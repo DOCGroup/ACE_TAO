@@ -290,8 +290,20 @@ TAO_Literal_Constraint (CORBA::Any* any)
   ACE_DECLARE_NEW_CORBA_ENV;
   CORBA::Any& any_ref = *any;
   CORBA::TypeCode_var type = any_ref.type ();
-  CORBA::TCKind corba_type = type->kind (ACE_TRY_ENV);
-  ACE_CHECK;
+  // @@ No where to throw exception back.
+  CORBA::TCKind corba_type = CORBA::tk_null;
+  ACE_TRY
+    {
+      corba_type = type->kind (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // @@ Seth: Don't know what else to do.  Make sure we can tell
+      // when this constructor fails.
+      return;
+    }
+  ACE_ENDTRY;
 
   this->type_ = TAO_Literal_Constraint::comparable_type (type.in ());
   switch (this->type_)
@@ -470,10 +482,20 @@ TAO_Expression_Type
 TAO_Literal_Constraint::comparable_type (CORBA::TypeCode_ptr type)
 {
   // Convert a CORBA::TCKind into a TAO_Literal_Type
-  ACE_DECLARE_NEW_CORBA_ENV;  
+  ACE_DECLARE_NEW_CORBA_ENV;
   TAO_Expression_Type return_value = TAO_UNKNOWN;
-  CORBA::TCKind kind = type->kind (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (return_value);
+  CORBA::TCKind kind = CORBA::tk_null;
+  ACE_TRY
+    {
+      kind = type->kind (ACE_TRY_ENV);
+      // ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      return return_value;
+    }
+  ACE_ENDTRY;
+  // Since this is a "top level try block, no need to check again.
 
   switch (kind)
     {
@@ -500,10 +522,19 @@ TAO_Literal_Constraint::comparable_type (CORBA::TypeCode_ptr type)
       break;
     case CORBA::tk_alias:
       {
-	CORBA::TypeCode_ptr typecode = type->content_type (ACE_TRY_ENV);
-	ACE_CHECK_RETURN (return_value);
-	CORBA::TCKind kind = typecode->kind (ACE_TRY_ENV);
-	ACE_CHECK_RETURN (return_value);
+        ACE_TRY_EX (label2)
+          {
+            CORBA::TypeCode_ptr typecode = type->content_type (ACE_TRY_ENV);
+            ACE_TRY_CHECK_EX (label2);
+            CORBA::TCKind kind = typecode->kind (ACE_TRY_ENV);
+            ACE_TRY_CHECK_EX (label2);;
+          }
+        ACE_CATCHANY
+          {
+            return return_value;
+          }
+        ACE_ENDTRY;
+        // Since this is a "top level try block, no need to check again.
 
 	if (kind == CORBA::tk_sequence)
 	  return_value = TAO_SEQUENCE;

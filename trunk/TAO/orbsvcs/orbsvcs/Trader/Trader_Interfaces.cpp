@@ -65,13 +65,15 @@ query (const char *type,
   // If a federated query returns to us, ignore it to prevent
   // redundant results and infinite loops.
   CosTrading::Admin::OctetSeq* request_id = 0;
-  if (this->seen_request_id (policies, request_id, ACE_TRY_ENV))
+  int check = this->seen_request_id (policies, request_id, ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (check)
     {
       returned_offers = new CosTrading::OfferSeq;
       returned_limits_applied = new CosTrading::PolicyNameSeq;
       return;
     }
-  ACE_CHECK;
 
   // The presence of a link interface determines whether we should
   // attempt to forward or propagate queries.
@@ -421,6 +423,7 @@ fill_receptacles (const char* /* type */,
 
       // Register it with the POA.
       offer_itr = oi->_this (ACE_TRY_ENV);
+      // @@ Seth, ACE_CHECK_RETURN (what?);
       oi->_remove_ref (ACE_TRY_ENV);
       ACE_CHECK_RETURN (total_offers - offers_in_iterator);
 
@@ -504,6 +507,7 @@ retrieve_links (TAO_Policies& policies,
        (follow_rule == CosTrading::if_no_local && offers_returned == 0))
       && policies.hop_count (ACE_TRY_ENV) > 0)
     should_follow = 1;
+  ACE_CHECK_RETURN (0);
 
   if (should_follow)
     {
@@ -671,6 +675,7 @@ federated_query (const CosTrading::LinkNameSeq& links,
           // Ah, well, this query failed, move on to the next one.
         }
       ACE_ENDTRY;
+      //      ACE_CHECK;
     }
 
   // Sort the sequence in preference order.
@@ -802,9 +807,10 @@ forward_query (const char* next_hop,
       CosTrading::Policy policy;
       policy.name = TAO_Policies::POLICY_NAMES[TAO_Policies::STARTING_TRADER];
       policy.value <<= next_hop;
-      ACE_THROW (CosTrading::Lookup::InvalidPolicyValue (policy));
+      ACE_TRY_THROW (CosTrading::Lookup::InvalidPolicyValue (policy));
     }
   ACE_ENDTRY;
+  //  ACE_CHECK;
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
@@ -832,14 +838,11 @@ seen_request_id (TAO_Policies& policies,
     {
       // Allocate memory so memory mangement is the same for both
       // cases.
-      ACE_NEW_RETURN (seq,
-                      CosTrading::Admin::OctetSeq (*seq),
-                      0);
+      ACE_NEW_THROW_EX (seq,
+                        CosTrading::Admin::OctetSeq (*seq),
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK_RETURN (1);
     }
-
-  if (seq == 0)
-    ACE_THROW_RETURN (CORBA::NO_MEMORY (),
-                      1);
 
   ACE_GUARD_RETURN (TRADER_LOCK_TYPE, trader_mon, this->lock_, 1);
 
@@ -929,7 +932,9 @@ _cxx_export (CORBA::Object_ptr reference,
 
   // TAO-specific way to determine if an object is derived from or is
   // an interface type.
-  if (! reference->_is_a (type_struct->if_name, ACE_TRY_ENV))
+  int check = (! reference->_is_a (type_struct->if_name, ACE_TRY_ENV));
+  ACE_CHECK_RETURN (0);
+  if (check)
     ACE_THROW_RETURN (CosTrading::Register::
                       InterfaceTypeMismatch (type, reference), 0);
 
@@ -939,7 +944,8 @@ _cxx_export (CORBA::Object_ptr reference,
   ACE_CHECK_RETURN (0);
 
   // CORBA::ULong plength = properties.length ();
-  ACE_NEW_RETURN (offer, CosTrading::Offer, 0);
+  ACE_NEW_THROW_EX (offer, CosTrading::Offer, CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (0);
 
   // No copying, no memory leaks. Violates the "in" parameter semantics
   // when this object is colocated with the client, however.
@@ -996,7 +1002,8 @@ describe (const char *id,
   ACE_CHECK_RETURN (0);
 
   CosTrading::Register::OfferInfo *offer_info = 0;
-  ACE_NEW_RETURN (offer_info, CosTrading::Register::OfferInfo, 0);
+  ACE_NEW_THROW_EX (offer_info, CosTrading::Register::OfferInfo, CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (0);
 
   offer_info->reference = CORBA::Object::_duplicate (offer->reference.in ());
   offer_info->type = CORBA::string_dup (type);
@@ -1031,7 +1038,10 @@ modify (const char *id,
 {
   // Throw an exception if the trader is not configured
   // to support properties modification.
-  if (! this->supports_modifiable_properties (ACE_TRY_ENV))
+  int check =  (! this->supports_modifiable_properties (ACE_TRY_ENV));
+  ACE_CHECK;
+
+  if (check)
     ACE_THROW (CosTrading::NotImplemented ());
 
   char* type = 0;
@@ -1132,6 +1142,7 @@ withdraw_using_constraint (const char *type,
 
           ids.dequeue_head (offer_id);
           offer_database.remove_offer (offer_id, ACE_TRY_ENV);
+          ACE_CHECK;
           CORBA::string_free (offer_id);
         }
     }
@@ -1177,10 +1188,10 @@ resolve (const CosTrading::TraderName &name,
     }
   ACE_CATCHANY
     {
-      ACE_THROW_RETURN (CosTrading::Register::UnknownTraderName (name),
-                        CosTrading::Register::_nil ());
+      ACE_TRY_THROW (CosTrading::Register::UnknownTraderName (name));
     }
   ACE_ENDTRY;
+  ACE_CHECK_RETURN (CosTrading::Register::_nil ());
 
   // Ensure that the register pointer isn't nil.
   if (! CORBA::is_nil (remote_reg.in ()))
@@ -1241,7 +1252,9 @@ validate_properties (const char* type,
               CosTradingRepos::ServiceTypeRepository::PROP_MANDATORY)
             ACE_THROW (CosTrading::MissingMandatoryProperty (type, prop_name));
         }
-      else if (! prop_type->equal (prop_struct.value_type.in (), ACE_TRY_ENV))
+      int check = (! prop_type->equal (prop_struct.value_type.in (), ACE_TRY_ENV));
+      ACE_CHECK;
+      if (check)
         {
           // Offer cannot redefine the type of an property.
           const CosTrading::Property* prop = prop_eval.get_property (prop_name);
@@ -1594,9 +1607,13 @@ list_offers (CORBA::ULong how_many,
   id_itr = CosTrading::OfferIdIterator::_nil ();
   if (how_many > 0)
     {
-      if (offer_id_iter->next_n (how_many, ids, ACE_TRY_ENV) == 1)
+      int check = offer_id_iter->next_n (how_many, ids, ACE_TRY_ENV);
+      ACE_CHECK;
+
+      if (check == 1)
         {
           id_itr = offer_id_iter->_this (ACE_TRY_ENV);
+          ACE_CHECK;
           offer_id_iter->_remove_ref (ACE_TRY_ENV);
           ACE_CHECK;
         }
@@ -1732,9 +1749,10 @@ TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::describe_link (const char *name,
   CosTrading::Link::LinkInfo* new_link_info = 0;
   CosTrading::Link::LinkInfo& old_link_info = link_entry->int_id_;
 
-  ACE_NEW_RETURN (new_link_info,
-                  CosTrading::Link::LinkInfo,
-                  0);
+  ACE_NEW_THROW_EX (new_link_info,
+                    CosTrading::Link::LinkInfo,
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (0);
 
   new_link_info->def_pass_on_follow_rule = old_link_info.def_pass_on_follow_rule;
   new_link_info->limiting_follow_rule = old_link_info.limiting_follow_rule;
@@ -1802,6 +1820,7 @@ modify_link (const char *name,
 
   // Ensure that the limiting link behavior for this link doesn't
   // exceed the maximum allowed for a link.
+  // @@ Seth, rethrowing an exception?  This is probably not exception safe.
   if (limiting_follow_rule < this->max_link_follow_policy (ACE_TRY_ENV))
     ACE_THROW (CosTrading::Link::LimitingFollowTooPermissive
                (limiting_follow_rule, this->max_link_follow_policy (ACE_TRY_ENV)));

@@ -126,9 +126,10 @@ TAO_Offer_Iterator_Collection::next_n (CORBA::ULong n,
   CORBA::Boolean return_value = 1;
   CosTrading::OfferSeq_var out_offers;
 
-  ACE_NEW_RETURN (offers,
-                  CosTrading::OfferSeq,
-                  return_value);
+  ACE_NEW_THROW_EX (offers,
+                    CosTrading::OfferSeq,
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (return_value);
 
   while (offers_left > 0 && ! this->iters_.is_empty ())
     {
@@ -145,13 +146,13 @@ TAO_Offer_Iterator_Collection::next_n (CORBA::ULong n,
         iter->next_n (offers_left,
                       CosTrading::OfferSeq_out (out_offers.out ()),
                       ACE_TRY_ENV);
-      ACE_CHECK;
+      ACE_CHECK_RETURN (return_value);
 
       // If we've exhausted this iterator, destroy it.
       if (any_left == 0)
         {
           iter->destroy (ACE_TRY_ENV);
-          ACE_CHECK;
+          ACE_CHECK_RETURN (return_value);
           CORBA::release (iter);
         }
       else
@@ -186,6 +187,7 @@ TAO_Offer_Iterator_Collection::destroy (CORBA::Environment& ACE_TRY_ENV)
 
       iters_iter.next (iter);
       (*iter)->destroy (ACE_TRY_ENV);
+      ACE_CHECK;
     }
 
   // Remove self from POA

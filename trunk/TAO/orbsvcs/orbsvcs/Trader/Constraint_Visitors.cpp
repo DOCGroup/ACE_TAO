@@ -488,12 +488,21 @@ visit_property (TAO_Property_Constraint* literal)
 
   if (this->props_.find (prop_name, prop_index) == 0)
     {
-      ACE_DECLARE_NEW_CORBA_ENV;  
+      ACE_DECLARE_NEW_CORBA_ENV;
 
+      CORBA::Any *value = 0;
       // Retrieve the value of the property from the Property_Evaluator
-      CORBA::Any* value =
-        this->prop_eval_.property_value (prop_index, ACE_TRY_ENV);
-      ACE_CHECK_RETURN (-1);
+      ACE_TRY
+        {
+          value = this->prop_eval_.property_value (prop_index, ACE_TRY_ENV);
+          // ACE_TRY_CHECK;
+        }
+      ACE_CATCHANY
+        {
+          return -1;
+        }
+      ACE_ENDTRY;
+      //      ACE_CHECK_RETURN (-1);
 
       if (value != 0)
         {
@@ -538,9 +547,19 @@ sequence_does_contain (CORBA::Any* sequence,
   ACE_DECLARE_NEW_CORBA_ENV;
   CORBA::Boolean return_value = 0;
   CORBA::TypeCode_var type = sequence->type ();
-  CORBA::TCKind sequence_type =
-    TAO_Sequence_Extracter_Base::sequence_type (type.in (), ACE_TRY_ENV);
-  ACE_CHECK_RETURN (return_value);
+  CORBA::TCKind sequence_type = CORBA::tk_void;
+  ACE_TRY
+    {
+      sequence_type =
+        TAO_Sequence_Extracter_Base::sequence_type (type.in (), ACE_TRY_ENV);
+      // ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      return return_value;
+    }
+  ACE_ENDTRY;
+  //  ACE_CHECK_RETURN (return_value);
 
   if (sequence_type == CORBA::tk_void)
     return return_value;
@@ -616,9 +635,9 @@ operator () (TAO_DynSequence_i& dyn_any,
       ACE_TRY_CHECK;
       return_value = (value == element);
     }
-  ACE_CATCHANY 
+  ACE_CATCHANY
     {
-    } 
+    }
   ACE_ENDTRY;
   return return_value;
 }
@@ -635,9 +654,9 @@ operator () (TAO_DynSequence_i& dyn_any,
       ACE_TRY_CHECK;
       return_value = (value == element);
     }
-  ACE_CATCHANY 
+  ACE_CATCHANY
     {
-    } 
+    }
   ACE_ENDTRY;
   return return_value;
 }
@@ -654,9 +673,9 @@ operator () (TAO_DynSequence_i& dyn_any,
       ACE_TRY_CHECK;
       return_value = (value == element);
     }
-  ACE_CATCHANY 
+  ACE_CATCHANY
     {
-    } 
+    }
   ACE_ENDTRY;
   return return_value;
 }
@@ -673,9 +692,9 @@ operator () (TAO_DynSequence_i& dyn_any,
       ACE_TRY_CHECK;
       return_value = (value == element);
     }
-  ACE_CATCHANY 
+  ACE_CATCHANY
     {
-    } 
+    }
   ACE_ENDTRY;
   return return_value;
 }
@@ -1030,11 +1049,20 @@ visit_in (TAO_Binary_Constraint* binary_in)
 
   if (right_type == TAO_SEQUENCE)
     {
-      ACE_DECLARE_NEW_CORBA_ENV;  
+      ACE_DECLARE_NEW_CORBA_ENV;
       CORBA::Boolean types_match = 0;
-      CORBA::TCKind seq_type =
-        TAO_Sequence_Extracter_Base::sequence_type (prop_type, ACE_TRY_ENV);
-      ACE_CHECK_RETURN (return_value);
+      CORBA::TCKind seq_type = CORBA::tk_void;
+      ACE_TRY
+        {
+          seq_type =
+            TAO_Sequence_Extracter_Base::sequence_type (prop_type, ACE_TRY_ENV);
+          // ACE_TRY_CHECK;
+        }
+      ACE_CATCHANY
+        {
+          return return_value;
+        }
+      ACE_ENDTRY;
 
       if (seq_type != CORBA::tk_void)
         {

@@ -69,13 +69,13 @@ public:
   // = Initialization and termination methods.
   TAO_Constraint_Interpreter (const CosTradingRepos::ServiceTypeRepository::TypeStruct& ts,
                               const char* constraints,
-                              CORBA::Environment& env)
+                              CORBA::Environment& ACE_TRY_ENV)
     ACE_THROW_SPEC ((CosTrading::IllegalConstraint,
                      CORBA::NO_MEMORY));
 
   TAO_Constraint_Interpreter (TAO_Constraint_Validator& validator,
                               const char* constraints,
-                              CORBA::Environment& env)
+                              CORBA::Environment& ACE_TRY_ENV)
     ACE_THROW_SPEC ((CosTrading::IllegalConstraint,
                      CORBA::NO_MEMORY));
   // This constructor builds an expression tree representing the
@@ -112,13 +112,13 @@ public:
   // = Initialization and termination methods.
   TAO_Preference_Interpreter (const CosTradingRepos::ServiceTypeRepository::TypeStruct& ts,
                               const char* preference,
-                              CORBA::Environment& env)
+                              CORBA::Environment& ACE_TRY_ENV)
     ACE_THROW_SPEC ((CosTrading::Lookup::IllegalPreference,
                      CORBA::NO_MEMORY));
 
   TAO_Preference_Interpreter (TAO_Constraint_Validator& validator,
                               const char* preference,
-                              CORBA::Environment& env)
+                              CORBA::Environment& ACE_TRY_ENV)
     ACE_THROW_SPEC ((CosTrading::Lookup::IllegalPreference,
                      CORBA::NO_MEMORY));
 

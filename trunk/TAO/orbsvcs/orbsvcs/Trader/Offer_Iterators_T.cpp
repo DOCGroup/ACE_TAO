@@ -58,9 +58,11 @@ next_n (CORBA::ULong n,
   CORBA::ULong max_possible_offers_in_sequence =
     (n <  this->offer_ids_.size ()) ? n : this->offer_ids_.size ();
 
-  ACE_NEW_RETURN (offers,
-                  CosTrading::OfferSeq,
-                  0);
+  ACE_NEW_THROW_EX (offers,
+                    CosTrading::OfferSeq,
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (0);
+
   offers->length (max_possible_offers_in_sequence);
 
   // While there are entries left and we haven't filled <offers>
@@ -76,7 +78,7 @@ next_n (CORBA::ULong n,
 
       CosTrading::OfferId_var offerid_var (id);
       CosTrading::Offer* offer = this->db_.lookup_offer (id, ACE_TRY_ENV);
-      ACE_CHECK;
+      ACE_CHECK_RETURN (0);
 
       if (offer != 0)
         this->pfilter_.filter_offer (offer,
