@@ -255,7 +255,7 @@ make_standard_typecode (CORBA::TypeCode_ptr tcp,
 				stream.next - stream.buffer,
 				stream.buffer, CORBA::B_FALSE);
 
-  assert (tcp->_length <= TC_BUFLEN);
+  assert (tcp->length_ <= TC_BUFLEN);
   return;
 }
 

@@ -73,35 +73,35 @@ CORBA_Request::CORBA_Request (CORBA::Object_ptr obj,
 			      CORBA::NVList_ptr args,
 			      CORBA::NamedValue_ptr result,
 			      CORBA::Flags flags) 
-  : _args (args),
-    _result (result),
-    _flags (flags),
+  : args_ (args),
+    result_ (result),
+    flags_ (flags),
     refcount_ (1)
 {
-  _target = CORBA::Object::_duplicate (obj);
-  _opname = CORBA::string_copy (op);
+  target_ = CORBA::Object::_duplicate (obj);
+  opname_ = CORBA::string_copy (op);
 }
 
 CORBA_Request::CORBA_Request (CORBA::Object_ptr obj,
 			      const CORBA::Char *op) 
-  : _flags (0),
+  : flags_ (0),
     refcount_ (1)
 {
-  _target = CORBA::Object::_duplicate (obj);
-  _opname = CORBA::string_copy (op);
+  target_ = CORBA::Object::_duplicate (obj);
+  opname_ = CORBA::string_copy (op);
 
-  _args = new CORBA::NVList;
-  _result = new CORBA::NamedValue;
+  args_ = new CORBA::NVList;
+  result_ = new CORBA::NamedValue;
 }
 
 CORBA_Request::~CORBA_Request (void)
 {
   assert (refcount_ == 0);
 
-  CORBA::release (_target);
-  CORBA::string_free ((CORBA::String)_opname);
-  CORBA::release (_args);
-  CORBA::release (_result);
+  CORBA::release (target_);
+  CORBA::string_free ((CORBA::String) opname_);
+  CORBA::release (args_);
+  CORBA::release (result_);
 }
 
 // The public DII interfaces:  normal and oneway calls.
@@ -116,20 +116,20 @@ CORBA_Request::invoke (void)
 {
   STUB_Object *stub;
 
-  if (_target->QueryInterface (IID_STUB_Object,
+  if (target_->QueryInterface (IID_STUB_Object,
 			       (void **) &stub) != NOERROR) 
     {
-      _env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
+      env_.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
       return;
     }
 
-  stub->do_dynamic_call ((char *)_opname,
+  stub->do_dynamic_call ((char *) opname_,
 			 CORBA::B_TRUE,
-			 _args,
-			 _result,
-			 _flags,
-			 _exceptions,
-			 _env);
+			 args_,
+			 result_,
+			 flags_,
+			 exceptions_,
+			 env_);
   stub->Release ();
 }
 
@@ -138,19 +138,19 @@ CORBA_Request::send_oneway (void)
 {
   STUB_Object *stub;
 
-  if (_target->QueryInterface (IID_STUB_Object,
+  if (target_->QueryInterface (IID_STUB_Object,
 			       (void **) &stub) != NOERROR) 
     {
-      _env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
+      env_.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
       return;
     }
 
-  stub->do_dynamic_call ((char *)_opname,
+  stub->do_dynamic_call ((char *) opname_,
 			 CORBA::B_TRUE,
-			 _args,
-			 _result,
-			 _flags,
-			 _exceptions,
-			 _env);
+			 args_,
+			 result_,
+			 flags_,
+			 exceptions_,
+			 env_);
   stub->Release ();
 }

@@ -62,7 +62,7 @@ private:
   const CORBA::Char *opname_;
   CORBA::NVList_ptr args_;
   CORBA::NamedValue_ptr result_;
-  CORBA::Flags _flags;
+  CORBA::Flags flags_;
   CORBA::Environment env_;
   CORBA::ExceptionList exceptions_;
 
