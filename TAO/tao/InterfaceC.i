@@ -31,157 +31,157 @@ CORBA_IRObject::CORBA_IRObject (
 }
 
 // *************************************************************
-// Inline operations for class CORBA::IRObject_var
+// Inline operations for class CORBA_IRObject_var
 // *************************************************************
 
 ACE_INLINE
 CORBA_IRObject_var::CORBA_IRObject_var (void) // default constructor
-  : ptr_ (IRObject::_nil ())
+  : ptr_ (CORBA_IRObject::_nil ())
 {}
 
-ACE_INLINE ::CORBA::IRObject_ptr
-CORBA::IRObject_var::ptr (void) const
+ACE_INLINE ::CORBA_IRObject_ptr
+CORBA_IRObject_var::ptr (void) const
 {
   return this->ptr_;
 }
 
 ACE_INLINE
-CORBA::IRObject_var::CORBA_IRObject_var (const ::CORBA::IRObject_var &p) // copy constructor
+CORBA_IRObject_var::CORBA_IRObject_var (const ::CORBA_IRObject_var &p) // copy constructor
   : TAO_Base_var (),
-    ptr_ (IRObject::_duplicate (p.ptr ()))
+    ptr_ (CORBA_IRObject::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
-CORBA::IRObject_var::~CORBA_IRObject_var (void) // destructor
+CORBA_IRObject_var::~CORBA_IRObject_var (void) // destructor
 {
   CORBA::release (this->ptr_);
 }
 
-ACE_INLINE CORBA::IRObject_var &
-CORBA::IRObject_var::operator= (IRObject_ptr p)
+ACE_INLINE CORBA_IRObject_var &
+CORBA_IRObject_var::operator= (CORBA_IRObject_ptr p)
 {
   CORBA::release (this->ptr_);
   this->ptr_ = p;
   return *this;
 }
 
-ACE_INLINE CORBA::IRObject_var &
-CORBA::IRObject_var::operator= (const CORBA_IRObject_var &p)
+ACE_INLINE CORBA_IRObject_var &
+CORBA_IRObject_var::operator= (const CORBA_IRObject_var &p)
 {
   if (this != &p)
   {
     CORBA::release (this->ptr_);
-    this->ptr_ = ::CORBA::IRObject::_duplicate (p.ptr ());
+    this->ptr_ = ::CORBA_IRObject::_duplicate (p.ptr ());
   }
   return *this;
 }
 
 ACE_INLINE 
-CORBA::IRObject_var::operator const ::CORBA::IRObject_ptr &() const // cast
+CORBA_IRObject_var::operator const ::CORBA_IRObject_ptr &() const // cast
 {
   return this->ptr_;
 }
 
 ACE_INLINE 
-CORBA::IRObject_var::operator ::CORBA::IRObject_ptr &() // cast 
+CORBA_IRObject_var::operator ::CORBA_IRObject_ptr &() // cast 
 {
   return this->ptr_;
 }
 
-ACE_INLINE ::CORBA::IRObject_ptr
-CORBA::IRObject_var::operator-> (void) const
+ACE_INLINE ::CORBA_IRObject_ptr
+CORBA_IRObject_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE ::CORBA::IRObject_ptr
-CORBA::IRObject_var::in (void) const
+ACE_INLINE ::CORBA_IRObject_ptr
+CORBA_IRObject_var::in (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE ::CORBA::IRObject_ptr &
-CORBA::IRObject_var::inout (void)
+ACE_INLINE ::CORBA_IRObject_ptr &
+CORBA_IRObject_var::inout (void)
 {
   return this->ptr_;
 }
 
-ACE_INLINE ::CORBA::IRObject_ptr &
-CORBA::IRObject_var::out (void)
+ACE_INLINE ::CORBA_IRObject_ptr &
+CORBA_IRObject_var::out (void)
 {
   CORBA::release (this->ptr_);
-  this->ptr_ = ::CORBA::IRObject::_nil ();
+  this->ptr_ = ::CORBA_IRObject::_nil ();
   return this->ptr_;
 }
 
-ACE_INLINE ::CORBA::IRObject_ptr
-CORBA::IRObject_var::_retn (void)
+ACE_INLINE ::CORBA_IRObject_ptr
+CORBA_IRObject_var::_retn (void)
 {
   // yield ownership of managed obj reference
-  ::CORBA::IRObject_ptr val = this->ptr_;
-  this->ptr_ = ::CORBA::IRObject::_nil ();
+  ::CORBA_IRObject_ptr val = this->ptr_;
+  this->ptr_ = ::CORBA_IRObject::_nil ();
   return val;
 }
 
 // *************************************************************
-// Inline operations for class CORBA::IRObject_out
+// Inline operations for class CORBA_IRObject_out
 // *************************************************************
 
 ACE_INLINE
-CORBA_IRObject_out::CORBA_IRObject_out (IRObject_ptr &p)
+CORBA_IRObject_out::CORBA_IRObject_out (CORBA_IRObject_ptr &p)
   : ptr_ (p)
 {
-  this->ptr_ = ::CORBA::IRObject::_nil ();
+  this->ptr_ = ::CORBA_IRObject::_nil ();
 }
 
 ACE_INLINE
-CORBA_IRObject_out::CORBA_IRObject_out (IRObject_var &p) // constructor from _var
+CORBA_IRObject_out::CORBA_IRObject_out (CORBA_IRObject_var &p) // constructor from _var
   : ptr_ (p.out ())
 {
   CORBA::release (this->ptr_);
-  this->ptr_ = ::CORBA::IRObject::_nil ();
+  this->ptr_ = ::CORBA_IRObject::_nil ();
 }
 
 ACE_INLINE
-CORBA_IRObject_out::CORBA_IRObject_out (const ::CORBA::IRObject_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (IRObject_out &, p).ptr_)
+CORBA_IRObject_out::CORBA_IRObject_out (const ::CORBA_IRObject_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (CORBA_IRObject_out &, p).ptr_)
 {}
 
-ACE_INLINE ::CORBA::IRObject_out &
-CORBA::IRObject_out::operator= (const CORBA_IRObject_out &p)
+ACE_INLINE ::CORBA_IRObject_out &
+CORBA_IRObject_out::operator= (const CORBA_IRObject_out &p)
 {
   this->ptr_ = ACE_const_cast (CORBA_IRObject_out&, p).ptr_;
   return *this;
 }
 
-ACE_INLINE CORBA::IRObject_out &
-CORBA::IRObject_out::operator= (const CORBA_IRObject_var &p)
+ACE_INLINE CORBA_IRObject_out &
+CORBA_IRObject_out::operator= (const CORBA_IRObject_var &p)
 {
-  this->ptr_ = ::CORBA::IRObject::_duplicate (p.ptr ());
+  this->ptr_ = ::CORBA_IRObject::_duplicate (p.ptr ());
   return *this;
 }
 
-ACE_INLINE CORBA::IRObject_out &
-CORBA::IRObject_out::operator= (IRObject_ptr p)
+ACE_INLINE CORBA_IRObject_out &
+CORBA_IRObject_out::operator= (CORBA_IRObject_ptr p)
 {
   this->ptr_ = p;
   return *this;
 }
 
 ACE_INLINE 
-CORBA::IRObject_out::operator ::CORBA::IRObject_ptr &() // cast
+CORBA_IRObject_out::operator ::CORBA_IRObject_ptr &() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE ::CORBA::IRObject_ptr &
-CORBA::IRObject_out::ptr (void) // ptr
+ACE_INLINE ::CORBA_IRObject_ptr &
+CORBA_IRObject_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
-ACE_INLINE ::CORBA::IRObject_ptr
-CORBA::IRObject_out::operator-> (void)
+ACE_INLINE ::CORBA_IRObject_ptr
+CORBA_IRObject_out::operator-> (void)
 {
   return this->ptr_;
 }
@@ -19033,18 +19033,18 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR_DefinitionKind &_ta
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &,
-    const CORBA::IRObject_ptr
+    const CORBA_IRObject_ptr
   );
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &,
-    CORBA::IRObject_ptr &
+    CORBA_IRObject_ptr &
   );
 
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &strm,
-    const CORBA::IRObject_ptr _tao_objref
+    const CORBA_IRObject_ptr _tao_objref
   )
 {
   CORBA::Object_ptr _tao_corba_obj = _tao_objref;
@@ -19054,7 +19054,7 @@ operator<< (
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &strm,
-    CORBA::IRObject_ptr &_tao_objref
+    CORBA_IRObject_ptr &_tao_objref
   )
 {
   ACE_TRY_NEW_ENV
@@ -19064,7 +19064,7 @@ operator>> (
       return 0;
     // narrow to the right type
     _tao_objref =
-      CORBA::IRObject::_unchecked_narrow (
+      CORBA_IRObject::_unchecked_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
