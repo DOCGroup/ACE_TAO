@@ -1,4 +1,7 @@
 project(*client) : taoexe, portableserver, rtevent, naming  {
+  after += Quoter_Idl_Lib
+  includes += ../../idl
+  requires += exceptions
   source_files {
     client.cpp
     Stock_Consumer.cpp
@@ -6,6 +9,9 @@ project(*client) : taoexe, portableserver, rtevent, naming  {
 }
 
 project(*server) : taoexe, portableserver, rtevent, naming {
+  after += Quoter_Idl_Lib
+  includes += ../../idl
+  requires += exceptions
   source_files {
     server.cpp
     Stock_Factory_i.cpp
