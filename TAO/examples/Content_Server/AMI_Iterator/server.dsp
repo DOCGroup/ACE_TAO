@@ -1,24 +1,24 @@
-# Microsoft Developer Studio Project File - Name="SMI_Iterator Client" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="AMI_Iterator Server" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=SMI_Iterator Client - Win32 Debug
+CFG=AMI_Iterator Server - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
-!MESSAGE NMAKE /f "client.mak".
+!MESSAGE NMAKE /f "server.mak".
 !MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "client.mak" CFG="SMI_Iterator Client - Win32 Debug"
+!MESSAGE NMAKE /f "server.mak" CFG="AMI_Iterator Server - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "SMI_Iterator Client - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "SMI_Iterator Client - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "AMI_Iterator Server - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "AMI_Iterator Server - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
@@ -28,7 +28,7 @@ CFG=SMI_Iterator Client - Win32 Debug
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "SMI_Iterator Client - Win32 Release"
+!IF  "$(CFG)" == "AMI_Iterator Server - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -42,7 +42,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\\" /I "..\..\..\\" /I "..\..\..\..\\" /I "..\..\..\ACE_wrappers" /I "..\..\..\ACE_wrappers\TAO\\" /I "..\..\..\ACE_wrappers\TAO\orbsvcs" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\..\ACE_wrappers" /I "..\..\..\ACE_wrappers\TAO\\" /I "..\..\\" /I "..\..\..\\" /I "..\..\..\..\\" /I "..\..\..\ACE_wrappers\TAO\orbsvcs" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
@@ -53,7 +53,7 @@ LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
 # ADD LINK32 ace.lib TAO.lib TAO_CosNaming.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace" /libpath:"..\..\orbsvcs"
 
-!ELSEIF  "$(CFG)" == "SMI_Iterator Client - Win32 Debug"
+!ELSEIF  "$(CFG)" == "AMI_Iterator Server - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -67,7 +67,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\\" /I "..\..\..\\" /I "..\..\..\..\\" /I "..\..\..\ACE_wrappers" /I "..\..\..\ACE_wrappers\TAO\\" /I "..\..\..\orbsvcs" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\..\ACE_wrappers" /I "..\..\..\ACE_wrappers\TAO\\" /I "..\..\\" /I "..\..\..\\" /I "..\..\..\..\\" /I "..\..\..\orbsvcs" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -82,18 +82,54 @@ LINK32=link.exe
 
 # Begin Target
 
-# Name "SMI_Iterator Client - Win32 Release"
-# Name "SMI_Iterator Client - Win32 Debug"
+# Name "AMI_Iterator Server - Win32 Release"
+# Name "AMI_Iterator Server - Win32 Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter ".cpp"
 # Begin Source File
 
-SOURCE=.\client.cpp
+SOURCE=.\Content_Iterator_i.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Iterator_Factory_i.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\server.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\Web_ServerC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Web_ServerS.cpp
+# End Source File
+# End Group
+# Begin Group "Header Files"
+
+# PROP Default_Filter ".h"
+# Begin Source File
+
+SOURCE=.\Content_Iterator_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Iterator_Factory_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Web_ServerC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Web_ServerS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Web_ServerS_T.h
 # End Source File
 # End Group
 # Begin Group "IDL Files"
@@ -103,7 +139,7 @@ SOURCE=.\Web_ServerC.cpp
 
 SOURCE=.\Web_Server.idl
 
-!IF  "$(CFG)" == "SMI_Iterator Client - Win32 Release"
+!IF  "$(CFG)" == "AMI_Iterator Server - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
 USERDEP__WEB_S="..\..\..\..\bin\Release\tao_idl.exe"	
@@ -142,7 +178,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ELSEIF  "$(CFG)" == "SMI_Iterator Client - Win32 Debug"
+!ELSEIF  "$(CFG)" == "AMI_Iterator Server - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
 USERDEP__WEB_S="..\..\..\..\bin\tao_idl.exe"	
@@ -151,7 +187,7 @@ InputPath=.\Web_Server.idl
 InputName=Web_Server
 
 BuildCmds= \
-	..\..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
+	..\..\..\..\bin\tao_idl -Ge 1 -GC $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -192,13 +228,9 @@ BuildCmds= \
 # Begin Group "Template Files"
 
 # PROP Default_Filter ""
-# End Group
-# Begin Group "Header Files"
-
-# PROP Default_Filter ".h"
 # Begin Source File
 
-SOURCE=.\Web_ServerC.h
+SOURCE=.\Web_ServerS_T.cpp
 # End Source File
 # End Group
 # End Target

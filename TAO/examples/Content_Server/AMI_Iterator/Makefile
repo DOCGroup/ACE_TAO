@@ -22,8 +22,6 @@ SERVER_FILES = \
 	server
 
 CLIENT_FILES = \
-	Content_Iterator_i \
-	Iterator_Factory_i \
 	Iterator_Handler \
 	client
 

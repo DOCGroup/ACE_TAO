@@ -20,13 +20,20 @@
 #ifndef PUSH_ITERATOR_HANDLER_H
 #define PUSH_ITERATOR_HANDLER_H
 
-#include "ace/pre.h"
-
 #include "Push_Web_ServerS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+// This is to remove "inherits via dominance" warnings from MSVC.
+// MSVC is being a little too paranoid.
+#if defined(_MSC_VER)
+#if (_MSC_VER >= 1200)
+#pragma warning(push)
+#endif /* _MSC_VER >= 1200 */
+#pragma warning(disable:4250)
+#endif /* _MSC_VER */
 
 // Forward declaration
 class Callback_i;
@@ -107,6 +114,8 @@ private:
   // Reference to this Reply Handler's self.
 };
 
-#include "ace/post.h"
+#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#pragma warning(pop)
+#endif /* _MSC_VER */
 
 #endif  /* PUSH_ITERATOR_HANDLER_H */
