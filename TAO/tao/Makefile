@@ -538,13 +538,11 @@ realclean:
  Object.i \
  CurrentC.i \
  CDR.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Environment.h \
  Environment.i \
+ Exception.h \
+ Exception.i \
  Sequence.h \
  Managed_Types.h \
  Managed_Types.i \
@@ -572,6 +570,11 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ Typecode.h \
+ Typecode.i \
+ InterfaceC.i \
  POAS.i \
  Active_Object_Map.h \
  Active_Object_Map.i \
@@ -691,8 +694,6 @@ realclean:
  ObjectIDList.h \
  ObjectIDList.i \
  WrongTransactionC.h \
- InterfaceC.h \
- ifrfwd.h \
  BoundsC.h \
  BoundsC.i \
  ImplRepoC.i \
@@ -834,13 +835,11 @@ realclean:
  Object.i \
  CurrentC.i \
  CDR.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Environment.h \
  Environment.i \
+ Exception.h \
+ Exception.i \
  Sequence.h \
  Managed_Types.h \
  Managed_Types.i \
@@ -991,13 +990,11 @@ realclean:
  Object.i \
  CurrentC.i \
  CDR.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Environment.h \
  Environment.i \
+ Exception.h \
+ Exception.i \
  Sequence.h \
  Managed_Types.h \
  Managed_Types.i \
@@ -1025,6 +1022,11 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ Typecode.h \
+ Typecode.i \
+ InterfaceC.i \
  POAS.i \
  Active_Object_Map.h \
  Active_Object_Map.i \
@@ -1143,8 +1145,6 @@ realclean:
  ObjectIDList.h \
  ObjectIDList.i \
  WrongTransactionC.h \
- InterfaceC.h \
- ifrfwd.h \
  BoundsC.h \
  BoundsC.i \
  ImplRepoC.i \
@@ -1244,13 +1244,11 @@ realclean:
  Object.i \
  CurrentC.i \
  CDR.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Environment.h \
  Environment.i \
+ Exception.h \
+ Exception.i \
  Sequence.h \
  Managed_Types.h \
  Managed_Types.i \
@@ -1275,6 +1273,11 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ Typecode.h \
+ Typecode.i \
+ InterfaceC.i \
  POAS.i \
  POA.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -1443,8 +1446,6 @@ realclean:
  ObjectIDList.h \
  ObjectIDList.i \
  WrongTransactionC.h \
- InterfaceC.h \
- ifrfwd.h \
  BoundsC.h \
  BoundsC.i \
  ImplRepoC.i \
@@ -1537,13 +1538,11 @@ realclean:
  Object.i \
  CurrentC.i \
  CDR.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Environment.h \
  Environment.i \
+ Exception.h \
+ Exception.i \
  Sequence.h \
  Managed_Types.h \
  Managed_Types.i \
@@ -1567,6 +1566,11 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ Typecode.h \
+ Typecode.i \
+ InterfaceC.i \
  POAS.i \
  Server_Request.h \
  IOPC.h \
@@ -1740,13 +1744,11 @@ realclean:
  Object.i \
  CurrentC.i \
  CDR.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Environment.h \
  Environment.i \
+ Exception.h \
+ Exception.i \
  Sequence.h \
  Managed_Types.h \
  Managed_Types.i \
@@ -1770,6 +1772,11 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ Typecode.h \
+ Typecode.i \
+ InterfaceC.i \
  POAS.i \
  poa_macros.h \
  POAManager.i \
@@ -1937,8 +1944,6 @@ realclean:
  ObjectIDList.h \
  ObjectIDList.i \
  WrongTransactionC.h \
- InterfaceC.h \
- ifrfwd.h \
  BoundsC.h \
  BoundsC.i \
  ImplRepoC.i \
@@ -2076,13 +2081,11 @@ realclean:
  Object.i \
  CurrentC.i \
  CDR.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Environment.h \
  Environment.i \
+ Exception.h \
+ Exception.i \
  Sequence.h \
  Managed_Types.h \
  Managed_Types.i \
@@ -2191,13 +2194,11 @@ realclean:
  Object.i \
  CurrentC.i \
  CDR.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Environment.h \
  Environment.i \
+ Exception.h \
+ Exception.i \
  Sequence.h \
  Managed_Types.h \
  Managed_Types.i \
@@ -2267,6 +2268,11 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ Typecode.h \
+ Typecode.i \
+ InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -2391,8 +2397,6 @@ realclean:
  ObjectIDList.h \
  ObjectIDList.i \
  WrongTransactionC.h \
- InterfaceC.h \
- ifrfwd.h \
  BoundsC.h \
  BoundsC.i \
  ImplRepoC.i \
@@ -2486,13 +2490,11 @@ realclean:
  Object.i \
  CurrentC.i \
  CDR.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Environment.h \
  Environment.i \
+ Exception.h \
+ Exception.i \
  Sequence.h \
  Managed_Types.h \
  Managed_Types.i \
@@ -2685,8 +2687,6 @@ realclean:
  IORS.h \
  IORC.h \
  CDR.h \
- Typecode.h \
- Typecode.i \
  CDR.i \
  IORC.i \
  Servant_Base.h \
@@ -2733,6 +2733,8 @@ realclean:
  Server_Request.i \
  LocalObject.h \
  LocalObject.i \
+ Typecode.h \
+ Typecode.i \
  Marshal.h \
  Marshal.i \
  singletons.h \
@@ -2766,6 +2768,9 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ InterfaceC.i \
  POAS.i \
  Active_Object_Map.h \
  Active_Object_Map.i \
@@ -2841,8 +2846,6 @@ realclean:
  ObjectIDList.h \
  ObjectIDList.i \
  WrongTransactionC.h \
- InterfaceC.h \
- ifrfwd.h \
  BoundsC.h \
  BoundsC.i \
  ImplRepoC.i
@@ -2978,8 +2981,6 @@ realclean:
  IORS.h \
  IORC.h \
  CDR.h \
- Typecode.h \
- Typecode.i \
  CDR.i \
  IORC.i \
  Servant_Base.h \
@@ -3026,6 +3027,8 @@ realclean:
  Server_Request.i \
  LocalObject.h \
  LocalObject.i \
+ Typecode.h \
+ Typecode.i \
  Marshal.h \
  Marshal.i \
  singletons.h \
@@ -3059,6 +3062,9 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ InterfaceC.i \
  POAS.i \
  Active_Object_Map.h \
  Active_Object_Map.i \
@@ -3134,8 +3140,6 @@ realclean:
  ObjectIDList.h \
  ObjectIDList.i \
  WrongTransactionC.h \
- InterfaceC.h \
- ifrfwd.h \
  BoundsC.h \
  BoundsC.i \
  ImplRepoC.i ImplRepoS_T.h ImplRepoS_T.i ImplRepoS_T.cpp ImplRepoS.i
@@ -3333,6 +3337,9 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -3460,10 +3467,6 @@ realclean:
  Tagged_Components.h \
  IOPC.h \
  CDR.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Sequence.h \
  Managed_Types.h \
@@ -3615,8 +3618,6 @@ realclean:
  Environment.h \
  Environment.i \
  CDR.h \
- Typecode.h \
- Typecode.i \
  CDR.i \
  IORC.i \
  Servant_Base.h \
@@ -3645,6 +3646,11 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ Typecode.h \
+ Typecode.i \
+ InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -3882,6 +3888,9 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ InterfaceC.i \
  Policy_Manager.i \
  params.h \
  params.i \
@@ -4287,6 +4296,9 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  params.h \
@@ -4569,6 +4581,9 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  params.h \
@@ -4700,10 +4715,6 @@ realclean:
  Tagged_Components.h \
  IOPC.h \
  CDR.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Sequence.h \
  Managed_Types.h \
@@ -4729,6 +4740,8 @@ realclean:
  Pluggable_Messaging.i \
  GIOP_Message_State.i \
  ORB.h \
+ Exception.h \
+ Exception.i \
  IOR_LookupTable.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
@@ -4841,6 +4854,8 @@ realclean:
  Wait_Strategy.h \
  IIOP_Transport.h \
  Pluggable.h \
+ Typecode.h \
+ Typecode.i \
  Pluggable.i \
  operation_details.h \
  operation_details.i \
@@ -4857,6 +4872,9 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -4943,8 +4961,6 @@ realclean:
  ObjectIDList.h \
  ObjectIDList.i \
  WrongTransactionC.h \
- InterfaceC.h \
- ifrfwd.h \
  BoundsC.h \
  BoundsC.i \
  ImplRepoC.i \
@@ -5204,6 +5220,9 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -5501,6 +5520,9 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ InterfaceC.i \
  Policy_Manager.i \
  params.h \
  params.i \
@@ -5747,6 +5769,9 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -6013,6 +6038,9 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -6303,6 +6331,9 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  params.h \
@@ -6592,6 +6623,9 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  params.h \
@@ -6722,10 +6756,6 @@ realclean:
  Tagged_Components.h \
  IOPC.h \
  CDR.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Sequence.h \
  Managed_Types.h \
@@ -6796,6 +6826,10 @@ realclean:
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Message_Queue.i \
+ Typecode.h \
+ Exception.h \
+ Exception.i \
+ Typecode.i \
  Pluggable.i \
  GIOP_Message_State.h \
  Pluggable_Messaging.h \
@@ -6885,6 +6919,9 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -6973,8 +7010,6 @@ realclean:
  ObjectIDList.h \
  ObjectIDList.i \
  WrongTransactionC.h \
- InterfaceC.h \
- ifrfwd.h \
  BoundsC.h \
  BoundsC.i \
  ImplRepoC.i \
@@ -7240,6 +7275,9 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -7545,6 +7583,9 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ InterfaceC.i \
  Policy_Manager.i \
  params.h \
  params.i \
@@ -7796,6 +7837,9 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -8062,6 +8106,9 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -8356,6 +8403,9 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  params.h \
@@ -8487,10 +8537,6 @@ realclean:
  Tagged_Components.h \
  IOPC.h \
  CDR.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Sequence.h \
  Managed_Types.h \
@@ -8510,6 +8556,8 @@ realclean:
  Tagged_Components.i \
  Profile.i \
  ORB.h \
+ Exception.h \
+ Exception.i \
  IOR_LookupTable.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
@@ -8638,6 +8686,8 @@ realclean:
  Wait_Strategy.h \
  SHMIOP_Transport.h \
  Pluggable.h \
+ Typecode.h \
+ Typecode.i \
  Pluggable.i \
  SHMIOP_Transport.i \
  SHMIOP_Connect.i \
@@ -8652,6 +8702,9 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -8740,8 +8793,6 @@ realclean:
  ObjectIDList.h \
  ObjectIDList.i \
  WrongTransactionC.h \
- InterfaceC.h \
- ifrfwd.h \
  BoundsC.h \
  BoundsC.i \
  ImplRepoC.i \
@@ -9009,6 +9060,9 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -9316,6 +9370,9 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ InterfaceC.i \
  Policy_Manager.i \
  params.h \
  params.i \
@@ -9570,6 +9627,9 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -9841,6 +9901,9 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -9952,10 +10015,6 @@ realclean:
  Environment.h \
  Environment.i \
  CDR.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Object.h \
  Object.i \
@@ -9969,6 +10028,8 @@ realclean:
  varout.h \
  varout.i \
  varout.cpp \
+ Exception.h \
+ Exception.i \
  IORC.i \
  IORS.h \
  Servant_Base.h \
@@ -10029,6 +10090,8 @@ realclean:
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Message_Queue.i \
+ Typecode.h \
+ Typecode.i \
  IOPC.h \
  IOPC.i \
  Pluggable.i \
@@ -10063,6 +10126,9 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -10192,10 +10258,6 @@ realclean:
  Environment.h \
  Environment.i \
  CDR.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Object.h \
  Object.i \
@@ -10209,6 +10271,8 @@ realclean:
  varout.h \
  varout.i \
  varout.cpp \
+ Exception.h \
+ Exception.i \
  IORC.i \
  Servant_Base.h \
  POAC.h \
@@ -10307,10 +10371,6 @@ realclean:
  Environment.h \
  Environment.i \
  CDR.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Sequence.h \
  Managed_Types.h \
@@ -10322,6 +10382,8 @@ realclean:
  varout.h \
  varout.i \
  varout.cpp \
+ Exception.h \
+ Exception.i \
  IORC.i \
  Servant_Base.h \
  POAC.h \
@@ -10391,6 +10453,8 @@ realclean:
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Message_Queue.i \
+ Typecode.h \
+ Typecode.i \
  Pluggable.i \
  ORB.h \
  IOR_LookupTable.h \
@@ -10539,8 +10603,6 @@ realclean:
  Environment.h \
  Environment.i \
  CDR.h \
- Typecode.h \
- Typecode.i \
  CDR.i \
  IORC.i \
  Servant_Base.h \
@@ -10569,6 +10631,11 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ Typecode.h \
+ Typecode.i \
+ InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -10745,8 +10812,6 @@ realclean:
  Environment.h \
  Environment.i \
  CDR.h \
- Typecode.h \
- Typecode.i \
  CDR.i \
  IORC.i \
  Servant_Base.h \
@@ -10775,6 +10840,11 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ Typecode.h \
+ Typecode.i \
+ InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -10999,6 +11069,9 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ InterfaceC.i \
  Policy_Manager.i \
  params.h \
  params.i \
@@ -11963,8 +12036,6 @@ realclean:
  Environment.h \
  Environment.i \
  CDR.h \
- Typecode.h \
- Typecode.i \
  CDR.i \
  IORC.i \
  Servant_Base.h \
@@ -12116,8 +12187,6 @@ realclean:
  Environment.h \
  Environment.i \
  CDR.h \
- Typecode.h \
- Typecode.i \
  CDR.i \
  IORC.i \
  Servant_Base.h \
@@ -12218,16 +12287,16 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  corbafwd.i \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Environment.h \
  Environment.i \
  Object.h \
  Object.i \
  Any.i \
+ Typecode.h \
+ Exception.h \
+ Exception.i \
+ Typecode.i \
  Marshal.h \
  Principal.h \
  Sequence.h \
@@ -12301,6 +12370,9 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -12528,7 +12600,10 @@ realclean:
  DomainC.h \
  DomainC.i \
  PollableC.h \
- PollableC.i
+ PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ InterfaceC.i
 
 .obj/CurrentS.o .obj/CurrentS.so .shobj/CurrentS.o .shobj/CurrentS.so: CurrentS.cpp \
  CurrentC.h \
@@ -12643,13 +12718,11 @@ realclean:
  POA_CORBA.h \
  PolicyC.h \
  CDR.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Environment.h \
  Environment.i \
+ Exception.h \
+ Exception.i \
  Sequence.h \
  Managed_Types.h \
  Managed_Types.i \
@@ -12673,6 +12746,11 @@ realclean:
  Servant_Base.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ Typecode.h \
+ Typecode.i \
+ InterfaceC.i \
  Server_Request.h \
  IOPC.h \
  IOPC.i \
@@ -12857,8 +12935,6 @@ realclean:
  Environment.h \
  Environment.i \
  CDR.h \
- Typecode.h \
- Typecode.i \
  CDR.i
 
 .obj/Environment.o .obj/Environment.so .shobj/Environment.o .shobj/Environment.so: Environment.cpp \
@@ -12991,8 +13067,6 @@ realclean:
  IORS.h \
  IORC.h \
  CDR.h \
- Typecode.h \
- Typecode.i \
  CDR.i \
  IORC.i \
  Servant_Base.h \
@@ -13021,6 +13095,11 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ Typecode.h \
+ Typecode.i \
+ InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -13188,13 +13267,11 @@ realclean:
  CurrentC.h \
  CurrentC.i \
  CDR.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Environment.h \
  Environment.i \
+ Exception.h \
+ Exception.i \
  Sequence.h \
  Managed_Types.h \
  Managed_Types.i \
@@ -13222,6 +13299,11 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ Typecode.h \
+ Typecode.i \
+ InterfaceC.i \
  POAS.i \
  Active_Object_Map.h \
  Active_Object_Map.i \
@@ -13457,13 +13539,11 @@ realclean:
  CurrentC.h \
  CurrentC.i \
  CDR.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Environment.h \
  Environment.i \
+ Exception.h \
+ Exception.i \
  Sequence.h \
  Managed_Types.h \
  Managed_Types.i \
@@ -13491,6 +13571,11 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ Typecode.h \
+ Typecode.i \
+ InterfaceC.i \
  POAS.i \
  Active_Object_Map.h \
  Active_Object_Map.i \
@@ -13878,8 +13963,6 @@ realclean:
  Environment.h \
  Environment.i \
  CDR.h \
- Typecode.h \
- Typecode.i \
  CDR.i \
  IORC.i \
  Servant_Base.h \
@@ -13921,6 +14004,8 @@ realclean:
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Message_Queue.i \
+ Typecode.h \
+ Typecode.i \
  Pluggable.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -13979,6 +14064,9 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ InterfaceC.i \
  ORB_Core.h \
  Policy_Manager.h \
  Policy_Manager.i \
@@ -13989,10 +14077,6 @@ realclean:
  Server_Strategy_Factory.h \
  debug.h \
  TAO_Internal.h \
- Marshal.h \
- Principal.h \
- Principal.i \
- Marshal.i \
  Object_Adapter.h \
  Key_Adapters.h \
  $(ACE_ROOT)/ace/Map.h \
@@ -14024,6 +14108,8 @@ realclean:
  POAManager.i \
  ImplRepoC.h \
  corba.h \
+ Principal.h \
+ Principal.i \
  Request.h \
  Context.h \
  Context.i \
@@ -14042,6 +14128,8 @@ realclean:
  Server_Request.i \
  LocalObject.h \
  LocalObject.i \
+ Marshal.h \
+ Marshal.i \
  singletons.h \
  Operation_Table.h \
  Client_Strategy_Factory.h \
@@ -14065,8 +14153,6 @@ realclean:
  ObjectIDList.h \
  ObjectIDList.i \
  WrongTransactionC.h \
- InterfaceC.h \
- ifrfwd.h \
  BoundsC.h \
  BoundsC.i \
  ImplRepoC.i \
@@ -14259,13 +14345,11 @@ realclean:
  Object.i \
  CurrentC.i \
  CDR.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Environment.h \
  Environment.i \
+ Exception.h \
+ Exception.i \
  Sequence.h \
  Managed_Types.h \
  Managed_Types.i \
@@ -14326,6 +14410,8 @@ realclean:
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Message_Queue.i \
+ Typecode.h \
+ Typecode.i \
  IOPC.h \
  IOPC.i \
  Pluggable.i \
@@ -14365,6 +14451,9 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ InterfaceC.i \
  Invocation.h \
  ORB_Core.h \
  Policy_Manager.h \
@@ -14498,13 +14587,11 @@ realclean:
  Object.i \
  CurrentC.i \
  CDR.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Environment.h \
  Environment.i \
+ Exception.h \
+ Exception.i \
  Sequence.h \
  Managed_Types.h \
  Managed_Types.i \
@@ -14562,6 +14649,11 @@ realclean:
  Servant_Base.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ Typecode.h \
+ Typecode.i \
+ InterfaceC.i \
  ORB.h \
  IOR_LookupTable.h \
  Services.h \
@@ -14663,13 +14755,11 @@ realclean:
  Object.i \
  CurrentC.i \
  CDR.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Environment.h \
  Environment.i \
+ Exception.h \
+ Exception.i \
  Sequence.h \
  Managed_Types.h \
  Managed_Types.i \
@@ -14733,6 +14823,8 @@ realclean:
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Message_Queue.i \
+ Typecode.h \
+ Typecode.i \
  IOPC.h \
  IOPC.i \
  Pluggable.i \
@@ -14771,6 +14863,9 @@ realclean:
  DynAnyC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -14901,13 +14996,11 @@ realclean:
  Object.i \
  CurrentC.i \
  CDR.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Environment.h \
  Environment.i \
+ Exception.h \
+ Exception.i \
  Sequence.h \
  Managed_Types.h \
  Managed_Types.i \
@@ -14965,6 +15058,11 @@ realclean:
  Servant_Base.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ Typecode.h \
+ Typecode.i \
+ InterfaceC.i \
  ORB.h \
  IOR_LookupTable.h \
  Services.h \
@@ -15062,10 +15160,6 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  corbafwd.i \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Environment.h \
  Environment.i \
@@ -15077,7 +15171,11 @@ realclean:
  TimeBaseS_T.h \
  TimeBaseS_T.i \
  TimeBaseS_T.cpp \
- TimeBaseS.i
+ TimeBaseS.i \
+ Typecode.h \
+ Exception.h \
+ Exception.i \
+ Typecode.i
 
 .obj/TimeBaseS.o .obj/TimeBaseS.so .shobj/TimeBaseS.o .shobj/TimeBaseS.so: TimeBaseS.cpp \
  TimeBaseS.h \
@@ -15162,10 +15260,6 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  corbafwd.i \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Environment.h \
  Environment.i \
@@ -15272,10 +15366,6 @@ realclean:
  varout.cpp \
  Principal.i \
  CDR.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i
 
 .obj/Sequence.o .obj/Sequence.so .shobj/Sequence.o .shobj/Sequence.so: Sequence.cpp \
@@ -15452,10 +15542,6 @@ realclean:
  corbafwd.i \
  IOPC.h \
  CDR.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Sequence.h \
  Managed_Types.h \
@@ -15479,6 +15565,8 @@ realclean:
  CurrentC.i \
  Environment.h \
  Environment.i \
+ Exception.h \
+ Exception.i \
  PolicyC.i \
  POAC.i \
  NVList.h \
@@ -15538,6 +15626,11 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ Typecode.h \
+ Typecode.i \
+ InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -15659,10 +15752,6 @@ realclean:
  Tagged_Components.h \
  IOPC.h \
  CDR.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Sequence.h \
  Managed_Types.h \
@@ -15730,6 +15819,10 @@ realclean:
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Message_Queue.i \
+ Typecode.h \
+ Exception.h \
+ Exception.i \
+ Typecode.i \
  Pluggable.i \
  Environment.h \
  Environment.i
@@ -15930,6 +16023,9 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -16238,12 +16334,10 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  corbafwd.i \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  ORB.h \
+ Exception.h \
+ Exception.i \
  IOR_LookupTable.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
@@ -16318,6 +16412,11 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ Typecode.h \
+ Typecode.i \
+ InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -16570,8 +16669,6 @@ realclean:
  Environment.h \
  Environment.i \
  CDR.h \
- Typecode.h \
- Typecode.i \
  CDR.i \
  IORC.i \
  Servant_Base.h \
@@ -16673,13 +16770,11 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  corbafwd.i \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  ORB_Core.h \
  ORB.h \
+ Exception.h \
+ Exception.i \
  IOR_LookupTable.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
@@ -16753,6 +16848,11 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ Typecode.h \
+ Typecode.i \
+ InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -16787,11 +16887,7 @@ realclean:
  ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
- singletons.h \
- Marshal.h \
- Principal.h \
- Principal.i \
- Marshal.i
+ singletons.h
 
 .obj/Client_Strategy_Factory.o .obj/Client_Strategy_Factory.so .shobj/Client_Strategy_Factory.o .shobj/Client_Strategy_Factory.so: Client_Strategy_Factory.cpp \
  Client_Strategy_Factory.h \
@@ -17138,13 +17234,11 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  corbafwd.i \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  ORB_Core.h \
  ORB.h \
+ Exception.h \
+ Exception.i \
  IOR_LookupTable.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
@@ -17218,6 +17312,11 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ Typecode.h \
+ Typecode.i \
+ InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -17405,10 +17504,6 @@ realclean:
  corbafwd.i \
  IOPC.h \
  CDR.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Sequence.h \
  Managed_Types.h \
@@ -17508,10 +17603,6 @@ realclean:
  InterceptorC.h \
  IOPC.h \
  CDR.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Sequence.h \
  Managed_Types.h \
@@ -17612,10 +17703,6 @@ realclean:
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  corbafwd.i \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Sequence.h \
  Managed_Types.h \
@@ -17800,13 +17887,11 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  corbafwd.i \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  ORB_Core.h \
  ORB.h \
+ Exception.h \
+ Exception.i \
  IOR_LookupTable.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
@@ -17880,6 +17965,11 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ Typecode.h \
+ Typecode.i \
+ InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -18095,8 +18185,6 @@ realclean:
  Environment.h \
  Environment.i \
  CDR.h \
- Typecode.h \
- Typecode.i \
  CDR.i \
  IORC.i \
  Servant_Base.h \
@@ -18125,6 +18213,11 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ Typecode.h \
+ Typecode.i \
+ InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -18272,8 +18365,6 @@ realclean:
  ObjectIDList.h \
  ObjectIDList.i \
  WrongTransactionC.h \
- InterfaceC.h \
- ifrfwd.h \
  BoundsC.h \
  BoundsC.i \
  ImplRepoC.i \
@@ -18416,8 +18507,6 @@ realclean:
  Environment.h \
  Environment.i \
  CDR.h \
- Typecode.h \
- Typecode.i \
  CDR.i \
  IORC.i \
  Servant_Base.h \
@@ -18446,6 +18535,11 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ Typecode.h \
+ Typecode.i \
+ InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -18698,8 +18792,6 @@ realclean:
  Environment.h \
  Environment.i \
  CDR.h \
- Typecode.h \
- Typecode.i \
  CDR.i \
  IORC.i \
  Servant_Base.h \
@@ -18728,6 +18820,11 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ Typecode.h \
+ Typecode.i \
+ InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -18902,8 +18999,6 @@ realclean:
  Environment.h \
  Environment.i \
  CDR.h \
- Typecode.h \
- Typecode.i \
  CDR.i \
  IORC.i \
  Servant_Base.h \
@@ -18932,6 +19027,11 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ Typecode.h \
+ Typecode.i \
+ InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -19266,6 +19366,9 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ InterfaceC.i \
  Policy_Manager.i \
  params.h \
  params.i \
@@ -19535,6 +19638,9 @@ realclean:
  Servant_Base.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ InterfaceC.i \
  TAOS_T.h \
  TAOS_T.i \
  TAOS_T.cpp \
@@ -20120,13 +20226,11 @@ realclean:
  Object.i \
  CurrentC.i \
  CDR.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Environment.h \
  Environment.i \
+ Exception.h \
+ Exception.i \
  Sequence.h \
  Managed_Types.h \
  Managed_Types.i \
@@ -20368,6 +20472,9 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -20468,10 +20575,6 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  corbafwd.i \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Sequence.h \
  Managed_Types.h \
@@ -20518,6 +20621,8 @@ realclean:
  Reply_Dispatcher.h \
  Request.h \
  ORB.h \
+ Exception.h \
+ Exception.i \
  IOR_LookupTable.h \
  Services.h \
  Services.i \
@@ -20584,6 +20689,8 @@ realclean:
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Message_Queue.i \
+ Typecode.h \
+ Typecode.i \
  Pluggable.i
 
 .obj/Reply_Dispatcher.o .obj/Reply_Dispatcher.so .shobj/Reply_Dispatcher.o .shobj/Reply_Dispatcher.so: Reply_Dispatcher.cpp \
@@ -20717,8 +20824,6 @@ realclean:
  Environment.h \
  Environment.i \
  CDR.h \
- Typecode.h \
- Typecode.i \
  CDR.i \
  IORC.i \
  Servant_Base.h \
@@ -20770,6 +20875,11 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ Typecode.h \
+ Typecode.i \
+ InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -20889,10 +20999,6 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  corbafwd.i \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Sequence.h \
  Managed_Types.h \
@@ -20910,7 +21016,11 @@ realclean:
  Any.h \
  Environment.h \
  Environment.i \
- Any.i
+ Any.i \
+ Typecode.h \
+ Exception.h \
+ Exception.i \
+ Typecode.i
 
 .obj/IOPS.o .obj/IOPS.so .shobj/IOPS.o .shobj/IOPS.so: IOPS.cpp \
  IOPS.h \
@@ -20994,10 +21104,6 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  corbafwd.i \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Sequence.h \
  Managed_Types.h \
@@ -21102,8 +21208,6 @@ realclean:
  Exception.h \
  Exception.i \
  CDR.h \
- Typecode.h \
- Typecode.i \
  CDR.i \
  PollableC.i \
  POA_CORBA.h \
@@ -21133,6 +21237,11 @@ realclean:
  POAC.h \
  POAC.i \
  Servant_Base.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ Typecode.h \
+ Typecode.i \
+ InterfaceC.i \
  Stub.h \
  Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -21342,8 +21451,6 @@ realclean:
  Exception.h \
  Exception.i \
  CDR.h \
- Typecode.h \
- Typecode.i \
  CDR.i \
  PollableC.i \
  POA_CORBA.h \
@@ -21373,6 +21480,11 @@ realclean:
  POAC.h \
  POAC.i \
  Servant_Base.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ Typecode.h \
+ Typecode.i \
+ InterfaceC.i \
  PollableS.i \
  Operation_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -21503,10 +21615,6 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  corbafwd.i \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Sequence.h \
  Managed_Types.h \
@@ -21524,7 +21632,11 @@ realclean:
  Any.h \
  Environment.h \
  Environment.i \
- Any.i
+ Any.i \
+ Typecode.h \
+ Exception.h \
+ Exception.i \
+ Typecode.i
 
 .obj/CONV_FRAMES.o .obj/CONV_FRAMES.so .shobj/CONV_FRAMES.o .shobj/CONV_FRAMES.so: CONV_FRAMES.cpp \
  CONV_FRAMES.h \
@@ -21608,10 +21720,6 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  corbafwd.i \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Sequence.h \
  Managed_Types.h \
@@ -21713,10 +21821,6 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  corbafwd.i \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Sequence.h \
  Managed_Types.h \
@@ -21817,10 +21921,6 @@ realclean:
  corbafwd.i \
  IOPC.h \
  CDR.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Sequence.h \
  Managed_Types.h \
@@ -21841,7 +21941,11 @@ realclean:
  Environment.h \
  Environment.i \
  Any.h \
- Any.i
+ Any.i \
+ Typecode.h \
+ Exception.h \
+ Exception.i \
+ Typecode.i
 
 .obj/BoundsC.o .obj/BoundsC.so .shobj/BoundsC.o .shobj/BoundsC.so: BoundsC.cpp \
  BoundsC.h \
@@ -21926,8 +22030,6 @@ realclean:
  Exception.h \
  Exception.i \
  CDR.h \
- Typecode.h \
- Typecode.i \
  CDR.i \
  Any.h \
  Environment.h \
@@ -21935,7 +22037,9 @@ realclean:
  Object.h \
  Object.i \
  Any.i \
- BoundsC.i
+ BoundsC.i \
+ Typecode.h \
+ Typecode.i
 
 .obj/TAOC.o .obj/TAOC.so .shobj/TAOC.o .shobj/TAOC.so: TAOC.cpp \
  TAOC.h \
@@ -22033,13 +22137,11 @@ realclean:
  CurrentC.h \
  CurrentC.i \
  CDR.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Environment.h \
  Environment.i \
+ Exception.h \
+ Exception.i \
  PolicyC.i \
  TimeBaseC.h \
  Any.h \
@@ -22058,6 +22160,11 @@ realclean:
  Servant_Base.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ Typecode.h \
+ Typecode.i \
+ InterfaceC.i \
  TAOS_T.h \
  TAOS_T.i \
  TAOS_T.cpp \
@@ -22160,13 +22267,11 @@ realclean:
  CurrentC.h \
  CurrentC.i \
  CDR.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Environment.h \
  Environment.i \
+ Exception.h \
+ Exception.i \
  PolicyC.i \
  TimeBaseC.h \
  Any.h \
@@ -22184,6 +22289,11 @@ realclean:
  Servant_Base.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ Typecode.h \
+ Typecode.i \
+ InterfaceC.i \
  TAOS_T.h \
  TAOS_T.i \
  TAOS_T.cpp \
@@ -22579,8 +22689,6 @@ realclean:
  Environment.h \
  Environment.i \
  CDR.h \
- Typecode.h \
- Typecode.i \
  CDR.i \
  IORC.i \
  Servant_Base.h \
@@ -22641,6 +22749,8 @@ realclean:
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Message_Queue.i \
+ Typecode.h \
+ Typecode.i \
  Pluggable.i \
  MProfile.h \
  Profile.h \
@@ -22748,15 +22858,15 @@ realclean:
  varout.cpp \
  Services.i \
  CDR.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Any.h \
  Environment.h \
  Environment.i \
- Any.i
+ Any.i \
+ Typecode.h \
+ Exception.h \
+ Exception.i \
+ Typecode.i
 
 .obj/NVList.o .obj/NVList.so .shobj/NVList.o .shobj/NVList.so: NVList.cpp \
  NVList.h \
@@ -22840,10 +22950,6 @@ realclean:
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  corbafwd.i \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Environment.h \
  Environment.i \
@@ -22851,6 +22957,8 @@ realclean:
  Object.i \
  Any.i \
  NVList.i \
+ Exception.h \
+ Exception.i \
  ORB.h \
  IOR_LookupTable.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -22914,6 +23022,12 @@ realclean:
  BoundsC.h \
  BoundsC.i \
  debug.h \
+ Typecode.h \
+ Typecode.i \
+ Marshal.h \
+ Principal.h \
+ Principal.i \
+ Marshal.i \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
@@ -23004,10 +23118,6 @@ realclean:
  ValueFactory.i \
  Any.h \
  CDR.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Environment.h \
  Environment.i \
@@ -23019,6 +23129,8 @@ realclean:
  PolicyC.h \
  CurrentC.h \
  CurrentC.i \
+ Exception.h \
+ Exception.i \
  Sequence.h \
  Managed_Types.h \
  Managed_Types.i \
@@ -23052,6 +23164,11 @@ realclean:
  POAC.h \
  POAC.i \
  Servant_Base.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ Typecode.h \
+ Typecode.i \
+ InterfaceC.i \
  MessagingS.i \
  Stub.h \
  Pluggable.h \
@@ -23248,10 +23365,6 @@ realclean:
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  corbafwd.i \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Environment.h \
  Environment.i \
@@ -23267,6 +23380,8 @@ realclean:
  CurrentC.h \
  CurrentC.i \
  PolicyC.h \
+ Exception.h \
+ Exception.i \
  Sequence.h \
  Managed_Types.h \
  Managed_Types.i \
@@ -23288,6 +23403,11 @@ realclean:
  Servant_Base.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ Typecode.h \
+ Typecode.i \
+ InterfaceC.i \
  MessagingC.h \
  ValueBase.h \
  ValueBase.i \
@@ -23503,13 +23623,11 @@ realclean:
  CurrentC.i \
  PolicyC.h \
  CDR.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Environment.h \
  Environment.i \
+ Exception.h \
+ Exception.i \
  Sequence.h \
  Managed_Types.h \
  Managed_Types.i \
@@ -23533,6 +23651,11 @@ realclean:
  Servant_Base.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ Typecode.h \
+ Typecode.i \
+ InterfaceC.i \
  Policy_Manager.i \
  ORB_Core.h \
  ORB.h \
@@ -23726,10 +23849,6 @@ realclean:
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  corbafwd.i \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Environment.h \
  Environment.i \
@@ -23745,6 +23864,8 @@ realclean:
  CurrentC.h \
  CurrentC.i \
  PolicyC.h \
+ Exception.h \
+ Exception.i \
  Sequence.h \
  Managed_Types.h \
  Managed_Types.i \
@@ -23766,6 +23887,11 @@ realclean:
  Servant_Base.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ Typecode.h \
+ Typecode.i \
+ InterfaceC.i \
  MessagingC.h \
  ValueBase.h \
  ValueBase.i \
@@ -23878,13 +24004,11 @@ realclean:
  CurrentC.h \
  CurrentC.i \
  CDR.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Environment.h \
  Environment.i \
+ Exception.h \
+ Exception.i \
  PolicyC.i \
  TimeBaseC.h \
  Any.h \
@@ -23902,6 +24026,11 @@ realclean:
  Servant_Base.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ Typecode.h \
+ Typecode.i \
+ InterfaceC.i \
  TAOS_T.h \
  TAOS_T.i \
  TAOS_T.cpp \
@@ -24006,13 +24135,11 @@ realclean:
  CurrentC.h \
  CurrentC.i \
  CDR.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Environment.h \
  Environment.i \
+ Exception.h \
+ Exception.i \
  PolicyC.i \
  TimeBaseC.h \
  Any.h \
@@ -24030,6 +24157,11 @@ realclean:
  Servant_Base.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ Typecode.h \
+ Typecode.i \
+ InterfaceC.i \
  TAOS_T.h \
  TAOS_T.i \
  TAOS_T.cpp \
@@ -24577,6 +24709,9 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -24721,8 +24856,6 @@ realclean:
  Environment.h \
  Environment.i \
  CDR.h \
- Typecode.h \
- Typecode.i \
  CDR.i \
  IORC.i \
  Servant_Base.h \
@@ -24785,6 +24918,11 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ Typecode.h \
+ Typecode.i \
+ InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -24890,10 +25028,6 @@ realclean:
  corbafwd.i \
  Any.h \
  CDR.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Environment.h \
  Environment.i \
@@ -24910,6 +25044,8 @@ realclean:
  varout.h \
  varout.i \
  varout.cpp \
+ Exception.h \
+ Exception.i \
  DynAnyC.i \
  Stub.h \
  Pluggable.h \
@@ -24960,6 +25096,8 @@ realclean:
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Message_Queue.i \
+ Typecode.h \
+ Typecode.i \
  IOPC.h \
  IOPC.i \
  Pluggable.i \
@@ -24998,7 +25136,10 @@ realclean:
  DomainC.h \
  DomainC.i \
  PollableC.h \
- PollableC.i
+ PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ InterfaceC.i
 
 .obj/DynAnyS.o .obj/DynAnyS.so .shobj/DynAnyS.o .shobj/DynAnyS.so: DynAnyS.cpp \
  DynAnyC.h \
@@ -25082,10 +25223,6 @@ realclean:
  corbafwd.i \
  Any.h \
  CDR.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Environment.h \
  Environment.i \
@@ -25102,6 +25239,8 @@ realclean:
  varout.h \
  varout.i \
  varout.cpp \
+ Exception.h \
+ Exception.i \
  DynAnyC.i \
  POA_CORBA.h \
  CurrentC.h \
@@ -25115,7 +25254,12 @@ realclean:
  POAC.i \
  Servant_Base.i \
  PollableC.h \
- PollableC.i
+ PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ Typecode.h \
+ Typecode.i \
+ InterfaceC.i
 
 .obj/DynAny_i.o .obj/DynAny_i.so .shobj/DynAny_i.o .shobj/DynAny_i.so: DynAny_i.cpp \
  DynAny_i.h \
@@ -25204,13 +25348,11 @@ realclean:
  CurrentC.i \
  PolicyC.h \
  CDR.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Environment.h \
  Environment.i \
+ Exception.h \
+ Exception.i \
  Sequence.h \
  Managed_Types.h \
  Managed_Types.i \
@@ -25234,6 +25376,11 @@ realclean:
  Servant_Base.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ Typecode.h \
+ Typecode.i \
+ InterfaceC.i \
  DynStruct_i.h \
  DynSequence_i.h \
  DynEnum_i.h \
@@ -25333,13 +25480,11 @@ realclean:
  CurrentC.i \
  PolicyC.h \
  CDR.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Environment.h \
  Environment.i \
+ Exception.h \
+ Exception.i \
  Sequence.h \
  Managed_Types.h \
  Managed_Types.i \
@@ -25363,8 +25508,59 @@ realclean:
  Servant_Base.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ Typecode.h \
+ Typecode.i \
+ InterfaceC.i \
  DynArray_i.h \
- InconsistentTypeCodeC.h
+ InconsistentTypeCodeC.h \
+ Marshal.h \
+ Principal.h \
+ Principal.i \
+ ORB.h \
+ IOR_LookupTable.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/Functor.h \
+ $(ACE_ROOT)/ace/Functor.i \
+ $(ACE_ROOT)/ace/Functor_T.h \
+ $(ACE_ROOT)/ace/Functor_T.i \
+ $(ACE_ROOT)/ace/Functor_T.cpp \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
+ $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ Services.h \
+ Services.i \
+ IORManipulation.h \
+ IORS.h \
+ IORC.h \
+ IORC.i \
+ IORS.i \
+ Interceptor.h \
+ InterceptorC.h \
+ IOPC.h \
+ IOPC.i \
+ InterceptorC.i \
+ Interceptor.i \
+ ORB.i \
+ Marshal.i
 
 .obj/DynEnum_i.o .obj/DynEnum_i.so .shobj/DynEnum_i.o .shobj/DynEnum_i.so: DynEnum_i.cpp \
  DynAny_i.h \
@@ -25453,13 +25649,11 @@ realclean:
  CurrentC.i \
  PolicyC.h \
  CDR.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Environment.h \
  Environment.i \
+ Exception.h \
+ Exception.i \
  Sequence.h \
  Managed_Types.h \
  Managed_Types.i \
@@ -25483,6 +25677,11 @@ realclean:
  Servant_Base.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ Typecode.h \
+ Typecode.i \
+ InterfaceC.i \
  DynEnum_i.h \
  InconsistentTypeCodeC.h
 
@@ -25573,13 +25772,11 @@ realclean:
  CurrentC.i \
  PolicyC.h \
  CDR.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Environment.h \
  Environment.i \
+ Exception.h \
+ Exception.i \
  Sequence.h \
  Managed_Types.h \
  Managed_Types.i \
@@ -25603,8 +25800,59 @@ realclean:
  Servant_Base.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ Typecode.h \
+ Typecode.i \
+ InterfaceC.i \
  DynSequence_i.h \
- InconsistentTypeCodeC.h
+ InconsistentTypeCodeC.h \
+ Marshal.h \
+ Principal.h \
+ Principal.i \
+ ORB.h \
+ IOR_LookupTable.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/Functor.h \
+ $(ACE_ROOT)/ace/Functor.i \
+ $(ACE_ROOT)/ace/Functor_T.h \
+ $(ACE_ROOT)/ace/Functor_T.i \
+ $(ACE_ROOT)/ace/Functor_T.cpp \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
+ $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ Services.h \
+ Services.i \
+ IORManipulation.h \
+ IORS.h \
+ IORC.h \
+ IORC.i \
+ IORS.i \
+ Interceptor.h \
+ InterceptorC.h \
+ IOPC.h \
+ IOPC.i \
+ InterceptorC.i \
+ Interceptor.i \
+ ORB.i \
+ Marshal.i
 
 .obj/DynStruct_i.o .obj/DynStruct_i.so .shobj/DynStruct_i.o .shobj/DynStruct_i.so: DynStruct_i.cpp \
  DynAny_i.h \
@@ -25693,13 +25941,11 @@ realclean:
  CurrentC.i \
  PolicyC.h \
  CDR.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Environment.h \
  Environment.i \
+ Exception.h \
+ Exception.i \
  Sequence.h \
  Managed_Types.h \
  Managed_Types.i \
@@ -25723,6 +25969,11 @@ realclean:
  Servant_Base.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ Typecode.h \
+ Typecode.i \
+ InterfaceC.i \
  DynStruct_i.h \
  InconsistentTypeCodeC.h \
  ORB.h \
@@ -25766,7 +26017,11 @@ realclean:
  IOPC.i \
  InterceptorC.i \
  Interceptor.i \
- ORB.i
+ ORB.i \
+ Marshal.h \
+ Principal.h \
+ Principal.i \
+ Marshal.i
 
 .obj/DynUnion_i.o .obj/DynUnion_i.so .shobj/DynUnion_i.o .shobj/DynUnion_i.so: DynUnion_i.cpp \
  DynAny_i.h \
@@ -25855,13 +26110,11 @@ realclean:
  CurrentC.i \
  PolicyC.h \
  CDR.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Environment.h \
  Environment.i \
+ Exception.h \
+ Exception.i \
  Sequence.h \
  Managed_Types.h \
  Managed_Types.i \
@@ -25885,10 +26138,61 @@ realclean:
  Servant_Base.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ Typecode.h \
+ Typecode.i \
+ InterfaceC.i \
  DynUnion_i.h \
  DynUnion_i_T.h \
  DynUnion_i_T.cpp \
- InconsistentTypeCodeC.h
+ InconsistentTypeCodeC.h \
+ Marshal.h \
+ Principal.h \
+ Principal.i \
+ ORB.h \
+ IOR_LookupTable.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/Functor.h \
+ $(ACE_ROOT)/ace/Functor.i \
+ $(ACE_ROOT)/ace/Functor_T.h \
+ $(ACE_ROOT)/ace/Functor_T.i \
+ $(ACE_ROOT)/ace/Functor_T.cpp \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
+ $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ Services.h \
+ Services.i \
+ IORManipulation.h \
+ IORS.h \
+ IORC.h \
+ IORC.i \
+ IORS.i \
+ Interceptor.h \
+ InterceptorC.h \
+ IOPC.h \
+ IOPC.i \
+ InterceptorC.i \
+ Interceptor.i \
+ ORB.i \
+ Marshal.i
 
 .obj/InconsistentTypeCodeC.o .obj/InconsistentTypeCodeC.so .shobj/InconsistentTypeCodeC.o .shobj/InconsistentTypeCodeC.so: InconsistentTypeCodeC.cpp \
  InconsistentTypeCodeC.h \
@@ -26020,8 +26324,6 @@ realclean:
  Environment.h \
  Environment.i \
  CDR.h \
- Typecode.h \
- Typecode.i \
  CDR.i \
  IORC.i \
  Servant_Base.h \
@@ -26123,10 +26425,6 @@ realclean:
  ifrfwd.h \
  Any.h \
  CDR.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Environment.h \
  Environment.i \
@@ -26143,6 +26441,11 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
+ Typecode.h \
+ Exception.h \
+ Exception.i \
+ Typecode.i \
+ InterfaceC.i \
  Stub.h \
  Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -26236,6 +26539,7 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -26364,10 +26668,6 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  corbafwd.i \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Sequence.h \
  Managed_Types.h \
@@ -26433,6 +26733,10 @@ realclean:
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Message_Queue.i \
+ Typecode.h \
+ Exception.h \
+ Exception.i \
+ Typecode.i \
  Pluggable.i
 
 .obj/Pluggable_Messaging_Utils.o .obj/Pluggable_Messaging_Utils.so .shobj/Pluggable_Messaging_Utils.o .shobj/Pluggable_Messaging_Utils.so: Pluggable_Messaging_Utils.cpp \
@@ -26517,10 +26821,6 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  corbafwd.i \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Sequence.h \
  Managed_Types.h \
@@ -26622,10 +26922,6 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  corbafwd.i \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Sequence.h \
  Managed_Types.h \
@@ -26696,6 +26992,10 @@ realclean:
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Message_Queue.i \
+ Typecode.h \
+ Exception.h \
+ Exception.i \
+ Typecode.i \
  Pluggable.i \
  debug.h
 
@@ -26785,10 +27085,6 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  corbafwd.i \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Sequence.h \
  Managed_Types.h \
@@ -26819,6 +27115,8 @@ realclean:
  PolicyC.h \
  CurrentC.h \
  CurrentC.i \
+ Exception.h \
+ Exception.i \
  PolicyC.i \
  TimeBaseC.h \
  TimeBaseC.i \
@@ -26920,10 +27218,6 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  corbafwd.i \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Sequence.h \
  Managed_Types.h \
@@ -26952,6 +27246,8 @@ realclean:
  GIOP_Message_Accept_State.i \
  ORB_Core.h \
  ORB.h \
+ Exception.h \
+ Exception.i \
  IOR_LookupTable.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
@@ -27011,6 +27307,11 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ Typecode.h \
+ Typecode.i \
+ InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -27129,8 +27430,6 @@ realclean:
  ObjectIDList.h \
  ObjectIDList.i \
  WrongTransactionC.h \
- InterfaceC.h \
- ifrfwd.h \
  BoundsC.h \
  BoundsC.i \
  ImplRepoC.i \
@@ -27224,10 +27523,6 @@ realclean:
  corbafwd.i \
  IOPC.h \
  CDR.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Sequence.h \
  Managed_Types.h \
@@ -27252,6 +27547,8 @@ realclean:
  Server_Request.h \
  Server_Request.i \
  ORB.h \
+ Exception.h \
+ Exception.i \
  IOR_LookupTable.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
@@ -27404,10 +27701,6 @@ realclean:
  Pluggable_Messaging_Utils.h \
  IOPC.h \
  CDR.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Sequence.h \
  Managed_Types.h \
@@ -27427,6 +27720,8 @@ realclean:
  GIOP_Utils.i \
  ORB_Core.h \
  ORB.h \
+ Exception.h \
+ Exception.i \
  IOR_LookupTable.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
@@ -27486,6 +27781,11 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ Typecode.h \
+ Typecode.i \
+ InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -27604,10 +27904,6 @@ realclean:
  corbafwd.i \
  IOPC.h \
  CDR.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Sequence.h \
  Managed_Types.h \
@@ -27723,10 +28019,6 @@ realclean:
  Object_KeyC.i \
  IOPC.h \
  CDR.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  IOPC.i \
  target_specification.i
@@ -27814,10 +28106,6 @@ realclean:
  Server_Request.h \
  IOPC.h \
  CDR.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Sequence.h \
  Managed_Types.h \
@@ -27836,6 +28124,8 @@ realclean:
  Object_KeyC.i \
  Server_Request.i \
  ORB.h \
+ Exception.h \
+ Exception.i \
  IOR_LookupTable.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
@@ -27911,6 +28201,11 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ Typecode.h \
+ Typecode.i \
+ InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -27947,6 +28242,8 @@ realclean:
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  Timeprobe.h \
  $(ACE_ROOT)/ace/Timeprobe.h \
+ Marshal.h \
+ Marshal.i \
  debug.h \
  GIOP_Utils.h \
  GIOP_Utils.i
@@ -28032,10 +28329,6 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  corbafwd.i \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  GIOP_Utils.h \
  Pluggable_Messaging.h \
@@ -28061,6 +28354,8 @@ realclean:
  GIOP_Message_State.i \
  ORB_Core.h \
  ORB.h \
+ Exception.h \
+ Exception.i \
  IOR_LookupTable.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
@@ -28120,6 +28415,11 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ Typecode.h \
+ Typecode.i \
+ InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -28240,8 +28540,6 @@ realclean:
  ObjectIDList.h \
  ObjectIDList.i \
  WrongTransactionC.h \
- InterfaceC.h \
- ifrfwd.h \
  BoundsC.h \
  BoundsC.i \
  ImplRepoC.i \
@@ -28339,10 +28637,6 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  corbafwd.i \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
  CDR.i \
  Sequence.h \
  Managed_Types.h \
@@ -28364,6 +28658,8 @@ realclean:
  GIOP_Utils.i \
  ORB_Core.h \
  ORB.h \
+ Exception.h \
+ Exception.i \
  IOR_LookupTable.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
@@ -28423,6 +28719,11 @@ realclean:
  DomainC.i \
  PollableC.h \
  PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ Typecode.h \
+ Typecode.i \
+ InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \

@@ -18,6 +18,7 @@
 #include "tao/Exception.h"
 #include "tao/Principal.h"
 #include "tao/singletons.h"
+#include "tao/Marshal.h"
 #include "tao/debug.h"
 
 #if !defined (__ACE_INLINE__)
@@ -125,9 +126,6 @@ CORBA_TypeCode::CORBA_TypeCode (CORBA::TCKind kind)
     non_aligned_buffer_ (0)
 {
 }
-
-// Constructor for all other typecodes, including constants with
-// non-empty parameter lists.  See "corba.hh" for details.
 
 CORBA_TypeCode::CORBA_TypeCode (CORBA::TCKind kind,
                                 size_t length,
@@ -1617,9 +1615,11 @@ CORBA_TypeCode::private_member_type (CORBA::ULong slot,
         for (CORBA::ULong i = 0; i < mcount; i++)
           // the ith entry will have the typecode of the ith guy
           {
+            // skip member label
             CORBA::TypeCode::traverse_status status =
-              stream.skip (tc.in (), ACE_TRY_ENV);
-            // member label
+              TAO_Marshal_Object::perform_skip (tc.in (),
+                                                &stream,
+                                                ACE_TRY_ENV);
             ACE_CHECK_RETURN (0);
 
             if (status != CORBA::TypeCode::TRAVERSE_CONTINUE
@@ -1813,8 +1813,9 @@ CORBA_TypeCode::private_member_name (CORBA::ULong slot,
               {
                 // the ith entry will have the name of the ith member
                 CORBA::TypeCode::traverse_status status =
-                  stream.skip (tc.in (),
-                               ACE_TRY_ENV); // member label
+                  TAO_Marshal_Object::perform_skip (tc.in (),
+                                                    &stream,
+                                                    ACE_TRY_ENV);
                 ACE_CHECK_RETURN (0);
 
                 if (status != CORBA::TypeCode::TRAVERSE_CONTINUE)
@@ -1911,7 +1912,10 @@ CORBA_TypeCode::private_member_label (CORBA::ULong n,
       TAO_InputCDR temp (stream);
 
       char *begin = stream.rd_ptr ();
-      int retval = temp.skip (tc.in (), ACE_TRY_ENV);
+      int retval =
+        TAO_Marshal_Object::perform_skip (tc.in (),
+                                          &temp,
+                                          ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
 
       if (retval != CORBA::TypeCode::TRAVERSE_CONTINUE)
@@ -1929,7 +1933,11 @@ CORBA_TypeCode::private_member_label (CORBA::ULong n,
                          ACE_Allocator::instance (),
                          ACE_Allocator::instance ());
 
-      retval = out.append (tc.in (), &stream, ACE_TRY_ENV);
+      retval =
+        TAO_Marshal_Object::perform_append (tc.in (),
+                                            &stream,
+                                            &out,
+                                            ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
       if (retval != CORBA::TypeCode::TRAVERSE_CONTINUE)
         return 0;

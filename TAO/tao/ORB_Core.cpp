@@ -342,7 +342,7 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
           ACE_DEBUG ((LM_WARNING,
                       ACE_TEXT ("(%P|%t) This option has been deprecated \n")
                       ACE_TEXT ("Please use svc.conf file to load the protcol \n")));
-          
+
           arg_shifter.consume_arg ();
         }
       else if (arg_shifter.cur_arg_strncasecmp ("-ORBDebug") == 0)
@@ -1243,7 +1243,7 @@ TAO_ORB_Core::fini (void)
   //    is statically added to the service configurator, fredk
   if (!this->resource_factory_from_service_config_)
     delete resource_factory_;
-  
+
 
   // @@ This is not needed since the default client factory
   //    is statically added to the service configurator, fredk

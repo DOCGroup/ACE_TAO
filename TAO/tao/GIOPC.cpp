@@ -20,7 +20,7 @@
 #include "tao/GIOPC.h"
 #include "tao/Environment.h"
 #include "tao/Any.h"
-
+#include "tao/Typecode.h"
 
 #if !defined (__ACE_INLINE__)
 #include "GIOPC.i"

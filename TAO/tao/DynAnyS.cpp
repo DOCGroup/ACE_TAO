@@ -29,6 +29,7 @@
 #include "tao/POA_CORBA.h"
 #include "tao/Servant_Base.h"
 #include "tao/POAC.h"
+#include "tao/Typecode.h"
 
 ACE_RCSID(tao, DynAnyS, "$Id$")
 
@@ -578,7 +579,7 @@ POA_CORBA::DynAny::_this (CORBA_Environment &ACE_TRY_ENV)
   CORBA_DynAny *retval = CORBA_DynAny::_nil ();
 
   ACE_NEW_RETURN (retval,
-                  POA_CORBA::_tao_collocated_DynAny (this, 
+                  POA_CORBA::_tao_collocated_DynAny (this,
                                                      stub),
                   CORBA_DynAny::_nil ());
 
@@ -733,7 +734,7 @@ POA_CORBA::DynEnum::_this (CORBA_Environment &ACE_TRY_ENV)
   CORBA_DynEnum *retval = CORBA_DynEnum::_nil ();
 
   ACE_NEW_RETURN (retval,
-                  POA_CORBA::_tao_collocated_DynEnum (this, 
+                  POA_CORBA::_tao_collocated_DynEnum (this,
                                                       stub),
                   CORBA_DynEnum::_nil ());
 
@@ -882,7 +883,7 @@ POA_CORBA::DynStruct::_this (CORBA_Environment &ACE_TRY_ENV)
   CORBA_DynStruct *retval = CORBA_DynStruct::_nil ();
 
   ACE_NEW_RETURN (retval,
-                  POA_CORBA::_tao_collocated_DynStruct (this, 
+                  POA_CORBA::_tao_collocated_DynStruct (this,
                                                         stub),
                   CORBA_DynStruct::_nil ());
 
@@ -1070,7 +1071,7 @@ POA_CORBA::DynUnion::_this (CORBA_Environment &ACE_TRY_ENV)
   CORBA_DynUnion *retval = CORBA_DynUnion::_nil ();
 
   ACE_NEW_RETURN (retval,
-                  POA_CORBA::_tao_collocated_DynUnion (this, 
+                  POA_CORBA::_tao_collocated_DynUnion (this,
                                                        stub),
                   CORBA_DynUnion::_nil ());
 
@@ -1219,7 +1220,7 @@ POA_CORBA::DynSequence::_this (CORBA_Environment &ACE_TRY_ENV)
   CORBA_DynSequence *retval = CORBA_DynSequence::_nil ();
 
   ACE_NEW_RETURN (retval,
-                  POA_CORBA::_tao_collocated_DynSequence (this, 
+                  POA_CORBA::_tao_collocated_DynSequence (this,
                                                           stub),
                   CORBA_DynSequence::_nil ());
 
@@ -1345,7 +1346,7 @@ POA_CORBA::DynArray::_this (CORBA_Environment &ACE_TRY_ENV)
   CORBA_DynArray *retval = CORBA_DynArray::_nil ();
 
   ACE_NEW_RETURN (retval,
-                  POA_CORBA::_tao_collocated_DynArray (this, 
+                  POA_CORBA::_tao_collocated_DynArray (this,
                                                        stub),
                   CORBA_DynArray::_nil ());
 
