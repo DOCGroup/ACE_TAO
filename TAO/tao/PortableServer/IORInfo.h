@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/IORInterceptor/IORInterceptorC.h"
+#include "tao/IORInterceptor/IORInfoC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -1,3 +1,18 @@
+Fri Aug 20 07:59:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IORInterceptor/IORInterceptor.pidl:
+        * tao/IORInterceptor/IORInfo.pidl:
+          Moved IORInfo interface to its own file
+
+        * tao/IORInterceptor/IORInterceptorC.{h,cpp,i}:
+          Regenerated
+
+        * tao/IORInterceptor/IORInfoC.{h,cpp,i}:
+          New generated files
+
+        * tao/PortableServer/IORInfo.h:
+          Include IORInfoC.h instead of IORInterceptorC.h
+
 Thu Aug 19 17:58:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PI_Forward.pidl:
