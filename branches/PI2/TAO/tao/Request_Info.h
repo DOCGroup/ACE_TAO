@@ -169,7 +169,7 @@ class TAO_Export TAO_ClientRequest_Info
    CORBA::Object_var forward_reference_;
    // Needed to ensure no copy anywhere. 
    IOP::ServiceContextList &service_context_list_;
-   CORBA::Any_var slot_;
+   CORBA::Any_var result_;
    CORBA::Object_var target_;
    CORBA::Object_var effective_target_;
    
@@ -315,7 +315,7 @@ class TAO_Export TAO_ServerRequest_Info
   CORBA::Object_var forward_reference_;
   // Needed to ensure no copy anywhere. 
   IOP::ServiceContextList &service_context_list_;
-  CORBA::Any_var slot_;
+  CORBA::Any_var result_;
   PortableInterceptor::OctetSeq_var object_id_;
   PortableInterceptor::OctetSeq_var adapter_id_; 
 };
