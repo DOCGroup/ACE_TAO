@@ -1,5 +1,11 @@
 Sat Aug 14 15:20:27 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/SOCK_Dgram_Mcast.cpp (subscribe): It looks like there
+	  was a bug where we were passing an s_addr to ACE_OS::join_leaf()
+ 	  rather than a sockaddr *.  Fixing this also cleaned up some code
+ 	  that was #ifdef'd for UNICOS.  Thanks to Vishal for reporting
+ 	  this.
+
 	* ace/Process.h: Added a virtual to ~ACE_Process so that it
 	  can be used for subclassing more readily.  Thanks to Zoran
  	  Ivanovic <zorani@pathcom.com> for suggesting this.

@@ -403,15 +403,9 @@ ACE_SOCK_Dgram_Mcast::subscribe (const ACE_INET_Addr &mcast_addr,
   // Tell network device driver to read datagrams with a
   // <mcast_request_if_> IP interface.
   else if (ACE_OS::join_leaf (this->get_handle (),
-#if defined (_UNICOS)
                               ACE_reinterpret_cast (const sockaddr *,
                                                     &this->mcast_request_if_.imr_multiaddr),
                               sizeof this->mcast_request_if_.imr_multiaddr,
-#else  /* ! _UNICOS */
-                              ACE_reinterpret_cast (const sockaddr *,
-                                                    &this->mcast_request_if_.imr_multiaddr.s_addr),
-                              sizeof this->mcast_request_if_.imr_multiaddr.s_addr,
-#endif /* ! _UNICOS */
                               qos_params) == ACE_INVALID_HANDLE)
     return -1;
   else
