@@ -21,9 +21,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Arg_Traits_T.h"
 #include "tao/PortableServer/Var_Size_SArgument_T.h"
-#include "tao/portableserver_export.h"
+#include "tao/PortableServer/portableserver_export.h"
+
+#include "tao/Arg_Traits_T.h"
 
 namespace CORBA
 {

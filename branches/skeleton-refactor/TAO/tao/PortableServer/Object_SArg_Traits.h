@@ -43,7 +43,7 @@ namespace TAO
   /// Used in generated code if CORBA::Object is an argument or
   /// return type.
   ACE_TEMPLATE_SPECIALIZATION
-  class TAO_Export SArg_Traits<CORBA::Object>
+  class TAO_PortableServer_Export SArg_Traits<CORBA::Object>
     : public Object_SArg_Traits_T<CORBA::Object_ptr,
                                   CORBA::Object_var,
                                   CORBA::Object_out>
