@@ -1,3 +1,12 @@
+Wed Dec  5 12:45:34 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/performance-tests/EC_Federated_Scalability/Makefile:
+	  Fixed the realclean target, it was not removing the IDL
+	  generated files.
+
+	* orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp:
+	  Remove reference to Orbix in a comment.
+
 Wed Dec  5 12:44:28 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* TAO-INSTALL.html:
