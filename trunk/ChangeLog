@@ -5,6 +5,13 @@ Fri Jun 22 13:10:13 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 	  Reverted the change as it seems to break VC++. Will fix it
 	  shortly.
 
+Fri Jun 22 10:31:29 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/Configuration.{h cpp}: Added back the ACE_Configuration::
+          import_config and export_config functions and marked them
+          deprecated. They're needed for backwards compatibility with
+          ACE 5.1.
+
 Fri Jun 22 07:33:45 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/OS_TLI.{h,inl}: Changed the signature of the t_open() and
