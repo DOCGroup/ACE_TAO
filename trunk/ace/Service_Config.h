@@ -218,7 +218,7 @@ public:
                    ACE_TCHAR *argv[],
                    const ACE_TCHAR *logger_key = ACE_DEFAULT_LOGGER_KEY,
                    int ignore_static_svcs = 1,
-                   int ignore_default_svc_conf = 0,
+                   int ignore_default_svc_conf_file = 0,
                    int ignore_debug_flag = 0);
 
   /// Perform user-specified close activities and remove dynamic
