@@ -279,10 +279,10 @@ ACE_INET_Addr::set (u_short port_number,
 #  else
       hostent hentry;
       ACE_HOSTENT_DATA buf;
-      int h_errno;  // Not the same as errno!
+      int h_error;  // Not the same as errno!
 
       hostent *hp = ACE_OS::gethostbyname_r (host_name, &hentry,
-                                             buf, &h_errno);
+                                             buf, &h_error);
 #  endif /* VXWORKS */
 
       if (hp == 0)
@@ -704,7 +704,7 @@ ACE_INET_Addr::get_host_name_i (char hostname[], size_t len) const
                                            this->ip_addr_size (),
                                            this->get_type ());
 #  else
-      int h_errno;  // Not the same as errno!
+      int h_error;  // Not the same as errno!
       hostent hentry;
       ACE_HOSTENT_DATA buf;
       hostent *hp =
@@ -713,7 +713,7 @@ ACE_INET_Addr::get_host_name_i (char hostname[], size_t len) const
                                  this->get_type (),
                                  &hentry,
                                  buf,
-                                 &h_errno);
+                                 &h_error);
 #  endif /* CHORUS */
 
       if (hp == 0 || hp->h_name == 0)
