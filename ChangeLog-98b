@@ -2,7 +2,7 @@ Wed Jul 01 08:51:33 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
         * ace/Service_Types.cpp
           tests/Dynamic_Priority_Test.cpp: Moved explicit template
-          instantiations for ACE_Dynamic_Message_Queue and 
+          instantiations for ACE_Dynamic_Message_Queue and
           ACE_Message_Queue_Factory from the test into the ACE library
           (next to where the ACE_Message_Queue instantiations resided).
 
@@ -11,6 +11,13 @@ Wed Jul 01 07:08:40 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/Message_Queue.i,cpp (VxWorks only): removed args from a
           couple of unsupported functions, and added ACE_UNUSED_ARGS
           to others, to avoid compiler warnings.
+
+        * tests/Message_Queue_Test.cpp (performance_test): allocate
+          the send blocks in the main thread instead of in the sender.
+          That way, the main thread can delete them after the
+          receiver has finished.  Before this change, the sender would
+          sometimes delete them before the reciever finished.  Thanks to
+          Carlos and his friend Mr. SIGSEGV for helping to track this down.
 
 Tue Jun 30 23:48:39 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
