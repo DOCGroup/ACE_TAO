@@ -443,9 +443,6 @@ ACE_Service_Config::process_directives (void)
               result += ACE_Service_Config::process_directives_i ();
             }
         }
-
-      delete ACE_Service_Config::svc_conf_file_queue_;
-      ACE_Service_Config::svc_conf_file_queue_ = 0;
     }
 
   return result;
@@ -722,6 +719,10 @@ ACE_Service_Config::close (void)
   // The Singletons can be used independently of the services.
   // Therefore, this call must go out here.
   ACE_Service_Config::close_singletons ();
+
+  // Delete the list fo svc.conf files
+  delete ACE_Service_Config::svc_conf_file_queue_;
+  ACE_Service_Config::svc_conf_file_queue_ = 0;
 
   // Delete the dynamically allocated static_svcs instance.
   delete ACE_Service_Config::static_svcs_;
