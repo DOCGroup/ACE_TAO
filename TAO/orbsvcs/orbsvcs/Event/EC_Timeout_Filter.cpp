@@ -3,7 +3,6 @@
 #include "EC_Timeout_Filter.h"
 #include "EC_Timeout_Generator.h"
 #include "EC_Event_Channel.h"
-#include "EC_ProxySupplier.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/Event_Service_Constants.h"
 
@@ -15,12 +14,10 @@ ACE_RCSID(Event, EC_Timeout_Filter, "$Id$")
 
 TAO_EC_Timeout_Filter::TAO_EC_Timeout_Filter (
       TAO_EC_Event_Channel *event_channel,
-      TAO_EC_ProxyPushSupplier *supplier,
       const TAO_EC_QOS_Info& qos_info,
       RtecEventComm::EventType type,
       RtecEventComm::Time period)
   : event_channel_ (event_channel),
-    supplier_ (supplier),
     qos_info_ (qos_info),
     type_ (type)
 {
@@ -60,31 +57,22 @@ TAO_EC_Timeout_Filter::~TAO_EC_Timeout_Filter (void)
                                                             this->id_);
 }
 
-void
-TAO_EC_Timeout_Filter::push_to_proxy (const RtecEventComm::EventSet& event,
-                                      TAO_EC_QOS_Info& qos_info,
-                                      CORBA::Environment& ACE_TRY_ENV)
-{
-  this->supplier_->push_timeout (this,
-                                 event,
-                                 qos_info,
-                                 ACE_TRY_ENV);
-}
-
 int
 TAO_EC_Timeout_Filter::filter (const RtecEventComm::EventSet& event,
                                TAO_EC_QOS_Info& qos_info,
                                CORBA::Environment& ACE_TRY_ENV)
 {
-  return 0;
+  this->push (event, qos_info, ACE_TRY_ENV);
+  return 1;
 }
 
 int
 TAO_EC_Timeout_Filter::filter_nocopy (RtecEventComm::EventSet& event,
-                                      TAO_EC_QOS_Info& qos_info,
-                                      CORBA::Environment& ACE_TRY_ENV)
+                                   TAO_EC_QOS_Info& qos_info,
+                                   CORBA::Environment& ACE_TRY_ENV)
 {
-  return 0;
+  this->push_nocopy (event, qos_info, ACE_TRY_ENV);
+  return 1;
 }
 
 void
@@ -119,15 +107,6 @@ TAO_EC_Timeout_Filter::max_event_size (void) const
 int
 TAO_EC_Timeout_Filter::can_match (
       const RtecEventComm::EventHeader& header) const
-{
-  return 0;
-}
-
-int
-TAO_EC_Timeout_Filter::add_dependencies (
-      const RtecEventComm::EventHeader&,
-      const TAO_EC_QOS_Info &,
-      CORBA::Environment &)
 {
   return 0;
 }

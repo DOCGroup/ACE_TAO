@@ -28,8 +28,6 @@
 
 #include "tao/ORB.h"
 
-ACE_RCSID(tao, InconsistentTypeCodeC, "$Id$")
-
 // default constructor
 CORBA_ORB_InconsistentTypeCode::CORBA_ORB_InconsistentTypeCode (void)
   : CORBA_UserException (CORBA::ORB::_tc_InconsistentTypeCode)

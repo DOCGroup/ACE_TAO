@@ -60,11 +60,12 @@ Nestea_i::crush (CORBA::Long cans,
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "Nestea_i::crush %d cans\n", cans));
 
-  if (ACE_static_cast (ACE_UINT32, cans) > this->cans_)
-    this->cans_ = 0;
-  else
-    this->cans_ -= cans;
+  this->cans_ -= cans;
   
+  // Don't go below 0.
+  if (this->cans_ < 0) 
+    this->cans_ = 0;
+
   if (this->shutdown_ != 0)
     TAO_ORB_Core_instance ()->orb ()->shutdown ();
 
@@ -121,6 +122,7 @@ Nestea_i::save_data (void)
 {
   ACE_FILE_IO file;
   ACE_FILE_Addr filename (this->data_filename_);
+  ACE_FILE_Connector tempfile (file, filename);
 
   char str[MAX_UINT32_STR_LEN];
 
@@ -137,6 +139,7 @@ Nestea_i::load_data (void)
 {
   ACE_FILE_IO file;
   ACE_FILE_Addr filename ("nestea.dat");
+  ACE_FILE_Connector tempfile (file, filename);
 
   char str[12];
 

@@ -30,8 +30,6 @@
 #include "tao/Servant_Base.h"
 #include "tao/POAC.h"
 
-ACE_RCSID(tao, DynAnyS, "$Id$")
-
 // constructor
 POA_CORBA::DynAny::DynAny (void)
 {
@@ -87,7 +85,7 @@ POA_CORBA::DynAny::_interface_repository_id (void) const
 
 POA_CORBA::_tao_collocated_DynAny::_tao_collocated_DynAny (
     POA_CORBA::DynAny_ptr  servant,
-    TAO_Stub *stub
+    STUB_Object *stub
   )
   : CORBA_DynAny (),
     CORBA_Object (stub,
@@ -577,7 +575,7 @@ POA_CORBA::_tao_collocated_DynAny::rewind (
 CORBA_DynAny*
 POA_CORBA::DynAny::_this (CORBA_Environment &TAO_IN_ENV)
 {
-  TAO_Stub *stub = this->_create_stub (TAO_IN_ENV);
+  STUB_Object *stub = this->_create_stub (TAO_IN_ENV);
 
   if (TAO_IN_ENV.exception () != 0)
     return 0;
@@ -655,7 +653,7 @@ POA_CORBA::DynEnum::_interface_repository_id (void) const
 
 POA_CORBA::_tao_collocated_DynEnum::_tao_collocated_DynEnum (
     POA_CORBA::DynEnum_ptr servant,
-    TAO_Stub *stub
+    STUB_Object *stub
   )
   : CORBA_DynEnum (),
     _tao_collocated_DynAny (servant,
@@ -733,7 +731,7 @@ POA_CORBA::_tao_collocated_DynEnum::value_as_ulong (
 CORBA_DynEnum*
 POA_CORBA::DynEnum::_this (CORBA_Environment &TAO_IN_ENV)
 {
-  TAO_Stub *stub = this->_create_stub (TAO_IN_ENV);
+  STUB_Object *stub = this->_create_stub (TAO_IN_ENV);
 
   if (TAO_IN_ENV.exception () != 0)
     return 0;
@@ -808,7 +806,7 @@ POA_CORBA::DynStruct::_interface_repository_id (void) const
 
 POA_CORBA::_tao_collocated_DynStruct::_tao_collocated_DynStruct (
     POA_CORBA::DynStruct_ptr  servant,
-    TAO_Stub *stub
+    STUB_Object *stub
   )
   : CORBA_DynStruct (),
     ACE_NESTED_CLASS (POA_CORBA, _tao_collocated_DynAny (servant,
@@ -858,7 +856,7 @@ POA_CORBA::_tao_collocated_DynStruct::current_member_kind (
   );
 }
 
-CORBA::NameValuePairSeq *
+NameValuePairSeq *
 POA_CORBA::_tao_collocated_DynStruct::get_members (
     CORBA::Environment &_tao_environment
    )
@@ -870,7 +868,7 @@ POA_CORBA::_tao_collocated_DynStruct::get_members (
 
 void
 POA_CORBA::_tao_collocated_DynStruct::set_members (
-    const CORBA::NameValuePairSeq & value,
+    const NameValuePairSeq & value,
     CORBA::Environment &_tao_environment
    )
 {
@@ -884,7 +882,7 @@ POA_CORBA::_tao_collocated_DynStruct::set_members (
 CORBA_DynStruct*
 POA_CORBA::DynStruct::_this (CORBA_Environment &TAO_IN_ENV)
 {
-  TAO_Stub *stub = this->_create_stub (TAO_IN_ENV);
+  STUB_Object *stub = this->_create_stub (TAO_IN_ENV);
 
   if (TAO_IN_ENV.exception () != 0)
     return 0;
@@ -957,7 +955,7 @@ const char* POA_CORBA::DynUnion::_interface_repository_id (void) const
 
 POA_CORBA::_tao_collocated_DynUnion::_tao_collocated_DynUnion (
     POA_CORBA::DynUnion_ptr  servant,
-    TAO_Stub *stub
+    STUB_Object *stub
   )
   : CORBA_DynUnion (),
     ACE_NESTED_CLASS (POA_CORBA, _tao_collocated_DynAny (servant,
@@ -1073,7 +1071,7 @@ POA_CORBA::_tao_collocated_DynUnion::member_kind (
 CORBA_DynUnion*
 POA_CORBA::DynUnion::_this (CORBA_Environment &TAO_IN_ENV)
 {
-  TAO_Stub *stub = this->_create_stub (TAO_IN_ENV);
+  STUB_Object *stub = this->_create_stub (TAO_IN_ENV);
 
   if (TAO_IN_ENV.exception () != 0)
     return 0;
@@ -1148,7 +1146,7 @@ POA_CORBA::DynSequence::_interface_repository_id (void) const
 
 POA_CORBA::_tao_collocated_DynSequence::_tao_collocated_DynSequence (
     POA_CORBA::DynSequence_ptr  servant,
-    TAO_Stub *stub
+    STUB_Object *stub
   )
   : CORBA_DynSequence (),
     ACE_NESTED_CLASS (POA_CORBA, _tao_collocated_DynAny (servant,
@@ -1198,7 +1196,7 @@ POA_CORBA::_tao_collocated_DynSequence::length (
   );
 }
 
-CORBA_AnySeq *
+AnySeq *
 POA_CORBA::_tao_collocated_DynSequence::get_elements (
     CORBA::Environment &_tao_environment
    )
@@ -1210,7 +1208,7 @@ POA_CORBA::_tao_collocated_DynSequence::get_elements (
 
 void
 POA_CORBA::_tao_collocated_DynSequence::set_elements (
-    const CORBA_AnySeq & value,
+    const AnySeq & value,
     CORBA::Environment &_tao_environment
    )
 {
@@ -1224,7 +1222,7 @@ POA_CORBA::_tao_collocated_DynSequence::set_elements (
 CORBA_DynSequence*
 POA_CORBA::DynSequence::_this (CORBA_Environment &TAO_IN_ENV)
 {
-  TAO_Stub *stub = this->_create_stub (TAO_IN_ENV);
+  STUB_Object *stub = this->_create_stub (TAO_IN_ENV);
 
   if (TAO_IN_ENV.exception () != 0)
     return 0;
@@ -1299,7 +1297,7 @@ POA_CORBA::DynArray::_interface_repository_id (void) const
 
 POA_CORBA::_tao_collocated_DynArray::_tao_collocated_DynArray (
     POA_CORBA::DynArray_ptr  servant,
-    TAO_Stub *stub
+    STUB_Object *stub
   )
   : CORBA_DynArray (),
     ACE_NESTED_CLASS (POA_CORBA, _tao_collocated_DynAny (servant,
@@ -1326,7 +1324,7 @@ CORBA::Boolean POA_CORBA::_tao_collocated_DynArray::_is_a (
     );
 }
 
-CORBA_AnySeq *
+AnySeq *
 POA_CORBA::_tao_collocated_DynArray::get_elements (
     CORBA::Environment &_tao_environment
    )
@@ -1338,7 +1336,7 @@ POA_CORBA::_tao_collocated_DynArray::get_elements (
 
 void
 POA_CORBA::_tao_collocated_DynArray::set_elements (
-    const CORBA_AnySeq & value,
+    const AnySeq & value,
     CORBA::Environment &_tao_environment
    )
 {
@@ -1352,7 +1350,7 @@ POA_CORBA::_tao_collocated_DynArray::set_elements (
 CORBA_DynArray*
 POA_CORBA::DynArray::_this (CORBA_Environment &TAO_IN_ENV)
 {
-  TAO_Stub *stub = this->_create_stub (TAO_IN_ENV);
+  STUB_Object *stub = this->_create_stub (TAO_IN_ENV);
 
   if (TAO_IN_ENV.exception () != 0)
     return 0;

@@ -29,7 +29,7 @@ Grid_Client_i::parse_args (int argc,
                            char *argv[])
 {
   // Parses some of the options that are specific to this example
-  ACE_Get_Opt get_opts (argc, argv, "df:nk:xw:h:p:q:v:");
+  ACE_Get_Opt get_opts (argc, argv, "w:h:p:q:v:");
 
   int c = 0;
   while ((c = get_opts ()) != -1)
@@ -69,18 +69,16 @@ Grid_Client_i::run (char *name,
                     char *argv[])
 {
   // Initialize the client.
-  if (client.init (name, argc, argv) == -1)
+  if (client.init (name,argc, argv) == -1)
     return -1;
 
   if (this->parse_args (argc, argv) == -1)
     return -1;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  ACE_TRY
+  ACE_TRY_NEW_ENV
     {
       // Make the Grid.
-
+      
       Grid_ptr grid = client->make_grid (width_,
                                          height_,
                                          ACE_TRY_ENV);
@@ -105,25 +103,23 @@ Grid_Client_i::run (char *name,
       ACE_TRY_CHECK;
 
       ACE_ASSERT (ret_val == value_);
-
+  
       if (client.shutdown () == 1)
         client->shutdown (ACE_TRY_ENV);
       ACE_UNUSED_ARG (ret_val);
     }
   ACE_CATCH (CORBA::UserException, range_ex)
     {
-      ACE_PRINT_EXCEPTION (range_ex,
-                           "\tFrom get and set grid");
+      ACE_UNUSED_ARG (range_ex);
+      ACE_TRY_ENV.print_exception ("\tFrom get and set grid");
       return -1;
     }
   ACE_CATCH (CORBA::SystemException, memex)
     {
-      ACE_PRINT_EXCEPTION (memex,
-                           "Cannot make grid as Memory exhausted");
-      return -1;
+      ACE_UNUSED_ARG (memex);
+      ACE_TRY_ENV.print_exception (" Cannot make grid as Memory exhausted");
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

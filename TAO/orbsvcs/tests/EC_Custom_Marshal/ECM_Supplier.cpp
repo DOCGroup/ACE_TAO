@@ -197,12 +197,12 @@ ECMS_Driver::supplier_task (Test_Supplier *supplier,
       CORBA::ULong n = this->event_size_;
 
       ECM_IDLData::Info info;
-      info.mobile_name = CORBA::string_dup ("test");
+      info.mobile_name = CORBA::string_copy ("test");
       info.mobile_speed = 1;
       info.trajectory.length (n);
 
       ECM_Data other;
-      other.description = CORBA::string_dup ("some data");
+      other.description = CORBA::string_copy ("some data");
 
       for (CORBA::ULong j = 0; j < n; ++j)
         {
@@ -251,8 +251,8 @@ ECMS_Driver::supplier_task (Test_Supplier *supplier,
 
           ACE_hrtime_t t = ACE_OS::gethrtime ();
           ORBSVCS_Time::hrtime_to_TimeT (event[0].header.creation_time, t);
-          event[0].header.ec_recv_time = ORBSVCS_Time::zero ();
-          event[0].header.ec_send_time = ORBSVCS_Time::zero ();
+          event[0].header.ec_recv_time = ORBSVCS_Time::zero;
+          event[0].header.ec_send_time = ORBSVCS_Time::zero;
 
           if (i == ACE_static_cast (CORBA::Long, this->event_count_) - 1)
             event[0].header.type = ACE_ES_EVENT_SHUTDOWN;
@@ -408,7 +408,7 @@ ECMS_Driver::parse_args (int argc, char *argv [])
   if (this->n_suppliers_ <= 0)
     {
       this->n_suppliers_ = 1;
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ACE_ERROR_RETURN ((LM_DEBUG,
                          "%s: number of suppliers out of range, "
                          "reset to default (%d)\n",
                          argv[0], 1), -1);
