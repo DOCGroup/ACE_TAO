@@ -367,10 +367,10 @@ object. Each profile for an object may encode information pertaining to
 QoS, network and transport protocols, addresses or routes.<p>
 
 <li>
-<b>Example Transport protocols</b>- The first planned example aside from
-IIOP will use UNIX domain sockets. Other interesting transport protocols
-would be for ATM, Buses (VME or PCI), shared memory, TP4, GSMP, and
-    UDP/IP.</li> <p>
+<b>Example Transport protocols</b>- The first example, aside from IIOP, that
+has been implemented uses UNIX domain sockets. Other interesting transport
+protocols would be for ATM, Buses (VME or PCI), shared memory, TP4, GSMP, and
+UDP/IP.</li> <p>
 
 <li>
 <b>Pluggable ORB protocols</b> - This step will add support for ORB protocols
@@ -382,19 +382,136 @@ Current Status:
 <li>
 
 The initial prototype of the basic framework to support pluggable transport
-protocols has been compiled, linked and, tested against an older version
+protocols has been compiled, linked and, tested against a recent version
 of TAO. The standard TAO regression tests
 <tt>MT_Cubit</tt>, <tt>Multiple_Inheritance</tt>,
 <tt>CDR</tt>
 and <tt>EC_Throughput</tt> were run successfully.</li><P>
 
 <li>
-The basic framework does not include support for multiple profiles and
-the Acceptor registry. What it does do is separate the transport specific
-processing from the rest of the ORB.</li>
+            Multiple endpoint support in the ORB has been added.  A
+            list of TAO_Acceptors is kept in the Acceptor
+            Registry. When the ORB needs to create an IOR it iterates
+            over all the acceptors to do so. Using either multiple
+            <code>-ORBendpoint</code> options or several endpoints
+            separated by semi-colons ';', the user can specify what
+            addresses the ORB should use.  Each endpoint is specified
+            in URL format (ex: <code>iiop://foo.bar.com:0</code>),
+            this format can be extended to support different
+            protocols.
+</li><P>
+
+<li>
+            If the user does not specify a list of endpoints then the
+            ORB creates a default endpoint for each protocol
+            configured.
+</li><P>
+
+<li>
+            Added support for multiple Connectors in the ORB, the ORB
+            finds the correct connector based on the tag for the
+            profile.
+</li><P>
+
+<li>
+	    Added support for multiple profiles in the IORs, when the
+            ORB demarshals an IOR it queries the Connector Registry to
+            create the right kind of profile for the known protocols.
+            If one of the protocols is unknown we create a special
+            profile class that can only be used for marshaling and
+            demarshaling, not communication.
+</li><P>
+
+<li>
+	    Enabled the UIOP protocol, this protocol uses local IPC
+            (aka UNIX domain) sockets as the transport mechanism.  The
+            protocol is loaded by default but no endpoints are created
+            unless an explicit <code>-ORBendpoint</code> option is
+            used (ex: <code>-ORBendpoint
+            uiop:///tmp/my_rendezvous</code>).
+
+</li><P>
+
+<li>
+	    Protocols can be dynamically loaded into the ORB: The
+            default resource factory reads the protocol "names" from
+            its list of arguments.  These protocol names are used to
+            load an abstract factory via the service configurator.
+            This factory can create acceptors or connectors on demand.
+            By default only IIOP and UIOP are loaded.
+</li><P>
+
+<li>
+	    The <code>-ORBhost</code> and <code>-ORBport</code>
+            options are deprecated. The new <code>-ORBendpoint</code>
+            option supercedes them. If the deprecated options are
+            used, the ORB issues a warning.
+</li><P>
+
+<li>
+            The <code>-ORBpreconnect</code> option supports multiple
+            protocols using the same URL formats that
+            <code>-ORBendpoint</code> does. Note that the old
+            <em><code>host:port</code></em> format is supported for
+            backwards compatibility.
+</li><P>
+
+<li>
+            The URL style object reference format has been updated to
+            conform with the format that <code>iioploc</code>
+            uses. The BNF specification for <code>iioploc</code> is:
+
+<blockquote><code>
+&lt;iioploc&gt; = "iioploc://"[&lt;addr_list&gt;]["/"&lt;key_string&gt;]<br>
+&lt;addr_list&gt;= [&lt;address&gt; ","]* &lt;address&gt;<br>
+&lt;address&gt; = [&lt;version&gt; &lt;host&gt; [":" &lt;port&gt;]]<br>
+&lt;host&gt; = DNS-style Host Name | ip_address<br>
+&lt;version&gt; = &lt;major&gt; "." &lt;minor&gt; "@" | empty_string<br>
+&lt;port&gt; = number<br>
+&lt;major&gt; = number<br>
+&lt;minor&gt; = number<br>
+&lt;key_string&gt; = &lt;string&gt; | empty_string<br>
+</code></blockquote>
+
+            <code>iiop</code> URL style object references are
+            equivalent to <code>iioploc</code> URL style object
+            references.  <code>uiop</code> URL style object references
+            have a similar syntax:
+
+<blockquote><code>
+&lt;uiop&gt; = "uiop://"[&lt;addr_list&gt;]["|"&lt;key_string&gt;]<br>
+&lt;addr_list&gt;= [&lt;address&gt; ","]* &lt;address&gt;<br>
+&lt;address&gt; = [&lt;version&gt; &lt;rendezvous point&gt;]<br>
+&lt;rendezvous point&gt; = &lt;string&gt;<br>
+&lt;version&gt; = &lt;major&gt; "." &lt;minor&gt; "@" |
+                empty_string<br>
+&lt;major&gt; = number<br>
+&lt;minor&gt; = number<br>
+&lt;key_string&gt; = &lt;string&gt; | empty_string<br>
+</code></blockquote>
+
+            Note that the key string delimiter for <b><code>uiop</code></b>
+            is a vertical bar `<b><code>|</code></b>' (the command line
+            "pipe" symbol) not a forward slash
+            `<code>/</code>'.  A delimiter other than a
+            forward slash is needed to prevent ambiguities of
+            where the rendezvous point ends and where the key
+            string begins since both may contain forward
+            slashes in them. 
+
+            The <i>rendezvous point</i> for <code>uiop</code> is
+            any valid path and filename that the ORB has permission to
+            read and write to.<P>
+
+            The <code>-ORBendpoint</code> option uses a syntax similar 
+            to that of the URL style object reference shown above.
+            The only difference is that the object key delimiter and
+            the object key string are not specified.
+</li><P>
 
 <p>
 </ul>
+
 Known Issues:
 
 <ul>
@@ -406,23 +523,21 @@ Critical Work:
 
 <ul>
 <li>
-Adding support for multiple profiles.</li><p>
+Complete support for multiple profiles.</li><p>
 
 <p>
 </ul>
 Future Work:
 <ul>
 <li>
-Immediate plans are to bring my workspace up to date with the repository
-and verify all of TAO's regression tests still work. This will be followed
+Verify all of TAO's regression tests still work. This will be followed 
 by performing a suite of tests to compare performance of with the unmodified
-TAO distribution. Also, we'll extensively retest TAO using purify and quantify.</li><p>
+TAO distribution. Also, we'll extensively retest TAO using Purify and
+Quantify.
+</li><p> 
 
 <li>
-In parallel, we will add support for multiple profiles and an acceptor
-registry class. The acceptor registry will both keep track of all acceptors
-and be responsible for creating a list of profiles for new object references
-(essentially the IOR).</li><p>
+In parallel, we will add support for multiple profiles.</li><p>
 
 <li>
 Long term work will include adding support for pluggable ORB protocols,

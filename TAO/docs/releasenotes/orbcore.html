@@ -104,7 +104,7 @@ Point of contact: <a href="mailto: irfan@cs.wustl.edu">Irfan Pyarali</a>
       realized, i.e., the connection to that new object may use a
       different interface from the original object. Currently the only
       way to change this is to use the <A
-      HREF="../Options.html#-ORBhost"><b>-ORBhost</b> option</a> to
+      HREF="../Options.html#-ORBendpoint"><b>-ORBendpoint</b> option</a> to
       manually specify that dynamically-created objects bind to a
       specific interface so that their IIOP Profile has the desired
       hostname. A more desirable fix is being investigated.</p>
@@ -324,11 +324,12 @@ new ORB Core structure.
   <li><p>It is often desireable for a server to start up and not have
       to specify the TCP port number on which the ORB will listen,
       i.e., let the OS decide.  While this works properly (by
-      providing an argument <code>-ORBport 0</code>), the actual port
+      providing an argument such as
+      `<code>-ORBendpoint iiop://localhost:0</code>'), the actual port
       number used by the server won't be available after the server
-      starts listening. TAO now tries to bind the address when
-      <code>-ORBport 0</code> is issued so it can get the actual
-      address to publish the IOR for clients' use.</p>
+      starts listening. TAO now tries to bind the address when a port
+      set to zero is issued so it can get the actual address to publish
+      the IOR for clients' use.</p>
   </li>
 
   <li><p>Broke the tight coupling between <code>CORBA_Object</code>
