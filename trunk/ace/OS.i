@@ -2245,7 +2245,7 @@ ACE_OS::sema_trywait (ACE_sema_t *s)
           s->count_--;
           if (s->count_ <= 0)
             ACE_OS::event_reset (&s->count_nonzero_);
-          return 0;
+          result = 0;
         }
 
       ACE_OS::mutex_unlock (&s->lock_);
@@ -2337,6 +2337,7 @@ ACE_OS::sema_wait (ACE_sema_t *s)
     }
   /* NOTREACHED */
 #  else /* ACE_USES_WINCE_SEMA_SIMULATION */
+  int result = -1;
   while (1)
     switch (::WaitForSingleObject (s->count_nonzero_, INFINITE))
       {
@@ -2349,10 +2350,12 @@ ACE_OS::sema_wait (ACE_sema_t *s)
             s->count_--;
             if (s->count_ <= 0)
               ACE_OS::event_reset (&s->count_nonzero_);
-            return 0;
+            result = 0;
           }
 
         ACE_OS::mutex_unlock (&s->lock_);
+        if (result == 0)
+          return 0;
         break;
       default:
         errno = ::GetLastError ();
@@ -2443,6 +2446,7 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
 #  else /* ACE_USES_WINCE_SEMA_SIMULATION */
   ACE_Time_Value start_time = ACE_OS::gettimeofday ();
   ACE_Time_Value relative_time = tv;
+  int result = -1;
 
   while (relative_time > ACE_Time_Value::zero)
     {
@@ -2457,10 +2461,12 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
               s->count_--;
               if (s->count_ <= 0)
                 ACE_OS::event_reset (&s->count_nonzero_);
-              return 0;
+              result = 0;
             }
 
           ACE_OS::mutex_unlock (&s->lock_);
+          if (result == 0)
+            return 0;
           break;
         case WAIT_TIMEOUT:
           errno = ETIME;
