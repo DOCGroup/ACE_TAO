@@ -310,6 +310,9 @@ be_enum::tc_encap_len (void)
   if (this->encap_len_ == -1) // not computed yet
     {
       long slen;
+ 
+      // Macro to avoid "warning: unused parameter" type warning.
+      ACE_UNUSED_ARG (slen);
 
       this->encap_len_ = 4;  // holds the byte order flag
 

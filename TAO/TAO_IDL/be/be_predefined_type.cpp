@@ -319,6 +319,9 @@ be_predefined_type::gen_typecode (void)
   TAO_NL  nl;        // end line
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
 
+  // Macro to avoid "warning: unused parameter" type warning.
+  ACE_UNUSED_ARG (nl);
+
   cs = cg->client_stubs ();
   cs->indent (); // start from the current indentation level
 

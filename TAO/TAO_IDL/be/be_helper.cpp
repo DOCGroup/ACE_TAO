@@ -162,6 +162,9 @@ TAO_OutStream::operator<< (const long num)
 TAO_OutStream &
 TAO_OutStream::operator<< (const TAO_NL nl)
 {
+  // Macro to avoid "warning: unused parameter" type warning.
+  ACE_UNUSED_ARG (nl);
+
   ACE_OS::fprintf (this->fp_ , "\n");
   this->indent ();
   return *this;

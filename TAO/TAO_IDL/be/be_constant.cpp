@@ -57,6 +57,9 @@ be_constant::gen_client_header (void)
   TAO_NL  nl;        // end line
   be_scope *scope;   // scope
 
+  // Macro to avoid "warning: unused parameter" type warning.
+  ACE_UNUSED_ARG (nl);
+
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
   cg->push (TAO_CodeGen::TAO_CONSTANT_CH);
@@ -89,6 +92,8 @@ be_constant::gen_client_stubs (void)
   TAO_NL  nl;        // end line
   be_scope *scope;   // scope
 
+  // Macro to avoid "warning: unused parameter" type warning.
+  ACE_UNUSED_ARG (nl);
 
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
