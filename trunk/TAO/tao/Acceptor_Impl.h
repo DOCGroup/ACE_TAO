@@ -24,49 +24,41 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-template<class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> class TAO_Acceptor_Impl : public ACE_Acceptor<SVC_HANDLER,ACE_PEER_ACCEPTOR_2>
+template <class SVC_HANDLER>
+class TAO_Creation_Strategy : public ACE_Creation_Strategy<SVC_HANDLER>
 {
   // = TITLE
-  //   Helper class to implement the acceptors in TAO
-  //
-  // = DESCRIPTION
-  //   TAO pluggable protocols framework provide an abstraction to
-  //   represent any kind of acceptor object, the implementation of
-  //   that acceptor is left for the pluggable protocol implementor,
-  //   but the most common case would be to use an ACE_Acceptor<>
-  //   instantiated over the right Svc_Handlers.
-  //   But the Svc_Handlers must inherit the <orb_core> that owns the
-  //   acceptor, though this could be implemented in each pluggable
-  //   protocol we believe that this class would simplify that task
-  //   and work in most cases.  Pluggable protocol implementors are,
-  //   of course, free to use something else.
-  //
+  //     Creates a Svc_Handler and set the ORB_Core pointer on it.
 public:
-  // = Initialization and termination methods.
-  TAO_Acceptor_Impl (ACE_Reactor * = 0,
-                     int use_select = 1);
+  TAO_Creation_Strategy (TAO_ORB_Core *orb_core);
   // Constructor.
 
-  TAO_Acceptor_Impl (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
-                     ACE_Reactor * = ACE_Reactor::instance (),
-                     int flags = 0,
-                     int use_select = 1,
-                     int reuse_addr = 1);
-  // The constructors, just delegate to the base class.
-
-  int open (TAO_ORB_Core* orb_core,
-            const ACE_PEER_ACCEPTOR_ADDR &,
-            int flags = 0,
-            int use_select = 1,
-            int reuse_addr = 1);
-  // Initialize the ORB_Core.
+  int make_svc_handler (SVC_HANDLER *&sh);
+  // Create a SVC_HANDLER  and set the ORB_Core pointer on it.
 
 protected:
-  // = See $ACE_ROOT/ace/Acceptor.h for the documentation.
-  virtual int make_svc_handler (SVC_HANDLER *&sh);
-  virtual int activate_svc_handler (SVC_HANDLER *svc_handler);
+  TAO_ORB_Core *orb_core_;
+  // Pointer to the ORB Core.
+};
 
-private:
+template <class SVC_HANDLER>
+class TAO_Concurrency_Strategy : public ACE_Concurrency_Strategy<SVC_HANDLER>
+{
+  // = TITLE
+  //     Activates the Svc_Handler, and then if specified by the
+  //     TAO_Server_Strategy_Factory, it activates the Svc_Handler to
+  //     run in its own thread.
+public:
+  TAO_Concurrency_Strategy (TAO_ORB_Core *orb_core);
+  // Constructor.
+
+  int activate_svc_handler (SVC_HANDLER *svc_handler,
+                            void *arg);
+  // Activates the Svc_Handler, and then if specified by the
+  // TAO_Server_Strategy_Factory, it activates the Svc_Handler to run
+  // in its own thread.
+
+protected:
   TAO_ORB_Core *orb_core_;
   // Pointer to the ORB Core.
 };

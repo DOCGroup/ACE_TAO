@@ -33,41 +33,35 @@
 
 ACE_RCSID(tao, Acceptor_Impl, "$Id$")
 
-template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
-TAO_Acceptor_Impl<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open (TAO_ORB_Core* orb_core,
-                              const ACE_PEER_ACCEPTOR_ADDR &local_address,
-                              int flags,
-                              int use_select,
-                              int reuse_addr)
+template <class SVC_HANDLER>
+TAO_Creation_Strategy<SVC_HANDLER>::TAO_Creation_Strategy (TAO_ORB_Core *orb_core)
+  : orb_core_ (orb_core)
 {
-  this->orb_core_ = orb_core;
-  return this->ACE_Acceptor<SVC_HANDLER,ACE_PEER_ACCEPTOR_2>::open 
-    (local_address,
-     this->orb_core_->reactor (),
-     flags,
-     use_select,
-     reuse_addr);
 }
 
-template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
-TAO_Acceptor_Impl<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::make_svc_handler (SVC_HANDLER *&sh)
+template <class SVC_HANDLER> int
+TAO_Creation_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLER *&sh)
 {
   if (sh == 0)
-    {
-      if (this->orb_core_ == 0)
-        this->orb_core_ = TAO_ORB_Core_instance ();
+    ACE_NEW_RETURN (sh,
+                    SVC_HANDLER (this->orb_core_),
+                    -1);
 
-      ACE_NEW_RETURN (sh,
-                      SVC_HANDLER (this->orb_core_),
-                      -1);
-    }
   return 0;
 }
 
-template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
-TAO_Acceptor_Impl<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::activate_svc_handler (SVC_HANDLER *sh)
+template <class SVC_HANDLER>
+TAO_Concurrency_Strategy<SVC_HANDLER>::TAO_Concurrency_Strategy (TAO_ORB_Core *orb_core)
+  : orb_core_ (orb_core)
 {
-  if (this->ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::activate_svc_handler (sh) == -1)
+}
+
+
+template <class SVC_HANDLER> int
+TAO_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *sh,
+                                                             void *arg)
+{
+  if (this->ACE_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (sh) == -1)
     return -1;
 
   TAO_Server_Strategy_Factory *f =
@@ -77,7 +71,7 @@ TAO_Acceptor_Impl<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::activate_svc_handler (SVC_H
     return sh->activate (f->server_connection_thread_flags (),
                          f->server_connection_thread_count ());
 
-  return this->reactor ()->register_handler 
+  return this->orb_core_->reactor ()->register_handler
     (sh, ACE_Event_Handler::READ_MASK);
 }
 
