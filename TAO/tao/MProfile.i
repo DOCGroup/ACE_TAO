@@ -286,7 +286,10 @@ TAO_MProfile::policy_list (void)
     return this->policy_list_;
   else
     {
-      ACE_MT (ACE_Guard<ACE_Recursive_Thread_Mutex> guard (this->mutex_);)
+      ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX,
+                        guard,
+                        this->mutex_,
+                        0);
       if (this->policy_list_ == 0)
         {
           this->create_policy_list ();

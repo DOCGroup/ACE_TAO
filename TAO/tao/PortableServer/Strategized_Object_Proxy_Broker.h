@@ -38,7 +38,7 @@
 class TAO_PortableServer_Export TAO_Strategized_Object_Proxy_Broker : public TAO_Object_Proxy_Broker
 {
 public:
-  
+
   // -- Ctor/Dtor --
   TAO_Strategized_Object_Proxy_Broker (void);
   ~TAO_Strategized_Object_Proxy_Broker (void);
@@ -53,10 +53,10 @@ private:
 
 private:
 
-  TAO_Object_Proxy_Impl 
+  TAO_Object_Proxy_Impl
   *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
-  
-  ACE_Mutex mutex_;
+
+  ACE_SYNCH_MUTEX mutex_;
 };
 
 TAO_Strategized_Object_Proxy_Broker *the_tao_strategized_object_proxy_broker (void);
@@ -65,4 +65,3 @@ TAO_Strategized_Object_Proxy_Broker *the_tao_strategized_object_proxy_broker (vo
 
 #include "ace/post.h"
 #endif /* TAO_STRATEGIZED_OBJECT_PROXY_BROKER_H_ */
-
