@@ -164,6 +164,9 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
   // Send the IOR back to the client.
   ssize_t result = stream.send_n (ior.c_str (),
                                   ACE_OS::strlen (ior.c_str ()) + 1);
+  // Close the stream.
+  stream.close ();
+
   // Check for error.
   if (result == -1)
     return 0;
