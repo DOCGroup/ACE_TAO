@@ -88,22 +88,31 @@ public:
   // Operations
 
   // Constructor(s)
-  FE_InterfaceHeader(UTL_ScopedName *n, UTL_NameList *l,
-                                        UTL_NameList *supports = 0,
-                                        idl_bool compile_now = 1);
-  virtual ~FE_InterfaceHeader() {}
+  FE_InterfaceHeader (UTL_ScopedName *n, 
+                      UTL_NameList *l,
+                      UTL_NameList *supports = 0,
+                      idl_bool compile_now = 1);
+
+  virtual ~FE_InterfaceHeader (void);
 
   // Data Accessors
-  UTL_ScopedName *interface_name();
-  AST_Interface **inherits();
-  long n_inherits();
+  UTL_ScopedName *interface_name (void);
+  AST_Interface **inherits (void);
+  long n_inherits (void);
+  AST_Interface **inherits_flat (void);
+  long n_inherits_flat (void);
 
   // Data
 protected:
   UTL_ScopedName        *pd_interface_name;     // Interface name
 private:
+  // Used for eventual code generation
   AST_Interface         **pd_inherits;          // Inherited interfaces
   long                  pd_n_inherits;          // How many
+
+  // Used for name clash checking
+  AST_Interface         **pd_inherits_flat;     // All ancestors
+  long                  pd_n_inherits_flat;     // How many
 
   // Operations
 

@@ -83,14 +83,21 @@ ACE_RCSID(fe, fe_interface_header, "$Id$")
  * Constructor(s) and destructor
  */
 
-FE_InterfaceHeader::FE_InterfaceHeader(UTL_ScopedName *n, 
-                                       UTL_NameList *nl,
-                                       UTL_NameList *supports,
-                                       idl_bool compile_now)
-                  : pd_interface_name(n)
+FE_InterfaceHeader::FE_InterfaceHeader (UTL_ScopedName *n, 
+                                        UTL_NameList *nl,
+                                        UTL_NameList *supports,
+                                        idl_bool compile_now)
+  : pd_interface_name(n)
 {
   if (compile_now)
-    compile_inheritance (nl, supports);
+    {
+      compile_inheritance (nl, 
+                           supports);
+    }
+}
+
+FE_InterfaceHeader::~FE_InterfaceHeader (void)
+{
 }
 
 /*
@@ -104,17 +111,23 @@ FE_InterfaceHeader::FE_InterfaceHeader(UTL_ScopedName *n,
 
 /*
  * Private storage used to store interfaces seen already in the
- * computation of the unique, flattened inheritance list
+ * computation of the unique inheritance list
  */
 static AST_Interface **iseen = NULL;
 static long         iallocated = 0;
 static long         iused = 0;
 
+// Same as above, but the list is flattened and
+// includes all ancestors, not just immediate ones.
+static AST_Interface **iseen_flat = NULL;
+static long         iallocated_flat = 0;
+static long         iused_flat = 0;
+
 /*
  * Add an interface to an inheritance spec
  */
 static void
-add_inheritance(AST_Interface *i)
+add_inheritance (AST_Interface *i)
 {
   long                  k;
   AST_Interface       **oiseen;
@@ -122,19 +135,25 @@ add_inheritance(AST_Interface *i)
   /*
    * Make sure there's space for one more
    */
-  if (iallocated == iused) {
-    if (iallocated == 0) {
-      iallocated = INCREMENT;
-      iseen = new AST_Interface *[iallocated];
-    } else {
-      oiseen = iseen;
-      iallocated += INCREMENT;
-      iseen = new AST_Interface *[iallocated];
-      for (k = 0; k < iused; k++)
-        iseen[k] = oiseen[k];
-      delete oiseen;
+  if (iallocated == iused) 
+    {
+      if (iallocated == 0) 
+        {
+          iallocated = INCREMENT;
+          iseen = new AST_Interface *[iallocated];
+        } 
+      else 
+        {
+          oiseen = iseen;
+          iallocated += INCREMENT;
+          iseen = new AST_Interface *[iallocated];
+
+          for (k = 0; k < iused; k++)
+            iseen[k] = oiseen[k];
+
+          delete oiseen;
+        }
     }
-  }
   /*
    * OK, now insert it
    */
@@ -142,18 +161,71 @@ add_inheritance(AST_Interface *i)
   iused++;
 }
 
+// Add an interface to the flat list.
+static void
+add_inheritance_flat (AST_Interface *i)
+{
+  long                  k;
+  AST_Interface       **oiseen_flat;
+
+  /*
+   * Make sure there's space for one more
+   */
+  if (iallocated_flat == iused_flat) 
+    {
+      if (iallocated_flat == 0) 
+        {
+          iallocated_flat = INCREMENT;
+          iseen_flat = new AST_Interface *[iallocated_flat];
+        } 
+      else 
+        {
+          oiseen_flat = iseen_flat;
+          iallocated_flat += INCREMENT;
+          iseen_flat = new AST_Interface *[iallocated_flat];
+
+          for (k = 0; k < iused_flat; k++)
+            iseen_flat[k] = oiseen_flat[k];
+
+          delete oiseen_flat;
+        }
+    }
+  /*
+   * OK, now insert it
+   */
+  iseen_flat[iused_flat] = i;
+  iused_flat++;
+}
+
 /*
  * Have we already seen this interface?
  */
 static long
-already_seen(AST_Interface *ip)
+already_seen (AST_Interface *ip)
 {
   long  i;
 
-  for (i = 0; i < iused; i++) {
-    if (iseen[i] == ip)
-      return I_TRUE;
-  }
+  for (i = 0; i < iused; i++) 
+    {
+      if (iseen[i] == ip)
+        return I_TRUE;
+    }
+
+  return I_FALSE;
+}
+
+// Have we already seen this interface in the flat list?
+static long
+already_seen_flat (AST_Interface *ip)
+{
+  long  i;
+
+  for (i = 0; i < iused_flat; i++) 
+    {
+      if (iseen_flat[i] == ip)
+        return I_TRUE;
+    }
+
   return I_FALSE;
 }
 
@@ -161,7 +233,7 @@ already_seen(AST_Interface *ip)
  * Add this interface to the list of inherited if not already there
  */
 void
-FE_InterfaceHeader::compile_one_inheritance(AST_Interface *i)
+FE_InterfaceHeader::compile_one_inheritance (AST_Interface *i)
 {
   /*
    * Check for badly formed interface
@@ -171,25 +243,43 @@ FE_InterfaceHeader::compile_one_inheritance(AST_Interface *i)
   /*
    * If we've seen it already then don't expand again
    */
-  if (already_seen(i))
+  if (already_seen (i))
     return;
   /*
    * OK, add i to the list of inherited interfaces
    */
-  add_inheritance(i);
+  add_inheritance (i);
+
+  // And add i to the flat list as well
+  if (!already_seen_flat (i))
+    add_inheritance_flat (i);
+
+  // Add i's parents to the flat list.
+  AST_Interface **parents = i->inherits ();
+  long num_parents = i->n_inherits ();
+
+  for (long j = 0; j < num_parents; j++)
+    {
+      AST_Interface *tmp = parents[j];
+
+      if (already_seen_flat (tmp))
+        continue;
+
+      add_inheritance_flat (tmp);
+    }
 }
 
 /*
  * Compute the list of top-level interfaces this one inherits from
  */
 void
-FE_InterfaceHeader::compile_inheritance(UTL_NameList *ifaces,
-                                        UTL_NameList *supports)
+FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
+                                         UTL_NameList *supports)
 {
   UTL_NamelistActiveIterator   *l;
   AST_Decl                     *d;
   AST_Interface                *i;
-  long                          k;
+  long                          j, k;
   UTL_NameList                 *nl;
   int                           loops;
   long                          ichecked = 0;
@@ -203,91 +293,116 @@ FE_InterfaceHeader::compile_inheritance(UTL_NameList *ifaces,
    */
   nl = ifaces;
   // loop twice if nl and supports are nonempty
-  for (loops = 0; loops < 2; ++loops) {
-    if (nl != NULL) {
-      l = new UTL_NamelistActiveIterator(nl);
-      while (!(l->is_done())) {
-        /*
-         * Check that scope stack is valid
-         */
-        if (idl_global->scopes()->top() == NULL) {
-          idl_global->err()->lookup_error(l->item());
-          return;
-        }
-        /*
-         * Look it up
-         */
-        d = idl_global->scopes()->top()->lookup_by_name(l->item(), I_TRUE);
-        /*
-         * Not found?
-         */
-        if (d == NULL) {
-          idl_global->err()->lookup_error(l->item());
-          return;
-        }
-        /*
-         * Not an appropriate interface?
-         */
-        while(d->node_type() == AST_Decl::NT_typedef)
-          d = AST_Typedef::narrow_from_decl(d)->base_type();
-        if (d->node_type() == AST_Decl::NT_interface)
-          i = AST_Interface::narrow_from_decl(d);
-        else
-          i = NULL;
-        if (i != NULL)
-          {
-            if (in_supports)
-              {
-                inh_err = ! this->check_supports (i);
-              }
-            else
-              {
-                if (ichecked == 0)
-                  inh_err = ! this->check_first (i);
-                else
-                  inh_err = ! this->check_further (i);
-              }
-          }
-        else
-          {
-            inh_err = 1;
-          }
-        if (inh_err)
-          {
-            idl_global->err()->inheritance_error(pd_interface_name, d);
-            return;  //%! really ? inh_err=0; and test the remaining...?
-          }
-        /*
-         * Forward declared interface?
-         */
-        if (!i->is_defined()) {
-          idl_global->err()->inheritance_fwd_error(pd_interface_name, i);
-          return;
-        }
-        /*
-         * OK, see if we have to add this to the list of interfaces
-         * inherited from
-         */
-        compile_one_inheritance(i);
+  for (loops = 0; loops < 2; ++loops) 
+    {
+      if (nl != NULL) 
+        {
+          l = new UTL_NamelistActiveIterator  (nl);
 
-        /*
-         * Next element in header list
-         */
-        ++ ichecked;
-        l->next();
-      }
-      delete l;
+          while (!(l->is_done ())) 
+            {
+              /*
+               * Check that scope stack is valid
+               */
+              if (idl_global->scopes  ()->top () == NULL) 
+                {
+                  idl_global->err ()->lookup_error (l->item ());
+                  return;
+                }
+              /*
+               * Look it up
+               */
+              d = idl_global->scopes  ()->top ()->lookup_by_name  (l->item (), 
+                                                                   I_TRUE);
+              /*
+               * Not found?
+               */
+              if (d == NULL) 
+                {
+                  idl_global->err ()->lookup_error (l->item ());
+                  return;
+                }
+              /*
+               * Not an appropriate interface?
+               */
+              while (d->node_type () == AST_Decl::NT_typedef)
+                d = AST_Typedef::narrow_from_decl (d)->base_type ();
+
+              if (d->node_type () == AST_Decl::NT_interface)
+                i = AST_Interface::narrow_from_decl (d);
+              else
+                i = NULL;
+
+              if (i != NULL)
+                {
+                  if (in_supports)
+                    {
+                      inh_err = ! this->check_supports (i);
+                    }
+                  else
+                    {
+                      if (ichecked == 0)
+                        inh_err = ! this->check_first (i);
+                      else
+                        inh_err = ! this->check_further (i);
+                    }
+                }
+              else
+                {
+                  inh_err = 1;
+                }
+
+              if (inh_err)
+                {
+                  idl_global->err ()->inheritance_error (pd_interface_name, 
+                                                         d);
+                  return;  //%! really ? inh_err=0; and test the remaining...?
+                }
+
+              /*
+               * Forward declared interface?
+               */
+              if (!i->is_defined ()) 
+                {
+                  idl_global->err ()->inheritance_fwd_error (pd_interface_name, 
+                                                             i);
+                  return;
+                }
+
+              /*
+               * OK, see if we have to add this to the list of interfaces
+               * inherited from
+               */
+              compile_one_inheritance (i);
+
+              /*
+               * Next element in header list
+               */
+              ++ ichecked;
+              l->next ();
+            }
+          delete l;
+        }
+      in_supports = 1;
+      nl = supports;
     }
-    in_supports = 1;
-    nl = supports;
-  }
-  /*
-   * OK, install in interface header
-   */
+
+  // OK, install in interface header
+  // First the flat list (all ancestors)
+  this->pd_inherits_flat = new AST_Interface *[iused_flat];
+
+  for (j = 0; j < iused_flat; j++)
+    this->pd_inherits_flat[j] = iseen_flat[j];
+
+  this->pd_n_inherits_flat = iused_flat;
+
+  // Then the list of immediate ancestors
   pd_inherits = new AST_Interface *[iused];
+
   for (k = 0; k < iused; k++)
-    pd_inherits[k] = iseen[k];
-  pd_n_inherits = iused;
+    this->pd_inherits[k] = iseen[k];
+
+  this->pd_n_inherits = iused;
 }
 
 // check_ methods called from compile_inheritance()
@@ -302,7 +417,7 @@ FE_InterfaceHeader::check_first (AST_Interface *i)
 idl_bool
 FE_InterfaceHeader::check_further (AST_Interface *i)
 {
-  if (i && ! i->is_valuetype())
+  if (i && ! i->is_valuetype ())
     {
       return 1;
     }
@@ -332,44 +447,59 @@ FE_InterfaceHeader::check_supports (AST_Interface *)
  */
 
 UTL_ScopedName *
-FE_InterfaceHeader::interface_name()
+FE_InterfaceHeader::interface_name (void)
 {
   return pd_interface_name;
 }
 
 AST_Interface **
-FE_InterfaceHeader::inherits()
+FE_InterfaceHeader::inherits (void)
 {
   return pd_inherits;
 }
 
 long
-FE_InterfaceHeader::n_inherits()
+FE_InterfaceHeader::n_inherits (void)
 {
   return pd_n_inherits;
 }
 
+AST_Interface **
+FE_InterfaceHeader::inherits_flat (void)
+{
+  return pd_inherits_flat;
+}
+
+long
+FE_InterfaceHeader::n_inherits_flat (void)
+{
+  return pd_n_inherits_flat;
+}
 
 // #ifdef IDL_HAS_VALUETYPE
 
 // FE_obv_header
 
-FE_obv_header::FE_obv_header (UTL_ScopedName *n, UTL_NameList *nl, UTL_NameList *supports)
-                  : FE_InterfaceHeader (n, nl, supports,0),
-                    truncatable_ (0),
-                    n_concrete_ (0)
+FE_obv_header::FE_obv_header (UTL_ScopedName *n, 
+                              UTL_NameList *nl, 
+                              UTL_NameList *supports)
+  : FE_InterfaceHeader (n, nl, supports,0),
+    truncatable_ (0),
+    n_concrete_ (0)
 {
-  compile_inheritance (nl, supports);
+  compile_inheritance (nl, 
+                       supports);
 }
 
 // check_ methods called from compile_inheritance()
 idl_bool
 FE_obv_header::check_first (AST_Interface *i)
 {
-  if (i && i->is_valuetype())
+  if (i && i->is_valuetype ())
     {
-      if (! i->is_abstract_valuetype())
+      if (! i->is_abstract_valuetype ())
         ++ n_concrete_;
+
       return 1;
     }
   else
@@ -381,7 +511,7 @@ FE_obv_header::check_first (AST_Interface *i)
 idl_bool
 FE_obv_header::check_further (AST_Interface *i)
 {
-  if (i && i->is_valuetype() && i->is_abstract_valuetype())
+  if (i && i->is_valuetype () && i->is_abstract_valuetype ())
     {
       return 1;
     }
@@ -394,7 +524,7 @@ FE_obv_header::check_further (AST_Interface *i)
 idl_bool
 FE_obv_header::check_supports (AST_Interface *i)
 {
-  if (i && ! i->is_valuetype())
+  if (i && ! i->is_valuetype ())
     {
       return 1;
     }

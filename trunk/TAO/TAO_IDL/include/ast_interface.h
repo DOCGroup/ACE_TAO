@@ -92,22 +92,34 @@ public:
   // Operations
 
   // Constructor(s)
-  AST_Interface();
-  AST_Interface(UTL_ScopedName *n,
-                AST_Interface **ih,
-                long nih,
-                UTL_StrList *p);
-  virtual ~AST_Interface() {}
+  AST_Interface (void);
+  AST_Interface (UTL_ScopedName *n,
+                 AST_Interface **ih,
+                 long nih,
+                 AST_Interface **ih_flat,
+                 long nih_flat,
+                 UTL_StrList *p);
+
+  virtual ~AST_Interface (void);
 
   // Data Accessors
   static void fwd_redefinition_helper (AST_Interface *&i,
-                                       UTL_Scope *s, UTL_StrList *p);
+                                       UTL_Scope *s, 
+                                       UTL_StrList *p);
 
-  virtual void redefine (AST_Interface *from, UTL_StrList *p);
-  AST_Interface **inherits();
-  void set_inherits(AST_Interface **i);
-  long n_inherits();
-  void set_n_inherits(long i);
+  virtual void redefine (AST_Interface *from, 
+                         UTL_StrList *p);
+
+  AST_Interface **inherits (void);
+  void set_inherits (AST_Interface **i);
+  long n_inherits (void);
+  void set_n_inherits (long i);
+
+  AST_Interface **inherits_flat (void);
+  void set_inherits_flat (AST_Interface **i);
+  long n_inherits_flat (void);
+  void set_n_inherits_flat (long i);
+
   void be_add_operation (AST_Operation *);
   void be_replace_operation (AST_Decl *old_op,
                              AST_Decl *new_op);
@@ -115,20 +127,20 @@ public:
   // Is this interface defined? This predicate returns FALSE when an
   // interface was forward declared but not defined yet, and TRUE in
   // all other cases.
-  idl_bool is_defined()
+  idl_bool is_defined (void)
   {
     return (pd_n_inherits < 0) ? I_FALSE : I_TRUE;
   }
 
-  virtual idl_bool is_abstract_interface ();
-  virtual idl_bool is_valuetype ();
-  virtual idl_bool is_abstract_valuetype ();
-  virtual void set_abstract_valuetype ();
+  virtual idl_bool is_abstract_interface (void);
+  virtual idl_bool is_valuetype (void);
+  virtual idl_bool is_abstract_valuetype (void);
+  virtual void set_abstract_valuetype (void);
 
   // Check if any member's name clashes with a parent's
   // member's name, or if any parents' members' names
   // clash with each other.
-  void inherited_name_clash ();
+  void inherited_name_clash (void);
 
   // Narrowing
   DEF_NARROW_METHODS2(AST_Interface, AST_Type, UTL_Scope);
@@ -136,7 +148,7 @@ public:
   DEF_NARROW_FROM_SCOPE(AST_Interface);
 
   // AST Dumping
-  virtual void                  dump(ostream &o);
+  virtual void                  dump (ostream &o);
 
 private:
   // Helper function for fwd_redefinition_helper.
@@ -144,10 +156,15 @@ private:
                                  AST_Interface *other);
 
   // Data
+  // Immediate ancestors
   AST_Interface                 **pd_inherits;  // Inherited interfaces
                                                 // This is an array of pointers
                                                 // to the inherited interfaces
   long                          pd_n_inherits;  // How many of them?
+
+  // All ancestors
+  AST_Interface                 **pd_inherits_flat;
+  long                          pd_n_inherits_flat;
 
   // Scope Management Protocol
   friend int tao_yyparse();

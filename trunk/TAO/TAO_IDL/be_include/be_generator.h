@@ -97,6 +97,8 @@ public:
   virtual AST_Interface *create_interface(UTL_ScopedName *n,
                                           AST_Interface **ih,
                                           long nih,
+                                          AST_Interface **ih_flat,
+                                          long nih_flat,
                                           UTL_StrList *p);
   virtual AST_InterfaceFwd *create_interface_fwd(UTL_ScopedName *n,
                                                  UTL_StrList *p);
