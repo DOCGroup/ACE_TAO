@@ -1,3 +1,8 @@
+Thu Jan 22 17:16:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* apps/JAWS/server/server.mpc:
+	  Added missing cpp extension to main
+
 Thu Jan 22 09:47:04 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/RMCast/acetest.mpb:
