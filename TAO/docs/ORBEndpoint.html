@@ -19,6 +19,7 @@
       <LI><A HREF="#SHMIOP">SHMIOP Endpoints</A></LI>
       <LI><A HREF="#UIOP">UIOP Endpoints</A></LI>
       <LI><A HREF="#DIOP">DIOP Endpoints</A></LI>
+      <LI><A HREF="#SSLIOP">SSLIOP Endpoints</A></LI>
     </UL>
 
     <hr>
@@ -516,9 +517,10 @@
     <P>
     <h3>DIOP Endpoint Overview</h3>
     <P>
-      Since DIOP endpoints in TAO have the same form as IIOP endpoints, a
-      detailed description is therefore omitted. DIOP has no support
-      for endpoint-specific options.
+      Since DIOP endpoints in TAO have the same form as
+      <A HREF="#IIOP">IIOP</A> endpoints, a detailed description is
+      therefore omitted. DIOP has no support for endpoint-specific
+      options.
     <P>
       We recommend explicitly setting port numbers for endpoints
       since TAO does not support automatic selection of free endpoints for
@@ -533,12 +535,54 @@
       <LI><CODE>-ORBEndpoint diop://1.1@:1234</CODE>
     </UL>
 
+    <P>
+    <h2><A NAME="SSLIOP">SSLIOP Endpoints</A></h2>
+    TAO's SSLIOP pluggable protocol facilitates CORBA request
+    invocation over TLS (formerly known as SSL), and is a drop-in
+    replacement for the <A HREF="#IIOP">IIOP</A> pluggable protocol.
+    <P>
+      The SSLIOP pluggable protocol will actually create two
+      endpoints: one which is meant to accept plain IIOP requests, and
+      another meant to accept SSLIOP requests.  As security measure,
+      IIOP requests will be rejected by default unless the server is
+      configured to accept them (See the
+      <A HREF="Security/SSLIOP-USAGE.html">SSLIOP documentation</A> for
+      additional details).
+    <P>
+    <h3>SSLIOP Endpoint Format</h3>
+    <P>
+      SSLIOP endpoints basically have the same format as
+      <A HREF="#IIOP">IIOP</A> endpoints.  The only difference between
+      the two is that SSLIOP endpoints accept an additional option
+      that allows one to select the port which will accept TLS
+      requests.  To make a server open a SSLIOP endpoint on a specific
+      port use the <CODE>ssl_port</CODE> endpoint option:
+
+    <UL>
+      <LI><CODE>-ORBEndpoint iiop://foo:1234/ssl_port=1235</CODE>
+    </UL>
+
+    In this case, an <A HREF="#IIOP">IIOP</A> endpoint would be opened
+    on port <CODE>1234</CODE> and a SSLIOP endpoint on port
+    <CODE>1235</CODE>.  If no <CODE>ssl_port</CODE> option is
+    supplied, a port will automatically be chosen in the same way a
+    port is automatically chosen for an <A HREF="#IIOP">IIOP</A>
+    endpoint.
+
+    <P>
+      Note that the protocol label in the above example is
+      <CODE>iiop</CODE>, <EM>not</EM> <code>ssliop</code>.
+      Regardless, a SSLIOP endpoint will be opened if the SSLIOP
+      pluggable protocol was loaded.  Furthermore, the
+      <CODE>ssl_port</CODE> endpoint option is only valid if the
+      SSLIOP pluggable protocol is used.
+
     <hr>
 
-    <address><a href="mailto:ossama@uci.edu">Ossama Othman</a></address>
+    <address><a href="mailto:ossama@dre.vanderbilt.edu">Ossama Othman</a></address>
 <!-- Created: Thu May 18 08:37:25 PDT 2000 -->
 <!-- hhmts start -->
-Last modified: Tue Jul 29 09:03:03 CDT 2003
+Last modified: Wed Apr  7 10:50:09 PDT 2004
 <!-- hhmts end -->
   </body>
 </html>
