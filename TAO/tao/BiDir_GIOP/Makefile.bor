@@ -7,6 +7,7 @@ NAME = TAO_BiDirGIOP
 OBJFILES = \
 	$(OBJDIR)\BiDirGIOP.obj \
 	$(OBJDIR)\BiDirPolicyC.obj \
+        $(OBJDIR)\BiDirPolicy_Validator.obj \
 	$(OBJDIR)\BiDir_ORBInitializer.obj \
 	$(OBJDIR)\BiDir_PolicyFactory.obj \
 	$(OBJDIR)\BiDir_Policy_i.obj
