@@ -10,6 +10,10 @@
 // and the value is packaged as an Any.  The flags indicate parameter
 // mode, and some ownership rules for "top level" memory.
 //
+
+#if !defined(ACE_ROA_NVLIST_H)
+#  define ACE_ROA_NVLIST_H
+
 class _EXPCLASS			CORBA_NamedValue;
 
 void				CORBA_release (CORBA_NamedValue_ptr x);
@@ -26,34 +30,35 @@ enum {
 
 class _EXPCLASS CORBA_NamedValue
 {
-  public:
-    const CORBA_String	_FAR name () { return (const CORBA_String) _name; }
-    CORBA_Any_ptr	_FAR value () { return &_any; }
-    CORBA_Flags		flags () const { return _flags; }
+public:
+  const CORBA_String	_FAR name () { return (const CORBA_String) _name; }
+  CORBA_Any_ptr	_FAR value () { return &_any; }
+  CORBA_Flags		flags () const { return _flags; }
 
-			~CORBA_NamedValue ();
+  ~CORBA_NamedValue ();
 
-    //
-    // Stuff required for COM IUnknown support
-    //
-    ULONG __stdcall     AddRef ();
-    ULONG __stdcall     Release ();
-    HRESULT __stdcall   QueryInterface (
-                            REFIID      riid,
-                            void        **ppv
-                        );
+  //
+  // Stuff required for COM IUnknown support
+  //
+  ULONG __stdcall     AddRef ();
+  ULONG __stdcall     Release ();
+  HRESULT __stdcall   QueryInterface (
+				      REFIID      riid,
+				      void        **ppv
+				      );
 
-  private:
-    unsigned            _refcount;
+private:
+  unsigned            _refcount;
+  ACE_Thread_Mutex lock_;
 
-    CORBA_Any		_any;
-    CORBA_Flags		_flags;
-    const CORBA_Char	*_FAR _name;
+  CORBA_Any		_any;
+  CORBA_Flags		_flags;
+  const CORBA_Char	*_FAR _name;
 
-			CORBA_NamedValue () : _flags (0), _name (0) { }
+  CORBA_NamedValue () : _flags (0), _name (0) { }
 
-    friend class CORBA_NVList;
-    friend class CORBA_Request;
+  friend class CORBA_NVList;
+  friend class CORBA_Request;
 };
 
 
@@ -77,43 +82,46 @@ extern "C" const IID 		IID_CORBA_NVList;
 
 class _EXPCLASS CORBA_NVList
 {
-  public:
-    CORBA_ULong			count () const
-				    { return _len; }
+public:
+  CORBA_ULong			count () const
+  { return _len; }
 
-    CORBA_NamedValue_ptr	add_value (
-				    const CORBA_Char *_FAR ,
-				    const CORBA_Any _FAR &,
-				    CORBA_Flags,
-				    CORBA_Environment _FAR &
-				);
+  CORBA_NamedValue_ptr	add_value (
+				   const CORBA_Char *_FAR ,
+				   const CORBA_Any _FAR &,
+				   CORBA_Flags,
+				   CORBA_Environment _FAR &
+				   );
 
-    CORBA_NamedValue_ptr	item (CORBA_Long n) const
-				    { return &_values [(unsigned) n]; }
+  CORBA_NamedValue_ptr	item (CORBA_Long n) const
+  { return &_values [(unsigned) n]; }
 
-		    		~CORBA_NVList ();
+  ~CORBA_NVList ();
 
-    //
-    // Stuff required for COM IUnknown support
-    //
-    ULONG __stdcall             AddRef ();
-    ULONG __stdcall             Release ();
-    HRESULT __stdcall           QueryInterface (
-                                    REFIID      riid,
-                                    void        **ppv
-                                );
+  //
+  // Stuff required for COM IUnknown support
+  //
+  ULONG __stdcall             AddRef ();
+  ULONG __stdcall             Release ();
+  HRESULT __stdcall           QueryInterface (
+					      REFIID      riid,
+					      void        **ppv
+					      );
 
-  private:
-    CORBA_NamedValue		*_FAR _values;
-    unsigned			_max;
-    unsigned			_len;
-    unsigned            	_refcount;
+private:
+  CORBA_NamedValue		*_FAR _values;
+  unsigned			_max;
+  unsigned			_len;
+  ACE_Thread_Mutex lock_;
+  unsigned            	_refcount;
 
-				CORBA_NVList ()
-				    : _values (0), _max (0),
-					_len (0), _refcount (1)
-				    { }
+  CORBA_NVList ()
+    : _values (0), _max (0),
+      _len (0), _refcount (1)
+  { }
 
-    friend class	CORBA_ORB;
-    friend class	CORBA_Request;
+  friend class	CORBA_ORB;
+  friend class	CORBA_Request;
 };
+
+#endif

@@ -12,43 +12,49 @@
 // and available through the Interface Repositories.  Think of it as a
 // "globally scoped" name distinguishing each exception.
 //
+#if !defined(ACE_ROA_EXCEPT_H)
+#  define ACE_ROA_EXCEPT_H
+
+#  include <ace/Synch.h>
+
 extern const IID	IID_CORBA_Exception;
 extern const IID	IID_CORBA_UserException;
 extern const IID	IID_CORBA_SystemException;
 
-class _EXPCLASS CORBA_Exception : public IUnknown {
-  public:
-				CORBA_Exception (const CORBA_Exception &src);
-    CORBA_Exception		&operator = (const CORBA_Exception &src);
+class _EXPCLASS CORBA_Exception : public IUnknown
+{
+public:
+  CORBA_Exception (const CORBA_Exception &src);
+  CORBA_Exception		&operator = (const CORBA_Exception &src);
 
-    void			*operator new (size_t, const void *p)
-					{ return (void *) p; }
-    void			*operator new (size_t s)
-					{ return ::operator new (s); }
-    void			operator delete (void *p)
-					{ ::operator delete (p); }
+  void			*operator new (size_t, const void *p)
+  { return (void *) p; }
+  void			*operator new (size_t s)
+  { return ::operator new (s); }
+  void			operator delete (void *p)
+  { ::operator delete (p); }
 
 
-    const CORBA_String		id () const;
-    const CORBA_TypeCode_ptr	type () const;
+  const CORBA_String		id () const;
+  const CORBA_TypeCode_ptr	type () const;
 
-    //
-    // Stuff required for COM IUnknown support
-    //
-    ULONG __stdcall		AddRef ();
-    ULONG __stdcall		Release ();
-    HRESULT __stdcall           QueryInterface (
-				    REFIID	riid,
-				    void	**ppv
-				);
+  //
+  // Stuff required for COM IUnknown support
+  //
+  ULONG __stdcall		AddRef ();
+  ULONG __stdcall		Release ();
+  HRESULT __stdcall           QueryInterface (
+					      REFIID	riid,
+					      void	**ppv
+					      );
 
-				CORBA_Exception (
-				    CORBA_TypeCode_ptr	type
-				);
-				virtual ~CORBA_Exception ();
-  private:
-    CORBA_TypeCode_ptr		_type;
-    unsigned			_refcnt;
+  CORBA_Exception (CORBA_TypeCode_ptr type);
+  virtual ~CORBA_Exception ();
+private:
+  CORBA_TypeCode_ptr		_type;
+
+  ACE_Thread_Mutex lock_;
+  unsigned			_refcnt;
 };
 typedef CORBA_Exception *CORBA_Exception_ptr;
 
@@ -184,3 +190,4 @@ class CORBA_Environment {
 				CORBA_Environment (const CORBA_Environment &src);
     CORBA_Environment		&operator = (const CORBA_Environment &src);
 };
+#endif

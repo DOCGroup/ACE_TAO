@@ -48,30 +48,6 @@ ROA::init (CORBA_ORB_ptr parent,
   (void) ACE_Thread::keycreate(&req_key_);
 #endif
     
-  // Don't know if this is right for what was originally being done.  Looks like
-  // what was set in thread_attr were flags given to pthread_create().  However,
-  // thread creation (when necessary) is now performed by the Svc_Handler::create().
-  //(void) p->thread_flags(ROA_DEFAULT_THREADFLAGS);
-#if 0
-
-  //
-  // Initialize POSIX thread stuff:  TSD key for request data, and
-  // attributes for threads that can be dynamically created.
-  //
-  // XXX this stuff should be guarded by "pthread_once", it's not
-  // at all OA-specific.
-  //
-  (void) pthread_key_create (&request_key, 0);
-
-  (void) pthread_attr_init (&thread_attr);
-  (void) pthread_attr_setdetachstate (&thread_attr, PTHREAD_CREATE_DETACHED);
-
-#ifdef	_POSIX_THREAD_PRIORITY_SCHEDULING
-  (void) pthread_attr_setscope (&thread_attr, PTHREAD_SCOPE_PROCESS);
-#endif	// _POSIX_THREAD_PRIORITY_SCHEDULING
-
-#endif	// _POSIX_THREADS
-
   ROA_ptr rp;
   ACE_NEW_RETURN (rp, ROA(parent, rendezvous, env), 0);
   p->oa(rp);
@@ -289,6 +265,7 @@ ROA::register_dir (BOA::dsi_handler handler, void* ctx, CORBA_Environment& env)
   env.clear ();
 }
 
+// OBSOLETE!!!  But for now I'm afraid to take it out.
 void
 ROA::get_request(CORBA_Boolean use_threads,
 		    struct timeval *tvp,
@@ -312,9 +289,7 @@ ROA::get_request(CORBA_Boolean use_threads,
   get_request (skeleton, 0, use_threads, context, tvp, env);
 }
 
-// NOTE!  The only reason this method exists is because the method
-// above calls it.  Neither method is defined by the standard, so it's
-// possible that they'll BOTH go away.
+// OBSOLETE!!!  But stays in b/c the one above calls it.
 void
 ROA::get_request (
     BOA::dsi_handler	handler,

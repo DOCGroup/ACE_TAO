@@ -33,14 +33,6 @@
 #include	<initguid.h>
 
 
-#ifdef	_POSIX_THREADS
-//
-// If POSIX threads are available, set up lock covering refcounts.
-//
-static pthread_mutex_t		refcnt_lock = PTHREAD_MUTEX_INITIALIZER;
-#endif	// _POSIX_THREADS
-
-
 void
 CORBA_release (CORBA_TypeCode_ptr tc)
 {
@@ -145,28 +137,24 @@ ULONG
 __stdcall
 CORBA_TypeCode::AddRef ()
 {
-#ifdef	_POSIX_THREADS
-    Critical		region (&refcnt_lock);
-#endif
+  ACE_GUARD_RETURN(ACE_Thread_Mutex, guard, lock_, 0);
 
-    return _refcount++;
+  return _refcount++;
 }
 
 ULONG
 __stdcall
 CORBA_TypeCode::Release ()
 {
-#ifdef	_POSIX_THREADS
-    Critical		region (&refcnt_lock);
-#endif
+  ACE_GUARD_RETURN(ACE_Thread_Mutex, guard, lock_, 0);
 
-    assert (this != 0);
+  assert (this != 0);
 
-    if (--_refcount != 0)
-	return _refcount;
-    if (_orb_owns)
-	delete this;
-    return 0;
+  if (--_refcount != 0)
+    return _refcount;
+  if (_orb_owns)
+    delete this;
+  return 0;
 }
 
 HRESULT

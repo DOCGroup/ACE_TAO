@@ -81,80 +81,81 @@ extern const IID                  IID_IIOP_ServerRequest;
 
 class _EXPCLASS IIOP_ServerRequest : public CORBA_ServerRequest
 {
-  public:
-    //
-    // Constructor, destructor
-    //
-				IIOP_ServerRequest (
-				    CDR			*msg,
-				    CORBA_ORB_ptr	the_orb,
-				    BOA_ptr		the_boa
-				)
-				: _incoming (msg), _params (0), _retval (0),
-					_exception (0),
-					_ex_type (NO_EXCEPTION),
-					_refcount (1),
-					_orb (the_orb),
-					_boa (the_boa)
-				{ }
+public:
+  //
+  // Constructor, destructor
+  //
+  IIOP_ServerRequest (
+		      CDR			*msg,
+		      CORBA_ORB_ptr	the_orb,
+		      BOA_ptr		the_boa
+		      )
+    : _incoming (msg), _params (0), _retval (0),
+      _exception (0),
+      _ex_type (NO_EXCEPTION),
+      _refcount (1),
+      _orb (the_orb),
+      _boa (the_boa)
+  { }
 
-				virtual ~IIOP_ServerRequest ();
+  virtual ~IIOP_ServerRequest ();
 
-    //
-    // General ServerRequest operations
-    //
-    void __stdcall		params (
-				    CORBA_NVList_ptr	list,
-				    CORBA_Environment	&env
-				);
+  //
+  // General ServerRequest operations
+  //
+  void __stdcall		params (
+					CORBA_NVList_ptr	list,
+					CORBA_Environment	&env
+					);
 
-    void __stdcall		result (
-				    CORBA_Any_ptr	value,
-				    CORBA_Environment	&env
-				);
+  void __stdcall		result (
+					CORBA_Any_ptr	value,
+					CORBA_Environment	&env
+					);
 
-    void __stdcall		exception (
-				    CORBA_ExceptionType	type,
-				    CORBA_Any_ptr       value,
-				    CORBA_Environment   &env
-				);
+  void __stdcall		exception (
+					   CORBA_ExceptionType	type,
+					   CORBA_Any_ptr       value,
+					   CORBA_Environment   &env
+					   );
 
-    //
-    // Request attributes
-    //
-    CORBA_String __stdcall		op_name ();
-    CORBA_Principal_ptr __stdcall	caller ();
-    CORBA_Object_ptr __stdcall		target ();
-    CORBA_ORB_ptr __stdcall		orb ();
-    BOA_ptr __stdcall			oa ();
+  //
+  // Request attributes
+  //
+  CORBA_String __stdcall		op_name ();
+  CORBA_Principal_ptr __stdcall	caller ();
+  CORBA_Object_ptr __stdcall		target ();
+  CORBA_ORB_ptr __stdcall		orb ();
+  BOA_ptr __stdcall			oa ();
 
-    //
-    // Stuff required for COM IUnknown support
-    //
-    ULONG __stdcall		AddRef ();
-    ULONG __stdcall		Release ();
-    HRESULT __stdcall		QueryInterface (
-				    REFIID      riid,
-				    void        **ppv
-				);
+  //
+  // Stuff required for COM IUnknown support
+  //
+  ULONG __stdcall		AddRef ();
+  ULONG __stdcall		Release ();
+  HRESULT __stdcall		QueryInterface (
+						REFIID      riid,
+						void        **ppv
+						);
 
   // private:
-    CORBA_String		_opname;
-    CDR				*_incoming;
-    CORBA_NVList_ptr		_params;
-    CORBA_Any_ptr		_retval;
-    CORBA_Any_ptr		_exception;
-    CORBA_ExceptionType		_ex_type;
+  CORBA_String		_opname;
+  CDR				*_incoming;
+  CORBA_NVList_ptr		_params;
+  CORBA_Any_ptr		_retval;
+  CORBA_Any_ptr		_exception;
+  CORBA_ExceptionType		_ex_type;
 
-    //
-    // Just drop the refcount, don't destroy the object; most
-    // of these are stack-allocated.
-    //
-    void			release () { _refcount--; }
+  //
+  // Just drop the refcount, don't destroy the object; most
+  // of these are stack-allocated.
+  //
+  void			release () { _refcount--; }
 
-  private:
-    unsigned			_refcount;
-    CORBA_ORB_ptr		_orb;
-    BOA_ptr			_boa;
+private:
+  unsigned			_refcount;
+  ACE_Thread_Mutex lock_;
+  CORBA_ORB_ptr		_orb;
+  BOA_ptr			_boa;
 };
 #endif
