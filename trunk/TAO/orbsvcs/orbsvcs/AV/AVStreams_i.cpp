@@ -3305,7 +3305,7 @@ TAO_MMDevice::add_fdev (CORBA::Object_ptr fdev_obj,
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
 
-  if (CORBA::is_nil (fdev))
+  if (CORBA::is_nil (fdev.in ()))
     return 0;
 
   // Add it to the sequence of flowNames supported.
