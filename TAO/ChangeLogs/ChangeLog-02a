@@ -1,3 +1,15 @@
+Sat Dec 15 21:12:10 2001  Ossama Othman  <ossama@uci.edu>
+
+	* docs/performance.html:
+
+	  Draft of a new document designed to let TAO users know how to
+	  optimially tune TAO for their applications.
+
+	* docs/tao.css:
+
+	  Stylesheet used by the above document, and eventually the
+	  other existing documents.
+
 Sat Dec 15 11:54:31 2001  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_PrincipalAuthenticator.h:
