@@ -683,7 +683,6 @@ template class ACE_Unbounded_Set_Iterator<ACE_Static_Svc_Descriptor *>;
 template class ACE_Node<ACE_CString>;
 template class ACE_Unbounded_Queue<ACE_CString>;
 template class ACE_Unbounded_Queue_Iterator<ACE_CString>;
-template class ACE_Unbounded_Queue_Iterator<ACE_CString>;
 template class ACE_Unbounded_Set<ACE_CString>;
 template class ACE_Unbounded_Set_Iterator<ACE_CString>;
 template class ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex>;
@@ -696,7 +695,6 @@ template class ACE_Auto_Basic_Ptr<ACE_Obstack>;
 #pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Static_Svc_Descriptor *>
 #pragma instantiate ACE_Node<ACE_CString>
 #pragma instantiate ACE_Unbounded_Queue<ACE_CString>
-#pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_CString>
 #pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_CString>
 #pragma instantiate ACE_Unbounded_Set<ACE_CString>
 #pragma instantiate ACE_Unbounded_Set_Iterator<ACE_CString>
