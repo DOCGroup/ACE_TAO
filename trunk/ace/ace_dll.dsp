@@ -230,6 +230,10 @@ SOURCE=.\ATM_Stream.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Atomic_Op.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Base_Thread_Adapter.cpp
 # End Source File
 # Begin Source File
@@ -3178,23 +3182,6 @@ SOURCE=.\Active_Map_Manager_T.cpp
 
 SOURCE=.\Asynch_Acceptor.cpp
 # PROP Exclude_From_Build 1
-# End Source File
-# Begin Source File
-
-SOURCE=.\Atomic_Op.cpp
-
-!IF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 

@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_SYNCH_C
 #define ACE_SYNCH_C
 
@@ -12,11 +10,16 @@
 #include "ace/Synch.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID(ace, Synch, "$Id$")
+
+ACE_RCSID (ace,
+           Synch,
+           "$Id$")
+
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Synch.i"
 #endif /* __ACE_INLINE__ */
+
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Null_Mutex)
 
@@ -174,7 +177,7 @@ ACE_Mutex::dump (void) const
 ACE_Mutex::ACE_Mutex (int type, const ACE_TCHAR *name,
                       ACE_mutexattr_t *arg, mode_t mode)
   :
-#if defined (CHORUS) || defined(ACE_HAS_PTHREADS) || defined(ACE_HAS_STHREADS)
+#if defined (CHORUS) || defined (ACE_HAS_PTHREADS) || defined(ACE_HAS_STHREADS)
     process_lock_ (0),
     lockname_ (0),
 #endif /* CHORUS */
@@ -183,7 +186,7 @@ ACE_Mutex::ACE_Mutex (int type, const ACE_TCHAR *name,
   // ACE_TRACE ("ACE_Mutex::ACE_Mutex");
 
   // These platforms need process-wide mutex to be in shared memory.
-#if defined (CHORUS) || defined (ACE_HAS_PTHREADS) || defined (ACE_HAS_STHREADS)
+#if defined (CHORUS) || defined(ACE_HAS_PTHREADS) || defined (ACE_HAS_STHREADS)
   if (type == USYNC_PROCESS)
     {
       // Let's see if the shared memory entity already exists.
@@ -232,7 +235,10 @@ ACE_Mutex::ACE_Mutex (int type, const ACE_TCHAR *name,
     }
    // It is ok to fall through into the <mutex_init> below if the
    // USYNC_PROCESS flag is not enabled.
+#else
+  ACE_UNUSED_ARG (mode);
 #endif /* CHORUS */
+
   if (ACE_OS::mutex_init (&this->lock_,
                           type,
                           name,
