@@ -1,172 +1,180 @@
+Thu Jan 15 08:12:14 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * TAO_IDL/tao_idl.mpc:
+        * orbsvcs/IFR_Service/IFR_Service.mpc:
+
+          Replaced the use of the idlpreprocessor keyword with verbatim
+          clauses that give the same results.
+
 Wed Jan 14 18:46:49 2004  Balachandran  <bala@dre.vanderbilt.edu>
 
         * TAO version 1.4 released.
 
 Wed Jan 14 15:25:55 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* docs/releasenotes/index.html: 
+        * docs/releasenotes/index.html:
 
-	  Added a link to CIDLC from the releasenotes.
+          Added a link to CIDLC from the releasenotes.
 
 Wed Jan 14 14:55:18 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* Makefile:
+        * Makefile:
 
-	  Removed orbsvcs/README from the release process.
+          Removed orbsvcs/README from the release process.
 
 Wed Jan 14 11:41:00 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* docs/releasenotes/index.html: 
+        * docs/releasenotes/index.html:
 
-	  Added a link to CIAO.
+          Added a link to CIAO.
 
 Wed Jan 14 09:47:56 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* */*_Static.ds[p,w]:
+        * */*_Static.ds[p,w]:
 
-	  All the Win32 static projects and workspaces have been
-	  removed. Please use MPC to generate them. 
+          All the Win32 static projects and workspaces have been
+          removed. Please use MPC to generate them.
 
 Tue Jan 13 21:37:35 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* docs/Options.html: 
+        * docs/Options.html:
 
-	  Added documentation for -ORBDisableRTCollocation. Somehow this
-	  slipped through the cracks.
+          Added documentation for -ORBDisableRTCollocation. Somehow this
+          slipped through the cracks.
 
 Mon Jan 12 13:05:54 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/OctetSeqA.cpp:
-	* tao/OctetSeqA.h:
-	* tao/OctetSeqC.cpp:
-	* tao/OctetSeqC.h:
-	* tao/OctetSeqC.i:
+        * tao/OctetSeqA.cpp:
+        * tao/OctetSeqA.h:
+        * tao/OctetSeqC.cpp:
+        * tao/OctetSeqC.h:
+        * tao/OctetSeqC.i:
 
-	  Regenerated the files since the last checkin was not addressing
-	  things in a right manner.
-	
-	* tao/diffs/OctetSeq.diff:
+          Regenerated the files since the last checkin was not addressing
+          things in a right manner.
 
-	  Updated the diffs.
+        * tao/diffs/OctetSeq.diff:
+
+          Updated the diffs.
 
 Mon Jan 12 15:59:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tao/OctetSeqA.h:
-	  Added missing pre/post includes and TAO_Export macro to export the
-	  methods. Thanks to Heiko Bachmann <h.bachmann@unicontrol.de> for
-	  reporting this.
+        * tao/OctetSeqA.h:
+          Added missing pre/post includes and TAO_Export macro to export the
+          methods. Thanks to Heiko Bachmann <h.bachmann@unicontrol.de> for
+          reporting this.
 
 Mon Jan 12 01:20:33 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/Server_Request_Interceptor.cpp:
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/Server_Request_Interceptor.cpp:
 
-	  Fixed a simple problem with the way we used extraction operators
-	  that caused link errors on VC71.
+          Fixed a simple problem with the way we used extraction operators
+          that caused link errors on VC71.
 
 Sun Jan 11 08:43:09 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* orbsvcs/FTRT_Event_Service/Gateway_Service/FTRTEC_Gateway_Service.mpc:
-	  The extra file added was not required for GNU Makefiles.
+        * orbsvcs/FTRT_Event_Service/Gateway_Service/FTRTEC_Gateway_Service.mpc:
+          The extra file added was not required for GNU Makefiles.
 
 Sat Jan 10 23:17:55 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* tests/MT_Client/client.global.conf.xml:
-	* tests/MT_Client/client.tss.conf.xml:
+        * tests/MT_Client/client.global.conf.xml:
+        * tests/MT_Client/client.tss.conf.xml:
 
-	  These need to go too.
+          These need to go too.
 
 Sat Jan 10 23:09:14 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/MT_Client/client.global.conf:
-	* tests/MT_Client/client.tss.conf:
+        * tests/MT_Client/client.global.conf:
+        * tests/MT_Client/client.tss.conf:
 
-	  These configuration files are old and the options aren't
-	  supported any more. Nor are they used any more.
+          These configuration files are old and the options aren't
+          supported any more. Nor are they used any more.
 
 Sat Jan 10 22:56:57 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* performance-tests/Latency/Thread_Per_Connection/Roundtrip.cpp:
-	* tests/MT_Client/test_i.cpp:
+        * performance-tests/Latency/Thread_Per_Connection/Roundtrip.cpp:
+        * tests/MT_Client/test_i.cpp:
 
-	  The best fix for the problem outlined is "Sat Jan 10 21:17:10
-	  2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>" to
-	  wait for all threads exit () before finishing shutting down the
-	  ORB_Core. I was trying to avoid this with earlier checkins.
+          The best fix for the problem outlined is "Sat Jan 10 21:17:10
+          2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>" to
+          wait for all threads exit () before finishing shutting down the
+          ORB_Core. I was trying to avoid this with earlier checkins.
 
-	  The cost of avoiding this can be catostrophical though it doesn't
-	  show up for us. We now explicitly call shutdown with a boolean
-	  flag to prevent the crash. We have now moved the configuration
-	  details to the application, but looks like it is hard to avoid.
+          The cost of avoiding this can be catostrophical though it doesn't
+          show up for us. We now explicitly call shutdown with a boolean
+          flag to prevent the crash. We have now moved the configuration
+          details to the application, but looks like it is hard to avoid.
 
 Sat Jan 10 22:17:59 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Connection_Handler.cpp:
+        * tao/Connection_Handler.cpp:
 
-	  Reverted this change "Sat Jan 10 21:17:10 2004  Balachandran
-	  Natarajan  <bala@dre.vanderbilt.edu>" since it doesn't look
-	  like a right fix. This can cause other problems like silent
-	  crashes when threads exits.
+          Reverted this change "Sat Jan 10 21:17:10 2004  Balachandran
+          Natarajan  <bala@dre.vanderbilt.edu>" since it doesn't look
+          like a right fix. This can cause other problems like silent
+          crashes when threads exits.
 
 Sat Jan 10 21:42:47 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/FtRtEvent.mpc:
+        * orbsvcs/orbsvcs/FtRtEvent.mpc:
 
-	  Added a missing file, which gave rise to link errors with VC71
-	  builds.
+          Added a missing file, which gave rise to link errors with VC71
+          builds.
 
 Sat Jan 10 21:17:10 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Connection_Handler.cpp:
+        * tao/Connection_Handler.cpp:
 
-	  Increase the refcount of the ORB_Core in the constructor aand
-	  decrement the  refcount in the destructor. This may not be
-	  required at all. This is required only for the
-	  thread-per-connection model. A shutdown () call from a remote
-	  host could potentially cleanup the whole ORB and call ORB::fini
-	  () before the thread in svc_i () can try calling has_shutdown ()
-	  to exit out of the svc_i () loop. This could cause a crash. To
-	  prevent that from happening we will increment the refcount. With
-	  reactive model this is not be needed at all, since all the
-	  threads are  kicked out of the reactor before the ORB is
-	  shutdown by the closing thread.
+          Increase the refcount of the ORB_Core in the constructor aand
+          decrement the  refcount in the destructor. This may not be
+          required at all. This is required only for the
+          thread-per-connection model. A shutdown () call from a remote
+          host could potentially cleanup the whole ORB and call ORB::fini
+          () before the thread in svc_i () can try calling has_shutdown ()
+          to exit out of the svc_i () loop. This could cause a crash. To
+          prevent that from happening we will increment the refcount. With
+          reactive model this is not be needed at all, since all the
+          threads are  kicked out of the reactor before the ORB is
+          shutdown by the closing thread.
 
-	  Thanks to valgrind for helping me catch this. This should have
-	  slipped through for a very long time, if my guess is right.
+          Thanks to valgrind for helping me catch this. This should have
+          slipped through for a very long time, if my guess is right.
 
 Sat Jan 10 17:47:00 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* orbsvcs/performance-tests/RTEvent/lib/Send_Task.h:
+        * orbsvcs/performance-tests/RTEvent/lib/Send_Task.h:
 
-	  Fixed another warning with Forte 8 compilers, which complained
-	  about the ACE_Task_Base::init () being hidden.
+          Fixed another warning with Forte 8 compilers, which complained
+          about the ACE_Task_Base::init () being hidden.
 
 Sat Jan 10 17:25:23 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/FTRT_Event_Service/Gateway_Service/FTRTEC_Gateway_Service.mpc:
+        * orbsvcs/FTRT_Event_Service/Gateway_Service/FTRTEC_Gateway_Service.mpc:
 
-	  Added a missing file to the project. This was creating link
-	  error in VC71 builds.
+          Added a missing file to the project. This was creating link
+          error in VC71 builds.
 
 Sat Jan 10 12:27:59 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* orbsvcs/tests/FT_App/FT_App.mpc:
+        * orbsvcs/tests/FT_App/FT_App.mpc:
 
-	  Used the wrong library name as a dependency which broke the
-	  SunOS MPC builds from remedy.
+          Used the wrong library name as a dependency which broke the
+          SunOS MPC builds from remedy.
 
 Fri Jan  9 23:50:21 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* orbsvcs/tests/Miop/McastHello/McastHello.cpp:
+        * orbsvcs/tests/Miop/McastHello/McastHello.cpp:
 
-	  Fixed a warning in BCB6 in builds.
+          Fixed a warning in BCB6 in builds.
 
 Fri Jan  9 18:02:18 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/IDL_Test/enum_in_struct.idl:
+        * tests/IDL_Test/enum_in_struct.idl:
 
-	  Fixed a duplicate enum declaration. This showed up only in the
-	  TRU64 builds. Thanks to Johnny for arranging an access to a TRU
-	  64 box to find this problem out.
+          Fixed a duplicate enum declaration. This showed up only in the
+          TRU64 builds. Thanks to Johnny for arranging an access to a TRU
+          64 box to find this problem out.
 
 Fri Jan  9 13:31:09 2004  Chad Elliott  <elliott_c@ociweb.com>
 
