@@ -1,6 +1,6 @@
 
 /**
- * @file Kokyu_qos.idl
+ * @file Kokyu_qos.pidl
  *
  * $Id$
  *
@@ -16,7 +16,7 @@
  *     tao_idl -I $TAO_ROOT -Ge 1 Kokyu_qos.pidl
  *
  *   2. Then apply the patches in Kokyu_qosC.h.diff to the generated code.
- *   The patch will replace the inclusion of RTCORBAC.h and RTSchedulerC.h
+ *   The patch will replace the inclusion of RTCORBAC.h and RTSchedulerC.h 
  *   with RTCORBA.h and RTScheduler.h respectively.
  *
  * Apply patches using the following command:
@@ -36,7 +36,7 @@
 #define _KOKYU_DSRT_QOS_PIDL_
 
 #include <TimeBase.pidl>
-#include <tao/RTCORBA/RTCORBA_include.pidl>
+#include <tao/RTCORBA/RTCORBA.pidl>
 
 #pragma prefix "omg.org"
 
@@ -52,6 +52,9 @@ module Kokyu
     RTCORBA::Priority desired_priority;
     TimeBase::TimeT deadline;
     TimeBase::TimeT estimated_initial_execution_time;
+    TimeBase::TimeT period;
+    long task_id;
+//    And deadline info in QoS is a subdeadline for a subtask or a task deadline.
   };
 };
 
