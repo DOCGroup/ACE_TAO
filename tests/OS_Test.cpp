@@ -128,7 +128,7 @@ rename_test (void)
 
 
 int 
-main (int, char *argv[])
+main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("OS_Test"));
 
