@@ -93,6 +93,9 @@ namespace CORBA
     /// for string of return type.
     char *_retn (void);
 
+    /// TAO extension.
+    char *ptr (void);
+
   private:
     /// instance.
     char *ptr_;
@@ -208,6 +211,9 @@ namespace CORBA
 
     /// for string of return type.
     CORBA::WChar *_retn (void);
+
+    /// TAO extension.
+    CORBA::WChar *ptr (void);
 
   private:
     /// instance.

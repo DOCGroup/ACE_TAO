@@ -85,6 +85,7 @@ public:
   idl_bool cli_stub_cdr_op_gen (void);
   idl_bool cli_inline_cdr_op_gen (void);
   idl_bool cli_inline_cdr_decl_gen (void);
+  idl_bool cli_traits_gen (void);
 
   // Set the flag indicating that code generation is done.
   void cli_hdr_gen (idl_bool);
@@ -101,6 +102,7 @@ public:
   void cli_stub_cdr_op_gen (idl_bool);
   void cli_inline_cdr_op_gen (idl_bool);
   void cli_inline_cdr_decl_gen (idl_bool);
+  void cli_traits_gen (idl_bool);
 
   // Narrowing
   DEF_NARROW_METHODS1 (be_decl, AST_Decl);
@@ -123,7 +125,7 @@ private:
   idl_bool cli_stub_cdr_op_gen_;
   idl_bool cli_inline_cdr_op_gen_;
   idl_bool cli_inline_cdr_decl_gen_;
-
+  idl_bool cli_traits_gen_;
 };
 
 #endif // if !defined

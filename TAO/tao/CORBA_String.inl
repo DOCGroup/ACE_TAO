@@ -72,6 +72,13 @@ CORBA::String_var::_retn (void)
   return temp;
 }
 
+/// TAO extension.
+ACE_INLINE char *
+CORBA::String_var::ptr (void)
+{
+  return this->ptr_;
+}
+
 // ----------------------------------------------------
 //  String_out type
 // ----------------------------------------------------
@@ -204,6 +211,13 @@ CORBA::WString_var::_retn (void)
   CORBA::WChar *temp = this->ptr_;
   this->ptr_ = 0;
   return temp;
+}
+
+/// TAO extension.
+ACE_INLINE CORBA::WChar *
+CORBA::WString_var::ptr (void)
+{
+  return this->ptr_;
 }
 
 // ----------------------------------------------------

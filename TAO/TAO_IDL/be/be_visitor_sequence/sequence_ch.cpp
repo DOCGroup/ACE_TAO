@@ -71,6 +71,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
                         -1);
     }
 
+  bt->seen_in_sequence (I_TRUE);
   AST_Decl::NodeType nt = bt->node_type ();
 
   // If our base type is an anonymouse sequence, we must create a  name

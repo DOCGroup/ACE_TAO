@@ -39,7 +39,9 @@ be_type::be_type (void)
     be_decl (),
     tc_name_ (0),
     common_varout_gen_ (I_FALSE),
-    seen_in_sequence_ (I_FALSE)
+    seq_elem_tmplinst_ (I_FALSE),
+    seen_in_sequence_ (I_FALSE),
+    seen_in_operation_ (I_FALSE)
 {
 }
 
@@ -54,7 +56,9 @@ be_type::be_type (AST_Decl::NodeType nt,
              n),
     tc_name_ (0),
     common_varout_gen_ (I_FALSE),
-    seen_in_sequence_ (I_FALSE)
+    seq_elem_tmplinst_ (I_FALSE),
+    seen_in_sequence_ (I_FALSE),
+    seen_in_operation_ (I_FALSE)
 {
   if (n != 0)
     {
@@ -352,6 +356,18 @@ be_type::gen_common_tmplinst (TAO_OutStream *os)
 }
 
 idl_bool
+be_type::seq_elem_tmplinst (void) const
+{
+  return this->seq_elem_tmplinst_;
+}
+
+void
+be_type::seq_elem_tmplinst (idl_bool val)
+{
+  this->seq_elem_tmplinst_ = val;
+}
+
+idl_bool
 be_type::seen_in_sequence (void) const
 {
   return this->seen_in_sequence_;
@@ -361,6 +377,18 @@ void
 be_type::seen_in_sequence (idl_bool val)
 {
   this->seen_in_sequence_ = val;
+}
+
+idl_bool
+be_type::seen_in_operation (void) const
+{
+  return this->seen_in_operation_;
+}
+
+void
+be_type::seen_in_operation (idl_bool val)
+{
+  this->seen_in_operation_ = val;
 }
 
 AST_Decl::NodeType

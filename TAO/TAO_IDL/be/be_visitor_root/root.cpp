@@ -201,6 +201,24 @@ int be_visitor_root::visit_root (be_root *node)
         }
     }
 
+  status = 0;
+  ctx = *this->ctx_;
+
+  if (this->ctx_->state () == TAO_CodeGen::TAO_ROOT_CH)
+    {
+      be_visitor_traits visitor (&ctx);
+      status = node->accept (&visitor);
+
+      if (status == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_root::"
+                             "visit_root - "
+                             "failed to generate traits\n"),
+                            -1);
+        }
+    }
+
   // The next thing we need to do is make one more pass thru the entire tree
   // and generate code for all the <<= and >>= operators for all the
   // user-defined types.
