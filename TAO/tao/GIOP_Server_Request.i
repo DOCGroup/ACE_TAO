@@ -58,6 +58,13 @@ TAO_GIOP_ServerRequest::response_expected (void) const
   return this->response_expected_;
 }
 
+ACE_INLINE CORBA::Boolean
+TAO_GIOP_ServerRequest::deferred_reply (void) const
+{
+  return this->deferred_reply_;
+}
+
+
 ACE_INLINE void
 TAO_GIOP_ServerRequest::
 response_expected (CORBA::Boolean response)
@@ -134,5 +141,3 @@ TAO_GIOP_ServerRequest::profile (void)
 {
   return this->profile_;
 }
-
-

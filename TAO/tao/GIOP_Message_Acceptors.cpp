@@ -78,20 +78,13 @@ TAO_GIOP_Message_Acceptors::
                           TAO_ORB_Core* orb_core,
                           TAO_InputCDR &input)
 {
-  // Get the revision info
-  TAO_GIOP_Version version (this->major_version (),
-                            this->minor_version ());
-
-
-
   // This will extract the request header, set <response_required>
   // and <sync_with_server> as appropriate.
   TAO_GIOP_ServerRequest request (this,
                                   input,
                                   *this->output_,
                                   transport,
-                                  orb_core,
-                                  version);
+                                  orb_core);
 
   CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ();
 
@@ -113,57 +106,10 @@ TAO_GIOP_Message_Acceptors::
 
       response_required = request.response_expected ();
 
-#if (TAO_NO_IOR_TABLE == 0)
-      const CORBA::Octet *object_key =
-        request.object_key ().get_buffer ();
-
-      if (ACE_OS::memcmp (object_key,
-                          &TAO_POA::objectkey_prefix[0],
-                          TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE) != 0)
-        {
-          ACE_CString object_id (ACE_reinterpret_cast (const char *,
-                                                       object_key),
-                                 request.object_key ().length (),
-                                 0,
-                                 0);
-
-          // @@ This debugging output should *NOT* be used since the
-          //    object key string is not null terminated, nor can it
-          //    be null terminated without copying.  No copying should
-          //    be done since performance is somewhat important here.
-          //    So, just remove the debugging output entirely.
-          //
-          //           if (TAO_debug_level > 0)
-          //             ACE_DEBUG ((LM_DEBUG,
-          //                         "Simple Object key %s. "
-          //                         "Doing the Table Lookup ...\n",
-          //                         object_id.c_str ()));
-
-          //CORBA::Object_ptr object_reference =
-          CORBA::Object_var object_reference =
-            CORBA::Object::_nil ();
-
-          // Do the Table Lookup.
-          int status =
-            orb_core->orb ()->_tao_find_in_IOR_table (object_id,
-                                                      object_reference.out ());
-
-          // If ObjectID not in table or reference is nil raise
-          // OBJECT_NOT_EXIST.
-
-          if (status == -1 || CORBA::is_nil (object_reference.in ()))
-            ACE_TRY_THROW (CORBA::OBJECT_NOT_EXIST ());
-
-          // ObjectID present in the table with an associated NON-NULL
-          // reference.  Throw a forward request exception.
-
-          /*CORBA::Object_ptr dup =
-            CORBA::Object::_duplicate (object_reference);*/
-
-          // @@ We could simply write the response at this point...
-          ACE_TRY_THROW (PortableServer::ForwardRequest (object_reference.in ()));
-        }
-#endif /* TAO_NO_IOR_TABLE */
+      this->find_ior_in_table (request.object_key (),
+                               orb_core,
+                               ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // Do this before the reply is sent.
       orb_core->object_adapter ()->dispatch_servant (
@@ -314,10 +260,6 @@ TAO_GIOP_Message_Acceptors::
                          TAO_ORB_Core* orb_core,
                          TAO_InputCDR &input)
 {
-  // Get the revision info
-  TAO_GIOP_Version version (this->major_version (),
-                            this->minor_version ());
-
   // This will extract the request header, set <response_required> as
   // appropriate.
   TAO_GIOP_Locate_Request_Header locate_request (input,
@@ -338,53 +280,12 @@ TAO_GIOP_Message_Acceptors::
       if (parse_error != 0)
         ACE_TRY_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                        CORBA::COMPLETED_NO));
-#if (TAO_NO_IOR_TABLE == 0)
 
-      const CORBA::Octet *object_key =
-        locate_request.object_key ().get_buffer ();
+      this->find_ior_in_table (locate_request.object_key (),
+                               orb_core,
+                               ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-      if (ACE_OS::memcmp (object_key,
-                          &TAO_POA::objectkey_prefix[0],
-                          TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE) != 0)
-        {
-          CORBA::ULong len =
-            locate_request.object_key ().length ();
-
-          ACE_CString object_id (ACE_reinterpret_cast (const char *,
-                                                       object_key),
-                                 len,
-                                 0,
-                                 0);
-
-          if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("Simple Object key %s. Doing the Table Lookup ...\n"),
-                        object_id.c_str ()));
-
-          CORBA::Object_ptr object_reference;
-
-          // Do the Table Lookup.
-          int find_status =
-            orb_core->orb ()->_tao_find_in_IOR_table (object_id,
-                                                      object_reference);
-
-          // If ObjectID not in table or reference is nil raise
-          // OBJECT_NOT_EXIST.
-
-          if (CORBA::is_nil (object_reference)
-              || find_status == -1)
-            ACE_TRY_THROW (CORBA::OBJECT_NOT_EXIST ());
-
-          // ObjectID present in the table with an associated NON-NULL
-          // reference.  Throw a forward request exception.
-
-          CORBA::Object_ptr dup =
-            CORBA::Object::_duplicate (object_reference);
-
-          // @@ We could simply write the response at this point...
-          ACE_TRY_THROW (PortableServer::ForwardRequest (dup));
-        }
-#endif /* TAO_NO_IOR_TABLE */
       // Execute a fake request to find out if the object is there or
       // if the POA can activate it on demand...
       char repbuf[ACE_CDR::DEFAULT_BUFSIZE];
@@ -392,8 +293,6 @@ TAO_GIOP_Message_Acceptors::
                                   sizeof repbuf);
       // This output CDR is not used!
 
-      // This could be tricky if the target_address does not have the
-      // object key. Till then .. Bala
       TAO_ObjectKey tmp_key (locate_request.object_key ().length (),
                              locate_request.object_key ().length (),
                              locate_request.object_key ().get_buffer (),
@@ -403,15 +302,18 @@ TAO_GIOP_Message_Acceptors::
       parse_error = 1;
       CORBA::ULong req_id = locate_request.request_id ();
 
+      // We will send the reply. The ServerRequest class need not send
+      // the reply
+      CORBA::Boolean deferred_reply = 1;
       TAO_GIOP_ServerRequest server_request (this,
                                              req_id,
                                              response_required,
+                                             deferred_reply,
                                              tmp_key,
                                              "_non_existent",
                                              dummy_output,
                                              transport,
                                              orb_core,
-                                             version,
                                              parse_error);
       if (parse_error != 0)
         ACE_TRY_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
@@ -488,6 +390,67 @@ TAO_GIOP_Message_Acceptors::
                                        status_info);
 }
 
+void
+TAO_GIOP_Message_Acceptors::
+  find_ior_in_table (TAO_ObjectKey &object_key,
+                     TAO_ORB_Core *orb_core,
+                     CORBA::Environment &ACE_TRY_ENV)
+{
+#if (TAO_NO_IOR_TABLE == 0)
+  const CORBA::Octet *key =
+    object_key.get_buffer ();
+
+  if (ACE_OS::memcmp (key,
+                      &TAO_POA::objectkey_prefix[0],
+                      TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE) != 0)
+    {
+      ACE_CString object_id (ACE_reinterpret_cast (const char *,
+                                                   key),
+                             object_key.length (),
+                             0,
+                             0);
+      // @@ This debugging output should *NOT* be used since the
+      //    object key string is not null terminated, nor can it
+      //    be null terminated without copying.  No copying should
+      //    be done since performance is somewhat important here.
+      //    So, just remove the debugging output entirely.
+      //
+      //           if (TAO_debug_level > 0)
+      //             ACE_DEBUG ((LM_DEBUG,
+      //                         "Simple Object key %s. "
+      //                         "Doing the Table Lookup ...\n",
+      //                         object_id.c_str ()));
+
+      //CORBA::Object_ptr object_reference =
+      CORBA::Object_var object_reference =
+        CORBA::Object::_nil ();
+
+      // Do the Table Lookup.
+      int status =
+        orb_core->orb ()->_tao_find_in_IOR_table (object_id,
+                                                  object_reference.out ());
+
+      // If ObjectID not in table or reference is nil raise
+      // OBJECT_NOT_EXIST.
+
+      if (status == -1 || CORBA::is_nil (object_reference.in ()))
+        ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
+
+      // ObjectID present in the table with an associated NON-NULL
+      // reference.  Throw a forward request exception.
+
+      /*CORBA::Object_ptr dup =
+        CORBA::Object::_duplicate (object_reference);*/
+
+      // @@ We could simply write the response at this point...
+      ACE_THROW (PortableServer::ForwardRequest (object_reference.in ()));
+    }
+#else
+  ACE_UNUSED_ARG (object_key);
+  ACE_UNUSED_ARG (orb_core);
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
+#endif /* TAO_NO_IOR_TABLE */
+}
 
 int
 TAO_GIOP_Message_Acceptors::
