@@ -5,8 +5,8 @@
 #include "tao/Connect.h"
 #include "tao/Timeprobe.h"
 #include "tao/CDR.h"
-#include "tao/IIOP_RMS.h"
-#include "tao/IIOP_Reply_Dispatcher.h"
+#include "tao/Request_Mux_Strategy.h"
+#include "tao/Reply_Dispatcher.h"
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
@@ -43,8 +43,8 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Transport_Timeprobe_Description,
 
 
 TAO_IIOP_Transport::TAO_IIOP_Transport (TAO_IIOP_Handler_Base* handler,
-                                        TAO_IIOP_Request_Multiplexing_Strategy *rms,
-                                        TAO_IIOP_Wait_Strategy *ws)
+                                        TAO_Request_Mux_Strategy *rms,
+                                        TAO_Wait_Strategy *ws)
   : TAO_Transport (rms, ws),
     handler_(handler),
     tag_(TAO_IOP_TAG_INTERNET_IOP)
@@ -63,8 +63,8 @@ TAO_IIOP_Server_Transport::TAO_IIOP_Server_Transport (TAO_Server_Connection_Hand
 }
 
 TAO_IIOP_Client_Transport::TAO_IIOP_Client_Transport (TAO_Client_Connection_Handler *handler,
-                                                      TAO_IIOP_Request_Multiplexing_Strategy *rms,
-                                                      TAO_IIOP_Wait_Strategy *ws)
+                                                      TAO_Request_Mux_Strategy *rms,
+                                                      TAO_Wait_Strategy *ws)
   :  TAO_IIOP_Transport (handler,
                          rms,
                          ws),
@@ -267,7 +267,7 @@ TAO_IIOP_Client_Transport::handle_client_input (int block)
                       -1);
 
   // Find the TAO_Reply_Handler for that request ID!
-  TAO_IIOP_Reply_Dispatcher* reply_dispatcher =
+  TAO_Reply_Dispatcher* reply_dispatcher =
     this->rms_->find_dispatcher (request_id);
   if (reply_dispatcher == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
