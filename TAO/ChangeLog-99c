@@ -1,3 +1,20 @@
+Mon Jun  7 20:37:27 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/tests/Simple_Naming/client.h:
+	* orbsvcs/tests/Simple_Naming/client.cpp:
+	  The ORB was beign leaked: the TAO_ORB_Manager::orb() method
+	  returns a duplicate and that was not getting released in both
+	  the MT_Test constructor invocation and in the
+	  naming_client.init() call.
+
+	* tao/ORB.cpp:
+	  The naming service and other object references should be release 
+	  *before* releasing the ORB core.
+
+	* tao/ORB_Core.cpp:
+	  Made the use of ACE_CString in the ORB_Table explicit, so we
+	  understand what is going on.
+
 Mon Jun  7 16:13:31 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Exception.h:
