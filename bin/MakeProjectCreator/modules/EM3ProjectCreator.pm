@@ -36,13 +36,8 @@ sub fill_value {
 
 sub project_file_name {
   my($self) = shift;
-  return $self->project_name() . '.vcp';
-}
-
-
-sub static_project_file_name {
-  my($self) = shift;
-  return $self->project_name() . $self->get_static_append() . '.vcp';
+  return $self->get_modified_project_file_name($self->project_name(),
+                                               '.vcp');
 }
 
 

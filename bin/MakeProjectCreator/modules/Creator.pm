@@ -26,7 +26,7 @@ use vars qw(@ISA);
 my(@statekeys) = ('global', 'include', 'template', 'ti',
                   'dynamic', 'static', 'relative', 'addtemp',
                   'addproj', 'progress', 'toplevel', 'baseprojs',
-                  'feature_file', 'hierarchy',
+                  'feature_file', 'hierarchy', 'name_modifier',
                  );
 
 my(%all_written) = ();
@@ -51,6 +51,7 @@ sub new {
   my($baseprojs) = shift;
   my($feature)   = shift;
   my($hierarchy) = shift;
+  my($nmodifier) = shift;
   my($type)      = shift;
   my($self)      = Parser::new($class, $inc);
 
@@ -75,6 +76,7 @@ sub new {
   $self->{'static'}         = $static;
   $self->{'feature_file'}   = $feature;
   $self->{'hierarchy'}      = $hierarchy;
+  $self->{'name_modifier'}  = $nmodifier;
 
   return $self;
 }
@@ -756,6 +758,12 @@ sub get_hierarchy {
   my($self) = shift;
   return $self->{'hierarchy'};
 }
+
+sub get_name_modifier {
+  my($self) = shift;
+  return $self->{'name_modifier'};
+}
+
 
 # ************************************************************
 # Virtual Methods To Be Overridden

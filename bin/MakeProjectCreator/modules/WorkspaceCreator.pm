@@ -64,11 +64,12 @@ sub new {
   my($hierarchy) = shift;
   my($exclude)   = shift;
   my($makeco)    = shift;
+  my($nmod)      = shift;
   my($self)      = Creator::new($class, $global, $inc,
                                 $template, $ti, $dynamic, $static,
                                 $relative, $addtemp, $addproj,
                                 $progress, $toplevel, $baseprojs,
-                                $feature, $hierarchy, 'workspace');
+                                $feature, $hierarchy, $nmod, 'workspace');
   my($typecheck) = $self->{'type_check'};
 
   $self->{'workspace_name'}      = undef;
@@ -133,9 +134,9 @@ sub parse_line {
 
           ## End of workspace; Have subclass write out the file
           ## Generate the project files
-          my($gstat, $generator) = $self->generate_project_files();
+          my($gstat, $creator) = $self->generate_project_files();
           if ($gstat) {
-            ($status, $errorString) = $self->write_workspace($generator, 1);
+            ($status, $errorString) = $self->write_workspace($creator, 1);
             $self->{'assign'} = {};
           }
           else {
@@ -475,7 +476,7 @@ sub get_workspace_name {
 
 sub write_workspace {
   my($self)      = shift;
-  my($generator) = shift;
+  my($creator)   = shift;
   my($addfile)   = shift;
   my($status)    = 1;
   my($error)     = '';
@@ -534,7 +535,7 @@ sub write_workspace {
       my($different) = 1;
       if (open($fh, ">$tmp")) {
         $self->pre_workspace($fh);
-        $self->write_comps($fh, $generator);
+        $self->write_comps($fh, $creator);
         $self->post_workspace($fh);
         close($fh);
 
@@ -621,7 +622,7 @@ sub topname {
 
 sub generate_hierarchy {
   my($self)      = shift;
-  my($generator) = shift;
+  my($creator)   = shift;
   my($origproj)  = shift;
   my($originfo)  = shift;
   my($current)   = undef;
@@ -644,7 +645,7 @@ sub generate_hierarchy {
     elsif ($top ne $current) {
       ## Write out the hierachical workspace
       $self->cd($current);
-      $self->generate_hierarchy($generator, \@saved, \%sinfo);
+      $self->generate_hierarchy($creator, \@saved, \%sinfo);
 
       $self->{'projects'}       = \@saved;
       $self->{'project_info'}   = \%sinfo;
@@ -653,10 +654,10 @@ sub generate_hierarchy {
       ## Add implict project dependencies based on source files
       ## that have been used by multiple projects
       if ($self->generate_implicit_project_dependencies()) {
-        $self->add_implicit_project_dependencies($generator, $self->getcwd());
+        $self->add_implicit_project_dependencies($creator, $self->getcwd());
       }
 
-      my($status, $error) = $self->write_workspace($generator);
+      my($status, $error) = $self->write_workspace($creator);
       if (!$status) {
         print STDERR "$error\n";
       }
@@ -675,7 +676,7 @@ sub generate_hierarchy {
   }
   if (defined $current && $current ne '.') {
     $self->cd($current);
-    $self->generate_hierarchy($generator, \@saved, \%sinfo);
+    $self->generate_hierarchy($creator, \@saved, \%sinfo);
 
     $self->{'projects'}       = \@saved;
     $self->{'project_info'}   = \%sinfo;
@@ -684,10 +685,10 @@ sub generate_hierarchy {
     ## Add implict project dependencies based on source files
     ## that have been used by multiple projects
     if ($self->generate_implicit_project_dependencies()) {
-      $self->add_implicit_project_dependencies($generator, $self->getcwd());
+      $self->add_implicit_project_dependencies($creator, $self->getcwd());
     }
 
-    my($status, $error) = $self->write_workspace($generator);
+    my($status, $error) = $self->write_workspace($creator);
     if (!$status) {
       print STDERR "$error\n";
     }
@@ -701,21 +702,21 @@ sub generate_project_files {
   my($status)    = (scalar @{$self->{'project_files'}} == 0 ? 1 : 0);
   my(@projects)  = ();
   my(%pi)        = ();
-  my($generator) = $self->project_creator();
+  my($creator)   = $self->project_creator();
   my($cwd)       = $self->getcwd();
   my($impl)      = $self->get_assignment('implicit');
-  my($postkey)   = $generator->get_dynamic() .
-                   $generator->get_static() . "-$self";
+  my($postkey)   = $creator->get_dynamic() .
+                   $creator->get_static() . "-$self";
   my($previmpl)  = $impl;
   my($prevcache) = $self->{'cacheok'};
-  my(%gstate)    = $generator->save_state();
+  my(%gstate)    = $creator->save_state();
   my($genimpdep) = $self->generate_implicit_project_dependencies();
 
   ## Remove the address portion of the $self string
   $postkey =~ s/=.*//;
 
   ## Set the source file callback on our project creator
-  $generator->set_source_listing_callback([\&source_listing_callback, $self]);
+  $creator->set_source_listing_callback([\&source_listing_callback, $self]);
 
   foreach my $ofile (@{$self->{'project_files'}}) {
     if (!$self->excluded($ofile)) {
@@ -741,8 +742,8 @@ sub generate_project_files {
           my(%parameters) = $self->current_parameters();
           $self->process_cmdline($cmdline, \%parameters);
 
-          ## Set the parameters on the generator
-          $generator->restore_state(\%parameters);
+          ## Set the parameters on the creator
+          $creator->restore_state(\%parameters);
           $restore = 1;
         }
       }
@@ -756,7 +757,7 @@ sub generate_project_files {
         ## If the implicit assignment value was not a number, then
         ## we will add this value to our base projects.
         if ($impl !~ /^\d+$/) {
-          my($bps) = $generator->get_baseprojs();
+          my($bps) = $creator->get_baseprojs();
           push(@$bps, split(/\s+/, $impl));
           $restore = 1;
           $self->{'cacheok'} = 0;
@@ -778,20 +779,20 @@ sub generate_project_files {
           $status = 1;
         }
         else {
-          $status = $generator->generate(basename($file));
+          $status = $creator->generate(basename($file));
 
           ## If any one project file fails, then stop
           ## processing altogether.
           if (!$status) {
             ## We don't restore the state before we leave,
             ## but that's ok since we will be exiting soon.
-            return $status, $generator;
+            return $status, $creator;
           }
 
           ## Get the individual project information and
           ## generated file name(s)
-          $gen = $generator->get_files_written();
-          $gpi = $generator->get_project_info();
+          $gen = $creator->get_files_written();
+          $gpi = $creator->get_project_info();
 
           ## If we need to generate a workspace file per project
           ## then we generate a temporary project info and projects
@@ -809,13 +810,13 @@ sub generate_project_files {
             ## Add implict project dependencies based on source files
             ## that have been used by multiple projects
             if ($genimpdep) {
-              $self->add_implicit_project_dependencies($generator,
+              $self->add_implicit_project_dependencies($creator,
                                                        $self->getcwd());
             }
 
             ## Write our per project workspace
             my($error) = '';
-            ($status, $error) = $self->write_workspace($generator);
+            ($status, $error) = $self->write_workspace($creator);
             if (!$status) {
               print STDERR "$error\n";
             }
@@ -837,7 +838,7 @@ sub generate_project_files {
         ## Unable to change to the directory.
         ## We don't restore the state before we leave,
         ## but that's ok since we will be exiting soon.
-        return 0, $generator;
+        return 0, $creator;
       }
 
       ## Return things to the way they were
@@ -846,7 +847,7 @@ sub generate_project_files {
       }
       if ($restore) {
         $self->{'cacheok'} = $prevcache;
-        $generator->restore_state(\%gstate);
+        $creator->restore_state(\%gstate);
       }
     }
     else {
@@ -857,7 +858,7 @@ sub generate_project_files {
 
   if ($self->get_hierarchy()) {
     my($orig) = $self->{'workspace_name'};
-    $self->generate_hierarchy($generator, \@projects, \%pi);
+    $self->generate_hierarchy($creator, \@projects, \%pi);
     $self->{'workspace_name'} = $orig;
   }
 
@@ -867,10 +868,10 @@ sub generate_project_files {
   ## Add implict project dependencies based on source files
   ## that have been used by multiple projects
   if ($status && $genimpdep) {
-    $self->add_implicit_project_dependencies($generator, $cwd);
+    $self->add_implicit_project_dependencies($creator, $cwd);
   }
 
-  return $status, $generator;
+  return $status, $creator;
 }
 
 
@@ -901,7 +902,7 @@ sub array_contains {
 
 sub add_implicit_project_dependencies {
   my($self)      = shift;
-  my($generator) = shift;
+  my($creator)   = shift;
   my($cwd)       = shift;
   my(%bidir)     = ();
   my(%save)      = ();
@@ -936,11 +937,11 @@ sub add_implicit_project_dependencies {
           else {
             $bidir{$key} = [$ikey];
           }
-          my($append) = $generator->translate_value('after', $key);
+          my($append) = $creator->translate_value('after', $key);
           my($file)   = $self->{'project_file_list'}->{$ikey}->[0];
           my($dir)    = $self->{'project_file_list'}->{$ikey}->[1];
           my($cfile)  = $self->escape_regex_special(
-                              $generator->translate_value('after', $ikey));
+                              $creator->translate_value('after', $ikey));
           ## Remove our starting directory from the projects directory
           ## to get the right part of the directory to prepend.
           $dir =~ s/^$cwd[\/\\]*//;
@@ -1281,7 +1282,8 @@ sub project_creator {
                    $parameters{'feature_file'},
                    $parameters{'hierarchy'},
                    $self->{'exclude'}->{$self->{'wctype'}},
-                   $self->make_coexistence());
+                   $self->make_coexistence(),
+                   $parameters{'name_modifier'});
 }
 
 
@@ -1301,6 +1303,12 @@ sub get_modified_workspace_name {
   my($self)   = shift;
   my($name)   = shift;
   my($ext)    = shift;
+  my($nmod)   = $self->get_name_modifier();
+
+  if (defined $nmod) {
+    $nmod =~ s/\*/$name/g;
+    $name = $nmod;
+  }
 
   ## If this is a per project workspace, then we should not
   ## modify the workspace name.  It may overwrite another workspace

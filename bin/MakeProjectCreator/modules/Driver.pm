@@ -40,7 +40,7 @@ sub new {
 
   $self->{'path'}     = $path;
   $self->{'name'}     = $name;
-  $self->{'version'}  = "2.2";
+  $self->{'version'}  = "2.3";
   $self->{'types'}    = {};
   $self->{'creators'} = \@creators;
   $self->{'default'}  = $creators[0];
@@ -98,11 +98,11 @@ sub optionError {
                "Usage: $base [-global <file>] [-include <directory>] [-recurse]]\n" .
                $spaces . "[-ti <dll | lib | dll_exe | lib_exe>:<file>] [-hierarchy]\n" .
                $spaces . "[-template <file>] [-relative NAME=VAR] [-base <project>]\n" .
-               $spaces . "[-noreldefs] [-notoplevel] [-static] [-static_only]\n" .
+               $spaces . "[-noreldefs] [-notoplevel] [-static]\n" .
                $spaces . "[-value_template <NAME+=VAL | NAME=VAL | NAME-=VAL>]\n" .
                $spaces . "[-value_project <NAME+=VAL | NAME=VAL | NAME-=VAL>]\n" .
                $spaces . "[-feature_file <file name>] [-make_coexistence]\n" .
-               $spaces . "[-exclude <directories>]\n" .
+               $spaces . "[-exclude <directories>] [-name_modifier <pattern>]\n" .
                $spaces . "[-type <";
 
   my(@keys) = sort keys %{$self->{'types'}};
@@ -137,9 +137,8 @@ sub optionError {
 "                       for the specific type as shown above\n" .
 "                       (ex. -ti dll_exe:vc8exe)\n" .
 "       -template       Specifies the template name (with no extension).\n" .
-"       -static         Specifies that static projects will be generated in\n" .
-"                       addition to dynamic projects.\n" .
-"       -static_only    Specifies that only static projects will be generated.\n" .
+"       -static         Specifies that only static projects will be generated.\n" .
+"                       By default, only dynamic projects will be generated.\n" .
 "       -recurse        Recurse from the current directory and generate from\n" .
 "                       all found input files.\n" .
 "       -relative       Any \$() variable in an mpc that is matched to NAME\n" .
@@ -147,6 +146,9 @@ sub optionError {
 "                       relative path based on the current working directory.\n" .
 "       -make_coexistence If multiple 'make' based project types are\n" .
 "                       generated, they will be named such that they can coexist.\n" .
+"       -name_modifier  Modify output names.  The pattern passed to this\n" .
+"                       parameter will have the '*' portion replaced with the\n" .
+"                       actual output name.  Ex. *_Static\n" .
 "       -noreldefs      Do not try to generate default relative definitions.\n" .
 "       -notoplevel     Do not generate the top level target file.  Files\n" .
 "                       are still process, but no top level file is created.\n" .
@@ -202,9 +204,9 @@ sub run {
   ## has been 'required'
   my(%loaded) = ();
 
-  ## Set up the default generator, if no type is selected
-  if (!defined $options->{'generators'}->[0]) {
-    push(@{$options->{'generators'}}, $self->{'default'});
+  ## Set up the default creator, if no type is selected
+  if (!defined $options->{'creators'}->[0]) {
+    push(@{$options->{'creators'}}, $self->{'default'});
   }
 
   if ($options->{'recurse'}) {
@@ -215,17 +217,17 @@ sub run {
                          'specified when using -recurse');
     }
     else {
-      ## We have to load at least one generator here in order
+      ## We have to load at least one creator here in order
       ## to call the generate_recursive_input_list virtual function.
-      my($name) = $options->{'generators'}->[0];
+      my($name) = $options->{'creators'}->[0];
       if (!$loaded{$name}) {
         require "$name.pm";
         $loaded{$name} = 1;
       }
 
       ## Generate the recursive input list
-      my($generator) = $name->new();
-      my(@input) = $generator->generate_recursive_input_list('.');
+      my($creator) = $name->new();
+      my(@input) = $creator->generate_recursive_input_list('.');
       $options->{'input'} = \@input;
 
       ## If no files were found above, then we issue a warning
@@ -319,13 +321,13 @@ sub run {
       $base = '';
     }
 
-    foreach my $name (@{$options->{'generators'}}) {
+    foreach my $name (@{$options->{'creators'}}) {
       if (!$loaded{$name}) {
         require "$name.pm";
         $loaded{$name} = 1;
       }
       my($file) = $cfile;
-      my($generator) = $name->new($options->{'global'},
+      my($creator) = $name->new($options->{'global'},
                                   $options->{'include'},
                                   $options->{'template'},
                                   $options->{'ti'},
@@ -341,10 +343,11 @@ sub run {
                                   $options->{'feature_file'},
                                   $options->{'hierarchy'},
                                   $options->{'exclude'},
-                                  $options->{'coexistence'});
+                                  $options->{'coexistence'},
+                                  $options->{'name_modifier'});
       if ($base ne $file) {
         my($dir) = ($base eq '' ? $file : dirname($file));
-        if (!$generator->cd($dir)) {
+        if (!$creator->cd($dir)) {
           print STDERR "ERROR: Unable to change to directory: $dir\n";
           $status++;
           last;
@@ -362,14 +365,14 @@ sub run {
         print '' . ($partial ne '' ? "$partial/" : '') . $file;
       }
       print "\n" . 'Start Time: ' . scalar(localtime(time())) . "\n";
-      if (!$generator->generate($file)) {
+      if (!$creator->generate($file)) {
         print STDERR "ERROR: Unable to process: " .
                      ($file eq '' ? 'default input' : $file) . "\n";
         $status++;
         last;
       }
       print '  End Time: ' . scalar(localtime(time())) . "\n";
-      $generator->cd($orig_dir);
+      $creator->cd($orig_dir);
     }
     if ($status) {
       last;

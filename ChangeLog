@@ -1,3 +1,38 @@
+Fri Dec 19 07:19:37 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/README:
+        * bin/MakeProjectCreator/USAGE:
+        * bin/MakeProjectCreator/modules/AutomakeProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/BorlandProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/CbxProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/Creator.pm:
+        * bin/MakeProjectCreator/modules/Driver.pm:
+        * bin/MakeProjectCreator/modules/EM3ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/GHSProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/GNUACEProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/MakeProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/NMakeProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/Options.pm:
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/TemplateParser.pm:
+        * bin/MakeProjectCreator/modules/VA4ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/VC6ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/VC7ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          Added a workspace/project name modifier (-name_modifier) which can
+          be used to modify workspace and project names using a pattern
+          replacement.  The parameter passed to -name_modifier will have any
+          instances of the asterisk character repaced with the actual
+          workspace or project name.
+
+          Also, deprecated the -static_only option and modified -static to
+          generate only static projects (since dynamic and static couldn't
+          co-exist with the vc6 and vc7 types).
+
+          And, finally, replaced $generator with $creator which is more
+          consistent with object names.
+
 Fri Dec 19 11:45:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-osf1-3.2.h:
@@ -58,11 +93,11 @@ Fri Dec 19 03:29:33 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Fri Dec 19 01:27:00 UTC 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* examples/Reactor/WFMO_Reactor/Abandoned.cpp (handle_timeout):
+        * examples/Reactor/WFMO_Reactor/Abandoned.cpp (handle_timeout):
 
-	  Must remove handler from the Reactor before the handler dies.
-	  Otherwise, a call back from the Reactor will result in a seg
-	  fault.
+          Must remove handler from the Reactor before the handler dies.
+          Otherwise, a call back from the Reactor will result in a seg
+          fault.
 
 Fri Dec 19 01:26:00 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 

@@ -57,7 +57,7 @@ sub project_file_name {
     $name = $self->project_name();
   }
 
-  return "$name.bor";
+  return $self->get_modified_project_file_name($name, '.bor');
 }
 
 

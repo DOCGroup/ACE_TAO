@@ -350,7 +350,7 @@ The first is 'cmdline'.  The values given to the cmdline assignment will be
 processed as command line options, but only to the projects that are
 contained within the workspace (or the scope of the assignment).  The only
 valid command line options for cmdline are -base, -global, -include, -ti,
--template, -static, -static_only, -relative, -notoplevel, -value_template
+-template, -static, -relative, -notoplevel, -value_template
 and -value_project.
 
 The second assignment is 'implicit'.  This assignment takes two different

@@ -867,7 +867,7 @@ sub collect_data {
   }
 
   ## A tiny hack (mainly for VC6 projects)
-  ## for the workspace generator.  It needs to know the
+  ## for the workspace creator.  It needs to know the
   ## target names to match up with the project name.
   $prjc->update_project_info($self, 0, ['project_name']);
 
