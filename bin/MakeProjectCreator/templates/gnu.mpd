@@ -33,15 +33,11 @@ SHLIB            = $(SHLIB_UNCHECKED)
 <%endif%>
 <%if(tao)%>
 
-ifndef TAO_ROOT
-  TAO_ROOT = $(ACE_ROOT)/TAO
-endif
+TAO_ROOT ?= $(ACE_ROOT)/TAO
 <%endif%>
 <%if(ciao)%>
 
-ifndef CIAO_ROOT
-  CIAO_ROOT = $(TAO_ROOT)/CIAO
-endif
+CIAO_ROOT ?= $(TAO_ROOT)/CIAO
 <%endif%>
 
 <%if(grouped_source_files)%>
@@ -161,14 +157,11 @@ endif
 # The compiler/linker isn't too smart about instantiating templates...
 ifdef TEMPINCDIR
 TEMPINCDIR := $(TEMPINCDIR)/<%project_name%>
-
 all: $(TEMPINCDIR)
-
 endif
 
 ifneq ($(OUTPUT_DIRECTORY),)
 all: $(OUTPUT_DIRECTORY)
-
 $(OUTPUT_DIRECTORY):
 	-@$(MKDIR) "$(OUTPUT_DIRECTORY)"
 endif
