@@ -423,7 +423,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::find_i (const EXT_ID &ext_id,
     {
       // Found it, so assign a copy.
       int_id = this->search_structure_[index].int_id_;
-      return 0;
+      return index;
     }
 }
 
