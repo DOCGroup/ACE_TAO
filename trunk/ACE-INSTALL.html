@@ -251,7 +251,7 @@ make: *** [libACE.so] Error 8
       <CODE>TEMPLATE_FILES=</CODE> in the Makefile. Now update the Makefile so that
       <CODE>FILES=ACE_All_Src</CODE> and <CODE>TEMPLATE_FILES=ACE_All_Tmp</CODE>.<P>
 
-  <LI><B>Linux</B><P>
+  <LI><B><a name="Linux">Linux</a></B><P>
 
       ACE has been ported to <A
       HREF="http://www.cs.wustl.edu/~cleeland/ace/">Linux</A> on both Intel
@@ -261,6 +261,9 @@ make: *** [libACE.so] Error 8
       use the <code>include/makeinclude/platform_linux_lxpthreads.GNU</code>
       and <code>ace/config-linux-lxpthreads.h</code> platform/config
       files.<p>
+
+      If you run out of memory, it's easy to add virtual memory
+      on Linux.  Please see the <code>mkswap</code> man page.<p>
 
       The glibc 2.0 dynamic loader isn't thread safe. If you want to use the
       Invocation API you'll have to set <code>LD_BIND_NOW=true</code>. If you
@@ -412,16 +415,33 @@ make: *** [libACE.so] Error 8
       Wei Chiang &lt<A HREF="mailto:chiang@tele.nokia.fi">chiang@tele.nokia.fi</A>&gt
       has ported ACE to Chorus 3.1 using GNU g++ 2.7.2.<P>
 
-  <LI><B>LynxOS</B> <P>
+  <LI><B><a name="LynxOS">LynxOS</a></B> <P>
 
       ACE builds and runs properly on LynxOS 3.0.0 for Intel targets.
-      Some of the ACE tests fail; they are disabled in
-      <code>ACE_wrappers/tests/run_tests.sh</code>.<p>
+      ACE's Naming_Test fails; it is disabled in <a
+      href="tests/run_tests.sh"><code>ACE_wrappers/tests/run_tests.sh</code></a>.<p>
 
       ACE builds cleanly on LynxOS 3.0.0 for PowerPC targets.  For
       the most part, it runs properly.  But, there appears to be
       a problem with registering signal handlers.  So, some of the
       ACE tests seg fault when attempting to do that.<p>
+
+      If you run out of memory on LynxOS, these might help:<p>
+      <ul>
+        <li>Increase the limits in <code>/etc/starttab</code>,
+          then logout and login again.  We use these limits:
+          <pre>
+# Data, stack, and core file limits (in Kbytes)
+240000
+80000
+102400</pre><p>
+        <li>Enable or expand virtual memory, with something like:
+          <pre>
+# mkcontig /swap 320
+# prio 17 vmstart /swap</pre>
+          See the <code>mkcontig</code> and <code>vmstart</code>
+          man pages, and <code>/bin/rc</code>.<p>
+      </ul>
 
       Please see the comments in the
       <a href="include/makeinclude/platform_lynxos.GNU">ACE
@@ -1487,8 +1507,9 @@ library subset sizes</a>.<p>
 If you run out of memory when building, you might consider trying
 some or all of these suggestions:<p>
 <ul>
-  <li>Enable or increase virtual memory.  If you're on a Linux platform,
-    see the <code>mkswap</code> man page.<p>
+  <li>Enable or increase virtual memory.  If you're on a <a
+    href="#Linux">Linux</a> or <a href="#LynxOS">LynxOS</a> platform,
+    please see the appropriate sections above.<p>
   <li>Disable/enable optimization and/or debugging.  See the
     <a href="#flags">Makefile Flags</a> discussion for information
     on how to do that via ACE's Makefiles.<p>
