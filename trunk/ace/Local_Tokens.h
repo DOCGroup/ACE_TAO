@@ -41,7 +41,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_LOCAL_MUTEX_H
 #define ACE_LOCAL_MUTEX_H
 #include "ace/pre.h"
@@ -56,6 +55,8 @@
 #include "ace/Synch_Options.h"
 #include "ace/Map_Manager.h"
 #include "ace/Log_Msg.h"
+
+#if defined (ACE_HAS_TOKENS_LIBRARY)
 
 #if !(defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE))
 # define ACE_NO_TSS_TOKENS 1
@@ -1087,6 +1088,8 @@ protected:
   /// Return a new ACE_Local_Mutex.
   ACE_Tokens *create_token (const ACE_TCHAR *name);
 };
+
+#endif /* ACE_HAS_TOKENS_LIBRARY */
 
 #if defined (__ACE_INLINE__)
 #include "ace/Local_Tokens.i"

@@ -1,7 +1,7 @@
 /* -*- C++ -*- */
 // $Id$
 
-// Token_Manager.i
+#if defined (ACE_HAS_TOKENS_LIBRARY)
 
 ACE_INLINE ACE_TOKEN_CONST::MUTEX &
 ACE_Token_Manager::mutex (void)
@@ -17,3 +17,4 @@ ACE_Token_Manager::debug (int d)
   debug_ = d;
 }
 
+#endif /* ACE_HAS_TOKENS_LIBRARY */

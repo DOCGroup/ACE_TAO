@@ -1,7 +1,7 @@
 /* -*- C++ -*- */
 // $Id$
 
-// Local_Tokens.i
+#if defined (ACE_HAS_TOKENS_LIBRARY)
 
 ACE_INLINE int
 ACE_Token_Proxy::type (void) const
@@ -9,7 +9,6 @@ ACE_Token_Proxy::type (void) const
   ACE_TRACE ("ACE_Token_Proxy::type");
   return 0;
 }
-
 
 ACE_INLINE int
 ACE_Token_Proxy::acquire_read (int notify,
@@ -431,3 +430,5 @@ ACE_Token_Name::operator== (const ACE_Token_Name &rhs) const
   // the name and type must be the same
   return (ACE_OS::strcmp (this->token_name_, rhs.name ()) == 0);
 }
+
+#endif /* ACE_HAS_TOKENS_LIBRARY */

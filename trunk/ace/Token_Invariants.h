@@ -16,7 +16,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_TOKEN_INVARIANTS_H
 #define ACE_TOKEN_INVARIANTS_H
 #include "ace/pre.h"
@@ -29,6 +28,8 @@
 
 #include "ace/Map_Manager.h"
 #include "ace/Local_Tokens.h"
+
+#if defined (ACE_HAS_TOKENS_LIBRARY)
 
 /**
  * @class ACE_Mutex_Invariants
@@ -220,6 +221,8 @@ protected:
   /// Singleton pointer.
   static ACE_Token_Invariant_Manager *instance_;
 };
+
+#endif /* ACE_HAS_TOKENS_LIBRARY */
 
 #include "ace/post.h"
 #endif /* ACE_TOKEN_INVARIANTS_H */
