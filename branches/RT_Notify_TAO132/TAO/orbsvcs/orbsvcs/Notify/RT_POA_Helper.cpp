@@ -36,10 +36,18 @@ TAO_NS_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa, const char* poa_
 
   RTCORBA::RTORB_var rt_orb = TAO_NS_RT_PROPERTIES::instance ()->rt_orb ();
 
+  RTCORBA::PriorityModel priority_model =
+    tp_params.priority_model == NotifyExt::CLIENT_PROPAGATED ?
+    RTCORBA::CLIENT_PROPAGATED : RTCORBA::SERVER_DECLARED;
+
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG, "Priority Model = %d, Server prio = %d\n"
+                , tp_params.priority_model, tp_params.server_priority));
+
   policy_list.length (3);
   policy_list[2] =
-    rt_orb->create_priority_model_policy (RTCORBA::CLIENT_PROPAGATED,
-                                          0
+    rt_orb->create_priority_model_policy (priority_model,
+                                          tp_params.server_priority
                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -88,10 +96,14 @@ TAO_NS_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa, const char* poa_
 
   RTCORBA::RTORB_var rt_orb = TAO_NS_RT_PROPERTIES::instance ()->rt_orb ();
 
+  RTCORBA::PriorityModel priority_model =
+    tpl_params.priority_model == NotifyExt::CLIENT_PROPAGATED ?
+    RTCORBA::CLIENT_PROPAGATED : RTCORBA::SERVER_DECLARED;
+
   policy_list.length (3);
   policy_list[2] =
-    rt_orb->create_priority_model_policy (RTCORBA::CLIENT_PROPAGATED,
-                                          0
+    rt_orb->create_priority_model_policy (priority_model,
+                                          tpl_params.server_priority
                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 

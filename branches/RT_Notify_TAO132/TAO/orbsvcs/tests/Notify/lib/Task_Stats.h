@@ -49,8 +49,17 @@ class TAO_NOTIFY_TEST_Export Task_Stats
   /// Destructor
   ~Task_Stats (void);
 
+  /// Useful Global Scale Factor
+  static ACE_UINT32 gsf_;
+
   /// Init
   int init (size_t max_samples);
+
+  /// Useful helper to calculate diff in sec.
+  static double diff_sec (ACE_hrtime_t& before, ACE_hrtime_t& after);
+
+  /// Useful helper to calculate diff in usec.
+  static ACE_UINT32 diff_usec (ACE_hrtime_t& before, ACE_hrtime_t& after);
 
   /// Set the base time value.
   void base_time (ACE_hrtime_t time);
@@ -59,16 +68,14 @@ class TAO_NOTIFY_TEST_Export Task_Stats
   void end_time (ACE_hrtime_t time);
 
   /// Record a sample
-  int sample (ACE_UINT64 inv_start_time, ACE_UINT64 inv_end_time);
+  int sample (ACE_UINT64& inv_start_time, ACE_UINT64& inv_end_time);
 
-  void dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg,
-                     ACE_UINT32 scale_factor);
+  void dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg);
+
  protected:
-  void dump_latency_stats (ACE_TCHAR *out_msg, ACE_UINT32 sf);
-
   /// Base and end times
-  ACE_hrtime_t base_time_;
-  ACE_hrtime_t end_time_;
+  ACE_UINT64 base_time_;
+  ACE_UINT64 end_time_;
 
   /// The maximum number of samples
   ACE_UINT32 max_samples_;
@@ -80,23 +87,11 @@ class TAO_NOTIFY_TEST_Export Task_Stats
   ACE_UINT64 *time_inv_;
   ACE_UINT64 *time_exec_;
 
-  /// The minimum value
-  ACE_UINT64 exec_time_min_;
+  /// The mean of the data set.
+  ACE_UINT64 mean_;
 
-  /// The number of the sample that had the minimum value
-  ACE_UINT32 exec_time_min_at_;
-
-  /// The maximum value
-  ACE_UINT64 exec_time_max_;
-
-  /// The number of the sample that had the maximum value
-  ACE_UINT32 exec_time_max_at_;
-
-  /// The sum of all the values
-  ACE_UINT64 sum_;
-
-  /// The sum of the square of all the values
-  ACE_UINT64 sum2_;
+  /// The Var^2 of the data set.
+  ACE_UINT64 var_2_;
 };
 
 #if defined (__ACE_INLINE__)

@@ -53,26 +53,6 @@ protected:
   TAO_SYNCH_MUTEX lock_;
 };
 
-/***********************************************************************/
-
-/**
- * @class TAO_NS_Refcountable_Guard
- *
- * @brief Ref. Count Guard
- *        Increments the reference count in the constructor, the count is decremented when the guard's is destructor.
- *
- */
-class TAO_Notify_Export TAO_NS_Refcountable_Guard
-{
-public:
-  TAO_NS_Refcountable_Guard (TAO_NS_Refcountable& refcountable);
-
-  ~TAO_NS_Refcountable_Guard ();
-
-protected:
-  TAO_NS_Refcountable& refcountable_;
-};
-
 #if defined (__ACE_INLINE__)
 #include "Refcountable.inl"
 #endif /* __ACE_INLINE__ */

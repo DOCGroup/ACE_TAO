@@ -21,10 +21,16 @@
 
 #include "orbsvcs/ESF/ESF_Worker.h"
 #include "Method_Request.h"
-#include "ProxySupplier.h"
+#include "ProxyConsumer.h"
 #include "Consumer_Map.h"
+#include "Method_Request_Lookup_T.h"
 
 class TAO_NS_ProxyConsumer;
+
+typedef TAO_NS_Method_Request_Lookup_T<const TAO_NS_Event_var
+                                       , TAO_NS_ProxyConsumer_Guard
+                                       , const TAO_NS_Event_var&
+                                       , TAO_NS_ProxyConsumer*>  TAO_NS_Method_Request_Lookup_Base;
 
 /**
  * @class TAO_NS_Method_Request_Lookup
@@ -32,33 +38,48 @@ class TAO_NS_ProxyConsumer;
  * @brief Lookup command object looks up the event type of the given event in the consumer map and send the event to each proxysupplier.
  *
  */
-class TAO_Notify_Export TAO_NS_Method_Request_Lookup : public TAO_NS_Method_Request_Event, public TAO_ESF_Worker<TAO_NS_ProxySupplier>
+class TAO_Notify_Export TAO_NS_Method_Request_Lookup : public TAO_NS_Method_Request_Lookup_Base
+                                                       , public TAO_NS_Method_Request
 {
 public:
   /// Constuctor
-  TAO_NS_Method_Request_Lookup (const TAO_NS_Event_var& event, TAO_NS_ProxyConsumer* proxy_consumer, TAO_NS_Consumer_Map* map);
+  TAO_NS_Method_Request_Lookup (const TAO_NS_Event_var& event, TAO_NS_ProxyConsumer* proxy_consumer);
 
   /// Destructor
   ~TAO_NS_Method_Request_Lookup ();
 
-  /// Create a copy of this object.
-  TAO_NS_Method_Request* copy (void);
+  /// Execute the Request
+  virtual int execute (ACE_ENV_SINGLE_ARG_DECL);
+};
+
+/*****************************************************************************************************************************/
+
+typedef TAO_NS_Method_Request_Lookup_T<const TAO_NS_Event*
+                                       , TAO_NS_ProxyConsumer*
+                                       , const TAO_NS_Event*
+                                       , TAO_NS_ProxyConsumer*>  TAO_NS_Method_Request_Lookup_No_Copy_Base;
+
+/**
+ * @class TAO_NS_Method_Request_Lookup_No_Copy
+ *
+ * @brief Lookup command object looks up the event type of the given event in the consumer map and send the event to each proxysupplier.
+ *
+ */
+class TAO_Notify_Export TAO_NS_Method_Request_Lookup_No_Copy : public TAO_NS_Method_Request_Lookup_No_Copy_Base
+                                                               , public TAO_NS_Method_Request_No_Copy
+{
+public:
+  /// Constuctor
+  TAO_NS_Method_Request_Lookup_No_Copy (const TAO_NS_Event* event, TAO_NS_ProxyConsumer* proxy_consumer);
+
+  /// Destructor
+  ~TAO_NS_Method_Request_Lookup_No_Copy ();
 
   /// Execute the Request
   virtual int execute (ACE_ENV_SINGLE_ARG_DECL);
 
-  ///= TAO_ESF_Worker method
-  void work (TAO_NS_ProxySupplier* proxy_supplier ACE_ENV_ARG_DECL);
-
-private:
-  /// ProxyConsumer supplying event.
-  TAO_NS_ProxyConsumer* proxy_consumer_;
-
-  /// The map of subscriptions.
-  TAO_NS_Consumer_Map* map_;
-
-  /// Guard to automatically inc/decr ref count on the proxy.
-  TAO_NS_Refcountable_Guard refcountable_guard_;
+  /// Create a copy of this object.
+  virtual TAO_NS_Method_Request* copy (ACE_ENV_SINGLE_ARG_DECL);
 };
 
 #if defined (__ACE_INLINE__)

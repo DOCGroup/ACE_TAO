@@ -20,9 +20,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "orbsvcs/CosEventChannelAdminC.h"
+#include "Refcountable_Guard_T.h"
 #include "Event.h"
 #include "Proxy.h"
-#include "orbsvcs/CosEventChannelAdminC.h"
+
 
 class TAO_NS_SupplierAdmin;
 class TAO_NS_Supplier;
@@ -61,9 +63,6 @@ public:
   /// Destroy this object.
   virtual void destroy (ACE_ENV_SINGLE_ARG_DECL);
 
-  /// Start event propagation.
-  virtual void push (TAO_NS_Event_var &event);
-
   /// Access our Peer.
   virtual TAO_NS_Peer* peer (void);
 
@@ -84,6 +83,8 @@ protected:
   /// The Supplier that we're connect to.
   TAO_NS_Supplier* supplier_;
 };
+
+typedef TAO_NS_Refcountable_Guard_T<TAO_NS_ProxyConsumer> TAO_NS_ProxyConsumer_Guard;
 
 #if defined (__ACE_INLINE__)
 #include "ProxyConsumer.inl"

@@ -27,6 +27,12 @@ module NotifyExt
   const Priority minPriority = 0;
   const Priority maxPriority = 32767;
 
+  enum PriorityModel
+  {
+    CLIENT_PROPAGATED,
+    SERVER_DECLARED
+  };
+
   /*
    * ThreadPool QoS property,
    */
@@ -35,6 +41,9 @@ module NotifyExt
   // ThreadPoolParams : same as RTCORBA::create_threadpool
   struct ThreadPoolParams
   {
+    PriorityModel priority_model;
+    Priority server_priority;
+
     unsigned long stacksize;
     unsigned long static_threads;
     unsigned long dynamic_threads;
@@ -51,6 +60,9 @@ module NotifyExt
 
   struct ThreadPoolLane
   {
+    PriorityModel priority_model;
+    Priority server_priority;
+
     Priority lane_priority;
     unsigned long static_threads;
     unsigned long dynamic_threads;
@@ -60,6 +72,9 @@ module NotifyExt
 
   struct ThreadPoolLanesParams
     {
+      PriorityModel priority_model;
+      Priority server_priority;
+
       unsigned long stacksize;
       ThreadPoolLanes_List lanes;
       boolean allow_borrowing;

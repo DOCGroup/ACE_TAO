@@ -1,4 +1,5 @@
 //$Id$
+
 #include "Task_Stats.h"
 #include "ace/OS.h"
 #include "ace/Log_Msg.h"
@@ -6,6 +7,9 @@
 #if !defined (__ACE_INLINE__)
 #include "Task_Stats.inl"
 #endif /* __ACE_INLINE__ */
+
+ACE_UINT32 Task_Stats::gsf_
+= ACE_High_Res_Timer::global_scale_factor ();
 
 Base_Time::Base_Time (void)
 {
@@ -19,12 +23,8 @@ Task_Stats::Task_Stats (void)
     samples_count_ (0),
     time_inv_ (0),
     time_exec_ (0),
-    exec_time_min_ (0),
-    exec_time_min_at_ (0),
-    exec_time_max_ (0),
-    exec_time_max_at_(0),
-    sum_ (0),
-    sum2_ (0)
+    mean_ (0),
+    var_2_ (0)
 {
 }
 
@@ -57,8 +57,7 @@ Task_Stats::end_time (ACE_hrtime_t time)
 }
 
 void
-Task_Stats::dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg,
-                          ACE_UINT32 scale_factor)
+Task_Stats::dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg)
 {
   FILE* output_file = ACE_OS::fopen (file_name, "w");
 
@@ -68,120 +67,71 @@ Task_Stats::dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg,
   // next, compose and dump what we want to say.
 
   // calc throughput.
+  double seconds = this->diff_sec (base_time_, end_time_);
 
-  ACE_TCHAR out_msg[BUFSIZ];
+  double t_avg = samples_count_ / seconds;
 
-  ACE_hrtime_t elapsed_microseconds = (end_time_ - base_time_) / scale_factor;
-  double elapsed_seconds =
-    ACE_CU64_TO_CU32(elapsed_microseconds) / 1000000.0;
-  double throughput =
-    double(samples_count_) / elapsed_seconds;
+  char out_msg[BUFSIZ];
 
-  ACE_OS::sprintf (out_msg, "#Throughtput: %f\n", throughput);
+  ACE_OS::sprintf (out_msg,
+                   "# Throughput: %.2f (events/second) [%u samples in %.2f seconds]\n",
+                   t_avg, samples_count_, seconds);
   ACE_OS::fprintf (output_file, "%s\n",out_msg);
 
-  // dump latency stats.
-  this->dump_latency_stats (out_msg, scale_factor);
-  ACE_OS::fprintf (output_file, "%s\n",out_msg);
-  ACE_OS::fprintf (output_file, "#Invocation time \t Execution time\n");
-
-  // dump the samples recorded.
+  // Calc the mean.
   for (size_t i = 0; i != this->samples_count_; ++i)
     {
-      ACE_UINT64 x = this->time_inv_[i] / scale_factor;
-      ACE_UINT32 val_1 = ACE_CU64_TO_CU32 (x);
+      ACE_UINT32 val_2 = Task_Stats::diff_usec (time_inv_[i], time_exec_[i]);
 
-      ACE_UINT64 y = this->time_exec_[i] / scale_factor;
-      ACE_UINT32 val_2 = ACE_CU64_TO_CU32 (y);
+      // Write the normalized value.
+      // we will need this to calculate the var^2
+      this->time_exec_[i] = val_2;
 
-      ACE_OS::fprintf (output_file, "%u \t %u\n",val_1, val_2);
+      this->mean_ += val_2;
+    }
+
+  // calculate the mean.
+  this->mean_ /= this->samples_count_;
+
+  // Calculate the var^2
+  for (size_t i = 0; i != this->samples_count_; ++i)
+    {
+      ACE_UINT64 diff = this->time_exec_[i] - this->mean_;
+
+      ACE_UINT64 diff_sq =
+#if defined ACE_LACKS_LONGLONG_T
+        diff * ACE_U64_TO_U32(diff);
+#else  /* ! ACE_LACKS_LONGLONG_T */
+      diff * diff;
+#endif /* ! ACE_LACKS_LONGLONG_T */
+
+      this->var_2_ += diff_sq;
+    }
+
+  this->var_2_ /= this->samples_count_;
+
+  ACE_OS::fprintf (output_file, "## Avg = %u, Var^2 = %u\n"
+                   , ACE_CU64_TO_CU32 (this->mean_)
+                   , ACE_CU64_TO_CU32 (this->var_2_));
+
+  ACE_DEBUG ((LM_DEBUG, " Avg = %u, Var^2 = %u\n"
+              , ACE_CU64_TO_CU32 (this->mean_)
+              , ACE_CU64_TO_CU32 (this->var_2_)));
+
+  // dump the samples recorded.
+  ACE_OS::fprintf (output_file, "#Invocation time \t Execution time\n");
+
+  for (size_t i = 0; i != this->samples_count_; ++i)
+    {
+      ACE_UINT32 val_1 = Task_Stats::diff_usec (base_time_, time_inv_[i]);
+
+      ACE_OS::fprintf (output_file, "%u \t %u\n",val_1,
+                       ACE_CU64_TO_CU32 (time_exec_[i]));
     }
 
   ACE_OS::fclose (output_file);
 }
 
-void
-Task_Stats::dump_latency_stats (ACE_TCHAR *out_msg, ACE_UINT32 sf)
-{
-  if (this->samples_count_ == 0u)
-    {
-      ACE_OS::sprintf (out_msg,
-                       ACE_LIB_TEXT ("# no data collected\n"));
-      return;
-    }
-
-  ACE_UINT64 avg = this->sum_ / this->samples_count_;
-  ACE_UINT64 dev =
-#if defined ACE_LACKS_LONGLONG_T
-    ACE_static_cast (ACE_U_LongLong,
-                     this->sum2_ / this->samples_count_)
-    - avg * ACE_U64_TO_U32(avg);
-#else  /* ! ACE_LACKS_LONGLONG_T */
-    this->sum2_ / this->samples_count_ - avg * avg;
-#endif /* ! ACE_LACKS_LONGLONG_T */
-
-    ACE_UINT64 l_min_ = this->exec_time_min_ / sf;
-    ACE_UINT32 l_min = ACE_CU64_TO_CU32 (l_min_);
-
-    ACE_UINT64 l_max_ = this->exec_time_max_ / sf;
-    ACE_UINT32 l_max = ACE_CU64_TO_CU32 (l_max_);
-
-    /*
-    ACE_UINT64 l_avg_ = avg / sf;
-    ACE_UINT32 l_avg = ACE_CU64_TO_CU32 (l_avg_);
-
-    ACE_UINT64 l_dev_ = dev / sf;
-    ACE_UINT32 l_dev = ACE_CU64_TO_CU32 (l_dev_);
-    */
-
-    double l_avg = ACE_CU64_TO_CU32 (avg) / sf;
-    double l_dev = ACE_CU64_TO_CU32 (dev) / (sf * sf);
-
-    ACE_UINT64 tmin_ = this->time_inv_[0] / sf;
-    ACE_UINT32 tmin = ACE_CU64_TO_CU32 (tmin_);
-
-    ACE_UINT64 tmax_ = this->time_inv_[samples_count_-1] / sf;
-    ACE_UINT32 tmax = ACE_CU64_TO_CU32 (tmax_);
-
-    ACE_OS::sprintf(out_msg,
-                  ACE_LIB_TEXT ("#latency   : %u[%d]/%.2f/%u[%d]/%.2f (min/avg/max/var^2)\n #first invocation time = %u, last invocation time = %u\n"),
-                  l_min, this->exec_time_min_at_,
-                  l_avg,
-                  l_max, this->exec_time_max_at_,
-                  l_dev,
-                  tmin,tmax);
-    /*
-  double l_min = ACE_CU64_TO_CU32 (this->exec_time_min_) / sf;
-  double l_max = ACE_CU64_TO_CU32 (this->exec_time_max_) / sf;
-  double l_avg = ACE_CU64_TO_CU32 (avg) / sf;
-  double l_dev = ACE_CU64_TO_CU32 (dev) / (sf * sf);
-
-  double tmin = ACE_CU64_TO_CU32 (this->time_inv_[0])/sf;
-  double tmax = ACE_CU64_TO_CU32 (this->time_inv_[samples_count_-1])/sf;
-
-  ACE_OS::sprintf(out_msg,
-                  ACE_LIB_TEXT ("#latency   : %.2f[%d]/%.2f/%.2f[%d]/%.2f (min/avg/max/var^2)\n #first invocation time = %.0f, last invocation time = %.0f\n"),
-                  l_min, this->exec_time_min_at_,
-                  l_avg,
-                  l_max, this->exec_time_max_at_,
-                  l_dev,
-                  tmin,tmax);
-
-
-  ACE_OS::sprintf(out_msg,
-                  ACE_LIB_TEXT ("#latency   : %.2f[%d]/%.2f/%.2f[%d]/%.2f (min/avg/max/var^2)\n"),
-                  l_min, this->exec_time_min_at_,
-                  l_avg,
-                  l_max, this->exec_time_max_at_,
-                  l_dev);
-
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("#latency   : %.2f[%d]/%.2f/%.2f[%d]/%.2f (min/avg/max/var^2)\n"),
-                  l_min, this->exec_time_min_at_,
-                  l_avg,
-                  l_max, this->exec_time_max_at_,
-                  l_dev));
-  */
-}
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class ACE_Singleton<Base_Time, TAO_SYNCH_MUTEX>;

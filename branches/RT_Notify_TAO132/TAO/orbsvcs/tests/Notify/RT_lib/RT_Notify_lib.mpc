@@ -1,10 +1,12 @@
 
-project(TAO_RT_NotifyTests): orbsvcslib, notify {
+project(TAO_RT_NotifyTests): orbsvcslib {
 
   depends    += TAO_NotifyTests RTPortableServer RTCORBA
   sharedname = TAO_RT_NotifyTests
   libs       += TAO_NotifyTests TAO_RTCORBA TAO_RTPortableServer
   requires += rt_corba
+
+  includes += $(TAO_ROOT)
 
   libpaths += $(TAO_ROOT)/tao/RTCORBA
   libpaths += $(TAO_ROOT)/tao/RTPortableServer

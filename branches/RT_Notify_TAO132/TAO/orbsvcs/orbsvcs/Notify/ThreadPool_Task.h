@@ -57,7 +57,7 @@ public:
   void init (const NotifyExt::ThreadPoolParams& tp_params, TAO_NS_AdminProperties_var& admin_properties ACE_ENV_ARG_DECL);
 
   /// Queue the request
-  virtual void exec (TAO_NS_Method_Request& method_request);
+  virtual void execute (TAO_NS_Method_Request_No_Copy& method_request ACE_ENV_ARG_DECL);
 
   /// Shutdown task
   virtual void shutdown (void);

@@ -22,6 +22,9 @@
 #include "ace/SString.h"
 #include "orbsvcs/CosNotifyChannelAdminC.h"
 #include "Command.h"
+#include "../../../orbsvcs/Notify/CosNotify_Initializer.h"
+
+class TAO_Notify_Service;
 
 /**
  * @class TAO_NS_EventChannel_Command
@@ -72,6 +75,12 @@ protected:
   CosNotification::QoSProperties qos_;
 
   CosNotification::AdminProperties admin_;
+
+  /// Flag to tell if the Channel Factory should be colocated.
+  CORBA::Boolean colocated_;
+
+  /// Helper method to create a colocated ECF.
+  void create_colocated_ecf (ACE_ENV_SINGLE_ARG_DECL);
 
   /// = Handlers
   void handle_create (ACE_ENV_SINGLE_ARG_DECL);

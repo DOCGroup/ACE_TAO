@@ -142,10 +142,12 @@ TAO_NS_ProxyConsumer::destroy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK;
 }
 
-void
-TAO_NS_ProxyConsumer::push (TAO_NS_Event_var &event)
-{
-  TAO_NS_Method_Request_Lookup request (event, this, this->event_manager_->consumer_map ());
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-  this->worker_task ()->exec (request);
-}
+template class TAO_NS_Refcountable_Guard_T<TAO_NS_ProxyConsumer>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate TAO_NS_Refcountable_Guard_T<TAO_NS_ProxyConsumer>
+
+#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
