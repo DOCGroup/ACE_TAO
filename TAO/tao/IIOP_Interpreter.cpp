@@ -168,7 +168,7 @@ declare_entry (CORBA::Any, tk_any);
 
 declare_entry (CORBA::TypeCode_ptr, tk_TypeCode);
 declare_entry (CORBA::Principal_ptr, tk_Principal);
-declare_entry (CORBA::Object_ptr, tk_objref);
+declare_entry (TAO_Object_Field_T<CORBA_Object>, tk_objref);
 
 declare_entry (CORBA::String, tk_string);
 #if !defined (TAO_NO_COPY_OCTET_SEQUENCES)

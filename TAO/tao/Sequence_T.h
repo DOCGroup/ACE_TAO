@@ -310,10 +310,10 @@ class TAO_Unbounded_Object_Sequence : public TAO_Unbounded_Base_Sequence
   //   pseudo objects, object references and strings.
 
   // = SPEC
-  // 16.8 Mapping for Structured Types
-  // The mapping for struct, union, and sequence (but not array) is a
-  // C++ struct or class with a default constructor, a copy
-  // constructor, an assignment operator, and a destructor.
+  //   16.8 Mapping for Structured Types
+  //   The mapping for struct, union, and sequence (but not array) is a
+  //   C++ struct or class with a default constructor, a copy
+  //   constructor, an assignment operator, and a destructor.
   //
 public:
   // = Initialization and termination methods.
@@ -412,6 +412,10 @@ public:
   virtual void _deallocate_buffer (void);
   virtual void _shrink_buffer (CORBA::ULong new_length,
 			       CORBA::ULong old_length);
+  virtual void _downcast (void* target,
+			  CORBA_Object* src,
+			  CORBA_Environment &env);
+  virtual CORBA_Object* _upcast (void* src) const;
 };
 
 // *************************************************************
@@ -423,9 +427,8 @@ class TAO_Bounded_Object_Sequence : public TAO_Bounded_Base_Sequence
   //   Parametric sequence for types that require managers.
   //
   // = DESCRIPTION
-  //   Some IDL types require that sequences on them have a "manager"
-  //   class, in charge of handling the object lifetime, examples are
-  //   pseudo objects, object references and strings.
+  //   Please see the documentation for the unbounded case.
+  //
 public:
   // = Initialization and termination methods.
 
@@ -448,6 +451,117 @@ public:
   // destructor
 
   TAO_Bounded_Object_Sequence &operator= (const TAO_Bounded_Object_Sequence<T,MAX> &);
+  // Assignment from another Bounded sequence.
+
+  TAO_Object_Manager<T> operator[] (CORBA::ULong index) const;
+  // Read-write accessor.
+
+  static T **allocbuf (CORBA::ULong length);
+  // Allocate storage for a sequence..
+
+  static void freebuf (T **buffer);
+  // Free a buffer allocated by allocbuf() and release each element on
+  // it.
+
+  // The Base_Sequence functions, please see "tao/sequence.h"
+  virtual void _allocate_buffer (CORBA::ULong length);
+  virtual void _deallocate_buffer (void);
+  virtual void _shrink_buffer (CORBA::ULong new_length,
+			       CORBA::ULong old_length);
+  virtual void _downcast (void* target,
+			  CORBA_Object* src,
+			  CORBA_Environment &env);
+  virtual CORBA_Object* _upcast (void* src) const;
+};
+
+// *************************************************************
+
+template<class T>
+class TAO_Unbounded_Pseudo_Sequence : public TAO_Unbounded_Base_Sequence
+{
+  // = TITLE
+  //   Parametric sequence for pseudo objects.
+  //
+  // = DESCRIPTION
+  //   Some IDL types (including pseudo objects) require that
+  //   sequences on them have a "manager" class, in charge of handling
+  //   the object lifetime.
+  //   This parametric class implements those sequences. In general
+  //   the sequence is similar to Object_Sequente, except for some
+  //   TAO internal details. The complete documentation of each method
+  //   is provided in TAO_Unbounded_Object_Sequece
+public:
+  // = Initialization and termination methods.
+
+  TAO_Unbounded_Pseudo_Sequence (void);
+  // default ctor
+
+  TAO_Unbounded_Pseudo_Sequence (CORBA::ULong max);
+  // Constructor with a "hint" for the maximum capacity.
+
+  TAO_Unbounded_Pseudo_Sequence (CORBA::ULong maximum,
+				 CORBA::ULong length,
+				 T* *data,
+				 CORBA::Boolean release=0);
+  // Constructor with a given buffer.
+
+  TAO_Unbounded_Pseudo_Sequence(const TAO_Unbounded_Pseudo_Sequence<T> &);
+  // Copy ctor, deep copies.
+
+  ~TAO_Unbounded_Pseudo_Sequence (void);
+  // dtor releases all the contained elements.
+
+  TAO_Unbounded_Pseudo_Sequence<T> &operator= (const TAO_Unbounded_Pseudo_Sequence <T> &);
+  // The assignment operator first releases all object reference
+  // members and frees all string members, and then performs a
+  // deepcopy to create a new structure.
+
+  TAO_Object_Manager<T> operator[] (CORBA::ULong index) const;
+  // read-write accessor
+
+  static T **allocbuf (CORBA::ULong);
+  // The allocbuf function allocates a vector of T elements that can
+  // be passed to the T *data constructor.
+
+  static void freebuf (T **);
+  // Release all the elements.
+
+  // The Base_Sequence functions, please see "tao/Sequence.h"
+  virtual void _allocate_buffer (CORBA::ULong length);
+  virtual void _deallocate_buffer (void);
+  virtual void _shrink_buffer (CORBA::ULong new_length,
+			       CORBA::ULong old_length);
+};
+
+// *************************************************************
+
+template<class T, CORBA::ULong MAX>
+class TAO_Bounded_Pseudo_Sequence : public TAO_Bounded_Base_Sequence
+{
+  // = TITLE
+  //   Bounded version of TAO_Unbounded_Psuedo_Sequence.
+  //
+  // = DESCRIPTION
+  //   Please see the documentation for the unbounded case.
+  //
+public:
+  // = Initialization and termination methods.
+
+  TAO_Bounded_Pseudo_Sequence (void);
+  // default ctor.
+
+  TAO_Bounded_Pseudo_Sequence (CORBA::ULong length,
+			       T* *value,
+			       CORBA::Boolean release=0);
+  // Constructor from data.
+
+  TAO_Bounded_Pseudo_Sequence (const TAO_Bounded_Pseudo_Sequence<T,MAX> &);
+  // Copy constructor.
+
+  ~TAO_Bounded_Pseudo_Sequence (void);
+  // destructor
+
+  TAO_Bounded_Pseudo_Sequence &operator= (const TAO_Bounded_Pseudo_Sequence<T,MAX> &);
   // Assignment from another Bounded sequence.
 
   TAO_Object_Manager<T> operator[] (CORBA::ULong index) const;

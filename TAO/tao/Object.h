@@ -28,14 +28,21 @@
 class TAO_ServantBase;
 class STUB_Object;
 
+class CORBA_Object;
+typedef CORBA_Object* CORBA_Object_ptr;
+
 class TAO_Export CORBA_Object
 {
 public:
-  static CORBA::Object_ptr _duplicate (CORBA::Object_ptr obj);
+  static CORBA_Object_ptr _duplicate (CORBA_Object_ptr obj);
   // increment the ref count
 
-  static CORBA::Object_ptr _nil (void);
+  static CORBA_Object_ptr _nil (void);
   // return a NUL object
+
+  static CORBA_Object_ptr _narrow (CORBA_Object_ptr obj,
+				   CORBA::Environment& env);
+  // no-op it is just here to simplify some templates.
 
   // These calls correspond to over-the-wire operations, or at least
   // do so in many common cases.  The normal implementation assumes a
@@ -195,6 +202,35 @@ public:
 
 private:
   CORBA::Object_ptr &ptr_;
+};
+
+class TAO_Object_Field
+{
+  // = TITLE
+  //   Base class to represent fields (in structures) corresponding to
+  //   object references.
+  //
+  // = DESCRIPTION
+  //   When an object reference appears in a structure the marshaling
+  //   and demarhsaling of the structure gets complicated:
+  //   the interpreter can only marshal CORBA_Object_ptr when it
+  //   dermarshal it creates on of those objects.
+  //   The downcasting to the right type must be executed by classes
+  //   with compile-time knowledge of the object type.
+  //   The solution addopted in TAO is to create a special manager
+  //   class for that field called TAO_Object_Field_T<T> (see
+  //   varout.h), this class serves as an abstract interface to
+  //   manipulate instances of those classes (by the interpreter, of
+  //   course).
+  //
+public:
+  virtual ~TAO_Object_Field (void);
+  // destructor
+
+  virtual void _downcast (CORBA_Object* base_ptr,
+			  CORBA_Environment& env) = 0;
+  virtual CORBA_Object* _upcast (void) = 0;
+  virtual void _release (void) = 0;
 };
 
 #if defined (__ACE_INLINE__)

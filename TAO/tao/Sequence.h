@@ -18,6 +18,9 @@
 #if !defined (TAO_SEQUENCE_H)
 #  define TAO_SEQUENCE_H
 
+class CORBA_Object;
+class CORBA_Environment;
+
 class TAO_Export TAO_Base_Sequence
 {
   // = TITLE
@@ -54,6 +57,16 @@ public:
   // the sequence is shrunk. The spec requires the destructor to
   // release the objects only from position <0> to <length-1>; so
   // shrink and then delete could result in a memory leak.
+
+  virtual void _downcast (void* target,
+			  CORBA_Object* src,
+			  CORBA_Environment &env);
+  // Used for sequences of objects to downcast a recently demarshalled
+  // object reference into the right type.
+
+  virtual CORBA_Object* _upcast (void* src) const;
+  // Used for sequences of object to convert from the derived type
+  // into the Object class.
 
 protected:
   TAO_Base_Sequence (void);
@@ -458,6 +471,10 @@ private:
 };
 
 #endif /* defined (TAO_NO_COPY_OCTET_SEQUENCES) */
+
+// ****************************************************************
+
+
 
 // ****************************************************************
 

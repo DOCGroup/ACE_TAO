@@ -21,6 +21,21 @@ void TAO_Base_Sequence::_shrink_buffer (CORBA::ULong, CORBA::ULong)
   // default is no op.
 }
 
+void
+TAO_Base_Sequence::_downcast (void*,
+			      CORBA_Object*,
+			      CORBA_Environment &)
+{
+  // default is no op.
+  // @@ TODO Maybe throw an exception?
+}
+
+CORBA_Object*
+TAO_Base_Sequence::_upcast (void*) const
+{
+  return 0;
+}
+
 // *************************************************************
 // Operations for class TAO_Unbounded_Base_Sequence
 // *************************************************************

@@ -799,7 +799,6 @@ TAO_Marshal_Struct::decode (CORBA::TypeCode_ptr  tc,
                           stream->read_wchar (*(CORBA::WChar *) data);
                         break;
                       case CORBA::tk_TypeCode:
-                      case CORBA::tk_objref:
                       case CORBA::tk_any:
                       case CORBA::tk_Principal:
                       case CORBA::tk_struct:
@@ -812,6 +811,17 @@ TAO_Marshal_Struct::decode (CORBA::TypeCode_ptr  tc,
                       case CORBA::tk_wstring:
                         retval = stream->decode (param, data, 0, env);
                         break;
+
+                      case CORBA::tk_objref:
+			{
+			  CORBA_Object_ptr object;
+			  retval = stream->decode (param, &object, 0, env);
+			  TAO_Object_Field* field = 
+			    ACE_static_cast(TAO_Object_Field*, data);
+			  field->_downcast (object, env);
+			}
+			break;
+
                       default:
                         break;
                       }
@@ -1237,7 +1247,6 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
                       break;
 
                       // handle all aggregate types here
-                    case CORBA::tk_objref:
                     case CORBA::tk_string:
                     case CORBA::tk_wstring:
                     case CORBA::tk_any:
@@ -1260,6 +1269,26 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
                       if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
                         return CORBA::TypeCode::TRAVERSE_CONTINUE;
                       break;
+
+                    case CORBA::tk_objref:
+		      {
+			size = sizeof (CORBA_Object_ptr);
+			while (bounds-- &&
+			       retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
+			  {
+			    CORBA_Object_ptr ptr;
+			    retval = stream->decode (tc2, &ptr, 0,  env);
+			    if (env.exception () != 0) break;
+			    seq->_downcast (value, ptr, env);
+			    if (env.exception () != 0) break;
+			    CORBA::release (ptr);
+			    value += size;
+			  }
+			if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
+			  return retval;
+		      }
+		      break;
+
                     default:
                       break;
                     } // end of switch
@@ -1269,9 +1298,10 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
       else
         return CORBA::TypeCode::TRAVERSE_CONTINUE;
     }
-  // error exit
-  env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
-  dmsg ("marshaling TAO_Marshal_Sequence::decode detected error");
+  // If an error was detected but no exception was raised then raise a
+  // marshal exception.
+  if (env.exception () == 0)
+    env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
   return CORBA::TypeCode::TRAVERSE_STOP;
 }
 

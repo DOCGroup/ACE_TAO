@@ -24,7 +24,7 @@ CORBA_Object::_decr_refcnt (void)
 }
 
 ACE_INLINE CORBA_Object_ptr
-CORBA_Object::_duplicate (CORBA::Object_ptr obj)
+CORBA_Object::_duplicate (CORBA_Object_ptr obj)
 {
   if (obj)
     obj->_incr_refcnt ();
@@ -37,6 +37,12 @@ ACE_INLINE CORBA_Object_ptr
 CORBA_Object::_nil (void)
 {
   return 0;
+}
+
+ACE_INLINE CORBA_Object_ptr
+CORBA_Object::_narrow (CORBA_Object_ptr obj, CORBA::Environment&)
+{
+  return obj;
 }
 
 ACE_INLINE CORBA::Boolean
