@@ -1,3 +1,12 @@
+Tue Jul  8 14:27:47 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* tao/except.h: added ACE_Svc_Export to SYSEX macro
+
+	* tao/iiopobj.cpp: changed declaration of IID_STUB_Object
+	  to include ACE_Svc_Export
+
+	* tao/stub.h: added ACE_Svc_Export to IID_STUB_Object
+
 Tue Jul  8 12:44:14 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* tao/orbobj.cpp: Put the "*" in before the comment since it is
