@@ -427,8 +427,12 @@ public:
   /// locking strategies.
   ACE_Data_Block *create_input_cdr_data_block (size_t size);
 
+#if (TAO_HAS_CORBA_MESSAGING == 1)
+
   /// Accessor method for the default_policies_
   TAO_Policy_Manager_Impl *get_default_policies (void);
+
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
   /**
    * The thread has a default environment to simplify porting between

@@ -1,3 +1,10 @@
+Fri Dec 22 15:02:00 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/ORB_Core.h : 
+	* tao/ORB_Core.i: 
+	  Added TAO_HAS_CORBA_MESSAGING guards around get_default_policies
+	  which returns TAO_Policy_Manager_Impl *.
+	
 Fri Dec 22 14:24:17 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/TAO.dsp
