@@ -4,6 +4,8 @@
 #include "ace/Read_Buffer.h"
 #include "test_i.h"
 
+#include "tao/Strategies/advanced_resource.h"
+
 ACE_RCSID(Nested_Event_Loop, client, "$Id$")
 
 // Name of file contains ior.

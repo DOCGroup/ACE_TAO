@@ -3,6 +3,8 @@
 #include "ace/Get_Opt.h"
 #include "test_i.h"
 
+#include "tao/Strategies/advanced_resource.h"
+
 ACE_RCSID(Nested_Event_Loop, server, "$Id$")
 
 const char *ior_output_file = "ior";
