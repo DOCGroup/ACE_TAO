@@ -247,7 +247,7 @@ public:
   virtual long schedule (const TYPE &type,
                          const void *act,
                          const ACE_Time_Value &future_time,
-                         const ACE_Time_Value &interval = ACE_Time_Value::zero_time_value());
+                         const ACE_Time_Value &interval = ACE_Time_Value::zero);
 
   /**
    * Resets the interval of the timer represented by <timer_id> to

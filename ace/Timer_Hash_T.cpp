@@ -665,7 +665,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::find_new_earliest (void)
   for (size_t i = 0; i < this->table_size_; i++)
     if (!this->table_[i]->is_empty ())
       if (this->table_[this->earliest_position_]->is_empty ()
-          || this->earliest_time () == ACE_Time_Value::zero_time_value()
+          || this->earliest_time () == ACE_Time_Value::zero
           || this->table_[i]->earliest_time () <= this->earliest_time ())
           this->earliest_position_ = i;
 }
@@ -753,7 +753,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::expire (const ACE_Time_Value 
 #endif
 
           // Check if this is an interval timer.
-          if (expired->get_interval () > ACE_Time_Value::zero_time_value())
+          if (expired->get_interval () > ACE_Time_Value::zero)
             {
               // Make sure that we skip past values that have already
               // "expired".

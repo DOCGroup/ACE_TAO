@@ -127,7 +127,7 @@ ACE_Timer_Node_T<TYPE>::get_dispatch_info (ACE_Timer_Node_Dispatch_Info_T<TYPE> 
   info.type_ = this->type_;
   info.act_  = this->act_;
   info.recurring_timer_ =
-    this->interval_ > ACE_Time_Value::zero_time_value();
+    this->interval_ > ACE_Time_Value::zero;
 }
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK> ACE_INLINE void

@@ -99,10 +99,6 @@ public:
   /// Constant "0".
   static const ACE_Time_Value zero;
 
-  /// Accessor method for zero for exported use (since some compilers,
-  /// i.e. MingW, have trouble handling exported class data members).
-  static const ACE_Time_Value& zero_time_value (void);
-
   /**
    * Constant for maximum time representable.  Note that this time is
    * not intended for use with <select> or other calls that may have
@@ -112,10 +108,6 @@ public:
    * class.
    */
   static const ACE_Time_Value max_time;
-
-  /// Accessor method for max_time for exported use (since some compilers,
-  /// i.e. MingW, have trouble handling exported class data members).
-  static const ACE_Time_Value& max_time_value (void);
 
   // = Initialization methods.
 
@@ -368,6 +360,14 @@ private:
 #if defined (__ACE_INLINE__)
 #include "ace/Time_Value.inl"
 #endif /* __ACE_INLINE__ */
+
+#if defined (__MINGW32__)
+// The MingW linker has problems with the exported statics zero and max_time
+// with these two statics the linker will be able to resolve the static
+// exported symbols.
+static const ACE_Time_Value& __zero_time = ACE_Time_Value::zero;
+static const ACE_Time_Value& __max_time = ACE_Time_Value::max_time;
+#endif /* __MINGW32__ */
 
 #include /**/ "ace/post.h"
 

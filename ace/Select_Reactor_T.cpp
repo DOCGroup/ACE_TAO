@@ -1460,7 +1460,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::check_handles (void)
   ACE_TRACE ("ACE_Select_Reactor_T::check_handles");
 
 #if defined (ACE_WIN32) || defined (__MVS__) || defined (ACE_PSOS) || defined (VXWORKS)
-  ACE_Time_Value time_poll = ACE_Time_Value::zero_time_value();
+  ACE_Time_Value time_poll = ACE_Time_Value::zero;
   ACE_Handle_Set rd_mask;
 #endif /* ACE_WIN32 || MVS || ACE_PSOS || VXWORKS */
 

@@ -53,7 +53,7 @@ ACE_Async_Timer_Queue_Adapter<TQ>::schedule_ualarm (void)
 
   // Beware of negative times and zero times (which cause problems for
   // <ualarm>).
-  if (tv < ACE_Time_Value::zero_time_value())
+  if (tv < ACE_Time_Value::zero)
     tv = ACE_Time_Value (0, 1);
 
   // @@ This code should be clever enough to avoid updating the
