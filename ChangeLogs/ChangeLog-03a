@@ -1,3 +1,9 @@
+Tue Dec 05 05:39:39 2000  Christopher Kohlhoff  <chris@kohlhoff.com>
+
+        * tests/Makefile.bor:
+
+          Implemented 'clean' support in the ACE tests makefile.
+
 Tue Dec 05 02:02:51 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/IPC_SAP.cpp (disable): Reverted this change:
