@@ -53,7 +53,6 @@
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:63
-
 int foo::_tao_class_id = 0;
 
 foo_ptr
@@ -244,6 +243,91 @@ TAO_ClientRequestInfo_foo_all_str::result (char * result)
   this->_result = result;
 }
 
+
+class TAO_ClientRequestInfo_foo_push : public TAO_ClientRequestInfo_i
+{
+public:
+  TAO_ClientRequestInfo_foo_push (
+      TAO_GIOP_Invocation *_tao_invocation,
+      CORBA::Object_ptr _tao_target,
+      const char * inarg
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+
+    virtual Dynamic::ParameterList * arguments (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_foo_push (const TAO_ClientRequestInfo_foo_push &);
+    void operator= (const TAO_ClientRequestInfo_foo_push &);
+    const char * inarg_;
+  };
+
+  // TAO_IDL - Generated from
+  // be/be_visitor_operation/interceptors_cs.cpp:376
+
+  TAO_ClientRequestInfo_foo_push::TAO_ClientRequestInfo_foo_push (
+      TAO_GIOP_Invocation *_tao_invocation,
+      CORBA::Object_ptr _tao_target,
+      const char * inarg
+      ACE_ENV_ARG_DECL_NOT_USED
+    )
+      : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
+      inarg_ (inarg)
+{}
+
+Dynamic::ParameterList *
+TAO_ClientRequestInfo_foo_push::arguments (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the argument list on demand.
+  Dynamic::ParameterList *parameter_list =
+    TAO_RequestInfo_Util::make_parameter_list (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  Dynamic::ParameterList_var safe_parameter_list = parameter_list;
+
+  parameter_list->length (1);
+  CORBA::ULong len = 0;
+  (*parameter_list)[len].argument <<= inarg_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+
+  return safe_parameter_list._retn ();
+}
+
+Dynamic::ExceptionList *
+TAO_ClientRequestInfo_foo_push::exceptions (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the exception list on demand.
+  Dynamic::ExceptionList *exception_list =
+    TAO_RequestInfo_Util::make_exception_list (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  return exception_list;
+}
+
+CORBA::Any *
+TAO_ClientRequestInfo_foo_push::result (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the result on demand.
+  CORBA::Boolean tk_void_any = 1;
+  CORBA::Any *result_any =
+    TAO_RequestInfo_Util::make_any (tk_void_any ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  return result_any;
+}
+
+
+
 #endif /* TAO_HAS_INTERCEPTORS */
 
 // TAO_IDL - Generated from
@@ -295,7 +379,7 @@ char * _TAO_foo_Remote_Proxy_Impl::all_str (
                                   7);
 
   _tao_call.invoke (ACE_ENV_SINGLE_ARG_DECL);
-  ACE_CHECK_RETURN (_tao_retval._retn ());
+  ACE_CHECK_RETURN (_tao_retval.excp ());
 
 #if 0
   TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
@@ -508,6 +592,35 @@ char * _TAO_foo_Remote_Proxy_Impl::all_str (
 return _tao_retval.retn ();
 }
 
+void _TAO_foo_Remote_Proxy_Impl::push (
+    CORBA::Object *_collocated_tao_target_,
+    const char * inarg
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  TAO::Arg_Traits<void>::stub_ret_val _tao_retval;
+  TAO::Arg_Traits<CORBA::Char *>::in_arg_val _tao_inarg (inarg);
+
+  TAO::Argument *_tao_signature [] =
+  {
+    &_tao_retval,
+    &_tao_inarg
+  };
+
+  TAO::Invocation_Base _tao_call (_collocated_tao_target_,
+                                  _tao_signature,
+                                  4, //arg number
+                                  "push",
+                                  4);
+
+  _tao_call.invoke (ACE_ENV_SINGLE_ARG_DECL);
+  ACE_CHECK_RETURN (_tao_retval._retn ());
+
+  return _tao_retval._retn ();
+}
 //
 //            End  Base & Remote  Proxy Implemeentation.
 ///////////////////////////////////////////////////////////////////////
