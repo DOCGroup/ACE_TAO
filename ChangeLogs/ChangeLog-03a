@@ -1,3 +1,8 @@
+Fri Aug 25 09:22:11 2000  Chad Elliott  <elliott_c@ociweb.com>
+
+        * include/makeinclude/platform_sunos5_sunc++.GNU
+          Modified check for SunCC 5 to work with 5.0 and 5.1 (Forte).
+
 Thu Aug 24 09:01:23 2000  JLopez <jlopez@uida.es>
 
         * ace/config-tru64.h: #define ACE_LACKS_SYSTIME_H with
