@@ -1,3 +1,4 @@
 workspace {
+  cmdline += -value_template optimize=
 }
 

@@ -6,7 +6,10 @@ workspace {
   ../ACEXML/apps/svcconf
   ../Kokyu/Kokyu.mpc
   tao
-  TAO_IDL
+  options {
+    cmdline += -value_template optimize=
+    TAO_IDL
+  }
   utils
   orbsvcs
   exclude {
