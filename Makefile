@@ -192,15 +192,17 @@ CONTROLLED_FILES = \
 
 RELEASE_FILES = \
         $(addprefix ACE_wrappers/,$(CONTROLLED_FILES)) \
-	ACE_wrappers/Makefile.in \
-	ACE_wrappers/configure \
-	ACE_wrappers/aclocal.m4 \
-	ACE_wrappers/aux \
         ACE_wrappers/ACE-INSTALL \
         ACE_wrappers/man
 
+AUTOCONF_RELEASE_FILES = \
+	ACE_wrappers/Makefile.in \
+	ACE_wrappers/configure \
+	ACE_wrappers/aclocal.m4 \
+	ACE_wrappers/aux 
+
 ALL_RELEASE_FILES = \
-        $(RELEASE_FILES) \
+	$(RELEASE_FILES) \
         ACE_wrappers/TAO
 
 RELEASE_LIB_FILES = \
@@ -279,6 +281,9 @@ show_controlled_files:
 
 show_release_files:
 	@echo $(RELEASE_FILES)
+
+show_autoconf_release_files:
+	@echo $(AUTOCONF_RELEASE_FILES)
 
 show_release_lib_files:
 	@echo $(RELEASE_LIB_FILES)
