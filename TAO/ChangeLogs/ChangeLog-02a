@@ -1,3 +1,8 @@
+Tue Oct 23 18:55:26 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/examples/Security/Send_File/Makefile:Updated
+	  dependancies.  
+
 Tue Oct 23 09:49:01 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* examples/Quoter/Client.bor: 
