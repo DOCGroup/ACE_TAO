@@ -50,6 +50,9 @@
 #  define ACE_DEFAULT_BASE_ADDR ((char *) 0x80000000)
 #endif  /* __LP64__ */
 
+// Platform can do async I/O (aio_*)
+#define ACE_HAS_AIO_CALLS
+
 // Compiler/platform contains the <sys/syscall.h> file.
 #define ACE_HAS_SYSCALL_H
 // But doesn't have a prototype for syscall()
@@ -223,7 +226,6 @@
 #endif /* ACE_HAS_THREADS */
 
 #define ACE_HAS_POSIX_SEM
-#define ACE_HAS_AIO_CALLS
 
 // Turns off the tracing feature.
 // To build with tracing enabled, make sure ACE_NTRACE is not defined
