@@ -1,3 +1,14 @@
+Fri Dec 17 11:38:09 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
+
+	* We just reached our 800th external contributor: Andrey
+ 	  Nechypurenko <andreynech@yahoo.com>.  Andrey gets a free copy of
+ 	  ACE+TAO as a prize!
+
+	* ace/config-linux-common.h: Wrapped the #define
+ 	  ACE_DEFAULT_SELECT_REACTOR_SIZE with a #if !defined() so that
+ 	  users can override this.  Thanks to Charlie Duke
+ 	  <cduke@wpine.com> for suggesting this.
+
 Thu Dec 16 12:26:36 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* bin/auto_compile_win32.pl: Took out Concurrency Service from the
