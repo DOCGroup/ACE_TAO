@@ -1,3 +1,10 @@
+Wed Jan 20 17:37:21 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/Log_Msg.h: Added "do {} while (0)" as defs for ACE_HEX_DUMP,
+          ACE_ERROR, ACE_DEBUG when ACE_NLOGGING is defined.  Having null defs
+          for these caused MSVC some problems.  Thanks to Doug Schmidt for
+          giving (and explaining) the correct definitions.
+
 Wed Jan 20 13:38:03 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.i (readdir_r): added ACE_UNUSED_ARG (entry)
