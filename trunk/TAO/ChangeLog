@@ -1,3 +1,11 @@
+Sat Aug 03 12:42:43 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Thread_Lane_Resources.cpp: Remove the allocators from the
+	  lane only after closing down the Reactor and Transport
+	  cache. Contents of Reactor or Transport cache, like the event
+	  handler and the transport could be using the allocators to
+	  release memory. The allocator needs to be around till then! 
+
 Sat Aug  3 09:15:03 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/PSS/PSDL_Node_Visitor.cpp (visit_export_dcl): Fixed

@@ -260,22 +260,6 @@ TAO_Thread_Lane_Resources::finalize (void)
       delete this->acceptor_registry_;
     }
 
-    if (this->input_cdr_dblock_allocator_ != 0)
-    this->input_cdr_dblock_allocator_->remove ();
-  delete this->input_cdr_dblock_allocator_;
-
-  if (this->input_cdr_buffer_allocator_ != 0)
-    this->input_cdr_buffer_allocator_->remove ();
-  delete this->input_cdr_buffer_allocator_;
-
-    if (this->input_cdr_msgblock_allocator_ != 0)
-    this->input_cdr_msgblock_allocator_->remove ();
-  delete this->input_cdr_msgblock_allocator_;
-
-  if (this->transport_message_buffer_allocator_ != 0)
-    this->transport_message_buffer_allocator_->remove ();
-  delete this->transport_message_buffer_allocator_;
-
   // Set of file descriptors corresponding to open connections.  This
   // handle set is used to explicitly deregister the connection event
   // handlers from the Reactor.  This is particularly important for
@@ -311,6 +295,25 @@ TAO_Thread_Lane_Resources::finalize (void)
 
   delete this->transport_cache_;
   delete this->leader_follower_;
+
+  // Delete all the allocators here.. They shouldnt be done earlier,
+  // lest some of the contents in the abve, say reactor or acceptor
+  // may use memory from the pool..
+  if (this->input_cdr_dblock_allocator_ != 0)
+    this->input_cdr_dblock_allocator_->remove ();
+  delete this->input_cdr_dblock_allocator_;
+
+  if (this->input_cdr_buffer_allocator_ != 0)
+    this->input_cdr_buffer_allocator_->remove ();
+  delete this->input_cdr_buffer_allocator_;
+
+  if (this->input_cdr_msgblock_allocator_ != 0)
+    this->input_cdr_msgblock_allocator_->remove ();
+  delete this->input_cdr_msgblock_allocator_;
+
+  if (this->transport_message_buffer_allocator_ != 0)
+    this->transport_message_buffer_allocator_->remove ();
+  delete this->transport_message_buffer_allocator_;
 }
 
 void
