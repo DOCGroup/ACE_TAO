@@ -24,6 +24,14 @@
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 #include "ace/Object_Manager.h"
 
+#if defined (ACE_HAS_WINCE)
+const wchar_t *day_of_week_name[] = {L"Sun", L"Mon", L"Tue", L"Wed",
+                                     L"Thr", L"Fri", L"Sat"};
+const wchar_t *month_name[] = {L"Jan", L"Feb", L"Mar", L"Apr",
+                               L"May", L"Jun", L"Jul", L"Aug",
+                               L"Sep", L"Oct", L"Nov", L"Dec" };
+#endif /* ACE_HAS_WINCE */
+
 #if defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
 int
 ACE_OS::netdb_acquire (void)
@@ -2909,7 +2917,7 @@ ftruncate (ACE_HANDLE handle, long len)
 }
 #endif /* ACE_NEEDS_FTRUNCATE */
 
-#if defined (ACE_LACKS_MKTEMP) && !defined (ACE_HAS_UNICODE_ONLY)
+#if defined (ACE_LACKS_MKTEMP) && !defined (ACE_HAS_MOSTLY_UNICODE_APIS)
 char *
 ACE_OS::mktemp (char *s)
 {
@@ -2951,7 +2959,7 @@ ACE_OS::mktemp (char *s)
       return s;
     }
 }
-#endif /* ACE_LACKS_MKTEMP && !ACE_HAS_UNICODE_ONLY */
+#endif /* ACE_LACKS_MKTEMP && !ACE_HAS_MOSTLY_UNICODE_APIS */
 
 int
 ACE_OS::socket_init (int version_high, int version_low)
@@ -3262,6 +3270,36 @@ ACE_OS::pwrite (ACE_HANDLE handle,
     return ACE_OS::write (handle, buf, nbytes);
 #endif /* ACE_HAD_P_READ_WRITE */
 }
+
+#if defined (ACE_HAS_WINCE)
+wchar_t *
+ACE_OS::ctime (const time_t *t)
+{
+  wchar_t buf[26];              // 26 is a "magic number" ;)
+  return ACE_OS::ctime_r (t, buf, 26);
+}
+
+wchar_t *
+ACE_OS::ctime_r (const time_t *clock,
+                 wchar_t *buf,
+                 int buflen)
+{
+  // buflen must be at least 26 wchar_t long.
+  if (buflen < 26)              // Again, 26 is a magic number.
+    return 0;
+  CTime frz (*clock);
+
+  ACE_OS::sprintf (buf, L"%3s %3s %02d %02d:%02d:%02d %04d\n",
+                   ACE_OS::day_of_week_name[frz.GetDayOfWeek ()],
+                   ACE_OS::month_name[frz.GetMonth ()],
+                   frz.GetDay (),
+                   frz.GetHour (),
+                   frz.GetMinute (),
+                   frz.GetSecond (),
+                   frz.GetYear ());
+  return buf;
+}
+#endif /* ACE_HAS_WINCE */
 
 #if !defined (ACE_HAS_WINCE)
 time_t
