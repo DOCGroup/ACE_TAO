@@ -1,3 +1,12 @@
+Mon Sep 21 14:25:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+	  Fixed problems with unused arguments.
+
+	* examples/OBV/Typed_Events/Event_Types_impl.cpp,
+	  examples/OBV/Typed_Events/Event_Types_impl.h:
+	  Fixed problems with the CORBA::Environment.
+
 Tue Sep 21 13:51:08 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/DynAny_i.cpp:

@@ -52,6 +52,7 @@ be_visitor_ami_pre_proc::visit_module (be_module *node)
   return 0;
 }
 
+int
 be_visitor_ami_pre_proc::visit_interface (be_interface *node)
 {
   ACE_DEBUG ((LM_DEBUG, "be_visitor_ami_pre_proc::visit_interface\n"));
@@ -152,11 +153,6 @@ be_visitor_ami_pre_proc::visit_interface (be_interface *node)
                                                                  (new Identifier ("void", 1, 0, I_FALSE), 
                                                                   0),
                                                                0);
-
-              AST_Operation *operation = new AST_Operation (rt,
-                                                            AST_Operation::OP_noflags,
-                                                            node->name (),
-                                                            0);
 
               // Name the operation properly
               UTL_ScopedName *new_name = (UTL_ScopedName *) node->name ()->copy ();
