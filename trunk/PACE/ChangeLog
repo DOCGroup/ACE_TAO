@@ -1,6 +1,6 @@
 Wed May 24 18:56:16 2000  Darrell Brunsch <brunsch@uci.edu>
 
-        * pace/docs/ACE_Integration.txt: (added)
+        * docs/ACE_Integration.txt: (added)
 
           For the PACE crew, a file used to document our progress in
           splitting of ACE_OS and the PACE integration.
