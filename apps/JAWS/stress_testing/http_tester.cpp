@@ -6,9 +6,9 @@ int Client_Parameters::tcp_nodelay;
 int Client_Parameters::sockbufsiz;
 Stats *Client_Parameters::stats;
 
-
-static void *client_thread(void *data) {
-	ACE_Thread_Control tc(ACE_Thread_Manager::instance ());
+static void *
+client_thread(void *data) 
+{
   Client_Parameters *cp = (Client_Parameters *) data;
   float latency = 0, throughput;
   URL *u = cp->url;
@@ -44,8 +44,8 @@ static void *client_thread(void *data) {
     num_read = webserver.read(buffer, sizeof buffer);
     if(first_time) {
       ACE_Profile_Timer::ACE_Elapsed_Time et;
-	  latency_timer.stop();
-	  latency_timer.elapsed_time(et);
+      latency_timer.stop();
+      latency_timer.elapsed_time(et);
       latency =  et.real_time;
       first_time = 0;
     }

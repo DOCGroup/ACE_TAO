@@ -21,9 +21,6 @@ static ACE_Thread_Manager thr_mgr;
 static void *
 producer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
 {
-  // Insert thread into thr_mgr.
-  ACE_Thread_Control thread_control (&thr_mgr); 
-
   // Keep reading stdin, until we reach EOF. 
 
   for (int n; ; )
@@ -54,8 +51,6 @@ producer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
 	}
     }
 
-  // The destructor of ACE_Thread_Control removes the exiting thread
-  // from the thr_mgr automatically.
   return 0; 
 }
 
@@ -66,8 +61,6 @@ producer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
 
 static void *consumer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
 {
-  // Insert thread into thr_mgr.
-  ACE_Thread_Control thread_control (&thr_mgr); 
   int result = 0;
 
   // Keep looping, reading a message out of the queue, until we timeout
@@ -98,8 +91,6 @@ static void *consumer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
   if (result == -1 && errno == EWOULDBLOCK)
     ACE_ERROR ((LM_ERROR, "(%t) %p\n%a", "timed out waiting for message", 1));
 
-  // The destructor of ACE_Thread_Control removes the exiting thread
-  // from the thr_mgr automatically.
   return 0;
 }
 

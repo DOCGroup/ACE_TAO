@@ -165,8 +165,6 @@ Peer_Handler::Peer_Handler (Peer_Router_Context *prc)
 
 Peer_Handler::svc (void)
 {
-  ACE_Thread_Control thread_control (tm);
-
   ACE_Message_Block *db, *hb;
   int n;
 

@@ -89,7 +89,7 @@ ACE_Handle_Set::count_bits (u_long n) const
   ACE_TRACE ("ACE_Handle_Set::count_bits");
   int rval = 0;
 
-  for (int i = 0; i < sizeof (u_long); i++)
+  for (int i = 0; n != 0; i++)
     {
       rval += ACE_Handle_Set::nbits_[n & 0xff];
       n >>= 8;

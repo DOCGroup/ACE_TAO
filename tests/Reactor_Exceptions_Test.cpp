@@ -95,7 +95,6 @@ static int
 worker (void)
 {
   ACE_NEW_THREAD;
-  ACE_Thread_Control tc (ACE_Thread_Manager::instance ());
 
   ACE_Reactor::instance()->owner (ACE_OS::thr_self());
 

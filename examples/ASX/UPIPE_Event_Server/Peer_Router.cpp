@@ -64,9 +64,7 @@ Peer_Handler<ROUTER, KEY>::Peer_Handler (ACE_Thread_Manager *tm)
 template <class ROUTER, class KEY> int
 Peer_Handler<ROUTER, KEY>::svc (void)
 {
-  ACE_Thread_Control thread_control (tm);
-  // just a try !!
-  // we're just reading from our ACE_Message_Queue
+  // Just a try !!  we're just reading from our ACE_Message_Queue.
   ACE_Message_Block *db, *hb;
   int n;
   // do an endless loop

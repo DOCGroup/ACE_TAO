@@ -61,9 +61,6 @@ consumer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
 static void *
 producer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
 {
-  // Insert thread into thr_mgr.
-  ACE_Thread_Control thread_control (&thr_mgr); 
-
   ACE_Read_Buffer rb (ACE_STDIN);
 
   // Keep reading stdin, until we reach EOF. 
@@ -114,8 +111,6 @@ producer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
   // the size of the lines!).
   consumer (msg_queue);
 
-  // The destructor of ACE_Thread_Control removes the exiting thread
-  // from the thr_mgr automatically.
   return 0; 
 }
 

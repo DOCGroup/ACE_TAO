@@ -145,8 +145,6 @@ worker (void *args)
 {
   ACE_NEW_THREAD;
 
-  ACE_Thread_Control tc (ACE_Thread_Manager::instance ());
-
   ACE_Reactor *reactor = (ACE_Reactor *) args;
 
   // Make this thread the owner of the Reactor's event loop.

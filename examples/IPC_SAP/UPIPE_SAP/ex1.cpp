@@ -25,8 +25,6 @@ static ACE_UPIPE_Addr addr ("pattern");
 static void *
 peer1 (void *)
 {
-  // Insert thread into thr_mgr.
-  ACE_Thread_Control thread_control (&thr_mgr); 
   ACE_UPIPE_Stream c_stream;
 
   ACE_DEBUG ((LM_DEBUG, "(%t) peer1 starting connect\n"));
@@ -81,9 +79,6 @@ peer1 (void *)
 static void *
 peer2 (void *)
 {
-  // Insert thread into thr_mgr.
-  ACE_Thread_Control thread_control (&thr_mgr); 
-
   ACE_UPIPE_Acceptor acc (addr);
   ACE_UPIPE_Stream s_stream;
 

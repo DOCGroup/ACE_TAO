@@ -65,10 +65,6 @@ malloc_recurse (int count)
 static void *
 worker (void *arg)
 {
-  // Allocate a thread control object, which automatically removes the
-  // thread from the thread manager on exit.
-  ACE_Thread_Control tc (&thread_manager);
-
   malloc_recurse ((int) arg);
   return 0;
 }
