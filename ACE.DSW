@@ -3,7 +3,7 @@ Microsoft Developer Studio Workspace File, Format Version 5.00
 
 ###############################################################################
 
-Project: "ACE"=".\ace\ace-vc50.dsp" - Package Owner=<4>
+Project: "ACE"=.\ace\ace.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -508,6 +508,30 @@ Package=<4>
 ###############################################################################
 
 Project: "UPIPE_SAP_Test"=.\tests\UPIPE_SAP_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "netsvcs"=.\netsvcs\lib\netsvcs.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "servers"=.\netsvcs\servers\servers.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
