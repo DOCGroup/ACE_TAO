@@ -11,11 +11,12 @@ LIB_DIR		= $(CLASSIXDIR)/lib
 CC		= gcc
 CXX		= g++
 		
-CFLAGS		+= -w -O2
-CCFLAGS		+= -w -O2 -fno-implicit-templates	\
+CFLAGS		+= $(DCFLAGS) -w -O2
+CCFLAGS		+= $(CFLAGS) -fno-implicit-templates	\
 		   -fno-strict-prototypes     		\
 		   -D_POSIX_THREADS 			\
 		   -D_POSIX_THREAD_SAFE_FUNCTIONS
+DCFLAGS		+= -g
 
 INCLDIRS	+= -I$(INC_DIR)/posix			\
 		   -I$(INC_DIR)/stdc			\

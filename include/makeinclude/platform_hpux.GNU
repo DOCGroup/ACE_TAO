@@ -1,14 +1,15 @@
 CC		= /bin/cc
 CXX		= /usr/bin/CC
+CFLAGS		= $(DCFLAGS) -Aa -z
+CCFLAGS		= $(CFLAGS) -pta -ptb
+DCFLAGS		+= -g
 DLD		= $(CXX)
 LD		= $(CXX) 
 PIC		= +Z
 ARFLAGS		= ruv
 RANLIB		= echo
-CFLAGS		= $(DCFLAGS) -Aa -z
 LDFLAGS		= -L$(WRAPPER_ROOT)/ace -Wl,+s
 LIBS		+= -lxti
-CCFLAGS		= -Aa -pta -ptb -z
 SOFLAGS		= -b
 SOEXT		= sl
 SOBUILD     = @echo ""; \

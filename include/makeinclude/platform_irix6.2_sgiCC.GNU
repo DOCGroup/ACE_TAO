@@ -7,6 +7,9 @@
 
 CC              = cc
 CXX             = CC
+CFLAGS		+= $(DCFLAGS)
+CCFLAGS		+= $(CFLAGS)
+DCFLAGS		+= -g
 DLD             = $(CXX)
 LD              = $(CXX) 
 

@@ -2,7 +2,9 @@
 # *not* using Orbix
 CC		= cxvxppc
 CXX		= $(CC)
-CCFLAGS		+= --no_rtti
+CFLAGS		+= $(DCFLAGS)
+CCFLAGS		+= $(CFLAGS) --no_rtti
+DCFLAGS		+= -g
 DLD		= $(CXX) 
 LD		= $(CXX)
 LIBS            += /appl/newgreen/vxppc603/indlib.o
