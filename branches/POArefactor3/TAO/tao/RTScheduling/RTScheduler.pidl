@@ -26,8 +26,8 @@
 #ifndef TAO_RTSCHEDULER_PIDL
 #define TAO_RTSCHEDULER_PIDL
 
-#include "tao/RTCORBA/RTCORBA.pidl"
-#include "tao/PortableServer/PortableServer.pidl"
+#include "tao/RTCORBA/RTCORBA_include.pidl"
+#include "tao/PortableServer/PortableServer_include.pidl"
 #include "tao/PortableInterceptor.pidl"
 
 
