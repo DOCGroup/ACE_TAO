@@ -1,3 +1,15 @@
+Tue Oct 19 13:56:54 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * examples/Kokyu_dsrt_schedulers/fp_example/test_i.cpp (test_method):
+        
+          Changed an ACE_UINT64 cast to ACE_UINT32, the correct type to be
+          passed to the Task_Stats utility class.
+          
+        * orbsvcs/examples/LoadBalancing/RPS_Monitor.cpp:
+        
+          Added an explicit cast to CORBA::Float to eliminate VC warnings
+          about the implicit cast from unsigned long.
+
 Tue Oct 19 12:02:04 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * performance-tests/Protocols/sender.cpp:
