@@ -1,3 +1,20 @@
+Fri Jan 23 14:30:19 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/poa.h: 
+	* tao/poa.cpp: 
+	* tao/servant_base.cpp: 
+	  _this() was using the object id for the current servant in *all*
+	  objects, now it only does so for the servant invoked.
+
+	* tests/Cubit/TAO/IDL_Cubit/Makefile: 
+	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp: 
+	* tests/Cubit/TAO/IDL_Cubit/clnt.h: 
+	* tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp: 
+	* tests/Cubit/TAO/IDL_Cubit/cubit_i.h: 
+	* tests/Cubit/TAO/IDL_Cubit/svr.cpp: 
+	  Ported the Cubit test to POA, including some funky persistent
+	  policies to simplify its use.
+
 Sat Jan 24 01:24:24 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/poa.cpp (destroy_i): Changed etherealize objects to correct

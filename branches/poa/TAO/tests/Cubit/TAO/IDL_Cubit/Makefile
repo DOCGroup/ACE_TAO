@@ -17,7 +17,7 @@ PROG_SRCS =	$(IDL_SRC) svr.cpp clnt.cpp tmplinst.cpp
 LSRC = $(PROG_SRCS)
 
 CUBIT_SVR_OBJS = cubitC.o cubitS.o svr.o cubit_i.o tmplinst.o
-CUBIT_CLT_OBJS = cubitC.o clnt.o tmplinst.o
+CUBIT_CLT_OBJS = cubitC.o cubitS.o clnt.o tmplinst.o
 
 BIN = svr clnt
 BUILD = $(BIN)
@@ -76,8 +76,8 @@ check:	$(TESTS)
 	@./clnt -n250 -O `cat obj.5` -x
 	@echo ''
 
-clean:
-	-/bin/rm -rf *.o Log $(BIN) obj.* core Templates.DB .make.state
+#clean:
+#	-/bin/rm -rf *.o Log $(BIN) obj.* core Templates.DB .make.state
 
 realclean: clean
 	-/bin/rm -rf cubitC.* cubitS.*
