@@ -1,13 +1,51 @@
+Mon Sep 28 16:06:05 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.*,Object_Manager.{h,cpp}: removed ACE_HAS_TSS_EMULATION's
+          support for ACE_HAS_NATIVE_KEYS.  Now, if ACE_HAS_TSS_EMULATION
+          is used and ACE_HAS_THREAD_SPECIFIC_STORAGE is #defined, then
+          the ACE TSS emulation will use one native TSS key.
+
+          ACE_TSS_EMULATION may be useful on even on platforms that
+          have native thread specific storage.  It offers these
+          advantages:
+
+          1) ACE's TSS emulation offers a configurable number of TSS
+             keys, via ACE_DEFAULT_THREAD_KEYS.  Most (all?) native TSS
+             implementations have a fixed number of keys.  LynxOS 3.0.0,
+             for example, only has three keys available to applications.
+
+             ACE_DEFAULT_THREAD_KEYS defaults to 64, to match the
+             number of native keys on Windows NT.
+
+          2) ACE's TSS emulation recycles deleted keys.  Some native TSS
+             implementations, such as POSIX Draft 4, POSIX Draft 6, and
+             Solaris, do not allow deletion of TSS keys.  Therefore,
+             unused keys cannot be recycled.
+
+          3) ACE's TSS emulation calls destructors on TSS objects in the
+             main thread.  Solaris' native TSS, for example, does not.
+
+          There is one known drawback to using ACE's TSS emulation:  it is
+          slower than using native TSS.  The performance penalty is
+          probably negligible for most applications, however.  It involves
+          just an additional function call, an array index, and three numeric
+          comparisons beyond the native TSS call.  The function call is
+          _not_ a virtual function call.  (On MVS, there's an additional
+          memcpy of the TSS key with TSS emulation.)
+
+          TSS emulation is enabled by default in the ACE configurations
+          for VxWorks and LynxOS.
+
 Sun Sep 27 20:12:13 EDT 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
 
         * docs/tutorials/index.html: Linked in Tutorial 13
 
 Sun Sep 27 18:53:25 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/Map_Manager_Test.cpp: 
-	  Instead of clearing the capacity and size in the
-	  free_search_structure() method we do it on the close()
-	  method. The first method is also used in other places...
+        * tests/Map_Manager_Test.cpp:
+          Instead of clearing the capacity and size in the
+          free_search_structure() method we do it on the close()
+          method. The first method is also used in other places...
 
 Sun Sep 27 18:25:57 1998  David L. Levine  <levine@cs.wustl.edu>
 
