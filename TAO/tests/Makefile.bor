@@ -21,6 +21,7 @@ DIRS = \
         Bug_1269_Regression \
         Bug_1270_Regression \
         Bug_1482_Regression \
+	Bug_1551_Regression \
 	CDR \
 	Client_Leaks \
 	Codec \

@@ -1,10 +1,10 @@
+//
+// $Id$
+//
+
 #ifndef REPLY_HANDLER_H
 #define REPLY_HANDLER_H
-/**
- * @file
- *
- * $Id$
- */
+
 #include "ace/pre.h"
 
 #include "TestS.h"
