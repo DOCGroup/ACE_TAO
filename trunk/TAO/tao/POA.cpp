@@ -863,6 +863,14 @@ TAO_POA::cleanup_servant (TAO_Active_Object_Map::Map_Entry *active_object_map_en
   // First check for a non-zero servant.
   if (active_object_map_entry->servant_)
     {
+      // If we are a single threaded POA, teardown the appropriate
+      // locking in the servant.
+      //
+      // Note that teardown of the servant lock must happen before the
+      // _remove_ref() or etherealize() calls since they might end up
+      // deleting the servant.
+      //
+      this->teardown_servant_lock (active_object_map_entry->servant_);
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
@@ -909,10 +917,6 @@ TAO_POA::cleanup_servant (TAO_Active_Object_Map::Map_Entry *active_object_map_en
           active_object_map_entry->servant_->_remove_ref (ACE_TRY_ENV);
           ACE_CHECK;
         }
-
-      // If we are a single threaded POA, teardown the appropriate
-      // locking in the servant.
-      this->teardown_servant_lock (active_object_map_entry->servant_);
     }
 
   // This operation causes the association of the Object Id specified
