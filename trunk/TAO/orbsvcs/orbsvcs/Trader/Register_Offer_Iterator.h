@@ -18,7 +18,6 @@
 #ifndef TAO_REGISTER_OFFER_ITERATOR_H
 #define TAO_REGISTER_OFFER_ITERATOR_H
 
-#include "ace/Containers.h"
 #include "Offer_Iterator.h"
 
 template <class TRADER>
