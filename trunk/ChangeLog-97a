@@ -1,3 +1,9 @@
+Thu May 29 21:28:25 1997    <harrison@samba.cs.wustl.edu>
+
+	* Local_Tokens_T.*: Removed all these files.  They have not been
+	  used by the token library for some time.  They were mistakenly
+	  put in the release.
+
 Thu May 29 02:00:14 1997    <irfan@TWOSTEP>
 
 	* ACE.cpp (is_process_active): Added this method which checks if a
