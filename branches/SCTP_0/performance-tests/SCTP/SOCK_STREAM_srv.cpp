@@ -224,7 +224,9 @@ int main(int argc, char **argv){
 #ifndef ACE_HAS_SCTP
   if (optsMgr.test_transport_protocol == IPPROTO_SCTP)
     ACE_ERROR_RETURN((LM_ERROR,
-                      "SCTP was NOT installed when this binary was compiled.\nSOCK_STREAM_srv may still be run using TCP via the '-t tcp' option.\n"),
+                      "SCTP was NOT installed when this binary was compiled.\n"
+                      "SOCK_STREAM_srv may still be run using TCP "
+                      "via the '-t tcp' option.\n"),
                      1);
 #endif
 
