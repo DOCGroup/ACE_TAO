@@ -80,16 +80,23 @@
 
 # define ACE_DEFAULT_BASE_ADDR ((char *) 0x80000000)
 
-// Fixes a problem with new versions of Linux...
-#ifndef msg_accrights
-#undef msg_control
-#define msg_accrights msg_control
-#endif
+#if 0
+  // Wed Sep 23 22:29:37 1998  David L. Levine  <levine@cs.wustl.edu>
+  // Disabled this, because it doesn't really look right.  I think
+  // that it was added to work around some problems with very early
+  // versions of glib2.  It no longer seems to be necessary.
 
-#ifndef msg_accrightslen
-#undef msg_controllen
-#define msg_accrightslen msg_controllen
-#endif
+  // Fixes a problem with new versions of Linux...
+  #ifndef msg_accrights
+  # undef msg_control
+  # define msg_accrights msg_control
+  #endif
+
+  #ifndef msg_accrightslen
+  # undef msg_controllen
+  # define msg_accrightslen msg_controllen
+  #endif
+#endif /* 0 */
 
 // Compiler/platform supports alloca().
 #define ACE_HAS_ALLOCA
