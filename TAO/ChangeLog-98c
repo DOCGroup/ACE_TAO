@@ -1,3 +1,20 @@
+Fri Oct 23 15:54:13 1998  Jeff Parsons <jp4@cs.wustl.edu>
+
+        * TAO/tests/DynAny_Test/data.{h,cpp};
+        * TAO/tests/DynAny_Test/driver.{h,cpp};
+        * TAO/tests/DynAny_Test/test_dynany.{h,cpp};
+        * TAO/tests/DynAny_Test/test_dynarray.{h,cpp};
+        * TAO/tests/DynAny_Test/test_dynenum.{h,cpp};
+        * TAO/tests/DynAny_Test/test_dynsequence.{h,cpp};
+        * TAO/tests/DynAny_Test/test_dynstruct.{h,cpp};
+        * TAO/tests/DynAny_Test/test_dynunion.{h,cpp};
+        * TAO/tests/DynAny_Test/test_wrapper.{h,cpp};
+        * TAO/tests/DynAny_Test/da_tests.pidl;
+        * TAO/tests/DynAny_Test/DynAny_Test.dsw;
+        * TAO/tests/DynAny_Test/basic_test.dsp;
+          The basic DynAny test stuff. Makefile and README
+          file to come shortly. Only works on NT for now.
+
 Fri Oct 23 15:00:30 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/tests/Simulator/DOVEMIB/DOVEMIBx.dsp
