@@ -11,10 +11,12 @@
 
 TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (void)
 {
+  //no-op
 }
 
 TAO_GIOP_Message_Base::~TAO_GIOP_Message_Base (void)
 {
+  //no-op
 }
 
 CORBA::Boolean
@@ -25,7 +27,7 @@ TAO_GIOP_Message_Base::
   
   TAO_GIOP_Message_Type type;
   
-  // First convert the Pluggable 
+  // First convert the Pluggable type to the GIOP specific type. 
   switch (t)
     {
     case (TAO_PLUGGABLE_MESSAGE_REQUEST):
@@ -76,7 +78,7 @@ TAO_GIOP_Message_Base::
   // version info , Bala
   msg.write_octet (TAO_ENCAP_BYTE_ORDER);
  
-  msg.write_octet ((CORBA::Octet) t);
+  msg.write_octet ((CORBA::Octet) type);
 
   // Write a dummy <size> later it is set to the right value...
   CORBA::ULong size = 0;
@@ -95,7 +97,7 @@ TAO_GIOP_Message_Base::
 {
   switch (header_type)
     {
-    case TAO_REQUEST_HEADER:
+    case TAO_PLUGGABLE_MESSAGE_REQUEST_HEADER:
       this->write_request_header (params.svc_ctx,
                                   params.request_id,
                                   params.response_flags,
@@ -103,7 +105,7 @@ TAO_GIOP_Message_Base::
                                   params.operation_name,
                                   cdr);
       break;
-    case TAO_LOCATE_REQUEST_HEADER:
+    case TAO_PLUUGABLE_MESSAGE_LOCATE_REQUEST_HEADER:
       this->write_locate_request_header (params.request_id,
                                          spec,
                                          cdr);

@@ -10,7 +10,7 @@
 //     GIOP_Message_Acceptors.h
 //
 // = DESCRIPTION
-//     
+//   Implementation interface for the Server side of GIOP classes.  
 //
 // = AUTHOR
 //     Balachandran Natarajan <bala@cs.wustl.edu>
@@ -27,7 +27,10 @@ class TAO_Export TAO_GIOP_Message_Acceptors:
   public TAO_GIOP_Message_Base
 {
   // = TITLE
+  //   TAO_GIOP_Message_Acceptors
   // = DESCRIPTION
+  //   This class provides a comprehensive set of interfaces for the
+  //   server side of the GIOP classes. 
   
 public:
   

@@ -19,4 +19,5 @@ TAO_Pluggable_Messaging_Interface::~TAO_Pluggable_Messaging_Interface (void)
 
 TAO_Message_State_Factory::~TAO_Message_State_Factory (void)
 {
+  //no-op
 }
