@@ -6,6 +6,12 @@
 CIAO::RepositoryManager_Impl::RepositoryManager_Impl 
    (CORBA::ORB_ptr orb,
     PortableServer::POA_ptr poa)
+  : orb_ (CORBA::ORB::_duplicate  (orb)),
+    poa_ (PortableServer::POA::_duplicate (poa))
+{
+}
+
+CIAO::RepositoryManager_Impl::RepositoryManager_Impl ()
 {
 }
 
@@ -22,6 +28,8 @@ installPackage (const char* installation_name,
                    Deployment::NameExists,
                    Deployment::PackageError))
 {
+  // i am here.
+  ACE_DEBUG((LM_DEBUG, "\ni am here\n"));
 }
 
 void
@@ -84,4 +92,11 @@ deletePackage (const char* name
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::NoSuchName))
 {
+}
+
+void
+CIAO::RepositoryManager_Impl::shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  this->orb_->shutdown (1 ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 }
