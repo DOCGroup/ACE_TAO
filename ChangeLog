@@ -1,19 +1,24 @@
+Wed Feb 16 18:15:07 2005  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_lynxos.GNU:
+          Fixed setting of ACE_LYNXOS_MAJOR and ACE_LYNXOS_MINOR.
+        
 Wed Feb 16 11:04:29 2005  Steve Huston  <shuston@riverace.com>
 
-	* ace/SSL/SSL_Asynch_Stream.cpp: Corrections to use ACE_Handler::Proxy
-	  instead of naked ACE_Handler pointers/references.
+        * ace/SSL/SSL_Asynch_Stream.cpp: Corrections to use ACE_Handler::Proxy
+          instead of naked ACE_Handler pointers/references.
 
 Wed Feb 16 10:19:19 2005  Steve Huston  <shuston@riverace.com>
 
-	* ace/Asynch_IO.h: Remove the extraneous ACE_Handler:: qualification
-	  of Proxy_Ptr used inside ACE_Handler. This confused MSVC 6.
+        * ace/Asynch_IO.h: Remove the extraneous ACE_Handler:: qualification
+          of Proxy_Ptr used inside ACE_Handler. This confused MSVC 6.
 
 Wed Feb 16 10:13:41 2005  Steve Huston  <shuston@riverace.com>
 
-	* examples/Reactor/Proactor/post_completions.cpp:
-	* examples/Reactor/Proactor/test_proactor.cpp: Adjust the overridden
-	  result class and internal proactor calls to pass handler's proxy
-	  pointer, not the handler itself.
+        * examples/Reactor/Proactor/post_completions.cpp:
+        * examples/Reactor/Proactor/test_proactor.cpp: Adjust the overridden
+          result class and internal proactor calls to pass handler's proxy
+          pointer, not the handler itself.
 
 Wed Feb 16 07:02:15 2005  Chad Elliott  <elliott_c@ociweb.com>
 
