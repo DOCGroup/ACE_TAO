@@ -23,6 +23,22 @@
 #include "orbsvcs/AV/Endpoint_Strategy.h"
 #include "orbsvcs/AV/Policy.h"
 
+class Signal_Handler : public ACE_Event_Handler
+{
+  // TITLE
+  //   This class Handles the SIGINT signal through the Reactor.
+  //   Useful to gracefully release the process
+
+public:
+  
+  Signal_Handler (void);
+
+  int handle_signal(int signum, siginfo_t*,ucontext_t*);
+  // Override this method to implement graceful shutdown.
+
+};
+
+
 class Distributer_Receiver_Callback : public TAO_AV_Callback
 {
   // = TITLE
@@ -72,6 +88,14 @@ public:
   int handle_destroy (void);
   /// Called when the sender has finished reading the file and wants
   /// to close down the connection.
+
+  /// Accessor methods for the flowname of the callback.
+  ACE_CString &flowname (void);
+  void flowname (const ACE_CString &flowname);
+
+private:
+  
+  ACE_CString flowname_;
   
 };
 
@@ -170,7 +194,7 @@ public:
   void stream_destroyed (void);
   /// Called when stream destroyed
 
-  void unbind (CORBA::Environment &);
+  void shut_down (CORBA::Environment &);
   ///Unbind the sender and receiver from the Naming Service
 
 protected:
@@ -202,4 +226,8 @@ protected:
   /// Number of active streams. When a stream is disconnected this 
   /// count is decremented.
 
+  Signal_Handler signal_handler_;
+  /// Reference to the signal handler.
+  
 };
+

@@ -10,10 +10,10 @@ typedef ACE_Singleton<Sender, ACE_Null_Mutex> SENDER;
 /// Create a singleton instance of the Sender.
 
 int g_shutdown = 0;
+/// Flag set when a signal is raised.
 
 // constructor.
-Signal_Handler::Signal_Handler (const ACE_CString &sender_name)
-  : sender_name_ (sender_name)
+Signal_Handler::Signal_Handler (void)
 {
 }
 
@@ -22,31 +22,14 @@ Signal_Handler::handle_signal (int signum, siginfo_t *, ucontext_t*)
 {
   if (signum == SIGINT)
     {
-      ACE_DEBUG ((LM_DEBUG,
-		  "In the signal handler\n"));
+      if (TAO_debug_level > 0)
+	ACE_DEBUG ((LM_DEBUG,
+		    "In the signal handler\n"));
       
       g_shutdown = 1;
       
-      TAO_AV_CORE::instance ()->reactor ()->end_event_loop ();//resume_handlers (); //notify ();
-      
-      ACE_DEBUG ((LM_DEBUG,
-		  "It reached here\n"));
-
-     
     }  
   return 0;
-}
-
-const ACE_CString&
-Signal_Handler::sender_name (void)
-{
-  return this->sender_name_;
-}
-
-void
-Signal_Handler::sender_name (const ACE_CString& sender_name)
-{
-  this->sender_name_ = sender_name;
 }
 
 ACE_CString &
@@ -149,9 +132,7 @@ Sender::Sender (void)
     input_file_ (0),
     frame_rate_ (5),
     mb_ (BUFSIZ),
-    sender_name_ ("sender"),
-    //    stream_count_ (0),
-    signal_handler_ (sender_name_)
+    sender_name_ ("sender")
 {
 }
 
@@ -167,7 +148,9 @@ Sender::shut_down (CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_TRY
     {
-      AVStreams::MMDevice_var mmdevice;
+      AVStreams::MMDevice_var mmdevice =
+	this->sender_mmdevice_->_this (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       
       SENDER::instance ()->connection_manager ().unbind_sender (this->sender_name_,
 								mmdevice.in (),
@@ -242,8 +225,6 @@ Sender::init (int argc,
   if (result != 0)
     return result;
   
-  this->signal_handler_.sender_name (this->sender_name_);
-  
   ACE_Reactor *reactor = 
     TAO_AV_CORE::instance ()->reactor ();
   
@@ -252,6 +233,7 @@ Sender::init (int argc,
     ACE_ERROR_RETURN ((LM_ERROR,
 		       "Error in handler register\n"),
 		      -1);
+  /// Register the signal handler for clean termination of the process.
 
   /// Open file to read.
   this->input_file_ =
@@ -324,8 +306,13 @@ Sender::pace_data (CORBA::Environment &ACE_TRY_ENV)
 	    {
 	      ACE_DEBUG ((LM_DEBUG,
 			  "Shut Down called\n"));
+
+	      this->shut_down (ACE_TRY_ENV);
+	      ACE_TRY_CHECK;
+
 	      break;
 	    }
+
           /// Read from the file into a message block.
           int n = ACE_OS::fread (this->mb_.wr_ptr (),
                                  1,
@@ -343,18 +330,9 @@ Sender::pace_data (CORBA::Environment &ACE_TRY_ENV)
 	      if (TAO_debug_level > 0)
                 ACE_DEBUG ((LM_DEBUG,"Handle_Start:End of file\n"));
 
-	      AVStreams::MMDevice_var mmdevice =
-		this->sender_mmdevice_->_this (ACE_TRY_ENV);
-	      ACE_TRY_CHECK;
-	      
-	      this->connection_manager_.unbind_sender (this->sender_name_,
-						       mmdevice.in (),
-						       ACE_TRY_ENV);
-	      ACE_TRY_CHECK;
+	      this->shut_down (ACE_TRY_ENV);
+	      ACE_TRY_ENV;
 
-  	      this->connection_manager_.destroy (ACE_TRY_ENV);
-  	      ACE_TRY_CHECK;
-	      
 	      break;
 			    
             }
@@ -397,7 +375,7 @@ Sender::pace_data (CORBA::Environment &ACE_TRY_ENV)
 		  TAO_AV_CORE::instance ()->orb ()->run (wait_time,
 							 ACE_TRY_ENV);
 		  ACE_TRY_CHECK;
-		  
+
                 }
             }
 

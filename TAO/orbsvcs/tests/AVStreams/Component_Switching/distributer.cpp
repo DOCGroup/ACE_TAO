@@ -8,13 +8,38 @@
 
 typedef ACE_Singleton<Distributer, ACE_Null_Mutex> DISTRIBUTER;
 
+// constructor.
+Signal_Handler::Signal_Handler (void)
+{
+}
+
 int
-Distributer_Sender_StreamEndPoint::get_callback (const char *,
+Signal_Handler::handle_signal (int signum, siginfo_t *, ucontext_t*)
+{
+  if (signum == SIGINT)
+    {
+      if (TAO_debug_level > 0)
+	ACE_DEBUG ((LM_DEBUG,
+		    "In the signal handler\n"));
+      
+      DISTRIBUTER::instance ()->done (1);
+                 
+    }  
+  return 0;
+}
+
+int
+Distributer_Sender_StreamEndPoint::get_callback (const char *flow_name,
                                                  TAO_AV_Callback *&callback)
 {
   /// Create and return the sender application callback to AVStreams
   /// for further upcalls.
   callback = &this->callback_;
+  
+  ACE_CString fname = flow_name;
+
+  this->callback_.flowname (fname);
+
   return 0;
 }
 
@@ -176,6 +201,18 @@ Distributer_Receiver_Callback::handle_destroy (void)
   return 0;
 }
 
+ACE_CString &
+Distributer_Sender_Callback::flowname (void)
+{
+  return this->flowname_;
+}
+
+void 
+Distributer_Sender_Callback::flowname (const ACE_CString &flowname)
+{
+  this->flowname_ = flowname;
+}
+
 int
 Distributer_Sender_Callback::handle_destroy (void)
 {
@@ -183,6 +220,13 @@ Distributer_Sender_Callback::handle_destroy (void)
 
   ACE_DEBUG ((LM_DEBUG,
               "Distributer_Sender_Callback::end_stream\n"));
+  
+  DISTRIBUTER::instance ()->connection_manager ().protocol_objects ().unbind (this->flowname_.c_str ());
+  
+  DISTRIBUTER::instance ()->connection_manager ().streamctrls ().unbind (this->flowname_.c_str ());
+  
+  DISTRIBUTER::instance ()->connection_manager ().receivers ().unbind (this->flowname_.c_str ());
+
   return 0;
 }
 
@@ -278,6 +322,16 @@ Distributer::init (int argc,
   if (result != 0)
     return result;
 
+  ACE_Reactor *reactor = 
+    TAO_AV_CORE::instance ()->reactor ();
+  
+  if (reactor->register_handler (SIGINT,
+				 &this->signal_handler_) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+		       "Error in handler register\n"),
+		      -1);
+  /// Register the signal handler for clean termination of the process.  
+
   ACE_NEW_RETURN (this->distributer_sender_mmdevice_,
                   TAO_MMDevice (&this->sender_endpoint_strategy_),
                   -1);
@@ -334,7 +388,7 @@ Distributer::done (void) const
 }
 
 void
-Distributer::unbind (CORBA::Environment &ACE_TRY_ENV)
+Distributer::shut_down (CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_TRY
     {
@@ -352,10 +406,13 @@ Distributer::unbind (CORBA::Environment &ACE_TRY_ENV)
       DISTRIBUTER::instance ()->connection_manager ().unbind_sender (this->distributer_name_,
 								     sender_mmdevice.in ());
       
+      DISTRIBUTER::instance ()->connection_manager ().destroy (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Distributer::unbind");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Distributer::shut_down");
     }
   ACE_ENDTRY;
 }
@@ -421,7 +478,7 @@ main (int argc,
 	  ACE_TRY_CHECK;
 	}
 
-      DISTRIBUTER::instance ()->unbind (ACE_TRY_ENV);
+      DISTRIBUTER::instance ()->shut_down (ACE_TRY_ENV);
       ACE_TRY_CHECK;
       
     }

@@ -6,14 +6,41 @@
 static FILE *output_file = 0;
 /// File handle of the file into which received data is written.
 
-Connection_Manager *connection_manager;
+static int done = 0;
+/// Flag set when a signal is raised.
+
+// constructor.
+Signal_Handler::Signal_Handler (void)
+{
+}
+
 int
-Receiver_StreamEndPoint::get_callback (const char *,
+Signal_Handler::handle_signal (int signum, siginfo_t *, ucontext_t*)
+{
+  if (signum == SIGINT)
+    {
+      if (TAO_debug_level > 0)
+	ACE_DEBUG ((LM_DEBUG,
+		    "In the signal handler\n"));
+      
+      done = 1;
+    }  
+  return 0;
+}
+
+
+Connection_Manager *connection_manager;
+
+int
+Receiver_StreamEndPoint::get_callback (const char *flow_name,
                                        TAO_AV_Callback *&callback)
 {
   /// Return the receiver application callback to the AVStreams for
   /// future upcalls.
   callback = &this->callback_;
+  
+  ACE_CString fname = flow_name;
+  this->callback_.flowname (fname);
   return 0;
 }
 
@@ -21,8 +48,9 @@ CORBA::Boolean
 Receiver_StreamEndPoint::handle_connection_requested (AVStreams::flowSpec &flowspec,
 						      CORBA::Environment &)
 {
-  ACE_DEBUG ((LM_DEBUG,
-	      "In Handle Conection Requested \n"));	     
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG,
+		"In Handle Conection Requested \n"));	     
   
   for (CORBA::ULong i = 0;
        i < flowspec.length ();
@@ -65,6 +93,30 @@ Receiver_Callback::Receiver_Callback (void)
 {
 }
 
+ACE_CString &
+Receiver_Callback::flowname (void)
+{
+  return this->flowname_;
+}
+
+void 
+Receiver_Callback::flowname (const ACE_CString &flowname)
+{
+  this->flowname_ = flowname;
+}
+
+int
+Receiver_Callback::handle_destroy (void)
+{
+  /// Called when the sender requests the stream to be shutdown.
+  ACE_DEBUG ((LM_DEBUG,
+	      "Receiver_Callback::end_stream\n"));
+
+  /// Remove the related stream control reference.
+  connection_manager->streamctrls ().unbind (this->flowname_.c_str ());
+  
+  return 0;
+}
 int
 Receiver_Callback::receive_frame (ACE_Message_Block *frame,
                                   TAO_AV_frame_info *,
@@ -108,12 +160,7 @@ Receiver::Receiver (void)
 
 Receiver::~Receiver (void)
 {
-  ACE_DEBUG ((LM_DEBUG,
-	      "Receiver destructor\n"));
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  this->unbind (ACE_TRY_ENV);
-  ACE_CHECK;
 }
 
 ACE_CString
@@ -147,6 +194,16 @@ Receiver::init (int,
     return result;
 
   connection_manager = &this->connection_manager_;
+  
+  ACE_Reactor *reactor = 
+    TAO_AV_CORE::instance ()->reactor ();
+  
+  if (reactor->register_handler (SIGINT,
+				 &this->signal_handler_) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+		       "Error in handler register\n"),
+		      -1);
+  /// Register the signal handler for clean termination of the process.
   
   /// Register the receiver mmdevice object with the ORB
   ACE_NEW_RETURN (this->mmdevice_,
@@ -215,7 +272,7 @@ Receiver::output_file_name (void)
 }
 
 void
-Receiver::unbind (CORBA::Environment &ACE_TRY_ENV)
+Receiver::shut_down (CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_TRY
     {
@@ -227,6 +284,10 @@ Receiver::unbind (CORBA::Environment &ACE_TRY_ENV)
       this->connection_manager_.unbind_receiver (this->sender_name_,
 						 this->receiver_name_,
 						 mmdevice_obj.in ());
+
+      this->connection_manager_.destroy (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
     }
   ACE_CATCHANY
     {
@@ -305,10 +366,13 @@ main (int argc,
       if (result != 0)
         return result;
 
-      orb->run (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      while (!done) 
+	{
+	  orb->perform_work (ACE_TRY_ENV);
+	  ACE_TRY_CHECK;
+	}
 
-      orb->destroy (ACE_TRY_ENV);
+      receiver.shut_down (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       ACE_OS::fclose (output_file);
