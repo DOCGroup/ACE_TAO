@@ -9,7 +9,7 @@
 #include <tao/Services.pidl>
 #include <tao/TimeBase.pidl>
 #include <orb.idl>
-#include <OctetSeq.pidl>
+#include <tao/OctetSeq.pidl>
 
 #pragma prefix "omg.org"
 
