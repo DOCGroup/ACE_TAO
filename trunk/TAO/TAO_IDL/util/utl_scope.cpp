@@ -1620,8 +1620,12 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
   idl_bool in_corba =
     ACE_OS::strcmp (e->get_string (), "CORBA") == 0;
 
-  // Iterate over this scope.
-  for (UTL_ScopeActiveIterator i (this, UTL_Scope::IK_decls);
+  // Iterate over this scope. We need IK_both here for the legacy
+  // case where a recursive type is defined via an anonymous sequence.
+  // Looking up the anonymous sequence parameter succeeds only if
+  // references are included, since the decl for the (unfinished)
+  // enclosing type has not yet been added to the scope decls.
+  for (UTL_ScopeActiveIterator i (this, UTL_Scope::IK_both);
        !i.is_done ();
        i.next ())
     {
