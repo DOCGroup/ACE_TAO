@@ -1,3 +1,21 @@
+Thu Dec 13 16:41:39 2001  Steve Huston  <shuston@riverace.com>
+
+        * examples/Reactor/WFMO_Reactor/test_multithreading.cpp: Changed
+          call to ACE_Service_Config::close_singletons () to call
+          ACE_Reactor::close_singleton() instead. Recent changes made
+          it necessary to include "ace/Service_Config.h" here to use
+          the former, and it seemed better to call the only needed singleton
+          destroyer necessary in this case.
+
+        * examples/Reactor/WFMO_Reactor/test_suspended_removals.cpp:
+        * examples/Reactor/WFMO_Reactor/test_window_messages.cpp:
+        * examples/Bounded_Packet_Relay/BPR_Drivers.h:
+          Added #include "ace/Reactor.h" - recent changes necessitate this.
+
+        * examples/Reactor/WFMO_Reactor/test_talker.cpp: Added
+          #include "ace/Reactor_Notification_Strategy.h" - recent changes
+          necessitate this.
+
 Wed Dec 12 16:29:17 2001  Greg Burley  <Burley@tabq.com.au>
 
 	* ace/SSL/SSL_Context.h:

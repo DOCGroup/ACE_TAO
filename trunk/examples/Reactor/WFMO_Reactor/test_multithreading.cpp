@@ -236,11 +236,10 @@ main (int argc, char **argv)
   // Wait for all threads to exit
   ACE_Thread_Manager::instance ()->wait ();
 
-  // Delete dynamic resources; this is necessary since it will destroy
-  // the Reactor instance.  If we wait for the Object Manager to do
-  // this, it will be too late since Task_Handler instance would have
-  // disappeared.
-  ACE_Service_Config::close_singletons ();
+  // Close the Reactor singleton before exiting this function.
+  // If we wait for the Object Manager to do this, it will be too
+  // late since Task_Handler instance would have disappeared.
+  ACE_Reactor::close_singleton ();
 
   return 0;
 }

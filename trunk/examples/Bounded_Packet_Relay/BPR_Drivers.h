@@ -35,6 +35,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Reactor.h"
 #include "ace/Task.h"
 #include "ace/Synch.h"
 
