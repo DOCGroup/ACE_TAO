@@ -1,3 +1,10 @@
+Tue Feb 23 19:54:55 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* ace/POSIX_Asynch_IO.h:
+	* ace/POSIX_Asynch_IO.cpp: 	
+	Fixed the potential dominance warnings in POSIX
+	implementation. Updated the documentation.
+
 Tue Feb 23 16:54:33 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/OS.i (recursive_mutex_trylock and recursive_mutex_lock):
