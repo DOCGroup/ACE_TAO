@@ -47,7 +47,7 @@ inline int QuantifyStopRecordingData ()
 static const char *ior = "file://test.ior";
 
 // Levels at which syncscope policy can be set.
-enum LEVEL {ORB, THREAD, OBJECT};
+enum LEVEL {ORB_LEVEL, THREAD_LEVEL, OBJECT_LEVEL};
 
 // Default is OBJECT level.
 static LEVEL level = OBJECT;
@@ -318,11 +318,11 @@ parse_args (int argc, char *argv[])
           char *tmp = get_opts.optarg;
 
           if (!ACE_OS::strcmp (tmp, "orb"))
-            level = ORB;
+            level = ORB_LEVEL;
           else if (!ACE_OS::strcmp (tmp, "thread"))
-            level = THREAD;
+            level = THREAD_LEVEL;
           else if (!ACE_OS::strcmp (tmp, "object"))
-            level = OBJECT;
+            level = OBJECT_LEVEL;
           else
             error = 1;
           break;
@@ -497,7 +497,7 @@ main (int argc, char *argv[])
 
           switch (level)
           {
-            case ORB:
+            case ORB_LEVEL:
               // Set the sync scope policy at the ORB level.
               policy_manager->set_policy_overrides (sync_scope_policy_list,
                                                     CORBA::ADD_OVERRIDE,
@@ -505,7 +505,7 @@ main (int argc, char *argv[])
               ACE_TRY_CHECK;
               break;
 
-            case THREAD:
+            case THREAD_LEVEL:
               // Set the sync scope policy at the thread level.
               policy_current->set_policy_overrides (sync_scope_policy_list,
                                                     CORBA::ADD_OVERRIDE,
@@ -513,7 +513,7 @@ main (int argc, char *argv[])
               ACE_TRY_CHECK;
               break;
 
-            case OBJECT:
+            case OBJECT_LEVEL:
               // Set the sync scope policy at the object level.
               obj = server->_set_policy_overrides (sync_scope_policy_list,
                                                    CORBA::ADD_OVERRIDE,

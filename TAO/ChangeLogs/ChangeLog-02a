@@ -1,11 +1,24 @@
+Wed Nov 21 07:01:04 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* performance-tests/RTCorba/Oneways/Reliable/client.cpp (main): 
+	  Added "_LEVEL" to the enumerated literals to avoid clashes with
+ 	  SunC++ 4.2.  Thanks to Steve Osselton
+ 	  <steve@prismtechnologies.com> for reporting the bug and
+ 	  suggesting the fix.
+
+Fri Nov 16 10:39:52 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* docs: Moved minimumTAO.html from $TAO_ROOT/docs/ to
+ 	  $ACE_ROOT/docs.
+	
 Tue Nov 20 11:58:39 2001  Ossama Othman  <ossama@uci.edu>
 
 	* configure.in:
 
 	  Removed this file from the distribution.  Some folks insist on
-	  attempting to build ACE/TAO with the configure script and
-	  reporting problems despite the fact we've explicitly disabled
-	  it.
+ 	  attempting to build ACE/TAO with the configure script and
+ 	  reporting problems despite the fact we've explicitly disabled
+ 	  it.
 
 Tue Nov 20 11:44:50 2001  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -35,49 +48,48 @@ Mon Nov 19 21:16:35 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 Mon Nov 19 20:19:48 2001  Jaiganesh Balasubramanian  <jai@balar.ece.uci.edu>
 
-        * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.h:
-        * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.i:
-        * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
-          Modified the TAO_ECG_Mcast_EH class to handle large numbers of
-          multicast subscriptions.  Because most OSes impose a limit on
-          the number of subscription that a single socket supports, we
-          needed to keep a collection of sockets.
-          Furthermore, we need to track on what socket each multicast
-          group is subscribed, so a map from multicast groups to sockets
-          is also maintained.
-          Using this new map we can optimize the algorithm used to remove
-          multicast group subscriptions, previous versions of this class
-          simply closed the socket, but that has been reported as too
-          expensive by Mark Hyett <mhyett@std.saic.com>.  With this new
-          change the class only unsubscribes from the multicast groups no
-          longer needed, without closing the socket.
-          The changes revealed some bugs in ACE_SOCK_Dgram_Mcast, the bug
-          was fixed and the changes are documented in the ACE ChangeLog
-          file.
+	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.h:
+	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.i:
+	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
+	  Modified the TAO_ECG_Mcast_EH class to handle large numbers of
+ 	  multicast subscriptions.  Because most OSes impose a limit on
+ 	  the number of subscription that a single socket supports, we
+ 	  needed to keep a collection of sockets.  Furthermore, we need to
+ 	  track on what socket each multicast group is subscribed, so a
+ 	  map from multicast groups to sockets is also maintained.
+	
+	  Using this new map we can optimize the algorithm used to remove
+ 	  multicast group subscriptions, previous versions of this class
+ 	  simply closed the socket, but that has been reported as too
+ 	  expensive by Mark Hyett <mhyett@std.saic.com>.  With this new
+ 	  change the class only unsubscribes from the multicast groups no
+ 	  longer needed, without closing the socket.  The changes revealed
+ 	  some bugs in ACE_SOCK_Dgram_Mcast, the bug was fixed and the
+ 	  changes are documented in the ACE ChangeLog file.
 
-        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h:
-        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.i:
-        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
-          Moved the class TAO_ECG_Mcast_EH to its own file.
-          (See ECG_Mcast_EH.h)
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h:
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.i:
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
+	  Moved the class TAO_ECG_Mcast_EH to its own file. 
+	  (See ECG_Mcast_EH.h)
 
-        * orbsvcs/tests/EC_Mcast/EC_Mcast.h:
-        * orbsvcs/examples/RtEC/MCast/MCast.cpp:
-          Add new header file for TAO_ECG_Mcast_EH
+	* orbsvcs/tests/EC_Mcast/EC_Mcast.h:
+	* orbsvcs/examples/RtEC/MCast/MCast.cpp:
+	  Add new header file for TAO_ECG_Mcast_EH
 
-        * orbsvcs/tests/EC_Mcast/Makefile:
-        * orbsvcs/examples/RtEC/MCast/Makefile:
-          Updated dependencies
+	* orbsvcs/tests/EC_Mcast/Makefile:
+	* orbsvcs/examples/RtEC/MCast/Makefile:
+	  Updated dependencies
 
-        * orbsvcs/tests/EC_Mcast/sample.cfg:
-          Changed this file so users can test the support for large
-          numbers of multicast groups.
+	* orbsvcs/tests/EC_Mcast/sample.cfg:
+	  Changed this file so users can test the support for large
+	  numbers of multicast groups.
 
-        * orbsvcs/orbsvcs/Makefile.RTEvent:
-        * orbsvcs/orbsvcs/RTEvent.bor:
-        * orbsvcs/orbsvcs/Event/Makefile.am:
-          Added a new file Event/TAO_ECG_Mcast_EH.cpp.  Update
-          dependencies for the GNUMake makefile.
+	* orbsvcs/orbsvcs/Makefile.RTEvent:
+	* orbsvcs/orbsvcs/RTEvent.bor:
+	* orbsvcs/orbsvcs/Event/Makefile.am:
+	  Added a new file Event/TAO_ECG_Mcast_EH.cpp.  Update
+	  dependencies for the GNUMake makefile.
 
 Mon Nov 19 02:06:53 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
@@ -1614,8 +1626,27 @@ Wed Sep 26 15:30:31 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 Tue Sep 25 23:45:30 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-        * performance-tests/RTCorba/Thread_Pool/client.cpp:
+	* performance-tests/RTCorba/Thread_Pool/client.cpp:
 
+	  - Include tests/RTCORBA/Linear_Priority/readers.cpp to reuse
+	    common file parsing code.  This way we can removed the
+	    get_rates() function.
+
+<<<<<<< ChangeLog
+	  - Invocation priorities can either be automatically
+	    calculated (as before) or can be explicitly specified
+	    through the <invocation_priorities_file> option.
+
+	* performance-tests/RTCorba/Thread_Pool/server.cpp:
+=======
+        * performance-tests/RTCorba/Thread_Pool/client.cpp:
+>>>>>>> 1.4454
+
+<<<<<<< ChangeLog
+	  - Include tests/RTCORBA/Linear_Priority/readers.cpp to reuse
+	    common file parsing code.  Auto lane priorities and bands
+	    calculations were moved to readers.cpp.
+=======
           - Include tests/RTCORBA/Linear_Priority/readers.cpp to reuse
             common file parsing code.  This way we can removed the
             get_rates() function.
@@ -1629,6 +1660,7 @@ Tue Sep 25 23:45:30 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
           - Include tests/RTCORBA/Linear_Priority/readers.cpp to reuse
             common file parsing code.  Auto lane priorities and bands
             calculations were moved to readers.cpp.
+>>>>>>> 1.4454
 
           - Lane priorities and bands can either be automatically
             calculated (as before) or can be explicitly specified

@@ -14,28 +14,41 @@ bgcolor="#ffffff">
 <H3 ALIGN=CENTER>Options for TAO Components</H3>
 
 <H3>Overview</H3>
-<blockquote>
 
-<p>There are two major mechanisms to configure the behaviors of TAO.
-Behaviors that are global to a process, such as those of ORB Core or
-Object Adapters, are configrued through environment variables or
-command line flags.</p>
+TAO is an extremely flexible ORB that can be configured to meet a wide
+range of application requirements.  There are two primary mechanisms
+for configuring TAO's behaviors:
 
-<p>Another mechanism to configure TAO is to plug in internal
-implementations implementing different behaviors that an ORB uses.
-Plugins are loading into an ORB by providing a <code>svc.conf</code>
-file where users can specify the plugins to be loaded into the ORB and
-options that are specific to each plugin.  In other words, if your
-program use-cases have particular characteristics, you can use the
-<code>svc.conf</code> file to customize your programs and use various
-optimization provided by TAO.  A <code>svc.conf</code> file, however,
-is not required to run TAO programs.</p>
+<UL>
 
-<P><EM>Programmer's Note:</EM> the internal structure for options is
-the traditional <CODE>argc</CODE>/<CODE>argv</CODE> vector of strings
-style popularized by C and Unix.  By convention, an initialization
-method will consume, <EM>i.e.</EM>, remove from the vector, any
-options that it recognizes.</P> </blockquote>
+<LI> Configurations that are global to an ORB, such as
+    a Name Service IOR or the default stringified IOR
+    format an ORB generates, are configured via environment
+    variables or command-line option flags passed to the
+    <code>ORB_init()</code> call.  The internal structure for
+    command-line options is the traditional
+    <CODE>argc</CODE>/<CODE>argv</CODE> vector of strings style
+    popularized by C/C++ and Unix.  By convention,
+    <code>ORB_init()</code> will consume any options that it recognizes,
+    removing them from <CODE>argv</CODE>, whereas unrecognized options
+    will not be removed. <P>
+
+<LI>Users can also modify the internal behaviors of an ORB by
+    dynamically linking <EM>ORB plug-ins</EM>, such as client/server connection 
+    strategies, via a <code>svc.conf</code> file.  These ORB plug-ins
+    can be fine-tuned by specifying their options in the
+    <code>svc.conf</code> file.
+    TAO provides several default plug-ins to deploy resource management
+    strategies, client/server strategies, and communication protocols
+    that can be further customized via the
+    <code>svc.conf</code> file options described in this page.  Advanced
+    users can also develop their own plug-ins to customize TAO.
+    A <code>svc.conf</code> file, however, is not required to run TAO
+    programs since TAO provides a set of built-in strategies configured for
+    use with common use cases.  Many of the default configuratiions for
+    these built-in strategies can also be customized when TAO is
+    compiled.<p>
+</UL>
 
 <HR><P>
 <H3><A NAME="ev">Environment Variables</A></H3>
