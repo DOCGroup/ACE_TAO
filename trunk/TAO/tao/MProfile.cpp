@@ -130,6 +130,7 @@ TAO_MProfile::add_profiles (TAO_MProfile *pfiles)
       if (this->add_profile (pfiles->pfiles_[h]) < 0)
         return -1;
     }
+  return 0;
 }
 
 
@@ -181,6 +182,7 @@ TAO_MProfile::remove_profiles (const TAO_MProfile *pfiles)
       if (this->remove_profile (pfiles->pfiles_[h]) < 0)
         return -1;
     }
+  return 0;
 }
 
 CORBA::Boolean
