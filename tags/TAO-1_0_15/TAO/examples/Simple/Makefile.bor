@@ -1,0 +1,8 @@
+
+#
+# Makefile for building the simple examples
+# 
+
+DIRS = bank chat echo grid time
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

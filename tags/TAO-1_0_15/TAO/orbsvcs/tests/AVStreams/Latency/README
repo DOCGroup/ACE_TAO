@@ -1,0 +1,9 @@
+# $Id$
+
+	A simple latency test for the AVStreams pluggable protocol
+framework. Run as follows:
+
+$ ping -o ping.ior
+$ pong -o pong.ior
+$ control -f file://ping.ior -g file://pong.ior
+
