@@ -1,3 +1,8 @@
+Fri Jun 20 14:28:12 UTC 2003  Johnny WIllemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-mingw.h:
+          Updated this file because of the os splitting.
+
 Fri Jun 20 09:08:05 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/pch_cmd.pl:
