@@ -1,3 +1,11 @@
+Wed May 24 20:27:26 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ace/OS_String.h:
+
+	  Changed "u_long" to "unsigned long."  The u_long typedef wasn't
+	  being pulled in, so just use the basic type.  This avoids having
+	  to pull in a header, and fixes a compile time problem.
+
 Wed May 24 20:18:59 2000  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Select_Reactor_Base.cpp (open):
