@@ -29,7 +29,7 @@ public class DemoCore extends Frame {
   private GridBagLayout gridbag_;
   private GridBagConstraints constraints_;
 
-  DemoCore (String nameServiceIOR, java.applet.Applet applet) {
+  DemoCore (String nameServiceIOR, String[] args, java.applet.Applet applet) {
     super ();
 
     setSize (600,400);
@@ -45,7 +45,7 @@ public class DemoCore extends Frame {
 
     // Instantiate the DataHandler and the PushConsumer
     dataHandler_ = new NavWeapDataHandler ();
-    pushConsumerFactory_ = new PushConsumerFactory (dataHandler_, nameServiceIOR, applet);
+    pushConsumerFactory_ = new PushConsumerFactory (dataHandler_, nameServiceIOR, args, applet);
 
     // List of Visualization Components
     vis_comp_list_ = new java.util.Vector();
