@@ -2,6 +2,14 @@ Thu Jan 01 08:50:55 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * apps/Gateway/Peer/Peer.cpp: added template instantiations.
 
+        * netsvcs/lib/Base_Optimizer.*,Makefile: moved inline functions
+          to .i file and changed inline to ACE_INLINE.
+
+        * netsvcs/lib/Server_Logging_Handler_T.{h,cpp}: don't use
+          Base_Optimizer with g++.  Some versions of g++ 2.7.x have
+          trouble with its inline template member functions, especially
+          if __ACE_INLINE__ is disabled.
+
 Thu Jan 01 07:56:17 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.4.12, released Thu Jan 01 07:56:17 1998.
