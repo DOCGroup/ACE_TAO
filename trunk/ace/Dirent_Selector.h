@@ -57,7 +57,9 @@ protected:
   int n_;	
 };
 
+#if defined (__ACE_INLINE__)
 #include "ace/Dirent_Selector.inl"
+#endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
 #endif /* ACE_DIRENT_SELECTOR_H */
