@@ -1,3 +1,14 @@
+Thu Apr 19 23:30:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+        * examples/PluggableUDP/DIOP/DIOP_Acceptor.h:
+        * examples/PluggableUDP/DIOP/DIOP_Acceptor.cpp:
+        * examples/PluggableUDP/DIOP/DIOP_Connector.h:
+        * examples/PluggableUDP/DIOP/DIOP_Connector.cpp:
+        * examples/PluggableUDP/DIOP/DIOP_Factory.h:
+
+          Removed unused dependencies to ACE headers and
+          removed dead code.
+
 Thu Apr 19 14:40:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
         * examples/PluggableUDP/tests/Basic/run_test.pl:
