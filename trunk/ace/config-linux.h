@@ -13,6 +13,16 @@
 
 // Do we really need this #define here?
 #define LINUX
+
+#if defined (i386)
+  // If running an Intel, assume that it's a Pentium so that
+  // ACE_OS::gethrtime () can use the RDTSC instruction.  If
+  // running a 486 or lower, be sure to comment this out.
+  // (If not running an Intel CPU, this #define will not be seen
+  //  because of the i386 protection, so it can be ignored.)
+# define ACE_HAS_PENTIUM
+#endif /* i386 */
+
 // ONLY define this if you have config'd multicast into a 2.x kernel.
 // If you do anything else, we've never tested it!
 #define ACE_HAS_IP_MULTICAST
@@ -21,7 +31,6 @@
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 
-#define ACE_HAS_PENTIUM
 #define ACE_HAS_LONGLONG_T
 #define ACE_HAS_STRING_CLASS
 
