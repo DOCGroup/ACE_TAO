@@ -22,11 +22,6 @@ use vars qw(@ISA);
 # Subroutine Section
 # ************************************************************
 
-sub allow_duplicates {
-  my($self) = shift;
-  return 0;
-}
-
 sub crlf {
   my($self) = shift;
   return $self->windows_crlf();
