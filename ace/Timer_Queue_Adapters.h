@@ -1,18 +1,17 @@
 // -*- C++ -*-
-
 // $Id$
 
 // ============================================================================
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Timer_Queue_Adapters.h
 //
 // = AUTHOR
 //    Douglas C. Schmidt and Carlos O'Ryan
-// 
+//
 // ============================================================================
 
 #if !defined (ACE_TIMER_QUEUE_ADAPTERS_H)
@@ -39,9 +38,9 @@ public:
   // indicated in <mask>.
 
   long schedule (ACE_Event_Handler *type,
-		 const void *act, 
-		 const ACE_Time_Value &delay,
-		 const ACE_Time_Value &interval = ACE_Time_Value::zero);
+                 const void *act,
+                 const ACE_Time_Value &delay,
+                 const ACE_Time_Value &interval = ACE_Time_Value::zero);
   // Schedule the timer according to the semantics of the
   // <ACE_Timer_List>.  However, this timer gets dispatched via a
   // signal, rather than by a user calling <expire>.
@@ -96,12 +95,12 @@ public:
 
   ACE_Thread_Timer_Queue_Adapter (ACE_Thread_Manager * = ACE_Thread_Manager::instance ());
   // Creates the timer queue.  Activation of the task is the user's
-  // responsibility.  
+  // responsibility.
 
   long schedule (ACE_Event_Handler* handler,
-		 const void *act,
-		 const ACE_Time_Value &delay,
-		 const ACE_Time_Value &interval = ACE_Time_Value::zero);
+                 const void *act,
+                 const ACE_Time_Value &delay,
+                 const ACE_Time_Value &interval = ACE_Time_Value::zero);
   // Schedule the timer according to the semantics of the <TQ>; wakes
   // up the dispatching thread.
 
@@ -124,13 +123,15 @@ public:
   ACE_thread_t thr_id (void);
   // Return the thread id of our active object.
 
-  virtual int activate (long flags = THR_NEW_LWP, 
-			int n_threads = 1, 
-			int force_active = 0,
-			long priority = ACE_DEFAULT_THREAD_PRIORITY,
-			int grp_id = -1,
-			ACE_Task_Base *task = 0,
-			ACE_hthread_t thread_handles[] = 0);
+  virtual int activate (long flags = THR_NEW_LWP,
+                        int n_threads = 1,
+                        int force_active = 0,
+                        long priority = ACE_DEFAULT_THREAD_PRIORITY,
+                        int grp_id = -1,
+                        ACE_Task_Base *task = 0,
+                        ACE_hthread_t thread_handles[] = 0,
+                        void *stack[] = 0,
+                        size_t stack_size[] = 0);
   // We override the default <activate> method so that we can ensure
   // that only a single thread is ever spawned.  Otherwise, too many
   // weird things can happen...
