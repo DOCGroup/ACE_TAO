@@ -75,12 +75,9 @@ be_constant::exprtype_to_string (void)
     case AST_Expression::EV_none:
       return "none";
     case AST_Expression::EV_longlong:
-      return "CORBA::LongLong";
     case AST_Expression::EV_ulonglong:
-      return "CORBA::ULongLong";
-    case AST_Expression::EV_wchar:
-      return "CORBA::WChar";
     case AST_Expression::EV_longdouble:
+    case AST_Expression::EV_wchar:
     case AST_Expression::EV_wstring:
       return NULL;
     }

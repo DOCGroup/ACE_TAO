@@ -19,9 +19,9 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
+#include	"idl.h"
+#include	"idl_extern.h"
+#include	"be.h"
 
 ACE_RCSID(be, be_interface_fwd, "$Id$")
 
@@ -34,16 +34,11 @@ be_interface_fwd::be_interface_fwd (void)
   this->size_type (be_decl::VARIABLE); // always the case
 }
 
-be_interface_fwd::be_interface_fwd (AST_Interface *dummy,
-                                    UTL_ScopedName *n, UTL_StrList *p)
-  : AST_InterfaceFwd (dummy, n, p),
+be_interface_fwd::be_interface_fwd (UTL_ScopedName *n, UTL_StrList *p)
+  : AST_InterfaceFwd (n, p),
     AST_Decl (AST_Decl::NT_interface_fwd, n, p)
 {
   this->size_type (be_decl::VARIABLE); // always the case
-}
-
-be_interface_fwd::~be_interface_fwd (void)
-{
 }
 
 // generate the var definition
@@ -498,6 +493,17 @@ be_interface_fwd::gen_out_impl (void)
   ci->decr_indent ();
   *ci << "}\n\n";
 
+  return 0;
+}
+int
+be_interface_fwd::gen_typecode (void)
+{
+  return 0;
+}
+
+long
+be_interface_fwd::tc_size (void)
+{
   return 0;
 }
 

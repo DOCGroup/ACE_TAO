@@ -28,7 +28,7 @@ Exception.cpp
 	C++
 GIOP.cpp
 	C++
-CDR_Interpreter.cpp
+IIOP_Interpreter.cpp
 	C++
 IIOP_Object.cpp
 	C++

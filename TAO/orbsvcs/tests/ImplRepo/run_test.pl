@@ -1,21 +1,20 @@
+#$Id$
+# -*- perl -*-
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
-
-# $Id$
-# -*- perl -*-
 
 use lib "../../../../bin";
 
 require ACEutils;
 
 $airplane_ior = "airplane.ior";
-$nestea_ior = "nestea.ior";
+$simple_ior = "simple.ior";
 $implrepo_ior = "implrepo.ior";
 
 # Make sure the files are gone, so we can wait on them.
 unlink $airplane_ior;
-unlink $nestea_ior;
+unlink $simple_ior;
 unlink $implrepo_ior;
 
 # The Tests
@@ -23,12 +22,12 @@ unlink $implrepo_ior;
 sub airplane_test
 {
   $SV = Process::Create ($EXEPREFIX."airplane_server".$Process::EXE_EXT,
-                         "-o $airplane_ior");
+                         "-o $airplane_ior -r");
 
   ACE::waitforfile ($airplane_ior);
 
   $status = system ($EXEPREFIX."airplane_client".$Process::EXE_EXT.
-                    " -k file://$airplane_ior");
+                    " -f $airplane_ior");
 
   $SV->Kill (); $SV->Wait ();
   unlink $airplane_ior;
@@ -36,7 +35,7 @@ sub airplane_test
 
 sub airplane_ir_test
 {
-  $IR = Process::Create ("..".$DIR_SEPARATOR."..".$DIR_SEPARATOR."ImplRepo_Service".$DIR_SEPARATOR."ImplRepo_Service".$Process::EXE_EXT,
+  $IR = Process::Create ("..".$DIR_SEPARATOR."..".$DIR_SEPARATOR."ImplRepo_Service".$DIR_SEPARATOR."ImplRepo_Service".$Process::EXE_EXT, 
                          "-ORBsvcconf implrepo.conf -ORBobjrefstyle url -d 0");
 
   ACE::waitforfile ($implrepo_ior);
@@ -46,68 +45,78 @@ sub airplane_ir_test
 
   ACE::waitforfile ($airplane_ior);
 
-  system($EXEPREFIX."airplane_client -k file://$airplane_ior -ORBobjrefstyle url");
+  system($EXEPREFIX."airplane_client -f $airplane_ior -ORBobjrefstyle url");
 
   $IR->Kill (); $IR->Wait ();
 }
 
-sub nestea_test
+sub simple_test
 {
-  $SV = Process::Create ($EXEPREFIX."nestea_server".$Process::EXE_EXT,
-                         "-o $nestea_ior");
+  $SV = Process::Create ($EXEPREFIX."server".$Process::EXE_EXT,
+                         "-o $simple_ior");
 
-  ACE::waitforfile ($nestea_ior);
+  ACE::waitforfile ($simple_ior);
 
-  $status = system ($EXEPREFIX."nestea_client".$Process::EXE_EXT.
-                    " -k file://$nestea_ior");
+  $status = system ($EXEPREFIX."client".$Process::EXE_EXT.
+                    " -f $simple_ior");
 
   $SV->Kill (); $SV->Wait ();
 
-  unlink $nestea_ior;
+  unlink $simple_ior;
 }
 
-sub nestea_ir_test
+sub implrepo_test
 {
-  $IR = Process::Create ("..".$DIR_SEPARATOR."..".$DIR_SEPARATOR."ImplRepo_Service".$DIR_SEPARATOR."ImplRepo_Service".$Process::EXE_EXT,
-                         "-ORBsvcconf implrepo.conf -ORBobjrefstyle url -d 0");
+  $IR = Process::Create ("..".$DIR_SEPARATOR."..".$DIR_SEPARATOR."ImplRepo_Service".$DIR_SEPARATOR."ImplRepo_Service".$Process::EXE_EXT, 
+                         "-ORBsvcconf implrepo.conf");
 
-  ACE::waitforfile ($implrepo_ior);
+  ACE::waitforfile ("implrepo.ior");
 
-  $SV = Process::Create ($EXEPREFIX."nestea_server".$Process::EXE_EXT,
-                         "-o $nestea_ior -i -r -ORBobjrefstyle url");
+  system ($EXEPREFIX."server -r -o svr.ior");
 
-  ACE::waitforfile ($nestea_ior);
+  $SV = Process::Create ($EXEPREFIX."server".$Process::EXE_EXT, "");
 
-  system($EXEPREFIX."nestea_client -k file://$nestea_ior -ORBobjrefstyle url");
+  sleep $ACE::sleeptime;
 
-  $IR->Kill (); $IR->Wait ();
-}
-
-sub both_ir_test
-{
-  $IR = Process::Create ("..".$DIR_SEPARATOR."..".$DIR_SEPARATOR."ImplRepo_Service".$DIR_SEPARATOR."ImplRepo_Service".$Process::EXE_EXT,
-                         "-ORBsvcconf implrepo.conf -ORBobjrefstyle url -d 0");
-
-  ACE::waitforfile ($implrepo_ior);
-
-  $ASV = Process::Create ($EXEPREFIX."nestea_server".$Process::EXE_EXT,
-                         "-o $nestea_ior -i -r -ORBobjrefstyle url");
-
-  $NSV = Process::Create ($EXEPREFIX."airplane_server".$Process::EXE_EXT,
-                         "-o $airplane_ior -i -r -ORBobjrefstyle url");
-
-  ACE::waitforfile ($nestea_ior);
-
-  $NCL = Process::Create ($EXEPREFIX."nestea_client".$Process::EXE_EXT,
-                          "-k file://$nestea_ior -ORBobjrefstyle url");
+  $PSV = Process::Create ($EXEPREFIX."airplane_server".$Process::EXE_EXT,
+                          "-o $airplane_ior -i -r");
 
   ACE::waitforfile ($airplane_ior);
 
-  system($EXEPREFIX."airplane_client -k file://$airplane_ior -ORBobjrefstyle url");
+  $PCL = Process::Create ($EXEPREFIX."airplane_client".$Process::EXE_EXT,
+                          " -f $airplane_ior");
 
-  $NCL->Kill (); $NCL->Kill ();
+  system ($EXEPREFIX."client -f svr.ior");
+
   $IR->Kill (); $IR->Wait ();
 }
+
+sub implrepo2_test
+{
+  $IR = Process::Create ("..".$DIR_SEPARATOR."..".$DIR_SEPARATOR."ImplRepo_Service".$DIR_SEPARATOR."ImplRepo_Service".$Process::EXE_EXT, 
+                         "-ORBsvcconf implrepo.conf");
+
+  ACE::waitforfile ("implrepo.ior");
+
+  system ($EXEPREFIX."server -r -o svr.ior");
+
+  $SV = Process::Create ($EXEPREFIX."server".$Process::EXE_EXT, "");
+
+  sleep $ACE::sleeptime;
+
+  $PSV = Process::Create ($EXEPREFIX."airplane_server".$Process::EXE_EXT,
+                          "-o $airplane_ior -i -r");
+
+  ACE::waitforfile ($airplane_ior);
+
+  $PCL = Process::Create ($EXEPREFIX."client".$Process::EXE_EXT,
+                          " -f $svr_ior");
+
+  system ($EXEPREFIX."airplane_client -f $airplane_ior");
+
+  $IR->Kill (); $IR->Wait ();
+}
+
 
 
 # Parse the arguments
@@ -126,27 +135,27 @@ for ($i = 0; $i <= $#ARGV; $i++)
     }
     if ($ARGV[$i] eq "airplane")
     {
-      airplane_test ();
+      airplane_test ();    
       exit;
     }
     if ($ARGV[$i] eq "airplane_ir")
     {
-      airplane_ir_test ();
+      airplane_ir_test ();    
       exit;
     }
-    if ($ARGV[$i] eq "nestea")
+    if ($ARGV[$i] eq "simple")
     {
-      nestea_test ();
+      simple_test ();    
       exit;
     }
-    if ($ARGV[$i] eq "nestea_ir")
+    if ($ARGV[$i] eq "implrepo")
     {
-      nestea_ir_test ();
+      implrepo_test ();    
       exit;
     }
-    if ($ARGV[$i] eq "both_ir")
+    if ($ARGV[$i] eq "implrepo2")
     {
-      both_ir_test ();
+      implrepo2_test ();    
       exit;
     }
 
@@ -154,4 +163,4 @@ for ($i = 0; $i <= $#ARGV; $i++)
   }
 }
 
-print "Specify airplane, airplane_ir, nestea, nestea_ir, or both_ir\n"
+print "Specify airplane, airplane_ir\n"

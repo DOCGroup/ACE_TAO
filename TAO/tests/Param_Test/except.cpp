@@ -26,8 +26,7 @@ ACE_RCSID(Param_Test, except, "$Id$")
 // ************************************************************************
 
 Test_Exception::Test_Exception (void)
-  : opname_ (CORBA::string_dup ("test_exception")),
-    iterations_ (0)
+  : opname_ (CORBA::string_dup ("test_exception"))
 {
 }
 
@@ -44,15 +43,14 @@ Test_Exception::opname (void) const
 }
 
 void
-Test_Exception::dii_req_invoke (CORBA::Request *req,
-                                CORBA::Environment &ACE_TRY_ENV)
+Test_Exception::dii_req_invoke (CORBA::Request *req)
 {
-  ACE_TRY
+  TAO_TRY_VAR (*req->env ())
     {
-      req->invoke (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      req->invoke ();
+      TAO_CHECK_ENV;
     }
-  ACE_CATCH (Param_Test::Ooops, ex)
+  TAO_CATCH (Param_Test::Ooops, ex)
     {
       if (TAO_debug_level > 0)
         {
@@ -64,38 +62,34 @@ Test_Exception::dii_req_invoke (CORBA::Request *req,
                       "expected user exception"
                       " (%s,%d)\n", reason, ex.input));
         }
-      this->inout_ = this->in_ * 3;
-      this->out_ = this->in_ * 4;
-      this->ret_ = this->in_ * 5;
-
-      // Why should we use clear ?????
-      //TAO_TRY_ENV.clear ();
+      this->inout_ = this->in_ * 2;
+      this->out_ = this->in_ * 3;
+      this->ret_ = this->in_ * 4;
+      TAO_TRY_ENV.clear ();
 
       return;
     }
-  ACE_CATCH (CORBA::UNKNOWN, ex)
+  TAO_CATCH (CORBA::UNKNOWN, ex)
     {
       if (TAO_debug_level > 0)
         {
-          ACE_PRINT_EXCEPTION (ex,"Test_Exception::run_sii_test - "
-                               "expected system exception\n");
+          TAO_TRY_ENV.print_exception ("Test_Exception::run_sii_test - "
+                                       "expected system exception\n");
         }
-      this->inout_ = this->in_ * 4;
-      this->out_ = this->in_ * 5;
-      this->ret_ = this->in_ * 6;
-
-      // TAO_TRY_ENV.clear ();
+      this->inout_ = this->in_ * 2;
+      this->out_ = this->in_ * 3;
+      this->ret_ = this->in_ * 4;
+      TAO_TRY_ENV.clear ();
 
       return;
     }
-  ACE_CATCH (Param_Test::BadBoy, ex)
+  TAO_CATCH (Param_Test::BadBoy, ex)
     {
-      ACE_PRINT_EXCEPTION (ex, "Test_Exception::run_sii_test - "
-                           " unexpected exception\n");
-      ACE_TRY_THROW (Param_Test::BadBoy ());
+      TAO_TRY_ENV.print_exception ("Test_Exception::run_sii_test - "
+                                   " unexpected exception\n");
+      TAO_RETHROW_SAME_ENV_RETURN_VOID;
     }
-  ACE_ENDTRY;
-  ACE_CHECK;
+  TAO_ENDTRY;
 }
 
 int
@@ -120,17 +114,19 @@ Test_Exception::reset_parameters (void)
 
 int
 Test_Exception::run_sii_test (Param_Test_ptr objref,
-                              CORBA::Environment &ACE_TRY_ENV)
+                              CORBA::Environment &TAO_IN_ENV)
 {
-  ACE_TRY
+  TAO_TRY
     {
       this->ret_ = objref->test_exception (this->in_,
                                            this->inout_,
                                            this->out_,
-                                           ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                                           TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      return 0;
     }
-  ACE_CATCH (Param_Test::Ooops, ex)
+  TAO_CATCH (Param_Test::Ooops, ex)
     {
       if (TAO_debug_level > 0)
         {
@@ -142,37 +138,40 @@ Test_Exception::run_sii_test (Param_Test_ptr objref,
                       "expected user exception"
                       " (%s,%d)\n", reason, ex.input));
         }
-      this->inout_ = this->in_ * 3;
-      this->out_ = this->in_ * 4;
-      this->ret_ = this->in_ * 5;
-      return -1;
+      this->inout_ = this->in_ * 2;
+      this->out_ = this->in_ * 3;
+      this->ret_ = this->in_ * 4;
+      TAO_TRY_ENV.clear ();
+
+      return 0;
     }
-  ACE_CATCH (CORBA::UNKNOWN, ex)
+  TAO_CATCH (CORBA::UNKNOWN, ex)
     {
       if (TAO_debug_level > 0)
         {
-          ACE_PRINT_EXCEPTION (ex,"Test_Exception::run_sii_test - expected system exception\n");
+          TAO_TRY_ENV.print_exception ("Test_Exception::run_sii_test - "
+                                       "expected system exception\n");
         }
-      this->inout_ = this->in_ * 4;
-      this->out_ = this->in_ * 5;
-      this->ret_ = this->in_ * 6;
-      return -1;
-    }
-  ACE_CATCH (Param_Test::BadBoy, ex)
-    {
-      ACE_PRINT_EXCEPTION (ex,"Test_Exception::run_sii_test - unexpected system exception\n");
-      return -1;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
+      this->inout_ = this->in_ * 2;
+      this->out_ = this->in_ * 3;
+      this->ret_ = this->in_ * 4;
+      TAO_TRY_ENV.clear ();
 
-  return 0;
+      return 0;
+    }
+  TAO_CATCH (Param_Test::BadBoy, ex)
+    {
+      TAO_TRY_ENV.print_exception ("Test_Exception::run_sii_test - "
+                                   " unexpected exception\n");
+      TAO_RETHROW_RETURN (-1);
+    }
+  TAO_ENDTRY_RETURN (-1);
 }
 
 int
 Test_Exception::add_args (CORBA::NVList_ptr param_list,
                           CORBA::NVList_ptr retval,
-                          CORBA::Environment &ACE_TRY_ENV)
+                          CORBA::Environment &env)
 {
   // we provide top level memory to the ORB to retrieve the data
   CORBA::Any in_arg (CORBA::_tc_ulong,
@@ -191,34 +190,33 @@ Test_Exception::add_args (CORBA::NVList_ptr param_list,
   param_list->add_value ("s1",
                          in_arg,
                          CORBA::ARG_IN,
-                         ACE_TRY_ENV);
+                         env);
 
   param_list->add_value ("s2",
                          inout_arg,
                          CORBA::ARG_INOUT,
-                         ACE_TRY_ENV);
+                         env);
 
   param_list->add_value ("s3",
                          out_arg,
                          CORBA::ARG_OUT,
-                         ACE_TRY_ENV);
+                         env);
 
   // add return value. Let the ORB allocate storage. We simply tell the ORB
   // what type we are expecting.
-  retval->item (0, ACE_TRY_ENV)->value ()->replace (CORBA::_tc_ulong,
-                                                    &this->ret_,
-                                                    0, // does not own
-                                                    ACE_TRY_ENV);
+  retval->item (0, env)->value ()->replace (CORBA::_tc_ulong,
+                                            &this->ret_,
+                                            0, // does not own
+                                            env);
   return 0;
 }
 
 CORBA::Boolean
 Test_Exception::check_validity (void)
 {
-  CORBA::ULong n = (this->iterations_++) % 3;
-  if (this->inout_ == this->in_ * (n + 2) &&
-      this->out_ == this->in_ * (n + 3) &&
-      this->ret_ == this->in_ * (n + 4))
+  if (this->inout_ == this->in_ * 2 &&
+      this->out_ == this->in_ * 3 &&
+      this->ret_ == this->in_ * 4)
     return 1;
   return 0;
 }

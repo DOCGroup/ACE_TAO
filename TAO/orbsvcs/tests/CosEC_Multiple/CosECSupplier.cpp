@@ -44,51 +44,49 @@ CosECSupplier::parse_args (int argc, char *argv [])
 
 void
 CosECSupplier::open (CosEventChannelAdmin::EventChannel_ptr event_channel,
-                     CORBA::Environment& ACE_TRY_ENV)
+                     CORBA::Environment& TAO_TRY_ENV)
 {
   // = Connect as a consumer.
   this->supplier_admin_ =
-    event_channel->for_suppliers (ACE_TRY_ENV);
-  ACE_CHECK;
+    event_channel->for_suppliers (TAO_TRY_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_TRY_ENV);
 }
 
 void
-CosECSupplier::close (CORBA::Environment &ACE_TRY_ENV)
+CosECSupplier::close (CORBA::Environment &TAO_TRY_ENV)
 {
-  this->disconnect (ACE_TRY_ENV);
-  ACE_CHECK;
-
+  this->disconnect (TAO_TRY_ENV);
   this->supplier_admin_ =
     CosEventChannelAdmin::SupplierAdmin::_nil ();
 }
 
 void
-CosECSupplier::connect (CORBA::Environment &ACE_TRY_ENV)
+CosECSupplier::connect (CORBA::Environment &TAO_TRY_ENV)
 {
   if (CORBA::is_nil (this->supplier_admin_.in ()))
     return;
 
   this->consumer_proxy_ =
-    this->supplier_admin_->obtain_push_consumer (ACE_TRY_ENV);
-  ACE_CHECK;
+    this->supplier_admin_->obtain_push_consumer (TAO_TRY_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_TRY_ENV);
 
-  CosEventComm::PushSupplier_var objref = this->_this (ACE_TRY_ENV);
-  ACE_CHECK;
+  CosEventComm::PushSupplier_var objref = this->_this (TAO_TRY_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_TRY_ENV);
 
   this->consumer_proxy_->connect_push_supplier (objref.in (),
-                                                ACE_TRY_ENV);
-  ACE_CHECK;
+                                                TAO_TRY_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_TRY_ENV);
 }
 
 void
-CosECSupplier::disconnect (CORBA::Environment &ACE_TRY_ENV)
+CosECSupplier::disconnect (CORBA::Environment &TAO_TRY_ENV)
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ())
       || CORBA::is_nil (this->supplier_admin_.in ()))
     return;
 
-  this->consumer_proxy_->disconnect_push_consumer (ACE_TRY_ENV);
-  ACE_CHECK;
+  this->consumer_proxy_->disconnect_push_consumer (TAO_TRY_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_TRY_ENV);
 
   this->consumer_proxy_ =
     CosEventChannelAdmin::ProxyPushConsumer::_nil ();
@@ -96,36 +94,34 @@ CosECSupplier::disconnect (CORBA::Environment &ACE_TRY_ENV)
 
 void
 CosECSupplier::send_event (const CORBA::Any & data,
-                           CORBA::Environment &ACE_TRY_ENV)
+                           CORBA::Environment &TAO_TRY_ENV)
 {
-  this->consumer_proxy_->push (data, ACE_TRY_ENV);
-  ACE_CHECK;
+  this->consumer_proxy_->push (data, TAO_TRY_ENV);
 }
 
 void
-CosECSupplier::disconnect_push_supplier (CORBA::Environment &ACE_TRY_ENV)
+CosECSupplier::disconnect_push_supplier (CORBA::Environment &TAO_TRY_ENV)
 {
   // Deactivate this object.
 
   PortableServer::POA_var poa =
-    this->_default_POA (ACE_TRY_ENV);
-  ACE_CHECK;
+    this->_default_POA (TAO_TRY_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_TRY_ENV);
 
   PortableServer::ObjectId_var id =
     poa->servant_to_id (this,
-                        ACE_TRY_ENV);
-  ACE_CHECK;
+                        TAO_TRY_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_TRY_ENV);
 
   poa->deactivate_object (id.in (),
-                          ACE_TRY_ENV);
-  ACE_CHECK;
+                          TAO_TRY_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_TRY_ENV);
 }
 
 void
 CosECSupplier::run (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  TAO_TRY
     {
       // Create an Any type to pass to the Cos EC.
       CORBA_Any cany;
@@ -134,11 +130,11 @@ CosECSupplier::run (void)
       cany >>= any;
 
       this->open (this->cos_ec_,
-                  ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                  TAO_TRY_ENV);
+      TAO_CHECK_ENV_RETURN_VOID (TAO_TRY_ENV);
 
-      this->connect (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      this->connect (TAO_TRY_ENV);
+      TAO_CHECK_ENV_RETURN_VOID (TAO_TRY_ENV);
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%P):sending %d events...\n",
@@ -149,23 +145,21 @@ CosECSupplier::run (void)
            count--)
         {
           this->send_event (any,
-                            ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+                            TAO_TRY_ENV);
+          TAO_CHECK_ENV_RETURN_VOID (TAO_TRY_ENV);
         }
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%P):Done!. exiting now..\n"));
 
-      this->close (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      this->close (TAO_TRY_ENV);
+      TAO_TRY_ENV;
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception in CosEC_Multiple::run\n");
+      TAO_TRY_ENV.print_exception ("exception in CosEC_Multiple::run\n");
     }
-  ACE_ENDTRY;
-  ACE_CHECK;
+  TAO_ENDTRY;
 }
 
 int

@@ -12,9 +12,9 @@ TAO_IOR_Multicast::get_handle (void) const
 
 TAO_IOR_Multicast::TAO_IOR_Multicast (void)
   : service_id_ ((TAO_Service_ID) 0),
-    ior_ (0)
+    ior_ (0)    
 {
-}
+}  
 
 TAO_IOR_Multicast::TAO_IOR_Multicast (const char *ior,
                                       u_short port,
@@ -55,11 +55,6 @@ TAO_IOR_Multicast::init (const char *ior,
                        "%p\n",
                        "subscribe"),
                       -1);
-
-  // Initialise the IOR_LookupTable.
-
-  //  this->ior_lookup_table_.add_ior ("ObjectID1","iioploc://tango.cs.wustl.edu:9999/ObjectID1");
-
   return 0;
 }
 
@@ -72,115 +67,64 @@ TAO_IOR_Multicast::handle_timeout (const ACE_Time_Value &,
 
 int
 TAO_IOR_Multicast::handle_input (ACE_HANDLE)
-{
-  // The header has the length of the data following it.
-  CORBA::Short header;
-  ACE_UINT16 remote_port;
-
-  char *name;
-  ACE_NEW_RETURN (name,
-                  char[BUFSIZ],
-                  0);
-
-  CORBA::String_var service_name (name);
+{  
+  struct
+  {
+    u_short reply_port;
+    CORBA::Short service_id;
+  } mcast_info;
 
   ACE_INET_Addr remote_addr;
-
-  // Take a peek at the header and get the length of data in bytes.
-  ssize_t n = this->mcast_dgram_.recv (&header,
-                                       sizeof(header),
-				       remote_addr,
-                                       MSG_PEEK);
-  if (n <= 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "TAO_IOR_Multicast::handle_input - peek %d\n",
-		       n),
-		      0);
-
-  else if (ACE_NTOHS (header) <= 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Header value < 1\n"),
-                      0);
-
-  // Construct an iovec to receive.
-  const int iovcnt = 3;
-  iovec iov[iovcnt];
-
-  iov[0].iov_base = (char *) &header;
-  iov[0].iov_len  = sizeof(header);
-  iov[1].iov_base = (char *) &remote_port;
-  iov[1].iov_len  = sizeof (ACE_UINT16);
-  iov[2].iov_base = (char *) service_name;
-  iov[2].iov_len  = ACE_NTOHS (header) - sizeof (ACE_UINT16);
-
-  // Read the iovec.
-  n = this->mcast_dgram_.recv (iov,
-                               iovcnt,
-                               remote_addr);
-  if (n <= 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "TAO_IOR_Multicast::handle_input recv = %d\n",
-		       n),
-		      0);
-  // Null terminate.
-  service_name [ACE_NTOHS (header) - sizeof (ACE_UINT16)] = 0;
+  ssize_t retcode =
+    this->mcast_dgram_.recv (&mcast_info,
+                             sizeof (mcast_info),
+                             remote_addr);
+  if (retcode == -1)
+    return -1;
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-		"(%P|%t) Received multicast.\n"
-		"Service Name received : %s\n"
-		"Port received : %u\n",
-		service_name.in (),
-		ACE_NTOHS (remote_port)));
-  ACE_CString ior(this->ior_);
+                "(%P|%t) Received multicast.\n"));
 
-  if (ACE_OS::strcmp (service_name.in (),
-                      "NameService") != 0
-      && ACE_OS::strcmp (service_name.in (),
-                         "TradingService") != 0)
+  // @@ validate data string received is from a valid client here
+  // @@ Probably not needed
+
+  if (retcode != sizeof (mcast_info))
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Reply to multicast not sent. Received %d bytes, expected %d.",
+                       retcode,
+                       sizeof (mcast_info)),
+                      -1);
+
+  // Confirm that we were meant to respond to this request.
+  mcast_info.service_id = ntohs (mcast_info.service_id);
+  if (mcast_info.service_id == this->service_id_)
     {
-      // The client has requested an IOR other than for the
-      // Name/Trading Service.  Lookup the table for the IOR. The call
-      // to find_ior will fill the ior for us if the service name is
-      // found in the table.
+      // Convert port number received to network byte order and set port
+      // number to reply;
+      mcast_info.reply_port = ntohs (mcast_info.reply_port);
+      remote_addr.set_port_number (mcast_info.reply_port);
 
-      ACE_CString service (service_name.in ());
+      // send the object reference for the naming service
+      retcode = response_.send (this->ior_,
+                                ACE_OS::strlen (this->ior_) + 1,
+                                remote_addr,
+                                0);
+      if (TAO_debug_level > 0)
+	ACE_DEBUG ((LM_DEBUG,
+		    "(%P|%t) ior_: <%s>\n"
+		    " sent through port %u.\n"
+		    "retcode=%d\n",
+		    this->ior_,
+		    remote_addr.get_port_number (),
+		    retcode));
 
-      if (this->ior_lookup_table_.find_ior (service, ior) != 0)
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   "IOR_Multicast::find failed.\n"),
-			  0);
+      if (retcode == -1)
+        return -1;
     }
-
-  ACE_SOCK_Connector connector;
-  ACE_INET_Addr peer_addr (ACE_NTOHS (remote_port),
-			   remote_addr.get_host_name ());
-  ACE_SOCK_Stream stream;
-
-  // Connect.
-  if (connector.connect (stream,
-                         peer_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-		       "IOR_Multicast::connect failed\n"),
-		      0);
-  // Send the IOR back to the client.
-  ssize_t result = stream.send_n (ior.c_str (),
-                                  ACE_OS::strlen (ior.c_str ()) + 1);
-  // Close the stream.
-  stream.close ();
-
-  // Check for error.
-  if (result == -1)
-    return 0;
-
-  if (TAO_debug_level > 0)
+  else
     ACE_DEBUG ((LM_DEBUG,
-                "(%P|%t) ior_: <%s>\n"
-                "sent to %s:%u.\n"
-                "result from send = %d\n",
-                ior.c_str (),
-                peer_addr.get_host_name (),
-		peer_addr.get_port_number (),
-                result));
+                "(%P|%t) Multicast was not for us."));
+
   return 0;
 }

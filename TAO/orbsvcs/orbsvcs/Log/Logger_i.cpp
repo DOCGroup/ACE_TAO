@@ -42,10 +42,10 @@ Logger_Factory_i::make_logger (const char *name,
 
       // This attempts to create a new Logger_i and throws an
       // exception and returns a null value if it fails
-      ACE_NEW_THROW_EX (result,
-                        Logger_i (name),
-                        CORBA::NO_MEMORY ());
-      ACE_CHECK_RETURN (Logger::_nil ());
+      ACE_NEW_THROW_RETURN (result,
+                            Logger_i (name),
+                            CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
+                            Logger::_nil ());
     }
 
   // Enter the new logger into the hash map.  Check if the <bind>
@@ -55,7 +55,7 @@ Logger_Factory_i::make_logger (const char *name,
   if (hash_map_.bind (name, result) == -1)
     {
       delete result;
-      TAO_THROW_RETURN (CORBA::UNKNOWN (),
+      TAO_THROW_RETURN (CORBA::UNKNOWN (CORBA::COMPLETED_NO),
                         Logger::_nil ());
     }
   else
@@ -109,12 +109,12 @@ Logger_i::verbosity_conversion (Logger::Verbosity_Level verbosity_level)
   switch (verbosity_level)
     {
     case Logger::SILENT:
-      return 64;
+      return 040;
     case Logger::VERBOSE_LITE:
-      return 32;
+      return 020;
     default:
     case Logger::VERBOSE:
-      return 16;
+      return 010;
     }
 }
 
@@ -178,8 +178,9 @@ Logger_i::logv (const Logger::Log_Record &log_rec,
 
   // Create a buffer and fill it with the host name of the logger
   ASYS_TCHAR namebuf[MAXHOSTNAMELEN + 1];
+  addy.get_host_name (namebuf,
+                      MAXHOSTNAMELEN);
 
-  ACE_OS::strncpy (namebuf, addy.get_host_addr (), MAXHOSTNAMELEN);
 
   u_long verb_level = this->verbosity_conversion (verbosity);
 
