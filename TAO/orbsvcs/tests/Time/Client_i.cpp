@@ -400,7 +400,9 @@ Client_i::init (int argc, char **argv)
 	  ACE_DEBUG((LM_DEBUG,
 		     "[CLIENT] Process/Thread Id : (%P/%t) Using the Naming Service\n"));
 
-	  this->obtain_initial_references ();
+	  if (this->obtain_initial_references () == -1)
+	    return -1;
+
 	  TAO_CHECK_ENV;
 	}
     }
