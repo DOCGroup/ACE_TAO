@@ -23,32 +23,15 @@ TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core,
   : orb_core_ (orb_core),
     message_state_ (orb_core,
                     this),
-    output_ (0),
     generator_parser_ (0)
 {
-#if defined(ACE_HAS_PURIFY)
-  (void) ACE_OS::memset (this->repbuf_,
-                         '\0',
-                         sizeof this->repbuf_);
-#endif /* ACE_HAS_PURIFY */
-  ACE_NEW (this->output_,
-           TAO_OutputCDR (this->repbuf_,
-                          sizeof this->repbuf_,
-                          TAO_ENCAP_BYTE_ORDER,
-                          orb_core->message_block_buffer_allocator (),
-                          orb_core->message_block_dblock_allocator (),
-                          orb_core->message_block_msgblock_allocator (),
-                          orb_core->orb_params ()->cdr_memcpy_tradeoff (),
-                          TAO_DEF_GIOP_MAJOR,
-                          TAO_DEF_GIOP_MINOR,
-                          orb_core->to_iso8859 (),
-                          orb_core->to_unicode ()));
+
 }
 
 
 TAO_GIOP_Message_Base::~TAO_GIOP_Message_Base (void)
 {
-  delete this->output_;
+
 }
 
 
@@ -531,9 +514,27 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
   this->set_state (qd->major_version_,
                    qd->minor_version_);
 
-  // Reset the output CDR stream.
-  // @@@@Is it necessary  here?
-  this->output_->reset ();
+  // A buffer that we will use to initialise the CDR stream
+  char repbuf[ACE_CDR::DEFAULT_BUFSIZE];
+
+#if defined(ACE_HAS_PURIFY)
+  (void) ACE_OS::memset (repbuf,
+                         '\0',
+                         sizeof repbuf);
+#endif /* ACE_HAS_PURIFY */
+
+  // Initialze an output CDR on the stack
+  TAO_OutputCDR output (repbuf,
+                        sizeof repbuf,
+                        TAO_ENCAP_BYTE_ORDER,
+                        this->orb_core_->output_cdr_buffer_allocator (),
+                        this->orb_core_->output_cdr_dblock_allocator (),
+                        this->orb_core_->output_cdr_msgblock_allocator (),
+                        this->orb_core_->orb_params ()->cdr_memcpy_tradeoff (),
+                        qd->major_version_,
+                        qd->minor_version_,
+                        this->orb_core_->to_iso8859 (),
+                        this->orb_core_->to_unicode ());
 
   // Get the read and write positions before we steal data.
   size_t rd_pos = qd->msg_block_->rd_ptr () - qd->msg_block_->base ();
@@ -560,13 +561,6 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
                           qd->minor_version_,
                           this->orb_core_);
 
-  // Set giop version info for the outstream so that server replies
-  // in correct GIOP version
-  this->output_->set_version (this->message_state_.giop_version_.major,
-                              this->message_state_.giop_version_.minor);
-
-  // Reset the message handler to receive upcalls if any
-  // this->message_handler_.reset (0);
 
   // We know we have some request message. Check whether it is a
   // GIOP_REQUEST or GIOP_LOCATE_REQUEST to take action.
@@ -582,11 +576,13 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
       // could raise an exception or write things in the output CDR
       // stream
       return this->process_request (transport,
-                                    input_cdr);
+                                    input_cdr,
+                                    output);
 
     case TAO_GIOP_LOCATEREQUEST:
       return this->process_locate_request (transport,
-                                           input_cdr);
+                                           input_cdr,
+                                           output);
     default:
       return -1;
     }
@@ -597,6 +593,9 @@ TAO_GIOP_Message_Base::process_reply_message (
     TAO_Pluggable_Reply_Params &params,
     TAO_Queued_Data *qd)
 {
+  // Set the state internally for parsing and generating messages
+  this->set_state (qd->major_version_,
+                   qd->minor_version_);
 
   // Get the read and write positions before we steal data.
   size_t rd_pos = qd->msg_block_->rd_ptr () - qd->msg_block_->base ();
@@ -721,13 +720,14 @@ TAO_GIOP_Message_Base::write_protocol_header (TAO_GIOP_Message_Type t,
 
 int
 TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
-                                        TAO_InputCDR &cdr)
+                                        TAO_InputCDR &cdr,
+                                        TAO_OutputCDR &output)
 {
   // This will extract the request header, set <response_required>
   // and <sync_with_server> as appropriate.
   TAO_ServerRequest request (this,
                              cdr,
-                             *this->output_,
+                             output,
                              transport,
                              this->orb_core_);
 
@@ -772,12 +772,12 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
           reply_params.service_context_notowned (&request.reply_service_info ());
 
           // Make the GIOP header and Reply header
-          this->generate_reply_header (*this->output_,
+          this->generate_reply_header (output,
                                        reply_params);
 
-          *this->output_ << forward_to.in ();
+          output << forward_to.in ();
 
-          int result = transport->send_message (*this->output_);
+          int result = transport->send_message (output);
           if (result == -1)
             {
               if (TAO_debug_level > 0)
@@ -900,7 +900,8 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
 
 int
 TAO_GIOP_Message_Base::process_locate_request (TAO_Transport *transport,
-                                               TAO_InputCDR &input)
+                                               TAO_InputCDR &input,
+                                               TAO_OutputCDR &output)
 {
   // This will extract the request header, set <response_required> as
   // appropriate.
@@ -926,13 +927,6 @@ TAO_GIOP_Message_Base::process_locate_request (TAO_Transport *transport,
                                          CORBA::COMPLETED_NO));
         }
 
-      // Execute a fake request to find out if the object is there or
-      // if the POA can activate it on demand...
-      char repbuf[ACE_CDR::DEFAULT_BUFSIZE];
-      TAO_OutputCDR dummy_output (repbuf,
-                                  sizeof repbuf);
-      // This output CDR is not used!
-
       TAO_ObjectKey tmp_key (locate_request.object_key ().length (),
                              locate_request.object_key ().length (),
                              locate_request.object_key ().get_buffer (),
@@ -951,7 +945,7 @@ TAO_GIOP_Message_Base::process_locate_request (TAO_Transport *transport,
                                         deferred_reply,
                                         tmp_key,
                                         "_non_existent",
-                                        dummy_output,
+                                        output,
                                         transport,
                                         this->orb_core_,
                                         parse_error);
@@ -1030,27 +1024,29 @@ TAO_GIOP_Message_Base::process_locate_request (TAO_Transport *transport,
 
   return this->make_send_locate_reply (transport,
                                        locate_request,
-                                       status_info);
+                                       status_info,
+                                       output);
 }
 
 int
 TAO_GIOP_Message_Base::make_send_locate_reply (TAO_Transport *transport,
                                                TAO_GIOP_Locate_Request_Header &request,
-                                               TAO_GIOP_Locate_Status_Msg &status_info)
+                                               TAO_GIOP_Locate_Status_Msg &status_info,
+                                               TAO_OutputCDR &output)
 {
   // Note here we are making the Locate reply header which is *QUITE*
   // different from the reply header made by the make_reply () call..
   // Make the GIOP message header
   this->write_protocol_header (TAO_GIOP_LOCATEREPLY,
-                               *this->output_);
+                               output);
 
   // This writes the header & body
-  this->generator_parser_->write_locate_reply_mesg (*this->output_,
+  this->generator_parser_->write_locate_reply_mesg (output,
                                                     request.request_id (),
                                                     status_info);
 
   // Send the message
-  int result = transport->send_message (*this->output_);
+  int result = transport->send_message (output);
 
   // Print out message if there is an error
   if (result == -1)
@@ -1428,11 +1424,18 @@ TAO_GIOP_Message_Base::more_messages (void)
 TAO_Queued_Data *
 TAO_GIOP_Message_Base::make_queued_data (size_t sz)
 {
+  // Get a node for the queue..
   TAO_Queued_Data *qd =
     TAO_Queued_Data::get_queued_data ();
 
+  // Make a datablock for the size requested + something. The
+  // "something" is required because we are going to align the data
+  // block in the message block. During alignment we could loose some
+  // bytes. As we may not know how many bytes will be lost, we will
+  // allocate ACE_CDR::MAX_ALIGNMENT extra.
   ACE_Data_Block *db =
-    this->orb_core_->data_block_for_message_block (sz);
+    this->orb_core_->data_block_for_message_block (sz +
+                                                   ACE_CDR::MAX_ALIGNMENT);
 
   ACE_Allocator *alloc =
     this->orb_core_->message_block_msgblock_allocator ();
