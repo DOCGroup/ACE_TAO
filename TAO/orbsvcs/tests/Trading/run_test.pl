@@ -31,7 +31,7 @@ $E = Process::Create ($EXEPREFIX."export_test".$EXE_EXT,
 sleep $sleeptime;
 
 $I = Process::Create ($EXEPREFIX."import_test".$EXE_EXT,
-		      "-ORBNameServiceIOR file://$ior");
+		      "-ORBTradingServiceIOR file://$ior");
 
 if ($I->TimedWait (60) == -1) {
   $status = 1;
@@ -39,7 +39,8 @@ if ($I->TimedWait (60) == -1) {
   $I->Kill (); $I->TimedWait (1);
 }
 
-if ($E->TimedWait (60) == -1) {
+$E->Terminate (); 
+if ($E->TimedWait (15) == -1) {
   $status =1;
   print STDERR "ERROR: export test timedout\n";
   $E->Kill (); $E->TimedWait (1);
