@@ -83,6 +83,12 @@ private:
   // Stores the cleanup info for a thread.  
   // @@ Note, this should be generalized to be a stack of
   // <ACE_Cleanup_Info>s.
+
+  long flags_;
+  // Keeps track of whether this thread was created "detached" or not.
+  // If a thread is *not* created detached then if someone calls
+  // <ACE_Thread_Manager::wait>, we need to join with that thread (and
+  // close down the handle).
 };
 
 // Forward declaration.
@@ -348,13 +354,17 @@ protected:
   // Locate the index of the table slot occupied by <task>.  Returns
   // -1 if <task> is not in the table doesn't contain <task>.
 
-  int insert_thr (ACE_thread_t t_id, ACE_hthread_t, int grp_id = -1);
+  int insert_thr (ACE_thread_t t_id,
+		  ACE_hthread_t,
+		  int grp_id = -1,
+		  long flags = 0);
   // Insert a thread in the table (checks for duplicates).
 
   int append_thr (ACE_thread_t t_id, ACE_hthread_t, 
 		  ACE_Thread_State,
 		  int grp_id,
-		  ACE_Task_Base *task = 0);
+		  ACE_Task_Base *task = 0,
+		  long flags = 0);
   // Append a thread in the table (adds at the end, growing the table
   // if necessary).
 
