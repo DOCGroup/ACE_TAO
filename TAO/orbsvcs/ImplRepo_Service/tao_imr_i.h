@@ -17,7 +17,7 @@
 #ifndef TAO_IMR_I_H
 #define TAO_IMR_I_H
 
-#include "tao/PortableServer/ImplRepoC.h"
+#include "tao/PortableServer/ImR_LocatorC.h"
 #include "tao/corba.h"
 
 // Forward Declaration
@@ -59,8 +59,9 @@ private:
   /// Remember our orb.
   CORBA::ORB_var orb_;
 
-  /// Reference to our implementation repository.
-  ImplementationRepository::Administration_var implrepo_;
+  /// Reference to our Locator interface of
+  /// implementation repository.
+  ImplementationRepository::Locator_var imr_locator_;
 
   /// What we need to do.
   TAO_IMR_Op *op_;
@@ -83,8 +84,8 @@ public:
   /// Constructor.
   TAO_IMR_Op (void);
 
-  /// Sets the implrepo pointer
-  virtual void set_imr (ImplementationRepository::Administration_ptr imr);
+  /// Sets the implrepo locator pointer
+  virtual void set_imr_locator (ImplementationRepository::Locator_ptr imr);
 
   /// Virtual Destructor.
   virtual ~TAO_IMR_Op (void);
@@ -97,7 +98,7 @@ public:
 
 protected:
   /// Reference to our implementation repository.
-  ImplementationRepository::Administration_ptr implrepo_;
+  ImplementationRepository::Locator_ptr imr_locator_;
 
   // = Helper methods
 
@@ -127,7 +128,9 @@ protected:
   void print_usage (void);
 
   /// POA server name.
-  ACE_TString server_name_;
+  ACE_CString server_name_;
+
+  ACE_CString location_;
 };
 
 
@@ -155,19 +158,22 @@ protected:
   void print_usage (void);
 
   /// POA server name.
-  ACE_TString server_name_;
+  ACE_CString server_name_;
 
   /// Command line.
-  ACE_TString command_line_;
+  ACE_CString command_line_;
 
   /// Environment Variables.
   ImplementationRepository::EnvironmentList environment_vars_;
 
   /// Working directory.
-  ACE_TString working_dir_;
+  ACE_CString working_dir_;
 
   /// Activation mode (0 = NORMAL, 1 = MANUAL, 2 = PER_CLIENT, 3 = AUTO_START)
   ImplementationRepository::ActivationMode activation_;
+
+  /// Hostname where the activator is running.
+  ACE_CString location_;
 };
 
 
@@ -216,10 +222,10 @@ protected:
   void print_usage (void);
 
   /// POA server name.
-  ACE_TString server_name_;
+  ACE_CString server_name_;
 
   /// Filename to output to.
-  ACE_TString filename_;
+  ACE_CString filename_;
 };
 
 
@@ -245,7 +251,7 @@ protected:
   void print_usage (void);
 
   /// POA server name.
-  ACE_TString server_name_;
+  ACE_CString server_name_;
 
   /// If true, more server information is displayed.
   int verbose_server_information_;
@@ -277,7 +283,10 @@ protected:
   void print_usage (void);
 
   /// POA server name.
-  ACE_TString server_name_;
+  ACE_CString server_name_;
+
+  /// Hostname where the activator is running.
+  ACE_CString location_;
 };
 
 
@@ -302,7 +311,9 @@ protected:
   void print_usage (void);
 
   /// POA server name.
-  ACE_TString server_name_;
+  ACE_CString server_name_;
+
+  ACE_CString location_;
 };
 
 
@@ -331,13 +342,13 @@ protected:
   void print_usage (void);
 
   /// POA server name.
-  ACE_TString server_name_;
+  ACE_CString server_name_;
 
   /// True if the command_line_ needs to be updated.
   int set_command_line_;
 
   /// Startup command.
-  ACE_TString command_line_;
+  ACE_CString command_line_;
 
   /// True if the environment_vars_ needs to be updated.
   int set_environment_vars_;
@@ -349,13 +360,20 @@ protected:
   ImplementationRepository::EnvironmentList environment_vars_;
 
   /// Working directory.
-  ACE_TString working_dir_;
+  ACE_CString working_dir_;
 
   /// True if the activation mode needs to be updated.
   int set_activation_;
 
   /// Activation mode (0 = NORMAL, 1 = MANUAL, 2 = PER_CLIENT, 3 = AUTO_START)
   ImplementationRepository::ActivationMode activation_;
+
+  /// True if the location mode needs to be updated.
+  int set_location_;
+
+  /// Hostname where the activator is running.
+  ACE_CString location_;
+
 };
 
 #endif /* TAO_IMR_I_H */

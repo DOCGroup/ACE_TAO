@@ -14,7 +14,7 @@
 #ifndef IMR_ITERATOR_H
 #define IMR_ITERATOR_H
 
-#include "Repository.h"
+#include "Server_Repository.h"
 #include "tao/PortableServer/PortableServerC.h"
 #include "tao/PortableServer/ImplRepoS.h"
 

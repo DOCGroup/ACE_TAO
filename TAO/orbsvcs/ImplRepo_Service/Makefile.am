@@ -38,7 +38,8 @@ noinst_HEADERS = \
         Iterator.h \
         NT_Service.h \
         Options.h \
-        Repository.h
+	Server_Info.h \
+        Server_Repository.h
 
 ## EXTRA_DIST = README
 

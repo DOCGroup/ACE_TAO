@@ -2,17 +2,18 @@
 // $Id$
 
 #include "Options.h"
-#include "ImplRepo_i.h"
+#include "ImR_Activator_i.h"
 #include "NT_Service.h"
 
 int
 run_standalone (void)
 {
-  ImplRepo_i server;
+  ImR_Activator_i server;
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
+      // Initialize the ImR_Activator_i server.
       int status = server.init (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -22,9 +23,11 @@ run_standalone (void)
         }
       else
         {
+          // Run the server if it is initialized correctly.
           server.run (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
+          // End the server after its work is done.
           status = server.fini (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 

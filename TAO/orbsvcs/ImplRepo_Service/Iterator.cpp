@@ -60,7 +60,7 @@ ImR_Iterator::next_n (CORBA::ULong how_many,
     {
       this->iterator_->next (server_entry);
 
-      ACE_TString logical, server, command_line, working_directory, location, server_ior;
+      ACE_CString logical, server, command_line, working_directory, location, server_ior;
       ImplementationRepository::EnvironmentList environment_vars;
       ImplementationRepository::ActivationMode activation =
         ImplementationRepository::NORMAL;
