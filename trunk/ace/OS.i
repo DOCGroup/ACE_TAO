@@ -5185,7 +5185,7 @@ ACE_OS::signal (int signum, ACE_SignalHandler func)
     return (ACE_SignalHandler) ::signal (signum, (void (*)(void)) func);
 #elif defined (ACE_PSOS_TM)  //JINLU
     return (ACE_SignalHandler) ::signal (signum, (void (*)(int)) func);
-#elif !defined (ACE_HAS_WINCE) && !defined (ACE_LACKS_UNIX_SIGNALS)
+#elif defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) || !defined (ACE_LACKS_UNIX_SIGNALS)
 # if !defined (ACE_HAS_TANDEM_SIGNALS) && !defined (ACE_HAS_LYNXOS_SIGNALS)
     return ::signal (signum, func);
 # else
