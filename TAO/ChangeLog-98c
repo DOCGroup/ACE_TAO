@@ -1,3 +1,14 @@
+Tue Nov  4 04:42:17 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
+
+	* tests/Thruput_test/server.cpp: 
+	* tests/Thruput_test/client.cpp: 
+	* tests/Thruput_test/ttcpS.cpp: 
+	Fixed "print_exception" errors and errors due to some changes in 
+ 	the orb compiler. 
+
+	* tests/Cubit/TAO/MT_Cubit/server/svr.cpp (svc): Use unsigned 
+	int for variable that is used for positive comparisons only.
+
 Tue Nov 04 03:04:00 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* TAO version 0.0.21, released Tue Nov 04 03:04:00 1997.
