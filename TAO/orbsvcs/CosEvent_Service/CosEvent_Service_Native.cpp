@@ -3,6 +3,7 @@
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/CosEvent/CEC_EventChannel.h"
 #include "orbsvcs/CosEvent/CEC_Default_Factory.h"
+#include "orbsvcs/CosEvent/CEC_Event_Loader.h"
 #include "ace/Get_Opt.h"
 
 ACE_RCSID(CosEvent_Service, CosEvent_Service_Native, "$Id$")
@@ -53,8 +54,6 @@ main (int argc, char* argv[])
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      int result;
-
       // Intialize the ORB
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, 0, ACE_TRY_ENV);
@@ -64,11 +63,13 @@ main (int argc, char* argv[])
       TAO_CEC_Event_Loader event_service;
 
       // To intialise the service
-      result = event_service.init (argc, argv);
+      int result = 
+        event_service.init (argc, argv);
 
       if (result == -1)
         return 1;
 
+      // Run
       orb->run();
 
       // Destroy the ORB
