@@ -13,6 +13,9 @@
 #ifndef ACE_CONFIG_DOXYGEN_H
 #define ACE_CONFIG_DOXYGEN_H
 
+/// Make sure that we always turn inlining on.
+#defind __ACE_INLINE__
+
 /// Make the wchar_t interfaces available.
 #define ACE_HAS_WCHAR
 
