@@ -24,7 +24,8 @@ DIRS  =	Simple_Naming \
 	ImplRepo \
 	Sched_Conf \
 	Time \
-	Event
+	Event \
+	AVStreams
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
