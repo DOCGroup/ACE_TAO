@@ -21,6 +21,7 @@
 #ifdef __cplusplus
 
 #include "ace/os_include/os_stdio.h"
+#include "ace/os_include/os_ctype.h"
 
 /* Use prototypes in function declarations. */
 #define TAO_YY_USE_PROTOS
