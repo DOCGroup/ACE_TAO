@@ -1,3 +1,8 @@
+Wed Mar 21 19:20:02 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* apps/Gateway/Peer/Peer.cpp (nonblk_put): Fixed a compile error
+	  in g++.
+
 Wed Mar 21 17:28:26 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/Message_Queue.h:
