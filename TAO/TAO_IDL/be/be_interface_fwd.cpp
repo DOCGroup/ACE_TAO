@@ -80,7 +80,8 @@ be_interface_fwd::gen_var_defn (char *)
 
   // default constr
   *ch << namebuf << " (void); // default constructor" << nl;
-  *ch << namebuf << " (" << this->local_name () << "_ptr);" << nl;
+  *ch << namebuf << " (" << this->local_name () << "_ptr p)" 
+      << " : ptr_ (p) {} " << nl;
 
   // copy constructor
   *ch << namebuf << " (const " << namebuf <<
@@ -184,13 +185,6 @@ be_interface_fwd::gen_var_impl (char *,
   *ci << fname << "::" << lname <<
     " (void) // default constructor" << nl;
   *ci << "  " << ": ptr_ (" << this->name () << "::_nil ())" << nl;
-  *ci << "{}\n\n";
-
-  // constr from a _ptr
-  ci->indent ();
-  *ci << "ACE_INLINE" << nl;
-  *ci << fname << "::" << lname << " (" << this->name () << "_ptr p)" << nl;
-  *ci << "  : ptr_ (p)" << nl;
   *ci << "{}\n\n";
 
   // the additional ptr () member function. This member function must be
