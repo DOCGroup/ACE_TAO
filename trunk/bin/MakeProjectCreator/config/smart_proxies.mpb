@@ -4,6 +4,5 @@
 project : taolib_with_idl {
   after    += SmartProxies
   libs     += TAO_SmartProxies
-  requires += smart_proxies
   idlflags += -Gsp
 }
