@@ -32,7 +32,7 @@
 #define _TAO_IDL_TESTC_H_
 
 
-#include "tao/corba.h"
+#include "tao/ORB.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

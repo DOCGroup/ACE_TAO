@@ -1,7 +1,9 @@
 // -*- C++ -*-
 // $Id$
 
-#include "tao/corba.h"
+#include "tao/ORB.h"
+
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(ORB_init, ORB_init, "$Id$")
 

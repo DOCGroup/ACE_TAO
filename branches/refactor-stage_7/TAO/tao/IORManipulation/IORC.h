@@ -749,10 +749,56 @@ namespace TAO_IOP
 // TAO_IDL - Generated from
 // be/be_visitor_traits.cpp:48
 
+#if defined (_MSC_VER)
+
 // Traits specializations.
 namespace TAO
 {
+
+#if !defined (_TAO_IOP_TAO_IOR_PROPERTY__TRAITS_CH_)
+#define _TAO_IOP_TAO_IOR_PROPERTY__TRAITS_CH_
+  
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_IORManip_Export Objref_Traits<TAO_IOP::TAO_IOR_Property>
+  {
+    static TAO_IOP::TAO_IOR_Property_ptr tao_duplicate (
+        TAO_IOP::TAO_IOR_Property_ptr
+      );
+    static void tao_release (
+        TAO_IOP::TAO_IOR_Property_ptr
+      );
+    static TAO_IOP::TAO_IOR_Property_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        TAO_IOP::TAO_IOR_Property_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
+
+#if !defined (_TAO_IOP_TAO_IOR_MANIPULATION__TRAITS_CH_)
+#define _TAO_IOP_TAO_IOR_MANIPULATION__TRAITS_CH_
+  
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_IORManip_Export Objref_Traits<TAO_IOP::TAO_IOR_Manipulation>
+  {
+    static TAO_IOP::TAO_IOR_Manipulation_ptr tao_duplicate (
+        TAO_IOP::TAO_IOR_Manipulation_ptr
+      );
+    static void tao_release (
+        TAO_IOP::TAO_IOR_Manipulation_ptr
+      );
+    static TAO_IOP::TAO_IOR_Manipulation_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        TAO_IOP::TAO_IOR_Manipulation_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
 };
+
+#endif /* _MSC_VER */
 
 // TAO_IDL - Generated from
 // be/be_visitor_exception/any_op_ch.cpp:52

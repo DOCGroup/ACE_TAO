@@ -2,6 +2,7 @@
 
 #include "Supports_Test_impl.h"
 
+#include "ace/Streams.h"
 
 /* vt_graph_impl */
 

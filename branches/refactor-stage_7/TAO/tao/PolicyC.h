@@ -619,6 +619,22 @@ namespace TAO
         TAO_OutputCDR & cdr
       );
   };
+
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_Export Objref_Traits<CORBA::PolicyManager>
+  {
+    static CORBA::PolicyManager_ptr tao_duplicate (
+        CORBA::PolicyManager_ptr
+      );
+    static void tao_release (
+        CORBA::PolicyManager_ptr
+      );
+    static CORBA::PolicyManager_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        CORBA::PolicyManager_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
 };
 
 // TAO_IDL - Generated from

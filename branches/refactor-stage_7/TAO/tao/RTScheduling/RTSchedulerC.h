@@ -1096,10 +1096,119 @@ namespace RTScheduling
 // TAO_IDL - Generated from
 // be/be_visitor_traits.cpp:48
 
+#if defined (_MSC_VER)
+
 // Traits specializations.
 namespace TAO
 {
+
+#if !defined (_RTSCHEDULING_THREADACTION__TRAITS_CH_)
+#define _RTSCHEDULING_THREADACTION__TRAITS_CH_
+  
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_RTScheduler_Export Objref_Traits<RTScheduling::ThreadAction>
+  {
+    static RTScheduling::ThreadAction_ptr tao_duplicate (
+        RTScheduling::ThreadAction_ptr
+      );
+    static void tao_release (
+        RTScheduling::ThreadAction_ptr
+      );
+    static RTScheduling::ThreadAction_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        RTScheduling::ThreadAction_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
+
+#if !defined (_RTSCHEDULING_DISTRIBUTABLETHREAD__TRAITS_CH_)
+#define _RTSCHEDULING_DISTRIBUTABLETHREAD__TRAITS_CH_
+  
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_RTScheduler_Export Objref_Traits<RTScheduling::DistributableThread>
+  {
+    static RTScheduling::DistributableThread_ptr tao_duplicate (
+        RTScheduling::DistributableThread_ptr
+      );
+    static void tao_release (
+        RTScheduling::DistributableThread_ptr
+      );
+    static RTScheduling::DistributableThread_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        RTScheduling::DistributableThread_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
+
+#if !defined (_RTSCHEDULING_CURRENT__TRAITS_CH_)
+#define _RTSCHEDULING_CURRENT__TRAITS_CH_
+  
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_RTScheduler_Export Objref_Traits<RTScheduling::Current>
+  {
+    static RTScheduling::Current_ptr tao_duplicate (
+        RTScheduling::Current_ptr
+      );
+    static void tao_release (
+        RTScheduling::Current_ptr
+      );
+    static RTScheduling::Current_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        RTScheduling::Current_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
+
+#if !defined (_RTSCHEDULING_RESOURCEMANAGER__TRAITS_CH_)
+#define _RTSCHEDULING_RESOURCEMANAGER__TRAITS_CH_
+  
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_RTScheduler_Export Objref_Traits<RTScheduling::ResourceManager>
+  {
+    static RTScheduling::ResourceManager_ptr tao_duplicate (
+        RTScheduling::ResourceManager_ptr
+      );
+    static void tao_release (
+        RTScheduling::ResourceManager_ptr
+      );
+    static RTScheduling::ResourceManager_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        RTScheduling::ResourceManager_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
+
+#if !defined (_RTSCHEDULING_SCHEDULER__TRAITS_CH_)
+#define _RTSCHEDULING_SCHEDULER__TRAITS_CH_
+  
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_RTScheduler_Export Objref_Traits<RTScheduling::Scheduler>
+  {
+    static RTScheduling::Scheduler_ptr tao_duplicate (
+        RTScheduling::Scheduler_ptr
+      );
+    static void tao_release (
+        RTScheduling::Scheduler_ptr
+      );
+    static RTScheduling::Scheduler_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        RTScheduling::Scheduler_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
 };
+
+#endif /* _MSC_VER */
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/cdr_op.cpp:48

@@ -1,5 +1,8 @@
 #include "Echo.h"
 #include "Server_ORBInitializer.h"
+
+#include "tao/ORBInitializer_Registry.h"
+
 #include "ace/Get_Opt.h"
 
 

@@ -1065,25 +1065,6 @@ protected:
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
-namespace TAO
-{
-  ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_PortableServer_Export Objref_Traits<PortableServer::POA>
-  {
-    static PortableServer::POA_ptr tao_duplicate (
-        PortableServer::POA_ptr
-      );
-    static void tao_release (
-        PortableServer::POA_ptr
-      );
-    static PortableServer::POA_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        PortableServer::POA_ptr p,
-        TAO_OutputCDR & cdr
-      );
-  };
-};
-
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)
 #endif /* _MSC_VER */

@@ -3,6 +3,8 @@
 #include "interceptors.h"
 #include "tao/OctetSeqC.h"
 
+#include "ace/Log_Msg.h"
+
 ACE_RCSID (Service_Context_Manipulation,
            interceptors,
            "$Id$")

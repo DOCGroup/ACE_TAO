@@ -35,7 +35,7 @@ RSC=rc.exe
 # PROP Output_Dir "Release"
 # PROP Intermediate_Dir "Release\Client"
 # PROP Target_Dir ""
-# ADD CPP /nologo /MD /W3 /GR /GX /O2 /D NDEBUG=1 /D WIN32=1 /D _CONSOLE=1 /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "../../../.." /I "../../.." /D NDEBUG=1 /D WIN32=1 /D _CONSOLE=1 /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409 /d NDEBUG=1
@@ -54,7 +54,7 @@ LINK32=link.exe
 # PROP Intermediate_Dir "Debug\Client"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /Zi /Od /Gy /D _DEBUG=1 /D WIN32=1 /D _CONSOLE=1 /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /Zi /Od /Gy /I "../../../.." /I "../../.." /D _DEBUG=1 /D WIN32=1 /D _CONSOLE=1 /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409 /d _DEBUG=1
@@ -146,12 +146,13 @@ SOURCE=.\Supports_Test.idl
 !IF  "$(CFG)" == "Client EXE - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
+USERDEP__SUPPO="$(ACE_ROOT)\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking IDL Compiler on $(InputPath)
 InputPath=.\Supports_Test.idl
 InputName=Supports_Test
 
 BuildCmds= \
-	$(ACE_ROOT)\bin\tao_idl -o . -Sc $(InputPath)
+	$(ACE_ROOT)\bin\Release\tao_idl -o . -Sc $(InputPath)
 
 ".\$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -175,6 +176,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "Client EXE - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
+USERDEP__SUPPO="$(ACE_ROOT)\bin\tao_idl,exe"	
 # Begin Custom Build - Invoking IDL Compiler on $(InputPath)
 InputPath=.\Supports_Test.idl
 InputName=Supports_Test

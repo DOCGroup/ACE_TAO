@@ -17,8 +17,9 @@
 //
 // ============================================================================
 
-#include "tao/corba.h"
 #include "MT_Object_i.h"
+
+#include "tao/Exception.h"
 
 ACE_RCSID(MT_Client_Test, MT_Object_i, "$Id$")
 

@@ -555,6 +555,38 @@ namespace IOP
 // Traits specializations.
 namespace TAO
 {
+  // Hand crafted.
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_Export Objref_Traits<IOP::Codec>
+  {
+    static IOP::Codec_ptr tao_duplicate (
+        IOP::Codec_ptr
+      );
+    static void tao_release (
+        IOP::Codec_ptr
+      );
+    static IOP::Codec_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        IOP::Codec_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_Export Objref_Traits<IOP::CodecFactory>
+  {
+    static IOP::CodecFactory_ptr tao_duplicate (
+        IOP::CodecFactory_ptr
+      );
+    static void tao_release (
+        IOP::CodecFactory_ptr
+      );
+    static IOP::CodecFactory_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        IOP::CodecFactory_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
 };
 
 // TAO_IDL - Generated from

@@ -3,6 +3,11 @@
 #include "interceptors.h"
 #include "testC.h"
 
+#include "tao/DynamicC.h"
+#include "tao/Typecode.h"
+
+#include "ace/Log_Msg.h"
+
 ACE_RCSID (Dynamic,
            interceptors,
            "$Id$")

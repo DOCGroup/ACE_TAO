@@ -11,6 +11,7 @@ ACE_RCSID (ForwardRequest,
 #include "Client_Request_Interceptor.h"
 
 #include "tao/StringSeqC.h"
+#include "tao/ORB_Constants.h"
 
 void
 Client_ORBInitializer::pre_init (

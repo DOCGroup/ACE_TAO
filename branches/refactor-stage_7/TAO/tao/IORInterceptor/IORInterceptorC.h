@@ -376,10 +376,35 @@ namespace PortableInterceptor
 // TAO_IDL - Generated from
 // be/be_visitor_traits.cpp:48
 
+#if defined (_MSC_VER)
+
 // Traits specializations.
 namespace TAO
 {
-  // Hand crafted. Not forward declared but used by PortableServer.
+#if !defined (_PORTABLEINTERCEPTOR_IORINTERCEPTOR__TRAITS_CH_)
+#define _PORTABLEINTERCEPTOR_IORINTERCEPTOR__TRAITS_CH_
+  
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_IORInterceptor_Export Objref_Traits<PortableInterceptor::IORInterceptor>
+  {
+    static PortableInterceptor::IORInterceptor_ptr tao_duplicate (
+        PortableInterceptor::IORInterceptor_ptr
+      );
+    static void tao_release (
+        PortableInterceptor::IORInterceptor_ptr
+      );
+    static PortableInterceptor::IORInterceptor_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        PortableInterceptor::IORInterceptor_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
+
+#if !defined (_PORTABLEINTERCEPTOR_IORINFO__TRAITS_CH_)
+#define _PORTABLEINTERCEPTOR_IORINFO__TRAITS_CH_
+  
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_IORInterceptor_Export Objref_Traits<PortableInterceptor::IORInfo>
   {
@@ -395,7 +420,11 @@ namespace TAO
         TAO_OutputCDR & cdr
       );
   };
+
+#endif /* end #if !defined */
 };
+
+#endif /* _MSC_VER */
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/cdr_op.cpp:48
