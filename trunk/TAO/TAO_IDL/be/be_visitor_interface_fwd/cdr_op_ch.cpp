@@ -45,22 +45,11 @@ be_visitor_interface_fwd_cdr_op_ch::~be_visitor_interface_fwd_cdr_op_ch (void)
 int
 be_visitor_interface_fwd_cdr_op_ch::visit_interface_fwd (be_interface_fwd *node)
 {
-  // No CDR operations for locality constraint interfaces.
-  if (idl_global->gen_locality_constraint ())
-    return 0;
-  if (node->cli_hdr_cdr_op_gen () || node->imported ())
-    return 0;
+  AST_Interface *fd = node->full_definition ();
 
-  TAO_OutStream *os = this->ctx_->stream ();
-
-  // generate the CDR << and >> operator declarations
-  os->indent ();
-  *os << idl_global->stub_export_macro () << " CORBA::Boolean" << be_nl
-      << "operator<< (TAO_OutputCDR &, const " << node->full_name ()
-      << "_ptr );" << be_nl;
-  *os << idl_global->stub_export_macro () << " CORBA::Boolean" << be_nl
-      << "operator>> (TAO_InputCDR &, "
-      << node->full_name () << "_ptr &);\n";
+  if (!fd->is_defined ())
+    {
+    }
 
   node->cli_hdr_cdr_op_gen (1);
 

@@ -90,51 +90,6 @@ be_visitor_interface_fwd_ch::visit_interface_fwd (be_interface_fwd *node)
         }
       // generate the endif macro
       os->gen_endif ();
-
-      // now the interface definition itself
-      os->gen_ifdef_macro (node->flat_name ());
-
-      // now generate the class definition
-      *os << "// Declarations necessary for use of forward declared" << be_nl;
-      *os << "// interface as a member or parameter." << be_nl;
-      *os << "class " << idl_global->stub_export_macro ()
-                << " " << node->local_name ();
-
-      // We are here only if we are a forward declared interface that is
-      // not defined later in the same file. We do not need to worry here
-      // about what interface(s) we may actually inherit from, if any.
-      *os << " : public virtual ACE_CORBA_1 (Object)" << be_nl;
-
-      // generate the body
-
-      *os << "{" << be_nl
-          << "public:" << be_idt_nl
-
-          // generate the static _duplicate, _narrow, and _nil operations
-          << "// the static operations" << be_nl
-          << "static " << node->local_name () << "_ptr " << "_duplicate ("
-          << node->local_name () << "_ptr obj);" << be_nl
-          << "static " << node->local_name () << "_ptr "
-          << "_narrow (" << be_idt << be_idt_nl
-          << "CORBA::Object_ptr obj," << be_nl
-          << "CORBA::Environment &env = " << be_idt_nl
-          << "TAO_default_environment ()"
-          << be_uidt << be_uidt_nl
-          << ");" << be_uidt_nl;
-
-      // This method is defined in the header file to workaround old
-      // g++ problems
-      *os << "static " << node->local_name () << "_ptr _nil (void)"
-          << be_idt_nl << "{" << be_idt_nl
-          << "return (" << node->name () << "_ptr)0;" << be_uidt_nl
-          << "}" << be_uidt;// << "\n\n";
-
-      *os << be_uidt <<be_uidt_nl;
-      *os << "};\n\n";
-      
-      os->gen_endif ();
-      
       node->cli_hdr_gen (I_TRUE);
     }
-  return 0;
-}
+  return 0;}
