@@ -125,7 +125,7 @@ be_visitor_sequence_ci::gen_unbounded_obj_sequence (be_sequence *node)
       << "CORBA::ULong length," << be_nl;
   pt->accept (visitor); 
   *os <<"* *value," << be_nl
-      << "CORBA::Boolean release=0)" << be_uidt_nl
+      << "CORBA::Boolean release)" << be_uidt_nl
       << ": TAO_Unbounded_Base_Sequence (maximum, length, value, release)" << be_nl
       << "{" << be_nl
       << "}" << be_nl

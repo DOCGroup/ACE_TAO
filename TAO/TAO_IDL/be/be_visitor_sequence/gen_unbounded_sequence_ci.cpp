@@ -120,7 +120,7 @@ be_visitor_sequence_ci::gen_unbounded_sequence (be_sequence *node)
                         -1);
   }
   *os << " *data," << be_nl
-      << "CORBA::Boolean release = 0)" << be_uidt_nl
+      << "CORBA::Boolean release)" << be_uidt_nl
       << ": TAO_Unbounded_Base_Sequence (maximum, length, data, release)" << be_nl
       << "{" << be_nl
       << "}" << be_nl
@@ -301,7 +301,7 @@ be_visitor_sequence_ci::gen_unbounded_sequence (be_sequence *node)
   *os << "ACE_INLINE ";
   pt->accept(visitor); 
   *os << " *" << be_nl
-      << full_class_name << "::get_buffer (CORBA::Boolean orphan = 0)" << be_nl
+      << full_class_name << "::get_buffer (CORBA::Boolean orphan)" << be_nl
       << "{" << be_idt_nl;
   pt->accept(visitor); 
   *os <<" *result = 0;" << be_nl
