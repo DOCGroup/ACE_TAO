@@ -647,7 +647,15 @@ ACE_Strategy_Connector<SH, PR_CO_2>::open
 
   // Initialize the creation strategy.
 
-  if (cre_s == 0)
+  if (this->creation_strategy_ != 0 &&
+      this->delete_creation_strategy_ != 0)
+    {
+      delete this->creation_strategy_;
+      this->creation_strategy_ = 0;
+      this->delete_creation_strategy_ = 0;
+    }
+
+  if (cre_s == 0 && this->creation_strategy_ == 0)
     {
       ACE_NEW_RETURN (cre_s, CREATION_STRATEGY, -1);
       this->delete_creation_strategy_ = 1;
@@ -656,7 +664,15 @@ ACE_Strategy_Connector<SH, PR_CO_2>::open
 
   // Initialize the accept strategy.
 
-  if (conn_s == 0)
+  if (this->connect_strategy_ != 0 &&
+      this->delete_connect_strategy_ != 0)
+    {
+      delete this->connect_strategy_;
+      this->connect_strategy_ = 0;
+      this->delete_connect_strategy_ = 0;
+    }
+
+  if (conn_s == 0 && this->connect_strategy_ == 0)
     {
       ACE_NEW_RETURN (conn_s, CONNECT_STRATEGY, -1);
       this->delete_connect_strategy_ = 1;
@@ -665,7 +681,16 @@ ACE_Strategy_Connector<SH, PR_CO_2>::open
 
   // Initialize the concurrency strategy.
 
-  if (con_s == 0)
+  if (this->concurrency_strategy_ != 0 &&
+      this->delete_concurrency_strategy_ != 0 &&
+      con_s != 0)
+    {
+      delete this->concurrency_strategy_;
+      this->concurrency_strategy_ = 0;
+      this->delete_concurrency_strategy_ = 0;
+    }
+
+  if (con_s == 0 && this->concurrency_strategy_ == 0)
     {
       ACE_NEW_RETURN (con_s, CONCURRENCY_STRATEGY, -1);
       this->delete_concurrency_strategy_ = 1;
