@@ -15,6 +15,7 @@ DIRS  = Cubit \
         Pluggable \
         RTCorba \
 	Latency \
+	Sequence_Latency \
 	Memory \
 	Throughput \
 	Anyop
