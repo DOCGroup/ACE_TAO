@@ -34,6 +34,7 @@ TAO_CEC_EventChannel (const TAO_CEC_EventChannel_Attributes& attr,
       this->factory_ =
         ACE_Dynamic_Service<TAO_CEC_Factory>::instance ("CEC_Factory");
       this->own_factory_ = 0;
+      ACE_ASSERT (this->factory_ != 0);
     }
 
   this->dispatching_ =

@@ -1,35 +1,48 @@
+Fri Oct 27 11:42:34 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.cpp:
+        * orbsvcs/examples/CosEC/Factory/main.cpp:
+          Fixed initialization of the Factory example.  The default
+          factory must be manually registered with the Service
+          Configurator because we avoid static constructors in ACE+TAO.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.cpp:
+          Use ACE_ASSERT to stop early if the factory pointer is null.
+          Thanks to Sandro Doro <doro.s@flashnet.it> for suggesting these
+          fixes.
+
 Fri Oct 27 08:56:43 2000  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* tao/Sequence_T.cpp: 
-	* tao/Sequence_T.i:
+        * tao/Sequence_T.cpp:
+        * tao/Sequence_T.i:
 
-	  Moved the allocbuf() methods from the .i to the .cpp for
- 	  TAO_Bounded_Array_Sequence and TAO_Unbounded_Array_Sequence
- 	  templates.  They cause SunWorkshop 4.2 grief during compiles
- 	  because the compiler couldn't find a definition for one of the
- 	  template parameters.  Moving it into .cpp got the compiler
- 	  unconfused.  This is a workaround for the SunCC 4.2 Compiler
- 	  patch level 104631-07.
+          Moved the allocbuf() methods from the .i to the .cpp for
+          TAO_Bounded_Array_Sequence and TAO_Unbounded_Array_Sequence
+          templates.  They cause SunWorkshop 4.2 grief during compiles
+          because the compiler couldn't find a definition for one of the
+          template parameters.  Moving it into .cpp got the compiler
+          unconfused.  This is a workaround for the SunCC 4.2 Compiler
+          patch level 104631-07.
 
 Fri Oct 27 00:28:03 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* examples/POA/Forwarding/run_test.pl (run_test): Added a missing
-	  print statement.
+        * examples/POA/Forwarding/run_test.pl (run_test): Added a missing
+          print statement.
 
-	* examples/POA/Forwarding/client.cpp (main): 
-	* examples/POA/Forwarding/server.cpp: 
-	* examples/POA/Forwarding/Servant_Activator.cpp: 
+        * examples/POA/Forwarding/client.cpp (main):
+        * examples/POA/Forwarding/server.cpp:
+        * examples/POA/Forwarding/Servant_Activator.cpp:
 
-	  Fixed the use of TAO_ENV_ARG_DECL and ACE_CHECK.  These errors
-	  were there never found on NT because of the presence of native
-	  exception handling.
+          Fixed the use of TAO_ENV_ARG_DECL and ACE_CHECK.  These errors
+          were there never found on NT because of the presence of native
+          exception handling.
 
 Thu Oct 26 13:58:42 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
-	* orbsvcs/examples/Notify/Filter/Filter.cpp:
-	  Reverted some code that had been inadvertently commented for
-	  debugging purposes.
-	
+        * orbsvcs/examples/Notify/Filter/Filter.cpp:
+          Reverted some code that had been inadvertently commented for
+          debugging purposes.
+
 Wed Oct 25 20:59:45 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * tao/PortableServer/POA.cpp:
@@ -57,113 +70,113 @@ Wed Oct 25 08:23:34 2000  Chad Elliott  <elliott_c@ociweb.com>
 
 Wed Oct 25 00:32:59 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/PortableServer: POA::reference_to_servant() was missing the
-	  WrongAdapter exception in the throw spec.  Thanks to Marina (and
-	  the Borland compiler) for pointing this out.  Following files
-	  needed the change:
+        * tao/PortableServer: POA::reference_to_servant() was missing the
+          WrongAdapter exception in the throw spec.  Thanks to Marina (and
+          the Borland compiler) for pointing this out.  Following files
+          needed the change:
 
-	  - POA.cpp
-	  - POA.h
-	  - PortableServer.pidl
-	  - PortableServerC.h
+          - POA.cpp
+          - POA.h
+          - PortableServer.pidl
+          - PortableServerC.h
 
 Tue Oct 24 23:40:33 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/PortableServer/Object_Adapter.h (TAO_Object_Adapter): 
+        * tao/PortableServer/Object_Adapter.h (TAO_Object_Adapter):
 
-	  - Two essential changes were required while preparing for
-	  servant upcalls: (a) Increasing <poa->outstanding_requests_> now
-	  happens before we start looking for the servant.  This change is
-	  necessary because otherwise a servant manager may decide to
-	  shutdown the ORB or destroy the calling POA.  This change makes
-	  sure that POA/Object_Adapter are not destroyed before the upcall
-	  cycle completes.  Now poa_cleanup() is called every time
-	  <poa->outstanding_requests_> is increased.
+          - Two essential changes were required while preparing for
+          servant upcalls: (a) Increasing <poa->outstanding_requests_> now
+          happens before we start looking for the servant.  This change is
+          necessary because otherwise a servant manager may decide to
+          shutdown the ORB or destroy the calling POA.  This change makes
+          sure that POA/Object_Adapter are not destroyed before the upcall
+          cycle completes.  Now poa_cleanup() is called every time
+          <poa->outstanding_requests_> is increased.
 
-	  The other change is to check if a non-servant upcall is in
-	  progress after calling the servant and before changing the
-	  POA/servant related reference counts.  If a non-servant upcall
-	  is in progress, wait for it to complete; unless of course, the
-	  thread making the non-servant upcall is this thread.
+          The other change is to check if a non-servant upcall is in
+          progress after calling the servant and before changing the
+          POA/servant related reference counts.  If a non-servant upcall
+          is in progress, wait for it to complete; unless of course, the
+          thread making the non-servant upcall is this thread.
 
-	  - Non_Servant_Upcall now knows for which POA it was setup.  This
-	  change allows the prevention of the destruction of the calling
-	  POA while the non-servant upcall is in progress.  Now at the end
-	  of the non-servant upcall, we check if the POA needs to be
-	  cleaned up.
+          - Non_Servant_Upcall now knows for which POA it was setup.  This
+          change allows the prevention of the destruction of the calling
+          POA while the non-servant upcall is in progress.  Now at the end
+          of the non-servant upcall, we check if the POA needs to be
+          cleaned up.
 
-	  - non_servant_upcall_in_progress() now returns a pointer to the
-	  non-servant upcall in progress.  If no non-servant upcall is in
-	  progress, this pointer is zero.
+          - non_servant_upcall_in_progress() now returns a pointer to the
+          non-servant upcall in progress.  If no non-servant upcall is in
+          progress, this pointer is zero.
 
-	* tao/PortableServer/POA:
-	 
-	  - (complete_destruction_i): Mark that we are no longer awaiting
-	  destruction.  This helps avoid infinite calls to
-	  complete_destruction_i() when using Non_Servant_Upcall while
-	  cleaning up the adapter activator, servant activator, servant
-	  locator and the default servant.
+        * tao/PortableServer/POA:
 
-	  - (destroy_i): Only call complete_destruction_i() if there are
-	  no outstanding requests and that we are not in a non-servant
-	  upcall or if we are in a non-servant upcall, make sure we are
-	  the POA related to the non-servant upcall.
+          - (complete_destruction_i): Mark that we are no longer awaiting
+          destruction.  This helps avoid infinite calls to
+          complete_destruction_i() when using Non_Servant_Upcall while
+          cleaning up the adapter activator, servant activator, servant
+          locator and the default servant.
 
-	* tao/PortableServer/POA.i (TAO_POA_Guard): Waiting for
-	  non-servant upcalls to complete must happen before the POA state
-	  is checked.
+          - (destroy_i): Only call complete_destruction_i() if there are
+          no outstanding requests and that we are not in a non-servant
+          upcall or if we are in a non-servant upcall, make sure we are
+          the POA related to the non-servant upcall.
 
-	* tao: <TAO_Default_Resource_Factory::parser_names> should be char
-	  * and not const char *.  You could make it char * const but not
-	  const char *. Changes were required to:
+        * tao/PortableServer/POA.i (TAO_POA_Guard): Waiting for
+          non-servant upcalls to complete must happen before the POA state
+          is checked.
 
-	  - tao/Parser_Registry.cpp
-	  - tao/Resource_Factory.cpp
-	  - tao/Resource_Factory.h
-	  - tao/default_resource.cpp
-	  - tao/default_resource.h
-	  
-	  Also, the memory managment for <parser_names> needed fixing.
-	  <parser_names> needed to be deleted.  The elements of
-	  <parser_names> needed to be initialized, consistently duplicated
-	  and eventually freed.
+        * tao: <TAO_Default_Resource_Factory::parser_names> should be char
+          * and not const char *.  You could make it char * const but not
+          const char *. Changes were required to:
 
-	* tao/Adapter.cpp (close): The destruction of the individual
-	  adapters was missing.  Plus the adapter destruction was
-	  happening in close().  It should really happen in the destructor
-	  because close() is too early to destroy the adapters since
-	  upcalls may still be in progress when ORB::shutdown() is called
-	  which will call close().
+          - tao/Parser_Registry.cpp
+          - tao/Resource_Factory.cpp
+          - tao/Resource_Factory.h
+          - tao/default_resource.cpp
+          - tao/default_resource.h
 
-	* tao/Exception: Made the _info() method virtual in the Exception
-	  class and added an implementation for the UserException and
-	  SystemException.  This also removed the requirement to upcast in
-	  the CORBA_Exception::_info() method.
+          Also, the memory managment for <parser_names> needed fixing.
+          <parser_names> needed to be deleted.  The elements of
+          <parser_names> needed to be initialized, consistently duplicated
+          and eventually freed.
 
-	* examples/POA/Forwarding: Revamped and simplified this example.
-	  Removed the POA approach for forwarding since it is not
-	  standard.  Also, changed the example to use the servant
-	  activator instead of the servant locator since the activator is
-	  more appropriate here.
+        * tao/Adapter.cpp (close): The destruction of the individual
+          adapters was missing.  Plus the adapter destruction was
+          happening in close().  It should really happen in the destructor
+          because close() is too early to destroy the adapters since
+          upcalls may still be in progress when ORB::shutdown() is called
+          which will call close().
+
+        * tao/Exception: Made the _info() method virtual in the Exception
+          class and added an implementation for the UserException and
+          SystemException.  This also removed the requirement to upcast in
+          the CORBA_Exception::_info() method.
+
+        * examples/POA/Forwarding: Revamped and simplified this example.
+          Removed the POA approach for forwarding since it is not
+          standard.  Also, changed the example to use the servant
+          activator instead of the servant locator since the activator is
+          more appropriate here.
 
 Tue Oct 24 13:36:05 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/PolicyFactory_Registry.h:
+        * tao/PolicyFactory_Registry.h:
 
-	  Removed the local ITERATOR typedef.  It confused brain-damaged
-	  g++ 2.7.x.
+          Removed the local ITERATOR typedef.  It confused brain-damaged
+          g++ 2.7.x.
 
-	* tao/PolicyFactory_Registry.cpp (~TAO_PolicyFactory_Registry):
+        * tao/PolicyFactory_Registry.cpp (~TAO_PolicyFactory_Registry):
 
-	  Use the ACE_Map_Manager<>::ITERATOR trait instead of the now
-	  removed typedef local to this class.
+          Use the ACE_Map_Manager<>::ITERATOR trait instead of the now
+          removed typedef local to this class.
 
 Tue Oct 24 11:18:01 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/Typecode.cpp : 
-	  Made the code a little bit cleaner by moving code that is
-	  similar for all the cases in the switch-case block of
-	  private_member_name outside the block.
+        * tao/Typecode.cpp :
+          Made the code a little bit cleaner by moving code that is
+          similar for all the cases in the switch-case block of
+          private_member_name outside the block.
 
 Tue Oct 24 07:38:45 2000  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -180,33 +193,33 @@ Tue Oct 24 07:38:45 2000  Chad Elliott  <elliott_c@ociweb.com>
 
 Mon Oct 23 21:39:22 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/ORB.cpp (ORB_init):
+        * tao/ORB.cpp (ORB_init):
 
-	  Fixed a typo where TAO_HAS_RTCORBA was used instead of
-	  TAO_HAS_RT_CORBA.  This typo prevented the RT CORBA ORB
-	  initializer from being registered, which in turn prevented the
-	  RT CORBA policy factories from being registered.  This fixes a
-	  seg fault.
+          Fixed a typo where TAO_HAS_RTCORBA was used instead of
+          TAO_HAS_RT_CORBA.  This typo prevented the RT CORBA ORB
+          initializer from being registered, which in turn prevented the
+          RT CORBA policy factories from being registered.  This fixes a
+          seg fault.
 
-	* tao/Stub.cpp (~TAO_Stub):
+        * tao/Stub.cpp (~TAO_Stub):
 
-	  Fixed a typo where TAO_HAS_RTCORBA was used instead of
-	  TAO_HAS_RT_CORBA.  This fixes a problem where the destroy()
-	  method in each RT policy was not being called.
+          Fixed a typo where TAO_HAS_RTCORBA was used instead of
+          TAO_HAS_RT_CORBA.  This fixes a problem where the destroy()
+          method in each RT policy was not being called.
 
-	  Make sure the pointer to the policy is valid before invoking the
-	  destroy() method through it.  This fixes a seg fault.
+          Make sure the pointer to the policy is valid before invoking the
+          destroy() method through it.  This fixes a seg fault.
 
-	* tao/Profile.cpp (policies):
+        * tao/Profile.cpp (policies):
 
-	  Made this code exception safe by using a Policy_var.
+          Made this code exception safe by using a Policy_var.
 
 Mon Oct 23 19:13:54 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/DomainC.cpp:
+        * tao/DomainC.cpp:
 
-	  Corrected the last of the references to TAO_ClientRequest_Info.
-	  That class has been renamed to TAO_ClientRequestInfo.
+          Corrected the last of the references to TAO_ClientRequest_Info.
+          That class has been renamed to TAO_ClientRequestInfo.
 
 Mon Oct 23 18:07:01 2000  Carlos O'Ryan  <coryan@uci.edu>
 
