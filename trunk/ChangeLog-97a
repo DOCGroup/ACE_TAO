@@ -1,3 +1,8 @@
+Mon Mar 17 12:59:56 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/OS.{h,i}: added nanosleep (), currently supported only
+	  on POSIX platforms (if ACE_HAS_CLOCK_GETTIME is defined).
+
 Sun Mar 16 11:31:46 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Timer_{List,Queue,Heap}.h: Defined copy constructors and
