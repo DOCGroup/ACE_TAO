@@ -1,3 +1,17 @@
+Sat Jun  5 20:09:51 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp:
+	  Removed unused variable
+
+	* tao/GIOP.cpp:
+	  Changed ACE_THROW for ACE_TRY_THROW, we want the exception
+	  catched in the enclosing TRY/CATCH clause.
+
+	* examples/OBV/Simple_util.h:
+	* orbsvcs/examples/CosEC/Factory/FactoryDriver.h:
+	  Fixed order of declaration between ORB_var and other objects,
+	  the ORB must be the last object destroyed.
+
 Sat Jun 05 19:00:18 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/corbafwd.h: changed value of TAO_UNKNOWN_MINOR_CODE
