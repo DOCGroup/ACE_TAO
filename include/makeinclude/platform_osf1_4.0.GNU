@@ -7,7 +7,7 @@ debug = 1
 
 CC              = cxx
 CXX             = $(CC)
-CFLAGS          +=
+CFLAGS          += -pthread
 
 #### These flags can only be used with cxx Version 6.0 and later.
 # WARNING_FLAGS +=
@@ -26,7 +26,7 @@ CCFLAGS         += $(CFLAGS) -ptr ptrepository $(WARNING_FLAGS)
 DCFLAGS         += -g -O0
 DLD             = $(CXX)
 LD              = $(CXX)
-LIBS            += -pthread -ltli -lrt -ptr ptrepository
+LIBS            += -ltli -lrt -ptr ptrepository
 OFLAGS          += -O4
 PIC             =
 ARFLAGS         = cruvZ
