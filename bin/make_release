@@ -92,7 +92,7 @@ my $controlled_files = my $release_files = my $release_lib_files = '';
 my $release_tag_files = my $release_autoconf_files = '';
 my $release_filter = '\\( -name CVS -o -name build \\) -prune -o ' .
                      '! -name \'.\#*\' ! -name \'\#*\' ! -name \'*~\' ' .
-                     '! -name \'*.MAK\' -print';
+                     '! -name \'*.MAK\' !-name \'.cvsignore\' -print';
 my $update_versions = 0;
 my $create_zips = 1;
 
