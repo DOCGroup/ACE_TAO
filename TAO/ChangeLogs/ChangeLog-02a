@@ -1,3 +1,9 @@
+Tue Aug 29 19:15:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* tests/Portable_Interceptors/Benchmark/interceptors.cpp:
+	  Added dynamic casts for RequestInfo class when they needed to
+	  access TAO specific exception related methods.
+	
 Tue Aug 29 15:09:55 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* examples/Simple/time-date/Makefile: 
