@@ -1,3 +1,14 @@
+Thu May  4 14:53:45 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * orbsvcs/orbsvcs/AV/AV_Core.h:
+        * orbsvcs/orbsvcs/AV/AV_export.h:
+
+          Defined TAO_AV_SINGLETON_DECLARE in a different way to 
+          hopefully solve this problem on all compilers.  Since some
+          do not want anything defined, we cannot use a no-argument
+          version of the macro.  Now it takes in the singleton type,
+          type class, and also the lock.
+
 Thu May  4 13:59:58 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/orbsvcs/AV/AV_Core.h:

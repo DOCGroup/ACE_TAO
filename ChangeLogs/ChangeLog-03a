@@ -1,3 +1,16 @@
+Thu May  4 14:53:45 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/config-all.h:
+        * ace/config-win32-common.h:
+        * bin/generate_export_file.pl:
+
+          Changed the ACE_EXPORT_SINGLETON_DECLARE and 
+          ACE_IMPORT_SINGLETON_DECLARE to take in arguments, but
+          this time it takes in 3, the singleton type, the class,
+          and then the lock.  So we have:
+
+          ACE_EXPORT_SINGLETON_DECLARE (ACE_Singleton, foo, ACE_Null_Mutex);
+
 Thu May  4 13:59:58 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/config-all.h:
