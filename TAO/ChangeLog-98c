@@ -1,3 +1,8 @@
+Thu Feb 26 18:38:56 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp (TAO_Naming_Server):
+ 	  Fixed a syntax error.
+
 Thu Feb 26 18:07:16 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
 	* docs/releasenotes/index.html: Added an entry for the Property Service.
