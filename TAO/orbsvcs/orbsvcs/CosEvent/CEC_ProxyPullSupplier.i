@@ -3,7 +3,7 @@
 ACE_INLINE CORBA::Boolean
 TAO_CEC_ProxyPullSupplier::is_connected_i (void) const
 {
-  return !CORBA::is_nil (this->consumer_.in ());
+  return this->connected_;
 }
 
 ACE_INLINE CORBA::Boolean

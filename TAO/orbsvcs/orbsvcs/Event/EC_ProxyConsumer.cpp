@@ -17,6 +17,7 @@ TAO_EC_ProxyPushConsumer::
     TAO_EC_ProxyPushConsumer (TAO_EC_Event_Channel* ec)
   : event_channel_ (ec),
     refcount_ (1),
+    connected_ (0),
     filter_ (0)
 {
   this->lock_ =
@@ -50,6 +51,10 @@ TAO_EC_ProxyPushConsumer::supplier_non_existent (
   if (this->is_connected_i () == 0)
     {
       disconnected = 1;
+      return 0;
+    }
+  if (CORBA::is_nil (this->supplier_.in ()))
+    {
       return 0;
     }
 
@@ -132,6 +137,7 @@ TAO_EC_ProxyPushConsumer::shutdown (CORBA::Environment &ACE_TRY_ENV)
     ACE_CHECK;
 
     supplier = this->supplier_._retn ();
+    this->connected_ = 0;
 
     if (this->filter_ != 0)
       {
@@ -166,6 +172,7 @@ TAO_EC_ProxyPushConsumer::cleanup_i (void)
 {
   this->supplier_ =
     RtecEventComm::PushSupplier::_nil ();
+  this->connected_ = 0;
 
   if (this->filter_ != 0)
     {
@@ -287,6 +294,7 @@ TAO_EC_ProxyPushConsumer::connect_push_supplier (
 
     this->supplier_ =
       RtecEventComm::PushSupplier::_duplicate (push_supplier);
+    this->connected_ = 1;
     this->qos_ = qos;
 
 #if TAO_EC_ENABLE_DEBUG_MESSAGES
@@ -337,6 +345,7 @@ TAO_EC_ProxyPushConsumer::disconnect_push_consumer (
 
     connected = this->is_connected_i ();
     supplier = this->supplier_._retn ();
+    this->connected_ = 0;
 
     if (connected)
       this->cleanup_i ();
@@ -346,7 +355,7 @@ TAO_EC_ProxyPushConsumer::disconnect_push_consumer (
   this->event_channel_->disconnected (this, ACE_TRY_ENV);
   ACE_CHECK;
 
-  if (!connected)
+  if (CORBA::is_nil (supplier.in ()))
     {
       return;
     }

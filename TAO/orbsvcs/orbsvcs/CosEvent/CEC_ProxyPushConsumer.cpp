@@ -16,7 +16,8 @@ typedef ACE_Reverse_Lock<ACE_Lock> TAO_CEC_Unlock;
 TAO_CEC_ProxyPushConsumer::
     TAO_CEC_ProxyPushConsumer (TAO_CEC_EventChannel* ec)
   : event_channel_ (ec),
-    refcount_ (1)
+    refcount_ (1),
+    connected_ (0)
 {
   this->lock_ =
     this->event_channel_->create_consumer_lock ();
@@ -90,6 +91,10 @@ TAO_CEC_ProxyPushConsumer::supplier_non_existent (
       disconnected = 1;
       return 0;
     }
+  if (CORBA::is_nil (this->supplier_.in ()))
+    {
+      return 0;
+    }
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
   return this->supplier_->_non_existent (ACE_TRY_ENV);
@@ -111,6 +116,7 @@ TAO_CEC_ProxyPushConsumer::shutdown (CORBA::Environment &ACE_TRY_ENV)
     ACE_CHECK;
 
     supplier = this->supplier_._retn ();
+    this->connected_ = 0;
   }
 
   this->deactivate (ACE_TRY_ENV);
@@ -137,6 +143,7 @@ TAO_CEC_ProxyPushConsumer::cleanup_i (void)
 {
   this->supplier_ =
     CosEventComm::PushSupplier::_nil ();
+  this->connected_ = 0;
 }
 
 CORBA::ULong
@@ -205,6 +212,7 @@ TAO_CEC_ProxyPushConsumer::connect_push_supplier (
       }
     this->supplier_ =
       CosEventComm::PushSupplier::_duplicate (push_supplier);
+    this->connected_ = 1;
   }
 
   // Notify the event channel...
@@ -253,6 +261,9 @@ TAO_CEC_ProxyPushConsumer::disconnect_push_consumer (
   // Notify the event channel...
   this->event_channel_->disconnected (this, ACE_TRY_ENV);
   ACE_CHECK;
+
+  if (CORBA::is_nil (supplier.in ()))
+    return;
 
   if (this->event_channel_->disconnect_callbacks ())
     {
