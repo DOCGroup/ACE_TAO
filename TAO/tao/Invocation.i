@@ -109,10 +109,22 @@ TAO_GIOP_Invocation::orb_core (void)
   return this->orb_core_;
 }
 
+ACE_INLINE TAO_Transport *&
+TAO_GIOP_Invocation::transport (void)
+{
+  return this->transport_;
+}
+
 ACE_INLINE CORBA::PolicyList_var&
 TAO_GIOP_Invocation::inconsistent_policies (void)
 {
   return this->inconsistent_policies_;
+}
+
+ACE_INLINE ACE_Time_Value *
+TAO_GIOP_Invocation::max_wait_time (void)
+{
+  return this->max_wait_time_;
 }
 
 ACE_INLINE CORBA::ULong&

@@ -250,9 +250,8 @@ TAO_GIOP_Invocation::perform_call (TAO_Transport_Descriptor_Interface &desc,
     }
 
   // Obtain a connection.
-  int result = conn_reg->connect (&desc,
-                                  this->transport_,
-                                  this->max_wait_time_,
+  int result = conn_reg->connect (this,
+                                  &desc,
                                   ACE_TRY_ENV);
   ACE_CHECK_RETURN (1);
 

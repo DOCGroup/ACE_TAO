@@ -344,10 +344,10 @@ module Security {
 
 
     // Policies used to control attributes of a binding to a target
-    const CORBA::PolicyType SecMechanismsPolicy       = 12;
-    const CORBA::PolicyType SecCredentialsPolicy      = 13;
-    const CORBA::PolicyType SecFeaturesPolicy         = 14; // obsolete
-    const CORBA::PolicyType SecQOPPolicy              = 15;
+    const CORBA::PolicyType SecMechanismsPolicy            = 12;
+    const CORBA::PolicyType SecInvocationCredentialsPolicy = 13;
+    const CORBA::PolicyType SecFeaturePolicy               = 14; // obsolete
+    const CORBA::PolicyType SecQOPPolicy                   = 15;
 
     const CORBA::PolicyType SecDelegationDirectivePolicy = 38;
     const CORBA::PolicyType SecEstablishTrustPolicy      = 39;

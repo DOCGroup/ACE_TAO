@@ -14,6 +14,7 @@
 #include "tao/Environment.h"
 #include "ace/Auto_Ptr.h"
 #include "tao/Transport_Cache_Manager.h"
+#include "tao/Invocation.h"
 
 ACE_RCSID (Strategies,
            SHMIOP_Connector,
@@ -116,9 +117,8 @@ TAO_SHMIOP_Connector::close (void)
 }
 
 int
-TAO_SHMIOP_Connector::connect (TAO_Transport_Descriptor_Interface *desc,
-                               TAO_Transport *&transport,
-                               ACE_Time_Value *max_wait_time,
+TAO_SHMIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
+                               TAO_Transport_Descriptor_Interface *desc,
                                CORBA::Environment &)
 {
   if (TAO_debug_level > 0)
@@ -126,6 +126,8 @@ TAO_SHMIOP_Connector::connect (TAO_Transport_Descriptor_Interface *desc,
                   ACE_TEXT ("TAO (%P|%t) Connector::connect - ")
                   ACE_TEXT ("looking for SHMIOP connection.\n")));
 
+  TAO_Transport *&transport = invocation->transport ();
+  ACE_Time_Value *max_wait_time = invocation->max_wait_time ();
   TAO_Endpoint *endpoint = desc->endpoint ();
 
   if (endpoint->tag () != TAO_TAG_SHMEM_PROFILE)

@@ -264,9 +264,8 @@ TAO_Connector_Registry::preprocess_preconnects (TAO_ORB_Core *orb_core,
 
 
 int
-TAO_Connector_Registry::connect (TAO_Transport_Descriptor_Interface *desc,
-                                 TAO_Transport *&transport,
-                                 ACE_Time_Value *max_wait_time,
+TAO_Connector_Registry::connect (TAO_GIOP_Invocation *invocation,
+                                 TAO_Transport_Descriptor_Interface *desc,
                                  CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_Endpoint *endpoint = desc->endpoint ();
@@ -280,9 +279,8 @@ TAO_Connector_Registry::connect (TAO_Transport_Descriptor_Interface *desc,
   if (connector == 0)
       return -1;
 
-  return connector->connect (desc,
-                             transport,
-                             max_wait_time,
+  return connector->connect (invocation,
+                             desc,
                              ACE_TRY_ENV);
 }
 

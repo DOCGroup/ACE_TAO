@@ -186,5 +186,5 @@ TAO_IIOP_Endpoint::hash (void)
   // thing except that it converts the port from network byte order to
   // host byte order.  As such, this implementation is actually less
   // costly.
-  return this->object_addr_.get_ip_address () + this->port_;
+  return this->object_addr ().get_ip_address () + this->port_;
 }

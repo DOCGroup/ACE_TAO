@@ -45,6 +45,8 @@ IDL_SRC = \
         $(addsuffix C.cpp, $(IDL_FILES))
 
 FILES = \
+  Security/QOPPolicy \
+  Security/Security_PolicyFactory \
   Security/Security_Current \
   Security/Security_Current_Impl \
   Security/Security_ORBInitializer

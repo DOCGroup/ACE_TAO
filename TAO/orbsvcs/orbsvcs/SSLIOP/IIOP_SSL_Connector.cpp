@@ -3,18 +3,19 @@
 // $Id$
 
 #include "IIOP_SSL_Connector.h"
-#include "SSLIOP_Endpoint.h"
 
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 #include "tao/Environment.h"
-#include "tao/Base_Transport_Property.h"
 #include "tao/IIOP_Endpoint.h"
 #include "tao/Transport_Cache_Manager.h"
+#include "tao/Invocation.h"
 
 #include "ace/Strategies_T.h"
 
-ACE_RCSID(TAO_SSLIOP, IIOP_SSL_Connector, "$Id$")
+ACE_RCSID (TAO_SSLIOP,
+           IIOP_SSL_Connector,
+           "$Id$")
 
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
@@ -107,29 +108,26 @@ TAO_IIOP_SSL_Connector::close (void)
 }
 
 int
-TAO_IIOP_SSL_Connector::connect (TAO_Transport_Descriptor_Interface *desc,
-                                 TAO_Transport *&transport,
-                                 ACE_Time_Value *max_wait_time,
-                                 CORBA::Environment &)
+TAO_IIOP_SSL_Connector::connect (
+  TAO_GIOP_Invocation *invocation,
+  TAO_Transport_Descriptor_Interface *desc,
+  CORBA::Environment &)
 {
   if (TAO_debug_level > 0)
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) Connector::connect - ")
                   ACE_TEXT ("looking for IIOP connection.\n")));
 
+  TAO_Transport *&transport = invocation->transport ();
+  ACE_Time_Value *max_wait_time = invocation->max_wait_time ();
   TAO_Endpoint *endpoint = desc->endpoint ();
 
   if (endpoint->tag () != TAO_TAG_IIOP_PROFILE)
     return -1;
 
-  TAO_SSLIOP_Endpoint *ssliop_endpoint =
-    ACE_dynamic_cast (TAO_SSLIOP_Endpoint *,
-                      endpoint );
-
-  if (ssliop_endpoint == 0)
-    return -1;
-
-  TAO_IIOP_Endpoint *iiop_endpoint = ssliop_endpoint->iiop_endpoint ();
+  TAO_IIOP_Endpoint *iiop_endpoint =
+    ACE_dynamic_cast (TAO_IIOP_Endpoint *,
+                      endpoint);
 
   if (iiop_endpoint == 0)
     return -1;
@@ -159,8 +157,8 @@ TAO_IIOP_SSL_Connector::connect (TAO_Transport_Descriptor_Interface *desc,
   TAO_Transport *base_transport = 0;
 
   // Check the Cache first for connections
-  if (this->orb_core ()->transport_cache ()->cache_transport (desc,
-                                                              base_transport) == 0)
+  if (this->orb_core ()->transport_cache ()->find_transport (desc,
+                                                             base_transport) == 0)
     {
       if (TAO_debug_level > 5)
         ACE_DEBUG ((LM_DEBUG,
@@ -225,7 +223,10 @@ TAO_IIOP_SSL_Connector::connect (TAO_Transport_Descriptor_Interface *desc,
         }
 
       base_transport = TAO_Transport::_duplicate (svc_handler->transport ());
-      // Add the handler to Cache
+
+      // Add the handler to Cache.
+      //
+      // Note that the IIOP-only transport descriptor is used!
       int retval =
         this->orb_core ()->transport_cache ()->cache_transport (desc,
                                                                 base_transport);

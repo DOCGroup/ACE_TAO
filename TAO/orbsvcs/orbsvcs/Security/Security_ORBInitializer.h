@@ -29,6 +29,8 @@
 #include "tao/PortableInterceptorC.h"
 #include "tao/LocalObject.h"
 
+#include "Security_PolicyFactory.h"
+
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
 #if defined(_MSC_VER)
@@ -59,6 +61,12 @@ private:
   void register_policy_factories (
          PortableInterceptor::ORBInitInfo_ptr info,
          CORBA::Environment &ACE_TRY_ENV);
+
+private:
+
+  /// PolicyFactory that is used to create all security related
+  /// policies capable of being created via ORB::create_policy().
+  TAO_Security_PolicyFactory policy_factory_;
 
 };
 
