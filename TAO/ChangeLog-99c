@@ -1,3 +1,13 @@
+Fri Jun 25 16:43:47 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+        * tests/NestedUpcall/Reactor/NestedUpCalls_i.h: Removed old file.
+
+	* examples/POA/DSI/Database_i.cpp (find_entry):
+	* examples/POA/Default_Servant/File_i.cpp (destroy):
+
+	  Fixed the throwing of an exception that is not in the throw
+	  spec.
+
 Fri Jun 25 13:37:47 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/benchmark/client.cpp:
@@ -74,14 +84,14 @@ Fri Jun 25 13:37:47 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Fri Jun 25 14:19:48 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/benchmark/client.cpp: 
-	* orbsvcs/tests/AVStreams/sfp/server.cpp (main): 
-	* orbsvcs/tests/AVStreams/sfp/client.cpp (main): 
-	* orbsvcs/tests/AVStreams/sfp/common.h: 
-	* orbsvcs/orbsvcs/AV/Endpoint_Strategy.cpp (create_B): 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp (remove_fep): 
+	* orbsvcs/tests/AVStreams/benchmark/client.cpp:
+	* orbsvcs/tests/AVStreams/sfp/server.cpp (main):
+	* orbsvcs/tests/AVStreams/sfp/client.cpp (main):
+	* orbsvcs/tests/AVStreams/sfp/common.h:
+	* orbsvcs/orbsvcs/AV/Endpoint_Strategy.cpp (create_B):
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp (remove_fep):
 	  Fixed SunCC 5.0 warnings thanks to Carlos O' Ryan.
-	
+
 Fri Jun 25 14:06:54 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/Event_Service/Event_Service.cpp:
@@ -141,7 +151,7 @@ Fri Jun 25 13:37:47 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 Fri Jun 25 12:38:43 1999  Matthew J Braun  <mjb2@cs.wustl.edu>
 
 	* examples/Logging/Logger_i.cpp,h
-	  Added default argument values for ACE_TRY_ENV to reflect tao_idl 
+	  Added default argument values for ACE_TRY_ENV to reflect tao_idl
 	  generated code. Also removed a vestigal method (verbosity ())
 	  which was never declared in IDL (since its name would have
 	  clashed with the orhte verbosity method). Hopefully DU will be
