@@ -119,13 +119,6 @@ ACE_Message_Block::size (void) const
   return this->data_block ()->size ();
 }
 
-ACE_INLINE size_t
-ACE_Message_Block::space (void) const
-{
-  ACE_TRACE ("ACE_Message_Block::space");
-  return this->end () - this->wr_ptr ();
-}
-
 ACE_INLINE ACE_Message_Block::ACE_Message_Type
 ACE_Data_Block::msg_type (void) const
 {
@@ -296,6 +289,13 @@ ACE_Message_Block::wr_ptr (size_t n)
 {
   ACE_TRACE ("ACE_Message_Block::wr_ptr");
   this->wr_ptr_ += n;
+}
+
+ACE_INLINE size_t
+ACE_Message_Block::space (void) const
+{
+  ACE_TRACE ("ACE_Message_Block::space");
+  return this->end () - this->wr_ptr ();
 }
 
 ACE_INLINE void
