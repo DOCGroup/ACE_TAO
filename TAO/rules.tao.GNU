@@ -46,21 +46,56 @@ ifeq ($(findstring g++,$(CXX)),g++)
 endif # g++
 
 ifeq ($(minimum_corba),1)
+  ifndef rt_corba
+    rt_corba = 0
+  endif # ! rt_corba
+  ifndef corba_messaging
+    corba_messaging = 0
+  endif # ! corba_messaging
   CPPFLAGS += -DTAO_HAS_MINIMUM_CORBA
-else  # ! minimum_corba
-  override minimum_corba =
-endif # ! minimum_corba
+else  # minimum_corba
+  override minimum_corba = 0
+endif # minimum_corba
+
+ifeq ($(ami),1)
+  ifndef ami_callback
+    ami_callback = 1
+  endif # ! ami_callback
+  ifndef ami_poller
+    ami_poller = 1
+  endif # ! ami_poller
+  CPPFLAGS += -DTAO_HAS_AMI=1
+else  # ami
+  override ami = 0
+  CPPFLAGS += -DTAO_HAS_AMI=0
+endif # ami
+
+ifeq ($(ami_poller),1)
+  CPPFLAGS += -DTAO_HAS_AMI_POLLER=1
+else  # ami_poller
+  override ami_poller = 0
+  CPPFLAGS += -DTAO_HAS_AMI_POLLER=0
+endif # ami_poller
+
+ifeq ($(ami_callback),1)
+  CPPFLAGS += -DTAO_HAS_AMI_CALLBACK=1
+else  # ami_callback
+  override ami_callback = 0
+  CPPFLAGS += -DTAO_HAS_AMI_CALLBACK=0
+endif # ami_callback
 
 ifeq ($(rt_corba),0)
-  CPPFLAGS += -DTAO_DISABLE_RT_CORBA
+  CPPFLAGS += -DTAO_HAS_RT_CORBA=0
 else  # rt_corba
   override rt_corba = 1
+  CPPFLAGS += -DTAO_HAS_RT_CORBA=1
 endif # rt_corba
 
 ifeq ($(corba_messaging),0)
+  CPPFLAGS += -DTAO_HAS_CORBA_MESSAGING=0
 else  # corba_messaging
   override corba_messaging = 1
-  CPPFLAGS += -DTAO_HAS_CORBA_MESSAGING
+  CPPFLAGS += -DTAO_HAS_CORBA_MESSAGING=1
 endif # corba_messaging
 
 ifeq (1,$(CROSS-COMPILE))
@@ -70,9 +105,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
 endif # ! CROSS-COMPILE
 
 ifeq ($(interface_repo),1)
-  CPPFLAGS += -DTAO_HAS_INTERFACE_REPOSITORY
+  CPPFLAGS += -DTAO_HAS_INTERFACE_REPOSITORY=1
 endif # interface_repo
-
 
 ####
 #### Event Channel customization.

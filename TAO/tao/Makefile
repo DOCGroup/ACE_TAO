@@ -179,7 +179,7 @@ ACE_SHLIBS = -lACE
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 
-ifndef minimum_corba
+ifeq ($(minimum_corba),0)
 
 POA_FILES += \
   Forwarding_Servant \

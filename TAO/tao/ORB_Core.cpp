@@ -78,11 +78,11 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     opt_for_collocation_ (1),
     use_global_collocation_ (1),
     collocation_strategy_ (THRU_POA),
-#if defined (TAO_HAS_CORBA_MESSAGING)
+#if (TAO_HAS_CORBA_MESSAGING == 1)
     policy_manager_ (0),
     default_policies_ (0),
     policy_current_ (0),
-#endif /* TAO_HAS_CORBA_MESSAGING */
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
     poa_current_ (0),
     object_adapter_ (0),
     tm_ (),
@@ -104,10 +104,10 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     open_lock_ (),
     open_called_ (0),
     priority_mapping_ (0),
-#if defined (TAO_HAS_CORBA_MESSAGING)
+#if (TAO_HAS_CORBA_MESSAGING == 1)
     none_sync_strategy_ (0),
     flush_sync_strategy_ (0),
-#endif /* TAO_HAS_CORBA_MESSAGING */
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
     transport_sync_strategy_ (0),
     svc_config_argc_ (0),
     svc_config_argv_ (0)
@@ -120,7 +120,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
   ACE_NEW (this->to_iso8859_,   ACE_IBM1047_ISO8859);
 #endif /* ACE_MVS */
 
-#if defined (TAO_HAS_CORBA_MESSAGING)
+#if (TAO_HAS_CORBA_MESSAGING == 1)
 
   ACE_NEW (this->none_sync_strategy_,
            TAO_None_Sync_Strategy);
@@ -137,7 +137,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
   ACE_NEW (this->policy_current_,
            TAO_Policy_Current);
 
-#endif /* TAO_HAS_CORBA_MESSAGING */
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
   ACE_NEW (this->transport_sync_strategy_,
            TAO_Transport_Sync_Strategy);
@@ -151,7 +151,7 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
   delete this->from_iso8859_;
   delete this->to_iso8859_;
 
-#if defined (TAO_HAS_CORBA_MESSAGING)
+#if (TAO_HAS_CORBA_MESSAGING == 1)
 
   delete this->none_sync_strategy_;
   delete this->flush_sync_strategy_;
@@ -160,7 +160,7 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
   delete this->default_policies_;
   delete this->policy_current_;
 
-#endif /* TAO_HAS_CORBA_MESSAGING */
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
   delete this->transport_sync_strategy_;
 
@@ -1235,9 +1235,9 @@ TAO_ORB_Core::fini (void)
   }
 
   delete this->reactor_registry_;
-#if defined(TAO_HAS_RT_CORBA)
+#if (TAO_HAS_RT_CORBA == 1)
   delete this->priority_mapping_;
-#endif /* TAO_HAS_RT_CORBA */
+#endif /* TAO_HAS_RT_CORBA == 1 */
 
   delete this;
 
@@ -2017,7 +2017,7 @@ TAO_ORB_Core::reactor (TAO_Acceptor *acceptor)
 int
 TAO_ORB_Core::get_thread_priority (CORBA::Short &priority)
 {
-#if !defined (TAO_HAS_RT_CORBA)
+#if (TAO_HAS_RT_CORBA == 0)
   priority = 0;
   return 0;
 #else
@@ -2045,13 +2045,13 @@ TAO_ORB_Core::get_thread_priority (CORBA::Short &priority)
     }
 
   return 0;
-#endif /* TAO_HAS_RT_CORBA */
+#endif /* TAO_HAS_RT_CORBA == 0 */
 }
 
 int
 TAO_ORB_Core::set_thread_priority (CORBA::Short priority)
 {
-#if !defined (TAO_HAS_RT_CORBA)
+#if (TAO_HAS_RT_CORBA == 0)
   ACE_UNUSED_ARG (priority);
   return 0;
 #else
@@ -2068,10 +2068,10 @@ TAO_ORB_Core::set_thread_priority (CORBA::Short priority)
     return -1;
 
   return 0;
-#endif /* TAO_HAS_RT_CORBA */
+#endif /* TAO_HAS_RT_CORBA == 0 */
 }
 
-CORBA::Object_ptr 
+CORBA::Object_ptr
 TAO_ORB_Core::implrepo_service (void)
 {
   if (!this->use_implrepo_)
@@ -2088,7 +2088,7 @@ TAO_ORB_Core::implrepo_service (void)
           ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, CORBA::Object::_nil ());
 
           // @@ Worry about assigning a different IOR? (brunsch)
-	  this->implrepo_service_ = temp._retn ();
+          this->implrepo_service_ = temp._retn ();
         }
       ACE_CATCHANY
         {
@@ -2156,9 +2156,9 @@ TAO_ORB_Core_TSS_Resources::~TAO_ORB_Core_TSS_Resources (void)
 TAO_TSS_Resources::TAO_TSS_Resources (void)
   :  poa_current_impl_ (0),
      default_environment_ (&this->tss_environment_)
-#if defined (TAO_HAS_CORBA_MESSAGING)
+#if (TAO_HAS_CORBA_MESSAGING == 1)
   , policy_current_ (&this->initial_policy_current_)
-#endif /* TAO_HAS_CORBA_MESSAGING */
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 {
 }
 

@@ -96,7 +96,7 @@ TAO_GIOP_Invocation::select_profile_based_on_policy
 (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-#if !defined (TAO_HAS_CORBA_MESSAGING)
+#if (TAO_HAS_CORBA_MESSAGING == 0)
 
   this->profile_ = this->stub_->profile_in_use ();
   return this->profile_;
@@ -182,7 +182,7 @@ TAO_GIOP_Invocation::select_profile_based_on_policy
         return this->profile_;
     }
 
-#endif /* TAO_HAS_CORBA_MESSAGING */
+#endif /* TAO_HAS_CORBA_MESSAGING == 0 */
 
 }
 
@@ -237,7 +237,7 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
   // have the protocol) then we give it another profile to try.
   // So the invocation Object should handle policy decisions.
 
-#if defined (TAO_HAS_CORBA_MESSAGING)
+#if (TAO_HAS_CORBA_MESSAGING == 1)
   TAO_RelativeRoundtripTimeoutPolicy_i *timeout =
     this->stub_->relative_roundtrip_timeout ();
 
@@ -265,7 +265,7 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
                       msecs));
         }
     }
-#endif /* TAO_HAS_CORBA_MESSAGING */
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
   ACE_Countdown_Time countdown (this->max_wait_time_);
   // Loop until a connection is established or there aren't any more
@@ -922,14 +922,14 @@ TAO_GIOP_Oneway_Invocation (TAO_Stub *stub,
   : TAO_GIOP_Invocation (stub, operation, orb_core),
     sync_scope_ (TAO::SYNC_WITH_TRANSPORT)
 {
-#if defined (TAO_HAS_CORBA_MESSAGING)
+#if (TAO_HAS_CORBA_MESSAGING == 1)
   TAO_Sync_Scope_Policy *ssp = stub->sync_scope ();
 
   if (ssp)
     {
       this->sync_scope_ = ssp->synchronization ();
     }
-#endif /* TAO_HAS_CORBA_MESSAGING */
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 }
 
 TAO_GIOP_Oneway_Invocation::~TAO_GIOP_Oneway_Invocation (void)
@@ -964,7 +964,7 @@ TAO_GIOP_Oneway_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
     }
 
   // Create this only if a reply is required.
-  TAO_Synch_Reply_Dispatcher rd (this->orb_core_, 
+  TAO_Synch_Reply_Dispatcher rd (this->orb_core_,
                                  this->service_info_);
 
   // The rest of this function is very similar to
@@ -1105,8 +1105,8 @@ TAO_GIOP_Oneway_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
             // @@ We should raise a CORBA::NO_MEMORY, but we ran out
             //    of memory already. We need a pre-allocated, TSS,
             //    CORBA::NO_MEMORY instance
-            ACE_NEW_RETURN (ex, 
-                            CORBA::UNKNOWN, 
+            ACE_NEW_RETURN (ex,
+                            CORBA::UNKNOWN,
                             TAO_INVOKE_EXCEPTION);
           }
 

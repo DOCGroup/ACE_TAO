@@ -31,7 +31,7 @@ endif
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 
-ifndef minimum_corba
+ifeq ($(minimum_corba),0)
 
 # No POA forwarding in minimum CORBA
   DIRS += Quoter
@@ -41,10 +41,14 @@ endif # minimum_corba
 ifeq ($(corba_messaging),1)
 
 # No Buffered Oneways without CORBA Messaging
-  DIRS += Buffered_Oneways \
+  DIRS += Buffered_Oneways
 
-#### Buffered_AMI doesn't build yet on most platforms.
-####          Buffered_AMI
+  ifeq ($(ami_callback),1)
+
+    # No Buffered Requests without CORBA Messaging and requires AMI callbacks
+    DIRS += Buffered_AMI
+
+  endif # ami_callback
 
 endif # corba_messaging
 

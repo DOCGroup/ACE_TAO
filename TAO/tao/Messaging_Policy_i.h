@@ -22,7 +22,7 @@
 
 #include "tao/orbconf.h"
 
-#if defined (TAO_HAS_CORBA_MESSAGING)
+#if (TAO_HAS_CORBA_MESSAGING == 1)
 
 #include "tao/MessagingS.h"
 
@@ -149,6 +149,6 @@ private:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#endif /* TAO_HAS_CORBA_MESSAGING */
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 #endif /* TAO_MESSAGING_POLICY_I_H */

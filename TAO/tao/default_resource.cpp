@@ -674,7 +674,7 @@ TAO_Default_Resource_Factory::purge_percentage (void) const
 TAO_Priority_Mapping *
 TAO_Default_Resource_Factory::get_priority_mapping (void)
 {
-#if !defined (TAO_HAS_RT_CORBA)
+#if (TAO_HAS_RT_CORBA == 0)
   return 0;
 #else
   TAO_Priority_Mapping *pm;
@@ -697,7 +697,7 @@ TAO_Default_Resource_Factory::get_priority_mapping (void)
       break;
     }
   return pm;
-#endif /* TAO_HAS_RT_CORBA */
+#endif /* TAO_HAS_RT_CORBA == 0 */
 }
 
 // ****************************************************************

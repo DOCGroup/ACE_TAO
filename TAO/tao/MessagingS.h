@@ -13,7 +13,7 @@
 
 #include "tao/orbconf.h"
 
-#if defined (TAO_HAS_CORBA_MESSAGING)
+#if (TAO_HAS_CORBA_MESSAGING == 1)
 
 #include "tao/TimeBaseS.h"
 #include "tao/POA_CORBA.h"
@@ -1602,7 +1602,7 @@ private:
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
-#if defined (TAO_HAS_AMI_CALLBACK)
+#if (TAO_HAS_AMI_CALLBACK == 1)
 
   class ReplyHandler;
   typedef ReplyHandler *ReplyHandler_ptr;
@@ -1741,9 +1741,9 @@ private:
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
-#endif /* TAO_HAS_AMI_CALLBACK */
+#endif /* TAO_HAS_AMI_CALLBACK == 1 */
 
-#if defined (TAO_HAS_AMI_POLLER)
+#if (TAO_HAS_AMI_POLLER == 1)
 
   class Poller;
   typedef Poller *Poller_ptr;
@@ -2032,7 +2032,7 @@ private:
   };
 
 #endif /* ACE_HAS_USING_KEYWORD */
-#endif /* TAO_HAS_AMI_POLLER */
+#endif /* TAO_HAS_AMI_POLLER == 1 */
 
 }
 TAO_NAMESPACE_CLOSE
@@ -2047,6 +2047,6 @@ TAO_NAMESPACE_CLOSE
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#endif /* TAO_HAS_CORBA_MESSAGING */
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 #endif /* TAO_IDL_MESSAGINGS_H */

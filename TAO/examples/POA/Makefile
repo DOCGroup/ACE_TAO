@@ -29,7 +29,7 @@ endif
 
 include	$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 
-ifndef minimum_corba
+ifeq ($(minimum_corba),0)
 
 # No AdapterActivator in minimum CORBA
   DIRS += Adapter_Activator

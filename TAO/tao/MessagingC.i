@@ -3020,7 +3020,7 @@ Messaging::PolicyValueSeq_out::operator[] (CORBA::ULong slot)
 }
 
 
-#if defined (TAO_HAS_AMI_CALLBACK)
+#if (TAO_HAS_AMI_CALLBACK == 1)
 
 // *************************************************************
 // Inline operations for class Messaging::ExceptionHolder::_tao_seq_Octet_var
@@ -3583,9 +3583,9 @@ Messaging::ReplyHandler_out::operator-> (void)
   return this->ptr_;
 }
 
-#endif /* TAO_HAS_AMI_CALLBACK */
+#endif /* TAO_HAS_AMI_CALLBACK == 1 */
 
-#if defined(TAO_HAS_AMI_POLLER)
+#if (TAO_HAS_AMI_POLLER == 1)
 
 ACE_INLINE
 Messaging::Poller::Poller (void) // default constructor
@@ -3945,12 +3945,12 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, Messaging::PolicyValue
   return 0; // error
 }
 
-#endif /* TAO_HAS_AMI_POLLER */
+#endif /* TAO_HAS_AMI_POLLER == 1 */
 
 
 // ****************************************************************
 
-#if defined(TAO_HAS_AMI_CALLBACK) || defined(TAO_HAS_AMI_POLLER)
+#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
 
 ACE_INLINE CORBA::Boolean
 operator<< (TAO_OutputCDR &strm, const Messaging::ExceptionHolder *_tao_valuetype)
@@ -4054,9 +4054,9 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, Messaging::ExceptionHo
 }
 
 
-#endif /* TAO_HAS_AMI_CALLBACK || TAO_HAS_AMI_POLLER */
+#endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
 
-#if defined (TAO_HAS_AMI_CALLBACK)
+#if (TAO_HAS_AMI_CALLBACK == 1)
 
 // ****************************************************************
 
@@ -4109,11 +4109,11 @@ operator>> (
   return 0;
 }
 
-#endif /* TAO_HAS_AMI_CALLBACK */
+#endif /* TAO_HAS_AMI_CALLBACK == 1 */
 
 // ****************************************************************
 
-#if defined (TAO_HAS_AMI_POLLER)
+#if (TAO_HAS_AMI_POLLER == 1)
 
 ACE_INLINE CORBA::Boolean
 operator<< (
@@ -4164,4 +4164,4 @@ operator>> (
   return 0;
 }
 
-#endif /* TAO_HAS_AMI_POLLER */
+#endif /* TAO_HAS_AMI_POLLER == 1 */

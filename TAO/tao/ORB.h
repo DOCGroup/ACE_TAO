@@ -487,7 +487,7 @@ public:
                                                CORBA::Environment &ACE_TRY_ENV
                                                = TAO_default_environment ());
 
-#if defined (TAO_HAS_INTERFACE_REPOSITORY)
+#if (TAO_HAS_INTERFACE_REPOSITORY == 1)
   //Methods added for Philipe Merle for CORBA Script..
   CORBA_TypeCode_ptr create_interface_tc (const char * id,
                                           const char * name,
@@ -607,12 +607,12 @@ public:
   // Returns a sequence of ObjectIds that lists which objects have
   // references available via the initial references mechanism.
 
-#if defined(TAO_HAS_CORBA_MESSAGING)
+#if (TAO_HAS_CORBA_MESSAGING == 1)
   CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
                                    const CORBA::Any& val,
                                    CORBA_Environment &ACE_TRY_ENV =
                                        TAO_default_environment ());
-#endif /* TAO_HAS_CORBA_MESSAGING */
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
   // ----------------------------------------------------------------
   // = TAO-specific extensions to the CORBA specification.

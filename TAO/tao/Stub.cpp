@@ -82,9 +82,9 @@ TAO_Stub::TAO_Stub (char *repository_id,
     orb_core_ (orb_core),
     orb_ (),
     servant_orb_ ()
-#if defined (TAO_HAS_CORBA_MESSAGING)
+#if (TAO_HAS_CORBA_MESSAGING == 1)
     , policies_ (0)
-#endif /* TAO_HAS_CORBA_MESSAGING */
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 {
   if (this->orb_core_ == 0)
     {
@@ -133,9 +133,9 @@ TAO_Stub::~TAO_Stub (void)
 
   delete this->profile_lock_ptr_;
 
-#if defined (TAO_HAS_CORBA_MESSAGING)
+#if (TAO_HAS_CORBA_MESSAGING == 1)
   delete this->policies_;
-#endif /* TAO_HAS_CORBA_MESSAGING */
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 }
 
 void
@@ -802,7 +802,7 @@ TAO_Stub::put_params (TAO_GIOP_Invocation &call,
 
 // ****************************************************************
 
-#if defined (TAO_HAS_CORBA_MESSAGING)
+#if (TAO_HAS_CORBA_MESSAGING == 1)
 
 CORBA::Policy_ptr
 TAO_Stub::get_policy (
@@ -1133,13 +1133,13 @@ TAO_Stub::validate_connection (CORBA::PolicyList_out inconsistent_policies,
   return 1;
 }
 
-#endif /* TAO_HAS_CORBA_MESSAGING */
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 TAO_Sync_Strategy &
 TAO_Stub::sync_strategy (void)
 {
 
-#if defined (TAO_HAS_CORBA_MESSAGING)
+#if (TAO_HAS_CORBA_MESSAGING == 1)
 
   POA_Messaging::SyncScopePolicy *policy =
     this->sync_scope ();
@@ -1160,7 +1160,7 @@ TAO_Stub::sync_strategy (void)
         return this->orb_core_->flush_sync_strategy ();
     }
 
-#endif /* TAO_HAS_CORBA_MESSAGING */
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
   return this->orb_core_->transport_sync_strategy ();
 }

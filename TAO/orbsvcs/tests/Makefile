@@ -35,7 +35,7 @@ endif
 
 include	$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 
-ifndef minimum_corba
+ifeq ($(minimum_corba),0)
 
 # ImplRepo uses AdapterActivator which is disabled when compiling with
 # minimum CORBA support.
