@@ -1,3 +1,17 @@
+Fri May 23 10:46:50 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	From Carsten Madsen <com@navicon.dk>
+	* ace/TTY_IO.h (Serial_Params):
+
+	  Added new "readmincharacters" member that denotes the minimum
+	  number of characters for a non-canonical read.
+
+	* ace/TTY_IO.cpp (control):
+
+	  Take into account the new Serial_Params::readmincharacters value
+	  so that serial line timeout configuration is no longer as
+	  limited as it was prior to this change.  [Bug 1388]
+
 Fri May 23 12:20:54 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* THANKS: Added Vincent Korkos to the hall of fame.
