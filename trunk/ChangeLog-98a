@@ -7,6 +7,10 @@ Tue May 05 08:35:18 1998  David L. Levine  <levine@cs.wustl.edu>
         * include/makeinclude/platform_sunos5_g++.GNU: use -gstabs+ instead
           of -g on Solaris86.
 
+        * etc/Svc_Conf_l.cpp.diff: updated.  It's magic, Nanbor :-)
+          The problem seems to be due to an old version left in
+          /tmp/Svc_Conf_l.cpp, which confuses flex.
+
 Tue May 05 02:15:49 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/Svc_Conf_l.cpp: I know, I know.  I shouldn't mess with this
