@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Deployment:DeploymentPlan
+ xmlns:Deployment="http://www.omg.org/Deployment"
+ xmlns:xmi="http://www.omg.org/XMI"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+  <label>HUDisplay Deployment Plan</label>
+  <implementation xmi:id="BMClosedED_Impl">
+    <name>BMClosedED_Impl</name>
+    <source>66a409c2-fa3a-48ea-be50-482dec4ae7a2</source>
+    <artifact xmi:idref="BMClosedED_Stub" />
+    <artifact xmi:idref="BMClosedED_Svnt" />
+    <artifact xmi:idref="BMClosedED_Exec" />
+    <artifact xmi:idref="ACE_TAO_CIAO" />
+  </implementation>
+  <implementation xmi:id="BMDevice_Impl">
+    <name>BMDevice_Impl</name>
+    <source>154cf3cd-1770-4e92-b19b-8c2c921fea38</source>
+    <artifact xmi:idref="BMDevice_Stub" />
+    <artifact xmi:idref="BMDevice_Svnt" />
+    <artifact xmi:idref="BMDevice_Exec" />
+    <artifact xmi:idref="ACE_TAO_CIAO" />
+  </implementation>
+  <implementation xmi:id="BMDisplay_Impl">
+    <name>BMDisplay_Impl</name>
+    <source>0a52c9de-7852-42e4-aac7-bf478169a21a</source>
+    <artifact xmi:idref="BMDisplay_Stub" />
+    <artifact xmi:idref="BMDisplay_Svnt" />
+    <artifact xmi:idref="BMDisplay_Exec" />
+    <artifact xmi:idref="ACE_TAO_CIAO" />
+  </implementation>
+  <implementation xmi:id="EC_Impl">
+    <name>EC_Impl</name>
+    <source>789e1be2-703f-4bd3-af50-b400eef91fd0</source>
+    <artifact xmi:idref="EC_Stub" />
+    <artifact xmi:idref="EC_Svnt" />
+    <artifact xmi:idref="EC_Exec" />
+    <artifact xmi:idref="ACE_TAO_CIAO" />
+    <execParameter>
+      <name>hertz</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>40</long>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+  <instance xmi:id="BMClosedED_Instance">
+    <name>BMClosedED_Instance</name>
+    <node>BMClosedED</node>
+    <implementation xmi:idref="BMClosedED_Impl" />
+    <source>66a409c2-fa3a-48ea-be50-482dec4ae7a2</source>
+  </instance>
+  <instance xmi:id="BMDevice_Instance">
+    <name>BMDevice_Instance</name>
+    <node>BMDevice</node>
+    <implementation xmi:idref="BMDevice_Impl" />
+    <source>154cf3cd-1770-4e92-b19b-8c2c921fea38</source>
+  </instance>
+  <instance xmi:id="BMDisplay_Instance">
+    <name>BMDisplay_Instance</name>
+    <node>BMDisplay</node>
+    <implementation xmi:idref="BMDisplay_Impl" />
+    <source>0a52c9de-7852-42e4-aac7-bf478169a21a</source>
+  </instance>
+  <instance xmi:id="EC_Instance">
+    <name>EC_Instance</name>
+    <node>EC</node>
+    <implementation xmi:idref="EC_Impl" />
+    <source>789e1be2-703f-4bd3-af50-b400eef91fd0</source>
+    <configProperty>
+      <name>hertz</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>40</long>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+  <artifact xmi:id="BMClosedED_Stub">
+    <name>BMClosedED_Stub</name>
+    <source>93bbdf7d-d3f7-4227-bb75-b0562ac15b92</source>
+    <node>BMClosedED</node>
+    <location>BMClosedED_stub.so</location>
+  </artifact>
+  <artifact xmi:id="BMClosedED_Svnt">
+    <name>BMClosedED_Svnt</name>
+    <source>88f66272-bdb6-488b-9d95-cfa63317c616</source>
+    <node>BMClosedED</node>
+    <location>BMClosedED_svnt.so</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>createBMClosedEDHome_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+  <artifact xmi:id="BMClosedED_Exec">
+    <name>BMClosedED_Exec</name>
+    <source>0f76b3d3-3d50-4d65-88b1-e26b60b624dd</source>
+    <node>BMClosedED</node>
+    <location>BMClosedED_exec.so</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>createBMClosedEDHome_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+  <artifact xmi:id="BMDevice_Stub">
+    <name>BMDevice_Stub</name>
+    <source>c7264c15-d373-4d01-84ee-d37536599240</source>
+    <node>BMDevice</node>
+    <location>BMDevice_stub.so</location>
+  </artifact>
+  <artifact xmi:id="BMDevice_Svnt">
+    <name>BMDevice_Svnt</name>
+    <source>657440e8-9143-494b-928c-2a3df84e509f</source>
+    <node>BMDevice</node>
+    <location>BMDevice_svnt.so</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>createBMDeviceHome_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+  <artifact xmi:id="BMDevice_Exec">
+    <name>BMDevice_Exec</name>
+    <source>9617ed9a-d127-4797-836a-0a3b3d7d8b12</source>
+    <node>BMDevice</node>
+    <location>BMDevice_exec.so</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>createBMDeviceHome_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+  <artifact xmi:id="BMDisplay_Stub">
+    <name>BMDisplay_Stub</name>
+    <source>4d02c22b-768e-4d1a-bf07-76da2f5d1fbf</source>
+    <node>BMDisplay</node>
+    <location>BMDisplay_stub.so</location>
+  </artifact>
+  <artifact xmi:id="BMDisplay_Svnt">
+    <name>BMDisplay_Svnt</name>
+    <source>ad052b10-0806-43c7-9ccc-2dfeda0e0e03</source>
+    <node>BMDisplay</node>
+    <location>BMDisplay_svnt.so</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>createBMDisplayHome_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+  <artifact xmi:id="BMDisplay_Exec">
+    <name>BMDisplay_Exec</name>
+    <source>412f8156-7913-4651-9110-f7a3f98c7a83</source>
+    <node>BMDisplay</node>
+    <location>BMDisplay_exec.so</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>createBMDisplayHome_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+  <artifact xmi:id="EC_Stub">
+    <name>EC_Stub</name>
+    <source>93bbdf7d-d3f7-4227-bb75-b0562ac15b92</source>
+    <node>EC</node>
+    <location>EC_stub.so</location>
+  </artifact>
+  <artifact xmi:id="EC_Svnt">
+    <name>EC_Svnt</name>
+    <source>04e4d246-e6eb-4b0e-8e32-60b996497cea</source>
+    <node>EC</node>
+    <location>EC_svnt.so</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>createECHome_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+  <artifact xmi:id="EC_Exec">
+    <name>EC_Exec</name>
+    <source>5e4f2366-3810-4d4c-a269-5788a525cbe1</source>
+    <node>EC</node>
+    <location>EC_exec.so</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>createECHome_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+  <artifact xmi:id="ACE_TAO_CIAO">
+    <name>Common Libraries</name>
+    <source>6bae4fcd-c71c-44b4-a0d4-0e4199ce1a49</source>
+    <location>$ACE_ROOT/lib/libACE.so</location>
+    <location>$ACE_ROOT/lib/libTAO.so</location>
+    <location>$ACE_ROOT/lib/libCIAO_Client.so</location>
+  </artifact>
+  <connection>
+    <name>Timer_NavDisplay</name>
+    <internalEndpoint>
+      <portName>timeout</portName>
+      <kind>EventPublisher</kind>
+      <instance xmi:idref="EC_Instance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>data_ready</portName>
+      <kind>EventConsumer</kind>
+      <instance xmi:idref="BMDisplay_Instance" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>GPS_Airframe</name>
+    <internalEndpoint>
+      <portName>data_available</portName>
+      <kind>EventPublisher</kind>
+      <instance xmi:idref="BMDevice_Instance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>in_avail</portName>
+      <kind>EventConsumer</kind>
+      <instance xmi:idref="BMClosedED_Instance" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>Airframe_GPS</name>
+    <internalEndpoint>
+      <portName>datain</portName>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="BMClosedED_Instance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>data_read</portName>
+      <kind>Facet</kind>
+      <instance xmi:idref="BMDevice_Instance" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>NavDisplay_Airframe</name>
+    <internalEndpoint>
+      <portName>comp_data</portName>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="BMDisplay_Instance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>dataout</portName>
+      <kind>Facet</kind>
+      <instance xmi:idref="BMClosedED_Instance" />
+    </internalEndpoint>
+  </connection>
+</Deployment:DeploymentPlan>
