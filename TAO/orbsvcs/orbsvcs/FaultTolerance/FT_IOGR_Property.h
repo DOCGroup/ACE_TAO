@@ -44,8 +44,9 @@
 
 class TAO_Profile;
 
-class TAO_FT_Export TAO_FT_IOGR_Property  : public TAO_IOP::TAO_IOR_Property,
-                                            public CORBA::LocalObject
+class TAO_FT_Export TAO_FT_IOGR_Property
+  : public virtual TAO_IOP::TAO_IOR_Property,
+    public virtual TAO_Local_RefCounted_Object
 {
   // = TITLE
   //   TAO_FT_IOGR_Property
@@ -67,12 +68,6 @@ public:
 
   ~TAO_FT_IOGR_Property (void);
   // destructor
-
-  virtual void _add_ref (void);
-  // Increment the reference count.
-
-  virtual void _remove_ref (void);
-  // Decrement the reference count.
 
   virtual CORBA::Boolean set_property (
       CORBA::Object_ptr ior

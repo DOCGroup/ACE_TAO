@@ -18,20 +18,6 @@ Client_Request_Interceptor::~Client_Request_Interceptor (void)
 {
 }
 
-void
-Client_Request_Interceptor::_add_ref (void)
-{
-  this->_incr_refcnt ();
-  // This is a TAO specific implementation.
-}
-
-void
-Client_Request_Interceptor::_remove_ref (void)
-{
-  this->_decr_refcnt ();
-  // This is a TAO specific implementation.
-}
-
 char *
 Client_Request_Interceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))

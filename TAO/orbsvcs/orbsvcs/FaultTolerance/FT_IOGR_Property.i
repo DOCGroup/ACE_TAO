@@ -1,4 +1,7 @@
+// -*- C++ -*-
+//
 //$Id$
+
 ACE_INLINE
 TAO_FT_IOGR_Property::TAO_FT_IOGR_Property (
     FT::TagFTGroupTaggedComponent &ft_group)
@@ -9,20 +12,6 @@ TAO_FT_IOGR_Property::TAO_FT_IOGR_Property (
 ACE_INLINE
 TAO_FT_IOGR_Property::~TAO_FT_IOGR_Property (void)
 {
-}
-
-ACE_INLINE void
-TAO_FT_IOGR_Property::_add_ref (void)
-{
-  this->_incr_refcnt ();
-  // This is a TAO specific implementation.
-}
-
-ACE_INLINE void
-TAO_FT_IOGR_Property::_remove_ref (void)
-{
-  this->_decr_refcnt ();
-  // This is a TAO specific implementation.
 }
 
 ACE_INLINE CORBA::Boolean

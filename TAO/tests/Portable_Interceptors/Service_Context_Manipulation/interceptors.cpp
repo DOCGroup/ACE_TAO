@@ -22,20 +22,6 @@ Echo_Client_Request_Interceptor::~Echo_Client_Request_Interceptor (void)
 {
 }
 
-void
-Echo_Client_Request_Interceptor::_add_ref (void)
-{
-  this->_incr_refcnt ();
-  // This is a TAO specific implementation.
-}
-
-void
-Echo_Client_Request_Interceptor::_remove_ref (void)
-{
-  this->_decr_refcnt ();
-  // This is a TAO specific implementation.
-}
-
 char *
 Echo_Client_Request_Interceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -287,20 +273,6 @@ Echo_Server_Request_Interceptor::Echo_Server_Request_Interceptor (void)
 
 Echo_Server_Request_Interceptor::~Echo_Server_Request_Interceptor (void)
 {
-}
-
-void
-Echo_Server_Request_Interceptor::_add_ref (void)
-{
-  this->_incr_refcnt ();
-  // This is a TAO specific implementation.
-}
-
-void
-Echo_Server_Request_Interceptor::_remove_ref (void)
-{
-  this->_decr_refcnt ();
-  // This is a TAO specific implementation.
 }
 
 char *

@@ -1,3 +1,26 @@
+Wed Mar  6 11:03:12 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.h:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.i
+	  (_add_ref, _remove_ref):
+	* tao/IORManipulation/IORManipulation.h:
+	* tao/IORManipulation/IORManipulation.cpp (_add_ref, _remove_ref):
+	* tests/Portable_Interceptors/Benchmark/interceptors.h:
+	* tests/Portable_Interceptors/Benchmark/interceptors.cpp
+	  (_add_ref, _remove_ref):
+	* tests/Portable_Interceptors/Dynamic/interceptors.h:
+	* tests/Portable_Interceptors/Dynamic/interceptors.cpp
+	  (_add_ref, _remove_ref):
+	* tests/Portable_Interceptors/Service_Context_Manipulation/interceptors.h:
+	* tests/Portable_Interceptors/Service_Context_Manipulation/interceptors.cpp (_add_ref, _remove_ref):
+	* tests/RTCORBA/Client_Propagated/interceptors.h:
+	* tests/RTCORBA/Client_Propagated/interceptors.cpp:
+	  (_add_ref, _remove_ref):
+
+	  Removed these methods.  They called methods that no longer
+	  exist.  Inheriting from TAO_Local_RefCounted_Object provides the
+	  correct implementation.
+
 Wed Mar  6 07:29:19 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Property/CosPropertyService_i.h: Correctly push/pop
