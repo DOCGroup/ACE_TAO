@@ -10122,11 +10122,6 @@ ACE_OS::ioctl (ACE_HANDLE handle,
                      int, -1);
 #elif defined (ACE_PSOS)
   ACE_OSCALL_RETURN (::ioctl (handle, cmd, (char *) val), int, -1);
-#elif defined (__CYGWIN32__)
-  ACE_UNUSED_ARG (handle);
-   ACE_UNUSED_ARG (cmd);
-   ACE_UNUSED_ARG (val);
-   ACE_NOTSUP_RETURN (-1);
 #else
   ACE_OSCALL_RETURN (::ioctl (handle, cmd, val), int, -1);
 #endif /* ACE_WIN32 */
