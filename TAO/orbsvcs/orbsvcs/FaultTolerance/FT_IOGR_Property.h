@@ -59,6 +59,8 @@ public:
   /// Our Constructor
   TAO_FT_IOGR_Property (FT::TagFTGroupTaggedComponent &ft_group);
 
+  TAO_FT_IOGR_Property (void);
+
   /// Destructor
   ~TAO_FT_IOGR_Property (void);
 
@@ -108,6 +110,13 @@ public:
   CORBA::Boolean reset_tagged_components (
       FT::TagFTGroupTaggedComponent &ft_group);
 
+  /// Extract the TagFTGroupTaggedComponent inside the <ior>
+  CORBA::Boolean get_tagged_component (
+      const CORBA::Object_ptr iogr,
+      FT::TagFTGroupTaggedComponent &ft_group
+      ACE_ENV_ARG_DECL) const
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
 private:
 
   /// An helper function that gets the primary profile from the <ior>
@@ -118,8 +127,9 @@ private:
       TAO_OutputCDR &cdr,
       IOP::TaggedComponent &tagged_components);
 
-  /// Hold the reference to the Ft group tagged component
-  FT::TagFTGroupTaggedComponent &ft_group_tagged_component_;
+private:
+  /// Hold the reference to the FT group tagged component
+  FT::TagFTGroupTaggedComponent *ft_group_tagged_component_;
 };
 
 
