@@ -1,3 +1,14 @@
+Tue Nov  3 14:39:05 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/mpeg/mpeg_shared/Receiver.idl: 
+	  Added a video object reference and video file parameters to the
+	  push_mmdevice method in the Receiver interface.
+
+	* orbsvcs/tests/AVStreams/mpeg/mpeg_client/Command_Handler.{h,cpp}:
+	  Changed the implementation of the Receiver interface to
+	  implement code for the video reference and videofile parameters
+	  to push_mmdevice method. 
+		
 Mon Nov  2 17:57:23 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.{h,cpp}:
