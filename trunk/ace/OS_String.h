@@ -95,12 +95,6 @@ public:
   static size_t strspn (const wchar_t *s1, const wchar_t *s2);
 #endif /* ACE_HAS_WCHAR */
 
-#if defined (ACE_HAS_STRPTIME)
-  static char *strptime (char *buf,
-                         const char *format,
-                         struct tm *tm);
-#endif /* ACE_HAS_STRPTIME */
-
   static char *strstr (char *s, const char *t);
   static const char *strstr (const char *s, const char *t);
   static char *strnstr (char *s, const char *t, size_t len);
@@ -136,11 +130,6 @@ public:
   static unsigned long strtoul (const wchar_t *s, wchar_t **ptr, int base);
   static double strtod (const wchar_t *s, wchar_t **endptr);
 #endif /* ACE_HAS_WCHAR */
-
-#if defined (ACE_HAS_STRPTIME)  &&  defined (ACE_LACKS_NATIVE_STRPTIME)
-  static int strptime_getnum (char *buf, int *num, int *bi, int *fi,
-                              int min, int max);
-#endif /* ACE_HAS_STRPTIME  &&  ACE_LACKS_NATIVE_STRPTIME */
 
   static int to_lower (int c);
 #if defined (ACE_HAS_WCHAR)
