@@ -106,7 +106,7 @@ protected:
              u_long flags,
             int reuse_addr);
 
-  /// Default constructor is private to prevent instances of this class
+  /// Default constructor is protected to prevent instances of this class
   /// from being defined.
   ACE_SOCK (void);
 
