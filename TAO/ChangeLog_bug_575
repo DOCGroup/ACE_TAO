@@ -1,4 +1,17 @@
-Wed Jul  4 16:21:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+Wed Jul  4 18:53:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp (recv_i): Added the
+	  error checking.
+
+	* tao/Pluggable_Messaging.h: Made reset () as a pure virtual
+	  function.
+
+	* tao/Strategies/UIOP_Transport.cpp: Removed the close_connection
+	  () call on TMS.
+
+	* tao/LIST_OF_TODO: Updated..
+
+Wed Jul  4 18:45:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/GIOP_Message_State.inl (reset):
 	* tao/GIOP_Message_State.h:
