@@ -367,7 +367,7 @@ TAO_Property_Modifier::delete_property (const char* name)
 }
 
 void
-TAO_Property_Modifier::modify_property (const char* name, const Any& value)
+TAO_Property_Modifier::modify_property (const char* name, const CORBA::Any& value)
 {
   CORBA::ULong plength = this->pmodify_.length (),
     tlength = this->tmodify_.length ();
