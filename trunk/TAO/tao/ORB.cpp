@@ -1034,7 +1034,17 @@ CORBA_ORB::resolve_service (TAO_MCAST_SERVICEID mcast_service_id
       ACE_OS::strcat (def_init_ref, port_ptr.in ());
       ACE_OS::strcat (def_init_ref, "::");
 
-      this->orb_core_->orb_params ()->default_init_ref (def_init_ref.in ());
+      CORBA::String_var default_init_ref =
+             this->orb_core_->orb_params ()->default_init_ref ();
+
+      static const char mcast_prefix[] = "mcast://:::";
+
+      if ((ACE_OS::strncmp (default_init_ref.in (),
+                            mcast_prefix,
+                            sizeof mcast_prefix -1) == 0))
+      {
+         this->orb_core_->orb_params ()->default_init_ref (def_init_ref.in ());
+      }
 
       return CORBA::Object::_nil ();
    }
