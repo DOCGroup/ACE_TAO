@@ -57,6 +57,11 @@ TAO_AV_UDP_MCast_Acceptor::open (TAO_Base_StreamEndPoint *endpoint,
     return result;
 
   entry->handler (handler);
+  ACE_INET_Addr *local_addr = 0;
+  ACE_NEW_RETURN (local_addr,
+                  ACE_INET_Addr (*mcast_addr),
+                  -1);
+  entry->set_local_addr (local_addr);
   return 0;
 }
 
@@ -147,6 +152,11 @@ TAO_AV_UDP_MCast_Connector::connect (TAO_FlowSpec_Entry *entry,
     return result;
   entry->handler (handler);
   transport = handler->transport ();
+  ACE_INET_Addr *local_addr = 0;
+  ACE_NEW_RETURN (local_addr,
+                  ACE_INET_Addr (*mcast_addr),
+                  -1);
+  entry->set_local_addr (local_addr);
   return 0;
 }
 
