@@ -56,12 +56,18 @@ public:
   // = Traits.
   typedef KEY key_type;
   typedef VALUE mapped_type;
+  typedef MAP map_type;
+  typedef CACHING_STRATEGY caching_strategy_type;
+  typedef ITERATOR_IMPL ITERATOR_IMPLEMENTATION;
+  typedef REVERSE_ITERATOR_IMPL REVERSE_ITERATOR_IMPLEMENTATION;
+  typedef ACE_Pair<VALUE, ATTRIBUTES> CACHE_VALUE;
   typedef ITERATOR_IMPL 
           ITERATOR_IMPLEMENTATION;
   typedef REVERSE_ITERATOR_IMPL 
           REVERSE_ITERATOR_IMPLEMENTATION;
   typedef ACE_Pair<VALUE, ATTRIBUTES> 
           CACHE_VALUE;
+
   // The actual value mapped to the key in the map. The <attributes>
   // are used by the strategy and is transparent to the user of this
   // class.
@@ -163,7 +169,7 @@ public:
   // Remove <key> from the cache, and return the <value> associated with
   // <key>.
 
-  int purge (MAP &map);
+  int purge (void);
   // Remove entries from the cache depending upon the strategy.
 
   size_t current_size (void);
