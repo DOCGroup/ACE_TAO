@@ -31,6 +31,14 @@
 #define ACE_CC_PREPROCESSOR ""
 #define ACE_CC_PREPROCESSOR_ARGS ""
 
+#define ACE_HAS_CUSTOM_EXPORT_MACROS
+#define ACE_Proper_Export_Flag __declspec (dllexport)
+#define ACE_Proper_Import_Flag __declspec (dllimport)
+#define ACE_EXPORT_SINGLETON_DECLARATION(T) template class  T
+#define ACE_EXPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) template class __declspec (dllexport) SINGLETON_TYPE<CLASS, LOCK>;
+#define ACE_IMPORT_SINGLETON_DECLARATION(T) template class T
+#define ACE_IMPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) template class SINGLETON_TYPE <CLASS, LOCK>;
+
 // By default WIN32 has FD_SETSIZE of 64, which places the limit
 // between 61 and 64 on the number of clients a server using the
 // Select Reactor can support at the same time (i.e., 64 - standard in,
