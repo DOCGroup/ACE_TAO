@@ -324,10 +324,9 @@ operator + (const ACE_Time_Value &tv1,
             const ACE_Time_Value &tv2)
 {
   // ACE_OS_TRACE ("operator +");
-  ACE_Time_Value sum (tv1.sec () + tv2.sec (),
-                      tv1.usec () + tv2.usec ());
+  ACE_Time_Value sum (tv1);
+  sum += tv2;
 
-  sum.normalize ();
   return sum;
 }
 
@@ -338,9 +337,9 @@ operator - (const ACE_Time_Value &tv1,
             const ACE_Time_Value &tv2)
 {
   // ACE_OS_TRACE ("operator -");
-  ACE_Time_Value delta (tv1.sec () - tv2.sec (),
-                        tv1.usec () - tv2.usec ());
-  delta.normalize ();
+  ACE_Time_Value delta (tv1);
+  delta -= tv2;
+
   return delta;
 }
 
