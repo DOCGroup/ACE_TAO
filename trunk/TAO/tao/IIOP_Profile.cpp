@@ -32,7 +32,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr& addr,
     object_addr_ (addr),
     hint_ (0)
 {
-  this->set(addr);
+  this->set (addr);
   int l = ACE_OS::strlen (object_key);
   this->object_key_.length (l);
 
@@ -53,7 +53,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr& addr,
     object_addr_ (addr),
     hint_ (0)
 {
-  this->set(addr);
+  this->set (addr);
   this->create_body ();
 }
 
@@ -69,7 +69,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr& addr,
     object_addr_ (addr),
     hint_ (0)
 {
-  this->set(addr);
+  this->set (addr);
   int l = ACE_OS::strlen (object_key);
   this->object_key_.length (l);
 
@@ -91,7 +91,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr& addr,
     object_addr_ (addr),
     hint_ (0)
 {
-  this->set(addr);
+  this->set (addr);
   this->create_body ();
 }
 

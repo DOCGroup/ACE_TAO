@@ -280,6 +280,9 @@ public:
 private:
   TAO_InputCDR inp_stream_;
   // Stream into which the request is placed.
+
+  TAO_Synch_Reply_Dispatcher rd_;
+  // Reply dispatcher for the current synchronous invocation.
 };
 
 #if defined (__ACE_INLINE__)

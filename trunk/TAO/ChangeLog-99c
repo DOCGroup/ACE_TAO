@@ -1,3 +1,46 @@
+Thu Jun  3 13:20:09 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/GIOP.h:
+	* tao/GIOP.cpp:
+	* tao/GIOP_Server_Request.h:
+	* tao/GIOP_Server_Request.i:
+	* tao/GIOP_Server_Request.cpp:
+	* tao/IIOP_Connect.h:
+	* tao/IIOP_Connect.cpp:
+	* tao/IIOP_Profile.cpp:
+	* tao/IIOP_Transport.cpp:
+	* tao/IIOP_Transport.h:
+	* tao/Invocation.h:
+	* tao/Invocation.i:
+	* tao/Invocation.cpp:
+	* tao/Pluggable.h:
+	* tao/Pluggable.cpp:
+	* tao/Wait_Strategy.h:
+	* tao/Wait_Strategy.cpp:
+	* tao/Reply_Dispatcher.h:
+	* tao/Reply_Dispatcher.cpp:
+	* tao/Request_Mux_Strategy.h:
+	* tao/Request_Mux_Strategy.cpp:
+	* tao/UIOP_Connect.h:
+	* tao/UIOP_Connect.cpp:
+	* tao/UIOP_Transport.h:
+	* tao/UIOP_Transport.cpp:
+	  Moved all the GIOP code into GIOP.cpp, i.e. the Invocation,
+	  Transport and Connect classes do not parse headers or read any
+	  data, it is all controlled by the GIOP module.
+	  This also saved some code because the UIOP and IIOP protocols
+	  can share the implementation in GIOP.cpp
+	  Improve the interface between the Reply_Dispatcher, the
+	  Request_Muxers and the transport objects.
+	  Removed a bunch of methods that were not used anymore, like
+	  suspend_* and resume_*
+	  In short: we continue the process of integrating pluggable
+	  protocols and the first phase of messaging.
+
+	* tests/MT_Client/test_i.cpp:
+	  Call shutdown() with the default parameter, otherwise it dies a
+	  horrible death.
+
 Thu Jun  3 13:17:50 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/varout.h:

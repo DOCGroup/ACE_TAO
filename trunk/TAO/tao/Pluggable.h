@@ -123,38 +123,11 @@ public:
                             int twoway) = 0;
   // Default action to be taken for send request.
 
-  void input_cdr_stream (TAO_InputCDR *cdr);
-  // Set the CDR stream for reading the input message.
-
   TAO_InputCDR *input_cdr_stream (void) const;
   // Get the CDR stream for reading the input message.
 
   void destroy_cdr_stream (TAO_InputCDR *) const;
   // Release a CDR stream, simply pass it to the RMS...
-
-  // = State of the incoming message.
-
-  void message_size (CORBA::ULong message_size);
-  // Set the total size of the incoming message. (This does not
-  // include the header size). This inits the <message_offset> setting
-  // it to zero.
-
-  CORBA::ULong message_size (void) const;
-  // Get the total size of the incoming message.
-
-  CORBA::ULong message_offset (void) const;
-  // Get the current offset of the incoming message.
-
-  int incr_message_offset (CORBA::Long bytes_transferred);
-  // Update the offset of the incoming message. Returns 0 on success
-  // -1 on failure.
-
-  void message_received (int received);
-  // Set the flag to indicate whether the input message was read fully
-  // or no.
-
-  int message_received (void) const;
-  // Get the flag.
 
   // = Get and set methods for the ORB Core.
 
@@ -207,18 +180,6 @@ protected:
 
   TAO_ORB_Core *orb_core_;
   // Global orbcore resource.
-
-  // = States for the input message.
-  CORBA::ULong message_size_;
-  // Total length of the whole message. This does not include the
-  // header length.
-
-  CORBA::ULong message_offset_;
-  // Current offset of the input message.
-
-  int message_received_;
-  // Flag to indicate whether the input message has been received
-  // fully or not.
 
   TAO_Request_Mux_Strategy *rms_;
   // Strategy to decide whether multiple requests can be sent over the

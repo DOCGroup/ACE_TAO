@@ -48,10 +48,11 @@ public:
   virtual ~TAO_Wait_Strategy (void);
   // Destructor.
 
-  virtual int send_request (TAO_ORB_Core *orb_core,
-                            TAO_OutputCDR &stream,
-                            int two_way);
-  // Does the send.
+  virtual int sending_request (TAO_ORB_Core *orb_core,
+                               int two_way);
+  // The user is going to send a request, prepare any internal
+  // variables because the reply may arrive *before* the user calls
+  // wait.
 
   virtual int wait (void) = 0;
   // Base class virtual method.
@@ -129,23 +130,13 @@ public:
   virtual ~TAO_Wait_On_Leader_Follower (void);
   // Destructor.
 
-  virtual int send_request (TAO_ORB_Core *orb_core,
-                            TAO_OutputCDR &stream,
-                            int two_way);
-  // Send the request. Set some  flags in case of two way call.
-
+  // = Documented in TAO_Wait_Strategy
+  virtual int sending_request (TAO_ORB_Core *orb_core,
+                               int two_way);
   virtual int wait (void);
-  // Wait according to the L-F model.
-
   virtual int handle_input (void);
-  // Handle the input. Delegate this job to Transport object. Before
-  // that, suspend the handler in the Reactor.
-
   virtual int handle_close (void);
-  // The connection was closed, take appropiate action...
-
   virtual int register_handler (void);
-  // Register the handler with the Reactor.
 
 protected:
   ACE_SYNCH_CONDITION* cond_response_available (void);

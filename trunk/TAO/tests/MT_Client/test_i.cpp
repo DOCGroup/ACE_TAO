@@ -29,5 +29,5 @@ Simple_Server_i::get_number (CORBA::Environment&)
 void
 Simple_Server_i::shutdown (CORBA::Environment&)
 {
-  this->orb_->shutdown (1);
+  this->orb_->shutdown (0);
 }

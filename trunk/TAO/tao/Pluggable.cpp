@@ -204,9 +204,6 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
                               TAO_ORB_Core *orb_core)
   : tag_ (tag),
     orb_core_ (orb_core),
-    message_size_ (0),
-    message_offset_ (0),
-    message_received_ (0),
     rms_ (0),
     ws_ (0)
 {
@@ -237,13 +234,6 @@ TAO_Transport::tag (void) const
 //                                          reply_dispatcher,
 //                                          input_cdr);
 
-// Set the CDR stream for reading the input message.
-void
-TAO_Transport::input_cdr_stream (TAO_InputCDR *cdr)
-{
-  this->rms_->set_cdr_stream (cdr);
-}
-
 // @@ Do you need an accessor? Or is the CDR stream simply passed by
 //    the RMS to the right target.  We should go to the RMS and obtain
 //    the CDR stream from it, that way we can implement an optimized
@@ -261,61 +251,6 @@ void
 TAO_Transport::destroy_cdr_stream (TAO_InputCDR *cdr) const
 {
   this->rms_->destroy_cdr_stream (cdr);
-}
-
-// Set the total size of the incoming message. (This does not
-// include the header size).
-void
-TAO_Transport::message_size (CORBA::ULong message_size)
-{
-  this->message_size_ = message_size;
-
-  // Reset the offset.
-  this->message_offset_ = 0;
-}
-
-// Get the total size of the incoming message.
-CORBA::ULong
-TAO_Transport::message_size (void) const
-{
-  return this->message_size_;
-}
-
-// Get the current offset of the incoming message.
-CORBA::ULong
-TAO_Transport::message_offset (void) const
-{
-  return this->message_offset_;
-}
-
-// Update the offset of the incoming message.
-int
-TAO_Transport::incr_message_offset (CORBA::Long bytes_transferred)
-{
-  if ((this->message_offset_ + bytes_transferred) > this->message_size_)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "TAO: %N:%l: (%P | %t): TAO_Transport::incr_message_offset: "
-                       "Failed to update the offset of incoming message\n"),
-                      -1);
-
-  this->message_offset_ +=  bytes_transferred;
-
-  return 0;
-}
-
-// Set the flag to indicate whether the input message was read fully
-// or no.
-void
-TAO_Transport::message_received (int received)
-{
-  this->message_received_ = received;
-}
-
-// Get the flag.
-int
-TAO_Transport::message_received (void) const
-{
-  return this->message_received_;
 }
 
 // Get it.
