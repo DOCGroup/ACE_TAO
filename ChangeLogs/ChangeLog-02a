@@ -1,3 +1,10 @@
+Sun Aug  6 17:03:29 2000  Ossama Othman  <ossama@uci.edu>
+
+	* include/makeinclude/wrapper_macros.GNU (CPPFLAGS):
+
+	  Define ACE_HAS_SSL=1 instead of just defining ACE_HAS_SSL
+	  without an explicit value.
+
 Sat Aug  5 21:49:12 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/OS_String.cpp:
