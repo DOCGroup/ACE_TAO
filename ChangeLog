@@ -1,11 +1,21 @@
+Wed Jan  5 14:06:03 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/config-aix-4.x.h:
+        * include/makeinclude/platform_aix_ibm.GNU:
+
+          Visual Age 6 does not require #pragma implementation for template
+          cpp files and so for backward compatibility, set the
+          ACE_TEMPLATES_REQUIRE_PRAGMA macro if using Visual Age 5 or
+          earlier and ACE_TEMPLATES_REQUIRE_SOURCE for 6 and later.
+
 Wed Jan  5 13:03:23 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/qt_reactor.mpb:
-        
+
           Modified this file similarly to those in
-          
+
           Wed Jan  5 09:25:49 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
-          
+
           so that MPC regeneration will work correctly when qt=1.
 
 Wed Jan  5 17:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
@@ -84,50 +94,50 @@ Wed Jan  5 09:10:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Jan  4 17:38:23 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* Makefile.am:
-	* Release:
-	* configure.ac:
+        * Makefile.am:
+        * Release:
+        * configure.ac:
 
-	  Updated for removal of ace-config.in and ace-config.1.in.
+          Updated for removal of ace-config.in and ace-config.1.in.
 
-	* ace-config.in:
-	* ace-config.1.in:
+        * ace-config.in:
+        * ace-config.1.in:
 
-	  Removed.
+          Removed.
 
 Tue Jan  4 18:19:11 2005  Steve Huston  <shuston@riverace.com>
 
-	* ace/ACE_export.h: Adjusted ACE_NAMESPACE_INLINE_FUNCTION to include
-	  the extern storage class when inlining for non-Windows. This resolves
-	  some warnings on Solaris/Forte7, and is (hopefully!) the nit
-	  behind the mysterious intermittent compile failures on HP-UX aCC.
+        * ace/ACE_export.h: Adjusted ACE_NAMESPACE_INLINE_FUNCTION to include
+          the extern storage class when inlining for non-Windows. This resolves
+          some warnings on Solaris/Forte7, and is (hopefully!) the nit
+          behind the mysterious intermittent compile failures on HP-UX aCC.
 
 Tue Jan  4 17:37:29 2005  Steve Huston  <shuston@riverace.com>
 
-	* ace/ACE.h: Corrected t_rcv(), t_rcv_n_i() to be extern ACE_Export,
-	  not ACE_NAMESPACE_INLINE_FUNCTION - the bodies are defined in the
-	  .cpp file, and not inline.
+        * ace/ACE.h: Corrected t_rcv(), t_rcv_n_i() to be extern ACE_Export,
+          not ACE_NAMESPACE_INLINE_FUNCTION - the bodies are defined in the
+          .cpp file, and not inline.
 
 Tue Jan  4 17:22:14 2005  Steve Huston  <shuston@riverace.com>
 
-	* ace/Signal.h:
-	* ace/TLI.h:
-	* ace/TLI_Stream.h: Include "ace/config-lite.h" before testing any ACE
-	  config macros.
+        * ace/Signal.h:
+        * ace/TLI.h:
+        * ace/TLI_Stream.h: Include "ace/config-lite.h" before testing any ACE
+          config macros.
 
 Tue Jan  4 09:56:46 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/TMCast/TMCast.mpc:
-	* bin/MakeProjectCreator/config/tmcast.mpb:
+        * ace/TMCast/TMCast.mpc:
+        * bin/MakeProjectCreator/config/tmcast.mpb:
 
-	  Changed to inherit from exceptions.mpb and threads.mpb
+          Changed to inherit from exceptions.mpb and threads.mpb
 
-	* bin/MakeProjectCreator/exceptions.mpb:
-	* bin/MakeProjectCreator/threads.mpb:
+        * bin/MakeProjectCreator/exceptions.mpb:
+        * bin/MakeProjectCreator/threads.mpb:
 
-	  New files, MPC base projects that require exceptions and threads
-	  respecitively.  Projects can inherit from these instead of using
-	  an explicit requires +=, which can result in duplicate entries.
+          New files, MPC base projects that require exceptions and threads
+          respecitively.  Projects can inherit from these instead of using
+          an explicit requires +=, which can result in duplicate entries.
 
 Tue Jan  4 13:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -156,56 +166,56 @@ Tue Jan  4 08:07:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Jan  4 04:25:44 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/OS_NS_sys_stat.inl:
-	* ace/OS_NS_sys_utsname.inl:
+        * ace/OS_NS_sys_stat.inl:
+        * ace/OS_NS_sys_utsname.inl:
 
-	  Fixes for SUN Studio 9 builds on x86 platform. New builds will
-	  be setup soon to track this on a day-today basis.
+          Fixes for SUN Studio 9 builds on x86 platform. New builds will
+          be setup soon to track this on a day-today basis.
 
 Mon Jan  3 16:53:59 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* examples/TMCast/Member/Makefile.am:
+        * examples/TMCast/Member/Makefile.am:
 
-	  Update for ACE prefix being added to TMCast library name.
+          Update for ACE prefix being added to TMCast library name.
 
 Mon Jan  3 17:42:39 2005  Steve Huston  <shuston@riverace.com>
 
-	* apps/JAWS/server/server.mpc:
-	* apps/JAWS3jaws3/jaws3.mpc: Added "avoids += uses_wchar" because
-	  there are some sources in here that won't work with wide-char.
-	  Furthermore, it's not immediately clear what the needs of the code
-	  are with respect to char width. These could probably be fixed,
-	  but may require (or be greatly helped by) some improvement to
-	  ACE_Process_Options::setenv() to accept narrow-char args and/or
-	  adjust string formatting to account for wide-char input.
+        * apps/JAWS/server/server.mpc:
+        * apps/JAWS3jaws3/jaws3.mpc: Added "avoids += uses_wchar" because
+          there are some sources in here that won't work with wide-char.
+          Furthermore, it's not immediately clear what the needs of the code
+          are with respect to char width. These could probably be fixed,
+          but may require (or be greatly helped by) some improvement to
+          ACE_Process_Options::setenv() to accept narrow-char args and/or
+          adjust string formatting to account for wide-char input.
 
-	* examples/Connection/non_blocking/CPP-acceptor.cpp: The
-	  ACE_DEFAULT_SERVER_PORT_STR is already defined in terms of
-	  ACE_TEXT, so it shouldn't be wrapped in ACE_TEXT.
+        * examples/Connection/non_blocking/CPP-acceptor.cpp: The
+          ACE_DEFAULT_SERVER_PORT_STR is already defined in terms of
+          ACE_TEXT, so it shouldn't be wrapped in ACE_TEXT.
 
 Mon Jan  3 14:38:01 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* netsvcs/lib/Makefile.am:
+        * netsvcs/lib/Makefile.am:
 
-	  Install header files.
+          Install header files.
 
 Mon Jan  3 14:34:57 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/Makefile.am:
-	* ace/QoS/Makefile.am:
-	* ace/RMCast/Makefile.am:
-	* ace/SSL/Makefile.am:
-	* ace/TMCast/Makefile.am:
+        * ace/Makefile.am:
+        * ace/QoS/Makefile.am:
+        * ace/RMCast/Makefile.am:
+        * ace/SSL/Makefile.am:
+        * ace/TMCast/Makefile.am:
 
-	  Generate pkg-config *.pc files from templates.
+          Generate pkg-config *.pc files from templates.
 
-	* ace/ACE.pc.in:
-	* ace/QoS/ACE_QoS.pc.in:
-	* ace/RMCast/ACE_RMCast.pc.in:
-	* ace/SSL/ACE_SSL.pc.in:
-	* ace/TMCast/ACE_TMCast.pc.in:
+        * ace/ACE.pc.in:
+        * ace/QoS/ACE_QoS.pc.in:
+        * ace/RMCast/ACE_RMCast.pc.in:
+        * ace/SSL/ACE_SSL.pc.in:
+        * ace/TMCast/ACE_TMCast.pc.in:
 
-	  New files, pkg-config *.pc templates.
+          New files, pkg-config *.pc templates.
 
 Mon Jan  3 19:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 

@@ -48,8 +48,6 @@
 #    if (__xlC__ < 0x0500)
 #      define ACE_LACKS_PLACEMENT_OPERATOR_DELETE
 #    endif /* __xlC__ < 0x0500 */
-#    define ACE_TEMPLATES_REQUIRE_PRAGMA
-     // If compiling without thread support, turn off ACE's thread capability.
 #  endif
 
    // These are for Visual Age C++ only
