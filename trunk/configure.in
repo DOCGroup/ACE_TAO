@@ -1,7 +1,7 @@
 dnl
 dnl $Id$
 
-AC_REVISION($Revision 0.66 $)dnl
+AC_REVISION($Revision 0.67 $)dnl
 
 dnl
 dnl An autoconf script to automatically configure ACE.
@@ -954,7 +954,7 @@ dnl but is needed if sched_yield() is defined in one of the other libraries
 dnl we check for.
 ACE_SEARCH_LIBS(sched_yield, rt posix4, ace_has_sched_yield=yes,)dnl
 
-dnl Check for asynchronous IO calls
+dnl Check for asynchronous IO calls (perform check *after* thread check!)
 ACE_CHECK_ASYNCH_IO
 
 dnl Additional `-lposix4' library check since it may not be added by the
@@ -4109,7 +4109,7 @@ dnl sched_yield() is in the C library or perhaps in "-lposix4."
 dnl We need to add other library checks in this script's "check libraries"
 dnl section if it is in another library.
 dnl  AC_CHECK_FUNC(sched_yield,,) dnl
-dnl We already check for this during the library checks
+dnl We already check for this during the library checks.
 
 dnl Check if platform has thread_self() rather than pthread_self()
   ACE_CHECK_FUNC(pthread_self, pthread.h, dnl
