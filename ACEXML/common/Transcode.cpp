@@ -40,7 +40,7 @@ ACEXML_Transcoder::utf8s2utf16s (const ACEXML_UTF8 *src,
       len -= forward;
     }
 
-  return total_len;
+  return ACE_static_cast (int, total_len);
 }
 
 int
@@ -79,5 +79,5 @@ ACEXML_Transcoder::utf16s2utf8s (const ACEXML_UTF16 *src,
       len -= forward;
     }
 
-  return total_len;
+  return ACE_static_cast (int, total_len);
 }

@@ -71,7 +71,7 @@ ACEXML_Mem_Map_Stream::recv (size_t &len)
     return 0;
 
   const char *s = this->recv_pos_;
-  this->seek (len, SEEK_CUR);
+  this->seek (ACE_static_cast (off_t, len), SEEK_CUR);
   len = this->get_pos_ - s;
   return s;
 }

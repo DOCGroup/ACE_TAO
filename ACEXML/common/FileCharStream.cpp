@@ -122,7 +122,7 @@ int
 ACEXML_FileCharStream::read (ACEXML_Char *str,
                              size_t len)
 {
-  return ACE_OS::fread (str, len, 1, this->infile_);
+  return ACE_static_cast (int, ACE_OS::fread (str, len, 1, this->infile_));
 }
 
 int

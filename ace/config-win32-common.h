@@ -559,6 +559,8 @@ typedef unsigned long long ACE_UINT64;
 #if defined (ACE_WIN64)
 // Data must be aligned on 8-byte boundaries, at a minimum.
 #  define ACE_MALLOC_ALIGN 8
+// Void pointers are 8 bytes
+#  define ACE_SIZEOF_VOID_P 8
 #endif /* ACE_WIN64 */
 
 #if !defined (ACE_DISABLES_THREAD_LIBRARY_CALLS)

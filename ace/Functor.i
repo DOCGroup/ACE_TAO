@@ -126,7 +126,7 @@ ACE_Hash<ACE_TCHAR *>::operator () (const ACE_TCHAR *t) const
 ACE_INLINE u_long
 ACE_Hash<void *>::operator () (const void *t) const
 {
-  return (u_long) t;
+  return (u_long)((ptr_arith_t) t);
 }
 
 /***********************************************************************/

@@ -644,7 +644,9 @@ ACEXML_Parser::parse_element (int is_root ACEXML_ENV_ARG_DECL)
           if (cdata_length != 0)
             {
               cdata = this->obstack_.freeze ();
-              this->content_handler_->characters (cdata, 0, cdata_length ACEXML_ENV_ARG_PARAMETER);
+              this->content_handler_->characters (cdata, 0,
+                                         ACE_static_cast (int, cdata_length)
+                                         ACEXML_ENV_ARG_PARAMETER);
               ACEXML_CHECK;
               this->obstack_.unwind (cdata);
               cdata_length = 0;
@@ -755,9 +757,9 @@ ACEXML_Parser::parse_element (int is_root ACEXML_ENV_ARG_DECL)
           if (cdata == 0)
             {
               cdata = this->obstack_.freeze ();
-              this->content_handler_->characters (cdata,
-                                                  0,
-                                                  cdata_length ACEXML_ENV_ARG_PARAMETER);
+              this->content_handler_->characters (cdata, 0,
+                                           ACE_static_cast (int, cdata_length)
+                                           ACEXML_ENV_ARG_PARAMETER);
               ACEXML_CHECK;
               this->obstack_.grow (ch);
               cdata_length = 1;   // the missing char.
@@ -922,9 +924,9 @@ ACEXML_Parser::parse_cdata (ACEXML_ENV_SINGLE_ARG_DECL)
           if (ch == '>')        // Yay!
             {
               cdata = this->obstack_.freeze ();
-              this->content_handler_->characters (cdata,
-                                                  0,
-                                                  datalen ACEXML_ENV_ARG_PARAMETER);
+              this->content_handler_->characters (cdata, 0,
+                                                  ACE_static_cast (int, datalen)
+                                                  ACEXML_ENV_ARG_PARAMETER);
               // ACEXML_CHECK_RETURN (-1);
               this->obstack_.unwind(cdata);
               return 0;
@@ -974,7 +976,8 @@ ACEXML_Parser::try_grow_cdata (size_t size, size_t &len ACEXML_ENV_ARG_DECL)
             }
           this->content_handler_->characters (cdata,
                                               0,
-                                              len ACEXML_ENV_ARG_PARAMETER);
+                                              ACE_static_cast (int, len)
+                                              ACEXML_ENV_ARG_PARAMETER);
           ACEXML_CHECK_RETURN (-1);
           len = 0;              // reset counter
           if (this->obstack_.request (size) == 0)

@@ -115,7 +115,7 @@ ACEXML_StrCharStream::read (ACEXML_Char *str,
 
       ACE_OS_String::strncpy (str, this->ptr_, len);
       this->ptr_ += len;
-      return len;
+      return ACE_static_cast (int, len);
     }
   return 0;
 }
