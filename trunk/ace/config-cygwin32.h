@@ -11,7 +11,7 @@
 #include "ace/config-cygwin32-common.h"
 
 #define ACE_HAS_AUTOMATIC_INIT_FINI
-// #define _CLOCKID_T
+#define _CLOCKID_T
 
 #include "ace/post.h"
 #endif /* ACE_CONFIG_H */
