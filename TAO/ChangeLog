@@ -1,3 +1,9 @@
+Sat Dec  6 09:19:41 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/CodeSets/UCS4_UTF16/WUCS4_UTF16.cpp:
+
+	  #included OS_Memory.h to get the declaration of ACE_NEW_RETURN.
+
 Sat Dec  6 13:52:34 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* orbsvcs/orbsvcs/RTEvent.dsp:

@@ -28,6 +28,7 @@
 // ============================================================================
 
 #include "WUCS4_UTF16.h"
+#include "ace/OS_Memory.h"
 
 ACE_RCSID(UCS4_UTF16, WUCS4_UTF16, "$Id$")
 
