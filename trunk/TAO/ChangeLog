@@ -1,7 +1,59 @@
+Mon Nov 11 18:03:37 2002  Ossama Othman  <ossama@uci.edu>
+
+	* docs/interceptors.html:
+
+	  Updated release notes about AMI interceptor support.
+
+	  Updated CORBA spec URL to the 3.0.1 spec's URL.
+
+	* tao/Messaging/Makefile.bor:
+	* tao/Messaging/Messaging.dsp:
+	* tao/Messaging/Messaging_Static.dsp:
+
+	  Added AMI_ClientRequestInfo_i.{h,cpp} to these Make/project
+	  files.
+
+Mon Nov 11 17:27:22 2002  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* tao/Messaging/AMI_ClientRequestInfo_i.h:
+	* tao/Messaging/AMI_ClientRequestInfo_i.cpp:
+	* tao/Messaging/Makefile:
+	  Add implementation class for AMI ClientRequestInfos.
+
+	* TAO_IDL/be/be_codegen.cpp:
+	  Move some #includes to the .cpp file, include
+	  AMI_ClientRequestInfo_i.h when compiling with interceptors and
+	  AMI.
+
+	* TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+	  Generate interceptor code for sendc_*** operations.
+
+	* tests/Portable_Interceptors/Makefile:
+	* tests/Portable_Interceptors/AMI/Makefile:
+	* tests/Portable_Interceptors/AMI/run_test.pl:
+	* tests/Portable_Interceptors/AMI/.cvsignore:
+	* tests/Portable_Interceptors/AMI/Client_Interceptor.h:
+	* tests/Portable_Interceptors/AMI/Client_Interceptor.cpp:
+	* tests/Portable_Interceptors/AMI/Client_ORBInitializer.h:
+	* tests/Portable_Interceptors/AMI/Client_ORBInitializer.cpp:
+	* tests/Portable_Interceptors/AMI/Echo.h:
+	* tests/Portable_Interceptors/AMI/Echo.cpp:
+	* tests/Portable_Interceptors/AMI/Echo_Handler.h:
+	* tests/Portable_Interceptors/AMI/Echo_Handler.cpp:
+	* tests/Portable_Interceptors/AMI/Server_Interceptor.h:
+	* tests/Portable_Interceptors/AMI/Server_Interceptor.cpp:
+	* tests/Portable_Interceptors/AMI/Server_ORBInitializer.h:
+	* tests/Portable_Interceptors/AMI/Server_ORBInitializer.cpp:
+	* tests/Portable_Interceptors/AMI/Shared_Interceptor.h:
+	* tests/Portable_Interceptors/AMI/Test.idl:
+	* tests/Portable_Interceptors/AMI/client.cpp:
+	* tests/Portable_Interceptors/AMI/server.cpp:
+	  New regression test for the AMI interceptors.
+
 Mon Nov 11 20:11:56 2002  Pradeep Gore  <pradeep@oomworks.com>
 
 	Removed these files as they are no longer needed. All features and
-	bug fixes have been absorbed in the new implementation as per 
+	bug fixes have been absorbed in the new implementation as per
 	ChangeLogTag: Sun Oct 27 01:04:09 2002  Pradeep Gore  <pradeep@oomworks.com>
 	* orbsvcs/orbsvcs/Notify/Notify_AdminProperties.cpp:
 	* orbsvcs/orbsvcs/Notify/Notify_AdminProperties.h:
@@ -79,25 +131,25 @@ Mon Nov 11 20:11:56 2002  Pradeep Gore  <pradeep@oomworks.com>
 	* orbsvcs/orbsvcs/Notify/Notify_StructuredEvents.h:
 	* orbsvcs/orbsvcs/Notify/Notify_StructuredProxyPushConsumer_i.cpp:
 	  Removed.
-	
+
 	* orbsvcs/orbsvcs/Notify/Dispatch_Observer_T.cpp:
  	* orbsvcs/orbsvcs/Notify/Dispatch_Observer_T.h:
  	* orbsvcs/orbsvcs/Notify/Dispatch_Observer_T.inl:
-	  Removed Dispatch Observer as error handling has moved to TAO_NS_Peer. 
-	
+	  Removed Dispatch Observer as error handling has moved to TAO_NS_Peer.
+
 	* orbsvcs/orbsvcs/Notify/Event_Map_Observer.h:
  	* orbsvcs/orbsvcs/Notify/Event_Map_Observer_T.cpp:
  	* orbsvcs/orbsvcs/Notify/Event_Map_Observer_T.h:
  	* orbsvcs/orbsvcs/Notify/Event_Map_Observer_T.inl:
 	  Removed Event_Map_Observer as Map changes are conveyed via
 	  return values in Event_Map_T <insert> and <remove> methods.
-	
+
 	* orbsvcs/orbsvcs/Notify/Pending_Worker_T.cpp:
  	* orbsvcs/orbsvcs/Notify/Pending_Worker_T.h:
  	* orbsvcs/orbsvcs/Notify/Pending_Worker_T.inl:
 	  Removed Pending_Worker as we have decided not to implement
-	  retries for now. 
-	
+	  retries for now.
+
 	* orbsvcs/orbsvcs/Notify/Builder.cpp:
 	  Removed code depending on Dispatch_Observer.
 
@@ -123,7 +175,7 @@ Mon Nov 11 20:11:56 2002  Pradeep Gore  <pradeep@oomworks.com>
 	  - Added an <intersection> method that calculates the common
 	  elements of two sequences.
 	  - Modified the <init> method to correctly handle cases with
-	  duplicates in the added and/or removed list.  
+	  duplicates in the added and/or removed list.
 
 	* orbsvcs/orbsvcs/Notify/Event_Manager.h:
 	* orbsvcs/orbsvcs/Notify/Event_Manager.cpp:
@@ -144,91 +196,91 @@ Mon Nov 11 20:11:56 2002  Pradeep Gore  <pradeep@oomworks.com>
 	- Added <connect> and <disconnect> methods that we delegate to the
 	  appropriate Event_Map and inform the newly connected Proxy of
 	  types that are avialable in the channel.
-	  
+
 	* orbsvcs/orbsvcs/Notify/Event_Map_T.cpp:
 	* orbsvcs/orbsvcs/Notify/Event_Map_T.h:
 	* orbsvcs/orbsvcs/Notify/Event_Map_T.inl:
 	  - Added <connect> and <disconnect> methods that add  the proxy
 	  to an updates list. This list is used to disseminate the
-	  subscription/offer update changes. 
+	  subscription/offer update changes.
 	  - Added accessor method for the updates list and count of proxys
 	  connected to this map.
 	 - Removed code relating to Event_Map_Observer.
 	 - The <insert> and <remove> methods now return 1 if the type
 	  being inserted or removed is the first time/ last time.
-	
+
 	* orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.cpp:
 	  - Added checks for nil pointers and modified exception handling
 	  code to be simpler.
-	
+
 	* orbsvcs/orbsvcs/Notify/Peer.cpp:
 	* orbsvcs/orbsvcs/Notify/Peer.h:
 	* orbsvcs/orbsvcs/Notify/Peer.inl:
 	  - Added a <dispatch_updates> method that formats the event types
 	  for final dispatch.
-	  - Added a <handle_dispatch_exception> method that simply	
+	  - Added a <handle_dispatch_exception> method that simply
 	  destroys the offending Peer.
 	  - Modified <dispatch_updates_i> to accept
 	  CosNotification::EventTypeSeq's.
 	- Removed <updates_dispatch_observer_> data member and code
 	  related to it.
 	- Removed <retry_count_> data member and retry related code.
-	    
+
 	* orbsvcs/orbsvcs/Notify/Proxy.cpp:
 	* orbsvcs/orbsvcs/Notify/Proxy.h:
 	  - Removed added_, removed_ data members, <type_added> and <type_removed> code because
 	  subscription/offer_change handling logic has been
 	  simplified.
 	  - Added <types_changed> method that enqueues a
-	  TAO_NS_Method_Request_Updates object in the Proxys worker task queue. 
+	  TAO_NS_Method_Request_Updates object in the Proxys worker task queue.
 	  - Renamed the <admin_subscription> to
 	  <admin_types_changed>. This seems more appropriate.
-	
+
 	* orbsvcs/orbsvcs/Notify/ProxyConsumer.cpp:
 	* orbsvcs/orbsvcs/Notify/ProxyConsumer.h:
 	   - Added calls to <connect>, <disconnect> and <offer_change>
 	  instead of calling <publish> and <un_publish>
-	
+
 	* orbsvcs/orbsvcs/Notify/ProxyConsumer.ProxyConsumer_T.cpp:
 	* orbsvcs/orbsvcs/Notify/ProxyConsumer.ProxyConsumer_T.h:
 	  - Renaming to <admin_types_changed>
 	  - Call <offer_change> instead of calling <publish> and <un_publish>
-	
+
 	* orbsvcs/orbsvcs/Notify/ProxySupplier.cpp:
 	  - Calling <subscription_change> instead of <subscribe> and
 	  <un_subscribe>.
 	  - Added calls to <connect> and <disconnect>
-	
+
 	* orbsvcs/orbsvcs/Notify/ProxySupplier_T.cpp:
 	* orbsvcs/orbsvcs/Notify/ProxySupplier_T.h:
 	- Calling <subscription_change> instead of <subscribe> and
 	  <un_subscribe>.
 	- Renamed <admin_subscription> to <admin_types_changed>
-	
+
 	* orbsvcs/orbsvcs/Notify/Refcountable.cpp:
 	- Print messages at debug level 1.
-	
+
 	* orbsvcs/orbsvcs/Notify/Subscription_Change_Worker.inl:
 	- Renamed <admin_subscription> to <admin_types_changed>
-	
+
  	* orbsvcs/orbsvcs/Notify/Supplier.cpp:
  	* orbsvcs/orbsvcs/Notify/Supplier.h:
-	- Modified <dispatch_updates_i> signature. 
-	
+	- Modified <dispatch_updates_i> signature.
+
 	* orbsvcs/orbsvcs/Notify/ThreadPool_Task.cpp:
 	  Moved shutdown code fix from Notify_MT_Worker.cpp.
-	
+
 	* orbsvcs/orbsvcs/Notify/Types.h:
 	  - Removed forward declaration for Event_Map_Observer,
 	  Dispatch_Observer, Pending_Worker types that are no longer used.
-	    
+
  	* orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushConsumer.h:
-	* orbsvcs/orbsvcs/Notify/Any/ProxyPushConsumer.h:	
+	* orbsvcs/orbsvcs/Notify/Any/ProxyPushConsumer.h:
 	  - Added missing virtual keyword to <push>
 
  	* orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.cpp
 	  - Changed the exception handling code to delegate to the Peer's
-	  <handle_dispatch_exception> method. 
+	  <handle_dispatch_exception> method.
 
 	* orbsvcs/orbsvcs/Notify/Method_Request_Updates.cpp:
  	* orbsvcs/orbsvcs/Notify/Method_Request_Updates.h:
@@ -237,16 +289,16 @@ Mon Nov 11 20:11:56 2002  Pradeep Gore  <pradeep@oomworks.com>
 	  objects. Updates are also treated as events and
 	  enqueued/dequeued in a queue(if any) of the Worker Task.
 	  This replaces the earlier logic of using Pending_Worker.
-	
+
 	* orbsvcs/tests/Notify/Events.cpp:
 	* orbsvcs/tests/Notify/Events.h:
 	  - Added a -use_default_admin option that results in the test
 	  obtaining a Consumer/SupplierAdmin interface via the
 	  default_consumer/supplier_admin method.
-	
+
 	* orbsvcs/tests/Notify/Filter.cpp:
 	* orbsvcs/tests/Notify/Filter.h:
-	  - Added this test for Filter operations. 
+	  - Added this test for Filter operations.
 	  This test excercises the FilterAdmin code for a Consumer Admin.
 
 	* orbsvcs/tests/Notify/MultiTypes.cpp:
@@ -255,33 +307,33 @@ Mon Nov 11 20:11:56 2002  Pradeep Gore  <pradeep@oomworks.com>
 	  + Consumers of different types should receive events
 	  that are send by any kind of supplier.
 	  + A nested upcall to the Notification Service via a
-	  disconnect_XXX from within a push should succeed.	
-	
+	  disconnect_XXX from within a push should succeed.
+
 	* orbsvcs/tests/Notify/Updates.cpp:
 	* orbsvcs/tests/Notify/Updates.h:
 	  Completely revamped this test. This test tests subscription and
 	  offer change calls and makes sure that the expected updates are
-	  indeed received. 
-	
+	  indeed received.
+
 	* orbsvcs/tests/Notify/Basic/run_test.pl:
 	  Added the new Filter and MultiTypes tests.
-	
+
 	* orbsvcs/tests/Notify/Basic/Makefile
 	* orbsvcs/tests/Notify/Basic/Makefile.bor
 	* orbsvcs/tests/Notify/Notify_Tests.dsw
 	* orbsvcs/tests/Notify/Basic/Basic.dsw
 	  Modified to include the new Filter and MultiTypes tests and
 	  updated dependencies.
-	
+
 	* orbsvcs/orbsvcs/Makefile.CosNotification:
 	* orbsvcs/orbsvcs/CosNotification.dsp:
 	* orbsvcs/orbsvcs/CosNotification.bor:
 	  Removed old Notify files, added Method_Request_Updates file and
 	  updated dependencies.
-	
+
 	* orbsvcs/Notify_Service/Makefile:
 	  Updated dependencies.
-	
+
 Mon Nov 11 14:28:39 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/GIOP_Message_Base.cpp (consolidate_fragments): When growing
@@ -292,8 +344,8 @@ Mon Nov 11 14:28:39 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	  [BUGID 1356] and is convinced this is the right way to go, since
 	  this uses less memory. Since I dont foresee problems, his patch
 	  is being accepted for the release. Thanks to Simon for putting
-	  in lot of effort to narrow down the problem to this area. 
-	  
+	  in lot of effort to narrow down the problem to this area.
+
 Mon Nov 11 10:43:59 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.dsp:
