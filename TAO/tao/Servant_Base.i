@@ -29,6 +29,7 @@ TAO_Local_ServantBase::_create_stub (CORBA_Environment &ACE_TRY_ENV)
                                                                this->_interface_repository_id (),
                                                                ACE_TRY_ENV);
 #else
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
   return 0;
 #endif
 }
