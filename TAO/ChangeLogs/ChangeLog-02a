@@ -1,4 +1,30 @@
+Thu Jul  6 21:42:00 2000  Bruce Trask  <brucetrask@aol.com>
+      
+      * tao/GIOP_Message_Acceptors.cpp:
+        Removed   CORBA::Boolean sync_with_server and 
+        CORBA::Boolean location_forward from TAO_GIOP_Message_Acceptors::
+        process_client_request()as they are no longer used there.
+        Removed transport parameter in call to 
+        orb_core->object_adapter ()->dispatch_servant(...)
+      
+      * tao/GIOP_Message_Lite.cpp:
+        Removed   CORBA::Boolean sync_with_server and 
+        CORBA::Boolean location_forward from TAO_GIOP_Message_Lite::
+        process_client_request()as they are no longer used there.    
+        Removed transport parameter in call to 
+        orb_core->object_adapter ()->dispatch_servant(...)
+
+      * tao/Servant_Base.cpp:
+        Added an ACE_TRY_CHECK to TAO_ServantBase::synchronous_upcall_dispatch 
+        to get rid of a compiler warning.   Did the same in
+        TAO_DynamicImplementation::_dispatch function.
+      
+      * tao/Object_Adapter.cpp,.h:
+        Remove transport from the paramter list of TAO_Object_Adapter::dispatch_servant
+        as it is no longer used in the function.  
+
 Thu Jul  7 08:09:00 2000  Bruce Trask   <brucetrask@aol.com>
+  
       * tao/Object_Adapter.h
          
         Changed the signature of dispatch_servant to remove the transport parameter
