@@ -12,7 +12,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
-LDLIBS = -lTAO_Svc_Utils -lTAO -lACE
+LDLIBS = -lTAO_Svc_Utils -lTAO
 
 PROG_SRCS = \
         AliasDef_i.cpp \
