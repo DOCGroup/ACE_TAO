@@ -1,5 +1,8 @@
 Sat May 31 13:34:14 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
 
+	* *.h, *.cpp: Changed include lines from "apps/JAWS/server/..." to
+	  "..." to avoid dependencies on the WRAPPER_ROOT tree.
+
 	* jaws.auth:  This file is added to be a sample authorization
 	  file.  This is the file which JAWS is currently hardcoded to use
 	  to verify authenticated PUT requests.
