@@ -1,4 +1,3 @@
-
 /* -*- C++ -*- */
 // $Id$
 
@@ -192,9 +191,57 @@ private:
         if (opfx ()) iostream::operator<< (v); osfx (); return *this; \
         }
 
+// These typedefs are provided by G++ (on some systems?) without the
+// trailing '_'.  Since we can't count on 'em, I've defined them to
+// what GNU wants here.
+//
+typedef ios& (*__manip_)(ios&);
+typedef istream& (*__imanip_)(istream&);
+typedef ostream& (*__omanip_)(ostream&);
+
+// Trying to do something like is shown below instead of using the
+// __*manip typedefs causes Linux do segfault when "<<endl" is done.
+//
+//        virtual MT& operator<<(ios& (*func)(ios&))  { (*func)(*this); return *this; }
+
 // These are necessary in case somebody wants to derive from us and
 // override one of these with a custom approach.
 
+#if defined (ACE_LACKS_SIGNED_CHAR)
+#define ACE_OPERATORG_SET(MT) \
+        ACE_OPERATORG(MT,short &); \
+        ACE_OPERATORG(MT,u_short &); \
+        ACE_OPERATORG(MT,int &); \
+        ACE_OPERATORG(MT,u_int &); \
+        ACE_OPERATORG(MT,long &); \
+        ACE_OPERATORG(MT,u_long &); \
+        ACE_OPERATORG(MT,float &); \
+        ACE_OPERATORG(MT,double &); \
+        ACE_OPERATORG(MT,long double &); \
+        ACE_OPERATORG(MT,char &) \
+        ACE_OPERATORG(MT,u_char &); \
+        ACE_OPERATORG(MT,char *) \
+        ACE_OPERATORG(MT,u_char *); \
+        virtual MT& operator>>(__omanip_ func) { (*func)(*this); return *this; } \
+        virtual MT& operator>>(__manip_ func)  { (*func)(*this); return *this; }
+
+#define ACE_OPERATORP_SET(MT) \
+        ACE_OPERATORP(MT,short); \
+        ACE_OPERATORP(MT,u_short); \
+        ACE_OPERATORP(MT,int); \
+        ACE_OPERATORP(MT,u_int); \
+        ACE_OPERATORP(MT,long); \
+        ACE_OPERATORP(MT,u_long); \
+        ACE_OPERATORP(MT,float); \
+        ACE_OPERATORP(MT,double); \
+        ACE_OPERATORP(MT,char); \
+        ACE_OPERATORP(MT,u_char); \
+        ACE_OPERATORP(MT,const char *); \
+        ACE_OPERATORP(MT,const u_char *); \
+        ACE_OPERATORP(MT,const void *); \
+        virtual MT& operator<<(__omanip_ func) { (*func)(*this); return *this; } \
+        virtual MT& operator<<(__manip_ func)  { (*func)(*this); return *this; }
+#else
 #define ACE_OPERATORG_SET(MT) \
         ACE_OPERATORG(MT,short &); \
         ACE_OPERATORG(MT,u_short &); \
@@ -211,8 +258,8 @@ private:
         ACE_OPERATORG(MT,char *) \
         ACE_OPERATORG(MT,u_char *); \
         ACE_OPERATORG(MT,signed char *); \
-        virtual MT& operator>>(ostream& (*func)(ostream&)) { (*func)(*this); return *this; } \
-        virtual MT& operator>>(ios& (*func)(ios&))  { (*func)(*this); return *this; }
+        virtual MT& operator>>(__omanip_ func) { (*func)(*this); return *this; } \
+        virtual MT& operator>>(__manip_ func)  { (*func)(*this); return *this; }
 
 #define ACE_OPERATORP_SET(MT) \
         ACE_OPERATORP(MT,short); \
@@ -230,8 +277,9 @@ private:
         ACE_OPERATORP(MT,const u_char *); \
         ACE_OPERATORP(MT,const signed char *); \
         ACE_OPERATORP(MT,const void *); \
-        virtual MT& operator<<(istream& (*func)(istream&)) { (*func)(*this); return *this; } \
-        virtual MT& operator<<(ios& (*func)(ios&))  { (*func)(*this); return *this; }
+        virtual MT& operator<<(__omanip_ func) { (*func)(*this); return *this; } \
+        virtual MT& operator<<(__manip_ func)  { (*func)(*this); return *this; }
+#endif /* ACE_LACKS_SIGNED_CHAR */
 
 template <class STREAM>
 class ACE_IOStream : public iostream, public STREAM
@@ -308,11 +356,11 @@ public:
   // be inserted after every put operation so that my transmitted
   // "fields" are always separated.
 
-  virtual int ipfx (int need = 0) { iostream::ipfx(need); }
-  virtual int ipfx0(void)         { iostream::ipfx0(); }  // Optimized ipfx(0)
-  virtual int ipfx1(void)         { iostream::ipfx1(); }  // Optimized ipfx(1)
+  virtual int ipfx (int need = 0) { return(iostream::ipfx(need)); }
+  virtual int ipfx0(void)         { return(iostream::ipfx0()); }  // Optimized ipfx(0)
+  virtual int ipfx1(void)         { return(iostream::ipfx1()); }  // Optimized ipfx(1)
   virtual void isfx (void)        { iostream::isfx(); }
-  virtual int opfx (void)         { iostream::opfx(); }
+  virtual int opfx (void)         { return(iostream::opfx()); }
   virtual void osfx (void)        { iostream::osfx(); }
 
 protected:
