@@ -1,3 +1,8 @@
+Tue Mar 30 10:37:43 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* ace/OS.i (getpwnam_r): Added patch contributed by Roland Gigler
+	  <roland@mch.pn.siemens.de> for getpwnam_r on SCO UnixWare 7.
+
 Mon Mar 29 20:22:44 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* configure.in:
