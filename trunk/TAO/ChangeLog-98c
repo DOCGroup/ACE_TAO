@@ -1,3 +1,10 @@
+Thu Aug 20 19:42:07 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Invocation.cpp: 
+	  Fixed two warnings reported by David. They were only a problem
+	  when using user exceptions in DII, something that still requires
+	  some work.
+
 Thu Aug 20 18:24:04 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
 	* orbsvcs/tests/Property/client.{h,cpp} 

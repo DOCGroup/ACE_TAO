@@ -649,14 +649,14 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
 		// constructor for Any taking a TypeCode and a CDR
 		// stream, it may be that we need an extension to the
 		// CORBA_Any class
-		const ACE_Message_Block* cdr = 
-		  this->inp_stream_.start ();
+		// const ACE_Message_Block* cdr = 
+		// this->inp_stream_.start ();
 		CORBA_Any any;
 		CORBA_Exception *exception = 
 		  new CORBA_UnknownUserException (any);
 		env.exception (exception);
+		return TAO_GIOP_USER_EXCEPTION;
               }
-	    return TAO_GIOP_USER_EXCEPTION;
           }
 
         // If we couldn't find this exception's typecode, report it as
