@@ -23,6 +23,10 @@ Fri Dec 26 12:03:05 1997  David L. Levine  <levine@cs.wustl.edu>
           variable msgque because it conflicted with a symbol in the DEC cxx
           w/DCE threads headers.
 
+        * ACE-INSTALL.html: expanded discussion of gcc config.status file.
+          Thanks to Hans Rohnert <rohnert@scr.siemens.com> for figuring
+          out the role of the config.status file.
+
 Fri Dec 26 06:44:25 1997    <nw1@JIG>
 
 	* ace/OS.h (ACE_OS::ace_flock_t): Added a new field "lockname_" to
