@@ -948,13 +948,6 @@ ACE_Bounded_Set<T>::size (void) const
   return this->cur_size_;
 }
 
-template <class T> size_t
-ACE_Unbounded_Set<T>::size (void) const
-{
-// ACE_TRACE ("ACE_Unbounded_Set<T>::size");
-  return this->cur_size_;
-}
-
 template <class T, size_t ACE_SIZE> void
 ACE_Fixed_Set<T, ACE_SIZE>::dump (void) const
 {
@@ -1404,6 +1397,13 @@ ACE_DNode<T>::~ACE_DNode (void)
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Unbounded_Set)
+
+template <class T> size_t
+ACE_Unbounded_Set<T>::size (void) const
+{
+// ACE_TRACE ("ACE_Unbounded_Set<T>::size");
+  return this->cur_size_;
+}
 
 template <class T> int
 ACE_Unbounded_Set<T>::insert_tail (const T &item)
