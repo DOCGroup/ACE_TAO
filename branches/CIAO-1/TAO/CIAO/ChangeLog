@@ -1,24 +1,31 @@
-Fri Apr 04 16:26:16 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+Fri Apr 04 22:40:11 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	M examples/handcrafted/Display/CIAO_Installation_Data.ini
-	M examples/handcrafted/Display/NavDisplay/NavDisplay_exec.cpp
-	A tools/Assembly_Deployer/Assembly_Deployer.cpp
-	M tools/Assembly_Deployer/Assembly_Deployer.mpc
-	M tools/Assembly_Deployer/Assembly_Impl.cpp
-	M tools/Assembly_Deployer/Assembly_Impl.h
-	M tools/Assembly_Deployer/Assembly_Impl.inl
-	A tools/Assembly_Deployer/Assembly_Manager.cpp
-	A tools/Assembly_Deployer/Assembly_Visitors.h
-	A tools/Assembly_Deployer/Assembly_Visitors.inl
-	A tools/Assembly_Deployer/Deployment_Configuration.cpp
-	A tools/Assembly_Deployer/Deployment_Configuration.h
-	A tools/Assembly_Deployer/Deployment_Configuration.inl
-	M tools/Daemon/Daemon.mpc
-	M tools/Daemon/DaemonController.dsp
-	M tools/XML_Helpers/Assembly_Handlers.cpp
-	M tools/XML_Helpers/Assembly_Spec.cpp
-	M tools/XML_Helpers/Assembly_Spec.h
-	M tools/XML_Helpers/Assembly_Spec.inl
+	* examples/handcrafted/Display/descriptors/*: Moved all XML
+	  descriptors and deployment configuration into this newly created
+	  subdirectory to simply procedures to test this example.
+
+	* examples/handcrafted/Display/NavDisplay/NavDisplay_exec.cpp:
+	  Changed to thow a BAD_INV_ORDER exception is the receptacle is
+	  not connected instead of a MSVC structural exception.
+
+	* tools/Daemon/Daemon.mpc:
+	* tools/Daemon/DaemonController.dsp:
+	* tools/XML_Helpers/Assembly_Handlers.cpp:
+	* tools/XML_Helpers/Assembly_Spec.cpp:
+	* tools/XML_Helpers/Assembly_Spec.h:
+	* tools/XML_Helpers/Assembly_Spec.inl:
+	* tools/Assembly_Deployer/Assembly_Deployer.cpp:
+	* tools/Assembly_Deployer/Assembly_Deployer.mpc:
+	* tools/Assembly_Deployer/Assembly_Impl.cpp:
+	* tools/Assembly_Deployer/Assembly_Impl.h:
+	* tools/Assembly_Deployer/Assembly_Impl.inl:
+	* tools/Assembly_Deployer/Assembly_Manager.cpp:
+	* tools/Assembly_Deployer/Assembly_Visitors.h:
+	* tools/Assembly_Deployer/Assembly_Visitors.inl:
+	* tools/Assembly_Deployer/Deployment_Configuration.cpp:
+	* tools/Assembly_Deployer/Deployment_Configuration.h:
+	* tools/Assembly_Deployer/Deployment_Configuration.inl: Added more
+	  support for component installation when building an Assembly.
 
 Thu Apr 03 15:08:20 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
