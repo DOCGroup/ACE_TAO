@@ -20,7 +20,7 @@ ACE_ARGV::state(void) const
 }
 
 // Return the arguments in a space-separated string
-ACE_INLINE const char *
+ACE_INLINE const ASYS_TCHAR *
 ACE_ARGV::buf (void)
 {
   ACE_TRACE ("ACE_ARGV::buf");
@@ -28,11 +28,11 @@ ACE_ARGV::buf (void)
   if (this->buf_ == 0 && this->state_ == ITERATIVE) 
     this->create_buf_from_queue();
 
-  return (const char *)this->buf_;
+  return (const ASYS_TCHAR *)this->buf_;
 }
 
 // Return the arguments in an entry-per-argument array
-ACE_INLINE char **
+ACE_INLINE ASYS_TCHAR **
 ACE_ARGV::argv (void)
 {
   ACE_TRACE ("ACE_ARGV::argv");
@@ -51,7 +51,7 @@ ACE_ARGV::argv (void)
 }
 
 // Subscript operator.  
-ACE_INLINE const char *
+ACE_INLINE const ASYS_TCHAR *
 ACE_ARGV::operator[] (size_t i)
 {
   ACE_TRACE ("ACE_ARGV::operator[]");
@@ -60,7 +60,7 @@ ACE_ARGV::operator[] (size_t i)
   if (i >= this->argc_)
     return 0;
 
-  return (const char *)(this->argv()[i]);
+  return (const ASYS_TCHAR *)(this->argv()[i]);
 }
 
 

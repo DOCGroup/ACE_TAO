@@ -77,7 +77,7 @@ public: // Should be protected:
   // Transfer message to the adjacent ACE_Task in a ACE_Stream.
 
   // = ACE_Task utility routines to identify names et al.
-  const char *name (void) const;
+  const ASYS_TCHAR *name (void) const;
   // Return the name of the enclosing Module if there's one associated
   // with the Task, else returns 0.
 

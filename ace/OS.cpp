@@ -2749,7 +2749,7 @@ ACE_OS::thr_key_detach (void *inst)
 // separated by spaces.
 
 pid_t
-ACE_OS::fork_exec (char *argv[])
+ACE_OS::fork_exec (ASYS_TCHAR *argv[])
 {
 #if defined (ACE_WIN32)
   ACE_ARGV argv_buf (argv);
@@ -2757,6 +2757,7 @@ ACE_OS::fork_exec (char *argv[])
   if (argv_buf.buf () != 0)
     {
       PROCESS_INFORMATION process_info;
+#if !defined (ACE_HAS_WINCE)
       STARTUPINFO startup_info;
       ACE_OS::memset ((void *) &startup_info, 0, sizeof startup_info);
       startup_info.cb = sizeof startup_info;
@@ -2766,11 +2767,25 @@ ACE_OS::fork_exec (char *argv[])
                            0, // No process attributes.
                            0,  // No thread attributes.
                            TRUE, // Allow handle inheritance.
-                           0, /* CREATE_NEW_CONSOLE */ // Don't create a new console window.
+                           0,   /* CREATE_NEW_CONSOLE */
+                                // Don't create a new console window.
                            0, // No environment.
                            0, // No current directory.
                            &startup_info,
                            &process_info))
+#else
+      if (::CreateProcess (0,
+                           (LPTSTR) ACE_WIDE_STRING (argv_buf.buf ()),
+                           0, // No process attributes.
+                           0,  // No thread attributes.
+                           FALSE, // Can's inherit handles on CE
+                           0, /* CREATE_NEW_CONSOLE */
+                              // Don't create a new console window.
+                           0, // No environment.
+                           0, // No current directory.
+                           0, // Can't use startup info on CE
+                           &process_info))
+#endif /* ! ACE_HAS_WINCE */
         {
           // Free resources allocated in kernel.
           ACE_OS::close (process_info.hThread);

@@ -107,13 +107,13 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dump (void) const
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,
-              "deactivated = %d\n"
-              "low_water_mark = %d\n"
-              "high_water_mark = %d\n"
-              "cur_bytes = %d\n"
-              "cur_count = %d\n"
-              "head_ = %u\n"
-              "tail_ = %u\n",
+              ASYS_TEXT ("deactivated = %d\n")
+              ASYS_TEXT ("low_water_mark = %d\n")
+              ASYS_TEXT ("high_water_mark = %d\n")
+              ASYS_TEXT ("cur_bytes = %d\n")
+              ASYS_TEXT ("cur_count = %d\n")
+              ASYS_TEXT ("head_ = %u\n")
+              ASYS_TEXT ("tail_ = %u\n"),
               this->deactivated_,
               this->low_water_mark_,
               this->high_water_mark_,

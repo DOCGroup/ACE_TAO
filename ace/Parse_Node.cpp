@@ -34,7 +34,7 @@ ACE_Stream_Node::apply (void)
   ACE_TRACE ("ACE_Stream_Node::apply");
 
   if (ACE_Service_Config::initialize (this->node_->record (),
-                                      this->node_->parameters ()) == -1)
+                                      ASYS_WIDE_STRING (this->node_->parameters ())) == -1)
     ace_yyerrno++;
 
   ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("did stream on %s, error = %d\n"),
@@ -108,7 +108,7 @@ ACE_Parse_Node::print (void) const
   ACE_TRACE ("ACE_Parse_Node::print");
 
   ACE_DEBUG ((LM_DEBUG,
-              "svc = %s\n",
+              ASYS_TEXT ("svc = %s\n"),
               this->name ()));
 
   if (this->next_)
@@ -159,7 +159,7 @@ ACE_Suspend_Node::apply (void)
     ace_yyerrno++;
 
   ACE_DEBUG ((LM_DEBUG,
-              "did suspend on %s, error = %d\n",
+              ASYS_TEXT ("did suspend on %s, error = %d\n"),
               this->name (), ace_yyerrno));
 }
 
@@ -171,7 +171,7 @@ ACE_Resume_Node::apply (void)
     ace_yyerrno++;
 
   ACE_DEBUG ((LM_DEBUG,
-              "did resume on %s, error = %d\n",
+              ASYS_TEXT ("did resume on %s, error = %d\n"),
              this->name (),
               ace_yyerrno));
 }
@@ -198,7 +198,7 @@ ACE_Remove_Node::apply (void)
     ace_yyerrno++;
 
   ACE_DEBUG ((LM_DEBUG,
-              "did remove on %s, error = %d\n",
+              ASYS_TEXT ("did remove on %s, error = %d\n"),
              this->name (),
               ace_yyerrno));
 
@@ -229,7 +229,7 @@ ACE_Dynamic_Node::apply (void)
     ace_yyerrno++;
 
   ACE_DEBUG ((LM_DEBUG,
-              "did dynamic on %s, error = %d\n",
+              ASYS_TEXT ("did dynamic on %s, error = %d\n"),
              this->name (),
               ace_yyerrno));
 }
@@ -292,7 +292,7 @@ ACE_Static_Node::apply (void)
     ace_yyerrno++;
 
   ACE_DEBUG ((LM_DEBUG,
-              "did static on %s, error = %d\n",
+              ASYS_TEXT ("did static on %s, error = %d\n"),
               this->name (),
               ace_yyerrno));
 }
@@ -386,19 +386,19 @@ ACE_Location_Node::open_handle (void)
       ace_yyerrno++;
 
       ACE_ERROR ((LM_ERROR,
-                  "dlopen failed for %s",
+                  ASYS_TEXT ("dlopen failed for %s"),
                   dl_pathname));
 
       char *errmsg = ACE_OS::dlerror ();
 
       if (errmsg != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ": %s\n",
+                           ASYS_TEXT (": %s\n"),
                            errmsg),
                           0);
       else
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "\n"),
+                           ASYS_TEXT ("\n")),
                           0);
     }
   else
@@ -437,19 +437,19 @@ ACE_Object_Node::symbol (void)
           ace_yyerrno++;
 
           ACE_ERROR ((LM_ERROR,
-                      "dlsym failed for object %s\n",
+                      ASYS_TEXT ("dlsym failed for object %s\n"),
                       this->object_name_));
 
           char *errmsg = ACE_OS::dlerror ();
 
           if (errmsg != 0)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               ": %s\n",
+                               ASYS_TEXT (": %s\n"),
                                errmsg),
                               0);
           else
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "\n"),
+                               ASYS_TEXT ("\n")),
                               0);
         }
       return this->symbol_;
@@ -505,19 +505,19 @@ ACE_Function_Node::symbol (void)
               ace_yyerrno++;
 
               ACE_ERROR ((LM_ERROR,
-                          "dlsym failed for function %s\n",
+                          ASYS_TEXT ("dlsym failed for function %s\n"),
                           this->function_name_));
 
               char *errmsg = ACE_OS::dlerror ();
 
               if (errmsg != 0)
                 ACE_ERROR_RETURN ((LM_ERROR,
-                                   ": %s\n",
+                                   ASYS_TEXT (": %s\n"),
                                    errmsg),
                                   0);
               else
                 ACE_ERROR_RETURN ((LM_ERROR,
-                                   "\n"),
+                                   ASYS_TEXT ("\n")),
                                   0);
             }
         }
@@ -528,7 +528,7 @@ ACE_Function_Node::symbol (void)
         {
           ace_yyerrno++;
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "%p\n",
+                             ASYS_TEXT ("%p\n"),
                              this->function_name_),
                             0);
         }
@@ -563,7 +563,7 @@ ACE_Dummy_Node::apply (void)
 {
   ACE_TRACE ("ACE_Dummy_Node::apply");
   ACE_DEBUG ((LM_DEBUG,
-              "did operations on stream %s, error = %d\n",
+              ASYS_TEXT ("did operations on stream %s, error = %d\n"),
              this->name (),
               ace_yyerrno));
 }
@@ -624,7 +624,7 @@ ACE_Static_Function_Node::symbol (void)
           ace_yyerrno++;
 
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "no static service registered for function %s\n",
+                             ASYS_TEXT ("no static service registered for function %s\n"),
                              this->function_name_),
                              0);
         }
@@ -637,7 +637,7 @@ ACE_Static_Function_Node::symbol (void)
     {
       ace_yyerrno++;
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "%p\n",
+                         ASYS_TEXT ("%p\n"),
                          this->function_name_),
                         0);
     }

@@ -19,7 +19,7 @@ ACE_Service_Object_Ptr::operator-> ()
   return this->service_object_; 
 }
 
-ACE_INLINE const char *
+ACE_INLINE const ASYS_TCHAR *
 ACE_Service_Type::name (void) const
 {
   ACE_TRACE ("ACE_Service_Type::name");
@@ -41,12 +41,12 @@ ACE_Service_Type::handle (void) const
 }
 
 ACE_INLINE void 
-ACE_Service_Type::name (const char *n)
+ACE_Service_Type::name (const ASYS_TCHAR *n)
 {
   ACE_TRACE ("ACE_Service_Type::name");
 
-  delete [] (char *) this->name_;
-  this->name_ = ACE_OS::strcpy (new char [::strlen (n) + 1], n);
+  delete [] (ASYS_TCHAR *) this->name_;
+  this->name_ = ACE_OS::strcpy (new ASYS_TCHAR [ACE_OS::strlen (n) + 1], n);
 }
 
 ACE_INLINE void 
