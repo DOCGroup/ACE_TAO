@@ -2,6 +2,9 @@ Wed Jun 17 11:46:49 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO_IDL/Makefile: suppressed some warnings from DEC cxx.
 
+        * TAO/tests/Cubit/TAO/MT_Cubit/Task_Client.h: removed unused
+          static variables.
+
 Tue Jun 16 17:00:14 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
         * TAO_IDL/be_include/be_interface.h: Added a helper called
