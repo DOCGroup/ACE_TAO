@@ -327,6 +327,57 @@ ACE_TP_Reactor::register_handler (const ACE_Sig_Set &,
 }
 
 int
+ACE_TP_Reactor::register_handler (ACE_Event_Handler *eh,
+                                  ACE_Reactor_Mask mask)
+{
+  return ACE_Select_Reactor::register_handler (eh,
+                                               mask);
+}
+
+int
+ACE_TP_Reactor::register_handler (ACE_HANDLE handle,
+                                  ACE_Event_Handler *eh,
+                                  ACE_Reactor_Mask mask)
+{
+  return ACE_Select_Reactor::register_handler (handle,
+                                               eh,
+                                               mask);
+}
+
+#if defined (ACE_WIN32)
+
+int
+ACE_TP_Reactor::register_handler (ACE_Event_Handler *eh,
+                                  ACE_HANDLE h)
+{
+  retrun ACE_Select_Reactor::register_handler (eh,
+                                               h);
+}
+
+#endif /* ACE_WIN32 */
+int
+ACE_TP_Reactor::register_handler (ACE_HANDLE event_handle,
+                                  ACE_HANDLE io_handle,
+                                  ACE_Event_Handler *event_handler,
+                                  ACE_Reactor_Mask mask)
+{
+  return ACE_Select_Reactor::register_handler (event_handle,
+                                               io_handle,
+                                               event_handler,
+                                               mask);
+}
+
+int
+ACE_TP_Reactor::register_handler (const ACE_Handle_Set &handles,
+                                  ACE_Event_Handler *eh,
+                                  ACE_Reactor_Mask mask)
+{
+  return ACE_Select_Reactor::register_handler (handles,
+                                               eh,
+                                               mask);
+}
+
+int
 ACE_TP_Reactor::remove_handler (int /*signum*/,
                                 ACE_Sig_Action * /*new_disp*/,
                                 ACE_Sig_Action * /*old_disp*/,
