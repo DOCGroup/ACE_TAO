@@ -51,7 +51,7 @@ Fri Mar 26 14:32:35 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	  TAO's SSLIOP pluggable protocol.  Doing so makes SSL_write()
 	  behave like write(2).  Note that this isn't an issue when using
 	  blocking I/O.   This fixes the SSLIOP "Big_Request" test
-	  failure.
+	  failure.  [Bug 1429]
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
 
