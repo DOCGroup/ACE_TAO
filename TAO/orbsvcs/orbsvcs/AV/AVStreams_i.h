@@ -174,10 +174,10 @@ class TAO_ORBSVCS_Export TAO_Client_Base_StreamEndPoint
   : public virtual TAO_Base_StreamEndPoint
 {
 public:
-  virtual CORBA::Boolean handle_connection_established (AVStreams::StreamEndPoint_ptr responder, 
-                                                        AVStreams::streamQoS &qos_spec, 
-                                                        const AVStreams::flowSpec &the_spec,  
-                                                        CORBA::Environment &env) = 0;
+  virtual CORBA::Boolean handle_preconnect (void) = 0;
+  // Application needs to define this
+
+  virtual CORBA::Boolean handle_postconnect (void) = 0;
   // Application needs to define this
 };
 
