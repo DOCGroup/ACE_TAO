@@ -10,7 +10,7 @@
 //
 // = DESCRIPTION
 //
-//    This example application shows how to write ReactorEx event
+//    This example application shows how to write Reactor event
 //    loops that handle events for some fixed amount of time.
 //
 //    Run this example (without arguments) to see the timers
@@ -24,7 +24,7 @@
 // 
 // ============================================================================
 
-#include "ace/ReactorEx.h"
+#include "ace/Reactor.h"
 #include "ace/Service_Config.h"
 #include "ace/OS.h"
 
@@ -58,20 +58,20 @@ main (int, char *[])
 
   // Register a 3 second timer.
   ACE_Time_Value bar_tv (3);
-  ACE_ReactorEx::instance ()->schedule_timer (&handler,
-					      (void *) "Bar",
-					      bar_tv,
-					      bar_tv);
+  ACE_Reactor::instance ()->schedule_timer (&handler,
+					    (void *) "Bar",
+					    bar_tv,
+					    bar_tv);
 
   // Register a 2 second timer.
   ACE_Time_Value foo_tv (2);
-  ACE_ReactorEx::instance ()->schedule_timer (&handler,
-					      (void *) "Foo",
-					      foo_tv,
-					      foo_tv);
+  ACE_Reactor::instance ()->schedule_timer (&handler,
+					    (void *) "Foo",
+					    foo_tv,
+					    foo_tv);
   // Handle events for 12 seconds.
   ACE_Time_Value run_time (12);
-  if (ACE_ReactorEx::run_event_loop(run_time) == -1)
+  if (ACE_Reactor::run_event_loop(run_time) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p.\n", "main"), -1);
 						    
   return 0;

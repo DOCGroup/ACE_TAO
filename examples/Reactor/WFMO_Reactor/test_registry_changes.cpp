@@ -10,7 +10,7 @@
 //
 // = DESCRIPTION
 //
-//    This application tests the working of ReactorEx when users are
+//    This application tests the working of Reactor when users are
 //    interested in monitoring changes in the registry.
 //
 // = AUTHOR
@@ -18,7 +18,7 @@
 // 
 // ============================================================================
 
-#include "ace/ReactorEx.h"
+#include "ace/Reactor.h"
 #include "ace/Registry.h"
 
 static int stop_test = 0;
@@ -28,7 +28,7 @@ static LPCTSTR temp_context_name = __TEXT ("ACE temporary context");
 class Event_Handler : public ACE_Event_Handler
 {
 public:
-  Event_Handler (ACE_ReactorEx &reactorEx);
+  Event_Handler (ACE_Reactor &reactor);
   ~Event_Handler (void);
   int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);  
   int handle_close (ACE_HANDLE handle,
@@ -40,10 +40,10 @@ private:
   ACE_Registry::Naming_Context context_;
 };
 
-Event_Handler::Event_Handler (ACE_ReactorEx &reactorEx)
+Event_Handler::Event_Handler (ACE_Reactor &reactor)
   : context_ (context_to_monitor)
 {
-  this->reactorEx (&reactorEx);
+  this->reactor (&reactor);
   
   if (::RegNotifyChangeKeyValue (this->context_.key (), // handle of key to watch 
 				 FALSE, // flag for subkey notification 
@@ -53,9 +53,9 @@ Event_Handler::Event_Handler (ACE_ReactorEx &reactorEx)
 				 ) != ERROR_SUCCESS)
     ACE_ERROR ((LM_ERROR, "RegNotifyChangeKeyValue could not be setup\n"));
   
-  if (this->reactorEx ()->register_handler (this,
-					    this->event_.handle ()) != 0)
-    ACE_ERROR ((LM_ERROR, "Registration with ReactorEx could not be done\n"));		    
+  if (this->reactor ()->register_handler (this,
+					  this->event_.handle ()) != 0)
+    ACE_ERROR ((LM_ERROR, "Registration with Reactor could not be done\n"));		    
 }
 
 Event_Handler::~Event_Handler (void)
@@ -68,7 +68,7 @@ Event_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
   ACE_DEBUG ((LM_DEBUG, "(%t) Something changed in the Registry\n"));
 
   if (stop_test)
-    this->reactorEx ()->close ();
+    this->reactor ()->close ();
   else if (::RegNotifyChangeKeyValue (this->context_.key (), // handle of key to watch 
 				      FALSE, // flag for subkey notification 
 				      REG_NOTIFY_CHANGE_NAME, // changes to be reported 
@@ -84,7 +84,7 @@ int
 Event_Handler::handle_close (ACE_HANDLE handle,
 			     ACE_Reactor_Mask close_mask)
 {
-  ACE_DEBUG ((LM_DEBUG, "Event_Handler removed from ReactorEx\n"));
+  ACE_DEBUG ((LM_DEBUG, "Event_Handler removed from Reactor\n"));
   return 0;
 }
 
@@ -120,14 +120,14 @@ worker (Event_Handler *event_handler)
 int
 main (int, char *[])
 {
-  ACE_ReactorEx reactorEx;
-  Event_Handler handler (reactorEx);
+  ACE_Reactor reactor;
+  Event_Handler handler (reactor);
 
   ACE_ASSERT (ACE_OS::thr_create ((ACE_THR_FUNC) worker, &handler, 0, 0) == 0);
 
   int result = 0;
   while (result != -1)
-    result = reactorEx.handle_events ();
+    result = reactor.handle_events ();
 
   return 0;
 }

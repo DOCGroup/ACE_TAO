@@ -10,7 +10,7 @@
 //
 // = DESCRIPTION
 //
-//    This application tests ReactorEx to make sure that it responds
+//    This application tests Reactor to make sure that it responds
 //    correctly to different kinds of network events.
 //
 //    The test starts off by creating a Network_Listener, that listens
@@ -31,14 +31,14 @@
 // 
 // ============================================================================
 
-#include "ace/ReactorEx.h"
+#include "ace/Reactor.h"
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Stream.h"
 #include "ace/SOCK_Acceptor.h"
 
 // Globals for this test
 int stop_test = 0;
-ACE_ReactorEx reactorEx;
+ACE_Reactor reactor;
 
 class Network_Handler : public ACE_Event_Handler
 {
@@ -58,11 +58,11 @@ public:
 Network_Handler::Network_Handler (ACE_SOCK_Stream &s)
   : stream_ (s)
 {
-  this->reactorEx (&::reactorEx);
+  this->reactor (&::reactor);
 
   ACE_Reactor_Mask mask = ACE_Event_Handler::READ_MASK | ACE_Event_Handler::CLOSE_MASK;
-  ACE_ASSERT (this->reactorEx ()->register_handler (this, 
-						    mask) == 0);
+  ACE_ASSERT (this->reactor ()->register_handler (this, 
+						  mask) == 0);
 }
 
 ACE_HANDLE  
@@ -101,7 +101,7 @@ Network_Handler::handle_close (ACE_HANDLE handle,
   if (close_mask == ACE_Event_Handler::CLOSE_MASK)
     {
       ACE_Reactor_Mask mask = ACE_Event_Handler::DONT_CALL | ACE_Event_Handler::ALL_EVENTS_MASK;
-      this->reactorEx ()->remove_handler (this, mask);
+      this->reactor ()->remove_handler (this, mask);
     }
   
   this->stream_.close ();
@@ -130,9 +130,9 @@ Network_Listener::Network_Listener (void)
   : local_address_ (ACE_DEFAULT_SERVER_PORT),
     acceptor_ (local_address_, 1)
 {
-  this->reactorEx (&::reactorEx);
-  ACE_ASSERT (this->reactorEx ()->register_handler (this, 
-						    ACE_Event_Handler::ACCEPT_MASK) == 0);
+  this->reactor (&::reactor);
+  ACE_ASSERT (this->reactor ()->register_handler (this, 
+						  ACE_Event_Handler::ACCEPT_MASK) == 0);
 }
 
 ACE_HANDLE  
@@ -177,7 +177,7 @@ main (int, char *[])
   int result = 0;
   while (!stop_test && result != -1)
     {
-      result = reactorEx.handle_events ();
+      result = reactor.handle_events ();
     }
   return 0;
 };

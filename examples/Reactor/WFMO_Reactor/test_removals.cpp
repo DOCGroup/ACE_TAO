@@ -10,9 +10,9 @@
 //
 // = DESCRIPTION
 //
-//    Tests the ReactorEx's ability to handle simultaneous events.  If
+//    Tests the Reactor's ability to handle simultaneous events.  If
 //    you pass anything on the command-line, then each handler
-//    requests to be removed from the ReactorEx after each event.
+//    requests to be removed from the Reactor after each event.
 //    
 // = AUTHOR
 //    Tim Harrison
@@ -20,7 +20,7 @@
 // 
 // ============================================================================
 
-#include "ace/ReactorEx.h"
+#include "ace/Reactor.h"
 #include "ace/Service_Config.h"
 #include "ace/Synch.h"
 
@@ -30,7 +30,7 @@ class Event_Handler : public ACE_Event_Handler
 //
 // = DESCRIPTION
 //
-//    Creates event.  Registers with ReactorEx.  Signals event.  If
+//    Creates event.  Registers with Reactor.  Signals event.  If
 //    created with -close_down- it returns -1 from handle signal.
 {
 public:
@@ -39,9 +39,9 @@ public:
     : event_number_ (event_number),
     close_down_ (close_down)
     {
-      if (ACE_ReactorEx::instance ()->register_handler (this,
-							this->event_.handle ()) == -1)
-	ACE_ERROR ((LM_ERROR, "%p\tevent handler %d cannot be added to ReactorEx\n", "", event_number_));
+      if (ACE_Reactor::instance ()->register_handler (this,
+						      this->event_.handle ()) == -1)
+	ACE_ERROR ((LM_ERROR, "%p\tevent handler %d cannot be added to Reactor\n", "", event_number_));
       this->event_.signal ();
     }
 
@@ -83,14 +83,14 @@ main (int argc, char *argv[])
 {
   int close_down = argc > 1 ? 1 : 0;
 
-  for (int i = 1; i <= ACE_ReactorEx::DEFAULT_SIZE; i++)
+  for (int i = 1; i <= ACE_Reactor::instance ()->size (); i++)
     new Event_Handler (i, close_down);
 
   int result = 0;
   ACE_Time_Value time (1);
   while (1)
     {
-      result = ACE_ReactorEx::instance ()->handle_events (time);
+      result = ACE_Reactor::instance ()->handle_events (time);
       if (result == 0 && errno == ETIME)
 	{
 	  ACE_DEBUG ((LM_DEBUG, "No more work left: timing out\n"));
