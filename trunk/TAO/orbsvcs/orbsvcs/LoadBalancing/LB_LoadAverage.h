@@ -117,13 +117,6 @@ protected:
   /// Destructor.
   ~TAO_LB_LoadAverage (void);
 
-  /// Retrieve the least loaded location from the given list of
-  /// locations.
-  CORBA::Boolean get_location (CosLoadBalancing::LoadManager_ptr load_manager,
-                               const PortableGroup::Locations & locations,
-                               PortableGroup::Location & location
-                               ACE_ENV_ARG_DECL);
-
   /// Return the effective load.
   CORBA::Float effective_load (CORBA::Float previous_load,
                                CORBA::Float new_load);
