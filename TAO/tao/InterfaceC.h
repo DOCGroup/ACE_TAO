@@ -13,11 +13,11 @@
 
 #include "tao/corbafwd.h"
 #include "tao/Object.h"
-//#include "tao/Environment.h"
+
 #include "tao/Any.h"
 #include "tao/Sequence_T.h"
 
-#ifdef TAO_HAS_INTERFACE_REPOSITORY
+#if defined TAO_HAS_INTERFACE_REPOSITORY
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
