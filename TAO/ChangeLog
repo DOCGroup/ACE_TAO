@@ -154,10 +154,10 @@ Fri Aug 13 09:30:54 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 Fri Aug 13 12:48:48 2004  Simon McQueen  <sm@prismtechnologies.com>
 
         * TAO_IDL/fe/fe_lookup.cpp (lookup):
-        Fixed warning in Linux builds.
+          Fixed warning in Linux builds.
 
         * tests/Bug_1904_Regression/test.mpc:
-        Added missing $Id tag.
+          Added missing $Id tag.
 
 Fri Aug 13 00:46:24 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
