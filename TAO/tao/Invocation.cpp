@@ -355,8 +355,7 @@ TAO_GIOP_Invocation::prepare_header (CORBA::Octet response_flags
 
     case TAO_Target_Specification::Profile_Addr:
       this->target_spec_.target_specifier (
-                this->profile_->create_tagged_profile ()
-              );
+          *this->profile_->create_tagged_profile ());
       break;
 
     case TAO_Target_Specification::Reference_Addr:

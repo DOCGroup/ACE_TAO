@@ -147,10 +147,6 @@ public:
   virtual CORBA::ULong hash (CORBA::ULong max
                              ACE_ENV_ARG_DECL);
 
-  /// Please refer to Profile.h for the documentation of this
-  /// function.
-  virtual IOP::TaggedProfile &create_tagged_profile (void);
-
 private:
 
   /// Creates an encapsulation of the ProfileBody struct in the <cdr>
@@ -192,8 +188,6 @@ private:
   /// Object_key associated with this profile.
   TAO_ObjectKey object_key_;
 
-  /// Our tagged profile
-  IOP::TaggedProfile tagged_profile_;
 };
 
 #if defined (__ACE_INLINE__)

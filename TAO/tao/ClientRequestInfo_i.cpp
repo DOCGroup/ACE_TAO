@@ -131,11 +131,11 @@ TAO_ClientRequestInfo_i::effective_profile (ACE_ENV_SINGLE_ARG_DECL)
 
   IOP::TaggedProfile_var safe_tagged_profile = tagged_profile;
 
-  IOP::TaggedProfile &ep =
+  IOP::TaggedProfile *ep =
     this->target_->_stubobj ()->profile_in_use ()->create_tagged_profile ();
 
-  tagged_profile->tag = ep.tag;
-  tagged_profile->profile_data = ep.profile_data;  // Deep copy
+  tagged_profile->tag = ep->tag;
+  tagged_profile->profile_data = ep->profile_data;  // Deep copy
 
   return safe_tagged_profile._retn ();
 }
