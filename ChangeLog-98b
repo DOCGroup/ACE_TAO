@@ -1,5 +1,9 @@
 Tue May 12 00:42:05 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 	
+	* bin/dsp2dsp.pl: This file clones a new MSVC 5.0 dsp file based
+	  on setting from another dsp file.  It is most useful in adding
+	  new project files into tests/.
+	
 	* tests/WinCE/*: New project files.  Updated the workspace.
 	  Please see CE-status for the current progress.
 	
