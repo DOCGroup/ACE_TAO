@@ -1274,6 +1274,12 @@ CORBA_ORB::init_orb_globals (CORBA::Environment &ACE_TRY_ENV)
   // This method should be invoked atomically.  It is the caller's
   // responsibility to ensure that this condition is satisfied.
 
+  // Prevent multiple initializations.
+  if (CORBA::ORB::orb_init_count_ != 0)
+    return;
+  else
+    CORBA::ORB::orb_init_count_++;
+
 #if defined(ACE_HAS_EXCEPTIONS)
   set_unexpected (CORBA_ORB::_tao_unexpected_exception);
 #endif /* ACE_HAS_EXCEPTIONS */
@@ -1358,13 +1364,8 @@ CORBA::ORB_init (int &argc,
   if (TAO_Singleton_Manager::instance ()->init () == -1)
     return CORBA::ORB::_nil ();
 
-  if (CORBA::ORB::orb_init_count_ == 0)
-    {
-      CORBA_ORB::init_orb_globals (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (CORBA::ORB::_nil ());
-
-      CORBA::ORB::orb_init_count_++;
-    }
+  CORBA_ORB::init_orb_globals (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::ORB::_nil ());
 
   // Make sure the following is done after the global ORB
   // initialization since we need to have exceptions initialized.
