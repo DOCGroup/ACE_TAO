@@ -1,3 +1,13 @@
+Wed Aug 19 15:25:07 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* $ACE_wrappers/TAO/orbsvcs/tests/CosPropertyService/client.cpp: 
+		Fixed the SunCC warnings.
+
+Wed Aug 19 11:48:57 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* tests/Cubit/TAO/IDL_Cubit/README: Removed the note on
+	IDL_Cubit_Test. It is no more there. run_test.pl does all.
+
 Wed Aug 19 15:58:23 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO-INSTALL.html: added instructions for cross-compiled targets.
