@@ -1,3 +1,10 @@
+Wed Jul 28 00:09:08 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* examples/IPC_SAP/SSL_SAP/SSL-server-fancy.cpp (handle_events):
+
+	  Fixed "comparison of signed and unsigned values" warning
+	  exhibited by CBuilderX.
+
 Tue Jul 27 07:11:50 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* Reverted change:

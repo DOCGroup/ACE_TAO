@@ -547,10 +547,8 @@ Handler_Factory::handle_events (void)
   fd_set handles;
 
   FD_ZERO (&handles);
-  FD_SET ( (int) this->twoway_acceptor_.get_handle (),
-          &handles);
-  FD_SET ( (int) this->oneway_acceptor_.get_handle (),
-          &handles);
+  FD_SET ((ACE_SOCKET) this->twoway_acceptor_.get_handle (), &handles);
+  FD_SET ((ACE_SOCKET) this->oneway_acceptor_.get_handle (), &handles);
 
   // Performs the iterative server activities.
 
