@@ -1,3 +1,13 @@
+Sat Oct 18 07:43:29 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* include/makeinclude/rules.local.GNU: added $(TEMPLATE_REPOSITORY)
+	  to OBJDIRS, so that individual platforms can add template
+	  repository directories for creation.
+
+	* include/makeinclude/platform_sunos{4,5}_sunc++*.GNU: added
+	  TEMPLATE_REPOSITORY with Templates.DB and Templates.DB/Modules.DB.
+	  We can build without any warnings with Sun C++ now.
+
 Fri Oct 17 22:51:46 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* ace/Timer_Queue_Adapters.h: 
