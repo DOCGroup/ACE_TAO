@@ -3,7 +3,7 @@
 // This test program verifies the functionality of the ACE_OS
 // implementation of readers/writer locks on Win32 and Posix pthreads.
 
-#include "ace/Synch.h"
+#include "ace/OS_main.h"
 #include "ace/Thread.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Get_Opt.h"

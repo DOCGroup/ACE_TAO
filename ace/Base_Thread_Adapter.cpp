@@ -1,7 +1,6 @@
 // $Id$
 
 #include "ace/Base_Thread_Adapter.h"
-#include "ace/OS.h"
 
 ACE_RCSID(ace, Base_Thread_Adapter, "$Id$")
 

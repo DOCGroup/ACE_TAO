@@ -2,6 +2,7 @@
 
 #include "Consumer_Router.h"
 #include "Options.h"
+#include "ace/os_include/os_assert.h"
 
 ACE_RCSID(Event_Server, Consumer_Router, "$Id$")
 

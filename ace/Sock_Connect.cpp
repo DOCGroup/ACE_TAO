@@ -1,12 +1,14 @@
 // $Id$
 
 #include "ace/Sock_Connect.h"
-#include "ace/OS.h"             // Needed to get the ifreq stuff
 #include "ace/INET_Addr.h"
 #include "ace/Log_Msg.h"
 #include "ace/Handle_Set.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
+#include "ace/OS_NS_sys_socket.h"
+#include "ace/OS_NS_netdb.h"
+#include "ace/os_include/net/os_if.h"
 
 # if defined (ACE_HAS_GETIFADDRS)
 #   include /**/ <ifaddrs.h>

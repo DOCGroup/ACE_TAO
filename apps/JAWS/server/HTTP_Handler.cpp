@@ -8,6 +8,8 @@
 #include "HTTP_Handler.h"
 #include "HTTP_Helpers.h"
 #include "IO.h"
+#include "ace/OS_NS_sys_socket.h"
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID(server, HTTP_Handler, "$Id$")
 

@@ -24,6 +24,7 @@
 
 #include "ace/Get_Opt.h"
 #include "test_i.h"
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID(Adapter_Activator, server, "$Id$")
 

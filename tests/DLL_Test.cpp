@@ -117,7 +117,7 @@ int basic_test (ACE_DLL &dll)
   // Allocate and free a string allocated via malloc in a different dll.
   ACE_TCHAR *malloc_str = my_hello->malloc_info ();
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Result for malloc_info(): %s\n"), malloc_str));
-  ACE_OS_Memory::free (malloc_str);
+  ACE_OS::free (malloc_str);
 
   return 0;
 }

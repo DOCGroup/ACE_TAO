@@ -17,10 +17,12 @@
 //
 // ============================================================================
 
+#include "ace/OS_main.h"
 #include "ace/SString.h"
 #include "ace/Naming_Context.h"
 #include "ace/Profile_Timer.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID(Misc, test_naming, "$Id$")
 

@@ -1,6 +1,11 @@
 // $Id$
 
 #include "ace/ACE.h"
+
+#if defined (ACE_LACKS_INLINE_FUNCTIONS)
+#include "ace/ACE.i"
+#endif /* ACE_LACKS_INLINE_FUNCTIONS */
+
 #include "ace/Basic_Types.h"
 #include "ace/Handle_Set.h"
 #include "ace/Auto_Ptr.h"
@@ -8,10 +13,18 @@
 #include "ace/Version.h"
 #include "ace/Message_Block.h"
 #include "ace/Log_Msg.h"
-
-#if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/ACE.i"
-#endif /* ACE_LACKS_INLINE_FUNCTIONS */
+#include "ace/OS_NS_sys_select.h"
+#include "ace/OS_NS_strings.h"
+#include "ace/OS_NS_signal.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_sys_resource.h"
+#include "ace/OS_NS_sys_wait.h"
+#include "ace/OS_NS_sys_time.h"
+#include "ace/OS_NS_time.h"
+#include "ace/OS_NS_sys_uio.h"
+#include "ace/OS_NS_sys_stat.h"
+#include "ace/OS_NS_ctype.h"
+#include "ace/OS_TLI.h"
 
 ACE_RCSID(ace, ACE, "$Id$")
 
@@ -3469,7 +3482,7 @@ ACE::strnew (const wchar_t *s)
     return 0;
   wchar_t *t = 0;
   ACE_NEW_RETURN (t,
-                  wchar_t[ACE_OS_String::strlen (s) + 1],
+                  wchar_t[ACE_OS::strlen (s) + 1],
                   0);
   if (t == 0)
     return 0;

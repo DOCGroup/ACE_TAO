@@ -13,6 +13,8 @@ ACE_RCSID (tao,
 # include "tao/IIOP_Endpoint.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/OS_NS_stdio.h"
+
 TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const ACE_INET_Addr &addr,
                                       int use_dotted_decimal_addresses)
   : TAO_Endpoint (IOP::TAG_INTERNET_IOP)

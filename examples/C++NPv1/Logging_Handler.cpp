@@ -12,7 +12,7 @@
 
 #include "Logging_Handler.h"
 #include "ace/streams.h"
-
+#include "ace/os_include/os_netdb.h"
 
 int operator>> (ACE_InputCDR &cdr, ACE_Log_Record &log_record)
 {

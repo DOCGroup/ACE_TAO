@@ -3,6 +3,7 @@
 // The following test exercises the Eric C. Newton's <ecn@clark.net>
 // XtReactor implementation.
 
+#include "ace/OS_main.h"
 #include "ace/XtReactor.h"
 #include "ace/Reactor.h"
 #include "ace/Message_Block.h"

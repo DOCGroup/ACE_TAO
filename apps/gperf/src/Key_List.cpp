@@ -29,6 +29,9 @@ ACE_RCSID(src, Key_List, "$Id$")
 
 #include "ace/Read_Buffer.h"
 #include "Hash_Table.h"
+#include "ace/OS_Memory.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
 
 // Default type for generated code.
 const char *const Key_List::default_array_type = "char *";
@@ -362,7 +365,7 @@ Key_List::merge (List_Node *list1, List_Node *list2)
     return list1;
   else if (occurrence_sort && list1->occurrence < list2->occurrence
            || hash_sort && list1->hash_value > list2->hash_value
-           || key_sort && strcmp (list1->key, list2->key) >= 0)
+           || key_sort && ACE_OS::strcmp (list1->key, list2->key) >= 0)
     {
       list2->next = merge (list2->next, list1);
       return list2;
@@ -553,7 +556,7 @@ Key_List::output_switch (int use_keyword_table)
       // Keep track of the longest string we'll need!
       const char *s = "charmap[*str] == *resword->%s && !strncasecmp (str + 1, resword->%s + 1, len - 1)";
       comp_buffer =
-        new char [strlen (s) + 2 * strlen (option.key_name ()) + 1];
+        new char [ACE_OS::strlen (s) + 2 * ACE_OS::strlen (option.key_name ()) + 1];
       if (option[COMP])
         sprintf (comp_buffer, "%s == *resword->%s && !%s (str + 1, resword->%s + 1, len - 1)",
                  option[STRCASECMP] ? "charmap[*str]" : "*str", option.key_name (),

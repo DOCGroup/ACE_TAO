@@ -10,6 +10,7 @@
 #include "orbsvcs/Sched/Config_Scheduler.h"
 #include "orbsvcs/Scheduler_Factory.h"
 #include "orbsvcs/FtRtEvent/EventChannel/FTRTEC_ServiceActivate.h"
+#include "ace/OS_main.h"
 
 ACE_RCSID (Event_Service,
            FT_EventService,

@@ -1,14 +1,16 @@
 #include "ace/Message_Block.h"
-#include "ace/Log_Msg.h"
-#include "ace/Malloc_Base.h"
-#include "ace/Guard_T.h"
-
-//#define ACE_ENABLE_TIMEPROBES
-#include "ace/Timeprobe.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Message_Block.i"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/Log_Msg.h"
+#include "ace/Malloc_Base.h"
+#include "ace/Guard_T.h"
+#include "ace/OS_NS_string.h"
+
+//#define ACE_ENABLE_TIMEPROBES
+#include "ace/Timeprobe.h"
 
 ACE_RCSID (ace,
            Message_Block,

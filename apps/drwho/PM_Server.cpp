@@ -4,6 +4,7 @@
 #include "Rwho_DB_Manager.h"
 #include "PM_Server.h"
 #include "ace/ACE.h"
+#include "ace/OS_NS_string.h"
 
 // This is the main method for the server side of things.  It reads
 // the RWHO file on the local machine and inserts HOST_NAME
@@ -67,7 +68,7 @@ PM_Server::handle_protocol_entries (char *buf_ptr,
                np->get_inactive_count (),
                np->get_active_count (),
                np->get_host_name ());
-      buf_ptr += strlen (buf_ptr) + 1;
+      buf_ptr += ACE_OS::strlen (buf_ptr) + 1;
     }
 
   return buf_ptr;

@@ -1,16 +1,18 @@
 // $Id$
 
+#include "ACEXML/parser/parser/Parser.h"
+
+#if !defined (__ACEXML_INLINE__)
+# include "ACEXML/parser/parser/Parser.i"
+#endif /* __ACEXML_INLINE__ */
+
 #include "ace/ACE.h"
 #include "ACEXML/common/Transcode.h"
 #include "ACEXML/common/AttributesImpl.h"
 #include "ACEXML/common/StrCharStream.h"
 #include "ACEXML/common/StreamFactory.h"
-#include "ACEXML/parser/parser/Parser.h"
 #include "ACEXML/parser/parser/ParserInternals.h"
-
-#if !defined (__ACEXML_INLINE__)
-# include "ACEXML/parser/parser/Parser.i"
-#endif /* __ACEXML_INLINE__ */
+#include "ace/OS_NS_strings.h"
 
 static const ACEXML_Char default_attribute_type[] = ACE_TEXT ("CDATA");
 static const ACEXML_Char empty_string[] = { 0 };

@@ -1,16 +1,17 @@
-#include "ace/Get_Opt.h"
-#include "ace/Log_Msg.h"
-#include "ace/Service_Repository.h"
-#include "ace/Service_Config.h"
 #include "ace/Service_Manager.h"
-#include "ace/Service_Types.h"
-#include "ace/Reactor.h"
-#include "ace/WFMO_Reactor.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Service_Manager.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/Get_Opt.h"
+#include "ace/Log_Msg.h"
+#include "ace/Service_Repository.h"
+#include "ace/Service_Config.h"
+#include "ace/Service_Types.h"
+#include "ace/Reactor.h"
+#include "ace/WFMO_Reactor.h"
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID (ace,
            Service_Manager,
@@ -82,7 +83,7 @@ ACE_Service_Manager::info (ACE_TCHAR **strp, size_t length) const
     return -1;
   else
     ACE_OS::strsncpy (*strp, buf, length);
-  return ACE_static_cast (int, ACE_OS_String::strlen (buf));
+  return ACE_static_cast (int, ACE_OS::strlen (buf));
 }
 
 int
@@ -173,7 +174,7 @@ ACE_Service_Manager::list_services (void)
        sri.next (sr) != 0;
        sri.advance ())
     {
-      size_t len = ACE_OS_String::strlen (sr->name ()) + 11;
+      size_t len = ACE_OS::strlen (sr->name ()) + 11;
       ACE_TCHAR buf[BUFSIZ];
       ACE_TCHAR *p = buf + len;
 

@@ -10,6 +10,8 @@
 #include "FILE_Parser.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/OS_NS_stdio.h"
+
 ACE_RCSID (tao, 
            FILE_Parser, 
            "$Id$")

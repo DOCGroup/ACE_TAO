@@ -36,6 +36,10 @@ extern "C"
 {
 #endif /* __cplusplus */
 
+# if !defined (ACE_HAS_UCONTEXT_T)
+typedef int ucontext_t;
+# endif /* ACE_HAS_UCONTEXT_T */
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

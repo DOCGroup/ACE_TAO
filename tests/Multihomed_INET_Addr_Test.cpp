@@ -18,10 +18,11 @@
 //
 // ============================================================================
 
-#include /**/ "test_config.h"
-#include /**/ "ace/OS.h"
-#include /**/ "ace/Multihomed_INET_Addr.h"
-#include /**/ "ace/Log_Msg.h"
+#include "test_config.h"
+#include "ace/OS_NS_string.h"
+#include "ace/Multihomed_INET_Addr.h"
+#include "ace/Log_Msg.h"
+#include "ace/OS_NS_arpa_inet.h"
 
 int run_main (int argc, ACE_TCHAR *argv[])
 {

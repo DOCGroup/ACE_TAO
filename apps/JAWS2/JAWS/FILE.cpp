@@ -1,7 +1,6 @@
 // $Id$
 
-#include "ace/OS.h"
-#include "ace/Synch.h"
+#include "ace/Guard_T.h"
 
 #include "JAWS/FILE.h"
 

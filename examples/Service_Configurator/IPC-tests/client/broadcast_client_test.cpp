@@ -3,10 +3,13 @@
 // Tests out the broadcast service of the
 // Internet domain IPC-SAP dgram abstraction.
 
+#include "ace/OS_main.h"
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Dgram_Bcast.h"
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID(client, broadcast_client_test, "$Id$")
 
@@ -51,7 +54,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   static char buf[] = "testing socket broadcast service";
 
-  if (sd.send (buf, strlen (buf), broadcast_port_number) == -1)
+  if (sd.send (buf, ACE_OS::strlen (buf), broadcast_port_number) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "can't send broadcast"), -1);
 
   return 0;

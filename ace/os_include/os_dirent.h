@@ -45,6 +45,13 @@ extern "C"
 #  define MAXNAMLEN NAME_MAX
 #endif /* !MAXNAMLEN */
 
+# if defined (ACE_PSOS)
+// pHILE+ calls the DIR struct XDIR instead
+#    if !defined (ACE_PSOS_DIAB_PPC)
+typedef XDIR ACE_DIR;
+#    endif /* !defined (ACE_PSOS_DIAB_PPC) */
+# endif /* ACE_PSOS */
+
 // At least compile on some of the platforms without <ACE_DIR> info yet.
 #if !defined (ACE_HAS_DIRENT)
 typedef int ACE_DIR;

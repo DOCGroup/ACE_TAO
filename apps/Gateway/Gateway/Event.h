@@ -17,11 +17,13 @@
 #ifndef EVENT_H
 #define EVENT_H
 
-#include "ace/OS.h"
+#include "ace/os_include/arpa/os_inet.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Basic_Types.h"
 
 // = The following #defines should really be in a separate include
 // file that is shared with the ../Peer/ directory.  For now, we'll

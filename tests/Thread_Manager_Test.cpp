@@ -24,6 +24,7 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Signal.h"
 #include "ace/Task.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(tests, Thread_Manager_Test, "$Id$")
 

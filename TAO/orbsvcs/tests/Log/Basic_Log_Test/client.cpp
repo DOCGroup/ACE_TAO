@@ -1,5 +1,6 @@
 #include "Basic_Log_Test.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_main.h"
 
 ACE_RCSID (Basic_Log_Test,
            client,

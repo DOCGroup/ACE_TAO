@@ -18,12 +18,13 @@
 #define ACE_RMCAST_H
 #include /**/ "ace/pre.h"
 
-#include "ace/OS.h"
 #include "RMCast_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Basic_Types.h"
 
 class ACE_Message_Block;
 class ACE_RMCast_Proxy;

@@ -7,6 +7,7 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID (ImplRepo, 
            airplane_server_i, 

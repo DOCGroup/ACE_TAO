@@ -5,6 +5,7 @@
 // suspension and resumption, and cooperative thread cancellation
 // mechanisms.
 
+#include "ace/OS_main.h"
 #include "ace/Service_Config.h"
 #include "ace/Thread_Manager.h"
 

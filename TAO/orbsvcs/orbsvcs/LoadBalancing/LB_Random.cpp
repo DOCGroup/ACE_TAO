@@ -3,6 +3,7 @@
 #include "LB_Random.h"
 
 #include "tao/ORB_Constants.h"
+#include "ace/OS_NS_time.h"
 
 ACE_RCSID (LoadBalancing,
            LB_Random,

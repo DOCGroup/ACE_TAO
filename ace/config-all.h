@@ -23,6 +23,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+// By default we perform no tracing on the OS layer, otherwise the
+// coupling between the OS layer and Log_Msg is too tight.  But the
+// application can override the default if they wish to.
+# if !defined(ACE_OS_TRACE)
+#  define ACE_OS_TRACE(X)
+# endif /* ACE_OS_TRACE */
+
 #define ACE_BITS_PER_ULONG (8 * sizeof (u_long))
 
 #if !defined (ACE_OSTREAM_TYPE)
@@ -691,6 +698,9 @@ extern "C" u_long CLS##_Export _get_dll_unload_policy (void) \
 # define ACE_NOTSUP_RETURN(FAILVALUE) do { errno = ENOTSUP ; return FAILVALUE; } while (0)
 # define ACE_NOTSUP do { errno = ENOTSUP; return; } while (0)
 #endif /* ! ACE_HAS_VERBOSE_NOTSUP */
+
+// empty ACE_OS namespace to help identify compiler errors more easily.
+namespace ACE_OS {}
 
 #include /**/ "ace/post.h"
 

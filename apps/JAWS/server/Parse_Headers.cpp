@@ -3,6 +3,10 @@
 #include "ace/Log_Msg.h"
 
 #include "Parse_Headers.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_strings.h"
+#include "ace/OS_NS_stdlib.h"
+#include "ace/os_include/os_ctype.h"
 
 ACE_RCSID(server, Parse_Headers, "$Id$")
 
@@ -64,7 +68,7 @@ Headers::parse_header_line (char * const header_line)
     }
 
   // Write back the unused portion of the input.
-  ACE_OS::memmove (header_line, ptr, strlen(ptr) + 1);
+  ACE_OS::memmove (header_line, ptr, ACE_OS::strlen(ptr) + 1);
 }
 
 int

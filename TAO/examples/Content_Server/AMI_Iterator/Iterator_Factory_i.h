@@ -26,6 +26,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/OS_NS_sys_stat.h"
 
 // Forward declarations
 class Content_Iterator_i;

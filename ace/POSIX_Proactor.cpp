@@ -5,11 +5,6 @@
 
 #if defined (ACE_HAS_AIO_CALLS)
 
-#include "ace/ACE.h"
-#include "ace/Task_T.h"
-#include "ace/Log_Msg.h"
-#include "ace/Object_Manager.h"
-
 #if !defined (__ACE_INLINE__)
 #include "ace/POSIX_Proactor.i"
 #endif /* __ACE_INLINE__ */
@@ -17,6 +12,17 @@
 # if defined (ACE_HAS_SYSINFO)
 #   include /**/ <sys/systeminfo.h>
 # endif /* ACE_HAS_SYS_INFO */
+
+#include "ace/ACE.h"
+#include "ace/Task_T.h"
+#include "ace/Log_Msg.h"
+#include "ace/Object_Manager.h"
+#include "ace/OS_NS_sys_socket.h"
+#include "ace/OS_NS_signal.h"
+
+#if defined (sun)
+#  include "ace/OS_NS_strings.h"
+#endif /* sun */
 
 // *********************************************************************
 /**
@@ -61,11 +67,11 @@ ACE_POSIX_Proactor::ACE_POSIX_Proactor (void)
 
   ACE_OS::sysinfo (SI_RELEASE , Buf, sizeof(Buf)-1);
 
-  if (ACE_OS_String::strcasecmp (Buf , "5.6") == 0)
+  if (ACE_OS::strcasecmp (Buf , "5.6") == 0)
     os_id_ = OS_SUN_56;
-  else if (ACE_OS_String::strcasecmp (Buf , "5.7") == 0)
+  else if (ACE_OS::strcasecmp (Buf , "5.7") == 0)
     os_id_ = OS_SUN_57;
-  else if (ACE_OS_String::strcasecmp (Buf , "5.8") == 0)
+  else if (ACE_OS::strcasecmp (Buf , "5.8") == 0)
     os_id_ = OS_SUN_58;
 
 #elif defined(HPUX)

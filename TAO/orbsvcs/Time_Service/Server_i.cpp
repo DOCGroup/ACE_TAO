@@ -4,6 +4,7 @@
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
 #include "ace/Argv_Type_Converter.h"
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID(Time_Service, Server_i, "$Id$")
 

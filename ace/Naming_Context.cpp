@@ -45,11 +45,11 @@ ACE_Naming_Context::info (ACE_TCHAR **strp,
                    ACE_LIB_TEXT ("ACE_Naming_Context"),
                    ACE_LIB_TEXT ("Proxy for making calls to a Name Server"));
 
-  if (*strp == 0 && (*strp = ACE_OS_String::strdup (buf)) == 0)
+  if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
     return -1;
   else
-    ACE_OS_String::strsncpy (*strp, buf, length);
-  return ACE_static_cast (int, ACE_OS_String::strlen (buf));
+    ACE_OS::strsncpy (*strp, buf, length);
+  return ACE_static_cast (int, ACE_OS::strlen (buf));
 }
 
 int

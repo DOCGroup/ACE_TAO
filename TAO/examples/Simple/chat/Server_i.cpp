@@ -19,6 +19,7 @@
 
 #include "Server_i.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_stdio.h"
 
 Server_i::Server_i ()
   : ior_file_name_ ("chat.ior")
