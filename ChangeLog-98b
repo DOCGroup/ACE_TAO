@@ -1,5 +1,9 @@
 Fri Sep 04 11:56:44 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* tests/XtReactor_Test.cpp (main): Removed '.cpp' from
+	  ACE_START_TEST title string.  Thanks to Ossama for reporting
+	  this. 
+
 	* Makefile (CONTROLLED_FILES): Removed some documents from the
 	  list because they are in docs/ now.
 
