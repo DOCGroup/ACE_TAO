@@ -1,7 +1,7 @@
-#include "ace/OS.h"
 // $Id$
 
 #include "Config_Files.h"
+#include "Options.h"
 
 // This fixes a nasty bug with cfront-based compilers (like
 // Centerline).
@@ -9,7 +9,7 @@ typedef FP::Return_Type FP_RETURN_TYPE;
 
 FP_RETURN_TYPE
 Consumer_Config_File_Parser::read_entry (Consumer_Config_Info &entry,
-					 int &line_number)
+                                         int &line_number)
 {
   FP_RETURN_TYPE result;
 
@@ -39,7 +39,7 @@ Consumer_Config_File_Parser::read_entry (Consumer_Config_Info &entry,
   // get all the consumers.
   entry.total_consumers_ = 0;
 
-  while ((result = this->getint 
+  while ((result = this->getint
           (entry.consumers_[entry.total_consumers_])) == FP::SUCCESS)
     ++entry.total_consumers_; // do nothing (should check against max...)
 
@@ -51,7 +51,7 @@ Consumer_Config_File_Parser::read_entry (Consumer_Config_Info &entry,
 
 FP_RETURN_TYPE
 Proxy_Config_File_Parser::read_entry (Proxy_Config_Info &entry,
-					   int &line_number)
+                                           int &line_number)
 {
   char buf[BUFSIZ];
   FP_RETURN_TYPE result;
@@ -89,7 +89,7 @@ Proxy_Config_File_Parser::read_entry (Proxy_Config_Info &entry,
 
       if (entry.proxy_role_ == 'C')
         entry.remote_port_ = Options::instance ()->consumer_connector_port ();
-      else (entry.proxy_role_ == 'S')
+      else if (entry.proxy_role_ == 'S')
         entry.remote_port_ = Options::instance ()->supplier_connector_port ();
       else
         // Yikes, this is a *weird* error!
@@ -138,7 +138,7 @@ Proxy_Config_File_Parser::read_entry (Proxy_Config_Info &entry,
 #if defined (DEBUGGING)
 int main (int argc, char *argv[])
 {
-  if (argc != 4) 
+  if (argc != 4)
     {
       //    ACE_ERROR_RETURN ((LM_ERROR, "%s filename\n", argv[0]), -1);
       cerr << argv[0] << " CCfilename filename Mapfilename.\n";
@@ -158,12 +158,12 @@ int main (int argc, char *argv[])
   while ((result = CCfile.read_entry (entry, line_number)) != EOF)
     {
       if (result != FP::SUCCESS)
- //	ACE_DEBUG ((LM_DEBUG, "Error line %d.\n", line_number));
-	cerr << "Error at line " << line_number << endl;
+ //     ACE_DEBUG ((LM_DEBUG, "Error line %d.\n", line_number));
+        cerr << "Error at line " << line_number << endl;
       else
-	printf ("%d\t%s\t%d\t%c\t%d\t%c\t%d\n",
-	       entry.proxy_id_, entry.host_, entry.remote_port_, entry.proxy_role_,
-	       entry.max_retry_timeout_, entry.transform_, entry.local_port_);
+        printf ("%d\t%s\t%d\t%c\t%d\t%c\t%d\n",
+               entry.proxy_id_, entry.host_, entry.remote_port_, entry.proxy_role_,
+               entry.max_retry_timeout_, entry.transform_, entry.local_port_);
     }
   CCfile.close();
 
@@ -180,15 +180,15 @@ int main (int argc, char *argv[])
   while ((result = file.read_entry (entry, line_number)) != EOF)
     {
       if (result != FP::SUCCESS)
-	cerr << "Error at line " << line_number << endl;
+        cerr << "Error at line " << line_number << endl;
       else
-	{
-	  printf ("%d\t%d\t%d\t%d\t",
-		  entry.proxy_id_, entry.supplier_id_, entry.type_);
-	  while (--entry.total_consumers_ >= 0)
-	    printf ("%d,", entry.consumers_[entry.total_consumers_]);
-	  printf ("\n");
-	}
+        {
+          printf ("%d\t%d\t%d\t%d\t",
+                  entry.proxy_id_, entry.supplier_id_, entry.type_);
+          while (--entry.total_consumers_ >= 0)
+            printf ("%d,", entry.consumers_[entry.total_consumers_]);
+          printf ("\n");
+        }
     }
   file.close();
 
@@ -203,4 +203,3 @@ template class File_Parser<Consumer_Config_Info>;
 #pragma instantiate File_Parser<Proxy_Config_Info>
 #pragma instantiate File_Parser<Consumer_Config_Info>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
