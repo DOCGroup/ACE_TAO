@@ -33,6 +33,7 @@
 #include "tao/Wait_Strategy.h"
 #include "tao/Connection_Handler.h"
 #include "tao/IIOP_Connection_Handler.h"
+#include "tao/IIOPC.h"
 
 #include "SSLIOP_Transport.h"
 #include "SSLIOP_Current_Impl.h"
@@ -108,6 +109,9 @@ public:
 
   /// Add ourselves to Cache.
   int add_handler_to_cache (void);
+
+  /// Process the <listen_list>
+  int process_listen_point_list (IIOP::ListenPointList &listen_list);
 
   /// Make the SSL session state available to the SSLIOP::Current
   /// object.

@@ -259,6 +259,44 @@ TAO_SSLIOP_Connection_Handler::add_handler_to_cache (void)
 
 
 int
+TAO_SSLIOP_Connection_Handler::process_listen_point_list (
+    IIOP::ListenPointList &listen_list)
+{
+  // Get the size of the list
+  CORBA::ULong len = listen_list.length ();
+
+  for (CORBA::ULong i = 0; i < len; ++ i)
+    {
+      IIOP::ListenPoint listen_point = listen_list[i];
+      ACE_INET_Addr addr (listen_point.port,
+                          listen_point.host.in ());
+
+
+      // Construct an  IIOP_Endpoint object
+      TAO_SSLIOP_Endpoint endpoint (addr,
+                                    0);
+
+      // Construct a property object
+      TAO_Base_Connection_Property prop (&endpoint);
+
+      // Mark the connection as bidirectional
+      prop.set_bidir_flag (1);
+
+      // The property for this handler has changed. Recache the
+      // handler with this property
+      int retval = this->recache_handler (&prop);
+      if (retval == -1)
+        return retval;
+
+      // Make the handler idle and ready for use
+      this->make_idle ();
+    }
+
+  return 0;
+}
+
+
+int
 TAO_SSLIOP_Connection_Handler::handle_input (ACE_HANDLE h)
 {
   return this->handle_input_i (h);

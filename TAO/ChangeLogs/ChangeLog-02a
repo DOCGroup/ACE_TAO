@@ -1,3 +1,11 @@
+Fri Dec 22 15:25:51 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp: Added bidirectional
+	  support for SSLIOP.
+
 Fri Dec 22 14:56:24 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/IIOP_Transport.h:
