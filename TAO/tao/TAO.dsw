@@ -351,7 +351,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "TypeCodeFactory_Static"=H:\fix_886\ACE_wrappers\TAO\tao\TypeCodeFactory\TypeCodeFactory_Static.dsp - Package Owner=<4>
+Project: "TypeCodeFactory_Static"=.\TypeCodeFactory\TypeCodeFactory_Static.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
