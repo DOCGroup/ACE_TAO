@@ -145,11 +145,11 @@ main (int argc, char *argv[])
       ACE_Throughput_Stats throughput;
 
       ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
-
+      
       client.accumulate_into (throughput);
-
+      
       char buf[64];
-      ACE_OS::sprintf (buf, "Thread[%d]", 1);
+      ACE_OS::sprintf (buf, "Single Theaded:SMI");
       client.dump_stats (buf, gsf);
 
       throughput.dump_results ("Aggregated", gsf);
