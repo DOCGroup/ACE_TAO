@@ -1,3 +1,10 @@
+Thu Jun 10 17:15:37 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Exception.cpp:
+	  Added include and modified identifier related to the
+	  codeset translator implemented for IBM1047. Thanks to
+	  Jim Rogers jrogers@viasoft.com for pointing this out.
+
 Thu Jun 10 16:51:02 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* examples/Simple/chat/Server_i.h:
