@@ -55,20 +55,6 @@ be_array::be_array (UTL_ScopedName *n, unsigned long ndims, UTL_ExprList *dims)
                                                          I_FALSE), NULL));
       this->set_name (myname);
     }
-
-#if 0
-  // computes the repoID
-  compute_repoID ();
-
-  // computes the fully scoped name
-  compute_fullname ();
-
-  // computes the fully scoped typecode name
-  compute_tc_name ();
-
-  // compute the flattened fully scoped name
-  compute_flatname ();
-#endif
 }
 
 // Code generation
@@ -1223,7 +1209,7 @@ be_array::gen_encapsulation (void)
 
   // XXXASG - byte order must be based on what m/c we are generating code -
   // TODO
-  *os << "0, // byte order" << nl;
+  *os << "MY_BYTE_SEX, // byte order" << nl;
 
   // emit typecode of element type
   bt = be_type::narrow_from_decl (this->base_type ());
