@@ -1,0 +1,12 @@
+// $Id$
+#include "HumanMachineInterface.idl"
+
+composition session HumanMachineInterface_Impl
+{
+  home executor HumanMachineInterfaceHome_Exec
+  {
+    implements RobotAssembly::HumanMachineInterfaceHome;
+    manages    HumanMachineInterface_Exec;
+  };
+};
+

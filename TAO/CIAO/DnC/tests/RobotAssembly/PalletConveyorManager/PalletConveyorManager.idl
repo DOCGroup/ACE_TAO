@@ -1,0 +1,20 @@
+// $Id$
+#include "../Robot_Base.idl" 
+
+module RobotAssembly
+{
+  component PalletConveyorManager 
+  {
+    // Production Interfaces.
+    consumes MovePalletRequest PalletRequests;
+    publishes PalletStatusResponse PalletStatus;
+    
+    // Development Interfaces.
+    provides PCMController Controller;
+ };
+
+ home PalletConveyorManagerHome manages PalletConveyorManager {};
+
+};
+
+

@@ -1,0 +1,20 @@
+// $Id$
+#include "../Robot_Base.idl" 
+
+module RobotAssembly
+{
+  component RobotManager
+  {
+    // Production Interfaces.
+    consumes  ProcessPallet ProcessPalletCommands;
+    publishes PalletProcessingStatus ProcessingStatus;
+    
+    // Development Interfaces.
+    provides RMController Controller;
+
+  };
+  home RobotManagerHome manages RobotManager {};
+
+};
+
+
