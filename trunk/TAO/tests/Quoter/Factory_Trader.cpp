@@ -26,10 +26,17 @@ const char * Factory_Trader::GENERIC_FACTORY_INTERFACE_REPOSITORY_ID = "IDL:CosL
 
 
 Factory_Trader::Factory_Trader ()
+#ifdef TRADER_AVAILABLE
+
   : trading_Components_ptr_ (0), 
     trader_ptr_(0), 
     support_Attributes_ptr_(0)
+
+#endif // TRADER_AVAILABLE
 { 
+
+#ifdef TRADER_AVAILABLE
+
   TAO_TRY
     {      
       // create the trader 
@@ -52,17 +59,24 @@ Factory_Trader::Factory_Trader ()
       TAO_TRY_ENV.print_exception ("Factory_Trader constructor: Exception.\n");
     }
   TAO_ENDTRY;  
+#endif // TRADER_AVAILABLE
 }
 
 Factory_Trader::~Factory_Trader ()
 { 
+#ifdef TRADER_AVAILABLE
+
   delete this->trader_ptr_;
+
+#endif // TRADER_AVAILABLE
 }
 
 
 void 
 Factory_Trader::add_type ()
 {
+#ifdef TRADER_AVAILABLE
+
   TAO_TRY
     {
       // define the new type
@@ -113,6 +127,8 @@ Factory_Trader::add_type ()
       ACE_ERROR ((LM_ERROR, "Factory_Trader::init: Failed adding a new type."));
     }
   TAO_ENDTRY;
+
+#endif // TRADER_AVAILABLE
 }
   
 
@@ -122,6 +138,8 @@ Factory_Trader::export (const char * name,
 	       const char * description,
 	       const CORBA::Object_ptr object_ptr)
 {
+#ifdef TRADER_AVAILABLE
+
   TAO_TRY
     {
       if (CORBA::is_nil(object_ptr))
@@ -166,12 +184,15 @@ Factory_Trader::export (const char * name,
       ACE_ERROR ((LM_ERROR, "Factory_Trader::export: Failed to export factory.\n"));
     }
   TAO_ENDTRY;  
+
+#endif // TRADER_AVAILABLE
 }
 
 
 CORBA::Object_ptr
 Factory_Trader::query (const CORBA::String constraint)
 {
+#ifdef TRADER_AVAILABLE
 
   TAO_TRY
     {           
@@ -246,4 +267,12 @@ Factory_Trader::query (const CORBA::String constraint)
       ACE_ERROR ((LM_ERROR, "Factory_Trader::query: Failed.\n"));
     }
   TAO_ENDTRY;        
+
+#else // TRADER_AVAILABLE
+
+  return 0;
+
+#endif // TRADER_AVAILABLE
 }
+
+
