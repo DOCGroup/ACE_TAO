@@ -1,3 +1,11 @@
+Wed May 19 10:04:54 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* ace/SString.i:
+	  Change the default constructor to set rep_ to the 
+	  empty string instead of the null string. Thanks to
+	  Knut Johannessen <knutj@funcom.com> for pointing
+	  this out.
+
 Wed May 19 06:34:58 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-minimal.h: added #define ACE_USE_THREAD_MANAGER_ADAPTER,
