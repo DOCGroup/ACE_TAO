@@ -6,35 +6,29 @@ nameservice is made on the orb. After that, getting a reference
 to the Cubit object, making the Cubit operation calls, 
 and shutting down the server are all done with DII requests.
 
-To run the tests with one entry, type "dii_cubit_test" (with no args). This
-will create a process that forks into servant and client, shutting down the
-server when finished.
-
-If there is more than one machine on the network running a naming service, the
-client may query the wrong one and not find the Cubit server. In that case, there
-is a perl script in this directory called run_test.pl that will circumvent the
-problem by assigning server and client a nameservice port based on user ID.
-Otherwise, it does the same thing as dii_cubit_test.
+To run the tests with one "button-push", execute the perl script run_test.pl
+in this directory. It will start up the server and client. The client will
+shut down the server when the tests are finished.
 
 If you want to run each executable separately and manually, run the 
 server first (in IDL_Cubit). Then run the client with zero or more of 
 the following args:
 
-	[-d]			Increments TAO_debug_level. It's additive, up
-				to 2 levels of debugging.
+        [-d]                 Increments TAO_debug_level. It's additive, up
+                             to 2 levels of debugging.
 
-	[-n <calls/loop>]	Sets the # of calls per loop (default is 250).
+        [-n <calls/loop>]	   Sets the # of calls per loop (default is 250).
 
-	[-i <factory IOR>]	For passing the IOR by hand.
+        [-i <factory IOR>]   For passing the IOR by hand.
 
-	[-f <filename>]		If server is run with [-o <filename>] option, 
-				it outputs its factory IOR to a file, which
-				the client can readwith this option.
+        [-f <filename>]      If server is run with [-o <filename>] option, 
+                             it outputs its factory IOR to a file, which
+                             the client can readwith this option.
 
-	[-x]			Shuts down server when finished.
+        [-x]                 Shuts down server when finished.
 
-	[-s]			Disables use of the TAO naming service (-i and
-				-f options do this automatically).
+        [-s]                 Disables use of the TAO naming service (-i and
+                            -f options do this automatically).
 
 If using the -i option, you might want to run the server with the option 
 [-ORBobjrefstyle url]. This will cause the server to display its IOR in a 
