@@ -12,6 +12,7 @@ DIRS = \
   Big_Request \
   Callback \
   MT_SSLIOP \
+  MT_IIOP_SSL \
   Secure_Invocation \
   SecurityLevel1 \
   Crash_Test

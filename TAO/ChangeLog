@@ -1,3 +1,12 @@
+Sat Jan 25 18:10:10 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/tests/Security/MT_IIOP_SSL/Makefile: Fixed dependencies. 
+
+	* orbsvcs/tests/Security/MT_IIOP_SSL/test_i.cpp: Cosmetic fixes. 
+
+	* orbsvcs/tests/Security/Makefile: Added the new file to the DIRS
+	  section. 
+	
 Sat Jan 25 17:55:10 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/tests/Security/MT_IIOP_SSL/client.dsp:
