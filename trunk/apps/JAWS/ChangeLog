@@ -1,15 +1,20 @@
+Fri Sep 25 23:29:14 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * server/IO.cpp (receive_file,transmit_file): changed
+          NOMAP to ACE_NOMAP.
+
 Thu Sep 17 18:53:05 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* server/IO.cpp: 
-	* PROTOTYPE/JAWS/IO.cpp: 
-	  Revert back to iovec. Also added some missing casts.
+        * server/IO.cpp:
+        * PROTOTYPE/JAWS/IO.cpp:
+          Revert back to iovec. Also added some missing casts.
 
 Wed Sep 16 22:53:06 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* server/IO.cpp: 
-	* PROTOTYPE/JAWS/IO.cpp: 
-	  Use ACE_IO_Vector instead of iovec, because it is more
-	  protable.
+        * server/IO.cpp:
+        * PROTOTYPE/JAWS/IO.cpp:
+          Use ACE_IO_Vector instead of iovec, because it is more
+          protable.
 
 Tue Aug 25 10:18:16 1998  David L. Levine  <levine@cs.wustl.edu>
 
