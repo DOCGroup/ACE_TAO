@@ -5,7 +5,6 @@
 #include "orbsvcs/FtRtEvent/Utils/resolve_init.h"
 #include "orbsvcs/FtRtEvent/Utils/FTEC_Gateway.h"
 #include "orbsvcs/FtRtEvent/Utils/Log.h"
-#include "orbsvcs/FtRtEvent/Utils/RT_Task.h"
 
 #ifndef NO_FTRTEC
 /// include this file to statically linked with FT ORB
@@ -37,7 +36,7 @@ FtRtEvent_Test_Base::~FtRtEvent_Test_Base()
 int 
 FtRtEvent_Test_Base::parse_args(int argc, ACE_TCHAR** argv ACE_ENV_ARG_DECL)
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("d:e:f:hi:k:np:r?"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("d:e:f:hi:k:np:?"));
     int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -71,9 +70,6 @@ FtRtEvent_Test_Base::parse_args(int argc, ACE_TCHAR** argv ACE_ENV_ARG_DECL)
       break;
     case 'p':
       options_.proxy_consumer_file = get_opt.opt_arg ();
-      break;
-    case 'r':
-        RT_Task::enable();
       break;
     case 'h':
     case '?':

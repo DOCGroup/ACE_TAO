@@ -12,7 +12,6 @@
 #include "orbsvcs/FtRtEvent/EventChannel/FTRTEC_ServiceActivate.h"
 #include "orbsvcs/FtRtEvent/EventChannel/Replication_Service.h"
 #include "orbsvcs/FtRtEvent/Utils/Log.h"
-#include "orbsvcs/FtRtEvent/Utils/RT_Task.h"
 #include "orbsvcs/Event/EC_Default_Factory.h"
 #include "Crash_Injector.h"
 #include <fstream>
@@ -163,7 +162,7 @@ FT_EventService::parse_args (int argc, ACE_TCHAR* argv [])
     }
   }
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("d:jo:prs:"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("d:jo:ps:"));
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -178,9 +177,6 @@ FT_EventService::parse_args (int argc, ACE_TCHAR* argv [])
       break;
     case 'p':
       this->membership_ = TAO_FTEC_Event_Channel::PRIMARY;
-      break;
-    case 'r':
-        RT_Task::enable();
       break;
     case 's':
       // It could be just a flag (i.e. no "global" or "local"
