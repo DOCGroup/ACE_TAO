@@ -1,4 +1,3 @@
-// Service_Config.cpp
 // $Id$
 
 #define ACE_BUILD_DLL
@@ -58,13 +57,8 @@ const char *ACE_Service_Config::service_config_file_ = ACE_DEFAULT_SVC_CONF;
 // Name of file used to store messages.
 LPCTSTR ACE_Service_Config::logger_key_ = ACE_LOGGER_KEY;
 
-// Define the object that describes the service statically.
-ACE_STATIC_SVC_DEFINE (ACE_Service_Manager,
-                       "ACE_Service_Manager", ACE_SVC_OBJ_T, &ACE_SVC_NAME (ACE_Service_Manager),
-                       ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ, 0)
-
-// Add this to the list of statically configured services.
-ACE_STATIC_SVC_REQUIRE (ACE_Service_Manager)
+// The ACE_Service_Manager static service object is now defined
+// by the ACE_Object_Manager, in Object_Manager.cpp.
 
 // List of statically configured services.
 
