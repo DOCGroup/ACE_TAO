@@ -63,20 +63,6 @@ TAO_Preference_Interpreter::~TAO_Preference_Interpreter()
 {
 }
 
-#if defined TAO_HAS_DYNAMIC_PROPERTY_BUG
-
-void 
-TAO_Preference_Interpreter::
-order_offer (CosTrading::OfferId offer_id,
-	     CosTrading::Offer* offer,
-	     CORBA::ORB_ptr orb)
-{
-  TAO_Constraint_Evaluator evaluator(offer, orb);
-  this->order_offer (offer_id, offer, evaluator);
-}
-
-#else
-
 void 
 TAO_Preference_Interpreter::
 order_offer (CosTrading::OfferId offer_id,
@@ -85,8 +71,6 @@ order_offer (CosTrading::OfferId offer_id,
   TAO_Constraint_Evaluator evaluator(offer);
   this->order_offer (offer_id, offer, evaluator);
 }
-
-#endif /* TAO_HAS_DYNAMIC_PROPERTY_BUG */
 
 void 
 TAO_Preference_Interpreter::

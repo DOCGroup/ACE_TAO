@@ -55,14 +55,8 @@ public:
   ~TAO_Preference_Interpreter(void);
   // Destructor
 
-#if defined TAO_HAS_DYNAMIC_PROPERTY_BUG
-  void order_offer (CosTrading::OfferId offer_id,
-		    CosTrading::Offer* offer,
-		    CORBA::ORB_ptr orb);
-#else
   void order_offer (CosTrading::OfferId offer_id,
 		    CosTrading::Offer* offer);
-#endif /* TAO_HAS_DYNAMIC_PROPERTY_BUG */
   
   void order_offer (CosTrading::OfferId offer_id,
 		    CosTrading::Offer* offer,

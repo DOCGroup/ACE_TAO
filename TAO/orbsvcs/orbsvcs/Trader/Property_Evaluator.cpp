@@ -44,19 +44,11 @@ TAO_Property_Evaluator::is_dynamic_property (int index)
   return return_value;
 }
 
-#if defined TAO_HAS_DYNAMIC_PROPERTY_BUG
-CORBA::Any*
-TAO_Property_Evaluator::property_value(int index,
-				       CORBA::ORB_ptr orb,
-				       CORBA::Environment& _env)
-  TAO_THROW_SPEC ((CORBA::SystemException,
-		   CosTradingDynamic::DPEvalFailure))
-#else
+
 CORBA::Any*
 TAO_Property_Evaluator::property_value(int index,
 				       CORBA::Environment& _env)
     TAO_THROW_SPEC ((CosTradingDynamic::DPEvalFailure))
-#endif /* TAO_HAS_DYNAMIC_PROPERTY_BUG */
 {
   CORBA::Any* prop_val = 0;
   
@@ -74,6 +66,7 @@ TAO_Property_Evaluator::property_value(int index,
       value >>= dp_struct;
 
 #if defined TAO_HAS_DYNAMIC_PROPERTY_BUG
+      CORBA::ORB_ptr orb = TAO_ORB_Core_instance ()->orb ();
       CORBA::Object_ptr obj = orb->string_to_object (dp_struct->eval_if, _env);
       TAO_CHECK_ENV_RETURN (_env, 0);
       dp_eval = CosTradingDynamic::DynamicPropEval::_narrow (obj, _env);
@@ -187,23 +180,10 @@ is_dynamic_property(const char* property_name)
   return predicate;
 }
 
-#if defined TAO_HAS_DYNAMIC_PROPERTY_BUG
-
-CORBA::Any*
-TAO_Property_Evaluator_By_Name::property_value (const char* property_name,
-						CORBA::ORB_ptr orb,
-						CORBA::Environment& _env)
-  TAO_THROW_SPEC ((CORBA::SystemException,
-		   CosTradingDynamic::DPEvalFailure))
-
-#else 
-
 CORBA::Any* 
 TAO_Property_Evaluator_By_Name::property_value (const char* property_name,
 						CORBA::Environment& _env)
   TAO_THROW_SPEC ((CosTradingDynamic::DPEvalFailure))
-  
-#endif /* TAO_HAS_DYNAMIC_PROPERTY_BUG */
 {
   CORBA::Any* prop_value = 0;
   string prop_name(property_name);
@@ -214,13 +194,7 @@ TAO_Property_Evaluator_By_Name::property_value (const char* property_name,
   if (lookup_iter != this->table_.end())
     {
       int index = (*lookup_iter).second;
-
-#if defined TAO_HAS_DYNAMIC_PROPERTY_BUG
-      prop_value =
-	this->TAO_Property_Evaluator::property_value (index, orb, _env);
-#else 
       prop_value = this->TAO_Property_Evaluator::property_value (index, _env);
-#endif /* TAO_HAS_DYNAMIC_PROPERTY_BUG */
     }
 
   return prop_value;

@@ -285,11 +285,7 @@ lookup_one_type (const char* type,
 	  // constraints. 
 	  CosTrading::Offer* offer = offer_iter->get_offer ();
 
-#ifdef TAO_HAS_DYNAMIC_PROPERTY_BUG
-	  TAO_Constraint_Evaluator evaluator (offer, this->trader_.orb ());
-#else
 	  TAO_Constraint_Evaluator evaluator (offer);
-#endif /* TAO_HAS_DYNAMIC_PROPERTY_BUG */
 	  if (offer_filter.ok_to_consider (offer) &&
 	      constr_inter.evaluate (evaluator))
 	    {

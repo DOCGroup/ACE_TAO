@@ -36,11 +36,7 @@ public:
 
   typedef TAO_Trader_Base TAO_TRADER;
 
-#if defined TAO_HAS_DYNAMIC_PROPERTY_BUG
-  static TAO_TRADER* create_linked_trader (CORBA::ORB_ptr orb);
-#else
   static TAO_TRADER* create_linked_trader (void);
-#endif /* TAO_HAS_DYNAMIC_PROPERTY_BUG */
   
 #ifdef ACE_HAS_THREADS
   
@@ -67,12 +63,8 @@ class TAO_Export TAO_Trader_Base
 public:
   typedef int HUGE_NUMBER;
 
-#if defined TAO_HAS_DYNAMIC_PROPERTY_BUG 
-  TAO_Trader_Base (CORBA::ORB_ptr orb);
-#else
   TAO_Trader_Base (void);
-#endif /* TAO_HAS_DYNAMIC_PROPERTY_BUG */
-  
+
   // = Accessors for objects that manage trader's configuration.
 
   TAO_Trading_Components_Impl &trading_components (void);
@@ -101,10 +93,6 @@ public:
   // first character is a letter, and the subsequent ones letter,
   // numbers, or underscores.)
 
-#if defined TAO_HAS_DYNAMIC_PROPERTY_BUG
-  CORBA::ORB_ptr orb (void);
-#endif /* TAO_HAS_DYNAMIC_PROPERTY_BUG */
-  
 protected:
   // = Objects determining current configuration of a trader.
 
@@ -119,11 +107,6 @@ protected:
 
   TAO_Link_Attributes_Impl link_attributes_;
   // Stores and allows access/modification of trader's link attributes.
-
-#if defined TAO_HAS_DYNAMIC_PROPERTY_BUG 
-  CORBA::ORB_var orb_;
-#endif /* TAO_HAS_DYNAMIC_PROPERTY_BUG */
-
 };
 
 int
