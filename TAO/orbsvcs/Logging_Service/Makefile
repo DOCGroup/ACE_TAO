@@ -88,7 +88,8 @@ Logging_Service: $(addprefix $(VDIR),$(LOG_OBJS))
  $(ACE_ROOT)/ace/Sock_Connect.h \
  $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Get_Opt.i Logging_Service.h \
+ $(ACE_ROOT)/ace/Get_Opt.i \
+ Logging_Service.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \

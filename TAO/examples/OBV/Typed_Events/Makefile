@@ -917,7 +917,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Read_Buffer.h \
  $(ACE_ROOT)/ace/Read_Buffer.i \
  ../Simple_util.cpp \
- $(TAO_ROOT)/tao/debug.h Event_TypesC.h \
+ $(TAO_ROOT)/tao/debug.h \
+ Event_TypesC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
@@ -1251,8 +1252,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Read_Buffer.h \
  $(ACE_ROOT)/ace/Read_Buffer.i \
  ../Simple_util.cpp \
- $(TAO_ROOT)/tao/debug.h Server_i.h \
- Event_TypesS.h Event_TypesC.h \
+ $(TAO_ROOT)/tao/debug.h \
+ Server_i.h Event_TypesS.h Event_TypesC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
@@ -1925,7 +1926,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Read_Buffer.h \
  $(ACE_ROOT)/ace/Read_Buffer.i \
  ../Simple_util.cpp \
- $(TAO_ROOT)/tao/debug.h Event_TypesC.h \
+ $(TAO_ROOT)/tao/debug.h \
+ Event_TypesC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
@@ -2108,7 +2110,8 @@ realclean: clean
  Event_TypesC.i Event_Types_impl.h
 
 .obj/Event_Types_impl.o .obj/Event_Types_impl.so .shobj/Event_Types_impl.o .shobj/Event_Types_impl.so: Event_Types_impl.cpp Event_Types_impl.h \
- Event_TypesC.h $(TAO_ROOT)/tao/corba.h \
+ Event_TypesC.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \

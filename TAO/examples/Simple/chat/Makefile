@@ -1083,7 +1083,8 @@ realclean: clean
  ReceiverC.h ReceiverC.i BroadcasterC.i
 
 .obj/BroadcasterS.o .obj/BroadcasterS.so .shobj/BroadcasterS.o .shobj/BroadcasterS.so: BroadcasterS.cpp BroadcasterS.h ReceiverS.h \
- ReceiverC.h $(TAO_ROOT)/tao/corba.h \
+ ReceiverC.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -2109,7 +2110,8 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h
 
 .obj/Client_i.o .obj/Client_i.so .shobj/Client_i.o .shobj/Client_i.so: Client_i.cpp Client_i.h Receiver_i.h ReceiverS.h \
- ReceiverC.h $(TAO_ROOT)/tao/corba.h \
+ ReceiverC.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \

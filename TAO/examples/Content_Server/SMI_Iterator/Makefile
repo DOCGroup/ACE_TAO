@@ -473,8 +473,9 @@ realclean: clean
  $(ACE_ROOT)/ace/IO_SAP.h \
  $(ACE_ROOT)/ace/IO_SAP.i \
  $(ACE_ROOT)/ace/FILE.i \
- $(ACE_ROOT)/ace/FILE_IO.i Web_ServerS.h \
- Web_ServerC.h $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/FILE_IO.i \
+ Web_ServerS.h Web_ServerC.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \

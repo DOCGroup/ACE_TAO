@@ -736,7 +736,8 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
- testC.i $(ACE_ROOT)/ace/Get_Opt.h \
+ testC.i \
+ $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(TAO_ROOT)/tao/Strategies/TAO_Strategies_Internal.h \
  $(TAO_ROOT)/tao/Strategies/strategies_export.h

@@ -1,12 +1,29 @@
+Wed Nov 15 18:38:31 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * */Makefile*:
+          Update dependencies again.  Always double check dependencies so
+          that they look like this for generated files:
+
+          .obj/Naming_Context_Interface.o [snip, snip]
+          .shobj/Naming_Context_Interface.o: \
+             Naming/Naming_Context_Interface.cpp \
+             Naming/Naming_Context_Interface.h \
+             $(ACE_ROOT)/ace/pre.h \
+             CosNamingS.h \
+             CosNamingC.h \
+
+          if the absolute path shows up, or the .shobj or .obj directories
+          are missing the the dependencies are broken.
+
 Wed Nov 15 10:46:24 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/ORBInitInfo.cpp:
+        * tao/ORBInitInfo.cpp:
 
-	  Added zero ORB core pointer checks.  If the ORB core has been
-	  set to set zero by CORBA::ORB_init(), then ORB initialization is
-	  complete, and throw a CORBA::OBJECT_NOT_EXIST exception as
-	  stipulated by the Portable Interceptor specification.  Thanks to
-	  Carlos for pointing out this check was missing.
+          Added zero ORB core pointer checks.  If the ORB core has been
+          set to set zero by CORBA::ORB_init(), then ORB initialization is
+          complete, and throw a CORBA::OBJECT_NOT_EXIST exception as
+          stipulated by the Portable Interceptor specification.  Thanks to
+          Carlos for pointing out this check was missing.
 
 Wed Nov 15 09:56:21 2000  Carlos O'Ryan  <coryan@uci.edu>
 

@@ -933,8 +933,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/Read_Buffer.h \
  $(ACE_ROOT)/ace/Read_Buffer.i \
- Simple_util.cpp $(TAO_ROOT)/tao/debug.h \
- GridC.h $(TAO_ROOT)/tao/corba.h \
+ Simple_util.cpp \
+ $(TAO_ROOT)/tao/debug.h \
+ GridC.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -1266,7 +1268,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/Read_Buffer.h \
  $(ACE_ROOT)/ace/Read_Buffer.i \
- Simple_util.cpp $(TAO_ROOT)/tao/debug.h \
+ Simple_util.cpp \
+ $(TAO_ROOT)/tao/debug.h \
  Grid_i.h GridS.h GridC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
@@ -1938,8 +1941,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/Read_Buffer.h \
  $(ACE_ROOT)/ace/Read_Buffer.i \
- Simple_util.cpp $(TAO_ROOT)/tao/debug.h \
- GridC.h $(TAO_ROOT)/tao/corba.h \
+ Simple_util.cpp \
+ $(TAO_ROOT)/tao/debug.h \
+ GridC.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -2271,7 +2276,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/Read_Buffer.h \
  $(ACE_ROOT)/ace/Read_Buffer.i \
- Simple_util.cpp $(TAO_ROOT)/tao/debug.h
+ Simple_util.cpp \
+ $(TAO_ROOT)/tao/debug.h
 
 .obj/Persistent_Client_i.o .obj/Persistent_Client_i.so .shobj/Persistent_Client_i.o .shobj/Persistent_Client_i.so: Persistent_Client_i.cpp Persistent_Client.h \
  Simple_util.h \
@@ -2425,8 +2431,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/Read_Buffer.h \
  $(ACE_ROOT)/ace/Read_Buffer.i \
- Simple_util.cpp $(TAO_ROOT)/tao/debug.h \
- GridC.h $(TAO_ROOT)/tao/corba.h \
+ Simple_util.cpp \
+ $(TAO_ROOT)/tao/debug.h \
+ GridC.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -2759,8 +2767,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/Read_Buffer.h \
  $(ACE_ROOT)/ace/Read_Buffer.i \
- Simple_util.cpp $(TAO_ROOT)/tao/debug.h \
- GridC.h $(TAO_ROOT)/tao/corba.h \
+ Simple_util.cpp \
+ $(TAO_ROOT)/tao/debug.h \
+ GridC.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
