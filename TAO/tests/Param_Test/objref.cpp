@@ -51,6 +51,12 @@ Test_ObjRef::opname (void) const
   return this->opname_;
 }
 
+void
+Test_ObjRef::dii_req_invoke (CORBA::Request *req)
+{
+  req->invoke ();
+}
+
 static const char *Coffee_Flavor [] = {
   "Italian Roast",
   "Irish Creme",
@@ -92,8 +98,14 @@ Test_ObjRef::init_parameters (Param_Test_ptr objref,
   this->ret_ = Coffee::_nil ();
 
   // DII
-  *this->in_courier = this->in_.in ();
-  *this->inout_courier = this->inout_.in ();
+  *this->in_courier = ACE_dynamic_cast (CORBA::Object_ptr,
+                                        this->in_.in ());
+  *this->inout_courier = ACE_dynamic_cast (CORBA::Object_ptr,
+                                           this->inout_.in ());
+  *this->out_courier = ACE_dynamic_cast (CORBA::Object_ptr,
+                                         this->out_.in ());
+  *this->ret_courier = ACE_dynamic_cast (CORBA::Object_ptr,
+                                         this->ret_.in ());
 
   return 0;
 }
@@ -122,8 +134,10 @@ Test_ObjRef::reset_parameters (void)
   this->ret_ = Coffee::_nil ();
 
   // DII
-  *this->in_courier = this->in_.in ();
-  *this->inout_courier = this->inout_.in ();
+  *this->in_courier = ACE_dynamic_cast (CORBA::Object_ptr,
+                                        this->in_.in ());
+  *this->inout_courier = ACE_dynamic_cast (CORBA::Object_ptr,
+                                           this->inout_.in ());
 
   return 0;
 }
@@ -187,7 +201,7 @@ Test_ObjRef::check_validity (void)
 {
   CORBA::Environment env;
 
-  Coffee::Desc_var in_desc = 
+  Coffee::Desc_var in_desc =
     this->in_->description (env);
   if (env.exception ())
     {
@@ -270,7 +284,7 @@ Test_ObjRef::print_values (void)
 {
   CORBA::Environment env;
 
-  Coffee::Desc_var in_desc = 
+  Coffee::Desc_var in_desc =
     this->in_->description (env);
   if (env.exception ())
     {
@@ -318,4 +332,3 @@ Test_ObjRef::print_values (void)
               out,
               ret));
 }
-
