@@ -51,6 +51,11 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Asynch_Invocation_Timeprobe_Description,
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
+TAO_GIOP_Asynch_Invocation::TAO_GIOP_Asynch_Invocation (void)
+  : rd_ (0)
+{
+}
+
 int
 TAO_GIOP_Asynch_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))

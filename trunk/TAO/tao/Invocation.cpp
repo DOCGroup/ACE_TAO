@@ -76,6 +76,24 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Invocation_Timeprobe_Description,
 // restructuring an ORB core in terms of asynchrony.
 // ****************************************************************
 
+TAO_GIOP_Invocation::TAO_GIOP_Invocation (void)
+  : stub_ (0),
+    op_details_ (0,
+                 0),
+    out_stream_ (),
+    orb_core_ (0),
+    transport_ (0),
+    endpoint_selector_ (0),
+    is_selector_initialized_ (0),
+    profile_ (0),
+    endpoint_ (0),
+    max_wait_time_ (0),
+    ior_info_ (),
+    rt_context_initialized_ (0),
+    restart_flag_ (0)
+{
+}
+
 TAO_GIOP_Invocation::TAO_GIOP_Invocation (TAO_Stub *stub,
                                           const char *operation,
                                           CORBA::ULong opname_len,
@@ -83,8 +101,8 @@ TAO_GIOP_Invocation::TAO_GIOP_Invocation (TAO_Stub *stub,
   : stub_ (stub),
     op_details_ (operation,
                  opname_len),
-    out_stream_ (buffer,
-                 sizeof buffer, /* ACE_CDR::DEFAULT_BUFSIZE */
+    out_stream_ (this->buffer_,
+                 sizeof this->buffer_, /* ACE_CDR::DEFAULT_BUFSIZE */
                  TAO_ENCAP_BYTE_ORDER,
                  orb_core->output_cdr_buffer_allocator (),
                  orb_core->output_cdr_dblock_allocator (),
@@ -569,6 +587,12 @@ TAO_GIOP_Invocation::add_rt_service_context (CORBA_Environment &ACE_TRY_ENV)
 }
 
 // ****************************************************************
+
+TAO_GIOP_Synch_Invocation::TAO_GIOP_Synch_Invocation (void)
+  : rd_ (0, 
+         this->op_details_.service_info ())
+{
+}
 
 TAO_GIOP_Synch_Invocation::~TAO_GIOP_Synch_Invocation (void)
 {
