@@ -54,8 +54,8 @@ MyImpl::BMClosedED_exec_i::push_in_avail (BasicSP::DataAvailable *
                str));
 
   if (ACE_OS::strcmp (str, "BM DEVICE DATA") == 0)
-    {	  
-      this->str_ = CORBA::string_dup ("BM CLOSED ED DATA");	   
+    {
+      this->str_ = CORBA::string_dup ("BM CLOSED ED DATA");
     }
 
   // Notify others
@@ -73,7 +73,7 @@ char *
 MyImpl::BMClosedED_exec_i::get_data (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->str_.inout ();
+  return CORBA::string_dup (this->str_.inout ());
 }
 
 // Operations from Components::SessionComponent
