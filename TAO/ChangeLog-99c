@@ -1,7 +1,12 @@
 Sat May 29 14:02:41 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
-	
-	Done Carlos's suggestion to set the  flags for Leader Follower
-	model's send request. Leader  Follower doesnt work yet.
+
+	* tao/Wait_Strategy.cpp: 
+	* tao/Wait_Strategy.h: 
+	Removed the old errorneous <send_request> implementation.
+
+		Done Carlos's suggestion to set the  flags for Leader
+		Follower model's send request. Leader  Follower doesnt
+		work yet. 
 
 	* tao/IIOP_Transport.cpp: 
 	Update TAO_IIOP_Client_Transport::send_request to call the Wait
