@@ -130,8 +130,7 @@ public:
   virtual int locked_transport_cache (void);
   virtual TAO_Flushing_Strategy *create_flushing_strategy (void);
   virtual TAO_Connection_Purging_Strategy *create_purging_strategy (void);
-  virtual TAO_Resource_Factory::Resource_Usage
-  TAO_Default_Resource_Factory::resource_usage_strategy (void) const;
+  TAO_Resource_Factory::Resource_Usage resource_usage_strategy (void) const;
   virtual TAO_LF_Strategy *create_lf_strategy (void);
 
   virtual void disable_factory (void);
