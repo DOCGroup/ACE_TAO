@@ -826,8 +826,10 @@ ACE_Double_Linked_List<T>::delete_head (void)
   if (this->is_empty ())
     return 0;
 
-  temp = ACE_static_cast (T *, this->head_->next_);
-  this->remove_element (temp);  // Detach it from the list.
+  temp = ACE_static_cast (T *,
+                          this->head_->next_);
+  // Detach it from the list.
+  this->remove_element (temp);  
   return temp;
 }
 
@@ -839,8 +841,10 @@ ACE_Double_Linked_List<T>::delete_tail (void)
   if (this->is_empty ())
     return 0;
 
-  temp = ACE_static_cast (T*, this->head_->prev_);
-  this->remove_element (temp);  // Detach it from the list.
+  temp = ACE_static_cast (T *,
+                          this->head_->prev_);
+  // Detach it from the list.
+  this->remove_element (temp);  
   return temp;
 }
 
@@ -946,7 +950,8 @@ ACE_Double_Linked_List<T>::insert_element (T *new_item,
     old_item = this->head_;
 
   if (before)
-    old_item = ACE_static_cast (T*, old_item->prev_);
+    old_item = ACE_static_cast (T *,
+                                old_item->prev_);
 
   new_item->next_ = old_item->next_;
   new_item->next_->prev_ = new_item;
@@ -2217,7 +2222,6 @@ ACE_Ordered_MultiSet_Iterator<T>::next (T *&item) const
 
   return 0;
 }
-
 
 ACE_ALLOC_HOOK_DEFINE (ACE_DLList_Node)
 

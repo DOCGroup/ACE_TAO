@@ -29,10 +29,13 @@
 #include "ace/Name_Request_Reply.h"
 #include "ace/Singleton.h"
 
-// This helper class adds the correct default constructor to the
-// ACE_Naming_Context class so that we can use it in ACE_Singleton.
 class Naming_Context : public ACE_Naming_Context
 {
+  // = TITLE
+  // 
+  //   This helper class adds the correct default constructor to the
+  //   <ACE_Naming_Context> class so that we can use it in
+  //   <ACE_Singleton>.
 public:
   Naming_Context (void)
     : ACE_Naming_Context (ACE_Naming_Context::NET_LOCAL) {}
@@ -40,8 +43,8 @@ public:
 
 typedef ACE_Singleton<Naming_Context, ACE_SYNCH_NULL_MUTEX> NAMING_CONTEXT;
 
-
 class ACE_Svc_Export ACE_Name_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+{
   // = TITLE
   //    Product object created by <ACE_Name_Acceptor>.  An
   //    <ACE_Name_Handler> exchanges messages with a <ACE_Name_Proxy>
@@ -53,7 +56,7 @@ class ACE_Svc_Export ACE_Name_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, 
   //   names.  It also schedules and handles timeouts that are used to
   //   support "timed waits."  Clients used timed waits to bound the
   //   amount of time they block trying to get a name.
-{
+
   friend class ACE_Shutup_GPlusPlus;  // Turn off g++ warning
 public:
   typedef int (ACE_Name_Handler::*OPERATION) (void);
@@ -181,10 +184,10 @@ private:
 };
 
 class ACE_Name_Acceptor : public ACE_Strategy_Acceptor<ACE_Name_Handler, ACE_SOCK_ACCEPTOR>
+{
   // = TITLE
   //     This class contains the service-specific methods that can't
   //     easily be factored into the <ACE_Strategy_Acceptor>.
-{
 public:
   virtual int init (int argc, char *argv[]);
   // Dynamic linking hook.

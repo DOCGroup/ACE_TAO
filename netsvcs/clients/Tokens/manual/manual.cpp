@@ -80,7 +80,7 @@ private:
   COLLECTIONS collections_;
   // A collection for each <tid>.
 
-  char *server_host_;
+  const char *server_host_;
   int server_port_;
   int ignore_deadlock_;
   int debug_;
@@ -88,11 +88,11 @@ private:
 };
 
 STDIN_Token::STDIN_Token (void)
-: server_host_ (ACE_DEFAULT_SERVER_HOST),
-  server_port_ (ACE_DEFAULT_SERVER_PORT),
-  ignore_deadlock_ (0),
-  debug_ (0),
-  remote_ (0)
+  : server_host_ (ACE_DEFAULT_SERVER_HOST),
+    server_port_ (ACE_DEFAULT_SERVER_PORT),
+    ignore_deadlock_ (0),
+    debug_ (0),
+    remote_ (0)
 {
 }
 
@@ -134,7 +134,8 @@ STDIN_Token::parse_args (int argc, char *argv[])
     }
 
   if (remote_)
-    ACE_Remote_Mutex::set_server_address (ACE_INET_Addr (server_port_, server_host_));
+    ACE_Remote_Mutex::set_server_address (ACE_INET_Addr (server_port_,
+                                                         server_host_));
 
   return 0;
 }

@@ -92,6 +92,7 @@ protected:
 
 template<class SERVER_LOGGING_HANDLER, class LOG_MESSAGE_RECEIVER, class SCHEDULE_STRATEGY>
 class ACE_Server_Logging_Acceptor_T : public ACE_Strategy_Acceptor<SERVER_LOGGING_HANDLER, LOGGING_PEER_ACCEPTOR>
+{
   // = TITLE
   //     Factory that creates <SERVER_LOGGING_HANDLER>s scheduled with
   //     <SCHEDULE_STRATEGY> and logging records proccessed by a
@@ -100,7 +101,6 @@ class ACE_Server_Logging_Acceptor_T : public ACE_Strategy_Acceptor<SERVER_LOGGIN
   // = DESCRIPTION
   //     This class contains the service-specific methods that can't
   //     easily be factored into the <ACE_Strategy_Acceptor>.
-{
 public:
   ACE_Server_Logging_Acceptor_T (void);
   virtual int init (int argc, char *argv[]);
@@ -145,6 +145,7 @@ private:
 
 template<class LOG_MESSAGE_RECEIVER>
 class ACE_Server_Logging_Handler : public ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, u_long, ACE_NULL_SYNCH, LOG_MESSAGE_RECEIVER>
+{
   // = TITLE
   //    Product object created by a
   //    <ACE_Server_Logging_Acceptor_T<ACE_Server_Logging_Handler> >.  An
@@ -153,7 +154,7 @@ class ACE_Server_Logging_Handler : public ACE_Server_Logging_Handler_T<LOGGING_P
   //
   // = DESCRIPTION
   //     All clients are handled in the same thread.
-{
+
 public:
   ACE_Server_Logging_Handler (ACE_Thread_Manager * = 0);
   ACE_Server_Logging_Handler (ACE_Thread_Manager *,
@@ -172,15 +173,16 @@ typedef u_long ACE_LOGGER_COUNTER;
 
 template<class LOG_MESSAGE_RECEIVER>
 class ACE_Thr_Server_Logging_Handler : public ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, ACE_LOGGER_COUNTER, ACE_LOGGER_SYNCH, LOG_MESSAGE_RECEIVER>
+{
   // = TITLE
   //    Product object created by a
-  //    <ACE_Server_Logging_Acceptor_T<ACE_Thr_Server_Logging_Handler> >.  An
-  //    <ACE_Thr_Server_Logging_Handler> receives, frames. The logging record is then processed by the
-  //    <LOG_MESSAGE_RECEIVER>
+  //    <ACE_Server_Logging_Acceptor_T<ACE_Thr_Server_Logging_Handler>
+  //    >.  An <ACE_Thr_Server_Logging_Handler> receives, frames. The
+  //    logging record is then processed by the <LOG_MESSAGE_RECEIVER>
   //
   // = DESCRIPTION
   //     Each client is handled in its own separate thread.
-{
+
 public:
   ACE_Thr_Server_Logging_Handler (ACE_Thread_Manager * = 0);
   ACE_Thr_Server_Logging_Handler (ACE_Thread_Manager *,
