@@ -35,5 +35,5 @@ IDLDIR = .
 # IDL Build rules
 #
 
-$(IDLDIR)\TestS.cpp $(IDLDIR)\TestC.cpp: $(IDLDIR)\Test.idl
+$(IDLDIR)\TestC.cpp: $(IDLDIR)\Test.idl
 	$(TAO_IDL) $**
