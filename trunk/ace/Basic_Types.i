@@ -3,31 +3,31 @@
 
 #if !defined (ACE_WIN32) && !defined (ACE_HAS_LONGLONG_T)
 ACE_INLINE
-ACE_U_LongLong::ACE_U_LongLong (const u_long lo, const u_long hi)
+ACE_U_LongLong::ACE_U_LongLong (const ACE_UINT32 lo, const ACE_UINT32 hi)
   : hi_ (hi), lo_ (lo)
 {
 }
 
-ACE_INLINE u_long
+ACE_INLINE ACE_UINT32
 ACE_U_LongLong::hi (void) const
 {
   return hi_;
 }
 
-ACE_INLINE u_long
+ACE_INLINE ACE_UINT32
 ACE_U_LongLong::lo (void) const
 {
   return lo_;
 }
 
 ACE_INLINE void
-ACE_U_LongLong::hi (const u_long hi)
+ACE_U_LongLong::hi (const ACE_UINT32 hi)
 {
   hi_ = hi;
 }
 
 ACE_INLINE void
-ACE_U_LongLong::lo (const u_long lo)
+ACE_U_LongLong::lo (const ACE_UINT32 lo)
 {
   lo_ = lo;
 }
@@ -112,8 +112,8 @@ ACE_U_LongLong::operator- (const ACE_U_LongLong &ll) const
   return ret;
 }
 
-ACE_INLINE u_long
-ACE_U_LongLong::operator/ (const u_long ul) const
+ACE_INLINE ACE_UINT32
+ACE_U_LongLong::operator/ (const ACE_UINT32 ul) const
 {
   return hi_ / ul * ULONG_MAX + lo_ / ul;
 }
