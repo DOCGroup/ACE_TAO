@@ -29,7 +29,7 @@ override TAO_IDLFLAGS += \
         -Wb,export_include=orbsvcs_export.h \
         $(TAO_LACKS_EVENT_CHANNEL_ANY)
 
-VPATH=.:Naming:Time:Log:Concurrency:Property:Trader:Sched:Event:CosEvent:AV:
+VPATH=.:Naming:Time:Concurrency:Property:Trader:Sched:Event:CosEvent:AV:
 
 LIBS    += -lTAO -lACE
 
@@ -48,7 +48,6 @@ ifndef TAO_ORBSVCS
   TAO_ORBSVCS = Naming \
                 ImplRepo \
                 Time \
-                Log \
                 Concurrency \
                 Property \
                 Trader \
@@ -220,12 +219,6 @@ ifneq (,$(findstring Concurrency,$(TAO_ORBSVCS)))
         Concurrency/CC_LockSetFactory \
         Concurrency/Concurrency_Utils
 endif # Concurrency
-
-ifneq (,$(findstring Log,$(TAO_ORBSVCS)))
-  IDL_SRCS += Logger
-  TAO_ORBSVCS_SRCS += \
-        Log/Logger_i
-endif # Log
 
 ifneq (,$(findstring Time,$(TAO_ORBSVCS)))
   IDL_SRCS += TimeBase TimeService

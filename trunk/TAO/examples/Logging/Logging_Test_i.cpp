@@ -4,7 +4,7 @@
 #include "ace/SOCK_Dgram_Mcast.h"
 #include "ace/OS.h"
 #include "orbsvcs/CosNamingC.h"
-#include "orbsvcs/LoggerC.h"
+#include "LoggerC.h"
 #include "Logging_Test_i.h"
 
 ACE_RCSID(Logger, Logging_Test_i, "$Id$")
@@ -27,18 +27,19 @@ Logger_Client::init (int argc, char *argv[])
   this->argc_ = argc;
   this->argv_ = argv;
 
-  TAO_TRY
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       // Initialize the ORB
       orb_ = CORBA::ORB_init (argc,
                               argv,
                               "internet",
-                              TAO_TRY_ENV);
+                              ACE_TRY_ENV);
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "\nTrying to initialize orb\n"));
 
-      TAO_CHECK_ENV;
+      ACE_TRY_CHECK;
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "\nOrb initialized successfully\n"));
@@ -48,31 +49,31 @@ Logger_Client::init (int argc, char *argv[])
         return -1;
 
       // Initialize the naming service
-      if (this->init_naming_service (TAO_TRY_ENV) != 0)
+      if (this->init_naming_service (ACE_TRY_ENV) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize naming"
                            "services.\n"),
                           -1);
       // Create the logger instances
-      if (this->init_loggers (TAO_TRY_ENV) != 0)
+      if (this->init_loggers (ACE_TRY_ENV) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize logger"
                            "instances.\n"),
                           -1);
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("init");
+      ACE_TRY_ENV.print_exception ("init");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 
   return 0;
 
 }
 
 int
-Logger_Client::init_naming_service (CORBA::Environment &env)
+Logger_Client::init_naming_service (CORBA::Environment &ACE_TRY_ENV)
 {
   // Initialize the naming services
   if (my_name_client_.init (orb_.in ()) != 0)
@@ -88,7 +89,7 @@ Logger_Client::init_naming_service (CORBA::Environment &env)
 
   CORBA::Object_var factory_ref =
     my_name_client_->resolve (factory_name,
-                              env);
+                              ACE_TRY_ENV);
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "\nFactory_ref resolved\n"));
@@ -104,7 +105,7 @@ Logger_Client::init_naming_service (CORBA::Environment &env)
   // Narrow the factory and check the success
   factory_ =
     Logger_Factory::_narrow (factory_ref.in (),
-                             env);
+                             ACE_TRY_ENV);
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -120,7 +121,7 @@ Logger_Client::init_naming_service (CORBA::Environment &env)
   // If debugging, get the factory's IOR
   CORBA::String_var str =
     orb_->object_to_string (factory_.in (),
-                            env);
+                            ACE_TRY_ENV);
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "The factory IOR is <%s>\n",
@@ -129,18 +130,18 @@ Logger_Client::init_naming_service (CORBA::Environment &env)
 }
 
 int
-Logger_Client::init_loggers (CORBA::Environment &env)
-{
+Logger_Client::init_loggers (CORBA::Environment &ACE_TRY_ENV)
+{ 
   // Retrieve the Logger obj ref corresponding to key1 and
   // key2.
   this->logger_1_ = factory_->make_logger ("key1",
-                                           env);
-  if (env.exception () != 0)
+                                           ACE_TRY_ENV);
+  if (ACE_TRY_ENV.exception () != 0)
     return -1;
 
   this->logger_2_ = factory_->make_logger ("key2",
-                                           env);
-  if (env.exception () != 0)
+                                           ACE_TRY_ENV);
+  if (ACE_TRY_ENV.exception () != 0)
     return -1;
 
   if (CORBA::is_nil (this->logger_1_.in ()))
@@ -162,7 +163,7 @@ Logger_Client::init_loggers (CORBA::Environment &env)
       ACE_DEBUG ((LM_DEBUG,
                   "\nTrying to resolve already created logger..."));
       Logger_var logger_3 = factory_->make_logger ("key1",
-                                                   env);
+                                                   ACE_TRY_ENV);
       if (CORBA::is_nil (logger_3.in ()))
         ACE_DEBUG ((LM_DEBUG,
                     "\nResolution failed."));
@@ -180,7 +181,8 @@ Logger_Client::init_loggers (CORBA::Environment &env)
 int
 Logger_Client::run (void)
 {
-  TAO_TRY
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       // Create 3 Log_Records for the test
       Logger::Log_Record rec1;
@@ -229,44 +231,44 @@ Logger_Client::run (void)
         }
 
       // Change the verbosity.
-      this->logger_1_->verbosity (Logger::VERBOSE_LITE, TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      this->logger_1_->verbosity (Logger::VERBOSE_LITE, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // Log the first Log_Record (VERBOSE_LITE)
-      this->logger_1_->log (rec1, TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      this->logger_1_->log (rec1, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // Change the verbosity again.
-      this->logger_2_->verbosity (Logger::VERBOSE, TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      this->logger_2_->verbosity (Logger::VERBOSE, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // Log the second Log_Record (VERBOSE)
-      this->logger_2_->log (rec2, TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      this->logger_2_->log (rec2, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // Change the verbosity again
-      this->logger_2_->verbosity (Logger::SILENT, TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      this->logger_2_->verbosity (Logger::SILENT, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // Log the third log record using logv() (this shows if the
       // verbosity level overrides the logger's verbosity level)
-      this->logger_2_->logv (rec3, Logger::VERBOSE, TAO_TRY_ENV);
+      this->logger_2_->logv (rec3, Logger::VERBOSE, ACE_TRY_ENV);
 
       // Change the verbosity again (so that regular log msgs can be
       // seen again)
-      this->logger_2_->verbosity (Logger::VERBOSE, TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      this->logger_2_->verbosity (Logger::VERBOSE, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // Log the fourth record using log2()
-      this->logger_2_->log2 (rec4, TAO_TRY_ENV);
+      this->logger_2_->log2 (rec4, ACE_TRY_ENV);
     }
 
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("run");
+      ACE_TRY_ENV.print_exception ("run");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
   return 0;
 }
 

@@ -19,7 +19,8 @@
 //
 // ============================================================================
 
-// @@ Add the guard against multiple inclusions.
+#ifndef _LOG_CLIENT_H
+#define _LOG_CLIENT_H
 
 #include "ace/Get_Opt.h"
 
@@ -29,7 +30,7 @@
 
 #include "tao/corba.h"
 #include "orbsvcs/CosNamingC.h"
-#include "orbsvcs/LoggerC.h"
+#include "LoggerC.h"
 #include "orbsvcs/Naming/Naming_Utils.h"
 
 class Logger_Client
@@ -68,21 +69,21 @@ private:
                     const char *msg);
   // Prepares the <Log_Record> for logging.
 
-  int init_naming_service (CORBA::Environment &env);
+  int init_naming_service (CORBA::Environment &ACE_TRY_ENV);
   // Initialises the name server and resolves the logger_factory
 
-  int init_loggers (CORBA::Environment &env);
+  int init_loggers (CORBA::Environment &ACE_TRY_ENV);
   // Instantiates the 2 logger member variables
 
   void show_record (Logger::Log_Record &newrec);
   // Shows contents of the record (for debugging purposes).
 
+  CORBA::ORB_var orb_;
+  // Keep a pointer to the ORB for easy access
+
   TAO_Naming_Client my_name_client_;
   // An instance of the name client used for resolving the factory
   // objects.
-
-  CORBA::ORB_var orb_;
-  // Keep a pointer to the ORB for easy access
 
   int argc_;
   // # of arguments on the command line.
@@ -100,3 +101,4 @@ private:
   // Logger obj ref.
 };
 
+#endif /* _LOG_CLIENT_H */

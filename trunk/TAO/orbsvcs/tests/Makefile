@@ -9,7 +9,6 @@
 #----------------------------------------------------------------------------
 
 DIRS  =	Simple_Naming \
-	Logger \
 	Event_Latency \
 	EC_Multiple \
 	EC_Throughput \
