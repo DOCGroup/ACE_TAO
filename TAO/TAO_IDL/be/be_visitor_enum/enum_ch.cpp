@@ -52,7 +52,7 @@ be_visitor_enum_ch::visit_enum (be_enum *node)
       *os << "enum " << node->local_name () << be_nl;
       *os << "{\n";
       os->incr_indent ();
-      if (this->visit_scope (node) == 1)
+       if (this->visit_scope (node) == 1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_enum_ch::"

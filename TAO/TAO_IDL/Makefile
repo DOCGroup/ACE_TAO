@@ -189,9 +189,9 @@ endif # ! CROSS-COMPILE
 
 tags:
 	rm -f TAGS
-	etags -C tao_idl.cpp include/*.h be_include/*.h
+	etags -C tao_idl.cpp include/*.h be_include/*.h be_include/be_visitor_*/*.h \
 	etags -a ast/*.cpp util/*.cpp narrow/*.cpp \
-		driver/*.cpp fe/*.cpp be/*.cpp
+		driver/*.cpp fe/*.cpp be/*.cpp be/*/*.cpp
 
 
 #----------------------------------------------------------------------------

@@ -85,8 +85,11 @@ int be_visitor_args_docall_cs::visit_array (be_array *node)
       *os << arg->local_name ();
       break;
     case AST_Argument::dir_OUT:
-      // pass reference to the pointer to slice
-      *os << "_tao_base_" << arg->local_name ();
+      if (node->size_type () == be_type::VARIABLE)
+        // pass reference to the pointer to slice
+        *os << "_tao_base_" << arg->local_name ();
+      else
+        *os << arg->local_name ();
       break;
     }
   return 0;

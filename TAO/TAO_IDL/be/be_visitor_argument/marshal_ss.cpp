@@ -68,7 +68,7 @@ int be_visitor_args_marshal_ss::visit_argument (be_argument *node)
   return 0;
 }
 
-int be_visitor_args_marshal_ss::visit_array (be_array *)
+int be_visitor_args_marshal_ss::visit_array (be_array *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
   be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
@@ -82,7 +82,14 @@ int be_visitor_args_marshal_ss::visit_array (be_array *)
       break;
     case AST_Argument::dir_OUT:
       os->indent ();
-      *os << "_tao_var_" << arg->local_name () << ".ptr ()";
+      if (node->size_type () == be_type::VARIABLE)
+        {
+          *os << "_tao_ptr_" << arg->local_name ();
+        }
+      else
+        {
+          *os << arg->local_name ();
+        }
       break;
     }
   return 0;
