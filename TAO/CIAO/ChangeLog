@@ -1,3 +1,13 @@
+Sun Jun 27 12:59:04 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DnC/tests/scripts/BasicSP/basicNodeDaemon.pl:
+        * DnC/tests/scripts/BasicSP/basicsp.dat:
+        * DnC/tests/scripts/RobotAssembly/robotNodeDaemon.pl:
+        * DnC/tests/scripts/RobotAssembly/robotassembly.dat:
+
+          Added the scripts directory to help in the integrated
+          testing.
+
 Sun Jun 27 12:50:12 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/tests/Config_Handlers/HUDisplay/Deployment.xsd:
