@@ -26,9 +26,13 @@ parent (char *shm)
 {
   char *s = shm;
 
+  // Both semaphores are initially created with a count of 0, i.e.,
+  // they are "locked."
   ACE_SV_Semaphore_Complex mutex (SEM_KEY_1, ACE_SV_Semaphore_Complex::ACE_CREATE, 0);
   ACE_SV_Semaphore_Complex synch (SEM_KEY_2, ACE_SV_Semaphore_Complex::ACE_CREATE, 0);
 
+  // This is a critical section, which is protected by the mutex
+  // semaphore.
   for (char c = 'a'; c <= 'z'; c++)
     *s++ = c;
 
@@ -51,9 +55,15 @@ parent (char *shm)
 static int
 child (char *shm)
 {
+  // Both semaphores are initially created with a count of 0, i.e.,
+  // they are "locked."
   ACE_SV_Semaphore_Complex mutex (SEM_KEY_1, ACE_SV_Semaphore_Complex::ACE_CREATE, 0);
   ACE_SV_Semaphore_Complex synch (SEM_KEY_2, ACE_SV_Semaphore_Complex::ACE_CREATE, 0);
 
+  // Perform "busy waiting" here until we acquire the semaphore.  This
+  // isn't really a good design -- it's just to illustrate that you
+  // can do non-blocking acquire() calls with the ACE System V
+  // semaphore wrappers.
   while (mutex.tryacquire () == -1)
     if (errno == EAGAIN)
       ACE_DEBUG ((LM_DEBUG, "spinning in child!\n"));
