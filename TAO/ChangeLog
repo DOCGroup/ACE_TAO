@@ -1,3 +1,173 @@
+Wed Sep  4 10:58:07 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/PortableServer/ImplRepo.pidl: 
+	* tao/PortableServer/ImR_Activator.pidl
+	* tao/PortableServer/ImR_Locator.pidl
+	  Split the original ImplRepo.pidl into the above three pidls.
+	  ImplRepo.pidl contains the common interfaces and the base
+	  interface for the locator and the activator interfaces which are
+	  defined in ImR_Locator.pidl and ImR_Activator.pidl respectively.
+	  
+	* tao/PortableServer/ImplRepoC.cpp:
+	* tao/PortableServer/ImplRepoC.h:
+	* tao/PortableServer/ImplRepoC.i:
+	* tao/PortableServer/ImplRepoS.cpp:
+	* tao/PortableServer/ImplRepoS.h:
+	* tao/PortableServer/ImplRepoS.i:
+	* tao/PortableServer/ImplRepoS_T.cpp:
+	* tao/PortableServer/ImplRepoS_T.h:
+	* tao/PortableServer/ImplRepoS_T.i:
+	* tao/PortableServer/ImR_ActivatorS.h:
+	* tao/PortableServer/ImR_ActivatorS.i:
+	* tao/PortableServer/ImR_ActivatorS.cpp:
+	* tao/PortableServer/ImR_ActivatorC.cpp:
+	* tao/PortableServer/ImR_ActivatorC.i:
+	* tao/PortableServer/ImR_ActivatorC.h:
+        * tao/PortableServer/ImR_ActivatorS_T.h:
+        * tao/PortableServer/ImR_ActivatorS_T.cpp:
+        * tao/PortableServer/ImR_ActivatorS_T.i:
+	* tao/PortableServer/ImR_LocatorS.h:
+	* tao/PortableServer/ImR_LocatorS.i:
+	* tao/PortableServer/ImR_LocatorS.cpp:
+	* tao/PortableServer/ImR_LocatorC.cpp:
+	* tao/PortableServer/ImR_LocatorC.i:
+	* tao/PortableServer/ImR_LocatorC.h:
+        * tao/PortableServer/ImR_LocatorS_T.h:
+        * tao/PortableServer/ImR_LocatorS_T.cpp:
+        * tao/PortableServer/ImR_LocatorS_T.i:
+	  Related stubs and skeletons.
+	
+	* tao/PortableServer/Makefile:
+	  Added the new files.
+	
+	* tao/PortableServer/POA.cpp:
+	  The interface which is now visible to the application's using
+	  the ImR is ImplementationRepository::Locator. Modified
+	  references to ImR accordingly.
+
+	* orbsvcs/ImplRepo_Service/ImR_Activator.cpp:
+	* orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+	* orbsvcs/ImplRepo_Service/ImR_Activator_i.h:
+	* orbsvcs/ImplRepo_Service/ImR_Locator.cpp:
+	* orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+	* orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+	* orbsvcs/ImplRepo_Service/ImplRepo_i.h:
+	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+	* orbsvcs/ImplRepo_Service/ImplRepo.cpp:
+	  The workload of the previous ImR is now split to two,
+	  ImR_Locator and ImR_Activator. ImR_Locator does the work of
+	  administration... when it gets a request such as to add, remove,
+	  activate or shutdown a server, it chooses an ImR_Activator and
+	  sends it the request. The ImR_Activator is the one that actually
+	  executes the request. Read more about this in the README.
+
+	  Accordingly, the previous ImplRepo_i is split into ImR_Locator_i
+	  and ImR_Activator_i. These classes implement the
+	  ImplementationRepository::Locator and
+	  ImplementationRepository::Activator interfaces respectively.
+
+	  Removed ImplRepo_i.h ImplRepo_i.cpp ImplRepo.cpp
+	
+	* orbsvcs/ImplRepo_Service/Repository_Configuration.cpp:
+	* orbsvcs/ImplRepo_Service/Repository_Configuration.h:
+	  This class acts as a wrapper around the ACE_Configuration_Heap
+	  class. This class is used to maintain the XML and the non-Win32
+	  registry server configuration.
+	
+	* orbsvcs/ImplRepo_Service/Server_Info.cpp:
+	* orbsvcs/ImplRepo_Service/Server_Info.h:
+	* orbsvcs/ImplRepo_Service/Server_Repository.cpp:
+	* orbsvcs/ImplRepo_Service/Server_Repository.h:
+	* orbsvcs/ImplRepo_Service/Repository.cpp:
+	* orbsvcs/ImplRepo_Service/Repository.h:
+	  Split Repository into two set of files,
+	  Server_Repository.{h,cpp} and Server_Info.{h,cpp} so that each
+	  of the new file will have to deal with only one
+	  interface. 
+	  Removed the original Repository.{h,cpp}
+
+	* orbsvcs/ImplRepo_Service/XML_ContentHandler.cpp
+	* orbsvcs/ImplRepo_Service/XML_ContentHandler.h
+	  The class is used to help update the existing XML file that is
+	  used for storing the server configuration. Derives from
+	  ACEXML_DefaultHandler.
+	
+	* orbsvcs/ImplRepo_Service/repository.xml
+	  Contains the sample xml.
+  
+	* orbsvcs/ImplRepo_Service/Adapter_Activator.cpp:
+	  Cosmetic changes.
+	
+	* orbsvcs/ImplRepo_Service/Forwarder.cpp:
+	* orbsvcs/ImplRepo_Service/Forwarder.h:
+	  Modified the signature of the constructor to take in a reference
+	  to the ORB.
+	  Made class ImR_Locator_i forward declared instead of ImplRepo_i
+	  as the class ImplRepo_i no longer exists.
+	  Added a new private variable to save the ORB reference.
+	
+	* orbsvcs/ImplRepo_Service/Iterator.h:
+	  The previous Repository.h doesnt exist now. See the description
+	  for Repository.h. Included Server_Repository.h instead.
+
+	* orbsvcs/ImplRepo_Service/Locator.cpp:
+	  Included ImR_Activator_i.h instead of ImplRepo_i.h. See the
+	  description for ImplRepo_i.h. Modified the constructor
+	  accordingly.
+	
+	* orbsvcs/ImplRepo_Service/Locator.h:
+	  Forward declared ImR_Activator_i instead of ImplRepo_i. class
+	  ImplRepo_i doesnt exist anymore. ImR_Activator_i does the related
+	  work.
+	
+	* orbsvcs/ImplRepo_Service/Makefile:
+	* orbsvcs/ImplRepo_Service/Makefile.am:
+	  Modified to remove and add the old and files
+	  respectively.
+	
+	* orbsvcs/ImplRepo_Service/Options.cpp:
+	* orbsvcs/ImplRepo_Service/Options.h:
+	  New option '-x' to specify that the file used to store the
+	  server related settings should be in XML format. Takes in the name
+	  of the XML file where the information has to be saved.
+	  Removed and replaced ACE_Configuration_Heap and related usage with
+	  Repository_Configuration. Read the description for
+	  Repository_Configuration.h for related information.
+
+	  Added a new method to initialize the XML formatted repository.
+	  Options::initialize_xml_persistence.
+	  One method to convert from
+	  ImplementationRepository::ActivationMode mode to a string and
+	  another to do the reverse conversion.
+
+	We have a new class Repository_Configuration which acts like a
+ 	wrap around over 	
+
+	  
+	* orbsvcs/ImplRepo_Service/README:
+	  Updated to describe the new ImR, future work and also a section
+	  on how to transit from the old IMR to the present one.
+		  
+	* orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+	* orbsvcs/ImplRepo_Service/tao_imr_i.h:
+	  Since now the ImplementationRepository::Administration's work is
+	  being done by ImplementationRepository::Locator interface,
+	  replaced references to ImplementationRepository::Administration
+	  accordingly. Also, added a new option, "-l", by which you can
+	  specify the location ( hostname ) where you want to add, activate,
+	  remove, shutdown the server. Also, while adding, activating,
+	  removing and shutting down a server, check if the location is
+	  specified. Invoke the corresponding methods 'activity'_server
+	  or a'activity'_server_in_location accordingly.
+	  Replaced references to the ImR related exceptions to go along
+	  with the modified scopes to which they now belong. Several
+	  cosmetic changes.
+
+
+	* orbsvcs/tests/ImplRepo/locked/run_test.pl: 
+	* orbsvcs/tests/ImplRepo/run_test.pl: 
+	  Updated to get the tests running with the new ImR.
+	
 Wed Sep  4 10:44:39 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/PortableServer/ObjectReferenceTemplate.h (poa):
@@ -146,6 +316,7 @@ Tue Sep  3 14:48:55 2002  Ossama Othman  <ossama@uci.edu>
 
 	  Removed redundant "-I" preprocessor directives again.
 
+>>>>>>> 1.382
 Tue Sep  3 14:40:35 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/Security.dsp:
