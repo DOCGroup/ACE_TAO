@@ -1,3 +1,9 @@
+Mon Aug 25 14:47:53 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/Collocated_ORBInitializer.cpp (pre_init):
+
+	  Fixed "unused argument" warning.
+
 Mon Aug 25 16:24:38 2003  George Edwards <g.edwards@vanderbilt.edu>
 
         * tests/Portable_Interceptors/Collocated/Dynamic/*.*
