@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- *  @author  Jeff Parsons <j.parsons@vanderbilt.edu>
+ *  @author  Jeff Parsons <parsons@cs.wustl.edu>
  */
 //=============================================================================
 
