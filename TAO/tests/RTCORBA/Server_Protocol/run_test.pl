@@ -46,14 +46,15 @@ sub client
 
 # Configurations for all tests to be run.
 @server_opts =
-    ("-ORBEndpoint uiop:// -ORBendpoint shmiop:// -ORBendpoint iiop://",
+    ("-ORBendpoint iiop://",
      "-ORBsvcconf server_reverse.conf "
      ."-ORBEndpoint uiop:// -ORBendpoint shmiop:// -ORBendpoint iiop://",
      "-ORBsvcconf server_shmiop.conf -ORBendpoint shmiop://",
-     "-ORBEndpoint uiop:// -ORBendpoint shmiop:// -ORBendpoint iiop://"
+     "-ORBsvcconf server.conf -ORBEndpoint uiop:// "
+     ." -ORBendpoint shmiop:// -ORBendpoint iiop://"
      ." -p 1413566208",
      "-ORBEndpoint uiop:// -ORBendpoint shmiop:// -ORBendpoint iiop://"
-     ." -p 1413566210");
+     ." -p 1413566210 -ORBsvcconf server.conf");
 
 @comments = ("* ORB Default Server Protocol Policy Test\n          "
              ."(TAO's default behavior without config files): \n",
@@ -73,11 +74,11 @@ if ($^O eq "MSWin32")
         ("-ORBendpoint shmiop:// -ORBendpoint iiop://",
          "-ORBsvcconf server_reverse_nt.conf "
          ."-ORBEndpoint shmiop:// -ORBendpoint iiop://",
-         "-ORBsvcconf server_shmiop.conf -ORBendpoint shmiop://",
-         "-ORBendpoint shmiop:// -ORBendpoint iiop://"
-         ." -p 0",
-         "-ORBendpoint shmiop:// -ORBendpoint iiop://"
-         ." -p 1413566210");
+         "-ORBsvcconf server_shmiop.conf -ORBendpoint shmiop://");
+#         "-ORBendpoint shmiop:// -ORBendpoint iiop://"
+#         ." -p 0",
+#         "-ORBendpoint shmiop:// -ORBendpoint iiop://"
+#         ." -p 1413566210");
     $comments[3] =
         "Overriding ORB Default Server Protocol Policy in the POA "
             ."(POA Server Protocol set to IIOP only): \n";

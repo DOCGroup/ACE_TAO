@@ -19,6 +19,8 @@ server_i::start (client_ptr c,
   this->ping (time_to_live,
               ACE_TRY_ENV);
   ACE_CHECK;
+
+  return;
 }
 
 void
