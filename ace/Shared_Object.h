@@ -21,7 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/OS.h"
+#include "ace/os_include/sys/os_types.h"
 
 /**
  * @class ACE_Shared_Object
