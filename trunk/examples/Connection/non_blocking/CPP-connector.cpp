@@ -33,7 +33,8 @@ Peer_Handler<PR_ST_2>::open (void *)
       while (this->connected () != -1)
 	continue;
 
-      this->handle_close (0, ACE_Event_Handler::READ_MASK);
+      this->handle_close (ACE_INVALID_HANDLE, 
+			  ACE_Event_Handler::READ_MASK);
     }
   return 0;
 }
@@ -79,6 +80,7 @@ Peer_Handler<PR_ST_2>::connected (void)
     {
       if (this->peer ().close () == -1) 
 	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "close"), 1);
+
       this->action_ = &Peer_Handler<PR_ST_2>::disconnecting;
       return -1;
     }
@@ -191,12 +193,16 @@ IPC_Client<SH, PR_CO_2>::init (int argc, char *argv[])
 
   this->options_.set (ACE_Synch_Options::USE_REACTOR, timeout);
 
+  SH *sh;
+  
+  ACE_NEW_RETURN (sh, SH (this->reactor ()), -1)
+
   // Connect to the peer, reusing the local addr if necessary.
-  if (this->connect (new SH (this->reactor ()), remote_addr,
-		     this->options_, local_addr, 1) == -1
-	   && errno != EWOULDBLOCK)
+  if (this->connect (sh, remote_addr, this->options_, local_addr, 1) == -1
+      && errno != EWOULDBLOCK)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "connect"), -1);
-  return 0;
+  else
+    return 0;
 }
 
 template <class SH, PR_CO_1> 
@@ -208,10 +214,11 @@ template <class SH, PR_CO_1> int
 IPC_Client<SH, PR_CO_2>::handle_close (ACE_HANDLE h, 
 				       ACE_Reactor_Mask)
 {
-  if (h >= 0)
+  if (h == ACE_INVALID_HANDLE)
     ACE_ERROR ((LM_ERROR, "%p on %d\n", "connection failed", h));
-  else // We are closing down the connector.
+  else 
     {
+      // We are closing down the connector.
       ACE_DEBUG ((LM_DEBUG, "closing down IPC_Client\n"));
       this->inherited::handle_close ();
     }

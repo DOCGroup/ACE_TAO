@@ -1,11 +1,11 @@
 // ACE_SPIPE Server.
 // $Id$
 
-
 #include "ace/SPIPE_Acceptor.h"
 #include "ace/SPIPE_Addr.h"
 #include "CPP-acceptor.h"
 
+#if !defined (ACE_WIN32)
 typedef Svc_Handler<ACE_SPIPE_STREAM> SVC_HANDLER;
 typedef IPC_Server<SVC_HANDLER, ACE_SPIPE_ACCEPTOR> IPC_SERVER;
 
@@ -22,4 +22,11 @@ main (int argc, char *argv[])
 
   return peer_acceptor.svc ();
 }
+#else
+int
+main (void)
+{
+  ACE_ERROR_RETURN ((LM_ERROR, "This test is not ported to Win32 (yet)\n"), -1);
+}
+#endif /* !ACE_WIN32 */
 

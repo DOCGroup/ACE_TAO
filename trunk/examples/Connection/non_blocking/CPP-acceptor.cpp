@@ -93,15 +93,16 @@ IPC_Server<SH, PR_AC_2>::init (int argc, char *argv[])
 			     use_reactor ? ACE_Service_Config::reactor () : 0) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
 
-  // Handle SIGINT signal through the ACE_Reactor.
+  // Handle the SIGINT signal through the ACE_Reactor.
   else if (ACE_Service_Config::reactor ()->register_handler
 	   (SIGINT, &this->done_handler_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "register_handler"), -1);
-
-  // Handle SIGPIPE signal through the ACE_Reactor.
+#if !defined (ACE_WIN32)
+  // Handle the SIGPIPE signal through the ACE_Reactor.
   else if (ACE_Service_Config::reactor ()->register_handler 
 	   (SIGPIPE, &this->done_handler_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "register_handler"), -1);
+#endif /* ACE_WIN32 */
   else
     return 0;
 }
