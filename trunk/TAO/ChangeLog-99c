@@ -1,3 +1,8 @@
+Wed Apr  7 19:34:44 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* orbsvcs/tests/Property/{server, client}.dsp:Made the release
+	versions. 
+
 Wed Apr  7 18:49:41 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Typecode_Constants.cpp: 
