@@ -1,3 +1,12 @@
+Fri Feb 21 13:07:33 2003  Ossama Othman  <ossama@uci.edu>
+
+	* TAO_IDL/be/be_interface.cpp (gen_stub_ctor):
+	* TAO_IDL/be/be_visitor_exception/exception_cs.cpp (visit_exception): 
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp (visit_interface):
+
+	  Generate code that uses the ACE_NESTED_CLASS macro to work
+	  around MSVC++ 6 lack of fully functional C++ namespace sport.
+
 Fri Feb 21 12:54:07 2003  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ValueBase.h (add_ref, remove_ref):

@@ -36,8 +36,8 @@
 #include "nr_extern.h"
 #include "ace/Process.h"
 
-ACE_RCSID (be, 
-           be_interface, 
+ACE_RCSID (be,
+           be_interface,
            "$Id$")
 
 // Default constructor.
@@ -494,15 +494,15 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
                 << "TAO_Abstract_ServantBase *servant" << be_uidt_nl
                 << ")"
                 << be_nl;
-      *os << ": Object (objref, _tao_collocated, servant)";
+      *os << ": ACE_NESTED_CLASS (CORBA, Object) (objref, _tao_collocated, servant)";
 
       if (this->has_mixed_parentage_)
         {
           *os << be_idt;
 
-          int status = 
+          int status =
             this->traverse_inheritance_graph (
-                      be_interface::gen_abstract_init_helper, 
+                      be_interface::gen_abstract_init_helper,
                       os,
                       I_TRUE
                     );
@@ -847,7 +847,7 @@ be_interface::gen_var_impl (char *interface_local_name,
   *cs << "return val;" << be_uidt_nl;
   *cs << "}" << be_nl << be_nl;
 
-  // Hooks for the flat name global functions used by references to 
+  // Hooks for the flat name global functions used by references to
   // non-defined interfaces.
   *cs << "::" << interface_full_name
       << "_ptr" << be_nl
@@ -1254,7 +1254,7 @@ be_interface::gen_operation_table (const char *flat_name,
         ACE_NEW_RETURN (temp_file,
                         char [ACE_OS::strlen (idl_global->temp_dir ())
                               + ACE_OS::strlen (flat_name)
-                              + ACE_OS::strlen (".gperf") 
+                              + ACE_OS::strlen (".gperf")
                               + 1],
                         -1);
 
@@ -1610,8 +1610,8 @@ be_interface::traverse_inheritance_graph (be_interface::tao_code_emitter gen,
 
   be_code_emitter_wrapper wrapper (gen);
 
-  return this->traverse_inheritance_graph (wrapper, 
-                                           os, 
+  return this->traverse_inheritance_graph (wrapper,
+                                           os,
                                            abstract_paths_only);
 }
 
@@ -1667,7 +1667,7 @@ be_interface::traverse_inheritance_graph (
       // If we are doing a component, we check for a parent.
       if (bi->node_type () == AST_Decl::NT_component)
         {
-          AST_Component *base = 
+          AST_Component *base =
             AST_Component::narrow_from_decl (bi)->base_component ();
 
           if (base != 0)
@@ -2104,7 +2104,7 @@ be_interface::queryinterface_helper (be_interface *derived,
                                      TAO_OutStream *os)
 {
   // Emit the comparison code.
-  *os << "(type == ACE_reinterpret_cast (" 
+  *os << "(type == ACE_reinterpret_cast ("
       << be_idt << be_idt <<be_idt << be_idt << be_idt << be_idt_nl
       << "ptr_arith_t," << be_nl;
 
@@ -2173,7 +2173,7 @@ be_interface::downcast_helper (be_interface * /* derived */,
       return 0;
     }
 
-  *os << "if (ACE_OS::strcmp (logical_type_id," << be_nl 
+  *os << "if (ACE_OS::strcmp (logical_type_id," << be_nl
       << "                    \""
       << base->repoID () << "\") == 0)" << be_idt_nl
       << "{" << be_idt_nl
@@ -2432,7 +2432,7 @@ be_interface::in_mult_inheritance_helper (be_interface *derived,
   return 0;
 }
 
-int 
+int
 be_interface::gen_abstract_init_helper (be_interface *node,
                                         be_interface *base,
                                         TAO_OutStream *os)
@@ -2452,7 +2452,7 @@ be_interface::gen_abstract_init_helper (be_interface *node,
       *os << be_nl
           << "ACE_NESTED_CLASS ("
           << parent_decl->name () << ", "
-          << base->local_name () 
+          << base->local_name ()
           << ") (objref, _tao_collocated, servant)";
     }
   else
