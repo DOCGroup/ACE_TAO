@@ -161,7 +161,7 @@ namespace TAO
             ImplementationRepository::Administration::_narrow (imr.in () ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          imr_locator->server_is_shutting_down (poa->the_name () ACE_ENV_ARG_PARAMETER);
+          imr_locator->server_is_shutting_down (poa->name().c_str () ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       ACE_CATCHANY

@@ -339,7 +339,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:1939
+    // be\be_interface.cpp:1859
     
     static void
     copy_skel (
@@ -350,7 +350,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:1939
+    // be\be_interface.cpp:1859
     
     static void
     destroy_skel (
@@ -445,7 +445,7 @@ namespace POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2130
+    // be\be_interface.cpp:2050
     
     static void
     copy (
@@ -459,7 +459,7 @@ namespace POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2130
+    // be\be_interface.cpp:2050
     
     static void
     destroy (

@@ -274,7 +274,7 @@ namespace TAO
 
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1535
+// be\be_interface.cpp:1455
 
 class TAO_ImplementationRepository_ServerInformationIterator_Perfect_Hash_OpTable
   : public TAO_Perfect_Hash_OpTable
@@ -480,7 +480,7 @@ POA_ImplementationRepository::_TAO_ServerInformationIterator_Strategized_Proxy_B
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:978
+// be\be_visitor_interface/interface_ss.cpp:985
 
 TAO::Collocation_Proxy_Broker *
 ImplementationRepository__TAO_ServerInformationIterator_Proxy_Broker_Factory_function (CORBA::Object_ptr)
@@ -1174,7 +1174,7 @@ POA_ImplementationRepository::ServerInformationIterator::_this (ACE_ENV_SINGLE_A
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1535
+// be\be_interface.cpp:1455
 
 class TAO_ImplementationRepository_Administration_Perfect_Hash_OpTable
   : public TAO_Perfect_Hash_OpTable
@@ -1390,7 +1390,7 @@ POA_ImplementationRepository::_TAO_Administration_Strategized_Proxy_Broker::disp
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:978
+// be\be_visitor_interface/interface_ss.cpp:985
 
 TAO::Collocation_Proxy_Broker *
 ImplementationRepository__TAO_Administration_Proxy_Broker_Factory_function (CORBA::Object_ptr)
