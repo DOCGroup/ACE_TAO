@@ -25,7 +25,9 @@
 #include "orbsvcs/CosEventChannelAdminC.h"
 #include "orbsvcs/CosEvent/ProxyPushConsumer_i.h"
 
-class TAO_ORBSVCS_Export TAO_CosEC_SupplierAdmin_i : public POA_CosEventChannelAdmin::SupplierAdmin
+class TAO_ORBSVCS_Export TAO_CosEC_SupplierAdmin_i :
+  public virtual POA_CosEventChannelAdmin::SupplierAdmin,
+  public virtual PortableServer::RefCountServantBase
 {
   // = TITLE
   //   class TAO_CosEC_SupplierAdmin_i implements the SupplierAdmin interface.
@@ -47,11 +49,11 @@ public:
   // error.
 
   virtual CosEventChannelAdmin::ProxyPushConsumer_ptr
-  obtain_push_consumer (CORBA::Environment &TAO_IN_ENV);
+  obtain_push_consumer (CORBA::Environment &ACE_TRY_ENV);
   // Returns a new ProxyPushConsumer_ptr.
 
   virtual CosEventChannelAdmin::ProxyPullConsumer_ptr
-  obtain_pull_consumer(CORBA::Environment &TAO_IN_ENV);
+  obtain_pull_consumer(CORBA::Environment &ACE_TRY_ENV);
   // Returns a new ProxyPullConsumer_ptr.
 
 private:

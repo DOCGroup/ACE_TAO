@@ -26,7 +26,9 @@
 
 class TAO_CosEC_PushSupplierWrapper;
 
-class TAO_ORBSVCS_Export TAO_CosEC_ProxyPushConsumer_i : public POA_CosEventChannelAdmin::ProxyPushConsumer
+class TAO_ORBSVCS_Export TAO_CosEC_ProxyPushConsumer_i :
+  public virtual POA_CosEventChannelAdmin::ProxyPushConsumer,
+  public virtual PortableServer::RefCountServantBase
 {
   // = TITLE
   //   class TAO_CosEC_ProxyPushConsumer_i implements the ProxyPushConsumer
@@ -51,14 +53,14 @@ public:
   // Destructor.
 
   virtual void push (const CORBA::Any &data,
-                     CORBA::Environment &TAO_IN_ENV);
+                     CORBA::Environment &ACE_TRY_ENV);
   // Suppliers call this method to pass data to connected consumers.
 
-  virtual void disconnect_push_consumer (CORBA::Environment &TAO_IN_ENV);
+  virtual void disconnect_push_consumer (CORBA::Environment &ACE_TRY_ENV);
   // Disconnects the supplier from the event communication.
 
   virtual void connect_push_supplier(CosEventComm::PushSupplier_ptr push_supplier,
-                                     CORBA::Environment &TAO_IN_ENV);
+                                     CORBA::Environment &ACE_TRY_ENV);
   // Connects a push supplier.
 
 private:
