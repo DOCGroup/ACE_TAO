@@ -1,6 +1,7 @@
 //$Id$
 
 project(*CompilerElements) {
+  requires += cidl
   staticname = CompilerElements
   includes += ../..
 }

@@ -1,6 +1,7 @@
 //$Id$
 
 project(*CIDL) {
+  requires += cidl
   staticname = CIDL
   includes += ../..
   Source_Files {
