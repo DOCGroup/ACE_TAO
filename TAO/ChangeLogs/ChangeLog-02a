@@ -1,20 +1,42 @@
+Thu May 23 12:02:19 2002  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* orbsvcs/performance-tests/RTEvent/lib/Control.cpp:
+	  Fixed event type mismatch.  Add loopbacks for the low priority
+	  consumers.
+
+	* orbsvcs/performance-tests/RTEvent/lib/Loopback_Supplier.cpp:
+	* orbsvcs/performance-tests/RTEvent/lib/Peer_Base.cpp:
+	* orbsvcs/performance-tests/RTEvent/lib/Supplier.cpp:
+	  Add debug messages, but commented out, they may be useful in the
+	  future.
+
+	* orbsvcs/performance-tests/RTEvent/Makefile:
+	  Add new TCP_Baseline test to the Makefile.
+
+	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/client.cpp:
+	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/roundtrip.conf:
+	  Enable EC_Factory in the Service Configurator.
+
+	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/run_roundtrip.sh:
+	  Fixed options.
+
 Wed May 22 23:18:59 2002  Priyanka  <oci@cs.wustl.edu>
 
         * TAO version 1.2.3 released.
 
 Wed May 22 11:55:10 2002 Ru Gunatilleke <ru@ociweb.com>
 
-	* examples/RTCORBA/Activity/README: Added description on 
+	* examples/RTCORBA/Activity/README: Added description on
 	  options for creating POA.
 
-	* examples/RTCORBA/Activity/svc.conf.client: Added -ThreadCount 2 
+	* examples/RTCORBA/Activity/svc.conf.client: Added -ThreadCount 2
 
 Tue May 21 16:10:11 2002 Ru Gunatilleke <ru@ociweb.com>
 
-	* examples/RTCORBA/Activity/README: Fixed the description on 
+	* examples/RTCORBA/Activity/README: Fixed the description on
 	  supplying the service configurator file.
 
-	* examples/RTCORBA/Activity/svc.conf.server: Added -POACount 1 
+	* examples/RTCORBA/Activity/svc.conf.server: Added -POACount 1
 	  and -JobCount 2
 
 Tue May 21 15:53:07 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
@@ -66,7 +88,7 @@ Sat May 18 07:59:59 2002  Ossama Othman  <ossama@uci.edu>
 
 Fri May 17 18:55:09 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tests/ORT/client.dsp : 
+	* tests/ORT/client.dsp :
 	  Fixed a typo: Portableclient to PortableServer.
 
 Fri May 17 11:30:05 2002  Nanbor Wang  <nanbor@cs.wustl.edu>

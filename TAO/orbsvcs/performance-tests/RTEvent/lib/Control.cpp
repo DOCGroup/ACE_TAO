@@ -12,6 +12,8 @@
 #include "Auto_Functor.h"
 #include "Auto_Disconnect.h"
 
+#include "orbsvcs/Event_Service_Constants.h"
+
 #include "ace/High_Res_Timer.h"
 #include "ace/Sample_History.h"
 #include "ace/Basic_Stats.h"
@@ -93,20 +95,20 @@ Control::join (Federated_Test::Peer_ptr peer
     {
       /// ... automatically release the object references ...
       ACE_Auto_Basic_Array_Ptr<Federated_Test::Loopback_var> loopbacks (
-          new Federated_Test::Loopback_var[this->peers_count_]
+          new Federated_Test::Loopback_var[2*this->peers_count_]
           );
 
       /// ... and automatically disconnect the loopbacks ...
       typedef Auto_Disconnect<Federated_Test::Loopback> Loopback_Disconnect;
       ACE_Auto_Basic_Array_Ptr<auto_ptr<Loopback_Disconnect> > disconnects (
-          new auto_ptr<Loopback_Disconnect>[this->peers_count_]
+          new auto_ptr<Loopback_Disconnect>[2*this->peers_count_]
           );
 
       ACE_DEBUG ((LM_DEBUG,
                   "Control (%P|%t) Running test for peer %d\n",
                   i));
       CORBA::Long experiment_id = 128 + i;
-      CORBA::Long base_event_type = 32;
+      CORBA::Long base_event_type = ACE_ES_EVENT_UNDEFINED;
 
       size_t lcount = 0;
 
@@ -118,6 +120,19 @@ Control::join (Federated_Test::Peer_ptr peer
               loopbacks[lcount] =
                 this->peers_[j]->setup_loopback (experiment_id,
                                                  base_event_type
+                                                 ACE_ENV_ARG_PARAMETER);
+              ACE_CHECK;
+
+              ACE_AUTO_PTR_RESET (disconnects[lcount],
+                                  new Loopback_Disconnect (
+                                        loopbacks[lcount].in ()),
+                                  Loopback_Disconnect
+                                 );
+              lcount++;
+
+              loopbacks[lcount] =
+                this->peers_[j]->setup_loopback (experiment_id,
+                                                 base_event_type + 2
                                                  ACE_ENV_ARG_PARAMETER);
               ACE_CHECK;
 

@@ -81,7 +81,7 @@ Peer_Base::connect (Federated_Test::Peer_ptr remote_peer
                     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // ACE_DEBUG ((LM_DEBUG, "(%P|%t) Connecting....\n"));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Connecting....\n"));
   CORBA::Object_var remote_ec_object =
     remote_peer->channel (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
