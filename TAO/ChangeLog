@@ -1,3 +1,10 @@
+Wed Jul 23 16:18:38 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* README:
+
+	  Reverted accidental changes. Thanks to Johnny Willemsen for
+	  pointing this out.
+
 Wed Jul 23 15:26:41 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* tests/RTScheduling/DT_Spawn/test.cpp (main): Used ACE_TRY_EX
