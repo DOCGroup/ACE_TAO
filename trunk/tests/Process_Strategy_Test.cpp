@@ -554,7 +554,7 @@ server (void *)
 int
 main (int argc, char *argv[])
 {
-  ACE_START_TEST ("Process_Stratey_Test");
+  ACE_START_TEST ("Process_Strategy_Test");
 
   ACE_Service_Config svc_conf;
 
