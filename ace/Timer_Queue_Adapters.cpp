@@ -293,18 +293,13 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::enqueue_command (ACE_Command_Base *cmd,
                     this->command_mutex_, -1);
 
   if (pos == ACE_Thread_Timer_Queue_Adapter<TQ>::TAIL)
-    {
-      return command_queue_.enqueue_tail (cmd);
-    }
+    return command_queue_.enqueue_tail (cmd);
   else
-    {
-      return command_queue_.enqueue_head (cmd);
-    }
+    return command_queue_.enqueue_head (cmd);
 }
 
-
-// Dispatches all command objects enqueued in the most
-// recent event handler context.
+// Dispatches all command objects enqueued in the most recent event
+// handler context.
 
 template<class TQ> int
 ACE_Thread_Timer_Queue_Adapter<TQ>::dispatch_commands (void)

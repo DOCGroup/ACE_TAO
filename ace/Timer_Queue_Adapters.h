@@ -6,10 +6,10 @@
  *
  *  $Id$
  *
- *  @author Douglas C. Schmidt and Carlos O'Ryan
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu> and 
+ *          Carlos O'Ryan <coryan@uci.edu>
  */
 //=============================================================================
-
 
 #ifndef ACE_TIMER_QUEUE_ADAPTERS_H
 #define ACE_TIMER_QUEUE_ADAPTERS_H
@@ -96,7 +96,7 @@ private:
  * dispatch the timers. The base queue need not be thread safe,
  * this class takes all the necessary locks.
  *
- * @note This is a case were template parameters will be useful, but
+ * @note This is a case where template parameters will be useful, but
  * (IMHO) the effort and portability problems discourage their
  * use.
  *
@@ -105,13 +105,13 @@ template <class TQ>
 class ACE_Thread_Timer_Queue_Adapter : public ACE_Task_Base
 {
 public:
-
   /// Trait for the underlying queue type.
   typedef TQ TIMER_QUEUE;
 
 # if defined (ACE_HAS_DEFERRED_TIMER_COMMANDS)
 
-  /// Typedef for the position at which to enqueue a deferred execution command.
+  /// Typedef for the position at which to enqueue a deferred
+  /// execution command.
   enum COMMAND_ENQUEUE_POSITION {HEAD, TAIL};
 
 # endif /* ACE_HAS_DEFERRED_TIMER_COMMANDS */
@@ -191,7 +191,6 @@ public:
 private:
 
 # if defined (ACE_HAS_DEFERRED_TIMER_COMMANDS)
-
   /// Dispatches all command objects enqueued in the most
   /// recent event handler context.
   int dispatch_commands (void);
@@ -201,7 +200,6 @@ private:
 
   /// The mutual exclusion mechanism for the command queue.
   ACE_SYNCH_MUTEX command_mutex_;
-
 # endif /* ACE_HAS_DEFERRED_TIMER_COMMANDS */
 
   /// The underlying Timer_Queue.
@@ -218,7 +216,7 @@ private:
    */
   ACE_SYNCH_CONDITION condition_;
 
-  /// The mutual exclusion mechanism which is required to use the
+  /// The mutual exclusion mechanism that is required to use the
   /// <condition_>.
   ACE_SYNCH_MUTEX mutex_;
 
