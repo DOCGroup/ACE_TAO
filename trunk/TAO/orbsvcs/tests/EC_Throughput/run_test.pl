@@ -54,18 +54,18 @@ $ES = Process::Create ("..".$DIR_SEPARATOR.
                        "..".$DIR_SEPARATOR.
                        "Event_Service".$DIR_SEPARATOR.
                        "Event_Service".$EXE_EXT,
-                       " -ORBNameServiceIOR file://$ns_ior "
+                       " -ORBInitRef NameService=file://$ns_ior "
                        ." -ORBSvcConf ec.conf "
 		       . " -t NEW");
 
 sleep 5;
 
 $C = Process::Create ($EXEPREFIX."ECT_Consumer".$EXE_EXT,
-		      " -ORBNameServiceIOR file://$ns_ior "
+		      " -ORBInitRef NameService=file://$ns_ior "
 		      . " -c 4 -s 1");
 
 $S = Process::Create ($EXEPREFIX."ECT_Supplier".$EXE_EXT,
-		      " -ORBNameServiceIOR file://$ns_ior "
+		      " -ORBInitRef NameService=file://$ns_ior "
 		      . " -s 1 -u 5000 -n 1 -t 0");
 
 if ($S->TimedWait (300) == -1) {
