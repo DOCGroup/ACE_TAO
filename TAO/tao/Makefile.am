@@ -150,6 +150,7 @@ ORB_Core = \
   PICurrent_Copy_Callback.cpp \
   PICurrent_ORBInitializer.cpp \
   PI_ForwardC.cpp \
+  PI_ForwardA.cpp \
   ParameterModeC.cpp \
   Parser_Registry.cpp \
   PolicyA.cpp \
@@ -790,7 +791,7 @@ nobase_include_HEADERS += \
   Parser_Registry.i \
   Pluggable_Messaging.i \
   Pluggable_Messaging_Utils.i \
-  PolicyC.i \
+  PolicyC.inl \
   Policy_ForwardC.i \
   Policy_Manager.i \
   Policy_Set.i \
