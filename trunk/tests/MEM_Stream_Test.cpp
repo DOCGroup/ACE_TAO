@@ -109,12 +109,17 @@ Echo_Handler::handle_input (ACE_HANDLE)
 
   len = this->peer ().recv (buf, MAXPATHLEN * sizeof (ACE_TCHAR));
 
-  if (len == -1 && errno != EIO)
+  if (len == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Error receiving from MEM_Stream\n")),
                       -1);
-  else if (len == 0)
-    return -1;
+  else if (len == 0)            // Connection closed.
+    {
+      ACE_DEBUG ((LM_INFO,
+                  ACE_TEXT ("Connection %d closed\n"),
+                  this->connection_));
+      return -1;
+    }
 
   ACE_TCHAR return_buf[MAXPATHLEN];
   ACE_OS::strcpy (return_buf, this->name_);

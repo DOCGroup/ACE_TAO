@@ -1,3 +1,18 @@
+Sat Dec 28 13:16:24 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/MEM_IO.cpp (recv_buf): Reverted my previous hack in:
+
+	  Fri Dec 27 08:38:29 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	  and make the connection close handling more robust.
+
+	* tests/MEM_Stream_Test.cpp: Reverted my previous change in:
+
+	  Sat Dec 28 11:04:38 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	  It was not necessary.  Added debug information for close
+	  connection.
+
 Sat Dec 28 11:04:38 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/MEM_Stream_Test.cpp: Made sure this test ignore the EIO
