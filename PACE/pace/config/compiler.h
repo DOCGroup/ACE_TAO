@@ -28,11 +28,7 @@
  * static. Otherwise, we want PACE_INLINE to be defined as nothing.
  */
 # if defined (PACE_HAS_INLINE)
-#   if defined (__GNUC__)
-#     define PACE_INLINE static inline
-#   else
-#     define PACE_INLINE static
-#   endif
+#   define PACE_INLINE static
 # else
 #   define PACE_INLINE
 # endif /* ! PACE_HAS_INLINE */
