@@ -1,3 +1,16 @@
+Fri Apr 14 14:30:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* tao/orbconf.h: Moved MINIMUM_CONNECTION_CACHING_STRATEGY
+	  definition to after MINIMUM_CORBA definition so that it can be
+	  disabled for MINIMUM_CORBA. Thanks to Irfan Pyarali
+	  <irfan@cs.wustl.edu> for observing this.
+	* TAO_IDL/util/utl_global.cpp: Added the -Gsp flag for generation
+	  of smart proxy classes automatically when TAO_HAS_SMART_PROXIES
+	  is enabled. This resolves build errors obtained when compiling
+	  with TAO_HAS_SMART_PROXIES enabled. Thanks to Bala
+	  <bala@cs.wustl.edu> for helping with putting this in the
+	  appropriate location in TAO_IDL compiler code.
+		
 Fri Apr 14 11:02:31 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/corbafwd.h:
