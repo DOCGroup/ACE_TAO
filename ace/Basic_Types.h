@@ -161,7 +161,7 @@
   typedef unsigned short ACE_UINT16;
 # elif ACE_SIZEOF_INT == 2
   typedef int ACE_INT16;
-  typedef unsigned short ACE_UINT16;
+  typedef unsigned int ACE_UINT16;
 # elif (ACE_SIZEOF_SHORT) == 4 && defined(_CRAYMPP)
   // mpp cray - uses Alpha processors
   //   Use the real 32-bit quantity for ACE_INT32's, and use a "long"
