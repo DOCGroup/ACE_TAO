@@ -93,7 +93,7 @@ Test_Task::~Test_Task (void)
 int
 Test_Task::open (void *args)
 {
-  this->reactor (ACE_reinterpret_cast (ACE_Reactor *, 
+  this->reactor (ACE_reinterpret_cast (ACE_Reactor *,
                                        args));
   return this->activate (THR_NEW_LWP);
 }
@@ -173,7 +173,7 @@ Test_Task::handle_input (ACE_HANDLE)
 static void *
 worker (void *args)
 {
-  ACE_Reactor *reactor = ACE_reinterpret_cast (ACE_Reactor *, 
+  ACE_Reactor *reactor = ACE_reinterpret_cast (ACE_Reactor *,
                                                args);
 
   // Make this thread the owner of the Reactor's event loop.
@@ -262,7 +262,7 @@ main (int, ASYS_TCHAR *[])
               ASYS_TEXT ("(%t) all threads are finished \n")));
 
 #else
-  ACE_ERROR ((LM_ERROR,
+  ACE_ERROR ((LM_INFO,
               ASYS_TEXT ("threads not supported on this platform\n")));
 #endif /* ACE_HAS_THREADS */
   ACE_END_TEST;

@@ -426,7 +426,7 @@ main (int, ASYS_TCHAR *[])
 {
   ACE_START_TEST (ASYS_TEXT ("Reactor_Performance_Test"));
 
-  ACE_ERROR ((LM_ERROR,
+  ACE_ERROR ((LM_INFO,
               ASYS_TEXT ("threads not supported on this platform\n")));
 
   ACE_END_TEST;

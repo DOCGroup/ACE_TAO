@@ -147,7 +147,7 @@ main (int, char *[])
       break;
     }
 #else
-  ACE_ERROR ((LM_ERROR,
+  ACE_ERROR ((LM_INFO,
               "SYSV IPC and fork are not supported on this platform\n"));
 #endif /* ACE_HAS_SYSV_IPC */
   ACE_END_TEST;

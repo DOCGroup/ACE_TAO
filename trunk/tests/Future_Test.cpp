@@ -155,7 +155,7 @@ Method_Request_work::call (void)
 {
   // Dispatch the Servant's operation and store the result into the
   // Future.
-  return this->future_result_.set (this->scheduler_->work_i 
+  return this->future_result_.set (this->scheduler_->work_i
                                    (this->param_,
                                     this->count_));
 }
@@ -214,7 +214,7 @@ private:
 };
 
 Method_Request_end::Method_Request_end (Prime_Scheduler *scheduler)
-  : scheduler_ (scheduler) 
+  : scheduler_ (scheduler)
 {
 }
 
@@ -222,8 +222,8 @@ Method_Request_end::~Method_Request_end (void)
 {
 }
 
-int 
-Method_Request_end::call (void) 
+int
+Method_Request_end::call (void)
 {
   // Shut down the scheduler.
   this->scheduler_->close ();
@@ -345,7 +345,7 @@ Prime_Scheduler::name (void)
 }
 
 ACE_Future<u_long>
-Prime_Scheduler::work (u_long newparam, 
+Prime_Scheduler::work (u_long newparam,
                        int newcount)
 {
   if (this->scheduler_) {
@@ -528,7 +528,7 @@ main (int, ASYS_TCHAR *[])
     ACE_Time_Value timeout (1);
     int value = 0;
 
-    if (f1.get (value, &timeout) == 0 
+    if (f1.get (value, &timeout) == 0
         && value == 100)
       ACE_DEBUG ((LM_DEBUG,
                   ASYS_TEXT ("Ace_Future<T>::Set followed by Ace_Future<T>::Get works.\n")));
@@ -544,7 +544,7 @@ main (int, ASYS_TCHAR *[])
     ACE_Future<int> f1;
     {
       // To ensure that a rep object is created.
-      ACE_Future<int> f2 (f1); 
+      ACE_Future<int> f2 (f1);
     }
     // Now it is one ACE_Future<int> referencing the rep instance
 
@@ -568,7 +568,7 @@ main (int, ASYS_TCHAR *[])
 
     ACE_DEBUG ((LM_DEBUG,
                 ASYS_TEXT ("1.\n")));
-    { 
+    {
       // Might delete the same data a couple of times.
       ACE_Future<int> f2 (f1);
       f1.set (100);
@@ -616,7 +616,8 @@ main (int, ASYS_TCHAR *[])
   delete matias;
 
 #else
-  ACE_ERROR ((LM_ERROR, ASYS_TEXT ("threads not supported on this platform\n")));
+  ACE_ERROR ((LM_INFO,
+              ASYS_TEXT ("threads not supported on this platform\n")));
 #endif /* ACE_HAS_THREADS */
   ACE_END_TEST;
   return 0;

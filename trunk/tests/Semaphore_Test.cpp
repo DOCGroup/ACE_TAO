@@ -231,7 +231,8 @@ int main (int argc, ASYS_TCHAR *argv[])
 #else
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
-  ACE_ERROR ((LM_ERROR, ASYS_TEXT ("Threads not supported on this platform\n")));
+  ACE_ERROR ((LM_INFO,
+              ASYS_TEXT ("Threads not supported on this platform\n")));
 #endif /* ACE_HAS_THREADS */
   ACE_END_TEST;
   return test_result;

@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    tests
-// 
+//
 // = FILENAME
 //    Task_Test.cpp
 //
@@ -15,7 +15,7 @@
 //
 // = AUTHOR
 //    Prashant Jain and Doug C. Schmidt
-// 
+//
 // ============================================================================
 
 #include "test_config.h"
@@ -34,9 +34,9 @@ class Barrier_Task : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
   Barrier_Task (ACE_Thread_Manager *thr_mgr,
-		int n_threads, 
-		int n_iterations);
-  
+                int n_threads,
+                int n_iterations);
+
   virtual int svc (void);
   // Iterate <n_iterations> time printing off a message and "waiting"
   // for all other threads to complete this iteration.
@@ -50,25 +50,25 @@ private:
   // Number of iterations to run.
 };
 
-Barrier_Task::Barrier_Task (ACE_Thread_Manager *thr_mgr, 
-			    int n_threads, 
-			    int n_iterations)
-  : ACE_Task<ACE_MT_SYNCH> (thr_mgr), 
-    barrier_ (n_threads), 
-    n_iterations_ (n_iterations) 
+Barrier_Task::Barrier_Task (ACE_Thread_Manager *thr_mgr,
+                            int n_threads,
+                            int n_iterations)
+  : ACE_Task<ACE_MT_SYNCH> (thr_mgr),
+    barrier_ (n_threads),
+    n_iterations_ (n_iterations)
 {
   // Create worker threads.
   if (this->activate (THR_NEW_LWP, n_threads) == -1)
     ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n"), ASYS_TEXT ("activate failed")));
 }
-  
+
 // Iterate <n_iterations> time printing off a message and "waiting"
 // for all other threads to complete this iteration.
 
-int 
-Barrier_Task::svc (void) 
-{  
-  for (int iterations = 1; 
+int
+Barrier_Task::svc (void)
+{
+  for (int iterations = 1;
        iterations <= this->n_iterations_;
        iterations++)
     {
@@ -86,7 +86,7 @@ Barrier_Task::svc (void)
 
 #endif /* ACE_HAS_THREADS */
 
-int 
+int
 main (int, ASYS_TCHAR *[])
 {
   ACE_START_TEST (ASYS_TEXT ("Task_Test"));
@@ -95,14 +95,15 @@ main (int, ASYS_TCHAR *[])
   int n_threads = ACE_MAX_THREADS;
   int n_iterations = ACE_MAX_ITERATIONS;
 
-  Barrier_Task barrier_task (ACE_Thread_Manager::instance (), 
-			     n_threads, 
-			     n_iterations);
+  Barrier_Task barrier_task (ACE_Thread_Manager::instance (),
+                             n_threads,
+                             n_iterations);
 
   ACE_Thread_Manager::instance ()->wait ();
 
 #else
-  ACE_ERROR ((LM_ERROR, ASYS_TEXT ("threads not supported on this platform\n")));
+  ACE_ERROR ((LM_INFO,
+              ASYS_TEXT ("threads not supported on this platform\n")));
 #endif /* ACE_HAS_THREADS */
   ACE_END_TEST;
   return 0;

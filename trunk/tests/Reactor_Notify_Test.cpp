@@ -291,7 +291,7 @@ main (int, ASYS_TCHAR *[])
               ASYS_TEXT ("(%t) running tests with notify pipe disabled\n")));
   run_test (1);
 #else
-  ACE_ERROR ((LM_ERROR,
+  ACE_ERROR ((LM_INFO,
               ASYS_TEXT ("threads not supported on this platform\n")));
 #endif /* ACE_HAS_THREADS */
   ACE_END_TEST;

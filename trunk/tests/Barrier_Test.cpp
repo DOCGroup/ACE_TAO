@@ -102,7 +102,7 @@ main (int, ASYS_TCHAR *[])
 
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("test done\n")));
 #else
-  ACE_ERROR ((LM_ERROR,
+  ACE_ERROR ((LM_INFO,
               ASYS_TEXT ("threads not supported on this platform\n")));
 #endif /* ACE_HAS_THREADS */
   ACE_END_TEST;

@@ -440,7 +440,7 @@ spawn (void)
       break;
     }
 #else
-  ACE_ERROR_RETURN ((LM_ERROR,
+  ACE_ERROR_RETURN ((LM_INFO,
                      "threads *and* processes not supported on this platform\n"),
                     -1);
 #endif /* ACE_HAS_THREADS */
@@ -460,7 +460,7 @@ main (int, char *[])
   ACE_INIT_LOG ("IOStream_Test-children");
   spawn ();
 #else
-  ACE_ERROR ((LM_ERROR, "ACE_IOSTREAM not supported on this platform\n"));
+  ACE_ERROR ((LM_INFO, "ACE_IOSTREAM not supported on this platform\n"));
 #endif /* !ACE_LACKS_ACE_IOSTREAM */
   ACE_END_TEST;
   return 0;

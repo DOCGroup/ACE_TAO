@@ -342,7 +342,7 @@ main (int, ASYS_TCHAR *[])
 
   ACE_Thread_Manager::instance ()->wait ();
 #else
-  ACE_DEBUG ((LM_DEBUG,
+  ACE_DEBUG ((LM_INFO,
               ASYS_TEXT ("Message queue watermark test not performed because threads are not supported\n")));
 #endif /* ACE_HAS_THREADS */
 
