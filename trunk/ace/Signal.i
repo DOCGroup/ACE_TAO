@@ -203,7 +203,7 @@ ACE_INLINE
 ACE_Sig_Guard::~ACE_Sig_Guard (void)
 {
   //ACE_TRACE ("ACE_Sig_Guard::~ACE_Sig_Guard");
-#if (ACE_LACKS_PTHREAD_THR_SIGSETMASK)
+#if defined (ACE_LACKS_PTHREAD_THR_SIGSETMASK)
   ACE_OS::sigprocmask (SIG_SETMASK, (sigset_t *) this->omask_, 0);
 #else
   ACE_OS::thr_sigsetmask (SIG_SETMASK, (sigset_t *) this->omask_, 0);
