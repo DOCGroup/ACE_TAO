@@ -1,3 +1,11 @@
+Tue Apr 27 17:36:28 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* m4/threads.m4: 
+
+	  Restructured thread detection test so that it properly detects
+	  threads on platforms that provide PTHREADS backward compatibility
+	  macros, such as Digital Unix 4.0 and 5.0.
+
 Tue Apr 27 18:56:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * ace/Containers_T.{cpp, h}
@@ -10,6 +18,12 @@ Tue Apr 27 18:56:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
           the board support package linker file. Thanks to Sarmeesha
           Reddy <sreddy@tr.comm.mot.com> and Steven Tine
           <stevent@tr.comm.mot.com> for contributing this change.
+
+Tue Apr 27 16:30:57 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* ace/UNIX_Addr.h (ACE_UNIX_Addr): 
+
+	  Corrected typographical error in comment.
 
 Tue Apr 27 12:57:06 1999  Ossama Othman  <othman@cs.wustl.edu>
 
