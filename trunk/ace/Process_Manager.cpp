@@ -198,26 +198,8 @@ ACE_Process_Manager::open (size_t size,
   if (r)
     {
       ACE_Event_Handler::reactor (r);
-#if !defined(ACE_WIN32) && !defined (ACE_PSOS)
-      // (No signals for child-exited on Win32) Assign the
-      // Process_Manager a dummy I/O descriptor.  Note that even
-      // though we open this file "Write Only" we still need to use
-      // the ACE_Event_Handler::NULL_MASK when registering this with
-      // the ACE_Reactor (see below).
-      this->dummy_handle_ = ACE_OS::open (ACE_DEV_NULL,
-                                          O_WRONLY);
-      ACE_ASSERT (this->dummy_handle_ != ACE_INVALID_HANDLE);
-#if defined (F_SETFD)
-      // Don't want children to inherit the dummy I/O handle!
-      ACE_OS::fcntl (this->dummy_handle_, F_SETFD, 1);
-#endif /* F_SETFD */
-
-      // Register signal handler object.  Note that NULL_MASK is used
-      // to keep the ACE_Reactor from calling us back on the
-      // "/dev/null" descriptor.  NULL_MASK just reserves a "slot" in
-      // the Reactor's internal demuxing table, but doesn't cause it
-      // to dispatch the event handler directly.  Instead, we use the
-      // signal handler to do this.
+#if !defined (ACE_WIN32) && !defined (ACE_PSOS)
+      // Register signal handler object.
       if (reactor ()->register_handler
           (this,
            ACE_Event_Handler::NULL_MASK) == -1)
@@ -250,9 +232,6 @@ ACE_Process_Manager::ACE_Process_Manager (size_t size,
     process_table_ (0),
     max_process_table_size_ (0),
     current_count_ (0),
-#if !defined(ACE_WIN32)
-    dummy_handle_ (ACE_INVALID_HANDLE),
-#endif // !defined(ACE_WIN32)
     default_exit_handler_ (0)
 #if defined (ACE_HAS_THREADS)
   , lock_ ()
@@ -331,11 +310,6 @@ ACE_Process_Manager::handle_input (ACE_HANDLE)
   return 0;
 }
 
-ACE_HANDLE
-ACE_Process_Manager::get_handle (void) const
-{
-  return this->dummy_handle_;
-}
 #endif /* !ACE_WIN32 */
 
 // On Unix, this routine is called asynchronously when a SIGCHLD is
@@ -387,10 +361,9 @@ ACE_Process_Manager::handle_signal (int,
     }
 #else /* !ACE_WIN32 */
   ACE_UNUSED_ARG (si);
-  return reactor ()->ready_ops
-    (this->dummy_handle_,
-     ACE_Event_Handler::READ_MASK,
-     ACE_Reactor::ADD_MASK);
+  return reactor ()->notify
+    (this,
+     ACE_Event_Handler::READ_MASK);
 #endif /* !ACE_WIN32 */
 }
 
@@ -423,21 +396,6 @@ ACE_Process_Manager::register_handler (ACE_Event_Handler *eh,
       (ACE_INVALID_HANDLE,
        0);
   proc_desc.exit_notify_ = eh;
-  return 0;
-}
-
-int
-ACE_Process_Manager::handle_close (ACE_HANDLE handle,
-                                   ACE_Reactor_Mask)
-{
-  ACE_TRACE ("ACE_Process_Manager::handle_close");
-  ACE_UNUSED_ARG (handle);
-
-#if !defined (ACE_WIN32)
-  ACE_ASSERT (handle == this->dummy_handle_);
-
-  ACE_OS::close (dummy_handle_);
-#endif /* ACE_WIN32 */
   return 0;
 }
 
