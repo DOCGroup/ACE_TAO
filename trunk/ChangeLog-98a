@@ -1,3 +1,20 @@
+Tue Mar 03 22:15:16 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Remote_Name_Space.cpp: Replaced a bunch of usages of
+	  ACE_WString::rep ().  They were passed to ACE_Name_Request which
+	  creates another copy for itself and nobody ever cleans up these
+	  memories.  Thanks to John Mulhern <9107@MN3.LAWSON.lawson.com>
+	  for reporting this.
+
+	* ace/OS.h (THR_DETACHED): Defined this macro so that we can
+	  simulate detached threads on NT (Hi Irfan! ;-).  Thanks to Andre
+	  Arpin <arpin@adan.kingston.net> for prividing the use case of
+	  detached threads.
+
+	* ace/Thread_Manager.cpp (exit): Added detached threads
+	  manipulating codes here.  We now can simulate behaviros of UNIX
+	  detached threads on NT (no one cares about their return status.)
+
 Tue Mar 03 15:05:42 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Basic_Types.{h,i} (ACE_U_LongLong::operator *=): updated
