@@ -309,7 +309,6 @@ ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS    Compiler does not call
                                         thrown.  In particular, the
                                         exception specification is not
                                         respected.
-ACE_HAS_EXPLICIT_KEYWORD                Compiler support explicit constructors.
 ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION Compiler's template
                                         instantiation mechanism
                                         supports the use of explicit
@@ -846,9 +845,6 @@ ACE_LACKS_RLIMIT                        Platform/compiler lacks
 ACE_LACKS_RLIMIT_PROTOTYPE              Platform/compiler lacks
                                         {get,set}rlimit() prototypes
                                         (e.g., Tandem)
-ACE_LACKS_RTTI                          Compiler does not support
-                                        dynamic_cast.  Usually used
-                                        with ACE_HAS_ANSI_CASTS.
 ACE_LACKS_READDIR_R                     Platform uses ACE_HAS_DIRENT
                                         but does not have readdir_r
                                         ().

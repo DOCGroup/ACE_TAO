@@ -142,25 +142,25 @@ public:
 
   struct ACE_Export from_boolean
   {
-    ACE_EXPLICIT from_boolean (ACE_CDR::Boolean b);
+    explicit from_boolean (ACE_CDR::Boolean b);
     ACE_CDR::Boolean val_;
   };
 
   struct ACE_Export from_octet
   {
-    ACE_EXPLICIT from_octet (ACE_CDR::Octet o);
+    explicit from_octet (ACE_CDR::Octet o);
     ACE_CDR::Octet val_;
   };
 
   struct ACE_Export from_char
   {
-    ACE_EXPLICIT from_char (ACE_CDR::Char c);
+    explicit from_char (ACE_CDR::Char c);
     ACE_CDR::Char val_;
   };
 
   struct ACE_Export from_wchar
   {
-    ACE_EXPLICIT from_wchar (ACE_CDR::WChar wc);
+    explicit from_wchar (ACE_CDR::WChar wc);
     ACE_CDR::WChar val_;
   };
 
@@ -619,25 +619,25 @@ public:
 
   struct ACE_Export to_boolean
   {
-    ACE_EXPLICIT to_boolean (ACE_CDR::Boolean &b);
+    explicit to_boolean (ACE_CDR::Boolean &b);
     ACE_CDR::Boolean &ref_;
   };
 
   struct ACE_Export to_char
   {
-    ACE_EXPLICIT to_char (ACE_CDR::Char &c);
+    explicit to_char (ACE_CDR::Char &c);
     ACE_CDR::Char &ref_;
   };
 
   struct ACE_Export to_wchar
   {
-    ACE_EXPLICIT to_wchar (ACE_CDR::WChar &wc);
+    explicit to_wchar (ACE_CDR::WChar &wc);
     ACE_CDR::WChar &ref_;
   };
 
   struct ACE_Export to_octet
   {
-    ACE_EXPLICIT to_octet (ACE_CDR::Octet &o);
+    explicit to_octet (ACE_CDR::Octet &o);
     ACE_CDR::Octet &ref_;
   };
 

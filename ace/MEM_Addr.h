@@ -46,7 +46,7 @@ public:
   ACE_MEM_Addr (u_short port_number);
 
   /// Creates an <ACE_INET_Addr> from a <port_name>.
-  ACE_EXPLICIT ACE_MEM_Addr (const ACE_TCHAR port_name[]);
+  explicit ACE_MEM_Addr (const ACE_TCHAR port_name[]);
 
   /// Default dtor.
   ~ACE_MEM_Addr (void);

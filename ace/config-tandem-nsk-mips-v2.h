@@ -343,9 +343,6 @@ extern int cma_sigwait  (sigset_t *);
 // Compiler/platform has correctly prototyped header files
 #define ACE_HAS_CPLUSPLUS_HEADERS
 
-// Compiler supports mutable.
-#define ACE_HAS_MUTABLE_KEYWORD
-
 // Compiler/platform does not support the unsigned long long datatype.
 #define ACE_LACKS_LONGLONG_T
 
@@ -354,9 +351,6 @@ extern int cma_sigwait  (sigset_t *);
 
 // Platform/compiler supports Standard C++ Library
 #define ACE_HAS_STANDARD_CPP_LIBRARY 0
-
-// Compiler support explicit constructors (for type conversions).
-#define ACE_HAS_EXPLICIT_KEYWORD
 
 // Compiler uses the template<> syntax
 #define ACE_HAS_STD_TEMPLATE_SPECIALIZATION

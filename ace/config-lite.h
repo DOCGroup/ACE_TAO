@@ -206,22 +206,22 @@
 // EXPLICIT macro
 // =========================================================================
 
-# if defined (ACE_HAS_EXPLICIT_KEYWORD)
-#   define ACE_EXPLICIT explicit
-# else  /* ! ACE_HAS_EXPLICIT_KEYWORD */
-#   define ACE_EXPLICIT
-# endif /* ! ACE_HAS_EXPLICIT_KEYWORD */
+/**
+ * @deprecated explicit is deprecated.  ACE requires C++
+ *             "explicit" keyword support.
+ */
+# define ACE_EXPLICIT explicit
 
 // =========================================================================
 // MUTABLE macro
 // =========================================================================
 
 /**
- * @deprecated ACE_MUTABLE is deprecated.  ACE now requires C++
- *             "mutable" keyword support.
+ * @deprecated ACE_MUTABLE is deprecated.  ACE requires C++ "mutable"
+ *             keyword support.
  */
 # define ACE_MUTABLE mutable
-# define ACE_CONST_WHEN_MUTABLE const // Addition #1
+# define ACE_CONST_WHEN_MUTABLE const
 
 // ============================================================================
 // EXPORT macros

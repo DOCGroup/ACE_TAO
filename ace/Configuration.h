@@ -101,7 +101,7 @@ public:
   /**
    * @param key The section key to reference. Calls add_ref() with @a key.
    */
-  ACE_EXPLICIT ACE_Configuration_Section_Key (ACE_Section_Key_Internal *key);
+  explicit ACE_Configuration_Section_Key (ACE_Section_Key_Internal *key);
 
   /// Copy constructor, increments the reference count on the key.
   ACE_Configuration_Section_Key (const ACE_Configuration_Section_Key &rhs);
@@ -468,7 +468,7 @@ public:
    * base registry key to attach to.  This class takes ownership of
    * hKey, it will invoke <RegCloseKey> on it upon destruction.
    */
-  ACE_EXPLICIT ACE_Configuration_Win32Registry (HKEY hKey);
+  explicit ACE_Configuration_Win32Registry (HKEY hKey);
 
   /// Destructor
   virtual ~ACE_Configuration_Win32Registry (void);
@@ -574,7 +574,7 @@ public:
   ACE_Configuration_ExtId (void);
 
   /// Named constructor
-  ACE_EXPLICIT ACE_Configuration_ExtId (const ACE_TCHAR* name);
+  explicit ACE_Configuration_ExtId (const ACE_TCHAR* name);
 
   /// Copy ctor
   ACE_Configuration_ExtId (const ACE_Configuration_ExtId& rhs);
@@ -634,10 +634,10 @@ public:
   ACE_Configuration_Value_IntId (void);
 
   /// String constructor, takes ownership of string
-  ACE_EXPLICIT ACE_Configuration_Value_IntId (ACE_TCHAR* string);
+  explicit ACE_Configuration_Value_IntId (ACE_TCHAR* string);
 
   /// Integer constructor
-  ACE_EXPLICIT ACE_Configuration_Value_IntId (u_int integer);
+  explicit ACE_Configuration_Value_IntId (u_int integer);
 
   /// Binary constructor, takes ownership of data
   ACE_Configuration_Value_IntId (void* data, size_t length);
@@ -695,7 +695,7 @@ public:
   ACE_Configuration_Section_IntId (void);
 
   /// Named ctor
-  ACE_EXPLICIT ACE_Configuration_Section_IntId (VALUE_MAP* value_hash_map,
+  explicit ACE_Configuration_Section_IntId (VALUE_MAP* value_hash_map,
                                                 SUBSECTION_MAP* section_hash_map);
 
   /// Copy ctor

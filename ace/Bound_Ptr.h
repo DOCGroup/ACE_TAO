@@ -111,11 +111,11 @@ class ACE_Strong_Bound_Ptr
 public:
   /// Constructor that initializes an ACE_Strong_Bound_Ptr to point to the
   /// object \<p\> immediately.
-  ACE_EXPLICIT ACE_Strong_Bound_Ptr (X *p = 0);
+  explicit ACE_Strong_Bound_Ptr (X *p = 0);
 
   /// Constructor that initializes an ACE_Strong_Bound_Ptr by stealing
   /// ownership of an object from an auto_ptr.
-  ACE_EXPLICIT ACE_Strong_Bound_Ptr (auto_ptr<X> p);
+  explicit ACE_Strong_Bound_Ptr (auto_ptr<X> p);
 
   /// Copy constructor binds <this> and <r> to the same object.
   ACE_Strong_Bound_Ptr (const ACE_Strong_Bound_Ptr<X, ACE_LOCK> &r);
@@ -224,7 +224,7 @@ class ACE_Weak_Bound_Ptr
 public:
   /// Constructor that initializes an ACE_Weak_Bound_Ptr to point to
   /// the object \<p\> immediately.
-  ACE_EXPLICIT ACE_Weak_Bound_Ptr (X *p = 0);
+  explicit ACE_Weak_Bound_Ptr (X *p = 0);
 
   /// Copy constructor binds <this> and <r> to the same object.
   ACE_Weak_Bound_Ptr (const ACE_Weak_Bound_Ptr<X, ACE_LOCK> &r);
