@@ -1,3 +1,10 @@
+Tue Jan 25 12:57:05 2005  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Codeset_Manager.cpp:
+          Moved default selection of the UTF16_BOM codeset translator from
+          get_char_trans() to get_wchar_trans() where it belongs. Thanks
+          to Olivier Brunet <o.brunet@free.fr> for finding this.
+
 Tue Jan 25 09:59:28 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/Event_Service/Event_Service.cpp:
