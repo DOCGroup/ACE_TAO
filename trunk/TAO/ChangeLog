@@ -1,3 +1,9 @@
+Fri Jun 12 12:18:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/AV/TCP.h:
+          Don't mix virtual and non-virtual bases. This fixes warnings
+          from the HP aCC compiler.
+
 Fri Jun 11 22:11:38 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Array_VarOut_T.inl (operator[]):
