@@ -1,3 +1,9 @@
+Mon Jan 05 00:11:45 1998    <coryan@MILONGA>
+
+	* tao/objtable.h: 
+	* tao/objtable.cpp: 
+	  New Object Table interface, in preparation for the POA needs.
+
 Sat Jan 03 11:37:21 1998    <coryan@MILONGA>
 
 	* TAO_IDL/be/be_visitor_args.cpp: 
