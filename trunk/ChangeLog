@@ -1,3 +1,15 @@
+Fri Feb 28 14:12:03 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/ChangeLogEditor/ChangeLogEdit.pm:
+        * bin/ChangeLogEditor/ChangeLogEntry.pm:
+        * bin/ChangeLogEditor/EmailTranslator.pm:
+        * bin/ChangeLogEditor/FileLocator.pm:
+        * bin/cle.pl:
+
+          Added a ChangeLog editor script.  It uses CVS to determine which
+          files have been modified, added or removed and generates a blank
+          ChangeLog entry in the existing ChangeLog.
+
 Fri Feb 28 13:18:17 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/VC7WorkspaceCreator.pm:
