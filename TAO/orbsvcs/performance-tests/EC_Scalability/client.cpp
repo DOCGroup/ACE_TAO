@@ -129,7 +129,8 @@ main (int argc, char *argv [])
       ACE_NEW_RETURN (consumer_impl,
                       ECS_Consumer*[consumer_count],
                       1);
-      for (int i = 0; i != consumer_count; ++i)
+      int i;
+      for (i = 0; i != consumer_count; ++i)
         {
           ACE_NEW_RETURN (consumer_impl[i],
                           ECS_Consumer (iterations),
@@ -160,7 +161,7 @@ main (int argc, char *argv [])
       // event[0].data.payload.length(1024);
 
       ACE_hrtime_t start = ACE_OS::gethrtime ();
-      for (int i = 0; i != iterations; ++i)
+      for (i = 0; i != iterations; ++i)
         {
           ACE_hrtime_t creation = ACE_OS::gethrtime ();
           ORBSVCS_Time::hrtime_to_TimeT (event[0].header.creation_time,
@@ -171,7 +172,7 @@ main (int argc, char *argv [])
         }
       ACE_hrtime_t end = ACE_OS::gethrtime ();
 
-      for (int i = 0; i != consumer_count; ++i)
+      for (i = 0; i != consumer_count; ++i)
         {
           consumer_impl[i]->disconnect (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
@@ -188,7 +189,7 @@ main (int argc, char *argv [])
       ACE_DEBUG ((LM_DEBUG, "Done (%d)\n", gsf));
 
       ACE_Sample_History history (iterations);
-      for (size_t j = 0; j != iterations; ++j)
+      for (int j = 0; j != iterations; ++j)
         {
           ACE_UINT64 value = 0;
           for (int i = 0; i != consumer_count; ++i)
