@@ -285,7 +285,7 @@ ACE_Token::shared_acquire (void (*sleep_hook_func)(void *),
           break;
         }
     }
-  while (this->in_use_);
+  while (!ACE_OS::thr_equal (thr_id, this->owner_));
 
   // Do this always and irrespective of the result of wait().
   this->waiters_--;
@@ -318,9 +318,6 @@ ACE_Token::shared_acquire (void (*sleep_hook_func)(void *),
     {
       // If this is a normal wakeup, this thread should be runnable.
       ACE_ASSERT (my_entry.runable_);
-
-      this->in_use_ = op_type;
-      this->owner_ = thr_id;
 
       if (this->signal_all_threads_ != 0)
         return 2;
@@ -392,7 +389,8 @@ ACE_Token::renew (int requeue_position,
     this->in_use_ == ACE_Token::READ_TOKEN ?
     &this->readers_ : &this->writers_;
 
-  ACE_Token::ACE_Token_Queue_Entry my_entry (this->lock_, this->owner_);
+  ACE_Token::ACE_Token_Queue_Entry my_entry (this->lock_,
+                                             this->owner_);
 
   this_threads_queue->insert_entry (my_entry,
                                     requeue_position);
@@ -402,9 +400,7 @@ ACE_Token::renew (int requeue_position,
   int save_nesting_level_ = this->nesting_level_;
 
   // Reset state for new owner.
-  this->owner_ = ACE_OS::NULL_thread;
   this->nesting_level_ = 0;
-  this->in_use_ = 0;
 
   // Wakeup waiter.
   this->wakeup_next_waiter ();
@@ -443,7 +439,7 @@ ACE_Token::renew (int requeue_position,
           break;
         }
     }
-  while (this->in_use_);
+  while (!ACE_OS::thr_equal (my_entry.thread_id_, this->owner_));
 
   // Do this always and irrespective of the result of wait().
   this->waiters_--;
@@ -476,15 +472,6 @@ ACE_Token::renew (int requeue_position,
     {
       // If this is a normal wakeup, this thread should be runnable.
       ACE_ASSERT (my_entry.runable_);
-
-      // Where did we come from?
-      if (this_threads_queue == &this->readers_)
-        this->in_use_ = ACE_Token::READ_TOKEN;
-      else
-        this->in_use_ = ACE_Token::WRITE_TOKEN;
-
-      // Reinstate owner.
-      this->owner_ = my_entry.thread_id_;
 
       // Reinstate nesting level.
       this->nesting_level_ = save_nesting_level_;
@@ -520,10 +507,6 @@ ACE_Token::release (void)
       // Regular release...
       //
 
-      // Reset state for new owner.
-      this->owner_ = ACE_OS::NULL_thread;
-      this->in_use_ = 0;
-
       // Wakeup waiter.
       this->wakeup_next_waiter ();
     }
@@ -535,6 +518,10 @@ void
 ACE_Token::wakeup_next_waiter (void)
 {
   ACE_TRACE ("ACE_Token::wakeup_next_waiter");
+
+  // Reset state for new owner.
+  this->owner_ = ACE_OS::NULL_thread;
+  this->in_use_ = 0;
 
   // Any waiters...
   if (this->writers_.head_ == 0 &&
@@ -550,13 +537,21 @@ ACE_Token::wakeup_next_waiter (void)
 
   // Writer threads get priority to run first.
   if (this->writers_.head_ != 0)
-    queue = &this->writers_;
+    {
+      this->in_use_ = ACE_Token::WRITE_TOKEN;
+      queue = &this->writers_;
+    }
   else
-    queue = &this->readers_;
+    {
+      this->in_use_ = ACE_Token::READ_TOKEN;
+      queue = &this->readers_;
+    }
 
   // Wake up waiter and make it runable.
   queue->head_->runable_ = 1;
   queue->head_->signal ();
+
+  this->owner_ = queue->head_->thread_id_;
 }
 
 int

@@ -1,3 +1,43 @@
+Tue Feb 08 21:22:45 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Token: Yesterday's change caused one problem.  There was no
+	  way to distinguish which thread was going to be the next owner.
+	  So the following happened:
+
+	  Thread A had a read lock and was waiting in select().  Thread B
+	  wanted a write lock, therefore it executed the sleep hook, and
+	  then waited on the condition.  Thread A got up through the sleep
+	  hook, signaled thread B, released the lock and went back to grab
+	  the read lock.  Even though thread B was runnable, it hadn't
+	  gotten a chance to become the owner and <in_use_> was still
+	  zero.  When thread A tried to reacquire the read lock, it
+	  succeeded.  Thread B finally ran to find out that the token was
+	  in use and went back to sleep, and hence got starved in the
+	  process.
+
+	  Therefore, the following changes were made to fix the above:
+
+	  - wakeup_next_waiter() always reset <in_use_> and <owner_>.  If
+	    there is a waiter, it sets <in_use_> and <owner_> for the next
+	    owner.
+
+	  - release() doesn't reset <in_use_> and <owner_> since
+	    wakeup_next_waiter() now does.
+
+	  - renew() doesn't set or reset <in_use_> and <owner_> since
+	    wakeup_next_waiter() now does.
+
+	  - shared_acquire() doesn't set <in_use_> and <owner_> since
+	    wakeup_next_waiter() now does.
+
+	  - The while loops in shared_acquire() and renew() now loop until
+	    the calling thread becomes the owner.
+
+	  Note that this version of the Token implementation is still
+	  better than the previous one since it does not double delete on
+	  timeouts and wakes up the next waiter if it timed out and became
+	  the owner simultaneously.
+
 Tue Feb 08 21:46:51 2000  Girish Birajdar  <birajdar@lucent.com>
 
         * include/makeinclude/platform_vxworks5.x_g++.GNU:
