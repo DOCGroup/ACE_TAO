@@ -1,3 +1,9 @@
+Tue Aug 10 18:08:30 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* ace/CDR_Stream.h:
+	* ace/CDR_STream.i:
+	  Added all the necessary stuff for wstrings.
+
 Tue Aug 10 15:36:02 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Malloc_Test.cpp (main): removed unused argc
