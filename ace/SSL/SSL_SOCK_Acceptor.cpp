@@ -25,8 +25,8 @@ ACE_SSL_SOCK_Acceptor::~ACE_SSL_SOCK_Acceptor (void)
 
 int
 ACE_SSL_SOCK_Acceptor::shared_accept_start (ACE_Time_Value *timeout,
-					    int restart,
-					    int &in_blocking_mode) const
+                                            int restart,
+                                            int &in_blocking_mode) const
 {
   ACE_TRACE ("ACE_SSL_SOCK_Acceptor::shared_accept_start");
 
@@ -36,20 +36,20 @@ ACE_SSL_SOCK_Acceptor::shared_accept_start (ACE_Time_Value *timeout,
   if (timeout != 0)
     {
       if (ACE::handle_timed_accept (handle,
-				    timeout,
-				    restart) == -1)
-	return -1;
+                                    timeout,
+                                    restart) == -1)
+        return -1;
       else
-	{
-	  in_blocking_mode = ACE_BIT_DISABLED (ACE::get_flags (handle),
-					       ACE_NONBLOCK);
-	  // Set the handle into non-blocking mode if it's not already
-	  // in it.
-	  if (in_blocking_mode
-	      && ACE::set_flags (handle,
-				 ACE_NONBLOCK) == -1)
-	    return -1;
-	}
+        {
+          in_blocking_mode = ACE_BIT_DISABLED (ACE::get_flags (handle),
+                                               ACE_NONBLOCK);
+          // Set the handle into non-blocking mode if it's not already
+          // in it.
+          if (in_blocking_mode
+              && ACE::set_flags (handle,
+                                 ACE_NONBLOCK) == -1)
+            return -1;
+        }
     }
 
   return 0;
@@ -57,8 +57,8 @@ ACE_SSL_SOCK_Acceptor::shared_accept_start (ACE_Time_Value *timeout,
 
 int
 ACE_SSL_SOCK_Acceptor::shared_accept_finish (ACE_SSL_SOCK_Stream& new_stream,
-					     int in_blocking_mode,
-					     int reset_new_handle) const
+                                             int in_blocking_mode,
+                                             int reset_new_handle) const
 {
   ACE_TRACE ("ACE_SSL_SOCK_Acceptor::shared_accept_finish ()");
 
@@ -141,7 +141,8 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
   // the ACE Acceptor strategies are not designed for protocols
   // that require additional handshakes after the initial accept.
   ACE_SSL_Accept_Handler eh (new_stream);
-  ACE_Reactor_Mask reactor_mask =
+
+  const ACE_Reactor_Mask reactor_mask =
     ACE_Event_Handler::READ_MASK |
     ACE_Event_Handler::WRITE_MASK;
 
@@ -165,7 +166,7 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
   // Have the Reactor complete the SSL passive connection.  Run the
   // event loop until the passive connection is completed.  Since
   // the Reactor is used, this isn't a busy wait.
-  while (SSL_in_accept_init (ssl))
+  while (!SSL_is_init_finished (ssl))
     {
       // Before blocking in the Reactor, do an SSL_accept() in case
       // OpenSSL buffered additional data sent within an SSL record
@@ -299,14 +300,14 @@ ACE_SSL_SOCK_Acceptor::accept (ACE_SSL_SOCK_Stream &new_stream,
                                ACE_Addr *remote_addr,
                                ACE_Time_Value *timeout,
                                int restart,
-			       int reset_new_handle) const
+                               int reset_new_handle) const
 {
   ACE_TRACE ("ACE_SSL_SOCK_Acceptor::accept");
 
   int in_blocking_mode = 0;
   if (this->shared_accept_start (timeout,
-				 restart,
-				 in_blocking_mode) == -1)
+                                 restart,
+                                 in_blocking_mode) == -1)
     return -1;
   else
     {
