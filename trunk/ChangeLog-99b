@@ -1,3 +1,10 @@
+Mon May 10 15:00:31 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Select_Reactor_Base.cpp (unbind): We need to make sure the
+	  reactor's suspend_set_ also gets clean up when unbinding a
+	  handler.  Thanks to Casey Lucas <clucas@sabre.com> for pointing
+	  this out.
+
 Mon May 10 13:32:11 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Conn_Test.cpp (spawn_threads): wait a maximum
