@@ -13,10 +13,13 @@ ACE_RCSID (PortableServer,
            "$Id$")
 
 void
-TAO_PortableServer_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr
-                                             ACE_ENV_ARG_DECL_NOT_USED)
+TAO_PortableServer_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info
+                                             ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  this->register_poa_current (info
+                              ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 void
@@ -24,10 +27,6 @@ TAO_PortableServer_ORBInitializer::post_init (PortableInterceptor::ORBInitInfo_p
                                               ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->register_poa_current (info
-                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
   this->register_policy_factories (info
                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
