@@ -1,6 +1,6 @@
 Tue May 05 08:35:18 1998  David L. Levine  <levine@cs.wustl.edu>
 
-        * ace/config-irix6.x-sgic++-nothreads.h: update the determination
+        * ace/config-irix6.x-sgic++-nothreads.h: updated the determination
           of ACE_SIZEOF_LONG_DOUBLE.  Thanks to Bob Laferriere
           <laferrie@gsao.med.ge.com> for providing the fix.
 
