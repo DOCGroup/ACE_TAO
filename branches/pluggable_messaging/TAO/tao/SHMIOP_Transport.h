@@ -143,8 +143,13 @@ public:
                        TAO_Target_Specification &spec,
                        TAO_OutputCDR &msg);
   
-  void messaging_init (TAO_Pluggable_Messaging_Interface *mesg);
+  int messaging_init (CORBA::Octet major,
+                      CORBA::Octet minor);
   // Initialising the messaging object
+  
+  void use_lite (CORBA::Boolean flag);
+  // Sets the lite flag
+  
 private:
   TAO_SHMIOP_Client_Connection_Handler *client_handler_;
   // pointer to the corresponding client side connection handler.
@@ -152,6 +157,9 @@ private:
   TAO_Pluggable_Messaging_Interface *client_mesg_factory_;
   // The message_factor instance specific for this particular
   // transport protocol.
+
+  CORBA::Boolean lite_flag_;
+  // Are we using lite?
 };
 
 // ****************************************************************
@@ -175,19 +183,17 @@ public:
   ~TAO_SHMIOP_Server_Transport (void);
   // Default destructor
   
-  void messaging_init (TAO_Pluggable_Messaging_Interface *mesg);
-  // Initialising the messaging object
-
   TAO_SHMIOP_Server_Connection_Handler *server_handler_;
   // Pointer to the corresponding connection handler.
 
   TAO_GIOP_Message_State message_state_;
   // This keep the state of the current message, to enable
   // non-blocking reads, fragment reassembly, etc.
-private:
-  TAO_Pluggable_Messaging_Interface *server_mesg_factory_;
-  // This would be server side messaging protocol  
 };
+
+#if defined (__ACE_INLINE__)
+#include "tao/SHMIOP_Transport.i"
+#endif /* __ACE_INLINE__ */
 
 #endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */
 

@@ -313,9 +313,11 @@ template class ACE_Refcounted_Recyclable_Handler_Caching_Utility<TAO_ADDR, TAO_C
 
 TAO_UIOP_Connect_Creation_Strategy::
   TAO_UIOP_Connect_Creation_Strategy (ACE_Thread_Manager* t,
-                                      TAO_ORB_Core* orb_core)
+                                      TAO_ORB_Core* orb_core,
+                                      CORBA::Boolean flag)
     :  ACE_Creation_Strategy<TAO_UIOP_Client_Connection_Handler> (t),
-       orb_core_ (orb_core)
+       orb_core_ (orb_core),
+       lite_flag_ (flag)
 {
 }
 
@@ -327,7 +329,8 @@ TAO_UIOP_Connect_Creation_Strategy::make_svc_handler
     ACE_NEW_RETURN (sh,
                     TAO_UIOP_Client_Connection_Handler
                     (this->orb_core_->thr_mgr (),
-                     this->orb_core_),
+                     this->orb_core_,
+                     this->lite_flag_),
                     -1);
   return 0;
 }
@@ -366,7 +369,8 @@ TAO_UIOP_Connector::open (TAO_ORB_Core *orb_core)
   ACE_NEW_RETURN (connect_creation_strategy,
                   TAO_UIOP_Connect_Creation_Strategy
                   (this->orb_core_->thr_mgr (),
-                   this->orb_core_),
+                   this->orb_core_,
+                   this->lite_flag_),
                   -1);
 
   auto_ptr<TAO_UIOP_Connect_Creation_Strategy>
@@ -507,20 +511,11 @@ TAO_UIOP_Connector::connect (TAO_Profile *profile,
     }
 
   transport = svc_handler->transport ();
-  int ret_val = 0;
-  if (lite_flag_)
-    {
-      ret_val = svc_handler->init_mesg_protocol (TAO_DEF_GIOP_LITE_MAJOR,
-                                            TAO_DEF_GIOP_LITE_MINOR);
-    }
-  else
-    {
-      // Now that we have the client connection handler object we need to
-      // set the right messaging protocol for the connection handler.
-      const TAO_GIOP_Version& version = uiop_profile->version ();
-      ret_val = uiop_profile->hint ()->init_mesg_protocol (version.major,
-                                                           version.minor);
-    }
+  // Now that we have the client connection handler object we need to
+  // set the right messaging protocol for the connection handler.
+  const TAO_GIOP_Version& version = uiop_profile->version ();
+  int ret_val = transport->messaging_init (version.major,
+                                           version.minor);
   if (ret_val == -1)
     {
       if (TAO_debug_level > 0)

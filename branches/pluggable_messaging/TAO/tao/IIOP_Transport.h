@@ -88,7 +88,6 @@ public:
   send_request_header (TAO_Operation_Details &opdetails,
                          TAO_Target_Specification &spec,
                          TAO_OutputCDR &msg);
-  
 protected:
   TAO_IIOP_Handler_Base *handler_;
   // the connection service handler used for accessing lower layer
@@ -148,17 +147,22 @@ public:
                        TAO_Target_Specification &spec,
                        TAO_OutputCDR &msg);  
 
-  void messaging_init (TAO_Pluggable_Messaging_Interface *mesg);
+  int messaging_init (CORBA::Octet major,
+                      CORBA::Octet minor);
   // Initialising the messaging object
-  
+
+  void use_lite (CORBA::Boolean flag);
+  // Sets the lite flag
 private:
   TAO_IIOP_Client_Connection_Handler *client_handler_;
   // pointer to the corresponding client side connection handler.
-
-   TAO_Pluggable_Messaging_Interface *client_mesg_factory_;
+  
+  TAO_Pluggable_Messaging_Interface *client_mesg_factory_;
   // The message_factor instance specific for this particular
   // transport protocol.
-
+  
+  CORBA::Boolean lite_flag_;
+  // Are we using lite?
 };
 
 // ****************************************************************
@@ -189,14 +193,10 @@ public:
   // This keep the state of the current message, to enable
   // non-blocking reads, fragment reassembly, etc.
   // @@Bala. Should not be here like this
-
-  void messaging_init (TAO_Pluggable_Messaging_Interface *mesg);
-  // Initialising the messaging object  
-
- private:
-  
-  TAO_Pluggable_Messaging_Interface *server_mesg_factory_;
-  // This would be server side messaging protocol  
 };
+
+#if defined (__ACE_INLINE__)
+#include "tao/IIOP_Transport.i"
+#endif /* __ACE_INLINE__ */
 
 #endif  /* TAO_IIOP_TRANSPORT_H */

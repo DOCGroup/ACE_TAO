@@ -155,8 +155,12 @@ public:
                        TAO_Target_Specification &spec,
                        TAO_OutputCDR &msg);
   
-  void messaging_init (TAO_Pluggable_Messaging_Interface *mesg);
+  int messaging_init (CORBA::Octet major,
+                      CORBA::Octet minor);
   // Initialising the messaging object
+
+  void use_lite (CORBA::Boolean flag);
+  // Set the lite flag
 
 private:
   TAO_UIOP_Client_Connection_Handler *client_handler_;
@@ -165,6 +169,9 @@ private:
   TAO_Pluggable_Messaging_Interface *client_mesg_factory_;
   // The message_factor instance specific for this particular
   // transport protocol.
+  
+  CORBA::Boolean lite_flag_;
+  // We using GIOP lite?
 };
 
 // ****************************************************************
@@ -195,14 +202,11 @@ public:
   // This keep the state of the current message, to enable
   // non-blocking reads, fragment reassembly, etc.
 
-  void messaging_init (TAO_Pluggable_Messaging_Interface *mesg);
-  // Initialising the messaging object  
-
- private:
-  
-  TAO_Pluggable_Messaging_Interface *server_mesg_factory_;
-  // This would be server side messaging protocol  
 };
+
+#if defined (__ACE_INLINE__)
+#include "tao/UIOP_Transport.i"
+#endif /* __ACE_INLINE__ */
 
 # endif  /* TAO_HAS_UIOP == 1 */
 
