@@ -1,3 +1,9 @@
+Thu Oct 01 00:17:17 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/ORB_Core.h: Removed template specialization for
+ 	  INET_Addr.hash(). Also changed/fixed explicit template
+ 	  instantiations.
+x
 Wed Sep 30 15:47:26 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Connect.h: 

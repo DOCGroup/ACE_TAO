@@ -1,3 +1,16 @@
+Thu Oct 01 00:09:35 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/Conn_Test: Removed template specialization for
+ 	  INET_Addr.hash().
+
+	* ace/Addr.i (hash): 
+	* ace/INET_Addr.i (hash): 
+
+	  Finally gave up with template specialization hell and freak'in
+ 	  broken compilers and simply added a hash() method to ACE_Addr
+ 	  and ACE_INET_Addr. ACE_Addr::hash() simply return 0 and should
+ 	  be overwritten by subclasses that can provide better hashing.
+
 Wed Sep 30 10:16:56 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/ACE.cpp: Modified max_handles() so that it goes the right

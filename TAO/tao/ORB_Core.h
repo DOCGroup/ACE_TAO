@@ -29,7 +29,7 @@ public:
   ~TAO_Collocation_Table_Lock (void);
 };
 
-typedef ACE_Hash_Map_Manager<ACE_Hash_Addr<ACE_INET_Addr>, TAO_POA *, TAO_Collocation_Table_Lock>
+typedef ACE_Hash_Map_Manager<ACE_INET_Addr, TAO_POA *, TAO_Collocation_Table_Lock>
         TAO_GLOBAL_Collocation_Table;
 
 class TAO_Cached_Connector_Lock : public ACE_Adaptive_Lock
@@ -659,27 +659,5 @@ protected:
 ACE_FACTORY_DECLARE (TAO, TAO_Resource_Factory)
 
 extern TAO_Export TAO_ORB_Core *TAO_ORB_Core_instance (void);
-
-// Declare that the following method should be specialized.
-
-#if defined (ACE_HAS_TEMPLATE_SPECIALIZATION)  &&  (!defined (__GNUG__) || (__GNUC__ > 2 || __GNUC_MINOR__ >= 90))
-
-// Template specializations that allow the cached connection manager
-// to work better.  Older versions of g++, such as 2.7.2.3, can't
-// deal with them, though.
-
-inline u_long
-ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>::hash_i (void) const
-{
-  return this->t_.get_ip_address () + this->t_.get_port_number ();
-}
-
-inline u_long
-ACE_Hash_Addr<ACE_INET_Addr>::hash_i (const ACE_INET_Addr &addr) const
-{
-  return addr.get_ip_address () + addr.get_port_number ();
-}
-
-#endif /* ACE_HAS_TEMPLATE_SPECIALIZATION && egcs, if __GNUG__ */
 
 #endif /* TAO_ORB_CORE_H */
