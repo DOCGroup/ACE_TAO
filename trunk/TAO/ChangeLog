@@ -1,3 +1,15 @@
+Wed Sep 24 09:12:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/tests/FaultTolerance/IOGR/Makefile: Do not link the
+	  server wih the FT library since it is not required.
+
+	* orbsvcs/tests/FaultTolerance/IOGR/svc.conf: Remove the file from
+	  the repo. 
+
+	* orbsvcs/tests/FaultTolerance/IOGRManipulation/IOGRTest.cpp:
+	  Added a test for extracting the IOGR version info from the
+	  profile.
+
 Wed Sep 24 09:04:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.cpp: The
