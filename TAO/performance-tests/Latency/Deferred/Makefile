@@ -30,8 +30,10 @@ include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 
-ifeq ($(minimum_corba),0)
-  BIN = $(BIN_UNCHECKED)
+ifeq ($(corba_messaging),1)
+  ifeq ($(minimum_corba),0)
+    BIN = $(BIN_UNCHECKED)
+  endif # corba_messaging == 1
 endif # minimum_corba
 
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU

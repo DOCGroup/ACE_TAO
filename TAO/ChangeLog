@@ -1,3 +1,11 @@
+Sat Nov  8 22:23:55 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* performance-tests/Latency/Deferred/Makefile:
+	* orbsvcs/tests/InterfaceRepo/Application_Test/Makefile:
+
+	  Fixed the Makefiles so that these don't build when
+	  corba_messaging is turned off.
+
 Sat Nov  8 22:19:30 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/TypeCodeFactory/TypeCodeFactoryC.cpp:
