@@ -475,16 +475,16 @@ AST_Union::lookup_branch (AST_UnionBranch *branch)
     {
       if (label->label_kind () == AST_UnionLabel::UL_default)
         {
-          return lookup_default ();
+          return this->lookup_default ();
         }
 
       if (this->pd_udisc_type == AST_Expression::EV_enum)
         {
           // CONVENTION: indicates enum discriminant.
-          return lookup_enum (branch);
+          return this->lookup_enum (branch);
         }
 
-      return lookup_label (branch);
+      return this->lookup_label (branch);
     }
 
   return 0;
