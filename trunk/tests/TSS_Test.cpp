@@ -250,17 +250,6 @@ worker (void *c)
 #  endif /* !(PTHREADS_DRAFT4 or 6) || defined (ACE_HAS_TSS_EMULATION) */
 #endif /* ! __Lynx__ || ACE_HAS_TSS_EMULATION */
     }
-    if (Errno::created () != Errno::deleted ())
-      {
-        //@@TODO: this should probably be promoted to an error rather than just a
-        // warning.
-        ACE_ERROR ((LM_ERROR,
-          ACE_TEXT ("(%P|%t) Warning: Number created (%d) != number deleted (%d)\n"),
-          Errno::created (),
-          Errno::deleted ()
-          ));
-      }
-
   return 0;
 }
 
@@ -313,6 +302,19 @@ run_main (int, ACE_TCHAR *[])
   delete tss_error;
 
   Errno::deallocate_lock ();
+
+
+  if (Errno::created () != Errno::deleted ())
+    {
+      //@@TODO: this should probably be promoted to an error rather than just a
+      // warning.
+      ACE_ERROR ((LM_DEBUG,
+        ACE_TEXT ("(%P|%t) Warning: Number created (%d) != number deleted (%d)\n"),
+        Errno::created (),
+        Errno::deleted ()
+        ));
+    }
+
 #else /* ACE_HAS_THREADS */
   ACE_ERROR ((LM_INFO,
               ACE_TEXT ("threads are not supported on this platform\n")));
