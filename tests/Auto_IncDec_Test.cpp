@@ -25,8 +25,7 @@ ACE_RCSID(tests, Auto_IncDec_Test, "Auto_IncDec_Test.cpp, by Edan Ayal")
 
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");
-//--------------------------------------------------------------------------
--
+//---------------------------------------------------------------------------
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
 #if defined (ACE_HAS_THREADS)
