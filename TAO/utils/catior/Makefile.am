@@ -9,7 +9,7 @@ TAO_BUILDDIR = $(top_builddir)
 
 if BUILD_RT_CORBA
 
-noinst_PROGRAMS = catior
+bin_PROGRAMS = catior
 
 catior_CPPFLAGS = \
   -I$(ACE_ROOT) \
