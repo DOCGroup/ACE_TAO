@@ -146,6 +146,8 @@ DRV_usage (void)
   cerr << GTDEVEL (" -sT\t\t\tServer's template skeleton file name ending. Default is S_T.cpp\n");
   cerr << GTDEVEL (" -Sa\t\t\tsuppress Any support (support enabled by default)\n");
   cerr << GTDEVEL (" -St\t\t\tsuppress TypeCode support (support enabled by default)\n");
+  cerr << GTDEVEL (" -t\t\t\tTemporary directory to be used by the IDL compiler."
+                   "(default is value of environment variable ACE_DEFAULT_TEMP_DIR_ENV)\n");
   cerr << GTDEVEL (" -u\t\t\tprints usage message and exits\n");
   cerr << GTDEVEL (" -Uname\t\t\tundefines name for preprocessor\n");
   cerr << GTDEVEL (" -v\t\t\ttraces compilation stages\n");
