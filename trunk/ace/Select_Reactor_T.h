@@ -193,6 +193,18 @@ public:
   // Current <alertable_handle_events> is identical to
   // <handle_events>.
 
+  // = Event handling control.
+
+  virtual int deactivated (void);
+  // Return the status of Reactor.  If this function returns 0, the reactor is
+  // actively handling events.  If it returns non-zero, <handling_events> and
+  // <handle_alertable_events> return -1 immediately.
+
+  virtual void deactivate (int do_stop);
+  // Control whether the Reactor will handle any more incoming events or not.
+  // If <do_stop> == 1, the Reactor will be disabled.  By default, a reactor
+  // is in active state and can be deactivated/reactived as wish.
+
   // = Register and remove <ACE_Event_Handler>s.
   virtual int register_handler (ACE_Event_Handler *eh,
                                 ACE_Reactor_Mask mask);
@@ -600,6 +612,9 @@ protected:
   int handle_events_i (ACE_Time_Value *max_wait_time = 0);
   // Stops the VC++ compiler from bitching about exceptions and destructors
 
+  sig_atomic_t deactivated_;
+  // This flag is used to keep track of whether we are actively handling
+  // events or not.
 
 private:
   ACE_UNIMPLEMENTED_FUNC (ACE_Select_Reactor_T (const ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN> &))

@@ -155,6 +155,18 @@ public:
   // return when the system queues an I/O completion routine or an
   // Asynchronous Procedure Call.
 
+  // = Event handling control.
+
+  virtual int deactivated (void) = 0;
+  // Return the status of Reactor.  If this function returns 0, the reactor is
+  // actively handling events.  If it returns non-zero, <handling_events> and
+  // <handle_alertable_events> return -1 immediately.
+
+  virtual void deactivate (int do_stop) = 0;
+  // Control whether the Reactor will handle any more incoming events or not.
+  // If <do_stop> == 1, the Reactor will be disabled.  By default, a reactor
+  // is in active state and can be deactivated/reactived as wish.
+
   // = Register and remove Handlers.
 
   virtual int register_handler (ACE_Event_Handler *event_handler,
