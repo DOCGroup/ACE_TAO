@@ -132,10 +132,28 @@ SOURCE=.\SSLIOP\SSLIOP_Connector.cpp
 # Begin Source File
 
 SOURCE=.\SSLIOP\SSLIOP_Credentials.cpp
+
+!IF  "$(CFG)" == "SSLIOP - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "SSLIOP - Win32 Debug"
+
+# ADD CPP /GR
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\SSLIOP\SSLIOP_Current.cpp
+
+!IF  "$(CFG)" == "SSLIOP - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "SSLIOP - Win32 Debug"
+
+# ADD CPP /GR
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
@@ -172,6 +190,15 @@ SOURCE=.\SSLIOP\SSLIOP_ReceivedCredentials.cpp
 # Begin Source File
 
 SOURCE=.\SSLIOP\SSLIOP_TargetCredentials.cpp
+
+!IF  "$(CFG)" == "SSLIOP - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "SSLIOP - Win32 Debug"
+
+# ADD CPP /GR
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
