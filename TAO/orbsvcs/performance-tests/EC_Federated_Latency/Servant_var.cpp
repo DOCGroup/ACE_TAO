@@ -21,11 +21,13 @@ Servant_var<SERVANT>::~Servant_var ()
   if (this->ptr_ == 0)
     return;
 
-  try {
-    this->ptr_->_remove_ref ();
-  } catch (...) {
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY {
+    this->ptr_->_remove_ref (ACE_TRY_ENV);
+    ACE_TRY_CHECK;
+  } ACE_CATCHANY {
     // @@ This event should be logged...
-  }
+  } ACE_ENDTRY;
 }
 
 #endif /* CS_SERVANT_VAR_CPP */

@@ -1,3 +1,9 @@
+Fri Aug 24 14:48:28 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/performance-tests/EC_Federated_Latency/Servant_var.cpp:
+          Fixed the code to deal with platforms without C++ native
+          exceptions.
+
 Fri Aug 24 14:35:59 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/Event/EC_Gateway.cpp:
