@@ -214,7 +214,7 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler
   (SVC_HANDLER *svc_handler)
 {
   ACE_TRACE ("ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler");
-  if (this->peer_acceptor_.accept (*svc_handler) == -1)
+  if (this->peer_acceptor_.accept (svc_handler->peer ()) == -1)
     {
       // Close down handler to avoid memory leaks.
       svc_handler->close (0); 
@@ -808,7 +808,7 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::shared_accept
     return -1;
 
   // Accept connection into the Svc_Handler.
-  else if (this->peer_acceptor_.accept (*svc_handler, remote_addr,
+  else if (this->peer_acceptor_.accept (svc_handler->peer (), remote_addr,
 					timeout, restart) == -1)
     {
       // Check whether we just timed out or whether we failed...
@@ -866,7 +866,7 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept
 // "oneshot" Acceptor).
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
-ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_input (ACE_HANDLE listener)
+ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_input (ACE_HANDLE)
 {
   ACE_TRACE ("ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_input");
   int result = 0;

@@ -35,14 +35,19 @@
 
 #ifdef _AFXDLL        // May be defined by MSVC++ IDE
 #include <afxwin.h>   // He is doing MFC
+#define	_INC_WINDOWS  // Prevent winsock.h from including windows.h
 #endif
 #ifdef _WINDLL        // May be defined by MSVC++ IDE
 #include <afxwin.h>   // He is doing MFC
+#define	_INC_WINDOWS  // Prevent winsock.h from including windows.h
 #endif
 
 #ifndef __AFX_H__     // set in afxwin.h
 #include <windows.h>  // if he's not doing MFC, snag this
 #endif
+
+// Needed for timeval.
+#include <winsock.h> 
 
 #define ACE_HAS_UNICODE
 
@@ -166,10 +171,7 @@
 #define ACE_NEEDS_WRITEV
 #define ACE_NEEDS_READV
 
-// STRICT type checking in WINDOWS.H enhances type safety for Windows
-// programs by using distinct types to represent all the different
-// HANDLES in Windows. So for example, STRICT prevents you from
-// mistakenly passing an HPEN to a routine expecting an HBITMAP.
-#define STRICT
-
+// Comment this out for now since it will break existing application
+// code.
+#define ACE_HAS_STRICT
 #endif /* ACE_CONFIG_H */

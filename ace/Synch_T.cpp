@@ -178,7 +178,7 @@ template <class MUTEX> int
 ACE_Condition<MUTEX>::wait (void)
 {
 // ACE_TRACE ("ACE_Condition<MUTEX>::wait");
-  return ACE_OS::cond_wait (&this->cond_, this->mutex_.lock_);
+  return ACE_OS::cond_wait (&this->cond_, &this->mutex_.lock_);
 }
 
 template <class MUTEX> int

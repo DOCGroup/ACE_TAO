@@ -25,7 +25,6 @@
 
 // Forward decls...
 template <ACE_SYNCH_1> class ACE_Module;
-template <ACE_SYNCH_1> class ACE_Task_Exit;
 
 class ACE_Task_Flags
   // = TITLE
@@ -49,30 +48,21 @@ public:
   };
 };
 
-template <ACE_SYNCH_1>
-class ACE_Task : public ACE_Service_Object
+class ACE_Task_Base : public ACE_Service_Object
   // = TITLE
-  //    Primary interface for application message processing, as well 
-  //    as input and output message queueing.
+  //    Direct base class for the ACE_Task template.
   //
   // = DESCRIPTION
-  //    This class serves as the basis for passive and active objects
-  //    in ACE.  
+  //    This class factors out the non-template code in order to
+  //    reduce template bloat, as well as to make it possible for the
+  //    <ACE_Thread_Manager> to store <ACE_Task_Base> *'s
+  //    polymorphically.
 {
-friend class ACE_Module<ACE_SYNCH_2>;
-friend class ACE_Module_Type;
-friend class ACE_Task_Exit<ACE_SYNCH_2>;
 public:
-  // = Initialization/termination methods.
-  ACE_Task (ACE_Thread_Manager *thr_mgr = 0, 
-	    ACE_Message_Queue<ACE_SYNCH_2> *mq = 0);
-  // Initialize a Task, supplying a thread manager and a message
-  // queue.  If the user doesn't supply a ACE_Message_Queue pointer
-  // then we'll allocate one dynamically.  Otherwise, we'll use the
-  // one they give.
+  // = Initialization method.
+  ACE_Task_Base (ACE_Thread_Manager *);
 
-  // = Initialization and termination hooks (note that these *must* be
-  // defined by subclasses).
+  // = Initialization and termination hooks (note that these *must* be defined by subclasses).
   virtual int open (void *args = 0) = 0;
   // Hook called to open a Task.  <args> can be used to pass arbitrary
   // information into <open>.
@@ -80,11 +70,8 @@ public:
   virtual int close (u_long flags = 0) = 0;
   // Hook called to close a Task.
 
-  virtual ~ACE_Task (void);	
-  // Destructor.
-
   // = Immediate and deferred processing methods, respectively.
-  virtual int put (ACE_Message_Block *, ACE_Time_Value *tv = 0) = 0;
+  virtual int put (ACE_Message_Block *, ACE_Time_Value * = 0) = 0;
   // Transfer msg into the queue to handle immediate processing. 
 
   virtual int svc (void);
@@ -96,7 +83,7 @@ public:
 			int force_active = 0,
 			u_int priority = 0,
 			int grp_id = -1,
-			ACE_Task<ACE_SYNCH_2> *task = NULL); 
+			ACE_Task_Base *task = NULL); 
   // Turn the task into an active object, i.e., having <n_threads> of
   // control, all running at the <priority> level with the same
   // <grp_id>, all of which invoke <Task::svc>.  Returns -1 if failure
@@ -105,7 +92,7 @@ public:
   // this case), and returns 0 if Task was not already an active
   // object and a thread is created successfully or thread is an
   // active object and <force_active> is true.
-  
+
   // = Suspend/resume a Task
   virtual int suspend (void);
   // Suspend a task.
@@ -124,69 +111,18 @@ public:
   void thr_mgr (ACE_Thread_Manager *);
   // Set the thread manager associated with this Task.
 
-  ACE_Message_Queue<ACE_SYNCH_2> *msg_queue (void);
-  // Gets the message queue associated with this task.
-
-  void msg_queue (ACE_Message_Queue<ACE_SYNCH_2> *);
-  // Sets the message queue associated with this task.
-
   size_t thr_count (void);
   // Returns the number of threads currently running within a task.
   // If we're a passive object this value is 0, else it's > 0.
 
-public: /* Should be protected: */
-  static void *svc_run (ACE_Task<ACE_SYNCH_2> *); 
+  static void *svc_run (ACE_Task_Base *); 
   // Routine that runs the service routine as a daemon thread. 
-
-  // = Message queue manipulation methods.
-
-  int can_put (ACE_Message_Block *); 
-  // Tests whether we can enqueue a message without blocking.
-
-  int putq (ACE_Message_Block *, ACE_Time_Value *tv = 0);    
-  // Insert message into the message list.
-
-  int getq (ACE_Message_Block *&mb, ACE_Time_Value *tv = 0);
-  // Extract the first message from the list (blocking).
-
-  int ungetq (ACE_Message_Block *, ACE_Time_Value *tv = 0);	 
-  // Return a message to the queue.
-
-  int put_next (ACE_Message_Block *msg, ACE_Time_Value *tv = 0);
-  // Transfer message to the adjacent ACE_Task in a ACE_Stream.
-
-  int reply (ACE_Message_Block *, ACE_Time_Value *tv = 0);	     
-  // Turn the message back around.
-
-  // = ACE_Task utility routines to identify names et al.
-  const char *name (void) const;
-  // Return the name of the enclosing Module if there's one associated
-  // with the Task, else returns 0.
-
-  ACE_Task<ACE_SYNCH_2> *sibling (void);
-  // Return the Task's sibling if there's one associated with the
-  // Task's Module, else returns 0.
-
-  ACE_Module<ACE_SYNCH_2> *module (void) const;
-  // Return the Task's Module if there is one, else returns 0.
 
   int is_reader (void);	
   // True if queue is a reader, else false.
 
   int is_writer (void);	
   // True if queue is a writer, else false.
-
-  // = Pointers to next ACE_Queue (if ACE is part of an ACE_Stream).
-  ACE_Task<ACE_SYNCH_2> *next (void);
-  // Get next Task pointer.
-  void next (ACE_Task<ACE_SYNCH_2> *);
-  // Set next Task pointer.
-
-  int flush (u_long flag = ACE_Task_Flags::ACE_FLUSHALL); /* Flush the queue */
-  // Special routines corresponding to certain message types.
-
-  void water_marks (ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds, size_t);
-  // Manipulate watermarks.
 
   void thr_count_dec (void);
   // Atomically decrement the thread count by 1.  This should only be
@@ -204,20 +140,8 @@ public: /* Should be protected: */
   ACE_Thread_Manager *thr_mgr_;
   // Multi-threading manager.
 
-  ACE_Message_Queue<ACE_SYNCH_2> *msg_queue_;	
-  // List of messages on the ACE_Task..
-
-  int delete_msg_queue_;
-  // 1 if should delete Message_Queue, 0 otherwise.
-
   u_long flags_;		
   // ACE_Task flags.
-
-  ACE_Module<ACE_SYNCH_2> *mod_;		
-  // Back-pointer to the enclosing module.
-
-  ACE_Task<ACE_SYNCH_2> *next_;
-  // Pointer to adjacent ACE_Task.
 
   int grp_id_;
   // This maintains the group id of the 
@@ -227,6 +151,94 @@ public: /* Should be protected: */
   // Protect the state of a Task during concurrent operations, but
   // only if we're configured as MT safe...
 #endif /* ACE_MT_SAFE */
+};
+
+template <ACE_SYNCH_1>
+class ACE_Task : public ACE_Task_Base
+  // = TITLE
+  //    Primary interface for application message processing, as well 
+  //    as input and output message queueing.
+  //
+  // = DESCRIPTION
+  //    This class serves as the basis for passive and active objects
+  //    in ACE.  
+{
+friend class ACE_Module<ACE_SYNCH_2>;
+friend class ACE_Module_Type;
+public:
+  // = Initialization/termination methods.
+  ACE_Task (ACE_Thread_Manager *thr_mgr = 0, 
+	    ACE_Message_Queue<ACE_SYNCH_2> *mq = 0);
+  // Initialize a Task, supplying a thread manager and a message
+  // queue.  If the user doesn't supply a ACE_Message_Queue pointer
+  // then we'll allocate one dynamically.  Otherwise, we'll use the
+  // one they give.
+
+  virtual ~ACE_Task (void);	
+  // Destructor.
+
+  ACE_Message_Queue<ACE_SYNCH_2> *msg_queue (void);
+  // Gets the message queue associated with this task.
+
+  void msg_queue (ACE_Message_Queue<ACE_SYNCH_2> *);
+  // Sets the message queue associated with this task.
+
+public: // Should be protected: 
+  // = Message queue manipulation methods.
+
+  int putq (ACE_Message_Block *, ACE_Time_Value *tv = 0);    
+  // Insert message into the message list.
+
+  int getq (ACE_Message_Block *&mb, ACE_Time_Value *tv = 0);
+  // Extract the first message from the list (blocking).
+
+  int ungetq (ACE_Message_Block *, ACE_Time_Value *tv = 0);	 
+  // Return a message to the queue.
+
+  int can_put (ACE_Message_Block *); 
+  // Tests whether we can enqueue a message without blocking.
+
+  int reply (ACE_Message_Block *, ACE_Time_Value *tv = 0);	     
+  // Turn the message back around.
+
+  int put_next (ACE_Message_Block *msg, ACE_Time_Value *tv = 0);
+  // Transfer message to the adjacent ACE_Task in a ACE_Stream.
+
+  // = ACE_Task utility routines to identify names et al.
+  const char *name (void) const;
+  // Return the name of the enclosing Module if there's one associated
+  // with the Task, else returns 0.
+
+  // = Pointers to next ACE_Task_Base (if ACE is part of an ACE_Stream).
+  ACE_Task<ACE_SYNCH_2> *next (void);
+  // Get next Task pointer.
+  void next (ACE_Task<ACE_SYNCH_2> *);
+  // Set next Task pointer.
+
+  ACE_Task<ACE_SYNCH_2> *sibling (void);
+  // Return the Task's sibling if there's one associated with the
+  // Task's Module, else returns 0.
+
+  ACE_Module<ACE_SYNCH_2> *module (void) const;
+  // Return the Task's Module if there is one, else returns 0.
+
+  int flush (u_long flag = ACE_Task_Flags::ACE_FLUSHALL); /* Flush the queue */
+  // Special routines corresponding to certain message types.
+
+  void water_marks (ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds, size_t);
+  // Manipulate watermarks.
+
+  ACE_Message_Queue<ACE_SYNCH_2> *msg_queue_;	
+  // List of messages on the ACE_Task..
+
+  int delete_msg_queue_;
+  // 1 if should delete Message_Queue, 0 otherwise.
+
+  ACE_Module<ACE_SYNCH_2> *mod_;		
+  // Back-pointer to the enclosing module.
+
+  ACE_Task<ACE_SYNCH_2> *next_;
+  // Pointer to adjacent ACE_Task.
 
   void dump (void) const;
   // Dump the state of an object.
@@ -235,7 +247,6 @@ public: /* Should be protected: */
   // Declare the dynamic allocation hooks.
 };
 
-template<ACE_SYNCH_1>
 class ACE_Task_Exit
   // = TITLE
   //    Keep exit information for a Task in thread specific storage so
@@ -253,10 +264,10 @@ public:
   ACE_Task_Exit (void);
   // Capture the Task object that will be cleaned up automatically.
 
-  void set_task (ACE_Task<ACE_SYNCH_2> *t);
+  void set_task (ACE_Task_Base *t);
   // Set the this pointer...
 
-  ACE_Task<ACE_SYNCH_2>* get_task (void);
+  ACE_Task_Base *get_task (void);
   // Get the pointer to the ACE_Task.
 
   void *status (void *s);
@@ -268,11 +279,11 @@ public:
   ~ACE_Task_Exit (void);
   // Destructor calls the <close> method of the captured Task on exit.
 
-  static ACE_Task_Exit<ACE_SYNCH_2> *instance (void);
+  static ACE_Task_Exit *instance (void);
   // Singleton access point.
 
 private:
-  ACE_Task<ACE_SYNCH_2> *t_;
+  ACE_Task_Base *t_;
   // Pointer to the captured Task.
 
   void *status_;

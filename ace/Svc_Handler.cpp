@@ -184,16 +184,7 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::peer (void) const
   return (ACE_PEER_STREAM &) this->peer_;
 }
 
-// Extract the underlying PEER_STREAM (e.g., used by ACE_Connector and
-// ACE_Acceptor).
-
-template <PR_ST_1, ACE_SYNCH_1>
-ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::operator ACE_PEER_STREAM &()
-{
-  return this->peer_;
-}
-
-/* Extract the underlying I/O descriptor. */
+// Extract the underlying I/O descriptor.
 
 template <PR_ST_1, ACE_SYNCH_1> ACE_HANDLE
 ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::get_handle (void) const
@@ -202,7 +193,7 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::get_handle (void) const
   return this->peer_.get_handle ();
 }
 
-/* Set the underlying I/O descriptor. */
+// Set the underlying I/O descriptor.
 
 template <PR_ST_1, ACE_SYNCH_1> void
 ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::set_handle (ACE_HANDLE h)

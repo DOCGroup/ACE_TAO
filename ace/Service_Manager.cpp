@@ -21,7 +21,7 @@ ACE_Service_Manager::dump (void) const
   ACE_TRACE ("ACE_Service_Manager::dump");
 }
 
-/* Static variables. */
+// Static variables. 
 
 u_short ACE_Service_Manager::DEFAULT_PORT_ = 10000;
 

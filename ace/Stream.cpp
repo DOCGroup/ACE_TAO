@@ -32,26 +32,26 @@ ACE_Stream<ACE_SYNCH_2>::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG, "-------- writer links --------\n"));
 
-  ACE_Task<ACE_SYNCH_2> *qp;
+  ACE_Task<ACE_SYNCH_2> *tp;
 
-  for (qp = this->stream_head_->writer (); ; qp = qp->next ())
+  for (tp = this->stream_head_->writer (); ; tp = tp->next ())
     {
-      ACE_DEBUG ((LM_DEBUG, "writer queue name = %s\n", qp->name ()));
-      qp->dump ();
+      ACE_DEBUG ((LM_DEBUG, "writer queue name = %s\n", tp->name ()));
+      tp->dump ();
       ACE_DEBUG ((LM_DEBUG, "-------\n"));
-      if (qp == this->stream_tail_->writer ()
-	  || (this->linked_us_ && qp == this->linked_us_->stream_head_->reader ()))
+      if (tp == this->stream_tail_->writer ()
+	  || (this->linked_us_ && tp == this->linked_us_->stream_head_->reader ()))
 	break;
     }
 
   ACE_DEBUG ((LM_DEBUG, "-------- reader links --------\n"));
-  for (qp = this->stream_tail_->reader (); ; qp = qp->next ())
+  for (tp = this->stream_tail_->reader (); ; tp = tp->next ())
     {
-      ACE_DEBUG ((LM_DEBUG, "reader queue name = %s\n", qp->name ()));
-      qp->dump ();
+      ACE_DEBUG ((LM_DEBUG, "reader queue name = %s\n", tp->name ()));
+      tp->dump ();
       ACE_DEBUG ((LM_DEBUG, "-------\n"));
-      if (qp == this->stream_head_->reader ()
-	  || (this->linked_us_ && qp == this->linked_us_->stream_head_->writer ()))
+      if (tp == this->stream_head_->reader ()
+	  || (this->linked_us_ && tp == this->linked_us_->stream_head_->writer ()))
 	break;
     }
 }

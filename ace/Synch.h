@@ -465,7 +465,9 @@ class ACE_Export ACE_Recursive_Thread_Mutex
   // = DESCRIPTION
   //     This class should be a specialization of the
   //     ACE_Recursive_Lock template class, but problems with some C++
-  //     compilers preclude this...
+  //     compilers preclude this.  This implementation is based
+  //     on an algorithm sketched by Dave Butenhof  <butenhof@zko.dec.com>. 
+  //     Naturally, I take the credit for any mistakes ;-)
 {
   // friend class ACE_Condition<class ACE_COND_MUTEX>;
 public:

@@ -38,8 +38,7 @@ class ACE_Export ACE
   //     methods are put here rather than in ACE_OS in order to
   //     separate concerns.
 public:
-  // = Network I/O functions that factor out differences between Win32
-  // and UNIX.
+  // = Network I/O functions that factor out differences between Win32 and UNIX.
   static ssize_t recv (ACE_HANDLE handle, 
 		       void *buf, 
 		       size_t len, 
@@ -63,6 +62,17 @@ public:
   // out a -1 is returned with <errno == ETIME>.  If it succeeds the
   // number of bytes received is returned.
 
+  static ssize_t recv_n (ACE_HANDLE handle, 
+			 void *buf, 
+			 size_t len, 
+			 int flags,
+			 const ACE_Time_Value *timeout);
+  // Try to recv exactly <len> bytes into <buf> from <handle> (uses
+  // the <recv> call).  If <recv> blocks for longer than <timeout> the
+  // number of bytes actually read is returned with <errno == ETIME>.
+  // If a timeout does not occur, <recv_n> return <len> (i.e., the
+  // number of bytes requested to be read).
+
   static ssize_t send (ACE_HANDLE handle, 
 		       const void *buf, 
 		       size_t len, 
@@ -79,6 +89,17 @@ public:
   // into <buf> from <handle> (uses the <send> call).  If <send> times
   // out a -1 is returned with <errno == ETIME>.  If it succeeds the
   // number of bytes sent is returned.
+
+  static ssize_t send_n (ACE_HANDLE handle, 
+			 const void *buf, 
+			 size_t len, 
+			 int flags,
+			 const ACE_Time_Value *timeout);
+  // Try to send exactly <len> bytes into <buf> from <handle> (uses
+  // the <send> call).  If <send> blocks for longer than <timeout> the
+  // number of bytes actually sent is returned with <errno == ETIME>.
+  // If a timeout does not occur, <send_n> return <len> (i.e., the
+  // number of bytes requested to be sent).
 
   static ssize_t send (ACE_HANDLE handle, 
 		       const void *buf, 
@@ -113,8 +134,7 @@ public:
   // Send <len> bytes from <buf> to <handle> (uses the <write> system
   // call on UNIX and the <recv> call on Win32).
 
-  // = File system I/O functions that encapsulate differences between
-  // UNIX and Win32 and also send and recv exactly n bytes.
+  // = File system I/O functions that encapsulate differences between UNIX and Win32 and also send and recv exactly n bytes.
   static ssize_t read_n (ACE_HANDLE handle, 
 			 void *buf, 
 			 size_t len);
@@ -212,8 +232,7 @@ public:
   static int daemonize (void);
   // Become a daemon process.
 
-  // = Methods for searching and opening shared libraries using
-  // relative naming. 
+  // = Methods for searching and opening shared libraries using relative naming. 
   static int ldfind (const char *filename, 
 		     char *pathname, 
 		     size_t maxlen);
