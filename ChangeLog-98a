@@ -1,3 +1,12 @@
+Fri Apr 24 16:33:14 1998  Steve Huston  <shuston@riverace.com>
+
+	* ace/OS.h: ACE_FACTORY_DEFINE - in the generated gobble function,
+	  use the indicated object type to do the delete so 1) the aC++
+	  compiler won't complain, and 2) so the service object is destructed
+	  properly.
+
+	* tests/Env_Value_Test.cpp: Made it compile on Solaris.
+
 Fri Apr 24 15:45:38 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-sunos5.5-*.h: set ACE_THR_PRI_FIFO_DEF to 30, because
