@@ -80,15 +80,6 @@ client:
         3. Get it from the Naming Service (which is the default client
            behavior).
 
-IDL_Cubit_Test:
---------------
-
-        This is a simple test program which tests the server and
-client using the default options of the server and client. To test
-using this just run
-
-        % IDL_Cubit_Test
-
 collocation_test:
 -----------------
 
