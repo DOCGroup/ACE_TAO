@@ -1,7 +1,7 @@
 // $Id:
 
 workspace(CCF) {
-  requries += cidl
+  requires += cidl
   cmdline += -static
   ./CIDL/CIDL.mpc
   ./IDL2/IDL2.mpc
