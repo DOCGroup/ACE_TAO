@@ -2,13 +2,15 @@
 //
 // $Id$
 
-#include "ace/Service_Config.h"
+#include "ace/svc_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/svc_export.h"
+#include "ace/Service_Config.h"
+#include "ace/Service_Object.h"
+
 
 class ACE_Svc_Export Timer_Service_1 : public ACE_Service_Object
 {
