@@ -1,3 +1,10 @@
+Mon Jul 26 10:34:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Time_Value.h:
+          The latest version of the Cygwin binutils gives linker errors
+          on the exported static members. The workaround we used for
+          MinGW is now also needed for Cygwin.
+
 Sun Jul 25 17:04:16 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tests/Dev_Poll_Reactor_Test.cpp (server_worker):
