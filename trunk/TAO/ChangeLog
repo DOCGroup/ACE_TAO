@@ -1,3 +1,18 @@
+Tue Dec  9 13:42:00 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp (gen_nested_namespace_end):
+
+          Fixed indentation problem in code generation.
+
+        * tao/IFR_Client/IFR_BaseC.cpp:
+        * tao/IFR_Client/IFR_BasicC.cpp:
+        * tao/IFR_Client/IFR_ComponentsC.cpp:
+        * tao/IFR_Client/IFR_ExtendedC.cpp:
+
+          Regenerated IFR_ComponentsC.cpp, to get the correct indentation since
+          the fix above, and from all files listed, removed duplicate explicit
+          template instantiations of the argument template helper classes.
+
 Tue Dec  9 18:38:12 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * orbsvcs/orbsvcs/Makefile.CosTime:

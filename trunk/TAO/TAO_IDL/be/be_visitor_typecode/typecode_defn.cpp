@@ -250,7 +250,7 @@ be_visitor_typecode_defn::gen_nested_namespace_end (be_module *node)
       if (ACE_OS::strcmp (i.item ()->get_string (), "") != 0)
         {
           // Leave the outermost root scope.
-          *os << be_nl << "}";
+          *os << be_uidt_nl << "}";
         }
     }
 
@@ -398,7 +398,7 @@ be_visitor_typecode_defn::visit_type (be_type *node)
           << " =" << be_idt_nl
           << "&_tc_TAO_tc_"
           << node->flat_name () << ";"
-          << be_uidt << be_uidt;
+          << be_uidt;
 
       if (this->gen_nested_namespace_end (module) == -1)
         {
