@@ -23,6 +23,7 @@ ACE_RCSID (ace,
 
 #if defined (ACE_LACKS_MKSTEMP)
 #  include "ace/OS_NS_fcntl.h"
+#  include "ace/OS_NS_ctype.h"
 #  include "ace/OS_NS_sys_time.h"
 
 #  include <limits>
@@ -642,7 +643,7 @@ ACE_OS::mkstemp_emulation (ACE_TCHAR * s)
           do
             {
               r =
-                static_cast<ACE_TCHAR> (coefficient * ACE_OS::rand_r (&seed));
+                static_cast<ACE_TCHAR> (coefficient * ACE_OS::rand_r (seed));
             }
           while (!ACE_OS::ace_isalnum (r));
 
