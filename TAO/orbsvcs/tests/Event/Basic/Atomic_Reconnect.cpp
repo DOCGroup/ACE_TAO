@@ -267,8 +267,8 @@ Consumer::dump_results (int base_count,
                   this->event_base_count));
     }
 
-  if (this->event_count < base_count
-      || this->event_count >= base_count + extra_count)
+  if (this->event_count < CORBA::ULong(base_count)
+      || this->event_count >= CORBA::ULong(base_count + extra_count))
     {
       ACE_DEBUG ((LM_DEBUG,
                   "ERROR - %s unexpected number of events  <%d,%d,%d>\n",
