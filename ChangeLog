@@ -1,3 +1,16 @@
+Wed Nov 15 14:23:54 2000  Ossama Othman  <ossama@uci.edu>
+
+	* configure.in:
+
+	  Fixed bug in the auto_ptr / C++ std namespace test where the
+	  template argument for the auto_ptr being instantiated was
+	  a non-existent type.
+	  Reported by Kevin Marhsall <KCMarshall@att.net>
+
+	* THANKS:
+
+	  Added Kevin to the hall of fame list.
+
 Wed Nov 15 10:19:45 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * examples/Threads/thread_specific.cpp:

@@ -2146,16 +2146,11 @@ ACE_CACHE_CHECK(for new style C++ include file support,
 #include <string>
         ],
         [
+#ifdef ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB
          std::string str;
-        ],
-        ace_cv_lib_posix_standard_includes=yes)
-    else
-      AC_TRY_COMPILE(
-        [
-#include <string>
-        ],
-        [
+#else
          string str;
+#endif  /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
         ],
         ace_cv_lib_posix_standard_includes=yes)
     fi
@@ -2186,7 +2181,7 @@ if test "$ac_cv_header_new" = yes &&
 #ifdef ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB
         std::auto_ptr<int> safe (foo);
 #else
-        auto_ptr<Foo> safe (foo);
+        auto_ptr<int> safe (foo);
 #endif
         foo = safe.release ();
 
