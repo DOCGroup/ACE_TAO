@@ -1,10 +1,18 @@
+Wed Jul  7 10:42:19 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* docs/releasenotes/switch.html:
+	* docs/releasenotes/index.html:
+
+	  Updated the file to follow the directory change for DAnCE.
+	  Updated the link to the TODO list.
+
 Wed Jul  7 09:53:56 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* docs/TODO.html:
 
   	  Overhauled the TODO completely keeping in mind the latest
-	  thoughts and forces. 
-	
+	  thoughts and forces.
+
 	* docs/todo.html:
 
 	  Removed this from th erepository.
@@ -13,7 +21,7 @@ Tue Jul  6 18:05:35 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* CIAO-INSTALL.html:
 
-	  Did a massive update to this since it was woefully outdated. 
+	  Did a massive update to this since it was woefully outdated.
 
 Tue Jul  6 14:34:16 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
@@ -45,15 +53,15 @@ Tue Jul  6 14:22:00 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* CIDLC/CIDLC.mpc:
 
 	  All of them require exceptions to be available. Therefore added
-	  requires += exceptions. 
+	  requires += exceptions.
 
-	* CCF/CCF/CodeGenerationKit/IndentationXML.hpp:	
+	* CCF/CCF/CodeGenerationKit/IndentationXML.hpp:
 
-	  Remove the comma at the end of the enum declaration. 
+	  Remove the comma at the end of the enum declaration.
 
 
 	  All the above should fix compilation errors in Full_Reactors
-	  builds. 
+	  builds.
 
 Tue Jul  6 10:17:06 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
@@ -74,7 +82,7 @@ Mon Jul  5 08:39:06 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tools/static_configurator/Static_Assembly_Parser.cpp:
 
 	  Fixed warnings that were caused from converting strings to
-	  non-const char *. 
+	  non-const char *.
 
 Mon Jul  5 08:36:07 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -87,21 +95,21 @@ Mon Jul  5 08:36:07 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tests/temp/assembly/server.cpp:
 
 	  Completely removed them. They were not supposed to be shipped or
-	  built. We have better test programs for those features now. 
+	  built. We have better test programs for those features now.
 
 Mon Jul  5 08:27:39 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* examples/OEP/Display/NavDisplayGUI_exec/NavDisplayGUI.mpc:
 
 	  Added requires += qt
-	
+
 	* examples/handcrafted/BasicSP_EC/EC/EC.mpc:
 	* examples/handcrafted/BasicSP_EC2/BasicSP.mpc:
 	* examples/handcrafted/BasicSP_EC2/RTEventService/RTEventService.mpc:
 
 	  They should not be compiled inour daily builds at all. They are
 	  not for that.
-	
+
 	* tests/RTCCM/DiffServ/Controller/Controller.mpc:
 	* tests/RTCCM/DiffServ/Receiver/Receiver.mpc:
 	* tests/RTCCM/DiffServ/Sender/Sender.mpc:
@@ -116,29 +124,29 @@ Sun Jul  4 22:13:37 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* performance-tests/Benchmark/RoundTripClient/RoundTripClient_exec.cpp:
 	* performance-tests/Benchmark/RoundTripClient/RoundTripClient_exec.h:
 
-	  Added ciao_preactivate () and ciao_postactivate () methods. 
+	  Added ciao_preactivate () and ciao_postactivate () methods.
 
 	* performance-tests/Protocols/Receiver/Receiver.mpc:
 	* performance-tests/Protocols/Sender/Sender.mpc:
 
-	  Did the following 
+	  Did the following
 
 	  (1) Changed the name of the shared object to Protocol_*_stub and
 	  Protocol_*_svnt. This was needed since there are other examples
 	  that have named the libraries as Sender_stub and
 	  Receiver_stub. Since all of these libraries are written to
 	  $ACE_ROOT/lib, one library overwrites the other and all hell
-	  breaks loose. 
+	  breaks loose.
 
 	  (2) The executor librares are not being compiled now. We have
 	  used the requires += dummy to prevent them from compiling. The
 	  executor code depends on a header file that hasn't been checked
 	  in. I am informing the code author about this. Till the author
-	  fixes the code, the executor code will  not be compiled. 
-	
+	  fixes the code, the executor code will  not be compiled.
+
 	* performance-tests/Protocols/Controller/Controller.mpc:
 
-	  They now link to Protocol_*_stubs. 
+	  They now link to Protocol_*_stubs.
 
 
 Sun Jul  4 19:05:35 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
@@ -154,7 +162,7 @@ Sun Jul  4 19:05:35 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* examples/handcrafted/BasicSP_EC2/EC/EC.mpc:
 
 	  Do not compile these. They wouldn't compile at all. These are
-	  useful examples that are needed for EC integration. 
+	  useful examples that are needed for EC integration.
 
 Sun Jul  4 18:59:09 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -175,25 +183,25 @@ Sun Jul  4 18:40:10 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* performance-tests/Protocols/Sender/SenderImpl.ccd
 	* performance-tests/Protocols/Sender/Sender_svnt.h:
 
-	  Removed the generated code form the repository. 
+	  Removed the generated code form the repository.
 
 Sun Jul  4 11:14:03 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* DAnCE/ciao/CCM_Core.mpc:
 
 	  Restructured things so that CIAO_DnC_Server doesn't need to be
-	  linked with stub projects. 
-	
+	  linked with stub projects.
+
 	* DAnCE/ciao/Container_Base.h:
 
-	  Added an include for the xport file. 
-	
+	  Added an include for the xport file.
+
 Sun Jul  4 10:17:52 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* DAnCE/ciao/CCM_Core.mpc:
 
 	  The deployment_stub should depend on the CIAO_DnC_Server. This
-	  would need some restructuring. I will do this shortly. 
+	  would need some restructuring. I will do this shortly.
 
 Sun Jul  4 09:07:20 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -201,19 +209,19 @@ Sun Jul  4 09:07:20 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	  Added DAnCE and removed DnC
 
-	* DAnCE/RepositoryManager/Repository_Manager.cpp:	
+	* DAnCE/RepositoryManager/Repository_Manager.cpp:
 	* DAnCE/ExecutionManager/Execution_Manager.cpp:
 
-	  Fixed warnings in our daily builds. 
-	
+	  Fixed warnings in our daily builds.
+
 	* DAnCE/NodeManager/NodeDaemon.mpc:
 
 	  Use CIAO_DnC_Server instead of  CIAO_Server.
 
 	* DAnCE/ciao/CCM_Core.mpc:
 
-	  Removed unneeded dependancies. 
-	
+	  Removed unneeded dependancies.
+
 Sat Jul  3 10:03:22 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* DAnCE/ciao/Deployment_Base.idl:
