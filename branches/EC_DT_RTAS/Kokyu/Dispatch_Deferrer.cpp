@@ -117,7 +117,7 @@ Dispatch_Deferrer::handle_timeout (const ACE_Time_Value &,
       DSUI_EVENT_LOG (DISP_DEFERRER_FAM, EVENT_DEFERRED_DEQUEUE, 0, sizeof(Kokyu::Object_Counter::object_id), (char*)&oid);
 #endif /* ACE_HAS_DSUI */
 
-      this->task_->enqueue(qitem);
+      this->task_->enqueue_i(qitem);
 
       ++begin;
     }

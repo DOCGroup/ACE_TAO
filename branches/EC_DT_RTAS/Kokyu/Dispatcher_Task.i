@@ -52,7 +52,7 @@ Dispatcher_Task::get_curr_config_info() const
 
 ACE_INLINE
 int
-Dispatcher_Task::enqueue (Dispatch_Queue_Item *qitem)
+Dispatcher_Task::enqueue_i (Dispatch_Queue_Item *qitem)
 {
 #ifdef KOKYU_HAS_RELEASE_GUARD
   //update release time
