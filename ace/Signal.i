@@ -174,7 +174,7 @@ ACE_Sig_Guard::ACE_Sig_Guard (ACE_Sig_Set *mask)
     {
       ACE_Sig_Set smask (1);
 
-#if 0 // defined (ACE_MT_SAFE)
+#if 0 /* defined (ACE_MT_SAFE) */
       ACE_OS::thr_sigsetmask (SIG_BLOCK, (sigset_t *) smask, (sigset_t *)
 			      this->omask_);
 #else
@@ -183,7 +183,7 @@ ACE_Sig_Guard::ACE_Sig_Guard (ACE_Sig_Set *mask)
 #endif /* ACE_MT_SAFE */
     }
   else
-#if 0 // defined (ACE_MT_SAFE)
+#if 0 /* defined (ACE_MT_SAFE) */
   ACE_OS::thr_sigsetmask (SIG_BLOCK, (sigset_t *) *mask, (sigset_t *)
 			  this->omask_);
 #else
@@ -198,7 +198,7 @@ ACE_INLINE
 ACE_Sig_Guard::~ACE_Sig_Guard (void)
 {
   ACE_TRACE ("ACE_Sig_Guard::~ACE_Sig_Guard");
-#if 0 // defined (ACE_MT_SAFE)
+#if 0 /* defined (ACE_MT_SAFE) */
   ACE_OS::thr_sigsetmask (SIG_SETMASK, (sigset_t *) this->omask_, 0);
 #else
   ACE_OS::sigprocmask (SIG_SETMASK, (sigset_t *) this->omask_, 0);

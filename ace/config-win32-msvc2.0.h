@@ -50,7 +50,7 @@
 	// #define	_INC_WINDOWS  // Prevent winsock.h from including windows.h
 #endif
 
-#if !defined (_INC_WINDOWS)	// Already include windows.h ?
+#if !defined (_INC_WINDOWS)	/* Already include windows.h ? */
 	// Must define strict before including windows.h !
 	#if (defined ACE_HAS_STRICT)
 		#define STRICT 1

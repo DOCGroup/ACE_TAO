@@ -73,7 +73,7 @@ typedef char *ACE_MMAP_TYPE;
 extern "C" int gettimeofday (struct timeval *tp, void * = 0);
 #else
 extern "C" int gettimeofday (struct timeval *tp);
-#endif	//  m88k
+#endif	/*  m88k */
 #elif defined (ACE_HAS_OSF1_GETTIMEOFDAY)
 extern "C" int gettimeofday (struct timeval *tp, struct timezone * = 0);
 #elif defined (ACE_HAS_SUNOS4_GETTIMEOFDAY)
@@ -154,7 +154,7 @@ extern "C" void ace_mutex_lock_cleanup_adapter (void *args);
 #include /**/ <sys/syscall.h>
 #endif /* ACE_HAS_SYSCALL_H */
 
-#if defined (UNIXWARE)	// See strcasecmp, below
+#if defined (UNIXWARE)	/* See strcasecmp, below */
 #include /**/ <ctype.h>
 #endif /* UNIXWARE */
 
@@ -416,7 +416,7 @@ ACE_OS::umask (mode_t cmask)
 #endif /* VXWORKS */
 }
 
-#else // ACE_WIN32
+#else /* ACE_WIN32 */
 
 // This is for Win32 exclusively!
 
@@ -1423,7 +1423,7 @@ ACE_OS::rw_rdlock (ACE_rwlock_t *rw)
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::rw_rdlock (rw), ace_result_), int, -1);
-#else // NT, POSIX, and VxWorks don't support this natively.
+#else /* NT, POSIX, and VxWorks don't support this natively. */
 #if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
   ACE_PTHREAD_CLEANUP_PUSH (&rw->lock_);
 #endif /* ACE_HAS_DCETHREADS */
@@ -1465,7 +1465,7 @@ ACE_OS::rw_tryrdlock (ACE_rwlock_t *rw)
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::rw_tryrdlock (rw), ace_result_), int, -1);
-#else // NT, POSIX, and VxWorks don't support this natively.
+#else /* NT, POSIX, and VxWorks don't support this natively. */
   int result = -1;
 
   if (ACE_OS::mutex_lock (&rw->lock_) != -1)
@@ -1500,7 +1500,7 @@ ACE_OS::rw_trywrlock (ACE_rwlock_t *rw)
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::rw_trywrlock (rw), ace_result_), int, -1);
-#else // NT, POSIX, and VxWorks don't support this natively.
+#else /* NT, POSIX, and VxWorks don't support this natively. */
   int result = -1;
 
   if (ACE_OS::mutex_lock (&rw->lock_) != -1)
@@ -1535,7 +1535,7 @@ ACE_OS::rw_unlock (ACE_rwlock_t *rw)
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::rw_unlock (rw), ace_result_), int, -1);
-#else // NT, POSIX, and VxWorks don't support this natively.
+#else /* NT, POSIX, and VxWorks don't support this natively. */
   if (ACE_OS::mutex_lock (&rw->lock_) == -1)
     return -1;
 
@@ -1579,7 +1579,7 @@ ACE_OS::rw_wrlock (ACE_rwlock_t *rw)
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::rw_wrlock (rw), ace_result_), int, -1);
-#else // NT, POSIX, and VxWorks don't support this natively.
+#else /* NT, POSIX, and VxWorks don't support this natively. */
 #if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
   ACE_PTHREAD_CLEANUP_PUSH (&rw->lock_);
 #endif /* defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS) */
@@ -1627,7 +1627,7 @@ ACE_OS::rwlock_init (ACE_rwlock_t *rw,
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::rwlock_init (rw, type, arg), ace_result_), int, -1);
-#else // NT, POSIX, and VxWorks don't support this natively.
+#else /* NT, POSIX, and VxWorks don't support this natively. */
   int result = -1;
 
   if (ACE_OS::mutex_init (&rw->lock_, type, name, arg) == 0
@@ -1664,7 +1664,7 @@ ACE_OS::rwlock_destroy (ACE_rwlock_t *rw)
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::rwlock_destroy (rw), ace_result_), int, -1);
-#else // NT, POSIX, and VxWorks don't support this natively.
+#else /* NT, POSIX, and VxWorks don't support this natively. */
   ACE_OS::mutex_destroy (&rw->lock_);
   ACE_OS::cond_destroy (&rw->waiting_readers_);
   return ACE_OS::cond_destroy (&rw->waiting_writers_);
@@ -3027,7 +3027,7 @@ ACE_OS::thr_equal (ACE_thread_t t1, ACE_thread_t t2)
 #endif /* pthread_equal */
 #elif defined (VXWORKS)
   return ! ACE_OS::strcmp (t1, t2);
-#else // For both STHREADS and WTHREADS...
+#else /* For both STHREADS and WTHREADS... */
   // Hum, Do we need to treat WTHREAD differently?
   return t1 == t2;
 #endif /* ACE_HAS_DCETHREADS */
@@ -3045,7 +3045,7 @@ ACE_OS::thr_cmp (ACE_hthread_t t1, ACE_hthread_t t2)
 #else
   return ::pthread_equal (t1, t2);
 #endif /* pthread_equal */
-#else // For STHREADS, WTHREADS, and VXWORKS ...
+#else /* For STHREADS, WTHREADS, and VXWORKS ... */
   // Hum, Do we need to treat WTHREAD differently?
   return t1 == t2;
 #endif /* ACE_HAS_DCETHREADS */
@@ -3397,7 +3397,7 @@ ACE_OS::thr_sigsetmask (int how,
     }
 
   return 0;
-#else // Should not happen.
+#else /* Should not happen. */
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_STHREADS */
 #else
@@ -3437,7 +3437,7 @@ ACE_OS::thr_min_stack (void)
                                 status),
 	      STATUS, -1, status);
   return status == OK ? taskDesc.td_stackSize : 0;
-#else // Should not happen...
+#else /* Should not happen... */
   ACE_NOTSUP_RETURN (0);
 #endif /* ACE_HAS_STHREADS */
 #else
@@ -3474,7 +3474,7 @@ ACE_OS::thr_kill (ACE_thread_t thr_id, int signum)
     ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::kill (tid, signum), ace_result_),
                        int, -1);
 
-#else // This should not happen!
+#else /* This should not happen! */
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_STHREADS */
 #else
@@ -3605,7 +3605,7 @@ ACE_OS::thr_yield (void)
   ::pthread_yield (NULL);
 #else
   ::pthread_yield ();
-#endif	//  ACE_HAS_IRIX62_THREADS */
+#endif	/*  ACE_HAS_IRIX62_THREADS */ */
 #elif defined (ACE_HAS_WTHREADS)
   ::Sleep (0);
 #elif defined (VXWORKS)
@@ -4904,7 +4904,7 @@ ACE_OS::ctime (const time_t *t)
   ACE_OSCALL_RETURN (::asctime (::localtime (t)), char *, 0);
 #else
   ACE_OSCALL_RETURN (::ctime (t), char *, 0);
-#endif    // ACE_HAS_BROKEN_CTIME)
+#endif    /* ACE_HAS_BROKEN_CTIME) */
 }
 
 ACE_INLINE char *

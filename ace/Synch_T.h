@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -369,7 +368,7 @@ public:
 #define ACE_TSS_Write_GUARD ACE_Write_Guard
 #define ACE_TSS_Read_GUARD ACE_Read_Guard
 
-#else // ACE platform supports some form of threading and
+#else /* ACE platform supports some form of threading and */
       // thread-specific storage.
 
 template <class LOCK>
@@ -488,7 +487,7 @@ public:
 };
 #endif /* !(defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)) */
 
-#if defined (ACE_HAS_THREADS) // ACE platform supports some form of threading.
+#if defined (ACE_HAS_THREADS) /* ACE platform supports some form of threading. */
 
 template <class MUTEX>
 class ACE_Condition

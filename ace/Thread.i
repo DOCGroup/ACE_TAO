@@ -242,3 +242,17 @@ ACE_Thread::self (ACE_hthread_t &t_id)
 //  ACE_TRACE ("ACE_Thread::self");
   ACE_OS::thr_self (t_id);
 }
+
+ACE_INLINE int 
+ACE_Thread::getprio (ACE_hthread_t t_id, int *prio)
+{
+  ACE_TRACE ("ACE_Thread::getprio");
+  return ACE_OS::thr_getprio (t_id, prio);
+}
+
+ACE_INLINE int 
+ACE_Thread::setprio (ACE_hthread_t t_id, int prio)
+{
+  ACE_TRACE ("ACE_Thread::setprio");
+  return ACE_OS::thr_setprio (t_id, prio);
+}

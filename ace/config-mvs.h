@@ -6,10 +6,10 @@
 
 // The following #defines are hacks to get around things
 // that seem to be missing or different in MVS land
-#define MAXPATHLEN 1024          // sys/param.h not on MVS
-#define NSIG 44                  // missing from Signal.h
-#define MAXHOSTNAMELEN 256       // missing form netdb.h
-#define howmany __howmany        // MVS uses different names than most others
+#define MAXPATHLEN 1024          /* sys/param.h not on MVS */
+#define NSIG 44                  /* missing from Signal.h */
+#define MAXHOSTNAMELEN 256       /* missing form netdb.h */
+#define howmany __howmany        /* MVS uses different names than most others */
 #define fd_mask __fd_mask
 #define MAXNAMLEN  __DIR_NAME_MAX
 

@@ -15,7 +15,7 @@
 
 #define _HPUX_SOURCE
 #include /**/ <sys/stdsyms.h>
-#include /**/ <sched.h>                              //  pthread.h doesn't include this
+#include /**/ <sched.h>                              /*  pthread.h doesn't include this */
 
 #define ACE_HAS_BROKEN_CONVERSIONS
 
@@ -64,8 +64,8 @@
 #define ACE_HAS_SETKIND_NP
 #define ACE_LACKS_CONDATTR_PSHARED
 #define ACE_LACKS_SI_ADDR
-#define ACE_LACKS_SETDETACH                     //  new
-#define ACE_LACKS_KEYDELETE                     //  new
+#define ACE_LACKS_SETDETACH                     /*  new */
+#define ACE_LACKS_KEYDELETE                     /*  new */
 #define ACE_LACKS_THREAD_PROCESS_SCOPING
 #define ACE_LACKS_THREAD_STACK_ADDR
 

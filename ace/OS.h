@@ -165,7 +165,7 @@
   void *CLASS::operator new (size_t bytes) { return ::new char[bytes]; } \
   void CLASS::operator delete (void *ptr) { delete (ptr); }
 #else
-#define ACE_ALLOC_HOOK_DECLARE struct __Ace {} // Just need a dummy...
+#define ACE_ALLOC_HOOK_DECLARE struct __Ace {} /* Just need a dummy... */
 #define ACE_ALLOC_HOOK_DEFINE(CLASS) 
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
@@ -339,18 +339,18 @@ static ACE_Static_Svc_##X ace_static_svc_##X;
 
 // the following macros are for POSIX conformance.
 
-#define S_IRWXU 00700           // read, write, execute: owner.
-#define S_IRUSR 00400           // read permission: owner.
-#define S_IWUSR 00200           // write permission: owner.
-#define S_IXUSR 00100           // execute permission: owner.
-#define S_IRWXG 00070           // read, write, execute: group.
-#define S_IRGRP 00040           // read permission: group.
-#define S_IWGRP 00020           // write permission: group.
-#define S_IXGRP 00010           // execute permission: group.
-#define S_IRWXO 00007           // read, write, execute: other.
-#define S_IROTH 00004           // read permission: other.
-#define S_IWOTH 00002           // write permission: other.
-#define S_IXOTH 00001           // execute permission: other.
+#define S_IRWXU 00700           /* read, write, execute: owner. */
+#define S_IRUSR 00400           /* read permission: owner. */
+#define S_IWUSR 00200           /* write permission: owner. */
+#define S_IXUSR 00100           /* execute permission: owner. */
+#define S_IRWXG 00070           /* read, write, execute: group. */
+#define S_IRGRP 00040           /* read permission: group. */
+#define S_IWGRP 00020           /* write permission: group. */
+#define S_IXGRP 00010           /* execute permission: group. */
+#define S_IRWXO 00007           /* read, write, execute: other. */
+#define S_IROTH 00004           /* read permission: other. */
+#define S_IWOTH 00002           /* write permission: other. */
+#define S_IXOTH 00001           /* execute permission: other. */
 
 #endif /* ACE_LACKS_MODE_MASKS */
 
@@ -731,7 +731,7 @@ typedef ACE_mutex_t ACE_thread_mutex_t;
 #define THR_SCHED_RR            0
 #define THR_SCHED_DEFAULT       0
 #define USYNC_THREAD            0
-#define USYNC_PROCESS           1 // it's all global on VxWorks (without MMU
+#define USYNC_PROCESS           1 /* it's all global on VxWorks (without MMU */
                                   // option)
 
 typedef SEM_ID ACE_mutex_t;
@@ -851,9 +851,9 @@ struct ACE_rwlock_t
 #define THR_CANCEL_ENABLE       0
 #define THR_CANCEL_DEFERRED     0
 #define THR_CANCEL_ASYNCHRONOUS 0
-#define THR_DETACHED    0       // ?? ignore in most places 
-#define THR_BOUND       0       // ?? ignore in most places
-#define THR_NEW_LWP     0       // ?? ignore in most places
+#define THR_DETACHED    0       /* ?? ignore in most places */
+#define THR_BOUND       0       /* ?? ignore in most places */
+#define THR_NEW_LWP     0       /* ?? ignore in most places */
 #define THR_SUSPENDED   CREATE_SUSPENDED
 #endif /* ACE_HAS_DCETHREADS || ACE_HAS_PTHREADS */
 #else /* !ACE_HAS_THREADS, i.e., the OS/platform doesn't support threading. */
@@ -862,10 +862,10 @@ struct ACE_rwlock_t
 #define THR_CANCEL_ENABLE       0
 #define THR_CANCEL_DEFERRED     0
 #define THR_CANCEL_ASYNCHRONOUS 0
-#define THR_DETACHED    0       // ?? ignore in most places 
-#define THR_BOUND       0       // ?? ignore in most places
-#define THR_NEW_LWP     0       // ?? ignore in most places
-#define THR_SUSPENDED   0       // ?? ignore in most places
+#define THR_DETACHED    0       /* ?? ignore in most places */
+#define THR_BOUND       0       /* ?? ignore in most places */
+#define THR_NEW_LWP     0       /* ?? ignore in most places */
+#define THR_SUSPENDED   0       /* ?? ignore in most places */
 #define USYNC_THREAD 0
 #define USYNC_PROCESS 0
 // These are dummies needed for class OS.h
@@ -972,11 +972,11 @@ typedef void (*ACE_SignalHandlerV)(...);
 #elif defined (ACE_HAS_SVR4_SIGNAL_T)
 // SVR4 Signals are inconsistent (e.g., see struct sigaction)..
 typedef void (*ACE_SignalHandler)(int);
-#if !defined (m88k)     //  with SVR4_SIGNAL_T
+#if !defined (m88k)     /*  with SVR4_SIGNAL_T */
 typedef void (*ACE_SignalHandlerV)(void);
 #else
 typedef void (*ACE_SignalHandlerV)(int);
-#endif  //  m88k        //  with SVR4_SIGNAL_T
+#endif  //  m88k        /*  with SVR4_SIGNAL_T */
 #elif defined (ACE_WIN32)
 typedef void (__cdecl *ACE_SignalHandler)(int); 
 typedef void (__cdecl *ACE_SignalHandlerV)(int);
@@ -994,22 +994,22 @@ typedef void (*ACE_SignalHandlerV)(...);
 // which should be placed after these defines
 #ifndef ALL_WARNINGS
 // #pragma warning(disable: 4101)  // unreferenced local variable
-#pragma warning(disable: 4127)  // constant expression for TRACE/ASSERT
-#pragma warning(disable: 4134)  // message map member fxn casts
-#pragma warning(disable: 4511)  // private copy constructors are good to have
-#pragma warning(disable: 4512)  // private operator= are good to have
-#pragma warning(disable: 4514)  // unreferenced inlines are common
-#pragma warning(disable: 4710)  // private constructors are disallowed
-#pragma warning(disable: 4705)  // statement has no effect in optimized code
+#pragma warning(disable: 4127)  /* constant expression for TRACE/ASSERT */
+#pragma warning(disable: 4134)  /* message map member fxn casts */
+#pragma warning(disable: 4511)  /* private copy constructors are good to have */
+#pragma warning(disable: 4512)  /* private operator= are good to have */
+#pragma warning(disable: 4514)  /* unreferenced inlines are common */
+#pragma warning(disable: 4710)  /* private constructors are disallowed */
+#pragma warning(disable: 4705)  /* statement has no effect in optimized code */
 // #pragma warning(disable: 4701)  // local variable *may* be used without init
 // #pragma warning(disable: 4702)  // unreachable code caused by optimizations
-#pragma warning(disable: 4791)  // loss of debugging info in retail version
+#pragma warning(disable: 4791)  /* loss of debugging info in retail version */
 // #pragma warning(disable: 4204)  // non-constant aggregate initializer
-#pragma warning(disable: 4275)  // deriving exported class from non-exported
-#pragma warning(disable: 4251)  // using non-exported as public in exported
-#pragma warning(disable: 4786)  // identifier was truncated to '255' characters in the browser information
-#pragma warning(disable: 4097)  // typedef-name used as synonym for class-name
-#endif //!ALL_WARNINGS
+#pragma warning(disable: 4275)  /* deriving exported class from non-exported */
+#pragma warning(disable: 4251)  /* using non-exported as public in exported */
+#pragma warning(disable: 4786)  /* identifier was truncated to '255' characters in the browser information */
+#pragma warning(disable: 4097)  /* typedef-name used as synonym for class-name */
+#endif /*!ALL_WARNINGS */
 // We're on WinNT or Win95
 #define ACE_PLATFORM "Win32"
 #define ACE_PLATFORM_EXE_SUFFIX ".exe"
@@ -1020,7 +1020,7 @@ typedef void (*ACE_SignalHandlerV)(...);
 // mistakenly passing an HPEN to a routine expecting an HBITMAP.
 // Note that we only use this if we 
 #if defined (ACE_HAS_STRICT)
-#if !defined (STRICT)	// may already be defined
+#if !defined (STRICT)	/* may already be defined */
 #define STRICT
 #endif /* !STRICT */
 #endif /* ACE_HAS_STRICT */
@@ -1071,7 +1071,7 @@ typedef void (*ACE_SignalHandlerV)(...);
 #define ACE_DLL_PREFIX ""
 
 // This will help until we figure out everything:
-#define NFDBITS 32 // only used in unused functions...
+#define NFDBITS 32 /* only used in unused functions... */
 // These two may be used for internal flags soon:
 #define MAP_PRIVATE 1
 #define MAP_SHARED  2
@@ -1258,7 +1258,7 @@ typedef char TCHAR;
 
 #if defined (m88k)
 #define RUSAGE_SELF 1
-#endif  //  m88k
+#endif  /*  m88k */
 
 // Default semaphore key
 #define ACE_DEFAULT_SEM_KEY 1234
@@ -1671,19 +1671,19 @@ typedef fd_set ACE_FD_SET_TYPE;
 #endif /* NSIG */
 
 #if !defined (R_OK)
-#define R_OK    04      // Test for Read permission.
+#define R_OK    04      /* Test for Read permission. */
 #endif /* R_OK */
 
 #if !defined (W_OK)
-#define W_OK    02      // Test for Write permission.
+#define W_OK    02      /* Test for Write permission. */
 #endif /* W_OK */
 
 #if !defined (X_OK)
-#define X_OK    01      // Test for eXecute permission.
+#define X_OK    01      /* Test for eXecute permission. */
 #endif /* X_OK */
 
 #if !defined (F_OK)
-#define F_OK    0       // Test for existence of File.
+#define F_OK    0       /* Test for existence of File. */
 #endif /* F_OK */
 
 #if !defined (EIDRM)
@@ -1691,11 +1691,11 @@ typedef fd_set ACE_FD_SET_TYPE;
 #endif /* !EIDRM */
 
 #if !defined (ENOTSUP)
-#define ENOTSUP ENOSYS  // Operation not supported      .
+#define ENOTSUP ENOSYS  /* Operation not supported      . */
 #endif /* !ENOTSUP */
 
 #if !defined (EDEADLK)
-#define EDEADLK 1000 // Some large number....
+#define EDEADLK 1000 /* Some large number.... */
 #endif /* !ENOTSUP */
 
 #if !defined (MS_SYNC)
@@ -1861,7 +1861,7 @@ typedef void (*ACE_Sig_Handler_Ex) (int, siginfo_t *siginfo, ucontext_t *ucontex
 
 #if defined (ACE_REDEFINES_XTI_FUNCTIONS)
 #include /**/ <xti.h>
-#ifdef UNIXWARE         // They apparantly forgot one...
+#ifdef UNIXWARE         /* They apparantly forgot one... */
 extern "C" int _xti_error(char *);
 #endif /* UNIXWARE */
 #endif /* ACE_REDEFINES_XTI_FUNCTIONS */
