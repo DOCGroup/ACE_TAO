@@ -11,9 +11,10 @@
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/Sched/Config_Scheduler.h"
 #include "orbsvcs/Event/Event_Channel.h"
-#include "ECT_Consumer.h"
+#include "ECM_Consumer.h"
+#include "ECM_Data.h"
 
-ACE_RCSID(EC_Throughput, ECT_Consumer, "$Id$")
+ACE_RCSID(EC_Custom_Marshal, ECM_Consumer, "$Id$")
 
 int
 main (int argc, char *argv [])
@@ -194,11 +195,11 @@ Driver::push_consumer (void* consumer_cookie,
 
   this->recv_count_ += events.length ();
 
-  int x = this->event_count_ / 100;
+  int x = this->event_count_ / 10;
   if (this->recv_count_ % x == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-		  "ECT_Consumer (%P|%t): %d events received\n",
+		  "ECM_Consumer (%P|%t): %d events received\n",
 		  this->recv_count_));
     }
 
@@ -217,6 +218,49 @@ Driver::push_consumer (void* consumer_cookie,
         {
           ACE_DEBUG ((LM_DEBUG, "No data in event[%d]\n", i));
           continue;
+        }
+
+      // @@ TODO this is a little messy, infortunately we have to
+      // extract the first byte to determine the byte order, the CDR
+      // cannot do it for us because in certain cases the byte order
+      // is not in the encapsulation. Maybe we need another
+      // constructor for the InputCDR streams (but there are too many
+      // already!)?
+
+      // Note that there is no copying
+      int byte_order = e.data_.payload[0];
+
+      ACE_Message_Block* mb =
+        ACE_Message_Block::duplicate (e.data_.payload.mb ());
+      mb->rd_ptr (1); // skip the byte order
+
+      TAO_InputCDR cdr (mb, byte_order);
+
+      ECM_IDLData::Info info;
+      cdr.decode (ECM_IDLData::_tc_Info, &info, 0, _env);
+      if (_env.exception () != 0) return;
+
+      ECM_Data other;
+      cdr >> other;
+
+      if (!cdr.good_bit ())
+	ACE_ERROR ((LM_ERROR, "Problem demarshalling C++ data\n"));
+
+      CORBA::ULong n = info.trajectory.length ();
+      // ACE_DEBUG ((LM_DEBUG, "Payload contains <%d> elements\n", n));
+      // ACE_DEBUG ((LM_DEBUG, "Inventory <%s> contains <%d> elements\n",
+      // other.description.in (),
+      // other.inventory.current_size ()));
+
+      for (CORBA::ULong j = 0; j < n; ++j)
+        {
+          ECM_IDLData::Point& p = info.trajectory[j];
+          if (p.x != j || p.y != j*j)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "invalid data in trajectory[%d] = (%f,%f)\n",
+                          j, p.x, p.y));
+            }
         }
     }
 }

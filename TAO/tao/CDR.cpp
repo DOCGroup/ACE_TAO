@@ -495,47 +495,68 @@ TAO_OutputCDR::write_wstring (CORBA::ULong len,
 CORBA_Boolean
 TAO_OutputCDR::write_octet_array_mb (const ACE_Message_Block* mb)
 {
-  size_t length = mb->length ();
-
-#if !defined (TAO_NO_COPY_OCTET_SEQUENCES)
-  return this->write_array (mb->rd_ptr (),
-                            CDR::OCTET_SIZE,
-                            CDR::OCTET_ALIGN,
-                            length);
-#else
-  // If the mb does not own its data we are forced to make a copy.
-  if (ACE_BIT_ENABLED (mb->flags (),
-		       ACE_Message_Block::DONT_DELETE))
-    {
-      return this->write_array (mb->rd_ptr (),
-				CDR::OCTET_SIZE,
-				CDR::OCTET_ALIGN,
-				length);
-    }
-
   // If the buffer is small and it fits in the current message
   // block it is be cheaper just to copy the buffer.
   const size_t memcpy_tradeoff =
     TAO_ORB_Core_instance ()->orb_params ()->cdr_memcpy_tradeoff ();
-  
-  if (length < memcpy_tradeoff
-      && this->current_->wr_ptr () + length < this->current_->end ())
-    return this->write_array (mb->rd_ptr (),
-                              CDR::OCTET_SIZE,
-                              CDR::OCTET_ALIGN,
-                              length);
 
-  ACE_Message_Block* cont = ACE_Message_Block::duplicate (mb);
-  if (cont != 0)
+  for (const ACE_Message_Block* i = mb;
+       i != 0;
+       i = i->cont ())
     {
-      cont->cont (this->current_->cont ());
-      this->current_->cont (cont);
-      this->current_ = cont;
-      return CORBA::B_TRUE;
+      size_t length = i->length ();
+
+#if !defined (TAO_NO_COPY_OCTET_SEQUENCES)
+      if (!this->write_array (i->rd_ptr (),
+			      CDR::OCTET_SIZE,
+			      CDR::OCTET_ALIGN,
+			      length) )
+	{
+	  return CORBA::B_FALSE;
+	}
+#else
+      // If the mb does not own its data we are forced to make a copy.
+      if (ACE_BIT_ENABLED (i->flags (),
+			   ACE_Message_Block::DONT_DELETE))
+	{
+	  if (! this->write_array (i->rd_ptr (),
+				   CDR::OCTET_SIZE,
+				   CDR::OCTET_ALIGN,
+				   length))
+	    {
+	      return CORBA::B_FALSE;
+	    }
+	  continue;
+	}
+
+      if (length < memcpy_tradeoff
+	  && this->current_->wr_ptr () + length < this->current_->end ())
+	{
+	  if (! this->write_array (i->rd_ptr (),
+				   CDR::OCTET_SIZE,
+				   CDR::OCTET_ALIGN,
+				   length) )
+	    {
+	      return CORBA::B_FALSE;
+	    }
+	  continue;
+	}
+
+      ACE_Message_Block* cont = ACE_Message_Block::duplicate (i);
+      if (cont != 0)
+	{
+	  cont->cont (this->current_->cont ());
+	  this->current_->cont (cont);
+	  this->current_ = cont;
+	}
+      else
+	{
+	  this->good_bit_ = 0;
+	  return CORBA::B_FALSE;
+	}
     }
-  this->good_bit_ = 0;
-  return CORBA::B_FALSE;
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES */
+  return CORBA::B_TRUE;
 }
 
 CORBA_Boolean
