@@ -1,3 +1,8 @@
+Sun Aug 23 18:37:26 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* orbsvcs: Changed all occurrences of *_Impl to *_i to be more
+ 	  consistent.  Thanks to David Levine for reporting this.
+
 Sun Aug 23 16:17:03 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* docs/compiler.html: Updated documentation about new options.
