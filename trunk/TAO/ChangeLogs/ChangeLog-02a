@@ -1,3 +1,17 @@
+Tue May 29 11:19:29 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_operation.cpp:
+
+          Added a missing call to ast_accept() when visiting an
+          operation's exception list. Also removed code that skips
+          the call to ast_accept when an argument, return type or
+          attribute is an interface. Skipping the call didn't
+          cause a problem, but other recent fixes, including the
+          first one above, have made it unnecessary. Thanks to
+          Philippe Merle <Philippe.Merle@lifl.fr> for sending in
+          the example IDL file that uncovered this bug.
+
 Mon May 28 16:44:59 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* examples/PluggableUDP/tests/Basic/client.dsp:
