@@ -5,7 +5,7 @@
 // Operations on the generic unbounded sequence class.
 // ***************************************************
 
-template <class T> ACE_INLINE ACE_TYPENAME T *
+template <class T> ACE_INLINE T *
 TAO_Unbounded_Sequence<T>::allocbuf (CORBA::ULong size)
 {
   return new T[size];
@@ -38,7 +38,7 @@ TAO_Unbounded_Sequence<T>::TAO_Unbounded_Sequence (CORBA::ULong maximum,
 {
 }
 
-template <class T> ACE_INLINE ACE_TYPENAME T *
+template <class T> ACE_INLINE T *
 TAO_Unbounded_Sequence<T>::get_buffer (CORBA::Boolean orphan)
 {
   T *result = 0;
