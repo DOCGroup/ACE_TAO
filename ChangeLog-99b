@@ -15,6 +15,10 @@ Thu Jul  8 13:50:14 1999  Steve Huston  <shuston@riverace.com>
           again, which artificially increased the count of dispatched
           handlers, and left some input unhandled when it was ready.
 
+        * tests/MT_Reactor_Timer_Test.cpp: Added some verification checks to
+          be sure that timer, notify, and input events all are handled at the
+          right time.
+
 Thu Jul 08 12:35:23 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/test_config.h: Reorganized WinCE's macros and fix some
