@@ -78,7 +78,6 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
@@ -186,7 +185,6 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
@@ -210,7 +208,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- JAWS/JAWS/Data_Block.h JAWS/JAWS/JAWS/Pipeline.h \
+ JAWS/JAWS/Pipeline.h \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -279,12 +277,11 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Stream_Modules.cpp \
  $(ACE_ROOT)/ace/Stream.i \
  $(ACE_ROOT)/ace/Stream.cpp \
- JAWS/JAWS/JAWS/JAWS/Pipeline_Handler.h \
- JAWS/JAWS/JAWS/JAWS/JAWS/Pipeline.h \
- JAWS/JAWS/JAWS/JAWS/JAWS/Pipeline_Handler.cpp \
- JAWS/JAWS/JAWS/JAWS/JAWS/JAWS/Pipeline_Handler.h JAWS/JAWS/Pipeline.h \
- JAWS/Data_Block.h JAWS/Policy.h JAWS/JAWS/Concurrency.h \
- JAWS/JAWS/JAWS/IO.h $(ACE_ROOT)/ace/Asynch_IO.h \
+ JAWS/JAWS/JAWS/Pipeline_Handler.h JAWS/JAWS/JAWS/JAWS/Pipeline.h \
+ JAWS/JAWS/JAWS/JAWS/Pipeline_Handler.cpp \
+ JAWS/JAWS/JAWS/JAWS/JAWS/Pipeline_Handler.h JAWS/Data_Block.h \
+ JAWS/IO_Handler.h $(ACE_ROOT)/ace/Asynch_IO.h \
+ JAWS/Policy.h JAWS/JAWS/Concurrency.h JAWS/JAWS/JAWS/IO.h \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
@@ -312,7 +309,6 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
@@ -437,7 +433,6 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
@@ -561,7 +556,6 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
@@ -683,7 +677,6 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
@@ -782,8 +775,8 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  JAWS/JAWS/JAWS/JAWS/Pipeline_Handler.h \
  JAWS/JAWS/JAWS/JAWS/JAWS/Pipeline.h \
  JAWS/JAWS/JAWS/JAWS/JAWS/Pipeline_Handler.cpp \
- JAWS/JAWS/JAWS/JAWS/JAWS/JAWS/Pipeline_Handler.h JAWS/Data_Block.h \
- JAWS/Concurrency.h JAWS/JAWS/IO.h \
+ JAWS/JAWS/JAWS/JAWS/JAWS/JAWS/Pipeline_Handler.h JAWS/JAWS/Policy.h \
+ JAWS/JAWS/JAWS/Concurrency.h JAWS/JAWS/JAWS/JAWS/IO.h \
  $(ACE_ROOT)/ace/Asynch_IO.h \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
@@ -796,13 +789,14 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/SOCK_IO.i \
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/SOCK_Stream.i JAWS/IO_Handler.h \
- JAWS/IO_Acceptor.h \
+ $(ACE_ROOT)/ace/SOCK_Stream.i JAWS/Data_Block.h \
+ JAWS/Concurrency.h JAWS/IO.h JAWS/IO_Handler.h JAWS/IO_Acceptor.h \
  $(ACE_ROOT)/ace/Asynch_Acceptor.h \
  $(ACE_ROOT)/ace/LOCK_SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
- $(ACE_ROOT)/ace/LOCK_SOCK_Acceptor.cpp
+ $(ACE_ROOT)/ace/LOCK_SOCK_Acceptor.cpp \
+ JAWS/JAWS/IO.h JAWS/Pipeline_Tasks.h JAWS/JAWS/Pipeline.h
 .obj/IO_Acceptor.o .obj/IO_Acceptor.so .shobj/IO_Acceptor.o .shobj/IO_Acceptor.so: IO_Acceptor.cpp JAWS/IO_Acceptor.h \
  $(ACE_ROOT)/ace/Asynch_Acceptor.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -817,7 +811,6 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
@@ -874,7 +867,6 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
@@ -997,7 +989,6 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \

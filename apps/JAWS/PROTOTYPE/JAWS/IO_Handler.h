@@ -33,6 +33,7 @@ class JAWS_Synch_IO_Handler_Factory;
 class JAWS_Asynch_IO_Handler_Factory;
 class JAWS_Data_Block;
 
+//#include "JAWS/Data_Block.h"
 template <class TYPE> class JAWS_Pipeline_Abstract_Handler;
 typedef JAWS_Pipeline_Abstract_Handler<JAWS_Data_Block>
         JAWS_Pipeline_Handler;
@@ -46,6 +47,9 @@ class JAWS_IO_Handler
   // = DESCRIPTION
 {
 public:
+  virtual void task (JAWS_Pipeline_Handler *ph) = 0;
+  virtual JAWS_Pipeline_Handler *task (void) = 0;
+
   virtual void accept_complete (ACE_HANDLE handle) = 0;
   // This method is called by the IO class when new passive connection has
   // been established.
@@ -105,9 +109,6 @@ public:
 
   virtual ACE_HANDLE handle (void) = 0;
   // Returns the socket handle for this handler
-
-  virtual void task (JAWS_Pipeline_Handler *ph) = 0;
-  virtual JAWS_Pipeline_Handler *task (void) = 0;
 
   virtual int status (void) = 0;
 
