@@ -1,3 +1,11 @@
+Mon Feb  4 19:58:03 2002  Boris Kolpackov  <bosk@ipmce.ru>
+
+	* ace/Log_Msg.cpp:
+
+	  Fixed minor bug in what's just commited before. 
+	  Thanks to Craig Rodrigues <crodrigu@bbn.com>
+	  for pointing it out.
+	
 Mon Feb  4 14:11:14 2002  Boris Kolpackov  <bosk@ipmce.ru>
 
 	* ace/Log_Msg.h:
