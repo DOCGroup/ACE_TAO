@@ -37,6 +37,13 @@ dnl Require GNU Autoconf 2.58 or better.  Previous versions did not
 dnl correctly support HP-UX.
 AC_PREREQ([2.58])
 
+dnl Autoconf explicitly forbids patterns containing "_AC_".  This causes
+dnl a problem when using MPC to generate the Automake ".am" files since
+dnl the "AC_CLD" project in ACE_wrappers/examples/C++NPv2 ends up having
+dnl a Makefile containing "NPv2_AC_CLD" in it, triggering the forbidden
+dnl "_AC_" pattern.  Explicitly allow our pattern.
+m4_pattern_allow([NPv2_AC_CLD])
+
 AC_CONFIG_SRCDIR([ace/ACE.cpp])
 
 AC_CONFIG_AUX_DIR([aux_config])
@@ -3777,6 +3784,27 @@ AC_CHECK_FUNC([wcstoul],
   ,
   [AC_DEFINE([ACE_LACKS_WCSTOUL])])
 
+if test "$ac_cv_func_wcstok" = yes; then
+dnl The wcstok() function varies with standards. Check which one we have.
+AC_MSG_CHECKING([for 2- or 3-param wcstok])
+AC_LINK_IFELSE([AC_LANG_PROGRAM(
+          [[
+#include <wchar.h>
+          ]],
+          [[
+           wchar_t str[] = L"junk";
+           const wchar_t delim[] = L"\t\n";
+           wchar_t *ptr;
+           wchar_t *p = wcstok (str, delim, &ptr);
+          ]])],
+          [
+           AC_DEFINE([ACE_HAS_3_PARAM_WCSTOK])
+           AC_MSG_RESULT([3])
+          ],
+          [
+           AC_MSG_RESULT([2])
+          ])
+fi dnl test "$ac_cv_func_wcstok" = yes
 
 dnl Check for SYSV IPC functions
 dnl
