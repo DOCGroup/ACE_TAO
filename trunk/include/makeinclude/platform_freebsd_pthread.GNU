@@ -11,7 +11,7 @@ versioned_so = 1
 
 CC              = gcc
 CXX		= g++
-CFLAGS          += -w -Wpointer-arith -pipe -D_THREAD_SAFE
+CFLAGS          += -Wall -Wpointer-arith -pipe -D_THREAD_SAFE
 CCFLAGS         += $(CFLAGS) -fno-implicit-templates
 DCFLAGS         += -g
 DLD             = $(CXX)
