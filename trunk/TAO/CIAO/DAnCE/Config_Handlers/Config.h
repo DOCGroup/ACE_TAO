@@ -12,6 +12,6 @@
 #define CIAO_DANCE_CONFIG_H
 
 #define BEGIN_DEPLOYMENT_NAMESPACE namespace CIAO { namespace Config_Handler {
-#define END_DEPLOYMENT_NAMESPACE }; };
+#define END_DEPLOYMENT_NAMESPACE } }
 
 #endif // CIAO_DANCE_CONFIG_H
