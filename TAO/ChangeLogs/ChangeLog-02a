@@ -1,3 +1,11 @@
+Tue Jun  6 12:21:23 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/tests/ImplRepo/NameService/test.cpp:
+          Fixed warnings under gcc 2.95.2
+
+        * orbsvcs/tests/ImplRepo/NameService/Makefile:
+          Updated dependencies
+
 Tue Jun  6 12:18:41 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Reply_Dispatcher.h:
