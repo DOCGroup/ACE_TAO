@@ -1342,7 +1342,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #    if !defined (ACE_LACKS_SETSCHED)
       // If we wish to set the priority explicitly, we have to enable
       // explicit scheduling, and a policy, too.
-      if (priority != -1)
+      if (priority != ACE_DEFAULT_THREAD_PRIORITY)
 	{
 	  ACE_SET_BITS (flags, THR_EXPLICIT_SCHED);
 	  if (ACE_BIT_DISABLED (flags, THR_SCHED_FIFO)
@@ -1419,7 +1419,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
       if ((ACE_BIT_ENABLED (flags, THR_SCHED_FIFO)
 	   || ACE_BIT_ENABLED (flags, THR_SCHED_RR)
 	   || ACE_BIT_ENABLED (flags, THR_SCHED_DEFAULT))
-	  && priority == -1)
+	  && priority == ACE_DEFAULT_THREAD_PRIORITY)
 	{
 	  if (ACE_BIT_ENABLED (flags, THR_SCHED_FIFO))
 	    priority = ACE_THR_PRI_FIFO_DEF;
@@ -1429,7 +1429,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 	    priority = ACE_THR_PRI_OTHER_DEF;
 	}
 #      endif //ACE_HAS_PTHREADS_1003_DOT_1C
-      if (priority != -1)
+      if (priority != ACE_DEFAULT_THREAD_PRIORITY)
 	{
 	  struct sched_param sparam;
 
@@ -1562,6 +1562,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #      endif /* ACE_HAS_THR_C_FUNC */
   ::pthread_attr_destroy (&attr);
 #    endif /* ACE_HAS_SETKIND_NP */
+
 #    if defined (ACE_HAS_STHREADS)
   // This is the Solaris implementation of pthreads, where
   // ACE_thread_t and ACE_hthread_t are the same.
@@ -1575,7 +1576,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
   int result;
   int start_suspended = ACE_BIT_ENABLED (flags, THR_SUSPENDED);
 
-  if (priority >= 0)
+  if (priority != ACE_DEFAULT_THREAD_PRIORITY)
     // If we need to set the priority, then we need to start the
     // thread in a suspended mode.
     ACE_SET_BITS (flags, THR_SUSPENDED);
@@ -1586,7 +1587,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
   if (result != -1)
     {
-      if (priority >= 0)
+      if (priority != ACE_DEFAULT_THREAD_PRIORITY)
 	{
 	  // Set the priority of the new thread and then let it
 	  // continue, but only if the user didn't start it suspended
@@ -1632,7 +1633,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
     {
       int start_suspended = ACE_BIT_ENABLED (flags, THR_SUSPENDED);
 
-      if (priority >= 0)
+      if (priority != ACE_DEFAULT_THREAD_PRIORITY)
 	// If we need to set the priority, then we need to start the
 	// thread in a suspended mode.
 	ACE_SET_BITS (flags, THR_SUSPENDED);
@@ -1645,7 +1646,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 	 flags,
 	 (unsigned int *) thr_id);
 
-      if (priority >= 0 && *thr_handle != 0)
+      if (priority != ACE_DEFAULT_THREAD_PRIORITY && *thr_handle != 0)
 	{
 	  // Set the priority of the new thread and then let it
 	  // continue, but only if the user didn't start it suspended
@@ -1689,7 +1690,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
   // an even integer.
 
   // If called with thr_create() defaults, use same default values as ::sp ():
-  if (priority == -1) priority = 100;
+  if (priority == ACE_DEFAULT_THREAD_PRIORITY) priority = 100;
   if (flags == 0) flags = VX_FP_TASK; // Assumes that there is a
   // floating point coprocessor.
   // As noted above, ::sp () hardcodes
