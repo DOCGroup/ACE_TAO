@@ -9,8 +9,6 @@
 #include "tao/Objref_VarOut_T.inl"
 #endif /* __ACE_INLINE__ */
 
-
-
 ACE_RCSID (tao,
            Objref_VarOut_T,
            "$Id$")
@@ -48,6 +46,7 @@ TAO::Objref_Traits<T>::tao_marshal (T * p,
 }
 
 // =================================================================
+
 template <typename T>
 TAO_Objref_Var_T<T>::TAO_Objref_Var_T (void)
   : ptr_ (TAO::Objref_Traits<T>::tao_nil ())
