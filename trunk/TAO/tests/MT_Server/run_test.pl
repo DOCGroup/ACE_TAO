@@ -27,6 +27,8 @@ if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
   exit 1;
 }
 
+sleep (1);
+
 $CL1 = Process::Create ($EXEPREFIX."client$EXE_EXT ",
 			" -k file://$iorfile"
 			. " -i 100");
