@@ -20,7 +20,6 @@ ACE_DLList_Node::ACE_DLList_Node (void *&i,
 }
 
 ACE_INLINE
-ACE_DLList_Node::~ACE_DLList_Node (void) 
+ACE_DLList_Node::~ACE_DLList_Node (void)
 {
-};
-
+}
