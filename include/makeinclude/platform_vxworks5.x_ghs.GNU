@@ -18,3 +18,4 @@ PIC             =
 AR              = ax
 ARFLAGS         = rv
 RANLIB          = /bin/true
+VXWORKS         = 1
