@@ -1,11 +1,20 @@
+Sun Jun 20 17:52:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Acceptor_Registry.cpp:
+        * tao/Object_KeyC.cpp:
+        * tao/ORB.cpp:
+        * tao/Profile.cpp:
+          Added include of ace/os_include/os_ctype.h to fix compile errors
+          in the Tru64 build.
+
 Sun Jun 20 10:22:23 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* docs/TAO-metrics.html:
 
 	  Updated links.
-	
+
 	* docs/orbsvcs.html:
-	 
+
 	  This file was woefully out of date. Updated this file with new
 	  information.
 
@@ -27,7 +36,7 @@ Sun Jun 20 00:34:25 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* docs/Tags.html:
 
 	  Updated documentation.
-	
+
 	* docs/libraries.html:
 
 	  New documentation for different libraries in $TAO_ROOT/tao.
