@@ -1,3 +1,16 @@
+Mon Apr 22 08:55:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Timer_Queue_T.h:
+          Doxygen-ized some of the comments
+
+        * etc/*.doxygen:
+          Added the following to all doxygen config files
+          DISTRIBUTE_GROUP_DOC  = YES
+          When a doxygen group is used (starts with //@{ and ends with
+          //@}) and if there is only one description for all group members than
+          this description is used for all the members separately. If a member
+          has its own description than that description is used.
+
 Mon Apr 22 01:34:32 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Task.h: Enhanced the comment for <wait> method to make it
