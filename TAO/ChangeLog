@@ -1,3 +1,247 @@
+Fri Sep 24 13:16:44 MST 2004  Trevor Fields  <fields_t@ociweb.com>
+
+         This is the merge of changes to the Implementation Repository into the
+          DOC group repository.  The original work was done mostly by Justin Michel.
+
+        * orbsvcs/ImplRepo_Service/Activator_Loader.h:
+        * orbsvcs/ImplRepo_Service/Activator_Loader.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Loader.h:
+        * orbsvcs/ImplRepo_Service/Locator_Loader.cpp:
+        * orbsvcs/ImplRepo_Service/activator_export.h:
+        * orbsvcs/ImplRepo_Service/locator_export.h:
+        * orbsvcs/ImplRepo_Service/utils.h:
+        * orbsvcs/ImplRepo_Service/Activator_NT_Service.h:
+        * orbsvcs/ImplRepo_Service/Activator_NT_Service.cpp:
+        * orbsvcs/ImplRepo_Service/Activator_Options.h:
+        * orbsvcs/ImplRepo_Service/Activator_Options.cpp:
+        * orbsvcs/ImplRepo_Service/Adapter_Activator.h:
+        * orbsvcs/ImplRepo_Service/Adapter_Activator.cpp:
+        * orbsvcs/ImplRepo_Service/Forwarder.h:
+        * orbsvcs/ImplRepo_Service/Forwarder.cpp:
+        * orbsvcs/ImplRepo_Service/INS_Locator.h:
+        * orbsvcs/ImplRepo_Service/INS_Locator.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Activator.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+        * orbsvcs/ImplRepo_Service/Iterator.h:
+        * orbsvcs/ImplRepo_Service/Iterator.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_NT_Service.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Options.h:
+        * orbsvcs/ImplRepo_Service/Locator_Options.cpp:
+        * orbsvcs/ImplRepo_Service/Multi_Iterator.h:
+        * orbsvcs/ImplRepo_Service/Multi_Iterator.cpp:
+        * orbsvcs/ImplRepo_Service/README.txt:
+        * orbsvcs/ImplRepo_Service/Server_Info.h:
+        * orbsvcs/ImplRepo_Service/Server_Info.cpp:
+        * orbsvcs/ImplRepo_Service/Server_Repository.h:
+        * orbsvcs/ImplRepo_Service/Server_Repository.cpp:
+        * orbsvcs/ImplRepo_Service/XML_ContentHandler.h:
+        * orbsvcs/ImplRepo_Service/XML_ContentHandler.cpp:
+        * orbsvcs/ImplRepo_Service/tao_imr_i.h:
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+
+        * orbsvcs/orbsvcs/IOR_Multicast.h:
+        * orbsvcs/orbsvcs/IOR_Multicast.cpp:
+
+        * orbsvcs/tests/ImplRepo/run_test.pl:
+
+        * tao/PortableServer/ImR_Locator.pidl:
+        * tao/PortableServer/ImR_LocatorC.h:
+        * tao/PortableServer/ImR_LocatorC.i:
+        * tao/PortableServer/ImR_LocatorC.cpp:
+        * tao/PortableServer/ImR_LocatorS.h:
+        * tao/PortableServer/ImR_LocatorS.i:
+        * tao/PortableServer/ImR_LocatorS.cpp:
+        * tao/PortableServer/ImplRepo.pidl:
+        * tao/PortableServer/ImplRepoC.h:
+        * tao/PortableServer/ImplRepoC.i:
+        * tao/PortableServer/ImplRepoC.cpp:
+        * tao/PortableServer/ImplRepoS.h:
+        * tao/PortableServer/ImplRepoS.i:
+        * tao/PortableServer/ImplRepoS.cpp:
+
+          Added support for using the ImR locator and activator
+           services within the ACE Service Configurator framework.
+          Split locator and activator into separate libraries and
+           executables.
+          Refactored Activator_Options and Locator_Options to
+           facilitate use in separate libraries.
+          Fixed problems with activator persistence including support
+           for environment variables.
+          Fixed problems with the list() operation and iterators,
+           although the better solution will likely be to eliminate
+           the iterators entirely.
+          Simplified Service_Info class into a simple struct which
+           further simplified and enhanced the startup code for servers.
+          Refactored some locator servant options to throw NO_IMPLEMENT
+           until the IDL is updated to correctly remove these operations.
+          Fixed many miscellaneous bugs and performance problems.
+          Removed the ready_check() feature, as the current implementation
+           was broken, and the correct solution is relatively
+           straightforward, and will likely be added soon.
+          Fixed the broken ImR_Multicast implementation. A char* is NOT
+           a string, and should never be used as such. ACE_CString or the
+           equivalent is a much better choice. There are likely other
+           lurking bugs of this type in ACE/TAO.
+          Removed the unused logical_server from the ServerInformation
+           type in ImplRepo.pidl. Also removed the Address typedef and
+           changed the terminology from location to partial_ior.
+
+        * orbsvcs/examples/ImR/Combined_Service/test.idl:
+        * orbsvcs/examples/ImR/Combined_Service/ImR_Combined_Service.mpc:
+        * orbsvcs/examples/ImR/Combined_Service/combined.cpp:
+        * orbsvcs/examples/ImR/Combined_Service/controller.cpp:
+        * orbsvcs/examples/ImR/Combined_Service/dynserver.h:
+        * orbsvcs/examples/ImR/Combined_Service/dynserver.cpp:
+        * orbsvcs/examples/ImR/Combined_Service/dynserver_export.h:
+        * orbsvcs/examples/ImR/Combined_Service/readme:
+        * orbsvcs/examples/ImR/Combined_Service/run_test.pl:
+        * orbsvcs/examples/ImR/Combined_Service/service_config.idl:
+        * orbsvcs/examples/ImR/Combined_Service/start_all.conf:
+        * orbsvcs/examples/ImR/Combined_Service/test.cpp:
+        * orbsvcs/examples/ImR/Combined_Service/test_server.cpp:
+
+          Added an example of using ImR_Locator and ImR_Activator service
+           from the ACE Service Configurator.  The test starts a locator,
+           activator, and test server in one process using the service configurator
+           framework. Also provides a corba-ified service configurator that can
+           be controlled using the provided command line client.
+
+        * orbsvcs/ImplRepo_Service/Repository_Configuration.h:
+        * orbsvcs/ImplRepo_Service/Repository_Configuration.cpp:
+        * orbsvcs/ImplRepo_Service/Server_Repository.h:
+        * orbsvcs/ImplRepo_Service/Server_Repository.cpp:
+        * orbsvcs/ImplRepo_Service/XML_ContentHandler.h:
+        * orbsvcs/ImplRepo_Service/XML_ContentHandler.cpp:
+        * tao/PortableServer/ImR_Activator.pidl:
+        * tao/PortableServer/ImR_Locator.pidl:
+        * tao/PortableServer/ImR_LocatorC.h:
+        * tao/PortableServer/ImR_LocatorC.i:
+        * tao/PortableServer/ImR_LocatorC.cpp:
+        * tao/PortableServer/ImR_LocatorS.h:
+        * tao/PortableServer/ImR_LocatorS.i:
+        * tao/PortableServer/ImR_LocatorS.cpp:
+        * tao/PortableServer/ImplRepo.pidl:
+        * tao/PortableServer/ImplRepoC.h:
+        * tao/PortableServer/ImplRepoC.i:
+        * tao/PortableServer/ImplRepoC.cpp:
+        * tao/PortableServer/ImplRepoS.h:
+        * tao/PortableServer/ImplRepoS.i:
+        * tao/PortableServer/ImplRepoS.cpp:
+
+          Removed these files. Most were only necessary due to the complication of
+        splitting the persistent state between the activator and locator.
+
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp (is_alive):
+
+          Masked out all bits in the minor code except those that correspond
+           to the "location".  See corbafwd.h for information about how the
+           minor code is laid out.
+
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+
+          Fixed ORB_init calls to specify a hopefully unique ORBid
+        for the activator and locator orbs.
+
+        * orbsvcs/ImplRepo_Service/Activator_Info.h:
+        * orbsvcs/ImplRepo_Service/Activator_Info.cpp:
+        * orbsvcs/ImplRepo_Service/Activator_Loader.h:
+        * orbsvcs/ImplRepo_Service/Activator_NT_Service.h:
+        * orbsvcs/ImplRepo_Service/Activator_NT_Service.cpp:
+        * orbsvcs/ImplRepo_Service/Activator_Options.h:
+        * orbsvcs/ImplRepo_Service/Activator_Options.cpp:
+        * orbsvcs/ImplRepo_Service/Adapter_Activator.h:
+        * orbsvcs/ImplRepo_Service/Adapter_Activator.cpp:
+        * orbsvcs/ImplRepo_Service/Forwarder.h:
+        * orbsvcs/ImplRepo_Service/Forwarder.cpp:
+        * orbsvcs/ImplRepo_Service/INS_Locator.h:
+        * orbsvcs/ImplRepo_Service/INS_Locator.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Activator.idl:
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator.idl:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+        * orbsvcs/ImplRepo_Service/Iterator.h:
+        * orbsvcs/ImplRepo_Service/Iterator.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_NT_Service.h:
+        * orbsvcs/ImplRepo_Service/Locator_Options.h:
+        * orbsvcs/ImplRepo_Service/Locator_Options.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.h:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_XMLHandler.h:
+        * orbsvcs/ImplRepo_Service/Locator_XMLHandler.cpp:
+        * orbsvcs/ImplRepo_Service/README.txt:
+        * orbsvcs/ImplRepo_Service/Server_Info.h:
+        * orbsvcs/ImplRepo_Service/Server_Info.cpp:
+        * orbsvcs/ImplRepo_Service/activator_idl_export.h:
+        * orbsvcs/ImplRepo_Service/locator_idl_export.h:
+        * orbsvcs/ImplRepo_Service/repository.xml:
+        * orbsvcs/ImplRepo_Service/tao_imr.cpp:
+        * orbsvcs/ImplRepo_Service/tao_imr_i.h:
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+
+          Refactored ImR to move most functionality from the activator into
+        the locator. All activator->locator and locator->activator interfaces
+        are moved to new idl files in this directory, thereby making PortableServer
+        smaller. The activator no longer has need for persistence since it's little
+        more than a process launcher now. The Activator has been rewritten to use
+        AMH, which allows the locator to block waiting for the servers to startup
+        without wasting thread resources or inducing stack overflow.
+
+        The locator now persists all activator and server information, and can use
+        any of the three persistence formats for this.
+
+        Added the StartLimit feature, wherein the ImR will try to start a server
+        up to StartLimit times before giving up. From the point of view of tao_imr, this
+        feature is called retry_count, which = start_limit - 1. The default is 0, or disabled.
+
+        Reintroduced the ping interval command line option for the Locator. If the server
+        has been pinged in the last N seconds, then it will be assumed to be still running.
+        This should cut down on some potential unnecessary traffic. The default is 500ms, and
+        0 can be specified to disable the verification feature. Which is nice.
+
+        Fixed many miscellaneous bugs found while refactoring, and adding features.
+
+        However, there are some existing know problems. Specifically the INS_Locator no
+        longer seems to work, although it seems to return the same result as 1.3a before this
+        merge in which it was working fine. Maybe the merge will take care of the problem.
+        Also the persistent_ir test is not working. Could be related.
+
+        * orbsvcs/tests/ImplRepo/locked/run_test.pl:
+        * orbsvcs/tests/ImplRepo/run_test.pl:
+
+          Updated to reflect new/moved command line params.
+
+        * tao/PortableServer/ImplRepo.idl:
+        * tao/PortableServer/POA.cpp:
+        * tao/PortableServer/PortableServer.mpc:
+
+          Changed to use idl instead of pidl.
+
+        * utils/catior/catior.cpp:
+
+          Fixed bug with crash in incorrect use of isprint()
+
+        * orbsvcs/tests/ImplRepo/scale/client.conf:
+        * orbsvcs/tests/ImplRepo/scale/client.cpp:
+        * orbsvcs/tests/ImplRepo/scale/run_test.pl:
+        * orbsvcs/tests/ImplRepo/scale/scaletest.mpc:
+        * orbsvcs/tests/ImplRepo/scale/server.cpp:
+        * orbsvcs/tests/ImplRepo/scale/server_i.h:
+        * orbsvcs/tests/ImplRepo/scale/server_i.cpp:
+        * orbsvcs/tests/ImplRepo/scale/test.idl:
+
+          This new scalability test should help track down some remaining
+        flaws in the ImR. It was originally submitted by SoftComputer, but
+        has been extensively modified.
+
 Fri Sep 24 12:58:37 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * examples/Kokyu_dsrt_schedulers/mif_example/test_i.cpp:
@@ -770,6 +1014,7 @@ Wed Sep 15 21:25:28 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
           The cleanup needs to remove all declarations and
           references except those for the predefined types,
           and there was an off-by-one error.
+
 
 Tue Sep 14 17:12:41 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
