@@ -48,15 +48,11 @@ OUTDIR=<%libout%>
 <%endif%>
 INTDIR=<%intermediate_dir%>\<%noextension(project_file)%>
 
-ALL : <%if(idl_files)%>IDL_STUBS <%endif%><%if(exename)%><%if(install)%>"$(INSTALLDIR)" <%endif%><%endif%>"<%if(type_is_dynamic)%><%if(dllout)%><%dllout%><%else%><%libout%><%endif%>\<%sharedname%><%lib_modifier%>.dll<%endif%><%if(type_is_static)%>$(OUTDIR)\<%staticname%><%lib_modifier%>.lib<%endif%><%if(exename)%>$(INSTALLDIR)\<%exename%>.exe<%endif%>"<%foreach(custom_types)%><%foreach(custom_type->input_files)%><%foreach(custom_type->input_file->output_files)%> "<%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>\<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%>"<%endfor%><%endfor%><%endfor%>
+ALL : <%if(exename)%><%if(install)%>"$(INSTALLDIR)" <%endif%><%endif%>"<%if(type_is_dynamic)%><%if(dllout)%><%dllout%><%else%><%libout%><%endif%>\<%sharedname%><%lib_modifier%>.dll<%endif%><%if(type_is_static)%>$(OUTDIR)\<%staticname%><%lib_modifier%>.lib<%endif%><%if(exename)%>$(INSTALLDIR)\<%exename%>.exe<%endif%>"<%foreach(custom_types)%><%foreach(custom_type->input_files)%><%foreach(custom_type->input_file->output_files)%> "<%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>\<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%>"<%endfor%><%endfor%><%endfor%>
 
 DEPEND :
 	<%depgen("perl $(ACE_ROOT)\\bin\\depgen.pl")%><%foreach(includes)%> -I"<%include%>"<%endfor%><%foreach(defines cpu_defines common_defines macros)%> -D<%define%><%endfor%><%if(type_is_dynamic)%><%foreach(dynamicflags)%> -D<%dynamicflag%><%endfor%><%endif%><%if(need_staticflags)%><%foreach(staticflags)%> -D<%staticflag%><%endfor%><%endif%><%if(pch_header)%><%foreach(pch_defines)%> -D<%pch_define%><%endfor%><%endif%> -f "<%noextension(project_file)%>.dep"<%foreach(source_files)%> <%source_file%><%endfor%>
 
-<%if(idl_files)%>
-IDL_STUBS :<%foreach(idl_files)%> "<%if(flag_overrides(idl_file, idlgendir))%><%flag_overrides(idl_file, idlgendir)%><%else%><%if(idlgendir)%><%idlgendir%><%else%><%dirname(idl_file)%><%endif%><%endif%>\<%basenoextension(idl_file)%>C.cpp"<%endfor%>
-
-<%endif%>
 CLEAN :
 	-@erase "$(INTDIR)\*.obj"
 	-@erase "$(INTDIR)\*.res"
@@ -85,9 +81,6 @@ REALCLEAN : CLEAN
         -@erase "$(OUTDIR)\<%staticname%><%lib_modifier%>.lib"
         -@erase "$(OUTDIR)\<%staticname%><%lib_modifier%>.exp"
         -@erase "$(OUTDIR)\<%staticname%><%lib_modifier%>.ilk"
-<%endif%>
-<%if(idl_files)%>
-        -@erase<%foreach(idl_files)%> "<%if(flag_overrides(idl_file, idlgendir))%><%flag_overrides(idl_file, idlgendir)%><%else%><%if(idlgendir)%><%idlgendir%><%else%><%dirname(idl_file)%><%endif%><%endif%>\<%basenoextension(idl_file)%>C.*" "<%if(flag_overrides(idl_file, idlgendir))%><%flag_overrides(idl_file, idlgendir)%><%else%><%if(idlgendir)%><%idlgendir%><%else%><%dirname(idl_file)%><%endif%><%endif%>\<%basenoextension(idl_file)%>S.*"<%endfor%>
 <%endif%>
 <%foreach(custom_types)%>
 <%foreach(custom_type->input_files)%>
@@ -225,28 +218,6 @@ SOURCE=<%source_file%>
 <%endif%>
 <%foreach(template_files)%>
 SOURCE=<%template_file%>
-<%endfor%>
-<%foreach(idl_files)%>
-SOURCE=<%idl_file%>
-
-<%foreach(platforms)%>
-<%foreach(configurations)%>
-!<%fornotfirst("ELSE")%>IF  "$(CFG)" == "<%platform%> <%configuration%>"
-
-InputPath=<%idl_file%>
-InputName=<%basenoextension(idl_file)%>
-InputDir=<%dirname(idl_file)%>
-
-"<%if(flag_overrides(idl_file, idlgendir))%><%flag_overrides(idl_file, idlgendir)%><%else%><%if(idlgendir)%><%idlgendir%><%else%><%if(dirname_found)%>$(InputDir)<%else%>.<%endif%><%endif%><%endif%>\$(InputName)C.h"	"<%if(flag_overrides(idl_file, idlgendir))%><%flag_overrides(idl_file, idlgendir)%><%else%><%if(idlgendir)%><%idlgendir%><%else%><%if(dirname_found)%>$(InputDir)<%else%>.<%endif%><%endif%><%endif%>\$(InputName)C.i"	"<%if(flag_overrides(idl_file, idlgendir))%><%flag_overrides(idl_file, idlgendir)%><%else%><%if(idlgendir)%><%idlgendir%><%else%><%if(dirname_found)%>$(InputDir)<%else%>.<%endif%><%endif%><%endif%>\$(InputName)C.cpp"	"<%if(flag_overrides(idl_file, idlgendir))%><%flag_overrides(idl_file, idlgendir)%><%else%><%if(idlgendir)%><%idlgendir%><%else%><%if(dirname_found)%>$(InputDir)<%else%>.<%endif%><%endif%><%endif%>\$(InputName)S.h"	"<%if(flag_overrides(idl_file, idlgendir))%><%flag_overrides(idl_file, idlgendir)%><%else%><%if(idlgendir)%><%idlgendir%><%else%><%if(dirname_found)%>$(InputDir)<%else%>.<%endif%><%endif%><%endif%>\$(InputName)S.i"	"<%if(flag_overrides(idl_file, idlgendir))%><%flag_overrides(idl_file, idlgendir)%><%else%><%if(idlgendir)%><%idlgendir%><%else%><%if(dirname_found)%>$(InputDir)<%else%>.<%endif%><%endif%><%endif%>\$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-	<<tempfile.bat
-	@echo off
-	<%idl_compiler%> -o <%if(flag_overrides(idl_file, idlgendir))%><%flag_overrides(idl_file, idlgendir)%><%else%><%if(idlgendir)%><%idlgendir%><%else%><%if(dirname_found)%>$(InputDir)<%else%>.<%endif%><%endif%><%endif%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%><%idlflags%><%endif%> <%idl_file%>
-<<
-
-<%endfor%>
-!ENDIF
-<%endfor%>
-
 <%endfor%>
 <%foreach(custom_types)%>
 <%foreach(custom_type->input_files)%>

@@ -3,10 +3,8 @@ project(TAO) : acelib, taoversion, core, tao_output, taodefaults, extra_core {
   sharedname   = TAO
   dynamicflags = TAO_BUILD_DLL
 
-  // Override the defaults due to the
-  // existence of orb.idl
-  IDL_Files {
-  }
+  // It is no longer necessary to override IDL_Files since it is a
+  // custom build type and comes from the taoidldefaults base project.
 
   Source_Files(TAO_COMPONENTS) {
     Pluggable_Protocols {

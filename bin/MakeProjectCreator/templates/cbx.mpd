@@ -193,16 +193,6 @@
 <%endfor%>
   </node>
 <%endif%>
-<%if(idl_files)%>
-  <node name="IDL files" type="Folder">
-    <property category="unique" name="id"/>
-<%foreach(idl_files)%>
-      <file path="<%idl_file%>">
-        <property category="unique" name="id"/>
-      </file>
-<%endfor%>
-  </node>
-<%endif%>
 <%foreach(custom_types)%>
 <%if(custom_type->input_files)%>
   <node name="<%custom_type%>" type="Folder">
