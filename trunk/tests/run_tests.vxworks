@@ -30,6 +30,11 @@
 
 memShow
 
+#### This test occasionally causes a page fault on VxWorks.
+ld < Message_Queue_Test
+write 2, "Message_Queue_Test ", 19
+ace_main; unld "Message_Queue_Test"
+
 ld < Basic_Types_Test
 write 2, "Basic_Types_Test ", 17
 ace_main; unld "Basic_Types_Test"
@@ -143,11 +148,6 @@ ace_main; unld "Recursive_Mutex_Test"
 ld < Map_Manager_Test
 write 2, "Map_Manager_Test ", 17
 ace_main; unld "Map_Manager_Test"
-
-#### This test occasionally causes a page fault on VxWorks.
-ld < Message_Queue_Test
-write 2, "Message_Queue_Test ", 19
-ace_main; unld "Message_Queue_Test"
 
 ld < Message_Queue_Notifications_Test
 write 2, "Message_Queue_Notifications_Test ", 33
