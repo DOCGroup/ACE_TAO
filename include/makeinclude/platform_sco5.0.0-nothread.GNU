@@ -1,34 +1,33 @@
 # $Id$
+#
+# NOTE: the above file from ACE 4.6 has been modified by Mike P. to get rid of 
+# thread related stuff until we can obtain fsu-threads library.
 
-# Requires FSU pthreads and gcc 2.7.2 installed in /usr/progressive
+# Requires gcc 2.7.2 Skunkware 97
 # to produce libACE.so correctly changed the specs file for gcc 2.7.2
 # for not link -lc and -lgcc and other not shared libraries
+
+debug = 1
+optimize = 1
+
 CC              = gcc
-# for threads
 # for no threads
-#CXX		= gcc -fno-implicit-templates -w -fno-strict-prototypes
-# LDFLAGS	+= -L $(ACE_ROOT)/ace -L ./ ${FSU_PTHREADS_DIR}/init/init.o # -z muldefs
-# LDLIBS	+= -L $(ACE_ROOT)/ace -L ./ ${FSU_PTHREADS_DIR}/init/init.o -lACE # -z muldefs
-LDLIBS	+= -L $(ACE_ROOT)/ace # -z muldefs
+LDLIBS		+= -lm -L $(ACE_ROOT)/ace 
 CXX		= g++
-CFLAGS		+= $(DCFLAGS) -melf -w -O2
-CCFLAGS		+= $(DCCFLAGS) -melf -O2 -fPIC -fno-implicit-templates -I /usr/progressive/lib/g++-include
-#DCFLAGS		+= -gstabs -DACE_HAS_BIG_FD_SET
-DCFLAGS		+= -gstabs
+CFLAGS		+= -melf -w 
+CCFLAGS		+= -melf -fno-implicit-templates 
+# -g option not supported for C++ on systems using the DWARF debugging format
+#DCFLAGS		+= -g
 DCCFLAGS	+= $(DCFLAGS)
 DLD             = $(CXX)
-LD              = $(CXX)
+LD              = $(CXX) /usr/lib/libc.so.1
 LIBS            = -lnsl -lsocket
+OCCFLAGS        += $(OCFLAGS)
 PIC             = -fPIC
 AR              = ar
 ARFLAGS         = ruv
 RANLIB          = /bin/true
 
-SOFLAGS = $(CPPFLAGS) -melf -fPIC -G 
+SOFLAGS = $(CPPFLAGS) -melf -fPIC -G
 SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
-# SOLINK	= $(SOLINK.cc) -o $@ $(LDFLAGS) $<
-# PRELIB  = (echo "main() { }" > gcctemp.c && \
-#           $(COMPILE.cc) -o gcctemp.o gcctemp.c && \
-#           $(LINK.cc) -o gcctemp gcctemp.o $^ $(LDFLAGS) $(LDLIBS) $(LIBS); \
-#           status=$$?; exit $$status)
-PRELIB = @true
+PRELIB  = @true
