@@ -1,3 +1,9 @@
+Tue Dec  4 08:54:15 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/performance-tests/EC_Federated_Scalability/Servant_var.inl:
+	  Fixed problems in copy constructor, the previous version
+	  depended on how the conversion operators work.
+
 Tue Dec 04 08:16:59 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/performance-tests/EC_Scalability/Makefile:

@@ -15,7 +15,7 @@ Servant_var<SERVANT>::Servant_var (SERVANT *s)
 
 template<typename SERVANT> ACE_INLINE
 Servant_var<SERVANT>::Servant_var (const Servant_var<SERVANT> &rhs)
-  : ptr_ (rhs)
+  : ptr_ (rhs.ptr_)
 {
   if (this->ptr_ != 0)
     this->ptr_->_add_ref ();
