@@ -72,7 +72,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "idl_extern.h"
 #include "fe_private.h"
 #include "y.tab.h"
-#include <string.h>
 
 static char	idl_escape_reader(char *);
 static double	idl_atof(char *);
