@@ -177,6 +177,10 @@ Sat May 31 07:01:22 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 Fri May 30 16:25:25 1997    <irfan@TWOSTEP>
 
+	* CPP-inclient.cpp (main): Properly compare to the "quit"
+ 	  string. Thanks to "Andre Arpin" <arpin@adan.kingston.net> for
+ 	  reporting this.
+
 	* tests/UPIPE_SAP_Test.cpp (connector): Changed the eof marker in
  	  the strings.
 
