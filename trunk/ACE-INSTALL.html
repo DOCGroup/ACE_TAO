@@ -179,7 +179,7 @@ and g++ 2.7.2 compilers.<P>
 
 In addition to all of the other benefits of ACE, it helps
 work around some deficiencies with VxWorks 5.3/5.3.1.
-These apply only with g++, at least thru version 2.7.2.
+Some of these apply only with g++, at least thru version 2.7.2.
 That is the version that is shipped with Tornado 1.0.1/
 VxWorks 5.3.1.  The problems are:<P>
 
@@ -191,11 +191,12 @@ VxWorks 5.3.1.  The problems are:<P>
        Please see ace/config-vxworks5.2-g++.h for more information.<P>
 
   <LI> Unsigned long long support is not available with the g++ that
-       is distributed with Tornado 1.0.1/VxWorks 5.3.1.  The
-       documentation says that it is supported, but try using it :-)
-       Wind River technical support will verify this.  ACE provides
-       its own 64-bit unsigned integer type, ACE_hrtime_t, so you
-       don't even have to worry about this problem if you use it.<P>
+       is distributed with Tornado 1.0.1/VxWorks 5.3.1, or with
+       GreenHills 1.8.8.  The documentation says that it is supported
+       by g++, but try using it :-)   Wind River technical support verified
+       that it doesn't work.  ACE provides its own 64-bit unsigned integer
+       type, ACE_hrtime_t, so you don't even have to worry about this
+       problem if you use it.<P>
 
   <LI> The program entry point cannot be called ``main''.  ACE
        renames it to ``ace_main'' on VxWorks.  While this may seem
@@ -537,6 +538,23 @@ I recommend just building the ACE library and tests first.
 Then try running the tests.  Please see $ACE_ROOT/tests/README
 for the latest status of the ACE tests on VxWorks.<P>
 
+Please note that the <code>main</code> entry point is renamed to
+<code>ace_main</code> on VxWorks, to comply with the VxWorks
+restriction against using <code>main</code>.  Also, if you run
+<code>ace_main</code> directly from a shell, you'll probably have to
+restart the shell (using Ctrl-C, if enabled in your configuration) in
+order to be able to unld the module.  Alternatively, you can spawn a
+new task to run <code>ace_main</code>, using either VxWorks
+<code>sp</code>, or ACE'S <code>spa</code>.  <code>spa</code> can be
+used from the VxWorks shell to pass arguments to
+<code>ace_main</code>.  Its usage is
+
+<pre><code>    spa main, "arg1" [, ...]
+</code></pre>
+
+All arguments must be quoted, even numbers.
+
+
 <HR>
 <H3><A NAME="svcsinstall">Building and Installing ACE Network Services</A></H3>
 
@@ -597,9 +615,9 @@ the Network Services.<P>
 If you are using MSVC 4.x, you will need to add another directory to
 your global include and library paths, ACE_ROOT/netsvcs/lib.  When you
 use the dynamic libraries, make sure to also include ACE_ROOT/netsvcs/lib 
-in your PATH.  <P>
+in your PATH.<P>
 
-<P><HR><P>
+<HR><P>
 <H3><A NAME="advanced">Advanced Topics</A></H3>
 
 <UL>
