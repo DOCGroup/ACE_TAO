@@ -1773,6 +1773,18 @@ template class ACE_Hash_Map_Entry<ACE_Configuration_ExtId, int>;
 template class ACE_Hash_Map_Iterator_Base_Ex<ACE_Configuration_ExtId, ACE_Configuration_Section_IntId, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Base_Ex<ACE_Configuration_ExtId, ACE_Configuration_Value_IntId, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Base_Ex<ACE_Configuration_ExtId, int, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>;
+
+
+// Added to fix problems in SunOs CC5.0
+template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_Configuration_ExtId,ACE_Configuration_Value_IntId,ACE_Hash<ACE_Configuration_ExtId>,ACE_Equal_To<ACE_Configuration_ExtId>,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<ACE_Configuration_ExtId,ACE_Configuration_Value_IntId,ACE_Hash<ACE_Configuration_ExtId>,ACE_Equal_To<ACE_Configuration_ExtId>,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<ACE_Configuration_ExtId,int,ACE_Hash<ACE_Configuration_ExtId>,ACE_Equal_To<ACE_Configuration_ExtId>,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<ACE_Configuration_ExtId,ACE_Configuration_Section_IntId,ACE_Hash<ACE_Configuration_ExtId>,ACE_Equal_To<ACE_Configuration_ExtId>,ACE_Null_Mutex>;
+template class ACE_Equal_To<ACE_Configuration_ExtId>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_Configuration_ExtId,ACE_Configuration_Section_IntId,ACE_Hash<ACE_Configuration_ExtId>,ACE_Equal_To<ACE_Configuration_ExtId>,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_Configuration_ExtId,int,ACE_Hash<ACE_Configuration_ExtId>,ACE_Equal_To<ACE_Configuration_ExtId>,ACE_Null_Mutex>;
+template class ACE_Hash<ACE_Configuration_ExtId>;
+
 template class ACE_Hash_Map_Manager_Ex<ACE_Configuration_ExtId, ACE_Configuration_Section_IntId, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager_Ex<ACE_Configuration_ExtId, ACE_Configuration_Value_IntId, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager_Ex<ACE_Configuration_ExtId, int, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>;
@@ -1795,6 +1807,16 @@ template class ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Thread_Mutex>;
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_Configuration_ExtId, ACE_Configuration_Section_IntId, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_Configuration_ExtId, ACE_Configuration_Value_IntId, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_Configuration_ExtId, int, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>
+
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_Configuration_ExtId,ACE_Configuration_Value_IntId,ACE_Hash<ACE_Configuration_ExtId>,ACE_Equal_To<ACE_Configuration_ExtId>,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_Configuration_ExtId,ACE_Configuration_Value_IntId,ACE_Hash<ACE_Configuration_ExtId>,ACE_Equal_To<ACE_Configuration_ExtId>,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_Configuration_ExtId,int,ACE_Hash<ACE_Configuration_ExtId>,ACE_Equal_To<ACE_Configuration_ExtId>,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_Configuration_ExtId,ACE_Configuration_Section_IntId,ACE_Hash<ACE_Configuration_ExtId>,ACE_Equal_To<ACE_Configuration_ExtId>,ACE_Null_Mutex>
+#pragma instantiate ACE_Equal_To<ACE_Configuration_ExtId>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_Configuration_ExtId,ACE_Configuration_Section_IntId,ACE_Hash<ACE_Configuration_ExtId>,ACE_Equal_To<ACE_Configuration_ExtId>,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_Configuration_ExtId,int,ACE_Hash<ACE_Configuration_ExtId>,ACE_Equal_To<ACE_Configuration_ExtId>,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash<ACE_Configuration_ExtId>
+
 #pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_Configuration_ExtId, ACE_Configuration_Section_IntId, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_Configuration_ExtId, ACE_Configuration_Value_IntId, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_Configuration_ExtId, int, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>
