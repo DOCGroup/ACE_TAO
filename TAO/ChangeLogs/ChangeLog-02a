@@ -1,3 +1,7 @@
+Thu Jul  6 17:46:24 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Makefile: Updated dependencies.
+
 Thu Jul 06 16:57:38 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * tao/Makefile (ior.target): Added auto generation rules for
