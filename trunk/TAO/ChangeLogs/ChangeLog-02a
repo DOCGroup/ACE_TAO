@@ -1,3 +1,14 @@
+Fri Mar  1 15:17:27 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
+
+	* tao/Messaging/Messaging.cpp:
+	* tao/Messaging/MessagingC.cpp:
+	* tao/Messaging/MessagingC.h:
+	* tao/Messaging/MessagingC.i:
+	* tao/Messaging/MessagingS.cpp:
+	* tao/Messaging/Messaging_PolicyFactory.cpp
+	  Made changes to fix the compiler errors for MINIMUM_CORBA
+	  and CORBA_MESSAGING.
+
 Fri Mar  1 11:59:30 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 
 	* tao/Messaging/MessagingC.cpp:

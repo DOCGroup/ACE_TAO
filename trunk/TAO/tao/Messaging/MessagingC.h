@@ -2756,38 +2756,77 @@ TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, const Messa
 
 #endif /* TAO_HAS_PRIORITY_POLICIES == 1 */
 
+#if (TAO_HAS_REQUEST_PRIORITY_POLICIES == 1)
+
 // Any operators for interface Messaging::RequestPriorityPolicy
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::RequestPriorityPolicy_ptr); // copying
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::RequestPriorityPolicy_ptr *); // non-copying
 TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::RequestPriorityPolicy_ptr &);
+
+#endif /* TAO_HAS_REQUEST_PRIORITY_POLICIES == 1 */
+
+#if (TAO_HAS_REPLY_PRIORITY_POLICIES == 1)
+
 // Any operators for interface Messaging::ReplyPriorityPolicy
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::ReplyPriorityPolicy_ptr); // copying
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::ReplyPriorityPolicy_ptr *); // non-copying
 TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::ReplyPriorityPolicy_ptr &);
+
+#endif /* TAO_HAS_REPLY_PRIORITY_POLICIES == 1 */
+
+#if (TAO_HAS_REQUEST_START_TIME_POLICIES == 1)
+
 // Any operators for interface Messaging::RequestStartTimePolicy
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::RequestStartTimePolicy_ptr); // copying
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::RequestStartTimePolicy_ptr *); // non-copying
 TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::RequestStartTimePolicy_ptr &);
+
+#endif /* TAO_HAS_REQUEST_START_TIME_POLICIES == 1 */
+
+#if (TAO_HAS_REQUEST_END_TIME_POLICIES == 1)
+
 // Any operators for interface Messaging::RequestEndTimePolicy
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::RequestEndTimePolicy_ptr); // copying
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::RequestEndTimePolicy_ptr *); // non-copying
 TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::RequestEndTimePolicy_ptr &);
+
+#endif /* TAO_HAS_REQUEST_END_TIME_POLICIES == 1 */
+
+#if (TAO_HAS_REPLY_START_TIME_POLICIES == 1)
+
 // Any operators for interface Messaging::ReplyStartTimePolicy
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::ReplyStartTimePolicy_ptr); // copying
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::ReplyStartTimePolicy_ptr *); // non-copying
 TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::ReplyStartTimePolicy_ptr &);
+
+#endif /* TAO_HAS_REPLY_START_TIME_POLICIES == 1 */
+
+#if (TAO_HAS_REPLY_END_TIME_POLICIES == 1)
+
 // Any operators for interface Messaging::ReplyEndTimePolicy
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::ReplyEndTimePolicy_ptr); // copying
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::ReplyEndTimePolicy_ptr *); // non-copying
 TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::ReplyEndTimePolicy_ptr &);
+
+#endif /* TAO_HAS_REPLY_END_TIME_POLICIES == 1 */
+
+#if (TAO_HAS_RELATIVE_REQ_TIMEOUT_POLICIES == 1)
+
 // Any operators for interface Messaging::RelativeRequestTimeoutPolicy
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::RelativeRequestTimeoutPolicy_ptr); // copying
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::RelativeRequestTimeoutPolicy_ptr *); // non-copying
 TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::RelativeRequestTimeoutPolicy_ptr &);
+
+#endif /* TAO_HAS_RELATIVE_REQ_TIMEOUT_POLICIES == 1 */
+
+#if (TAO_HAS_RELATIVE_RT_TIMEOUT_POLICIES == 1)
+
 // Any operators for interface Messaging::RelativeRoundtripTimeoutPolicy
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::RelativeRoundtripTimeoutPolicy_ptr); // copying
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::RelativeRoundtripTimeoutPolicy_ptr *); // non-copying
 TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::RelativeRoundtripTimeoutPolicy_ptr &);
+
+#endif /* TAO_HAS_RELATIVE_RT_TIMEOUT_POLICIES == 1 */
 
 #if (TAO_HAS_ROUTING_POLICY == 1)
 
@@ -2796,20 +2835,31 @@ TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::RoutingTypeRange
 TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::RoutingTypeRange *&); // deprecated
 TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, const Messaging::RoutingTypeRange *&);
 
-#endif /* TAO_HAS_ROUTING_POLICY == 1 */
-
 // Any operators for interface Messaging::RoutingPolicy
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::RoutingPolicy_ptr); // copying
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::RoutingPolicy_ptr *); // non-copying
 TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::RoutingPolicy_ptr &);
+
+#endif /* TAO_HAS_ROUTING_POLICY == 1 */
+
+#if (TAO_HAS_MAX_HOPS_POLICY == 1)
+
 // Any operators for interface Messaging::MaxHopsPolicy
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::MaxHopsPolicy_ptr); // copying
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::MaxHopsPolicy_ptr *); // non-copying
 TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::MaxHopsPolicy_ptr &);
+
+#endif /* TAO_HAS_MAX_HOPS_POLICY == 1 */
+
+#if (TAO_HAS_QUEUE_ORDER_POLICY == 1)
+
 // Any operators for interface Messaging::QueueOrderPolicy
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::QueueOrderPolicy_ptr); // copying
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::QueueOrderPolicy_ptr *); // non-copying
 TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::QueueOrderPolicy_ptr &);
+
+#endif /* TAO_HAS_QUEUE_ORDER_POLICY == 1 */
+
 // Any operators for valuetype Messaging::ExceptionHolder
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::ExceptionHolder *); // copying
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::ExceptionHolder **); // non-copying

@@ -67,6 +67,8 @@ TAO_Messaging_PolicyFactory::create_policy (
       break;
     }
 
+  ACE_UNUSED_ARG (value);
+
   ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
                     CORBA::Policy::_nil ());
 }

@@ -6265,10 +6265,13 @@ TAO_Messaging_Export CORBA::Boolean operator>>= (
 
 #endif /* TAO_HAS_AMI_CALLBACK == 1 */
 
+#if (TAO_HAS_PRIORITY_POLICIES == 1)
+
 // TAO_IDL - Generated from 
 // be/be_visitor_structure/any_op_cs.cpp:58
 
 // Copying insertion.
+TAO_Messaging_Export
 void operator<<= (
     CORBA::Any &_tao_any,
     const Messaging::PriorityRange &_tao_elem
@@ -6287,7 +6290,7 @@ void operator<<= (
 }
 
 // Non-copying insertion.
-void operator<<= (
+TAO_Messaging_Export void operator<<= (
     CORBA::Any &_tao_any,
     Messaging::PriorityRange *_tao_elem
   )
@@ -6392,11 +6395,14 @@ TAO_Messaging_Export CORBA::Boolean operator>>= (
   return 0;
 }
 
+#endif /* TAO_HAS_PRIORITY_POLICIES == 1 */
+
+#if (TAO_HAS_REQUEST_PRIORITY_POLICIES == 1)
 
 // TAO_IDL - Generated from 
 // be/be_visitor_interface/any_op_cs.cpp:60
 
-void operator<<= (
+TAO_Messaging_Export void operator<<= (
     CORBA::Any &_tao_any,
     Messaging::RequestPriorityPolicy_ptr _tao_elem
   )
@@ -6411,7 +6417,7 @@ void operator<<= (
   _tao_any.contains_local (1);
 }
 
-void operator<<= (
+TAO_Messaging_Export void operator<<= (
     CORBA::Any &_tao_any,
     Messaging::RequestPriorityPolicy_ptr *_tao_elem
   )
@@ -6464,6 +6470,8 @@ TAO_Messaging_Export CORBA::Boolean operator>>= (
   return 0;
 }
 
+#endif /* TAO_HAS_REQUEST_PRIORITY_POLICIES == 1 */
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<Messaging::RequestPriorityPolicy,Messaging::RequestPriorityPolicy_var>;
@@ -6471,11 +6479,12 @@ TAO_Messaging_Export CORBA::Boolean operator>>= (
 #  pragma instantiate TAO_Object_Manager<Messaging::RequestPriorityPolicy,Messaging::RequestPriorityPolicy_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
+#if (TAO_HAS_REPLY_PRIORITY_POLICIES == 1)
 
 // TAO_IDL - Generated from 
 // be/be_visitor_interface/any_op_cs.cpp:60
 
-void operator<<= (
+TAO_Messaging_Export void operator<<= (
     CORBA::Any &_tao_any,
     Messaging::ReplyPriorityPolicy_ptr _tao_elem
   )
@@ -6490,7 +6499,7 @@ void operator<<= (
   _tao_any.contains_local (1);
 }
 
-void operator<<= (
+TAO_Messaging_Export void operator<<= (
     CORBA::Any &_tao_any,
     Messaging::ReplyPriorityPolicy_ptr *_tao_elem
   )
@@ -6543,6 +6552,8 @@ TAO_Messaging_Export CORBA::Boolean operator>>= (
   return 0;
 }
 
+#endif /* TAO_HAS_REPLY_PRIORITY_POLICIES == 1 */
+
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
@@ -6551,11 +6562,12 @@ TAO_Messaging_Export CORBA::Boolean operator>>= (
 #  pragma instantiate TAO_Object_Manager<Messaging::ReplyPriorityPolicy,Messaging::ReplyPriorityPolicy_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
+#if (TAO_HAS_REQUEST_START_TIME_POLICIES == 1)
 
 // TAO_IDL - Generated from 
 // be/be_visitor_interface/any_op_cs.cpp:60
 
-void operator<<= (
+TAO_Messaging_Export void operator<<= (
     CORBA::Any &_tao_any,
     Messaging::RequestStartTimePolicy_ptr _tao_elem
   )
@@ -6570,7 +6582,7 @@ void operator<<= (
   _tao_any.contains_local (1);
 }
 
-void operator<<= (
+TAO_Messaging_Export void operator<<= (
     CORBA::Any &_tao_any,
     Messaging::RequestStartTimePolicy_ptr *_tao_elem
   )
@@ -6623,6 +6635,8 @@ TAO_Messaging_Export CORBA::Boolean operator>>= (
   return 0;
 }
 
+#endif /* TAO_HAS_REQUEST_START_TIME_POLICIES == 1 */
+
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
@@ -6631,11 +6645,12 @@ TAO_Messaging_Export CORBA::Boolean operator>>= (
 #  pragma instantiate TAO_Object_Manager<Messaging::RequestStartTimePolicy,Messaging::RequestStartTimePolicy_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
+#if (TAO_HAS_REQUEST_END_TIME_POLICIES == 1)
 
 // TAO_IDL - Generated from 
 // be/be_visitor_interface/any_op_cs.cpp:60
 
-void operator<<= (
+TAO_Messaging_Export void operator<<= (
     CORBA::Any &_tao_any,
     Messaging::RequestEndTimePolicy_ptr _tao_elem
   )
@@ -6650,7 +6665,7 @@ void operator<<= (
   _tao_any.contains_local (1);
 }
 
-void operator<<= (
+TAO_Messaging_Export void operator<<= (
     CORBA::Any &_tao_any,
     Messaging::RequestEndTimePolicy_ptr *_tao_elem
   )
@@ -6703,6 +6718,8 @@ TAO_Messaging_Export CORBA::Boolean operator>>= (
   return 0;
 }
 
+#endif /* TAO_HAS_REQUEST_END_TIME_POLICIES == 1 */
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<Messaging::RequestEndTimePolicy,Messaging::RequestEndTimePolicy_var>;
@@ -6710,11 +6727,12 @@ TAO_Messaging_Export CORBA::Boolean operator>>= (
 #  pragma instantiate TAO_Object_Manager<Messaging::RequestEndTimePolicy,Messaging::RequestEndTimePolicy_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
+#if (TAO_HAS_REPLY_START_TIME_POLICIES == 1)
 
 // TAO_IDL - Generated from 
 // be/be_visitor_interface/any_op_cs.cpp:60
 
-void operator<<= (
+TAO_Messaging_Export void operator<<= (
     CORBA::Any &_tao_any,
     Messaging::ReplyStartTimePolicy_ptr _tao_elem
   )
@@ -6729,7 +6747,7 @@ void operator<<= (
   _tao_any.contains_local (1);
 }
 
-void operator<<= (
+TAO_Messaging_Export void operator<<= (
     CORBA::Any &_tao_any,
     Messaging::ReplyStartTimePolicy_ptr *_tao_elem
   )
@@ -6782,6 +6800,8 @@ TAO_Messaging_Export CORBA::Boolean operator>>= (
   return 0;
 }
 
+#endif /* TAO_HAS_REPLY_START_TIME_POLICIES == 1 */
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<Messaging::ReplyStartTimePolicy,Messaging::ReplyStartTimePolicy_var>;
@@ -6789,11 +6809,12 @@ TAO_Messaging_Export CORBA::Boolean operator>>= (
 #  pragma instantiate TAO_Object_Manager<Messaging::ReplyStartTimePolicy,Messaging::ReplyStartTimePolicy_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
+#if (TAO_HAS_REPLY_END_TIME_POLICIES == 1)
 
 // TAO_IDL - Generated from 
 // be/be_visitor_interface/any_op_cs.cpp:60
 
-void operator<<= (
+TAO_Messaging_Export void operator<<= (
     CORBA::Any &_tao_any,
     Messaging::ReplyEndTimePolicy_ptr _tao_elem
   )
@@ -6808,7 +6829,7 @@ void operator<<= (
   _tao_any.contains_local (1);
 }
 
-void operator<<= (
+TAO_Messaging_Export void operator<<= (
     CORBA::Any &_tao_any,
     Messaging::ReplyEndTimePolicy_ptr *_tao_elem
   )
@@ -6861,6 +6882,8 @@ TAO_Messaging_Export CORBA::Boolean operator>>= (
   return 0;
 }
 
+#endif /* TAO_HAS_REPLY_END_TIME_POLICIES == 1 */
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<Messaging::ReplyEndTimePolicy,Messaging::ReplyEndTimePolicy_var>;
@@ -6868,11 +6891,12 @@ TAO_Messaging_Export CORBA::Boolean operator>>= (
 #  pragma instantiate TAO_Object_Manager<Messaging::ReplyEndTimePolicy,Messaging::ReplyEndTimePolicy_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
+#if (TAO_HAS_RELATIVE_REQ_TIMEOUT_POLICIES == 1)
 
 // TAO_IDL - Generated from 
 // be/be_visitor_interface/any_op_cs.cpp:60
 
-void operator<<= (
+TAO_Messaging_Export void operator<<= (
     CORBA::Any &_tao_any,
     Messaging::RelativeRequestTimeoutPolicy_ptr _tao_elem
   )
@@ -6887,7 +6911,7 @@ void operator<<= (
   _tao_any.contains_local (1);
 }
 
-void operator<<= (
+TAO_Messaging_Export void operator<<= (
     CORBA::Any &_tao_any,
     Messaging::RelativeRequestTimeoutPolicy_ptr *_tao_elem
   )
@@ -6940,6 +6964,8 @@ TAO_Messaging_Export CORBA::Boolean operator>>= (
   return 0;
 }
 
+#endif /* TAO_HAS_RELATIVE_REQ_TIMEOUT_POLICIES == 1 */
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<Messaging::RelativeRequestTimeoutPolicy,Messaging::RelativeRequestTimeoutPolicy_var>;
@@ -6947,11 +6973,12 @@ TAO_Messaging_Export CORBA::Boolean operator>>= (
 #  pragma instantiate TAO_Object_Manager<Messaging::RelativeRequestTimeoutPolicy,Messaging::RelativeRequestTimeoutPolicy_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
+#if (TAO_HAS_RELATIVE_RT_TIMEOUT_POLICIES == 1)
 
 // TAO_IDL - Generated from 
 // be/be_visitor_interface/any_op_cs.cpp:60
 
-void operator<<= (
+TAO_Messaging_Export void operator<<= (
     CORBA::Any &_tao_any,
     Messaging::RelativeRoundtripTimeoutPolicy_ptr _tao_elem
   )
@@ -6966,7 +6993,7 @@ void operator<<= (
   _tao_any.contains_local (1);
 }
 
-void operator<<= (
+TAO_Messaging_Export void operator<<= (
     CORBA::Any &_tao_any,
     Messaging::RelativeRoundtripTimeoutPolicy_ptr *_tao_elem
   )
@@ -7019,6 +7046,8 @@ TAO_Messaging_Export CORBA::Boolean operator>>= (
   return 0;
 }
 
+#endif /* TAO_HAS_RELATIVE_RT_TIMEOUT_POLICIES == 1 */
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<Messaging::RelativeRoundtripTimeoutPolicy,Messaging::RelativeRoundtripTimeoutPolicy_var>;
@@ -7026,12 +7055,13 @@ TAO_Messaging_Export CORBA::Boolean operator>>= (
 #  pragma instantiate TAO_Object_Manager<Messaging::RelativeRoundtripTimeoutPolicy,Messaging::RelativeRoundtripTimeoutPolicy_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
+#if (TAO_HAS_ROUTING_POLICY == 1)
 
 // TAO_IDL - Generated from 
 // be/be_visitor_structure/any_op_cs.cpp:58
 
 // Copying insertion.
-void operator<<= (
+TAO_Messaging_Export void operator<<= (
     CORBA::Any &_tao_any,
     const Messaging::RoutingTypeRange &_tao_elem
   )
@@ -7049,7 +7079,7 @@ void operator<<= (
 }
 
 // Non-copying insertion.
-void operator<<= (
+TAO_Messaging_Export void operator<<= (
     CORBA::Any &_tao_any,
     Messaging::RoutingTypeRange *_tao_elem
   )
@@ -7158,7 +7188,7 @@ TAO_Messaging_Export CORBA::Boolean operator>>= (
 // TAO_IDL - Generated from 
 // be/be_visitor_interface/any_op_cs.cpp:60
 
-void operator<<= (
+TAO_Messaging_Export void operator<<= (
     CORBA::Any &_tao_any,
     Messaging::RoutingPolicy_ptr _tao_elem
   )
@@ -7173,7 +7203,7 @@ void operator<<= (
   _tao_any.contains_local (1);
 }
 
-void operator<<= (
+TAO_Messaging_Export void operator<<= (
     CORBA::Any &_tao_any,
     Messaging::RoutingPolicy_ptr *_tao_elem
   )
@@ -7226,6 +7256,8 @@ TAO_Messaging_Export CORBA::Boolean operator>>= (
   return 0;
 }
 
+#endif /* TAO_HAS_ROUTING_POLICY == 1 */
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<Messaging::RoutingPolicy,Messaging::RoutingPolicy_var>;
@@ -7233,11 +7265,12 @@ TAO_Messaging_Export CORBA::Boolean operator>>= (
 #  pragma instantiate TAO_Object_Manager<Messaging::RoutingPolicy,Messaging::RoutingPolicy_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
+#if (TAO_HAS_MAX_HOPS_POLICY == 1)
 
 // TAO_IDL - Generated from 
 // be/be_visitor_interface/any_op_cs.cpp:60
 
-void operator<<= (
+TAO_Messaging_Export void operator<<= (
     CORBA::Any &_tao_any,
     Messaging::MaxHopsPolicy_ptr _tao_elem
   )
@@ -7252,7 +7285,7 @@ void operator<<= (
   _tao_any.contains_local (1);
 }
 
-void operator<<= (
+TAO_Messaging_Export void operator<<= (
     CORBA::Any &_tao_any,
     Messaging::MaxHopsPolicy_ptr *_tao_elem
   )
@@ -7305,6 +7338,8 @@ TAO_Messaging_Export CORBA::Boolean operator>>= (
   return 0;
 }
 
+#endif /* TAO_HAS_MAX_HOPS_POLICY == 1 */
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<Messaging::MaxHopsPolicy,Messaging::MaxHopsPolicy_var>;
@@ -7312,11 +7347,12 @@ TAO_Messaging_Export CORBA::Boolean operator>>= (
 #  pragma instantiate TAO_Object_Manager<Messaging::MaxHopsPolicy,Messaging::MaxHopsPolicy_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
+#if (TAO_HAS_QUEUE_ORDER_POLICY == 1)
 
 // TAO_IDL - Generated from 
 // be/be_visitor_interface/any_op_cs.cpp:60
 
-void operator<<= (
+TAO_Messaging_Export void operator<<= (
     CORBA::Any &_tao_any,
     Messaging::QueueOrderPolicy_ptr _tao_elem
   )
@@ -7331,7 +7367,7 @@ void operator<<= (
   _tao_any.contains_local (1);
 }
 
-void operator<<= (
+TAO_Messaging_Export void operator<<= (
     CORBA::Any &_tao_any,
     Messaging::QueueOrderPolicy_ptr *_tao_elem
   )
@@ -7383,6 +7419,8 @@ TAO_Messaging_Export CORBA::Boolean operator>>= (
   _tao_elem = Messaging::QueueOrderPolicy::_nil ();
   return 0;
 }
+
+#endif /* TAO_HAS_QUEUE_ORDER_POLICY == 1 */
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
@@ -7482,7 +7520,7 @@ operator>>= (const CORBA::Any &any, Messaging::ExceptionHolder *&value)
 // TAO_IDL - Generated from 
 // be/be_visitor_interface/any_op_cs.cpp:60
 
-void operator<<= (
+TAO_Messaging_Export void operator<<= (
     CORBA::Any &_tao_any,
     Messaging::ReplyHandler_ptr _tao_elem
   )
@@ -7502,7 +7540,7 @@ void operator<<= (
     }
 }
 
-void operator<<= (
+TAO_Messaging_Export void operator<<= (
     CORBA::Any &_tao_any,
     Messaging::ReplyHandler_ptr *_tao_elem
   )
@@ -7522,7 +7560,7 @@ void operator<<= (
     }
 }
 
-CORBA::Boolean operator>>= (
+TAO_Messaging_Export CORBA::Boolean operator>>= (
     const CORBA::Any &_tao_any,
     Messaging::ReplyHandler_ptr &_tao_elem
   )
@@ -7580,6 +7618,9 @@ CORBA::Boolean operator>>= (
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 //@@ Boris: begin experimental
+
+TAO_NAMESPACE CORBA
+{
 void
 CORBA::add_ref (Messaging::ExceptionHolder * vt)
 {
@@ -7597,6 +7638,10 @@ CORBA::remove_ref (Messaging::ExceptionHolder * vt)
     vt->_remove_ref ();
   }
 }
+}
+TAO_NAMESPACE_CLOSE
+
+#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
 
 //@@ Boris: end experimental
 CORBA::Boolean
@@ -7640,8 +7685,6 @@ OBV_Messaging::ExceptionHolder::_tao_unmarshal_state (TAO_InputCDR &strm)
     return 0;
   
 }
-
-#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,

@@ -4,6 +4,7 @@
 #include "Messaging.h"
 #include "Messaging_ORBInitializer.h"
 #include "tao/Invocation.h"
+#include "tao/debug.h"
 
 ACE_RCSID(tao, Messaging, "$Id$")
 
