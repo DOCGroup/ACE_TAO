@@ -10,8 +10,6 @@
 #include <string>
 #include <map>
 
-#include "tckind_names.h"
-
 namespace Deployment
 {
   /*
