@@ -1,3 +1,15 @@
+Sun Jan 16 23:26:58 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* m4/config_h.m4:
+
+	  Removed autoheader template for ACE_HAS_SIGINFO_T.
+
+	* configure.ac:
+
+	  Simplified check for ACE_HAS_SIGINFO_T.
+	  Added check for ACE_LACKS_SI_ADDR.
+	  Added check for ACE_HAS_PTHREAD_NP_H.
+
 Sun Jan 16 22:14:25 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/os_include/os_pthread.h:
