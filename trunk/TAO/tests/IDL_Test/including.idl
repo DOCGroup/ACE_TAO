@@ -43,5 +43,26 @@ union Bog switch (Agog)
   case Agog3: long bog3;
 };
 
+// We had a name clash with Me and ME, but the
+// rule that requires type defined in a scope
+// which is defined in an interface to be
+// added to the referenced types in the interface's
+// scope doesn't apply here, because Me is not
+// defined in the struct, only referenced.
+interface iface
+{   
+  enum postal
+  {
+    ME,
+	  FE
+  };
+    
+  struct using_incl
+  {
+    Aok::Me field1;
+  };    
+};
+
+
 #endif /* IDL_TEST_INCLUDING_IDL */
 
