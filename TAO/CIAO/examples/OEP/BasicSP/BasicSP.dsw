@@ -26,9 +26,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name BasicSP_stub DLL
-    End Project Dependency
 }}}
 
 ###############################################################################
@@ -74,9 +71,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name BasicSP_stub DLL
-    End Project Dependency
 }}}
 
 ###############################################################################
@@ -122,9 +116,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name BasicSP_stub DLL
-    End Project Dependency
 }}}
 
 ###############################################################################
@@ -167,9 +158,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name BasicSP_stub DLL
-    End Project Dependency
 }}}
 
 ###############################################################################
@@ -212,9 +200,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name BasicSP_stub DLL
-    End Project Dependency
 }}}
 
 ###############################################################################
