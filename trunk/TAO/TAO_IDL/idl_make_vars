@@ -42,7 +42,7 @@ CCC		= CC
 #
 # What flags to pass to the C preprocessor
 CPPFLAGS += -I../include -I. -D$(OSV) \
-	    -DCPP_LOCATION=\"$(C++)\" \
+	    -DTAO_IDL_PREPROCESSOR=\"$(C++)\" \
 	    -DIDL_CFE_VERSION=$(IDL_CFE_VERSION) \
 #
 # What flags to pass to the CC phase

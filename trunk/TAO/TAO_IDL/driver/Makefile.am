@@ -26,10 +26,10 @@ libdriver_a_SOURCES = \
          drv_preproc.cpp  \
          drv_private.cpp
 
-## FIXME: What should CPP_LOCATION be?
+## FIXME: What should TAO_IDL_PREPROCESSOR be?
 ##        Is the "+=" a portable make feature?
 CXXFLAGS += \
-           -DCPP_LOCATION=\"$(CXX)\"
+           -DTAO_IDL_PREPROCESSOR=\"$(CXX)\"
 
 ## Clean up some additional files/directories possibly created during
 ## the configure script tests.

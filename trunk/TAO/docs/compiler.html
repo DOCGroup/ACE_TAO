@@ -45,32 +45,50 @@ your code. <P>
 
 <HR><P>
 <a name="idl_env"><h3>Environment Variables</h3></a>
-TAO_IDL looks for two environment variables <code>CPP_LOCATION</code>
-and <code>TAO_IDL_DEFAULT_CPP_FLAGS</code>.  TAO_IDL doesn't
-implements its own preprocessor and it borrows the preprocessor of
-the compiler of your choice to perform the preprocessing work.
-On most platform TAO's makefiles can locate the compiler
-automatically.  However, on NT and some other situation (like cross
-compiling,) you need to instruct which specific compiler to use.
-<code>CPP_LOCATION</code> allows you to achieve this.  It holds the
-program name of the compiler that TAO_IDL uses.  This should be a full
-pathname if the compiler is not within your <code>$PATH</code>.
 
-TAO_IDL also defines a set of default command line options passed to
-the preprocessor depending on which platform TAO_IDL is compiled.  The
-environment variable <CODE>TAO_IDL_DEFAULT_CPP_FLAGS</CODE> allows you
-to alter the command line optiona passed to the preprocessor.  You can
-use it to alter the default options for the preprocessor and specify
-things like include directories and how the preprocessor is invoked.
-Two flags that won't get overwritten by the environment variable are
-<code>-DIDL</code> and <code>-I.</code>.  They are always passed to
-the preprocessor.
+<TABLE BORDER=2 CELLSPACING=2 CELLPADDING=0>
+  <TH>Variable 
+  <TH>Usage
+  <TR>
+    <TD>CPP_LOCATION
+    <TD>Deprecated in version 1.0.4 of TAO.  Please use TAO_IDL_PREPROCESSOR 
+        instead.
+  <TR>
+    <TD>TAO_IDL_DEFAULT_CPP_FLAGS
+      <TD>Deprecated in version 1.0.4 of TAO.  Please use 
+          TAO_IDL_PREPROCESSOR_ARGS instead.
+  <TR>
+    <TD>TAO_IDL_PREPROCESSOR
+    <TD>Used to override the program name of the preprocessor that TAO_IDL 
+	    uses.
+  <TR>
+    <TD>TAO_IDL_PREPROCESSOR_ARGS
+    <TD>Used to override the flags passed to the preprocessor that TAO_IDL 
+        uses.  This can be used to alter the default options for the 
+        preprocessor and specify things like include directories and how 
+        the preprocessor is invoked.  Two flags that will always be passed to
+        the preprocessor are <CODE>-DIDL</CODE> and <CODE>-I.</CODE>.  
+  <TR>
+    <TD>TAO_ROOT
+	<TD>Used to determine where <CODE>orb.idl</CODE> is located.
+  <TR>
+    <TD>ACE_ROOT
+	<TD>Used to determine where <CODE>orb.idl</CODE> is located.
+</TABLE>
 
-If your IDLs need to include <code>&lt;orb.idl&gt;</code>, then you need to
-define either/both <code>ACE_ROOT</code> or/and <code>TAO_ROOT</code>.  If you
-already have <CODE>ACE_ROOT</CODE> defined, TAO_IDL can figure
-<CODE>TAO_ROOT</CODE> out if your ACE/TAO was installed using default directory
-structure, otherwise, you'll need to define <code>TAO_ROOT</code>.
+<P>Since TAO_IDL doesn't do any preprocessing, it calls an external 
+preprocessor before it compiles an IDL file.  On most platforms, TAO's 
+makefiles or TAO_IDL's defaults will be sufficient.  However, with some 
+compiler installations (such as cross compilers), TAO_IDL may need to be 
+instructed to what preprocessor to use. To do this, set 
+<CODE>TAO_IDL_PREPROCESSOR</CODE> and 
+<CODE>TAO_IDL_PREPROCESSOR_ARGS</CODE> to the correct values.</P>
+
+<P>If <CODE>ACE_ROOT</CODE> or <CODE>TAO_ROOT</CODE> are defined, then TAO_IDL
+will use them to include the $(ACE_ROOT)/TAO/tao or $(TAO_ROOT)/tao 
+directories. This is to allow TAO_IDL to automatically find 
+<CODE>&lt;orb.idl&gt;</CODE> when it is included in an IDL file.  TAO_IDL will
+display a warning message when neither is defined.</P>
 
 <HR><P>
 <h3>Operation Demuxing Strategies</h3>

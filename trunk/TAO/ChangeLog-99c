@@ -1,3 +1,34 @@
+Fri Sep  3 14:40:13 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * rules.tao.GNU:  
+        * TAO_IDL/Makefile:
+        * TAO_IDL/Makefile.bor:
+        * TAO_IDL/idl_make_vars:
+        * TAO_IDL/driver/Makefile.am:
+          Changed CPP_LOCATION to TAO_IDL_PREPROCESSOR.  If CPP_LOCATION
+          is defined, still use it but display a warning message.
+
+        * TAO_IDL/driver/drv_init.cpp:
+        * TAO_IDL/driver/drv_preproc.cpp:
+          Cleaned up the way TAO_IDL picks the external preprocessor.  
+          It now checks for TAO_IDL_PREPROCESSOR and TAO_IDL_PREPROCESSOR_ARGS 
+          environment variables at run time (it will still use CPP_LOCATION and
+          TAO_IDL_DEFAULT_CPP_FLAGS, but displays a warning message).
+          
+          Otherwise, it will use its default, which is set to one of
+          the following:
+          1. TAO_IDL_PREPROCESSOR/_ARGS macros, if defined
+          2. else ACE_CC_PREPROCESSOR/_ARGS macros, if defined
+          3. else "cc" and "-E"
+
+        * docs/compiler.html:
+        * TAO-INSTALL.html:
+          Cleaned up documentation and added information about the 
+          TAO_IDL_PREPROCESSOR* environment variables.
+
+          Thanks to Christopher Kohlhoff <chris@kohlhoff.com> and 
+          Adrian Mercieca <adrian@anvil.co.uk> for first reporting this.
+
 Fri Sep  3 13:34:17 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/DynArray_i.cpp:
