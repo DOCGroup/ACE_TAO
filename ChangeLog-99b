@@ -1,45 +1,45 @@
 Sun Jun 27 18:03:24 1999  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
 
-	* ace/config-g++-common.h: Added ACE_LACKS_AUTO_PTR to work
-	  around an omission within the EGCS standard library.
+        * ace/config-g++-common.h: Added ACE_LACKS_AUTO_PTR to work
+          around an omission within the EGCS standard library.
 
-	* ace/Auto_Ptr.h: If ACE_LACKS_AUTO_PTR is enabled then
-	  use our version of auto_ptr.  This is necessary to work around
- 	  problems with EGCS.
+        * ace/Auto_Ptr.h: If ACE_LACKS_AUTO_PTR is enabled then
+          use our version of auto_ptr.  This is necessary to work around
+          problems with EGCS.
 
-	* ace/config-g++-common.h: Define ACE_HAS_STANDARD_CPP_LIBRARY
-	  so that #include <exception> will work properly.  However, this
- 	  required that we also set ACE_USES_OLD_IOSTREAMS, as well.
-  	  Thanks to Carlos for help with this.
+        * ace/config-g++-common.h: Define ACE_HAS_STANDARD_CPP_LIBRARY
+          so that #include <exception> will work properly.  However, this
+          required that we also set ACE_USES_OLD_IOSTREAMS, as well.
+          Thanks to Carlos for help with this.
 
-	* ace/config-g++-common.h: The EGCS 1.1.1 compiler supports
-	  the template<> syntax.  If this breaks older EGCS or GCC
- 	  compilers we'll have to handle each of those cases.
+        * ace/config-g++-common.h: The EGCS 1.1.1 compiler supports
+          the template<> syntax.  If this breaks older EGCS or GCC
+          compilers we'll have to handle each of those cases.
 
-	* ace/config-win32-borland.h:
-	  Added ACE_HAS_STD_TEMPLATE_METHOD_SPECIALIZATION.
+        * ace/config-win32-borland.h:
+          Added ACE_HAS_STD_TEMPLATE_METHOD_SPECIALIZATION.
 
-	* ace/OS.h: Replaced the const's for ACE_DEFAULT_SHLIB_MODE and
-	  ACE_SHLIB_INVALID_HANDLE with #defines since it's more portable.
+        * ace/OS.h: Replaced the const's for ACE_DEFAULT_SHLIB_MODE and
+          ACE_SHLIB_INVALID_HANDLE with #defines since it's more portable.
 
-	* ace/OS.i: All the strcasecmp() and strncasecmp() methods were
-	  broken.  Thanks to David Levine for reporting this.
+        * ace/OS.i: All the strcasecmp() and strncasecmp() methods were
+          broken.  Thanks to David Levine for reporting this.
 
-	* ace/WFMO_Reactor.cpp: Updated the programming style a bit to
-	  conform to the ACE guidelines.
+        * ace/WFMO_Reactor.cpp: Updated the programming style a bit to
+          conform to the ACE guidelines.
 
 Sun Jun 27 14:56:16 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/run_tests.bat: Added the patch for running tests compiled
-	  with Borland C++.  Thanks to Jody Haggins <jody@atdesk.com> for
-	  the patch.
+        * tests/run_tests.bat: Added the patch for running tests compiled
+          with Borland C++.  Thanks to Jody Hagins <jody@atdesk.com> for
+ 	  the patch.
 
-	* tests/Cache_Map_Manager_Test.dsp: The project file was
-	  mis-configured.
+        * tests/Cache_Map_Manager_Test.dsp: The project file was
+          mis-configured.
 
-	* tests/version_tests/version_tests.dsw:
-	* tests/version_tests/Cache_Map_Manager_Test.dsp: Added this new
-	  project file.
+        * tests/version_tests/version_tests.dsw:
+        * tests/version_tests/Cache_Map_Manager_Test.dsp: Added this new
+          project file.
 
 Sun Jun 27 12:36:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
@@ -54,169 +54,169 @@ Sun Jun 27 12:36:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
 Sat Jun 26 16:22:07 1999  Marina Spivak  <marina@cs.wustl.edu>
 
-	* ace/ace_lib.dsp
-	* ace/ace_dll.dsp:
-	  Updated to include Hash_Map_With_Allocator_T.* files.
+        * ace/ace_lib.dsp
+        * ace/ace_dll.dsp:
+          Updated to include Hash_Map_With_Allocator_T.* files.
 
 Sat Jun 26 16:05:29 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* acconfig.h:
-	* configure.in:
+        * acconfig.h:
+        * configure.in:
 
-	  Added support/test for ACE_HAS_MEMCHR macro.
+          Added support/test for ACE_HAS_MEMCHR macro.
 
-	* ace/Makefile.am:
-	* tests/Makefile.am:
+        * ace/Makefile.am:
+        * tests/Makefile.am:
 
-	  Synchronized with latest version of ACE.
+          Synchronized with latest version of ACE.
 
-	* m4/features.m4:
+        * m4/features.m4:
 
-	  Updated asynchronous IO tests.
+          Updated asynchronous IO tests.
 
 Sat Jun 26 14:41:31 1999  Marina Spivak  <marina@cs.wustl.edu>
 
-	* ace/Event_Handler_T.h
+        * ace/Event_Handler_T.h
           Removed "ACE_Export" - it is not necessary for a template class.
 
-	* ace/Hash_Map_With_Allocator.{h,i,cpp}:
-	  Added these files to ACE.  These files contain a thin wrapper
- 	  around ACE_Hash_Map_Manager, which is useful when
- 	  ACE_Hash_Map_Manager is used with a shared memory (or memory
- 	  mapped file) allocator (e.g., ACE Naming Service, and TAO Naming
- 	  Service are example use cases).  Please see header file for more
- 	  details.
+        * ace/Hash_Map_With_Allocator.{h,i,cpp}:
+          Added these files to ACE.  These files contain a thin wrapper
+          around ACE_Hash_Map_Manager, which is useful when
+          ACE_Hash_Map_Manager is used with a shared memory (or memory
+          mapped file) allocator (e.g., ACE Naming Service, and TAO Naming
+          Service are example use cases).  Please see header file for more
+          details.
 
 Sat Jun 26 12:45:26 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/Cache_Map_Manager_Test.cpp: Fixed this test so that it
-	  compiles with SunC++ 4.2 and its broken C++ templates...  Thanks
- 	  to David Levine for reporting this.
+        * tests/Cache_Map_Manager_Test.cpp: Fixed this test so that it
+          compiles with SunC++ 4.2 and its broken C++ templates...  Thanks
+          to David Levine for reporting this.
 
-	* ace/Malloc_T.i: Make sure to put ACE_INLINE on all the methods
-	  in the .i files.  Thank to Marina for reporting this.
+        * ace/Malloc_T.i: Make sure to put ACE_INLINE on all the methods
+          in the .i files.  Thank to Marina for reporting this.
 
-	* ace/Hash_Map_Manager_T.h: Fixed the programming style a bit.
+        * ace/Hash_Map_Manager_T.h: Fixed the programming style a bit.
 
-	* ace/Arg_Shifter.cpp (ACE_Arg_Shifter): Reformatted this
-	  stuff a bit.
+        * ace/Arg_Shifter.cpp (ACE_Arg_Shifter): Reformatted this
+          stuff a bit.
 
 Sat Jun 26 12:45:26 1999  Jody Hagins <jody@atdesk.com>
 
         This is a change log for the modifications made to support
-	Borland C++Builder 4.0, Patch 1.  Thanks to
-	Christopher Kohlhoff <chris@kohlhoff.com> and Chris Uzdavinis
-	<chris@uzdavinis.com>	for helping with this.
+        Borland C++Builder 4.0, Patch 1.  Thanks to
+        Christopher Kohlhoff <chris@kohlhoff.com> and Chris Uzdavinis
+        <chris@uzdavinis.com> for helping with this.
 
         First, I did not get integrate the makefiles to the BCB environment
-	as it requires alot of tools and more time.  I hope to fet to this
-	in the somewhat near future.  However, each directory that has stuff
-	that I built and tested has a Makefile.bor, which will make whatever
-	is there with BCB4.  Note that the makefiles do not, at present,
-	have a clean or anything except the default make.
+        as it requires alot of tools and more time.  I hope to fet to this
+        in the somewhat near future.  However, each directory that has stuff
+        that I built and tested has a Makefile.bor, which will make whatever
+        is there with BCB4.  Note that the makefiles do not, at present,
+        have a clean or anything except the default make.
 
-	To build, make sure config.h points to, or simply includes
-	ace/config-win32.h.
+        To build, make sure config.h points to, or simply includes
+        ace/config-win32.h.
 
-	Finally, not all the programs and exampales have BCB makefiles.
-	However, it should not be too difficult to adapt the ones that are
-	there.  In addition, the .bpr files should NOT be used to build
-	the libraries, or any examples.  If you want to build examples,
-	you will need to start with a fresh project in BCB.
+        Finally, not all the programs and exampales have BCB makefiles.
+        However, it should not be too difficult to adapt the ones that are
+        there.  In addition, the .bpr files should NOT be used to build
+        the libraries, or any examples.  If you want to build examples,
+        you will need to start with a fresh project in BCB.
 
-	At present (4.6.42) all tests, except SOCK_Send_Recv_Test run
-	successfully, and some of my own tests run.  Also, the TAO services
-	and programs seem to be operating as well.
+        At present (4.6.42) all tests, except SOCK_Send_Recv_Test run
+        successfully, and some of my own tests run.  Also, the TAO services
+        and programs seem to be operating as well.
 
-	* ace/Asynch_Acceptor.cpp: Need CancelIO for BCB as well
+        * ace/Asynch_Acceptor.cpp: Need CancelIO for BCB as well
 
-	* ace/Atomic_Op.i: Need ACE_TEMPLATE_SPECIALIZE on specializations.
+        * ace/Atomic_Op.i: Need ACE_TEMPLATE_SPECIALIZE on specializations.
 
-	* ace/CDR_Stream.h: Need LongLong for BCB as well
+        * ace/CDR_Stream.h: Need LongLong for BCB as well
 
-	* ace/Functor.i: Need ACE_TEMPLATE_SPECIALIZE on specializations.
+        * ace/Functor.i: Need ACE_TEMPLATE_SPECIALIZE on specializations.
 
-	* ace/Future.h: Work around a BCB4 bug which causes the create()
- 	  method from being seen.
+        * ace/Future.h: Work around a BCB4 bug which causes the create()
+          method from being seen.
 
-	* ace/IOStream.h: Only want CString stuff for MSC.
+        * ace/IOStream.h: Only want CString stuff for MSC.
 
-	* ace/IOStream_T.cpp: Only want CString stuff for MSC.
+        * ace/IOStream_T.cpp: Only want CString stuff for MSC.
 
-	* ace/OS.cpp: _fdopen, in BCB, takes a non-const pointer
+        * ace/OS.cpp: _fdopen, in BCB, takes a non-const pointer
 
-	* ace/OS.h: Differentiate between mode masks and user mode masks.
+        * ace/OS.h: Differentiate between mode masks and user mode masks.
 
-	  BCB doesn't like initialized data in precompiled header files so
- 	  define certain constants instead.  A bug in BCB prevents calling
- 	  a destructor explicitly on a typedef declared inside a class.
-  	  So, TEMPLATE3 and TEMPLATE4 versions of ACE_DES_FREE are
- 	  necessary for destruction of templates with more parameters.
+          BCB doesn't like initialized data in precompiled header files so
+          define certain constants instead.  A bug in BCB prevents calling
+          a destructor explicitly on a typedef declared inside a class.
+          So, TEMPLATE3 and TEMPLATE4 versions of ACE_DES_FREE are
+          necessary for destruction of templates with more parameters.
 
-	  BCB4 has a bug in the RTL that resets the GetLastError() value
- 	  to zero when errno is accessed.  Thus, setting errno to
- 	  ::GetLastError requires a copy.  To keep from having the code
- 	  everywhere, I added ACE_OS::set_errno_to_last_error () and
- 	  ACE_OS::set_errno_to_wsa_last_error (), and used it everywhere
- 	  errno was being set to GetLastError() or WSAGetLastError().
+          BCB4 has a bug in the RTL that resets the GetLastError() value
+          to zero when errno is accessed.  Thus, setting errno to
+          ::GetLastError requires a copy.  To keep from having the code
+          everywhere, I added ACE_OS::set_errno_to_last_error () and
+          ACE_OS::set_errno_to_wsa_last_error (), and used it everywhere
+          errno was being set to GetLastError() or WSAGetLastError().
 
-	  BCB4 has a bug in the optimizer that screws up the return from
- 	  certain expressions when a variable is set on both sides of an
- 	  assignment.  Thus, the definition of ACE_WIN32CALL_RETURN needed
- 	  to change.
+          BCB4 has a bug in the optimizer that screws up the return from
+          certain expressions when a variable is set on both sides of an
+          assignment.  Thus, the definition of ACE_WIN32CALL_RETURN needed
+          to change.
 
-	* ace/OS.i: Use ACE_set_errno_to_last_error where appropriate.
-	  BCB4 bug requires splitting FILETIME dummy_1, dummy_2; into
- 	  separate declarations.
+        * ace/OS.i: Use ACE_set_errno_to_last_error where appropriate.
+          BCB4 bug requires splitting FILETIME dummy_1, dummy_2; into
+          separate declarations.
 
-	* ace/Select_Reactor.h: Need ACE_TEMPLATE_SPECIALIZE on
-	  specializations.
+        * ace/Select_Reactor.h: Need ACE_TEMPLATE_SPECIALIZE on
+          specializations.
 
-	* ace/WFMO_Reactor.cpp: Use ACE_set_errno_to_last_error where
-	  appropriate.  Likewise, fix the use of auto_ptr copy ctor, which
- 	  can not take a const ref.
+        * ace/WFMO_Reactor.cpp: Use ACE_set_errno_to_last_error where
+          appropriate.  Likewise, fix the use of auto_ptr copy ctor, which
+          can not take a const ref.
 
-	* ace/WIN32_Asynch_IO.cpp: Use ACE_set_errno_to_last_error
-	  where appropriate.  Need CancelIo for BCB as well.
+        * ace/WIN32_Asynch_IO.cpp: Use ACE_set_errno_to_last_error
+          where appropriate.  Need CancelIo for BCB as well.
 
-	* ace/WIN32_Proactor.cpp: Use ACE_set_errno_to_last_error
-	  where appropriate.
+        * ace/WIN32_Proactor.cpp: Use ACE_set_errno_to_last_error
+          where appropriate.
 
-	* ace/config-win32-borland.h: Specific build stuff for BCB
+        * ace/config-win32-borland.h: Specific build stuff for BCB
 
-	* ace/config-win32-common.h: Differences between BCB and MSC
+        * ace/config-win32-common.h: Differences between BCB and MSC
 
-	* apps/JAWS/PROTOTYPE/JAWS/Cache_Hash_T.cpp: BCB4 bug prevents
- 	  using typedef inside class for explicit dextructor.
+        * apps/JAWS/PROTOTYPE/JAWS/Cache_Hash_T.cpp: BCB4 bug prevents
+          using typedef inside class for explicit dextructor.
 
-	* apps/JAWS/PROTOTYPE/JAWS/Cache_List_T.cpp:
-	  BCB4 bug prevents using typedef inside class for explicit
- 	  dextructor.
+        * apps/JAWS/PROTOTYPE/JAWS/Cache_List_T.cpp:
+          BCB4 bug prevents using typedef inside class for explicit
+          dextructor.
 
-	* apps/JAWS/PROTOTYPE/JAWS/Cache_Manager_T.cpp: BCB4 bug prevents 
- 	  using typedef inside class for explicit dextructor.
+        * apps/JAWS/PROTOTYPE/JAWS/Cache_Manager_T.cpp: BCB4 bug prevents 
+          using typedef inside class for explicit dextructor.
 
-	* apps/JAWS/PROTOTYPE/JAWS/IO.cpp: Get rid of const warning
+        * apps/JAWS/PROTOTYPE/JAWS/IO.cpp: Get rid of const warning
 
-	* tests/DLL_Test.cpp: The get_hello function has calling
-	  convention __cdecl (by default since the calling convention is
- 	  not mentioned).  However, BCB decorates __cdecl with a leading
- 	  underscore (and doesn't decorate __stdcall). Thus, we needed to
- 	  add some decoration to find the function.  Also, added prefix to
- 	  find the executable.
+        * tests/DLL_Test.cpp: The get_hello function has calling
+          convention __cdecl (by default since the calling convention is
+          not mentioned).  However, BCB decorates __cdecl with a leading
+          underscore (and doesn't decorate __stdcall). Thus, we needed to
+          add some decoration to find the function.  Also, added prefix to
+          find the executable.
 
-	* tests/Message_Queue_Test.cpp: BCB4 defines a "messages" and by
-	  default sucks that namespace into the global namespace, so a new
- 	  variable name was needed.
+        * tests/Message_Queue_Test.cpp: BCB4 defines a "messages" and by
+          default sucks that namespace into the global namespace, so a new
+          variable name was needed.
 
-	* tests/Reactor_Exceptions_Test.cpp: The test throws a structured
-	  exception.  The ISO does not require non C++ exceptions to be
- 	  caught by catch (...).  MSVC catches it but BCB4 does not.  So,
- 	  the code needed to be changed to catch a structured exception as
- 	  well.
+        * tests/Reactor_Exceptions_Test.cpp: The test throws a structured
+          exception.  The ISO does not require non C++ exceptions to be
+          caught by catch (...).  MSVC catches it but BCB4 does not.  So,
+          the code needed to be changed to catch a structured exception as
+          well.
 
-	* tests/run_tests.bat: Changed to allow running the BCB tests,
-	  when in another directory.
+        * tests/run_tests.bat: Changed to allow running the BCB tests,
+          when in another directory.
 
 Sat Jun 26 08:40:01 1999  David L. Levine  <levine@cs.wustl.edu>
 
