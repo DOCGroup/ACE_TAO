@@ -13793,11 +13793,11 @@ Thu Jan 21 15:00:10 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
         (gen_copy_ctor):
         (gen_assign_op):
 
-        * TAO_IDL/driver/drv_args.cpp:
-        Addded options to generate implementaion header and skeleton
-        files. Also provided options to change the name of the
-        implemenation files created, adding copy constructors, providing
-        prefixes and suffixes to the implementation class names
+        * TAO_IDL/driver/drv_args.cpp: Addded options to generate
+ 	implementation header and skeleton files. Also provided options to
+ 	change the name of the implemenation files created, adding copy
+ 	constructors, providing prefixes and suffixes to the
+ 	implementation class names
 
         * TAO_IDL/be/be_visitor_root/root.cpp:
         Add the following case statements to set constext
