@@ -55,13 +55,17 @@ ACE_Name_Acceptor::init (int argc, char *argv[])
 
   // Set the acceptor endpoint into listen mode (use the Singleton
   // global Reactor...).
-  if (this->open (this->service_addr_, ACE_Reactor::instance (),
+  if (this->open (this->service_addr_,
+                  ACE_Reactor::instance (),
 		  0, 0, 0,
 		  &this->scheduling_strategy_,
-		  "Name Server", "ACE naming service") == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%n: %p on port %d\n",
+		  "Name Server",
+                  "ACE naming service") == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%n: %p on port %d\n",
 		       "acceptor::open failed",
-		       this->service_addr_.get_port_number ()), -1);
+		       this->service_addr_.get_port_number ()),
+                      -1);
 
   // Ignore SIGPIPE so that each <SVC_HANDLER> can handle this on its
   // own.
@@ -72,7 +76,10 @@ ACE_Name_Acceptor::init (int argc, char *argv[])
 
   // Figure out what port we're really bound to.
   if (this->acceptor ().get_local_addr (server_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "get_local_addr"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "get_local_addr"),
+                      -1);
 
   ACE_DEBUG ((LM_DEBUG,
 	      "starting up Name Server at port %d on handle %d\n",
@@ -136,15 +143,18 @@ ACE_Name_Handler::open (void *)
 
   // Call down to our parent to register ourselves with the Reactor.
   if (ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::open (0) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
-
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "open"),
+                      -1);
   return 0;
 }
 
 // Create and send a reply to the client.
 
 /* VIRTUAL */ int
-ACE_Name_Handler::send_reply (ACE_UINT32 status, ACE_UINT32 err)
+ACE_Name_Handler::send_reply (ACE_INT32 status,
+                              ACE_UINT32 err)
 {
   ACE_TRACE ("ACE_Name_Handler::send_reply");
   void *buf;
@@ -160,8 +170,12 @@ ACE_Name_Handler::send_reply (ACE_UINT32 status, ACE_UINT32 err)
   ssize_t n = this->peer ().send (buf, len);
 
   if (n != len)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n, expected len = %d, actual len = %d",
-		      "send failed", len, n), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n, expected len = %d, actual len = %d",
+		      "send failed",
+                       len,
+                       n),
+                      -1);
   else
     return 0;
 }
@@ -170,17 +184,21 @@ ACE_Name_Handler::send_reply (ACE_UINT32 status, ACE_UINT32 err)
 ACE_Name_Handler::send_request (ACE_Name_Request &request)
 {
   ACE_TRACE ("ACE_Name_Handler::send_request");
-  void    *buffer;
+  void *buffer;
   ssize_t length = request.encode (buffer);
 
   if (length == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "encode failed"), -1);
-
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "encode failed"),
+                      -1);
   // Transmit request via a blocking send.
 
   if (this->peer ().send_n (buffer, length) != length)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send_n failed"), -1);
-
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "send_n failed"),
+                      -1);
   return 0;
 }
 
@@ -191,9 +209,7 @@ ACE_Name_Handler::send_request (ACE_Name_Request &request)
 ACE_Name_Handler::abandon (void)
 {
   ACE_TRACE ("ACE_Name_Handler::abandon");
-  int failure_reason = errno;
-  return
-    this->send_reply (-1, failure_reason);
+  return this->send_reply (-1, errno);
 }
 
 // Enable clients to limit the amount of time they'll wait
@@ -229,7 +245,8 @@ ACE_Name_Handler::dispatch (void)
   // all handled by the same method. Similarly, it returns the same
   // index for list_name_entries, list_value_entries, and
   // list_type_entries.
-  return (this->*op_table_[ACE_TABLE_MAP (index, ACE_Name_Request::OP_TABLE_MASK)]) ();
+  return (this->*op_table_[ACE_TABLE_MAP (index,
+                                          ACE_Name_Request::OP_TABLE_MASK)]) ();
 }
 
 // Receive, frame, and decode the client's request.  Note, this method
@@ -242,16 +259,20 @@ ACE_Name_Handler::recv_request (void)
   // Read the first 4 bytes to get the length of the message This
   // implementation assumes that the first 4 bytes are the length of
   // the message.
-  ssize_t n = this->peer ().recv ((void *) &this->name_request_, sizeof (ACE_UINT32));
-
+  ssize_t n = this->peer ().recv ((void *) &this->name_request_,
+                                  sizeof (ACE_UINT32));
   switch (n)
     {
     case -1:
       /* FALLTHROUGH */
-      ACE_DEBUG ((LM_DEBUG, "****************** recv_request returned -1\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "****************** recv_request returned -1\n"));
     default:
-      ACE_ERROR ((LM_ERROR, "%p got %d bytes, expected %d bytes\n",
-		 "recv failed", n, sizeof (ACE_UINT32)));
+      ACE_ERROR ((LM_ERROR,
+                  "%p got %d bytes, expected %d bytes\n",
+		 "recv failed",
+                  n,
+                  sizeof (ACE_UINT32)));
       /* FALLTHROUGH */
     case 0:
       // We've shutdown unexpectedly, let's abandon the connection.
@@ -266,7 +287,9 @@ ACE_Name_Handler::recv_request (void)
 	// Do a sanity check on the length of the message.
 	if (length > (ssize_t) sizeof this->name_request_)
 	  {
-	    ACE_ERROR ((LM_ERROR, "length %d too long\n", length));
+	    ACE_ERROR ((LM_ERROR,
+                        "length %d too long\n",
+                        length));
 	    return this->abandon ();
 	  }
 
@@ -287,7 +310,9 @@ ACE_Name_Handler::recv_request (void)
 	// Decode the request into host byte order.
 	if (this->name_request_.decode () == -1)
 	  {
-	    ACE_ERROR ((LM_ERROR, "%p\n", "decode failed"));
+	    ACE_ERROR ((LM_ERROR,
+                        "%p\n",
+                        "decode failed"));
 	    return this->abandon ();
 	  }
       }
@@ -335,14 +360,18 @@ ACE_Name_Handler::shared_bind (int rebind)
   int result;
   if (rebind == 0)
     {
-      ACE_DEBUG ((LM_DEBUG, "request for BIND \n"));
-      result = NAMING_CONTEXT::instance ()->bind (a_name, a_value,
+      ACE_DEBUG ((LM_DEBUG,
+                  "request for BIND \n"));
+      result = NAMING_CONTEXT::instance ()->bind (a_name,
+                                                  a_value,
                                                   this->name_request_.type ());
     }
   else
     {
-      ACE_DEBUG ((LM_DEBUG, "request for REBIND \n"));
-      result = NAMING_CONTEXT::instance ()->rebind (a_name, a_value,
+      ACE_DEBUG ((LM_DEBUG,
+                  "request for REBIND \n"));
+      result = NAMING_CONTEXT::instance ()->rebind (a_name,
+                                                    a_value,
                                                     this->name_request_.type ());
       if (result == 1)
 	result = 0;
@@ -493,15 +522,18 @@ ACE_Name_Handler::lists_entries (void)
   switch (this->name_request_.msg_type ())
     {
     case ACE_Name_Request::LIST_NAME_ENTRIES:
-      ACE_DEBUG ((LM_DEBUG, "request for LIST_NAME_ENTRIES \n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "request for LIST_NAME_ENTRIES \n"));
       ptmf = &ACE_Naming_Context::list_name_entries;
       break;
     case ACE_Name_Request::LIST_VALUE_ENTRIES:
-      ACE_DEBUG ((LM_DEBUG, "request for LIST_VALUE_ENTRIES \n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "request for LIST_VALUE_ENTRIES \n"));
       ptmf = &ACE_Naming_Context::list_value_entries;
       break;
     case ACE_Name_Request::LIST_TYPE_ENTRIES:
-      ACE_DEBUG ((LM_DEBUG, "request for LIST_TYPE_ENTRIES \n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "request for LIST_TYPE_ENTRIES \n"));
       ptmf = &ACE_Naming_Context::list_type_entries;
       break;
     default:
