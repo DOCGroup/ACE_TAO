@@ -82,7 +82,7 @@ protected:
   void create_EC (CORBA::Environment &ACE_TRY_ENV);
   // Create EC
 
-    CosNotifyChannelAdmin::EventChannel_var ec_;
+  CosNotifyChannelAdmin::EventChannel_var ec_;
   // The one channel that we create using the factory.
 
   CosNotifyChannelAdmin::ConsumerAdmin_var consumer_admin_;
