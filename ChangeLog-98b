@@ -39,6 +39,13 @@ Fri Sep 25 12:40:45 1998  David L. Levine  <levine@cs.wustl.edu>
         * docs/ACE-porting.html: updated "auto configure" link.  Thanks
           to Ossama for reporting this.
 
+        * ace/ACE.cpp (set_handle_limit): on platforms with
+          ACE_LACKS_RLIMIT or ! RLIMIT_NOFILE, don't use
+          ACE_NOTSUP_RETURN if the new_limit is <= the cur_limit.
+          On those platforms, the limit can't be changed anyways,
+          and the request was _not_ to increase the limit.  So,
+          it's a no-op; just return 0.
+
 Fri Sep 25 12:15:00 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * ace: The following ACE_TRACE calls being made during the
