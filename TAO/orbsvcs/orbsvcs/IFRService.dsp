@@ -781,9 +781,5 @@ SOURCE=.\IFRService\IFR_Service_Utils_T.cpp
 
 # PROP Default_Filter "rc"
 # End Group
-# Begin Source File
-
-SOURCE=.\IFRService\IFR_Service_Utils_T.asp
-# End Source File
 # End Target
 # End Project
