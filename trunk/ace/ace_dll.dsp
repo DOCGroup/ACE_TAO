@@ -40,7 +40,6 @@ CFG=ACE dynamic library - Win32 Alpha Unicode Debug
 # Begin Project
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
-# PROP WCE_Configuration "H/PC Ver. 2.00"
 
 !IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 

@@ -108,7 +108,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo /o".\ace.bsc"
 LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo /out:".\libace.lib"
-# ADD LIB32 /nologo /out:".\aceusd.lib"
+# ADD LIB32 /nologo /out:".\acesud.lib"
 
 !ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Release"
 
@@ -131,7 +131,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo /o".\ace.bsc"
 LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo /out:".\libace-r.lib"
-# ADD LIB32 /nologo /out:".\aceus.lib"
+# ADD LIB32 /nologo /out:".\acesu.lib"
 
 !ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Debug"
 
