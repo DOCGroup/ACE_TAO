@@ -1,3 +1,11 @@
+Fri Feb 05 12:02:31 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-hpux-9.x.h, config-hpux-(10,11).x-hpc++.h:
+          Removed ACE_HAS_BROKEN_ENUMS.  This affects the HP C++ compiler, not
+          aC++.  I made this change based on David's experience with the
+          enums and Green Hills, below.  If it causes any problems, let me
+          know and I'll reset it.
+
 Fri Feb 05 10:11:18 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Log_Priority.h: changed ENSURE_32_BITS to LM_ENSURE_32_BITS,
