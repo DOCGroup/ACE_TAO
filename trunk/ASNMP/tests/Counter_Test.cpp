@@ -79,15 +79,15 @@ static void  TestCounter()
    Counter32 c1;
    ACE_ASSERT(c1 == def);
    Counter32 c2(l);
-   ACE_ASSERT(c2 == l);
+   ACE_ASSERT(c2 == static_cast<unsigned long> (l));
    Counter32 c3(nl);
-   ACE_ASSERT(c3 == nl);
+   ACE_ASSERT(c3 == static_cast<unsigned long> (nl));
    Counter32 c4(ul);
    ACE_ASSERT(c4 == ul);
    Counter32 c5(i);
-   ACE_ASSERT(c5 == i);
+   ACE_ASSERT(c5 == static_cast<unsigned long> (i));
    Counter32 c6(ni);
-   ACE_ASSERT(c6 == ni);
+   ACE_ASSERT(c6 == static_cast<unsigned long> (ni));
    Counter32 c7(ui);
    ACE_ASSERT(c7 == ui);
    Counter32 *c8 = new Counter32(c5);
@@ -119,7 +119,7 @@ static void  TestCounter()
   c1 = us; // unsigned short
   ACE_ASSERT(c1 == us);
   c1 = si; // unsigned short
-  ACE_ASSERT(c1 == si);
+  ACE_ASSERT(c1 == static_cast<unsigned long> (si));
 #endif /*ACE_WIN32*/
 }
 
