@@ -144,7 +144,9 @@ TAO::Any_Impl_T<T>::widen (const CORBA::Any & any,
 
           if (mb == 0)
             {
-              _tao_elem = ACE_const_cast (T *, impl->value ());
+              _tao_elem = 
+                ACE_const_cast (T *, 
+                                ACE_reinterpret_cast (const T *, impl->value ()));
               return 1;
             }
         }
