@@ -43,6 +43,11 @@ cvs-id    : $Id$
     padding          : .4em 0em 0em 0em;
   }
 
+  ol.multiline li {
+    padding-top      : 0.6em;
+    padding-bottom   : 0.6em;
+  }
+
   </style>
 
 </head>
@@ -141,6 +146,7 @@ $ make -f Makefile.alt
 
 
 <!-- Linux -->
+
 
 <h1><a name="linux">Other GNU/Linux or UNIX Distributions</a></h1>
 
@@ -248,6 +254,10 @@ uninitialized.</p>
 <pre>$ cd CCF/CCF
 $ make -f Makefile.alt</pre>
 
+
+<!-- Windows -->
+
+
 <h1><a name="windows">Windows</a></h1>
 
 <h2><a name="windows_cxx">C++</a></h2>
@@ -256,7 +266,7 @@ VC++ 6 nor VC++ 7.0 is supported. </p>
 
 <h2><a name="windows_boost">Boost Libraries</a></h2>
 <p>In order to build CCF you will need the following libraries from
-<a href="http://www.boost.org">Boost distribution</a>:
+the <a href="http://www.boost.org">Boost distribution</a>:
 
 <ol>
 <li>regex</li>
@@ -264,9 +274,56 @@ VC++ 6 nor VC++ 7.0 is supported. </p>
 <li>spirit parser framework</li>
 </ol>
 
+<p>Below is the list of step-by-step instructions for building boost. As
+an example, I assume that the installation directory is <code>D:\lib</code>.
+</p>
+
+<ol class="multiline">
+
+<li>Download the latest boost source distribution from the
+<a href="http://boost.org/more/download.html">boost web site</a>.
+At the time of writing, the latest version was <code>1.30.2</code>
+thus the file you download would be <code>boost-1.30.2.zip</code>. After
+downloading unzip this file in <code>D:\lib</code> so that you get
+<code>D:\lib\boost-1.30.2</code>.</li>
+
+
+<li>Download the latest pre-built
+<a href="http://sourceforge.net/project/showfiles.php?group_id=7586&package_id=72941">
+<code>boost-jam<code></a>. At the time of writing, the latest version was
+<code>3.1.7</code> thus the file you download would be
+<code>bjam-3.1.7-ntx86.zip</code>. Unzip this file in <code>D:\lib</code> so
+that you get <code>D:\lib\bin.ntx86\bjam.exe</code>.</li>
+
+<li>Open a command prompt and <code>cd D:\lib\boost-1.30.2</code>. Then
+issue the following command.
+
+<pre>..\bin.ntx86\bjam.exe "-sTOOLS=vc7.1"
+</pre>
+</li>
+
+<li>Create a directory called <code>lib</code> in
+<code>D:\lib\boost-1.30.2</code>.</li>
+
+<li>Copy <code>D:\lib\boost-1.30.2\libs\filesystem\build\bin\libboost_filesystem.lib\vc7.1\debug\runtime-link-dynamic\libboost_filesystem.lib</code>
+to <code>D:\lib\boost-1.30.2\lib\libboost_filesystem_debug.lib</code>.<br>
+(Don't ask me who came up with this directory structure ;-)
+</li>
+
+<li>Copy <code>D:\lib\boost-1.30.2\libs\regex\build\bin\libboost_regex.lib\vc7.1\debug\runtime-link-dynamic\libboost_regex.lib</code>
+to <code>D:\lib\boost-1.30.2\lib\libboost_regex_debug.lib</code>.
+</li>
+
+<li>Add <code>D:\lib\boost-1.30.2</code> to your VC7.1 include directory
+search list (Go to Tools -> Options -> Projects -> VC++ Directories -> Include Files).
+Add <code>D:\lib\boost-1.30.2\lib</code> to your VC7.1 library directory
+search list.</li>
+
+</ol>
+
 <p>Please refer to the
 <a href="http://boost.org/tools/build/index.html">Boost Building
-Instructions</a> for details.<p>
+Instructions</a> if you have any questions.<p>
 
 
 <h2><a name="windows_utility">Utility Library</a></h2>
@@ -274,14 +331,15 @@ Instructions</a> for details.<p>
 <p>Another prerequisite for CCF is
 <a href="ftp://ftp.kolpackov.net/pub/Utility/Utility-1.2.2.tar.bz2">Utility
 Library</a>. You don't need to build anything in this library. Just unpack
-it to some convenient place.</p>
+it to some convenient place and add it to your VC7.1 include directory search
+list. For example if you unpacked <code>Utility-1.2.2.tar.bz2</code> in
+<code>D:\lib</code> then add <code>D:\lib\Utility-1.2.2</code> to your
+search list.</p>
+
 
 <h2><a name="windows_build">Building CCF</a></h2>
 
-<p>
-In order to build CCF with VC7.1 you will need to add Boost/Utility
-include and library paths to your search path. After having that done
-you can open VC7.1 solution file in <code>CCF/CCF/</code> and proceed
-as usual.</p>
+<p>Now you are ready to build CCF libraries. Just open VC7.1 solution file
+in <code>CCF\CCF\</code> and proceed as usual.</p>
 </body>
 </html>

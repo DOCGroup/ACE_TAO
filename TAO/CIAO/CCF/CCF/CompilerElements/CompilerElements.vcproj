@@ -20,11 +20,11 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/wd4290 /wd4800 /wd4250 /wd4355"
 				Optimization="0"
-				AdditionalIncludeDirectories="../.."
-				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
+				AdditionalIncludeDirectories="&quot;D:\my_libs\Utility-1.2.2&quot;;../..;&quot;D:\my_libs\boost-1.30.2&quot;"
+				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;BOOST_REGEX_STATIC_LINK"
 				MinimalRebuild="TRUE"
 				BasicRuntimeChecks="3"
-				RuntimeLibrary="5"
+				RuntimeLibrary="3"
 				DisableLanguageExtensions="FALSE"
 				ForceConformanceInForLoopScope="TRUE"
 				RuntimeTypeInfo="TRUE"
@@ -36,7 +36,8 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="$(OutDir)/CompilerElements.lib"/>
+				OutputFile="$(OutDir)/CompilerElements.lib"
+				AdditionalLibraryDirectories="&quot;D:\my_libs\boost-1.30.2\libs&quot;"/>
 			<Tool
 				Name="VCMIDLTool"/>
 			<Tool
