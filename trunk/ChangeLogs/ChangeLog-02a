@@ -1,10 +1,41 @@
+Fri May 26 12:04:39 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ARGV.cpp:
+	* Capabilities.cpp:
+	* Dump.cpp:
+	* Filecache.cpp:
+	* Local_Tokens.h:
+	* Log_Msg.cpp:
+	* Malloc.h:
+	* Map_Manager.h:
+	* Memory_Pool.cpp:
+	* Name_Proxy.cpp:
+	* Process.cpp:
+	* Process_Manager.cpp:
+	* QoS_Manager.cpp:
+	* QoS_Session_Factory.cpp:
+	* QoS_Session_Impl.cpp:
+	* Remote_Name_Space.cpp:
+	* SOCK_Acceptor.cpp:
+	* SOCK_Dgram.cpp:
+	* Select_Reactor_Base.cpp:
+	* Service_Repository.cpp:
+	* Signal.cpp:
+	* Stats.h:
+	* Synch.cpp:
+	* TP_Reactor.h:
+	* Thread_Manager.h:
+	* Token.cpp:
+
+	  These files needed to explicitly include "ace/Log_Msg.h," too.
+
 Fri May 26 11:29:44 2000  Ossama Othman  <ossama@uci.edu>
 
 	* ace/ACE.cpp:
 	* ace/Malloc.h:
 
 	  Include "ace/Log_Msg.h" to pull in the appropriate definition of
-	  the ACE logging macros.  This fixes a problem on Solaris.
+	  the ACE llessogging macros.  This fixes a problem on Solaris.
 
 Thu May 25 19:39:59 2000  Ossama Othman  <ossama@uci.edu>
 
