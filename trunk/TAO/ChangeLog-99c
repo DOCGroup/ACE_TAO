@@ -1,3 +1,10 @@
+Thu Feb 25 15:53:13 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* TAO_IDL/be
+	  TAO_IDL/driver
+	Changed the TAO_TRY macros with ACE_TRY macros in the 
+	IDl generated stubs and skeletons
+
 Thu Feb 25 15:35:14 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/MT_Cubit/client.cpp (main): removed
