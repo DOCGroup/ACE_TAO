@@ -1,4 +1,4 @@
-Thu Nov  6 07:46:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+Thu Nov  5 07:46:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ARGV.h:
           Define a private copy constructor and assignment operator. The
