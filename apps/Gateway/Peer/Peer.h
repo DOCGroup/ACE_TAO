@@ -117,10 +117,8 @@ protected:
   // Pointer-to-member-function for the current action to run in this
   // state.  This points to one of the preceding 3 methods.
 
-  ACE_INT32 proxy_id_;
-  // Proxy ID of the peer, which is obtained from the gatewayd.  For
-  // simplicity, in this implementation we also use the Proxy ID as
-  // the Supplier ID.  This might change in future releases.
+  CONNECTION_ID connection_id_;
+  // Connection ID of the peer, which is obtained from the gatewayd.
 
   ACE_Message_Block *msg_frag_;
   // Keep track of event fragments that arrive in non-blocking recv's

@@ -20,9 +20,9 @@
 #include "ace/Synch.h"
 
 class ACE_Svc_Export Options
+{
   // = TITLE
   //     Options Singleton for a gatewayd.
-{
 public:
   // = Options that can be enabled/disabled.
   enum
@@ -38,10 +38,7 @@ public:
     SUPPLIER_ACCEPTOR = 04,
     CONSUMER_ACCEPTOR = 010,
     SUPPLIER_CONNECTOR = 020,
-    CONSUMER_CONNECTOR = 040,
-
-    MAX_TIMEOUT = 32
-    // The maximum timeout for trying to re-establish connections.
+    CONSUMER_CONNECTOR = 040
   };
 
   static Options *instance (void);
@@ -102,7 +99,7 @@ public:
   // Our connector port host, i.e., the host running the gatewayd
   // process.
 
-  const char *proxy_config_file (void) const;
+  const char *connection_config_file (void) const;
   // Name of the connection configuration file.
 
   const char *consumer_config_file (void) const;
@@ -111,7 +108,19 @@ public:
   long max_timeout (void) const;
   // The maximum retry timeout delay.
 
+  long max_queue_size (void) const;
+  // The maximum size of the queue.
+
 private:
+  enum
+  {
+    MAX_QUEUE_SIZE = 1024 * 1024 * 16,
+    // We'll allow up to 16 megabytes to be queued per-output proxy.
+
+    MAX_TIMEOUT = 32
+    // The maximum timeout for trying to re-establish connections.
+  };
+
   Options (void);
   // Initialization.
 
@@ -161,7 +170,10 @@ private:
   long max_timeout_;
   // The maximum retry timeout delay.
 
-  char proxy_config_file_[MAXPATHLEN + 1];
+  long max_queue_size_;
+  // The maximum size of the queue.
+
+  char connection_config_file_[MAXPATHLEN + 1];
   // Name of the connection configuration file.
 
   char consumer_config_file_[MAXPATHLEN + 1];

@@ -6,7 +6,7 @@
 #include "Options.h"
 
 Peer_Handler::Peer_Handler (void)
-  : proxy_id_ (0),
+  : connection_id_ (0),
     msg_frag_ (0),
     total_bytes_ (0)
 {
@@ -53,8 +53,8 @@ Peer_Handler::open (void *a)
                        "schedule_wakeup"),
                       -1);
 
-  // First action is to wait to be notified of our supplier id.
-  this->do_action_ = &Peer_Handler::await_supplier_id;
+  // First action is to wait to be notified of our connection id.
+  this->do_action_ = &Peer_Handler::await_connection_id;
   return 0;
 }
 
@@ -63,7 +63,7 @@ Peer_Handler::open (void *a)
 int
 Peer_Handler::xmit_stdin (void)
 {
-  if (this->proxy_id_ != -1)
+  if (this->connection_id_ != -1)
     {
       ACE_Message_Block *mb;
 
@@ -94,9 +94,7 @@ Peer_Handler::xmit_stdin (void)
           ACE_ERROR ((LM_ERROR, "%p\n", "read"));
           break;
         default:
-          // For simplicity, we'll use our proxy id as the supplier id
-          // (which we must store in network byte order, of course).
-          event->header_.supplier_id_ = this->proxy_id_;
+          event->header_.connection_id_ = this->connection_id_;
           event->header_.len_ = n;
           event->header_.priority_ = 0;
           event->header_.type_ = 0;
@@ -148,7 +146,8 @@ Peer_Handler::nonblk_put (ACE_Message_Block *mb)
       // We didn't manage to send everything, so requeue.
       ACE_DEBUG ((LM_DEBUG,
                   "queueing activated on handle %d to supplier id %d\n",
-                 this->get_handle (), this->proxy_id_));
+                 this->get_handle (),
+                  this->connection_id_));
 
       // Re-queue in *front* of the list to preserve order.
       if (this->msg_queue ()->enqueue_head
@@ -211,7 +210,7 @@ Peer_Handler::handle_output (ACE_HANDLE)
               ACE_DEBUG ((LM_DEBUG,
                           "queue now empty on handle %d to supplier id %d\n",
                           this->get_handle (),
-                          this->proxy_id_));
+                          this->connection_id_));
 
               if (ACE_Reactor::instance ()->cancel_wakeup
                   (this, ACE_Event_Handler::WRITE_MASK) == -1)
@@ -224,7 +223,10 @@ Peer_Handler::handle_output (ACE_HANDLE)
     }
   else
     // If the list is empty there's a bug!
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "dequeue_head"), 0);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "dequeue_head"),
+                      0);
 }
 
 // Send an event to a peer (may block if necessary).
@@ -394,7 +396,7 @@ Peer_Handler::recv (ACE_Message_Block *&mb)
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%t) supplier id = %d, cur len = %d, total bytes read = %d\n",
-                  event->header_.supplier_id_,
+                  event->header_.connection_id_,
                   event->header_.len_,
                   data_received + header_received));
       if (Options::instance ()->enabled (Options::VERBOSE))
@@ -424,12 +426,12 @@ Peer_Handler::handle_input (ACE_HANDLE sd)
 // Action that receives our supplier id from the Gateway.
 
 int
-Peer_Handler::await_supplier_id (void)
+Peer_Handler::await_connection_id (void)
 {
-  ssize_t n = this->peer ().recv (&this->proxy_id_,
-                                  sizeof this->proxy_id_);
+  ssize_t n = this->peer ().recv (&this->connection_id_,
+                                  sizeof this->connection_id_);
 
-  if (n != sizeof this->proxy_id_)
+  if (n != sizeof this->connection_id_)
     {
       if (n == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -445,10 +447,10 @@ Peer_Handler::await_supplier_id (void)
     }
   else
     {
-      this->proxy_id_ = ntohl (this->proxy_id_);
+      this->connection_id_ = ntohl (this->connection_id_);
       ACE_DEBUG ((LM_DEBUG,
-                  "assigned proxy id %d\n",
-                  this->proxy_id_));
+                  "assigned connection id %d\n",
+                  this->connection_id_));
     }
 
   // Transition to the action that waits for Peer events.
@@ -502,7 +504,7 @@ Peer_Handler::await_events (void)
 
         ACE_DEBUG ((LM_DEBUG,
                     "route id = %d, cur len = %d, total len = %d\n",
-                    event->header_.supplier_id_,
+                    event->header_.connection_id_,
                     event->header_.len_,
                     this->total_bytes_));
         if (Options::instance ()->enabled (Options::VERBOSE))

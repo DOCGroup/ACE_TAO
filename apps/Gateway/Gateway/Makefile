@@ -12,16 +12,16 @@ BIN   	= gatewayd
 LIB   	= libGateway.a
 SHLIB	= libGateway.$(SOEXT)
 
-FILES	= Concrete_Proxy_Handlers \
+FILES	= Concrete_Connection_Handlers \
 	  Config_Files \
 	  File_Parser \
 	  Gateway \
 	  Event_Channel \
 	  Event_Forwarding_Discriminator \
 	  Options \
-	  Proxy_Handler \
-	  Proxy_Handler_Acceptor \
-	  Proxy_Handler_Connector
+	  Connection_Handler \
+	  Connection_Handler_Acceptor \
+	  Connection_Handler_Connector
 
 LSRC	= $(addsuffix .cpp,$(FILES))
 LDLIBS	= -lGateway
@@ -52,8 +52,8 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
-.obj/Concrete_Proxy_Handlers.o .shobj/Concrete_Proxy_Handlers.so: Concrete_Proxy_Handlers.cpp Event_Channel.h \
- Proxy_Handler_Connector.h \
+.obj/Concrete_Connection_Handlers.o .shobj/Concrete_Connection_Handlers.so: Concrete_Connection_Handlers.cpp Event_Channel.h \
+ Connection_Handler_Connector.h \
  $(ACE_ROOT)/ace/Connector.h \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Service_Object.h \
@@ -152,14 +152,14 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/SOCK_Stream.i \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/SOCK_Connector.i \
- Proxy_Handler.h Config_Files.h File_Parser.h Event.h \
- Proxy_Handler_Acceptor.h \
+ Connection_Handler.h Config_Files.h File_Parser.h Event.h \
+ Connection_Handler_Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
  Consumer_Dispatch_Set.h Event_Forwarding_Discriminator.h \
- Concrete_Proxy_Handlers.h
+ Concrete_Connection_Handlers.h
 .obj/Config_Files.o .shobj/Config_Files.so: Config_Files.cpp \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
@@ -242,7 +242,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- Event_Channel.h Proxy_Handler_Connector.h \
+ Event_Channel.h Connection_Handler_Connector.h \
  $(ACE_ROOT)/ace/Connector.h \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -291,13 +291,13 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/SOCK_Stream.i \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/SOCK_Connector.i \
- Proxy_Handler.h Event.h Proxy_Handler_Acceptor.h \
+ Connection_Handler.h Event.h Connection_Handler_Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
  Consumer_Dispatch_Set.h Event_Forwarding_Discriminator.h Gateway.h
-.obj/Event_Channel.o .shobj/Event_Channel.so: Event_Channel.cpp Proxy_Handler_Connector.h \
+.obj/Event_Channel.o .shobj/Event_Channel.so: Event_Channel.cpp Connection_Handler_Connector.h \
  $(ACE_ROOT)/ace/Connector.h \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Service_Object.h \
@@ -396,8 +396,8 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/SOCK_Stream.i \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/SOCK_Connector.i \
- Proxy_Handler.h Config_Files.h File_Parser.h Event.h Event_Channel.h \
- Proxy_Handler_Acceptor.h \
+ Connection_Handler.h Config_Files.h File_Parser.h Event.h Event_Channel.h \
+ Connection_Handler_Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
@@ -435,8 +435,8 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  Consumer_Dispatch_Set.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i
-.obj/Proxy_Handler.o .shobj/Proxy_Handler.so: Proxy_Handler.cpp Event_Channel.h \
- Proxy_Handler_Connector.h \
+.obj/Connection_Handler.o .shobj/Connection_Handler.so: Connection_Handler.cpp Event_Channel.h \
+ Connection_Handler_Connector.h \
  $(ACE_ROOT)/ace/Connector.h \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Service_Object.h \
@@ -535,16 +535,16 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/SOCK_Stream.i \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/SOCK_Connector.i \
- Proxy_Handler.h Config_Files.h File_Parser.h Event.h \
- Proxy_Handler_Acceptor.h \
+ Connection_Handler.h Config_Files.h File_Parser.h Event.h \
+ Connection_Handler_Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
  Consumer_Dispatch_Set.h Event_Forwarding_Discriminator.h \
- Concrete_Proxy_Handlers.h
-.obj/Proxy_Handler_Acceptor.o .shobj/Proxy_Handler_Acceptor.so: Proxy_Handler_Acceptor.cpp Event_Channel.h \
- Proxy_Handler_Connector.h \
+ Concrete_Connection_Handlers.h
+.obj/Connection_Handler_Acceptor.o .shobj/Connection_Handler_Acceptor.so: Connection_Handler_Acceptor.cpp Event_Channel.h \
+ Connection_Handler_Connector.h \
  $(ACE_ROOT)/ace/Connector.h \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Service_Object.h \
@@ -643,15 +643,15 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/SOCK_Stream.i \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/SOCK_Connector.i \
- Proxy_Handler.h Config_Files.h File_Parser.h Event.h \
- Proxy_Handler_Acceptor.h \
+ Connection_Handler.h Config_Files.h File_Parser.h Event.h \
+ Connection_Handler_Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
  Consumer_Dispatch_Set.h Event_Forwarding_Discriminator.h
-.obj/Proxy_Handler_Connector.o .shobj/Proxy_Handler_Connector.so: Proxy_Handler_Connector.cpp \
- Proxy_Handler_Connector.h \
+.obj/Connection_Handler_Connector.o .shobj/Connection_Handler_Connector.so: Connection_Handler_Connector.cpp \
+ Connection_Handler_Connector.h \
  $(ACE_ROOT)/ace/Connector.h \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Service_Object.h \
@@ -750,6 +750,6 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/SOCK_Stream.i \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/SOCK_Connector.i \
- Proxy_Handler.h Config_Files.h File_Parser.h Event.h
+ Connection_Handler.h Config_Files.h File_Parser.h Event.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

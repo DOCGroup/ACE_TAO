@@ -29,9 +29,10 @@ Options::Options (void)
     supplier_acceptor_port_ (DEFAULT_PEER_SUPPLIER_PORT),
     supplier_connector_port_ (DEFAULT_GATEWAY_SUPPLIER_PORT),
     consumer_connector_port_ (DEFAULT_GATEWAY_CONSUMER_PORT),
-    max_timeout_ (MAX_TIMEOUT)
+    max_timeout_ (MAX_TIMEOUT),
+    max_queue_size_ (MAX_QUEUE_SIZE)
 {
-  ACE_OS::strcpy (this->proxy_config_file_, "proxy_config");
+  ACE_OS::strcpy (this->connection_config_file_, "connection_config");
   ACE_OS::strcpy (this->consumer_config_file_, "consumer_config");
 }
 
@@ -89,9 +90,9 @@ Options::threading_strategy (void) const
 }
 
 const char *
-Options::proxy_config_file (void) const
+Options::connection_config_file (void) const
 {
-  return this->proxy_config_file_;
+  return this->connection_config_file_;
 }
 
 const char *
@@ -118,6 +119,12 @@ Options::consumer_connector_port (void) const
   return this->consumer_connector_port_;
 }
 
+long
+Options::max_queue_size (void) const
+{
+  return this->max_queue_size_;
+}
+
 u_short
 Options::supplier_connector_port (void) const
 {
@@ -132,7 +139,7 @@ Options::parse_args (int argc, char *argv[])
   // Assign defaults.
   ACE_Get_Opt get_opt (argc,
                        argv,
-                       "a:bC:c:dP:p:q:r:t:vw:",
+                       "a:bC:c:dm:P:p:q:r:t:vw:",
                        0);
 
   for (int c; (c = get_opt ()) != EOF; )
@@ -200,9 +207,9 @@ Options::parse_args (int argc, char *argv[])
                         Options::DEBUG);
           break;
         case 'P': // Use a different consumer config filename.
-          ACE_OS::strncpy (this->proxy_config_file_,
+          ACE_OS::strncpy (this->connection_config_file_,
                            get_opt.optarg,
-                           sizeof this->proxy_config_file_);
+                           sizeof this->connection_config_file_);
           break;
         case 'q': // Use a different socket queue size.
           this->socket_queue_size_ = ACE_OS::atoi (get_opt.optarg);
