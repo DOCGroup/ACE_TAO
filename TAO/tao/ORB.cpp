@@ -1553,8 +1553,7 @@ CORBA_ORB::create_policy (CORBA::PolicyType type,
 #if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
 
     case TAO_MESSAGING_RELATIVE_RT_TIMEOUT_POLICY_TYPE:
-      return TAO_RelativeRoundtripTimeoutPolicy::create (root_poa.in (),
-                                                         val,
+      return TAO_RelativeRoundtripTimeoutPolicy::create (val,
                                                          ACE_TRY_ENV);
 
 #endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
@@ -1562,8 +1561,7 @@ CORBA_ORB::create_policy (CORBA::PolicyType type,
 #if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
 
     case TAO_CLIENT_PRIORITY_POLICY_TYPE:
-      return TAO_Client_Priority_Policy::create (root_poa.in (),
-                                                 val,
+      return TAO_Client_Priority_Policy::create (val,
                                                  ACE_TRY_ENV);
 
 #endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
@@ -1571,8 +1569,7 @@ CORBA_ORB::create_policy (CORBA::PolicyType type,
 #if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
 
     case TAO_MESSAGING_SYNC_SCOPE_POLICY_TYPE:
-      return TAO_Sync_Scope_Policy::create (root_poa.in (),
-                                            val,
+      return TAO_Sync_Scope_Policy::create (val,
                                             ACE_TRY_ENV);
 
 #endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
@@ -1580,8 +1577,7 @@ CORBA_ORB::create_policy (CORBA::PolicyType type,
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
     case TAO_BUFFERING_CONSTRAINT_POLICY_TYPE:
-      return TAO_Buffering_Constraint_Policy::create (root_poa.in (),
-                                                      val,
+      return TAO_Buffering_Constraint_Policy::create (val,
                                                       ACE_TRY_ENV);
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */

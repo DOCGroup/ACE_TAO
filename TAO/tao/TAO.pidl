@@ -13,10 +13,19 @@
 //   This file contains TAO-specific idl interfaces (not part of CORBA
 //   2.3).
 //
-//   This file was used to generate the code in TAO{C,S,S_T}.{h,i,cpp}
-//   The code is then hand-crafted to compile it inside the ORB, avoid
-//   cyclic dependencies and enforce the locality constraints on
-//   certain objects.
+//   The command used to generate code from this file is:
+//
+//   tao_idl -o orig -Gp -Gd -Ge 1 -Gv  \
+//       -Wb,export_macro=TAO_Export \
+//       -Wb,export_include="tao/corbafwd.h" Messaging.pidl
+//
+//   after the file is generated a patch must be applied.  The patch
+//   fixes the interface repository IDs, disables the code under
+//   certain configurations, and eliminates cycles in the include
+//   dependencies.  Those changes are required because the generated
+//   code is part of the TAO library, it hardly makes any sense to
+//   change the IDL compiler to support changes that are very
+//   occasional.
 //
 // ================================================================
 
@@ -25,6 +34,8 @@
 
 #include "Policy.pidl"
 #include "TimeBase.pidl"
+
+#pragma prefix ""
 
 module TAO
 {
@@ -44,12 +55,12 @@ module TAO
   };
 
   const CORBA::PolicyType CLIENT_PRIORITY_POLICY_TYPE = 0x54410000;
-  interface ClientPriorityPolicy : CORBA::Policy
+  local interface ClientPriorityPolicy : CORBA::Policy
     {
       readonly attribute PrioritySpecification priority_specification;
     };
 
-  ////////////////////////////////////////////////////////////////////////////////
+  // ****************************************************************
 
   //
   // Buffering constraint.
@@ -71,11 +82,29 @@ module TAO
   };
 
   const CORBA::PolicyType BUFFERING_CONSTRAINT_POLICY_TYPE = 0x54410001;
-  interface BufferingConstraintPolicy : CORBA::Policy
+  local interface BufferingConstraintPolicy : CORBA::Policy
     {
       readonly attribute BufferingConstraint buffering_constraint;
     };
 
+  // @@ I (coryan) found the following comment on the generated code:
+  //
+  //       It seems easier to have copies of these here than to use
+  //       #if (TAO_HAS_CORBA_MESSAGING == 1) everywhere or to define
+  //       a new class TAO_GIOP_Reliable_Oneway_Invocation
+  //
+  // I don't agree, but this is not the time to fix this stuff,
+  // instead I added the code to the .pidl file so at least it is
+  // automatically generated.
+  //
+  typedef short SyncScope;
+  const SyncScope SYNC_NONE           = 0;
+  const SyncScope SYNC_WITH_TRANSPORT = 1;
+  const SyncScope SYNC_WITH_SERVER    = 2;
+  const SyncScope SYNC_WITH_TARGET    = 3;
+  // = TAO specific.
+  const SyncScope SYNC_EAGER_BUFFERING   = SYNC_NONE;
+  const SyncScope SYNC_DELAYED_BUFFERING = -1;
 };
 
 #pragma prefix ""

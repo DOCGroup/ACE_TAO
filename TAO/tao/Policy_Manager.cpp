@@ -123,28 +123,28 @@ TAO_Policy_Manager_Impl::cleanup_i (CORBA::Environment &ACE_TRY_ENV)
 
 #if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
 
-  delete this->relative_roundtrip_timeout_;
+  CORBA::release (this->relative_roundtrip_timeout_);
   this->relative_roundtrip_timeout_ = 0;
 
 #endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
 
 #if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
 
-  delete this->client_priority_;
+  CORBA::release (this->client_priority_);
   this->client_priority_ = 0;
 
 #endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
 
 #if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
 
-  delete this->sync_scope_;
+  CORBA::release (this->sync_scope_);
   this->sync_scope_ = 0;
 
 #endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
-  delete this->buffering_constraint_;
+  CORBA::release (this->buffering_constraint_);
   this->buffering_constraint_ = 0;
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
@@ -186,25 +186,20 @@ TAO_Policy_Manager_Impl::set_policy_overrides (
 
         case TAO_MESSAGING_RELATIVE_RT_TIMEOUT_POLICY_TYPE:
           {
-            TAO_ServantBase *servant = policy->_servant ();
-            if (servant == 0)
-              ACE_THROW (CORBA::INTERNAL ());
+            Messaging::RelativeRoundtripTimeoutPolicy_var p =
+              Messaging::RelativeRoundtripTimeoutPolicy::_narrow (policy);
 
-            POA_Messaging::RelativeRoundtripTimeoutPolicy *tmp =
-              ACE_static_cast(POA_Messaging::RelativeRoundtripTimeoutPolicy*,
-                              servant->_downcast ("IDL:Messaging/RelativeRoundtripTimeoutPolicy:1.0"));
-            if (tmp == 0)
-              ACE_THROW (CORBA::INTERNAL ());
+            if (CORBA::is_nil (p.in ()))
+              ACE_THROW (CORBA::INTERNAL (
+                      CORBA_SystemException::_tao_minor_code (
+                        TAO_POLICY_NARROW_CODE,
+                        0),
+                      CORBA::COMPLETED_NO));
 
-            TAO_RelativeRoundtripTimeoutPolicy *policy =
-              ACE_dynamic_cast (TAO_RelativeRoundtripTimeoutPolicy *, tmp);
-
-            if (policy == 0)
-              ACE_THROW (CORBA::INTERNAL ());
-
-            delete this->relative_roundtrip_timeout_;
-            this->relative_roundtrip_timeout_ = policy->clone ();
-
+            CORBA::release (this->relative_roundtrip_timeout_);
+            this->relative_roundtrip_timeout_ =
+              ACE_dynamic_cast (TAO_RelativeRoundtripTimeoutPolicy*,
+                                p._retn ());
             this->count_++;
           }
           break;
@@ -215,24 +210,20 @@ TAO_Policy_Manager_Impl::set_policy_overrides (
 
         case TAO_CLIENT_PRIORITY_POLICY_TYPE:
           {
-            TAO_ServantBase *servant = policy->_servant ();
-            if (servant == 0)
-              ACE_THROW (CORBA::INTERNAL ());
+            TAO::ClientPriorityPolicy_var p =
+              TAO::ClientPriorityPolicy::_narrow (policy);
 
-            POA_TAO::ClientPriorityPolicy *tmp =
-              ACE_static_cast(POA_TAO::ClientPriorityPolicy*,
-                              servant->_downcast ("IDL:TAO/ClientPriorityPolicy:1.0"));
-            if (tmp == 0)
-              ACE_THROW (CORBA::INTERNAL ());
+            if (CORBA::is_nil (p.in ()))
+              ACE_THROW (CORBA::INTERNAL (
+                      CORBA_SystemException::_tao_minor_code (
+                        TAO_POLICY_NARROW_CODE,
+                        0),
+                      CORBA::COMPLETED_NO));
 
-            TAO_Client_Priority_Policy *policy =
-              ACE_dynamic_cast (TAO_Client_Priority_Policy *, tmp);
-
-            if (policy == 0)
-              ACE_THROW (CORBA::INTERNAL ());
-
-            delete this->client_priority_;
-            this->client_priority_ = policy->clone ();
+            CORBA::release (this->client_priority_);
+            this->client_priority_ =
+              ACE_dynamic_cast (TAO_Client_Priority_Policy *,
+                                p._retn ());
 
             this->count_++;
           }
@@ -244,24 +235,20 @@ TAO_Policy_Manager_Impl::set_policy_overrides (
 
         case TAO_MESSAGING_SYNC_SCOPE_POLICY_TYPE:
           {
-            TAO_ServantBase *servant = policy->_servant ();
-            if (servant == 0)
-              ACE_THROW (CORBA::INTERNAL ());
+            Messaging::SyncScopePolicy_var p =
+              Messaging::SyncScopePolicy::_narrow (policy);
 
-            POA_Messaging::SyncScopePolicy *tmp =
-              ACE_static_cast(POA_Messaging::SyncScopePolicy*,
-                              servant->_downcast ("IDL:Messaging/SyncScopePolicy:1.0"));
-            if (tmp == 0)
-              ACE_THROW (CORBA::INTERNAL ());
+            if (CORBA::is_nil (p.in ()))
+              ACE_THROW (CORBA::INTERNAL (
+                      CORBA_SystemException::_tao_minor_code (
+                        TAO_POLICY_NARROW_CODE,
+                        0),
+                      CORBA::COMPLETED_NO));
 
-            TAO_Sync_Scope_Policy *policy =
-              ACE_dynamic_cast (TAO_Sync_Scope_Policy *, tmp);
-
-            if (policy == 0)
-              ACE_THROW (CORBA::INTERNAL ());
-
-            delete this->sync_scope_;
-            this->sync_scope_ = policy->clone ();
+            CORBA::release (this->sync_scope_);
+            this->sync_scope_ =
+              ACE_dynamic_cast (TAO_Sync_Scope_Policy*,
+                                p._retn ());
 
             this->count_++;
           }
@@ -273,24 +260,20 @@ TAO_Policy_Manager_Impl::set_policy_overrides (
 
         case TAO_BUFFERING_CONSTRAINT_POLICY_TYPE:
           {
-            TAO_ServantBase *servant = policy->_servant ();
-            if (servant == 0)
-              ACE_THROW (CORBA::INTERNAL ());
+            TAO::BufferingConstraintPolicy_var p =
+              TAO::BufferingConstraintPolicy::_narrow (policy);
 
-            POA_TAO::BufferingConstraintPolicy *tmp =
-              ACE_static_cast(POA_TAO::BufferingConstraintPolicy*,
-                              servant->_downcast ("IDL:TAO/BufferingConstraintPolicy:1.0"));
-            if (tmp == 0)
-              ACE_THROW (CORBA::INTERNAL ());
+            if (CORBA::is_nil (p.in ()))
+              ACE_THROW (CORBA::INTERNAL (
+                      CORBA_SystemException::_tao_minor_code (
+                        TAO_POLICY_NARROW_CODE,
+                        0),
+                      CORBA::COMPLETED_NO));
 
-            TAO_Buffering_Constraint_Policy *policy =
-              ACE_dynamic_cast (TAO_Buffering_Constraint_Policy *, tmp);
-
-            if (policy == 0)
-              ACE_THROW (CORBA::INTERNAL ());
-
-            delete this->buffering_constraint_;
-            this->buffering_constraint_ = policy->clone ();
+            CORBA::release (this->buffering_constraint_);
+            this->buffering_constraint_ =
+              ACE_dynamic_cast (TAO_Buffering_Constraint_Policy *,
+                                p._retn ());
 
             this->count_++;
           }
@@ -375,7 +358,7 @@ TAO_Policy_Manager_Impl::get_policy_overrides (
       if (this->relative_roundtrip_timeout_ != 0)
         {
           policy_list[n++] =
-            relative_roundtrip_timeout_->_this (ACE_TRY_ENV);
+            CORBA::Policy::_duplicate (this->relative_roundtrip_timeout_);
           ACE_CHECK_RETURN (0);
         }
 
@@ -386,7 +369,7 @@ TAO_Policy_Manager_Impl::get_policy_overrides (
       if (this->client_priority_ != 0)
         {
           policy_list[n++] =
-            client_priority_->_this (ACE_TRY_ENV);
+            CORBA::Policy::_duplicate (this->client_priority_);
           ACE_CHECK_RETURN (0);
         }
 
@@ -397,7 +380,7 @@ TAO_Policy_Manager_Impl::get_policy_overrides (
       if (this->sync_scope_ != 0)
         {
           policy_list[n++] =
-            sync_scope_->_this (ACE_TRY_ENV);
+            CORBA::Policy::_duplicate (this->sync_scope_);
           ACE_CHECK_RETURN (0);
         }
 
@@ -408,7 +391,7 @@ TAO_Policy_Manager_Impl::get_policy_overrides (
       if (this->buffering_constraint_ != 0)
         {
           policy_list[n++] =
-            buffering_constraint_->_this (ACE_TRY_ENV);
+            CORBA::Policy::_duplicate (this->buffering_constraint_);
           ACE_CHECK_RETURN (0);
         }
 
@@ -438,7 +421,7 @@ TAO_Policy_Manager_Impl::get_policy_overrides (
               if (this->relative_roundtrip_timeout_ != 0)
                 {
                   policy_list[n++] =
-                    relative_roundtrip_timeout_->_this (ACE_TRY_ENV);
+                    CORBA::Policy::_duplicate (this->relative_roundtrip_timeout_);
                   ACE_CHECK_RETURN (0);
                 }
               break;
@@ -451,7 +434,7 @@ TAO_Policy_Manager_Impl::get_policy_overrides (
               if (this->client_priority_ != 0)
                 {
                   policy_list[n++] =
-                    client_priority_->_this (ACE_TRY_ENV);
+                    CORBA::Policy::_duplicate (this->client_priority_);
                   ACE_CHECK_RETURN (0);
                 }
               break;
@@ -464,7 +447,7 @@ TAO_Policy_Manager_Impl::get_policy_overrides (
               if (this->sync_scope_ != 0)
                 {
                   policy_list[n++] =
-                    sync_scope_->_this (ACE_TRY_ENV);
+                    CORBA::Policy::_duplicate (this->sync_scope_);
                   ACE_CHECK_RETURN (0);
                 }
               break;
@@ -477,7 +460,7 @@ TAO_Policy_Manager_Impl::get_policy_overrides (
               if (this->buffering_constraint_ != 0)
                 {
                   policy_list[n++] =
-                    buffering_constraint_->_this (ACE_TRY_ENV);
+                    CORBA::Policy::_duplicate (this->buffering_constraint_);
                   ACE_CHECK_RETURN (0);
                 }
               break;
@@ -534,7 +517,7 @@ TAO_Policy_Manager_Impl::get_policy (CORBA::PolicyType type,
     case TAO_MESSAGING_RELATIVE_RT_TIMEOUT_POLICY_TYPE:
       if (this->relative_roundtrip_timeout_ != 0)
         {
-          return this->relative_roundtrip_timeout_->_this (ACE_TRY_ENV);
+          return CORBA::Policy::_duplicate (this->relative_roundtrip_timeout_);
         }
       return CORBA::Policy::_nil ();
 
@@ -545,7 +528,7 @@ TAO_Policy_Manager_Impl::get_policy (CORBA::PolicyType type,
     case TAO_CLIENT_PRIORITY_POLICY_TYPE:
       if (this->client_priority_ != 0)
         {
-          return this->client_priority_->_this (ACE_TRY_ENV);
+          return CORBA::Policy::_duplicate (this->client_priority_);
         }
       return CORBA::Policy::_nil ();
 
@@ -556,7 +539,7 @@ TAO_Policy_Manager_Impl::get_policy (CORBA::PolicyType type,
     case TAO_MESSAGING_SYNC_SCOPE_POLICY_TYPE:
       if (this->sync_scope_ != 0)
         {
-          return this->sync_scope_->_this (ACE_TRY_ENV);
+          return CORBA::Policy::_duplicate (this->sync_scope_);
         }
       return CORBA::Policy::_nil ();
 
@@ -567,7 +550,7 @@ TAO_Policy_Manager_Impl::get_policy (CORBA::PolicyType type,
     case TAO_BUFFERING_CONSTRAINT_POLICY_TYPE:
       if (this->buffering_constraint_ != 0)
         {
-          return this->buffering_constraint_->_this (ACE_TRY_ENV);
+          return CORBA::Policy::_duplicate (this->buffering_constraint_);
         }
       return CORBA::Policy::_nil ();
 

@@ -1,0 +1,167 @@
+--- orig/MessagingS.h	Fri Apr 28 16:44:03 2000
++++ MessagingS.h	Fri Apr 28 16:30:37 2000
+@@ -7,15 +7,17 @@
+ // Information about TAO is available at:
+ //                 http://www.cs.wustl.edu/~schmidt/TAO.html
+ 
+-#ifndef _TAO_IDL_ORIG_MESSAGINGS_H_
+-#define _TAO_IDL_ORIG_MESSAGINGS_H_
++#ifndef _TAO_IDL_TMP_MESSAGINGS_H_
++#define _TAO_IDL_TMP_MESSAGINGS_H_
++#include "ace/pre.h"
+ 
+-#include "TimeBaseS.h"
+-#include "IOPS.h"
+-#include "PolicyS.h"
+-#include "PollableS.h"
+-#include "MessagingC.h"
++#include "tao/orbconf.h"
+ 
++#if (TAO_HAS_CORBA_MESSAGING == 1)
++
++#include "tao/TimeBaseS.h"
++#include "tao/POA_CORBA.h"
++#include "tao/MessagingC.h"
+ 
+ #if !defined (ACE_LACKS_PRAGMA_ONCE)
+ # pragma once
+@@ -30,6 +32,9 @@
+ 
+ TAO_NAMESPACE  POA_Messaging
+ {
++
++#if (TAO_HAS_AMI_CALLBACK == 1)
++
+   class ReplyHandler;
+   typedef ReplyHandler *ReplyHandler_ptr;
+   class TAO_Export ReplyHandler :  public virtual PortableServer::ServantBase
+@@ -44,7 +49,7 @@
+ 
+     virtual CORBA::Boolean _is_a (
+         const char* logical_type_id,
+-        CORBA::Environment &ACE_TRY_ENV = 
++        CORBA::Environment &ACE_TRY_ENV =
+           TAO_default_environment ()
+       );
+ 
+@@ -56,7 +61,7 @@
+         CORBA::ServerRequest &req,
+         void *obj,
+         void *context,
+-        CORBA::Environment &ACE_TRY_ENV = 
++        CORBA::Environment &ACE_TRY_ENV =
+           TAO_default_environment ()
+       );
+ 
+@@ -64,19 +69,19 @@
+         CORBA::ServerRequest &req,
+         void *obj,
+         void *context,
+-        CORBA::Environment &ACE_TRY_ENV = 
++        CORBA::Environment &ACE_TRY_ENV =
+           TAO_default_environment ()
+       );
+ 
+     virtual void _dispatch (
+         CORBA::ServerRequest &_tao_req,
+         void *_tao_context,
+-        CORBA::Environment &ACE_TRY_ENV = 
++        CORBA::Environment &ACE_TRY_ENV =
+           TAO_default_environment ()
+       );
+ 
+     ::Messaging::ReplyHandler *_this (
+-        CORBA::Environment &ACE_TRY_ENV = 
++        CORBA::Environment &ACE_TRY_ENV =
+           TAO_default_environment ()
+       );
+ 
+@@ -99,11 +104,11 @@
+         const CORBA::Char *logical_type_id,
+         CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+       );
+-    
++
+     virtual CORBA::Boolean _non_existent(
+         CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+       );
+-    
++
+       };
+ 
+ 
+@@ -124,14 +129,14 @@
+         const CORBA::Char *logical_type_id,
+         CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+       );
+-    
++
+     ReplyHandler_ptr _get_servant (void) const;
+-    
++
+     virtual CORBA::Boolean _non_existent(
+         CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+       );
+-    
+-      
++
++
+   private:
+     ReplyHandler_ptr servant_;
+   };
+@@ -139,7 +144,7 @@
+ 
+ #endif /* end #if !defined */
+ 
+-  
++
+ #if defined (ACE_HAS_USING_KEYWORD)
+   // TIE class: Refer to CORBA v2.2, Section 20.34.4
+   template <class T>
+@@ -156,7 +161,7 @@
+     // ctor with T*, ownership flag and a POA
+     ~ReplyHandler_tie (void);
+     // dtor
+-    
++
+     // TIE specific functions
+     T *_tied_object (void);
+     // return the underlying object
+@@ -168,17 +173,17 @@
+     // do we own it
+     void _is_owner (CORBA::Boolean b);
+     // set the ownership
+-    
++
+     // overridden ServantBase operations
+     PortableServer::POA_ptr _default_POA (
+-        CORBA::Environment &ACE_TRY_ENV = 
++        CORBA::Environment &ACE_TRY_ENV =
+           TAO_default_environment ()
+       );
+ private:
+     T *ptr_;
+     PortableServer::POA_var poa_;
+     CORBA::Boolean rel_;
+-    
++
+     // copy and assignment are not allowed
+     ReplyHandler_tie (const ReplyHandler_tie &);
+     void operator= (const ReplyHandler_tie &);
+@@ -186,6 +191,8 @@
+ 
+ #endif /* ACE_HAS_USING_KEYWORD */
+ 
++#endif /* TAO_HAS_AMI_CALLBACK == 1 */
++
+ }
+ TAO_NAMESPACE_CLOSE
+ 
+@@ -199,4 +206,7 @@
+ #pragma warning(pop)
+ #endif /* _MSC_VER */
+ 
++#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
++
++#include "ace/post.h"
+ #endif /* ifndef */

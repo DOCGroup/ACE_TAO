@@ -7,9 +7,8 @@
 // Information about TAO is available at:
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#ifndef _TAO_IDL__PROJECT_DOC_MARINA_ACE_WRAPPERS_TAO_TAO_TAOS_T_H_
-#define _TAO_IDL__PROJECT_DOC_MARINA_ACE_WRAPPERS_TAO_TAO_TAOS_T_H_
-#include "ace/pre.h"
+#ifndef _TAO_IDL_TMP_TAOS_T_H_
+#define _TAO_IDL_TMP_TAOS_T_H_
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -20,12 +19,12 @@
 
 
 #if defined (__ACE_INLINE__)
-#include "tao/TAOS_T.i"
+#include "TAOS_T.i"
 #endif /* defined INLINE */
 
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "tao/TAOS_T.cpp"
+#include "TAOS_T.cpp"
 #endif /* defined REQUIRED SOURCE */
 
 
@@ -37,5 +36,4 @@
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
 #endif /* ifndef */
