@@ -1,3 +1,25 @@
+Fri Dec 19 11:45:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-osf1-3.2.h:
+        * ace/config-osf1-4.0.h:
+          Replaced ACE_HAS_64BIT_LONGS with ACE_SIZEOF_LONG 8 to fix compile
+          errors on Tru64.
+
+        * bin/MakeProjectCreator/config/wfmo.mpb:
+          Added new config file. Projects that need wfmo, should be based on
+          this.
+
+        * include/makeinclude/wrapper_macros.GNU:
+          When wfmo is not set, we set it to 0. So by default all platforms that
+          use the GNU makefiles lack wfmo support.
+
+        * include/makeinclude/platform_mingw32.GNU:
+          MinGW has wfmo, so set wfmo to 1.
+
+        * examples/Reactor/WFMO_Reactor/WFMO_Reactor.mpc:
+          Based now on the wfmo instead of a GNU specific hack. This simplifies
+          this MPC file but also with MinGW we will now build these examples.
+
 Fri Dec 19 10:46:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Codeset_Registry.cpp:
