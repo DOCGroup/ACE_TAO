@@ -132,7 +132,7 @@ main (int argc, char *argv[])
 
 	  ACE_OS::puts ((char *) str);
 	  ACE_OS::fflush (stdout);
-	  dmsg1 ("Object Created at: '%ul'", obj);
+	  //dmsg1 ("Object Created at: '%ul'", obj);
 	  dmsg1 ("listening as object '%s'", str);
 	}
 
