@@ -21,6 +21,7 @@ public:
           PortableServer::POA_ptr poa);
 
   void method (CORBA::ULong work,
+               CORBA::ULong prime_number,
                CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -43,6 +44,7 @@ test_i::test_i (CORBA::ORB_ptr orb,
 
 void
 test_i::method (CORBA::ULong work,
+                CORBA::ULong prime_number,
                 CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -50,8 +52,6 @@ test_i::method (CORBA::ULong work,
     ACE_DEBUG ((LM_DEBUG,
                 "test_i::method: %hd units of work\n",
                 work));
-
-  const u_long prime_number = 9619;
 
   for (; work != 0; work--)
     ACE::is_prime (prime_number,

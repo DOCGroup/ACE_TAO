@@ -41,6 +41,7 @@ static int print_missed_invocations = 0;
 static int continuous_workers_are_rt = 1;
 static ACE_hrtime_t test_start;
 static ACE_Time_Value start_of_test;
+static CORBA::ULong prime_number = 9619;
 
 struct Synchronizers
 {
@@ -61,7 +62,7 @@ struct Synchronizers
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "c:h:i:k:m:p:r:s:t:u:v:w:x:y:z:");
+  ACE_Get_Opt get_opts (argc, argv, "c:h:i:k:m:p:q:r:s:t:u:v:w:x:y:z:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -95,6 +96,11 @@ parse_args (int argc, char *argv[])
       case 'p':
         invocation_priorities_file =
           get_opts.optarg;
+        break;
+
+      case 'q':
+        prime_number =
+          ACE_OS::atoi (get_opts.optarg);
         break;
 
       case 'r':
@@ -152,6 +158,7 @@ parse_args (int argc, char *argv[])
                            "\t-k <ior> (defaults to %s)\n"
                            "\t-m <print missed invocations for paced workers> (defaults to %d)\n"
                            "\t-p <invocation priorities file> (defaults to %s)\n"
+                           "\t-q <prime number> (defaults to %d)\n"
                            "\t-r <rates file> (defaults to %s)\n"
                            "\t-s <continuous workers have real time scope and scheduling policies> (defaults to %d)\n"
                            "\t-t <time for test> (defaults to %d)\n"
@@ -169,6 +176,7 @@ parse_args (int argc, char *argv[])
                            ior,
                            print_missed_invocations,
                            invocation_priorities_file,
+                           prime_number,
                            rates_file,
                            continuous_workers_are_rt,
                            time_for_test,
@@ -184,6 +192,29 @@ parse_args (int argc, char *argv[])
   return 0;
 }
 
+double
+to_seconds (ACE_UINT64 hrtime,
+            ACE_UINT32 sf)
+{
+  double seconds =
+#if defined ACE_LACKS_LONGLONG_T
+    hrtime / sf;
+#else  /* ! ACE_LACKS_LONGLONG_T */
+  ACE_static_cast (double,
+                   ACE_UINT64_DBLCAST_ADAPTER (hrtime / sf));
+#endif /* ! ACE_LACKS_LONGLONG_T */
+  seconds /= ACE_HR_SCALE_CONVERSION;
+
+  return seconds;
+}
+
+ACE_UINT64
+to_hrtime (double seconds,
+           ACE_UINT32 sf)
+{
+  return ACE_UINT64 (seconds * sf * ACE_HR_SCALE_CONVERSION);
+}
+
 int
 start_synchronization (test_ptr test,
                        Synchronizers &synchronizers)
@@ -191,6 +222,7 @@ start_synchronization (test_ptr test,
   ACE_TRY_NEW_ENV
     {
       test->method (work,
+                    prime_number,
                     ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
@@ -314,21 +346,23 @@ max_throughput (test_ptr test,
                            CORBA_priority),
                           -1);
 
-      ACE_Time_Value start =
-        ACE_OS::gettimeofday ();
+      ACE_hrtime_t start =
+        ACE_OS::gethrtime ();
 
-      ACE_Time_Value end =
-        start + ACE_Time_Value (max_throughput_timeout);
+      ACE_hrtime_t end =
+        start +
+        to_hrtime (max_throughput_timeout, gsf);
 
       for (;;)
         {
-          ACE_Time_Value now =
-            ACE_OS::gettimeofday ();
+          ACE_hrtime_t now =
+            ACE_OS::gethrtime ();
 
           if (now > end)
             break;
 
           test->method (work,
+                        prime_number,
                         ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
@@ -558,6 +592,7 @@ Paced_Worker::svc (void)
           ACE_hrtime_t start = ACE_OS::gethrtime ();
 
           this->test_->method (work,
+                               prime_number,
                                ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
@@ -759,6 +794,7 @@ Continuous_Worker::svc (void)
           ACE_hrtime_t start = ACE_OS::gethrtime ();
 
           this->test_->method (work,
+                               prime_number,
                                ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
