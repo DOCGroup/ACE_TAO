@@ -38,10 +38,6 @@
       <homeplacement id="a_SatelliteHome">
         <componentfileref idref="com-Satellite"/>
           <componentinstantiation id="a_Satellite">
-          <registercomponent>
-            <!-- writeiortofile is a non-standard CIAO extension.  -->
-            <writeiortofile name="sat.ior"/>
-          </registercomponent>
         </componentinstantiation>
       </homeplacement>
      <destination>SatelliteHost</destination>
@@ -60,19 +56,31 @@
           <componentinstantiation id="a_UAV_GS">
         </componentinstantiation>
       </homeplacement>
-      
+
       <homeplacement id="a_UAVHome">
         <componentfileref idref="com-UAV"/>
           <componentinstantiation id="a_UAV">
         </componentinstantiation>
       </homeplacement>
- 
+
+      <homeplacement id="b_UAVHome">
+        <componentfileref idref="com-UAV"/>
+          <componentinstantiation id="b_UAV">
+        </componentinstantiation>
+      </homeplacement>
+      
+      <homeplacement id="c_UAVHome">
+        <componentfileref idref="com-UAV"/>
+          <componentinstantiation id="c_UAV">
+        </componentinstantiation>
+      </homeplacement>
+            
       <homeplacement id="a_EngagementHome">
         <componentfileref idref="com-Engagement"/>
           <componentinstantiation id="a_Engagement">
         </componentinstantiation>
       </homeplacement>
-           
+      
       <homeplacement id="a_Battle">
         <componentfileref idref="com-Battle"/>
           <componentinstantiation id="a_Battle">
@@ -84,14 +92,26 @@
           <componentinstantiation id="a_UCAV_GS">
         </componentinstantiation>
       </homeplacement>
-                
+                  
       <homeplacement id="a_UCAVHome">
         <componentfileref idref="com-UCAV"/>
           <componentinstantiation id="a_UCAV">
         </componentinstantiation>
       </homeplacement>
-      <destination>CAOCHost</destination>
-    </processcollocation>               
+
+      <homeplacement id="b_UCAVHome">
+        <componentfileref idref="com-UCAV"/>
+          <componentinstantiation id="b_UCAV">
+        </componentinstantiation>
+      </homeplacement>
+      
+      <homeplacement id="c_UCAVHome">
+        <componentfileref idref="com-UCAV"/>
+          <componentinstantiation id="c_UCAV">
+        </componentinstantiation>
+      </homeplacement>            
+     <destination>CAOCHost</destination>
+    </processcollocation>      
   <!-- A plain vanilla partition.  We don't even need the processcollocation tag here. -->
 
   </partitioning>
@@ -188,7 +208,7 @@
     
     <connectevent>
       <consumesport>
-        <consumesidentifier>start_move</consumesidentifier>
+        <consumesidentifier>start_move/consumesidentifier>
         <componentinstantiationref idref="a_UCAV"/>
       </consumesport>
       <publishesport>
@@ -199,7 +219,7 @@
 
     <connectevent>
       <consumesport>
-        <consumesidentifier>start_move</consumesidentifier>
+        <consumesidentifier>start_move/consumesidentifier>
         <componentinstantiationref idref="b_UCAV"/>
       </consumesport>
       <publishesport>
@@ -210,47 +230,14 @@
     
     <connectevent>
       <consumesport>
-        <consumesidentifier>start_move</consumesidentifier>
+        <consumesidentifier>start_move/consumesidentifier>
         <componentinstantiationref idref="c_UCAV"/>
       </consumesport>
       <publishesport>
         <publishesidentifier>start_move</publishesidentifier>
         <componentinstantiationref idref="a_UCAV_GS"/>
       </publishesport>
-    </connectevent>     
-    
-    <connectevent>
-      <consumesport>
-        <consumesidentifier>uav_ready</consumesidentifier>
-        <componentinstantiationref idref="a_Satellite"/>
-      </consumesport>
-      <publishesport>
-        <publishesidentifier>uav_ready</publishesidentifier>
-        <componentinstantiationref idref="a_UAV"/>
-      </publishesport>
-    </connectevent>    
-    
-    <connectevent>
-      <consumesport>
-        <consumesidentifier>ucav_ready</consumesidentifier>
-        <componentinstantiationref idref="a_Satellite"/>
-      </consumesport>
-      <publishesport>
-        <publishesidentifier>ucav_ready</publishesidentifier>
-        <componentinstantiationref idref="a_UCAV"/>
-      </publishesport>
-    </connectevent>       
-    
-    <connectevent>
-      <consumesport>
-        <consumesidentifier>battle_ready</consumesidentifier>
-        <componentinstantiationref idref="a_Satellite"/>
-      </consumesport>
-      <publishesport>
-        <publishesidentifier>battle_ready</publishesidentifier>
-        <componentinstantiationref idref="a_Battle"/>
-      </publishesport>
-    </connectevent>       
+    </connectevent>                    
 
   </connections>
 
