@@ -64,15 +64,16 @@ static int fileSize;
 static unsigned char cmd;
 static live_source = 0;
 
-static void CmdRead(char *buf, int psize)
+static int CmdRead(char *buf, int psize)
 {
   int res = wait_read_bytes(serviceSocket, buf, psize);
-  if (res == 0) exit(0);
+  if (res == 0) return (1);
   if (res == -1) {
     fprintf(stderr, "AS error on read cmdSocket, size %d", psize);
     perror("");
-    exit(1);
+    return (-1);
   }
+  return 0;
 }
 
 static void CmdWrite(char *buf, int size)
@@ -84,12 +85,15 @@ static void CmdWrite(char *buf, int size)
   }
 }
 
-static void INITaudio(void)
+static int INITaudio(void)
 {
+  int result;
   int failureType; /* 0 - can't open file, 1 - can't open live source */
   INITaudioPara para;
 
-  CmdRead((char *)&para, sizeof(para));
+  result = CmdRead((char *)&para, sizeof(para));
+  if (result != 0)
+    return result;
 #ifdef NeedByteOrderConversion
   para.sn = ntohl(para.sn);
   para.version = ntohl(para.version);
@@ -100,7 +104,9 @@ static void INITaudio(void)
   para.para.bytesPerSample = ntohl(para.para.bytesPerSample);
 #endif
   if (para.nameLength>0)
-    CmdRead(audioFile, para.nameLength);
+    result = CmdRead(audioFile, para.nameLength);
+  if (result != 0)
+    return result;
   if (Mpeg_Global::session_num > Mpeg_Global::session_limit || para.version != VERSION) {
     char errmsg[128];
     cmd = CmdFAIL;
@@ -115,7 +121,7 @@ static void INITaudio(void)
 	      para.version / 100, para.version % 100);
     }
     write_string(serviceSocket, errmsg);
-    exit(0);
+    return(1);
   }
   memcpy(&audioPara, &para.para, sizeof(audioPara));
   /*
@@ -133,7 +139,7 @@ static void INITaudio(void)
       CmdWrite((char *)&cmd, 1);
       sprintf(errmsg, "%s without suffix .au", audioFile);
       write_string(serviceSocket, errmsg);
-      exit(0);
+      return(1);
     }
   }
   /*
@@ -186,7 +192,7 @@ static void INITaudio(void)
     CmdWrite((char *)&cmd, 1);
     CmdWrite((char *)&reply, sizeof(reply));
   }
-  return;
+  return 0;
   
  failure:
   {
@@ -198,7 +204,7 @@ static void INITaudio(void)
     write_string(serviceSocket,
 		 failureType == 0 ? "Failed to open audio file for read." :
 		 "Failed to connect to live audio source.");
-    exit(0);
+    return(1);
   }
 }
 
@@ -234,7 +240,7 @@ static int send_packet(int firstSample, int samples)
       if (errno == EINTR)
 	continue;   /* interrupted */
       perror("AS error on read audio file");
-      exit(1);
+      return(-1);
     }
     if (len < audioPara.bytesPerSample) {
       return 0;
@@ -336,7 +342,7 @@ static void ResendPacket(int firstsample, int samples)
 
 static AudioFeedBackPara * fbpara = NULL;
 
-static void PLAYaudio(void)
+static int PLAYaudio(void)
 {
   int hasdata = 1;
   int addSamples;
@@ -345,12 +351,15 @@ static void PLAYaudio(void)
   int upp;  /* micro-seconds per packet */
   int delta_sps = 0;  /* compensation for sps from feedback msgs */
   int nfds = (serviceSocket > audioSocket ? serviceSocket : audioSocket) + 1;
+  int result;
   /*
   fprintf(stderr, "PLAY . . .\n");
   */
   {
     PLAYaudioPara para;
-    CmdRead((char *)&para, sizeof(para));
+    result = CmdRead((char *)&para, sizeof(para));
+    if (result != 0)
+      return result;
 #ifdef NeedByteOrderConversion
     para.sn = ntohl(para.sn);
     para.nextSample = ntohl(para.nextSample);
@@ -430,17 +439,21 @@ static void PLAYaudio(void)
       if (errno == EINTR)
         continue;
       perror("AS error on select reading or writing");
-      exit(1);
+      return(-1);
     }
     if (FD_ISSET(serviceSocket, &read_mask)){  /* STOP, SPEED, or CLOSE*/
       unsigned char tmp;
-      CmdRead((char *)&tmp, 1);
+      result = CmdRead((char *)&tmp, 1);
+      if (result != 0)
+        return result;
       switch (tmp)
       {
       case CmdSPEED:
 	{
 	  SPEEDaudioPara para;
-	  CmdRead((char *)&para, sizeof(para));
+	  result = CmdRead((char *)&para, sizeof(para));
+          if (result != 0)
+            return result;
 #ifdef NeedByteOrderConversion
 	  para.sn = ntohl(para.sn);
 	  para.samplesPerSecond = ntohl(para.samplesPerSecond);
@@ -467,26 +480,28 @@ static void PLAYaudio(void)
 	  /*
 	     fprintf(stderr, "AS: CmdSTOP. . .\n");
 	     */
-	  CmdRead((char *)&val, sizeof(int));
+	  result = CmdRead((char *)&val, sizeof(int));
+          if (result != 0)
+            return result;
 	  /*
 	  CmdWrite(AUDIO_STOP_PATTERN, strlen(AUDIO_STOP_PATTERN));
 	  */
 	  if (live_source) {
 	    StopPlayLiveAudio();
 	  }
-	  return;  /* return from PLAYaudio() */
+	  return 0;  /* return from PLAYaudio() */
 	}
       case CmdCLOSE:
 	if (live_source) {
 	  StopPlayLiveAudio();
 	}
-	exit(0);  /* The whole AS session terminates */
+	return(1);  /* The whole AS session terminates */
       default:
 	if (live_source) {
 	  StopPlayLiveAudio();
 	}
 	fprintf(stderr, "AS error: cmd=%d while expects STOP/SPEED/CLOSE.\n", tmp);
-	exit(1);
+	return(-1);
       }
     }
     
@@ -495,10 +510,10 @@ static void PLAYaudio(void)
       for (;;) {
 	if (conn_tag >= 0) {
 	  len = wait_read_bytes(audioSocket, (char *)fbpara, sizeof(*fbpara));
-	  if (len == 0) exit(0); /* connection broken */
+	  if (len == 0) return(1); /* connection broken */
 	  else if (len < 0) { /* unexpected error */
 	    perror("AS read1 FB");
-	    exit(1);
+	    return(-1);
 	  }
 	}
 	else { /* discard mode packet stream, read the whole packet */
@@ -531,10 +546,10 @@ static void PLAYaudio(void)
 	  len = wait_read_bytes(audioSocket,
 				((char *)fbpara) + sizeof(*fbpara),
 				bytes);
-	  if (len == 0) exit(0); /* connection broken */
+	  if (len == 0) return(1); /* connection broken */
 	  else if (len < 0) { /* unexpected error */
 	    perror("AS read2 FB");
-	    exit(1);
+	    return(-1);
 	  }
 	  len += sizeof(*fbpara);
 	}
@@ -624,8 +639,10 @@ static void on_exit_routine(void)
   ComCloseConn(audioSocket);
 }
 
-void AudioServer(int ctr_fd, int data_fd, int rttag, int max_pkt_size)
+int AudioServer(int ctr_fd, int data_fd, int rttag, int max_pkt_size)
 {
+  int result;
+  
   serviceSocket = ctr_fd;
   audioSocket = data_fd;
   conn_tag = max_pkt_size;
@@ -637,12 +654,17 @@ void AudioServer(int ctr_fd, int data_fd, int rttag, int max_pkt_size)
   
   atexit(on_exit_routine);
 
-  INITaudio();
+  result = INITaudio();
+
+  if (result != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "(%P|%t) AudioServer: "),
+                      result);
 
   fbpara = (AudioFeedBackPara *)malloc(FBBUF_SIZE);
   if (fbpara == NULL) {
     perror("AS failed to allocate mem for fbpara");
-    exit(1);
+    return (-1);
   }
 
   databuf_size = max_pkt_size - sizeof(*pktbuf);
@@ -651,7 +673,7 @@ void AudioServer(int ctr_fd, int data_fd, int rttag, int max_pkt_size)
   pktbuf = (AudioPacket *)malloc(sizeof(*pktbuf) + databuf_size);
   if (pktbuf == NULL) {
     perror("AS failed to allocate mem for pktbuf");
-    exit(1);
+    return(-1);
   }
 
   for (;;)
@@ -659,17 +681,21 @@ void AudioServer(int ctr_fd, int data_fd, int rttag, int max_pkt_size)
     /*
     fprintf(stderr, "AS: waiting for a new command...\n");
     */
-    CmdRead((char *)&cmd, 1);
+    result = CmdRead((char *)&cmd, 1);
+    if (result != 0)
+      return result;
     switch (cmd)
     {
     case CmdPLAY:
-      PLAYaudio();
+      result = PLAYaudio();
+      if (result != 0)
+        return result;
       break;
     case CmdCLOSE:
       /*
       fprintf(stderr, "a session closed.\n");
       */
-      exit(0);
+      return(0);
       break;
     default:
       fprintf(stderr, "audio channel command %d not recoganizeable\n", cmd);

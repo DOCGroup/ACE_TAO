@@ -153,12 +153,12 @@ static struct FrameTable
 	  if (fseek(fp, (position), 0) == -1) \
 	  { \
 	    perror("VS error on fseek VideoFile"); \
-	    exit(1); \
+	    return (-1); \
 	  } \
 	  while (fread((buf), (size), 1, fp) == 0) \
 	  { if (errno == EINTR) { errno = 0; continue;}\
-	    perror("VS error on fread VideoFile"); \
-	    exit(1); \
+             perror("VS error on fread VideoFile"); \
+             return (-1); \
 	  } \
 	}
 
@@ -194,15 +194,16 @@ static void FileRead(long position, char * pbuf, int psize)
 }
 */
 
-static void CmdRead(char *buf, int psize)
+static int CmdRead(char *buf, int psize)
 {
   int res = wait_read_bytes(serviceSocket, buf, psize);
-  if (res == 0) exit(0);
+  if (res == 0) return(1);
   if (res == -1) {
     fprintf(stderr, "VS error on read cmdSocket, size %d", psize);
     perror("");
-    exit(1);
+    return(-1);
   }
+  return 0;
 }
 
 static void CmdWrite(char *buf, int size)
@@ -523,14 +524,15 @@ static int SendPacket(int shtag, int gop, int frame, int timeToUse)
 }
 
 
-static void SendReferences(int group, int frame)
+static int SendReferences(int group, int frame)
 {
   unsigned char orgcmd;
   int i, base;
   int pregroup;
+  int result;
   
-  if (group < 0 || group >= numG) return;
-  if (frame <= 0 || frame >= gopTable[group].totalFrames) return;
+  if (group < 0 || group >= numG) return 0;
+  if (frame <= 0 || frame >= gopTable[group].totalFrames) return 0;
   
   orgcmd = cmd;
   cmd = CmdREF;
@@ -555,7 +557,9 @@ static void SendReferences(int group, int frame)
 	/*
 	SFprintf(stderr, "REF group%d, frame%d\n", pregroup, i);
 	*/
-	SendPacket(i == 0, pregroup, i, 0);
+	result = SendPacket(i == 0, pregroup, i, 0);
+        if (result != 0)
+          return result;
       }
     }
   }
@@ -1181,21 +1185,28 @@ static int init_MPEG1_video_file(void)
   return 0;
 }
 
-static void INITvideo(void)
+static int INITvideo(void)
 {
   INITvideoPara para;
   int failureType = 0;
+  int result;
   /*
   fprintf(stderr, "VS about to read Para.\n");
   */
-  CmdRead((char *)&para, sizeof(para));
+  result = CmdRead((char *)&para, sizeof(para));
+  if (result != 0)
+    return result;
 #ifdef NeedByteOrderConversion
   para.sn = ntohl(para.sn);
   para.version = ntohl(para.version);
   para.nameLength = ntohl(para.nameLength);
 #endif
   if (para.nameLength>0)
-    CmdRead(videoFile, para.nameLength);
+    {
+    result = CmdRead(videoFile, para.nameLength);
+    if (result != 0)
+      return result;
+    }
   if (Mpeg_Global::session_num > Mpeg_Global::session_limit || para.version != VERSION) {
     char errmsg[128];
     cmd = CmdFAIL;
@@ -1313,7 +1324,7 @@ static void INITvideo(void)
       if (live_source) StopPlayLiveVideo();
     }
 
-    return;
+    return 0;
     
   }
  failure:
@@ -1340,12 +1351,12 @@ static void INITvideo(void)
 #define CheckGroupRange(pnextGroup) \
 { if ((pnextGroup) < 0 || (pnextGroup) >= numG) \
   { fprintf(stderr, "VS: %d.nextGroup(%d) out of range (%d).\n", cmd, (pnextGroup), numG); \
-    return; } }
+    return 0; } }
 
 #define CheckFrameRange(pnextFrame) \
 { if ((pnextFrame) < 0 || (pnextFrame) >= numF) \
   { fprintf(stderr, "VS: %d.nextFrame(%d) out of range (%d).\n", cmd, (pnextFrame), numF); \
-    return; } }
+    return 0; } }
 
 static int FrameToGroup(int * frame)
 {
@@ -1357,15 +1368,18 @@ static int FrameToGroup(int * frame)
   return i;
 }
 
-static void POSITIONvideo()
+static int POSITIONvideo()
 {
+  int result;
   POSITIONpara para;
   /*
   fprintf(stderr, "POSITION . . .\n");
   */
-  CmdRead((char *)&para, sizeof(para));
+  result = CmdRead((char *)&para, sizeof(para));
+  if (result != 0)
+    return result;
 
-  if (live_source) return;
+  if (live_source) return 0;
   
 #ifdef NeedByteOrderConversion
   para.nextGroup = ntohl(para.nextGroup);
@@ -1374,16 +1388,20 @@ static void POSITIONvideo()
   
   CheckGroupRange(para.nextGroup);
   cmdsn = para.sn;
-  SendPacket(numS>1 || para.nextGroup == 0, para.nextGroup, 0, 0);
+  result = SendPacket(numS>1 || para.nextGroup == 0, para.nextGroup, 0, 0);
+  return result;
 }
 
-static void STEPvideo()
+static int STEPvideo()
 {
   int group;
   STEPpara para;
   int tag = 0;
+  int result;
 
-  CmdRead((char *)&para, sizeof(para));
+  result = CmdRead((char *)&para, sizeof(para));
+  if (result != 0)
+    return result;
 #ifdef NeedByteOrderConversion
   para.sn = ntohl(para.sn);
   para.nextFrame = ntohl(para.nextFrame);
@@ -1403,7 +1421,9 @@ static void STEPvideo()
     CheckFrameRange(para.nextFrame);
     group = FrameToGroup(&para.nextFrame);
     if (precmd != CmdSTEP && !tag ) {
-      SendReferences(group, para.nextFrame);
+      result = SendReferences(group, para.nextFrame);
+      if (result < 0 )
+        return result;
     }
   }
   if (live_source) StartPlayLiveVideo();
@@ -1419,6 +1439,7 @@ static void STEPvideo()
   }
   
   if (live_source) StopPlayLiveVideo();
+  return 0;
 }
 
 static int timerHeader, timerGroup, timerFrame;
@@ -1637,14 +1658,17 @@ static void GetFeedBack()
   */
 }
 
-static void FastVideoPlay(void)
+static int FastVideoPlay(void)
 {
+  int result;
   FFpara para;
   int preGroup = -1;
   int preHeader = -1;
   int nfds = (serviceSocket > videoSocket ? serviceSocket : videoSocket) + 1;
   
-  CmdRead((char *)&para, sizeof(para));
+  result = CmdRead((char *)&para, sizeof(para));
+  if (result != 0)
+    return result;
 #ifdef NeedByteOrderConversion
   para.sn = ntohl(para.sn);
   para.nextGroup = ntohl(para.nextGroup);
@@ -1653,7 +1677,7 @@ static void FastVideoPlay(void)
   para.VStimeAdvance = ntohl(para.VStimeAdvance);
 #endif
 
-  if (live_source) return;
+  if (live_source) return 0;
   
   VStimeAdvance = para.VStimeAdvance;
   /*
@@ -1698,7 +1722,9 @@ static void FastVideoPlay(void)
     }
     if (FD_ISSET(serviceSocket, &read_mask))   /* stop */
     {
-      CmdRead((char *)&cmd, 1);
+      result = CmdRead((char *)&cmd, 1);
+      if (result != 0)
+        return result;
       if (cmd == CmdCLOSE) {
 	exit(0);
       }
@@ -1707,7 +1733,9 @@ static void FastVideoPlay(void)
 	normalExit = 0;
 	exit(1);
       }
-      CmdRead((char *)&cmdsn, sizeof(int));
+      result = CmdRead((char *)&cmdsn, sizeof(int));
+      if (result != 0 )
+        return result;
 #ifdef NeedByteOrderConversion
       cmdsn = ntohl(cmdsn);
 #endif
@@ -1719,6 +1747,7 @@ static void FastVideoPlay(void)
       GetFeedBack();
     }
   }
+  return 0;
 }
 
 static void FFvideo()
@@ -1780,7 +1809,7 @@ static void ComputeFirstSendPattern(float limit)
   free(pat);
 }
 
-static void PLAYliveVideo(PLAYpara * para)
+static int PLAYliveVideo(PLAYpara * para)
 {
   int doscale;
   int count;
@@ -1790,6 +1819,7 @@ static void PLAYliveVideo(PLAYpara * para)
   struct fd_set read_mask;
   struct timeval tval = {0, 0};
   double ratio;
+  int result;
   
   currentUPF = (int)(1000000.0 / fps);  /* ignore para.usecPerFrame */
   if (frameRateLimit < fps) {
@@ -1836,7 +1866,9 @@ static void PLAYliveVideo(PLAYpara * para)
     if (FD_ISSET(serviceSocket, &read_mask))   /* stop */
     {
       unsigned char tmp;
-      CmdRead((char *)&tmp, 1);
+      result = CmdRead((char *)&tmp, 1);
+      if (result != 0)
+        return result;
       if (tmp == CmdCLOSE) {
 	StopPlayLiveVideo();
 	exit(0);
@@ -1846,7 +1878,9 @@ static void PLAYliveVideo(PLAYpara * para)
 	/*
 	fprintf(stderr, "VS: CmdSTOP. . .\n");
 	*/
-        CmdRead((char *)&cmdsn, sizeof(int));
+        result = CmdRead((char *)&cmdsn, sizeof(int));
+        if (result != 0)
+          return result;
 #ifdef NeedByteOrderConversion
 	cmdsn = ntohl(cmdsn);
 #endif
@@ -1859,7 +1893,9 @@ static void PLAYliveVideo(PLAYpara * para)
 	/*
 	fprintf(stderr, "VS: CmdSPEED. . .\n");
 	*/
-	CmdRead((char *)&para, sizeof(para));
+	result = CmdRead((char *)&para, sizeof(para));
+        if (result != 0)
+          return result;
 	/* ignore this thing for live video */
       }
       else
@@ -1879,7 +1915,7 @@ static void PLAYliveVideo(PLAYpara * para)
 	/*
 	   SFprintf(stderr, "VS warning: a FB packet discarded.\n");
 	   */
-	return;
+	return 0;
       }
 #ifdef NeedByteOrderConversion
       para.frameRateLimit1000 = ntohl(para.frameRateLimit1000);
@@ -1898,18 +1934,22 @@ static void PLAYliveVideo(PLAYpara * para)
       else doscale = 0;
     }
   }
+  return 0;
 }
 
-static void PLAYvideo()
+static int PLAYvideo()
 {
   PLAYpara para;
   int preGroup = -1;
   int preHeader = -1;
   int preFrame = -1;
+  int result;
   
   fprintf(stderr, "PLAY . . .\n");
   
-  CmdRead((char *)&para, sizeof(para));
+  result = CmdRead((char *)&para, sizeof(para));
+  if (result != 0)
+    return result;
 #ifdef NeedByteOrderConversion
   para.sn = ntohl(para.sn);
   para.nextFrame = ntohl(para.nextFrame);
@@ -1933,7 +1973,7 @@ static void PLAYvideo()
   
   if (live_source || video_format != VIDEO_MPEG1) {
     if (live_source) PLAYliveVideo(&para);
-    return;
+    return 0;
   }
   
   
@@ -1950,7 +1990,9 @@ static void PLAYvideo()
   timerGroup = FrameToGroup(&timerFrame);
   timerHeader = gopTable[timerGroup].systemHeader;
   memcpy(sendPattern, para.sendPattern, PATTERN_SIZE);
-  SendReferences(timerGroup, timerFrame);
+  result = SendReferences(timerGroup, timerFrame);
+  if (result < 0)
+    return result;
   StartTimer();
   
   fprintf (stderr, "VS Going into the for loop\n");
@@ -2060,7 +2102,10 @@ static void PLAYvideo()
     if (FD_ISSET(serviceSocket, &read_mask))   /* stop, speed change, loop swap */
     {
       unsigned char tmp;
-      CmdRead((char *)&tmp, 1);
+      result = CmdRead((char *)&tmp, 1);
+      if (result != 0)
+        return result;
+        
       if (tmp == CmdCLOSE) {
 	exit(0);
       }
@@ -2069,7 +2114,9 @@ static void PLAYvideo()
 	/*
 	fprintf(stderr, "VS: CmdSTOP. . .\n");
 	*/
-        CmdRead((char *)&cmdsn, sizeof(int));
+        result = CmdRead((char *)&cmdsn, sizeof(int));
+        if (result != 0)
+          return result;
 #ifdef NeedByteOrderConversion
 	cmdsn = ntohl(cmdsn);
 #endif
@@ -2082,7 +2129,9 @@ static void PLAYvideo()
 	/*
 	fprintf(stderr, "VS: CmdSPEED. . .\n");
 	*/
-	CmdRead((char *)&para, sizeof(para));
+	result = CmdRead((char *)&para, sizeof(para));
+        if (result != 0)
+          return result;
 #ifdef NeedByteOrderConversion
 	para.sn = ntohl(para.sn);
 	para.usecPerFrame = ntohl(para.usecPerFrame);
@@ -2109,6 +2158,7 @@ static void PLAYvideo()
       GetFeedBack();
     }
   }
+  return 0;
 }
 
 #include <ctype.h>
@@ -2177,8 +2227,10 @@ static void on_exit_routine(void)
   ComCloseConn(videoSocket);
 }
 
-void VideoServer(int ctr_fd, int data_fd, int rttag, int max_pkt_size)
+int VideoServer(int ctr_fd, int data_fd, int rttag, int max_pkt_size)
 {
+  int result;
+
   serviceSocket = ctr_fd;
   videoSocket = data_fd;
   conn_tag = max_pkt_size;
@@ -2198,7 +2250,10 @@ void VideoServer(int ctr_fd, int data_fd, int rttag, int max_pkt_size)
   lastRef[0] = lastRef[1] = -1;
   lastRefPtr = 0;
 
-  INITvideo();
+  result = INITvideo();
+
+  if (result != 0)
+    return result;
 
   if (rttag) {
     if (SetRTpriority("VS", 0) == -1) rttag = 0;
@@ -2210,18 +2265,28 @@ void VideoServer(int ctr_fd, int data_fd, int rttag, int max_pkt_size)
     fprintf(stderr, "VS: waiting for a new command...\n");
     
     precmd = cmd;
-    CmdRead((char *)&cmd, 1);
-    
+    result = CmdRead((char *)&cmd, 1);
+    if (result != 0)
+      {
+        cerr << result;
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%P|%t) VideoServer "),
+                          result);
+      }
     fprintf(stderr, "VS got cmd %d\n", cmd);
     
     switch (cmd)
     {
     case CmdPOSITION:
     case CmdPOSITIONrelease:
-      POSITIONvideo();
+      result = POSITIONvideo();
+      if (result != 0)
+        return result;
       break;
     case CmdSTEP:
-      STEPvideo();
+      result = STEPvideo();
+      if (result != 0)
+        return result;
       break;
     case CmdFF:
       FFvideo();
@@ -2230,14 +2295,17 @@ void VideoServer(int ctr_fd, int data_fd, int rttag, int max_pkt_size)
       FBvideo();
       break;
     case CmdPLAY:
-      PLAYvideo();
+      result = PLAYvideo();
+      if (result != 0)
+        return result;
       break;
     case CmdCLOSE:
       /*
       fprintf(stderr, "a session closed.\n");
       normalExit =1;
       */
-      exit(0);
+      //      exit(0);
+      return 0;
       break;
     case CmdSTATstream:
       STATstream();
@@ -2249,7 +2317,7 @@ void VideoServer(int ctr_fd, int data_fd, int rttag, int max_pkt_size)
       fprintf(stderr,
 	      "VS error: video channel command %d not known.\n", cmd);
       normalExit = 0;
-      exit(1);
+      return -1;
       break;
     }
   }

@@ -57,7 +57,7 @@ int ReadLiveVideoPicture(int * frame, char * buf, int size); /* ret # bytes */
 int LiveVideoProcess(int argc, char ** argv);
 
 /* as.c */
-void AudioServer(int ctr_fd, int data_fd, int rttag, int max_pkt_size);
+int AudioServer(int ctr_fd, int data_fd, int rttag, int max_pkt_size);
 
 /* vs.c */
-void VideoServer(int ctr_fd, int data_fd, int rttag, int max_pkt_size);
+int VideoServer(int ctr_fd, int data_fd, int rttag, int max_pkt_size);
