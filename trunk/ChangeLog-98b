@@ -1,6 +1,6 @@
 Wed May 13 09:26:48 1998  David L. Levine  <levine@cs.wustl.edu>
 
-        * many files:  inserted RCS keyword string.
+        * many *.{h,i,cpp,idl} files:  inserted RCS keyword string.
 
 Tue May 12 15:16:04 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
