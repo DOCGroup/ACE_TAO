@@ -54,7 +54,8 @@
 #if defined (_MSC_VER)
 
 # define ACE_CC_NAME "Visual C++"
-# define ACE_CC_COMPILER "CL.EXE"
+# define ACE_CC_PREPROCESSOR "CL.EXE"
+# define ACE_CC_PREPROCESSOR_ARGS "-nologo -E"
 
 #if (_MSC_VER >= 1200)
 # define ACE_CC_MAJOR_VERSION 6
