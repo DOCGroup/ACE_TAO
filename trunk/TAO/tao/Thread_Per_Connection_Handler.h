@@ -61,8 +61,7 @@ public:
                         ACE_hthread_t thread_handles[] = 0,
                         void *stack[] = 0,
                         size_t stack_size[] = 0,
-                        ACE_thread_t  thread_names[] = 0,
-                        bool inherit_priority = false);
+                        ACE_thread_t  thread_names[] = 0);
 
   /// Template hook method that the thread uses...
   /**

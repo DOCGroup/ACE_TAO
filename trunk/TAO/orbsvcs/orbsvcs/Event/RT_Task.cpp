@@ -517,11 +517,9 @@ ACE_RT_Thread_Manager::spawn_i (ACE_THR_FUNC func,
                                 int grp_id,
                                 void *stack,
                                 size_t stack_size,
-                                ACE_Task_Base *task,
-                                bool inherit_priority)
+                                ACE_Task_Base *task)
 {
   flags |= flags_;
   return ACE_Thread_Manager::spawn_i (func, args, flags, t_id, t_handle,
-                                      priority, grp_id, stack, stack_size, task,
-                                      inherit_priority);
+                                      priority, grp_id, stack, stack_size, task);
 }
