@@ -1,3 +1,11 @@
+Thu Nov 06 18:30:42 1997  Steve Huston  <shuston@riverace.com>
+
+	* ace/Connector.cpp (connect_n): return -1 if any of the connect
+	  attempts fail.
+
+	* tests/Reactor_Performance_Test.cpp: Don't crash if any of the
+	  client's connect attempts fail.
+
 Thu Nov  6 16:51:36 1997  Sumedh Mungee  <sumedh@lindy.cs.wustl.edu>
 
 	* tests/SOCK_Connector_Test.cpp (find_another_host): Added
