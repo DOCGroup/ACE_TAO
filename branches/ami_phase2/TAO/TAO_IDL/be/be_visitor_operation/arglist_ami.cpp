@@ -51,6 +51,26 @@ be_visitor_operation_arglist_ami::visit_operation (be_operation *node)
   
   *os << " (" << be_idt << be_idt << "\n";
 
+  // #if defined (TAO_IDL_HAS_AMI)
+  // For the AMI, we need the Reply Handler as the first argument.
+
+  // start with current indentation level
+  os->indent ();
+
+  
+  be_decl *interface =
+    be_interface::narrow_from_scope (node->defined_in ())->decl ();
+  if (interface == 0)
+    cerr << "Invalid interface";
+
+  // AMI Handler argument.
+  *os << "AMI_"
+      << interface->fullname ()
+      << "_ptr "
+      << "ami_handler"
+      << ",\n";
+  // #endif /* TAO_IDL_HAS_AMI */
+
   // all we do is hand over code generation to our scope
   if (this->visit_scope (node) == -1)
     {
