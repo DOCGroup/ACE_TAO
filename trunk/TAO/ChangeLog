@@ -1,3 +1,10 @@
+Thu Apr 24 08:11:04 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/DynamicInterface/Context.h:
+	* tao/DynamicInterface/ExceptionList.h: Added a undef for
+	  TAO_EXPORT_MACRO and redefined TAO_EXPORT_MACRO. This should fix
+	  problems with MSVC builds.
+
 Wed Apr 23 22:12:37 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/CDR_Encaps_Codec.cpp (encode_value):

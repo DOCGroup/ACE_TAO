@@ -13,6 +13,12 @@ CORBA::Request::_duplicate (CORBA::Request_ptr x)
   return x;
 }
 
+ACE_INLINE CORBA::Request_ptr
+CORBA::Request::_nil (void)
+{
+  return 0;
+}
+
 ACE_INLINE CORBA::Object_ptr
 CORBA::Request::target (void) const
 {
