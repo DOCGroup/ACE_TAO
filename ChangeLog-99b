@@ -1,3 +1,20 @@
+Mon Apr 26 17:01:22 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/ACE.cpp (DllMain): Re-enabled this for use on Win32.
+
+        * ace/OS.h (main): On non-pSoS, use ACE::init, ACE::fini rather than
+          creating object manager instances on the stack.  Allows a single
+          instance regardless of program type; especially helpful on Win32.
+
+        * ace/OS.cpp (ACE_OS_Object_Manager ctor):
+        * ace/Object_Manager.cpp (ACE_Object_Manager ctor):
+          Don't set instance_ if it was already set.  So if two
+          ACE_Object_Manager instances end up getting created, the first one
+          stays The Instance, and the second gets used privately by its
+          creator.  Previously, the original was forgotten.  Thanks to David
+          Levine for working out this and the above details with me to get the
+          Win32 crowd in business without platform-specific hacks.
+
 Mon Apr 26 16:43:32 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Asynch_IO_Impl.h (ACE_Asynch_[Read|Write]_File_Impl):
@@ -291,6 +308,7 @@ Wed Apr 21 16:35:21 1999  Steve Huston  <shuston@riverace.com>
         * tests/New_Fail_Test.cpp: Test to be sure that the ACE_NEW[_RETURN]
           stuff works correctly when heap is exhausted.
         * tests/Makefile: Added New_Fail_Test.
+	* tests/tests.dsw, New_Fail_Test.dsp: Add new test to MSVC.
 
 Wed Apr 21 15:35:44 1999  Steve Huston  <shuston@riverace.com>
 
