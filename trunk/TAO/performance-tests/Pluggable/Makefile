@@ -29,7 +29,6 @@ PP_TEST_SVR_OBJS = PP_TestC.o \
 		 PP_Test_i.o \
 		 server.o
 PP_TEST_CLT_OBJS = PP_TestC.o \
-		 PP_TestS.o \
 		 PP_Test_Client.o \
 		 client.o
 
