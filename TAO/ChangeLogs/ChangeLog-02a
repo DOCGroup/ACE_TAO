@@ -1,3 +1,14 @@
+Thu Nov 16 19:06:36 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * orbsvcs/ImplRepo_Service/Options.cpp:
+
+          Moved orb_argv_pos declaration outside of the for loop because 
+          compilers treat the scoping differently.
+
+        * orbsvcs/ImplRepo_Service/README.txt:
+
+          Changed the docs on the INS example to use IORTable.
+
 Thu Nov 16 18:38:12 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/orbconf.h:

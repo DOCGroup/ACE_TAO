@@ -516,7 +516,9 @@ Options::load_registry_options (ACE_ARGV &orb_options)
                     "Registry Argument Added: %s\n",
                     orb_argv[0]));
 
-      for (unsigned int buffer_pos = 0, orb_argv_pos = 1;
+      int orb_argv_pos = 1;
+
+      for (unsigned int buffer_pos = 0;
            buffer_pos < dwSize / sizeof (ACE_TCHAR) - 2;
            ++buffer_pos)
         {
