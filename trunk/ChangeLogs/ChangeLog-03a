@@ -1,3 +1,8 @@
+Wed Jul 12 09:42:21 2000  Giga Giguashvili <gregoryg@paradigmgeo.com>
+
+        * ace/CDR_Stream.h: added forward declaration of
+          ACE_InputCDR before ACE_OutputCDR class definition.
+
 Wed Jul 12 07:26:25 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Service_Config_Test.cpp (instance): cast the u_short to
