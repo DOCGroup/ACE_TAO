@@ -1,3 +1,10 @@
+Tue Feb 15 18:10:56 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* m4/ace.m4:
+
+	  Removed ACE_ENABLE_RMCAST macro.  Building RMCast library is now
+	  unconditional.
+
 Tue Feb 15 18:45:26 2005  Steve Huston  <shuston@riverace.com>
 
 	* ace/POSIX_Asynch_IO.{h cpp}:
