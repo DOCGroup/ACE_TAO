@@ -339,7 +339,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
 }
 
 int be_visitor_interface_smart_proxy_cs::visit_component (
-    be_interface *node
+    be_component *node
   )
 {
   return this->visit_interface (node);
