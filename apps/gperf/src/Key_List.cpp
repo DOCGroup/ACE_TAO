@@ -807,7 +807,7 @@ Key_List::output_keyword_table (void)
 
   for (column = 1; slot < head->hash_value; column++)
     {
-      ACE_OS::printf ("%s\"\"%s,%s %s",
+      ACE_OS::printf ("%s\"\",%s%s%s",
                       l_brace,
                       option.fill_default (),
                       r_brace,
@@ -831,7 +831,11 @@ Key_List::output_keyword_table (void)
           ACE_OS::printf ("      ");
 
           for (column = 1; slot < temp->hash_value; slot++, column++)
-            ACE_OS::printf ("%s\"\",%s %s", l_brace, r_brace, column % 9 ? "" : "\n      ");
+            ACE_OS::printf ("%s\"\",%s%s%s",
+                            l_brace,
+                            option.fill_default (),
+                            r_brace,
+                            column % 9 ? "" : "\n      ");
 
           if (column % 10)
             ACE_OS::printf ("\n");
