@@ -1,6 +1,11 @@
+Tue Jul 22 11:24:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Strategies/SHMIOP_Profile.cpp (parse_string_i): Fixed a cut
+	  an paste error that threw up undefined variable errors. 
+
 Tue Jul 22 11:29:47 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* orbsvcs\orbsvcs\Notify\RT_Builder.cpp: 
+	* orbsvcs/orbsvcs/Notify/RT_Builder.cpp: 
 
 	  Added include for Object.h.
 
