@@ -18,20 +18,6 @@ Vault_Client_Request_Interceptor::~Vault_Client_Request_Interceptor ()
 {
 }
 
-void
-Vault_Client_Request_Interceptor::_add_ref (void)
-{
-  this->_incr_refcnt ();
-  // This is a TAO specific implementation.
-}
-
-void
-Vault_Client_Request_Interceptor::_remove_ref (void)
-{
-  this->_decr_refcnt ();
-  // This is a TAO specific implementation.
-}
-
 char *
 Vault_Client_Request_Interceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -167,20 +153,6 @@ Vault_Server_Request_Interceptor::~Vault_Server_Request_Interceptor ()
 {
 }
 
-void
-Vault_Server_Request_Interceptor::_add_ref (void)
-{
-  this->_incr_refcnt ();
-  // This is a TAO specific implementation.
-}
-
-void
-Vault_Server_Request_Interceptor::_remove_ref (void)
-{
-  this->_decr_refcnt ();
-  // This is a TAO specific implementation.
-}
-
 char *
 Vault_Server_Request_Interceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -297,20 +269,6 @@ Vault_Client_Request_Context_Interceptor::~Vault_Client_Request_Context_Intercep
 {
 }
 
-void
-Vault_Client_Request_Context_Interceptor::_add_ref (void)
-{
-  this->_incr_refcnt ();
-  // This is a TAO specific implementation.
-}
-
-void
-Vault_Client_Request_Context_Interceptor::_remove_ref (void)
-{
-  this->_decr_refcnt ();
-  // This is a TAO specific implementation.
-}
-
 char *
 Vault_Client_Request_Context_Interceptor::name (
     ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
@@ -420,20 +378,6 @@ Vault_Server_Request_Context_Interceptor::~Vault_Server_Request_Context_Intercep
 {
 }
 
-void
-Vault_Server_Request_Context_Interceptor::_add_ref (void)
-{
-  this->_incr_refcnt ();
-  // This is a TAO specific implementation.
-}
-
-void
-Vault_Server_Request_Context_Interceptor::_remove_ref (void)
-{
-  this->_decr_refcnt ();
-  // This is a TAO specific implementation.
-}
-
 char *
 Vault_Server_Request_Context_Interceptor::name (
     ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
@@ -516,20 +460,6 @@ Vault_Client_Request_Dynamic_Interceptor::Vault_Client_Request_Dynamic_Intercept
 
 Vault_Client_Request_Dynamic_Interceptor::~Vault_Client_Request_Dynamic_Interceptor ()
 {
-}
-
-void
-Vault_Client_Request_Dynamic_Interceptor::_add_ref (void)
-{
-  this->_incr_refcnt ();
-  // This is a TAO specific implementation.
-}
-
-void
-Vault_Client_Request_Dynamic_Interceptor::_remove_ref (void)
-{
-  this->_decr_refcnt ();
-  // This is a TAO specific implementation.
 }
 
 char *
@@ -672,20 +602,6 @@ Vault_Server_Request_Dynamic_Interceptor::~Vault_Server_Request_Dynamic_Intercep
 {
 }
 
-void
-Vault_Server_Request_Dynamic_Interceptor::_add_ref (void)
-{
-  this->_incr_refcnt ();
-  // This is a TAO specific implementation.
-}
-
-void
-Vault_Server_Request_Dynamic_Interceptor::_remove_ref (void)
-{
-  this->_decr_refcnt ();
-  // This is a TAO specific implementation.
-}
-
 char *
 Vault_Server_Request_Dynamic_Interceptor::name (
     ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
@@ -808,20 +724,6 @@ Vault_Client_Request_NOOP_Interceptor::~Vault_Client_Request_NOOP_Interceptor ()
 {
 }
 
-void
-Vault_Client_Request_NOOP_Interceptor::_add_ref (void)
-{
-  this->_incr_refcnt ();
-  // This is a TAO specific implementation.
-}
-
-void
-Vault_Client_Request_NOOP_Interceptor::_remove_ref (void)
-{
-  this->_decr_refcnt ();
-  // This is a TAO specific implementation.
-}
-
 char *
 Vault_Client_Request_NOOP_Interceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -909,20 +811,6 @@ Vault_Server_Request_NOOP_Interceptor::Vault_Server_Request_NOOP_Interceptor (vo
 
 Vault_Server_Request_NOOP_Interceptor::~Vault_Server_Request_NOOP_Interceptor ()
 {
-}
-
-void
-Vault_Server_Request_NOOP_Interceptor::_add_ref (void)
-{
-  this->_incr_refcnt ();
-  // This is a TAO specific implementation.
-}
-
-void
-Vault_Server_Request_NOOP_Interceptor::_remove_ref (void)
-{
-  this->_decr_refcnt ();
-  // This is a TAO specific implementation.
 }
 
 char *

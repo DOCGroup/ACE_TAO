@@ -19,8 +19,8 @@
 #endif /* _MSC_VER */
 
 class Vault_Client_Request_Interceptor
-  : public PortableInterceptor::ClientRequestInterceptor,
-    public CORBA::LocalObject
+  : public virtual PortableInterceptor::ClientRequestInterceptor,
+    public virtual TAO_Local_RefCounted_Object
 {
   // = Client-side Vault interceptor.  For checking interceptor visually only.
 public:
@@ -28,12 +28,6 @@ public:
   // ctor.
   virtual ~Vault_Client_Request_Interceptor ();
   // dtor.
-
-  virtual void _add_ref (void);
-  // Increment the reference count.
-
-  virtual void _remove_ref (void);
-  // Decrement the reference count.
 
   virtual char * name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -70,8 +64,8 @@ private:
 };
 
 class Vault_Server_Request_Interceptor
-  : public PortableInterceptor::ServerRequestInterceptor,
-    public CORBA::LocalObject
+  : public virtual PortableInterceptor::ServerRequestInterceptor,
+    public virtual TAO_Local_RefCounted_Object
 {
   // = Server-side Vault interceptor.  For checking interceptor visually only.
 public:
@@ -79,12 +73,6 @@ public:
   // cotr.
   ~Vault_Server_Request_Interceptor ();
   // dotr.
-
-  virtual void _add_ref (void);
-  // Increment the reference count.
-
-  virtual void _remove_ref (void);
-  // Decrement the reference count.
 
   virtual char * name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -123,8 +111,8 @@ private:
 };
 
 class Vault_Client_Request_Context_Interceptor
-  : public PortableInterceptor::ClientRequestInterceptor,
-    public CORBA::LocalObject
+  : public virtual PortableInterceptor::ClientRequestInterceptor,
+    public virtual TAO_Local_RefCounted_Object
 {
   // = Client-side Vault interceptor.  For checking interceptor visually only.
 public:
@@ -132,12 +120,6 @@ public:
   // ctor.
   virtual ~Vault_Client_Request_Context_Interceptor ();
   // dtor.
-
-  virtual void _add_ref (void);
-  // Increment the reference count.
-
-  virtual void _remove_ref (void);
-  // Decrement the reference count.
 
   virtual char * name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -174,8 +156,8 @@ private:
 };
 
 class Vault_Server_Request_Context_Interceptor
-  : public PortableInterceptor::ServerRequestInterceptor,
-    public CORBA::LocalObject
+  : public virtual PortableInterceptor::ServerRequestInterceptor,
+    public virtual TAO_Local_RefCounted_Object
 {
   // = Server-side Vault interceptor.  For checking interceptor visually only.
 public:
@@ -183,12 +165,6 @@ public:
   // cotr.
   ~Vault_Server_Request_Context_Interceptor ();
   // dotr.
-
-  virtual void _add_ref (void);
-  // Increment the reference count.
-
-  virtual void _remove_ref (void);
-  // Decrement the reference count.
 
   virtual char * name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -228,8 +204,8 @@ private:
 
 
 class Vault_Client_Request_Dynamic_Interceptor
-  : public PortableInterceptor::ClientRequestInterceptor,
-    public CORBA::LocalObject
+  : public virtual PortableInterceptor::ClientRequestInterceptor,
+    public virtual TAO_Local_RefCounted_Object
 {
   // = Client-side Vault interceptor.  For checking interceptor visually only.
 public:
@@ -237,12 +213,6 @@ public:
   // ctor.
   virtual ~Vault_Client_Request_Dynamic_Interceptor ();
   // dtor.
-
-  virtual void _add_ref (void);
-  // Increment the reference count.
-
-  virtual void _remove_ref (void);
-  // Decrement the reference count.
 
   virtual char * name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -279,8 +249,8 @@ private:
 };
 
 class Vault_Server_Request_Dynamic_Interceptor
-  : public PortableInterceptor::ServerRequestInterceptor,
-    public CORBA::LocalObject
+  : public virtual PortableInterceptor::ServerRequestInterceptor,
+    public virtual TAO_Local_RefCounted_Object
 {
   // = Server-side Vault interceptor.  For checking interceptor visually only.
 public:
@@ -288,12 +258,6 @@ public:
   // cotr.
   ~Vault_Server_Request_Dynamic_Interceptor ();
   // dotr.
-
-  virtual void _add_ref (void);
-  // Increment the reference count.
-
-  virtual void _remove_ref (void);
-  // Decrement the reference count.
 
   virtual char * name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -333,8 +297,8 @@ private:
 
 
 class Vault_Client_Request_NOOP_Interceptor
-  : public PortableInterceptor::ClientRequestInterceptor,
-    public CORBA::LocalObject
+  : public virtual PortableInterceptor::ClientRequestInterceptor,
+    public virtual TAO_Local_RefCounted_Object
 {
   // = Client-side Vault interceptor.  For checking interceptor visually only.
 public:
@@ -342,12 +306,6 @@ public:
   // ctor.
   virtual ~Vault_Client_Request_NOOP_Interceptor ();
   // dtor.
-
-  virtual void _add_ref (void);
-  // Increment the reference count.
-
-  virtual void _remove_ref (void);
-  // Decrement the reference count.
 
   virtual char * name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -384,8 +342,8 @@ private:
 };
 
 class Vault_Server_Request_NOOP_Interceptor
-  : public PortableInterceptor::ServerRequestInterceptor,
-    public CORBA::LocalObject
+  : public virtual PortableInterceptor::ServerRequestInterceptor,
+    public virtual TAO_Local_RefCounted_Object
 {
   // = Server-side Vault interceptor.  For checking interceptor visually only.
 public:
@@ -393,12 +351,6 @@ public:
   // cotr.
   ~Vault_Server_Request_NOOP_Interceptor ();
   // dotr.
-
-  virtual void _add_ref (void);
-  // Increment the reference count.
-
-  virtual void _remove_ref (void);
-  // Decrement the reference count.
 
   virtual char * name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
