@@ -1,7 +1,13 @@
+Wed Jan 22 10:55:39 2003  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-tru64.h: Added ACE_HAS_SNPRINTF. Thanks to Vladimir
+          Chovanec <Vladimir.CHOVANEC@asset.sk> for this fix.
+
 Wed Jan 22 01:24:51 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/Message_Queue_T.h: Corrected the documentation for ACE_Message_Block_Ex
-	  so it says ACE_MESSAGE_TYPE rather than ACE_Message_Block.
+	* ace/Message_Queue_T.h: Corrected the documentation for
+          ACE_Message_Block_Ex so it says ACE_MESSAGE_TYPE rather than
+          ACE_Message_Block.
 
 Tue Jan 21 21:44:04 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
