@@ -90,7 +90,8 @@ PLUGGABLE_PROTOCOLS_FILES = \
   IIOP_Connector \
   IIOP_Acceptor \
   IIOP_Connection_Handler \
-  IIOP_Endpoint
+  IIOP_Endpoint \
+  IIOPC
 
 PLUGGABLE_MESSAGING_FILES = \
   Pluggable_Messaging \
@@ -225,7 +226,11 @@ ORB_CORE_FILES = \
   Cleanup_Func_Registry \
   Connection_Descriptor_Interface \
   IORInfo \
-  Object_Ref_Table
+  Object_Ref_Table \
+  BiDirPolicyC \
+  BiDir_ORBInitializer \
+  BiDir_PolicyFactory \
+  BiDir_Policy_i
 
 DYNAMIC_ANY_FILES =
 

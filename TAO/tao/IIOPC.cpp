@@ -19,7 +19,9 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#include "IIOPC.h"
+#include "tao/IIOPC.h"
+#include "tao/Typecode.h"
+#include "tao/Any.h"
 
 #if !defined (__ACE_INLINE__)
 #include "IIOPC.i"
