@@ -103,11 +103,6 @@ TAO_IIOP_Connector::connect (TAO_Connection_Descriptor_Interface *desc,
                              ACE_Time_Value *max_wait_time,
                              CORBA::Environment &)
 {
-  if (TAO_debug_level > 0)
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) Connector::connect - ")
-                  ACE_TEXT ("looking for IIOP connection.\n")));
-
   TAO_Endpoint *endpoint = desc->endpoint ();
 
   if (endpoint->tag () != TAO_TAG_IIOP_PROFILE)
@@ -147,21 +142,22 @@ TAO_IIOP_Connector::connect (TAO_Connection_Descriptor_Interface *desc,
   if (this->orb_core ()->connection_cache ().find_handler (desc,
                                                            conn_handler) == 0)
     {
-      if (TAO_debug_level > 5)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) IIOP_Connector::connect ")
-                    ACE_TEXT ("got an existing connection \n")));
       // We have found a connection and a handler
       svc_handler =
         ACE_dynamic_cast (TAO_IIOP_Client_Connection_Handler *,
                           conn_handler);
+      if (TAO_debug_level > 2)
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("(%P|%t) IIOP_Connector::connect - ")
+                    ACE_TEXT ("got an existing connection on HANDLE %d\n"),
+                    svc_handler->peer ().get_handle ()));
     }
   else
     {
-      if (TAO_debug_level > 4)
+      if (TAO_debug_level > 2)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) IIOP_Connector::connect ")
-                    ACE_TEXT ("making a new connection \n")));
+                    ACE_TEXT ("(%P|%t) IIOP_Connector::connect - ")
+                    ACE_TEXT ("making a new connection\n")));
 
       // @@ This needs to change in the next round when we implement a
       // policy that will not allow new connections when a connection
@@ -187,11 +183,6 @@ TAO_IIOP_Connector::connect (TAO_Connection_Descriptor_Interface *desc,
                                                   remote_address);
         }
 
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) IIOP_Connector::connect ")
-                    ACE_TEXT ("The result is <%d> \n"), result));
-
       if (result == -1)
         {
           // Give users a clue to the problem.
@@ -208,6 +199,12 @@ TAO_IIOP_Connector::connect (TAO_Connection_Descriptor_Interface *desc,
             }
           return -1;
         }
+
+      if (TAO_debug_level > 2)
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("(%P|%t) IIOP_Connector::connect - ")
+                    ACE_TEXT ("new connection on HANDLE %d\n"),
+                    svc_handler->peer ().get_handle ()));
 
       // Add the handler to Cache
       int retval =
