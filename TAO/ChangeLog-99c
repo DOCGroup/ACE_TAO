@@ -1,3 +1,15 @@
+Thu Aug  5 16:36:18 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* Benchmark/benchmark/Makefile:
+	* examples/POA/Generic_Servant/Makefile:
+	* examples/Simple/time-date/Makefile:
+	* orbsvcs/orbsvcs/Makefile:
+	* orbsvcs/tests/Event/lib/Makefile:
+	* orbsvcs/tests/Trading/Makefile:
+	* tao/Makefile:
+	  Changed to use the new ACE_SHLIBS macro, this should let TAO
+	  compile under AIX, fixing [BUGID:171]
+
 Thu Aug  5 16:04:04 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
 
 	* tests/XtStopwatch: Updated this test to make the code 
