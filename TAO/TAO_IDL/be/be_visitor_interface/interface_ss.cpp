@@ -65,11 +65,17 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  // generate the skeleton class name
-
   os->indent (); // start with whatever indentation level we are at
 
-  if (node->gen_operation_table () == -1)
+  ACE_CString full_skel_name_holder =
+    this->generate_full_skel_name (node);
+  const char *full_skel_name = full_skel_name_holder.c_str ();
+
+  ACE_CString flat_name_holder =
+    this->generate_flat_name (node);
+  const char *flat_name = flat_name_holder.c_str ();
+
+  if (node->gen_operation_table (flat_name, full_skel_name) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "be_visitor_interface_ss::"
@@ -97,17 +103,13 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     this->generate_local_name (node);
   const char *node_local_name = node_local_name_holder.c_str ();
 
-  ACE_CString full_skel_name_holder =
-    this->generate_full_skel_name (node);
-  const char *full_skel_name = full_skel_name_holder.c_str ();
-
   *os << full_skel_name << "::"
       << local_name_prefix << node_local_name
       << " (void)\n";
 
   // Generate optable
   *os << "{" << be_idt_nl
-      << "this->optable_ = &tao_" << node->flat_name ()
+      << "this->optable_ = &tao_" << flat_name
       << "_optable;" << be_uidt_nl
       << "}\n\n";
 
@@ -515,6 +517,12 @@ be_visitor_interface_ss::generate_proxy_classes (be_interface *node)
 }
 
 ACE_CString
+be_visitor_interface_ss::generate_flat_name (be_interface *node)
+{
+  return ACE_CString (node->flat_name ());
+}
+
+ACE_CString
 be_visitor_interface_ss::generate_local_name (be_interface *node)
 {
   return ACE_CString (node->local_name ());
@@ -525,3 +533,4 @@ be_visitor_interface_ss::generate_full_skel_name (be_interface *node)
 {
   return ACE_CString (node->full_skel_name ());
 }
+

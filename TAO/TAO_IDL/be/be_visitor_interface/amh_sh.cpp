@@ -149,21 +149,7 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
   *os << "virtual const char* _interface_repository_id "
       << "(void) const;\n\n";
 
-  // Generate code for elements in the scope (e.g., operations).
-  // We have to generate AMH-operations here.  Here is how we go
-  // about it:
-  // We create a new node 'on the fly' and for each corresponding
-  // operation in the original node, we add a new AMH-operation
-  // into the node and then call visit_scope on the new node.
-
-  // Step 1: Create the new AMH-node
-  be_interface *amh_node = this->create_amh_class (class_name);
-
-  // Step 2: Add the memebers of original node to new AMH-node
-  this->add_original_members (node, amh_node);
-
-  // Step 3: Generate the AMH-operations
-  if (this->visit_scope (amh_node) ==  -1)
+  if (this->visit_scope (node) ==  -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "be_visitor_interface_sh::"
@@ -178,13 +164,11 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
   if (node->traverse_inheritance_graph (be_interface::gen_skel_helper, os) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_interface_sh::"
+                         "be_visitor_amh_interface_sh::"
                          "visit_interface - "
                          "inheritance graph traversal failed\n"),
                         -1);
     }
-
-  delete amh_node;
 
   *os << be_uidt_nl << "};\n\n";
   return 0;
@@ -389,8 +373,6 @@ be_visitor_amh_interface_sh::this_method (be_interface *node)
   // the type of the class, but the original class that "implied" the
   // AMH one.
   *os << non_amh_name.c_str () << " *_this (" << be_idt << be_idt_nl
-      << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
-      << "TAO_default_environment ()"
-      << be_uidt << be_uidt_nl
-      << ");\n" << be_uidt_nl;
+      << "TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
+      << be_uidt_nl << ");\n" << be_uidt_nl;
 }

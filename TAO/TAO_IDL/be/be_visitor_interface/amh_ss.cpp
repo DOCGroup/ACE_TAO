@@ -138,6 +138,22 @@ be_visitor_amh_interface_ss::generate_proxy_classes (be_interface *)
 }
 
 ACE_CString
+be_visitor_amh_interface_ss::generate_flat_name (be_interface *node)
+{
+  // @@ The following code is *NOT* exception-safe.
+  char *buf = 0;
+  node->compute_flat_name ("AMH_", "", buf);
+
+  // @@ This whole thing would be more efficient if we could pass the
+  // ACE_CString to compute_full_name, after all it uses that
+  // internally.
+  ACE_CString result (buf);
+  delete[] buf;
+
+  return result;
+}
+
+ACE_CString
 be_visitor_amh_interface_ss::generate_local_name (be_interface *node)
 {
   ACE_CString local_name = "AMH_";

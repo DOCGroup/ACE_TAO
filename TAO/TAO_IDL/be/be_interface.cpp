@@ -931,9 +931,11 @@ be_interface::gen_out_impl (char *interface_local_name,
   ci->indent ();
 
   *ci << "// *************************************************************"
-      << be_nl;
-  *ci << "// Operations for class " << fname << be_nl;
-  *ci << "// *************************************************************"
+      << be_nl
+      << "// fname" << be_nl
+      << "// TAO_IDL - Generated from "
+      << __FILE__ << ":" << __LINE__ << be_nl
+      << "// *************************************************************"
       << be_nl << be_nl;
 
       // Constructor from a _ptr.
@@ -1021,9 +1023,9 @@ be_interface::gen_out_impl (char *interface_local_name,
   return 0;
 }
 
-// Helper.
 int
-be_interface::gen_operation_table (void)
+be_interface::gen_operation_table (const char *flat_name,
+                                   const char *skeleton_class_name)
 {
   TAO_OutStream *os; // output stream.
   TAO_NL  nl;        // end line.
@@ -1041,7 +1043,7 @@ be_interface::gen_operation_table (void)
       os->indent ();
 
       // Start the table generation.
-      *os << "static const TAO_operation_db_entry " << this->flat_name () <<
+      *os << "static const TAO_operation_db_entry " << flat_name <<
         "_operations [] = {\n";
       os->incr_indent (0);
 
@@ -1055,33 +1057,33 @@ be_interface::gen_operation_table (void)
 
       // Generate the skeleton for the is_a method.
       os->indent ();
-      *os << "{\"_is_a\", &" << this->full_skel_name () << "::_is_a_skel},\n";
+      *os << "{\"_is_a\", &" << skeleton_class_name
+          << "::_is_a_skel},\n";
       this->skel_count_++;
 
       os->indent ();
-      *os << "{\"_non_existent\", &" << this->full_skel_name () << "::_non_existent_skel}\n";
+      *os << "{\"_non_existent\", &" << skeleton_class_name
+          << "::_non_existent_skel}\n";
       this->skel_count_++;
 
       os->decr_indent ();
       *os << "};" << nl << nl;
 
-      // XXXASG - this code should be based on using different strategies for
-      // demux - for next release
-      *os << "static const CORBA::Long _tao_" << this->flat_name ()
+      *os << "static const CORBA::Long _tao_" << flat_name
           << "_optable_size = sizeof (ACE_Hash_Map_Entry<const char *,"
           << " TAO_Skeleton>) * (" << (3*this->skel_count_)
           << ");" << be_nl;
-      *os << "static char _tao_" << this->flat_name () << "_optable_pool "
-          << "[_tao_" << this->flat_name () << "_optable_size];" << be_nl;
-      *os << "static ACE_Static_Allocator_Base _tao_" << this->flat_name ()
-          << "_allocator (_tao_" << this->flat_name () << "_optable_pool, "
-          << "_tao_" << this->flat_name () << "_optable_size);" << be_nl;
+      *os << "static char _tao_" << flat_name << "_optable_pool "
+          << "[_tao_" << flat_name << "_optable_size];" << be_nl;
+      *os << "static ACE_Static_Allocator_Base _tao_" << flat_name
+          << "_allocator (_tao_" << flat_name << "_optable_pool, "
+          << "_tao_" << flat_name << "_optable_size);" << be_nl;
       *os << "static TAO_Dynamic_Hash_OpTable tao_"
-          << this->flat_name () << "_optable " << "(" << be_idt << be_idt_nl
-          << this->flat_name () << "_operations," << be_nl
+          << flat_name << "_optable " << "(" << be_idt << be_idt_nl
+          << flat_name << "_operations," << be_nl
           << this->skel_count_ << "," << be_nl
           << 2*this->skel_count_ << "," << be_nl
-          << "&_tao_" << this->flat_name () << "_allocator" << be_uidt_nl
+          << "&_tao_" << flat_name << "_allocator" << be_uidt_nl
           << ");" << be_uidt_nl;
 
       break;
@@ -1100,14 +1102,14 @@ be_interface::gen_operation_table (void)
         char *temp_file = 0;
         ACE_NEW_RETURN (temp_file,
                         char [ACE_OS::strlen (idl_global->temp_dir ()) +
-                             ACE_OS::strlen (this->flat_name ()) +
+                             ACE_OS::strlen (flat_name) +
                              ACE_OS::strlen (".gperf") + 1],
                         -1);
 
         ACE_OS::sprintf (temp_file,
                          "%s%s.gperf",
                          idl_global->temp_dir (),
-                         this->flat_name ());
+                         flat_name);
 
         // Save this file name with the codegen singleton.
         tao_cg->gperf_input_filename (temp_file);
@@ -1166,26 +1168,26 @@ be_interface::gen_operation_table (void)
         // Generate the skeleton for the is_a method.
         os->indent ();
         *os << "_is_a" << ", &"
-            << this->full_skel_name ()
+            << skeleton_class_name
             << "::_is_a_skel\n";
         this->skel_count_++;
 
         os->indent ();
         *os << "_non_existent, &"
-            << this->full_skel_name ()
+            << skeleton_class_name
             << "::_non_existent_skel\n";
         this->skel_count_++;
 
         os->indent ();
         *os << "_interface, &"
-            << this->full_skel_name ()
+            << skeleton_class_name
             << "::_interface_skel\n";
         this->skel_count_++;
 
         // Input to the gperf is ready. Run gperf and get things
         // done. This method also unlinks the temp file that we used
         // for the gperf.
-        this->gen_gperf_things ();
+        this->gen_gperf_things (flat_name);
       }
 
       break;
@@ -1200,6 +1202,18 @@ be_interface::gen_operation_table (void)
   }
 
   return 0;
+}
+
+// Helper.
+int
+be_interface::gen_operation_table (void)
+{
+  const char *flat_name =
+    this->flat_name ();
+  const char *skeleton_class_name =
+    this->full_skel_name ();
+
+  return this->gen_operation_table (flat_name, skeleton_class_name);
 }
 
 
@@ -1592,7 +1606,7 @@ be_interface::gen_optable_helper (be_interface *derived,
 // depending on which strategy we are using. Returns 0 on sucess, -1
 // on error.
 int
-be_interface::gen_gperf_things (void)
+be_interface::gen_gperf_things (const char *flat_name)
 {
   // GPERF can give Binary search, Linear search and Perfect Hash
   // methods. Generate the class defintion according to that.
@@ -1606,51 +1620,51 @@ be_interface::gen_gperf_things (void)
     case BE_GlobalData::TAO_PERFECT_HASH:
       // Output a class definition deriving from
       // TAO_Perfect_Hash_OpTable.
-      gen_perfect_hash_class_definition ();
+      gen_perfect_hash_class_definition (flat_name);
 
       // Call GPERF and get the methods defined.
-      if (gen_gperf_lookup_methods () == -1)
+      if (gen_gperf_lookup_methods (flat_name) == -1)
         {
           return -1;
         }
 
       // Create an instance of the correct class corresponding the
       // operation lookup strategy we are following.
-      gen_perfect_hash_instance ();
+      this->gen_perfect_hash_instance (flat_name);
 
       break;
 
     case BE_GlobalData::TAO_BINARY_SEARCH:
       // Output a class definition deriving from
       // TAO_Binary_Search_OpTable.
-      this->gen_binary_search_class_definition ();
+      this->gen_binary_search_class_definition (flat_name);
 
       // Call GPERF and get the methods defined.
-      if (gen_gperf_lookup_methods () == -1)
+      if (gen_gperf_lookup_methods (flat_name) == -1)
         {
           return -1;
         }
 
       // Create an instance of the correct class corresponding the
       // operation lookup strategy we are following.
-      gen_binary_search_instance ();
+      this->gen_binary_search_instance (flat_name);
 
       break;
 
     case BE_GlobalData::TAO_LINEAR_SEARCH:
       // Output a class definition deriving from
       // TAO_Linear_Search_OpTable.
-      gen_linear_search_class_definition ();
+      this->gen_linear_search_class_definition (flat_name);
 
       // Call GPERF and get the methods defined.
-      if (gen_gperf_lookup_methods () == -1)
+      if (this->gen_gperf_lookup_methods (flat_name) == -1)
         {
           return -1;
         }
 
       // Create an instance of the correct class corresponding the
       // operation lookup strategy we are following.
-      gen_linear_search_instance ();
+      this->gen_linear_search_instance (flat_name);
 
       break;
 
@@ -1670,12 +1684,12 @@ be_interface::gen_gperf_things (void)
 // Outputs the class definition for the perfect hashing. This class
 // will inherit from the TAO_Perfect_Hash_OpTable.
 void
-be_interface::gen_perfect_hash_class_definition (void)
+be_interface::gen_perfect_hash_class_definition (const char *flat_name)
 {
   // Outstream.
   TAO_OutStream *os = this->strategy_->get_out_stream ();
 
-  *os << "class " << "TAO_" << this->flat_name () << "_Perfect_Hash_OpTable"
+  *os << "class " << "TAO_" << flat_name << "_Perfect_Hash_OpTable"
       << " : public TAO_Perfect_Hash_OpTable"
       << be_nl
       << "{"
@@ -1695,12 +1709,12 @@ be_interface::gen_perfect_hash_class_definition (void)
 // Outputs the class definition for the binary searching. This class
 // will inherit from the TAO_Binary_Seach_OpTable.
 void
-be_interface::gen_binary_search_class_definition (void)
+be_interface::gen_binary_search_class_definition (const char *flat_name)
 {
   // Outstream.
   TAO_OutStream *os = this->strategy_->get_out_stream ();
 
-  *os << "class " << "TAO_" << this->flat_name () << "_Binary_Search_OpTable"
+  *os << "class " << "TAO_" << flat_name << "_Binary_Search_OpTable"
       << " : public TAO_Binary_Search_OpTable"
       << be_nl
       << "{"
@@ -1716,12 +1730,12 @@ be_interface::gen_binary_search_class_definition (void)
 // Outputs the class definition for the linear search. This class
 // will inherit from the TAO_Linear_Search_OpTable.
 void
-be_interface::gen_linear_search_class_definition (void)
+be_interface::gen_linear_search_class_definition (const char *flat_name)
 {
   // Outstream.
   TAO_OutStream *ss = this->strategy_->get_out_stream ();
 
-  *ss << "class " << "TAO_" << this->flat_name () << "_Linear_Search_OpTable"
+  *ss << "class " << "TAO_" << flat_name << "_Linear_Search_OpTable"
       << " : public TAO_Linear_Search_OpTable"
       << be_nl
       << "{"
@@ -1740,7 +1754,7 @@ be_interface::gen_linear_search_class_definition (void)
 // GPERF reads from our temp file and write to the Server Skeleton
 // file.
 int
-be_interface::gen_gperf_lookup_methods (void)
+be_interface::gen_gperf_lookup_methods (const char *flat_name)
 {
   // Using ACE_Process.
   ACE_Process process;
@@ -1822,7 +1836,7 @@ be_interface::gen_gperf_lookup_methods (void)
                                     " "
                                     "-N lookup",
                                     idl_global->gperf_path (),
-                                    this->flat_name ());
+                                    flat_name);
       break;
 
       // Binary search methods from GPERF. Everythis and the -B flag.
@@ -1845,7 +1859,7 @@ be_interface::gen_gperf_lookup_methods (void)
                                     " "
                                     "-N lookup",
                                     idl_global->gperf_path (),
-                                    this->flat_name ());
+                                    flat_name);
       break;
 
       // Linear search methods from GPERF. Everything and the -z flag.
@@ -1868,7 +1882,7 @@ be_interface::gen_gperf_lookup_methods (void)
                                     " "
                                     "-N lookup",
                                     idl_global->gperf_path (),
-                                    this->flat_name ());
+                                    flat_name);
       break;
 
     default:
@@ -1915,41 +1929,41 @@ be_interface::gen_gperf_lookup_methods (void)
 
 // Create an instance of this perfect hash table.
 void
-be_interface::gen_perfect_hash_instance ()
+be_interface::gen_perfect_hash_instance (const char *flat_name)
 {
   // Outstream.
   TAO_OutStream *os = this->strategy_->get_out_stream ();
 
-  *os << "static TAO_" << this->flat_name () << "_Perfect_Hash_OpTable"
+  *os << "static TAO_" << flat_name << "_Perfect_Hash_OpTable"
       << " "
-      << "tao_" << this->flat_name () << "_optable"
+      << "tao_" << flat_name << "_optable"
       << ";\n" << be_nl;
 }
 
 // Create an instance of the binary search optable.
 void
-be_interface::gen_binary_search_instance ()
+be_interface::gen_binary_search_instance (const char *flat_name)
 {
   // Outstream.
   TAO_OutStream *os = this->strategy_->get_out_stream ();
 
-  *os << "static TAO_" << this->flat_name () << "_Binary_Search_OpTable"
+  *os << "static TAO_" << flat_name << "_Binary_Search_OpTable"
       << " "
-      << "tao_" << this->flat_name () << "_optable"
+      << "tao_" << flat_name << "_optable"
       << ";\n" << be_nl;
 }
 
 
 // Create an instance of this perfect hash table.
 void
-be_interface::gen_linear_search_instance ()
+be_interface::gen_linear_search_instance (const char *flat_name)
 {
   // Outstream.
   TAO_OutStream *os = this->strategy_->get_out_stream ();
 
-  *os << "static TAO_" << this->flat_name () << "_Linear_Search_OpTable"
+  *os << "static TAO_" << flat_name << "_Linear_Search_OpTable"
       << " "
-      << "tao_" << this->flat_name () << "_optable"
+      << "tao_" << flat_name << "_optable"
       << ";\n" << be_nl;
 }
 
