@@ -1,3 +1,18 @@
+Mon Sep 14 10:11:18 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/ace_ce_dll.dsp: Added Select_Reactor_Base.cpp and removed
+	  Array.cpp from the project.  Thanks to Paul Sexton
+	  <pauls@ENTERPRISE.bt.co.uk> for noticing this.
+ 	
+	* ace/config-WinCE.h: Added ACE_LACKS_BSEARCH.
+	
+	* ace/OS.h: Added /**/ between #include and <ace/sys_conf.h> in
+	  pSOS section to prevent a MSVC warning.
+
+	* ace/OS.i (bsearch): If the function is not supported by the
+	  platform, return NULL instead of -1 so it behaves compatibly
+	  with most common implementation.
+
 Mon Sep 14 09:37:09 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Synch_T.h: Fixed a deadlock condition caused by acquiring
