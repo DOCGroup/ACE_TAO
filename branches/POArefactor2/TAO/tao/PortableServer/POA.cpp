@@ -1428,8 +1428,8 @@ TAO_POA::create_reference_with_id_i (const PortableServer::ObjectId &user_id,
   if (this->cached_policies_.id_assignment () == PortableServer::SYSTEM_ID &&
       !this->is_poa_generated_id (user_id))
     {
-// @johnny, minor code should be 14
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (),
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 14,
+                                          CORBA::COMPLETED_NO),
                         CORBA::Object::_nil ());
     }
 
