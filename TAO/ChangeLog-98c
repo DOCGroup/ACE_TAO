@@ -1,7 +1,17 @@
+Wed Aug 19 17:54:13 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/benchmark/client.{h,cpp}
+	* orbsvcs/tests/AVStreams/benchmark/server.{h,cpp} 
+	  Added Naming_Utils code to simplify Naming Service
+	  operations. Note: Due to multicast weirdness yet to be resolved
+	  sometimes the Naming Service will not be properly detected. I
+	  found that running the Naming Service and the server in the same
+	  window helped. I added comments to that effect.
+
 Wed Aug 19 17:37:51 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile: Integrated the Audio/video streams
-	stuff into the mainstream orbsvcs.
+	  stuff into the mainstream orbsvcs.
 
 Wed Aug 19 17:32:40 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
