@@ -26,11 +26,10 @@ TAO::TypeCode::Array<RefCountPolicy>::tao_marshal (TAO_OutputCDR & cdr) const
   // marshaled into a CDR encapsulation.
 
   // Create a CDR encapsulation.
-  cdr << TAO_ENCAP_BYTE_ORDER;
-  cdr << *(this->content_type_);
-  cdr << this->length_;
-
-  return true;
+  return
+    (cdr << TAO_ENCAP_BYTE_ORDER)
+    && (cdr << *(this->content_type_))
+    && (cdr << this->length_);
 }
 
 template <class RefCountPolicy>
