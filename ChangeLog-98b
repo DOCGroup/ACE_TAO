@@ -1,5 +1,8 @@
 Fri Jul 17 13:53:54 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* examples/Threads/barrier2.cpp (ACE_MT_SYNCH>): Cleaned up the
+	  coding style in this example.
+
 	* ace/TTY_IO.cpp (control): Added entries for 300 baud.  Thanks to
  	  the ever vigilant Arturo Montes <mitosys@colomsat.com.co> for
  	  reporting this.
