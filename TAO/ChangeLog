@@ -1,3 +1,11 @@
+Fri Apr  1 10:33:39 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_codegen.cpp (gen_stub_src_includes):
+
+	  Fixed conditional so that a TypeCode related include directives
+	  are always generated when TypeCode support is enabled and
+	  separate Any stub files are disabled.
+
 Fri Apr  1 10:43:10 2005  Rich Seibel  <seibel_r@ociweb.com>
         
         Moving updates for Mac made by Paul and Chad  to get it to work.
