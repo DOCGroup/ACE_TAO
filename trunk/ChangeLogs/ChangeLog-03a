@@ -1,3 +1,21 @@
+Thu Aug 22 17:34:18 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/FIFO_Recv_Msg.{h i}: Fixed recv() in the non-
+          ACE_HAS_STREAM_PIPES case to throw away the part of a
+          message longer than the max number of bytes requested by
+          the caller. Filled out the doxygen comments in the header
+          to explain the behavior, and the differences when (not)
+          using ACE_HAS_STREAM_PIPES.
+
+Wed Aug 21 17:48:29 2002  Steve Huston  <shuston@riverace.com>
+
+        * examples/C++NPv2/TP_Logging_Server.cpp (TP_Logging_Task):
+        * examples/C++NPv2/display_logfile.cpp (svc):
+          Must use reinterpret_cast, not static_cast, to cast between
+          unrelated types (char *, class *).
+
+        * examples/C++NPv2/Makefile: Added AIO_CLD to top-level build.
+
 Thu Aug 22 18:10:46 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* bin/nightlybuilds/builds.lst: Move RedHat_Static build
