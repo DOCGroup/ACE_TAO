@@ -2,47 +2,52 @@
 
 #include "Smart_Proxy_Impl.h"
 
-smart_test_factory::smart_test_factory (void)
+Smart_Test_Factory::Smart_Test_Factory (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "smart_test_factory\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "Smart_Test_Factory\n"));
 }
 
-test_ptr
-smart_test_factory::create_proxy (test_ptr proxy,
-                                  CORBA::Environment &
-                                  )
+Test_ptr
+Smart_Test_Factory::create_proxy (Test_ptr proxy,
+                                  CORBA::Environment &)
  {
-   ACE_DEBUG ((LM_DEBUG, "create_smart_proxy\n"));
-   return (!CORBA::is_nil (proxy) ? new smart_test_proxy (proxy) : proxy);
+   ACE_DEBUG ((LM_DEBUG,
+               "create_smart_proxy\n"));
+   return CORBA::is_nil (proxy) == 0
+     // @@ Kirthika, please make sure to use the appropriate
+     // ACE_NEW_THROW macro here that checks for failures and raises
+     // an exception, etc.
+     ? new Smart_Test_Proxy (proxy) 
+     : proxy;
    
  }
 
-smart_test_proxy::smart_test_proxy (test_ptr proxy)
-  : TAO_test_Smart_Proxy_Base (proxy)
+Smart_Test_Proxy::Smart_Test_Proxy (Test_ptr proxy)
+  : TAO_Test_Smart_Proxy_Base (proxy)
 {
 }
 
 CORBA::Short 
-smart_test_proxy::method (
-                     CORBA::Short boo,
-                     CORBA::Environment &ACE_TRY_ENV 
-                     )
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException,
-                   test::Oops
-                   ))
+Smart_Test_Proxy::method (CORBA::Short boo,
+                          CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Test::Oops))
 {
-  ACE_DEBUG ((LM_DEBUG, "Yahoo I am smart\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "Yahoo, I am smart\n"));
   
   CORBA::Short retval = 0;
   ACE_TRY 
     {
-      retval = TAO_test_Smart_Proxy_Base::method (boo, ACE_TRY_ENV);
+      retval = TAO_Test_Smart_Proxy_Base::method (boo,
+                                                  ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
-  ACE_CATCH (test::Oops, reason)
+  ACE_CATCH (Test::Oops, reason)
     {
-      ACE_PRINT_EXCEPTION (reason, "User Exception");
+      ACE_PRINT_EXCEPTION (reason,
+                           "User Exception");
       return -1;
     }
   ACE_ENDTRY;

@@ -1,5 +1,21 @@
 // $Id$
 
+//========================================================================
+//
+// = LIBRARY
+//     TAO/tests/Smart_Proxy
+//
+// = FILENAME
+//     client.cpp
+//
+// = DESCRIPTION
+//     This is the client program that tests TAO's Smart Proxy extension.
+//
+// = AUTHOR
+//     Kirthika Parameswaran <kirthika@cs.wustl.edu>
+//
+//=========================================================================
+
 #include "ace/Get_Opt.h"
 #include "testC.h"
 #include "Smart_Proxy_Impl.h"
@@ -39,40 +55,42 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+        CORBA::ORB_init (argc,
+                         argv,
+                         "",
+                         ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
       
        CORBA::Object_var object =
-        orb->string_to_object (ior, ACE_TRY_ENV);
+        orb->string_to_object (ior,
+                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      // For using the smart proxy:
-      // Its necessary to allocate the user_defined smart factory on
-      // the heap as the smart proxy generated classes take care of 
-      // destroying the object. This way it a win situation
-      // for the application developer who doesnt have to 
-      // make sure to destoy it and also for the smart proxy
-      // designer who now can manage the lifetime of the object
+      // To use the smart proxy it is necessary to allocate the
+      // user-defined smart factory on the heap as the smart proxy
+      // generated classes take care of destroying the object. This
+      // way it a win situation for the application developer who
+      // doesnt have to make sure to destoy it and also for the smart
+      // proxy designer who now can manage the lifetime of the object
       // much surely.
-	  smart_test_factory *test_factory = 0;
+      Smart_Test_Factory *test_factory = 0;
       ACE_NEW_RETURN (test_factory, 
-                      smart_test_factory,
+                      Smart_Test_Factory,
                       -1);
       
-      test_var server =
-        test::_narrow (object.in (), ACE_TRY_ENV);
+      Test_var server =
+        Test::_narrow (object.in (),
+                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
       
       if (CORBA::is_nil (server.in ()))
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Object reference <%s> is nil\n",
-                             ior),
-                            1);
-        }
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Object reference <%s> is nil\n",
+                           ior),
+                          1);
       
       server->method (0);
 
@@ -83,10 +101,10 @@ main (int argc, char *argv[])
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Client side exception:");
+                           "Client-side exception:");
       return 1;
     }
   ACE_ENDTRY;
 
-   return 0;
+  return 0;
 }

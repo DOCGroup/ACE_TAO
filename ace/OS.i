@@ -297,10 +297,10 @@ operator > (const ACE_Time_Value &tv1,
             const ACE_Time_Value &tv2)
 {
   ACE_TRACE ("operator >");
-  if (tv1.tv_.tv_sec > tv2.tv_.tv_sec)
+  if (tv1.sec () > tv2.sec ())
     return 1;
-  else if (tv1.tv_.tv_sec == tv2.tv_.tv_sec
-           && tv1.tv_.tv_usec > tv2.tv_.tv_usec)
+  else if (tv1.sec () == tv2.sec ()
+           && tv1.usec () > tv2.usec ())
     return 1;
   else
     return 0;
@@ -313,10 +313,10 @@ operator >= (const ACE_Time_Value &tv1,
              const ACE_Time_Value &tv2)
 {
   ACE_TRACE ("operator >=");
-  if (tv1.tv_.tv_sec > tv2.tv_.tv_sec)
+  if (tv1.sec () > tv2.sec ())
     return 1;
-  else if (tv1.tv_.tv_sec == tv2.tv_.tv_sec
-           && tv1.tv_.tv_usec >= tv2.tv_.tv_usec)
+  else if (tv1.sec () == tv2.sec ()
+           && tv1.usec () >= tv2.usec ())
     return 1;
   else
     return 0;
@@ -330,11 +330,11 @@ ACE_Time_Value::operator timespec_t () const
   ACE_TRACE ("ACE_Time_Value::operator timespec_t");
   timespec_t tv;
 #if ! defined(ACE_HAS_BROKEN_TIMESPEC_MEMBERS)
-  tv.tv_sec = this->tv_.tv_sec;
+  tv.tv_sec = this->sec ();
   // Convert microseconds into nanoseconds.
   tv.tv_nsec = this->tv_.tv_usec * 1000;
 #else
-  tv.ts_sec = this->tv_.tv_sec;
+  tv.ts_sec = this->sec ();
   // Convert microseconds into nanoseconds.
   tv.ts_nsec = this->tv_.tv_usec * 1000;
 #endif /* ACE_HAS_BROKEN_TIMESPEC_MEMBERS */
@@ -444,8 +444,8 @@ operator == (const ACE_Time_Value &tv1,
              const ACE_Time_Value &tv2)
 {
   // ACE_TRACE ("operator ==");
-  return tv1.tv_.tv_sec == tv2.tv_.tv_sec
-    && tv1.tv_.tv_usec == tv2.tv_.tv_usec;
+  return tv1.sec () == tv2.sec ()
+    && tv1.usec () == tv2.usec ();
 }
 
 // True if tv1 != tv2.
@@ -464,8 +464,8 @@ ACE_INLINE void
 ACE_Time_Value::operator+= (const ACE_Time_Value &tv)
 {
   ACE_TRACE ("ACE_Time_Value::operator+=");
-  this->tv_.tv_sec += tv.tv_.tv_sec;
-  this->tv_.tv_usec += tv.tv_.tv_usec;
+  this->sec (this->sec () + tv.sec ());
+  this->usec (this->usec () + tv.usec ());
   this->normalize ();
 }
 
@@ -475,8 +475,8 @@ ACE_INLINE void
 ACE_Time_Value::operator-= (const ACE_Time_Value &tv)
 {
   ACE_TRACE ("ACE_Time_Value::operator-=");
-  this->tv_.tv_sec -= tv.tv_.tv_sec;
-  this->tv_.tv_usec -= tv.tv_.tv_usec;
+  this->sec (this->sec () - tv.sec ());
+  this->usec (this->usec () - tv.usec ());
   this->normalize ();
 }
 
@@ -487,8 +487,8 @@ operator + (const ACE_Time_Value &tv1,
             const ACE_Time_Value &tv2)
 {
   ACE_TRACE ("operator +");
-  ACE_Time_Value sum (tv1.tv_.tv_sec + tv2.tv_.tv_sec,
-                      tv1.tv_.tv_usec + tv2.tv_.tv_usec);
+  ACE_Time_Value sum (tv1.sec () + tv2.sec (),
+                      tv1.usec () + tv2.usec ());
 
   sum.normalize ();
   return sum;
@@ -501,8 +501,8 @@ operator - (const ACE_Time_Value &tv1,
             const ACE_Time_Value &tv2)
 {
   ACE_TRACE ("operator -");
-  ACE_Time_Value delta (tv1.tv_.tv_sec - tv2.tv_.tv_sec,
-                        tv1.tv_.tv_usec - tv2.tv_.tv_usec);
+  ACE_Time_Value delta (tv1.sec () - tv2.sec (),
+                        tv1.usec () - tv2.usec ());
   delta.normalize ();
   return delta;
 }
