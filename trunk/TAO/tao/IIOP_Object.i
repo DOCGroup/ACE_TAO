@@ -9,7 +9,7 @@ IIOP::Version::Version (CORBA::Octet maj, CORBA::Octet min)
 
 ACE_INLINE
 IIOP::Profile::Profile (const char *h,
-                        const CORBA::UShort p,
+                        CORBA::UShort p,
                         const TAO_opaque &key,
                         const ACE_INET_Addr &addr)
   : host (0)
