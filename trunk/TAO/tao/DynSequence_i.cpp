@@ -57,6 +57,7 @@ TAO_DynSequence_i::TAO_DynSequence_i (const CORBA_Any& any)
         {
           // This Any constructor is a TAO extension.
           CORBA_Any field_any (field_tc,
+                               0,
                                cdr.start ());
 
           // This recursive step will call the correct constructor
@@ -247,6 +248,7 @@ TAO_DynSequence_i::from_any (const CORBA_Any& any,
         {
           // This Any constructor is a TAO extension.
           CORBA_Any field_any (field_tc,
+                               0,
                                cdr.start ());
 
           if (!CORBA::is_nil (this->da_members_[i].in ()))
@@ -299,6 +301,7 @@ TAO_DynSequence_i::to_any (CORBA::Environment& ACE_TRY_ENV)
   CORBA_Any* retval;
   ACE_NEW_THROW_EX (retval,
                     CORBA_Any (this->type (ACE_TRY_ENV),
+                               0,
                                in_cdr.start ()),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);

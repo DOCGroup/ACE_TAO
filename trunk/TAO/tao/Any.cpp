@@ -117,6 +117,7 @@ CORBA_Any::CORBA_Any (CORBA::TypeCode_ptr tc,
 
 // Constructor using a message block.
 CORBA_Any::CORBA_Any (CORBA::TypeCode_ptr type,
+                      CORBA::UShort,
                       const ACE_Message_Block* mb)
   : type_ (CORBA::TypeCode::_duplicate (type)),
     value_ (0),

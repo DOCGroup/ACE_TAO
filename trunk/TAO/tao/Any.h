@@ -75,9 +75,12 @@ public:
 
   // = TAO extension
   CORBA_Any (CORBA::TypeCode_ptr type,
+             CORBA::UShort dummy,
              const ACE_Message_Block* mb);
-  // Constructor. Used by DynAny to compose/decompose
-  // complex types using a CDR.
+  // Constructor. Used by DynAny and others to optimize Any
+  // activities by using CDR. The dummy arg is to keep calls
+  // like CORBA_Any foo (CORBA::TypeCode_ptr bar (NULL), NULL) from
+  // being confused with the constructor above.
 
   CORBA_Any (const CORBA_Any &a);
   // Copy constructor.

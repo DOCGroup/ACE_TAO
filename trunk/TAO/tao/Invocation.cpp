@@ -526,7 +526,7 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
 
           const ACE_Message_Block* cdr =
             this->inp_stream_.start ();
-          CORBA_Any any (tcp, cdr);
+          CORBA_Any any (tcp, 0, cdr);
           CORBA_Exception *exception;
           ACE_NEW_THROW_EX (exception,
                             CORBA_UnknownUserException (any),

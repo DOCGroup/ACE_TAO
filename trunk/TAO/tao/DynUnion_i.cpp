@@ -256,6 +256,7 @@ TAO_DynUnion_i::to_any (CORBA::Environment& ACE_TRY_ENV)
   CORBA_Any* retval;
   ACE_NEW_THROW_EX (retval,
                     CORBA_Any (this->type (ACE_TRY_ENV),
+                               0,
                                in_cdr.start ()),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
@@ -1351,6 +1352,7 @@ TAO_DynUnion_i::set_from_any (const CORBA_Any& any,
   CORBA_TypeCode_ptr disc_tc = any.type ()->discriminator_type (env);
 
   CORBA_Any disc_any (disc_tc,
+                      0,
                       cdr.start ());
 
   if (!CORBA::is_nil (this->discriminator_.in()))
@@ -1407,6 +1409,7 @@ TAO_DynUnion_i::set_from_any (const CORBA_Any& any,
 
       CORBA_Any member_any (any.type ()->member_type (this->index_,
                                                       env),
+                            0,
                             cdr.start ());
 
       if (!CORBA::is_nil (this->member_.in ()))
