@@ -1,3 +1,19 @@
+Sun Mar 28 18:02:54 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* configure.in:
+	  Enabled the C++ libtool support mentioned below.  Removed all
+	  references to CXXCPPFLAGS since the CPPFLAGS variable is used
+	  by autoconf for both C and C++.
+
+	* ltconfig:
+	  Added my experimental libtool C++ support.  The hacks I made
+	  allow it to build C++ shared libraries.
+	
+	* m4/acinclude.m4:
+	* m4/threads.m4: 
+	  Renamed some variables.  Namespace pollution was breaking most
+	  of the tests.
+
 Sun Mar 28 12:20:44 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.h:
