@@ -76,7 +76,8 @@ sub new {
   $self->{'project_info'}         = [];
   $self->{'reading_global'}       = 0;
   $self->{'reading_parent'}       = [];
-  $self->{'exe_template_input'}   = undef;
+  $self->{'dexe_template_input'}  = undef;
+  $self->{'lexe_template_input'}  = undef;
   $self->{'lib_template_input'}   = undef;
   $self->{'dll_template_input'}   = undef;
   $self->{'idl_defaulted'}        = 0;
@@ -423,19 +424,33 @@ sub read_template_input {
   my($override)    = 0;
 
   if ($self->exe_target()) {
-    $tag = 'exe_template_input';
-    if (!defined $self->{$tag}) {
-      if (defined $$ti{'exe'}) {
-        $file = $$ti{'exe'};
-        $override = 1;
+    if ($self->{'writing_type'} == 1) {
+      $tag = 'lexe_template_input';
+      if (!defined $self->{$tag}) {
+        if (defined $$ti{'lib_exe'}) {
+          $file = $$ti{'lib_exe'};
+          $override = 1;
+        }
+        else {
+          $file = $self->get_lib_exe_template_input_file();
+        }
       }
-      else {
-        $file = $self->get_exe_template_input_file();
+    }
+    else {
+      $tag = 'dexe_template_input';
+      if (!defined $self->{$tag}) {
+        if (defined $$ti{'dll_exe'}) {
+          $file = $$ti{'dll_exe'};
+          $override = 1;
+        }
+        else {
+          $file = $self->get_dll_exe_template_input_file();
+        }
       }
     }
   }
   else {
-    if ($self->{'writing_type'}) {
+    if ($self->{'writing_type'} == 1) {
       $tag = 'lib_template_input';
       if (!defined $self->{$tag}) {
         if (defined $$ti{'lib'}) {
@@ -1040,7 +1055,7 @@ sub write_project {
   ($status, $error) = $self->write_output_file($name);
 
   if ($status &&
-      $self->separate_static_project() && $self->lib_target()) {
+      $self->separate_static_project()) {
     ## Set the project name back to what it originally was
     $self->process_assignment('project_name', $prjname);
     $name = $self->static_project_file_name();
@@ -1110,15 +1125,20 @@ sub get_template_input {
   my($self) = shift;
 
   if ($self->lib_target()) {
-    if ($self->{'writing_type'}) {
+    if ($self->{'writing_type'} == 1) {
       return $self->{'lib_template_input'};
     }
     else {
       return $self->{'dll_template_input'};
     }
   }
-
-  return $self->{'exe_template_input'};
+  
+  if ($self->{'writing_type'} == 1) {
+    return $self->{'lexe_template_input'};
+  }
+  else {
+    return $self->{'dexe_template_input'};
+  }
 }
 
 
@@ -1250,7 +1270,13 @@ sub override_exclude_component_extensions {
 }
 
 
-sub get_exe_template_input_file {
+sub get_dll_exe_template_input_file {
+  my($self) = shift;
+  return undef;
+}
+
+
+sub get_lib_exe_template_input_file {
   my($self) = shift;
   return undef;
 }
