@@ -46,7 +46,7 @@ class AddServiceObjectNode extends ParseNode
 
   public void apply ()
   {
-    System.err.println("AddServiceObjectNode apply");
+    ACE.DEBUG("AddServiceObjectNode apply");
 
     if (JACE.ServiceConfigurator.ServiceConfig.initialize(this) == -1)
       ACE.ERROR("Error adding " + this.name_);
