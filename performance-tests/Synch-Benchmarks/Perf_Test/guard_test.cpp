@@ -18,7 +18,7 @@ public:
   };
 
   virtual int svc (void);
-  virtual int init (int, char *[]);
+  virtual int init (int, ACE_TCHAR *[]);
 
   void test_guard (int);
 #if defined (ACE_USES_OBSOLETE_GUARD_CLASSES)
@@ -33,9 +33,9 @@ int Guard_Test::guard_type_ = Guard_Test::TEST_ACE_GUARD;
 ACE_Thread_Mutex Guard_Test::mutex_;
 
 int
-Guard_Test::init (int argc, char *argv[])
+Guard_Test::init (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt getopt (argc, argv, "gt");
+  ACE_Get_Opt getopt (argc, argv, ACE_TEXT("gt"));
   int c;
 
   while ((c = getopt()) != -1)
