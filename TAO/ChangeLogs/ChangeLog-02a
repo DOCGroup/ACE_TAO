@@ -1,6 +1,7 @@
 Fri Jun 16 15:00:17 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
           Add the new files to the project.
 
 Fri Jun 16 15:01:02 2000  Ossama Othman  <ossama@uci.edu>
