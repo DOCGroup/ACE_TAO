@@ -3,8 +3,6 @@
 #include "tao/GIOP_Message_Base.h"
 #include "tao/operation_details.h"
 
-
-
 #if !defined (__ACE_INLINE__)
 # include "tao/GIOP_Message_Base.i"
 #endif /* __ACE_INLINE__ */

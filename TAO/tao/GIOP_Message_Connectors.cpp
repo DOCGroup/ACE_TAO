@@ -63,7 +63,7 @@ TAO_GIOP_Message_Connectors::
                CORBA::ULong &reply_status)
 {
   
-    // Cast to the GIOP Message state
+  // Cast to the GIOP Message state
   TAO_GIOP_Message_State *state = ACE_dynamic_cast (TAO_GIOP_Message_State *,
                                                     &mesg_state);
 

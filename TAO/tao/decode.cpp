@@ -1,6 +1,5 @@
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -355,11 +354,14 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
                         {TAO_ENCAP_BYTE_ORDER, 0};
                         // Bounded string. Save the bounds
                         _oc_bounded_string [1] = (CORBA::Long) bound;
-                        *tcp = new CORBA::TypeCode (ACE_static_cast(CORBA::TCKind, kind),
-                                                    8,
-                                                    ACE_reinterpret_cast(char*,_oc_bounded_string),
-                                                    0, sizeof
-                                                    (CORBA::String_var), 0);
+                        ACE_NEW_THROW_EX (*tcp,
+                                          CORBA::TypeCode (ACE_static_cast(CORBA::TCKind, kind),
+                                                           8,
+                                                           ACE_reinterpret_cast(char*,_oc_bounded_string),
+                                                           0, sizeof
+                                                           (CORBA::String_var), 0),
+                                          CORBA::NO_MEMORY ());
+                        ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
                       }
                   }
               }
@@ -455,12 +457,15 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
                 // reducing the cost of getting typecodes.
                 if (continue_decoding)
                   {
-                    *tcp = new CORBA::TypeCode ((CORBA::TCKind) indir_kind,
+                    ACE_NEW_THROW_EX (*tcp,
+                                      CORBA::TypeCode ((CORBA::TCKind) indir_kind,
                                                 indir_len,
                                                 indir_stream.rd_ptr(),
                                                 0,
                                                 0,
-                                                parent);
+                                                parent),
+                                      CORBA::NO_MEMORY ());
+                    ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
                   }
               }
             break;
@@ -487,12 +492,16 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
                 u_int len = (u_int) length;
 
                 // create a new typecode
-                *tcp = new CORBA::TypeCode ((CORBA::TCKind) kind,
+                ACE_NEW_THROW_EX (*tcp,
+                                  CORBA::TypeCode ((CORBA::TCKind) kind,
                                             len,
                                             stream->rd_ptr (),
                                             0,
                                             0,
-                                            parent);
+                                            parent),
+                                  CORBA::NO_MEMORY ());
+                ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+
                 // skip length number of bytes in the stream, else we may
                 // leave the stream in an undefined state
                 (void) stream->skip_bytes (length);
@@ -604,9 +613,9 @@ TAO_Marshal_Struct::decode (CORBA::TypeCode_ptr  tc,
       ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
       align_offset =
-        (ptr_arith_t) ptr_align_binary (data, alignment)
+        (ptr_arith_t) ACE_ptr_align_binary (data, alignment)
         - (ptr_arith_t) data
-        - ((ptr_arith_t) ptr_align_binary (start_addr, alignment)
+        - ((ptr_arith_t) ACE_ptr_align_binary (start_addr, alignment)
         - (ptr_arith_t) start_addr);
       if (align_offset < 0)
         align_offset += alignment;
@@ -1416,119 +1425,15 @@ TAO_Marshal_Alias::decode (CORBA::TypeCode_ptr  tc,
 //
 // NOTE: This is asymmetric with respect to encoding exceptions.
 CORBA::TypeCode::traverse_status
-TAO_Marshal_Except::decode (CORBA::TypeCode_ptr  tc,
-                            const void *data,
+TAO_Marshal_Except::decode (CORBA::TypeCode_ptr,
                             const void *,
-                            void *context,
+                            const void *,
+                            void *,
                             CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_InputCDR *stream = (TAO_InputCDR *) context;
-  CORBA::TypeCode::traverse_status retval =
-    CORBA::TypeCode::TRAVERSE_CONTINUE;
-  CORBA::Boolean continue_decoding = 1;
-  CORBA::TypeCode_var param;
-  CORBA::Long size, alignment;
-
-  data = (char *) data + sizeof (CORBA::Exception);
-  // @@ (ASG) The reason this is done is because we want to skip the size
-  // of the the base class and its private data members (type_ and
-  // refcount_). After skipping these data members, we will have the data
-  // members of the derived class which must be encoded.
-
-  // Number of fields in the struct.
-  int member_count = tc->member_count (ACE_TRY_ENV);
-  // @@EXC@@ Rethrow CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE)?
-  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-
-  for (int i = 0; i < member_count
-         && retval == CORBA::TypeCode::TRAVERSE_CONTINUE
-         && continue_decoding == 1; i++)
-    {
-      param = tc->member_type (i, ACE_TRY_ENV);
-      // @@EXC@@ Rethrow CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE)?
-      ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-
-      size = param->size (ACE_TRY_ENV);
-      // @@EXC@@ Rethrow CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE)?
-      ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-
-      alignment = param->alignment (ACE_TRY_ENV);
-      // @@EXC@@ Rethrow CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE)?
-      ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-
-      data = ptr_align_binary (data, alignment);
-      switch (param->kind_)
-        {
-        case CORBA::tk_null:
-        case CORBA::tk_void:
-          break;
-        case CORBA::tk_short:
-        case CORBA::tk_ushort:
-          continue_decoding =
-            stream->read_short (*(CORBA::Short *) data);
-          break;
-        case CORBA::tk_long:
-        case CORBA::tk_ulong:
-        case CORBA::tk_float:
-        case CORBA::tk_enum:
-          continue_decoding =
-            stream->read_long (*(CORBA::Long *) data);
-          break;
-        case CORBA::tk_double:
-        case CORBA::tk_longlong:
-        case CORBA::tk_ulonglong:
-          continue_decoding =
-            stream->read_longlong (*(CORBA::LongLong *) data);
-          break;
-        case CORBA::tk_boolean:
-          continue_decoding =
-            stream->read_boolean (*(CORBA::Boolean *) data);
-          break;
-        case CORBA::tk_char:
-        case CORBA::tk_octet:
-          continue_decoding =
-            stream->read_char (*(CORBA::Char *) data);
-          break;
-        case CORBA::tk_longdouble:
-          continue_decoding =
-            stream->read_longdouble (*(CORBA::LongDouble *) data);
-          break;
-        case CORBA::tk_wchar:
-          continue_decoding =
-            stream->read_wchar (*(CORBA::WChar *) data);
-          break;
-        case CORBA::tk_any:
-        case CORBA::tk_TypeCode:
-        case CORBA::tk_Principal:
-        case CORBA::tk_objref:
-        case CORBA::tk_struct:
-        case CORBA::tk_union:
-        case CORBA::tk_string:
-        case CORBA::tk_sequence:
-        case CORBA::tk_array:
-        case CORBA::tk_alias:
-        case CORBA::tk_except:
-        case CORBA::tk_wstring:
-          retval = stream->decode (param.in (), data, 0, ACE_TRY_ENV);
-          // @@EXC@@ Rethrow CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE)?
-          ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-          break;
-        default:
-          break;
-        }
-      data = (char *) data + size;
-    }
-
-  if (retval != CORBA::TypeCode::TRAVERSE_CONTINUE
-      || continue_decoding != 1)
-    {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("TAO_Marshal_Except::decode detected error\n")));
-      ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE),
-                        CORBA::TypeCode::TRAVERSE_STOP);
-    }
-  return CORBA::TypeCode::TRAVERSE_CONTINUE;
+  ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
+                                    CORBA::COMPLETED_MAYBE),
+                    CORBA::TypeCode::TRAVERSE_STOP);
 }
 
 // decode wstring

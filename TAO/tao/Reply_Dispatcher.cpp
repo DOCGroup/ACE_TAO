@@ -62,7 +62,7 @@ TAO_Synch_Reply_Dispatcher::dispatch_reply (CORBA::ULong reply_status,
   this->reply_received_ = 1;
 
   this->reply_status_ = reply_status;
-  this->version_ = version;
+  //this->version_ = version;
 
   // Steal the buffer, that way we don't do any unnecesary copies of
   // this data.
@@ -266,7 +266,7 @@ TAO_DII_Deferred_Reply_Dispatcher::dispatch_reply (
   )
 {
   this->reply_status_ = reply_status;
-  this->version_ = version;
+  //this->version_ = version;
   this->message_state_ = message_state;
 
   // Steal the buffer, that way we don't do any unnecesary copies of
