@@ -87,6 +87,8 @@ namespace Deployment
       static void dump(const Deployment::SatisfierProperty &sp);
 
       static void dump(const Deployment::ResourceUsageKind &ruk);
+
+      static void dump(const Deployment::DeploymentPlan &plan);
       ///   ... Zillions of such things ....
 
     private:
