@@ -1,11 +1,11 @@
 Fri Jun 20 17:45:46 2003  Gan Deng  <dengg@dre.vanderbilt.edu>
 
-	* performance-tests/Sequence_Latency/AMI/run_test.pl
-	* performance-tests/Sequence_Latency/AMH/Single_Threaded/run_test.pl
-	* performance-tests/Sequence_Latency/DII/run_test.pl
-	* performance-tests/Sequence_Latency/DSI/run_test.pl
-	* performance-tests/Sequence_Latency/Deferred/run_test.pl
-	* performance-tests/Sequence_Latency/Thread_Per_Connection/run_test.pl
+        * performance-tests/Sequence_Latency/AMI/run_test.pl
+        * performance-tests/Sequence_Latency/AMH/Single_Threaded/run_test.pl
+        * performance-tests/Sequence_Latency/DII/run_test.pl
+        * performance-tests/Sequence_Latency/DSI/run_test.pl
+        * performance-tests/Sequence_Latency/Deferred/run_test.pl
+        * performance-tests/Sequence_Latency/Thread_Per_Connection/run_test.pl
         * performance-tests/Sequence_Latency/Thread_Pool/run_test.pl
 
           Fixed the perl running command line format in order to facilitate
