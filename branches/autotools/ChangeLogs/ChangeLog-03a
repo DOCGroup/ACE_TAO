@@ -1,3 +1,11 @@
+Sat Feb  1 13:22:59 2003  Ossama Othman  <ossama@uci.edu>
+
+	* bin/bootstrap:
+
+	  Removed workspace/release bootstrapping code.  Newer versions of
+	  automake obviate the need to make a distinction due to improved
+	  dependency tracking support.
+
 Sat Feb  1 13:14:08 2003  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Makefile.am (TEMPLATE_FILES):

@@ -27,42 +27,13 @@ set -e
 # If paginator environment variable isn't set then use `more'.
 test -z $PAGER && PAGER=more
 
-# Flag that determines if dependency tracking should be enabled in
-# GNU Automake generated Makefile.in files.
-enable_deps=no
-
-# By default, assume that a workspace, not a release, is being bootstrapped.
-bootstrap_release=no
-
 usage()
 {
     cat <<EOF | $PAGER
-Usage: bootstrap [OPTIONS] [workspace | release]
+Usage: bootstrap [OPTIONS]
 
 Generic options:
   --help	  display this help and exit
-
-Supported options:
-  --enable-deps   enable dependency tracking for workspace    [default=no]
-
-Workspace Bootstrapping
------------------------
-    Bootstrapping a workspace causes all files necessary for
-    maintainers to build ACE or TAO to be generated.
-
-    Enabling dependency tracking via the \`--enable-deps\' option causes
-    GNU Automake to generate dependency tracking rules in generated
-    Makefile.in files.  Currently those dependency tracking rules only
-    work with GNU C++, which is why dependency tracking is disabled by
-    default.
-
-Release Bootstrapping
----------------------
-    Bootstrapping a workspace for release does the same things as the
-    standard workspace bootstrapping procedure except that files that
-    are needed to build an ACE/TAO distribution are also generated
-    (e.g. man pages).  Dependency tracking is enabled by default since
-    Makefile dependencies should be included in ACE/TAO distributions.
 
 EOF
 
@@ -79,16 +50,6 @@ while test $# -gt 0; do
     --help)
 	usage 0
 	;;
-    --enable-deps)
-        enable_deps=yes
-	;;
-    workspace)
-	bootstrap_release=no
-        ;;
-    release)
-	bootstrap_release=yes
-        enable_deps=yes
-        ;;
     esac
     shift
 done
@@ -101,13 +62,6 @@ if test -d m4; then
   if (uname | grep SunOS > /dev/null 2>&1); then
     PATH=/project/danzon/pkg/gnu/bin:$PATH
     export PATH
-  fi
-
-  # Provide some "useful" information.
-  if test $bootstrap_release = yes; then
-    echo Bootstrapping release...
-  else
-    echo Bootstrapping workspace...
   fi
 
   # Update the NEWS file
@@ -125,17 +79,8 @@ if test -d m4; then
   echo "Running libtool"
   libtoolize --automake
 
-#   # Generate all `Makefile.in' templates in the directories listed in
-#   # `configure.in' and add any missing files that GNU Automake needs so
-#   # that the distribution and configuration processes will run properly.
-#   echo Running automake
-#   if test $bootstrap_release = no && test $enable_deps = no; then
-#     automake --add-missing --include-deps #--verbose
-#   else
-
-    echo "Running automake"
-    automake --add-missing
-#   fi
+  echo "Running automake"
+  automake --add-missing
 
   # Generate a `config.h.in' configuration header template from `acconfig.h'.
   echo "Running autoheader"
