@@ -15,7 +15,6 @@ module Hello
 {
   local interface Sender_Exec :
     CCM_Sender,
-    CCM_message,
     Components::SessionComponent
     {
     };
