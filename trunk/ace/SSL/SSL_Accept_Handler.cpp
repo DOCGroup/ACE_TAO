@@ -99,10 +99,14 @@ ACE_SSL_Accept_Handler::ssl_accept (void)
 #ifndef ACE_NDEBUG
           ERR_print_errors_fp (stderr);
 #endif  /* ACE_NDEBUG */
+
           return -1;
         }
     }
   while (::SSL_pending (this->ssl_stream_.ssl ()));
+
+  // Completed reading an SSL record, but SSL passive connection is
+  // still pending completion.
 
   return 0;
 }
