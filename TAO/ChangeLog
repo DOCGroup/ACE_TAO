@@ -1,3 +1,14 @@
+Fri Aug 29 09:49:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Codec/client.cpp: Cosmetic fix. Removed the word "warning"
+	  from a debug statement. The data structure that is used for
+	  encoding and decoding is always aligned on an 8 byte
+	  boundary. There was a time when we used a data structure that
+	  was aligned on a 4 byte boundary and after encoding we used to
+	  have data aligned on a 8 byte boundary. This problem was fixed
+	  long back, but the warning word was not removed. This checkin
+	  fixes that.
+
 Fri Aug 29 08:24:17 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/RTCORBA/RT_Protocols_Hooks.cpp:
