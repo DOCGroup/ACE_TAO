@@ -1,52 +1,77 @@
 @echo off
-@echo This is the NT version of the one-button ACE tests.
-@echo on
-@echo Starting tests...
+rem    To use this either give it no arguments to run all the tests or
+rem    pass it the test name (without the extention) to run only one
+rem    test
 
-Barrier_Test
-Buffer_Stream_Test
-Future_Test
-Handle_Set_Test
-IOStream_Test
-Map_Manager_Test
-Mem_Map_Test
-Message_Queue_Test
-Message_Queue_Notifications_Test
-Simple_Message_Block_Test
-Message_Block_Test
-MM_Shared_Memory_Test
-Sigset_Ops_Test
-@echo The following test runs for about 1 minute
-Mutex_Test
-Naming_Test
-Pipe_Test
-Priority_Buffer_Test
-Priority_Task_Test
-Process_Mutex_Test
-Process_Strategy_Test
-Reactor_Timer_Test
-Reactor_Notify_Test
-Reactor_Exceptions_Test
-Reader_Writer_Test
-Recursive_Mutex_Test
-Service_Config_Test
-SOCK_Test
-Conn_Test
-SPIPE_Test
-SString_Test
-SV_Shared_Memory_Test
-TSS_Test
-Task_Test
-Thread_Manager_Test
-Thread_Pool_Test
-Time_Service_Test
-Time_Value_Test
-Timer_Queue_Test
-Tokens_Test
-UPIPE_SAP_Test
-Reactors_Test
-Enum_Interfaces_Test
-Hash_Map_Manager_Test
-Semaphore_Test
+if not "%1" == "" goto runtest
 
-@echo Tests complete...
+call run_tests Barrier_Test
+call run_tests Buffer_Stream_Test
+call run_tests Conn_Test
+call run_tests Enum_Interfaces_Test
+call run_tests Future_Test
+call run_tests Handle_Set_Test
+call run_tests Hash_Map_Manager_Test
+call run_tests IOStream_Test
+call run_tests Map_Manager_Test
+call run_tests Mem_Map_Test
+call run_tests Message_Block_Test
+call run_tests Message_Queue_Notifications_Test
+call run_tests Message_Queue_Test
+call run_tests MM_Shared_Memory_Test
+call run_tests Mutex_Test
+call run_tests Naming_Test
+call run_tests Pipe_Test
+call run_tests Priority_Buffer_Test
+call run_tests Priority_Task_Test
+call run_tests Process_Mutex_Test
+call run_tests Process_Strategy_Test
+call run_tests Reactors_Test
+call run_tests Reactor_Exceptions_Test
+call run_tests Reactor_Notify_Test
+call run_tests Reactor_Timer_Test
+call run_tests Reader_Writer_Test
+call run_tests Recursive_Mutex_Test
+call run_tests Semaphore_Test
+call run_tests Service_Config_Test
+call run_tests Sigset_Ops_Test
+call run_tests Simple_Message_Block_Test
+call run_tests SOCK_Test
+call run_tests SPIPE_Test
+call run_tests SString_Test
+call run_tests SV_Shared_Memory_Test
+call run_tests Task_Test
+call run_tests Thread_Manager_Test
+call run_tests Thread_Pool_Test
+call run_tests Timer_Queue_Test
+call run_tests Time_Service_Test
+call run_tests Time_Value_Test
+call run_tests Tokens_Test
+call run_tests TSS_Test
+call run_tests UPIPE_SAP_Test
+
+goto done
+
+:runtest
+
+echo Running %1
+%1.exe
+if errorlevel 0 goto fine
+echo.
+echo %1 has FAILED!!!
+echo.
+type %temp%\log\%1.log | find /I "assertion failed"
+type %temp%\log\%1.log | find /I "not supported"
+type %temp%\log\%1.log | find /I "no such file or directory"
+type %temp%\log\%1.log | find /I "invalid argument"
+type %temp%\log\%1.log | find /I "timeout"
+type %temp%\log\%1.log | find /I "bad file number"
+echo.
+
+goto done
+:fine
+
+rem We should check the log files here to make sure the test ended correctly
+rem type %temp%\log\%1.log | find "Ending"
+
+:done
