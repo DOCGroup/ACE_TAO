@@ -103,6 +103,8 @@ if test -d m4; then
     export PATH
   fi
 
+  echo Bootstrapping...
+
   # Generate an `aclocal.m4' file from all existing m4 macro files
   # including those in the `m4' directory.
   echo Running aclocal
