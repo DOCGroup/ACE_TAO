@@ -2,7 +2,7 @@
 #
 #       $Id$
 #
-#       Makefile for the TAO performance-tests
+#       Makefile for the TAO AMH "Latency" performance-tests
 #
 #----------------------------------------------------------------------------
 
@@ -10,13 +10,8 @@
 #       Local macros
 #----------------------------------------------------------------------------
 
-DIRS  = Cubit \
-        POA \
-        Pluggable \
-        RTCorba \
-	Latency \
-	Callback \
-	Throughput
+DIRS = \
+  Single_Threaded
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO

@@ -1,3 +1,18 @@
+Sun Jan 27 12:51:02 2002  Ossama Othman  <ossama@uci.edu>
+
+	* performance-tests/Makefile (DIRS):
+
+	  Updated in accordance with the new "Latency" performance
+	  test organization.
+
+	* performance-tests/Latency/Makefile (DIRS):
+	* performance-tests/Latency/Makefile.bor (DIRS):
+	* performance-tests/Latency/AMH/Makefile (DIRS):
+	* performance-tests/Latency/AMH/Makefile.bor (DIRS):
+
+	  Makefiles for the newly reorganized "Latency" performance
+	  tests.
+
 Sun Jan 27 12:02:37 2002  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup/PortableGroup_Acceptor_Registry.cpp:
