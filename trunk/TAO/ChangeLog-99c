@@ -1,6 +1,15 @@
 Tue Jun 22 14:02:26 1999  David L. Levine  <levine@cs.wustl.edu>
 
-        * examples/OBV/Typed_Events/Makefile: replaced rm with $(RM).
+        * examples/OBV/Typed_Events/Makefile
+          Benchmark/Marshal_Test/Orbix/Makefile,
+          Benchmark/Marshal_Test/TAO/Makefile,
+          Benchmark/Marshal_Test/VisiBroker/Makefile,
+          TAO_IDL/Makefile,
+          performance-tests/Cubit/Hardpack/IDL_Cubit/Makefile,
+          performance-tests/Cubit/VisiBroker/base_server/Makefile,
+          performance-tests/Cubit/VisiBroker/client/Makefile,
+          performance-tests/Thruput/Orbix/Makefile:
+          replaced rm with $(RM).
 
 Tue Jun 22 13:55:09 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
