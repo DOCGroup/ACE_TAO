@@ -1,3 +1,9 @@
+Sat Sep 11 02:04:09 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/MessagingS.h (POA_Messaging): Removed the redundant
+	  <_dispatch> declaration, the compiler did not like the multiple
+	  declaration stuff. ;)
+
 Fri Sep 10 19:20:11 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/MessagingS.h:
@@ -14,7 +20,7 @@ Fri Sep 10 14:05:12 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 	  code to store the result of the new get_context() implementation
  	  described below into a _var so that it'll be cleaned up
  	  properly.
-  
+
 	* orbsvcs/orbsvcs/Naming/Naming_Utils: Changed the implementation
 	  of get_context() so that it _duplicate()s the pointer to enable
  	  it to be stored into a *_var.  Thanks to Timothy Canham
