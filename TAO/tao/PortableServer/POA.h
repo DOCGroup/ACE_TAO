@@ -572,6 +572,7 @@ public:
                                                 CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::POA::ObjectNotActive,
+                     PortableServer::POA::WrongAdapter,
                      PortableServer::POA::WrongPolicy));
 
   PortableServer::ObjectId *reference_to_id (CORBA::Object_ptr reference,
