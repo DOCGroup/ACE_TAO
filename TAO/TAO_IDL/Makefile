@@ -5750,11 +5750,7 @@ tags:
  be_include/be_visitor_interface/cdr_op_ci.h \
  be_include/be_visitor_interface/cdr_op_cs.h \
  be_include/be_visitor_interface/tie_sh.h \
- be_include/be_visitor_interface/tie_si.h \
- be_include/be_visitor_interface/ami_handler_fwd_ch.h \
- be_include/be_visitor_interface/ami_handler_fwd_ci.h \
- be_include/be_visitor_interface/ami_handler_stub_ch.h \
- be_include/be_visitor_interface/ami_handler_stub_cs.h be_include/be.h \
+ be_include/be_visitor_interface/tie_si.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
  $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
  be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
@@ -8729,12 +8725,6 @@ tags:
  be_include/be_visitor_argument/compiled_marshal_cs.h \
  be_include/be_visitor_argument/compiled_marshal_ss.h \
  be_include/be_visitor_argument/pre_invoke_cs.h \
- be_include/be_visitor_argument/ami_arglist.h \
- be_include/be_visitor_argument/ami_handler_arglist.h \
- be_include/be_visitor_argument/ami_handler_result_arg.h \
- be_include/be_visitor_argument/ami_handler_compiled_marshal_cs.h \
- be_include/be_visitor_argument/ami_handler_upcall_cs.h \
- be_include/be_visitor_argument/ami_handler_vardecl_cs.h \
  be_include/be_visitor_array.h be_include/be_visitor_array/array.h \
  be_include/be_visitor_array/array_ch.h \
  be_include/be_visitor_array/array_ci.h \
@@ -8794,10 +8784,6 @@ tags:
  be_include/be_visitor_interface/cdr_op_cs.h \
  be_include/be_visitor_interface/tie_sh.h \
  be_include/be_visitor_interface/tie_si.h \
- be_include/be_visitor_interface/ami_handler_fwd_ch.h \
- be_include/be_visitor_interface/ami_handler_fwd_ci.h \
- be_include/be_visitor_interface/ami_handler_stub_ch.h \
- be_include/be_visitor_interface/ami_handler_stub_cs.h \
  be_include/be_visitor_interface_fwd.h \
  be_include/be_visitor_interface_fwd/interface_fwd_ch.h \
  be_include/be_visitor_interface_fwd/interface_fwd_ci.h \
@@ -9254,12 +9240,6 @@ tags:
  be_include/be_visitor_argument/compiled_marshal_cs.h \
  be_include/be_visitor_argument/compiled_marshal_ss.h \
  be_include/be_visitor_argument/pre_invoke_cs.h \
- be_include/be_visitor_argument/ami_arglist.h \
- be_include/be_visitor_argument/ami_handler_arglist.h \
- be_include/be_visitor_argument/ami_handler_result_arg.h \
- be_include/be_visitor_argument/ami_handler_compiled_marshal_cs.h \
- be_include/be_visitor_argument/ami_handler_upcall_cs.h \
- be_include/be_visitor_argument/ami_handler_vardecl_cs.h \
  be/be_visitor_argument/arglist.cpp \
  be/be_visitor_argument/argument.cpp \
  be/be_visitor_argument/docall_cs.cpp \
@@ -10269,10 +10249,6 @@ tags:
  be_include/be_visitor_interface/cdr_op_cs.h \
  be_include/be_visitor_interface/tie_sh.h \
  be_include/be_visitor_interface/tie_si.h \
- be_include/be_visitor_interface/ami_handler_fwd_ch.h \
- be_include/be_visitor_interface/ami_handler_fwd_ci.h \
- be_include/be_visitor_interface/ami_handler_stub_ch.h \
- be_include/be_visitor_interface/ami_handler_stub_cs.h \
  be/be_visitor_interface/interface.cpp \
  be/be_visitor_interface/interface_ch.cpp \
  be/be_visitor_interface/interface_ci.cpp \
@@ -10962,12 +10938,6 @@ tags:
  be_include/be_visitor_argument/compiled_marshal_cs.h \
  be_include/be_visitor_argument/compiled_marshal_ss.h \
  be_include/be_visitor_argument/pre_invoke_cs.h \
- be_include/be_visitor_argument/ami_arglist.h \
- be_include/be_visitor_argument/ami_handler_arglist.h \
- be_include/be_visitor_argument/ami_handler_result_arg.h \
- be_include/be_visitor_argument/ami_handler_compiled_marshal_cs.h \
- be_include/be_visitor_argument/ami_handler_upcall_cs.h \
- be_include/be_visitor_argument/ami_handler_vardecl_cs.h \
  be/be_visitor_operation/operation_is.cpp \
  be/be_visitor_operation/rettype.cpp \
  be/be_visitor_operation/rettype_is.cpp \
