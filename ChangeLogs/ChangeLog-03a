@@ -1,3 +1,15 @@
+Wed Jun  5 16:58:41 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ACEXML/common/Mem_Map_Stream.cpp:
+
+          Instantiate the templates needed when explicit templates are
+          defined. Thanks to Carlos for pointing this out.
+
+        * ACEXML/common/HttpCharStream.cpp:
+
+          Peek means "get the next character", not "get the character
+          after next". The previous change to the test caught this bug.
+
 Wed Jun  5 16:42:43 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ACEXML/examples/SAXPrint/main.cpp (ACE_TMAIN):
