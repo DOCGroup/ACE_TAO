@@ -85,12 +85,14 @@ CORBA_Environment::exception (CORBA_Exception *ex)
     {
       this->clear ();
       this->exception_ = ex;
-      this->exception_->_incr_refcnt ();
     }
-#if defined (TAO_USE_EXCEPTIONS)
   if (this->exception_ != 0)
-    this->exception_->_raise ();
+    {
+      this->exception->_incr_refcnt ();
+#if defined (TAO_USE_EXCEPTIONS)
+      this->exception_->_raise ();
 #endif /* TAO_USE_EXCEPTIONS */
+    }
 }
 
 void
