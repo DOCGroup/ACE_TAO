@@ -4,6 +4,7 @@
 #define MIF_SCHEDULER_H
 
 #include "tao/orbconf.h"
+#include "tao/LocalObject.h"
 #include "ace/Synch_Traits.h"
 #include "tao/RTScheduling/RTScheduler.h"
 #include "../MIF_SchedulingC.h"

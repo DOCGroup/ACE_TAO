@@ -2,6 +2,7 @@
 
 #include "orbsvcs/ETCL/ETCL_Constraint.h"
 #include "orbsvcs/ETCL/ETCL_y.h"
+
 #include "tao/DynamicAny/DynArray_i.h"
 #include "tao/DynamicAny/DynSequence_i.h"
 #include "tao/DynamicAny/DynStruct_i.h"
@@ -9,11 +10,11 @@
 #include "tao/DynamicAny/DynEnum_i.h"
 #include "tao/DynamicAny/DynAnyFactory.h"
 
+#include "tao/Any_Unknown_IDL_Type.h"
 
 ACE_RCSID (Log,
            Log_Constraint_Visitors,
            "$Id$")
-
 
 TAO_Log_Constraint_Visitor::TAO_Log_Constraint_Visitor (
   DsLogAdmin::LogRecord &rec)

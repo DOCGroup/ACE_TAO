@@ -1,6 +1,7 @@
 // $Id$
 
 #include "RTI_IO.h"
+#include "ace/Log_Msg.h"
 
 void
 print_RtiPacket (Cubit::RtiPacket const &arg)

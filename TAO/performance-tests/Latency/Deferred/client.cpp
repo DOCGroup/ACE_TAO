@@ -3,6 +3,7 @@
 #include "TestC.h"
 
 #include "tao/DynamicInterface/Request.h"
+#include "tao/TC_Constants_Forward.h"
 
 #include "tao/Strategies/advanced_resource.h"
 

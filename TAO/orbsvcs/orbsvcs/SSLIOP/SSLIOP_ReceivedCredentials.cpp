@@ -1,6 +1,7 @@
 // -*- C++ -*-
 
 #include "SSLIOP_ReceivedCredentials.h"
+#include "tao/ORB_Constants.h"
 
 ACE_RCSID (TAO_SSLIOP,
            SSLIOP_ReceivedCredentials,
@@ -91,32 +92,10 @@ TAO_SSLIOP_ReceivedCredentials::delegation_mode (
 
 TAO_SSLIOP_ReceivedCredentials_ptr
 TAO_SSLIOP_ReceivedCredentials::_narrow (CORBA::Object_ptr obj
-                                         ACE_ENV_ARG_DECL)
+                                         ACE_ENV_ARG_DECL_NOT_USED)
 {
-  return
-    TAO_SSLIOP_ReceivedCredentials::_unchecked_narrow (obj
-                                                       ACE_ENV_ARG_PARAMETER);
-}
-
-TAO_SSLIOP_ReceivedCredentials_ptr
-TAO_SSLIOP_ReceivedCredentials::_unchecked_narrow (CORBA::Object_ptr obj
-                                                   ACE_ENV_ARG_DECL_NOT_USED)
-{
-  if (CORBA::is_nil (obj))
-    return TAO_SSLIOP_ReceivedCredentials::_nil ();
-  return
-        ACE_reinterpret_cast
-          (
-            TAO_SSLIOP_ReceivedCredentials_ptr,
-              obj->_tao_QueryInterface
-                (
-                  ACE_reinterpret_cast
-                    (
-                      ptrdiff_t,
-                      &TAO_SSLIOP_ReceivedCredentials::_tao_class_id
-                    )
-                )
-          );
+  return  TAO_SSLIOP_ReceivedCredentials::_duplicate (
+              dynamic_cast<TAO_SSLIOP_ReceivedCredentials *> (obj));
 }
 
 TAO_SSLIOP_ReceivedCredentials_ptr
@@ -127,35 +106,6 @@ TAO_SSLIOP_ReceivedCredentials::_duplicate (
     obj->_add_ref ();
 
   return obj;
-}
-
-void *
-TAO_SSLIOP_ReceivedCredentials::_tao_QueryInterface (ptrdiff_t type)
-{
-  void *retv = 0;
-  if (type == ACE_reinterpret_cast
-    (ptrdiff_t,
-      &TAO_SSLIOP_ReceivedCredentials::_tao_class_id))
-    retv = ACE_reinterpret_cast (void*, this);
-  else if (type == ACE_reinterpret_cast
-    (ptrdiff_t,
-      &::SecurityLevel2::Credentials::_tao_class_id))
-    retv = ACE_reinterpret_cast
-      (
-        void *,
-        ACE_static_cast
-          (
-            SecurityLevel2::Credentials_ptr,
-            this
-          )
-      );
-  else if (type == ACE_reinterpret_cast (ptrdiff_t, &CORBA::Object::_tao_class_id))
-    retv = ACE_reinterpret_cast (void *,
-      ACE_static_cast (CORBA::Object_ptr, this));
-
-  if (retv)
-    this->_add_ref ();
-  return retv;
 }
 
 // -----------------------------------------------------------

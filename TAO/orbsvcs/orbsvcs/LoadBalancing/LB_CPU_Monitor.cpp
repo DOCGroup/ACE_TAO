@@ -1,9 +1,10 @@
 #include "LB_CPU_Monitor.h"
 
+#include "tao/ORB_Constants.h"
+
 #if defined (ACE_HAS_SYS_LOADAVG_H)
 # include <sys/loadavg.h>
 #endif /* ACE_HAS_SYS_LOADAVG_H */
-
 
 ACE_RCSID (LoadBalancing,
            LB_CPU_Monitor,

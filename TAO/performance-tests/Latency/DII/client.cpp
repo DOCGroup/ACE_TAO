@@ -7,6 +7,7 @@
 #include "ace/Sample_History.h"
 
 #include "tao/Strategies/advanced_resource.h"
+#include "tao/TC_Constants_Forward.h"
 #include "tao/DynamicInterface/Request.h"
 
 ACE_RCSID(DII_Latency, client, "$Id$")

@@ -11,6 +11,7 @@
 
 #ifndef TAO_Notify_PROPERTIES_H
 #define TAO_Notify_PROPERTIES_H
+
 #include /**/ "ace/pre.h"
 
 #include "notify_export.h"
@@ -22,6 +23,7 @@
 #include "tao/TAO_Singleton.h"
 #include "tao/ORB.h"
 #include "tao/PortableServer/PortableServer.h"
+
 #include "orbsvcs/CosNotificationC.h"
 
 class TAO_Notify_Factory;
@@ -134,4 +136,5 @@ TAO_NOTIFY_SINGLETON_DECLARE (TAO_Singleton, TAO_Notify_Properties, TAO_SYNCH_MU
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_Notify_PROPERTIES_H */

@@ -7,8 +7,7 @@
 #include "tao/Profile.h"
 #include "tao/Tagged_Components.h"
 #include "tao/Stub.h"
-
-#include "tao/Invocation.h"
+#include "tao/Invocation_Utils.h"
 #include "tao/ORB_Core.h"
 #include "tao/Client_Strategy_Factory.h"
 
@@ -172,32 +171,19 @@ TAO_FT_Service_Callbacks::hash_ft (TAO_Profile *p,
   return (CORBA::ULong) group_component.object_group_id % max;
 }
 
-int
+TAO::Invocation_Status
 TAO_FT_Service_Callbacks::raise_comm_failure (
-    TAO_GIOP_Invocation *invoke,
+    IOP::ServiceContextList &context_list,
     TAO_Profile *profile
     ACE_ENV_ARG_DECL)
 {
-  if (this->restart_policy_check (
-          invoke->request_service_context ().service_info (),
-          profile))
-    {
-      TAO_GIOP_Twoway_Invocation *invoc =
-        ACE_dynamic_cast (TAO_GIOP_Twoway_Invocation *,
-                          invoke);
-
-      if (invoc)
-        {
-          // Reset the states to start invocation on a different
-          // target
-          invoc->reset_states ();
-        }
-      return TAO_INVOKE_RESTART;
-    }
+  if (this->restart_policy_check (context_list,
+                                  profile))
+    return TAO::TAO_INVOKE_RESTART;
 
   // As the right tags are not found close the connection and throw an
   // exception
-  invoke->close_connection ();
+  //   invoke->close_connection ();
   ACE_THROW_RETURN (CORBA::COMM_FAILURE (
       CORBA::SystemException::_tao_minor_code (
           TAO_INVOCATION_RECV_REQUEST_MINOR_CODE,
@@ -206,28 +192,15 @@ TAO_FT_Service_Callbacks::raise_comm_failure (
       TAO_INVOKE_EXCEPTION);
 }
 
-int
+TAO::Invocation_Status
 TAO_FT_Service_Callbacks::raise_transient_failure (
-    TAO_GIOP_Invocation *invoke,
+    IOP::ServiceContextList &service,
     TAO_Profile *profile
     ACE_ENV_ARG_DECL)
 {
-  if (restart_policy_check (
-        invoke->request_service_context ().service_info (),
-        profile))
-    {
-      TAO_GIOP_Twoway_Invocation *invoc =
-        ACE_dynamic_cast (TAO_GIOP_Twoway_Invocation *,
-                          invoke);
-
-      if (invoc)
-        {
-          // Reset the states to start invocation on a different
-          // target
-          invoc->reset_states ();
-        }
-      return TAO_INVOKE_RESTART;
-    }
+  if (this->restart_policy_check (service,
+                                  profile))
+    return TAO::TAO_INVOKE_RESTART;
 
   // As the right tags are not found close the connection and throw an
   // exception

@@ -26,19 +26,25 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:151
+// be/be_codegen.cpp:150
 
 #ifndef _TAO_IDL_KOKYU_QOSC_H_
 #define _TAO_IDL_KOKYU_QOSC_H_
 
-
-#include "tao/corba.h"
+#include "tao/ORB.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/CDR.h"
+#include "tao/Environment.h"
+#include "tao/Sequence_T.h"
+#include "tao/Seq_Var_T.h"
+#include "tao/Seq_Out_T.h"
+#include "tao/VarOut_T.h"
 
+#include "TimeBaseC.h"
 #include "tao/RTCORBA/RTCORBA.h"
 
 #if defined (TAO_EXPORT_MACRO)
@@ -67,11 +73,11 @@
 // TAO_IDL - Generated from
 // be/be_visitor_module/module_ch.cpp:48
 
-TAO_NAMESPACE  Kokyu
+namespace Kokyu
 {
   
   // TAO_IDL - Generated from
-  // be/be_visitor_sequence/sequence_ch.cpp:100
+  // be/be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_KOKYU_GUIDTYPE_CH_)
 #define _KOKYU_GUIDTYPE_CH_
@@ -132,7 +138,7 @@ TAO_NAMESPACE  Kokyu
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_GuidType;
   
   // TAO_IDL - Generated from
-  // be/be_type.cpp:254
+  // be/be_type.cpp:258
   
   struct Svc_Ctxt_DSRT_QoS;
   
@@ -171,10 +177,17 @@ TAO_NAMESPACE  Kokyu
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Svc_Ctxt_DSRT_QoS;
 
 // TAO_IDL - Generated from
-// be/be_visitor_module/module_ch.cpp:67
+// be/be_visitor_module/module_ch.cpp:66
 
-}
-TAO_NAMESPACE_CLOSE // module Kokyu
+} // module Kokyu
+
+// TAO_IDL - Generated from
+// be/be_visitor_traits.cpp:48
+
+// Traits specializations.
+namespace TAO
+{
+};
 
 // TAO_IDL - Generated from
 // be/be_visitor_sequence/any_op_ch.cpp:52
@@ -226,7 +239,7 @@ TAO_NAMESPACE_CLOSE // module Kokyu
 #endif /* __ACE_INLINE__ */
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:1060
+// be/be_codegen.cpp:911
 
 #if defined (__ACE_INLINE__)
 #include "Kokyu_qosC.i"

@@ -2,7 +2,10 @@
 
 #include "FT_ServerRequest_Interceptor.h"
 #include "tao/IOP_IORC.h"
+#include "tao/ORB_Constants.h"
+#include "tao/DynamicC.h"
 #include "orbsvcs/FT_CORBA_ORBC.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID (FaultTolerance,
            FT_ServerRequest_Interceptor,

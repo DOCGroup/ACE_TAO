@@ -2,6 +2,8 @@
 #include "FT_ClientPolicy_i.h"
 
 #include "tao/debug.h"
+#include "ace/Log_Msg.h"
+#include "tao/ORB_Constants.h"
 
 #if !defined (__ACE_INLINE__)
 #include "FT_ClientPolicy_i.inl"

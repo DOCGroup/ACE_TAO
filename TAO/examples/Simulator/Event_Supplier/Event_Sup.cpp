@@ -17,22 +17,25 @@
 //
 // ============================================================================
 
-#include "tao/corba.h"
-#include "tao/PortableServer/ORB_Manager.h"
-#include "ace/Get_Opt.h"
-#include "ace/Sched_Params.h"
-//#include "ace/Profile_Timer.h"
-#include "ace/OS.h"
+#include "Event_Sup.h"
+#include "NavWeapC.h"
+
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/Scheduler_Factory.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
-#include "Event_Sup.h"
-#include "NavWeapC.h"
+
+#include "tao/PortableServer/ORB_Manager.h"
+
+#include "ace/Get_Opt.h"
+#include "ace/Sched_Params.h"
+#include "ace/OS.h"
 
 #include <limits.h>
 
-ACE_RCSID(Event_Supplier, Event_Sup, "$Id$")
+ACE_RCSID (Event_Supplier, 
+           Event_Sup, 
+           "$Id$")
 
 static const char usage [] =
 "[[-?]\n"

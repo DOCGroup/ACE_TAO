@@ -18,10 +18,15 @@
 //
 //=========================================================================
 
-#include "tao/corba.h"
 #include "tao/PortableServer/PortableServer.h"
 
-ACE_RCSID(RootPOA, RootPOA, "$Id$")
+#include "tao/ORB.h"
+
+#include "ace/Log_Msg.h"
+
+ACE_RCSID (RootPOA, 
+           RootPOA, 
+           "$Id$")
 
 int
 main (int argc, char **argv)

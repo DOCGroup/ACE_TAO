@@ -144,18 +144,18 @@ TAO_IIOP_SSL_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
   return 0;
 }
 
-int
+TAO_Transport *
 TAO_IIOP_SSL_Connector::make_connection (
-  TAO_GIOP_Invocation *invocation,
-  TAO_Transport_Descriptor_Interface *desc,
+  TAO::Profile_Transport_Resolver *,
+  TAO_Transport_Descriptor_Interface &desc,
   ACE_Time_Value *max_wait_time)
 {
   TAO_IIOP_Endpoint *iiop_endpoint =
     ACE_dynamic_cast (TAO_IIOP_Endpoint *,
-                      desc->endpoint ());
+                      desc.endpoint ());
 
   if (iiop_endpoint == 0)
-    return -1;
+    return 0;
 
   const ACE_INET_Addr &remote_address =
     iiop_endpoint->object_addr ();
@@ -293,7 +293,7 @@ TAO_IIOP_SSL_Connector::make_connection (
                       "errno"));
         }
 
-      return -1;
+      return 0;
     }
 
   // At this point, the connection has be successfully connected.
@@ -310,7 +310,7 @@ TAO_IIOP_SSL_Connector::make_connection (
 
   // Add the handler to Cache
   int retval =
-    this->orb_core ()->lane_resources ().transport_cache ().cache_transport (desc,
+    this->orb_core ()->lane_resources ().transport_cache ().cache_transport (&desc,
                                                                              transport);
 
   // Failure in adding to cache.
@@ -326,7 +326,7 @@ TAO_IIOP_SSL_Connector::make_connection (
                       "could not add the new connection to cache\n"));
         }
 
-      return -1;
+      return 0;
     }
 
   // If the wait strategy wants us to be registered with the reactor
@@ -350,13 +350,8 @@ TAO_IIOP_SSL_Connector::make_connection (
                       "could not register the new connection in the reactor\n"));
         }
 
-      return -1;
+      return 0;
     }
 
-  // Handover the transport pointer to the Invocation class.
-  TAO_Transport *&invocation_transport =
-    invocation->transport ();
-  invocation_transport = transport;
-
-  return 0;
+  return transport;
 }

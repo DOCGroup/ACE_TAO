@@ -1,7 +1,6 @@
 // $Id$
 
 #include "nestea_i.h"
-#include "tao/corba.h"
 #include "tao/debug.h"
 #include "ace/FILE_Addr.h"
 #include "ace/FILE_Connector.h"

@@ -3,10 +3,13 @@
 // $Id$
 
 #include "UIPMC_Endpoint.h"
-//#include "tao/UIPMC_Connection_Handler.h"
-#include "tao/debug.h"
 
-ACE_RCSID(tao, UIPMC_Endpoint, "$Id$")
+#include "tao/debug.h"
+#include "tao/ORB_Constants.h"
+
+ACE_RCSID (tao, 
+           UIPMC_Endpoint, 
+           "$Id$")
 
 
 #if !defined (__ACE_INLINE__)

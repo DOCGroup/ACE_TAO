@@ -12,15 +12,17 @@
 #include "CEC_EventChannel.h"
 #include "CEC_Reactive_ConsumerControl.h"
 #include "CEC_Reactive_SupplierControl.h"
+
 #include "orbsvcs/ESF/ESF_Immediate_Changes.h"
 #include "orbsvcs/ESF/ESF_Delayed_Changes.h"
 #include "orbsvcs/ESF/ESF_Copy_On_Write.h"
 #include "orbsvcs/ESF/ESF_Copy_On_Read.h"
 #include "orbsvcs/ESF/ESF_Proxy_List.h"
 #include "orbsvcs/ESF/ESF_Proxy_RB_Tree.h"
-#include "orbsvcs/ESF/ESF_Delayed_Command.h"
+
 #include "ace/Arg_Shifter.h"
 #include "ace/Sched_Params.h"
+
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
 #include "CEC_TypedConsumerAdmin.h"
 #include "CEC_TypedSupplierAdmin.h"
@@ -37,16 +39,19 @@ ACE_RCSID (CosEvent,
 
 TAO_CEC_Default_Factory::~TAO_CEC_Default_Factory (void)
 {
-    if(orbid_dupped_ != 0) {
-        ACE_OS::free(orbid_);
-    }
+    if (orbid_dupped_ != 0) 
+      {
+        ACE_OS::free (orbid_);
+      }
 }
 
 int
 TAO_CEC_Default_Factory::init_svcs (void)
 {
-  return ACE_Service_Config::static_svcs ()->
-    insert (&ace_svc_desc_TAO_CEC_Default_Factory);
+  return 
+    ACE_Service_Config::static_svcs ()->insert (
+        &ace_svc_desc_TAO_CEC_Default_Factory
+      );
 }
 
 int

@@ -21,14 +21,17 @@
 #include "ace/Codeset_Registry.h"
 #include "ace/Get_Opt.h"
 #include "ace/streams.h"
-#include "tao/corba.h"
 #include "tao/IIOP_Profile.h"
 #include "tao/Messaging_PolicyValueC.h"
 #include "tao/Messaging/Messaging_RT_PolicyC.h"
 #include "tao/Messaging/Messaging_SyncScope_PolicyC.h"
 #include "tao/Messaging/Messaging_No_ImplC.h"
 #include "tao/RTCORBA/RTCORBA.h"
-#include "tao/iiop_endpoints.h"
+#include "tao/Typecode.h"
+#include "tao/Marshal.h"
+#include "tao/ORB_Constants.h"
+#include "tao/Transport_Acceptor.h"
+#include "tao/IIOP_EndpointsC.h"
 
 
 static CORBA::Boolean
@@ -200,7 +203,7 @@ catior (char* str
     {
       ACE_DEBUG ((LM_DEBUG,
                   "cannot read type id\n"));
-      return CORBA::TypeCode::TRAVERSE_STOP;
+      return TAO::TRAVERSE_STOP;
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -228,7 +231,7 @@ catior (char* str
     {
       ACE_DEBUG ((LM_DEBUG,
                   "cannot read the profile count\n"));
-      return CORBA::TypeCode::TRAVERSE_STOP;
+      return TAO::TRAVERSE_STOP;
     }
 
   CORBA::ULong profile_counter = 0;
@@ -239,7 +242,7 @@ catior (char* str
 
   // No profiles means a NIL objref.
   if (profiles == 0)
-    return CORBA::TypeCode::TRAVERSE_CONTINUE;
+    return TAO::TRAVERSE_CONTINUE;
   else
     while (profiles-- != 0)
       {
@@ -593,7 +596,7 @@ cat_tao_tag_endpoints (TAO_InputCDR& stream) {
   TAO_InputCDR stream2 (stream, length);
   stream.skip_bytes(length);
 
-  TAO_IIOPEndpointSequence epseq;
+  TAO::IIOPEndpointSequence epseq;
   stream2 >> epseq;
 
   ACE_DEBUG ((LM_DEBUG,

@@ -18,10 +18,11 @@
 #define BASE_SERVER_H
 
 #include /**/ "ace/pre.h"
-#include "tao/corba.h"
+
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableServer/Servant_Base.h"
 
+#include "tao/ORB.h"
 
 // Forward declaration of the kind of servant we are willing to handle
 // in this server

@@ -1,4 +1,5 @@
 // $Id$
+
 /* -*- C++ -*- */
 //=============================================================================
 /**
@@ -25,12 +26,14 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/ESF/ESF_Proxy_Admin.h"
+
 #include "CEC_TypedProxyPushConsumer.h"
 
 class TAO_CEC_TypedEventChannel;
 
 //Class TAO_CEC_TypedSupplierAdmin
-class  TAO_Event_Export TAO_CEC_TypedSupplierAdmin : public POA_CosTypedEventChannelAdmin::TypedSupplierAdmin
+class  TAO_Event_Export TAO_CEC_TypedSupplierAdmin
+  : public POA_CosTypedEventChannelAdmin::TypedSupplierAdmin
 {
 public:
   //Constructor
@@ -88,7 +91,10 @@ private:
   PortableServer::POA_var default_POA_;
 
   /// The push and pull aspects are implemented using these classes
-  TAO_ESF_Proxy_Admin<TAO_CEC_TypedEventChannel,TAO_CEC_TypedProxyPushConsumer,CosTypedEventChannelAdmin::TypedProxyPushConsumer> typed_push_admin_;
+  TAO_ESF_Proxy_Admin<TAO_CEC_TypedEventChannel,
+                      TAO_CEC_TypedProxyPushConsumer,
+                      CosTypedEventChannelAdmin::TypedProxyPushConsumer>
+    typed_push_admin_;
 };
 
 #if defined (__ACE_INLINE__)

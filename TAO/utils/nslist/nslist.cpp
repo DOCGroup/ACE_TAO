@@ -19,6 +19,8 @@
 #include "tao/Endpoint.h"
 #include "tao/Profile.h"
 #include "tao/Stub.h"
+#include "tao/ORB_Constants.h"
+#include "ace/Log_Msg.h"
 
 CORBA::ORB_var orb;
 int showIOR = 0;

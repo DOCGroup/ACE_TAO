@@ -3,6 +3,8 @@
 #include "Constraint_Nodes.h"
 #include "Constraint_Visitors.h"
 
+#include "tao/Managed_Types.h"
+
 ACE_RCSID (Trader,
            Constraint_Nodes,
            "$Id$")

@@ -23,7 +23,6 @@
 #define ADMIN_CLIENT_H
 
 #include "tao/IFR_Client/IFR_BasicC.h"
-#include "tao/corba.h"
 
 const CORBA::ULong NUMBER_OF_TESTS = 11;
 

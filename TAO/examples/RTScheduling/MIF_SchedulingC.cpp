@@ -26,20 +26,12 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:351
+// be/be_codegen.cpp:302
 
 
 #include "MIF_SchedulingC.h"
-#include "tao/Stub.h"
-#include "tao/Invocation.h"
-#include "tao/PortableInterceptor.h"
-
-#if TAO_HAS_INTERCEPTORS == 1
-#include "tao/RequestInfo_Util.h"
-#include "tao/ClientRequestInfo_i.h"
-#include "tao/ClientInterceptorAdapter.h"
-#endif  /* TAO_HAS_INTERCEPTORS == 1 */
-
+#include "tao/Typecode.h"
+#include "tao/Any_Impl_T.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -50,88 +42,54 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:63
+// be/be_visitor_arg_traits.cpp:60
 
-int MIF_Scheduling::SegmentSchedulingParameterPolicy::_tao_class_id = 0;
+// Arg traits specializations.
+namespace TAO
+{
+};
+
+// TAO_IDL - Generated from
+// be/be_visitor_interface/interface_cs.cpp:60
+
+// Traits specializations for MIF_Scheduling::SegmentSchedulingParameterPolicy.
 
 MIF_Scheduling::SegmentSchedulingParameterPolicy_ptr
-MIF_Scheduling::tao_SegmentSchedulingParameterPolicy_life::tao_duplicate (
-    SegmentSchedulingParameterPolicy_ptr p
+TAO::Objref_Traits<MIF_Scheduling::SegmentSchedulingParameterPolicy>::tao_duplicate (
+    MIF_Scheduling::SegmentSchedulingParameterPolicy_ptr p
   )
 {
-  return SegmentSchedulingParameterPolicy::_duplicate (p);
+  return MIF_Scheduling::SegmentSchedulingParameterPolicy::_duplicate (p);
 }
 
 void
-MIF_Scheduling::tao_SegmentSchedulingParameterPolicy_life::tao_release (
-    SegmentSchedulingParameterPolicy_ptr p
+TAO::Objref_Traits<MIF_Scheduling::SegmentSchedulingParameterPolicy>::tao_release (
+    MIF_Scheduling::SegmentSchedulingParameterPolicy_ptr p
   )
 {
   CORBA::release (p);
 }
 
 MIF_Scheduling::SegmentSchedulingParameterPolicy_ptr
-MIF_Scheduling::tao_SegmentSchedulingParameterPolicy_life::tao_nil (
-    void
-  )
+TAO::Objref_Traits<MIF_Scheduling::SegmentSchedulingParameterPolicy>::tao_nil (void)
 {
-  return SegmentSchedulingParameterPolicy::_nil ();
+  return MIF_Scheduling::SegmentSchedulingParameterPolicy::_nil ();
 }
 
 CORBA::Boolean
-MIF_Scheduling::tao_SegmentSchedulingParameterPolicy_life::tao_marshal (
-    SegmentSchedulingParameterPolicy_ptr p,
-    TAO_OutputCDR &cdr
+TAO::Objref_Traits<MIF_Scheduling::SegmentSchedulingParameterPolicy>::tao_marshal (
+    MIF_Scheduling::SegmentSchedulingParameterPolicy_ptr p,
+    TAO_OutputCDR & cdr
   )
 {
   return p->marshal (cdr);
 }
 
-MIF_Scheduling::SegmentSchedulingParameterPolicy_ptr
-MIF_Scheduling::tao_SegmentSchedulingParameterPolicy_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return SegmentSchedulingParameterPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-MIF_Scheduling::tao_SegmentSchedulingParameterPolicy_cast::tao_upcast (
-    void *src
-  )
-{
-  SegmentSchedulingParameterPolicy **tmp =
-    ACE_static_cast (SegmentSchedulingParameterPolicy **, src);
-  return *tmp;
-}
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class
-    TAO_Objref_Var_T<
-        MIF_Scheduling::SegmentSchedulingParameterPolicy,
-        MIF_Scheduling::tao_SegmentSchedulingParameterPolicy_life
-      >;
-  template class
-    TAO_Objref_Out_T<
-        MIF_Scheduling::SegmentSchedulingParameterPolicy,
-        MIF_Scheduling::tao_SegmentSchedulingParameterPolicy_life
-      >;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate \
-    TAO_Objref_Var_T< \
-        MIF_Scheduling::SegmentSchedulingParameterPolicy, \
-        MIF_Scheduling::tao_SegmentSchedulingParameterPolicy_life \
-      >
-# pragma instantiate \
-    TAO_Objref_Out_T< \
-        MIF_Scheduling::SegmentSchedulingParameterPolicy, \
-        MIF_Scheduling::tao_SegmentSchedulingParameterPolicy_life \
-      >
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-// TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_cs.cpp:245
+// Function pointer for collocation factory initialization.
+TAO::Collocation_Proxy_Broker * 
+(*MIF_Scheduling__TAO_SegmentSchedulingParameterPolicy_Proxy_Broker_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  ) = 0;
 
 MIF_Scheduling::SegmentSchedulingParameterPolicy::SegmentSchedulingParameterPolicy (void)
 {}
@@ -142,40 +100,26 @@ MIF_Scheduling::SegmentSchedulingParameterPolicy::~SegmentSchedulingParameterPol
 void 
 MIF_Scheduling::SegmentSchedulingParameterPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
-  SegmentSchedulingParameterPolicy *tmp = ACE_static_cast (SegmentSchedulingParameterPolicy *, _tao_void_pointer);
-  CORBA::release (tmp);
+  SegmentSchedulingParameterPolicy *_tao_tmp_pointer =
+    ACE_static_cast (SegmentSchedulingParameterPolicy *, _tao_void_pointer);
+  CORBA::release (_tao_tmp_pointer);
 }
 
 MIF_Scheduling::SegmentSchedulingParameterPolicy_ptr
 MIF_Scheduling::SegmentSchedulingParameterPolicy::_narrow (
-    CORBA::Object_ptr obj
-    ACE_ENV_ARG_DECL
-  )
-{
-  return SegmentSchedulingParameterPolicy::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
-}
-
-MIF_Scheduling::SegmentSchedulingParameterPolicy_ptr 
-MIF_Scheduling::SegmentSchedulingParameterPolicy::_unchecked_narrow (
-    CORBA::Object_ptr obj
+    CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (obj))
+  if (CORBA::is_nil (_tao_objref))
     {
       return SegmentSchedulingParameterPolicy::_nil ();
     }
   
-  return
-      ACE_reinterpret_cast (
-          SegmentSchedulingParameterPolicy_ptr,
-          obj->_tao_QueryInterface (
-              ACE_reinterpret_cast (
-                  ptrdiff_t,
-                  &SegmentSchedulingParameterPolicy::_tao_class_id
-                )
-            )
-        );
+  SegmentSchedulingParameterPolicy_ptr proxy =
+    dynamic_cast<SegmentSchedulingParameterPolicy_ptr> (_tao_objref);
+  
+  return SegmentSchedulingParameterPolicy::_duplicate (proxy);
 }
 
 MIF_Scheduling::SegmentSchedulingParameterPolicy_ptr
@@ -189,49 +133,37 @@ MIF_Scheduling::SegmentSchedulingParameterPolicy::_duplicate (SegmentSchedulingP
   return obj;
 }
 
-void *MIF_Scheduling::SegmentSchedulingParameterPolicy::_tao_QueryInterface (ptrdiff_t type)
+CORBA::Boolean
+MIF_Scheduling::SegmentSchedulingParameterPolicy::_is_a (
+    const char *value
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
 {
-  void *retv = 0;
-  
-  if (type == ACE_reinterpret_cast (
-              ptrdiff_t,
-              &ACE_NESTED_CLASS (::MIF_Scheduling, SegmentSchedulingParameterPolicy)::_tao_class_id)
-            )
+  if (
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/CORBA/Policy:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:MIF_Scheduling/SegmentSchedulingParameterPolicy:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/CORBA/LocalObject:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/CORBA/Object:1.0"
+        )
+     )
     {
-      retv = ACE_reinterpret_cast (void*, this);
+      return 1; // success using local knowledge
     }
-  else if (type == ACE_reinterpret_cast (
-              ptrdiff_t,
-              &::CORBA::Policy::_tao_class_id)
-            )
+  else
     {
-      retv =
-        ACE_reinterpret_cast (
-            void *,
-            ACE_static_cast (
-                CORBA::Policy_ptr,
-                this
-              )
-          );
+      return 0;
     }
-  else if (type == ACE_reinterpret_cast (
-               ptrdiff_t,
-               &CORBA::Object::_tao_class_id)
-             )
-    {
-      retv =
-        ACE_reinterpret_cast (
-            void *,
-            ACE_static_cast (CORBA::Object_ptr, this)
-          );
-    }
-  
-  if (retv != 0)
-    {
-      this->_add_ref ();
-    }
-  
-  return retv;
 }
 
 const char* MIF_Scheduling::SegmentSchedulingParameterPolicy::_interface_repository_id (void) const
@@ -286,98 +218,53 @@ static CORBA::TypeCode _tc_TAO_tc_MIF_Scheduling_SegmentSchedulingParameterPolic
     sizeof (MIF_Scheduling::SegmentSchedulingParameterPolicy)
   );
 
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (MIF_Scheduling)
-TAO_NAMESPACE_DEFINE (
-    ::CORBA::TypeCode_ptr,
-    _tc_SegmentSchedulingParameterPolicy,
-    &_tc_TAO_tc_MIF_Scheduling_SegmentSchedulingParameterPolicy
-  )
-TAO_NAMESPACE_END
+namespace MIF_Scheduling
+{
+  ::CORBA::TypeCode_ptr _tc_SegmentSchedulingParameterPolicy =
+    &_tc_TAO_tc_MIF_Scheduling_SegmentSchedulingParameterPolicy;
+}
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:63
+// be/be_visitor_interface/interface_cs.cpp:60
 
-int MIF_Scheduling::MIF_Scheduler::_tao_class_id = 0;
+// Traits specializations for MIF_Scheduling::MIF_Scheduler.
 
 MIF_Scheduling::MIF_Scheduler_ptr
-MIF_Scheduling::tao_MIF_Scheduler_life::tao_duplicate (
-    MIF_Scheduler_ptr p
+TAO::Objref_Traits<MIF_Scheduling::MIF_Scheduler>::tao_duplicate (
+    MIF_Scheduling::MIF_Scheduler_ptr p
   )
 {
-  return MIF_Scheduler::_duplicate (p);
+  return MIF_Scheduling::MIF_Scheduler::_duplicate (p);
 }
 
 void
-MIF_Scheduling::tao_MIF_Scheduler_life::tao_release (
-    MIF_Scheduler_ptr p
+TAO::Objref_Traits<MIF_Scheduling::MIF_Scheduler>::tao_release (
+    MIF_Scheduling::MIF_Scheduler_ptr p
   )
 {
   CORBA::release (p);
 }
 
 MIF_Scheduling::MIF_Scheduler_ptr
-MIF_Scheduling::tao_MIF_Scheduler_life::tao_nil (
-    void
-  )
+TAO::Objref_Traits<MIF_Scheduling::MIF_Scheduler>::tao_nil (void)
 {
-  return MIF_Scheduler::_nil ();
+  return MIF_Scheduling::MIF_Scheduler::_nil ();
 }
 
 CORBA::Boolean
-MIF_Scheduling::tao_MIF_Scheduler_life::tao_marshal (
-    MIF_Scheduler_ptr p,
-    TAO_OutputCDR &cdr
+TAO::Objref_Traits<MIF_Scheduling::MIF_Scheduler>::tao_marshal (
+    MIF_Scheduling::MIF_Scheduler_ptr p,
+    TAO_OutputCDR & cdr
   )
 {
   return p->marshal (cdr);
 }
 
-MIF_Scheduling::MIF_Scheduler_ptr
-MIF_Scheduling::tao_MIF_Scheduler_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return MIF_Scheduler::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-MIF_Scheduling::tao_MIF_Scheduler_cast::tao_upcast (
-    void *src
-  )
-{
-  MIF_Scheduler **tmp =
-    ACE_static_cast (MIF_Scheduler **, src);
-  return *tmp;
-}
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class
-    TAO_Objref_Var_T<
-        MIF_Scheduling::MIF_Scheduler,
-        MIF_Scheduling::tao_MIF_Scheduler_life
-      >;
-  template class
-    TAO_Objref_Out_T<
-        MIF_Scheduling::MIF_Scheduler,
-        MIF_Scheduling::tao_MIF_Scheduler_life
-      >;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate \
-    TAO_Objref_Var_T< \
-        MIF_Scheduling::MIF_Scheduler, \
-        MIF_Scheduling::tao_MIF_Scheduler_life \
-      >
-# pragma instantiate \
-    TAO_Objref_Out_T< \
-        MIF_Scheduling::MIF_Scheduler, \
-        MIF_Scheduling::tao_MIF_Scheduler_life \
-      >
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-// TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_cs.cpp:245
+// Function pointer for collocation factory initialization.
+TAO::Collocation_Proxy_Broker * 
+(*MIF_Scheduling__TAO_MIF_Scheduler_Proxy_Broker_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  ) = 0;
 
 MIF_Scheduling::MIF_Scheduler::MIF_Scheduler (void)
 {}
@@ -388,40 +275,26 @@ MIF_Scheduling::MIF_Scheduler::~MIF_Scheduler (void)
 void 
 MIF_Scheduling::MIF_Scheduler::_tao_any_destructor (void *_tao_void_pointer)
 {
-  MIF_Scheduler *tmp = ACE_static_cast (MIF_Scheduler *, _tao_void_pointer);
-  CORBA::release (tmp);
+  MIF_Scheduler *_tao_tmp_pointer =
+    ACE_static_cast (MIF_Scheduler *, _tao_void_pointer);
+  CORBA::release (_tao_tmp_pointer);
 }
 
 MIF_Scheduling::MIF_Scheduler_ptr
 MIF_Scheduling::MIF_Scheduler::_narrow (
-    CORBA::Object_ptr obj
-    ACE_ENV_ARG_DECL
-  )
-{
-  return MIF_Scheduler::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
-}
-
-MIF_Scheduling::MIF_Scheduler_ptr 
-MIF_Scheduling::MIF_Scheduler::_unchecked_narrow (
-    CORBA::Object_ptr obj
+    CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (obj))
+  if (CORBA::is_nil (_tao_objref))
     {
       return MIF_Scheduler::_nil ();
     }
   
-  return
-      ACE_reinterpret_cast (
-          MIF_Scheduler_ptr,
-          obj->_tao_QueryInterface (
-              ACE_reinterpret_cast (
-                  ptrdiff_t,
-                  &MIF_Scheduler::_tao_class_id
-                )
-            )
-        );
+  MIF_Scheduler_ptr proxy =
+    dynamic_cast<MIF_Scheduler_ptr> (_tao_objref);
+  
+  return MIF_Scheduler::_duplicate (proxy);
 }
 
 MIF_Scheduling::MIF_Scheduler_ptr
@@ -435,49 +308,37 @@ MIF_Scheduling::MIF_Scheduler::_duplicate (MIF_Scheduler_ptr obj)
   return obj;
 }
 
-void *MIF_Scheduling::MIF_Scheduler::_tao_QueryInterface (ptrdiff_t type)
+CORBA::Boolean
+MIF_Scheduling::MIF_Scheduler::_is_a (
+    const char *value
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
 {
-  void *retv = 0;
-  
-  if (type == ACE_reinterpret_cast (
-              ptrdiff_t,
-              &ACE_NESTED_CLASS (::MIF_Scheduling, MIF_Scheduler)::_tao_class_id)
-            )
+  if (
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:RTScheduling/Scheduler:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:MIF_Scheduling/MIF_Scheduler:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/CORBA/LocalObject:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/CORBA/Object:1.0"
+        )
+     )
     {
-      retv = ACE_reinterpret_cast (void*, this);
+      return 1; // success using local knowledge
     }
-  else if (type == ACE_reinterpret_cast (
-              ptrdiff_t,
-              &::RTScheduling::Scheduler::_tao_class_id)
-            )
+  else
     {
-      retv =
-        ACE_reinterpret_cast (
-            void *,
-            ACE_static_cast (
-                RTScheduling::Scheduler_ptr,
-                this
-              )
-          );
+      return 0;
     }
-  else if (type == ACE_reinterpret_cast (
-               ptrdiff_t,
-               &CORBA::Object::_tao_class_id)
-             )
-    {
-      retv =
-        ACE_reinterpret_cast (
-            void *,
-            ACE_static_cast (CORBA::Object_ptr, this)
-          );
-    }
-  
-  if (retv != 0)
-    {
-      this->_add_ref ();
-    }
-  
-  return retv;
 }
 
 const char* MIF_Scheduling::MIF_Scheduler::_interface_repository_id (void) const
@@ -523,17 +384,38 @@ static CORBA::TypeCode _tc_TAO_tc_MIF_Scheduling_MIF_Scheduler (
     sizeof (MIF_Scheduling::MIF_Scheduler)
   );
 
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (MIF_Scheduling)
-TAO_NAMESPACE_DEFINE (
-    ::CORBA::TypeCode_ptr,
-    _tc_MIF_Scheduler,
-    &_tc_TAO_tc_MIF_Scheduling_MIF_Scheduler
-  )
-TAO_NAMESPACE_END
+namespace MIF_Scheduling
+{
+  ::CORBA::TypeCode_ptr _tc_MIF_Scheduler =
+    &_tc_TAO_tc_MIF_Scheduling_MIF_Scheduler;
+}
 
 // TAO_IDL - Generated from
 // be/be_visitor_interface/any_op_cs.cpp:50
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<MIF_Scheduling::SegmentSchedulingParameterPolicy>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<MIF_Scheduling::SegmentSchedulingParameterPolicy>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<MIF_Scheduling::SegmentSchedulingParameterPolicy>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
 
 // Copying insertion.
 void
@@ -577,15 +459,32 @@ operator>>= (
       );
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
-    defined (ACE_HAS_GNU_REPO)
-  template class TAO::Any_Impl_T<MIF_Scheduling::SegmentSchedulingParameterPolicy>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO::Any_Impl_T<MIF_Scheduling::SegmentSchedulingParameterPolicy>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 // TAO_IDL - Generated from
 // be/be_visitor_interface/any_op_cs.cpp:50
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<MIF_Scheduling::MIF_Scheduler>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<MIF_Scheduling::MIF_Scheduler>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<MIF_Scheduling::MIF_Scheduler>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
 
 // Copying insertion.
 void
@@ -629,10 +528,92 @@ operator>>= (
       );
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
-    defined (ACE_HAS_GNU_REPO)
-  template class TAO::Any_Impl_T<MIF_Scheduling::MIF_Scheduler>;
+// TAO_IDL - Generated from
+// be/be_visitor_root/root.cpp:1702
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+  template class
+    TAO::Objref_Traits<
+        MIF_Scheduling::SegmentSchedulingParameterPolicy
+      >;
+
+  template class
+    TAO_Objref_Var_T<
+        MIF_Scheduling::SegmentSchedulingParameterPolicy
+      >;
+  
+  template class
+    TAO_Objref_Out_T<
+        MIF_Scheduling::SegmentSchedulingParameterPolicy
+      >;
+
+  template class
+    TAO::Any_Impl_T<
+        MIF_Scheduling::SegmentSchedulingParameterPolicy
+      >;
+
+  template class
+    TAO::Objref_Traits<
+        MIF_Scheduling::MIF_Scheduler
+      >;
+
+  template class
+    TAO_Objref_Var_T<
+        MIF_Scheduling::MIF_Scheduler
+      >;
+  
+  template class
+    TAO_Objref_Out_T<
+        MIF_Scheduling::MIF_Scheduler
+      >;
+
+  template class
+    TAO::Any_Impl_T<
+        MIF_Scheduling::MIF_Scheduler
+      >;
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO::Any_Impl_T<MIF_Scheduling::MIF_Scheduler>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+# pragma instantiate \
+    TAO::Objref_Traits< \
+        MIF_Scheduling::SegmentSchedulingParameterPolicy \
+      >
+
+# pragma instantiate \
+    TAO_Objref_Var_T< \
+        MIF_Scheduling::SegmentSchedulingParameterPolicy
+      >
+  
+# pragma instantiate \
+    TAO_Objref_Out_T< \
+        MIF_Scheduling::SegmentSchedulingParameterPolicy
+      >
+
+# pragma instantiate \
+    TAO::Any_Impl_T< \
+        MIF_Scheduling::SegmentSchedulingParameterPolicy \
+      >
+
+# pragma instantiate \
+    TAO::Objref_Traits< \
+        MIF_Scheduling::MIF_Scheduler \
+      >
+
+# pragma instantiate \
+    TAO_Objref_Var_T< \
+        MIF_Scheduling::MIF_Scheduler
+      >
+  
+# pragma instantiate \
+    TAO_Objref_Out_T< \
+        MIF_Scheduling::MIF_Scheduler
+      >
+
+# pragma instantiate \
+    TAO::Any_Impl_T< \
+        MIF_Scheduling::MIF_Scheduler \
+      >
+
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 

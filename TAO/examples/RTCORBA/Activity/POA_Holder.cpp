@@ -2,6 +2,7 @@
 #include "POA_Holder.h"
 #include "ace/Arg_Shifter.h"
 #include "tao/debug.h"
+#include "ace/Log_Msg.h"
 
 POA_Holder::POA_Holder (void)
   :priority_model_ (RTCORBA::CLIENT_PROPAGATED),
