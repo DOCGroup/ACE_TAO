@@ -20,9 +20,7 @@
 
 // Constructor.p
 Options::Options (void)
-  : param_test_key_ (CORBA::string_dup ("param_test")),
-    hostname_ (CORBA::string_dup (ACE_DEFAULT_SERVER_HOST)),
-    portnum_ (TAO_DEFAULT_SERVER_PORT),
+  : ior_ (0),
     test_type_ (Options::NO_TEST),
     invoke_type_ (Options::SII),
     loop_count_ (1),
@@ -33,17 +31,15 @@ Options::Options (void)
 Options::~Options (void)
 {
   // Free resources
-  CORBA::string_free (this->param_test_key_);
-  this->param_test_key_ = 0;
-  CORBA::string_free (this->hostname_);
-  this->hostname_ = 0;
+  CORBA::string_free (this->ior_);
+  this->ior_ = 0;
 }
 
 // Parses the command line arguments and returns an error status.
 int
 Options::parse_args (int argc, char **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "dn:h:p:k:i:t:");
+  ACE_Get_Opt get_opts (argc, argv, "dn:f:h:p:k:i:t:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -56,16 +52,9 @@ Options::parse_args (int argc, char **argv)
       case 'n':			// loop count
         this->loop_count_ = (CORBA::ULong) ACE_OS::atoi (get_opts.optarg);
         break;
-      case 'h':
-        CORBA::string_free (this->hostname_); // release old one
-        this->hostname_ = CORBA::string_dup (get_opts.optarg);
-        break;
-      case 'p':
-        this->portnum_ = ACE_OS::atoi (get_opts.optarg);
-        break;
-      case 'k':			// stringified objref
-        CORBA::string_free (this->param_test_key_); // release old one
-        this->param_test_key_ = CORBA::string_dup (get_opts.optarg);
+      case 'f':
+        CORBA::string_free (this->ior_);
+        this->ior_ = CORBA::string_copy (get_opts.optarg);
         break;
       case 'i':  // invocation
         if (!ACE_OS::strcmp (get_opts.optarg, "dii"))
@@ -95,11 +84,9 @@ Options::parse_args (int argc, char **argv)
                            "usage:  %s"
                            " [-d]"
                            " [-n loopcount]"
-                           " [-k Param_Test-obj-ref-key]"
-                           " [-h hostname]"
+                           " [-f servant-IOR]"
                            " [-i invocation (sii/dii)]"
                            " [-t data type]"
-                           " [-p port]"
                            "\n",
                            argv [0]),
                           -1);
@@ -110,21 +97,9 @@ Options::parse_args (int argc, char **argv)
 }
 
 char *
-Options::param_test_key (void)
+Options::param_test_ior (void)
 {
-  return this->param_test_key_;
-}
-
-char *
-Options::hostname (void)
-{
-  return this->hostname_;
-}
-
-CORBA::UShort
-Options::portnum (void)
-{
-  return this->portnum_;
+  return this->ior_;
 }
 
 Options::TEST_TYPE
