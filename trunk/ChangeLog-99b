@@ -1,3 +1,9 @@
+Tue Jul  6 18:31:34 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* include/makeinclude/platform_irix6.x_sgic++.GNU:
+	  Removed pesky warnings about functions to big to optimize
+	  because it would be slow.
+
 Tue Jul  6 18:15:31 1999  Steve Huston  <shuston@riverace.com>
 
         * ACE_INSTALL.html: Added a further note re PharLap ETS builds.
