@@ -1,3 +1,8 @@
+Wed Mar 23 11:41:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/Config_Handlers/Basic_Deployment_Data.hpp:
+          Fixed compile errors
+
 Wed Mar 23 11:22:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/Config_Handlers/Basic_Deployment_Data.cpp:
