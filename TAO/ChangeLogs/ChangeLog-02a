@@ -4,10 +4,10 @@ Sat May 26 17:41:37 2001  Krishnakumar B  <kitty@cs.wustl.edu>
         * performance-tests/DSI_Latency/run_test.pl:
         * performance-tests/Deferred_Latency/run_test.pl:
         * performance-tests/Single_Threaded_Latency/run_test.pl:
-        * performance-tests/Thread_Pool_Latency/run_test.pl:
+        * performance-tests/Thread_Pool_Latency/run_test. pl:
 
-        Bumped up the timeouts on these tests as they seem to be timing
-        out on Tru64 before the test could be completed.
+          Bumped up the timeouts on these tests as they seem to be timing
+	  out on Tru64 before the test could be completed. 
 
 Sat May 26 17:12:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
@@ -28,17 +28,17 @@ Sat May 26 16:45:04 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * examples/PluggableUDP/tests/SimplePerformance/run_test.pl:
 
-        The previous changelog should have been mentioned
-        examples/PluggableUDP/tests/SimplePerformance/run_test.pl and not
-        examples/PluggableUDP/run_test.pl. Added the new file with correct
-        permissions.
+          The previous changelog should have been mentioned
+	  examples/PluggableUDP/tests/SimplePerformance/run_test.pl and
+	  not  examples/PluggableUDP/run_test.pl. Added the new file with
+	  correct permissions.
 
 Sat May 26 16:42:05 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * examples/PluggableUDP/run_test.pl:
 
-        Removed the file from the repository as it was checked in without
-        execute permissions.
+          Removed the file from the repository as it was checked in
+	  without execute permissions. 
 
 Fri May 25 20:51:33 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
 
