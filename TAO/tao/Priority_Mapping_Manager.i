@@ -1,6 +1,6 @@
 // $Id$
 
-#if (TAO_HAS_RT_CORBA == 1)
+#if (TAO_HAS_RT_CORBA==1)
 // *************************************************************
 // Inline operations for class TAO_Priority_Mapping_Manager_var
 // *************************************************************
@@ -99,12 +99,6 @@ TAO_Priority_Mapping_Manager_var::_retn (void)
   return val;
 }
 
-
-#endif /* end #if !defined */
-
-
-#if !defined (_PRIORITY_MAPPING_MANAGER___OUT_CI_)
-#define _PRIORITY_MAPPING_MANAGER___OUT_CI_
 
 // *************************************************************
 // Inline operations for class TAO_Priority_Mapping_Manager_out
