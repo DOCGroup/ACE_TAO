@@ -114,13 +114,13 @@ CORBA_TypeCode::alignment (CORBA::Environment &env)
 // These are in CORBA namespace
 
 ACE_INLINE CORBA::Boolean
-CORBA::is_nil (CORBA::ORB_ptr obj)
+CORBA::is_nil (CORBA::TypeCode_ptr obj)
 {
   return obj == 0;
 }
 
 ACE_INLINE void
-CORBA::release (CORBA::ORB_ptr obj)
+CORBA::release (CORBA::TypeCode_ptr obj)
 {
   if (obj)
     obj->_decr_refcnt ();
