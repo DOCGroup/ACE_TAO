@@ -1,3 +1,9 @@
+Mon Aug 25 06:34:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
+        * orbsvcs/orbsvcs/Event/EC_Scheduling_Strategy.h:
+          Added include of event_export.h
+
 Mon Aug 25 06:02:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/ICMG_Any_Bug/Hello.cpp:
