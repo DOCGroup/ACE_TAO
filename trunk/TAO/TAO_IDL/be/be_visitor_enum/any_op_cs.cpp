@@ -83,7 +83,7 @@ be_visitor_enum_any_op_cs::visit_enum (be_enum *node)
       << "if (!type->equal (" << node->tc_name ()
       << ", ACE_TRY_ENV)) return 0; // not equal" << be_nl
       << "ACE_TRY_CHECK;" << be_nl
-      << "TAO_InputCDR stream ((ACE_Message_Block *)_tao_any._tao_get_cdr ());"
+      << "TAO_InputCDR stream (_tao_any._tao_get_cdr ());"
       << be_nl
       << "if (stream.decode (" << node->tc_name ()
       << ", &_tao_elem, 0, ACE_TRY_ENV)" << be_nl
