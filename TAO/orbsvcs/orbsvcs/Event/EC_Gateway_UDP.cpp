@@ -1061,7 +1061,7 @@ int
 TAO_ECG_Mcast_EH::close (CORBA::Environment& TAO_IN_ENV)
 {
   if (this->handle_ == 0)
-    return;
+    return 0;
 
   this->ec_->remove_observer (this->handle_, TAO_IN_ENV);
   this->handle_ = 0;
