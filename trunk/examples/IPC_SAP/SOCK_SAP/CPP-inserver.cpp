@@ -55,7 +55,7 @@ twoway_server (void *arg)
                        "%p\n",
                        "get_remote_addr"),
                        0);
-                       
+
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) client %s connected from %d\n",
               cli_addr.get_host_name (),
@@ -118,7 +118,7 @@ twoway_server (void *arg)
                       "(%P|%t) reached end of input, connection closed by client\n"));
           break;
         }
-      else if (verbose 
+      else if (verbose
                && ACE::write_n (ACE_STDOUT,
                                 request,
                                 r_bytes) != r_bytes)
@@ -167,7 +167,7 @@ oneway_server (void *arg)
                        "%p\n",
                        "get_remote_addr"),
                        0);
-                       
+
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) client %s connected from %d\n",
               cli_addr.get_host_name (),
@@ -221,7 +221,7 @@ oneway_server (void *arg)
       // Subtract off the sizeof the length prefix.
       r_bytes = new_stream.recv_n (request,
                                    len - sizeof (ACE_UINT32));
-      
+
       if (r_bytes == -1)
         {
           ACE_ERROR ((LM_ERROR,
@@ -235,7 +235,7 @@ oneway_server (void *arg)
                       "(%P|%t) reached end of input, connection closed by client\n"));
           break;
         }
-      else if (verbose 
+      else if (verbose
                && ACE::write_n (ACE_STDOUT, request, r_bytes) != r_bytes)
         ACE_ERROR ((LM_ERROR,
                     "%p\n",
@@ -262,11 +262,11 @@ oneway_server (void *arg)
   double messages_per_sec = double (message_count) / et.real_time;
 
   ACE_DEBUG ((LM_DEBUG,
-	      ASYS_TEXT ("\t\tmessages = %d\n\t\ttotal bytes = %d\n\t\tmbits/sec = %f\n\t\tusec-per-message = %f\n\t\tmessages-per-second = %0.00f\n"),
-	      message_count,
+              ASYS_TEXT ("\t\tmessages = %d\n\t\ttotal bytes = %d\n\t\tmbits/sec = %f\n\t\tusec-per-message = %f\n\t\tmessages-per-second = %0.00f\n"),
+              message_count,
               total_bytes,
-	      (((double) total_bytes * 8) / et.real_time) / (double) (1024 * 1024),
-	      (et.real_time / (double) message_count) * 1000000,
+              (((double) total_bytes * 8) / et.real_time) / (double) (1024 * 1024),
+              (et.real_time / (double) message_count) * 1000000,
               messages_per_sec < 0 ? 0 : messages_per_sec));
 
   // Close new endpoint (listening endpoint stays open).
@@ -346,13 +346,13 @@ run_event_loop (u_short port)
                               "%p\n",
                               "accept"));
                   continue;
-                }          
+                }
               else
                 ACE_DEBUG ((LM_DEBUG,
                             "(%P|%t) spawning twoway server\n"));
 
               // Run the twoway server.
-              run_server (twoway_server,
+              run_server (ACE_static_cast (ACE_THR_FUNC, twoway_server),
                           new_stream.get_handle ());
             }
           if (temp.is_set (oneway_acceptor.get_handle ()))
@@ -361,13 +361,13 @@ run_event_loop (u_short port)
                 {
                   ACE_ERROR ((LM_ERROR, "%p\n", "accept"));
                   continue;
-                }          
+                }
               else
                 ACE_DEBUG ((LM_DEBUG,
                             "(%P|%t) spawning oneway server\n"));
 
               // Run the oneway server.
-              run_server (oneway_server,
+              run_server (ACE_static_cast (ACE_THR_FUNC, oneway_server),
                           new_stream.get_handle ());
             }
         }
