@@ -2815,7 +2815,15 @@ public:
   static int mutex_init (ACE_mutex_t *m, int type = USYNC_THREAD,
                          LPCTSTR name = 0, void *arg = 0);
   static int mutex_destroy (ACE_mutex_t *m);
+
   static int mutex_lock (ACE_mutex_t *m);
+  // Win32 note: Abandoned mutexes are not treated differently. 0 is
+  // returned.
+
+  static int mutex_lock (ACE_mutex_t *m, int &abandoned);
+  // This method is only implemented for Win32.  For abandoned
+  // mutexes, <abandoned> is set to 1 and 0 is returned.
+
   static int mutex_trylock (ACE_mutex_t *m);
   static int mutex_unlock (ACE_mutex_t *m);
 
