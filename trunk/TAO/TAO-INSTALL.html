@@ -44,22 +44,34 @@ likely unpredictable and erroneous results. <P>
   <LI>Set <CODE>TAO_ROOT</CODE> environment variable to
       <CODE>$ACE_ROOT/TAO</CODE>. <P>
 
-  <LI>Build and install the TAO release under <CODE>$TAO_ROOT</CODE>.<P>
+  <LI>Build and install the TAO release under
+	<CODE>$TAO_ROOT</CODE>.<P>
 
-      <UL>
-        <LI>Compile the Library: Change directory to
-            <CODE>$TAO_ROOT/tao</CODE> and execute
-            <code><a href="#makenotes">make</a></code>.
-	<LI>Compile TAO_IDL: Change directory to
-            <CODE>$TAO_ROOT/TAO_IDL</CODE> and execute
-            <code><a href="#makenotes">make</a></code>.
-	<LI>Compile ORB Services: Change directory to
-            <CODE>$TAO_ROOT/orbsvcs/orbsvcs</CODE> and execute
-            <code><a href="#makenotes">make</a></code>.
-      </UL>
+	<P>The easiest and recommended way to compile the
+	  <B>complete</B> TAO distribution by simply simply executing
+	  <code><a href="#makenotes">make</a></code>
+	  in the <CODE>$TAO_ROOT</CODE> directory.
+	</P>
 
-  <LI>To test that the TAO release is properly configured, follow
-      instructions on executing the various examples under
+	<P>A smaller subset, that may be of interest to test basic TAO 
+	  functionality, is:
+	  <CODE>$TAO_ROOT/tao</CODE>,
+	  <CODE>$TAO_ROOT/TAO_IDL</CODE>,
+	  <CODE>$TAO_ROOT/tests/Param_Test</CODE>.
+	  Then you can execute the <CODE>run_test.pl</CODE> script in
+	  <CODE>$TAO_ROOT/tests/Param_Test</CODE> and/or
+	  follow the instructions contained in the <CODE>README</CODE> 
+	  file in the same directory.
+	</P>
+
+	<P>If you wish to compile the services distributed with TAO,
+	  including the <CODE>Naming_Service</CODE> you
+	  must include <CODE>$TAO_ROOT/orbsvcs</CODE> to the list
+	  above.
+	</P>
+
+  <LI>To test that the TAO release is properly configured,
+	follow instructions on executing the various examples under
       <CODE>$TAO_ROOT/tests</CODE>.<P>
 
 </OL>
