@@ -874,7 +874,7 @@ CORBA_ORB::multicast_to_service (const char * service_name,
 }
 
 CORBA_Object_ptr
-CORBA_ORB::resolve_initial_references (const CORBA::String name,
+CORBA_ORB::resolve_initial_references (const char *name,
                                        CORBA_Environment &TAO_IN_ENV)
 {
   return this->resolve_initial_references (name,
@@ -883,7 +883,7 @@ CORBA_ORB::resolve_initial_references (const CORBA::String name,
 }
 
 CORBA_Object_ptr
-CORBA_ORB::resolve_initial_references (const CORBA::String name,
+CORBA_ORB::resolve_initial_references (const char *name,
                                        ACE_Time_Value *timeout,
                                        CORBA_Environment &ACE_TRY_ENV)
 {
