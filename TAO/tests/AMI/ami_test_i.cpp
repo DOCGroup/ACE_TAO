@@ -36,7 +36,6 @@ AMI_Test_i::foo (CORBA::Long_out out_l,
                  CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
   out_l = 931233;
 
   //if (TAO_debug_level > 0)
@@ -49,7 +48,7 @@ AMI_Test_i::foo (CORBA::Long_out out_l,
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Throwing Exception: DidNotWork\n"));
-      ACE_TRY_THROW (A::DidNotWork());
+      ACE_THROW_RETURN (A::DidNotWork(), 0);
     }
 
   return 931234;
