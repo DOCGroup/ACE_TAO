@@ -4,16 +4,16 @@
 
 #include "tao/SystemException.h"
 
-
-ACE_INLINE
-TAO_POA_Current::TAO_POA_Current (void)
-{
-}
-
 ACE_INLINE TAO_Policy_Validator &
 TAO_Object_Adapter::validator (void)
 {
   return this->default_validator_;
+}
+
+ACE_INLINE int
+TAO_Object_Adapter::enable_locking (void) const
+{
+  return this->enable_locking_;
 }
 
 ACE_INLINE TAO_POA_Policy_Set &
@@ -73,7 +73,7 @@ TAO_Object_Adapter::find_servant (const TAO::ObjectKey &key,
 
 ACE_INLINE int
 TAO_Object_Adapter::find_persistent_poa (const poa_name &system_name,
-                                         TAO_POA *&poa
+                                         TAO_Root_POA *&poa
                                          ACE_ENV_ARG_DECL)
 {
   return this->hint_strategy_->find_persistent_poa (system_name,
@@ -85,8 +85,8 @@ ACE_INLINE int
 TAO_Object_Adapter::find_poa (const poa_name &system_name,
                               CORBA::Boolean activate_it,
                               CORBA::Boolean root,
-                              const TAO_Temporary_Creation_Time &poa_creation_time,
-                              TAO_POA *&poa
+                              const TAO::Portable_Server::Temporary_Creation_Time &poa_creation_time,
+                              TAO_Root_POA *&poa
                               ACE_ENV_ARG_DECL)
 {
   if (activate_it)
@@ -106,7 +106,7 @@ TAO_Object_Adapter::find_poa (const poa_name &system_name,
 }
 
 ACE_INLINE int
-TAO_Object_Adapter::bind_transient_poa (TAO_POA *poa,
+TAO_Object_Adapter::bind_transient_poa (TAO_Root_POA *poa,
                                         poa_name_out system_name)
 {
   poa_name name;
@@ -125,7 +125,7 @@ TAO_Object_Adapter::bind_transient_poa (TAO_POA *poa,
 
 ACE_INLINE int
 TAO_Object_Adapter::bind_persistent_poa (const poa_name &folded_name,
-                                         TAO_POA *poa,
+                                         TAO_Root_POA *poa,
                                          poa_name_out system_name)
 {
   return this->hint_strategy_->bind_persistent_poa (folded_name,
@@ -147,7 +147,7 @@ TAO_Object_Adapter::unbind_persistent_poa (const poa_name &folded_name,
                                                       system_name);
 }
 
-ACE_INLINE TAO_POA *
+ACE_INLINE TAO_Root_POA *
 TAO_Object_Adapter::root_poa (void) const
 {
   return this->root_;
@@ -159,179 +159,9 @@ TAO_Object_Adapter::orb_core (void) const
   return this->orb_core_;
 }
 
-ACE_INLINE TAO_Object_Adapter::Non_Servant_Upcall *
+ACE_INLINE TAO::Portable_Server::Non_Servant_Upcall *
 TAO_Object_Adapter::non_servant_upcall_in_progress (void) const
 {
   return this->non_servant_upcall_in_progress_;
 }
 
-// ****************************************************************
-
-ACE_INLINE TAO_POA &
-TAO_Object_Adapter::Non_Servant_Upcall::poa (void) const
-{
-  return this->poa_;
-}
-
-ACE_INLINE TAO_POA &
-TAO_Object_Adapter::Servant_Upcall::poa (void) const
-{
-  return *this->poa_;
-}
-
-ACE_INLINE PortableServer::Servant
-TAO_Object_Adapter::Servant_Upcall::servant (void) const
-{
-  return this->servant_;
-}
-
-ACE_INLINE TAO_Object_Adapter &
-TAO_Object_Adapter::Servant_Upcall::object_adapter (void) const
-{
-  return *this->object_adapter_;
-}
-
-ACE_INLINE const PortableServer::ObjectId &
-TAO_Object_Adapter::Servant_Upcall::id (void) const
-{
-  return this->system_id_;
-}
-
-ACE_INLINE void
-TAO_Object_Adapter::Servant_Upcall::user_id (
-  const PortableServer::ObjectId *id)
-{
-  this->user_id_ = id;
-}
-
-ACE_INLINE const PortableServer::ObjectId &
-TAO_Object_Adapter::Servant_Upcall::user_id (void) const
-{
-  return *(this->user_id_);
-}
-
-#if (TAO_HAS_MINIMUM_POA == 0)
-
-ACE_INLINE PortableServer::ServantLocator::Cookie
-TAO_Object_Adapter::Servant_Upcall::locator_cookie (void) const
-{
-  return this->cookie_;
-}
-
-ACE_INLINE void
-TAO_Object_Adapter::Servant_Upcall::locator_cookie (PortableServer::ServantLocator::Cookie cookie)
-{
-  this->cookie_ = cookie;
-}
-
-ACE_INLINE const char *
-TAO_Object_Adapter::Servant_Upcall::operation (void) const
-{
-  return this->operation_;
-}
-
-ACE_INLINE void
-TAO_Object_Adapter::Servant_Upcall::operation (const char *name)
-{
-  this->operation_ = name;
-}
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
-
-ACE_INLINE void
-TAO_Object_Adapter::Servant_Upcall::active_object_map_entry (TAO_Active_Object_Map::Map_Entry *entry)
-{
-  this->active_object_map_entry_ = entry;
-}
-
-ACE_INLINE TAO_Active_Object_Map::Map_Entry *
-TAO_Object_Adapter::Servant_Upcall::active_object_map_entry (void) const
-{
-  return this->active_object_map_entry_;
-}
-
-ACE_INLINE void
-TAO_Object_Adapter::Servant_Upcall::using_servant_locator (void)
-{
-  this->using_servant_locator_ = 1;
-}
-
-////////////////////////////////////////////////////////////////////////////////
-
-ACE_INLINE void
-TAO_POA_Current_Impl::poa (TAO_POA *p)
-{
-  this->poa_ = p;
-}
-
-ACE_INLINE TAO_POA *
-TAO_POA_Current_Impl::poa (void) const
-{
-  return this->poa_;
-}
-
-ACE_INLINE void
-TAO_POA_Current_Impl::object_id (const PortableServer::ObjectId &id)
-{
-  this->object_id_ = id;
-}
-
-ACE_INLINE const PortableServer::ObjectId &
-TAO_POA_Current_Impl::object_id (void) const
-{
-  return this->object_id_;
-}
-
-ACE_INLINE void
-TAO_POA_Current_Impl::object_key (const TAO::ObjectKey &key)
-{
-  this->object_key_ = &key;
-}
-
-ACE_INLINE const TAO::ObjectKey &
-TAO_POA_Current_Impl::object_key (void) const
-{
-  return *this->object_key_;
-}
-
-ACE_INLINE void
-TAO_POA_Current_Impl::servant (PortableServer::Servant servant)
-{
-  this->servant_ = servant;
-}
-
-ACE_INLINE PortableServer::Servant
-TAO_POA_Current_Impl::servant (void) const
-{
-  return this->servant_;
-}
-
-ACE_INLINE void
-TAO_POA_Current_Impl::priority (CORBA::Short priority)
-{
-  this->priority_ = priority;
-}
-
-ACE_INLINE CORBA::Short
-TAO_POA_Current_Impl::priority (void) const
-{
-  return this->priority_;
-}
-
-ACE_INLINE CORBA::Short
-TAO_Object_Adapter::Servant_Upcall::priority (void) const
-{
-  return this->current_context_.priority ();
-}
-
-ACE_INLINE TAO_Object_Adapter::Servant_Upcall::State
-TAO_Object_Adapter::Servant_Upcall::state (void) const
-{
-  return this->state_;
-}
-
-ACE_INLINE void
-TAO_Object_Adapter::Servant_Upcall::state (TAO_Object_Adapter::Servant_Upcall::State state)
-{
-  this->state_ = state;
-}
