@@ -11,17 +11,19 @@
 // ============================================================================
 
 #include "test_config.h"
+#include "ace/Task.h"
 #include "ace/RMCast/RMCast_Fragment.h"
 
 ACE_RCSID(tests, RMCast_Fragment_Test, "$Id$")
 
-class ACE_RMCast_Fragment_Tester : public ACE_Task<ACE_MT_SYNCH>
+class ACE_RMCast_Fragment_Tester
+  : public ACE_Task_Base
+  , public ACE_RMCast_Module
 {
 public:
   ACE_RMCast_Fragment_Tester (void);
 
-  virtual int put (ACE_Message_Block *mb,
-                   ACE_Time_Value *tv = 0);
+  virtual int put_data (ACE_RMCast::Data &data);
   virtual int svc (void);
 
 private:
@@ -32,7 +34,7 @@ private:
   // Compare the message block to <received_>
 
 private:
-  ACE_RMCast_Fragment<ACE_MT_SYNCH> fragment_;
+  ACE_RMCast_Fragment fragment_;
 
   ACE_Message_Block received_;
   ACE_UINT32 received_bytes_;
@@ -64,7 +66,6 @@ main (int, ACE_TCHAR *[])
 ACE_RMCast_Fragment_Tester::ACE_RMCast_Fragment_Tester (void)
 {
   this->fragment_.next (this);
-  this->next (&this->fragment_);
 }
 
 int
@@ -81,12 +82,14 @@ ACE_RMCast_Fragment_Tester::svc (void)
 
     this->initialize (&big_blob);
 
-    if (this->fragment_.put (&big_blob) == -1)
+    ACE_RMCast::Data data;
+    data.payload = &big_blob;
+    if (this->fragment_.put_data (data) == -1)
       return -1;
 
     if (this->received_bytes_ != n)
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "Unpexpected number of "
+                         "Unexpected number of "
                          "received bytes (%d/%d)\n",
                          this->received_bytes_, n),
                         -1);
@@ -121,7 +124,9 @@ ACE_RMCast_Fragment_Tester::svc (void)
       }
     this->initialize (small);
 
-    if (this->fragment_.put (small) == -1)
+    ACE_RMCast::Data data;
+    data.payload = small;
+    if (this->fragment_.put_data (data) == -1)
       return -1;
 
     ACE_UINT32 total = n * size;
@@ -169,7 +174,9 @@ ACE_RMCast_Fragment_Tester::svc (void)
       }
     this->initialize (small);
 
-    if (this->fragment_.put (small) == -1)
+    ACE_RMCast::Data data;
+    data.payload = small;
+    if (this->fragment_.put_data (data) == -1)
       return -1;
 
     if (this->received_bytes_ != total)
@@ -239,30 +246,22 @@ ACE_RMCast_Fragment_Tester::compare (ACE_Message_Block *mb)
 }
 
 int
-ACE_RMCast_Fragment_Tester::put (ACE_Message_Block *mb,
-                                 ACE_Time_Value *)
+ACE_RMCast_Fragment_Tester::put_data (ACE_RMCast::Data &data)
 {
-  ACE_UINT32 header[3];
-  size_t fragment_header_size = sizeof(header);
+  ACE_UINT32 sequence_number = data.sequence_number;
+  ACE_UINT32 message_size = data.total_size;
+  size_t offset = data.fragment_offset;
+  ACE_Message_Block *mb = data.payload;
 
-  if (mb->length () < fragment_header_size)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Message block too small, "
-                       "not enough room for the header\n"),
-                      -1);
-
-  ACE_OS::memcpy (header, mb->rd_ptr (), fragment_header_size);
-
-  ACE_UINT32 message_size = ACE_NTOHL(header[2]);
   if (this->received_bytes_ == 0)
     {
       this->received_.size (message_size);
       this->received_.wr_ptr (message_size);
-      this->message_sequence_number_ =  ACE_NTOHL(header[0]);
+      this->message_sequence_number_ =  sequence_number;
     }
   else
     {
-      if (this->message_sequence_number_ != ACE_NTOHL(header[0]))
+      if (this->message_sequence_number_ != sequence_number)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Mismatched sequence number\n"),
                           -1);
@@ -272,13 +271,12 @@ ACE_RMCast_Fragment_Tester::put (ACE_Message_Block *mb,
                           -1);
     }
 
-  size_t offset = ACE_NTOHL(header[1]);
-  size_t payload_size = mb->length () - fragment_header_size;
+  size_t payload_size = mb->length ();
   size_t fragment_size = payload_size;
   if (payload_size > 0)
     {
       ACE_OS::memcpy (this->received_.rd_ptr () + offset,
-                      mb->rd_ptr () + fragment_header_size,
+                      mb->rd_ptr (),
                       payload_size);
       this->received_bytes_ += payload_size;
       offset += payload_size;
@@ -303,13 +301,3 @@ ACE_RMCast_Fragment_Tester::put (ACE_Message_Block *mb,
 
   return 0;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_RMCast_Fragment<ACE_MT_SYNCH>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_RMCast_Fragment<ACE_MT_SYNCH>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
