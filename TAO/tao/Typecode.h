@@ -615,13 +615,23 @@ namespace CORBA
 namespace TAO
 {
   /// Used in generated code if CORBA::TypeCode is an argument or return type.
-  template<>
+  ACE_TEMPLATE_SPECIALIZATION
   class TAO_Export Arg_Traits<CORBA::TypeCode>
     : public Object_Arg_Traits_T<CORBA::TypeCode_ptr,
                                  CORBA::TypeCode_var,
                                  CORBA::TypeCode_out,
                                  TAO::Objref_Traits<CORBA::TypeCode> >
   {
+  };
+
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_Export Objref_Traits<CORBA::TypeCode>
+  {
+    static CORBA::TypeCode_ptr tao_duplicate (CORBA::TypeCode_ptr);
+    static void tao_release (CORBA::TypeCode_ptr);
+    static CORBA::TypeCode_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (CORBA::TypeCode_ptr p,
+                                       TAO_OutputCDR & cdr);
   };
 
   /**

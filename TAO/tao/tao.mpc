@@ -70,7 +70,10 @@ project(TAO) : acelib, taoversion, core, tao_output {
     }
     ORB_Core {
       Any.cpp
+      Any_Basic_Impl.cpp
+      Any_Impl.cpp
       Any_SystemException.cpp
+      Any_Unknown_IDL_Type.cpp
       CORBA_String.cpp
       CurrentC.cpp
       Exception.cpp

@@ -1,7 +1,7 @@
 // -*- C++ -*-
 //=============================================================================
 /**
- *  @file    Any.h
+ *  @file    Any_Impl.h
  *
  *  $Id$
  *
@@ -60,7 +60,7 @@ namespace TAO
 
     CORBA::Boolean marshal (TAO_OutputCDR &);
     virtual CORBA::Boolean marshal_value (TAO_OutputCDR &) = 0;
-    virtual const void *value (void) const = 0;
+    virtual const void *value (void) const;
 
     virtual void free_value (void);
 

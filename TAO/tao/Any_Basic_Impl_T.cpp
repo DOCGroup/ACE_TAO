@@ -14,7 +14,7 @@
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID (tao,
-           Any_T,
+           Any_Basic_Impl_T,
            "$Id$")
 
 

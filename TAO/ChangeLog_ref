@@ -29,6 +29,13 @@ Tue Sep  9 14:10:50 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
           Removed these files, they are completely replaced by
           the new class above.
 
+        * tao/Makefile.tao:
+        * tao/Makefile.bor:
+        * tao/TAO.dsp:
+        * tao/tao.mpc:
+
+          Updated.
+
         * tests/Param_Test/anyop.cpp:
 
           Updated syntax of call to unchecked_narrow() for the
