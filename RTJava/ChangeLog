@@ -1,0 +1,14 @@
+Thu Feb 01 19:07:42 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* docs:
+	* benchmarks:
+	* examples:
+	  Added directory for RT-Java documentation, examples, and
+	  benchmarks.
+
+	* TODO:
+	  Files with the checklist of things to-do.
+
+	* README:
+	  Files containing general info about what's in this
+	  directory.
