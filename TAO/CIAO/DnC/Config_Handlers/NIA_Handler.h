@@ -46,6 +46,17 @@ using xercesc::DOMNodeFilter;
 
 BEGIN_DEPLOYMENT_NAMESPACE
 
+/**
+ * @class NIA_Handler
+ *
+ * @brief Handler class for <NamedImplementationArtifact> type
+ *
+ * This class defines handler methods to parse Named Implementation
+ * Artifact types in the descriptor files. The corresponding
+ * CORBA IDL type for the schema element is returned.
+ *
+ */
+
 class Config_Handler_Export NIA_Handler: public Basic_Handler
 {
 public:
