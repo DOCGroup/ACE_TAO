@@ -1,4 +1,7 @@
-Fri Jun 18 14:52:53 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+Fri Jun 18 16:54:43 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* apps/gperf/src/Key_List.cpp (output_lookup_array): Prefixed
+	  debug message with "GPERF".
 
 	* tests/Message_Block_Test.cpp: Removed template instantiations
  	  for ACE_Message_Queue_Iterator and
