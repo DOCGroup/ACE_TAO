@@ -316,6 +316,8 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::unbind_i (const EXT_ID &ext_id,
     prev->next_ = temp->next_;
 
   int_id = temp->int_id_;
+  // Explicitly call the destructor.
+  temp->ACE_Hash_Map_Entry<EXT_ID, INT_ID>::~ACE_Hash_Map_Entry ();
   this->allocator_->free (temp);
   this->cur_size_--;
   return 0;
