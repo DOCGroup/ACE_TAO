@@ -1,3 +1,18 @@
+Sun Jul 11 14:45:31 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* tao/Invocation.cpp
+	* tao/Invocation.h
+	* tao/Pluggable.cpp
+	* tao/Pluggable.h
+	* tao/Reply_Dispatcher.cpp
+	* tao/Reply_Dispatcher.h
+	* tao/Wait_Strategy.cpp
+	* tao/Wait_Strategy.h
+	  Terminating reactor event loop based on the reply_received flag
+	  in the reply dispatcher. Reference to this
+	  <reply_dispatcher::reply_received_> is passed to the wait
+	  strategy from the Invocation class. 
+  
 Sat Jul 10 16:50:23 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* tao/Invocation.h:
