@@ -1,3 +1,10 @@
+Tue Oct 07 09:34:35 1997    <brian.r.mendel@boeing.com>
+
+        * tao/Orb_Core.h{cpp}: Added ACE_Svc_Export label to global
+        TAO_ORB_Core_instance() method.  Needed for DLL support on NT.i
+
+        * default.bld, tao.bld: Modified VxWorks build files to add new files.
+
 Tue Oct 07 07:05:38 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* TAO version 0.0.10, released Tue Oct 07 07:05:38 1997.
