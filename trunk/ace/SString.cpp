@@ -58,6 +58,9 @@ ACE_CString::ACE_CString (ACE_Allocator *alloc)
 
   if (this->allocator_ == 0)
     this->allocator_ = ACE_Service_Config::alloc ();
+
+  this->rep_ = (char *) this->allocator_->malloc (this->len_ + 1);
+  this->rep_[this->len_] = '\0';
 }
 
 // Constructor that actually copies memory.
@@ -252,6 +255,8 @@ ACE_SString::ACE_SString (ACE_Allocator *alloc)
 
   if (this->allocator_ == 0)
     this->allocator_ = ACE_Service_Config::alloc ();
+  this->rep_ = (char *) this->allocator_->malloc (this->len_ + 1);
+  this->rep_[this->len_] = '\0';
 }
 
 int
@@ -394,6 +399,8 @@ ACE_WString::ACE_WString (ACE_Allocator *alloc)
 
   if (this->allocator_ == 0)
     this->allocator_ = ACE_Service_Config::alloc ();
+  this->rep_ = (ACE_USHORT16 *) this->allocator_->malloc ((this->len_ + 1) * sizeof (ACE_USHORT16));
+  this->rep_[this->len_] = 0;
 }
 
 /* static */

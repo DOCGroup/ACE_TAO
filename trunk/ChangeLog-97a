@@ -1,3 +1,35 @@
+Fri Feb 28 02:22:33 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/config-mvs.h: Added #define ACE_LACKS_TCP_H for MVS.  Thanks
+ 	  to Chuck Gehr for pointing this out.
+
+	* ace/OS.h: Added a new #define ACE_LACKS_TCP_H that skips the
+ 	  inclusion of the netinet/tcp.h file if it isn't on the platform.
+
+	* ace/OS.i (thr_cancel): Changed the line
+
+	  ACE_UNUSED_ARG (t_id);
+
+	  to
+
+	  ACE_UNUSED_ARG (thr_id);
+
+	  Thanks to Chuck Gehr <gehr@sweng.stortek.com> for reporting
+ 	  this.
+
+	* ace/SString.cpp: Fixed up all the ACE_[CSW]String code so that
+ 	  always allocates a rep_ even in the null constructor.  This
+ 	  saves us from having to handle odd special cases later on...
+  	  Thanks to John Morey <JMOREY@tbi.com> for reporting this.
+
+	* ace/Service_Repository.cpp (close): Changed the order in which
+ 	  services are destroyed when the Service Configurator is closed.
+  	  Currently, services are destroyed in the order in which they are
+ 	  created according to the svc.conf file.  Now, we shut them down
+ 	  in reverse order.  This makes more sense when services are
+ 	  related, i.e., one service has to be started before another.
+  	  Thanks to Karlheinz for this suggestion.
+
 Thu Feb 27 21:36:28 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/OS.{i,cpp} (gethrtime):  support on all platforms by
