@@ -240,8 +240,8 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::extract (const CORBA::Any & any,
                         mb->rd_ptr () - mb->base (),
                         mb->wr_ptr () - mb->base (),
                         impl->_tao_byte_order (),
-						            TAO_DEF_GIOP_MAJOR,
-						            TAO_DEF_GIOP_MINOR);
+                                                            TAO_DEF_GIOP_MAJOR,
+                                                            TAO_DEF_GIOP_MINOR);
 
       CORBA::TCKind kind = any_tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
@@ -430,8 +430,8 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::extract(const CORBA::Any & any,
                         mb->rd_ptr () - mb->base (),
                         mb->wr_ptr () - mb->base (),
                         impl->_tao_byte_order (),
-						            TAO_DEF_GIOP_MAJOR,
-						            TAO_DEF_GIOP_MINOR);
+                                                            TAO_DEF_GIOP_MAJOR,
+                                                            TAO_DEF_GIOP_MINOR);
 
       CORBA::TCKind kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -559,8 +559,8 @@ TAO::Any_Basic_Impl_T<T>::extract (const CORBA::Any & any,
                         mb->rd_ptr () - mb->base (),
                         mb->wr_ptr () - mb->base (),
                         impl->_tao_byte_order (),
-						            TAO_DEF_GIOP_MAJOR,
-						            TAO_DEF_GIOP_MINOR);
+                                                            TAO_DEF_GIOP_MAJOR,
+                                                            TAO_DEF_GIOP_MINOR);
 
       CORBA::Boolean result = replacement->demarshal_value (cdr);
 
@@ -692,8 +692,8 @@ TAO::Any_Special_Basic_Impl_T<T, from_T, to_T>::extract (
                         mb->rd_ptr () - mb->base (),
                         mb->wr_ptr () - mb->base (),
                         impl->_tao_byte_order (),
-						            TAO_DEF_GIOP_MAJOR,
-						            TAO_DEF_GIOP_MINOR);
+                                                            TAO_DEF_GIOP_MAJOR,
+                                                            TAO_DEF_GIOP_MINOR);
 
       CORBA::TCKind kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
@@ -851,8 +851,8 @@ TAO::Any_Dual_Impl_T<T>::extract (const CORBA::Any & any,
                         mb->rd_ptr () - mb->base (),
                         mb->wr_ptr () - mb->base (),
                         impl->_tao_byte_order (),
-						            TAO_DEF_GIOP_MAJOR,
-						            TAO_DEF_GIOP_MINOR);
+                                                            TAO_DEF_GIOP_MAJOR,
+                                                            TAO_DEF_GIOP_MINOR);
 
       CORBA::TCKind kind = any_tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
