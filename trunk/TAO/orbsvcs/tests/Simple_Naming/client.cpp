@@ -41,10 +41,12 @@ public:
 
   // = Interface implementation accessor methods.
 
-  void id (CORBA::Short id, CORBA::Environment &ACE_TRY_ENV);
+  void id (CORBA::Short id, CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Sets id.
 
-  CORBA::Short id (CORBA::Environment &ACE_TRY_ENV);
+  CORBA::Short id (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Gets id.
 
 private:
@@ -62,12 +64,14 @@ My_Test_Object::~My_Test_Object (void)
 
 CORBA::Short
 My_Test_Object::id (CORBA::Environment &)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return id_;
 }
 
 void
 My_Test_Object::id (CORBA::Short id, CORBA::Environment &)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   id_ = id;
 }
@@ -651,12 +655,19 @@ Tree_Test::execute (TAO_Naming_Client &root_context)
         Test_Object::_narrow (result_obj_ref.in (),
                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      if (CORBA::is_nil (result_object.in ())
-          || !(result_object->id (ACE_TRY_ENV) == CosNaming_Client::OBJ1_ID))
+
+      if (CORBA::is_nil (result_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Problems with resolving foo in Tree Test\n"),
+                           "Problems with resolving foo in Tree Test - nil object ref.\n"),
                           -1);
+
+      CORBA::Short id = result_object->id (ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+      if (id != CosNaming_Client::OBJ1_ID)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Problems with resolving foo in Tree Test - wrong id.\n"),
+                          -1);
 
       // Unbind the object from the Naming Context and bind it back
       // in.
