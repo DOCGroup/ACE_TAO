@@ -15,6 +15,13 @@ namespace TAO
     {
     }
 
+    ::PortableServer::ServantRetentionPolicyValue
+    Retain_Servant_Retention_Policy::policy_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+      ACE_THROW_SPEC ((CORBA::SystemException))
+    {
+      return ::PortableServer::RETAIN;
+    }
+
     ACE_FACTORY_DEFINE (TAO_PortableServer, Retain_Servant_Retention_Policy)
 
     ACE_STATIC_SVC_DEFINE (

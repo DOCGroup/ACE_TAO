@@ -79,10 +79,8 @@ namespace TAO
 
   namespace Portable_Server
   {
-    class Servant_Retention_Strategy;
     class Servant_Upcall;
     class POA_Current_Impl;
-    class Unique_Id_Uniqueness_Strategy;
     class Retain_Servant_Retention_Strategy;
     class Temporary_Creation_Time;
   }
@@ -108,7 +106,6 @@ class TAO_PortableServer_Export TAO_POA
 public:
 
   friend class TAO_Object_Adapter;
-  friend class TAO::Portable_Server::Servant_Retention_Strategy;
   friend class TAO::Portable_Server::Servant_Upcall;
   friend class TAO::Portable_Server::Non_Servant_Upcall;
   friend class TAO::Portable_Server::POA_Current_Impl;
@@ -117,7 +114,6 @@ public:
   friend class TAO_IORInfo;
 
   // this is temporarily
-  friend class TAO::Portable_Server::Unique_Id_Uniqueness_Strategy;
   friend class TAO::Portable_Server::Retain_Servant_Retention_Strategy;
 
   typedef ACE_CString String;
