@@ -8,6 +8,37 @@
 
 ACE_RCSID(Latency, st_server, "$Id$")
 
+//#define USING_QUANTIFY 1
+
+#if defined (USING_QUANTIFY)
+
+#if defined (ACE_WIN32)
+
+#include "pure.h"
+
+#else /* !ACE_WIN32 */
+
+#include "quantify.h"
+
+inline int QuantifyClearData ()
+{
+  return quantify_clear_data ();
+}
+
+inline int QuantifyStartRecordingData ()
+{
+  return quantify_start_recording_data ();
+}
+
+inline int QuantifyStopRecordingData ()
+{
+  return quantify_stop_recording_data ();
+}
+
+#endif /* ACE_WIN32 */
+
+#endif /* USING_QUANTIFY */
+
 const char *ior_output_file = "test.ior";
 int workload = 0;
 
@@ -45,6 +76,13 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
+
+#if defined (USING_QUANTIFY)
+  // Reset Quantify data recording; whatever happened in the past is
+  // not relevant to this test.
+  QuantifyClearData ();
+#endif /* USING_QUANTIFY */
+
   int priority =
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
      + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
