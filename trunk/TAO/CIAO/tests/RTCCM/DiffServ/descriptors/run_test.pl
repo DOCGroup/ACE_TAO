@@ -34,6 +34,7 @@ unlink "assembly_manager.ior";
 unlink "daemon.ior";
 unlink "receiver.ior";
 unlink "sender.ior";
+unlink "assembly";
 
 # Start the daemons.
 $daemon_1->Spawn ();
@@ -70,4 +71,5 @@ unlink "assembly_manager.ior";
 unlink "daemon.ior";
 unlink "receiver.ior";
 unlink "sender.ior";
+unlink "assembly";
 

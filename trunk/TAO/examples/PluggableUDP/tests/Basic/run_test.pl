@@ -8,11 +8,13 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib '../../../../../bin';
 use PerlACE::Run_Test;
 
+$ORBdebuglevel = 0;
+
 $status = 0;
 $iorfile = PerlACE::LocalFile ("test.ior");
 
-$SV = new PerlACE::Process ("server", "-ORBEndpoint diop://:88888 -o $iorfile");
-$CL = new PerlACE::Process ("client", "-k file://$iorfile -t 10 -i 10");
+$SV = new PerlACE::Process ("server", "-ORBEndpoint diop://:88888 -o $iorfile -ORBdebuglevel $ORBdebuglevel");
+$CL = new PerlACE::Process ("client", "-k file://$iorfile -t 10 -i 10 -ORBdebuglevel $ORBdebuglevel");
 
 $SV->Spawn ();
 

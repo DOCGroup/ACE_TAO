@@ -8,7 +8,7 @@ char* Static_Config_Timer_Descriptions[] =
   {
     "Create Home",
     "Create Container",
-    "Create Component", 
+    "Create Component",
     "Register Component",
     "Create Connection",
     "Total Assembly time",
@@ -26,6 +26,6 @@ void Segment_Timer::dump (int index)
     {
       //ACE_Time_Value tv;
       //this->hrtime_to_tv (tv, recorded_times_[i]);
-      ACE_DEBUG ((LM_DEBUG, "%f msec \n", (float)recorded_times_[i]/1000000));
+      //ACE_DEBUG ((LM_DEBUG, "%f msec \n", recorded_times_[i]/1000000));
     }
 }

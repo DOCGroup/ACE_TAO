@@ -20,7 +20,7 @@
 #include "UDP_i.h"
 
 #include "tao/debug.h"
-
+#include "ace/OS_NS_stdio.h"
 #include "ace/Get_Opt.h"
 
 // The following include file forces DIOP to be linked into the
