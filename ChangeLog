@@ -1,3 +1,17 @@
+Thu May 13 07:24:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Cache_Map_Manager_T.{h,cpp,i}:
+        * ace/Cached_Connect_Strategy_T.cpp:
+        * ace/Hash_Cache_Map_Manager_T.h:
+        * tests/Cached_Accept_Conn_Test.{h,cpp}:
+        * tests/Cached_Conn_Test.cpp:
+        * ace/README:
+          Removed ACE_HAS_BROKEN_EXTENDED_TEMPLATES. This was for a bug in pre
+          GCC 2.8 compilers which we don't support anymore.
+
+        * ace/config-openvms.h:
+          Cleanup
+
 Wed May 12 21:26:37 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* performance-tests/Server_Concurrency/Leader_Follower/leader_follower.cpp:
