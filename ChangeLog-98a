@@ -9,6 +9,9 @@ Sat Mar 14 06:43:32 1998  David L. Levine  <levine@cs.wustl.edu>
           Kirill Rybaltchenko <Kirill.Rybaltchenko@cern.ch> for reporting
           this.
 
+        * include/makeinclude/platform_chorus_ghs.GNU: set PATH, and
+          remove /tmp/gh_*.[os] files that GreenHills leaves.
+
 Sat Mar 14 00:13:22 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Task.h (ACE_Task_Base): Give a default value of 0 for the
