@@ -1,3 +1,21 @@
+Wed Sep 29 11:01:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* TAO_IDL/be/be_interface_strategy.cpp,
+	  TAO_IDL/be/be_visitor_operation/ami_exception_holder_operation_cs.cpp,
+	  TAO_IDL/be/be_visitor_operation/ami_handler_skeleton_cs.cpp,
+	  TAO_IDL/be/be_visitor_valuetype/ami_exception_holder_ch.cpp,
+	  TAO_IDL/be/be_visitor_valuetype/ami_exception_holder_cs.cpp:
+	  Further adjustments to produce correct AMI code.
+
+	* TAO_IDL/be/be_visitor_valuetype/obv_module.cpp:
+	  Put in a hook for addtitional code generation.
+
+	* tao/Messaging.pidl: Updated the valuetypes according to the
+	  spec.
+
+	* tao/MessagingC.h: Added a "TAO_Export" declaration on
+	  the OBV_ namespace classes.
+
 Wed Sep 29 10:59:45 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/TAO.h:
