@@ -1,3 +1,11 @@
+Mon Aug  4 23:47:33 2003  <Ossama Othman <ossama@dre.vanderbilt.edu>
+
+	* ace/Array_Base.cpp:
+
+	  For MSVC++ 6, include standard C++ <new> header to pull in
+	  placement new() operator prototype.  Addresses template
+	  instantiation errors.
+
 Mon Aug  4 22:41:24 2003  <Ossama Othman <ossama@dre.vanderbilt.edu>
 
 	* ace/DLL_Manager.cpp:
