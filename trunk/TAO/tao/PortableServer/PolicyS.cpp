@@ -194,8 +194,7 @@ void POA_CORBA::Policy::_get_policy_type_skel (
       ACE_CHECK;
 
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval)
@@ -222,8 +221,7 @@ void POA_CORBA::Policy::copy_skel (
       ACE_CHECK;
 
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -248,8 +246,7 @@ void POA_CORBA::Policy::destroy_skel (
       ACE_CHECK;
 
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   }
 
 void POA_CORBA::Policy::_is_a_skel (
@@ -269,8 +266,7 @@ void POA_CORBA::Policy::_is_a_skel (
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(_tao_out << CORBA::Any::from_boolean (_tao_retval)))
     ACE_THROW (CORBA::MARSHAL ());
@@ -287,8 +283,7 @@ void POA_CORBA::Policy::_non_existent_skel (
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(_tao_out << CORBA::Any::from_boolean (_tao_retval)))
     ACE_THROW (CORBA::MARSHAL ());

@@ -242,8 +242,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl << be_nl;
   *os << "_tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);" << be_nl;
   *os << "ACE_CHECK;" << be_nl << be_nl;
-  *os << "_tao_server_request.init_reply (ACE_TRY_ENV);" << be_nl;
-  *os << "ACE_CHECK;" << be_nl;
+  *os << "_tao_server_request.init_reply ();" << be_nl;
   *os << "TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();" << be_nl;
   *os << "if (!(_tao_out << CORBA::Any::from_boolean (_tao_retval)))" << be_idt_nl;
   if (be_global->use_raw_throw ())
@@ -266,8 +265,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << node->full_skel_name () << " *) _tao_object_reference;" << be_nl;
   *os << "CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);" << be_nl;
   *os << "ACE_CHECK;" << be_nl << be_nl;
-  *os << "_tao_server_request.init_reply (ACE_TRY_ENV);" << be_nl;
-  *os << "ACE_CHECK;" << be_nl;
+  *os << "_tao_server_request.init_reply ();" << be_nl;
   *os << "TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();" << be_nl;
   *os << "if (!(_tao_out << CORBA::Any::from_boolean (_tao_retval)))" << be_idt_nl;
   if (be_global->use_raw_throw ())

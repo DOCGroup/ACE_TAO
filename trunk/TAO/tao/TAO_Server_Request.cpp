@@ -108,7 +108,7 @@ TAO_ServerRequest::orb (void)
 }
 
 void
-TAO_ServerRequest::init_reply (CORBA::Environment &)
+TAO_ServerRequest::init_reply (void)
 {
   // Construct our reply generator.
   TAO_Pluggable_Reply_Params reply_params;

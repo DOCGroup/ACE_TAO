@@ -89,8 +89,7 @@ public:
   TAO_ORB_Core *orb_core (void);
   // Return the ORB core pointer member.
 
-  void init_reply (CORBA_Environment &ACE_TRY_ENV =
-                     TAO_default_environment ());
+  void init_reply (void);
   // Start a Reply message.
 
   TAO_InputCDR &incoming (void);

@@ -446,8 +446,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
       *os << "if (_tao_server_request.response_expected ()" << be_idt << be_idt_nl
           << "&& !_tao_server_request.sync_with_server ())" << be_uidt_nl
           << "{" << be_idt_nl
-          << "_tao_server_request.init_reply (ACE_TRY_ENV);" << be_nl
-          << "ACE_CHECK;" << be_uidt_nl
+          << "_tao_server_request.init_reply ();" << be_uidt_nl
           << "}" << be_uidt << be_uidt_nl
           << "}\n\n";
       return 0;
@@ -595,8 +594,7 @@ be_visitor_operation_ss::gen_marshal_params (be_operation *node,
   // We will be here only if we are 2way
   // first initialize a reply message
   os->indent ();
-  *os << "_tao_server_request.init_reply (ACE_TRY_ENV);" << be_nl
-      << "ACE_CHECK;";
+  *os << "_tao_server_request.init_reply ();";
 
   // We still need the following check because we maybe 2way and yet have no
   // parameters and a void return type.
