@@ -18,6 +18,7 @@
     Libraries</a>
   <li><a href="#Configuration Management">Configuration Management</a>
   <li><a href="#Classes">Classes in Each ACE Library Subset</a>
+  <li><a href="#Status">Current ACE Subsetting Status</a>
   <li><a href="#ACE Library Size Breakdown">ACE Library Size Breakdown</a>
   <li><a href="#Building ACE Subsets">Building ACE Subsets</a>
   <li><a href="#ACE_OS Adaptation Layer">ACE_OS Adaptation Layer</a>
@@ -420,6 +421,38 @@ XtReactor
 </code></pre>
 
 <hr><p>
+<h3><a name="Status">Current ACE Subsetting Status</a></h3>
+<ul>
+  <li>Remaining major subsetting issues:
+  <ul>
+    <li>Remove remaining dependencies on higher layers from ACE_OS.
+      (These can be seen by searching for ACE_HAS_MINIMAL_ACE_OS
+       in OS.cpp, and by looking at the conditional #includes
+       near the top of OS.cpp.)
+    <ul>
+      <li>ACE_Thread_Manager
+      <li>ACE_Array
+      <li>ACE_TSS: move all ACE_TSS support into separate .h,.i,cpp files
+    </ul><p>
+
+    <li>Log_Msg cleanup:  We have a good start on this, but it needs work
+      to finish.  It might be easiest to make an abstract
+      base class, then have ACE_Log_Msg derive from it.  That way
+      we could remove the exposure of all the #includes in Log_Msg.cpp
+      to applications that don't need it.<p>
+
+    <li>Higher layer interdependencies:  we haven't been paying much
+      attention to this.  We need to figure out what's there, and
+      if/how to deal with the interdependencies.<p>
+
+    <li>Remove use of multiple inheritance:  its only used in a few
+      places, in one of the SOCK classes and service config.<p>
+  </ul>
+</ul><p>
+Please let us know if you're able to contribute to this effort.<p>
+
+
+<hr><p>
 <h3><a name="ACE Library Size Breakdown">ACE Library Size Breakdown</a></h3>
 
 Here is an example size breakdown, by ACE library component.  It is
@@ -691,9 +724,6 @@ To build an ACE static library, if shared libraries are the default, use
     <td align=center>15
 </table></center><p>
 
-</table></center><p>
-
-
 
 <hr><p>
 <h3><a name="Building ACE Subsets">Building ACE Subsets</a></h3>
@@ -765,6 +795,7 @@ for an example of usage.<p>
 
 <a name="minimumTAO">
 <!--#include virtual="/~schmidt/ACE_wrappers/TAO/docs/minimumTAO.html" -->
+</a>
 
 <HR><P>
 
