@@ -116,13 +116,13 @@ DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::svc (void)
         {
 #ifdef KOKYU_DSRT_LOGGING
           ACE_DEBUG ((LM_DEBUG,
-                      "(%t): sched thread about to wait on cv\n"));
+                      "(%t|%T): sched thread about to wait on cv\n"));
 #endif
           sched_queue_modified_cond_.wait ();
         }
 
 #ifdef KOKYU_DSRT_LOGGING
-      ACE_DEBUG ((LM_DEBUG, "(%t): sched thread done waiting on cv\n"));
+      ACE_DEBUG ((LM_DEBUG, "(%t|%T): sched thread done waiting on cv\n"));
 #endif
 
       sched_queue_modified_ = 0;
@@ -181,6 +181,8 @@ DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::svc (void)
           this->curr_scheduled_thr_handle_ = most_eligible_thr_handle;
           this->curr_scheduled_guid_ = item_var->guid ();
         }
+	/*change all threads in blocked_prio_ to inactive_prio_*/
+          this->ready_queue_.change_prio(this->blocked_prio_, this->inactive_prio_,this->sched_policy_);
     }
 
 #ifdef KOKYU_DSRT_LOGGING
@@ -233,6 +235,13 @@ schedule_i (Guid_t id, const DSRT_QoSDescriptor& qos)
 #endif
 
   //ready_queue_.dump ();
+
+  /*first release ready_queue_ lock. Otherwise if the scheduler gets the
+  sched_queue_modified_cond_lock first, then try to get the ready_queue_ lock
+  just when one thread who gets the ready_queue_ lock first, then try to get
+  sched_queue_modified_cond_lock. Deadlock happens.
+  */
+  guard.release ();
 
   //@@ Perhaps the lock could be moved further down just before
   //setting the condition variable?
@@ -335,6 +344,9 @@ cancel_schedule_i (Guid_t guid)
       this->curr_scheduled_guid_ = 0;
       this->curr_scheduled_thr_handle_ = 0;
     }
+
+  //release ready_queue_ lock first before getting another lock
+  guard.release ();
 
   ACE_GUARD_RETURN (cond_lock_t,
                     mon, this->sched_queue_modified_cond_lock_, 0);
