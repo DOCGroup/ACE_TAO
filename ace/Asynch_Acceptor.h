@@ -177,7 +177,7 @@ private:
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation "Asynch_Acceptor.cpp"
+#pragma implementation ("Asynch_Acceptor.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* ACE_WIN32 || ACE_HAS_AIO_CALLS */

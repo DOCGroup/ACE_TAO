@@ -77,7 +77,7 @@ private:
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation "Typed_SV_Message_Queue.cpp"
+#pragma implementation ("Typed_SV_Message_Queue.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* ACE_TYPED_MESSAGE_QUEUE_H */

@@ -144,7 +144,7 @@ ACE_Convert (const char *s, double &d)
 }
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation "Env_Value_T.cpp"
+#pragma implementation ("Env_Value_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* ACE_ENV_VALUE_T_H */
