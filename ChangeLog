@@ -1,3 +1,10 @@
+Fri Mar 25 16:41:56 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * bin/MakeProjectCreator/modules/AutomakeWorkspaceHelper.pm:
+
+	  Change regular expression match $(KEY) instead of of adding
+	  "$(" and ")" to the key itself.
+
 Fri Mar 25 09:27:40 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* configure.ac:
