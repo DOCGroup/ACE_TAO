@@ -464,11 +464,11 @@ test_mutex_try_lock (RTCORBA::RTORB_ptr rt_orb)
       // Test out try_lock and keep the lock so that the spawned task
       // can test out try_lock failure cases
       result = mutex->try_lock (0u, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       if (!result)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "try_lock failed\n"),
                           1);
-      ACE_TRY_CHECK;
 
       test_data.mutex = mutex;
       test_data.shared_var = &shared_var;
