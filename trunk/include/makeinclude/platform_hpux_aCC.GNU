@@ -118,6 +118,16 @@ ifeq (03,$(CXXMAJORVERS))
 endif
 CPPFLAGS	+= $(THR_DEFS) -D_HPUX_SOURCE -DHPUX_VERS=$(HPUX_VERS) -DACE_LACKS_PRAGMA_ONCE
 
+ifeq (03,$(CXXMAJORVERS))
+  ifeq (57,$(CXXMINORVERS))
+    # aCC 3.57 has a bug. When a class has private constructors
+    # and is trying to be created from a friend class we end up with
+    # a compile error. We disable array optimization in the compiler
+    # by setting this environment variable.
+    export aCC_ARRAY_OPT=OFF
+  endif
+endif
+
 # If exception support is explicitly disabled, tell the compiler.
 # This is not recommended since the run-time library can throw exceptions.
 ifneq ($(exceptions),1)
