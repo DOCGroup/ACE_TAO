@@ -1,3 +1,23 @@
+Sun Aug 25 16:36:53 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/util/utl_global.cpp:
+
+          Changed the storage of included IDL files from the
+          lexer to use the full name instead of the stripped
+          name (base file name only), and added checks to
+          validate_included_idl_files() to handle conditional
+          includes where the same local filename appears in
+          different subdiretories, and where a complete path
+          name is a substring of another one. Thanks to
+          Robert Hancock <hancock@SEDSystems.ca>, Andy Olson 
+          <andrew.olson@lmco.com>, and to Terry Ware 
+          <terry.ware@dc.alphatech.com> for reporting the bug.
+          This fix applies to [BUGID:821] and [BUGID:1225], but
+          I will wait to see if the fix works on all platforms
+          before I close the Bugzilla entries.
+
 Sun Aug 25 15:07:05 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_constant/constant_ch.cpp:
