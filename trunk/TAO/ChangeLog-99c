@@ -1,3 +1,11 @@
+Wed Nov 10 14:59:25 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* Makefile.am:
+	* tao/Makefile.am:
+
+	  Additional updates to bring files in synch with stock TAO
+	  Makefiles.
+
 Wed Nov 10 14:46:51 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* TAO_IDL/driver/Makefile.am (AM_CPPFLAGS):
@@ -32,7 +40,7 @@ Wed Nov 10 14:40:24 1999  Ossama Othman  <othman@cs.wustl.edu>
 	* TAO_IDL/narrow/Makefile.am:
 	* TAO_IDL/util/Makefile.am:
 
-	  Synchronized with stock TAO_IDL makefiles.
+	  Synchronized with stock TAO_IDL Makefiles.
 
 Wed Nov 10 11:11:19 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
