@@ -7,46 +7,29 @@
 
 #include "CCF/CodeGenerationKit/CommandLine.hpp"
 
-#include "Collectors.hpp"
-
-#include "CCF/CIDL/SyntaxTree.hpp"
+#include "CCF/CIDL/SemanticGraph.hpp"
 #include "CCF/CIDL/Traversal.hpp"
 
-// SourceEmitterBase is a base class that holds the ostream member
-// common to every other class in this file.
-//
-class SourceEmitterBase
-{
-protected:
-  SourceEmitterBase (std::ostream&);
-
-  std::ostream& os;
-};
-
-// Emitter generates the servant source mapping for declarations collected
-// by Collector. Note that the original structure of modules is preserved.
-//
 class ServantSourceEmitter
-  : public SourceEmitterBase,
-    public CCF::CIDL::Traversal::TranslationUnit
 {
 public:
   ServantSourceEmitter (std::ostream& os_,
-                        std::string export_macro,
                         CommandLine const& cl,
-                        Declarations const& declarations);
+                        string export_macro,
+                        fs::path const& file);
+
 
   virtual void
-  generate (CCF::CIDL::SyntaxTree::TranslationUnitPtr const& u);
+  pre (CCF::CIDL::SemanticGraph::TranslationUnit& u);
 
   virtual void
-  pre (CCF::CIDL::SyntaxTree::TranslationUnitPtr const&);
+  generate (CCF::CIDL::SemanticGraph::TranslationUnit& u);
 
 private:
+  std::ostream& os;
   CommandLine const& cl_;
   std::string export_macro_;
-
-  Declarations const& declarations_;
+  fs::path file_;
 };
 
 #endif // SERVANT_SOURCE_GENERATOR_HPP

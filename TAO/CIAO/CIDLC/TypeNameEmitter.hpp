@@ -5,39 +5,40 @@
 #ifndef TYPENAME_EMITTER_HPP
 #define TYPENAME_EMITTER_HPP
 
+#include "CCF/CIDL/SemanticGraph.hpp"
 #include "CCF/CIDL/Traversal.hpp"
 
-using namespace CCF;
-using namespace CIDL;
-using namespace SyntaxTree;
+using namespace CCF::CIDL;
+using namespace CCF::CIDL::SemanticGraph;
 
 // Base class that holds the ostream member
 // common to every other class in this file,
 // and collects the ancestors in one place.
 //
-class TypeNameEmitter : public Traversal::VoidDecl,
-                        public Traversal::BooleanDecl,
-                        public Traversal::OctetDecl,
-                        public Traversal::CharDecl,
-                        public Traversal::WcharDecl,
-                        public Traversal::ShortDecl,
-                        public Traversal::UnsignedShortDecl,
-                        public Traversal::LongDecl,
-                        public Traversal::UnsignedLongDecl,
-                        public Traversal::LongLongDecl,
-                        public Traversal::UnsignedLongLongDecl,
-                        public Traversal::FloatDecl,
-                        public Traversal::DoubleDecl,
-                        public Traversal::StringDecl,
-                        public Traversal::TypedefDecl<SyntaxTree::StringDecl>,
-                        public Traversal::WstringDecl,
-                        public Traversal::TypedefDecl<SyntaxTree::WstringDecl>,
-                        public Traversal::ObjectDecl,
-                        public Traversal::ValueBaseDecl,
-                        public Traversal::AnyDecl,
-                        public Traversal::StructDecl,
-                        public Traversal::SequenceDecl,
-                        public Traversal::InterfaceDecl
+class TypeNameEmitter : public Traversal::Void,
+                        public Traversal::Boolean,
+                        public Traversal::Octet,
+                        public Traversal::Char,
+                        public Traversal::Wchar,
+                        public Traversal::Short,
+                        public Traversal::UnsignedShort,
+                        public Traversal::Long,
+                        public Traversal::UnsignedLong,
+                        public Traversal::LongLong,
+                        public Traversal::UnsignedLongLong,
+                        public Traversal::Float,
+                        public Traversal::Double,
+                        public Traversal::String,
+                        public Traversal::Wstring,
+                        public Traversal::Object,
+                        public Traversal::ValueBase,
+                        public Traversal::Any,
+                        public Traversal::Struct,
+                        public Traversal::UnboundedSequence,
+                        public Traversal::Interface,
+                        public Traversal::ValueType,
+                        public Traversal::EventType,
+                        public Traversal::Component
 {
 protected:
   TypeNameEmitter (std::ostream&);
@@ -53,29 +54,30 @@ class ReturnTypeNameEmitter : public TypeNameEmitter
 public:
   ReturnTypeNameEmitter (std::ostream&);
 
-  virtual void traverse (VoidDeclPtr const&);
-  virtual void traverse (BooleanDeclPtr const&);
-  virtual void traverse (OctetDeclPtr const&);
-  virtual void traverse (CharDeclPtr const&);
-  virtual void traverse (WcharDeclPtr const&);
-  virtual void traverse (ShortDeclPtr const&);
-  virtual void traverse (UnsignedShortDeclPtr const&);
-  virtual void traverse (LongDeclPtr const&);
-  virtual void traverse (UnsignedLongDeclPtr const&);
-  virtual void traverse (LongLongDeclPtr const&);
-  virtual void traverse (UnsignedLongLongDeclPtr const&);
-  virtual void traverse (FloatDeclPtr const&);
-  virtual void traverse (DoubleDeclPtr const&);
-  virtual void traverse (StringDeclPtr const&);
-  virtual void traverse (TypedefDeclPtr const&, StringDeclPtr const&);
-  virtual void traverse (WstringDeclPtr const&);
-  virtual void traverse (TypedefDeclPtr const&, WstringDeclPtr const&);
-  virtual void traverse (ObjectDeclPtr const&);
-  virtual void traverse (ValueBaseDeclPtr const&);
-  virtual void traverse (AnyDeclPtr const&);
-  virtual void traverse (StructDeclPtr const&);
-  virtual void traverse (SequenceDeclPtr const&);
-  virtual void traverse (InterfaceDeclPtr const&);
+  virtual void traverse (Void&);
+  virtual void traverse (Boolean&);
+  virtual void traverse (Octet&);
+  virtual void traverse (Char&);
+  virtual void traverse (Wchar&);
+  virtual void traverse (Short&);
+  virtual void traverse (UnsignedShort&);
+  virtual void traverse (Long&);
+  virtual void traverse (UnsignedLong&);
+  virtual void traverse (LongLong&);
+  virtual void traverse (UnsignedLongLong&);
+  virtual void traverse (Float&);
+  virtual void traverse (Double&);
+  virtual void traverse (String&);
+  virtual void traverse (Wstring&);
+  virtual void traverse (Object&);
+  virtual void traverse (ValueBase&);
+  virtual void traverse (Any&);
+  virtual void traverse (SemanticGraph::Struct&);
+  virtual void traverse (SemanticGraph::UnboundedSequence&);
+  virtual void traverse (SemanticGraph::Interface&);
+  virtual void traverse (SemanticGraph::ValueType&);
+  virtual void traverse (SemanticGraph::EventType&);
+  virtual void traverse (SemanticGraph::Component&);
 };
 
 // Generates the typename of an IN argument.
@@ -86,28 +88,30 @@ class INArgTypeNameEmitter : public TypeNameEmitter
 public:
   INArgTypeNameEmitter (std::ostream&);
 
-  virtual void traverse (BooleanDeclPtr const&);
-  virtual void traverse (OctetDeclPtr const&);
-  virtual void traverse (CharDeclPtr const&);
-  virtual void traverse (WcharDeclPtr const&);
-  virtual void traverse (ShortDeclPtr const&);
-  virtual void traverse (UnsignedShortDeclPtr const&);
-  virtual void traverse (LongDeclPtr const&);
-  virtual void traverse (UnsignedLongDeclPtr const&);
-  virtual void traverse (LongLongDeclPtr const&);
-  virtual void traverse (UnsignedLongLongDeclPtr const&);
-  virtual void traverse (FloatDeclPtr const&);
-  virtual void traverse (DoubleDeclPtr const&);
-  virtual void traverse (StringDeclPtr const&);
-  virtual void traverse (TypedefDeclPtr const&, StringDeclPtr const&);
-  virtual void traverse (WstringDeclPtr const&);
-  virtual void traverse (TypedefDeclPtr const&, WstringDeclPtr const&);
-  virtual void traverse (ObjectDeclPtr const&);
-  virtual void traverse (ValueBaseDeclPtr const&);
-  virtual void traverse (AnyDeclPtr const&);
-  virtual void traverse (StructDeclPtr const&);
-  virtual void traverse (SequenceDeclPtr const&);
-  virtual void traverse (InterfaceDeclPtr const&);
+  virtual void traverse (Void&);
+  virtual void traverse (Boolean&);
+  virtual void traverse (Octet&);
+  virtual void traverse (Char&);
+  virtual void traverse (Wchar&);
+  virtual void traverse (Short&);
+  virtual void traverse (UnsignedShort&);
+  virtual void traverse (Long&);
+  virtual void traverse (UnsignedLong&);
+  virtual void traverse (LongLong&);
+  virtual void traverse (UnsignedLongLong&);
+  virtual void traverse (Float&);
+  virtual void traverse (Double&);
+  virtual void traverse (String&);
+  virtual void traverse (Wstring&);
+  virtual void traverse (Object&);
+  virtual void traverse (ValueBase&);
+  virtual void traverse (Any&);
+  virtual void traverse (SemanticGraph::Struct&);
+  virtual void traverse (SemanticGraph::UnboundedSequence&);
+  virtual void traverse (SemanticGraph::Interface&);
+  virtual void traverse (SemanticGraph::ValueType&);
+  virtual void traverse (SemanticGraph::EventType&);
+  virtual void traverse (SemanticGraph::Component&);
 };
 
 // Generates the typename of an INOUT argument.
@@ -118,28 +122,30 @@ class INOUTArgTypeNameEmitter : public TypeNameEmitter
 public:
   INOUTArgTypeNameEmitter (std::ostream&);
 
-  virtual void traverse (BooleanDeclPtr const&);
-  virtual void traverse (OctetDeclPtr const&);
-  virtual void traverse (CharDeclPtr const&);
-  virtual void traverse (WcharDeclPtr const&);
-  virtual void traverse (ShortDeclPtr const&);
-  virtual void traverse (UnsignedShortDeclPtr const&);
-  virtual void traverse (LongDeclPtr const&);
-  virtual void traverse (UnsignedLongDeclPtr const&);
-  virtual void traverse (LongLongDeclPtr const&);
-  virtual void traverse (UnsignedLongLongDeclPtr const&);
-  virtual void traverse (FloatDeclPtr const&);
-  virtual void traverse (DoubleDeclPtr const&);
-  virtual void traverse (StringDeclPtr const&);
-  virtual void traverse (TypedefDeclPtr const&, StringDeclPtr const&);
-  virtual void traverse (WstringDeclPtr const&);
-  virtual void traverse (TypedefDeclPtr const&, WstringDeclPtr const&);
-  virtual void traverse (ObjectDeclPtr const&);
-  virtual void traverse (ValueBaseDeclPtr const&);
-  virtual void traverse (AnyDeclPtr const&);
-  virtual void traverse (StructDeclPtr const&);
-  virtual void traverse (SequenceDeclPtr const&);
-  virtual void traverse (InterfaceDeclPtr const&);
+  virtual void traverse (Void&);
+  virtual void traverse (Boolean&);
+  virtual void traverse (Octet&);
+  virtual void traverse (Char&);
+  virtual void traverse (Wchar&);
+  virtual void traverse (Short&);
+  virtual void traverse (UnsignedShort&);
+  virtual void traverse (Long&);
+  virtual void traverse (UnsignedLong&);
+  virtual void traverse (LongLong&);
+  virtual void traverse (UnsignedLongLong&);
+  virtual void traverse (Float&);
+  virtual void traverse (Double&);
+  virtual void traverse (String&);
+  virtual void traverse (Wstring&);
+  virtual void traverse (Object&);
+  virtual void traverse (ValueBase&);
+  virtual void traverse (Any&);
+  virtual void traverse (SemanticGraph::Struct&);
+  virtual void traverse (SemanticGraph::UnboundedSequence&);
+  virtual void traverse (SemanticGraph::Interface&);
+  virtual void traverse (SemanticGraph::ValueType&);
+  virtual void traverse (SemanticGraph::EventType&);
+  virtual void traverse (SemanticGraph::Component&);
 };
 
 // Generates the typename of an OUT argument.
@@ -150,28 +156,30 @@ class OUTArgTypeNameEmitter : public TypeNameEmitter
 public:
   OUTArgTypeNameEmitter (std::ostream&);
 
-  virtual void traverse (BooleanDeclPtr const&);
-  virtual void traverse (OctetDeclPtr const&);
-  virtual void traverse (CharDeclPtr const&);
-  virtual void traverse (WcharDeclPtr const&);
-  virtual void traverse (ShortDeclPtr const&);
-  virtual void traverse (UnsignedShortDeclPtr const&);
-  virtual void traverse (LongDeclPtr const&);
-  virtual void traverse (UnsignedLongDeclPtr const&);
-  virtual void traverse (LongLongDeclPtr const&);
-  virtual void traverse (UnsignedLongLongDeclPtr const&);
-  virtual void traverse (FloatDeclPtr const&);
-  virtual void traverse (DoubleDeclPtr const&);
-  virtual void traverse (StringDeclPtr const&);
-  virtual void traverse (TypedefDeclPtr const&, StringDeclPtr const&);
-  virtual void traverse (WstringDeclPtr const&);
-  virtual void traverse (TypedefDeclPtr const&, WstringDeclPtr const&);
-  virtual void traverse (ObjectDeclPtr const&);
-  virtual void traverse (ValueBaseDeclPtr const&);
-  virtual void traverse (AnyDeclPtr const&);
-  virtual void traverse (StructDeclPtr const&);
-  virtual void traverse (SequenceDeclPtr const&);
-  virtual void traverse (InterfaceDeclPtr const&);
+  virtual void traverse (Void&);
+  virtual void traverse (Boolean&);
+  virtual void traverse (Octet&);
+  virtual void traverse (Char&);
+  virtual void traverse (Wchar&);
+  virtual void traverse (Short&);
+  virtual void traverse (UnsignedShort&);
+  virtual void traverse (Long&);
+  virtual void traverse (UnsignedLong&);
+  virtual void traverse (LongLong&);
+  virtual void traverse (UnsignedLongLong&);
+  virtual void traverse (Float&);
+  virtual void traverse (Double&);
+  virtual void traverse (String&);
+  virtual void traverse (Wstring&);
+  virtual void traverse (Object&);
+  virtual void traverse (ValueBase&);
+  virtual void traverse (Any&);
+  virtual void traverse (SemanticGraph::Struct&);
+  virtual void traverse (SemanticGraph::UnboundedSequence&);
+  virtual void traverse (SemanticGraph::Interface&);
+  virtual void traverse (SemanticGraph::ValueType&);
+  virtual void traverse (SemanticGraph::EventType&);
+  virtual void traverse (SemanticGraph::Component&);
 };
 
 #endif /* TYPENAME_EMITTER_HPP */

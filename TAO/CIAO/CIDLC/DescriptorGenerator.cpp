@@ -5,7 +5,7 @@
 
 #include <ostream>
 
-#include "CCF/CIDL/SyntaxTree.hpp"
+#include "CCF/CIDL/SemanticGraph.hpp"
 #include "CCF/CIDL/Traversal.hpp"
 
 #include "CCF/CodeGenerationKit/Regex.hpp"
@@ -18,7 +18,7 @@ using std::string;
 
 using namespace StringLiterals;
 using namespace CCF::CIDL;
-using namespace SyntaxTree;
+using namespace CCF::CIDL::SemanticGraph;
 
 namespace
 {
@@ -30,164 +30,73 @@ namespace
     return os.str ();
   }
 
-  string
-  compute_repo_id (DeclarationPtr const& d)
+  Nameable* defined_in (Nameable& n)
   {
-    if (d->context ().count ( STRS[REPO_ID]))
+    for (Nameable::NamedIterator i (n.named_begin ()), e (n.named_end ());
+        i != e; 
+        ++i)
     {
-      return d->context ().get<string> (STRS[REPO_ID]);
+      if (Defines* d = dynamic_cast<Defines*> (*i))
+      {
+        return &d->scope ();
+      }
+    }
+    
+    return 0;
+  }
+
+  string
+  compute_repo_id (Nameable& d)
+  {
+    if (d.context ().count (STRS[REPO_ID]))
+    {
+      return d.context ().get<string> (STRS[REPO_ID]);
     }
 
     string prefix ("");
-    TypePrefixPtr tp;
+    TypePrefix *tp = 0;
     
-    if (d->context ().count (STRS[TYPE_PREFIX]))
+    if (d.context ().count (STRS[TYPE_PREFIX]))
     {
-      tp =
-        d->context ().get<TypePrefixPtr> (STRS[TYPE_PREFIX]);
-        
-      prefix = tp->prefix ().str ();
+      tp = d.context ().get<TypePrefix*> (STRS[TYPE_PREFIX]);  
+      prefix = tp->prefix ().literal ();
     }
     else
     {
-      DeclarationPtr parent = d->scope ();
+      Nameable* parent = defined_in (d);
         
       while (parent != 0)
       {
         if (parent->context ().count (STRS[TYPE_PREFIX]))
         {
           tp =
-            parent->context ().get<TypePrefixPtr> (STRS[TYPE_PREFIX]);
+            parent->context ().get<TypePrefix*> (STRS[TYPE_PREFIX]);
             
-          prefix = tp->prefix ().str ();
+          prefix = tp->prefix ().literal ();
           break;
         }
           
-        if (parent->dynamic_type<CCF::IDL2::SyntaxTree::FileScope> () != 0) 
-          break;
-        else parent = parent->scope ();
+        parent = defined_in (*parent);
       }
     }
       
     if (prefix != "") prefix += "/";
     
+    ScopedName scoped (d.scoped_name ());
+    Name stripped (scoped.begin () + 1, scoped.end ());
+    
     string scope_name =
-      regex::perl_s (name_to_string (d->name ().in_file_scope ()),
+      regex::perl_s (name_to_string (stripped),
                      "%::%/%",
                      '%');
                      
     string repo_id = "IDL:" + prefix + scope_name + ":1.0";
     
     // Store the repo id for possible future reference.
-    d->context ().set<string> (STRS[REPO_ID],
-                               repo_id);
+    d.context ().set<string> (STRS[REPO_ID], repo_id);
     return repo_id;
   }
-
-  typedef
-  DeclarationOrderComparator<InterfaceDefPtr>
-  InterfaceDefOrderComparator;
-
-  typedef
-  std::set<InterfaceDefPtr,
-           InterfaceDefOrderComparator>
-  InterfaceDefSet;
-
-  class Declarations
-  {
-  public:
-    bool
-    add (UnconstrainedInterfaceDefPtr const& i)
-    {
-      if (! interfaces_.insert (i).second)
-      {
-        return false;
-      }
-
-      for (InterfaceDef::Iterator iter = i->inherits_begin ();
-           iter != i->inherits_end ();
-           iter++)
-        {
-          add (iter->resolve ()->dynamic_type<UnconstrainedInterfaceDef> ());
-        }
-
-      return true;
-    }
-
-    InterfaceDefSet& unique_ifaces ()
-    {
-      return this->interfaces_;
-    }
-
-  private:
-    InterfaceDefSet interfaces_;
-  };
-
-  class InterfaceCollector : public Traversal::UnconstrainedInterfaceDef
-  {
-  public:
-    InterfaceCollector (Declarations& declarations)
-      : declarations_ (declarations)
-    {
-    }
-
-    virtual void
-    traverse (UnconstrainedInterfaceDefPtr const& i)
-    {
-      // Add to the list if it's not already there.
-      declarations_.add (i);
-    }
-
-  private:
-    Declarations& declarations_;
-  };
-
-  class ComponentCollector : public Traversal::ComponentDef
-  {
-  public:
-    ComponentCollector (Traversal::Dispatcher* interface_collector)
-        : interface_collector_ (interface_collector)
-    {
-    }
-
-    virtual void
-    pre (ComponentDefPtr const& c)
-    {
-      for (SyntaxTree::ComponentDef::Iterator i = c->supports_begin ();
-           i != c->supports_end ();
-           i++)
-      {
-        interface_collector_->dispatch (i->resolve ());
-      }
-
-      if (c->inherits ())
-      {
-        traverse (c->inherits ().resolve ());
-      }
-    }
-
-  private:
-    Traversal::Dispatcher* interface_collector_;
-  };
-
-  class HomeExecutorCollector : public Traversal::HomeExecutor
-  {
-  public:
-    HomeExecutorCollector (Traversal::Dispatcher* component_collector)
-      : component_collector_ (component_collector)
-    {
-    }
-
-    virtual void
-    traverse (HomeExecutorPtr const& he)
-    {
-      component_collector_->dispatch (he->implements ()->manages ());
-    }
-
-  private:
-    Traversal::Dispatcher* component_collector_;
-  };
-
+  
   class EmitterBase
   {
   public:
@@ -199,314 +108,431 @@ namespace
     fs::ofstream& os;
   };
 
-  class ProvidesEmitter : public EmitterBase,
-                          public Traversal::ProvidesDecl
-  {
-  public:
-    ProvidesEmitter (fs::ofstream& ofs)
-      : EmitterBase (ofs),
-        facettag_ (1U)
-    {}
-
-    virtual void
-    traverse (ProvidesDeclPtr const& p)
-    {
-      os << "<provides" << endl
-         << "providesname=\"" << p->name ().simple ()
-         << "\"" << endl
-         << "repid=\"" << compute_repo_id (p->type ())
-         << "\"" << endl
-         << "facettag=\"" << facettag_
-         << "\">" << endl
-         << "</provides>" << endl;
-
-      ++facettag_;
-    }
-
-    // Called for each composition.
-    void reset ()
-    {
-      facettag_ = 1U;
-    }
-
-  private:
-    unsigned long facettag_;
-  };
-
-  class UsesEmitter : public EmitterBase,
-                      public Traversal::UsesDecl
-  {
-  public:
-    UsesEmitter (fs::ofstream& ofs)
-      : EmitterBase (ofs)
-    {}
-
-    virtual void
-    traverse (UsesDeclPtr const& u)
-    {
-      os << "<uses" << endl
-         << "usesname=\"" << u->name ().simple ()
-         << "\"" << endl
-         << "repid=\"" << compute_repo_id (u->type ())
-         << "\">" << endl
-         << "</uses>" << endl;
-    }
-  };
-
-  class EmitsEmitter : public EmitterBase,
-                       public Traversal::EmitsDecl
-  {
-  public:
-    EmitsEmitter (fs::ofstream& ofs)
-      : EmitterBase (ofs)
-    {}
-
-    virtual void
-    traverse (EmitsDeclPtr const& e)
-    {
-      os << "<emits" << endl
-         << "emitsname=\"" << e->name ().simple ()
-         << "\"" << endl
-         << "eventtype=\"" << compute_repo_id (e->type ())
-         << "\">" << endl
-         << "<eventpolicy policy=\"normal\"/>" << endl
-         << "</emits>" << endl;
-    }
-  };
-
-  class PublishesEmitter : public EmitterBase,
-                           public Traversal::PublishesDecl
-  {
-  public:
-    PublishesEmitter (fs::ofstream& ofs)
-      : EmitterBase (ofs)
-    {}
-
-    virtual void
-    traverse (PublishesDeclPtr const& p)
-    {
-      os << "<publishes" << endl
-         << "publishesname=\"" << p->name ().simple ()
-         << "\"" << endl
-         << "eventtype=\"" << compute_repo_id (p->type ())
-         << "\">" << endl
-         << "<eventpolicy policy=\"normal\"/>" << endl
-         << "</publishes>" << endl;
-    }
-  };
-
-  class ConsumesEmitter : public EmitterBase,
-                          public Traversal::ConsumesDecl
-  {
-  public:
-    ConsumesEmitter (fs::ofstream& ofs)
-      : EmitterBase (ofs)
-    {}
-
-    virtual void
-    traverse (ConsumesDeclPtr const& c)
-    {
-      os << "<consumes" << endl
-         << "consumesname=\"" << c->name ().simple ()
-         << "\"" << endl
-         << "eventtype=\"" << compute_repo_id (c->type ())
-         << "\">" << endl
-         << "<eventpolicy policy=\"normal\"/>" << endl
-         << "</consumes>" << endl;
-    }
-  };
-
-  class ComponentEmitter : public EmitterBase,
-                           public Traversal::ComponentDef
-  {
-  public:
-    ComponentEmitter (fs::ofstream& ofs)
-      : EmitterBase (ofs)
-    {}
-
-    virtual void
-    pre (ComponentDefPtr const& c)
-    {
-      os << "<componentfeatures" << endl
-         << "name=\"" << c->name ().simple ()
-         << "\"" << endl
-         << "repid=\"" << compute_repo_id (c)
-         << "\">" << endl;
-
-      if (c->inherits ())
-      {
-        os << "<inheritscomponent repid=\""
-           << compute_repo_id (c->inherits ().resolve ())
-           << "\"/>" << endl;
-      }
-
-      for (SyntaxTree::ComponentDef::Iterator i = c->supports_begin ();
-           i != c->supports_end ();
-           i++)
-      {
-        os << "<supportsinterface repid=\""
-           << compute_repo_id (i->resolve ())
-           << "\">" << endl
-           << "</supportsinterface>" << endl;
-      }
-
-      os << "<ports>" << endl;
-    }
-
-    virtual void
-    post (ComponentDefPtr const& c)
-    {
-      os << "</ports>" << endl
-         << "</componentfeatures>" << endl << endl;
-
-      // This will cause recursion as long as there are parents.
-      if (c->inherits ())
-      {
-        dispatch (c->inherits ().resolve ());
-      }
-    }
-  };
-
-  class HomeEmitter : public EmitterBase,
-                      public Traversal::HomeDef
-  {
-  public:
-    HomeEmitter (fs::ofstream& ofs)
-      : EmitterBase (ofs)
-    {}
-
-    virtual void
-    pre (HomeDefPtr const& h)
-    {
-      os << "<homefeatures" << endl
-        << "name=\"" << h->name ().simple () << "\"" << endl
-        << "repid=\"" << compute_repo_id (h)
-        << "\">" << endl;
-
-      if (h->inherits ())
-      {
-        os << "<inheritshome repid=\""
-           << compute_repo_id (h->inherits ().resolve ())
-           << "\"/>" << endl;
-      }
-    }
-
-    virtual void
-    post (HomeDefPtr const& h)
-    {
-      os << "</homefeatures>" << endl << endl;
-
-      // This will cause recursion as long as there are parents.
-      if (h->inherits ())
-      {
-        dispatch (h->inherits ().resolve ());
-      }
-    }
-  };
-
-  class HomeExecutorEmitter : public EmitterBase,
-                              public Traversal::HomeExecutor
-  {
-  public:
-    HomeExecutorEmitter (fs::ofstream& ofs,
-                         Traversal::Dispatcher* component_emitter,
-                         Traversal::Dispatcher* home_emitter)
-      : EmitterBase (ofs),
-        manages_emitter_ (component_emitter),
-        implements_emitter_ (home_emitter)
-    {}
-
-  virtual void
-  pre (HomeExecutorPtr const& he)
-  {
-    os << "<corbacomponent>" << endl
-       << "<corbaversion>3.0</corbaversion>" << endl
-       << "<componentrepid repid=\""
-       << compute_repo_id (he->implements ()->manages ())
-       << "\"/>" << endl
-       << "<homerepid repid=\""
-       << compute_repo_id (he->implements ())
-       << "\"/>" << endl
-       << "<componentkind>" << endl;
-
-    // This can't be 0, a home executor can be defined only in a composition.
-    CompositionPtr composition =
-      he->scope ()->dynamic_type<Composition> ();
-
-    // Reasonable default values for CIAO.
-    os << "<" << composition->category () << ">" << endl
-       << "<servant lifetime=\"container\"/>" << endl
-       << "</" << composition->category () << ">" << endl
-       << "</componentkind>" << endl
-       << "<threading policy=\"multithread\"/>" << endl
-       << "<configurationcomplete set=\"true\"/>" << endl << endl;
-
-    implements_emitter_->dispatch (he->implements ());
-    manages_emitter_->dispatch (he->implements ()->manages ());
-  }
-
-  private:
-    Traversal::Dispatcher* manages_emitter_;
-    Traversal::Dispatcher* implements_emitter_;
-  };
-
   class CompositionEmitter : public EmitterBase,
                              public Traversal::Composition
   {
+  // Nested classes for emitters created and dispatched inside
+  // ComponsitionEmitter::traverse().
+  private:  
+    struct ComponentIdEmitter : Traversal::Component, EmitterBase
+    {
+      ComponentIdEmitter (fs::ofstream& ofs)
+        : EmitterBase (ofs)
+      {}
+
+      virtual void
+      traverse (Type& c)
+      {
+        os << "<componentrepid repid=\"" << compute_repo_id (c) << "\"/>"
+           << endl;
+      }
+    };
+
+    struct HomeIdEmitter : Traversal::Home, EmitterBase
+    {
+      HomeIdEmitter (fs::ofstream& ofs)
+        : EmitterBase (ofs)
+      {}
+ 
+      virtual void
+      traverse (Type& h)
+      {
+        os << "<homerepid repid=\"" << compute_repo_id (h) << "\"/>"
+           << endl;
+      }
+    };
+
+    struct HomeFeaturesEmitter : Traversal::Home, EmitterBase
+    {
+      HomeFeaturesEmitter (fs::ofstream& ofs)
+        : EmitterBase (ofs)
+      {}
+ 
+      virtual void
+      traverse (Type& h)
+      {
+        os << "<homefeatures" << endl
+           << "name=\"" << h.name () << "\"" << endl
+           << "repid=\"" << compute_repo_id (h)
+           << "\">" << endl;
+          
+        Traversal::Inherits home_inherits;
+        HomeInheritanceEmitter emitter (os);
+        home_inherits.node_traverser (emitter);
+        
+        inherits (h, home_inherits);
+
+        os << "</homefeatures>" << endl << endl;
+        
+        // Go after inherited homes.
+        //
+        Traversal::Home::traverse (h);
+      }
+      
+      struct HomeInheritanceEmitter : Traversal::Home, EmitterBase
+      {
+        HomeInheritanceEmitter (fs::ofstream& ofs)
+          : EmitterBase (ofs)
+        {}
+        
+        virtual void
+        traverse (Type& h)
+        {
+          os << "<inheritshome repid=\"" << compute_repo_id (h) << "\"/>"
+             << endl;
+        }
+      };
+    };
+
+    struct ComponentFeaturesEmitter : Traversal::Component, EmitterBase
+    {
+      ComponentFeaturesEmitter (fs::ofstream& ofs)
+        : EmitterBase (ofs)
+      {}
+ 
+      virtual void
+      traverse (Type& h)
+      {
+        os << "<componentfeatures" << endl
+           << "name=\"" << h.name () << "\"" << endl
+           << "repid=\"" << compute_repo_id (h)
+           << "\">" << endl;
+          
+        Traversal::Inherits component_inherits;
+        Traversal::Supports component_supports;
+        ComponentInheritanceEmitter i_emitter (os);
+        ComponentSupportsEmitter s_emitter (os);
+        component_inherits.node_traverser (i_emitter);
+        component_supports.node_traverser (s_emitter);
+        
+        inherits (h, component_inherits);
+        supports (h, component_supports);
+        
+        os << "<ports>" << endl;
+        
+        Traversal::Defines defines;
+        PortsEmitter ports_emitter (os);
+        defines.node_traverser (ports_emitter);
+        
+        names (h, defines);
+        
+        os << "</ports>" << endl;
+
+        os << "</componentfeatures>" << endl << endl;
+        
+        // Go after inherited components.
+        //
+        Traversal::Component::traverse (h);
+      }
+      
+      struct ComponentInheritanceEmitter : Traversal::Component, EmitterBase
+      {
+        ComponentInheritanceEmitter (fs::ofstream& ofs)
+          : EmitterBase (ofs)
+        {}
+        
+        virtual void
+        traverse (Type& h)
+        {
+          os << "<inheritscomponent repid=\"" << compute_repo_id (h) << "\"/>"
+             << endl;
+        }
+      };
+      
+      struct ComponentSupportsEmitter : Traversal::Interface, EmitterBase
+      {
+        ComponentSupportsEmitter (fs::ofstream& ofs)
+          : EmitterBase (ofs)
+        {}
+        
+        virtual void
+        traverse (Type& h)
+        {
+          os << "<supportsinterface repid=\"" << compute_repo_id (h) << "\"/>"
+             << endl;
+        }
+      };
+      
+      struct PortsEmitter : Traversal::EmitterData,
+                            Traversal::UserData,
+                            Traversal::ProviderData,
+                            Traversal::ConsumerData,
+                            Traversal::PublisherData,
+                            EmitterBase
+      {
+        PortsEmitter (fs::ofstream& ofs)
+          : EmitterBase (ofs), 
+            type_name_emitter_ (ofs),
+            facettag_ (1U)     
+        {
+          belongs_.node_traverser (type_name_emitter_);
+        }
+        
+        virtual void
+        traverse (SemanticGraph::Emitter& e)
+        {
+          os << "<emits" << endl
+             << "emitsname=\"" << e.name () << "\"" << endl
+             << "eventtype=";
+            
+          Traversal::EmitterData::belongs (e, belongs_);
+            
+          os << ">" << endl
+             << "<eventpolicy policy=\"normal\"/>" << endl
+             << "</emits>" << endl;
+        }
+        
+        virtual void
+        traverse (SemanticGraph::User& u)
+        {
+          os << "<uses" << endl
+             << "usesname=\"" << u.name () << "\"" << endl
+             << "repid=";
+            
+          Traversal::UserData::belongs (u, belongs_);
+            
+          os << ">" << endl
+             << "</uses>" << endl;
+        }
+        
+        virtual void
+        traverse (SemanticGraph::Provider& p)
+        {
+          os << "<provides" << endl
+             << "providesname=\"" << p.name () << "\"" << endl
+             << "repid=";
+            
+          Traversal::ProviderData::belongs (p, belongs_);
+            
+          os << endl 
+             << "facettag=\"" << facettag_ << "\">" << endl
+             << "</provides>" << endl;
+
+          ++facettag_;
+        }
+        
+        virtual void
+        traverse (SemanticGraph::Consumer& c)
+        {
+          os << "<consumes" << endl
+             << "consumesname=\"" << c.name () << "\"" << endl
+             << "eventtype=";
+            
+          Traversal::ConsumerData::belongs (c, belongs_);
+            
+          os << ">" << endl
+             << "<eventpolicy policy=\"normal\"/>" << endl
+             << "</consumes>" << endl;
+        }
+        
+        virtual void
+        traverse (SemanticGraph::Publisher& p)
+        {
+          os << "<publishes" << endl
+            << "publishesname=\"" << p.name ()
+            << "\"" << endl
+            << "eventtype=";
+            
+          Traversal::PublisherData::belongs (p, belongs_);
+            
+          os << ">" << endl
+             << "<eventpolicy policy=\"normal\"/>" << endl
+             << "</publishes>" << endl;
+        }
+        
+        struct TypeNameEmitter : Traversal::Type, EmitterBase
+        {
+          TypeNameEmitter (fs::ofstream& ofs)
+            : EmitterBase (ofs)
+          {}
+          
+          virtual void
+          traverse (SemanticGraph::Type& t)
+          {
+            os << '\"' << compute_repo_id (t) << '\"';
+          }
+        };
+        
+      private:
+        TypeNameEmitter type_name_emitter_;
+        unsigned long facettag_;
+        Traversal::Belongs belongs_;
+      };
+    };
+    
+    struct InterfaceEmitter : Traversal::UnconstrainedInterface,
+                              EmitterBase
+    {
+      InterfaceEmitter (fs::ofstream& ofs)
+        : EmitterBase (ofs)
+      {}
+
+      bool
+      add (UnconstrainedInterface& i)
+      {
+        return interfaces_.insert (&i).second;
+      }
+
+      virtual void
+      traverse (UnconstrainedInterface& i)
+      {
+        if (add (i))
+        {
+          os << "<interface" << endl
+              << "name=\"" << i.name ()
+              << "\"" << endl
+              << "repid=\"" << compute_repo_id (i)
+              << "\">" << endl;
+              
+          Traversal::Inherits interface_inherits;
+          InterfaceInheritanceEmitter i_emitter (os);
+          interface_inherits.node_traverser (i_emitter);
+          
+          inherits (i, interface_inherits);
+
+          os << "</interface>" << endl << endl;
+          
+          // Go after inherited interfaces.
+          Traversal::UnconstrainedInterface::traverse (i);
+        }
+      }
+
+    struct InterfaceInheritanceEmitter : Traversal::Interface, EmitterBase
+    {
+      InterfaceInheritanceEmitter (fs::ofstream& ofs)
+        : EmitterBase (ofs)
+      {}
+      
+      virtual void
+      traverse (Type& i)
+      {
+        os << "<inheritsinterface repid=\"" << compute_repo_id (i)
+            << "\"/>" << endl;
+      }
+    };
+    
+    private:
+      std::set<UnconstrainedInterface*> interfaces_;
+    };
+
   public:
     CompositionEmitter (fs::ofstream& ofs,
-                        CommandLine const& cl,
-                        ProvidesEmitter &pe,
-                        Declarations& declarations)
+                        CommandLine const& cl)
       : EmitterBase (ofs),
-        cl_ (cl),
-        pe_ (pe),
-        declarations_ (declarations)
+        cl_ (cl)
     {}
 
     virtual void
-    pre (CompositionPtr const& c)
+    traverse (Composition& c)
     {
-      string name = name_to_string (c->name ().in_file_scope ());
+      ScopedName scoped (c.scoped_name ());
+      Name stripped (scoped.begin () + 1, scoped.end ());
+      string name = name_to_string (stripped);
       configure_stream (name);
 
       os << "<?xml version=\"1.0\"?>" << endl
          << "<!DOCTYPE corbacomponent SYSTEM \"corbacomponent.dtd\">"
          << endl << endl;
 
-      pe_.reset ();
-    }
+      os << "<corbacomponent>" << endl
+         << "<corbaversion>3.0</corbaversion>" << endl;
 
-    virtual void
-    post (CompositionPtr const&)
-    {
-      // Generate all the interfaces ported or supported.
-      InterfaceDefSet& ifaces = declarations_.unique_ifaces ();
-
-      for (InterfaceDefSet::const_iterator i = ifaces.begin ();
-           i != ifaces.end ();
-           ++i)
       {
-        os << "<interface" << endl
-           << "name=\"" << (*i)->name ().simple ()
-           << "\"" << endl
-           << "repid=\"" << compute_repo_id (*i)
-           << "\">" << endl;
+        ComponentIdEmitter component_id_emitter (os);
+        HomeIdEmitter home_id_emitter (os);
+        Traversal::Defines defines;
+        Traversal::ComponentExecutor component_executor;
+        Traversal::HomeExecutor home_executor;
+        defines.node_traverser (component_executor);
+        defines.node_traverser (home_executor);
+        Traversal::Implements implements;
+        component_executor.edge_traverser (implements);
+        home_executor.edge_traverser (implements);
+        implements.node_traverser (component_id_emitter);
+        implements.node_traverser (home_id_emitter);   
+      
+        names (c, defines);
+      }   
+      
+      os << "<componentkind>" << endl
+         << "<session>" << endl
+         << "<servant lifetime=\"container\"/>" << endl
+         << "</session>" << endl
+         << "</componentkind>" << endl
+         << "<threading policy=\"multithread\"/>" << endl
+         << "<configurationcomplete set=\"true\"/>" << endl << endl;
 
-        for (InterfaceDef::Iterator inh = (*i)->inherits_begin ();
-              inh != (*i)->inherits_end ();
-              ++inh)
-        {
-          os << "<inheritsinterface repid=\""
-             << compute_repo_id ((*inh).resolve ())
-             << "\"/>" << endl;
-        }
+      {
+        HomeFeaturesEmitter home_features_emitter (os);
+        Traversal::Defines defines;
+        Traversal::HomeExecutor home_executor;
+        defines.node_traverser (home_executor);
+        Traversal::Implements implements;
+        home_executor.edge_traverser (implements);
+        implements.node_traverser (home_features_emitter);   
+        
+        Traversal::Inherits inherits;
+        home_features_emitter.edge_traverser (inherits);
+        inherits.node_traverser (home_features_emitter);
+      
+        names (c, defines);
+      }   
 
-        os << "</interface>" << endl;
+      {
+        ComponentFeaturesEmitter component_features_emitter (os);
+        Traversal::Defines defines;
+        Traversal::ComponentExecutor component_executor;
+        defines.node_traverser (component_executor);
+        Traversal::Implements implements;
+        component_executor.edge_traverser (implements);
+        implements.node_traverser (component_features_emitter);   
+        
+        Traversal::Inherits inherits;
+        component_features_emitter.edge_traverser (inherits);
+        inherits.node_traverser (component_features_emitter);
+      
+        names (c, defines);
       }
-
-      os << endl
-         << "</corbacomponent>" << endl;
+      
+      {
+        Traversal::Component component;
+        Traversal::Home home;
+        Traversal::Defines defines;
+        Traversal::ComponentExecutor component_executor;
+        Traversal::HomeExecutor home_executor;
+        defines.node_traverser (component_executor);
+        defines.node_traverser (home_executor);
+        Traversal::Implements implements;
+        component_executor.edge_traverser (implements);
+        home_executor.edge_traverser (implements);
+        implements.node_traverser (component);
+        implements.node_traverser (home);
+        
+        Traversal::Supports supports;
+        InterfaceEmitter interface_emitter (os);
+        supports.node_traverser (interface_emitter);
+        component.edge_traverser (supports);
+        home.edge_traverser (supports);
+        
+        Traversal::Defines component_defines;
+        component.edge_traverser (component_defines);
+        Traversal::Provider provider;
+        Traversal::User user;
+        component_defines.node_traverser (provider);
+        component_defines.node_traverser (user);
+        Traversal::Belongs belongs;
+        belongs.node_traverser (interface_emitter);
+        provider.edge_traverser (belongs);
+        user.edge_traverser (belongs);
+        
+        Traversal::Inherits inherits;
+        inherits.node_traverser (interface_emitter);
+        interface_emitter.edge_traverser (inherits);
+      
+        names (c, defines);
+      }
+      
+      os << "</component>" << endl;  
     }
 
   private:
@@ -538,8 +564,6 @@ namespace
 
   private:
     CommandLine const& cl_;
-    ProvidesEmitter pe_;
-    Declarations& declarations_;
   };
 }
 
@@ -565,77 +589,45 @@ DescriptorGenerator::options (CL::Description& d)
 
 void
 DescriptorGenerator::generate (CommandLine const& cl,
-                               TranslationUnitPtr const& u)
+                               TranslationUnit& u)
 {
-  Declarations declarations;
-
   // Set auto-indentation for os
   Indentation::Implanter<Indentation::XML> guard (ofs_);
 
-  {
-    InterfaceCollector iface (declarations);
-    Traversal::ProvidesDecl provides (&iface);
-    Traversal::UsesDecl uses (&iface);
+  Traversal::TranslationUnit unit;
+  
+  // Layer 1
+  //
+  Traversal::ContainsPrincipal contains_principal;
+  unit.edge_traverser (contains_principal);
 
-    ComponentCollector component (&iface);
-    component.add_scope_delegate (&provides);
-    component.add_scope_delegate (&uses);
+  //--
+  Traversal::TranslationRegion region;
+  contains_principal.node_traverser (region);
 
-    HomeExecutorCollector home_executor (&component);
+  // Layer 2
+  //
+  Traversal::ContainsRoot contains_root;
+  Traversal::Includes includes;
+  
+  region.edge_traverser (includes);
+  region.edge_traverser (contains_root);
+  
+  //--
+  Traversal::Root root;  
+  includes.node_traverser (region);
+  contains_root.node_traverser (root);
 
-    Traversal::Composition composition;
-    composition.add_scope_delegate (&home_executor);
+  // Layer 3
+  //
+  Traversal::Defines defines;
+  root.edge_traverser (defines);
 
-    Traversal::Module module;
-    module.add_scope_delegate (&composition);
-    module.add_scope_delegate (&module);
-
-    Traversal::FileScope file_scope;
-    file_scope.add_scope_delegate (&composition);
-    file_scope.add_scope_delegate (&module);
-
-    Traversal::TranslationRegion region (&file_scope);
-
-    Traversal::TranslationUnit unit;
-    unit.add_content_delegate (&region);
-
-    unit.dispatch (u);
-  }
-
-  {
-    ProvidesEmitter provides (ofs_);
-    UsesEmitter uses (ofs_);
-    EmitsEmitter emits (ofs_);
-    PublishesEmitter publishes (ofs_);
-    ConsumesEmitter consumes (ofs_);
-
-    ComponentEmitter component (ofs_);
-    component.add_scope_delegate (&provides);
-    component.add_scope_delegate (&uses);
-    component.add_scope_delegate (&emits);
-    component.add_scope_delegate (&publishes);
-    component.add_scope_delegate (&consumes);
-
-    HomeEmitter home (ofs_);
-
-    HomeExecutorEmitter home_executor (ofs_, &component, &home);
-
-    CompositionEmitter composition (ofs_, cl, provides, declarations);
-    composition.add_scope_delegate (&home_executor);
-
-    Traversal::Module module;
-    module.add_scope_delegate (&composition);
-    module.add_scope_delegate (&module);
-
-    Traversal::FileScope file_scope;
-    file_scope.add_scope_delegate (&module);
-    file_scope.add_scope_delegate (&composition);
-
-    Traversal::TranslationRegion region (&file_scope);
-
-    Traversal::TranslationUnit unit;
-    unit.add_content_delegate (&region);
-
-    unit.dispatch (u);
-  }
+  //--
+  Traversal::Module module;
+  CompositionEmitter composition (ofs_, cl);
+  defines.node_traverser (module);
+  defines.node_traverser (composition);
+  
+  unit.traverse (u);
 }
