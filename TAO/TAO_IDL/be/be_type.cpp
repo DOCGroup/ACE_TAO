@@ -150,6 +150,38 @@ be_type::nested_type_name (be_decl *d, char *suffix)
   return macro;
 }
 
+// *****************************
+// CODE GENERATION
+// *****************************
+
+// generate the _var definition for ourself
+int
+be_type::gen_var_defn (void)
+{
+  return 0;
+}
+
+// implementation of the _var class. All of these get generated in the inline
+// file
+int
+be_type::gen_var_impl (void)
+{
+  return 0;
+}
+
+// generate the _out definition
+int
+be_type::gen_out_defn (void)
+{
+  return 0;
+}
+
+int
+be_type::gen_out_impl (void)
+{
+  return 0;
+}
+
 // Narrowing
 IMPL_NARROW_METHODS2 (be_type, AST_Type, be_decl)
 IMPL_NARROW_FROM_DECL (be_type)

@@ -3,7 +3,7 @@
 //
 // = LIBRARY
 //    TAO IDL
-// 
+//
 // = FILENAME
 //    be_interface.h
 //
@@ -13,9 +13,9 @@
 //
 // = AUTHOR
 //    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and 
+//    and
 //    Aniruddha Gokhale
-// 
+//
 // ============================================================================
 
 #if !defined (BE_INTERFACE_FWD_H)
@@ -41,13 +41,13 @@ public:
   // constructor
 
   virtual int gen_client_header (void);
-  // Generates the client-side header information for the interface 
+  // Generates the client-side header information for the interface
 
   virtual int gen_client_stubs (void);
   // Generates the client-side stubs for the interface
 
   virtual int gen_server_header (void);
-  // Generates the server-side header information for the interface 
+  // Generates the server-side header information for the interface
 
   virtual int gen_server_skeletons (void);
   // Generates the server-side skeletons for the interface
@@ -57,6 +57,18 @@ public:
 
   virtual int gen_server_inline (void);
   // Generates the server-side inlines for the interface
+
+  virtual int gen_var_defn (void);
+  // generate the _var class definition
+
+  virtual int gen_var_impl (void);
+  // generate the implementation for the _var class
+
+  virtual int gen_out_defn (void);
+  // generate the _out class definition
+
+  virtual int gen_out_impl (void);
+  // generate the _out implementation
 
   virtual int gen_typecode (void);
   // generate the typecode
