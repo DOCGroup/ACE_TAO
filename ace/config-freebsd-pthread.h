@@ -13,6 +13,10 @@
 #define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
+#if (__FreeBSD__ < 3)
+#error Threads are not supported.
+#endif /* __FreeBSD < 3 */
+
 #define ACE_SIZEOF_LONG_DOUBLE 12
 
 #if defined (__GNUG__)
@@ -157,6 +161,6 @@ char * cuserid (char *s);
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
 #define ACE_HAS_DIRENT
 
-// #define ACE_HAS_SIGWAIT
+#define ACE_HAS_SIGWAIT
 
 #endif /* ACE_CONFIG_H */
