@@ -1,3 +1,12 @@
+Thu Sep 20 12:29:09 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/SSL/ACE_SSL_LIB.dsp:
+	* ace/SSL/ACE_SSL_LIB.dsw:
+
+	  New static build MSVC++ project and workspace files for the
+	  ACE_SSL library contributed by Jonathan Reis <reis@stentor.com>.
+	  [Bug 1032]
+
 Thu Sep 20 12:16:13 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/SSL/SSL_SOCK.cpp (enable, disable):
