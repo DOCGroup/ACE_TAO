@@ -1,3 +1,28 @@
+Wed Dec  3 14:08:12 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Decoder.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Decoder.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Decoder_Find.h:
+          Removed.  Renamed Properties_Decoder to Property_Set.
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Property_Set.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Property_Set.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Property_Set_Find.h:
+          Added.  Renamed Properties_Decoder to Property_Set.
+
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.h:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManagerFaultAnalyzer.cpp:
+        * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Support.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Support.cpp:
+        * orbsvcs/tests/FT_App/FT_ReplicaFactory_i.cpp:
+          Changes Properties_Decoder users to use new name.
+
 Wed Dec  3 12:57:45 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.mpc:

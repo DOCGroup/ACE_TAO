@@ -27,9 +27,9 @@
 
 //////////////////
 // Forward reference
-namespace TAO_PG
+namespace TAO
 {
-  class Properties_Decoder;
+  class PG_Property_Set;
 } // namespace TAO_PG
 
 
@@ -81,7 +81,7 @@ namespace TAO
     TAO::PG_Object_Group * create_group (
         const char * type_id,
         const PortableGroup::Criteria & the_criteria,
-        TAO_PG::Properties_Decoder * typeid_properties
+        TAO::PG_Property_Set * typeid_properties
         ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableGroup::NoFactory,

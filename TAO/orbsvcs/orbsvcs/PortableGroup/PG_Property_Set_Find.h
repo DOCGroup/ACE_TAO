@@ -1,7 +1,7 @@
 /* -*- C++ -*- */
 //=============================================================================
 /**
- *  @file    PG_Properties_Decoder.h
+ *  @file    PG_Property_Set.h
  *
  *  $Id$
  *
@@ -11,8 +11,8 @@
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
 //=============================================================================
-#ifndef TAO_PG_PROPERTIES_DECODER_FIND_H
-#define TAO_PG_PROPERTIES_DECODER_FIND_H
+#ifndef TAO_PG_PROPERTY_SET_FIND_H
+#define TAO_PG_PROPERTY_SET_FIND_H
 #include /**/ "ace/pre.h"
 #include <ace/ACE.h>
 
@@ -24,15 +24,15 @@
 
 #include "ace/Hash_Map_Manager.h"
 
-namespace TAO_PG
+namespace TAO
 {
   /**
-   * Find a value in a Properties::Properties_Decoder.
+   * Find a value in a TAO::PG_Property_Set.
    * This is a work-around for the lack of
    * templated methods.
    */
   template <typename TYPE>
-  int find (const Properties_Decoder & decoder, const ACE_CString & key, TYPE & value)
+  int find (const PG_Property_Set & decoder, const ACE_CString & key, TYPE & value)
   {
     int result = 0;
     PortableGroup::Value const * any;
@@ -43,6 +43,6 @@ namespace TAO_PG
     return result;
   }
 
-} //namespace TAO_PG
+} //namespace TAO
 
-#endif // TAO_PG_PROPERTIES_DECODER_FIND_H
+#endif // TAO_PG_PROPERTY_SET_FIND_H

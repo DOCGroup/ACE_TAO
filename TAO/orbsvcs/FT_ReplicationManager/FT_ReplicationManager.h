@@ -54,11 +54,12 @@ namespace TAO
   *   members and set group properties.
   *
   *  TAO::PG_Properties_Support properties_support_;
-  *   This object maintains sets of properties.  In particular it has
-  *   one default property set, and a collection of property sets indexed
-  *   by type_id.  The default property set acts as a parent to the type_id
-  *   property sets and the type_id property sets act as parents to the
-  *   property sets contained in PG_Object_Group.
+  *   This object maintains sets of properties(TAO::PG_Property_Set).  
+  *   In particular it has one default property set, and a collection of 
+  *   property sets indexed by type_id.  
+  *   The default property set acts as a parent to the type_id property 
+  *   sets and the type_id property sets act as parents to the property 
+  *   sets contained in PG_Object_Group.
   *
   *  FT::FaultNotifier_var fault_notifier_;
   *   This notification channel is "the" source of fault notifications.
@@ -320,8 +321,8 @@ namespace TAO
      * deleted by the application.  Objects created by the
      * infrastructure (replication manager) will be deleted by the
      * infrastructure.
-     * For infrastructure-controlled membership: After the member 
-     * is removed from the group the minumum number of members 
+     * For infrastructure-controlled membership: After the member
+     * is removed from the group the minumum number of members
      * parameter will be checked and new members will be created
      * as necessary (if possible.)
      */

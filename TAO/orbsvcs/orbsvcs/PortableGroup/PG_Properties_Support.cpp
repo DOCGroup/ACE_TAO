@@ -62,12 +62,12 @@ TAO::PG_Properties_Support::set_type_properties (
 {
   InternalGuard guard(this->internals_);
 
-  TAO_PG::Properties_Decoder * typeid_properties;
+  TAO::PG_Property_Set * typeid_properties;
   if ( 0 != this->properties_map_.find (type_id, typeid_properties))
   {
     ACE_NEW_THROW_EX (
       typeid_properties,
-      TAO_PG::Properties_Decoder (overrides, & this->default_properties_),
+      TAO::PG_Property_Set (overrides, & this->default_properties_),
       CORBA::NO_MEMORY());
     this->properties_map_.bind (type_id, typeid_properties);
   }
@@ -87,7 +87,7 @@ TAO::PG_Properties_Support::get_type_properties (
 
   InternalGuard guard(this->internals_);
 
-  TAO_PG::Properties_Decoder * typeid_properties;
+  TAO::PG_Property_Set * typeid_properties;
   if ( 0 != this->properties_map_.find (type_id, typeid_properties))
   {
     typeid_properties->export_properties (*result ACE_ENV_ARG_PARAMETER);
@@ -110,7 +110,7 @@ TAO::PG_Properties_Support::remove_type_properties (
 
   InternalGuard guard(this->internals_);
 
-  TAO_PG::Properties_Decoder * typeid_properties;
+  TAO::PG_Property_Set * typeid_properties;
   if ( 0 != this->properties_map_.find (type_id, typeid_properties))
   {
     typeid_properties->remove (props ACE_ENV_ARG_PARAMETER);
@@ -119,7 +119,7 @@ TAO::PG_Properties_Support::remove_type_properties (
 }
 
 
-TAO_PG::Properties_Decoder *
+TAO::PG_Property_Set *
 TAO::PG_Properties_Support::find_typeid_properties (
     const char *type_id
     ACE_ENV_ARG_PARAMETER)
@@ -127,12 +127,12 @@ TAO::PG_Properties_Support::find_typeid_properties (
 {
   InternalGuard guard(this->internals_);
 
-  TAO_PG::Properties_Decoder * typeid_properties = 0;
+  TAO::PG_Property_Set * typeid_properties = 0;
   if ( 0 != this->properties_map_.find (type_id, typeid_properties))
   {
     ACE_NEW_THROW_EX (
       typeid_properties,
-      TAO_PG::Properties_Decoder (& this->default_properties_),
+      TAO::PG_Property_Set (& this->default_properties_),
       CORBA::NO_MEMORY());
     this->properties_map_.bind (type_id, typeid_properties);
   }
@@ -144,24 +144,24 @@ TAO::PG_Properties_Support::find_typeid_properties (
 
   template class ACE_Hash_Map_Manager<
     ACE_CString,
-    ::TAO_PG::Properties_Decoder *,
+    ::TAO::PG_Property_Set *,
     TAO_SYNCH_MUTEX>;
 
   template class ACE_Hash_Map_Iterator<
     ACE_CString,
-    ::TAO_PG::Properties_Decoder *,
+    ::TAO::PG_Property_Set *,
     TAO_SYNCH_MUTEX>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 # pragma instantiate ACE_Hash_Map_Manager<
     ACE_CString,
-    ::TAO_PG::Properties_Decoder *,
+    ::TAO::PG_Property_Set *,
     TAO_SYNCH_MUTEX>
 
 # pragma instantiate ACE_Hash_Map_Iterator<
     ACE_CString,
-    ::TAO_PG::Properties_Decoder *,
+    ::TAO::PG_Property_Set *,
     TAO_SYNCH_MUTEX>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

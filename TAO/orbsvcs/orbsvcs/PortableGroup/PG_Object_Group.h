@@ -24,7 +24,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "PG_Properties_Decoder.h"
+#include "PG_Property_Set.h"
 
 //////////////////////////////////
 // Classes declared in this header
@@ -125,7 +125,7 @@ namespace TAO
       const PortableGroup::TagGroupTaggedComponent & tagged_component,
       const char * type_id,
       const PortableGroup::Criteria & the_criteria,
-      TAO_PG::Properties_Decoder * type_properties);
+      TAO::PG_Property_Set * type_properties);
 
 
     /// Destructor
@@ -366,7 +366,7 @@ namespace TAO
 
     // Miscellaneous properties passed to create_object when this group
     // was initially created.  To be used to create new members.
-    TAO_PG::Properties_Decoder properties_;
+    TAO::PG_Property_Set properties_;
 
     // Cached property information
 
