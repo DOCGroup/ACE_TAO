@@ -620,7 +620,7 @@ ACE_Object_Manager::fini (void)
 
 #  if (((defined (ACE_HAS_WINNT)) && (ACE_HAS_WINNT == 1)) || (defined (ACE_HAS_AIO_CALLS)))
       ACE_Proactor::close_singleton ();
-#  endif / !ACE_HAS_WINCE /
+#  endif /* !ACE_HAS_WINCE */
 
 
 #  if ! defined (ACE_THREAD_MANAGER_LACKS_STATICS)

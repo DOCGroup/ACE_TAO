@@ -148,6 +148,9 @@ ACE_Log_Msg_Manager::close (void)
   // Ugly, ugly, but don't know a better way.
   delete ACE_Log_Msg_Manager::lock_;
   ACE_Log_Msg_Manager::lock_ = 0;
+
+  delete ACE_Log_Msg_Manager::ipc_backend_;
+  ACE_Log_Msg_Manager::ipc_backend_ = 0;
 }
 
 # if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || \
