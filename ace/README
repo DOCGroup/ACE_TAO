@@ -410,6 +410,11 @@ ACE_HAS_OPTIMIZED_MESSAGE_QUEUE         Use the semaphore
                                         variable (NT and VxWorks).
 ACE_HAS_OSF_TIMOD_H                     Platform supports the OSF TLI
                                         timod STREAMS module
+ACE_HAS_3_PARAM_WCSTOK                  Platform has 3-parameter version
+                                        of wcstok(), which was added in
+                                        1994 in the ISO C standard Normative
+                                        Addendum 1.  Other standards like XPG4
+                                        define a 2 parameter wcstok().
 ACE_HAS_PENTIUM                         Platform is an Intel Pentium
                                         microprocessor.
 ACE_HAS_POLL                            Platform contains <poll.h>
