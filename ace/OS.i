@@ -3567,10 +3567,15 @@ ACE_OS::gettimeofday (void)
 #if defined (ACE_HAS_TIMEZONE_GETTIMEOFDAY) || (defined (ACE_HAS_SVR4_GETTIMEOFDAY) && !defined (m88k))
   ACE_OSCALL (::gettimeofday (&tv, 0), int, -1, result);
 #elif defined (VXWORKS)
-  // assumes that struct timespec is same size as struct timeval,
-  // which assumes that time_t is a long: it currently (v 5.2) is
-  ACE_OSCALL (ACE_ADAPT_RETVAL (::clock_gettime (CLOCK_REALTIME, (struct timespec *) &tv), result),
+  // Assumes that struct timespec is same size as struct timeval,
+  // which assumes that time_t is a long: it currently (VxWorks 5.2/5.3) is.
+  struct timespec ts;
+  
+  ACE_OSCALL (ACE_ADAPT_RETVAL (::clock_gettime (CLOCK_REALTIME, &ts), result),
               int, -1, result);
+
+  tv.tv_sec = ts.tv_sec;
+  tv.tv_usec = ts.tv_nsec / 1000L;  // timespec has nsec, but timeval has usec
 #else
   ACE_OSCALL (::gettimeofday (&tv), int, -1, result);
 #endif /* ACE_HAS_SVR4_GETTIMEOFDAY */
