@@ -21,7 +21,8 @@
 ACE_RCSID(Quoter, Generic_Factory_i, "$Id$")
 
 // Constructor
-Quoter_Generic_Factory_i::Quoter_Generic_Factory_i (void)
+Quoter_Generic_Factory_i::Quoter_Generic_Factory_i (int debug_level)
+: debug_level_ (debug_level)
 {
 }
 
@@ -139,8 +140,8 @@ Quoter_Generic_Factory_i::create_object (const CosLifeCycle::Key &factory_key,
           return CORBA::Object::_nil ();
         }
 
-      ACE_DEBUG ((LM_DEBUG,
-                  "Factory reference OK.\n"));
+      if (this->debug_level_ > 1)
+        ACE_DEBUG ((LM_DEBUG, "Generic Factory: Factory reference OK.\n"));
 
       // Now retrieve the Quoter obj ref corresponding to the key.
       quoter_var =
@@ -148,8 +149,8 @@ Quoter_Generic_Factory_i::create_object (const CosLifeCycle::Key &factory_key,
                                     ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      ACE_DEBUG ((LM_DEBUG,
-                  "Quoter Created\n"));
+      if (this->debug_level_ > 1)
+        ACE_DEBUG ((LM_DEBUG, "Generic_Factory: Quoter Created\n"));
 
       if (CORBA::is_nil (quoter_var.in ()))
         {
@@ -158,8 +159,8 @@ Quoter_Generic_Factory_i::create_object (const CosLifeCycle::Key &factory_key,
           return CORBA::Object::_nil ();
         }
 
-      ACE_DEBUG ((LM_DEBUG,
-                  "Return a object reference to a new object.\n"));
+      if (this->debug_level_ > 1)
+        ACE_DEBUG ((LM_DEBUG, "Generic_Factory: Return an object reference to a new object.\n"));
 
     }
   ACE_CATCHANY

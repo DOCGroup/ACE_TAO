@@ -65,6 +65,10 @@ private:
   // commandline arguments.
 
   unsigned char use_LifeCycle_Service_;
+  // flag for whether or not to use the lifecycle service
+
+  int debug_level_;
+  // debug level (0 = quiet, 1 = default, informative, 2+ = noisy);
 };
 
 #endif /* GENERIC_FACTORY_H */
