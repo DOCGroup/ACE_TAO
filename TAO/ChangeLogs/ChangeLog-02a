@@ -23,7 +23,7 @@ Thu Oct 19 14:30:59 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 	  Updates necessary to make the code work with the corrected pidl
 	  and the newly generated locality constrained stubs. 
 
-	Thanks to Ossama for making all these changes.
+	Thanks to Ossama for helping with these changes.
 
 	* tao/OctetSeq.pidl: 
 	* tao/OctetSeqC.i: 
