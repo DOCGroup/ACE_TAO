@@ -1,6 +1,6 @@
---- y.tab.cpp.orig	Wed Mar 24 14:30:15 1999
-+++ y.tab.cpp	Wed Mar 24 14:50:58 1999
-@@ -971,7 +972,7 @@
+--- y.tab.cpp	Fri Jun 18 18:28:04 1999
++++ y.tab.cpp.new	Fri Jun 18 18:20:42 1999
+@@ -1101,7 +1101,7 @@
      extern char *ace_foo();
  #endif
  
@@ -9,7 +9,7 @@
      {
          tao_yyn = *tao_yys;
          if (tao_yyn >= '0' && tao_yyn <= '9')
-@@ -988,7 +989,7 @@
+@@ -1118,7 +1118,7 @@
      *tao_yyssp = tao_yystate = 0;
  
  tao_yyloop:
@@ -18,7 +18,7 @@
      if (tao_yychar < 0)
      {
          if ((tao_yychar = tao_yylex()) < 0) tao_yychar = 0;
-@@ -1042,7 +1043,6 @@
+@@ -1172,7 +1172,6 @@
  #ifdef lint
      goto tao_yyerrlab;
  #endif
