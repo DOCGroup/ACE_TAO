@@ -1,50 +1,60 @@
-// $Id$
+// -*- IDL -*-
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Interceptors
-//
-// = FILENAME
-//    test.idl
-//
-// = DESCRIPTION
-//   Simple IDL file to test portable interceptor support.
-//
-// = AUTHORS
-//   Nanbor Wang <nanbor@cs.wustl.edu>
-//
-// ============================================================================
+// ===================================================================
+/**
+ *  @file   test.idl
+ *
+ *  $Id$
+ *
+ *  Simple IDL file to test portable interceptor support.
+ *
+ *  @author Nanbor Wang <nanbor@cs.wustl.edu>
+ *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
+ */
+// ===================================================================
 
 module Test_Interceptors
 {
-  exception Silly
-    {};
+  exception Silly {};
 
+  /**
+   * @class Visual
+   *
+   * @brief Test interface for checking interceptor visually.
+   *
+   * Test interface for checking interceptor visually.
+   */
   interface Visual
   {
-    // = TITLE
-    //   A test idl for checking interceptor visually.
-    //
-    // = DESCRIPTION
-    //
+    /**
+     * @class VarLenStruct
+     *
+     * @brief Variable length structure
+     *
+     * This structure is designed to exercise memory management in the
+     * @c PortableInterceptor::RequestInfo::result() method.
+     */
+    struct VarLenStruct
+    {
+      octet  flag;
+      string message;
+    };
 
+    /// Normal operation.
     void normal (in long arg);
-    // Normal operation.
 
+    /// Normal operation with a return val.
     long calculate (in long one, in long two);
-    // Normal operation with a return val.
+    
+    readonly attribute VarLenStruct the_structure;
 
-    void user ()
-      raises (Silly);
-    // throws a user exception.
+    /// Throws a user exception.
+    void user () raises (Silly);
 
+    /// Throws a system exception.
     void system ();
-    // thows a system exception.
 
-   oneway void shutdown ();
-    // shutdown the ORB
-
-
+    /// Shutdown the ORB.
+    oneway void shutdown ();
   };
 };
