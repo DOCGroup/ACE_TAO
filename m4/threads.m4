@@ -257,12 +257,12 @@ AC_DEFUN(ACE_SEARCH_THREAD_FLAGS, dnl
  ACE_CACHE_CHECK(for compiler thread flag,
    ace_cv_thread_flag_search,
    [
-    ace_save_CXXFLAGS="$CXXFLAGS"
-    ace_save_CFLAGS="$CFLAGS"
+    ifelse(AC_LANG, [CPLUSPLUS],
+           [ace_save_CXXFLAGS="$CXXFLAGS"],[ace_save_CFLAGS="$CFLAGS"])
 
     for i in $1; do
-      CXXFLAGS="$CXXFLAGS -$i"
-      CFLAGS="$CFLAGS -$i"
+      ifelse(AC_LANG, [CPLUSPLUS],
+             [CXXFLAGS="$CXXFLAGS -$i"],[CFLAGS="$CFLAGS -$i"])
 
       ACE_CHECK_THREAD_FLAGS(
         [
@@ -276,20 +276,21 @@ AC_DEFUN(ACE_SEARCH_THREAD_FLAGS, dnl
         ])
 
       dnl Reset the flags for the next flag check.
-      CXXFLAGS="$ace_save_CXXFLAGS"
-      CFLAGS="$ace_save_CFLAGS"
+      ifelse(AC_LANG, [CPLUSPLUS],
+             [CXXFLAGS="$ace_save_CXXFLAGS"],[CFLAGS="$ace_save_CFLAGS"])
     done
 
     dnl Reset the flags to a consistent state.
     dnl This prevents duplicate flags from being added to
     dnl the C/CXXFLAGS variable.
-    CXXFLAGS="$ace_save_CXXFLAGS"
-    CFLAGS="$ace_save_CFLAGS"
+    ifelse(AC_LANG, [CPLUSPLUS],
+           [CXXFLAGS="$ace_save_CXXFLAGS"],[CFLAGS="$ace_save_CFLAGS"])
    ],
    [
     dnl Add the found/cached thread flag to the C/CXXFLAGS variables
-    CXXFLAGS="$CXXFLAGS $ace_cv_thread_flag_search"
-    CFLAGS="$CFLAGS $ace_cv_thread_flag_search"
+    ifelse(AC_LANG, [CPLUSPLUS],
+           [CXXFLAGS="$CXXFLAGS $ace_cv_thread_flag_search"],
+           [CFLAGS="$CFLAGS $ace_cv_thread_flag_search"])
 
     $2
    ],

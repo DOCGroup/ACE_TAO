@@ -66,17 +66,21 @@ dnl Usage: ACE_TRY_COMPILE(COMPILER-FLAGS, INCLUDES, FUNCTION-BODY,
 dnl                        [ACTION-IF-FOUND [,ACTION-IF-NOT-FOUND]])
 AC_DEFUN(ACE_TRY_COMPILE, dnl
 [
- ace_pre_try_CXXFLAGS="$CXXFLAGS"
- CXXFLAGS="$CXXFLAGS $1"
-
- ace_pre_try_CFLAGS="$CFLAGS"
- CFLAGS="$CFLAGS $1"
+ ifelse(AC_LANG, [CPLUSPLUS],
+   [
+    ace_pre_try_CXXFLAGS="$CXXFLAGS"
+    CXXFLAGS="$CXXFLAGS $1"
+   ],
+   [
+    ace_pre_try_CFLAGS="$CFLAGS"
+    CFLAGS="$CFLAGS $1"
+   ])
 
  AC_TRY_COMPILE($2, $3, $4, $5)
 
  dnl Restore the C++ and C flags
- CXXFLAGS="$ace_pre_try_CXXFLAGS"
- CFLAGS="$ace_pre_try_CFLAGS"
+ ifelse(AC_LANG, [CPLUSPLUS],
+   [CXXFLAGS="$ace_pre_try_CXXFLAGS"],[CFLAGS="$ace_pre_try_CFLAGS"])
 
 ])
 
@@ -90,12 +94,22 @@ dnl header when doing an AC_TRY_COMPILE.
 dnl Usage: ACE_USE_TEMP_FILE(TEMP-FILE-TO-CREATE, COMMANDS-THAT-WILL-USE-IT)
 AC_DEFUN(ACE_USE_TEMP_FILE, dnl
 [
+ test -d ./$1 && AC_MSG_ERROR([cannot create file: $acetmp is a directory])
 
  test -f ${srcdir}/$1 && mv ${srcdir}/$1 ${srcdir}/$1.conf
  touch ${srcdir}/$1
 
  if test ${srcdir}/$1 != "./$1"; then
    test -f ./$1 && mv ./$1 ./$1.conf
+   dnl Create all of the sub-directories (assume "mkdir -p" is not portable).
+   acetmp="."
+changequote(, )dnl
+   for ace_dir in `echo $1 | sed -e 's,/[^/][^/]*\$,,' -e 's,/, ,g'`; do
+changequote([, ])dnl
+     acetmp="$acetmp/$ace_dir"
+     test -f $acetmp && AC_MSG_ERROR([cannot create directory: $acetmp])
+     test -d $acetmp || mkdir $acetmp
+   done
    touch ./$1
  fi
 
@@ -111,6 +125,9 @@ AC_DEFUN(ACE_USE_TEMP_FILE, dnl
    if test -f ./$1.conf; then
      mv ./$1.conf ./$1
    else
+     dnl Remove the file.  Any sub-directories will not be removed
+     dnl since we have no way to tell if they existed prior to the
+     dnl creation of this file.
      rm ./$1
    fi
  fi
