@@ -62,6 +62,10 @@ namespace CIAO
               DOMText* text = ACE_reinterpret_cast (DOMText*, node);
               this->process_name (text->getNodeValue(), compportdesc);
             }
+          else if (node_name == XStr
+             (ACE_TEXT ("Deployment:ComponentPortDescription")))
+            {
+            }
           else if (node_name == XStr (ACE_TEXT ("specificType")))
             {
               // Fetch the text node which contains the "specificType"
