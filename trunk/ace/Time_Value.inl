@@ -165,7 +165,8 @@ ACE_Time_Value::ACE_Time_Value (const ACE_Time_Value &tv)
 ACE_INLINE ACE_Time_Value &
 ACE_Time_Value::operator *= (double d)
 {
-  double time = ((double) this->sec ()) * ACE_ONE_SECOND_IN_USECS + this->usec ();
+  double time =
+    ((double) this->sec ()) * ACE_ONE_SECOND_IN_USECS + this->usec ();
   time *= d;
   this->sec ((long)(time / ACE_ONE_SECOND_IN_USECS));
   this->usec (((long)time) % ACE_ONE_SECOND_IN_USECS);
