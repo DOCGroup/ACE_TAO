@@ -1,3 +1,24 @@
+Fri Jun  4 00:32:04 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* tao/Client_Strategy_Factory.cpp:
+	* tao/Client_Strategy_Factory.h:
+	* tao/IIOP_Transport.cpp:
+	* tao/Makefile:
+	* tao/Pluggable.cpp:
+	* tao/Pluggable.h:
+	* tao/Request_Mux_Strategy.cpp:
+	* tao/Request_Mux_Strategy.h:
+	* tao/UIOP_Transport.cpp:
+	* tao/Wait_Strategy.h:
+	* tao/default_client.cpp:
+	* tao/default_client.h:
+	* tao/Transport_Mux_Strategy.h:
+	* tao/Transport_Mux_Strategy.cpp:
+
+	The Mux strategies are over the Transport objects. So naming them
+	as Transport_Mux is more appropriate than Request_Mux. 
+	Thanks Carlos!
+
 Thu Jun  3 23:27:27 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/UIOP_Connector.cpp:
