@@ -412,6 +412,12 @@ CORBA_ORB::resolve_policy_current (CORBA::Environment& ACE_TRY_ENV)
 }
 
 CORBA_Object_ptr
+CORBA_ORB::resolve_ior_manipulation (CORBA::Environment& ACE_TRY_ENV)
+{
+  return this->ior_manipulation_._this (ACE_TRY_ENV);
+}
+
+CORBA_Object_ptr
 CORBA_ORB::resolve_service (const char *service_name,
                             ACE_Time_Value *timeout,
                             CORBA::Environment& ACE_TRY_ENV)
@@ -738,6 +744,8 @@ CORBA_ORB::resolve_initial_references (const char *name,
 
   else if (ACE_OS::strcmp (name, TAO_OBJID_POLICYCURRENT) == 0)
     return this->resolve_policy_current (ACE_TRY_ENV);
+  else if (ACE_OS::strcmp (name, TAO_OBJID_IORMANIPULATION) == 0)
+    return this->resolve_ior_manipulation (ACE_TRY_ENV);
 
   // Is not one of the well known services, try to find it in the
   // InitRef table....

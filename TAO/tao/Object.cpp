@@ -157,16 +157,14 @@ CORBA_Object::_hash (CORBA::ULong maximum,
 // such as strcmp(), to allow more comparison algorithms.
 
 CORBA::Boolean
-CORBA_Object::_is_equivalent (CORBA_Object_ptr other_obj,
-                              CORBA::Environment &ACE_TRY_ENV)
+CORBA_Object::_is_equivalent (CORBA_Object_ptr other_obj)
 {
   if (other_obj == this)
     {
-      //      env.clear ();
       return 1;
     }
 
-  return this->_stubobj ()->is_equivalent (other_obj, ACE_TRY_ENV);
+  return this->_stubobj ()->is_equivalent (other_obj);
 }
 
 // TAO's extensions

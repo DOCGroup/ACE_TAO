@@ -52,26 +52,27 @@ TAO_MProfile::set (CORBA::ULong sz)
           }
 
       // Next see if we can reuse our profile list memory
-      if (this->size_ != sz)
+      if (this->size_ < sz)
         {
-          // we cant reuse memory since the array sized are different!
-          // @@ Fred: if sz < this->size_ you could avoid this memory
-          //    allocation, you only need another flag to keep the
-          //    "capacity".
+          // we cant reuse memory since the current array is too small!
           delete [] this->pfiles_;
 
           ACE_NEW_RETURN (this->pfiles_,
-                          TAO_Profile_ptr[sz],
+                          TAO_Profile *[sz],
                           -1);
+          this->size_ = sz;
         }
+      // else , leave this->size and this->pfiles alone!
     }
   else
-    // first time, initialize!
-    ACE_NEW_RETURN (this->pfiles_,
-                    TAO_Profile_ptr [sz],
-                    -1);
+    {
+      // first time, initialize!
+      ACE_NEW_RETURN (this->pfiles_,
+                      TAO_Profile *[sz],
+                      -1);
+      this->size_ = sz;
+    }
 
-  this->size_ = sz;
   this->last_ = 0;
   this->current_ = 0;
 
@@ -110,37 +111,87 @@ TAO_MProfile::set (const TAO_MProfile &mprofile)
 }
 
 int
-TAO_MProfile::add_profile (TAO_Profile *pfile)
+TAO_MProfile::add_profiles (TAO_MProfile *pfiles)
 {
-  // skip by the used slots
-  if (last_ == size_) // full!
-    return -1;
+  // this->size_ == total number of profiles we can hold
+  // this->last_ == the index of the last profile
+  CORBA::ULong space = this->size_ - this->last_;
 
-  pfiles_[last_++] = pfile;
+  if (space < pfiles->last_)
+    {
+      // we need to grow!
+     if (this->grow (this->last_ + pfiles->last_) < 0)
+       return -1;
+    }
 
-  if (pfile && pfile->_incr_refcnt () == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%P|%t) Unable to increment reference count in add_profile!\n"),
-                      -1);
-  return last_ - 1;
+  // copy over profiles
+  for (TAO_PHandle h = 0;h < pfiles->last_;h++)
+    {
+      if (this->add_profile (pfiles->pfiles_[h]) < 0)
+        return -1;
+    }
+}
+
+
+// the layout for a full list of 7 Profiles.
+//
+// last_ == one past the last valid entry, so if the list has 2
+//          profiles then last_ equals 2.
+// current_ == index of the next profile to be returned (or one past
+//             the last returned.
+//
+// this->size_ = 7; current_ = 3; last_ = 7
+//   0, 1, 2, 3, 4, 5, 6}
+// { _, _, _, _, ..., _}
+//
+int
+TAO_MProfile::remove_profile (const TAO_Profile *pfile)
+{
+  TAO_PHandle h;
+  int found=0;
+  for (h = 0;h < this->last_;h++)
+    {
+      if (this->pfiles_[h]->is_equivalent (pfile))
+        { // remove it!
+          TAO_Profile *old = this->pfiles_[h];
+          this->pfiles_[h] = 0;
+          old->_decr_refcnt ();
+          // shift other profiles up one
+          // note, if h == last_ - 1 then do nothing.
+          for (TAO_PHandle inner = h;inner < this->last_ - 1;inner++)
+            {
+              this->pfiles_[inner] = this->pfiles_[inner + 1];
+            }
+          // subtract 1 from last_ to indicate we have one fewer profiles
+          this->last_--;
+          found = 1;
+          break;
+        }
+    }
+  if ( found == 0)
+    return -1; // profile not found.
+  return 0;
+}
+
+int
+TAO_MProfile::remove_profiles (const TAO_MProfile *pfiles)
+{
+  for (TAO_PHandle h = 0;h < pfiles->last_;h++)
+    {
+      if (this->remove_profile (pfiles->pfiles_[h]) < 0)
+        return -1;
+    }
 }
 
 CORBA::Boolean
-TAO_MProfile::is_equivalent (TAO_MProfile *first,
-                             TAO_MProfile *second,
-                             CORBA::Environment &env)
+TAO_MProfile::is_equivalent (const TAO_MProfile *rhs)
 {
   // Two profile lists are equivalent iff at least one of the profiles
   // form the first list is_equivalent to at least one of the profiles
   // from the second list!!
-  TAO_Profile_ptr *pfiles1 = first->pfiles ();
-  TAO_Profile_ptr *pfiles2 = second->pfiles ();
-  TAO_PHandle first_cnt = first->profile_count ();
-  TAO_PHandle second_cnt = second->profile_count ();
-
-  for (TAO_PHandle h1 = 0; h1 < first_cnt;h1++)
-    for (TAO_PHandle h2 = 0; h2 < second_cnt; h2++ )
-      if (pfiles1[h1]->is_equivalent (pfiles2[h2], env))
+  for (TAO_PHandle h1 = 0; h1 < this->last_;h1++)
+    for (TAO_PHandle h2 = 0; h2 < rhs->last_; h2++ )
+      if (this->pfiles_[h1]->is_equivalent (rhs->pfiles_[h2]))
         return 1;
 
   return 0;

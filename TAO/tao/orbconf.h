@@ -280,6 +280,7 @@
 #define TAO_OBJID_INTERFACEREP     "InterfaceRepository"
 #define TAO_OBJID_POLICYMANAGER    "ORBPolicyManager"
 #define TAO_OBJID_POLICYCURRENT    "PolicyCurrent"
+#define TAO_OBJID_IORMANIPULATION  "IORManipulation"
 
 // TAO Naming Service.
 

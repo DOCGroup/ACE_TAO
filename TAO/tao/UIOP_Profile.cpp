@@ -186,16 +186,14 @@ TAO_UIOP_Profile::parse_string (const char *string,
 }
 
 CORBA::Boolean
-TAO_UIOP_Profile::is_equivalent (TAO_Profile *other_profile,
-                                 CORBA::Environment &env)
+TAO_UIOP_Profile::is_equivalent (const TAO_Profile *other_profile)
 {
-  env.clear ();
 
   if (other_profile->tag () != TAO_IOP_TAG_UNIX_IOP)
     return 0;
 
-  TAO_UIOP_Profile *op =
-    ACE_dynamic_cast (TAO_UIOP_Profile *, other_profile);
+  const TAO_UIOP_Profile *op =
+    ACE_dynamic_cast (const TAO_UIOP_Profile *, other_profile);
 
   ACE_ASSERT (op->object_key_.length () < UINT_MAX);
 

@@ -307,9 +307,7 @@ public:
   // that refers/points to the same remote object (i.e. are
   // equivalent).
 
-  CORBA::Boolean is_equivalent (CORBA::Object_ptr other_obj,
-                                CORBA_Environment &TAO_IN_ENV =
-                                      TAO_default_environment ());
+  CORBA::Boolean is_equivalent (CORBA::Object_ptr other_obj);
   // Implement the is_equivalent() method for the CORBA::Object
 
   // Our Constructors ...

@@ -114,14 +114,13 @@ TAO_Unknown_Profile::_key (void) const
 }
 
 CORBA::Boolean
-TAO_Unknown_Profile::is_equivalent (TAO_Profile* other_profile,
-                                    CORBA::Environment &)
+TAO_Unknown_Profile::is_equivalent (const TAO_Profile* other_profile)
 {
   if (other_profile->tag () != this->tag ())
     return 0;
 
-  TAO_Unknown_Profile *op =
-    ACE_dynamic_cast (TAO_Unknown_Profile*, other_profile);
+  const TAO_Unknown_Profile *op =
+    ACE_dynamic_cast (const TAO_Unknown_Profile*, other_profile);
 
   return (this->body_ == op->body_);
 }
@@ -136,7 +135,7 @@ TAO_Unknown_Profile::hash (CORBA::ULong max,
 }
 
 int
-TAO_Unknown_Profile::addr_to_string (char * /* buffer */, 
+TAO_Unknown_Profile::addr_to_string (char * /* buffer */,
                                      size_t /* length */)
 {
   return 0;

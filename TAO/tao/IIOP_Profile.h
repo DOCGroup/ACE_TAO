@@ -103,8 +103,7 @@ public:
   TAO_ObjectKey *_key (void) const;
   //  Return a pointer to the Object Key.
 
-  CORBA::Boolean is_equivalent (TAO_Profile *other_profile,
-                                CORBA::Environment &env);
+  CORBA::Boolean is_equivalent (const TAO_Profile *other_profile);
   // Return true if this profile is equivalent to other_profile.  Two
   // profiles are equivalent iff their key, port, host, object_key and
   // version are the same.
