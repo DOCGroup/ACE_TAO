@@ -21,6 +21,7 @@ namespace CIAO
   {
     MID_Handler::MID_Handler (DOMDocument* doc, unsigned long filter)
       : traverse_ (doc),
+        doc_ (doc),
         root_ (doc->getDocumentElement()),
         filter_ (filter),
         iter_ (traverse_->createNodeIterator (this->root_,
@@ -31,7 +32,7 @@ namespace CIAO
     {}
 
     MID_Handler::MID_Handler (DOMNodeIterator* iter, bool release)
-      : traverse_ (0), root_ (0), filter_ (0), iter_ (iter), release_ (release)
+      : traverse_ (0), doc_ (0), root_ (0), filter_ (0), iter_ (iter), release_ (release)
     {}
 
 
@@ -50,35 +51,56 @@ namespace CIAO
           XStr name (node->getNodeName());
           if (name == XStr (ACE_TEXT ("execParameter")))
             {
-              // increase length of sequence
-              CORBA::ULong i (mid.execParameter.length ());
-              mid.execParameter.length (i + 1);
-
-              // delegate to property handler
-              Property_Handler::process_Property (this->iter_, 
-                                                  mid.execParameter[i]);
+              this->process_exec_parameter_element (node,
+                                                    this->doc_,
+                                                    this->iter_,
+                                                    mid);
             }
           else if (name == XStr (ACE_TEXT ("deployRequirement")))
             {
-
-              // increase length of sequence
-              CORBA::ULong i (mid.deployRequirement.length ());
-              mid.deployRequirement.length (i + 1);
-
-              // delegate to requirement handler
-              Requirement_Handler::process_Requirement (this->iter_,
-                                                        mid.deployRequirement[i]);
+              if (node->hasAttributes ())
+                {
+                  DOMNamedNodeMap* named_node_map = node->getAttributes ();
+                  int length = named_node_map->getLength ();
+                  CORBA::ULong i
+                    (mid.deployRequirement.length ());
+                  mid.deployRequirement.length (i + 1);
+                  if (length == 1)
+                    {
+                      Requirement_Handler::process_Requirement
+                         (this->iter_,
+                          mid.deployRequirement[i]);
+                    }
+                  else if (length > 1)
+                    {
+                      this->process_attributes_for_deploy_requirement
+                       (named_node_map, this->doc_,
+                        this->iter_, i, mid.deployRequirement[i]);
+                    }
+                }
             }
           else if (name == XStr (ACE_TEXT ("primaryArtifact")))
             {
-
-              // increase length
-              CORBA::ULong i (mid.primaryArtifact.length ());
-              mid.primaryArtifact.length (i + 1);
-
-              // delegate to NIA handler
-              NIA_Handler nia_handler (iter_, false); // NamedImplementationArtifact
-              nia_handler.process_NamedImplementationArtifact (mid.primaryArtifact[i]);
+              if (node->hasAttributes ())
+                {
+                  DOMNamedNodeMap* named_node_map = node->getAttributes ();
+                  int length = named_node_map->getLength ();
+                  CORBA::ULong i
+                    (mid.primaryArtifact.length ());
+                  mid.primaryArtifact.length (i + 1);
+                  if (length == 1)
+                    {
+                      NIA_Handler nia_handler (iter_, false);
+                      nia_handler.process_NamedImplementationArtifact
+                        (mid.primaryArtifact[i]);
+                    }
+                  else if (length > 1)
+                    {
+                      this->process_attributes_for_nia
+                       (named_node_map, this->doc_,
+                        this->iter_, i, mid.primaryArtifact[i]);
+                    }
+                }
             }
           else
             {
@@ -88,5 +110,320 @@ namespace CIAO
         }
       return;
     }
+
+    void MID_Handler::process_attributes_for_nia
+       (DOMNamedNodeMap* named_node_map,
+        DOMDocument* doc,
+        DOMNodeIterator* iter,
+        int value,
+        Deployment::NamedImplementationArtifact &nia)
+    {
+      int length = named_node_map->getLength ();
+
+      for (int j = 0; j < length; j++)
+        {
+          DOMNode* attribute_node = named_node_map->item (j);
+          XStr strattrnodename
+             (attribute_node->getNodeName ());
+          ACE_TString aceattrnodevalue =  XMLString::transcode
+             (attribute_node->getNodeValue ());
+
+          if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
+            {
+              NIA_Handler nia_handler (iter, false);
+              nia_handler.process_NamedImplementationArtifact
+                 (nia);
+              id_map_.bind (aceattrnodevalue, value);
+            }
+          else if (strattrnodename == XStr (ACE_TEXT ("xmi:idref")))
+            {
+              this->process_refs (named_node_map);
+            }
+          else if (strattrnodename == XStr (ACE_TEXT ("href")))
+            {
+              XMLURL xml_url (aceattrnodevalue.c_str ());
+              XMLURL result (aceattrnodevalue.c_str ());
+              std::string url_string = aceattrnodevalue.c_str ();
+              ACE_TString doc_path =
+               XMLString::transcode ( doc->getDocumentURI ());
+              result.makeRelativeTo
+                 (XMLString::transcode (doc_path.c_str ()));
+              ACE_TString final_url =
+               XMLString::transcode (result.getURLText ());
+
+              DOMDocument* href_doc;
+
+              if (xml_url.isRelative ())
+                {
+                  href_doc = this->create_document
+                       (final_url.c_str ());
+                }
+              else
+                {
+                  href_doc = this->create_document
+                       (url_string.c_str ());
+                }
+
+              DOMDocumentTraversal* traverse (href_doc);
+              DOMNode* root = (href_doc->getDocumentElement ());
+              unsigned long filter = DOMNodeFilter::SHOW_ELEMENT |
+                                     DOMNodeFilter::SHOW_TEXT;
+              DOMNodeIterator* href_iter = traverse->createNodeIterator
+                                              (root,
+                                               filter,
+                                               0,
+                                               true);
+              href_iter->nextNode ();
+              NIA_Handler nia_handler (href_iter, false);
+              nia_handler.process_NamedImplementationArtifact
+                 (nia);
+            }
+        }
+
+      return;
+    }
+
+    // handle exec parameter element
+    void MID_Handler::process_exec_parameter_element (DOMNode* node,
+          DOMDocument* doc,
+          DOMNodeIterator* iter,
+          Deployment::MonolithicImplementationDescription& mid)
+    {
+      if (node->hasAttributes ())
+        {
+          DOMNamedNodeMap* named_node_map = node->getAttributes ();
+          int length = named_node_map->getLength ();
+          CORBA::ULong i (mid.execParameter.length ());
+          mid.execParameter.length (i + 1);
+          if (length == 1)
+            {
+              Property_Handler::process_Property
+                 (iter, mid.execParameter[i]);
+            }
+          else if (length > 1)
+            {
+              this->process_attributes_for_property
+                (named_node_map, doc,
+                 iter, i, mid.execParameter[i]);
+            }
+        }
+    }
+
+    void MID_Handler::process_attributes_for_property
+         (DOMNamedNodeMap* named_node_map,
+          DOMDocument* doc,
+          DOMNodeIterator* iter,
+          int value,
+          Deployment::Property& mid_property)
+    {
+      int length = named_node_map->getLength ();
+
+      for (int j = 0; j < length; j++)
+        {
+          DOMNode* attribute_node = named_node_map->item (j);
+          XStr strattrnodename
+             (attribute_node->getNodeName ());
+          ACE_TString aceattrnodevalue =  XMLString::transcode
+             (attribute_node->getNodeValue ());
+
+          if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
+            {
+              Property_Handler::process_Property (iter,
+                                                  mid_property);
+              id_map_.bind (aceattrnodevalue, value);
+            }
+          else if (strattrnodename == XStr (ACE_TEXT ("href")))
+            {
+              XMLURL xml_url (aceattrnodevalue.c_str ());
+              XMLURL result (aceattrnodevalue.c_str ());
+              std::string url_string = aceattrnodevalue.c_str ();
+              ACE_TString doc_path =
+               XMLString::transcode ( doc->getDocumentURI ());
+              result.makeRelativeTo
+                 (XMLString::transcode (doc_path.c_str ()));
+              ACE_TString final_url =
+               XMLString::transcode (result.getURLText ());
+
+              DOMDocument* href_doc;
+
+              if (xml_url.isRelative ())
+                {
+                  href_doc = this->create_document
+                       (final_url.c_str ());
+                }
+              else
+                {
+                  href_doc = this->create_document
+                       (url_string.c_str ());
+                }
+
+              DOMDocumentTraversal* traverse (href_doc);
+              DOMNode* root = (href_doc->getDocumentElement ());
+              unsigned long filter = DOMNodeFilter::SHOW_ELEMENT |
+                                     DOMNodeFilter::SHOW_TEXT;
+              DOMNodeIterator* href_iter = traverse->createNodeIterator
+                                              (root,
+                                               filter,
+                                               0,
+                                               true);
+              href_iter->nextNode ();
+              Property_Handler::process_Property (href_iter,
+                                                  mid_property);
+            }
+        }
+
+      return;
+    }
+
+    DOMDocument* MID_Handler::create_document (const char *url)
+    {
+
+      xercesc::XMLPlatformUtils::Initialize();
+      static const XMLCh gLS[] = { xercesc::chLatin_L,
+                                   xercesc::chLatin_S,
+                                   xercesc::chNull };
+
+      DOMImplementation* impl
+        = DOMImplementationRegistry::getDOMImplementation(gLS);
+
+      DOMBuilder* parser =
+        ((DOMImplementationLS*)impl)->createDOMBuilder
+              (DOMImplementationLS::MODE_SYNCHRONOUS, 0);
+
+      // Discard comment nodes in the document
+      parser->setFeature (XMLUni::fgDOMComments, false);
+
+      // Disable datatype normalization. The XML 1.0 attribute value
+      // normalization always occurs though.
+      parser->setFeature (XMLUni::fgDOMDatatypeNormalization, true);
+
+      // Do not create EntityReference nodes in the DOM tree. No
+      // EntityReference nodes will be created, only the nodes
+      // corresponding to their fully expanded sustitution text will be
+      // created.
+      parser->setFeature (XMLUni::fgDOMEntities, false);
+
+      // Perform Namespace processing.
+      parser->setFeature (XMLUni::fgDOMNamespaces, true);
+
+      // Perform Validation
+      parser->setFeature (XMLUni::fgDOMValidation, true);
+
+      // Do not include ignorable whitespace in the DOM tree.
+      parser->setFeature (XMLUni::fgDOMWhitespaceInElementContent, false);
+
+      // Enable the parser's schema support.
+      parser->setFeature (XMLUni::fgXercesSchema, true);
+
+      // Enable full schema constraint checking, including checking which
+      // may be time-consuming or memory intensive. Currently, particle
+      // unique attribution constraint checking and particle derivation
+      // restriction checking are controlled by this option.
+      parser->setFeature (XMLUni::fgXercesSchemaFullChecking, true);
+
+      // The parser will treat validation error as fatal and will exit.
+      parser->setFeature (XMLUni::fgXercesValidationErrorAsFatal, true);
+
+
+      DOMDocument* doc = parser->parseURI (url);
+      ACE_TString root_node_name;
+      root_node_name = XMLString::transcode
+          (doc->getDocumentElement ()->getNodeName ());
+
+      return doc;
+    }
+
+    void MID_Handler::process_attributes_for_deploy_requirement
+       (DOMNamedNodeMap* named_node_map,
+        DOMDocument* doc,
+        DOMNodeIterator* iter,
+        int value,
+        Deployment::Requirement& mid_req)
+    {
+      int length = named_node_map->getLength ();
+
+      for (int j = 0; j < length; j++)
+        {
+          DOMNode* attribute_node = named_node_map->item (j);
+          XStr strattrnodename
+             (attribute_node->getNodeName ());
+          ACE_TString aceattrnodevalue =  XMLString::transcode
+             (attribute_node->getNodeValue ());
+
+          if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
+            {
+              id_map_.bind (aceattrnodevalue, value);
+              Requirement_Handler::process_Requirement
+                  (iter,
+                   mid_req);
+            }
+          else if (strattrnodename == XStr (ACE_TEXT ("xmi:idref")))
+            {
+              this->process_refs (named_node_map);
+            }
+          else if (strattrnodename == XStr (ACE_TEXT ("href")))
+            {
+              XMLURL xml_url (aceattrnodevalue.c_str ());
+              XMLURL result (aceattrnodevalue.c_str ());
+              std::string url_string = aceattrnodevalue.c_str ();
+              ACE_TString doc_path =
+               XMLString::transcode ( doc->getDocumentURI ());
+              result.makeRelativeTo
+                 (XMLString::transcode (doc_path.c_str ()));
+              ACE_TString final_url =
+               XMLString::transcode (result.getURLText ());
+
+              DOMDocument* href_doc;
+
+              if (xml_url.isRelative ())
+                {
+                  href_doc = this->create_document
+                       (final_url.c_str ());
+                }
+              else
+                {
+                  href_doc = this->create_document
+                       (url_string.c_str ());
+                }
+
+              DOMDocumentTraversal* traverse (href_doc);
+              DOMNode* root = (href_doc->getDocumentElement ());
+              unsigned long filter = DOMNodeFilter::SHOW_ELEMENT |
+                                     DOMNodeFilter::SHOW_TEXT;
+              DOMNodeIterator* href_iter = traverse->createNodeIterator
+                                              (root,
+                                               filter,
+                                               0,
+                                               true);
+              href_iter->nextNode ();
+              Requirement_Handler::process_Requirement
+                  (href_iter,
+                   mid_req);
+            }
+        }
+
+      return;
+    }
+
+
+    void MID_Handler::process_refs (DOMNamedNodeMap* named_node_map)
+    {
+      int length = named_node_map->getLength ();
+
+      for (int j = 0; j < length; j++)
+        {
+          DOMNode* attribute_node = named_node_map->item (j);
+          XStr strattrnodename (attribute_node->getNodeName ());
+          ACE_TString aceattrnodevalue = XMLString::transcode
+             (attribute_node->getNodeValue ());
+          if (strattrnodename == XStr (ACE_TEXT ("xmi:idref")))
+            {
+              this->index_ = this->index_ + 1;
+              idref_map_.bind (this->index_, aceattrnodevalue);
+            }
+        }
+    }
+
+
   }
 }
