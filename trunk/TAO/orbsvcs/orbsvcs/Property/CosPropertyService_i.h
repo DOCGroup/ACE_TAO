@@ -21,6 +21,10 @@
 #include "orbsvcs/orbsvcs_export.h"
 #include "orbsvcs/CosPropertyServiceS.h"
 
+#if defined(_MSC_VER)
+#pragma warning(disable:4250)
+#endif /* _MSC_VER */
+
 // =  Classes to deal with the ACE_Hash_Map_Manager.
 
 class TAO_ORBSVCS_Export CosProperty_Hash_Key
@@ -496,5 +500,9 @@ private:
   CosProperty_Hash_Iterator iterator_;
   // The iterator object.
 };
+
+#if defined(_MSC_VER)
+#pragma warning(default:4250)
+#endif /* _MSC_VER */
 
 #endif /* COSPROPERTYSERVICE_I_H */
