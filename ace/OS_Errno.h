@@ -1,4 +1,5 @@
 // -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   OS_Errno.h
@@ -6,11 +7,8 @@
  *  $Id$
  *
  *  @author (Originally in OS.h)Doug Schmidt <schmidt@cs.wustl.edu>
- *  @author Jesper S. M|ller<stophph@diku.dk>
- *  @author and a cast of thousands...
  */
 //=============================================================================
-
 
 #ifndef ACE_OS_ERRNO_H
 #define ACE_OS_ERRNO_H
@@ -42,7 +40,6 @@ extern int t_errno;
 #if !defined (ENOTSUP)
 # define ENOTSUP ENOSYS  /* Operation not supported. */
 #endif /* !ENOTSUP */
-
 
 #if defined (ACE_HAS_WINCE_BROKEN_ERRNO)
 /**

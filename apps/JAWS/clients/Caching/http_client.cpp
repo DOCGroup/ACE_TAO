@@ -39,6 +39,12 @@ main (int, char *[])
     {
       char *s = buf;
 
+      // get rid of trailing '\n'
+      int len = ACE_OS::strlen (s);
+
+      if (len > 0 && s[len - 1] == '\n')
+        s[len - 1] = 0;
+
       while (isspace (*s))
         s++;
 

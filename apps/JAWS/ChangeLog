@@ -1,3 +1,9 @@
+Thu Dec  6 09:00:31 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* clients/Caching/http_client.cpp (main): Make sure to remove the
+	  trailing '\n' so the example works properly.  Thanks to Andrey
+ 	  Shkinev <andreyshkinev@rogers.com> for reporting this.
+
 Wed Nov 14 16:21:46 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* clients/Blobby/Blob.{h,cpp},
