@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_TOKEN_H
 #define ACE_TOKEN_H
 #include "ace/pre.h"
@@ -105,7 +104,7 @@ public:
   /**
    * An optimized method that efficiently reacquires the token if no
    * other threads are waiting.  This is useful for situations where
-   * you don't want to degrad the quality of service if there are
+   * you don't want to degrade the quality of service if there are
    * other threads waiting to get the token.  If <requeue_position> ==
    * -1 and there are other threads waiting to obtain the token we are
    * queued at the end of the list of waiters.  If <requeue_position>
