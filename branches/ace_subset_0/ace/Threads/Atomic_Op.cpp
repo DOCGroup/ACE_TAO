@@ -1,7 +1,7 @@
 #ifndef ACE_ATOMIC_OP_C
 #define ACE_ATOMIC_OP_C
 
-#include "ace/Atomic_Op.h"
+#include "ace/Threads/Atomic_Op.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -10,7 +10,7 @@
 #if !defined (__ACE_INLINE__)
 // On non-Win32 platforms, this code will be treated as normal code.
 #if !defined (ACE_WIN32)
-#include "ace/Atomic_Op.i"
+#include "ace/Threads/Atomic_Op.i"
 #endif /* !ACE_WIN32 */
 #endif /* __ACE_INLINE__ */
 

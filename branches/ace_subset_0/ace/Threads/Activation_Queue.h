@@ -21,8 +21,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Threads/Message_Queue.h"
-#include "ace/Method_Request.h"
+#include "ace/Streams/Message_Queue.h"
+#include "ace/Utils/Method_Request.h"
 
 // Be compatible with the terminology in the POSA2 book!
 #define ACE_Activation_List ACE_Activation_Queue
@@ -101,7 +101,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Activation_Queue.i"
+#include "ace/Threads/Activation_Queue.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

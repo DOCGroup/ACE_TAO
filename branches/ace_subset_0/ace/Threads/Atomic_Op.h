@@ -20,7 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Synch.h"
+#include "ace/Threads/Synch.h"
 
 
 /**
@@ -154,13 +154,12 @@ private:
 #if defined (__ACE_INLINE__)
 // On non-Win32 platforms, this code will be inlined
 #if !defined (ACE_WIN32)
-#include "ace/Atomic_Op.i"
+#include "ace/Threads/Atomic_Op.i"
 #endif /* !ACE_WIN32 */
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-
-#include "Atomic_Op.cpp"
+#include "ace/Threads/Atomic_Op.cpp"
 // On Win32 platforms, this code will be included as template source
 // code and will not be inlined. Therefore, we first turn off
 // ACE_INLINE, set it to be nothing, include the code, and then turn
@@ -172,7 +171,7 @@ private:
 #if defined (ACE_WIN32)
 #undef ACE_INLINE
 #define ACE_INLINE
-#include "ace/Atomic_Op.i"
+#include "ace/Threads/Atomic_Op.i"
 #undef ACE_INLINE
 #if defined (__ACE_INLINE__)
 #define ACE_INLINE inline
