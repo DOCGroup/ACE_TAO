@@ -94,7 +94,6 @@ static char data[] =
   "Connection: Keep-Alive\r\n"
   "\r\n" ;
 
-
 // *************************************************************
 //  MyTask is ACE_Task resposible for :
 //  1. creation and deletion of
@@ -114,24 +113,20 @@ static char data[] =
 class MyTask : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-
-  MyTask (void) : threads_ (0), proactor_ (0) {}
+  MyTask (void): threads_ (0), proactor_ (0) {}
 
   int svc (void);
   void waitready (void) { this->event_.wait (); }
 
 private:
-
   void create_proactor (void);
   void delete_proactor (void);
 
 private:
-
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   int threads_;
   ACE_Proactor *proactor_;
   ACE_Manual_Event event_;
-
 };
 
 void
@@ -243,9 +238,7 @@ class Receiver : public ACE_Service_Handler
 {
   friend class Acceptor;
 public:
-
   Receiver  (Acceptor *acceptor = 0, int index = -1);
-
   ~Receiver (void);
 
   /// This is called after the new connection has been accepted.
@@ -253,7 +246,6 @@ public:
                      ACE_Message_Block &message_block);
 
 protected:
-
   /**
    * @name AIO callback handling
    *
@@ -268,12 +260,9 @@ protected:
   virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result);
 
 private:
-
   int initiate_read_stream (void);
   int initiate_write_stream (ACE_Message_Block &mb, int nbytes);
   int check_destroy (void);
-
-private:
 
   Acceptor *acceptor_;
   int index_;
@@ -284,15 +273,12 @@ private:
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
 
   long io_count_;
-
 };
 
 class Acceptor : public ACE_Asynch_Acceptor<Receiver>
 {
   friend class Receiver;
-
 public:
-
   long get_number_sessions (void) { return this->sessions_; }
 
   Acceptor (void);
@@ -304,16 +290,12 @@ public:
   Receiver *make_handler (void);
 
 private:
-
   void on_new_receiver (Receiver &rcvr);
   void on_delete_receiver (Receiver &rcvr);
-
-private:
 
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   long sessions_;
   Receiver *list_receivers_[MAX_RECEIVERS];
-
 };
 
 Acceptor::Acceptor (void)
@@ -343,7 +325,6 @@ Acceptor::stop(void)
       this->list_receivers_[i] = 0;
     }
 }
-
 
 void
 Acceptor::on_new_receiver (Receiver & rcvr)
@@ -647,7 +628,6 @@ Receiver::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
 class Sender : public ACE_Service_Handler
 {
 public:
-
   static long get_number_sessions (void) { return sessions_; }
   static void init (void);
   static int  activate (int num);
@@ -656,7 +636,6 @@ public:
   int open_sender (const ACE_TCHAR *host, u_short port);
 
 protected:
-
   // These methods are called by the freamwork
   Sender  (int index);
   ~Sender (void);
@@ -668,12 +647,9 @@ protected:
   // This is called when asynchronous writes from the socket complete
 
 private:
-
   int check_destroy (void);
   int initiate_read_stream (void);
   int initiate_write_stream (void);
-
-private:
 
   int  index_;
 
@@ -1203,11 +1179,9 @@ main (int argc, ACE_TCHAR *argv[])
   int rc = 0;
 
   if (both != 0 || host == 0) // Acceptor
-      {
-        // Simplify, initial read with  zero size
-      if (acceptor.open (ACE_INET_Addr (port), 0, 1) == 0)
-        rc = 1;
-    }
+    // Simplify, initial read with  zero size
+    if (acceptor.open (ACE_INET_Addr (port), 0, 1) == 0)
+      rc = 1;
 
   if (both != 0 || host != 0)
     {
@@ -1257,17 +1231,13 @@ disable_signal (int sigmin, int sigmax)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("Error: (%P|%t):%p\n"),
                 ACE_TEXT ("pthread_sigmask failed")));
-
 #else
-
   ACE_UNUSED_ARG (sigmin);
   ACE_UNUSED_ARG (sigmax);
-
 #endif /* ACE_WIN32 */
 
   return 1;
 }
-
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Asynch_Acceptor<Receiver>;
