@@ -486,7 +486,7 @@ server (void *arg)
 
 #if !defined (ACE_LACKS_FORK)
 static void
-handler (int signum)
+handler (int /* signum */)
 {
   // No printout here, to be safe.  Signal handlers must not acquire
   // locks, etc.
