@@ -1738,9 +1738,11 @@ ACE_TSS_Cleanup::detach (void *inst)
     {
       // Mark the key as no longer being used.
       key_info->key_in_use (0);
+# if defined (ACE_WIN32)
       ACE_thread_key_t temp_key = key_info->key_;
+# endif /* ACE_WIN32 */
       int retv = this->remove (key_info->key_);
-      
+
 # if defined (ACE_WIN32)
       ::TlsFree (temp_key);
 # endif /* ACE_WIN32 */
@@ -2352,17 +2354,17 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
           if (::pthread_attr_setdetachstate (&attr, &dstate) != 0)
 #       else
           if (ACE_ADAPT_RETVAL(::pthread_attr_setdetachstate (&attr, dstate),
-			       result) != 0)
+                               result) != 0)
 #       endif /* ACE_HAS_PTHREADS_DRAFT6 */
 #     endif /* ACE_HAS_PTHREADS_DRAFT4 */
-	    {
+            {
 #     if defined (ACE_HAS_PTHREADS_DRAFT4)
               ::pthread_attr_delete (&attr);
 #     else /* ACE_HAS_PTHREADS_DRAFT4 */
               ::pthread_attr_destroy (&attr);
 #     endif /* ACE_HAS_PTHREADS_DRAFT4 */
               return -1;
-	    }
+            }
         }
 
       // Note: if ACE_LACKS_SETDETACH and THR_DETACHED is enabled, we
@@ -2441,8 +2443,8 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #     elif defined (ACE_HAS_PTHREADS_DRAFT6)
           result = ::pthread_attr_setschedpolicy (&attr, spolicy);
 #     else  /* draft 7 or std */
-	  ACE_ADAPT_RETVAL(::pthread_attr_setschedpolicy (&attr, spolicy),
-			   result);
+          ACE_ADAPT_RETVAL(::pthread_attr_setschedpolicy (&attr, spolicy),
+                           result);
 #     endif /* ACE_HAS_PTHREADS_DRAFT4 */
           if (result != 0)
               {
@@ -2525,7 +2527,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
                                                 sparam.sched_priority);
 #       else /* this is draft 7 or std */
                ACE_ADAPT_RETVAL(::pthread_attr_setschedparam (&attr, &sparam),
-				result);
+                                result);
 #       endif /* ACE_HAS_PTHREADS_DRAFT4, 6 */
                if (result != 0)
                  {
@@ -3178,8 +3180,8 @@ ACE_OS::thr_setspecific (ACE_thread_key_t key, void *data)
     ACE_OSCALL_RETURN (::pthread_setspecific (key, data), int, -1);
 #   else
     ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setspecific (key, data),
-					 ace_result_),
-		       int, -1);
+                                         ace_result_),
+                       int, -1);
 #   endif /* ACE_HAS_PTHREADS_DRAFT4, 6 */
 
 # elif defined (ACE_HAS_STHREADS)
@@ -3247,8 +3249,8 @@ ACE_OS::thr_keycreate (ACE_OS_thread_key_t *key,
     ACE_OSCALL_RETURN (::pthread_keycreate (key, dest), int, -1);
 #   else
     ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_key_create (key, dest),
-					 ace_result_),
-		       int, -1);
+                                         ace_result_),
+                       int, -1);
 #   endif /* ACE_HAS_STDARG_THR_DEST */
 
 # elif defined (ACE_HAS_STHREADS)
@@ -3312,8 +3314,8 @@ ACE_OS::thr_keycreate (ACE_thread_key_t *key,
     ACE_OSCALL_RETURN (::pthread_keycreate (key, dest), int, -1);
 #   else
     ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_key_create (key, dest),
-                                         ace_result_), 
-		       int, -1);
+                                         ace_result_),
+                       int, -1);
 #   endif /* ACE_HAS_STDARG_THR_DEST */
 
 # elif defined (ACE_HAS_STHREADS)
@@ -3722,7 +3724,7 @@ spa (FUNCPTR entry, ...)
     }
 
   // The hard-coded options are what ::sp () uses.
-  const int ret = ::taskSpawn (argv[0], 100, VX_FP_TASK, 20000,
+  const int ret = ::taskSpawn (argv[0], 100, VX_FP_TASK, 1000000,
                                entry, argc, (int) argv,
                                0, 0, 0, 0, 0, 0, 0, 0);
   va_end (pvar);
@@ -3861,11 +3863,11 @@ ACE_OS::pread (ACE_HANDLE handle,
     ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *ace_os_monitor_lock, -1));
 
   // Remember the original file pointer position
-  DWORD original_position = ::SetFilePointer (handle, 
+  DWORD original_position = ::SetFilePointer (handle,
                                               0,
                                               NULL,
                                               FILE_CURRENT);
-  
+
   if (original_position == 0xFFFFFFFF)
     return -1;
 
@@ -3876,9 +3878,9 @@ ACE_OS::pread (ACE_HANDLE handle,
                                              FILE_BEGIN);
   if (altered_position == 0xFFFFFFFF)
     return -1;
-  
-  DWORD bytes_read; 
-  
+
+  DWORD bytes_read;
+
 #    if defined (ACE_HAS_WINNT4)
 
   OVERLAPPED overlapped;
@@ -3888,10 +3890,10 @@ ACE_OS::pread (ACE_HANDLE handle,
   overlapped.OffsetHigh = 0;
   overlapped.hEvent = 0;
 
-  BOOL result = ::ReadFile (handle, 
-                            buf, 
-                            nbytes, 
-                            &bytes_read, 
+  BOOL result = ::ReadFile (handle,
+                            buf,
+                            nbytes,
+                            &bytes_read,
                             &overlapped);
 
   if (result == FALSE)
@@ -3901,9 +3903,9 @@ ACE_OS::pread (ACE_HANDLE handle,
 
       else
         {
-          result = ::GetOverlappedResult (handle, 
-                                          &overlapped, 
-                                          &bytes_read, 
+          result = ::GetOverlappedResult (handle,
+                                          &overlapped,
+                                          &bytes_read,
                                           TRUE);
           if (result == FALSE)
             return -1;
@@ -3912,10 +3914,10 @@ ACE_OS::pread (ACE_HANDLE handle,
 
 #    else /* ACE_HAS_WINNT4 */
 
-  BOOL result = ::ReadFile (handle, 
-                            buf, 
-                            nbytes, 
-                            &bytes_read, 
+  BOOL result = ::ReadFile (handle,
+                            buf,
+                            nbytes,
+                            &bytes_read,
                             NULL);
   if (result == FALSE)
     return -1;
@@ -3923,12 +3925,12 @@ ACE_OS::pread (ACE_HANDLE handle,
 #   endif /* ACE_HAS_WINNT4 */
 
   // Reset the original file pointer position
-  if (::SetFilePointer (handle, 
+  if (::SetFilePointer (handle,
                         original_position,
                         NULL,
                         FILE_BEGIN) == 0xFFFFFFFF)
     return -1;
-                                             
+
   return (ssize_t) bytes_read;
 
 #  else /* ACE_WIN32 */
@@ -3945,28 +3947,28 @@ ACE_OS::pread (ACE_HANDLE handle,
     ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *ace_os_monitor_lock, -1));
 
   // Remember the original file pointer position
-  off_t original_position = ACE_OS::lseek (handle, 
-                                           0, 
+  off_t original_position = ACE_OS::lseek (handle,
+                                           0,
                                            SEEK_SET);
 
   if (original_position == -1)
     return -1;
 
   // Go to the correct position
-  off_t altered_position = ACE_OS::lseek (handle, 
-                                          offset, 
+  off_t altered_position = ACE_OS::lseek (handle,
+                                          offset,
                                           SEEK_SET);
-  
+
   if (altered_position == -1)
     return -1;
 
-  ssize_t bytes_read = ACE_OS::read (handle, 
-                                     buf, 
+  ssize_t bytes_read = ACE_OS::read (handle,
+                                     buf,
                                      nbytes);
 
   if (bytes_read == -1)
     return -1;
-  
+
   if (ACE_OS::lseek (handle,
                      original_position,
                      SEEK_SET) == -1)
@@ -3992,11 +3994,11 @@ ACE_OS::pwrite (ACE_HANDLE handle,
     ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *ace_os_monitor_lock, -1));
 
   // Remember the original file pointer position
-  DWORD original_position = ::SetFilePointer (handle, 
+  DWORD original_position = ::SetFilePointer (handle,
                                               0,
                                               NULL,
                                               FILE_CURRENT);
-  
+
   if (original_position == 0xFFFFFFFF)
     return -1;
 
@@ -4008,7 +4010,7 @@ ACE_OS::pwrite (ACE_HANDLE handle,
   if (altered_position == 0xFFFFFFFF)
     return -1;
 
-  DWORD bytes_written; 
+  DWORD bytes_written;
 
 #    if defined (ACE_HAS_WINNT4)
 
@@ -4019,10 +4021,10 @@ ACE_OS::pwrite (ACE_HANDLE handle,
   overlapped.OffsetHigh = 0;
   overlapped.hEvent = 0;
 
-  BOOL result = ::WriteFile (handle, 
-                             buf, 
-                             nbytes, 
-                             &bytes_written, 
+  BOOL result = ::WriteFile (handle,
+                             buf,
+                             nbytes,
+                             &bytes_written,
                              &overlapped);
 
   if (result == FALSE)
@@ -4032,9 +4034,9 @@ ACE_OS::pwrite (ACE_HANDLE handle,
 
       else
         {
-          result = ::GetOverlappedResult (handle, 
-                                          &overlapped, 
-                                          &bytes_written, 
+          result = ::GetOverlappedResult (handle,
+                                          &overlapped,
+                                          &bytes_written,
                                           TRUE);
           if (result == FALSE)
             return -1;
@@ -4043,10 +4045,10 @@ ACE_OS::pwrite (ACE_HANDLE handle,
 
 #    else /* ACE_HAS_WINNT4 */
 
-  BOOL result = ::WriteFile (handle, 
-                             buf, 
-                             nbytes, 
-                             &bytes_written, 
+  BOOL result = ::WriteFile (handle,
+                             buf,
+                             nbytes,
+                             &bytes_written,
                              NULL);
   if (result == FALSE)
     return -1;
@@ -4054,12 +4056,12 @@ ACE_OS::pwrite (ACE_HANDLE handle,
 #    endif /* ACE_HAS_WINNT4 */
 
   // Reset the original file pointer position
-  if (::SetFilePointer (handle, 
+  if (::SetFilePointer (handle,
                         original_position,
                         NULL,
                         FILE_BEGIN) == 0xFFFFFFFF)
     return -1;
-                                             
+
   return (ssize_t) bytes_written;
 
 # else /* ACE_WIN32 */
@@ -4076,28 +4078,28 @@ ACE_OS::pwrite (ACE_HANDLE handle,
     ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *ace_os_monitor_lock, -1));
 
   // Remember the original file pointer position
-  off_t original_position = ACE_OS::lseek (handle, 
-                                           0, 
+  off_t original_position = ACE_OS::lseek (handle,
+                                           0,
                                            SEEK_SET);
 
   if (original_position == -1)
     return -1;
 
   // Go to the correct position
-  off_t altered_position = ACE_OS::lseek (handle, 
-                                          offset, 
+  off_t altered_position = ACE_OS::lseek (handle,
+                                          offset,
                                           SEEK_SET);
-  
+
   if (altered_position == -1)
     return -1;
 
-  ssize_t bytes_written = ACE_OS::write (handle, 
-                                         buf, 
+  ssize_t bytes_written = ACE_OS::write (handle,
+                                         buf,
                                          nbytes);
 
   if (bytes_written == -1)
     return -1;
-  
+
   if (ACE_OS::lseek (handle,
                      original_position,
                      SEEK_SET) == -1)
