@@ -11,7 +11,7 @@
  *
  * This file should not be #included directly by application
  * code. Instead, it should #include "ace/IOStream.h".  That's because
- * we only put some conditional compilations in that file. 
+ * we only put some conditional compilations in that file.
  */
 //=============================================================================
 
@@ -274,7 +274,7 @@ protected:
 };
 
 #  if defined (__ACE_INLINE__)
-#    include "ace/IOStream_T.i"
+#    include "ace/IOStream_T.inl"
 #  endif /* __ACE_INLINE__ */
 
 #  if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

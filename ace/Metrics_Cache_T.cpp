@@ -228,7 +228,7 @@ flush_ACE_Metrics_Cache ()
 
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Metrics_Cache_T.i"
+#include "ace/Metrics_Cache_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* defined (ACE_COMPILE_TIMEPROBES) */

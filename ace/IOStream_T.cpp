@@ -28,7 +28,7 @@ ACE_RCSID(ace, IOStream_T, "$Id$")
 #endif /*__GNUG__ */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/IOStream_T.i"
+#include "ace/IOStream_T.inl"
 #endif /* !__ACE_INLINE__ */
 
 // We will be given a STREAM by the iostream object which creates us.

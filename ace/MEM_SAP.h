@@ -152,7 +152,7 @@ protected:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/MEM_SAP.i"
+#include "ace/MEM_SAP.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */

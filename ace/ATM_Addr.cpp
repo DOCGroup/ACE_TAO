@@ -12,7 +12,7 @@
 #endif /* ACE_HAS_FORE_ATM_WS2 */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/ATM_Addr.i"
+#include "ace/ATM_Addr.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, ATM_Addr, "$Id$")

@@ -110,7 +110,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/SPIPE_Addr.i"
+#include "ace/SPIPE_Addr.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

@@ -6,7 +6,7 @@
 #include "ace/Env_Value_T.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "ace/Env_Value_T.i"
+#include "ace/Env_Value_T.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Env_Value_T, "$Id$")

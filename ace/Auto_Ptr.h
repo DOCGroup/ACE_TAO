@@ -166,7 +166,7 @@ public:
 # endif /* ACE_AUTO_PTR_LACKS_RESET */
 
 #if defined (__ACE_INLINE__)
-#include "ace/Auto_Ptr.i"
+#include "ace/Auto_Ptr.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

@@ -10,7 +10,7 @@ ACE_RCSID(ace, UPIPE_Acceptor, "$Id$")
 #include "ace/OS_NS_unistd.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/UPIPE_Acceptor.i"
+#include "ace/UPIPE_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_ALLOC_HOOK_DEFINE(ACE_UPIPE_Acceptor)

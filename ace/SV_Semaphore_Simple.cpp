@@ -4,7 +4,7 @@
 #include "ace/os_include/sys/os_sem.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/SV_Semaphore_Simple.i"
+#include "ace/SV_Semaphore_Simple.inl"
 #endif /* !__ACE_INLINE__ */
 
 ACE_RCSID (ace,

@@ -5,7 +5,7 @@
 #include "ace/OS_NS_unistd.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/SPIPE.i"
+#include "ace/SPIPE.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, SPIPE, "$Id$")

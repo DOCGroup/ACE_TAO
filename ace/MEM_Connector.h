@@ -165,7 +165,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/MEM_Connector.i"
+#include "ace/MEM_Connector.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */

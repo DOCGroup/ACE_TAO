@@ -7,10 +7,10 @@ ACE_RCSID(ace, Msg_WFMO_Reactor, "$Id$")
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_MSG_WFMO)
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Msg_WFMO_Reactor.i"
+#include "ace/Msg_WFMO_Reactor.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_Msg_WFMO_Reactor::ACE_Msg_WFMO_Reactor (ACE_Sig_Handler *sh, 
+ACE_Msg_WFMO_Reactor::ACE_Msg_WFMO_Reactor (ACE_Sig_Handler *sh,
                                             ACE_Timer_Queue *tq)
   : ACE_WFMO_Reactor (sh, tq)
 {
@@ -58,7 +58,7 @@ ACE_Msg_WFMO_Reactor::dispatch_window_messages (void)
 {
   int number_of_messages = 0;
   MSG msg;
-      
+
   // Process all pending message from this thread's message queue
   while (::PeekMessage (&msg, 0, 0, 0, PM_REMOVE))
     {
@@ -66,14 +66,14 @@ ACE_Msg_WFMO_Reactor::dispatch_window_messages (void)
       if (msg.message == WM_QUIT)
         {
           // Should inform the main thread
-          ::PostQuitMessage (msg.wParam); 
+          ::PostQuitMessage (msg.wParam);
           return -1;
         }
-      
+
       ::DispatchMessage (&msg);
       number_of_messages++;
     }
-  
+
   return number_of_messages;
 }
 

@@ -278,7 +278,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Task.i"
+#include "ace/Task.inl"
 #endif /* __ACE_INLINE__ */
 
 // Include the ACE_Task templates classes at this point.

@@ -7,7 +7,7 @@ ACE_RCSID (ace, ATM_Stream, "$Id$")
 #if defined (ACE_HAS_ATM)
 
 #if !defined (__ACE_INLINE__)
-#include "ace/ATM_Stream.i"
+#include "ace/ATM_Stream.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_ALLOC_HOOK_DEFINE (ACE_ATM_Stream)

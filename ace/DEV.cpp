@@ -7,7 +7,7 @@
 #include "ace/OS_NS_unistd.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/DEV.i"
+#include "ace/DEV.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, DEV, "$Id$")

@@ -86,14 +86,14 @@ protected:
    * dispatched. Return -1 on errors.
    */
   int handle_events_i (u_long milli_seconds);
- 
+
   /// semaphore variable to notify
   /// used to wait the first AIO start
   ACE_SYNCH_SEMAPHORE sema_;
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/POSIX_CB_Proactor.i"
+#include "ace/POSIX_CB_Proactor.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_AIO_CALLS && !__Lynx__ && !__FreeBSD__  */

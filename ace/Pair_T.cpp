@@ -10,7 +10,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Pair_T.i"
+#include "ace/Pair_T.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Pair_T, "$Id$")

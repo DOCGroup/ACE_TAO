@@ -15,7 +15,7 @@ ACE_RCSID(ace, Event_Handler_T, "$Id$")
 #if defined (ACE_HAS_TEMPLATE_TYPEDEFS)
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Event_Handler_T.i"
+#include "ace/Event_Handler_T.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Event_Handler_T)

@@ -36,7 +36,7 @@
 #include "ace/Functor.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Functor.i"
+#include "ace/Functor.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Functor, "$Id$")

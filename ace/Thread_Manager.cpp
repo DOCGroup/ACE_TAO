@@ -9,7 +9,7 @@
 #include "ace/Guard_T.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Thread_Manager.i"
+#include "ace/Thread_Manager.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Thread_Manager, "$Id$")

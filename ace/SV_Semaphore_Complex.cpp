@@ -6,7 +6,7 @@
 #include "ace/OS_NS_Thread.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/SV_Semaphore_Complex.i"
+#include "ace/SV_Semaphore_Complex.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, SV_Semaphore_Complex, "$Id$")

@@ -193,7 +193,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Module.i"
+#include "ace/Module.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

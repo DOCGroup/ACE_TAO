@@ -5,7 +5,7 @@
 #include "ace/OS_Memory.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/SPIPE_Stream.i"
+#include "ace/SPIPE_Stream.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, SPIPE_Stream, "$Id$")

@@ -3,7 +3,7 @@
 #include "ace/Stats.h"
 
 #if !defined (__ACE_INLINE__)
-# include "ace/Stats.i"
+# include "ace/Stats.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/High_Res_Timer.h"

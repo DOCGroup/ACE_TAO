@@ -140,7 +140,7 @@ public:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/MEM_Stream.i"
+#include "ace/MEM_Stream.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */

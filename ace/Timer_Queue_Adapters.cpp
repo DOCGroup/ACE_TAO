@@ -12,7 +12,7 @@
 ACE_RCSID(ace, Timer_Queue_Adapters, "$Id$")
 
 # if !defined (__ACE_INLINE__)
-#  include "ace/Timer_Queue_Adapters.i"
+#  include "ace/Timer_Queue_Adapters.inl"
 # endif /* __ACE_INLINE__ */
 
 #include "ace/OS_NS_unistd.h"

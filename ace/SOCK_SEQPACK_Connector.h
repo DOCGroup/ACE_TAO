@@ -319,7 +319,7 @@ protected:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/SOCK_SEQPACK_Connector.i"
+#include "ace/SOCK_SEQPACK_Connector.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

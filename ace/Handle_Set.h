@@ -237,7 +237,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Handle_Set.i"
+#include "ace/Handle_Set.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

@@ -5,7 +5,7 @@
 ACE_RCSID(ace, Addr, "$Id$")
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Addr.i"
+#include "ace/Addr.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Log_Msg.h"

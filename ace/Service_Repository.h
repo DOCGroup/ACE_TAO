@@ -207,7 +207,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Service_Repository.i"
+#include "ace/Service_Repository.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

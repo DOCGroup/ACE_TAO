@@ -10,7 +10,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Free_List.i"
+#include "ace/Free_List.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Free_List, "$Id$")

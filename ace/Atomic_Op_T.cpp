@@ -9,7 +9,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Atomic_Op_T.i"
+#include "ace/Atomic_Op_T.inl"
 #endif /* __ACE_INLINE__ */
 
 

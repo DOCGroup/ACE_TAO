@@ -63,7 +63,7 @@ protected:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Containers.i"
+#include "ace/Containers.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Containers_T.h"

@@ -1,7 +1,7 @@
 #include "ace/Message_Block.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Message_Block.i"
+#include "ace/Message_Block.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Log_Msg.h"

@@ -136,7 +136,7 @@ protected:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/FILE.i"
+#include "ace/FILE.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

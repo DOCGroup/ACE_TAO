@@ -104,7 +104,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/ATM_Acceptor.i"
+#include "ace/ATM_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_ATM */

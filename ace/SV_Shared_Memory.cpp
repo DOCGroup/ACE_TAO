@@ -5,7 +5,7 @@
 #include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/SV_Shared_Memory.i"
+#include "ace/SV_Shared_Memory.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, SV_Shared_Memory, "$Id$")

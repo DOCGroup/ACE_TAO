@@ -848,7 +848,7 @@ public:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/RB_Tree.i"
+#include "ace/RB_Tree.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

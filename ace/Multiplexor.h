@@ -71,7 +71,7 @@ public:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Multiplexor.i"
+#include "ace/Multiplexor.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* 0 */

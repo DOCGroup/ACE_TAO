@@ -6,7 +6,7 @@
 #include "ace/OS_NS_sys_socket.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/SOCK_CODgram.i"
+#include "ace/SOCK_CODgram.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, SOCK_CODgram, "$Id$")

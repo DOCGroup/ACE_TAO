@@ -25,7 +25,7 @@
 // function here.  Therefore, we temporarily disable the code here.
 // We shall turn this back on once we know the problem gets fixed.
 #if 1 // !defined (__ACE_INLINE__)
-#include "ace/Select_Reactor_T.i"
+#include "ace/Select_Reactor_T.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (ace,

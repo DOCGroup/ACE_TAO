@@ -309,7 +309,7 @@ private:
 #endif /* ACE_HAS_TOKENS_LIBRARY */
 
 #if defined (__ACE_INLINE__)
-#include "ace/Remote_Tokens.i"
+#include "ace/Remote_Tokens.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

@@ -63,7 +63,7 @@ public:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/LSOCK_Dgram.i"
+#include "ace/LSOCK_Dgram.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */

@@ -185,7 +185,7 @@ public:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Based_Pointer_T.i"
+#include "ace/Based_Pointer_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

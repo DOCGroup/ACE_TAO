@@ -78,7 +78,7 @@ template <class T> void ACE_Convert (const ACE_TCHAR *s, T &t);
 // Function to convert a string <s> into type <T>.
 
 #if defined (__ACE_INLINE__)
-#include "ace/Env_Value_T.i"
+#include "ace/Env_Value_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

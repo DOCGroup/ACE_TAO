@@ -385,7 +385,7 @@ protected:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Cache_Map_Manager_T.i"
+#include "ace/Cache_Map_Manager_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

@@ -1592,7 +1592,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Map_T.i"
+#include "ace/Map_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

@@ -8,7 +8,7 @@
 #include "ace/Guard_T.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Signal.i"
+#include "ace/Signal.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Signal, "$Id$")

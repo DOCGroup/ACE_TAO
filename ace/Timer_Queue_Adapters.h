@@ -230,7 +230,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-# include "ace/Timer_Queue_Adapters.i"
+# include "ace/Timer_Queue_Adapters.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

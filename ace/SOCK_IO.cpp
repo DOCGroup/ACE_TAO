@@ -9,7 +9,7 @@
 #include "ace/OS_Memory.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/SOCK_IO.i"
+#include "ace/SOCK_IO.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, SOCK_IO, "$Id$")

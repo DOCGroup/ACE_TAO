@@ -15,7 +15,7 @@
 #include "ace/Object_Manager.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Malloc_Allocator.i"
+#include "ace/Malloc_Allocator.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Guard_T.h"

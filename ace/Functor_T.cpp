@@ -11,7 +11,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Functor_T.i"
+#include "ace/Functor_T.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Functor_T, "$Id$")

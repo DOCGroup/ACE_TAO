@@ -6,7 +6,7 @@
 #if defined (ACE_HAS_AIO_CALLS)
 
 #if !defined (__ACE_INLINE__)
-#include "ace/POSIX_Proactor.i"
+#include "ace/POSIX_Proactor.inl"
 #endif /* __ACE_INLINE__ */
 
 # if defined (ACE_HAS_SYSINFO)

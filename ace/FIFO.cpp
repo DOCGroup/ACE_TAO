@@ -4,7 +4,7 @@
 #include "ace/FIFO.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/FIFO.i"
+#include "ace/FIFO.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Log_Msg.h"

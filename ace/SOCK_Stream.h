@@ -160,7 +160,7 @@ public:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/SOCK_Stream.i"
+#include "ace/SOCK_Stream.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

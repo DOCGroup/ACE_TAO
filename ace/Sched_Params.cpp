@@ -19,7 +19,7 @@
 #include "ace/Sched_Params.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Sched_Params.i"
+#include "ace/Sched_Params.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_HAS_PRIOCNTL) && defined (ACE_HAS_STHREADS)

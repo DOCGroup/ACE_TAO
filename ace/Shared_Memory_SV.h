@@ -90,7 +90,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Shared_Memory_SV.i"
+#include "ace/Shared_Memory_SV.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

@@ -171,7 +171,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/DEV_IO.i"
+#include "ace/DEV_IO.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

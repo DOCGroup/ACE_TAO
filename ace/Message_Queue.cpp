@@ -7,7 +7,7 @@
 #include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Message_Queue.i"
+#include "ace/Message_Queue.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Message_Queue, "$Id$")

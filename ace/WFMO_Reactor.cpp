@@ -11,7 +11,7 @@
 #include "ace/Null_Condition.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/WFMO_Reactor.i"
+#include "ace/WFMO_Reactor.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, WFMO_Reactor, "$Id$")

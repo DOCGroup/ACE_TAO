@@ -168,7 +168,7 @@ template class ACE_Export ACE_Task<ACE_NULL_SYNCH>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
 
 #if defined (__ACE_INLINE__)
-#include "ace/Task_T.i"
+#include "ace/Task_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

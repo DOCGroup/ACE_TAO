@@ -76,7 +76,7 @@ public:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/FIFO_Send_Msg.i"
+#include "ace/FIFO_Send_Msg.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

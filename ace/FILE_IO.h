@@ -155,7 +155,7 @@ public:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/FILE_IO.i"
+#include "ace/FILE_IO.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

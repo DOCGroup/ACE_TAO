@@ -427,7 +427,7 @@ private:
 #include "ace/Static_Object_Lock.h"
 
 #if defined (__ACE_INLINE__)
-#include "ace/Object_Manager.i"
+#include "ace/Object_Manager.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Managed_Object.h"

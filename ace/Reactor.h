@@ -846,7 +846,7 @@ protected:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Reactor.i"
+#include "ace/Reactor.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

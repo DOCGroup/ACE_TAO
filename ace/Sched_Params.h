@@ -221,7 +221,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Sched_Params.i"
+#include "ace/Sched_Params.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

@@ -6,7 +6,7 @@
 #include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
-#  include "ace/Multihomed_INET_Addr.i"
+#  include "ace/Multihomed_INET_Addr.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (ace,

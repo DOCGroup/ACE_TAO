@@ -82,7 +82,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Pipe.i"
+#include "ace/Pipe.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

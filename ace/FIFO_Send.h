@@ -63,7 +63,7 @@ public:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/FIFO_Send.i"
+#include "ace/FIFO_Send.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

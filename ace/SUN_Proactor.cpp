@@ -10,7 +10,7 @@
 #include "ace/Object_Manager.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/SUN_Proactor.i"
+#include "ace/SUN_Proactor.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_SUN_Proactor::ACE_SUN_Proactor (size_t max_aio_operations)

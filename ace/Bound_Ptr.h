@@ -333,7 +333,7 @@ private:
   X *ptr_;
 };
 
-#include "ace/Bound_Ptr.i"
+#include "ace/Bound_Ptr.inl"
 
 #include /**/ "ace/post.h"
 

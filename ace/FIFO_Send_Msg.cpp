@@ -6,7 +6,7 @@
 #include "ace/OS_NS_sys_uio.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/FIFO_Send_Msg.i"
+#include "ace/FIFO_Send_Msg.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, FIFO_Send_Msg, "$Id$")

@@ -7,7 +7,7 @@
 #include "ace/Auto_Ptr.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Auto_Ptr.i"
+#include "ace/Auto_Ptr.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Auto_Ptr, "$Id$")

@@ -3,7 +3,7 @@
 #include "ace/Service_Repository.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Service_Repository.i"
+#include "ace/Service_Repository.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Service_Types.h"

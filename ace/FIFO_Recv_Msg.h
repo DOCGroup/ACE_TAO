@@ -127,7 +127,7 @@ public:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/FIFO_Recv_Msg.i"
+#include "ace/FIFO_Recv_Msg.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

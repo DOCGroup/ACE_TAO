@@ -6,7 +6,7 @@
 #include "ace/ARGV.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/ARGV.i"
+#include "ace/ARGV.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Log_Msg.h"

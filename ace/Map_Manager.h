@@ -696,7 +696,7 @@ public:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Map_Manager.i"
+#include "ace/Map_Manager.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

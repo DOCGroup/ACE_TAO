@@ -264,7 +264,7 @@ private:
 
 
 #if defined (__ACE_INLINE__)
-# include "ace/Stats.i"
+# include "ace/Stats.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

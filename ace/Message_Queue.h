@@ -600,7 +600,7 @@ private:
 
 
 #if defined (__ACE_INLINE__)
-#include "ace/Message_Queue.i"
+#include "ace/Message_Queue.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

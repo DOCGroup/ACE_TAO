@@ -1161,7 +1161,7 @@ extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
 
 
 #if defined (__ACE_INLINE__)
-# include "ace/CDR_Stream.i"
+# include "ace/CDR_Stream.inl"
 #else /* __ACE_INLINE__ */
 
 // Not used by CORBA or TAO

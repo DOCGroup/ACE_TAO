@@ -48,7 +48,7 @@ public:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Dynamic_Service.i"
+#include "ace/Dynamic_Service.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
