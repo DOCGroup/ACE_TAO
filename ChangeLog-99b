@@ -1,3 +1,9 @@
+Tue Jul  6 10:42:02 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/test_config.h (ACE_INIT_LOG): Fixed a typo in VxWorks'
+	  definition of ACE_INIT_LOG.  Thanks to David for reporting
+	  this.
+
 Tue Jul  6 10:17:19 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* include/makeinclude/ace_flags.bor: Removed an extraneous
