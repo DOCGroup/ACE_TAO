@@ -180,6 +180,8 @@ class TAO_Object_Adapter
   //     This class will be used as a facade for the POAs in a server
 public:
 
+  friend class TAO_POA;
+
   typedef PortableServer::ObjectId poa_name;
   typedef PortableServer::ObjectId_var poa_name_var;
   typedef PortableServer::ObjectId_out poa_name_out;
