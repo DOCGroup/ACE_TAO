@@ -8,7 +8,7 @@
 
 ACE_RCSID(Benchmark, server, "$Id$")
 
-const char *ior_output_file = 0;
+const char *ior_output_file = "test.ior";
 int register_interceptor = 1;
 
 int

@@ -12,6 +12,7 @@ ACE_RCSID (AMI,
 
 const char *ior = "file://test.ior";
 static int exit_status = 0;
+const int ITERATIONS = 100;
 
 int
 parse_args (int argc, char *argv[])
@@ -134,7 +135,7 @@ static void test_synchronous (Test::Echo_ptr echo
     Echo_Client_Request_Interceptor::request_count;
   unsigned long initial_reply_count =
     Echo_Client_Request_Interceptor::reply_count;
-  for(int i = 0; i != 100; ++i)
+  for(int i = 0; i != ITERATIONS; ++i)
   {
     CORBA::String_var s =
       echo->echo_operation ("dummy message"
@@ -146,8 +147,8 @@ static void test_synchronous (Test::Echo_ptr echo
   unsigned long total_reply_count =
     Echo_Client_Request_Interceptor::reply_count - initial_reply_count;
 
-  if (total_request_count != 100
-      || total_reply_count != 100)
+  if (total_request_count != ITERATIONS
+      || total_reply_count != ITERATIONS)
     {
       ACE_ERROR((LM_ERROR,
                  "ERROR: Invalid or mismatched request/reply "
@@ -174,7 +175,7 @@ static void test_ami (Test::Echo_ptr echo
   unsigned long initial_other_count =
     Echo_Client_Request_Interceptor::other_count;
 
-  for(int i = 0; i != 100; ++i)
+  for(int i = 0; i != ITERATIONS; ++i)
     {
       echo->sendc_echo_operation(
         echo_handler.in (), "dummy message" ACE_ENV_ARG_PARAMETER);
@@ -186,8 +187,8 @@ static void test_ami (Test::Echo_ptr echo
   unsigned long total_other_count =
     Echo_Client_Request_Interceptor::other_count - initial_other_count;
 
-  if (total_request_count != 100
-      || total_other_count != 100)
+  if (total_request_count != ITERATIONS
+      || total_other_count != ITERATIONS)
     {
       ACE_ERROR((LM_ERROR,
                  "ERROR: In test_ami() unexpected request/other "
@@ -206,6 +207,7 @@ static void wait_for_exception (CORBA::ORB_ptr orb,
   ACE_CHECK;
 
   bool exception_detected = false;
+
   while(!exception_detected)
     {
       ACE_TRY
@@ -248,7 +250,7 @@ static void test_ami_errors (CORBA::ORB_ptr orb,
   unsigned long initial_exception_count =
     Echo_Client_Request_Interceptor::exception_count;
 
-  for (int i = 0; i != 100; ++i)
+  for (int i = 0; i != ITERATIONS; ++i)
     {
       ACE_TRY
         {
@@ -267,8 +269,8 @@ static void test_ami_errors (CORBA::ORB_ptr orb,
   unsigned long total_exception_count =
     Echo_Client_Request_Interceptor::exception_count - initial_exception_count;
 
-  if (total_request_count != 100
-      || total_exception_count != 100)
+  if (total_request_count != ITERATIONS
+      || total_exception_count != ITERATIONS)
     {
       ACE_ERROR((LM_ERROR,
                  "ERROR: In test_ami_errors() unexpected request/exception "
