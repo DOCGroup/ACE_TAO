@@ -42,8 +42,13 @@ namespace TAO
     }
 
     void
-    RequestProcessingStrategyDefaultServantFactoryImpl::destroy (RequestProcessingStrategy *strategy)
+    RequestProcessingStrategyDefaultServantFactoryImpl::destroy (
+      RequestProcessingStrategy *strategy
+      ACE_ENV_ARG_DECL)
     {
+      strategy->strategy_cleanup (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
+
       delete strategy;
     }
 

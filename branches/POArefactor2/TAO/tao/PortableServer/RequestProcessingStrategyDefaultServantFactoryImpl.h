@@ -38,7 +38,9 @@ namespace TAO
         ::PortableServer::RequestProcessingPolicyValue value,
         ::PortableServer::ServantRetentionPolicyValue srvalue);
 
-      virtual void destroy (RequestProcessingStrategy *strategy);
+      virtual void destroy (
+        RequestProcessingStrategy *strategy
+        ACE_ENV_ARG_DECL);
     };
 
     ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, RequestProcessingStrategyDefaultServantFactoryImpl)

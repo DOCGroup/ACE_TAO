@@ -33,20 +33,14 @@ namespace TAO
           RequestProcessingStrategyFactory *strategy_factory =
             ACE_Dynamic_Service<RequestProcessingStrategyFactory>::instance ("RequestProcessingStrategyAOMOnlyFactory");
 
-          if (strategy_factory == 0)
-            {
-              ACE_Service_Config::process_directive (
-                ACE_TEXT("dynamic RequestProcessingStrategyFactory Service_Object *")
-                ACE_TEXT("TAO_PortableServer:_make_RequestProcessingStrategyAOMOnlyFactoryImpl()"));
-
-              strategy_factory =
-                ACE_Dynamic_Service<RequestProcessingStrategyFactory>::instance ("RequestProcessingStrategyAOMOnlyFactory");
-            }
-
           if (strategy_factory != 0)
-            {
-              strategy = strategy_factory->create (value, srvalue);
-            }
+            strategy = strategy_factory->create (value, srvalue);
+          else
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("(%P|%t) %p\n"),
+                        ACE_TEXT ("Unable to get ")
+                        ACE_TEXT ("RequestProcessingStrategyAOMOnlyFactory")));
+
           break;
         }
         case ::PortableServer::USE_DEFAULT_SERVANT :
@@ -54,20 +48,14 @@ namespace TAO
           RequestProcessingStrategyFactory *strategy_factory =
             ACE_Dynamic_Service<RequestProcessingStrategyFactory>::instance ("RequestProcessingStrategyDefaultServantFactory");
 
-          if (strategy_factory == 0)
-            {
-              ACE_Service_Config::process_directive (
-                ACE_TEXT("dynamic RequestProcessingStrategyFactory Service_Object *")
-                ACE_TEXT("TAO_PortableServer:_make_RequestProcessingStrategyDefaultServantFactoryImpl()"));
-
-              strategy_factory =
-                ACE_Dynamic_Service<RequestProcessingStrategyFactory>::instance ("RequestProcessingStrategyDefaultServantFactory");
-            }
-
           if (strategy_factory != 0)
-            {
-              strategy = strategy_factory->create (value, srvalue);
-            }
+            strategy = strategy_factory->create (value, srvalue);
+          else
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("(%P|%t) %p\n"),
+                        ACE_TEXT ("Unable to get ")
+                        ACE_TEXT ("RequestProcessingStrategyDefaultServantFactory")));
+
           break;
         }
         case ::PortableServer::USE_SERVANT_MANAGER :
@@ -95,7 +83,9 @@ namespace TAO
     }
 
     void
-    RequestProcessingStrategyFactoryImpl::destroy (RequestProcessingStrategy *strategy)
+    RequestProcessingStrategyFactoryImpl::destroy (
+      RequestProcessingStrategy *strategy
+      ACE_ENV_ARG_DECL)
     {
       switch (strategy->type ())
       {

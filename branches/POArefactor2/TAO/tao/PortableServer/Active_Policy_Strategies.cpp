@@ -241,10 +241,7 @@ namespace TAO
 
       if (request_processing_strategy_ != 0)
         {
-          request_processing_strategy_->strategy_cleanup (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK;
-
-          request_processing_strategy_factory_->destroy (request_processing_strategy_);
+          request_processing_strategy_factory_->destroy (request_processing_strategy_ ACE_ENV_ARG_PARAMETER);
           request_processing_strategy_ = 0;
         }
 
