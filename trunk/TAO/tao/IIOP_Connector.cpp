@@ -71,7 +71,8 @@ TAO_IIOP_Connector::open (TAO_ORB_Core *orb_core)
   this->orb_core (orb_core);
 
   // Create our connect strategy
-  this->create_connect_strategy ();
+  if (this->create_connect_strategy () == -1)
+    return -1;
 
   if (this->init_tcp_properties () != 0)
     return -1;
