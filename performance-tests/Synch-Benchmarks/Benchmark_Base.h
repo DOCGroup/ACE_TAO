@@ -7,6 +7,7 @@
 # define ACE_BENCHMARK_BASE_H
 
 # include "ace/Service_Config.h"
+# include "ace/Service_Repository.h"
 # include "ace/Synch.h"
 # include "ace/Service_Types.h"
 
@@ -48,10 +49,6 @@ class ACE_Svc_Export Benchmark_Base : public ACE_Service_Object
   //     information and to define other common methods all
   //     benchmarking classes should support.
 public:
-
-  Benchmark_Base (void);
-  // Default ctor.
-
   enum {
     BENCHMARK_BASE,
     METHOD,
@@ -66,6 +63,9 @@ public:
   // Returns our thread id;
 
 protected:
+  Benchmark_Base (int type = BENCHMARK_BASE);
+  // Default ctor.
+
   int benchmark_type_;
   // Store the RTTI info of this module.
 
@@ -74,5 +74,42 @@ protected:
   // Keeps track of our "virtual" thread id...
 #   endif /* ACE_HAS_PTHREADS || ACE_HAS_DCETHREADS || VXWORKS */
 };
+
+class ACE_Svc_Export Benchmark_Method_Base : public Benchmark_Base
+{
+  // = TITLE
+  //     This class identifies itself as Benmarking Method class.
+public:
+  int exec (ACE_Service_Repository_Iterator *sri);
+  // Run the test and advanced the service repository iterator
+
+  virtual void pre_run_test (void) = 0;
+  // Before running the real test.  Subclasses implement this method
+  // to dictate how the test is performed.
+
+  virtual void run_test (void) = 0;
+  // Run the real test.  Subclasses implement this method to
+  // dictate how the test is performed.
+
+  virtual void post_run_test (void) = 0;
+  // After running the real test.  Subclasses implement this method to
+  // dictate how the test is performed.
+
+  virtual int valid_test_object (Benchmark_Base *) = 0;
+  // Check if we got a valid test to perform.
+
+protected:
+  Benchmark_Method_Base (void);
+};
+
+class ACE_Svc_Export Benchmark_Performance_Test_Base : public Benchmark_Base
+{
+  // = TITLE
+  //     This class identifies itself as Benmarking Performance Test class.
+protected:
+  Benchmark_Performance_Test_Base (void);
+};
+
+
 # endif /* ACE_HAS_THREADS */
 #endif /* ACE_BENCHMARK_H */
