@@ -60,7 +60,7 @@ project(RoundTrip_exec) : ciao_component {
 
 
 
-project (RoundTrip_client) : ciao_client, valuetype {
+project (RoundTrip_client) : ciao_client, valuetype, strategies {
   exename = client
   after += RoundTrip_stub
   libs += RoundTrip_stub Benchmark_stub
@@ -73,19 +73,3 @@ project (RoundTrip_client) : ciao_client, valuetype {
     client.cpp
   }
 }
-
-
-//project (RoundTrip_controller) : ciao_client, valuetype {
-//  exename = controller
-//  after += RoundTrip_stub
-//  libs += RoundTrip_stub Benchmark_stub
-//  libpaths += ..
-//
-//  IDL_Files {
-//  }
-//
-//  Source_Files {
-//    controller.cpp
-//  }
-//}
-

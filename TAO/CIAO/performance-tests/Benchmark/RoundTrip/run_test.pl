@@ -25,7 +25,7 @@ unlink $svr_ior;
 unlink $home_ior;
 
 # CIAO Daemon command line arguments
-$daemon_args = "-o $daemon_ior -i CIAO_Installation_Data.ini -n $CIAO_ROOT/tools/ComponentServer/ComponentServer";
+$daemon_args = "-c $CIAO_ROOT/tools/ComponentServer/svc.conf -o $daemon_ior -i CIAO_Installation_Data.ini -n $CIAO_ROOT/tools/ComponentServer/ComponentServer";
 
 # CIAO Daemon Controller location:
 $controller = "$CIAO_ROOT/tools/Daemon/DaemonController";
@@ -43,7 +43,7 @@ $end_args = "end_home -c file://$svr_ior";
 $shutdown_args = "shutdown";
 
 # Client program command line arguments
-$cl_args = "-i 100000";
+$cl_args = "-ORBSvcConf ../RoundTrip/svc.conf -i 100000";
 
 # CIAO daemon process definition
 $DS = new PerlACE::Process ("$CIAO_ROOT/tools/Daemon/CIAO_Daemon",
@@ -51,7 +51,7 @@ $DS = new PerlACE::Process ("$CIAO_ROOT/tools/Daemon/CIAO_Daemon",
 
 # Client process definition
 $CL = new PerlACE::Process ("../RoundTrip/client",
-                            "$cl_args");
+                            $cl_args);
 
 ## Starting up the CIAO daemon
 $DS->Spawn ();

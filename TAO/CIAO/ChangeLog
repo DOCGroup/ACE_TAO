@@ -1,3 +1,14 @@
+2003-08-11  Arvind S. Krishna  <arvindk@equus.dre.vanderbilt.edu>
+
+	* performance-tests/Benchmark/RoundTrip/client.cpp:
+	* performance-tests/Benchmark/RoundTrip/svc.conf:
+	* performance-tests/Benchmark/RoundTrip/RoundTrip.mpc:
+	* performance-tests/Benchmark/RoundTrip/run_test.pl:
+	  The client was not using the proper svc conf file to run in
+	  "single-threaded" mode. Added proper svc.conf file and support
+	  code in the client. The .mpc file was modified to add client's
+	  dependency with TAO_Strategies library. 
+
 Thu Aug 07 16:46:42 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/OEP/Display/NavDisplayGUI_exec/NavDisplayGUI.mpc:
