@@ -28,6 +28,8 @@
 #include "ace/OS_NS_arpa_inet.h"
 #include "ace/OS_NS_string.h"
 #include "ace/os_include/os_netdb.h"
+#include "ace/OS_NS_unistd.h"
+
 // FUZZ: disable check_for_math_include
 #include <math.h>
 
