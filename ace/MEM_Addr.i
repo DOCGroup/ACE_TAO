@@ -26,7 +26,7 @@ ACE_MEM_Addr::set (const ASYS_TCHAR port_number[])
 
 // Set the port number.
 
-void
+ACE_INLINE void
 ACE_MEM_Addr::set_port_number (u_short port_number,
                                 int encode)
 {
@@ -86,7 +86,7 @@ ACE_MEM_Addr::operator == (const ACE_MEM_Addr &sap) const
     this->internal_ == sap.internal_;
 }
 
-int
+ACE_INLINE int
 ACE_MEM_Addr::operator == (const ACE_INET_Addr &sap) const
 {
   ACE_TRACE ("ACE_MEM_Addr::operator ==");
@@ -96,14 +96,14 @@ ACE_MEM_Addr::operator == (const ACE_INET_Addr &sap) const
 
 // Compare two addresses for inequality.
 
-int
+ACE_INLINE int
 ACE_MEM_Addr::operator != (const ACE_MEM_Addr &sap) const
 {
   ACE_TRACE ("ACE_MEM_Addr::operator !=");
   return !((*this) == sap);
 }
 
-int
+ACE_INLINE int
 ACE_MEM_Addr::operator != (const ACE_INET_Addr &sap) const
 {
   ACE_TRACE ("ACE_MEM_Addr::operator !=");
