@@ -1,3 +1,45 @@
+Fri Jul 25 17:41:08 2003  Venkita Subramonian  <venkita@cse.wustl.edu>
+
+	* Kokyu/Kokyu_DLL.dsp:
+	* Kokyu/DSRT_Schedulers.cpp:
+	* Kokyu/DSRT_Scheduler.h:
+
+	  Removed these files from CVS. Kokyu_DLL.dsp is renamed to
+	  Kokyu.dsp after conversion to MPC.
+
+	* Kokyu/DSRT_Direct_Dispatcher_Impl_T.{cpp,h}:
+	* Kokyu/DSRT_Dispatch_Item_T.{cpp,h,i}:
+	* Kokyu/DSRT_Dispatcher_Impl_T.{cpp,h,i}:
+	* Kokyu/DSRT_Sched_Queue_T.{cpp,h}:
+	* Kokyu/Kokyu_dsrt.{cpp,h,i}
+
+	  Added new files to implement dynamic scheduling schedulers.
+	
+	* Kokyu/Kokyu.dsp:
+	* Kokyu/Kokyu.mwc:
+	* Kokyu/Kokyu.mpc:
+	* Kokyu/Makefile.Kokyu:
+	* Kokyu/Makefile.Kokyu.bor:
+	* Kokyu/Makefile.bor:
+	* Kokyu/Kokyu.dsw:
+	* Kokyu/Kokyu_Static.dsp:
+	* Kokyu/Makefile:
+
+	  Created MPC file for Kokyu and generated project files from MPC.
+	 
+	* Kokyu/Kokyu_defs.{cpp,h,i}
+	* Kokyu/Default_Dispatcher_Impl.{cpp,h,i}
+	* Kokyu/Dispatcher_Impl.{h,cpp,i}
+	* Kokyu/Dispatcher_Task.{h,cpp,i}
+	* Kokyu/Kokyu.{cpp,h,i}
+	* Kokyu/kokyu_export.h
+
+	  Reorganized files and updated comments and doxygen documentation.
+	
+	* Kokyu/tests/DSRT_MIF/MIF.cpp
+
+	  Modified example to reflect new Kokyu dispatcher class.
+	
 Thu Jul 24 14:23:44 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/Future.{h,cpp}: Removed the operator new/delete/& so
