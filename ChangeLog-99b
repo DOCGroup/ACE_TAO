@@ -1,3 +1,26 @@
+Mon Apr  5 13:21:49 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* ace/Proactor.cpp: 
+	(svc): 
+	* ace/POSIX_Proactor.cpp: 
+	* ace/POSIX_Proactor.h: 
+	* ace/Proactor.h: 
+	* ace/Proactor_Impl.h: 
+	* ace/WIN32_Proactor.cpp: 
+	* ace/WIN32_Proactor.h: 
+	* examples/Reactor/Proactor/test_timeout.cpp: 
+       	Completed Timers implementation for POSIX platforms. Timers
+       	implementation is now common for POSIX and WIN32. Portable
+       	ACE_Auto_Event is used in the auxillary thread to wait for the
+	Timer events.
+       	The Timer's code in WIN32 has been removed and the common code exists
+       	in Proactor.{h,cpp} only.
+       	A new factory method called create_asynch_timer has been created to
+       	create the Timer Result class. This is used internally by the Proactor
+       	to post timer completions to the Proactor completion
+	queue. Application may want to use this directly to fake
+	completions. 
+
 Mon Apr 05 12:05:01 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.*,Thread_Manager.{h,cpp}: moved flags members from
