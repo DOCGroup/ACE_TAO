@@ -40,9 +40,22 @@ ACE_Control_Block::dump (void) const
   ACE_TRACE ("ACE_Control_Block::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ((ACE_Name_Node *) this->name_head_)->dump ();
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("freep_ = %x"), (ACE_Malloc_Header *) this->freep_));
+  ACE_DEBUG ((LM_DEBUG, "Name Node:\n"));
+  for (ACE_Name_Node *nextn = this->name_head_;
+       nextn != 0;
+       nextn = nextn->next_)
+    nextn->dump ();
 
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("freep_ = %x"), (ACE_Malloc_Header *) this->freep_));
+  this->base_.dump ();
+
+  ACE_DEBUG ((LM_DEBUG, "\nMalloc Header:\n"));
+  for (ACE_Malloc_Header *nexth = ((ACE_Malloc_Header *)this->freep_)->next_block_;
+       nexth != 0 && nexth != &this->base_;
+       nexth = nexth->next_block_)
+    nexth->dump ();
+
+  ACE_DEBUG ((LM_DEBUG, "\n"));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -182,7 +195,7 @@ ACE_Allocator::close_singleton (void)
 {
   ACE_TRACE ("ACE_Allocator::close_singleton");
 
-  ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon, 
+  ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon,
                      *ACE_Static_Object_Lock::instance ()));
 
   if (ACE_Allocator::delete_allocator_)
