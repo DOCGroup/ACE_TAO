@@ -12,14 +12,14 @@ ACE_RCSID(orbsvcs, LoadBalancer, "$Id$")
 #endif /* __ACE_INLINE__ */
 
 TAO_LB_LoadBalancer::TAO_LB_LoadBalancer (
-                            const char *interface_id,
-                            TAO_LB_LoadBalancing_Strategy *strategy,
-                            PortableServer::POA_ptr poa)
-  : redirector_ (this, interface_id),
+     const char * interface_id,
+     TAO_LB_LoadBalancing_Strategy *strategy,
+     PortableServer::POA_ptr root_poa)
+  : locator_ (this),
     strategy_ (strategy),
-    poa_ (PortableServer::POA::_duplicate (poa))
+    poa_ ()
 {
-  (void) this->init ();
+  (void) this->init (interface_id, root_poa);
 }
 
 TAO_LB_LoadBalancer::~TAO_LB_LoadBalancer (void)
@@ -74,23 +74,86 @@ TAO_LB_LoadBalancer::load_changed (TAO_LB_ReplicaProxy *proxy,
 }
 
 int
-TAO_LB_LoadBalancer::init (void)
+TAO_LB_LoadBalancer::init (const char * repository_id,
+                           PortableServer::POA_ptr root_poa)
 {
   ACE_TRY_NEW_ENV
     {
-      PortableServer::ObjectId_var oid =
-        this->poa_->activate_object (&this->redirector_,
-                                     ACE_TRY_ENV);
+      // Create a new transient servant manager object in the Root
+      // POA.
+      PortableServer::ServantManager_var servant_manager =
+        this->locator_._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      // Create the appropriate RequestProcessingPolicy
+      // (USE_SERVANT_MANAGER) and ServantRetentionPolicy (NON_RETAIN)
+      // for a ServantLocator.
+      PortableServer::RequestProcessingPolicy_var request =
+        root_poa->create_request_processing_policy (
+          PortableServer::USE_SERVANT_MANAGER,
+          ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      PortableServer::ServantRetentionPolicy_var retention =
+        root_poa->create_servant_retention_policy (
+          PortableServer::NON_RETAIN,
+          ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // Create the PolicyList.
+      CORBA::PolicyList policy_list;
+      policy_list.length (2);
+      policy_list[0] =
+        PortableServer::RequestProcessingPolicy::_duplicate (
+          request.in ());
+      policy_list[1] =
+        PortableServer::ServantRetentionPolicy::_duplicate (
+           retention. in ());
+      
+      // Create the child POA with the ServantManager (ReplicaLocator)
+      // above policies.
+      PortableServer::POAManager_var poa_manager =
+        root_poa->the_POAManager (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      this->poa_ = root_poa->create_POA ("TAO_LB_ReplicaLocator_POA",
+                                         poa_manager.in (),
+                                         policy_list,
+                                         ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // Activate the child POA.
+      poa_manager->activate (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      request->destroy (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      retention->destroy (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // Now set the ReplicaLocator as the child POA's Servant
+      // Manager.
+      this->poa_->set_servant_manager (servant_manager.in (),
+                                       ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // @@ What ObjectId should be used?
+      PortableServer::ObjectId_var oid =
+        PortableServer::string_to_ObjectId ("TAO_LB_ObjectGroup");
+
       this->group_identity_ =
-        this->poa_->id_to_reference (oid.in (),
-                                     ACE_TRY_ENV);
+        this->poa_->create_reference_with_id (oid.in (),
+                                              repository_id,
+                                              ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
       // @@ Should we do anything here?
+
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "(%P|%t) Load Balancer initialization:");
+
       return -1;
     }
   ACE_ENDTRY;

@@ -20,6 +20,7 @@
 
 #include "ace/pre.h"
 
+#include "ace/Synch.h"
 #include "orbsvcs/LoadBalancingS.h"
 #include "LoadBalancing_export.h"
 
@@ -100,6 +101,10 @@ private:
   // with the ReplicaProxy.
 
 private:
+
+  ACE_SYNCH_MUTEX lock_;
+  // Mutex used to ensure access ReplicaProxy state is atomic.
+
   CORBA::Object_var replica_;
   // Reference to the Object being load balanced.
 
