@@ -48,7 +48,7 @@ public:
 /**
  * @class TAO_NS_Method_Request_Event
  *
-\ * @brief Base class for NS method Requests on Events.
+ * @brief Base class for NS method Requests on Events.
  *
  */
 class TAO_Notify_Export TAO_NS_Method_Request_Event : public TAO_NS_Method_Request
@@ -73,24 +73,6 @@ protected:
   const TAO_NS_Event_var event_;
 };
 
-/***********************************************************************/
-
-/**
- * @class TAO_NS_Refcountable_Guard
- *
- * @brief Ref. Count Guard
- *
- */
-class TAO_Notify_Export TAO_NS_Refcountable_Guard
-{
-public:
-  TAO_NS_Refcountable_Guard (TAO_NS_Refcountable& refcountable);
-
-  ~TAO_NS_Refcountable_Guard ();
-
-protected:
-  TAO_NS_Refcountable& refcountable_;
-};
 
 #if defined (__ACE_INLINE__)
 #include "Method_Request.inl"

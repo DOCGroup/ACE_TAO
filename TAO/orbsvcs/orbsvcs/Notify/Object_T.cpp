@@ -26,7 +26,7 @@ TAO_NS_Object_T<TYPE, PARENT>::~TAO_NS_Object_T ()
 template <class TYPE, class PARENT> void
 TAO_NS_Object_T<TYPE, PARENT>::destroy (TYPE *type ACE_ENV_ARG_DECL)
 {
-  TAO_NS_Object_RefCount_Guard guard (this->refcount_);
+  TAO_NS_Refcountable_Guard ref_guard(*this); // Protect this object from being destroyed in the middle of its shutdown sequence.
 
   this->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;

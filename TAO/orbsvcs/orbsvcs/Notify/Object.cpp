@@ -26,9 +26,6 @@ TAO_NS_Object::~TAO_NS_Object ()
 {
   if (TAO_debug_level > 1 )
     ACE_DEBUG ((LM_DEBUG,"object:%x  destroyed\n", this ));
-
-  this->shutdown_worker_task ();
-  this->shutdown_proxy_poa ();
 }
 
 void
@@ -56,6 +53,9 @@ TAO_NS_Object::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 {
   this->shutdown_ = 1;
   this->deactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
+
+  this->shutdown_worker_task ();
+  this->shutdown_proxy_poa ();
 }
 
 CORBA::Object_ptr

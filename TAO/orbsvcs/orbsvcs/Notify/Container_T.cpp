@@ -43,12 +43,15 @@ TAO_NS_Container_T<TYPE, OBJECT, PARENT>::~TAO_NS_Container_T ()
 template <class TYPE, class OBJECT, class PARENT> void
 TAO_NS_Container_T<TYPE, OBJECT, PARENT>::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 {
-  TAO_NS_Object_T<OBJECT, PARENT>::shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-
+  // Destroy the leaves upwards..
+  // First inform the children.
   TAO_ESF_Shutdown_Proxy<TYPE> shutdown_worker;
 
   this->collection_->for_each (&shutdown_worker ACE_ENV_ARG_PARAMETER);
+
+  // shutdown baseclass.
+  TAO_NS_Object_T<OBJECT, PARENT>::shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 
   /// shutdown Container
   this->cleanup (ACE_ENV_SINGLE_ARG_PARAMETER);

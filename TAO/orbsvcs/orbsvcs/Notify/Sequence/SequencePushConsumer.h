@@ -65,7 +65,7 @@ public:
   virtual void push (const CosNotification::StructuredEvent & event ACE_ENV_ARG_DECL);
 
   /// Push <event> to this consumer.
-  virtual void push (const CosNotification::EventBatch& event ACE_ENV_ARG_DECL);
+  virtual void push (const CosNotification::EventBatch& event);
 
   /// Override, Peer::qos_changed
   virtual void qos_changed (const TAO_NS_QoSProperties& qos_properties);
@@ -83,6 +83,7 @@ protected:
   void cancel_timer (void);
 
   ///= Protected Data Members
+
   /// The Pacing Interval
   ACE_Time_Value pacing_interval_;
 
