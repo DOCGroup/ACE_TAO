@@ -3,41 +3,46 @@ Sat Mar 07 08:29:51 1998  David L. Levine  <levine@cs.wustl.edu>
         * tao/orb_core.cpp (TAO_Default_Reactor ctor and dtor): removed
           inline qualifiers.
 
+        * tests/Cubit/TAO/MT_Cubit/Makefile: changed -lm to $(MATHLIB).
+          It looks like Sun C++ and g++ link with -lm by default, so
+          there shouldn't be any affect on those platforms.  Others may
+          have to define MATHLIB in their platform_macros.GNU.
+
 Fri Mar  6 17:56:25 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
 
-	* Aloha: I bid fond farewall to Team TAO for now.  Thanks for the
- 	fun times!
+        * Aloha: I bid fond farewall to Team TAO for now.  Thanks for the
+        fun times!
 
-	* tests/NestedUpcall/server.cpp: Integrated new stuff.
+        * tests/NestedUpcall/server.cpp: Integrated new stuff.
 
-	* tests/NestedUpcall/client.cpp: Called new 'stop' method.
+        * tests/NestedUpcall/client.cpp: Called new 'stop' method.
 
-	* tests/NestedUpcall/{Reactor.idl,reactor_i.*}: Added 'stop' to Reactor
- 	interface to shutdown the server.
+        * tests/NestedUpcall/{Reactor.idl,reactor_i.*}: Added 'stop' to Reactor
+        interface to shutdown the server.
 
-	* tao/tao_util.cpp: Added code to explicitly destroy policies
- 	after creating a child POA.
+        * tao/tao_util.cpp: Added code to explicitly destroy policies
+        after creating a child POA.
 
-	* tao/poaS.h: Added a little comment to bring this up in C++ mode
- 	in emacs.
+        * tao/poaS.h: Added a little comment to bring this up in C++ mode
+        in emacs.
 
-	* tao/poa.cpp: Performed explicit deletes on buffers.
+        * tao/poa.cpp: Performed explicit deletes on buffers.
 
-	* tao/object.{cpp,i}: Moved DTOR into .cpp and stuck in comment
- 	explaining refcount semantics on CORBA_Object.
+        * tao/object.{cpp,i}: Moved DTOR into .cpp and stuck in comment
+        explaining refcount semantics on CORBA_Object.
 
-	* tao/iiopobj.i: Changed initial refcount value to zero; the ORB
- 	Core must perform an explicit AddRef() if it intends to hold on to
- 	this object.
+        * tao/iiopobj.i: Changed initial refcount value to zero; the ORB
+        Core must perform an explicit AddRef() if it intends to hold on to
+        this object.
 
-	* tao/iiopobj.cpp: Changed Release() so that it will call 'delete
- 	this' whenever the refcount is below zero.
+        * tao/iiopobj.cpp: Changed Release() so that it will call 'delete
+        this' whenever the refcount is below zero.
 
 Fri Mar 06 11:38:38 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* docs/Options.html: Shrinked the table widths to 80% so we can
- 	  see everything without scrolling.  Thanks to Darrell for the
- 	  HTML tip.
+        * docs/Options.html: Shrinked the table widths to 80% so we can
+          see everything without scrolling.  Thanks to Darrell for the
+          HTML tip.
 
 Fri Mar 06 09:36:47 1998  David L. Levine  <levine@cs.wustl.edu>
 
