@@ -44,6 +44,7 @@ namespace PortableServer
 namespace TAO
 {
   class Argument;
+  class Upcall_Command;
 
   /**
    * @class Upcall_Wrapper
@@ -59,10 +60,18 @@ namespace TAO
     Upcall_Wrapper (TAO::Argument * args[],
                     size_t nargs,
                     TAO_ServerRequest & server_request,
+                    TAO::Upcall_Command & command,
                     void * servant_upcall,
                     PortableServer::ServantBase * servant,
                     CORBA::TypeCode_ptr * exceptions,
                     size_t nexceptions);
+
+
+    /// Perform the upcall.
+    bool upcall (void);
+
+  private:
+
 
     /// Perform pre-upcall operations.
     /**
@@ -97,6 +106,10 @@ namespace TAO
     /// reply construction, etc).
     TAO_ServerRequest & server_request_;
 
+    /// @c Command object that performs the actual upcall into the
+    /// servant.
+    TAO::Upcall_Command & upcall_command_;
+
 #if TAO_HAS_INTERCEPTORS == 1
 
     /// PortableServer::ServerRequestInfo instance specific to the
@@ -111,7 +124,8 @@ namespace TAO
 
   };
 
-}
+}  // End namespace TAO
+
 
 #ifdef __ACE_INLINE__
 # include "tao/PortableServer/Upcall_Wrapper.inl"
