@@ -40,10 +40,19 @@ PACE_INLINE
 int
 pace_fstat (PACE_HANDLE fildes, pace_stat_s * buf)
 {
-  PACE_UNUSED_ARG (fildes);
-  PACE_UNUSED_ARG (buf);
-  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
-  /*  return _fstat (fildes, buf); */
+  /* There are two impl in ACE. This is the simpler. But requires
+   * you to close the temporary file desc. */
+  int retval = -1;
+  int fd = _open_osfhandle ((long) fildes, 0);
+  if (fd != -1)
+    {
+      retval = ::_fstat (fd, (struct _stat *) stp);
+    }
+
+  _close (fd);
+
+  /* Remember to close the file handle. */
+  return retval;
 }
 #endif /* PACE_HAS_POSIX_FS_UOF */
 
@@ -72,7 +81,7 @@ PACE_INLINE
 int
 pace_stat (const char * path, pace_stat_s * buf)
 {
-  return _stat (path, buf);
+  return _stat (path, (struct _stat *)buf);
 }
 #endif /* PACE_HAS_POSIX_FS_UOF */
 
