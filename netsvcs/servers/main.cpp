@@ -30,7 +30,7 @@ main (int argc, char *argv[])
   ACE_Service_Config daemon;
 
   // Create an adapter to end the event loop.
-  ACE_Sig_Adapter sa ((ACE_Sig_Handler_Ex) ACE_Service_Config::end_reactor_event_loop);
+  ACE_Sig_Adapter sa ((ACE_Sig_Handler_Ex) ACE_Reactor::end_event_loop);
 
   ACE_Sig_Set sig_set;
   sig_set.sig_add (SIGINT);
@@ -39,10 +39,10 @@ main (int argc, char *argv[])
   // Register ourselves to receive SIGINT and SIGQUIT so we can shut
   // down gracefully via signals.
 #if !defined (ACE_WIN32)
-  if (ACE_Service_Config::reactor ()->register_handler (sig_set, &sa) == -1)
+  if (ACE_Reactor::instance ()->register_handler (sig_set, &sa) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n"), -1);
 #else
-  if (ACE_Service_Config::reactor ()->register_handler (SIGINT, &sa) == -1)
+  if (ACE_Reactor::instance ()->register_handler (SIGINT, &sa) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n"), -1);
 #endif /* ACE_WIN32 */  
 
@@ -102,7 +102,7 @@ main (int argc, char *argv[])
       // Run forever, performing the configured services until we are shut
       // down by a SIGINT/SIGQUIT signal.
 
-      daemon.run_reactor_event_loop ();
+      ACE_Reactor::run_event_loop ();
 
       // Destructors of Service_Ptr's automagically call fini().
     }
@@ -111,7 +111,7 @@ main (int argc, char *argv[])
     // Run forever, performing the configured services until we are shut
     // down by a SIGINT/SIGQUIT signal.
 
-    daemon.run_reactor_event_loop ();
+    ACE_Reactor::run_event_loop ();
 
   return 0;
 }
