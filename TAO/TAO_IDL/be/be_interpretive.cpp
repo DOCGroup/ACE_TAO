@@ -55,12 +55,10 @@ TAO_Interpretive_Visitor_Factory::make_visitor (TAO_CodeGen::CG_STATE st)
     case TAO_CodeGen::TAO_ROOT_SS:
       return TAO_BE_VISITOR_ROOT_SS::instance ();
     case TAO_CodeGen::TAO_SEQUENCE_BASE_CH:
-      return TAO_BE_VISITOR_SEQUENCE_BASE_CH::instance ();
     case TAO_CodeGen::TAO_SEQUENCE_BODY_CH:
       return TAO_BE_VISITOR_SEQUENCE_CH::instance ();
     case TAO_CodeGen::TAO_SEQELEM_RETTYPE_CH:
     case TAO_CodeGen::TAO_SEQELEM_RETTYPE_CI:
-      return TAO_BE_VISITOR_SEQUENCE_ELEMTYPE::instance ();
     case TAO_CodeGen::TAO_SEQELEM_RETTYPE_CS:
     case TAO_CodeGen::TAO_SEQUENCE_BASE_CS:
     case TAO_CodeGen::TAO_SEQUENCE_BASE_CI:

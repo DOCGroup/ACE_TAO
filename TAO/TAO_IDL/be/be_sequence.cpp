@@ -20,6 +20,7 @@
 #include	"idl.h"
 #include	"idl_extern.h"
 #include	"be.h"
+#include "be_visitor_sequence.h"
 
 /*
  * BE_Sequence
@@ -1320,11 +1321,9 @@ be_sequence::gen_var_defn (void)
       *ch << " &";
     }
 #endif
-  be_visitor *visit_sequence_elemtype = cg->make_visitor
-    (TAO_CodeGen::TAO_SEQELEM_RETTYPE_CH);
-  visit_sequence_elemtype->be_node (this);
-  visit_sequence_elemtype->stream (ch);
-  if (bt->accept (visit_sequence_elemtype) == -1)
+
+  be_visitor_sequence_elemtype elemtype (ch, this, bt);
+  if (bt->accept (&elemtype) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_sequence::"
@@ -1415,7 +1414,7 @@ be_sequence::gen_var_impl (void)
   // constr from a _ptr
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
-  *ci << fname << "::" << lname << " (" << name () << "_ptr p)" << nl;
+  *ci << fname << "::" << lname << " (" << name () << " *p)" << nl;
   *ci << "\t: ptr_ (p)" << nl;
   *ci << "{}\n\n";
 
@@ -1548,11 +1547,9 @@ be_sequence::gen_var_impl (void)
       *ci << " &";
     }
 #endif
-  be_visitor *visit_sequence_elemtype = cg->make_visitor
-    (TAO_CodeGen::TAO_SEQELEM_RETTYPE_CI);
-  visit_sequence_elemtype->be_node (this);
-  visit_sequence_elemtype->stream (ci);
-  if (bt->accept (visit_sequence_elemtype) == -1)
+
+  be_visitor_sequence_elemtype elemtype (ci, this, bt);
+  if (bt->accept (&elemtype) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_sequence::"
@@ -1732,11 +1729,8 @@ be_sequence::gen_out_defn (void)
       *ch << " &";
     }
 #endif
-  be_visitor *visit_sequence_elemtype = cg->make_visitor
-    (TAO_CodeGen::TAO_SEQELEM_RETTYPE_CH);
-  visit_sequence_elemtype->be_node (this);
-  visit_sequence_elemtype->stream (ch);
-  if (bt->accept (visit_sequence_elemtype) == -1)
+  be_visitor_sequence_elemtype elemtype(ch, this, bt);
+  if (bt->accept (&elemtype) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_sequence::"
@@ -1920,11 +1914,9 @@ be_sequence::gen_out_impl (void)
       *ci << " &";
     }
 #endif
-  be_visitor *visit_sequence_elemtype = cg->make_visitor
-    (TAO_CodeGen::TAO_SEQELEM_RETTYPE_CI);
-  visit_sequence_elemtype->be_node (this);
-  visit_sequence_elemtype->stream (ci);
-  if (bt->accept (visit_sequence_elemtype) == -1)
+
+  be_visitor_sequence_elemtype elemtype (ci, this, bt);
+  if (bt->accept (&elemtype) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_sequence::"

@@ -214,4 +214,95 @@ public:
 
 };
 
+/****************************************************************/
+
+template<class T, class Manager> class TAO_Unbounded_Managed_Sequence;
+template<class T, class Manager, CORBA::ULong MAX> class TAO_Bounded_Managed_Sequence;
+
+class TAO_String_Manager
+{
+  // = TITLE
+  //   Manager for strings.
+  //
+  // = DESCRIPTION
+  //   Similar to the mapping for sequences of objects (and other
+  //   pseudo objects) the mapping for sequences of strings 
+  //   requires an auxiliar class or <Manager> to handle the
+  //   allocation and deallocation of the string.
+  //   The main difference with respect to String_var classes is that
+  //   automatic release is not controlled on a per-item basis, but
+  //   for the sequence as a whole.
+  //   The difference wrt Object_Manager is that strings are
+  //   duplicated using CORBA::string_copy() as opposed to
+  //   T::_duplicate().
+  //
+  //   This class implements the generic string manager and is used to
+  //   instantiate the proper sequence types.
+  //
+  // = NOTES
+  //   It has been proposed that the class should be parametric on
+  //   both T and T_ptr, IMHO this is no necesary: though the IDL spec
+  //   says that T_ptr *could* map to a type different to T* in the
+  //   particular case of TAO it does map to <T*>.
+  //
+public:
+  friend class TAO_Unbounded_Managed_Sequence<char*,TAO_String_Manager>;
+
+  // @@ Use partial template specialization here to give access only
+  // to the right kind of sequence.
+  // friend template<CORBA::ULong MAX>
+  // class TAO_Bounded_Managed_Sequence<char*,TAO_String_Manager,MAX>;
+
+  
+  TAO_String_Manager (const TAO_String_Manager &);
+  // copy constructor
+
+  TAO_String_Manager (char **buffer, CORBA::Boolean release);
+  // constructor from address of an element
+
+  ~TAO_String_Manager (void);
+  // destructor
+
+  TAO_String_Manager &operator= (const TAO_String_Manager&);
+  // assignment from another managed type
+
+  TAO_String_Manager &operator= (char *);
+  // assignment from a char*
+
+  TAO_String_Manager &operator= (const char *);
+  // assignment from a constant char*
+
+  operator const char*() const;
+  // cast  (read-only)
+
+  operator char *();
+  // cast
+
+  char &operator[] (CORBA::ULong index);
+  // accessor
+
+  const char* &operator[] (CORBA::ULong index) const;
+  // read-only accessor
+
+  // in, inout, out, _retn
+  const char *in (void) const;
+  // returns the underlying string
+
+  char *&inout (void);
+  // returns a reference to the underlying string for in arguments
+
+  char *&out (void);
+  // used for out arguments
+
+  char *_retn (void);
+  // gives up ownership, used for return types.
+
+private:
+  char **ptr_;
+  // address of string element from the parent's buffer
+
+  CORBA::Boolean release_;
+  // based on parent's release flag
+};
+
 #endif /* TAO_SEQUENCE_H */
