@@ -105,7 +105,7 @@ namespace TAO
     S retn (void);
 
   protected:
-    S * x_;
+    S x_;
   };
 
   /**

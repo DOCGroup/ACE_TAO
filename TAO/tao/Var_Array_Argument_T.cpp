@@ -94,11 +94,8 @@ template<typename S,
          typename S_forany>
 TAO::Out_Var_Array_Argument_T<S,S_slice,S_var,S_out,S_forany>::
 Out_Var_Array_Argument_T (S_out x)
+  : x_ (x.ptr ())
 {
-  typedef TAO::Array_Traits<S,S_slice> ARRAY_TRAITS;
-  ACE_ALLOCATOR (x.ptr (),
-                 ARRAY_TRAITS::tao_alloc ());
-  this->x_ = x.ptr ();
 }
 
 template<typename S, 
@@ -111,7 +108,11 @@ TAO::Out_Var_Array_Argument_T<S,S_slice,S_var,S_out,S_forany>::demarshal (
     TAO_InputCDR & cdr
   )
 {
-  S_forany tmp (this->x_.ptr ());
+  typedef TAO::Array_Traits<S,S_slice> ARRAY_TRAITS;
+  ACE_ALLOCATOR_RETURN (this->x_,
+                        ARRAY_TRAITS::tao_alloc (),
+                        0);
+  S_forany tmp (this->x_);
   return cdr >> tmp;
 }
 
@@ -121,11 +122,6 @@ template<typename S, typename S_slice, typename S_var, typename S_forany>
 TAO::Ret_Var_Array_Argument_T<S,S_slice,S_var,S_forany>::
 Ret_Var_Array_Argument_T (void)
 {
-  typedef TAO::Array_Traits<S,S_slice> ARRAY_TRAITS;
-  S_slice * tmp = 0;
-  ACE_ALLOCATOR (tmp,
-                 ARRAY_TRAITS::tao_alloc ());
-  this->x_ = tmp;
 }
 
 template<typename S, typename S_slice, typename S_var, typename S_forany>
@@ -134,6 +130,12 @@ TAO::Ret_Var_Array_Argument_T<S,S_slice,S_var,S_forany>::demarshal (
     TAO_InputCDR & cdr
   )
 {
+  typedef TAO::Array_Traits<S,S_slice> ARRAY_TRAITS;
+  S_slice * tmp_ptr = 0;
+  ACE_ALLOCATOR_RETURN (tmp_ptr,
+                        ARRAY_TRAITS::tao_alloc (),
+                        0);
+  this->x_ = tmp_ptr;
   S_forany tmp (this->x_.ptr ());
   return cdr >> tmp;
 }

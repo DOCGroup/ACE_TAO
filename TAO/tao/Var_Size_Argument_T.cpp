@@ -78,14 +78,15 @@ template<typename S, typename S_out>
 TAO::Out_Var_Size_Argument_T<S,S_out>::Out_Var_Size_Argument_T (S_out x)
   : x_ (x.ptr ())
 {
-  ACE_NEW (this->x_,
-           S);
 }
 
 template<typename S, typename S_out>
 CORBA::Boolean
 TAO::Out_Var_Size_Argument_T<S,S_out>::demarshal (TAO_InputCDR & cdr)
 {
+  ACE_NEW_RETURN (this->x_,
+                  S,
+                  0);
   return cdr >> *this->x_;
 }
 
@@ -94,14 +95,17 @@ TAO::Out_Var_Size_Argument_T<S,S_out>::demarshal (TAO_InputCDR & cdr)
 template<typename S, typename S_var>
 TAO::Ret_Var_Size_Argument_T<S,S_var>::Ret_Var_Size_Argument_T (void)
 {
-  ACE_NEW (this->x_.out (),
-           S);
 }
 
 template<typename S, typename S_var>
 CORBA::Boolean
 TAO::Ret_Var_Size_Argument_T<S,S_var>::demarshal (TAO_InputCDR & cdr)
 {
+  S * tmp = 0;
+  ACE_NEW_RETURN (tmp,
+                  S,
+                  0);
+  this->x_ = tmp;
   return cdr >> this->x_.inout ();
 }
 

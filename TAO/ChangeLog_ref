@@ -1,3 +1,16 @@
+Thu Jul 10 16:05:26 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Fixed_Size_Argument_T.cpp:
+        * tao/Fixed_Size_Argument_T.h:
+        * tao/Var_Array_Argument_T.cpp:
+        * tao/Var_Array_Argument_T.h:
+        * tao/Var_Size_Argument_T.cpp:
+
+	  Fixed bugs uncovered by running Param_Test. Also moved memory
+	  allocation for OUT arguments and return values of variable size
+	  from the constructor to the demarshal() method. This delay will
+	  allow the allocation to be skipped for collocated calls.
+
 Thu Jul 10 09:36:44 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Any.cpp:
