@@ -114,8 +114,12 @@ TAO_DynAny_i::set_to_default_value (CORBA::TypeCode_ptr tc,
       this->any_ <<= CORBA::Any (CORBA::_tc_null);
       break;
     case CORBA::tk_TypeCode:
-      this->any_ <<= &CORBA::TypeCode (CORBA::tk_null);
-      break;
+      {
+        CORBA::TypeCode tc (CORBA::tk_null);
+        CORBA::TypeCode_ptr tc_ptr = &tc;
+        this->any_ <<= tc_ptr;
+        break;
+      }
     case CORBA::tk_objref:
       this->any_ <<= CORBA::Object::_nil ();
       break;
@@ -123,8 +127,12 @@ TAO_DynAny_i::set_to_default_value (CORBA::TypeCode_ptr tc,
       this->any_ <<= "";
       break;
     case CORBA::tk_wstring:
-      this->any_ <<= L"";
-      break;
+      {
+        CORBA::WChar wstr[1];
+        wstr[0] = 0;
+        this->any_ <<= wstr;
+        break;
+      }
     default:
       // Should never get here - check_typecode() has already been called.
       break;
