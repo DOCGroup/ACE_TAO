@@ -1,3 +1,9 @@
+Tue Apr 13 15:29:37 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Object_Manager.cpp: moved ACE_Service_Config signal
+          handler allocation from constructor to init ().  Tidy,
+          tidy, tidy.
+
 Tue Apr 13 14:52:15 1999  Joe Hoffert  <joeh@cs.wustl.edu>
 
         * ace/ATM_Addr.cpp: Fixed g++ warnings of unused parameters.
