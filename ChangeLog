@@ -1,3 +1,13 @@
+Thu Apr 17 10:52:17 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/iosfwd.h:
+
+	  Added forward declarations of the iostream classes for the
+	  ACE_HAS_STANDARD_CPP_LIBRARY,
+	  !ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB, ACE_USES_OLD_IOSTREAMS
+	  and !ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION case.  This case
+	  previously resulted in a basically empty header.
+
 Thu Apr 17 11:45:51 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/Driver.pm:
