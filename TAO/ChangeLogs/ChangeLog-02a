@@ -1,3 +1,9 @@
+Sun Jan 02 10:48:59 2000  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* orbsvcs/orbsvcs/Trader/Offer_Iterators.cpp:
+	  Fixed a MSVC warning, complaining about an array
+	  operator.
+
 Sat Jan 01 09:18:59 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Makefile: updated dependencies, including
