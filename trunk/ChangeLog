@@ -3,7 +3,7 @@ Thu Aug  7 00:12:50 UTC 2003  Don Hinton  <dhinton@dresystems.com>
         * ace/Handle_Set.i:
           Added several #includes required by the FD_ZERO macro on various
           platforms, including os_string.h, os_strings.h, and bstring.h,
-          reqired by recent subsetting.
+          required by recent subsetting.
 
         * ace/Process_Mutex.cpp:
           Removed explicite template instantiation of
