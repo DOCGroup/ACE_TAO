@@ -204,7 +204,7 @@ Test_Aio::do_aio (void)
         }
 
       // Analyze return and error values.
-      if (aio_error (list_aiocb [0]) != EINPROGRESS)
+      if (list_aiocb [0] != 0 && aio_error (list_aiocb [0]) != EINPROGRESS)
         {
           if (aio_return (list_aiocb [0]) == -1)
             {
@@ -222,7 +222,7 @@ Test_Aio::do_aio (void)
 //      else
 //        cout << "AIO in progress" << endl;
 
-      if (aio_error (list_aiocb [1]) != EINPROGRESS)
+      if (list_aiocb [1] != 0 && aio_error (list_aiocb [1]) != EINPROGRESS)
         {
           if (aio_return (list_aiocb [1]) == -1)
             {
