@@ -187,6 +187,6 @@
 
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
-
+#define ACE_HAS_IDTYPE_T
 #define ACE_DGUX
 #endif /* ACE_CONFIG_H */

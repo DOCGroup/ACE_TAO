@@ -22,6 +22,7 @@
 #define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
+#define ACE_HAS_IDTYPE_T
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 

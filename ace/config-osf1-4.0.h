@@ -170,5 +170,5 @@
 // Do not define this smaller than 64KB, because ACE_Log_Msg::log needs that!
 // TK, 05 Feb 97
 #define ACE_NEEDS_HUGE_THREAD_STACKSIZE (1024 * 1024)
-
+#define ACE_HAS_IDTYPE_T
 #endif /* ACE_CONFIG_H */
