@@ -140,11 +140,11 @@ if (ACE::waitforfile_timed ($middlefile, 15) == -1) {
 
 $CL = Process::Create ($EXEPREFIX."client$EXE_EXT ",
 		       " -k file://$middlefile"
-		       . " -i 100 -a");
+		       . " -i 100 -s");
 
 $client = $CL->TimedWait (60);
 if ($client == -1) {
-  print STDERR "ERROR: client (middle/-a) timedout\n";
+  print STDERR "ERROR: client (middle/-s) timedout\n";
   $CL->Kill (); $CL->TimedWait (1);
   $status = 1;
 }
@@ -153,23 +153,23 @@ $CL = Process::Create ($EXEPREFIX."client$EXE_EXT ",
 		       " -k file://$middlefile"
 		       . " -i 10 -x");
 
-$client = $CL->TimedWait (20);
+$client = $CL->TimedWait (60);
 if ($client == -1) {
   print STDERR "ERROR: client (middle/-x) timedout\n";
   $CL->Kill (); $CL->TimedWait (1);
   $status = 1;
 }
 
-$server = $SV->TimedWait (20);
+$server = $SV->TimedWait (60);
 if ($server == -1) {
   print STDERR "ERROR: server (middle/-x) timedout\n";
   $SV->Kill (); $SV->TimedWait (1);
   $status = 1;
 }
 
-$middle = $MD->TimedWait (20);
+$middle = $MD->TimedWait (60);
 if ($middle == -1) {
-  print STDERR "ERROR: middle (-a) timedout\n";
+  print STDERR "ERROR: middle (-x) timedout\n";
   $MD->Kill (); $MD->TimedWait (1);
   $status = 1;
 }
