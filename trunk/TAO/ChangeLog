@@ -1,3 +1,20 @@
+Fri Feb 25 21:58:39 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/Makefile.am:
+	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/Makefile.am:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/Makefile.am:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/Makefile.am:
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/Makefile.am:
+	* orbsvcs/performance-tests/RTEvent/TCP_Baseline/Makefile.am:
+	* orbsvcs/performance-tests/RTEvent/lib/Makefile.am:
+
+	  Regenerated.
+
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/RTCORBA_Baseline.mpc:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/RTCORBA_Callback.mpc:
+
+	  Add new project for IDL generation.
+
 Fri Feb 25 18:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Domain/DomainS.{h,cpp,inl}:
