@@ -317,9 +317,19 @@ public:
 
   /// This is a "safe" c string copy function (char version).
   /**
-   * The function doesn't check for a 0 <dst>, because this will give
-   * problems anyway.  When <src> is 0 an empty string is made.  We do
-   * not "touch" *<dst> if maxlen is 0.  Returns <dst>.
+   * Unlike strncpy() this function will always add a terminating '\0'
+   * char if maxlen > 0.  So the user doesn't has to provide an extra
+   * '\0' if the user wants a '\0' terminated dst.  The function
+   * doesn't check for a 0 <dst>, because this will give problems
+   * anyway.  When <src> is 0 an empty string is made.  We do not
+   * "touch" *<dst> if maxlen is 0.  Returns <dst>.  Care should be
+   * taken when replacing strncpy() calls, because in some cases a
+   * strncpy() user is using the "not '\0' terminating" feature from
+   * strncpy().  This happens most when the call to strncpy() was
+   * optimized by using a maxlen which is 1 smaller than the size
+   * because there's always written a '\0' inside this last position.
+   * Very seldom it's possible that the '\0' padding feature from
+   * strncpy() is needed.
    */
   static char *strsncpy (char *dst,
                          const char *src,
@@ -328,9 +338,19 @@ public:
 #if defined (ACE_HAS_WCHAR)
   /// This is a "safe" c string copy function (wchar_t version).
   /**
-   * The function doesn't check for a 0 <dst>, because this will give
-   * problems anyway.  When <src> is 0 an empty string is made.  We do
-   * not "touch" *<dst> if maxlen is 0.  Returns <dst>.
+   * Unlike strncpy() this function will always add a terminating '\0'
+   * char if maxlen > 0.  So the user doesn't has to provide an extra
+   * '\0' if the user wants a '\0' terminated dst.  The function
+   * doesn't check for a 0 <dst>, because this will give problems
+   * anyway.  When <src> is 0 an empty string is made.  We do not
+   * "touch" *<dst> if maxlen is 0.  Returns <dst>.  Care should be
+   * taken when replacing strncpy() calls, because in some cases a
+   * strncpy() user is using the "not '\0' terminating" feature from
+   * strncpy().  This happens most when the call to strncpy() was
+   * optimized by using a maxlen which is 1 smaller than the size
+   * because there's always written a '\0' inside this last position.
+   * Very seldom it's possible that the '\0' padding feature from
+   * strncpy() is needed.
    */
   static wchar_t *strsncpy (wchar_t *dst,
                             const wchar_t *src,

@@ -786,6 +786,7 @@ ACE_Log_Msg::open (const ACE_TCHAR *prog_name,
 //   'I', indent according to nesting depth
 //   'e', 'E', 'f', 'F', 'g', 'G': print a double
 //   'l', print line number where an error occurred.
+//   'M': print the name of the priority of the message.
 //   'm': Return the message corresponding to errno value, e.g., as done by <strerror>
 //   'N': print file name where the error occurred.
 //   'n': print the name of the program (or "<unknown>" if not set)
@@ -1115,6 +1116,11 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                       }
                     break;
                   }
+
+                case 'M': // Print the name of the priority of the message.
+                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("s"));
+                  ACE_OS::sprintf (bp, ACE_Log_Record::priority_name (log_priority));
+                  break;
 
                 case 'm': // Format the string assocated with the errno value.
                   {
