@@ -35,15 +35,13 @@ ACEXML_Mem_Map_Stream::get_char (void)
 {
   if (this->eof () && this->grow_file_and_remap () == -1)
     return EOF;
-
   return *this->get_pos_++;
 }
 
 void
 ACEXML_Mem_Map_Stream::rewind (void)
 {
-  this->recv_pos_ = ACE_reinterpret_cast (char *,
-                          this->mem_map_.addr ());
+  this->recv_pos_ = ACE_reinterpret_cast (char *, this->mem_map_.addr ());
   this->get_pos_ = this->recv_pos_;
   this->end_of_mapping_plus1_ = this->recv_pos_ + this->mem_map_.size ();
 }
