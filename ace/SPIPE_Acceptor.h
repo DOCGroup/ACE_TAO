@@ -64,6 +64,10 @@ public:
   // block forever, a <timeout> of {0, 0} means poll.  <restart> == 1
   // means "restart if interrupted."
 
+  // = Meta-type info
+  typedef ACE_SPIPE_Addr PEER_ADDR;
+  typedef ACE_SPIPE_Stream PEER_STREAM;
+
   void dump (void) const;
   // Dump the state of an object.
 

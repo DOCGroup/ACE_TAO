@@ -6142,7 +6142,7 @@ ACE_OS::getpgid (pid_t pid)
 {
   // ACE_TRACE ("ACE_OS::getpid");
 #if defined (ACE_WIN32) || defined (CHORUS)
-  return ACE_NOTSUP_RETURN (-1);
+  ACE_NOTSUP_RETURN (-1);
 #elif defined (VXWORKS) 
   // getpid() is not supported:  just one process anyways
   return 0;
