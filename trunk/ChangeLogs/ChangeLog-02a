@@ -1,3 +1,10 @@
+Sat Feb  3 14:41:17 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/OS.h:
+        * ace/config-win32-msvc.h:
+
+          Fixed problems with LLSEEK and ACE_stat on Windows CE.
+
 Sat Feb  3 14:12:36 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * tests/Config_Test.cpp:
