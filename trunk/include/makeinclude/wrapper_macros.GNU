@@ -47,6 +47,8 @@
 #  shared_libs_only Only build shared libraries.  Ignored if no SHLIBs are
 #                   specified by the Makefile, as in performance-tests/Misc.
 #  static_libs_only Only build static libraries.
+#  static_link      Link only static libs to executables, e.g., uses "-static"
+#                   flag with the GNU ld linker.
 #  threads          Build with thread support.
 #  xt_reactor       Build the XtReactor.
 #  fl_reactor       Build the FlReactor.
