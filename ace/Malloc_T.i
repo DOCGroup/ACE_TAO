@@ -183,9 +183,3 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::protect (void *addr, size_t len, int flags
   ACE_TRACE ("ACE_Malloc<MEMORY_POOL, ACE_LOCK>::protect");
   return this->memory_pool_.protect (addr, len, flags);
 }
-
-template <size_t POOL_SIZE> ACE_INLINE 
-ACE_Static_Allocator<POOL_SIZE>::ACE_Static_Allocator (void)
-  : ACE_Static_Allocator_Base (this->pool_, POOL_SIZE)
-{
-}
