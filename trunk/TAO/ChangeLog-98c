@@ -1,3 +1,8 @@
+Tue Oct  6 13:01:24 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_sunsoft.cpp: 
+	  Fixed some problems with char and octet constants.
+
 Tue Oct 06 11:23:32 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/MT_Cubit/MT_Cubit_Test: support
@@ -7,6 +12,10 @@ Tue Oct 06 11:23:32 1998  David L. Levine  <levine@cs.wustl.edu>
           priority in blue, low in light green.
 
 Tue Oct  6 10:26:06 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp: 
+	  Dummy initialization for "observer_handler" to give compilers
+	  some peace of mind about its use.
 
         * orbsvcs/orbsvcs/Event/EC_Gateway.cpp:
           Assigning an _var to a _ptr is ambiguous, we have to use .in().
