@@ -140,7 +140,7 @@ public:
   // start_XX_group method is not called, start_conjunction_group is
   // assumed.
 
-  /// Insert the <subscribe> structure describing the event and
+  /// Insert the @a subscribe structure describing the event and
   /// receiving method into the current group.
   int insert (const RtecEventChannelAdmin::Dependency &subscribe);
 
@@ -161,8 +161,8 @@ public:
   int insert_source (RtecEventComm::EventSourceID source,
                      RtecBase::handle_t rt_info);
 
-  /// Register temporal dependency.  <type> designates interval or
-  /// deadline timeout that will occur every <interval>.
+  /// Register temporal dependency.  @a type designates interval or
+  /// deadline timeout that will occur every @a interval.
   int insert_time (RtecEventComm::EventType type,
                    RtecEventComm::Time interval,
                    RtecBase::handle_t rt_info);
@@ -210,7 +210,7 @@ public:
 
   /**
    * Publish @a sid and @a type that is generate by a method described by
-   * <rtinfo>.  The method generates @a type @a ncalls number of times
+   * @a rtinfo.  The method generates @a type @a ncalls number of times
    * per "iteration."
    */
   int insert (RtecEventComm::EventSourceID sid,

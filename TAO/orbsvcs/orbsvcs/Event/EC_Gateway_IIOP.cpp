@@ -319,7 +319,7 @@ TAO_EC_Gateway_IIOP::update_consumer_i (
           // ACE_SupplierQOS_Factory::debug (pub);
           (*j).int_id_->connect_push_supplier (supplier_ref.in (),
                                                pub
-                                                ACE_ENV_ARG_PARAMETER);
+                                               ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
         }
     }
@@ -367,7 +367,7 @@ TAO_EC_Gateway_IIOP::update_consumer_i (
       // ACE_SupplierQOS_Factory::debug (pub);
       this->default_consumer_proxy_->connect_push_supplier (supplier_ref.in (),
                                                             pub
-                                                             ACE_ENV_ARG_PARAMETER);
+                                                            ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 
@@ -391,7 +391,7 @@ TAO_EC_Gateway_IIOP::update_consumer_i (
 
   this->supplier_proxy_->connect_push_consumer (consumer_ref.in (),
                                                 sub
-                                                 ACE_ENV_ARG_PARAMETER);
+                                                ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
 }

@@ -37,7 +37,7 @@ class TAO_RTEvent_Export TAO_EC_MT_Dispatching : public TAO_EC_Dispatching
 {
 public:
   /// Constructor
-  /// It will create <nthreads> servicing threads...
+  /// It will create @a nthreads servicing threads...
   TAO_EC_MT_Dispatching (int nthreads,
                          int thread_creation_flags,
                          int thread_priority,

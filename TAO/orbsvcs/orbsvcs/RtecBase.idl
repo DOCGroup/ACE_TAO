@@ -23,10 +23,12 @@
  */
 module RtecBase
 {
-  /// Specify one-way or two-way call.
+  /// Specify type of call.
   enum Dependency_Type_t
   {
+    /// One-way call.
     ONE_WAY_CALL,
+    /// Two-way call.
     TWO_WAY_CALL
   };
 
