@@ -476,124 +476,102 @@ void IDL_GlobalData::idl_src_file(String *s)
 }
 
 /************ Helper functions **************/
+static const char*
+be_change_idl_file_extension (String* idl_file,
+			      const char *new_extension)
+{
+  // @@ This shouldn't happen anyway; but a better error handling
+  // mechanism is needed.
+  if (idl_file == 0 || new_extension == 0)
+    {
+      return 0;
+    }
+
+  static char fname[MAXNAMELEN];
+  ACE_OS::memset (fname, 0, MAXNAMELEN);
+
+  const char* string = idl_file->get_string ();
+
+  // get the base part of the filename
+  char* base = ACE_OS::strstr (string, ".idl");
+
+  if (base == 0)
+    return 0;
+
+  ACE_OS::strncpy (fname, string, base - string);
+  ACE_OS::strcat (fname, new_extension);
+  return fname;
+}
+
+const char *
+IDL_GlobalData::be_get_client_hdr (String *idl_file_name)
+{
+  return be_change_idl_file_extension (idl_file_name, "C.h");
+}
+
+const char *
+IDL_GlobalData::be_get_client_stub (String *idl_file_name)
+{
+  return be_change_idl_file_extension (idl_file_name, "C.cpp");
+}
+
+const char *
+IDL_GlobalData::be_get_client_inline (String *idl_file_name)
+{
+  return be_change_idl_file_extension (idl_file_name, "C.i");
+}
+
+const char *
+IDL_GlobalData::be_get_server_hdr (String *idl_file_name)
+{
+  return be_change_idl_file_extension (idl_file_name, "S.h");
+}
+
+const char *
+IDL_GlobalData::be_get_server_skeleton (String *idl_file_name)
+{
+  return be_change_idl_file_extension (idl_file_name, "S.cpp");
+}
+
+const char *
+IDL_GlobalData::be_get_server_inline (String *idl_file_name)
+{
+  return be_change_idl_file_extension (idl_file_name, "S.i");
+}
+
 const char *
 IDL_GlobalData::be_get_client_hdr_fname ()
 {
-  String *s;
-  char *base;
-  static char fname[MAXNAMELEN];
-
-  ACE_OS::memset (fname, 0, MAXNAMELEN);
-  s = idl_global->idl_src_file (); 
-  // get the IDL source file name
-  base = ACE_OS::strstr (s->get_string (), ".idl");
-  // get the base part of the filename
-  if (base == NULL)
-    return 0;
-
-  ACE_OS::strncpy (fname, s->get_string (), base - s->get_string ());
-  ACE_OS::strcat (fname, "C.h");
-  return fname;
+  return be_get_client_hdr (idl_global->idl_src_file ());
 }
 
 const char * 
 IDL_GlobalData::be_get_client_stub_fname ()
 {
-  String *s;
-  char *base;
-  static char fname[MAXNAMELEN];
-
-  ACE_OS::memset (fname, 0, MAXNAMELEN);
-  s = idl_global->idl_src_file (); 
-  // get the IDL source file name
-  base = ACE_OS::strstr (s->get_string (), ".idl");
-  // get the base part of the filename
-  if (base == NULL)
-    return 0;
-
-  ACE_OS::strncpy (fname, s->get_string (), base - s->get_string ());
-  ACE_OS::strcat (fname, "C.cpp");
-  return fname;
+  return be_get_client_stub (idl_global->idl_src_file ());
 }
 
 const char * 
 IDL_GlobalData::be_get_client_inline_fname ()
 {
-  String *s;
-  char *base;
-  static char fname[MAXNAMELEN];
-
-  ACE_OS::memset (fname, 0, MAXNAMELEN);
-  s = idl_global->idl_src_file (); 
-  // get the IDL source file name
-  base = ACE_OS::strstr (s->get_string (), ".idl");
-  // get the base part of the filename
-  if (base == NULL)
-    return 0;
-
-  ACE_OS::strncpy (fname, s->get_string (), base - s->get_string ());
-  ACE_OS::strcat (fname, "C.i");
-  return fname;
+  return be_get_client_inline (idl_global->idl_src_file ());
 }
 
 const char * 
 IDL_GlobalData::be_get_server_hdr_fname ()
 {
-  String *s;
-  char *base;
-  static char fname[MAXNAMELEN];
-
-  ACE_OS::memset (fname, 0, MAXNAMELEN);
-  s = idl_global->idl_src_file (); 
-  // get the IDL source file name
-  base = ACE_OS::strstr (s->get_string (), ".idl");
-  // get the base part of the filename
-  if (base == NULL)
-    return 0;
-
-  ACE_OS::strncpy (fname, s->get_string (), base - s->get_string ());
-  ACE_OS::strcat (fname, "S.h");
-  return fname;
-}
-
-const char * 
-IDL_GlobalData::be_get_server_inline_fname ()
-{
-  String *s;
-  char *base;
-  static char fname[MAXNAMELEN];
-
-  ACE_OS::memset (fname, 0, MAXNAMELEN);
-  s = idl_global->idl_src_file (); 
-  // get the IDL source file name
-  base = ACE_OS::strstr (s->get_string (), ".idl");
-  // get the base part of the filename
-  if (base == NULL)
-    return 0;
-
-  ACE_OS::strncpy (fname, s->get_string (), base - s->get_string ());
-  ACE_OS::strcat (fname, "S.i");
-  return fname;
+  return be_get_server_hdr (idl_global->idl_src_file ());
 }
 
 const char * 
 IDL_GlobalData::be_get_server_skeleton_fname ()
 {
-  String *s;
-  char *base;
-  static char fname[MAXNAMELEN];
-
-  ACE_OS::memset (fname, 0, MAXNAMELEN);
-  s = idl_global->idl_src_file (); 
-  // get the IDL source file name
-  base = ACE_OS::strstr (s->get_string (), ".idl");
-  // get the base part of the filename
-  if (base == NULL)
-    return 0;
-
-  ACE_OS::strncpy (fname, s->get_string (), base - s->get_string ());
-  ACE_OS::strcat (fname, "S.cpp");
-  return fname;
+  return be_get_server_skeleton (idl_global->idl_src_file ());
 }
 
+const char * 
+IDL_GlobalData::be_get_server_inline_fname ()
+{
+  return be_get_server_inline (idl_global->idl_src_file ());
+}
 

@@ -1,7 +1,8 @@
 #include "tao/corba.h"
 
 TAO_ORB_Parameters::TAO_ORB_Parameters (void)
-  : name_service_ior_ (0)
+  : name_service_ior_ (0),
+    name_service_port_ (0)
 {
 }
 
