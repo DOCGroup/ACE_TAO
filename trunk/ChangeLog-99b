@@ -1,3 +1,8 @@
+Sun Jul 04 16:07:33 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ACE-INSTALL.html: updated instructions for building on
+          NT host for VxWorks.
+
 Sun Jul 04 15:41:34 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * many Makefiles: call ace_components via sh, instead of
