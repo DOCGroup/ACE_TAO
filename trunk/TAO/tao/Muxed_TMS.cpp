@@ -63,10 +63,11 @@ int
 TAO_Muxed_TMS::bind_dispatcher (CORBA::ULong request_id,
                                 TAO_Reply_Dispatcher *rd)
 {
-  // NOTE: The most dangerous form of code. At the outset one would
-  // think that there is a race here since we are not using the
-  // lock. But no, there is a implicit synhronization since only one
-  // thread can be active on this path.
+  ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
+                    ace_mon,
+                    this->lock_,
+		    -1);
+
   int result =
     this->dispatcher_table_.bind (request_id, rd);
 

@@ -1,3 +1,14 @@
+Mon Jan 20 16:42:34 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Muxed_TMS.cpp (bind_dispatcher): Added a lock to synchronize
+	  acces to the map. It *was* initially thought that
+	  synchronization will not be required since we always believed
+	  that only one thread could be active in the map. This is *not*
+	  true since a thread could be accessing the transport from the
+	  invocation side whereas another thread could be accessing the
+	  transport and the map underneath from the LF. This is really
+	  really bad.
+
 Mon Jan 20 13:32:30 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/ImplRepo_Service/README.txt: Fixed a broken HTML tag.
