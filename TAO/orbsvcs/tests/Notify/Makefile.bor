@@ -8,6 +8,7 @@ DIRS = \
         Basic \
         Blocking \
         Discarding \
+        MT_Dispatching \
         Ordering \
         performance-tests
 
