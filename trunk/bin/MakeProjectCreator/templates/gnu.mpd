@@ -95,7 +95,7 @@ tao_dont_use_idl_make_rule = 1
 include $(TAO_ROOT)/rules.tao.GNU
 <%endif%>
 
-# To build multiple executables in the same directory on AIX, it works
+# To build multiple targets in the same directory on AIX, it works
 # best to have a template directory per project.
 # The compiler/linker isn't too smart about instantiating templates...
 ifdef TEMPINCDIR
@@ -426,25 +426,21 @@ endif
 <%endif%>
 <%if(idl_files)%>
 <%if(source_files)%>
+ADDITIONAL_IDL_TARGETS +=<%foreach(idl_files)%> <%if(flag_overrides(idl_file, gendir))%><%flag_overrides(idl_file, gendir)%>/<%basenoextension(idl_file)%>$(IDL_CLIENT_HDR_EXT)<%else%><%noextension(idl_file)%>$(IDL_CLIENT_HDR_EXT)<%endif%><%endfor%>
+idl_stubs: $(ADDITIONAL_IDL_TARGETS)
+
 # This assignment forces make to run the idl_stubs
 # target before building any of the source files.
 FORCED_IDL_STUBS = <%source_files%>
-
-ADDITIONAL_IDL_TARGETS +=<%foreach(idl_files)%> <%if(flag_overrides(idl_file, gendir))%><%flag_overrides(idl_file, gendir)%>/<%basenoextension(idl_file)%>$(IDL_CLIENT_HDR_EXT)<%else%><%noextension(idl_file)%>$(IDL_CLIENT_HDR_EXT)<%endif%><%endfor%>
-
-## We really only want the generated source files, but there's no
-## way to get just the cpp files from the custom_type output files in MPC
 <%foreach(custom_types)%>
 <%foreach(custom_type->input_files)%>
-<%if(custom_type->input_file->output_files)%>
-<%foreach(custom_type->input_file->output_files)%>
-FORCED_IDL_STUBS := $(FORCED_IDL_STUBS:<%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%>=)
+<%if(custom_type->input_file->source_output_files)%>
+<%foreach(custom_type->input_file->source_output_files)%>
+FORCED_IDL_STUBS := $(FORCED_IDL_STUBS:<%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->source_output_file)%><%else%><%custom_type->input_file->source_output_file%><%endif%>=)
 <%endfor%>
 <%endif%>
 <%endfor%>
 <%endfor%>
-
-idl_stubs: $(ADDITIONAL_IDL_TARGETS)
 
 ifneq ($(FORCED_IDL_STUBS),)
 $(FORCED_IDL_STUBS): idl_stubs
