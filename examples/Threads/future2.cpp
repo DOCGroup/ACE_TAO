@@ -25,9 +25,8 @@
 //                     the tests so they are more modular.
 // ============================================================================
 
-#include <math.h>
+#include "ace/ACE.h"
 #include "ace/Task.h"
-
 #include "ace/Synch.h"
 #include "ace/Message_Queue.h"
 #include "ace/Future.h"
@@ -58,14 +57,14 @@ class Scheduler : public ACE_Task<ACE_MT_SYNCH>
 public:
 
   Scheduler (const char *, Scheduler * = 0);
-  ~Scheduler (void);
+  virtual ~Scheduler (void);
 
   virtual int open (void *args = 0);
   // The method that is used to start the active object.
 
   // = Here are the methods exported by the class. They return an
   // <ACE_Future>.
-  ACE_Future<double> work (double param, int count);
+  ACE_Future<u_long> work (u_long param, int count = 1);
   ACE_Future<char*> name (void);
   void end (void);
 
@@ -77,7 +76,7 @@ private:
   // Here the actual servicing of all requests is happening..
 
   // = Implementation methods.
-  double work_i (double, int);
+  u_long work_i (u_long, int);
   char *name_i (void);
 
   char *name_;
@@ -90,21 +89,21 @@ class Method_Object_work : public ACE_Method_Object
   //     Reification of the <work> method.
 {
 public:
-  Method_Object_work (Scheduler *, double, int, ACE_Future<double> &);
-  ~Method_Object_work (void);
+  Method_Object_work (Scheduler *, u_long, int, ACE_Future<u_long> &);
+  virtual ~Method_Object_work (void);
   virtual int call (void);
 
 private:
   Scheduler *scheduler_;
-  double param_;
+  u_long param_;
   int count_;
-  ACE_Future<double> future_result_;
+  ACE_Future<u_long> future_result_;
 };
 
 Method_Object_work::Method_Object_work (Scheduler* new_Scheduler,
-				        double new_param, 
+				        u_long new_param, 
 				        int new_count, 
-					ACE_Future<double> &new_result)
+					ACE_Future<u_long> &new_result)
   : scheduler_ (new_Scheduler),
     param_ (new_param),
     count_ (new_count),
@@ -128,7 +127,7 @@ class Method_Object_name : public ACE_Method_Object
 {
 public:
   Method_Object_name (Scheduler *, ACE_Future<char*> &);
-  ~Method_Object_name (void);
+  virtual ~Method_Object_name (void);
   virtual int call (void);
 
 private:
@@ -164,7 +163,7 @@ class Method_Object_end : public ACE_Method_Object
 {
 public:
   Method_Object_end (Scheduler *new_Scheduler): scheduler_ (new_Scheduler) {}
-  ~Method_Object_end (void) {}
+  virtual ~Method_Object_end (void) {}
   virtual int call (void) { this->scheduler_->close (); return -1; }
 
 private:
@@ -230,19 +229,13 @@ Scheduler::end (void)
 }
 
 // Here's where the Work takes place.
-double 
-Scheduler::work_i (double param, 
+u_long 
+Scheduler::work_i (u_long param, 
 		   int count)
 {
-  double x = 0, y = 0;
-  
-  for (int j = 0; j < count; j++) 
-    {
-      x = x + param;
-      y = y + ::sin (x);
-    }
+  ACE_UNUSED_ARG (count);
 
-  return y;
+  return ACE::is_prime (param, 2, param / 2);
 }
 
 char *
@@ -285,14 +278,14 @@ Scheduler::name (void)
     }
 }
 
-ACE_Future<double> 
-Scheduler::work (double newparam, int newcount)
+ACE_Future<u_long> 
+Scheduler::work (u_long newparam, int newcount)
 {
   if (this->scheduler_) 
     return this->scheduler_->work (newparam, newcount);
   else 
     {
-      ACE_Future<double> new_future;
+      ACE_Future<u_long> new_future;
 
       if (this->thr_count () == 0) 
 	{
@@ -331,7 +324,7 @@ determine_iterations (void)
     {
       tstart = ACE_OS::gettimeofday ();
 
-      worker_a->work (0.1, n_iterations);
+      worker_a->work (9013, n_iterations);
 
       tend = ACE_OS::gettimeofday ();
     }
@@ -347,6 +340,8 @@ determine_iterations (void)
 static void
 test_active_object (int n_iterations)
 {
+  ACE_UNUSED_ARG (n_iterations);
+
   ACE_DEBUG ((LM_DEBUG," (%t) testing active object pattern...\n"));
   // A simple example for the use of the active object pattern and
   // futures to return values from an active object.
@@ -377,9 +372,9 @@ test_active_object (int n_iterations)
 	  worker_c->open ();
 	}
 
-      ACE_Future<double> fresulta = worker_a->work (0.01, n_iterations);
-      ACE_Future<double> fresultb = worker_b->work (0.02, n_iterations);
-      ACE_Future<double> fresultc = worker_c->work (0.03, n_iterations);
+      ACE_Future<u_long> fresulta = worker_a->work (9013);
+      ACE_Future<u_long> fresultb = worker_b->work (9013);
+      ACE_Future<u_long> fresultc = worker_c->work (9013);
 
       if (i == 0) 
 	{
@@ -394,9 +389,9 @@ test_active_object (int n_iterations)
       // When the workers are active we will block here until the
       // results are available.
 
-      double resulta = fresulta;
-      double resultb = fresultb;
-      double resultc = fresultc;
+      u_long resulta = fresulta;
+      u_long resultb = fresultb;
+      u_long resultc = fresultc;
 
       ACE_Future<char *> fnamea = worker_a->name ();
       ACE_Future<char *> fnameb = worker_b->name ();
@@ -406,12 +401,12 @@ test_active_object (int n_iterations)
       char *nameb = fnameb;
       char *namec = fnamec;
 
-      ACE_DEBUG ((LM_DEBUG, " (%t) result from %s %f\n",
-		  namea, resulta));
-      ACE_DEBUG ((LM_DEBUG, " (%t) result from %s %f\n",
-		  nameb, resultb));
-      ACE_DEBUG ((LM_DEBUG, " (%t) result from %s %f\n",
-		  namec, resultc));
+      ACE_DEBUG ((LM_DEBUG, " (%t) result from %s %u\n",
+		  namea, (u_int) resulta));
+      ACE_DEBUG ((LM_DEBUG, " (%t) result from %s %u\n",
+		  nameb, (u_int) resultb));
+      ACE_DEBUG ((LM_DEBUG, " (%t) result from %s %u\n",
+		  namec, (u_int) resultc));
     }
 
   ACE_DEBUG ((LM_DEBUG, " (%t) scheduler_open_count %d before end ()\n",
@@ -442,28 +437,28 @@ test_cancellation (int n_iterations)
   ACE_NEW (worker_a, Scheduler ("worker A"));
   worker_a->open ();
 
-  ACE_Future<double> fresulta = worker_a->work (0.01, n_iterations);
+  ACE_Future<u_long> fresulta = worker_a->work (9013, n_iterations);
 
   // save the result by copying the future
-  ACE_Future<double> fresultb = fresulta;
+  ACE_Future<u_long> fresultb = fresulta;
 
   // now we cancel the first future.. but the
   // calculation will still go on...
-  fresulta.cancel (10.0);
+  fresulta.cancel (10);
 
   if (!fresulta.ready ())
     ACE_DEBUG ((LM_DEBUG," (%t) ERROR: future A is should be ready!!!\n"));
 
-  double resulta = fresulta;
+  u_long resulta = fresulta;
 
-  ACE_DEBUG ((LM_DEBUG, " (%t) cancelled result %f\n", resulta));
+  ACE_DEBUG ((LM_DEBUG, " (%t) cancelled result %u\n", (u_int) resulta));
 
-  if (resulta != 10.0)
-    ACE_DEBUG ((LM_DEBUG, " (%t) cancelled result should be 10.0!!\n", resulta));
+  if (resulta != 10)
+    ACE_DEBUG ((LM_DEBUG, " (%t) cancelled result should be 10!!\n", resulta));
 
   resulta = fresultb;
 
-  ACE_DEBUG ((LM_DEBUG, " (%t) true result %f\n", resulta));
+  ACE_DEBUG ((LM_DEBUG, " (%t) true result %u\n", (u_int) resulta));
 
   worker_a->end ();
   // @@ Can we safely delete worker_a here?
@@ -477,13 +472,13 @@ test_timeout (int n_iterations)
   ACE_NEW (worker_a, Scheduler ("worker A"));
   worker_a->open ();
 
-  ACE_Future<double> fresulta = worker_a->work (0.01, 2 * n_iterations);
+  ACE_Future<u_long> fresulta = worker_a->work (9013, 2 * n_iterations);
 
   // Should immediately return... and we should see an error...
   ACE_Time_Value *delay;
   ACE_NEW (delay, ACE_Time_Value (1));
 
-  double resulta;
+  u_long resulta;
   fresulta.get (resulta, delay);
 
   if (fresulta.ready ())
@@ -493,7 +488,7 @@ test_timeout (int n_iterations)
 
   // now we wait until we are done...
   fresulta.get (resulta);
-  ACE_DEBUG ((LM_DEBUG, " (%t) result %f\n", resulta));
+  ACE_DEBUG ((LM_DEBUG, " (%t) result %u\n", (u_int) resulta));
 
   worker_a->end ();
   // @@ Can we safely delete worker_a here?
@@ -516,6 +511,8 @@ main (int, char *[])
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
 template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
+template class ACE_Future<const char *>;
+template class ACE_Future<u_long>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
 
 #else
