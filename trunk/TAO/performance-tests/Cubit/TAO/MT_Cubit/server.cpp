@@ -186,7 +186,7 @@ Cubit_Task::initialize_orb (void)
       if (TAO_TRY_ENV.exception () != 0 ||
           CORBA::is_nil (this->naming_context_.in ())==CORBA::B_TRUE )
         return 1;
-    
+
       // Register the servant with the Naming Context....
       CosNaming::Name cubit_context_name (1);
       cubit_context_name.length (1);
@@ -207,7 +207,7 @@ Cubit_Task::initialize_orb (void)
               TAO_TRY_ENV.clear ();
               objref = this->naming_context_->resolve (cubit_context_name,
                                                        TAO_TRY_ENV);
-	      printf("NamingContext::AlreadyBound\n");
+              printf("NamingContext::AlreadyBound\n");
             }
           else
             TAO_TRY_ENV.print_exception ("bind() Cubit context object\n");
@@ -536,7 +536,7 @@ parse_args (int argc, char *argv[])
       perror ("gethostname");
       return -1;
     }
-  
+
   while ((c = opts ()) != -1)
     switch (c)
       {
@@ -699,7 +699,7 @@ start_servants (void)
   for (i = 0; i < num_of_objs - 1; i++)
     {
       char *args;
-      
+
       ACE_NEW_RETURN (args,
                       char [BUFSIZ],
                       -1);
@@ -725,7 +725,7 @@ start_servants (void)
     }
 
   char *args;
-  
+
   ACE_NEW_RETURN (args,
                   char [BUFSIZ],
                   -1);
@@ -744,25 +744,24 @@ start_servants (void)
   for (i = 0; i < num_of_objs-1; ++i)
     cubits[i + 1] = low_priority_task[i]->get_servant_ior (0);
 
-  FILE *ior_file = 0;
+  FILE *ior_f = 0;
 
   if (ior_file != 0)
-    ior_file = fopen (ior_file, "w");
+    ior_f = ACE_OS::fopen (ior_file, "w");
 
   for (i = 0; i < num_of_objs; ++i)
     {
-      if (ior_file != 0)
+      if (ior_f != 0)
         {
-          fputs (cubits[i], ior_file);
-          fputs ("\n", ior_file);
+          ACE_OS::fprintf (ior_f, "%s\n", cubits[i]);
         }
       ACE_OS::printf ("cubits[%d] ior = %s\n",
                       i,
                       cubits[i]);
     }
 
-  if (ior_file != 0)
-    ACE_OS::fclose (ior_file);
+  if (ior_f != 0)
+    ACE_OS::fclose (ior_f);
 
   ACE_NEW_RETURN (factory_task,
                   Cubit_Factory_Task (args, "internet", cubits, num_of_objs),
