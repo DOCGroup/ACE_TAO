@@ -48,6 +48,9 @@ extern "C" {
 #define PACE_PTHREAD_SCOPE_PROCESS PTHREAD_SCOPE_PROCESS
 #define PACE_PTHREAD_SCOPE_SYSTEM PTHREAD_SCOPE_SYSTEM
 
+#define PTHREAD_MUTEX_INITIALIZER 0
+#define PTHREAD_COND_INITIALIZER 0
+
 #ifndef PACE_SCHED_PARAM
 #define PACE_SCHED_PARAM
   typedef struct sched_param pace_sched_param;
@@ -82,6 +85,7 @@ extern "C" {
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
   extern pace_pthread_attr_t pthread_attr_default;
 
+  STATUS pacevx_vxworks_init();
   void pacevx_pthread_proc_exit(pace_pthread_t pthread, void *value_ptr);
   int pacevx_pthread_verify(pace_pthread_t pthread);
   void pacevx_pthread_run_cleanup (WIND_TCB *pTcb);
@@ -105,7 +109,7 @@ extern "C" {
   int pthread_key_create (pace_pthread_key_t * key,
                           pace_keycreate_pf destructor);
   int pthread_once (pace_pthread_once_t * once_control,
-                    pace_once_pf void_routine);
+                    pace_once_pf init_routine);
 # else /* ! PACE_HAS_CPLUSPLUS */
   int pthread_create (pace_pthread_t * thread,
                       const pace_pthread_attr_t * attr,
@@ -114,7 +118,7 @@ extern "C" {
   int pthread_key_create (pace_pthread_key_t * key,
                           void (*destructor)(void*));
   int pthread_once (pace_pthread_once_t * once_control,
-                    void (*void_routine) (void));
+                    void (*init_routine) (void));
 # endif /*! PACE_HAS_CPLUSPLUS */
   int pthread_detach (pace_pthread_t thread);
   int pthread_join (pace_pthread_t thread, void ** value_ptr);

@@ -229,9 +229,6 @@ extern "C" {
   typedef uid_t pace_uid_t;
 #endif /* PACE_UID_T */
 
-
-
-
 #ifndef PACE_PTHREAD_QUEUE_T
 #define PACE_PTHREAD_QUEUE_T
   struct _PTHREAD_QUEUE_ENTRY

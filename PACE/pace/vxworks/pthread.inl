@@ -519,7 +519,7 @@ void
 pace_pthread_exit (void * value_ptr)
 {
   /*
-   * Normal thread exit. All the cleanup routine will be popped, if any.
+   * Normal thread exit. All the cleanup routines will be popped, if any.
    * If the thread is detached, free the storage; otherwise wait for join.
    */
   pace_pthread_t pthread;
