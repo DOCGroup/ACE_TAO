@@ -15,10 +15,8 @@
 //
 // ========================================================================================================= 
 
+#include "orbsvcs/CosPropertyServiceS.h"
 #include "orbsvcs/Property/CosPropertyService_i.h"
-#include "tao/any.h"      
-#include "tao/corbacom.h" 
-#include "tao/tao_util.h"
 
 class TAO_PropertySet_Tester
 {
