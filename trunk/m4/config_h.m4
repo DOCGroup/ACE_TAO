@@ -204,34 +204,6 @@ AH_TEMPLATE([ACE_USE_RCSID],[Enable embedding of global RCS ID strings into comp
 AH_TEMPLATE([IP_ADD_MEMBERSHIP],[])
 AH_TEMPLATE([IP_DROP_MEMBERSHIP],[])
 
-AH_VERBATIM([ACE_INT64_TYPEDEF],
-[
-/*
-   typedef for ACE_INT64
-
-   We only make the typedef if ACE_INT64_TYPEDEF is defined.  Otherwise,
-   let ace/Basic_Types.h do the work for us.
-*/
-#undef ACE_INT64_TYPEDEF
-#ifdef ACE_INT64_TYPEDEF
-   typedef ACE_INT64_TYPEDEF ACE_INT64;
-#endif /* ACE_INT64_TYPEDEF */
-])
-
-AH_VERBATIM([ACE_UINT64_TYPEDEF],
-[
-/*
-   typedef for ACE_UINT64
-
-   We only make the typedef if ACE_UINT64_TYPEDEF is defined.  Otherwise,
-   let ace/Basic_Types.h do the work for us.
-*/
-#undef ACE_UINT64_TYPEDEF
-#ifdef ACE_UINT64_TYPEDEF
-   typedef ACE_UINT64_TYPEDEF ACE_UINT64;
-#endif /* ACE_UINT64_TYPEDEF */
-])
-
 AH_TEMPLATE([ACE_LOFF_T_TYPEDEF],[typedef for ACE_LOFF_T])
 
 AH_TEMPLATE([__ACE_INLINE__],[Enable ACE inlining])
