@@ -1,4 +1,5 @@
 // $Id$
+
 #define ACE_BUILD_DLL
 #include "ace/Stats.h"
 
@@ -157,7 +158,7 @@ ACE_Stats::reset (void)
   overflow_ = 0u;
   samples_ = 0u;
   min_ = 0x7FFFFFFF;
-  max_ = -0x80000000;
+  max_ = -0x8000 * 0x10000;
   sum_ = ACE_STATS_INTERNAL_OFFSET;
   sum_of_squares_ = 0u;
 }
@@ -224,14 +225,16 @@ ACE_Stats::quotient (const ACE_UINT64 dividend,
                      ACE_Stats_Value &quotient)
 {
   // The whole part of the division comes from simple integer division.
-  quotient.whole (divisor == 0  ?  0  :  dividend / divisor);
+  quotient.whole (ACE_static_cast (ACE_UINT32,
+    divisor == 0  ?  0  :  dividend / divisor));
 
   if (quotient.precision () > 0  ||  divisor == 0)
     {
       const ACE_UINT32 field = quotient.fractional_field ();
 
       // Fractional = (dividend % divisor) * 10^precision / divisor.
-      quotient.fractional (dividend % divisor * field / divisor);
+      quotient.fractional (ACE_static_cast (ACE_UINT32,
+       dividend % divisor * field / divisor));
     }
   else
     // No fractional portion is requested, so don't bother
