@@ -1,3 +1,10 @@
+Thu Nov  6 09:50:34 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/README:
+
+          Added information about generating GNUACE projects that will only
+          build static libraries.
+
 Thu Nov  6 12:46:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/RMCast/RMCast.rc:
@@ -46,43 +53,43 @@ Thu Nov  6 04:53:54 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Wed Nov  5 19:02:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/CDR_Stream.cpp (clone_from):
+        * ace/CDR_Stream.cpp (clone_from):
 
-	  Fixed an alignment problem under the following conditions
+          Fixed an alignment problem under the following conditions
 
-	  - The incoming CDR buffer has a message of size exactly 1024
-	    bytes.
+          - The incoming CDR buffer has a message of size exactly 1024
+            bytes.
 
-	  - The data block within the message block in the destination CDR
-	    is not aligned on an 8 byte boundary.
+          - The data block within the message block in the destination CDR
+            is not aligned on an 8 byte boundary.
 
-	  This lead to improper copying. The problem was that the call
-	  clone () on the source data block returned exactly 1024 bytes
-	  and in addition could potentially (which is the destination)
-	  could be aligned on a 4 byte boundary. This made the destination
-	  buffer to get aligned on a 8 byte boundary and lose 4 bytes of
-	  space which lead to improper copying of the source
-	  buffer. Thanks to Jian Chen  <jchen@huawei.com> for reporting
-	  the problem.
+          This lead to improper copying. The problem was that the call
+          clone () on the source data block returned exactly 1024 bytes
+          and in addition could potentially (which is the destination)
+          could be aligned on a 4 byte boundary. This made the destination
+          buffer to get aligned on a 8 byte boundary and lose 4 bytes of
+          space which lead to improper copying of the source
+          buffer. Thanks to Jian Chen  <jchen@huawei.com> for reporting
+          the problem.
 
-	  The above problem now been fixed by doing an additional size
-	  increment on the cloned datablock. We have also added a small
-	  optimzation. We don't always clone the data block. We do it only
-	  if the size of the source buffer is larger than the size of the
-	  destination buffer. This should lead to a small increase in
-	  performance since we are avoiding an allocation along the
-	  critical path.
+          The above problem now been fixed by doing an additional size
+          increment on the cloned datablock. We have also added a small
+          optimzation. We don't always clone the data block. We do it only
+          if the size of the source buffer is larger than the size of the
+          destination buffer. This should lead to a small increase in
+          performance since we are avoiding an allocation along the
+          critical path.
 
-	  I haven't received a response yet from Jian on whether this
-	  patch solves his problem. But I am positive that this would
-	  help.
+          I haven't received a response yet from Jian on whether this
+          patch solves his problem. But I am positive that this would
+          help.
 
 Wed Nov  5 18:52:01 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/OS_NS_sys_socket.h:
+        * ace/OS_NS_sys_socket.h:
 
-	  #include'd os_include/net/os_if.h to get the definitions of
-	  if_nametoindex () if_indextoname () etc.
+          #include'd os_include/net/os_if.h to get the definitions of
+          if_nametoindex () if_indextoname () etc.
 
 Wed Nov  5 23:45:09 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -91,83 +98,83 @@ Wed Nov  5 23:45:09 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Wed Nov  5 18:16:40 2003  Steve Huston  <shuston@riverace.com>
 
-	* ace/ARGV.i: Added #include "ace/Global_Macros.h" to find ACE_TRACE.
+        * ace/ARGV.i: Added #include "ace/Global_Macros.h" to find ACE_TRACE.
 
-	* ace/Global_Macros.h: Added #include "ace/OS_Errno.h" near the
-	  ACE_ALLOCATOR* and ACE_NEW* macros to see errno and ENOMEM.
+        * ace/Global_Macros.h: Added #include "ace/OS_Errno.h" near the
+          ACE_ALLOCATOR* and ACE_NEW* macros to see errno and ENOMEM.
 
-	* ace/ACE.cpp: Added #include "ace/OS_NS_string.h" to find
-	  ACE_OS::strlen().
+        * ace/ACE.cpp: Added #include "ace/OS_NS_string.h" to find
+          ACE_OS::strlen().
 
-	* ace/Capabilities.cpp: Added #include "ace/os_includes/os_ctype.h"
-	  to get isdigit(), "ace/OS_Memory.h" to get ACE_NEW_RETURN, and
-	  "ace/OS_NS_string.h" to get ACE_OS::strcmp().
+        * ace/Capabilities.cpp: Added #include "ace/os_includes/os_ctype.h"
+          to get isdigit(), "ace/OS_Memory.h" to get ACE_NEW_RETURN, and
+          "ace/OS_NS_string.h" to get ACE_OS::strcmp().
 
-	* ace/Configuration.cpp:
-	* ace/Configuration_Import_Export.cpp:
-	* ace/DLL_Manager.cpp:
-	* ace/Filecache.cpp:
-	* ace/Get_Opt.cpp:
-	* ace/Process.{cpp i}
-	* ace/SString.cpp:
-	* ace/UPIPE_Stream.cpp: Added #include "ace/OS_NS_string.h" to pick
-	  up ACE_OS string functions.
+        * ace/Configuration.cpp:
+        * ace/Configuration_Import_Export.cpp:
+        * ace/DLL_Manager.cpp:
+        * ace/Filecache.cpp:
+        * ace/Get_Opt.cpp:
+        * ace/Process.{cpp i}
+        * ace/SString.cpp:
+        * ace/UPIPE_Stream.cpp: Added #include "ace/OS_NS_string.h" to pick
+          up ACE_OS string functions.
 
-	* ace/Based_Pointer_Repository.cpp:
-	* ace/Filecache.cpp:
-	* ace/Local_Name_Space_T.cpp:
-	* ace/Malloc_T.h:
-	* ace/Object_Manager.cpp:
-	* ace/Process_Manager.cpp:
-	* ace/Reactor.cpp:
-	* ace/Select_Reactor_T.cpp:
-	* ace/Signal.cpp:
-	* ace/Singleton.cpp:
-	* ace/Svc_Conf_l.cpp:
-	* ace/Thread_Exit.cpp:
-	* ace/Thread_Manager.cpp:
-	* ace/Timer_Heap_T.cpp:
-	* ace/Timer_Queue_T.cpp:
-	* ace/UUID.cpp: Added #include "ace/Guard_T.h" to find ACE_Guard.
+        * ace/Based_Pointer_Repository.cpp:
+        * ace/Filecache.cpp:
+        * ace/Local_Name_Space_T.cpp:
+        * ace/Malloc_T.h:
+        * ace/Object_Manager.cpp:
+        * ace/Process_Manager.cpp:
+        * ace/Reactor.cpp:
+        * ace/Select_Reactor_T.cpp:
+        * ace/Signal.cpp:
+        * ace/Singleton.cpp:
+        * ace/Svc_Conf_l.cpp:
+        * ace/Thread_Exit.cpp:
+        * ace/Thread_Manager.cpp:
+        * ace/Timer_Heap_T.cpp:
+        * ace/Timer_Queue_T.cpp:
+        * ace/UUID.cpp: Added #include "ace/Guard_T.h" to find ACE_Guard.
 
-	* ace/DEV_Addr.cpp:
-	* ace/FILE_Addr.cpp:
-	* ace/SPIPE_Addr.cpp: Added #include "ace/OS_NS_string.h" to get
-	  ACE_OS functions and "ace/os_include/sys/os_socket.h" to get
-	  AF_DEV, etc. defs.
+        * ace/DEV_Addr.cpp:
+        * ace/FILE_Addr.cpp:
+        * ace/SPIPE_Addr.cpp: Added #include "ace/OS_NS_string.h" to get
+          ACE_OS functions and "ace/os_include/sys/os_socket.h" to get
+          AF_DEV, etc. defs.
 
-	* ace/Log_Msg.cpp: Added #include "ace/OS_NS_stdio.h" to pick up
-	  ACE_OS::snprintf() and "ace/Guard_T.h" to find ACE_Guard.
-	* ace/SString.h: Added #include "ace/streams.h" if
-	  !ACE_LACKS_IOSTREAM_TOTALLY to pick up the correct ostream type.
+        * ace/Log_Msg.cpp: Added #include "ace/OS_NS_stdio.h" to pick up
+          ACE_OS::snprintf() and "ace/Guard_T.h" to find ACE_Guard.
+        * ace/SString.h: Added #include "ace/streams.h" if
+          !ACE_LACKS_IOSTREAM_TOTALLY to pick up the correct ostream type.
 
-	* ace/Process_Manager.h: Add #include "ace/Time_Value.h" to get the
-	  ACE_Time_Value class and member defs needed.
+        * ace/Process_Manager.h: Add #include "ace/Time_Value.h" to get the
+          ACE_Time_Value class and member defs needed.
 
-	* ace/Sock_Connect.cpp: Added #include "ace/OS_NS_string.h",
-	  "ace/OS_NS_unistd.h" and "ace/OS_NS_stdlib.h" and "ace/OS_Memory.h"
-	  to get missing functions.
+        * ace/Sock_Connect.cpp: Added #include "ace/OS_NS_string.h",
+          "ace/OS_NS_unistd.h" and "ace/OS_NS_stdlib.h" and "ace/OS_Memory.h"
+          to get missing functions.
 
-	* ace/Thread_Adapter.cpp: Added #include "ace/Object_Manager_Base.h" to
-	  get ACE_OS_Object_Manager class.
+        * ace/Thread_Adapter.cpp: Added #include "ace/Object_Manager_Base.h" to
+          get ACE_OS_Object_Manager class.
 
-	* ace/Time_Request_Reply.cpp: Added #include
-	  "ace/os_include/netinet/os_in.h" to get htonl(), ntohl().
+        * ace/Time_Request_Reply.cpp: Added #include
+          "ace/os_include/netinet/os_in.h" to get htonl(), ntohl().
 
-	* ace/TP_Reactor.cpp: Added #include "ace/OS_NS_sys_time.h" to get
-	  ACE_OS::gettimeofday() and "ace/Log_Msg.h" to get logging macros.
+        * ace/TP_Reactor.cpp: Added #include "ace/OS_NS_sys_time.h" to get
+          ACE_OS::gettimeofday() and "ace/Log_Msg.h" to get logging macros.
 
-	* ace/TP_Reactor.h: Added #include "ace/Timer_Queue.h" so IBM Visual
-	  Age C++ can see the whole ACE_Timer_Queue type for template reasons.
+        * ace/TP_Reactor.h: Added #include "ace/Timer_Queue.h" so IBM Visual
+          Age C++ can see the whole ACE_Timer_Queue type for template reasons.
 
-	* ace/Timer_Queue.h: Add #include of either
-	  ace/Recursive_Thread_Mutex.h or ace/Null_Mutex.h based on
-	  ACE_HAS_THREADS. IBM Visual Age C++ needs to see the complete
-	  type.
+        * ace/Timer_Queue.h: Add #include of either
+          ace/Recursive_Thread_Mutex.h or ace/Null_Mutex.h based on
+          ACE_HAS_THREADS. IBM Visual Age C++ needs to see the complete
+          type.
 
-	* ace/Parse_Node.cpp: Added #include "ace/ACE.h" to see ACE::debug().
+        * ace/Parse_Node.cpp: Added #include "ace/ACE.h" to see ACE::debug().
 
-	* netsvcs/lib/TS_Clerk_Handler.h: Added #include "ace/Null_Mutex.h".
+        * netsvcs/lib/TS_Clerk_Handler.h: Added #include "ace/Null_Mutex.h".
 
 Wed Nov  5 23:26:11 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -203,7 +210,7 @@ Wed Nov  5 21:22:45 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Wed Nov  5 15:09:00 2003  Justin Michel <michel_j@ociweb.com>
 
-	* apps/gperf/src/gperf.cpp:
+        * apps/gperf/src/gperf.cpp:
 
           Added missing #include "ace/OS_main.h"
 
@@ -248,22 +255,22 @@ Wed Nov  5 19:03:20 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Wed Nov  5 11:58:04 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/SOCK_Dgram_Mcast.cpp,
-  	* ace/Asynch_Connector.cpp,
-	* ace/INET_Addr.cpp,
-  	* ace/OS.h,
-    	* ace/OS.i,
-      	* ace/Sock_Connect.n,
-      	* ace/Sock_Connect.i,
-	* ace/SOCK_Dgram.i,
-	* ace/SOCK_Dgram.cpp,
-  	* ace/SOCK_Dgram_Mcast.h,
-  	* ace/SOCK_Dgram_Mcast.cpp,
-	* ace/SOCK_SEQPACK_Acceptor.cpp,
-	* ace/OS_NS_sys_socket.{h,inl}:
-	  Finished adding IPv6 support to ACE.  The main addition is
- 	  support for UDP multicast over IPv6 for Linux.  Thanks to Brian
- 	  Buesker <bbuesker@qualcomm.com> for contributing this.
+        * ace/SOCK_Dgram_Mcast.cpp,
+        * ace/Asynch_Connector.cpp,
+        * ace/INET_Addr.cpp,
+        * ace/OS.h,
+        * ace/OS.i,
+        * ace/Sock_Connect.n,
+        * ace/Sock_Connect.i,
+        * ace/SOCK_Dgram.i,
+        * ace/SOCK_Dgram.cpp,
+        * ace/SOCK_Dgram_Mcast.h,
+        * ace/SOCK_Dgram_Mcast.cpp,
+        * ace/SOCK_SEQPACK_Acceptor.cpp,
+        * ace/OS_NS_sys_socket.{h,inl}:
+          Finished adding IPv6 support to ACE.  The main addition is
+          support for UDP multicast over IPv6 for Linux.  Thanks to Brian
+          Buesker <bbuesker@qualcomm.com> for contributing this.
 
 Wed Nov  5 15:28:30 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -400,8 +407,8 @@ Wed Nov  5 05:33:44 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Tue Nov 04 19:37:31 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* COPYING: Modified to include CIAO in the Copyright disclaimer.
-	  Thanks to Roland Schimmack <SC@ProCom.de> for motivating the change.
+        * COPYING: Modified to include CIAO in the Copyright disclaimer.
+          Thanks to Roland Schimmack <SC@ProCom.de> for motivating the change.
 
 Wed Nov  5 01:23:08 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -458,156 +465,156 @@ Wed Nov  5 00:28:47 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Tue Nov  4 16:03:06 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/Makefile.am (HEADER_FILES):
+        * ace/Makefile.am (HEADER_FILES):
 
-	  Added new Timer_Queuefwd.h header to this list.
+          Added new Timer_Queuefwd.h header to this list.
 
 Tue Nov  4 15:35:30 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tests/Conn_Test.cpp:
+        * tests/Conn_Test.cpp:
 
-	  Include "ace/Signal.h".  Necessitated by inter-header dependency
-	  reductions.
+          Include "ace/Signal.h".  Necessitated by inter-header dependency
+          reductions.
 
 Tue Nov  4 14:36:59 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/Array_Base.cpp:
+        * ace/Array_Base.cpp:
 
-	  Check if _MSC_VER macro is defined prior to checking if
-	  it is defined to a specific value.  Addresses warnings in some
-	  g++ configurations.
+          Check if _MSC_VER macro is defined prior to checking if
+          it is defined to a specific value.  Addresses warnings in some
+          g++ configurations.
 
-	* ace/Asynch_Pseudo_Task.h:
+        * ace/Asynch_Pseudo_Task.h:
 
-	  Nuked trailing whitespace.
+          Nuked trailing whitespace.
 
-	* ace/CDR_Base.cpp (swap_4_array):
+        * ace/CDR_Base.cpp (swap_4_array):
 
-	  Fixed problem where byte swapping code for arrays containing 4
-	  byte elements on platforms with 8 byte alignment was not
-	  enabled.
+          Fixed problem where byte swapping code for arrays containing 4
+          byte elements on platforms with 8 byte alignment was not
+          enabled.
 
-	* ace/Connector.cpp:
+        * ace/Connector.cpp:
 
-	  Include "ace/Handle_Set.h".  Necessitated by inter-header
-	  dependency reductions.
+          Include "ace/Handle_Set.h".  Necessitated by inter-header
+          dependency reductions.
 
-	* ace/Dev_Poll_Reactor.cpp:
+        * ace/Dev_Poll_Reactor.cpp:
 
-	  Include "ace/Signal.h".  Necessitated by inter-header dependency
-	  reductions.
+          Include "ace/Signal.h".  Necessitated by inter-header dependency
+          reductions.
 
-	* ace/Name_Space.h:
+        * ace/Name_Space.h:
 
-	  Forward declare the ACE_Unbounded_Set and
-	  ACE_Unbounded_Set_Iterator template classes instead of including
-	  "ace/Unbounded_Set.h".
+          Forward declare the ACE_Unbounded_Set and
+          ACE_Unbounded_Set_Iterator template classes instead of including
+          "ace/Unbounded_Set.h".
 
-	  No need to include "ace/Name_Proxy.h".
+          No need to include "ace/Name_Proxy.h".
 
-	* ace/Naming_Context.h:
+        * ace/Naming_Context.h:
 
-	  No need to include "ace/SString.h", "ace/Containers.h" and
-	  "ace/Name_Proxy.h".
+          No need to include "ace/SString.h", "ace/Containers.h" and
+          "ace/Name_Proxy.h".
 
-	* ace/OS_NS_string.h:
+        * ace/OS_NS_string.h:
 
-	  No need to forward declare ACE_Time_Value.
+          No need to forward declare ACE_Time_Value.
 
-	* ace/Process_Manager.h:
+        * ace/Process_Manager.h:
 
-	  No need to include "ace/Reactor.h".  A forward declaration for
-	  ACE_Reactor is enough.
+          No need to include "ace/Reactor.h".  A forward declaration for
+          ACE_Reactor is enough.
 
-	* ace/Process_Manager.cpp:
+        * ace/Process_Manager.cpp:
 
-	  Include "ace/Reactor.h" to pull in ACE_Reactor class
-	  declaration.
+          Include "ace/Reactor.h" to pull in ACE_Reactor class
+          declaration.
 
-	* ace/Reactor.h:
+        * ace/Reactor.h:
 
-	  Include new "ace/Timer_Queuefwd.h" header instead of
-	  "ace/Timer_Queue.h".  Forward declarations are enough.
+          Include new "ace/Timer_Queuefwd.h" header instead of
+          "ace/Timer_Queue.h".  Forward declarations are enough.
 
-	  No need to include "ace/Signal.h".  Forward declarations for
-	  ACE_Sig_{Action,Handler,Set} are enough.
+          No need to include "ace/Signal.h".  Forward declarations for
+          ACE_Sig_{Action,Handler,Set} are enough.
 
-	  No need to include "ace/Handle_Set.h".  Forward declaring
-	  ACE_Handle_Set is enough.
+          No need to include "ace/Handle_Set.h".  Forward declaring
+          ACE_Handle_Set is enough.
 
-	* ace/Reactor.i:
+        * ace/Reactor.i:
 
-	  No need to include "ace/Handle_Set.h".  The forward declaration
-	  in "ace/Reactor.h" is enough.
+          No need to include "ace/Handle_Set.h".  The forward declaration
+          in "ace/Reactor.h" is enough.
 
-	* ace/Reactor_Impl.h:
+        * ace/Reactor_Impl.h:
 
-	  Include new "ace/Timer_Queuefwd.h" header instead of
-	  "ace/Timer_Queue.h".  Forward declarations are enough.
+          Include new "ace/Timer_Queuefwd.h" header instead of
+          "ace/Timer_Queue.h".  Forward declarations are enough.
 
-	  No need to include "ace/Signal.h".  Forward declarations for
-	  ACE_Sig_{Action,Handler,Set} are enough.
+          No need to include "ace/Signal.h".  Forward declarations for
+          ACE_Sig_{Action,Handler,Set} are enough.
 
-	* ace/Reactor_Timer_Interface.h:
+        * ace/Reactor_Timer_Interface.h:
 
-	  Include "ace/Time_Value.h" to pull in ACE_Time_Value class
-	  declaration.
+          Include "ace/Time_Value.h" to pull in ACE_Time_Value class
+          declaration.
 
-	* ace/SString.h (ACE_NS_WString):
+        * ace/SString.h (ACE_NS_WString):
 
-	  Corrected documentation.
+          Corrected documentation.
 
-	* ace/SString.i:
+        * ace/SString.i:
 
-	  No need to include "ace/Malloc_Base.h".
+          No need to include "ace/Malloc_Base.h".
 
-	* ace/SString.cpp:
+        * ace/SString.cpp:
 
-	  Cosmetic reorganization of code.
+          Cosmetic reorganization of code.
 
-	* ace/Select_Reactor_Base.h:
+        * ace/Select_Reactor_Base.h:
 
-	  No need to include "ace/Signal.h".
+          No need to include "ace/Signal.h".
 
-	  Include new "ace/Timer_Queuefwd.h" header instead of
-	  "ace/Timer_Queue.h".  Forward declarations are enough.
+          Include new "ace/Timer_Queuefwd.h" header instead of
+          "ace/Timer_Queue.h".  Forward declarations are enough.
 
-	* ace/Select_Reactor_Base.cpp:
-	* ace/Select_Reactor_T.cpp:
+        * ace/Select_Reactor_Base.cpp:
+        * ace/Select_Reactor_T.cpp:
 
-	  Include "ace/Signal.h" to pull in ACE signal classes.
+          Include "ace/Signal.h" to pull in ACE signal classes.
 
-	* ace/TP_Reactor.h:
+        * ace/TP_Reactor.h:
 
-	  No need to include "ace/Log_Msg.h".
+          No need to include "ace/Log_Msg.h".
 
-	* ace/TP_Reactor.cpp:
+        * ace/TP_Reactor.cpp:
 
-	  No need to include "ace/Reactor.h".
+          No need to include "ace/Reactor.h".
 
-	  Include "ace/Timer_Queue.h" and "ace/Signal.h" to pull in
-	  ACE_Timer_Queue and ACE signal classes.
+          Include "ace/Timer_Queue.h" and "ace/Signal.h" to pull in
+          ACE_Timer_Queue and ACE signal classes.
 
-	* ace/Timer_Queue.h:
+        * ace/Timer_Queue.h:
 
-	  Moved ACE_Timer_Queue typedef to new Timer_Queuefwd.h file.
+          Moved ACE_Timer_Queue typedef to new Timer_Queuefwd.h file.
 
-	  Include "ace/Timer_Queuefwd.h" to pull in ACE_Timer_Queue
-	  typedef.
+          Include "ace/Timer_Queuefwd.h" to pull in ACE_Timer_Queue
+          typedef.
 
-	* ace/Timer_Queue_T.cpp:
+        * ace/Timer_Queue_T.cpp:
 
-	  No need to include "ace/Signal.h".
+          No need to include "ace/Signal.h".
 
-	* ace/Timer_Queuefwd.h:
+        * ace/Timer_Queuefwd.h:
 
-	  New file containing forward declarations and typedefs for the
-	  ACE_Timer_Queue class and friends.
+          New file containing forward declarations and typedefs for the
+          ACE_Timer_Queue class and friends.
 
 Tue Nov  4 17:58:29 2003  Steve Huston  <shuston@riverace.com>
 
-	* ace/UUID.cpp: Added explicit instantiation of
-	  ACE_Singleton::singleton_ to work around g++ issue on HP-UX and AIX.
+        * ace/UUID.cpp: Added explicit instantiation of
+          ACE_Singleton::singleton_ to work around g++ issue on HP-UX and AIX.
 
 Tue Nov  4 20:40:26 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -635,47 +642,47 @@ Tue Nov  4 18:54:10 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Tue Nov  4 09:50:47 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tests/Makefile.am
-	  (MT_Reference_Counted_Event_Handler_Test_SOURCES):
-	  (MT_Reference_Counted_Notify_Test_SOURCES):
-	  (NonBlocking_Conn_Test_SOURCES):
-	  (Reactor_Registration_Test_SOURCES):
-	  (Reference_Counted_Event_Handler_Test_SOURCES):
-	  (Timer_Cancellation_Test_SOURCES):
-	  (Timer_Queue_Reference_Counting_Test_SOURCES):
-	  (WFMO_Reactor_Test_SOURCES):
+        * tests/Makefile.am
+          (MT_Reference_Counted_Event_Handler_Test_SOURCES):
+          (MT_Reference_Counted_Notify_Test_SOURCES):
+          (NonBlocking_Conn_Test_SOURCES):
+          (Reactor_Registration_Test_SOURCES):
+          (Reference_Counted_Event_Handler_Test_SOURCES):
+          (Timer_Cancellation_Test_SOURCES):
+          (Timer_Queue_Reference_Counting_Test_SOURCES):
+          (WFMO_Reactor_Test_SOURCES):
 
-	  Added these missing test source declarations.
+          Added these missing test source declarations.
 
 Tue Nov  4 09:15:13 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/OS_NS_stdlib.inl:
-	* ace/OS_NS_sys_time.inl:
-	* ace/OS_NS_sys_uio.inl:
-	* ace/OS_NS_sys_utsname.inl:
+        * ace/OS_NS_stdlib.inl:
+        * ace/OS_NS_sys_time.inl:
+        * ace/OS_NS_sys_uio.inl:
+        * ace/OS_NS_sys_utsname.inl:
 
-	  Include "ace/os_include/os_errno.h".  The ACE_OSCALL macros used
-	  in these files use the global errno variable.
+          Include "ace/os_include/os_errno.h".  The ACE_OSCALL macros used
+          in these files use the global errno variable.
 
-	* ace/os_include/os_pthread.h:
+        * ace/os_include/os_pthread.h:
 
-	  Don't define ACE_HAS_MUTEX_TIMEOUTS if it has been previously
-	  defined.  Fixes a warning for configurations that explicitly
-	  define ACE_HAS_MUTEX_TIMEOUTS.
+          Don't define ACE_HAS_MUTEX_TIMEOUTS if it has been previously
+          defined.  Fixes a warning for configurations that explicitly
+          define ACE_HAS_MUTEX_TIMEOUTS.
 
-	  Do not directly check the GNU libc-specific "__USE_XOPEN2K"
-	  XPG6 feature test macro.  The correct/portable way to check for
-	  XPG6 features is to check if _XOPEN_SOURCE >= 600.
+          Do not directly check the GNU libc-specific "__USE_XOPEN2K"
+          XPG6 feature test macro.  The correct/portable way to check for
+          XPG6 features is to check if _XOPEN_SOURCE >= 600.
 
-	* ace/os_include/sys/os_time.h:
+        * ace/os_include/sys/os_time.h:
 
-	  No need to include "ace/os_include/sys/os_select.h".
+          No need to include "ace/os_include/sys/os_select.h".
 
-	* ace/os_include/sys/os_types.h:
+        * ace/os_include/sys/os_types.h:
 
-	  Check if ACE_SIZEOF_LONG macro is defined prior to checking if
-	  it is defined to a specific value.  Addresses warnings in some
-	  g++ configurations.
+          Check if ACE_SIZEOF_LONG macro is defined prior to checking if
+          it is defined to a specific value.  Addresses warnings in some
+          g++ configurations.
 
 Tue Nov  4 16:48:54 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
