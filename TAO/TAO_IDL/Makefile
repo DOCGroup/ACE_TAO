@@ -5754,11 +5754,8 @@ tags:
  be_include/be_visitor_interface/ami_handler_fwd_ch.h \
  be_include/be_visitor_interface/ami_handler_fwd_ci.h \
  be_include/be_visitor_interface/ami_handler_stub_ch.h \
- be_include/be_visitor_interface/ami_handler_stub_cs.h \
- be_include/be_visitor_interface/ami_exception_holder_ch.h \
- be_include/be_visitor_interface/ami_exception_holder_ci.h \
- be_include/be_visitor_interface/ami_exception_holder_cs.h \
- be_include/be.h $(ACE_ROOT)/ace/Process.h \
+ be_include/be_visitor_interface/ami_handler_stub_cs.h be_include/be.h \
+ $(ACE_ROOT)/ace/Process.h \
  $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
  be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
  be_include/be_predefined_type.h be_include/be_module.h \
@@ -8801,9 +8798,6 @@ tags:
  be_include/be_visitor_interface/ami_handler_fwd_ci.h \
  be_include/be_visitor_interface/ami_handler_stub_ch.h \
  be_include/be_visitor_interface/ami_handler_stub_cs.h \
- be_include/be_visitor_interface/ami_exception_holder_ch.h \
- be_include/be_visitor_interface/ami_exception_holder_ci.h \
- be_include/be_visitor_interface/ami_exception_holder_cs.h \
  be_include/be_visitor_interface_fwd.h \
  be_include/be_visitor_interface_fwd/interface_fwd_ch.h \
  be_include/be_visitor_interface_fwd/interface_fwd_ci.h \
@@ -8824,6 +8818,8 @@ tags:
  be_include/be_visitor_valuetype/field_cs.h \
  be_include/be_visitor_valuetype/field_cdr_ci.h \
  be_include/be_visitor_valuetype/obv_module.h \
+ be_include/be_visitor_valuetype/ami_exception_holder_ch.h \
+ be_include/be_visitor_valuetype/ami_exception_holder_cs.h \
  be_include/be_visitor_valuetype_fwd.h \
  be_include/be_visitor_valuetype_fwd/valuetype_fwd_ch.h \
  be_include/be_visitor_valuetype_fwd/valuetype_fwd_ci.h \
@@ -9278,13 +9274,7 @@ tags:
  be/be_visitor_argument/vardecl_ss.cpp \
  be/be_visitor_argument/compiled_marshal_cs.cpp \
  be/be_visitor_argument/compiled_marshal_ss.cpp \
- be/be_visitor_argument/pre_invoke_cs.cpp \
- be/be_visitor_argument/ami_arglist.cpp \
- be/be_visitor_argument/ami_handler_arglist.cpp \
- be/be_visitor_argument/ami_handler_result_arg.cpp \
- be/be_visitor_argument/ami_handler_compiled_marshal_cs.cpp \
- be/be_visitor_argument/ami_handler_upcall_cs.cpp \
- be/be_visitor_argument/ami_handler_vardecl_cs.cpp
+ be/be_visitor_argument/pre_invoke_cs.cpp
 .obj/be_visitor_array.o .obj/be_visitor_array.so .shobj/be_visitor_array.o .shobj/be_visitor_array.so: be/be_visitor_array.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -10283,9 +10273,6 @@ tags:
  be_include/be_visitor_interface/ami_handler_fwd_ci.h \
  be_include/be_visitor_interface/ami_handler_stub_ch.h \
  be_include/be_visitor_interface/ami_handler_stub_cs.h \
- be_include/be_visitor_interface/ami_exception_holder_ch.h \
- be_include/be_visitor_interface/ami_exception_holder_ci.h \
- be_include/be_visitor_interface/ami_exception_holder_cs.h \
  be/be_visitor_interface/interface.cpp \
  be/be_visitor_interface/interface_ch.cpp \
  be/be_visitor_interface/interface_ci.cpp \
@@ -10304,18 +10291,7 @@ tags:
  be/be_visitor_interface/any_op_cs.cpp \
  be/be_visitor_interface/cdr_op_ch.cpp \
  be/be_visitor_interface/cdr_op_ci.cpp \
- be/be_visitor_interface/cdr_op_cs.cpp \
- be/be_visitor_interface/ami_handler_fwd_ch.cpp \
- be_include/be_visitor_interface_fwd.h \
- be_include/be_visitor_interface_fwd/interface_fwd_ch.h \
- be_include/be_visitor_interface_fwd/interface_fwd_ci.h \
- be_include/be_visitor_interface_fwd/cdr_op_ci.h \
- be/be_visitor_interface/ami_handler_fwd_ci.cpp \
- be/be_visitor_interface/ami_handler_stub_ch.cpp \
- be/be_visitor_interface/ami_handler_stub_cs.cpp \
- be/be_visitor_interface/ami_exception_holder_ch.cpp \
- be/be_visitor_interface/ami_exception_holder_ci.cpp \
- be/be_visitor_interface/ami_exception_holder_cs.cpp
+ be/be_visitor_interface/cdr_op_cs.cpp
 .obj/be_visitor_interface_fwd.o .obj/be_visitor_interface_fwd.so .shobj/be_visitor_interface_fwd.o .shobj/be_visitor_interface_fwd.so: be/be_visitor_interface_fwd.cpp \
  include/idl.h $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -10541,6 +10517,8 @@ tags:
  be_include/be_visitor_valuetype/field_cs.h \
  be_include/be_visitor_valuetype/field_cdr_ci.h \
  be_include/be_visitor_valuetype/obv_module.h \
+ be_include/be_visitor_valuetype/ami_exception_holder_ch.h \
+ be_include/be_visitor_valuetype/ami_exception_holder_cs.h \
  be/be_visitor_valuetype/valuetype.cpp \
  be/be_visitor_valuetype/valuetype_ch.cpp \
  be/be_visitor_valuetype/valuetype_obv_ch.cpp \
@@ -10597,7 +10575,9 @@ tags:
  be_include/be_visitor_field/cdr_op_ch.h \
  be_include/be_visitor_field/cdr_op_ci.h \
  be_include/be_visitor_field/cdr_op_cs.h \
- be/be_visitor_valuetype/obv_module.cpp
+ be/be_visitor_valuetype/obv_module.cpp \
+ be/be_visitor_valuetype/ami_exception_holder_ch.cpp \
+ be/be_visitor_valuetype/ami_exception_holder_cs.cpp
 .obj/be_visitor_valuetype_fwd.o .obj/be_visitor_valuetype_fwd.so .shobj/be_visitor_valuetype_fwd.o .shobj/be_visitor_valuetype_fwd.so: be/be_visitor_valuetype_fwd.cpp \
  include/idl.h $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
