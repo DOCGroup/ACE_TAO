@@ -11,11 +11,12 @@ Wed Sep 20 10:39:20 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* tao/Abstract_Servant_Base.cpp:
 
-	  Fixed link errors.
+	  Fixed link errors caused by missing implementation of
+	  the copy constructor and of the assignment operator.
 
 	* tao/Remote_Object_Proxy_Broker.cpp:
 
-	  Fixed warning caused by unused args.
+	  Fixed warning caused by unused args in method <select_proxy>.
 
 Wed Sep 20 09:38:32 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
