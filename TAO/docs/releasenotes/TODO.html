@@ -51,56 +51,6 @@
         </P>
       </LI>
 
-      <LI><P><B>EC:</B> The current architecture of the real-time
-          Event Channel does not support some features, such as:
-	  <UL>
-	    <LI><P><B>EC:</B> Some applications are both suppliers and
-                consumers of events,
-                they may be interested in all the
-                events of type <B>T</B> unless the event is generated
-		by them.
-            </LI>
-            <LI><P><B>EC:</B> Can we factor out the scheduling service from
-                the EC?
-              </P>
-            </LI>
-
-            <LI><P><B>EC:</B> The reactive event channel can eliminate
-                data copies because the data does not need to survive
-		after the <CODE>push()</CODE> call.
-              </P>
-            </LI>
-
-	    <LI><P><B>EC:</B> Many applications require to intercept
-	        the EC event processing, for example to keep track of
-		the number of events received and sent. 
-                This requires strategized factories for many (if not
-		all) of the Event Channel internal servants.
-               </P>
-             </LI>
-
-	    <LI><P><B>EC:</B> Some applications require ad-hoc
-                filters, such as "this events must arrive in
-                sequence", or "wait for all this events and then send
-                this other event".
-               </P>
-             </LI>
-
-            <!-- This is Boeing specific -->
-            <LI><P><B>EC:</B> For some applications it is insteresting
-                to activate the EC servants (such as the
-                ConsumerProxys) in different POAs
-              </P>
-            </LI>
-      
-          </UL>
-	  We have completed a new design for the real-time event
-          channel that will let us implement all this features (and
-          others).
-          <BR>[ASSIGNED TO:] Carlos
-        </P>
-      </LI>
-
     </OL>
 
     <HR>
@@ -262,6 +212,43 @@
 
     <H4>New features and Bug fixes</H4>
     <OL>
+      <LI><P><B>EC:</B>Complete the implementation of the new EC,
+	  specially generate the strategies and changes required to
+	  support hard real-time behavior.
+        </P>
+      </LI>
+
+      <LI><P><B>EC:</B>Optimize the updates to the SupplierFiltering
+	  module, specially when it is a singleton: currently it
+	  receives a <CODE>connected</CODE> call for each supplier,
+	  event though one would be enough.
+        </P>
+      </LI>
+
+      <LI><P><B>EC:</B>The supplier filters could depend on the QoS
+	  data, as consumer filters do. We should provide a factory
+	  for them too.
+        </P>
+      </LI>
+
+      <LI><P><B>EC:</B>We need to provide simple operations to update
+	  the subscriptions of a consumer, as well as the publications 
+	  of a supplier, the current scheme (disconnecting and
+	  connecting again) is inefficient.
+        </P>
+      </LI>
+
+      <LI><P><B>EC:</B>We need some strategy in the EC to periodically 
+	  flush out mibehaving suppliers and consumers. Examples of
+	  misbehavior include: suppliers flooding the EC;
+	  consumers or suppliers that are destroyed, but were not
+	  disconnected;
+	  consumers that are not accepting events (risking a
+	  dead-lock);
+	  etc.
+        </P>
+      </LI>
+
       <LI><P><B>EC:</B>Sometimes the Event Channel dead-locks during
           shutdown. According to Ulf Jährig &lt;jaehrig@desys.com&gt>;, an
           easy way to reproduce the problem is to run the
@@ -534,8 +521,8 @@ class POA_Foo {
       <P></LI>
 
       <LI><B>EC:</B> Build an EC example that uses all the cool features
-	(multiple ORBs on each process, collocated EC and Scheduling
-	service, Naming, etc.)
+	(multiple endpoints on each process, collocated EC and
+	Scheduling Service, Naming, etc.)
       <P></LI>
 
       <LI><B>EC:</B> Extend the Concurrency Service (or create a new
@@ -1018,6 +1005,59 @@ encapsulation format.
       <H3>Completed Tasks</H3>
 
     <OL>
+      <LI><P><B>EC:</B> The current architecture of the real-time
+          Event Channel does not support some features, such as:
+	  <UL>
+	    <LI><P><B>EC:</B> Some applications are both suppliers and
+                consumers of events,
+                they may be interested in all the
+                events of type <B>T</B> unless the event is generated
+		by them.
+            </LI>
+            <LI><P><B>EC:</B> Can we factor out the scheduling service from
+                the EC?
+              </P>
+            </LI>
+
+            <LI><P><B>EC:</B> The reactive event channel can eliminate
+                data copies because the data does not need to survive
+		after the <CODE>push()</CODE> call.
+              </P>
+            </LI>
+
+	    <LI><P><B>EC:</B> Many applications require to intercept
+	        the EC event processing, for example to keep track of
+		the number of events received and sent. 
+                This requires strategized factories for many (if not
+		all) of the Event Channel internal servants.
+               </P>
+             </LI>
+
+	    <LI><P><B>EC:</B> Some applications require ad-hoc
+                filters, such as "this events must arrive in
+                sequence", or "wait for all this events and then send
+                this other event".
+               </P>
+             </LI>
+
+            <!-- This is Boeing specific -->
+            <LI><P><B>EC:</B> For some applications it is insteresting
+                to activate the EC servants (such as the
+                ConsumerProxys) in different POAs
+              </P>
+            </LI>
+      
+          </UL>
+	We have completed a new design for the real-time event
+	channel that will let us implement all this features (and
+	others).
+	<BR>[DONE] The new implementation is working, we have to add 
+	several strategies and stress test it, but the architecture
+	seems sound.
+	<BR>[ASSIGNED TO:] Carlos
+      </P>
+      </LI>
+
       <LI><P><B>IDL Compiler:</B>The IDL compiler could generate files
           with empty 
 	  implementation classes, just to make the life of implementors
