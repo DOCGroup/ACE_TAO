@@ -1,0 +1,9 @@
+#
+# Makefile for building RTCORBA tests
+#
+
+DIRS = \
+	Client_Propagated \
+	Server_Protocol
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

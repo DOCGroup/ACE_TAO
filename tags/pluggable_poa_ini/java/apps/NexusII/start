@@ -1,0 +1,27 @@
+#! /bin/sh
+
+## This is an example script to launch the server.
+
+# the mywebaddress variable should point to a URL which is world-readable
+# the mywebdir variable should point to the actual pathname of the URL
+# which is specified by the mywebaddress variable
+# The server needs to have write access to the mywebdir directory.
+# Thus, the server saves images into the "mywebdir", and clients
+# can access them via the "mywebaddress" URL.
+
+# the 222222 number is the port number on which the server is to be launched
+# the same port number should appear in the html document containing
+# the client applet (see start.html for an example)
+
+# while running the server, the ./classes should be part of the CLASSPATH.
+# while running the client, the client classes as well as the awtCommand
+# toolkit should be world-readable. (The awtcommand toolkit is included
+# in this toolkit, under the classes directory.)
+
+
+umask 022
+java -Dmywebaddress=http://cumbia.cs.wustl.edu/NexusII/tmp/ -Dmywebdir=/project/cumbia/sumedh/web/apache/root/NexusII/tmp/ NexusIIserver 222222
+
+
+
+
