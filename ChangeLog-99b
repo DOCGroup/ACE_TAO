@@ -9,7 +9,7 @@ Thu Jul 01 10:53:33 1999  David L. Levine  <levine@cs.wustl.edu>
 
 Thu Jul 01 10:47:41 1999  David L. Levine  <levine@cs.wustl.edu>
 
-        * bin/libsizes.pl: always use `pwd`, because the PWD environment
+        * bin/libsize.pl: always use `pwd`, because the PWD environment
           variable doesn't appear to get updated by recursive makes.
 
 Thu Jul 01 08:46:10 1999  David L. Levine  <levine@cs.wustl.edu>
