@@ -1,3 +1,10 @@
+Sun Apr  7 06:02:26 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * include/makeinclude/platform_lynxos.GNU:
+        * include/makeinclude/platform_macosx.GNU:
+
+          Didn't know that these platforms used g++. Fixing them.
+
 Sun Apr  7 05:27:35 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * include/makeinclude/platform_g++_common.GNU:
