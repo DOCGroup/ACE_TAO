@@ -134,6 +134,7 @@ public:
     EIDL_UNDERSCORE,            // More than one leading underscore
     EIDL_EMPTY_MODULE,          // Empty modules not allowed in IDL.
     EIDL_BACK_END,              // Back end error
+    EIDL_ILLEGAL_INFIX,         // Illegal infix operator in expression
     EIDL_OK                     // No error
   };
 
@@ -319,6 +320,10 @@ public:
   // Report back-end error
   void back_end (long lineno,
                  UTL_String *s);
+                 
+  // Report illegal infix operator error (they can be used
+  // only with integer, floating point or fixed point expressions.
+  void illegal_infix (void);
 };
 
 #endif           // _UTL_ERR_UTL_ERR_HH

@@ -199,6 +199,8 @@ error_string (UTL_Error::ErrorCode c)
       return "module must contain at least one declaration: ";
     case UTL_Error::EIDL_BACK_END:
       return "back end: ";
+    case UTL_Error::EIDL_ILLEGAL_INFIX:
+      return "illegal infix operator in expression";
   }
 
   return 0;
@@ -1337,6 +1339,19 @@ UTL_Error::back_end (long lineno,
   idl_error_header (EIDL_BACK_END,
                     lineno,
                     s);
+  ACE_ERROR ((LM_ERROR,
+              "\n"));
+  idl_global->set_err_count (idl_global->err_count () + 1);
+}
+
+void
+UTL_Error::illegal_infix (void)
+{
+  idl_error_header (EIDL_ILLEGAL_INFIX,
+                    idl_global->lineno (),
+                    idl_global->filename ());
+  ACE_ERROR ((LM_ERROR,
+              "\n"));
   idl_global->set_err_count (idl_global->err_count () + 1);
 }
 
