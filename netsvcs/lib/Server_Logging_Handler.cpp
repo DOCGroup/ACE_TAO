@@ -188,7 +188,8 @@ ACE_Server_Logging_Handler<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_2>::open (void 
 template <ACE_PEER_STREAM_1, class COUNTER, ACE_SYNCH_1> int
 ACE_Server_Logging_Handler<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_2>::handle_input (ACE_HANDLE)
 {
-  return this->handle_logging_record () > 0 ? 0 : -1;
+  int result = this->handle_logging_record ();
+  return result > 0 ? result : -1;
 }
 
 int 
