@@ -121,10 +121,9 @@ ACE_SOCK_Dgram::send (const void *buf,
 
   iovec buffer[1];
   buffer[0].iov_len = n;
-  buffer[0].iov_base = buf;
+  buffer[0].iov_base = (char *) buf;
   size_t number_of_bytes_sent = 0;
-  return this->send (this->get_handle (),
-                     buffer,
+  return this->send (buffer,
                      1,
                      number_of_bytes_sent,
                      flags,
@@ -147,10 +146,9 @@ ACE_SOCK_Dgram::recv (void *buf,
 
   iovec buffer[1];
   buffer[0].iov_len = n;
-  buffer[0].iov_base = buf;
+  buffer[0].iov_base = (char *) buf;
   size_t number_of_bytes_recvd = 0;
-  return this->recv (this->get_handle (),
-                     buffer,
+  return this->recv (buffer,
                      1,
                      number_of_bytes_recvd,
                      flags,
