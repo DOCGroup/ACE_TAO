@@ -1,11 +1,17 @@
+Wed Jul 21 11:48:53 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_vxworks5.x_g++.GNU:
+          use full path to $(CC) in egcs version check, to avoid
+          warning if it is not on the user's PATH.
+
 Wed Jul 21 11:44:19 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/OS.h:
-	  Simplified the definition of the ACE_THR_PRI_*_DEF macros from
-	  (MIN+(MAX-MIN)/2) to ((MIN+MAX)/2), the new definition is not
-	  only easier to read, makes less operations (and function calls)
-	  but it is also safer when the the priorities are "backwards" and 
-	  PRI_MAX < PRI_MIN
+        * ace/OS.h:
+          Simplified the definition of the ACE_THR_PRI_*_DEF macros from
+          (MIN+(MAX-MIN)/2) to ((MIN+MAX)/2), the new definition is not
+          only easier to read, makes less operations (and function calls)
+          but it is also safer when the the priorities are "backwards" and
+          PRI_MAX < PRI_MIN
 
 Wed Jul 21 11:40:31 1999  Steve Huston  <shuston@riverace.com>
 
