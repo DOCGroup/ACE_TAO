@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <Deployment:ComponentImplementationDescription
  xmlns:Deployment="http://www.omg.org/Deployment"
  xmlns:xmi="http://www.omg.org/XMI"
@@ -67,6 +67,7 @@
         <instance xmi:idref="a_Airframe"/>
       </internalEndpoint>
     </connection>
+    
     <connection>
       <name>NavDisplay_Airframe</name>
       <internalEndpoint>
@@ -78,5 +79,18 @@
         <instance xmi:idref="a_Airframe"/>
       </internalEndpoint>
     </connection>
+
+	  <connection> 
+	    <name>NavDisplay_Airframe_Uses_Multiple</name> 
+	    <internalEndpoint> 
+	      <portName>gather_data</portName> 
+	      <instance xmi:idref="a_NavDisplay"/> 
+	    </internalEndpoint> 
+	    <internalEndpoint> 
+	      <portName>dataout</portName> 
+	      <instance xmi:idref="a_Airframe"/> 
+	    </internalEndpoint> 
+	  </connection> 
+    
   </assemblyImpl>
 </Deployment:ComponentImplementationDescription>
