@@ -4490,7 +4490,11 @@ ACE_OS::open (const char *filename,
     }
 
   ACE_HANDLE h = ::CreateFileA (filename, access,
+#if defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)
                                 FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
+#else
+                                FILE_SHARE_READ | FILE_SHARE_WRITE,
+#endif /* ACE_HAS_WINNT4 && ACE_HAS_WINNT4 != 0 */
                                 ACE_OS::default_win32_security_attributes (sa),
                                 creation,
                                 flags,
