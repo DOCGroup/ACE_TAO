@@ -167,8 +167,8 @@ public:
   // Set the LWP concurrency level of the process.
 
   static int sigsetmask (int how, 
-			 const sigset_t *set, 
-			 sigset_t *oset = 0);
+                         const sigset_t *sigset, 
+                         sigset_t *osigset = 0);
   // Change and/or examine calling thread's signal mask.
 
   static int keycreate (ACE_thread_key_t *keyp,

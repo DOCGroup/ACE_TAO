@@ -147,11 +147,11 @@ ACE_Thread::setconcurrency (int new_level)
 
 ACE_INLINE int 
 ACE_Thread::sigsetmask (int how, 
-			const sigset_t *set, 
-			sigset_t *oset)
+			const sigset_t *sigset, 
+			sigset_t *osigset)
 {
   ACE_TRACE ("ACE_Thread::sigsetmask");
-  return ACE_OS::thr_sigsetmask (how, set, oset);
+  return ACE_OS::thr_sigsetmask (how, sigset, osigset);
 }
 
 ACE_INLINE int
