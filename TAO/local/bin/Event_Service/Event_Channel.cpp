@@ -28,6 +28,7 @@ Preemption_Priority (RtecScheduler::handle_t rtinfo)
 
   ACE_TRY
     {
+      ACE_TIMEPROBE ("  Preemption_Priority - priority requested");
       ACE_Scheduler_Factory::server ()->priority
 	(rtinfo,
 	 thread_priority,
@@ -35,6 +36,7 @@ Preemption_Priority (RtecScheduler::handle_t rtinfo)
 	 preemption_priority,
 	 ACE_TRY_ENV);
       ACE_CHECK_ENV
+      ACE_TIMEPROBE ("  connected - priority obtained");
     }
   ACE_CATCH (RtecScheduler::UNKNOWN_TASK, ex_ut)
     {
@@ -2142,7 +2144,7 @@ ACE_ES_Subscription_Module::subscribe_type (ACE_ES_Consumer_Rep *consumer,
 		 dependency_info->rt_info,
 		 dependency_info->number_of_calls,
 		 ACE_TRY_ENV);
-	      ACE_DEBUG ((LM_ERROR, "%p - add_dependency (%d,%d,%d)\n",
+	      ACE_DEBUG ((LM_ERROR, "%s - add_dependency (%d,%d,%d)\n",
 			  "ACE_ES_Priority_Timer::schedule_timer - ",
 			  consumer->dependency ()->rt_info,
 			  dependency_info->rt_info,
@@ -2208,7 +2210,7 @@ ACE_ES_Subscription_Module::subscribe_source_type (ACE_ES_Consumer_Rep *consumer
 		       dependency_info->rt_info,
 		       dependency_info->number_of_calls,
 		       ACE_TRY_ENV);
-		    ACE_DEBUG ((LM_ERROR, "%p - add_dependency (%d,%d,%d)\n",
+		    ACE_DEBUG ((LM_ERROR, "%s - add_dependency (%d,%d,%d)\n",
 				"ACE_Subscription_Module::subscribe_source_type - ",
 				consumer->dependency ()->rt_info,
 				dependency_info->rt_info,
@@ -2680,10 +2682,12 @@ ACE_ES_Priority_Timer::connected (RtecScheduler::handle_t rt_info)
 
   ACE_TRY
     {
+      ACE_TIMEPROBE ("  connected - priority requested");
       ACE_Scheduler_Factory::server ()->priority
 	(rt_info, thread_priority,
 	 subpriority, preemption_priority, ACE_TRY_ENV);
       ACE_CHECK_ENV;
+      ACE_TIMEPROBE ("  connected - priority obtained");
 #if 0
       ACE_ERROR_RETURN ((LM_ERROR, "%p RtecScheduler::Scheduler::priority failed.\n",
 			 "ACE_ES_Priority_Timer::connected"), -1);
@@ -2733,9 +2737,11 @@ ACE_ES_Consumer_Name (const RtecEventChannelAdmin::ConsumerQOS &qos)
 
   ACE_TRY
     {
+      ACE_TIMEPROBE ("  Consumer_Name - priority requested");
       RtecScheduler::RT_Info* rt_info = ACE_Scheduler_Factory::server ()->get
 	(qos.dependencies[1].rt_info, ACE_TRY_ENV);
       ACE_CHECK_ENV;
+      ACE_TIMEPROBE ("  Consumer_Name - priority obtained");
 
       return rt_info->entry_point;
     }

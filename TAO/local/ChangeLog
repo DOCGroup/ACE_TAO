@@ -1,3 +1,24 @@
+Mon Dec  8 13:20:39 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* bin/Event_Service/Makefile: 
+	* bin/Event_Service/Dispatching_Modules.cpp: 
+	* bin/Event_Service/Dispatching_Modules.h: 
+	* bin/Event_Service/Event_Channel.cpp: 
+	* bin/Event_Service/Event_Channel.h: 
+	* bin/Event_Service/RT_Task.cpp: 
+	* bin/Event_Service/ReactorTask.cpp: 
+	* bin/Event_Service/ReactorTask.h: 
+	* bin/Scheduling_Service/Config_Scheduler.cpp: 
+	* bin/Scheduling_Service/Scheduler_Internal.cpp: 
+	  More fine tuning of TIMEPROBES, trying to track the wasted time.
+
+	* tests/Latency.cpp: 
+	  Use ACE_ERROR and ACE_DEBUG instead of iostreams.
+
+	* bin/Scheduling_Service/Scheduler_Internal.cpp: 
+	  Fixed problem on scheduling computation, I guess I left some
+	  code commented out and never actually fixed it.
+
 Wed Dec  3 16:11:39 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* tests/Latency.h: 
