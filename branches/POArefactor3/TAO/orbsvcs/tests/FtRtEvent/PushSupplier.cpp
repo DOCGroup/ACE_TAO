@@ -8,6 +8,7 @@
 #include "tao/MProfile.h"
 #include "tao/Stub.h"
 #include "orbsvcs/FtRtEvent/Utils/resolve_init.h"
+#include "tao/PortableServer/PS_CurrentC.h"
 
 ACE_RCSID (FtRtEvent,
            PushSupplier,

@@ -16,7 +16,6 @@
 #ifndef _TRADING_SERVICE_H
 #define _TRADING_SERVICE_H
 
-#include "tao/PortableServer/ORB_Manager.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Signal.h"
 
