@@ -5,23 +5,17 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
-unshift @INC, '../../../../bin';
-require Process;
-require ACEutils;
-use Cwd;
+use lib '../../../../bin';
+use PerlACE::Run_Test;
 
-ACE::checkForTarget(getcwd());
+$T = new PerlACE::Process ("Single_Threaded_POA");
 
-$T = Process::Create ($EXEPREFIX."Single_Threaded_POA".$EXE_EXT);
+$client = $T->SpawnWaitKill (60);
 
-$client = $T->TimedWait (60);
-if ($client == -1) {
-  print STDERR "ERROR: test timedout\n";
-  $T->Kill (); $T->TimedWait (1);
-}
-
-if ($client == -1) {
+if ($client != 0) {
+  print STDERR "ERROR: test returned $client\n";
   exit 1;
 }
 
 exit 0;
+
