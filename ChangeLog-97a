@@ -1,3 +1,16 @@
+Tue Mar 25 21:26:10 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/TTY_IO.{h,cpp},README, and these config files:
+	  config-aix-*.h, config-hpux-*.h, config-irix5.*.h,
+	  config-mvs.h, config-osf1-*.h, config-sun*.h (except for g++
+	  and config-sunos5.5-sunc++-4.1.h), config-win*.h:
+	  Added ACE_NEEDS_DEV_IO_CONVERSION to conditionally compile the
+	  ACE_DEV_IO & conversion operator for ACE_TTY_IO, which is a
+	  subclass of ACE_DEV_IO.  Thanks to Fred LaBar
+	  <flabar@fallschurch.esys.com> and Gonzalo Diethelm
+	  <gonzo@ing.puc.cl> for reporting warnings without this on
+	  Irix 6.2 with the mipsPro compiler.
+
 Tue Mar 25 10:17:08 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/OS.cpp (thr_create): on VxWorks, always pass 0 as first arg to
