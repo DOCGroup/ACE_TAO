@@ -218,11 +218,11 @@ main (int argc, char **argv)
       FILE *output_file_6 = ACE_OS::fopen ("ior_6", "w");
       
       if (output_file_5)
-        ACE_OS::fprintf (output_file_1, 
+        ACE_OS::fprintf (output_file_5, 
                          "%s",
                          fifth_ior.in ());
       if (output_file_6)
-        ACE_OS::fprintf (output_file_1, 
+        ACE_OS::fprintf (output_file_6, 
                          "%s",
                          sixth_ior.in ());
 
