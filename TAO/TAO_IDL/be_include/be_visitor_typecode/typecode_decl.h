@@ -69,6 +69,9 @@ public:
   virtual int visit_union (be_union *node);
   // visit a union
 
+  virtual int visit_valuetype (be_valuetype *node);
+  // visit a valuetype
+
 };
 
 #endif /* _BE_VISITOR_TYPECODE_TYPECODE_DECL_H_ */
