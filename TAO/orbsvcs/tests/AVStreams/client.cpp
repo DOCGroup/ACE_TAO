@@ -276,10 +276,9 @@ Client::test_define_property (CORBA::Environment &env)
   ACE_DEBUG ((LM_DEBUG,
               "Main : Char ch = %c\n",
               ch));
-
-  local_mmdevice_->define_property ("char_property",
-                                    anyval,
-                                    env);
+  this->remote_mmdevice_->define_property ("char_property",
+                                           anyval,
+                                           env);
   TAO_CHECK_ENV_RETURN (env, 1);
   
   // Prepare a Short and "define" that in the PropertySet.
