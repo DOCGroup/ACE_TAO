@@ -3,21 +3,24 @@
 // $Id$
 
 #include "FT_PolicyFactory.h"
+#include "FT_Policy_i.h"
+#include "orbsvcs/FT_CORBAC.h"
+#include "tao/PolicyC.h"
+
 
 ACE_RCSID (FaultTolerance, FT_PolicyFactory, "$Id$")
 
-#include "tao/PolicyC.h"
+
 
 
 CORBA::Policy_ptr
 TAO_FT_PolicyFactory::create_policy (
     CORBA::PolicyType type,
-    const CORBA::Any &
+    const CORBA::Any &val
     TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CORBA::PolicyError))
 {
-  CORBA::Policy_ptr policy = CORBA::Policy::_nil ();
 
   TAO_ENV_ARG_DEFN;
 
