@@ -1,4 +1,4 @@
-Wed Jul 14 08:26:42 1999  Brian Raven <brianr@mrpotatohead.liffe.com>
+Wed Jul 14 08:26:42 1999  Brian Raven <brianr@liffe.com>
 
         * asnmp/snmp.{h,cpp},wpdu.cpp:
           SYNOPSIS:
