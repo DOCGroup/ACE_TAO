@@ -31,7 +31,7 @@ Mon Aug  9 17:43:33 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 Mon Aug  9 12:16:50 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/BD_String_Argument_T.cpp:
-        
+
           Fixed incorrect placement of #if TAO_HAS_INTERCEPTORS == 1
           guard.
 
