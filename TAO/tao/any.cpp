@@ -660,3 +660,29 @@ CORBA_Any::operator VARIANT (void)
   retval.vt = VT_EMPTY;
   return retval;
 }
+
+// ----------------------------------------------------------------------
+// Any_var type
+// ----------------------------------------------------------------------
+
+CORBA::Any_var &
+CORBA_Any_var::operator= (CORBA::Any *p)
+{
+  if (this->ptr_ != p)
+    {
+      if (this->ptr_ != 0)
+	delete (this->ptr_);
+      this->ptr_ = p;
+    }
+  return *this;
+}
+
+CORBA::Any_var &
+CORBA_Any_var::operator= (const CORBA::Any_var& r)
+{
+  if (this->ptr_ != 0)
+    delete (this->ptr_);
+  this->ptr_ = new CORBA::Any (*r.ptr_);
+  return *this;
+}
+

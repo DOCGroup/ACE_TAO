@@ -64,7 +64,8 @@
 #include "tao/corbacom.h"
 
 // individual CORBA classes
-#include "tao/sequence.h" // used by many
+#include "tao/sequence.h"
+#include "tao/varout.h"
 #include "tao/any.h"
 #include "tao/boa.h"
 
@@ -108,19 +109,21 @@
 
 //#include "tao/xdr.h"
 
-// include all the *.i file here
+// The following *.i files are always included here
 #  if !defined(__ACE_INLINE__)
 #    undef ACE_INLINE
 #    define ACE_INLINE inline
 #    define do_undef_on_ACE_INLINE
 #  endif
 
+#include "tao/corbacom.i"
+#include "tao/sequence.i"
 #include "tao/typecode.i"
 #include "tao/any.i"
-#include "tao/cdr.i" //always
-#include "tao/object.i"  // should always be included
+#include "tao/cdr.i"
+#include "tao/object.i"
 #include "tao/orbobj.i"
-#include "tao/marshal.i" // always
+#include "tao/marshal.i"
 #include "tao/client_factory.i"
 
 #  if defined(do_undef_on_ACE_INLINE)
@@ -129,6 +132,7 @@
 #    define ACE_INLINE
 #  endif
 
+// the following *.i files are conditionally included here
 #if defined (__ACE_INLINE__)
 #include "tao/boa.i"
 #include "tao/giop.i"
