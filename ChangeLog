@@ -1,5 +1,9 @@
 Sat Dec  8 09:39:48 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
+	* ace/OS.cpp (string_to_argv): Improved the support for quoted strings.
+	  Thanks to Kevin Burge <kevin.burge@systemware.com> for reporting
+ 	  this.
+
 	* ace/Profile_Timer.cpp,
 	  ace/OS.i,
 	  ace/OS.h,
@@ -15,22 +19,6 @@ Fri Dec  7 07:57:12 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 	* ace/OS.cpp (cond_timedwait): Fixed a bug in the WinCE semaphore
 	  simulation version of ACE_OS::cond_timedwait().  Thanks to
  	  Michael Graf <mg@leutek.de> for helping to find this.
-
-Thu Dec  6 18:48:07 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
-
-	* ace/Lib_Find.cpp: Fixed the ldfind() method so that it
-	  does a case-insensitive comparison on Windows platforms.  Thanks
- 	  to Kevin Burge <kevin.burge@systemware.com> for reporting this.
-
-Thu Dec  6 09:02:06 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
-
-	* ace/Sock_Connect.cpp: Added MACOSX support.  Thanks to 
-	  John Michael Zorko <j.zorko@att.net> for contributing this.
-
-	* tests/Logging_Strategy_Test.cpp: Add a "wait()" at the 
-	  end of the main function to avoid problems when the main thread
- 	  exits before the reactor thread.  Thanks to Michael Searles
- 	  <msearles@base16.com> for reporting this.
 
 Fri Dec 07 14:28:33 2001  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -61,6 +49,22 @@ Fri Dec  7 10:22:25 2001  Ossama Othman  <ossama@uci.edu>
 	  on Windows, and a "hang" on Unix platforms.  Thanks to Vladimir
 	  Chovanec <Vladimir.CHOVANEC@asset.sk> for tracking down this
 	  problem.
+
+Thu Dec  6 18:48:07 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Lib_Find.cpp: Fixed the ldfind() method so that it
+	  does a case-insensitive comparison on Windows platforms.  Thanks
+ 	  to Kevin Burge <kevin.burge@systemware.com> for reporting this.
+
+Thu Dec  6 09:02:06 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Sock_Connect.cpp: Added MACOSX support.  Thanks to 
+	  John Michael Zorko <j.zorko@att.net> for contributing this.
+
+	* tests/Logging_Strategy_Test.cpp: Add a "wait()" at the 
+	  end of the main function to avoid problems when the main thread
+ 	  exits before the reactor thread.  Thanks to Michael Searles
+ 	  <msearles@base16.com> for reporting this.
 
 Thu Dec 06 20:28:02 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
