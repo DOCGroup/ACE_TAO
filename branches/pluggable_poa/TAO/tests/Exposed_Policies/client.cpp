@@ -2,7 +2,7 @@
 
 // -- App. Specific Include --
 #include "CounterC.h"
-#include "util.h"
+// #include "util.h"
 
 // -- App. Specific Include --
 #include "Policy_Verifier.h"
