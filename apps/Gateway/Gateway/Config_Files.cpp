@@ -1,5 +1,7 @@
 // $Id$
 
+#define ACE_BUILD_SVC_DLL
+
 #include "Config_Files.h"
 #include "Options.h"
 
