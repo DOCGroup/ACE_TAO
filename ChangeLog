@@ -1,3 +1,10 @@
+Fri Feb 01 00:00:12 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Task.h:
+	* ace/Thread_Manager.h: Added more explanation on how to use the
+	  <task> argument.  Thanks to Petr Shelomovsky
+	  <pedrodon@trustworks.com> for motivating the change.
+
 Thu Jan 31 19:18:37 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/NT_Service.{h cpp}: To avoid race condition at shutdown time,
@@ -17,10 +24,10 @@ Thu Jan 31 17:00:52 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/config-all.h: Need to include <new> with all versions of
 	  SunCC compiler and not just CC 5.0, when the compiler is using
-	  compat mode 4. 
+	  compat mode 4.
 	* ace/config-sunos5.6.h: Need to define ACE_LACKS_ACE_IOSTREAM
 	  when higher versions of CC are used with compat mode 4 and
-	  such. 
+	  such.
 
 	  Thanks to Tim Rydell <tim.rydell@gd-ais.com> for the fixes.
 

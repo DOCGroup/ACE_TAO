@@ -155,12 +155,19 @@ public:
    * handles being spawned.  Returns -1 on failure (<errno> will
    * explain...), otherwise returns the group id of the threads.
    *
+   * Assigning <task> allows you to associate the newly spwaned
+   * threads with an instance of ACE_Task_Base.  If <task> == 0, then
+   * the new threads are automatically with <this> ACE_Task_Base.
+   * Setting the <task> argument to value other than <this> make the
+   * thread manipulating functions, like wait(), suspend(), resume()
+   * useless.  Threads spawned with user specified <task> value must
+   * be manipulated thru ACE_Thread_Manager directly.
+   *
    * If <stack> != 0 it is assumed to be an array of <n> pointers to
    * the base of the stacks to use for the threads being spawned.
    * Likewise, if <stack_size> != 0 it is assumed to be an array of
    * <n> values indicating how big each of the corresponding <stack>s
-   * are.
-   */
+   * are.  */
   virtual int activate (long flags = THR_NEW_LWP | THR_JOINABLE,
                         int n_threads = 1,
                         int force_active = 0,

@@ -521,10 +521,24 @@ public:
    * an array of <n> values indicating how big each of the
    * corresponding <stack>s are.  If <thread_handles> != 0 it is
    * assumed to be an array of <n> thread_handles that will be
-   * assigned the values of the thread handles being spawned.  Returns
-   * -1 on failure (<errno> will explain...), otherwise returns the
-   * group id of the threads.
-   */
+   * assigned the values of the thread handles being spawned.
+   *
+   * Threads in Thread_Manager can be maniputated in groups based on
+   * <grp_id> or <task> using functions such as kill_grp() or
+   * cancel_task().
+   *
+   * If <grp_id> is assigned, the newly spawned threads are added into
+   * the group.  Otherwise, the Thread_Manager assigns these <n>
+   * threads with a grp_id.  You should choose either assigning
+   * <grp_id> everytime, or let the Thread_Manager handles it for
+   * you consistently.
+   *
+   * The argument <task> is usually assigned by
+   * ACE_Task_Base::activate.  It associate the newly spawned threads
+   * with an ACE_Task instance.
+   *
+   * @retval -1 on failure (<errno> will explain...), otherwise returns the
+   * group id of the threads.  */
   int spawn_n (ACE_thread_t thread_ids[],
                size_t n,
                ACE_THR_FUNC func,
