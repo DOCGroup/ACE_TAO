@@ -31,7 +31,7 @@ CosEC_Basic::~CosEC_Basic (void)
 int
 CosEC_Basic::init_ORB  (int argc, char *argv [])
 {
-  ACE_DECLARE_NEW_CORBA_ENV
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       this->orb_ = CORBA::ORB_init (argc,
@@ -79,7 +79,7 @@ CosEC_Basic::init_ORB  (int argc, char *argv [])
 int
 CosEC_Basic::init_RtEC (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV
+  ACE_DECLARE_NEW_CORBA_ENV;
     ACE_TRY
     {
       this->scheduler_ =
@@ -131,7 +131,7 @@ CosEC_Basic::init_RtEC (void)
 int
 CosEC_Basic::init_CosEC (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV
+  ACE_DECLARE_NEW_CORBA_ENV;
     ACE_TRY
     {
       // Setup the QOS params..
