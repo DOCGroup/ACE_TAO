@@ -44,20 +44,20 @@ while ( $#ARGV >= 0)
     }
     elsif ($ARGV[0] =~ m/^-evc3/i) {
         $extension = "vcp";
-    }    
+    }
     elsif ($ARGV[0] =~ m/^-msvc6/i) {
         $extension = "dsp";
-    }    
+    }
     elsif ($ARGV[0] =~ m/^-msvc7/i) {
         $extension = "vcproj";
-    }    
+    }
     elsif ($ARGV[0] =~ m/^-config/i) {
         push @configs, $ARGV[1];
-        shift; 
-    }    
+        shift;
+    }
     elsif ($ARGV[0] =~ m/^-r/i) {
         $recurse = 1;
-    }    
+    }
     elsif ($ARGV[0] =~ m/^-v/i) {
         $verbose = 1;
     }
@@ -69,7 +69,7 @@ while ( $#ARGV >= 0)
     }
     elsif ($ARGV[0] =~ m/^-useroot/i) {
         push @roots, $ARGV[1];
-        shift; 
+        shift;
     }
     elsif ($ARGV[0] =~ m/^-aceroot/i) {
         $aceroot = 1;
@@ -98,7 +98,7 @@ while ( $#ARGV >= 0)
     }
     shift;
 }
- 
+
 if ($#configs < 0) {
     if (defined $ENV{WINMAKE_CONFIGS}) {
         @configs = split /:/, $ENV{WINMAKE_CONFIGS};
@@ -160,13 +160,13 @@ sub ProjectSearch ($@)
     my $build = shift;
     my @targets = @_;
 
-    while ($#targets >= 0) { 
+    while ($#targets >= 0) {
         my $target = $targets[0];
         if (-d $target) {
             print "    Reading Directory $target\n" if ($verbose);
             if ($recurse) {
                 my $dh = new DirHandle ($target);
-                
+
                 if (defined $dh) {
                     foreach my $entry ($dh->read ()) {
                         if (-d "$target/$entry" && $entry ne "." && $entry ne "..") {
@@ -179,7 +179,7 @@ sub ProjectSearch ($@)
                     print STDERR "Error: Cannot read $target: $!\n";
                 }
             }
-            
+
             foreach my $t (glob ($target . "\\*." . $extension)) {
                 print "    Adding project $t\n" if ($verbose);
                 %projects->{$t}->{BUILD} = $build;
@@ -228,7 +228,7 @@ print "=== Reading Project Files\n" if ($verbose);
 
 foreach my $project (keys %projects) {
     my $proj;
-    
+
     if ($project =~ m/\.dsp$/i) {
         $proj = new PerlACE::MSProject::DSP ($project);
     }
@@ -243,25 +243,29 @@ foreach my $project (keys %projects) {
     }
 
     print "    Loading $project:" if ($verbose);
-    
+
     $proj->Load ();
-    
+
     foreach my $config (@configs) {
         foreach my $proj_config ($proj->Configs ()) {
             if ($proj_config =~ m/\Q$config\E/i) {
                 print " \"$proj_config\"" if ($verbose);
                 my $name = $proj->DepOutputFile ($proj_config);
-                           
+
                 %names->{lc $name} = $project;
-                @{%projects->{$project}->{CONFIGS}->{$proj_config}->{DEPS}} = split / /, $proj->Libs ($proj_config);
-                
+                my @deps = split / /, $proj->Libs ($proj_config);
+
+                foreach my $dep (@deps) {
+#                    $dep =~ s/.*[\/\\]//g;
+                    push (@{%projects->{$project}->{CONFIGS}->{$proj_config}->{DEPS}}, $dep);
+                }
                 if ($proj->UsesTAOIDL () == 1) {
                     push @{%projects->{$project}->{CONFIGS}->{$proj_config}->{DEPS}}, ("gperf.exe", "tao_idl.exe");
                 }
             }
         }
     }
-    
+
     print "\n" if ($verbose);
 
     %projects->{$project}->{PROJ} = $proj;
@@ -280,6 +284,8 @@ foreach my $project (keys %projects) {
         print "        Before:", join (" ", @{%projects->{$project}->{CONFIGS}->{$config}->{DEPS}}), "\n" if ($verbose);
         my @newdeps;
         foreach my $dep (@{%projects->{$project}->{CONFIGS}->{$config}->{DEPS}}) {
+            $dep =~ s/.*[\/\\]//g;
+
             if (defined %names->{lc $dep}) {
                 push @newdeps, $dep;
             }
@@ -311,7 +317,7 @@ do {
             }
         }
     }
-    
+
 } while (!$finished);
 
 
@@ -329,11 +335,11 @@ if ($debug) {
             print "        Depends: ", join (" ", @{%projects->{$project}->{CONFIGS}->{$config}->{DEPS}}), "\n";
         }
     }
-    
+
     print "\n";
     print "List of Outputs\n";
     print "---------------\n";
-    
+
     foreach my $name (keys %names) {
         print "$name\n";
     }
@@ -341,7 +347,7 @@ if ($debug) {
 
 ################################################################################
 
-# Loop through and 
+# Loop through and
 
 print "=== Compiling\n" if ($verbose);
 
@@ -352,7 +358,7 @@ my $loop = 1;
 do {
     $compilations = 0;
     $unfinished = 0;
-    
+
     foreach my $project (keys %projects) {
         if (%projects->{$project}->{BUILD} == 1) {
             foreach my $config (keys %{%projects->{$project}->{CONFIGS}}) {
@@ -363,15 +369,15 @@ do {
                             ++$depsleft;
                         }
                     }
-                    
+
                     if ($depsleft == 0) {
                         ++$compilations;
                         print "Auto_compiling $project : $config\n" if ($auto_compile);
-                        
+
                         if ($list == 1) {
                             if ($clean == 1) {
                                 print "Cleaning ";
-                            } 
+                            }
                             else {
                                 print "Compiling ";
                             }
@@ -394,7 +400,7 @@ do {
             }
         }
     }
-    
+
     print "    === Loop $loop: $compilations compiles, $unfinished left\n" if ($verbose);
     ++$loop;
 } while ($compilations != 0);
@@ -409,5 +415,5 @@ foreach my $project (keys %projects) {
                 print STDERR "Error: Project not compiled: $project - $config\n",
             }
         }
-    }        
+    }
 }
