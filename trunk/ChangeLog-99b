@@ -1,7 +1,8 @@
 Tue Feb 16 00:39:35 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
+	* examples/Reactor/Proactor/test_proactor.dsp: 
 	* examples/Reactor/Proactor/test_proactor.cpp: 
-	Updated the file.
+	Updated the files.
 	* ace/WIN32_Asynch_IO.h: 
 	* ace/WIN32_Asynch_IO.h: 
 	* ace/WIN32_Asynch_IO.h:
@@ -14,8 +15,8 @@ Tue Feb 16 00:39:35 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 	* examples/Reactor/Proactor/Makefile: 	
 	New make file which also compiles the test_aiosig_ace.cpp
 	program. 		
-		
-	* ace/POSIX_Asynch_IO.i: 
+	* ace/POSIX_Asynch_IO.i:
+ 
 	rTagged the ACE_wrappers repository with <before_proactor>
 	After the following changes rtagged the repository with
 	<after_proactor> 
