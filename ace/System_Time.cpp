@@ -35,10 +35,9 @@ ACE_System_Time::ACE_System_Time (const ACE_TCHAR *poolname)
 #endif /* ACE_DEFAULT_BACKING_STORE */
     }
   else
-    ACE_OS::strncpy (this->poolname_,
-                     poolname,
-                     (sizeof this->poolname_ / sizeof (ACE_TCHAR)));
-
+    ACE_OS::strsncpy (this->poolname_,
+                      poolname,
+                      (sizeof this->poolname_ / sizeof (ACE_TCHAR)));
   
   ACE_NEW (this->shmem_,
            ALLOCATOR (this->poolname_));

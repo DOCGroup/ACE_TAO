@@ -199,7 +199,7 @@ ACE_Module_Type::info (ACE_TCHAR **str, size_t len) const
   if (*str == 0 && (*str = ACE_OS::strdup (buf)) == 0)
     return -1;
   else
-    ACE_OS::strncpy (*str, buf, len);
+    ACE_OS::strsncpy (*str, buf, len);
   return ACE_OS::strlen (buf);
 }
 
@@ -281,7 +281,7 @@ ACE_Stream_Type::info (ACE_TCHAR **str, size_t len) const
   if (*str == 0 && (*str = ACE_OS::strdup (buf)) == 0)
     return -1;
   else
-    ACE_OS::strncpy (*str, buf, len);
+    ACE_OS::strsncpy (*str, buf, len);
   return ACE_OS::strlen (buf);
 }
 

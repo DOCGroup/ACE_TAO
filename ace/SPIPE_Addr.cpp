@@ -121,9 +121,9 @@ ACE_SPIPE_Addr::set (const ACE_TCHAR *addr,
 #else
   this->ACE_Addr::base_set (AF_SPIPE,
                             ACE_OS::strlen (addr) + 1 + len);
-  ACE_OS::strncpy (this->SPIPE_addr_.rendezvous_,
-                   addr,
-		   sizeof this->SPIPE_addr_.rendezvous_);
+  ACE_OS::strsncpy (this->SPIPE_addr_.rendezvous_,
+                    addr,
+                    sizeof this->SPIPE_addr_.rendezvous_);
 #endif /* ACE_WIN32 */
   this->SPIPE_addr_.gid_ = gid == 0 ? ACE_OS::getgid () : gid;
   this->SPIPE_addr_.uid_ = uid == 0 ? ACE_OS::getuid () : uid;

@@ -545,10 +545,15 @@ ACE::dirname (const ACE_TCHAR *pathname, ACE_TCHAR delim)
     }
   else
     {
-      ACE_OS::strncpy (return_dirname,
-                       pathname,
-                       MAXPATHLEN);
-      return_dirname[temp - pathname] = '\0';
+      // When the len is truncated, there are problems!  This should
+      // not happen in normal circomstances
+      size_t len = temp - pathname + 1;
+      if (len > (sizeof return_dirname / sizeof (ACE_TCHAR)))
+        len = sizeof return_dirname / sizeof (ACE_TCHAR);
+
+      ACE_OS::strsncpy (return_dirname,
+                        pathname,
+                        len);
       return return_dirname;
     }
 }
@@ -2590,19 +2595,18 @@ ACE::timestamp (ACE_TCHAR date_and_time[],
   ACE_OS::ctime_r (&secs,
                    timebuf,
                    sizeof timebuf);
+  // date_and_timelen > sizeof timebuf!
   ACE_OS::strncpy (date_and_time,
                    timebuf,
                    date_and_timelen);
   char yeartmp[5];
-  ACE_OS::strncpy (yeartmp,
-                   &date_and_time[20],
-                   4);
-  yeartmp[4] = '\0';
+  ACE_OS::strsncpy (yeartmp,
+                    &date_and_time[20],
+                    5);
   char timetmp[9];
-  ACE_OS::strncpy (timetmp,
-                   &date_and_time[11],
-                   8);
-  timetmp[8] = '\0';
+  ACE_OS::strsncpy (timetmp,
+                    &date_and_time[11],
+                    9);
   ACE_OS::sprintf (&date_and_time[11],
                    "%s %s.%06ld",
                    yeartmp,
@@ -3267,8 +3271,7 @@ ACE::strndup (const char *str, size_t n)
   ACE_ALLOCATOR_RETURN (s,
                         (char *) ACE_OS::malloc (len + 1),
                         0);
-  s[len] = '\0';
-  return ACE_OS::strncpy (s, str, len);
+  return ACE_OS::strsncpy (s, str, len + 1);
 }
 
 #if defined (ACE_HAS_WCHAR)
@@ -3292,8 +3295,7 @@ ACE::strndup (const wchar_t *str, size_t n)
                                          ACE_OS::malloc ((len + 1)
                                                          * sizeof (wchar_t))),
                         0);
-  s[len] = L'\0';
-  return ACE_OS::strncpy (s, str, len);
+  return ACE_OS::strsncpy (s, str, len + 1);
 }
 #endif /* ACE_HAS_WCHAR */
 
@@ -3315,8 +3317,7 @@ ACE::strnnew (const char *str, size_t n)
   ACE_NEW_RETURN (s,
                   char[len + 1],
                   0);
-  s[len] = '\0';
-  return ACE_OS::strncpy (s, str, len);
+  return ACE_OS::strsncpy (s, str, len + 1);
 }
 
 #if defined (ACE_HAS_WCHAR)
@@ -3338,8 +3339,7 @@ ACE::strnnew (const wchar_t *str, size_t n)
   ACE_NEW_RETURN (s,
                   wchar_t[len + 1],
                   0);
-  s[len] = L'\0';
-  return ACE_OS::strncpy (s, str, len);
+  return ACE_OS::strsncpy (s, str, len + 1);
 }
 #endif /* ACE_HAS_WCHAR */
 

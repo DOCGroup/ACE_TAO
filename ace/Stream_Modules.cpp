@@ -139,7 +139,7 @@ ACE_Stream_Head<ACE_SYNCH_USE>::info (ACE_TCHAR **strp, size_t length) const
   if (*strp == 0 && (*strp = ACE_OS::strdup (name)) == 0)
     return -1;
   else
-    ACE_OS::strncpy (*strp, name, length);
+    ACE_OS::strsncpy (*strp, name, length);
   return ACE_OS::strlen (name);
 }
 
@@ -278,7 +278,7 @@ ACE_Stream_Tail<ACE_SYNCH_USE>::info (ACE_TCHAR **strp, size_t length) const
   if (*strp == 0 && (*strp = ACE_OS::strdup (name)) == 0)
     return -1;
   else
-    ACE_OS::strncpy (*strp, name, length);
+    ACE_OS::strsncpy (*strp, name, length);
   return ACE_OS::strlen (name);
 }
 
@@ -355,7 +355,7 @@ ACE_Thru_Task<ACE_SYNCH_USE>::info (ACE_TCHAR **strp,
   if (*strp == 0 && (*strp = ACE_OS::strdup (name)) == 0)
     return -1;
   else
-    ACE_OS::strncpy (*strp, name, length);
+    ACE_OS::strsncpy (*strp, name, length);
   return ACE_OS::strlen (name);
 }
 

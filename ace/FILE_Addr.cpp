@@ -71,9 +71,9 @@ ACE_FILE_Addr::set (const ACE_TCHAR *filename)
 {
   this->ACE_Addr::base_set (AF_FILE,
                             ACE_OS::strlen (filename) + 1);
-  (void) ACE_OS::strncpy (this->filename_,
-                          filename,
-                          sizeof this->filename_ / sizeof (ACE_TCHAR));
+  (void) ACE_OS::strsncpy (this->filename_,
+                           filename,
+                           sizeof this->filename_ / sizeof (ACE_TCHAR));
   return 0;
 }
 

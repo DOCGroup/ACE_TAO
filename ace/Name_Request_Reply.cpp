@@ -241,9 +241,9 @@ void
 ACE_Name_Request::type (const char *c)
 {
   ACE_TRACE ("ACE_Name_Request::type");
-  (void) ::strncpy (this->type_,
+  ACE_OS::strsncpy (this->type_,
                     c,
-                    MAXPATHLEN + 1);
+                    sizeof this->type_);
 }
 
 // Encode the transfer buffer into network byte order so that it can

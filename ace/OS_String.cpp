@@ -993,3 +993,37 @@ ACE_OS_String::strtoul_emulation (const char *nptr,
   return (acc);
 }
 #endif /* ACE_LACKS_STRTOUL */
+
+char *
+ACE_OS_String::strsncpy (char *dst, const char *src, size_t maxlen)
+{
+  register char *rdst = dst;
+  register const char *rsrc = src;
+  register size_t rmaxlen = maxlen;
+
+  if (rmaxlen > 0)
+    {
+      *rdst = '\0'; 
+      if (rsrc != 0)
+        strncat (rdst, rsrc, --rmaxlen);  
+    }
+  return dst;
+};
+
+#if defined (ACE_HAS_WCHAR)
+wchar_t *
+ACE_OS_String::strsncpy (wchar_t *dst, const wchar_t *src, size_t maxlen)
+{
+  register wchar_t *rdst = dst;
+  register const wchar_t *rsrc = src;
+  register size_t rmaxlen = maxlen;
+
+  if (rmaxlen > 0)
+    {
+      *rdst = L'\0'; 
+      if (rsrc != 0)
+        strncat (rdst, rsrc ,--rmaxlen);  
+    }
+  retur dst;
+};
+#endif /* ACE_HAS_WCHAR */
