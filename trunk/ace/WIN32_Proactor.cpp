@@ -458,7 +458,7 @@ ACE_WIN32_Proactor::handle_signal (int, siginfo_t *, ucontext_t *)
     {
       result = this->handle_events (timeout);
 
-      if (result != 0 || errno == ETIME)
+      if (result != 1)
         break;
     }
 
@@ -517,19 +517,23 @@ ACE_WIN32_Proactor::handle_events (unsigned long milli_seconds)
     {
       ACE_OS::set_errno_to_last_error ();
 
-      if (errno == WAIT_TIMEOUT)
+      switch (errno)
         {
+        case WAIT_TIMEOUT:
           errno = ETIME;
           return 0;
-        }
-      else
-        {
+
+        case ERROR_SUCCESS:
+          // Calling GetQueuedCompletionStatus with timeout value 0
+          // returns FALSE with extended errno "ERROR_SUCCESS" errno =
+          // ETIME; ?? I don't know if this has to be done !!
+          return 0;
+
+        default:
           if (ACE::debug ())
-            {
-              ACE_DEBUG ((LM_ERROR,
-                          ACE_LIB_TEXT ("%p\n"),
-                          ACE_LIB_TEXT ("GetQueuedCompletionStatus")));
-            }
+            ACE_DEBUG ((LM_ERROR,
+                        ACE_LIB_TEXT ("%p\n"),
+                        ACE_LIB_TEXT ("GetQueuedCompletionStatus")));
           return -1;
         }
     }
