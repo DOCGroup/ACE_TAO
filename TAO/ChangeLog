@@ -1,3 +1,17 @@
+Wed Jul 10 10:11:30 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* TAO_IDL/be/be_visitor_valuetype/arglist.cpp (visit_operation):
+          We need to throw an exceptions that was assigned in a different
+	  place (by the app-developer).  ACE_THROW does not fit the bill
+	  since the ACE_THROW macro contructs the exception passed to it.
+	  Also exception->raise_() is ruled out since in platforms without
+	  native exception support, the raise() function does not do
+	  anything.  What is left as an alternative is an #ifdef that
+	  explicitly takes care of both the cases (platforms with and
+	  without native exception support). The original
+	  exception->raise_() code is now replaced by the generation of
+	  the #ifdef.
+
 Wed Jul 10 10:48:51 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * docs/releasenotes/index.html:
