@@ -20,6 +20,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_sys_stat.h"
+#include "ace/OS_NS_stdlib.h"
 
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"

@@ -1,10 +1,11 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
+#include "ace/OS_NS_stropts.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_INLINE
 Handle_L_FIFO::Handle_L_FIFO (void)
@@ -12,7 +13,7 @@ Handle_L_FIFO::Handle_L_FIFO (void)
 }
 
 ACE_INLINE int
-Handle_L_FIFO::open (const char *rendezvous_fifo) 
+Handle_L_FIFO::open (const char *rendezvous_fifo)
 {
   if (this->ACE_FIFO_Recv_Msg::open (rendezvous_fifo) == -1)
     return -1;
@@ -20,7 +21,7 @@ Handle_L_FIFO::open (const char *rendezvous_fifo)
     return 0;
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 Handle_L_FIFO::info (char **strp, size_t length) const
 {
   char buf[BUFSIZ];
@@ -46,17 +47,17 @@ Handle_L_FIFO::init (int argc, char *argv[])
   for (int c; (c = get_opt ()) != -1; )
      switch (c)
        {
-       case 'r': 
+       case 'r':
 	 rendezvous_fifo = get_opt.opt_arg ();
 	 break;
        default:
 	 break;
        }
-  
+
   ACE_OS::unlink (rendezvous_fifo);
   if (this->open (rendezvous_fifo) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
-  else if (ACE_Reactor::instance ()->register_handler 
+  else if (ACE_Reactor::instance ()->register_handler
 	   (this, ACE_Event_Handler::READ_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "registering service with ACE_Reactor\n"),
@@ -64,10 +65,10 @@ Handle_L_FIFO::init (int argc, char *argv[])
   return 0;
 }
 
-ACE_INLINE int 
-Handle_L_FIFO::fini (void) 
+ACE_INLINE int
+Handle_L_FIFO::fini (void)
 {
-  return ACE_Reactor::instance ()->remove_handler 
+  return ACE_Reactor::instance ()->remove_handler
     (this, ACE_Event_Handler::ACCEPT_MASK);
 }
 
@@ -77,7 +78,7 @@ Handle_L_FIFO::get_handle (void) const
   return this->ACE_FIFO::get_handle ();
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 Handle_L_FIFO::handle_input (ACE_HANDLE)
 {
   char buf[PIPE_BUF];

@@ -6,6 +6,7 @@
 #include "URL_Addr.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/OS_Memory.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_stdio.h"
 
