@@ -41,6 +41,7 @@ use Getopt::Std;
 @files_changelog = ();
 @files_makefile = ();
 @files_mpc = ();
+@files_bor = ();
 
 # To keep track of errors and warnings
 $errors = 0;
@@ -114,6 +115,9 @@ sub store_file ($)
     elsif ($name =~ /\.(mpc|mwc|mpb|mpt)/i) {
         push @files_mpc, ($name);
     }
+    elsif ($name =~ /\.(bor)/i) {
+        push @files_bor, ($name);
+    }
 }
 
 ##############################################################################
@@ -171,7 +175,7 @@ sub check_for_inline_in_cpp ()
 sub check_for_id_string ()
 {
     print "Running \$Id\$ string check\n";
-    foreach $file (@files_cpp, @files_inl, @files_h, @files_mpc,
+    foreach $file (@files_cpp, @files_inl, @files_h, @files_mpc, @files_bor, 
                    @files_html, @files_idl, @files_pl, @makefile_files) {
         my $found = 0;
         if (open (FILE, $file)) {
