@@ -85,6 +85,12 @@ Options::Options (void)
 {
 }
 
+Options::~Options (void)
+{
+  delete concurrency_strategy_;
+  concurrency_strategy_ = 0;
+}
+
 int
 Options::parse_args (int argc, char *argv[])
 {
