@@ -221,16 +221,18 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
                          SIOCGIFFLAGS,
                          (char *) &flags) == -1)
         {
-          ACE_ERROR ((LM_ERROR, "%p\n",
-                     "ACE_SOCK_Dgram_Bcast::mk_broadcast: ioctl (get interface flags)"));
+          ACE_ERROR ((LM_ERROR, "%p [%s]\n",
+						 "ACE_SOCK_Dgram_Bcast::mk_broadcast: ioctl (get interface flags)", 
+						 flags.ifr_name));
           continue;
         }
 
       if (ACE_BIT_ENABLED (flags.ifr_flags,
                            IFF_UP) == 0)
         {
-          ACE_ERROR ((LM_ERROR, "%p\n",
-                     "ACE_SOCK_Dgram_Bcast::mk_broadcast: Network interface is not up"));
+          ACE_ERROR ((LM_ERROR, "%p [%s]\n",
+						 "ACE_SOCK_Dgram_Bcast::mk_broadcast: Network interface is not up",
+						 flags.ifr_name));
           continue;
         }
 
@@ -244,8 +246,9 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
           if (ACE_OS::ioctl (s,
                              SIOCGIFBRDADDR,
                              (char *) &if_req) == -1)
-            ACE_ERROR ((LM_ERROR, "%p\n",
-                       "ACE_SOCK_Dgram_Bcast::mk_broadcast: ioctl (get broadaddr)"));
+            ACE_ERROR ((LM_ERROR, "%p [%s]\n",
+						   "ACE_SOCK_Dgram_Bcast::mk_broadcast: ioctl (get broadaddr)",
+						   flags.ifr_name));
           else
             {
               ACE_INET_Addr addr (ACE_reinterpret_cast (sockaddr_in *,
@@ -258,8 +261,9 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
             }
         }
       else
-        ACE_ERROR ((LM_ERROR, "%p\n",
-                   "ACE_SOCK_Dgram_Bcast::mk_broadcast: Broadcast is not enable for this interface."));
+        ACE_ERROR ((LM_ERROR, "%p [%s]\n",
+                   "ACE_SOCK_Dgram_Bcast::mk_broadcast: Broadcast is not enable for this interface.", 
+					flags.ifr_name));
     }
 #else
   ACE_UNUSED_ARG (host_name);
