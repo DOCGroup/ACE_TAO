@@ -1,3 +1,9 @@
+Wed Aug 13 18:35:08 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * Kokyu/tests/DSRT_MIF/MIF.cpp:
+          Changed ACE_Thread_Mutex to ACE_SYNCH_MUTEX to quash an error on
+          single threaded builds.
+
 Wed Aug 13 17:38:09 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * apps/Gateway/Gateway/gateway.mpc:
