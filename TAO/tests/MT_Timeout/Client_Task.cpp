@@ -4,7 +4,7 @@
 
 #include "Client_Task.h"
 
-ACE_RCSID(Mt_Timeout, Client_Task, "$Id$")
+ACE_RCSID(MT_Timeout, Client_Task, "$Id$")
 
 Client_Task::Client_Task (CORBA::ORB_ptr orb,
                           Test::Sleep_Service_ptr sleep_service,
@@ -53,6 +53,7 @@ Client_Task::svc (void)
       ACE_TRY_CHECK;
       CORBA::PolicyCurrent_var policy_current =
         CORBA::PolicyCurrent::_narrow (object.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       TimeBase::TimeT timeout_period = 10 * this->timeout_;
 
@@ -137,7 +138,7 @@ Client_Task::one_iteration (CORBA::Environment &ACE_TRY_ENV)
       ACE_TRY_CHECK;
 
       ACE_Time_Value end = ACE_OS::gettimeofday ();
-      
+
       if (this->sleep_time_ > this->timeout_)
         {
           // If we don't sleep then the next request will also
