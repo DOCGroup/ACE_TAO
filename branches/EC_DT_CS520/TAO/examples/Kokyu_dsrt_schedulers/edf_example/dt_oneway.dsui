@@ -1,0 +1,22 @@
+# TEST_ONE
+DSTRM_EVENT	TEST_ONE	3	STOP_SERVICE		1       "Stop service time"     print_string
+DSTRM_EVENT	TEST_ONE	3	START_SERVICE		0       "Start service time"    print_string
+
+# WORKER GROUP
+DSTRM_EVENT	WORKER_GROUP	2	ONE_WAY_CALL_DONE	4       "One way call done"     print_string
+DSTRM_EVENT	WORKER_GROUP	2	ONE_WAY_CALL_START	3       "One way call started"  print_string
+DSTRM_EVENT	WORKER_GROUP	2	END_SCHED_SEGMENT	2       "End scheduling segment"        print_string
+DSTRM_EVENT	WORKER_GROUP	2	BEGIN_SCHED_SEGMENT	1       "Start scheduling segment"      print_string
+DSTRM_EVENT	WORKER_GROUP	2	WORKER_STARTED		0       "Start worker thread"   print_string
+
+
+# MAIN GROUP
+DSTRM_EVENT	MAIN_GROUP	1	SCHEDULER_STARTED	8       "Scheduler started"     print_string
+DSTRM_EVENT	MAIN_GROUP	1	SCHEDULER_SHUTDOWN	7       "Scheduler stopped"     print_string
+DSTRM_EVENT	MAIN_GROUP	1	AFTER_SERVER_SHUTDOWN	6       "Server shutdown complete"      print_string
+DSTRM_EVENT	MAIN_GROUP	1	CALL_SERVER_SHUTDOWN	5       "Called server to shutdown"     print_string
+DSTRM_EVENT	MAIN_GROUP	1	WORKER_WAIT_DONE	4       "Worker thread wait() call complete"    print_string
+DSTRM_EVENT	MAIN_GROUP	1	WORKER_ACTIVATED	3       "Worker activated"      print_string
+DSTRM_EVENT	MAIN_GROUP	1	SCHEDULE_SETUP		2       "Scheduler setup"       print_string
+DSTRM_EVENT	MAIN_GROUP	1	STOP			1       "Stop program"  print_string
+DSTRM_EVENT	MAIN_GROUP	1	START			0       "Start program" print_string
