@@ -215,7 +215,7 @@ ACE_Task_Base::activate (long flags,
 void *
 ACE_Task_Base::svc_run (void *args)
 {
-  ACE_TRACE ("ace_svc_run");
+  ACE_TRACE ("ACE_Task_Base::svc_run");
 
   ACE_Task_Base *t = (ACE_Task_Base *) args;
 
