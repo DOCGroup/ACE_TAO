@@ -27,6 +27,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include <stdarg.h> // LynxOS requires this before stdio.h
+#include <stdio.h>  // Pull in "stdout" definition.
+
 class TAO_ORB_Core;
 
 namespace CORBA
@@ -128,7 +131,6 @@ namespace CORBA
     /// Initialize using a well known ORB Core; this is intended for
     /// the bootstraping of the ORB_Core, not for general
     /// consumption.
-    friend class TAO_ORB_Core;
     Environment (TAO_ORB_Core *orb_core);
 
     /// Pointer to the exception object contained in the environment.
