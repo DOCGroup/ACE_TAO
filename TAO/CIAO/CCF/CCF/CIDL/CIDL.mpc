@@ -5,6 +5,7 @@ project(*CIDL) {
   sharedname =
   staticname = CIDL
   includes += ../..
+  libout = ..
   Source_Files {
  	.
 	./SemanticGraph
