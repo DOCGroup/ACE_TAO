@@ -1,5 +1,14 @@
 Tue May 20 10:55:09 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
+	* IIOP/lib/optable.cpp: Fixed names of methods that were changed
+ 	in the header but never changed in the source.  Amazing that
+ 	neither g++ nor Sun C++ caught these gaffs!  (Finally, the NT
+ 	compiler wins).
+
+	* IIOP/lib/{orbobj,object}.h: Changed the forward decls of
+ 	CORBA_release() and CORBA_is_nil() so that they are only in effect
+ 	when inlining is NOT being used.
+
 	* IIOP/lib/giop.cpp: Fixed incorrect passing of an object to
  	ACE_DEBUG() where an int is expected.
 
