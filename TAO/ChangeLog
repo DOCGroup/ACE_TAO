@@ -1,3 +1,8 @@
+Mon Nov 10 15:01:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* TAO_IDL/util/utl_indenter.cpp:
+	  Changed order of includes to get this file compiling with BCB6
+
 Mon Nov 10 07:18:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/PortableServer/ImR_ActivatorC.cpp:
@@ -48,7 +53,7 @@ Sun Nov  9 19:19:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/tao.mpc:
 
-	  Added the new generated files into the list of source files. 
+	  Added the new generated files into the list of source files.
 
 Sun Nov  9 19:12:40 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -66,8 +71,8 @@ Sun Nov  9 19:12:40 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  is just a test. If this gives good wins, we can go ahead fix all
 	  the generated code in $TAO_ROOT/tao to maintain the Any's in a
 	  seperate file. This can be used by the application by just
-	  including the header.  
-	  
+	  including the header.
+
 	* tao/IOP_CodecC.cpp:
 	* tao/IOP_CodecC.i:
 	* tao/IOP_IOR.pidl
@@ -143,7 +148,7 @@ Sun Nov  9 17:57:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tests/Bug_1361_Regression/Server_Thread_Pool.h:
 	* tests/OBV/Supports/Supports_Test_impl.cpp:
 	* tests/OBV/Supports/Supports_Test_impl.h:
-	  
+
 	  Fixed fuzz errors.
 
 Sun Nov  9 22:12:29 UTC 2003  Don Hinton  <dhinton@dresystems.com>
@@ -189,8 +194,8 @@ Sun Nov  9 11:19:23 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/IORInterceptor/IORInterceptor.mpc:
 	* tao/IORInterceptor/Makefile:
 	* tao/IORInterceptor/Makefile.bor:
-  
-	  IORInterceptor needs Valuetype and ORT libraries to build fine.  
+
+	  IORInterceptor needs Valuetype and ORT libraries to build fine.
 
 Sun Nov  9 14:39:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
