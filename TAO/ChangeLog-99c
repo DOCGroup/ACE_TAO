@@ -1,3 +1,12 @@
+Mon Jul 26 12:25:55 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* docs/Options.html:
+
+	  Added comments explaining that -ORBEndpoint is a server side
+	  option and -ORBPreconnect is a client side option.  Also
+	  clarified use of -ORBInitRef and -ORBDefaultInitRef with UIOP
+	  IORs.
+
 Mon Jul 26 10:42:26 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* orbsvcs/examples/CosEC/Factory: Added a README file.
