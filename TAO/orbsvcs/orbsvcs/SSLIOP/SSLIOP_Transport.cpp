@@ -305,10 +305,11 @@ TAO_SSLIOP_Client_Transport::register_handler (void)
 
 ssize_t
 TAO_SSLIOP_Transport::send (TAO_Stub *stub,
+			    int two_way,
 			    const ACE_Message_Block *message_block,
 			    const ACE_Time_Value *max_wait_time)
 {
-  if (stub == 0)
+  if (stub == 0 || two_way)
     {
       return this->send (message_block,
                          max_wait_time);
