@@ -1,7 +1,17 @@
+Tue Sep 22 23:04:01 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * performance-tests/Cubit/TAO/MT_Cubit/MT_Cubit_Test:
+          enable -ORBiioplite by default, and added -l option to
+          disable.
+
+        * performance-tests/Cubit/TAO/MT_Cubit/summarize:
+          added this script, which summarizes the results
+          from multiple MT_Cubit_Test runs.
+
 Tue Sep 22 22:46:52 1998  Sergio Flores  <sergio@tango.cs.wustl.edu>
 
-	* performance-tests/Cubit/TAO/MT_Cubit/Makefile: Updated
- 	dependencies.
+        * performance-tests/Cubit/TAO/MT_Cubit/Makefile: Updated
+        dependencies.
 
 Tue Sep 22 22:29:30 1998  David L. Levine  <levine@cs.wustl.edu>
 
