@@ -37,7 +37,7 @@ class URLDialogButton extends BaseButton
   public URLDialogButton (String title, String desc, ImageApp parent)
   {
     super (title, desc, parent);
-    this.openURLFrame_ = new URLFrame ("Open URL", this.parent_, true);
+    this.openURLFrame_ = new LoadURLFrame ("Open URL <2>", this.parent_);
   }
 
   public boolean action (Event e, Object arg)
@@ -45,15 +45,18 @@ class URLDialogButton extends BaseButton
     this.openURLFrame_.show ();
     return true;
   }
-  private URLFrame openURLFrame_;
+  private LoadURLFrame openURLFrame_;
 }
 
+// ******************
+// Should continue to remember the password
+// ******************
 class SaveButton extends BaseButton
 {
   public SaveButton (String title, String desc, ImageApp parent)
   {
     super (title, desc, parent);
-    this.openURLFrame_ = new URLFrame ("Save Image", this.parent_, false);
+    this.openURLFrame_ = new SaveURLFrame ("Save Image <2>", this.parent_);
   }
 
   public boolean action (Event e, Object arg)
@@ -61,7 +64,7 @@ class SaveButton extends BaseButton
     this.openURLFrame_.show ();
     return true;
   }
-  private URLFrame openURLFrame_;
+  private SaveURLFrame openURLFrame_;
 }
 
 class ReloadButton extends BaseButton

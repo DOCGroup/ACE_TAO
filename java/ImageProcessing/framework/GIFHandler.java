@@ -13,6 +13,15 @@ public class GIFHandler extends BlobWriter
     super (null, length, 0, filename);
     this.image_ = image;
   }
+
+  /******************************
+   * Used for HTTP 1.1 PUT authorization
+   *****************************/
+  public GIFHandler (String filename, Image image, int length, String authentication)
+    {
+      super (null, length, 0, filename, authentication);
+      this.image_ = image;
+    }
   
   protected int sendRequest ()
   {

@@ -19,7 +19,8 @@ realclean: clean
 
 files =	ImageProcessor.java \
 	DialogType.java \
-	URLFrame.java \
+	LoadURLFrame.java \
+	SaveURLFrame.java \
 	DialogManager.java \
 	ImageCanvas.java \
 	ImageApp.java \
