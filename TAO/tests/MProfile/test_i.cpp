@@ -29,3 +29,12 @@ Simple_Server_i::shutdown (CORBA::Environment&)
 {
   this->orb_->shutdown (0);
 }
+
+PortableServer::POA_ptr
+Simple_Server_i::_default_POA (CORBA::Environment &)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return PortableServer::POA::_duplicate (this->poa_);
+}
+  
+
