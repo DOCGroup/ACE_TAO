@@ -732,159 +732,6 @@ DEP_CPP_ARGV_=\
 # End Source File
 # Begin Source File
 
-SOURCE=.\Asynch_Acceptor.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-DEP_CPP_ASYNC=\
-	".\ACE.h"\
-	".\ACE.i"\
-	".\Addr.h"\
-	".\Addr.i"\
-	".\Asynch_Acceptor.h"\
-	".\Asynch_Acceptor.i"\
-	".\Asynch_IO.h"\
-	".\Asynch_IO.i"\
-	".\Atomic_Op.i"\
-	".\Auto_Ptr.cpp"\
-	".\Auto_Ptr.h"\
-	".\Auto_Ptr.i"\
-	".\Basic_Types.h"\
-	".\Basic_Types.i"\
-	".\config-win32-borland.h"\
-	".\config-win32-common.h"\
-	".\config-win32.h"\
-	".\config-WinCE.h"\
-	".\config.h"\
-	".\Containers.h"\
-	".\Containers.i"\
-	".\Containers_T.cpp"\
-	".\Containers_T.h"\
-	".\Containers_T.i"\
-	".\Event_Handler.h"\
-	".\Event_Handler.i"\
-	".\Free_List.cpp"\
-	".\Free_List.h"\
-	".\Free_List.i"\
-	".\Handle_Set.h"\
-	".\Handle_Set.i"\
-	".\Hash_Map_Manager.cpp"\
-	".\Hash_Map_Manager.h"\
-	".\inc_user_config.h"\
-	".\INET_Addr.h"\
-	".\INET_Addr.i"\
-	".\IO_Cntl_Msg.h"\
-	".\iosfwd.h"\
-	".\Log_Msg.h"\
-	".\Log_Priority.h"\
-	".\Log_Record.h"\
-	".\Log_Record.i"\
-	".\Malloc.h"\
-	".\Malloc.i"\
-	".\Malloc_Base.h"\
-	".\Malloc_T.cpp"\
-	".\Malloc_T.h"\
-	".\Malloc_T.i"\
-	".\Managed_Object.cpp"\
-	".\Managed_Object.h"\
-	".\Managed_Object.i"\
-	".\Mem_Map.h"\
-	".\Mem_Map.i"\
-	".\Memory_Pool.h"\
-	".\Memory_Pool.i"\
-	".\Message_Block.h"\
-	".\Message_Block.i"\
-	".\Message_Block_T.cpp"\
-	".\Message_Block_T.h"\
-	".\Message_Block_T.i"\
-	".\Message_Queue.h"\
-	".\Message_Queue.i"\
-	".\Message_Queue_T.cpp"\
-	".\Message_Queue_T.h"\
-	".\Message_Queue_T.i"\
-	".\Module.cpp"\
-	".\Module.h"\
-	".\Module.i"\
-	".\Object_Manager.h"\
-	".\Object_Manager.i"\
-	".\OS.h"\
-	".\OS.i"\
-	".\Reactor.h"\
-	".\Reactor.i"\
-	".\Reactor_Impl.h"\
-	".\Service_Config.h"\
-	".\Service_Config.i"\
-	".\Service_Object.h"\
-	".\Service_Object.i"\
-	".\Service_Repository.h"\
-	".\Service_Repository.i"\
-	".\Service_Types.h"\
-	".\Service_Types.i"\
-	".\Shared_Object.h"\
-	".\Shared_Object.i"\
-	".\Signal.h"\
-	".\Signal.i"\
-	".\SString.h"\
-	".\SString.i"\
-	".\Strategies.h"\
-	".\Strategies.i"\
-	".\Strategies_T.cpp"\
-	".\Strategies_T.h"\
-	".\Strategies_T.i"\
-	".\Stream_Modules.cpp"\
-	".\Stream_Modules.h"\
-	".\Stream_Modules.i"\
-	".\streams.h"\
-	".\SV_Semaphore_Complex.h"\
-	".\SV_Semaphore_Complex.i"\
-	".\SV_Semaphore_Simple.h"\
-	".\SV_Semaphore_Simple.i"\
-	".\Svc_Conf_Tokens.h"\
-	".\Synch.h"\
-	".\Synch.i"\
-	".\Synch_Options.h"\
-	".\Synch_Options.i"\
-	".\Synch_T.cpp"\
-	".\Synch_T.h"\
-	".\Synch_T.i"\
-	".\Task.h"\
-	".\Task.i"\
-	".\Task_T.cpp"\
-	".\Task_T.h"\
-	".\Task_T.i"\
-	".\Thread.h"\
-	".\Thread.i"\
-	".\Thread_Manager.h"\
-	".\Thread_Manager.i"\
-	".\Timer_Queue.h"\
-	".\Timer_Queue_T.cpp"\
-	".\Timer_Queue_T.h"\
-	".\Timer_Queue_T.i"\
-	".\Trace.h"\
-	".\WFMO_Reactor.h"\
-	".\WFMO_Reactor.i"\
-	".\ws2tcpip.h"\
-	
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
 SOURCE=.\Asynch_IO.cpp
 
 !IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
@@ -897,7 +744,7 @@ SOURCE=.\Asynch_IO.cpp
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
 
-DEP_CPP_ASYNCH=\
+DEP_CPP_ASYNC=\
 	".\ACE.h"\
 	".\ACE.i"\
 	".\Addr.h"\
@@ -15978,6 +15825,31 @@ SOURCE=.\Acceptor.cpp
 
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Asynch_Acceptor.cpp
+
+!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
 !ENDIF 
 
