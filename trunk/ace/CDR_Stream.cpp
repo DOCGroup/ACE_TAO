@@ -992,3 +992,16 @@ ACE_InputCDR::skip_bytes (size_t len)
   this->good_bit_ = 0;
   return 0;
 }
+
+
+
+int
+ACE_InputCDR::grow (size_t newsize)
+{
+  if (ACE_CDR::grow (&this->start_, newsize) == -1)
+    return -1;
+
+  ACE_CDR::mb_align (&this->start_);
+  this->start_.wr_ptr (newsize);
+  return 0;
+}

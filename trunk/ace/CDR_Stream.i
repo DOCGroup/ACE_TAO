@@ -1202,6 +1202,12 @@ ACE_OutputCDR::append_wstring (ACE_InputCDR &stream)
   return flag;
 }
 
+ACE_INLINE void
+ACE_InputCDR::reset_byte_order (int byte_order)
+{
+  this->do_byte_swap_ = (byte_order != ACE_CDR_BYTE_ORDER);
+}
+
 ACE_INLINE int
 ACE_InputCDR::do_byte_swap (void) const
 {

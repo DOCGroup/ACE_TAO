@@ -1,3 +1,11 @@
+Sat Jun  5 13:00:46 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/CDR_Stream.h:
+	* ace/CDR_Stream.i:
+	* ace/CDR_Stream.cpp:
+	  New methods added to the InputCDR class to simplify the process
+	  of reading a buffer from a socket or file.
+
 Fri Jun  4 23:52:19 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/CDR_Stream.h:
