@@ -1,3 +1,15 @@
+Wed May 29 09:46:56 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Message_Queue.h:
+
+	  Include "ace/Synch.h" to pull in ACE_Thread_Mutex class
+	  declaration.  Thanks to Marek Maleta <marek_maleta@agilent.com>
+	  for reporting the problem.
+
+	* THANKS:
+
+	  Added Marek to the Hall of Fame.
+
 Wed May 29 09:38:53 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ace/OS_String.inl (strstr):
