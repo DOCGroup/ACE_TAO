@@ -1,3 +1,15 @@
+Fri Jan 23 10:04:00 2004  Gary Maxey <gary.maxey@hp.com>
+
+        * ace/OS_NS_stdlib.inl
+        * ace/OS_NS_sys_wait.inl:
+
+          Fix for BUGID 1722, for Tandem NSK platform
+
+          In OS_NS_stdlib.inl
+             Need to use spt_system() instead of system()
+          In OS_NS_sys_wait.inl
+             Need to use spt_waitpid() instead of waitpid()
+
 Fri Jan 23 09:49:00 2004  Gary Maxey <gary.maxey@hp.com>
 
         * ace/OS_NS_Thread.inl:
