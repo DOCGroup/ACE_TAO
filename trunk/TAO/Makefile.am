@@ -11,7 +11,7 @@
 
 ## The number in AUTOMAKE_OPTIONS is the minimum required version automake
 ## needed to process this file.
-AUTOMAKE_OPTIONS = 1.4 check-news
+AUTOMAKE_OPTIONS = 1.4 ##check-news
 
 bin_SCRIPTS = tao-config
 
@@ -19,12 +19,11 @@ man_MANS = tao-config.1
 
 SUBDIRS = \
         tao \
-        TAO_IDL \
-        orbsvcs
+        TAO_IDL
 
 ## For some reason, automake doesn't include acconfig.h in the distribution
 EXTRA_DIST = PROBLEM-REPORT-FORM VERSION \
-             COPYING.sun LICENSE.sun README.sun README.taoconf \
+             COPYING.sun LICENSE.sun README.sun \
              tao-config.in taoConf.sh.in tao-config.1.in
 
 DISTCLEANFILES = tao-config taoConf.sh tao-config.1
