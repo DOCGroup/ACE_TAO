@@ -1,5 +1,6 @@
-Fri Jul 16 11:06:07 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+Fri Jul 16 12:20:50 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
+	* tests/AMI/client.cpp: Cosmetic changes. 
 	* tao/Reply_Dispatcher.cpp: Removed the unneccessary ACE_DEBUG's.  
 
 	* tests/AMI/README
