@@ -3022,14 +3022,14 @@ ACE::map_errno (int error)
 u_long
 ACE::gcd (u_long x, u_long y)
 {
-  if (y == 0)
+  while (y != 0)
     {
-      return x;
+      u_long r = x % y;
+      x = y;
+      y = r;
     }
-  else
-    {
-      return ACE::gcd (y, x % y);
-    }
+
+  return x;
 }
 
 
