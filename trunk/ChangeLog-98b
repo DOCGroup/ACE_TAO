@@ -1,3 +1,15 @@
+Sat Oct 31 18:12:36 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/Hash_Map_Manager_Test.cpp (run_test): updated the test to
+ 	  validate that the trybind() operation works correctly.  Thanks
+ 	  to Bill Fulton <fultonb@pcnet1.ascs.aro.allied.com> for this
+ 	  fix.
+
+	* ace/Hash_Map_Manager.cpp: trybind() was doing the "Wrong
+ 	  Thing"[TM] by overwritting the INT_ID even if the entry was
+ 	  already in the map!  It's fixed now...  Thanks to Bill Fulton
+ 	  <fultonb@pcnet1.ascs.aro.allied.com> for reporting this.
+
 Sat Oct 31 17:15:42 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.6.1 released.

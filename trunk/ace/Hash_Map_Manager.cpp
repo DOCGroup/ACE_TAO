@@ -309,10 +309,7 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::trybind_i (const EXT_ID &ext_id,
       return 0;
     }
   else
-    {
-      entry->int_id_ = int_id;
-      return 1;
-    }
+    return 1;
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> int
@@ -321,7 +318,10 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::trybind_i (const EXT_ID &ext_id,
 {
   ACE_Hash_Map_Entry<EXT_ID, INT_ID> *temp;
 
-  return this->trybind_i (ext_id, int_id, temp);
+   int result = this->trybind_i (ext_id, int_id, temp);
+   if (result == 1)
+     int_id = temp->int_id_;
+  return result;
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> int
