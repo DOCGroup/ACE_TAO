@@ -1,3 +1,12 @@
+Mon Jun 18 10:15:46 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+        * tests/Exposed_Policies/Client.dsp:
+        * tests/Exposed_Policies/Server.dsp:
+
+          Added RTCORBA libraries to linker list, and changed the 
+          names of the projects to "Exposed_Policies Client" and
+          "Exposed_Policies Server" from "Client" and "Server".
+
 Mon Jun 18 09:47:07 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/DynamicAny/DynCommon.cpp:
@@ -282,7 +291,7 @@ Thu Jun 14 12:22:52 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
         * tao/PortableServer/POA.h: Temporarily reverted change described in
           Wed Jun 13 17:02:27 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
-          That change wile fixing Borland Compiler and GCC 3.0 was
+          That change while fixing Borland Compiler and GCC 3.0 was
           breaking VC++ builds.
 
 Thu Jun 14 09:53:45 2001  Ossama Othman  <ossama@uci.edu>
