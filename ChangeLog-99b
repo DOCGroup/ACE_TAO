@@ -1,3 +1,12 @@
+Mon Jan 18 23:07:38 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.cpp (open): Files opened with CreateFileA (on Win32 of
+	  course,) are now opened with FILE_SHARE_DELETE flag set.  This
+	  allows ACE_OS::unlink to work as it should.  However, I haven't
+	  figured out how to make unlink work with file opened with fopen
+	  yet.  Apparently, fopen does not open file with
+	  FILE_SHARE_DELETE.
+
 Mon Jan 18 22:54:18 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * ace/ace_dll.dsp:
@@ -10,8 +19,8 @@ Mon Jan 18 22:54:18 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Mon Jan 18 22:14:00 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
 
-	* docs/tutorials/011/message_queue.cpp: 
-	* docs/tutorials/011/page02.html: 
+	* docs/tutorials/011/message_queue.cpp:
+	* docs/tutorials/011/page02.html:
 	ACE_Message_Block::copy() will advance the wr_ptr() for us.
 	Previously, I was doing that myself in run_test().  The test only
 	worked because I never wrote data to the block after that.  If I
