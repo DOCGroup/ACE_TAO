@@ -46,8 +46,8 @@
 
 // We need to rename program entry name "main" with ace_ce_main here
 // so that we can call it from CE's bridge class.
-define ACE_MAIN ace_ce_main
-define ACE_MAIN_OBJECT_MANAGER
+#define ACE_MAIN ace_ce_main
+#define ACE_MAIN_OBJECT_MANAGER
 
 // SH3 cross-compiler can't handle inline functions correctly (along with other bugs.)
 #if defined (SH3) && defined (DEBUG)
