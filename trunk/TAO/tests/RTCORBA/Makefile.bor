@@ -4,6 +4,7 @@
 
 DIRS = \
 	Client_Propagated \
-	Server_Protocol
+	Server_Protocol \
+	Client_Protocol
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

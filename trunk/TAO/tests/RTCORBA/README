@@ -20,3 +20,8 @@ on the corresponding test.  List of tests:
 
                 Tests various settings of
                 RTCORBA::ServerProtocolPolicy.
+
+              . Client_Protocol
+
+                Tests various settings of
+                RTCORBA::ClientProtocolPolicy.
