@@ -1,3 +1,12 @@
+Thu Nov 13 17:39:19 UTC 2003  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* ace/config-freebsd.h:
+	  Remove #define ACE_SIZEOF_LONG_DOUBLE, since this value
+	  is hardcoded for 32-bit platforms.  Dan Eischen <deischen@freebsd.org>
+	  reported that this caused the Basic_Types_Test to fail on 64-bit FreeBSD 
+	  platforms.   The correct value for this constant is defined later
+	  on in Basic_Types.h by including <float.h>.
+
 Thu Nov 13 11:27:23 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/DependencyGenerator/DependencyEditor.pm:

@@ -34,8 +34,6 @@
 #endif /* ACE_HAS_THREADS */
 #endif /* __FreeBSD_version < 220000 */
 
-#define ACE_SIZEOF_LONG_DOUBLE 12
-
 #if defined (__GNUG__)
 # include "ace/config-g++-common.h"
 #endif /* __GNUG__ */
