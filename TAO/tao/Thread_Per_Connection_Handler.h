@@ -61,7 +61,8 @@ public:
                         ACE_hthread_t thread_handles[] = 0,
                         void *stack[] = 0,
                         size_t stack_size[] = 0,
-                        ACE_thread_t  thread_names[] = 0);
+                        ACE_thread_t  thread_names[] = 0,
+                        bool inherit_priority = false);
 
   /// Template hook method that the thread uses...
   /**
@@ -70,14 +71,6 @@ public:
   virtual int svc (void);
   virtual int open (void *);
   virtual int close (u_long);
-
-  /// Helper method invoked by TAO's acceptors.
-  /**
-   * This method checks the priority of the invoking thread and sets
-   * the priority of thread that will be created by activate ().
-   */
-  int activate_threads (long flags,
-                        int n_threads);
 
 private:
   /// Pointer to protocsol specific code that does the bunch of the
