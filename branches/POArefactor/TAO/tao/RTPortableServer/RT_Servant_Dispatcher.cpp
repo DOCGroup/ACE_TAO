@@ -32,7 +32,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
   TAO_POA &poa,
   CORBA::Short servant_priority,
   TAO_ServerRequest &req,
-  TAO_Object_Adapter::Servant_Upcall::Pre_Invoke_State &pre_invoke_state
+  TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &pre_invoke_state
   ACE_ENV_ARG_DECL)
 {
   TAO_Service_Context &request_service_context =
@@ -229,7 +229,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
                                                CORBA::COMPLETED_NO));
 
           pre_invoke_state.state_ =
-            TAO_Object_Adapter::Servant_Upcall::Pre_Invoke_State::PRIORITY_RESET_REQUIRED;
+            TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State::PRIORITY_RESET_REQUIRED;
 
           if (TAO_debug_level > 0)
             {
@@ -270,7 +270,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
 void
 TAO_RT_Servant_Dispatcher::pre_invoke_collocated_request (TAO_POA &poa,
                                                           CORBA::Short servant_priority,
-                                                          TAO_Object_Adapter::Servant_Upcall::Pre_Invoke_State &pre_invoke_state
+                                                          TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &pre_invoke_state
                                                           ACE_ENV_ARG_DECL)
 {
   TAO_Thread_Pool *thread_pool =
@@ -327,20 +327,20 @@ TAO_RT_Servant_Dispatcher::pre_invoke_collocated_request (TAO_POA &poa,
                                            CORBA::COMPLETED_NO));
 
       pre_invoke_state.state_ =
-        TAO_Object_Adapter::Servant_Upcall::Pre_Invoke_State::PRIORITY_RESET_REQUIRED;
+        TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State::PRIORITY_RESET_REQUIRED;
     }
 }
 
 void
 TAO_RT_Servant_Dispatcher::post_invoke (TAO_POA &poa,
-                                        TAO_Object_Adapter::Servant_Upcall::Pre_Invoke_State &pre_invoke_state)
+                                        TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &pre_invoke_state)
 
 {
   if (pre_invoke_state.state_ ==
-      TAO_Object_Adapter::Servant_Upcall::Pre_Invoke_State::PRIORITY_RESET_REQUIRED)
+      TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State::PRIORITY_RESET_REQUIRED)
     {
       pre_invoke_state.state_ =
-        TAO_Object_Adapter::Servant_Upcall::Pre_Invoke_State::NO_ACTION_REQUIRED;
+        TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State::NO_ACTION_REQUIRED;
 
       ACE_DECLARE_NEW_CORBA_ENV;
 

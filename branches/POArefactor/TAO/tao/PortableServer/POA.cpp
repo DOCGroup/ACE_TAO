@@ -26,6 +26,7 @@ ACE_RCSID (PortableServer,
 #include "tao/PortableServer/ORT_Adapter.h"
 #include "tao/PortableServer/ORT_Adapter_Factory.h"
 #include "tao/PortableServer/Policy_Creator_T.h"
+#include "tao/PortableServer/POA_Current_Impl.h"
 #include "Non_Servant_Upcall.h"
 #include "tao/PortableInterceptorC.h"
 #include "tao/ORB_Core.h"
@@ -1559,8 +1560,8 @@ TAO_POA::check_for_valid_wait_for_completions (const TAO_ORB_Core &orb_core,
 {
   if (wait_for_completion)
     {
-      TAO_POA_Current_Impl *poa_current_impl =
-        static_cast <TAO_POA_Current_Impl *>
+      TAO::Portable_Server::POA_Current_Impl *poa_current_impl =
+        static_cast <TAO::Portable_Server::POA_Current_Impl *>
                     (TAO_TSS_RESOURCES::instance ()->poa_current_impl_);
 
       while (1)
@@ -2147,8 +2148,8 @@ TAO_POA::servant_to_id_i (PortableServer::Servant servant
         {
           // If they are the same servant, then check if we are in an
           // upcall.
-          TAO_POA_Current_Impl *poa_current_impl =
-            static_cast <TAO_POA_Current_Impl *>
+          TAO::Portable_Server::POA_Current_Impl *poa_current_impl =
+            static_cast <TAO::Portable_Server::POA_Current_Impl *>
                         (TAO_TSS_RESOURCES::instance ()->poa_current_impl_);
           // If we are in an upcall on the default servant, return the
           // ObjectId associated with the current invocation.
@@ -2750,7 +2751,7 @@ PortableServer::Servant
 TAO_POA::locate_servant_i (const char *operation,
                            const PortableServer::ObjectId &system_id,
                            TAO_Object_Adapter::Servant_Upcall &servant_upcall,
-                           TAO_POA_Current_Impl &poa_current_impl,
+                           TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
                            int &wait_occurred_restart_call
                            ACE_ENV_ARG_DECL)
 {

@@ -30,7 +30,6 @@
 #if (TAO_HAS_INTERCEPTORS == 1)
 
 #include "Object_Adapter.h"
-
 #include "tao/PortableInterceptorC.h"
 #include "tao/LocalObject.h"
 #include "tao/StringSeqC.h"
@@ -43,6 +42,13 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+namespace TAO
+{
+  namespace Portable_Server
+  {
+    class Servant_Upcall;
+  }
+}
 
 /**
  * @class TAO_ServerRequestInfo
@@ -58,7 +64,7 @@ public:
 
   /// Constructor.
   TAO_ServerRequestInfo (TAO_ServerRequest &server_request,
-                         TAO_Object_Adapter::Servant_Upcall *servant_upcall);
+                         TAO::Portable_Server::Servant_Upcall *servant_upcall);
 
   /// Return an ID unique to the current request.  This request ID may
   /// or may not be the same as the GIOP request ID.
@@ -269,7 +275,7 @@ protected:
 
   /// Pointer to the Servant_Upcall object that contains the object
   /// ID, among other things.
-  TAO_Object_Adapter::Servant_Upcall *servant_upcall_;
+  TAO::Portable_Server::Servant_Upcall *servant_upcall_;
 
   /// Pointer to the caught exception.
   CORBA::Exception *caught_exception_;

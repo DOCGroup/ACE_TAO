@@ -163,9 +163,9 @@ class TAO_PortableServer_Export TAO_POA
 public:
 
   friend class TAO_Object_Adapter;
-  friend class TAO_Object_Adapter::Servant_Upcall;
+  friend class TAO::Portable_Server::Servant_Upcall;
   friend class TAO::Portable_Server::Non_Servant_Upcall;
-  friend class TAO_POA_Current_Impl;
+  friend class TAO::Portable_Server::POA_Current_Impl;
   friend class TAO_POA_Manager;
   friend class TAO_RT_Collocation_Resolver;
   friend class TAO_IORInfo;
@@ -833,8 +833,8 @@ protected:
   PortableServer::Servant locate_servant_i (
       const char *operation,
       const PortableServer::ObjectId &id,
-      TAO_Object_Adapter::Servant_Upcall &servant_upcall,
-      TAO_POA_Current_Impl &poa_current_impl,
+      TAO::Portable_Server::Servant_Upcall &servant_upcall,
+      TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
       int &wait_occurred_restart_call
       ACE_ENV_ARG_DECL
     );
