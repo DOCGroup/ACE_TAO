@@ -16,7 +16,6 @@
 #ifndef PACE_SEMAPHORE_H
 #define PACE_SEMAPHORE_H
 
-#include "pace/defines.h"
 #include <semaphore.h>
 
 #if defined (PACE_HAS_CPLUSPLUS)

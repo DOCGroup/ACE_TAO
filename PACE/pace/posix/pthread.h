@@ -16,7 +16,6 @@
 #ifndef PACE_PTHREAD_H
 #define PACE_PTHREAD_H
 
-#include "pace/defines.h"
 #include "pace/sys/types.h"
 #include "pace/signal.h"
 #include <pthread.h>

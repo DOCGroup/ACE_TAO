@@ -16,7 +16,6 @@
 #ifndef PACE_SYS_TERMIOS_H
 #define PACE_SYS_TERMIOS_H
 
-#include "pace/defines.h"
 #include "pace/sys/types.h"
 #include <termios.h>
 

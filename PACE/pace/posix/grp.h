@@ -16,7 +16,6 @@
 #ifndef PACE_GRP_H
 #define PACE_GRP_H
 
-#include "pace/defines.h"
 #include <grp.h>
 
 # if defined (PACE_HAS_CPLUSPLUS)

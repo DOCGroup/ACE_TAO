@@ -16,7 +16,6 @@
 #ifndef PACE_UTIME_H
 #define PACE_UTIME_H
 
-#include "pace/defines.h"
 #include "pace/sys/types.h"
 #include <utime.h>
 

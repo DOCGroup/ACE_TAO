@@ -16,7 +16,6 @@
 #ifndef PACE_MQUEUE_H
 #define PACE_MQUEUE_H
 
-#include "pace/defines.h"
 #include <mqueue.h>
 
 #if defined (PACE_HAS_CPLUSPLUS)

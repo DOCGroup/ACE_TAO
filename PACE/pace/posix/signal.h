@@ -16,7 +16,6 @@
 #ifndef PACE_SIGNAL_H
 #define PACE_SIGNAL_H
 
-#include "pace/defines.h"
 #include "pace/sys/types.h"
 #include <signal.h>
 

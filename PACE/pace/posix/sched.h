@@ -16,7 +16,6 @@
 #ifndef PACE_SCHED_H
 #define PACE_SCHED_H
 
-#include "pace/defines.h"
 #include <sched.h>
 
 #if defined (PACE_HAS_CPLUSPLUS)

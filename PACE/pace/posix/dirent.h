@@ -16,7 +16,6 @@
 #ifndef PACE_DIRENT_H
 #define PACE_DIRENT_H
 
-#include "pace/defines.h"
 #include "pace/sys/types.h"
 #include <dirent.h>
 
