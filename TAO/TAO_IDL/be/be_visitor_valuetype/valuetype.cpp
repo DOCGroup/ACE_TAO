@@ -234,14 +234,12 @@ be_visitor_valuetype::visit_constant (be_constant *node)
     {
     case TAO_CodeGen::TAO_VALUETYPE_CH:
       {
-        ctx.state (TAO_CodeGen::TAO_CONSTANT_CH);
         be_visitor_constant_ch visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
     case TAO_CodeGen::TAO_VALUETYPE_CS:
       {
-        ctx.state (TAO_CodeGen::TAO_CONSTANT_CS);
         be_visitor_constant_cs visitor (&ctx);
         status = node->accept (&visitor);
         break;
@@ -294,42 +292,36 @@ be_visitor_valuetype::visit_enum (be_enum *node)
     {
     case TAO_CodeGen::TAO_VALUETYPE_CH:
       {
-        ctx.state (TAO_CodeGen::TAO_ENUM_CH);
         be_visitor_enum_ch visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
     case TAO_CodeGen::TAO_VALUETYPE_CS:
       {
-        ctx.state (TAO_CodeGen::TAO_ENUM_CS);
         be_visitor_enum_cs visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
     case TAO_CodeGen::TAO_VALUETYPE_ANY_OP_CH:
       {
-        ctx.state (TAO_CodeGen::TAO_ENUM_ANY_OP_CH);
         be_visitor_enum_any_op_ch visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
     case TAO_CodeGen::TAO_VALUETYPE_ANY_OP_CS:
       {
-        ctx.state (TAO_CodeGen::TAO_ENUM_ANY_OP_CS);
         be_visitor_enum_any_op_cs visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
     case TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CH:
       {
-        ctx.state (TAO_CodeGen::TAO_ENUM_CDR_OP_CH);
         be_visitor_enum_cdr_op_ch visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
     case TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CI:
       {
-        ctx.state (TAO_CodeGen::TAO_ENUM_CDR_OP_CI);
         be_visitor_enum_cdr_op_ci visitor (&ctx);
         status = node->accept (&visitor);
         break;
@@ -969,7 +961,6 @@ be_visitor_valuetype::gen_field_pd (be_field *node)
   // will be modified based on what type of node we are visiting.
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  ctx.state (TAO_CodeGen::TAO_FIELD_CH);
   be_visitor_field_ch visitor (&ctx);
 
   *os << be_nl;

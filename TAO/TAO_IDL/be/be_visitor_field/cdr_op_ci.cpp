@@ -174,7 +174,6 @@ be_visitor_field_cdr_op_ci::visit_array (be_array *node)
       ctx.node (node);
 
       // First generate the  declaration.
-      ctx.state (TAO_CodeGen::TAO_ARRAY_CDR_OP_CI);
       be_visitor_array_cdr_op_ci visitor (&ctx);
 
       if (node->accept (&visitor) == -1)
@@ -245,7 +244,6 @@ be_visitor_field_cdr_op_ci::visit_enum (be_enum *node)
       ctx.node (node);
 
       // Generate the typcode for enums.
-      ctx.state (TAO_CodeGen::TAO_ENUM_CDR_OP_CI);
       be_visitor_enum_cdr_op_ci visitor (&ctx);
 
       if (node->accept (&visitor) == -1)

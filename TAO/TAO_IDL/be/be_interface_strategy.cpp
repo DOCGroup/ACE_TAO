@@ -406,10 +406,8 @@ be_interface_ami_exception_holder_strategy::next_state (
       switch (current_state)
         {
         case TAO_CodeGen::TAO_VALUETYPE_OBV_CH:
-        case TAO_CodeGen::TAO_EVENTTYPE_OBV_CH:
           return TAO_CodeGen::TAO_AMI_EXCEPTION_HOLDER_VALUETYPE_CH;
         case TAO_CodeGen::TAO_VALUETYPE_OBV_CS:
-        case TAO_CodeGen::TAO_EVENTTYPE_OBV_CS:
           return TAO_CodeGen::TAO_AMI_EXCEPTION_HOLDER_VALUETYPE_CS;
         default:
           return current_state;

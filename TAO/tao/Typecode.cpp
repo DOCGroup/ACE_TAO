@@ -153,7 +153,8 @@ CORBA_TypeCode::CORBA_TypeCode (CORBA::TCKind kind)
     refcount_ (1),
     orb_owns_ (1),
     private_state_ (new TC_Private_State (kind)),
-    non_aligned_buffer_ (0)
+    non_aligned_buffer_ (0),
+    offset_map_ (0)
 {
 }
 
@@ -169,7 +170,8 @@ CORBA_TypeCode::CORBA_TypeCode (CORBA::TCKind kind,
     refcount_ (1),
     orb_owns_ (orb_owns_tc),
     private_state_ (new TC_Private_State (kind)),
-    non_aligned_buffer_ (0)
+    non_aligned_buffer_ (0),
+    offset_map_ (0)
 {
   // The CDR code used to interpret TypeCodes requires in-memory
   // alignments to match the "on-the-wire" alignments, simplifying
@@ -274,6 +276,8 @@ CORBA_TypeCode::~CORBA_TypeCode (void)
   delete this->private_state_;
   this->private_state_ = 0;
 
+  delete this->offset_map_;
+  this->offset_map_ = 0;
 }
 
 
@@ -1125,7 +1129,7 @@ CORBA_TypeCode::private_equal_struct (
 
           if (ACE_OS::strlen (my_member_name) > 1
               && ACE_OS::strlen (tc_member_name) > 1
-              && ACE_OS::strcmp (my_member_name, tc_member_name) !=0)
+              && ACE_OS::strcmp (my_member_name, tc_member_name) != 0)
             {
               return 0;
             }
@@ -1710,6 +1714,33 @@ CORBA_TypeCode::private_equal_valuetype (
   if (my_count != tc_count)
     {
       return 0; // number of members don't match
+    }
+
+  // The checks below indicate that we have a recursive union.
+  CORBA::TypeCode_ptr par = this->parent_;
+
+  if (par != 0)
+    {
+      if (this->tc_base_ == this->root_tc_base_)
+        {
+          return 1;
+        }
+
+      CORBA::TypeCode_ptr tc_par = tc->parent_;
+
+      if (tc_par)
+        {
+          CORBA::TypeCode_ptr gpar = par->parent_;
+          CORBA::TypeCode_ptr tc_gpar = tc_par->parent_;
+
+          if (gpar != 0
+              && tc_gpar != 0
+              && this->tc_base_ == gpar->tc_base_
+              && tc->tc_base_ == tc_gpar->tc_base_)
+            {
+              return 1;
+            }
+        }
     }
 
   for (CORBA::ULong i = 0; i < my_count; ++i)
@@ -3548,16 +3579,22 @@ operator<< (TAO_OutputCDR& cdr, const CORBA::TypeCode *x)
     default:
       break;
 
-      // Indirected typecodes can't occur at "top level" like
-      // this, only nested inside others!
+    // Indirected typecodes can occur at "top level" like
+    // this only when constructing a recursive typecode in the 
+    // TypeCodeFactory. The check for non-null offset map suffices.
     case ~0u:
-      if (TAO_debug_level > 0)
+      if (x->offset_map () == 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      "indirected typecode at top level!\n"));
+          return 0;
         }
 
-      return 0;
+      if (!cdr.write_octet_array ((CORBA::Octet*)x->buffer_,
+                                  4))
+        {
+          return 0;
+        }
+
+      break;
 
       // A few have "simple" parameter lists
     case CORBA::tk_string:
@@ -3626,10 +3663,48 @@ operator>> (TAO_InputCDR& cdr, CORBA::TypeCode *&x)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class TAO_Pseudo_Object_Manager<CORBA_TypeCode, CORBA_TypeCode_var>;
+template class TAO_Pseudo_Object_Manager<CORBA_TypeCode, 
+                                         CORBA_TypeCode_var>;
 
+template class ACE_Node<CORBA::Long>;
+template class ACE_Unbounded_Queue<CORBA::Long>;
+template class ACE_Unbounded_Queue_Iterator<CORBA::Long>;
+
+template class ACE_Hash_Map_Entry<const char *, 
+                                  ACE_Unbounded_Queue<CORBA::Long> *>;
+template class ACE_Hash_Map_Manager_Ex<const char *, 
+                                       ACE_Unbounded_Queue<CORBA::Long> *, 
+                                       ACE_Hash<const char *>, 
+                                       ACE_Equal_To<const char *>, 
+                                       ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<const char *, 
+                                             ACE_Unbounded_Queue<CORBA::Long> *, 
+                                             ACE_Hash<const char *>, 
+                                             ACE_Equal_To<const char *>, 
+                                             ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<const char *, 
+                                                ACE_Unbounded_Queue<CORBA::Long> *,
+                                                ACE_Hash<const char *>, 
+                                                ACE_Equal_To<const char *>, 
+                                                ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<const char *, 
+                                        ACE_Unbounded_Queue<CORBA::Long> *, 
+                                        ACE_Hash<const char *>, 
+                                        ACE_Equal_To<const char *>, 
+                                        ACE_Null_Mutex>;
+ 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate TAO_Pseudo_Object_Manager<CORBA_TypeCode, CORBA_TypeCode_var>
 
+#pragma instantiate ACE_Node<CORBA::Long>
+#pragma instantiate ACE_Unbounded_Queue<CORBA::Long>
+#pragma instantiate ACE_Unbounded_Queue_Iterator<CORBA::Long>
+
+#pragma instantiate ACE_Hash_Map_Entry<const char *, ACE_Unbounded_Queue<CORBA::Long> *>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<const char *, ACE_Unbounded_Queue<CORBA::Long> *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<const char *, ACE_Unbounded_Queue<CORBA::Long> *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<const char *, ACE_Unbounded_Queue<CORBA::Long> *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<const char *, ACE_Unbounded_Queue<CORBA::Long> *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>
+ 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

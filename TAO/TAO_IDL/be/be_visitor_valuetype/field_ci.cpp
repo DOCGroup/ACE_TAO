@@ -98,7 +98,6 @@ be_visitor_valuetype_field_ci::visit_array (be_array *node)
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
-      ctx.state (TAO_CodeGen::TAO_ARRAY_CI);
       be_visitor_array_ci visitor (&ctx);
 
       if (node->accept (&visitor) == -1)

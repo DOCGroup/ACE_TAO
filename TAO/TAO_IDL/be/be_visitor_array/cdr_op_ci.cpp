@@ -138,7 +138,6 @@ be_visitor_array_cdr_op_ci::visit_array (be_array *node)
       {
         case AST_Decl::NT_enum:
           {
-            ctx.state (TAO_CodeGen::TAO_ENUM_CDR_OP_CI);
             be_visitor_enum_cdr_op_ci ec_visitor (&ctx);
             status = bt->accept (&ec_visitor);
             break;

@@ -37,7 +37,6 @@ int
 be_visitor_eventtype_fwd_ch::visit_eventtype_fwd (be_eventtype_fwd *node)
 {
   be_visitor_context ctx (*this->ctx_);
-  ctx.state (TAO_CodeGen::TAO_VALUETYPE_FWD_CH);
   be_visitor_valuetype_fwd_ch visitor (&ctx);
   return visitor.visit_valuetype_fwd (node);
 }

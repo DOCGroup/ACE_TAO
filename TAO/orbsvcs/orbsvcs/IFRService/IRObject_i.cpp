@@ -86,7 +86,7 @@ char *
 TAO_IRObject_i::reference_to_path (CORBA::IRObject_ptr obj)
 {
   PortableServer::ObjectId object_id;
-  TAO_ObjectKey object_key = obj->_object_key ();
+  TAO::ObjectKey object_key = obj->_object_key ();
   int status = TAO_POA::parse_ir_object_key (object_key,
                                              object_id);
   if (status != 0)

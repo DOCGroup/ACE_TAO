@@ -211,6 +211,12 @@ private:
                               const CORBA::UnionMemberSeq &members,
                               TAO_OutputCDR &cdr);
 
+  /// Insert a non-default label value into the typecode being created.
+  CORBA::Boolean insert_label_value (CORBA::TCKind kind,
+                                     const CORBA::Any &any,
+                                     TAO_OutputCDR &cdr
+                                     ACE_ENV_ARG_DECL);
+
   /// Called for all types that take just an id and a name.
   CORBA::TypeCode_ptr create_tc_common (
       const char *id,
@@ -283,8 +289,15 @@ private:
 
   /// Common code for allocating and doing the final assembly of a typecode.
   CORBA::TypeCode_ptr assemble_tc (TAO_OutputCDR &cdr,
-                                   CORBA::TCKind kind
+                                   CORBA::TCKind kind,
+                                   CORBA::TypeCode::OFFSET_MAP *map
                                    ACE_ENV_ARG_DECL);
+
+  /// Update the offset map we will pass to the typecode we are constructing.
+  void update_map (CORBA::TypeCode::OFFSET_MAP *&offset_map,
+                   CORBA::TypeCode_ptr member_tc,
+                   const char *id,
+                   TAO_OutputCDR &cdr);
 
   /// Prohibited
   TAO_TypeCodeFactory_i (const TAO_TypeCodeFactory_i &src);
