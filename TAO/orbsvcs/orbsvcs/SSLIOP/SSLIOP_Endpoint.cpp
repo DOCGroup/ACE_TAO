@@ -106,18 +106,6 @@ TAO_SSLIOP_Endpoint::addr_to_string (char *buffer, size_t length)
   return 0;
 }
 
-void
-TAO_SSLIOP_Endpoint::reset_hint (void)
-{
-  this->iiop_endpoint_->reset_hint ();
-
-  // @@ Who is doing the locking here!
-  /*if (this->ssl_hint_)
-    {
-      this->ssl_hint_->cleanup_hint ();
-      this->ssl_hint_ = 0;
-      }*/
-}
 
 TAO_Endpoint *
 TAO_SSLIOP_Endpoint::next (void)
@@ -158,6 +146,8 @@ TAO_SSLIOP_Endpoint::duplicate (void)
 {
   TAO_SSLIOP_Endpoint *endpoint = 0;
 
+  // @@ We need to set the priority of the newly formed endpoint. It
+  // shouldnt be a problem as long as SSL is not used with RTCORBA.
   ACE_NEW_RETURN (endpoint,
                   TAO_SSLIOP_Endpoint (&this->ssl_component_,
                                        0),
@@ -184,4 +174,42 @@ TAO_SSLIOP_Endpoint::hash (void)
     + (CORBA::is_nil (this->credentials_.in ())
        ? 0
        : this->credentials_->hash ());
+}
+
+
+const ACE_INET_Addr &
+TAO_SSLIOP_Endpoint::object_addr (void) const
+{
+  // The object_addr_ is initialized here, rather than at IOR decode
+  // time for several reasons:
+  //   1. A request on the object may never be invoked.
+  //   2. The DNS setup may have changed dynamically.
+  //   ...etc..
+
+  // Double checked locking optimization.
+  if (this->object_addr_.get_type () != AF_INET)
+    {
+      // We need to modify the object_addr_ in this method.  Do so
+      // using a non-const copy of the <this> pointer.
+      ACE_INET_Addr &ssl_addr =
+        ACE_const_cast (ACE_INET_Addr &, this->object_addr_);
+
+      const ACE_INET_Addr &iiop_addr = this->iiop_endpoint_->object_addr ();
+
+      TAO_SSLIOP_Endpoint *ssl_endpoint =
+        ACE_const_cast (TAO_SSLIOP_Endpoint *, this);
+
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                        guard,
+                        ssl_endpoint->addr_lookup_lock_,
+                        this->object_addr_);
+
+      if (this->object_addr_.get_type () != AF_INET)
+        {
+          ssl_addr = iiop_addr;
+          ssl_addr.set_port_number (this->ssl_component_.port);
+        }
+    }
+
+  return this->object_addr_;
 }

@@ -467,8 +467,6 @@ TAO_GIOP_Invocation::invoke (CORBA::Boolean write_semantics
         }
       this->transport_->close_connection ();
 
-      this->endpoint_->reset_hint ();
-
       this->restart_flag_ = 1;
 
       return TAO_INVOKE_RESTART;
@@ -500,7 +498,6 @@ TAO_GIOP_Invocation::close_connection (void)
   TAO_Transport::release (this->transport_);
   this->transport_ = 0;
 
-  this->endpoint_->reset_hint ();
   this->endpoint_ = 0;
   this->profile_ = 0;
 

@@ -47,7 +47,8 @@ public:
   TAO_UIOP_Endpoint (void);
 
   /// Constructor.
-  TAO_UIOP_Endpoint (const ACE_UNIX_Addr &addr);
+  TAO_UIOP_Endpoint (const ACE_UNIX_Addr &addr,
+                     CORBA::Short priority = TAO_INVALID_PRIORITY);
 
   /// Destructor.
   ~TAO_UIOP_Endpoint (void);
@@ -60,9 +61,6 @@ public:
   //@{
   virtual TAO_Endpoint *next (void);
   virtual int addr_to_string (char *buffer, size_t length);
-  virtual void reset_hint (void);
-
-  /// Returns a copy of <this>
   virtual TAO_Endpoint *duplicate (void);
 
   /// Return true if this endpoint is equivalent to <other_endpoint>.  Two

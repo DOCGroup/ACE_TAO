@@ -13,17 +13,19 @@ ACE_RCSID(Strategies, UIOP_Endpoint, "$Id$")
 # include "UIOP_Endpoint.i"
 #endif /* __ACE_INLINE__ */
 
-TAO_UIOP_Endpoint::TAO_UIOP_Endpoint (const ACE_UNIX_Addr &addr)
-  : TAO_Endpoint (TAO_TAG_UIOP_PROFILE),
-    object_addr_ (addr),
-    next_ (0)
+TAO_UIOP_Endpoint::TAO_UIOP_Endpoint (const ACE_UNIX_Addr &addr,
+                                      CORBA::Short priority)
+  : TAO_Endpoint (TAO_TAG_UIOP_PROFILE,
+                  priority)
+    , object_addr_ (addr)
+    , next_ (0)
 {
 }
 
 TAO_UIOP_Endpoint::TAO_UIOP_Endpoint (void)
-  : TAO_Endpoint (TAO_TAG_UIOP_PROFILE),
-    object_addr_ (),
-    next_ (0)
+  : TAO_Endpoint (TAO_TAG_UIOP_PROFILE)
+    , object_addr_ ()
+    , next_ (0)
 {
 }
 
@@ -42,13 +44,6 @@ TAO_UIOP_Endpoint::addr_to_string (char *buffer, size_t length)
   return 0;
 }
 
-void
-TAO_UIOP_Endpoint::reset_hint (void)
-{
-  //  if (this->hint_)
-  //this->hint_->cleanup_hint ((void **) &this->hint_);
-}
-
 TAO_Endpoint *
 TAO_UIOP_Endpoint::next (void)
 {
@@ -60,7 +55,8 @@ TAO_UIOP_Endpoint::duplicate (void)
 {
   TAO_UIOP_Endpoint *endpoint = 0;
   ACE_NEW_RETURN (endpoint,
-                  TAO_UIOP_Endpoint (this->object_addr_),
+                  TAO_UIOP_Endpoint (this->object_addr_,
+                                     this->priority ()),
                   0);
 
   return endpoint;
