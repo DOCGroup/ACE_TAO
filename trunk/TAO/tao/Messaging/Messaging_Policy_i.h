@@ -1,4 +1,5 @@
 /* -*- C++ -*- */
+
 //=============================================================================
 /**
  *  @file   Messaging_Policy_i.h
@@ -8,7 +9,6 @@
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
 //=============================================================================
-
 
 #ifndef TAO_MESSAGING_POLICY_I_H
 #define TAO_MESSAGING_POLICY_I_H
