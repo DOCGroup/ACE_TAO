@@ -23,6 +23,8 @@
 #include "tao/POAS.h"
 // for POA skeleton.
 
+#include "tao/poa_macros.h"
+
 class TAO_POA;
 // Forward decl.
 
