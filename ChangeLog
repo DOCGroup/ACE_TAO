@@ -1,3 +1,12 @@
+Mon Jan 19 10:46:51 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/GUID.pm:
+
+          Mask the 8 byte portions of the GUID with 0xffffffff to avoid
+          problems with 64-bit versions of Cygwin Perl.  Thanks to Cristian
+          Ferretti <cristian_ferretti@yahoo.com> for reporting this and
+          providing a fix.
+
 Mon Jan 19 10:22:05 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/make.mpd:
