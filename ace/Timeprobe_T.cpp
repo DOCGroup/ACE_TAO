@@ -18,7 +18,7 @@ ACE_Timeprobe<ACE_LOCK>::ACE_Timeprobe (u_long size)
   ACE_NEW (this->timeprobes_,
            ACE_timeprobe_t[this->max_size_]);
 
-#ifdef VXWORKS
+#if defined (VXWORKS)
   if (sysProcNumGet () == 0)
     this->current_slot_vme_address_ = (u_int *) 0xDa010000;
   else
