@@ -1,6 +1,6 @@
 // $Id$
 
-#include "..\Supports_Test_impl.h"
+#include "Supports_Test_impl.h"
 #include "tao/Strategies/advanced_resource.h"
 
 const char * ior_output_file = "test.ior";
