@@ -60,8 +60,10 @@ static const ACE_TCHAR *rendezvous = ACE_TEXT ("127.0.0.1:10010");
 static size_t svr_thrno = ACE_MAX_THREADS;
 
 
-#if defined (CHORUS) // Add platforms that can't handle too many
-                     // connection simultaneously here.
+#if defined (CHORUS) \
+	|| defined (ACE_VXWORKS) 	// default network parameters (MAX_BINDS and system buffers) are too small for full test
+		 // Add platforms that can't handle too many
+         // connection simultaneously here.
 #define ACE_LOAD_FACTOR /2
 #else
 #define ACE_LOAD_FACTOR
