@@ -1,3 +1,7 @@
+Sun May 11 11:02:18 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* docs/Options.html: Added documentation for the new ORB option.
+
 Sun May 11 10:44:56 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	The aim of this checkin is to reduce the runtime memory consumed
