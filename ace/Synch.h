@@ -107,9 +107,9 @@ class ACE_Export ACE_Adaptive_Lock : public ACE_Lock
   //    to the run time and delegates all locking operations to the actual
   //    lock.  Users must overwrite the constructor to initialize <lock_>.
 public:
-  virtual ~ACE_Adaptive_Lock ();
-  // You must also overwrite the destructor function to match with
-  // how you construct the underneath <lock_>.
+  virtual ~ACE_Adaptive_Lock (void);
+  // You must also override the destructor function to match with how
+  // you construct the underneath <lock_>.
 
   // = Lock/unlock operations.
 
@@ -121,13 +121,13 @@ public:
   virtual int acquire_write (void);
   virtual int tryacquire_read (void);
   virtual int tryacquire_write (void);
-  void dump () const;
+  void dump (void) const;
 
 protected:
   ACE_Adaptive_Lock (void);
   // Create and initialize create the actual lcok used in the class.
-  // The default constructor simply set the <lock_> to 0 (null).
-  // You must overwrite this method for this class to work.
+  // The default constructor simply set the <lock_> to 0 (null).  You
+  // must overwrite this method for this class to work.
 
   ACE_Lock *lock_;
 };
@@ -303,6 +303,13 @@ public:
 protected:
   ACE_sema_t semaphore_;
 
+  int removed_;
+  // Keeps track of whether <remove> has been called yet to avoid
+  // multiple <remove> calls, e.g., explicitly and implicitly in the
+  // destructor.  This flag isn't protected by a lock, so make sure
+  // that you don't have multiple threads simultaneously calling
+  // <remove> on the same object, which is a bad idea anyway...
+
 private:
   // = Prevent assignment and initialization.
   void operator= (const ACE_Semaphore &);
@@ -448,6 +455,12 @@ protected:
   ACE_rwlock_t lock_;
   // Readers/writer lock.
 
+  int removed_;
+  // Keeps track of whether <remove> has been called yet to avoid
+  // multiple <remove> calls, e.g., explicitly and implicitly in the
+  // destructor.  This flag isn't protected by a lock, so make sure
+  // that you don't have multiple threads simultaneously calling
+  // <remove> on the same object, which is a bad idea anyway...
 private:
   // = Prevent assignment and initialization.
   void operator= (const ACE_RW_Mutex &);
@@ -515,7 +528,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
-//private:
+protected:
 #if defined (CHORUS)
   ACE_mutex_t *process_lock_;
   // This lock resides in shared memory.
@@ -524,6 +537,14 @@ public:
   // Remember the name of the mutex if we created it so we can unlink
   // it when we go away (only the actor that initialized the memory
   // can destroy it).
+
+#else
+  int removed_;
+  // Keeps track of whether <remove> has been called yet to avoid
+  // multiple <remove> calls, e.g., explicitly and implicitly in the
+  // destructor.  This flag isn't protected by a lock, so make sure
+  // that you don't have multiple threads simultaneously calling
+  // <remove> on the same object, which is a bad idea anyway...
 #endif /* CHORUS */
 
   ACE_mutex_t lock_;
@@ -899,6 +920,13 @@ protected:
   ACE_event_t handle_;
   // The underlying handle.
 
+  int removed_;
+  // Keeps track of whether <remove> has been called yet to avoid
+  // multiple <remove> calls, e.g., explicitly and implicitly in the
+  // destructor.  This flag isn't protected by a lock, so make sure
+  // that you don't have multiple threads simultaneously calling
+  // <remove> on the same object, which is a bad idea anyway...
+
 private:
   // = Prevent copying.
   ACE_Event (const ACE_Event& event);
@@ -984,6 +1012,7 @@ class ACE_Export ACE_Thread_Mutex
   //     recursive.  To be totally safe and portable, developers
   //     should use ACE_Recursive_Thread_Mutex when they need a
   //     recursive mutex.
+  friend class ACE_Condition_Thread_Mutex;
 public:
   ACE_Thread_Mutex (LPCTSTR name = 0, void *arg = 0);
 
@@ -1037,9 +1066,16 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
-//private:
+protected:
   ACE_thread_mutex_t lock_;
   // Mutex type that supports single-process locking efficiently.
+
+  int removed_;
+  // Keeps track of whether <remove> has been called yet to avoid
+  // multiple <remove> calls, e.g., explicitly and implicitly in the
+  // destructor.  This flag isn't protected by a lock, so make sure
+  // that you don't have multiple threads simultaneously calling
+  // <remove> on the same object, which is a bad idea anyway...
 
 private:
   // = Prevent assignment and initialization.
@@ -1173,6 +1209,13 @@ protected:
   ACE_Thread_Mutex &mutex_;
   // Reference to mutex lock.
 
+  int removed_;
+  // Keeps track of whether <remove> has been called yet to avoid
+  // multiple <remove> calls, e.g., explicitly and implicitly in the
+  // destructor.  This flag isn't protected by a lock, so make sure
+  // that you don't have multiple threads simultaneously calling
+  // <remove> on the same object, which is a bad idea anyway...
+
 private:
   // = Prevent assignment and initialization.
   void operator= (const ACE_Condition_Thread_Mutex &);
@@ -1283,6 +1326,13 @@ protected:
   ACE_thread_t owner_id_;
   // Current owner of the lock.
 #endif /* ! ACE_WIN32 */
+
+  int removed_;
+  // Keeps track of whether <remove> has been called yet to avoid
+  // multiple <remove> calls, e.g., explicitly and implicitly in the
+  // destructor.  This flag isn't protected by a lock, so make sure
+  // that you don't have multiple threads simultaneously calling
+  // <remove> on the same object, which is a bad idea anyway...
 
 private:
   // = Prevent assignment and initialization.
