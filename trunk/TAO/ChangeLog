@@ -1,3 +1,11 @@
+Thu Mar 27 14:25:31 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+
+          Added explicit cast of a literal 0xffffffff to CORBA::Long, to prevent
+          BCB from trying to promote it to a float or double. Thanks to
+          Johnny Willemsen <jwillemsen@rememdy.nl> for reporting the problem.
+
 Thu Mar 27 09:28:09 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp (create_object): Removed
