@@ -94,7 +94,7 @@ namespace TAO
     /**
     * @name POA_CosNotifyComm::StructuredPushConsumer Methods
     *
-    * Methods required by the POA_CosNotifyComm::StructuredPushConsumer 
+    * Methods required by the POA_CosNotifyComm::StructuredPushConsumer
     * interface.
     */
     //@{
