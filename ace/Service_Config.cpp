@@ -21,6 +21,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/XML_Svc_Conf.h"
 #include "ace/OS_NS_time.h"
+#include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_stat.h"
 
 ACE_RCSID (ace,
@@ -677,12 +678,12 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
     ACE_Service_Config::start_daemon ();
 
   // Write process id to file.
-  if (ACE_Service_Config::pid_file_name_ != 0) 
+  if (ACE_Service_Config::pid_file_name_ != 0)
     {
-      FILE* pidf = ACE_OS::fopen (ACE_Service_Config::pid_file_name_, 
+      FILE* pidf = ACE_OS::fopen (ACE_Service_Config::pid_file_name_,
 				  ACE_LIB_TEXT("w"));
 
-      if (pidf != 0) 
+      if (pidf != 0)
         {
           ACE_OS::fprintf (pidf,
                            "%ld\n",

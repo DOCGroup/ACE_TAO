@@ -152,10 +152,8 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current
    * @name Reference Related Methods
    */
   //@{
-#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
   typedef TAO_RTScheduler_Current_ptr _ptr_type;
   typedef TAO_RTScheduler_Current_var _var_type;
-#endif /* ! __GNUC__ || g++ >= 2.8 */
 
   static TAO_RTScheduler_Current_ptr _duplicate (TAO_RTScheduler_Current_ptr obj);
 

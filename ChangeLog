@@ -1,3 +1,8 @@
+Sat Jan  1 13:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Service_Config.cpp:
+          Added include of OS_NS_unistd.h to get ACE_OS::getpid()
+
 Sat Jan  1 13:45:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_gnuwin32_common.GNU:
