@@ -1,3 +1,9 @@
+Thu Aug 30 09:58:38 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/High_Res_Timer.i (elapsed_microseconds): For Win32, isolate the
+          msec modulus before converting it up to usecs. Thanks to Francois
+          Rioux <rioux01@gel.ulaval.ca> for reporting this.
+
 Thu Aug 30 00:42:41 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
 
         * ace/Service_Config.cpp:
