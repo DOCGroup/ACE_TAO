@@ -22,8 +22,7 @@
 // Multidimensional arrays - constant vigilance.
 typedef short TwoDArray[64][63];
 
-// Not yet
-//typedef short ThreeDArray[64][63][62];
+typedef short ThreeDArray[64][63][62];
 
 // This problem is a combination of two others
 // that have long been fixed, but you never know...

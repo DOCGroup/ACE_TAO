@@ -37,7 +37,6 @@ typedef M5 R5;
 
 typedef R5 V5;
 
-// Not yet - creates an array of more than 2 dimensions
-// typedef V5 Z5[5];
+ typedef V5 Z5[5];
 
 
