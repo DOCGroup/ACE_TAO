@@ -159,7 +159,9 @@ public:
   // *** Helper functions for parsing XML
 
   /**
-   * Skip any whitespaces encounter.
+   * Skip any whitespaces encounter until the first non-whitespace
+   * character is encountered and consumed from the current input
+   * CharStream.
    *
    * @param whitespace Return a pointer to the string of skipped
    * whitespace after proper conversion.  Null if there's no
@@ -168,8 +170,26 @@ public:
    * @retval The first none-white space characters (which will be
    * consumed from the CharStream.)  If no whitespace is found, it
    * will return 0.
+   *
+   * @sa skip_whitespace_count
    */
   ACEXML_Char skip_whitespace (ACEXML_Char **whitespace);
+
+  /**
+   * Skip any whitespaces encounter until the first non-whitespace
+   * character.  The first non-whitespace character is not consumed.
+   * This method does peek into the input CharStream and therefore
+   * is more expensive than @ref skip_whitespace.
+   *
+   * @param peek If non-null, @a peek points to a ACEXML_Char where
+   *        skip_whitespace_count store the first non-whitespace
+   *        character it sees (character is not removed from the stream.)
+   *
+   * @retval The number of whitespace characters consumed.
+   *
+   * @sa skip_whitespace
+   */
+  int skip_whitespace_count (ACEXML_Char *peek = 0);
 
   /**
    * Check if a character @a c is a whitespace.
@@ -202,8 +222,8 @@ public:
   /**
    * Get a quoted string.  Quoted strings are used to specify
    * attribute values and this routine will replace character and
-   * entity references on-the-fly.  Parameter entitys is not allowed
-   * (or replaced) in this function.
+   * entity references on-the-fly.  Parameter entities are not allowed
+   * (or replaced) in this function.  (But regular entities are.)
    *
    * @param str returns the un-quoted string.
    *
@@ -248,8 +268,17 @@ public:
   /**
    * Parse an XML element.  The first character encountered should
    * be the first character of the element "Name".
+   *
+   * @param is_root If not 0, then we are expecting to see the "root"
+   * element now, and the next element's name need to match the name
+   * defined in DOCTYPE definition, i.e., @a this->doctype_.
+   *
+   * @todo Instead of simply checking for the root element based on the
+   * argument @a is_root, we should instead either pass in some sort
+   * of validator or allow the function to return the element name so it
+   * can be used in a validator.
    */
-  void parse_element (ACEXML_Env &xmlenv)
+  void parse_element (int is_root, ACEXML_Env &xmlenv)
     //    ACE_THROW_SPEC ((ACEXML_SAXException))
     ;
 
@@ -297,12 +326,16 @@ public:
    * Parse an "ELEMENT" decl.  The first character this method
    * expects is always the 'L' (the second char) in the word
    * "ELEMENT".
+   *
+   * @retval 0 on success, -1 otherwise.
    */
   int parse_element_decl (ACEXML_Env &xmlenv);
 
   /**
    * Parse an "ENTITY" decl.  The first character this method expects
    * is always the 'N' (the second char) in the word "ENTITY".
+   *
+   * @retval 0 on success, -1 otherwise.
    */
   int parse_entity_decl (ACEXML_Env &xmlenv);
 
@@ -310,6 +343,8 @@ public:
    * Parse an "ATTLIST" decl.  Thse first character this method
    * expects is always the 'A' (the first char) in the word
    * "ATTLIST".
+   *
+   * @retval 0 on success, -1 otherwise.
    */
   int parse_attlist_decl (ACEXML_Env &xmlenv);
 
@@ -317,8 +352,34 @@ public:
    *Parse a "NOTATION" decl.  The first character this method
    * expects is always the 'N' (the first char) in the word
    * "NOTATION".
+   *
+   * @retval 0 on success, -1 otherwise.
    */
   int parse_notation_decl (ACEXML_Env &xmlenv);
+
+  /**
+   * Parse an ExternalID or a reference to PUBLIC ExternalID.
+   * Possible cases are in the forms of: <code>
+   *
+   * SYSTEM 'quoted string representing system resource'
+   * PUBLIC 'quoted name of public ID' 'quoted resource'
+   * PUBLIC 'quoted name we are referring to'
+   * </code>
+   *
+   * The first character this function sees must be either 'S' or 'P'.
+   * When the function finishes parsing, the input stream points
+   * at the first non-whitespace character.
+   *
+   * @param publicID returns the unquoted publicID read.  If none
+   *        is available, it will be reset to 0.
+   * @param systemID returns the unquoted systemID read.  If none
+   *        is available, it will be reset to 0.
+   *
+   * @retval 0 on success, -1 otherwise.
+   */
+  int parse_external_id_and_ref (ACEXML_Char *&publicId,
+                                 ACEXML_Char *&systemId,
+                                 ACEXML_Env &xmlenv);
 
 protected:
   /// Get a character.
@@ -353,8 +414,17 @@ private:
   ACEXML_ErrorHandler *error_handler_;
 
   /// @@ Feature and properties management structure here.
-  // Current input char stream.
+  /// Current input char stream.
   ACEXML_CharStream *instream_;
+
+  /// My doctype, if any.
+  ACEXML_Char *doctype_;
+
+  /// External DTD System Literal, if any.
+  ACEXML_Char *dtd_system_;
+
+  /// External DTD Public Literal, if any.
+  ACEXML_Char *dtd_public_;
 
   ACE_Obstack_T<ACEXML_Char> obstack_;
 
