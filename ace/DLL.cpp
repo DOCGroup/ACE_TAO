@@ -98,8 +98,6 @@ ACE_DLL::open (const ACE_TCHAR *dll_filename,
           ACE_OS_String::strcat (dll_pathname, ACE_LIB_TEXT ("(shr.o)"));
           open_mode |= RTLD_MEMBER;
           this->handle_ = ACE_OS::dlopen (dll_pathname, open_mode);
-          if (this->handle_ != ACE_SHLIB_INVALID_HANDLE)
-            break;  // end up returning 0
         }
     }        
 #endif /* AIX */
