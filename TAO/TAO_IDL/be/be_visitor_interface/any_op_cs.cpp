@@ -55,7 +55,7 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
   // Any <<= and >>= operators
   os->indent ();
   *os << "void operator<<= (CORBA::Any &_tao_any, "
-      << node->name () << "_ptr _tao_elem) // copying" << be_nl
+      << node->name () << "_ptr _tao_elem)" << be_nl
       << "{" << be_idt_nl
       << "CORBA::Environment _tao_env;" << be_nl
       << "CORBA::Object_ptr *_tao_obj_ptr;" << be_nl
@@ -64,14 +64,6 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
       << "::_duplicate (_tao_elem);" << be_nl
       << "_tao_any.replace (" << node->tc_name () << ", "
       << "_tao_obj_ptr, 1, _tao_env);" << be_uidt_nl
-      << "}\n" << be_nl;
-
-  *os << "void operator<<= (CORBA::Any &_tao_any, "
-      << node->name () << "_ptr *_tao_elem) // non copying" << be_nl
-      << "{" << be_idt_nl
-      << "CORBA::Environment _tao_env;" << be_nl
-      << "_tao_any.replace (" << node->tc_name () << ", "
-      << "_tao_elem, 1, _tao_env); // consume it" << be_uidt_nl
       << "}\n" << be_nl;
 
   *os << "CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, "
