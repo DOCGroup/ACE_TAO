@@ -158,8 +158,16 @@ module UnionTest3
 // Make sure inner union is generated in header file with
 // proper scoping (or lack thereof) in its name, depending
 // on the platform.
-enum XType { X_A };
-enum ZType { Z_A };
+enum XType 
+{ 
+  X_A 
+};
+
+enum ZType 
+{ 
+  Z_A 
+};
+
 union X switch (XType) 
 {
   case X_A:
@@ -208,5 +216,28 @@ struct Element
     case 1:
       sequence<ValueUnion> VUValue;
   } Value;
+};
+
+// A fix to the IDL compiler's typecoce generation created
+// a problem with unions that have more than one member,
+// where any member except the last is itself a scoped type.
+// This is the simplest example that will reproduce the problem,
+// if it ever reappears.
+enum TestOneEnum 
+{ 
+  TALL, 
+  SCHORT
+};
+
+enum TestTwoEnum 
+{ 
+  LIGHT, 
+  DARK
+};
+
+union TestUnion switch (short) 
+{
+  case 1: TestOneEnum oneEnum;
+  case 2: TestTwoEnum twoEnum;
 };
 
