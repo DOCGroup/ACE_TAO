@@ -1,3 +1,12 @@
+Wed Jun 18 15:59:18 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/OS.h:
+          Added includes of os_fcntl.h, os_netdb.h, os_semaphore.h,
+          os_signal.h, os_stdio.h, os_stdlib.h, os_stropts.h, os_unistd.h,
+          arpa/os_inet.h, sys/select.h, and sys/os_socket.h to the VxWorks
+          section.  All the includes in OS.h will be reorganized once the
+          builds stabalize.
+
 Wed Jun 18 10:54:18 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
