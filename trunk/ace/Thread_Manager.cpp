@@ -140,7 +140,7 @@ ACE_Thread_Descriptor::terminate()
           {
             // Mark thread as terminated.
             this->thr_state_ = ACE_THR_TERMINATED;
-            tm_->terminated_thr_queue_.enqueue_tail (*this);
+            tm_->register_as_terminated (this);
             // Must copy the information here because td will be "freed" below.
           }
 #if defined (ACE_WIN32)
@@ -226,12 +226,7 @@ ACE_Thread_Descriptor::ACE_Thread_Descriptor (void)
 #if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
     log_msg_(0),
     at_exit_list_(0),
-#endif /* !ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
-    grp_id_ (0),
-    thr_state_ (ACE_THR_IDLE),
-    task_ (0)
-#if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
-    , terminated_(0)
+    terminated_(0)
 #endif /* !ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
 {
   ACE_TRACE ("ACE_Thread_Descriptor::ACE_Thread_Descriptor");
@@ -1420,6 +1415,67 @@ ACE_Thread_Manager::cancel_all (int async_cancel)
                           async_cancel);
 }
 
+int
+ACE_Thread_Manager::join (ACE_thread_t tid)
+{
+  ACE_TRACE ("ACE_Thread_Manager::join");
+
+  ACE_Thread_Descriptor_Base tdb;
+  int found = 0;
+  {
+    ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
+
+    for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor_Base> biter (this->terminated_thr_list_);
+         !biter.done ();
+         biter.advance ())
+      if (ACE_OS::thr_equal (biter.next ()->thr_id_, tid))
+        {
+          ACE_Thread_Descriptor_Base *tdb = biter.advance_and_remove (0);
+          if (ACE_Thread::join (tdb->thr_handle_) == -1)
+            return -1;
+
+# if defined (ACE_HAS_DCE_DRAFT4_THREADS)  &&  defined (ACE_LACKS_SETDETACH)
+          // Must explicitly detach threads.  Threads without THR_DETACHED
+          // were detached in ACE_OS::thr_create ().
+          ::pthread_detach (tdb->thr_handle_);
+# endif /* ACE_HAS_DCE_DRAFT4_THREADS && ACE_LACKS_SETDETACH */
+
+          delete tdb;
+          return 0;
+          // return immediately if we've found the thread we want to join.
+        }
+    
+    for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter (this->thr_list_);
+         !iter.done ();
+         iter.advance ())
+      // If threads are created as THR_DETACHED or THR_DAEMON, we
+      // can't help much.
+      if (ACE_OS::thr_equal (iter.next ()->thr_id_,tid) &&
+          (ACE_BIT_DISABLED (iter.next ()->flags_, (THR_DETACHED | THR_DAEMON))
+           || ACE_BIT_ENABLED (iter.next ()->flags_, THR_JOINABLE)))
+        {
+          tdb = *iter.next ();
+          tdb.thr_state_ = ACE_THR_JOINING;
+          found = 1;
+          break;
+        }
+
+    if (!found)
+      return -1;
+    // Didn't find the thread we want or the thread is not joinable.
+  }
+  
+  if (ACE_Thread::join (tdb.thr_handle_) == -1)
+    return -1;
+
+# if defined (ACE_HAS_DCE_DRAFT4_THREADS)  &&  defined (ACE_LACKS_SETDETACH)
+  // Must explicitly detach threads.  Threads without THR_DETACHED
+  // were detached in ACE_OS::thr_create ().
+  ::pthread_detach (tdb.thr_handle_);
+# endif /* ACE_HAS_DCE_DRAFT4_THREADS && ACE_LACKS_SETDETACH */
+  return 0;
+}
+
 // Wait for group of threads
 
 int
@@ -1436,7 +1492,10 @@ ACE_Thread_Manager::wait_grp (int grp_id)
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
-    ACE_NEW_RETURN (copy_table, ACE_Thread_Descriptor_Base [this->thr_list_.size ()], -1);
+    ACE_NEW_RETURN (copy_table,
+                    ACE_Thread_Descriptor_Base [this->thr_list_.size () +
+                                               this->terminated_thr_list_.size ()],
+                    -1);
 
     for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter (this->thr_list_);
          !iter.done ();
@@ -1446,7 +1505,22 @@ ACE_Thread_Manager::wait_grp (int grp_id)
       if (iter.next ()->grp_id_ == grp_id &&
           (ACE_BIT_DISABLED (iter.next ()->flags_, (THR_DETACHED | THR_DAEMON))
            || ACE_BIT_ENABLED (iter.next ()->flags_, THR_JOINABLE)))
-        copy_table[copy_count++] = *iter.next ();
+        {
+          iter.next ()->thr_state_ = ACE_THR_JOINING;
+          copy_table[copy_count++] = *iter.next ();
+        }
+
+    for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor_Base> biter (this->terminated_thr_list_);
+         !biter.done ();
+         biter.advance ())
+      // If threads are created as THR_DETACHED or THR_DAEMON, we
+      // can't help much.
+      if (biter.next ()->grp_id_ == grp_id)
+        {
+          ACE_Thread_Descriptor_Base *tdb = biter.advance_and_remove (0);
+          copy_table[copy_count++] = *tdb;
+          delete tdb;
+        }
   }
 
   // Now actually join() with all the threads in this group.
@@ -1540,19 +1614,20 @@ ACE_Thread_Manager::exit (void *status, int do_thr_exit)
         // Threads created with THR_DAEMON shouldn't exist here, but
         // just to be safe, let's put it here.
 
-        if (ACE_BIT_DISABLED (td->flags_, (THR_DETACHED | THR_DAEMON))
-            || (ACE_BIT_ENABLED (td->flags_, THR_JOINABLE)))
-          {
-            // Mark thread as terminated.
-            td->thr_state_ = ACE_THR_TERMINATED;
-            this->terminated_thr_queue_.enqueue_tail (*td);
-            // Must copy the information here because td will be "freed" below.
-          }
+        if (td->thr_state != ACE_THR_JOINING)
+          if (ACE_BIT_DISABLED (td->flags_, (THR_DETACHED | THR_DAEMON))
+              || (ACE_BIT_ENABLED (td->flags_, THR_JOINABLE)))
+            {
+              // Mark thread as terminated.
+              td->thr_state_ = ACE_THR_TERMINATED;
+              this->register_as_terminated.insert_tail (td);
+              // Must copy the information here because td will be "freed" below.
+            }
 #if defined (ACE_WIN32)
-        else
-          {
-            close_handle = 1;
-          }
+          else
+            {
+              close_handle = 1;
+            }
 #endif /* ACE_WIN32 */
 #endif /* ! VXWORKS */
 
@@ -1628,7 +1703,10 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout,
                  iter.advance ())
               if (ACE_BIT_ENABLED (iter.next ()->flags_, (THR_DETACHED | THR_DAEMON)) &&
                   ACE_BIT_DISABLED (iter.next ()->flags_, THR_JOINABLE))
-                this->thr_to_be_removed_.enqueue_tail (iter.next ());
+                {
+                  this->thr_to_be_removed_.enqueue_tail (iter.next ());
+                  iter.next ()->thr_state_ = ACE_THR_JOINING;
+                }
 
             if (! this->thr_to_be_removed_.is_empty ())
               {
@@ -1652,24 +1730,25 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout,
 #if !defined (VXWORKS)
   // @@ VxWorks doesn't support thr_join (yet.)  We are working
   //on our implementation.   Chorus'es thr_join seems broken.
-  ACE_Thread_Descriptor_Base item;
+  ACE_Thread_Descriptor_Base *item;
 
 #if defined (CHORUS)
   if (ACE_Object_Manager::shutting_down () != 1)
     {
 #endif /* CHORUS */
-      while (this->terminated_thr_queue_.dequeue_head (item) == 0)
+      while ((item = this->terminated_thr_list_.delete_head ()) != 0)
         {
-          if (ACE_BIT_DISABLED (item.flags_, (THR_DETACHED | THR_DAEMON))
-              || ACE_BIT_ENABLED (item.flags_, THR_JOINABLE))
+          if (ACE_BIT_DISABLED (item->flags_, (THR_DETACHED | THR_DAEMON))
+              || ACE_BIT_ENABLED (item->flags_, THR_JOINABLE))
             // Detached handles shouldn't reached here.
-              ACE_Thread::join (item.thr_handle_);
+              ACE_Thread::join (item->thr_handle_);
 
 # if defined (ACE_HAS_DCE_DRAFT4_THREADS)  &&  defined (ACE_LACKS_SETDETACH)
           // Must explicitly detach threads.  Threads without
           // THR_DETACHED were detached in ACE_OS::thr_create ().
-          ::pthread_detach (&item.thr_handle_);
+          ::pthread_detach (&item->thr_handle_);
 # endif /* ACE_HAS_DCE_DRAFT4_THREADS && ACE_LACKS_SETDETACH */
+          delete item;
         }
 #if defined (CHORUS)
     }
@@ -1733,7 +1812,8 @@ ACE_Thread_Manager::wait_task (ACE_Task_Base *task)
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
     ACE_NEW_RETURN (copy_table,
-                    ACE_Thread_Descriptor_Base [this->thr_list_.size ()],
+                    ACE_Thread_Descriptor_Base [this->thr_list_.size () +
+                                                this->terminated_thr_list_.size ()],
                     -1);
 
     for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter (this->thr_list_);
@@ -1744,7 +1824,21 @@ ACE_Thread_Manager::wait_task (ACE_Task_Base *task)
           (ACE_BIT_DISABLED (iter.next ()->flags_,
                              (THR_DETACHED | THR_DAEMON)))
            || ACE_BIT_ENABLED (iter.next ()->flags_, THR_JOINABLE))
+        {
+          iter.next ()->thr_state_ = ACE_THR_JOINING;
           copy_table[copy_count++] = *iter.next ();
+        }
+
+    for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor_Base> titer (this->terminated_thr_list_);
+         !titer.done ();
+         titer.advance ())
+      // If threads are created as THR_DETACHED or THR_DAEMON, we can't help much here.
+      if (titer.next ()->task_ == task)
+        {
+          ACE_Thread_Descriptor_Base *tdb = titer.advance_and_remove (0);
+          copy_table[copy_count++] = *tdb;
+          delete tdb;
+        }
   }
 
   // Now to do the actual work
@@ -2069,14 +2163,11 @@ ACE_Thread_Control::exit (void *exit_status, int do_thr_exit)
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class ACE_Node<ACE_Thread_Descriptor_Base>;
-  template class ACE_Unbounded_Queue<ACE_Thread_Descriptor_Base>;
-  template class ACE_Unbounded_Queue_Iterator<ACE_Thread_Descriptor_Base>;
+  template class ACE_Double_Linked_List<ACE_Thread_Descriptor_Base>;
+  template class ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor_Base>;
+  template class ACE_Node<ACE_Thread_Descriptor*>;
   template class ACE_Unbounded_Queue<ACE_Thread_Descriptor*>;
   template class ACE_Unbounded_Queue_Iterator<ACE_Thread_Descriptor*>;
-  template class ACE_Node<ACE_Thread_Descriptor*>;
-  template class ACE_Double_Linked_List<ACE_Thread_Descriptor>;
-  template class ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>;
   template class ACE_Free_List<ACE_Thread_Descriptor>;
   template class ACE_Locked_Free_List<ACE_Thread_Descriptor, ACE_DEFAULT_THREAD_MANAGER_LOCK>;
 # if (defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)))
@@ -2085,14 +2176,11 @@ ACE_Thread_Control::exit (void *exit_status, int do_thr_exit)
     template class ACE_TSS<ACE_Thread_Exit>;
 # endif /* ACE_HAS_THREADS && (ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION) */
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-  #pragma instantiate ACE_Node<ACE_Thread_Descriptor_Base>
-  #pragma instantiate ACE_Unbounded_Queue<ACE_Thread_Descriptor_Base>
-  #pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_Thread_Descriptor_Base>
+  #pragma instantiate ACE_Double_Linked_List<ACE_Thread_Descriptor_Base>
+  #pragma instantiate ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor_Base>
+  #pragma instantiate ACE_Node<ACE_Thread_Descriptor*>
   #pragma instantiate ACE_Unbounded_Queue<ACE_Thread_Descriptor*>
   #pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_Thread_Descriptor*>
-  #pragma instantiate ACE_Node<ACE_Thread_Descriptor*>
-  #pragma instantiate ACE_Double_Linked_List<ACE_Thread_Descriptor>
-  #pragma instantiate ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>
   #pragma instantiate ACE_Free_List<ACE_Thread_Descriptor>
   #pragma instantiate ACE_Locked_Free_List<ACE_Thread_Descriptor, ACE_DEFAULT_THREAD_MANAGER_LOCK>
 # if (defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)))
