@@ -106,8 +106,8 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
           // platforms. If SSL_accept failed outright, though, don't
           // bother checking more. This can happen if the socket gets
           // closed during the handshake.
-          if (status == -1 &&
-              ACE_OS::set_errno_to_last_error () == EWOULDBLOCK)
+          if (ACE_OS::set_errno_to_last_error () == EWOULDBLOCK &&
+              status == -1)
             {
               // Although the SSL_ERROR_WANT_READ/WRITE isn't getting
               // set correctly, the read/write state should be valid.
@@ -176,7 +176,7 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
   // Take into account the time to complete the basic TCP handshake
   // and the SSL handshake.
   ACE_Time_Value timeout_copy (*timeout);  // Need a scribblable copy
-  ACE_Countdown_Time countdown (timeout_copy);
+  ACE_Countdown_Time countdown (&timeout_copy);
 
   if (this->connector_.connect (new_stream.peer (),
                                 remote_sap,
@@ -193,7 +193,7 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
 
   (void) countdown.update ();
 
-  return this->ssl_connect (new_stream, timeout_copy);
+  return this->ssl_connect (new_stream, &timeout_copy);
 }
 
 int
@@ -215,7 +215,7 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
   // Take into account the time to complete the basic TCP handshake
   // and the SSL handshake.
   ACE_Time_Value timeout_copy (*timeout);  // Need a scribblable copy
-  ACE_Countdown_Time countdown (timeout_copy);
+  ACE_Countdown_Time countdown (&timeout_copy);
 
   if (this->connector_.connect (new_stream.peer (),
                                 remote_sap,
@@ -235,7 +235,7 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
 
   (void) countdown.update ();
 
-  return this->ssl_connect (new_stream, timeout_copy);
+  return this->ssl_connect (new_stream, &timeout_copy);
 }
 
 // Try to complete a non-blocking connection.
@@ -250,7 +250,7 @@ ACE_SSL_SOCK_Connector::complete (ACE_SSL_SOCK_Stream &new_stream,
   // Take into account the time to complete the basic TCP handshake
   // and the SSL handshake.
   ACE_Time_Value timeout_copy (*tv);  // Need a scribblable copy
-  ACE_Countdown_Time countdown (timeout_copy);
+  ACE_Countdown_Time countdown (&timeout_copy);
 
   if (this->connector_.complete (new_stream.peer (),
                                  remote_sap,
@@ -261,7 +261,7 @@ ACE_SSL_SOCK_Connector::complete (ACE_SSL_SOCK_Stream &new_stream,
 
   (void) countdown.update ();
 
-  return this->ssl_connect (new_stream, timeout_copy);
+  return this->ssl_connect (new_stream, &timeout_copy);
 }
 
 
