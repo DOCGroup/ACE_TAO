@@ -59,7 +59,7 @@ CORBA_Object::_is_a (const CORBA::Char *type_id,
           TAO_Object_Adapter::Servant_Upcall servant_upcall
             (*this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ());
           servant_upcall.prepare_for_upcall (this->_object_key (),
-                                             "_non_existent",
+                                             "_is_a",
                                              ACE_TRY_ENV);
           ACE_CHECK_RETURN (0);
           return servant_upcall.servant ()->_is_a (type_id, ACE_TRY_ENV);
@@ -223,8 +223,24 @@ CORBA::Boolean
 CORBA_Object::_non_existent (CORBA::Environment &ACE_TRY_ENV)
 {
   // If the object is collocated then try locally....
-  if (this->is_collocated_ && this->servant_ != 0)
-    return this->servant_->_non_existent (ACE_TRY_ENV);
+  if (this->is_collocated_)
+    {
+      // Which collocation strategy should we use?
+      if (this->protocol_proxy_->servant_orb_var ()->orb_core ()->get_collocation_strategy () == TAO_ORB_Core::THRU_POA)
+        {
+          TAO_Object_Adapter::Servant_Upcall servant_upcall
+            (*this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ());
+          servant_upcall.prepare_for_upcall (this->_object_key (),
+                                             "_non_existent",
+                                             ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
+          return servant_upcall.servant ()->_non_existent (ACE_TRY_ENV);
+        }
+
+      // Direct collocation strategy is used.
+      if (this->servant_ != 0)
+        return this->servant_->_non_existent (ACE_TRY_ENV);
+    }
 
   CORBA::Boolean _tao_retval = 0;
 
