@@ -1,3 +1,44 @@
+Sat Apr 29 14:49:13 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * examples/DLL/Newsweek.dsp:
+        * examples/Threads/barrier1.dsp:
+        * examples/Threads/barrier2.dsp:
+        * examples/Threads/cancel.dsp:
+        * examples/Threads/future1.dsp:
+        * examples/Threads/future2.dsp:
+        * examples/Threads/manual_event.dsp:
+        * examples/Threads/process_mutex.dsp:
+        * examples/Threads/process_semaphore.dsp:
+        * examples/Threads/reader_writer.dsp:
+        * examples/Threads/recursive_mutex.dsp:
+        * examples/Threads/task_five.dsp:
+        * examples/Threads/task_four.dsp:
+        * examples/Threads/task_one.dsp:
+        * examples/Threads/task_three.dsp:
+        * examples/Threads/task_two.dsp:
+        * examples/Threads/test.dsp:
+        * examples/Threads/thread_manager.dsp:
+        * examples/Threads/thread_pool.dsp:
+        * examples/Threads/thread_specific.dsp:
+        * examples/Threads/token.dsp:
+        * examples/Threads/tss1.dsp:
+        * examples/Threads/tss2.dsp:
+        * examples/Timer_Queue/Async_Timer_Queue_Test.dsp:
+        * examples/Timer_Queue/Reactor_Timer_Queue_Test.dsp:
+        * examples/Timer_Queue/Thread_Timer_Queue_Test.dsp:
+        * examples/Web_Crawler/Web_Crawler.dsp:
+        * performance-tests/Synch-Benchmarks/synch_driver.dsp:
+        * performance-tests/Synch-Benchmarks/Base_Test/Base_Test.dsp:
+        * performance-tests/Synch-Benchmarks/Perf_Test/Perf_Test.dsp:
+        * performance-tests/Synch-Benchmarks/Synch_Lib/Synch_Lib.dsp:
+        * websvcs/lib/websvcs.dsp:
+        * websvcs/tests/Test_URL_Addr.dsp:
+
+          I started to test out my msvc_auto_compile.pl script and after
+          testing it for the whole thing, found out that I soon ran out
+          of disk space.  By the time I ran out of space, the PCH files
+          made up 3 GB of disk.  So I removed them from these projects.
+
 Sat Apr 29 14:15:12 2000  Darrell Brunsch  <brunsch@uci.edu>
 
         * bin/clean_dsp.pl:
