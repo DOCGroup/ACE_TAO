@@ -1,3 +1,8 @@
+Fri Feb  6 12:42:01 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event_Utilities.h:
+          Fixed include path
+
 Fri Feb  6 11:40:56 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/FTRT_Event_Service/Gateway_Service/FTRTEC_Gateway_Service.cpp:
