@@ -1415,35 +1415,23 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
   // ACE_OS::cond_broadcast().
   result = ACE_OS::sema_wait (&cv->sema_);
 #endif /* ACE_HAS_SIGNAL_OBJECT_AND_WAIT */
+
+  // Reacquire lock to avoid race conditions.
+  ACE_OS::thread_mutex_lock (&cv->waiters_lock_);
+  cv->waiters_--;
+
   if (result != -1)
     {
-      // If we are broadcasting, then we need to be smarter about
-      // locking since there can now be multiple threads in the
-      // crtical section.  If we are signaling, however, we don't have
-      // to worry since there will just be 1 thread here.
-      if (cv->was_broadcast_)
-	{
-	  if (ACE_OS::thread_mutex_lock (&cv->waiters_lock_) != -1)
-	    {
-	      // By making the waiter responsible for decrementing its count we
-	      // don't have to worry about having an internal mutex.  Thanks to
-	      // Karlheinz for recognizing this optimization.
-	      cv->waiters_--;
-
-	      // Release the signaler/broadcaster if we're the last waiter.	
-	      if (cv->waiters_ == 0)
+      if (cv->was_broadcast_ && cv->waiters_ == 0)
 #if defined (VXWORKS)
-		ACE_OS::sema_post (&cv->waiters_done_);
+	ACE_OS::sema_post (&cv->waiters_done_);
 #else
-		ACE_OS::event_signal (&cv->waiters_done_);
+	ACE_OS::event_signal (&cv->waiters_done_);
 #endif /* VXWORKS */
-
-	      ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
-	    }
-	}
-      else
-	cv->waiters_--;
     }
+
+  ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
+
   // We must always regain the external mutex, even when errors
   // occur because that's the guarantee that we give to our
   // callers.
@@ -1504,40 +1492,25 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   // Wait to be awakened by a ACE_OS::signal() or ACE_OS::broadcast().
   result = ::WaitForSingleObject (cv->sema_, msec_timeout);
 #endif /* ACE_HAS_SIGNAL_OBJECT_AND_WAIT */
+
+  // Reacquire lock to avoid race conditions.
+  ACE_OS::thread_mutex_lock (&cv->waiters_lock_);
+  cv->waiters_--;
+
   if (result != WAIT_OBJECT_0)
     {
       // This is a hack, we need to find an appropriate mapping...
       error = result == WAIT_TIMEOUT ? ETIME : ::GetLastError ();
       result = -1;
     }
-  else 
-    {
-      // If we are broadcasting, then we need to be smarter about
-      // locking since there can now be multiple threadsd in the
-      // crtical section.  If we are signaling, however, we don't have
-      // to worry since there will just be 1 thread here.
-      if (cv->was_broadcast_)
-	{
-	  if (ACE_OS::thread_mutex_lock (&cv->waiters_lock_) != -1)
-	    {
-	      // By making the waiter responsible for decrementing its count we
-	      // don't have to worry about having an internal mutex.  Thanks to
-	      // Karlheinz for recognizing this optimization.
-	      cv->waiters_--;
+  else if (cv->was_broadcast_ && cv->waiters_ == 0)
+    // Release the signaler/broadcaster if we're the last waiter.
+    ACE_OS::event_signal (&cv->waiters_done_);
 
-	      // Release the signaler/broadcaster if we're the last waiter.	
-	      if (cv->waiters_ == 0)
-		ACE_OS::event_signal (&cv->waiters_done_);
+  ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
 
-	      ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
-	    }
-	}
-      else
-	cv->waiters_--;
-    }
-  // We must always regain the external mutex, even when errors
-  // occur because that's the guarantee that we give to our
-  // callers.
+  // We must always regain the external mutex, even when errors occur
+  // because that's the guarantee that we give to our callers.
   ACE_OS::mutex_lock (external_mutex);
   errno = error;
   return result;
@@ -1620,40 +1593,24 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   // Wait to be awakened by a ACE_OS::signal() or ACE_OS::broadcast().
   result = ::WaitForSingleObject (cv->sema_, msec_timeout);
 
+  // Reacquire lock to avoid race conditions.
+  ACE_OS::thread_mutex_lock (&cv->waiters_lock_);
+  cv->waiters_--;
+
   if (result != WAIT_OBJECT_0)
     {
       // This is a hack, we need to find an appropriate mapping...
       error = result == WAIT_TIMEOUT ? ETIME : ::GetLastError ();
       result = -1;
     }
-  else 
-    {
-      // If we are broadcasting, then we need to be smarter about
-      // locking since there can now be multiple threadsd in the
-      // crtical section.  If we are signaling, however, we don't have
-      // to worry since there will just be 1 thread here.
-      if (cv->was_broadcast_)
-	{
-	  if (ACE_OS::thread_mutex_lock (&cv->waiters_lock_) != -1)
-	    {
-	      // By making the waiter responsible for decrementing its count we
-	      // don't have to worry about having an internal mutex.  Thanks to
-	      // Karlheinz for recognizing this optimization.
-	      cv->waiters_--;
+  else if (cv->was_broadcast_ && cv->waiters_ == 0)
+    // Release the signaler/broadcaster if we're the last waiter.
+    ACE_OS::event_signal (&cv->waiters_done_);
 
-	      // Release the signaler/broadcaster if we're the last waiter.	
-	      if (cv->waiters_ == 0)
-		ACE_OS::event_signal (&cv->waiters_done_);
+  ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
 
-	      ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
-	    }
-	}
-      else
-	cv->waiters_--;
-    }
-  // We must always regain the external mutex, even when errors
-  // occur because that's the guarantee that we give to our
-  // callers.
+  // We must always regain the external mutex, even when errors occur
+  // because that's the guarantee that we give to our callers.
   ACE_OS::thread_mutex_lock (external_mutex);
   errno = error;
   return result;
@@ -1688,37 +1645,22 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
   // ACE_OS::cond_broadcast().
   result = ::WaitForSingleObject (cv->sema_, INFINITE);
 
+  // Reacquire lock to avoid race conditions.
+  ACE_OS::thread_mutex_lock (&cv->waiters_lock_);
+  cv->waiters_--;
+
   if (result != WAIT_OBJECT_0)
     {
       // This is a hack, we need to find an appropriate mapping...
-      error = result == WAIT_TIMEOUT ? ETIME : ::GetLastError ();
+      error = ::GetLastError ();
       result = -1;
     }
-  else 
-    {
-      // If we are broadcasting, then we need to be smarter about
-      // locking since there can now be multiple threadsd in the
-      // crtical section.  If we are signaling, however, we don't have
-      // to worry since there will just be 1 thread here.
-      if (cv->was_broadcast_)
-	{
-	  if (ACE_OS::thread_mutex_lock (&cv->waiters_lock_) != -1)
-	    {
-	      // By making the waiter responsible for decrementing its count we
-	      // don't have to worry about having an internal mutex.  Thanks to
-	      // Karlheinz for recognizing this optimization.
-	      cv->waiters_--;
+  else if (cv->was_broadcast_ && cv->waiters_ == 0)
+    // Release the signaler/broadcaster if we're the last waiter.
+    ACE_OS::event_signal (&cv->waiters_done_);
 
-	      // Release the signaler/broadcaster if we're the last waiter.	
-	      if (cv->waiters_ == 0)
-		ACE_OS::event_signal (&cv->waiters_done_);
+  ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
 
-	      ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
-	    }
-	}
-      else
-	cv->waiters_--;
-    }
   // We must always regain the external mutex, even when errors
   // occur because that's the guarantee that we give to our
   // callers.
