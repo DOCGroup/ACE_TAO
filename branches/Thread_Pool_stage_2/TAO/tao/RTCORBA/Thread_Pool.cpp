@@ -93,7 +93,7 @@ TAO_Thread_Lane::validate_and_map_priority (CORBA::Environment &ACE_TRY_ENV)
   // Check that the priority is in bounds.
   if (this->lane_priority_ < RTCORBA::minPriority ||
       this->lane_priority_ > RTCORBA::maxPriority)
-    ACE_THROW (CORBA::DATA_CONVERSION ());
+    ACE_THROW (CORBA::BAD_PARAM ());
 
   CORBA::ORB_ptr orb =
     this->pool_.manager ().orb_core ().orb ();
@@ -271,6 +271,10 @@ TAO_Thread_Pool::TAO_Thread_Pool (TAO_Thread_Pool_Manager &manager,
     number_of_lanes_ (1),
     with_lanes_ (0)
 {
+  // No support for buffering.
+  if (allow_request_buffering)
+    ACE_THROW (CORBA::NO_IMPLEMENT ());
+
   // Create one lane.
   this->lanes_ = new TAO_Thread_Lane *[this->number_of_lanes_];
   this->lanes_[0] =
@@ -302,6 +306,11 @@ TAO_Thread_Pool::TAO_Thread_Pool (TAO_Thread_Pool_Manager &manager,
     number_of_lanes_ (lanes.length ()),
     with_lanes_ (1)
 {
+  // No support for buffering or borrowing.
+  if (allow_borrowing ||
+      allow_request_buffering)
+    ACE_THROW (CORBA::NO_IMPLEMENT ());
+
   // Create multiple lane.
   this->lanes_ = new TAO_Thread_Lane *[this->number_of_lanes_];
   for (CORBA::ULong i = 0;

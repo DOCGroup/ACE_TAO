@@ -1,4 +1,4 @@
-Fri Aug 17 16:41:32 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+Fri Aug 17 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/RTPortableServer/RT_POA.cpp: 
 
@@ -155,6 +155,10 @@ Fri Aug 17 16:41:32 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
             implemented as a thread-pool with one lane, it is
             difficult to tell them apart. Added a <with_lanes_> flag
             to tell them apart.
+
+	  - (constructors): Make sure <allow_request_buffering> and
+	    <allow_borrowing> are disabled since we do not support
+	    them.
 
 	* tao/RTCORBA/RT_Protocols_Hooks.cpp
 	  (set_default_server_protocol_policy): Don't include all the
@@ -707,3 +711,9 @@ Fri Aug 17 16:41:32 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	  Added new tests ORB_init and Policy_Combinations.
 
+	* docs/rtcorba/features.html:
+	* docs/rtcorba/status.html:
+	* docs/rtcorba/issues.html:
+
+          Updated RTCORBA documentation to reflect new thread-pool
+          support.
