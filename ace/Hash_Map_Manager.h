@@ -421,16 +421,16 @@ public:
   // = STL styled iteration, compare, and reference functions.
 
   ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> operator++ (void);
-  // Postfix advance.
+  // Prefix advance.
 
   ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>& operator++ (int);
-  // Prefix advance.
-
-  ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> operator-- (void);
   // Postfix advance.
 
-  ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>& operator-- (int);
+  ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> operator-- (void);
   // Prefix advance.
+
+  ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>& operator-- (int);
+  // Postfix advance.
 
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
