@@ -1,171 +1,177 @@
+Thu Jul 06 12:17:21 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * pace/posix/pthread.inl (pace_pthread_mutex_{get,set}prioceiling):
+          LynxOS does not have pthread_mutex_{get,set}prioceiling, so
+          don't call them with PACE_LYNXOS.
+
 Wed Jul 5 13:38:11 2000 John Heitmann <jwh1@cs.wustl.edu>
 
-	* pace/types.h:
-	  Added #include <pthread.h> to expose types on LynxOS.
+        * pace/types.h:
+          Added #include <pthread.h> to expose types on LynxOS.
 
-	* pace/time.inl:
-	  Casted away const for LynxOS.
+        * pace/time.inl:
+          Casted away const for LynxOS.
 
-	* pace/posix/termios.*:
-	  Fixed a typedef and removed tc*pgrp which didn't seem to
-	  take from the last commit.
+        * pace/posix/termios.*:
+          Fixed a typedef and removed tc*pgrp which didn't seem to
+          take from the last commit.
 
-	* ../ace/OS.i:
-	  Updated corresponding functions to those newly added in PACE.
+        * ../ace/OS.i:
+          Updated corresponding functions to those newly added in PACE.
 
 Wed Jul  5 17:15:26 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
-	* pace/Makefile:
-	  Fixed error introduced by my earlier update.
+        * pace/Makefile:
+          Fixed error introduced by my earlier update.
 
-	* pace/termios.*:
-	  Added typedefs and changed function signatures appropriately.
-	  Removed tcgetpgrp which was added to unistd earlier.
+        * pace/termios.*:
+          Added typedefs and changed function signatures appropriately.
+          Removed tcgetpgrp which was added to unistd earlier.
 
-	* pace/sys/wait.h:
-	  Added macros.
+        * pace/sys/wait.h:
+          Added macros.
 
-	* pace/sys/utsname.*:
-	* pace/sys/times.*:
-	* pace/sys/stat.*:
-	* pace/sys/mman.*
-	  Added typedefs and changed function parameters appropriately.
+        * pace/sys/utsname.*:
+        * pace/sys/times.*:
+        * pace/sys/stat.*:
+        * pace/sys/mman.*
+          Added typedefs and changed function parameters appropriately.
 
-	* pace/time.h:
-	  Added #include "pace/signal.h"
+        * pace/time.h:
+          Added #include "pace/signal.h"
 
-	* pace/unistd.inl:
-	  Changed spelling error.
+        * pace/unistd.inl:
+          Changed spelling error.
 
-	* pace/signal.*:
-	* pace/stat.*:
-	  Typedefs of structs later used as pointers were broken
-	  so I reverted back to the old way temporarily.
+        * pace/signal.*:
+        * pace/stat.*:
+          Typedefs of structs later used as pointers were broken
+          so I reverted back to the old way temporarily.
 
 Wed Jul 05 16:00:32 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/types.h:
+        * pace/win32/types.h:
 
-	  Removed redefinition of size_t.
+          Removed redefinition of size_t.
 
 Wed Jul 05 14:54:16 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/types.h:
+        * pace/win32/types.h:
 
-	  Define native UNIX types to work on WIN32 types.
+          Define native UNIX types to work on WIN32 types.
 
 Wed Jul  5 15:28:25 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
-	* pace/Makefile:
-	  Fixed paths that were invalidated when wait.h and termios.h
-	  were moved.
+        * pace/Makefile:
+          Fixed paths that were invalidated when wait.h and termios.h
+          were moved.
 
 Wed Jul 05 14:46:38 2000  Luther J Baker <luther@cs.wustl.edu>
 
-	* pace/win32/aio.h:
+        * pace/win32/aio.h:
 
-	  Removed #include <aio.h>.
+          Removed #include <aio.h>.
 
 Wed Jul 05 13:41:00 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* PACE/win32/types.h:
+        * PACE/win32/types.h:
 
-	  Removed #include <inttypes.h>.
-	  Moved -*- C -*- to same line as $-Id-$
+          Removed #include <inttypes.h>.
+          Moved -*- C -*- to same line as $-Id-$
 
 Wed Jul  5 13:25:34 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/*
+        * pace/win32/*
 
-	  Removed (posix ace) from files.
+          Removed (posix ace) from files.
 
 Wed Jul 05 12:49:20 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* PACE/config/platform.h
+        * PACE/config/platform.h
 
-	  WIN32 doesn't use the makefile.
-	  #define PACE_WIN32 2000
+          WIN32 doesn't use the makefile.
+          #define PACE_WIN32 2000
 
 Wed Jul  5 12:48:41 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/*.
+        * pace/win32/*.
 
-	  Update files per PACE/posix changes.
+          Update files per PACE/posix changes.
 
 Mon Jul  3 19:30:39 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
-	* pace/posix/time.*:
-	  Added macros, typedefs, clock(), and difftime().
+        * pace/posix/time.*:
+          Added macros, typedefs, clock(), and difftime().
 
- 	* pace/posix/unistd.*:
-	  Added macros, typedefs, tcgetpgrp(), tcsetpgrp().
+        * pace/posix/unistd.*:
+          Added macros, typedefs, tcgetpgrp(), tcsetpgrp().
 
-	* pace/posix/utime.*:
-	  Added macros and typedefs.
+        * pace/posix/utime.*:
+          Added macros and typedefs.
 
 Mon Jul  3 9:45:00 2000 John Heitmann <jwh1@cs.wustl.edu>
 
         * pace/config/types.h:
-	  Removed. Functionality replaced by platform
-	  specific pace/sys/types.
+          Removed. Functionality replaced by platform
+          specific pace/sys/types.
 
-	* pace/config/defines.h:
-	  Deleted reference to types.h.
+        * pace/config/defines.h:
+          Deleted reference to types.h.
 
 Mon Jul  3 00:25:44 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
-	* pace/sys/termios.h:
-	  Moved to pace/
+        * pace/sys/termios.h:
+          Moved to pace/
 
-	* pace/posix/aio.*:
-	* pace/posix/direnet.*:
-	* pace/posix/fcntl.*:
-	* pace/posix/grp.*:
-	* pace/posix/locale.*:
-	* pace/posix/math.*:
-	* pace/posix/mqueue.*:
-	* pace/posix/pthread.*:
-	* pace/posix/pwd.*:
-	* pace/posix/sched.*:
-	* pace/posix/semaphore.*:
-	* pace/posix/setjmp.*:
-	* pace/posix/signal.*:
-	* pace/stddef.*:
-	* pace/posix/stdio.*:
-	* pace/posix/stdlib.*:
-	* pace/posix/string.*:
-	* pace/posix/types.*:
-	* pace/posix/time.*:
-	  Added many missing typedefs and macros. A bug has been
-	  added in also in types.h. It is harmless but causes a
-	  compiler warning that I could not fix. Files lower in
-	  the alphabet such as utime haven't been finished yet.
+        * pace/posix/aio.*:
+        * pace/posix/direnet.*:
+        * pace/posix/fcntl.*:
+        * pace/posix/grp.*:
+        * pace/posix/locale.*:
+        * pace/posix/math.*:
+        * pace/posix/mqueue.*:
+        * pace/posix/pthread.*:
+        * pace/posix/pwd.*:
+        * pace/posix/sched.*:
+        * pace/posix/semaphore.*:
+        * pace/posix/setjmp.*:
+        * pace/posix/signal.*:
+        * pace/stddef.*:
+        * pace/posix/stdio.*:
+        * pace/posix/stdlib.*:
+        * pace/posix/string.*:
+        * pace/posix/types.*:
+        * pace/posix/time.*:
+          Added many missing typedefs and macros. A bug has been
+          added in also in types.h. It is harmless but causes a
+          compiler warning that I could not fix. Files lower in
+          the alphabet such as utime haven't been finished yet.
 
-	* pace/posix/stdio.*:
-	  Added in the missing functions fgetpos, fsetpos, fwrite,
-	  setvbuf, vfprintf, vprintf, vsprintf. The last three
-	  are empty until passing the macro va_list is resolved.
+        * pace/posix/stdio.*:
+          Added in the missing functions fgetpos, fsetpos, fwrite,
+          setvbuf, vfprintf, vprintf, vsprintf. The last three
+          are empty until passing the macro va_list is resolved.
 
-	* pace/posix/locale.*:
-	  Added localeconv ().
+        * pace/posix/locale.*:
+          Added localeconv ().
 
-	* pace/posix/signal.*:
-	  Added raise () and signal ().
+        * pace/posix/signal.*:
+          Added raise () and signal ().
 
-	* pace/posix/unistd.*:
-	* pace/posix/stdio.*:
-	  Moved ctermid() from stdio to unistd.
+        * pace/posix/unistd.*:
+        * pace/posix/stdio.*:
+          Moved ctermid() from stdio to unistd.
 
-	* pace/posix/stdlib.*:
-	  Added abort ().
+        * pace/posix/stdlib.*:
+          Added abort ().
 
         * pace/:
           Added stddef.h and errno.h
 
 Fri Jun 30 16:54:41 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
-	* pace/wait.h:
-	  Moved to sys/
+        * pace/wait.h:
+          Moved to sys/
 
 Fri Jun 30 15:55:52 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 
@@ -244,21 +250,21 @@ Fri Jun 30 10:10:53 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 
 Thu Jun 29 19:53:10 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/config/utility.h:
+        * pace/config/utility.h:
 
-	  (ENOTSUP) is not defined on win32. Added support.
+          (ENOTSUP) is not defined on win32. Added support.
 
 Thu Jun 29 19:22:46 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32
-	  Altered syntax (#include pace/posix/file.h) left over
-	  from copying.
+        * pace/win32
+          Altered syntax (#include pace/posix/file.h) left over
+          from copying.
 
 Thu Jun 29 16:42:31 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
-	* pace/posix/pthread.{h,inl}:
-	Changed pthead_condattr_init to pthread_condattr init
-	and pace_pace_pthread... to pace_pthread...
+        * pace/posix/pthread.{h,inl}:
+        Changed pthead_condattr_init to pthread_condattr init
+        and pace_pace_pthread... to pace_pthread...
 
 
 Thu Jun 29 15:04:42 2000  Joe Hoffert  <joeh@cs.wustl.edu>
@@ -335,16 +341,16 @@ Thu Jun 29 09:21:19 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 
 Thu Jun 29 02:38:52 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
-	* pace/posix/mman.inl:
-	  Added cast to char* from void* in param passing.
+        * pace/posix/mman.inl:
+          Added cast to char* from void* in param passing.
 
-	* pace/posix/stdio.h:
- 	* pace/posix/stdio.c:
-	  Changed *printf from macros to functions.
+        * pace/posix/stdio.h:
+        * pace/posix/stdio.c:
+          Changed *printf from macros to functions.
 
-	* pace/posix/unistd.c:
- 	* pace/posix/unistd.h:
-	  Changed the macros execl, execle, execlp to functions.
+        * pace/posix/unistd.c:
+        * pace/posix/unistd.h:
+          Changed the macros execl, execle, execlp to functions.
 
 Wed Jun 28 11:18:17 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 

@@ -344,7 +344,11 @@ int
 pace_pthread_mutex_getprioceiling (pace_pthread_mutex_t * mutex,
                                    int * prioceiling)
 {
+#if PACE_HAS_POSIX == PACE_LYNXOS
+  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
+#else  /* ! PACE_LYNXOS */
   return pthread_mutex_getprioceiling (mutex, prioceiling);
+#endif /* ! PACE_LYNXOS */
 }
 
 PACE_INLINE
@@ -368,7 +372,11 @@ pace_pthread_mutex_setprioceiling (pace_pthread_mutex_t * mutex,
                                    int prioceiling,
                                    int * old_ceiling)
 {
+#if PACE_HAS_POSIX == PACE_LYNXOS
+  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
+#else  /* ! PACE_LYNXOS */
   return pthread_mutex_setprioceiling (mutex, prioceiling, old_ceiling);
+#endif /* ! PACE_LYNXOS */
 }
 
 PACE_INLINE
