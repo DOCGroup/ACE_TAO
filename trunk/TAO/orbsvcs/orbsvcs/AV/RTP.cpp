@@ -36,7 +36,6 @@
 
 #include "RTP.h"
 #include "RTCP.h"
-#include "Nil.h"
 
 #include "tao/debug.h"
 #include "ace/OS_NS_arpa_inet.h"
