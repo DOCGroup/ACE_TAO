@@ -1,0 +1,35 @@
+// $Id$
+//=============================================================================
+/**
+ * @file EC.idl
+ *
+ * Definition of events, and common interfaces used in the BasicSP module.
+ *
+ * @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
+ */
+//=============================================================================
+
+#ifndef CIAO_EC_IDL
+#define CIAO_EC_IDL
+
+#include "../BasicSP.idl"
+
+module BasicSP
+{
+  component EC
+    {
+      publishes TimeOut timeout;
+
+      /// The attribute can be configured via the home or the
+      /// component property file.
+      attribute long hertz;
+    };
+
+  home ECHome manages EC
+  {
+    // Explicit operations
+    factory new_EC (in long hertz);
+  };
+};
+
+#endif /* CIAO_EC_IDL*/

@@ -1,0 +1,23 @@
+project: server, orbsvcsexe {
+  ssl       = 1
+  depends  += Security SSL
+  libs     += TAO_Security
+  requires += ssl
+
+  Source_Files {
+    Foo_i.cpp
+    server.cpp
+  }
+}
+
+project: client, orbsvcsexe {
+  depends  += Security SSL
+  libs     += TAO_Security
+  requires += ssl
+
+  Source_Files {
+    FooC.cpp
+    client.cpp
+  }
+}
+

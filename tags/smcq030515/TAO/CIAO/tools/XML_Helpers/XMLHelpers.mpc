@@ -1,0 +1,21 @@
+project(XML_Helpers): acelib, acexml {
+  sharedname=CIAO_XML_Helpers
+  dllflags += CIAO_XML_HELPERS_BUILD_DLL
+
+  Source_Files {
+    XML_Utils.cpp
+    Softpkg_Handlers.cpp
+    Cascadable_DocHandler.cpp
+    Assembly_Spec.cpp
+    Assembly_Handlers.cpp
+  }
+}
+
+project(Helper_Test): aceexe, acexml {
+  libs += CIAO_XML_Helpers
+  depends += XML_Helpers
+
+  Source_Files {
+    main.cpp
+  }
+}

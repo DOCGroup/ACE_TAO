@@ -1,0 +1,39 @@
+# Makefile for building the client exe with Borland C++ Builder
+
+NAME = client
+
+OBJFILES = \
+	$(OBJDIR)\client.obj
+
+EXTERNAL_LIBS =
+
+LFLAGS = \
+	-L..\..\..\tao\IFR_Client\$(CONFIG_SUBDIR) -L..\..\..\tao\IFR_Client \
+	-L..\..\..\tao\$(CONFIG_SUBDIR) -L..\..\..\tao \
+	-L..\..\..\..\ace\$(CONFIG_SUBDIR) -L..\..\..\..\ace \
+  -L$(CORE_BINDIR)
+
+LIBFILES = \
+	TAO_IFR_Client$(LIB_DECORATOR).lib \
+	TAO$(LIB_DECORATOR).lib \
+	ACE$(LIB_DECORATOR).lib \
+	$(EXTERNAL_LIBS)
+
+!ifdef STATIC
+LIB_FLAGS = -DTAO_AS_STATIC_LIBS=1 -DACE_AS_STATIC_LIBS=1
+DLL_FLAGS =
+!else
+LIB_FLAGS =
+DLL_FLAGS =
+!endif
+
+CFLAGS = \
+	-I..\..\.. \
+	-I..\..\..\tao \
+	-I..\..\..\.. \
+	$(LIB_FLAGS) \
+	$(DLL_FLAGS)
+
+CPPDIR = .
+
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>

@@ -1,0 +1,24 @@
+
+#
+# Makefile for building the IBM1047_ISO8859 library
+#
+
+NAME = IBM1047_ISO8859
+
+OBJFILES = \
+	$(OBJDIR)\Char_IBM1047_ISO8859_Factory.obj \
+	$(OBJDIR)\Char_IBM1047_ISO8859_Translator.obj
+
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS) \
+	-DOLT_BUILD_DLL=1
+
+
+LIBFILES = \
+	$(ACE_LIB) \
+	$(TAO_LIB)
+
+CPPDIR = .
+
+!include <$(ACE_ROOT)\include\makeinclude\build_dll.bor>
