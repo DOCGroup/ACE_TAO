@@ -38,13 +38,15 @@ namespace Kokyu
     typedef typename
     DSRT_Scheduler_Traits::QoSDescriptor_t DSRT_QoSDescriptor;
 
-    DSRT_Direct_Dispatcher_Impl (ACE_Sched_Params::Policy sched_policy, 
+    DSRT_Direct_Dispatcher_Impl (ACE_Sched_Params::Policy sched_policy,
                                  int sched_scope);
 
     int init_i (const DSRT_ConfigInfo&);
 
     /// Schedule a thread dynamically based on the qos info supplied.
     int schedule_i (Guid_t, const DSRT_QoSDescriptor&);
+
+    int release_guard_i (Guid_t, const DSRT_QoSDescriptor&);
 
     /// Update the schedule for a thread. This could alter the current
     /// schedule.

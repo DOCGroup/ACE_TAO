@@ -84,3 +84,14 @@ int operator != (const Kokyu::ConfigInfo& lhs,
           lhs.thread_priority_ != rhs.thread_priority_ ||
           lhs.dispatching_type_ != rhs.dispatching_type_ );
 }
+
+//to satisfy ACE_Map_Manager<QoSDescriptor>
+ACE_INLINE 
+int operator == (const Kokyu::QoSDescriptor& lhs, 
+                 const Kokyu::QoSDescriptor& rhs)
+{
+  return (lhs.preemption_priority_ == rhs.preemption_priority_ &&
+          lhs.deadline_ == rhs.deadline_ &&
+          lhs.execution_time_ == rhs.execution_time_ &&
+          lhs.importance_ == rhs.importance_ );
+}

@@ -28,6 +28,10 @@ Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
+/*DTTIME:
+  recording the entering DT's send_request time on the client side.
+  First Time.
+*/
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "Client_Interceptor::send_request\n"));
@@ -117,6 +121,10 @@ Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
           new_current->cleanup_current ();
         }
     }
+/*DTTIME:
+  record the leaving DT's send_request time on the client side.
+  Second Time.
+*/
 }
 
 void
@@ -283,6 +291,10 @@ Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr 
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
+/*DTTIME:
+ record the entering DT's receive_request time on the server side.
+ Third Time.
+*/
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "Server_Interceptor::receive_request\n"));
@@ -329,6 +341,7 @@ Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr 
   // Scheduler retrieves scheduling parameters
   // from request and populates the out
   // parameters.
+
   new_current->scheduler()->receive_request (ri,
                                              guid_var.out (),
                                              name,
@@ -383,6 +396,10 @@ Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr 
   TAO_TSS_Resources *tss = TAO_TSS_RESOURCES::instance ();
 
   tss->rtscheduler_previous_current_impl_ = this->current_->implementation (new_current);
+/*DTTIME:
+  recording the leaving DT's receive_request time on the server side.
+  Fourth Time.
+*/
 }
 
 void

@@ -17,6 +17,11 @@ Dispatcher_Task::Dispatcher_Task (const ConfigInfo& config_info,
                            config_info.reordering_flags_.static_bit_field_shift_,
                            config_info.reordering_flags_.dynamic_priority_max_,
                            config_info.reordering_flags_.dynamic_priority_offset_)
+#ifdef KOKYU_HAS_RELEASE_GUARD
+  ,  releases_()
+  ,  deferrer_attr_()
+  ,  deferrer_()
+#endif //KOKYU_HAS_RELEASE_GUARD
 {
    this->initialize();
 }
@@ -43,6 +48,28 @@ const ConfigInfo&
 Dispatcher_Task::get_curr_config_info() const
 {
     return curr_config_info_;
+}
+
+ACE_INLINE
+int 
+Dispatcher_Task::enqueue (Dispatch_Queue_Item *qitem)
+{
+#ifdef KOKYU_HAS_RELEASE_GUARD
+  //update release time
+  //TODO: want release time before or after enqueuing call?
+  ACE_Time_Value release = ACE_OS::gettimeofday();
+#endif //KOKYU_HAS_RELEASE_GUARD
+
+  this->putq (qitem);
+  //@BT INSTRUMENT with event ID: EVENT_ENQUEUED Measure time from
+  //event enqueue into dispatch queue to actual dispatch
+
+#ifdef KOKYU_HAS_RELEASE_GUARD
+  //if qos_info is not in map, this should add it
+  this->releases_.rebind(qitem->qos_info(),release.msec());
+#endif //KOKYU_HAS_RELEASE_GUARD
+
+  return 0;
 }
 
 ACE_INLINE
@@ -78,4 +105,12 @@ Dispatch_Queue_Item::command()
 {
   return const_cast<Dispatch_Command*> (command_);
 }
+
+ACE_INLINE
+const QoSDescriptor&
+Dispatch_Queue_Item::qos_info() const
+{
+  return this->qos_info_;
 }
+
+} //namespace Kokyu

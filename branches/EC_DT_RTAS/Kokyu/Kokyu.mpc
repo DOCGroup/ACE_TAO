@@ -4,8 +4,11 @@
 project(Kokyu) : acelib {
   sharedname  = Kokyu
   dynamicflags = KOKYU_BUILD_DLL
+  libpaths += $(DATASTREAM_ROOT)/lib
+  includes += $(ACE_ROOT)/Kokyu $(DATASTREAM_ROOT)/include
 
   Source_Files {
+    Dispatch_Deferrer.cpp
     Dispatcher_Impl.cpp 
     Kokyu.cpp 
     Default_Dispatcher_Impl.cpp 

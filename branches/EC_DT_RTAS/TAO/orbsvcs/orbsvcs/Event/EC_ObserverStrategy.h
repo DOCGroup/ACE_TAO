@@ -232,10 +232,12 @@ protected:
   virtual void supplier_qos_update (TAO_EC_ProxyPushConsumer *consumer
                                     ACE_ENV_ARG_DECL);
 
-  /// Compute consumer QOS.
+  /// Computes consumer QOS based on EC consumer subscriptions
+  /// reported by ProxyPushSuppliers connected to the EC.
   void fill_qos (RtecEventChannelAdmin::ConsumerQOS &qos
                  ACE_ENV_ARG_DECL);
-  /// Compute supplier QOS.
+  /// Computes supplier QOS based on EC supplier publications reported
+  /// by ProxyPushConsumers connected to the EC.
   void fill_qos (RtecEventChannelAdmin::SupplierQOS &qos
                  ACE_ENV_ARG_DECL);
 

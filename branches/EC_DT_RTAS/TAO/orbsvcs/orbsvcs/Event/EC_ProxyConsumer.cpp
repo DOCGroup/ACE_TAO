@@ -24,6 +24,7 @@ TAO_EC_ProxyPushConsumer::
     connected_ (0),
     filter_ (0)
 {
+  ACE_DEBUG ((LM_DEBUG, "\nECPPC (%t) - Constructor\n\n"));
   this->lock_ =
     this->event_channel_->create_consumer_lock ();
 

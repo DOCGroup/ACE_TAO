@@ -16,7 +16,7 @@ $exclude_ace = 0;
 $exclude_tao = 0;
 $verbose = 0;
 $perl_path = '/usr/bin/perl';
-$dot_path = '/usr/local/bin';
+$dot_path = '/usr/bin';
 @ACE_DOCS = ('ace',
              'ace_man',
              'ace_rmcast',
@@ -49,11 +49,11 @@ $dot_path = '/usr/local/bin';
              ,'tao_ifr'
              ,'ciao_assembly_deployer'
              ,'ciao_componentserver'
-	     ,'ciao_daemon'
-	     ,'ciao_serveractivator'
-	     ,'ciao_xml_helpers'
-	     ,'ciao'
-	     );
+             ,'ciao_daemon'
+             ,'ciao_serveractivator'
+             ,'ciao_xml_helpers'
+             ,'ciao'
+             );
 
 # Modify defaults using the command line arguments
 &parse_args ();
@@ -130,29 +130,29 @@ sub generate_doxy_files {
         print DOXYOUTPUT "PROJECT_NUMBER        = ", $VERSION, "\n";
         next;
       } elsif (/^PERL_PATH /) {
-	print DOXYOUTPUT "PERL_PATH = $perl_path\n";
-	next;
+        print DOXYOUTPUT "PERL_PATH = $perl_path\n";
+        next;
       } elsif (/^DOT_PATH /) {
-	print DOXYOUTPUT "DOT_PATH = $dot_path\n";
-	next;
+        print DOXYOUTPUT "DOT_PATH = $dot_path\n";
+        next;
       } elsif (/^QUIET / && $verbose) {
-	print DOXYOUTPUT "QUIET = NO\n";
-	next;
+        print DOXYOUTPUT "QUIET = NO\n";
+        next;
       } elsif (/^INLINE_SOURCES/ && $is_release) {
-	print DOXYOUTPUT "INLINE_SOURCES = NO\n";
-	next;
+        print DOXYOUTPUT "INLINE_SOURCES = NO\n";
+        next;
       } elsif (/^SOURCE_BROWSER/ && $is_release) {
-	print DOXYOUTPUT "SOURCE_BROWSER = NO\n";
-	next;
+        print DOXYOUTPUT "SOURCE_BROWSER = NO\n";
+        next;
       } elsif (/^VERBATIM_HEADERS/ && $is_release) {
-	print DOXYOUTPUT "VERBATIM_HEADERS = NO\n";
-	next;
+        print DOXYOUTPUT "VERBATIM_HEADERS = NO\n";
+        next;
 #      } elsif (/^INCLUDE_GRAPH/ && $is_release) {
-#	print DOXYOUTPUT "INCLUDE_GRAPH = NO\n";
-#	next;
+#       print DOXYOUTPUT "INCLUDE_GRAPH = NO\n";
+#       next;
 #      } elsif (/^INCLUDED_BY_GRAPH/ && $is_release) {
-#	print DOXYOUTPUT "INCLUDED_BY_GRAPH = NO\n";
-#	next;
+#       print DOXYOUTPUT "INCLUDED_BY_GRAPH = NO\n";
+#       next;
       } elsif (/^GENERATE_MAN/ && /= YES/) {
         $generate_man = 1;
       } elsif (/^GENERATE_HTML/ && /= YES/) {

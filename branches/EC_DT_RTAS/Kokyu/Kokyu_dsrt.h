@@ -1,8 +1,9 @@
+/* $Id$ */
 /* -*- C++ -*- */
 /**
  *  @file   Kokyu_dsrt.h
  *
- *  $Id$
+ *  Kokyu_dsrt.h,v 1.7 2003/10/13 08:36:22 jwillemsen Exp
  *
  *  @author Venkita Subramonian (venkita@cs.wustl.edu)
  *
@@ -48,6 +49,9 @@ namespace Kokyu
 
     /// Schedule a thread dynamically based on the qos info supplied.
     int schedule (Guid_t guid, const DSRT_QoSDescriptor&);
+
+    /// Release a thread on its proper release time.
+    int release_guard (Guid_t guid, const DSRT_QoSDescriptor&);
 
     /// Update the schedule for a thread. This could alter the current schedule.
     int update_schedule (Guid_t guid, const DSRT_QoSDescriptor&);
@@ -140,6 +144,23 @@ namespace Kokyu
 		    const QoSDesc& qos2);
   };
 
+  /**
+   * @class EDF_Sched_Strategy
+   *
+   * @brief Strategy class implementing Earliest Deadline First 
+   * reordering strategy.
+   *
+   */
+  template <class QoSDesc>
+  class EDF_Comparator
+  {
+     public:
+     typedef typename QoSDesc::Time_t Time_t;
+
+     int operator ()(const QoSDesc& qos1,
+		     const QoSDesc& qos2);
+  };
+  
   /**
    * @class MUF_Sched_Strategy
    *

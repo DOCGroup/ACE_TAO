@@ -38,7 +38,7 @@
  * strategies for EC distribution.
  *
  */
-class TAO_RTEvent_Export TAO_EC_Gateway 
+class TAO_RTEvent_Export TAO_EC_Gateway
   : public POA_RtecEventChannelAdmin::Observer
 {
 public:
@@ -52,11 +52,24 @@ public:
   /// or any other communication media (such as multicast groups).
   virtual void close (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) = 0;
 
-  /// Obtain and modify the observer handle.
-  void observer_handle (RtecEventChannelAdmin::Observer_Handle h);
+  /**
+   * @brief Set the observer handle.
+   * @param obs_hd Observer Handle provided by the user to enable
+   *               the gateway to be notified of changes.
+   */
+  void observer_handle (RtecEventChannelAdmin::Observer_Handle obs_hd);
+
+  /**
+   * @brief Return a copy of the Observer_Handle in order to enable
+   * removal of the Observer from the target Observable.
+   * @return Return copy of internal Observer_Handle
+   */
   RtecEventChannelAdmin::Observer_Handle observer_handle (void) const;
 
 private:
+  /**
+   * @brief Stored copy of the Observer Handle for future usage.
+   */
   RtecEventChannelAdmin::Observer_Handle handle_;
 };
 
