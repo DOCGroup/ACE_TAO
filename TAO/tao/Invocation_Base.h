@@ -138,7 +138,7 @@ namespace TAO
 
   private:
 
-    ACE_UNIMPLEMENTED_FUNC (Invocation_Base & operator= (const Invocation_Base &));
+    ACE_UNIMPLEMENTED_FUNC (Invocation_Base & operator= (const Invocation_Base &))
 
   private:
     //@{
