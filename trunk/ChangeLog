@@ -1,3 +1,12 @@
+Mon Feb 14 20:37:56 2005  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_lynxos.GNU:
+
+          Removed LynxOS 2.5 leftovers.
+	  Added definition of two new preprocessor macros
+	  ACE_LYNXOS_MAJOR and ACE_LYNXOS_MINOR. These macros make
+	  easier to maintain code that depend on LynxOS version. 
+	  
 Mon Feb 14 10:51:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * Kokyu/DSRT_Dispatch_Item_T.h:
@@ -6,41 +15,41 @@ Mon Feb 14 10:51:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Feb 14 01:22:19 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* examples/RMCast/Send_Msg/Receiver.cpp:
+        * examples/RMCast/Send_Msg/Receiver.cpp:
 
-	  Use "ACE_OS::memcmp()" instead of "std::memcmp()".  MSVC++ 6
-	  doesn't place memcmp() in the "std" C++ namespace.
+          Use "ACE_OS::memcmp()" instead of "std::memcmp()".  MSVC++ 6
+          doesn't place memcmp() in the "std" C++ namespace.
 
 Mon Feb 14 00:56:18 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/RMCast/Acknowledge.cpp:
+        * ace/RMCast/Acknowledge.cpp:
 
-	  No need to include "ace/OS.h".  Include "ace/OS_NS_unistd.h"
-	  instead.
+          No need to include "ace/OS.h".  Include "ace/OS_NS_unistd.h"
+          instead.
 
-	* ace/RMCast/Protocol.h:
+        * ace/RMCast/Protocol.h:
 
-	  Corrected friend declaration to use "struct" instead of "class"
-	  since the friend type in question is actually struct.
+          Corrected friend declaration to use "struct" instead of "class"
+          since the friend type in question is actually struct.
 
 Mon Feb 14 00:41:11 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/RMCast/Bits.h:
+        * ace/RMCast/Bits.h:
 
-	  Added support for single-threaded configurations.
+          Added support for single-threaded configurations.
 
-	* ace/RMCast/Link.cpp:
+        * ace/RMCast/Link.cpp:
 
-	  Explicitly cast INADDR_ANY argument in ACE_INET_Addr constructor
-	  call to ACE_UINT32.  Addresses constructor ambiguity issues
-	  exhibited by some compilers.
+          Explicitly cast INADDR_ANY argument in ACE_INET_Addr constructor
+          call to ACE_UINT32.  Addresses constructor ambiguity issues
+          exhibited by some compilers.
 
-	* ace/RMCast/Protocol.h:
-	* ace/RMCast/Simulator.h:
-	* ace/RMCast/Socket.h:
+        * ace/RMCast/Protocol.h:
+        * ace/RMCast/Simulator.h:
+        * ace/RMCast/Socket.h:
 
-	  Added missing #include directives now made necessary by header
-	  reductions in "Bits.h".
+          Added missing #include directives now made necessary by header
+          reductions in "Bits.h".
 
 Sun Feb 13 13:32:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -75,106 +84,106 @@ Sun Feb 13 07:03:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sat Feb 12 09:00:51 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* m4/ace.m4:
+        * m4/ace.m4:
 
           Rename ACE_WITH_{GL,FL,QT,TK} autoconf macros to ACE_PATH_{GL,
-	  FL,QT,TK} to be consistant with standard naming conventions.
+          FL,QT,TK} to be consistant with standard naming conventions.
 
 Sat Feb 12 01:00:25 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/RMCast/Protocol.h (Header):
+        * ace/RMCast/Protocol.h (Header):
 
-	  Fixed "value computed is not used" warning exhibited by g++ 4.0
-	  CVS snapshot.
+          Fixed "value computed is not used" warning exhibited by g++ 4.0
+          CVS snapshot.
 
-	* ace/RMCast/RMCast.mpc:
-	* bin/MakeProjectCreator/config/rmcast.mpb:
+        * ace/RMCast/RMCast.mpc:
+        * bin/MakeProjectCreator/config/rmcast.mpb:
 
-	  Require native C++ exception support.  The new reliable
-	  multicast implementation currently requires it.
+          Require native C++ exception support.  The new reliable
+          multicast implementation currently requires it.
 
 Sat Feb 12 00:09:18 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/RMCast/Protocol.h:
+        * ace/RMCast/Protocol.h:
 
-	  Work around Borland C++ Builder 6 (or earlier) inability to deal
-	  with default template parameters.  Thanks to Johnny for
-	  suggesting a work-around.
+          Work around Borland C++ Builder 6 (or earlier) inability to deal
+          with default template parameters.  Thanks to Johnny for
+          suggesting a work-around.
 
 Fri Feb 11 21:39:04 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* configure.ac:
+        * configure.ac:
 
-	  Updated for new RMCast implementation.
+          Updated for new RMCast implementation.
 
-	* tests/Makefile.am:
+        * tests/Makefile.am:
 
-	  Removed RMCast from SUBDIRS.
+          Removed RMCast from SUBDIRS.
 
-	* ace/RMCast/Makefile.am:
-	* examples/RMCast/Makefile.am:
-	* examples/RMCast/Send_Msg/Makefile.am:
+        * ace/RMCast/Makefile.am:
+        * examples/RMCast/Makefile.am:
+        * examples/RMCast/Send_Msg/Makefile.am:
 
-	  New files.
+          New files.
 
 Fri Feb 11 17:59:50 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/Makefile.am:
+        * ace/Makefile.am:
 
-	  Fix typo in pkgconfigdatadir definition.
+          Fix typo in pkgconfigdatadir definition.
 
 Fri Feb 11 18:11:29 2005  Steve Huston  <shuston@riverace.com>
 
-	* ace/Dev_Poll_Reactor.{h inl cpp}:
-	  Comment out the check for epoll's proper Linux kernel version
-	  based on linux/version.h. It's not always accurate. For example,
-	  on Fedora Core 2 it says 2.4.20, yet the actual kernel is 2.6.5
-	  and epoll_ctl works fine (apparantly).
+        * ace/Dev_Poll_Reactor.{h inl cpp}:
+          Comment out the check for epoll's proper Linux kernel version
+          based on linux/version.h. It's not always accurate. For example,
+          on Fedora Core 2 it says 2.4.20, yet the actual kernel is 2.6.5
+          and epoll_ctl works fine (apparantly).
 
-	  Removed the original reference counting scheme based on the
-	  handler repository and implemented the ACE_Event_Handler-based
-	  scheme used by the other reactors. Kept the
-	  ACE_Dev_Poll_Handler_Guard class, though, as it is very nice.
-	  Just changed some contents and added a release() method to make it
-	  easier to work with the notify case since the refcount is incremented
-	  when the handler is queued for notify and decremented after the
-	  later upcall is done.
+          Removed the original reference counting scheme based on the
+          handler repository and implemented the ACE_Event_Handler-based
+          scheme used by the other reactors. Kept the
+          ACE_Dev_Poll_Handler_Guard class, though, as it is very nice.
+          Just changed some contents and added a release() method to make it
+          easier to work with the notify case since the refcount is incremented
+          when the handler is queued for notify and decremented after the
+          later upcall is done.
 
-	  (wakeup_all_threads): Removed the #if 0 block around the notify()
-	  call. This works fine (and is necessary) for epoll-capable systems.
+          (wakeup_all_threads): Removed the #if 0 block around the notify()
+          call. This works fine (and is necessary) for epoll-capable systems.
 
-	  (handle_events_i, dispatch): Moved the signal-dispatched detection
-	  to handle_events_i() from dispatch() and allowed a dispatched signal
-	  to count as a dispatched event instead of always causing a
-	  -1/EINTR return.
+          (handle_events_i, dispatch): Moved the signal-dispatched detection
+          to handle_events_i() from dispatch() and allowed a dispatched signal
+          to count as a dispatched event instead of always causing a
+          -1/EINTR return.
 
-	  (dispatch_io_events): Increment io_handlers_dispatched before
-	  doing the upcall. Previously, it wouldn't get incremented if the
-	  handler returned -1.
+          (dispatch_io_events): Increment io_handlers_dispatched before
+          doing the upcall. Previously, it wouldn't get incremented if the
+          handler returned -1.
 
-	* ace/Reactor.cpp: Added the ability to specify ACE_Dev_Poll_Reactor
-	  as the default reactor implementation by specifying
-	  ACE_USE_DEV_POLL_REACTOR_FOR_REACTOR_IMPL in the config file.
+        * ace/Reactor.cpp: Added the ability to specify ACE_Dev_Poll_Reactor
+          as the default reactor implementation by specifying
+          ACE_USE_DEV_POLL_REACTOR_FOR_REACTOR_IMPL in the config file.
 
-	* tests/Dev_Poll_Reactor_Test.cpp: Ignore SIGPIPE, else if the
-	  receiving side closes its handle first, the sending side will crash
-	  on SIGPIPE. Make the Client shut down its reactor if handle_output()
-	  fails. Else, the timer will never fire again and the test will hang.
+        * tests/Dev_Poll_Reactor_Test.cpp: Ignore SIGPIPE, else if the
+          receiving side closes its handle first, the sending side will crash
+          on SIGPIPE. Make the Client shut down its reactor if handle_output()
+          fails. Else, the timer will never fire again and the test will hang.
 
-	* tests/MT_Reactor_Upcall_Test.cpp:
-	* tests/MT_Reference_Counted_Event_Handler_Test.cpp:
-	* tests/MT_Reference_Counted_Notify_Test.cpp: Added test for
-	  ACE_Dev_Poll_Reactor using -d (defaults to 1) but only runs it
-	  if ACE_HAS_EVENT_POLL is set.
-	  For MT_Reference_Counted_Notify_Test, added checks to see that
-	  the reference count actually gets incremented for the upcall.
+        * tests/MT_Reactor_Upcall_Test.cpp:
+        * tests/MT_Reference_Counted_Event_Handler_Test.cpp:
+        * tests/MT_Reference_Counted_Notify_Test.cpp: Added test for
+          ACE_Dev_Poll_Reactor using -d (defaults to 1) but only runs it
+          if ACE_HAS_EVENT_POLL is set.
+          For MT_Reference_Counted_Notify_Test, added checks to see that
+          the reference count actually gets incremented for the upcall.
 
 Fri Feb 11 13:55:47 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* configure.ac:
-	* m4/config_h.m4:
+        * configure.ac:
+        * m4/config_h.m4:
 
-	  Define ACE_HAS_ICMP_SUPPORT if host supports raw sockets.
+          Define ACE_HAS_ICMP_SUPPORT if host supports raw sockets.
 
 Fri Feb 11 21:33:37 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -183,127 +192,127 @@ Fri Feb 11 21:33:37 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Feb 11 08:43:04 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/RMCast/Makefile.am:
-	* ace/RMCast/RMCast.cpp:
-	* ace/RMCast/RMCast.h:
-	* ace/RMCast/RMCast.rc:
-	* ace/RMCast/RMCast_Ack_Worker.cpp:
-	* ace/RMCast/RMCast_Ack_Worker.h:
-	* ace/RMCast/RMCast_Ack_Worker.i:
-	* ace/RMCast/RMCast_Copy_On_Write.cpp:
-	* ace/RMCast/RMCast_Copy_On_Write.h:
-	* ace/RMCast/RMCast_Copy_On_Write.i:
-	* ace/RMCast/RMCast_Export.h:
-	* ace/RMCast/RMCast_Fork.cpp:
-	* ace/RMCast/RMCast_Fork.h:
-	* ace/RMCast/RMCast_Fork.i:
-	* ace/RMCast/RMCast_Fragment.cpp:
-	* ace/RMCast/RMCast_Fragment.h:
-	* ace/RMCast/RMCast_Fragment.i:
-	* ace/RMCast/RMCast_IO_UDP.cpp:
-	* ace/RMCast/RMCast_IO_UDP.h:
-	* ace/RMCast/RMCast_IO_UDP.i:
-	* ace/RMCast/RMCast_Membership.cpp:
-	* ace/RMCast/RMCast_Membership.h:
-	* ace/RMCast/RMCast_Membership.i:
-	* ace/RMCast/RMCast_Module.cpp:
-	* ace/RMCast/RMCast_Module.h:
-	* ace/RMCast/RMCast_Module.i:
-	* ace/RMCast/RMCast_Module_Factory.cpp:
-	* ace/RMCast/RMCast_Module_Factory.h:
-	* ace/RMCast/RMCast_Partial_Message.cpp:
-	* ace/RMCast/RMCast_Partial_Message.h:
-	* ace/RMCast/RMCast_Partial_Message.i:
-	* ace/RMCast/RMCast_Proxy.cpp:
-	* ace/RMCast/RMCast_Proxy.h:
-	* ace/RMCast/RMCast_Proxy.i:
-	* ace/RMCast/RMCast_Reassembly.cpp:
-	* ace/RMCast/RMCast_Reassembly.h:
-	* ace/RMCast/RMCast_Receiver_Module.cpp:
-	* ace/RMCast/RMCast_Receiver_Module.h:
-	* ace/RMCast/RMCast_Receiver_Module.i:
-	* ace/RMCast/RMCast_Reliable_Factory.cpp:
-	* ace/RMCast/RMCast_Reliable_Factory.h:
-	* ace/RMCast/RMCast_Reliable_Factory.i:
-	* ace/RMCast/RMCast_Reordering.cpp:
-	* ace/RMCast/RMCast_Reordering.h:
-	* ace/RMCast/RMCast_Reordering.i:
-	* ace/RMCast/RMCast_Resend_Handler.cpp:
-	* ace/RMCast/RMCast_Resend_Handler.h:
-	* ace/RMCast/RMCast_Resend_Handler.i:
-	* ace/RMCast/RMCast_Resend_Worker.cpp:
-	* ace/RMCast/RMCast_Resend_Worker.h:
-	* ace/RMCast/RMCast_Resend_Worker.i:
-	* ace/RMCast/RMCast_Retransmission.cpp:
-	* ace/RMCast/RMCast_Retransmission.h:
-	* ace/RMCast/RMCast_Retransmission.i:
-	* ace/RMCast/RMCast_Sequencer.cpp:
-	* ace/RMCast/RMCast_Sequencer.h:
-	* ace/RMCast/RMCast_Sequencer.i:
-	* ace/RMCast/RMCast_Singleton_Factory.cpp:
-	* ace/RMCast/RMCast_Singleton_Factory.h:
-	* ace/RMCast/RMCast_Singleton_Factory.i:
-	* ace/RMCast/RMCast_UDP_Event_Handler.cpp:
-	* ace/RMCast/RMCast_UDP_Event_Handler.h:
-	* ace/RMCast/RMCast_UDP_Event_Handler.i:
-	* ace/RMCast/RMCast_UDP_Proxy.cpp:
-	* ace/RMCast/RMCast_UDP_Proxy.h:
-	* ace/RMCast/RMCast_UDP_Proxy.i:
-	* ace/RMCast/RMCast_UDP_Reliable_Receiver.cpp:
-	* ace/RMCast/RMCast_UDP_Reliable_Receiver.h:
-	* ace/RMCast/RMCast_UDP_Reliable_Receiver.i:
-	* ace/RMCast/RMCast_UDP_Reliable_Sender.cpp:
-	* ace/RMCast/RMCast_UDP_Reliable_Sender.h:
-	* ace/RMCast/RMCast_UDP_Reliable_Sender.i:
-	* ace/RMCast/RMCast_Worker.cpp:
-	* ace/RMCast/RMCast_Worker.h:
-	* examples/RMCast/Makefile.am:
-	* examples/RMCast/Send_File/Makefile.am:
-	* examples/RMCast/Send_File/RMCast_Send_File.mpc:
-	* examples/RMCast/Send_File/Receiver.cpp:
-	* examples/RMCast/Send_File/Sender.cpp:
-	* tests/RMCast/Main.cpp:
-	* tests/RMCast/Makefile.am:
-	* tests/RMCast/RMCast_Fragment_Test.cpp:
-	* tests/RMCast/RMCast_Membership_Test.cpp:
-	* tests/RMCast/RMCast_Reassembly_Test.cpp:
-	* tests/RMCast/RMCast_Reordering_Test.cpp:
-	* tests/RMCast/RMCast_Retransmission_Test.cpp:
-	* tests/RMCast/RMCast_UDP_Best_Effort_Test.cpp:
-	* tests/RMCast/acetest.mpb:
-	* tests/RMCast/tests.mpc:
+        * ace/RMCast/Makefile.am:
+        * ace/RMCast/RMCast.cpp:
+        * ace/RMCast/RMCast.h:
+        * ace/RMCast/RMCast.rc:
+        * ace/RMCast/RMCast_Ack_Worker.cpp:
+        * ace/RMCast/RMCast_Ack_Worker.h:
+        * ace/RMCast/RMCast_Ack_Worker.i:
+        * ace/RMCast/RMCast_Copy_On_Write.cpp:
+        * ace/RMCast/RMCast_Copy_On_Write.h:
+        * ace/RMCast/RMCast_Copy_On_Write.i:
+        * ace/RMCast/RMCast_Export.h:
+        * ace/RMCast/RMCast_Fork.cpp:
+        * ace/RMCast/RMCast_Fork.h:
+        * ace/RMCast/RMCast_Fork.i:
+        * ace/RMCast/RMCast_Fragment.cpp:
+        * ace/RMCast/RMCast_Fragment.h:
+        * ace/RMCast/RMCast_Fragment.i:
+        * ace/RMCast/RMCast_IO_UDP.cpp:
+        * ace/RMCast/RMCast_IO_UDP.h:
+        * ace/RMCast/RMCast_IO_UDP.i:
+        * ace/RMCast/RMCast_Membership.cpp:
+        * ace/RMCast/RMCast_Membership.h:
+        * ace/RMCast/RMCast_Membership.i:
+        * ace/RMCast/RMCast_Module.cpp:
+        * ace/RMCast/RMCast_Module.h:
+        * ace/RMCast/RMCast_Module.i:
+        * ace/RMCast/RMCast_Module_Factory.cpp:
+        * ace/RMCast/RMCast_Module_Factory.h:
+        * ace/RMCast/RMCast_Partial_Message.cpp:
+        * ace/RMCast/RMCast_Partial_Message.h:
+        * ace/RMCast/RMCast_Partial_Message.i:
+        * ace/RMCast/RMCast_Proxy.cpp:
+        * ace/RMCast/RMCast_Proxy.h:
+        * ace/RMCast/RMCast_Proxy.i:
+        * ace/RMCast/RMCast_Reassembly.cpp:
+        * ace/RMCast/RMCast_Reassembly.h:
+        * ace/RMCast/RMCast_Receiver_Module.cpp:
+        * ace/RMCast/RMCast_Receiver_Module.h:
+        * ace/RMCast/RMCast_Receiver_Module.i:
+        * ace/RMCast/RMCast_Reliable_Factory.cpp:
+        * ace/RMCast/RMCast_Reliable_Factory.h:
+        * ace/RMCast/RMCast_Reliable_Factory.i:
+        * ace/RMCast/RMCast_Reordering.cpp:
+        * ace/RMCast/RMCast_Reordering.h:
+        * ace/RMCast/RMCast_Reordering.i:
+        * ace/RMCast/RMCast_Resend_Handler.cpp:
+        * ace/RMCast/RMCast_Resend_Handler.h:
+        * ace/RMCast/RMCast_Resend_Handler.i:
+        * ace/RMCast/RMCast_Resend_Worker.cpp:
+        * ace/RMCast/RMCast_Resend_Worker.h:
+        * ace/RMCast/RMCast_Resend_Worker.i:
+        * ace/RMCast/RMCast_Retransmission.cpp:
+        * ace/RMCast/RMCast_Retransmission.h:
+        * ace/RMCast/RMCast_Retransmission.i:
+        * ace/RMCast/RMCast_Sequencer.cpp:
+        * ace/RMCast/RMCast_Sequencer.h:
+        * ace/RMCast/RMCast_Sequencer.i:
+        * ace/RMCast/RMCast_Singleton_Factory.cpp:
+        * ace/RMCast/RMCast_Singleton_Factory.h:
+        * ace/RMCast/RMCast_Singleton_Factory.i:
+        * ace/RMCast/RMCast_UDP_Event_Handler.cpp:
+        * ace/RMCast/RMCast_UDP_Event_Handler.h:
+        * ace/RMCast/RMCast_UDP_Event_Handler.i:
+        * ace/RMCast/RMCast_UDP_Proxy.cpp:
+        * ace/RMCast/RMCast_UDP_Proxy.h:
+        * ace/RMCast/RMCast_UDP_Proxy.i:
+        * ace/RMCast/RMCast_UDP_Reliable_Receiver.cpp:
+        * ace/RMCast/RMCast_UDP_Reliable_Receiver.h:
+        * ace/RMCast/RMCast_UDP_Reliable_Receiver.i:
+        * ace/RMCast/RMCast_UDP_Reliable_Sender.cpp:
+        * ace/RMCast/RMCast_UDP_Reliable_Sender.h:
+        * ace/RMCast/RMCast_UDP_Reliable_Sender.i:
+        * ace/RMCast/RMCast_Worker.cpp:
+        * ace/RMCast/RMCast_Worker.h:
+        * examples/RMCast/Makefile.am:
+        * examples/RMCast/Send_File/Makefile.am:
+        * examples/RMCast/Send_File/RMCast_Send_File.mpc:
+        * examples/RMCast/Send_File/Receiver.cpp:
+        * examples/RMCast/Send_File/Sender.cpp:
+        * tests/RMCast/Main.cpp:
+        * tests/RMCast/Makefile.am:
+        * tests/RMCast/RMCast_Fragment_Test.cpp:
+        * tests/RMCast/RMCast_Membership_Test.cpp:
+        * tests/RMCast/RMCast_Reassembly_Test.cpp:
+        * tests/RMCast/RMCast_Reordering_Test.cpp:
+        * tests/RMCast/RMCast_Retransmission_Test.cpp:
+        * tests/RMCast/RMCast_UDP_Best_Effort_Test.cpp:
+        * tests/RMCast/acetest.mpb:
+        * tests/RMCast/tests.mpc:
 
-	  Removed old ACE reliable multicast implementation.  It is not
-	  maintained, and is now superseded by Boris's implementation
-	  described below.
+          Removed old ACE reliable multicast implementation.  It is not
+          maintained, and is now superseded by Boris's implementation
+          described below.
 
-	From Boris Kolpkacov <boris at kolpackov dot net>
-	* ace/RMCast/Acknowledge.cpp:
-	* ace/RMCast/Acknowledge.h:
-	* ace/RMCast/Agent.tar.bz2:
-	* ace/RMCast/Bits.h:
-	* ace/RMCast/Link.cpp:
-	* ace/RMCast/Link.h:
-	* ace/RMCast/Protocol.cpp:
-	* ace/RMCast/Protocol.h:
-	* ace/RMCast/RMCast.mpc:
-	* ace/RMCast/Retransmit.cpp:
-	* ace/RMCast/Retransmit.h:
-	* ace/RMCast/Simulator.cpp:
-	* ace/RMCast/Simulator.h:
-	* ace/RMCast/Socket.cpp:
-	* ace/RMCast/Socket.h:
-	* ace/RMCast/Stack.cpp:
-	* ace/RMCast/Stack.h:
-	* examples/RMCast/Send_Msg/Protocol.h:
-	* examples/RMCast/Send_Msg/README:
-	* examples/RMCast/Send_Msg/Receiver.cpp:
-	* examples/RMCast/Send_Msg/Send_Msg.mpc:
-	* examples/RMCast/Send_Msg/Sender.cpp:
+        From Boris Kolpkacov <boris at kolpackov dot net>
+        * ace/RMCast/Acknowledge.cpp:
+        * ace/RMCast/Acknowledge.h:
+        * ace/RMCast/Agent.tar.bz2:
+        * ace/RMCast/Bits.h:
+        * ace/RMCast/Link.cpp:
+        * ace/RMCast/Link.h:
+        * ace/RMCast/Protocol.cpp:
+        * ace/RMCast/Protocol.h:
+        * ace/RMCast/RMCast.mpc:
+        * ace/RMCast/Retransmit.cpp:
+        * ace/RMCast/Retransmit.h:
+        * ace/RMCast/Simulator.cpp:
+        * ace/RMCast/Simulator.h:
+        * ace/RMCast/Socket.cpp:
+        * ace/RMCast/Socket.h:
+        * ace/RMCast/Stack.cpp:
+        * ace/RMCast/Stack.h:
+        * examples/RMCast/Send_Msg/Protocol.h:
+        * examples/RMCast/Send_Msg/README:
+        * examples/RMCast/Send_Msg/Receiver.cpp:
+        * examples/RMCast/Send_Msg/Send_Msg.mpc:
+        * examples/RMCast/Send_Msg/Sender.cpp:
 
-	  New reliable source-ordered multicast protocol implementation
-	  for message-oriented multi-sender group communication built on
-	  top of IPv4 multicast.
+          New reliable source-ordered multicast protocol implementation
+          for message-oriented multi-sender group communication built on
+          top of IPv4 multicast.
 
 Fri Feb 11 16:01:37 2005  Martin Corino  <mcorino@remedy.nl>
 
