@@ -30,6 +30,8 @@
 
 ACE_RCSID(tests, MM_Shared_Memory_Test, "$Id$")
 
+#if !defined (ACE_LACKS_MMAP)
+
 static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 const int SHMSZ = 27;
 static ACE_TCHAR *shm_key;
@@ -183,12 +185,14 @@ spawn (void)
 #endif /* ACE_HAS_THREADS */
   return 0;
 }
+#endif /* !ACE_LACKS_MMAP */
 
 int
 main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("MM_Shared_Memory_Test"));
 
+#if !defined (ACE_LACKS_MMAP)
   ACE_TCHAR temp_file[MAXPATHLEN + 1];
 
   // Get the temporary directory,
@@ -211,7 +215,11 @@ main (int, ACE_TCHAR *[])
                       1);
   spawn ();
 
-
+#else /* !ACE_LACKS_MMAP */
+  ACE_ERROR ((LM_INFO,
+              ACE_TEXT ("mmap ")
+              ACE_TEXT ("is not supported on this platform\n")));
+#endif /* !ACE_LACKS_MMAP */
 
   ACE_END_TEST;
   return 0;

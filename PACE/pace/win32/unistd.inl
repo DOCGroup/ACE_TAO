@@ -109,11 +109,11 @@ int
 pace_execv (const char * path,
             char * const argv[])
 {
-#if defined (__BORLANDC__)
+#if defined (__BORLANDC__) || defined(__MINGW32__)
   return execv (path, argv);
-#else /* __BORLANDC__ */
+#else /* __BORLANDC__ || __MINGW32__ */
   return _execv (path, (const char * const *) argv);
-#endif /* __BORLANDC__ */
+#endif /* __BORLANDC__ || __MINGW32__ */
   /* if successful, this operation does NOT return */
 }
 #endif /* PACE_HAS_POSIX_MP_UOF */
@@ -125,12 +125,12 @@ pace_execve (const char * path,
              char * const argv[],
              char * const envp[])
 {
-#if defined (__BORLANDC__)
+#if defined (__BORLANDC__) || defined (__MINGW32__)
   return execve (path, argv, envp);
-#else /* __BORLANDC__ */
+#else /* __BORLANDC__ || __MINGW32__ */
   return _execve (path, (const char *const *) argv,
                   (const char *const *) envp);
-#endif /* __BORLANDC__ */
+#endif /* __BORLANDC__ || __MINGW32__ */
   /* if successful, this operation does NOT return */
 }
 #endif /* PACE_HAS_POSIX_MP_UOF */
@@ -141,11 +141,11 @@ int
 pace_execvp (const char * file,
              char * const argv[])
 {
-#if defined (__BORLANDC__)
+#if defined (__BORLANDC__) || defined (__MINGW32__)
   return execvp (file, argv);
-#else /* __BORLANDC__ */
+#else /* __BORLANDC__ || __MINGW32__ */
   return _execvp (file, (const char *const *) argv);
-#endif /* __BORLANDC__ */
+#endif /* __BORLANDC__ || __MINGW32__ */
   /* if successful, this operation does NOT return */
 }
 #endif /* PACE_HAS_POSIX_MP_UOF */
@@ -262,6 +262,8 @@ PACE_INLINE
 int
 pace_getlogin_r (char * name, size_t namesize)
 {
+  PACE_UNUSED_ARG (name);
+  PACE_UNUSED_ARG (namesize);
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 }
 #endif /* PACE_HAS_POSIX_UGR_UOF */
@@ -310,11 +312,11 @@ PACE_INLINE
 int
 pace_isatty (int fildes)
 {
-#if defined (__BORLANDC__)
+#if defined (__BORLANDC__) || defined (__MINGW32__)
   return isatty (fildes);
-#else /* __BORLANDC__ */
+#else /* __BORLANDC__ || __MINGW32__ */
   return _isatty (fildes);
-#endif /* __BORLANDC__ */
+#endif /* __BORLANDC__ || __MINGW32__ */
 }
 #endif /* PACE_HAS_POSIX_DS_UOF */
 
@@ -473,7 +475,7 @@ PACE_INLINE
 char *
 pace_ttyname (PACE_HANDLE fildes)
 {
-  char * retval = (void*)0;
+  char * retval = (char*) 0;
   PACE_UNUSED_ARG (fildes);
   PACE_ERRNO_NO_SUPPORT_RETURN (retval);
 }

@@ -1,6 +1,10 @@
 // -*- C++ -*-
 // $Id$
 
+#if defined (__CYGWIN32__)
+#  include <getopt.h>
+#endif
+
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # undef ACE_INLINE
 # define ACE_INLINE
@@ -10309,6 +10313,8 @@ ACE_OS::execv (const char *path,
 #elif defined (ACE_WIN32)
 # if defined (__BORLANDC__) /* VSB */
   return ::execv (path, argv);
+# elif defined (__MINGW32__)
+  return ::_execv (path, (char *const *) argv);
 # else
   return ::_execv (path, (const char *const *) argv);
 # endif /* __BORLANDC__ */
@@ -10342,6 +10348,8 @@ ACE_OS::execve (const char *path,
 #elif defined (ACE_WIN32)
 # if defined (__BORLANDC__) /* VSB */
   return ::execve (path, argv, envp);
+# elif defined (__MINGW32__)
+  return ::_execve (path, (char *const *) argv, (char *const *) envp);
 # else
   return ::_execve (path, (const char *const *) argv, (const char *const *) envp);
 # endif /* __BORLANDC__ */
@@ -10373,6 +10381,8 @@ ACE_OS::execvp (const char *file,
 #elif defined (ACE_WIN32)
 # if defined (__BORLANDC__) /* VSB */
   return ::execvp (file, argv);
+# elif defined (__MINGW32__)
+  return ::_execvp (file, (char *const *) argv);
 # else
   return ::_execvp (file, (const char *const *) argv);
 # endif /* __BORLANDC__ */
@@ -10558,7 +10568,7 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
   ACE_UNUSED_ARG (op);
   // Use .obj/gethrtime.o, which was compiled with g++.
   return ACE_gethrtime ();
-#elif (defined(__KCC) || defined (__GNUG__)) && defined (ACE_HAS_PENTIUM)
+#elif (defined(__KCC) || defined (__GNUG__)) && !defined (__MINGW32__) && defined (ACE_HAS_PENTIUM)
   ACE_UNUSED_ARG (op);
 
 # if defined (ACE_LACKS_LONGLONG_T)
@@ -10602,6 +10612,7 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
 
   return now;
 #elif defined (ACE_WIN32)
+  ACE_UNUSED_ARG(op);
   LARGE_INTEGER freq;
 
   ::QueryPerformanceCounter (&freq);
@@ -11434,8 +11445,10 @@ ACE_OS::mkdir (const ACE_TCHAR *path, mode_t mode)
                                           ace_result_),
                         int, -1);
 #elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+  ACE_UNUSED_ARG (mode);
   ACE_OSCALL_RETURN (::_wmkdir (path), int, -1);
 #elif defined (ACE_WIN32)
+  ACE_UNUSED_ARG (mode);
   ACE_OSCALL_RETURN (::mkdir (path), int, -1);
 #else
   ACE_OSCALL_RETURN (::mkdir (path, mode), int, -1);

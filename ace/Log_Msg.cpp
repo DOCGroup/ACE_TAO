@@ -115,7 +115,7 @@ int ACE_Log_Msg_Manager::init_backend (const u_long *flags)
 
       ACE_Log_Msg_Manager::log_backend_flags_ = *flags;
     }
-  
+
   if (ACE_Log_Msg_Manager::log_backend_ == 0)
     {
       ACE_NO_HEAP_CHECK;
@@ -792,9 +792,12 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
   ACE_TRACE ("ACE_Log_Msg::log");
   // External decls.
 
-#if ! (defined(__BORLANDC__) && __BORLANDC__ >= 0x0530)
+#if ! (defined(__BORLANDC__) && __BORLANDC__ >= 0x0530) \
+    && !defined(__MINGW32__)
 #if defined (__FreeBSD__) || defined(__QNX__)
    extern const int sys_nerr;
+#elif defined (__CYGWIN32__)
+#  define sys_nerr _sys_nerr
 #else
    extern int sys_nerr;
 #endif /* !__FreeBSD__ && !__QNX__ */
@@ -1144,7 +1147,10 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                 case 't': // Format thread id.
                   type = SKIP_SPRINTF;
 #if defined (ACE_WIN32)
-                  ACE_OS::sprintf (bp, ACE_LIB_TEXT ("%u"), ACE_Thread::self ());
+                  ACE_OS::sprintf (bp,
+                                   ACE_LIB_TEXT ("%u"),
+                                   ACE_static_cast(unsigned,
+                                                   ACE_Thread::self ()));
 #elif defined (AIX) && (ACE_AIX_MINOR_VERS <= 2)
                   // AIX's pthread_t (ACE_hthread_t) is a pointer, and it's
                   // a little ugly to send that through a %u format.  So,

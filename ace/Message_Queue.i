@@ -205,6 +205,8 @@ ACE_INLINE int
 ACE_Message_Queue_NT::peek_dequeue_head (ACE_Message_Block *&first_item,
                                          ACE_Time_Value *timeout)
 {
+  ACE_UNUSED_ARG(first_item);
+  ACE_UNUSED_ARG(timeout);
   ACE_NOTSUP_RETURN (-1);
 }
 

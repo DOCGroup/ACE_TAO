@@ -108,14 +108,6 @@ connection_completed (void)
     ACE_Reactor::instance()->wakeup_all_threads ();
 }
 
-// Have all connections been serviced?
-
-static int
-done (void)
-{
-  return connections == ACE_MAX_ITERATIONS + 1;
-}
-
 // Constructor
 Process_Strategy::Process_Strategy (size_t n_processes,
                                     ACE_Event_Handler *acceptor,
@@ -500,6 +492,8 @@ Counting_Service::open (void *)
   return 0;
 }
 
+#if !defined (ACE_LACKS_FORK) || defined (ACE_HAS_THREADS)
+
 // Execute the client tests.
 
 static void *
@@ -617,6 +611,14 @@ client (void *arg)
 
 // Performs the server activities.
 
+// Have all connections been serviced?
+
+static int
+done (void)
+{
+  return connections == ACE_MAX_ITERATIONS + 1;
+}
+
 static void *
 server (void *)
 {
@@ -629,6 +631,8 @@ server (void *)
 
   return 0;
 }
+
+#endif /* !ACE_LACKS_FORK || ACE_HAS_THREADS */
 
 int
 main (int argc, ACE_TCHAR *argv[])
@@ -705,10 +709,9 @@ main (int argc, ACE_TCHAR *argv[])
       // Wait for the threads to exit.
       ACE_Thread_Manager::instance ()->wait ();
 #else
-      ACE_ERROR ((LM_ERROR,
+      ACE_ERROR ((LM_INFO,
                   ACE_TEXT ("(%P|%t) only one thread may be run ")
-                  ACE_TEXT ("in a process on this platform\n%a"),
-                  1));
+                  ACE_TEXT ("in a process on this platform\n")));
 #endif /* ACE_HAS_THREADS */
     }
 

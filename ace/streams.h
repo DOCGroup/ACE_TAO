@@ -130,6 +130,7 @@
 #       include /**/ <istream.h>
 #       include /**/ <ostream.h>
 #     endif /* _MSC_VER */
+#   elif !defined (__MINGW32__)
 #     include /**/ <strstrea.h> // VSB
 #   else
 #     include /**/ <strstream.h>

@@ -1363,7 +1363,7 @@ ACE_WIN32_Asynch_Accept::accept  (ACE_Message_Block &message_block,
 
       // Cleanup dynamically allocated Asynch_Result.
       delete result;
-      
+
       if (ACE::debug ())
         {
           ACE_DEBUG ((LM_ERROR,
@@ -1373,6 +1373,12 @@ ACE_WIN32_Asynch_Accept::accept  (ACE_Message_Block &message_block,
       return -1;
     }
 #else /* ACE_HAS_WINNT4 .......|| ACE_HAS_AIO_CALLS */
+  ACE_UNUSED_ARG (message_block);
+  ACE_UNUSED_ARG (bytes_to_read);
+  ACE_UNUSED_ARG (accept_handle);
+  ACE_UNUSED_ARG (act);
+  ACE_UNUSED_ARG (priority);
+  ACE_UNUSED_ARG (signal_number);
   ACE_NOTSUP_RETURN (-1);
 #endif /* (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)) || (defined (ACE_HAS_AIO_CALLS) */
 }
@@ -1646,7 +1652,7 @@ ACE_WIN32_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
 
       // Cleanup dynamically allocated Asynch_Result
       delete result;
-      
+
       if (ACE::debug ())
         {
           ACE_DEBUG ((LM_ERROR,
@@ -1656,6 +1662,16 @@ ACE_WIN32_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
       return -1;
     }
 #else /* (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)) */
+  ACE_UNUSED_ARG (file);
+  ACE_UNUSED_ARG (header_and_trailer);
+  ACE_UNUSED_ARG (bytes_to_write);
+  ACE_UNUSED_ARG (offset);
+  ACE_UNUSED_ARG (offset_high);
+  ACE_UNUSED_ARG (bytes_per_send);
+  ACE_UNUSED_ARG (flags);
+  ACE_UNUSED_ARG (act);
+  ACE_UNUSED_ARG (priority);
+  ACE_UNUSED_ARG (signal_number);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_AIO_CALLS */
 }

@@ -1,3 +1,89 @@
+Sat Apr 21 15:31:27 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * PACE/pace/ctype.h:
+        * PACE/pace/config/compiler.h:
+        * PACE/pace/config/platform.h:
+        * PACE/pace/win32/pthread.c:
+        * PACE/pace/win32/pthread.inl:
+        * PACE/pace/win32/semaphore.c:
+        * PACE/pace/win32/semaphore.h:
+        * PACE/pace/win32/signal.inl:
+        * PACE/pace/win32/socket.c:
+        * PACE/pace/win32/socket.h:
+        * PACE/pace/win32/socket.inl:
+        * PACE/pace/win32/stdlib.inl:
+        * PACE/pace/win32/unistd.h:
+        * PACE/pace/win32/unistd.inl:
+        * PACE/pace/win32/utime.c:
+        * PACE/pace/win32/utsname.c:
+        * PACE/pace/win32/utsname.inl:
+        * PACE/pace/win32/wait.inl:
+        * ace/ACE.cpp:
+        * ace/Basic_Types.h:
+        * ace/Configuration.cpp:
+        * ace/Handle_Gobbler.i:
+        * ace/Lib_Find.cpp:
+        * ace/Local_Name_Space_T.cpp:
+        * ace/Log_Msg.cpp:
+        * ace/Makefile:
+        * ace/Mem_Map.cpp:
+        * ace/Memory_Pool.cpp:
+        * ace/Message_Queue.i:
+        * ace/NT_Service.cpp:
+        * ace/OS.cpp:
+        * ace/OS.h:
+        * ace/OS.i:
+        * ace/OS_String.cpp:
+        * ace/Process.cpp:
+        * ace/Process_Manager.cpp:
+        * ace/Registry.cpp:
+        * ace/SOCK_Connector.i:
+        * ace/Sock_Connect.cpp:
+        * ace/TTY_IO.cpp:
+        * ace/WFMO_Reactor.cpp:
+        * ace/WFMO_Reactor.i:
+        * ace/WIN32_Asynch_IO.cpp:
+        * ace/config-cygwin32-common.h:
+        * ace/config-g++-common.h:
+        * ace/config-win32-common.h:
+        * ace/config-win32-mingw.h:
+        * ace/config-win32.h:
+        * ace/streams.h:
+        * examples/NT_Service/Makefile:
+        * examples/NT_Service/main.cpp:
+        * examples/NT_Service/ntsvc.cpp:
+        * include/makeinclude/platform_cygwin32.GNU:
+        * include/makeinclude/platform_gnuwin32_common.GNU:
+        * include/makeinclude/platform_mingw32.GNU:
+        * include/makeinclude/rules.local.GNU:
+        * include/makeinclude/wrapper_macros.GNU:
+        * tests/CDR_File_Test.cpp:
+        * tests/Cached_Accept_Conn_Test.cpp:
+        * tests/Cached_Conn_Test.cpp:
+        * tests/Conn_Test.cpp:
+        * tests/Handle_Set_Test.cpp:
+        * tests/MEM_Stream_Test.cpp:
+        * tests/MEM_Stream_Test.h:
+        * tests/MM_Shared_Memory_Test.cpp:
+        * tests/MT_SOCK_Test.cpp:
+        * tests/Malloc_Test.cpp:
+        * tests/Mem_Map_Test.cpp:
+        * tests/OS_Test.cpp:
+        * tests/Priority_Reactor_Test.cpp:
+        * tests/Process_Strategy_Test.cpp:
+        * tests/Reactor_Exceptions_Test.cpp:
+        * tests/Reactor_Notify_Test.cpp:
+        * tests/SOCK_Send_Recv_Test.cpp:
+        * tests/SOCK_Test.cpp:
+        * tests/SPIPE_Test.cpp:
+        * tests/Svc_Handler_Test.cpp:
+        * tests/run_tests.bat:
+        * tests/run_tests.sh:
+        * tests/RMCast/RMCast_Fragment_Test.cpp:
+          Add support for mingw (www.mingw.org) and partial support for
+          cygwin (http://cygwin.com/).  Many thanks to Cristian Ferretti
+          <cristian_ferretti@yahoo.com>
+
 Fri Apr 20 18:21:41 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/CDR_Stream.i (align_write_ptr):
@@ -6,13 +92,13 @@ Fri Apr 20 18:21:41 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 Fri Apr 20 19:37:53 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Get_Opt.h: Updated the documentation to match the constructor
-	  arguments for ACE_Get_Opt.  Thanks to Benot Desmeules
- 	  <bdesmeules@eurekium.com> for reporting this.	
-  
-	* ace/TP_Reactor.cpp: Added a workaround for compiling ACE on 
-	  Linux for the OS/390 OS.  Thanks to James Dorsey
- 	  <James.Dorsey@acxiom.com> for reporting this.
+        * ace/Get_Opt.h: Updated the documentation to match the constructor
+          arguments for ACE_Get_Opt.  Thanks to Benot Desmeules
+          <bdesmeules@eurekium.com> for reporting this.
+
+        * ace/TP_Reactor.cpp: Added a workaround for compiling ACE on
+          Linux for the OS/390 OS.  Thanks to James Dorsey
+          <James.Dorsey@acxiom.com> for reporting this.
 
 Fri Apr 20 00:57:24 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 

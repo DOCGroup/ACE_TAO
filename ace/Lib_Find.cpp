@@ -428,6 +428,7 @@ ACE_HANDLE
 ACE_Lib_Find::open_temp_file (const ACE_TCHAR *name, int mode, int perm)
 {
 #if defined (ACE_WIN32)
+  ACE_UNUSED_ARG(perm);
   return ACE_OS::open (name,
                        mode | _O_TEMPORARY);
 #else

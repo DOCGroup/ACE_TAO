@@ -64,6 +64,7 @@
 # define PACE_WIN32 0
 /* Doesn't use the makefile! */
 #elif defined (WIN32)
+# undef PACE_WIN32
 # define PACE_WIN32 2000
 # define PACE_LACKS_POSIX PACE_WIN32
 # define PACE_LINUX 0
