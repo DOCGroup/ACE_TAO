@@ -18,6 +18,7 @@
 #define SUPPLIER_H
 
 #include "ace/Event_Handler.h"
+#include "ace/Counter.h"
 
 #include "orbsvcs/RtecEventCommS.h"
 #include "orbsvcs/RtecSchedulerC.h"
@@ -52,7 +53,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // The skeleton methods.
 
-  void timeout_occured (ACE_ENV_SINGLE_ARG_DECL);
+  void timeout_occured (Object_ID& oid ACE_ENV_ARG_DECL);
 
   void set_consumer_proxy(const RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer_proxy);
 

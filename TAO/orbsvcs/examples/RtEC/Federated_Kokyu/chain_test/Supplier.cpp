@@ -6,8 +6,8 @@
 #include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/RtecEventCommC.h"
-#include <ace/Counter.h>
-#include <ace/OS_NS_sys_time.h>
+#include "ace/Counter.h"
+#include "ace/OS_NS_sys_time.h"
 
 #if defined (ACE_HAS_DSUI)
 #include <dsui.h>
@@ -41,7 +41,7 @@ Supplier::rt_info(void) const
 }
 
 void
-Supplier::timeout_occured (ACE_ENV_SINGLE_ARG_DECL)
+Supplier::timeout_occured (Object_ID& oid ACE_ENV_ARG_DECL)
 {
   RtecEventComm::EventSet event (1);
   event.length (1);
@@ -49,7 +49,6 @@ Supplier::timeout_occured (ACE_ENV_SINGLE_ARG_DECL)
   event[0].header.source = id_;
   event[0].header.ttl    = 1;
 
-  Object_ID oid = ACE_OBJECT_COUNTER->increment();
   event[0].header.eid.id = oid.id;
   event[0].header.eid.tid = oid.tid;
   event[0].header.eid.pid = oid.pid;
@@ -60,7 +59,8 @@ Supplier::timeout_occured (ACE_ENV_SINGLE_ARG_DECL)
   //when event is pushed by client.
 
   //DSTRM_EVENT (WORKER_GROUP_FAM, ONE_WAY_CALL_START, 1, 0, NULL);
-  ACE_DEBUG((LM_DEBUG,"Supplier (id %d) in thread %t ONE_WAY_CALL_START at %u\n",this->id_,ACE_OS::gettimeofday().msec()));
+  ACE_DEBUG((LM_DEBUG,"Supplier (id %d) in thread %t ONE_WAY_CALL_START pushing event type %d at %u\n",this->id_,event[0].header.type,ACE_OS::gettimeofday().msec()));
+  ACE_DEBUG((LM_DEBUG,"Supplier (id %d) ONE_WAY_CALL_START Object_ID id=%d type=%u\n",this->id_,oid.id,oid.type));
   DSTRM_EVENT (WORKER_GROUP_FAM, ONE_WAY_CALL_START, 0, sizeof(Object_ID), (char*)&oid);
 
   consumer_proxy_->push (event ACE_ENV_ARG_PARAMETER);
@@ -108,16 +108,11 @@ Timeout_Consumer::push (const RtecEventComm::EventSet& events
   ACE_DEBUG((LM_DEBUG,"Timeout_Consumer (for Supplier id %d) in thread %t BEGIN_SCHED_SEGMENT (timeout occurred) at %u\n",
              this->supplier_impl_->get_id(),ACE_OS::gettimeofday().msec()));
 
-  Object_ID oid;
-  oid.id = events[0].header.eid.id;
-  oid.tid = events[0].header.eid.tid;
-  oid.pid = events[0].header.eid.pid;
-  oid.queue_id = events[0].header.eid.queue_id;
-  oid.type = events[0].header.type;
+  Object_ID oid = ACE_OBJECT_COUNTER->increment();
 
   DSTRM_EVENT (WORKER_GROUP_FAM, BEGIN_SCHED_SEGMENT, 0, sizeof(Object_ID), (char*)&oid);
 
-  supplier_impl_->timeout_occured (ACE_ENV_SINGLE_ARG_PARAMETER);
+  supplier_impl_->timeout_occured (oid ACE_ENV_ARG_PARAMETER);
 
   //@BT: Finished handling the timeout.
   //DSTRM_EVENT (WORKER_GROUP_FAM, END_SCHED_SEGMENT, 1, 0, NULL);
@@ -140,8 +135,8 @@ Supplier_Timeout_Handler::Supplier_Timeout_Handler (Supplier * supplier_impl)
 {}
 
 int
-Supplier_Timeout_Handler::handle_timeout (const ACE_Time_Value &current_time,
-                                          const void *act)
+Supplier_Timeout_Handler::handle_timeout (const ACE_Time_Value &,
+                                          const void *)
 {
   ACE_DEBUG ((LM_DEBUG, "Supplier_Timeout_Handler (%t): timeout received\n"));
   //@BT INSTRUMENT with event ID: EVENT_TIMEOUT Measure time when
@@ -160,13 +155,14 @@ Supplier_Timeout_Handler::handle_timeout (const ACE_Time_Value &current_time,
 
   DSTRM_EVENT (WORKER_GROUP_FAM, BEGIN_SCHED_SEGMENT, 0, sizeof(Object_ID), (char*)&oid);
 
-  supplier_impl_->timeout_occured (ACE_ENV_SINGLE_ARG_PARAMETER);
+  supplier_impl_->timeout_occured (oid ACE_ENV_ARG_PARAMETER);
 
   //@BT: Finished handling the timeout.
   //DSTRM_EVENT (WORKER_GROUP_FAM, END_SCHED_SEGMENT, 1, 0, NULL);
   ACE_DEBUG((LM_DEBUG,"Supplier_Timeout_Handler (for Supplier id %d) in thread %t END_SCHED_SEGMENT (timeout occurred) at %u\n",
              this->supplier_impl_->get_id(),ACE_OS::gettimeofday().msec()));
   DSTRM_EVENT (WORKER_GROUP_FAM, END_SCHED_SEGMENT, 0, sizeof(Object_ID), (char*)&oid);
+  return 0;
 } //Supplier_Timeout_Handler::handle_timeout()
 
 // ****************************************************************

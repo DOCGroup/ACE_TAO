@@ -119,7 +119,7 @@ Consumer::push (const RtecEventComm::EventSet& events
   //@BT INSTRUMENT with event ID: EVENT_WORK_END Measure time when
   //work triggered by event finishes.
   //DSTRM_EVENT (TEST_ONE_FAM, STOP_SERVICE, guid,0,NULL);
-  ACE_DEBUG((LM_DEBUG,"Consumer in thread %t STOP_SERVICE at %u\n",ACE_OS::gettimeofday().msec()));
+  ACE_DEBUG((LM_DEBUG,"Consumer in thread %t STOP_SERVICE for event type %d at %u\n",events[0].header.type,ACE_OS::gettimeofday().msec()));
   DSTRM_EVENT (TEST_ONE_FAM, STOP_SERVICE, 0, sizeof(Object_ID), (char*)&oid);
 
   ACE_TIMEPROBE("STOP_SERVICE");
@@ -145,7 +145,7 @@ Consumer::push (const RtecEventComm::EventSet& events
   if (this->fwddest_ != 0)
     {
       //trigger next subtask
-      this->fwddest_->timeout_occured(ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->fwddest_->timeout_occured(oid ACE_ENV_ARG_PARAMETER);
     }
 
   if (this->handler_ != 0)
