@@ -21,6 +21,20 @@ TAO_EC_ProxyPushConsumer::supplier (void) const
   return RtecEventComm::PushSupplier::_duplicate (this->supplier_.in ());
 }
 
+ACE_INLINE void
+TAO_EC_ProxyPushConsumer::supplier_i (RtecEventComm::PushSupplier_ptr supplier)
+{
+  this->supplier_ = supplier;
+}
+
+ACE_INLINE void
+TAO_EC_ProxyPushConsumer::supplier (RtecEventComm::PushSupplier_ptr supplier)
+{
+  ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
+
+  this->supplier_i (supplier);
+}
+
 ACE_INLINE const RtecEventChannelAdmin::SupplierQOS&
 TAO_EC_ProxyPushConsumer::publications (void) const
 {

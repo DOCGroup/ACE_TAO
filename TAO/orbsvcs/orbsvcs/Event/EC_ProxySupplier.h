@@ -156,7 +156,12 @@ public:
   virtual void _add_ref (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
   virtual void _remove_ref (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
-private:
+protected:
+  void consumer (RtecEventComm::PushConsumer_ptr consumer);
+  void consumer_i (RtecEventComm::PushConsumer_ptr consumer);
+  // Set the consumer, used by some implementations to change the
+  // policies used when invoking operations on the consumer.
+
   CORBA::Boolean is_connected_i (void) const;
   // The private version (without locking) of is_connected().
 
