@@ -106,7 +106,7 @@ int
 main (int argc, char *argv[])
 {
   int policy = ACE_SCHED_FIFO;
-  int flags  = THR_SCHED_FIFO|THR_NEW_LWP|THR_JOINABLE;
+  int flags  = THR_SCHED_FIFO|THR_NEW_LWP|THR_JOINABLE|THR_BOUND;
   int priority =
     ACE_Sched_Params::priority_max (policy);
 
@@ -282,9 +282,13 @@ Client::svc (void)
       // connection. (Not an issue if all threads have different priorities.)
       for (int j = 0; j < 100; ++j)
         {
-          CORBA::PolicyList_var pols;
+          /* CORBA::PolicyList_var pols;
           server_->_validate_connection (pols.out (),
                                          ACE_TRY_ENV);
+          */
+
+          server_->test_method (this->id_,
+                                ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
 

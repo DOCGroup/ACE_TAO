@@ -106,9 +106,9 @@ int
 main (int argc, char *argv[])
 {
   int policy = ACE_SCHED_FIFO;
-  int flags  = THR_SCHED_FIFO|THR_NEW_LWP|THR_JOINABLE;
+  int flags  = THR_SCHED_FIFO|THR_NEW_LWP|THR_JOINABLE|THR_BOUND;
   int priority =
-    ACE_Sched_Params::priority_min (policy);
+    ACE_Sched_Params::priority_max (policy);
 
   // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
   if (ACE_OS::sched_params (ACE_Sched_Params (policy,
@@ -158,8 +158,6 @@ main (int argc, char *argv[])
         }
 
       ACE_Thread_Manager::instance ()->wait ();
-
-      ACE_DEBUG ((LM_DEBUG, "threads finished\n"));
 
       ACE_Throughput_Stats throughput;
 
@@ -242,9 +240,13 @@ Client::svc (void)
       // Try to make sure every thread gets its own connection.
       for (int j = 0; j < 100; ++j)
         {
-          CORBA::PolicyList_var pols;
+          /* CORBA::PolicyList_var pols;
           server->_validate_connection (pols.out (),
                                         ACE_TRY_ENV);
+          */
+
+          server->test_method (this->id_,
+                               ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
 
