@@ -18,6 +18,19 @@
 // = AUTHOR
 //     Copyright by Douglas C. Schmidt.
 //
+//   *****************************************************************
+//   *                                                               *
+//   *        NOTICE !!!    NOTICE !!!   NOTICE !!!   NOTICE !!!     *
+//   *                                                               *
+//   *                                                               *
+//   *        The macros in this file is depricated.                 *
+//   *                                                               *
+//   *        Please check out $ACE_ROOT/ace/CORBA_macros.h          *
+//   *        for a new set of helper macros that replace            *
+//   *        this file.                                             *
+//   *                                                               *
+//   *****************************************************************
+//
 // ============================================================================
 
 #ifndef TAO_TRY_MACROS_H
