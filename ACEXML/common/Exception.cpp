@@ -4,10 +4,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/ACE.h"
 
-#if !defined (__ACEXML_INLINE__)
-# include "common/Exception.i"
-#endif /* __ACEXML_INLINE__ */
-
 static const ACEXML_Char ACEXML_Exception_name[] = {
   'A', 'C', 'E', 'X', 'M', 'L',
   '_', 'E', 'x', 'c', 'e', 'p',
@@ -16,6 +12,10 @@ const ACEXML_Char *ACEXML_Exception::exception_name_ = ACEXML_Exception_name;
 
 static const ACEXML_Char ACEXML_Exception_null [] = {0};
 const ACEXML_Char *ACEXML_Exception::null_ = ACEXML_Exception_null;
+
+#if !defined (__ACEXML_INLINE__)
+# include "common/Exception.i"
+#endif /* __ACEXML_INLINE__ */
 
 ACEXML_Exception::ACEXML_Exception (void)
 {

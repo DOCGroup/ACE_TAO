@@ -2,10 +2,6 @@
 
 #include "common/NamespaceSupport.h"
 
-#if !defined (__ACEXML_INLINE__)
-# include "common/NamespaceSupport.i"
-#endif /* __ACEXML_INLINE__ */
-
 static const ACEXML_Char ACEXML_XMLNS_PREFIX_name[] = {'x', 'm', 'l', 'n', 's', 0};
 const ACEXML_Char *ACEXML_NamespaceSupport::XMLNS_PREFIX = ACEXML_XMLNS_PREFIX_name;
 
@@ -23,8 +19,9 @@ static const ACEXML_Char ACEXML_XMLNS_URI_name[] = {
     'n', 'a', 'm', 'e', 's', 'p', 'a', 'c', 'e', 0};
 const ACEXML_Char *ACEXML_NamespaceSupport::XMLNS = ACEXML_XMLNS_URI_name;
 
-
-
+#if !defined (__ACEXML_INLINE__)
+# include "common/NamespaceSupport.i"
+#endif /* __ACEXML_INLINE__ */
 
 ACEXML_Namespace_Context_Stack::ACEXML_Namespace_Context_Stack (void)
   : head_ (0)
