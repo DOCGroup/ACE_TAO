@@ -1,17 +1,17 @@
 // $Id$
+
+// =========================================================================================================
+// = FILE  
+//     Program to test the property services.
 //
-// FILE  
-//   Program to test the property services.
+// = DESCRIPTION
+//     - Instantiate TAO_PropertySet
+//     - Use the fns implemented
+//     - Show the results
 //
-//
-// AUTHOR
-//   Alexander Babu Arulanthu
-//
-// DESCRIPTION
-//   - Instantiate TAO_PropertySet
-//   - Use the fns implemented
-//   - Show the results
-// 
+// = AUTHOR
+//     Alexander Babu Arulanthu
+// ========================================================================================================== 
 
 
 #include "orbsvcs/CosPropertyService_i.h"
