@@ -1,3 +1,16 @@
+Fri May 18 14:39:31 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-aix-4.x.h: Removed ACE_LACKS_SETSCHED for AIX 4.3.
+          Fixes Bugzilla # 47.
+
+        * ace/OS.h: AIX's ACE_THR_PRI_*_{MIN MAX} values are 1 and 127,
+          respectively. PRIORITY_{MIN MAX} are process priorities,
+          and the range is not legal for pthread_attr_setschedparam.
+
+        * ace/Makefile.vac:
+        * tests/Makefile.vac: Use -sev=w instead of -severity=warning
+          to avoid tripping the scoreboard error detector unnecessarily.
+
 Fri May 18 10:50:55 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * Configuration.cpp:
@@ -168,8 +181,8 @@ Thu May 17 06:23:59 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 	* ace/Proactor_Impl.h: Added two missing factory methods to
  	  ACE_Proactor_Impl.  Thanks to Bala for reporting this.
   
-	* ace/WIN32_Proactor.h (ACE_WIN32_Proactor): The signal_number parameter was
-	  missing.  Thanks to Andy Gokhale for reporting this.
+	* ace/WIN32_Proactor.h (ACE_WIN32_Proactor): The signal_number
+          parameter was missing.  Thanks to Andy Gokhale for reporting this.
 
 Thu May 17 06:23:59 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu> 
 
@@ -192,12 +205,6 @@ Thu May 17 06:23:59 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 	  ace/WIN32_Proactor.h: Added Async IO support for UDP dgrams
 	  on NT so they can be used via the Proactor.  Thanks to
 	  Roger Tragin <rtragin@cuseeme.com> for contributing this.
-  
-        * ace/Proactor_Impl.h: Added two missing factory methods to
-          ACE_Proactor_Impl.  Thanks to Bala for reporting this.
-
-        * ace/WIN32_Proactor.h (ACE_WIN32_Proactor): The signal_number parameter was
-          missing.  Thanks to Andy Gokhale for reporting this.
 
 Wed May 16 22:43:19 2001  Steve Huston  <shuston@riverace.com>
 

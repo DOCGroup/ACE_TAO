@@ -2051,12 +2051,17 @@ struct stat
 #       define ACE_THR_PRI_OTHER_MIN (long) PRI_OTHER_MIN
 #       define ACE_THR_PRI_OTHER_MAX (long) PRI_OTHER_MAX
 #     elif defined (AIX)
-#       define ACE_THR_PRI_FIFO_MIN  (long) PRIORITY_MIN
-#       define ACE_THR_PRI_FIFO_MAX  (long) PRIORITY_MAX
-#       define ACE_THR_PRI_RR_MIN    (long) PRIORITY_MIN
-#       define ACE_THR_PRI_RR_MAX    (long) PRIORITY_MAX
-#       define ACE_THR_PRI_OTHER_MIN (long) PRIORITY_MIN
-#       define ACE_THR_PRI_OTHER_MAX (long) PRIORITY_MAX
+        // AIX's priority range is 1 (low) to 127 (high). There aren't
+        // any preprocessor macros I can find. PRIORITY_MIN is for
+        // process priorities, as far as I can see, and does not apply
+        // to thread priority. The 1 to 127 range is from the
+        // pthread_attr_setschedparam man page (Steve Huston, 18-May-2001).
+#       define ACE_THR_PRI_FIFO_MIN  (long) 1
+#       define ACE_THR_PRI_FIFO_MAX  (long) 127
+#       define ACE_THR_PRI_RR_MIN    (long) 1
+#       define ACE_THR_PRI_RR_MAX    (long) 127
+#       define ACE_THR_PRI_OTHER_MIN (long) 1
+#       define ACE_THR_PRI_OTHER_MAX (long) 127
 #     elif defined (sun)
         // SunOS 5.6 could use sched_get_priority_min/max () for FIFO
         // and RR.  But for OTHER, it returns negative values, which
