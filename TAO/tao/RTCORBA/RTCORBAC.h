@@ -85,7 +85,7 @@ TAO_NAMESPACE  RTCORBA
   typedef TAO_Network_Priority_Mapping_Manager_out NetworkPriorityMappingManager_out;
 
   typedef CORBA::Long NetworkPriority;
-  
+
   typedef TAO_Priority_Mapping PriorityMapping;
   typedef TAO_Network_Priority_Mapping NetworkPriorityMapping;
   // End TAO-specific
@@ -981,6 +981,11 @@ TAO_NAMESPACE  RTCORBA
 
 #endif /* end #if !defined */
 
+  // TAO_IDL - Generated from
+  // C:\irfan\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ProtocolList;
+
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong SERVER_PROTOCOL_POLICY_TYPE;
 
 
@@ -1583,7 +1588,7 @@ TAO_NAMESPACE  RTCORBA
       )) = 0;
 
     virtual CORBA::Boolean enable_network_priority (
-						    
+
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -2927,7 +2932,7 @@ TAO_NAMESPACE  RTCORBA
         CORBA::Boolean keep_alive,
         CORBA::Boolean dont_route,
         CORBA::Boolean no_delay,
-	CORBA::Boolean enable_network_priority
+        CORBA::Boolean enable_network_priority
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -3095,6 +3100,12 @@ TAO_RTCORBA_Export void operator<<= (CORBA::Any &, const RTCORBA::PriorityBands 
 TAO_RTCORBA_Export void operator<<= (CORBA::Any &, RTCORBA::PriorityBands*); // noncopying version
 TAO_RTCORBA_Export CORBA::Boolean operator>>= (const CORBA::Any &, RTCORBA::PriorityBands *&); // deprecated
 TAO_RTCORBA_Export CORBA::Boolean operator>>= (const CORBA::Any &, const RTCORBA::PriorityBands *&);
+
+// Any operators for interface RTCORBA::ProtocolProperties
+TAO_RTCORBA_Export void operator<<= (CORBA::Any &, const RTCORBA::ProtocolList &); // copying version
+TAO_RTCORBA_Export void operator<<= (CORBA::Any &, RTCORBA::ProtocolList*); // noncopying version
+TAO_RTCORBA_Export CORBA::Boolean operator>>= (const CORBA::Any &, RTCORBA::ProtocolList *&); // deprecated
+TAO_RTCORBA_Export CORBA::Boolean operator>>= (const CORBA::Any &, const RTCORBA::ProtocolList *&);
 
 #ifndef __ACE_INLINE__
 

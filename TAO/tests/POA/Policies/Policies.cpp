@@ -29,10 +29,11 @@ main (int argc, char **argv)
   ACE_TRY
     {
       // Initialize the ORB first.
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            0
-                                            ACE_ENV_ARG_PARAMETER);
+      CORBA::ORB_var orb =
+        CORBA::ORB_init (argc,
+                         argv,
+                         0
+                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Obtain the RootPOA.
@@ -223,6 +224,10 @@ main (int argc, char **argv)
       }
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "%s successful\n",
+                  argv[0]));
 
     }
   ACE_CATCHANY

@@ -1,14 +1,14 @@
-
 #
 # Makefile for building the Policies test
 #
 
 NAME = Policies
 
+
 OBJFILES = \
 	$(OBJDIR)\Policies.obj
 
-CPPDIR = .;..
+CPPDIR = .
 
-!include <$(ACE_ROOT)\include\makeinclude\build_example.bor>
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
 
