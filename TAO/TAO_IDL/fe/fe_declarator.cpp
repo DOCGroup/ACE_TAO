@@ -93,6 +93,18 @@ FE_Declarator::compose (AST_Decl *d)
 
   ct = AST_Type::narrow_from_decl (d);
 
+  if (ct == 0)
+    {
+      idl_global->err ()->not_a_type (d);
+      return 0;
+    }
+
+  if (ct->node_type () == AST_Decl::NT_except)
+    {
+      idl_global->err ()->not_a_type (d);
+      return 0;
+    }
+
   // All uses of forward declared interfaces, structs and unions must
   // not have a different prefix from the place of declaration.
   if (!ct->is_defined ())
@@ -107,18 +119,6 @@ FE_Declarator::compose (AST_Decl *d)
 
           return 0;
         }
-    }
-
-  if (ct == 0)
-    {
-      idl_global->err ()->not_a_type (d);
-      return 0;
-    }
-
-  if (ct->node_type () == AST_Decl::NT_except)
-    {
-      idl_global->err ()->not_a_type (d);
-      return 0;
     }
 
   if (this->pd_decl_type == FD_simple || this->pd_complex_part == 0)
