@@ -1,6 +1,5 @@
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -504,7 +503,7 @@ int
 Test_String_Sequence::init_parameters (Param_Test_ptr objref,
                                        CORBA::Environment &env)
 {
-  Generator *gen = GENERATOR::instance (); // value generator
+  // Generator *gen = GENERATOR::instance (); // value generator
 
   ACE_UNUSED_ARG (objref);
   ACE_UNUSED_ARG (env);
@@ -699,7 +698,7 @@ int
 Test_Bounded_String_Sequence::init_parameters (Param_Test_ptr objref,
                                                CORBA::Environment &env)
 {
-  Generator *gen = GENERATOR::instance (); // value generator
+  // Generator *gen = GENERATOR::instance (); // value generator
 
   ACE_UNUSED_ARG (objref);
   ACE_UNUSED_ARG (env);
@@ -1975,19 +1974,6 @@ Test_Any::opname (void) const
   return this->opname_;
 }
 
-static const CORBA::TypeCode_ptr any_table [] =
-{
-  // primitive parameterless typecodes
-  CORBA::_tc_short,
-  // typecode with a simple parameter
-  CORBA::_tc_string,
-  // complex typecodes
-  _tc_Coffee,
-  Param_Test::_tc_StrSeq,
-  Param_Test::_tc_StructSeq,
-  Param_Test::_tc_Nested_Struct
-};
-
 int
 Test_Any::init_parameters (Param_Test_ptr objref,
                            CORBA::Environment &env)
@@ -2380,8 +2366,6 @@ int
 Test_Bounded_Short_Sequence::init_parameters (Param_Test_ptr objref,
                                                                                           CORBA::Environment &env)
 {
-  Generator *gen = GENERATOR::instance (); // value generator
-
   ACE_UNUSED_ARG (objref);
   ACE_UNUSED_ARG (env);
 
@@ -2741,8 +2725,6 @@ int
 Test_Bounded_Long_Sequence::init_parameters (Param_Test_ptr objref,
                                                                                      CORBA::Environment &env)
 {
-  Generator *gen = GENERATOR::instance (); // value generator
-
   ACE_UNUSED_ARG (objref);
   ACE_UNUSED_ARG (env);
 
@@ -3026,7 +3008,6 @@ Test_ObjRef_Sequence::check_validity (void)
     return 0;
   }
   TAO_ENDTRY;
-  return 0;
 }
 
 CORBA::Boolean
@@ -3111,9 +3092,9 @@ Test_ObjRef_Sequence::print_sequence (const Param_Test::Coffee_Mix &s)
   ACE_DEBUG ((LM_DEBUG, "Elements -\n"));
   for (CORBA::ULong i=0; i < s.length (); i++)
     {
-      const Coffee_ptr vs = s[i];
+    /* const Coffee_ptr vs = s[i];
 
-    /*  ACE_DEBUG ((LM_DEBUG,
+      ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"
                   "\tdesc = %d\n"
                   i,
@@ -3399,9 +3380,9 @@ Test_AnySeq::print_sequence (const Param_Test::AnySeq &s)
   ACE_DEBUG ((LM_DEBUG, "Elements -\n"));
   for (CORBA::ULong i=0; i < s.length (); i++)
     {
-      const CORBA::Any& vs = s[i];
+ /*     const CORBA::Any& vs = s[i];
 
- /*     ACE_DEBUG ((LM_DEBUG,
+        ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"
                   "\tl = %d\n"
                   "\tc = %c\n"
