@@ -1,6 +1,6 @@
 # $Id$
 
-LDLIBS = -lTAO_RTOLDEvent -lTAO_RTSched -lTAO_RTEvent -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_Messaging -lTAO_PortableServer -lTAO
+LDLIBS = -lTAO_RTOLDEvent -lTAO_RTSched -lTAO_RTEvent -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_Messaging $(TAO_SRVR_LIBS)
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO

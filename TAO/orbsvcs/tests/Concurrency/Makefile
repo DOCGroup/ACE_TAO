@@ -14,7 +14,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LDLIBS = -lTAO_CosConcurrency -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_PortableServer -lTAO
+LDLIBS = -lTAO_CosConcurrency -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable $(TAO_SRVR_LIBS)
 
 PROG_SRCS = CC_client.cpp CC_tests.cpp CC_naming_service.cpp \
                 tmplinst.cpp CC_command.tab.cpp \
