@@ -133,15 +133,20 @@ public:
   int process_listen_point_list (DIOP::ListenPointList &listen_list);
   */
 
-  // @@ Frank: From DIOP_Connect.h
+  // DIOP Additions - Begin
   ACE_HANDLE get_handle (void) const;
 
   const ACE_INET_Addr &addr (void);
 
   void addr (const ACE_INET_Addr &addr);
 
+  const ACE_INET_Addr &local_addr (void);
+
+  void local_addr (const ACE_INET_Addr &addr);
+
   const ACE_SOCK_Dgram &dgram (void);
-  // @@ Frank: End DIOP_Connect.h
+  // DIOP Additions - End
+
 protected:
 
   /// = Event Handler overloads
@@ -159,11 +164,16 @@ protected:
   // @@ Frank: From DIOP_Connect.h
   virtual int handle_cleanup ();
 
-  // @@ Frank: From DIOP_Connect.h
+  // DIOP Additions - Begin
   ACE_SOCK_Dgram udp_socket_;
 
+  // This is always the remote address
   ACE_INET_Addr addr_;
-  // @@ Frank: From DIOP_Connect.h
+
+  // This is always the local address
+  ACE_INET_Addr local_addr_;
+
+  // DIOP Additions - End
 
 private:
 

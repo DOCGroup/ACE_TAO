@@ -194,6 +194,11 @@ TAO_DIOP_Transport::recv (char *buf,
       ssize_t n = this->connection_handler_->dgram ().recv (local_buffer_.wr_ptr (),
                                                   local_buffer_.size (),
                                                   from_addr);
+
+	    // Remember the from addr to eventually use it as remote
+	    // addr for the reply.
+	    this->connection_handler_->addr (from_addr);
+
       if (n == -1)
         return -1;
       else
