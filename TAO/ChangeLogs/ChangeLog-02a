@@ -9,8 +9,8 @@ Fri Mar 02 09:32:33 2001  Ossama Othman  <ossama@uci.edu>
 	  interceptor was destroyed (destructor called), and the
 	  interceptor wouldn't be destroyed unless the object references
 	  were released!  I'll need to examine this issue further.  In the
-	  meantime, the ServerRequestInterceptor::destroy() gets around
-	  the problem nicely, and fixes the memory leaks.
+	  meantime, the ServerRequestInterceptor::destroy() change gets
+	  around the problem nicely, and fixes the memory leaks.
 
 	* tests/Portable_Interceptors/ForwardRequest/Server_ORBInitializer.cpp
 	  (post_init):
