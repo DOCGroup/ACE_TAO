@@ -1,3 +1,9 @@
+Thu Mar 13 11:49:25 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Any.cpp:
+
+          Removed duplicate explicit instantiation.
+
 Thu Mar 13 10:45:05 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/RTCORBA/Linear_Priority_Mapping.cpp:
