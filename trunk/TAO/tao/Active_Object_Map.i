@@ -33,177 +33,6 @@ TAO_Active_Object_Map_Impl::find (const PortableServer::Servant servant)
   return this->find (servant, id);
 }
 
-ACE_INLINE
-TAO_Active_Object_Map_Iterator::TAO_Active_Object_Map_Iterator (TAO_Active_Object_Map_Iterator_Impl *impl)
-  : impl_ (impl)
-{
-}
-
-ACE_INLINE
-TAO_Active_Object_Map_Iterator::TAO_Active_Object_Map_Iterator (const TAO_Active_Object_Map_Iterator &x)
-  : impl_ (0)
-{
-  if (x.impl_ != 0)
-    this->impl_ = x.impl_->clone ();
-}
-
-ACE_INLINE TAO_Active_Object_Map_Iterator &
-TAO_Active_Object_Map_Iterator::operator= (const TAO_Active_Object_Map_Iterator &x)
-{
-  if (this != &x)
-    {
-      delete this->impl_;
-      if (x.impl_ == 0)
-        this->impl_ = 0;
-      else
-        this->impl_ = x.impl_->clone ();
-    }
-  return *this;
-}
-
-ACE_INLINE
-TAO_Active_Object_Map_Iterator::~TAO_Active_Object_Map_Iterator (void)
-{
-  delete this->impl_;
-}
-
-ACE_INLINE const TAO_Active_Object_Map_Entry &
-TAO_Active_Object_Map_Iterator::operator *(void) const
-{
-  return this->impl_->item ();
-}
-
-ACE_INLINE TAO_Active_Object_Map_Iterator
-TAO_Active_Object_Map_Iterator::operator++ (void)
-{
-  TAO_Active_Object_Map_Iterator tmp = *this;
-  this->impl_->advance ();
-  return tmp;
-}
-
-ACE_INLINE TAO_Active_Object_Map_Iterator
-TAO_Active_Object_Map_Iterator::operator++ (int)
-{
-  this->impl_->advance ();
-  return *this;
-}
-
-ACE_INLINE int
-operator== (const TAO_Active_Object_Map_Iterator &l,
-            const TAO_Active_Object_Map_Iterator &r)
-{
-  return l.impl_->done (r.impl_);
-}
-
-ACE_INLINE int
-operator!= (const TAO_Active_Object_Map_Iterator &l,
-            const TAO_Active_Object_Map_Iterator &r)
-{
-  return !(l == r);
-}
-
-ACE_INLINE
-TAO_Active_Object_Map::~TAO_Active_Object_Map (void)
-{
-  delete this->impl_;
-  delete this->reverse_impl_;
-}
-
-ACE_INLINE int
-TAO_Active_Object_Map::bind (const PortableServer::ObjectId &id,
-                             PortableServer::Servant servant)
-{
-  int result = this->impl_->bind (id, servant);
-  if (result != 0)
-    {
-      return result;  
-    }
-    
-  result = this->reverse_impl_->bind (servant, id);
-  if (result != 0)
-    {
-      this->impl_->unbind (id, servant);
-    }
-
-  return result;
-}
-
-ACE_INLINE int
-TAO_Active_Object_Map::unbind (const PortableServer::ObjectId &id,
-                               PortableServer::Servant &servant)
-{
-  int result = this->impl_->unbind (id, servant);
-  if (result != 0)
-    return result;  
-    
-  return this->reverse_impl_->unbind (servant);
-}
-
-ACE_INLINE int
-TAO_Active_Object_Map::find (const PortableServer::ObjectId &id,
-                             PortableServer::Servant &servant)
-{
-  return this->impl_->find (id, servant);
-}
-
-ACE_INLINE int
-TAO_Active_Object_Map::find (const PortableServer::ObjectId &id)
-{
-  return this->impl_->find (id);
-}
-
-ACE_INLINE int
-TAO_Active_Object_Map::find (const PortableServer::Servant servant)
-{
-  if (this->unique_id_policy_)
-    {
-      return this->reverse_impl_->find (servant);
-    }
-  else
-    {
-      return this->impl_->find (servant);
-    }
-}
-
-ACE_INLINE int
-TAO_Active_Object_Map::find (const PortableServer::Servant servant,
-                             PortableServer::ObjectId &id)
-{
-  if (this->unique_id_policy_)
-    {
-      return this->reverse_impl_->find (servant, id);
-    }
-  else
-    {
-      return this->impl_->find (servant, id);
-    }
-}
-
-ACE_INLINE TAO_Active_Object_Map::iterator
-TAO_Active_Object_Map::begin (void) const
-{
-  return TAO_Active_Object_Map::iterator (this->impl_->begin ());
-}
-
-ACE_INLINE TAO_Active_Object_Map::iterator
-TAO_Active_Object_Map::end (void) const
-{
-  return TAO_Active_Object_Map::iterator (this->impl_->end ());
-}
-
-ACE_INLINE PortableServer::ObjectId *
-TAO_Active_Object_Map::create_object_id (PortableServer::Servant servant,
-                                         CORBA::Environment &env)
-{
-  return this->impl_->create_object_id (servant, env);
-}
-
-ACE_INLINE CORBA::ULong
-TAO_Active_Object_Map::system_id_size (void) const
-{
-  return this->impl_->system_id_size ();
-}
-
 ACE_INLINE 
 TAO_Dynamic_Hash_Active_Object_Map::TAO_Dynamic_Hash_Active_Object_Map (CORBA::ULong size)
   : hash_map_ (size),
@@ -599,3 +428,175 @@ TAO_Reverse_Active_Object_Map_For_Multiple_Id_Policy::find (PortableServer::Serv
   // Unsuccessful no-op
   return -1;
 }
+
+ACE_INLINE
+TAO_Active_Object_Map_Iterator::TAO_Active_Object_Map_Iterator (TAO_Active_Object_Map_Iterator_Impl *impl)
+  : impl_ (impl)
+{
+}
+
+ACE_INLINE
+TAO_Active_Object_Map_Iterator::TAO_Active_Object_Map_Iterator (const TAO_Active_Object_Map_Iterator &x)
+  : impl_ (0)
+{
+  if (x.impl_ != 0)
+    this->impl_ = x.impl_->clone ();
+}
+
+ACE_INLINE TAO_Active_Object_Map_Iterator &
+TAO_Active_Object_Map_Iterator::operator= (const TAO_Active_Object_Map_Iterator &x)
+{
+  if (this != &x)
+    {
+      delete this->impl_;
+      if (x.impl_ == 0)
+        this->impl_ = 0;
+      else
+        this->impl_ = x.impl_->clone ();
+    }
+  return *this;
+}
+
+ACE_INLINE
+TAO_Active_Object_Map_Iterator::~TAO_Active_Object_Map_Iterator (void)
+{
+  delete this->impl_;
+}
+
+ACE_INLINE const TAO_Active_Object_Map_Entry &
+TAO_Active_Object_Map_Iterator::operator *(void) const
+{
+  return this->impl_->item ();
+}
+
+ACE_INLINE TAO_Active_Object_Map_Iterator
+TAO_Active_Object_Map_Iterator::operator++ (void)
+{
+  TAO_Active_Object_Map_Iterator tmp = *this;
+  this->impl_->advance ();
+  return tmp;
+}
+
+ACE_INLINE TAO_Active_Object_Map_Iterator
+TAO_Active_Object_Map_Iterator::operator++ (int)
+{
+  this->impl_->advance ();
+  return *this;
+}
+
+ACE_INLINE int
+operator== (const TAO_Active_Object_Map_Iterator &l,
+            const TAO_Active_Object_Map_Iterator &r)
+{
+  return l.impl_->done (r.impl_);
+}
+
+ACE_INLINE int
+operator!= (const TAO_Active_Object_Map_Iterator &l,
+            const TAO_Active_Object_Map_Iterator &r)
+{
+  return !(l == r);
+}
+
+ACE_INLINE
+TAO_Active_Object_Map::~TAO_Active_Object_Map (void)
+{
+  delete this->impl_;
+  delete this->reverse_impl_;
+}
+
+ACE_INLINE int
+TAO_Active_Object_Map::bind (const PortableServer::ObjectId &id,
+                             PortableServer::Servant servant)
+{
+  int result = this->impl_->bind (id, servant);
+  if (result != 0)
+    {
+      return result;  
+    }
+    
+  result = this->reverse_impl_->bind (servant, id);
+  if (result != 0)
+    {
+      this->impl_->unbind (id, servant);
+    }
+
+  return result;
+}
+
+ACE_INLINE int
+TAO_Active_Object_Map::unbind (const PortableServer::ObjectId &id,
+                               PortableServer::Servant &servant)
+{
+  int result = this->impl_->unbind (id, servant);
+  if (result != 0)
+    return result;  
+    
+  return this->reverse_impl_->unbind (servant);
+}
+
+ACE_INLINE int
+TAO_Active_Object_Map::find (const PortableServer::ObjectId &id,
+                             PortableServer::Servant &servant)
+{
+  return this->impl_->find (id, servant);
+}
+
+ACE_INLINE int
+TAO_Active_Object_Map::find (const PortableServer::ObjectId &id)
+{
+  return this->impl_->find (id);
+}
+
+ACE_INLINE int
+TAO_Active_Object_Map::find (const PortableServer::Servant servant)
+{
+  if (this->unique_id_policy_)
+    {
+      return this->reverse_impl_->find (servant);
+    }
+  else
+    {
+      return this->impl_->find (servant);
+    }
+}
+
+ACE_INLINE int
+TAO_Active_Object_Map::find (const PortableServer::Servant servant,
+                             PortableServer::ObjectId &id)
+{
+  if (this->unique_id_policy_)
+    {
+      return this->reverse_impl_->find (servant, id);
+    }
+  else
+    {
+      return this->impl_->find (servant, id);
+    }
+}
+
+ACE_INLINE TAO_Active_Object_Map::iterator
+TAO_Active_Object_Map::begin (void) const
+{
+  return TAO_Active_Object_Map::iterator (this->impl_->begin ());
+}
+
+ACE_INLINE TAO_Active_Object_Map::iterator
+TAO_Active_Object_Map::end (void) const
+{
+  return TAO_Active_Object_Map::iterator (this->impl_->end ());
+}
+
+ACE_INLINE PortableServer::ObjectId *
+TAO_Active_Object_Map::create_object_id (PortableServer::Servant servant,
+                                         CORBA::Environment &env)
+{
+  return this->impl_->create_object_id (servant, env);
+}
+
+ACE_INLINE CORBA::ULong
+TAO_Active_Object_Map::system_id_size (void) const
+{
+  return this->impl_->system_id_size ();
+}
+
