@@ -65,7 +65,7 @@
 #elif defined(IRIX)
 #define AUDIO_DEVICE "proprietary device"
 #define AUDIO_CONTROL "proprietary device"
-#elif defined(LINUX)
+#elif defined(__linux__)
 #define AUDIO_DEVICE "/dev/audio"
 #define AUDIO_CONTROL "NO CONTROL DEV"
 #endif
@@ -174,7 +174,7 @@ int InitAudioDevice(void)
   fprintf(stderr, "Using default AudioFile.\n");
   return 0;
 #elif defined(__svr4__) || defined(sun) || defined(FreeBSD) \
-  || defined(_HPUX_SOURCE) || defined(IRIX) || defined(LINUX)
+  || defined(_HPUX_SOURCE) || defined(IRIX) || defined(__linux__)
   fprintf(stderr, "This vcr compiled without AudioFile, try native audio.\n");
 #else
   fprintf(stderr, "This vcr compiled without AudioFile, audio to be ignored\n");
@@ -272,7 +272,7 @@ int InitAudioDevice(void)
     }
     afd = 0;
   }
-#elif defined(LINUX)
+#elif defined(__linux__)
   
   afd = open(AUDIO_DEVICE, O_WRONLY);
   if (afd == -1) {
@@ -308,7 +308,7 @@ unsigned int GetAudioTime(void)
   if (useAF) return AFGetTime(ac);
 #endif
 #if defined(__svr4__) || defined(sun) || defined(FreeBSD) \
-  || defined(_HPUX_SOURCE) || defined(IRIX) || defined(LINUX)
+  || defined(_HPUX_SOURCE) || defined(IRIX) || defined(__linux__)
   if (afd == -1) return 0;
   return get_duration(start_time, get_msec()) * 8; /* 8K sampling speed */
 #else
@@ -325,7 +325,7 @@ unsigned int PlayAudioSamples(unsigned int time, char * buf, int size)
 #endif
 
 #if defined(__svr4__) || defined(sun) || defined(FreeBSD) \
-  || defined(_HPUX_SOURCE) || defined(IRIX) || defined(LINUX)
+  || defined(_HPUX_SOURCE) || defined(IRIX) || defined(__linux__)
   if (afd == -1) return 0;
 
 #ifdef IRIX
