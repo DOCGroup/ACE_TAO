@@ -687,8 +687,8 @@ protected:
 
 private:
   // = Prevent assignment and initialization.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Condition<MUTEX> &))
-  ACE_Condition (const ACE_Condition<MUTEX> &c): mutex_ (c.mutex_) {}
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Condition<MUTEX> &));
+  ACE_UNIMPLEMENTED_FUNC (ACE_Condition (const ACE_Condition<MUTEX> &));
 };
 
 template <class MUTEX>

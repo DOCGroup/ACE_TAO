@@ -69,9 +69,9 @@ public:
   // array) to be destroyed.  Returns 0 on success, non-zero on
   // failure: -1 if virtual memory is exhausted or 1 if the object (or
   // arrayt) had already been registered.
-
-   ~ACE_Thread_Descriptor (void);
-   // Do nothing destructor to keep some compilers happy
+  
+  ~ACE_Thread_Descriptor (void);
+  // Do nothing destructor to keep some compilers happy
 
   // = We need the following to make BORLANDC happy.
   int operator== (const ACE_Thread_Descriptor &rhs) const;
