@@ -1,9 +1,12 @@
 Sat Sep 27 09:31:42 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
+	* tao/Orb_Core.h: Fixed the friend declaration for
+ 	CORBA::ORB_init().
+
 	* tests/Cubit/TAO/svr.cpp: Modified to use ORB::run() for event
  	loop and eliminated code cruft.
 
-	* tao/orbobj.cpp: Added stubs for 4 methods on the ORB from the
+	* tao/orbobj.*: Added stubs for 4 methods on the ORB from the
  	POA spec: work_pending, perform_work, run, and shutdown.  Of all
  	of these, only run is reasonably implemented, and there not even
  	according to the spec (because the way the spec works isn't really
