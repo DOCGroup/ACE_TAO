@@ -1,3 +1,18 @@
+Wed May  2 11:26:10 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * examples/POA/TIE/Makefile:
+
+          Disabled this build for SunCC 4.2. It worked before, even
+          though 4.2 does not have ACE_HAS_USING_KEYWORD defined
+          (in other words, it has no namespace support), because the
+          IDL compiler left out the #ifdef guards using the above
+          macro if the interface was declared at global scope, and the
+          only interface in the TIE example where the tie class was
+          used happened to fall into that category. This generation of
+          #ifdef guards was inconsistent, however, and now *all* tie
+          classes are left out by the preprocessor if 
+          ACE_HAS_USING_KEYWORD is not defined.
+
 Wed May 02 05:37:23 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/Queued_Message_Test/run_test.pl:
