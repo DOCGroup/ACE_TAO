@@ -1,3 +1,19 @@
+Wed Oct 14 12:36:00 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/config-cygwin32-common.h,
+	  ace/config-cygwin32.h,
+	  ace/OS.h: 
+	  Added support for Cygwin32.  Thanks to Phil Feairheller
+ 	  <Phil.Feairheller@emax.com> for contributing this.
+
+	* ace/config-vxworks5.x.h,
+          ace/config-chorus.h,
+	  ace/config-psos*.h,
+	  ace/config-cygwin32-common.h,
+	  ace/OS.i:
+	  Added and used the new ACE_LACKS_MKFIFO macro.  Thanks to Phil
+ 	  Feairheller <Phil.Feairheller@emax.com> for reporting this.
+
 Wed Oct 14 11:03:45 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.5.54 released.
