@@ -43,6 +43,7 @@ LDFLAGS += -L$(STL_ROOT)/lib
 #----------------------------------------------------------------------------
 #	Local macros
 #----------------------------------------------------------------------------
+
 shared_libs_only=1
 BIN     = export_test import_test colocated_test
 
@@ -67,6 +68,10 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat $(TSS_O
 LSRC    = $(addsuffix .cpp,$(FILES))
 LDLIBS  = -lTTest -lorbsvcs -lospace -lTAO
 VLDLIBS = $(LDLIBS:%=%$(VAR))
+
+ifdef dynamic_properties
+CPPFLAGS += -DTAO_USE_DYNAMIC_PROPERTIES
+endif
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
