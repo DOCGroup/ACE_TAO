@@ -48,7 +48,7 @@ class Leader_Follower_Task;
 class Synchronisers
 {
 public:
-  friend Leader_Follower_Task;
+  friend class Leader_Follower_Task;
 
   /// Ctor
   Synchronisers (void);
