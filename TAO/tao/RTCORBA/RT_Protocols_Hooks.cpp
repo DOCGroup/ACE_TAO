@@ -1,5 +1,3 @@
-// $Id$
-
 #include "RT_Protocols_Hooks.h"
 #include "RT_Policy_i.h"
 
@@ -8,6 +6,8 @@
 #include "tao/MProfile.h"
 #include "tao/Acceptor_Registry.h"
 #include "tao/Thread_Lane_Resources.h"
+#include "tao/Protocol_Factory.h"
+#include "tao/Pluggable.h"
 #include "Priority_Mapping_Manager.h"
 #include "RT_Stub.h"
 
