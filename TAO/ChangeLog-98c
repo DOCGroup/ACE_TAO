@@ -1,3 +1,9 @@
+Thu Aug 27 11:55:29 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* utils/IOR-parser/ior-handler.cpp (hexChar2int): Added a return 0
+ 	  to make the compiler happy.  Thanks to Lothar Werzinger
+ 	  <lwerzinger@krones.de> for reporting this.
+
 Thu Aug 27 09:55:31 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Cubit/TAO/MT_Cubit/Task_Client.{h,cpp}: changed argc_ from
