@@ -1,3 +1,12 @@
+Thu Oct 30 07:22:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ClientInterceptorAdapter.h:
+          Added TAO_GIOP_Invocation as forward declaration
+
+        * tao/Invocation_Adapter.h:
+        * tao/Invocation_Base.h:
+          Removed ; after ACE_UNIMPLEMENTED_FUNC
+
 Thu Oct 30 07:00:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/TAO_IDL_BE.bor:
