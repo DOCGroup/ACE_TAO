@@ -1,5 +1,9 @@
 Sat Apr 12 20:42:11 1997  David L. Levine  <levine@cs.wustl.edu>
 
+	* tests/Priority_Task_Test.cpp (open): use ACE_SCHED_FIFO instead
+	  of THR_SCHED_FIFO so that the test works with STHREADS and
+	  without PTHREADS.
+
 	* examples/ASX/Event_Server/Event_Server/Peer_Router.cpp
 	  (make_svc_handler): added return statement.
 
