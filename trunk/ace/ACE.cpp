@@ -161,10 +161,10 @@ ACE::strsplit_r (char *str,
       if (tok_loc != 0)
         {
           // Return the beginning of the string.
-          ret = next_start;         
+          ret = next_start;
 
           // Insure it's terminated.
-          *tok_loc = '\0';          
+          *tok_loc = '\0';
           next_start = tok_loc + ACE_OS::strlen (token);
         }
       else
@@ -1533,7 +1533,6 @@ ACE::max_handles (void)
 int
 ACE::set_handle_limit (int new_limit)
 {
-  ACE_TRACE ("ACE::set_handle_limit");
   ACE_TRACE ("ACE::set_handle_limit");
   int cur_limit = ACE::max_handles ();
 
