@@ -580,9 +580,6 @@
    the emulated condition variable (NT and VxWorks). */
 #undef ACE_HAS_OPTIMIZED_MESSAGE_QUEUE
 
-/* Platform has Orbix CORBA implementation */
-#undef ACE_HAS_ORBIX
-
 /* Platform supports the OSF TLI timod STREAMS module */
 #undef ACE_HAS_OSF_TIMOD_H
 

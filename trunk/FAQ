@@ -409,28 +409,12 @@ that, but I don't think it would be all that difficult.
 ----------------------------------------
 13. 
 
-> 	Is the non CORBA version still aroung? I think I still need it from the
-> follow error, or is something else?
+> 	Is the Orbix (aka CORBA) version still around?
 
-Aha, there are two ways to get around this problem:
+Nope, IONA does not support Orbix-2.X nor Orbix-3.0 anymore (the
+versions of Orbix that the ACE code was based upon).  Plus we didn't
+maintain this code for ages, so it probably was broken too.
 
-1. Set your ORBIX_ROOT environment variable to the location of the
-   Orbix release (e.g., /opt/Orbix).  Naturally, this only works
-   if you've got Orbix installed on your machine.
-
-2. If you don't have Orbix, then to get rid of that problem all you
-   need to do is change the symbolic links on the 
-
-./include/config.h
-./include/makeinclude/platform_macros.GNU
-
-files to 
-
-./include/config-sunos5-sunc++-4.x
-./include/makeinclude/platform_sunos5_sunc++.GNU
-
-rather than the *-orbix* versions, which they point to by default.
-And then recompile ACE.
 ----------------------------------------
 14. 
 > We are using your ACE software and ran into a problem which may or may not
