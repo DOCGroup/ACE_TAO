@@ -5,6 +5,9 @@ Sun Feb 09 21:44:34 1997  David L. Levine  <levine@cs.wustl.edu>
 	  Thanks to Thilo Kielmann <kielmann@informatik.uni-siegen.de>
 	  for suggesting this.
 
+	* ace/OS.{h,i}: added ACE_OS::clock_gettime ().  It allows
+	  applications to get high-resolution time on POSIX systems.
+
 	* ace/Timer_List.cpp (constructor): added initializer for
 	  timer_id_ to prevent unitialized memory read report from Purify.
 
