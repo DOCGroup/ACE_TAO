@@ -1,3 +1,8 @@
+Tue May 25 07:37:47 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_osf1_4.0.GNU: removed suppression
+          of warning 839: no_corresponding_delete.
+
 Mon May 24 14:04:11 1999  Steve Huston  <shuston@riverace.com>
 
         * tests/SOCK_Send_Recv_Test.cpp: New test to exercise ACE_SOCK send
@@ -11,56 +16,56 @@ Mon May 24 14:04:11 1999  Steve Huston  <shuston@riverace.com>
 
 Mon May 24 12:11:03 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/OS.i (ACE_SOCKCALL_RETURN): Fixed macro by comparing against
-	  FAILVALUE rather than SOCKET_ERROR.  Some winsock calls don't
-	  return SOCKET_ERROR.  Thanks to Christopher Kohlhoff
-	  <chris@kohlhoff.com> for reporting this problem.
+        * ace/OS.i (ACE_SOCKCALL_RETURN): Fixed macro by comparing against
+          FAILVALUE rather than SOCKET_ERROR.  Some winsock calls don't
+          return SOCKET_ERROR.  Thanks to Christopher Kohlhoff
+          <chris@kohlhoff.com> for reporting this problem.
 
 Sun May 23 11:33:07 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	 Changes for the following enhancement in the Proactor
- 	 implementation.  Enhanced the semantics of the <end_event_loop>,
- 	 so that when it is called, it wakes up all the threads blocked on
- 	 waiting for completions and end the event loop.  Thanks to Edwin
- 	 D. Windes <ewindes@usa.net> for reporting the issue.
+         Changes for the following enhancement in the Proactor
+         implementation.  Enhanced the semantics of the <end_event_loop>,
+         so that when it is called, it wakes up all the threads blocked on
+         waiting for completions and end the event loop.  Thanks to Edwin
+         D. Windes <ewindes@usa.net> for reporting the issue.
 
-	* ace/Proactor.h:
-	* ace/Proactor.cpp: Added static helper methods and states to post
- 	  the wakeup completions to the CompletionPort.
+        * ace/Proactor.h:
+        * ace/Proactor.cpp: Added static helper methods and states to post
+          the wakeup completions to the CompletionPort.
 
-	* ace/Asynch_IO.h:
-	* ace/Asynch_IO.cpp: Added a method <handle_wakeup> to the
- 	  ACE_Handler.
+        * ace/Asynch_IO.h:
+        * ace/Asynch_IO.cpp: Added a method <handle_wakeup> to the
+          ACE_Handler.
 
-	* ace/Object_Manager.cpp
-	* ace/Object_Manager.h: Added a new Thread_Mutex called
- 	  <ACE_PROACTOR_EVENT_LOOP_LOCK> to protect the thread count in
- 	  the event loop.
+        * ace/Object_Manager.cpp
+        * ace/Object_Manager.h: Added a new Thread_Mutex called
+          <ACE_PROACTOR_EVENT_LOOP_LOCK> to protect the thread count in
+          the event loop.
 
-	* ace/POSIX_Asynch_IO.cpp
-	* ace/POSIX_Proactor.cpp
-	* ace/POSIX_Proactor.h
-	* ace/Proactor.cpp
-	* ace/Proactor.h
-	* ace/Proactor_Impl.h
-    	* ace/WIN32_Proactor.cpp
-	* ace/WIN32_Proactor.h:
-  	  Changes for posting wakeup completions.
+        * ace/POSIX_Asynch_IO.cpp
+        * ace/POSIX_Proactor.cpp
+        * ace/POSIX_Proactor.h
+        * ace/Proactor.cpp
+        * ace/Proactor.h
+        * ace/Proactor_Impl.h
+        * ace/WIN32_Proactor.cpp
+        * ace/WIN32_Proactor.h:
+          Changes for posting wakeup completions.
 
-	* examples/Reactor/Proactor/test_end_event_loop.cpp:
-	* examples/Reactor/Proactor/test_end_event_loop.dsp:
-	* examples/Reactor/Proactor/post_completions.dsp:
-	* examples/Reactor/Proactor/Makefile: Test file the
-	  <end_event_loop> enhancement.
+        * examples/Reactor/Proactor/test_end_event_loop.cpp:
+        * examples/Reactor/Proactor/test_end_event_loop.dsp:
+        * examples/Reactor/Proactor/post_completions.dsp:
+        * examples/Reactor/Proactor/Makefile: Test file the
+          <end_event_loop> enhancement.
 
 Sat May 22 16:57:38 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/FlReactor.cpp: Sun/CC doesn't like reinterpret cast when
- 	  converting from an int into an int; this is silly, but I cannot
- 	  use static_cast because on NT reinterpret_cast is the right
- 	  thing.  Use old-style casts for the moment.
+        * ace/FlReactor.cpp: Sun/CC doesn't like reinterpret cast when
+          converting from an int into an int; this is silly, but I cannot
+          use static_cast because on NT reinterpret_cast is the right
+          thing.  Use old-style casts for the moment.
 
-	* tests/FlReactor_Test.cpp: Minor cosmetic fixes.
+        * tests/FlReactor_Test.cpp: Minor cosmetic fixes.
 
 Sat May 22 16:36:14 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
@@ -69,20 +74,20 @@ Sat May 22 16:36:14 1999  Chris Gill  <cdgill@cs.wustl.edu>
 Sat May 22 14:53:47 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Filecache.cpp: snagged another "template <>".  Thanks to
- 	  Bala for reporting it.
+          Bala for reporting it.
 
 Sat May 22 07:30:44 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-chorus.h,ace/config-lynxos.h: added
- 	  ACE_HAS_NONCONST_SELECT_TIMEVAL.
+          ACE_HAS_NONCONST_SELECT_TIMEVAL.
 
         * ace/Filecache.cpp: commented out "template<>" for now.  Not all
- 	  compilers can cope with it.
+          compilers can cope with it.
 
 Fri May 21 21:12:37 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * ace/Map_Manager.i (operator==): Since <map_man_> is a pointer
- 	  now, we must compare by value, rather than by address.
+          now, we must compare by value, rather than by address.
 
 Fri May 21 12:56:38 1999  David L. Levine  <levine@cs.wustl.edu>
 
