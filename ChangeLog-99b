@@ -1,22 +1,27 @@
+Thu Mar 11 14:04:15 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_chorus_ghs.GNU: added protection
+          to not reset exceptions flag if it was defined.
+
 Thu Mar 11 12:53:41 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/Thread_Manager.i: 
-	  The method to return the number of threads was using thr_lists_
-	  as a pointer, but it isn't.
+        * ace/Thread_Manager.i:
+          The method to return the number of threads was using thr_lists_
+          as a pointer, but it isn't.
 
 Thu Mar 11 10:12:51 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Thread_Manager: Added a method to return the current number
- 	  of threads in the ACE_Thread_Manager.  Thanks to Zoran Ivanovic
- 	  <zorani@pathcom.com> for suggesting this.
+        * ace/Thread_Manager: Added a method to return the current number
+          of threads in the ACE_Thread_Manager.  Thanks to Zoran Ivanovic
+          <zorani@pathcom.com> for suggesting this.
 
 Thu Mar 11 10:27:51 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* tests/DLL_Test.cpp (main): Allowed the main to be accessible on
-	  all platforms by shifting the #ifdefs inside the main. The
-	  problem arose due to the main being declared an undefined
-	  reference on LynxOS.
-	
+        * tests/DLL_Test.cpp (main): Allowed the main to be accessible on
+          all platforms by shifting the #ifdefs inside the main. The
+          problem arose due to the main being declared an undefined
+          reference on LynxOS.
+
 Wed Mar 10 13:31:37 1999  Ossama Othman  <othman@cs.wustl.edu>
 
         * ace/config-linux-common.h:
