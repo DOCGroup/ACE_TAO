@@ -4295,11 +4295,8 @@ ACE_OS::thr_getspecific (ACE_thread_key_t key, void **data)
       return 0;
 # elif defined (ACE_HAS_WTHREADS)
     *data = ::TlsGetValue (key);
-    if (*data == 0)
-      {
-        errno = ::GetLastError ();
+    if (*data == 0 && (errno = ::GetLastError ()) != NO_ERROR)
         return -1;
-      }
     return 0;
 # endif /* ACE_HAS_STHREADS */
 #else
