@@ -4,6 +4,10 @@ Wed Aug 19 09:47:58 1998  David L. Levine  <levine@cs.wustl.edu>
           building client w/o libraries for VxWorks.  They were out-of-date,
           and too much of libACE/TAO are needed now for it to be done easily.
 
+        * tests/Cubit/TAO/MT_Cubit/Task_Client.cpp (parse_args): check
+          for success of ACE_OS::fopen () call on the IOR file.  Print
+          an ACE_ERROR message and return -1 if it failed.
+
 Wed Aug 19 08:07:38 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * tao/debug: Fixed a couple of uses of TAO_Export to make MSVC 6.0

@@ -1,8 +1,14 @@
+Wed Aug 19 10:06:25 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * etc/ACE-guidelines.html: @added guidelines to check for
+          success of an attempted open of an existing file, and to not
+          release copyrighted, etc., material with ACE/TAO.
+
 Wed Aug 19 08:25:20 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/Service_Configurator/Misc/Timer_Service.cpp: Changed
- 	  Timer_Service_2 to Timer_Service_1 since it was a typo.  Thanks
- 	  to Irfan for reporting this.
+        * examples/Service_Configurator/Misc/Timer_Service.cpp: Changed
+          Timer_Service_2 to Timer_Service_1 since it was a typo.  Thanks
+          to Irfan for reporting this.
 
 Tue Aug 18 22:10:43 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -13,11 +19,11 @@ Tue Aug 18 22:10:43 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Tue Aug 18 16:50:28 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Thread.i (sigsetmask): Renamed parameter name since it
- 	  conflicts with STL class name.  Thanks to Kent Watsen
- 	  <kent@watsen.net> for pointing this out.
+        * ace/Thread.i (sigsetmask): Renamed parameter name since it
+          conflicts with STL class name.  Thanks to Kent Watsen
+          <kent@watsen.net> for pointing this out.
 
-	* examples/Reactor/Proactor/test_proactor.cpp (handle_write_stream):
+        * examples/Reactor/Proactor/test_proactor.cpp (handle_write_stream):
           Fixed incorrect unary minus operator application.
 
 Tue Aug 18 16:43:00 1998  David L. Levine  <levine@cs.wustl.edu>
