@@ -1,3 +1,11 @@
+Mon Jan 13 10:12:20 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+
+	  Removed generation of 
+	  'friend class <remote/thru-POA/direct proxy class name>' for local
+	  interfaces.
+
 Mon Jan 13 12:47:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Transport.cpp:

@@ -355,7 +355,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
   // Protected destructor.
   *os << "virtual ~" << node->local_name () << " (void);";
 
-  if (! node->is_abstract ())
+  if (! node->is_abstract () && ! node->is_local ())
     {
       // Friends declarations.
       *os << be_nl << be_nl
