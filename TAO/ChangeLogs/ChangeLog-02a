@@ -19,7 +19,7 @@ Thu Apr 25 16:36:41 2002  Ossama Othman  <ossama@uci.edu>
 
 	  (shutdown):
 
-	  For the sake of consistency, the set the cached pointer to the
+	  For the sake of consistency, set the cached pointer to the
 	  TAO_PI_Current object to zero.  Obviously, it should no longer
 	  be used after this point.
 
