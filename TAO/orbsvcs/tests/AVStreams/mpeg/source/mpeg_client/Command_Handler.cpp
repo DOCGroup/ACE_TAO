@@ -114,6 +114,7 @@ Command_Handler::resolve_video_reference (void)
 
       video_mmdevice_name.length (1);
       video_mmdevice_name [0].id = CORBA::string_dup ("Video_MMDevice");
+      video_mmdevice_name [0].id = CORBA::string_dup ("Video_MMDevice");
       CORBA::Object_var video_mmdevice_obj =
         naming_context->resolve (video_mmdevice_name,
                                  TAO_TRY_ENV);
@@ -135,7 +136,8 @@ Command_Handler::resolve_video_reference (void)
       return -1;
     }
   TAO_ENDTRY;
-  
+
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) MMDevice successfully resolved.\n"));
   return 0;
 }
 
@@ -2513,7 +2515,7 @@ Client_Sig_Handler::TimerProcessing (void)
   //  cerr << "Timerprocessing signal-handler done\n";
 }
 
-int
+CORBA::Boolean
 Video_Client_StreamEndPoint::handle_preconnect (void)
 {
   ACE_DEBUG ((LM_DEBUG,"(%P|%t) handle_preconnect called\n"));
@@ -2559,27 +2561,27 @@ Video_Client_StreamEndPoint::handle_preconnect (void)
   return 0;
 }
 
-int
+CORBA::Boolean
 Video_Client_StreamEndPoint::handle_postconnect (void)
 {
   ACE_DEBUG ((LM_DEBUG,"(%P|%t) handle_postconnect called \n"));
   return 0;
 }
 
-CORBA::Boolean
-Video_Client_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder, 
-                                      AVStreams::streamQoS &qos_spec, 
-                                      const AVStreams::flowSpec &the_spec,  
-                                      CORBA::Environment &env)
-{
-  ACE_DEBUG ((LM_DEBUG,"(%P|%t) Video_Client_StreamEndPoint::connect () \n"));
-  this->handle_preconnect ();
-  responder->request_connection (this->_this (env),
-                                 0,
-                                 qos_spec,
-                                 the_spec,
-                                 env);
-  TAO_CHECK_ENV_RETURN (env, CORBA::B_FALSE);
-  this->handle_postconnect ();
-}
+// CORBA::Boolean
+// Video_Client_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder, 
+//                                       AVStreams::streamQoS &qos_spec, 
+//                                       const AVStreams::flowSpec &the_spec,  
+//                                       CORBA::Environment &env)
+// {
+//   ACE_DEBUG ((LM_DEBUG,"(%P|%t) Video_Client_StreamEndPoint::connect () \n"));
+//   this->handle_preconnect ();
+//   responder->request_connection (this->_this (env),
+//                                  0,
+//                                  qos_spec,
+//                                  the_spec,
+//                                  env);
+//   TAO_CHECK_ENV_RETURN (env, CORBA::B_FALSE);
+//   this->handle_postconnect ();
+// }
 
