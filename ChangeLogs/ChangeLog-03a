@@ -1,3 +1,8 @@
+Thu Oct  4 13:18:37 2001  Steve Huston  <shuston@riverace.com>
+
+        * examples/C++NPv1/Logging_Handler.cpp: Use a ACE_Message_Block,
+          rather than hijacking a CDR block, to read the payload into.
+
 Thu Oct  4 10:14:34 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* THANKS: Added Donald Acton to the Hall of Fame.
