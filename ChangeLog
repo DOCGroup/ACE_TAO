@@ -1,9 +1,15 @@
+Sun Dec 31 13:59:02 2000  David L. Levine <levine@cs.wustl.edu>
+
+        * tests/Refcounted_Auto_Ptr_Test.cpp: on DIGITAL_UNIX
+          only, added a call to ACE_OS::exit () at the end of
+          the test so that it will terminate.  [Bug 758]
+
 Sun Dec 31 10:28:43 2000  David L. Levine <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_osf1_4.0.GNU (LIBS):
           wrapped /usr/lib/cmplrs/cxx/libcxxstd.a with
           $(wildcard), so that is ignored on systems on which
-          it doesn't exist, such as Tru64 5.1
+          it doesn't exist, such as Tru64 5.1.
 
 Sun Dec 31 09:23:09 2000  David L. Levine <levine@cs.wustl.edu>
 
