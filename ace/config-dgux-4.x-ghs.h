@@ -54,11 +54,7 @@
 
 // Compiler/platform does not support the "long long" datatype.
 #define ACE_LACKS_LONGLONG_T
-#if defined (__LL_Is_32)
-#define ACE_SIZEOF_LONG_LONG 4
-#elif defined (__LL_Is_64)
-#define ACE_SIZEOF_LONG_LONG 8
-#endif
+
 // Green Hills doesn't give a preprocessor symbol for long double
 #define ACE_SIZEOF_LONG_DOUBLE 8
 
