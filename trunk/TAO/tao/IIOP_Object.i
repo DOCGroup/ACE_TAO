@@ -48,7 +48,8 @@ IIOP_Object::IIOP_Object (char *repository_id)
     fwd_profile_ (0),
     refcount_ (1),
     use_locate_request_ (CORBA::B_FALSE),
-    first_locate_request_ (CORBA::B_FALSE)
+    first_locate_request_ (CORBA::B_FALSE),
+    handler_ (0)
 {
   this->fwd_profile_lock_ptr_ =  TAO_ORB_Core_instance ()
                                 ->client_factory ()
@@ -63,7 +64,8 @@ IIOP_Object::IIOP_Object (char *repository_id,
     fwd_profile_ (0),
     refcount_ (1),
     use_locate_request_ (CORBA::B_FALSE),
-    first_locate_request_ (CORBA::B_FALSE)
+    first_locate_request_ (CORBA::B_FALSE),
+    handler_ (0)
 {
   this->fwd_profile_lock_ptr_ =  TAO_ORB_Core_instance ()
                                 ->client_factory ()
@@ -141,3 +143,16 @@ IIOP_Object::use_locate_requests (CORBA::Boolean use_it)
       this->use_locate_request_ = CORBA::B_TRUE;
     }   
 } 
+
+ACE_INLINE TAO_Client_Connection_Handler *&
+IIOP_Object::handler (void)
+{
+  return this->handler_;
+}
+
+ACE_INLINE void 
+IIOP_Object::reset_handler (void)
+{
+  this->handler_ = 0;
+}
+

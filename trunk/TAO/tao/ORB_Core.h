@@ -19,21 +19,6 @@
 
 #  include "tao/corba.h"
 
-typedef ACE_Strategy_Connector<TAO_Client_Connection_Handler, TAO_SOCK_CONNECTOR>
-        TAO_CONNECTOR;
-
-typedef ACE_Cached_Connect_Strategy<TAO_Client_Connection_Handler,
-                                    TAO_SOCK_CONNECTOR,
-                                    ACE_SYNCH_MUTEX>
-        TAO_CACHED_CONNECT_STRATEGY;
-
-typedef ACE_NOOP_Creation_Strategy<TAO_Client_Connection_Handler>
-        TAO_NULL_CREATION_STRATEGY;
-
-typedef ACE_NOOP_Concurrency_Strategy<TAO_Client_Connection_Handler>
-        TAO_NULL_ACTIVATION_STRATEGY;
-
-
 class TAO_Collocation_Table_Lock : public ACE_Adaptive_Lock
 {
   // TITLE
@@ -46,6 +31,31 @@ public:
 
 typedef ACE_Hash_Map_Manager<ACE_Hash_Addr<ACE_INET_Addr>, TAO_POA *, TAO_Collocation_Table_Lock>
         TAO_GLOBAL_Collocation_Table;
+
+class TAO_Cached_Connector_Lock : public ACE_Adaptive_Lock
+{
+  // TITLE
+  //   This lock class determines the type underlying lock
+  //   when it gets constructed.
+public:
+  TAO_Cached_Connector_Lock (void);
+  ~TAO_Cached_Connector_Lock (void);
+};
+
+typedef ACE_Strategy_Connector<TAO_Client_Connection_Handler, TAO_SOCK_CONNECTOR>
+        TAO_CONNECTOR;
+
+typedef ACE_Cached_Connect_Strategy<TAO_Client_Connection_Handler,
+                                    TAO_SOCK_CONNECTOR,
+                                    TAO_Cached_Connector_Lock>
+        TAO_CACHED_CONNECT_STRATEGY;
+
+typedef ACE_NOOP_Creation_Strategy<TAO_Client_Connection_Handler>
+        TAO_NULL_CREATION_STRATEGY;
+
+typedef ACE_NOOP_Concurrency_Strategy<TAO_Client_Connection_Handler>
+        TAO_NULL_ACTIVATION_STRATEGY;
+
 
 // Forward decl.
 class TAO_Resource_Factory;
@@ -254,10 +264,6 @@ private:
   TAO_ACCEPTOR *acceptor_;
   // The acceptor passively listening for connection requests.
 
-#if defined (TAO_HAS_CLIENT_CONCURRENCY)
-  CONCURRENCY_STRATEGY *concurrency_strategy_;
-#endif /* TAO_HAS_CLIENT_CONCURRENCY */
-
   TAO_POA_Current *poa_current_;
   // Points to structure containing state for the current upcall
   // context in this thread.  Note that it does not come from the
@@ -266,19 +272,6 @@ private:
   // are TSS singletons, we simply ride along and don't allocate
   // occupy another TSS slot since there are some platforms where
   // those are precious commodities (e.g., NT).
-
-  TAO_NULL_CREATION_STRATEGY null_creation_strategy_;
-  // This no-op creation strategy is necessary for using the
-  // <Strategy_Connector> with the <Cached_Connect_Strategy>.
-
-  TAO_CACHED_CONNECT_STRATEGY caching_connect_strategy_;
-  // This connection strategy maintain a cache of preconnected
-  // <TAO_Client_Connection_Handler>s.  The goal is to reduce latency
-  // and locking overhead.
-
-  TAO_NULL_ACTIVATION_STRATEGY null_activation_strategy_;
-  // This no-op activation strategy prevents the cached connector from
-  // calling the service handler's <open> method multiple times.
 
   TAO_Resource_Factory *resource_factory_;
   // Handle to the factory for resource information..
@@ -393,6 +386,17 @@ public:
   TAO_CONNECTOR *get_connector (void);
   // Return an Connector to be utilized.
 
+  TAO_CACHED_CONNECT_STRATEGY *get_cached_connect_strategy (void);
+  // Return an Cached Connect Strategy to be utilized.
+
+  TAO_NULL_CREATION_STRATEGY *get_null_creation_strategy (void);
+  // This no-op creation strategy is necessary for using the
+  // <Strategy_Connector> with the <Cached_Connect_Strategy>.
+
+  TAO_NULL_ACTIVATION_STRATEGY *get_null_activation_strategy (void);
+  // This no-op activation strategy prevents the cached connector from
+  // calling the service handler's <open> method multiple times.
+
   TAO_ACCEPTOR *get_acceptor (void);
   // Return an Acceptor to be utilized.
 
@@ -458,6 +462,17 @@ public:
     TAO_CONNECTOR c_;
     // The Connector
 
+    TAO_CACHED_CONNECT_STRATEGY cached_connect_strategy_;
+    // The Cached Connect Strategy
+
+    TAO_NULL_CREATION_STRATEGY null_creation_strategy_;
+    // This no-op creation strategy is necessary for using the
+    // <Strategy_Connector> with the <Cached_Connect_Strategy>.
+
+    TAO_NULL_ACTIVATION_STRATEGY null_activation_strategy_;
+    // This no-op activation strategy prevents the cached connector from
+    // calling the service handler's <open> method multiple times.
+
     TAO_ACCEPTOR a_;
     // The Acceptor
 
@@ -507,11 +522,10 @@ private:
   // thread-specific.  If not set specifically, this takes on the
   // value of <resource_source_>.
 
-  int coltbl_source_;
+  int collocation_table_source_;
   // Flag indicating whether the collocation table should be global
   // thread-specific.  It defaults to TAO_GLOBAL if not set
   // specifically.
-
 
   // = Typedefs for the singleton types used to store our orb core
   // information.

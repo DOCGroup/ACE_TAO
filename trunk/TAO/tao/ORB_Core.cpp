@@ -19,13 +19,24 @@ typedef ACE_TSS_Singleton<TAO_ORB_Core, ACE_SYNCH_MUTEX>
 
 TAO_Collocation_Table_Lock::TAO_Collocation_Table_Lock (void)
 {
-    this->lock_ =TAO_ORB_Core_instance ()->server_factory ()->create_coltbl_lock ();
+  this->lock_ = TAO_ORB_Core_instance ()->server_factory ()->create_collocation_table_lock ();
   // We don't need to worry about the race condition here because this
   // is called from within the ctor of Hash_Map_Manager which is
   // placed inside a ACE_Singleton.
 }
 
 TAO_Collocation_Table_Lock::~TAO_Collocation_Table_Lock (void)
+{
+  delete this->lock_;
+  this->lock_ = 0;
+}
+
+TAO_Cached_Connector_Lock::TAO_Cached_Connector_Lock (void)
+{
+  this->lock_ = TAO_ORB_Core_instance ()->server_factory ()->create_cached_connector_lock ();
+}
+
+TAO_Cached_Connector_Lock::~TAO_Cached_Connector_Lock (void)
 {
   delete this->lock_;
   this->lock_ = 0;
@@ -508,15 +519,10 @@ TAO_ORB_Core::init (int& argc, char** argv)
     this->orb_params ()->cdr_memcpy_tradeoff (cdr_tradeoff);
 
   // Open the <Strategy_Connector>.
-  if (this->connector ()->open (this->reactor(),
-                                &this->null_creation_strategy_,
-                                &this->caching_connect_strategy_,
-#if defined (TAO_HAS_CLIENT_CONCURRENCY)
-                                this->concurrency_strategy_ ()
-#else
-                                &this->null_activation_strategy_
-#endif /* TAO_HAS_CLIENT_CONCURRENCY */
-                                ) != 0)
+  if (this->connector ()->open (this->reactor (),
+                                this->resource_factory ()->get_null_creation_strategy (),
+                                this->resource_factory ()->get_cached_connect_strategy (),
+                                this->resource_factory ()->get_null_activation_strategy ()) != 0)
     return -1;
 
   if (preconnections)
@@ -921,9 +927,9 @@ TAO_ORB_Core::add_to_collocation_table (void)
 {
   if (this->using_collocation ())
     {
-      TAO_GLOBAL_Collocation_Table *coltbl = this->resource_factory ()->get_global_collocation_table ();
-      if (coltbl != 0)
-        return coltbl->bind (this->orb_params ()->addr (), this->root_poa ());
+      TAO_GLOBAL_Collocation_Table *collocation_table = this->resource_factory ()->get_global_collocation_table ();
+      if (collocation_table != 0)
+        return collocation_table->bind (this->orb_params ()->addr (), this->root_poa ());
     }
   return 0;
 }
@@ -933,11 +939,11 @@ TAO_ORB_Core::get_collocated_poa (ACE_INET_Addr &addr)
 {
   if (this->using_collocation ())
     {
-      TAO_GLOBAL_Collocation_Table *coltbl = this->resource_factory ()->get_global_collocation_table ();
-      if (coltbl != 0)
+      TAO_GLOBAL_Collocation_Table *collocation_table = this->resource_factory ()->get_global_collocation_table ();
+      if (collocation_table != 0)
         {
           TAO_POA *poa;
-          if (coltbl->find (addr, poa) == 0)
+          if (collocation_table->find (addr, poa) == 0)
             return poa;
         }
       else
@@ -1065,7 +1071,7 @@ TAO_ORB_Core::get_next_follower (void)
 TAO_Resource_Factory::TAO_Resource_Factory (void)
   : resource_source_ (TAO_GLOBAL),
     poa_source_ (TAO_GLOBAL),
-    coltbl_source_ (TAO_GLOBAL)
+    collocation_table_source_ (TAO_GLOBAL)
 {
 }
 
@@ -1163,9 +1169,9 @@ TAO_Resource_Factory::parse_args (int argc, char **argv)
             char *name = argv[curarg];
 
             if (ACE_OS::strcasecmp (name, "global") == 0)
-              coltbl_source_ = TAO_GLOBAL;
+              collocation_table_source_ = TAO_GLOBAL;
             else if (ACE_OS::strcasecmp (name, "orb") == 0)
-              coltbl_source_ = TAO_TSS;
+              collocation_table_source_ = TAO_TSS;
           }
       }
 
@@ -1224,6 +1230,9 @@ IMPLEMENT_PRE_GET_METHOD(get_reactor, ACE_Reactor *, r_)
 IMPLEMENT_PRE_GET_METHOD(get_thr_mgr, ACE_Thread_Manager *, tm_)
 IMPLEMENT_PRE_GET_METHOD(get_acceptor, TAO_ACCEPTOR *, a_)
 IMPLEMENT_PRE_GET_METHOD(get_connector, TAO_CONNECTOR *, c_)
+IMPLEMENT_PRE_GET_METHOD(get_cached_connect_strategy, TAO_CACHED_CONNECT_STRATEGY *, cached_connect_strategy_)
+IMPLEMENT_PRE_GET_METHOD(get_null_creation_strategy, TAO_NULL_CREATION_STRATEGY *, null_creation_strategy_);
+IMPLEMENT_PRE_GET_METHOD(get_null_activation_strategy, TAO_NULL_ACTIVATION_STRATEGY *, null_activation_strategy_);
 IMPLEMENT_APP_GET_METHOD(get_orb, CORBA_ORB_ptr, orb_)
 IMPLEMENT_PRE_GET_METHOD(get_orb_params, TAO_ORB_Parameters *, orbparams_)
 IMPLEMENT_PRE_GET_METHOD(get_oa_params, TAO_OA_Parameters *, oaparams_)
@@ -1300,7 +1309,7 @@ TAO_Resource_Factory::get_allocator (void)
 TAO_GLOBAL_Collocation_Table *
 TAO_Resource_Factory::get_global_collocation_table (void)
 {
-  return (coltbl_source_ == TAO_GLOBAL ? GLOBAL_Collocation_Table::instance () : 0);
+  return (collocation_table_source_ == TAO_GLOBAL ? GLOBAL_Collocation_Table::instance () : 0);
 }
 
 // This function exists because of Win32's proclivity for expanding

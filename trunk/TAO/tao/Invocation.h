@@ -92,9 +92,6 @@ protected:
 
   TAO_OutputCDR out_stream_;
   // Stream into which the response is placed.
-
-  TAO_Client_Connection_Handler *handler_;
-  // The handler for the client's connection.
 };
 
 class TAO_Export TAO_GIOP_Twoway_Invocation : public TAO_GIOP_Invocation

@@ -1,3 +1,40 @@
+Wed Aug 05 17:34:52 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Invocation.h (TAO_GIOP_Invocation): Removed the
+ 	  TAO_Client_Connection_Handler pointer from this class.  It was
+ 	  moved into the IIOP_Object where it would be easier to recycle
+	  it since instances of TAO_GIOP_Invocation are transient while
+	  IIOP_Objects are not.
+
+	* tao/ORB_Core.cpp (TAO_Cached_Connector_Lock): Added a new
+ 	  adaptive lock type TAO_Collocation_Table_Lock that will be used
+ 	  to control the type of locking used by the connector in TAO.
+
+	  Moved all the connect strategies from the ORB_Core to the
+	  resource factory.  If the strategies were left in the ORB_Core,
+	  each thread would get its own copy of the strategies since
+	  ORB_Core is TSS. 
+ 	
+	  Removed all instances of TAO_HAS_CLIENT_CONCURRENCY.  They were
+ 	  incomplete, not used, and annoying.
+
+	* tao/ORB.cpp: Changed the template instantiations of the
+ 	  Connector to specify the new TAO_Cached_Connector_Lock instead
+ 	  of ACE_SYNCH_NULL_MUTEX or ACE_SYNCH_MUTEX.
+
+	* tao/default_server.cpp (parse_args): Added a new option
+ 	  (-ORBconnectorlock) to control the lock on the connector.  It
+ 	  defaults to a thread lock, but can set to null.
+
+	  Also, changed the lock type of the collocation table from
+ 	  ACE_SYNCH_RECURSIVE_MUTEX to ACE_SYNCH_MUTEX.
+
+	* tests/Cubit/TAO/IDL_Cubit/svc.conf: Removed excessive options
+ 	  from the svc.conf file. Also added -ORBconnectorlock null to
+ 	  avoid locking in the connector.
+
+	* tao: Renamed all instances of coltbl to collocation_table.
+
 Wed Aug  5 17:48:31 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
 	* tests/Param_Test/var_struct.{h,cpp}:
