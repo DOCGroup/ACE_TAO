@@ -1,3 +1,14 @@
+Fri Sep 29 09:17:15 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+	* TAO_IDL/be/be_visitor_sequence/sequence_ci.cpp:
+
+	  Backed off generation of const []  operator for
+	  _var class of sequences of arrays. Also updated
+	  the related Bugzilla entry [BUGID:676]. These
+	  operators were causing build erorrs in Param_Test
+	  (typedef sequence<Param_Test::FixedArray> ArraySeq).
+
 Fri Sep 29 02:09:32 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/diffs/RTPortableServerC.h.diff: 
