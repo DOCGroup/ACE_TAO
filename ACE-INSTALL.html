@@ -1222,7 +1222,7 @@ first executable that was loaded.<p>
 <h5><a name="VxWorks/SharedLibs">Building Shared Libraries for VxWorks</a>.</h5>
 ACE now supports shared libraries for VxWorks, but only with the
 g++ compiler.  To build shared libraries instead of the default
-static libraries, added <code>static_libs_only=1</code> to either
+static libraries, added <code>shared_libs_only=1</code> to either
 your <code>ACE_wrappers/include/makeinclude/platform_macros.GNU</code>
 or your <code>make</code> invocation.  Then, be sure to load
 the ACE (and any other) shared library before loading your
@@ -1257,17 +1257,15 @@ A few additional Windows Notes, from Paul von Behren:<p>
       large collection of GNU tools to WinNT/95 - including a port of
       gcc/g++.  See <A href="http://www.cygnus.com/misc/gnu-win32/">http://www.cygnus.com/misc/gnu-win32/</A>
       WindRiver provides a subset of these tools - including make
-      and gcc cross-compilers.<p>
+      and gcc cross-compilers.  (Note:  it appears that the make
+      that is provided with Tornado 2.0 cannot be used to build ACE.
+      Use Cygnus' make (version 3.75) instead.)<p>
   <li>To set up the command-prompt build environemnt, run
       <code>Tornado\host\x86-win32\bin\TorVars.bat</code>.  This is done
       implicitly within the Tornado IDE.<p>
   <li>To run <code>ace_ld</code>, you still need perl installed -
       see <A href="http://www.activestate.com/software/default.htm">http://www.activestate.com/software/default.htm</A>
       for Windows perl.<p>
-  <li>But make does work in "leaf" directories (those with no
-      subdirectories).  You can make the <code>ACE_ROOT\ace directory</code>
-      creating the library libACE.a.  If perl is available, make also works
-      in the ACE_ROOT\tests directory.<p>
   <li>The Tornado IDE will use a standard Makefile for project
       builds, but does not have a GUI interface for managing the
       Makefile.  By default, it will use rules from Makefile in the current
@@ -1275,6 +1273,37 @@ A few additional Windows Notes, from Paul von Behren:<p>
       targets to the project.  If you have <code>ACE_ROOT</code> defined
       before starting Tornado, you can specify an ACE Makefile as a Tornado
       target and Tornado will then call make from the menu.<p>
+</ul>
+
+Using the Cygnus tools, this approach should work:
+<ul>
+  <li>You'll build both your NT and VxWorks executables in the same
+    workspace (directory hierarchy).  This works because the NT
+    compiler and ACE's Makefiles put their output in different
+    directories.<p>
+  <li>Set up your
+    <code>ACE_wrappers/include/makeinclude/platform_macros.GNU</code>
+    as usual for VxWorks.  See
+    <a href="include/makeinclude/platform_vxworks5.x_g++.GNU">the
+    g++/VxWorks platform file</a> for more information.  You may
+    also want to add this line, because there's no need to install
+    libraries in the VxWorks build:
+<pre>
+INSTALL=
+</pre><p>
+  <li>Create an <code>ACE_wrappers/ace/config.h</code> file that looks
+    something like:
+<pre>
+#if defined (__BORLANDC__) || defined (_MSC_VER)
+# include &lt;ace/config-win32.h&gt;
+#else
+# include &lt;ace/config-vxworks.h&gt;
+#endif
+</pre><p>
+   <li>Set your <code>ACE_ROOT</code>, <code>CPP_LOCATION</code>,
+     <code>WIND_BASE</code>, and <code>WIND_HOST_TYPE</code> environment
+     variables.<p>
+   <li>Build for NT, then build for VxWorks.<p>
 </ul>
 
 And Chris Ryan's instructions for building for VxWorks targets
@@ -1345,8 +1374,6 @@ on Windows NT hosts:
   <li>Basically, follow documented procedure for ACE build/install on UNIX
       platform. Create a <code>$ACE_ROOT/ace/config.h</code> that looks like:<p>
       <pre>
-      #define __ACE_INLINE__ 0
-      #define ACE_HAS_DLL 0
       #include "config-vxworks5.x.h"
       </pre>
 
