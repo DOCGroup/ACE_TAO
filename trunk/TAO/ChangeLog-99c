@@ -1,3 +1,16 @@
+Mon Apr  5 02:06:57 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* performance-tests/Thruput/TAO/svc.conf:
+	* orbsvcs/tests/ImplRepo/svc.conf:
+	* orbsvcs/tests/AVStreams/mpeg/source/client/svc.conf:
+	* orbsvcs/tests/AVStreams/mpeg/source/server/svc.conf:
+	* examples/Simulator/Event_Supplier/svc.conf:
+	* examples/POA/On_Demand_Loading/svc.conf:
+	* examples/Simulator/DOVEMIB/svc.conf:
+	* tests/Param_Test/svc.conf:
+	* performance-tests/Cubit/TAO/MT_Cubit/svc.conf: Some of the
+	  services didn't get changed to be static.
+
 Sun Apr 04 22:33:23 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/MT_Cubit/svc.conf.static:
