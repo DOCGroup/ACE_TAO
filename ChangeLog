@@ -1,3 +1,9 @@
+Fri Jun 21 06:21:33 2002  Christopher Kohlhoff  <chris@kohlhoff.com>
+
+        * ace/config-win32-borland.h:
+          Re-enable ACE_HAS_STD_TEMPLATE_METHOD_SPECIALIZATION for all
+          versions of Borland C++.
+
 Thu Jun 20 20:50:51 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/config-sunos5.5.h: Re-enable
