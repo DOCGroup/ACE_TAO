@@ -6,11 +6,20 @@ Sat May 03 06:56:10 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Set.cpp (ACE_Fixed_Set<T, SIZE>::find): typo: index instead of i.
 
+	* ace/IOStream.cpp: fixed typo: "#if defined" instead of just "#if".
+
 	* tests/Conn_Test.cpp,
 	  netsvcs/lib/{Client_Logging_Handler,TS_Clerk_Handler}.cpp,
 	  netsvcs/clients/Tokens/manual/manual.cpp,
-	  apps/Gateway/Gateway/Event_Channel.cpp: added ACE_Map_Entry template
-	  specialization.  It's needed now that the destructor is explicit.
+	  apps/Gateway/Gateway/Event_Channel.cpp,:
+	  apps/JAWS/client/Blob.cpp,
+	  examples/ASX/Event_Server/Event_Server/Peer_Router.cpp,
+	  examples/ASX/Event_Server/Transceiver/transceiver.cpp,
+	  examples/ASX/UPIPE_Event_Server/{Consumer,Supplier}_Router.cpp,
+	  examples/Connection/misc/test_upipe.cpp,
+	  examples/Connection/non_blocking/test_*_connector.cpp: added
+	  ACE_Map_Entry template specialization.  It's needed now that the
+	  destructor is explicit.
 
 Fri May  2 14:57:56 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
