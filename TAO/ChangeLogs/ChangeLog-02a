@@ -1,10 +1,18 @@
+Mon Dec 31 11:39:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * tests/OBV/Makefile.bor:
+          Added new BCB makefile to build subdirectories
+
+        * tests/Makefile.bor:
+          Added new OBV directory
+
 Mon Dec 31 11:01:29 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/Sequence_T.h:
 	* tao/Sequence_T.i:
 	* tao/Sequence_T.cpp:
 
-	  Changes by Nanbor Wang <nanbor@cs.wustl.edu> for 
+	  Changes by Nanbor Wang <nanbor@cs.wustl.edu> for
 	  support of sequences of valuetypes.
 
 	* tests/OBV/Factory/client.bor:
@@ -40,7 +48,7 @@ Mon Dec 31 11:01:29 2001  Jeff Parsons <parsons@cs.wustl.edu>
 	* tests/OBV/Forward/TreeController.idl:
 	* tests/OBV/Forward/TreeNode.idl:
 
-	  New value type tests, written by Boris Kolpackov 
+	  New value type tests, written by Boris Kolpackov
 	  <bosk@ipmce.ru>.
 
 	* TAO_IDL/be/be_tmplinst.cpp:
