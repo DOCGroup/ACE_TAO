@@ -6,6 +6,12 @@ Wed Dec 24 08:14:32 1997  David L. Levine  <levine@cs.wustl.edu>
           (at least on Solaris/g++ and Linux).  And, all of the ACE tests
           Purify cleanly.
 
+        * ace/OS.cpp (ACE_Thread_Adapter::invoke): wrapped
+          rethrow_w32_structural_exception () call with #ifdef ACE_WIN32.
+          It was eliminated by the ACE_SEH_EXCEPT macro on non-WIN32
+          platforms, but some compilers (cxx) warned about the
+          unreachable code.  This call is only supported on WIN32 anyways.
+
 Wed Dec 24 04:25:49 1997    <nw1@DINGO>
 
 	* ace/OS.i (sema_init): Added checking for initial semaphore
