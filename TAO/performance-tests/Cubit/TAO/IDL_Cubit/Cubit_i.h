@@ -133,8 +133,6 @@ public:
 
 private:
   Cubit_i my_cubit_;
-
-  int cubit_registered_;
 };
 
 #endif /* _CUBIT_I_H */
