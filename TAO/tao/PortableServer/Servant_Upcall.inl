@@ -6,7 +6,7 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    ACE_INLINE TAO_Root_POA &
+    ACE_INLINE ::TAO_Root_POA &
     Servant_Upcall::poa (void) const
     {
       return *this->poa_;
