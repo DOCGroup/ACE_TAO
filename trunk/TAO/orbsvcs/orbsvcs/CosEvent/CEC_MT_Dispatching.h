@@ -34,7 +34,7 @@ class TAO_CEC_EventChannel;
  * threads.  It's main purpose is to decouple the suppliers from
  * the client execution time, specially in the collocated case.
  */
-class TAO_Event_Export TAO_CEC_MT_Dispatching : public TAO_CEC_Dispatching
+class TAO_Event_Serv_Export TAO_CEC_MT_Dispatching : public TAO_CEC_Dispatching
 {
 public:
   /// Constructor

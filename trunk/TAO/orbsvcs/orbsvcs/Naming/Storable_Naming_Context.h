@@ -23,7 +23,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_Naming_Export TAO_Storable_IntId
+class TAO_Naming_Serv_Export TAO_Storable_IntId
 {
 public:
   // = Initialization and termination methods.
@@ -52,7 +52,7 @@ public:
   CosNaming::BindingType type_;
 };
 
-class TAO_Naming_Export TAO_Storable_ExtId
+class TAO_Naming_Serv_Export TAO_Storable_ExtId
 {
 public:
   // = Initialization and termination methods.
@@ -113,7 +113,7 @@ public:
  * A thin wrapper on top of ACE_Hash_Map_Manager.  Supports
  * TAO_Bindings_Map interface.  Used by TAO_Transient_Naming_Context.
  */
-class TAO_Naming_Export TAO_Storable_Bindings_Map : public TAO_Bindings_Map
+class TAO_Naming_Serv_Export TAO_Storable_Bindings_Map : public TAO_Bindings_Map
 {
 public:
 
@@ -213,7 +213,7 @@ private:
  * TAO_Hash_Naming_Context and uses TAO_Storable_Bindings_Map to
  * store name to object bindings.
  */
-class TAO_Naming_Export TAO_Storable_Naming_Context : public TAO_Hash_Naming_Context
+class TAO_Naming_Serv_Export TAO_Storable_Naming_Context : public TAO_Hash_Naming_Context
 {
 
 public:

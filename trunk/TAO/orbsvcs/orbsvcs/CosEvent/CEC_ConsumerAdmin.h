@@ -25,7 +25,7 @@
 
 #include "CEC_ProxyPushSupplier.h"
 #include "CEC_ProxyPullSupplier.h"
-#include "event_export.h"
+#include "event_serv_export.h"
 
 class TAO_CEC_EventChannel;
 
@@ -45,7 +45,7 @@ class TAO_CEC_EventChannel;
  * externally.
  * = TODO
  */
-class TAO_Event_Export TAO_CEC_ConsumerAdmin 
+class TAO_Event_Serv_Export TAO_CEC_ConsumerAdmin 
   : public POA_CosEventChannelAdmin::ConsumerAdmin
 {
 public:

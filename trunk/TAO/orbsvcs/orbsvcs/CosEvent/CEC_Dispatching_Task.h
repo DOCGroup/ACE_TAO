@@ -28,7 +28,7 @@
 #include "tao/Basic_Types.h"
 #include "tao/Objref_VarOut_T.h"
 
-#include "orbsvcs/CosEvent/event_export.h"
+#include "orbsvcs/CosEvent/event_serv_export.h"
 
 #include "CEC_ProxyPushSupplier.h"
 
@@ -43,7 +43,7 @@
  * dispatching.
  *
  */
-class TAO_Event_Export TAO_CEC_Dispatching_Task : public ACE_Task<ACE_SYNCH>
+class TAO_Event_Serv_Export TAO_CEC_Dispatching_Task : public ACE_Task<ACE_SYNCH>
 {
 public:
   /// Constructor
@@ -72,7 +72,7 @@ private:
 
 // ****************************************************************
 
-class TAO_Event_Export TAO_CEC_Dispatch_Command : public ACE_Message_Block
+class TAO_Event_Serv_Export TAO_CEC_Dispatch_Command : public ACE_Message_Block
 {
 public:
   /// Constructor, it will allocate its own data block
@@ -91,7 +91,7 @@ public:
 
 // ****************************************************************
 
-class TAO_Event_Export TAO_CEC_Shutdown_Task_Command : public TAO_CEC_Dispatch_Command
+class TAO_Event_Serv_Export TAO_CEC_Shutdown_Task_Command : public TAO_CEC_Dispatch_Command
 {
 public:
   /// Constructor
@@ -103,7 +103,7 @@ public:
 
 // ****************************************************************
 
-class TAO_Event_Export TAO_CEC_Push_Command : public TAO_CEC_Dispatch_Command
+class TAO_Event_Serv_Export TAO_CEC_Push_Command : public TAO_CEC_Dispatch_Command
 {
 public:
   /// Constructor
@@ -129,7 +129,7 @@ private:
 // ****************************************************************
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-class TAO_Event_Export TAO_CEC_Invoke_Command : public TAO_CEC_Dispatch_Command
+class TAO_Event_Serv_Export TAO_CEC_Invoke_Command : public TAO_CEC_Dispatch_Command
 {
 public:
   /// Constructor

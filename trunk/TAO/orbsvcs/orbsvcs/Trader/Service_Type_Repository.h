@@ -26,7 +26,7 @@
  * @brief This class implements CosTradingRepos::ServiceTypeRepository
  * IDL interface.
  */
-class TAO_Trading_Export TAO_Service_Type_Repository : public POA_CosTradingRepos::ServiceTypeRepository
+class TAO_Trading_Serv_Export TAO_Service_Type_Repository : public POA_CosTradingRepos::ServiceTypeRepository
 {
 public:
   /**

@@ -30,7 +30,7 @@
 class TAO_CEC_TypedEventChannel;
 
 //Class TAO_CEC_TypedConsumerAdmin
-class TAO_Event_Export TAO_CEC_TypedConsumerAdmin
+class TAO_Event_Serv_Export TAO_CEC_TypedConsumerAdmin
   : public POA_CosTypedEventChannelAdmin::TypedConsumerAdmin
 {
 public:

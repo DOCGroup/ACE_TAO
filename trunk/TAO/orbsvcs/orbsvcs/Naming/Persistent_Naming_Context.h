@@ -16,7 +16,7 @@
 
 #include "Hash_Naming_Context.h"
 #include "Persistent_Entries.h"
-#include "naming_export.h"
+#include "naming_serv_export.h"
 
 /**
  * @class TAO_Persistent_Bindings_Map
@@ -29,7 +29,7 @@
  * from persistent storage) to make bindings persistent and
  * supports TAO_Bindings_Map interface.  Used by TAO_Persistent_Naming_Context.
  */
-class TAO_Naming_Export TAO_Persistent_Bindings_Map : public TAO_Bindings_Map
+class TAO_Naming_Serv_Export TAO_Persistent_Bindings_Map : public TAO_Bindings_Map
 {
 public:
 
@@ -157,7 +157,7 @@ class TAO_Persistent_Context_Index;
  * process boundaries.  Derives from TAO_Hash_Naming_Context and
  * uses TAO_Persistent_Bindings_Map to store name to object bindings.
  */
-class TAO_Naming_Export TAO_Persistent_Naming_Context : public TAO_Hash_Naming_Context
+class TAO_Naming_Serv_Export TAO_Persistent_Naming_Context : public TAO_Hash_Naming_Context
 {
 public:
   /// Underlying data structure - typedef for ease of use.

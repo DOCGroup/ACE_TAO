@@ -28,7 +28,7 @@
  * @brief
  *
  */
-class TAO_Notify_Export TAO_Notify_Batch_Buffering_Strategy : public TAO_Notify_Buffering_Strategy
+class TAO_Notify_Serv_Export TAO_Notify_Batch_Buffering_Strategy : public TAO_Notify_Buffering_Strategy
 {
 public:
   /// Constuctor

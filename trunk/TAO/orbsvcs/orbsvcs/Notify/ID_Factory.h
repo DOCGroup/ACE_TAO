@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "notify_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -30,7 +30,7 @@
  * @brief A simple factory for generating ID's for objects created by Notify.
  *
  */
-class TAO_Notify_Export TAO_Notify_ID_Factory
+class TAO_Notify_Serv_Export TAO_Notify_ID_Factory
 {
 public:
   /// Constuctor

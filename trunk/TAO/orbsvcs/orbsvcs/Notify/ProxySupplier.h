@@ -13,7 +13,7 @@
 #define TAO_Notify_PROXYSUPPLIER_H
 #include /**/ "ace/pre.h"
 
-#include "notify_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -33,7 +33,7 @@ class TAO_Notify_ConsumerAdmin;
  * @brief Base class for all the ProxySuppliers.
  *
  */
-class TAO_Notify_Export TAO_Notify_ProxySupplier : public virtual TAO_Notify_Proxy
+class TAO_Notify_Serv_Export TAO_Notify_ProxySupplier : public virtual TAO_Notify_Proxy
 {
   friend class TAO_Notify_Consumer;
 

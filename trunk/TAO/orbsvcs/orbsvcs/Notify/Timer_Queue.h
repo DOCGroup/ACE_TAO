@@ -13,7 +13,7 @@
 #define TAO_Notify_TIMER_QUEUE_H
 #include /**/ "ace/pre.h"
 
-#include "notify_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -31,7 +31,7 @@
  * @brief ACE_Timer_Queue based timer.
  *
  */
-class TAO_Notify_Export TAO_Notify_Timer_Queue : public TAO_Notify_Timer
+class TAO_Notify_Serv_Export TAO_Notify_Timer_Queue : public TAO_Notify_Timer
 {
 public:
   /// Constuctor

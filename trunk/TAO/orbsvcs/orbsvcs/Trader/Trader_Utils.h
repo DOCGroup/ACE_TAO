@@ -39,7 +39,7 @@
  * CORBA sequences, but requires that the client know the layout of
  * properties ahead of time.
  */
-class TAO_Trading_Export TAO_Property_Evaluator
+class TAO_Trading_Serv_Export TAO_Property_Evaluator
 {
 public:
 
@@ -123,7 +123,7 @@ private:
  * names to integer indicies, upon which lookups are guaranteed to
  * be O(lg n).
  */
-class TAO_Trading_Export TAO_Property_Evaluator_By_Name : public TAO_Property_Evaluator
+class TAO_Trading_Serv_Export TAO_Property_Evaluator_By_Name : public TAO_Property_Evaluator
 {
 public:
 
@@ -182,7 +182,7 @@ private:
  * @brief Little helper class that you can extend to have your dynamic
  * property handler construct CosTradingDynamic::DynamicProp structs.
  */
-class TAO_Trading_Export TAO_Dynamic_Property
+class TAO_Trading_Serv_Export TAO_Dynamic_Property
   : public virtual POA_CosTradingDynamic::DynamicPropEval,
     public virtual PortableServer::RefCountServantBase
 {
@@ -496,7 +496,7 @@ private:
  * interface that helps them build a policy sequence without violating
  * syntax rules and having to mess with typecodes.
  */
-class TAO_Trading_Export TAO_Policy_Creator
+class TAO_Trading_Serv_Export TAO_Policy_Creator
 {
 public:
 

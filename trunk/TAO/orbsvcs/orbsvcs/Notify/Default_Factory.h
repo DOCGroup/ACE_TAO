@@ -13,7 +13,7 @@
 #define TAO_Notify_DEFAULT_FACTORY_H
 #include /**/ "ace/pre.h"
 
-#include "notify_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -27,7 +27,7 @@
  * @brief Default_Factory interface for creating Notify Objects.
  *
  */
-class TAO_Notify_Export TAO_Notify_Default_Factory : public TAO_Notify_Factory
+class TAO_Notify_Serv_Export TAO_Notify_Default_Factory : public TAO_Notify_Factory
 {
 public:
   /// Constructor
@@ -91,7 +91,7 @@ public:
   virtual void create (TAO_Notify_SequenceProxyPushSupplier*& proxy ACE_ENV_ARG_DECL);
 };
 
-ACE_FACTORY_DECLARE (TAO_Notify, TAO_Notify_Default_Factory)
+ACE_FACTORY_DECLARE (TAO_Notify_Serv, TAO_Notify_Default_Factory)
 
 #if defined (__ACE_INLINE__)
 #include "Default_Factory.inl"

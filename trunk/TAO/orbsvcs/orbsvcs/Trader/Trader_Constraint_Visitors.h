@@ -19,7 +19,7 @@
 #include "Trader_Utils.h"
 #include "orbsvcs/CosTradingC.h"
 
-class TAO_Trading_Export TAO_Trader_Constraint_Validator : public TAO_Constraint_Validator
+class TAO_Trading_Serv_Export TAO_Trader_Constraint_Validator : public TAO_Constraint_Validator
 {
  public:
   /**
@@ -38,7 +38,7 @@ class TAO_Trading_Export TAO_Trader_Constraint_Validator : public TAO_Constraint
 
 };
 
-class TAO_Trading_Export TAO_Trader_Constraint_Evaluator : public TAO_Constraint_Evaluator
+class TAO_Trading_Serv_Export TAO_Trader_Constraint_Evaluator : public TAO_Constraint_Evaluator
 {
  public:
   /// Constructor.

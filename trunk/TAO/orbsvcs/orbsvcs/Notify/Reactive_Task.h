@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "notify_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -31,7 +31,7 @@ class TAO_Notify_Timer_Reactor;
  * @brief A reactive worker task. Simply executes the command in the caller's context.
  *
  */
-class TAO_Notify_Export TAO_Notify_Reactive_Task : public TAO_Notify_Worker_Task
+class TAO_Notify_Serv_Export TAO_Notify_Reactive_Task : public TAO_Notify_Worker_Task
 {
 public:
   /// Constuctor

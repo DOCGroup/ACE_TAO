@@ -59,7 +59,7 @@ project (CosEvent_Skel) : orbsvcslib, core, minimum_corba, event, portableserver
 
 project (CosEvent_Serv) : orbsvcslib, core, minimum_corba, event_skel, ec_typed_events_serv, messaging, svc_utils {
   sharedname   = TAO_CosEvent_Serv
-  dynamicflags = TAO_EVENT_BUILD_DLL
+  dynamicflags = TAO_EVENT_SERV_BUILD_DLL
   tagchecks   += CosEvent
 
   IDL_Files {

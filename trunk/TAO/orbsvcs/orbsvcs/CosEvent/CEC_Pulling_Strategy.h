@@ -23,7 +23,7 @@
 
 #include "tao/Objref_VarOut_T.h"
 
-#include "orbsvcs/CosEvent/event_export.h"
+#include "orbsvcs/CosEvent/event_serv_export.h"
 
 /**
  * @class TAO_CEC_Pulling_Strategy
@@ -36,7 +36,7 @@
  * for each queue or can simply push the event to the consumer in
  * FIFO order.
  */
-class TAO_Event_Export TAO_CEC_Pulling_Strategy
+class TAO_Event_Serv_Export TAO_CEC_Pulling_Strategy
 {
 public:
   /// destructor...

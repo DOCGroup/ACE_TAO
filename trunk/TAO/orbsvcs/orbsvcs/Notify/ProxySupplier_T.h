@@ -13,7 +13,7 @@
 #define TAO_Notify_PROXYSUPPLIER_T_H
 #include /**/ "ace/pre.h"
 
-#include "notify_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

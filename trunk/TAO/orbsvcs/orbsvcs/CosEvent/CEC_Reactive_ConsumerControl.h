@@ -48,7 +48,7 @@ class TAO_CEC_TypedEventChannel;
  * periodically wakeup and verify the state of the consumers
  * registered with the Event Channel.
  */
-class TAO_Event_Export TAO_CEC_ConsumerControl_Adapter : public ACE_Event_Handler
+class TAO_Event_Serv_Export TAO_CEC_ConsumerControl_Adapter : public ACE_Event_Handler
 {
 public:
   /// Constructor
@@ -74,7 +74,7 @@ private:
  * = LOCKING
  * = TODO
  */
-class TAO_Event_Export TAO_CEC_Reactive_ConsumerControl 
+class TAO_Event_Serv_Export TAO_CEC_Reactive_ConsumerControl 
   : public TAO_CEC_ConsumerControl
 {
 public:

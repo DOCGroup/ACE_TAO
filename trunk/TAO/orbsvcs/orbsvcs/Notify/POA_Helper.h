@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "notify_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -30,7 +30,7 @@
  * @brief POA Abstraction.
  *
  */
-class TAO_Notify_Export TAO_Notify_POA_Helper : private ACE_Copy_Disabled
+class TAO_Notify_Serv_Export TAO_Notify_POA_Helper : private ACE_Copy_Disabled
 {
 public:
   /// Default Constructor
