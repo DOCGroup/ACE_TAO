@@ -395,6 +395,12 @@ make: *** [libACE.so] Error 8
       We actively maintain ACE on LynxOS 3.0.0.  It should build and
       run on LynxOS 2.5, but we no longer test on that OS version.<p>
 
+      NOTE: if you want to use IP multicast on LynxOS, be sure to add
+      this line to your <code>/net/rc.network</code>, and reboot:<p>
+      <pre><code>
+        /bin/route add "224.0.0.0" "$my_name"
+      </code></pre>
+
       Dave Mayerhoefer &lt<A HREF="mailto:davem@lynx.com">davem@lynx.com</A>&gt
       has ported ACE to LynxOS 2.5 using GNU g++ 2.7.2.  However, you may need
       to apply some <A HREF="os-patches/lynxos-patches.html">patches
