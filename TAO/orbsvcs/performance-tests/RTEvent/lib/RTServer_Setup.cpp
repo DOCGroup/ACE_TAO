@@ -33,8 +33,7 @@ RTServer_Setup::RTServer_Setup (int use_rt_corba,
 
   if (use_rt_corba)
     {
-      this->rtpoa_setup_ =
-        auto_ptr<RTPOA_Setup> (new RTPOA_Setup (orb,
+      this->rtpoa_setup_.reset(new RTPOA_Setup (orb,
                                                 *this->rtcorba_setup ()
                                                 ACE_ENV_ARG_PARAMETER));
       ACE_CHECK;

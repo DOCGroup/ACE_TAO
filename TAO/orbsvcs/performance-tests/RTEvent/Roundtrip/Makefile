@@ -59,28 +59,29 @@ server: $(addprefix $(VDIR),$(server_OBJS))
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/server.o .obj/server.o .obj/server.o .obj/server.o: server.cpp ../lib/RT_Class.h ../lib/rtec_perf_export.h \
+.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp ../lib/RT_Class.h ../lib/rtec_perf_export.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  $(ACE_ROOT)/ace/svc_export.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
-  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/Sched_Params.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/OS_String.inl \
   $(ACE_ROOT)/ace/OS_Memory.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_TLI.h \
   $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
@@ -107,9 +108,7 @@ server: $(addprefix $(VDIR),$(server_OBJS))
   $(ACE_ROOT)/ace/ACE.i \
   $(ACE_ROOT)/ace/Malloc.h \
   $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Record.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/Log_Record.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Malloc.i \
@@ -245,8 +244,8 @@ server: $(addprefix $(VDIR),$(server_OBJS))
   ../lib/RTCORBA_Setup.inl ../lib/PriorityBand_Setup.h \
   ../lib/PriorityBand_Setup.inl ../lib/SyncScope_Setup.h \
   $(TAO_ROOT)/tao/Messaging/Messaging.h \
-  $(TAO_ROOT)/tao/Messaging/MessagingC.h \
   $(TAO_ROOT)/tao/Messaging/messaging_export.h \
+  $(TAO_ROOT)/tao/Messaging/MessagingC.h \
   $(TAO_ROOT)/tao/ValueBase.h \
   $(TAO_ROOT)/tao/ValueBase.i \
   $(TAO_ROOT)/tao/ValueFactory.h \
@@ -256,21 +255,62 @@ server: $(addprefix $(VDIR),$(server_OBJS))
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
   $(TAO_ROOT)/tao/Messaging/MessagingC.i \
+  $(TAO_ROOT)/tao/TAOC.h \
+  $(TAO_ROOT)/tao/TAOC.i \
   ../lib/SyncScope_Setup.inl ../lib/RTClient_Setup.inl \
   ../lib/RTPOA_Setup.h \
   $(TAO_ROOT)/tao/RTPortableServer/RTPortableServer.h \
   $(TAO_ROOT)/tao/RTPortableServer/rtportableserver_export.h \
   $(TAO_ROOT)/tao/RTPortableServer/RTPortableServerC.h \
   $(TAO_ROOT)/tao/RTPortableServer/RTPortableServerC.i \
-  ../lib/RTPOA_Setup.inl ../lib/RTServer_Setup.inl \
+  ../lib/RTPOA_Setup.inl ../lib/RTServer_Setup.inl ../lib/ORB_Task.h \
+  $(ACE_ROOT)/ace/Task.h \
+  $(ACE_ROOT)/ace/Service_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Service_Object.i \
+  $(ACE_ROOT)/ace/Thread_Manager.h \
+  $(ACE_ROOT)/ace/Unbounded_Queue.h \
+  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
+  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
+  $(ACE_ROOT)/ace/Containers.h \
+  $(ACE_ROOT)/ace/Containers.i \
+  $(ACE_ROOT)/ace/Containers_T.h \
+  $(ACE_ROOT)/ace/Array_Base.h \
+  $(ACE_ROOT)/ace/Array_Base.inl \
+  $(ACE_ROOT)/ace/Array_Base.cpp \
+  $(ACE_ROOT)/ace/Containers_T.i \
+  $(ACE_ROOT)/ace/Containers_T.cpp \
+  $(ACE_ROOT)/ace/Singleton.h \
+  $(ACE_ROOT)/ace/Singleton.i \
+  $(ACE_ROOT)/ace/Singleton.cpp \
+  $(ACE_ROOT)/ace/Thread_Manager.i \
+  $(ACE_ROOT)/ace/Task.i \
+  $(ACE_ROOT)/ace/Task_T.h \
+  $(ACE_ROOT)/ace/Message_Queue.h \
+  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+  $(ACE_ROOT)/ace/Message_Queue_T.h \
+  $(ACE_ROOT)/ace/Message_Queue_T.i \
+  $(ACE_ROOT)/ace/Message_Queue_T.cpp \
+  $(ACE_ROOT)/ace/Notification_Strategy.h \
+  $(ACE_ROOT)/ace/Notification_Strategy.inl \
+  $(ACE_ROOT)/ace/Message_Queue.i \
+  $(ACE_ROOT)/ace/Task_T.i \
+  $(ACE_ROOT)/ace/Task_T.cpp \
+  $(ACE_ROOT)/ace/Module.h \
+  $(ACE_ROOT)/ace/Module.i \
+  $(ACE_ROOT)/ace/Module.cpp \
+  $(ACE_ROOT)/ace/Stream_Modules.h \
+  $(ACE_ROOT)/ace/Stream_Modules.cpp \
+  ../lib/ORB_Task.inl ../lib/ORB_Task_Activator.h ../lib/Task_Activator.h \
+  $(ACE_ROOT)/ace/Copy_Disabled.h \
+  ../lib/Task_Activator.inl ../lib/Task_Activator.cpp \
+  ../lib/ORB_Task_Activator.inl \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Event_Channel.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Factory.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Event/event_export.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/NVList.h \
-  $(ACE_ROOT)/ace/Unbounded_Queue.h \
-  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
-  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(TAO_ROOT)/tao/NVList.i \
   $(TAO_ROOT)/tao/Principal.h \
   $(TAO_ROOT)/tao/OctetSeqC.h \
@@ -294,10 +334,6 @@ server: $(addprefix $(VDIR),$(server_OBJS))
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(ACE_ROOT)/ace/Service_Object.h \
-  $(ACE_ROOT)/ace/Shared_Object.h \
-  $(ACE_ROOT)/ace/Shared_Object.i \
-  $(ACE_ROOT)/ace/Service_Object.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Factory.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Defaults.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.h \
@@ -373,9 +409,6 @@ server: $(addprefix $(VDIR),$(server_OBJS))
   $(TAO_ROOT)/tao/Strategies/strategies_export.h \
   $(TAO_ROOT)/tao/default_resource.h \
   $(TAO_ROOT)/tao/Resource_Factory.h \
-  $(TAO_ROOT)/tao/Pluggable.h \
-  $(TAO_ROOT)/tao/Pluggable.i \
-  $(TAO_ROOT)/tao/Protocol_Factory.h \
   $(TAO_ROOT)/tao/default_resource.i \
   $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/Policy_Manager.h \
@@ -398,9 +431,6 @@ server: $(addprefix $(VDIR),$(server_OBJS))
   $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
   $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
   $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
-  $(ACE_ROOT)/ace/Array_Base.h \
-  $(ACE_ROOT)/ace/Array_Base.inl \
-  $(ACE_ROOT)/ace/Array_Base.cpp \
   $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
   $(TAO_ROOT)/tao/Object_Ref_Table.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
@@ -417,43 +447,34 @@ server: $(addprefix $(VDIR),$(server_OBJS))
   $(TAO_ROOT)/tao/PICurrent.inl \
   $(TAO_ROOT)/tao/Protocols_Hooks.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
-  $(ACE_ROOT)/ace/Thread_Manager.h \
-  $(ACE_ROOT)/ace/Containers.h \
-  $(ACE_ROOT)/ace/Containers.i \
-  $(ACE_ROOT)/ace/Containers_T.h \
-  $(ACE_ROOT)/ace/Containers_T.i \
-  $(ACE_ROOT)/ace/Containers_T.cpp \
-  $(ACE_ROOT)/ace/Singleton.h \
-  $(ACE_ROOT)/ace/Singleton.i \
-  $(ACE_ROOT)/ace/Singleton.cpp \
-  $(ACE_ROOT)/ace/Thread_Manager.i \
   $(TAO_ROOT)/tao/ORB_Core.i \
   $(TAO_ROOT)/tao/Strategies/advanced_resource.i \
   $(ACE_ROOT)/ace/Get_Opt.h \
   $(ACE_ROOT)/ace/Get_Opt.i
 
-.obj/client.o .obj/client.o .obj/client.o .obj/client.o: client.cpp ../lib/RT_Class.h ../lib/rtec_perf_export.h \
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp ../lib/RT_Class.h ../lib/rtec_perf_export.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  $(ACE_ROOT)/ace/svc_export.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
-  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/Sched_Params.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/OS_String.inl \
   $(ACE_ROOT)/ace/OS_Memory.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_TLI.h \
   $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
@@ -480,9 +501,7 @@ server: $(addprefix $(VDIR),$(server_OBJS))
   $(ACE_ROOT)/ace/ACE.i \
   $(ACE_ROOT)/ace/Malloc.h \
   $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Record.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/Log_Record.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Malloc.i \
@@ -614,8 +633,8 @@ server: $(addprefix $(VDIR),$(server_OBJS))
   ../lib/RTCORBA_Setup.inl ../lib/PriorityBand_Setup.h \
   ../lib/PriorityBand_Setup.inl ../lib/SyncScope_Setup.h \
   $(TAO_ROOT)/tao/Messaging/Messaging.h \
-  $(TAO_ROOT)/tao/Messaging/MessagingC.h \
   $(TAO_ROOT)/tao/Messaging/messaging_export.h \
+  $(TAO_ROOT)/tao/Messaging/MessagingC.h \
   $(TAO_ROOT)/tao/ValueBase.h \
   $(TAO_ROOT)/tao/ValueBase.i \
   $(TAO_ROOT)/tao/ValueFactory.h \
@@ -625,6 +644,8 @@ server: $(addprefix $(VDIR),$(server_OBJS))
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
   $(TAO_ROOT)/tao/Messaging/MessagingC.i \
+  $(TAO_ROOT)/tao/TAOC.h \
+  $(TAO_ROOT)/tao/TAOC.i \
   ../lib/SyncScope_Setup.inl ../lib/RTClient_Setup.inl \
   ../lib/RTPOA_Setup.h \
   $(TAO_ROOT)/tao/RTPortableServer/RTPortableServer.h \
@@ -748,15 +769,14 @@ server: $(addprefix $(VDIR),$(server_OBJS))
   ../lib/Client_Pair.inl ../lib/Loopback_Pair.h \
   ../lib/Loopback_Supplier.h ../lib/Loopback_Consumer.h \
   ../lib/Loopback_Pair.inl ../lib/Client_Group.inl ../lib/ORB_Task.h \
-  ../lib/ORB_Task.inl ../lib/Auto_Disconnect.h ../lib/Auto_Functor.h \
-  ../lib/Auto_Functor.inl ../lib/Auto_Functor.cpp \
-  ../lib/Auto_Disconnect.inl ../lib/Auto_Disconnect.cpp \
-  ../lib/ORB_Task_Activator.h ../lib/Task_Activator.h \
+  ../lib/ORB_Task.inl ../lib/ORB_Task_Activator.h ../lib/Task_Activator.h \
   $(ACE_ROOT)/ace/Copy_Disabled.h \
   ../lib/Task_Activator.inl ../lib/Task_Activator.cpp \
   ../lib/ORB_Task_Activator.inl ../lib/Low_Priority_Setup.h \
-  ../lib/Send_Task_Stopper.h ../lib/Send_Task_Stopper.inl \
-  ../lib/Low_Priority_Setup.cpp \
+  ../lib/Auto_Disconnect.h ../lib/Auto_Functor.h ../lib/Auto_Functor.inl \
+  ../lib/Auto_Functor.cpp ../lib/Auto_Disconnect.inl \
+  ../lib/Auto_Disconnect.cpp ../lib/Send_Task_Stopper.h \
+  ../lib/Send_Task_Stopper.inl ../lib/Low_Priority_Setup.cpp \
   $(ACE_ROOT)/ace/Basic_Stats.h \
   $(ACE_ROOT)/ace/Basic_Stats.inl \
   ../lib/EC_Destroyer.h ../lib/EC_Destroyer.inl ../lib/Client_Options.h \
@@ -767,9 +787,6 @@ server: $(addprefix $(VDIR),$(server_OBJS))
   $(TAO_ROOT)/tao/Strategies/strategies_export.h \
   $(TAO_ROOT)/tao/default_resource.h \
   $(TAO_ROOT)/tao/Resource_Factory.h \
-  $(TAO_ROOT)/tao/Pluggable.h \
-  $(TAO_ROOT)/tao/Pluggable.i \
-  $(TAO_ROOT)/tao/Protocol_Factory.h \
   $(ACE_ROOT)/ace/Service_Config.h \
   $(ACE_ROOT)/ace/Service_Config.i \
   $(ACE_ROOT)/ace/Reactor.h \
@@ -827,8 +844,6 @@ server: $(addprefix $(VDIR),$(server_OBJS))
   $(TAO_ROOT)/tao/Strategies/advanced_resource.i \
   $(TAO_ROOT)/tao/RTCORBA/Continuous_Priority_Mapping.h \
   $(TAO_ROOT)/tao/RTCORBA/Continuous_Priority_Mapping.i \
-  $(ACE_ROOT)/ace/Get_Opt.h \
-  $(ACE_ROOT)/ace/Get_Opt.i \
   $(ACE_ROOT)/ace/High_Res_Timer.h \
   $(ACE_ROOT)/ace/High_Res_Timer.i \
   $(ACE_ROOT)/ace/Stats.h \

@@ -1,3 +1,26 @@
+Tue Apr 30 09:31:42 2002  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* orbsvcs/performance-tests/RTEvent/TCP_Baseline/Makefile:
+	* orbsvcs/performance-tests/RTEvent/TCP_Baseline/server.cpp:
+	* orbsvcs/performance-tests/RTEvent/TCP_Baseline/client.cpp:
+	  Add new test to measure the baseline priority inversions in the
+	  TCP/IP stack, basically the canonical 'MT Cubit' configuration,
+	  but using a couple of sockets and the Reactor.
+
+	* orbsvcs/performance-tests/RTEvent/lib/Control.cpp:
+	* orbsvcs/performance-tests/RTEvent/lib/Low_Priority_Setup.cpp:
+	* orbsvcs/performance-tests/RTEvent/lib/RTClient_Setup.cpp:
+	* orbsvcs/performance-tests/RTEvent/lib/RTServer_Setup.cpp:
+	  Use reset() to change the state of auto_ptr objects.
+
+	* orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/Makefile:
+	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/Makefile:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/Makefile:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/Makefile:
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/Makefile:
+	* orbsvcs/performance-tests/RTEvent/lib/Makefile:
+	  Update deps.
+
 Wed May  1 00:59:39 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/receiver.cpp:
