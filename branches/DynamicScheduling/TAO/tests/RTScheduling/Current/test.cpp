@@ -30,8 +30,11 @@ main (int argc, char* argv [])
 	  
       Thread_Task task;
       
-      task.activate_task (orb.in ());
+      task.activate_task (orb.in (),
+			  4);
       orb->run ();
+
+      ACE_Thread_Manager::instance ()->wait ();
     }
   ACE_CATCHANY
     {
@@ -43,4 +46,6 @@ main (int argc, char* argv [])
   
   return 0;
 }
+
+
 
