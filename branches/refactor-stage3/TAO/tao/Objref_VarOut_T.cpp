@@ -15,6 +15,68 @@ ACE_RCSID (tao,
            Objref_VarOut_T,
            "$Id$")
 
+template<typename T>
+T *
+TAO_Life<T>::tao_duplicate (
+    T * p
+  )
+{
+  return T::_duplicate (p);
+}
+
+template<typename T>
+void
+TAO_Life<T>::tao_release (
+    T * p
+  )
+{
+  CORBA::release (p);
+}
+
+template<typename T>
+T *
+TAO_Life<T>::tao_nil (
+    void
+  )
+{
+  return T::_nil ();
+}
+
+template<typename T>
+CORBA::Boolean
+TAO_Life<T>::tao_marshal (
+    T * p,
+    TAO_OutputCDR & cdr
+  )
+{
+  return p->marshal (cdr);
+}
+
+// ================================================================
+
+template<typename T>
+T *
+TAO_Cast<T>::tao_narrow (
+    CORBA::Object *p
+    ACE_ENV_ARG_DECL
+  )
+{
+  return T::_narrow (p ACE_ENV_ARG_PARAMETER);
+}
+
+template<typename T>
+CORBA::Object *
+TAO_Cast<T>::tao_upcast (
+    void *src
+  )
+{
+  T ** tmp =
+    ACE_static_cast (T **, src);
+  return *tmp;
+}
+
+// =================================================================
+
 template <typename T, typename T_life>
 TAO_Objref_Var_T<T, T_life>::TAO_Objref_Var_T (void)
   : ptr_ (T_life::tao_nil ())
