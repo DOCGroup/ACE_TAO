@@ -26,6 +26,7 @@ marshalled and sent to the target object.</p>
   <li><a href="#Examples">Examples</a>
   <li><a href="#Design Issues">Design Issues</a>
   <li><a href="#Design Overview">Design Overview</a>
+  <li><a href="#Inheritance">Inheritance Issues</a>
   <li><a href="#Implementation Issues">Implementation Issues</a>
   <li><a href="#Acknowledgements">Acknowledgements</a>
   <li><a href="#ref">References</a>
@@ -331,6 +332,18 @@ interface_ptr _unchecked_narrow (CORBA::Object obj,
 </pre>
 
 <Hr><P>
+<h3><a name="Inheritance">Inheritance Issues</a></h3>
+<p>The original implementation of the Smart Proxies was cumbersome
+since when a smart proxy inherited from another the constructor
+explicitly had to call the constructor of the base class of the other
+proxy. To get over this issue, implementation inheritance was applied
+by <a href="mailto:brian.wallis@ot.com.au">Brian Wallis</a> where
+there is a higher level Smart_Proxy_Base which stores the
+<pre> <base_proxy_> </pre> member. This implementation was influenced
+by a similar implementation in Orbix. Thanks to Brian Wallis for this
+wonderful contribution to Smart Proxies in TAO.
+
+<Hr><P>
 <h3><a name="Implementation Issues">Implementation Issues</a></h3>
 
 <UL>
@@ -355,11 +368,15 @@ final smart proxy thru its create_proxy () method.
 href="mailto:schmidt@cs.wustl.edu">Dr.Schmidt</a> for their help in
 designing and discussing this feature. <P>
 
+<P><a href="mailto:brian.wallis@ot.com.au">Brian Wallis</a> for
+contributing the implementation inheritance feature. 
+
 <Hr><P>
 <h3><a name="ref">References</a></h3>
 
 <p> CORBA Distributed Objects using Orbix - Sean Baker </p>
 <p> Visigenic Documentation </p>
+<p> Orbix Documentation </p>
 
 <Hr><P>
 <p><h3>Last Update</h3></3>
