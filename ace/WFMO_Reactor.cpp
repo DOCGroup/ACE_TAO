@@ -2187,6 +2187,18 @@ ACE_WFMO_Reactor_Notify::dispatch_notifications (int &number_of_active_handles,
   return -1;
 }
 
+ACE_HANDLE
+ACE_WFMO_Reactor_Notify::notify_handle (void)
+{
+  return ACE_INVALID_HANDLE;
+}
+
+int
+ACE_WFMO_Reactor_Notify::dispatch_notify (ACE_HANDLE )
+{
+  return 0;
+}
+
 int
 ACE_WFMO_Reactor_Notify::close (void)
 {

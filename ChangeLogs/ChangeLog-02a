@@ -1,3 +1,9 @@
+Fri Aug 24 23:12:15 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/WFMO_Reactor.h: 
+	* ace/WFMO_Reactor.cpp (dispatch_notify): Fixed a compile error on
+	  MSVC.  
+
 Fri Aug 24 23:07:42 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Configuration_Import_Export.cpp: Fixed a compile error with
