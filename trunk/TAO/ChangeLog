@@ -1,3 +1,15 @@
+Fri Aug 27 14:07:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/examples/ORT/ORT.mpc:
+          Added iorinterceptor as base of the server project
+
+        * orbsvcs/examples/ORT/Object_Factory_i.cpp:
+          Commented out some code that uses a non portable way of getting
+          the ORT Factory, this now doesn't work anymore. I am working on
+          changing this example so that it works again, but for a day or so
+          comment out the incorrect code so that we get green build results
+          again
+
 Fri Aug 27 10:19:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Security.mpc:
