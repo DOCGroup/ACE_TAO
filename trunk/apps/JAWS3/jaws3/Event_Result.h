@@ -4,7 +4,7 @@
 #ifndef JAWS_EVENT_RESULT_H
 #define JAWS_EVENT_RESULT_H
 
-#include "ace/OS.h"
+#include "ace/OS_NS_errno.h"
 
 #include "jaws3/Export.h"
 
