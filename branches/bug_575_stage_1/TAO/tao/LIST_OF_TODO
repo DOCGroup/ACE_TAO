@@ -14,5 +14,3 @@
 - Optimize outgoing CDR's, I mean get it on stack..
 - Dont we want a cached transport on the server side...
 - Multi-threaded Single_Read test..
-- look for better print outs in Message State..=======
-- other protocols

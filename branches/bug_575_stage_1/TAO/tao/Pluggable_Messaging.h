@@ -158,7 +158,7 @@ public:
   virtual int is_ready_for_bidirectional (void) = 0;
 
   /// Reset the messaging the object
-  virtual void reset (void);
+  virtual void reset (void) = 0;
 };
 
 #if defined (__ACE_INLINE__)

@@ -102,9 +102,6 @@ TAO_UIOP_Transport::recv_i (char *buf,
       if (errno == EWOULDBLOCK)
         return 0;
 
-      // Close the connection
-      this->tms_->connection_closed ();
-
       return -1;
     }
   // @@ What are the other error handling here??
