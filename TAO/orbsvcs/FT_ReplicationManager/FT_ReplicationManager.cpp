@@ -37,11 +37,11 @@ ACE_RCSID (FT_ReplicationManager,
 
 TAO::FT_ReplicationManager::FT_ReplicationManager ()
   : ior_output_file_(0)
-  , nsName_(0)
+  , ns_name_(0)
   , internals_ ()
   , object_group_manager_ ()
-  , property_manager_ (object_group_manager_)
-  , generic_factory_ (object_group_manager_, property_manager_)
+  , property_manager_ (this->object_group_manager_)
+  , generic_factory_ (this->object_group_manager_, this->property_manager_)
 {
   // @note "this->init()" is not called here (in the constructor)
   //       since it may thrown an exception.  Throwing an exception in
@@ -55,12 +55,13 @@ TAO::FT_ReplicationManager::~FT_ReplicationManager (void)
 {
 }
 
+
 //////////////////////////////////////////////////////
 // FT_ReplicationManager public, non-CORBA methods
 
 int TAO::FT_ReplicationManager::parse_args (int argc, char * argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:q");
+  ACE_Get_Opt get_opts (argc, argv, "n:o:q");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -68,7 +69,11 @@ int TAO::FT_ReplicationManager::parse_args (int argc, char * argv[])
     switch (c)
     {
       case 'o':
-        ior_output_file_ = get_opts.opt_arg ();
+        this->ior_output_file_ = get_opts.opt_arg ();
+        break;
+
+      case 'n':
+        this->ns_name_ = get_opts.opt_arg ();
         break;
 
       case '?':
@@ -77,6 +82,7 @@ int TAO::FT_ReplicationManager::parse_args (int argc, char * argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s"
                            " -o <iorfile>"
+                           " -n <name-to-bind-in-NameService>"
                            "\n",
                            argv [0]),
                           -1);
@@ -89,35 +95,14 @@ int TAO::FT_ReplicationManager::parse_args (int argc, char * argv[])
 
 const char * TAO::FT_ReplicationManager::identity () const
 {
-  return identity_.c_str();
+  return this->identity_.c_str();
 }
 
-int TAO::FT_ReplicationManager::write_IOR()
+int TAO::FT_ReplicationManager::init (TAO_ORB_Manager & orbManager
+  ACE_ENV_ARG_DECL)
 {
-  int result = -1;
-  FILE* out = ACE_OS::fopen (ior_output_file_, "w");
-  if (out)
-  {
-    ACE_OS::fprintf (out, "%s", static_cast<const char *>(ior_));
-    ACE_OS::fclose (out);
-    result = 0;
-  }
-  else
-  {
-    ACE_ERROR ((LM_ERROR,
-      "Open failed for %s\n", ior_output_file_
-    ));
-  }
-  return result;
-}
-
-int
-TAO::FT_ReplicationManager::init (TAO_ORB_Manager & orbManager
-                             ACE_ENV_ARG_DECL)
-{
-  InternalGuard guard (internals_);
   int result = 0;
-  orb_ = orbManager.orb();
+  this->orb_ = orbManager.orb();
 
   // set our property validator
   FT_Property_Validator * property_validator;
@@ -130,69 +115,115 @@ TAO::FT_ReplicationManager::init (TAO_ORB_Manager & orbManager
 
   this->property_manager_.init (property_validator);
 
-  // Register with the ORB.
-  ior_ = orbManager.activate (this
-      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
-
   //TODO - the poa should be externally settable
-  this->object_group_manager_.init (orb_, orbManager.root_poa());
+  this->object_group_manager_.init (this->orb_, orbManager.root_poa());
 
   // Get an object reference for the ORBs IORManipulation object!
   CORBA::Object_var IORM =
-    orb_->resolve_initial_references (TAO_OBJID_IORMANIPULATION,
+    this->orb_->resolve_initial_references (TAO_OBJID_IORMANIPULATION,
                                       0
                                       ACE_ENV_ARG_PARAMETER);
   ACE_TRY_CHECK;
 
-  iorm_ = TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM.in ()
+  this->iorm_ = TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM.in ()
                                                   ACE_ENV_ARG_PARAMETER);
   ACE_TRY_CHECK;
 
-  if (ior_output_file_ != 0)
+  // Register with the ORB.
+  this->ior_ = orbManager.activate (this
+      ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  if (this->ior_output_file_ != 0)
   {
-    identity_ = "file:";
-    identity_ += ior_output_file_;
-    result = write_IOR();
+    this->identity_ = "file:";
+    this->identity_ += this->ior_output_file_;
+    result = this->write_ior();
   }
   else
   {
     // if no IOR file specified,
     // then always try to register with name service
-    nsName_ = "ReplicationManager";
+    this->ns_name_ = "ReplicationManager";
   }
 
-  if (nsName_ != 0)
+  if (this->ns_name_ != 0)
   {
-    identity_ = "name:";
-    identity_ += nsName_;
+    this->identity_ = "name:";
+    this->identity_ += this->ns_name_;
 
     CORBA::Object_var naming_obj =
-      orb_->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
+      this->orb_->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (CORBA::is_nil(naming_obj.in ())){
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "%T %n (%P|%t) Unable to find the Naming Service\n"),
+                        "%T %n (%P|%t) Unable to find the Naming Service\n"),
                         1);
     }
 
-    naming_context_ =
+    this->naming_context_ =
       CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
-    this_name_.length (1);
-    this_name_[0].id = CORBA::string_dup (nsName_);
+    this->this_name_.length (1);
+    this->this_name_[0].id = CORBA::string_dup (this->ns_name_);
 
     //@@ Do NOT use _this() here.  Need to use the POA with which we
     // were activated to get the IOR.  Another reason not to use the
     // TAO_ORB_Manager; it does not give us much flexibility w.r.t.
     // POA usage.  -- Steve Totten
-    naming_context_->rebind (this_name_, _this()
+    this->naming_context_->rebind (this->this_name_, _this()
                             ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
   }
 
+  return result;
+}
+
+int TAO::FT_ReplicationManager::idle (int & result)
+{
+  ACE_UNUSED_ARG (result);
+  int quit = 0;  // never quit
+  return quit;
+}
+
+
+int TAO::FT_ReplicationManager::fini (ACE_ENV_SINGLE_ARG_DECL)
+{
+  if (this->ior_output_file_ != 0)
+  {
+    ACE_OS::unlink (this->ior_output_file_);
+    this->ior_output_file_ = 0;
+  }
+  if (this->ns_name_ != 0)
+  {
+    this->naming_context_->unbind (this->this_name_
+                            ACE_ENV_ARG_PARAMETER);
+    this->ns_name_ = 0;
+  }
+  return 0;
+}
+
+////////////////////////////////////////////
+// FT_ReplicationManager private methods
+
+int TAO::FT_ReplicationManager::write_ior()
+{
+  int result = -1;
+  FILE* out = ACE_OS::fopen (this->ior_output_file_, "w");
+  if (out)
+  {
+    ACE_OS::fprintf (out, "%s", static_cast<const char *>(this->ior_));
+    ACE_OS::fclose (out);
+    result = 0;
+  }
+  else
+  {
+    ACE_ERROR ((LM_ERROR,
+      "Open failed for %s\n", this->ior_output_file_
+    ));
+  }
   return result;
 }
 
@@ -220,7 +251,7 @@ ACE_THROW_SPEC ((
   , FT::InterfaceNotFound
 ))
 {
-  return FT::FaultNotifier::_duplicate (fault_notifier_.in());
+  return FT::FaultNotifier::_duplicate (this->fault_notifier_.in());
 }
 
 //////////////////////////////////////////////////////
@@ -535,7 +566,7 @@ TAO::FT_ReplicationManager::create_test_iogr (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAU
       const char * domain_id = "TestFTDomains";
 
       // Object group id
-      test_iogr_group_id_ = (CORBA::ULongLong) 10;
+      this->test_iogr_group_id_ = (CORBA::ULongLong) 10;
 
       // create a property set
       TAO_PG::Properties_Encoder encoder;
@@ -559,26 +590,26 @@ TAO::FT_ReplicationManager::create_test_iogr (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAU
       // Create a few fictitious IORs
       //@@ Corrected to use corbaloc ObjectURL syntax.  -- Steve Totten
       CORBA::Object_var name1 =
-        orb_->string_to_object ("corbaloc:iiop:acme.cs.wustl.edu:6060/xyz"
+        this->orb_->string_to_object ("corbaloc:iiop:acme.cs.wustl.edu:6060/xyz"
                                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       CORBA::Object_var name2 =
-        orb_->string_to_object ("corbaloc::iiop:tango.cs.wustl.edu:7070/xyz"
+        this->orb_->string_to_object ("corbaloc::iiop:tango.cs.wustl.edu:7070/xyz"
                                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Create IOR list for use with merge_iors.
       TAO_IOP::TAO_IOR_Manipulation::IORList iors (3);
       iors.length (3);
-      iors [0] = object_group_manager_.create_object_group(
-                         test_iogr_group_id_,
+      iors [0] = this->object_group_manager_.create_object_group(
+                         this->test_iogr_group_id_,
                          domain_id,
                          "my-dummy-type-id",
                          props_in);
       iors [1] = name1;
       iors [2] = name2;
 
-      test_iogr_ = iorm_->merge_iors (iors ACE_ENV_ARG_PARAMETER);
+      this->test_iogr_ = this->iorm_->merge_iors (iors ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // we only need this so we can call IORManipulation's set_primary
@@ -587,7 +618,7 @@ TAO::FT_ReplicationManager::create_test_iogr (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAU
 
       // set primary
       CORBA::Boolean retval =
-        iorm_->set_primary (&ft_prop, name2.in (), test_iogr_.in () ACE_ENV_ARG_PARAMETER);
+        this->iorm_->set_primary (&ft_prop, name2.in (), this->test_iogr_.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (retval != 0)
@@ -632,8 +663,8 @@ TAO::FT_ReplicationManager::create_test_iogr (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAU
 
   ACE_DEBUG ((LM_DEBUG, "---------------------------------------------\n"));
 
-  //@@ Object_var (test_iogr_) must give up ownership to return IOGR
+  //@@ Object_var (this->test_iogr_) must give up ownership to return IOGR
   // as an Object_ptr.  -- Steve Totten
-  return test_iogr_._retn();
+  return this->test_iogr_._retn();
 }
 
