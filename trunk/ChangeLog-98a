@@ -1,3 +1,8 @@
+Tue Jan 27 02:38:16 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.{i,cpp}:
+	* ace/config-WinCE.h: More Windows CE insanities.
+
 Mon Jan 26 13:20:58 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_osf1_4.0_g++.GNU: added $(ACELIB)
