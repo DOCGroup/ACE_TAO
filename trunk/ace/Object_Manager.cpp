@@ -39,7 +39,6 @@ ACE_RCSID(ace, Object_Manager, "$Id$")
 # define ACE_APPLICATION_PREALLOCATED_ARRAY_DELETIONS
 #endif /* ACE_APPLICATION_PREALLOCATED_ARRAY_DELETIONS */
 
-
 // Static data.
 ACE_Object_Manager *ACE_Object_Manager::instance_ = 0;
 
@@ -59,9 +58,9 @@ void *ACE_Object_Manager::preallocated_array[
 
 ACE_Sig_Adapter *ace_service_config_sig_handler = 0;
 
-// Handy macros for use by ACE_Object_Manager constructor to preallocate or
-// delete an object or array, either statically (in global data) or
-// dynamically (on the heap).
+// Handy macros for use by ACE_Object_Manager constructor to
+// preallocate or delete an object or array, either statically (in
+// global data) or dynamically (on the heap).
 #if defined (ACE_HAS_STATIC_PREALLOCATION)
 # define ACE_PREALLOCATE_OBJECT(TYPE, ID)\
     {\
@@ -95,9 +94,11 @@ ACE_Sig_Adapter *ace_service_config_sig_handler = 0;
     preallocated_array[ID] = 0;
 #endif /* ACE_HAS_STATIC_PREALLOCATION */
 
-
 class ACE_Object_Manager_Preallocations
 {
+  // = TITLE
+  //   Performs preallocations of certain statically allocated
+  //   services needed by ACE.
 public:
   ACE_Object_Manager_Preallocations (void);
   ~ACE_Object_Manager_Preallocations (void);
@@ -117,10 +118,10 @@ ACE_Object_Manager_Preallocations *ace_object_manager_preallocations = 0;
 // ACE_Svc_Export context.
 extern "C" ACE_Export ACE_Service_Object *_make_ACE_Service_Manager (ACE_Service_Object_Exterminator *);
 
-ACE_Object_Manager_Preallocations::ACE_Object_Manager_Preallocations ()
+ACE_Object_Manager_Preallocations::ACE_Object_Manager_Preallocations (void)
 {
-  // Define the static services.  This macro call creates static service
-  // descriptors that are used for initialization below.
+  // Define the static services.  This macro call creates static
+  // service descriptors that are used for initialization below.
 #if !defined (ACE_HAS_WINCE)
   ACE_STATIC_SVC_DEFINE (ACE_Naming_Context_initializer,
                          ASYS_TEXT ("ACE_Naming_Context"),

@@ -229,7 +229,7 @@ public:
   // ace/Managed_Object.h for information on accessing preallocated
   // arrays.
 
-  static int starting_up ();
+  static int starting_up (void);
   // Returns 1 before ACE_Object_Manager has been constructed.  This
   // flag can be used to determine if the program is constructing
   // static objects.  If no static object spawns any threads, the
@@ -238,7 +238,7 @@ public:
   // this flag returns 0, if ACE_HAS_NONSTATIC_OBJECT_MANAGER is not
   // defined.)
 
-  static int shutting_down ();
+  static int shutting_down (void);
   // Returns 1 after ACE_Object_Manager has been destroyed.  This flag
   // can be used to determine if the program is in the midst of
   // destroying static objects.  (Note that the program might destroy
