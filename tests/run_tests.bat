@@ -100,6 +100,7 @@ call %run_cmd% %dopure% %platform% CDR_File_Test
 call %run_cmd% %dopure% %platform% CDR_Array_Test
 call %run_cmd% %dopure% %platform% Collection_Test
 call %run_cmd% %dopure% %platform% Conn_Test
+call %run_cmd% 5dopure% %platform% Dirent_Test
 call %run_cmd% %dopure% %platform% DLL_Test
 call %run_cmd% %dopure% %platform% DLList_Test
 call %run_cmd% %dopure% %platform% Dynamic_Priority_Test
