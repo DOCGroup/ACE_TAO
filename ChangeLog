@@ -1,3 +1,11 @@
+Fri Jun 18 11:49:23 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* docs/ACE-inheritance.pdf:
+	* docs/ACE-inheritance.ps.gz:
+
+	  These are simply out dated files. Doxygen produces better
+	  things. Users should refer to doxygen and not this.
+
 Fri Jun 18 11:47:22 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* docs/ACE-SSL.html:
@@ -165,7 +173,7 @@ Wed Jun 16 15:02:39 2004  Steve Huston  <shuston@riverace.com>
 	* ace/MEM_Acceptor.cpp:
 	* ace/SOCK_SEQPACK_Acceptor.cpp:
 	* ace/SOCK_SEQPACK_Association.cpp:
-	& ace/SOCK_SEQPACK_Connector.cpp:
+	* ace/SOCK_SEQPACK_Connector.cpp:
 	* ACEXML/common/SAXExceptions.cpp:
 	* ACEXML/common/URL_Addr.cpp:
 	* examples/C++NPv1/Process_Per_Connection_Logging_Server.cpp:
