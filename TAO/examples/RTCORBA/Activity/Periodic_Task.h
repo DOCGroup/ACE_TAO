@@ -84,6 +84,9 @@ class activity_Export Periodic_Task : public ACE_Task <ACE_SYNCH>
 
   /// = Stats house keeping
   Task_Stats* task_stats_;
+
+  ///Enable Network Priority Flag
+  int enable_network_priority_;
 };
 
 #endif /* PERIODIC_TASK_H */

@@ -51,6 +51,14 @@ Periodic_Task::init_task (ACE_Arg_Shifter& arg_shifter)
         {
           exec_time_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
+
+	  if (exec_time_ != 0)
+	    {
+	      ACE_NEW_RETURN (task_stats_, Task_Stats (5000), -1);
+	      
+	      if (task_stats_->init () == -1)
+		return -1;
+	    }
         }
       else if ((current_arg = arg_shifter.get_the_parameter ("-Phase")))
         {
@@ -61,20 +69,31 @@ Periodic_Task::init_task (ACE_Arg_Shifter& arg_shifter)
         {
           iter_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
-
-          // create the stat object.
-          ACE_NEW_RETURN (task_stats_, Task_Stats (iter_), -1);
-
-          if (task_stats_->init () == -1)
-            return -1;
+	  
+	  if (iter_ != 0)
+	    {
+	      // create the stat object.
+	      ACE_NEW_RETURN (task_stats_, Task_Stats (iter_), -1);
+	      
+	      if (task_stats_->init () == -1)
+		return -1;
+	    }
         }
       else if ((current_arg = arg_shifter.get_the_parameter ("-Load")))
         {
           load_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
+        }
+      else if ((current_arg = arg_shifter.get_the_parameter ("-Diffserv")))
+	{
+	  enable_network_priority_ = ACE_OS::atoi (current_arg);
+	  arg_shifter.consume_arg ();
+	  ACE_DEBUG ((LM_DEBUG,
+		      "Enable Network Priority %d\n",
+		      enable_network_priority_));
 
           return 0;
-        }
+	}
       else
         {
           ACE_DEBUG ((LM_DEBUG, "parse Task unknown option %s\n",

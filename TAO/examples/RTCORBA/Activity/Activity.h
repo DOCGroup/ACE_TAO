@@ -55,6 +55,7 @@ public:
 
   /// = Accessors
   CORBA::ORB_ptr orb (void);
+  RTCORBA::RTORB_ptr rt_orb (void);
   RTCORBA::Current_ptr current (void);
   long scope_policy (void);
   long sched_policy (void);

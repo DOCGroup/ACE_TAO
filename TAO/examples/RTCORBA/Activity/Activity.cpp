@@ -11,6 +11,7 @@
 #include "Job_i.h"
 #include "POA_Holder.h"
 #include "Builder.h"
+#include "Task_Stats.h"
 
 //***************************************************************//
 extern "C" void handler (int)
@@ -45,6 +46,12 @@ CORBA::ORB_ptr
 Activity::orb (void)
 {
   return orb_.in ();
+}
+
+RTCORBA::RTORB_ptr
+Activity::rt_orb (void)
+{
+  return rt_orb_.in ();
 }
 
 long
@@ -239,9 +246,15 @@ Activity::activate_schedule (ACE_ENV_SINGLE_ARG_DECL)
       name.length (1);
       name[0].id = CORBA::string_dup (task->job ());
 
-      CORBA::Object_var obj =
-                this->naming_->resolve (name ACE_ENV_ARG_PARAMETER);
+      ACE_DEBUG ((LM_DEBUG,
+		  "Before resolve %s\n",
+		  task->job ()));
+
+      CORBA::Object_var obj = this->naming_->resolve (name ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
+
+      ACE_DEBUG ((LM_DEBUG,
+		  "After resolve\n"));
 
       Job_var job = Job::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
@@ -254,12 +267,12 @@ Activity::activate_schedule (ACE_ENV_SINGLE_ARG_DECL)
             job->_get_policy (RTCORBA::PRIORITY_MODEL_POLICY_TYPE
                               ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
-
+	  
           RTCORBA::PriorityModelPolicy_var priority_policy =
             RTCORBA::PriorityModelPolicy::_narrow (policy.in ()
                                                    ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
-
+	  
           if (CORBA::is_nil (priority_policy.in ()))
             ACE_DEBUG ((LM_DEBUG,
                         "ERROR: Priority Model Policy not exposed!\n"));
@@ -268,7 +281,7 @@ Activity::activate_schedule (ACE_ENV_SINGLE_ARG_DECL)
               RTCORBA::PriorityModel priority_model =
                 priority_policy->priority_model (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_CHECK;
-
+	      
               if (priority_model == RTCORBA::CLIENT_PROPAGATED)
                 ACE_DEBUG ((LM_DEBUG,
                             "%s priority_model = RTCORBA::CLIENT_PROPAGATED\n", task->job ()));
@@ -277,14 +290,14 @@ Activity::activate_schedule (ACE_ENV_SINGLE_ARG_DECL)
                             "%s priority_model = RTCORBA::SERVER_DECLARED\n", task->job ()));
             }
         } /*  if (TAO_debug_level > 0) */
-
+      
       task->job (job.in ());
       task->activate_task (barrier_);
       active_task_count_++;
-
+      
       ACE_DEBUG ((LM_DEBUG, "Job %s scheduled\n", task->job ()));
     }
-
+  
   ACE_DEBUG ((LM_DEBUG, "Waiting for tasks to synch..."));
   barrier_->wait ();
   ACE_DEBUG ((LM_DEBUG, "Tasks have synched..."));
@@ -462,6 +475,8 @@ main (int argc, char *argv[])
 
   ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGHUP);
 
+  BASE_TIME::instance ();
+
   ACE_Timer_Heap timer_queue;
   ACE_Reactor::instance ()->set_timer_queue (&timer_queue);
 
@@ -473,7 +488,7 @@ main (int argc, char *argv[])
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+                           "Caught exception: Activity\n");
       return 1;
     }
   ACE_ENDTRY;
