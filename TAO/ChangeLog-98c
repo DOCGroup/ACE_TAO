@@ -1,3 +1,8 @@
+Mon Sep  7 10:22:19 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/Cubit/TAO/MT_Cubit: Fixed a bunch of warnings.  Thanks to
+ 	  David Levine for reporting this.
+
 Mon Sep 07 09:37:07 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp (TAO_ECG_UDP_Sender::push):

@@ -19,7 +19,7 @@
 #define ACE_URL_PROPERTIES_H
 
 #include "ace/SString.h"
-#include "ace/Array.h"
+#include "ace/Containers.h"
 
 class ACE_SVC_Export ACE_WString_Helper
   // = TITLE

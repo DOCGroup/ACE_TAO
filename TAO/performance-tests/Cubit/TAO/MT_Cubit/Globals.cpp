@@ -126,7 +126,7 @@ MT_Priority::get_low_priority (u_int num_low_priority,
                                ACE_Sched_Priority prev_priority,
                                u_int use_multiple_priority)
 {
-  ACE_Sched_Priority low_priority;
+  ACE_Sched_Priority low_priority = ACE_THR_PRI_FIFO_DEF;
 
   // Drop the priority.
   if (use_multiple_priority)
