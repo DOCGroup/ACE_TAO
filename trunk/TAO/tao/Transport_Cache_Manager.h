@@ -65,7 +65,7 @@ public:
   typedef HASH_MAP::iterator HASH_MAP_ITER;
 
   typedef ACE_Hash_Map_Entry <TAO_Cache_ExtId,
-                              TAO_Cache_IntId> 
+                              TAO_Cache_IntId>
     HASH_MAP_ENTRY;
 
   typedef TAO_Condition<TAO_SYNCH_MUTEX> CONDITION;
@@ -78,7 +78,6 @@ public:
   virtual ~TAO_Transport_Cache_Manager (void);
 
   /// Add the transport to the cache.
-
   /**
    * The transport has the property definition based on which caching
    * can be done. This method marks the transport
@@ -128,7 +127,7 @@ public:
   HASH_MAP &map (void);
 
 private:
-  /// Associate <ext_id> with <int_id>. Grabs the lock and calls the
+  /// Associate @a ext_id with @a int_id. Grabs the lock and calls the
   /// implementation function bind_i.
   int bind (TAO_Cache_ExtId &ext_id,
             TAO_Cache_IntId &int_id);

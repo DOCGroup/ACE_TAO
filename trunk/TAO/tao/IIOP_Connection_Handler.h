@@ -87,7 +87,7 @@ public:
 
   TAO_IIOP_Connection_Handler (ACE_Thread_Manager * = 0);
 
-  /// Constructor. <arg> parameter is used by the Acceptor to pass the
+  /// Constructor. @a arg parameter is used by the Acceptor to pass the
   /// protocol configuration properties for this connection.
   TAO_IIOP_Connection_Handler (TAO_ORB_Core *orb_core,
                                CORBA::Boolean flag,
@@ -97,7 +97,7 @@ public:
   /// Destructor.
   ~TAO_IIOP_Connection_Handler (void);
 
-  /// Called by the <Strategy_Acceptor> when the handler is completely
+  /// Called by the @c Strategy_Acceptor when the handler is completely
   /// connected.  Argument is unused.
   virtual int open (void *);
 
@@ -120,13 +120,14 @@ public:
   /// Add ourselves to Cache.
   int add_transport_to_cache (void);
 
-  /// Process the <listen_list>
+  /// Process the @a listen_list
   int process_listen_point_list (IIOP::ListenPointList &listen_list);
 
-    ///Check if network priority needs to be enabled
+  /// Check if network priority needs to be enabled
   int enable_network_priority (void);
 
-  ///Set the Diff-Serv codepoint if the Policy dicates the setting of Network Priority
+  /// Set the Diff-Serv codepoint if the Policy dictates the setting of
+  /// Network Priority
   int set_dscp_codepoint (void);
 
   int set_dscp_codepoint (int tos);
@@ -143,7 +144,7 @@ protected:
 
   /// Constructor that could be used by the derived classes.
   /**
-   * Sometimes new pluggbale protocols which have similarties with
+   * Sometimes new pluggable protocols which have similarities with
    * IIOP may be tempted to this class for their use. Classical
    * example being that of IIOP_SSL_Connection_Handler. This
    * constructor just initializes its base class and sets all of its

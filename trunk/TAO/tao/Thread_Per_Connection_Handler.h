@@ -50,7 +50,7 @@ public:
 
   /// = Active object activation method.
   /**
-   * @todo: This probably needs to go after x.4.1
+   * @todo This probably needs to go after x.4.1
    */
   virtual int activate (long flags = THR_NEW_LWP,
                         int n_threads = 1,
