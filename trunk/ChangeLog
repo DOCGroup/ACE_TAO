@@ -1,3 +1,12 @@
+Wed Mar 10 11:39:41 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/INET_Addr.cpp (set (const sockaddr_in *addr, int len)): Check
+	  the specified length to be sure we don't overrun the structure the
+	  address is copied to. There's a bit of evidence from a customer
+	  suggesting that (Windows) GetAcceptExSockaddrs() may return an
+	  address length of the length passed to AcceptEx, and not the
+	  length of a sockaddr_in structure. This guards against that.
+
 Wed Mar 10 11:29:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Task.cpp:

@@ -476,6 +476,9 @@ ACE_INET_Addr::set (const sockaddr_in *addr, int len)
 
   if (addr->sin_family == AF_INET)
     {
+      int maxlen = ACE_static_cast (int, sizeof (this->inet_addr_.in4_));
+      if (len > maxlen)
+        len = maxlen;
       ACE_OS::memcpy (&this->inet_addr_.in4_, addr, len);
       this->base_set (AF_INET, len);
       return 0;
@@ -483,6 +486,9 @@ ACE_INET_Addr::set (const sockaddr_in *addr, int len)
 #if defined (ACE_HAS_IPV6)
   else if (addr->sin_family == AF_INET6)
     {
+      int maxlen = ACE_static_cast (int, sizeof (this->inet_addr_.in6_));
+      if (len > maxlen)
+        len = maxlen;
       ACE_OS::memcpy (&this->inet_addr_.in6_, addr, len);
       this->base_set (AF_INET6, len);
       return 0;
