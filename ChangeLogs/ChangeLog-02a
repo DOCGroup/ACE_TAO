@@ -1,3 +1,10 @@
+Wed Jan 17 07:44:29 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* examples/Log_Msg/test_log_msg.cpp (main): Fixed the example by
+	  adding ACE_Log_Msg::PROCESS so that the messages do not print
+ 	  out (which is the correct behavior for this test).  Thanks to
+ 	  Mike Curtis <mccurry@my-deja.com> for reporting this.
+
 Tue Jan 16 15:28:22 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * netsvcs/lib/Server_Logging_Handler_T.cpp:
