@@ -683,6 +683,13 @@ TAO_GIOP_Twoway_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
                                    ACE_TRY_ENV);
 }
 
+void
+TAO_GIOP_Twoway_Invocation::reset_reply_received (void)
+{
+  this->rd_.reply_received() = 0;
+}
+
+
 int
 TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList_ptr exceptions,
                                     CORBA::Environment &ACE_TRY_ENV)

@@ -402,7 +402,22 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
                         -1);
 
     }
+  if (node->flags () != AST_Operation::OP_oneway)
+    {
+      *os << be_nl;
+      *os << "_tao_call.reset_reply_received();\n";
+    }
+      // check if there is an exception
+  if (this->gen_check_interceptor_exception (bt) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_operation_cs::"
+                         "gen_marshal_and_invoke - "
+                         "codegen for checking exception failed\n"),
+                        -1);
 
+    }
+  
   // Invoke preinvoke interceptor
   *os << be_nl << "TAO_INTERCEPTOR (" << be_idt << be_idt_nl
       << "_tao_vfr.preinvoke (" << be_idt << be_idt_nl
