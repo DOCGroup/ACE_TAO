@@ -114,49 +114,52 @@ sub Build_Core ()
     my @core_list = ();
 
     if ($Build_DLL) {
-        push @core_list, ($ACE_ROOT."\\ace\\ace_dll.dsp",
-                          $ACE_ROOT."\\apps\\gperf\\src\\gperf_lib.dsp",
-                          $ACE_ROOT."\\apps\\gperf\\src\\gperf.dsp",
-                          $ACE_ROOT."\\TAO\\TAO_IDL\\tao_idl.dsp",
-                          $ACE_ROOT."\\TAO\\tao\\TAO.dsp",
-                          $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\orbsvcs.dsw");
+        @core_list = ($ACE_ROOT."\\ace\\ace_dll.dsp",
+                      $ACE_ROOT."\\apps\\gperf\\src\\gperf_lib.dsp",
+                      $ACE_ROOT."\\apps\\gperf\\src\\gperf.dsp",
+                      $ACE_ROOT."\\TAO\\TAO_IDL\\tao_idl.dsp",
+                      $ACE_ROOT."\\TAO\\tao\\TAO.dsp",
+                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\orbsvcs.dsw");
+
+        foreach $c (@core_list) {
+            if ($Build_Debug) {
+                $Status = Build ($c, "ALL - Win32 Debug");
+                return if $Status != 0 && !$Ignore_errors;
+            }
+            if ($Build_Release) {
+                $Status = Build ($c, "ALL - Win32 Release");
+                return if $Status != 0 && !$Ignore_errors;
+            }
+        }
     }
     if ($Build_LIB) {
-        push @core_list, ($ACE_ROOT."\\ace\\ace_lib.dsp",
-                          $ACE_ROOT."\\apps\\gperf\\src\\gperf_lib.dsp",
-                          $ACE_ROOT."\\apps\\gperf\\src\\gperf.dsp",
-                          $ACE_ROOT."\\TAO\\TAO_IDL\\tao_idl_static.dsp",
-                          $ACE_ROOT."\\TAO\\tao\\TAO_Static.dsp",
-                          $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\Svc_Utils_Static.dsp",
-                          $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\CosNaming_Static.dsp",
-                          $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\CosProperty_Static.dsp",
-                          $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\CosTrading_Static.dsp",
-                          $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\AV_Static.dsp",
-                          $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\RTSched_Static.dsp",
-                          $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\RTEvent_Static.dsp",
-                          $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\CosEvent_Static.dsp",
-                          $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\CosConcurrency_Static.dsp",
-                          $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\CosLifeCycle_Static.dsp",
-                          $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\CosTime_Static.dsp",
-                          $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\DsLogAdmin_Static.dsp");
-    }
+        @core_list = ($ACE_ROOT."\\ace\\ace_lib.dsp",
+                      $ACE_ROOT."\\apps\\gperf\\src\\gperf_lib.dsp",
+                      $ACE_ROOT."\\apps\\gperf\\src\\gperf.dsp",
+                      $ACE_ROOT."\\TAO\\TAO_IDL\\tao_idl_static.dsp",
+                      $ACE_ROOT."\\TAO\\tao\\TAO_Static.dsp",
+                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\Svc_Utils_Static.dsp",
+                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\CosNaming_Static.dsp",
+                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\CosProperty_Static.dsp",
+                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\CosTrading_Static.dsp",
+                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\AV_Static.dsp",
+                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\RTSched_Static.dsp",
+                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\RTEvent_Static.dsp",
+                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\CosEvent_Static.dsp",
+                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\CosConcurrency_Static.dsp",
+                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\CosLifeCycle_Static.dsp",
+                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\CosTime_Static.dsp",
+                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\DsLogAdmin_Static.dsp");
 
-    foreach $c (@core_list) {
-        if ($Build_DLL && $Build_Debug) {
-            $Status = Build ($c, "ALL - Win32 Debug");
-            return if $Status != 0 && !$Ignore_errors;
-        }
-        elsif ($Build_DLL && $Build_Release) {
-            $Status = Build ($c, "ALL - Win32 Release");
-            return if $Status != 0 && !$Ignore_errors;
-        }
-        elsif ($Build_LIB && $Build_Debug) {
-            $Status = Build ($c, "ALL - Win32 Static Debug");
-            return if $Status != 0 && !$Ignore_errors;
-        }
-        elsif ($Build_LIB && $Build_Release) {
-            $Status = Build ($c, "ALL - Win32 Static Release");
-            return if $Status != 0 && !$Ignore_errors;
+        foreach $c (@core_list) {
+            if ($Build_Debug) {
+                $Status = Build ($c, "ALL - Win32 Static Debug");
+                return if $Status != 0 && !$Ignore_errors;
+            }
+            if ($Build_Release) {
+                $Status = Build ($c, "ALL - Win32 Static Release");
+                return if $Status != 0 && !$Ignore_errors;
+            }
         }
     }
 }
