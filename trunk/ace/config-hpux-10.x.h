@@ -155,17 +155,19 @@ extern int h_errno;	/* This isn't declared in a header file on HP-UX */
 // the functions are not implemented.
 //#  define ACE_HAS_POSIX_SEM
 #  define ACE_HAS_PTHREAD_T
+#  define ACE_HAS_PTHREAD_EQUAL
+
+// Platform's sigwait() has one arg
+#  define ACE_HAS_ONEARG_SIGWAIT
 
 // Platform supports reentrant functions (i.e., all the POSIX *_r functions).
-#define ACE_HAS_REENTRANT_FUNCTIONS
+#  define ACE_HAS_REENTRANT_FUNCTIONS
 // But this one is not like other platforms
-#define ACE_CTIME_R_RETURNS_INT
-
-// Platform has pthread_attr_delete instead of pthread_attr_destroy
-// ACE needs to define PRIORITY_MAX
-#  define ACE_HAS_SETKIND_NP
+#  define ACE_CTIME_R_RETURNS_INT
 
 #  define ACE_HAS_THREAD_SPECIFIC_STORAGE
+// ... and it's looked up via an argument
+#  define ACE_HAS_PTHREAD_GETSPECIFIC_DATAPTR
 
 // They forgot a const in the prototype of pthread_cond_timedwait
 #  define ACE_LACKS_CONST_TIMESPEC_PTR
