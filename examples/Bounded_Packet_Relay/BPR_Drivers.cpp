@@ -35,164 +35,18 @@ ACE_RCSID(Bounded_Packet_Relay, BPR_Driver, "$Id$")
 
 // Constructor.
 
-Input_Device_Wrapper_Base::Input_Device_Wrapper_Base (ACE_Thread_Manager *input_task_mgr)
-  : ACE_Task_Base (input_task_mgr),
-    send_input_msg_cmd_ (0),
-    input_period_ (ACE_ONE_SECOND_IN_USECS),
-    is_active_ (0)
-{
-}
-
-// Destructor.
-
-Input_Device_Wrapper_Base::~Input_Device_Wrapper_Base (void)
-{
-  delete send_input_msg_cmd_;
-}
- 
-// Sets send input message command in the input device driver object.
-
-int
-Input_Device_Wrapper_Base::set_send_input_msg_cmd (Command_Base *send_input_msg_cmd)
-{
-  // Delete the old command (if any), then set the new command.
-  delete send_input_msg_cmd_;
-  send_input_msg_cmd_ = send_input_msg_cmd;
-  return 0;
-}
-
-// Sets period between when input messages are produced.
-
-int 
-Input_Device_Wrapper_Base::set_input_period (u_long input_period)
-{
-  input_period_ = input_period;
-  return 0;
-}
-
-// Sets count of messages to send.
-
-int 
-Input_Device_Wrapper_Base::set_send_count (long count)
-{
-  send_count_ = count;
-  return 0;
-}
-
-// Request that the input device stop sending messages
-// and terminate its thread.  Should return 1 if it will do so, 0
-// if it has already done so, or -1 if there is a problem doing so.
-
-int 
-Input_Device_Wrapper_Base::request_stop (void)
-{
-  if (is_active_)
-    {
-      is_active_ = 0;
-      return 1;
-    }
-
-  return 0;
-}
-
-// This method runs the input device loop in the new thread.
-
-int 
-Input_Device_Wrapper_Base::svc (void)
-{
-  long count;
-  ACE_Time_Value timeout;
-  ACE_Message_Block *message;
-
-  // Set a flag to indicate we're active.
-  is_active_ = 1;
-
-  // Start with the total count of messages to send.
-  for (count = send_count_;
-       // While we're still marked active, and there are packets to send.
-       is_active_ && count != 0;
-       )
-    {
-      // make sure there is a send command object
-      if (send_input_msg_cmd_ == 0)
-        {
-          is_active_ = 0;
-          ACE_ERROR_RETURN ((LM_ERROR, "%t %p\n", 
-                             "send message command object not instantiated"), 
-                            -1);
-        }
-
-      // create an input message to send
-      message = create_input_message ();
-      if (message == 0)
-        {
-          is_active_ = 0;
-          ACE_ERROR_RETURN ((LM_ERROR, "%t %p\n", 
-                             "Failed to create input message object"), 
-                             -1);
-        }
-
-      // send the input message
-      if (send_input_msg_cmd_->execute ((void *) message) < 0)
-        {
-          is_active_ = 0;
-          delete message;
-          ACE_ERROR_RETURN ((LM_ERROR, "%t %p\n", 
-                             "Failed executing send message command object"), 
-                            -1);
-        }
-
-      // If all went well, decrement count of messages to send,
-      // and run the reactor event loop unti we get a timeout
-      // or something happens in a registered upcall.
-      if (count > 0) 
-        --count;
-
-      timeout = ACE_Time_Value (0, input_period_);
-      reactor_.run_event_loop (timeout);
-    }
-
-  is_active_ = 0;
-
-  return 0;
-}
-
-// Sends a newly created message block, carrying data
-// read from the underlying input device, by passing a
-// pointer to the message block to its command execution.
-
-int 
-Input_Device_Wrapper_Base::send_input_message (ACE_Message_Block *amb)
-{
-  if (send_input_msg_cmd_)
-    return send_input_msg_cmd_->execute ((void *) amb);
-  else
-    {
-      ACE_ERROR_RETURN ((LM_ERROR, "%t %p\n", 
-                         "Input_Device_Wrapper_Base::send_input_message: "
-                         "command object not instantiated"), 
-                        -1);
-    }
-}
-
-// Constructor.
-
 template <ACE_SYNCH_DECL>
 Bounded_Packet_Relay<ACE_SYNCH_USE>::Bounded_Packet_Relay (ACE_Thread_Manager *input_task_mgr,
                                                            Input_Device_Wrapper_Base *input_wrapper,
                                                            Output_Device_Wrapper_Base *output_wrapper)
   : input_task_mgr_ (input_task_mgr),
     input_wrapper_ (input_wrapper),
-    input_thread_handle_ (0),
     output_wrapper_ (output_wrapper),
-    queue_,
-    is_active_ (0),
-    transmission_lock_,
-    queue_lock_,
     transmission_number_ (0),
     packets_sent_ (0),
     status_ (Bounded_Packet_Relay_Base::UN_INITIALIZED),
-    elapsed_duration_ (0)
+    transmission_start_ (0, 0),
+    transmission_end_ (0, 0)
 {
   if (input_task_mgr_ == 0)
     input_task_mgr_ = ACE_Thread_Manager::instance ();
@@ -203,8 +57,6 @@ Bounded_Packet_Relay<ACE_SYNCH_USE>::Bounded_Packet_Relay (ACE_Thread_Manager *i
 template <ACE_SYNCH_DECL>
 Bounded_Packet_Relay<ACE_SYNCH_USE>::~Bounded_Packet_Relay (void)
 {
-  delete input_wrapper_;
-  delete output_wrapper_;
 }
 
 // Requests output be sent to output device.
@@ -400,6 +252,150 @@ Bounded_Packet_Relay<ACE_SYNCH_USE>::receive_input (void * arg)
                       -1);
   return 0;
 }
+
+
+// Constructor.
+
+Input_Device_Wrapper_Base::Input_Device_Wrapper_Base (ACE_Thread_Manager *input_task_mgr)
+  : ACE_Task_Base (input_task_mgr),
+    send_input_msg_cmd_ (0),
+    input_period_ (ACE_ONE_SECOND_IN_USECS),
+    is_active_ (0)
+{
+}
+
+// Destructor.
+
+Input_Device_Wrapper_Base::~Input_Device_Wrapper_Base (void)
+{
+  delete send_input_msg_cmd_;
+}
+ 
+// Sets send input message command in the input device driver object.
+
+int
+Input_Device_Wrapper_Base::set_send_input_msg_cmd (Command_Base *send_input_msg_cmd)
+{
+  // Delete the old command (if any), then set the new command.
+  delete send_input_msg_cmd_;
+  send_input_msg_cmd_ = send_input_msg_cmd;
+  return 0;
+}
+
+// Sets period between when input messages are produced.
+
+int 
+Input_Device_Wrapper_Base::set_input_period (u_long input_period)
+{
+  input_period_ = input_period;
+  return 0;
+}
+
+// Sets count of messages to send.
+
+int 
+Input_Device_Wrapper_Base::set_send_count (long count)
+{
+  send_count_ = count;
+  return 0;
+}
+
+// Request that the input device stop sending messages
+// and terminate its thread.  Should return 1 if it will do so, 0
+// if it has already done so, or -1 if there is a problem doing so.
+
+int 
+Input_Device_Wrapper_Base::request_stop (void)
+{
+  if (is_active_)
+    {
+      is_active_ = 0;
+      return 1;
+    }
+
+  return 0;
+}
+
+// This method runs the input device loop in the new thread.
+
+int 
+Input_Device_Wrapper_Base::svc (void)
+{
+  long count;
+  ACE_Time_Value timeout;
+  ACE_Message_Block *message;
+
+  // Set a flag to indicate we're active.
+  is_active_ = 1;
+
+  // Start with the total count of messages to send.
+  for (count = send_count_;
+       // While we're still marked active, and there are packets to send.
+       is_active_ && count != 0;
+       )
+    {
+      // make sure there is a send command object
+      if (send_input_msg_cmd_ == 0)
+        {
+          is_active_ = 0;
+          ACE_ERROR_RETURN ((LM_ERROR, "%t %p\n", 
+                             "send message command object not instantiated"), 
+                            -1);
+        }
+
+      // create an input message to send
+      message = create_input_message ();
+      if (message == 0)
+        {
+          is_active_ = 0;
+          ACE_ERROR_RETURN ((LM_ERROR, "%t %p\n", 
+                             "Failed to create input message object"), 
+                             -1);
+        }
+
+      // send the input message
+      if (send_input_msg_cmd_->execute ((void *) message) < 0)
+        {
+          is_active_ = 0;
+          delete message;
+          ACE_ERROR_RETURN ((LM_ERROR, "%t %p\n", 
+                             "Failed executing send message command object"), 
+                            -1);
+        }
+
+      // If all went well, decrement count of messages to send,
+      // and run the reactor event loop unti we get a timeout
+      // or something happens in a registered upcall.
+      if (count > 0) 
+        --count;
+
+      timeout = ACE_Time_Value (0, input_period_);
+      reactor_.run_event_loop (timeout);
+    }
+
+  is_active_ = 0;
+
+  return 0;
+}
+
+// Sends a newly created message block, carrying data
+// read from the underlying input device, by passing a
+// pointer to the message block to its command execution.
+
+int 
+Input_Device_Wrapper_Base::send_input_message (ACE_Message_Block *amb)
+{
+  if (send_input_msg_cmd_)
+    return send_input_msg_cmd_->execute ((void *) amb);
+  else
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "%t %p\n", 
+                         "Input_Device_Wrapper_Base::send_input_message: "
+                         "command object not instantiated"), 
+                        -1);
+    }
+}
+
 
 // Parse the input and execute the corresponding command.
 
