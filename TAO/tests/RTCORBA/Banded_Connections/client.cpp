@@ -317,7 +317,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       invocation_exception_test (client_propagated_obj.in (),
-                                 client_priority1,
+                                 client_priority3,
                                  ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
