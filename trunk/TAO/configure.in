@@ -57,7 +57,7 @@ changequote(, )dnl
 TAO_VERSION=`head -1 ${srcdir}/VERSION | sed 's/.*version \([0-9.]*\).*/\1/'`
 changequote([, ])dnl
 
-AM_INIT_AUTOMAKE("$TAO_PACKAGE", "$TAO_VERSION", )
+AM_INIT_AUTOMAKE("$TAO_PACKAGE", "$TAO_VERSION", DUMMY)
 
 dnl Generate a header file with all settings.
 dnl AM_CONFIG_HEADER(tao/config.h)
@@ -72,14 +72,46 @@ dnl
 dnl Check if system supports "#! /bin/sh" line in scripts
 AC_SYS_INTERPRETER
 
+
+dnl Check for ace-config script
+AC_CHECK_PROG(ACE_CONFIG, ace-config, ace-config,) dnl
+if test -z "$ACE_CONFIG"; then
+  AC_MSG_WARN(ace-config script not found)
+  AC_MSG_WARN(TAO may not find all of the necessary ACE related libraries)
+fi
+
 dnl Check the C compiler and preprocessor.
 AC_PROG_CC
 AC_PROG_CPP
 AC_PROG_CC_C_O
 
+dnl The C++ compiler used to compile TAO must be the same as the one
+dnl used to compile ACE.
+if test -n $ACE_CONFIG; then
+  CXX=`$ACE_CONFIG --cxx ace`
+fi
+
 dnl Check the C++ compiler and preprocessor.
 AC_PROG_CXX
 AC_PROG_CXXCPP
+
+dnl Disable building of static libraries by default
+AC_DISABLE_STATIC
+
+dnl Enable Libtool module support
+AC_LIBTOOL_DLOPEN
+
+dnl FIXME: Temporary hack to make libtool work with g++.
+dnl        Shared library support will only work with GNU g++ and GNU ld
+dnl        right now.
+save_CC="$CC"
+CC="$CXX"
+
+dnl Check for libtool and turn on Automake processing for Libtool
+AM_PROG_LIBTOOL
+
+CC="$save_CC"
+
 
 dnl This checks for a binary called gm4, gnum4 or m4, and assigns
 dnl whatever was found (or "gonzo") to the M4 macro.
@@ -103,10 +135,9 @@ dnl library with the "right" version information.
 dnl We really should switch to a version scheme that is compatible with
 dnl libtool.
 dnl               -Ossama
-TAO_CURRENT=`expr $TAO_MAJOR + $TAO_MINOR`
-TAO_AGE=$TAO_MINOR
-TAO_REVISION=$TAO_BETA
-
+  TAO_CURRENT=`expr $TAO_MAJOR + $TAO_MINOR`
+  TAO_AGE=$TAO_MINOR
+  TAO_REVISION=$TAO_BETA
 fi
 
 AC_SUBST(TAO_CURRENT)
@@ -151,13 +182,6 @@ dnl if test -z "$YACC"; then
 dnl   ./missing yacc
 dnl fi
 
-dnl Check for ace-config script
-AC_CHECK_PROG(ACE_CONFIG, ace-config, ace-config,) dnl
-if test -z "$ACE_CONFIG"; then
-  AC_MSG_WARN(ace-config script not found)
-  AC_MSG_WARN(TAO may not find all of the necessary ACE related libraries)
-fi
-
 dnl We actually check for this in the user AC_ARG_WITH(--with-gperf) 
 dnl block since it is more convenient to put it there.
 dnl Check for gperf program
@@ -166,21 +190,6 @@ dnl AC_CHECK_PROGS(GPERF, gperf-ace gperf,) dnl
 dnl Check for profiling progam
 AC_CHECK_PROGS(PROF, gprof prof,) dnl
 
-dnl Since we are linking TAO with the C++ compiler, and since
-dnl libtool checks linker characteristics using the C compiler,
-dnl temporarily state that the C compiler is the C++ compiler.
-TEMP_CC="$CC"
-CC="$CXX"
-
-dnl Disable building of static libraries by default
-AM_DISABLE_STATIC
-
-dnl Check for libtool and turn on Automake processing for Libtool
-AM_PROG_LIBTOOL
-
-
-dnl Restore the C compiler variable
-CC="$TEMP_CC"
 
 dnl
 dnl SECTION 2: Configure script command line options
@@ -428,9 +437,9 @@ AC_ARG_WITH(gperf,
                   AC_MSG_ERROR(Specify the gperf program.)
                   ;;
                 *)
-                  AC_CHECK_PROGS(GPERF, ${withval} gperf-ace gperf,) dnl
+                  AC_CHECK_PROGS(GPERF, ${withval},) dnl
                   if test -n "$GPERF"; then
-                    AC_DEFINE_UNQUOTED(ACE_GPERF, "${withval}")
+                    AC_DEFINE_UNQUOTED(ACE_GPERF, "${withval}") dnl
                   else
                     AC_MSG_ERROR(gperf program ${withval} does not exist.)
                   fi
@@ -438,10 +447,11 @@ AC_ARG_WITH(gperf,
                esac
               ],
               [
-               if test -z "$GPERF"; then
-                 AC_MSG_WARN(No gperf program found.  TAO will not use perfect hashing.)
+               AC_CHECK_PROGS(GPERF, gperf-ace gperf,) dnl
+               if test -n "$GPERF"; then
+                 AC_DEFINE_UNQUOTED(ACE_GPERF, "${GPERF}") dnl
                else
-                 AC_DEFINE_UNQUOTED(ACE_GPERF, "${GPERF}")
+                 AC_MSG_WARN(No gperf program found.  TAO will not use perfect hashing.)
                fi
               ])
 
@@ -603,13 +613,11 @@ AM_CONDITIONAL(TEMPLATES_REQUIRE_SOURCE,
 dnl Additional flags to set by the configure script
 
 if test -n "$GXX" && test -z "$ACE_CONFIG"; then
-  TAO_CXXFLAGS="$TAO_CXXFLAGS -Wall -Wpointer-arith -Wno-switch"
-else
-  TAO_CXXFLAGS="$TAO_CXXFLAGS -Wno-switch"
+  TAO_CXXFLAGS="$TAO_CXXFLAGS -W -Wall -Wpointer-arith"
 fi
 
 if test -n "$GCC" && test -z "$ACE_CONFIG"; then
-  TAO_CFLAGS="$TAO_CFLAGS -Wall -Wpointer-arith -Wno-switch"
+  TAO_CFLAGS="$TAO_CFLAGS -W -Wall -Wpointer-arith"
 fi
 
 dnl Combine package set flags with user's flags.
@@ -619,7 +627,6 @@ dnl X_CFLAGS comes from AC_PATH_XTRA.  It may include, for example,
 dnl additional include file paths or macros that need to be defined
 dnl in order for X11 related files to be compiled properly.
 CXXFLAGS="$TAO_CXXFLAGS $CXXFLAGS"
-CXXCPPFLAGS="$TAO_CXXCPPFLAGS $CXXCPPFLAGS"
 CFLAGS="$TAO_CFLAGS $CFLAGS"
 CPPFLAGS="$TAO_CPPFLAGS $CPPFLAGS"
 LDFLAGS="$TAO_LDFLAGS $LDFLAGS"
@@ -652,20 +659,21 @@ dnl We can finally create all the files listed here; Makefile is
 dnl created from Makefile.in, etc.  Top-level Makefiles should be
 dnl created first.
 AC_OUTPUT([
-           Makefile
-           TAO_IDL/Makefile
-           TAO_IDL/ast/Makefile
-           TAO_IDL/be/Makefile
-           TAO_IDL/be_include/Makefile
-           TAO_IDL/driver/Makefile
-           TAO_IDL/fe/Makefile
-           TAO_IDL/include/Makefile
-           TAO_IDL/narrow/Makefile
-           TAO_IDL/util/Makefile
-           tao/Makefile
-           tao-config
-          ])
-
-echo ""
-echo "Configuration of TAO is now complete."
-echo ""
+  Makefile
+  TAO_IDL/Makefile
+  TAO_IDL/ast/Makefile
+  TAO_IDL/be/Makefile
+  TAO_IDL/be_include/Makefile
+  TAO_IDL/driver/Makefile
+  TAO_IDL/fe/Makefile
+  TAO_IDL/include/Makefile
+  TAO_IDL/narrow/Makefile
+  TAO_IDL/util/Makefile
+  tao/Makefile
+  tao-config
+ ],
+ [
+  echo ""
+  echo "Configuration of TAO is now complete."
+  echo ""
+ ])
