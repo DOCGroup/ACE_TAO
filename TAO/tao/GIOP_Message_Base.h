@@ -47,7 +47,7 @@ public:
 
   /// Constructor
   TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core,
-                         size_t input_cdr_size = ACE_CDR::DEFAULT_BUFSIZE);
+			 size_t input_cdr_size = ACE_CDR::DEFAULT_BUFSIZE);
 
   /// Dtor
   virtual ~TAO_GIOP_Message_Base (void);
@@ -55,7 +55,7 @@ public:
   /// Initialize the underlying state object based on the <major> and
   /// <minor> revision numbers
   virtual void init (CORBA::Octet major,
-                     CORBA::Octet minor);
+		     CORBA::Octet minor);
 
   /// Reset the messaging the object
   virtual void reset (void);
@@ -63,8 +63,8 @@ public:
   /// Write the RequestHeader in to the <cdr> stream. The underlying
   /// implementation of the mesaging should do the right thing.
   virtual int generate_request_header (TAO_Operation_Details &op,
-                                       TAO_Target_Specification &spec,
-                                       TAO_OutputCDR &cdr);
+				       TAO_Target_Specification &spec,
+				       TAO_OutputCDR &cdr);
 
   /// Write the RequestHeader in to the <cdr> stream.
   virtual int generate_locate_request_header (
@@ -84,8 +84,8 @@ public:
   /// message is read and handled. Returns -1 on errors. If <block> is
   /// 1, then reply is read in a blocking manner.
   virtual int read_message (TAO_Transport *transport,
-                            int block = 0,
-                            ACE_Time_Value *max_wait_time = 0);
+			    int block = 0,
+			    ACE_Time_Value *max_wait_time = 0);
 
 
   /// Format the message. As we have not written the message length in
@@ -105,23 +105,23 @@ public:
    * 0 if there are no more messages in <incoming>.
    */
   virtual int extract_next_message (ACE_Message_Block &incoming,
-                                    TAO_Queued_Data *&qd);
+				    TAO_Queued_Data *&qd);
 
   /// Check whether the node <qd> needs consolidation from <incoming>
   virtual int consolidate_node (TAO_Queued_Data *qd,
-                                ACE_Message_Block &incoming);
+				ACE_Message_Block &incoming);
 
   /// Get the details of the message parsed through the <qd>.
   virtual void get_message_data (TAO_Queued_Data *qd);
 
   /// @@Bala:Docu??
   virtual int consolidate_fragments (TAO_Queued_Data *dqd,
-                                     const TAO_Queued_Data *sqd);
+				     const TAO_Queued_Data *sqd);
 
   /// Process the request message that we have received on the
   /// connection
   virtual int process_request_message (TAO_Transport *transport,
-                                       TAO_Queued_Data *qd);
+				       TAO_Queued_Data *qd);
 
 
   /// Parse the reply message that we received and return the reply
@@ -143,22 +143,25 @@ protected:
 
   /// Processes the <GIOP_REQUEST> messages
   int process_request (TAO_Transport *transport,
-                       TAO_InputCDR &input,
-                       TAO_OutputCDR &output);
+		       TAO_InputCDR &input,
+		       TAO_OutputCDR &output,
+		       TAO_GIOP_Message_Generator_Parser *);
 
   /// Processes the <GIOP_LOCATE_REQUEST> messages
   int process_locate_request (TAO_Transport *transport,
-                              TAO_InputCDR &input,
-                              TAO_OutputCDR &output);
+			      TAO_InputCDR &input,
+			      TAO_OutputCDR &output,
+			      TAO_GIOP_Message_Generator_Parser *);
 
   /// Set the state
   void set_state (CORBA::Octet major,
-                  CORBA::Octet minor);
+		  CORBA::Octet minor,
+		  TAO_GIOP_Message_Generator_Parser *&);
 
   /// Print out a debug messages..
   void dump_msg (const char *label,
-                 const u_char *ptr,
-                 size_t len);
+		 const u_char *ptr,
+		 size_t len);
 
   /// Get the message type. The return value would be one of the
   /// following:
@@ -174,33 +177,33 @@ private:
   /// NOTE: If the GIOP header happens to change in the future, we can
   /// push this method in to the generator_parser classes.
   int write_protocol_header (TAO_GIOP_Message_Type t,
-                             TAO_OutputCDR &msg);
-
+			     TAO_OutputCDR &msg);
 
   /// Make a <GIOP_LOCATEREPLY> and hand that over to the transport so
   /// that it can be sent over the connection.
   /// NOTE:As on date 1.1 & 1.2 seem to have similar headers. Till an
   /// unmanageable difference comes let them be implemented here.
   int make_send_locate_reply (TAO_Transport *transport,
-                              TAO_GIOP_Locate_Request_Header &request,
-                              TAO_GIOP_Locate_Status_Msg &status,
-                              TAO_OutputCDR &output);
+			      TAO_GIOP_Locate_Request_Header &request,
+			      TAO_GIOP_Locate_Status_Msg &status,
+			      TAO_OutputCDR &output,
+			      TAO_GIOP_Message_Generator_Parser *);
 
   /// Send error messages
   int  send_error (TAO_Transport *transport);
 
   /// Close a connection, first sending GIOP::CloseConnection.
   void send_close_connection (const TAO_GIOP_Message_Version &version,
-                              TAO_Transport *transport,
-                              void *ctx);
+			      TAO_Transport *transport,
+			      void *ctx);
 
   /// We must send a LocateReply through <transport>, this request
   /// resulted in some kind of exception.
   int send_reply_exception (TAO_Transport *transport,
-                            TAO_ORB_Core* orb_core,
-                            CORBA::ULong request_id,
-                            IOP::ServiceContextList *svc_info,
-                            CORBA::Exception *x);
+			    TAO_ORB_Core* orb_core,
+			    CORBA::ULong request_id,
+			    IOP::ServiceContextList *svc_info,
+			    CORBA::Exception *x);
 
 
   /// Write the locate reply header
@@ -210,7 +213,7 @@ private:
 
   /// Is the messaging object ready for processing BiDirectional
   /// request/response?
-  virtual int is_ready_for_bidirectional (void);
+  virtual int is_ready_for_bidirectional (TAO_OutputCDR &msg);
 
   /// Creates a new node for the queue with a message block in the
   /// node of size <sz>..
@@ -230,7 +233,7 @@ private:
 
 protected:
   /// The generator and parser state.
-  TAO_GIOP_Message_Generator_Parser *generator_parser_;
+  // TAO_GIOP_Message_Generator_Parser *generator_parser_;
 
 };
 
