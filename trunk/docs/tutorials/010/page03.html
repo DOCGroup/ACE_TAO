@@ -20,7 +20,6 @@ that the message blocks to, indeed, get freed when we're done with 'em.
 
 <HR WIDTH="100%">
 <PRE>
-
 <font color=red>// $Id$</font>
 
 <font color=blue>#ifndef</font> <font color=purple>BLOCK_H</font>
@@ -32,32 +31,37 @@ that the message blocks to, indeed, get freed when we're done with 'em.
 # pragma once
 <font color=blue>#endif</font> <font color=red>/* ACE_LACKS_PRAGMA_ONCE */</font>
 
-<font color=red>/*
-   This simple ACE_Message_Block derivative will inform us of it's construction
-   and destruction.  We'll use this to assure ourselves that we don't have any
-   memory leaks.  In a real application, of course, this isn't necessary.
- */</font>
+<font color=red>/* This simple ACE_Message_Block derivative will inform us of it's
+   construction and destruction.  We'll use this to assure ourselves
+   that we don't have any memory leaks.  In a real application, of
+   course, this isn't necessary.  */</font>
 class Block : public ACE_Message_Block
 {
 public:
   Block (void)
   {
-    ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) Block ctor 0x%x\n</font>", (void *) this));
+    ACE_DEBUG ((LM_DEBUG,
+                "<font color=green>(%P|%t) Block ctor 0x%x\n</font>",
+                (void *) this));
   }
 
   Block (size_t size)
-   : ACE_Message_Block (size)
+    : ACE_Message_Block (size)
   {
-    ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) Block ctor 0x%x\n</font>", (void *) this));
+    ACE_DEBUG ((LM_DEBUG,
+                "<font color=green>(%P|%t) Block ctor 0x%x\n</font>",
+                (void *) this));
   }
 
-  virtual ~ Block (void)
+  virtual ~Block (void)
   {
-    ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) Block dtor 0x%x\n</font>", (void *) this));
+    ACE_DEBUG ((LM_DEBUG,
+                "<font color=green>(%P|%t) Block dtor 0x%x\n</font>",
+                (void *) this));
   }
 };
 
-<font color=blue>#endif</font>
+<font color=blue>#endif</font> <font color=red>/* BLOCK_H */</font>
 </PRE>
 <HR WIDTH="100%">
 <P>

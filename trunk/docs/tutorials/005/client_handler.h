@@ -12,8 +12,7 @@
    ACE_Event_Handler, you'll have to contain and maintain an
    ACE_SOCK_Stream instance yourself.  With ACE_Svc_Handler (which is
    a derivative of ACE_Event_Handler) some of those details are
-   handled for you.
- */
+   handled for you.  */
 
 #include "ace/Svc_Handler.h"
 

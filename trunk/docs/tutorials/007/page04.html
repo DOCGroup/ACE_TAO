@@ -19,71 +19,60 @@ I finally had enough code to move it out of the header.
 <P>
 <HR WIDTH="100%">
 <PRE>
-
 <font color=red>// $Id$</font>
 
 <font color=blue>#include</font> "<font color=green>client_acceptor.h</font>"
 
-<font color=red>/*
-   Construct ourselves with the chosen concurrency strategy.  Notice that we also
-   set our Thread_Pool reference to our private instance.
- */</font>
-<font color=#008888>Client_Acceptor::Client_Acceptor</font>( int _concurrency )
- :  concurrency_(_concurrency)
-   ,the_thread_pool_(private_thread_pool_)
+<font color=red>/* Construct ourselves with the chosen concurrency strategy.  Notice
+   that we also set our Thread_Pool reference to our private instance.  */</font>
+<font color=#008888>Client_Acceptor::Client_Acceptor</font> (int concurrency)
+  : concurrency_ (concurrency),
+    the_thread_pool_ (private_thread_pool_)
 {
 }
 
-<font color=red>/*
-   Construct ourselves with a reference to somebody else' Thread_Pool.  Obvioulsy
-   our concurrency strategy is "<font color=green>thread_pool_</font>" at this point.
- */</font>
-<font color=#008888>Client_Acceptor::Client_Acceptor</font>( Thread_Pool & _thread_pool )
- :  concurrency_(thread_pool_)
-   ,the_thread_pool_(_thread_pool)
+<font color=red>/* Construct ourselves with a reference to somebody else' Thread_Pool.
+   Obvioulsy our concurrency strategy is "<font color=green>thread_pool_</font>" at this point.  */</font>
+<font color=#008888>Client_Acceptor::Client_Acceptor</font> (Thread_Pool &thread_pool)
+  : concurrency_ (thread_pool),
+    the_thread_pool_ (thread_pool)
 {
 }
 
-<font color=red>/*
-   When we're destructed, we may need to cleanup after ourselves.  If we're running
-   with a thread pool that we own, it is up to us to close it down.
- */</font>
-<font color=#008888>Client_Acceptor::~Client_Acceptor</font>( void )
+<font color=red>/* When we're destructed, we may need to cleanup after ourselves.  If
+   we're running with a thread pool that we own, it is up to us to
+   close it down.  */</font>
+<font color=#008888>Client_Acceptor::~Client_Acceptor</font> (void)
 {
-	if( this->concurrency() == thread_pool_ && thread_pool_is_private() )
-	{
-		thread_pool()->close();
-	}
+  if (this->concurrency() == thread_pool_ && thread_pool_is_private ())
+    thread_pool ()->close ();
 }
 
-<font color=red>/*
-   Similar to the destructor (and close() below) it is necessary for us to open the
-   thread pool in some circumstances.
+<font color=red>/* Similar to the destructor (and close() below) it is necessary for
+   us to open the thread pool in some circumstances.
 
-   Notice how we delegate most of the open() work to the open() method of our baseclass.
- */</font>
-int <font color=#008888>Client_Acceptor::open</font>( const ACE_INET_Addr & _addr, ACE_Reactor * _reactor, int _pool_size )
+   Notice how we delegate most of the open() work to the open() method
+   of our baseclass.  */</font>
+int 
+<font color=#008888>Client_Acceptor::open</font> (const ACE_INET_Addr &addr,
+                       ACE_Reactor *reactor,
+                       int pool_size)
 {
-	if( this->concurrency() == thread_pool_ && thread_pool_is_private() )
-	{
-		thread_pool()->open(_pool_size);
-	}
+  if (this->concurrency() == thread_pool_ && thread_pool_is_private ())
+    thread_pool ()->open (pool_size);
 
-	return <font color=#008888>inherited::open</font>(_addr,_reactor);
+  return <font color=#008888>inherited::open</font> (addr, reactor);
 }
 
-<font color=red>/*
-   Here again we find that we have to manage the thread pool.  Like open() we also delegate
-   the other work to our baseclass.
- */</font>
-int <font color=#008888>Client_Acceptor::close</font>(void)
+<font color=red>/* Here again we find that we have to manage the thread pool.  Like
+   open() we also delegate the other work to our baseclass.  */</font>
+int 
+<font color=#008888>Client_Acceptor::close</font> (void)
 {
-	if( this->concurrency() == thread_pool_ && thread_pool_is_private() )
-	{
-		thread_pool()->close();
-	}
+  if (this->concurrency() == thread_pool_ && thread_pool_is_private ())
+    thread_pool ()->close ();
 
-	return <font color=#008888>inherited::close</font>();
+  return <font color=#008888>inherited::close</font> ();
 }
 
 </PRE>

@@ -20,7 +20,6 @@ that's causing all the fuss.
 <P>
 <HR WIDTH="100%">
 <PRE>
-
 <font color=red>// $Id$</font>
 
 <font color=blue>#ifndef</font> <font color=purple>DATA_H</font>
@@ -31,21 +30,28 @@ class DataBase
 public:
   DataBase (void)
   {
-    ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) DataBase ctor 0x%x\n</font>", (void *) this));
+    ACE_DEBUG ((LM_DEBUG,
+                "<font color=green>(%P|%t) DataBase ctor 0x%x\n</font>",
+                (void *) this));
   }
-  virtual ~ DataBase (void)
+  virtual ~DataBase (void)
   {
-    ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) DataBase dtor 0x%x\n</font>", (void *) this));
+    ACE_DEBUG ((LM_DEBUG,
+                "<font color=green>(%P|%t) DataBase dtor 0x%x\n</font>",
+                (void *) this));
   }
 
   void who_am_i (void)
   {
-    ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) DataBase instance 0x%x\n</font>", (void *) this));
+    ACE_DEBUG ((LM_DEBUG,
+                "<font color=green>(%P|%t) DataBase instance 0x%x\n</font>",
+                (void *) this));
   }
 
   virtual void what_am_i (void)
   {
-    ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) I am a DataBase object\n</font>"));
+    ACE_DEBUG ((LM_DEBUG,
+                "<font color=green>(%P|%t) I am a DataBase object\n</font>"));
   }
 
 };
@@ -54,32 +60,39 @@ class Data : public DataBase
 {
 public:
   Data (void)
-  : message_ (-1)
+    : message_ (-1)
   {
-    ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) Data ctor 0x%x\n</font>", (void *) this));
+    ACE_DEBUG ((LM_DEBUG,
+                "<font color=green>(%P|%t) Data ctor 0x%x\n</font>",
+                (void *) this));
   }
 
   Data (int message)
-  : message_ (message)
+    : message_ (message)
   {
-    ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) Data ctor 0x%x for message %d\n</font>", (void *) this, message_));
+    ACE_DEBUG ((LM_DEBUG,
+                "<font color=green>(%P|%t) Data ctor 0x%x for message %d\n</font>",
+                (void *) this, message_));
   }
-  virtual ~ Data (void)
+  virtual ~Data (void)
   {
-    ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) Data dtor 0x%x\n</font>", (void *) this));
+    ACE_DEBUG ((LM_DEBUG,
+                "<font color=green>(%P|%t) Data dtor 0x%x\n</font>",
+                (void *) this));
   }
 
   void what_am_i (void)
   {
-    ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) I am a Data object for message %d\n</font>", message_));
+    ACE_DEBUG ((LM_DEBUG,
+                "<font color=green>(%P|%t) I am a Data object for message %d\n</font>",
+                message_));
   }
 
 protected:
   int message_;
-
 };
 
-<font color=blue>#endif</font>
+<font color=blue>#endif</font> <font color=red>/* DATA_H */</font>
 </PRE>
 <HR WIDTH="100%">
 <P>
