@@ -16,7 +16,7 @@
 #include "ace/OS_NS_arpa_inet.h"
 #include "ace/OS_NS_netdb.h"
 #include "ace/OS_NS_unistd.h"
-#include "ace/os_include/net/os_if.h"
+#include "ace/OS_NS_sys_socket.h"
 
 ACE_RCSID (ace,
            INET_Addr,
@@ -894,7 +894,8 @@ ACE_INET_Addr::set_interface (const char *intf_name)
   if (this->get_type () == PF_INET6 && 
       IN6_IS_ADDR_LINKLOCAL (&this->inet_addr_.in6_.sin6_addr))
     {
-      this->inet_addr_.in6_.sin6_scope_id = if_nametoindex (intf_name);
+      this->inet_addr_.in6_.sin6_scope_id = 
+	ACE_OS::if_nametoindex (intf_name);
 
       // check to see if the interface lookup succeeded
       if (this->inet_addr_.in6_.sin6_scope_id != 0)
