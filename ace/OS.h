@@ -828,7 +828,7 @@ typedef int key_t;
 
 #   if defined (ACE_PSOSIM)
 
-#     include /**/ <ace/sys_conf.h> /* system configuration file */
+#     include /**/ "ace/sys_conf.h" /* system configuration file */
 #     include /**/ <psos.h>         /* pSOS+ system calls                */
 #     include /**/ <pna.h>          /* pNA+ TCP/IP Network Manager calls */
 
@@ -884,7 +884,7 @@ typedef int key_t;
 //      typedef unsigned char wchar_t;
 #     endif
 
-#     include /**/ <ace/sys_conf.h> /* system configuration file */
+#     include /**/ "ace/sys_conf.h" /* system configuration file */
 #     include /**/ <configs.h>   /* includes all pSOS headers */
 //    #include /**/ <psos.h>    /* pSOS system calls */
 #     include /**/ <pna.h>      /* pNA+ TCP/IP Network Manager calls */
@@ -1999,6 +1999,12 @@ struct stat
 
 
 #if defined (ACE_HAS_PRIOCNTL)
+  // Need to #include thread.h before #defining THR_BOUND, etc.,
+  // when building without threads on SunOS 5.x.
+#  if defined (sun)
+#    include /**/ <thread.h>
+#  endif /* sun */
+
   // Need to #include these before #defining USYNC_PROCESS on SunOS 5.x.
 # include /**/ <sys/rtpriocntl.h>
 # include /**/ <sys/tspriocntl.h>
@@ -2666,19 +2672,45 @@ public:
 #   define ACE_SCHED_OTHER 0
 #   define ACE_SCHED_FIFO 1
 #   define ACE_SCHED_RR 2
-#   define THR_CANCEL_DISABLE      0
-#   define THR_CANCEL_ENABLE       0
-#   define THR_CANCEL_DEFERRED     0
-#   define THR_CANCEL_ASYNCHRONOUS 0
-#   define THR_JOINABLE    0       /* ?? ignore in most places */
-#   define THR_DETACHED    0       /* ?? ignore in most places */
-#   define THR_DAEMON      0       /* ?? ignore in most places */
-#   define THR_BOUND       0       /* ?? ignore in most places */
-#   define THR_NEW_LWP     0       /* ?? ignore in most places */
-#   define THR_SUSPENDED   0       /* ?? ignore in most places */
-#   define THR_SCHED_FIFO          0
-#   define THR_SCHED_RR            0
-#   define THR_SCHED_DEFAULT       0
+#   if !defined (THR_CANCEL_DISABLE)
+#     define THR_CANCEL_DISABLE      0
+#   endif /* ! THR_CANCEL_DISABLE */
+#   if !defined (THR_CANCEL_ENABLE)
+#     define THR_CANCEL_ENABLE       0
+#   endif /* ! THR_CANCEL_ENABLE */
+#   if !defined (THR_CANCEL_DEFERRED)
+#     define THR_CANCEL_DEFERRED     0
+#   endif /* ! THR_CANCEL_DEFERRED */
+#   if !defined (THR_CANCEL_ASYNCHRONOUS)
+#     define THR_CANCEL_ASYNCHRONOUS 0
+#   endif /* ! THR_CANCEL_ASYNCHRONOUS */
+#   if !defined (THR_JOINABLE)
+#     define THR_JOINABLE    0     /* ignore in most places */
+#   endif /* ! THR_JOINABLE */
+#   if !defined (THR_DETACHED)
+#     define THR_DETACHED    0     /* ignore in most places */
+#   endif /* ! THR_DETACHED */
+#   if !defined (THR_DAEMON)
+#     define THR_DAEMON      0     /* ignore in most places */
+#   endif /* ! THR_DAEMON */
+#   if !defined (THR_BOUND)
+#     define THR_BOUND       0     /* ignore in most places */
+#   endif /* ! THR_BOUND */
+#   if !defined (THR_NEW_LWP)
+#     define THR_NEW_LWP     0     /* ignore in most places */
+#   endif /* ! THR_NEW_LWP */
+#   if !defined (THR_SUSPENDED)
+#     define THR_SUSPENDED   0     /* ignore in most places */
+#   endif /* ! THR_SUSPENDED */
+#   if !defined (THR_SCHED_FIFO)
+#     define THR_SCHED_FIFO 0
+#   endif /* ! THR_SCHED_FIFO */
+#   if !defined (THR_SCHED_RR)
+#     define THR_SCHED_RR 0
+#   endif /* ! THR_SCHED_RR */
+#   if !defined (THR_SCHED_DEFAULT)
+#     define THR_SCHED_DEFAULT 0
+#   endif /* ! THR_SCHED_DEFAULT */
 #   if !defined (USYNC_THREAD)
 #     define USYNC_THREAD 0
 #   endif /* ! USYNC_THREAD */
@@ -2946,7 +2978,7 @@ extern "C" ssize_t pread (int fd,
 extern "C" ssize_t pwrite (int fd,
                            const void *buf,
                            size_t n,
-                           off_t offset); 
+                           off_t offset);
 #endif  /* ACE_LACKS_PREAD_PROTOTYPE && (_XOPEN_SOURCE - 0) != 500 */
 
 # if defined (ACE_LACKS_UALARM_PROTOTYPE)
@@ -3932,7 +3964,7 @@ extern "C" {
 #     endif /* !RTLD_LAZY */
 #   if defined (__KCC)
 #   define ACE_DEFAULT_SHLIB_MODE RTLD_LAZY | RTLD_GROUP | RTLD_NODELETE
-#   else    
+#   else
 #   define ACE_DEFAULT_SHLIB_MODE RTLD_LAZY
 #   endif /* KCC */
 #   elif defined (__hpux)
