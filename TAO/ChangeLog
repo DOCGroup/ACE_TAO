@@ -1,3 +1,9 @@
+Tue Oct 28 23:19:18 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/util/utl_scope.cpp (lookup_pseudo):
+
+          Removed unused local variables.
+
 Tue Oct 28 22:46:46 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService.dsp:
