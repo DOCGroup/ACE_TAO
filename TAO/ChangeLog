@@ -1,8 +1,20 @@
+Wed Dec  8 11:42:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/CurrentC.{h,cpp,i,inl}:
+        * tao/Current.cpp:
+          Regenerated and replace .i file with .inl variant
+
+        * tao/Makefile.am:
+          Updated because of change above
+
+        * tao/diffs/Current.diff:
+          Removed this file, no diffs are needed anymore
+
 Wed Dec  8 08:04:32 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/tests/Application_Test/ifr_dii_client.cpp:
         * orbsvcs/tests/Application_Test/test_i.cpp:
-        
+
           Fixed some unused arg warnings.
 
 Wed Dec  8 11:42:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
