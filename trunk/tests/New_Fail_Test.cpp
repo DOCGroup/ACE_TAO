@@ -44,7 +44,7 @@ USELIB("..\ace\aced.lib");
 // If it doesn't ever fail an allocation, there's a warning that something is
 // wrong.  The allocated memory is always freed to avoid masking a leak
 // somewhere else in the test.
-static const int BIG_BLOCK = 1024*1024;	      // 1MB
+static const int BIG_BLOCK = 1024*1024;       // 1MB
 static const int MAX_ALLOCS_IN_TEST = 4096;   // about 4GB max in the test
 
 
@@ -78,6 +78,11 @@ main (int, ASYS_TCHAR *[])
     !defined (ACE_HAS_EXCEPTIONS)
   ACE_DEBUG ((LM_NOTICE, "Out-of-memory will throw an unhandled exception\n"));
   ACE_DEBUG ((LM_NOTICE, "Rebuild with exceptions=1 to prevent this, but it may impair performance.\n"));
+
+  // Use the static function addresses, to prevent warnings about the
+  // functions not being used.
+  if (&try_ace_new) /* null */;
+  if (&try_ace_new_return) /* null */;
 #else
 
   char *blocks[MAX_ALLOCS_IN_TEST];
