@@ -92,6 +92,8 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open
                                           ACE_Event_Handler::ACCEPT_MASK);
   if (result != -1)
     this->reactor (reactor);
+  else
+    this->peer_acceptor_.close ();
 
   return result;
 }
@@ -455,7 +457,6 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::dump (void) const
               this->service_name_ == 0 ? ACE_LIB_TEXT ("<unknown>") : this->service_name_));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nservice_description_ = %s"),
               this->service_description_ == 0 ? ACE_LIB_TEXT ("<unknown>") : this->service_description_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nservice_port_ = %d"), this->service_port_));
   this->service_addr_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
@@ -487,6 +488,19 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::get_handle (void) const
 // connection acceptance, and concurrency, and then register <this>
 // with the Reactor and listen for connection requests at the
 // designated <local_addr>.
+template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
+ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open
+  (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
+   ACE_Reactor *reactor,
+   int /* flags unused */,
+   int use_select,
+   int reuse_addr)
+{
+  ACE_TRACE ("ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open");
+  return this->open
+    (local_addr, reactor, 0, 0, 0, 0, 0, 0, use_select, reuse_addr);
+}
+
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
 ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open
@@ -498,7 +512,8 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open
    ACE_Scheduling_Strategy<SVC_HANDLER> *sch_s,
    const ACE_TCHAR *service_name,
    const ACE_TCHAR *service_description,
-   int use_select)
+   int use_select,
+   int reuse_addr)
 {
   ACE_TRACE ("ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open");
 
@@ -541,7 +556,7 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open
     }
   this->accept_strategy_ = acc_s;
 
-  if (this->accept_strategy_->open (local_addr, 1) == -1)
+  if (this->accept_strategy_->open (local_addr, reuse_addr) == -1)
     return -1;
 
   // Set the peer acceptor's handle into non-blocking mode.  This is a
@@ -588,7 +603,8 @@ template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
 ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Strategy_Acceptor
   (const ACE_TCHAR service_name[],
    const ACE_TCHAR service_description[],
-   int use_select)
+   int use_select,
+   int reuse_addr)
     : creation_strategy_ (0),
       delete_creation_strategy_ (0),
       accept_strategy_ (0),
@@ -598,8 +614,7 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Strategy_Acceptor
       scheduling_strategy_ (0),
       delete_scheduling_strategy_ (0),
       service_name_ (0),
-      service_description_ (0),
-      service_port_ (0)
+      service_description_ (0)
 {
   ACE_TRACE ("ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Strategy_Acceptor");
 
@@ -610,6 +625,7 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Strategy_Acceptor
     ACE_ALLOCATOR (this->service_description_,
                    ACE_OS::strdup (service_description));
   this->use_select_ = use_select;
+  this->reuse_addr_ = reuse_addr;
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
@@ -622,7 +638,8 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Strategy_Acceptor
    ACE_Scheduling_Strategy<SVC_HANDLER> *sch_s,
    const ACE_TCHAR service_name[],
    const ACE_TCHAR service_description[],
-   int use_select)
+   int use_select,
+   int reuse_addr)
     : creation_strategy_ (0),
       delete_creation_strategy_ (0),
       accept_strategy_ (0),
@@ -632,8 +649,7 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Strategy_Acceptor
       scheduling_strategy_ (0),
       delete_scheduling_strategy_ (0),
       service_name_ (0),
-      service_description_ (0),
-      service_port_ (0)
+      service_description_ (0)
 {
   ACE_TRACE ("ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Strategy_Acceptor");
 
@@ -645,7 +661,8 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Strategy_Acceptor
                   sch_s,
                   service_name,
                   service_description,
-                  use_select) == -1)
+                  use_select,
+                  reuse_addr) == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("%p\n"),
                 ACE_LIB_TEXT ("ACE_Strategy_Acceptor::ACE_Strategy_Acceptor")));

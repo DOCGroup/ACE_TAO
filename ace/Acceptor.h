@@ -82,16 +82,38 @@ public:
                 int reuse_addr = 1);
 
   /**
-   * Initialize and register <this> with the Reactor and listen for
-   * connection requests at the designated <local_addr>.  <flags>
-   * indicates how <SVC_HANDLER>'s should be initialized prior to
-   * being activated.  Right now, the only flag that is processed is
-   * <ACE_NONBLOCK>, which enables non-blocking I/O on the
-   * <SVC_HANDLER> when it is opened.  If <use_select> is non-zero
-   * then <select> is used to determine when to break out of the
-   * <accept> loop.  <reuse_addr> is passed down to the
-   * <PEER_ACCEPTOR>.  If it is non-zero this will allow the OS to
-   * reuse this listen port.
+   * Open the contained @c PEER_ACCEPTOR object to begin listening, and
+   * register with the specified reactor for accept events.
+   *
+   * The @c PEER_ACCEPTOR handle is put into non-blocking mode as a
+   * safeguard against the race condition that can otherwise occur
+   * between the time when the passive-mode socket handle is "ready"
+   * and when the actual @c accept call is made.  During this
+   * interval, the client can shutdown the connection, in which case,
+   * the <accept> call can hang.
+   *
+   * @arg local_addr   The address to listen at.
+   * @arg reactor      Pointer to the ACE_Reactor instance to register
+   *                   this object with. The default is the singleton.
+   * @arg flags        Flags to control what mode an accepted socket
+   *                   will be put into after it is accepted. The only
+   *                   legal value for this argument is @c ACE_NONBLOCK,
+   *                   which enables non-blocking mode on the accepted
+   *                   peer stream object in @c SVC_HANDLER.  The default
+   *                   is 0.
+   * @arg use_select   Affects behavior when called back by the reactor
+   *                   when a connection can be accepted.  If non-zero,
+   *                   this object will accept all pending connections,
+   *                   intead of just the one that triggered the reactor
+   *                   callback.  Uses ACE_OS::select() internally to
+   *                   detect any remaining acceptable connections.
+   *                   The default is 1.
+   * @arg reuse_addr   Passed to the @c PEER_ACCEPTOR::open() method with
+   *                   @p local_addr.  Generally used to request that the
+   *                   OS allow reuse of the listen port.  The default is 1.
+   *
+   * @retval 0  Success
+   * @retval -1 Failure, @c errno contains an error code.
    */
   virtual int open (const ACE_PEER_ACCEPTOR_ADDR &,
                     ACE_Reactor * = ACE_Reactor::instance (),
@@ -229,7 +251,8 @@ public:
   /// Default constructor.
   ACE_Strategy_Acceptor (const ACE_TCHAR service_name[] = 0,
                          const ACE_TCHAR service_description[] = 0,
-                         int use_select = 1);
+                         int use_select = 1,
+                         int reuse_addr = 1);
 
   /**
    * Initialize the appropriate strategies for creation, passive
@@ -245,7 +268,48 @@ public:
                          ACE_Scheduling_Strategy<SVC_HANDLER> * = 0,
                          const ACE_TCHAR service_name[] = 0,
                          const ACE_TCHAR service_description[] = 0,
-                         int use_select = 1);
+                         int use_select = 1,
+                         int reuse_addr = 1);
+
+  /**
+   * Open the contained @c PEER_ACCEPTOR object to begin listening, and
+   * register with the specified reactor for accept events.
+   *
+   * The @c PEER_ACCEPTOR handle is put into non-blocking mode as a
+   * safeguard against the race condition that can otherwise occur
+   * between the time when the passive-mode socket handle is "ready"
+   * and when the actual @c accept call is made.  During this
+   * interval, the client can shutdown the connection, in which case,
+   * the <accept> call can hang.
+   *
+   * @arg local_addr   The address to listen at.
+   * @arg reactor      Pointer to the ACE_Reactor instance to register
+   *                   this object with. The default is the singleton.
+   * @arg flags        Flags to control what mode an accepted socket
+   *                   will be put into after it is accepted. The only
+   *                   legal value for this argument is @c ACE_NONBLOCK,
+   *                   which enables non-blocking mode on the accepted
+   *                   peer stream object in @c SVC_HANDLER.  The default
+   *                   is 0.
+   * @arg use_select   Affects behavior when called back by the reactor
+   *                   when a connection can be accepted.  If non-zero,
+   *                   this object will accept all pending connections,
+   *                   intead of just the one that triggered the reactor
+   *                   callback.  Uses ACE_OS::select() internally to
+   *                   detect any remaining acceptable connections.
+   *                   The default is 1.
+   * @arg reuse_addr   Passed to the @c PEER_ACCEPTOR::open() method with
+   *                   @p local_addr.  Generally used to request that the
+   *                   OS allow reuse of the listen port.  The default is 1.
+   *
+   * @retval 0  Success
+   * @retval -1 Failure, @c errno contains an error code.
+   */
+  virtual int open (const ACE_PEER_ACCEPTOR_ADDR &,
+                    ACE_Reactor *,
+                    int flags = 0,
+                    int use_select = 1,
+                    int reuse_addr = 1);
 
   /**
    * Initialize the appropriate strategies for creation, passive
@@ -261,7 +325,8 @@ public:
                     ACE_Scheduling_Strategy<SVC_HANDLER> * = 0,
                     const ACE_TCHAR *service_name = 0,
                     const ACE_TCHAR *service_description = 0,
-                    int use_select = 1);
+                    int use_select = 1,
+                    int reuse_addr = 1);
 
   /// Close down the Strategy_Acceptor's resources.
   virtual ~ACE_Strategy_Acceptor (void);
@@ -388,9 +453,6 @@ protected:
 
   /// Description of the service.
   ACE_TCHAR *service_description_;
-
-  /// Port number for the server.
-  u_short service_port_;
 
   /// Address that the <Strategy_Acceptor> uses to listen for
   /// connections.

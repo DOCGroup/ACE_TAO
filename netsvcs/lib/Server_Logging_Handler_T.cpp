@@ -247,7 +247,7 @@ ACE_Server_Logging_Acceptor_T<SLH, LMR, SST>::parse_args (int argc, char *argv[]
 {
   ACE_TRACE ("ACE_Server_Logging_Acceptor_T<SLH, LMR, SST>::parse_args");
 
-  this->service_port_ = ACE_DEFAULT_SERVER_PORT;
+  int service_port = ACE_DEFAULT_SERVER_PORT;
 
   ACE_LOG_MSG->open ("Logging Service");
 
@@ -258,7 +258,7 @@ ACE_Server_Logging_Acceptor_T<SLH, LMR, SST>::parse_args (int argc, char *argv[]
       switch (c)
         {
         case 'p':
-          this->service_port_ = ACE_OS::atoi (get_opt.opt_arg ());
+          service_port = ACE_OS::atoi (get_opt.opt_arg ());
           break;
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -267,7 +267,7 @@ ACE_Server_Logging_Acceptor_T<SLH, LMR, SST>::parse_args (int argc, char *argv[]
         }
     }
 
-  this->service_addr_.set (this->service_port_);
+  this->service_addr_.set (service_port);
   return 0;
 }
 
