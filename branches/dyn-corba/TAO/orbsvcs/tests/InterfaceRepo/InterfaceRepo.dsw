@@ -39,6 +39,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Latency Test"=".\Latency_Test\Latency Test.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Persistence_Test"=.\Persistence_Test\Persistence_Test.dsp - Package Owner=<4>
 
 Package=<5>
