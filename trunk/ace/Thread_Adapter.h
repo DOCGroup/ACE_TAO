@@ -67,6 +67,10 @@ private:
   ~ACE_Thread_Adapter (void);
   // Ensure that this object must be allocated on the heap.
 
+  virtual void *invoke_i (void);
+  // Called by invoke, mainly here to separate the SEH stuff because
+  // SEH on Win32 doesn't compile with local vars with destructors.
+
 private:
   ACE_Thread_Manager *thr_mgr_;
   // Optional thread manager.
