@@ -1118,31 +1118,30 @@ ACE_Thread_Manager::exit (void *status, int do_thr_exit)
 
     // Locate thread id.
     i = this->find_thread (ACE_Thread::self ());
+
+    if (i != -1)
+      {
+	// @@ Currently, we have just one hook.  This should clearly
+	// be generalized to support an arbitrary number of hooks.
+
+	if (this->thr_table_[i].cleanup_info_.cleanup_hook_ != 0)
+	  {
+	    // Copy the hook so that we can call it after releasing
+	    // the guard.
+	    cleanup_info = this->thr_table_[i].cleanup_info_;
+	    this->thr_table_[i].cleanup_info_.cleanup_hook_ = 0;
+	  }
+
+	// Remove thread descriptor from the table.
+	this->remove_thr (i);
+      }
+    // Release the guard.
   }
-
-  if (i != -1)
-    {
-      // @@ Currently, we have just one hook.  This should clearly be
-      // generalized to support an arbitrary number of hooks.
-
-      if (this->thr_table_[i].cleanup_info_.cleanup_hook_ != 0)
-        {
-          // Copy the hook so that we can call it after releasing the guard.
-          cleanup_info = this->thr_table_[i].cleanup_info_;
-          this->thr_table_[i].cleanup_info_.cleanup_hook_ = 0;
-        }
-
-      // Remove thread descriptor from the table.
-      this->remove_thr (i);
-    }
-  // Let go of the guard.
 
   // Call the cleanup hook.
   if (cleanup_info.cleanup_hook_ != 0)
-    {
-      (*cleanup_info.cleanup_hook_) (cleanup_info.object_,
-                                     cleanup_info.param_);
-    }
+    (*cleanup_info.cleanup_hook_) (cleanup_info.object_,
+				   cleanup_info.param_);
 
   if (do_thr_exit)
     {
