@@ -10,7 +10,7 @@ ACE_High_Res_Timer::supported ()
 }
 
 ACE_INLINE
-ACE_High_Res_Timer::ACE_High_Res_Timer (u_long scale_factor)
+ACE_High_Res_Timer::ACE_High_Res_Timer (double scale_factor)
   : scale_factor_ (scale_factor)
 {
   ACE_TRACE ("ACE_High_Res_Timer::ACE_High_Res_Timer");

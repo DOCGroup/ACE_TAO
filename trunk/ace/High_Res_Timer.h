@@ -51,7 +51,7 @@ public:
   static int supported ();
   // Returns 1 if high-resolution time is supported on the platform, 0 if not.
 
-  ACE_High_Res_Timer (u_long scale_factor = 0);
+  ACE_High_Res_Timer (double scale_factor = 0);
   // Initialize the timer.
 
   void reset (void);
@@ -114,7 +114,7 @@ private:
   ACE_hrtime_t start_incr_;
   // Start time of incremental timing.
 
-  u_long scale_factor_;
+  double scale_factor_;
 };
 
 #if defined (__ACE_INLINE__)
