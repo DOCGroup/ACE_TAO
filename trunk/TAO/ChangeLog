@@ -1,3 +1,13 @@
+Wed May 28 11:22:29 2003  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/tests/Notify/Activation_Manager.cpp:
+	* orbsvcs/tests/Notify/Periodic_Supplier.cpp:
+	* orbsvcs/tests/Notify/Periodic_Supplier.h:
+
+	  Renamed the <Periodic_Supplier::activate> method to
+	  <activate_task> method. This is done to stop the warnings from
+	  the Borland compiler.
+	
 Wed May 28 14:10:50 2003  Simon McQueen  <sm@prismtechnologies.com>
 
         * orbsvcs/tests/Notify/Driver/Driver.dsp:
