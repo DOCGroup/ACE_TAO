@@ -1,3 +1,7 @@
+Thu Nov 21 22:29:57 2002  Bala  <bala@cs.wustl.edu>
+
+        * ACE version 5.2.6 released.
+
 Tue Nov 19 22:36:38 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Time_Value.h (sec, usec, msec):
