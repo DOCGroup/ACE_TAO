@@ -18,6 +18,7 @@
 //
 // ============================================================================
 
+#include "test_config.h"
 #include "ace/OS.h"
 #include "ace/INET_Addr.h"
 #include "ace/Log_Msg.h"
@@ -27,6 +28,8 @@ int main (int argc, char *argv[])
 {
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
+
+  ACE_START_TEST (ACE_TEXT ("INET_Addr_Test"));
 
   int status = 0;     // Innocent until proven guilty
 
@@ -122,6 +125,8 @@ int main (int argc, char *argv[])
     }
 
 #endif
+
+  ACE_END_TEST;
 
   return status;
 }
