@@ -1,3 +1,6 @@
+/* -*- C++ -*- */
+// $Id$
+
 // ============================================================================
 //
 // = LIBRARY
@@ -67,7 +70,7 @@ public: // Should be protected:
   // Tests whether we can enqueue a message without blocking.
 
   int reply (ACE_Message_Block *, ACE_Time_Value *tv = 0);	     
-  // Turn the message back around.
+  // Turn the message around and send it back down the Stream.
 
   int put_next (ACE_Message_Block *msg, ACE_Time_Value *tv = 0);
   // Transfer message to the adjacent ACE_Task in a ACE_Stream.

@@ -462,7 +462,7 @@ ACE_Malloc<ACE_MEM_POOL_2, LOCK>::find (const char *name, void *&pointer)
 // @return function returns the number of chunks of the given size 
 //          that would fit in the currently allocated memory
 
-template <ACE_MEM_POOL_1, class LOCK> size_t
+template <ACE_MEM_POOL_1, class LOCK> ssize_t
 ACE_Malloc<ACE_MEM_POOL_2, LOCK>::avail_chunks (size_t size) const
 {
   ACE_TRACE ("ACE_Malloc<ACE_MEM_POOL_2, LOCK>::avail_chunks");

@@ -71,12 +71,6 @@ public:
   virtual ACE_PEER_ACCEPTOR &acceptor (void) const;
   // Return the underlying PEER_ACCEPTOR object.
 
-  ACE_Reactor *reactor (void) const;
-  // Get the underlying Reactor *.
-
-  void reactor (ACE_Reactor *);
-  // Set the underlying Reactor *.
-
   virtual ACE_HANDLE get_handle (void) const;
   // Returns the listening acceptor's <ACE_HANDLE>.
 
@@ -117,7 +111,7 @@ protected:
   virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE, 
 			    ACE_Reactor_Mask = ACE_Event_Handler::RWE_MASK);
   // Perform termination activities when <this> is removed from the
-  // <reactor_>.
+  // <reactor>.
 
   virtual int handle_input (ACE_HANDLE);
   // Accepts all pending connections from clients, and creates and
@@ -142,9 +136,6 @@ protected:
   // This method calls <Reactor::resume>.
 
 private:
-  ACE_Reactor *reactor_;
-  // Event demultiplexer associated with this object.
-
   ACE_PEER_ACCEPTOR peer_acceptor_;
   // Concrete factory for accepting connections from clients...
 };
@@ -373,12 +364,6 @@ public:
   virtual ACE_PEER_ACCEPTOR &acceptor (void) const;
   // Return the underlying PEER_ACCEPTOR object.
 
-  ACE_Reactor *reactor (void) const;
-  // Get the underlying Reactor *.
-
-  void reactor (ACE_Reactor *);
-  // Set the underlying Reactor *.
-
   void dump (void) const;
   // Dump the state of an object.
 
@@ -414,7 +399,7 @@ protected:
   virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
 			    ACE_Reactor_Mask = ACE_Event_Handler::RWE_MASK);
   // Perform termination activities when <this> is removed from the
-  // <reactor_>.
+  // <reactor>.
        
   virtual int handle_input (ACE_HANDLE);
   // Accept one connection from a client and activates the
@@ -446,9 +431,6 @@ protected:
   // by application developer to do anything meaningful.
 
 private:
-  ACE_Reactor *reactor_;
-  // Event demultiplexer associated with this object.
-
   SVC_HANDLER *svc_handler_;
   // Hold the svc_handler_ across asynchrony boundaries.
 

@@ -64,14 +64,10 @@ public:
 typedef ACE_Unbounded_Set<ACE_Static_Svc_Descriptor *> ACE_STATIC_SVCS;
 typedef ACE_Unbounded_Set_Iterator<ACE_Static_Svc_Descriptor *> ACE_STATIC_SVCS_ITERATOR;
 
-class ACE_Export ACE_Service_Config : public ACE_Event_Handler
+class ACE_Export ACE_Service_Config
   // = TITLE
-  //     Provide the base class that supplies common server daemon
-  //     operations.
-  //
-  // = DESCRIPTION
-  //     This class inherits from <ACE_Event_Handler> so that it can
-  //     be used as a signal handler.
+  //     Supplies common server operations for dynamic and static
+  //     configuration of services.
 {
 public:
   enum {MAX_SERVICES = ACE_DEFAULT_REACTOR_SIZE};
@@ -272,11 +268,10 @@ protected:
   static int load_defaults (void);
   // Add the default statically-linked services to the <ACE_Service_Repository>.
 
-  virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
-  // Signal handling API to trigger dynamic reconfiguration.
+  static void handle_signal (int sig, siginfo_t *, ucontext_t *);
+  // Handles signals to trigger reconfigurations.
 
 private:
-
   static ACE_Service_Repository *svc_rep_;
   // Pointer to a process-wide <ACE_Service_Repository>.
 
@@ -341,6 +336,9 @@ private:
 
   static int signum_;
   // Number of the signal used to trigger reconfiguration.
+
+  static ACE_Sig_Adapter signal_handler_;
+  // Handles the reconfiguration signals.
 };
 
 #if defined (__ACE_INLINE__)

@@ -54,7 +54,7 @@
 // defined early also:  these are here
 // because Time_Value.h #includes ace/config.h, but not ace/OS.h
 typedef int key_t;
-#include <vxWorks.h>
+#include /**/ <vxWorks.h>
 
 
 #endif /* ACE_CONFIG_H */

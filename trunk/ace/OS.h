@@ -182,11 +182,11 @@
 // horrible hacks to get around inconsistency between ansi and VxWorks
 // stdarg.h with Green Hills 1.8.8 compiler
 #define __INCstdargh
-#include <stdarg.h>
+#include /**/ <stdarg.h>
 #endif /* ghs */
 
 typedef int key_t;
-#include <vxWorks.h>
+#include /**/ <vxWorks.h>
 #endif /* VXWORKS */
 
 #include "ace/Time_Value.h"
@@ -396,11 +396,11 @@ struct strrecvfd {};
 #endif /* ACE_LACKS_STRRECVFD */
 
 #if defined (ACE_HAS_PROC_FS)
-#include <sys/procfs.h>
+#include /**/ <sys/procfs.h>
 #endif /* ACE_HAS_PROC_FD */
 
 #if defined (ACE_HAS_UNICODE)
-#include <wchar.h>
+#include /**/ <wchar.h>
 #endif /* ACE_HAS_UNICODE */
 
 #if defined (ACE_HAS_BROKEN_WRITEV)
@@ -493,7 +493,7 @@ enum ACE_Thread_State
     if (OBJ.locked () == 0) return;
 
 #if defined (ACE_HAS_POSIX_SEM)
-#include <semaphore.h>
+#include /**/ <semaphore.h>
 typedef struct
 {
   sem_t *sema_;
@@ -519,8 +519,8 @@ struct cancel_state
 
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_STHREADS)
-#include <synch.h>
-#include <thread.h>
+#include /**/ <synch.h>
+#include /**/ <thread.h>
 #endif /* ACE_HAS_STHREADS */
 
 #if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
@@ -703,9 +703,9 @@ typedef ACE_mutex_t ACE_thread_mutex_t;
 #define THR_CANCEL_DEFERRED     0
 #define THR_CANCEL_ASYNCHRONOUS 0
 #elif defined(VXWORKS)
-#include <semLib.h>    // for mutex implementation using mutual-exclusion
+#include /**/ <semLib.h>    // for mutex implementation using mutual-exclusion
                        // semaphores (which can be taken recursively)
-#include <taskLib.h>
+#include /**/ <taskLib.h>
 
 // task options:  the other options are either obsolete, internal, or for
 // Fortran or Ada support
@@ -810,20 +810,20 @@ typedef int ACE_thread_t;
 typedef int ACE_hthread_t;
 typedef int ACE_thread_key_t;
 #endif /* ACE_HAS_THREADS */
-#include <sys/types.h>
-#include <assert.h>
-#include <sys/stat.h>
-#include <limits.h>
-#include <stdio.h>
+#include /**/ <sys/types.h>
+#include /**/ <assert.h>
+#include /**/ <sys/stat.h>
+#include /**/ <limits.h>
+#include /**/ <stdio.h>
 #include "ace/stdcpp.h"
-#include <new.h>
-#include <ctype.h>
-#include <signal.h>
-#include <string.h>
-#include <stdarg.h>
-#include <fcntl.h>
-#include <errno.h>
-#include <stdlib.h>
+#include /**/ <new.h>
+#include /**/ <ctype.h>
+#include /**/ <signal.h>
+#include /**/ <string.h>
+#include /**/ <stdarg.h>
+#include /**/ <fcntl.h>
+#include /**/ <errno.h>
+#include /**/ <stdlib.h>
 
 // This must come after signal.h is #included.
 #if defined (SCO)
@@ -854,7 +854,7 @@ typedef unsigned int *ACE_RANDR_TYPE;
 #endif /* !ACE_HAS_RTLD_LAZY_V */
 
 #if defined (ACE_HAS_UTIME)
-#include <utime.h>
+#include /**/ <utime.h>
 #endif /* ACE_HAS_UTIME */
 
 #if !defined (ACE_HAS_MSG) && !defined (SCO)
@@ -945,7 +945,7 @@ typedef void (*ACE_SignalHandlerV)(...);
 #define STRICT
 #endif /* ACE_HAS_STRICT */
 
-#include <sys/timeb.h>
+#include /**/ <sys/timeb.h>
 
 // The following 3 defines are used by the ACE Name Server...
 #define ACE_DEFAULT_NAMESPACE_DIR "C:\\temp"
@@ -1032,10 +1032,10 @@ PAGE_NOCACHE  */
 // This is necessary since MFC users apparently can't #include
 // <windows.h> directly.
 #if !defined (__AFX_H__)
-#include <windows.h>
+#include /**/ <windows.h>
 #endif /* __AFX_H__ */
 
-#include <winsock.h>
+#include /**/ <winsock.h>
 
 #define MAXHOSTNAMELEN  256
 
@@ -1081,10 +1081,10 @@ PAGE_NOCACHE  */
 // #define ENAMETOOLONG            WSAENAMETOOLONG 
 // #define ENOTEMPTY               WSAENOTEMPTY
 
-#include <time.h>
-#include <direct.h>
-#include <process.h>
-#include <io.h>
+#include /**/ <time.h>
+#include /**/ <direct.h>
+#include /**/ <process.h>
+#include /**/ <io.h>
 
 typedef OVERLAPPED ACE_OVERLAPPED;
 typedef DWORD ACE_thread_t;
@@ -1336,54 +1336,54 @@ typedef int LPSECURITY_ATTRIBUTES;
 #if defined (ACE_HAS_BROKEN_IF_HEADER)
 struct ifafilt;
 #endif
-#include <sys/socket.h>
+#include /**/ <sys/socket.h>
 extern "C" {
 #if !defined (VXWORKS)
-#include <netdb.h>
+#include /**/ <netdb.h>
 #endif /* VXWORKS */
-#include <net/if.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
+#include /**/ <net/if.h>
+#include /**/ <netinet/in.h>
+#include /**/ <arpa/inet.h>
 }
 #if defined (VXWORKS)
-#include <sys/times.h>
+#include /**/ <sys/times.h>
 #else
-#include <sys/param.h>
-#include <sys/uio.h>
-#include <sys/ipc.h>
-#include <sys/shm.h>
-#include <sys/sem.h>
-#include <sys/file.h>
-#include <sys/time.h>
-#include <sys/resource.h>
-#include <sys/wait.h>
-#include <pwd.h>
+#include /**/ <sys/param.h>
+#include /**/ <sys/uio.h>
+#include /**/ <sys/ipc.h>
+#include /**/ <sys/shm.h>
+#include /**/ <sys/sem.h>
+#include /**/ <sys/file.h>
+#include /**/ <sys/time.h>
+#include /**/ <sys/resource.h>
+#include /**/ <sys/wait.h>
+#include /**/ <pwd.h>
 #endif /* VXWORKS */
-#include <sys/ioctl.h>
-#include <dirent.h>
-#include <sys/utsname.h>
-#include <sys/stat.h>
-#include <unistd.h>
+#include /**/ <sys/ioctl.h>
+#include /**/ <dirent.h>
+#include /**/ <sys/utsname.h>
+#include /**/ <sys/stat.h>
+#include /**/ <unistd.h>
 
 #if !defined (ACE_LACKS_PARAM_H)
-#include <sys/param.h>
+#include /**/ <sys/param.h>
 #endif /* ACE_LACKS_PARAM_H */
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS) && !defined (VXWORKS)
-#include <sys/un.h>
+#include /**/ <sys/un.h>
 #endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */
 
 #if defined (ACE_HAS_SIGINFO_T)
 #if !defined (ACE_LACKS_SIGINFO_H)
-#include <siginfo.h>
+#include /**/ <siginfo.h>
 #endif /* ACE_LACKS_SIGINFO_H */
 #if !defined (ACE_LACKS_UCONTEXT_H)
-#include <ucontext.h>
+#include /**/ <ucontext.h>
 #endif /* ACE_LACKS_UCONTEXT_H */
 #endif /* ACE_HAS_SIGINFO_T */
 
 #if defined (ACE_HAS_POLL)
-#include <poll.h>
+#include /**/ <poll.h>
 #endif /* ACE_HAS_POLL */
 
 #if defined (ACE_HAS_STREAMS)
@@ -1391,10 +1391,10 @@ extern "C" {
 #if !defined (_XOPEN_EXTENDED_SOURCE)
 #define _XOPEN_EXTENDED_SOURCE
 #endif /* !_XOPEN_EXTENDED_SOURCE */
-#include <stropts.h>
+#include /**/ <stropts.h>
 #undef _XOPEN_EXTENDED_SOURCE
 #else
-#include <stropts.h>
+#include /**/ <stropts.h>
 #endif /* AIX */
 #endif /* ACE_HAS_STREAMS */
 
@@ -1407,23 +1407,23 @@ extern "C" int sigwait (sigset_t *set);
 #endif /* ACE_HAS_SIGWAIT */
 
 #if defined (ACE_HAS_SELECT_H)
-#include <sys/select.h>
+#include /**/ <sys/select.h>
 #endif /* ACE_HAS_SELECT_H */
 
 #if defined (ACE_HAS_ALLOCA_H)
-#include <alloca.h>
+#include /**/ <alloca.h>
 #endif /* ACE_HAS_ALLOCA_H */
 
 #if defined (ACE_HAS_TIUSER_H)
-#include <tiuser.h> 
+#include /**/ <tiuser.h> 
 #endif /* ACE_HAS_TIUSER_H */
 
 #if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
-#include <dlfcn.h>
+#include /**/ <dlfcn.h>
 #endif /* ACE_HAS_SVR4_DYNAMIC_LINKING */
 
 #if defined (ACE_HAS_SOCKIO_H)
-#include <sys/sockio.h>
+#include /**/ <sys/sockio.h>
 #endif /* ACE_HAS_SOCKIO_ */
 
 // There must be a better way to do this...
@@ -1474,16 +1474,16 @@ extern "C"
 
 // IRIX5 defines bzero() in this odd file...
 #if defined (ACE_HAS_BSTRING)
-#include <bstring.h>
+#include /**/ <bstring.h>
 #endif /* ACE_HAS_BSTRING */
 
 // AIX defines bzero() in this odd file...
 #if defined (ACE_HAS_STRINGS)
-#include <strings.h>
+#include /**/ <strings.h>
 #endif /* ACE_HAS_STRINGS */
 
 #if defined (ACE_HAS_TERM_IOCTLS)
-#include <sys/termios.h>
+#include /**/ <sys/termios.h>
 #endif /* ACE_HAS_TERM_IOCTLS */
 
 #if defined (ACE_LACKS_MMAP)
@@ -1501,10 +1501,10 @@ extern "C"
 #if defined (ACE_HAS_BROKEN_MMAP_H)
 extern "C" 
 {
-#include <sys/mman.h>
+#include /**/ <sys/mman.h>
 }
 #elif !defined (ACE_LACKS_MMAP)
-#include <sys/mman.h>
+#include /**/ <sys/mman.h>
 #endif /* ACE_HAS_BROKEN_MMAP_H */
 
 // OSF1 has problems with sys/msg.h and C++...
@@ -1512,7 +1512,7 @@ extern "C"
 #define _KERNEL
 #endif /* ACE_HAS_BROKEN_MSG_H */
 #if !defined (VXWORKS)
-#include <sys/msg.h>
+#include /**/ <sys/msg.h>
 #endif /* VXWORKS */
 #if defined (ACE_HAS_BROKEN_MSG_H)
 #undef _KERNEL
@@ -1532,11 +1532,11 @@ extern "C"
 #if defined (VXWORKS)
 
 #if defined (ACE_HAS_GREENHILLS_SOCKETS)  
-#include <hostLib.h>
-#include <ioLib.h>
-#include <selectLib.h>
-#include <sigLib.h>
-#include <sockLib.h>
+#include /**/ <hostLib.h>
+#include /**/ <ioLib.h>
+#include /**/ <selectLib.h>
+#include /**/ <sigLib.h>
+#include /**/ <sockLib.h>
 
 extern "C" 
 struct sockaddr_un {
@@ -1793,9 +1793,9 @@ typedef int ucontext_t;
 #endif /* SA_RESTART */
 
 #if defined (ACE_HAS_TIMOD_H)
-#include <sys/timod.h>
+#include /**/ <sys/timod.h>
 #elif defined (ACE_HAS_OSF_TIMOD_H)
-#include <tli/timod.h>
+#include /**/ <tli/timod.h>
 #endif /* ACE_HAS_TIMOD_H */
 
 #if defined (ACE_HAS_BROKEN_T_ERRNO)
@@ -1810,7 +1810,7 @@ typedef void (*ACE_Sig_Handler_Ex) (int, siginfo_t *siginfo, ucontext_t *ucontex
 // declaration here.
 
 #if defined (ACE_REDEFINES_XTI_FUNCTIONS)
-#include <xti.h>
+#include /**/ <xti.h>
 #ifdef UNIXWARE         // They apparantly forgot one...
 extern "C" int _xti_error(char *);
 #endif /* UNIXWARE */

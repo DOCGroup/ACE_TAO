@@ -12,7 +12,7 @@
 #if defined (HPUX) || defined (VXWORKS)
 #include "ace/OS.h"
 #endif /* HPUX || VXWORKS */
-#include <stdio.h>
+#include /**/ <stdio.h>
 
 
 /* cfront 1.2 defines "c_plusplus" instead of "__cplusplus" */
@@ -25,8 +25,8 @@
 
 #ifdef __cplusplus
 
-#include <stdlib.h>
-#include <stdio.h>
+#include /**/ <stdlib.h>
+#include /**/ <stdio.h>
 
 /* Use prototypes in function declarations. */
 #define YY_USE_PROTOS
@@ -482,7 +482,7 @@ YY_MALLOC_DECL
 #else
 #if __STDC__
 #ifndef __cplusplus
-#include <stdlib.h>
+#include /**/ <stdlib.h>
 #endif
 #else
 /* Just try to get by without declaring the routines.  This will fail

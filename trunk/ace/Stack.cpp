@@ -390,12 +390,12 @@ ACE_Unbounded_Queue<TYPE>::enqueue (const TYPE &new_item)
   if (temp == 0)
     return -1;
 
-  if (head_ == 0)
-    head_ = tail_ = temp;
+  if (this->head_ == 0)
+    this->head_ = this->tail_ = temp;
   else
     {
-      tail_->next_ = temp;
-      tail_ = temp;
+      this->tail_->next_ = temp;
+      this->tail_ = temp;
     }
 
   ++this->cur_size_;
@@ -404,16 +404,28 @@ ACE_Unbounded_Queue<TYPE>::enqueue (const TYPE &new_item)
 }
 
 template <class TYPE> int
+ACE_Unbounded_Queue<TYPE>::peek (TYPE &item)
+{
+  ACE_TRACE ("ACE_Unbounded_Queue<TYPE>::peek (TYPE *&item)");
+
+  if (this->head_ == 0)
+    return -1;
+
+  item = this->head_->item_;
+  return 0;
+}
+
+template <class TYPE> int
 ACE_Unbounded_Queue<TYPE>::dequeue (TYPE &item)
 {
   ACE_TRACE ("ACE_Unbounded_Queue<TYPE>::dequeue (TYPE *&item)");
 
-  if (head_ == 0)
+  if (this->head_ == 0)
     return -1;
 
-  item = head_->item_;
-  ACE_Queue_Node<TYPE> *temp = head_;
-  head_ = head_->next_;
+  item = this->head_->item_;
+  ACE_Queue_Node<TYPE> *temp = this->head_;
+  this->head_ = this->head_->next_;
   delete temp;
   --this->cur_size_;
   return 0;

@@ -328,13 +328,13 @@ ACE_Proactor::dispatch (ACE_Overlapped_IO *overlapped,
       overlapped->re_init ();
       return this->initiate (overlapped);
     case -1: // Handler is closing.
-      overlapped->handler_->
-	handle_close (overlapped->handler_->get_handle (),
-		      overlapped->mask_);
+      overlapped->handler_->handle_close 
+	(overlapped->handler_->get_handle (), overlapped->mask_);
       // Fallthrough.
     default: 
       // Handler succeeded, but does not want another operation
       // started.
+
       delete overlapped;
       return 0;
     }
@@ -360,6 +360,8 @@ ACE_Proactor::initiate (ACE_Event_Handler *handler,
 				     file, this->global_handle_),
 		  -1);
 
+  // Tell the handler that *this* <Proactor> is dispatching it.
+  handler->proactor (this);
   return this->initiate (overlapped);
 }
 

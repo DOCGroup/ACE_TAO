@@ -21,6 +21,9 @@
 
 // Forward declaration.
 class ACE_Message_Block;
+class ACE_Reactor;
+class ACE_ReactorEx;
+class ACE_Proactor;
 
 typedef u_long ACE_Reactor_Mask;
 
@@ -64,8 +67,7 @@ public:
   virtual void set_handle (ACE_HANDLE);
   // Set the I/O handle.
 
-  // = Priority runs from MIN_PRIORITY (which is the "lowest
-  // priority") to MAX_PRIORITY (which is the "highest priority").
+  // = Priority runs from MIN_PRIORITY (which is the "lowest priority") to MAX_PRIORITY (which is the "highest priority").
   virtual int get_priority (void) const;
   // Get the priority of the Event_Handler.
   virtual void set_priority (int priority);
@@ -93,15 +95,7 @@ public:
   // Called when object is signaled by OS (either via UNIX signals or
   // when a Win32 object becomes signaled).
 
-  // = <ACE_Proactor> callbacks.
-  //     Win32 specific.  An Event_Handler can be given to a Proactor
-  //     with a {RECV,SEND}_MASK.  The Proactor calls back
-  //     <get_message> and <get_handle> to perform the correct
-  //     operations (send/recv).  When the send/recv is complete,
-  //     handle_{input,output} is called.  Thus, Event_Handlers are
-  //     used for "proactive I/O" where they are told WHEN THE
-  //     OPERATION IS COMPLETE.  Alternatively, the _Reactor_ tells
-  //     Event_Handlers WHEN THE OPERATION CAN BE PERFORMED.
+  // = <ACE_Proactor> callbacks.  These are Win32 specific.  An Event_Handler can be given to a Proactor with a {RECV,SEND}_MASK.  The Proactor calls back <get_message> and <get_handle> to perform the correct operations (send/recv).  When the send/recv is complete, handle_{input,output} is called.  Thus, Event_Handlers are used for "proactive I/O" where they are told WHEN THE OPERATION IS COMPLETE.  Alternatively, the _Reactor_ tells Event_Handlers WHEN THE OPERATION CAN BE PERFORMED.
 
   virtual int handle_input_complete (ACE_Message_Block *message,
 				     long bytes_transferred);
@@ -134,12 +128,27 @@ public:
   // <Event_Handler> with its contents filled in.  By default,
   // get_message dynamically creates a new ACE_Message_Block.
 
+  // = Accessors to set/get the various event demultiplexors.
+  virtual void reactor (ACE_Reactor *reactor);
+  virtual ACE_Reactor *reactor (void) const;
+
+  virtual void reactorex (ACE_ReactorEx *reactorex);
+  virtual ACE_ReactorEx *reactorex (void) const;
+
+  virtual void proactor (ACE_Proactor *proactor);
+  virtual ACE_Proactor *proactor (void) const;
+
 protected:
   ACE_Event_Handler (void);
   // Force ACE_Event_Handler to be an abstract base class.
 
   int priority_;
   // Priority of this Event_Handler.
+
+  // = Pointers to the various event demultiplexors.  
+  ACE_Reactor *reactor_;
+  ACE_ReactorEx *reactorex_;
+  ACE_Proactor *proactor_;
 };
 
 #if defined (__ACE_INLINE__)

@@ -9,7 +9,10 @@
 
 ACE_INLINE
 ACE_Event_Handler::ACE_Event_Handler (void)
-  : priority_ (ACE_Event_Handler::LO_PRIORITY)
+  : priority_ (ACE_Event_Handler::LO_PRIORITY),
+    reactor_ (0),
+    reactorex_ (0),
+    proactor_ (0)
 {
   ACE_TRACE ("ACE_Event_Handler::ACE_Event_Handler");
 }
@@ -129,5 +132,50 @@ ACE_Event_Handler::get_message (void)
 {
   ACE_TRACE ("ACE_Event_Handler::get_message");
   return 0;
+}
+
+ACE_INLINE void 
+ACE_Event_Handler::reactor (ACE_Reactor *reactor)
+{
+  ACE_TRACE ("ACE_Event_Handler::reactor");
+  this->reactor_ = reactor;
+}
+
+ACE_INLINE ACE_Reactor *
+ACE_Event_Handler::reactor (void) const
+{
+  ACE_TRACE ("ACE_Event_Handler::Reactor");
+  return this->reactor_;
+}
+
+ACE_INLINE void 
+ACE_Event_Handler::reactorex (ACE_ReactorEx *reactorex)
+{
+  ACE_TRACE ("ACE_Event_Handler::reactorex");
+  this->reactorex_ = reactorex;
+}
+
+ACE_INLINE ACE_ReactorEx *
+ACE_Event_Handler::reactorex (void) const
+{
+  ACE_TRACE ("ACE_Event_Handler::ReactorEx");
+
+  return this->reactorex_;
+}
+
+ACE_INLINE void 
+ACE_Event_Handler::proactor (ACE_Proactor *proactor)
+{
+  ACE_TRACE ("ACE_Event_Handler::proactor");
+
+  this->proactor_ = proactor;
+}
+
+ACE_INLINE ACE_Proactor *
+ACE_Event_Handler::proactor (void) const
+{
+  ACE_TRACE ("ACE_Event_Handler::Proactor");
+
+  return this->proactor_;
 }
 
