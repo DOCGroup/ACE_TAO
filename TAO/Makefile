@@ -21,19 +21,19 @@ INFO    = README \
 
 DIRS    = tao \
           TAO_IDL \
+          tests \
           orbsvcs \
           examples \
           performance-tests \
-          tests \
           utils
 
 CLONE   = Makefile \
           tao \
           TAO_IDL \
+          tests \
           orbsvcs \
           examples \
           performance-tests \
-          tests \
           utils
 
 #----------------------------------------------------------------------------

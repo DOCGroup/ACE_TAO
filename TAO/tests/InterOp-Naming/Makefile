@@ -17,7 +17,7 @@ IDL_SRC = \
 	INSC.cpp \
 	INSS.cpp
 
-LDLIBS = -lTAO_CosNaming -lTAO_Svc_Utils -lTAO
+LDLIBS = -lTAO
 
 PROG_SRCS = \
 	INS_test_client.cpp \
@@ -39,16 +39,9 @@ SIMPLE_SERVER_OBJS = \
 		Server_i.o \
 		INS_test_server.o
 
-BIN2 = \
+BIN = \
 	INS_test_server \
         INS_test_client
-
-#### If the TAO orbsvcs library wasn't built with sufficient components,
-#### don't try to build here.
-TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
-ifeq (Naming,$(findstring Naming,$(TAO_ORBSVCS)))
-  BIN = $(BIN2)
-endif # Naming
 
 TAO_IDLFLAGS += -Ge 1
 #----------------------------------------------------------------------------
@@ -66,11 +59,6 @@ include $(TAO_ROOT)/taoconfig.mk
 #----------------------------------------------------------------------------
 #       Local targets
 #----------------------------------------------------------------------------
-
-
-LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao -L$(TAO_ROOT)/orbsvcs/Naming_Service
-
-CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
 
 INS_test_server:$(addprefix $(VDIR),$(SIMPLE_SERVER_OBJS))
 		$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
@@ -91,10 +79,9 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/INS_test_client.o .obj/INS_test_client.so .shobj/INS_test_client.o .shobj/INS_test_client.so: INS_test_client.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
- $(ACE_ROOT)/ace/pre.h \
+.obj/INS_test_client.o .obj/INS_test_client.so .shobj/INS_test_client.o .shobj/INS_test_client.so: INS_test_client.cpp INSC.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -383,9 +370,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
  $(TAO_ROOT)/tao/MessagingS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
- INSC.h INSC.i
+ INSC.i
 
 .obj/INS_i.o .obj/INS_i.so .shobj/INS_i.o .shobj/INS_i.so: INS_i.cpp INS_i.h INSS.h INSC.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -824,7 +809,11 @@ realclean: clean
  $(TAO_ROOT)/tao/InterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Utils.h \
+ $(ACE_ROOT)/ace/Get_Opt.h \
+ $(ACE_ROOT)/ace/Get_Opt.i \
+ $(ACE_ROOT)/ace/Read_Buffer.h \
+ $(ACE_ROOT)/ace/Read_Buffer.i \
+ INS_i.h INSS.h INSC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
@@ -973,35 +962,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
  $(TAO_ROOT)/tao/MessagingS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/IOR_Multicast.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
- $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
- $(ACE_ROOT)/ace/SOCK_Dgram.h \
- $(ACE_ROOT)/ace/SOCK.h \
- $(ACE_ROOT)/ace/IPC_SAP.h \
- $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/QoS_Session.h \
- $(ACE_ROOT)/ace/SOCK.i \
- $(ACE_ROOT)/ace/SOCK_Dgram.i \
- $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Context_Interface.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
- $(ACE_ROOT)/ace/Get_Opt.h \
- $(ACE_ROOT)/ace/Get_Opt.i \
- $(ACE_ROOT)/ace/Read_Buffer.h \
- $(ACE_ROOT)/ace/Read_Buffer.i \
- INS_i.h INSS.h INSC.h INSC.i INSS_T.h INSS_T.i INSS_T.cpp INSS.i
+ INSC.i INSS_T.h INSS_T.i INSS_T.cpp INSS.i
 
 .obj/INS_test_server.o .obj/INS_test_server.so .shobj/INS_test_server.o .shobj/INS_test_server.so: INS_test_server.cpp Server_i.h \
  $(TAO_ROOT)/tao/TAO.h \
@@ -1147,7 +1108,11 @@ realclean: clean
  $(TAO_ROOT)/tao/InterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Utils.h \
+ $(ACE_ROOT)/ace/Get_Opt.h \
+ $(ACE_ROOT)/ace/Get_Opt.i \
+ $(ACE_ROOT)/ace/Read_Buffer.h \
+ $(ACE_ROOT)/ace/Read_Buffer.i \
+ INS_i.h INSS.h INSC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
@@ -1296,35 +1261,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
  $(TAO_ROOT)/tao/MessagingS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/IOR_Multicast.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
- $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
- $(ACE_ROOT)/ace/SOCK_Dgram.h \
- $(ACE_ROOT)/ace/SOCK.h \
- $(ACE_ROOT)/ace/IPC_SAP.h \
- $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/QoS_Session.h \
- $(ACE_ROOT)/ace/SOCK.i \
- $(ACE_ROOT)/ace/SOCK_Dgram.i \
- $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Context_Interface.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
- $(ACE_ROOT)/ace/Get_Opt.h \
- $(ACE_ROOT)/ace/Get_Opt.i \
- $(ACE_ROOT)/ace/Read_Buffer.h \
- $(ACE_ROOT)/ace/Read_Buffer.i \
- INS_i.h INSS.h INSC.h INSC.i INSS_T.h INSS_T.i INSS_T.cpp INSS.i
+ INSC.i INSS_T.h INSS_T.i INSS_T.cpp INSS.i
 
 .obj/INSC.o .obj/INSC.so .shobj/INSC.o .shobj/INSC.so: INSC.cpp INSC.h \
  $(TAO_ROOT)/tao/corba.h \
