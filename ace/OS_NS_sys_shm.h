@@ -26,17 +26,30 @@
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/os_include/sys/os_shm.h"
+#include "ace/ACE_export.h"
+
+#if defined (ACE_EXPORT_MACRO)
+#  undef ACE_EXPORT_MACRO
+#endif
+#define ACE_EXPORT_MACRO ACE_Export
 
 namespace ACE_OS {
 
   //@{ @name A set of wrappers for System V shared memory.
+  ACE_NAMESPACE_INLINE_FUNCTION
   void *shmat (int int_id,
                void *shmaddr,
                int shmflg);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
   int shmctl (int int_id,
               int cmd,
               struct shmid_ds *buf);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
   int shmdt (void *shmaddr);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
   int shmget (key_t key,
               int size,
               int flags);

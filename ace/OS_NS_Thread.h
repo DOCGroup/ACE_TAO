@@ -34,6 +34,12 @@
 # include "ace/os_include/os_semaphore.h"
 # include "ace/OS_Memory.h"
 # include "ace/OS_NS_signal.h"
+# include "ace/ACE_export.h"
+
+# if defined (ACE_EXPORT_MACRO)
+#   undef ACE_EXPORT_MACRO
+# endif
+# define ACE_EXPORT_MACRO ACE_Export
 
 # if defined (ACE_HAS_PRIOCNTL)
   // Need to #include thread.h before #defining THR_BOUND, etc.,
@@ -62,7 +68,7 @@ typedef struct
 # if defined (ACE_PSOS)
 
 // Wrapper for NT events on pSOS.
-class ACE_OS_Export ACE_event_t
+class ACE_Export ACE_event_t
 {
 protected:
 
@@ -131,11 +137,11 @@ typedef sema_t ACE_sema_t;
 #     endif /* !ACE_HAS_POSIX_SEM */
 
 typedef cond_t ACE_cond_t;
-struct ACE_OS_Export ACE_condattr_t
+struct ACE_Export ACE_condattr_t
 {
   int type;
 };
-struct ACE_OS_Export ACE_mutexattr_t
+struct ACE_Export ACE_mutexattr_t
 {
   int type;
 };
@@ -164,7 +170,7 @@ typedef u_long ACE_hthread_t;
 #     if defined (ACE_PSOS_HAS_COND_T)
 typedef u_long ACE_cond_t;
 typedef u_long ACE_condattr_t;
-struct ACE_OS_Export ACE_mutexattr_t
+struct ACE_Export ACE_mutexattr_t
 {
   int type;
 };
@@ -221,11 +227,6 @@ typedef u_int ACE_thread_key_t;
 
 /* #define T_NOFPU         0x00000000   Not using FPU */
 /* #define T_FPU           0x00000002   Using FPU bit */
-
-
-
-
-
 
 #   elif defined (VXWORKS)
 #     include /**/ <sysLib.h> // for sysClkRateGet()
@@ -332,7 +333,7 @@ typedef HANDLE ACE_sema_t;
  *
  * @brief Semaphore simulation for Windows CE.
  */
-class ACE_OS_Export ACE_sema_t
+class ACE_Export ACE_sema_t
 {
 public:
   /// Serializes access to <count_>.
@@ -384,7 +385,7 @@ public:
  * At the current time, this stuff only works for threads
  * within the same process.
  */
-class ACE_OS_Export ACE_cond_t
+class ACE_Export ACE_cond_t
 {
 public:
 
@@ -423,12 +424,12 @@ public:
   size_t was_broadcast_;
 };
 
-struct ACE_OS_Export ACE_condattr_t
+struct ACE_Export ACE_condattr_t
 {
   int type;
 };
 
-struct ACE_OS_Export ACE_mutexattr_t
+struct ACE_Export ACE_mutexattr_t
 {
   int type;
 };
@@ -445,7 +446,7 @@ struct ACE_OS_Export ACE_mutexattr_t
  *     At the current time, this stuff only works for threads
  *     within the same process.
  */
-struct ACE_OS_Export ACE_rwlock_t
+struct ACE_Export ACE_rwlock_t
 {
 public:
 //protected:
@@ -644,11 +645,11 @@ struct ACE_recursive_mutex_state
 
 // These are dummies needed for class OS.h
 typedef int ACE_cond_t;
-struct ACE_OS_Export ACE_condattr_t
+struct ACE_Export ACE_condattr_t
 {
   int type;
 };
-struct ACE_OS_Export ACE_mutexattr_t
+struct ACE_Export ACE_mutexattr_t
 {
   int type;
 };
@@ -683,7 +684,7 @@ typedef unsigned int ACE_thread_key_t;
  *
  * @brief Defines a platform-independent thread ID.
  */
-class ACE_OS_Export ACE_Thread_ID
+class ACE_Export ACE_Thread_ID
 {
 public:
   // = Initialization method.
@@ -782,7 +783,7 @@ class ACE_TSS_Keys;
  * native TSS, or have a TSS with limitations such as the
  * number of keys or lack of support for removing keys.
  */
-class ACE_OS_Export ACE_TSS_Emulation
+class ACE_Export ACE_TSS_Emulation
 {
 public:
   typedef void (*ACE_TSS_DESTRUCTOR)(void *value) /* throw () */;
@@ -1033,10 +1034,10 @@ extern "C" ACE_OS_Export void ace_mutex_lock_cleanup_adapter (void *args);
 #   define ACE_PTHREAD_CLEANUP_POP(A)
 # endif /* ACE_HAS_THR_C_FUNC */
 
-#if !defined (ACE_WIN32)
+# if !defined (ACE_WIN32)
 // forward decl's
 class ACE_event_t;
-#endif
+# endif
 
 namespace ACE_OS {
 
@@ -1071,20 +1072,20 @@ namespace ACE_OS {
 
   /// This is necessary to deal with POSIX pthreads and their use of
   /// structures for thread ids.
-  extern ACE_thread_t NULL_thread;
+  extern ACE_Export ACE_thread_t NULL_thread;
 
   /// This is necessary to deal with POSIX pthreads and their use of
   /// structures for thread handles.
-  extern ACE_hthread_t NULL_hthread;
+  extern ACE_Export ACE_hthread_t NULL_hthread;
 
   /// This is necessary to deal with POSIX pthreads and their use of
   /// structures for TSS keys.
-  extern ACE_thread_key_t NULL_key;
+  extern ACE_Export ACE_thread_key_t NULL_key;
 
 # if defined (CHORUS)
   /// This is used to map an actor's id into a KnCap for killing and
   /// waiting actors.
-  KnCap actorcaps_[ACE_CHORUS_MAX_ACTORS];
+  extern ACE_Export KnCap actorcaps_[ACE_CHORUS_MAX_ACTORS];
 # endif /* CHORUS */
   //@}
 
@@ -1093,50 +1094,130 @@ namespace ACE_OS {
    * thread is the main thread, then the argument must be 1.
    * For private use of ACE_Object_Manager and ACE_Thread_Adapter only.
    */
+  extern ACE_Export
   void cleanup_tss (const u_int main_thread);
 
   //@{ @name A set of wrappers for condition variables.
+#if defined (ACE_LACKS_COND_T) && ! defined (ACE_PSOS_DIAB_MIPS)
+  extern ACE_Export
+#else
+  ACE_NAMESPACE_INLINE_FUNCTION
+#endif /* ACE_LACKS_COND_T && !ACE_PSOS_DIAB_MIPS */
   int condattr_init (ACE_condattr_t &attributes,
                      int type = ACE_DEFAULT_SYNCH_TYPE);
+
+#if defined (ACE_LACKS_COND_T) && ! defined (ACE_PSOS_DIAB_MIPS)
+  extern ACE_Export
+#else
+  ACE_NAMESPACE_INLINE_FUNCTION
+#endif /* ACE_LACKS_COND_T && !ACE_PSOS_DIAB_MIPS */
   int condattr_destroy (ACE_condattr_t &attributes);
+
+#if defined (ACE_LACKS_COND_T) && ! defined (ACE_PSOS_DIAB_MIPS)
+  extern ACE_Export
+#else
+  ACE_NAMESPACE_INLINE_FUNCTION
+#endif /* ACE_LACKS_COND_T && !ACE_PSOS_DIAB_MIPS */
   int cond_broadcast (ACE_cond_t *cv);
+
+#if defined (ACE_LACKS_COND_T) && ! defined (ACE_PSOS_DIAB_MIPS)
+  extern ACE_Export
+#else
+  ACE_NAMESPACE_INLINE_FUNCTION
+#endif /* ACE_LACKS_COND_T && !ACE_PSOS_DIAB_MIPS */
   int cond_destroy (ACE_cond_t *cv);
+
+#if defined (ACE_LACKS_COND_T) && ! defined (ACE_PSOS_DIAB_MIPS)
+  extern ACE_Export
+#else
+  ACE_NAMESPACE_INLINE_FUNCTION
+#endif /* ACE_LACKS_COND_T && !ACE_PSOS_DIAB_MIPS */
   int cond_init (ACE_cond_t *cv,
                  short type = ACE_DEFAULT_SYNCH_TYPE,
                  const char *name = 0,
                  void *arg = 0);
+
+#if defined (ACE_LACKS_COND_T) && ! defined (ACE_PSOS_DIAB_MIPS)
+  extern ACE_Export
+#else
+  ACE_NAMESPACE_INLINE_FUNCTION
+#endif /* ACE_LACKS_COND_T && !ACE_PSOS_DIAB_MIPS */
   int cond_init (ACE_cond_t *cv,
                  ACE_condattr_t &attributes,
                  const char *name = 0,
                  void *arg = 0);
+
 # if defined (ACE_HAS_WCHAR)
+#   if defined (ACE_LACKS_COND_T) && ! defined (ACE_PSOS_DIAB_MIPS)
+  extern ACE_Export
+#   else
+  ACE_NAMESPACE_INLINE_FUNCTION
+#   endif /* ACE_LACKS_COND_T && !ACE_PSOS_DIAB_MIPS */
   int cond_init (ACE_cond_t *cv,
                  short type,
                  const wchar_t *name,
                  void *arg = 0);
+
+#   if defined (ACE_LACKS_COND_T) && ! defined (ACE_PSOS_DIAB_MIPS)
+  extern ACE_Export
+#   else
+  ACE_NAMESPACE_INLINE_FUNCTION
+#   endif /* ACE_LACKS_COND_T && !ACE_PSOS_DIAB_MIPS */
   int cond_init (ACE_cond_t *cv,
                  ACE_condattr_t &attributes,
                  const wchar_t *name,
                  void *arg = 0);
 # endif /* ACE_HAS_WCHAR */
+
+#if defined (ACE_LACKS_COND_T) && ! defined (ACE_PSOS_DIAB_MIPS)
+  extern ACE_Export
+#else
+  ACE_NAMESPACE_INLINE_FUNCTION
+#endif /* ACE_LACKS_COND_T && !ACE_PSOS_DIAB_MIPS */
   int cond_signal (ACE_cond_t *cv);
+
+#if defined (ACE_LACKS_COND_T) && ! defined (ACE_PSOS_DIAB_MIPS)
+  extern ACE_Export
+#else
+  ACE_NAMESPACE_INLINE_FUNCTION
+#endif /* ACE_LACKS_COND_T && !ACE_PSOS_DIAB_MIPS */
   int cond_timedwait (ACE_cond_t *cv,
                       ACE_mutex_t *m,
                       ACE_Time_Value *);
+
+#if defined (ACE_LACKS_COND_T) && ! defined (ACE_PSOS_DIAB_MIPS)
+  extern ACE_Export
+#else
+  ACE_NAMESPACE_INLINE_FUNCTION
+#endif /* ACE_LACKS_COND_T && !ACE_PSOS_DIAB_MIPS */
   int cond_wait (ACE_cond_t *cv,
                  ACE_mutex_t *m);
+
 # if defined (ACE_WIN32) && defined (ACE_HAS_WTHREADS)
+#   if defined (ACE_LACKS_COND_T) && ! defined (ACE_PSOS_DIAB_MIPS)
+  extern ACE_Export
+#   else
+  ACE_NAMESPACE_INLINE_FUNCTION
+#   endif /* ACE_LACKS_COND_T && !ACE_PSOS_DIAB_MIPS */
   int cond_timedwait (ACE_cond_t *cv,
                       ACE_thread_mutex_t *m,
                       ACE_Time_Value *);
+
+#   if defined (ACE_LACKS_COND_T) && ! defined (ACE_PSOS_DIAB_MIPS)
+  extern ACE_Export
+#   else
+  ACE_NAMESPACE_INLINE_FUNCTION
+#   endif /* ACE_LACKS_COND_T && !ACE_PSOS_DIAB_MIPS */
   int cond_wait (ACE_cond_t *cv,
                  ACE_thread_mutex_t *m);
 # endif /* ACE_WIN32 && ACE_HAS_WTHREADS */
 
   //@{ @name A set of wrappers for auto-reset and manual events.
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int event_destroy (ACE_event_t *event);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int event_init (ACE_event_t *event,
                   int manual_reset = 0,
                   int initial_state = 0,
@@ -1146,6 +1227,7 @@ namespace ACE_OS {
                   LPSECURITY_ATTRIBUTES sa = 0);
 
 # if defined (ACE_HAS_WCHAR)
+  ACE_NAMESPACE_INLINE_FUNCTION
   int event_init (ACE_event_t *event,
                   int manual_reset,
                   int initial_state,
@@ -1155,29 +1237,38 @@ namespace ACE_OS {
                   LPSECURITY_ATTRIBUTES sa = 0);
 # endif /* ACE_HAS_WCHAR */
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int event_pulse (ACE_event_t *event);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int event_reset (ACE_event_t *event);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int event_signal (ACE_event_t *event);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int event_timedwait (ACE_event_t *event,
                        ACE_Time_Value *timeout,
                        int use_absolute_time = 1);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int event_wait (ACE_event_t *event);
 
   //@}
 
+  extern ACE_Export
   int lwp_getparams (ACE_Sched_Params &);
 
+  extern ACE_Export
   int lwp_setparams (const ACE_Sched_Params &);
 
 
   //@{ @name A set of wrappers for mutex locks.
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int mutex_destroy (ACE_mutex_t *m);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int mutex_init (ACE_mutex_t *m,
                   int type = ACE_DEFAULT_SYNCH_TYPE,
                   const char *name = 0,
@@ -1185,6 +1276,7 @@ namespace ACE_OS {
                   LPSECURITY_ATTRIBUTES sa = 0);
 
 #if defined (ACE_HAS_WCHAR)
+  ACE_NAMESPACE_INLINE_FUNCTION
   int mutex_init (ACE_mutex_t *m,
                   int type,
                   const wchar_t *name,
@@ -1194,10 +1286,12 @@ namespace ACE_OS {
 
   /// Win32 note: Abandoned mutexes are not treated differently. 0 is
   /// returned since the calling thread does get the ownership.
+  ACE_NAMESPACE_INLINE_FUNCTION
   int mutex_lock (ACE_mutex_t *m);
 
   /// This method is only implemented for Win32.  For abandoned
   /// mutexes, <abandoned> is set to 1 and 0 is returned.
+  ACE_NAMESPACE_INLINE_FUNCTION
   int mutex_lock (ACE_mutex_t *m,
                   int &abandoned);
 
@@ -1210,6 +1304,7 @@ namespace ACE_OS {
    * Note that the mutex should not be a recursive one, i.e., it
    * should only be a standard mutex or an error checking mutex.
    */
+  ACE_NAMESPACE_INLINE_FUNCTION
   int mutex_lock (ACE_mutex_t *m,
                   const ACE_Time_Value &timeout);
 
@@ -1222,21 +1317,26 @@ namespace ACE_OS {
    * mutex should not be a recursive one, i.e., it should only be a
    * standard mutex or an error checking mutex.
    */
+  ACE_NAMESPACE_INLINE_FUNCTION
   int mutex_lock (ACE_mutex_t *m,
                   const ACE_Time_Value *timeout);
 
   /// Handle asynchronous thread cancellation cleanup.
+  extern ACE_Export
   void mutex_lock_cleanup (void *mutex);
 
   /// Win32 note: Abandoned mutexes are not treated differently. 0 is
   /// returned since the calling thread does get the ownership.
+  ACE_NAMESPACE_INLINE_FUNCTION
   int mutex_trylock (ACE_mutex_t *m);
 
   /// This method is only implemented for Win32.  For abandoned
   /// mutexes, <abandoned> is set to 1 and 0 is returned.
+  ACE_NAMESPACE_INLINE_FUNCTION
   int mutex_trylock (ACE_mutex_t *m,
                      int &abandoned);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int mutex_unlock (ACE_mutex_t *m);
 
   //@}
@@ -1246,6 +1346,7 @@ namespace ACE_OS {
    * Can't call the following priocntl, because that's a macro on
    * Solaris.
    */
+  ACE_NAMESPACE_INLINE_FUNCTION
   int priority_control (ACE_idtype_t, ACE_id_t, int, void *);
 
   //@{ @name A set of wrappers for recursive mutex locks.
@@ -1253,23 +1354,30 @@ namespace ACE_OS {
   // These two methods are primarily in support of
   // ACE_Condition<ACE_Recursive_Thread_Mutex> and should probably not
   // be called outside that context.
+  ACE_NAMESPACE_INLINE_FUNCTION
   int recursive_mutex_cond_unlock (ACE_recursive_thread_mutex_t *m,
                                    ACE_recursive_mutex_state &state);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   void recursive_mutex_cond_relock (ACE_recursive_thread_mutex_t *m,
                                     ACE_recursive_mutex_state &state);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int recursive_mutex_destroy (ACE_recursive_thread_mutex_t *m);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int recursive_mutex_init (ACE_recursive_thread_mutex_t *m,
                             const ACE_TCHAR *name = 0,
                             ACE_mutexattr_t *arg = 0,
                             LPSECURITY_ATTRIBUTES sa = 0);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int recursive_mutex_lock (ACE_recursive_thread_mutex_t *m);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int recursive_mutex_trylock (ACE_recursive_thread_mutex_t *m);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int recursive_mutex_unlock (ACE_recursive_thread_mutex_t *m);
 
   //@}
@@ -1277,20 +1385,28 @@ namespace ACE_OS {
 
   //@{ @name A set of wrappers for readers/writer locks.
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int rw_rdlock (ACE_rwlock_t *rw);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int rw_tryrdlock (ACE_rwlock_t *rw);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int rw_trywrlock (ACE_rwlock_t *rw);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int rw_trywrlock_upgrade (ACE_rwlock_t *rw);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int rw_unlock (ACE_rwlock_t *rw);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int rw_wrlock (ACE_rwlock_t *rw);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int rwlock_destroy (ACE_rwlock_t *rw);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int rwlock_init (ACE_rwlock_t *rw,
                    int type = ACE_DEFAULT_SYNCH_TYPE,
                    const ACE_TCHAR *name = 0,
@@ -1301,16 +1417,20 @@ namespace ACE_OS {
   //@{ @name Thread scheduler interface.
   /// Set scheduling parameters.  An id of ACE_SELF indicates, e.g.,
   /// set the parameters on the calling thread.
+  extern ACE_Export
   int sched_params (const ACE_Sched_Params &, ACE_id_t id = ACE_SELF);
   //@}
 
   /// Find the schedling class ID that corresponds to the class name.
+  extern ACE_Export
   int scheduling_class (const char *class_name, ACE_id_t &);
 
   //@{ @name A set of wrappers for semaphores.
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int sema_destroy (ACE_sema_t *s);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int sema_init (ACE_sema_t *s,
                  u_int count,
                  int type = ACE_DEFAULT_SYNCH_TYPE,
@@ -1320,6 +1440,7 @@ namespace ACE_OS {
                  LPSECURITY_ATTRIBUTES sa = 0);
 
 # if defined (ACE_HAS_WCHAR)
+  ACE_NAMESPACE_INLINE_FUNCTION
   int sema_init (ACE_sema_t *s,
                  u_int count,
                  int type,
@@ -1329,56 +1450,75 @@ namespace ACE_OS {
                  LPSECURITY_ATTRIBUTES sa = 0);
 # endif /* ACE_HAS_WCHAR */
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int sema_post (ACE_sema_t *s);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int sema_post (ACE_sema_t *s,
                  u_int release_count);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int sema_trywait (ACE_sema_t *s);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int sema_wait (ACE_sema_t *s);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int sema_wait (ACE_sema_t *s,
                  ACE_Time_Value &tv);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int sema_wait (ACE_sema_t *s,
                  ACE_Time_Value *tv);
 
   //@}
 
   //@{ @name A set of wrappers for System V semaphores.
+  ACE_NAMESPACE_INLINE_FUNCTION
   int semctl (int int_id,
               int semnum,
               int cmd,
               semun);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
   int semget (key_t key,
               int nsems,
               int flags);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
   int semop (int int_id,
              struct sembuf *sops,
              size_t nsops);
   //@}
 
   /// Friendly interface to <priocntl>(2).
+  extern ACE_Export
   int set_scheduling_params (const ACE_Sched_Params &,
                              ACE_id_t id = ACE_SELF);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int sigtimedwait (const sigset_t *set,
                     siginfo_t *info,
                     const ACE_Time_Value *timeout);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int sigwait (sigset_t *set,
                int *sig = 0);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int sigwaitinfo (const sigset_t *set,
                    siginfo_t *info);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int thr_cancel (ACE_thread_t t_id);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int thr_cmp (ACE_hthread_t t1,
                ACE_hthread_t t2);
+
   // These are non-portable since they use ACE_thread_t and
   // ACE_hthread_t and will go away in a future release.
+  ACE_NAMESPACE_INLINE_FUNCTION
   int thr_continue (ACE_hthread_t target_thread);
 
   /*
@@ -1411,6 +1551,7 @@ namespace ACE_OS {
    * Note that <thread_adapter> is always deleted by <thr_create>,
    * therefore it must be allocated with global operator new.
    */
+  extern ACE_Export
   int thr_create (ACE_THR_FUNC func,
                   void *args,
                   long flags,
@@ -1421,128 +1562,177 @@ namespace ACE_OS {
                   size_t stacksize = 0,
                   ACE_Base_Thread_Adapter *thread_adapter = 0);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int thr_equal (ACE_thread_t t1,
                  ACE_thread_t t2);
 
+  extern ACE_Export
   void thr_exit (ACE_THR_FUNC_RETURN status = 0);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int thr_getconcurrency (void);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int thr_getprio (ACE_hthread_t id,
                    int &priority);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int thr_getprio (ACE_hthread_t id,
                    int &priority,
                    int &policy);
 
 # if defined (ACE_HAS_TSS_EMULATION) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
+  ACE_NAMESPACE_INLINE_FUNCTION
   int thr_getspecific (ACE_OS_thread_key_t key,
                        void **data);
 # endif /* ACE_HAS_TSS_EMULATION && ACE_HAS_THREAD_SPECIFIC_STORAGE */
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int thr_getspecific (ACE_thread_key_t key,
                        void **data);
 
+#if defined (VXWORKS)
+  extern ACE_Export
+#else
+  ACE_NAMESPACE_INLINE_FUNCTION
+#endif /* VXWORKS */
   int thr_join (ACE_hthread_t waiter_id,
                 ACE_THR_FUNC_RETURN *status);
 
+#if defined (VXWORKS)
+  extern ACE_Export
+#else
+  ACE_NAMESPACE_INLINE_FUNCTION
+#endif /* VXWORKS */
   int thr_join (ACE_thread_t waiter_id,
                 ACE_thread_t *thr_id,
                 ACE_THR_FUNC_RETURN *status);
 
+  extern ACE_Export
   int thr_key_detach (void *inst);
 
+  extern ACE_Export
   int thr_key_used (ACE_thread_key_t key);
 
 # if defined (ACE_HAS_THR_C_DEST)
 #   if defined (ACE_HAS_TSS_EMULATION) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
+  extern ACE_Export
   int thr_keycreate (ACE_OS_thread_key_t *key,
                      ACE_THR_C_DEST,
                      void *inst = 0);
 #   endif /* ACE_HAS_TSS_EMULATION && ACE_HAS_THREAD_SPECIFIC_STORAGE */
+
+  extern ACE_Export
   int thr_keycreate (ACE_thread_key_t *key,
                      ACE_THR_C_DEST,
                      void *inst = 0);
 # else
 #   if defined (ACE_HAS_TSS_EMULATION) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
+  extern ACE_Export
   int thr_keycreate (ACE_OS_thread_key_t *key,
                      ACE_THR_DEST,
                      void *inst = 0);
 #   endif /* ACE_HAS_TSS_EMULATION && ACE_HAS_THREAD_SPECIFIC_STORAGE */
+
+  extern ACE_Export
   int thr_keycreate (ACE_thread_key_t *key,
                      ACE_THR_DEST,
                      void *inst = 0);
 # endif /* ACE_HAS_THR_C_DEST */
 
+  extern ACE_Export
   int thr_keyfree (ACE_thread_key_t key);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int thr_kill (ACE_thread_t thr_id,
                 int signum);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   size_t thr_min_stack (void);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   ACE_thread_t thr_self (void);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   void thr_self (ACE_hthread_t &);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int thr_setcancelstate (int new_state,
                           int *old_state);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int thr_setcanceltype (int new_type,
                          int *old_type);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int thr_setconcurrency (int hint);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int thr_setprio (ACE_hthread_t id,
                    int priority,
                    int policy = -1);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int thr_setprio (const ACE_Sched_Priority prio);
 
 # if defined (ACE_HAS_TSS_EMULATION) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
+  extern ACE_Export
   int thr_setspecific (ACE_OS_thread_key_t key,
                        void *data);
 # endif /* ACE_HAS_TSS_EMULATION && ACE_HAS_THREAD_SPECIFIC_STORAGE */
 
+  extern ACE_Export
   int thr_setspecific (ACE_thread_key_t key,
                        void *data);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int thr_sigsetmask (int how,
                       const sigset_t *nsm,
                       sigset_t *osm);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int thr_suspend (ACE_hthread_t target_thread);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   void thr_testcancel (void);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   void thr_yield (void);
 
   //@{ @name A set of wrappers for mutex locks that only work within a single process.
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int thread_mutex_destroy (ACE_thread_mutex_t *m);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int thread_mutex_init (ACE_thread_mutex_t *m,
                          int type = ACE_DEFAULT_SYNCH_TYPE,
                          const char *name = 0,
                          ACE_mutexattr_t *arg = 0);
 
 #if defined (ACE_HAS_WCHAR)
+  ACE_NAMESPACE_INLINE_FUNCTION
   int thread_mutex_init (ACE_thread_mutex_t *m,
                          int type,
                          const wchar_t *name,
                          ACE_mutexattr_t *arg = 0);
 #endif /* ACE_HAS_WCHAR */
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int thread_mutex_lock (ACE_thread_mutex_t *m);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int thread_mutex_lock (ACE_thread_mutex_t *m,
                          const ACE_Time_Value &timeout);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int thread_mutex_lock (ACE_thread_mutex_t *m,
                          const ACE_Time_Value *timeout);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int thread_mutex_trylock (ACE_thread_mutex_t *m);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int thread_mutex_unlock (ACE_thread_mutex_t *m);
 
   //@}
@@ -1555,6 +1745,7 @@ namespace ACE_OS {
    * the same process. The uniqueness of this name is therefore only
    * valid for the life of <object>.
    */
+  extern ACE_Export
   void unique_name (const void *object,
                     ACE_TCHAR *name,
                     size_t length);
@@ -1569,7 +1760,7 @@ namespace ACE_OS {
  *
  * @brief Wrapper for NT events on UNIX.
  */
-class ACE_OS_Export ACE_event_t
+class ACE_Export ACE_event_t
 {
   friend int ACE_OS::event_init(ACE_event_t*, int, int, int, const char*, void*,int);
   friend int ACE_OS::event_destroy(ACE_event_t*);

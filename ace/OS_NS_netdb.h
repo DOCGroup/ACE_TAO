@@ -26,13 +26,29 @@
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/os_include/os_netdb.h"
+#include "ace/ACE_export.h"
+
+#if defined (ACE_EXPORT_MACRO)
+#  undef ACE_EXPORT_MACRO
+#endif
+#define ACE_EXPORT_MACRO ACE_Export
 
 namespace ACE_OS {
 
+#if defined (VXWORKS)
+  extern ACE_Export 
+#else
+  ACE_NAMESPACE_INLINE_FUNCTION
+#endif /* VXWORKS */
   struct hostent *gethostbyaddr (const char *addr,
                                  int length,
                                  int type);
 
+#if defined (VXWORKS)
+  extern ACE_Export 
+#else
+  ACE_NAMESPACE_INLINE_FUNCTION
+#endif /* VXWORKS */
   struct hostent *gethostbyaddr_r (const char *addr,
                                    int length,
                                    int type,
@@ -40,17 +56,37 @@ namespace ACE_OS {
                                    ACE_HOSTENT_DATA buffer,
                                    int *h_errnop);
 
+#if defined (VXWORKS)
+  extern ACE_Export 
+#else
+  ACE_NAMESPACE_INLINE_FUNCTION
+#endif /* VXWORKS */
   struct hostent *gethostbyname (const char *name);
 
+#if defined (VXWORKS)
+  extern ACE_Export 
+#else
+  ACE_NAMESPACE_INLINE_FUNCTION
+#endif /* VXWORKS */
   struct hostent *gethostbyname_r (const char *name,
                                    struct hostent *result,
                                    ACE_HOSTENT_DATA buffer,
                                    int *h_errnop);
 
 
+#if defined (VXWORKS)
+  extern ACE_Export 
+#else
+  ACE_NAMESPACE_INLINE_FUNCTION
+#endif /* VXWORKS */
   struct hostent *getipnodebyaddr (const void *src, size_t len,
                                    int family);
 
+#if defined (VXWORKS)
+  extern ACE_Export 
+#else
+  ACE_NAMESPACE_INLINE_FUNCTION
+#endif /* VXWORKS */
   struct hostent *getipnodebyname (const char *name, int family,
                                    int flags = 0);
 
@@ -62,30 +98,40 @@ namespace ACE_OS {
     unsigned char node[6];
   };
 
+  extern ACE_Export 
   int getmacaddress (struct macaddr_node_t *node);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   struct protoent *getprotobyname (const char *name);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   struct protoent *getprotobyname_r (const char *name,
                                      struct protoent *result,
                                      ACE_PROTOENT_DATA buffer);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   struct protoent *getprotobynumber (int proto);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   struct protoent *getprotobynumber_r (int proto,
                                        struct protoent *result,
                                        ACE_PROTOENT_DATA buffer);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   struct servent *getservbyname (const char *svc,
                                  const char *proto);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   struct servent *getservbyname_r (const char *svc,
                                    const char *proto,
                                    struct servent *result,
                                    ACE_SERVENT_DATA buf);
 
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0) && defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
+  extern ACE_Export 
   int netdb_acquire (void);
+
+  extern ACE_Export 
   int netdb_release (void);
 # endif /* defined (ACE_MT_SAFE) && ACE_LACKS_NETDB_REENTRANT_FUNCTIONS */
 

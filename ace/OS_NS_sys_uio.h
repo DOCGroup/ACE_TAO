@@ -26,19 +26,28 @@
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/os_include/sys/os_uio.h"
+#include "ace/ACE_export.h"
+
+#if defined (ACE_EXPORT_MACRO)
+#  undef ACE_EXPORT_MACRO
+#endif
+#define ACE_EXPORT_MACRO ACE_Export
 
 namespace ACE_OS {
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   ssize_t readv (ACE_HANDLE handle,
                  iovec *iov,
                  int iovlen);
 
 #if defined (ACE_LACKS_READV)
+  extern ACE_Export
   ssize_t readv_emulation (ACE_HANDLE handle,
                            ACE_READV_TYPE *iov,
                            int iovcnt);
 #endif /* ACE_LACKS_READV */
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   ssize_t writev (ACE_HANDLE handle,
                   const iovec *iov,
                   int iovcnt);
@@ -46,6 +55,7 @@ namespace ACE_OS {
   // these don't need to be in the header, better to put them in the cpp
   //  or inl.
 #if defined (ACE_LACKS_WRITEV)
+  extern ACE_Export
   int writev_emulation (ACE_HANDLE handle,
                         ACE_WRITEV_TYPE *iov,
                         int iovcnt);

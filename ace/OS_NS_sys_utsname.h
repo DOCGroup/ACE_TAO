@@ -25,6 +25,13 @@
 #  pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/ACE_export.h"
+
+#if defined (ACE_EXPORT_MACRO)
+#  undef ACE_EXPORT_MACRO
+#endif
+#define ACE_EXPORT_MACRO ACE_Export
+
 #if defined (ACE_LACKS_UTSNAME_T)
 #   if !defined (SYS_NMLN)
 #     define SYS_NMLN 257
@@ -47,6 +54,11 @@ typedef struct utsname ACE_utsname;
 
 namespace ACE_OS {
 
+#if !defined (ACE_WIN32) && !defined (VXWORKS) && !defined (CHORUS) && !defined (ACE_PSOS)
+  ACE_NAMESPACE_INLINE_FUNCTION
+#else
+  extern ACE_Export
+#endif /* ! ACE_WIN32 && ! VXWORKS && ! CHORUS */
   int uname (ACE_utsname *name);
 
 } /* namespace ACE_OS */

@@ -26,14 +26,23 @@
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/os_include/os_poll.h"
+#include "ace/ACE_export.h"
+
+#if defined (ACE_EXPORT_MACRO)
+#  undef ACE_EXPORT_MACRO
+#endif
+#define ACE_EXPORT_MACRO ACE_Export
 
 class ACE_Time_Value;
 
 namespace ACE_OS {
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int poll (struct pollfd *pollfds,
             unsigned long len,
             const ACE_Time_Value *tv = 0);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
   int poll (struct pollfd *pollfds,
             unsigned long len,
             const ACE_Time_Value &tv);

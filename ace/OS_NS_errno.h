@@ -26,15 +26,25 @@
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/os_include/os_errno.h"
+#include "ace/ACE_export.h"
+
+#if defined (ACE_EXPORT_MACRO)
+#  undef ACE_EXPORT_MACRO
+#endif
+#define ACE_EXPORT_MACRO ACE_Export
 
 namespace ACE_OS {
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int last_error (void);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   void last_error (int);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int set_errno_to_last_error (void);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int set_errno_to_wsa_last_error (void);
 
 } /* namespace ACE_OS */

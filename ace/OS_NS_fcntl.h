@@ -27,9 +27,16 @@
 
 #include "ace/os_include/os_fcntl.h"
 #include "ace/Global_Macros.h"  // for LPSECURITY_ATTRIBUTES :-(
+#include "ace/ACE_export.h"
+
+#if defined (ACE_EXPORT_MACRO)
+#  undef ACE_EXPORT_MACRO
+#endif
+#define ACE_EXPORT_MACRO ACE_Export
 
 namespace ACE_OS {
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int fcntl (ACE_HANDLE handle,
              int cmd,
              long arg = 0);
@@ -57,11 +64,13 @@ namespace ACE_OS {
   /// the end prior to each write, as specified by POSIX.  This
   /// is generally good enough for typical situations, but it is ``not
   /// quite right'' in its semantics.
+  extern ACE_Export 
   ACE_HANDLE open (const char *filename,
                    int mode,
                    int perms = ACE_DEFAULT_OPEN_PERMS,
                    LPSECURITY_ATTRIBUTES sa = 0);
 #if defined (ACE_HAS_WCHAR)
+  extern ACE_Export 
   ACE_HANDLE open (const wchar_t *filename,
                    int mode,
                    int perms = ACE_DEFAULT_OPEN_PERMS,

@@ -61,31 +61,6 @@ ACE_OS::inet_ntoa (const struct in_addr addr)
 }
 #endif /* defined (ACE_PSOS) */
 
-ACE_INLINE int
-ACE_OS::inet_pton (int family, const char *strptr, void *addrptr)
-{
-  ACE_OS_TRACE ("ACE_OS::inet_pton");
-
-#if defined (ACE_HAS_IPV6)
-  ACE_OSCALL_RETURN (::inet_pton (family, strptr, addrptr), int, -1);
-#else
-  if (family == AF_INET)
-    {
-      struct in_addr in_val;
-
-      if (ACE_OS::inet_aton (strptr, &in_val))
-        {
-          ACE_OS::memcpy (addrptr, &in_val, sizeof (struct in_addr));
-          return 1; // Success
-        }
-
-      return 0; // Input is not a valid presentation format
-    }
-
-  ACE_NOTSUP_RETURN(-1);
-#endif  /* ACE_HAS_IPV6 */
-}
-
 ACE_INLINE const char *
 ACE_OS::inet_ntop (int family, const void *addrptr, char *strptr, size_t len)
 {
@@ -121,3 +96,28 @@ ACE_OS::inet_ntop (int family, const void *addrptr, char *strptr, size_t len)
   ACE_NOTSUP_RETURN(0);
 #endif /* ACE_HAS_IPV6 */
 }
+ACE_INLINE int
+ACE_OS::inet_pton (int family, const char *strptr, void *addrptr)
+{
+  ACE_OS_TRACE ("ACE_OS::inet_pton");
+
+#if defined (ACE_HAS_IPV6)
+  ACE_OSCALL_RETURN (::inet_pton (family, strptr, addrptr), int, -1);
+#else
+  if (family == AF_INET)
+    {
+      struct in_addr in_val;
+
+      if (ACE_OS::inet_aton (strptr, &in_val))
+        {
+          ACE_OS::memcpy (addrptr, &in_val, sizeof (struct in_addr));
+          return 1; // Success
+        }
+
+      return 0; // Input is not a valid presentation format
+    }
+
+  ACE_NOTSUP_RETURN(-1);
+#endif  /* ACE_HAS_IPV6 */
+}
+
