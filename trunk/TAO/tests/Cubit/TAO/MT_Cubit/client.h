@@ -52,18 +52,17 @@ public:
   void run (void);
   // Run the tests.
 
-  int do_priority_inversion_test (ACE_Thread_Manager *thread_manager);
+  int do_priority_inversion_test (void);
   // Performs the priority inversion test.
 
-  int do_thread_per_rate_test (ACE_Thread_Manager *thread_manager);
+  int do_thread_per_rate_test (void);
   // Performs the test with 4 threads each sending requests at rates
   // of 20,10,5 and 1Hz.
 
-  int start_servant (Task_State *ts, ACE_Thread_Manager
-                     &thread_manager);
+  int start_servant (void);
   // Starts the client utilization thread.
 
-  void output_latency (Task_State *ts);
+  void output_latency (void);
   // output the latency results for the requests.
 
 #if defined (VXWORKS)
@@ -78,10 +77,10 @@ private:
   void calc_util_time (void);
   // Calculate the time for one util computation.
 
-  int activate_high_client (ACE_Thread_Manager *thread_manager);
+  int activate_high_client (void);
   // Activates the high priority client.
 
-  int activate_low_client (ACE_Thread_Manager *thread_manager);
+  int activate_low_client (void);
   // Activates the low priority client.
 
   int activate_util_thread (void);
@@ -177,6 +176,9 @@ private:
   u_int context_switch_;
   // Stores the total number of context switches incurred by the
   // program while making CORBA requests
+
+  ACE_Thread_Manager server_thread_manager_;
+  // Thread manager for the servant used for utilization.
 
 #if (defined (ACE_HAS_PRUSAGE_T) || defined (ACE_HAS_GETRUSAGE)) && !defined (ACE_WIN32)
   ACE_Profile_Timer timer_for_context_switch;

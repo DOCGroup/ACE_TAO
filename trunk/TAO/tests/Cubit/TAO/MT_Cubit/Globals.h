@@ -36,13 +36,6 @@ if (status != OK)\
 #define VX_VME_INIT
 #endif /* VXWORKS && VME_DRIVER */
 
-#if defined (ACE_LACKS_FLOATING_POINT)
-#define TIME_IN_MICROSEC(X) X
-#else /* !ACE_LACKS_FLOATING_POINT */
-#define TIME_IN_MICROSEC(X) \
-(X * ACE_ONE_SECOND_IN_USECS)
-#endif /* !ACE_LACKS_FLOATING_POINT */
-
 #define THREAD_PER_RATE_OBJS 4
 // Number of cubit objects in the thread per rate test.
 

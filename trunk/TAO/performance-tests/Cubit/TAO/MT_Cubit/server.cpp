@@ -47,7 +47,7 @@ Server::Server (void)
 }
 
 int
-Server::initialize (int argc, char **argv)
+Server::init (int argc, char **argv)
 {
 #if defined (ACE_HAS_THREADS)
   // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
@@ -94,6 +94,25 @@ Server::initialize (int argc, char **argv)
    ACE::set_handle_limit ();
 
    return 0;
+}
+
+int
+Server::run (void)
+{
+  STOP_QUANTIFY;
+  CLEAR_QUANTIFY;
+  START_QUANTIFY;
+
+  if (this->start_servants () != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Error creating the servants\n"),
+                      -1);
+  ACE_DEBUG ((LM_DEBUG,
+              "Wait for all the threads to exit\n"));
+  // Wait for all the threads to exit.
+  this->servant_manager_.wait ();
+  STOP_QUANTIFY;
+  return 0;
 }
 
 void
@@ -189,7 +208,7 @@ Server::write_iors (void)
 }
 
 int
-Server::activate_high_servant (ACE_Thread_Manager *serv_thr_mgr)
+Server::activate_high_servant (void)
 {
   char orbport[BUFSIZ];
   char orbhost[BUFSIZ];
@@ -216,7 +235,7 @@ Server::activate_high_servant (ACE_Thread_Manager *serv_thr_mgr)
                   Cubit_Task (this->high_argv_->buf (),
                               "internet",
                               1,
-                              serv_thr_mgr,
+                              &this->servant_manager_,
                               0), //task id 0.
                   -1);
 
@@ -245,7 +264,7 @@ Server::activate_high_servant (ACE_Thread_Manager *serv_thr_mgr)
 }
 
 int
-Server::activate_low_servants (ACE_Thread_Manager *serv_thr_mgr)
+Server::activate_low_servants (void)
 {
   char orbport[BUFSIZ];
   char orbhost[BUFSIZ];
@@ -290,7 +309,7 @@ Server::activate_low_servants (ACE_Thread_Manager *serv_thr_mgr)
                       Cubit_Task (this->low_argv_->buf (),
 				  "internet",
 				  1,
-				  serv_thr_mgr,
+                                  &this->servant_manager_,
 				  i),
                       -1);
 
@@ -330,7 +349,7 @@ Server::activate_low_servants (ACE_Thread_Manager *serv_thr_mgr)
 }
 
 int
-Server::start_servants (ACE_Thread_Manager *serv_thr_mgr)
+Server::start_servants (void)
 {
   int result;
   // Do the preliminary argument processing for options -p and -h.
@@ -344,7 +363,7 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr)
               this->high_priority_));
 
   // Activate the high priority servant task
-  if (this->activate_high_servant (serv_thr_mgr) < 0)
+  if (this->activate_high_servant () < 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Failure in activating high priority servant\n"),
                       -1);
@@ -356,7 +375,7 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr)
   this->init_low_priority ();
 
   // Activate the low priority servants.
-  if (this->activate_low_servants (serv_thr_mgr) < 0)
+  if (this->activate_low_servants () < 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Failure in activating low priority servant\n"),
                       -1);
@@ -384,39 +403,30 @@ int
 main (int argc, char *argv[])
 {
 #endif /* VXWORKS */
-  // Dummy code to create the GLOBALS object in the global memory
-  // instead of TSS.
-  GLOBALS::instance ();
-
+  int result;
   Server server;
 
-  if (server.initialize (argc, argv) != 0)
+  result = server.init (argc, argv);
+  if (result != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error in Initialization\n"),
                       1);
 
-  // Create the daemon thread in its own <ACE_Thread_Manager>.
-  ACE_Thread_Manager servant_thread_manager;
-
-  STOP_QUANTIFY;
-  CLEAR_QUANTIFY;
-  START_QUANTIFY;
-
-  if (server.start_servants (&servant_thread_manager) != 0)
+  // run the server.
+  result = server.run ();
+  if (result != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error creating the servants\n"),
-                      1);
-  ACE_DEBUG ((LM_DEBUG,
-              "Wait for all the threads to exit\n"));
-  // Wait for all the threads to exit.
-  servant_thread_manager.wait ();
-  //  ACE_Thread_Manager::instance ()->wait ();
-  STOP_QUANTIFY;
+                       "Error while running the servants\n"),
+                      2);
   return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Singleton<Globals,ACE_Null_Mutex>;
+template class ACE_Unbounded_Set<ACE_timer_t>;
+template class ACE_Unbounded_Set_Iterator<ACE_timer_t>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Singleton<Globals,ACE_Null_Mutex>
+#pragma instantiate ACE_Unbounded_Set<ACE_timer_t>
+#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_timer_t>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -74,11 +74,11 @@ MT_Cubit_Timer::get_elapsed (void)
 
   real_time = tmp + tmp2 / (ACE_timer_t) ACE_ONE_SECOND_IN_USECS;
 #else
-  real_time = ((ACE_timer_t) this->delta_.sec () +
-               (ACE_timer_t) this->delta_.usec () / (ACE_timer_t) ACE_ONE_SECOND_IN_USECS);
+  real_time = ((ACE_timer_t) this->delta_.sec () * ACE_ONE_SECOND_IN_USECS) +
+               (ACE_timer_t) this->delta_.usec ();
 #endif /* VXWORKS */
-  real_time /= this->granularity_;
+  real_time = real_time/this->granularity_;
 #endif /* !ACE_LACKS_FLOATING_POINT */
-  return real_time;
+  return real_time; // in usecs.
 }
    

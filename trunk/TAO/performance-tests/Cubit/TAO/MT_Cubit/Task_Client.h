@@ -314,6 +314,10 @@ private:
   // determines the frequency at which to make calls depending on the
   // id of the thread.
 
+  ACE_timer_t calc_delta (ACE_timer_t real_time,
+                          ACE_timer_t delta);
+  // calculate the delta value.
+
   Cubit_ptr cubit_;
   // pointer to the cubit object.
 
