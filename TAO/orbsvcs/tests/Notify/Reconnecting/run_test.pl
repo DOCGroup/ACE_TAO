@@ -77,7 +77,9 @@ if ($verbose eq "-v") {print "TEST SCRIPT: Starting Notify Service on port $noti
 $NS->Arguments($ns_args);
 if ($verbose eq "-v") {print "TEST SCRIPT: " . $NS->CommandLine . "\n";}
 print $NS->CommandLine ();
-$NS->Spawn();
+if ($NS->Spawn() == -1) {
+   exit 1;
+}
 
 # the ior file is only used to wait for the service to start
 if (PerlACE::waitforfile_timed ($notify_ior, 10) == -1) {
