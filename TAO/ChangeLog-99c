@@ -1,5 +1,7 @@
 Wed Jun 23 17:38:52 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
+	* examples/Quoter/Generic_Factory.cpp:
+	* examples/Quoter/Quoter_i.cpp :
 	* examples/Simple/grid/Grid_i.cpp:
 	* examples/Simple/Time/Time_i.cpp: Fixed unused arguments warnings
 	  in these files.
