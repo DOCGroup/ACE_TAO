@@ -112,10 +112,18 @@ bgcolor="#ffffff">
       <LI>Scheduling_Service</LI>
       <LI>Trading_Service</LI>
       <LI>Time_Service</LI>
+      <LI>ImplRepo_Service *(see below)*</LI>
     </UL>
 
     <P>In the future we plan to use a single binary and ACE Service
       Configurator and keep a single binary.</P>
+
+    <P>The Implementation Repository is a unique service in that it
+      starts server executables, and it doesn't make sense to collocate
+      it in another server. Because of this, only the IDL files are
+      located in <CODE>$TAO_ROOT/orbsvcs/orbsvcs</CODE>. The other
+      files are all located in 
+      <CODE>$TAO_ROOT/orbsvcs/ImplRepo_Service</code>.</P>
 
     <P>Finally the tests and example programs are located in
       <CODE>$TAO_ROOT/orbsvcs/tests</CODE>;
@@ -194,6 +202,11 @@ bgcolor="#ffffff">
 	<TD><CODE>Event_Latency</CODE></TD>
 	<TD>Test the Real-time Event Service and measure end-to-end latency,
 	it also uses the Scheduling and Naming services.</TD></TR>
+
+      <TR>
+        <TD><CODE>ImplRepo</CODE></TD>
+        <TD>Tests used to test the functionality of the
+        Implementation Repository Service.</TD></TR>
 
       <TR>
 	<TD><CODE>Logger</CODE></TD>
