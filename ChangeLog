@@ -1,3 +1,25 @@
+Thu Nov  4 17:06:08 CST 2004 Scott Harris <harris_s@ociweb.com>
+
+        * test/Test_Output.cpp:
+          
+          Fix a bug introduced by a memory leak fix in Logging_Strategy.cpp,
+          Mon Oct 18 21:13:02 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+          , that broke the test/Logging_Strategy_Test on some platforms.
+          The problem is that Test_Output gives its file stream away
+          to ACE_LOG_MSG and then ACE_Logging_Strategry::init destroys the
+          stream but ACE_END_TEST still tries to close and destory it.
+          The solution was to only have Test_Output close/destroy the
+          stream if it has not already be changed in ACE_LOG_MSG.
+          
+        * test/Log_Msg_Test.cpp:
+        
+          The above change made it so ACE_Test_Output::output_file ()
+          returns the ACE_MSG_LOG stream so it would not return
+          a possibly destroyed stream. Log_Msg_Test had
+          to be changed to save off the message stream when it
+          switched to a different file stream and then back 
+          to the original.
+
 Thu Nov  4 14:00:50 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/QoS/Makefile.am:

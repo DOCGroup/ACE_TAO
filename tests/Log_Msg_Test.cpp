@@ -353,6 +353,7 @@ test_ostream (void)
   if (myostream.bad ())
     return -1;
 
+  OFSTREAM *old_stream = ace_file_stream::instance ()->output_file ();
   // Set the ostream.
   ACE_LOG_MSG->msg_ostream (&myostream);
 
@@ -360,7 +361,7 @@ test_ostream (void)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("fourth message\n")));
   // Set the ostream back to the test's log file.
-  ACE_LOG_MSG->msg_ostream (ace_file_stream::instance ()->output_file ());
+  ACE_LOG_MSG->msg_ostream (old_stream);
   // Now close the ostream file and check its contents.
   myostream.close ();
 
