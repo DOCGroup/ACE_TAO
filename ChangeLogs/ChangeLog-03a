@@ -1,3 +1,17 @@
+Tue Jul  9 07:21:29 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/Map_T.h:
+        * ace/Map.cpp:
+        * ace/Pair_T.h:
+        * ace/Pair.cpp:
+
+          Remove the use of Map.h and Pair.h.
+
+        * ace/gethrtime.cpp:
+
+          Only compile the contents of this file if using GHS and are
+          building for the x86.
+
 Mon Jul  8 17:26:51 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Task.cpp (svc_run): Borland complains about reinterpret_cast from
