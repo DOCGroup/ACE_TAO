@@ -179,7 +179,7 @@ EC_Driver::initialize_orb_and_poa (int &argc, char* argv[],
 
   CORBA::Object_var poa_object =
     this->orb_->resolve_initial_references("RootPOA", ACE_TRY_ENV);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
 
   if (CORBA::is_nil (poa_object.in ()))
     {
