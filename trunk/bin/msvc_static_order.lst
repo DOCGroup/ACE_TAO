@@ -53,3 +53,4 @@ TAO/orbsvcs/orbsvcs/CosLoadBalancing.dsp
 TAO/orbsvcs/orbsvcs/IFRService.dsp
 TAO/orbsvcs/orbsvcs/RT_Notification.dsp
 TAO/orbsvcs/Naming_Service/Naming_Service.dsp
+tests/Test_Output.dsp
