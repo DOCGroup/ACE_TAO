@@ -95,7 +95,8 @@ realclean:
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/CDR_Base.inl \
   $(TAO_ROOT)/tao/orbconf.h \
   $(TAO_ROOT)/tao/TAO_Export.h \
@@ -266,7 +267,6 @@ realclean:
   $(TAO_ROOT)/tao/DomainC.i \
   $(TAO_ROOT)/tao/WrongTransactionC.h \
   $(TAO_ROOT)/tao/WrongTransactionC.i \
-  $(TAO_ROOT)/tao/ObjectIdListC.h \
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
@@ -278,8 +278,8 @@ realclean:
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
   $(TAO_ROOT)/tao/IOPC.h \
   $(TAO_ROOT)/tao/IOPC.i \
-  $(TAO_ROOT)/tao/PortableInterceptorC.i test_objectC.i \
-  $(TAO_ROOT)/tao/Stub.h \
+  $(TAO_ROOT)/tao/PortableInterceptorC.i \
+  test_objectC.i $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/MProfile.h \
   $(TAO_ROOT)/tao/MProfile.i \
   $(TAO_ROOT)/tao/ORB_Core.h \
@@ -371,10 +371,10 @@ realclean:
   $(TAO_ROOT)/tao/target_specification.i \
   $(TAO_ROOT)/tao/operation_details.i \
   $(TAO_ROOT)/tao/Transport.h \
-  $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
-  $(TAO_ROOT)/tao/Cache_Entries.h \
   $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
   $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
+  $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
+  $(TAO_ROOT)/tao/Cache_Entries.h \
   $(ACE_ROOT)/ace/Recyclable.h \
   $(ACE_ROOT)/ace/Recyclable.inl \
   $(TAO_ROOT)/tao/Cache_Entries.inl \
@@ -388,9 +388,6 @@ realclean:
   $(ACE_ROOT)/ace/Refcountable.h \
   $(ACE_ROOT)/ace/Refcountable.inl \
   $(TAO_ROOT)/tao/Synch_Refcountable.inl \
-  $(TAO_ROOT)/tao/Codeset_Translator_Factory.h \
-  $(TAO_ROOT)/tao/Codeset_Translator_Factory_T.h \
-  $(TAO_ROOT)/tao/Codeset_Translator_Factory_T.cpp \
   $(TAO_ROOT)/tao/Transport.inl \
   $(TAO_ROOT)/tao/Invocation.i \
   $(TAO_ROOT)/tao/PortableInterceptor.h \
@@ -429,7 +426,8 @@ realclean:
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/CDR_Base.inl \
   $(TAO_ROOT)/tao/orbconf.h \
   $(TAO_ROOT)/tao/TAO_Export.h \
@@ -600,7 +598,6 @@ realclean:
   $(TAO_ROOT)/tao/DomainC.i \
   $(TAO_ROOT)/tao/WrongTransactionC.h \
   $(TAO_ROOT)/tao/WrongTransactionC.i \
-  $(TAO_ROOT)/tao/ObjectIdListC.h \
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
@@ -612,7 +609,8 @@ realclean:
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
   $(TAO_ROOT)/tao/IOPC.h \
   $(TAO_ROOT)/tao/IOPC.i \
-  $(TAO_ROOT)/tao/PortableInterceptorC.i test_objectC.i \
+  $(TAO_ROOT)/tao/PortableInterceptorC.i \
+  test_objectC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -731,6 +729,12 @@ realclean:
   $(ACE_ROOT)/ace/Framework_Component_T.cpp \
   $(ACE_ROOT)/ace/Thread_Manager.i \
   $(TAO_ROOT)/tao/ORB_Core.i \
+  $(TAO_ROOT)/tao/Profile.h \
+  $(TAO_ROOT)/tao/Tagged_Components.h \
+  $(TAO_ROOT)/tao/Tagged_Components.i \
+  $(TAO_ROOT)/tao/GIOP_Message_Version.h \
+  $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
+  $(TAO_ROOT)/tao/Profile.i \
   $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/MProfile.h \
   $(TAO_ROOT)/tao/MProfile.i \
@@ -778,7 +782,8 @@ realclean:
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/CDR_Base.inl \
   $(TAO_ROOT)/tao/orbconf.h \
   $(TAO_ROOT)/tao/TAO_Export.h \
@@ -949,7 +954,6 @@ realclean:
   $(TAO_ROOT)/tao/DomainC.i \
   $(TAO_ROOT)/tao/WrongTransactionC.h \
   $(TAO_ROOT)/tao/WrongTransactionC.i \
-  $(TAO_ROOT)/tao/ObjectIdListC.h \
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
@@ -961,7 +965,8 @@ realclean:
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
   $(TAO_ROOT)/tao/IOPC.h \
   $(TAO_ROOT)/tao/IOPC.i \
-  $(TAO_ROOT)/tao/PortableInterceptorC.i test_objectC.i \
+  $(TAO_ROOT)/tao/PortableInterceptorC.i \
+  test_objectC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -986,7 +991,8 @@ realclean:
   $(TAO_ROOT)/orbsvcs/orbsvcs/IOR_Multicast.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
   $(ACE_ROOT)/ace/INET_Addr.h \
-  $(ACE_ROOT)/ace/Addr.h $(ACE_ROOT)/ace/Addr.i \
+  $(ACE_ROOT)/ace/Addr.h \
+  $(ACE_ROOT)/ace/Addr.i \
   $(ACE_ROOT)/ace/INET_Addr.i \
   $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
   $(ACE_ROOT)/ace/SOCK_Dgram.h \
