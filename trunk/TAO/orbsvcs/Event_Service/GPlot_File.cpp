@@ -165,15 +165,15 @@ ACE_GPlot_File::set (long entry, float value)
 
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Map_Entry<long, char *>;
 template class ACE_Map_Manager<long, char *, ACE_Null_Mutex>;
 template class ACE_Map_Iterator_Base<long, char *, ACE_Null_Mutex>;
 template class ACE_Map_Iterator<long, char *, ACE_Null_Mutex>;
 template class ACE_Map_Reverse_Iterator<long, char *, ACE_Null_Mutex>;
-template class ACE_Map_Entry<long, char *>;
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Map_Entry<long, char *>
 #pragma instantiate ACE_Map_Manager<long, char *, ACE_Null_Mutex>
 #pragma instantiate ACE_Map_Iterator_Base<long, char *, ACE_Null_Mutex>
 #pragma instantiate ACE_Map_Iterator<long, char *, ACE_Null_Mutex>
 #pragma instantiate ACE_Map_Reverse_Iterator<long, char *, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Entry<long, char *>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
