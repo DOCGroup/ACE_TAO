@@ -1,5 +1,10 @@
 Mon Sep 21 18:20:35 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
+	* tao/ORB_Core.cpp (init): Added compile time option
+ 	  TAO_USE_DOTTED_DECIMAL_ADDRESSES that makes the use of dotted
+ 	  decimal addresses the default.  Also changed the
+ 	  -ORBdotteddecimaladdresses option to take an argument (0 or 1).
+
 	* tao/ORB.cpp: 
 	* tao/Connect.cpp: 
 

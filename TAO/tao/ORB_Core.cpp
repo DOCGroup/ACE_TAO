@@ -157,7 +157,11 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   char *preconnections = 0;
 
   // Use dotted decimal addresses
+#if defined (TAO_USE_DOTTED_DECIMAL_ADDRESSES)
+  int dotted_decimal_addresses = 1; 
+#else
   int dotted_decimal_addresses = 0; 
+#endif /* TAO_USE_DOTTED_DECIMAL_ADDRESSES */
 
   while (arg_shifter.is_anything_left ())
     {
@@ -188,7 +192,11 @@ TAO_ORB_Core::init (int &argc, char *argv[])
         {
           // Use dotted decimal addresses
           arg_shifter.consume_arg ();
-	  dotted_decimal_addresses = 1;
+          if (arg_shifter.is_parameter_next ())
+            {
+              dotted_decimal_addresses = ACE_OS::atoi (arg_shifter.get_current ());
+              arg_shifter.consume_arg ();
+            }
         }
       else if (ACE_OS::strcmp (current_arg, "-ORBdebug") == 0)
         {
