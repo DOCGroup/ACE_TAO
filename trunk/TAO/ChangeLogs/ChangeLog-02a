@@ -1,3 +1,10 @@
+Fri Nov  3 16:49:01 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/ast/ast_structure.cpp:
+
+	  Added explicit template instantiation for 
+	  ACE_Unbounded_Queue_Iterator<AST_Field *>.
+
 Fri Nov  3 14:53:08 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao_idl/ast/ast_exception.cpp:
