@@ -1,6 +1,10 @@
 /* -*- C++ -*- */
 // $Id$
 
+#include "ace/Time_Value.h"
+#include "ace/OS.h"
+#include "ace/Trace.h"
+
 // Be very carefull before changing the calculations inside
 // ACE_High_Res_Timer.  The precision matters and we are using integer
 // calculations not floating point.  Also look good at the emulated 64
@@ -46,7 +50,7 @@ ACE_High_Res_Timer::hrtime_to_tv (ACE_Time_Value &tv,
 
 
 ACE_INLINE ACE_Time_Value
-ACE_High_Res_Timer::gettimeofday (const ACE_OS::ACE_HRTimer_Op op)
+ACE_High_Res_Timer::gettimeofday (int op)
 {
 #if defined (ACE_WIN32)
   // Get the global scale factor if there isn't one yet.
@@ -79,7 +83,7 @@ ACE_High_Res_Timer::gettimeofday_hr (void)
 
 
 ACE_INLINE ACE_hrtime_t
-ACE_High_Res_Timer::gettime (const ACE_OS::ACE_HRTimer_Op op)
+ACE_High_Res_Timer::gettime (int op)
 {
 #if defined (ACE_WIN32)
   // Get the global scale factor if there isn't one yet.
@@ -105,28 +109,28 @@ ACE_High_Res_Timer::~ACE_High_Res_Timer (void)
 }
 
 ACE_INLINE void
-ACE_High_Res_Timer::start (const ACE_OS::ACE_HRTimer_Op op)
+ACE_High_Res_Timer::start (int op)
 {
   ACE_TRACE ("ACE_High_Res_Timer::start");
   this->start_ = ACE_High_Res_Timer::gettime (op);
 }
 
 ACE_INLINE void
-ACE_High_Res_Timer::stop (const ACE_OS::ACE_HRTimer_Op op)
+ACE_High_Res_Timer::stop (int op)
 {
   ACE_TRACE ("ACE_High_Res_Timer::stop");
   this->end_ = ACE_High_Res_Timer::gettime (op);
 }
 
 ACE_INLINE void
-ACE_High_Res_Timer::start_incr (const ACE_OS::ACE_HRTimer_Op op)
+ACE_High_Res_Timer::start_incr (int op)
 {
   ACE_TRACE ("ACE_High_Res_Timer::start_incr");
   this->start_incr_ = ACE_High_Res_Timer::gettime (op);
 }
 
 ACE_INLINE void
-ACE_High_Res_Timer::stop_incr (const ACE_OS::ACE_HRTimer_Op op)
+ACE_High_Res_Timer::stop_incr (int op)
 {
   ACE_TRACE ("ACE_High_Res_Timer::stop_incr");
   this->total_ += ACE_High_Res_Timer::gettime (op) - this->start_incr_;

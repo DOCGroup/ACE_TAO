@@ -22,6 +22,137 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if !defined (ACE_EXITCODE_TYPE)
+#   define ACE_EXITCODE_TYPE int
+#endif /* !ACE_EXITCODE_TYPE */
+typedef ACE_EXITCODE_TYPE ACE_exitcode;
+
+// change this so that it conforms to others
+#if defined (ACE_LACKS_SYSTIME_H)
+#  define ACE_NEEDS_SYS_TIME_H
+#endif /* ACE_LACKS_SYSTIME_H */
+
+#if !defined (ACE_HAS_TERM_IOCTLS)
+#  define ACE_LACKS_TERMIOS_H
+#endif /* ACE_HAS_TERM_IOCTLS */
+
+#if !defined (ACE_HAS_SELECT_H)
+#  define ACE_LACKS_SYS_SELECT_H
+#endif /* ACE_HAS_SELECT_H */
+
+#if !defined (ACE_NEEDS_SCHED_H)
+#  define ACE_LACKS_SCHED_H
+#endif /* ACE_NEEDS_SCHED_H */
+
+#if !defined (ACE_HAS_UTIME)
+#  define ACE_LACKS_UTIME_H
+#endif /* !ACE_HAS_UTIME */
+
+#if defined (ACE_LACKS_SYSV_SHMEM)
+#  define ACE_LACKS_SYS_SHM_H
+#endif /* ACE_LACKS_SYSV_SHMEM */
+
+#if !defined (ACE_HAS_POLL)
+#  define ACE_LACKS_POLL_H
+#endif /* !ACE_HAS_POLL */
+
+// this may need an "|| defined (ACE_WIN32)" if windows doesn't have <aio.h> 
+#if !defined (ACE_HAS_AIO_CALLS)
+#  define ACE_LACKS_AIO_H
+#endif /* ACE_HAS_AIO_CALLS */
+
+#if defined (ACE_LACKS_SIGSET)
+#  define ACE_LACKS_SIGSET_T
+#endif /* ACE_LACKS_SIGSET */
+
+#if defined (ACE_LACKS_SIGACTION_T)
+#  define ACE_LACKS_SIGACTION_T
+#endif /* ACE_LACKS_SIGACTION_T */
+
+
+// need to clean all these up...
+#if defined (ACE_LACKS_UNIX_SYS_HEADERS)
+#  define ACE_LACKS_SYS_TYPES_H
+//...
+#endif /* ACE_LACKS_UNIX_SYS_HEADERS */
+
+
+#if !defined (ACE_HAS_SIG_ATOMIC_T)
+#  define ACE_LACKS_SIG_ATOMIC_T
+#endif /* !ACE_HAS_SIG_ATOMIC_T */
+
+#if !defined (ACE_HAS_SSIZE_T)
+#  define ACE_LACKS_SSIZE_T
+#endif /* !ACE_HAS_SSIZE_T */
+
+// Default semaphore key
+#   if !defined (ACE_DEFAULT_SEM_KEY)
+#     define ACE_DEFAULT_SEM_KEY 1234
+#   endif /* ACE_DEFAULT_SEM_KEY */
+
+// Need to work around odd glitches with NT.
+#   if !defined (ACE_MAX_DEFAULT_PORT)
+#     define ACE_MAX_DEFAULT_PORT 65535
+#   endif /* ACE_MAX_DEFAULT_PORT */
+
+# if !defined (ACE_INVALID_SEM_KEY)
+#   define ACE_INVALID_SEM_KEY -1
+# endif /* !ACE_INVALID_SEM_KEY */
+
+
+# if !defined (ACE_DIRECTORY_SEPARATOR_STR_A)
+// Define the pathname separator characters for UNIX.
+#   define ACE_DIRECTORY_SEPARATOR_STR_A "/"
+#   define ACE_DIRECTORY_SEPARATOR_CHAR_A '/'
+# endif /* ACE_DIRECTORY_SEPARATOR_STR_A */
+
+# if !defined (ACE_PLATFORM_A)
+// We're some kind of UNIX...
+#   define ACE_PLATFORM_A "UNIX"
+#   define ACE_PLATFORM_EXE_SUFFIX_A ""
+# endif /* ACE_PLATFORM_A */
+
+#   if !defined (ACE_LD_SEARCH_PATH)
+#     define ACE_LD_SEARCH_PATH "LD_LIBRARY_PATH"
+#   endif /* ACE_LD_SEARCH_PATH */
+#   if !defined (ACE_LD_SEARCH_PATH_SEPARATOR_STR)
+#     define ACE_LD_SEARCH_PATH_SEPARATOR_STR ":"
+#   endif /* ACE_LD_SEARCH_PATH_SEPARATOR_STR */
+
+#   if !defined (ACE_DLL_SUFFIX)
+#     define ACE_DLL_SUFFIX ".so"
+#   endif /* ACE_DLL_SUFFIX */
+#   if !defined (ACE_DLL_PREFIX)
+#     define ACE_DLL_PREFIX "lib"
+#   endif /* ACE_DLL_PREFIX */
+
+// Used for dynamic linking.
+#   if !defined (ACE_DEFAULT_SVC_CONF)
+#     define ACE_DEFAULT_SVC_CONF ACE_LIB_TEXT ("./svc.conf")
+#   endif /* ACE_DEFAULT_SVC_CONF */
+
+
+// The following are #defines and #includes that are specific to UNIX.
+# if !defined (ACE_STDIN)
+#   define ACE_STDIN 0
+#   define ACE_STDOUT 1
+#   define ACE_STDERR 2
+# endif /* !ACE_STDIN */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Moved from OS.h dah
 // Default address for shared memory mapped files and SYSV shared memory
 // (defaults to 64 M).
@@ -395,6 +526,7 @@
 // being used).
 // ============================================================================
 
+#include "ace/ace_new.h"
 #if defined (ACE_NEW_THROWS_EXCEPTIONS)
 
 // Since new() throws exceptions, we need a way to avoid passing
@@ -648,8 +780,25 @@ typedef SOCKET ACE_SOCKET;
 typedef int ACE_HANDLE;
 typedef ACE_HANDLE ACE_SOCKET;
 # define ACE_INVALID_HANDLE -1
+# define ACE_SYSCALL_FAILED -1
+
+
+// need to move this to a better place, albeit possibly in this file.
+#   define ACE_SEH_TRY if (1)
+#   define ACE_SEH_EXCEPT(X) while (0)
+#   define ACE_SEH_FINALLY if (1)
+
+
 
 #endif /* ACE_WIN32 */
+
+
+// this probably shouldn't go here either...
+#   if !defined (ACE_INVALID_PID)
+#     define ACE_INVALID_PID ((pid_t) -1)
+#   endif /* ACE_INVALID_PID */
+
+
 
 typedef void *(*ACE_THR_FUNC)(void *);
 

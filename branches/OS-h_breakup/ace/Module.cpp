@@ -10,11 +10,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Stream_Modules.h"
-
 #if !defined (__ACE_INLINE__)
 #include "ace/Module.i"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/Stream_Modules.h"
 
 ACE_RCSID(ace, Module, "$Id$")
 

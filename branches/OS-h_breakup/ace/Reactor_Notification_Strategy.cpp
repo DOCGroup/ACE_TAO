@@ -1,9 +1,10 @@
 #include "ace/Reactor_Notification_Strategy.h"
-#include "ace/Reactor.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Reactor_Notification_Strategy.inl"
 #endif /* __ACE_INLINE __ */
+
+#include "ace/Reactor.h"
 
 ACE_RCSID(ace, Reactor_Notification_Strategy, "$Id$")
 

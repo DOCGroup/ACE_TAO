@@ -1,16 +1,17 @@
 // $Id$
 
 #include "ace/OS_Dirent.h"
-#include "ace/OS_String.h"
-#include "ace/OS_Memory.h" 
-#include "ace/Log_Msg.h" 
-#include "ace/OS.h" // for qsort()
 
 ACE_RCSID(ace, OS_Dirent, "$Id$")
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # include "ace/OS_Dirent.inl"
 #endif /* ACE_HAS_INLINED_OS_CALLS */
+
+#include "ace/OS_String.h"
+#include "ace/OS_Memory.h" 
+#include "ace/Log_Msg.h" 
+#include "ace/OS.h" // for qsort()
 
 ACE_DIR *
 ACE_OS_Dirent::opendir_emulation (const ACE_TCHAR *filename)

@@ -13,7 +13,7 @@
 #ifndef ACE_TTY_IO_H
 #define ACE_TTY_IO_H
 
-#include "ace/OS.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -1,11 +1,13 @@
 // $Id$
 
-#include "ace/Service_Types.h"
 #include "ace/Service_Object.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Service_Object.i"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/Service_Types.h"
+#include "ace/Trace.h"
 
 ACE_RCSID(ace, Service_Object, "$Id$")
 

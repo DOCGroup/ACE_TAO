@@ -4,13 +4,13 @@
 #include "ace/ATM_Connector.h"
 #if defined (ACE_HAS_ATM)
 
-#include "ace/Handle_Set.h"
-
 ACE_RCSID(ace, ATM_Connector, "$Id$")
 
 #if !defined (__ACE_INLINE__)
 #include "ace/ATM_Connector.i"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/Handle_Set.h"
 
 ACE_ALLOC_HOOK_DEFINE(ACE_ATM_Connector)
 

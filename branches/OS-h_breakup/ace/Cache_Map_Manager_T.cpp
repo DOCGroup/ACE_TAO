@@ -9,11 +9,11 @@
 #define ACE_LACKS_PRAGMA_ONCE
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Malloc.h"
-
 #if !defined (__ACE_INLINE__)
 #include "ace/Cache_Map_Manager_T.i"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/Malloc.h"
 
 ACE_RCSID(ace, Cache_Map_Manager_T, "$Id$")
 

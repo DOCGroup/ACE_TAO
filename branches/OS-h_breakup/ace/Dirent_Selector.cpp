@@ -1,12 +1,13 @@
 // $Id$
 
-#include "ace/OS_Memory.h"
-#include "ace/OS_Dirent.h"
 #include "ace/Dirent_Selector.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Dirent_Selector.inl"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/OS_Memory.h"
+#include "ace/OS_Dirent.h"
 
 ACE_RCSID (ace,
            Dirent_Selector,

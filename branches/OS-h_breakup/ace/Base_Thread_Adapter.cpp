@@ -1,13 +1,14 @@
 // $Id$
 
 #include "ace/Base_Thread_Adapter.h"
-#include "ace/Trace.h"
 
 ACE_RCSID(ace, Base_Thread_Adapter, "$Id$")
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # include "ace/Base_Thread_Adapter.inl"
 #endif /* ACE_HAS_INLINED_OS_CALLS */
+
+#include "ace/Trace.h"
 
 ACE_INIT_LOG_MSG_HOOK     ACE_Base_Thread_Adapter::init_log_msg_hook_ = 0;
 ACE_INHERIT_LOG_MSG_HOOK  ACE_Base_Thread_Adapter::inherit_log_msg_hook_ = 0;

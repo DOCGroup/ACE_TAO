@@ -1,6 +1,4 @@
 #include "ace/Time_Value.h"
-#include "ace/Basic_Types.h"
-
 
 ACE_RCSID (ace,
            Time_Value,
@@ -11,6 +9,7 @@ ACE_RCSID (ace,
 #include "ace/Time_Value.inl"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/Basic_Types.h"
 
 // Static constant representing `zero-time'.
 // Note: this object requires static construction.

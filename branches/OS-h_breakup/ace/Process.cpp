@@ -1,11 +1,6 @@
 // $Id$
 
-#include "ace/OS.h"
 #include "ace/Process.h"
-#include "ace/ARGV.h"
-#include "ace/Signal.h"
-#include "ace/SString.h"
-#include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Process.i"
@@ -13,6 +8,11 @@
 
 ACE_RCSID (ace, Process, "$Id$")
 
+#include "ace/OS.h"
+#include "ace/ARGV.h"
+#include "ace/Signal.h"
+#include "ace/SString.h"
+#include "ace/Log_Msg.h"
 
 // This function acts as a signal handler for SIGCHLD. We don't really want
 // to do anything with the signal - it's just needed to interrupt a sleep.

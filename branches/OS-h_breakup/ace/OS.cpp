@@ -1,18 +1,21 @@
 // $Id$
 
 #include "ace/OS.h"
-#include "ace/Sched_Params.h"
-#include "ace/OS_Thread_Adapter.h"
-
-#if !defined (ACE_HAS_WINCE)
-# include "ace/OS_QoS.h"
-#endif  // ACE_HAS_WINCE
 
 // Perhaps we should *always* include ace/OS.i in order to make sure
 // we can always link against the OS symbols?
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # include "ace/OS.i"
 #endif /* ACE_HAS_INLINED_OS_CALLS */
+
+#include "ace/Sched_Params.h"
+#include "ace/OS_Thread_Adapter.h"
+
+#include "ace/ace_time.h" 
+
+#if !defined (ACE_HAS_WINCE)
+# include "ace/OS_QoS.h"
+#endif  // ACE_HAS_WINCE
 
 ACE_RCSID(ace, OS, "$Id$")
 
@@ -801,28 +804,6 @@ ACE_OS::gethostbyname_r (const char *name, hostent *result,
 }
 #endif /* VXWORKS */
 
-void
-ACE_OS::ace_flock_t::dump (void) const
-{
-  ACE_OS_TRACE ("ACE_OS::ace_flock_t::dump");
-
-#if 0
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("handle_ = %u"), this->handle_));
-# if defined (ACE_WIN32)
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nInternal = %d"), this->overlapped_.Internal));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nInternalHigh = %d"), this->overlapped_.InternalHigh));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nOffsetHigh = %d"), this->overlapped_.OffsetHigh));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nhEvent = %d"), this->overlapped_.hEvent));
-# elif !defined (CHORUS)
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nl_whence = %d"), this->lock_.l_whence));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nl_start = %d"), this->lock_.l_start));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nl_len = %d"), this->lock_.l_len));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nl_type = %d"), this->lock_.l_type));
-# endif /* ACE_WIN32 */
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-#endif /* 0 */
-}
 
 void
 ACE_OS::mutex_lock_cleanup (void *mutex)
@@ -4504,7 +4485,6 @@ spaef (FUNCPTR entry, ...)
 #endif /* VXWORKS */
 
 #if !defined (ACE_HAS_SIGINFO_T)
-# if !defined (ACE_WIN32)
 siginfo_t::siginfo_t (ACE_HANDLE handle)
   : si_handle_ (handle),
     si_handles_ (&handle)
@@ -4516,7 +4496,6 @@ siginfo_t::siginfo_t (ACE_HANDLE *handles)
     si_handles_ (handles)
 {
 }
-# endif /* ! ACE_WIN32 */
 #endif /* ACE_HAS_SIGINFO_T */
 
 pid_t

@@ -1,11 +1,19 @@
 // $Id$
 
 #include "ace/Sock_Connect.h"
+
+#if defined (ACE_LACKS_INLINE_FUNCTIONS)
+#include "ace/Sock_Connect.i"
+#endif /* ACE_LACKS_INLINE_FUNCTIONS */
+
 #include "ace/INET_Addr.h"
 #include "ace/Log_Msg.h"
 #include "ace/Handle_Set.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
+
+#include "ace/ace_netinet_in.h"
+#include "ace/ace_sys_ioctl.h"
 
 #if defined (VXWORKS)
 #include /**/ <inetLib.h>
@@ -28,10 +36,6 @@ extern "C" {
 // Whether or not ipv6 is turned on in this box
 int ACE_Sock_Connect::ipv6_enabled_ = -1;
 #endif /* ACE_HAS_IPV6 */
-
-#if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/Sock_Connect.i"
-#endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 ACE_RCSID(ace, Sock_Connect, "$Id$")
 

@@ -2,11 +2,12 @@
 // $Id$
 
 #include "ace/SV_Semaphore_Complex.h"
-#include "ace/Log_Msg.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/SV_Semaphore_Complex.i"
 #endif
+
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(ace, SV_Semaphore_Complex, "$Id$")
 

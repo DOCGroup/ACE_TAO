@@ -14,11 +14,15 @@
 #define ACE_HIGH_RES_TIMER_H
 #include "ace/pre.h"
 
-#include "ace/ACE.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/ACE_export.h"
+#include "ace/Basic_Types.h"
+#include "ace/Time_Value.h"
 
 /**
  * @class ACE_High_Res_Timer
@@ -94,6 +98,7 @@
 class ACE_Export ACE_High_Res_Timer
 {
 public:
+
   // = Initialization method.
 
   /**
@@ -159,10 +164,10 @@ public:
   void reset (void);
 
   /// Start timing.
-  void start (const ACE_OS::ACE_HRTimer_Op = ACE_OS::ACE_HRTIMER_GETTIME);
+  void start (int = ACE_HRTIMER_GETTIME);
 
   /// Stop timing.
-  void stop (const ACE_OS::ACE_HRTimer_Op = ACE_OS::ACE_HRTIMER_GETTIME);
+  void stop (int = ACE_HRTIMER_GETTIME);
 
   /// Set <tv> to the number of microseconds elapsed.
   /**
@@ -192,10 +197,10 @@ public:
   void elapsed_microseconds (ACE_hrtime_t &usecs) const;
 
   /// Start incremental timing.
-  void start_incr (const ACE_OS::ACE_HRTimer_Op = ACE_OS::ACE_HRTIMER_GETTIME);
+  void start_incr (int = ACE_HRTIMER_GETTIME);
 
   /// Stop incremental timing.
-  void stop_incr (const ACE_OS::ACE_HRTimer_Op = ACE_OS::ACE_HRTIMER_GETTIME);
+  void stop_incr (int = ACE_HRTIMER_GETTIME);
 
   /// Set <tv> to the number of microseconds elapsed between all calls
   /// to start_incr and stop_incr.
@@ -248,8 +253,7 @@ public:
    * <global_scale_factor_> appropriately will result in the finest
    * resolution possible.
    */
-  static ACE_Time_Value gettimeofday (const ACE_OS::ACE_HRTimer_Op =
-                                        ACE_OS::ACE_HRTIMER_GETTIME);
+  static ACE_Time_Value gettimeofday (int = ACE_HRTIMER_GETTIME);
 
   /// Converts an <hrt> to <tv> using global_scale_factor_.
   static void hrtime_to_tv (ACE_Time_Value &tv,
@@ -272,8 +276,7 @@ private:
    * low-resolution clock if the <global_scale_factor_> has not been
    * set.
    */
-  static ACE_hrtime_t gettime (const ACE_OS::ACE_HRTimer_Op =
-                                 ACE_OS::ACE_HRTIMER_GETTIME);
+  static ACE_hrtime_t gettime (int = ACE_HRTIMER_GETTIME);
 
   /// Starting time.
   ACE_hrtime_t start_;

@@ -155,5 +155,39 @@
 // Needed to wait for "processes" to exit.
 #include <am/await.h>
 
+
+// from OS.h
+#     include /**/ <chorus.h>
+#     if !defined(CHORUS_4)
+#       include /**/ <cx/select.h>
+#     else
+#       include /**/ <stdio.h>
+#     endif
+#     include /**/ <sys/uio.h>
+#     include /**/ <time.h>
+#     include /**/ <stdfileio.h>
+#     include /**/ <am/afexec.h>
+#     include /**/ <sys/types.h>
+#     include /**/ <sys/signal.h>
+#     include /**/ <sys/wait.h>
+#     include /**/ <pwd.h>
+#     include /**/ <timer/chBench.h>
+extern_C int      getgid          __((void));
+extern_C int      getuid          __((void));
+extern_C char*    getcwd          __((char* buf, size_t size));
+extern_C int      pipe            __((int* fildes));
+extern_C int      gethostname     __((char*, size_t));
+
+// This must come after limits.h is included
+//#     define MAXPATHLEN _POSIX_PATH_MAX
+
+#     if  !defined(CHORUS_4)
+typedef cx_fd_mask fd_mask;
+typedef void (*__sighandler_t)(int); // keep Signal compilation happy
+#     endif
+
+
+
+
 #include "ace/post.h"
 #endif /* ACE_CONFIG_H */

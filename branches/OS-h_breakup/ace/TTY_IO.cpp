@@ -1,6 +1,8 @@
 // $Id$
 
 #include "ace/TTY_IO.h"
+#include "ace/ace_sys_ioctl.h"
+#include "ace/ace_termios.h"
 
 ACE_RCSID(ace, TTY_IO, "$Id$")
 

@@ -1,6 +1,8 @@
 /* -*- C++ -*- */
 // $Id$
 
+#include "ace/OS.h"
+
 template <class STREAM> ssize_t
 ACE_Streambuf_T<STREAM>::send (char *buf, ssize_t len)
 {

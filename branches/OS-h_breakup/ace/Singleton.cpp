@@ -9,13 +9,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Synch_T.h"
-#include "ace/Object_Manager.h"
-#include "ace/Log_Msg.h"
-
 #if !defined (__ACE_INLINE__)
 #include "ace/Singleton.i"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/Synch_T.h"
+#include "ace/Object_Manager.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID (ace,
            Singleton,

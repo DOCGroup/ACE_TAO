@@ -174,6 +174,7 @@
 
 // Compiler/platform defines the sig_atomic_t typedef
 #define ACE_HAS_SIG_ATOMIC_T
+
 #if (ACE_AIX_VERS >= 402)
 #  define ACE_HAS_SIGINFO_T
 #  define ACE_LACKS_SIGINFO_H

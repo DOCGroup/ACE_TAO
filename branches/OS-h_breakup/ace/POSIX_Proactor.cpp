@@ -5,23 +5,18 @@
 
 #if defined (ACE_HAS_AIO_CALLS)
 
-#include "ace/Task_T.h"
-#include "ace/Log_Msg.h"
-#include "ace/Object_Manager.h"
-
 #if !defined (__ACE_INLINE__)
 #include "ace/POSIX_Proactor.i"
 #endif /* __ACE_INLINE__ */
 
+
+#include "ace/Task_T.h"
+#include "ace/Log_Msg.h"
+#include "ace/Object_Manager.h"
+
 # if defined (ACE_HAS_SYSINFO)
 #   include  <sys/systeminfo.h>
 # endif /* ACE_HAS_SYS_INFO */
-
-// Moved from OS.h dah
-# if !defined (_SC_AIO_MAX)
-#   define _SC_AIO_MAX 1
-# endif /* _SC_AIO_MAX */
-
 
 
 // *********************************************************************

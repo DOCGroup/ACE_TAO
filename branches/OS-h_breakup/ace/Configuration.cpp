@@ -1,6 +1,7 @@
 // $Id$
 #include "ace/Configuration.h"
 #include "ace/Auto_Ptr.h"
+#include "ace/ace_unistd.h"
 
 // Can remove this when import_config and export_config are removed from
 // ACE_Configuration. They're deprecated at ACE 5.2.

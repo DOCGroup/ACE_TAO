@@ -1,6 +1,8 @@
 /* -*- C++ -*- */
 // $Id$
 
+#include "ace/OS.h"
+
 ACE_INLINE
 ACE_Lock::ACE_Lock (void)
 {

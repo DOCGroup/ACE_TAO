@@ -98,7 +98,8 @@
 //#define ACE_HAS_GETRUSAGE
 
 // Platform uses int for select() rather than fd_set.
-#define ACE_SELECT_USES_INT
+//#define ACE_SELECT_USES_INT
+#define ACE_SELECT_FD_SET_TYPE int
 
 // Platform has prototypes for ACE_TLI.
 //#define ACE_HAS_TLI_PROTOTYPES

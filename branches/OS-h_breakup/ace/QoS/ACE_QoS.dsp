@@ -134,7 +134,7 @@ SOURCE=.\QoS_Session_Impl.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\SOCK_Dgram_Mcast_QoS.h
+SOURCE=.\SOCK_Dgram_Mcasu_QoS.h
 # End Source File
 # End Group
 # Begin Group "Resource Files"

@@ -5,13 +5,13 @@
 
 #if defined (ACE_HAS_AIO_CALLS) && defined (sun)
 
-#include "ace/Task_T.h"
-#include "ace/Log_Msg.h"
-#include "ace/Object_Manager.h"
-
 #if !defined (__ACE_INLINE__)
 #include "ace/SUN_Proactor.i"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/Task_T.h"
+#include "ace/Log_Msg.h"
+#include "ace/Object_Manager.h"
 
 ACE_SUN_Proactor::ACE_SUN_Proactor (size_t max_aio_operations)
   : ACE_POSIX_AIOCB_Proactor (max_aio_operations, 

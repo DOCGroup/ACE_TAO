@@ -3,6 +3,9 @@
 
 // IPC_SAP.i
 
+#include "ace/Trace.h"
+#include "ace/OS.h"
+
 // Used to return the underlying handle_. 
 
 ASYS_INLINE

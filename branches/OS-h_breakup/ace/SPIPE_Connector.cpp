@@ -2,11 +2,12 @@
 // $Id$
 
 #include "ace/SPIPE_Connector.h"
-#include "ace/Log_Msg.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/SPIPE_Connector.i"
 #endif
+
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(ace, SPIPE_Connector, "$Id$")
 

@@ -5,15 +5,15 @@
 
 #if defined (ACE_HAS_AIO_CALLS)
 
+#if !defined (__ACE_INLINE__)
+#include "ace/POSIX_Asynch_IO.i"
+#endif /* __ACE_INLINE__ */
+
 #include "ace/Proactor.h"
 #include "ace/Message_Block.h"
 #include "ace/INET_Addr.h"
 #include "ace/Task_T.h"
 #include "ace/POSIX_Proactor.h"
-
-#if !defined (__ACE_INLINE__)
-#include "ace/POSIX_Asynch_IO.i"
-#endif /* __ACE_INLINE__ */
 
 u_long
 ACE_POSIX_Asynch_Result::bytes_transferred (void) const

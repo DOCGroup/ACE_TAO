@@ -1,6 +1,11 @@
 // $Id$
 
 #include "ace/Reactor.h"
+
+#if !defined (__ACE_INLINE__)
+#include "ace/Reactor.i"
+#endif /* __ACE_INLINE__ */
+
 #include "ace/Reactor_Impl.h"
 #include "ace/Handle_Set.h"
 #if !defined (ACE_HAS_WINCE)
@@ -16,10 +21,6 @@
 #include "ace/TP_Reactor.h"
 #include "ace/Object_Manager.h"
 #include "ace/Framework_Component.h"
-
-#if !defined (__ACE_INLINE__)
-#include "ace/Reactor.i"
-#endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Reactor, "$Id$")
 

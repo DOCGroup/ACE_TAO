@@ -606,7 +606,7 @@ endif # GHS
 
 
 .obj/Basic_Types.o .obj/Basic_Types.so .shobj/Basic_Types.o .shobj/Basic_Types.so: Basic_Types.cpp \
-  OS.h \
+  Basic_Types.h \
   pre.h \
   config-all.h \
   config.h \
@@ -616,40 +616,10 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
-  ace_sys_types.h \
-  OS_Export.h \
-  ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
-  ace_stropts.h \
-  ace_sys_uio.h \
-  ace_sys_resource.h \
-  OS_Dirent.h \
-  OS_Errno.h \
-  OS_Errno.inl \
-  OS_Dirent.inl \
-  OS_String.h \
-  Basic_Types.h \
+  ace_new.h \
   ACE_export.h \
+  ace_limits.h \
   Basic_Types.i \
-  OS_String.inl \
-  OS_Memory.h \
-  OS_Memory.inl \
-  OS_TLI.h \
-  OS_TLI.inl \
-  Time_Value.h \
-  Time_Value.inl \
-  Default_Constants.h \
-  Global_Macros.h \
-  Min_Max.h \
-  streams.h \
-  Trace.h \
-  OS.i \
   Template_Instantiations.cpp
 
 .obj/Time_Value.o .obj/Time_Value.so .shobj/Time_Value.o .shobj/Time_Value.so: Time_Value.cpp \
@@ -664,9 +634,11 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   ACE_export.h \
   Time_Value.inl \
   Basic_Types.h \
+  ace_limits.h \
   Basic_Types.i
 
 .obj/OS.o .obj/OS.so .shobj/OS.o .shobj/OS.so: OS.cpp OS.h \
@@ -679,28 +651,39 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
-  OS_Dirent.inl \
-  OS_String.h \
+  ace_dirent.h \
+  ace_unistd.h \
   Basic_Types.h \
   ACE_export.h \
+  ace_limits.h \
   Basic_Types.i \
+  OS_Dirent.inl \
+  OS_String.h \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -710,14 +693,19 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
-  OS.i \
   Sched_Params.h \
   Sched_Params.i \
+  Trace.h \
+  OS.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   OS_Thread_Adapter.h \
   Base_Thread_Adapter.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Base_Thread_Adapter.inl \
   OS_Thread_Adapter.inl \
@@ -735,43 +723,62 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
-  OS_Dirent.inl \
-  OS_String.h \
+  ace_dirent.h \
+  ace_sys_types.h \
+  ace_unistd.h \
   Basic_Types.h \
   ACE_export.h \
+  ace_limits.h \
   Basic_Types.i \
+  OS_Dirent.inl \
+  OS_String.h \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   Log_Msg.h \
-  Global_Macros.h \
-  Default_Constants.h \
+  ace_sys_param.h \
+  ace_stdlib.h \
   Log_Priority.h \
+  Default_Constants.h \
   ace_threads.h \
-  ace_sys_types.h \
+  ace_signal.h \
   OS_Log_Msg_Attributes.h \
   streams.h \
+  ace_stdio.h \
   OS_Log_Msg_Attributes.inl \
   OS.h \
-  ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_TLI.h \
   OS_TLI.inl \
   Time_Value.h \
   Time_Value.inl \
+  Global_Macros.h \
   Min_Max.h \
+  Sched_Params.h \
+  Sched_Params.i \
   Trace.h \
-  OS.i
+  OS.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h
 
 .obj/OS_Memory.o .obj/OS_Memory.so .shobj/OS_Memory.o .shobj/OS_Memory.so: OS_Memory.cpp \
   OS_Memory.h \
@@ -785,14 +792,15 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
   OS_Memory.inl
 
 .obj/OS_QoS.o .obj/OS_QoS.so .shobj/OS_QoS.o .shobj/OS_QoS.so: OS_QoS.cpp \
   OS_QoS.h \
   pre.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -801,40 +809,14 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
-  ace_sys_types.h \
+  ace_new.h \
   OS_Export.h \
-  ace_stdio.h \
-  ace_semaphore.h \
+  ace_sys_types.h \
   ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
-  ace_stropts.h \
-  ace_sys_uio.h \
-  ace_sys_resource.h \
-  OS_Dirent.h \
+  ace_stdio.h \
   OS_Errno.h \
-  OS_Errno.inl \
-  OS_Dirent.inl \
-  OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
-  OS_String.inl \
-  OS_Memory.h \
-  OS_Memory.inl \
-  OS_TLI.h \
-  OS_TLI.inl \
-  Time_Value.h \
-  Time_Value.inl \
-  Default_Constants.h \
-  Global_Macros.h \
-  Min_Max.h \
-  streams.h \
-  Trace.h \
-  OS.i
+  ace_errno.h \
+  OS_Errno.inl
 
 .obj/OS_String.o .obj/OS_String.so .shobj/OS_String.o .shobj/OS_String.so: OS_String.cpp \
   OS_String.h \
@@ -848,12 +830,16 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   Basic_Types.h \
   ACE_export.h \
+  ace_limits.h \
   Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
   OS_Memory.inl
 
@@ -868,8 +854,10 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   OS_Export.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
   OS_TLI.inl
 
@@ -885,6 +873,8 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
+  ace_errno.h \
   OS_Errno.inl
 
 .obj/Base_Thread_Adapter.o .obj/Base_Thread_Adapter.so .shobj/Base_Thread_Adapter.o .shobj/Base_Thread_Adapter.so: Base_Thread_Adapter.cpp \
@@ -899,43 +889,14 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   streams.h \
+  ace_stdio.h \
   OS_Export.h \
   OS_Log_Msg_Attributes.inl \
   Base_Thread_Adapter.inl \
-  OS.h \
-  ace_threads.h \
-  ace_sys_types.h \
-  ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
-  ace_stropts.h \
-  ace_sys_uio.h \
-  ace_sys_resource.h \
-  OS_Dirent.h \
-  OS_Errno.h \
-  OS_Errno.inl \
-  OS_Dirent.inl \
-  OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
-  OS_String.inl \
-  OS_Memory.h \
-  OS_Memory.inl \
-  OS_TLI.h \
-  OS_TLI.inl \
-  Time_Value.h \
-  Time_Value.inl \
-  Default_Constants.h \
-  Global_Macros.h \
-  Min_Max.h \
   Trace.h \
-  OS.i
+  ACE_export.h
 
 .obj/OS_Thread_Adapter.o .obj/OS_Thread_Adapter.so .shobj/OS_Thread_Adapter.o .shobj/OS_Thread_Adapter.so: OS_Thread_Adapter.cpp \
   OS_Thread_Adapter.h \
@@ -950,34 +911,45 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   streams.h \
+  ace_stdio.h \
   OS_Export.h \
   OS_Log_Msg_Attributes.inl \
   Base_Thread_Adapter.inl \
   OS_Thread_Adapter.inl \
   Thread_Hook.h \
   OS.h \
-  ace_threads.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
-  OS_Dirent.inl \
-  OS_String.h \
+  ace_dirent.h \
+  ace_unistd.h \
   Basic_Types.h \
   ACE_export.h \
+  ace_limits.h \
   Basic_Types.i \
+  OS_Dirent.inl \
+  OS_String.h \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -987,8 +959,15 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
+  Sched_Params.h \
+  Sched_Params.i \
   Trace.h \
-  OS.i
+  OS.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h
 
 .obj/OS_Log_Msg_Attributes.o .obj/OS_Log_Msg_Attributes.so .shobj/OS_Log_Msg_Attributes.o .shobj/OS_Log_Msg_Attributes.so: OS_Log_Msg_Attributes.cpp \
   OS_Log_Msg_Attributes.h \
@@ -1001,7 +980,9 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   streams.h \
+  ace_stdio.h \
   OS_Export.h \
   OS_Log_Msg_Attributes.inl
 
@@ -1016,29 +997,40 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   OS_Export.h \
   OS.h \
-  ace_threads.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
-  OS_Dirent.inl \
-  OS_String.h \
+  ace_dirent.h \
+  ace_unistd.h \
   Basic_Types.h \
   ACE_export.h \
+  ace_limits.h \
   Basic_Types.i \
+  OS_Dirent.inl \
+  OS_String.h \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -1048,14 +1040,19 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   Trace.h \
-  OS.i
+  OS.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h
 
 .obj/Sched_Params.o .obj/Sched_Params.so .shobj/Sched_Params.o .shobj/Sched_Params.so: Sched_Params.cpp \
   Sched_Params.h \
   pre.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -1064,40 +1061,14 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
+  ACE_export.h \
+  Time_Value.h \
+  OS_Export.h \
+  Time_Value.inl \
   ace_threads.h \
   ace_sys_types.h \
-  OS_Export.h \
-  ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
-  ace_stropts.h \
-  ace_sys_uio.h \
-  ace_sys_resource.h \
-  OS_Dirent.h \
-  OS_Errno.h \
-  OS_Errno.inl \
-  OS_Dirent.inl \
-  OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
-  OS_String.inl \
-  OS_Memory.h \
-  OS_Memory.inl \
-  OS_TLI.h \
-  OS_TLI.inl \
-  Time_Value.h \
-  Time_Value.inl \
-  Default_Constants.h \
-  Global_Macros.h \
-  Min_Max.h \
-  streams.h \
-  Trace.h \
-  OS.i \
+  ace_signal.h \
   Sched_Params.i
 
 .obj/Handle_Set.o .obj/Handle_Set.so .shobj/Handle_Set.o .shobj/Handle_Set.so: Handle_Set.cpp \
@@ -1111,6 +1082,7 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   Global_Macros.h \
   OS_Export.h \
   ace_sys_types.h \
@@ -1118,18 +1090,22 @@ endif # GHS
   Handle_Set.i \
   Trace.h \
   Log_Msg.h \
-  Default_Constants.h \
+  ace_sys_param.h \
+  ace_stdlib.h \
   Log_Priority.h \
-  Basic_Types.h \
-  Basic_Types.i \
-  OS_Errno.h \
-  OS_Errno.inl \
+  Default_Constants.h \
   ace_threads.h \
+  ace_signal.h \
   OS_Log_Msg_Attributes.h \
   streams.h \
+  ace_stdio.h \
   OS_Log_Msg_Attributes.inl \
   OS_String.h \
-  OS_String.inl
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
+  OS_String.inl \
+  ace_string.h
 
 .obj/Copy_Disabled.o .obj/Copy_Disabled.so .shobj/Copy_Disabled.o .shobj/Copy_Disabled.so: Copy_Disabled.cpp \
   Copy_Disabled.h \
@@ -1142,11 +1118,11 @@ endif # GHS
   config-g++-common.h \
   post.h \
   ace_wchar.h \
-  ace_wchar.inl
+  ace_wchar.inl \
+  ace_new.h
 
 .obj/ACE.o .obj/ACE.so .shobj/ACE.o .shobj/ACE.so: ACE.cpp ACE.h \
   pre.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -1155,28 +1131,43 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -1186,11 +1177,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -1200,6 +1194,7 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   Handle_Set.h \
   Handle_Set.i \
   Auto_Ptr.h \
@@ -1213,8 +1208,10 @@ endif # GHS
   String_Base.cpp \
   Malloc.h \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
@@ -1245,6 +1242,7 @@ endif # GHS
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
@@ -1274,31 +1272,43 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   Basic_Types.h \
   ACE_export.h \
+  ace_limits.h \
   Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   Active_Map_Manager.i \
   Active_Map_Manager_T.h \
   Map_Manager.h \
   Synch.h \
-  ACE.h \
-  OS.h \
   ace_threads.h \
   ace_sys_types.h \
+  ace_signal.h \
+  Global_Macros.h \
+  Synch.i \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
   OS_Dirent.inl \
   OS_Memory.h \
   OS_Memory.inl \
@@ -1307,11 +1317,20 @@ endif # GHS
   Time_Value.h \
   Time_Value.inl \
   Default_Constants.h \
-  Global_Macros.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   Trace.h \
   OS.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
+  Synch_T.h \
+  Synch_T.i \
+  Thread.h \
+  ACE.h \
   Flag_Manip.h \
   Flag_Manip.i \
   Handle_Ops.h \
@@ -1323,19 +1342,18 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
-  Synch.i \
-  Synch_T.h \
-  Synch_T.i \
-  Thread.h \
+  ace_ctype.h \
   Thread_Adapter.h \
   Base_Thread_Adapter.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Base_Thread_Adapter.inl \
   Thread_Adapter.inl \
   Thread.i \
   Synch_T.cpp \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   Map_Manager.i \
   Map_Manager.cpp \
@@ -1359,6 +1377,7 @@ endif # GHS
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
@@ -1413,19 +1432,21 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   OS_String.h \
   OS_Export.h \
   Basic_Types.h \
+  ace_limits.h \
   Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl
 
 .obj/ARGV.o .obj/ARGV.so .shobj/ARGV.o .shobj/ARGV.so: ARGV.cpp \
   ARGV.h \
   pre.h \
-  ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -1434,62 +1455,71 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
-  ace_sys_types.h \
+  ace_new.h \
+  Unbounded_Queue.h \
+  Node.h \
+  Node.cpp \
+  OS_Memory.h \
   OS_Export.h \
-  ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
-  ace_stropts.h \
-  ace_sys_uio.h \
-  ace_sys_resource.h \
-  OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  OS_Memory.inl \
+  Unbounded_Queue.inl \
+  Unbounded_Queue.cpp \
+  Malloc_Base.h \
+  ACE_export.h \
+  ace_sys_mman.h \
+  ace_sys_types.h \
+  Log_Msg.h \
+  ace_sys_param.h \
+  ace_stdlib.h \
+  Log_Priority.h \
+  Default_Constants.h \
+  ace_threads.h \
+  ace_signal.h \
+  OS_Log_Msg_Attributes.h \
+  streams.h \
+  ace_stdio.h \
+  OS_Log_Msg_Attributes.inl \
+  Global_Macros.h \
+  Trace.h \
+  ARGV.i \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_stropts.h \
+  ace_time.h \
+  ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
+  OS_Dirent.h \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
-  OS_Memory.h \
-  OS_Memory.inl \
+  ace_string.h \
   OS_TLI.h \
   OS_TLI.inl \
   Time_Value.h \
   Time_Value.inl \
-  Default_Constants.h \
-  Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
-  Handle_Ops.h \
-  Handle_Ops.i \
-  Lib_Find.h \
-  Lib_Find.i \
-  Init_ACE.h \
-  Init_ACE.i \
-  Sock_Connect.h \
-  Sock_Connect.i \
-  ACE.i \
-  Unbounded_Queue.h \
-  Node.h \
-  Node.cpp \
-  Unbounded_Queue.inl \
-  Unbounded_Queue.cpp \
-  Malloc_Base.h \
-  Log_Msg.h \
-  Log_Priority.h \
-  OS_Log_Msg_Attributes.h \
-  OS_Log_Msg_Attributes.inl \
-  ARGV.i
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h
 
 .obj/Argv_Type_Converter.o .obj/Argv_Type_Converter.so .shobj/Argv_Type_Converter.o .shobj/Argv_Type_Converter.so: Argv_Type_Converter.cpp \
   Argv_Type_Converter.h \
@@ -1503,17 +1533,21 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   Argv_Type_Converter.inl \
   OS_String.h \
   OS_Export.h \
   Basic_Types.h \
+  ace_limits.h \
   Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl
 
 .obj/Capabilities.o .obj/Capabilities.so .shobj/Capabilities.o .shobj/Capabilities.so: Capabilities.cpp \
-  Map_Manager.h \
+  Capabilities.h \
   pre.h \
   config-all.h \
   config.h \
@@ -1523,31 +1557,43 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   Synch.h \
-  ACE.h \
-  OS.h \
   ace_threads.h \
   ace_sys_types.h \
   OS_Export.h \
+  ace_signal.h \
+  ACE_export.h \
+  Global_Macros.h \
+  Synch.i \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -1555,11 +1601,20 @@ endif # GHS
   Time_Value.h \
   Time_Value.inl \
   Default_Constants.h \
-  Global_Macros.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   Trace.h \
   OS.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
+  Synch_T.h \
+  Synch_T.i \
+  Thread.h \
+  ACE.h \
   Flag_Manip.h \
   Flag_Manip.i \
   Handle_Ops.h \
@@ -1571,27 +1626,55 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
-  Synch.i \
-  Synch_T.h \
-  Synch_T.i \
-  Thread.h \
+  ace_ctype.h \
   Thread_Adapter.h \
   Base_Thread_Adapter.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Base_Thread_Adapter.inl \
   Thread_Adapter.inl \
   Thread.i \
   Synch_T.cpp \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
-  Map_Manager.i \
-  Map_Manager.cpp \
+  Hash_Map_Manager.h \
+  Hash_Map_Manager_T.h \
+  Functor.h \
+  Functor.i \
+  Functor_T.h \
+  Functor_T.i \
+  Functor_T.cpp \
+  Hash_Map_Manager_T.i \
+  Hash_Map_Manager_T.cpp \
+  Service_Config.h \
+  Service_Object.h \
+  Shared_Object.h \
+  Shared_Object.i \
+  Event_Handler.h \
+  Event_Handler.i \
+  Service_Object.i \
+  Signal.h \
+  Signal.i \
+  Unbounded_Queue.h \
+  Node.h \
+  Node.cpp \
+  Unbounded_Queue.inl \
+  Unbounded_Queue.cpp \
+  Malloc_Base.h \
+  Unbounded_Set.h \
+  Unbounded_Set.inl \
+  Unbounded_Set.cpp \
+  SString.h \
+  String_Base.h \
+  String_Base_Const.h \
+  String_Base.i \
+  String_Base.cpp \
   Malloc.h \
   Malloc.i \
   Malloc_T.h \
   Malloc_Allocator.h \
-  Malloc_Base.h \
   Malloc_Allocator.i \
   Free_List.h \
   Free_List.i \
@@ -1599,35 +1682,14 @@ endif # GHS
   Malloc_T.i \
   Malloc_T.cpp \
   Memory_Pool.h \
-  Event_Handler.h \
-  Event_Handler.i \
-  Signal.h \
-  Signal.i \
   Mem_Map.h \
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
-  Unbounded_Set.h \
-  Node.h \
-  Node.cpp \
-  Unbounded_Set.inl \
-  Unbounded_Set.cpp \
   Memory_Pool.i \
-  Service_Config.h \
-  Service_Object.h \
-  Shared_Object.h \
-  Shared_Object.i \
-  Service_Object.i \
-  Unbounded_Queue.h \
-  Unbounded_Queue.inl \
-  Unbounded_Queue.cpp \
-  SString.h \
-  String_Base.h \
-  String_Base_Const.h \
-  String_Base.i \
-  String_Base.cpp \
   Auto_Ptr.h \
   Auto_Ptr.i \
   Auto_Ptr.cpp \
@@ -1646,16 +1708,6 @@ endif # GHS
   Reactor.i \
   Reactor_Impl.h \
   Svc_Conf_Tokens.h \
-  Capabilities.h \
-  Hash_Map_Manager.h \
-  Hash_Map_Manager_T.h \
-  Functor.h \
-  Functor.i \
-  Functor_T.h \
-  Functor_T.i \
-  Functor_T.cpp \
-  Hash_Map_Manager_T.i \
-  Hash_Map_Manager_T.cpp \
   Containers.h \
   Containers.i \
   Containers_T.h \
@@ -1664,7 +1716,10 @@ endif # GHS
   Array_Base.cpp \
   Containers_T.i \
   Containers_T.cpp \
-  Capabilities.i
+  Capabilities.i \
+  Map_Manager.h \
+  Map_Manager.i \
+  Map_Manager.cpp
 
 .obj/Containers.o .obj/Containers.so .shobj/Containers.o .shobj/Containers.so: Containers.cpp \
   Containers.h \
@@ -1678,6 +1733,7 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   Containers.i \
   Containers_T.h \
   Node.h \
@@ -1685,59 +1741,43 @@ endif # GHS
   Array_Base.h \
   Global_Macros.h \
   OS_Export.h \
+  ace_sys_types.h \
   Array_Base.inl \
   Array_Base.cpp \
   Malloc_Base.h \
-  OS.h \
-  ace_threads.h \
-  ace_sys_types.h \
-  ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
-  ace_stropts.h \
-  ace_sys_uio.h \
-  ace_sys_resource.h \
-  OS_Dirent.h \
-  OS_Errno.h \
-  OS_Errno.inl \
-  OS_Dirent.inl \
-  OS_String.h \
-  Basic_Types.h \
-  Basic_Types.i \
-  OS_String.inl \
-  OS_Memory.h \
-  OS_Memory.inl \
-  OS_TLI.h \
-  OS_TLI.inl \
-  Time_Value.h \
-  Time_Value.inl \
-  Default_Constants.h \
-  Min_Max.h \
-  streams.h \
-  Trace.h \
-  OS.i \
+  ace_sys_mman.h \
   Unbounded_Set.h \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Log_Msg.h \
+  ace_sys_param.h \
+  ace_stdlib.h \
   Log_Priority.h \
+  Default_Constants.h \
+  ace_threads.h \
+  ace_signal.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
+  ace_stdio.h \
   OS_Log_Msg_Attributes.inl \
   Unbounded_Queue.h \
+  OS_Memory.h \
+  OS_Errno.h \
+  ace_errno.h \
+  OS_Errno.inl \
+  OS_Memory.inl \
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
+  Trace.h \
   Containers_T.i \
   Containers_T.cpp
 
 .obj/Configuration.o .obj/Configuration.so .shobj/Configuration.o .shobj/Configuration.so: Configuration.cpp \
   Configuration.h \
   pre.h \
+  SString.h \
+  String_Base.h \
   ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -1746,28 +1786,43 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -1777,11 +1832,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -1791,16 +1849,17 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
-  SString.h \
-  String_Base.h \
+  ace_ctype.h \
   String_Base_Const.h \
   String_Base.i \
   Malloc_Base.h \
   String_Base.cpp \
   Malloc.h \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
@@ -1831,6 +1890,7 @@ endif # GHS
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
@@ -1883,8 +1943,9 @@ endif # GHS
   Configuration_Import_Export.h \
   pre.h \
   Configuration.h \
+  SString.h \
+  String_Base.h \
   ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -1893,28 +1954,43 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -1924,11 +2000,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -1938,16 +2017,17 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
-  SString.h \
-  String_Base.h \
+  ace_ctype.h \
   String_Base_Const.h \
   String_Base.i \
   Malloc_Base.h \
   String_Base.cpp \
   Malloc.h \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
@@ -1978,6 +2058,7 @@ endif # GHS
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
@@ -2037,27 +2118,36 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   OS_Dirent.h \
   OS_Export.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_sys_types.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   Dirent.i \
   Log_Msg.h \
-  Global_Macros.h \
-  Default_Constants.h \
+  ace_sys_param.h \
+  ace_stdlib.h \
   Log_Priority.h \
-  Basic_Types.h \
-  Basic_Types.i \
+  Default_Constants.h \
   ace_threads.h \
-  ace_sys_types.h \
+  ace_signal.h \
   OS_Log_Msg_Attributes.h \
   streams.h \
+  ace_stdio.h \
   OS_Log_Msg_Attributes.inl
 
 .obj/Dirent_Selector.o .obj/Dirent_Selector.so .shobj/Dirent_Selector.o .shobj/Dirent_Selector.so: Dirent_Selector.cpp \
-  OS.h \
+  Dirent_Selector.h \
   pre.h \
+  ACE_export.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -2066,48 +2156,26 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
-  ace_sys_types.h \
-  OS_Export.h \
-  ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
-  ace_stropts.h \
-  ace_sys_uio.h \
-  ace_sys_resource.h \
+  ace_new.h \
   OS_Dirent.h \
+  OS_Export.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
-  OS_Dirent.inl \
-  OS_String.h \
+  ace_dirent.h \
+  ace_sys_types.h \
+  ace_unistd.h \
   Basic_Types.h \
-  ACE_export.h \
+  ace_limits.h \
   Basic_Types.i \
-  OS_String.inl \
+  OS_Dirent.inl \
+  Dirent_Selector.inl \
   OS_Memory.h \
-  OS_Memory.inl \
-  OS_TLI.h \
-  OS_TLI.inl \
-  Time_Value.h \
-  Time_Value.inl \
-  Default_Constants.h \
-  Global_Macros.h \
-  Min_Max.h \
-  streams.h \
-  Trace.h \
-  OS.i \
-  Dirent_Selector.h \
-  Dirent_Selector.inl
+  OS_Memory.inl
 
 .obj/Dynamic.o .obj/Dynamic.so .shobj/Dynamic.o .shobj/Dynamic.so: Dynamic.cpp \
   Dynamic.h \
   pre.h \
-  ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -2116,28 +2184,46 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
+  ACE_export.h \
+  Dynamic.i \
+  Trace.h \
+  Singleton.h \
+  Synch.h \
   ace_threads.h \
   ace_sys_types.h \
   OS_Export.h \
+  ace_signal.h \
+  Global_Macros.h \
+  Synch.i \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -2145,11 +2231,19 @@ endif # GHS
   Time_Value.h \
   Time_Value.inl \
   Default_Constants.h \
-  Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
+  Synch_T.h \
+  Synch_T.i \
+  Thread.h \
+  ACE.h \
   Flag_Manip.h \
   Flag_Manip.i \
   Handle_Ops.h \
@@ -2161,22 +2255,19 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
-  Synch_T.h \
-  Synch.h \
-  Synch.i \
-  Synch_T.i \
-  Thread.h \
+  ace_ctype.h \
   Thread_Adapter.h \
   Base_Thread_Adapter.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Base_Thread_Adapter.inl \
   Thread_Adapter.inl \
   Thread.i \
   Synch_T.cpp \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
-  Singleton.h \
   Singleton.i \
   Singleton.cpp \
   Object_Manager.h \
@@ -2189,10 +2280,10 @@ endif # GHS
   Object_Manager.i \
   Managed_Object.h \
   Managed_Object.i \
-  Managed_Object.cpp \
-  Dynamic.i
+  Managed_Object.cpp
 
-.obj/Flag_Manip.o .obj/Flag_Manip.so .shobj/Flag_Manip.o .shobj/Flag_Manip.so: Flag_Manip.cpp Flag_Manip.h \
+.obj/Flag_Manip.o .obj/Flag_Manip.so .shobj/Flag_Manip.o .shobj/Flag_Manip.so: Flag_Manip.cpp \
+  Flag_Manip.h \
   pre.h \
   ACE_export.h \
   config-all.h \
@@ -2203,30 +2294,41 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   Flag_Manip.i \
   Trace.h \
   OS.h \
-  ace_threads.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -2236,15 +2338,19 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  OS.i
+  Sched_Params.h \
+  Sched_Params.i \
+  OS.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h
 
 .obj/Framework_Component.o .obj/Framework_Component.so .shobj/Framework_Component.o .shobj/Framework_Component.so: Framework_Component.cpp \
   Framework_Component.h \
   pre.h \
   Synch.h \
-  ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -2253,28 +2359,42 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   ace_threads.h \
   ace_sys_types.h \
   OS_Export.h \
+  ace_signal.h \
+  ACE_export.h \
+  Global_Macros.h \
+  Synch.i \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -2282,11 +2402,20 @@ endif # GHS
   Time_Value.h \
   Time_Value.inl \
   Default_Constants.h \
-  Global_Macros.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   Trace.h \
   OS.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
+  Synch_T.h \
+  Synch_T.i \
+  Thread.h \
+  ACE.h \
   Flag_Manip.h \
   Flag_Manip.i \
   Handle_Ops.h \
@@ -2298,19 +2427,18 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
-  Synch.i \
-  Synch_T.h \
-  Synch_T.i \
-  Thread.h \
+  ace_ctype.h \
   Thread_Adapter.h \
   Base_Thread_Adapter.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Base_Thread_Adapter.inl \
   Thread_Adapter.inl \
   Thread.i \
   Synch_T.cpp \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   Framework_Component.inl \
   Framework_Component_T.h \
@@ -2333,7 +2461,6 @@ endif # GHS
   pre.h \
   Functor.h \
   ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -2342,28 +2469,43 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -2373,11 +2515,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -2387,6 +2532,7 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   Functor.i \
   Functor_T.i \
   Functor_T.cpp
@@ -2394,8 +2540,9 @@ endif # GHS
 .obj/Get_Opt.o .obj/Get_Opt.so .shobj/Get_Opt.o .shobj/Get_Opt.so: Get_Opt.cpp \
   Get_Opt.h \
   pre.h \
+  SString.h \
+  String_Base.h \
   ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -2404,28 +2551,43 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -2435,11 +2597,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -2449,16 +2614,17 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
-  SString.h \
-  String_Base.h \
+  ace_ctype.h \
   String_Base_Const.h \
   String_Base.i \
   Malloc_Base.h \
   String_Base.cpp \
   Malloc.h \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
@@ -2489,6 +2655,7 @@ endif # GHS
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
@@ -2525,33 +2692,47 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   Hash_Map_Manager_T.h \
   Default_Constants.h \
   Functor.h \
   ACE.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
   OS.h \
-  ace_threads.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -2560,11 +2741,14 @@ endif # GHS
   Time_Value.inl \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -2574,13 +2758,16 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   Functor.i \
   Functor_T.h \
   Functor_T.i \
   Functor_T.cpp \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Hash_Map_Manager_T.i \
   Synch.h \
@@ -2633,6 +2820,7 @@ endif # GHS
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Memory_Pool.i \
@@ -2668,6 +2856,7 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   Recyclable.inl
 
 .obj/Hashable.o .obj/Hashable.so .shobj/Hashable.o .shobj/Hashable.so: Hashable.cpp \
@@ -2682,14 +2871,13 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   Hashable.inl
 
 .obj/Notification_Strategy.o .obj/Notification_Strategy.so .shobj/Notification_Strategy.o .shobj/Notification_Strategy.so: Notification_Strategy.cpp \
   Notification_Strategy.h \
   pre.h \
   Event_Handler.h \
-  ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -2698,51 +2886,12 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
-  ace_sys_types.h \
-  OS_Export.h \
-  ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
-  ace_stropts.h \
-  ace_sys_uio.h \
-  ace_sys_resource.h \
-  OS_Dirent.h \
-  OS_Errno.h \
-  OS_Errno.inl \
-  OS_Dirent.inl \
-  OS_String.h \
-  Basic_Types.h \
+  ace_new.h \
   ACE_export.h \
-  Basic_Types.i \
-  OS_String.inl \
-  OS_Memory.h \
-  OS_Memory.inl \
-  OS_TLI.h \
-  OS_TLI.inl \
-  Time_Value.h \
-  Time_Value.inl \
-  Default_Constants.h \
-  Global_Macros.h \
-  Min_Max.h \
-  streams.h \
-  Trace.h \
-  OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
-  Handle_Ops.h \
-  Handle_Ops.i \
-  Lib_Find.h \
-  Lib_Find.i \
-  Init_ACE.h \
-  Init_ACE.i \
-  Sock_Connect.h \
-  Sock_Connect.i \
-  ACE.i \
+  ace_sys_types.h \
+  ace_signal.h \
+  ace_threads.h \
+  OS_Export.h \
   Event_Handler.i \
   Notification_Strategy.inl
 
@@ -2758,6 +2907,7 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   Recyclable.inl
 
 .obj/Refcountable.o .obj/Refcountable.so .shobj/Refcountable.o .shobj/Refcountable.so: Refcountable.cpp \
@@ -2772,6 +2922,7 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   Refcountable.inl
 
 .obj/Handle_Ops.o .obj/Handle_Ops.so .shobj/Handle_Ops.o .shobj/Handle_Ops.so: Handle_Ops.cpp \
@@ -2786,31 +2937,42 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   Time_Value.h \
   OS_Export.h \
   Time_Value.inl \
-  Basic_Types.h \
-  Basic_Types.i \
+  ace_stdio.h \
   Handle_Ops.i \
   OS.h \
-  ace_threads.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -2818,9 +2980,15 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   Trace.h \
-  OS.i
+  OS.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h
 
 .obj/Init_ACE.o .obj/Init_ACE.so .shobj/Init_ACE.o .shobj/Init_ACE.so: Init_ACE.cpp \
   Init_ACE.h \
@@ -2834,33 +3002,41 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   Init_ACE.i \
   Object_Manager.h \
-  Service_Object.h \
-  Shared_Object.h \
-  ACE.h \
   OS.h \
-  ace_threads.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -2870,9 +3046,22 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   Trace.h \
   OS.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
+  Service_Object.h \
+  Shared_Object.h \
+  Shared_Object.i \
+  Event_Handler.h \
+  Event_Handler.i \
+  Service_Object.i \
+  ACE.h \
   Flag_Manip.h \
   Flag_Manip.i \
   Handle_Ops.h \
@@ -2882,10 +3071,7 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
-  Shared_Object.i \
-  Event_Handler.h \
-  Event_Handler.i \
-  Service_Object.i \
+  ace_ctype.h \
   Object_Manager.i \
   Managed_Object.h \
   Managed_Object.i \
@@ -2894,7 +3080,6 @@ endif # GHS
 .obj/Lib_Find.o .obj/Lib_Find.so .shobj/Lib_Find.o .shobj/Lib_Find.so: Lib_Find.cpp \
   Lib_Find.h \
   pre.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -2903,51 +3088,70 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  ACE_export.h \
   ace_sys_types.h \
-  OS_Export.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
-  ace_stropts.h \
-  ace_sys_uio.h \
-  ace_sys_resource.h \
-  OS_Dirent.h \
-  OS_Errno.h \
-  OS_Errno.inl \
-  OS_Dirent.inl \
+  Lib_Find.i \
+  Log_Msg.h \
+  ace_sys_param.h \
+  ace_stdlib.h \
+  Log_Priority.h \
+  Default_Constants.h \
+  ace_threads.h \
+  OS_Export.h \
+  ace_signal.h \
+  OS_Log_Msg_Attributes.h \
+  streams.h \
+  OS_Log_Msg_Attributes.inl \
+  Trace.h \
   OS_String.h \
   Basic_Types.h \
-  ACE_export.h \
+  ace_limits.h \
   Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_stropts.h \
+  ace_time.h \
+  ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
+  OS_Dirent.h \
+  OS_Errno.h \
+  ace_errno.h \
+  OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  OS_Dirent.inl \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
   OS_TLI.inl \
   Time_Value.h \
   Time_Value.inl \
-  Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Lib_Find.i \
-  Log_Msg.h \
-  Log_Priority.h \
-  OS_Log_Msg_Attributes.h \
-  OS_Log_Msg_Attributes.inl
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h
 
 .obj/Message_Block.o .obj/Message_Block.so .shobj/Message_Block.o .shobj/Message_Block.so: Message_Block.cpp \
   Message_Block.h \
   ACE.h \
   pre.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -2956,28 +3160,43 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -2987,11 +3206,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -3001,10 +3223,13 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   Malloc.h \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
@@ -3036,6 +3261,7 @@ endif # GHS
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
@@ -3062,15 +3288,13 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   Global_Macros.h \
   OS_Export.h
 
 .obj/Object_Manager.o .obj/Object_Manager.so .shobj/Object_Manager.o .shobj/Object_Manager.so: Object_Manager.cpp \
   Object_Manager.h \
   pre.h \
-  Service_Object.h \
-  Shared_Object.h \
-  ACE.h \
   OS.h \
   config-all.h \
   config.h \
@@ -3080,28 +3304,39 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
-  OS_Dirent.inl \
-  OS_String.h \
+  ace_dirent.h \
+  ace_unistd.h \
   Basic_Types.h \
   ACE_export.h \
+  ace_limits.h \
   Basic_Types.i \
+  OS_Dirent.inl \
+  OS_String.h \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -3111,9 +3346,22 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   Trace.h \
   OS.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
+  Service_Object.h \
+  Shared_Object.h \
+  Shared_Object.i \
+  Event_Handler.h \
+  Event_Handler.i \
+  Service_Object.i \
+  ACE.h \
   Flag_Manip.h \
   Flag_Manip.i \
   Handle_Ops.h \
@@ -3125,10 +3373,7 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
-  Shared_Object.i \
-  Event_Handler.h \
-  Event_Handler.i \
-  Service_Object.i \
+  ace_ctype.h \
   Object_Manager.i \
   Managed_Object.h \
   Managed_Object.i \
@@ -3142,12 +3387,14 @@ endif # GHS
   Thread_Adapter.h \
   Base_Thread_Adapter.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Base_Thread_Adapter.inl \
   Thread_Adapter.inl \
   Thread.i \
   Synch_T.cpp \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   Map_Manager.h \
   Map_Manager.i \
@@ -3170,6 +3417,7 @@ endif # GHS
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
@@ -3245,28 +3493,39 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
-  OS_Dirent.inl \
-  OS_String.h \
+  ace_dirent.h \
+  ace_unistd.h \
   Basic_Types.h \
   ACE_export.h \
+  ace_limits.h \
   Basic_Types.i \
+  OS_Dirent.inl \
+  OS_String.h \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -3276,9 +3535,15 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   Trace.h \
-  OS.i
+  OS.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h
 
 .obj/String_Base_Const.o .obj/String_Base_Const.so .shobj/String_Base_Const.o .shobj/String_Base_Const.so: String_Base_Const.cpp \
   String_Base_Const.h \
@@ -3291,13 +3556,14 @@ endif # GHS
   config-g++-common.h \
   post.h \
   ace_wchar.h \
-  ace_wchar.inl
+  ace_wchar.inl \
+  ace_new.h
 
 .obj/SString.o .obj/SString.so .shobj/SString.o .shobj/SString.so: SString.cpp \
-  Malloc.h \
+  SString.h \
   pre.h \
+  String_Base.h \
   ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -3306,28 +3572,43 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -3337,11 +3618,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -3351,9 +3635,17 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
+  String_Base_Const.h \
+  String_Base.i \
+  Malloc_Base.h \
+  String_Base.cpp \
+  Malloc.h \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
@@ -3369,7 +3661,6 @@ endif # GHS
   Thread.i \
   Synch_T.cpp \
   Malloc_Allocator.h \
-  Malloc_Base.h \
   Malloc_Allocator.i \
   Free_List.h \
   Free_List.i \
@@ -3385,6 +3676,7 @@ endif # GHS
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
@@ -3393,11 +3685,6 @@ endif # GHS
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
-  SString.h \
-  String_Base.h \
-  String_Base_Const.h \
-  String_Base.i \
-  String_Base.cpp \
   Auto_Ptr.h \
   Auto_Ptr.i \
   Auto_Ptr.cpp \
@@ -3407,7 +3694,6 @@ endif # GHS
   Stats.h \
   pre.h \
   ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -3416,28 +3702,43 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -3447,11 +3748,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -3461,6 +3765,7 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   Unbounded_Queue.h \
   Node.h \
   Node.cpp \
@@ -3468,8 +3773,10 @@ endif # GHS
   Unbounded_Queue.cpp \
   Malloc_Base.h \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Basic_Stats.h \
   Basic_Stats.inl \
@@ -3488,202 +3795,71 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   Basic_Types.h \
   ACE_export.h \
+  ace_limits.h \
   Basic_Types.i \
   Sample_History.inl \
   Basic_Stats.h \
   Basic_Stats.inl \
   Log_Msg.h \
-  Global_Macros.h \
-  OS_Export.h \
-  Default_Constants.h \
+  ace_sys_param.h \
+  ace_stdlib.h \
   Log_Priority.h \
-  OS_Errno.h \
-  OS_Errno.inl \
+  Default_Constants.h \
   ace_threads.h \
   ace_sys_types.h \
+  OS_Export.h \
+  ace_signal.h \
   OS_Log_Msg_Attributes.h \
   streams.h \
+  ace_stdio.h \
   OS_Log_Msg_Attributes.inl \
   OS.h \
-  ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
   ace_stropts.h \
-  ace_sys_uio.h \
-  ace_sys_resource.h \
-  OS_Dirent.h \
-  OS_Dirent.inl \
-  OS_String.h \
-  OS_String.inl \
-  OS_Memory.h \
-  OS_Memory.inl \
-  OS_TLI.h \
-  OS_TLI.inl \
-  Time_Value.h \
-  Time_Value.inl \
-  Min_Max.h \
-  Trace.h \
-  OS.i
-
-.obj/Filecache.o .obj/Filecache.so .shobj/Filecache.o .shobj/Filecache.so: Filecache.cpp \
-  Filecache.h \
-  pre.h \
-  Mem_Map.h \
-  ACE.h \
-  OS.h \
-  config-all.h \
-  config.h \
-  config-linux.h \
-  config-linux-common.h \
-  config-g++-common.h \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  ace_threads.h \
-  ace_sys_types.h \
-  OS_Export.h \
-  ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
   ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
-  ace_stropts.h \
-  ace_sys_uio.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
   OS_TLI.inl \
   Time_Value.h \
   Time_Value.inl \
-  Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   Trace.h \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
-  Handle_Ops.h \
-  Handle_Ops.i \
-  Lib_Find.h \
-  Lib_Find.i \
-  Init_ACE.h \
-  Init_ACE.i \
-  Sock_Connect.h \
-  Sock_Connect.i \
-  ACE.i \
-  Mem_Map.i \
-  Synch_T.h \
-  Synch.h \
-  Synch.i \
-  Synch_T.i \
-  Thread.h \
-  Thread_Adapter.h \
-  Base_Thread_Adapter.h \
-  OS_Log_Msg_Attributes.h \
-  OS_Log_Msg_Attributes.inl \
-  Base_Thread_Adapter.inl \
-  Thread_Adapter.inl \
-  Thread.i \
-  Synch_T.cpp \
-  Log_Msg.h \
-  Log_Priority.h \
-  Hash_Map_Manager.h \
-  Hash_Map_Manager_T.h \
-  Functor.h \
-  Functor.i \
-  Functor_T.h \
-  Functor_T.i \
-  Functor_T.cpp \
-  Hash_Map_Manager_T.i \
-  Hash_Map_Manager_T.cpp \
-  Service_Config.h \
-  Service_Object.h \
-  Shared_Object.h \
-  Shared_Object.i \
-  Event_Handler.h \
-  Event_Handler.i \
-  Service_Object.i \
-  Signal.h \
-  Signal.i \
-  Unbounded_Queue.h \
-  Node.h \
-  Node.cpp \
-  Unbounded_Queue.inl \
-  Unbounded_Queue.cpp \
-  Malloc_Base.h \
-  Unbounded_Set.h \
-  Unbounded_Set.inl \
-  Unbounded_Set.cpp \
-  SString.h \
-  String_Base.h \
-  String_Base_Const.h \
-  String_Base.i \
-  String_Base.cpp \
-  Malloc.h \
-  Malloc.i \
-  Malloc_T.h \
-  Malloc_Allocator.h \
-  Malloc_Allocator.i \
-  Free_List.h \
-  Free_List.i \
-  Free_List.cpp \
-  Malloc_T.i \
-  Malloc_T.cpp \
-  Memory_Pool.h \
-  SV_Semaphore_Complex.h \
-  SV_Semaphore_Simple.h \
-  SV_Semaphore_Simple.i \
-  SV_Semaphore_Complex.i \
-  Memory_Pool.i \
-  Auto_Ptr.h \
-  Auto_Ptr.i \
-  Auto_Ptr.cpp \
-  SString.i \
-  Service_Config.i \
-  Reactor.h \
-  Handle_Set.h \
-  Handle_Set.i \
-  Timer_Queue.h \
-  Timer_Queue_T.h \
-  Test_and_Set.h \
-  Test_and_Set.i \
-  Test_and_Set.cpp \
-  Timer_Queue_T.i \
-  Timer_Queue_T.cpp \
-  Reactor.i \
-  Reactor_Impl.h \
-  Svc_Conf_Tokens.h \
-  Object_Manager.h \
-  Object_Manager.i \
-  Managed_Object.h \
-  Managed_Object.i \
-  Managed_Object.cpp
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h
 
 .obj/Dump.o .obj/Dump.so .shobj/Dump.o .shobj/Dump.so: Dump.cpp \
-  Synch_T.h \
+  Dump.h \
   pre.h \
-  Synch.h \
-  ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -3692,78 +3868,101 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
-  ace_sys_types.h \
-  OS_Export.h \
-  ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
-  ace_stropts.h \
-  ace_sys_uio.h \
-  ace_sys_resource.h \
-  OS_Dirent.h \
-  OS_Errno.h \
-  OS_Errno.inl \
-  OS_Dirent.inl \
-  OS_String.h \
-  Basic_Types.h \
+  ace_new.h \
   ACE_export.h \
-  Basic_Types.i \
-  OS_String.inl \
-  OS_Memory.h \
-  OS_Memory.inl \
-  OS_TLI.h \
-  OS_TLI.inl \
-  Time_Value.h \
-  Time_Value.inl \
-  Default_Constants.h \
-  Global_Macros.h \
-  Min_Max.h \
-  streams.h \
-  Trace.h \
-  OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
-  Handle_Ops.h \
-  Handle_Ops.i \
-  Lib_Find.h \
-  Lib_Find.i \
-  Init_ACE.h \
-  Init_ACE.i \
-  Sock_Connect.h \
-  Sock_Connect.i \
-  ACE.i \
-  Synch.i \
-  Synch_T.i \
-  Thread.h \
-  Thread_Adapter.h \
-  Base_Thread_Adapter.h \
-  OS_Log_Msg_Attributes.h \
-  OS_Log_Msg_Attributes.inl \
-  Base_Thread_Adapter.inl \
-  Thread_Adapter.inl \
-  Thread.i \
-  Synch_T.cpp \
-  Log_Msg.h \
-  Log_Priority.h \
-  Dump.h \
   Dump_T.h \
   Dump_T.cpp \
   Object_Manager.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_sys_types.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
+  ace_stdio.h \
+  ace_stdlib.h \
+  ace_stropts.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
+  ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
+  OS_Dirent.h \
+  OS_Errno.h \
+  ace_errno.h \
+  OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
+  OS_Dirent.inl \
+  OS_String.h \
+  OS_String.inl \
+  ace_string.h \
+  OS_Memory.h \
+  OS_Memory.inl \
+  OS_TLI.h \
+  OS_TLI.inl \
+  Time_Value.h \
+  Time_Value.inl \
+  Default_Constants.h \
+  Global_Macros.h \
+  Min_Max.h \
+  Sched_Params.h \
+  Sched_Params.i \
+  Trace.h \
+  OS.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Service_Object.h \
   Shared_Object.h \
   Shared_Object.i \
   Event_Handler.h \
   Event_Handler.i \
   Service_Object.i \
+  ACE.h \
+  Flag_Manip.h \
+  Flag_Manip.i \
+  Handle_Ops.h \
+  Handle_Ops.i \
+  Lib_Find.h \
+  Lib_Find.i \
+  Init_ACE.h \
+  Init_ACE.i \
+  Sock_Connect.h \
+  Sock_Connect.i \
+  ACE.i \
+  ace_ctype.h \
   Object_Manager.i \
   Managed_Object.h \
   Managed_Object.i \
-  Managed_Object.cpp
+  Managed_Object.cpp \
+  Log_Msg.h \
+  ace_sys_param.h \
+  Log_Priority.h \
+  OS_Log_Msg_Attributes.h \
+  streams.h \
+  OS_Log_Msg_Attributes.inl \
+  Synch_T.h \
+  Synch.h \
+  Synch.i \
+  Synch_T.i \
+  Thread.h \
+  Thread_Adapter.h \
+  Base_Thread_Adapter.h \
+  Base_Thread_Adapter.inl \
+  Thread_Adapter.inl \
+  Thread.i \
+  Synch_T.cpp
 
 .obj/Log_Msg.o .obj/Log_Msg.so .shobj/Log_Msg.o .shobj/Log_Msg.so: Log_Msg.cpp \
   config-all.h \
@@ -3775,30 +3974,44 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   ACE.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
   OS.h \
-  ace_threads.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -3808,11 +4021,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -3822,11 +4038,13 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   Thread_Manager.h \
   Thread.h \
   Thread_Adapter.h \
   Base_Thread_Adapter.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Base_Thread_Adapter.inl \
   Thread_Adapter.inl \
@@ -3837,6 +4055,7 @@ endif # GHS
   Synch_T.i \
   Synch_T.cpp \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   Unbounded_Queue.h \
   Node.h \
@@ -3906,7 +4125,8 @@ endif # GHS
   config-g++-common.h \
   post.h \
   ace_wchar.h \
-  ace_wchar.inl
+  ace_wchar.inl \
+  ace_new.h
 
 .obj/Log_Msg_Backend.o .obj/Log_Msg_Backend.so .shobj/Log_Msg_Backend.o .shobj/Log_Msg_Backend.so: Log_Msg_Backend.cpp \
   Log_Msg_Backend.h \
@@ -3919,7 +4139,8 @@ endif # GHS
   config-g++-common.h \
   post.h \
   ace_wchar.h \
-  ace_wchar.inl
+  ace_wchar.inl \
+  ace_new.h
 
 .obj/Log_Msg_IPC.o .obj/Log_Msg_IPC.so .shobj/Log_Msg_IPC.o .shobj/Log_Msg_IPC.so: Log_Msg_IPC.cpp \
   Log_Msg_IPC.h \
@@ -3934,33 +4155,47 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   SOCK_Connector.h \
   SOCK_Stream.h \
   SOCK_IO.h \
   SOCK.h \
   ACE.h \
+  Flag_Manip.h \
+  Flag_Manip.i \
+  Trace.h \
   OS.h \
-  ace_threads.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -3970,11 +4205,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -3984,6 +4222,7 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   Addr.h \
   Addr.i \
   IPC_SAP.h \
@@ -3996,6 +4235,7 @@ endif # GHS
   SOCK_Connector.i \
   Log_Record.h \
   Log_Priority.h \
+  streams.h \
   Log_Record.i
 
 .obj/Log_Msg_NT_Event_Log.o .obj/Log_Msg_NT_Event_Log.so .shobj/Log_Msg_NT_Event_Log.o .shobj/Log_Msg_NT_Event_Log.so: Log_Msg_NT_Event_Log.cpp \
@@ -4007,7 +4247,8 @@ endif # GHS
   config-g++-common.h \
   post.h \
   ace_wchar.h \
-  ace_wchar.inl
+  ace_wchar.inl \
+  ace_new.h
 
 .obj/Log_Msg_UNIX_Syslog.o .obj/Log_Msg_UNIX_Syslog.so .shobj/Log_Msg_UNIX_Syslog.o .shobj/Log_Msg_UNIX_Syslog.so: Log_Msg_UNIX_Syslog.cpp \
   config-all.h \
@@ -4019,30 +4260,44 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   ACE.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
   OS.h \
-  ace_threads.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -4052,11 +4307,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -4066,9 +4324,12 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Log_Msg_UNIX_Syslog.h \
   Log_Msg_Backend.h \
@@ -4080,7 +4341,6 @@ endif # GHS
   Log_Priority.h \
   pre.h \
   post.h \
-  ACE_export.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -4088,106 +4348,67 @@ endif # GHS
   config-g++-common.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
+  ACE_export.h \
+  ace_sys_types.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
+  Default_Constants.h \
+  ace_stdio.h \
+  streams.h \
   Log_Record.i \
-  Log_Msg.h \
+  Trace.h \
   Global_Macros.h \
   OS_Export.h \
-  Default_Constants.h \
-  Basic_Types.h \
-  Basic_Types.i \
-  OS_Errno.h \
-  OS_Errno.inl \
+  Time_Value.h \
+  Time_Value.inl \
+  OS_String.h \
+  OS_String.inl \
+  ace_string.h \
+  Log_Msg.h \
+  ace_sys_param.h \
+  ace_stdlib.h \
   ace_threads.h \
-  ace_sys_types.h \
+  ace_signal.h \
   OS_Log_Msg_Attributes.h \
-  streams.h \
   OS_Log_Msg_Attributes.inl \
   ACE.h \
-  OS.h \
-  ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
-  ace_stropts.h \
-  ace_sys_uio.h \
-  ace_sys_resource.h \
-  OS_Dirent.h \
-  OS_Dirent.inl \
-  OS_String.h \
-  OS_String.inl \
-  OS_Memory.h \
-  OS_Memory.inl \
-  OS_TLI.h \
-  OS_TLI.inl \
-  Time_Value.h \
-  Time_Value.inl \
-  Min_Max.h \
-  Trace.h \
-  OS.i \
   Flag_Manip.h \
   Flag_Manip.i \
-  Handle_Ops.h \
-  Handle_Ops.i \
-  Lib_Find.h \
-  Lib_Find.i \
-  Init_ACE.h \
-  Init_ACE.i \
-  Sock_Connect.h \
-  Sock_Connect.i \
-  ACE.i
-
-.obj/Logging_Strategy.o .obj/Logging_Strategy.so .shobj/Logging_Strategy.o .shobj/Logging_Strategy.so: Logging_Strategy.cpp \
-  Get_Opt.h \
-  pre.h \
-  ACE.h \
   OS.h \
-  config-all.h \
-  config.h \
-  config-linux.h \
-  config-linux-common.h \
-  config-g++-common.h \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  ace_threads.h \
-  ace_sys_types.h \
-  OS_Export.h \
-  ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
   OS_Dirent.inl \
-  OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
-  OS_String.inl \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
   OS_TLI.inl \
-  Time_Value.h \
-  Time_Value.inl \
-  Default_Constants.h \
-  Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -4197,16 +4418,96 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h
+
+.obj/Logging_Strategy.o .obj/Logging_Strategy.so .shobj/Logging_Strategy.o .shobj/Logging_Strategy.so: Logging_Strategy.cpp \
+  Get_Opt.h \
+  pre.h \
   SString.h \
   String_Base.h \
+  ACE.h \
+  config-all.h \
+  config.h \
+  config-linux.h \
+  config-linux-common.h \
+  config-g++-common.h \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  ace_new.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_sys_types.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
+  ace_stdio.h \
+  ace_stdlib.h \
+  ace_stropts.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
+  ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
+  OS_Dirent.h \
+  OS_Errno.h \
+  ace_errno.h \
+  OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
+  OS_Dirent.inl \
+  OS_String.h \
+  OS_String.inl \
+  ace_string.h \
+  OS_Memory.h \
+  OS_Memory.inl \
+  OS_TLI.h \
+  OS_TLI.inl \
+  Time_Value.h \
+  Time_Value.inl \
+  Default_Constants.h \
+  Global_Macros.h \
+  Min_Max.h \
+  Sched_Params.h \
+  Sched_Params.i \
+  OS.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
+  Handle_Ops.h \
+  Handle_Ops.i \
+  Lib_Find.h \
+  Lib_Find.i \
+  Init_ACE.h \
+  Init_ACE.i \
+  Sock_Connect.h \
+  Sock_Connect.i \
+  ACE.i \
+  ace_ctype.h \
   String_Base_Const.h \
   String_Base.i \
   Malloc_Base.h \
   String_Base.cpp \
   Malloc.h \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
@@ -4237,6 +4538,7 @@ endif # GHS
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
@@ -4291,51 +4593,68 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   Log_Msg.h \
-  Global_Macros.h \
-  OS_Export.h \
-  Default_Constants.h \
+  ace_sys_param.h \
+  ace_stdlib.h \
   Log_Priority.h \
-  Basic_Types.h \
-  Basic_Types.i \
-  OS_Errno.h \
-  OS_Errno.inl \
+  Default_Constants.h \
   ace_threads.h \
   ace_sys_types.h \
+  OS_Export.h \
+  ace_signal.h \
   OS_Log_Msg_Attributes.h \
   streams.h \
+  ace_stdio.h \
   OS_Log_Msg_Attributes.inl \
   OS.h \
-  ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
+  OS_Errno.h \
+  ace_errno.h \
+  OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
   OS_TLI.inl \
   Time_Value.h \
   Time_Value.inl \
+  Global_Macros.h \
   Min_Max.h \
-  OS.i
+  Sched_Params.h \
+  Sched_Params.i \
+  OS.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h
 
 .obj/Activation_Queue.o .obj/Activation_Queue.so .shobj/Activation_Queue.o .shobj/Activation_Queue.so: Activation_Queue.cpp \
   Activation_Queue.h \
   pre.h \
   Synch_T.h \
   Synch.h \
-  ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -4344,28 +4663,42 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   ace_threads.h \
   ace_sys_types.h \
   OS_Export.h \
+  ace_signal.h \
+  ACE_export.h \
+  Global_Macros.h \
+  Synch.i \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -4373,11 +4706,19 @@ endif # GHS
   Time_Value.h \
   Time_Value.inl \
   Default_Constants.h \
-  Global_Macros.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   Trace.h \
   OS.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
+  Synch_T.i \
+  Thread.h \
+  ACE.h \
   Flag_Manip.h \
   Flag_Manip.i \
   Handle_Ops.h \
@@ -4389,18 +4730,18 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
-  Synch.i \
-  Synch_T.i \
-  Thread.h \
+  ace_ctype.h \
   Thread_Adapter.h \
   Base_Thread_Adapter.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Base_Thread_Adapter.inl \
   Thread_Adapter.inl \
   Thread.i \
   Synch_T.cpp \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   Message_Queue.h \
   Message_Block.h \
@@ -4424,6 +4765,7 @@ endif # GHS
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
@@ -4447,7 +4789,7 @@ endif # GHS
   Activation_Queue.i
 
 .obj/Process.o .obj/Process.so .shobj/Process.o .shobj/Process.so: Process.cpp \
-  OS.h \
+  Process.h \
   pre.h \
   config-all.h \
   config.h \
@@ -4457,28 +4799,49 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
-  ace_sys_types.h \
+  ace_new.h \
+  Handle_Set.h \
+  Global_Macros.h \
   OS_Export.h \
+  ace_sys_types.h \
+  ACE_export.h \
+  Handle_Set.i \
+  Trace.h \
+  ace_sys_param.h \
+  ace_stdlib.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  Process.i \
+  ACE.h \
+  Flag_Manip.h \
+  Flag_Manip.i \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -4486,19 +4849,15 @@ endif # GHS
   Time_Value.h \
   Time_Value.inl \
   Default_Constants.h \
-  Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Process.h \
-  Handle_Set.h \
-  Handle_Set.i \
-  SString.h \
-  String_Base.h \
-  ACE.h \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -4508,143 +4867,39 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
-  String_Base_Const.h \
-  String_Base.i \
-  Malloc_Base.h \
-  String_Base.cpp \
-  Malloc.h \
-  Log_Msg.h \
-  Log_Priority.h \
-  OS_Log_Msg_Attributes.h \
-  OS_Log_Msg_Attributes.inl \
-  Malloc.i \
-  Malloc_T.h \
-  Synch.h \
-  Synch.i \
-  Synch_T.h \
-  Synch_T.i \
-  Thread.h \
-  Thread_Adapter.h \
-  Base_Thread_Adapter.h \
-  Base_Thread_Adapter.inl \
-  Thread_Adapter.inl \
-  Thread.i \
-  Synch_T.cpp \
-  Malloc_Allocator.h \
-  Malloc_Allocator.i \
-  Free_List.h \
-  Free_List.i \
-  Free_List.cpp \
-  Malloc_T.i \
-  Malloc_T.cpp \
-  Memory_Pool.h \
-  Event_Handler.h \
-  Event_Handler.i \
-  Signal.h \
-  Signal.i \
-  Mem_Map.h \
-  Mem_Map.i \
-  SV_Semaphore_Complex.h \
-  SV_Semaphore_Simple.h \
-  SV_Semaphore_Simple.i \
-  SV_Semaphore_Complex.i \
-  Unbounded_Set.h \
-  Node.h \
-  Node.cpp \
-  Unbounded_Set.inl \
-  Unbounded_Set.cpp \
-  Memory_Pool.i \
-  Auto_Ptr.h \
-  Auto_Ptr.i \
-  Auto_Ptr.cpp \
-  SString.i \
-  Process.i \
+  ace_ctype.h \
   ARGV.h \
   Unbounded_Queue.h \
+  Node.h \
+  Node.cpp \
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
-  ARGV.i
-
-.obj/Process_Manager.o .obj/Process_Manager.so .shobj/Process_Manager.o .shobj/Process_Manager.so: Process_Manager.cpp \
-  Synch_T.h \
-  pre.h \
-  Synch.h \
-  ACE.h \
-  OS.h \
-  config-all.h \
-  config.h \
-  config-linux.h \
-  config-linux-common.h \
-  config-g++-common.h \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  ace_threads.h \
-  ace_sys_types.h \
-  OS_Export.h \
-  ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
-  ace_stropts.h \
-  ace_sys_uio.h \
-  ace_sys_resource.h \
-  OS_Dirent.h \
-  OS_Errno.h \
-  OS_Errno.inl \
-  OS_Dirent.inl \
-  OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
-  OS_String.inl \
-  OS_Memory.h \
-  OS_Memory.inl \
-  OS_TLI.h \
-  OS_TLI.inl \
-  Time_Value.h \
-  Time_Value.inl \
-  Default_Constants.h \
-  Global_Macros.h \
-  Min_Max.h \
+  Malloc_Base.h \
+  Log_Msg.h \
+  Log_Priority.h \
+  OS_Log_Msg_Attributes.h \
   streams.h \
-  Trace.h \
-  OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
-  Handle_Ops.h \
-  Handle_Ops.i \
-  Lib_Find.h \
-  Lib_Find.i \
-  Init_ACE.h \
-  Init_ACE.i \
-  Sock_Connect.h \
-  Sock_Connect.i \
-  ACE.i \
+  OS_Log_Msg_Attributes.inl \
+  ARGV.i \
+  Signal.h \
+  Synch.h \
   Synch.i \
+  Synch_T.h \
   Synch_T.i \
   Thread.h \
   Thread_Adapter.h \
   Base_Thread_Adapter.h \
-  OS_Log_Msg_Attributes.h \
-  OS_Log_Msg_Attributes.inl \
   Base_Thread_Adapter.inl \
   Thread_Adapter.inl \
   Thread.i \
   Synch_T.cpp \
-  Log_Msg.h \
-  Log_Priority.h \
-  Process.h \
-  Handle_Set.h \
-  Handle_Set.i \
+  Event_Handler.h \
+  Event_Handler.i \
+  Signal.i \
   SString.h \
   String_Base.h \
   String_Base_Const.h \
   String_Base.i \
-  Malloc_Base.h \
   String_Base.cpp \
   Malloc.h \
   Malloc.i \
@@ -4657,38 +4912,136 @@ endif # GHS
   Malloc_T.i \
   Malloc_T.cpp \
   Memory_Pool.h \
-  Event_Handler.h \
-  Event_Handler.i \
-  Signal.h \
-  Signal.i \
   Mem_Map.h \
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h \
-  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
   Auto_Ptr.h \
   Auto_Ptr.i \
   Auto_Ptr.cpp \
-  SString.i \
-  Process.i \
+  SString.i
+
+.obj/Process_Manager.o .obj/Process_Manager.so .shobj/Process_Manager.o .shobj/Process_Manager.so: Process_Manager.cpp \
   Process_Manager.h \
+  pre.h \
+  Synch.h \
+  config-all.h \
+  config.h \
+  config-linux.h \
+  config-linux-common.h \
+  config-g++-common.h \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  ace_new.h \
+  ace_threads.h \
+  ace_sys_types.h \
+  OS_Export.h \
+  ace_signal.h \
+  ACE_export.h \
+  Global_Macros.h \
+  Synch.i \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_stdio.h \
+  ace_stdlib.h \
+  ace_stropts.h \
+  ace_time.h \
+  ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
+  OS_Dirent.h \
+  OS_Errno.h \
+  ace_errno.h \
+  OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
+  OS_Dirent.inl \
+  OS_String.h \
+  OS_String.inl \
+  ace_string.h \
+  OS_Memory.h \
+  OS_Memory.inl \
+  OS_TLI.h \
+  OS_TLI.inl \
+  Time_Value.h \
+  Time_Value.inl \
+  Default_Constants.h \
+  Min_Max.h \
+  Sched_Params.h \
+  Sched_Params.i \
+  Trace.h \
+  OS.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
+  Synch_T.h \
+  Synch_T.i \
+  Thread.h \
+  ACE.h \
+  Flag_Manip.h \
+  Flag_Manip.i \
+  Handle_Ops.h \
+  Handle_Ops.i \
+  Lib_Find.h \
+  Lib_Find.i \
+  Init_ACE.h \
+  Init_ACE.i \
+  Sock_Connect.h \
+  Sock_Connect.i \
+  ACE.i \
+  ace_ctype.h \
+  Thread_Adapter.h \
+  Base_Thread_Adapter.h \
+  OS_Log_Msg_Attributes.h \
+  streams.h \
+  OS_Log_Msg_Attributes.inl \
+  Base_Thread_Adapter.inl \
+  Thread_Adapter.inl \
+  Thread.i \
+  Synch_T.cpp \
+  Log_Msg.h \
+  ace_sys_param.h \
+  Log_Priority.h \
   Reactor.h \
+  Handle_Set.h \
+  Handle_Set.i \
   Timer_Queue.h \
   Timer_Queue_T.h \
+  Free_List.h \
+  Free_List.i \
+  Free_List.cpp \
   Test_and_Set.h \
+  Event_Handler.h \
+  Event_Handler.i \
   Test_and_Set.i \
   Test_and_Set.cpp \
   Timer_Queue_T.i \
   Timer_Queue_T.cpp \
+  Signal.h \
+  Signal.i \
   Reactor.i \
   Reactor_Impl.h \
+  Process.h \
+  Process.i \
   Process_Manager.i \
   Object_Manager.h \
   Service_Object.h \
@@ -4701,10 +5054,8 @@ endif # GHS
   Managed_Object.cpp
 
 .obj/Synch.o .obj/Synch.so .shobj/Synch.o .shobj/Synch.so: Synch.cpp \
-  Thread.h \
+  Synch.h \
   pre.h \
-  ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -4713,28 +5064,42 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   ace_threads.h \
   ace_sys_types.h \
   OS_Export.h \
+  ace_signal.h \
+  ACE_export.h \
+  Global_Macros.h \
+  Synch.i \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -4742,11 +5107,20 @@ endif # GHS
   Time_Value.h \
   Time_Value.inl \
   Default_Constants.h \
-  Global_Macros.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   Trace.h \
   OS.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
+  Synch_T.h \
+  Synch_T.i \
+  Thread.h \
+  ACE.h \
   Flag_Manip.h \
   Flag_Manip.i \
   Handle_Ops.h \
@@ -4758,26 +5132,24 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   Thread_Adapter.h \
   Base_Thread_Adapter.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Base_Thread_Adapter.inl \
   Thread_Adapter.inl \
   Thread.i \
-  Synch_T.h \
-  Synch.h \
-  Synch.i \
-  Synch_T.i \
   Synch_T.cpp \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h
 
 .obj/Synch_Options.o .obj/Synch_Options.so .shobj/Synch_Options.o .shobj/Synch_Options.so: Synch_Options.cpp \
   Synch_Options.h \
   pre.h \
   ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -4786,28 +5158,43 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -4817,11 +5204,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -4831,14 +5221,13 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   Synch_Options.i
 
 .obj/Process_Semaphore.o .obj/Process_Semaphore.so .shobj/Process_Semaphore.o .shobj/Process_Semaphore.so: Process_Semaphore.cpp \
   Process_Semaphore.h \
   pre.h \
   Synch.h \
-  ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -4847,28 +5236,42 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   ace_threads.h \
   ace_sys_types.h \
   OS_Export.h \
+  ace_signal.h \
+  ACE_export.h \
+  Global_Macros.h \
+  Synch.i \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -4876,11 +5279,20 @@ endif # GHS
   Time_Value.h \
   Time_Value.inl \
   Default_Constants.h \
-  Global_Macros.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   Trace.h \
   OS.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
+  Synch_T.h \
+  Synch_T.i \
+  Thread.h \
+  ACE.h \
   Flag_Manip.h \
   Flag_Manip.i \
   Handle_Ops.h \
@@ -4892,22 +5304,22 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
-  Synch.i \
-  Synch_T.h \
-  Synch_T.i \
-  Thread.h \
+  ace_ctype.h \
   Thread_Adapter.h \
   Base_Thread_Adapter.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Base_Thread_Adapter.inl \
   Thread_Adapter.inl \
   Thread.i \
   Synch_T.cpp \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Process_Semaphore.inl
@@ -4923,32 +5335,46 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
   ACE.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
   OS.h \
-  ace_threads.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -4958,11 +5384,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -4972,6 +5401,8 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Process_Mutex.inl \
@@ -4983,12 +5414,14 @@ endif # GHS
   Thread_Adapter.h \
   Base_Thread_Adapter.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Base_Thread_Adapter.inl \
   Thread_Adapter.inl \
   Thread.i \
   Synch_T.cpp \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h
 
 .obj/RW_Process_Mutex.o .obj/RW_Process_Mutex.so .shobj/RW_Process_Mutex.o .shobj/RW_Process_Mutex.so: RW_Process_Mutex.cpp \
@@ -5003,29 +5436,41 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   ACE_export.h \
   ace_sys_types.h \
+  ace_fcntl.h \
+  File_Lock.inl \
   OS.h \
-  ace_threads.h \
-  OS_Export.h \
+  ace_dlfcn.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -5035,14 +5480,21 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   Trace.h \
   OS.i \
-  File_Lock.inl \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   RW_Process_Mutex.inl \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   ACE.h \
   Flag_Manip.h \
@@ -5055,7 +5507,8 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i
+  ACE.i \
+  ace_ctype.h
 
 .obj/File_Lock.o .obj/File_Lock.so .shobj/File_Lock.o .shobj/File_Lock.so: File_Lock.cpp \
   File_Lock.h \
@@ -5068,29 +5521,41 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   ACE_export.h \
   ace_sys_types.h \
+  ace_fcntl.h \
+  File_Lock.inl \
   OS.h \
-  ace_threads.h \
-  OS_Export.h \
+  ace_dlfcn.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -5100,20 +5565,26 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   Trace.h \
   OS.i \
-  File_Lock.inl \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl
 
 .obj/Thread.o .obj/Thread.so .shobj/Thread.o .shobj/Thread.so: Thread.cpp \
   Thread.h \
   pre.h \
   ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -5122,28 +5593,43 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -5153,11 +5639,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -5167,20 +5656,21 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   Thread_Adapter.h \
   Base_Thread_Adapter.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Base_Thread_Adapter.inl \
   Thread_Adapter.inl \
   Thread.i
 
 .obj/Thread_Manager.o .obj/Thread_Manager.so .shobj/Thread_Manager.o .shobj/Thread_Manager.so: Thread_Manager.cpp \
-  Synch_T.h \
+  Thread_Manager.h \
   pre.h \
-  Synch.h \
+  Thread.h \
   ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -5189,28 +5679,43 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -5220,11 +5725,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -5234,20 +5742,23 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
-  Synch.i \
-  Synch_T.i \
-  Thread.h \
+  ace_ctype.h \
   Thread_Adapter.h \
   Base_Thread_Adapter.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Base_Thread_Adapter.inl \
   Thread_Adapter.inl \
   Thread.i \
+  Synch.h \
+  Synch.i \
+  Synch_T.h \
+  Synch_T.i \
   Synch_T.cpp \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
-  Thread_Manager.h \
   Unbounded_Queue.h \
   Node.h \
   Node.cpp \
@@ -5304,34 +5815,45 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   Base_Thread_Adapter.h \
   OS_Log_Msg_Attributes.h \
   streams.h \
+  ace_stdio.h \
   OS_Export.h \
   OS_Log_Msg_Attributes.inl \
   Base_Thread_Adapter.inl \
   Thread_Adapter.inl \
   OS.h \
-  ace_threads.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -5341,8 +5863,15 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
+  Sched_Params.h \
+  Sched_Params.i \
   Trace.h \
   OS.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Thread_Manager.h \
   Thread.h \
   ACE.h \
@@ -5357,6 +5886,7 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   Thread.i \
   Synch.h \
   Synch.i \
@@ -5364,6 +5894,7 @@ endif # GHS
   Synch_T.i \
   Synch_T.cpp \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   Unbounded_Queue.h \
   Node.h \
@@ -5416,29 +5947,41 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
+  ACE_export.h \
+  Thread_Control.h \
   OS.h \
-  ace_threads.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -5448,12 +5991,21 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   Trace.h \
   OS.i \
-  Thread_Control.h \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Thread_Control.inl \
   Synch.h \
+  Synch.i \
+  Synch_T.h \
+  Synch_T.i \
+  Thread.h \
   ACE.h \
   Flag_Manip.h \
   Flag_Manip.i \
@@ -5466,19 +6018,18 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
-  Synch.i \
-  Synch_T.h \
-  Synch_T.i \
-  Thread.h \
+  ace_ctype.h \
   Thread_Adapter.h \
   Base_Thread_Adapter.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Base_Thread_Adapter.inl \
   Thread_Adapter.inl \
   Thread.i \
   Synch_T.cpp \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   Managed_Object.h \
   Object_Manager.h \
@@ -5493,8 +6044,9 @@ endif # GHS
   Managed_Object.cpp
 
 .obj/Thread_Control.o .obj/Thread_Control.so .shobj/Thread_Control.o .shobj/Thread_Control.so: Thread_Control.cpp \
-  config-all.h \
+  Thread_Control.h \
   pre.h \
+  config-all.h \
   config.h \
   config-linux.h \
   config-linux-common.h \
@@ -5502,30 +6054,40 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  Thread_Control.h \
+  ace_new.h \
   OS.h \
-  ace_threads.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
-  OS_Dirent.inl \
-  OS_String.h \
+  ace_dirent.h \
+  ace_unistd.h \
   Basic_Types.h \
   ACE_export.h \
+  ace_limits.h \
   Basic_Types.i \
+  OS_Dirent.inl \
+  OS_String.h \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -5535,9 +6097,15 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   Trace.h \
   OS.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Thread_Control.inl \
   Thread_Manager.h \
   Thread.h \
@@ -5553,9 +6121,11 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   Thread_Adapter.h \
   Base_Thread_Adapter.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Base_Thread_Adapter.inl \
   Thread_Adapter.inl \
@@ -5566,6 +6136,7 @@ endif # GHS
   Synch_T.i \
   Synch_T.cpp \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   Unbounded_Queue.h \
   Node.h \
@@ -5604,10 +6175,9 @@ endif # GHS
   Thread_Manager.i
 
 .obj/Token.o .obj/Token.so .shobj/Token.o .shobj/Token.so: Token.cpp \
-  Thread.h \
+  Token.h \
   pre.h \
-  ACE.h \
-  OS.h \
+  Synch.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -5616,28 +6186,42 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   ace_threads.h \
   ace_sys_types.h \
   OS_Export.h \
+  ace_signal.h \
+  ACE_export.h \
+  Global_Macros.h \
+  Synch.i \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -5645,11 +6229,20 @@ endif # GHS
   Time_Value.h \
   Time_Value.inl \
   Default_Constants.h \
-  Global_Macros.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   Trace.h \
   OS.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
+  Synch_T.h \
+  Synch_T.i \
+  Thread.h \
+  ACE.h \
   Flag_Manip.h \
   Flag_Manip.i \
   Handle_Ops.h \
@@ -5661,28 +6254,24 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   Thread_Adapter.h \
   Base_Thread_Adapter.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Base_Thread_Adapter.inl \
   Thread_Adapter.inl \
   Thread.i \
-  Token.h \
-  Synch.h \
-  Synch.i \
-  Synch_T.h \
-  Synch_T.i \
   Synch_T.cpp \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   Token.i
 
 .obj/Event_Handler.o .obj/Event_Handler.so .shobj/Event_Handler.o .shobj/Event_Handler.so: Event_Handler.cpp \
   Event_Handler.h \
   pre.h \
-  ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -5691,28 +6280,46 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  ACE_export.h \
   ace_sys_types.h \
+  ace_signal.h \
+  ace_threads.h \
   OS_Export.h \
+  Event_Handler.i \
+  Message_Block.h \
+  ACE.h \
+  Flag_Manip.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -5722,11 +6329,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -5736,12 +6346,13 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
-  Event_Handler.i \
-  Message_Block.h \
+  ace_ctype.h \
   Malloc.h \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
@@ -5771,6 +6382,7 @@ endif # GHS
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
@@ -5831,7 +6443,8 @@ endif # GHS
   config-g++-common.h \
   post.h \
   ace_wchar.h \
-  ace_wchar.inl
+  ace_wchar.inl \
+  ace_new.h
 
 .obj/Msg_WFMO_Reactor.o .obj/Msg_WFMO_Reactor.so .shobj/Msg_WFMO_Reactor.o .shobj/Msg_WFMO_Reactor.so: Msg_WFMO_Reactor.cpp \
   Msg_WFMO_Reactor.h \
@@ -5844,6 +6457,7 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   Msg_WFMO_Reactor.i
 
 .obj/POSIX_Proactor.o .obj/POSIX_Proactor.so .shobj/POSIX_Proactor.o .shobj/POSIX_Proactor.so: POSIX_Proactor.cpp \
@@ -5857,30 +6471,49 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   Proactor_Impl.h \
-  OS.h \
-  ace_threads.h \
+  ACE_export.h \
+  Asynch_IO.h \
   ace_sys_types.h \
-  OS_Export.h \
-  ace_stdio.h \
-  ace_semaphore.h \
+  ace_signal.h \
   ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdio.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
+  Event_Handler.h \
+  ace_threads.h \
+  OS_Export.h \
+  Event_Handler.i \
+  Free_List.h \
+  Synch_T.h \
+  Synch.h \
+  Global_Macros.h \
+  Synch.i \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -5888,18 +6521,18 @@ endif # GHS
   Time_Value.h \
   Time_Value.inl \
   Default_Constants.h \
-  Global_Macros.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   Trace.h \
   OS.i \
-  Asynch_IO.h \
-  ace_sys_signal.h \
-  Reactor.h \
-  Handle_Set.h \
-  Handle_Set.i \
-  Timer_Queue.h \
-  Synch.h \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
+  Synch_T.i \
+  Thread.h \
   ACE.h \
   Flag_Manip.h \
   Flag_Manip.i \
@@ -5912,35 +6545,21 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
-  Synch.i \
-  Synch_T.h \
-  Synch_T.i \
-  Thread.h \
+  ace_ctype.h \
   Thread_Adapter.h \
   Base_Thread_Adapter.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Base_Thread_Adapter.inl \
   Thread_Adapter.inl \
   Thread.i \
   Synch_T.cpp \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
-  Timer_Queue_T.h \
-  Free_List.h \
   Free_List.i \
   Free_List.cpp \
-  Test_and_Set.h \
-  Event_Handler.h \
-  Event_Handler.i \
-  Test_and_Set.i \
-  Test_and_Set.cpp \
-  Timer_Queue_T.i \
-  Timer_Queue_T.cpp \
-  Signal.h \
-  Signal.i \
-  Reactor.i \
-  Reactor_Impl.h \
   Pipe.h \
   Pipe.i \
   POSIX_Asynch_IO.h \
@@ -5949,9 +6568,23 @@ endif # GHS
   Select_Reactor.h \
   Select_Reactor_T.h \
   Select_Reactor_Base.h \
+  Signal.h \
+  Signal.i \
+  Timer_Queue.h \
+  Timer_Queue_T.h \
+  Test_and_Set.h \
+  Test_and_Set.i \
+  Test_and_Set.cpp \
+  Timer_Queue_T.i \
+  Timer_Queue_T.cpp \
+  Handle_Set.h \
+  Handle_Set.i \
   Token.h \
   Token.i \
+  Reactor_Impl.h \
   Select_Reactor_Base.i \
+  Reactor.h \
+  Reactor.i \
   Select_Reactor_T.cpp \
   Timer_Heap.h \
   Timer_Heap_T.h \
@@ -6005,6 +6638,7 @@ endif # GHS
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Memory_Pool.i \
@@ -6026,6 +6660,7 @@ endif # GHS
   Module.cpp \
   Stream_Modules.h \
   Stream_Modules.cpp \
+  ace_aio.h \
   POSIX_Asynch_IO.i \
   POSIX_Proactor.i
 
@@ -6039,7 +6674,8 @@ endif # GHS
   config-g++-common.h \
   post.h \
   ace_wchar.h \
-  ace_wchar.inl
+  ace_wchar.inl \
+  ace_new.h
 
 .obj/Priority_Reactor.o .obj/Priority_Reactor.so .shobj/Priority_Reactor.o .shobj/Priority_Reactor.so: Priority_Reactor.cpp \
   Priority_Reactor.h \
@@ -6054,54 +6690,77 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   Node.cpp \
   OS_Memory.h \
   OS_Export.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
   OS_Memory.inl \
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
   Malloc_Base.h \
-  OS.h \
-  ace_threads.h \
-  ace_sys_types.h \
-  ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
-  ace_stropts.h \
-  ace_sys_uio.h \
-  ace_sys_resource.h \
-  OS_Dirent.h \
-  OS_Dirent.inl \
-  OS_String.h \
-  Basic_Types.h \
   ACE_export.h \
-  Basic_Types.i \
-  OS_String.inl \
-  OS_TLI.h \
-  OS_TLI.inl \
-  Time_Value.h \
-  Time_Value.inl \
-  Default_Constants.h \
-  Global_Macros.h \
-  Min_Max.h \
-  streams.h \
-  Trace.h \
-  OS.i \
+  ace_sys_mman.h \
+  ace_sys_types.h \
   Log_Msg.h \
+  ace_sys_param.h \
+  ace_stdlib.h \
   Log_Priority.h \
+  Default_Constants.h \
+  ace_threads.h \
+  ace_signal.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
+  ace_stdio.h \
   OS_Log_Msg_Attributes.inl \
+  Global_Macros.h \
+  Trace.h \
   Select_Reactor.h \
   Select_Reactor_T.h \
   Select_Reactor_Base.h \
   Signal.h \
   Synch.h \
+  Synch.i \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_stropts.h \
+  ace_time.h \
+  ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
+  OS_Dirent.h \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
+  OS_Dirent.inl \
+  OS_String.h \
+  OS_String.inl \
+  ace_string.h \
+  OS_TLI.h \
+  OS_TLI.inl \
+  Time_Value.h \
+  Time_Value.inl \
+  Min_Max.h \
+  Sched_Params.h \
+  Sched_Params.i \
+  OS.i \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
+  Synch_T.h \
+  Synch_T.i \
+  Thread.h \
   ACE.h \
   Flag_Manip.h \
   Flag_Manip.i \
@@ -6114,10 +6773,7 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
-  Synch.i \
-  Synch_T.h \
-  Synch_T.i \
-  Thread.h \
+  ace_ctype.h \
   Thread_Adapter.h \
   Base_Thread_Adapter.h \
   Base_Thread_Adapter.inl \
@@ -6163,6 +6819,7 @@ endif # GHS
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Memory_Pool.i \
@@ -6182,29 +6839,49 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   ACE_export.h \
-  OS.h \
-  ace_threads.h \
+  Asynch_IO.h \
   ace_sys_types.h \
-  OS_Export.h \
-  ace_stdio.h \
-  ace_semaphore.h \
+  ace_signal.h \
   ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdio.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
+  Asynch_IO_Impl.h \
+  Asynch_IO_Impl.i \
+  Thread_Manager.h \
+  Thread.h \
+  ACE.h \
+  Flag_Manip.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -6214,18 +6891,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Asynch_IO.h \
-  ace_sys_signal.h \
-  Asynch_IO_Impl.h \
-  Asynch_IO_Impl.i \
-  Thread_Manager.h \
-  Thread.h \
-  ACE.h \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -6235,9 +6908,11 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   Thread_Adapter.h \
   Base_Thread_Adapter.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Base_Thread_Adapter.inl \
   Thread_Adapter.inl \
@@ -6248,6 +6923,7 @@ endif # GHS
   Synch_T.i \
   Synch_T.cpp \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   Unbounded_Queue.h \
   Node.h \
@@ -6306,11 +6982,6 @@ endif # GHS
   High_Res_Timer.i \
   Proactor.i \
   Proactor_Impl.h \
-  Reactor.h \
-  Handle_Set.h \
-  Handle_Set.i \
-  Reactor.i \
-  Reactor_Impl.h \
   Task_T.h \
   Message_Queue.h \
   Message_Block.h \
@@ -6326,6 +6997,7 @@ endif # GHS
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Memory_Pool.i \
@@ -6360,6 +7032,11 @@ endif # GHS
   Auto_Ptr.cpp \
   SString.i \
   Service_Config.i \
+  Reactor.h \
+  Handle_Set.h \
+  Handle_Set.i \
+  Reactor.i \
+  Reactor_Impl.h \
   Svc_Conf_Tokens.h \
   Framework_Component.h \
   Framework_Component.inl \
@@ -6378,6 +7055,7 @@ endif # GHS
   Select_Reactor_Base.i \
   Select_Reactor_T.cpp \
   Select_Reactor_T.i \
+  ace_aio.h \
   POSIX_Asynch_IO.i \
   POSIX_Proactor.i
 
@@ -6393,6 +7071,7 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   Global_Macros.h \
   OS_Export.h \
   ace_sys_types.h \
@@ -6401,27 +7080,37 @@ endif # GHS
   Trace.h \
   Timer_Queue.h \
   Synch.h \
-  ACE.h \
-  OS.h \
   ace_threads.h \
+  ace_signal.h \
+  Synch.i \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -6430,8 +7119,18 @@ endif # GHS
   Time_Value.inl \
   Default_Constants.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
+  Synch_T.h \
+  Synch_T.i \
+  Thread.h \
+  ACE.h \
   Flag_Manip.h \
   Flag_Manip.i \
   Handle_Ops.h \
@@ -6443,19 +7142,18 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
-  Synch.i \
-  Synch_T.h \
-  Synch_T.i \
-  Thread.h \
+  ace_ctype.h \
   Thread_Adapter.h \
   Base_Thread_Adapter.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Base_Thread_Adapter.inl \
   Thread_Adapter.inl \
   Thread.i \
   Synch_T.cpp \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   Timer_Queue_T.h \
   Free_List.h \
@@ -6503,6 +7201,7 @@ endif # GHS
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Memory_Pool.i \
@@ -6545,8 +7244,6 @@ endif # GHS
   Select_Reactor_Base.h \
   Signal.h \
   Synch.h \
-  ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -6555,28 +7252,42 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   ace_threads.h \
   ace_sys_types.h \
   OS_Export.h \
+  ace_signal.h \
+  ACE_export.h \
+  Global_Macros.h \
+  Synch.i \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -6584,11 +7295,20 @@ endif # GHS
   Time_Value.h \
   Time_Value.inl \
   Default_Constants.h \
-  Global_Macros.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   Trace.h \
   OS.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
+  Synch_T.h \
+  Synch_T.i \
+  Thread.h \
+  ACE.h \
   Flag_Manip.h \
   Flag_Manip.i \
   Handle_Ops.h \
@@ -6600,19 +7320,18 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
-  Synch.i \
-  Synch_T.h \
-  Synch_T.i \
-  Thread.h \
+  ace_ctype.h \
   Thread_Adapter.h \
   Base_Thread_Adapter.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Base_Thread_Adapter.inl \
   Thread_Adapter.inl \
   Thread.i \
   Synch_T.cpp \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   Event_Handler.h \
   Event_Handler.i \
@@ -6654,8 +7373,6 @@ endif # GHS
   pre.h \
   Signal.h \
   Synch.h \
-  ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -6664,28 +7381,42 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   ace_threads.h \
   ace_sys_types.h \
   OS_Export.h \
+  ace_signal.h \
+  ACE_export.h \
+  Global_Macros.h \
+  Synch.i \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -6693,11 +7424,20 @@ endif # GHS
   Time_Value.h \
   Time_Value.inl \
   Default_Constants.h \
-  Global_Macros.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   Trace.h \
   OS.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
+  Synch_T.h \
+  Synch_T.i \
+  Thread.h \
+  ACE.h \
   Flag_Manip.h \
   Flag_Manip.i \
   Handle_Ops.h \
@@ -6709,19 +7449,18 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
-  Synch.i \
-  Synch_T.h \
-  Synch_T.i \
-  Thread.h \
+  ace_ctype.h \
   Thread_Adapter.h \
   Base_Thread_Adapter.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Base_Thread_Adapter.inl \
   Thread_Adapter.inl \
   Thread.i \
   Synch_T.cpp \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   Event_Handler.h \
   Event_Handler.i \
@@ -6782,7 +7521,8 @@ endif # GHS
   config-g++-common.h \
   post.h \
   ace_wchar.h \
-  ace_wchar.inl
+  ace_wchar.inl \
+  ace_new.h
 
 .obj/TP_Reactor.o .obj/TP_Reactor.so .shobj/TP_Reactor.o .shobj/TP_Reactor.so: TP_Reactor.cpp \
   TP_Reactor.h \
@@ -6792,8 +7532,6 @@ endif # GHS
   Select_Reactor_Base.h \
   Signal.h \
   Synch.h \
-  ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -6802,28 +7540,42 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   ace_threads.h \
   ace_sys_types.h \
   OS_Export.h \
+  ace_signal.h \
+  ACE_export.h \
+  Global_Macros.h \
+  Synch.i \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -6831,11 +7583,20 @@ endif # GHS
   Time_Value.h \
   Time_Value.inl \
   Default_Constants.h \
-  Global_Macros.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   Trace.h \
   OS.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
+  Synch_T.h \
+  Synch_T.i \
+  Thread.h \
+  ACE.h \
   Flag_Manip.h \
   Flag_Manip.i \
   Handle_Ops.h \
@@ -6847,19 +7608,18 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
-  Synch.i \
-  Synch_T.h \
-  Synch_T.i \
-  Thread.h \
+  ace_ctype.h \
   Thread_Adapter.h \
   Base_Thread_Adapter.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Base_Thread_Adapter.inl \
   Thread_Adapter.inl \
   Thread.i \
   Synch_T.cpp \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   Event_Handler.h \
   Event_Handler.i \
@@ -6907,7 +7667,8 @@ endif # GHS
   config-g++-common.h \
   post.h \
   ace_wchar.h \
-  ace_wchar.inl
+  ace_wchar.inl \
+  ace_new.h
 
 .obj/WFMO_Reactor.o .obj/WFMO_Reactor.so .shobj/WFMO_Reactor.o .shobj/WFMO_Reactor.so: WFMO_Reactor.cpp \
   WFMO_Reactor.h \
@@ -6919,7 +7680,8 @@ endif # GHS
   config-g++-common.h \
   post.h \
   ace_wchar.h \
-  ace_wchar.inl
+  ace_wchar.inl \
+  ace_new.h
 
 .obj/XtReactor.o .obj/XtReactor.so .shobj/XtReactor.o .shobj/XtReactor.so: XtReactor.cpp \
   XtReactor.h \
@@ -6931,7 +7693,8 @@ endif # GHS
   config-g++-common.h \
   post.h \
   ace_wchar.h \
-  ace_wchar.inl
+  ace_wchar.inl \
+  ace_new.h
 
 .obj/QtReactor.o .obj/QtReactor.so .shobj/QtReactor.o .shobj/QtReactor.so: QtReactor.cpp \
   QtReactor.h \
@@ -6943,7 +7706,8 @@ endif # GHS
   config-g++-common.h \
   post.h \
   ace_wchar.h \
-  ace_wchar.inl
+  ace_wchar.inl \
+  ace_new.h
 
 .obj/Asynch_IO.o .obj/Asynch_IO.so .shobj/Asynch_IO.o .shobj/Asynch_IO.so: Asynch_IO.cpp \
   Asynch_IO.h \
@@ -6956,31 +7720,49 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   ACE_export.h \
   ace_sys_types.h \
-  ace_sys_signal.h \
+  ace_signal.h \
   ace_sys_socket.h \
-  Proactor.h \
-  OS.h \
-  ace_threads.h \
-  OS_Export.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
+  Proactor.h \
+  Asynch_IO_Impl.h \
+  Asynch_IO_Impl.i \
+  Thread_Manager.h \
+  Thread.h \
+  ACE.h \
+  Flag_Manip.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -6990,16 +7772,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Asynch_IO_Impl.h \
-  Asynch_IO_Impl.i \
-  Thread_Manager.h \
-  Thread.h \
-  ACE.h \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -7009,9 +7789,11 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   Thread_Adapter.h \
   Base_Thread_Adapter.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Base_Thread_Adapter.inl \
   Thread_Adapter.inl \
@@ -7022,6 +7804,7 @@ endif # GHS
   Synch_T.i \
   Synch_T.cpp \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   Unbounded_Queue.h \
   Node.h \
@@ -7092,6 +7875,7 @@ endif # GHS
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Memory_Pool.i \
@@ -7115,44 +7899,17 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   Asynch_IO.h \
   ACE_export.h \
   ace_sys_types.h \
-  ace_sys_signal.h \
+  ace_signal.h \
   ace_sys_socket.h \
-  Asynch_IO_Impl.i \
-  OS.h \
-  ace_threads.h \
-  OS_Export.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
-  ace_stropts.h \
-  ace_sys_uio.h \
-  ace_sys_resource.h \
-  OS_Dirent.h \
-  OS_Errno.h \
-  OS_Errno.inl \
-  OS_Dirent.inl \
-  OS_String.h \
   Basic_Types.h \
+  ace_limits.h \
   Basic_Types.i \
-  OS_String.inl \
-  OS_Memory.h \
-  OS_Memory.inl \
-  OS_TLI.h \
-  OS_TLI.inl \
-  Time_Value.h \
-  Time_Value.inl \
-  Default_Constants.h \
-  Global_Macros.h \
-  Min_Max.h \
-  streams.h \
-  Trace.h \
-  OS.i
+  Asynch_IO_Impl.i
 
 .obj/POSIX_Asynch_IO.o .obj/POSIX_Asynch_IO.so .shobj/POSIX_Asynch_IO.o .shobj/POSIX_Asynch_IO.so: POSIX_Asynch_IO.cpp \
   POSIX_Asynch_IO.h \
@@ -7165,29 +7922,50 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS.h \
-  ace_threads.h \
+  ace_new.h \
+  ACE_export.h \
+  Asynch_IO_Impl.h \
+  Asynch_IO.h \
   ace_sys_types.h \
-  OS_Export.h \
-  ace_stdio.h \
-  ace_semaphore.h \
+  ace_signal.h \
   ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdio.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
+  Asynch_IO_Impl.i \
+  Select_Reactor.h \
+  Select_Reactor_T.h \
+  Select_Reactor_Base.h \
+  Signal.h \
+  Synch.h \
+  ace_threads.h \
+  OS_Export.h \
+  Global_Macros.h \
+  Synch.i \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -7195,20 +7973,19 @@ endif # GHS
   Time_Value.h \
   Time_Value.inl \
   Default_Constants.h \
-  Global_Macros.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   Trace.h \
   OS.i \
-  Asynch_IO_Impl.h \
-  Asynch_IO.h \
-  ace_sys_signal.h \
-  Asynch_IO_Impl.i \
-  Reactor.h \
-  Handle_Set.h \
-  Handle_Set.i \
-  Timer_Queue.h \
-  Synch.h \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
+  Synch_T.h \
+  Synch_T.i \
+  Thread.h \
   ACE.h \
   Flag_Manip.h \
   Flag_Manip.i \
@@ -7221,43 +7998,42 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
-  Synch.i \
-  Synch_T.h \
-  Synch_T.i \
-  Thread.h \
+  ace_ctype.h \
   Thread_Adapter.h \
   Base_Thread_Adapter.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Base_Thread_Adapter.inl \
   Thread_Adapter.inl \
   Thread.i \
   Synch_T.cpp \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
+  Event_Handler.h \
+  Event_Handler.i \
+  Signal.i \
+  Timer_Queue.h \
   Timer_Queue_T.h \
   Free_List.h \
   Free_List.i \
   Free_List.cpp \
   Test_and_Set.h \
-  Event_Handler.h \
-  Event_Handler.i \
   Test_and_Set.i \
   Test_and_Set.cpp \
   Timer_Queue_T.i \
   Timer_Queue_T.cpp \
-  Signal.h \
-  Signal.i \
-  Reactor.i \
-  Reactor_Impl.h \
-  Select_Reactor.h \
-  Select_Reactor_T.h \
-  Select_Reactor_Base.h \
+  Handle_Set.h \
+  Handle_Set.i \
   Token.h \
   Token.i \
   Pipe.h \
   Pipe.i \
+  Reactor_Impl.h \
   Select_Reactor_Base.i \
+  Reactor.h \
+  Reactor.i \
   Select_Reactor_T.cpp \
   Timer_Heap.h \
   Timer_Heap_T.h \
@@ -7311,6 +8087,7 @@ endif # GHS
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Memory_Pool.i \
@@ -7332,6 +8109,7 @@ endif # GHS
   Module.cpp \
   Stream_Modules.h \
   Stream_Modules.cpp \
+  ace_aio.h \
   POSIX_Asynch_IO.i \
   Proactor.h \
   Timer_List.h \
@@ -7361,7 +8139,8 @@ endif # GHS
   config-g++-common.h \
   post.h \
   ace_wchar.h \
-  ace_wchar.inl
+  ace_wchar.inl \
+  ace_new.h
 
 .obj/Addr.o .obj/Addr.so .shobj/Addr.o .shobj/Addr.so: Addr.cpp \
   Addr.h \
@@ -7375,51 +8154,28 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   Addr.i \
   Log_Msg.h \
-  Global_Macros.h \
-  OS_Export.h \
-  Default_Constants.h \
+  ace_sys_param.h \
+  ace_stdlib.h \
   Log_Priority.h \
-  Basic_Types.h \
-  Basic_Types.i \
-  OS_Errno.h \
-  OS_Errno.inl \
+  Default_Constants.h \
   ace_threads.h \
   ace_sys_types.h \
+  OS_Export.h \
+  ace_signal.h \
   OS_Log_Msg_Attributes.h \
   streams.h \
-  OS_Log_Msg_Attributes.inl \
-  OS.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
-  ace_stropts.h \
-  ace_sys_uio.h \
-  ace_sys_resource.h \
-  OS_Dirent.h \
-  OS_Dirent.inl \
-  OS_String.h \
-  OS_String.inl \
-  OS_Memory.h \
-  OS_Memory.inl \
-  OS_TLI.h \
-  OS_TLI.inl \
-  Time_Value.h \
-  Time_Value.inl \
-  Min_Max.h \
+  OS_Log_Msg_Attributes.inl \
   Trace.h \
-  OS.i
+  Global_Macros.h \
+  ace_sys_socket.h
 
 .obj/INET_Addr.o .obj/INET_Addr.so .shobj/INET_Addr.o .shobj/INET_Addr.so: INET_Addr.cpp \
   INET_Addr.h \
   pre.h \
-  ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -7428,64 +8184,71 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
-  ace_sys_types.h \
-  OS_Export.h \
-  ace_stdio.h \
-  ace_semaphore.h \
+  ace_new.h \
+  Addr.h \
+  ACE_export.h \
+  Addr.i \
   ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdio.h \
+  ace_sys_types.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
+  INET_Addr.i \
+  Trace.h \
+  Log_Msg.h \
+  ace_sys_param.h \
+  ace_stdlib.h \
+  Log_Priority.h \
+  Default_Constants.h \
+  ace_threads.h \
+  OS_Export.h \
+  ace_signal.h \
+  OS_Log_Msg_Attributes.h \
+  streams.h \
+  OS_Log_Msg_Attributes.inl \
+  OS_String.h \
+  OS_String.inl \
+  ace_string.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
   OS_Dirent.inl \
-  OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
-  OS_String.inl \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
   OS_TLI.inl \
   Time_Value.h \
   Time_Value.inl \
-  Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
-  Handle_Ops.h \
-  Handle_Ops.i \
-  Lib_Find.h \
-  Lib_Find.i \
-  Init_ACE.h \
-  Init_ACE.i \
-  Sock_Connect.h \
-  Sock_Connect.i \
-  ACE.i \
-  Addr.h \
-  Addr.i \
-  INET_Addr.i \
-  Log_Msg.h \
-  Log_Priority.h \
-  OS_Log_Msg_Attributes.h \
-  OS_Log_Msg_Attributes.inl
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h
 
 .obj/IPC_SAP.o .obj/IPC_SAP.so .shobj/IPC_SAP.o .shobj/IPC_SAP.so: IPC_SAP.cpp \
   IPC_SAP.h \
   pre.h \
-  Flag_Manip.h \
-  ACE_export.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -7494,30 +8257,42 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  Flag_Manip.i \
+  ace_new.h \
+  ACE_export.h \
+  ace_sys_types.h \
+  IPC_SAP.i \
   Trace.h \
   OS.h \
-  ace_threads.h \
-  ace_sys_types.h \
-  OS_Export.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -7527,13 +8302,22 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  IPC_SAP.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
-  OS_Log_Msg_Attributes.inl
+  streams.h \
+  OS_Log_Msg_Attributes.inl \
+  Flag_Manip.h \
+  Flag_Manip.i
 
 .obj/LSOCK.o .obj/LSOCK.so .shobj/LSOCK.o .shobj/LSOCK.so: LSOCK.cpp \
   LSOCK.h \
@@ -7546,31 +8330,45 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   SOCK.h \
   ACE.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
   OS.h \
-  ace_threads.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -7580,11 +8378,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -7594,6 +8395,7 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   Addr.h \
   Addr.i \
   IPC_SAP.h \
@@ -7601,8 +8403,10 @@ endif # GHS
   SOCK.i \
   LSOCK.i \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl
 
 .obj/LSOCK_Acceptor.o .obj/LSOCK_Acceptor.so .shobj/LSOCK_Acceptor.o .shobj/LSOCK_Acceptor.so: LSOCK_Acceptor.cpp \
@@ -7616,34 +8420,48 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   SOCK_Acceptor.h \
   SOCK_Stream.h \
   SOCK_IO.h \
   SOCK.h \
   ACE.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
   OS.h \
-  ace_threads.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -7653,11 +8471,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -7667,6 +8488,7 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   Addr.h \
   Addr.i \
   IPC_SAP.h \
@@ -7679,8 +8501,10 @@ endif # GHS
   SOCK_Acceptor.i \
   UNIX_Addr.h \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   UNIX_Addr.i \
   LSOCK_Stream.h \
@@ -7699,32 +8523,46 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   LSOCK.h \
   SOCK.h \
   ACE.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
   OS.h \
-  ace_threads.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -7734,11 +8572,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -7748,6 +8589,7 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   Addr.h \
   Addr.i \
   IPC_SAP.h \
@@ -7762,8 +8604,10 @@ endif # GHS
   SOCK_CODgram.i \
   LSOCK_CODgram.i \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl
 
 .obj/LSOCK_Connector.o .obj/LSOCK_Connector.so .shobj/LSOCK_Connector.o .shobj/LSOCK_Connector.so: LSOCK_Connector.cpp \
@@ -7777,34 +8621,48 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   SOCK_Connector.h \
   SOCK_Stream.h \
   SOCK_IO.h \
   SOCK.h \
   ACE.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
   OS.h \
-  ace_threads.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -7814,11 +8672,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -7828,6 +8689,7 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   Addr.h \
   Addr.i \
   IPC_SAP.h \
@@ -7841,8 +8703,10 @@ endif # GHS
   LSOCK_Stream.h \
   UNIX_Addr.h \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   UNIX_Addr.i \
   LSOCK.h \
@@ -7861,32 +8725,46 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   SOCK_Dgram.h \
   SOCK.h \
   ACE.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
   OS.h \
-  ace_threads.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -7896,11 +8774,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -7910,6 +8791,7 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   Addr.h \
   Addr.i \
   IPC_SAP.h \
@@ -7922,8 +8804,10 @@ endif # GHS
   LSOCK.i \
   LSOCK_Dgram.i \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl
 
 .obj/LSOCK_Stream.o .obj/LSOCK_Stream.so .shobj/LSOCK_Stream.o .shobj/LSOCK_Stream.so: LSOCK_Stream.cpp \
@@ -7937,33 +8821,47 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   SOCK_Stream.h \
   SOCK_IO.h \
   SOCK.h \
   ACE.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
   OS.h \
-  ace_threads.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -7973,11 +8871,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -7987,6 +8888,7 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   Addr.h \
   Addr.i \
   IPC_SAP.h \
@@ -7998,8 +8900,10 @@ endif # GHS
   SOCK_Stream.i \
   UNIX_Addr.h \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   UNIX_Addr.i \
   LSOCK.h \
@@ -8010,7 +8914,6 @@ endif # GHS
   SOCK.h \
   pre.h \
   ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -8019,28 +8922,43 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -8050,11 +8968,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -8064,14 +8985,17 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   Addr.h \
   Addr.i \
   IPC_SAP.h \
   IPC_SAP.i \
   SOCK.i \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl
 
 .obj/SOCK_Acceptor.o .obj/SOCK_Acceptor.so .shobj/SOCK_Acceptor.o .shobj/SOCK_Acceptor.so: SOCK_Acceptor.cpp \
@@ -8081,7 +9005,6 @@ endif # GHS
   SOCK_IO.h \
   SOCK.h \
   ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -8090,28 +9013,43 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -8121,11 +9059,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -8135,6 +9076,7 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   Addr.h \
   Addr.i \
   IPC_SAP.h \
@@ -8146,8 +9088,10 @@ endif # GHS
   SOCK_Stream.i \
   SOCK_Acceptor.i \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   OS_QoS.h \
   Synch.h \
@@ -8168,7 +9112,6 @@ endif # GHS
   SOCK_IO.h \
   SOCK.h \
   ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -8177,28 +9120,43 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -8208,11 +9166,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -8222,6 +9183,7 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   Addr.h \
   Addr.i \
   IPC_SAP.h \
@@ -8232,14 +9194,15 @@ endif # GHS
   INET_Addr.i \
   SOCK_CODgram.i \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl
 
 .obj/Sock_Connect.o .obj/Sock_Connect.so .shobj/Sock_Connect.o .shobj/Sock_Connect.so: Sock_Connect.cpp \
   Sock_Connect.h \
   pre.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -8248,45 +9211,79 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
-  ace_sys_types.h \
-  OS_Export.h \
-  ace_stdio.h \
-  ace_semaphore.h \
+  ace_new.h \
+  ACE_export.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdio.h \
+  ace_sys_types.h \
+  Sock_Connect.i \
+  INET_Addr.h \
+  Addr.h \
+  Addr.i \
+  INET_Addr.i \
+  Trace.h \
+  Log_Msg.h \
+  ace_sys_param.h \
+  ace_stdlib.h \
+  Log_Priority.h \
+  Default_Constants.h \
+  ace_threads.h \
+  OS_Export.h \
+  ace_signal.h \
+  OS_Log_Msg_Attributes.h \
+  streams.h \
+  OS_Log_Msg_Attributes.inl \
+  Handle_Set.h \
+  Global_Macros.h \
+  Handle_Set.i \
+  Auto_Ptr.h \
+  Auto_Ptr.i \
+  Auto_Ptr.cpp \
+  SString.h \
+  String_Base.h \
+  ACE.h \
+  Flag_Manip.h \
+  Flag_Manip.i \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
   OS_TLI.inl \
   Time_Value.h \
   Time_Value.inl \
-  Default_Constants.h \
-  Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Sock_Connect.i \
-  INET_Addr.h \
-  ACE.h \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -8294,20 +9291,7 @@ endif # GHS
   Init_ACE.h \
   Init_ACE.i \
   ACE.i \
-  Addr.h \
-  Addr.i \
-  INET_Addr.i \
-  Log_Msg.h \
-  Log_Priority.h \
-  OS_Log_Msg_Attributes.h \
-  OS_Log_Msg_Attributes.inl \
-  Handle_Set.h \
-  Handle_Set.i \
-  Auto_Ptr.h \
-  Auto_Ptr.i \
-  Auto_Ptr.cpp \
-  SString.h \
-  String_Base.h \
+  ace_ctype.h \
   String_Base_Const.h \
   String_Base.i \
   Malloc_Base.h \
@@ -8342,6 +9326,7 @@ endif # GHS
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
@@ -8350,7 +9335,9 @@ endif # GHS
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
-  SString.i
+  SString.i \
+  ace_netinet_in.h \
+  ace_sys_ioctl.h
 
 .obj/SOCK_Connector.o .obj/SOCK_Connector.so .shobj/SOCK_Connector.o .shobj/SOCK_Connector.so: SOCK_Connector.cpp \
   SOCK_Connector.h \
@@ -8359,7 +9346,6 @@ endif # GHS
   SOCK_IO.h \
   SOCK.h \
   ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -8368,28 +9354,43 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -8399,11 +9400,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -8413,6 +9417,7 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   Addr.h \
   Addr.i \
   IPC_SAP.h \
@@ -8424,8 +9429,10 @@ endif # GHS
   SOCK_Stream.i \
   SOCK_Connector.i \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   OS_QoS.h
 
@@ -8434,7 +9441,6 @@ endif # GHS
   pre.h \
   SOCK.h \
   ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -8443,28 +9449,43 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -8474,11 +9495,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -8488,6 +9512,7 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   Addr.h \
   Addr.i \
   IPC_SAP.h \
@@ -8506,20 +9531,22 @@ endif # GHS
   Thread_Adapter.h \
   Base_Thread_Adapter.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Base_Thread_Adapter.inl \
   Thread_Adapter.inl \
   Thread.i \
   Synch_T.cpp \
   Log_Msg.h \
-  Log_Priority.h
+  ace_sys_param.h \
+  Log_Priority.h \
+  ace_netinet_in.h \
+  ace_sys_ioctl.h
 
 .obj/SOCK_Dgram_Bcast.o .obj/SOCK_Dgram_Bcast.so .shobj/SOCK_Dgram_Bcast.o .shobj/SOCK_Dgram_Bcast.so: SOCK_Dgram_Bcast.cpp \
   SOCK_Dgram_Bcast.h \
   pre.h \
   INET_Addr.h \
-  ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -8528,28 +9555,49 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
-  ace_sys_types.h \
-  OS_Export.h \
-  ace_stdio.h \
-  ace_semaphore.h \
+  ace_new.h \
+  Addr.h \
+  ACE_export.h \
+  Addr.i \
   ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdio.h \
+  ace_sys_types.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
+  INET_Addr.i \
+  Trace.h \
+  SOCK_Dgram.h \
+  SOCK.h \
+  ACE.h \
+  Flag_Manip.h \
+  Flag_Manip.i \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -8559,11 +9607,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -8573,20 +9624,20 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
-  Addr.h \
-  Addr.i \
-  INET_Addr.i \
-  SOCK_Dgram.h \
-  SOCK.h \
+  ace_ctype.h \
   IPC_SAP.h \
   IPC_SAP.i \
   SOCK.i \
   SOCK_Dgram.i \
   SOCK_Dgram_Bcast.i \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
-  OS_Log_Msg_Attributes.inl
+  streams.h \
+  OS_Log_Msg_Attributes.inl \
+  ace_netinet_in.h \
+  ace_sys_ioctl.h
 
 .obj/SOCK_Dgram_Mcast.o .obj/SOCK_Dgram_Mcast.so .shobj/SOCK_Dgram_Mcast.o .shobj/SOCK_Dgram_Mcast.so: SOCK_Dgram_Mcast.cpp \
   SOCK_Dgram_Mcast.h \
@@ -8594,7 +9645,6 @@ endif # GHS
   SOCK_Dgram.h \
   SOCK.h \
   ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -8603,28 +9653,43 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -8634,11 +9699,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -8648,6 +9716,7 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   Addr.h \
   Addr.i \
   IPC_SAP.h \
@@ -8656,14 +9725,15 @@ endif # GHS
   INET_Addr.h \
   INET_Addr.i \
   SOCK_Dgram.i \
-  SOCK_Dgram_Mcast.i
+  SOCK_Dgram_Mcast.i \
+  ace_netinet_in.h \
+  ace_sys_ioctl.h
 
 .obj/SOCK_IO.o .obj/SOCK_IO.so .shobj/SOCK_IO.o .shobj/SOCK_IO.so: SOCK_IO.cpp \
   SOCK_IO.h \
   pre.h \
   SOCK.h \
   ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -8672,28 +9742,43 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -8703,11 +9788,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -8717,6 +9805,7 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   Addr.h \
   Addr.i \
   IPC_SAP.h \
@@ -8732,7 +9821,6 @@ endif # GHS
   SOCK_IO.h \
   SOCK.h \
   ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -8741,28 +9829,43 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -8772,11 +9875,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -8786,6 +9892,7 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   Addr.h \
   Addr.i \
   IPC_SAP.h \
@@ -8806,7 +9913,8 @@ endif # GHS
   config-g++-common.h \
   post.h \
   ace_wchar.h \
-  ace_wchar.inl
+  ace_wchar.inl \
+  ace_new.h
 
 .obj/ATM_Acceptor.o .obj/ATM_Acceptor.so .shobj/ATM_Acceptor.o .shobj/ATM_Acceptor.so: ATM_Acceptor.cpp \
   ATM_Acceptor.h \
@@ -8818,7 +9926,8 @@ endif # GHS
   config-g++-common.h \
   post.h \
   ace_wchar.h \
-  ace_wchar.inl
+  ace_wchar.inl \
+  ace_new.h
 
 .obj/ATM_Connector.o .obj/ATM_Connector.so .shobj/ATM_Connector.o .shobj/ATM_Connector.so: ATM_Connector.cpp \
   ATM_Connector.h \
@@ -8830,7 +9939,8 @@ endif # GHS
   config-g++-common.h \
   post.h \
   ace_wchar.h \
-  ace_wchar.inl
+  ace_wchar.inl \
+  ace_new.h
 
 .obj/ATM_Params.o .obj/ATM_Params.so .shobj/ATM_Params.o .shobj/ATM_Params.so: ATM_Params.cpp \
   ATM_Params.h \
@@ -8842,7 +9952,8 @@ endif # GHS
   config-g++-common.h \
   post.h \
   ace_wchar.h \
-  ace_wchar.inl
+  ace_wchar.inl \
+  ace_new.h
 
 .obj/ATM_QoS.o .obj/ATM_QoS.so .shobj/ATM_QoS.o .shobj/ATM_QoS.so: ATM_QoS.cpp \
   ATM_QoS.h \
@@ -8854,7 +9965,8 @@ endif # GHS
   config-g++-common.h \
   post.h \
   ace_wchar.h \
-  ace_wchar.inl
+  ace_wchar.inl \
+  ace_new.h
 
 .obj/ATM_Stream.o .obj/ATM_Stream.so .shobj/ATM_Stream.o .shobj/ATM_Stream.so: ATM_Stream.cpp \
   ATM_Stream.h \
@@ -8866,7 +9978,8 @@ endif # GHS
   config-g++-common.h \
   post.h \
   ace_wchar.h \
-  ace_wchar.inl
+  ace_wchar.inl \
+  ace_new.h
 
 .obj/XTI_ATM_Mcast.o .obj/XTI_ATM_Mcast.so .shobj/XTI_ATM_Mcast.o .shobj/XTI_ATM_Mcast.so: XTI_ATM_Mcast.cpp \
   XTI_ATM_Mcast.h \
@@ -8878,13 +9991,12 @@ endif # GHS
   config-g++-common.h \
   post.h \
   ace_wchar.h \
-  ace_wchar.inl
+  ace_wchar.inl \
+  ace_new.h
 
 .obj/DEV.o .obj/DEV.so .shobj/DEV.o .shobj/DEV.so: DEV.cpp DEV.h \
   pre.h \
   IO_SAP.h \
-  Flag_Manip.h \
-  ACE_export.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -8893,30 +10005,42 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  Flag_Manip.i \
+  ace_new.h \
+  ACE_export.h \
+  ace_sys_types.h \
+  IO_SAP.i \
   Trace.h \
   OS.h \
-  ace_threads.h \
-  ace_sys_types.h \
-  OS_Export.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -8926,75 +10050,18 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  IO_SAP.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   DEV_Addr.h \
   Addr.h \
   Addr.i \
-  ACE.h \
-  Handle_Ops.h \
-  Handle_Ops.i \
-  Lib_Find.h \
-  Lib_Find.i \
-  Init_ACE.h \
-  Init_ACE.i \
-  Sock_Connect.h \
-  Sock_Connect.i \
-  ACE.i \
   DEV_Addr.i \
-  SString.h \
-  String_Base.h \
-  String_Base_Const.h \
-  String_Base.i \
-  Malloc_Base.h \
-  String_Base.cpp \
-  Malloc.h \
-  Log_Msg.h \
-  Log_Priority.h \
-  OS_Log_Msg_Attributes.h \
-  OS_Log_Msg_Attributes.inl \
-  Malloc.i \
-  Malloc_T.h \
-  Synch.h \
-  Synch.i \
-  Synch_T.h \
-  Synch_T.i \
-  Thread.h \
-  Thread_Adapter.h \
-  Base_Thread_Adapter.h \
-  Base_Thread_Adapter.inl \
-  Thread_Adapter.inl \
-  Thread.i \
-  Synch_T.cpp \
-  Malloc_Allocator.h \
-  Malloc_Allocator.i \
-  Free_List.h \
-  Free_List.i \
-  Free_List.cpp \
-  Malloc_T.i \
-  Malloc_T.cpp \
-  Memory_Pool.h \
-  Event_Handler.h \
-  Event_Handler.i \
-  Signal.h \
-  Signal.i \
-  Mem_Map.h \
-  Mem_Map.i \
-  SV_Semaphore_Complex.h \
-  SV_Semaphore_Simple.h \
-  SV_Semaphore_Simple.i \
-  SV_Semaphore_Complex.i \
-  Unbounded_Set.h \
-  Node.h \
-  Node.cpp \
-  Unbounded_Set.inl \
-  Unbounded_Set.cpp \
-  Memory_Pool.i \
-  Auto_Ptr.h \
-  Auto_Ptr.i \
-  Auto_Ptr.cpp \
-  SString.i \
   DEV.i
 
 .obj/DEV_Addr.o .obj/DEV_Addr.so .shobj/DEV_Addr.o .shobj/DEV_Addr.so: DEV_Addr.cpp \
@@ -9010,106 +10077,33 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   Addr.i \
-  ACE.h \
-  OS.h \
-  ace_threads.h \
-  ace_sys_types.h \
-  OS_Export.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
-  ace_stropts.h \
-  ace_sys_uio.h \
-  ace_sys_resource.h \
-  OS_Dirent.h \
-  OS_Errno.h \
-  OS_Errno.inl \
-  OS_Dirent.inl \
-  OS_String.h \
+  ace_dirent.h \
+  ace_sys_types.h \
+  ace_unistd.h \
   Basic_Types.h \
+  ace_limits.h \
   Basic_Types.i \
-  OS_String.inl \
-  OS_Memory.h \
-  OS_Memory.inl \
-  OS_TLI.h \
-  OS_TLI.inl \
-  Time_Value.h \
-  Time_Value.inl \
-  Default_Constants.h \
-  Global_Macros.h \
-  Min_Max.h \
-  streams.h \
-  Trace.h \
-  OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
-  Handle_Ops.h \
-  Handle_Ops.i \
-  Lib_Find.h \
-  Lib_Find.i \
-  Init_ACE.h \
-  Init_ACE.i \
-  Sock_Connect.h \
-  Sock_Connect.i \
-  ACE.i \
   DEV_Addr.i \
-  SString.h \
-  String_Base.h \
-  String_Base_Const.h \
-  String_Base.i \
-  Malloc_Base.h \
-  String_Base.cpp \
-  Malloc.h \
+  Trace.h \
+  OS_String.h \
+  OS_Export.h \
+  OS_String.inl \
+  ace_string.h \
+  ace_sys_socket.h \
   Log_Msg.h \
+  ace_sys_param.h \
+  ace_stdlib.h \
   Log_Priority.h \
+  Default_Constants.h \
+  ace_threads.h \
+  ace_signal.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
-  Malloc.i \
-  Malloc_T.h \
-  Synch.h \
-  Synch.i \
-  Synch_T.h \
-  Synch_T.i \
-  Thread.h \
-  Thread_Adapter.h \
-  Base_Thread_Adapter.h \
-  Base_Thread_Adapter.inl \
-  Thread_Adapter.inl \
-  Thread.i \
-  Synch_T.cpp \
-  Malloc_Allocator.h \
-  Malloc_Allocator.i \
-  Free_List.h \
-  Free_List.i \
-  Free_List.cpp \
-  Malloc_T.i \
-  Malloc_T.cpp \
-  Memory_Pool.h \
-  Event_Handler.h \
-  Event_Handler.i \
-  Signal.h \
-  Signal.i \
-  Mem_Map.h \
-  Mem_Map.i \
-  SV_Semaphore_Complex.h \
-  SV_Semaphore_Simple.h \
-  SV_Semaphore_Simple.i \
-  SV_Semaphore_Complex.i \
-  Unbounded_Set.h \
-  Node.h \
-  Node.cpp \
-  Unbounded_Set.inl \
-  Unbounded_Set.cpp \
-  Memory_Pool.i \
-  Auto_Ptr.h \
-  Auto_Ptr.i \
-  Auto_Ptr.cpp \
-  SString.i
+  Global_Macros.h
 
 .obj/DEV_Connector.o .obj/DEV_Connector.so .shobj/DEV_Connector.o .shobj/DEV_Connector.so: DEV_Connector.cpp \
   DEV_Connector.h \
@@ -9117,8 +10111,6 @@ endif # GHS
   DEV_IO.h \
   DEV.h \
   IO_SAP.h \
-  Flag_Manip.h \
-  ACE_export.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -9127,30 +10119,42 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  Flag_Manip.i \
+  ace_new.h \
+  ACE_export.h \
+  ace_sys_types.h \
+  IO_SAP.i \
   Trace.h \
   OS.h \
-  ace_threads.h \
-  ace_sys_types.h \
-  OS_Export.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -9160,13 +10164,23 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  IO_SAP.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   DEV_Addr.h \
   Addr.h \
   Addr.i \
+  DEV_Addr.i \
+  DEV.i \
+  DEV_IO.i \
   ACE.h \
+  Flag_Manip.h \
+  Flag_Manip.i \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -9176,70 +10190,20 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
-  DEV_Addr.i \
-  SString.h \
-  String_Base.h \
-  String_Base_Const.h \
-  String_Base.i \
-  Malloc_Base.h \
-  String_Base.cpp \
-  Malloc.h \
+  ace_ctype.h \
+  DEV_Connector.i \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
-  OS_Log_Msg_Attributes.inl \
-  Malloc.i \
-  Malloc_T.h \
-  Synch.h \
-  Synch.i \
-  Synch_T.h \
-  Synch_T.i \
-  Thread.h \
-  Thread_Adapter.h \
-  Base_Thread_Adapter.h \
-  Base_Thread_Adapter.inl \
-  Thread_Adapter.inl \
-  Thread.i \
-  Synch_T.cpp \
-  Malloc_Allocator.h \
-  Malloc_Allocator.i \
-  Free_List.h \
-  Free_List.i \
-  Free_List.cpp \
-  Malloc_T.i \
-  Malloc_T.cpp \
-  Memory_Pool.h \
-  Event_Handler.h \
-  Event_Handler.i \
-  Signal.h \
-  Signal.i \
-  Mem_Map.h \
-  Mem_Map.i \
-  SV_Semaphore_Complex.h \
-  SV_Semaphore_Simple.h \
-  SV_Semaphore_Simple.i \
-  SV_Semaphore_Complex.i \
-  Unbounded_Set.h \
-  Node.h \
-  Node.cpp \
-  Unbounded_Set.inl \
-  Unbounded_Set.cpp \
-  Memory_Pool.i \
-  Auto_Ptr.h \
-  Auto_Ptr.i \
-  Auto_Ptr.cpp \
-  SString.i \
-  DEV.i \
-  DEV_IO.i \
-  DEV_Connector.i
+  streams.h \
+  OS_Log_Msg_Attributes.inl
 
 .obj/DEV_IO.o .obj/DEV_IO.so .shobj/DEV_IO.o .shobj/DEV_IO.so: DEV_IO.cpp \
   DEV_IO.h \
   pre.h \
   DEV.h \
   IO_SAP.h \
-  Flag_Manip.h \
-  ACE_export.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -9248,30 +10212,42 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  Flag_Manip.i \
+  ace_new.h \
+  ACE_export.h \
+  ace_sys_types.h \
+  IO_SAP.i \
   Trace.h \
   OS.h \
-  ace_threads.h \
-  ace_sys_types.h \
-  OS_Export.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -9281,13 +10257,23 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  IO_SAP.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   DEV_Addr.h \
   Addr.h \
   Addr.i \
+  DEV_Addr.i \
+  DEV.i \
+  DEV_IO.i \
   ACE.h \
+  Flag_Manip.h \
+  Flag_Manip.i \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -9297,68 +10283,18 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
-  DEV_Addr.i \
-  SString.h \
-  String_Base.h \
-  String_Base_Const.h \
-  String_Base.i \
-  Malloc_Base.h \
-  String_Base.cpp \
-  Malloc.h \
+  ace_ctype.h \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
-  OS_Log_Msg_Attributes.inl \
-  Malloc.i \
-  Malloc_T.h \
-  Synch.h \
-  Synch.i \
-  Synch_T.h \
-  Synch_T.i \
-  Thread.h \
-  Thread_Adapter.h \
-  Base_Thread_Adapter.h \
-  Base_Thread_Adapter.inl \
-  Thread_Adapter.inl \
-  Thread.i \
-  Synch_T.cpp \
-  Malloc_Allocator.h \
-  Malloc_Allocator.i \
-  Free_List.h \
-  Free_List.i \
-  Free_List.cpp \
-  Malloc_T.i \
-  Malloc_T.cpp \
-  Memory_Pool.h \
-  Event_Handler.h \
-  Event_Handler.i \
-  Signal.h \
-  Signal.i \
-  Mem_Map.h \
-  Mem_Map.i \
-  SV_Semaphore_Complex.h \
-  SV_Semaphore_Simple.h \
-  SV_Semaphore_Simple.i \
-  SV_Semaphore_Complex.i \
-  Unbounded_Set.h \
-  Node.h \
-  Node.cpp \
-  Unbounded_Set.inl \
-  Unbounded_Set.cpp \
-  Memory_Pool.i \
-  Auto_Ptr.h \
-  Auto_Ptr.i \
-  Auto_Ptr.cpp \
-  SString.i \
-  DEV.i \
-  DEV_IO.i
+  streams.h \
+  OS_Log_Msg_Attributes.inl
 
 .obj/FIFO.o .obj/FIFO.so .shobj/FIFO.o .shobj/FIFO.so: FIFO.cpp \
   FIFO.h \
   pre.h \
   IPC_SAP.h \
-  Flag_Manip.h \
-  ACE_export.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -9367,30 +10303,42 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  Flag_Manip.i \
+  ace_new.h \
+  ACE_export.h \
+  ace_sys_types.h \
+  IPC_SAP.i \
   Trace.h \
   OS.h \
-  ace_threads.h \
-  ace_sys_types.h \
-  OS_Export.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -9400,23 +10348,20 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  IPC_SAP.i \
-  ACE.h \
-  Handle_Ops.h \
-  Handle_Ops.i \
-  Lib_Find.h \
-  Lib_Find.i \
-  Init_ACE.h \
-  Init_ACE.i \
-  Sock_Connect.h \
-  Sock_Connect.i \
-  ACE.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
+  ace_sys_param.h \
   FIFO.i \
   Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl
 
 .obj/FIFO_Recv.o .obj/FIFO_Recv.so .shobj/FIFO_Recv.o .shobj/FIFO_Recv.so: FIFO_Recv.cpp \
@@ -9424,8 +10369,6 @@ endif # GHS
   pre.h \
   FIFO.h \
   IPC_SAP.h \
-  Flag_Manip.h \
-  ACE_export.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -9434,30 +10377,42 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  Flag_Manip.i \
+  ace_new.h \
+  ACE_export.h \
+  ace_sys_types.h \
+  IPC_SAP.i \
   Trace.h \
   OS.h \
-  ace_threads.h \
-  ace_sys_types.h \
-  OS_Export.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -9467,10 +10422,20 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  IPC_SAP.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
+  ace_sys_param.h \
+  FIFO.i \
+  FIFO_Recv.i \
   ACE.h \
+  Flag_Manip.h \
+  Flag_Manip.i \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -9480,11 +10445,11 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
-  FIFO.i \
-  FIFO_Recv.i \
+  ace_ctype.h \
   Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl
 
 .obj/FIFO_Recv_Msg.o .obj/FIFO_Recv_Msg.so .shobj/FIFO_Recv_Msg.o .shobj/FIFO_Recv_Msg.so: FIFO_Recv_Msg.cpp \
@@ -9493,8 +10458,6 @@ endif # GHS
   FIFO_Recv.h \
   FIFO.h \
   IPC_SAP.h \
-  Flag_Manip.h \
-  ACE_export.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -9503,30 +10466,42 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  Flag_Manip.i \
+  ace_new.h \
+  ACE_export.h \
+  ace_sys_types.h \
+  IPC_SAP.i \
   Trace.h \
   OS.h \
-  ace_threads.h \
-  ace_sys_types.h \
-  OS_Export.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -9536,10 +10511,20 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  IPC_SAP.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
+  ace_sys_param.h \
+  FIFO.i \
+  FIFO_Recv.i \
   ACE.h \
+  Flag_Manip.h \
+  Flag_Manip.i \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -9549,12 +10534,12 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
-  FIFO.i \
-  FIFO_Recv.i \
+  ace_ctype.h \
   FIFO_Recv_Msg.i \
   Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl
 
 .obj/FIFO_Send.o .obj/FIFO_Send.so .shobj/FIFO_Send.o .shobj/FIFO_Send.so: FIFO_Send.cpp \
@@ -9562,8 +10547,6 @@ endif # GHS
   pre.h \
   FIFO.h \
   IPC_SAP.h \
-  Flag_Manip.h \
-  ACE_export.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -9572,30 +10555,42 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  Flag_Manip.i \
+  ace_new.h \
+  ACE_export.h \
+  ace_sys_types.h \
+  IPC_SAP.i \
   Trace.h \
   OS.h \
-  ace_threads.h \
-  ace_sys_types.h \
-  OS_Export.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -9605,10 +10600,20 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  IPC_SAP.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
+  ace_sys_param.h \
+  FIFO.i \
+  FIFO_Send.i \
   ACE.h \
+  Flag_Manip.h \
+  Flag_Manip.i \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -9618,11 +10623,11 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
-  FIFO.i \
-  FIFO_Send.i \
+  ace_ctype.h \
   Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl
 
 .obj/FIFO_Send_Msg.o .obj/FIFO_Send_Msg.so .shobj/FIFO_Send_Msg.o .shobj/FIFO_Send_Msg.so: FIFO_Send_Msg.cpp \
@@ -9631,8 +10636,6 @@ endif # GHS
   FIFO_Send.h \
   FIFO.h \
   IPC_SAP.h \
-  Flag_Manip.h \
-  ACE_export.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -9641,30 +10644,42 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  Flag_Manip.i \
+  ace_new.h \
+  ACE_export.h \
+  ace_sys_types.h \
+  IPC_SAP.i \
   Trace.h \
   OS.h \
-  ace_threads.h \
-  ace_sys_types.h \
-  OS_Export.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -9674,10 +10689,20 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  IPC_SAP.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
+  ace_sys_param.h \
+  FIFO.i \
+  FIFO_Send.i \
   ACE.h \
+  Flag_Manip.h \
+  Flag_Manip.i \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -9687,12 +10712,12 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
-  FIFO.i \
-  FIFO_Send.i \
+  ace_ctype.h \
   FIFO_Send_Msg.i \
   Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl
 
 .obj/FILE_Addr.o .obj/FILE_Addr.so .shobj/FILE_Addr.o .shobj/FILE_Addr.so: FILE_Addr.cpp \
@@ -9708,32 +10733,43 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   Addr.i \
   Flag_Manip.h \
   Flag_Manip.i \
   Trace.h \
   OS.h \
-  ace_threads.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -9743,78 +10779,28 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   FILE_Addr.i \
-  SString.h \
-  String_Base.h \
-  ACE.h \
-  Handle_Ops.h \
-  Handle_Ops.i \
   Lib_Find.h \
   Lib_Find.i \
-  Init_ACE.h \
-  Init_ACE.i \
-  Sock_Connect.h \
-  Sock_Connect.i \
-  ACE.i \
-  String_Base_Const.h \
-  String_Base.i \
-  Malloc_Base.h \
-  String_Base.cpp \
-  Malloc.h \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
-  OS_Log_Msg_Attributes.inl \
-  Malloc.i \
-  Malloc_T.h \
-  Synch.h \
-  Synch.i \
-  Synch_T.h \
-  Synch_T.i \
-  Thread.h \
-  Thread_Adapter.h \
-  Base_Thread_Adapter.h \
-  Base_Thread_Adapter.inl \
-  Thread_Adapter.inl \
-  Thread.i \
-  Synch_T.cpp \
-  Malloc_Allocator.h \
-  Malloc_Allocator.i \
-  Free_List.h \
-  Free_List.i \
-  Free_List.cpp \
-  Malloc_T.i \
-  Malloc_T.cpp \
-  Memory_Pool.h \
-  Event_Handler.h \
-  Event_Handler.i \
-  Signal.h \
-  Signal.i \
-  Mem_Map.h \
-  Mem_Map.i \
-  SV_Semaphore_Complex.h \
-  SV_Semaphore_Simple.h \
-  SV_Semaphore_Simple.i \
-  SV_Semaphore_Complex.i \
-  Unbounded_Set.h \
-  Node.h \
-  Node.cpp \
-  Unbounded_Set.inl \
-  Unbounded_Set.cpp \
-  Memory_Pool.i \
-  Auto_Ptr.h \
-  Auto_Ptr.i \
-  Auto_Ptr.cpp \
-  SString.i
+  streams.h \
+  OS_Log_Msg_Attributes.inl
 
 .obj/FILE.o .obj/FILE.so .shobj/FILE.o .shobj/FILE.so: FILE.cpp \
   FILE.h \
   pre.h \
   IO_SAP.h \
-  Flag_Manip.h \
-  ACE_export.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -9823,30 +10809,42 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  Flag_Manip.i \
+  ace_new.h \
+  ACE_export.h \
+  ace_sys_types.h \
+  IO_SAP.i \
   Trace.h \
   OS.h \
-  ace_threads.h \
-  ace_sys_types.h \
-  OS_Export.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -9856,75 +10854,20 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  IO_SAP.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   FILE_Addr.h \
   Addr.h \
   Addr.i \
+  Flag_Manip.h \
+  Flag_Manip.i \
   FILE_Addr.i \
-  SString.h \
-  String_Base.h \
-  ACE.h \
-  Handle_Ops.h \
-  Handle_Ops.i \
-  Lib_Find.h \
-  Lib_Find.i \
-  Init_ACE.h \
-  Init_ACE.i \
-  Sock_Connect.h \
-  Sock_Connect.i \
-  ACE.i \
-  String_Base_Const.h \
-  String_Base.i \
-  Malloc_Base.h \
-  String_Base.cpp \
-  Malloc.h \
-  Log_Msg.h \
-  Log_Priority.h \
-  OS_Log_Msg_Attributes.h \
-  OS_Log_Msg_Attributes.inl \
-  Malloc.i \
-  Malloc_T.h \
-  Synch.h \
-  Synch.i \
-  Synch_T.h \
-  Synch_T.i \
-  Thread.h \
-  Thread_Adapter.h \
-  Base_Thread_Adapter.h \
-  Base_Thread_Adapter.inl \
-  Thread_Adapter.inl \
-  Thread.i \
-  Synch_T.cpp \
-  Malloc_Allocator.h \
-  Malloc_Allocator.i \
-  Free_List.h \
-  Free_List.i \
-  Free_List.cpp \
-  Malloc_T.i \
-  Malloc_T.cpp \
-  Memory_Pool.h \
-  Event_Handler.h \
-  Event_Handler.i \
-  Signal.h \
-  Signal.i \
-  Mem_Map.h \
-  Mem_Map.i \
-  SV_Semaphore_Complex.h \
-  SV_Semaphore_Simple.h \
-  SV_Semaphore_Simple.i \
-  SV_Semaphore_Complex.i \
-  Unbounded_Set.h \
-  Node.h \
-  Node.cpp \
-  Unbounded_Set.inl \
-  Unbounded_Set.cpp \
-  Memory_Pool.i \
-  Auto_Ptr.h \
-  Auto_Ptr.i \
-  Auto_Ptr.cpp \
-  SString.i \
   FILE.i
 
 .obj/FILE_Connector.o .obj/FILE_Connector.so .shobj/FILE_Connector.o .shobj/FILE_Connector.so: FILE_Connector.cpp \
@@ -9933,8 +10876,6 @@ endif # GHS
   FILE_IO.h \
   FILE.h \
   IO_SAP.h \
-  Flag_Manip.h \
-  ACE_export.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -9943,30 +10884,42 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  Flag_Manip.i \
+  ace_new.h \
+  ACE_export.h \
+  ace_sys_types.h \
+  IO_SAP.i \
   Trace.h \
   OS.h \
-  ace_threads.h \
-  ace_sys_types.h \
-  OS_Export.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -9976,15 +10929,22 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  IO_SAP.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   FILE_Addr.h \
   Addr.h \
   Addr.i \
+  Flag_Manip.h \
+  Flag_Manip.i \
   FILE_Addr.i \
-  SString.h \
-  String_Base.h \
+  FILE.i \
+  FILE_IO.i \
   ACE.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -9995,67 +10955,20 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
-  String_Base_Const.h \
-  String_Base.i \
-  Malloc_Base.h \
-  String_Base.cpp \
-  Malloc.h \
+  ace_ctype.h \
+  FILE_Connector.i \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
-  OS_Log_Msg_Attributes.inl \
-  Malloc.i \
-  Malloc_T.h \
-  Synch.h \
-  Synch.i \
-  Synch_T.h \
-  Synch_T.i \
-  Thread.h \
-  Thread_Adapter.h \
-  Base_Thread_Adapter.h \
-  Base_Thread_Adapter.inl \
-  Thread_Adapter.inl \
-  Thread.i \
-  Synch_T.cpp \
-  Malloc_Allocator.h \
-  Malloc_Allocator.i \
-  Free_List.h \
-  Free_List.i \
-  Free_List.cpp \
-  Malloc_T.i \
-  Malloc_T.cpp \
-  Memory_Pool.h \
-  Event_Handler.h \
-  Event_Handler.i \
-  Signal.h \
-  Signal.i \
-  Mem_Map.h \
-  Mem_Map.i \
-  SV_Semaphore_Complex.h \
-  SV_Semaphore_Simple.h \
-  SV_Semaphore_Simple.i \
-  SV_Semaphore_Complex.i \
-  Unbounded_Set.h \
-  Node.h \
-  Node.cpp \
-  Unbounded_Set.inl \
-  Unbounded_Set.cpp \
-  Memory_Pool.i \
-  Auto_Ptr.h \
-  Auto_Ptr.i \
-  Auto_Ptr.cpp \
-  SString.i \
-  FILE.i \
-  FILE_IO.i \
-  FILE_Connector.i
+  streams.h \
+  OS_Log_Msg_Attributes.inl
 
 .obj/FILE_IO.o .obj/FILE_IO.so .shobj/FILE_IO.o .shobj/FILE_IO.so: FILE_IO.cpp \
   FILE_IO.h \
   pre.h \
   FILE.h \
   IO_SAP.h \
-  Flag_Manip.h \
-  ACE_export.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -10064,30 +10977,42 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  Flag_Manip.i \
+  ace_new.h \
+  ACE_export.h \
+  ace_sys_types.h \
+  IO_SAP.i \
   Trace.h \
   OS.h \
-  ace_threads.h \
-  ace_sys_types.h \
-  OS_Export.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -10097,15 +11022,22 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  IO_SAP.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   FILE_Addr.h \
   Addr.h \
   Addr.i \
+  Flag_Manip.h \
+  Flag_Manip.i \
   FILE_Addr.i \
-  SString.h \
-  String_Base.h \
+  FILE.i \
+  FILE_IO.i \
   ACE.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -10116,64 +11048,17 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
-  String_Base_Const.h \
-  String_Base.i \
-  Malloc_Base.h \
-  String_Base.cpp \
-  Malloc.h \
+  ace_ctype.h \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
-  OS_Log_Msg_Attributes.inl \
-  Malloc.i \
-  Malloc_T.h \
-  Synch.h \
-  Synch.i \
-  Synch_T.h \
-  Synch_T.i \
-  Thread.h \
-  Thread_Adapter.h \
-  Base_Thread_Adapter.h \
-  Base_Thread_Adapter.inl \
-  Thread_Adapter.inl \
-  Thread.i \
-  Synch_T.cpp \
-  Malloc_Allocator.h \
-  Malloc_Allocator.i \
-  Free_List.h \
-  Free_List.i \
-  Free_List.cpp \
-  Malloc_T.i \
-  Malloc_T.cpp \
-  Memory_Pool.h \
-  Event_Handler.h \
-  Event_Handler.i \
-  Signal.h \
-  Signal.i \
-  Mem_Map.h \
-  Mem_Map.i \
-  SV_Semaphore_Complex.h \
-  SV_Semaphore_Simple.h \
-  SV_Semaphore_Simple.i \
-  SV_Semaphore_Complex.i \
-  Unbounded_Set.h \
-  Node.h \
-  Node.cpp \
-  Unbounded_Set.inl \
-  Unbounded_Set.cpp \
-  Memory_Pool.i \
-  Auto_Ptr.h \
-  Auto_Ptr.i \
-  Auto_Ptr.cpp \
-  SString.i \
-  FILE.i \
-  FILE_IO.i
+  streams.h \
+  OS_Log_Msg_Attributes.inl
 
 .obj/IO_SAP.o .obj/IO_SAP.so .shobj/IO_SAP.o .shobj/IO_SAP.so: IO_SAP.cpp \
   IO_SAP.h \
   pre.h \
-  Flag_Manip.h \
-  ACE_export.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -10182,30 +11067,42 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  Flag_Manip.i \
+  ace_new.h \
+  ACE_export.h \
+  ace_sys_types.h \
+  IO_SAP.i \
   Trace.h \
   OS.h \
-  ace_threads.h \
-  ace_sys_types.h \
-  OS_Export.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -10215,13 +11112,22 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  IO_SAP.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
-  OS_Log_Msg_Attributes.inl
+  streams.h \
+  OS_Log_Msg_Attributes.inl \
+  Flag_Manip.h \
+  Flag_Manip.i
 
 .obj/IOStream.o .obj/IOStream.so .shobj/IOStream.o .shobj/IOStream.so: IOStream.cpp \
   IOStream.h \
@@ -10234,68 +11140,12 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ACE_export.h \
-  ace_sys_types.h \
-  Time_Value.h \
-  OS_Export.h \
-  Time_Value.inl \
-  streams.h \
-  IOStream_T.h \
-  INET_Addr.h \
-  ACE.h \
-  OS.h \
-  ace_threads.h \
-  ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
-  ace_stropts.h \
-  ace_sys_uio.h \
-  ace_sys_resource.h \
-  OS_Dirent.h \
-  OS_Errno.h \
-  OS_Errno.inl \
-  OS_Dirent.inl \
-  OS_String.h \
-  Basic_Types.h \
-  Basic_Types.i \
-  OS_String.inl \
-  OS_Memory.h \
-  OS_Memory.inl \
-  OS_TLI.h \
-  OS_TLI.inl \
-  Default_Constants.h \
-  Global_Macros.h \
-  Min_Max.h \
-  Trace.h \
-  OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
-  Handle_Ops.h \
-  Handle_Ops.i \
-  Lib_Find.h \
-  Lib_Find.i \
-  Init_ACE.h \
-  Init_ACE.i \
-  Sock_Connect.h \
-  Sock_Connect.i \
-  ACE.i \
-  Addr.h \
-  Addr.i \
-  INET_Addr.i \
-  Handle_Set.h \
-  Handle_Set.i \
-  IOStream_T.i \
-  IOStream_T.cpp
+  ace_new.h
 
 .obj/Pipe.o .obj/Pipe.so .shobj/Pipe.o .shobj/Pipe.so: Pipe.cpp \
   Pipe.h \
   pre.h \
   ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -10304,28 +11154,43 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -10335,11 +11200,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -10349,6 +11217,7 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   Pipe.i \
   SOCK_Acceptor.h \
   SOCK_Stream.h \
@@ -10367,16 +11236,16 @@ endif # GHS
   SOCK_Connector.h \
   SOCK_Connector.i \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl
 
 .obj/Signal.o .obj/Signal.so .shobj/Signal.o .shobj/Signal.so: Signal.cpp \
-  Synch_T.h \
+  Signal.h \
   pre.h \
   Synch.h \
-  ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -10385,28 +11254,42 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   ace_threads.h \
   ace_sys_types.h \
   OS_Export.h \
+  ace_signal.h \
+  ACE_export.h \
+  Global_Macros.h \
+  Synch.i \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -10414,11 +11297,20 @@ endif # GHS
   Time_Value.h \
   Time_Value.inl \
   Default_Constants.h \
-  Global_Macros.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   Trace.h \
   OS.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
+  Synch_T.h \
+  Synch_T.i \
+  Thread.h \
+  ACE.h \
   Flag_Manip.h \
   Flag_Manip.i \
   Handle_Ops.h \
@@ -10430,20 +11322,19 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
-  Synch.i \
-  Synch_T.i \
-  Thread.h \
+  ace_ctype.h \
   Thread_Adapter.h \
   Base_Thread_Adapter.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Base_Thread_Adapter.inl \
   Thread_Adapter.inl \
   Thread.i \
   Synch_T.cpp \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
-  Signal.h \
   Event_Handler.h \
   Event_Handler.i \
   Signal.i \
@@ -10487,30 +11378,44 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   Addr.i \
   ACE.h \
+  Flag_Manip.h \
+  Flag_Manip.i \
+  Trace.h \
   OS.h \
-  ace_threads.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -10520,11 +11425,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -10534,6 +11442,7 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   SPIPE_Addr.i \
   SString.h \
   String_Base.h \
@@ -10543,8 +11452,10 @@ endif # GHS
   String_Base.cpp \
   Malloc.h \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
@@ -10575,6 +11486,7 @@ endif # GHS
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
@@ -10592,8 +11504,6 @@ endif # GHS
   SPIPE.h \
   pre.h \
   IPC_SAP.h \
-  Flag_Manip.h \
-  ACE_export.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -10602,30 +11512,42 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  Flag_Manip.i \
+  ace_new.h \
+  ACE_export.h \
+  ace_sys_types.h \
+  IPC_SAP.i \
   Trace.h \
   OS.h \
-  ace_threads.h \
-  ace_sys_types.h \
-  OS_Export.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -10635,13 +11557,20 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  IPC_SAP.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   SPIPE_Addr.h \
   Addr.h \
   Addr.i \
   ACE.h \
+  Flag_Manip.h \
+  Flag_Manip.i \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -10651,6 +11580,7 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   SPIPE_Addr.i \
   SString.h \
   String_Base.h \
@@ -10660,8 +11590,10 @@ endif # GHS
   String_Base.cpp \
   Malloc.h \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
@@ -10692,6 +11624,7 @@ endif # GHS
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
@@ -10712,8 +11645,6 @@ endif # GHS
   SPIPE_Stream.h \
   SPIPE.h \
   IPC_SAP.h \
-  Flag_Manip.h \
-  ACE_export.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -10722,30 +11653,42 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  Flag_Manip.i \
+  ace_new.h \
+  ACE_export.h \
+  ace_sys_types.h \
+  IPC_SAP.i \
   Trace.h \
   OS.h \
-  ace_threads.h \
-  ace_sys_types.h \
-  OS_Export.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -10755,13 +11698,20 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  IPC_SAP.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   SPIPE_Addr.h \
   Addr.h \
   Addr.i \
   ACE.h \
+  Flag_Manip.h \
+  Flag_Manip.i \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -10771,6 +11721,7 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   SPIPE_Addr.i \
   SString.h \
   String_Base.h \
@@ -10780,8 +11731,10 @@ endif # GHS
   String_Base.cpp \
   Malloc.h \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
@@ -10812,6 +11765,7 @@ endif # GHS
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
@@ -10833,8 +11787,6 @@ endif # GHS
   SPIPE_Stream.h \
   SPIPE.h \
   IPC_SAP.h \
-  Flag_Manip.h \
-  ACE_export.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -10843,30 +11795,42 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  Flag_Manip.i \
+  ace_new.h \
+  ACE_export.h \
+  ace_sys_types.h \
+  IPC_SAP.i \
   Trace.h \
   OS.h \
-  ace_threads.h \
-  ace_sys_types.h \
-  OS_Export.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -10876,13 +11840,20 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  IPC_SAP.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   SPIPE_Addr.h \
   Addr.h \
   Addr.i \
   ACE.h \
+  Flag_Manip.h \
+  Flag_Manip.i \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -10892,6 +11863,7 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   SPIPE_Addr.i \
   SString.h \
   String_Base.h \
@@ -10901,8 +11873,10 @@ endif # GHS
   String_Base.cpp \
   Malloc.h \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
@@ -10933,6 +11907,7 @@ endif # GHS
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
@@ -10954,8 +11929,6 @@ endif # GHS
   pre.h \
   SPIPE.h \
   IPC_SAP.h \
-  Flag_Manip.h \
-  ACE_export.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -10964,30 +11937,42 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  Flag_Manip.i \
+  ace_new.h \
+  ACE_export.h \
+  ace_sys_types.h \
+  IPC_SAP.i \
   Trace.h \
   OS.h \
-  ace_threads.h \
-  ace_sys_types.h \
-  OS_Export.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -10997,13 +11982,20 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  IPC_SAP.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   SPIPE_Addr.h \
   Addr.h \
   Addr.i \
   ACE.h \
+  Flag_Manip.h \
+  Flag_Manip.i \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -11013,6 +12005,7 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   SPIPE_Addr.i \
   SString.h \
   String_Base.h \
@@ -11022,8 +12015,10 @@ endif # GHS
   String_Base.cpp \
   Malloc.h \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
@@ -11054,6 +12049,7 @@ endif # GHS
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
@@ -11073,7 +12069,6 @@ endif # GHS
   SV_Message.h \
   pre.h \
   ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -11082,28 +12077,43 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -11113,11 +12123,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -11127,13 +12140,13 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   SV_Message.i
 
 .obj/SV_Message_Queue.o .obj/SV_Message_Queue.so .shobj/SV_Message_Queue.o .shobj/SV_Message_Queue.so: SV_Message_Queue.cpp \
   SV_Message_Queue.h \
   pre.h \
   ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -11142,28 +12155,43 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -11173,11 +12201,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -11187,12 +12218,16 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   SV_Message.h \
   SV_Message.i \
+  ace_sys_ipc.h \
   SV_Message_Queue.i \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl
 
 .obj/SV_Semaphore_Complex.o .obj/SV_Semaphore_Complex.so .shobj/SV_Semaphore_Complex.o .shobj/SV_Semaphore_Complex.so: SV_Semaphore_Complex.cpp \
@@ -11200,7 +12235,6 @@ endif # GHS
   pre.h \
   SV_Semaphore_Simple.h \
   ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -11209,28 +12243,43 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -11240,11 +12289,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -11254,18 +12306,21 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl
 
 .obj/SV_Semaphore_Simple.o .obj/SV_Semaphore_Simple.so .shobj/SV_Semaphore_Simple.o .shobj/SV_Semaphore_Simple.so: SV_Semaphore_Simple.cpp \
   SV_Semaphore_Simple.h \
   pre.h \
   ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -11274,28 +12329,43 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -11305,11 +12375,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -11319,17 +12392,20 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl
 
 .obj/SV_Shared_Memory.o .obj/SV_Shared_Memory.so .shobj/SV_Shared_Memory.o .shobj/SV_Shared_Memory.so: SV_Shared_Memory.cpp \
   SV_Shared_Memory.h \
   pre.h \
   ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -11338,28 +12414,43 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -11369,11 +12460,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -11383,17 +12477,19 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
+  ace_sys_ipc.h \
   SV_Shared_Memory.i \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl
 
 .obj/TLI.o .obj/TLI.so .shobj/TLI.o .shobj/TLI.so: TLI.cpp TLI.h \
   pre.h \
   IPC_SAP.h \
-  Flag_Manip.h \
-  ACE_export.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -11402,30 +12498,42 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  Flag_Manip.i \
+  ace_new.h \
+  ACE_export.h \
+  ace_sys_types.h \
+  IPC_SAP.i \
   Trace.h \
   OS.h \
-  ace_threads.h \
-  ace_sys_types.h \
-  OS_Export.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -11435,23 +12543,22 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  IPC_SAP.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Addr.h \
-  Addr.i \
-  Log_Msg.h \
-  Log_Priority.h \
-  OS_Log_Msg_Attributes.h \
-  OS_Log_Msg_Attributes.inl
+  Addr.i
 
 .obj/TLI_Acceptor.o .obj/TLI_Acceptor.so .shobj/TLI_Acceptor.o .shobj/TLI_Acceptor.so: TLI_Acceptor.cpp \
   TLI_Acceptor.h \
   pre.h \
   TLI.h \
   IPC_SAP.h \
-  Flag_Manip.h \
-  ACE_export.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -11460,30 +12567,42 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  Flag_Manip.i \
+  ace_new.h \
+  ACE_export.h \
+  ace_sys_types.h \
+  IPC_SAP.i \
   Trace.h \
   OS.h \
-  ace_threads.h \
-  ace_sys_types.h \
-  OS_Export.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -11493,32 +12612,32 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  IPC_SAP.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Addr.h \
   Addr.i \
   TLI_Stream.h \
   INET_Addr.h \
-  ACE.h \
-  Handle_Ops.h \
-  Handle_Ops.i \
-  Lib_Find.h \
-  Lib_Find.i \
-  Init_ACE.h \
-  Init_ACE.i \
-  Sock_Connect.h \
-  Sock_Connect.i \
-  ACE.i \
   INET_Addr.i \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl
 
 .obj/TLI_Connector.o .obj/TLI_Connector.so .shobj/TLI_Connector.o .shobj/TLI_Connector.so: TLI_Connector.cpp \
-  Handle_Set.h \
+  TLI_Connector.h \
   pre.h \
+  TLI_Stream.h \
+  TLI.h \
+  IPC_SAP.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -11527,38 +12646,42 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  Global_Macros.h \
-  OS_Export.h \
-  ace_sys_types.h \
+  ace_new.h \
   ACE_export.h \
-  Handle_Set.i \
+  ace_sys_types.h \
+  IPC_SAP.i \
   Trace.h \
-  TLI_Connector.h \
-  TLI_Stream.h \
-  TLI.h \
-  IPC_SAP.h \
-  Flag_Manip.h \
-  Flag_Manip.i \
   OS.h \
-  ace_threads.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -11566,27 +12689,25 @@ endif # GHS
   Time_Value.h \
   Time_Value.inl \
   Default_Constants.h \
+  Global_Macros.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  IPC_SAP.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Addr.h \
   Addr.i \
   INET_Addr.h \
-  ACE.h \
-  Handle_Ops.h \
-  Handle_Ops.i \
-  Lib_Find.h \
-  Lib_Find.i \
-  Init_ACE.h \
-  Init_ACE.i \
-  Sock_Connect.h \
-  Sock_Connect.i \
-  ACE.i \
   INET_Addr.i \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl
 
 .obj/TLI_Stream.o .obj/TLI_Stream.so .shobj/TLI_Stream.o .shobj/TLI_Stream.so: TLI_Stream.cpp \
@@ -11594,8 +12715,6 @@ endif # GHS
   pre.h \
   TLI.h \
   IPC_SAP.h \
-  Flag_Manip.h \
-  ACE_export.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -11604,30 +12723,42 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  Flag_Manip.i \
+  ace_new.h \
+  ACE_export.h \
+  ace_sys_types.h \
+  IPC_SAP.i \
   Trace.h \
   OS.h \
-  ace_threads.h \
-  ace_sys_types.h \
-  OS_Export.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -11637,29 +12768,23 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  IPC_SAP.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Addr.h \
   Addr.i \
   INET_Addr.h \
-  ACE.h \
-  Handle_Ops.h \
-  Handle_Ops.i \
-  Lib_Find.h \
-  Lib_Find.i \
-  Init_ACE.h \
-  Init_ACE.i \
-  Sock_Connect.h \
-  Sock_Connect.i \
-  ACE.i \
   INET_Addr.i
 
 .obj/TTY_IO.o .obj/TTY_IO.so .shobj/TTY_IO.o .shobj/TTY_IO.so: TTY_IO.cpp \
   TTY_IO.h \
-  OS.h \
-  pre.h \
   config-all.h \
+  pre.h \
   config.h \
   config-linux.h \
   config-linux-common.h \
@@ -11667,116 +12792,91 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
-  ace_sys_types.h \
-  OS_Export.h \
-  ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
-  ace_stropts.h \
-  ace_sys_uio.h \
-  ace_sys_resource.h \
-  OS_Dirent.h \
-  OS_Errno.h \
-  OS_Errno.inl \
-  OS_Dirent.inl \
-  OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
-  OS_String.inl \
-  OS_Memory.h \
-  OS_Memory.inl \
-  OS_TLI.h \
-  OS_TLI.inl \
-  Time_Value.h \
-  Time_Value.inl \
-  Default_Constants.h \
-  Global_Macros.h \
-  Min_Max.h \
-  streams.h \
-  Trace.h \
-  OS.i \
+  ace_new.h \
   DEV_Addr.h \
   Addr.h \
+  ACE_export.h \
   Addr.i \
-  ACE.h \
-  Flag_Manip.h \
-  Flag_Manip.i \
-  Handle_Ops.h \
-  Handle_Ops.i \
-  Lib_Find.h \
-  Lib_Find.i \
-  Init_ACE.h \
-  Init_ACE.i \
-  Sock_Connect.h \
-  Sock_Connect.i \
-  ACE.i \
+  ace_stdio.h \
+  ace_dirent.h \
+  ace_sys_types.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   DEV_Addr.i \
-  SString.h \
-  String_Base.h \
-  String_Base_Const.h \
-  String_Base.i \
-  Malloc_Base.h \
-  String_Base.cpp \
-  Malloc.h \
-  Log_Msg.h \
-  Log_Priority.h \
-  OS_Log_Msg_Attributes.h \
-  OS_Log_Msg_Attributes.inl \
-  Malloc.i \
-  Malloc_T.h \
-  Synch.h \
-  Synch.i \
-  Synch_T.h \
-  Synch_T.i \
-  Thread.h \
-  Thread_Adapter.h \
-  Base_Thread_Adapter.h \
-  Base_Thread_Adapter.inl \
-  Thread_Adapter.inl \
-  Thread.i \
-  Synch_T.cpp \
-  Malloc_Allocator.h \
-  Malloc_Allocator.i \
-  Free_List.h \
-  Free_List.i \
-  Free_List.cpp \
-  Malloc_T.i \
-  Malloc_T.cpp \
-  Memory_Pool.h \
-  Event_Handler.h \
-  Event_Handler.i \
-  Signal.h \
-  Signal.i \
-  Mem_Map.h \
-  Mem_Map.i \
-  SV_Semaphore_Complex.h \
-  SV_Semaphore_Simple.h \
-  SV_Semaphore_Simple.i \
-  SV_Semaphore_Complex.i \
-  Unbounded_Set.h \
-  Node.h \
-  Node.cpp \
-  Unbounded_Set.inl \
-  Unbounded_Set.cpp \
-  Memory_Pool.i \
-  Auto_Ptr.h \
-  Auto_Ptr.i \
-  Auto_Ptr.cpp \
-  SString.i \
+  Trace.h \
+  OS_String.h \
+  OS_Export.h \
+  OS_String.inl \
+  ace_string.h \
+  ace_sys_socket.h \
   DEV_Connector.h \
   DEV_IO.h \
   DEV.h \
   IO_SAP.h \
   IO_SAP.i \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
+  ace_stdlib.h \
+  ace_stropts.h \
+  ace_threads.h \
+  ace_time.h \
+  ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
+  OS_Dirent.h \
+  OS_Errno.h \
+  ace_errno.h \
+  OS_Errno.inl \
+  OS_Dirent.inl \
+  OS_Memory.h \
+  OS_Memory.inl \
+  OS_TLI.h \
+  OS_TLI.inl \
+  Time_Value.h \
+  Time_Value.inl \
+  Default_Constants.h \
+  Global_Macros.h \
+  Min_Max.h \
+  Sched_Params.h \
+  Sched_Params.i \
+  OS.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   DEV.i \
   DEV_IO.i \
-  DEV_Connector.i
+  ACE.h \
+  Flag_Manip.h \
+  Flag_Manip.i \
+  Handle_Ops.h \
+  Handle_Ops.i \
+  Lib_Find.h \
+  Lib_Find.i \
+  Init_ACE.h \
+  Init_ACE.i \
+  Sock_Connect.h \
+  Sock_Connect.i \
+  ACE.i \
+  ace_ctype.h \
+  DEV_Connector.i \
+  Log_Msg.h \
+  ace_sys_param.h \
+  Log_Priority.h \
+  OS_Log_Msg_Attributes.h \
+  streams.h \
+  OS_Log_Msg_Attributes.inl \
+  ace_sys_ioctl.h \
+  ace_termios.h
 
 .obj/UNIX_Addr.o .obj/UNIX_Addr.so .shobj/UNIX_Addr.o .shobj/UNIX_Addr.so: UNIX_Addr.cpp \
   UNIX_Addr.h \
@@ -11789,50 +12889,69 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   Addr.h \
   ACE_export.h \
   Addr.i \
   Log_Msg.h \
-  Global_Macros.h \
-  OS_Export.h \
-  Default_Constants.h \
+  ace_sys_param.h \
+  ace_stdlib.h \
   Log_Priority.h \
-  Basic_Types.h \
-  Basic_Types.i \
-  OS_Errno.h \
-  OS_Errno.inl \
+  Default_Constants.h \
   ace_threads.h \
   ace_sys_types.h \
+  OS_Export.h \
+  ace_signal.h \
   OS_Log_Msg_Attributes.h \
   streams.h \
+  ace_stdio.h \
   OS_Log_Msg_Attributes.inl \
   ACE.h \
+  Flag_Manip.h \
+  Flag_Manip.i \
+  Trace.h \
   OS.h \
-  ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
+  OS_Errno.h \
+  ace_errno.h \
+  OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
   OS_TLI.inl \
   Time_Value.h \
   Time_Value.inl \
+  Global_Macros.h \
   Min_Max.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -11842,6 +12961,7 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   UNIX_Addr.i
 
 .obj/UPIPE_Acceptor.o .obj/UPIPE_Acceptor.so .shobj/UPIPE_Acceptor.o .shobj/UPIPE_Acceptor.so: UPIPE_Acceptor.cpp \
@@ -11850,7 +12970,6 @@ endif # GHS
   UPIPE_Stream.h \
   Stream.h \
   ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -11859,28 +12978,43 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -11890,11 +13024,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -11904,12 +13041,15 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   IO_Cntl_Msg.h \
   Message_Block.h \
   Malloc.h \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
@@ -11941,6 +13081,7 @@ endif # GHS
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
@@ -12027,7 +13168,6 @@ endif # GHS
   UPIPE_Stream.h \
   Stream.h \
   ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -12036,28 +13176,43 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -12067,11 +13222,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -12081,12 +13239,15 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   IO_Cntl_Msg.h \
   Message_Block.h \
   Malloc.h \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
@@ -12118,6 +13279,7 @@ endif # GHS
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
@@ -12202,7 +13364,6 @@ endif # GHS
   pre.h \
   Stream.h \
   ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -12211,28 +13372,43 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -12242,11 +13418,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -12256,12 +13435,15 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   IO_Cntl_Msg.h \
   Message_Block.h \
   Malloc.h \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
@@ -12293,6 +13475,7 @@ endif # GHS
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
@@ -12377,7 +13560,6 @@ endif # GHS
   SOCK_IO.h \
   SOCK.h \
   ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -12386,28 +13568,43 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -12417,11 +13614,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -12431,6 +13631,7 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   Addr.h \
   Addr.i \
   IPC_SAP.h \
@@ -12447,8 +13648,10 @@ endif # GHS
   PI_Malloc.h \
   Malloc.h \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
@@ -12480,6 +13683,7 @@ endif # GHS
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
@@ -12526,7 +13730,6 @@ endif # GHS
   MEM_Addr.h \
   pre.h \
   ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -12535,28 +13738,43 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -12566,11 +13784,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -12580,14 +13801,17 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   INET_Addr.h \
   Addr.h \
   Addr.i \
   INET_Addr.i \
   MEM_Addr.i \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl
 
 .obj/MEM_Connector.o .obj/MEM_Connector.so .shobj/MEM_Connector.o .shobj/MEM_Connector.so: MEM_Connector.cpp \
@@ -12598,7 +13822,6 @@ endif # GHS
   SOCK_IO.h \
   SOCK.h \
   ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -12607,28 +13830,43 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -12638,11 +13876,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -12652,6 +13893,7 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   Addr.h \
   Addr.i \
   IPC_SAP.h \
@@ -12668,8 +13910,10 @@ endif # GHS
   PI_Malloc.h \
   Malloc.h \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
@@ -12701,6 +13945,7 @@ endif # GHS
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
@@ -12747,7 +13992,6 @@ endif # GHS
   pre.h \
   SOCK.h \
   ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -12756,28 +14000,43 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -12787,11 +14046,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -12801,6 +14063,7 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   Addr.h \
   Addr.i \
   IPC_SAP.h \
@@ -12810,8 +14073,10 @@ endif # GHS
   PI_Malloc.h \
   Malloc.h \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
@@ -12843,6 +14108,7 @@ endif # GHS
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
@@ -12887,7 +14153,6 @@ endif # GHS
   pre.h \
   PI_Malloc.h \
   ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -12896,28 +14161,43 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -12927,11 +14207,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -12941,10 +14224,13 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   Malloc.h \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
@@ -12976,6 +14262,7 @@ endif # GHS
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
@@ -13011,7 +14298,6 @@ endif # GHS
   MEM_IO.h \
   SOCK.h \
   ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -13020,28 +14306,43 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -13051,11 +14352,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -13065,6 +14369,7 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   Addr.h \
   Addr.i \
   IPC_SAP.h \
@@ -13074,8 +14379,10 @@ endif # GHS
   PI_Malloc.h \
   Malloc.h \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
@@ -13107,6 +14414,7 @@ endif # GHS
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
@@ -13158,28 +14466,29 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   Basic_Types.h \
   ACE_export.h \
+  ace_limits.h \
   Basic_Types.i \
   Basic_Stats.inl \
   Log_Msg.h \
-  Global_Macros.h \
-  OS_Export.h \
-  Default_Constants.h \
+  ace_sys_param.h \
+  ace_stdlib.h \
   Log_Priority.h \
-  OS_Errno.h \
-  OS_Errno.inl \
+  Default_Constants.h \
   ace_threads.h \
   ace_sys_types.h \
+  OS_Export.h \
+  ace_signal.h \
   OS_Log_Msg_Attributes.h \
   streams.h \
+  ace_stdio.h \
   OS_Log_Msg_Attributes.inl
 
 .obj/High_Res_Timer.o .obj/High_Res_Timer.so .shobj/High_Res_Timer.o .shobj/High_Res_Timer.so: High_Res_Timer.cpp \
   High_Res_Timer.h \
   pre.h \
-  ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -13188,40 +14497,61 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
-  ace_sys_types.h \
+  ace_new.h \
+  ACE_export.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
+  Time_Value.h \
   OS_Export.h \
+  Time_Value.inl \
+  High_Res_Timer.i \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_sys_types.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
   OS_TLI.inl \
-  Time_Value.h \
-  Time_Value.inl \
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   Trace.h \
   OS.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
+  Stats.h \
+  ACE.h \
   Flag_Manip.h \
   Flag_Manip.i \
   Handle_Ops.h \
@@ -13233,8 +14563,7 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
-  High_Res_Timer.i \
-  Stats.h \
+  ace_ctype.h \
   Unbounded_Queue.h \
   Node.h \
   Node.cpp \
@@ -13242,8 +14571,10 @@ endif # GHS
   Unbounded_Queue.cpp \
   Malloc_Base.h \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Basic_Stats.h \
   Basic_Stats.inl \
@@ -13275,7 +14606,6 @@ endif # GHS
   Profile_Timer.h \
   pre.h \
   ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -13284,28 +14614,43 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -13315,11 +14660,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -13329,12 +14677,15 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   High_Res_Timer.h \
   High_Res_Timer.i \
   Profile_Timer.i \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl
 
 .obj/System_Time.o .obj/System_Time.so .shobj/System_Time.o .shobj/System_Time.so: System_Time.cpp \
@@ -13349,28 +14700,39 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
-  OS_Dirent.inl \
-  OS_String.h \
+  ace_dirent.h \
+  ace_unistd.h \
   Basic_Types.h \
   ACE_export.h \
+  ace_limits.h \
   Basic_Types.i \
+  OS_Dirent.inl \
+  OS_String.h \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -13380,9 +14742,15 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   Trace.h \
   OS.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Memory_Pool.h \
   ACE.h \
   Flag_Manip.h \
@@ -13396,6 +14764,7 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   Event_Handler.h \
   Event_Handler.i \
   Signal.h \
@@ -13407,18 +14776,21 @@ endif # GHS
   Thread_Adapter.h \
   Base_Thread_Adapter.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Base_Thread_Adapter.inl \
   Thread_Adapter.inl \
   Thread.i \
   Synch_T.cpp \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   Signal.i \
   Mem_Map.h \
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
@@ -13452,107 +14824,31 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   ACE_export.h \
   Time_Value.inl \
-  SString.h \
-  String_Base.h \
-  ACE.h \
-  OS.h \
-  ace_threads.h \
-  ace_sys_types.h \
-  ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
-  ace_stropts.h \
-  ace_sys_uio.h \
-  ace_sys_resource.h \
-  OS_Dirent.h \
-  OS_Errno.h \
-  OS_Errno.inl \
-  OS_Dirent.inl \
-  OS_String.h \
   Basic_Types.h \
+  ace_limits.h \
   Basic_Types.i \
-  OS_String.inl \
-  OS_Memory.h \
-  OS_Memory.inl \
-  OS_TLI.h \
-  OS_TLI.inl \
-  Default_Constants.h \
-  Global_Macros.h \
-  Min_Max.h \
-  streams.h \
-  Trace.h \
-  OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
-  Handle_Ops.h \
-  Handle_Ops.i \
-  Lib_Find.h \
-  Lib_Find.i \
-  Init_ACE.h \
-  Init_ACE.i \
-  Sock_Connect.h \
-  Sock_Connect.i \
-  ACE.i \
-  String_Base_Const.h \
-  String_Base.i \
-  Malloc_Base.h \
-  String_Base.cpp \
-  Malloc.h \
+  ace_sys_types.h \
+  ace_sys_param.h \
+  ace_stdlib.h \
   Log_Msg.h \
   Log_Priority.h \
+  Default_Constants.h \
+  ace_threads.h \
+  ace_signal.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
+  ace_stdio.h \
   OS_Log_Msg_Attributes.inl \
-  Malloc.i \
-  Malloc_T.h \
-  Synch.h \
-  Synch.i \
-  Synch_T.h \
-  Synch_T.i \
-  Thread.h \
-  Thread_Adapter.h \
-  Base_Thread_Adapter.h \
-  Base_Thread_Adapter.inl \
-  Thread_Adapter.inl \
-  Thread.i \
-  Synch_T.cpp \
-  Malloc_Allocator.h \
-  Malloc_Allocator.i \
-  Free_List.h \
-  Free_List.i \
-  Free_List.cpp \
-  Malloc_T.i \
-  Malloc_T.cpp \
-  Memory_Pool.h \
-  Event_Handler.h \
-  Event_Handler.i \
-  Signal.h \
-  Signal.i \
-  Mem_Map.h \
-  Mem_Map.i \
-  SV_Semaphore_Complex.h \
-  SV_Semaphore_Simple.h \
-  SV_Semaphore_Simple.i \
-  SV_Semaphore_Complex.i \
-  Unbounded_Set.h \
-  Node.h \
-  Node.cpp \
-  Unbounded_Set.inl \
-  Unbounded_Set.cpp \
-  Memory_Pool.i \
-  Auto_Ptr.h \
-  Auto_Ptr.i \
-  Auto_Ptr.cpp \
-  SString.i
+  Trace.h \
+  Global_Macros.h
 
 .obj/Timeprobe.o .obj/Timeprobe.so .shobj/Timeprobe.o .shobj/Timeprobe.so: Timeprobe.cpp \
-  OS.h \
+  Timeprobe.h \
   pre.h \
+  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -13561,28 +14857,39 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
-  OS_Dirent.inl \
-  OS_String.h \
+  ace_dirent.h \
+  ace_unistd.h \
   Basic_Types.h \
   ACE_export.h \
+  ace_limits.h \
   Basic_Types.i \
+  OS_Dirent.inl \
+  OS_String.h \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -13592,9 +14899,15 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   Trace.h \
-  OS.i
+  OS.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h
 
 .obj/Timer_Hash.o .obj/Timer_Hash.so .shobj/Timer_Hash.o .shobj/Timer_Hash.so: Timer_Hash.cpp \
   Timer_Hash.h \
@@ -13610,32 +14923,44 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   Synch_T.h \
   Synch.h \
-  ACE.h \
-  OS.h \
   ace_threads.h \
   ace_sys_types.h \
   OS_Export.h \
+  ace_signal.h \
+  ACE_export.h \
+  Global_Macros.h \
+  Synch.i \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -13643,11 +14968,19 @@ endif # GHS
   Time_Value.h \
   Time_Value.inl \
   Default_Constants.h \
-  Global_Macros.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   Trace.h \
   OS.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
+  Synch_T.i \
+  Thread.h \
+  ACE.h \
   Flag_Manip.h \
   Flag_Manip.i \
   Handle_Ops.h \
@@ -13659,18 +14992,18 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
-  Synch.i \
-  Synch_T.i \
-  Thread.h \
+  ace_ctype.h \
   Thread_Adapter.h \
   Base_Thread_Adapter.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Base_Thread_Adapter.inl \
   Thread_Adapter.inl \
   Thread.i \
   Synch_T.cpp \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   Free_List.i \
   Free_List.cpp \
@@ -13711,32 +15044,44 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   Synch_T.h \
   Synch.h \
-  ACE.h \
-  OS.h \
   ace_threads.h \
   ace_sys_types.h \
   OS_Export.h \
+  ace_signal.h \
+  ACE_export.h \
+  Global_Macros.h \
+  Synch.i \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -13744,11 +15089,19 @@ endif # GHS
   Time_Value.h \
   Time_Value.inl \
   Default_Constants.h \
-  Global_Macros.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   Trace.h \
   OS.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
+  Synch_T.i \
+  Thread.h \
+  ACE.h \
   Flag_Manip.h \
   Flag_Manip.i \
   Handle_Ops.h \
@@ -13760,18 +15113,18 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
-  Synch.i \
-  Synch_T.i \
-  Thread.h \
+  ace_ctype.h \
   Thread_Adapter.h \
   Base_Thread_Adapter.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Base_Thread_Adapter.inl \
   Thread_Adapter.inl \
   Thread.i \
   Synch_T.cpp \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   Free_List.i \
   Free_List.cpp \
@@ -13806,32 +15159,44 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   Synch_T.h \
   Synch.h \
-  ACE.h \
-  OS.h \
   ace_threads.h \
   ace_sys_types.h \
   OS_Export.h \
+  ace_signal.h \
+  ACE_export.h \
+  Global_Macros.h \
+  Synch.i \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -13839,11 +15204,19 @@ endif # GHS
   Time_Value.h \
   Time_Value.inl \
   Default_Constants.h \
-  Global_Macros.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   Trace.h \
   OS.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
+  Synch_T.i \
+  Thread.h \
+  ACE.h \
   Flag_Manip.h \
   Flag_Manip.i \
   Handle_Ops.h \
@@ -13855,18 +15228,18 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
-  Synch.i \
-  Synch_T.i \
-  Thread.h \
+  ace_ctype.h \
   Thread_Adapter.h \
   Base_Thread_Adapter.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Base_Thread_Adapter.inl \
   Thread_Adapter.inl \
   Thread.i \
   Synch_T.cpp \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   Free_List.i \
   Free_List.cpp \
@@ -13893,6 +15266,7 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   Containers.i \
   Containers_T.h \
   Node.h \
@@ -13900,55 +15274,77 @@ endif # GHS
   Array_Base.h \
   Global_Macros.h \
   OS_Export.h \
+  ace_sys_types.h \
   Array_Base.inl \
   Array_Base.cpp \
   Malloc_Base.h \
-  OS.h \
-  ace_threads.h \
-  ace_sys_types.h \
-  ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
-  ace_stropts.h \
-  ace_sys_uio.h \
-  ace_sys_resource.h \
-  OS_Dirent.h \
-  OS_Errno.h \
-  OS_Errno.inl \
-  OS_Dirent.inl \
-  OS_String.h \
-  Basic_Types.h \
-  Basic_Types.i \
-  OS_String.inl \
-  OS_Memory.h \
-  OS_Memory.inl \
-  OS_TLI.h \
-  OS_TLI.inl \
-  Time_Value.h \
-  Time_Value.inl \
-  Default_Constants.h \
-  Min_Max.h \
-  streams.h \
-  Trace.h \
-  OS.i \
+  ace_sys_mman.h \
   Unbounded_Set.h \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Log_Msg.h \
+  ace_sys_param.h \
+  ace_stdlib.h \
   Log_Priority.h \
+  Default_Constants.h \
+  ace_threads.h \
+  ace_signal.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
+  ace_stdio.h \
   OS_Log_Msg_Attributes.inl \
   Unbounded_Queue.h \
+  OS_Memory.h \
+  OS_Errno.h \
+  ace_errno.h \
+  OS_Errno.inl \
+  OS_Memory.inl \
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
+  Trace.h \
   Containers_T.i \
   Containers_T.cpp \
   Timer_Queue.h \
   Synch.h \
+  Synch.i \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_stropts.h \
+  ace_time.h \
+  ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
+  OS_Dirent.h \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
+  OS_Dirent.inl \
+  OS_String.h \
+  OS_String.inl \
+  ace_string.h \
+  OS_TLI.h \
+  OS_TLI.inl \
+  Time_Value.h \
+  Time_Value.inl \
+  Min_Max.h \
+  Sched_Params.h \
+  Sched_Params.i \
+  OS.i \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
+  Synch_T.h \
+  Synch_T.i \
+  Thread.h \
   ACE.h \
   Flag_Manip.h \
   Flag_Manip.i \
@@ -13961,10 +15357,7 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
-  Synch.i \
-  Synch_T.h \
-  Synch_T.i \
-  Thread.h \
+  ace_ctype.h \
   Thread_Adapter.h \
   Base_Thread_Adapter.h \
   Base_Thread_Adapter.inl \
@@ -13999,32 +15392,44 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   Synch_T.h \
   Synch.h \
-  ACE.h \
-  OS.h \
   ace_threads.h \
   ace_sys_types.h \
   OS_Export.h \
+  ace_signal.h \
+  ACE_export.h \
+  Global_Macros.h \
+  Synch.i \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -14032,11 +15437,19 @@ endif # GHS
   Time_Value.h \
   Time_Value.inl \
   Default_Constants.h \
-  Global_Macros.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   Trace.h \
   OS.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
+  Synch_T.i \
+  Thread.h \
+  ACE.h \
   Flag_Manip.h \
   Flag_Manip.i \
   Handle_Ops.h \
@@ -14048,18 +15461,18 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
-  Synch.i \
-  Synch_T.i \
-  Thread.h \
+  ace_ctype.h \
   Thread_Adapter.h \
   Base_Thread_Adapter.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Base_Thread_Adapter.inl \
   Thread_Adapter.inl \
   Thread.i \
   Synch_T.cpp \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   Free_List.i \
   Free_List.cpp \
@@ -14086,57 +15499,66 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS.h \
+  ace_new.h \
+  ACE_export.h \
+  ace_dlfcn.h \
+  Global_Macros.h \
+  OS_Export.h \
+  Log_Msg.h \
+  ace_sys_param.h \
+  ace_stdlib.h \
+  Log_Priority.h \
+  Default_Constants.h \
   ace_threads.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_signal.h \
+  OS_Log_Msg_Attributes.h \
+  streams.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  OS_Log_Msg_Attributes.inl \
+  OS.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
   OS_TLI.inl \
   Time_Value.h \
   Time_Value.inl \
-  Default_Constants.h \
-  Global_Macros.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   Trace.h \
   OS.i \
-  Log_Msg.h \
-  Log_Priority.h \
-  OS_Log_Msg_Attributes.h \
-  OS_Log_Msg_Attributes.inl \
-  ACE.h \
-  Flag_Manip.h \
-  Flag_Manip.i \
-  Handle_Ops.h \
-  Handle_Ops.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Lib_Find.h \
-  Lib_Find.i \
-  Init_ACE.h \
-  Init_ACE.i \
-  Sock_Connect.h \
-  Sock_Connect.i \
-  ACE.i
+  Lib_Find.i
 
 .obj/Dynamic_Service_Base.o .obj/Dynamic_Service_Base.so .shobj/Dynamic_Service_Base.o .shobj/Dynamic_Service_Base.so: Dynamic_Service_Base.cpp \
   Dynamic_Service_Base.h \
@@ -14150,32 +15572,50 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   Service_Config.h \
   Service_Object.h \
   Shared_Object.h \
-  ACE.h \
-  OS.h \
-  ace_threads.h \
   ace_sys_types.h \
+  Shared_Object.i \
+  Event_Handler.h \
+  ace_signal.h \
+  ace_threads.h \
   OS_Export.h \
+  Event_Handler.i \
+  ace_dlfcn.h \
+  Service_Object.i \
+  ACE.h \
+  Flag_Manip.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -14185,11 +15625,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -14199,10 +15642,7 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
-  Shared_Object.i \
-  Event_Handler.h \
-  Event_Handler.i \
-  Service_Object.i \
+  ace_ctype.h \
   Signal.h \
   Synch.h \
   Synch.i \
@@ -14212,12 +15652,14 @@ endif # GHS
   Thread_Adapter.h \
   Base_Thread_Adapter.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Base_Thread_Adapter.inl \
   Thread_Adapter.inl \
   Thread.i \
   Synch_T.cpp \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   Signal.i \
   Unbounded_Queue.h \
@@ -14249,6 +15691,7 @@ endif # GHS
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Memory_Pool.i \
@@ -14276,12 +15719,11 @@ endif # GHS
   Service_Repository.i
 
 .obj/Parse_Node.o .obj/Parse_Node.so .shobj/Parse_Node.o .shobj/Parse_Node.so: Parse_Node.cpp \
-  Service_Config.h \
+  Parse_Node.h \
   pre.h \
+  Service_Types.h \
   Service_Object.h \
   Shared_Object.h \
-  ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -14290,28 +15732,48 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  ACE_export.h \
   ace_sys_types.h \
+  Shared_Object.i \
+  Event_Handler.h \
+  ace_signal.h \
+  ace_threads.h \
   OS_Export.h \
+  Event_Handler.i \
+  ace_dlfcn.h \
+  Service_Object.i \
+  ACE.h \
+  Flag_Manip.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -14321,11 +15783,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -14335,11 +15800,7 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
-  Shared_Object.i \
-  Event_Handler.h \
-  Event_Handler.i \
-  Service_Object.i \
-  Signal.h \
+  ace_ctype.h \
   Synch.h \
   Synch.i \
   Synch_T.h \
@@ -14348,13 +15809,20 @@ endif # GHS
   Thread_Adapter.h \
   Base_Thread_Adapter.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Base_Thread_Adapter.inl \
   Thread_Adapter.inl \
   Thread.i \
   Synch_T.cpp \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
+  Service_Types.i \
+  DLL.h \
+  Parse_Node.i \
+  Service_Config.h \
+  Signal.h \
   Signal.i \
   Unbounded_Queue.h \
   Node.h \
@@ -14385,6 +15853,7 @@ endif # GHS
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Memory_Pool.i \
@@ -14407,8 +15876,6 @@ endif # GHS
   Reactor_Impl.h \
   Svc_Conf_Tokens.h \
   Service_Repository.h \
-  Service_Types.h \
-  Service_Types.i \
   Service_Repository.i \
   Task.h \
   Thread_Manager.h \
@@ -14450,20 +15917,13 @@ endif # GHS
   Module.i \
   Module.cpp \
   Stream_Modules.h \
-  Stream_Modules.cpp \
-  Parse_Node.h \
-  DLL.h \
-  Parse_Node.i
+  Stream_Modules.cpp
 
 .obj/Service_Config.o .obj/Service_Config.so .shobj/Service_Config.o .shobj/Service_Config.so: Service_Config.cpp \
-  Svc_Conf.h \
+  Service_Config.h \
   pre.h \
-  Obstack.h \
-  Obstack_T.h \
-  Obchunk.h \
-  Malloc.h \
-  ACE.h \
-  OS.h \
+  Service_Object.h \
+  Shared_Object.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -14472,28 +15932,48 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  ACE_export.h \
   ace_sys_types.h \
+  Shared_Object.i \
+  Event_Handler.h \
+  ace_signal.h \
+  ace_threads.h \
   OS_Export.h \
+  Event_Handler.i \
+  ace_dlfcn.h \
+  Service_Object.i \
+  ACE.h \
+  Flag_Manip.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -14503,11 +15983,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -14517,12 +16000,8 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
-  Log_Msg.h \
-  Log_Priority.h \
-  OS_Log_Msg_Attributes.h \
-  OS_Log_Msg_Attributes.inl \
-  Malloc.i \
-  Malloc_T.h \
+  ace_ctype.h \
+  Signal.h \
   Synch.h \
   Synch.i \
   Synch_T.h \
@@ -14530,12 +16009,35 @@ endif # GHS
   Thread.h \
   Thread_Adapter.h \
   Base_Thread_Adapter.h \
+  OS_Log_Msg_Attributes.h \
+  streams.h \
+  OS_Log_Msg_Attributes.inl \
   Base_Thread_Adapter.inl \
   Thread_Adapter.inl \
   Thread.i \
   Synch_T.cpp \
-  Malloc_Allocator.h \
+  Log_Msg.h \
+  ace_sys_param.h \
+  Log_Priority.h \
+  Signal.i \
+  Unbounded_Queue.h \
+  Node.h \
+  Node.cpp \
+  Unbounded_Queue.inl \
+  Unbounded_Queue.cpp \
   Malloc_Base.h \
+  Unbounded_Set.h \
+  Unbounded_Set.inl \
+  Unbounded_Set.cpp \
+  SString.h \
+  String_Base.h \
+  String_Base_Const.h \
+  String_Base.i \
+  String_Base.cpp \
+  Malloc.h \
+  Malloc.i \
+  Malloc_T.h \
+  Malloc_Allocator.h \
   Malloc_Allocator.i \
   Free_List.h \
   Free_List.i \
@@ -14543,38 +16045,14 @@ endif # GHS
   Malloc_T.i \
   Malloc_T.cpp \
   Memory_Pool.h \
-  Event_Handler.h \
-  Event_Handler.i \
-  Signal.h \
-  Signal.i \
   Mem_Map.h \
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
-  Unbounded_Set.h \
-  Node.h \
-  Node.cpp \
-  Unbounded_Set.inl \
-  Unbounded_Set.cpp \
   Memory_Pool.i \
-  Obchunk.i \
-  Obstack_T.i \
-  Obstack_T.cpp \
-  Service_Config.h \
-  Service_Object.h \
-  Shared_Object.h \
-  Shared_Object.i \
-  Service_Object.i \
-  Unbounded_Queue.h \
-  Unbounded_Queue.inl \
-  Unbounded_Queue.cpp \
-  SString.h \
-  String_Base.h \
-  String_Base_Const.h \
-  String_Base.i \
-  String_Base.cpp \
   Auto_Ptr.h \
   Auto_Ptr.i \
   Auto_Ptr.cpp \
@@ -14593,6 +16071,13 @@ endif # GHS
   Reactor.i \
   Reactor_Impl.h \
   Svc_Conf_Tokens.h \
+  Svc_Conf.h \
+  Obstack.h \
+  Obstack_T.h \
+  Obchunk.h \
+  Obchunk.i \
+  Obstack_T.i \
+  Obstack_T.cpp \
   Parse_Node.h \
   Service_Types.h \
   Service_Types.i \
@@ -14645,10 +16130,12 @@ endif # GHS
   Framework_Component_T.cpp
 
 .obj/Service_Manager.o .obj/Service_Manager.so .shobj/Service_Manager.o .shobj/Service_Manager.so: Service_Manager.cpp \
-  Get_Opt.h \
+  Service_Manager.h \
   pre.h \
+  SOCK_Stream.h \
+  SOCK_IO.h \
+  SOCK.h \
   ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -14657,28 +16144,43 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -14688,11 +16190,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -14702,6 +16207,26 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
+  Addr.h \
+  Addr.i \
+  IPC_SAP.h \
+  IPC_SAP.i \
+  SOCK.i \
+  SOCK_IO.i \
+  INET_Addr.h \
+  INET_Addr.i \
+  SOCK_Stream.i \
+  SOCK_Acceptor.h \
+  SOCK_Acceptor.i \
+  Service_Object.h \
+  Shared_Object.h \
+  Shared_Object.i \
+  Event_Handler.h \
+  Event_Handler.i \
+  Service_Object.i \
+  Service_Manager.i \
+  Get_Opt.h \
   SString.h \
   String_Base.h \
   String_Base_Const.h \
@@ -14710,8 +16235,10 @@ endif # GHS
   String_Base.cpp \
   Malloc.h \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
@@ -14734,14 +16261,13 @@ endif # GHS
   Malloc_T.i \
   Malloc_T.cpp \
   Memory_Pool.h \
-  Event_Handler.h \
-  Event_Handler.i \
   Signal.h \
   Signal.i \
   Mem_Map.h \
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
@@ -14768,10 +16294,6 @@ endif # GHS
   Get_Opt.i \
   Service_Repository.h \
   Service_Types.h \
-  Service_Object.h \
-  Shared_Object.h \
-  Shared_Object.i \
-  Service_Object.i \
   Service_Types.i \
   Service_Repository.i \
   Service_Config.h \
@@ -14789,31 +16311,12 @@ endif # GHS
   Reactor.i \
   Reactor_Impl.h \
   Svc_Conf_Tokens.h \
-  Service_Manager.h \
-  SOCK_Stream.h \
-  SOCK_IO.h \
-  SOCK.h \
-  Addr.h \
-  Addr.i \
-  IPC_SAP.h \
-  IPC_SAP.i \
-  SOCK.i \
-  SOCK_IO.i \
-  INET_Addr.h \
-  INET_Addr.i \
-  SOCK_Stream.i \
-  SOCK_Acceptor.h \
-  SOCK_Acceptor.i \
-  Service_Manager.i \
   WFMO_Reactor.h
 
 .obj/Service_Object.o .obj/Service_Object.so .shobj/Service_Object.o .shobj/Service_Object.so: Service_Object.cpp \
-  Service_Types.h \
-  pre.h \
   Service_Object.h \
+  pre.h \
   Shared_Object.h \
-  ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -14822,28 +16325,48 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  ACE_export.h \
   ace_sys_types.h \
+  Shared_Object.i \
+  Event_Handler.h \
+  ace_signal.h \
+  ace_threads.h \
   OS_Export.h \
+  Event_Handler.i \
+  ace_dlfcn.h \
+  Service_Object.i \
+  ACE.h \
+  Flag_Manip.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -14853,11 +16376,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -14867,10 +16393,8 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
-  Shared_Object.i \
-  Event_Handler.h \
-  Event_Handler.i \
-  Service_Object.i \
+  ace_ctype.h \
+  Service_Types.h \
   Synch.h \
   Synch.i \
   Synch_T.h \
@@ -14879,12 +16403,14 @@ endif # GHS
   Thread_Adapter.h \
   Base_Thread_Adapter.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Base_Thread_Adapter.inl \
   Thread_Adapter.inl \
   Thread.i \
   Synch_T.cpp \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   Service_Types.i
 
@@ -14894,8 +16420,6 @@ endif # GHS
   Service_Types.h \
   Service_Object.h \
   Shared_Object.h \
-  ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -14904,28 +16428,48 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  ACE_export.h \
   ace_sys_types.h \
+  Shared_Object.i \
+  Event_Handler.h \
+  ace_signal.h \
+  ace_threads.h \
   OS_Export.h \
+  Event_Handler.i \
+  ace_dlfcn.h \
+  Service_Object.i \
+  ACE.h \
+  Flag_Manip.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -14935,11 +16479,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -14949,10 +16496,7 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
-  Shared_Object.i \
-  Event_Handler.h \
-  Event_Handler.i \
-  Service_Object.i \
+  ace_ctype.h \
   Synch.h \
   Synch.i \
   Synch_T.h \
@@ -14961,12 +16505,14 @@ endif # GHS
   Thread_Adapter.h \
   Base_Thread_Adapter.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Base_Thread_Adapter.inl \
   Thread_Adapter.inl \
   Thread.i \
   Synch_T.cpp \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   Service_Types.i \
   Service_Repository.i \
@@ -14981,8 +16527,6 @@ endif # GHS
   pre.h \
   Service_Object.h \
   Shared_Object.h \
-  ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -14991,28 +16535,48 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  ACE_export.h \
   ace_sys_types.h \
+  Shared_Object.i \
+  Event_Handler.h \
+  ace_signal.h \
+  ace_threads.h \
   OS_Export.h \
+  Event_Handler.i \
+  ace_dlfcn.h \
+  Service_Object.i \
+  ACE.h \
+  Flag_Manip.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -15022,11 +16586,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -15036,10 +16603,7 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
-  Shared_Object.i \
-  Event_Handler.h \
-  Event_Handler.i \
-  Service_Object.i \
+  ace_ctype.h \
   Synch.h \
   Synch.i \
   Synch_T.h \
@@ -15048,12 +16612,14 @@ endif # GHS
   Thread_Adapter.h \
   Base_Thread_Adapter.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Base_Thread_Adapter.inl \
   Thread_Adapter.inl \
   Thread.i \
   Synch_T.cpp \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   Service_Types.i \
   Stream_Modules.h \
@@ -15106,6 +16672,7 @@ endif # GHS
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Memory_Pool.i \
@@ -15139,7 +16706,6 @@ endif # GHS
   Obchunk.h \
   Malloc.h \
   ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -15148,28 +16714,43 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -15179,11 +16760,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -15193,9 +16777,12 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
@@ -15227,6 +16814,7 @@ endif # GHS
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
@@ -15322,8 +16910,6 @@ endif # GHS
 .obj/Shared_Object.o .obj/Shared_Object.so .shobj/Shared_Object.o .shobj/Shared_Object.so: Shared_Object.cpp \
   Shared_Object.h \
   pre.h \
-  ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -15332,52 +16918,11 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
-  ace_sys_types.h \
-  OS_Export.h \
-  ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
-  ace_stropts.h \
-  ace_sys_uio.h \
-  ace_sys_resource.h \
-  OS_Dirent.h \
-  OS_Errno.h \
-  OS_Errno.inl \
-  OS_Dirent.inl \
-  OS_String.h \
-  Basic_Types.h \
+  ace_new.h \
   ACE_export.h \
-  Basic_Types.i \
-  OS_String.inl \
-  OS_Memory.h \
-  OS_Memory.inl \
-  OS_TLI.h \
-  OS_TLI.inl \
-  Time_Value.h \
-  Time_Value.inl \
-  Default_Constants.h \
-  Global_Macros.h \
-  Min_Max.h \
-  streams.h \
-  Trace.h \
-  OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
-  Handle_Ops.h \
-  Handle_Ops.i \
-  Lib_Find.h \
-  Lib_Find.i \
-  Init_ACE.h \
-  Init_ACE.i \
-  Sock_Connect.h \
-  Sock_Connect.i \
-  ACE.i \
-  Shared_Object.i
+  ace_sys_types.h \
+  Shared_Object.i \
+  Trace.h
 
 .obj/Svc_Conf_l.o .obj/Svc_Conf_l.so .shobj/Svc_Conf_l.o .shobj/Svc_Conf_l.so: Svc_Conf_l.cpp \
   OS.h \
@@ -15390,28 +16935,39 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
-  OS_Dirent.inl \
-  OS_String.h \
+  ace_dirent.h \
+  ace_unistd.h \
   Basic_Types.h \
   ACE_export.h \
+  ace_limits.h \
   Basic_Types.i \
+  OS_Dirent.inl \
+  OS_String.h \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -15421,12 +16977,22 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   Trace.h \
   OS.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Object_Manager.h \
   Service_Object.h \
   Shared_Object.h \
+  Shared_Object.i \
+  Event_Handler.h \
+  Event_Handler.i \
+  Service_Object.i \
   ACE.h \
   Flag_Manip.h \
   Flag_Manip.i \
@@ -15439,10 +17005,7 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
-  Shared_Object.i \
-  Event_Handler.h \
-  Event_Handler.i \
-  Service_Object.i \
+  ace_ctype.h \
   Object_Manager.i \
   Managed_Object.h \
   Managed_Object.i \
@@ -15453,8 +17016,10 @@ endif # GHS
   Obchunk.h \
   Malloc.h \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
@@ -15484,6 +17049,7 @@ endif # GHS
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
@@ -15532,8 +17098,6 @@ endif # GHS
 .obj/Svc_Conf_y.o .obj/Svc_Conf_y.so .shobj/Svc_Conf_y.o .shobj/Svc_Conf_y.so: Svc_Conf_y.cpp \
   ARGV.h \
   pre.h \
-  ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -15542,42 +17106,79 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
-  ace_sys_types.h \
+  ace_new.h \
+  Unbounded_Queue.h \
+  Node.h \
+  Node.cpp \
+  OS_Memory.h \
   OS_Export.h \
-  ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
-  ace_stropts.h \
-  ace_sys_uio.h \
-  ace_sys_resource.h \
-  OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  OS_Memory.inl \
+  Unbounded_Queue.inl \
+  Unbounded_Queue.cpp \
+  Malloc_Base.h \
+  ACE_export.h \
+  ace_sys_mman.h \
+  ace_sys_types.h \
+  Log_Msg.h \
+  ace_sys_param.h \
+  ace_stdlib.h \
+  Log_Priority.h \
+  Default_Constants.h \
+  ace_threads.h \
+  ace_signal.h \
+  OS_Log_Msg_Attributes.h \
+  streams.h \
+  ace_stdio.h \
+  OS_Log_Msg_Attributes.inl \
+  Global_Macros.h \
+  Trace.h \
+  ARGV.i \
+  Svc_Conf.h \
+  Obstack.h \
+  Obstack_T.h \
+  Obchunk.h \
+  Malloc.h \
+  ACE.h \
+  Flag_Manip.h \
+  Flag_Manip.i \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_stropts.h \
+  ace_time.h \
+  ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
+  OS_Dirent.h \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
-  OS_Memory.h \
-  OS_Memory.inl \
+  ace_string.h \
   OS_TLI.h \
   OS_TLI.inl \
   Time_Value.h \
   Time_Value.inl \
-  Default_Constants.h \
-  Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -15587,22 +17188,7 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
-  Unbounded_Queue.h \
-  Node.h \
-  Node.cpp \
-  Unbounded_Queue.inl \
-  Unbounded_Queue.cpp \
-  Malloc_Base.h \
-  Log_Msg.h \
-  Log_Priority.h \
-  OS_Log_Msg_Attributes.h \
-  OS_Log_Msg_Attributes.inl \
-  ARGV.i \
-  Svc_Conf.h \
-  Obstack.h \
-  Obstack_T.h \
-  Obchunk.h \
-  Malloc.h \
+  ace_ctype.h \
   Malloc.i \
   Malloc_T.h \
   Synch.h \
@@ -15632,6 +17218,7 @@ endif # GHS
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
@@ -15727,7 +17314,6 @@ endif # GHS
   Obchunk.h \
   Malloc.h \
   ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -15736,28 +17322,43 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -15767,11 +17368,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -15781,9 +17385,12 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
@@ -15815,6 +17422,7 @@ endif # GHS
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
@@ -15875,31 +17483,46 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   Basic_Types.h \
   ACE_export.h \
+  ace_limits.h \
   Basic_Types.i \
+  CDR_Base.inl \
   Message_Block.h \
   ACE.h \
+  Flag_Manip.h \
+  Flag_Manip.i \
+  Trace.h \
   OS.h \
-  ace_threads.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
   OS_Dirent.inl \
   OS_String.h \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -15909,11 +17532,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -15923,10 +17549,13 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   Malloc.h \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
@@ -15958,6 +17587,7 @@ endif # GHS
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
@@ -15969,8 +17599,7 @@ endif # GHS
   Message_Block.i \
   Message_Block_T.h \
   Message_Block_T.i \
-  Message_Block_T.cpp \
-  CDR_Base.inl
+  Message_Block_T.cpp
 
 .obj/CDR_Stream.o .obj/CDR_Stream.so .shobj/CDR_Stream.o .shobj/CDR_Stream.so: CDR_Stream.cpp \
   CDR_Stream.h \
@@ -15984,31 +17613,46 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   Basic_Types.h \
   ACE_export.h \
+  ace_limits.h \
   Basic_Types.i \
+  CDR_Base.inl \
   Message_Block.h \
   ACE.h \
+  Flag_Manip.h \
+  Flag_Manip.i \
+  Trace.h \
   OS.h \
-  ace_threads.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
   OS_Dirent.inl \
   OS_String.h \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -16018,11 +17662,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -16032,10 +17679,13 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   Malloc.h \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
@@ -16067,6 +17717,7 @@ endif # GHS
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
@@ -16079,7 +17730,6 @@ endif # GHS
   Message_Block_T.h \
   Message_Block_T.i \
   Message_Block_T.cpp \
-  CDR_Base.inl \
   SString.h \
   String_Base.h \
   String_Base_Const.h \
@@ -16101,14 +17751,14 @@ endif # GHS
   config-g++-common.h \
   post.h \
   ace_wchar.h \
-  ace_wchar.inl
+  ace_wchar.inl \
+  ace_new.h
 
 .obj/Message_Queue.o .obj/Message_Queue.so .shobj/Message_Queue.o .shobj/Message_Queue.so: Message_Queue.cpp \
   Message_Queue.h \
   pre.h \
   Message_Block.h \
   ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -16117,28 +17767,43 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -16148,11 +17813,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -16162,10 +17830,13 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   Malloc.h \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
@@ -16197,6 +17868,7 @@ endif # GHS
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
@@ -16222,8 +17894,6 @@ endif # GHS
   pre.h \
   Notification_Strategy.h \
   Event_Handler.h \
-  ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -16232,28 +17902,51 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  ACE_export.h \
   ace_sys_types.h \
+  ace_signal.h \
+  ace_threads.h \
   OS_Export.h \
+  Event_Handler.i \
+  Notification_Strategy.inl \
+  Reactor_Notification_Strategy.inl \
+  Reactor.h \
+  Handle_Set.h \
+  Global_Macros.h \
+  Handle_Set.i \
+  Trace.h \
+  Timer_Queue.h \
+  Synch.h \
+  Synch.i \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -16261,11 +17954,19 @@ endif # GHS
   Time_Value.h \
   Time_Value.inl \
   Default_Constants.h \
-  Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
+  Synch_T.h \
+  Synch_T.i \
+  Thread.h \
+  ACE.h \
   Flag_Manip.h \
   Flag_Manip.i \
   Handle_Ops.h \
@@ -16277,27 +17978,18 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
-  Event_Handler.i \
-  Notification_Strategy.inl \
-  Reactor_Notification_Strategy.inl \
-  Reactor.h \
-  Handle_Set.h \
-  Handle_Set.i \
-  Timer_Queue.h \
-  Synch.h \
-  Synch.i \
-  Synch_T.h \
-  Synch_T.i \
-  Thread.h \
+  ace_ctype.h \
   Thread_Adapter.h \
   Base_Thread_Adapter.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Base_Thread_Adapter.inl \
   Thread_Adapter.inl \
   Thread.i \
   Synch_T.cpp \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   Timer_Queue_T.h \
   Free_List.h \
@@ -16318,8 +18010,6 @@ endif # GHS
   pre.h \
   Service_Object.h \
   Shared_Object.h \
-  ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -16328,28 +18018,48 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  ACE_export.h \
   ace_sys_types.h \
+  Shared_Object.i \
+  Event_Handler.h \
+  ace_signal.h \
+  ace_threads.h \
   OS_Export.h \
+  Event_Handler.i \
+  ace_dlfcn.h \
+  Service_Object.i \
+  ACE.h \
+  Flag_Manip.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -16359,11 +18069,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -16373,15 +18086,13 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
-  Shared_Object.i \
-  Event_Handler.h \
-  Event_Handler.i \
-  Service_Object.i \
+  ace_ctype.h \
   Thread_Manager.h \
   Thread.h \
   Thread_Adapter.h \
   Base_Thread_Adapter.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Base_Thread_Adapter.inl \
   Thread_Adapter.inl \
@@ -16392,6 +18103,7 @@ endif # GHS
   Synch_T.i \
   Synch_T.cpp \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   Unbounded_Queue.h \
   Node.h \
@@ -16440,6 +18152,7 @@ endif # GHS
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Memory_Pool.i \
@@ -16473,31 +18186,43 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  ace_new.h \
   Synch.h \
-  ACE.h \
-  OS.h \
   ace_threads.h \
   ace_sys_types.h \
   OS_Export.h \
+  ace_signal.h \
+  ACE_export.h \
+  Global_Macros.h \
+  Synch.i \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -16505,11 +18230,20 @@ endif # GHS
   Time_Value.h \
   Time_Value.inl \
   Default_Constants.h \
-  Global_Macros.h \
   Min_Max.h \
-  streams.h \
+  Sched_Params.h \
+  Sched_Params.i \
   Trace.h \
   OS.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
+  Synch_T.h \
+  Synch_T.i \
+  Thread.h \
+  ACE.h \
   Flag_Manip.h \
   Flag_Manip.i \
   Handle_Ops.h \
@@ -16521,19 +18255,18 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
-  Synch.i \
-  Synch_T.h \
-  Synch_T.i \
-  Thread.h \
+  ace_ctype.h \
   Thread_Adapter.h \
   Base_Thread_Adapter.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Base_Thread_Adapter.inl \
   Thread_Adapter.inl \
   Thread.i \
   Synch_T.cpp \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   Map_Manager.i \
   Map_Manager.cpp \
@@ -16557,6 +18290,7 @@ endif # GHS
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
@@ -16610,7 +18344,6 @@ endif # GHS
   Malloc.h \
   pre.h \
   ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -16619,28 +18352,43 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -16650,11 +18398,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -16664,9 +18415,12 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
@@ -16698,6 +18452,7 @@ endif # GHS
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
@@ -16720,7 +18475,6 @@ endif # GHS
   PI_Malloc.h \
   pre.h \
   ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -16729,28 +18483,43 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -16760,11 +18529,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -16774,10 +18546,13 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   Malloc.h \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
@@ -16809,6 +18584,7 @@ endif # GHS
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
@@ -16841,7 +18617,6 @@ endif # GHS
   Malloc_Allocator.h \
   pre.h \
   ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -16850,28 +18625,43 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -16881,11 +18671,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -16895,10 +18688,13 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   Malloc_Base.h \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Malloc_Allocator.i \
   Object_Manager.h \
@@ -16928,7 +18724,6 @@ endif # GHS
   Malloc.h \
   pre.h \
   ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -16937,28 +18732,43 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -16968,11 +18778,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -16982,9 +18795,12 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
@@ -17016,6 +18832,7 @@ endif # GHS
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
@@ -17028,8 +18845,6 @@ endif # GHS
 .obj/Mem_Map.o .obj/Mem_Map.so .shobj/Mem_Map.o .shobj/Mem_Map.so: Mem_Map.cpp \
   Mem_Map.h \
   pre.h \
-  ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -17038,62 +18853,70 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
-  ace_sys_types.h \
-  OS_Export.h \
+  ace_new.h \
+  ACE_export.h \
+  ace_sys_param.h \
+  ace_stdlib.h \
+  ace_sys_mman.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_fcntl.h \
+  ace_sys_types.h \
+  Global_Macros.h \
+  OS_Export.h \
+  Default_Constants.h \
+  Mem_Map.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
   OS_TLI.inl \
   Time_Value.h \
   Time_Value.inl \
-  Default_Constants.h \
-  Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
-  Handle_Ops.h \
-  Handle_Ops.i \
-  Lib_Find.h \
-  Lib_Find.i \
-  Init_ACE.h \
-  Init_ACE.i \
-  Sock_Connect.h \
-  Sock_Connect.i \
-  ACE.i \
-  Mem_Map.i \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl
 
 .obj/Memory_Pool.o .obj/Memory_Pool.so .shobj/Memory_Pool.o .shobj/Memory_Pool.so: Memory_Pool.cpp \
   Memory_Pool.h \
   pre.h \
   ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -17102,28 +18925,43 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -17133,11 +18971,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -17147,6 +18988,7 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   Event_Handler.h \
   Event_Handler.i \
   Signal.h \
@@ -17158,18 +19000,21 @@ endif # GHS
   Thread_Adapter.h \
   Base_Thread_Adapter.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Base_Thread_Adapter.inl \
   Thread_Adapter.inl \
   Thread.i \
   Synch_T.cpp \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   Signal.i \
   Mem_Map.h \
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
@@ -17204,7 +19049,6 @@ endif # GHS
   pre.h \
   Malloc.h \
   ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -17213,28 +19057,43 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -17244,11 +19103,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -17258,9 +19120,12 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
@@ -17292,6 +19157,7 @@ endif # GHS
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
@@ -17309,7 +19175,6 @@ endif # GHS
   Obchunk.h \
   Malloc.h \
   ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -17318,28 +19183,43 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -17349,11 +19229,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -17363,9 +19246,12 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
@@ -17397,6 +19283,7 @@ endif # GHS
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
@@ -17413,7 +19300,6 @@ endif # GHS
   Read_Buffer.h \
   pre.h \
   ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -17422,28 +19308,43 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -17453,11 +19354,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -17467,10 +19371,13 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   Malloc.h \
   Log_Msg.h \
+  ace_sys_param.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
+  streams.h \
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
@@ -17502,6 +19409,7 @@ endif # GHS
   Mem_Map.i \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
@@ -17547,7 +19455,6 @@ endif # GHS
   Shared_Memory.h \
   pre.h \
   ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -17556,28 +19463,43 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -17587,71 +19509,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
-  Handle_Ops.h \
-  Handle_Ops.i \
-  Lib_Find.h \
-  Lib_Find.i \
-  Init_ACE.h \
-  Init_ACE.i \
-  Sock_Connect.h \
-  Sock_Connect.i \
-  ACE.i
-
-.obj/Shared_Memory_MM.o .obj/Shared_Memory_MM.so .shobj/Shared_Memory_MM.o .shobj/Shared_Memory_MM.so: Shared_Memory_MM.cpp \
-  Shared_Memory_MM.h \
-  pre.h \
-  Shared_Memory.h \
-  ACE.h \
-  OS.h \
-  config-all.h \
-  config.h \
-  config-linux.h \
-  config-linux-common.h \
-  config-g++-common.h \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  ace_threads.h \
-  ace_sys_types.h \
-  OS_Export.h \
-  ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
+  ace_sys_mman.h \
   ace_sys_msg.h \
-  ace_stropts.h \
+  ace_sys_shm.h \
   ace_sys_uio.h \
-  ace_sys_resource.h \
-  OS_Dirent.h \
-  OS_Errno.h \
-  OS_Errno.inl \
-  OS_Dirent.inl \
-  OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
-  OS_String.inl \
-  OS_Memory.h \
-  OS_Memory.inl \
-  OS_TLI.h \
-  OS_TLI.inl \
-  Time_Value.h \
-  Time_Value.inl \
-  Default_Constants.h \
-  Global_Macros.h \
-  Min_Max.h \
-  streams.h \
-  Trace.h \
-  OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -17661,7 +19526,87 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h
+
+.obj/Shared_Memory_MM.o .obj/Shared_Memory_MM.so .shobj/Shared_Memory_MM.o .shobj/Shared_Memory_MM.so: Shared_Memory_MM.cpp \
+  Shared_Memory_MM.h \
+  pre.h \
+  Shared_Memory.h \
+  ACE.h \
+  config-all.h \
+  config.h \
+  config-linux.h \
+  config-linux-common.h \
+  config-g++-common.h \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  ace_new.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_sys_types.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
+  ace_stdio.h \
+  ace_stdlib.h \
+  ace_stropts.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
+  ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
+  OS_Dirent.h \
+  OS_Errno.h \
+  ace_errno.h \
+  OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
+  OS_Dirent.inl \
+  OS_String.h \
+  OS_String.inl \
+  ace_string.h \
+  OS_Memory.h \
+  OS_Memory.inl \
+  OS_TLI.h \
+  OS_TLI.inl \
+  Time_Value.h \
+  Time_Value.inl \
+  Default_Constants.h \
+  Global_Macros.h \
+  Min_Max.h \
+  Sched_Params.h \
+  Sched_Params.i \
+  OS.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
+  Handle_Ops.h \
+  Handle_Ops.i \
+  Lib_Find.h \
+  Lib_Find.i \
+  Init_ACE.h \
+  Init_ACE.i \
+  Sock_Connect.h \
+  Sock_Connect.i \
+  ACE.i \
+  ace_ctype.h \
   Mem_Map.h \
+  ace_sys_param.h \
   Mem_Map.i \
   Shared_Memory_MM.i
 
@@ -17670,7 +19615,6 @@ endif # GHS
   pre.h \
   Shared_Memory.h \
   ACE.h \
-  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -17679,28 +19623,43 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_threads.h \
+  ace_new.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
   ace_sys_types.h \
-  OS_Export.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
   ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
+  ace_stdlib.h \
   ace_stropts.h \
-  ace_sys_uio.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
   ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
   OS_Dirent.h \
   OS_Errno.h \
+  ace_errno.h \
   OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
   OS_String.inl \
+  ace_string.h \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
@@ -17710,11 +19669,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  streams.h \
-  Trace.h \
+  Sched_Params.h \
+  Sched_Params.i \
   OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  ace_sys_uio.h \
+  Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -17724,1542 +19686,10 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i \
+  ace_ctype.h \
   SV_Shared_Memory.h \
+  ace_sys_ipc.h \
   SV_Shared_Memory.i \
   Shared_Memory_SV.i
-
-.obj/Local_Tokens.o .obj/Local_Tokens.so .shobj/Local_Tokens.o .shobj/Local_Tokens.so: Local_Tokens.cpp \
-  Local_Tokens.h \
-  pre.h \
-  config-all.h \
-  config.h \
-  config-linux.h \
-  config-linux-common.h \
-  config-g++-common.h \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  Local_Tokens.i
-
-.obj/Remote_Tokens.o .obj/Remote_Tokens.so .shobj/Remote_Tokens.o .shobj/Remote_Tokens.so: Remote_Tokens.cpp \
-  Remote_Tokens.h \
-  pre.h \
-  INET_Addr.h \
-  ACE.h \
-  OS.h \
-  config-all.h \
-  config.h \
-  config-linux.h \
-  config-linux-common.h \
-  config-g++-common.h \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  ace_threads.h \
-  ace_sys_types.h \
-  OS_Export.h \
-  ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
-  ace_stropts.h \
-  ace_sys_uio.h \
-  ace_sys_resource.h \
-  OS_Dirent.h \
-  OS_Errno.h \
-  OS_Errno.inl \
-  OS_Dirent.inl \
-  OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
-  OS_String.inl \
-  OS_Memory.h \
-  OS_Memory.inl \
-  OS_TLI.h \
-  OS_TLI.inl \
-  Time_Value.h \
-  Time_Value.inl \
-  Default_Constants.h \
-  Global_Macros.h \
-  Min_Max.h \
-  streams.h \
-  Trace.h \
-  OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
-  Handle_Ops.h \
-  Handle_Ops.i \
-  Lib_Find.h \
-  Lib_Find.i \
-  Init_ACE.h \
-  Init_ACE.i \
-  Sock_Connect.h \
-  Sock_Connect.i \
-  ACE.i \
-  Addr.h \
-  Addr.i \
-  INET_Addr.i \
-  SOCK_Connector.h \
-  SOCK_Stream.h \
-  SOCK_IO.h \
-  SOCK.h \
-  IPC_SAP.h \
-  IPC_SAP.i \
-  SOCK.i \
-  SOCK_IO.i \
-  SOCK_Stream.i \
-  SOCK_Connector.i \
-  Synch_Options.h \
-  Synch_Options.i \
-  Local_Tokens.h \
-  Local_Tokens.i \
-  Token_Request_Reply.h \
-  Token_Request_Reply.i \
-  Remote_Tokens.i \
-  Singleton.h \
-  Synch.h \
-  Synch.i \
-  Synch_T.h \
-  Synch_T.i \
-  Thread.h \
-  Thread_Adapter.h \
-  Base_Thread_Adapter.h \
-  OS_Log_Msg_Attributes.h \
-  OS_Log_Msg_Attributes.inl \
-  Base_Thread_Adapter.inl \
-  Thread_Adapter.inl \
-  Thread.i \
-  Synch_T.cpp \
-  Log_Msg.h \
-  Log_Priority.h \
-  Singleton.i \
-  Singleton.cpp \
-  Object_Manager.h \
-  Service_Object.h \
-  Shared_Object.h \
-  Shared_Object.i \
-  Event_Handler.h \
-  Event_Handler.i \
-  Service_Object.i \
-  Object_Manager.i \
-  Managed_Object.h \
-  Managed_Object.i \
-  Managed_Object.cpp
-
-.obj/Token_Collection.o .obj/Token_Collection.so .shobj/Token_Collection.o .shobj/Token_Collection.so: Token_Collection.cpp \
-  Token_Collection.h \
-  pre.h \
-  Map_Manager.h \
-  config-all.h \
-  config.h \
-  config-linux.h \
-  config-linux-common.h \
-  config-g++-common.h \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  Synch.h \
-  ACE.h \
-  OS.h \
-  ace_threads.h \
-  ace_sys_types.h \
-  OS_Export.h \
-  ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
-  ace_stropts.h \
-  ace_sys_uio.h \
-  ace_sys_resource.h \
-  OS_Dirent.h \
-  OS_Errno.h \
-  OS_Errno.inl \
-  OS_Dirent.inl \
-  OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
-  OS_String.inl \
-  OS_Memory.h \
-  OS_Memory.inl \
-  OS_TLI.h \
-  OS_TLI.inl \
-  Time_Value.h \
-  Time_Value.inl \
-  Default_Constants.h \
-  Global_Macros.h \
-  Min_Max.h \
-  streams.h \
-  Trace.h \
-  OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
-  Handle_Ops.h \
-  Handle_Ops.i \
-  Lib_Find.h \
-  Lib_Find.i \
-  Init_ACE.h \
-  Init_ACE.i \
-  Sock_Connect.h \
-  Sock_Connect.i \
-  ACE.i \
-  Synch.i \
-  Synch_T.h \
-  Synch_T.i \
-  Thread.h \
-  Thread_Adapter.h \
-  Base_Thread_Adapter.h \
-  OS_Log_Msg_Attributes.h \
-  OS_Log_Msg_Attributes.inl \
-  Base_Thread_Adapter.inl \
-  Thread_Adapter.inl \
-  Thread.i \
-  Synch_T.cpp \
-  Log_Msg.h \
-  Log_Priority.h \
-  Map_Manager.i \
-  Map_Manager.cpp \
-  Malloc.h \
-  Malloc.i \
-  Malloc_T.h \
-  Malloc_Allocator.h \
-  Malloc_Base.h \
-  Malloc_Allocator.i \
-  Free_List.h \
-  Free_List.i \
-  Free_List.cpp \
-  Malloc_T.i \
-  Malloc_T.cpp \
-  Memory_Pool.h \
-  Event_Handler.h \
-  Event_Handler.i \
-  Signal.h \
-  Signal.i \
-  Mem_Map.h \
-  Mem_Map.i \
-  SV_Semaphore_Complex.h \
-  SV_Semaphore_Simple.h \
-  SV_Semaphore_Simple.i \
-  SV_Semaphore_Complex.i \
-  Unbounded_Set.h \
-  Node.h \
-  Node.cpp \
-  Unbounded_Set.inl \
-  Unbounded_Set.cpp \
-  Memory_Pool.i \
-  Service_Config.h \
-  Service_Object.h \
-  Shared_Object.h \
-  Shared_Object.i \
-  Service_Object.i \
-  Unbounded_Queue.h \
-  Unbounded_Queue.inl \
-  Unbounded_Queue.cpp \
-  SString.h \
-  String_Base.h \
-  String_Base_Const.h \
-  String_Base.i \
-  String_Base.cpp \
-  Auto_Ptr.h \
-  Auto_Ptr.i \
-  Auto_Ptr.cpp \
-  SString.i \
-  Service_Config.i \
-  Reactor.h \
-  Handle_Set.h \
-  Handle_Set.i \
-  Timer_Queue.h \
-  Timer_Queue_T.h \
-  Test_and_Set.h \
-  Test_and_Set.i \
-  Test_and_Set.cpp \
-  Timer_Queue_T.i \
-  Timer_Queue_T.cpp \
-  Reactor.i \
-  Reactor_Impl.h \
-  Svc_Conf_Tokens.h \
-  Local_Tokens.h \
-  Local_Tokens.i \
-  Token_Collection.i
-
-.obj/Token_Invariants.o .obj/Token_Invariants.so .shobj/Token_Invariants.o .shobj/Token_Invariants.so: Token_Invariants.cpp \
-  Token_Invariants.h \
-  pre.h \
-  Synch.h \
-  ACE.h \
-  OS.h \
-  config-all.h \
-  config.h \
-  config-linux.h \
-  config-linux-common.h \
-  config-g++-common.h \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  ace_threads.h \
-  ace_sys_types.h \
-  OS_Export.h \
-  ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
-  ace_stropts.h \
-  ace_sys_uio.h \
-  ace_sys_resource.h \
-  OS_Dirent.h \
-  OS_Errno.h \
-  OS_Errno.inl \
-  OS_Dirent.inl \
-  OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
-  OS_String.inl \
-  OS_Memory.h \
-  OS_Memory.inl \
-  OS_TLI.h \
-  OS_TLI.inl \
-  Time_Value.h \
-  Time_Value.inl \
-  Default_Constants.h \
-  Global_Macros.h \
-  Min_Max.h \
-  streams.h \
-  Trace.h \
-  OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
-  Handle_Ops.h \
-  Handle_Ops.i \
-  Lib_Find.h \
-  Lib_Find.i \
-  Init_ACE.h \
-  Init_ACE.i \
-  Sock_Connect.h \
-  Sock_Connect.i \
-  ACE.i \
-  Synch.i \
-  Synch_T.h \
-  Synch_T.i \
-  Thread.h \
-  Thread_Adapter.h \
-  Base_Thread_Adapter.h \
-  OS_Log_Msg_Attributes.h \
-  OS_Log_Msg_Attributes.inl \
-  Base_Thread_Adapter.inl \
-  Thread_Adapter.inl \
-  Thread.i \
-  Synch_T.cpp \
-  Log_Msg.h \
-  Log_Priority.h \
-  Map_Manager.h \
-  Map_Manager.i \
-  Map_Manager.cpp \
-  Malloc.h \
-  Malloc.i \
-  Malloc_T.h \
-  Malloc_Allocator.h \
-  Malloc_Base.h \
-  Malloc_Allocator.i \
-  Free_List.h \
-  Free_List.i \
-  Free_List.cpp \
-  Malloc_T.i \
-  Malloc_T.cpp \
-  Memory_Pool.h \
-  Event_Handler.h \
-  Event_Handler.i \
-  Signal.h \
-  Signal.i \
-  Mem_Map.h \
-  Mem_Map.i \
-  SV_Semaphore_Complex.h \
-  SV_Semaphore_Simple.h \
-  SV_Semaphore_Simple.i \
-  SV_Semaphore_Complex.i \
-  Unbounded_Set.h \
-  Node.h \
-  Node.cpp \
-  Unbounded_Set.inl \
-  Unbounded_Set.cpp \
-  Memory_Pool.i \
-  Service_Config.h \
-  Service_Object.h \
-  Shared_Object.h \
-  Shared_Object.i \
-  Service_Object.i \
-  Unbounded_Queue.h \
-  Unbounded_Queue.inl \
-  Unbounded_Queue.cpp \
-  SString.h \
-  String_Base.h \
-  String_Base_Const.h \
-  String_Base.i \
-  String_Base.cpp \
-  Auto_Ptr.h \
-  Auto_Ptr.i \
-  Auto_Ptr.cpp \
-  SString.i \
-  Service_Config.i \
-  Reactor.h \
-  Handle_Set.h \
-  Handle_Set.i \
-  Timer_Queue.h \
-  Timer_Queue_T.h \
-  Test_and_Set.h \
-  Test_and_Set.i \
-  Test_and_Set.cpp \
-  Timer_Queue_T.i \
-  Timer_Queue_T.cpp \
-  Reactor.i \
-  Reactor_Impl.h \
-  Svc_Conf_Tokens.h \
-  Local_Tokens.h \
-  Local_Tokens.i \
-  Object_Manager.h \
-  Object_Manager.i \
-  Managed_Object.h \
-  Managed_Object.i \
-  Managed_Object.cpp
-
-.obj/Token_Manager.o .obj/Token_Manager.so .shobj/Token_Manager.o .shobj/Token_Manager.so: Token_Manager.cpp \
-  Token_Manager.h \
-  pre.h \
-  Synch.h \
-  ACE.h \
-  OS.h \
-  config-all.h \
-  config.h \
-  config-linux.h \
-  config-linux-common.h \
-  config-g++-common.h \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  ace_threads.h \
-  ace_sys_types.h \
-  OS_Export.h \
-  ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
-  ace_stropts.h \
-  ace_sys_uio.h \
-  ace_sys_resource.h \
-  OS_Dirent.h \
-  OS_Errno.h \
-  OS_Errno.inl \
-  OS_Dirent.inl \
-  OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
-  OS_String.inl \
-  OS_Memory.h \
-  OS_Memory.inl \
-  OS_TLI.h \
-  OS_TLI.inl \
-  Time_Value.h \
-  Time_Value.inl \
-  Default_Constants.h \
-  Global_Macros.h \
-  Min_Max.h \
-  streams.h \
-  Trace.h \
-  OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
-  Handle_Ops.h \
-  Handle_Ops.i \
-  Lib_Find.h \
-  Lib_Find.i \
-  Init_ACE.h \
-  Init_ACE.i \
-  Sock_Connect.h \
-  Sock_Connect.i \
-  ACE.i \
-  Synch.i \
-  Synch_T.h \
-  Synch_T.i \
-  Thread.h \
-  Thread_Adapter.h \
-  Base_Thread_Adapter.h \
-  OS_Log_Msg_Attributes.h \
-  OS_Log_Msg_Attributes.inl \
-  Base_Thread_Adapter.inl \
-  Thread_Adapter.inl \
-  Thread.i \
-  Synch_T.cpp \
-  Log_Msg.h \
-  Log_Priority.h \
-  Map_Manager.h \
-  Map_Manager.i \
-  Map_Manager.cpp \
-  Malloc.h \
-  Malloc.i \
-  Malloc_T.h \
-  Malloc_Allocator.h \
-  Malloc_Base.h \
-  Malloc_Allocator.i \
-  Free_List.h \
-  Free_List.i \
-  Free_List.cpp \
-  Malloc_T.i \
-  Malloc_T.cpp \
-  Memory_Pool.h \
-  Event_Handler.h \
-  Event_Handler.i \
-  Signal.h \
-  Signal.i \
-  Mem_Map.h \
-  Mem_Map.i \
-  SV_Semaphore_Complex.h \
-  SV_Semaphore_Simple.h \
-  SV_Semaphore_Simple.i \
-  SV_Semaphore_Complex.i \
-  Unbounded_Set.h \
-  Node.h \
-  Node.cpp \
-  Unbounded_Set.inl \
-  Unbounded_Set.cpp \
-  Memory_Pool.i \
-  Service_Config.h \
-  Service_Object.h \
-  Shared_Object.h \
-  Shared_Object.i \
-  Service_Object.i \
-  Unbounded_Queue.h \
-  Unbounded_Queue.inl \
-  Unbounded_Queue.cpp \
-  SString.h \
-  String_Base.h \
-  String_Base_Const.h \
-  String_Base.i \
-  String_Base.cpp \
-  Auto_Ptr.h \
-  Auto_Ptr.i \
-  Auto_Ptr.cpp \
-  SString.i \
-  Service_Config.i \
-  Reactor.h \
-  Handle_Set.h \
-  Handle_Set.i \
-  Timer_Queue.h \
-  Timer_Queue_T.h \
-  Test_and_Set.h \
-  Test_and_Set.i \
-  Test_and_Set.cpp \
-  Timer_Queue_T.i \
-  Timer_Queue_T.cpp \
-  Reactor.i \
-  Reactor_Impl.h \
-  Svc_Conf_Tokens.h \
-  Local_Tokens.h \
-  Local_Tokens.i \
-  Token_Manager.i \
-  Object_Manager.h \
-  Object_Manager.i \
-  Managed_Object.h \
-  Managed_Object.i \
-  Managed_Object.cpp
-
-.obj/Token_Request_Reply.o .obj/Token_Request_Reply.so .shobj/Token_Request_Reply.o .shobj/Token_Request_Reply.so: Token_Request_Reply.cpp \
-  Token_Request_Reply.h \
-  pre.h \
-  Local_Tokens.h \
-  config-all.h \
-  config.h \
-  config-linux.h \
-  config-linux-common.h \
-  config-g++-common.h \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  Local_Tokens.i \
-  Time_Value.h \
-  OS_Export.h \
-  ACE_export.h \
-  Time_Value.inl \
-  Token_Request_Reply.i
-
-.obj/Local_Name_Space.o .obj/Local_Name_Space.so .shobj/Local_Name_Space.o .shobj/Local_Name_Space.so: Local_Name_Space.cpp \
-  ACE.h \
-  pre.h \
-  OS.h \
-  config-all.h \
-  config.h \
-  config-linux.h \
-  config-linux-common.h \
-  config-g++-common.h \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  ace_threads.h \
-  ace_sys_types.h \
-  OS_Export.h \
-  ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
-  ace_stropts.h \
-  ace_sys_uio.h \
-  ace_sys_resource.h \
-  OS_Dirent.h \
-  OS_Errno.h \
-  OS_Errno.inl \
-  OS_Dirent.inl \
-  OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
-  OS_String.inl \
-  OS_Memory.h \
-  OS_Memory.inl \
-  OS_TLI.h \
-  OS_TLI.inl \
-  Time_Value.h \
-  Time_Value.inl \
-  Default_Constants.h \
-  Global_Macros.h \
-  Min_Max.h \
-  streams.h \
-  Trace.h \
-  OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
-  Handle_Ops.h \
-  Handle_Ops.i \
-  Lib_Find.h \
-  Lib_Find.i \
-  Init_ACE.h \
-  Init_ACE.i \
-  Sock_Connect.h \
-  Sock_Connect.i \
-  ACE.i \
-  Local_Name_Space.h \
-  SString.h \
-  String_Base.h \
-  String_Base_Const.h \
-  String_Base.i \
-  Malloc_Base.h \
-  String_Base.cpp \
-  Malloc.h \
-  Log_Msg.h \
-  Log_Priority.h \
-  OS_Log_Msg_Attributes.h \
-  OS_Log_Msg_Attributes.inl \
-  Malloc.i \
-  Malloc_T.h \
-  Synch.h \
-  Synch.i \
-  Synch_T.h \
-  Synch_T.i \
-  Thread.h \
-  Thread_Adapter.h \
-  Base_Thread_Adapter.h \
-  Base_Thread_Adapter.inl \
-  Thread_Adapter.inl \
-  Thread.i \
-  Synch_T.cpp \
-  Malloc_Allocator.h \
-  Malloc_Allocator.i \
-  Free_List.h \
-  Free_List.i \
-  Free_List.cpp \
-  Malloc_T.i \
-  Malloc_T.cpp \
-  Memory_Pool.h \
-  Event_Handler.h \
-  Event_Handler.i \
-  Signal.h \
-  Signal.i \
-  Mem_Map.h \
-  Mem_Map.i \
-  SV_Semaphore_Complex.h \
-  SV_Semaphore_Simple.h \
-  SV_Semaphore_Simple.i \
-  SV_Semaphore_Complex.i \
-  Unbounded_Set.h \
-  Node.h \
-  Node.cpp \
-  Unbounded_Set.inl \
-  Unbounded_Set.cpp \
-  Memory_Pool.i \
-  Auto_Ptr.h \
-  Auto_Ptr.i \
-  Auto_Ptr.cpp \
-  SString.i \
-  Local_Name_Space_T.h \
-  Name_Space.h \
-  Name_Proxy.h \
-  INET_Addr.h \
-  Addr.h \
-  Addr.i \
-  INET_Addr.i \
-  SOCK_Connector.h \
-  SOCK_Stream.h \
-  SOCK_IO.h \
-  SOCK.h \
-  IPC_SAP.h \
-  IPC_SAP.i \
-  SOCK.i \
-  SOCK_IO.i \
-  SOCK_Stream.i \
-  SOCK_Connector.i \
-  Service_Config.h \
-  Service_Object.h \
-  Shared_Object.h \
-  Shared_Object.i \
-  Service_Object.i \
-  Unbounded_Queue.h \
-  Unbounded_Queue.inl \
-  Unbounded_Queue.cpp \
-  Service_Config.i \
-  Reactor.h \
-  Handle_Set.h \
-  Handle_Set.i \
-  Timer_Queue.h \
-  Timer_Queue_T.h \
-  Test_and_Set.h \
-  Test_and_Set.i \
-  Test_and_Set.cpp \
-  Timer_Queue_T.i \
-  Timer_Queue_T.cpp \
-  Reactor.i \
-  Reactor_Impl.h \
-  Svc_Conf_Tokens.h \
-  Synch_Options.h \
-  Synch_Options.i \
-  Name_Request_Reply.h \
-  Naming_Context.h \
-  Containers.h \
-  Containers.i \
-  Containers_T.h \
-  Array_Base.h \
-  Array_Base.inl \
-  Array_Base.cpp \
-  Containers_T.i \
-  Containers_T.cpp \
-  Hash_Map_Manager.h \
-  Hash_Map_Manager_T.h \
-  Functor.h \
-  Functor.i \
-  Functor_T.h \
-  Functor_T.i \
-  Functor_T.cpp \
-  Hash_Map_Manager_T.i \
-  Hash_Map_Manager_T.cpp \
-  Local_Name_Space_T.cpp \
-  RW_Process_Mutex.h \
-  File_Lock.h \
-  File_Lock.inl \
-  RW_Process_Mutex.inl
-
-.obj/Name_Proxy.o .obj/Name_Proxy.so .shobj/Name_Proxy.o .shobj/Name_Proxy.so: Name_Proxy.cpp \
-  Name_Proxy.h \
-  pre.h \
-  INET_Addr.h \
-  ACE.h \
-  OS.h \
-  config-all.h \
-  config.h \
-  config-linux.h \
-  config-linux-common.h \
-  config-g++-common.h \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  ace_threads.h \
-  ace_sys_types.h \
-  OS_Export.h \
-  ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
-  ace_stropts.h \
-  ace_sys_uio.h \
-  ace_sys_resource.h \
-  OS_Dirent.h \
-  OS_Errno.h \
-  OS_Errno.inl \
-  OS_Dirent.inl \
-  OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
-  OS_String.inl \
-  OS_Memory.h \
-  OS_Memory.inl \
-  OS_TLI.h \
-  OS_TLI.inl \
-  Time_Value.h \
-  Time_Value.inl \
-  Default_Constants.h \
-  Global_Macros.h \
-  Min_Max.h \
-  streams.h \
-  Trace.h \
-  OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
-  Handle_Ops.h \
-  Handle_Ops.i \
-  Lib_Find.h \
-  Lib_Find.i \
-  Init_ACE.h \
-  Init_ACE.i \
-  Sock_Connect.h \
-  Sock_Connect.i \
-  ACE.i \
-  Addr.h \
-  Addr.i \
-  INET_Addr.i \
-  SOCK_Connector.h \
-  SOCK_Stream.h \
-  SOCK_IO.h \
-  SOCK.h \
-  IPC_SAP.h \
-  IPC_SAP.i \
-  SOCK.i \
-  SOCK_IO.i \
-  SOCK_Stream.i \
-  SOCK_Connector.i \
-  Service_Config.h \
-  Service_Object.h \
-  Shared_Object.h \
-  Shared_Object.i \
-  Event_Handler.h \
-  Event_Handler.i \
-  Service_Object.i \
-  Signal.h \
-  Synch.h \
-  Synch.i \
-  Synch_T.h \
-  Synch_T.i \
-  Thread.h \
-  Thread_Adapter.h \
-  Base_Thread_Adapter.h \
-  OS_Log_Msg_Attributes.h \
-  OS_Log_Msg_Attributes.inl \
-  Base_Thread_Adapter.inl \
-  Thread_Adapter.inl \
-  Thread.i \
-  Synch_T.cpp \
-  Log_Msg.h \
-  Log_Priority.h \
-  Signal.i \
-  Unbounded_Queue.h \
-  Node.h \
-  Node.cpp \
-  Unbounded_Queue.inl \
-  Unbounded_Queue.cpp \
-  Malloc_Base.h \
-  Unbounded_Set.h \
-  Unbounded_Set.inl \
-  Unbounded_Set.cpp \
-  SString.h \
-  String_Base.h \
-  String_Base_Const.h \
-  String_Base.i \
-  String_Base.cpp \
-  Malloc.h \
-  Malloc.i \
-  Malloc_T.h \
-  Malloc_Allocator.h \
-  Malloc_Allocator.i \
-  Free_List.h \
-  Free_List.i \
-  Free_List.cpp \
-  Malloc_T.i \
-  Malloc_T.cpp \
-  Memory_Pool.h \
-  Mem_Map.h \
-  Mem_Map.i \
-  SV_Semaphore_Complex.h \
-  SV_Semaphore_Simple.h \
-  SV_Semaphore_Simple.i \
-  SV_Semaphore_Complex.i \
-  Memory_Pool.i \
-  Auto_Ptr.h \
-  Auto_Ptr.i \
-  Auto_Ptr.cpp \
-  SString.i \
-  Service_Config.i \
-  Reactor.h \
-  Handle_Set.h \
-  Handle_Set.i \
-  Timer_Queue.h \
-  Timer_Queue_T.h \
-  Test_and_Set.h \
-  Test_and_Set.i \
-  Test_and_Set.cpp \
-  Timer_Queue_T.i \
-  Timer_Queue_T.cpp \
-  Reactor.i \
-  Reactor_Impl.h \
-  Svc_Conf_Tokens.h \
-  Synch_Options.h \
-  Synch_Options.i \
-  Name_Request_Reply.h
-
-.obj/Name_Request_Reply.o .obj/Name_Request_Reply.so .shobj/Name_Request_Reply.o .shobj/Name_Request_Reply.so: Name_Request_Reply.cpp \
-  Name_Request_Reply.h \
-  pre.h \
-  Time_Value.h \
-  OS_Export.h \
-  config-all.h \
-  config.h \
-  config-linux.h \
-  config-linux-common.h \
-  config-g++-common.h \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  ACE_export.h \
-  Time_Value.inl \
-  SString.h \
-  String_Base.h \
-  ACE.h \
-  OS.h \
-  ace_threads.h \
-  ace_sys_types.h \
-  ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
-  ace_stropts.h \
-  ace_sys_uio.h \
-  ace_sys_resource.h \
-  OS_Dirent.h \
-  OS_Errno.h \
-  OS_Errno.inl \
-  OS_Dirent.inl \
-  OS_String.h \
-  Basic_Types.h \
-  Basic_Types.i \
-  OS_String.inl \
-  OS_Memory.h \
-  OS_Memory.inl \
-  OS_TLI.h \
-  OS_TLI.inl \
-  Default_Constants.h \
-  Global_Macros.h \
-  Min_Max.h \
-  streams.h \
-  Trace.h \
-  OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
-  Handle_Ops.h \
-  Handle_Ops.i \
-  Lib_Find.h \
-  Lib_Find.i \
-  Init_ACE.h \
-  Init_ACE.i \
-  Sock_Connect.h \
-  Sock_Connect.i \
-  ACE.i \
-  String_Base_Const.h \
-  String_Base.i \
-  Malloc_Base.h \
-  String_Base.cpp \
-  Malloc.h \
-  Log_Msg.h \
-  Log_Priority.h \
-  OS_Log_Msg_Attributes.h \
-  OS_Log_Msg_Attributes.inl \
-  Malloc.i \
-  Malloc_T.h \
-  Synch.h \
-  Synch.i \
-  Synch_T.h \
-  Synch_T.i \
-  Thread.h \
-  Thread_Adapter.h \
-  Base_Thread_Adapter.h \
-  Base_Thread_Adapter.inl \
-  Thread_Adapter.inl \
-  Thread.i \
-  Synch_T.cpp \
-  Malloc_Allocator.h \
-  Malloc_Allocator.i \
-  Free_List.h \
-  Free_List.i \
-  Free_List.cpp \
-  Malloc_T.i \
-  Malloc_T.cpp \
-  Memory_Pool.h \
-  Event_Handler.h \
-  Event_Handler.i \
-  Signal.h \
-  Signal.i \
-  Mem_Map.h \
-  Mem_Map.i \
-  SV_Semaphore_Complex.h \
-  SV_Semaphore_Simple.h \
-  SV_Semaphore_Simple.i \
-  SV_Semaphore_Complex.i \
-  Unbounded_Set.h \
-  Node.h \
-  Node.cpp \
-  Unbounded_Set.inl \
-  Unbounded_Set.cpp \
-  Memory_Pool.i \
-  Auto_Ptr.h \
-  Auto_Ptr.i \
-  Auto_Ptr.cpp \
-  SString.i
-
-.obj/Name_Space.o .obj/Name_Space.so .shobj/Name_Space.o .shobj/Name_Space.so: Name_Space.cpp \
-  Name_Space.h \
-  pre.h \
-  ACE.h \
-  OS.h \
-  config-all.h \
-  config.h \
-  config-linux.h \
-  config-linux-common.h \
-  config-g++-common.h \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  ace_threads.h \
-  ace_sys_types.h \
-  OS_Export.h \
-  ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
-  ace_stropts.h \
-  ace_sys_uio.h \
-  ace_sys_resource.h \
-  OS_Dirent.h \
-  OS_Errno.h \
-  OS_Errno.inl \
-  OS_Dirent.inl \
-  OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
-  OS_String.inl \
-  OS_Memory.h \
-  OS_Memory.inl \
-  OS_TLI.h \
-  OS_TLI.inl \
-  Time_Value.h \
-  Time_Value.inl \
-  Default_Constants.h \
-  Global_Macros.h \
-  Min_Max.h \
-  streams.h \
-  Trace.h \
-  OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
-  Handle_Ops.h \
-  Handle_Ops.i \
-  Lib_Find.h \
-  Lib_Find.i \
-  Init_ACE.h \
-  Init_ACE.i \
-  Sock_Connect.h \
-  Sock_Connect.i \
-  ACE.i \
-  SString.h \
-  String_Base.h \
-  String_Base_Const.h \
-  String_Base.i \
-  Malloc_Base.h \
-  String_Base.cpp \
-  Malloc.h \
-  Log_Msg.h \
-  Log_Priority.h \
-  OS_Log_Msg_Attributes.h \
-  OS_Log_Msg_Attributes.inl \
-  Malloc.i \
-  Malloc_T.h \
-  Synch.h \
-  Synch.i \
-  Synch_T.h \
-  Synch_T.i \
-  Thread.h \
-  Thread_Adapter.h \
-  Base_Thread_Adapter.h \
-  Base_Thread_Adapter.inl \
-  Thread_Adapter.inl \
-  Thread.i \
-  Synch_T.cpp \
-  Malloc_Allocator.h \
-  Malloc_Allocator.i \
-  Free_List.h \
-  Free_List.i \
-  Free_List.cpp \
-  Malloc_T.i \
-  Malloc_T.cpp \
-  Memory_Pool.h \
-  Event_Handler.h \
-  Event_Handler.i \
-  Signal.h \
-  Signal.i \
-  Mem_Map.h \
-  Mem_Map.i \
-  SV_Semaphore_Complex.h \
-  SV_Semaphore_Simple.h \
-  SV_Semaphore_Simple.i \
-  SV_Semaphore_Complex.i \
-  Unbounded_Set.h \
-  Node.h \
-  Node.cpp \
-  Unbounded_Set.inl \
-  Unbounded_Set.cpp \
-  Memory_Pool.i \
-  Auto_Ptr.h \
-  Auto_Ptr.i \
-  Auto_Ptr.cpp \
-  SString.i \
-  Name_Proxy.h \
-  INET_Addr.h \
-  Addr.h \
-  Addr.i \
-  INET_Addr.i \
-  SOCK_Connector.h \
-  SOCK_Stream.h \
-  SOCK_IO.h \
-  SOCK.h \
-  IPC_SAP.h \
-  IPC_SAP.i \
-  SOCK.i \
-  SOCK_IO.i \
-  SOCK_Stream.i \
-  SOCK_Connector.i \
-  Service_Config.h \
-  Service_Object.h \
-  Shared_Object.h \
-  Shared_Object.i \
-  Service_Object.i \
-  Unbounded_Queue.h \
-  Unbounded_Queue.inl \
-  Unbounded_Queue.cpp \
-  Service_Config.i \
-  Reactor.h \
-  Handle_Set.h \
-  Handle_Set.i \
-  Timer_Queue.h \
-  Timer_Queue_T.h \
-  Test_and_Set.h \
-  Test_and_Set.i \
-  Test_and_Set.cpp \
-  Timer_Queue_T.i \
-  Timer_Queue_T.cpp \
-  Reactor.i \
-  Reactor_Impl.h \
-  Svc_Conf_Tokens.h \
-  Synch_Options.h \
-  Synch_Options.i \
-  Name_Request_Reply.h
-
-.obj/Naming_Context.o .obj/Naming_Context.so .shobj/Naming_Context.o .shobj/Naming_Context.so: Naming_Context.cpp \
-  Get_Opt.h \
-  pre.h \
-  ACE.h \
-  OS.h \
-  config-all.h \
-  config.h \
-  config-linux.h \
-  config-linux-common.h \
-  config-g++-common.h \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  ace_threads.h \
-  ace_sys_types.h \
-  OS_Export.h \
-  ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
-  ace_stropts.h \
-  ace_sys_uio.h \
-  ace_sys_resource.h \
-  OS_Dirent.h \
-  OS_Errno.h \
-  OS_Errno.inl \
-  OS_Dirent.inl \
-  OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
-  OS_String.inl \
-  OS_Memory.h \
-  OS_Memory.inl \
-  OS_TLI.h \
-  OS_TLI.inl \
-  Time_Value.h \
-  Time_Value.inl \
-  Default_Constants.h \
-  Global_Macros.h \
-  Min_Max.h \
-  streams.h \
-  Trace.h \
-  OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
-  Handle_Ops.h \
-  Handle_Ops.i \
-  Lib_Find.h \
-  Lib_Find.i \
-  Init_ACE.h \
-  Init_ACE.i \
-  Sock_Connect.h \
-  Sock_Connect.i \
-  ACE.i \
-  SString.h \
-  String_Base.h \
-  String_Base_Const.h \
-  String_Base.i \
-  Malloc_Base.h \
-  String_Base.cpp \
-  Malloc.h \
-  Log_Msg.h \
-  Log_Priority.h \
-  OS_Log_Msg_Attributes.h \
-  OS_Log_Msg_Attributes.inl \
-  Malloc.i \
-  Malloc_T.h \
-  Synch.h \
-  Synch.i \
-  Synch_T.h \
-  Synch_T.i \
-  Thread.h \
-  Thread_Adapter.h \
-  Base_Thread_Adapter.h \
-  Base_Thread_Adapter.inl \
-  Thread_Adapter.inl \
-  Thread.i \
-  Synch_T.cpp \
-  Malloc_Allocator.h \
-  Malloc_Allocator.i \
-  Free_List.h \
-  Free_List.i \
-  Free_List.cpp \
-  Malloc_T.i \
-  Malloc_T.cpp \
-  Memory_Pool.h \
-  Event_Handler.h \
-  Event_Handler.i \
-  Signal.h \
-  Signal.i \
-  Mem_Map.h \
-  Mem_Map.i \
-  SV_Semaphore_Complex.h \
-  SV_Semaphore_Simple.h \
-  SV_Semaphore_Simple.i \
-  SV_Semaphore_Complex.i \
-  Unbounded_Set.h \
-  Node.h \
-  Node.cpp \
-  Unbounded_Set.inl \
-  Unbounded_Set.cpp \
-  Memory_Pool.i \
-  Auto_Ptr.h \
-  Auto_Ptr.i \
-  Auto_Ptr.cpp \
-  SString.i \
-  Containers.h \
-  Containers.i \
-  Containers_T.h \
-  Array_Base.h \
-  Array_Base.inl \
-  Array_Base.cpp \
-  Unbounded_Queue.h \
-  Unbounded_Queue.inl \
-  Unbounded_Queue.cpp \
-  Containers_T.i \
-  Containers_T.cpp \
-  Get_Opt.i \
-  Naming_Context.h \
-  Service_Object.h \
-  Shared_Object.h \
-  Shared_Object.i \
-  Service_Object.i \
-  Name_Proxy.h \
-  INET_Addr.h \
-  Addr.h \
-  Addr.i \
-  INET_Addr.i \
-  SOCK_Connector.h \
-  SOCK_Stream.h \
-  SOCK_IO.h \
-  SOCK.h \
-  IPC_SAP.h \
-  IPC_SAP.i \
-  SOCK.i \
-  SOCK_IO.i \
-  SOCK_Stream.i \
-  SOCK_Connector.i \
-  Service_Config.h \
-  Service_Config.i \
-  Reactor.h \
-  Handle_Set.h \
-  Handle_Set.i \
-  Timer_Queue.h \
-  Timer_Queue_T.h \
-  Test_and_Set.h \
-  Test_and_Set.i \
-  Test_and_Set.cpp \
-  Timer_Queue_T.i \
-  Timer_Queue_T.cpp \
-  Reactor.i \
-  Reactor_Impl.h \
-  Svc_Conf_Tokens.h \
-  Synch_Options.h \
-  Synch_Options.i \
-  Name_Request_Reply.h \
-  Name_Space.h \
-  Remote_Name_Space.h \
-  Local_Name_Space_T.h \
-  Local_Name_Space.h \
-  Hash_Map_Manager.h \
-  Hash_Map_Manager_T.h \
-  Functor.h \
-  Functor.i \
-  Functor_T.h \
-  Functor_T.i \
-  Functor_T.cpp \
-  Hash_Map_Manager_T.i \
-  Hash_Map_Manager_T.cpp \
-  Local_Name_Space_T.cpp \
-  Registry_Name_Space.h \
-  RW_Process_Mutex.h \
-  File_Lock.h \
-  File_Lock.inl \
-  RW_Process_Mutex.inl
-
-.obj/Registry_Name_Space.o .obj/Registry_Name_Space.so .shobj/Registry_Name_Space.o .shobj/Registry_Name_Space.so: Registry_Name_Space.cpp \
-  Registry_Name_Space.h \
-  pre.h \
-  OS.h \
-  config-all.h \
-  config.h \
-  config-linux.h \
-  config-linux-common.h \
-  config-g++-common.h \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  ace_threads.h \
-  ace_sys_types.h \
-  OS_Export.h \
-  ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
-  ace_stropts.h \
-  ace_sys_uio.h \
-  ace_sys_resource.h \
-  OS_Dirent.h \
-  OS_Errno.h \
-  OS_Errno.inl \
-  OS_Dirent.inl \
-  OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
-  OS_String.inl \
-  OS_Memory.h \
-  OS_Memory.inl \
-  OS_TLI.h \
-  OS_TLI.inl \
-  Time_Value.h \
-  Time_Value.inl \
-  Default_Constants.h \
-  Global_Macros.h \
-  Min_Max.h \
-  streams.h \
-  Trace.h \
-  OS.i
-
-.obj/Remote_Name_Space.o .obj/Remote_Name_Space.so .shobj/Remote_Name_Space.o .shobj/Remote_Name_Space.so: Remote_Name_Space.cpp \
-  Remote_Name_Space.h \
-  pre.h \
-  ACE.h \
-  OS.h \
-  config-all.h \
-  config.h \
-  config-linux.h \
-  config-linux-common.h \
-  config-g++-common.h \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  ace_threads.h \
-  ace_sys_types.h \
-  OS_Export.h \
-  ace_stdio.h \
-  ace_semaphore.h \
-  ace_sys_socket.h \
-  ace_time.h \
-  ace_sys_stat.h \
-  ace_sys_sem.h \
-  ace_sys_msg.h \
-  ace_stropts.h \
-  ace_sys_uio.h \
-  ace_sys_resource.h \
-  OS_Dirent.h \
-  OS_Errno.h \
-  OS_Errno.inl \
-  OS_Dirent.inl \
-  OS_String.h \
-  Basic_Types.h \
-  ACE_export.h \
-  Basic_Types.i \
-  OS_String.inl \
-  OS_Memory.h \
-  OS_Memory.inl \
-  OS_TLI.h \
-  OS_TLI.inl \
-  Time_Value.h \
-  Time_Value.inl \
-  Default_Constants.h \
-  Global_Macros.h \
-  Min_Max.h \
-  streams.h \
-  Trace.h \
-  OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
-  Handle_Ops.h \
-  Handle_Ops.i \
-  Lib_Find.h \
-  Lib_Find.i \
-  Init_ACE.h \
-  Init_ACE.i \
-  Sock_Connect.h \
-  Sock_Connect.i \
-  ACE.i \
-  SString.h \
-  String_Base.h \
-  String_Base_Const.h \
-  String_Base.i \
-  Malloc_Base.h \
-  String_Base.cpp \
-  Malloc.h \
-  Log_Msg.h \
-  Log_Priority.h \
-  OS_Log_Msg_Attributes.h \
-  OS_Log_Msg_Attributes.inl \
-  Malloc.i \
-  Malloc_T.h \
-  Synch.h \
-  Synch.i \
-  Synch_T.h \
-  Synch_T.i \
-  Thread.h \
-  Thread_Adapter.h \
-  Base_Thread_Adapter.h \
-  Base_Thread_Adapter.inl \
-  Thread_Adapter.inl \
-  Thread.i \
-  Synch_T.cpp \
-  Malloc_Allocator.h \
-  Malloc_Allocator.i \
-  Free_List.h \
-  Free_List.i \
-  Free_List.cpp \
-  Malloc_T.i \
-  Malloc_T.cpp \
-  Memory_Pool.h \
-  Event_Handler.h \
-  Event_Handler.i \
-  Signal.h \
-  Signal.i \
-  Mem_Map.h \
-  Mem_Map.i \
-  SV_Semaphore_Complex.h \
-  SV_Semaphore_Simple.h \
-  SV_Semaphore_Simple.i \
-  SV_Semaphore_Complex.i \
-  Unbounded_Set.h \
-  Node.h \
-  Node.cpp \
-  Unbounded_Set.inl \
-  Unbounded_Set.cpp \
-  Memory_Pool.i \
-  Auto_Ptr.h \
-  Auto_Ptr.i \
-  Auto_Ptr.cpp \
-  SString.i \
-  Name_Proxy.h \
-  INET_Addr.h \
-  Addr.h \
-  Addr.i \
-  INET_Addr.i \
-  SOCK_Connector.h \
-  SOCK_Stream.h \
-  SOCK_IO.h \
-  SOCK.h \
-  IPC_SAP.h \
-  IPC_SAP.i \
-  SOCK.i \
-  SOCK_IO.i \
-  SOCK_Stream.i \
-  SOCK_Connector.i \
-  Service_Config.h \
-  Service_Object.h \
-  Shared_Object.h \
-  Shared_Object.i \
-  Service_Object.i \
-  Unbounded_Queue.h \
-  Unbounded_Queue.inl \
-  Unbounded_Queue.cpp \
-  Service_Config.i \
-  Reactor.h \
-  Handle_Set.h \
-  Handle_Set.i \
-  Timer_Queue.h \
-  Timer_Queue_T.h \
-  Test_and_Set.h \
-  Test_and_Set.i \
-  Test_and_Set.cpp \
-  Timer_Queue_T.i \
-  Timer_Queue_T.cpp \
-  Reactor.i \
-  Reactor_Impl.h \
-  Svc_Conf_Tokens.h \
-  Synch_Options.h \
-  Synch_Options.i \
-  Name_Request_Reply.h \
-  Name_Space.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

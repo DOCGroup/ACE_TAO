@@ -36,8 +36,9 @@
 
 #include "ace/ACE_export.h"
 #include "ace/ace_sys_types.h"
-#include "ace/ace_sys_signal.h"
+#include "ace/ace_signal.h"
 #include "ace/ace_sys_socket.h"
+#include "ace/Basic_Types.h"
 
 // Forward declarations
 class ACE_Proactor;

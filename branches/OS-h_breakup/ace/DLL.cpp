@@ -4,7 +4,8 @@
 #include "ace/DLL.h"
 
 #include "ace/Log_Msg.h"
-#include "ace/ACE.h"
+#include "ace/OS.h"
+#include "ace/Lib_Find.h"
 
 ACE_RCSID(ace, DLL, "$Id$")
 

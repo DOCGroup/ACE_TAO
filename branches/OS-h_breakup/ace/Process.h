@@ -22,7 +22,11 @@
 
 #include "ace/Handle_Set.h"
 #include "ace/ACE_export.h"
+#include "ace/ace_sys_param.h"
+#include "ace/ace_signal.h"
+#include "ace/ace_stdio.h"
 
+class ACE_Time_Value;
 
 /**
  * @class ACE_Process_Options
@@ -566,7 +570,7 @@ private:
   // Keep G++ happy...
 };
 
-#include "ace/SString.h"
+//#include "ace/SString.h"
 
 #if defined (__ACE_INLINE__)
 #include "ace/Process.i"

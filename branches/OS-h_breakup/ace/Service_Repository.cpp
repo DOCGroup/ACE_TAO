@@ -2,12 +2,13 @@
 // $Id$
 
 #include "ace/Service_Repository.h"
-#include "ace/Object_Manager.h"
-#include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Service_Repository.i"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/Object_Manager.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(ace, Service_Repository, "$Id$")
 

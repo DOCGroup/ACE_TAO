@@ -25,7 +25,7 @@
 //=============================================================================
 
 
-#ifndef	ACE_CDR_BASE_H
+#ifndef	ACE_CDR_BASE_H 
 #define	ACE_CDR_BASE_H
 
 #include "ace/pre.h"
@@ -37,7 +37,78 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE	*/
 
 #include "ace/Basic_Types.h"
-#include "ace/Message_Block.h"
+//#include "ace/Message_Block.h"
+
+
+// Stuff used by the ACE CDR classes.
+# if defined ACE_LITTLE_ENDIAN
+#   define ACE_CDR_BYTE_ORDER 1
+// little endian encapsulation byte order has value = 1
+# else  /* ! ACE_LITTLE_ENDIAN */
+#   define ACE_CDR_BYTE_ORDER 0
+// big endian encapsulation byte order has value = 0
+# endif /* ! ACE_LITTLE_ENDIAN */
+
+
+/**
+ * @name Default values to control CDR classes memory allocation
+ *       strategies
+ */
+//@{
+
+/// Control the initial size of all CDR buffers, application
+/// developers may want to optimize this value to fit their request
+/// size
+# if !defined (ACE_DEFAULT_CDR_BUFSIZE)
+#   define ACE_DEFAULT_CDR_BUFSIZE 512
+# endif /* ACE_DEFAULT_CDR_BUFSIZE */
+
+/// Stop exponential growth of CDR buffers to avoid overallocation
+# if !defined (ACE_DEFAULT_CDR_EXP_GROWTH_MAX)
+#   define ACE_DEFAULT_CDR_EXP_GROWTH_MAX 65536
+# endif /* ACE_DEFAULT_CDR_EXP_GROWTH_MAX */
+
+/// Control CDR buffer growth after maximum exponential growth is
+/// reached
+# if !defined (ACE_DEFAULT_CDR_LINEAR_GROWTH_CHUNK)
+#   define ACE_DEFAULT_CDR_LINEAR_GROWTH_CHUNK 65536
+# endif /* ACE_DEFAULT_CDR_LINEAR_GROWTH_CHUNK */
+//@}
+
+/// Control the zero-copy optimizations for octet sequences
+/**
+ * Large octet sequences can be sent without any copies by chaining
+ * them in the list of message blocks that represent a single CDR
+ * stream.  However, if the octet sequence is too small the zero copy
+ * optimizations actually hurt performance.  Octet sequences smaller
+ * than this value will be copied.
+ */
+# if !defined (ACE_DEFAULT_CDR_MEMCPY_TRADEOFF)
+#   define ACE_DEFAULT_CDR_MEMCPY_TRADEOFF 256
+# endif /* ACE_DEFAULT_CDR_MEMCPY_TRADEOFF */
+
+/**
+ * In some environments it is useful to swap the bytes on write, for
+ * instance: a fast server can be feeding a lot of slow clients that
+ * happen to have the wrong byte order.
+ * Because this is a rarely used feature we disable it by default to
+ * minimize footprint.
+ * This macro enables the functionality, but we still need a way to
+ * activate it on a per-connection basis.
+ */
+// #define ACE_ENABLE_SWAP_ON_WRITE
+
+/**
+ * In some environements we never need to swap bytes when reading, for
+ * instance embebbed systems (such as avionics) or homogenous
+ * networks.
+ * Setting this macro disables the capabilities to demarshall streams
+ * in the wrong byte order.
+ */
+// #define ACE_DISABLE_SWAP_ON_READ
+
+
+class ACE_Message_Block;
 
 /**
  * @class ACE_CDR

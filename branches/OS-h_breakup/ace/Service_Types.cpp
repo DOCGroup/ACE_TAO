@@ -1,18 +1,19 @@
 // $Id$
 
 #include "ace/Service_Types.h"
-#include "ace/Stream_Modules.h"
-#include "ace/Stream.h"
 
 ACE_RCSID(ace, Service_Types, "$Id$")
-
-typedef ACE_Stream<ACE_SYNCH> MT_Stream;
-typedef ACE_Module<ACE_SYNCH> MT_Module;
-typedef ACE_Task<ACE_SYNCH> MT_Task;
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Service_Types.i"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/Stream_Modules.h"
+#include "ace/Stream.h"
+
+typedef ACE_Stream<ACE_SYNCH> MT_Stream;
+typedef ACE_Module<ACE_SYNCH> MT_Module;
+typedef ACE_Task<ACE_SYNCH> MT_Task;
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Service_Type_Impl)
 

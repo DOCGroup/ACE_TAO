@@ -14,11 +14,14 @@
 #define ACE_SHARED_OBJECT_H
 #include "ace/pre.h"
 
-#include "ace/ACE.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/ACE_export.h"
+#include "ace/ace_sys_types.h"
 
 /**
  * @class ACE_Shared_Object

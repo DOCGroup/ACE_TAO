@@ -9,26 +9,7 @@
  */
 //=============================================================================
 
-// Matthew Stevens 7-10-95 Fix GNU GCC 2.7 for memchr() problem.
-#if defined (ACE_HAS_GNU_CSTRING_H)
-// Define this file to keep /usr/include/memory.h from being included.
-# include /**/ <cstring>
-#else
-# if !defined (ACE_LACKS_MEMORY_H)
-#   include /**/ <memory.h>
-# endif /* !ACE_LACKS_MEMORY_H */
-#endif /* ACE_HAS_GNU_CSTRING_H */
-
-#if !defined (ACE_PSOS_DIAB_MIPS)
-# include /**/ <stdlib.h>
-# include /**/ <string.h>
-#endif /* !ACE_PSOS_DIAB_MIPS */
-
-// We need strings.h on some platforms (qnx-neutrino, for example)
-// to get the declaration for strcasecmp
-#if defined (ACE_HAS_STRINGS)
-# include /**/ <strings.h>
-#endif /* ACE_HAS_STRINGS */
+#include "ace/ace_string.h"
 
 #include /**/ <ctype.h>
 

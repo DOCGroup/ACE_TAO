@@ -1,11 +1,12 @@
 // $Id$
 
 #include "ace/Profile_Timer.h"
-#include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
 # include "ace/Profile_Timer.i"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(ace, Profile_Timer, "$Id$")
 

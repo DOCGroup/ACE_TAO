@@ -23,6 +23,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+// Default size of the ACE Reactor.
+# if defined (FD_SETSIZE)
+int const ACE_FD_SETSIZE = FD_SETSIZE;
+# else
+#   define ACE_FD_SETSIZE FD_SETSIZE
+# endif /* ACE_FD_SETSIZE */
+
 # if !defined (ACE_DEFAULT_SELECT_REACTOR_SIZE)
 #   define ACE_DEFAULT_SELECT_REACTOR_SIZE ACE_FD_SETSIZE
 # endif /* ACE_DEFAULT_SELECT_REACTOR_SIZE */
@@ -55,10 +62,10 @@ public:
 
   /**
    * Constructor, initializes the handle set from a given mask.
-   * <ACE_FD_SET_TYPE> is a <typedef> based on the platform's native
+   * <ACE_SELECT_FD_SET_TYPE> is a <typedef> based on the platform's native
    * type used for masks passed to <select>.
    */
-  ACE_Handle_Set (const ACE_FD_SET_TYPE &mask);
+  ACE_Handle_Set (const ACE_SELECT_FD_SET_TYPE &mask);
 
 #if defined (ACE_HAS_WINCE)
   /// Default dtor.

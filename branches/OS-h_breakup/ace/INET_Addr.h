@@ -14,13 +14,16 @@
 #define ACE_INET_ADDR_H
 #include "ace/pre.h"
 
-#include "ace/ACE.h"
+//#include "ace/ACE.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Addr.h"
+#include "ace/ace_sys_socket.h"
+#include "ace/Basic_Types.h"
 
 #if defined(VXWORKS)
 #  include /**/ "inetLib.h"

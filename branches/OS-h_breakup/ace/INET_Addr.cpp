@@ -3,11 +3,14 @@
 // Defines the Internet domain address family address format.
 
 #include "ace/INET_Addr.h"
-#include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/INET_Addr.i"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/Log_Msg.h"
+#include "ace/OS_String.h"
+#include "ace/OS.h"
 
 ACE_RCSID (ace,
            INET_Addr,

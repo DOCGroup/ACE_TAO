@@ -2,14 +2,15 @@
 // $Id$
 
 #include "ace/Event_Handler.h"
-#include "ace/Message_Block.h"
-#include "ace/OS_Errno.h"
-#include "ace/Reactor.h"
-#include "ace/Thread_Manager.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Event_Handler.i"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/Message_Block.h"
+#include "ace/OS_Errno.h"
+#include "ace/Reactor.h"
+#include "ace/Thread_Manager.h"
 
 ACE_RCSID(ace, Event_Handler, "$Id$")
 

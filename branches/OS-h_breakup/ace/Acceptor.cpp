@@ -3,13 +3,13 @@
 #ifndef ACE_ACCEPTOR_C
 #define ACE_ACCEPTOR_C
 
-#include "ace/ACE.h"
+#include "ace/Acceptor.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Acceptor.h"
+#include "ace/ACE.h"
 #include "ace/Handle_Set.h"
 #include "ace/WFMO_Reactor.h"
 

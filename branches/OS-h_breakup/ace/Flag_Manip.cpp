@@ -1,11 +1,12 @@
 // $Id$
 
 #include "ace/Flag_Manip.h"
-#include "ace/OS.h" // for ioctl(), etc...
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/Flag_Manip.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
+
+#include "ace/OS.h" // for ioctl(), etc...
 
 ACE_RCSID(ace, Flag_Manip, "$Id$")
 

@@ -586,76 +586,189 @@ typedef ACE_UINT16 ACE_USHORT16;
 
 
 
-// This doesn't belong here, so turn it off until I figure out where it goes.
-#if 0 
-// Byte-order (endian-ness) determination.
-# if defined (BYTE_ORDER)
-#   if (BYTE_ORDER == LITTLE_ENDIAN)
-#     define ACE_LITTLE_ENDIAN 0x0123
-#     define ACE_BYTE_ORDER ACE_LITTLE_ENDIAN
-#   elif (BYTE_ORDER == BIG_ENDIAN)
-#     define ACE_BIG_ENDIAN 0x3210
-#     define ACE_BYTE_ORDER ACE_BIG_ENDIAN
+
+
+
+// Type-safe, and unsigned.
+static const ACE_UINT32 ACE_U_ONE_SECOND_IN_MSECS = 1000U;
+static const ACE_UINT32 ACE_U_ONE_SECOND_IN_USECS = 1000000U;
+static const ACE_UINT32 ACE_U_ONE_SECOND_IN_NSECS = 1000000000U;
+
+
+
+
+/* This should work for linux, solaris 5.6 and above, IRIX, OSF */
+# if defined (ACE_HAS_LLSEEK) || defined (ACE_HAS_LSEEK64)
+#   if ACE_SIZEOF_LONG == 8
+      typedef off_t ACE_LOFF_T;
+#   elif defined (__sgi) || defined (AIX) || defined (HPUX) \
+    || defined (__QNX__)
+      typedef off64_t ACE_LOFF_T;
+#   elif defined (__sun)
+      typedef offset_t ACE_LOFF_T;
+#   elif defined (WIN32) //Add by Nick Lin -- for win32 llseek
+      typedef __int64  ACE_LOFF_T;  //Add by Nick Lin -- for win32 llseek
 #   else
-#     error: unknown BYTE_ORDER!
-#   endif /* BYTE_ORDER */
-# elif defined (__BYTE_ORDER)
-#   if (__BYTE_ORDER == __LITTLE_ENDIAN)
-#     define ACE_LITTLE_ENDIAN 0x0123
-#     define ACE_BYTE_ORDER ACE_LITTLE_ENDIAN
-#   elif (__BYTE_ORDER == __BIG_ENDIAN)
-#     define ACE_BIG_ENDIAN 0x3210
-#     define ACE_BYTE_ORDER ACE_BIG_ENDIAN
-#   else
-#     error: unknown __BYTE_ORDER!
-#   endif /* __BYTE_ORDER */
-# else /* ! BYTE_ORDER && ! __BYTE_ORDER */
-  // We weren't explicitly told, so we have to figure it out . . .
-#   if defined (i386) || defined (__i386__) || defined (_M_IX86) || \
-     defined (vax) || defined (__alpha) || defined (__LITTLE_ENDIAN__) || defined (ARM)
-    // We know these are little endian.
-#     define ACE_LITTLE_ENDIAN 0x0123
-#     define ACE_BYTE_ORDER ACE_LITTLE_ENDIAN
-#   else
-    // Otherwise, we assume big endian.
-#     define ACE_BIG_ENDIAN 0x3210
-#     define ACE_BYTE_ORDER ACE_BIG_ENDIAN
+      typedef loff_t ACE_LOFF_T;
 #   endif
-# endif /* ! BYTE_ORDER && ! __BYTE_ORDER */
+# endif /* ACE_HAS_LLSEEK || ACE_HAS_LSEEK64 */
 
-// Add some typedefs and macros to enhance Win32 conformance...
-#   if !defined (LPSECURITY_ATTRIBUTES)
-#     define LPSECURITY_ATTRIBUTES int
-#   endif /* !defined LPSECURITY_ATTRIBUTES */
-#   if !defined (GENERIC_READ)
-#     define GENERIC_READ 0
-#   endif /* !defined GENERIC_READ */
-#   if !defined (FILE_SHARE_READ)
-#     define FILE_SHARE_READ 0
-#   endif /* !defined FILE_SHARE_READ */
-#   if !defined (OPEN_EXISTING)
-#     define OPEN_EXISTING 0
-#   endif /* !defined OPEN_EXISTING */
-#   if !defined (FILE_ATTRIBUTE_NORMAL)
-#     define FILE_ATTRIBUTE_NORMAL 0
-#   endif /* !defined FILE_ATTRIBUTE_NORMAL */
-#   if !defined (MAXIMUM_WAIT_OBJECTS)
-#     define MAXIMUM_WAIT_OBJECTS 0
-#   endif /* !defined MAXIMUM_WAIT_OBJECTS */
-#   if !defined (FILE_FLAG_OVERLAPPED)
-#     define FILE_FLAG_OVERLAPPED 0
-#   endif /* !defined FILE_FLAG_OVERLAPPED */
-#   if !defined (FILE_FLAG_SEQUENTIAL_SCAN)
-#     define FILE_FLAG_SEQUENTIAL_SCAN 0
-#   endif   /* FILE_FLAG_SEQUENTIAL_SCAN */
+// Should this be in sys/types.h?
+# if defined (ACE_HAS_HI_RES_TIMER) &&  !defined (ACE_LACKS_LONGLONG_T)
+  /* hrtime_t is defined on systems (Suns) with ACE_HAS_HI_RES_TIMER */
+  typedef hrtime_t ACE_hrtime_t;
+# else  /* ! ACE_HAS_HI_RES_TIMER  ||  ACE_LACKS_LONGLONG_T */
+  typedef ACE_UINT64 ACE_hrtime_t;
+# endif /* ! ACE_HAS_HI_RES_TIMER  ||  ACE_LACKS_LONGLONG_T */
+
+# if defined (CHORUS) && !defined (CHORUS_4)
+#   define ACE_HRTIMER_START_VAL K_BSTART
+#   define ACE_HRTIMER_INCR_VAL K_BPOINT
+#   define ACE_HRTIMER_STOP_VAL K_BSTOP
+# else  /* ! CHORUS */
+#   define ACE_HRTIMER_START_VAL 0x0
+#   define ACE_HRTIMER_INCR_VAL 0x1
+#   define ACE_HRTIMER_STOP_VAL 0X3
+# endif /* CHORUS && !CHORUS_4 */
+
+# if !defined (ACE_HRTIMER_START)
+#   define ACE_HRTIMER_START ACE_HRTIMER_START_VAL
+# endif /* !ACE_HRTIMER_START */
+
+# if !defined (ACE_HRTIMER_INCR)
+#   define ACE_HRTIMER_INCR ACE_HRTIMER_INCR_VAL
+# endif /* !ACE_HRTIMER_INCR */
+
+# if !defined (ACE_HRTIMER_STOP)
+#   define ACE_HRTIMER_STOP ACE_HRTIMER_STOP_VAL
+# endif /* !ACE_HRTIMER_STOP */
+
+# if !defined (ACE_HRTIMER_GETTIME)
+#   define ACE_HRTIMER_GETTIME 0xFFFF
+# endif /* !ACE_HRTIMER_GETTIME */
 
 
 
-#if !defined (ACE_HAS_SSIZE_T)
-  typedef int ssize_t;
-#endif /* ACE_HAS_SSIZE_T */
+#if 0
+// These aren't used anywhere..
+# if defined (ACE_HAS_AIO_CALLS)
+  // = Giving unique ACE scoped names for some important
+  // RTSignal-Related constants. Becuase sometimes, different
+  // platforms use different names for these constants.
 
+  // Number of realtime signals provided in the system.
+  // _POSIX_RTSIG_MAX is the upper limit on the number of real time
+  // signals supported in a posix-4 compliant system.
+#   if defined (_POSIX_RTSIG_MAX)
+#     define ACE_RTSIG_MAX _POSIX_RTSIG_MAX
+#   else /* not _POSIX_RTSIG_MAX */
+  // POSIX-4 compilant system has to provide atleast 8 RT signals.
+  // @@ Make sure the platform does *not* define this constant with
+  // some other name. If yes, use that instead of 8.
+#     define ACE_RTSIG_MAX 8
+#   endif /* _POSIX_RTSIG_MAX */
+# endif /* ACE_HAS_AIO_CALLS */
 #endif /* 0 */
+
+// this doesn't belong here, but until I get an ace_aio.h file, here will be fine.
+// Defining POSIX4 real-time signal range.
+# if defined ACE_HAS_AIO_CALLS
+#   define ACE_SIGRTMIN SIGRTMIN
+#   define ACE_SIGRTMAX SIGRTMAX
+# else /* !ACE_HAS_AIO_CALLS */
+#   define ACE_SIGRTMIN 0
+#   define ACE_SIGRTMAX 0
+# endif /* ACE_HAS_AIO_CALLS */
+
+# if defined (ACE_WIN32) && ! defined (ACE_HAS_WINCE) \
+                         && ! defined (ACE_HAS_PHARLAP)
+typedef TRANSMIT_FILE_BUFFERS ACE_TRANSMIT_FILE_BUFFERS;
+typedef LPTRANSMIT_FILE_BUFFERS ACE_LPTRANSMIT_FILE_BUFFERS;
+typedef PTRANSMIT_FILE_BUFFERS ACE_PTRANSMIT_FILE_BUFFERS;
+
+#   define ACE_INFINITE INFINITE
+#   define ACE_STATUS_TIMEOUT STATUS_TIMEOUT
+#   define ACE_WAIT_FAILED WAIT_FAILED
+#   define ACE_WAIT_TIMEOUT WAIT_TIMEOUT
+# else /* ACE_WIN32 && !ACE_HAS_WINCE && !ACE_HAS_PHARLAP */
+
+struct ACE_TRANSMIT_FILE_BUFFERS
+{
+  void *Head;
+  size_t HeadLength;
+  void *Tail;
+  size_t TailLength;
+};
+typedef ACE_TRANSMIT_FILE_BUFFERS* ACE_PTRANSMIT_FILE_BUFFERS;
+typedef ACE_TRANSMIT_FILE_BUFFERS* ACE_LPTRANSMIT_FILE_BUFFERS;
+
+#   if !defined (ACE_INFINITE)
+#     define ACE_INFINITE LONG_MAX
+#   endif /* ACE_INFINITE */
+#   define ACE_STATUS_TIMEOUT LONG_MAX
+#   define ACE_WAIT_FAILED LONG_MAX
+#   define ACE_WAIT_TIMEOUT LONG_MAX
+# endif /* ACE_WIN32 */
+
+
+
+
+// probably doesn't belong here...
+//@{
+/**
+ * @name Efficiently compute aligned pointers to powers of 2 boundaries.
+ */
+
+/**
+ * Efficiently align "value" up to "alignment", knowing that all such
+ * boundaries are binary powers and that we're using two's complement
+ * arithmetic.
+ *
+ * Since the alignment is a power of two its binary representation is:
+ *
+ * alignment      = 0...010...0
+ *
+ * hence
+ *
+ * alignment - 1  = 0...001...1 = T1
+ *
+ * so the complement is:
+ *
+ * ~(alignment - 1) = 1...110...0 = T2
+ *
+ * Notice that there is a multiple of <alignment> in the range
+ * [<value>,<value> + T1], also notice that if
+ *
+ * X = ( <value> + T1 ) & T2
+ *
+ * then
+ *
+ * <value> <= X <= <value> + T1
+ *
+ * because the & operator only changes the last bits, and since X is a
+ * multiple of <alignment> (its last bits are zero) we have found the
+ * multiple we wanted.
+ */
+/// Return the next integer aligned to a required boundary
+/**
+ * @param ptr the base pointer
+ * @param alignment the required alignment
+ */
+# define ACE_align_binary(ptr, alignment) \
+    ((ptr + ((ptr_arith_t)((alignment)-1))) & (~((ptr_arith_t)((alignment)-1))))
+
+/// Return the next address aligned to a required boundary
+# define ACE_ptr_align_binary(ptr, alignment) \
+        ((char *) ACE_align_binary (((ptr_arith_t) (ptr)), (alignment)))
+//@}
+
+// this is only used in Log_Msg.cpp and Profile_Timer.h for right now.
+// maybe Time_Value.h?
+# if defined (ACE_LACKS_FLOATING_POINT)
+typedef ACE_UINT32 ACE_timer_t;
+# else
+typedef double ACE_timer_t;
+# endif /* ACE_LACKS_FLOATING_POINT */
 
 
 # if defined (__ACE_INLINE__)

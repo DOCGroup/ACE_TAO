@@ -1,6 +1,11 @@
 // $Id$
 
 #include "ace/Select_Reactor_Base.h"
+
+#if !defined (__ACE_INLINE__)
+#include "ace/Select_Reactor_Base.i"
+#endif /* __ACE_INLINE__ */
+
 #include "ace/Reactor.h"
 #include "ace/Thread.h"
 #include "ace/Synch_T.h"
@@ -8,10 +13,6 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/Timer_Heap.h"
 #include "ace/Log_Msg.h"
-
-#if !defined (__ACE_INLINE__)
-#include "ace/Select_Reactor_Base.i"
-#endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Select_Reactor_Base, "$Id$")
 

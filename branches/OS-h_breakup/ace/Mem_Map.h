@@ -14,11 +14,20 @@
 #define ACE_MEM_MAP_H
 #include "ace/pre.h"
 
-#include "ace/ACE.h"
+//#include "ace/ACE.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/ACE_export.h"
+#include "ace/ace_sys_param.h"
+#include "ace/ace_sys_mman.h"
+#include "ace/ace_stdio.h"
+#include "ace/ace_fcntl.h"
+#include "ace/Global_Macros.h"
+#include "ace/Default_Constants.h"
 
 /**
  * @class ACE_Mem_Map

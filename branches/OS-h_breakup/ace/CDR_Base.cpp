@@ -3,11 +3,12 @@
 // $Id$
 
 #include "ace/CDR_Base.h"
-#include "ace/Message_Block.h"
 
 #if !defined (__ACE_INLINE__)
 # include "ace/CDR_Base.inl"
 #endif /* ! __ACE_INLINE__ */
+
+#include "ace/Message_Block.h"
 
 ACE_RCSID(ace, CDR_Base, "$Id$")
 

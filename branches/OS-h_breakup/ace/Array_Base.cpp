@@ -4,7 +4,6 @@
 #define ACE_ARRAY_BASE_C
 
 #include "ace/Array_Base.h"
-#include "ace/Malloc_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -13,6 +12,8 @@
 #if !defined (__ACE_INLINE__)
 #include "ace/Array_Base.inl"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/Malloc_Base.h"
 
 ACE_RCSID(ace, Array_Base, "$Id$")
 

@@ -23,14 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/OS_Errno.h"
-
-#if !defined (ACE_WIN32) && !defined (ACE_PSOS) && !defined (ACE_HAS_WINCE)
-# include /**/ <sys/types.h>
-# if !defined (ACE_LACKS_UNISTD_H)
-#   include /**/ <unistd.h>  // VxWorks needs this to compile
-# endif /* !ACE_LACKS_UNISTD_H */
-# include /**/ <dirent.h>
-#endif /* !ACE_WIN32 && !ACE_PSOS */
+#include "ace/ace_dirent.h"
 
 // At least compile on some of the platforms without <ACE_DIR> info yet.
 # if !defined (ACE_HAS_DIRENT)

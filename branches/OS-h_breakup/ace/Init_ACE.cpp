@@ -1,10 +1,10 @@
 #include "ace/Init_ACE.h"
 
-#include "ace/Object_Manager.h"
-
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/Init_ACE.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
+
+#include "ace/Object_Manager.h"
 
 ACE_RCSID (ace,
            Init_ACE,

@@ -1,5 +1,13 @@
 // $Id$
 
+#include "ace/Thread_Control.h"
+
+ACE_RCSID(ace, Thread_Control, "$Id$")
+
+#if !defined (ACE_HAS_INLINED_OSCALLS)
+# include "ace/Thread_Control.inl"
+#endif /* ACE_HAS_INLINED_OS_CALLS */
+
 // <HACK ON>
 #include "ace/config-all.h"
 #if defined (ACE_LEGACY_MODE)
@@ -9,14 +17,7 @@
 #endif  /* ACE_LEGACY_MODE */
 // </HACK OFF>
 
-#include "ace/Thread_Control.h"
 #include "ace/Thread_Manager.h"
-
-ACE_RCSID(ace, Thread_Control, "$Id$")
-
-#if !defined (ACE_HAS_INLINED_OSCALLS)
-# include "ace/Thread_Control.inl"
-#endif /* ACE_HAS_INLINED_OS_CALLS */
 
 void
 ACE_Thread_Control::dump (void) const

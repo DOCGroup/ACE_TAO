@@ -21,6 +21,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/SV_Message.h"
+#include "ace/ace_sys_ipc.h"
 
 /**
  * @class ACE_SV_Message_Queue

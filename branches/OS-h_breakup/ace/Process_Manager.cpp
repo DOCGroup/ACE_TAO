@@ -1,16 +1,17 @@
 // $Id$
 
 // Process_Manager.cpp
-#include "ace/Synch_T.h"
-#include "ace/Process.h"
-#include "ace/Signal.h"
 #include "ace/Process_Manager.h"
-#include "ace/Object_Manager.h"
-#include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Process_Manager.i"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/Synch_T.h"
+#include "ace/Process.h"
+#include "ace/Signal.h"
+#include "ace/Object_Manager.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(ace, Process_Manager, "$Id$")
 

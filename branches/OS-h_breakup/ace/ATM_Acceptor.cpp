@@ -6,13 +6,13 @@ ACE_RCSID(ace, ATM_Acceptor, "$Id$")
 
 #if defined (ACE_HAS_ATM)
 
-#if defined (ACE_HAS_LINUX_ATM)
-#include "linux/atmdev.h"
-#endif /* ACE_HAS_LINUX_ATM */
-
 #if !defined (__ACE_INLINE__)
 #include "ace/ATM_Acceptor.i"
 #endif /* __ACE_INLINE__ */
+
+#if defined (ACE_HAS_LINUX_ATM)
+#include "linux/atmdev.h"
+#endif /* ACE_HAS_LINUX_ATM */
 
 // Put the actual definitions of the ACE_ATM_Request and
 // ACE_ATM_Request_Queue classes here to hide them from clients...

@@ -1,7 +1,6 @@
 // $Id$
 
 #include "ace/ATM_Stream.h"
-#include "ace/Log_Msg.h"
 
 ACE_RCSID (ace, ATM_Stream, "$Id$")
 
@@ -10,6 +9,8 @@ ACE_RCSID (ace, ATM_Stream, "$Id$")
 #if !defined (__ACE_INLINE__)
 #include "ace/ATM_Stream.i"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/Log_Msg.h"
 
 ACE_ALLOC_HOOK_DEFINE (ACE_ATM_Stream)
 

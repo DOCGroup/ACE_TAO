@@ -1,13 +1,13 @@
 // $Id$
 
-
 #include "ace/TP_Reactor.h"
-#include "ace/Reactor.h"
-#include "ace/Thread.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/TP_Reactor.i"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/Reactor.h"
+#include "ace/Thread.h"
 
 ACE_RCSID(ace, TP_Reactor, "$Id$")
 

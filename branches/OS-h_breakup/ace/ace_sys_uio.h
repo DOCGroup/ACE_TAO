@@ -12,16 +12,18 @@
 //=============================================================================
 
 #ifndef ACE_ACE_SYS_UIO_H
-#define ACE_ACE_SYS_UIO_H
-#include "ace/pre.h"
+# define ACE_ACE_SYS_UIO_H
+# include "ace/pre.h"
 
-#include "ace/config-all.h"
+# include "ace/config-all.h"
 
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
+# if !defined (ACE_LACKS_PRAGMA_ONCE)
+#   pragma once
+# endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include /**/ <sys/uio.h>
+# if !defined (ACE_LACKS_SYS_UIO_H) && !defined (ACE_LACKS_UNIX_SYS_HEADERS)
+#   include /**/ <sys/uio.h>
+# endif /* !ACE_LACKS_SYS_UIO_H && !ACE_LACKS_UNIX_SYS_HEADERS */
 
 # if defined(__rtems__)
 struct iovec {

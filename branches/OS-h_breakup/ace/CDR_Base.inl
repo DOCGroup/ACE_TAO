@@ -44,6 +44,8 @@
 //        register directly.
 //
 
+#include "ace/Message_Block.h"
+
 ACE_INLINE void
 ACE_CDR::swap_2 (const char *orig, char* target)
 {

@@ -2,16 +2,17 @@
 // $Id$
 
 #include "ace/SOCK_Connector.h"
+
+#if defined (ACE_LACKS_INLINE_FUNCTIONS)
+#include "ace/SOCK_Connector.i"
+#endif /* ACE_LACKS_INLINE_FUNCTIONS */
+
 #include "ace/INET_Addr.h"
 #include "ace/Log_Msg.h"
 
 #if !defined (ACE_HAS_WINCE)
 #include "ace/OS_QoS.h"
 #endif  // ACE_HAS_WINCE
-
-#if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/SOCK_Connector.i"
-#endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 ACE_RCSID(ace, SOCK_Connector, "$Id$")
 

@@ -3,13 +3,13 @@
 #include "ace/LSOCK_Dgram.h"
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
-#include "ace/Log_Msg.h"
-
 ACE_RCSID(ace, LSOCK_Dgram, "$Id$")
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/LSOCK_Dgram.i"
 #endif
+
+#include "ace/Log_Msg.h"
 
 ACE_ALLOC_HOOK_DEFINE(ACE_LSOCK_Dgram)
 

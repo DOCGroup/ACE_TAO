@@ -1,21 +1,22 @@
 // $Id$
 
-#include "ace/Thread.h"
 #include "ace/Token.h"
-#include "ace/Log_Msg.h"
-
-#if defined (DEBUGGING)
-#include "ace/streams.h"
-#endif /* DEBUGGING */
 
 ACE_RCSID(ace, Token, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Synch_T.h"
+  //#include "ace/Synch_T.h"
 #include "ace/Token.i"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/Thread.h"
+#include "ace/Log_Msg.h"
+
+#if defined (DEBUGGING)
+#include "ace/streams.h"
+#endif /* DEBUGGING */
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Token)
 

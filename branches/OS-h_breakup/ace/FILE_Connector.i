@@ -3,6 +3,9 @@
 
 // FILE_Connector.i
 
+#include "ace/Trace.h"
+#include "ace/Log_Msg.h"
+
 // Creates a Local ACE_FILE.
 
 ASYS_INLINE

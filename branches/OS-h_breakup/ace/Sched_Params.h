@@ -15,11 +15,23 @@
 #define ACE_SCHED_PARAMS_H
 #include "ace/pre.h"
 
-#include "ace/OS.h"
+//#include "ace/OS.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/ACE_export.h"
+#include "ace/Time_Value.h"
+#include "ace/ace_threads.h"
+
+
+
+// = The ACE_Sched_Priority type should be used for platform-
+//   independent thread and process priorities, by convention.
+//   int should be used for OS-specific priorities.
+typedef int ACE_Sched_Priority;
 
 /**
  * @class ACE_Sched_Params

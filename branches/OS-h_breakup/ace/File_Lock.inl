@@ -1,6 +1,8 @@
 /* -*- C++ -*- */
 // $Id$
 
+#include "ace/OS.h"
+
 ACE_INLINE int
 ACE_File_Lock::acquire_read (short whence, off_t start, off_t len)
 {

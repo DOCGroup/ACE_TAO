@@ -22,6 +22,8 @@
 
 #if !defined (ACE_WIN32) && !defined (ACE_LACKS_UNIX_SYSLOG)
 
+#  include /**/ <syslog.h>
+
 #include "ace/Log_Msg_Backend.h"
 
 /**

@@ -145,6 +145,8 @@
 
 // ---------------- platform features or lack of them -------------
 
+
+
 // By default WIN32 has FD_SETSIZE of 64, which places the limit
 // between 61 and 64 on the number of clients a server using the
 // Select Reactor can support at the same time (i.e., 64 - standard in,
@@ -185,9 +187,52 @@
 
 #define ACE_DEFAULT_THREAD_PRIORITY 0
 
+
+# if !defined(__MINGW32__)
+#   define ACE_PID_T_TYPE long
+#   define ACE_NLINK_T_TYPE DWORD
+# endif /* __MINGW32__ */
+#define ACE_LACKS_MODE_T
+#define ACE_LACKS_GID_T
+#define ACE_LACKS_UID_T
+#define ACE_LACKS_CADDR_T
+
+#define ACE_LACKS_SYS_FILE_H
+#define ACE_LACKS_SYS_IOCTL_H
+#define ACE_LACKS_SYS_IPC_H
+#define ACE_LACKS_SYS_MMAN_H
+#define ACE_LACKS_SYSV_MSG_H
+#define ACE_LACKS_SYS_PARAM_H
+#define ACE_LACKS_SYS_RESOURCE_H
+#define ACE_LACKS_SYS_SELECT_H
+#define ACE_LACKS_SYS_SEM_H
+#define ACE_LACKS_SYS_SHM_H
+#define ACE_LACKS_SYS_SOCKET_H
+//#define ACE_LACKS_SYS_STAT_H
+#define ACE_LACKS_SYS_TIMES_H
+//#define ACE_LACKS_SYS_TYPES_H
+#define ACE_LACKS_SYS_UIO_H
+#define ACE_LACKS_SYS_UTSNAME_H
+#define ACE_LACKS_SYS_WAIT_H
+
+#define ACE_LACKS_UNISTD_H
+#define ACE_LACKS_POLL_H
+#define ACE_LACKS_AIO_H
+#define ACE_LACKS_DLFCN_H
+#define ACE_LACKS_FCNTL
+//#define ACE_LACKS_FCNTL_H
+#define ACE_LACKS_NETINET_IN_H
+#define ACE_LACKS_PWD_H
+#define ACE_LACKS_SCHED_H
+//#define ACE_LACKS_SIGNAL_H
+
+#define ACE_LACKS_STROPTS_H
+
+
 #define ACE_HAS_RECURSIVE_MUTEXES
 #define ACE_HAS_MSG
 #define ACE_HAS_DIRENT
+#define ACE_LACKS_DIRENT_H
 #define ACE_HAS_SOCKADDR_MSG_NAME
 #define ACE_LACKS_GETPGID
 #define ACE_LACKS_GETPPID
@@ -196,7 +241,7 @@
 #define ACE_LACKS_SETREUID
 #define ACE_HAS_THREAD_SAFE_ACCEPT
 #define ACE_LACKS_GETHOSTENT
-#define ACE_LACKS_SIGACTION
+#define ACE_LACKS_SIGACTION_T
 #define ACE_LACKS_SIGSET
 #define ACE_LACKS_FORK
 #define ACE_LACKS_UNIX_SIGNALS
@@ -205,7 +250,7 @@
 #define ACE_LACKS_SEMBUF_T
 #define ACE_LACKS_MSGBUF_T
 #define ACE_LACKS_SYSV_SHMEM
-#define ACE_LACKS_UNISTD_H
+//#define ACE_LACKS_UNISTD_H
 #define ACE_LACKS_RLIMIT
 #define ACE_LACKS_MKFIFO
 #define ACE_LACKS_TELLDIR
@@ -213,7 +258,7 @@
 #define ACE_LACKS_REWINDDIR
 #define ACE_LACKS_READDIR_R
 #define ACE_LACKS_INET_ATON
-#define ACE_LACKS_PARAM_H
+//#define ACE_LACKS_PARAM_H
 
 #define ACE_HAS_VSWPRINTF
 #define ACE_HAS_VFWPRINTF
@@ -325,7 +370,7 @@ typedef unsigned long long ACE_UINT64;
 # define ACE_HAS_THREAD_SPECIFIC_STORAGE
 
 // Win32 doesn't have fcntl
-#define ACE_LACKS_FCNTL
+//#define ACE_LACKS_FCNTL
 
 // must have _MT defined to include multithreading
 // features from win32 headers
@@ -504,82 +549,276 @@ typedef unsigned long long ACE_UINT64;
 #define SO_REUSEPORT 0x0400  // We just have to pick a value that won't conflict
 #endif
 
+// taken from OS.h
+// A lot of this stuff needs to be moved into the appropriate ace_*.h files.
+
+// Turn off warnings for /W4
+// To resume any of these warning: #pragma warning(default: 4xxx)
+// which should be placed after these defines
+
+#   if !defined (ALL_WARNINGS) && defined(_MSC_VER) && !defined(ghs) && !defined(__MINGW32__)
+// #pragma warning(disable: 4101)  // unreferenced local variable
+#     pragma warning(disable: 4127)  /* constant expression for TRACE/ASSERT */
+#     pragma warning(disable: 4134)  /* message map member fxn casts */
+#     pragma warning(disable: 4511)  /* private copy constructors are good to have */
+#     pragma warning(disable: 4512)  /* private operator= are good to have */
+#     pragma warning(disable: 4514)  /* unreferenced inlines are common */
+#     pragma warning(disable: 4710)  /* private constructors are disallowed */
+#     pragma warning(disable: 4705)  /* statement has no effect in optimized code */
+// #pragma warning(disable: 4701)  // local variable *may* be used without init
+// #pragma warning(disable: 4702)  // unreachable code caused by optimizations
+#     pragma warning(disable: 4791)  /* loss of debugging info in retail version */
+// #pragma warning(disable: 4204)  // non-constant aggregate initializer
+#     pragma warning(disable: 4275)  /* deriving exported class from non-exported */
+#     pragma warning(disable: 4251)  /* using non-exported as public in exported */
+#     pragma warning(disable: 4786)  /* identifier was truncated to '255' characters in the browser information */
+#     pragma warning(disable: 4097)  /* typedef-name used as synonym for class-name */
+#   endif /* !ALL_WARNINGS && _MSV_VER && !ghs && !__MINGW32__ */
+
+// STRICT type checking in WINDOWS.H enhances type safety for Windows
+// programs by using distinct types to represent all the different
+// HANDLES in Windows. So for example, STRICT prevents you from
+// mistakenly passing an HPEN to a routine expecting an HBITMAP.
+// Note that we only use this if we
+#   if defined (ACE_HAS_STRICT) && (ACE_HAS_STRICT != 0)
+#     if !defined (STRICT)   /* may already be defined */
+#       define STRICT
+#     endif /* !STRICT */
+#   endif /* ACE_HAS_STRICT */
+
+// hmmm... this seems strange.
+#   if !defined (ACE_HAS_WINCE)
+#     include /**/ <sys/timeb.h>
+#   endif /* ACE_HAS_WINCE */
 
 
-#if defined (ACE_HAS_WTHREADS)
+// We're on WinNT or Win95
+#   define ACE_PLATFORM_A "Win32"
+#   define ACE_PLATFORM_EXE_SUFFIX_A ".exe"
 
-typedef CRITICAL_SECTION ACE_thread_mutex_t;
+// Used for dynamic linking
+#   if !defined (ACE_DEFAULT_SVC_CONF)
+#     define ACE_DEFAULT_SVC_CONF ACE_LIB_TEXT (".\\svc.conf")
+#   endif /* ACE_DEFAULT_SVC_CONF */
 
-typedef struct
-{
-  int type_; // Either USYNC_THREAD or USYNC_PROCESS
-  union
-  {
-    HANDLE proc_mutex_;
-    CRITICAL_SECTION thr_mutex_;
-  };
-} ACE_mutex_t;
+// The following are #defines and #includes that are specific to
+// WIN32.
+#   if defined (ACE_HAS_WINCE)
+#     define ACE_STDIN  _fileno (stdin)
+#     define ACE_STDOUT _fileno (stdout)
+#     define ACE_STDERR _fileno (stderr)
+#   else
+#     define ACE_STDIN GetStdHandle (STD_INPUT_HANDLE)
+#     define ACE_STDOUT GetStdHandle (STD_OUTPUT_HANDLE)
+#     define ACE_STDERR GetStdHandle (STD_ERROR_HANDLE)
+#   endif  // ACE_HAS_WINCE
 
-// Wrapper for NT Events.
-typedef HANDLE ACE_event_t;
+// Default semaphore key and mutex name
+#   if !defined (ACE_DEFAULT_SEM_KEY)
+#     define ACE_DEFAULT_SEM_KEY "ACE_SEM_KEY"
+#   endif /* ACE_DEFAULT_SEM_KEY */
 
-#     if defined (ACE_WIN32)
-// This can probably get _wider_ as more types are defined in PACE.
-// ie: see above ACE_mutex_t
+#   define ACE_INVALID_SEM_KEY 0
 
-//@@ ACE_USES_WINCE_SEMA_SIMULATION is used to debug
-//   semaphore simulation on WinNT.  It should be
-//   changed to ACE_USES_HAS_WINCE at some later point.
-#       if !defined (ACE_USES_WINCE_SEMA_SIMULATION)
-typedef HANDLE ACE_sema_t;
+#   if defined (ACE_HAS_WINCE)
+// @@ WinCE probably doesn't have structural exception support
+//    But I need to double check to find this out
+#     define ACE_SEH_TRY if (1)
+#     define ACE_SEH_EXCEPT(X) while (0)
+#     define ACE_SEH_FINALLY if (1)
+#   else
+#     if !defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+#       define ACE_SEH_TRY if (1)
+#       define ACE_SEH_EXCEPT(X) while (0)
+#       define ACE_SEH_FINALLY if (1)
+#     elif defined(__BORLANDC__)
+#       if (__BORLANDC__ >= 0x0530) /* Borland C++ Builder 3.0 */
+#         define ACE_SEH_TRY try
+#         define ACE_SEH_EXCEPT(X) __except(X)
+#         define ACE_SEH_FINALLY __finally
 #       else
-/**
- * @class ACE_sema_t
- *
- * @brief Semaphore simulation for Windows CE.
- */
-class ACE_OS_Export ACE_sema_t
+#         define ACE_SEH_TRY if (1)
+#         define ACE_SEH_EXCEPT(X) while (0)
+#         define ACE_SEH_FINALLY if (1)
+#       endif
+#     elif defined (__IBMCPP__) && (__IBMCPP__ >= 400)
+#       define ACE_SEH_TRY if (1)
+#       define ACE_SEH_EXCEPT(X) while (0)
+#       define ACE_SEH_FINALLY if (1)
+#     else
+#       define ACE_SEH_TRY __try
+#       define ACE_SEH_EXCEPT(X) __except(X)
+#       define ACE_SEH_FINALLY __finally
+#     endif /* __BORLANDC__ */
+#   endif /* ACE_HAS_WINCE */
+
+// The "null" device on Win32.
+#   define ACE_DEV_NULL "nul"
+
+// Define the pathname separator characters for Win32 (ugh).
+#   define ACE_DIRECTORY_SEPARATOR_STR_A "\\"
+#   define ACE_DIRECTORY_SEPARATOR_CHAR_A '\\'
+#   define ACE_LD_SEARCH_PATH ACE_LIB_TEXT ("PATH")
+#   define ACE_LD_SEARCH_PATH_SEPARATOR_STR ACE_LIB_TEXT (";")
+#   define ACE_DLL_SUFFIX ACE_LIB_TEXT (".dll")
+#   if defined (__MINGW32__)
+#     define ACE_DLL_PREFIX ACE_LIB_TEXT ("lib")
+#   else /* __MINGW32__ */
+#     define ACE_DLL_PREFIX ACE_LIB_TEXT ("")
+#   endif /* __MINGW32__ */
+
+// This will help until we figure out everything:
+#   define NFDBITS 32 /* only used in unused functions... */
+// These two may be used for internal flags soon:
+#   define MAP_PRIVATE 1
+#   define MAP_SHARED  2
+#   define MAP_FIXED   4
+
+#   define RUSAGE_SELF 1
+
+struct shmaddr { };
+struct msqid_ds {};
+
+// Fake the UNIX rusage structure.  Perhaps we can add more to this
+// later on?
+struct rusage
 {
-public:
-  /// Serializes access to <count_>.
-  ACE_thread_mutex_t lock_;
-
-  /// This event is signaled whenever the count becomes non-zero.
-  ACE_event_t count_nonzero_;
-
-  /// Current count of the semaphore.
-  u_int count_;
+  FILETIME ru_utime;
+  FILETIME ru_stime;
 };
 
-#       endif /* ACE_USES_WINCE_SEMA_SIMULATION */
-#     endif /* defined (ACE_WIN32) */
+#   if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
+#     include /**/ <ws2tcpip.h>
+#   endif /* ACE_HAS_WINSOCK2 */
 
-// These need to be different values, neither of which can be 0...
-#     define USYNC_THREAD 1
-#     define USYNC_PROCESS 2
+// error code mapping
+#   define ETIME                   ERROR_SEM_TIMEOUT
+#   define EWOULDBLOCK             WSAEWOULDBLOCK
+#   define EINPROGRESS             WSAEINPROGRESS
+#   define EALREADY                WSAEALREADY
+#   define ENOTSOCK                WSAENOTSOCK
+#   define EDESTADDRREQ            WSAEDESTADDRREQ
+#   define EMSGSIZE                WSAEMSGSIZE
+#   define EPROTOTYPE              WSAEPROTOTYPE
+#   define ENOPROTOOPT             WSAENOPROTOOPT
+#   define EPROTONOSUPPORT         WSAEPROTONOSUPPORT
+#   define ESOCKTNOSUPPORT         WSAESOCKTNOSUPPORT
+#   define EOPNOTSUPP              WSAEOPNOTSUPP
+#   define EPFNOSUPPORT            WSAEPFNOSUPPORT
+#   define EAFNOSUPPORT            WSAEAFNOSUPPORT
+#   define EADDRINUSE              WSAEADDRINUSE
+#   define EADDRNOTAVAIL           WSAEADDRNOTAVAIL
+#   define ENETDOWN                WSAENETDOWN
+#   define ENETUNREACH             WSAENETUNREACH
+#   define ENETRESET               WSAENETRESET
+#   define ECONNABORTED            WSAECONNABORTED
+#   define ECONNRESET              WSAECONNRESET
+#   define ENOBUFS                 WSAENOBUFS
+#   define EISCONN                 WSAEISCONN
+#   define ENOTCONN                WSAENOTCONN
+#   define ESHUTDOWN               WSAESHUTDOWN
+#   define ETOOMANYREFS            WSAETOOMANYREFS
+#   define ETIMEDOUT               WSAETIMEDOUT
+#   define ECONNREFUSED            WSAECONNREFUSED
+#   define ELOOP                   WSAELOOP
+#   define EHOSTDOWN               WSAEHOSTDOWN
+#   define EHOSTUNREACH            WSAEHOSTUNREACH
+#   define EPROCLIM                WSAEPROCLIM
+#   define EUSERS                  WSAEUSERS
+#   define EDQUOT                  WSAEDQUOT
+#   define ESTALE                  WSAESTALE
+#   define EREMOTE                 WSAEREMOTE
+// Grrr! These two are already defined by the horrible 'standard'
+// library.
+// #define ENAMETOOLONG            WSAENAMETOOLONG
+// #define ENOTEMPTY               WSAENOTEMPTY
 
-#     define THR_CANCEL_DISABLE      0
-#     define THR_CANCEL_ENABLE       0
-#     define THR_CANCEL_DEFERRED     0
-#     define THR_CANCEL_ASYNCHRONOUS 0
-#     define THR_DETACHED            0x02000000 /* ignore in most places */
-#     define THR_BOUND               0          /* ignore in most places */
-#     define THR_NEW_LWP             0          /* ignore in most places */
-#     define THR_DAEMON              0          /* ignore in most places */
-#     define THR_JOINABLE            0          /* ignore in most places */
-#     define THR_SUSPENDED   CREATE_SUSPENDED
-#     define THR_USE_AFX             0x01000000
-#     define THR_SCHED_FIFO          0
-#     define THR_SCHED_RR            0
-#     define THR_SCHED_DEFAULT       0
-#     define THR_SCOPE_PROCESS       0
-#     define THR_SCOPE_SYSTEM        0
-#   endif /* ACE_HAS_PTHREADS / STHREADS / PSOS / VXWORKS / WTHREADS */
+#   if !defined (ACE_HAS_WINCE)
+#     include /**/ <time.h>
+#     include /**/ <direct.h>
+#     include /**/ <process.h>
+#     include /**/ <io.h>
+#   endif /* ACE_HAS_WINCE */
+
+#   if defined (__BORLANDC__)
+#     include /**/ <fcntl.h>
+#     define _chdir chdir
+#     define _ftime ftime
+#     undef _access
+#     define _access access
+#     if (__BORLANDC__ <= 0x540)
+#       define _getcwd getcwd
+#       define _stat stat
+#     endif
+#     define _isatty isatty
+#     define _umask umask
+#     define _fstat fstat
+#     define _stricmp stricmp
+#     define _strnicmp strnicmp
+
+#     define _timeb timeb
+
+#     define _O_CREAT O_CREAT
+#     define _O_EXCL  O_EXCL
+#     define _O_TRUNC O_TRUNC
+      // 0x0800 is used for O_APPEND.  0x08 looks free.
+#     define _O_TEMPORARY 0x08 /* see fcntl.h */
+#     define _O_RDWR   O_RDWR
+#     define _O_WRONLY O_WRONLY
+#     define _O_RDONLY O_RDONLY
+#     define _O_APPEND O_APPEND
+#     define _O_BINARY O_BINARY
+#     define _O_TEXT   O_TEXT
+#   endif /* __BORLANDC__ */
+
+typedef OVERLAPPED ACE_OVERLAPPED;
+
+#define O_RDWR _O_RDWR
+#define O_CREAT _O_CREAT
+
+#define ACE_MAX_USERID 32
+
+#define ACE_EXITCODE_TYPE DWORD
+#   define ACE_SYSCALL_FAILED 0xFFFFFFFF
+
+// Needed to map calls to NT transparently.
+#   define MS_ASYNC 0
+#   define MS_INVALIDATE 0
+
+// Reliance on CRT - I don't really like this.
+
+#   define O_NDELAY    1
+#   if !defined (MAXPATHLEN)
+#     define MAXPATHLEN  _MAX_PATH
+#   endif /* !MAXPATHLEN */
+#   define MAXNAMLEN   _MAX_FNAME
+#   define EADDRINUSE WSAEADDRINUSE
 
 
 
 
 
+
+
+
+// The ordering of the fields in this struct is important.  It has to
+// match those in WSABUF.
+struct iovec
+{
+  size_t iov_len; // byte count to read/write
+  char *iov_base; // data to be read/written
+
+  // WSABUF is a Winsock2-only type.
+#   if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
+  operator WSABUF &(void) { return *((WSABUF *) this); }
+#   endif /* defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) */
+};
+
+#define ACE_IDTYPE_T_TYPE int
+#define ACE_ID_T_TYPE DWORD
+#   define ACE_SELF (0)
+#define ACE_PRI_T_TYPE int
+#define ACE_KEY_T_TYPE char*
 
 #include "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_COMMON_H */

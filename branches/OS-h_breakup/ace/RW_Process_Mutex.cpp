@@ -1,14 +1,15 @@
 // $Id$
 
 #include "ace/RW_Process_Mutex.h"
-#include "ace/Log_Msg.h"
-#include "ace/ACE.h"
 
 ACE_RCSID(ace, RW_Process_Mutex, "$Id$")
 
 #if !defined (__ACE_INLINE__)
 #include "ace/RW_Process_Mutex.inl"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/Log_Msg.h"
+#include "ace/ACE.h"
 
 ACE_ALLOC_HOOK_DEFINE(ACE_RW_Process_Mutex)
 

@@ -323,8 +323,6 @@
 
 # if defined (ACE_WIN32)
 
-#define ACE_MAX_USERID 32
-
 // This is necessary to work around bugs with Win32 non-blocking
 // connects...
 #   if !defined (ACE_NON_BLOCKING_BUG_DELAY)

@@ -2,11 +2,12 @@
 // $Id$
 
 #include "ace/FIFO_Recv_Msg.h"
-#include "ace/Log_Msg.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/FIFO_Recv_Msg.i"
 #endif
+
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(ace, FIFO_Recv_Msg, "$Id$")
 

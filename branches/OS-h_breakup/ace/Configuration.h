@@ -31,10 +31,10 @@
 #define ACE_CONFIGURATION_H
 #include "ace/pre.h"
 
-#include "ace/ACE.h"
+//#include "ace/ACE.h"
 #include "ace/SString.h"
 #include "ace/Hash_Map_With_Allocator_T.h"
-#include "ace/Malloc.h"
+//#include "ace/Malloc.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

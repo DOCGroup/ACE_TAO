@@ -15,11 +15,15 @@
 #define ACE_IO_SAP_H
 #include "ace/pre.h"
 
-#include "ace/Flag_Manip.h"
+//#include "ace/Flag_Manip.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/ACE_export.h"
+#include "ace/ace_sys_types.h"
 
 /**
  * @class ACE_IO_SAP
