@@ -135,10 +135,14 @@ class TAO_Export IIOP_Object : public STUB_Object
   // = DESCRIPTION
   //   NOTE that this uses (single) implementation inheritance to share
   //   most of the basic code for an object reference.
+  //  
+  //   This implementation provides DII support, and an analagous
+  //   interpreter that let  static stubs be very small.  It's
+  //   specific to objrefs with IIOP::Profile.
 public:
-  void do_call (CORBA::Environment &env,
-                const TAO_Call_Data *info,
-                ...);
+  void do_static_call (CORBA::Environment &env,
+                       const TAO_Call_Data *info,
+                       ...);
   // SII-based invocation.
 
   void do_dynamic_call (const char *opname,

@@ -171,7 +171,7 @@ PortableServer::Policy_ptr  PortableServer::Policy::copy (CORBA::Environment &en
     return PortableServer::Policy::_nil ();
   }
   this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_call (env, &PortableServer_Policy_copy_calldata, &retval);
+  istub->do_static_call (env, &PortableServer_Policy_copy_calldata, &retval);
   return PortableServer::Policy::_narrow (retval, env);
 
 }
@@ -194,7 +194,7 @@ void  PortableServer::Policy::destroy (CORBA::Environment &env)
     return;
   }
   this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_call (env, &PortableServer_Policy_destroy_calldata, 0);
+  istub->do_static_call (env, &PortableServer_Policy_destroy_calldata, 0);
   return; // no value
 
 }
@@ -411,7 +411,7 @@ PortableServer::ThreadPolicyValue PortableServer::ThreadPolicy::value(CORBA::Env
     return retval;
   }
   this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_call (env, &_get_PortableServer_ThreadPolicy_value_calldata, &retval);
+  istub->do_static_call (env, &_get_PortableServer_ThreadPolicy_value_calldata, &retval);
   return retval;
 
 }
@@ -515,7 +515,7 @@ PortableServer::LifespanPolicyValue PortableServer::LifespanPolicy::value(CORBA:
     return retval;
   }
   this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_call (env, &_get_PortableServer_LifespanPolicy_value_calldata, &retval);
+  istub->do_static_call (env, &_get_PortableServer_LifespanPolicy_value_calldata, &retval);
   return retval;
 
 }
@@ -619,7 +619,7 @@ PortableServer::IdUniquenessPolicyValue PortableServer::IdUniquenessPolicy::valu
     return retval;
   }
   this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_call (env, &_get_PortableServer_IdUniquenessPolicy_value_calldata, &retval);
+  istub->do_static_call (env, &_get_PortableServer_IdUniquenessPolicy_value_calldata, &retval);
   return retval;
 
 }
@@ -723,7 +723,7 @@ PortableServer::IdAssignmentPolicyValue PortableServer::IdAssignmentPolicy::valu
     return retval;
   }
   this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_call (env, &_get_PortableServer_IdAssignmentPolicy_value_calldata, &retval);
+  istub->do_static_call (env, &_get_PortableServer_IdAssignmentPolicy_value_calldata, &retval);
   return retval;
 
 }
@@ -827,7 +827,7 @@ PortableServer::ImplicitActivationPolicyValue PortableServer::ImplicitActivation
     return retval;
   }
   this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_call (env, &_get_PortableServer_ImplicitActivationPolicy_value_calldata, &retval);
+  istub->do_static_call (env, &_get_PortableServer_ImplicitActivationPolicy_value_calldata, &retval);
   return retval;
 
 }
@@ -931,7 +931,7 @@ PortableServer::ServantRetentionPolicyValue PortableServer::ServantRetentionPoli
     return retval;
   }
   this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_call (env, &_get_PortableServer_ServantRetentionPolicy_value_calldata, &retval);
+  istub->do_static_call (env, &_get_PortableServer_ServantRetentionPolicy_value_calldata, &retval);
   return retval;
 
 }
@@ -1037,7 +1037,7 @@ PortableServer::RequestProcessingPolicyValue PortableServer::RequestProcessingPo
     return retval;
   }
   this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_call (env, &_get_PortableServer_RequestProcessingPolicy_value_calldata, &retval);
+  istub->do_static_call (env, &_get_PortableServer_RequestProcessingPolicy_value_calldata, &retval);
   return retval;
 
 }
@@ -2000,7 +2000,7 @@ PortableServer::ObjectId * PortableServer::Current::get_object_id (CORBA::Enviro
     return 0;
   }
   this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_call (env, &PortableServer_Current_get_object_id_calldata, &retval);
+  istub->do_static_call (env, &PortableServer_Current_get_object_id_calldata, &retval);
   return retval;
 
 }

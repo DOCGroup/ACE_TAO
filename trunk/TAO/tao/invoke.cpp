@@ -1,4 +1,5 @@
 // @(#)invoke.cpp       1.3 95/09/24
+
 // Copyright 1994-1995 by Sun Microsystems Inc.
 // All Rights Reserved
 //
@@ -30,11 +31,8 @@
 
 #include "tao/corba.h"
 
-class ACE_Synchronous_Cancellation_Required
+class TAO_Synchronous_Cancellation_Required
   // = TITLE
-  //     ACE_Synchronous_Cancellation_Required
-  //
-  // = DESCRIPTION
   //     Stick one of these at the beginning of a block that can't
   //     support asynchronous cancellation, and which must be
   //     cancel-safe.
@@ -42,7 +40,7 @@ class ACE_Synchronous_Cancellation_Required
   // = EXAMPLE
   //     somefunc()
   //     {
-  //       ACE_Synchronous_Cancellation_Required NOT_USED;
+  //       TAO_Synchronous_Cancellation_Required NOT_USED;
   //       ...
   //     }
 {
@@ -50,14 +48,14 @@ public:
   // These should probably be in a separate inline file, but they're
   // only used within this one file right now, and we always want them
   // inlined, so here they sit.
-  ACE_Synchronous_Cancellation_Required (void)
+  TAO_Synchronous_Cancellation_Required (void)
     {
 #if !defined (VXWORKS)
       ACE_OS::thr_setcanceltype (THR_CANCEL_DEFERRED, &old_type_);
 #endif /* ! VXWORKS */
     }
 
-  ~ACE_Synchronous_Cancellation_Required (void)
+  ~TAO_Synchronous_Cancellation_Required (void)
     {
 #if !defined (VXWORKS)
       int dont_care;
@@ -77,12 +75,12 @@ private:
 // patent application is pending.
 
 void
-IIOP_Object::do_call (CORBA::Environment &env,  // exception reporting
+IIOP_Object::do_static_call (CORBA::Environment &env,  // exception reporting
                       const TAO_Call_Data *info,        // call description
                       ...)                       // ... any parameters
 
 {
-  ACE_Synchronous_Cancellation_Required NOT_USED;
+  TAO_Synchronous_Cancellation_Required NOT_USED;
 
   TAO_GIOP_Invocation call (this,
                             info->opname,
@@ -109,7 +107,7 @@ IIOP_Object::do_call (CORBA::Environment &env,  // exception reporting
 
       if (env.exception ())
         {
-          dexc (env, "do_call, start request message");
+          dexc (env, "do_static_call, start request message");
           return;
         }
 
@@ -146,7 +144,7 @@ IIOP_Object::do_call (CORBA::Environment &env,  // exception reporting
 
           if (env.exception ())
             {
-              dexc (env, "do_call, put request parameter");
+              dexc (env, "do_static_call, put request parameter");
               return;
             }
         }
@@ -168,7 +166,7 @@ IIOP_Object::do_call (CORBA::Environment &env,  // exception reporting
 
       if (env.exception ())
         {
-          dexc (env, "do_call, invoke");
+          dexc (env, "do_static_call, invoke");
           return;
         }
       if (!info->is_roundtrip
@@ -230,7 +228,7 @@ IIOP_Object::do_call (CORBA::Environment &env,  // exception reporting
 
                   if (env.exception ())
                     {
-                      dexc (env, "do_call, get reply parameter");
+                      dexc (env, "do_static_call, get reply parameter");
                       return;
                     }
                 }
@@ -259,7 +257,7 @@ IIOP_Object::do_dynamic_call (const char *opname,               // operation nam
                               CORBA::ExceptionList &exceptions, // possible user exceptions
                               CORBA::Environment &env)          // exception reporting
 {
-  ACE_Synchronous_Cancellation_Required NOT_USED;
+  TAO_Synchronous_Cancellation_Required NOT_USED;
 
   TAO_GIOP_Invocation call (this, opname, is_roundtrip);
 
@@ -273,7 +271,7 @@ IIOP_Object::do_dynamic_call (const char *opname,               // operation nam
 
       if (env.exception ())
         {
-          dexc (env, "do_call, start request message");
+          dexc (env, "do_static_call, start request message");
           return;
         }
 
