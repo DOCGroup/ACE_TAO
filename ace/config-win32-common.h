@@ -212,6 +212,10 @@
 
 #ifdef _DEBUG
 	#include /**/ <crtdbg.h>
+#else
+	#if ! defined (__ACE_INLINE__)
+		#define __ACE_INLINE__
+	#endif /* ! __ACE_INLINE__ */
 #endif
 
 // We are build ACE and want to use MFC (multithreaded)
