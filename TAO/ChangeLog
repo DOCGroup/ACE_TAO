@@ -1,3 +1,24 @@
+Mon Nov 10 18:09:59 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* tests/AMI/server.cpp:
+	* tests/AMI_Buffering/admin.cpp:
+	* tests/AMI_Buffering/server.cpp:
+	* tests/Crashed_Callback/server.cpp:
+	* tests/OBV/Any/server.cpp:
+	* tests/OBV/Factory/server.cpp:
+	* tests/OBV/Forward/server.cpp:
+	* tests/OBV/TC_Alignment/server.cpp:
+	  Added #include ace/OS_NS_stdio.h to get ACE_OS::fclose/fopen/fprintf.
+
+	* tests/ORT/ServerRequestInterceptor.cpp:
+	  Added #include ace/OS_NS_string.h to get ACE_OS::strcmp
+
+	* tests/Connection_Timeout/client.bor:
+	* tests/MT_Timeout/client.bor:
+	* tests/Oneway_Buffering/client.bor:
+	* tests/Nested_Upcall_Crash/scavenger.bor:
+	  Added ValueType library
+
 Mon Nov 10 11:33:34 2003  Justin Michel <michel_j@ociweb.com>
 
         * TAO/orbsvcs/ImplRepo_Service/Activator_NT_Service.cpp:
@@ -95,7 +116,7 @@ Mon Nov 10 11:33:34 2003  Justin Michel <michel_j@ociweb.com>
         reregister_server() can throw AlreadyRegistered if you try to register
         with a different activator.
 
-        Removed unused template files from tao/PortableServer, and 
+        Removed unused template files from tao/PortableServer, and
           updated instructions to use -Sc.
 
           Changed the text of some output messages to remove
@@ -108,7 +129,7 @@ Mon Nov 10 11:33:34 2003  Justin Michel <michel_j@ociweb.com>
         to the locator when the activator registers.
 
         Removed unused tao/PortableServer/ImR_Activator*.*
-     
+
         Support for ImR as NT Services.
 
         Updated run_test.pl for the main ImplRepo tests.
@@ -121,9 +142,9 @@ Mon Nov 10 11:20:52 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/DynamicAny/DynUnion.cpp (to_any):
 
-          Added check for 0 message block in the Any created from the 
+          Added check for 0 message block in the Any created from the
           discriminator, similarly to the check applied to the Any
-          created from the active member. Thanks to Harvinder Sawhney 
+          created from the active member. Thanks to Harvinder Sawhney
           <harvinder_sawhney@agilent.com> for reporting the problem
           and for suggesting a fix.
 
@@ -133,7 +154,7 @@ Mon Nov 10 11:03:34 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
           Added code to cover CDR insertion of a nil object reference
           (an empty string for the type hint, and a 0 for number of
-          profiles). Thanks to Harvinder Sawhney 
+          profiles). Thanks to Harvinder Sawhney
           <harvinder_sawhney@agilent.com> for reporting the problem.
 
 Mon Nov 10 16:59:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
