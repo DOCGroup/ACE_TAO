@@ -1,3 +1,10 @@
+Fri Feb  4 11:17:32 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Profile.cpp (TAO_Profile):
+
+	  Updated order of attributes in constructor base member
+	  initializer lists to match new attribute declaration order.
+
 Fri Feb  4 11:13:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/SystemException.cpp:
