@@ -1,3 +1,8 @@
+Wed May 29 10:29:10 2002  Steve Huston  <shuston@riverace.com>
+
+        * examples/C++NPv2/Client_Logging_Daemon.cpp: Use a safer scheme
+          to clean up sent blocks; compile the INET_Addr stuff clean.
+
 Wed May 29 12:54:23 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ace/DLL_Manager.cpp:
