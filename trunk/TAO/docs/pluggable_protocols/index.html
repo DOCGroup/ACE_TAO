@@ -2119,20 +2119,25 @@ Server Inter-ORB and Transport Class Diagram</CAPTION>
 Applying the solution in TAO</A>
 </H3>
 
-<P>
-As shown in Figure&nbsp;<A HREF="#iop_client">4</A>, TAO implements the messaging protocol
-and the transport protocol in separate components. The client ORB uses the current
-profile to find the right transport and ORB messaging implementations. The creation
-and initialization of these classes is controlled by the <TT>Connector</TT>
-(described in Section&nbsp;<A HREF="#design:connect">2.2</A>), with each <TT>Connector</TT> instance
-handling a particular ORB messaging/transport tuple.
+    <P>
+      As shown in Figure&nbsp;<A HREF="#iop_client">4</A>, TAO
+      implements the messaging protocol and the transport protocol in
+      separate components. The client ORB uses the current profile to
+      find the right transport and ORB messaging implementations. The
+      creation and initialization of these classes is controlled by
+      the <A HREF="#design:connect"><TT>Connector</TT></A>, with each
+      <TT>Connector</TT> instance handling a particular ORB
+      messaging/transport tuple.
 
-<P>
-Figure&nbsp;<A HREF="#iop_server">5</A> illustrates how the server's implementation uses the
-same transport classes, but with a different relationship. In particular, the
-transport class calls back the messaging class when data is received from the
-IPC mechanism. As with the client, a factory, in this case the <TT>Acceptor</TT>,
-creates and initializes these objects.
+
+    <P>
+      Figure&nbsp;<A HREF="#iop_server">5</A> illustrates how the
+      server's implementation uses the same transport classes, but
+      with a different relationship. In particular, the transport
+      class calls back the messaging class when data is received from
+      the IPC mechanism. As with the client, a factory, in this case
+      the <A HREF="#design:accept"><TT>Acceptor</TT></A>, creates and
+      initializes these objects.
 
 <P>
 
@@ -3219,7 +3224,7 @@ D. C. Schmidt,
   (R. Martin, F. Buschmann, and D. Riehle, eds.), Reading, MA: Addison-Wesley,
   1997.
 
-<P></P><DT><A NAME="Schmidt:97e">5</A>
+<P></P><DT><A NAME="Schmidt:97e">2</A>
 <DD>
 C. Cleeland, D. C. Schmidt and T. Harrison,
 ``<A HREF=http://www.cs.wustl.edu/~schmidt/External-Polymorphism.ps.gz>
@@ -3265,7 +3270,7 @@ examples of the Layers architecture.
     <ADDRESS><a href="mailto:othman@cs.wustl.edu">Ossama Othman</a></ADDRESS>
 <!-- Created: Tue Dec 14 16:53:58 CST 1999 -->
 <!-- hhmts start -->
-Last modified: Sat Dec 18 14:22:35 CST 1999
+Last modified: Sat Dec 18 14:30:21 CST 1999
 <!-- hhmts end -->
 </BODY>
 </HTML>
