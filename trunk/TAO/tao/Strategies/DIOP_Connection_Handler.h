@@ -1,4 +1,5 @@
 // This may look like C, but it's really -*- C++ -*-
+
 // ===================================================================
 /**
  *  @file   DIOP_Connection_Handler.h
@@ -110,12 +111,14 @@ public:
   /// calling <activate>.  This serves as the event loop in such cases.
   virtual int svc (void);
 
-  /// Perform appropriate closing.
-  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-                            ACE_Reactor_Mask = ACE_Event_Handler::NULL_MASK);
-
-  /// Event handler overload..
+  //@{
+  /** @name Event Handler overloads
+   */
   virtual int resume_handler (void);
+  virtual int handle_input (ACE_HANDLE);
+  virtual int handle_output (ACE_HANDLE);
+  virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
+  //@}
 
   /// Add ourselves to Cache.
   int add_transport_to_cache (void);
@@ -152,18 +155,13 @@ public:
 
 protected:
 
-  /// = Event Handler overloads
-
+  //@{
   /**
-   * Reads a message from the <peer()>, dispatching and servicing it
-   * appropriately.
-   * handle_input() just delegates on handle_input_i() which timeouts
-   * after <max_wait_time>, this is used in thread-per-connection to
-   * ensure that server threads eventually exit.
+   * @name TAO_Connection Handler overloads
    */
-  virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
-
-  virtual int handle_cleanup ();
+  void handle_close_i (void);
+  virtual int release_os_resources (void);
+  //@}
 
   // DIOP Additions - Begin
   /**
@@ -182,16 +180,9 @@ protected:
   // DIOP Additions - End
 
 private:
-
-  /// Perform appropriate closing
-  void handle_close_i (void);
-
-private:
   /// TCP configuration for this connection.
   TAO_DIOP_Properties *tcp_properties_;
-
 };
-
 
 #if defined (__ACE_INLINE__)
 #include "DIOP_Connection_Handler.i"

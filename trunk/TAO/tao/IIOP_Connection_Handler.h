@@ -103,21 +103,19 @@ public:
                         size_t stack_size[] = 0,
                         ACE_thread_t  thread_names[] = 0);
 
+
   /// Only used when the handler is turned into an active object by
   /// calling <activate>.  This serves as the event loop in such cases.
   virtual int svc (void);
 
-  /// Perform appropriate closing.
-  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-                            ACE_Reactor_Mask = ACE_Event_Handler::NULL_MASK);
-
-
-  /// Send a TRUE value to the reactor, so that the reactor does not
-  /// resume the handler
+  //@{
+  /** @name Event Handler overloads
+   */
   virtual int resume_handler (void);
-
-  /// Use peer() to drain the outgoing message queue
+  virtual int handle_input (ACE_HANDLE);
   virtual int handle_output (ACE_HANDLE);
+  virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
+  //@}
 
   /// Add ourselves to Cache.
   int add_transport_to_cache (void);
@@ -142,18 +140,13 @@ public:
 
 protected:
 
-  /// = Event Handler overloads
-
-  /// Reads a message from the <peer()>, dispatching and servicing it
-  /// appropriately.
-  /// handle_input() just delegates on handle_input_i() which timeouts
-  /// after <max_wait_time>, this is used in thread-per-connection to
-  /// ensure that server threads eventually exit.
-  virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
-
-  /// Connection Handler overloads
-  /// Perform appropriate closing.
+  //@{
+  /**
+   * @name TAO_Connection Handler overloads
+   */
   void handle_close_i (void);
+  virtual int release_os_resources (void);
+  //@}
 
 private:
   /// TCP configuration for this connection.
