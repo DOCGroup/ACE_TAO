@@ -8,9 +8,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # auto_run_tests.lst.
 
 use lib "$ENV{ACE_ROOT}/bin";
-if (defined $ENV{srcdir}) {
-  use lib "$ENV{srcdir}/bin";
-}
 use PerlACE::Run_Test;
 
 use English;
@@ -63,8 +60,8 @@ push (@file_list, "/bin/tao_other_tests.lst");
 
 if (scalar(@file_list) == 0) {
 push (@file_list, "/bin/ace_tests.lst");
-push (@file_list, "/bin/tao_orb_tests.lst") if -d "$ACE_ROOT/TAO";
-push (@file_list, "/bin/tao_other_tests.lst") if -d "$ACE_ROOT/TAO";
+push (@file_list, "/bin/tao_orb_tests.lst");
+push (@file_list, "/bin/tao_other_tests.lst");
 }
 
 foreach my$test_lst (@file_list) {

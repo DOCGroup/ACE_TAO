@@ -28,11 +28,12 @@ template <PR_ST_1> int
 Peer_Handler<PR_ST_2>::open (void *)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("activating %d\n"),
+              "activating %d\n",
               this->peer ().get_handle ()));
   this->action_ = &Peer_Handler<PR_ST_2>::connected;
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("please enter input..: ")));
+  ACE_DEBUG ((LM_DEBUG,
+              "please enter input..: "));
 
   if (this->reactor ())
 
@@ -63,7 +64,7 @@ template <PR_ST_1> int
 Peer_Handler<PR_ST_2>::close (u_long)
 {
   ACE_ERROR ((LM_ERROR,
-              ACE_TEXT ("Connect not successful: ending reactor event loop\n")));
+              "Connect not successful: ending reactor event loop\n"));
   this->reactor ()->end_reactor_event_loop();
   return 0;
 }
@@ -71,7 +72,8 @@ Peer_Handler<PR_ST_2>::close (u_long)
 template <PR_ST_1> int
 Peer_Handler<PR_ST_2>::uninitialized (void)
 {
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("uninitialized!\n")));
+  ACE_DEBUG ((LM_DEBUG,
+              "uninitialized!\n"));
   return 0;
 }
 
@@ -87,21 +89,24 @@ Peer_Handler<PR_ST_2>::connected (void)
   if (n > 0
       && this->peer ().send_n (buf,
                                n) != n)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("write failed")),
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "write failed"),
                       -1);
   else if (n == 0)
     {
       // Explicitly close the connection.
       if (this->peer ().close () == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("close")),
+                           "%p\n",
+                           "close"),
                           1);
       return -1;
     }
   else
     {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("please enter input..: ")));
+      ACE_DEBUG ((LM_DEBUG,
+                  "please enter input..: "));
       return 0;
     }
 }
@@ -111,7 +116,8 @@ Peer_Handler<PR_ST_2>::stdio (void)
 {
   char buf[BUFSIZ];
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("in stdio\nplease enter input..: ")));
+  ACE_DEBUG ((LM_DEBUG,
+              "in stdio\nplease enter input..: "));
 
   ssize_t n = ACE_OS::read (ACE_STDIN,
                             buf,
@@ -122,8 +128,8 @@ Peer_Handler<PR_ST_2>::stdio (void)
                          buf,
                          n) != n)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("write")),
+                           "%p\n",
+                           "write"),
                           -1);
       return 0;
     }
@@ -135,14 +141,16 @@ template <PR_ST_1> int
 Peer_Handler<PR_ST_2>::handle_timeout (const ACE_Time_Value &,
                                        const void *)
 {
-  ACE_ERROR ((LM_ERROR, ACE_TEXT ("Connect timedout. ")));
+  ACE_ERROR ((LM_ERROR,
+              "Connect timedout. "));
   return this->close ();
 }
 
 template <PR_ST_1> int
 Peer_Handler<PR_ST_2>::handle_output (ACE_HANDLE)
 {
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("in handle_output\n")));
+  ACE_DEBUG ((LM_DEBUG,
+              "in handle_output\n"));
 
   return (this->*action_) ();
 }
@@ -156,7 +164,8 @@ Peer_Handler<PR_ST_2>::handle_signal (int signum,
 
   // @@ Note that this code is not portable to all OS platforms since
   // it uses print statements within signal handler context.
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("in handle_signal\n")));
+  ACE_DEBUG ((LM_DEBUG,
+              "in handle_signal\n"));
 
   return (this->*action_) ();
 }
@@ -164,7 +173,8 @@ Peer_Handler<PR_ST_2>::handle_signal (int signum,
 template <PR_ST_1> int
 Peer_Handler<PR_ST_2>::handle_input (ACE_HANDLE)
 {
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("in handle_input\n")));
+  ACE_DEBUG ((LM_DEBUG,
+              "in handle_input\n"));
 
   return (this->*action_) ();
 }
@@ -174,18 +184,20 @@ Peer_Handler<PR_ST_2>::handle_close (ACE_HANDLE h,
                                      ACE_Reactor_Mask mask)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("closing down handle %d with mask %d\n"),
+              "closing down handle %d with mask %d\n",
               h,
               mask));
 
   if (this->action_ == &Peer_Handler<PR_ST_2>::stdio)
     {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("moving to closed state\n")));
-      this->reactor ()->end_reactor_event_loop ();
+      ACE_DEBUG ((LM_DEBUG,
+                  "moving to closed state\n"));
+      ACE_Reactor::end_event_loop ();
     }
   else
     {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("moving to stdio state\n")));
+      ACE_DEBUG ((LM_DEBUG,
+                  "moving to stdio state\n"));
       this->action_ = &Peer_Handler<PR_ST_2>::stdio;
       this->peer ().close ();
       ACE_OS::rewind (stdin);
@@ -214,7 +226,7 @@ template <class SVH, PR_CO_1> int
 IPC_Client<SVH, PR_CO_2>::svc (void)
 {
   if (this->reactor ())
-    this->reactor ()->run_reactor_event_loop ();
+    ACE_Reactor::run_event_loop ();
 
   return 0;
 }
@@ -232,13 +244,13 @@ IPC_Client<SVH, PR_CO_2>::IPC_Client (void)
 }
 
 template <class SVH, PR_CO_1> int
-IPC_Client<SVH, PR_CO_2>::init (int argc, ACE_TCHAR *argv[])
+IPC_Client<SVH, PR_CO_2>::init (int argc, char *argv[])
 {
   // Call down to the CONNECTOR's open() method to do the
   // initialization.
   this->inherited::open (ACE_Reactor::instance ());
 
-  const ACE_TCHAR *r_addr = argc > 1 ? argv[1] :
+  const char *r_addr = argc > 1 ? argv[1] :
     ACE_SERVER_ADDRESS (ACE_DEFAULT_SERVER_HOST,
                         ACE_DEFAULT_SERVER_PORT_STR);
   ACE_Time_Value timeout (argc > 2
@@ -250,8 +262,8 @@ IPC_Client<SVH, PR_CO_2>::init (int argc, ACE_TCHAR *argv[])
       (SIGINT,
        &this->done_handler_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("register_handler")),
+                       "%p\n",
+                       "register_handler"),
                       -1);
   PR_AD remote_addr (r_addr);
   this->options_.set (ACE_Synch_Options::USE_REACTOR,
@@ -268,8 +280,8 @@ IPC_Client<SVH, PR_CO_2>::init (int argc, ACE_TCHAR *argv[])
                      this->options_) == -1
       && errno != EWOULDBLOCK)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("connect")),
+                       "%p\n",
+                       "connect"),
                       -1);
   else
     return 0;

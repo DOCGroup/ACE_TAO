@@ -3,12 +3,8 @@
 
 // The ifrservice base project inherits from minimum_corba, so it's no longer
 // necessary to add minimum_corba to 'avoids' here.
-project(IFR_Service) : orbsvcsexe, core, ifrservice, ifr_client, portableserver, crosscompile {
+project(IFR_Service) : orbsvcsexe, core, ifrservice, typecodefactory, svc_utils, ifr_client, iortable, portableserver, crosscompile {
   exename = IFR_Service
-  
-  IDL_Files {
-  }
-  
   Source_Files {
     IFR_Server.cpp
     IFR_Service.cpp
@@ -42,7 +38,7 @@ project(TAO_IFR_BE) : taolib, core, ifr_client, crosscompile, minimum_corba {
 }
 
 
-project(TAO_IFR_EXE) : aceexe, core, ifr_client, crosscompile, minimum_corba {
+project(TAO_IFR_EXE) : taoexe, core, ifr_client, crosscompile, minimum_corba {
   after          += TAO_IFR_BE TAO_IDL_FE
   exename         = tao_ifr
   libs           += TAO_IFR_BE TAO TAO_IDL_FE

@@ -13,7 +13,7 @@ typedef Peer_Handler<ACE_SPIPE_STREAM> PEER_HANDLER;
 typedef IPC_Client<PEER_HANDLER, ACE_SPIPE_CONNECTOR> IPC_CLIENT;
 
 int
-ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+main (int argc, char *argv[])
 {
   // Perform Service_Config initializations
   ACE_Service_Config daemon (argv[0]);
@@ -22,8 +22,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   if (peer_connector.init (argc, argv) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("init")),
+                       "%p\n",
+                       "init"),
                       -1);
 
   return peer_connector.svc ();

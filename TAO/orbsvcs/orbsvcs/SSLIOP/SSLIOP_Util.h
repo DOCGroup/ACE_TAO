@@ -24,7 +24,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "SSLIOP_Current.h"
 
 class TAO_ORB_Core;
 class TAO_IIOP_Properties;
@@ -33,6 +32,8 @@ namespace TAO
 {
   namespace SSLIOP
   {
+    class Connection_Handler_State;
+
     /**
      * @class Util
      *
@@ -46,9 +47,12 @@ namespace TAO
     {
     public:
 
-      /// Access Current.
-      static TAO::SSLIOP::Current_ptr current (
-        TAO_ORB_Core *orb_core);
+      /// Setup the state that will be passed to the connection handler
+      /// when the handler is constructed.
+      static int setup_handler_state (
+        TAO_ORB_Core *orb_core,
+        TAO_IIOP_Properties *tcp_properties,
+        Connection_Handler_State &state);
 
     };
 

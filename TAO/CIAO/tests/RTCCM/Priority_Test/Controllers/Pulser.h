@@ -35,9 +35,9 @@ namespace PTImpl
     Pulser (Pulse_Handler *cb);
     ~Pulser ();
 
-    int open (void *args = 0);
+    int open (void);
 
-    int close (u_long flags = 0);
+    int close (void);
 
     int start (CORBA::Long hertz);
 

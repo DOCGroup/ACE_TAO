@@ -12,7 +12,6 @@
 //    }
 
 #include "ace/OS_NS_unistd.h"
-#include "ace/OS_NS_stdio.h"
 #include "ace/OS_main.h"
 #include "ace/Reactor.h"
 #include "ace/Service_Config.h"
@@ -27,7 +26,7 @@ ACE_RCSID(Threads, task_three, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 
-static ACE_OSTREAM_TYPE *out_stream = 0;
+static ofstream *out_stream = 0;
 static sig_atomic_t done = 0;
 static const size_t NUM_INVOCATIONS = 100;
 static const size_t TASK_COUNT = 130;
@@ -62,7 +61,7 @@ Test_Task::Test_Task (void)
   this->handled_ = 0;
   Test_Task::current_count_++;
   ACE_DEBUG ((LM_DEBUG,
-	      ACE_TEXT ("Test_Task constructed, current_count_ = %d\n"),
+	      "Test_Task constructed, current_count_ = %d\n",
 	      Test_Task::current_count_));
 }
 
@@ -71,14 +70,14 @@ Test_Task::~Test_Task (void)
   ACE_GUARD (ACE_Thread_Mutex, ace_mon, lock_);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Test_Task destroyed, current_count_ = %d\n"),
+              "Test_Task destroyed, current_count_ = %d\n",
 	      Test_Task::current_count_));
 }
 
 int
 Test_Task::open (void *args)
 {
-  r_ = reinterpret_cast <ACE_Reactor *> (args);
+  r_ = ACE_reinterpret_cast (ACE_Reactor *, args);
   return ACE_Task<ACE_MT_SYNCH>::activate (THR_NEW_LWP);
 }
 
@@ -89,7 +88,7 @@ Test_Task::close (u_long)
 
   Test_Task::current_count_--;
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Test_Task::close () current_count_ = %d.\n"),
+              "Test_Task::close () current_count_ = %d.\n",
 	      Test_Task::current_count_));
   return 0;
 }
@@ -113,13 +112,14 @@ Test_Task::svc (void)
 	  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, lock_, -1);
 
 	  ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("Test_Task: error %p!\n"),
-                             ACE_TEXT ("notifying reactor")),
+                             "Test_Task: error %p!\n",
+                             "notifying reactor"),
                              0);
 	}
     }
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%t) returning from svc ()\n")));
+  ACE_DEBUG ((LM_DEBUG,
+              " (%t) returning from svc ()\n"));
   return 0;
 }
 
@@ -133,7 +133,7 @@ Test_Task::handle_input (ACE_HANDLE)
       ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, lock_, -1);
       Test_Task::done_cnt_++;
       ACE_DEBUG ((LM_DEBUG,
-		  ACE_TEXT (" (%t) Test_Task: handle_input done_cnt_ = %d.\n"),
+		  " (%t) Test_Task: handle_input! done_cnt_ = %d.\n",
 		  Test_Task::done_cnt_));
     }
 
@@ -151,8 +151,9 @@ dispatch (void *arg)
       ACE_LOG_MSG->msg_ostream (out_stream);
     }
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%t) Dispatcher Thread started!\n")));
-  ACE_Reactor *r = reinterpret_cast <ACE_Reactor *> (arg);
+  ACE_DEBUG ((LM_DEBUG,
+              " (%t) Dispatcher Thread started!\n"));
+  ACE_Reactor *r = ACE_reinterpret_cast (ACE_Reactor *, arg);
   int result;
 
   r->owner (ACE_OS::thr_self ());
@@ -163,7 +164,7 @@ dispatch (void *arg)
 
       if (result <= 0)
 	ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("Dispatch: handle_events (): %d"),
+                    "Dispatch: handle_events (): %d",
                     result));
     }
 
@@ -182,15 +183,10 @@ ACE_TMAIN (int argc, ACE_TCHAR **)
   if (argc > 1)
     {
       // Send output to file.
-#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
       ACE_NEW_RETURN (out_stream,
                       ofstream ("test_task_three.out",
                                 ios::trunc|ios::out),
                       -1);
-#else
-      if ((out_stream = ACE_OS::fopen ("test_task_three.out", "w")) == NULL)
-        return -1;
-#endif
       ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);
       ACE_LOG_MSG->msg_ostream (out_stream);
     }
@@ -227,27 +223,20 @@ ACE_TMAIN (int argc, ACE_TCHAR **)
 	  if (errno == ETIME)
 	    {
 	      ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("no activity within 2 seconds, shutting down\n")));
+                          "no activity within 2 seconds, shutting down\n"));
 	      break;
 	    }
 	  else
 	    ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("%p error handling events\n"),
-                        ACE_TEXT ("main")));
+                        "%p error handling events\n",
+                        "main"));
 	}
     }
 
   if (argc > 1)
     {
-#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
       *out_stream << flush;
-      delete out_stream;
-#else
-      ACE_OS::fflush(out_stream);
-      ACE_OS::fclose(out_stream);
-#endif
-      ACE_LOG_MSG->clr_flags (ACE_Log_Msg::OSTREAM);
-      ACE_LOG_MSG->msg_ostream (0);
+      out_stream->close ();
     }
 
   // Bail out here so that we don't call the destructors for the tasks..
@@ -262,7 +251,7 @@ int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR ((LM_ERROR,
-              ACE_TEXT ("threads not supported on this platform\n")));
+              "threads not supported on this platform\n"));
   return 0;
 }
 #endif /* ACE_HAS_THREADS */

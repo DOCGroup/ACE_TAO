@@ -14,7 +14,6 @@ use strict;
 
 use Preprocessor;
 use DependencyWriterFactory;
-use ObjectGeneratorFactory;
 
 # ************************************************************
 # Subroutine Section
@@ -32,7 +31,6 @@ sub new {
                                                         $ipaths, $exclude),
                          'replace'  => $replace,
                          'dwrite'   => DependencyWriterFactory::create($type),
-                         'objgen'   => ObjectGeneratorFactory::create($type),
                          'noinline' => $noinline,
                         }, $class;
 
@@ -54,15 +52,17 @@ sub new {
 sub process {
   my($self)    = shift;
   my($file)    = shift;
+  my($objects) = shift;
   my($replace) = $self->{'replace'};
+  my($cwd)     = $self->{'cwd'};
 
   ## Generate the dependency string
   my($depstr) = $self->{'dwrite'}->process(
-                   $self->{'objgen'}->process($file),
+                   $objects,
                    $self->{'pre'}->process($file, $self->{'noinline'}));
 
   ## Perform the replacements on the dependency string
-  $depstr =~ s/$self->{'cwd'}//go;
+  $depstr =~ s/$cwd//go;
   foreach my $rep (@{$self->{'repkeys'}}) {
     $depstr =~ s/$rep/$$replace{$rep}/g;
   }

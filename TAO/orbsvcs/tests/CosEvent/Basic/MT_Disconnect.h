@@ -24,10 +24,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class MTD_Task : public ACE_Task_Base
+class Task : public ACE_Task_Base
 {
 public:
-  MTD_Task (CosEventChannelAdmin::EventChannel_ptr ec,
+  Task (CosEventChannelAdmin::EventChannel_ptr ec,
         int use_callbacks);
   // Create the task...
 

@@ -603,8 +603,6 @@ ACE_CHECK_LACKS_HEADERS(time.h)
 
 ACE_CHECK_LACKS_HEADERS(termios.h)
 
-ACE_CHECK_LACKS_HEADERS(wctype.h)
-
 
 
 AC_CHECK_HEADER([sys/systeminfo.h],[],[])
@@ -2130,11 +2128,15 @@ ACE_CACHE_CHECK([for C++ typename keyword],
                      public:
                        typedef typename T::Y Y;
                        Foo(T* foo) : foo_(foo) {}
-                       void bilbo(typename T::Y y)
-                         { typename T::Y x(10); }
+                       void bilbo(typename T::Y y);
                      private:
                        T* foo_;
                      };
+
+                     template <class T>
+                     void Foo<T>::bilbo(typename T::Y y)
+                     {
+                     }
                    ]],[[
                      Bar bar(15);
                      Foo<Bar> foo(&bar);
@@ -3214,54 +3216,7 @@ ACE_CHECK_LACKS_FUNCS(strtol)
 
 ACE_CHECK_LACKS_FUNCS(strtoul)
 
-# swab() comes in a number of forms:
-#   swab (const void*, void*, ssize_t) is POSIX, XPG4, SUS, SUSv2 standard.
-#   swab (const char*, char*, ssize_t) is SVID third edition.
-#   swab (char*, char*, ssize_t) is on some odd platforms like Windows.
-# So, if swab() is available, figure out which of the three variants it is.
-# The second and third have ACE config settings.
-ACE_CHECK_LACKS_FUNCS([swab],
-    [
-      AC_LINK_IFELSE([
-      AC_LANG_PROGRAM([
-#include <stdlib.h>
-#include <unistd.h>
-       ],
-       [
-// If this compiles, we have the POSIX, XPG4, etc. standard.
-const char src[2] = {'a', 'b'};
-char dst[2];
-const void *vsrc = src;
-void *vdst = dst;
-swab (vsrc, vdst, 2);
-       ])
-      ],
-      [
-        ace_cv_std_swab=yes
-      ],
-      [
-        AC_LINK_IFELSE([
-        AC_LANG_PROGRAM([
-#include <stdlib.h>
-#include <unistd.h>
-        ],
-        [
-// If this compiles, we have the SVID3 version, else it's the odd,
-// non-const one.
-const char src[2] = {'a', 'b'};
-char dst[2];
-swab (src, dst, 2);
-        ])
-       ],
-       [
-         AC_DEFINE([ACE_HAS_CONST_CHAR_SWAB])
-       ],
-       [
-         AC_DEFINE([ACE_HAS_NONCONST_SWAB])
-       ])
-      ])
-    ],
-)
+ACE_CHECK_LACKS_FUNCS(swab)
 
 dnl ACE uses execv, execvp and execve, so we don't bother to check
 dnl for the others (e.g. execl, execlp, execle)
@@ -3418,44 +3373,6 @@ AC_CHECK_FUNC([poll],
         ])
      ],[AC_DEFINE([ACE_POLL_IS_BROKEN])],)
   ],)
-
-case "$host" in
-  *linux*)
-    dnl Linux Event Poll
-    ACE_CACHE_CHECK([for epoll_create],
-     [ace_cv_linux_event_poll],
-     [
-      AC_LINK_IFELSE([
-      AC_LANG_PROGRAM([
-#include <sys/epoll.h>
-#include <linux/version.h>
-#if LINUX_VERSION_CODE < KERNEL_VERSION (2,5,45)
-#  error Disabling Linux epoll support.  Kernel used in C library is too old.
-#  error Linux kernel 2.5.45 or better is required.
-#endif  /* LINUX_VERSION_CODE < KERNEL_VERSION (2,5,45) */
-       ],
-       [
-int const ACE_NUM_DESCRIPTORS = 10;
-(void) epoll_create (ACE_NUM_DESCRIPTORS);
-       ])
-      ],
-      [
-       ace_cv_linux_event_poll=yes
-      ],
-      [
-       ace_cv_linux_event_poll=no
-      ])
-     ],
-     [
-      AC_DEFINE([ACE_HAS_EVENT_POLL])
-     ],
-     [])
-    ;;
-  *)
-    dnl /dev/poll character device
-    dnl TODO add test
-    ;;
-esac
 
 AC_CHECK_FUNC([gethrtime],
   [
@@ -7288,135 +7205,15 @@ dnl   tests/Makefile
 AC_CONFIG_FILES([
   ace-config
   ace-config.1
+  aceConf.sh
   Makefile
   ace/Makefile
-  ace/QoS/Makefile
   ace/RMCast/Makefile
+  ace/QoS/Makefile
   ace/SSL/Makefile
-  ace/TMCast/Makefile
-  ASNMP/Makefile
-  ASNMP/asnmp/Makefile
-  ASNMP/agent/Makefile
-  ASNMP/examples/Makefile
-  ASNMP/examples/get/Makefile
-  ASNMP/examples/next/Makefile
-  ASNMP/examples/set/Makefile
-  ASNMP/examples/trap/Makefile
-  ASNMP/examples/walk/Makefile
-  ASNMP/tests/Makefile
   apps/Makefile
-  apps/Gateway/Makefile
-  apps/Gateway/Gateway/Makefile
-  apps/Gateway/Peer/Makefile
-  apps/JAWS/Makefile
-  apps/JAWS/clients/Makefile
-  apps/JAWS/clients/Blobby/Makefile
-  apps/JAWS/clients/Caching/Makefile
-  apps/JAWS/server/Makefile
-  apps/JAWS3/Makefile
-  apps/JAWS3/jaws3/Makefile
-  apps/drwho/Makefile
   apps/gperf/Makefile
   apps/gperf/src/Makefile
-  apps/gperf/tests/Makefile
-  apps/mkcsregdb/Makefile
-  apps/soreduce/Makefile
-  bin/Makefile
-  bin/PerlACE/Makefile
-  examples/Makefile
-  examples/APG/Makefile
-  examples/APG/Active_Objects/Makefile
-  examples/APG/Config/Makefile
-  examples/APG/Containers/Makefile
-  examples/APG/Logging/Makefile
-  examples/APG/Misc_IPC/Makefile
-  examples/APG/Naming/Makefile
-  examples/APG/Proactor/Makefile
-  examples/APG/Processes/Makefile
-  examples/APG/Reactor/Makefile
-  examples/APG/Shared_Memory/Makefile
-  examples/APG/Signals/Makefile
-  examples/APG/Sockets/Makefile
-  examples/APG/Streams/Makefile
-  examples/APG/Svc_Config/Makefile
-  examples/APG/ThreadManagement/Makefile
-  examples/APG/ThreadPools/Makefile
-  examples/APG/ThreadSafety/Makefile
-  examples/APG/Threads/Makefile
-  examples/APG/Timers/Makefile
-  examples/ASX/Makefile
-  examples/ASX/CCM_App/Makefile
-  examples/ASX/Message_Queue/Makefile
-  examples/Bounded_Packet_Relay/Makefile
-  examples/C++NPv1/Makefile
-  examples/C++NPv2/Makefile
-  examples/Connection/Makefile
-  examples/Connection/blocking/Makefile
-  examples/Connection/misc/Makefile
-  examples/Connection/non_blocking/Makefile
-  examples/DLL/Makefile
-  examples/Export/Makefile
-  examples/IOStream/Makefile
-  examples/IOStream/client/Makefile
-  examples/IOStream/server/Makefile
-  examples/IPC_SAP/Makefile
-  examples/IPC_SAP/ATM_SAP/Makefile
-  examples/IPC_SAP/DEV_SAP/Makefile
-  examples/IPC_SAP/DEV_SAP/reader/Makefile
-  examples/IPC_SAP/DEV_SAP/writer/Makefile
-  examples/IPC_SAP/FIFO_SAP/Makefile
-  examples/IPC_SAP/FILE_SAP/Makefile
-  examples/IPC_SAP/SOCK_SAP/Makefile
-  examples/IPC_SAP/SPIPE_SAP/Makefile
-  examples/IPC_SAP/SSL_SAP/Makefile
-  examples/IPC_SAP/TLI_SAP/Makefile
-  examples/IPC_SAP/UPIPE_SAP/Makefile
-  examples/Log_Msg/Makefile
-  examples/Logger/Makefile
-  examples/Logger/Acceptor-server/Makefile
-  examples/Logger/client/Makefile
-  examples/Logger/simple-server/Makefile
-  examples/Mem_Map/Makefile
-  examples/Mem_Map/IO-tests/Makefile
-  examples/Mem_Map/file-reverse/Makefile
-  examples/Misc/Makefile
-  examples/NT_Service/Makefile
-  examples/Naming/Makefile
-  examples/OS/Makefile
-  examples/OS/Process/Makefile
-  examples/QOS/Makefile
-  examples/QOS/Change_Receiver_FlowSpec/Makefile
-  examples/QOS/Change_Sender_TSpec/Makefile
-  examples/QOS/Diffserv/Makefile
-  examples/QOS/Simple/Makefile
-  examples/RMCast/Makefile
-  examples/RMCast/Send_File/Makefile
-  examples/Reactor/Makefile
-  examples/Reactor/Dgram/Makefile
-  examples/Reactor/FIFO/Makefile
-  examples/Reactor/Misc/Makefile
-  examples/Reactor/Multicast/Makefile
-  examples/Reactor/Ntalker/Makefile
-  examples/Reactor/Proactor/Makefile
-  examples/Reactor/WFMO_Reactor/Makefile
-  examples/Registry/Makefile
-  examples/Service_Configurator/Makefile
-  examples/Service_Configurator/IPC-tests/Makefile
-  examples/Service_Configurator/IPC-tests/client/Makefile
-  examples/Service_Configurator/IPC-tests/server/Makefile
-  examples/Service_Configurator/Misc/Makefile
-  examples/Shared_Malloc/Makefile
-  examples/Shared_Memory/Makefile
-  examples/Smart_Pointers/Makefile
-  examples/Synch/Makefile
-  examples/System_V_IPC/Makefile
-  examples/System_V_IPC/SV_Message_Queues/Makefile
-  examples/System_V_IPC/SV_Semaphores/Makefile
-  examples/TMCast/Makefile
-  examples/TMCast/Member/Makefile
-  examples/Threads/Makefile
-  examples/Timer_Queue/Makefile
-  examples/Web_Crawler/Makefile
   netsvcs/Makefile
   netsvcs/lib/Makefile
   netsvcs/clients/Makefile
@@ -7424,66 +7221,21 @@ AC_CONFIG_FILES([
   netsvcs/clients/Naming/Makefile
   netsvcs/clients/Naming/Client/Makefile
   netsvcs/clients/Naming/Dump_Restore/Makefile
+  netsvcs/clients/Tokens/Makefile
+  netsvcs/clients/Tokens/collection/Makefile
+  netsvcs/clients/Tokens/deadlock/Makefile
+  netsvcs/clients/Tokens/invariant/Makefile
+  netsvcs/clients/Tokens/manual/Makefile
+  netsvcs/clients/Tokens/mutex/Makefile
+  netsvcs/clients/Tokens/rw_lock/Makefile
   netsvcs/servers/Makefile
-  performance-tests/Makefile
-  performance-tests/Misc/Makefile
-  performance-tests/SCTP/Makefile
-  performance-tests/Server_Concurrency/Makefile
-  performance-tests/Server_Concurrency/Leader_Follower/Makefile
-  performance-tests/Server_Concurrency/Queue_Based_Workers/Makefile
-  performance-tests/Synch-Benchmarks/Makefile
-  performance-tests/Synch-Benchmarks/Synch_Lib/Makefile
-  performance-tests/Synch-Benchmarks/Base_Test/Makefile
-  performance-tests/Synch-Benchmarks/Perf_Test/Makefile
-  performance-tests/TCP/Makefile
-  performance-tests/UDP/Makefile
-  protocols/Makefile
-  protocols/ace/Makefile
-  protocols/ace/HTBP/Makefile
   tests/Makefile
-  tests/HTBP/Makefile
-  tests/HTBP/Reactor_Tests/Makefile
-  tests/HTBP/Send_Large_Msg/Makefile
-  tests/HTBP/Send_Recv_Tests/Makefile
-  tests/HTBP/ping/Makefile
-  tests/RMCast/Makefile
   tests/SSL/Makefile
-  websvcs/Makefile
-  websvcs/lib/Makefile
-  websvcs/tests/Makefile
 ])
 
 dnl Configure subdirectories if they are present.
-if test -d $srcdir/ACEXML -a X$ace_user_with_acexml = Xyes; then
-  AC_CONFIG_FILES([
-    ACEXML/Makefile
-    ACEXML/common/Makefile
-    ACEXML/parser/Makefile
-    ACEXML/parser/parser/Makefile
-    ACEXML/apps/Makefile
-    ACEXML/apps/svcconf/Makefile
-    ACEXML/examples/Makefile
-    ACEXML/examples/SAXPrint/Makefile
-    ACEXML/tests/Makefile
-  ])
-fi
-
-if test -d $srcdir/Kokyu; then
-  AC_CONFIG_FILES([
-    Kokyu/Makefile
-    Kokyu/tests/Makefile
-    Kokyu/tests/DSRT_MIF/Makefile
-    Kokyu/tests/EDF/Makefile
-    Kokyu/tests/FIFO/Makefile
-  ])
-  AC_SUBST([KOKYU],[Kokyu])
-fi
-AM_CONDITIONAL([BUILD_KOKYU],
-               [test -d $srcdir/Kokyu])
-
 if test -d $srcdir/TAO -a X$ace_user_with_tao = Xyes; then
   AC_CONFIG_SUBDIRS([TAO])
-  AC_SUBST([TAO],[TAO])
 fi
 AM_CONDITIONAL([BUILD_TAO],
                [test -d $srcdir/TAO -a X$ace_user_with_tao = Xyes])

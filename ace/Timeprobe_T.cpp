@@ -15,7 +15,6 @@ ACE_RCSID(ace, Timeprobe_T, "$Id$")
 
 #include "ace/Timeprobe.h"
 #include "ace/High_Res_Timer.h"
-#include "ace/OS_NS_string.h"
 
 template <class ACE_LOCK, class ALLOCATOR>
 ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::ACE_Timeprobe_Ex (u_long size)
@@ -330,17 +329,14 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::print_absolute_times (void)
     i = this->current_size_;
   }
 
-  ACE_Time_Value tv; // to convert ACE_hrtime_t
   do
     {
-      ACE_High_Res_Timer::hrtime_to_tv (tv, this->timeprobes_ [i].time_);
-
       ACE_DEBUG ((LM_DEBUG,
                   "%-50.50s %8.8x %12.12u\n",
                   this->find_description_i (i),
                   this->timeprobes_ [i].thread_,
-                  tv.sec () * 1000000
-                   + tv.usec ()));
+                  this->timeprobes_ [i].time_.sec () * 1000000
+                   + this->timeprobes_[i].time_.usec ()));
       i = (i + 1) % this ->max_size_; // Modulus increment: loops around at the end.
 
     } while (i != this->current_size_);

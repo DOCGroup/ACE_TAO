@@ -5,7 +5,6 @@
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 #include "ace/OS_NS_unistd.h"
-#include "ace/OS_NS_stdio.h"
 
 // A simple class for building a client that "controls' the
 // Replication Manager (right now it just shuts it down).
@@ -32,7 +31,7 @@ private:
 /////////////////////////////
 // Private implementation.
 private:
-  void usage (FILE* out) const;
+  void usage (ostream & out) const;
 
 /////////////////////////////
 // Data members.
@@ -136,14 +135,13 @@ int TAO_FT_ReplicationManagerController::parse_args (int & argc, char * argv[])
       }
 
       default:
-		ACE_OS::fprintf (stderr, "%s: Unknown argument - %c\n",
-        			             argv[0], c);
-        this->usage(stderr);
+        cerr << argv[0] << ": Unknown argument -" << (char) c << endl;
+        this->usage(cerr);
         result = -1;
         break;
 
       case '?':
-        this->usage(stderr);
+        this->usage(cerr);
         result = -1;
     }
   }
@@ -151,11 +149,12 @@ int TAO_FT_ReplicationManagerController::parse_args (int & argc, char * argv[])
   return result;
 }
 
-void TAO_FT_ReplicationManagerController::usage (FILE* out) const
+void TAO_FT_ReplicationManagerController::usage (ostream & out) const
 {
-  ACE_OS::fprintf (out, "usage"
-      					" -k <replication manager ior file>"
-      					" -x (shutdown the Replication Manager)\n");
+  out << "usage"
+      << " -k <replication manager ior file>"
+      << " -x (shutdown the Replication Manager)"
+      << endl;
 }
 
 int TAO_FT_ReplicationManagerController::run ()

@@ -174,27 +174,22 @@ ACE_OS::itoa (int value, wchar_t *string, int radix)
 }
 #endif /* ACE_HAS_WCHAR */
 
+#if !defined (ACE_LACKS_MKSTEMP)
 ACE_INLINE ACE_HANDLE
 ACE_OS::mkstemp (char *s)
 {
-#if !defined (ACE_LACKS_MKSTEMP)
   return ::mkstemp (s);
-#else
-  return ACE_OS::mkstemp_emulation (ACE_TEXT_CHAR_TO_TCHAR (s));
-#endif  /* !ACE_LACKS_MKSTEMP */
 }
 
-#if defined (ACE_HAS_WCHAR)
+#  if defined (ACE_HAS_WCHAR)
 ACE_INLINE ACE_HANDLE
 ACE_OS::mkstemp (wchar_t *s)
 {
-#  if !defined (ACE_LACKS_MKSTEMP)
-  return ::mkstemp (ACE_TEXT_WCHAR_TO_TCHAR (ACE_TEXT_ALWAYS_CHAR (s)));
-#  else
-  return ACE_OS::mkstemp_emulation (ACE_TEXT_WCHAR_TO_TCHAR (s));
-#  endif  /* !ACE_LACKS_MKSTEMP */
+  ACE_Wide_To_Ascii narrow_s (s);
+  return ::mkstemp (narrow_s.char_rep ());
 }
-#endif /* ACE_HAS_WCHAR */
+#  endif /* ACE_HAS_WCHAR */
+#endif /* !ACE_LACKS_MKSTEMP */
 
 #if !defined (ACE_LACKS_MKTEMP)
 ACE_INLINE char *
@@ -342,7 +337,7 @@ ACE_OS::rand_r (ACE_RANDR_TYPE& seed)
 #  if !defined (ACE_LACKS_REALPATH)
 ACE_INLINE char *
 ACE_OS::realpath (const char *file_name,
-                  char *resolved_name)
+		  char *resolved_name)
 {
 #    if defined (ACE_WIN32)
   return ::_fullpath (resolved_name, file_name, PATH_MAX);
@@ -355,7 +350,7 @@ ACE_OS::realpath (const char *file_name,
 #  if defined (ACE_HAS_WCHAR)
 ACE_INLINE wchar_t *
 ACE_OS::realpath (const wchar_t *file_name,
-                  wchar_t *resolved_name)
+		  wchar_t *resolved_name)
 {
 #    if defined (ACE_WIN32)
   return ::_wfullpath (resolved_name, file_name, PATH_MAX);

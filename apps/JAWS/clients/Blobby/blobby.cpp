@@ -39,8 +39,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Explain what is going to happen
   if (options->debug_)
     ACE_DEBUG ((LM_DEBUG,
-		ACE_TEXT ("hostname = %C, port = %d, filename = %s, ")
-                ACE_TEXT ("length = %d, offset = %d, operation = %c\n"),
+		"hostname = %s, port = %d, filename = %s, length = %d, offset = %d, operation = %c\n",
 		options->hostname_,
 		options->port_,
 		options->filename_,
@@ -57,27 +56,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_Message_Block mb (0, options->length_);
 
       // Open the blob
-      if (blob.open (options->filename_,
-                     options->hostname_,
-                     options->port_) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("open error")),
-                          -1);
+      if (blob.open (options->filename_, options->hostname_, options->port_) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open error"), -1);
 
       // Read from it
       if (blob.read (&mb, options->length_, options->offset_) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("read error")),
-                          -1);
+        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "read error"), -1);
 
       // Write to STDOUT
       if (ACE_OS::write (ACE_STDOUT, mb.rd_ptr(), mb.length()) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("write error")),
-                          -1);
+        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "write error"), -1);
     }
   else
     {
@@ -87,24 +75,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Open the file to be sent
       ACE_HANDLE h = ACE_OS::open (options->filename_, O_RDONLY);
       if (h == ACE_INVALID_HANDLE)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("file open error")),
-                          -1);
+        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "file open error"), -1);
 
       // Open the blob
       if (blob.open (options->filename_, options->hostname_, options->port_) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("connection open error")),
-                          -1);
+        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "connection open error"), -1);
 
       // Read from the file
       if (ACE_OS::read (h, mb.wr_ptr (), total) != total)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("file read error")),
-                          -1);
+        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "file read error"), -1);
 
       // Close the file
       ACE_OS::close (h);
@@ -114,10 +93,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Write to the blob
       if (blob.write (&mb, options->length_, options->offset_) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("network write error")),
-                          -1);
+        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "network write error"), -1);
     }
 
   blob.close ();

@@ -65,13 +65,20 @@ TAO::IIOP_SSL_Connection_Handler::IIOP_SSL_Connection_Handler (
 
 TAO::IIOP_SSL_Connection_Handler::IIOP_SSL_Connection_Handler (
   TAO_ORB_Core *orb_core,
-  CORBA::Boolean /* flag */)
-  : TAO_IIOP_Connection_Handler (orb_core, 0)
+  CORBA::Boolean /*flag*/,
+  void *arg)
+  : TAO_IIOP_Connection_Handler (
+      orb_core,
+      (static_cast<TAO::SSLIOP::Connection_Handler_State *> (arg))->tcp_properties)
 {
+  TAO::SSLIOP::Connection_Handler_State *s =
+  static_cast<TAO::SSLIOP::Connection_Handler_State *> (arg);
+
   IIOP_SSL_Transport* specific_transport = 0;
   ACE_NEW (specific_transport,
            IIOP_SSL_Transport (this,
                                orb_core,
+                               s->ssliop_current.in (),
                                0));
 
   // Delete the transport with TAO_IIOP_Connection_Handler.

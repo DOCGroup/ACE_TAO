@@ -23,7 +23,6 @@ project(CosTrading) : orbsvcslib, core {
     CosTradingC.h
     CosTradingReposC.h
     CosTradingDynamicC.h
-    Trader/trading_export.h
   }
 
   Inline_Files {
@@ -63,8 +62,6 @@ project(CosTrading_Skel) : orbsvcslib, core, trading, portableserver {
     CosTradingS_T.h
     CosTradingReposS_T.h
     CosTradingDynamicS_T.h
-
-    Trader/trading_skel_export.h
   }
 
   Inline_Files {

@@ -1,2 +1,3 @@
 // $Id$
 
+#include "SequencePushConsumer.h"

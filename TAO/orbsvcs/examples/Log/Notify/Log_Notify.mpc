@@ -2,14 +2,14 @@
 // $Id$
 
 project(*Consumer) : orbsvcsexe, dsnotifylogadmin, notification_skel, naming {
-  exename = Notify_Consumer
+  exename = consumer
   source_files {
     Notify_Consumer.cpp
   }
 }
 
 project(*Supplier) : orbsvcsexe, dsnotifylogadmin, notification_skel, naming {
-  exename = Notify_Supplier
+  exename = supplier
   source_files {
     Notify_Supplier.cpp
   }

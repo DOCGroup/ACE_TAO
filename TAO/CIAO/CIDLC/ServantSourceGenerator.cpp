@@ -41,7 +41,7 @@ namespace
   {
     return export_macro_;
   }
-
+  
   CommandLine const&
   cl ()
   {
@@ -348,7 +348,7 @@ namespace
     std::ostream& os;
   };
 
-  struct InterfaceEmitter : Traversal::Interface,
+  struct InterfaceEmitter : Traversal::UnconstrainedInterface,
                             EmitterBase
   {
     InterfaceEmitter (Context& c)
@@ -356,22 +356,22 @@ namespace
     {}
 
     bool
-    add (Interface& i)
+    add (UnconstrainedInterface& i)
     {
       return interfaces_.insert (&i).second;
     }
 
     virtual void
-    traverse (Interface& i)
+    traverse (UnconstrainedInterface& i)
     {
       if (add (i))
       {
-        Traversal::Interface::traverse (i);
+        Traversal::UnconstrainedInterface::traverse (i);
       }
     }
 
   private:
-    std::set<Interface*> interfaces_;
+    std::set<UnconstrainedInterface*> interfaces_;
   };
 
   // Generates operations associated with attributes.
@@ -790,11 +790,11 @@ namespace
            << STRS[EXCP_SNGL] << endl
            << "{"
            << u.scoped_name () << "Connections *tmp_retv;"
-           << "ACE_NEW_THROW_EX (" << endl
+           << "ACE_NEW_RETURN (" << endl
            << "tmp_retv," << endl
            << u.scoped_name () << "Connections (this->ciao_uses_"
            << u.name () << "_.current_size ())," << endl
-           << "CORBA::NO_MEMORY ());" << endl << endl
+           << "0);" << endl << endl
            << u.scoped_name () << "Connections_var retv"
            << " = tmp_retv ;" << endl
            << "retv->length (this->ciao_uses_" << u.name ()
@@ -825,11 +825,10 @@ namespace
            << STRS[ENV_ARG] << ");"
            << "ACE_CHECK_RETURN (0);" << endl;
 
-        os << "ACE_NEW_THROW_EX (" << endl
-           << "retv[i].ck," << endl
+        os << "ACE_NEW_RETURN (" << endl
+           << "retv[i++].ck," << endl
            << "CIAO::Map_Key_Cookie (entry.ext_id_)," << endl
-           << "CORBA::NO_MEMORY ());" << endl
-           << "++i;" << endl
+           << "0);" << endl
            << "}";
 
         os << "return retv._retn ();" << endl
@@ -871,10 +870,10 @@ namespace
         os << "conn._retn ();" << endl;
 
         os << "Components::Cookie_var retv;"
-           << "ACE_NEW_THROW_EX (" << endl
+           << "ACE_NEW_RETURN (" << endl
            << "retv.out ()," << endl
            << "CIAO::Map_Key_Cookie (key)," << endl
-           << "CORBA::NO_MEMORY ());" << endl;
+           << "0);" << endl;
 
         os << "return retv._retn ();" << endl
            << "}";
@@ -1176,8 +1175,8 @@ namespace
          << "::Components::CCMHome_ptr home," << endl
          << "::CIAO::Session_Container *c," << endl
          << t.name () << "_Servant *sv)" << endl
-         << "  : ACE_NESTED_CLASS (CIAO, Context_Impl_Base (home, c)), " << endl
-         << "  ctx_svnt_base (home, c, sv)" << endl
+         << "  : Context_Impl_Base (home, c)," << endl
+         << "    ctx_svnt_base (home, c, sv)" << endl
          << "{"
          << "}";
 
@@ -1859,12 +1858,12 @@ namespace
 
         os << "CIAO::Port_Activator_T<" << endl
            << "    ";
-
+        
         Traversal::ProviderData::belongs (p, servant_belongs_);
-
+        
         os << "," << endl
            << "    ";
-
+        
         Traversal::ProviderData::belongs (p, enclosing_belongs_);
 
         os << "::CCM_";
@@ -1879,16 +1878,16 @@ namespace
            << "    ";
 
         Traversal::ProviderData::belongs (p, servant_belongs_);
-
+        
         os << "," << endl
            << "    ";
-
+        
         Traversal::ProviderData::belongs (p, enclosing_belongs_);
-
+        
         os << "::CCM_";
-
+        
         Traversal::ProviderData::belongs (p, simple_belongs_);
-
+        
         os << "," << endl
            << "    ::Components::CCMContext," << endl
            << "    " << scope_.name () << "_Servant" << endl
@@ -2068,7 +2067,7 @@ namespace
         Traversal::ConsumerData::belongs (c, belongs_);
 
         os << "::_downcast (ev);" << endl
-           << "if (ev_type.in () != 0)" << endl
+           << "if (ev_type != 0)" << endl
            << "{"
            << "this->push_";
 
@@ -2251,9 +2250,9 @@ namespace
       Traversal::Belongs repo_id_belongs_;
       SemanticGraph::Component& scope_;
     };
-
+    
     struct OperationExistsEmitter;
-
+    
     struct RegisterValueFactoryEmitter : Traversal::ConsumerData,
                                          EmitterBase
     {
@@ -2264,7 +2263,7 @@ namespace
       {
         belongs_.node_traverser (type_name_emitter_);
       }
-
+      
       void factory_gen_off (void)
       {
         gen_factory_ = false;
@@ -2275,22 +2274,22 @@ namespace
       {
         {
           Traversal::ConsumerData consumer;
-
+          
           Traversal::Belongs consumer_belongs;
           consumer.edge_traverser (consumer_belongs);
-
+          
           Traversal::EventType event_type;
           consumer_belongs.node_traverser (event_type);
-
+         
           Traversal::Defines defines;
           event_type.edge_traverser (defines);
-
+        
           OperationExistsEmitter op_emitter (this);
           defines.node_traverser (op_emitter);
-
+        
           consumer.traverse (c);
         }
-
+      
         if (gen_factory_)
         {
           os << "CIAO_REGISTER_OBV_FACTORY (" << endl;
@@ -2318,23 +2317,23 @@ namespace
         : r_ (r)
       {
       }
-
+      
       virtual void
       traverse (SemanticGraph::Operation&)
       {
         r_->factory_gen_off ();
       }
-
+      
       virtual void
       traverse (SemanticGraph::EventTypeFactory&)
       {
         r_->factory_gen_off ();
       }
-
+      
     private:
       RegisterValueFactoryEmitter* r_;
     };
-
+    
     struct PortTablePopulator : Traversal::ProviderData,
                                 Traversal::UserData,
                                 Traversal::PublisherData,
@@ -2437,8 +2436,8 @@ namespace
          << "_ptr exe," << endl
          << "::Components::CCMHome_ptr h," << endl
          << "::CIAO::Session_Container *c)" << endl
-         << "  : ACE_NESTED_CLASS (CIAO, Servant_Impl_Base (c))," << endl
-         << "  comp_svnt_base (exe, c)" << endl
+         << "  : Servant_Impl_Base (c)," << endl
+         << "    comp_svnt_base (exe, c)" << endl
          << "{"
          << "this->context_ = "
          << "new " << t.name () << "_Context (h, c, this);" << endl;
@@ -2942,7 +2941,6 @@ namespace
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
          << "{"
-         << "ACE_ENV_ARG_NOT_USED;"
          << "::CORBA::Object_var obj_var;"
          << "::Components::EventConsumerBase_var ecb_var;" << endl;
 
@@ -3033,13 +3031,11 @@ namespace
           return_type_name_emitter_ (c.os ()),
           enclosing_type_name_emitter_ (c.os ()),
           simple_type_name_emitter_ (c.os ()),
-          type_name_emitter_ (c.os ()),
           scope_ (home)
       {
         returns_.node_traverser (return_type_name_emitter_);
         enclosing_manages_.node_traverser (enclosing_type_name_emitter_);
         simple_manages_.node_traverser (simple_type_name_emitter_);
-        manages_.node_traverser (type_name_emitter_);
       }
 
       virtual void
@@ -3122,7 +3118,7 @@ namespace
 
         os << "ACE_CHECK_RETURN (";
 
-        Traversal::Home::manages (scope_, manages_);
+        Traversal::HomeFactory::returns (hf, returns_);
 
         os << "::_nil ());" << endl;
 
@@ -3146,7 +3142,7 @@ namespace
 
         os << "ACE_CHECK_RETURN (";
 
-        Traversal::Home::manages (scope_, manages_);
+        Traversal::HomeFactory::returns (hf, returns_);
 
         os << "::_nil ());" << endl;
 
@@ -3167,11 +3163,9 @@ namespace
       ReturnTypeNameEmitter return_type_name_emitter_;
       EnclosingTypeNameEmitter enclosing_type_name_emitter_;
       SimpleTypeNameEmitter simple_type_name_emitter_;
-      TypeNameEmitter type_name_emitter_;
       Traversal::Returns returns_;
       Traversal::Manages enclosing_manages_;
       Traversal::Manages simple_manages_;
-      Traversal::Manages manages_;
       SemanticGraph::Home& scope_;
     };
 
@@ -3289,8 +3283,8 @@ namespace
          << t.scoped_name ().scope_name () << "::CCM_" << t.name ()
          << "_ptr exe," << endl
          << "::CIAO::Session_Container *c)" << endl
-         << "  : ACE_NESTED_CLASS (CIAO, Home_Servant_Impl_Base (c))," << endl
-         << "  home_svnt_base (exe, c)" << endl
+         << "  : CIAO::Home_Servant_Impl_Base (c)," << endl
+         << "    " << "home_svnt_base (exe, c)" << endl
          << "{"
          << "}";
 
@@ -3578,7 +3572,7 @@ ServantSourceEmitter::pre (TranslationUnit&)
                                       "_svnt.h");
 
   file_name = regex::perl_s (file_name,
-                             "/(\\.(idl|cidl|cdl))?$/"
+                             "/(\\.(idl|cidl))?$/"
                              + file_suffix
                              + "/");
 

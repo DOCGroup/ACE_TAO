@@ -8,7 +8,6 @@ workspace {
   ../ACEXML/parser/parser
   ../ACEXML/apps/svcconf
   ../Kokyu/Kokyu.mpc
-  ../protocols/ace/HTBP
   tao
   TAO_IDL
   utils
@@ -17,5 +16,5 @@ workspace {
     orbsvcs/tests
     orbsvcs/performance-tests
     orbsvcs/examples
-  }
+  }  
 }

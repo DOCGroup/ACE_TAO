@@ -179,8 +179,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
             char **endPtr =0;
             ncs = ACE_OS::strtoul(ACE_TEXT_ALWAYS_CHAR(argv[curarg]),
                                   endPtr, 0);
-          }
-
+  }
         // Validate the CodesetId
         if (ACE_Codeset_Registry::get_max_bytes(ncs) == 0)
           {
@@ -973,7 +972,7 @@ TAO_Default_Resource_Factory::create_purging_strategy (void)
     {
       ACE_NEW_RETURN (strategy,
                       TAO_LRU_Connection_Purging_Strategy (
-                          this->cache_maximum ()),
+                                           this->cache_maximum ()),
                       0);
     }
   else

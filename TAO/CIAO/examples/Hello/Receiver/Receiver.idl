@@ -15,10 +15,6 @@ module Hello
   component Receiver
   {
     uses message read_message;
-    
-    // Not use in test, just used to test 'uses multiple'.
-    uses multiple message gather_messages;
-    
     consumes timeout click_in;
   };
 

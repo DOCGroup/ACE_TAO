@@ -104,14 +104,11 @@ private:
 
 private:
 
-  typedef ACE_Hash_Map_Manager <ACE_CString,
-                                CORBA::Any_var,
-                                TAO_SYNCH_MUTEX> HASH_MAP;
-
-  typedef HASH_MAP::ENTRY HASH_ENTRY;
-        
   /// Used to lookup property name and values.
-  HASH_MAP property_lookup_;
+  ACE_Hash_Map_Manager <ACE_CString, 
+                        CORBA::Any*,
+                        TAO_SYNCH_MUTEX> 
+  property_lookup_;
 
   /// The result of a non_boolean operation.
   ACE_Unbounded_Queue<TAO_ETCL_Literal_Constraint> queue_;

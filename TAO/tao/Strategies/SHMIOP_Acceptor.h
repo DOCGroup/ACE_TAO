@@ -36,7 +36,7 @@
 #include "ace/Acceptor.h"
 #include "ace/MEM_Acceptor.h"
 #include "tao/GIOP_Message_Version.h"
-// TAO SHMIOP_Acceptor concrete call definitions
+// TAO SHMIOP_Acceptor concrete call defination
 
 /**
  * @class TAO_SHMIOP_Acceptor

@@ -1,4 +1,5 @@
 // -*- C++ -*-
+//
 // $Id$
 
 // Handles UNIX datagram messages from local host.
@@ -23,8 +24,8 @@ class ACE_Svc_Export Handle_L_Dgram : public ACE_Service_Object, public ACE_LSOC
 {
 public:
   Handle_L_Dgram (void);
-  virtual int init (int argc, ACE_TCHAR *argv[]);
-  virtual int info (ACE_TCHAR **, size_t) const;
+  virtual int init (int argc, char *argv[]);
+  virtual int info (char **, size_t) const;
   virtual int fini (void);
 
 private:
@@ -33,8 +34,8 @@ private:
   virtual int handle_input (int fd);
   virtual int handle_close (int fd, ACE_Reactor_Mask);
 
-  ACE_TCHAR rendezvous[MAXPATHLEN + 1];
-  static const ACE_TCHAR *DEFAULT_RENDEZVOUS;
+  char rendezvous[MAXPATHLEN + 1];
+  static const char *DEFAULT_RENDEZVOUS;
 };
 
 extern ACE_Service_Object_Type ld;

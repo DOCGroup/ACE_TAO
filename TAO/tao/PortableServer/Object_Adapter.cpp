@@ -409,6 +409,16 @@ TAO_Object_Adapter::activate_poa (const poa_name &folded_name,
   else
     ++iterator;
 
+  // A recursive thread lock without using a recursive thread lock.
+  // Non_Servant_Upcall has a magic constructor and destructor.  We
+  // unlock the Object_Adapter lock for the duration of the adapter
+  // activator(s) upcalls; reacquiring once the upcalls complete.
+  // Even though we are releasing the lock, other threads will not be
+  // able to make progress since
+  // <Object_Adapter::non_servant_upcall_in_progress_> has been set.
+  Non_Servant_Upcall non_servant_upcall (*parent);
+  ACE_UNUSED_ARG (non_servant_upcall);
+
   for (;
        iterator != end;
        ++iterator)
@@ -581,6 +591,10 @@ TAO_Object_Adapter::open (ACE_ENV_SINGLE_ARG_DECL)
   this->orb_core_.thread_lane_resources_manager ().open_default_resources (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
+  // Set the default Server Protocol Policy.
+  this->set_default_server_protocol_policy (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
   TAO_POA_Policy_Set policies (this->default_poa_policies ());
 
 #if (TAO_HAS_MINIMUM_POA == 0)
@@ -599,17 +613,6 @@ TAO_Object_Adapter::open (ACE_ENV_SINGLE_ARG_DECL)
   // Merge policies from the ORB level.
   this->validator ().merge_policies (policies.policies ()
                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  // If any of the policy objects specified are not valid for the ORB
-  // implementation, if conflicting policy objects are specified, or
-  // if any of the specified policy objects require prior
-  // administrative action that has not been performed, an
-  // InvalidPolicy exception is raised containing the index in the
-  // policies parameter value of the first offending policy object.
-  policies.validate_policies (this->validator (),
-                              this->orb_core_
-                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Construct a new POA
@@ -645,6 +648,24 @@ TAO_Object_Adapter::open (ACE_ENV_SINGLE_ARG_DECL)
   // TAO_POA object takes ownership of the POA_Manager object
   // (actually it shares the ownership with its peers).
   (void) safe_poa_manager._retn ();
+}
+
+void
+TAO_Object_Adapter::set_default_server_protocol_policy (ACE_ENV_SINGLE_ARG_DECL)
+{
+  TAO_Thread_Lane_Resources &default_lane_resources =
+    this->orb_core_.thread_lane_resources_manager ().default_lane_resources ();
+
+  TAO_Acceptor_Registry &acceptor_registry =
+    default_lane_resources.acceptor_registry ();
+
+  TAO_Protocols_Hooks *protocols_hooks =
+    this->orb_core_.get_protocols_hooks (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  protocols_hooks->set_default_server_protocol_policy (acceptor_registry
+                                                       ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 void
@@ -814,26 +835,41 @@ CORBA::Object_ptr
 TAO_Object_Adapter::create_collocated_object (TAO_Stub *stub,
                                               const TAO_MProfile &mp)
 {
-  TAO_ServantBase *sb = this->get_collocated_servant (mp);
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      TAO_ServantBase *sb =
+        this->get_collocated_servant (mp
+                                      ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
-  // Set the servant ORB.  Do not duplicate the ORB here since
-  // TAO_Stub::servant_orb() duplicates it.
-  stub->servant_orb (this->orb_core_.orb ());
+      // Set the servant ORB.  Do not duplicate the ORB here since
+      // TAO_Stub::servant_orb() duplicates it.
+      stub->servant_orb (this->orb_core_.orb ());
 
-  // It is ok to create a collocated object even when <sb> is
-  // zero.
-  CORBA::Object_ptr x;
-  ACE_NEW_RETURN (x,
-      CORBA::Object (stub,
-          1,
-          sb),
-      CORBA::Object::_nil ());
+      // It is ok to create a collocated object even when <sb> is
+      // zero.
+      CORBA::Object_ptr x;
+      ACE_NEW_RETURN (x,
+                      CORBA::Object (stub,
+                                     1,
+                                     sb),
+                      CORBA::Object::_nil ());
 
-  // Here we set the strategized Proxy Broker.
-  x->_proxy_broker (the_tao_collocated_object_proxy_broker ());
+      // Here we set the strategized Proxy Broker.
+      x->_proxy_broker (the_tao_collocated_object_proxy_broker ());
 
-  // Success.
-  return x;
+      // Success.
+      return x;
+    }
+  ACE_CATCHANY
+    {
+      // Ignore the exception and continue with the next one.
+    }
+  ACE_ENDTRY;
+
+  // Failure.
+  return CORBA::Object::_nil ();
 }
 
 CORBA::Long
@@ -842,27 +878,45 @@ TAO_Object_Adapter::initialize_collocated_object (TAO_Stub *stub,
 {
   // @@ What about forwarding.  With this approach we are never
   //    forwarded  when we use collocation!
-  const TAO_MProfile &mp = stub->base_profiles ();
+  const TAO_MProfile &mp =
+    stub->base_profiles ();
 
-  TAO_ServantBase *sb = this->get_collocated_servant (mp);
+  ACE_DECLARE_NEW_CORBA_ENV;
 
-  // Set the servant ORB.  Do not duplicate the ORB here since
-  // TAO_Stub::servant_orb() duplicates it.
-  stub->servant_orb (this->orb_core_.orb ());
+  ACE_TRY
+    {
+      TAO_ServantBase *sb =
+        this->get_collocated_servant (mp
+                                      ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
-  // It is ok to set the object as a collocated object even when
-  // <sb> is zero.
-  obj->set_collocated_servant (sb);
+      // Set the servant ORB.  Do not duplicate the ORB here since
+      // TAO_Stub::servant_orb() duplicates it.
+      stub->servant_orb (this->orb_core_.orb ());
 
-  // Here we set the strategized Proxy Broker.
-  obj->_proxy_broker (the_tao_collocated_object_proxy_broker ());
+      // It is ok to set the object as a collocated object even when
+      // <sb> is zero.
+      obj->set_collocated_servant (sb);
 
-  // Success.
-  return 0;
+      // Here we set the strategized Proxy Broker.
+      obj->_proxy_broker (the_tao_collocated_object_proxy_broker ());
+
+     // Success.
+     return 0;
+    }
+  ACE_CATCHANY
+    {
+      // Ignore exceptions..
+    }
+  ACE_ENDTRY;
+
+  // Failure.
+  return -1;
 }
 
 TAO_ServantBase *
-TAO_Object_Adapter::get_collocated_servant (const TAO_MProfile &mp)
+TAO_Object_Adapter::get_collocated_servant (const TAO_MProfile &mp
+                                            ACE_ENV_ARG_DECL)
 {
   for (TAO_PHandle j = 0;
        j != mp.profile_count ();
@@ -878,18 +932,10 @@ TAO_Object_Adapter::get_collocated_servant (const TAO_MProfile &mp)
 
       TAO_ServantBase *servant = 0;
 
-      ACE_DECLARE_NEW_CORBA_ENV;
-      ACE_TRY
-        {
-          this->find_servant (objkey.in (),
-              servant
-              ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-        }
-      ACE_ENDTRY;
+      this->find_servant (objkey.in (),
+                          servant
+                          ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
 
       return servant;
     }
@@ -952,7 +998,7 @@ TAO_Object_Adapter_Factory::init (int /* argc */,
 
 ACE_FACTORY_DEFINE (TAO_PortableServer, TAO_Object_Adapter_Factory)
 ACE_STATIC_SVC_DEFINE (TAO_Object_Adapter_Factory,
-                       ACE_TEXT ("TAO_Object_Adapter_Factory"),
+                       ACE_TEXT ("TAO_POA"),
                        ACE_SVC_OBJ_T,
                        &ACE_SVC_NAME (TAO_Object_Adapter_Factory),
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
@@ -1216,7 +1262,7 @@ TAO_Object_Adapter::Non_Servant_Upcall::Non_Servant_Upcall (TAO_POA &poa)
   // Adjust the nesting level.
   this->object_adapter_.non_servant_upcall_nesting_level_++;
 
-  // We always release
+  // Release the Object Adapter lock.
   this->object_adapter_.lock ().release ();
 }
 
@@ -1225,10 +1271,11 @@ TAO_Object_Adapter::Non_Servant_Upcall::~Non_Servant_Upcall (void)
   // Reacquire the Object Adapter lock.
   this->object_adapter_.lock ().acquire ();
 
-  this->object_adapter_.non_servant_upcall_nesting_level_--;
-
   // We are done with this nested upcall.
   this->object_adapter_.non_servant_upcall_in_progress_ = this->previous_;
+
+  // Adjust the nesting level.
+  this->object_adapter_.non_servant_upcall_nesting_level_--;
 
   // If we are at the outer nested upcall.
   if (this->object_adapter_.non_servant_upcall_nesting_level_ == 0)

@@ -1,7 +1,6 @@
 // $Id$
 
 #include "concrete_classes.h"
-#include "Options.h"
 #include "IFR_Service_Utils_T.h"
 #include "ComponentRepository_i.h"
 #include "OperationDef_i.h"
@@ -427,9 +426,5 @@ template class TAO_IFR_Desc_Utils<CORBA::OperationDescription, TAO_OperationDef_
 #pragma instantiate TAO_IFR_Desc_Utils<CORBA::ComponentIR::ComponentDescription, TAO_ComponentDef_i>
 #pragma instantiate TAO_IFR_Desc_Utils<CORBA::ValueMember, TAO_ValueMemberDef_i>
 #pragma instantiate TAO_IFR_Desc_Utils<CORBA::OperationDescription, TAO_OperationDef_i>
-
-#elif defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
-
-template ACE_Singleton<Options, ACE_Null_Mutex> *ACE_Singleton<Options, ACE_Null_Mutex>::singleton_;
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

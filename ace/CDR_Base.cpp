@@ -21,13 +21,9 @@ ACE_CDR::swap_2_array (const char* orig, char* target, size_t n)
 {
   // ACE_ASSERT(n > 0); The caller checks that n > 0
 
-  // We pretend that AMD64/GNU G++ systems have a Pentium CPU to 
-  // take advantage of the inline assembly implementation.
-
   // Later, we try to read in 32 or 64 bit chunks,
   // so make sure we don't do that for unaligned addresses.
-#if ACE_SIZEOF_LONG == 8 && \
-    !(defined(__amd64__) && defined(__GNUG__))
+#if ACE_SIZEOF_LONG == 8
   const char* const o8 = ACE_ptr_align_binary (orig, 8);
   while (orig < o8 && n > 0)
     {
@@ -61,8 +57,7 @@ ACE_CDR::swap_2_array (const char* orig, char* target, size_t n)
   const char* const end = orig + 2 * (n & (~3));
 
   // See if we're aligned for writting in 64 or 32 bit chunks...
-#if ACE_SIZEOF_LONG == 8 && \
-    !(defined(__amd64__) && defined(__GNUG__))
+#if ACE_SIZEOF_LONG == 8
   if (target == ACE_ptr_align_binary (target, 8))
 #else
   if (target == ACE_ptr_align_binary (target, 4))
@@ -70,7 +65,7 @@ ACE_CDR::swap_2_array (const char* orig, char* target, size_t n)
     {
       while (orig < end)
         {
-#if (defined (ACE_HAS_PENTIUM) || defined(__amd64__)) && defined (__GNUG__)
+#if defined (ACE_HAS_PENTIUM) && defined (__GNUG__)
           unsigned int a =
             * reinterpret_cast<const unsigned int*> (orig);
           unsigned int b =
@@ -131,7 +126,7 @@ ACE_CDR::swap_2_array (const char* orig, char* target, size_t n)
       // We're out of luck. We have to write in 2 byte chunks.
       while (orig < end)
         {
-#if (defined (ACE_HAS_PENTIUM) || defined(__amd64__)) && defined (__GNUG__)
+#if defined (ACE_HAS_PENTIUM) && defined (__GNUG__)
           unsigned int a =
             * reinterpret_cast<const unsigned int*> (orig);
           unsigned int b =
@@ -287,12 +282,6 @@ ACE_CDR::swap_4_array (const char* orig, char* target, size_t n)
           register unsigned long b =
             * reinterpret_cast<const long*> (orig + 8);
 
-#if defined(__amd64__) && defined(__GNUC__) 
-          asm ("bswapq %1" : "=r" (a) : "0" (a));
-          asm ("bswapq %1" : "=r" (b) : "0" (b));
-          asm ("rol $32, %1" : "=r" (a) : "0" (a));
-          asm ("rol $32, %1" : "=r" (b) : "0" (b));
-#else
           register unsigned long a84 = (a & 0x000000ff000000ffL) << 24;
           register unsigned long b84 = (b & 0x000000ff000000ffL) << 24;
           register unsigned long a73 = (a & 0x0000ff000000ff00L) << 8;
@@ -304,7 +293,6 @@ ACE_CDR::swap_4_array (const char* orig, char* target, size_t n)
 
           a = (a84 | a73 | a62 | a51);
           b = (b84 | b73 | b62 | b51);
-#endif
 
           * reinterpret_cast<long*> (target) = a;
           * reinterpret_cast<long*> (target + 8) = b;
@@ -323,12 +311,6 @@ ACE_CDR::swap_4_array (const char* orig, char* target, size_t n)
           register unsigned long b =
             * reinterpret_cast<const long*> (orig + 8);
 
-#if defined(__amd64__) && defined(__GNUC__)
-          asm ("bswapq %1" : "=r" (a) : "0" (a));
-          asm ("bswapq %1" : "=r" (b) : "0" (b));
-          asm ("rol $32, %1" : "=r" (a) : "0" (a));
-          asm ("rol $32, %1" : "=r" (b) : "0" (b));
-#else
           register unsigned long a84 = (a & 0x000000ff000000ffL) << 24;
           register unsigned long b84 = (b & 0x000000ff000000ffL) << 24;
           register unsigned long a73 = (a & 0x0000ff000000ff00L) << 8;
@@ -340,7 +322,6 @@ ACE_CDR::swap_4_array (const char* orig, char* target, size_t n)
 
           a = (a84 | a73 | a62 | a51);
           b = (b84 | b73 | b62 | b51);
-#endif
 
           ACE_UINT32 c1 = static_cast<ACE_UINT32> (a >> 32);
           ACE_UINT32 c2 = static_cast<ACE_UINT32> (a & 0xffffffff);

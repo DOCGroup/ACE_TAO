@@ -9,7 +9,7 @@ use FileHandle;
 my @new_argv = ();
 
 for(my $i = 0; $i <= $#ARGV; ++$i) {
-    if ($ARGV[$i] eq '-Config') {
+    if ($ARGV[$i] eq '-Config') {  
         if (defined $ARGV[$i + 1]) {
             push @PerlACE::ConfigList::Configs, $ARGV[++$i];
         }
@@ -25,7 +25,7 @@ for(my $i = 0; $i <= $#ARGV; ++$i) {
 @ARGV = @new_argv;
 
 
-sub new ()
+sub new () 
 {
     my $self = {};
     @{$self->{MY_CONFIGS}} = @PerlACE::ConfigList::Configs;
@@ -78,19 +78,16 @@ sub load ($)
 
     while (<$fh>) {
         chomp;
-	if (/^\s*$/ || /^#/) {
-            next;
+	if (/^\s*$/ || /^#/) { 
+            next; 
         }
         # compress white space
 	s/\s+/ /g;
 
         my $entry = '';
         my $configs = '';
-
+            
         ($entry, $configs) = split /:/;
-
-        # remove trailing white spaces
-        $entry =~ s/\s+$//;
 
         push @{$self->{ENTRIES}}, $entry;
 	if (defined $configs) {
@@ -101,7 +98,7 @@ sub load ($)
     $fh->close ();
 }
 
-sub valid_entries ()
+sub valid_entries () 
 {
     my $self = shift;
     my @entries = ();
@@ -121,7 +118,7 @@ sub list_configs ()
     my $list = '';
 
     foreach my $entry (@{$self->{ENTRIES}}) {
-
+	
         foreach my $config (@{$self->{CONFIGS}->{$entry}}) {
             $config =~ s/!//g;
             if ($allconfigs{$config} != 1) {
@@ -136,7 +133,7 @@ sub list_configs ()
 
 sub dump ()
 {
-    my $self = shift;
+    my $self = shift;	
 
     print "============================================================\n";
     print "Config\n";

@@ -140,7 +140,8 @@ int transaction::handle_input (ACE_HANDLE)
 int transaction::handle_timeout(const ACE_Time_Value &,
                                 const void *)
 {
-    if (send() < 0)      // send pkt to agent
+    int rc;
+    if ((rc = send()) < 0)      // send pkt to agent
         result_->result(this, 0);
     else
         if (retry_counter_++ > params_.get_retry())

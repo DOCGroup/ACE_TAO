@@ -182,8 +182,7 @@ SendEvents (void)
 
       ACE_TRY_NEW_ENV
         {
-          ACE_DEBUG ((LM_DEBUG, "Sending events.\n"));
-
+cout << "Sending events" << endl;
           supplier_1->send_events(events ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }

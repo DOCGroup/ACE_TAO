@@ -34,22 +34,9 @@ struct testing_range_checking
     error << "Out of range access in " << function_name
           << ", index=" << index
           << ", length=" << length
-          << ", maximum=" << maximum;
+          << ", maximum=" << maximum
+          << ", class=unbounded_sequence<int>";
     throw std::range_error(error.str());
-  }
-
-  inline static void check_length(
-      CORBA::ULong & new_length,
-      CORBA::ULong maximum)
-  {
-    if (maximum < new_length)
-    {
-      std::ostringstream error;
-      error << "Invalid bounded sequence length "
-            << ", length=" << new_length
-            << ", maximum=" << maximum;
-      throw std::runtime_error(error.str());
-    }
   }
 };
 

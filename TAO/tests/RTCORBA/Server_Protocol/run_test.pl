@@ -13,24 +13,21 @@ $iorfile = PerlACE::LocalFile ("test.ior");
 unlink $iorfile;
 $status = 0;
 
-$server_reverse_conf     = PerlACE::LocalFile ("server_reverse$PerlACE::svcconf_ext");
-$server_iiop_conf        = PerlACE::LocalFile ("server_iiop$PerlACE::svcconf_ext");
-$server_uiop_conf        = PerlACE::LocalFile ("server_uiop$PerlACE::svcconf_ext");
-$server_shmiop_conf      = PerlACE::LocalFile ("server_shmiop$PerlACE::svcconf_ext");
-$server_iiop_uiop_conf   = PerlACE::LocalFile ("server_iiop_uiop$PerlACE::svcconf_ext");
-$server_iiop_shmiop_conf = PerlACE::LocalFile ("server_iiop_shmiop$PerlACE::svcconf_ext");
-$server_reverse_nt_conf  = PerlACE::LocalFile ("server_reverse_nt$PerlACE::svcconf_ext");
+$server_reverse_conf    = PerlACE::LocalFile ("server_reverse$PerlACE::svcconf_ext");
+$server_iiop_conf       = PerlACE::LocalFile ("server_iiop$PerlACE::svcconf_ext");
+$server_uiop_conf       = PerlACE::LocalFile ("server_uiop$PerlACE::svcconf_ext");
+$server_shmiop_conf     = PerlACE::LocalFile ("server_shmiop$PerlACE::svcconf_ext");
+$server_reverse_nt_conf = PerlACE::LocalFile ("server_reverse_nt$PerlACE::svcconf_ext");
 
 # Configurations for all tests to be run.
 @server_opts =
-    ("-ORBSndSock 54321 -ORBendpoint iiop://",
+    ("-ORBendpoint iiop://",
 
      "-ORBsvcconf $server_reverse_conf "
-     ."-ORBEndpoint shmiop:// -ORBEndpoint uiop:// -ORBendpoint iiop://",
+     ."-ORBEndpoint uiop:// -ORBendpoint iiop://",
 
-     "-ORBRcvSock 12345 -ORBsvcconf $server_iiop_uiop_conf "
-     ."-ORBEndpoint iiop:// -ORBEndpoint uiop:// "
-     ."-p 1413566208");
+     "-ORBEndpoint uiop:// "
+     ." -ORBsvcconf $server_uiop_conf -p 1413566208");
 
 @comments = ("* ORB Default Server Protocol Policy Test\n          "
              ."(TAO's default behavior without config files): \n",
@@ -44,18 +41,17 @@ $server_reverse_nt_conf  = PerlACE::LocalFile ("server_reverse_nt$PerlACE::svcco
 # UIOP only available on Unix.  Substitute with alternative tests on Windows.
 if ($^O eq "MSWin32") {
     @server_opts =
-        ("-ORBSndSock 54321 -ORBendpoint iiop://",
+        ("-ORBendpoint iiop://",
 
          "-ORBsvcconf $server_reverse_nt_conf "
-         ."-ORBEndpoint shmiop:// -ORBendpoint iiop://",
+         ."-ORBendpoint iiop://",
 
-         "-ORBRcvSock 12345 -ORBsvcconf $server_iiop_shmiop_conf "
-        ."-ORBEndpoint iiop:// -ORBEndpoint shmiop:// "
-        ."-p 1413566210");
+         "-ORBendpoint iiop://"
+         ." -ORBsvcconf $server_iiop_conf -p 0");
 
-    $comments[2] =
+    $comments[3] =
          "* Overriding ORB Default Server Protocol Policy in the POA\n"
-         ."          (POA Server Protocol set to SMHIOP only): \n";
+         ."          (POA Server Protocol set to IIOP only): \n";
 
 }
 
@@ -94,7 +90,7 @@ foreach $o (@server_opts) {
         $status = 1;
     }
 
-    $server = $SV->WaitKill (60);
+    $server = $SV->TerminateWaitKill (60);
 
     if ($server != 0) {
         print STDERR "ERROR: server returned $server\n";

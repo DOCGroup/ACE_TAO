@@ -24,10 +24,7 @@
 
 #include "test_config.h"
 #include "ace/Malloc.h"
-#include "ace/SV_Semaphore_Simple.h"
-#include "ace/SV_Semaphore_Complex.h"
 #include "ace/OS_NS_unistd.h"
-
 
 ACE_RCSID(tests, SV_Shared_Memory_Test, "$Id$")
 

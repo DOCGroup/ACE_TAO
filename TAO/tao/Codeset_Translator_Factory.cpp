@@ -9,7 +9,7 @@
 //    Codeset_Translator_Factory.cpp
 //
 // = DESCRIPTION
-//    The base for all the translator factories. Translator factories are
+//    The base for all the translator factories. Translator factories are 
 //    responsible for supplying the proper translator on demand.
 //
 // = AUTHORS
@@ -17,8 +17,7 @@
 //
 // ============================================================================
 
-#include "tao/Codeset_Translator_Factory.h"
-#include "tao/CDR.h"
+#include "Codeset_Translator_Factory.h"
 
 ACE_RCSID (tao,
            Codeset_Translator_Factory,
@@ -42,7 +41,7 @@ TAO_Codeset_Translator_Factory::init (int , ACE_TCHAR **)
 
 void
 TAO_Codeset_Translator_Factory::assign_i (
-    TAO_InputCDR *cdr,
+    TAO_InputCDR *cdr, 
     ACE_Char_Codeset_Translator *trans
   ) const
 {
@@ -51,7 +50,7 @@ TAO_Codeset_Translator_Factory::assign_i (
 
 void
 TAO_Codeset_Translator_Factory::assign_i (
-    TAO_OutputCDR *cdr,
+    TAO_OutputCDR *cdr, 
     ACE_Char_Codeset_Translator *trans
   ) const
 {
@@ -60,7 +59,7 @@ TAO_Codeset_Translator_Factory::assign_i (
 
 void
 TAO_Codeset_Translator_Factory::assign_i (
-    TAO_InputCDR *cdr,
+    TAO_InputCDR *cdr, 
     ACE_WChar_Codeset_Translator *trans
   ) const
 {
@@ -69,7 +68,7 @@ TAO_Codeset_Translator_Factory::assign_i (
 
 void
 TAO_Codeset_Translator_Factory::assign_i (
-    TAO_OutputCDR *cdr,
+    TAO_OutputCDR *cdr, 
     ACE_WChar_Codeset_Translator *trans
   ) const
 {

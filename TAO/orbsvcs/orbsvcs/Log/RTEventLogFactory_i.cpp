@@ -124,7 +124,7 @@ TAO_RTEventLogFactory_i::init (PortableServer::POA_ptr poa,
 
   this->consumer_admin_ = this->event_channel_->for_consumers(ACE_ENV_SINGLE_ARG_PARAMETER);
 
-  ACE_NEW_THROW_EX (this->notifier_,
+  ACE_NEW_THROW_EX (this->notifier_, 
                     TAO_RTEventLogNotification(this->event_channel_.in ()),
                     CORBA::NO_MEMORY ());
   return 0;
@@ -160,12 +160,12 @@ TAO_RTEventLogFactory_i::activate (PortableServer::POA_ptr poa
   return v_return._retn ();
 }
 
-RTEventLogAdmin::EventLog_ptr
+RTEventLogAdmin::EventLog_ptr 
 TAO_RTEventLogFactory_i::create (
         DsLogAdmin::LogFullActionType full_action,
         CORBA::ULongLong max_rec_size,
         const DsLogAdmin::CapacityAlarmThresholdList & thresholds,
-        DsLogAdmin::LogId_out id_out
+        DsLogAdmin::LogId_out id
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
@@ -174,14 +174,11 @@ TAO_RTEventLogFactory_i::create (
         DsLogAdmin::InvalidThreshold
       ))
 {
-  DsLogAdmin::LogId id;
-
-  // Get an unused/unique id for this Log.
-  while (hash_map_.find ((id = this->next_id_++)) == 0)
-    ;
+  // Get an id for this Log.
+  this->max_id_++;
 
   RTEventLogAdmin::EventLog_ptr eventlog =
-    this->create_with_id (id,
+    this->create_with_id (this->max_id_,
                           full_action,
                           max_rec_size,
                           thresholds
@@ -189,12 +186,17 @@ TAO_RTEventLogFactory_i::create (
   ACE_CHECK_RETURN (RTEventLogAdmin::EventLog::_nil ());
 
   // Set the id to return..
-  id_out = id;
+  id = this->max_id_;
+
+  // Store the id in the LogIdList.
+  CORBA::ULong len = logid_list_.length();
+  logid_list_.length(len+1);
+  logid_list_[len] = id;
 
   return eventlog;
 }
 
-RTEventLogAdmin::EventLog_ptr
+RTEventLogAdmin::EventLog_ptr 
 TAO_RTEventLogFactory_i::create_with_id (
         DsLogAdmin::LogId id,
         DsLogAdmin::LogFullActionType full_action,
@@ -228,14 +230,14 @@ TAO_RTEventLogFactory_i::create_with_id (
                                       this->notifier_,
                                       id,
                                       full_action,
-                                      max_size
+                                      max_size                              
                                       ),
                     CORBA::NO_MEMORY ());
 
   ACE_CHECK_RETURN (event_log._retn ());
 
   PortableServer::ServantBase_var safe_event_log_i = event_log_i;
-  // Transfer ownership to POA.
+  // Transfer ownership to POA.  
 
   event_log_i->init (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (event_log._retn ());
@@ -259,7 +261,7 @@ TAO_RTEventLogFactory_i::create_with_id (
   return event_log._retn ();
 }
 
-RtecEventChannelAdmin::ProxyPushSupplier_ptr
+RtecEventChannelAdmin::ProxyPushSupplier_ptr 
 TAO_RTEventLogFactory_i::obtain_push_supplier (
         ACE_ENV_SINGLE_ARG_DECL_NOT_USED
       )

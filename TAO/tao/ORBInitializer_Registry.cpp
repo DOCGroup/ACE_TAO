@@ -7,7 +7,6 @@
 #include "SystemException.h"
 
 #include "ace/Static_Object_Lock.h"
-#include "ace/Recursive_Thread_Mutex.h"
 
 
 ACE_RCSID (tao,

@@ -1,4 +1,5 @@
 // -*- C++ -*-
+//
 // $Id$
 
 /* Handles INET datagram messages from remote hosts. */
@@ -22,8 +23,8 @@ class ACE_Svc_Export Handle_R_Dgram : public ACE_Service_Object, public ACE_SOCK
 {
 public:
   Handle_R_Dgram (void);
-  virtual int init (int argc, ACE_TCHAR *argv[]);
-  virtual int info (ACE_TCHAR **, size_t) const;
+  virtual int init (int argc, char *argv[]);
+  virtual int info (char **, size_t) const;
   virtual int fini (void);
 
 private:

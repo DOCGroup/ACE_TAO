@@ -11,7 +11,6 @@ ACE_RCSID(ace, OS_NS_wchar, "$Id$")
 
 #if defined (ACE_HAS_WCHAR)
 #  include "ace/OS_NS_ctype.h"
-#  include "ace/OS_NS_string.h"
 #endif /* ACE_HAS_WCHAR */
 
 // The following wcs*_emulation methods were created based on BSD code:
@@ -357,7 +356,7 @@ ACE_OS::wcsstr_emulation (const wchar_t *string,
 
   if ((c = *charset++) != 0)
     {
-      len = ACE_OS::strlen (charset);
+      len = strlen(charset);
       do
         {
           do
@@ -365,7 +364,7 @@ ACE_OS::wcsstr_emulation (const wchar_t *string,
               if ((sc = *string++) == 0)
                 return 0;
             } while (sc != c);
-        } while (ACE_OS::strncmp (string, charset, len) != 0);
+        } while (strncmp(string, charset, len) != 0);
       string--;
     }
 

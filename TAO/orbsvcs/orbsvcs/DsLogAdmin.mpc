@@ -20,7 +20,6 @@ project(DsLogAdmin) : orbsvcslib, core {
   Header_Files {
     DsLogAdminC.h
     DsLogNotificationC.h
-    Log/log_export.h
   }
 
   Inline_Files {
@@ -56,8 +55,6 @@ project(DsLogAdmin_Skel) : orbsvcslib, core, dslogadmin, portableserver {
 
     DsLogAdminS_T.h
     DsLogNotificationS_T.h
-
-    Log/log_skel_export.h
   }
 
   Inline_Files {
@@ -94,6 +91,7 @@ project(DsLogAdmin_Serv) : orbsvcslib, core, dslogadmin_skel, dynamicany, etcl, 
       Log/Log_Constraint_Interpreter.cpp
       Log/Log_Constraint_Visitors.cpp
       Log/Log_i.cpp
+      Log/PersistStore.cpp
     }
   }
 

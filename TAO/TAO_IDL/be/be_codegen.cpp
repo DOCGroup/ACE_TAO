@@ -169,7 +169,6 @@ TAO_CodeGen::start_client_header (const char *fname)
                             << "\"\n\n";
     }
 
-  // To get ACE_UNUSED_ARGS
   this->gen_standard_include (this->client_header_,
                               "ace/config-all.h");
 
@@ -427,6 +426,14 @@ TAO_CodeGen::start_server_header (const char *fname)
                                    server_hdr);
     }
 
+  // Include the Messaging files if AMI is enabled.
+  if (be_global->ami_call_back () == I_TRUE)
+    {
+      // Include Messaging skeleton file.
+      this->gen_standard_include (this->server_header_,
+                                  "tao/Messaging/MessagingS.h");
+    }
+
   // The server header should include the client header.
   *this->server_header_ << "\n#include \""
                         << be_global->be_get_client_hdr_fname (1)
@@ -443,29 +450,17 @@ TAO_CodeGen::start_server_header (const char *fname)
   // thing, because we need the definitions there, it also
   // registers the POA factory with the Service_Configurator, so
   // the ORB can automatically find it.
-  if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
-                       idl_global->decls_seen_masks.non_local_iface_seen_))
+  this->gen_standard_include (this->server_header_,
+                              "tao/Collocation_Proxy_Broker.h");
+  this->gen_standard_include (this->server_header_,
+                              "tao/PortableServer/PortableServer.h");
+  this->gen_standard_include (this->server_header_,
+                              "tao/PortableServer/Servant_Base.h");
+
+  if (be_global->gen_amh_classes ())
     {
-      // Include the Messaging files if AMI is enabled.
-      if (be_global->ami_call_back () == I_TRUE)
-        {
-          // Include Messaging skeleton file.
-          this->gen_standard_include (this->server_header_,
-                                      "tao/Messaging/MessagingS.h");
-        }
-
       this->gen_standard_include (this->server_header_,
-                                  "tao/Collocation_Proxy_Broker.h");
-      this->gen_standard_include (this->server_header_,
-                                  "tao/PortableServer/PortableServer.h");
-      this->gen_standard_include (this->server_header_,
-                                  "tao/PortableServer/Servant_Base.h");
-
-      if (be_global->gen_amh_classes ())
-        {
-          this->gen_standard_include (this->server_header_,
-                                      "tao/Messaging/AMH_Response_Handler.h");
-        }
+                                  "tao/Messaging/AMH_Response_Handler.h");
     }
 
   *this->server_header_ << be_nl << be_nl
@@ -1559,17 +1554,11 @@ TAO_CodeGen::gen_stub_src_includes (void)
                                   "tao/ORB_Core.h");
     }
 
-  // We generate this include if we 
-  // have typecode support 
-  // AND have not already included it in the header file
-  // OR a TypeCode or TCKind reference is not seen
-  //    AND we are not generating typecodes in a separate file.
-  if (be_global->tc_support ()
-      && ACE_BIT_ENABLED (idl_global->decls_seen_info_,
-                          idl_global->decls_seen_masks.exception_seen_)
-      || (!ACE_BIT_ENABLED (idl_global->decls_seen_info_,
-                           idl_global->decls_seen_masks.typecode_seen_)
-          && !be_global->gen_anyop_files ()))
+  // We generate this include if we have typecode support and have not
+  // already included it in the header file.
+  if (!ACE_BIT_ENABLED (idl_global->decls_seen_info_,
+                        idl_global->decls_seen_masks.typecode_seen_)
+      && be_global->tc_support ())
     {
       this->gen_standard_include (this->client_stubs_,
                                   "tao/Typecode.h");
@@ -1623,13 +1612,6 @@ TAO_CodeGen::gen_stub_src_includes (void)
 void
 TAO_CodeGen::gen_skel_src_includes (void)
 {
-  // Only non-local interfaces generate anything in the skeleton.
-  if (!ACE_BIT_ENABLED (idl_global->decls_seen_info_,
-                        idl_global->decls_seen_masks.non_local_iface_seen_))
-    {
-      return;
-    }
-    
   this->gen_standard_include (this->server_skeletons_,
                               "tao/PortableServer/Object_Adapter.h");
   this->gen_standard_include (this->server_skeletons_,
@@ -1658,6 +1640,8 @@ TAO_CodeGen::gen_skel_src_includes (void)
     {
       this->gen_arg_file_includes (this->server_skeletons_);
     }
+
+
 
   // The following header must always be included.
   this->gen_standard_include (this->server_skeletons_,
@@ -1691,6 +1675,9 @@ TAO_CodeGen::gen_skel_src_includes (void)
   // For Static_Allocator_Base
   this->gen_standard_include (this->server_skeletons_,
                               "ace/Malloc_Allocator.h");
+  // To get ACE_UNUSED_ARGS
+  this->gen_standard_include (this->server_skeletons_,
+                              "ace/config-all.h");
 }
 
 void
@@ -1722,11 +1709,6 @@ TAO_CodeGen::gen_any_file_includes (void)
       if (be_global->gen_anyop_files ())
         {
           stream = this->anyop_source_;
-
-          this->gen_standard_include (stream,
-                                      "tao/CDR.h");
-          this->gen_standard_include (stream,
-                                      "tao/Any.h");
         }
 
       this->gen_cond_file_include (
@@ -1854,12 +1836,6 @@ TAO_CodeGen::gen_arg_file_includes (TAO_OutStream *stream)
   this->gen_cond_file_include (
       idl_global->decls_seen_masks.var_size_arg_seen_,
       "tao/Var_Size_Argument_T.h",
-      stream
-    );
-
-  this->gen_cond_file_include (
-      idl_global->decls_seen_masks.any_arg_seen_,
-      "tao/Any_Arg_Traits.h",
       stream
     );
 }

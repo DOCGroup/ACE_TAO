@@ -83,32 +83,14 @@ ACE_SHLIBS =<%foreach(libs)%> -l<%lib%><%endfor%><%foreach(pure_libs)%> <%pure_l
 <%if(tao_idl)%>
 TAO_IDL = <%tao_idl%>
 <%endif%>
-<%if(tao_idl_dep)%>
-TAO_IDL_DEP = <%tao_idl_dep%>$(EXEEXT)
-<%endif%>
 <%if(tao_idlflags)%>
 TAO_IDLFLAGS = <%tao_idlflags%>
-<%endif%>
-<%if(cidlc)%>
-CIDLC = <%cidlc%>
-<%endif%>
-<%if(cidlc_dep)%>
-CIDLC_DEP = <%cidlc_dep%>$(EXEEXT)
-<%endif%>
-<%if(cidlc_flags)%>
-CIDLC_FLAGS = <%cidlc_flags%>
 <%endif%>
 
 <%if(exename)%>
 <%if(install)%>
 INSBIN ?= <%install%>
 <%endif%>
-ifeq ($(INSBIN),.)
-  ifeq ($(PWD),)
-    PWD=$(shell pwd)
-  endif
-  INSBIN = $(PWD)
-endif
 OUTPUT_DIRECTORY = $(INSBIN)
 <%else%>
 <%if(dllout || libout)%>
@@ -130,12 +112,6 @@ ACELIB =
 tao_dont_use_idl_make_rule = 1
 include $(TAO_ROOT)/rules.tao.GNU
 <%endif%>
-<%if(version)%>
-
-ifeq ($(versioned_so),1)
-SOVERSION = .<%version%>
-endif
-<%endif%>
 
 # To build multiple targets in the same directory on AIX, it works
 # best to have a template directory per project.
@@ -151,7 +127,7 @@ ifneq ($(OUTPUT_DIRECTORY),)
 all: $(OUTPUT_DIRECTORY)
 
 $(OUTPUT_DIRECTORY):
-	-@$(MKDIR) "$(OUTPUT_DIRECTORY)"
+	-@mkdir -p "$(OUTPUT_DIRECTORY)"
 endif
 
 <%if(sharedname || staticname || exename)%>
@@ -303,7 +279,7 @@ else
 endif
 <%endfor%>
 
-OBJS   = $(addsuffix .$(OBJEXT), $(notdir $(FILES)))
+OBJS   = $(addsuffix .o, $(notdir $(FILES)))
 SRC    = $(addsuffix .cpp, $(FILES))
 <%endif%>
 ifneq (,$(RC))
@@ -323,7 +299,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 ifneq ($(OUTPUT_DIRECTORY),)
 ifneq ($(OUTPUT_DIRECTORY),.)
   INSTALL = $(VBIN:%=$(INSBIN)/%)
-  CLEANUP_INSTALL += $(CLEANUP_BIN:%=$(INSBIN)/%$(VAR)$(EXEEXT))
+  CLEANUP_INSTALL += $(CLEANUP_BIN:%=$(INSBIN)/%)
 endif
 endif
 
@@ -347,19 +323,12 @@ endif
 
 <%endif%>
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
-ifeq ($(VXWORKSLINK),true)
-include $(TGT_DIR)/h/make/rules.$(PRJ_TYPE)
-endif
 <%if(tao)%>
 include $(TAO_ROOT)/taoconfig.mk
 <%endif%>
 
 <%if(libpaths)%>
-ifeq ($(VXWORKSLINK),true)
-LDLIBPATH     =<%foreach(libpaths)%> -L<%libpath%><%endfor%>
-else
 LDFLAGS      +=<%foreach(libpaths)%> -L<%libpath%><%endfor%>
-endif
 <%endif%>
 <%if(includes)%>
 CPPFLAGS     +=<%foreach(includes)%> -I<%include%><%endfor%>
@@ -437,7 +406,7 @@ ifeq ($(wildcard $(GENERATED_DIRTY)), $(GENERATED_DIRTY))
       ## with respect to the source file.  Now we need to make sure that
       ## they are up-to-date with respect to the generation tool.  If the tool
       ## is newer than the generated files, then we need the special rule.
-      ifneq ($(shell<%foreach(custom_type->input_file->output_files)%> /bin/test <%custom_type->dependent%> -nt <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%> 2> /dev/null &&<%endfor%> echo 0),)
+      ifneq ($(shell<%foreach(custom_type->input_file->output_files)%> /bin/test <%custom_type->command%>$(EXEEXT) -nt <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%> 2> /dev/null &&<%endfor%> echo 0),)
         .NOTPARALLEL:
       endif
 <%endif%>
@@ -450,21 +419,12 @@ else
 endif
 <%endif%>
 <%endfor%>
-<%foreach(custom_type->input_file->output_files)%><%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%><%fornotlast(" ")%><%endfor%>: <%custom_type->input_file%><%if(custom_type->dependent)%> <%custom_type->dependent%><%endif%>
-<%if(flag_overrides(custom_type->input_file, gendir))%>
-	$(MKDIR) <%flag_overrides(custom_type->input_file, gendir)%>
-<%endif%>
+<%foreach(custom_type->input_file->output_files)%><%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%><%fornotlast(" ")%><%endfor%>: <%custom_type->input_file%><%if(custom_type->dependent)%> <%custom_type->command%>$(EXEEXT)<%endif%>
 	<%custom_type->command%> <%if(flag_overrides(custom_type->input_file, commandflags))%><%flag_overrides(custom_type->input_file, commandflags)%><%else%><%custom_type->commandflags%><%endif%> <%custom_type->input_file%> <%if(custom_type->output_option)%><%custom_type->output_option%> $@<%endif%>
-<%if(flag_overrides(custom_type->input_file, postcommand))%>
-<%foreach(custom_type->input_file->output_files)%>
-	<%flag_overrides(custom_type->input_file, postcommand)%>
-<%endfor%>
-<%else%>
 <%if(custom_type->postcommand)%>
 <%foreach(custom_type->input_file->output_files)%>
-	<%custom_type->postcommand%>
+	<%custom_type->postcommand()%>
 <%endfor%>
-<%endif%>
 <%endif%>
 <%if(pch_header)%>
 <%if(custom_type->pch_postrule)%>
@@ -530,14 +490,12 @@ endif
 <%endif%>
 <%if(exename)%>
 
-ifneq ($(VXWORKSLINK),true)
 ifndef kylix
 $(BIN): $(addprefix $(VDIR), $(OBJS))
 	$(LINK.cc) $(LDFLAGS) $(CC_OUTPUT_FLAG) $@ $^ $(VLDLIBS) $(POSTLINK)
 else
 $(BIN): $(addprefix $(VDIR), $(OBJS))
 	$(LINK.cc) $(LDFLAGS) $(CC_OUTPUT_FLAG) $(VLDLIBS) $(BORINITEXEOBJ) $(POSTLINK) $^, $@,,
-endif
 endif
 <%endif%>
 

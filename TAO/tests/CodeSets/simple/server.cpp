@@ -23,7 +23,6 @@
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
-#include "ace/OS_NS_stdio.h"
 
 // ------------------------------------------------------------
 // Servant for associated CORBA object
@@ -39,12 +38,10 @@ public:
               ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    ACE_DEBUG ((LM_DEBUG,
-                "Server: bare string: %s\n", name));
+    cout << "Server: bare string: " << name << endl;
     const char *any_str;
     inany >>= any_str;
-    ACE_DEBUG ((LM_DEBUG,
-                "Server: inserted string: %s\n\n", any_str));
+    cout << "Server: inserted string: " << any_str << endl << endl;
 
     CORBA::Any *out_ptr = 0;
     ACE_NEW_RETURN (out_ptr,
@@ -88,8 +85,7 @@ int main(int argc, char *argv[])
       // Check POA
       if (CORBA::is_nil (poa_object.in ()))
         {
-          ACE_DEBUG ((LM_DEBUG,
-                     "Couldn't initialize POA\n"));
+          cout << "Couldn't initialize POA" << endl;
           return 1;
         }
 
@@ -119,14 +115,18 @@ int main(int argc, char *argv[])
                                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      FILE *output_file= ACE_OS::fopen ("server.ior", "w");
-      if (output_file == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR: %s",
-                           "server.ior"),
-                              1);
-      ACE_OS::fprintf (output_file, "%s", ior.in ());
-      ACE_OS::fclose (output_file);
+      ofstream fstr;
+      fstr.open ("server.ior");
+
+      if (fstr.bad ())
+        {
+          cout << "Cannot open server.ior!" << endl;
+          exit (1);
+        }
+      else
+        {
+          fstr << ior.in () << endl;
+        }
 
       // Activate POA manager
       poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);

@@ -39,17 +39,19 @@ void Dispatcher::implementation (Dispatcher_Impl* impl)
   //dispatcher_impl_.reset (impl);
 }
 
-Dispatcher*
+Dispatcher_Auto_Ptr
 Dispatcher_Factory::
 create_dispatcher(const Dispatcher_Attributes& attrs)
 {
   Dispatcher* disp;
+  Dispatcher_Auto_Ptr nil_ptr((Dispatcher*)0);
   Dispatcher_Impl* tmp;
-  ACE_NEW_RETURN (tmp, Default_Dispatcher_Impl, 0);
-  ACE_NEW_RETURN (disp, Dispatcher, 0);
+  ACE_NEW_RETURN (tmp, Default_Dispatcher_Impl, nil_ptr);
+  ACE_NEW_RETURN (disp, Dispatcher, nil_ptr);
+  Dispatcher_Auto_Ptr disp_auto_ptr(disp);
   disp->implementation (tmp);
   tmp->init (attrs);
-  return disp;
+  return disp_auto_ptr;
 }
 
 }

@@ -773,7 +773,7 @@ namespace
     }
 
     virtual void
-    returns (SemanticGraph::HomeFactory&)
+    returns (SemanticGraph::HomeFactory& hf)
     {
       os << STRS[COMP_EC] << "_ptr" << endl;
     }
@@ -849,7 +849,7 @@ namespace
     }
 
     virtual void
-    returns (SemanticGraph::HomeFinder&)
+    returns (SemanticGraph::HomeFinder& t)
     {
       os << STRS[COMP_EC] << "_ptr" << endl;
     }
@@ -1177,7 +1177,7 @@ ExecImplHeaderEmitter::ExecImplHeaderEmitter (std::ostream& os_,
 {}
 
 void
-ExecImplHeaderEmitter::pre (TranslationUnit&)
+ExecImplHeaderEmitter::pre (TranslationUnit& u)
 {
   os << COPYRIGHT;
 
@@ -1219,7 +1219,7 @@ ExecImplHeaderEmitter::pre (TranslationUnit&)
                                       "_svnt.h");
 
   file_name = regex::perl_s (file_name,
-                             "/(\\.(idl|cidl|cdl))?$/"
+                             "/(\\.(idl|cidl))?$/"
                              + file_suffix
                              + "/");
 
@@ -1300,7 +1300,7 @@ ExecImplHeaderEmitter::generate (TranslationUnit& u)
 }
 
 void
-ExecImplHeaderEmitter::post (TranslationUnit&)
+ExecImplHeaderEmitter::post (TranslationUnit& u)
 {
   if (file_.empty ()) return;
   

@@ -50,17 +50,10 @@ project(*FD_unclient) : aceexe {
   }
 }
 
-project(*CPP_unclient) : aceexe {
-  exename = CPP-unclient
-  Source_Files {
-    CPP-unclient.cpp
-  }
-}
-
 project(*CPP_unserver) : aceexe {
-  exename = CPP-unserver
+  exename = FD-unserver
   Source_Files {
-    CPP-unserver.cpp
+    FD-unserver.cpp
   }
 }
 

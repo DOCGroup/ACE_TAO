@@ -31,7 +31,6 @@
 # define ACE_LACKS_ASSERT_H
 # define ACE_LACKS_SEARCH_H
 # define ACE_LACKS_WCHAR_H
-# define ACE_LACKS_WCTYPE_H
 #endif /* UNDER_CE < 400 */
 
 #if !defined (ACE_HAS_WINCE)

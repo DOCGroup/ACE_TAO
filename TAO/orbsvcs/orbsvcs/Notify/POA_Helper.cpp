@@ -9,10 +9,7 @@
 ACE_RCSID(RT_Notify, TAO_Notify_POA_Helper, "$Id$")
 
 #include "tao/debug.h"
-//#define DEBUG_LEVEL 10
-#ifndef DEBUG_LEVEL
-# define DEBUG_LEVEL TAO_debug_level
-#endif // DEBUG_LEVEL
+#include "ID_Factory.h"
 
 TAO_Notify_POA_Helper::TAO_Notify_POA_Helper (void)
 {
@@ -84,7 +81,7 @@ TAO_Notify_POA_Helper::create_i (PortableServer::POA_ptr parent_poa, const char*
                                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  if (DEBUG_LEVEL > 0)
+  if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "Created POA : %s\n", this->poa_->the_name ()));
   /*
   // Destroy the policies
@@ -128,32 +125,14 @@ TAO_Notify_POA_Helper::long_to_ObjectId (CORBA::Long id ACE_ENV_ARG_DECL) const
 CORBA::Object_ptr
 TAO_Notify_POA_Helper::activate (PortableServer::Servant servant, CORBA::Long& id ACE_ENV_ARG_DECL)
 {
+  /// ID Factory for objects.
+  static TAO_Notify_ID_Factory id_factory;
+
   // Generate a new ID.
-  id = this->id_factory_.id ();
+  id = id_factory.id ();
 
-  if (DEBUG_LEVEL > 0)
+  if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "Activating object with id = %d in  POA : %s\n", id, this->poa_->the_name ()));
-
-  // Convert CORBA::Long to ObjectId
-  PortableServer::ObjectId_var oid =
-    this->long_to_ObjectId (id ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
-
-  poa_->activate_object_with_id (oid.in (),
-                                 servant
-                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
-
-  return poa_->id_to_reference (oid.in ()
-                                ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object_ptr
-TAO_Notify_POA_Helper::activate_with_id (PortableServer::Servant servant, CORBA::Long id ACE_ENV_ARG_DECL)
-{
-  if (DEBUG_LEVEL > 0)
-    ACE_DEBUG ((LM_DEBUG, "Activating object with existing id = %d in  POA : %s\n", id, this->poa_->the_name ()));
-  this->id_factory_.set_last_used (id);
 
   // Convert CORBA::Long to ObjectId
   PortableServer::ObjectId_var oid =
@@ -191,20 +170,6 @@ TAO_Notify_POA_Helper::id_to_reference (CORBA::Long id ACE_ENV_ARG_DECL) const
   return poa_->id_to_reference (oid.in ()
                                 ACE_ENV_ARG_PARAMETER);
 }
-
-PortableServer::ServantBase *
-TAO_Notify_POA_Helper::reference_to_servant (CORBA::Object_ptr ptr ACE_ENV_ARG_DECL) const
-{
-  return poa_->reference_to_servant (ptr ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object_ptr
-TAO_Notify_POA_Helper::servant_to_reference (
-    PortableServer::ServantBase * servant  ACE_ENV_ARG_DECL) const
-{
-  return poa_->servant_to_reference (servant ACE_ENV_ARG_PARAMETER);
-}
-
 
 void
 TAO_Notify_POA_Helper::destroy (ACE_ENV_SINGLE_ARG_DECL)

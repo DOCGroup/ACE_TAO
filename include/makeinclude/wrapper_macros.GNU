@@ -170,7 +170,6 @@
 #  PWD          Command to get the current working directory
 #  PTDIRS       Pathnames of directories containing template code
 #  RM           Name of program to use to remove files
-#  ACE_MKDIR    Name of program to (recursively) create directories
 #  SOFLAGS      Flags used to build a shared library
 #  SOLINK.cc    Link line necessary to build a share library
 #  VAR          Variant identifier suffix
@@ -310,12 +309,6 @@ ifeq ($(PWD),)
   PWD=$(shell pwd)
 endif
 
-ifeq ($(ACE_MKDIR),)
-  MKDIR = mkdir -p
-else
-  MKDIR = $(ACE_MKDIR)
-endif
-
 #----------------------------------------------------------------------------
 #      Platform-independent macro definitions
 #----------------------------------------------------------------------------
@@ -339,6 +332,7 @@ IDL_SERVER_TSRC_EXT ?= S_T.cpp
 ifeq (,$(findstring -I$(ACE_ROOT),$(INCLDIRS)))
   INCLDIRS        += -I$(ACE_ROOT)
 endif
+INSBIN          ?= $(ACE_ROOT)/bin
 INSINC          ?= $(ACE_ROOT)/ace
 INSLIB          ?= $(ACE_ROOT)/lib
 INSMAN          ?= $(ACE_ROOT)/man
@@ -800,7 +794,6 @@ ace_token     ?= 1
 ace_svcconf   ?= 1
 ace_uuid      ?= 1
 ace_filecache ?= 1
-acexml        ?= 1
 
 #----------------------------------------------------------------------------
 #      Conditional macro definitions

@@ -44,6 +44,8 @@ template <class HANDLER>
 class ACE_Asynch_Connector : public ACE_Handler
 {
 public:
+  static const ACE_INET_Addr local_default;
+
   /// A do nothing constructor.
   ACE_Asynch_Connector (void);
 
@@ -59,8 +61,7 @@ public:
 
   /// This initiates a new asynchronous connect
   virtual int connect (const ACE_INET_Addr &remote_sap,
-                       const ACE_INET_Addr &local_sap =
-                         (const ACE_INET_Addr &)ACE_Addr::sap_any,
+                       const ACE_INET_Addr &local_sap = local_default,
                        int reuse_addr = 1,
                        const void *act = 0);
 

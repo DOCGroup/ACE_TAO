@@ -35,7 +35,7 @@ CC      = dmc
 CXX     = dmc
 RC      =
 
-CFLAGS += $(MODEL_FLAGS) -ND
+CFLAGS += $(MODEL_FLAGS)
 
 EXEEXT = .exe
 
@@ -54,6 +54,3 @@ SOBUILD    = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 PRELIB  = @true
 
 CCFLAGS += $(CFLAGS) $(TEMPLATES_FLAG)
-
-# Dmc doesn't have rwho
-rwho = 0

@@ -132,7 +132,7 @@ namespace
     virtual void
     post (Type&)
     {
-      os << ";" << endl << endl;
+      os << ";" << endl;
     }
 
     virtual void
@@ -300,7 +300,7 @@ namespace
     Traversal::Belongs read_belongs_;
   };
 
-  struct InterfaceEmitter : Traversal::Interface,
+  struct InterfaceEmitter : Traversal::UnconstrainedInterface,
                             EmitterBase
   {
     InterfaceEmitter (Context& c)
@@ -308,22 +308,22 @@ namespace
     {}
 
     bool
-    add (Interface& i)
+    add (UnconstrainedInterface& i)
     {
       return interfaces_.insert (&i).second;
     }
 
     virtual void
-    traverse (Interface& i)
+    traverse (UnconstrainedInterface& i)
     {
       if (add (i))
       {
-        Traversal::Interface::traverse (i);
+        Traversal::UnconstrainedInterface::traverse (i);
       }
     }
 
   private:
-    std::set<Interface*> interfaces_;
+    std::set<UnconstrainedInterface*> interfaces_;
   };
 
   struct FacetEmitter : Traversal::UnconstrainedInterface,
@@ -841,7 +841,7 @@ namespace
     }
 
     virtual void
-    post (Type&)
+    post (Type& t)
     {
       // Component context class closer.
       os << "};";
@@ -1175,12 +1175,12 @@ namespace
       }
 
       virtual void
-      traverse (SemanticGraph::SingleUser&)
+      traverse (SemanticGraph::SingleUser& u)
       {
       }
 
       virtual void
-      traverse (SemanticGraph::MultiUser&)
+      traverse (SemanticGraph::MultiUser& u)
       {
       }
 
@@ -1194,12 +1194,12 @@ namespace
       }
 
       virtual void
-      traverse (SemanticGraph::Emitter&)
+      traverse (SemanticGraph::Emitter& e)
       {
       }
 
       virtual void
-      traverse (SemanticGraph::Publisher&)
+      traverse (SemanticGraph::Publisher& p)
       {
       }
 
@@ -1475,7 +1475,7 @@ namespace
     }
 
     virtual void
-    post (Type&)
+    post (Type& t)
     {
       // Component servant class closer.
       os << "};";
@@ -1998,7 +1998,7 @@ namespace
          << STRS[ENV_HDR] << ");" << endl;
     }
 
-    virtual void post (Type&)
+    virtual void post (Type& t)
     {
       // Namespace closer.
       os << "}";
@@ -2048,7 +2048,7 @@ namespace
     {
       os << "#include \""
          << regex::perl_s (qi.file ().string (),
-                           "/(\\.(idl|cidl|cdl))?$/S.h/")
+                           "/(\\.(idl|cidl))?$/S.h/")
          << "\""
          << endl;
     }
@@ -2058,7 +2058,7 @@ namespace
     {
       os << "#include \""
          << regex::perl_s (bi.file ().string (),
-                           "/(\\.(idl|cidl|cdl))?$/S.h/")
+                           "/(\\.(idl|cidl))?$/S.h/")
          << "\""
          << endl;
     }
@@ -2076,7 +2076,7 @@ ServantHeaderEmitter::ServantHeaderEmitter (std::ostream& os_,
 {}
 
 void
-ServantHeaderEmitter::pre (TranslationUnit&)
+ServantHeaderEmitter::pre (TranslationUnit& u)
 {
   os << COPYRIGHT;
 
@@ -2105,7 +2105,7 @@ ServantHeaderEmitter::pre (TranslationUnit&)
   string guard =
       "CIAO_GLUE_SESSION_"
       + regex::perl_s (uc_file_name,
-                       "/(\\.(IDL|CIDL|CDL))?$/" +  uc_file_suffix + "/");
+                       "/(\\.(IDL|CIDL))?$/" +  uc_file_suffix + "/");
 
   // Replace any remaining '.' with '_'.
   guard = regex::perl_s (guard, "/\\./_/");
@@ -2135,7 +2135,7 @@ ServantHeaderEmitter::pre (TranslationUnit&)
   // they are in synch with the IDL compiler's options.
   os << "#include \""
      << regex::perl_s (file_name,
-                       "/(\\.(idl|cidl|cdl))?$/" + suffix + "C.h/")
+                       "/(\\.(idl|cidl))?$/" + suffix + "C.h/")
      << "\""
      << endl << endl;
 
@@ -2240,7 +2240,7 @@ ServantHeaderEmitter::generate (TranslationUnit& u)
 }
 
 void
-ServantHeaderEmitter::post (TranslationUnit&)
+ServantHeaderEmitter::post (TranslationUnit& u)
 {
   if (file_.empty ()) return;
 
@@ -2262,7 +2262,7 @@ ServantHeaderEmitter::post (TranslationUnit&)
   string guard =
     "CIAO_GLUE_SESSION_"
     + regex::perl_s (uc_file_name,
-                     "/(\\.(IDL|CIDL|CDL))?$/" +  uc_file_suffix + "/");
+                     "/(\\.(IDL|CIDL))?$/" +  uc_file_suffix + "/");
 
   guard = regex::perl_s (guard, "/\\./_/");
 

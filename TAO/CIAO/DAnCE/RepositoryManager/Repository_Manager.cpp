@@ -7,7 +7,6 @@
 #include "NodeManager/NodeDaemonC.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/streams.h"
-#include "ace/Auto_Ptr.h"
 using namespace std;
 
 const char * exec_ior = "file://exec_mgr.ior";
@@ -89,24 +88,19 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   try
     {
       // get a reference to the parser.
-      auto_ptr<DOMBuilder> plan_parser (
-          CIAO::Config_Handler::Utils::create_parser ()
-        );
-        
+      std::auto_ptr<DOMBuilder> plan_parser (CIAO::Config_Handler::Utils::
+                                             create_parser ());
       CIAO::Config_Handler::Config_Error_Handler handler;
       plan_parser->setErrorHandler(&handler);
 
-      auto_ptr<DOMBuilder> tpd_parser (
-          CIAO::Config_Handler::Utils::create_parser ()
-        );
-
+      std::auto_ptr<DOMBuilder> tpd_parser (CIAO::Config_Handler::Utils::
+                                            create_parser ());
       CIAO::Config_Handler::Config_Error_Handler tpd_handler;
       tpd_parser->setErrorHandler(&tpd_handler);
 
       // use the parser to parse the deployment plan URL and create
       // a DOM document.
       DOMDocument* plan_doc = plan_parser->parseURI (plan_url);
-      
       if (handler.getErrors())
         {
           return 1;
@@ -132,11 +126,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       //auto_ptr<DOMBuilder> cleanup_parser (parser);
 
       // call the Deployment Plan handler to parse the XML descriptor.
-      CIAO::Config_Handler::Plan_Handler plan_handler (
-          plan_doc,
-          DOMNodeFilter::SHOW_ELEMENT | DOMNodeFilter::SHOW_TEXT
-        );
-        
+      CIAO::Config_Handler::Plan_Handler plan_handler (plan_doc,
+                                                  DOMNodeFilter::SHOW_ELEMENT |
+                                                  DOMNodeFilter::SHOW_TEXT);
       Deployment::DeploymentPlan plan;
       plan_handler.process_plan (plan);
 
@@ -166,12 +158,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Deployment Process.
 
       CORBA::Object_var obj = orb->string_to_object (exec_ior
-                                                     ACE_ENV_ARG_PARAMETER);
+                                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CIAO::ExecutionManagerDaemon_var exec_mgr =
-        CIAO::ExecutionManagerDaemon::_narrow (obj.in ()
-                                               ACE_ENV_ARG_PARAMETER);
+        CIAO::ExecutionManagerDaemon::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (exec_mgr.in ()))
@@ -186,9 +177,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CIAO::NodeDaemon_var node_mgr;
       if (node_daemon_ior != 0)
       {
-        CORBA::Object_var node_mgr_obj = 
-          orb->string_to_object (node_daemon_ior
-                                 ACE_ENV_ARG_PARAMETER);
+        CORBA::Object_var node_mgr_obj = orb->string_to_object
+                                                 (node_daemon_ior
+                                                  ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
         node_mgr =
@@ -268,6 +259,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   catch (CORBA::Exception& ex)
     {
       ACE_PRINT_EXCEPTION (ex, "Caught CORBA Exception: ");
+      while (true);
       return -1;
     }
   catch (const DOMException& e)
@@ -286,11 +278,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
       //ACE_PRINT_EXCEPTION ("Caught DOM Exception: ");
       ACE_ERROR ((LM_ERROR, "Caught DOM exception\n"));
+      while (true);
       return -1;
     }
   catch (...)
     {
       ACE_ERROR ((LM_ERROR, "Caught unknown exception\n"));
+      while (true);
       return -1;
     }
 

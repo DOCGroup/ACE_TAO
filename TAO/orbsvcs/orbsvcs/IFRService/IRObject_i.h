@@ -59,7 +59,8 @@ public:
   virtual CORBA::DefinitionKind def_kind (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+  // Pure virtual.
 
   virtual void destroy (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS

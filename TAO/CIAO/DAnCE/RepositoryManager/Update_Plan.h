@@ -46,13 +46,11 @@ namespace CIAO
                               Deployment::DeploymentPlan &plan,
                               int l,
                               REF_MAP &ref_map,
-                              REF_MAP &primary_ref_map,
-                              REF_MAP &plan_ref_map);
+                              REF_MAP &primary_ref_map);
 
   void traverse_assembly (Deployment::ComponentAssemblyDescription &assembly,
                           Deployment::DeploymentPlan &plan,
-                          REF_MAP &ref_map, REF_MAP &primary_ref_map,
-                          REF_MAP &plan_ref_map);
+                          REF_MAP &ref_map, REF_MAP &primary_ref_map);
 
   void traverse_interface (Deployment::SubcomponentInstantiationDescription
                            &instance,
@@ -74,7 +72,6 @@ namespace CIAO
                          Deployment::InstanceDeploymentDescription &instance,
                          REF_MAP &ref_map, REF_MAP &primary_ref_map,
                          ART_REF_MAP &art_ref_map,
-                         REF_MAP &plan_ref_map,
                          Deployment::MonolithicDeploymentDescription &mdd);
 
   void update_artifact_location (Deployment::ImplementationArtifactDescription
@@ -103,7 +100,6 @@ namespace CIAO
                                            REF_MAP &primary_ref_map,
                                            REF_MAP &ref_map,
                                            ART_REF_MAP &art_ref_map,
-                                           REF_MAP &plan_ref_map,
                                            Deployment::MonolithicDeploymentDescription
                                            &mid,
                                            Deployment::DeploymentPlan &plan,

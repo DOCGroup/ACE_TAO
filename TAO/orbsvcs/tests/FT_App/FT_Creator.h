@@ -22,7 +22,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "TAO_Object_Group_Creator.h"
-#include "ace/OS_NS_stdio.h"
 
 namespace FTAPP
 {
@@ -53,7 +52,7 @@ namespace FTAPP
     /////////////////
     // implementation
   private:
-    void usage (FILE* out)const;
+    void usage (ostream & out)const;
 
     ////////////////////
     // forbidden methods

@@ -26,10 +26,9 @@ Notify_Logging_Service_SOURCES = \
   Notify_Logging_Service.h
 
 Notify_Logging_Service_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_DsNotifyLogAdmin_Serv.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Serv.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_DsLogAdmin_Serv.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_ETCL.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_DsNotifyLogAdmin_Skel.la \
@@ -51,8 +50,6 @@ endif !BUILD_MINIMUM_CORBA
 
 ## Clean up template repositories, etc.
 clean-local:
-	-rm -f *~ *.bak *.rpo *.sym lib*.*_pure_* core core.*
-	-rm -f gcctemp.c gcctemp so_locations *.ics
-	-rm -rf cxx_repository ptrepository ti_files
-	-rm -rf templateregistry ir.out
+	-rm -f *.bak *.rpo *.sym lib*.*_pure_* Makefile.old core
+	-rm -f gcctemp.c gcctemp so_locations
 	-rm -rf ptrepository SunWS_cache Templates.DB

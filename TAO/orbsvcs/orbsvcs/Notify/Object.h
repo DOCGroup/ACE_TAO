@@ -27,7 +27,6 @@
 #include "QoSProperties.h"
 #include "AdminProperties.h"
 #include "Refcountable.h"
-#include "Name_Value_Pair.h"
 
 class TAO_Notify_POA_Helper;
 class TAO_Notify_Worker_Task;
@@ -55,16 +54,10 @@ public:
   virtual ~TAO_Notify_Object (void);
 
   /// This Object's ID
-  ID id (void) const;
+  ID id (void);
 
   /// Activate
   virtual CORBA::Object_ptr activate (PortableServer::Servant servant ACE_ENV_ARG_DECL);
-
-  /// Activate with existing id
-  virtual CORBA::Object_ptr activate (
-      PortableServer::Servant servant,
-      CORBA::Long id
-      ACE_ENV_ARG_DECL);
 
   /// Deactivate
   void deactivate (ACE_ENV_SINGLE_ARG_DECL);
@@ -105,10 +98,6 @@ public:
   /// Get the QoS Properties.
   CosNotification::QoSProperties* get_qos (ACE_ENV_SINGLE_ARG_DECL);
 
-  bool find_qos_property_value (
-    const char * name,
-    CosNotification::PropertyValue & value)const;
-
   /// Obtain the Timer manager associated with this object.
   virtual TAO_Notify_Timer* timer (void);
 
@@ -118,13 +107,9 @@ public:
   /// Accessor for the Event Manager
   TAO_Notify_Event_Manager* event_manager (void);
 
-  /// Load our attributes. Each derived type should call the superclass
-  /// load first before loading its own attributes.
-  virtual void load_attrs(const TAO_Notify::NVPList& attrs);
-
 protected:
   /// Init this object with data from <rhs>.
-  void initialize (TAO_Notify_Object* parent);
+  void init (TAO_Notify_Object* parent);
 
   /// Shutdown the current worker task and delete it if we own it.
   void shutdown_worker_task (void);
@@ -137,11 +122,6 @@ protected:
 
   /// Notification that can be overridden by subclasses to be informed that <qos_properties_> have been modified.
   virtual void qos_changed (const TAO_Notify_QoSProperties& qos_properties);
-
-  /// Called by derived types to save their attributes. Each
-  /// derived type should call its superclass version before
-  /// saving its own attrs.
-  virtual void save_attrs(TAO_Notify::NVPList& attrs);
 
   ///= Protected data members.
 

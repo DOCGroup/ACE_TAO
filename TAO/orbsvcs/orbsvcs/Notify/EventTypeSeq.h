@@ -28,9 +28,7 @@
  * @brief Allows operations using the CosNotification::EventTypeSeq type.
  *
  */
-class TAO_Notify_Serv_Export TAO_Notify_EventTypeSeq
-  : public ACE_Unbounded_Set <TAO_Notify_EventType>
-  , public TAO_Notify::Topology_Object
+class TAO_Notify_Serv_Export TAO_Notify_EventTypeSeq : public ACE_Unbounded_Set <TAO_Notify_EventType>
 {
  typedef ACE_Unbounded_Set <TAO_Notify_EventType> inherited;
 
@@ -38,11 +36,9 @@ public:
   /// Constructor
   TAO_Notify_EventTypeSeq (void);
   TAO_Notify_EventTypeSeq (const CosNotification::EventTypeSeq& event_type_seq);
-  TAO_Notify_EventTypeSeq (const TAO_Notify_EventTypeSeq & rhs);
-  TAO_Notify_EventTypeSeq & operator = (const TAO_Notify_EventTypeSeq & rhs);
 
   /// Preprocess the types added and removed.
-  void add_and_remove (TAO_Notify_EventTypeSeq& added, TAO_Notify_EventTypeSeq& removed);
+  void init (TAO_Notify_EventTypeSeq& added, TAO_Notify_EventTypeSeq& removed);
 
   /// Populate this sequence with the intersection of rhs and lhs.
   void intersection (const TAO_Notify_EventTypeSeq& rhs, const TAO_Notify_EventTypeSeq& lhs);
@@ -68,14 +64,6 @@ public:
 
   /// Print the contents.
   void dump (void) const;
-
-  // TAO_Notify::Topology_Object
-
-  virtual void save_persistent (TAO_Notify::Topology_Saver& saver ACE_ENV_ARG_DECL);
-  virtual TAO_Notify::Topology_Object* load_child (const ACE_CString &type, CORBA::Long id,
-    const TAO_Notify::NVPList& attrs ACE_ENV_ARG_DECL);
-  virtual void release (void);
-
 };
 
 #if defined (__ACE_INLINE__)

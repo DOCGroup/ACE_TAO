@@ -13,25 +13,20 @@
 
 #include "ace/Log_Msg.h"
 
-ImR_Adapter::ImR_Adapter(void)
-: servant_locator_(0)
+ImR_Adapter_Activator::ImR_Adapter_Activator (
+  PortableServer::ServantLocator_ptr servant
+)  
+  : servant_locator_ (servant)
 {
-}
-
-void
-ImR_Adapter::init(PortableServer::ServantLocator_ptr servant)
-{
-  servant_locator_ = servant;
+  // Nothing
 }
 
 CORBA::Boolean
-ImR_Adapter::unknown_adapter (PortableServer::POA_ptr parent,
+ImR_Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
                                         const char *name
-                                        ACE_ENV_ARG_DECL)
+                                        ACE_ENV_ARG_DECL) 
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_ASSERT(! CORBA::is_nil(parent));
-  ACE_ASSERT(name != 0);
   CORBA::PolicyList policies (2);
   policies.length (2);
 
@@ -42,7 +37,8 @@ ImR_Adapter::unknown_adapter (PortableServer::POA_ptr parent,
       // Servant Retention Policy
       exception_message = "While PortableServer::POA::create_servant_retention_policy";
       policies[0] =
-        parent->create_servant_retention_policy (PortableServer::NON_RETAIN ACE_ENV_ARG_PARAMETER);
+        parent->create_servant_retention_policy (PortableServer::NON_RETAIN
+                                                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Request Processing Policy
@@ -81,8 +77,8 @@ ImR_Adapter::unknown_adapter (PortableServer::POA_ptr parent,
     }
   ACE_CATCHANY
     {
-      ACE_ERROR ((LM_ERROR,
-                  "IMR_Adapter_Activator::unknown_adapter - %s\n",
+      ACE_ERROR ((LM_ERROR, 
+                  "IMR_Adapter_Activator::unknown_adapter - %s\n", 
                   exception_message));
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "System Exception");
       return 0;

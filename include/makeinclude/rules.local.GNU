@@ -31,8 +31,6 @@ ifdef sun
   CLEANUP_DIRS += SunWS_cache
 endif
 
-vxworks_ntbuild ?= 0
-
 #### TEMPLATE_REPOSITORY can be set in individual platform files
 #### to create template repository directories.  See
 #### platform_sunos5_sunc++.GNU for an example.
@@ -89,7 +87,15 @@ ifeq ($(static_link),1)
 endif # static_link = 1
 
 OS ?=
+ifeq ($(OS),"Windows_NT")
+$(VDIR)%.obj: %.c
+	$(COMPILE.c) $(CC_OUTPUT_FLAG) $@ $<
+	${MVCMD}
 
+$(VDIR)%.obj: %.cpp
+	$(COMPILE.cc) $(CC_OUTPUT_FLAG) $@ $<
+	${MVCMD}
+else
 $(VDIR)%.o: %.c $(VDIR)%.creation_stamp
 	$(COMPILE.c) $(CC_OUTPUT_FLAG) $@ $<
 	${MVCMD}
@@ -97,6 +103,7 @@ $(VDIR)%.o: %.c $(VDIR)%.creation_stamp
 $(VDIR)%.o: %.cpp $(VDIR)%.creation_stamp
 	$(COMPILE.cc) $(CC_OUTPUT_FLAG) $@ $<
 	${MVCMD}
+endif
 
 $(VDIR)%.o: %.C $(VDIR)%.creation_stamp
 	$(COMPILE.cc) $(CC_OUTPUT_FLAG) $@ $<
@@ -159,25 +166,25 @@ $(VSHDIR)%.$(SOEXT): $(VSHDIR)%.$(OBJEXT) $(VSHDIR)%.creation_stamp
 	$(SOLINK)
 endif # SOLINK
 
-ifeq ($(vxworks_ntbuild),1)
-$(VDIR)%.creation_stamp:
-	@if not exist $(dir $@) $(MKDIR) $(dir $@) $(ACE_NUL_STDERR)
+ifeq ($(OS),"Windows_NT")
+$(VDIR).creation_stamp:
+	@if not exist $(VDIR) mkdir $(VDIR)
 	@echo > $@
 else
 .PHONY: $(VDIR)%.creation_stamp
 $(VDIR)%.creation_stamp:
-	@-test -d $(dir $@) || $(MKDIR) $(dir $@) $(ACE_NUL_STDERR)
+	@-test -d $(dir $@) || mkdir -p $(dir $@) $(ACE_NUL_STDERR)
 endif
 
 ifneq ($(VDIR),$(VSHDIR))
-  ifeq ($(vxworks_ntbuild),1)
-$(VSHDIR)%.creation_stamp:
-	@if not exist $(dir $@) $(MKDIR) $(dir $@) $(ACE_NUL_STDERR)
+  ifeq ($(OS),"Windows_NT")
+$(VSHDIR).creation_stamp:
+	@if not exist $(VSHDIR) mkdir $(VSHDIR)
 	@echo > $@
   else
 .PHONY: $(VSHDIR)%.creation_stamp
 $(VSHDIR)%.creation_stamp:
-	@-test -d $(dir $@) || $(MKDIR) $(dir $@) $(ACE_NUL_STDERR)
+	@-test -d $(dir $@) || mkdir -p $(dir $@) $(ACE_NUL_STDERR)
   endif
 endif
 
@@ -251,15 +258,6 @@ $(INSMAN)/man7/% \
 $(INSMAN)/man8/% \
 $(INSMAN)/manl/% \
 $(INSMAN)/mann/% :
-ifeq ($(vxworks_ntbuild),1)
-	@if exist $@ echo "$(@F) already installed"
-	@if not exist $@ echo "Installing $(@F:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) to $(@D)" && \
-		$(RM) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) && \
-		$(LN_S) $(shell pwd)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) && \
-		echo "Installing $(@F) to $(@D)" && \
-		$(RM) $@ && \
-		$(LN_S) $(shell pwd)/$(@F) $@
-else
 ifneq ($(mingw32),1)
 	@if test $(shell pwd) != $(@D) -o -n "$(SOVERSION)" ; then \
 		if test -s $@ ; then \
@@ -286,7 +284,6 @@ else
 			$(LN_S) $(call PWD)/$(@F) $@; \
 		fi ; \
 	fi
-endif
 endif
 ifdef MVSLIB
 #special for MVS in order to use the .x files
@@ -447,12 +444,12 @@ rcs_info.local:
 
 build.objdirs: $(CLEANUP_DIRS)
 
-ifeq ($(MKDIR_NTSTYLE),1)
+ifeq ($(OS),"Windows_NT")
 $(CLEANUP_DIRS):
-	@if not exist $@ $(MKDIR) $@ $(ACE_NUL_STDERR)
+	@if not exist $@ mkdir $@
 else
 $(CLEANUP_DIRS):
-	@test -d $@ || $(MKDIR) $@ $(ACE_NUL_STDERR)
+	@test -d $@ || mkdir -p $@ $(ACE_NUL_STDERR)
 endif
 
 #---------------------------------------------------------------------------

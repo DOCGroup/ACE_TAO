@@ -192,10 +192,10 @@
 // Platform supports IP multicast
 #define ACE_HAS_IP_MULTICAST
 
-// This setting was determined by running the autoconf tests. If it doesn't
-// work uniformly, will need some tweaking, possibly based on other
-// XPG feature-test macros.
-#define ACE_HAS_CONST_CHAR_SWAB
+// This is a lie, but the signatures are all messed up on
+// Solaris. Adding  the right options lie XOPEN_SOURCE and stuff
+// doesn't seem to work right. This is a hack.
+#define ACE_LACKS_SWAB
 
 // Compiler/platform supports alloca()
 // Although ACE does have alloca() on this compiler/platform combination, it is

@@ -26,7 +26,7 @@
 
 class TAO_Notify_Consumer;
 class TAO_Notify_ConsumerAdmin;
-class TAO_Notify_Method_Request;
+
 /**
  * @class TAO_Notify_ProxySupplier
  *
@@ -45,7 +45,7 @@ public:
   virtual ~TAO_Notify_ProxySupplier ();
 
   /// Init
-  void init (TAO_Notify_ConsumerAdmin* consumer_admin ACE_ENV_ARG_DECL);
+  virtual void init (TAO_Notify_ConsumerAdmin* consumer_admin ACE_ENV_ARG_DECL);
 
   /// Connect
   void connect (TAO_Notify_Consumer* consumer ACE_ENV_ARG_DECL)
@@ -57,7 +57,16 @@ public:
   void disconnect (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Dispatch Event to consumer
-  virtual void deliver (TAO_Notify_Method_Request & request ACE_ENV_ARG_DECL);
+  virtual void push (const TAO_Notify_Event* event ACE_ENV_ARG_DECL);
+
+  /// Dispatch Event to consumer
+  virtual void push (const TAO_Notify_Event_var& event ACE_ENV_ARG_DECL);
+
+  /// Dispatch Event to consumer, no filtering
+  virtual void push_no_filtering (const TAO_Notify_Event* event ACE_ENV_ARG_DECL);
+
+  /// Dispatch Event to consumer, no filtering
+  virtual void push_no_filtering (const TAO_Notify_Event_var& event ACE_ENV_ARG_DECL);
 
   /// Override TAO_Notify_Container_T::shutdown  method
   virtual int shutdown (ACE_ENV_SINGLE_ARG_DECL);
@@ -80,7 +89,6 @@ public:
   /// The CA parent.
   TAO_Notify_ConsumerAdmin* consumer_admin (void);
 
-//  const char * get_proxy_type_name (void) const;
 protected:
 
   ///= Data Members.

@@ -20,7 +20,7 @@ project(ACE) : acedefaults, aceversion, core, qt_reactor, other, codecs, token, 
   //Synch.cpp
 
   Source_Files(ACE_COMPONENTS) {
-    ACE_OS {
+    OS {
       Basic_Types.cpp
       Time_Value.cpp
       Cleanup.cpp
@@ -76,8 +76,6 @@ project(ACE) : acedefaults, aceversion, core, qt_reactor, other, codecs, token, 
 
     Utils {
       ACE.cpp
-      ACE_crc32.cpp
-      ACE_crc_ccitt.cpp
       Active_Map_Manager.cpp
       Arg_Shifter.cpp
       Capabilities.cpp
@@ -191,7 +189,6 @@ project(ACE) : acedefaults, aceversion, core, qt_reactor, other, codecs, token, 
       Addr.cpp
       INET_Addr.cpp
       IPC_SAP.cpp
-      ICMP_Socket.cpp
       LSOCK.cpp
       LSOCK_Acceptor.cpp
       LSOCK_CODgram.cpp
@@ -199,7 +196,6 @@ project(ACE) : acedefaults, aceversion, core, qt_reactor, other, codecs, token, 
       LSOCK_Dgram.cpp
       LSOCK_Stream.cpp
       Multihomed_INET_Addr.cpp
-      Ping_Socket.cpp
       SOCK.cpp
       SOCK_Acceptor.cpp
       SOCK_CODgram.cpp
@@ -282,20 +278,16 @@ project(ACE) : acedefaults, aceversion, core, qt_reactor, other, codecs, token, 
       Based_Pointer_Repository.cpp
       Malloc.cpp
       PI_Malloc.cpp
-      Local_Memory_Pool.cpp
-      MMAP_Memory_Pool.cpp
       Malloc_Allocator.cpp
       Malloc_Instantiations.cpp
       Mem_Map.cpp
+      Memory_Pool.cpp
       Obchunk.cpp
       Obstack.cpp
-      Pagefile_Memory_Pool.cpp
       Read_Buffer.cpp
-      Sbrk_Memory_Pool.cpp
       Shared_Memory.cpp
       Shared_Memory_MM.cpp
       Shared_Memory_SV.cpp
-      Shared_Memory_Pool.cpp
     }
 
     Timer {
@@ -321,21 +313,23 @@ project(ACE) : acedefaults, aceversion, core, qt_reactor, other, codecs, token, 
       Acceptor.cpp
       Active_Map_Manager_T.cpp
       Array_Base.cpp
+      Auto_Functor.cpp
+      Atomic_Op_T.cpp
+      Node.cpp
+      Unbounded_Set.cpp
+      Unbounded_Queue.cpp
       Asynch_Acceptor.cpp
       Asynch_Connector.cpp
-      Atomic_Op_T.cpp
-      Auto_Functor.cpp
       Auto_IncDec_T.cpp
       Auto_Ptr.cpp
       Based_Pointer_T.cpp
+      Connector.cpp
+      Containers_T.cpp
       Cache_Map_Manager_T.cpp
       Cached_Connect_Strategy_T.cpp
       Caching_Strategies_T.cpp
       Caching_Utility_T.cpp
       Cleanup_Strategies_T.cpp
-      Condition_T.cpp
-      Connector.cpp
-      Containers_T.cpp
       Dump_T.cpp
       Dynamic_Service.cpp
       Env_Value_T.cpp
@@ -345,16 +339,14 @@ project(ACE) : acedefaults, aceversion, core, qt_reactor, other, codecs, token, 
       Functor_T.cpp
       Future.cpp
       Future_Set.cpp
-      Guard_T.cpp
-      Hash_Cache_Map_Manager_T.cpp
       Hash_Map_Manager_T.cpp
       Hash_Map_With_Allocator_T.cpp
+      Hash_Cache_Map_Manager_T.cpp
       IOStream_T.cpp
       Intrusive_List.cpp
       Intrusive_List_Node.cpp
       LOCK_SOCK_Acceptor.cpp
       Local_Name_Space_T.cpp
-      Lock_Adapter_T.cpp
       Malloc_T.cpp
       Managed_Object.cpp
       Map_Manager.cpp
@@ -362,11 +354,9 @@ project(ACE) : acedefaults, aceversion, core, qt_reactor, other, codecs, token, 
       Message_Block_T.cpp
       Message_Queue_T.cpp
       Module.cpp
-      Node.cpp
       Obstack_T.cpp
       Pair_T.cpp
       RB_Tree.cpp
-      Reverse_Lock_T.cpp
       Select_Reactor_T.cpp
       Singleton.cpp
       Strategies_T.cpp
@@ -375,9 +365,8 @@ project(ACE) : acedefaults, aceversion, core, qt_reactor, other, codecs, token, 
       String_Base.cpp
       Svc_Handler.cpp
       Synch_T.cpp
-      TSS_T.cpp
-      Task_Ex_T.cpp
       Task_T.cpp
+      Task_Ex_T.cpp
       Template_Instantiations.cpp
       Test_and_Set.cpp
       Timeprobe_T.cpp
@@ -389,77 +378,51 @@ project(ACE) : acedefaults, aceversion, core, qt_reactor, other, codecs, token, 
       Timer_Wheel_T.cpp
       Typed_SV_Message.cpp
       Typed_SV_Message_Queue.cpp
-      Unbounded_Queue.cpp
-      Unbounded_Set.cpp
-      Unbounded_Set_Ex.cpp
       Vector_T.cpp
   }
 
   Inline_Files {
     Bound_Ptr.inl
-    Condition_T.inl
-    Guard_T.inl
     Handle_Gobbler.inl
-    Lock_Adapter_T.inl
-    OS.inl
-    OS_Memory.inl
-    OS_String.inl
     Refcounted_Auto_Ptr.inl
-    Reverse_Lock_T.inl
-    Swap.inl
-    TSS_T.inl
-    Unbounded_Set_Ex.inl
     ace_wchar.inl
   }
 
   Header_Files {
+    os_include
+    os_include/arpa
+    os_include/net
+    os_include/netinet
+    os_include/sys
     ACE_export.h
     Array.h
     Bound_Ptr.h
     CORBA_macros.h
-    Condition_T.h
     Default_Constants.h
     Exception_Macros.h
     Global_Macros.h
-    Guard_T.h
     Handle_Gobbler.h
-    If_Then_Else.h
-    IO_Cntl_Msg.h
-    Lock_Adapter_T.h
     Log_Priority.h
     Malloc_Base.h
     Method_Object.h
-    Memory_Pool.h
     Min_Max.h
     Null_Barrier.h
     Null_Condition.h
     Null_Mutex.h
     Null_Semaphore.h
-    OS.h
-    OS_Dirent.h
-    OS_Memory.h
     OS_NS_macros.h
-    OS_String.h
-    OS_Thread_Adapter.h
-    Object_Manager_Base.h
-    Pair.h
     Proactor_Impl.h
     Reactor_Impl.h
     Reactor_Timer_Interface.h
     Refcounted_Auto_Ptr.h
-    Reverse_Lock_T.h
     SStringfwd.h
     Static_Object_Lock.h
     Strategies.h
     Svc_Conf.h
     Svc_Conf_Tokens.h
-    Swap.h
-    Synch.h
     Synch_Traits.h
-    TSS_T.h
     Timer_Queuefwd.h
     UPIPE_Addr.h
-    Unbounded_Set_Ex.h
     Version.h
     ace_wchar.h
     config-WinCE.h
@@ -477,11 +440,6 @@ project(ACE) : acedefaults, aceversion, core, qt_reactor, other, codecs, token, 
     config-win32.h
     config.h
     iosfwd.h
-    os_include
-    os_include/arpa
-    os_include/net
-    os_include/netinet
-    os_include/sys
     post.h
     pre.h
     streams.h
@@ -491,41 +449,5 @@ project(ACE) : acedefaults, aceversion, core, qt_reactor, other, codecs, token, 
   Documentation_Files {
     README
     ../VERSION
-  }
-  verbatim(gnuace, local) {
-    "Svc_Conf_y.cpp: Svc_Conf.y"
-    "	$(YACC) -l -d Svc_Conf.y"
-    "	sed -e 's/char \\*getenv/char *ace_foo/g' \\"
-    "            -e 's/= getenv/= ACE_OS::getenv/g' \\"
-    "            -e 's/fprintf/ACE_OS::fprintf/g' \\"
-    "            -e 's/yy/ace_yy/g' \\"
-    "            -e 's/->ace_yyerrno/->yyerrno/g' \\"
-    "            -e 's/->ace_yylineno/->yylineno/g' \\"
-    "            -e 's/YY/ACE_YY/g' \\"
-    "            -e 's/Svc_Conf\\.tab\\.c/Svc_Conf_y.cpp/g' < Svc_Conf.tab.c > /tmp/$@"
-    "	cp /tmp/$@ $@"
-    "	patch < ../etc/Svc_Conf_y.cpp.diff"
-    "	echo \/\/ '$$Id$$' > Svc_Conf_Tokens.h"
-    "	cat Svc_Conf.tab.h >> Svc_Conf_Tokens.h"
-    "	$(RM) -f /tmp/$@ Svc_Conf.tab.c Svc_Conf.tab.h Svc_Conf_y.cpp.orig"
-
-    "Svc_Conf_l.cpp: Svc_Conf.l"
-    "	$(LEX) -L -t -I Svc_Conf.l > $@"
-    "	sed -e 's/unistd/stdio/g' \\"
-    "            -e 's/yy/ace_yy/g' \\"
-    "            -e 's/YY/ACE_YY/g' \\"
-    "            -e 's/->ace_yyerrno/->yyerrno/g' \\"
-    "            -e 's/->ace_yylineno/->yylineno/g' \\"
-    "            -e 's/free( ptr );/free( ACE_MALLOC_T (ptr) );/g' \\"
-    "            -e 's/exit( 1 );/ACE_OS::exit( 1 );/g' \\"
-    "            -e 's/isatty( fileno(file)/ACE_OS::isatty( fileno (file)/g' \\"
-    "            -e 's/int isatty/int nop_isatty/g' \\"
-    "            -e 's/realloc( ptr, size );/realloc( ACE_MALLOC_T (ptr), size );/g' \\"
-    "            -e 's@#include <stdio\.h>@#include /**/ \"ace/OS.h\"@' \\"
-    "            -e 's@#include <@#include /**/ <@' \\"
-    "            -e 's@ECHO@ACE_SVC_CONF_ECHO@' < $@ > /tmp/$@"
-    "	cp /tmp/$@ $@"
-    "	patch < ../etc/Svc_Conf_l.cpp.diff"
-    "	$(RM) -f /tmp/$@ Svc_Conf_l.cpp.orig"
   }
 }

@@ -8,6 +8,7 @@ ACE_RCSID (PortableServer,
 // ImplRepo related.
 //
 #if (TAO_HAS_MINIMUM_CORBA == 0)
+# include "tao/PortableServer/ImR_LocatorC.h"
 # include "tao/PortableServer/ImplRepo_i.h"
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
@@ -385,14 +386,6 @@ TAO_POA::complete_destruction_i (ACE_ENV_SINGLE_ARG_DECL)
   // lead to reference deadlock, i.e., POA holds object A, but POA
   // cannot die because object A hold POA.
   {
-    //
-    // If new things are added to this cleanup code, make sure to move
-    // the minimum CORBA #define after the declaration of
-    // <non_servant_upcall>.
-    //
-
-#if (TAO_HAS_MINIMUM_POA == 0)
-
     // A recursive thread lock without using a recursive thread lock.
     // Non_Servant_Upcall has a magic constructor and destructor.  We
     // unlock the Object_Adapter lock for the duration of the servant
@@ -400,6 +393,14 @@ TAO_POA::complete_destruction_i (ACE_ENV_SINGLE_ARG_DECL)
     // though we are releasing the lock, other threads will not be
     // able to make progress since
     // <Object_Adapter::non_servant_upcall_in_progress_> has been set.
+
+    //
+    // If new things are added to this cleanup code, make sure to move
+    // the minimum CORBA #define after the declaration of
+    // <non_servant_upcall>.
+    //
+
+#if (TAO_HAS_MINIMUM_POA == 0)
 
     TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (*this);
     ACE_UNUSED_ARG (non_servant_upcall);
@@ -616,6 +617,16 @@ TAO_POA::find_POA (const char *adapter_name,
   // Lock access for the duration of this transaction.
   TAO_POA_GUARD_RETURN (0);
 
+  // A recursive thread lock without using a recursive thread lock.
+  // Non_Servant_Upcall has a magic constructor and destructor.  We
+  // unlock the Object_Adapter lock for the duration of the servant
+  // activator upcalls; reacquiring once the upcalls complete.  Even
+  // though we are releasing the lock, other threads will not be able
+  // to make progress since
+  // <Object_Adapter::non_servant_upcall_in_progress_> has been set.
+  TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (*this);
+  ACE_UNUSED_ARG (non_servant_upcall);
+
   TAO_POA *poa = this->find_POA_i (adapter_name,
                                    activate_it
                                    ACE_ENV_ARG_PARAMETER);
@@ -646,18 +657,6 @@ TAO_POA::find_POA_i (const ACE_CString &child_name,
               // Check the state of the POA Manager.
               this->check_poa_manager_state (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_CHECK_RETURN (0);
-
-              // A recursive thread lock without using a recursive
-              // thread lock. Non_Servant_Upcall has a magic
-              // constructor and destructor.  We unlock the
-              // Object_Adapter lock for the duration of the servant
-              // activator upcalls; reacquiring once the upcalls
-              // complete.  Even though we are releasing the lock,
-              // other threads will not be able to make progress since
-              // <Object_Adapter::non_servant_upcall_in_progress_> has
-              // been set.
-              TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (*this);
-              ACE_UNUSED_ARG (non_servant_upcall);
 
               CORBA::Boolean success =
                 this->adapter_activator_->unknown_adapter (this,
@@ -3946,25 +3945,6 @@ TAO_POA::imr_notify_startup (ACE_ENV_SINGLE_ARG_DECL)
   if (CORBA::is_nil (imr.in ()))
       return;
 
-  ImplementationRepository::Administration_var imr_locator;
-  {
-        // A recursive thread lock without using a recursive thread lock.
-        // Non_Servant_Upcall has a magic constructor and destructor.  We
-        // unlock the Object_Adapter lock for the duration of the servant
-        // activator upcalls; reacquiring once the upcalls complete.  Even
-        // though we are releasing the lock, other threads will not be able
-        // to make progress since
-        // <Object_Adapter::non_servant_upcall_in_progress_> has been set.
-        TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (*this);
-        ACE_UNUSED_ARG (non_servant_upcall);
-
-        imr_locator = ImplementationRepository::Administration::_narrow (imr.in () ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
-  }
-
-  if (CORBA::is_nil(imr_locator.in ()))
-      return;
-
   TAO_POA *root_poa = this->object_adapter ().root_poa ();
   ACE_NEW_THROW_EX (this->server_object_,
                     ServerObject_i (this->orb_core_.orb (),
@@ -3999,7 +3979,7 @@ TAO_POA::imr_notify_startup (ACE_ENV_SINGLE_ARG_DECL)
 
   if (!svr->_stubobj () || !svr->_stubobj ()->profile_in_use ())
     {
-      ACE_ERROR ((LM_ERROR, "Invalid ImR ServerObject, bailing out.\n"));
+      ACE_ERROR ((LM_ERROR, "Invalid ServerObject, bailing out.\n"));
       return;
     }
 
@@ -4018,29 +3998,37 @@ TAO_POA::imr_notify_startup (ACE_ENV_SINGLE_ARG_DECL)
 
   ACE_CString partial_ior(ior.in (), (pos - ior.in()) + 1);
 
+  ImplementationRepository::Locator_var imr_locator =
+    ImplementationRepository::Locator::_narrow (imr.in ()
+                                                ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  if (CORBA::is_nil(imr_locator.in ()))
+    {
+      ACE_DEBUG ((LM_DEBUG, "Couldnt narrow down the ImR interface\n"));
+      return;
+    }
+
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "Informing IMR that we are running at: %s\n",
                 ACE_TEXT_CHAR_TO_TCHAR (partial_ior.c_str())));
 
+  char host_name[MAXHOSTNAMELEN + 1];
+  ACE_OS::hostname (host_name, MAXHOSTNAMELEN);
+
   ACE_TRY
     {
-      // A recursive thread lock without using a recursive thread lock.
-      // Non_Servant_Upcall has a magic constructor and destructor.  We
-      // unlock the Object_Adapter lock for the duration of the servant
-      // activator upcalls; reacquiring once the upcalls complete.  Even
-      // though we are releasing the lock, other threads will not be able
-      // to make progress since
-      // <Object_Adapter::non_servant_upcall_in_progress_> has been set.
-      TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (*this);
-
-      imr_locator->server_is_running (this->name().c_str (),
+      // Relies on the fact that host_name will be same for the activator
+      // We must pass this separately, because it is NOT possible to parse
+      // the hostname from the ior portably. On some platforms the hostname
+      // will be like 'foo.bar.com' and on others it will just be 'foo'
+      imr_locator->server_is_running_in_activator (this->name().c_str (),
+                                      host_name,
                                       partial_ior.c_str(),
                                       svr.in()
                                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-
-      ACE_UNUSED_ARG (non_servant_upcall);
     }
   ACE_CATCH (CORBA::SystemException, sysex)
     {
@@ -4064,43 +4052,35 @@ TAO_POA::imr_notify_startup (ACE_ENV_SINGLE_ARG_DECL)
 void
 TAO_POA::imr_notify_shutdown (void)
 {
-  // Notify the Implementation Repository about shutting down.
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG, "Notifying IMR of Shutdown\n"));
 
+  char host_name[MAXHOSTNAMELEN + 1];
+  ACE_OS::hostname (host_name, MAXHOSTNAMELEN);
+
+  // Notify the Implementation Repository about shutting down.
   CORBA::Object_var imr = this->orb_core ().implrepo_service ();
 
-  // Check to see if there was an imr returned.  If none, return
-  // ourselves.
+  // Check to see if there was an imr returned.  If none, return ourselves.
   if (CORBA::is_nil (imr.in ()))
     return;
 
   ACE_TRY_NEW_ENV
     {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "Notifing IMR of Shutdown server:%s\n", this->the_name()));
-
-      // A recursive thread lock without using a recursive thread lock.
-      // Non_Servant_Upcall has a magic constructor and destructor.  We
-      // unlock the Object_Adapter lock for the duration of the servant
-      // activator upcalls; reacquiring once the upcalls complete.  Even
-      // though we are releasing the lock, other threads will not be able
-      // to make progress since
-      // <Object_Adapter::non_servant_upcall_in_progress_> has been set.
-      TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (*this);
-      ACE_UNUSED_ARG (non_servant_upcall);
-
       // Get the IMR's administrative object and call shutting_down on it
-      ImplementationRepository::Administration_var imr_locator =
-        ImplementationRepository::Administration::_narrow (imr.in ()
-                                                           ACE_ENV_ARG_PARAMETER);
+      ImplementationRepository::Locator_var imr_locator =
+        ImplementationRepository::Locator::_narrow (imr.in ()
+                                                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      imr_locator->server_is_shutting_down (this->the_name ()
+      imr_locator->server_is_shutting_down_in_activator (this->the_name (),
+                                                         host_name
                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "POA::imr_notify_shutdown()");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Server_i::init");
       // Ignore exceptions
     }
   ACE_ENDTRY;

@@ -2,14 +2,14 @@
 // $Id$
 
 project(*Consumer) : orbsvcsexe, dseventlogadmin, event_skel, naming {
-  exename = Event_Consumer
+  exename = consumer
   source_files {
     Event_Consumer.cpp
   }
 }
 
 project(*Supplier) : orbsvcsexe, dseventlogadmin, event_skel, naming {
-  exename = Event_Supplier
+  exename = supplier
   source_files {
     Event_Supplier.cpp
   }

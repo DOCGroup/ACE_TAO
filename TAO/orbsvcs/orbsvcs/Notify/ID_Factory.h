@@ -41,12 +41,8 @@ public:
 
   TAO_Notify_Object::ID id (void);
 
-  void set_last_used (const TAO_Notify_Object::ID id);
-
 private:
-  // Can't use atomic op, because we added the set_last_used() method.
-  TAO_Notify_Object::ID seed_;
-  TAO_SYNCH_MUTEX mtx_;
+  ACE_Atomic_Op<TAO_SYNCH_MUTEX, TAO_Notify_Object::ID> seed_;
 };
 
 

@@ -47,8 +47,8 @@ public:
   /// Destructor
   ~TAO_Notify_ProxyConsumer ();
 
-  /// Initialize with pointer to parent
-  void init (TAO_Notify_SupplierAdmin * supplier_admin ACE_ENV_ARG_DECL);
+  /// Init
+  void init (TAO_Notify_SupplierAdmin* supplier_admin ACE_ENV_ARG_DECL);
 
   /// Connect
   void connect (TAO_Notify_Supplier* supplier ACE_ENV_ARG_DECL)
@@ -77,13 +77,6 @@ public:
 
   /// The SA parent.
   TAO_Notify_SupplierAdmin* supplier_admin (void);
-
-protected:
-  /// Accept an event from the Supplier
-  void push_i (TAO_Notify_Event * event ACE_ENV_ARG_DECL);
-
-  /// Is this part of a reliable channel
-  bool supports_reliable_events () const;
 
 protected:
   ///= Data Members.

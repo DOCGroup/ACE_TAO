@@ -19,10 +19,6 @@
 // This turns on ACE_HAS_PENTIUM
 #define _M_IX86 500
 
-#if defined ACE_LACKS_STRUCT_DIR
-# undef ACE_LACKS_STRUCT_DIR
-#endif
-
 // Changed ACE_TEXT to ACE_LIB_TEXT in the following line
 # define ACE_CC_NAME ACE_LIB_TEXT ("Digital Mars")
 # define ACE_CC_MAJOR_VERSION (1)
@@ -93,19 +89,6 @@
 #define ACE_LACKS_NETDB_H
 #define ACE_LACKS_SYS_SHM_H
 #define ACE_LACKS_REGEX_H
-#define ACE_LACKS_SYS_MSG_H
-#define ACE_LACKS_NETINET_TCP_H
-#define ACE_LACKS_UNISTD_H
-#define ACE_LACKS_TERMIOS_H
-#define ACE_LACKS_ACE_IOSTREAM
-
-// Typedefs which we expect DMC to do, but they don't do that
-typedef long o_uid_t;
-typedef long o_gid_t;
-
-#include "io.h"
-#undef umask;
-#undef tell;
 
 # if !defined (ACE_LD_DECORATOR_STR) && defined (_DEBUG)
 #  define ACE_LD_DECORATOR_STR ACE_LIB_TEXT ("d")

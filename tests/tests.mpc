@@ -1,7 +1,7 @@
 //  -*- MPC -*-
 // $Id$
 
-project(Test_Output) : acelib, script {
+project(Test_Output) : acelib {
   sharedname = Test_Output
   dynamicflags = TEST_OUTPUT_BUILD_DLL
   Source_Files {
@@ -12,10 +12,6 @@ project(Test_Output) : acelib, script {
     test_config.h
   }
   Resource_Files {
-  }
-  Script_Files {
-    run_test.pl
-    run_test.lst
   }
 }
 
@@ -464,13 +460,6 @@ project(Multihomed INET Addr Test) : acetest {
   exename = Multihomed_INET_Addr_Test
   Source_Files {
     Multihomed_INET_Addr_Test.cpp
-  }
-}
-
-project(Network_Adapters_Test) : acetest {
-  exename = Network_Adapters_Test
-  Source_Files {
-    Network_Adapters_Test.cpp
   }
 }
 
@@ -1128,13 +1117,6 @@ project(SOCK_Dgram_Bcast_Test) : acetest {
   exename = SOCK_Dgram_Bcast_Test
   Source_Files {
   	SOCK_Dgram_Bcast_Test.cpp
-  }
-}
-
-project(SOCK_SEQPACK_SCTP_Test) : acetest {
-  exename = SOCK_SEQPACK_SCTP_Test
-  Source_Files {
-  	SOCK_SEQPACK_SCTP_Test.cpp
   }
 }
 

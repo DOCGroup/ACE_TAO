@@ -5,7 +5,6 @@
 #define _OPTIONS
 
 #include "ace/os_include/os_stddef.h"
-#include "ace/os_include/os_limits.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -23,8 +22,8 @@ public:
   // Parse the arguments.
 
   // = Accessor methods.
-  const char *program_name (void);
-  const char *slave_name (void);
+  ACE_TCHAR *program_name (void);
+  const ACE_TCHAR *slave_name (void);
   int debug (void);
   int exec_slave (void);
   size_t iteration_count (void);
@@ -46,10 +45,10 @@ private:
   void print_usage_and_die (void);
   // Explain usage and exit.
 
-  char program_name_[MAXPATHLEN];
+  ACE_TCHAR *program_name_;
   // Name of the program.
 
-  char slave_name_[MAXPATHLEN];
+  const ACE_TCHAR *slave_name_;
   // Name of slave process.
 
   int debug_;

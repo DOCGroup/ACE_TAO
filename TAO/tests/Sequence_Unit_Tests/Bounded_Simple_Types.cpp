@@ -25,7 +25,7 @@ int main(int,char*[])
   int_sequence a;
   int_sequence b(a);
 
-  int_sequence c(0, int_sequence::allocbuf(), true);
+  int_sequence c(0, int_sequence::allocbuf());
 
   a = b;
 
@@ -41,7 +41,7 @@ int main(int,char*[])
   int_sequence const & d = a;
   c[0] = d[0];
 
-  b.replace(0, int_sequence::allocbuf(), true);
+  b.replace(0, int_sequence::allocbuf());
 
   int const * x = d.get_buffer();
   if (x != 0)

@@ -28,13 +28,13 @@ Options::Options (void)
   : host_ (ACE_DEFAULT_SERVER_HOST),
     port_ (ACE_DEFAULT_SERVER_PORT),
     sleep_time_ (0, 0), // By default, don't sleep between calls.
+    quit_string_ ("q"),
     message_len_ (0),
     message_buf_ (0),
     io_source_ (ACE_INVALID_HANDLE), // Defaults to using the generator.
     iterations_ (10000),
     oneway_ (1) // Make oneway calls the default.
 {
-  ACE_OS::strcpy (quit_string_, "q");
 }
 
 Options::~Options (void)
@@ -103,9 +103,9 @@ Options::read (void *buf, size_t len, size_t &iteration)
 }
 
 int
-Options::parse_args (int argc, ACE_TCHAR *argv[])
+Options::parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("2h:i:m:p:q:sT:"), 1);
+  ACE_Get_Opt getopt (argc, argv, "2h:i:m:p:q:sT:", 1);
 
   for (int c; (c = getopt ()) != -1; )
     switch (c)
@@ -126,9 +126,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         this->port_ = ACE_OS::atoi (getopt.opt_arg ());
         break;
       case 'q':
-        ACE_OS::strncpy (this->quit_string_,
-                         ACE_TEXT_ALWAYS_CHAR (getopt.opt_arg ()),
-                         QUIT_STRING_SIZE);
+        this->quit_string_ = getopt.opt_arg ();
         break;
       case 's':
         this->io_source_ = ACE_STDIN;
@@ -138,10 +136,10 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         break;
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) usage: %n [-2] [-h <host>] ")
-                           ACE_TEXT ("[-i iterations] [-m message-size] ")
-                           ACE_TEXT ("[-p <port>] [-q <quit string>] ")
-                           ACE_TEXT ("[-s] [-T <sleep_time>]\n")),
+                           "(%P|%t) usage: %n [-2] [-h <host>] "
+                           "[-i iterations] [-m message-size] "
+                           "[-p <port>] [-q <quit string>] "
+                           "[-s] [-T <sleep_time>]\n"),
                           -1);
       }
 
@@ -154,7 +152,7 @@ Options::port (void) const
   return this->port_;
 }
 
-const ACE_TCHAR *
+const char *
 Options::host (void) const
 {
   return this->host_;
@@ -183,12 +181,12 @@ Options::shared_client_test (u_short port,
   if (con.connect (cli_stream,
                    remote_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) %p\n"),
-                       ACE_TEXT ("connection failed")),
+                       "(%P|%t) %p\n",
+                       "connection failed"),
                       0);
   else
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%P|%t) connected to %C at port %d\n"),
+                "(%P|%t) connected to %s at port %d\n",
                 remote_addr.get_host_name (),
                 remote_addr.get_port_number ()));
 
@@ -198,7 +196,7 @@ Options::shared_client_test (u_short port,
                   0);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%P|%t) waiting...\n")));
+              "(%P|%t) waiting...\n"));
 
   return buf;
 }
@@ -224,7 +222,7 @@ Options::oneway_client_test (void)
   ACE_INT32 len = this->message_len ();
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%P|%t) starting oneway transmission\n")));
+              "(%P|%t) starting oneway transmission\n"));
 
   // Perform oneway transmission of data to server (correctly handles
   // "incomplete writes").
@@ -240,8 +238,8 @@ Options::oneway_client_test (void)
     else if (cli_stream.send_n (request, r_bytes) == -1)
       {
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) %p\n"),
-                    ACE_TEXT ("send_n")));
+                    "(%P|%t) %p\n",
+                    "send_n"));
         result = -1;
         break;
       }
@@ -277,7 +275,7 @@ Options::twoway_client_test (void)
   ACE_INT32 len = this->message_len ();
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%P|%t) starting twoway transmission\n")));
+              "(%P|%t) starting twoway transmission\n"));
 
   // Perform twoway transmission of data to server (correctly handles
   // "incomplete writes").
@@ -303,8 +301,8 @@ Options::twoway_client_test (void)
         if (cli_stream.send_n (request, r_bytes) == -1)
           {
             ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) %p\n"),
-                        ACE_TEXT ("send_n")));
+                        "(%P|%t) %p\n",
+                        "send_n"));
             result = -1;
             break;
           }
@@ -313,8 +311,8 @@ Options::twoway_client_test (void)
         else if (cli_stream.recv (request, r_bytes) <= 0)
           {
             ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) %p\n"),
-                        ACE_TEXT ("recv")));
+                        "(%P|%t) %p\n",
+                        "recv"));
             result = -1;
             break;
           }
@@ -361,7 +359,7 @@ run_client (void)
 }
 
 int
-ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+main (int argc, char *argv[])
 {
   // Initialize the logger.
   ACE_LOG_MSG->open (argv[0]);

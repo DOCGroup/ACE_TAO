@@ -1,2 +1,3 @@
 // $Id$
 
+#include "StructuredPushConsumer.h"

@@ -347,14 +347,14 @@ Thread_Handler::svc_run (void *eh)
 }
 
 int 
-ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+main (int argc, char *argv[])
 {
   ACE_LOG_MSG->open (argv[0]);
 
   if (argc < 4)
     {
       ACE_ERROR ((LM_ERROR, 
-                  ACE_TEXT ("usage: %s delay interval n_threads [iterations]\n"),
+                  "usage: %s delay interval n_threads [iterations]\n",
                   argv[0]));
       ACE_OS::exit (1);
     }
@@ -369,10 +369,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                               n_threads,
                               max_iterations);
 
-  ACE_Reactor::instance ()->run_reactor_event_loop ();
+  ACE_Reactor::run_event_loop ();
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("exiting from main\n")));
+              "exiting from main\n"));
   return 0;
 }
 #else

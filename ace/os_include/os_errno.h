@@ -156,11 +156,6 @@ extern "C"
 #    define ENOTEMPTY               WSAENOTEMPTY
 #  endif /* __BORLANDC__  && __BORLANDC__ <= 0x540*/
 #  define EADDRINUSE WSAEADDRINUSE
-
-  // CE needs this...
-#  if !defined (EPERM)
-#    define EPERM                 ERROR_ACCESS_DENIED
-#  endif
 #endif /* ACE_WIN32 */
 
 #if defined (ACE_HAS_H_ERRNO)

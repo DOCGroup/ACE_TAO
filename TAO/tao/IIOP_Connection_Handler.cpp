@@ -23,7 +23,7 @@ ACE_RCSID (tao,
 TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_IIOP_SVC_HANDLER (t, 0 , 0),
     TAO_Connection_Handler (0),
-    dscp_codepoint_ (IPDSFIELD_DSCP_DEFAULT << 2)
+    dscp_codepoint_ (0)
 {
   // This constructor should *never* get called, it is just here to
   // make the compiler happy: the default implementation of the
@@ -36,10 +36,12 @@ TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (ACE_Thread_Manager *t)
 
 TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (
   TAO_ORB_Core *orb_core,
-  CORBA::Boolean flag)
+  CORBA::Boolean flag,
+  void *arg)
   : TAO_IIOP_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
     TAO_Connection_Handler (orb_core),
-    dscp_codepoint_ (IPDSFIELD_DSCP_DEFAULT << 2)
+    tcp_properties_ (*(static_cast<TAO_IIOP_Properties *> (arg))),
+    dscp_codepoint_ (0)
 {
   TAO_IIOP_Transport* specific_transport = 0;
   ACE_NEW (specific_transport,
@@ -49,10 +51,12 @@ TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (
   this->transport (specific_transport);
 }
 
-TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (TAO_ORB_Core *orb_core)
+TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (TAO_ORB_Core *orb_core,
+                                                          void *arg)
   : TAO_IIOP_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
     TAO_Connection_Handler (orb_core),
-    dscp_codepoint_ (IPDSFIELD_DSCP_DEFAULT << 2)
+    tcp_properties_ (*(static_cast<TAO_IIOP_Properties *> (arg))),
+    dscp_codepoint_ (0)
 {
 }
 
@@ -70,58 +74,17 @@ TAO_IIOP_Connection_Handler::open_handler (void *v)
 int
 TAO_IIOP_Connection_Handler::open (void*)
 {
-  TAO_IIOP_Protocol_Properties protocol_properties;
-
-  // Initialize values from ORB params.
-  protocol_properties.send_buffer_size_ =
-    this->orb_core ()->orb_params ()->sock_sndbuf_size ();
-  protocol_properties.recv_buffer_size_ =
-    this->orb_core ()->orb_params ()->sock_rcvbuf_size ();
-  protocol_properties.no_delay_ =
-    this->orb_core ()->orb_params ()->nodelay ();
-
-  TAO_Protocols_Hooks *tph =
-    this->orb_core ()->get_protocols_hooks ();
-
-  bool client =
-    this->transport ()->opened_as () == TAO::TAO_CLIENT_ROLE;
-
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  ACE_TRY
-    {
-      if (client)
-        {
-          tph->client_protocol_properties_at_orb_level (
-            protocol_properties
-            ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
-      else
-        {
-          tph->server_protocol_properties_at_orb_level (
-            protocol_properties
-            ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
-    }
-  ACE_CATCHANY
-    {
-      return -1;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
-
   if (this->set_socket_option (this->peer (),
-                               protocol_properties.send_buffer_size_,
-                               protocol_properties.recv_buffer_size_) == -1)
+                               this->tcp_properties_.send_buffer_size,
+                               this->tcp_properties_.recv_buffer_size) == -1)
     return -1;
 
 #if !defined (ACE_LACKS_TCP_NODELAY)
+
   if (this->peer ().set_option (ACE_IPPROTO_TCP,
                                 TCP_NODELAY,
-                                (void *) &protocol_properties.no_delay_,
-                                sizeof (protocol_properties.no_delay_)) == -1)
+                                (void *) &tcp_properties_.no_delay,
+                                sizeof (int)) == -1)
     return -1;
 #endif /* ! ACE_LACKS_TCP_NODELAY */
 
@@ -141,12 +104,6 @@ TAO_IIOP_Connection_Handler::open (void*)
   ACE_INET_Addr local_addr;
   if (this->peer ().get_local_addr (local_addr) == -1)
     return -1;
-
-  if (TAO_debug_level > 2)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT("TAO(%P|%t) - IIOP_Connection_Handler::open, ")
-                ACE_TEXT("The local addr is (%s) \n"),
-                local_addr. get_host_addr ()));
 
   if (local_addr.get_ip_address () == remote_addr.get_ip_address ()
       && local_addr.get_port_number () == remote_addr.get_port_number ())
@@ -338,28 +295,84 @@ TAO_IIOP_Connection_Handler::process_listen_point_list (
   return 0;
 }
 
-int
-TAO_IIOP_Connection_Handler::set_dscp_codepoint (CORBA::Boolean set_network_priority)
+void
+TAO_IIOP_Connection_Handler::update_protocol_properties (
+  int send_buffer_size,
+  int recv_buffer_size,
+  int no_delay,
+  int enable_network_priority)
 {
-  int tos = IPDSFIELD_DSCP_DEFAULT << 2;
+  if (TAO_debug_level)
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler::")
+                ACE_TEXT("update_protocol_properties, ")
+                ACE_TEXT("enable_network_priority = %d\n"),
+                enable_network_priority));
 
-  if (set_network_priority)
+  if (this->tcp_properties_.send_buffer_size != send_buffer_size)
+    this->tcp_properties_.send_buffer_size = send_buffer_size;
+
+  if (this->tcp_properties_.recv_buffer_size != recv_buffer_size)
+    this->tcp_properties_.recv_buffer_size = recv_buffer_size;
+
+  if (this->tcp_properties_.no_delay != no_delay)
+    this->tcp_properties_.no_delay = no_delay;
+
+  if (this->tcp_properties_.enable_network_priority != enable_network_priority)
+    this->tcp_properties_.enable_network_priority = enable_network_priority;
+
+}
+
+int
+TAO_IIOP_Connection_Handler::enable_network_priority (void)
+{
+  return this->tcp_properties_.enable_network_priority;
+}
+
+int
+TAO_IIOP_Connection_Handler::set_dscp_codepoint (void)
+{
+  int tos = 0;
+  if (this->enable_network_priority ())
     {
-      TAO_Protocols_Hooks *tph =
-        this->orb_core ()->get_protocols_hooks ();
+      ACE_DECLARE_NEW_CORBA_ENV;
+      ACE_TRY
+        {
+          TAO_Protocols_Hooks *tph =
+            this->orb_core ()->get_protocols_hooks (
+              ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
 
-      CORBA::Long codepoint =
-        tph->get_dscp_codepoint ();
+          if (tph != 0)
+            {
+              CORBA::Long codepoint =
+                tph->get_dscp_codepoint ();
 
-      tos = (int)(codepoint) << 2;
+              tos = (int)(codepoint) << 2;
+            }
+        }
+      ACE_CATCHANY
+        {
+          if (TAO_debug_level > 0)
+            ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                                 "TAO_IIOP_Connection_Handler::"
+                                 "set_dscp_codepoint - "
+                                 "get_protocol_hooks");
+
+          return -1;
+        }
+      ACE_ENDTRY;
+      ACE_CHECK_RETURN (-1);
     }
+  else
+    tos = IPDSFIELD_DSCP_DEFAULT << 2;
 
   if (tos != this->dscp_codepoint_)
     {
-      int result = this->peer ().set_option (IPPROTO_IP,
-                                             IP_TOS,
-                                             (int *) &tos ,
-                                             (int) sizeof (tos));
+      const int ret = this->peer ().set_option (IPPROTO_IP,
+                                                IP_TOS,
+                                                (int *) &tos ,
+                                                (int) sizeof (tos));
 
       if (TAO_debug_level)
         {
@@ -367,14 +380,11 @@ TAO_IIOP_Connection_Handler::set_dscp_codepoint (CORBA::Boolean set_network_prio
                       "TAO (%P|%t) - IIOP_Connection_Handler::"
                       "set_dscp_codepoint -> dscp: %x; result: %d; %s\n",
                       tos,
-                      result,
-                      result == -1 ? "try running as superuser" : ""));
+                      ret,
+                      ret == -1 ? "try running as superuser" : ""));
         }
 
-      // On successful setting of TOS field.
-      if (result == 0)
-        this->dscp_codepoint_ = tos;
-
+      this->dscp_codepoint_ = tos;
     }
 
   return 0;

@@ -1,5 +1,5 @@
-#ifndef guard_unbounded_value_sequence_hpp
-#define guard_unbounded_value_sequence_hpp
+#ifndef TAO_unbounded_value_sequence_hpp
+#define TAO_unbounded_value_sequence_hpp
 /**
  * @file
  *
@@ -11,7 +11,7 @@
  * @author Carlos O'Ryan
  */
 
-#include "bounded_value_allocation_traits.hpp"
+#include "allocation_traits.hpp"
 #include "value_traits.hpp"
 #include "generic_sequence.hpp"
 
@@ -23,20 +23,17 @@ class bounded_value_sequence
 {
 public:
   // static CORBA::ULong const MAXIMUM = MAX;
-
   typedef T value_type;
-  typedef T const const_value_type;
-
-  typedef details::bounded_value_allocation_traits<value_type,MAX,true> allocation_traits;
-  typedef details::value_traits<value_type,true> element_traits;
-  typedef details::generic_sequence<value_type, allocation_traits, element_traits> implementation_type;
+  typedef details::bounded_allocation_traits<T,MAX,true> allocation_traits;
+  typedef details::value_traits<T,true> element_traits;
+  typedef details::generic_sequence<T, allocation_traits, element_traits> implementation_type;
 
   inline bounded_value_sequence()
     : impl_()
   {}
   inline bounded_value_sequence(
       CORBA::ULong length,
-      value_type * data,
+      T * data,
       CORBA::Boolean release = false)
     : impl_(MAX, length, data, release)
   {}
@@ -51,10 +48,9 @@ public:
     return impl_.length();
   }
   inline void length(CORBA::ULong length) {
-    implementation_type::range::check_length(length, MAX);
     impl_.length(length);
   }
-  inline value_type const & operator[](CORBA::ULong i) const {
+  inline T const & operator[](CORBA::ULong i) const {
     return impl_[i];
   }
   inline value_type & operator[](CORBA::ULong i) {
@@ -62,26 +58,26 @@ public:
   }
   inline void replace(
       CORBA::ULong length,
-      value_type * data,
+      T * data,
       CORBA::Boolean release = false) {
     impl_.replace(MAX, length, data, release);
   }
-  inline value_type const * get_buffer() const {
+  inline T const * get_buffer() const {
     return impl_.get_buffer();
   }
-  inline value_type * get_buffer(CORBA::Boolean orphan = false) {
+  inline T * get_buffer(CORBA::Boolean orphan = false) {
     return impl_.get_buffer(orphan);
   }
   inline void swap(bounded_value_sequence & rhs) throw() {
     impl_.swap(rhs.impl_);
   }
-  static value_type * allocbuf(CORBA::ULong maximum) {
+  static T * allocbuf(CORBA::ULong maximum) {
     return implementation_type::allocbuf(maximum);
   }
-  static value_type * allocbuf() {
+  static T * allocbuf() {
     return implementation_type::allocbuf(MAX);
   }
-  static void freebuf(value_type * buffer)
+  static void freebuf(T * buffer)
   {
     implementation_type::freebuf(buffer);
   }
@@ -92,4 +88,4 @@ private:
 
 } // namespace TAO
 
-#endif // guard_unbounded_string_sequence_hpp
+#endif // TAO_unbounded_string_sequence_hpp

@@ -1,27 +1,21 @@
 // $Id$
 
 #include "ace/Get_Opt.h"
-#include "tao/IORTable/IORTable.h"
 #include "test_i.h"
 #include "Server_Worker.h"
 
 const char *ior_output_file = 0;
-const char *ior_table_name = 0;
 int nthreads = 4;
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "i:o:n:");
+  ACE_Get_Opt get_opts (argc, argv, "o:n:");
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
-      case 'i':
-         ior_table_name = get_opts.opt_arg ();
-         break;
-
       case 'o':
         ior_output_file = get_opts.opt_arg ();
         break;
@@ -34,7 +28,6 @@ parse_args (int argc, char *argv[])
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
-                           "[-i <iortable name>]"
                            "-o <iorfile>"
                            "\n",
                            argv [0]),
@@ -88,27 +81,6 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in ()));
-
-      if (ior_table_name != 0)
-        {
-          CORBA::Object_var table_object =
-             orb->resolve_initial_references ("IORTable" ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
-
-          IORTable::Table_var adapter =
-             IORTable::Table::_narrow (table_object.in () ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
-
-          if (CORBA::is_nil (adapter.in ()))
-            {
-              ACE_ERROR ((LM_ERROR, "Nil IORTable\n"));
-              return -1;
-            }
-
-          adapter->bind ( ior_table_name, ior.in () ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
-        }
-
 
       // If the ior_output_file exists, output the ior to it
       if (ior_output_file != 0)

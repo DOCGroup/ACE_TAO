@@ -50,6 +50,13 @@ TAO_Transport::opened_as (TAO::Connection_Role role)
   this->opening_connection_role_ = role;
 }
 
+ACE_INLINE bool
+TAO_Transport::acts_as_server (void) const
+{
+  return (this->opened_as () == TAO::TAO_SERVER_ROLE ||
+          this->bidirectional_flag_ == 1) ? true : false;
+}
+
 ACE_INLINE TAO_Transport_Cache_Manager::HASH_MAP_ENTRY *
 TAO_Transport::cache_map_entry (void)
 {
@@ -77,12 +84,6 @@ TAO_Transport::purging_order (unsigned long value)
   // The transport should still be here since the cache manager still
   // has a reference to it.
   this->purging_order_ = value;
-}
-
-ACE_INLINE size_t
-TAO_Transport::id (void) const
-{
-  return this->id_;
 }
 
 ACE_INLINE void

@@ -11,10 +11,7 @@
  * @author Carlos O'Ryan
  */
 
-#include "unbounded_value_allocation_traits.hpp"
-#include "bounded_value_allocation_traits.hpp"
-#include "unbounded_reference_allocation_traits.hpp"
-#include "bounded_reference_allocation_traits.hpp"
+#include "allocation_traits.hpp"
 #include "testing_exception.hpp"
 #include "testing_counters.hpp"
 
@@ -60,26 +57,14 @@ namespace details
 {
 
 template<typename T>
-struct unbounded_value_allocation_traits<T,true>
-  : public testing_allocation_traits<T, unbounded_value_allocation_traits<T,false> >
+struct unbounded_allocation_traits<T,true>
+  : public testing_allocation_traits<T, unbounded_allocation_traits<T,false> >
 {
 };
 
 template<typename T, CORBA::ULong MAX>
-struct bounded_value_allocation_traits<T,MAX,true>
-  : public testing_allocation_traits<T, bounded_value_allocation_traits<T,MAX,false> >
-{
-};
-
-template<typename T, class reference_traits>
-struct unbounded_reference_allocation_traits<T,reference_traits,true>
-  : public testing_allocation_traits<T, unbounded_reference_allocation_traits<T,reference_traits,false> >
-{
-};
-
-template<typename T, class reference_traits, CORBA::ULong MAX>
-struct bounded_reference_allocation_traits<T,reference_traits,MAX,true>
-  : public testing_allocation_traits<T, bounded_reference_allocation_traits<T,reference_traits,MAX,false> >
+struct bounded_allocation_traits<T,MAX,true>
+  : public testing_allocation_traits<T, bounded_allocation_traits<T,MAX,false> >
 {
 };
 

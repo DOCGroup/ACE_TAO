@@ -18,8 +18,8 @@
 #include "UIPMC_Acceptor.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (PortableGroup,
-           UIPMC_Acceptor,
+ACE_RCSID (PortableGroup, 
+           UIPMC_Acceptor, 
            "$Id$")
 
 
@@ -90,13 +90,16 @@ TAO_UIPMC_Acceptor::open (TAO_ORB_Core *orb_core,
 {
   this->orb_core_ = orb_core;
 
+  if (this->init_uipmc_properties () != 0)
+    return -1;
+
   if (this->hosts_ != 0)
     {
       // The hostname cache has already been set!
       // This is bad mojo, i.e. an internal TAO error.
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("TAO (%P|%t) ")
-                         ACE_TEXT ("UIPMC_Acceptor::open - ")
+                         ACE_TEXT ("UIPMC_Acceptor::open - "),
                          ACE_TEXT ("hostname already set\n\n")),
                         -1);
     }
@@ -175,7 +178,8 @@ TAO_UIPMC_Acceptor::open_i (const ACE_INET_Addr& addr,
                             ACE_Reactor *reactor)
 {
   ACE_NEW_RETURN (this->connection_handler_,
-                  TAO_UIPMC_Connection_Handler (this->orb_core_),
+                  TAO_UIPMC_Connection_Handler (this->orb_core_,
+                                                0 /* TAO_UIPMC_Properties */),
                   -1);
 
   this->connection_handler_->local_addr (addr);
@@ -347,5 +351,12 @@ TAO_UIPMC_Acceptor::parse_options (const char *str)
                               -1);
         }
     }
+  return 0;
+}
+
+int
+TAO_UIPMC_Acceptor::init_uipmc_properties (void)
+{
+  // @@ Michael: We use UDP, so we do not set TCP settings.
   return 0;
 }

@@ -89,7 +89,6 @@ CIAO::NodeApplicationManager_Impl::
 create_node_application (const ACE_CString & options
                          ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   Deployment::ResourceNotAvailable,
                    Deployment::StartError,
                    Deployment::InvalidProperty))
 {
@@ -108,7 +107,7 @@ create_node_application (const ACE_CString & options
                                                     this->callback_poa_.in (),
                                                     this->objref_.in (),
                                                     prop.in ()),
-                                                    CORBA::NO_MEMORY ());
+                                                    CORBA::INTERNAL ());
   ACE_CHECK_RETURN (Deployment::NodeApplication::_nil());
 
   PortableServer::ServantBase_var servant_var (callback_servant);
@@ -150,7 +149,8 @@ create_node_application (const ACE_CString & options
         {
           if (CIAO::debug_level () > 1)
             ACE_DEBUG ((LM_ERROR, "Fail to spawn a NodeApplication process\n"));
-          ACE_TRY_THROW (Deployment::ResourceNotAvailable ());
+
+          ACE_TRY_THROW (Components::CreateFailure ());
         }
 
       // wait for nodeApp to pass back its object reference. with a
@@ -177,7 +177,7 @@ create_node_application (const ACE_CString & options
           if (CIAO::debug_level () > 1)
             ACE_DEBUG ((LM_ERROR, "Fail to acquire the NodeApplication object\n"));
 
-          ACE_TRY_THROW (Deployment::ResourceNotAvailable ());
+          ACE_TRY_THROW (Components::CreateFailure ());
         }
 
       {

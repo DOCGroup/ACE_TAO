@@ -347,7 +347,7 @@ Message_Handler::handle_input (ACE_HANDLE)
 }
 
 int
-ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+main (int argc, char *argv[])
 {
   ACE_Service_Config daemon (argv [0]);
 
@@ -369,8 +369,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   // Loop handling signals and I/O events until SIGQUIT occurs.
 
-  while (ACE_Reactor::instance ()->event_loop_done () == 0)
-    ACE_Reactor::instance ()->run_reactor_event_loop ();
+  while (ACE_Reactor::event_loop_done () == 0)
+    ACE_Reactor::run_event_loop ();
 
   // Deactivate the message queue.
   mh.msg_queue ()->deactivate ();
@@ -378,6 +378,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Wait for the thread to exit.
   ACE_Thread_Manager::instance ()->wait ();
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) leaving main\n")));
+              "(%t) leaving main\n"));
   return 0;
 }

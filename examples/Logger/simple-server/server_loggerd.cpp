@@ -28,7 +28,7 @@ handler (int)
 static const u_short PORT = ACE_DEFAULT_SERVER_PORT;
 
 int
-ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+main (int argc, char *argv[])
 {
   // Register a signal handler.
   ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
@@ -41,7 +41,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_INET_Addr addr (PORT);
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("p:"));
+  ACE_Get_Opt get_opt (argc, argv, "p:");
 
   for (int c; (c = get_opt ()) != -1; )
      switch (c)
@@ -55,26 +55,26 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   if (peer_acceptor->open (addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("open")),
+                       "%p\n",
+                       "open"),
                       -1);
   else if (REACTOR::instance ()->register_handler
 	   (peer_acceptor,
 	    ACE_Event_Handler::ACCEPT_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       ACE_TEXT ("registering service with ACE_Reactor\n")),
+		       "registering service with ACE_Reactor\n"),
 		       -1);
 
   // Run forever, performing the logging service.
 
   ACE_DEBUG ((LM_DEBUG,
-	      ACE_TEXT ("(%P|%t) starting up server logging daemon\n")));
+	      "(%P|%t) starting up server logging daemon\n"));
 
   while (!finished)
      REACTOR::instance ()->handle_events ();
 
   ACE_DEBUG ((LM_DEBUG,
-	      ACE_TEXT ("(%P|%t) shutting down server logging daemon\n")));
+	      "(%P|%t) shutting down server logging daemon\n"));
   return 0;
 }
 

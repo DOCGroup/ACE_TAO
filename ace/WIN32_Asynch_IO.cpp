@@ -582,7 +582,7 @@ ACE_WIN32_Asynch_Read_Stream::shared_read (ACE_WIN32_Asynch_Read_Stream_Result *
                                     result);
   if (initiate_result == 1)
     // Immediate success: the OVERLAPPED will still get queued.
-    return 0;
+    return 1;
 
   // If initiate failed, check for a bad error.
   ACE_OS::set_errno_to_last_error ();
@@ -1000,7 +1000,7 @@ ACE_WIN32_Asynch_Write_Stream::shared_write (ACE_WIN32_Asynch_Write_Stream_Resul
                                      result);
   if (initiate_result == 1)
     // Immediate success: the OVERLAPPED will still get queued.
-    return 0;
+    return 1;
 
   // If initiate failed, check for a bad error.
   ACE_OS::set_errno_to_last_error ();
@@ -1016,9 +1016,11 @@ ACE_WIN32_Asynch_Write_Stream::shared_write (ACE_WIN32_Asynch_Write_Stream_Resul
       // queued.
 
       if (ACE::debug ())
-        ACE_DEBUG ((LM_ERROR,
-                    ACE_LIB_TEXT ("%p\n"),
-                    ACE_LIB_TEXT ("WriteFile")));
+        {
+          ACE_DEBUG ((LM_ERROR,
+                      ACE_LIB_TEXT ("%p\n"),
+                      ACE_LIB_TEXT ("WriteFile")));
+        }
       return -1;
     }
 }
@@ -2537,8 +2539,8 @@ ACE_WIN32_Asynch_Connect::connect_i (ACE_WIN32_Asynch_Connect_Result *result,
            result->set_error (errno);
 
            ACE_ERROR_RETURN ((LM_ERROR,
-                              ACE_LIB_TEXT ("%N:%l:ACE_WIN32_Asynch_Connect::connect_i: %p\n"),
-                              ACE_LIB_TEXT ("ACE_OS::bind")),
+                              ACE_LIB_TEXT ("%N:%l:ACE_WIN32_Asynch_Connect::connect_i: ")
+                              ACE_LIB_TEXT (" ACE_OS::bind failed\n")),
                              -1);
         }
     }

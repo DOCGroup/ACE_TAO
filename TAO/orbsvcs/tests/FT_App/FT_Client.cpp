@@ -7,7 +7,6 @@
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 #include "ace/OS_NS_unistd.h"
-#include "ace/OS_NS_stdio.h"
 
 class FTClientMain
 {
@@ -30,8 +29,8 @@ class FTClientMain
   /////////////////
   // implementation
 private:
-  void usage (FILE* out)const;
-  void commandUsage (FILE* out);
+  void usage (ostream & out)const;
+  void commandUsage (ostream & out);
   int pass (
     long & counter,         // inout
     int & more,             // out
@@ -57,8 +56,8 @@ private:
   int argc_;
   char ** argv_;
   const char * inFileName_;
-  FILE *inFile_;
-  FILE *commandIn_;
+  ifstream inFile_;
+  istream *commandIn_;
 
   enum Verbosity{
     SILENT,
@@ -77,8 +76,7 @@ private:
 
 
 FTClientMain::FTClientMain ()
-  : inFile_(0)
-  , commandIn_(stdin)
+  : commandIn_(&cin)
   , verbose_(NORMAL)
   , replica_pos_(0)
   , replica_name_("none")
@@ -87,79 +85,64 @@ FTClientMain::FTClientMain ()
 
 FTClientMain::~FTClientMain ()
 {
-  if (this->inFile_)
+  if (this->inFile_.is_open())
   {
-    ACE_OS::fclose (this->inFile_);
-	this->inFile_ = 0;
+    this->inFile_.close();
   }
 }
 
-void FTClientMain::commandUsage(FILE* out)
+void FTClientMain::commandUsage(ostream & out)
 {
-  ACE_OS::fprintf (out,
-    "Each command must be at the beginning of a separate line.\n"
-    "Everything after the command (and operand if any) is ignored.\n"
-    "Valid commands are:\n"
-    "  Access via method call:\n"
-    "    =N    set counter to N\n"
-    "    cN    get counter and compare to N (c stands for \"check\"\n"
-    "    +N    increment counter by N\n"
-    "    -N    decrement counter by N\n"
-    "  Access as attribute:\n"
-    "    >N    set attribute to N\n"
-    "    <     get attribite\n"
-    "  Try methods to be used by fault tolerant infrastructure: \n"
-    "    !     is_alive\n"
-    "    s     get_state\n"
-    "    S     set_state\n"
-    "    u     get_update\n"
-    "    U     set_update\n"
-    "  Simulate failure:\n"
-    "    dN    die on condition:\n"
-    "        d%d don't die\n"
-    "        d%d immediately\n"
-    "        d%d while idle\n"
-    "      (FT_TestReplica interface)\n"
-    "        d%d before state change\n"
-    "        d%d after state change, before replication\n"
-    "        d%d after replication, before reply \n"
-    "      (Monitorable interface)\n"
-    "        d%d during is alive\n"
-    "        d%d is_alive returns false\n"
-    "      (Updatable interface)\n"
-    "        d%d during get update\n"
-    "        d%d before set update\n"
-    "        d%d after set update\n"
-    "      (Checkpointable interface)\n"
-    "        d%d during get state\n"
-    "        d%d before set state\n"
-    "        d%d after set state\n"
-    " Logistics commands:\n"
-    "   #    ignore this line (comment).\n"
-    "   v    set verbosity:\n"
-    "     0 don't check counter value.\n"
-    "     1 only display counter value mismatch.\n"
-    "     2 display counter value after every command (default).\n"
-    "     3 display commands.\n"
-    "     4 display method calls.\n"
-    "   zN   sleep N seconds.\n"
-    "   q    quit (end the client, not the replica(s).)\n"
-    "   q1   quit (end the client, and shutdown the currently active replica.)\n"
-    "   ?    help (this message)\n",
-	FT_TEST::TestReplica::NOT_YET,
-	FT_TEST::TestReplica::RIGHT_NOW,
-	FT_TEST::TestReplica::WHILE_IDLE,
-	FT_TEST::TestReplica::BEFORE_STATE_CHANGE,
-	FT_TEST::TestReplica::BEFORE_REPLICATION,
-	FT_TEST::TestReplica::BEFORE_REPLY,
-	FT_TEST::TestReplica::DURING_IS_ALIVE,
-	FT_TEST::TestReplica::DENY_IS_ALIVE,
-	FT_TEST::TestReplica::DURING_GET_UPDATE,
-	FT_TEST::TestReplica::BEFORE_SET_UPDATE,
-	FT_TEST::TestReplica::AFTER_SET_UPDATE,
-	FT_TEST::TestReplica::DURING_GET_STATE,
-	FT_TEST::TestReplica::BEFORE_SET_STATE,
-	FT_TEST::TestReplica::AFTER_SET_STATE);
+  out
+    << "Each command must be at the beginning of a separate line." << endl
+    << "Everything after the command (and operand if any) is ignored." << endl
+    << "Valid commands are:" << endl
+    << "  Access via method call:" << endl
+    << "    =N    set counter to N" << endl
+    << "    cN    get counter and compare to N (c stands for \"check\""<< endl
+    << "    +N    increment counter by N" << endl
+    << "    -N    decrement counter by N" << endl
+    << "  Access as attribute:" << endl
+    << "    >N    set attribute to N" << endl
+    << "    <     get attribite" << endl
+    << "  Try methods to be used by fault tolerant infrastructure: " << endl
+    << "    !     is_alive" << endl
+    << "    s     get_state" << endl
+    << "    S     set_state" << endl
+    << "    u     get_update" << endl
+    << "    U     set_update" << endl
+    << "  Simulate failure:" << endl
+    << "    dN    die on condition:" << endl
+    << "        d" << FT_TEST::TestReplica::NOT_YET << " don't die" << endl
+    << "        d" << FT_TEST::TestReplica::RIGHT_NOW << " immediately" << endl
+    << "        d" << FT_TEST::TestReplica::WHILE_IDLE << " while idle" << endl
+    << "      (FT_TestReplica interface)" << endl
+    << "        d" << FT_TEST::TestReplica::BEFORE_STATE_CHANGE << " before state change" << endl
+    << "        d" << FT_TEST::TestReplica::BEFORE_REPLICATION << " after state change, before replication" << endl
+    << "        d" << FT_TEST::TestReplica::BEFORE_REPLY << " after replication, before reply "<< endl
+    << "      (Monitorable interface)" << endl
+    << "        d" << FT_TEST::TestReplica::DURING_IS_ALIVE << " during is alive" << endl
+    << "        d" << FT_TEST::TestReplica::DENY_IS_ALIVE << " is_alive returns false" << endl
+    << "      (Updatable interface)" << endl
+    << "        d" << FT_TEST::TestReplica::DURING_GET_UPDATE << " during get update" << endl
+    << "        d" << FT_TEST::TestReplica::BEFORE_SET_UPDATE << " before set update" << endl
+    << "        d" << FT_TEST::TestReplica::AFTER_SET_UPDATE << " after set update" << endl
+    << "      (Checkpointable interface)" << endl
+    << "        d" << FT_TEST::TestReplica::DURING_GET_STATE << " during get state" << endl
+    << "        d" << FT_TEST::TestReplica::BEFORE_SET_STATE << " before set state" << endl
+    << "        d" << FT_TEST::TestReplica::AFTER_SET_STATE << " after set state" << endl
+    << " Logistics commands:" << endl
+    << "   #    ignore this line (comment)." << endl
+    << "   v    set verbosity:" << endl
+    << "     0 don't check counter value." << endl
+    << "     1 only display counter value mismatch." << endl
+    << "     2 display counter value after every command (default)." << endl
+    << "     3 display commands." << endl
+    << "     4 display method calls." << endl
+    << "   zN   sleep N seconds." << endl
+    << "   q    quit (end the client, not the replica(s).)" << endl
+    << "   q1   quit (end the client, and shutdown the currently active replica.)" << endl
+    << "   ?    help (this message)" << endl;
 }
 
 int
@@ -181,15 +164,15 @@ FTClientMain::parse_args (int argc, char *argv[])
       case 'c':
       {
         this->inFileName_ = get_opts.opt_arg ();
-        this->inFile_ = ACE_OS::fopen (this->inFileName_, "r");
-        if(this->inFile_ && !ferror (this->inFile_))
+        this->inFile_.open(this->inFileName_);
+        if(this->inFile_.is_open() && this->inFile_.good())
         {
-          ACE_OS::fprintf (stdout, "FT Client: Reading commands from %s\n", this->inFileName_);
-          this->commandIn_ = this->inFile_;
+          cout << "FT Client: Reading commands from " << this->inFileName_ << endl;
+          this->commandIn_ = & this->inFile_;
         }
         else
         {
-          ACE_OS::fprintf (stderr, "FT Client: Can't open input file: %s\n", this->inFileName_);
+          cout << "FT Client: Can't open input file: " << this->inFileName_ << endl;
           result = -1;
         }
         break;
@@ -202,18 +185,19 @@ FTClientMain::parse_args (int argc, char *argv[])
 
       default:
       case '?':
-        usage(stderr);
+        usage(cerr);
         result = 1;
     }
   }
   return result;
 }
 
-void FTClientMain::usage(FILE* out)const
+void FTClientMain::usage(ostream & out)const
 {
-  ACE_OS::fprintf (out, "usage"
-      				    " -c <command file>"
-      				    " [-f <ior file>]...\n");
+  out << "usage"
+      << " -c <command file>"
+      << " [-f <ior file>]..."
+      << endl;
 }
 
 int FTClientMain::pass (
@@ -230,18 +214,12 @@ int FTClientMain::pass (
   ::FT::State_var update;
   unsigned long updateValue = 0;
 
-  while(more && result == 0 &&  !feof (this->commandIn_))
+  while(more && result == 0 &&  ! this->commandIn_->eof())
   {
     if (! retry || command.length () == 0 )
     {
       char buffer[1000];
-      char *str_ = ACE_OS::fgets (buffer, sizeof(buffer)-1, this->commandIn_);
-	  if ( str_ )
-	  {
-		str_ = ACE_OS::strrchr (str_, '\n');
-		if ( str_ )
-			*str_ = '\0';
-	  }
+      this->commandIn_->getline(buffer, sizeof(buffer)-1);
       command = buffer;
     }
     retry = 0;
@@ -255,7 +233,7 @@ int FTClientMain::pass (
 
       if (this->verbose_ >= NOISY)
       {
-        ACE_OS::fprintf (stdout,  "FT Client: %s\n", command.c_str());
+        cout << "FT Client: " << command << endl;
       }
 
       // turn echo on (based on verbose)
@@ -273,7 +251,7 @@ int FTClientMain::pass (
         {
           if (this->verbose_ >= LOUD)
           {
-            ACE_OS::fprintf (stdout, "FT Client: ->set(%ld);\n", operand);
+            cout << "FT Client: ->set(" << operand << ");" << endl;
           }
           this->replica_->set(operand ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
@@ -284,18 +262,18 @@ int FTClientMain::pass (
         {
           if (this->verbose_ >= LOUD)
           {
-            ACE_OS::fprintf (stdout, "FT Client: ->get();\n");
+            cout << "FT Client: ->get();" << endl;
           }
           long value = this->replica_->counter(ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
           if (value == operand)
           {
-            ACE_OS::fprintf (stdout, "FT Client: Good: Read %ld expecting %ld\n", value, operand);
+            cout << "FT Client: Good: Read " << value << " expecting " << operand << endl;
             counter = operand;
           }
           else
           {
-            ACE_OS::fprintf (stdout, "FT Client: Error: Read %ld expecting %ld\n", value, operand);
+            cout << "FT Client: Error: Read " << value << " expecting " << operand << endl;
           }
           echo = 0;
           break;
@@ -305,7 +283,7 @@ int FTClientMain::pass (
         {
           if (this->verbose_ >= LOUD)
           {
-            ACE_OS::fprintf (stdout, "FT Client: ->counter(%ld);\n", operand);
+            cout << "FT Client: ->counter(" << operand << ");" << endl;
           }
           this->replica_->counter(operand ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
@@ -316,7 +294,7 @@ int FTClientMain::pass (
         {
           if (this->verbose_ >= LOUD)
           {
-            ACE_OS::fprintf (stdout, "FT Client: ->increment(%ld);\n", operand);
+            cout << "FT Client: ->increment(" << operand << ");" << endl;
           }
           this->replica_->increment(operand ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
@@ -327,7 +305,7 @@ int FTClientMain::pass (
         {
           if (this->verbose_ >= LOUD)
           {
-            ACE_OS::fprintf (stdout, "FT Client: ->increment(%ld);\n", -operand);
+            cout << "FT Client: ->increment(" << -operand << ");" << endl;
           }
           this->replica_->increment(-operand ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
@@ -338,11 +316,11 @@ int FTClientMain::pass (
         {
           if (this->verbose_ >= LOUD)
           {
-            ACE_OS::fprintf (stdout, "FT Client: ->counter();\n");
+            cout << "FT Client: ->counter();" << endl;
           }
           long attribute = this->replica_->counter(ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
-          ACE_OS::fprintf (stdout, "FT Client: Attribute: %ld\n", attribute);
+          cout << "FT Client: Attribute: " << attribute << endl;
           echo = 0;
           break;
         }
@@ -350,18 +328,18 @@ int FTClientMain::pass (
         {
           if (this->verbose_ >= LOUD)
           {
-            ACE_OS::fprintf (stdout, "FT Client: ->is_alive();\n");
+            cout << "FT Client: ->is_alive();" << endl;
           }
           int alive = this->replica_->is_alive(ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
-          ACE_OS::fprintf (stdout, "FT Client: Is alive?  %d\n", alive);
+          cout << "FT Client: Is alive?  " << alive << endl;
           break;
         }
         case 'd':
         {
           if (this->verbose_ >= LOUD)
           {
-            ACE_OS::fprintf (stdout, "FT Client: ->die(%ld);\n", operand);
+            cout << "FT Client: ->die(" << operand << ");" << endl;
           }
           this->replica_->die(ACE_static_cast (FT_TEST::TestReplica::Bane, operand) ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
@@ -372,7 +350,7 @@ int FTClientMain::pass (
         {
           if (this->verbose_ >= LOUD)
           {
-            ACE_OS::fprintf (stdout, "FT Client: ->get_state();\n");
+            cout << "FT Client: ->get_state();" << endl;
           }
           state = this->replica_->get_state(ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
@@ -385,7 +363,7 @@ int FTClientMain::pass (
           {
             if (this->verbose_ >= LOUD)
             {
-              ACE_OS::fprintf (stdout, "FT Client: ->set_state(saved_state);\n");
+              cout << "FT Client: ->set_state(saved_state);" << endl;
             }
             this->replica_->set_state (state.in ()
                                        ACE_ENV_ARG_PARAMETER);
@@ -394,7 +372,7 @@ int FTClientMain::pass (
           }
           else
           {
-            ACE_OS::fprintf (stdout, "FT Client: Error: no saved state.\n");
+            cout << "FT Client: Error: no saved state." << endl;
           }
           break;
         }
@@ -402,7 +380,7 @@ int FTClientMain::pass (
         {
           if (this->verbose_ >= LOUD)
           {
-            ACE_OS::fprintf (stdout, "FT Client: ->get_update();\n");
+            cout << "FT Client: ->get_update();" << endl;
           }
           update = this->replica_->get_update(ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
@@ -415,7 +393,7 @@ int FTClientMain::pass (
           {
             if (this->verbose_ >= LOUD)
             {
-              ACE_OS::fprintf (stdout, "FT Client: ->set_update(saved_update);\n");
+              cout << "FT Client: ->set_update(saved_update);" << endl;
             }
             this->replica_->set_update(update.in () ACE_ENV_ARG_PARAMETER);
             ACE_CHECK_RETURN (-1);
@@ -423,7 +401,7 @@ int FTClientMain::pass (
           }
           else
           {
-            ACE_OS::fprintf (stdout, "FT Client: ERROR: No saved update information.\n");
+            cout << "FT Client: ERROR: No saved update information." << endl;
           }
           break;
         }
@@ -450,7 +428,7 @@ int FTClientMain::pass (
             {
               if (this->verbose_ >= LOUD)
               {
-                ACE_OS::fprintf (stdout, "FT Client: ->shutdown();\n");
+                cout << "FT Client: ->shutdown();" << endl;
               }
               this->replica_->shutdown( ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_TRY_CHECK;
@@ -462,7 +440,7 @@ int FTClientMain::pass (
             }
             ACE_CATCHANY
             {
-              ACE_OS::fprintf (stdout, "FT Client: Ignoring expected exception during shutdown.\n");
+              cout << "FT Client: Ignoring expected exception during shutdown." << endl;
               ; // ignore exception during shutdown
             }
             ACE_ENDTRY;
@@ -475,9 +453,9 @@ int FTClientMain::pass (
         {
           if (op != '?')
           {
-            ACE_OS::fprintf (stdout, "FT Client: Unknown: %s\n", command.c_str());
+            cout << "FT Client: Unknown: " << command << endl;
           }
-          commandUsage(stderr);
+          commandUsage(cerr);
           break;
         }
       }
@@ -485,7 +463,7 @@ int FTClientMain::pass (
       {
         if (this->verbose_ >= LOUD)
         {
-          ACE_OS::fprintf (stdout, "FT Client: ->get();\n");
+          cout << "FT Client: ->get();" << endl;
         }
 
         long value = this->replica_->get(ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -494,12 +472,12 @@ int FTClientMain::pass (
         {
           if (this->verbose_ >= NORMAL)
           {
-            ACE_OS::fprintf (stdout, "FT Client: %ld\n", counter);
+            cout << "FT Client: " << counter << endl;;
           }
         }
         else
         {
-          ACE_OS::fprintf (stdout, "FT Client: Error: read %ld expecting %ld\n", value, counter);
+          cout << "FT Client: Error: read " << value << " expecting " << counter << endl;
           result = -1;
         }
       }
@@ -524,14 +502,12 @@ int FTClientMain::next_replica (ACE_ENV_SINGLE_ARG_DECL)
     }
     else
     {
-      ACE_OS::fprintf (stderr, "FT Client: Can't resolve IOR: %s\n", this->replica_name_);
+      cerr << "FT Client: Can't resolve IOR: " << this->replica_name_ << endl;
     }
   }
   else
   {
-    ACE_OS::fprintf (stderr, "***OUT_OF_REPLICAS*** "
-                             ACE_SIZE_T_FORMAT_SPECIFIER
-                             "\n", this->replica_pos_);
+    cerr << "***OUT_OF_REPLICAS*** " << this->replica_pos_ << endl;
   }
   return result;
 }
@@ -555,15 +531,15 @@ int FTClientMain::run (ACE_ENV_SINGLE_ARG_DECL)
 
     if (this->verbose_ >= NORMAL)
     {
-      ACE_OS::fprintf (stdout, "FT Client: Initial counter %ld\n", counter);
+      cout << "FT Client: Initial counter " << counter << endl;
     }
     if (ACE_OS::isatty(fileno(stdin)))
     {
-      ACE_OS::fprintf (stdout, "FT Client: Commands(? for help):\n");
+      cout << "FT Client: Commands(? for help):" << endl;
     }
 
     int more = 1;
-    while (more && result == 0 &&  !feof (this->commandIn_))
+    while (more && result == 0 &&  ! this->commandIn_->eof())
     {
       ACE_TRY_NEW_ENV
       {
@@ -572,7 +548,7 @@ int FTClientMain::run (ACE_ENV_SINGLE_ARG_DECL)
       }
       ACE_CATCH (CORBA::SystemException, sysex)
       {
-        ACE_OS::fprintf (stdout, "FT Client: Caught system exception: \n");
+        cout << "FT Client: Caught system exception: " << endl;
         ACE_PRINT_EXCEPTION (sysex, "FT Client");
 
         retry = 0;
@@ -582,33 +558,33 @@ int FTClientMain::run (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK_RETURN (0);
         if (handled)
         {
-          ACE_OS::fprintf (stdout, "FT Client: Recovering from fault.\n");
-          ACE_OS::fprintf (stdout, "FT Client:   Activate %s\n", this->replica_name_);
+          cout << "FT Client: Recovering from fault." << endl;
+          cout << "FT Client:   Activate " << this->replica_name_ << endl;
           if (command.length () == 0)
           {
-            ACE_OS::fprintf (stdout, "FT Client:   No command to retry.\n");
+            cout << "FT Client:   No command to retry." << endl;
           }
           else if (command[0] == 'd')
           {
-            ACE_OS::fprintf (stdout, "FT Client:   Not retrying \"die\" command.\n");
+            cout << "FT Client:   Not retrying \"die\" command." << endl;
           }
           else if (sysex.completed () == CORBA::COMPLETED_YES)
           {
-            ACE_OS::fprintf (stdout, "FT Client:   Last command completed.  No retry needed.\n");
+            cout << "FT Client:   Last command completed.  No retry needed." << endl;
           }
           else
           {
             if (sysex.completed () == CORBA::COMPLETED_MAYBE)
             {
-              ACE_OS::fprintf (stdout, "FT Client:   Last command may have completed.  Retrying anyway.\n");
+              cout << "FT Client:   Last command may have completed.  Retrying anyway." << endl;
             }
             retry = 1;
-            ACE_OS::fprintf (stdout, "FT Client:   Retrying command: %s\n", command.c_str());
+            cout << "FT Client:   Retrying command: " << command << endl;
           }
         }
         if (! handled)
         {
-          ACE_OS::fprintf (stdout, "FT Client: Exception not handled.  Rethrow. ");
+          cout << "FT Client: Exception not handled.  Rethrow. " << endl;
           ACE_RE_THROW;
         }
       }
@@ -617,7 +593,7 @@ int FTClientMain::run (ACE_ENV_SINGLE_ARG_DECL)
   }
   else
   {
-    ACE_OS::fprintf (stderr, "FT Client: Can't connect to replica.\n");
+    cerr << "FT Client: Can't connect to replica." << endl;
   }
   return result;
 }

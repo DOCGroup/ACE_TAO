@@ -44,10 +44,13 @@ ACE_RCSID (tao,
 //////////////////////////////////////////////////////////////////////////////
 
 template <class SVC_HANDLER>
-TAO_Creation_Strategy<SVC_HANDLER>::TAO_Creation_Strategy (TAO_ORB_Core *orb_core,
-                                                           CORBA::Boolean flag)
+TAO_Creation_Strategy<SVC_HANDLER>::TAO_Creation_Strategy (
+  TAO_ORB_Core *orb_core,
+  void *arg,
+  CORBA::Boolean flag)
   : ACE_Creation_Strategy<SVC_HANDLER> (0, orb_core->reactor()),
     orb_core_ (orb_core),
+    arg_ (arg),
     lite_flag_ (flag)
 {
 }
@@ -62,7 +65,8 @@ TAO_Creation_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLER *&sh)
 
       ACE_NEW_RETURN (sh,
                       SVC_HANDLER (this->orb_core_,
-                                   this->lite_flag_),
+                                   this->lite_flag_,
+                                   this->arg_),
                       -1);
     }
 
@@ -86,7 +90,7 @@ TAO_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *sh,
   // Indicate that this transport was opened in the server role
   if (TAO_debug_level > 6)
     ACE_DEBUG ((LM_DEBUG,
-                "TAO (%P|%t) - Concurrency_Strategy::activate_svc_handler, "
+                "(%P|%t) - TAO_Concurrency_Strategy::activate_svc_handler "
                 "opened as TAO_SERVER_ROLE\n"));
 
   // Here the service handler has been created and the new connection
@@ -107,8 +111,7 @@ TAO_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *sh,
       if (TAO_debug_level > 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("TAO (%P|%t) - Concurrency_Strategy::activate_svc_handler, ")
-                      ACE_TEXT ("could not add the handler to cache \n")));
+                      ACE_TEXT ("(%P|%t) Could not add the handler to Cache \n")));
         }
 
       return -1;

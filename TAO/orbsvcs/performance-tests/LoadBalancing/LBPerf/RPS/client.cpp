@@ -46,8 +46,7 @@ parse_args (int argc, char *argv[])
         break;
 
       case 'r':
-        rate =
-          static_cast<float> (ACE_OS::atoi (get_opts.opt_arg ()));
+        rate = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'n':

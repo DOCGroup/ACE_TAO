@@ -31,10 +31,6 @@ project(FaultTolerance): orbsvcslib, core, notification, ftorb, portablegroup, m
     }
   }
 
-  Header_Files {
-    FaultTolerance/fault_tol_export.h
-  }
-
   Template_Files {
   }
 }

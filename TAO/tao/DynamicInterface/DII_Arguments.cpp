@@ -22,8 +22,7 @@ namespace TAO
   CORBA::Boolean
   NamedValue_Argument::demarshal (TAO_InputCDR &cdr)
   {
-    ACE_DECLARE_NEW_CORBA_ENV;
-    ACE_TRY
+    ACE_TRY_NEW_ENV
       {
         if (this->x_ !=0 && this->x_->value ()->impl ())
           {
@@ -37,7 +36,6 @@ namespace TAO
         return 0;
       }
     ACE_ENDTRY;
-    ACE_CHECK_RETURN (false);
 
     this->byte_order_ = cdr.byte_order ();
 
@@ -55,8 +53,7 @@ namespace TAO
   CORBA::Boolean
   NVList_Argument::marshal (TAO_OutputCDR &cdr)
   {
-    ACE_DECLARE_NEW_CORBA_ENV;
-    ACE_TRY
+    ACE_TRY_NEW_ENV
       {
         this->x_->_tao_encode (cdr,
                                CORBA::ARG_IN | CORBA::ARG_INOUT
@@ -68,7 +65,6 @@ namespace TAO
         return 0;
       }
     ACE_ENDTRY;
-    ACE_CHECK_RETURN (false);
 
     return 1;
   }
@@ -77,8 +73,8 @@ namespace TAO
   NVList_Argument::demarshal (TAO_InputCDR &cdr)
   {
 
-    ACE_DECLARE_NEW_CORBA_ENV;
-    ACE_TRY
+
+    ACE_TRY_NEW_ENV
       {
         // Now, get all the "return", "out", and "inout" parameters
         // from the response message body ... return parameter is
@@ -98,40 +94,35 @@ namespace TAO
         return 0;
       }
     ACE_ENDTRY;
-    ACE_CHECK_RETURN (false);
 
     return 1;
   }
 
   void
-  NVList_Argument::interceptor_paramlist (Dynamic::ParameterList *lst)
+  NVList_Argument::interceptor_paramlist (Dynamic::ParameterList *list)
   {
     const CORBA::ULong len = this->x_->count ();
-    lst->length (len);
+    list->length (len);
 
     for (CORBA::ULong i = 0; i < len; ++i)
       {
-        if (!this->x_->item (i)->value ())
-          return;
-
-        (*lst)[i].argument.replace (
-          this->x_->item (i)->value ()->impl ());
+        (*list)[i].argument <<= *this->x_->item (i)->value ();
 
         switch (this->x_->item (i)->flags ())
           {
           case CORBA::ARG_IN:
             {
-              (*lst)[i].mode = CORBA::PARAM_IN;
+              (*list)[i].mode = CORBA::PARAM_IN;
               break;
             }
           case CORBA::ARG_INOUT:
             {
-              (*lst)[i].mode = CORBA::PARAM_INOUT;
+              (*list)[i].mode = CORBA::PARAM_INOUT;
               break;
             }
           case CORBA::ARG_OUT:
             {
-              (*lst)[i].mode = CORBA::PARAM_OUT;
+              (*list)[i].mode = CORBA::PARAM_OUT;
               break;
             }
           default:

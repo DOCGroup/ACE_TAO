@@ -9,8 +9,6 @@
 #include "ESF_Copy_On_Write.i"
 #endif /* __ACE_INLINE__ */
 
-#include "tao/Environment.h"
-
 ACE_RCSID(ESF, ESF_Copy_On_Write, "$Id$")
 
 template<class COLLECTION, class ITERATOR> CORBA::ULong

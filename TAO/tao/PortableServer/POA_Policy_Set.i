@@ -13,11 +13,9 @@ TAO_POA_Policy_Set::get_policy_by_index (CORBA::ULong index)
 }
 
 ACE_INLINE CORBA::Policy_ptr
-TAO_POA_Policy_Set::get_cached_policy (TAO_Cached_Policy_Type type
-                                       ACE_ENV_ARG_DECL)
+TAO_POA_Policy_Set::get_cached_policy (TAO_Cached_Policy_Type type)
 {
-  return this->impl_.get_cached_policy (type
-                                        ACE_ENV_ARG_PARAMETER);
+  return this->impl_.get_cached_policy (type);
 }
 
 ACE_INLINE void

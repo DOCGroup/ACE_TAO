@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "../notify_serv_export.h"
+#include "../notify_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -47,7 +47,6 @@ TAO_Notify_ProxySupplier_T<POA_Event_Forwarder::StructuredProxyPushSupplier>;
 class TAO_Notify_Serv_Export TAO_Notify_StructuredProxyPushSupplier
   : public virtual TAO_Notify_ProxySupplier_T <POA_Event_Forwarder::StructuredProxyPushSupplier>
 {
-  typedef TAO_Notify_ProxySupplier_T <POA_Event_Forwarder::StructuredProxyPushSupplier> SuperClass;
   friend class TAO_Notify_Builder;
 
 public:
@@ -59,8 +58,6 @@ public:
 
   /// Release
   virtual void release (void);
-
-  virtual void load_attrs (const TAO_Notify::NVPList& attrs);
 
   /// = Servant methods
   // = interface methods
@@ -86,7 +83,6 @@ public:
     CORBA::SystemException
   ));
 
-  virtual const char * get_proxy_type_name (void) const;
 
 };
 

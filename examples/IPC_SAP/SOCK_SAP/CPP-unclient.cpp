@@ -6,15 +6,14 @@
 #include "ace/UNIX_Addr.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_main.h"
-#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(SOCK_SAP, CPP_unclient, "$Id$")
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 int
-ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+main (int argc, char *argv[])
 {
-  const ACE_TCHAR *rendezvous = argc > 1 ? argv[1] : ACE_DEFAULT_RENDEZVOUS;
+  const char *rendezvous = argc > 1 ? argv[1] : ACE_DEFAULT_RENDEZVOUS;
   char buf[BUFSIZ];
 
   ACE_LSOCK_Stream cli_stream;
@@ -24,8 +23,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Establish the connection with server.
   if (con.connect (cli_stream, remote_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("connect")),
+                       "%p\n",
+                       "connect"),
                       1);
 
   // Send data to server (correctly handles "incomplete writes").
@@ -35,29 +34,29 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
        )
     if (cli_stream.send_n (buf, r_bytes) == -1)
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("%p\n"),
-                         ACE_TEXT ("send_n")),
+                         "%p\n",
+                         "send_n"),
                         1);
 
   // Explicitly close the writer-side of the connection.
   if (cli_stream.close_writer () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("close_writer")),
+                       "%p\n",
+                       "close_writer"),
                       1);
 
   // Wait for handshake with server.
   if (cli_stream.recv_n (buf, 1) != 1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("recv_n")),
+                       "%p\n",
+                       "recv_n"),
                       1);
 
   // Close the connection completely.
   if (cli_stream.close () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("close")),
+                       "%p\n",
+                       "close"),
                       1);
   return 0;
 }

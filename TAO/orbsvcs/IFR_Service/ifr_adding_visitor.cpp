@@ -1791,7 +1791,9 @@ ifr_adding_visitor::visit_structure (AST_Structure *node)
 
       if (CORBA::is_nil (prev_def.in ()))
         {
-          ifr_adding_visitor_structure visitor (node, 0);
+          ifr_adding_visitor_structure visitor (node,
+                                                0);
+
           int retval = visitor.visit_structure (node);
 
           if (retval == 0)
@@ -2865,13 +2867,13 @@ ifr_adding_visitor::create_interface_def (AST_Interface *node
             }
           else
             {
-              abs_bases[i] = 
+              bases[i] = 
                 CORBA::AbstractInterfaceDef::_narrow (result.in ()
                                                       ACE_ENV_ARG_PARAMETER);
               ACE_CHECK_RETURN (-1);
             }
 
-          if (CORBA::is_nil (abs_bases[i].in ()))
+          if (CORBA::is_nil (bases[i].in ()))
             {
               ACE_ERROR_RETURN ((
                   LM_ERROR,

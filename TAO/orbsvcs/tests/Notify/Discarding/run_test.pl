@@ -112,7 +112,7 @@ if ($status == 0) {
     }
 
     $SEC->Arguments($client_args . " -d $discard_policy");
-    $client = $SEC->SpawnWaitKill (200);
+    $client = $SEC->SpawnWaitKill (60);
 
     $SES->Kill ();
     if ($client != 0) {

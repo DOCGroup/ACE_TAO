@@ -22,13 +22,13 @@ Options::instance (void)
   return Options::instance_;
 }
 
-const char *
+ACE_TCHAR *
 Options::program_name (void)
 {
   return this->program_name_;
 }
 
-const char *
+const ACE_TCHAR *
 Options::slave_name (void)
 {
   return this->slave_name_;
@@ -116,7 +116,8 @@ Options::print_usage_and_die (void)
 }
 
 Options::Options (void)
-  : debug_ (0),
+  : slave_name_ (ACE_TEXT ("slave")),
+    debug_ (0),
     exec_slave_ (0),
     iteration_count_ (100),
     use_sbrk_ (0),
@@ -127,7 +128,6 @@ Options::Options (void)
     use_mmap_ (0),
     child_ (0)
 {
-  ACE_OS::strcpy (this->slave_name_, "slave");
 }
 
 void
@@ -135,8 +135,8 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("dehlL:mn:pst:T"));
 
-  ACE_OS::strcpy (this->program_name_, ACE_TEXT_ALWAYS_CHAR (argv[0]));
-  ACE_LOG_MSG->open (argv[0]);
+  this->program_name_ = argv[0];
+  ACE_LOG_MSG->open (this->program_name_);
 
   // Put in a special-case check for child process.
   if (ACE_OS::strcmp (this->program_name_, slave_name_) == 0)

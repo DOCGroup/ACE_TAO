@@ -23,8 +23,7 @@ print STDERR "\nrunning Smart Proxy test consisting of the client and two server
 
 $SV1->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile1,
-                        $PerlACE::wait_interval_for_process_creation) == -1) {
+if (PerlACE::waitforfile_timed ($iorfile1, 5) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile1>\n";
     $SV1->Kill (); 
     exit 1;
@@ -32,8 +31,7 @@ if (PerlACE::waitforfile_timed ($iorfile1,
 
 $SV2->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile2,
-                        $PerlACE::wait_interval_for_process_creation) == -1) {
+if (PerlACE::waitforfile_timed ($iorfile2, 5) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile2>\n";
     $SV1->Kill ();
     $SV2->Kill (); 
@@ -69,8 +67,7 @@ print STDERR "\nrunning Smart Proxy test consisting of the client and two server
 
 $SV1->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile1,
-                        $PerlACE::wait_interval_for_process_creation) == -1) {
+if (PerlACE::waitforfile_timed ($iorfile1, 5) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile1>\n";
     $SV1->Kill ();
     exit 1;
@@ -78,8 +75,7 @@ if (PerlACE::waitforfile_timed ($iorfile1,
 
 $SV2->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile2,
-                        $PerlACE::wait_interval_for_process_creation) == -1) {
+if (PerlACE::waitforfile_timed ($iorfile2, 5) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile2>\n";
     $SV1->Kill ();
     $SV2->Kill (); 

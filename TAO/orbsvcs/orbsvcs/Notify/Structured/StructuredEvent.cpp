@@ -36,36 +36,16 @@ TAO_Notify_StructuredEvent_No_Copy::~TAO_Notify_StructuredEvent_No_Copy ()
 {
 }
 
-void
-TAO_Notify_StructuredEvent_No_Copy::marshal (TAO_OutputCDR & cdr) const
-{
-  static const ACE_CDR::Octet STRUCTURED_CODE = MARSHAL_STRUCTURED;
-  cdr.write_octet (STRUCTURED_CODE);
-  cdr << (*this->notification_);
-}
-
-//static
-TAO_Notify_StructuredEvent *
-TAO_Notify_StructuredEvent_No_Copy::unmarshal (TAO_InputCDR & cdr)
-{
-  TAO_Notify_StructuredEvent * event = 0;
-  CosNotification::StructuredEvent body;
-  if (cdr >> body)
-  {
-    event = new TAO_Notify_StructuredEvent (body);
-  }
-  return event;
-}
-
-TAO_Notify_Event *
+TAO_Notify_Event*
 TAO_Notify_StructuredEvent_No_Copy::copy (ACE_ENV_SINGLE_ARG_DECL) const
 {
-  TAO_Notify_Event * new_event;
-  ACE_NEW_THROW_EX (new_event,
+  TAO_Notify_Event* copy;
+
+  ACE_NEW_THROW_EX (copy,
                     TAO_Notify_StructuredEvent (*this->notification_),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
-  return new_event;
+
+  return copy;
 }
 
 CORBA::Boolean
@@ -139,10 +119,3 @@ TAO_Notify_StructuredEvent::TAO_Notify_StructuredEvent (const CosNotification::S
 TAO_Notify_StructuredEvent::~TAO_Notify_StructuredEvent ()
 {
 }
-
-const TAO_Notify_Event *
-TAO_Notify_StructuredEvent::queueable_copy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)const
-{
-  return this;
-}
-

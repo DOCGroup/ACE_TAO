@@ -6,11 +6,13 @@
 
 ACE_RCSID(writer, writer, "$Id$")
 
-int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+int
+main (int argc, char *argv[])
 {
   if (argc < 2)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("usage: %s device-filename\n"),
+                       "usage: %s device-filename\n",
+
                        argv[0]), 1);
 
   ACE_TTY_IO write_dev;
@@ -19,7 +21,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (con.connect (write_dev,
                    ACE_DEV_Addr (argv[1])) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
+
+                       "%p\n",
                        argv[1]),
                       1);
 
@@ -36,12 +39,12 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (write_dev.control (ACE_TTY_IO::SETPARAMS,
                          &myparams) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("control")),
+                       "%p\n",
+                       "control"),
                       1);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("enter character to send, q terminates :\n")));
+              "enter character to send, q terminates :\n"));
 
   for (char writeto;
        ACE_OS::read (ACE_STDIN, &writeto, 1) != -1;
@@ -53,8 +56,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       if (bytes_written != 1)
 	ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("send")),
+                           "%p\n",
+                           "send"),
                           1);
       if (writeto == 'q')
 	break;
@@ -62,8 +65,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   if (write_dev.close () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("close")),
+                       "%p\n",
+                       "close"),
                       1);
   return 0;
 }

@@ -22,9 +22,6 @@ const int BUFFERED_MESSAGES_COUNT = 50;
 const unsigned int TIMEOUT_MILLISECONDS = 50;
 const int BUFFER_SIZE = 64 * PAYLOAD_LENGTH;
 
-/// Allow a larger timeout to occur due to scheduler differences
-const unsigned int TIMEOUT_TOLERANCE = 4 * TIMEOUT_MILLISECONDS;
-
 /// Check that no more than 10% of the messages are not sent.
 const double LIVENESS_TOLERANCE = 0.9;
 
@@ -621,7 +618,7 @@ run_timeout (CORBA::ORB_ptr orb,
               break;
             }
 
-          if (elapsed.msec () > TIMEOUT_TOLERANCE)
+          if (elapsed.msec () > 2 * TIMEOUT_MILLISECONDS)
             {
               test_failed = 1;
               ACE_DEBUG ((LM_DEBUG,
@@ -629,7 +626,7 @@ run_timeout (CORBA::ORB_ptr orb,
                           "timeout threshold. "
                           "Elapsed = %d, Timeout = %d msecs\n",
                           i,
-                          elapsed.msec (), TIMEOUT_TOLERANCE));
+                          elapsed.msec (), TIMEOUT_MILLISECONDS));
               break;
             }
         }
@@ -741,7 +738,7 @@ run_timeout_reactive (CORBA::ORB_ptr orb,
               break;
             }
 
-          if (elapsed.msec () > TIMEOUT_TOLERANCE)
+          if (elapsed.msec () > 2 * TIMEOUT_MILLISECONDS)
             {
               test_failed = 1;
               ACE_DEBUG ((LM_DEBUG,
@@ -749,7 +746,7 @@ run_timeout_reactive (CORBA::ORB_ptr orb,
                           "timeout threshold. "
                           "Elapsed = %d, Timeout = %d msecs\n",
                           i,
-                          elapsed.msec (), TIMEOUT_TOLERANCE));
+                          elapsed.msec (), TIMEOUT_MILLISECONDS));
               break;
             }
         }

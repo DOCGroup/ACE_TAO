@@ -190,7 +190,7 @@ ACE_Sig_Action::ACE_Sig_Action (const ACE_Sig_Set &signals,
 
 #if (ACE_NSIG > 0)  &&  !defined (CHORUS)
   for (int s = 1; s < ACE_NSIG; s++)
-    if ((signals.is_member (s)) == 1)
+    if (signals.is_member (s))
       ACE_OS::sigaction (s, &this->sa_, 0);
 #else  /* ACE_NSIG <= 0  ||  CHORUS */
   ACE_UNUSED_ARG (signals);
@@ -218,7 +218,7 @@ ACE_Sig_Action::ACE_Sig_Action (const ACE_Sig_Set &signals,
 
 #if (ACE_NSIG > 0)  &&  !defined (CHORUS)
   for (int s = 1; s < ACE_NSIG; s++)
-    if ((signals.is_member (s)) == 1)
+    if (signals.is_member (s))
       ACE_OS::sigaction (s, &this->sa_, 0);
 #else  /* ACE_NSIG <= 0  ||  CHORUS */
   ACE_UNUSED_ARG (signals);
@@ -472,10 +472,6 @@ ACE_Sig_Adapter::ACE_Sig_Adapter (ACE_Sig_Handler_Ex sig_func,
     sig_func_ (sig_func)
 {
   // ACE_TRACE ("ACE_Sig_Adapter::ACE_Sig_Adapter");
-}
-
-ACE_Sig_Adapter::~ACE_Sig_Adapter ()
-{
 }
 
 int

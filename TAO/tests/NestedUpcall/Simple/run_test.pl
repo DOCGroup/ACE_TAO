@@ -20,8 +20,7 @@ print STDERR "\nrunning ST version of the client and the server\n\n";
 
 $SV->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile,
-                        $PerlACE::wait_interval_for_process_creation) == -1) {
+if (PerlACE::waitforfile_timed ($iorfile, 5) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";
     $SV->Kill ();
     exit 1;
@@ -50,8 +49,7 @@ print STDERR "\nrunning MT version of the client and the server\n\n";
 
 $SV->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile,
-                        $PerlACE::wait_interval_for_process_creation) == -1) {
+if (PerlACE::waitforfile_timed ($iorfile, 5) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";
     $SV->Kill (); 
     exit 1;

@@ -160,16 +160,12 @@ be_visitor_interface_base_proxy_impl_ch::gen_abstract_ops_helper (
           UTL_ScopedName item_new_name (d->local_name (),
                                         0);
 
-          // We pass the node's is_abstract flag to the operation
-          // constructor so we will get the right generated operation
-          // body if we are regenerating an operation from an
-          // abstract interface in a concrete interface or component.
           AST_Operation *op = AST_Operation::narrow_from_decl (d);
           be_operation new_op (op->return_type (),
                                op->flags (),
                                &item_new_name,
                                op->is_local (),
-                               node->is_abstract ());
+                               op->is_abstract ());
           new_op.set_defined_in (node);
           be_visitor_interface::add_abstract_op_args (op,
                                                       new_op);

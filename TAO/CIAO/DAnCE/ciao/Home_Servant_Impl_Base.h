@@ -43,12 +43,10 @@ namespace CIAO
     : public virtual POA_Components::CCMHome
   {
   public:
-    explicit Home_Servant_Impl_Base (void);
-
     Home_Servant_Impl_Base (Session_Container * c);
 
     virtual ~Home_Servant_Impl_Base (void);
-
+    
     // Operations for CCMHome interface.
 
     virtual ::CORBA::IRObject_ptr
@@ -67,3 +65,4 @@ namespace CIAO
 #include /**/ "ace/post.h"
 
 #endif /* CIAO_HOME_SERVANT_IMPL_BASE_H */
+

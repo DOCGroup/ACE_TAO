@@ -16,8 +16,6 @@
 #if defined (ACE_WIN32)
 
 #include "ImR_Activator_i.h"
-#include "Activator_Options.h"
-
 #include "tao/ORB_Core.h"
 
 /**
@@ -59,18 +57,13 @@ int
 Activator_NT_Service::svc (void)
 {
   ImR_Activator_i server;
-  Options opts;
 
-  if (opts.init_from_registry() != 0)
-  {
-    report_status (SERVICE_STOPPED);
-    return -1;
-  }
+  int status = 0;
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      int status = server.init (opts ACE_ENV_ARG_PARAMETER);
+      status = server.init (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (status == -1)
@@ -82,9 +75,6 @@ Activator_NT_Service::svc (void)
         {
           report_status (SERVICE_RUNNING);
           server.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-
-          status = server.fini (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           report_status (SERVICE_STOPPED);

@@ -89,7 +89,7 @@ ACE_RCSID (util,
 #undef INCREMENT
 #define INCREMENT 64
 
-static long *pSeenOnce= 0;
+static long seen_once[INCREMENT] = {0};
 
 IDL_GlobalData::dsf::dsf (void)
   : interface_seen_ (0),
@@ -146,8 +146,7 @@ IDL_GlobalData::dsf::dsf (void)
     special_basic_arg_seen_ (0),
     ub_string_arg_seen_ (0),
     var_array_arg_seen_ (0),
-    var_size_arg_seen_ (0),
-    any_arg_seen_ (0)
+    var_size_arg_seen_ (0)
 {}
 
 IDL_GlobalData::IDL_GlobalData (void)
@@ -298,7 +297,6 @@ IDL_GlobalData::IDL_GlobalData (void)
   ACE_SET_BITS (this->decls_seen_masks.ub_string_arg_seen_,     cursor << 58);
   ACE_SET_BITS (this->decls_seen_masks.var_array_arg_seen_,     cursor << 59);
   ACE_SET_BITS (this->decls_seen_masks.var_size_arg_seen_,      cursor << 60);
-  ACE_SET_BITS (this->decls_seen_masks.any_arg_seen_,           cursor << 61);
 }
 
 IDL_GlobalData::~IDL_GlobalData (void)
@@ -570,7 +568,7 @@ IDL_GlobalData::seen_include_file_before (char *n)
 
       if (ACE_OS::strcmp (tmp, incl) == 0)
         {
-          return ++pSeenOnce[i];
+          return seen_once[i]++;
         }
     }
 
@@ -581,11 +579,13 @@ IDL_GlobalData::seen_include_file_before (char *n)
 void
 IDL_GlobalData::store_include_file_name (UTL_String *n)
 {
+  UTL_String **o_include_file_names;
+  unsigned long o_n_alloced_file_names;
+  unsigned long i;
+
   // Check if we need to store it at all or whether we've seen it already.
   if (this->seen_include_file_before (n->get_string ()))
     {
-      n->destroy ();
-      delete n; // Don't keep filenames we don't store!
       return;
     }
 
@@ -598,32 +598,26 @@ IDL_GlobalData::store_include_file_name (UTL_String *n)
           this->pd_n_alloced_file_names = INCREMENT;
           ACE_NEW (this->pd_include_file_names,
                    UTL_String *[this->pd_n_alloced_file_names]);
-          ACE_NEW (pSeenOnce, long [this->pd_n_alloced_file_names]);
         }
       else
         {
-          UTL_String    **o_include_file_names=   this->pd_include_file_names;
-          unsigned long   o_n_alloced_file_names= this->pd_n_alloced_file_names;
-          long           *o_pSeenOnce=            pSeenOnce;
-
+          o_include_file_names = this->pd_include_file_names;
+          o_n_alloced_file_names = this->pd_n_alloced_file_names;
           this->pd_n_alloced_file_names += INCREMENT;
           ACE_NEW (this->pd_include_file_names,
                    UTL_String *[this->pd_n_alloced_file_names]);
-          ACE_NEW (pSeenOnce, long [this->pd_n_alloced_file_names]);
 
-          for (unsigned long i = 0; i < o_n_alloced_file_names; ++i)
+          for (i = 0; i < o_n_alloced_file_names; ++i)
             {
               this->pd_include_file_names[i] = o_include_file_names[i];
-              pSeenOnce[i]= o_pSeenOnce[i];
             }
 
           delete [] o_include_file_names;
-          delete [] o_pSeenOnce;
         }
     }
 
   // Store it.
-  pSeenOnce[this->pd_n_include_file_names] = 1;
+  seen_once[this->pd_n_include_file_names] = 1;
   this->pd_include_file_names[this->pd_n_include_file_names++] = n;
 }
 
@@ -736,8 +730,8 @@ IDL_GlobalData::validate_included_idl_files (void)
   size_t n_post_preproc_includes = idl_global->n_include_file_names ();
   UTL_String **post_preproc_includes = idl_global->include_file_names ();
 
-  char pre_abspath[MAXPATHLEN] = "";
-  char post_abspath[MAXPATHLEN] = "";
+  char pre_abspath[MAXPATHLEN];
+  char post_abspath[MAXPATHLEN];
   char **path_tmp = 0;
   char *post_tmp = 0;
   char *full_path = 0;
@@ -766,8 +760,6 @@ IDL_GlobalData::validate_included_idl_files (void)
                     {
                       continue;
                     }
-
-                  ACE_OS::fclose (test);
 
                   // This file name is valid.
                   valid_file = 1;
@@ -808,8 +800,6 @@ IDL_GlobalData::validate_included_idl_files (void)
                               continue;
                             }
 
-                          ACE_OS::fclose (test);
-
                           // This file name is valid.
                           valid_file = 1;
                           ++n_found;
@@ -828,7 +818,7 @@ IDL_GlobalData::validate_included_idl_files (void)
       // Remove the file, if it is not valid.
       if (valid_file == 0)
         {
-          delete [] pre_preproc_includes[j];
+          delete pre_preproc_includes[j];
           pre_preproc_includes[j] = 0;
         }
       else
@@ -1461,86 +1451,4 @@ IDL_GlobalData::fini (void)
   this->temp_dir_ = 0;
   delete [] this->ident_string_;
   this->ident_string_ = 0;
-}
-
-void
-IDL_GlobalData::create_uses_multiple_stuff (
-    AST_Component *c,
-    AST_Component::port_description &pd
-  )
-{
-  ACE_CString struct_name (pd.id->get_string ());
-  struct_name += "Connection";
-  Identifier struct_id (struct_name.c_str ());
-  UTL_ScopedName sn (&struct_id, 0);
-  AST_Structure *connection = 
-    idl_global->gen ()->create_structure (&sn, 0, 0);
-  struct_id.destroy ();
-  
-  Identifier object_id ("objref");
-  UTL_ScopedName object_name (&object_id,
-                              0);
-  AST_Field *object_field = 
-    idl_global->gen ()->create_field (pd.impl,
-                                      &object_name,
-                                      AST_Field::vis_NA);
-  (void) DeclAsScope (connection)->fe_add_field (object_field);
-  object_id.destroy ();
-
-  Identifier local_id ("Cookie");
-  UTL_ScopedName local_name (&local_id,
-                             0);
-  Identifier module_id ("Components");
-  UTL_ScopedName scoped_name (&module_id,
-                              &local_name);
-  AST_Decl *d = c->lookup_by_name (&scoped_name,
-                                   I_TRUE);
-  local_id.destroy ();
-  module_id.destroy ();
-
-  if (d == 0)
-    {
-      // This would happen if we haven't included Componennts.idl.
-      idl_global->err ()->lookup_error (&scoped_name);
-      return;
-    }
-
-  AST_ValueType *cookie = AST_ValueType::narrow_from_decl (d);
-  
-  Identifier cookie_id ("ck");
-  UTL_ScopedName cookie_name (&cookie_id,
-                              0);
-  AST_Field *cookie_field =
-    idl_global->gen ()->create_field (cookie,
-                                      &cookie_name,
-                                      AST_Field::vis_NA);
-  (void) DeclAsScope (connection)->fe_add_field (cookie_field);
-  cookie_id.destroy ();
-  
-  (void) c->fe_add_structure (connection);
-  
-  ACE_UINT64 bound = 0;
-  AST_Expression *bound_expr =
-    idl_global->gen ()->create_expr (bound,
-                                     AST_Expression::EV_ulong);
-  AST_Sequence *sequence =
-    idl_global->gen ()->create_sequence (bound_expr,
-                                         connection,
-                                         0,
-                                         0,
-                                         0);
-                                         
-  ACE_CString seq_string (pd.id->get_string ());
-  seq_string += "Connections";
-  Identifier seq_id (seq_string.c_str ());
-  UTL_ScopedName seq_name (&seq_id,
-                           0);
-  AST_Typedef *connections =
-    idl_global->gen ()->create_typedef (sequence,
-                                        &seq_name,
-                                        0,
-                                        0);
-  seq_id.destroy ();
-  
-  (void) c->fe_add_typedef (connections);
 }

@@ -50,11 +50,8 @@ public:
 
   /// Obtain a single policy.
   CORBA::Policy_ptr get_policy (CORBA::PolicyType policy
-                                ACE_ENV_ARG_DECL);
+                                ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-  /// Obtain a single cached policy.
-  CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type
-                                       ACE_ENV_ARG_DECL);
 
   // = The CORBA::PolicyManager operations
 
@@ -69,6 +66,9 @@ public:
                                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CORBA::InvalidPolicies));
+
+  /// Obtain a single cached policy.
+  CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type);
 
 private:
   /// Protect access
@@ -88,11 +88,8 @@ public:
 
   /// Obtain a single policy.
   CORBA::Policy_ptr get_policy (CORBA::PolicyType policy
-                                ACE_ENV_ARG_DECL);
+                                ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-  /// Obtain a single cached policy.
-  CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type
-                                       ACE_ENV_ARG_DECL);
 
   // = The CORBA::PolicyManager operations
 
@@ -103,6 +100,9 @@ public:
   void set_policy_overrides (const CORBA::PolicyList & policies,
                              CORBA::SetOverrideType set_add
                              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+
+  /// Obtain a single cached policy.
+  CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type);
 
 private:
   /// The implementation.
@@ -122,11 +122,8 @@ public:
   /// Obtain a single policy.
   CORBA::Policy_ptr get_policy (
       CORBA::PolicyType policy
-      ACE_ENV_ARG_DECL);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-  /// Obtain a single cached policy.
-  CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type
-                                       ACE_ENV_ARG_DECL);
 
   // = The CORBA::PolicyManager operations
 
@@ -143,6 +140,9 @@ public:
       )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CORBA::InvalidPolicies));
+
+  /// Obtain a single cached policy.
+  CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type);
 
   // = Set and get the implementation.
   TAO_Policy_Current_Impl &implementation (void) const;

@@ -143,6 +143,10 @@ namespace TAO
        */
       CSIIOP::TLS_SEC_TRANS csiv2_component_;
 
+      /// State that will be passed to each SSLIOP connection handler upon
+      /// creation.
+      Connection_Handler_State handler_state_;
+
       /// The accept() timeout.
       /**
        * This timeout includes the overall time to complete the SSL

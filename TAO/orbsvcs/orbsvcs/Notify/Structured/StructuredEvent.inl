@@ -1,2 +1,4 @@
 // $Id$
 
+#include "StructuredEvent.h"
+

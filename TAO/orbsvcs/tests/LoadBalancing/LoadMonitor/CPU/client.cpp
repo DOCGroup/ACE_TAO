@@ -13,7 +13,7 @@ ACE_RCSID (CPU,
 const char * location = "MyLocation";
 
 const int MAX_RETRIES = 10;
-const CosLoadBalancing::LoadId LOAD_ID = CosLoadBalancing::LoadAverage;
+const CosLoadBalancing::LoadId LOAD_ID = CosLoadBalancing::CPU;
 
 int
 parse_args (int argc, char *argv[])

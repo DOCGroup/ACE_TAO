@@ -328,7 +328,6 @@ public:
     ACE_UINT64 ub_string_arg_seen_;
     ACE_UINT64 var_array_arg_seen_;
     ACE_UINT64 var_size_arg_seen_;
-    ACE_UINT64 any_arg_seen_;
   } decls_seen_masks;
 
   // Constructor
@@ -541,11 +540,6 @@ public:
   
   void fini (void);
   // Do final cleanup just before process exits.
-
-  void create_uses_multiple_stuff (AST_Component *c,
-                                   AST_Component::port_description &pd);
-  // We must do this in the front end since the executor
-  // mapping IDL will have these data types.
 
 private:
   // Data

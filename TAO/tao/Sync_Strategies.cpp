@@ -66,33 +66,17 @@ TAO_Eager_Buffering_Sync_Strategy::buffering_constraints_reached (
   must_flush = 0;
   set_timer = 0;
 
-  TAO_Buffering_Constraint_Policy *buffering_constraint_policy = 0;
+  CORBA::Policy_var bcp_policy = stub->buffering_constraint ();
+  TAO::BufferingConstraintPolicy_var bcp =
+    TAO::BufferingConstraintPolicy::_narrow (bcp_policy.in());
 
-  ACE_TRY_NEW_ENV
-    {
-      CORBA::Policy_var bcp_policy =
-        stub->get_cached_policy (TAO_CACHED_POLICY_BUFFERING_CONSTRAINT
-                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+  TAO_Buffering_Constraint_Policy *buffering_constraint_policy =
+    dynamic_cast<TAO_Buffering_Constraint_Policy *> (bcp.in ());
 
-      TAO::BufferingConstraintPolicy_var bcp =
-        TAO::BufferingConstraintPolicy::_narrow (bcp_policy.in ()
-                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      buffering_constraint_policy =
-        dynamic_cast<TAO_Buffering_Constraint_Policy *> (bcp.in ());
-
-      if (buffering_constraint_policy == 0)
-        {
-          return 1;
-        }
-    }
-  ACE_CATCHANY
+  if (buffering_constraint_policy == 0)
     {
       return 1;
     }
-  ACE_ENDTRY;
 
   TAO::BufferingConstraint buffering_constraint;
   buffering_constraint_policy->get_buffering_constraint (buffering_constraint);

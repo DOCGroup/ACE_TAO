@@ -16,8 +16,6 @@
 
 #include /**/ "ace/pre.h"
 #include "ace/Unbounded_Queue.h"
-#include "ace/Hash_Map_Manager.h"
-#include "ace/Synch.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -40,13 +38,7 @@ class TAO_Reverse_Active_Object_Map_Impl;
 //    in ACE so we do not have to worry about increasing TAO's
 //    footprint by using this container.
 typedef ACE_Unbounded_Queue<ACE_CString> TAO_EndpointSet;
-typedef ACE_Unbounded_Queue_Const_Iterator<ACE_CString> TAO_EndpointSetIterator;
-typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
-                                ACE_CString,
-                                ACE_Hash<ACE_CString>,
-                                ACE_Equal_To<ACE_CString>,
-                                ACE_Null_Mutex>
-  TAO_EndpointMap;
+typedef ACE_Unbounded_Queue_Iterator<ACE_CString> TAO_EndpointSetIterator;
 
 
 // -------------------------------------------------------------------
@@ -74,10 +66,9 @@ public:
 
   /// Specifies the endpoints on which this server is willing to
   /// listen for requests.
-  int add_endpoints (const ACE_CString &lane,
-                     const ACE_CString &endpoints);
-  void get_endpoint_set (const ACE_CString &lane,
-                         TAO_EndpointSet &endpoint_set);
+  int endpoints (ACE_CString &endpoints);
+  TAO_EndpointSet &endpoints (void);
+  void add_endpoint (ACE_CString &endpoint);
 
   /// Set/Get the port of services locatable through multicast.
   CORBA::UShort service_port (TAO_MCAST_SERVICEID service_id) const;
@@ -168,13 +159,6 @@ public:
   bool disable_rt_collocation_resolver (void) const;
   void disable_rt_collocation_resolver (bool);
 
-  /// Accepts the list of preferred interfaces and does a simple
-  /// semantic check on the string
-  bool preferred_interfaces (const char *s);
-  const char *preferred_interfaces (void) const;
-
-  void enforce_pref_interfaces (bool p);
-  bool enforce_pref_interfaces (void) const;
 private:
   // Each "endpoint" is of the form:
   //
@@ -192,14 +176,16 @@ private:
   //   iiop://space:2001,odyssey:2010;uiop://foo,bar
   //
   // All preconnect or endpoint strings should be of the above form(s).
-  int parse_and_add_endpoints (const ACE_CString &endpoints,
-                               TAO_EndpointSet &endpoint_set);
+
+  int parse_endpoints (ACE_CString &endpoints,
+                       TAO_EndpointSet &endpoints_list);
 
   /// List of endpoints used to pre-establish connections.
   // TAO_EndpointSet preconnects_list_;
 
-  /// Map of endpoints this server is willing to accept requests on.
-  TAO_EndpointMap endpoints_map_;
+  /// List of endpoints this server is willing to accept requests
+  /// on.
+  TAO_EndpointSet endpoints_list_;
 
   /// Port numbers of the configured services.
   CORBA::UShort service_port_[TAO_NO_OF_MCAST_SERVICES];
@@ -276,11 +262,6 @@ private:
    * loaded if the RTORB is used.
    */
   bool disable_rt_collocation_resolver_;
-
-  /// Preferred network interfaces as a string
-  ACE_CString pref_network_;
-
-  bool enforce_preferred_interfaces_;
 };
 
 #if defined (__ACE_INLINE__)

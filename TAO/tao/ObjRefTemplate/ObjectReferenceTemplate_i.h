@@ -28,7 +28,9 @@
 #include "tao/PortableServer/PortableServerC.h"
 
 #if defined(_MSC_VER)
+#if (_MSC_VER >= 1200)
 #pragma warning(push)
+#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -102,9 +104,13 @@ namespace TAO
     PortableServer::POA_var poa_;
   };
 }
-#if defined(_MSC_VER)
+#if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)
 #endif /* _MSC_VER */
+
+#if defined (__ACE_INLINE__)
+# include "ObjectReferenceTemplate_i.inl"
+#endif /* ! __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 

@@ -66,7 +66,7 @@ public:
   // Destructor.
 
   // = Dynamic linking hooks.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  virtual int init (int argc, char *argv[]);
   // Initialize the IPC client.
 
   virtual int fini (void);

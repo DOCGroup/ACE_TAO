@@ -46,7 +46,7 @@ public:
   ~IPC_Server (void);
 
   // = Dynamic linking hooks.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  virtual int init (int argc, char *argv[]);
   // Initialize the network server.
 
   virtual int fini (void);
@@ -56,7 +56,7 @@ public:
   // Run the interative service.
 
 private:
-  int parse_args (int argc, ACE_TCHAR *argv[]);
+  int parse_args (int argc, char *argv[]);
   // Parse command-line arguments.
 
   int n_threads_;

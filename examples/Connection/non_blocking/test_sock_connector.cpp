@@ -14,7 +14,7 @@ typedef IPC_Client<PEER_HANDLER, ACE_SOCK_CONNECTOR> IPC_CLIENT;
 // ACE_SOCK Client.
 
 int
-ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+main (int argc, char *argv[])
 {
   // Since this test waits on the STDIN handle to become ready, we
   // have to make sure that the WFMO_Reactor is used on Win32. This is
@@ -27,11 +27,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_Reactor::instance (&reactor);
 # else
   ACE_ERROR_RETURN ((LM_ERROR,
-                     ACE_TEXT ("Non-NT platform (Win95/98?) without Winsock2 ")
-                     ACE_TEXT ("installed.\n")
-                     ACE_TEXT ("This example requires WFMO_Reactor which ")
-                     ACE_TEXT ("requires.\n")
-                     ACE_TEXT ("Winsock2 be installed.\n")), -1);
+                     "Non-NT platform (Win95/98?) without Winsock2 installed.\n"
+                     "This example requires WFMO_Reactor which requires.\n"
+                     "Winsock2 be installed.\n"), -1);
 # endif /*  !ACE_HAS_WINSOCK2 && ACE_HAS_WINSOCK2 != 0 */
 #endif /* ACE_WIN32 */
 
@@ -41,7 +39,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   IPC_CLIENT peer_connector;
 
   if (peer_connector.init (argc, argv) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("init")),
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "init"),
                       -1);
 
   return peer_connector.svc ();

@@ -40,13 +40,6 @@ module mod2
 
   interface fwd;
   
-  exception exp
-  {
-    fwd fwd_mem;
-  };
-  
-  typedef fwd td_fwd;
-  
   interface full
   {
     fwd op (in fwd inarg,

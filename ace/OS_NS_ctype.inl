@@ -2,12 +2,9 @@
 // $Id$
 
 #include "ace/os_include/os_ctype.h"
-#if defined ACE_HAS_WCHAR
-# include "ace/os_include/os_wctype.h"
-#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE int
-ACE_OS::ace_isalnum (ACE_TCHAR c)
+ACE_OS::ace_isalnum (const ACE_TCHAR c)
 {
 #if defined (ACE_USES_WCHAR)
   return iswalnum (c);
@@ -17,7 +14,7 @@ ACE_OS::ace_isalnum (ACE_TCHAR c)
 }
 
 ACE_INLINE int
-ACE_OS::ace_isalpha (ACE_TCHAR c)
+ACE_OS::ace_isalpha (const ACE_TCHAR c)
 {
 #if defined (ACE_USES_WCHAR)
   return iswalpha (c);
@@ -27,7 +24,7 @@ ACE_OS::ace_isalpha (ACE_TCHAR c)
 }
 
 ACE_INLINE int
-ACE_OS::ace_iscntrl (ACE_TCHAR c)
+ACE_OS::ace_iscntrl (const ACE_TCHAR c)
 {
 #if defined (ACE_USES_WCHAR)
   return iswcntrl (c);
@@ -37,7 +34,7 @@ ACE_OS::ace_iscntrl (ACE_TCHAR c)
 }
 
 ACE_INLINE int
-ACE_OS::ace_isdigit (ACE_TCHAR c)
+ACE_OS::ace_isdigit (const ACE_TCHAR c)
 {
 #if defined (ACE_USES_WCHAR)
   return iswdigit (c);
@@ -47,7 +44,7 @@ ACE_OS::ace_isdigit (ACE_TCHAR c)
 }
 
 ACE_INLINE int
-ACE_OS::ace_isgraph (ACE_TCHAR c)
+ACE_OS::ace_isgraph (const ACE_TCHAR c)
 {
 #if defined (ACE_USES_WCHAR)
   return iswgraph (c);
@@ -57,7 +54,7 @@ ACE_OS::ace_isgraph (ACE_TCHAR c)
 }
 
 ACE_INLINE int
-ACE_OS::ace_islower (ACE_TCHAR c)
+ACE_OS::ace_islower (const ACE_TCHAR c)
 {
 #if defined (ACE_USES_WCHAR)
   return iswlower (c);
@@ -67,7 +64,7 @@ ACE_OS::ace_islower (ACE_TCHAR c)
 }
 
 ACE_INLINE int
-ACE_OS::ace_isprint (ACE_TCHAR c)
+ACE_OS::ace_isprint (const ACE_TCHAR c)
 {
 #if defined (ACE_USES_WCHAR)
   return iswprint (c);
@@ -77,7 +74,7 @@ ACE_OS::ace_isprint (ACE_TCHAR c)
 }
 
 ACE_INLINE int
-ACE_OS::ace_ispunct (ACE_TCHAR c)
+ACE_OS::ace_ispunct (const ACE_TCHAR c)
 {
 #if defined (ACE_USES_WCHAR)
   return iswpunct (c);
@@ -87,7 +84,7 @@ ACE_OS::ace_ispunct (ACE_TCHAR c)
 }
 
 ACE_INLINE int
-ACE_OS::ace_isspace (ACE_TCHAR c)
+ACE_OS::ace_isspace (const ACE_TCHAR c)
 {
 #if defined (ACE_USES_WCHAR)
   return iswspace (c);
@@ -97,7 +94,7 @@ ACE_OS::ace_isspace (ACE_TCHAR c)
 }
 
 ACE_INLINE int
-ACE_OS::ace_isupper (ACE_TCHAR c)
+ACE_OS::ace_isupper (const ACE_TCHAR c)
 {
 #if defined (ACE_USES_WCHAR)
   return iswupper (c);
@@ -107,7 +104,7 @@ ACE_OS::ace_isupper (ACE_TCHAR c)
 }
 
 ACE_INLINE int
-ACE_OS::ace_isxdigit (ACE_TCHAR c)
+ACE_OS::ace_isxdigit (const ACE_TCHAR c)
 {
 #if defined (ACE_USES_WCHAR)
   return iswxdigit (c);

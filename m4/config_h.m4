@@ -389,9 +389,6 @@ AH_TEMPLATE([ACE_HAS_CONFLICTING_XTI_MACROS],
 AH_TEMPLATE([ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES],
 [Prototypes for both signal() and struct sigaction are consistent.])
 
-AH_TEMPLATE([ACE_HAS_CONST_CHAR_SWAB],
-[Platform has swab(const char*, char*, ssize_t) variant.])
-
 AH_TEMPLATE([ACE_HAS_CPLUSPLUS_HEADERS],
 [Compiler/platform has correctly prototyped header files.])
 
@@ -445,9 +442,6 @@ AH_TEMPLATE([ACE_USES_IPV4_IPV6_MIGRATION],
 
 AH_TEMPLATE([ACE_HAS_NEW_NOTHROW],
 [Compiler supports new (std::nothrow)])
-
-AH_TEMPLATE([ACE_HAS_NONCONST_SWAB],
-[Platform has swab(char*, char*, ssize_t) variant.])
 
 AH_TEMPLATE([ACE_HAS_NONSTATIC_OBJECT_MANAGER],
 [Causes the ACE_Object_Manager instance to be created in
@@ -815,7 +809,6 @@ AH_TEMPLATE([ACE_HAS_UNIXWARE_SVR4_SIGNAL_T],
    platforms])
 
 AH_TEMPLATE([ACE_HAS_WCHAR],[Platform/compiler supports wchar_t])
-AH_TEMPLATE([ACE_USES_WCHAR],[ACE is built to use wide characters internally])
 
 AH_TEMPLATE([ACE_HAS_TYPENAME_KEYWORD],
 [Compiler supports the C++ typename keyword])
@@ -1152,12 +1145,6 @@ AH_TEMPLATE([ACE_USE_POLL],
 [The OS/platform supports the poll() event demultiplexor])
 
 AH_TEMPLATE([ACE_POLL_IS_BROKEN],[Platform has broken poll()])
-
-AH_TEMPLATE([ACE_HAS_EVENT_POLL],[Platform (Linux) supports event poll 
-  interface.])
-
-AH_TEMPLATE([ACE_HAS_DEV_POLL],[Platform (Linux) supports /dev/poll character
-  device.])
 
 AH_TEMPLATE([ACE_USES_ASM_SYMBOL_IN_DLSYM],
 [Platform uses assembly symbols instead of C symbols in dlsym()])

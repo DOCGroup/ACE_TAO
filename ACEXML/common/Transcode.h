@@ -47,7 +47,7 @@ public:
     ACEXML_INVALID_ARGS = -3,
     ACEXML_IS_SURROGATE = -4,
     ACEXML_NON_UNICODE = -5
-  } ACEXML_STATUS;
+  } STATUS;
 
 
   // The following functions translate a unicode characters

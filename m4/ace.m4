@@ -316,55 +316,6 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
   ])
  AM_CONDITIONAL([BUILD_THREADS], [test X$ace_user_enable_threads = Xyes])
 
- AC_ARG_ENABLE([pthreads],
-  AS_HELP_STRING(--enable-pthreads,enable POSIX thread (Pthreads) support [[[yes]]]),
-  [
-   case "${enableval}" in
-    yes)
-      ace_user_enable_pthreads=yes
-      ;;
-    no)
-      ace_user_enable_pthreads=no
-      ;;
-    *)
-      AC_MSG_ERROR([bad value ${enableval} for --enable-pthreads])
-      ;;
-   esac
-  ],
-  [
-    ace_user_enable_pthreads=yes
-  ])
-
- AC_ARG_ENABLE([uithreads],
-  AS_HELP_STRING(--enable-uithreads,enable UNIX International thread support [[[no]]]),
-  [
-   case "${enableval}" in
-    yes)
-      ace_user_enable_uithreads=yes
-      ;;
-    no)
-      ace_user_enable_uithreads=no
-      ;;
-    *)
-      AC_MSG_ERROR([bad value ${enableval} for --enable-uithreads])
-      ;;
-   esac
-  ],
-  [
-    dnl The default is to disable UI threads. However, on Solaris, we
-    dnl enable it by default since it's functionality is very useful and
-    dnl has traditionally been enabled in ACE.
-    case "$host" in
-      *solaris2*)
-        ace_user_enable_uithreads=yes
-        AC_MSG_NOTICE([[--enable-uithreads enabled by default for Solaris; use --enable-uithreads=no to disable it.]])
-        ;;
-      *)
-        ace_user_enable_uithreads=no
-        ;;
-    esac
-  ])
-
  AC_ARG_ENABLE([verb-not-sup],
   AS_HELP_STRING(--enable-verb-not-sup,enable verbose ENOTSUP reports [[[no]]]),
   [
@@ -381,23 +332,23 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
    esac
   ],)
 
- dnl The ace/config-all.h file defaults ACE_NTRACE properly, so only emit
- dnl something if the user specifies this option.
  AC_ARG_ENABLE([trace],
   AS_HELP_STRING(--enable-trace,enable ACE tracing [[[no]]]),
   [
    case "${enableval}" in
     yes)
-      AC_DEFINE([ACE_NTRACE],0)
       ;;
     no)
-      AC_DEFINE([ACE_NTRACE],1)
+      AC_DEFINE([ACE_NTRACE])
       ;;
     *)
       AC_MSG_ERROR([bad value ${enableval} for --enable-trace])
       ;;
    esac
-  ],)
+  ],
+  [
+   AC_DEFINE([ACE_NTRACE])
+  ])
 
  AC_ARG_ENABLE([wfmo],
   AS_HELP_STRING(--enable-wfmo,build WFMO-using examples [[[no]]]),
@@ -437,7 +388,7 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
       ace_user_enable_winregistry=no
       ;;
     *)
-      AC_MSG_ERROR([bad value ${enableval} for --enable-winregistry])
+      AC_MSG_ERROR([bad value ${enableval} for --enable-rtti])
       ;;
    esac
   ],
@@ -536,7 +487,6 @@ dnl line, then "no_x" is set to "yes."
  ACE_WITH_RMCAST
  ACE_WITH_QOS
  ACE_WITH_SSL
- ACE_WITH_ACEXML
 
  AC_ARG_WITH([tao],
   AS_HELP_STRING(--with-tao,build TAO (the ACE ORB) [[[yes]]]),
@@ -612,7 +562,6 @@ AC_DEFUN([ACE_COMPILATION_OPTIONS],
       ;;
     no)
       AC_DEFINE([ACE_NDEBUG])
-      AC_DEFINE([ACE_USE_RCSID],[0])
       ;;
     *)
       AC_MSG_ERROR([bad value ${enableval} for --enable-debug])
@@ -861,7 +810,7 @@ dnl    fi
   ],)
 
  AC_ARG_ENABLE([stdcpplib],
-  AS_HELP_STRING([--enable-stdcpplib],[enable standard C++ library [[yes]]]),
+  AS_HELP_STRING(--enable-stdcpplib,enable standard C++ library [[[yes]]]),
   [
    case "${enableval}" in
     yes)
@@ -878,25 +827,6 @@ dnl    fi
   [
    ace_user_enable_stdcpplib=yes
   ])
-
- AC_ARG_ENABLE([uses-wchar],
-               AS_HELP_STRING([--enable-uses-wchar],
-                            [enable use of wide characters [[no]]]),
-               [case "${withval}" in
-                 yes) 
-                  AC_DEFINE([ACE_USES_WCHAR])
-                  ace_user_enable_wide_char=yes
-                  ;;
-                 no)
-                  ace_user_enable_wide_char=no
-                  ;;
-                 *)
-                  AC_MSG_ERROR([bad value ${enableval} for --enable-uses-wchar])
-                  ;;
-                esac])
- AC_CACHE_CHECK([whether to use wide characters internally],
-                [ace_user_enable_wide_char], [ace_user_enable_wide_char=no])
- AM_CONDITIONAL([BUILD_USES_WCHAR], [test X$ace_user_enable_wide_char = Xyes])
 
 ])
 
@@ -958,27 +888,4 @@ AC_DEFUN([ACE_WITH_SSL],
 AC_CACHE_CHECK([whether to compile/use the ACE_SSL library],
                [ace_user_with_ssl], [ace_user_with_ssl=yes])
 AM_CONDITIONAL([BUILD_SSL], [test X$ace_user_with_ssl = Xyes])
-])
-
-AC_DEFUN([ACE_WITH_ACEXML],
-[AC_ARG_WITH([acexml],
-             AS_HELP_STRING([--with-acexml],
-                            [compile/use the ACEXML library [[yes]]]),
-             [case "${withval}" in
-               yes) 
-                ace_user_with_acexml=yes
-                ;;
-               no)
-                ace_user_with_acexml=no
-                ;;
-               *)
-                AC_MSG_ERROR(bad value ${withval} for --with-acexml)
-                ;;
-              esac],
-              [
-               ace_user_with_acexml=yes
-              ])
-AC_CACHE_CHECK([whether to compile/use the ACEXML library],
-               [ace_user_with_acexml], [ace_user_with_acexml=yes])
-AM_CONDITIONAL([BUILD_ACEXML], [test X$ace_user_with_acexml = Xyes])
 ])

@@ -15,7 +15,7 @@
 
 The file explains how to build and install ACE and its Network
 Services on the various OS platforms and compilers that it has been
-ported to.  Please consult the <a href="ChangeLog">ChangeLog</a> file
+ported to.  Please consult the <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/ChangeLog">ChangeLog</a> file
 to see whether any recent changes to the release will affect your
 code.  In addition, you should check out our <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/docs/ACE-development-process.html">development
 process</a>.  As you start working with ACE, we suggest you get copies
@@ -66,7 +66,7 @@ platforms is divided among a few different groups: the DOC group,
 Riverace, OCI, Remedy IT, and the ACE user community itself.  The
 table below summarizes each group's role and where you can get more
 detailed information.  For information on TAO's platform coverage and
-support, please also see <a href="TAO/TAO-INSTALL.html">TAO's install
+support, please also see <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/TAO/TAO-INSTALL.html">TAO's install
 document</a>.</p><p>
 
 <table border="1" width="75%">
@@ -102,18 +102,18 @@ document</a>.</p><p>
         software and service offerings.
     </td>
     <td>OCI's <a href="http://www.theaceorb.com/">web site</a> and
-        the TAO <a href="TAO/TAO-INSTALL.html">install document</a></td>
+        the TAO <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/TAO/TAO-INSTALL.html">install document</a></td>
   </tr>
   <tr>
     <th>Remedy IT</th>
     <td>Maintains ACE on many platforms required for their ACE and
         TAO service offerings. Besides the standard DOC group platforms
         we also support Borland C++ Builder 6, CBuilderX 1.0, MinGW,
-        Cygwin, VxWorks 5.5.1, OpenVMS 7.3-2, Linux 64bit Alpha, Tru64,
+        Cygwin, VxWorks 5.5, OpenVMS 7.3-2, Linux 64bit Alpha, Tru64,
         HPUX 11i 32/64 bit on PA-RISC, and HPUX 11i v2 on Itanium.
     </td>
     <td>Remedy IT <a href="http://www.theaceorb.nl/">web site</a> and
-        the TAO <a href="TAO/TAO-INSTALL.html">install document</a>
+        the TAO <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/TAO/TAO-INSTALL.html">install document</a>
     </td>
   </tr>
   <tr>
@@ -169,11 +169,9 @@ of ACE (TAO and CIAO) includes GNUmakefiles for UNIX platforms, VC6
 project files, and VC71 solution files. If it is necessary to generate
 files for build tools for other compilers such as Visual Age for IBM,
 and Windows CE users have to run MPC themselves to generate the
-appropriate files. Please see <a href="MPC/USAGE"> USAGE </a>, 
-<a href="MPC/README"> README </a> and 
-<a href="bin/MakeProjectCreator/README">README for ACE</a> files for
+appropriate files. Please see <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/MPC/USAGE"> USAGE </a>, <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/MPC/README"> README </a> and <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/bin/MakeProjectCreator/README">README for ACE</a> files for
 details. The options that have been used to generate the above build
-files can be found in <a href="bin/MakeProjectCreator/config/global.features">
+files can be found in <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/bin/MakeProjectCreator/config/global.features">
 global.features</a> file.
 
 
@@ -196,7 +194,7 @@ global.features</a> file.
       We've also added some support for
       <a href="#mingw">GNU g++ with MinGW</a>,
       <a href="#cygwin">GNU g++ with Cygwin</a>
-      <a href="#borland">Borland C++ 5.5, Borland C++ Builder 6.0
+      <a href="#borland">Borland C++ 5.5, Borland C++ Builder 4.0/5.0/6.0
       and Borland C++ BuilderX</a>, and IBM's VisualAge C++ compiler.
       Since we don't have these compilers we rely on the ACE+TAO users
       community to maintain these ports.  Therefore, please send email
@@ -276,7 +274,7 @@ global.features</a> file.
 
       Here's how to optimise the ACE library generation:</p><p>
 
-      Look at the <a href="ace/GNUmakefile.ACE">ace/GNUmakefile.ACE</a>
+      Look at the <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/ace/GNUmakefile.ACE">ace/GNUmakefile.ACE</a>
       in <code>$ACE_ROOT/ace</code>. Create a file called
       <code>ACE_All_Src.cpp</code>, and add a line to #include
       each of the source files
@@ -340,6 +338,12 @@ global.features</a> file.
             </p><pre>             <code># route add -net 224.0.0.0 netmask 240.0.0.0 dev eth0</code>
             </pre><p>
       </p></li></ul>
+
+      With RedHat 5.0, you'll need some <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/os-patches/linux-patches.html">updates and possibly some
+      patches</a> to get ACE working with LinuxThreads.  Some of the
+      patches are necessary with Alpha CPUs and with some older
+      kernels.  egcs 1.0.1 can also be used, but it may need patches,
+      described there, as well.<p>
 
       <strong>NOTE:</strong> Be careful when installing egcs on RedHat
       systems.  If you don't remove your old gcc and libg++ RPMs, it's
@@ -557,7 +561,9 @@ global.features</a> file.
       &lt;<a href="mailto:levine@cs.wustl.edu">levine@cs.wustl.edu</a>&gt; has
       ported ACE to VxWorks 5.2/5.3/5.3.1/5.4 with the GreenHills
       1.8.8/1.8.9 and g++ compilers that are distributed with
-      VxWorks/Tornado. It is not possible to use VxWorks 5.4
+      VxWorks/Tornado.  An anonymous contributor has also
+      provided <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/os-patches/vxworks-5.1.txt">notes for using
+      ACE with VxWorks 5.1.</a>. It is not possible to use VxWorks 5.4
       and earlier with ACE anymore because the compilers delivered with
       5.4 and earlier don't support the C++ features ACE needs.</p><p>
 
@@ -620,7 +626,7 @@ global.features</a> file.
 
   </p></li><li><b>MVS OpenEdition</b> <p>
 
-      All of ACE has been ported to OpenEdition by Chuck Gehr &lt;<a href="mailto:gehr@sweng.stortek.com">gehr@sweng.stortek.com</a>&gt;.
+      All of ACE has been ported to OpenEdition by Chuck Gehr &lt;<a href="mailto:gehr@sweng.stortek.com">gehr@sweng.stortek.com</a>&amp;gt.
       The ACE library, all the tests and most of the examples and apps
       build clean.  There are still some problems that need to be
       ironed out:</p><p>
@@ -649,7 +655,7 @@ global.features</a> file.
       ACE has been ported to <a href="http://www.qnx.com/products/os/neutrino.html">QNX Neutrino
       2.0</a>.  We cross-compile for Neutrino on a QNX4 host using g++
       2.8.1, using the <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/ace/config-qnx-neutrino.h">ace/config-qnx-neutrino.h</a>
-      and <a href="include/makeinclude/platform_qnx_neutrino.GNU">include/makeinclude/platform_qnx_neutrino.GNU</a>
+      and <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/include/makeinclude/platform_qnx_neutrino.GNU">include/makeinclude/platform_qnx_neutrino.GNU</a>
       configuration files.  Many of the ACE tests succeed, though some
       fail.  As the porting effort progresses, we hope to eliminate
       these failures.  If you know of fixes, please send them to
@@ -954,8 +960,7 @@ your applications. The traditional configuration method is still more
 reliable. Any help you can
 lend to improve the ACE build process using GNU Autoconf would be very much
 appreciated. Please send any fixes to the
-<a href="mailto:ace-users@cs.wustl.edu">ACE users</a> mailing list
-using the standard <a href="PROBLEM-REPORT-FORM">problem-report-form</a>.</p>
+<a href="mailto:ace-users@cs.wustl.edu">ACE users</a> mailing list.</p>
 <p>
 The ACE only kit has been bootstrapped so you do not need to install
 the GNU Autotools (autoconf, automake, libtool) unless you want to
@@ -968,7 +973,7 @@ configure and build ACE, do:
        <pre>       mkdir build
        cd build
        </pre>
-      Note that you do not run the <code>create_ace_build.pl</code> utility
+      Note that you do not run the <code>create_ace_build</code> utility
       mentioned in the <a href="#cloning">Cloning the Source Tree</a>
       section. The configure script takes care of creating all files
       and links that are needed.</li>
@@ -1132,13 +1137,13 @@ include $(ACE_ROOT)/include/makeinclude/platform_sunos5_sunc++.GNU
       library, tests, the examples, and the sample applications.
       Building the entire ACE release can take a long time and consume
       lots of disk space, however.  Therefore, you might consider
-      cd'ing into the <a href="ace">$ACE_ROOT/ace/</a> directory and
+      cd'ing into the <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/ace">$ACE_ROOT/ace/</a> directory and
       running <code>make</code> there to build just the ACE library.
       As a sanity check, you might also want to build and run the
-      automated <a href="tests/README">"one-button" tests</a> in <a href="tests/">$ACE_ROOT/tests/</a>.  Finally, if you're also
+      automated <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/tests/README">"one-button" tests</a> in <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/tests/">$ACE_ROOT/tests/</a>.  Finally, if you're also
       planning on building <a href="http://www.cs.wustl.edu/%7Eschmidt/TAO.html">TAO</a>, you
       should build the <a href="http://www.cs.wustl.edu/%7Eschmidt/PDF/gperf.pdf">gperf</a>
-      perfect hash function generator application in <a href="apps/gperf">$ACE_ROOT/apps/gperf/</a>.</p><p>
+      perfect hash function generator application in <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/apps/gperf">$ACE_ROOT/apps/gperf/</a>.</p><p>
 
   </p></li><li>If you need to regenerate the Svc_Conf_y.cpp file, you'll need to
       get <a href="http://ftp.gnu.org/pub/gnu/bison/">GNU Bison</a>.
@@ -1309,8 +1314,8 @@ Microsoft Visual C++</a></h4>
   files for static builds. Workspaces for static and DLL builds will be
   available through the stock release at DOC group's website. The
   workspaces for MFC are not available and have to be generated using
-  MPC. Please see <a href="MPC/README">MPC's README</a> for
-  details.<br><br>
+  MPC. Please see <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/MPC/README">MPC's README</a> for
+  details.<br>
   </li><li>Now load the workspace file for ACE (ACE_ROOT/ACE.dsw).<br>
       <br>
   </li><li>Make sure you are building the configuration (i.e, Debug/Release)
@@ -1383,7 +1388,7 @@ Microsoft Visual C++</a></h4>
 </li></ol>
 
 <p>More information for ACE/TAO on MSVC can be found
-<a href="docs/msvc_notes.txt">here</a>.  The doxygen version of this
+<a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/docs/msvc_notes.txt">here</a>.  The doxygen version of this
 document is available under Related Topics in the ACE Library.</p>
 
 <b>ACE TESTS</b><p>
@@ -1620,7 +1625,7 @@ For our build we require the following packages besides the packages the
 setup selects by default:
 <a name="cygwinpacks">
 </a></p><blockquote>
-<a name="cygwinpacks"><b><tt>gcc (version 3.3.3), cygipc, make, perl, binutils</tt></b>.
+<a name="cygwinpacks"><b><tt>gcc (version 3.3.3), cygipc, make, perl</tt></b>.
 </a></blockquote>
 
 <ol>
@@ -1758,7 +1763,7 @@ for these notes):</p><p>
       downloaded and loaded into the VxWorks target system.<p>
   </p></li><li>C++ object modules must be post-processed by a VxWorks
       utility called "munch."  ACE includes a perl script called
-      <a href="bin/ace_ld">$ACE_ROOT/bin/ace_ld</a>,
+      <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/bin/ace_ld">$ACE_ROOT/bin/ace_ld</a>,
       which is called from the Makefiles, replacing
       the traditional <code>ld</code> step.  You must have perl installed
       to use <code>ace_ld</code>.  If perl is not on your path, you'll
@@ -2300,7 +2305,7 @@ Here's what you need to do:<p>
 cd ACE_wrappers
 
 # create the host (e.g. Linux in this case) build tree
-bin/create_ace_build.pl Linux_g++
+./bin/create_ace_build Linux_g++
 cd build/Linux_g++/ace
 ln -s ../../../ace/config-linux.h config.h
 cd ../include/makeinclude
@@ -2308,7 +2313,7 @@ ln -s ../../../../include/makeinclude/platform_linux.GNU platform_macros.GNU
 cd ../../../..
 
 # create the target build tree
-bin/create_ace_build.pl rtems
+./bin/create_ace_build rtems
 cd build/rtems/TAO
 /bin/rm -r TAO_IDL
 ln -s ../../Linux_g++/TAO/TAO_IDL .
@@ -2588,8 +2593,8 @@ ACE_Object_Manager</a></h4> The ACE_Object_Manager can be instantiated
 as a static object, can be instantiated on the stack of the main
 program thread, or can be explicitly instantiated and destroyed by the
 application with <code>ACE::init ()</code> and <code>ACE::fini
-()</code>.  The comments in the header file, 
-<a href="ace/Object_Manager.h"><code>ace/Object_Manager.h</code></a>, as well as Section 1.6.3 in
+()</code>.  The comments in the <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/ace/Object_Manager.h">header
+file, <code>ace/Object_Manager.h</code></a>, as well as Section 1.6.3 in
 <a href="http://www.riverace.com/docs">The ACE Programmer's Guide</a>
 provide more detail.<p>
 
@@ -2598,8 +2603,8 @@ Special requirements are imposed on applications if the
 ACE_Object_Manager is instantiated, by ACE, on the stack of the main
 thread.  This behavior is selected by defining
 <code>ACE_HAS_NONSTATIC_OBJECT_MANAGER</code> in
-<code>ace/config.h</code>.  Again, see the ACE Object_Manager header file,
-<a href="ace/Object_Manager.h"><code>ace/Object_Manager.h</code></a> for more information.  One of
+<code>ace/config.h</code>.  Again, see the ACE Object_Manager <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/ace/Object_Manager.h">header file,
+<code>ace/Object_Manager.h</code></a> for more information.  One of
 these requirements is discussed here, because it is so important.
 Please note that <code>ACE_HAS_NONSTATIC_OBJECT_MANAGER</code> is
 defined in the distributed ACE <code>config.h</code> headers for
@@ -2634,7 +2639,7 @@ entry point something other than <code>main</code>, you'll need to
 construct and destroy the ACE_Object_Manager.  The best way to do that
 is to call <code>ACE::init ()</code> and <code>ACE::fini ()</code>.
 Or, see the <code>#define</code> of <code>main (int, char *[])</code>
-in <a href="ace/OS_main.h"><code>ace/OS_main.h</code></a> to see how ACE does
+in <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/ace/OS.h"><code>ace/OS.h</code></a> to see how ACE does
 that for entry points named <code>main</code>.
 
 </p><p></p><hr align="left" width="50%"><p>
@@ -2642,7 +2647,7 @@ that for entry points named <code>main</code>.
 
 On UNIX platforms, we typically like to support multiple platform
 builds using the same ACE source tree.  This idiom is supported by ACE
-using the $ACE_ROOT/bin/create_ace_build.pl script or
+using the $ACE_ROOT/bin/create_ace_build script or
 $ACE_ROOT/bin/clone.cpp program.
 
 To use build and use the clone program, first make sure there's a file
@@ -2653,7 +2658,7 @@ file that includes the desired platform/compiler specific
 configuration header.  Then perform the following steps:<p>
 
 </p><pre>% cd $ACE_ROOT/bin
-% make -f GNUmakefile.clone
+% make
 % mv clone ~/bin
 % rehash
 </pre><p>
@@ -2695,7 +2700,7 @@ files or directories) in all subdirectories before starting the build
 on your cloned tree.</p><p>
 
 Alternatively, the perl script
-<code>ACE_wrappers/bin/create_ace_build.pl</code> can be used to create
+<code>ACE_wrappers/bin/create_ace_build</code> can be used to create
 build trees.  It creates them below <code>ACE_wrappers/build</code>.
 It filters out all but the necessary files, so the warning above does
 not apply.  See the comments at the top of the script itself for usage
@@ -2840,26 +2845,26 @@ show_uninit        Lists all uninitialized in object files built for
 
 </p><hr><p>
 </p><h3><a name="power">Building from anonymous CVS</a></h3>
-If users are building from our <a href="http://cvs.doc.wustl.edu/anoncvs.html">anon cvs</a> the
+If users are building from our <a href="http://cvs.doc.wustl.edu/anoncvs.html"> anon cvs </a> the
 GNUmakefiles, and project files for building on various platforms will
 not be available. Users from anon cvs are expected to generate them
-using <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/MPC/README">MPC</a> before building ACE, TAO or
+using <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/MPC/README">MPC </a> before building ACE, TAO or
 CIAO. We point out some suggestions below to get bootstrapped
 quickly.
 
 <ul>
-  <li> Please see <a href="#MPC"> instructions</a> above to  download
+  <li> Please see <a href="#MPC"> instructions </a> above to  download
   MPC from anon cvs repository <p>
   </p></li><li>Please make sure that you have <a href="http://www.perl.org/">
   perl</a> installed, preferably perl
   5.8 or higher. Users on Win32 based platforms are recommended to use
   <a href="http://www.activestate.com/Products/ActivePerl/"> Active
-  State Perl</a>. We use active state perl without problems. We have
+  State Perl </a>. We use active state perl without problems. We have
   ran into problems trying to use the cygwin version of perl on Win32
   based platforms. <p>
   </p></li><li>If you just want to build ACE and associated tests, examples,
   and associated utility libraries, we recommend that you do <p>
-  <code> $ACE_ROOT/bin/mwc.pl ACE.mwc</code> </p><p>
+  <code> $ACE_ROOT/bin/mwc.pl ACE.mwc </code> </p><p>
 
   from <code> $ACE_ROOT </code> to generate GNUmakefiles. Please use
 
@@ -2869,8 +2874,7 @@ quickly.
   vc71</code> to generate VC71 project and solution files.
 
   </p></li><li>If you want to build TAO+CIAO and its associated libraries
-  please see <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/TAO/TAO-INSTALL.html">TAO-INSTALL</a><a> and 
-  </a><a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/TAO/CIAO/CIAO-INSTALL.html">CIAO-INSTALL</a> for details.
+  please see <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/TAO/TAO-INSTALL.html"> TAO-INSTALL </a><a> and </a><a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/TAO/CIAO/CIAO-INSTALL.html"> CIAO-INSTALL </a> for details.
 </li></ul>
 
 <hr><p>

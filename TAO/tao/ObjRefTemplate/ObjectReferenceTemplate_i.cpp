@@ -8,6 +8,10 @@ ACE_RCSID (ORT,
            ObjectReferenceTemplate_i,
            "$Id$")
 
+#if !defined (__ACE_INLINE__)
+# include "ObjectReferenceTemplate_i.inl"
+#endif /* ! __ACE_INLINE__ */
+
 namespace TAO
 {
   ObjectReferenceTemplate::ObjectReferenceTemplate (

@@ -221,7 +221,6 @@ Driver::push_consumer (void* /* consumer_cookie */,
 
   // ACE_DEBUG ((LM_DEBUG, "%d event(s)\n", events.length ()));
 
-#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
   for (u_int i = 0; i < events.length (); ++i)
     {
       const RtecEventComm::Event& e = events[i];
@@ -276,7 +275,6 @@ Driver::push_consumer (void* /* consumer_cookie */,
             }
         }
     }
-#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 }
 
 void

@@ -109,8 +109,8 @@ TAO_ORB_Core_Static_Resources::TAO_ORB_Core_Static_Resources (void)
     typecodefactory_adapter_name_ ("TypeCodeFactory_Adapter"),
     iorinterceptor_adapter_factory_name_ ("IORInterceptor_Adapter_Factory"),
     valuetype_adapter_name_ ("Valuetype_Adapter"),
-    poa_factory_name_ ("TAO_Object_Adapter_Factory"),
-    poa_factory_directive_ ("dynamic TAO_Object_Adapter_Factory Service_Object * TAO_PortableServer:_make_TAO_Object_Adapter_Factory()")
+    poa_factory_name_ ("TAO_POA"),
+    poa_factory_directive_ ("dynamic TAO_POA Service_Object * TAO_PortableServer:_make_TAO_Object_Adapter_Factory()")
 {
 }
 
@@ -118,6 +118,7 @@ TAO_ORB_Core_Static_Resources::TAO_ORB_Core_Static_Resources (void)
 
 TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
   : protocols_hooks_ (0),
+    protocols_hooks_checked_ (false),
     lock_ (),
     thread_lane_resources_manager_ (0),
     collocation_resolver_ (0),
@@ -249,6 +250,18 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
   CORBA::release (this->orb_);
 }
 
+#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
+
+CORBA::Policy_ptr
+TAO_ORB_Core::default_buffering_constraint (void) const
+{
+  return this->default_policies_->
+              get_cached_policy (TAO_CACHED_POLICY_BUFFERING_CONSTRAINT);
+}
+
+#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
+
+
 int
 TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
 {
@@ -340,6 +353,34 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
           // @@ this should be renamed.  See above comment. fredk
           dotted_decimal_addresses =
             ACE_OS::atoi (current_arg);
+
+          arg_shifter.consume_arg ();
+        }
+      else if ((current_arg = arg_shifter.get_the_parameter
+                (ACE_TEXT("-ORBEndpoint"))))
+        {
+          // Each "endpoint" is of the form:
+          //
+          //   protocol://V.v@addr1,addr2,...,addrN
+          //
+          // or:
+          //
+          //   protocol://addr1,addr2,...,addrN
+          //
+          // where "V.v" is an optional protocol version for each
+          // addr.  All endpoint strings should be of the above
+          // form(s).
+          //
+          // Multiple sets of endpoint may be seperated by a semi-colon `;'.
+          // For example:
+          //
+          //   corbaloc:space:2001,1.2@odyssey:2010;uiop://foo,bar
+          //
+          // All endpoint strings should be of the above form(s).
+
+          this->set_endpoint_helper (ACE_TEXT_ALWAYS_CHAR(current_arg)
+                                     ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK_RETURN (-1);
 
           arg_shifter.consume_arg ();
         }
@@ -516,28 +557,59 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
           arg_shifter.consume_arg ();
         }
       else if ((current_arg = arg_shifter.get_the_parameter
-                (ACE_TEXT("-ORBPreferredInterfaces"))))
+                (ACE_TEXT("-ORBPreconnect"))))
         {
-          if (this->orb_params ()->preferred_interfaces (
-                current_arg) == false)
-            ACE_THROW_RETURN (CORBA::INTERNAL (
+#if 0
+          /*
+           *
+           *  TODO: Needs to go. Leaving it around for things to
+           *  settle down.
+           */
+          // Get a string which describes the connections we want to
+          // cache up-front, thus reducing the latency of the first call.
+          //
+          // For example,  specify -ORBpreconnect once for each
+          // protocol:
+          //
+          //   -ORBpreconnect iiop://tango:10015,watusi:10016
+          //   -ORBpreconnect busX_iop://board1:0x07450000,board2,0x08450000
+          //
+          // Or chain all possible endpoint designations together:
+          //
+          //   -ORBpreconnect iiop://tango:10015,watusi:10016/;
+          //              busX_iop://board1:0x07450000,board2,0x08450000/
+          //
+          // The old style command line only works for IIOP:
+          //    -ORBpreconnect tango:10015,tango:10015,watusi:10016
+
+          ACE_CString preconnections (ACE_TEXT_ALWAYS_CHAR(current_arg));
+
+
+          if (this->orb_params ()->preconnects (preconnections) != 0)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("(%P|%t)\n")
+                          ACE_TEXT ("Invalid preconnect(s)")
+                          ACE_TEXT ("specified:\n%s\n"),
+                          preconnections.c_str ()));
+              ACE_THROW_RETURN (CORBA::BAD_PARAM (
                                   CORBA::SystemException::_tao_minor_code (
                                     TAO_ORB_CORE_INIT_LOCATION_CODE,
-                                    0),
+                                    EINVAL),
                                   CORBA::COMPLETED_NO),
                                 -1);
+            }
+#endif /*if 0*/
 
-          arg_shifter.consume_arg ();
-        }
-      else if ((current_arg = arg_shifter.get_the_parameter
-                (ACE_TEXT("-ORBEnforcePreferredInterfaces"))))
-        {
-          if (ACE_OS::strcasecmp (current_arg,
-                                  ACE_TEXT("YES")) == 0)
-            this->orb_params ()->enforce_pref_interfaces (true);
-          else if (ACE_OS::strcasecmp (current_arg,
-                                       ACE_TEXT("NO")) == 0)
-            this->orb_params ()->enforce_pref_interfaces (false);
+          // validate_connection() supports the same functionality as
+          // the -ORBPreconnect option, and more.  Multiple
+          // preconnections are also provided by validate_connection()
+          // via "banded connections."
+          ACE_ERROR ((LM_WARNING,
+                      ACE_TEXT ("(%P|%t) -ORBPreconnect is ")
+                      ACE_TEXT ("deprecated.\n")
+                      ACE_TEXT ("(%P|%t) Use validate_connection()")
+                      ACE_TEXT ("at runtime, instead.\n")));
 
           arg_shifter.consume_arg ();
         }
@@ -726,35 +798,6 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
           arg_shifter.consume_arg ();
         }
       else if ((current_arg = arg_shifter.get_the_parameter
-                (ACE_TEXT("-ORBEndpoint"))))
-        {
-          // Each "endpoint" is of the form:
-          //
-          //   protocol://V.v@addr1,addr2,...,addrN
-          //
-          // or:
-          //
-          //   protocol://addr1,addr2,...,addrN
-          //
-          // where "V.v" is an optional protocol version for each
-          // addr.  All endpoint strings should be of the above
-          // form(s).
-          //
-          // Multiple sets of endpoint may be seperated by a semi-colon `;'.
-          // For example:
-          //
-          //   corbaloc:space:2001,1.2@odyssey:2010;uiop://foo,bar
-          //
-          // All endpoint strings should be of the above form(s).
-
-          this->set_endpoint_helper (ACE_TEXT_ALWAYS_CHAR (TAO_DEFAULT_LANE),
-                                     ACE_TEXT_ALWAYS_CHAR (current_arg)
-                                     ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
-
-          arg_shifter.consume_arg ();
-        }
-      else if ((current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBListenEndpoints"))))
         {
           // This option is similar to the -ORBEndPoint option. May be
@@ -762,37 +805,11 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
           // now, I (Priyanka) am leaving so that both options can be
           // used.
 
-          this->set_endpoint_helper (ACE_TEXT_ALWAYS_CHAR (TAO_DEFAULT_LANE),
-                                     ACE_TEXT_ALWAYS_CHAR (current_arg)
+          this->set_endpoint_helper (ACE_TEXT_ALWAYS_CHAR(current_arg)
                                      ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
 
           arg_shifter.consume_arg ();
-        }
-      else if ((current_arg = arg_shifter.get_the_parameter
-                (ACE_TEXT("-ORBLaneEndpoint"))) ||
-               (current_arg = arg_shifter.get_the_parameter
-                (ACE_TEXT("-ORBLaneListenEndpoints"))))
-        {
-          // This option is similar to the -ORBEndPoint option but
-          // specifies endpoints for each lane.
-
-          if (arg_shifter.is_option_next ())
-            return -1;
-
-          ACE_CString lane (ACE_TEXT_ALWAYS_CHAR (current_arg));
-          arg_shifter.consume_arg ();
-
-          if(arg_shifter.is_option_next ())
-            return -1;
-
-          ACE_CString endpoints (ACE_TEXT_ALWAYS_CHAR (arg_shifter.get_current ()));
-          arg_shifter.consume_arg ();
-
-          this->set_endpoint_helper (lane,
-                                     endpoints
-                                     ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
         }
       else if ((current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBNoProprietaryActivation"))))
@@ -865,34 +882,6 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
         // Any arguments that don't match are ignored so that the
         // caller can still use them.
         arg_shifter.ignore_arg ();
-    }
-
-  const char *env_endpoint =
-    ACE_OS::getenv ("TAO_ORBENDPOINT");
-
-  if (env_endpoint != 0)
-    {
-      int result =
-        this->orb_params ()->add_endpoints (TAO_DEFAULT_LANE,
-                                            env_endpoint);
-
-      if (result != 0)
-        {
-          if (TAO_debug_level > 0)
-            {
-              ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("ERROR: Environment variable TAO_ORBENDPOINT set to invalid value ")
-                          ACE_TEXT ("<%s>.\n"),
-                          env_endpoint));
-            }
-
-          ACE_THROW_RETURN (CORBA::BAD_PARAM (
-                              CORBA::SystemException::_tao_minor_code (
-                                TAO_ORB_CORE_INIT_LOCATION_CODE,
-                                EINVAL),
-                              CORBA::COMPLETED_NO),
-                            -1);
-        }
     }
 
 #if defined (SIGPIPE) && !defined (ACE_LACKS_UNIX_SIGNALS)
@@ -1089,24 +1078,30 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
   // Initialize the flushing strategy
   this->flushing_strategy_ = trf->create_flushing_strategy ();
 
-  // Look in the service repository for an instance of the Protocol Hooks.
-  this->protocols_hooks_ =
-    ACE_Dynamic_Service<TAO_Protocols_Hooks>::instance
-    (TAO_ORB_Core_Static_Resources::instance ()->protocols_hooks_name_.c_str());
+  // Now that we have a complete list of available protocols and their
+  // related factory objects, set default policies and initialize the
+  // registries!
 
-  // Must have valid protocol hooks.
-  if (this->protocols_hooks_ == 0)
+  // Set ORB-level policy defaults.
+  TAO_Protocols_Hooks *tph =
+    this->get_protocols_hooks (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  int status = 0;
+
+  if (tph)
+    {
+      status = tph->set_default_policies (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (-1);
+    }
+
+  if (status != 0)
     ACE_THROW_RETURN (CORBA::INITIALIZE (
                         CORBA::SystemException::_tao_minor_code (
                           TAO_ORB_CORE_INIT_LOCATION_CODE,
                           0),
                         CORBA::COMPLETED_NO),
                       -1);
-
-  // Initialize the protocols hooks instance.
-  this->protocols_hooks_->init_hooks (this
-                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   // Look for BiDirectional library here. If the user has svc.conf
   // file, load the library at this point.
@@ -1390,11 +1385,43 @@ TAO_ORB_Core::set_protocols_hooks (const char *protocols_hooks_name)
   // Is synchronization necessary?
   TAO_ORB_Core_Static_Resources::instance ()->protocols_hooks_name_ =
     protocols_hooks_name;
+
+  // Probably we need to reset the
+  // TAO_ORB_Core::protocols_hooks_checked_ flag. Not sure how to do
+  // it though.
 }
 
 TAO_Protocols_Hooks *
-TAO_ORB_Core::get_protocols_hooks (void)
+TAO_ORB_Core::get_protocols_hooks (ACE_ENV_SINGLE_ARG_DECL)
 {
+  // Check if there is a cached reference.
+  if (this->protocols_hooks_ == 0 &&
+      this->protocols_hooks_checked_ == false)
+    {
+      // We need synchronization here since this is called in the
+      // critical path where more than one thread could be active on
+      // different handlers.
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                        ace_mon,
+                        this->lock_,
+                        0);
+
+      // If not, look in the service repository for an instance.
+      this->protocols_hooks_ =
+        ACE_Dynamic_Service<TAO_Protocols_Hooks>::instance
+        (TAO_ORB_Core_Static_Resources::instance ()->protocols_hooks_name_.c_str());
+
+      if (this->protocols_hooks_)
+        {
+          // Initialize the protocols hooks instance.
+          this->protocols_hooks_->init_hooks (this
+                                              ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK_RETURN (0);
+        }
+
+      this->protocols_hooks_checked_ = true;
+    }
+
   return this->protocols_hooks_;
 }
 
@@ -1894,10 +1921,6 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
       // Otherwise just continue..
     }
 
-  if (this->has_shutdown () == 1 &&
-      this->server_factory_->activate_server_connections ())
-      this->tm_.wait ();
-
   if (TAO_debug_level > 2)
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -2200,17 +2223,17 @@ TAO_ORB_Core::resolve_ior_table_i (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 int
-TAO_ORB_Core::set_endpoint_helper (const ACE_CString &lane,
-                                   const ACE_CString &endpoints
+TAO_ORB_Core::set_endpoint_helper (const char *current_arg
                                    ACE_ENV_ARG_DECL)
 {
-  if (this->orb_params ()->add_endpoints (lane,
-                                          endpoints) != 0)
+  ACE_CString endpts (current_arg);
+
+  if (this->orb_params ()->endpoints (endpts) != 0)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t)\n")
                   ACE_TEXT ("Invalid endpoint(s) specified:\n%s\n"),
-                  ACE_TEXT_CHAR_TO_TCHAR(endpoints.c_str ())));
+                  ACE_TEXT_CHAR_TO_TCHAR(endpts.c_str ())));
       ACE_THROW_RETURN (CORBA::BAD_PARAM (
                            CORBA::SystemException::_tao_minor_code (
                               TAO_ORB_CORE_INIT_LOCATION_CODE,
@@ -2553,6 +2576,39 @@ TAO_ORB_Core::set_sync_scope_hook (Sync_Scope_Hook hook)
   TAO_ORB_Core_Static_Resources::instance ()-> sync_scope_hook_ = hook;
 }
 
+#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
+
+CORBA::Policy_ptr
+TAO_ORB_Core::stubless_sync_scope (void)
+{
+  CORBA::Policy_var result;
+
+  // No need to lock, the object is in TSS storage....
+  TAO_Policy_Current &policy_current =
+    this->policy_current ();
+  result = policy_current.get_cached_policy (TAO_CACHED_POLICY_SYNC_SCOPE);
+
+  // @@ Must lock, but is is harder to implement than just modifying
+  //    this call: the ORB does take a lock to modify the policy
+  //    manager
+  if (CORBA::is_nil (result.in ()))
+    {
+      TAO_Policy_Manager *policy_manager =
+        this->policy_manager ();
+      if (policy_manager != 0)
+        result = policy_manager->get_cached_policy (
+                   TAO_CACHED_POLICY_SYNC_SCOPE);
+    }
+
+  if (CORBA::is_nil (result.in ()))
+    result = this->default_policies_->get_cached_policy (
+               TAO_CACHED_POLICY_SYNC_SCOPE);
+
+  return result._retn ();
+}
+
+#endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
+
 void
 TAO_ORB_Core::call_timeout_hook (TAO_Stub *stub,
                                  bool &has_timeout,
@@ -2578,6 +2634,43 @@ TAO_ORB_Core::set_timeout_hook (Timeout_Hook hook)
   return;
 }
 
+CORBA::Policy_ptr
+TAO_ORB_Core::stubless_relative_roundtrip_timeout (void)
+{
+  CORBA::Policy_var result;
+
+#if (TAO_HAS_CORBA_MESSAGING == 1 \
+     && TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
+
+  // No need to lock, the object is in TSS storage....
+  TAO_Policy_Current &policy_current =
+    this->policy_current ();
+  result = policy_current.get_cached_policy (
+             TAO_CACHED_POLICY_RELATIVE_ROUNDTRIP_TIMEOUT);
+
+  // @@ Must lock, but is is harder to implement than just modifying
+  //    this call: the ORB does take a lock to modify the policy
+  //    manager
+  if (CORBA::is_nil (result.in ()))
+    {
+      TAO_Policy_Manager *policy_manager =
+        this->policy_manager ();
+      if (policy_manager != 0)
+        result = policy_manager->get_cached_policy (
+          TAO_CACHED_POLICY_RELATIVE_ROUNDTRIP_TIMEOUT);
+    }
+
+  if (CORBA::is_nil (result.in ()))
+    result = this->default_policies_->get_cached_policy (
+               TAO_CACHED_POLICY_RELATIVE_ROUNDTRIP_TIMEOUT);
+
+#endif /* TAO_HAS_CORBA_MESSAGING == 1
+          && TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
+
+  return result._retn ();
+}
+
+
 void
 TAO_ORB_Core::connection_timeout (TAO_Stub *stub,
                                   bool &has_timeout,
@@ -2602,103 +2695,60 @@ TAO_ORB_Core::connection_timeout_hook (Timeout_Hook hook)
   TAO_ORB_Core_Static_Resources::instance ()->connection_timeout_hook_ = hook;
 }
 
+CORBA::Policy_ptr
+TAO_ORB_Core::stubless_connection_timeout (void)
+{
+  CORBA::Policy_var result;
+
+#if (TAO_HAS_CORBA_MESSAGING == 1 \
+     && TAO_HAS_CONNECTION_TIMEOUT_POLICY == 1)
+
+  // No need to lock, the object is in TSS storage....
+  TAO_Policy_Current &policy_current =
+    this->policy_current ();
+  result = policy_current.get_cached_policy (
+             TAO_CACHED_POLICY_CONNECTION_TIMEOUT);
+
+  // @@ Must lock, but is is harder to implement than just modifying
+  //    this call: the ORB does take a lock to modify the policy
+  //    manager
+  if (CORBA::is_nil (result.in ()))
+    {
+      TAO_Policy_Manager *policy_manager =
+        this->policy_manager ();
+      if (policy_manager != 0)
+        result = policy_manager->get_cached_policy (
+          TAO_CACHED_POLICY_CONNECTION_TIMEOUT);
+    }
+
+  if (CORBA::is_nil (result.in ()))
+    result = this->default_policies_->get_cached_policy (
+               TAO_CACHED_POLICY_CONNECTION_TIMEOUT);
+
+#endif /* TAO_HAS_CORBA_MESSAGING == 1
+          && TAO_HAS_CONNECTION_TIMEOUT_POLICY == 1 */
+
+  return result._retn ();
+}
+
+
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
 CORBA::Policy_ptr
-TAO_ORB_Core::get_policy (CORBA::PolicyType type
-                          ACE_ENV_ARG_DECL)
+TAO_ORB_Core::get_cached_policy (TAO_Cached_Policy_Type type)
 {
   CORBA::Policy_var result;
 
+  // @@ Must lock, but is is harder to implement than just modifying
+  //    this call: the ORB does take a lock to modify the policy
+  //    manager
   TAO_Policy_Manager *policy_manager =
     this->policy_manager ();
   if (policy_manager != 0)
-    {
-      result = policy_manager->get_policy (type
-                                           ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::Policy::_nil ());
-    }
+    result = policy_manager->get_cached_policy (type);
 
   if (CORBA::is_nil (result.in ()))
-    {
-      result =
-        this->get_default_policies ()->get_policy (type
-                                                   ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::Policy::_nil ());
-    }
-
-  return result._retn ();
-}
-
-CORBA::Policy_ptr
-TAO_ORB_Core::get_policy_including_current (CORBA::PolicyType type
-                                            ACE_ENV_ARG_DECL)
-{
-  TAO_Policy_Current &policy_current =
-    this->policy_current ();
-
-  CORBA::Policy_var result =
-    policy_current.get_policy (type
-                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
-
-  if (CORBA::is_nil (result.in ()))
-    {
-      result = this->get_policy (type
-                                 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::Policy::_nil ());
-    }
-
-  return result._retn ();
-}
-
-CORBA::Policy_ptr
-TAO_ORB_Core::get_cached_policy (TAO_Cached_Policy_Type type
-                                 ACE_ENV_ARG_DECL)
-{
-  CORBA::Policy_var result;
-
-  TAO_Policy_Manager *policy_manager =
-    this->policy_manager ();
-  if (policy_manager != 0)
-    {
-      result =
-        policy_manager->get_cached_policy (type
-                                           ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::Policy::_nil ());
-    }
-
-  if (CORBA::is_nil (result.in ()))
-    {
-      result =
-        this->get_default_policies ()->get_cached_policy (type
-                                                          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::Policy::_nil ());
-    }
-
-  return result._retn ();
-}
-
-CORBA::Policy_ptr
-TAO_ORB_Core::get_cached_policy_including_current (
-    TAO_Cached_Policy_Type type
-    ACE_ENV_ARG_DECL)
-{
-  TAO_Policy_Current &policy_current =
-    this->policy_current ();
-
-  CORBA::Policy_var result =
-    policy_current.get_cached_policy (type
-                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK (CORBA::Policy::_nil ());
-
-  if (CORBA::is_nil (result.in ()))
-    {
-      result =
-        this->get_cached_policy (type
-                                 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::Policy::_nil ());
-    }
+    result = this->get_default_policies ()->get_cached_policy (type);
 
   return result._retn ();
 }

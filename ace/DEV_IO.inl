@@ -23,10 +23,9 @@ ACE_DEV_IO::send_n (const void *buf, size_t n) const
 // this many bytes are received.
 
 ACE_INLINE ssize_t
-ACE_DEV_IO::recv_n (void *buf, 
-                    size_t n,
+ACE_DEV_IO::recv_n (void *buf, size_t n,
                     const ACE_Time_Value *timeout,
-                    size_t *bytes_transferred) const
+                    size_t *bt) const
 {
   ACE_TRACE ("ACE_DEV_IO::recv_n");
 #if defined (ACE_WIN32)
@@ -35,13 +34,14 @@ ACE_DEV_IO::recv_n (void *buf,
   return ACE::read_n (this->get_handle (),
                       buf,
                       n,
-                      bytes_transferred);
+                      bt);
 #else
+
   return ACE::recv_n (this->get_handle (),
                       buf,
                       n,
                       timeout,
-                      bytes_transferred);
+                      bt);
 #endif /*ACE_WIN32*/
 }
 

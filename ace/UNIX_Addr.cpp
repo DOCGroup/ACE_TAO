@@ -1,3 +1,4 @@
+// UNIX_Addr.cpp
 // $Id$
 
 #include "ace/UNIX_Addr.h"
@@ -91,9 +92,12 @@ ACE_UNIX_Addr::set (const char rendezvous_point[])
 			 0,
 			 sizeof this->unix_addr_);
   this->unix_addr_.sun_family = AF_UNIX;
-  (void) ACE_OS::strsncpy (this->unix_addr_.sun_path, 
-                           rendezvous_point,
-                           sizeof this->unix_addr_.sun_path);
+  size_t len = ACE_OS::strlen (rendezvous_point);
+  size_t maxlen = sizeof this->unix_addr_.sun_path;
+
+  (void) ACE_OS::memcpy (this->unix_addr_.sun_path,
+			 rendezvous_point,
+                         len >= maxlen ? maxlen - 1 : len);
 
   this->ACE_Addr::base_set (AF_UNIX,
 			    sizeof this->unix_addr_ -

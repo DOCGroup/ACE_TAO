@@ -34,9 +34,9 @@ namespace MyImpl
     timeout_Handler (EC_exec_i *cb);
     ~timeout_Handler ();
 
-    int open_h (void);
+    int open (void);
 
-    int close_h (void);
+    int close (void);
 
     int start (CORBA::Long hertz);
 

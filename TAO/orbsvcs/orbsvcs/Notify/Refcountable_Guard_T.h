@@ -31,29 +31,16 @@ class TAO_Notify_Refcountable_Guard_T
 {
 public:
   /// Constuctor
-  TAO_Notify_Refcountable_Guard_T (T* t = 0);
-
-  /// Copy constructor
-  TAO_Notify_Refcountable_Guard_T (const TAO_Notify_Refcountable_Guard_T<T> & rhs);
+  TAO_Notify_Refcountable_Guard_T (T* t);
 
   /// Destructor
   ~TAO_Notify_Refcountable_Guard_T ();
-
-  /// Redirection operator
-  T * get (void) const;
 
   /// Redirection operator
   T *operator-> (void) const;
 
   T &operator *() const;
 
-  TAO_Notify_Refcountable_Guard_T<T> & operator = (
-    const TAO_Notify_Refcountable_Guard_T<T> & rhs);
-
-private:
-  /// helper for exception safeness
-  /// @throws nothing
-  void swap (TAO_Notify_Refcountable_Guard_T & rhs);
 private:
   T* t_;
 };

@@ -20,7 +20,6 @@
 // ============================================================================
 
 #include "Char_IBM1047_ISO8859_Factory.h"
-#include "ace/Log_Msg.h"
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

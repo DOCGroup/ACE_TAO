@@ -1,6 +1,7 @@
 #include "SSLIOP_Connector.h"
 #include "SSLIOP_OwnCredentials.h"
 #include "SSLIOP_Profile.h"
+#include "SSLIOP_Util.h"
 #include "SSLIOP_X509.h"
 
 #include "orbsvcs/SecurityLevel2C.h"
@@ -56,7 +57,8 @@ TAO::SSLIOP::Connector::Connector (::Security::QOP qop)
   : TAO::IIOP_SSL_Connector (),
     qop_ (qop),
     connect_strategy_ (),
-    base_connector_ ()
+    base_connector_ (),
+    handler_state_ ()
 {
 }
 
@@ -74,6 +76,11 @@ TAO::SSLIOP::Connector::open (TAO_ORB_Core *orb_core)
   if (this->ACE_NESTED_CLASS (TAO, IIOP_SSL_Connector)::open (orb_core) == -1)
     return -1;
 
+  if (TAO::SSLIOP::Util::setup_handler_state (orb_core,
+                                              &(this->tcp_properties_),
+                                              this->handler_state_) != 0)
+      return -1;
+
   // Our connect creation strategy
   CONNECT_CREATION_STRATEGY *connect_creation_strategy = 0;
 
@@ -81,6 +88,7 @@ TAO::SSLIOP::Connector::open (TAO_ORB_Core *orb_core)
                   CONNECT_CREATION_STRATEGY
                       (orb_core->thr_mgr (),
                        orb_core,
+                       &(this->handler_state_),
                        0 /* Forcibly disable TAO's GIOPlite feature.
                             It introduces a security hole. */),
                   -1);
@@ -283,110 +291,6 @@ TAO::SSLIOP::Connector::make_profile (ACE_ENV_SINGLE_ARG_DECL)
 
   return profile;
 }
-
-
-TAO_Profile *
-TAO::SSLIOP::Connector::make_secure_profile (ACE_ENV_SINGLE_ARG_DECL)
-{
-  // The endpoint should be of the form:
-  //    N.n@host:port/object_key
-  // or:
-  //    host:port/object_key
-
-  TAO_Profile *profile = 0;
-  ACE_NEW_THROW_EX (profile,
-                    TAO_SSLIOP_Profile (this->orb_core (),
-                                          1), // SSL component
-                    CORBA::NO_MEMORY (
-                      CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
-                        ENOMEM),
-                      CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (0);
-
-  return profile;
-}
-
-
-
-TAO_Profile *
-TAO::SSLIOP::Connector::corbaloc_scan (const char *endpoint,
-                                       size_t &len
-                                       ACE_ENV_ARG_DECL)
-{
-   int ssl_only = 0;
-   if (this->check_prefix (endpoint) == 0)
-   {
-       ssl_only = 1;
-   }
-   else
-   {
-       if (this->TAO_IIOP_Connector::check_prefix (endpoint) != 0)
-         return 0;
-   }
-
-   // Determine the (first in a list of possibly > 1) endpoint address
-   const char *comma_pos = ACE_OS::strchr (endpoint,',');
-   const char *slash_pos = ACE_OS::strchr (endpoint,'/');
-   if (comma_pos == 0 && slash_pos == 0)
-   {
-       if (TAO_debug_level)
-       {
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT("(%P|%t) SSLIOP_Connector::corbaloc_scan warning: ")
-                        ACE_TEXT("supplied string contains no comma or slash: %s\n"),
-                        endpoint));
-       }
-       len = ACE_OS::strlen (endpoint);
-   }
-   else if (slash_pos != 0 || comma_pos > slash_pos)
-   {
-       // The endpoint address does not extend past the first '/' or ','
-       len = slash_pos - endpoint;
-   }
-   else
-   {
-       len = comma_pos - endpoint;
-   }
-
-   //Create the corresponding profile
-   TAO_Profile *ptmp = 0;
-   if (ssl_only)
-       ptmp = this->make_secure_profile (ACE_ENV_SINGLE_ARG_PARAMETER);
-   else
-       ptmp = this->make_profile (ACE_ENV_SINGLE_ARG_PARAMETER);
-
-   ACE_CHECK_RETURN (0);
-   return ptmp;
-}
-
-
-int
-TAO::SSLIOP::Connector::check_prefix (const char *endpoint)
-{
-  // Check for a valid string
-  if (!endpoint || !*endpoint) return -1;  // Failure
-
-  const char *protocol[] = { "ssliop", "sslioploc" };
-
-  size_t first_slot = ACE_OS::strchr (endpoint, ':') - endpoint;
-
-  size_t len0 = ACE_OS::strlen (protocol[0]);
-  size_t len1 = ACE_OS::strlen (protocol[1]);
-
-  // Check for the proper prefix in the IOR.  If the proper prefix
-  // isn't in the IOR then it is not an IOR we can use.
-  if (first_slot == len0 && ACE_OS::strncmp (endpoint, protocol[0], len0) == 0)
-    return 0;
-
-  if (first_slot == len1 && ACE_OS::strncmp (endpoint, protocol[1], len1) == 0)
-    return 0;
-
-  // Failure: not an SSLIOP IOR
-  // DO NOT throw an exception here.
-  return -1;
-}
-
 
 TAO_Transport*
 TAO::SSLIOP::Connector::iiop_connect (
@@ -821,7 +725,7 @@ TAO::SSLIOP::Connector::retrieve_credentials (TAO_Stub *stub,
       // Use the default certificate and private key, i.e. the one set
       // in the SSL_CTX that was used when creating the SSL data
       // structure.
-
+      
       /**
        * @todo Check if the CredentialsCurator contains a default set
        *       of SSLIOP OwnCredentials.

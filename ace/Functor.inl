@@ -43,6 +43,13 @@ ACE_Command_Base::ACE_Command_Base (void)
 {
 }
 
+// Virtaul destructor.
+
+ACE_INLINE
+ACE_Command_Base::~ACE_Command_Base (void)
+{
+}
+
 ////////////////////////////////////////////////////////////
 // STL-style Functor Classes and Template Specializations //
 ////////////////////////////////////////////////////////////

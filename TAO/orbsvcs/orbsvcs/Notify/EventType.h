@@ -21,7 +21,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/CosNotificationC.h"
-#include "Topology_Object.h"
 
 /**
  * @class TAO_Notify_EventType
@@ -32,7 +31,7 @@
  * It is used by the Event Manager as a key to find subscription lists.
  *
  */
-class TAO_Notify_Serv_Export TAO_Notify_EventType : public TAO_Notify::Topology_Savable
+class TAO_Notify_Serv_Export TAO_Notify_EventType
 {
 public:
   /// Constuctor
@@ -42,7 +41,7 @@ public:
   // Constuctor
 
   /// Destructor
-  virtual ~TAO_Notify_EventType ();
+  ~TAO_Notify_EventType ();
 
   /// hash value
   u_long hash (void) const;
@@ -70,13 +69,6 @@ public:
 
   /// Helper to print contents.
   void dump (void) const;
-
-  /// Initialize from an NVPList, return false on failure
-  bool init(const TAO_Notify::NVPList& attrs);
-
-  // TAO_Notify::Topology_Object
-
-  virtual void save_persistent (TAO_Notify::Topology_Saver& saver ACE_ENV_ARG_DECL);
 
 protected:
   /// Init this object.

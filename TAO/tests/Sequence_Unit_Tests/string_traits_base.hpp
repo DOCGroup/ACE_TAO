@@ -43,7 +43,9 @@ struct string_traits_base<char>
 
   inline static void release(char_type * s)
   {
-    CORBA::string_free(s);
+    // @@ Carlos, MSVC6 doesn't like to see a "return statement" in
+    // here, since its declared a void.
+    return CORBA::string_free(s);
   }
 };
 
@@ -56,13 +58,7 @@ struct string_traits_base<CORBA::WChar>
 
   inline static char_type * default_initializer()
   {
-#if defined(ACE_HAS_WCHAR) || defined(ACE_HAS_XPG4_MULTIBYTE_CHAR)
     return CORBA::wstring_dup(L"");
-#else
-#warning "platform not configured with native wchar_t support"
-    static CORBA::WChar empty[] = { 0 };
-    return CORBA::wstring_dup(empty);
-#endif /* 0 */
   }
 
   inline static char_type * duplicate(char_type const * s)
@@ -72,7 +68,9 @@ struct string_traits_base<CORBA::WChar>
 
   inline static void release(char_type * s)
   {
-    CORBA::wstring_free(s);
+    // @@ Carlos, MSVC6 doesn't like to see a "return statement" in
+    // here, since its declared a void.
+    return CORBA::wstring_free(s);
   }
 };
 

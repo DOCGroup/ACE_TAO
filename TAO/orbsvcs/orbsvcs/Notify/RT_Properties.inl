@@ -1,5 +1,6 @@
 // $Id$
 
+#include "RT_Properties.h"
 
 ACE_INLINE RTCORBA::RTORB_ptr
 TAO_Notify_RT_Properties::rt_orb (void)

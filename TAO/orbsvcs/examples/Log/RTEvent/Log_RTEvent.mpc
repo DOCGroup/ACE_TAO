@@ -2,14 +2,14 @@
 // $Id$
 
 project(*Consumer) : orbsvcsexe, rtevent, naming, rteventlogadmin {
-  exename = RTEvent_Consumer
+  exename = consumer
   source_files {
     RTEvent_Consumer.cpp
   }
 }
 
 project(*Supplier) : orbsvcsexe, rtevent, naming, rteventlogadmin {
-  exename = RTEvent_Supplier
+  exename = supplier
   source_files {
     RTEvent_Supplier.cpp
   }

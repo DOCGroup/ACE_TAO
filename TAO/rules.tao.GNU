@@ -17,12 +17,9 @@ endif
 
 ifndef TAO_IDL
   TAO_IDL = $(TAO_ROOT)/TAO_IDL/tao_idl
-  TAO_IDL_DEP = $(TAO_IDL)$(EXEEXT)
-else
-ifndef TAO_IDL_DEP
-  TAO_IDL_DEP = $(TAO_IDL)
 endif
-endif
+
+TAO_IDL_DEP = $(TAO_IDL)$(EXEEXT)
 
 ifeq (,$(findstring -L$(TAO_ROOT)/tao,$(LDFLAGS)))
   LDFLAGS += -L$(TAO_ROOT)/tao

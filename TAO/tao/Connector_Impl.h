@@ -42,9 +42,12 @@ class TAO_Connect_Creation_Strategy : public ACE_Creation_Strategy<SVC_HANDLER>
 {
 public:
 
-  /// Constructor. 
+  /// Constructor. <arg> parameter is used to pass any special
+  /// state/info to the service handler upon creation.  Currently used
+  /// by IIOP and UIOP to pass protocol configuration properties.
   TAO_Connect_Creation_Strategy (ACE_Thread_Manager * = 0,
                                  TAO_ORB_Core* orb_core = 0,
+                                 void *arg = 0,
                                  CORBA::Boolean flag = 0);
 
   /// Makes TAO_*_Client_Connection_Handlers
@@ -55,6 +58,9 @@ private:
 
   /// Pointer to the ORB_Core on which we are activated
   TAO_ORB_Core* orb_core_;
+
+  /// Some info/state to be passed to the service handler we create.
+  void *arg_;
 
   /// Are we using GIOP lite?
   CORBA::Boolean lite_flag_;

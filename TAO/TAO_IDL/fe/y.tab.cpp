@@ -6061,7 +6061,14 @@ tao_yyreduce:
                 {
                   if (!s->is_local () && tp->is_local ())
                     {
-                      idl_global->err ()->local_remote_mismatch (tp, s);
+                      ACE_DEBUG ((LM_DEBUG,
+                                  ACE_TEXT ("error in %s line %d\n"),
+                                  idl_global->filename ()->get_string (),
+                                  idl_global->lineno ()));
+                      ACE_DEBUG ((LM_DEBUG,
+                                  ACE_TEXT ("Cannot use a local type as an ")
+                                  ACE_TEXT ("argument of a remote ")
+                                  ACE_TEXT ("operation\n")));
                     }
                   else
                     {
@@ -6763,14 +6770,6 @@ tao_yyreduce:
               ud.impl = interface_type;
               ud.is_multiple = tao_yyvsp[-2].bval;
               c->uses ().enqueue_tail (ud);
-                  
-              if (ud.is_multiple == I_TRUE)
-                {
-                  // These datatypes must be created in the
-                  // front end so they can be looked up
-                  // when compiling the generated executor IDL.
-                  idl_global->create_uses_multiple_stuff (c, ud);
-                }
             }
         }
     break;

@@ -29,16 +29,18 @@ class Object1_impl : public POA_testSched::Object1,
                      public PortableServer::RefCountServantBase
 {
   public:
-    Object1_impl();
+    Object1_impl()
+      throw (CORBA::SystemException);
 
-    virtual ~Object1_impl();
+    virtual ~Object1_impl()
+      throw (CORBA::SystemException);
 
     virtual void method1(const char *activity,
                          CORBA::Long seconds,
                          char *&output
                          ACE_ENV_ARG_DECL_WITH_DEFAULTS
                          )
-      ACE_THROW_SPEC ((CORBA::SystemException, testSched::testSchedException));
+      throw (testSched::testSchedException);
 };
 
 #endif /* Object1_I_H  */

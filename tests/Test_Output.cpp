@@ -30,11 +30,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/ACE.h"
 
-#if defined (VXWORKS)
-# include "ace/OS_NS_unistd.h"
-# include "ace/OS_NS_fcntl.h"
-#endif /* VXWORKS */
-
 ACE_Test_Output *ACE_Test_Output::instance_ = 0;
 
 ACE_Test_Output::ACE_Test_Output (void)
@@ -48,8 +43,6 @@ ACE_Test_Output::ACE_Test_Output (void)
 ACE_Test_Output::~ACE_Test_Output (void)
 {
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY) && !defined (ACE_PSOS)
-  ACE_OSTREAM_TYPE *log_msg_stream =  ACE_LOG_MSG->msg_ostream ();
-
   ACE_LOG_MSG->msg_ostream (&cerr);
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY && ! ACE_PSOS */
 
@@ -57,24 +50,14 @@ ACE_Test_Output::~ACE_Test_Output (void)
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::STDERR);
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY) && !defined (ACE_HAS_PHARLAP)
-  if (this->output_file_ == log_msg_stream)
-    delete this->output_file_;
-  // else something else changed the stream and hence should
-  // have closed and deleted the output_file_ 
+  delete this->output_file_;
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 }
 
 OFSTREAM *
 ACE_Test_Output::output_file (void)
 {
-  // the output_file_ is given to ACE_LOG_MSG
-  // and something else might destroy and/or change the stream
-  // so return what ACE_LOG_MSG is using.
-#if defined (ACE_LACKS_IOSTREAM_TOTALLY)
-  return reinterpret_cast<OFSTREAM*>(ACE_LOG_MSG->msg_ostream ());
-#else
-  return dynamic_cast<OFSTREAM*>(ACE_LOG_MSG->msg_ostream ());
-#endif /* ACE_LACKS_IOSTREAM_TOTALLY */
+  return this->output_file_;
 }
 
 int
@@ -158,7 +141,7 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
   this->output_file_ = ACE_OS::fopen (temp, fmode);
 # endif /* ACE_LACKS_IOSTREAM_TOTALLY */
 
-  ACE_LOG_MSG->msg_ostream (this->output_file_);
+  ACE_LOG_MSG->msg_ostream (this->output_file ());
 #endif /* ACE_HAS_PHARLAP */
 
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR | ACE_Log_Msg::LOGGER );
@@ -171,16 +154,8 @@ void
 ACE_Test_Output::close (void)
 {
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
-  if (this->output_file_ == ACE_LOG_MSG->msg_ostream () ) 
-  {
-    this->output_file_->flush ();
-    this->output_file_->close ();
-    delete this->output_file_;
-    this->output_file_=0;
-    ACE_LOG_MSG->msg_ostream (this->output_file_);
-  }
-  // else something else changed the stream and hence should
-  // have closed and deleted the output_file_ 
+  this->output_file_->flush ();
+  this->output_file_->close ();
 #else
   ACE_OS::fflush (this->output_file_);
   ACE_OS::fclose (this->output_file_);
@@ -232,7 +207,7 @@ randomize (int array[], size_t size)
   size_t i;
 
   for (i = 0; i < size; i++)
-    array [i] = static_cast <int> (i);
+    array [i] = ACE_static_cast (int, i);
 
   // See with a fixed number so that we can produce "repeatable"
   // random numbers.

@@ -274,11 +274,9 @@ public:
     ACE_CDR::Long secs = * (ACE_CDR::Long *)mblk->rd_ptr ();
     mblk->rd_ptr (sizeof (ACE_CDR::Long));
     ACE_CDR::Long usecs = * (ACE_CDR::Long *)mblk->rd_ptr ();
-    ACE_TCHAR timestamp_t[26];
     char timestamp[26]; // Max size of ctime_r() string.
     time_t time_secs (secs);
-    ACE_OS::ctime_r (&time_secs, timestamp_t, sizeof timestamp_t);
-    ACE_OS::strcpy (timestamp, ACE_TEXT_ALWAYS_CHAR (timestamp_t));
+    ACE_OS::ctime_r (&time_secs, timestamp, sizeof timestamp);
     mblk->size (26); // Max size of ctime_r() string.
     mblk->reset ();
     timestamp[19] = '\0'; // NUL-terminate after the time.
@@ -339,13 +337,13 @@ public:
 
 LOGREC_MODULE (Logrec_Separator);
 
-int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+int main (int argc, char *argv[])
 {
   if (argc != 2)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "usage: %s logfile\n", argv[0]),
                       1);
-  ACE_TString logfile (argv[1]);
+  ACE_TString logfile (ACE_TEXT_CHAR_TO_TCHAR (argv[1]));
   ACE_Stream<ACE_SYNCH> stream;
 
   if (stream.push

@@ -20,9 +20,7 @@
 #include "interop_wcharC.h"
 #include "wchar_reference.h"
 
-#include "ace/streams.h"
-#include "ace/Get_Opt.h"
-#include "ace/Argv_Type_Converter.h"
+#include <ace/Get_Opt.h>
 
 const int WCHAR_TO_SERVER = 0x0001;
 const int WSTRING_TO_SERVER = 0x0002;
@@ -36,24 +34,22 @@ const int ANY_WCHAR_FROM_SERVER = 0x0100;
 const int ANY_WSTRING_TO_SERVER = 0x0200;
 const int ANY_WSTRING_FROM_SERVER = 0x0400;
 const int ANY_WSTRING_ECHO = 0x0800;
-const int WSTRUCTSEQ_FROM_SERVER = 0x1000;
-const int WSTRUCTSEQ_TO_SERVER = 0x2000;
-const int TBD_1 = 0x4000; // update ALL_TESTS if this is defined
-const int TBD_0 = 0x8000; // update ALL_TESTS if this is defined
-const int ALL_TESTS = 0x3FFF;
+const int TBD_3 = 0x1000;
+const int TBD_2 = 0x2000;
+const int TBD_1 = 0x4000;
+const int TBD_0 = 0x8000;
+const int ALL_TESTS = 0xFFFF;
 
-// The length of this array determines which tests are run for "all tests"
 const char * test_name[] =
   {
     "wchar_to_server", "wstring_to_server", "warray_to_server",
     "any(wchar)_to_server", "wstring_exception", "wchar_from_server",
     "wstring_from_server", "warray_from_server", "any(wchar)_from_server",
-    "any(wstring)_to_server", "any(wstring)_from_server", "any(wstring)_echo",
-    "wstructseq_from_server", "wstructseq_to_server"
+    "any(wstring)_to_server", "any(wstring)_from_server", "any(wstring)_echo"
   };
 
 const int LAST_TEST = sizeof (test_name) / sizeof (test_name[0]);
-const ACE_TCHAR *ior = ACE_TEXT("file://IOR");
+const char *ior = "file://IOR";
 int tests_to_run = 0;
 int verbose = 0;
 int kill_server = 0;
@@ -62,16 +58,6 @@ int data_set = 0;
 #if defined (ACE_HAS_WCHAR) || defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
 
 wchar_reference ref;
-
-void
-assign_wstruct (short key, interop::wstruct & ws)
-{
-    ws.st_char = ref.get_wchar(key);
-    ws.st_string = CORBA::wstring_dup(ref.get_wstring(key));
-    ref.assign_warray(key, ws.st_array);
-    ws.st_any <<= CORBA::wstring_dup(ref.get_wstring(key));
-}
-
 
 CORBA::Boolean
 run_one_test (interop::WChar_Passer_ptr server,
@@ -180,29 +166,6 @@ run_one_test (interop::WChar_Passer_ptr server,
           }
         return 0;
       }
-    case WSTRUCTSEQ_FROM_SERVER:
-      {
-        interop::wstructseq_var wsList =
-          server->wstructseq_from_server(data_set ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN(0);
-        CORBA::Boolean result = 1;
-
-        for (CORBA::ULong i = 0; i < wsList->length(); i++)
-          result &= ref.match_wstring (data_set,
-                                       wsList[i].st_string.in());
-
-        return result;
-      }
-    case WSTRUCTSEQ_TO_SERVER:
-      {
-        interop::wstructseq_var wsList = new interop::wstructseq;
-        wsList->length(5);
-        for (CORBA::ULong i = 0; i < wsList->length(); ++i)
-        {
-          assign_wstruct(data_set, (*wsList)[i]);
-        }
-        return server->wstructseq_to_server(wsList.in(), data_set ACE_ENV_ARG_PARAMETER);
-      }
     default:
       break;
     }
@@ -236,9 +199,9 @@ run_tests (interop::WChar_Passer_ptr server ACE_ENV_ARG_DECL)
 #endif // ACE_HAS_WCHAR || ACE_HAS_XPG4_MULTIBYTE_CHAR
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:t:vx"));
+  ACE_Get_Opt get_opts (argc, argv, "k:t:vx");
   int c;
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -248,7 +211,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         break;
       case 't':
         {
-          int tnum = ACE_OS::atoi(get_opts.opt_arg());
+          int tnum = atoi(get_opts.opt_arg());
           if (tnum >= 0 && tnum < LAST_TEST)
             tests_to_run |= (1 << tnum);
           else
@@ -286,59 +249,56 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN( int argc, ACE_TCHAR *argv[] )
+main( int argc, char *argv[] )
 {
 #if (!defined ACE_HAS_WCHAR) && (!defined ACE_HAS_XPG4_MULTIBYTE_CHAR)
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
-  ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("This test requires wchar support\n")),0);
+  ACE_ERROR_RETURN ((LM_ERROR,"This test requires wchar support\n"),0);
 #else
   ACE_TRY_NEW_ENV
-  {
-    ACE_Argv_Type_Converter command_line(argc, argv);
-    // Initialize orb
-    CORBA::ORB_var orb = CORBA::ORB_init( command_line.get_argc(), command_line.get_ASCII_argv() );
-    if (parse_args(argc, argv) == -1)
-      return 0;
-
-    // Destringify ior
-    CORBA::Object_var obj = orb->string_to_object( ACE_TEXT_ALWAYS_CHAR(ior) ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
-    if( CORBA::is_nil( obj.in() ) )
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "arg is not a valid ior sting"),
-                        -1);
-
-    // Narrow
-    interop::WChar_Passer_var server =
-      interop::WChar_Passer::_narrow( obj.in() ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
-
-    if( CORBA::is_nil( server.in() ))
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "arg is not a interop::WChar_Passer reference\n"),
-                        -1);
-
-    short result = run_tests (server.in() ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
-    CORBA::String_var server_orb =
-      server->orb_name(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
-    ACE_ERROR ((LM_ERROR,
-                "wchar_interop test (TAO client, %s server) %s \n",
-                server_orb.in(),
-                (result ? "passed" : "failed")));
-    if (kill_server)
     {
-      server->shutdown(ACE_ENV_SINGLE_ARG_PARAMETER);
+      // Initialize orb
+      CORBA::ORB_var orb = CORBA::ORB_init( argc, argv);
+      if (parse_args(argc, argv) == -1)
+        return 0;
+
+      // Destringify ior
+      CORBA::Object_var obj = orb->string_to_object( ior
+                                                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+      if( CORBA::is_nil( obj.in() ) )
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "arg is not a valid ior sting"),
+                          -1);
+
+      // Narrow
+      interop::WChar_Passer_var server =
+        interop::WChar_Passer::_narrow( obj.in() ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if( CORBA::is_nil( server.in() ))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "arg is not a interop::WChar_Passer reference\n"),
+                          -1);
+
+      short result = run_tests (server.in() ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      CORBA::String_var server_orb =
+        server->orb_name(ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      ACE_ERROR ((LM_ERROR,
+                  "wchar_interop test (TAO client, %s server) %s \n",
+                  server_orb.in(),
+                  (result ? "passed" : "failed")));
+      if (kill_server)
+        server->shutdown(ACE_ENV_SINGLE_ARG_PARAMETER);
     }
-  }
-  ACE_CATCH(CORBA::Exception, ex)
-  {
-    ACE_PRINT_EXCEPTION(ex, "Uncaught CORBA exception: ");
-    return 1;
-  }
+  ACE_CATCH(CORBA::Exception,ex)
+    {
+      ACE_PRINT_EXCEPTION(ex, "Uncaught CORBA exception: ");
+      return 1;
+    }
   ACE_ENDTRY;
   return 0;
 #endif

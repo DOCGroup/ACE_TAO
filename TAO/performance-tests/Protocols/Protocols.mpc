@@ -3,6 +3,8 @@
 
 project(*Receiver): taoserver {
 
+  requires += dummy_label
+
   exename = receiver
 
   Source_Files {
@@ -11,6 +13,8 @@ project(*Receiver): taoserver {
 }
 
 project(*Distributor): rt_server {
+
+  requires += dummy_label
 
   exename = distributor
 
@@ -21,8 +25,8 @@ project(*Distributor): rt_server {
 
 project(*Sender): rt_client {
 
-  includes += ../../tests/RTCORBA/Diffserv
-  
+  requires += dummy_label
+
   Source_Files {
     sender.cpp
     testC.cpp

@@ -270,7 +270,7 @@ be_decl::compute_flat_name  (const char *prefix,
       result_str += suffix_str;
     }
 
-  name = ACE_OS::strdup (result_str.rep ());
+  name = result_str.rep ();
 }
 
 void
@@ -914,8 +914,6 @@ be_decl::set_arg_seen_bit (be_type *bt)
               case AST_PredefinedType::PT_any:
                 ACE_SET_BITS (idl_global->decls_seen_info_,
                               idl_global->decls_seen_masks.var_size_arg_seen_);
-                ACE_SET_BITS (idl_global->decls_seen_info_,
-                              idl_global->decls_seen_masks.any_arg_seen_);
                 break;
               case AST_PredefinedType::PT_char:
               case AST_PredefinedType::PT_wchar:

@@ -27,7 +27,7 @@ typedef IPC_Client<PEER_HANDLER, ACE_LSOCK_CONNECTOR> IPC_CLIENT;
 // ACE_LSOCK Client.
 
 int
-ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+main (int argc, char *argv[])
 {
   // Perform Service_Config initializations
   ACE_Service_Config daemon (argv[0]);
@@ -36,8 +36,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   if (peer_connector.init (argc, argv) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("init")),
+                       "%p\n",
+                       "init"),
                       -1);
 
   return peer_connector.svc ();

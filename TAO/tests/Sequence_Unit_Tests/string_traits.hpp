@@ -39,7 +39,7 @@ struct string_traits_decorator
   }
 
   inline static void copy_range(
-      char_type ** begin, char_type ** end, char_type ** dst)
+      char_type ** begin, char_type ** end, char ** dst)
   {
     std::transform(begin, end, dst, &derived::duplicate);
   }
@@ -57,6 +57,18 @@ struct string_traits_decorator
       element = derived::default_initializer();
     }
     return element;
+  }
+
+  inline static void not_released_from_const(
+      char_type * & dst, char_type const * src)
+  {
+    dst = const_cast<char_type*>(src);
+  }
+
+  inline static void not_released_from_managed(
+      char_type * & dst, char_type const * src)
+  {
+    dst = const_cast<char_type*>(src);
   }
 };
 

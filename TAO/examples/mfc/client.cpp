@@ -11,8 +11,7 @@ main (int argc, char *argv[])
     {
       const char *orb_name = "";
 
-	  ACE_DEBUG ((LM_DEBUG,
-                  "Initializing the ORB!\n"));
+      cout << "Initializing the ORB!" << endl;
       CORBA::ORB_var the_orb = CORBA::ORB_init (argc,
                                                 argv,
                                                 orb_name
@@ -32,8 +31,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       // Retrieving the servants IOR from a file
-	  ACE_DEBUG ((LM_DEBUG,
-                  "Reading the IOR!\n"));
+      cout << "Reading the IOR!" << endl;
 
       const char *filename =
         "file://ior.txt";
@@ -42,18 +40,15 @@ main (int argc, char *argv[])
         the_orb->string_to_object (filename ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-	  ACE_DEBUG ((LM_DEBUG,
-                  "Narrowing the IOR!\n"));
+      cout << "Narrowing the IOR!" << endl;
 
       W32_Test_Interface_var mycall =
         W32_Test_Interface::_narrow (orb_obj.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-	  ACE_DEBUG ((LM_DEBUG,
-                  "Sending the Request!\n"));
+      cout << "Sending the Request!" << endl;
       char *response = mycall->getresponse (1);
-	  ACE_DEBUG ((LM_DEBUG,
-                  "The answer ...%s\n", response));
+      cout << "The answer ..." << response << endl;
 
       // Free up the string.
       CORBA::string_free (response);

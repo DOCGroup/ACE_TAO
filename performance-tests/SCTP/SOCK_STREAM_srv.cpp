@@ -24,7 +24,7 @@ extern "C" {
 };
 #else
 #ifndef IPPROTO_SCTP
-#define IPPROTO_SCTP 132 /* always the same value on every platform */
+#define IPPROTO_SCTP 132 /* always the same value on every platform */ 
 #endif
 #define SCTP_NODELAY -1
 #endif
@@ -58,13 +58,13 @@ static ACE_THR_FUNC_RETURN unmarshalledOctetServer (void *arg){
     // read the size of the buffer to follow
     if ((dataModeStream->recv_n(&msgBufSize, ACE_CDR::LONG_SIZE, 0, &bt)) == -1)
       ACE_ERROR_RETURN((LM_ERROR,
-                        ACE_TEXT ("%p\n"),
-                        ACE_TEXT ("recv_n")),
+                        "%p\n",
+                        "recv_n"),
                        0);
     msgBufSize = ACE_NTOHL(msgBufSize);
 
     // allocate the buffer for the message payload
-    ACE_CDR::Octet * msgBuf = 0;
+    ACE_CDR::Octet * msgBuf=NULL;
     ACE_NEW_RETURN(msgBuf,
                    ACE_CDR::Octet[msgBufSize],
                    0);
@@ -72,8 +72,8 @@ static ACE_THR_FUNC_RETURN unmarshalledOctetServer (void *arg){
     // read the buffer
     if ((dataModeStream->recv_n(msgBuf, msgBufSize, 0, &bt)) == -1)
       ACE_ERROR_RETURN((LM_ERROR,
-                        ACE_TEXT ("%p\n"),
-                        ACE_TEXT ("recv_n")),
+                        "%p\n",
+                        "recv_n"),
                        0);
 
     // clean up the allocated buffer
@@ -85,8 +85,8 @@ static ACE_THR_FUNC_RETURN unmarshalledOctetServer (void *arg){
     ACE_CDR::Short reply;
     if ((dataModeStream->send_n(&reply, ACE_CDR::SHORT_SIZE, 0, &bt)) == -1)
       ACE_ERROR_RETURN((LM_ERROR,
-                        ACE_TEXT ("%p\n"),
-                        ACE_TEXT ("send_n")),
+                        "%p\n",
+                        "send_n"),
                        0);
 
   } while (--numIterations);
@@ -95,7 +95,7 @@ static ACE_THR_FUNC_RETURN unmarshalledOctetServer (void *arg){
   dataModeStream->close();
   delete dataModeStream;
 
-  return 0;
+  return NULL;
 }
 
 // sets up the dataModeSocket Stream, reads the test header infomation
@@ -111,14 +111,14 @@ static void run_server (ACE_HANDLE handle)
   // Make sure we're not in non-blocking mode.
   if (dataModeStream->disable (ACE_NONBLOCK) == -1){
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("disable")));
+                "%p\n",
+                "disable"));
     return;
   }
   else if (dataModeStream->get_remote_addr (cli_addr) == -1){
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("get_remote_addr")));
+                "%p\n",
+                "get_remote_addr"));
     return;
   }
 
@@ -135,8 +135,8 @@ static void run_server (ACE_HANDLE handle)
     // default - sctp case
     if (-1 == dataModeStream->set_option(IPPROTO_SCTP, SCTP_NODELAY, &nagle, sizeof nagle)){
       ACE_ERROR((LM_ERROR,
-                 ACE_TEXT ("%p\n"),
-                 ACE_TEXT ("set_option")));
+                 "%p\n",
+                 "set_option"));
       return;
     }
   } else {
@@ -150,7 +150,7 @@ static void run_server (ACE_HANDLE handle)
   }
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%P|%t) client %C connected from %d\n"),
+              "(%P|%t) client %s connected from %d\n",
               cli_addr.get_host_name (),
               cli_addr.get_port_number ()));
 
@@ -167,8 +167,8 @@ static void run_server (ACE_HANDLE handle)
   // read the header
   if ((dataModeStream->recv_n(hdrBuf_a, hdrBufSize, 0, &bt)) == -1){
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("recv_n")));
+                "%p\n",
+                "recv_n"));
     return;
   }
 
@@ -188,14 +188,14 @@ static void run_server (ACE_HANDLE handle)
   // make sure the stream is good after the extractions
   if (!hdrCDR.good_bit()){
     ACE_ERROR((LM_ERROR,
-               ACE_TEXT ("%p\n"),
-               ACE_TEXT ("hdrCDR")));
+               "%p\n",
+               "hdrCDR"));
 
     return;
   }
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%P|%t) Test for %u iterations\n"),
+              "(%P|%t) Test for %u iterations\n",
               numIterations));
 
   // deallocate the header buffer
@@ -213,21 +213,21 @@ static void run_server (ACE_HANDLE handle)
                                               ACE_reinterpret_cast(void *,args),
                                               THR_DETACHED) == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) %p\n"),
-                ACE_TEXT ("spawn")));
+                "(%P|%t) %p\n",
+                "spawn"));
 #else
   (*unmarshalledOctetServer) (ACE_reinterpret_cast(void *, args));
 #endif /* ACE_HAS_THREADS */
 
 }
 
-int ACE_TMAIN (int argc, ACE_TCHAR **argv){
+int main(int argc, char **argv){
 
-  Options_Manager optsMgr(argc, argv, ACE_TEXT ("server-opts"));
+  Options_Manager optsMgr(argc, argv, "server-opts");
 
   // show usage is requested
   if (optsMgr._usage) {
-    optsMgr._show_usage(stderr, ACE_TEXT ("server-opts"));
+    optsMgr._show_usage(cerr, "server-opts");
     return 1;
   }
 
@@ -236,15 +236,15 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv){
 #ifndef ACE_HAS_SCTP
   if (optsMgr.test_transport_protocol == IPPROTO_SCTP)
     ACE_ERROR_RETURN((LM_ERROR,
-                      ACE_TEXT ("SCTP was NOT installed when this binary was compiled.\n")
-                      ACE_TEXT ("SOCK_STREAM_srv may still be run using TCP ")
-                      ACE_TEXT ("via the '-t tcp' option.\n")),
+                      "SCTP was NOT installed when this binary was compiled.\n"
+                      "SOCK_STREAM_srv may still be run using TCP "
+                      "via the '-t tcp' option.\n"),
                      1);
 #endif
 
   // check that valid options were specified
   if (optsMgr._error) {
-    ACE_OS::fprintf (stderr, "ERROR: %s\n", ACE_TEXT_ALWAYS_CHAR (optsMgr._error_message));
+    cerr << "ERROR: " << optsMgr._error_message << endl;
     return 1;
   }
 
@@ -259,7 +259,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv){
                            optsMgr.server_accept_addr);
 
   ACE_DEBUG((LM_DEBUG,
-             ACE_TEXT ("(%P|%t) Accepting connections on port %u on interface %C using %C\n"),
+             "(%P|%t) Accepting connections on port %u on interface %s using %s\n",
              serverAddr.get_port_number(),
              (optsMgr.server_accept_addr == INADDR_ANY) ? "INADDR_ANY" : serverAddr.get_host_addr(),
              (optsMgr.test_transport_protocol == IPPROTO_SCTP) ? "IPPROTO_SCTP" : "IPPROTO_TCP"));
@@ -273,8 +273,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv){
                            ACE_DEFAULT_BACKLOG,
                            optsMgr.test_transport_protocol) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("open")),
+                       "%p\n",
+                       "open"),
                       1);
 
   // this function checks that the port that was actually bound was
@@ -283,12 +283,12 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv){
   // used.
   else if (acceptor_socket.get_local_addr(serverAddr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("get_local_addr")),
+                       "%p\n",
+                       "get_local_addr"),
                       1);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%P|%t) starting server at port %d\n"),
+              "(%P|%t) starting server at port %d\n",
               serverAddr.get_port_number()));
 
   // this is the stream object that will associated with a completed
@@ -320,31 +320,31 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv){
     // check that select did not end with an error.
     if (result == -1)
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) %p\n"),
-                  ACE_TEXT ("select")));
+                  "(%P|%t) %p\n",
+                  "select"));
     // check to see if select timed out.
     else if (result == 0){
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) select timed out\n")));
+                  "(%P|%t) select timed out\n"));
 
     }
     else { // case where a file descriptor was actually set
       if (!(temp.is_set(acceptor_socket.get_handle()))){
         // CANNOT BE REACHED
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) %p\n"),
-                    ACE_TEXT ("select: NO ERROR BUT NO FD SET")));
+                    "(%P|%t) %p\n",
+                    "select: NO ERROR BUT NO FD SET"));
       } else {
         // call accept to set up the new stream.
         if (acceptor_socket.accept(new_stream) == -1) {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("%p\n"),
-                      ACE_TEXT ("accept")));
+                      "%p\n",
+                      "accept"));
           continue;
         }
         else{
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) spawning server\n")));
+                      "(%P|%t) spawning server\n"));
 
         }
         // Run the server.

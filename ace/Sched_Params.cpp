@@ -87,8 +87,7 @@ ACE_Sched_Params::priority_min (const Policy policy,
           return ACE_THR_PRI_OTHER_MIN;
         }
     }
-#elif defined(ACE_HAS_PTHREADS) && \
-      ( !defined(ACE_LACKS_SETSCHED) || defined (ACE_TANDEM_T1248_PTHREADS) )
+#elif defined (ACE_HAS_PTHREADS) && !defined(ACE_LACKS_SETSCHED)
 
   switch (scope)
     {
@@ -190,8 +189,7 @@ ACE_Sched_Params::priority_max (const Policy policy,
           return ACE_THR_PRI_OTHER_MAX;
         }
     }
-#elif defined(ACE_HAS_PTHREADS) && \
-      ( !defined(ACE_LACKS_SETSCHED) || defined (ACE_TANDEM_T1248_PTHREADS) )
+#elif defined(ACE_HAS_PTHREADS) && !defined(ACE_LACKS_SETSCHED)
 
   switch (scope)
     {
@@ -271,8 +269,7 @@ ACE_Sched_Params::next_priority (const Policy policy,
       default:
         return priority;  // unknown priority:  should never get here
     }
-#elif defined(ACE_HAS_THREADS) && \
-      ( !defined(ACE_LACKS_SETSCHED) || defined (ACE_TANDEM_T1248_PTHREADS) )
+#elif defined(ACE_HAS_THREADS) && !defined(ACE_LACKS_SETSCHED)
   // including STHREADS, and PTHREADS
   const int max = priority_max (policy, scope);
   return priority < max  ?  priority + 1  :  max;
@@ -315,8 +312,7 @@ ACE_Sched_Params::previous_priority (const Policy policy,
       default:
         return priority;  // unknown priority:  should never get here
     }
-#elif defined(ACE_HAS_THREADS) && \
-      ( !defined(ACE_LACKS_SETSCHED) || defined (ACE_TANDEM_T1248_PTHREADS) )
+#elif defined (ACE_HAS_THREADS) && !defined(ACE_LACKS_SETSCHED)
   // including STHREADS and PTHREADS
   const int min = priority_min (policy, scope);
 

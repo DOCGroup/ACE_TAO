@@ -8,37 +8,37 @@
 #include "ace/LSOCK_Connector.h"
 #include "ace/UNIX_Addr.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_unistd.h"
-#include "ace/OS_NS_fcntl.h"
 
 ACE_RCSID(client, local_pipe_client_test, "$Id$")
 
 #if defined (ACE_HAS_MSG) && !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 // Name of the program.
-static ACE_TCHAR *program_name;
+static char *program_name;
 
 // Name of rendezvous point.
-static const ACE_TCHAR *rendezvous = ACE_TEXT ("/tmp/foo_pipe");
+static const char *rendezvous = "/tmp/foo_pipe";
 
 // Name of file to send.
-static const ACE_TCHAR *file_name = ACE_TEXT ("local_data");
+static const char *file_name = "local_data";
 
 static void
 print_usage_and_die (void)
 {
   ACE_ERROR ((LM_ERROR,
-              ACE_TEXT ("usage: %s [-r rendezvous] [-f file]\n"),
+              "usage: %s [-r rendezvous] [-f file]\n",
 	      program_name));
   ACE_OS::exit (1);
 }
 
 void
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, char *argv[])
 {
   program_name = argv[0];
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("f:r:"));
+  ACE_Get_Opt get_opt (argc, argv, "f:r:");
 
   for (int c; (c = get_opt ()) != -1; )
     switch (c)
@@ -87,15 +87,15 @@ do_client_processing (ACE_LSOCK_Stream &sc)
                          buf,
                          n) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("write")),
+                           "%p\n",
+                           "write"),
                           -1);
       if ((n = ACE_OS::read (fd_read[0],
                              buf,
                              sizeof buf)) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("read")),
+                           "%p\n",
+                           "read"),
                           -1);
       if (ACE_OS::write (ACE_STDOUT,
                          buf,
@@ -122,20 +122,20 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (con.connect (sc,
                    ACE_UNIX_Addr (rendezvous)) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("connect")),
+                       "%p\n",
+                       "connect"),
                       -1);
 
   if (do_client_processing (sc) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("do_client_processing")),
+                       "%p\n",
+                       "do_client_processing"),
                       -1);
 
   if (sc.close () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("close")),
+                       "%p\n",
+                       "close"),
                       -1);
 
   return 0;
@@ -144,7 +144,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
-                     ACE_TEXT ("your platform must support sendmsg/recvmsg to run this test\n")),
+                     "your platform must support sendmsg/recvmsg to run this test\n"),
                     -1);
 }
 #endif /* ACE_HAS_MSG */

@@ -215,9 +215,7 @@ namespace
   };
   
   class RepoIdGenerator : public Traversal::Interface,
-                          public Traversal::EventType,
-                          public Traversal::Home,
-                          public Traversal::Component
+                          public Traversal::EventType
   {
     virtual void
     traverse (SemanticGraph::Interface& i)
@@ -229,18 +227,6 @@ namespace
     traverse (SemanticGraph::EventType& e)
     {
       compute_repo_id (e);
-    }
-    
-    virtual void
-    traverse (SemanticGraph::Home& h)
-    {
-      compute_repo_id (h);
-    }
-    
-    virtual void
-    traverse (SemanticGraph::Component& c)
-    {
-      compute_repo_id (c);
     }
   };
 }

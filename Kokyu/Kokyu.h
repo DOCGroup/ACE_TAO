@@ -100,9 +100,9 @@ namespace Kokyu
        *
        * @param config Configuration information for the dispatcher.
        *
-       * @return pointer to the dispatcher.
+       * @return Auto pointer to the dispatcher.
        */
-      static Dispatcher*
+      static Dispatcher_Auto_Ptr
       create_dispatcher (const Dispatcher_Attributes& attr);
     };
 } //end of namespace

@@ -1996,35 +1996,28 @@ UTL_Scope::add_to_referenced (AST_Decl *e,
   // Add the identifier arg, if non-null, to the identifier list.
   if (id)
     {
-      this->add_to_name_referenced (id);
-    }
-}
-
-void
-UTL_Scope::add_to_name_referenced (Identifier *id)
-{
-  // Make sure we have enough space.
-  if (this->pd_name_referenced_allocated == this->pd_name_referenced_used)
-    {
-      long name_referenced_allocated = this->pd_name_referenced_allocated;
-      pd_name_referenced_allocated += INCREMENT;
-
-      Identifier **name_tmp = 0;
-      ACE_NEW (name_tmp,
-               Identifier *[this->pd_name_referenced_allocated]);
-
-      for (long i = 0; i < name_referenced_allocated; i++)
+      if (this->pd_name_referenced_allocated == this->pd_name_referenced_used)
         {
-          name_tmp[i] = this->pd_name_referenced[i];
+          long name_referenced_allocated = this->pd_name_referenced_allocated;
+          pd_name_referenced_allocated += INCREMENT;
+
+          Identifier **name_tmp = 0;
+          ACE_NEW (name_tmp,
+                   Identifier *[this->pd_name_referenced_allocated]);
+
+          for (i = 0; i < name_referenced_allocated; i++)
+            {
+              name_tmp[i] = this->pd_name_referenced[i];
+            }
+
+          delete [] this->pd_name_referenced;
+
+          this->pd_name_referenced = name_tmp;
         }
 
-      delete [] this->pd_name_referenced;
-
-      this->pd_name_referenced = name_tmp;
+      // Insert new identifier.
+      this->pd_name_referenced[this->pd_name_referenced_used++] = id->copy ();
     }
-
-  // Insert new identifier.
-  this->pd_name_referenced[this->pd_name_referenced_used++] = id->copy ();
 }
 
 void

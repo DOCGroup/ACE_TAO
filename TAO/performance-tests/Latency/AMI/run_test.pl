@@ -29,8 +29,7 @@ if (PerlACE::waitforfile_timed ($iorfile, 15) == -1) {
     exit 1;
 }
 
-## Very slow machines need > 3 minutes to finish
-$client = $CL->SpawnWaitKill (210);
+$client = $CL->SpawnWaitKill (60);
 $server = $SV->WaitKill (10);
 
 unlink $iorfile;

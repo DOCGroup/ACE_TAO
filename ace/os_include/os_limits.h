@@ -130,6 +130,11 @@ extern "C"
 #   define _POSIX_TIMER_MAX 44
 # endif /* _POSIX_TIMER_MAX */
 
+// Some systems (VxWorks) don't define MAXSYMLINKS
+#if !defined (MAXSYMLINKS)
+# define MAXSYMLINKS 20
+#endif /* MAXSYMLINKS */
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

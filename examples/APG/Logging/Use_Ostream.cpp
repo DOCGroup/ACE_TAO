@@ -9,9 +9,10 @@ void foo (void);
 
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  ACE_TRACE ("main");
+  ACE_TRACE (ACE_TEXT ("main"));
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%IHi Mom\n")));
+
 
   /* Alternatively, you can use the set_flags() method to do the same
      thing after the singleton has been created:
@@ -32,7 +33,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 
 void foo (void)
 {
-  ACE_TRACE ("foo");
+  ACE_TRACE (ACE_TEXT ("foo"));
 
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("%IHowdy Pardner\n")));
 }

@@ -16,7 +16,6 @@
 #include "tao/RTCORBA/RT_ORB.h"
 
 #include "tao/ORB_Constants.h"
-#include "tao/ORB_Core.h"
 
 ACE_RCSID (tao, Policy_Tester, "$Id$")
 
@@ -177,8 +176,7 @@ Policy_Tester::create_objects (ACE_ENV_SINGLE_ARG_DECL)
     TAO_Protocol_Properties_Factory::create_orb_protocol_property (IOP::TAG_INTERNET_IOP);
 
   protocol_list[0].transport_protocol_properties =
-    TAO_Protocol_Properties_Factory::create_transport_protocol_property (IOP::TAG_INTERNET_IOP,
-                                                                         this->orb_->orb_core ());
+    TAO_Protocol_Properties_Factory::create_transport_protocol_property (IOP::TAG_INTERNET_IOP);
 
   poa_policy_list[2] =
     this->rt_orb_->create_client_protocol_policy (protocol_list);
