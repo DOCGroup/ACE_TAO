@@ -1,3 +1,12 @@
+Thu Aug 12 20:47:13 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/Cached_Accept_Conn_Test.cpp:
+	  Made the <debug> and <connection_accepted> variables global
+	  instead of static, because otherwise Sun/CC automatic template
+	  instantiation cannot find them at link time.  The variables are
+	  used in template code that is defined and used in the same file, 
+	  but Sun/CC does not seem to understand that.
+
 Thu Aug 12 17:14:35 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* ace/OS.h:
