@@ -10,22 +10,26 @@
 # The following targets arrange to build both unshared and shared libraries
 #----------------------------------------------------------------------------
 
+ifndef OBJEXT
+OBJEXT=o
+endif
+
 ifndef SOEXT
 SOEXT=so
 endif
 
 VSHLIB  = $(SHLIB:%.$(SOEXT)=%$(VAR).$(SOEXT))
-VOBJS   = $(LSRC:%.cpp=$(VDIR)%.o)
+VOBJS   = $(LSRC:%.cpp=$(VDIR)%.$(OBJEXT))
 
 ifdef TEMPINCDIR
-VSHOBJS1 = 
+VSHOBJS1 =
 else
 LSRC    += $(LSRC2)
 ifdef PRELIB
 ifdef PRELIB_USES_OBJ_ONLY
 VSHOBJS = $(LSRC:%.cpp=$(VSHDIR)%.o)
 else
-VSHOBJS	= $(LSRC:%.cpp=$(VSHDIR)%.$(SOEXT))
+VSHOBJS = $(LSRC:%.cpp=$(VSHDIR)%.$(SOEXT))
 endif
 VSHOBJS1 = $(VSHOBJS)
 else
@@ -34,7 +38,7 @@ VSHOBJS1 = $(LSRC:%.cpp=$(VSHDIR)%.o)
 endif
 endif
 
-# Comment out for now... 
+# Comment out for now...
 # $(DEFS:%=$(INSINC)/%) \
 
 ifdef shared_libs_only
@@ -113,7 +117,7 @@ ifdef TEMPINCDIR
 	 		done  \
 	 	done;  \
 	fi)
-	rm xxx 
+	rm xxx
 endif
 	-chmod a+r $@
 	-$(RANLIB) $@
