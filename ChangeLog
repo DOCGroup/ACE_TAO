@@ -1,3 +1,18 @@
+Tue Mar 16 10:48:48 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	  
+	* ace/Logging_Strategy.cpp:
+
+	  Use std::streamoff () to get the offset instead of casting.
+
+	* ace/Malloc_T.i:
+	* ace/Strategies_T.cpp:
+
+	  #included OS_NS_string.h.
+
+	  Thanks to Oliver Kellog for providing the patches. 
+
+
 Tue Mar 16 09:40:36 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/TemplateParser.pm:
