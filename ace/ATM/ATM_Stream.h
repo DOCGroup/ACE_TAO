@@ -15,8 +15,8 @@
 #define ACE_ATM_STREAM_H
 #include "ace/pre.h"
 
-#include "ace/ATM_Addr.h"
-#include "ace/ATM_Params.h"
+#include "ace/ATM/ATM_Addr.h"
+#include "ace/ATM/ATM_Params.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -25,10 +25,10 @@
 #if defined (ACE_HAS_ATM)
 
 #if defined (ACE_WIN32)
-#include "SOCK_Stream.h"
+#include "ace/Sockets/SOCK_Stream.h"
 typedef ACE_SOCK_Stream ATM_Stream;
 #else
-#include "TLI_Stream.h"
+#include "ace/IPC/TLI_Stream.h"
 typedef ACE_TLI_Stream ATM_Stream;
 #endif
 
@@ -88,7 +88,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/ATM_Stream.i"
+#include "ace/ATM/ATM_Stream.i"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_ATM */

@@ -10,7 +10,7 @@ LIB      = $(LIBOS).a
 SHLIB    = $(LIBOS).$(SOEXT)
 
 
-OS_FILES = \
+LIB_FILES = \
 	ATM_Acceptor\
 	ATM_Addr\
 	ATM_Connector\
@@ -27,7 +27,7 @@ include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 ####
 #### ACE_COMPONENTS support.
 ####
-FILES += $(OS_FILES)
+FILES += $(LIB_FILES)
 
 LSRC  = $(addsuffix .cpp,$(FILES))
 

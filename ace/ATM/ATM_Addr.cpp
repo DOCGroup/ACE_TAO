@@ -2,15 +2,15 @@
 
 // Defines the Internet domain address family address format.
 
-#include "ace/ATM_Addr.h"
-#include "ace/Log_Msg.h"
+#include "ace/ATM/ATM_Addr.h"
+#include "ace/Logging/Log_Msg.h"
 
 #if defined (ACE_HAS_FORE_ATM_WS2)
 #include "forews2.h"
 #endif /* ACE_HAS_FORE_ATM_WS2 */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/ATM_Addr.i"
+#include "ace/ATM/ATM_Addr.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, ATM_Addr, "$Id$")

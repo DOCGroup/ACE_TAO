@@ -23,12 +23,12 @@
 #if defined (ACE_HAS_ATM)
 
 #if defined (ACE_HAS_FORE_ATM_XTI)
-#include "ace/TLI.h"
+#include "ace/IPC/TLI.h"
 #define ATM_PROTOCOL_DEFAULT 0
 typedef struct t_info Param_Info;
 typedef struct netbuf Param_Udata;
 #elif defined (ACE_HAS_FORE_ATM_WS2)
-#include "ace/SOCK.h"
+#include "ace/Sockets/SOCK.h"
 #define ATM_PROTOCOL_DEFAULT ATMPROTO_AAL5
 #define ACE_XTI_ATM_DEVICE ""
 typedef int Param_Info;
@@ -176,7 +176,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/ATM_Params.i"
+#include "ace/ATM/ATM_Params.i"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_ATM */

@@ -1,34 +1,13 @@
 # $Id$
 
 #----------------------------------------------------------------------------
-#       Makefile for the libACE_ATM
+#       Makefile for the libACE_Demux
 #----------------------------------------------------------------------------
 
 MAKEFILE = Makefile
-LIBOS   = libACE_ATM
+LIBOS   = libACE_Demux
 LIB      = $(LIBOS).a
 SHLIB    = $(LIBOS).$(SOEXT)
-
-
-OS_FILES = \
-	Base_Thread_Adapter\
-	Basic_Types\
-	Date_Time\
-	gethrtime\
-	Handle_Ops\
-	Handle_Set\
-	Init_ACE\
-	OS\
-	OS_Dirent\
-	OS_Errno\
-	OS_Log_Msg_Attributes\
-	OS_Memory\
-	OS_QoS\
-	OS_String\
-	OS_Thread_Adapter\
-	OS_TLI\
-	Sched_Params\
-	Thread_Hook
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -39,7 +18,23 @@ include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 ####
 #### ACE_COMPONENTS support.
 ####
-FILES += $(OS_FILES)
+FILES += \
+	Event_Handler\
+	Event_Handler_T\
+	FlReactor\
+	POSIX_Proactor\
+	Priority_Reactor\
+	Proactor\
+	QtReactor\
+	Reactor\
+	Reactor_Notification_Strategy\
+	Select_Reactor_Base\
+	Select_Reactor\
+	Select_Reactor_T\
+	SUN_Proactor\
+	TkReactor\
+	WFMO_Reactor\
+	WIN32_Proactor
 
 LSRC  = $(addsuffix .cpp,$(FILES))
 
@@ -66,24 +61,3 @@ clean:
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
-
-ATM_Acceptor.cpp
-ATM_Acceptor.h
-ATM_Acceptor.i
-ATM_Addr.cpp
-ATM_Addr.h
-ATM_Addr.i
-ATM_Connector.cpp
-ATM_Connector.h
-ATM_Connector.i
-ATM_Params.cpp
-ATM_Params.h
-ATM_Params.i
-ATM_QoS.cpp
-ATM_QoS.h
-ATM_QoS.i
-ATM_Stream.cpp
-ATM_Stream.h
-ATM_Stream.i
-Makefile
-Makefile~

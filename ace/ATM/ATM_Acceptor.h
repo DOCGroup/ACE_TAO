@@ -15,10 +15,10 @@
 #define ACE_ATM_ACCEPTOR_H
 #include "ace/pre.h"
 
-#include "ace/Time_Value.h"
-#include "ace/ATM_Stream.h"
-#include "ace/ATM_Params.h"
-#include "ace/ATM_QoS.h"
+#include "ace/Timer/Time_Value.h"
+#include "ace/ATM/ATM_Stream.h"
+#include "ace/ATM/ATM_Params.h"
+#include "ace/ATM/ATM_QoS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -31,10 +31,10 @@
 #endif /* ACE_HAS_LINUX_ATM */
 
 #if defined (ACE_HAS_FORE_ATM_WS2) || defined (ACE_HAS_LINUX_ATM)
-#include "SOCK_Acceptor.h"
+#include "ace/Sockets/SOCK_Acceptor.h"
 typedef ACE_SOCK_Acceptor ATM_Acceptor;
 #elif defined (ACE_HAS_FORE_ATM_XTI)
-#include "TLI_Acceptor.h"
+#include "ace/IPC/TLI_Acceptor.h"
 typedef ACE_TLI_Acceptor ATM_Acceptor;
 #endif // ACE_HAS_FORE_ATM_WS2 || ACE_HAS_LINUX_ATM
 
@@ -101,7 +101,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/ATM_Acceptor.i"
+#include "ace/ATM/ATM_Acceptor.i"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_ATM */
