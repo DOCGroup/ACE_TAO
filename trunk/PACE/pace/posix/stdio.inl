@@ -13,6 +13,8 @@
  *
  * =========================================================================== */
 
+#include <stdarg.h>
+
 PACE_INLINE
 void
 pace_clearerr (FILE * stream)
@@ -119,6 +121,17 @@ pace_fputc (int c,
 {
   return fputc (c,
                 stream);
+}
+
+int
+pace_fprintf (FILE *fp, const char *format, ...)
+{
+  int result = 0;
+  va_list ap;
+  va_start (ap, format);
+  result = vfprintf (fp, format, ap);
+  va_end (ap);
+  return result;
 }
 
 PACE_INLINE
@@ -249,6 +262,17 @@ pace_perror (const char * s)
   return;
 }
 
+int
+pace_printf (const char* format, ...)
+{
+  int result = 0;
+  va_list ap;
+  va_start (ap, format);
+  result = vprintf (format, ap);
+  va_end (ap);
+  return result;
+}
+
 PACE_INLINE
 int
 pace_putc (int c,
@@ -327,6 +351,28 @@ pace_setbuf (FILE * stream, char * buf)
 {
   setbuf (stream, buf);
   return;
+}
+
+int
+pace_sprintf (char* s, const char* format, ...)
+{
+  int result = 0;
+  va_list ap;
+  va_start (ap, format);
+  result = vsprintf (s, format, ap);
+  va_end (ap);
+  return result;
+}
+
+int
+pace_snprintf (char *s, size_t  n, const char *format, ...)
+{
+  int result = 0;
+  va_list ap;
+  va_start (ap, format);
+  result = vsnprintf (s, n, format, ap);
+  va_end (ap);
+  return result;
 }
 
 PACE_INLINE
