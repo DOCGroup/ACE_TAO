@@ -93,8 +93,13 @@ TAO_ORBInitInfo::add_client_request_interceptor (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ORBInitInfo::DuplicateName))
 {
+# if TAO_HAS_INTERCEPTORS == 1
   this->orb_core_->add_interceptor (interceptor,
                                     ACE_TRY_ENV);
+#else
+  ACE_UNUSED_ARG (interceptor);
+  ACE_THROW (CORBA::NO_IMPLEMENT ());
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
 }
 
 void
@@ -104,8 +109,14 @@ TAO_ORBInitInfo::add_server_request_interceptor (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ORBInitInfo::DuplicateName))
 {
+# if TAO_HAS_INTERCEPTORS == 1
   this->orb_core_->add_interceptor (interceptor,
                                     ACE_TRY_ENV);
+
+#else
+  ACE_UNUSED_ARG (interceptor);
+  ACE_THROW (CORBA::NO_IMPLEMENT ());
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
 }
 
 void

@@ -1,3 +1,12 @@
+Mon Oct 23 15:59:53 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORBInitInfo.cpp
+	  (add_client_request_interceptor, add_server_request_interceptor):
+
+	  Only enable the request interceptor registration code if
+	  TAO_HAS_INTERCEPTORS is set to 1, otherwise throw a
+	  CORBA::NO_IMPLEMENT().
+
 Mon Oct 23 15:23:03 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/PortableInterceptorC.h:
