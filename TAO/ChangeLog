@@ -7,6 +7,7 @@ Wed Nov 24 08:07:21 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
           the stub header file.
           
         * TAO_IDL/be/be_visitor_root/root_sth.cpp:
+        * TAO_IDL/be/be_visitor_interface/tie_si.cpp:
         
           Removed generation of TAO_HAS_USING_KEYWORD guards - it is
           a legacy of the days when we supported platforms without
