@@ -1,3 +1,9 @@
+Wed Oct 21 21:19:53 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Service_Config.cpp (process_directives): Replaced a 
+	  return -1 with a result = -1 and a break to avoid a
+	  memory leak.  Thanks to David for pointing this out.
+
 Wed Oct 21 20:00:51 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* tests/Timer_Queue_Test.cpp : 
