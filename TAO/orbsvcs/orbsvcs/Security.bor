@@ -22,7 +22,9 @@ OBJFILES = \
 	$(OBJDIR)\SecurityLevel2S.obj \
 	$(OBJDIR)\Security_Current.obj \
 	$(OBJDIR)\Security_Current_Impl.obj \
-	$(OBJDIR)\Security_ORBInitializer.obj
+        $(OBJDIR)\Security_ORBInitializer.obj \
+        $(OBJDIR)\Security_PolicyFactory.obj \
+        $(OBJDIR)\QOPPolicy.obj
 
 RESOURCE = $(OBJDIR)\orbsvcs.res
 
