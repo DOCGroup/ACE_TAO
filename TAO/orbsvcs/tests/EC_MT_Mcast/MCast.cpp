@@ -29,23 +29,37 @@ void *
 run_orb_within_thread (void *)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
+
   while (! terminate_threads)
     {
-      CORBA::Boolean there_is_work =
-        orb->work_pending (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      if (there_is_work)
+      ACE_TRY
         {
-          // We use a TAO extension. The CORBA mechanism does not
-          // provide any decent way to control the duration of
-          // perform_work() or work_pending(), so just calling
-          // them results in a spin loop.
-          ACE_Time_Value tv (0, 50000);
-          orb->perform_work (tv ACE_ENV_ARG_PARAMETER);
+          CORBA::Boolean there_is_work =
+            orb->work_pending (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
+          if (there_is_work)
+            {
+              // We use a TAO extension. The CORBA mechanism does not
+              // provide any decent way to control the duration of
+              // perform_work() or work_pending(), so just calling
+              // them results in a spin loop.
+              ACE_Time_Value tv (0, 50000);
+              orb->perform_work (tv ACE_ENV_ARG_PARAMETER);
+              ACE_TRY_CHECK;
+            }
         }
+      ACE_CATCHANY
+        {
+          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                               "perform work");
+
+          return;
+        }
+      ACE_ENDTRY;
+      ACE_CHECK;
     }
-  return NULL;
+
+  return;
 }
 
 int parse_args (int argc, char *argv[]);

@@ -1,3 +1,8 @@
+Thu Oct 31 11:58:24 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/tests/EC_MT_Mcast/MCast.cpp: Fixed compile error in
+	  builds where exceptions have been turned off.
+
 Thu Oct 31 10:51:12 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* docs/Smart_Proxies.html: Fixed a few typos.
