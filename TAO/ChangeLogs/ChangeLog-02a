@@ -1,3 +1,15 @@
+2001-04-08  Yamuna Krishnamurthy  <yamuna@macumbo.cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/Component_Switching/sender.h: 
+	* orbsvcs/tests/AVStreams/Component_Switching/sender.cpp: 	
+	* orbsvcs/tests/AVStreams/Component_Switching/receiver.h: 
+	* orbsvcs/tests/AVStreams/Component_Switching/receiver.cpp: 	
+	* orbsvcs/tests/AVStreams/Component_Switching/distributor.h: 
+	* orbsvcs/tests/AVStreams/Component_Switching/distributor.cpp: 	
+	* orbsvcs/tests/AVStreams/Component_Switching/README: 		
+
+	  Added the sender switching capability.
+	
 Sun Apr  8 08:27:05 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* examples/POA/Forwarding/server.cpp,
