@@ -134,7 +134,7 @@ private:
   virtual int validate_version (TAO_GIOP_Message_State *state) = 0;
   // This will do a validation of the versions that arrive in the transport.
 
-  virtual int parse_header (TAO_GIOP_Message_State *state);
+  int parse_header (TAO_GIOP_Message_State *state);
   // Parses the header of the GIOP messages for validity
 
   virtual int parse_magic_bytes (TAO_GIOP_Message_State *state);
