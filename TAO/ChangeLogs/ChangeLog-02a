@@ -1,3 +1,9 @@
+Fri Sep  1 17:36:37 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* examples/Simulator/Event_Supplier/Makefile:
+	  Add TAO_PortableServer to the libraries. With this everything
+	  compiles under SunCC 4.2
+
 Fri Sep  1 16:39:19 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * orbsvcs/Logging_Service/Makefile:
