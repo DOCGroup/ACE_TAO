@@ -131,7 +131,7 @@ extern "C" {
 #     if defined (ACE_HAS_TIUSER_H)
 #       include /**/ <tiuser.h>
 #     else
-#       /* What to do here??? Is there a tli.h? */
+       /* What to do here??? Is there a tli.h? */
 #     endif /* ACE_HAS_TIUSER_H */
 #     if defined (ACE_HAS_TIUSER_H_BROKEN_EXTERN_C)
 }
