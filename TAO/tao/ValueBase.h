@@ -41,6 +41,9 @@ public:
   virtual void _remove_ref (void) = 0;
   virtual CORBA::ULong _refcount_value (void) = 0;
 
+  typedef CORBA_ValueBase* _ptr_type;
+  typedef CORBA_ValueBase_var _var_type;
+
   // dynamic casting
   static CORBA::ValueBase* _downcast (CORBA::ValueBase*);
 
@@ -126,6 +129,13 @@ public:
   CORBA::ValueBase *&out (void);
   CORBA::ValueBase *_retn (void);
   CORBA::ValueBase *ptr (void) const;
+
+  static CORBA::ValueBase * tao_duplicate (CORBA::ValueBase *);
+  static void tao_release (CORBA::ValueBase *);
+  static CORBA::ValueBase * tao_nil (void);
+  static CORBA::ValueBase * tao_narrow (CORBA::ValueBase *
+                                        ACE_ENV_ARG_DECL_NOT_USED);
+  static CORBA::ValueBase * tao_upcast (void *);
 
 private:
   CORBA::ValueBase *ptr_;

@@ -702,6 +702,8 @@ TAO_CodeGen::start_server_skeletons (const char *fname)
   this->gen_standard_include (this->server_skeletons_,
                               "tao/ORB_Core.h");
   this->gen_standard_include (this->server_skeletons_,
+                              "tao/Profile.h");
+  this->gen_standard_include (this->server_skeletons_,
                               "tao/Stub.h");
   this->gen_standard_include (this->server_skeletons_,
                               "tao/IFR_Client_Adapter.h");

@@ -457,6 +457,15 @@ operator>>= (
       );
 }
 
+CORBA::Boolean
+TAO::Any_Impl_T<CORBA::Current>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<CORBA::Current,CORBA::Current_var>;

@@ -2128,6 +2128,15 @@ operator>>= (
       );
 }
 
+CORBA::Boolean
+TAO::Any_Impl_T<CORBA::DomainManager>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<CORBA::DomainManager,CORBA::DomainManager_var>;
@@ -2180,6 +2189,15 @@ operator>>= (
         CORBA::_tc_ConstructionPolicy,
         _tao_elem
       );
+}
+
+CORBA::Boolean
+TAO::Any_Impl_T<CORBA::ConstructionPolicy>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \

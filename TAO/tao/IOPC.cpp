@@ -3686,6 +3686,15 @@ operator>>= (
       );
 }
 
+CORBA::Boolean
+TAO::Any_Impl_T<IOP::Codec>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<IOP::Codec,IOP::Codec_var>;
@@ -3803,6 +3812,15 @@ operator>>= (
         IOP::_tc_CodecFactory,
         _tao_elem
       );
+}
+
+CORBA::Boolean
+TAO::Any_Impl_T<IOP::CodecFactory>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \

@@ -135,7 +135,8 @@ be_visitor_operation_thru_poa_proxy_impl_ss::visit_operation (
       << ");" << be_uidt_nl
       << "CORBA::Object_var forward_to;" << be_nl
       << "servant_upcall.prepare_for_upcall (" << be_idt << be_idt_nl
-      << "_collocated_tao_target_->_object_key ()," << be_nl
+      << "_collocated_tao_target_->_stubobj ()->"
+      << "profile_in_use ()->object_key ()," << be_nl
       << "\"";
       
   // Check if we are an attribute node in disguise.

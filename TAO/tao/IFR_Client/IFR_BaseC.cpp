@@ -19910,6 +19910,15 @@ operator>>= (
       );
 }
 
+CORBA::Boolean
+TAO::Any_Impl_T<CORBA::IRObject>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<CORBA::IRObject,CORBA::IRObject_var>;
@@ -19962,6 +19971,15 @@ operator>>= (
         CORBA::_tc_Contained,
         _tao_elem
       );
+}
+
+CORBA::Boolean
+TAO::Any_Impl_T<CORBA::Contained>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
@@ -21455,6 +21473,15 @@ operator>>= (
       );
 }
 
+CORBA::Boolean
+TAO::Any_Impl_T<CORBA::IDLType>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<CORBA::IDLType,CORBA::IDLType_var>;
@@ -21507,6 +21534,15 @@ operator>>= (
         CORBA::_tc_TypedefDef,
         _tao_elem
       );
+}
+
+CORBA::Boolean
+TAO::Any_Impl_T<CORBA::TypedefDef>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \

@@ -1165,6 +1165,16 @@ operator>>= (
       );
 }
 
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::ExceptionHolder>::to_value (
+    CORBA::ValueBase *&_tao_elem
+  ) const
+{
+  CORBA::add_ref (this->value_);
+  _tao_elem = this->value_;
+  return 1;
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Valuetype_Manager<Messaging::ExceptionHolder, Messaging::ExceptionHolder_var>;
@@ -1217,6 +1227,15 @@ operator>>= (
         Messaging::_tc_ReplyHandler,
         _tao_elem
       );
+}
+
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::ReplyHandler>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \

@@ -190,6 +190,41 @@ CORBA::Any::to_value::to_value (CORBA::ValueBase *& obj)
 {
 }
 
+CORBA::Boolean
+CORBA::Any::checked_to_object (CORBA::Object_ptr &_tao_elem) const
+{
+  if (this->impl_ == 0)
+    {
+      return 0;
+    }
+
+  return this->impl_->to_object (_tao_elem);
+}
+
+CORBA::Boolean
+CORBA::Any::checked_to_value (CORBA::ValueBase *&_tao_elem) const
+{
+  if (this->impl_ == 0)
+    {
+      return 0;
+    }
+
+  return this->impl_->to_value (_tao_elem);
+}
+
+CORBA::Boolean
+CORBA::Any::checked_to_abstract_base (
+    CORBA::AbstractBase_ptr &_tao_elem
+  ) const
+{
+  if (this->impl_ == 0)
+    {
+      return 0;
+    }
+
+  return this->impl_->to_abstract_base (_tao_elem);
+}
+
 // =======================================================================
 
 TAO::Any_Impl::Any_Impl (_tao_destructor destructor,
@@ -809,34 +844,19 @@ CORBA::Any::operator>>= (CORBA::Any::to_wstring ws) const
 CORBA::Boolean
 CORBA::Any::operator>>= (CORBA::Any::to_object obj) const
 {
-  return TAO::Any_Impl_T<CORBA::Object>::widen (
-      *this,
-      CORBA::Object::_tao_any_destructor,
-      CORBA::tk_objref,
-      obj.ref_
-    );
+  return this->checked_to_object (obj.ref_);
 }
 
 CORBA::Boolean
 CORBA::Any::operator>>= (CORBA::Any::to_abstract_base obj) const
 {
-  return TAO::Any_Impl_T<CORBA::AbstractBase>::widen (
-      *this,
-      CORBA::AbstractBase::_tao_any_destructor,
-      CORBA::tk_abstract_interface,
-      obj.ref_
-    );
+  return this->checked_to_abstract_base (obj.ref_);
 }
 
 CORBA::Boolean
 CORBA::Any::operator>>= (CORBA::Any::to_value obj) const
 {
-  return TAO::Any_Impl_T<CORBA::ValueBase>::widen (
-      *this,
-      CORBA::ValueBase::_tao_any_destructor,
-      CORBA::tk_value,
-      obj.ref_
-    );
+  return this->checked_to_value (obj.ref_);
 }
 
 // Extraction into the other basic types.

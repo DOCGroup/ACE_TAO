@@ -7250,6 +7250,15 @@ operator>>= (
       );
 }
 
+CORBA::Boolean
+TAO::Any_Impl_T<RTCORBA::PriorityModelPolicy>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<RTCORBA::PriorityModelPolicy,RTCORBA::PriorityModelPolicy_var>;
@@ -7356,6 +7365,15 @@ operator>>= (
         RTCORBA::_tc_ProtocolProperties,
         _tao_elem
       );
+}
+
+CORBA::Boolean
+TAO::Any_Impl_T<RTCORBA::ProtocolProperties>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
@@ -7535,6 +7553,15 @@ operator>>= (
       );
 }
 
+CORBA::Boolean
+TAO::Any_Impl_T<RTCORBA::ServerProtocolPolicy>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<RTCORBA::ServerProtocolPolicy,RTCORBA::ServerProtocolPolicy_var>;
@@ -7587,6 +7614,15 @@ operator>>= (
         RTCORBA::_tc_ClientProtocolPolicy,
         _tao_elem
       );
+}
+
+CORBA::Boolean
+TAO::Any_Impl_T<RTCORBA::ClientProtocolPolicy>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
@@ -7643,6 +7679,15 @@ operator>>= (
       );
 }
 
+CORBA::Boolean
+TAO::Any_Impl_T<RTCORBA::PrivateConnectionPolicy>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<RTCORBA::PrivateConnectionPolicy,RTCORBA::PrivateConnectionPolicy_var>;
@@ -7695,6 +7740,15 @@ operator>>= (
         RTCORBA::_tc_TCPProtocolProperties,
         _tao_elem
       );
+}
+
+CORBA::Boolean
+TAO::Any_Impl_T<RTCORBA::TCPProtocolProperties>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
@@ -7751,6 +7805,15 @@ operator>>= (
       );
 }
 
+CORBA::Boolean
+TAO::Any_Impl_T<RTCORBA::GIOPProtocolProperties>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<RTCORBA::GIOPProtocolProperties,RTCORBA::GIOPProtocolProperties_var>;
@@ -7805,6 +7868,15 @@ operator>>= (
       );
 }
 
+CORBA::Boolean
+TAO::Any_Impl_T<RTCORBA::UnixDomainProtocolProperties>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<RTCORBA::UnixDomainProtocolProperties,RTCORBA::UnixDomainProtocolProperties_var>;
@@ -7857,6 +7929,15 @@ operator>>= (
         RTCORBA::_tc_SharedMemoryProtocolProperties,
         _tao_elem
       );
+}
+
+CORBA::Boolean
+TAO::Any_Impl_T<RTCORBA::SharedMemoryProtocolProperties>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
@@ -8036,6 +8117,15 @@ operator>>= (
       );
 }
 
+CORBA::Boolean
+TAO::Any_Impl_T<RTCORBA::PriorityBandedConnectionPolicy>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<RTCORBA::PriorityBandedConnectionPolicy,RTCORBA::PriorityBandedConnectionPolicy_var>;
@@ -8088,6 +8178,15 @@ operator>>= (
         RTCORBA::_tc_Current,
         _tao_elem
       );
+}
+
+CORBA::Boolean
+TAO::Any_Impl_T<RTCORBA::Current>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
@@ -8144,6 +8243,15 @@ operator>>= (
       );
 }
 
+CORBA::Boolean
+TAO::Any_Impl_T<RTCORBA::Mutex>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<RTCORBA::Mutex,RTCORBA::Mutex_var>;
@@ -8196,6 +8304,15 @@ operator>>= (
         RTCORBA::_tc_RTORB,
         _tao_elem
       );
+}
+
+CORBA::Boolean
+TAO::Any_Impl_T<RTCORBA::RTORB>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \

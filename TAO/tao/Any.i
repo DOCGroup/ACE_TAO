@@ -408,6 +408,24 @@ TAO::Any_Impl::_tao_byte_order (void) const
   return TAO_ENCAP_BYTE_ORDER;
 }
 
+ACE_INLINE CORBA::Boolean
+TAO::Any_Impl::to_object (CORBA::Object_ptr &) const
+{
+  return 0;
+}
+
+ACE_INLINE CORBA::Boolean
+TAO::Any_Impl::to_value (CORBA::ValueBase *&) const
+{
+  return 0;
+}
+
+ACE_INLINE CORBA::Boolean
+TAO::Any_Impl::to_abstract_base (CORBA::AbstractBase_ptr &) const
+{
+  return 0;
+}
+
 // ***********************************************************************
 
 ACE_INLINE const void *
