@@ -16,23 +16,15 @@
 #if !defined (TAO_OPTABLE_H)
 #define TAO_OPTABLE_H
 
-#if 0
-#include "ace/ACE.h"
-#include "ace/Synch.h"
-#include "ace/Hash_Map_Manager.h"
-#include "ace/SString.h"
-#include "ace/Singleton.h"
-#include "tao/orb.h"
-#endif
-
 struct TAO_operation_db_entry
+  // = TITLE
+  //   Define a table entry that holds an operation name and its
+  //   corresponding skeleton.  A table of such entries is used to
+  //   initialize the different lookup strategies.
 {
-  // =TITLE
-  // Define a table entry that holds an operation name and its corresponding skeleton.
-  // A table of such entries is used to initialize the different lookup strategies.
-
   CORBA::String opname_;
   // operation name
+
   TAO_Skeleton skel_ptr_;
   // skeleton pointer
 };

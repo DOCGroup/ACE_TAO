@@ -16,12 +16,6 @@
 #if !defined (TAO_IIOPORB_H)
 #  define TAO_IIOPORB_H
 
-#if 0
-#  include "ace/OS.h"
-#  include "ace/Singleton.h"
-#  include "orbobj.h"
-#endif
-
 #include "tao/corba.h"
 
 typedef class IIOP_ORB *IIOP_ORB_ptr;

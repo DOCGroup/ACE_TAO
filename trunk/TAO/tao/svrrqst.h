@@ -24,11 +24,6 @@
 #if !defined (TAO_SVRRQST_H)
 #define TAO_SVRRQST_H
 
-#if 0
-#include "ace/OS.h"
-#include "tao/cdr.h"
-#endif
-
 class ACE_Svc_Export CORBA_ServerRequest : public IUnknown
   // = TITLE
   // XXX this is currently in an intermediate state; this is not

@@ -1,3 +1,22 @@
+Sun Nov  9 02:03:40 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* tao: Removed all the unnecessary #if 0 ... #endif header files.
+  	  I don't know why there were still there.
+
+	* tao/except.h: Moved the #ifdef for minor and major into
+ 	  orbconf.h, where they belong.
+
+	* tao/orbconf.h: Removed all the DECLARED_* macros since they
+	  no longer made sense once we've got ACE.
+
+	* tao/orbconf.h: Moved the TAO_DEFAULT* macros from ace/OS.h
+	  here, which is more where they belong.
+
+	* tao/default_server.cpp (TAO_Default_Server_Strategy_Factory): 
+
+	* tao/{debug.h,orbconf.h}: Removed the DECLARED_STRERROR macro
+ 	  since ACE handles this.
+
 Sat Nov 08 23:23:41 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* TAO version 0.0.25, released Sat Nov 08 23:23:41 1997.

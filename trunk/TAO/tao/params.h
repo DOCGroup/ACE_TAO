@@ -16,14 +16,6 @@
 #if !defined (TAO_PARAMS_H)
 #  define TAO_PARAMS_H
 
-#if 0
-#  include "ace/OS.h"
-
-#  include "tao/orb.h" // get types
-#  include "tao/poa.h" // Need the DSI Handler
-#  include "tao/sequence.h" // for CORBA::OctetSeq
-#endif /* 0 */
-
 // Forward decls.
 
 class TAO_Server_Connection_Handler;

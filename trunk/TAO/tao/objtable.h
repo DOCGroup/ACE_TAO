@@ -16,21 +16,11 @@
 #if !defined (TAO_OBJTABLE_H)
 #  define TAO_OBJTABLE_H
 
-#if 0
-#  include "ace/ACE.h"
-#  include "ace/Synch.h"
-#  include "ace/Hash_Map_Manager.h"
-#  include "ace/SString.h"
-
-#  include "tao/orb.h"
-#  include "tao/sequence.h"
-#endif
-
 class TAO_Object_Table
-{
   // = TITLE
   //     Abstract class for maintaining a mapping of CORBA object keys
   //     to pointers to CORBA objects.
+{
 public:
   virtual int find (const CORBA::OctetSeq &key, 
 		    CORBA::Object_ptr &obj) = 0;
