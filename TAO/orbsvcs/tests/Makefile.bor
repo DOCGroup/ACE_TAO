@@ -1,5 +1,6 @@
 #
 # Makefile for building the TAO obsvcs tests
+# $Id$
 #
 
 DIRS = \
@@ -13,6 +14,7 @@ DIRS = \
 	EC_Custom_Marshal \
 	Event_Latency \
 	Property \
+        Simple_Naming \
 	Trading
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
