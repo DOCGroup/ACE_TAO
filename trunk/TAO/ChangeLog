@@ -1,3 +1,9 @@
+Tue Aug 12 06:27:19 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.cpp: Missed the
+	  checkin last night. This should fix build errors in our daily
+	  builds. 
+
 Mon Aug 11 22:37:43 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.h:
