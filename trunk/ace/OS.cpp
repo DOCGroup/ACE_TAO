@@ -1340,8 +1340,9 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
       if (ACE_BIT_ENABLED (flags, THR_USE_AFX))
   	{
   	  CWinThread *cwin_thread = 
-  	    ::AfxBeginThread ((AFX_THREADPROC) &ace_thread_adapter),
- 			      thread_args, priority, 0, flags | THR_SUSPENDED);
+  	    ::AfxBeginThread ((AFX_THREADPROC) &ace_thread_adapter,
+ 			      thread_args, priority, 0, 
+			      flags | THR_SUSPENDED);
  	  // Have to duplicate the handle because
  	  // CWinThread::~CWinThread() closes the original handle.
  	  (void) ::DuplicateHandle (::GetCurrentProcess (), 

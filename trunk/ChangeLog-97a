@@ -1,3 +1,27 @@
+Tue Jan 28 16:49:44 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* apps/Gateway/Peer/Peer.cpp: Added a destructor to Peer_Handler
+ 	  so that it can clean itself up properly when shutdown with a
+ 	  signal.  This fixes a nasty bug.
+
+	* ace/config-win32-msvc4.x.h (ACE_HAS_MFC): By default, ACE now
+ 	  enables ACE_HAS_MFC.  This makes it possible to use
+ 	  AfxBeginThread() with the ACE_THR_AFX flag.
+
+	* ace/OS.cpp: Fixed a typo in the call to ::AfxBeginThread()
+ 	  function.  Thanks to Karlheinz for reporting this.
+
+	* apps/Gateway/Peer/Peer.cpp: Removed all uses of the Map_Manager
+ 	  from the Peer.  There's only ever one connection from a Gateway
+ 	  per-Peer, so what was this doing here anyway?!  It was causing
+ 	  problems due to multiple deletions, so removing it improves
+ 	  robustness of the tests.
+
+	* ace/OS.i: Commented out the "extern char **_sys_siglist"
+ 	  definition since this was conflicting with the definition in
+ 	  Solaris.  If some platforms needs this, we'll need to add a
+ 	  specific #ifdef.
+
 Tue Jan 28 12:42:39 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
 	* ace/OS.h: Added strncat to the OS class.
@@ -77,6 +101,20 @@ Mon Jan 27 09:16:03 1997  David L. Levine  <levine@cs.wustl.edu>
 	  in the config files and adding -noex to the platform files,
 	  because it causes trouble, at least on MP machines.
 
+Mon Jan 27 14:54:31 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Memory_Pool.h: Added code to ACE_MMAP_Memory_Pool_Options to
+ 	  take a minimum_bytes parameter.  This is needed to prevent mmap
+ 	  remapping when a large segment is requested.  Thanks to Fred
+ 	  LaBar <flabar@fallschurch.esys.com> for this.
+
+Sun Jan 26 13:39:13 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.i: Changed the typo sis_siglist to sys_siglist.  Also,
+ 	  changed the logic from #if !defined (ACE_HAS_SYS_SIGLIST) to
+	  #if defined (ACE_HAS_SYS_SIGLIST) since this makes more sense...
+  	  Thanks to Nanbor Wang <nw1@cs.wustl.edu> for noticing this.
+
 Sat Jan 25 20:30:23 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/config-sunos5.5-sunc++-4.1.h: commented out ACE_HAS_EXCEPTIONS
@@ -84,8 +122,8 @@ Sat Jan 25 20:30:23 1997  David L. Levine  <levine@cs.wustl.edu>
 	  dump during thread exit on multiprocessor UltraSparcs.
 
 	* include/makeinclude/platform_sunos5_sunc++_4.1.GNU: added -noex
-	  back because of core dump during thread exit on multiprocessor
-	  UltraSparcs.
+	  back because of core dump during thread exit on
+	  multiprocessor UltraSparcs.
 
 	* examples/ASX/Event_Server/Event_Server/Event_Analyzer.cpp,
 	  examples/ASX/UPIPE_Event_Server/Event_Analyzer.cpp (control):

@@ -15,12 +15,12 @@ extern char *sys_errlist[];
 #endif /* ACE_HAS_SYS_ERRLIST */
 #endif /* !ACE_HAS_STERROR */
 
-#if !defined (ACE_HAS_SYS_SIGLIST)
-#if !defined (_sys_siglist)
-#define _sys_siglist sis_siglist
+#if defined (ACE_HAS_SYS_SIGLIST)
+#if !defined (_sys_siglist) 
+#define _sys_siglist sys_siglist
 #endif /* !defined (sys_siglist) */
-extern char **_sys_siglist;
-#endif /* !ACE_HAS_SYS_SIGLIST */
+//extern char **_sys_siglist;
+#endif /* ACE_HAS_SYS_SIGLIST */
 
 #if defined (ACE_HAS_SIZET_SOCKET_LEN)
 typedef size_t ACE_SOCKET_LEN;
