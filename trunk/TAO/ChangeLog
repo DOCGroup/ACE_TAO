@@ -1,3 +1,9 @@
+Wed Jul 24 11:51:29 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
+
+	* tao/PortableServer/Collocated_Object.cpp:
+	  Fixed a typo from retn() to _retn() to fix the RedHat static
+	  builds.
+
 Wed Jul 24 07:42:47 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * TAO_IDL/util/utl_scope.cpp:
