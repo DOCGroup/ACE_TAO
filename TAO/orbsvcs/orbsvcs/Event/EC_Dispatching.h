@@ -60,14 +60,14 @@ public:
   // structures, it should only return once the threads have finished
   // their jobs.
 
-  virtual void push (TAO_EC_ProxyPushSupplier* proxy,
-                     const RtecEventComm::EventSet& event,
-                     TAO_EC_QOS_Info& qos_info,
-                     CORBA::Environment& env) = 0;
-  virtual void push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
-                            RtecEventComm::EventSet& event,
-                            TAO_EC_QOS_Info& qos_info,
-                            CORBA::Environment& env) = 0;
+  virtual void push (TAO_EC_ProxyPushSupplier *proxy,
+                     const RtecEventComm::EventSet &event,
+                     TAO_EC_QOS_Info &qos_info,
+                     CORBA::Environment &env = TAO_default_environment ()) = 0;
+  virtual void push_nocopy (TAO_EC_ProxyPushSupplier *proxy,
+                            RtecEventComm::EventSet &event,
+                            TAO_EC_QOS_Info &qos_info,
+                            CORBA::Environment &env = TAO_default_environment ()) = 0;
   // The consumer represented by <proxy> should receive <event>.
   // It can use the information in <qos_info> to determine the event
   // priority (among other things).
@@ -92,14 +92,14 @@ public:
   // = The EC_Dispatching methods.
   virtual void activate (void);
   virtual void shutdown (void);
-  virtual void push (TAO_EC_ProxyPushSupplier* proxy,
-                     const RtecEventComm::EventSet& event,
-                     TAO_EC_QOS_Info& qos_info,
-                     CORBA::Environment& env);
-  virtual void push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
-                            RtecEventComm::EventSet& event,
-                            TAO_EC_QOS_Info& qos_info,
-                            CORBA::Environment& env);
+  virtual void push (TAO_EC_ProxyPushSupplier *proxy,
+                     const RtecEventComm::EventSet &event,
+                     TAO_EC_QOS_Info &qos_info,
+                     CORBA::Environment &env = TAO_default_environment ());
+  virtual void push_nocopy (TAO_EC_ProxyPushSupplier *proxy,
+                            RtecEventComm::EventSet &event,
+                            TAO_EC_QOS_Info &qos_info,
+                            CORBA::Environment &env = TAO_default_environment ());
 };
 
 // @@ TODO

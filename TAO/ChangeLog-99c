@@ -1,3 +1,13 @@
+Sun Jun 13 22:39:51 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.h,
+	* orbsvcs/orbsvcs/Event/EC_SupplierFiltering.h,
+	* orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set.h,
+	* orbsvcs/orbsvcs/Event/EC_Gateway.h,
+	* orbsvcs/orbsvcs/Event/EC_Dispatching.h: Added default
+ 	  TAO_default_environment() calls.  Thank to Russ Noseworthy for
+ 	  reporting this.
+
 Sun Jun 13 21:46:25 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/NestedUpcall/Triangle_Test/run_test.pl:

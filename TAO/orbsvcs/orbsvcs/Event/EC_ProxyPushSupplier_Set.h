@@ -213,29 +213,29 @@ public:
   // The implementation of this methods is provided by derived
   // classes, that provide appropiate locking.
 
-  virtual void connected (TAO_EC_ProxyPushSupplier*,
-                          CORBA::Environment&) = 0;
-  virtual void disconnected (TAO_EC_ProxyPushSupplier*,
-                             CORBA::Environment&) = 0;
+  virtual void connected (TAO_EC_ProxyPushSupplier *,
+                          CORBA::Environment & = TAO_default_environment ()) = 0;
+  virtual void disconnected (TAO_EC_ProxyPushSupplier *,
+                             CORBA::Environment & = TAO_default_environment ()) = 0;
   // Used to inform the EC that a Supplier has connected or
   // disconnected from it.
 
-  virtual void shutdown (CORBA::Environment&) = 0;
-  // The EC is shutting down, release all our resources
+  virtual void shutdown (CORBA::Environment & = TAO_default_environment ()) = 0;
+  // The EC is shutting down, release all our resources.
 
 protected:
   virtual void connected_i (TAO_EC_ProxyPushSupplier* supplier,
-                            CORBA::Environment &env);
-  // The implementation of connected(), without locking.
-  // It does not increase the reference count on the supplier
+                            CORBA::Environment &env = TAO_default_environment ());
+  // The implementation of connected(), without locking.  It does not
+  // increase the reference count on the supplier
 
   virtual void disconnected_i (TAO_EC_ProxyPushSupplier* supplier,
-                               CORBA::Environment &env);
-  // The implementation of disconnected(), without locking.
-  // It decreases the reference count on the supplier if the operation
-  // is successful.
+                               CORBA::Environment &env = TAO_default_environment ());
+  // The implementation of disconnected(), without locking.  It
+  // decreases the reference count on the supplier if the operation is
+  // successful.
 
-  virtual void shutdown_i (CORBA::Environment& env);
+  virtual void shutdown_i (CORBA::Environment &env = TAO_default_environment ());
   // Implement the shutdown method, assuming the right locks are
   // acquired by the base class.
 
