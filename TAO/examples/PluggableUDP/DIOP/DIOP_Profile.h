@@ -10,7 +10,7 @@
  *   DIOP profile specific processing
  *
  *
- *  @author  Fred Kuhns <fredk@cs.wustl.edu>
+ *  @author  Michael Kircher
  */
 //=============================================================================
 
@@ -67,11 +67,6 @@ public:
                     const TAO_GIOP_Version &version,
                     TAO_ORB_Core *orb_core);
 
-  /// Create object using a string ior.
-  TAO_DIOP_Profile (const char *string,
-                    TAO_ORB_Core *orb_core,
-                    CORBA::Environment &ACE_TRY_ENV =
-                      TAO_default_environment ());
 
   /// Profile constructor, default.
   TAO_DIOP_Profile (TAO_ORB_Core *orb_core);
@@ -81,9 +76,8 @@ public:
 
   /// Initialize this object using the given input string.
   /// Url-style string contain only one endpoint.
-  virtual int parse_string (const char *string,
-                            CORBA::Environment &ACE_TRY_ENV =
-                            TAO_default_environment ());
+  virtual void parse_string (const char *string,
+                             CORBA::Environment &ACE_TRY_ENV);
 
   /**
    * Return a string representation for this profile.
@@ -91,8 +85,7 @@ public:
    * This is used to create url-style reference.  Only one
    * endpoint is included into the string.
    */
-  virtual char * to_string (CORBA::Environment &ACE_TRY_ENV =
-                            TAO_default_environment ());
+  virtual char * to_string (CORBA::Environment &ACE_TRY_ENV);
 
   /// Initialize this object using the given CDR octet string.
   virtual int decode (TAO_InputCDR& cdr);
@@ -149,8 +142,7 @@ public:
 
   /// Return a hash value for this object.
   virtual CORBA::ULong hash (CORBA::ULong max,
-                             CORBA::Environment &ACE_TRY_ENV =
-                             TAO_default_environment ());
+                             CORBA::Environment &ACE_TRY_ENV);
 
   /// Please refer to Profile.h for the documentation of this
   /// function.

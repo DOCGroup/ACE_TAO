@@ -10,7 +10,9 @@
 #include "tao/debug.h"
 #include "tao/iiop_endpoints.h"
 
-ACE_RCSID(tao, DIOP_Profile, "$Id$")
+ACE_RCSID (DIOP,
+           DIOP_Profile,
+           "$Id$")
 
 #if !defined (__ACE_INLINE__)
 # include "DIOP_Profile.i"
@@ -25,7 +27,6 @@ TAO_DIOP_Profile::object_key_delimiter (void) const
 {
   return TAO_DIOP_Profile::object_key_delimiter_;
 }
-
 
 
 TAO_DIOP_Profile::TAO_DIOP_Profile (const ACE_INET_Addr &addr,
@@ -53,21 +54,6 @@ TAO_DIOP_Profile::TAO_DIOP_Profile (const char* host,
     object_key_ (object_key),
     tagged_profile_ ()
 {
-}
-
-TAO_DIOP_Profile::TAO_DIOP_Profile (const char *string,
-                                    TAO_ORB_Core *orb_core,
-                                    CORBA::Environment &ACE_TRY_ENV)
-  : TAO_Profile (TAO_TAG_UDP_PROFILE,
-                 orb_core,
-                 TAO_GIOP_Version (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR)),
-    endpoint_ (),
-    count_ (1),
-    object_key_ (),
-    tagged_profile_ ()
-{
-  this->parse_string (string, ACE_TRY_ENV);
-  ACE_CHECK;
 }
 
 TAO_DIOP_Profile::TAO_DIOP_Profile (TAO_ORB_Core *orb_core)
@@ -179,18 +165,17 @@ TAO_DIOP_Profile::decode (TAO_InputCDR& cdr)
   return -1;
 }
 
-int
+void
 TAO_DIOP_Profile::parse_string (const char *string,
                                 CORBA::Environment &ACE_TRY_ENV)
 {
   if (!string || !*string)
     {
-      ACE_THROW_RETURN (CORBA::INV_OBJREF (
+      ACE_THROW (CORBA::INV_OBJREF (
         CORBA_SystemException::_tao_minor_code (
           TAO_DEFAULT_MINOR_CODE,
           EINVAL),
-        CORBA::COMPLETED_NO),
-        -1);
+        CORBA::COMPLETED_NO));
     }
 
   // Remove the "N.n@" version prefix, if it exists, and verify the
@@ -213,12 +198,11 @@ TAO_DIOP_Profile::parse_string (const char *string,
   if (this->version_.major != TAO_DEF_GIOP_MAJOR ||
       this->version_.minor >  TAO_DEF_GIOP_MINOR)
     {
-      ACE_THROW_RETURN (CORBA::INV_OBJREF (
-                          CORBA_SystemException::_tao_minor_code (
-                            TAO_DEFAULT_MINOR_CODE,
-                            EINVAL),
-                          CORBA::COMPLETED_NO),
-                        -1);
+      ACE_THROW (CORBA::INV_OBJREF (
+                   CORBA_SystemException::_tao_minor_code (
+                     TAO_DEFAULT_MINOR_CODE,
+                     EINVAL),
+                   CORBA::COMPLETED_NO));
     }
 
   // Pull off the "hostname:port/" part of the objref
@@ -233,12 +217,11 @@ TAO_DIOP_Profile::parse_string (const char *string,
   if (okd == 0)
     {
       // No object key delimiter!
-      ACE_THROW_RETURN (CORBA::INV_OBJREF (
+      ACE_THROW (CORBA::INV_OBJREF (
         CORBA_SystemException::_tao_minor_code (
           TAO_DEFAULT_MINOR_CODE,
           EINVAL),
-        CORBA::COMPLETED_NO),
-        -1);
+        CORBA::COMPLETED_NO));
     }
 
   // The default port number.
@@ -320,7 +303,13 @@ TAO_DIOP_Profile::parse_string (const char *string,
                             ACE_TEXT ("DIOP_Profile::parse_string ")
                             ACE_TEXT ("- %p\n\n"),
                             ACE_TEXT ("cannot determine hostname")));
-              return -1;
+
+              // @@ What's the right exception to throw here?
+              ACE_THROW (CORBA::INV_OBJREF (
+                           CORBA_SystemException::_tao_minor_code (
+                             TAO_DEFAULT_MINOR_CODE,
+                             EINVAL),
+                           CORBA::COMPLETED_NO));
             }
           this->endpoint_.host_ = tmp;
         }
@@ -341,14 +330,18 @@ TAO_DIOP_Profile::parse_string (const char *string,
                       ACE_TEXT ("TAO (%P|%t) DIOP_Profile::parse_string - \n")
                       ACE_TEXT ("TAO (%P|%t) ACE_INET_Addr::set () failed")));
         }
-      return -1;
+
+      // @@ What's the right exception to throw here?
+      ACE_THROW (CORBA::INV_OBJREF (
+                   CORBA_SystemException::_tao_minor_code (
+                     TAO_DEFAULT_MINOR_CODE,
+                     EINVAL),
+                   CORBA::COMPLETED_NO));
     }
 
   start = ++okd;  // increment past the object key separator
 
   TAO_ObjectKey::decode_string_to_sequence (this->object_key_, start);
-
-  return 1;
 }
 
 CORBA::Boolean
