@@ -232,11 +232,15 @@ int Vb::get_value( SnmpUInt32 &u)
    return SNMP_CLASS_INVALID;
 }
 
+/* return a uint or a gauge. this is casting, but no semantic difference 
+ * at this level
+ */
 int Vb::get_value( Gauge32 &g)
 {
    if (iv_vb_value_ &&
        iv_vb_value_->valid() &&
-       (iv_vb_value_->get_syntax() == sNMP_SYNTAX_GAUGE32 )) {
+       ((iv_vb_value_->get_syntax() == sNMP_SYNTAX_GAUGE32) ||
+            iv_vb_value_->get_syntax() == sNMP_SYNTAX_UINT32) ) {
      g = *((Gauge32 *) iv_vb_value_);
      return SNMP_CLASS_SUCCESS;
    }
