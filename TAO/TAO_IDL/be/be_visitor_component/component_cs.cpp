@@ -107,7 +107,7 @@ be_visitor_component_cs::visit_component (be_component *node)
       << be_uidt_nl
       << "}" << be_nl << be_nl;
 
-  *os << "Components::CCMObject_ptr " << be_nl
+  *os << "CORBA::Object_ptr " << be_nl
       << "tao_" << node->flat_name ()
       << "_upcast (" << be_idt << be_idt_nl
       << "void *src" << be_uidt_nl
