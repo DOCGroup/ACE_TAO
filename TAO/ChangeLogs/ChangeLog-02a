@@ -1,3 +1,10 @@
+Fri Nov 17 10:49:21 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * orbsvcs/orbsvcs/SSLIOP.dsp:
+
+          Added ssleay32.lib to the list of linking libraries, since 
+          I'm guessing inlining causes SSLIOP to need to link to OpenSSL.  
+
 Fri Nov 17 10:11:17 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/corba.h:
@@ -97,7 +104,7 @@ Fri Nov 17 01:07:36 2000  Ossama Othman  <ossama@uci.edu>
 
           Added these missing method implementations (client side).
 
-Fri Nov 17 000:46:37 2000  Darrell Brunsch <brunsch@uci.edu>
+Fri Nov 17 00:46:37 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/orbsvcs/orbsvcs.dsw:
 
