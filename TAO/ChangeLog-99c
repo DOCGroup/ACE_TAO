@@ -1,3 +1,17 @@
+Wed Mar 31 000:42:30 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/fe/idl.ll:
+	* TAO_IDL/lex.yy.cpp:
+	  Added a definition above the rules section to generalize
+	  newline to handle '\n' and "\r\n", and plugged the 
+	  definition in where appropriate in the rules section.
+	  Since we don't regenerate lex.yy.cpp with every build,
+	  that had to be generated and checked in as well. Thanks
+	  to Ossama for his quick hack of a simple test for this.
+	  Also tested by ftp of Ping.idl (in binary mode) from NT
+	  to Unix and rebuild of orbsvcs after removing generated
+	  Ping interface files.
+
 Wed Mar 31 00:25:17 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* orbsvcs/tests/CosEC_Multiple/CosECConsumer.cpp:
