@@ -195,8 +195,7 @@ void POA_CORBA::IRObject::_get_def_kind_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval)
@@ -219,8 +218,7 @@ void POA_CORBA::IRObject::destroy_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
 }
 
 void POA_CORBA::IRObject::_is_a_skel (
@@ -240,8 +238,7 @@ void POA_CORBA::IRObject::_is_a_skel (
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -258,8 +255,7 @@ void POA_CORBA::IRObject::_non_existent_skel (
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -659,8 +655,7 @@ void POA_IR::Contained::_get_id_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -691,8 +686,7 @@ void POA_IR::Contained::_set_id_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
 }
 
 void POA_IR::Contained::_get_name_skel (
@@ -712,8 +706,7 @@ void POA_IR::Contained::_get_name_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -744,8 +737,7 @@ void POA_IR::Contained::_set_name_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
 }
 
 void POA_IR::Contained::_get_version_skel (
@@ -765,8 +757,7 @@ void POA_IR::Contained::_get_version_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -797,8 +788,7 @@ void POA_IR::Contained::_set_version_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
 }
 
 void POA_IR::Contained::_get_defined_in_skel (
@@ -818,8 +808,7 @@ void POA_IR::Contained::_get_defined_in_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -844,8 +833,7 @@ void POA_IR::Contained::_get_absolute_name_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -870,8 +858,7 @@ void POA_IR::Contained::_get_containing_repository_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -896,8 +883,7 @@ void POA_IR::Contained::describe_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -934,8 +920,7 @@ void POA_IR::Contained::move_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
 }
 
 void POA_IR::Contained::_is_a_skel (
@@ -955,8 +940,7 @@ void POA_IR::Contained::_is_a_skel (
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -973,8 +957,7 @@ void POA_IR::Contained::_non_existent_skel (
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -1676,8 +1659,7 @@ void POA_IR::Container::lookup_skel (
 
       ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -1712,8 +1694,7 @@ void POA_IR::Container::contents_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -1754,8 +1735,7 @@ void POA_IR::Container::lookup_name_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -1793,8 +1773,7 @@ void POA_IR::Container::describe_contents_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -1832,8 +1811,7 @@ void POA_IR::Container::create_module_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -1877,8 +1855,7 @@ void POA_IR::Container::create_constant_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -1919,8 +1896,7 @@ void POA_IR::Container::create_struct_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -1964,8 +1940,7 @@ void POA_IR::Container::create_union_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -2006,8 +1981,7 @@ void POA_IR::Container::create_enum_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -2048,8 +2022,7 @@ void POA_IR::Container::create_alias_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -2096,8 +2069,7 @@ void POA_IR::Container::create_interface_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -2156,8 +2128,7 @@ void POA_IR::Container::create_value_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -2198,8 +2169,7 @@ void POA_IR::Container::create_value_box_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -2240,8 +2210,7 @@ void POA_IR::Container::create_exception_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -2279,8 +2248,7 @@ void POA_IR::Container::create_native_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -2305,8 +2273,7 @@ void POA_IR::Container::_is_a_skel (
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -2323,8 +2290,7 @@ void POA_IR::Container::_non_existent_skel (
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -3229,8 +3195,7 @@ void POA_IR::IDLType::_get_type_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -3255,8 +3220,7 @@ void POA_IR::IDLType::_is_a_skel (
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -3273,8 +3237,7 @@ void POA_IR::IDLType::_non_existent_skel (
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -3674,8 +3637,7 @@ void POA_IR::Repository::lookup_id_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -3707,8 +3669,7 @@ void POA_IR::Repository::get_canonical_typecode_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -3740,8 +3701,7 @@ void POA_IR::Repository::get_primitive_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -3773,8 +3733,7 @@ void POA_IR::Repository::create_string_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -3806,8 +3765,7 @@ void POA_IR::Repository::create_wstring_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -3842,8 +3800,7 @@ void POA_IR::Repository::create_sequence_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -3878,8 +3835,7 @@ void POA_IR::Repository::create_array_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -3914,8 +3870,7 @@ void POA_IR::Repository::create_fixed_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -3940,8 +3895,7 @@ void POA_IR::Repository::_is_a_skel (
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -3958,8 +3912,7 @@ void POA_IR::Repository::_non_existent_skel (
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -4615,8 +4568,7 @@ void POA_IR::ComponentRepository::create_component_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -4663,8 +4615,7 @@ void POA_IR::ComponentRepository::create_home_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -4689,8 +4640,7 @@ void POA_IR::ComponentRepository::_is_a_skel (
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -4707,8 +4657,7 @@ void POA_IR::ComponentRepository::_non_existent_skel (
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -5164,8 +5113,7 @@ void POA_IR::ModuleDef::_is_a_skel (
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -5182,8 +5130,7 @@ void POA_IR::ModuleDef::_non_existent_skel (
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -5543,8 +5490,7 @@ void POA_IR::ConstantDef::_get_type_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -5569,8 +5515,7 @@ void POA_IR::ConstantDef::_get_type_def_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -5601,8 +5546,7 @@ void POA_IR::ConstantDef::_set_type_def_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
 }
 
 void POA_IR::ConstantDef::_get_value_skel (
@@ -5622,8 +5566,7 @@ void POA_IR::ConstantDef::_get_value_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -5654,8 +5597,7 @@ void POA_IR::ConstantDef::_set_value_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
 }
 
 void POA_IR::ConstantDef::_is_a_skel (
@@ -5675,8 +5617,7 @@ void POA_IR::ConstantDef::_is_a_skel (
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -5693,8 +5634,7 @@ void POA_IR::ConstantDef::_non_existent_skel (
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -6202,8 +6142,7 @@ void POA_IR::TypedefDef::_is_a_skel (
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -6220,8 +6159,7 @@ void POA_IR::TypedefDef::_non_existent_skel (
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -6598,8 +6536,7 @@ void POA_IR::StructDef::_get_members_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -6630,8 +6567,7 @@ void POA_IR::StructDef::_set_members_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
 }
 
 void POA_IR::StructDef::_is_a_skel (
@@ -6651,8 +6587,7 @@ void POA_IR::StructDef::_is_a_skel (
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -6669,8 +6604,7 @@ void POA_IR::StructDef::_non_existent_skel (
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -7121,8 +7055,7 @@ void POA_IR::UnionDef::_get_discriminator_type_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -7147,8 +7080,7 @@ void POA_IR::UnionDef::_get_discriminator_type_def_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -7179,8 +7111,7 @@ void POA_IR::UnionDef::_set_discriminator_type_def_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
 }
 
 void POA_IR::UnionDef::_get_members_skel (
@@ -7200,8 +7131,7 @@ void POA_IR::UnionDef::_get_members_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -7232,8 +7162,7 @@ void POA_IR::UnionDef::_set_members_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
 }
 
 void POA_IR::UnionDef::_is_a_skel (
@@ -7253,8 +7182,7 @@ void POA_IR::UnionDef::_is_a_skel (
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -7271,8 +7199,7 @@ void POA_IR::UnionDef::_non_existent_skel (
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -7795,8 +7722,7 @@ void POA_IR::EnumDef::_get_members_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -7827,8 +7753,7 @@ void POA_IR::EnumDef::_set_members_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
 }
 
 void POA_IR::EnumDef::_is_a_skel (
@@ -7848,8 +7773,7 @@ void POA_IR::EnumDef::_is_a_skel (
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -7866,8 +7790,7 @@ void POA_IR::EnumDef::_non_existent_skel (
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -8293,8 +8216,7 @@ void POA_IR::AliasDef::_get_original_type_def_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -8325,8 +8247,7 @@ void POA_IR::AliasDef::_set_original_type_def_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
 }
 
 void POA_IR::AliasDef::_is_a_skel (
@@ -8346,8 +8267,7 @@ void POA_IR::AliasDef::_is_a_skel (
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -8364,8 +8284,7 @@ void POA_IR::AliasDef::_non_existent_skel (
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -8789,8 +8708,7 @@ void POA_IR::NativeDef::_is_a_skel (
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -8807,8 +8725,7 @@ void POA_IR::NativeDef::_non_existent_skel (
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -9138,8 +9055,7 @@ void POA_IR::PrimitiveDef::_get_kind_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval)
@@ -9164,8 +9080,7 @@ void POA_IR::PrimitiveDef::_is_a_skel (
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -9182,8 +9097,7 @@ void POA_IR::PrimitiveDef::_non_existent_skel (
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -9556,8 +9470,7 @@ void POA_IR::StringDef::_get_bound_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval)
@@ -9588,8 +9501,7 @@ void POA_IR::StringDef::_set_bound_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
 }
 
 void POA_IR::StringDef::_is_a_skel (
@@ -9609,8 +9521,7 @@ void POA_IR::StringDef::_is_a_skel (
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -9627,8 +9538,7 @@ void POA_IR::StringDef::_non_existent_skel (
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -10032,8 +9942,7 @@ void POA_IR::WstringDef::_get_bound_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval)
@@ -10064,8 +9973,7 @@ void POA_IR::WstringDef::_set_bound_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
 }
 
 void POA_IR::WstringDef::_is_a_skel (
@@ -10085,8 +9993,7 @@ void POA_IR::WstringDef::_is_a_skel (
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -10103,8 +10010,7 @@ void POA_IR::WstringDef::_non_existent_skel (
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -10510,8 +10416,7 @@ void POA_IR::FixedDef::_get_digits_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval)
@@ -10542,8 +10447,7 @@ void POA_IR::FixedDef::_set_digits_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
 }
 
 void POA_IR::FixedDef::_get_scale_skel (
@@ -10563,8 +10467,7 @@ void POA_IR::FixedDef::_get_scale_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval)
@@ -10595,8 +10498,7 @@ void POA_IR::FixedDef::_set_scale_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
 }
 
 void POA_IR::FixedDef::_is_a_skel (
@@ -10616,8 +10518,7 @@ void POA_IR::FixedDef::_is_a_skel (
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -10634,8 +10535,7 @@ void POA_IR::FixedDef::_non_existent_skel (
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -11104,8 +11004,7 @@ void POA_IR::SequenceDef::_get_bound_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval)
@@ -11136,8 +11035,7 @@ void POA_IR::SequenceDef::_set_bound_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
 }
 
 void POA_IR::SequenceDef::_get_element_type_skel (
@@ -11157,8 +11055,7 @@ void POA_IR::SequenceDef::_get_element_type_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -11183,8 +11080,7 @@ void POA_IR::SequenceDef::_get_element_type_def_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -11215,8 +11111,7 @@ void POA_IR::SequenceDef::_set_element_type_def_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
 }
 
 void POA_IR::SequenceDef::_is_a_skel (
@@ -11236,8 +11131,7 @@ void POA_IR::SequenceDef::_is_a_skel (
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -11254,8 +11148,7 @@ void POA_IR::SequenceDef::_non_existent_skel (
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -11755,8 +11648,7 @@ void POA_IR::ArrayDef::_get_length_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval)
@@ -11787,8 +11679,7 @@ void POA_IR::ArrayDef::_set_length_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
 }
 
 void POA_IR::ArrayDef::_get_element_type_skel (
@@ -11808,8 +11699,7 @@ void POA_IR::ArrayDef::_get_element_type_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -11834,8 +11724,7 @@ void POA_IR::ArrayDef::_get_element_type_def_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -11866,8 +11755,7 @@ void POA_IR::ArrayDef::_set_element_type_def_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
 }
 
 void POA_IR::ArrayDef::_is_a_skel (
@@ -11887,8 +11775,7 @@ void POA_IR::ArrayDef::_is_a_skel (
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -11905,8 +11792,7 @@ void POA_IR::ArrayDef::_non_existent_skel (
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -12432,8 +12318,7 @@ void POA_IR::ExceptionDef::_get_type_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -12458,8 +12343,7 @@ void POA_IR::ExceptionDef::_get_members_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -12490,8 +12374,7 @@ void POA_IR::ExceptionDef::_set_members_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
 }
 
 void POA_IR::ExceptionDef::_is_a_skel (
@@ -12511,8 +12394,7 @@ void POA_IR::ExceptionDef::_is_a_skel (
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -12529,8 +12411,7 @@ void POA_IR::ExceptionDef::_non_existent_skel (
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -12983,8 +12864,7 @@ void POA_IR::AttributeDef::_get_type_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -13009,8 +12889,7 @@ void POA_IR::AttributeDef::_get_type_def_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -13041,8 +12920,7 @@ void POA_IR::AttributeDef::_set_type_def_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
 }
 
 void POA_IR::AttributeDef::_get_mode_skel (
@@ -13062,8 +12940,7 @@ void POA_IR::AttributeDef::_get_mode_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval)
@@ -13095,8 +12972,7 @@ void POA_IR::AttributeDef::_set_mode_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
 }
 
 void POA_IR::AttributeDef::_is_a_skel (
@@ -13116,8 +12992,7 @@ void POA_IR::AttributeDef::_is_a_skel (
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -13134,8 +13009,7 @@ void POA_IR::AttributeDef::_non_existent_skel (
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -13701,8 +13575,7 @@ void POA_IR::OperationDef::_get_result_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -13727,8 +13600,7 @@ void POA_IR::OperationDef::_get_result_def_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -13759,8 +13631,7 @@ void POA_IR::OperationDef::_set_result_def_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
 }
 
 void POA_IR::OperationDef::_get_params_skel (
@@ -13780,8 +13651,7 @@ void POA_IR::OperationDef::_get_params_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -13812,8 +13682,7 @@ void POA_IR::OperationDef::_set_params_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
 }
 
 void POA_IR::OperationDef::_get_mode_skel (
@@ -13833,8 +13702,7 @@ void POA_IR::OperationDef::_get_mode_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval)
@@ -13865,8 +13733,7 @@ void POA_IR::OperationDef::_set_mode_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
 }
 
 void POA_IR::OperationDef::_get_contexts_skel (
@@ -13886,8 +13753,7 @@ void POA_IR::OperationDef::_get_contexts_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -13918,8 +13784,7 @@ void POA_IR::OperationDef::_set_contexts_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
 }
 
 void POA_IR::OperationDef::_get_exceptions_skel (
@@ -13939,8 +13804,7 @@ void POA_IR::OperationDef::_get_exceptions_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -13971,8 +13835,7 @@ void POA_IR::OperationDef::_set_exceptions_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
 }
 
 void POA_IR::OperationDef::_is_a_skel (
@@ -13992,8 +13855,7 @@ void POA_IR::OperationDef::_is_a_skel (
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -14010,8 +13872,7 @@ void POA_IR::OperationDef::_non_existent_skel (
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -14732,8 +14593,7 @@ void POA_IR::InterfaceDef::_get_base_interfaces_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -14764,8 +14624,7 @@ void POA_IR::InterfaceDef::_set_base_interfaces_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
 }
 
 void POA_IR::InterfaceDef::_get_is_abstract_skel (
@@ -14785,8 +14644,7 @@ void POA_IR::InterfaceDef::_get_is_abstract_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << CORBA::Any::from_boolean (_tao_retval))
@@ -14817,8 +14675,7 @@ void POA_IR::InterfaceDef::_set_is_abstract_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
 }
 
 void POA_IR::InterfaceDef::_get_is_local_skel (
@@ -14838,8 +14695,7 @@ void POA_IR::InterfaceDef::_get_is_local_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << CORBA::Any::from_boolean (_tao_retval))
@@ -14870,8 +14726,7 @@ void POA_IR::InterfaceDef::_set_is_local_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
 }
 
 void POA_IR::InterfaceDef::is_a_skel (
@@ -14898,8 +14753,7 @@ void POA_IR::InterfaceDef::is_a_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << CORBA::Any::from_boolean (_tao_retval))
@@ -14949,8 +14803,7 @@ void POA_IR::InterfaceDef::create_attribute_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -15003,8 +14856,7 @@ void POA_IR::InterfaceDef::create_operation_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -15029,8 +14881,7 @@ void POA_IR::InterfaceDef::_is_a_skel (
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -15047,8 +14898,7 @@ void POA_IR::InterfaceDef::_non_existent_skel (
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -15723,8 +15573,7 @@ void POA_IR::ValueMemberDef::_get_type_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -15749,8 +15598,7 @@ void POA_IR::ValueMemberDef::_get_type_def_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -15781,8 +15629,7 @@ void POA_IR::ValueMemberDef::_set_type_def_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
 }
 
 void POA_IR::ValueMemberDef::_get_access_skel (
@@ -15802,8 +15649,7 @@ void POA_IR::ValueMemberDef::_get_access_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval)
@@ -15834,8 +15680,7 @@ void POA_IR::ValueMemberDef::_set_access_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
 }
 
 void POA_IR::ValueMemberDef::_is_a_skel (
@@ -15855,8 +15700,7 @@ void POA_IR::ValueMemberDef::_is_a_skel (
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -15873,8 +15717,7 @@ void POA_IR::ValueMemberDef::_non_existent_skel (
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -16420,8 +16263,7 @@ void POA_IR::ValueDef::_get_supported_interfaces_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -16452,8 +16294,7 @@ void POA_IR::ValueDef::_set_supported_interfaces_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
 }
 
 void POA_IR::ValueDef::_get_initializers_skel (
@@ -16473,8 +16314,7 @@ void POA_IR::ValueDef::_get_initializers_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -16505,8 +16345,7 @@ void POA_IR::ValueDef::_set_initializers_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
 }
 
 void POA_IR::ValueDef::_get_base_value_skel (
@@ -16526,8 +16365,7 @@ void POA_IR::ValueDef::_get_base_value_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -16558,8 +16396,7 @@ void POA_IR::ValueDef::_set_base_value_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
 }
 
 void POA_IR::ValueDef::_get_abstract_base_values_skel (
@@ -16579,8 +16416,7 @@ void POA_IR::ValueDef::_get_abstract_base_values_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -16611,8 +16447,7 @@ void POA_IR::ValueDef::_set_abstract_base_values_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
 }
 
 void POA_IR::ValueDef::_get_is_abstract_skel (
@@ -16632,8 +16467,7 @@ void POA_IR::ValueDef::_get_is_abstract_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << CORBA::Any::from_boolean (_tao_retval))
@@ -16664,8 +16498,7 @@ void POA_IR::ValueDef::_set_is_abstract_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
 }
 
 void POA_IR::ValueDef::_get_is_custom_skel (
@@ -16685,8 +16518,7 @@ void POA_IR::ValueDef::_get_is_custom_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << CORBA::Any::from_boolean (_tao_retval))
@@ -16717,8 +16549,7 @@ void POA_IR::ValueDef::_set_is_custom_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
 }
 
 void POA_IR::ValueDef::_get_is_truncatable_skel (
@@ -16738,8 +16569,7 @@ void POA_IR::ValueDef::_get_is_truncatable_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << CORBA::Any::from_boolean (_tao_retval))
@@ -16770,8 +16600,7 @@ void POA_IR::ValueDef::_set_is_truncatable_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
 }
 
 void POA_IR::ValueDef::is_a_skel (
@@ -16798,8 +16627,7 @@ void POA_IR::ValueDef::is_a_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << CORBA::Any::from_boolean (_tao_retval))
@@ -16843,8 +16671,7 @@ void POA_IR::ValueDef::create_value_member_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -16894,8 +16721,7 @@ void POA_IR::ValueDef::create_attribute_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -16948,8 +16774,7 @@ void POA_IR::ValueDef::create_operation_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -16974,8 +16799,7 @@ void POA_IR::ValueDef::_is_a_skel (
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -16992,8 +16816,7 @@ void POA_IR::ValueDef::_non_existent_skel (
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -17954,8 +17777,7 @@ void POA_IR::ValueBoxDef::_get_original_type_def_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -17986,8 +17808,7 @@ void POA_IR::ValueBoxDef::_set_original_type_def_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
 }
 
 void POA_IR::ValueBoxDef::_is_a_skel (
@@ -18007,8 +17828,7 @@ void POA_IR::ValueBoxDef::_is_a_skel (
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -18025,8 +17845,7 @@ void POA_IR::ValueBoxDef::_non_existent_skel (
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -18448,8 +18267,7 @@ void POA_IR::ProvidesDef::_get_interface_type_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -18474,8 +18292,7 @@ void POA_IR::ProvidesDef::_is_a_skel (
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -18492,8 +18309,7 @@ void POA_IR::ProvidesDef::_non_existent_skel (
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -18877,8 +18693,7 @@ void POA_IR::UsesDef::_get_interface_type_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -18903,8 +18718,7 @@ void POA_IR::UsesDef::_get_is_multiple_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << CORBA::Any::from_boolean (_tao_retval))
@@ -18929,8 +18743,7 @@ void POA_IR::UsesDef::_is_a_skel (
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -18947,8 +18760,7 @@ void POA_IR::UsesDef::_non_existent_skel (
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -19370,8 +19182,7 @@ void POA_IR::EventDef::is_a_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << CORBA::Any::from_boolean (_tao_retval))
@@ -19396,8 +19207,7 @@ void POA_IR::EventDef::_get_event_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -19422,8 +19232,7 @@ void POA_IR::EventDef::_is_a_skel (
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -19440,8 +19249,7 @@ void POA_IR::EventDef::_non_existent_skel (
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -19859,8 +19667,7 @@ void POA_IR::EmitsDef::_is_a_skel (
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -19877,8 +19684,7 @@ void POA_IR::EmitsDef::_non_existent_skel (
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -20236,8 +20042,7 @@ void POA_IR::PublishesDef::_is_a_skel (
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -20254,8 +20059,7 @@ void POA_IR::PublishesDef::_non_existent_skel (
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -20613,8 +20417,7 @@ void POA_IR::ConsumesDef::_is_a_skel (
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -20631,8 +20434,7 @@ void POA_IR::ConsumesDef::_non_existent_skel (
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -21032,8 +20834,7 @@ void POA_IR::ComponentDef::_get_supported_interfaces_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -21064,8 +20865,7 @@ void POA_IR::ComponentDef::_set_supported_interfaces_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
 }
 
 void POA_IR::ComponentDef::_get_base_component_skel (
@@ -21085,8 +20885,7 @@ void POA_IR::ComponentDef::_get_base_component_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -21111,8 +20910,7 @@ void POA_IR::ComponentDef::_get_provides_interfaces_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -21137,8 +20935,7 @@ void POA_IR::ComponentDef::_get_uses_interfaces_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -21163,8 +20960,7 @@ void POA_IR::ComponentDef::_get_emits_events_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -21189,8 +20985,7 @@ void POA_IR::ComponentDef::_get_publishes_events_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -21215,8 +21010,7 @@ void POA_IR::ComponentDef::_get_consumes_events_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -21241,8 +21035,7 @@ void POA_IR::ComponentDef::_get_is_basic_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << CORBA::Any::from_boolean (_tao_retval))
@@ -21283,8 +21076,7 @@ void POA_IR::ComponentDef::create_provides_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -21328,8 +21120,7 @@ void POA_IR::ComponentDef::create_uses_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -21370,8 +21161,7 @@ void POA_IR::ComponentDef::create_emits_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -21412,8 +21202,7 @@ void POA_IR::ComponentDef::create_publishes_skel (
 
   ACE_CHECK;
 
- _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+ _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -21454,8 +21243,7 @@ void POA_IR::ComponentDef::create_consumes_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -21480,8 +21268,7 @@ void POA_IR::ComponentDef::_is_a_skel (
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -21498,8 +21285,7 @@ void POA_IR::ComponentDef::_non_existent_skel (
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -22347,8 +22133,7 @@ void POA_IR::PrimaryKeyDef::is_a_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << CORBA::Any::from_boolean (_tao_retval))
@@ -22373,8 +22158,7 @@ void POA_IR::PrimaryKeyDef::_get_primary_key_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -22399,8 +22183,7 @@ void POA_IR::PrimaryKeyDef::_is_a_skel (
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -22417,8 +22200,7 @@ void POA_IR::PrimaryKeyDef::_non_existent_skel (
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -22894,8 +22676,7 @@ void POA_IR::FactoryDef::_is_a_skel (
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -22912,8 +22693,7 @@ void POA_IR::FactoryDef::_non_existent_skel (
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -23329,8 +23109,7 @@ void POA_IR::FinderDef::_is_a_skel (
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -23347,8 +23126,7 @@ void POA_IR::FinderDef::_non_existent_skel (
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -23744,8 +23522,7 @@ void POA_IR::HomeDef::_get_base_home_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -23800,8 +23577,7 @@ void POA_IR::HomeDef::_get_primary_key_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -23826,8 +23602,7 @@ void POA_IR::HomeDef::_get_factories_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -23852,8 +23627,7 @@ void POA_IR::HomeDef::_get_finders_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -23878,8 +23652,7 @@ void POA_IR::HomeDef::_get_is_basic_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << CORBA::Any::from_boolean (_tao_retval))
@@ -23920,8 +23693,7 @@ void POA_IR::HomeDef::create_primary_key_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -23965,8 +23737,7 @@ void POA_IR::HomeDef::create_factory_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -24010,8 +23781,7 @@ void POA_IR::HomeDef::create_finder_skel (
 
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -24036,8 +23806,7 @@ void POA_IR::HomeDef::_is_a_skel (
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
@@ -24054,8 +23823,7 @@ void POA_IR::HomeDef::_non_existent_skel (
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
     ACE_THROW (CORBA::MARSHAL ());
