@@ -96,7 +96,7 @@ AST_Enum::~AST_Enum (void)
 {
 }
 
-// Private operations.
+// Public operations.
 
 // Return the member count.
 int
@@ -110,35 +110,34 @@ AST_Enum::member_count (void)
   return this->member_count_;
 }
 
-// Public operations.
-
-// Compute total number of members.
-int
-AST_Enum::compute_member_count (void)
+// Convert a numeric value to the string name
+UTL_ScopedName *
+AST_Enum::value_to_name (const unsigned long v)
 {
-  UTL_ScopeActiveIterator *si = 0;
+  UTL_ScopeActiveIterator *iter = 0;
+  AST_EnumVal *item = 0;
+  AST_Decl *i = 0;
 
-  this->member_count_ = 0;
+  ACE_NEW_RETURN (iter,
+                  UTL_ScopeActiveIterator (this,
+                                           IK_decls),
+                  0);
 
-  // If there are elements in this scope
-  if (this->nmembers () > 0)
+  while (!iter->is_done ())
     {
-      // Instantiate a scope iterator.
-      ACE_NEW_RETURN (si,
-                      UTL_ScopeActiveIterator (this, 
-                                               UTL_Scope::IK_decls),
-                      -1);
+      i = iter->item  ();
+      item = AST_EnumVal::narrow_from_decl (i);
 
-      while (!(si->is_done ()))
-	      {
-	        // Get the next AST decl node.
-          this->member_count_++;
-          si->next ();
-        } 
+      if (item->constant_value ()->ev ()->u.ulval == v)
+        {
+          delete iter;
+          return item->name ();
+        }
 
-      delete si;
+      iter->next ();
     }
 
+  delete iter;
   return 0;
 }
 
@@ -218,7 +217,37 @@ munge_name_for_enumval (UTL_ScopedName *n,
   return hold;
 }
 
-// Redefinition of inherited virtual operations.
+// Private operations.
+
+// Compute total number of members.
+int
+AST_Enum::compute_member_count (void)
+{
+  UTL_ScopeActiveIterator *si = 0;
+
+  this->member_count_ = 0;
+
+  // If there are elements in this scope
+  if (this->nmembers () > 0)
+    {
+      // Instantiate a scope iterator.
+      ACE_NEW_RETURN (si,
+                      UTL_ScopeActiveIterator (this, 
+                                               UTL_Scope::IK_decls),
+                      -1);
+
+      while (!(si->is_done ()))
+	      {
+	        // Get the next AST decl node.
+          this->member_count_++;
+          si->next ();
+        } 
+
+      delete si;
+    }
+
+  return 0;
+}
 
 // Add an AST_EnumVal node to this scope
 AST_EnumVal *
@@ -285,6 +314,8 @@ AST_Enum::fe_add_enum_val (AST_EnumVal *t)
 
   return t;
 }
+
+// Redefinition of inherited virtual operations.
 
 // Dump this AST_Enum to the ostream o
 void

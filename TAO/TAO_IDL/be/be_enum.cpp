@@ -48,37 +48,6 @@ be_enum::be_enum (UTL_ScopedName *n,
   this->size_type (be_decl::FIXED);
 }
 
-// Convert a numeric value to the string name
-UTL_ScopedName *
-be_enum::value_to_name (const unsigned long v)
-{
-  UTL_ScopeActiveIterator *iter = 0;
-  AST_EnumVal *item = 0;
-  AST_Decl *i = 0;
-
-  ACE_NEW_RETURN (iter,
-                  UTL_ScopeActiveIterator (this,
-                                           IK_decls),
-                  0);
-
-  while (!iter->is_done ())
-    {
-      i = iter->item  ();
-      item = AST_EnumVal::narrow_from_decl (i);
-
-      if (item->constant_value ()->ev ()->u.ulval == v)
-        {
-          delete iter;
-          return item->name ();
-        }
-
-      iter->next ();
-    }
-
-  delete iter;
-  return 0;
-}
-
 void
 be_enum::destroy (void)
 {
