@@ -1,3 +1,7 @@
+Tue Mar 21 11:29:05 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Server_Request.h: Made some cosmetic changes. 
+
 Tue Mar 21 10:00:11 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/GIOP_Utils.cpp (convert_CORBA_to_GIOP_exception): Removed

@@ -23,11 +23,8 @@
 #define TAO_GIOP_SERVER_REQUEST_H
 
 #include "tao/corbafwd.h"
-// @@ Bala: there is a reasons why the rest of the #includes are after
-// the pragma once, think about it.
 
-//#include "tao/GIOP_Utils.h"
-#include "tao/GIOP_Message_Base.h"
+
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -36,6 +33,7 @@
 #include "tao/Server_Request.h"
 #include "tao/ORB.h"
 #include "tao/Principal.h"
+#include "tao/GIOP_Message_Base.h"
 
 class TAO_Export TAO_GIOP_ServerRequest : public CORBA_ServerRequest
 {
