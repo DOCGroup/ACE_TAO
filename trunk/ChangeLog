@@ -1,3 +1,11 @@
+Sun Apr 11 18:22:39 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* apps/JAWS2/HTTPU/HTTPU.DSP:
+	* java/gjt/GJT.DSP:
+	* java/src/JACE.DSP:
+
+	  Axed them from the repo.
+
 Sun Apr 11 18:19:55 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* apps/JAWS2/HTTPU/HTTPU.DSW:
