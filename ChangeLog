@@ -1,3 +1,11 @@
+Fri Dec 19 03:29:33 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * examples/System_V_IPC/SV_Semaphores/Semaphores_1.cpp:
+        * examples/System_V_IPC/SV_Semaphores/Semaphores_2.cpp:
+        * tests/SV_Shared_Memory_Test.cpp:
+          More explicit template instantiations of
+          ACE_Malloc_Lock_Adapter_T.
+
 Fri Dec 19 01:27:00 UTC 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	* examples/Reactor/WFMO_Reactor/Abandoned.cpp (handle_timeout): 
