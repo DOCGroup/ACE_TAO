@@ -1477,12 +1477,7 @@ sub generate_default_components {
 
         if (!$self->is_special_tag($tag)) {
           $self->sift_files($files, $exts, $pchh, $pchc, $tag, $array);
-          if (defined $self->{'generated_exts'}->{$tag}) {
-            if (defined $$array[0]) {
-              $self->{'defaulted'}->{$tag} = 1;
-            }
-          }
-          elsif ($tag eq 'source_files') {
+          if ($tag eq 'source_files') {
             foreach my $gentype (keys %{$self->{'generated_exts'}}) {
               ## If we are auto-generating the source_files, then
               ## we need to make sure that any generated source
@@ -1607,8 +1602,7 @@ sub list_default_generated {
   my($gentype) = shift;
   my($tags)    = shift;
 
-  if ($self->{'defaulted'}->{$gentype} &&
-      $self->{'generated_exts'}->{$gentype}->{'automatic'}) {
+  if ($self->{'generated_exts'}->{$gentype}->{'automatic'}) {
     ## After all source and headers have been defaulted, see if we
     ## need to add the generated .h, .i and .cpp files
     if (defined $self->{$gentype}) {
