@@ -43,12 +43,6 @@ int  AMI_Primary_Replication_Strategy::release (void)
   return  mutex_ ? mutex_->release() : 0;
 }
 
-
-int AMI_Primary_Replication_Strategy::init()
-{
-  return this->activate();
-}
-
 int AMI_Primary_Replication_Strategy::svc()
 {
   ACE_TRY_NEW_ENV {
