@@ -1,3 +1,30 @@
+Fri Sep 24 07:04:29 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* Makefile.am:
+	* ace.mpc:
+
+	  Add new files.
+
+	* ACE.h:
+	* ACE_crc_ccitt.cpp:
+
+	  Added ACE::crc_ccitt() family of functions in new file
+	  ACE_crc_ccitt.cpp.
+
+	* ACE_crc32.cpp:
+
+	  Changed table and shift expression so the special case with
+	  additional masking for systems where ACE_UINT32 is more than 32
+	  bits wide (such as the Cray) is not needed.  See "A Painless
+	  Guide to CRC Error Detection Algorithms" by Ross Williams for
+	  details.
+
+	* ACE.cpp:
+	* ACE_crc32.cpp:
+
+	  Split out ACE::crc32() family of functions out of ACE.cpp into
+	  new file ACE_crc32.cpp.
+
 Fri Sep 24 08:36:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-lite.h:
