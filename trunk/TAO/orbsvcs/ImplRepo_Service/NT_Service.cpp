@@ -12,8 +12,11 @@
 //=============================================================================
 
 #include "NT_Service.h"
-#include "ImplRepo_i.h"
 
+// Only on Windows for now
+#if defined (ACE_WIN32)
+
+#include "ImplRepo_i.h"
 
 /**
  * Default constructor, does nothing special.
@@ -116,3 +119,5 @@ ImR_NT_Service::svc (void)
 
   return 0;
 }
+
+#endif /* ACE_WIN32 */
