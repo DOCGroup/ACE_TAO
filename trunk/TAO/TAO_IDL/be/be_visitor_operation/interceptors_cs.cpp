@@ -51,6 +51,17 @@ be_visitor_operation_interceptors_cs::visit_operation (be_operation *node)
   
   os = this->ctx_->stream ();
   this->ctx_->node (node); // save the node
+  /*  if ((node->next_state (TAO_CodeGen::TAO_OPERATION_CS, 
+                         node->has_extra_code_generation (TAO_CodeGen::TAO_OPERATION_CS)) 
+       == TAO_CodeGen::TAO_AMI_SENDC_OPERATION_CS)
+      ||(node->next_state (TAO_CodeGen::TAO_OPERATION_CS,
+                           node->has_extra_code_generation (TAO_CodeGen::TAO_OPERATION_CS)) 
+         == TAO_CodeGen::TAO_AMI_HANDLER_REPLY_STUB_OPERATION_CS)
+      ||(node->next_state (TAO_CodeGen::TAO_OPERATION_CS,
+                           node->has_extra_code_generation (TAO_CodeGen::TAO_OPERATION_CS)) 
+         == TAO_CodeGen::TAO_AMI_EXCEPTION_HOLDER_RAISE_OPERATION_CS))
+         return 0;*/
+
   os->indent (); // start with the current indentation level
 
   // Generate the ClientRequest_Info object definition per operation
@@ -209,7 +220,14 @@ be_visitor_operation_interceptors_cs::visit_operation (be_operation *node)
     }
 
   *os<< "::"
-      << "arguments (CORBA::Environment &)"<< be_nl
+      << "arguments (";
+  // generate the CORBA::Environment parameter for the alternative mapping
+  if (!idl_global->exception_support ())
+    *os<<"CORBA::Environment &";
+  else
+    *os << "void";
+  *os<<")"<< be_idt_nl;
+  *os<<"ACE_THROW_SPEC ((CORBA::SystemException))"<<be_uidt_nl
       << "{" << be_idt_nl 
       << " // Generate the arg list on demand" << be_nl;
 
@@ -283,9 +301,16 @@ be_visitor_operation_interceptors_cs::visit_operation (be_operation *node)
     }
 
   *os<< "::"
-      << "exceptions (CORBA::Environment &)"<< be_nl
-      << "{" << be_idt_nl 
-      <<"// Generate the exception list on demand " << be_nl;
+      << "exceptions (";
+   // generate the CORBA::Environment parameter for the alternative mapping
+  if (!idl_global->exception_support ())
+    *os<<"CORBA::Environment &";
+  else
+    *os << "void";
+  *os<<")"<< be_idt_nl;
+  *os<<"ACE_THROW_SPEC ((CORBA::SystemException))"<<be_uidt_nl
+    << "{" << be_idt_nl 
+     <<"// Generate the exception list on demand " << be_nl;
   if (!node->exceptions ())
     {
       *os << "return 0;\n}\n\n" << be_nl;
@@ -353,8 +378,15 @@ be_visitor_operation_interceptors_cs::visit_operation (be_operation *node)
     }
 
   *os<< "::"
-      << "result (CORBA::Environment &)"<< be_nl
-      << "{\n // Generate the result on demand :" << be_nl;
+      << "result (";
+  // generate the CORBA::Environment parameter for the alternative mapping
+  if (!idl_global->exception_support ())
+    *os<<"CORBA::Environment &";
+  else
+    *os << "void";
+  *os<<")"<< be_idt_nl;
+  *os<<"ACE_THROW_SPEC ((CORBA::SystemException))"<<be_uidt_nl
+     << "{\n // Generate the result on demand :" << be_nl;
 
   bt = be_type::narrow_from_decl (node->return_type ());
   if (this->void_return_type (bt)) 

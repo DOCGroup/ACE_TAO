@@ -49,6 +49,14 @@ be_visitor_operation_interceptors_ch::visit_operation (be_operation *node)
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
   os = this->ctx_->stream ();
   this->ctx_->node (node); // save the node
+
+  /*  if ((node->next_state (TAO_CodeGen::TAO_OPERATION_CH, 
+                         node->has_extra_code_generation (TAO_CodeGen::TAO_OPERATION_CH)) 
+       == TAO_CodeGen::TAO_AMI_SENDC_OPERATION_CH)
+      ||(node->next_state (TAO_CodeGen::TAO_OPERATION_CH,
+                           node->has_extra_code_generation (TAO_CodeGen::TAO_OPERATION_CH)) 
+         == TAO_CodeGen::TAO_AMI_HANDLER_REPLY_STUB_OPERATION_CH))
+         return 0;*/
   
   // Generate the ClientRequest_Info object per operation to be used by the interecptors
   os->indent (); // start with the current indentation level
@@ -147,23 +155,45 @@ be_visitor_operation_interceptors_ch::visit_operation (be_operation *node)
 
   os->indent ();
   // Here I still need to generate the other methods + private args
-  *os << " virtual Dynamic::ParameterList * arguments ("<<be_idt_nl 
-      << "CORBA::Environment &ACE_TRY_ENV =" <<be_idt_nl
-      << " TAO_default_environment ())" << be_uidt_nl
-      << " ACE_THROW_SPEC ((CORBA::SystemException));" 
-      << be_uidt_nl << be_nl;
+  *os << " virtual Dynamic::ParameterList * arguments (";
+    if (!idl_global->exception_support ())
+      {
+        *os << be_idt_nl <<"CORBA::Environment &ACE_TRY_ENV =" 
+            <<be_idt_nl << " TAO_default_environment ())" 
+            << be_uidt<< be_uidt_nl;
+
+      }
+    else
+      *os << "void)" <<be_nl;
+
+    *os << " ACE_THROW_SPEC ((CORBA::SystemException));" 
+        << be_uidt_nl << be_nl;
   os->indent ();
-  *os << "virtual Dynamic::ExceptionList * exceptions "<<be_idt_nl 
-      <<"(CORBA::Environment &ACE_TRY_ENV = " <<be_idt_nl
-      << "TAO_default_environment ())"<< be_uidt_nl
-      <<"ACE_THROW_SPEC ((CORBA::SystemException));"
-      << be_uidt_nl << be_nl;
-  os->indent ();
-  *os << "virtual CORBA::Any * result ( "<< be_idt_nl 
-      <<"CORBA::Environment &ACE_TRY_ENV ="<< be_idt_nl
-      << "TAO_default_environment ())"<< be_uidt_nl
-      << "ACE_THROW_SPEC ((CORBA::SystemException));"
-      << be_uidt_nl << be_nl;
+  *os << "virtual Dynamic::ExceptionList * exceptions ( ";
+    if (!idl_global->exception_support ())
+      {
+        *os << be_idt_nl <<"CORBA::Environment &ACE_TRY_ENV =" 
+            <<be_idt_nl << " TAO_default_environment ())" 
+            << be_uidt<< be_uidt_nl;
+      }
+    else
+      *os << "void)" <<be_nl;
+
+    *os << " ACE_THROW_SPEC ((CORBA::SystemException));" 
+        << be_uidt_nl << be_nl;
+    os->indent ();
+    *os << "virtual CORBA::Any * result (";
+    if (!idl_global->exception_support ())
+      {
+        *os << be_idt_nl <<"CORBA::Environment &ACE_TRY_ENV =" 
+            <<be_idt_nl << " TAO_default_environment ())" 
+            << be_uidt<< be_uidt_nl;
+      }
+    else
+      *os << "void)" <<be_nl;
+
+    *os << " ACE_THROW_SPEC ((CORBA::SystemException));" 
+        << be_uidt_nl << be_nl;
   
   os->indent ();
   *os << be_uidt_nl << "private:" <<be_nl;
