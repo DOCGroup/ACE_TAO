@@ -905,42 +905,19 @@ ifr_adding_visitor::visit_attribute (AST_Attribute *node)
 
           AST_Type *type = node->field_type ();
 
-          // If this attribute is itself an interface, we just update
-          // the current IR object holder. The forward declaration
-          // (if any) will create a repository entry, and the full
-          // definition will take care of the interface's scope. Trying 
-          // to take care of the interface's scope at this point could
-          // cause problems, if the types of all its members have not yet
-          // been declared.
-          if (type->node_type () == AST_Decl::NT_interface)
+          // If this type already has a repository entry, the call
+          // will just update the current IR object holder. Otherwise,
+          // it will create the entry.
+          if (type->ast_accept (this) == -1)
             {
-              CORBA_Contained_var prev_type_def =
-                be_global->repository ()->lookup_id (type->repoID (),
-                                                     ACE_TRY_ENV);
-              ACE_TRY_CHECK;
-
-              this->ir_current_ = 
-                CORBA_IDLType::_narrow (prev_type_def.in (),
-                                        ACE_TRY_ENV);
-              ACE_TRY_CHECK;
-            }
-          else
-            {
-              // Since the type of this attribute has already been seen
-              // in the IDL file (or is a primitive type), the following
-              // call will simply look up the repository entry and place
-              // it in the current IR object holder.
-              if (type->ast_accept (this) == -1)
-                {
-                  ACE_ERROR_RETURN ((
-                      LM_ERROR,
-                      ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
-                      ACE_TEXT ("visit_attribute - ")
-                      ACE_TEXT ("failed to accept visitor\n")
-                    ), 
-                    -1
-                  );
-                }
+              ACE_ERROR_RETURN ((
+                  LM_ERROR,
+                  ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
+                  ACE_TEXT ("visit_attribute - ")
+                  ACE_TEXT ("failed to accept visitor\n")
+                ), 
+                -1
+              );
             }
 
           CORBA_Container_ptr current_scope = CORBA_Container::_nil ();

@@ -85,6 +85,21 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
         {
           ex = ex_iter.item ();
 
+          // If we got to visit_operation from a forward declared interface,
+          // this node may not yet be in the repository. If it is, this
+          // call will merely update ir_current_.
+          if (ex->ast_accept (this) == -1)
+            {
+              ACE_ERROR_RETURN ((
+                  LM_ERROR,
+                  ACE_TEXT ("(%N:%l) ifr_adding_visitor_operation::")
+                  ACE_TEXT ("visit_operation - AST_Exception failed to ")
+                  ACE_TEXT ("accept visitor\n")
+                ),  
+                -1
+              );
+            }
+
           prev_def =
             be_global->repository ()->lookup_id (ex->repoID (),
                                                  ACE_TRY_ENV);
@@ -131,40 +146,19 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
 
       AST_Type *return_type = node->return_type ();
 
-      // If one of the operations's args is an interface, we just update
-      // the current IR object holder. The forward declaration
-      // (if any) will create a repository entry, and the full
-      // definition will take care of the interface's scope. Trying 
-      // to take care of the interface's scope at this point could
-      // cause problems, if the types of all its members have not yet
-      // been declared.
-      if (return_type->node_type () == AST_Decl::NT_interface)
+      // If this type already has a repository entry, the call
+      // will just update the current IR object holder. Otherwise,
+      // it will create the entry.
+      if (return_type->ast_accept (this) == -1)
         {
-          CORBA_Contained_var prev_def =
-            be_global->repository ()->lookup_id (return_type->repoID (),
-                                                 ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-
-          this->ir_current_ = CORBA_IDLType::_narrow (prev_def.in (),
-                                                      ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-        }
-      else
-        {
-          // Since this entry should already be in the repository,
-          // this call will just look it up and update the current 
-          // IR object holder.
-          if (return_type->ast_accept (this) == -1)
-            {
-              ACE_ERROR_RETURN ((
-                  LM_ERROR,
-                  ACE_TEXT ("(%N:%l) ifr_adding_visitor_operation::")
-                  ACE_TEXT ("visit_operation -")
-                  ACE_TEXT (" failed to accept visitor\n")
-                ),  
-                -1
-              );
-            }
+          ACE_ERROR_RETURN ((
+              LM_ERROR,
+              ACE_TEXT ("(%N:%l) ifr_adding_visitor_operation::")
+              ACE_TEXT ("visit_operation -")
+              ACE_TEXT (" failed to accept visitor\n")
+            ),  
+            -1
+          );
         }
 
       // Is the operation oneway?
@@ -229,68 +223,34 @@ ifr_adding_visitor_operation::visit_argument (AST_Argument *node)
 
   AST_Type *arg_type = node->field_type ();
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  // If this type already has a repository entry, the call
+  // will just update the current IR object holder. Otherwise,
+  // it will create the entry.
+  if (arg_type->ast_accept (this) == -1)
     {
-      // If one of the operations's args is an interface, we just update
-      // the current IR object holder. The forward declaration
-      // (if any) will create a repository entry, and the full
-      // definition will take care of the interface's scope. Trying 
-      // to take care of the interface's scope at this point could
-      // cause problems, if the types of all its members have not yet
-      // been declared.
-      if (arg_type->node_type () == AST_Decl::NT_interface)
-        {
-          CORBA_Contained_var prev_def =
-            be_global->repository ()->lookup_id (arg_type->repoID (),
-                                                 ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-
-          this->ir_current_ = CORBA_IDLType::_narrow (prev_def.in (),
-                                                      ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-        }
-      else
-        {
-          // Since this type must already have a repository entry, the call
-          // wil just update the current IR object holder.
-          if (arg_type->ast_accept (this) == -1)
-            {
-              ACE_ERROR_RETURN ((
-                  LM_ERROR,
-                  ACE_TEXT ("(%N:%l) ifr_adding_visitor_operation::")
-                  ACE_TEXT ("visit_argument - failed to accept visitor\n")
-                ),  
-                -1
-              );
-            }
-        }
-
-      this->params_[this->index_].type_def = 
-        CORBA_IDLType::_duplicate (this->ir_current_.in ());
-
-      // Fortunately, AST_Field::Direction and CORBA_ParameterMode 
-      // are ordered identically.
-      this->params_[this->index_].mode = 
-        (CORBA::ParameterMode) node->direction ();
-
-      // IfR method create_operation does not use this - it just needs
-      // to be non-null for marshaling.
-      this->params_[this->index_].type =
-        CORBA::TypeCode::_duplicate (CORBA::_tc_null);
-
-      ++this->index_;
+      ACE_ERROR_RETURN ((
+          LM_ERROR,
+          ACE_TEXT ("(%N:%l) ifr_adding_visitor_operation::")
+          ACE_TEXT ("visit_argument - failed to accept visitor\n")
+        ),  
+        -1
+      );
     }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (
-          ACE_ANY_EXCEPTION,
-          ACE_TEXT ("ifr_adding_visitor_operation::visit_argument")
-        );
 
-      return -1;
-    }
-  ACE_ENDTRY;
+  this->params_[this->index_].type_def = 
+    CORBA_IDLType::_duplicate (this->ir_current_.in ());
+
+  // Fortunately, AST_Field::Direction and CORBA_ParameterMode 
+  // are ordered identically.
+  this->params_[this->index_].mode = 
+    (CORBA::ParameterMode) node->direction ();
+
+  // IfR method create_operation does not use this - it just needs
+  // to be non-null for marshaling.
+  this->params_[this->index_].type =
+    CORBA::TypeCode::_duplicate (CORBA::_tc_null);
+
+  ++this->index_;
 
   return 0;
 }
