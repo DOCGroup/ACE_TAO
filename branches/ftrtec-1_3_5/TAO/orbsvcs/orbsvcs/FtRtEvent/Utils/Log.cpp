@@ -42,7 +42,7 @@ namespace TAO_FTRTEC {
 
     int time_in_usec = result.sec()*1000000+result.usec();
     int n = ACE_OS::snprintf(now, buffer-now+sizeof(buffer), 
-             "%s %d , start = %d.%10d, stop = %d.%10d\n", 
+             "%s %d , start = %d.%06d, stop = %d.%06d\n", 
              msg_, time_in_usec, start_time_.sec(), start_time_.usec(),
              stop.sec(), stop.usec());
     now+=n;
