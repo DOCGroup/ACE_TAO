@@ -1,7 +1,0 @@
-#
-# Makefile for building the Collocation test executables and libraries
-#
-
-MAKEFILES = Coll_Test_Stubs.bor Diamond.bor Collocation.bor
-
-!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
