@@ -1,3 +1,15 @@
+Fri Aug 30 17:24:15 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/CosLoadBalancing.dsp:
+	* orbsvcs/orbsvcs/CosLoadBalancing_Static.dsp:
+	* orbsvcs/orbsvcs/PortableGroup.dsp:
+	* orbsvcs/orbsvcs/PortableGroup_Static.dsp:
+
+	  Removed redundant "-I" preprocessor directives.  They confused
+	  TAO_IDL's preprocessor.  This fixes some Windows build
+	  problems.  Thanks to Jeff for figuring out the cause of these
+	  problems, and for suggesting a fix.
+
 Fri Aug 30 14:36:33 2002  Ossama Othman  <ossama@uci.edu>
 
 	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp
