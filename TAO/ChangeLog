@@ -1,3 +1,11 @@
+Mon Oct 28 16:48:23 2002  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tests\POA\MT_Servant_Locator\MT_Servant_Locator.cpp: <Task::event_>
+	  was being used in both preinvoke() and postinvoke().  This led
+	  to a deadlock if the second signal() was missed since the event
+	  was already signaled. Solution was to give both preinvoke() and
+	  postinvoke() their own event variables.
+
 Mon Oct 28 14:20:32 2002  Irfan Pyarali  <irfan@oomworks.com>
 
 	* tao\PortableServer\POA.cpp (locate_servant_i): We no longer
