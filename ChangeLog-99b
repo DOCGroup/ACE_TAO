@@ -1,3 +1,8 @@
+Thu Jul 22 09:55:10 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * docs/ACE-guidelines.html: updated commit message guideline
+          to show ChangeLogTag example.
+
 Thu Jul 22 02:15:46 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Handle_Gobbler (class ACE_Handle_Gobbler): New class that

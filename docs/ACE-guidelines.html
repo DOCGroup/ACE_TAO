@@ -646,14 +646,15 @@ bgcolor="#ffffff">
         in most of their APIs.  On these platforms, ACE also uses
         UNICODE as its system string type.<p>
 
-        <p>Notice that when spaning a string literal across several lines,
-        you must apply <CODE>ASYS_TEXT</CODE> to <b>every</b> line.
-        For example, it is <font color=red>illegal</font> to do this:
+        Notice that when spaning a string literal across several lines,
+        you must apply <code>ASYS_TEXT</code> to <strong>every</strong>
+        line.  For example, it is <font color=red>illegal</font> to do this:
         <pre>
         ACE_ERROR ((LM_ERROR,
                     ASYS_TEXT ("%p\n"),
                     ASYS_TEXT ("\nerror: x is a null pointer in "
-                               "ACE_RB_Tree<EXT_ID, INT_ID>::RB_rotate_left\n")));
+                               "ACE_RB_Tree&lt;EXT_ID, INT_ID&gt;::"
+                               "RB_rotate_left\n")));
         </pre></p>
 
         <p>Instead, this should be written like this:
@@ -661,7 +662,8 @@ bgcolor="#ffffff">
         ACE_ERROR ((LM_ERROR,
                     ASYS_TEXT ("%p\n"),
                     ASYS_TEXT ("\nerror: x is a null pointer in ")
-                    ASYS_TEXT ("ACE_RB_Tree<EXT_ID, INT_ID>::RB_rotate_left\n")));
+                    ASYS_TEXT ("ACE_RB_Tree&lt;EXT_ID, INT_ID&gt;::")
+                    ASYS_TEXT ("RB_rotate_left\n")));
         </pre></p>
 
     <li><strong><code>ACE_TRACE</code></strong> handles conversion
@@ -760,7 +762,8 @@ bgcolor="#ffffff">
           ~exe_foo ()
             { cerr &lt;&lt; "destructor of exception called" &lt;&lt; endl; }
           exe_foo (const exe_foo& foo) : data_ (foo.data_)
-            { cerr &lt;&lt; "copy constructor of exception called" &lt;&lt; endl; }
+            { cerr &lt;&lt; "copy constructor of exception called"
+                   &lt;&lt; endl; }
           int data_;
         };
 
@@ -780,44 +783,52 @@ bgcolor="#ffffff">
 
         int main ()
         {
-          cout &lt;&lt; endl &lt;&lt; "First exception" &lt;&lt; endl &lt;&lt; endl;
+          cout &lt;&lt; endl &lt;&lt; "First exception" &lt;&lt; endl
+               &lt;&lt; endl;
           try
             {
               good (0);
             }
           catch (exe_foo &foo)
             {
-              cerr &lt;&lt; "exception caught: " &lt;&lt; foo.data_ &lt;&lt; endl;
+              cerr &lt;&lt; "exception caught: " &lt;&lt; foo.data_
+                   &lt;&lt; endl;
             }
 
-          cout &lt;&lt; endl &lt;&lt; "Second exception" &lt;&lt; endl &lt;&lt; endl;
+          cout &lt;&lt; endl &lt;&lt; "Second exception" &lt;&lt; endl
+               &lt;&lt; endl;
           try
             {
               good (0);
             }
           catch (exe_foo foo)
             {
-              cerr &lt;&lt; "exception caught: " &lt;&lt; foo.data_ &lt;&lt; endl;
+              cerr &lt;&lt; "exception caught: " &lt;&lt; foo.data_
+                   &lt;&lt; endl;
             }
 
-          cout &lt;&lt; endl &lt;&lt; "Third exception" &lt;&lt; endl &lt;&lt; endl;
+          cout &lt;&lt; endl &lt;&lt; "Third exception" &lt;&lt; endl
+               &lt;&lt; endl;
           try
             {
               bad (1);
             }
           catch (exe_foo &foo)
             {
-              cerr &lt;&lt; "exception caught: " &lt;&lt; foo.data_ &lt;&lt; endl;
+              cerr &lt;&lt; "exception caught: " &lt;&lt; foo.data_
+                   &lt;&lt; endl;
             }
 
-          cout &lt;&lt; endl &lt;&lt; "Fourth exception" &lt;&lt; endl &lt;&lt; endl;
+          cout &lt;&lt; endl &lt;&lt; "Fourth exception" &lt;&lt; endl
+               &lt;&lt; endl;
           try
             {
               bad (1);
             }
           catch (exe_foo foo)
             {
-              cerr &lt;&lt; "exception caught: " &lt;&lt; foo.data_ &lt;&lt; endl;
+              cerr &lt;&lt; "exception caught: " &lt;&lt; foo.data_
+                   &lt;&lt; endl;
             }
 
           return 0;
@@ -996,7 +1007,6 @@ bgcolor="#ffffff">
     <li>Test your change on at least one platform.  All changes
       <strong>must</strong> be tested with egcs before commiting.
       That means you may need to test on at least two platforms.<p>
-    <li>Commit your change with a meaningful message.<p>
     <li>An an entry to the appropriate ChangeLog.  TAO and some
       ACE subdirectories, such as <a href="../ASNMP">ASNMP</a>,
       <a href="../apps/JAWS">JAWS</a>, and
@@ -1004,6 +1014,11 @@ bgcolor="#ffffff">
       own ChangeLogs.  If you don't use one of those, use the
       <a href="../ChangeLog">ChangeLog</a> in the top-level
       <a href="..">ACE_wrappers</a> directory.<p>
+    <li>Commit your change using a message of this form:<p>
+<code>
+ChangeLogTag: Thu Jul 22 09:55:10 1999  David L. Levine
+ &lt;levine@cs.wustl.edu&gt;
+</code><p>
     <li>If the change is in response to a request by someone else:
     <ol>
       <li>Make sure that person is acknowledged in
