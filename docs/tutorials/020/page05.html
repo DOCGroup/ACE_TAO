@@ -17,6 +17,7 @@ The mmap.h where we define stuff that needs to be shared between the
 <hr>
 <HR width=50%><P><center>mmap.h</center><HR width=50%>
 <PRE>
+<font color=red>// $Id$</font>
 
 <font color=blue>#ifndef</font> <font color=purple>MMAP_H</font>
 <font color=blue>#define</font> <font color=purple>MMAP_H</font>
@@ -41,22 +42,24 @@ The mmap.h where we define stuff that needs to be shared between the
 class SharedData
 {
 public:
-    SharedData(int _initialize = 1);
+  SharedData (int initialize = 1);
     
-    void set(void);
-    void show(void);
-    int available(void);
-    void available(int _available);
+  void set (void);
+  void show (void);
+  int available (void);
+  void available (int not_in_use);
         
 protected:
-    char buf_[128];
-    int available_;
+  char buf_[128];
+  int available_;
 };
 
-<font color=blue>#endif</font> <font color=red>// MMAP_H</font>
+<font color=blue>#endif</font> <font color=red>/* MMAP_H */</font>
 </PRE>
 <HR width=50%><P><center>mmap.cpp</center><HR width=50%>
 <PRE>
+
+<font color=red>// $Id$</font>
 
 <font color=blue>#include</font> "<font color=green>mmap.h</font>"
 

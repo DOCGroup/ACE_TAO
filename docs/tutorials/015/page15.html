@@ -12,18 +12,21 @@
 
 <P>
 <HR WIDTH="100%">
-Recv is the sibling to Xmit.  Again, they could be combined into a
-single object if you want.
+The implementation of Xmit isn't too complicated.  If we choose to
+combine it with the Recv task we simply lift the recv() method from
+that object and drop it into this one.
 <P>
-An ACE_Stream is designed to handle downstream traffic very
-well.  You put() data into it and it flows along towards the tail.
-However, there doesn't seem to be a way to put data in such that it
-will travel upstream.  To get around that, I've added a get() method
-to Recv that will trigger a read on the socket.  Recv will then put
-the data to the next upstream module and we're on our way.  As noted
-earlier, that data will eventually show up either in the <i>reader</i> 
-(if installed on the stream open()) or the stream head reader task's
-message queue.
+Note that close() must decide if it's being called when the stream is
+shutdown or when it's svc() method exits.  Since we tell the baseclass 
+not to use any threads it's a safe bet that flags will always be
+non-zero.  Still, it's good practice to plan for the future by
+checking the value.
+<P>
+Note also that when we send the data we prefix it with the data size.
+This let's our sibling Recv ensure that an entire block is received
+together.  This can be very important for compression and encryption
+processes which typically work better with blocks of data instead of
+streams of data.
 <HR>
 <PRE>
 

@@ -1,5 +1,8 @@
 Sun Jan 31 18:19:45 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
+	* docs/tutorials/Makefile: Now we can build the UNSHAR SHAR HTML
+ 	  right from the top-level.  Thanks James!
+
 	* tests/Process_Strategy_Test: Updated the test to use ACE::fork()
  	  and the new "avoid zombies" feature of ACE_Process_Strategy.
 
