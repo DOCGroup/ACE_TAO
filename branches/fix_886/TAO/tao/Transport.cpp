@@ -1,8 +1,6 @@
 // -*- C++ -*-
 // $Id$
 
-
-
 #include "Transport.h"
 
 #include "Exception.h"
@@ -28,7 +26,6 @@
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(tao, Transport, "$Id$")
-
 
 TAO_Synch_Refcountable::TAO_Synch_Refcountable (ACE_Lock *lock, int refcount)
   : ACE_Refcountable (refcount)
@@ -887,15 +884,9 @@ TAO_Transport::handle_input_i (TAO_Resume_Handle &rh,
   if (qd.more_fragments_ ||
       (qd.msg_type_ == TAO_PLUGGABLE_MESSAGE_FRAGMENT))
     {
-      // Make a copy of the message that we have
-      ACE_Data_Block *ndb =
-        message_block.data_block ()->clone ();
-
-      // Replace the underlying the datablock
-      message_block.replace_data_block (ndb);
-
       // Duplicate the node that we have as the node is on stack..
-      TAO_Queued_Data *nqd = TAO_Queued_Data::duplicate (qd);
+      TAO_Queued_Data *nqd =
+        this->make_queued_data (message_block);
 
       return this->consolidate_fragments (nqd, rh);
     }
@@ -1349,8 +1340,9 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
            t == TAO_PLUGGABLE_MESSAGE_LOCATEREQUEST)
     {
       // Let us resume the handle before we go ahead to process the
-      // request. This will open up the handle for othe threads.
+      // request. This will open up the handle for other threads.
       rh.resume_handle ();
+
       if (this->messaging_object ()->process_request_message (
             this,
             qd) == -1)
@@ -1366,9 +1358,12 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
   else if (t == TAO_PLUGGABLE_MESSAGE_REPLY ||
            t == TAO_PLUGGABLE_MESSAGE_LOCATEREPLY)
     {
+      rh.resume_handle ();
+
       // @@todo: Maybe the input_cdr can be constructed from the
       // message_block
       TAO_Pluggable_Reply_Params params (this->orb_core ());
+
 
       if (this->messaging_object ()->process_reply_message (params,
                                                             qd) == -1)
@@ -1401,13 +1396,6 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
           return -1;
         }
 
-      // If we have received a reply, we resume after dispatching the
-      // reply. We know that dispatching a reply is bounded and will
-      // not affect the concurrency at any point.
-      // @@ todo: need to think what do we win by doing this
-      // here. Anyway, when the handle_input_i () returns we should be
-      // fine, right?
-      rh.resume_handle ();
     }
   else if (t == TAO_PLUGGABLE_MESSAGE_MESSAGERROR)
     {
