@@ -3365,7 +3365,7 @@ TAO_POA_Current::implementation (TAO_POA_Current_Impl *new_current)
   TAO_POA_Current_Impl *old = tss->poa_current_impl_;
   tss->poa_current_impl_ = new_current;
   return old;
-};
+}
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Array<PortableServer::ObjectId>;
