@@ -366,14 +366,11 @@ namespace TAO
     stub->add_forward_profiles (stubobj->base_profiles ());
 
     if (stub->next_profile () == 0)
-      ACE_THROW_RETURN (CORBA::TRANSIENT (
+      ACE_THROW (CORBA::TRANSIENT (
         CORBA::SystemException::_tao_minor_code (
           TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
           errno),
-        CORBA::COMPLETED_NO),
-                        TAO_INVOKE_FAILURE);
-
-
+        CORBA::COMPLETED_NO));
 
     return;
   }

@@ -1,3 +1,10 @@
+Mon Oct 13 11:05:58 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Invocation_Adapter.cpp (object_forwarded):
+
+          Changed an ACE_THROW_RETURN to ACE_THROW, since object_forwarded()
+          is a void function.
+
 Fri Oct 10 22:01:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Portable_Interceptors/Service_Context_Manipulation/interceptors.cpp:
