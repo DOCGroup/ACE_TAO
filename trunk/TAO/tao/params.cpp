@@ -109,16 +109,7 @@ TAO_ORB_Parameters::parse_endpoints (ACE_CString &endpoints,
 }
 
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Node<ACE_CString>;
-template class ACE_Unbounded_Set<ACE_CString>;
-template class ACE_Unbounded_Set_Iterator<ACE_CString>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Node<ACE_CString>
-#pragma instantiate ACE_Unbounded_Set<ACE_CString>
-#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_CString>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+/* Note ACE_Node<ACE_CString>, ACE_Unbounded_Set<ACE_CString> and 
+ * ACE_Unbounded_Set_Iterator<ACE_CString> * are instantiated in 
+ * Service_Config.cpp so we do not explicitly instantiate here.
+ */
