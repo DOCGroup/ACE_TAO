@@ -1,3 +1,11 @@
+Fri Dec  1 15:37:31 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/InterfaceC.i:
+	* tao/diffs/InterfaceC.i.diff:
+
+	  Changes to flat name of sequence base classes, caught by
+	  Sun egcs.
+
 Fri Dec  1 15:15:22 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/InterfaceC.i:
