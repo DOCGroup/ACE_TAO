@@ -10,7 +10,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # full path to perl, as long as it is in the user's PATH.
 # Taken from perlrun man page.
 
-$usage = "usage: $0 [-? | [[-c <compile>] [-m <munch>] [-n <nm>]] [-f]]]";
+$usage = "usage: $0 [-? | [[-c <compile>] [-m <munch>] [-n <nm>]] [-f]]]\n";
 
 ####
 #### process command line args
@@ -65,17 +65,17 @@ $current_dir_in_libDirs = 0;
 foreach $arg (@ARGV) {
   if ($arg =~ /-L([\S]+)/) {
     ($dir = $1) =~ s%/+$%%;     #### trim any trailing slashes
-    push @libDirs, $dir;
+    push (@libDirs, $dir);
     $current_dir_in_libDirs = 1 if $dir eq '.';
   } elsif ($arg =~ /-l([\S]+)/) {
-    push @libs, $1;
+    push (@libs, $1);
   } elsif ($arg =~ /\.o$/) {
-    push @objs, $arg;
+    push (@objs, $arg);
   }
 }
 
 #### Add . to libDirs if it doesn't already have it.
-push @libDirs, "." unless $current_dir_in_libDirs;
+push (@libDirs, ".") unless $current_dir_in_libDirs;
 
 foreach $lib (@libs) {
   foreach $libDir (@libDirs) {
@@ -102,10 +102,10 @@ if ($munch) {
   $munch_libs = join (' ', values %full_path);
 
   open (MUNCH, "$nm $munch_objs $munch_libs | $munch |") ||
-    fail ("$0: unable to run \"$nm\" or \"$munch\"\n");
+    &fail ("$0: unable to run \"$nm\" or \"$munch\"\n");
 
   open (CTORDTOR, "> __ctordtor.c") ||
-    fail ("$0: unable to open \"__ctordtor.c\"\n");
+    &fail ("$0: unable to open \"__ctordtor.c\"\n");
 
   while (<MUNCH>) {
     #### Filter out munch output that contains '.cpp'.  It results from
@@ -114,11 +114,11 @@ if ($munch) {
     print CTORDTOR unless /\.cpp/;
   }
 
-  close CTORDTOR || fail ("$0: unable to write \"__ctordtor.c\"\n");
+  close CTORDTOR || &fail ("$0: unable to write \"__ctordtor.c\"\n");
   close MUNCH;
 
   system ("$compile -o .obj/__ctordtor.o __ctordtor.c") &&
-    fail ("$0: \"$compile\" failed\n");
+    &fail ("$0: \"$compile\" failed\n");
 }
 
 
@@ -139,7 +139,7 @@ if ($munch) {
 
 $link_command = join (' ', @args);
 
-system ("$link_command") && fail ("$0: $link_command failed\n");
+system ("$link_command") && &fail ("$0: $link_command failed\n");
 
 
 $done = 1;
