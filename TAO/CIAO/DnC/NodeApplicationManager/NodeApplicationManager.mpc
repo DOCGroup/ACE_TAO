@@ -1,16 +1,13 @@
 // -*- MPC -*-
 // $Id$
 
-project(NodeApplicationManager): ciao_server, iortable {
-  requires += dnc
-  Source_Files {
-    NodeApplicationManager.cpp
-  }
-}
+project(NodeApplicationManager): ciao_server, ciao_deployment_svnt {
+  requires    += dnc
+  sharedname   = NodeApplicationManager
+  idlflags    += -Wb,export_include=CIAO_NAM_Export.h -Wb,export_macro=CIAO_NAM_Export
+  dynamicflags = CIAO_NAM_BUILD_DLL
 
-project(NodeApplicationManager_test_client) : ciao_server {
-  requires += dnc
   Source_Files {
-    NodeApplicationManager_test_client.cpp
+    NodeApplicationManager_Impl.cpp
   }
 }
