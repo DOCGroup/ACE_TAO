@@ -1,3 +1,8 @@
+Wed Nov 29 17:59:10 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
+
+	* examples/Load_Balancing_persistent/Load_Balancer_i.cpp:
+	  Fixed more link errors re. template instantiation.
+
 Wed Nov 29 09:19:38 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/NestedUpcall/Triangle_Test/run_test.pl:
