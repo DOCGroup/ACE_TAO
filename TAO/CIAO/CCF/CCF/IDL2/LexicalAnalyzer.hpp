@@ -6,6 +6,7 @@
 #define CCF_IDL2_LEXICAL_ANALYZER_HPP
 
 #include <set>
+#include <map>
 #include <deque>
 #include <locale>
 #include <cctype>
@@ -49,48 +50,165 @@ namespace CCF
       TokenStream<char>::traits
       traits;
 
+      struct Char
+      {
+        Char (int_type c, unsigned long line)
+            : c_ (c), line_ (line)
+        {
+        }
+
+      public:
+        bool
+        is_eof () const
+        {
+          return !traits::not_eof (c_);
+        }
+
+        bool
+        is_alpha (std::locale const& l) const
+        {
+          return std::isalpha (char_ (), l);
+        }
+
+        bool
+        is_alnum (std::locale const& l) const
+        {
+          return std::isalnum (char_ (), l);
+        }
+
+        bool
+        is_space (std::locale const& l) const
+        {
+          return std::isspace (char_ (), l);
+        }
+
+      public:
+        char_type
+        char_ () const
+        {
+          return traits::to_char_type (c_);
+        }
+
+        unsigned long
+        line () const
+        {
+          return line_;
+        }
+
+      public:
+        friend bool
+        operator== (Char const& a, char b)
+        {
+          return !a.is_eof () && a.char_ () == b;
+        }
+
+        friend bool
+        operator== (char a, Char const& b)
+        {
+          return b == a;
+        }
+
+        friend bool
+        operator!= (Char const& a, char b)
+        {
+          return a.is_eof () || a.char_ () != b;
+        }
+
+        friend bool
+        operator!= (char a, Char const& b)
+        {
+          return b != a;
+        }
+
+      private:
+        int_type c_;
+        unsigned long line_;
+      };
+
+
     protected:
-      virtual int_type
+      virtual Char
       get ();
 
-      virtual int_type
+      virtual Char
       peek ();
 
-      virtual int_type
+      virtual Char
       peek_more ();
 
+      virtual void
+      ret (Char const& c);
+
+      /*
       char_type
       to_char_type (int_type i);
+      */
 
       virtual void
-      cxx_comment (char_type c);
+      cxx_comment (Char c);
 
       virtual void
-      c_comment (char_type c);
+      c_comment (Char c);
+
+      virtual Char
+      skip_space (Char c);
 
       virtual TokenPtr
-      identifier (char_type c);
+      identifier (Char c);
 
       virtual bool
-      string_literal (char_type c, TokenPtr& token);
+      string_literal (Char c, TokenPtr& token);
 
       virtual bool
-      punctuation (char_type c, TokenPtr& token);
+      punctuation (Char c, TokenPtr& token);
 
     protected:
       typedef
       std::set<std::string>
       KeywordTable;
 
+      struct IdentifierTreeNode
+      {
+        typedef
+        std::map<std::string, IdentifierTreeNode>
+        PrefixMap;
+
+        IdentifierTreeNode&
+        operator[] (char const* key)
+        {
+          return map_[key];
+        }
+
+        PrefixMap map_;
+      };
+
       typedef
       std::set<std::string>
       PunctuationTable;
 
+      typedef
+      std::deque<Char>
+      CharBuffer;
+
+    protected:
+
+      Char
+      get_from_stream ();
+
+      bool
+      read_simple_identifier (std::string& lexeme, CharBuffer& buf);
+
+      bool
+      traverse_identifier_tree (std::string& lexeme,
+                                IdentifierTreeNode const& node);
+
+    protected:
       std::locale loc_;
 
       TokenStream<char>& is_;
 
       KeywordTable keyword_table_;
+      IdentifierTreeNode identifier_tree_;
       PunctuationTable punctuation_table_;
 
       // line numbering mechanism
@@ -98,7 +216,8 @@ namespace CCF
       unsigned long line_;
 
       // look ahead mechanism
-      std::deque<int_type> buffer_;
+
+      CharBuffer buffer_;
     };
   }
 }
