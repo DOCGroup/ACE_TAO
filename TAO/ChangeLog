@@ -1,3 +1,10 @@
+Fri Jan 28 21:48:12 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/Fault_Detector_Loader.h:
+
+	  Include "ace/Auto_Ptr.h" to pull in auto_ptr<> class template
+	  declaration.
+
 Fri Jan 28 21:39:09 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/AV/RTP.h:
