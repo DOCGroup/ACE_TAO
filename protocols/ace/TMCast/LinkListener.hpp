@@ -89,7 +89,7 @@ namespace ACE_TMCast
         control_.push (MessagePtr (new Terminate));
       }
 
-      if (ACE_OS::thr_join (thread_, &thread_, 0) != 0) ::abort ();
+      if (ACE_OS::thr_join (thread_, 0) != 0) ::abort ();
 
       // cerr << "Link listener is down." << endl;
     }

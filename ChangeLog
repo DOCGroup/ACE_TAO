@@ -1,3 +1,11 @@
+Wed Jan 12 14:02:03 2005  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* ace/TMCast/Group.cpp:
+	* ace/TMCast/LinkListener.hpp: Called different version of
+	  ACE_OS::thr_join which happens to be supported on Win32.
+	  Thanks to Hruicn <huangrui@mail.cqzte.com.cn> for reporting
+	  the problem and helping in narrowing it down.
+
 Tue Jan 11 23:16:35 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* configure.ac:
