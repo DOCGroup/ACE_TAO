@@ -482,39 +482,48 @@ TAO_OutputCDR::write_wstring (const CORBA::WChar *x)
 }
 
 CORBA_Boolean
-TAO_OutputCDR::write_octet_array (const CORBA::Octet* x,
-                                  CORBA::ULong length)
+TAO_OutputCDR::write_octet_array_mb (const ACE_Message_Block* mb)
 {
+  size_t length = mb->length ();
+
 #if !defined (TAO_NO_COPY_OCTET_SEQUENCES)
-  return this->write_array (x,
+  return this->write_array (mb->rd_ptr (),
                             CDR::OCTET_SIZE,
                             CDR::OCTET_ALIGN,
                             length);
 #else
-  // @@ If the buffer is small and it fits in the current message
-  // block it may be cheaper just to copy the buffer.
+  // If the mb does not own its data we are forced to make a copy.
+  if (ACE_BIT_DISABLED (mb->flags (),
+			ACE_Message_Block::DONT_DELETE))
+    {
+      return this->write_array (mb->rd_ptr (),
+				CDR::OCTET_SIZE,
+				CDR::OCTET_ALIGN,
+				length);
+    }
+
+  // If the buffer is small and it fits in the current message
+  // block it is be cheaper just to copy the buffer.
   const size_t memcpy_tradeoff =
     TAO_ORB_Core_instance ()->orb_params ()->cdr_memcpy_tradeoff ();
+  
   if (length < memcpy_tradeoff
       && this->current_->wr_ptr () + length < this->current_->end ())
-    return this->write_array (x,
+    return this->write_array (mb->rd_ptr (),
                               CDR::OCTET_SIZE,
                               CDR::OCTET_ALIGN,
                               length);
 
-  ACE_Message_Block* mb;
+  ACE_Message_Block* cont = ACE_Message_Block::duplicate (mb);
+  if (cont != 0)
+    {
+      cont->cont (this->current_->cont ());
+      this->current_->cont (cont);
+      this->current_ = cont;
+      return CORBA::B_TRUE;
+    }
   this->good_bit_ = 0;
-  ACE_NEW_RETURN (mb,
-                  ACE_Message_Block (ACE_reinterpret_cast(const char*,x),
-                                     length),
-                  CORBA::B_FALSE);
-  mb->wr_ptr (length);
-  this->good_bit_ = 1;
-
-  mb->cont (this->current_->cont ());
-  this->current_->cont (mb);
-  this->current_ = mb;
-  return CORBA::B_TRUE;
+  return -1;
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES */
 }
 

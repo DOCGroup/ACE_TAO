@@ -147,11 +147,14 @@ CORBA_Any::operator= (const CORBA_Any &src)
       return *this;
     }
 
+  // decrement the refcount on the Message_Block we hold, it does not
+  // matter if we own the data or not, because we always own the
+  // message block (i.e. it is always cloned or duplicated.
+  ACE_Message_Block::release ((ACE_Message_Block *) this->cdr_);
+
   // if we own any previous data, deallocate it
   if (this->any_owns_data_)
     {
-      // decrement the refcount on the Message_Block we hold
-      ACE_Message_Block::release ((ACE_Message_Block *) this->cdr_);
 
       if (this->value_)
         {
@@ -198,13 +201,16 @@ CORBA_Any::operator= (const CORBA_Any &src)
 CORBA_Any::~CORBA_Any (void)
 {
   // assert (this->refcount_ == 0);
+
+  // decrement the refcount on the Message_Block we hold, it does not
+  // matter if we own the data or not, because we always own the
+  // message block (i.e. it is always cloned or duplicated.
+  ACE_Message_Block::release (this->cdr_);
+  this->cdr_ = 0;
+
   CORBA::Environment env;
   if (this->any_owns_data_)
     {
-      // decrement the refcount on the Message_Block we hold
-      ACE_Message_Block::release ((ACE_Message_Block *) this->cdr_);
-      this->cdr_ = 0;
-
       // free up the storage for the value
       if (this->value_)
         {
@@ -230,11 +236,13 @@ CORBA_Any::replace (CORBA::TypeCode_ptr tc,
   // increment the refcount of the one that will be assigned to us.
   tc->AddRef ();
 
+  // decrement the refcount on the Message_Block we hold, it does not
+  // matter if we own the data or not, because we always own the
+  // message block (i.e. it is always cloned or duplicated.
+  ACE_Message_Block::release (this->cdr_);
+
   if (this->any_owns_data_)
     {
-      // decrement the refcount on the Message_Block we currently hold
-      ACE_Message_Block::release ((ACE_Message_Block *) this->cdr_);
-
       if (this->value_)
         {
           DEEP_FREE (this->type_, this->value_, 0, env);

@@ -157,7 +157,15 @@ Cubit_i::cube_raw (const Cubit::Raw &input,
 		   CORBA::Environment &)
 {
   if (output.ptr () == 0)
-    output = new Cubit::Raw (input.length ());
+    {
+      ACE_Message_Block mb (input.length ());
+      mb.wr_ptr (input.length ());
+      TAO_Unbounded_Sequence<CORBA::Octet>* tmp =
+	new TAO_Unbounded_Sequence<CORBA::Octet> (&mb);
+      // @@ TODO this is a temporary hack until the IDL compiler
+      // generates the constructor taking a Message_Block.
+      output = (Cubit::Raw*)tmp;
+    }
 
   output->length (input.length ());
 

@@ -64,12 +64,8 @@ CORBA_Request::CORBA_Request (CORBA::Object_ptr obj,
   target_ = CORBA::Object::_duplicate (obj);
   opname_ = CORBA::string_copy (op);
 
-  ACE_NEW (args_,
-           CORBA::NVList);
-  ACE_NEW (result_,
-           CORBA::NamedValue);
-
-  result_->AddRef ();
+  ACE_NEW (args_, CORBA::NVList);
+  ACE_NEW (result_, CORBA::NamedValue);
 }
 
 CORBA_Request::~CORBA_Request (void)

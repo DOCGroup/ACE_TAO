@@ -123,6 +123,16 @@ TAO_OutputCDR::write_wchar_array (const CORBA::WChar* x,
 }
 
 ACE_INLINE CORBA_Boolean
+TAO_OutputCDR::write_octet_array (const CORBA::Octet* x,
+                                  CORBA::ULong length)
+{
+  return this->write_array (x,
+                            CDR::OCTET_SIZE,
+                            CDR::OCTET_ALIGN,
+                            length);
+}
+
+ACE_INLINE CORBA_Boolean
 TAO_OutputCDR::write_short_array (const CORBA::Short* x,
 				  CORBA::ULong length)
 {

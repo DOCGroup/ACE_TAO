@@ -390,6 +390,10 @@ public:
   ~TAO_Unbounded_Sequence (void);
   // see TAO_Unbounded_Sequence in "Sequence_T.h"
 
+  TAO_Unbounded_Sequence<CORBA::Octet> (const ACE_Message_Block* mb);
+  // Create a sequence of octets from a single message block (i.e. it
+  // ignores any chaining in the meesage block).
+
   TAO_Unbounded_Sequence (const TAO_Unbounded_Sequence<CORBA::Octet> &);
   TAO_Unbounded_Sequence<CORBA::Octet>& operator= (const TAO_Unbounded_Sequence<CORBA::Octet> &);
   // The copy constructor and assignment operators *do* copy the data,

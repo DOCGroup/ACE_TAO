@@ -210,6 +210,10 @@ public:
   CORBA_Boolean write_longdouble_array (const CORBA::LongDouble* x,
 					CORBA::ULong length);
 
+  CORBA_Boolean write_octet_array_mb (const ACE_Message_Block* mb);
+  // Write an octet array contained inside a MB, this can be optimized
+  // to minimize copies.
+
   // = We have one method per basic IDL type....
   // They return CORBA::B_FALSE on failure and CORBA::B_TRUE on success.
   CORBA_Boolean append_boolean (TAO_InputCDR &);

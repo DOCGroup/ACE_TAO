@@ -101,7 +101,7 @@ writev_n (ACE_HANDLE h, ACE_IO_Vector *iov, int iovcnt)
       else
         {
           writelen += n;
-          while (n >= iov[s].length () && s < iovcnt)
+          while (s < iovcnt && n >= iov[s].length ())
             {
               n -= iov[s].length ();
               s++;

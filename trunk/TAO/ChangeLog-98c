@@ -1,3 +1,45 @@
+Sat May 23 21:50:00 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/CDR.h: 
+	* tao/CDR.i: 
+	* tao/CDR.cpp: 
+	  The no copy marshalling of octet sequences can only be applied
+	  if the octet sequence owns its memory through a message block.
+
+	* tao/Connect.cpp: 
+	  The input stream is allocated from the heap to permit the no
+	  copy optimizations to work.
+
+	* tao/GIOP.cpp: 
+	  Fixed some unitialized memory read problems.
+
+	* tao/Request.cpp: 
+	  The result was not released.
+
+	* tao/Sequence.h: 
+	* tao/Sequence.cpp: 
+	  Added constructor based on a Message_Block.
+	  Fixed memory deallocation in _allocate_buffer() for octet
+	  sequences.
+
+	* tao/Typecode.cpp: 
+	  The buffer was not released every time.
+
+	* TAO_IDL/be/be_visitor_args.cpp: 
+	  The return value must be allocated by the upcall and is held in
+	  a _var variable to guarantee automatic release.
+
+	* tests/Cubit/TAO/IDL_Cubit/client.cpp: 
+	  The result is released by the request, no need to release it in
+	  the invocation.
+
+	* tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp: 
+	  Initialize the octet sequence using a Message Block to exploit
+	  the no copy marshalling.
+
+	* tao/Any.cpp: 
+	  The cdr buffer must be released always.
+
 Fri May 22 16:39:14 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Naming/CosNaming_i.cpp (NS_NamingContext): Use
