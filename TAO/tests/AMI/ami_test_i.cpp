@@ -66,7 +66,7 @@ AMI_Test_i::shutdown (CORBA::Environment &ACE_TRY_ENV)
 }
 
 
-CORBA::Long 
+CORBA::Long
 AMI_Test_i::yadda (CORBA::Environment &ACE_TRY_ENV)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -78,7 +78,7 @@ AMI_Test_i::yadda (CORBA::Environment &ACE_TRY_ENV)
 }
 
 
-void 
+void
 AMI_Test_i::yadda (CORBA::Long yadda,
                    CORBA::Environment &ACE_TRY_ENV)
       ACE_THROW_SPEC ((CORBA::SystemException))
@@ -88,4 +88,4 @@ AMI_Test_i::yadda (CORBA::Long yadda,
   ACE_DEBUG ((LM_DEBUG,
               "%N:%l:(%P:%t):AMI_Test_i::(set_)yadda\n"));
   yadda_ = yadda;
-};
+}
