@@ -822,7 +822,7 @@ nobase_include_HEADERS += \
   Synch_Invocation.inl \
   Synch_Refcountable.inl \
   SystemException.inl \
-  TAOC.i \
+  TAOC.inl \
   TAOS.i \
   TAOS_T.i \
   TAO_Server_Request.i \
