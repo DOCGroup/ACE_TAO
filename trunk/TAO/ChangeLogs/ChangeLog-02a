@@ -1,3 +1,8 @@
+Sat Jan 01 09:18:59 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Makefile: updated dependencies, including
+          Notification Service files.
+
 Sat Jan 01 09:17:40 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * ChangeLog: moved to ChangeLog-99c.
