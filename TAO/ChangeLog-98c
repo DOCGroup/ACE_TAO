@@ -1,5 +1,9 @@
 Thu May 21 12:16:34 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
+	* tao/GIOP.cpp: 
+	  Fixed pointer airthmetic, it was done using "void*" instead of
+	  "char*".
+
 	* tests/Quoter/Makefile: 
 	  Pass a -I flag to the IDL compiler so it can find the
 	  CosLifeCycle.idl file.
