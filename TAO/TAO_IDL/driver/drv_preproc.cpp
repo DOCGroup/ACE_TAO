@@ -343,3 +343,9 @@ DRV_pre_proc(char *myfile)
   if (idl_global->compile_flags() & IDL_CF_ONLY_PREPROC)
     exit(0);
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template class ACE_Env_Value<char*>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate  ACE_Env_Value<char*>
+#endif
