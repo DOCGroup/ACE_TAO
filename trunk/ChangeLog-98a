@@ -5,7 +5,9 @@ Wed Feb 04 22:23:24 1998  David L. Levine  <levine@cs.wustl.edu>
           gas on Linux/Alpha.
 
         * ACE-INSTALL.html: added some comments on Linux/RedHat 5.0,
-          for both Intel and Alpha.
+          for both Intel and Alpha.  Thanks to James CE Johnson
+          <jjohnson@lads.com>, Torbjorn Lindgren <tl@funcom.com>,
+          and Oleg Krivosheev <kriol@fnal.gov> for this information.
 
         * ace/config-linux-common.h: replaced #define of ACE_HAS_EXCEPTIONS
           with a compile time check for egcs, which supports exceptions.
