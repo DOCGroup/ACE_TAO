@@ -9,8 +9,8 @@ Mon Apr 12 13:39:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
         * ace/config-win32-msvc-5.h:
         * ace/config-win32-msvc-6.h:
           Moved define ACE_HAS_LLSEEK from msvc5/6 file to the win32 common
-          file. This fixes bugid 1780. Thanks to <pierrebizz@hotmail.com> for
-          reporting this.
+          file. This fixes bugid 1780. Thanks to Pierre Bisaillon
+          <pierrebizz@hotmail.com> for reporting this.
 
 Thu Apr  1 15:40:55 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
