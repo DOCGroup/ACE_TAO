@@ -16,6 +16,7 @@
 #include "ace/Log_Msg.h"
 
 #include "IAD_Handler.h"
+#include "DT_Handler.h"
 #include "CompPropDesc_Handler.h"
 
 #include <iostream>
@@ -28,19 +29,19 @@ namespace CIAO
   namespace Config_Handler
   {
     CompPropDesc_Handler::CompPropDesc_Handler (DOMDocument* doc,
-						unsigned long filter)
+                                                unsigned long filter)
       : doc_ (doc),
         root_ (doc->getDocumentElement()),
         filter_ (filter),
         iter_ (doc_->createNodeIterator (this->root_,
-                                              this->filter_,
-                                              0,
-                                              true)),
+                                         this->filter_,
+                                         0,
+                                         true)),
         release_ (true)
     {}
 
     CompPropDesc_Handler::CompPropDesc_Handler (DOMNodeIterator* iter,
-						bool release)
+                                                bool release)
       : doc_ (0), root_ (0), filter_ (0), iter_ (iter), release_ (release)
     {}
 
@@ -53,7 +54,7 @@ namespace CIAO
 
     /// handle the package configuration and populate it
     void CompPropDesc_Handler::process_ComponentPropertyDescription
-      (::Deployment::ComponentPropertyDescription &comppropdesc)
+    (::Deployment::ComponentPropertyDescription &comppropdesc)
     {
       for (DOMNode* node = this->iter_->nextNode();
            node != 0;
@@ -63,16 +64,16 @@ namespace CIAO
           if (node_name == XStr (ACE_TEXT ("name")))
             {
               // Fetch the text node which contains the "label"
-	      node = this->iter_->nextNode();
-      	      DOMText* text = ACE_reinterpret_cast (DOMText*, node);
+              node = this->iter_->nextNode();
+              DOMText* text = ACE_reinterpret_cast (DOMText*, node);
               this->process_name (text->getNodeValue(), comppropdesc);
-	    }
-	  else if (node_name == XStr (ACE_TEXT ("type")))
+            }
+          else if (node_name == XStr (ACE_TEXT ("type")))
             {
-	      int argc = 0;
-	      char **argv = 0;
-	      CORBA::ORB orb = CORBA::ORB::init(argc, argv, "");
-	      DT_Handler::process_DataType(iter_, comppropdesc.type, orb.in());
+              int argc = 0;
+              char ** argv = 0;
+              CORBA::ORB_ptr orb = CORBA::ORB_init (argc, argv, "");
+              DT_Handler::process_DataType(iter_, comppropdesc.type, orb);
             }
           else
             {
@@ -85,7 +86,7 @@ namespace CIAO
 
     /// handle name attribute
     void CompPropDesc_Handler::process_name
-      (const XMLCh* name, ::Deployment::ComponentPropertyDescription &comppropdesc)
+    (const XMLCh* name, ::Deployment::ComponentPropertyDescription &comppropdesc)
     {
       if (name)
         {

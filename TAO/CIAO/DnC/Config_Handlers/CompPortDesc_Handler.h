@@ -43,65 +43,64 @@ using xercesc::DOMNodeIterator;
 using xercesc::DOMNode;
 using xercesc::DOMNodeFilter;
 
-namespace CIAO 
+namespace CIAO
 {
   namespace Config_Handler
-  {
-
-    class CompPortDesc_Handler
     {
-    public:
 
-      /// constructor
-      CompPortDesc_Handler (DOMDocument* doc, unsigned long filter_);
+      class CompPortDesc_Handler
+        {
+        public:
 
-      /// constructor
-      CompPortDesc_Handler (DOMNodeIterator* iter, bool release = false);
+          /// constructor
+          CompPortDesc_Handler (DOMDocument* doc, unsigned long filter_);
 
-      /// destructor
-      ~CompPortDesc_Handler();
+          /// constructor
+          CompPortDesc_Handler (DOMNodeIterator* iter, bool release = false);
 
-      /// Process the package configuration
-      void static
-	process_ComponentPortDescription (::Deployment::ComponentPortDescription &compportdesc);
+          /// destructor
+          ~CompPortDesc_Handler();
 
-    protected:
-      /// Process the label attribute
-      void process_name (const XMLCh* name, ::Deployment::ComponentPortDescription &compportdesc);
+          /// Process the package configuration
+          void process_ComponentPortDescription (::Deployment::ComponentPortDescription &compportdesc);
 
-      /// Process the specificType attribute
-      void process_specificType (const XMLCh* specificType, ::Deployment::ComponentPortDescription &compportdesc);
+        protected:
+          /// Process the label attribute
+          void process_name (const XMLCh* name, ::Deployment::ComponentPortDescription &compportdesc);
 
-      /// Process the supportedType attribute
-      void process_supportedType (const XMLCh* supportedType, ::Deployment::ComponentPortDescription &compportdesc);
+          /// Process the specificType attribute
+          void process_specificType (const XMLCh* specificType, ::Deployment::ComponentPortDescription &compportdesc);
 
-      /// Process the provider attribute
-      void process_provider (const XMLCh* provider, ::Deployment::ComponentPortDescription &compportdesc);
+          /// Process the supportedType attribute
+          void process_supportedType (const XMLCh* supportedType, ::Deployment::ComponentPortDescription &compportdesc);
 
-      /// Process the exclusiveProvider attribute
-      void process_exclusiveProvider (const XMLCh* exclusiveProvider, ::Deployment::ComponentPortDescription &compportdesc);
+          /// Process the provider attribute
+          void process_provider (const XMLCh* provider, ::Deployment::ComponentPortDescription &compportdesc);
 
-      /// Process the exclusiveUser attribute
-      void process_exclusiveUser (const XMLCh* name, ::Deployment::ComponentPortDescription &compportdesc);
+          /// Process the exclusiveProvider attribute
+          void process_exclusiveProvider (const XMLCh* exclusiveProvider, ::Deployment::ComponentPortDescription &compportdesc);
 
-      /// Process the optional attribute
-      void process_optional (const XMLCh* name, ::Deployment::ComponentPortDescription &compportdesc);
+          /// Process the exclusiveUser attribute
+          void process_exclusiveUser (const XMLCh* name, ::Deployment::ComponentPortDescription &compportdesc);
 
-    private:
+          /// Process the optional attribute
+          void process_optional (const XMLCh* name, ::Deployment::ComponentPortDescription &compportdesc);
 
-      DOMDocument* doc_;
+        private:
 
-      DOMNode* root_;
+          DOMDocument* doc_;
 
-      unsigned long filter_;
+          DOMNode* root_;
 
-      DOMNodeIterator* iter_;
+          unsigned long filter_;
 
-      bool release_;
+          DOMNodeIterator* iter_;
 
-    };
+          bool release_;
 
-  }
+        };
+
+    }
 
 }
 
