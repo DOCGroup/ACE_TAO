@@ -1,3 +1,9 @@
+Wed Sep 23 11:28:13 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* bin/Process_Unix.pm: 
+	  If the exec() call fails we report the name and the arguments of
+	  the program.
+
 Wed Sep 23 09:27:21 1998  Steve Huston  <shuston@riverace.com>
 
 	* ace/Dirent.cpp: Fixed aCC workaround from 22-Sep so that only
