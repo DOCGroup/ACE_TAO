@@ -1,3 +1,9 @@
+Mon Oct 30 10:40:57 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* docs/tutorials/Quoter/AMI/Makefile: 
+	  Updated the Makefile to link lTAO_PortableServer. Thanks to 
+	  Walt Corey <wcorey@ibm.net> for reporting the bug.
+
 Mon Oct 30 15:21:24 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Typecode.cpp:
