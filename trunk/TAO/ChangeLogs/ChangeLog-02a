@@ -1,3 +1,47 @@
+Sat Aug 19 15:20:34 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_Acceptors.cpp (process_client_locate):
+	* tao/GIOP_Message_Acceptors.h:
+	* tao/GIOP_Message_Lite.h:
+	* tao/GIOP_Message_Lite.cpp: Added a new method
+	  find_ior_in_table.
+
+	* tao/GIOP_Server_Request.cpp:
+	* tao/GIOP_Server_Request.i:
+	* tao/GIOP_Server_Request.h: Added an argument to one of the
+	  constructors that would indicate whether a reply should be sent
+	  by this class or not. Also added a inline method that would
+	  return that value. Further removed the version argument in the
+	  constructor. It is no longer needed.
+
+	* tao/Servant_Base.cpp: Added a check to see whether the deferred
+	  reply flag is set before a reply is sent by calling the
+	  ServerRequest class.
+
+	* tao/Servant_request.h: Added a virtual method that would return
+	  the deffered flag value.
+
+	  The whole set of changes were required to interoperate properly
+	  with other ORBs. The problem was when other ORBs sent a
+	  LocateRequest message. The LocateRequest classes after receiving
+	  the call make an upcall on to the servant. This is essentially
+	  done by calling the _non_existent () method on the servant to
+	  test whether the object is active. The existing setup processed
+	  the upcall in a fashion similar to that of a Request
+	  message. For a Request message, once the upcall is made on to
+	  the servant, the skeleton code prepares the reply and also
+	  marshalls the return value. Then the Servant_Base class sends
+	  the reply on the wire. But, for a LocateRequest message we need
+	  not do the above. We need to just make an upcall and then
+	  prepare the right reply if the call returned properly. If not we
+	  need to propagate the exception received from the upcall. To use
+	  the existing setup to make an upcall, I introduced a flag that
+	  would indicate to the Servant_Base class whether it needs to
+	  send the reply on the wire.  With this change the
+	  interoperability problem that we had with Orbix2000 and reported
+	  by Boeing should be gone.
+
+
 Sat Aug 19 11:10:40 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/POA.cpp:
@@ -19,11 +63,11 @@ Sat Aug 19 13:50:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_operation/interceptors_ch.cpp:
 	* TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp:
-	* TAO_IDL/be/be_visitor_operation/interceptors_sh.cpp:	
+	* TAO_IDL/be/be_visitor_operation/interceptors_sh.cpp:
 	* TAO_IDL/be/be_visitor_operation/interceptors_ss.cpp:
 	Made the formal arguments to the RequestInfo constructor unique to
 	resolve name clashing errors.
-	
+
 Fri Aug 18 23:20:56 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tao/RTCORBA.pidl

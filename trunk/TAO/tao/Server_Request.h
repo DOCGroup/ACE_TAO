@@ -166,6 +166,9 @@ public:
   virtual CORBA::Boolean response_expected (void) const = 0;
   // is the response expected
 
+  virtual CORBA::Boolean deferred_reply (void) const = 0;
+  // is the reply deferred?
+
   virtual CORBA::Boolean sync_with_server (void) const = 0;
   // Should we return before dispatching the servant?
 
