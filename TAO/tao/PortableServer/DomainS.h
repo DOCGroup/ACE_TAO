@@ -142,12 +142,13 @@
       void operator= (
           const TAO_ServerRequest_Info_CORBA_DomainManager_get_domain_policy &
         );
+
+      POA_CORBA_DomainManager *_tao_impl;
+
       CORBA::PolicyType &policy_type_;
       void result (CORBA::Policy_ptr  result);
       // update the result
       CORBA::Policy_ptr _result;
-
-      POA_CORBA_DomainManager *_tao_impl;
     };
 
 #endif /* TAO_HAS_INTERCEPTORS */
