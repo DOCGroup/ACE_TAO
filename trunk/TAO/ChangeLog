@@ -6836,7 +6836,7 @@ Tue Mar 25 14:06:58 2003  Ossama Othman  <ossama@uci.edu>
         * tao/PortableServer/ServerRequestInfo.cpp (sync_scope):
 
           Do not protect this method with a "TAO_HAS_CORBA_MESSAGING"
-          preprocessor block.  Doing is no longer necessary since it
+          preprocessor block.  Doing so is no longer necessary since it is
           always possible to retrieve the SyncScope oneway setting.  This
           problem only occurred recently, i.e. after the
           PortableInterceptorC.* stub was regenerated.  Fixes builds where
