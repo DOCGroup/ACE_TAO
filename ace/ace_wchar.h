@@ -9,7 +9,7 @@
 // = FILENAME
 //    unicode.h
 //
-// = AUTHOR
+// = AUTHORcd 
 //    Darrell Brunsch
 //
 // ============================================================================
@@ -34,6 +34,7 @@
 # endif /* ACE_HAS_UNICODE */
 
 // These are defined to get older stuff to compile
+// FUZZ: disable check_for_tchar
 # define ASYS_TCHAR ACE_TCHAR
 # define ASYS_TEXT ACE_TEXT
 # define ASYS_ONLY_MULTIBYTE_STRING ACE_TEXT_ALWAYS_CHAR

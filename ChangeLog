@@ -1,3 +1,19 @@
+Wed Jun  7 12:05:23 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * bin/fuzz.pl:
+
+          Dropped the level for the TCHAR check to 4, so it runs
+          by default.
+
+          Also added a new test to check for mismatch of ace/pre.h
+          and ace/post.h in header files (level 4).
+
+        * ace/ace_wchar.h:
+
+          Added a FUZZ: disable for the TCHAR check, since we need
+          to define the ASYS_TCHAR type macros for backwards 
+          compatiblity here.
+
 Wed Jun 07 13:22:01 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/IPC_SAP/SOCK_SAP/CPP-inclient.cpp (twoway_client_test):
