@@ -18,9 +18,6 @@
 #include "RequestProcessingStrategyFactoryImpl.h"
 #include "ServantRetentionStrategyFactoryImpl.h"
 
-#include "ThreadPolicyValueORBControl.h"
-#include "ThreadPolicyValueSingle.h"
-
 #include "ThreadStrategyORBControl.h"
 #include "ThreadStrategySingle.h"
 #include "ThreadStrategySingleFactoryImpl.h"
@@ -140,16 +137,6 @@ TAO_POA_Initializer::init (void)
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   // Policy Values
-
-#if (TAO_HAS_MINIMUM_POA == 0)
-  ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_ThreadPolicyValueORBControl
-    );
-
-  ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_ThreadPolicyValueSingle
-    );
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   ACE_Service_Config::process_directive (
       TAO::Portable_Server::ace_svc_desc_LifespanPolicyValueTransient

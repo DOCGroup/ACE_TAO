@@ -71,7 +71,7 @@ namespace TAO
         ACE_THROW_SPEC ((CORBA::PolicyError));
 
     private:
-      ThreadPolicyValue *value_;
+      ::PortableServer::ThreadPolicyValue value_;
     };
   }
 }

@@ -1,11 +1,7 @@
 #include "ThreadPolicy.h"
-#include "ThreadPolicyValue.h"
+#include "PortableServer.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Service_Config.h"
-
-#define TAO_PORTABLESERVER_SAFE_INCLUDE
-#include "PortableServerC.h"
-#undef TAO_PORTABLESERVER_SAFE_INCLUDE
 
 ACE_RCSID (PortableServer,
            ThreadPolicy,
@@ -17,8 +13,7 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    ThreadPolicy::ThreadPolicy () :
-      value_ (0)
+    ThreadPolicy::ThreadPolicy ()
     {
     }
 
@@ -38,42 +33,7 @@ namespace TAO
     ThreadPolicy::init (
       ::PortableServer::ThreadPolicyValue value)
     {
-      switch (value)
-        {
-        case ::PortableServer::ORB_CTRL_MODEL :
-          {
-            this->value_ =
-              ACE_Dynamic_Service<ThreadPolicyValue>::instance ("ThreadPolicyValueORBControl");
-
-            if (this->value_ == 0)
-              {
-                ACE_Service_Config::process_directive (
-                  ACE_TEXT("dynamic ThreadPolicyValueORBControl Service_Object *")
-                  ACE_TEXT("TAO_PortableServer:_make_ThreadPolicyValueORBControl()"));
-
-                this->value_ =
-                  ACE_Dynamic_Service<ThreadPolicyValue>::instance ("ThreadPolicyValueORBControl");
-              }
-            break;
-          }
-        case ::PortableServer::SINGLE_THREAD_MODEL :
-          {
-            this->value_ =
-              ACE_Dynamic_Service<ThreadPolicyValue>::instance ("ThreadPolicyValueSingle");
-
-            if (this->value_ == 0)
-              {
-                ACE_Service_Config::process_directive (
-                  ACE_TEXT("dynamic ThreadPolicyValueSingle Service_Object *")
-                  ACE_TEXT("TAO_PortableServer:_make_ThreadPolicyValueSingle()"));
-
-                this->value_ =
-                  ACE_Dynamic_Service<ThreadPolicyValue>::instance ("ThreadPolicyValueSingle");
-              }
-
-            break;
-          }
-        }
+      value_ = value;
     }
 
     CORBA::Policy_ptr
@@ -86,7 +46,7 @@ namespace TAO
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
-      (void) copy->init (this->value_->policy_type ());
+      (void) copy->init (this->value_);
 
       return copy;
     }
@@ -101,7 +61,7 @@ namespace TAO
     ThreadPolicy::value (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
-      return value_->policy_type ();
+      return value_;
     }
 
     CORBA::PolicyType
