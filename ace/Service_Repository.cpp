@@ -128,6 +128,7 @@ ACE_Service_Repository::fini (void)
 {
   ACE_TRACE ("ACE_Service_Repository::fini");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
+  int retval = 0;
 
   if (this->service_vector_ != 0)
     {
@@ -147,11 +148,12 @@ ACE_Service_Repository::fini (void)
           ACE_Service_Type *s =
             ACE_const_cast (ACE_Service_Type *,
                             this->service_vector_[i]);
-          s->fini ();
+          // Collect errors.
+          retval += s->fini ();
         }
     }
 
-  return 0;
+  return (retval == 0) ? 0 : -1;
 }
 
 // Close down all the services.
@@ -297,8 +299,7 @@ ACE_Service_Repository::resume (const ACE_TCHAR name[],
   if (i == -1)
     return -1;
 
-  this->service_vector_[i]->resume ();
-  return 0;
+  return this->service_vector_[i]->resume ();
 }
 
 // Suspend a service so that it will not be considered active under
@@ -315,8 +316,7 @@ ACE_Service_Repository::suspend (const ACE_TCHAR name[],
   if (i == -1)
     return -1;
 
-  this->service_vector_[i]->suspend ();
-  return 0;
+  return this->service_vector_[i]->suspend ();
 }
 
 // Completely remove a <name> entry from the Repository and
