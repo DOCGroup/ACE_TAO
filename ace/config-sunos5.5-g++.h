@@ -33,7 +33,7 @@
 
 // Must specialize templates due to G++'s lame parameterized type
 // support...
-#define ACE_TEMPLATES_REQUIRE_SPECIALIZATION
+#define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
 #define ACE_HAS_SYSV_IPC			

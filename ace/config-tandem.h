@@ -466,7 +466,7 @@
 // use a pragma This is used for AIX's C++ compiler.
 //? ACE_TEMPLATES_REQUIRE_SOURCE	Compiler's template mechanim must 
 // see source code (i.e., .cpp files).  This is used for GNU G++.
-//? ACE_TEMPLATES_REQUIRE_SPECIALIZATION    Compiler's template mechanism 
+//? ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION    Compiler's template mechanism 
 //requires the use of explicit C++ specializations for all used 
 //templates. This is also used for GNU G++ if you don't use the "repo" 
 //patches.

@@ -81,7 +81,7 @@
 // Compiler's template mechanism must see source code (i.e., .C files).
 #define ACE_TEMPLATES_REQUIRE_SOURCE
 
-#define ACE_TEMPLATES_REQUIRE_SPECIALIZATION
+#define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
 
 // Compiler doesn't support static data member templates.
 #define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
