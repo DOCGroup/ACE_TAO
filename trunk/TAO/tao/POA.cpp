@@ -4,15 +4,18 @@
 
 # include "tao/corba.h"
 
-#if !defined (__ACE_INLINE__)
-# include "tao/POA.i"
-#endif /* ! __ACE_INLINE__ */
+// Timeprobes class
+#include "tao/Timeprobe.h"
 
 // auto_ptr class
 #include "ace/Auto_Ptr.h"
 
 // Forwarding Servant class
 #include "tao/Forwarding_Servant.h"
+
+#if !defined (__ACE_INLINE__)
+# include "tao/POA.i"
+#endif /* ! __ACE_INLINE__ */
 
 // This is the maximum space require to convert the ulong into a
 // string.
@@ -1760,6 +1763,8 @@ TAO_POA::locate_poa_i (const TAO_ObjectKey &key,
                        PortableServer::ObjectId &id,
                        CORBA::Environment &env)
 {
+  ACE_FUNCTION_TIMEPROBE (TAO_POA_LOCATE_POA_I_START);
+
   TAO_POA::String poa_name;
   CORBA::Boolean persistent = CORBA::B_FALSE;
   TAO_Temporary_Creation_Time poa_creation_time;
@@ -1912,6 +1917,8 @@ TAO_POA::locate_poa_and_servant_i (const TAO_ObjectKey &key,
                                    TAO_POA *&poa_impl,
                                    CORBA::Environment &env)
 {
+  ACE_FUNCTION_TIMEPROBE (TAO_POA_LOCATE_POA_AND_SERVANT_I_START);
+
   poa_impl = this->locate_poa_i (key,
                                  id,
                                  env);
@@ -1925,9 +1932,14 @@ TAO_POA::locate_poa_and_servant_i (const TAO_ObjectKey &key,
   if (poa_impl->policies ().servant_retention () == PortableServer::RETAIN)
     {
       PortableServer::Servant servant = 0;
-      if (poa_impl->active_object_map ().find (id, servant) != -1)
-        // Success
-        return servant;
+
+      {
+        ACE_FUNCTION_TIMEPROBE (TAO_POA_FIND_SERVANT_START);
+        
+        if (poa_impl->active_object_map ().find (id, servant) != -1)
+          // Success
+          return servant;
+      }
     }
 
   // If the POA has the NON_RETAIN policy or has the RETAIN policy but
@@ -2104,10 +2116,14 @@ TAO_POA::dispatch_servant_i (const TAO_ObjectKey &key,
                    &current_context,
                    env);
 
-  // Upcall
-  servant->_dispatch (req,
-                      context,
-                      env);
+  {
+    ACE_FUNCTION_TIMEPROBE (TAO_SERVANT_DISPATCH_START);
+
+    // Upcall
+    servant->_dispatch (req,
+                        context,
+                        env);
+  }
 
   // Cleanup from upcall
   poa->post_invoke (servant,
@@ -2182,6 +2198,8 @@ TAO_POA::parse_key (const TAO_ObjectKey &key,
                     CORBA::Boolean &persistent,
                     TAO_Temporary_Creation_Time &poa_creation_time)
 {
+  ACE_FUNCTION_TIMEPROBE (TAO_POA_PARSE_KEY_START);
+
   // Try to find the last separator
   int last_token_position = this->rfind (key, TAO_POA::name_separator ());
 
