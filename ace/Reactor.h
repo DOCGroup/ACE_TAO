@@ -46,13 +46,16 @@ public:
   {
     // = Operations on the "ready" mask and the "dispatch" mask.
     GET_MASK = 1,
-    // Retrieve current value of the the "ready" mask or the "dispatch" mask.
+    // Retrieve current value of the the "ready" mask or the
+    // "dispatch" mask.
     SET_MASK = 2,
     // Set value of bits to new mask (changes the entire mask).
     ADD_MASK = 3,
-    // Bitwise "or" the value into the mask (only changes enabled bits).
+    // Bitwise "or" the value into the mask (only changes enabled
+    // bits).
     CLR_MASK = 4
-    // Bitwise "and" the negation of the value out of the mask (only changes enabled bits).
+    // Bitwise "and" the negation of the value out of the mask (only
+    // changes enabled bits).
   };
 
   static ACE_Reactor *instance (void);
@@ -74,10 +77,10 @@ public:
 
   static int run_event_loop (ACE_Time_Value &tv);
   static int run_alertable_event_loop (ACE_Time_Value &tv);
-  // Run the event loop until the
-  // <ACE_Reactor::handle_events/ACE_Reactor::alertable_handle_events>
-  // returns -1, the <end_event_loop> method is invoked, or the
-  // <ACE_Time_Value> expires.
+  // Run the event loop until the <ACE_Reactor::handle_events> or
+  // <ACE_Reactor::alertable_handle_events> methods returns -1, the
+  // <end_event_loop> method is invoked, or the <ACE_Time_Value>
+  // expires.
 
   static int end_event_loop (void);
   // Instruct the <ACE_Reactor::instance> to terminate its event loop

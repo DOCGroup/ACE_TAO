@@ -1,7 +1,22 @@
+Sat May  2 14:35:04 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* tests/Reactor_Notify_Test.cpp: Factored out some common code to
+ 	  make the test more concise.
+
+	* tests/Reactor_Notify_Test.cpp: Modified the test to check
+ 	  whether our new mechanism for disabling the notify pipe works
+ 	  correctly.
+
+	* ace/{WFMO,Select}_Reactor[_Impl]: Added the
+ 	  "disable_notify_pipe" flag in the constructor in order to
+ 	  disable this feature and save on descriptors if they aren't
+ 	  required.  Thanks to Tom Venturella <tventurell@mdc.com> for
+ 	  motivating this.
+
 Sat May 02  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
 	* tests/Aio_Platform_Test.cpp: Included this test program for
-	testing a platform for Asynchronous I/O options.
+ 	  testing an OS platform for Asynchronous I/O options.
 
 Fri May 01 17:52:32 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
@@ -2358,11 +2373,11 @@ Sun Mar 01 08:38:00 1998  David L. Levine  <levine@cs.wustl.edu>
 Sat Feb 28 12:20:57 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
         * ace/Message_Queue.cpp: Fixed the implementation of
-          wait_not_{full,empty}_cond() so that they utilize the
-          ACE_Time_Value it's passed.  In addition, revised the
-          implementation of peek_dequeue_head() so that it uses the new
-          wait_not_empty_cond() implementation.  Thanks to Thanks to Tom
-          Venturella <tventurell@mdc.com> for reporting this.
+ 	  wait_not_{full,empty}_cond() so that they utilize the
+ 	  ACE_Time_Value it's passed.  In addition, revised the
+ 	  implementation of peek_dequeue_head() so that it uses the new
+ 	  wait_not_empty_cond() implementation.  Thanks to Tom Venturella
+ 	  <tventurell@mdc.com> for reporting this.
 
 Fri Feb 27 15:47:15 1998  David L. Levine  <levine@cs.wustl.edu>
 

@@ -527,7 +527,8 @@ public:
   virtual int open (size_t size = DEFAULT_SIZE,
 		    int restart = 0,
 		    ACE_Sig_Handler * = 0,
-		    ACE_Timer_Queue * = 0);
+		    ACE_Timer_Queue * = 0,
+                    int disable_notify_pipe = 0);
   // Initialize <ACE_WFMO_Reactor> with size <size>.  Two slots will
   // be added to the <size> parameter which will store handles used
   // for internal management purposes.
