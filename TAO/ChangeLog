@@ -1,3 +1,19 @@
+Mon Feb 28 19:00:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Valuetype/ValueBase.{h,cpp}:
+          Made the marshal method const, no need for being it non-const
+
+        * TAO_IDL/be/be_visitor_valuetype/marshal_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_obv_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_obv_cs.cpp:
+          Generate const marshal methods
+
+        * TAO_IDL/be/be_visitor_valuetype/cdr_op_cs.cpp:
+          No need to generate a const_cast for the valuetype argument because
+          of the changes above
+
 Mon Feb 28 11:14:35 2005  Ciju John  <john_c@ociweb.com>
 
         * tao/IIOP_Acceptor.cpp:
