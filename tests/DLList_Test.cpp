@@ -19,6 +19,7 @@
 #include "test_config.h"
 #include "ace/Containers.h"
 #include "ace/SString.h"
+#include "ace/Malloc.h"
 
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");
