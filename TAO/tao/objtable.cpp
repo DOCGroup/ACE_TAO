@@ -105,9 +105,11 @@ TAO_Linear_ObjTable::find (const CORBA_OctetSeq &key,
 {
   ACE_ASSERT (this->next_ <= this->tablesize_);
 
+  //  ACE_CString objkey ((char *)key.buffer, key.length);
   for (CORBA_ULong i = 0; i < this->next_; i++)
     {
       // linearly search thru the table
+      //      if (!ACE_OS::strncmp (this->tbl_[i].opname_, objkey.rep (), key.length))
       if (!ACE_OS::strncmp (this->tbl_[i].opname_, (char *)key.buffer, key.length))
 	{
 	  // keys match. Return the object pointer
@@ -154,7 +156,8 @@ TAO_Active_Demux_ObjTable::bind (const CORBA_OctetSeq &key,
 {
   // The active demux strategy works on the assumption that the key is a
   // stringified form of an index into the table
-  CORBA_ULong i = ACE_OS::atoi ((char *)key.buffer);
+  ACE_CString objkey ((char *)key.buffer, key.length);
+  CORBA_ULong i = ACE_OS::atoi (objkey.rep ());
 
   if (i < this->tablesize_)
     {
@@ -176,7 +179,8 @@ int
 TAO_Active_Demux_ObjTable::find (const CORBA_OctetSeq &key,
 				 CORBA_Object_ptr& obj)
 {
-  CORBA_ULong i = ACE_OS::atoi ((char *)key.buffer);
+  ACE_CString objkey ((char *)key.buffer, key.length);
+  CORBA_ULong i = ACE_OS::atoi (objkey.rep ());
 
   ACE_ASSERT (i < this->tablesize_); // cannot be equal to
   obj = this->tbl_[i].obj_;
