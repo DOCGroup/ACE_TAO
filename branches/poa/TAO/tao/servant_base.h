@@ -1,3 +1,6 @@
+//
+// $Id$
+//
 #if !defined (SERVANT_BASE_H)
 #define SERVANT_BASE_H
 

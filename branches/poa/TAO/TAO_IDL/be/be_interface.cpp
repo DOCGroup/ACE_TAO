@@ -822,8 +822,10 @@ int be_interface::gen_server_skeletons (void)
         " (void)" << nl;
     }
 
-  *ss << "{\n";
-  *ss << "}\n\n";
+  *ss << "{" << be_idt_nl
+      << "this->optable_ = &tao_" << this->flatname ()
+      << "_optable;" << be_uidt_nl
+      << "}\n\n";
 
   // generate code for elements in the scope (e.g., operations)
   if (be_scope::gen_server_skeletons () == -1)
