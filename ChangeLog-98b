@@ -1,3 +1,10 @@
+Tue Dec 15 11:55:51 1998  Steve Huston  <shuston@riverace.com>
+
+        * ace/ACE_Library.(mak mdp): Added Message_Queue.cpp to the files list.
+
+        * examples/NT_Service/NT_Service.(mak mdp): MSVC 4.2 project file for
+          the NT_Service example.
+
 Tue Dec 15 11:27:24 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-chorus.h: added ACE_LACKS_READLINK.
