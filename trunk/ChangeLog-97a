@@ -1,3 +1,7 @@
+Wed May 14 15:00:58 1997    <irfan@TWOSTEP>
+
+	* Time_Service_Test.cpp (main): Fixed typo in the svc.conf
+ 	  filename for the clerk.
 
 Tue May 13 18:56:27 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
