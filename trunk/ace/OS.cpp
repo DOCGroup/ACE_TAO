@@ -1692,6 +1692,7 @@ ACE_Thread_Adapter::invoke (void)
     // and report the situation.  It is up to application programmers to
     // determine what to do.
   }
+  return 0;			// For g++, not reached
 }
 
 #if defined (ACE_WIN32)
