@@ -1,3 +1,24 @@
+Thu Jun 28 10:03:44 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORBInitInfo.inl (orb_core):
+
+	  New file that contains accessor to the underlying TAO_ORB_Core
+	  pointer.  Some users need access to it to gain access to the
+	  ORB's Reactor, for example.
+
+	* tao/ORBInitInfo.h:
+	* tao/ORBInitInfo.cpp:
+
+	  Updated these files to support the new accessor accordingly.
+
+	  Fixed downcast operations (_narrow(), etc) for the
+	  TAO_ORBInitInfo type (not PortableInterceptor::ORBInitInfo) so
+	  that their semantics are consistent with the C++ mapping defined
+	  semantics.
+
+	  Added missing "TAO_ORBInitInfo_var" class and corresponding
+	  support methods.
+
 Thu Jun 28 11:04:49 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/DynamicAny/DynUnion_i.cpp (set_discriminator):

@@ -11,6 +11,9 @@ ACE_RCSID (TAO,
            ORBInitInfo,
            "$Id$")
 
+#if !defined (__ACE_INLINE__)
+#include "ORBInitInfo.inl"
+#endif /* defined INLINE */
 
 TAO_ORBInitInfo::TAO_ORBInitInfo (TAO_ORB_Core *orb_core,
                                   int  argc ,
@@ -280,46 +283,242 @@ TAO_ORBInitInfo::check_validity (CORBA_Environment &ACE_TRY_ENV)
     }
 }
 
-TAO_ORBInitInfo *
-TAO_ORBInitInfo::_narrow (CORBA::Object_ptr obj,
-                          CORBA::Environment &ACE_TRY_ENV)
+TAO_ORBInitInfo_ptr TAO_ORBInitInfo::_narrow (
+    CORBA::Object_ptr obj,
+    CORBA::Environment &ACE_TRY_ENV
+  )
 {
   return TAO_ORBInitInfo::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
 
-TAO_ORBInitInfo *
-TAO_ORBInitInfo::_unchecked_narrow (CORBA::Object_ptr obj,
-                                    CORBA::Environment &)
+TAO_ORBInitInfo_ptr TAO_ORBInitInfo::_unchecked_narrow (
+    CORBA::Object_ptr obj,
+    CORBA::Environment &
+  )
 {
   if (CORBA::is_nil (obj))
-    return 0;
+    return TAO_ORBInitInfo::_nil ();
   return
-      ACE_reinterpret_cast (
-        TAO_ORBInitInfo *,
-        obj->_tao_QueryInterface (
-          ACE_reinterpret_cast (ptr_arith_t,
-                                &TAO_ORBInitInfo::_narrow)));
+      ACE_reinterpret_cast
+        (
+          TAO_ORBInitInfo_ptr,
+            obj->_tao_QueryInterface
+              (
+                ACE_reinterpret_cast
+                  (
+                    ptr_arith_t,
+                    &TAO_ORBInitInfo::_narrow
+                  )
+              )
+        );
 }
 
-void *
-TAO_ORBInitInfo::_tao_QueryInterface (ptr_arith_t type)
+TAO_ORBInitInfo_ptr
+TAO_ORBInitInfo::_duplicate (TAO_ORBInitInfo_ptr obj)
+{
+  if (!CORBA::is_nil (obj))
+    obj->_add_ref ();
+  return obj;
+}
+
+void *TAO_ORBInitInfo::_tao_QueryInterface (ptr_arith_t type)
 {
   void *retv = 0;
-  if (type == ACE_reinterpret_cast (ptr_arith_t,
-                                    &TAO_ORBInitInfo::_narrow))
+  if (type == ACE_reinterpret_cast
+    (ptr_arith_t,
+      &TAO_ORBInitInfo::_narrow))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
       &::PortableInterceptor::ORBInitInfo::_narrow))
-    retv = ACE_reinterpret_cast (
-             void *,
-             ACE_static_cast (PortableInterceptor::ORBInitInfo_ptr,
-                              this));
+    retv = ACE_reinterpret_cast
+      (
+        void *,
+        ACE_static_cast
+          (
+            PortableInterceptor::ORBInitInfo_ptr,
+            this
+          )
+      );
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-
-//   if (retv)
-//     this->_add_ref ();
+    
+  if (retv)
+    this->_add_ref ();
   return retv;
+}
+
+const char* TAO_ORBInitInfo::_interface_repository_id (void) const
+{
+  return "IDL:TAO_ORBInitInfo:1.0";
+}
+
+// *************************************************************
+TAO_ORBInitInfo_ptr
+tao_TAO_ORBInitInfo_duplicate (
+    TAO_ORBInitInfo_ptr p
+  )
+{
+  return TAO_ORBInitInfo::_duplicate (p);
+}
+
+void
+tao_TAO_ORBInitInfo_release (
+    TAO_ORBInitInfo_ptr p
+  )
+{
+  CORBA::release (p);
+}
+
+TAO_ORBInitInfo_ptr
+tao_TAO_ORBInitInfo_nil (
+    void
+  )
+{
+  return TAO_ORBInitInfo::_nil ();
+}
+
+TAO_ORBInitInfo_ptr
+tao_TAO_ORBInitInfo_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+{
+  return TAO_ORBInitInfo::_narrow (p, ACE_TRY_ENV);
+}
+
+CORBA::Object *
+tao_TAO_ORBInitInfo_upcast (
+    void *src
+  )
+{
+  TAO_ORBInitInfo **tmp =
+    ACE_static_cast (TAO_ORBInitInfo **, src);
+  return *tmp;
+}
+
+// *************************************************************
+
+// *************************************************************
+// Operations for class TAO_ORBInitInfo_var
+// *************************************************************
+
+TAO_ORBInitInfo_var::TAO_ORBInitInfo_var (void) // default constructor
+  : ptr_ (TAO_ORBInitInfo::_nil ())
+{}
+
+::TAO_ORBInitInfo_ptr
+TAO_ORBInitInfo_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+TAO_ORBInitInfo_var::TAO_ORBInitInfo_var (const ::TAO_ORBInitInfo_var &p)
+  : TAO_Base_var (),
+    ptr_ (TAO_ORBInitInfo::_duplicate (p.ptr ()))
+{}
+
+TAO_ORBInitInfo_var::~TAO_ORBInitInfo_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+TAO_ORBInitInfo_var &
+TAO_ORBInitInfo_var::operator= (TAO_ORBInitInfo_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+TAO_ORBInitInfo_var &
+TAO_ORBInitInfo_var::operator= (const ::TAO_ORBInitInfo_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::TAO_ORBInitInfo::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+TAO_ORBInitInfo_var::operator const ::TAO_ORBInitInfo_ptr &() const
+{
+  return this->ptr_;
+}
+
+TAO_ORBInitInfo_var::operator ::TAO_ORBInitInfo_ptr &()
+{
+  return this->ptr_;
+}
+
+TAO_ORBInitInfo_ptr
+TAO_ORBInitInfo_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+TAO_ORBInitInfo_ptr
+TAO_ORBInitInfo_var::in (void) const
+{
+  return this->ptr_;
+}
+
+TAO_ORBInitInfo_ptr &
+TAO_ORBInitInfo_var::inout (void)
+{
+  return this->ptr_;
+}
+
+TAO_ORBInitInfo_ptr &
+TAO_ORBInitInfo_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::TAO_ORBInitInfo::_nil ();
+  return this->ptr_;
+}
+
+TAO_ORBInitInfo_ptr
+TAO_ORBInitInfo_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::TAO_ORBInitInfo_ptr val = this->ptr_;
+  this->ptr_ = ::TAO_ORBInitInfo::_nil ();
+  return val;
+}
+
+TAO_ORBInitInfo_ptr
+TAO_ORBInitInfo_var::duplicate (TAO_ORBInitInfo_ptr p)
+{
+  return ::TAO_ORBInitInfo::_duplicate (p);
+}
+
+void
+TAO_ORBInitInfo_var::release (TAO_ORBInitInfo_ptr p)
+{
+  CORBA::release (p);
+}
+
+TAO_ORBInitInfo_ptr
+TAO_ORBInitInfo_var::nil (void)
+{
+  return ::TAO_ORBInitInfo::_nil ();
+}
+
+TAO_ORBInitInfo_ptr
+TAO_ORBInitInfo_var::narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+{
+  return ::TAO_ORBInitInfo::_narrow (p, ACE_TRY_ENV);
+}
+
+CORBA::Object *
+TAO_ORBInitInfo_var::upcast (void *src)
+{
+  TAO_ORBInitInfo **tmp =
+    ACE_static_cast (TAO_ORBInitInfo **, src);
+  return *tmp;
 }
