@@ -12,6 +12,7 @@
 #include "controlC.h"
 #include "Notify_Push_Consumer.h"
 #include "Notify_Test_Client.h"
+#include "tao/debug.h"
 
 // ******************************************************************
 // Data Section
@@ -226,9 +227,10 @@ int main (int argc, char * argv[])
                           client.done () = 1;
                       }
 
-                    ACE_DEBUG ((LM_DEBUG,
-                                "Consumer received event #%d\n",
-                                Notify_Push_Consumer::get_count ()));
+                    if (TAO_debug_level)
+                      ACE_DEBUG ((LM_DEBUG,
+                                  "Consumer received event #%d\n",
+                                  Notify_Push_Consumer::get_count ()));
                   }
               }
 
@@ -258,4 +260,3 @@ int main (int argc, char * argv[])
 
   return status;
 }
-

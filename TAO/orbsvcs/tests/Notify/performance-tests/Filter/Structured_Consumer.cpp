@@ -10,7 +10,7 @@
 #include "orbsvcs/CosNamingC.h"
 #include "Notify_Structured_Push_Consumer.h"
 #include "goC.h"
-
+#include "tao/debug.h"
 #include "Notify_Test_Client.h"
 
 // ******************************************************************
@@ -217,15 +217,17 @@ int main (int argc, char* argv[])
               static const unsigned int per = 100;
               ACE_Time_Value difference = then - now;
 
-              ACE_DEBUG((LM_DEBUG,
-                         "Total time: %d seconds\n", difference.sec ()));
+              if (TAO_debug_level)
+                ACE_DEBUG((LM_DEBUG,
+                           "Total time: %d seconds\n", difference.sec ()));
 
               double denominator = per / (double)expected;
               difference *= denominator;
 
-              ACE_DEBUG((LM_DEBUG,
-                         "Average of %ds %dus for %u events\n",
-                         difference.sec (), difference.usec (), per));
+              if (TAO_debug_level)
+                ACE_DEBUG((LM_DEBUG,
+                           "Average of %ds %dus for %u events\n",
+                           difference.sec (), difference.usec (), per));
             }
         }
     }

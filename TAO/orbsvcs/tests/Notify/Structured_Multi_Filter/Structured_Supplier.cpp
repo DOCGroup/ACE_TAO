@@ -11,6 +11,7 @@
 #include "Notify_Push_Supplier.h"
 #include "controlS.h"
 #include "Notify_Test_Client.h"
+#include "tao/debug.h"
 
 // ******************************************************************
 // Data Section
@@ -187,7 +188,9 @@ setup_event ()
 
   ACE_TRY_NEW_ENV
     {
-      ACE_DEBUG ((LM_DEBUG, "%d sent \n", count));
+      if (TAO_debug_level)
+        ACE_DEBUG ((LM_DEBUG, "%d sent \n", count));
+
       supplier->send_event (event ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
@@ -319,7 +322,9 @@ int main (int argc, char * argv[])
                                    1);
               ACE_OS::fprintf (fd, "%s", ior.in ());
               ACE_OS::fclose (fd);
-              ACE_DEBUG ((LM_DEBUG, "Supplier Ready.\n"));
+
+              if (TAO_debug_level)
+                ACE_DEBUG ((LM_DEBUG, "Supplier Ready.\n"));
 
               while ((!done) && (n_events > 0))
                 {
