@@ -10,17 +10,15 @@
 //    CosTransaction.idl
 //
 // = DESCRIPTION
-//    The concurrency service description is downloaded from
+//    Described in CORBAservices: Common Object Services
+//    Specification, chapter 7 The concurrency service description can
+//    be downloaded from
 //    ftp://www.omg.org/pub/docs/formal/97-11-02.idl
 //
 // = AUTHOR
 //    OMG and Torben Worm <tworm@cs.wustl.edu>
 //
 // ============================================================================
-
-//CONCURRENCY CONTROL SERVICE
-//described in CORBAservices: Common Object Services Specification, chapter 7
-
 
 //CosConcurrencyControl Module, page 7-8
 //Includes the following interfaces:
@@ -29,71 +27,73 @@
 // The part depending on the transaction service may be included by defining
 // TAO_HAS_TRANSACTION_CONTROL_SERVICE
 
-#if defined(TAO_HAS_TRANSACTION_CONTROL_SERVICE)
+#if defined (TAO_HAS_TRANSACTION_CONTROL_SERVICE)
 #include <CosTransactions.idl>
-#endif
+#endif /* TAO_HAS_TRANSACTION_CONTROL_SERVICE */
 
-module CosConcurrencyControl {
+module CosConcurrencyControl 
+// @@ Torben, can you please add the = TITLE and = DESCRIPTION entries here?!
+// In addition, can you please comment the interfaces and each
+// operation, as well? (briefly)  
+{
+  enum lock_mode 
+  {
+    read,
+    write,
+    upgrade,
+    intention_read,
+    intention_write
+  };
 
-    enum lock_mode {
-        read,
-        write,
-        upgrade,
-        intention_read,
-        intention_write
+  exception LockNotHeld {};
+
+  interface LockCoordinator
+    {
+      void drop_locks ();
     };
 
-    exception LockNotHeld{};
-
-    interface LockCoordinator
+  interface LockSet
     {
-	        void drop_locks();
+      void lock (in lock_mode mode);
+      boolean try_lock (in lock_mode mode);
+
+      void unlock (in lock_mode mode)
+        raises (LockNotHeld);
+      void change_mode (in lock_mode held_mode,
+                        in lock_mode new_mode)
+        raises (LockNotHeld);
+#if defined (TAO_HAS_TRANSACTION_CONTROL_SERVICE)
+      LockCoordinator get_coordinator (in CosTransactions::Coordinator which);
+#endif /* TAO_HAS_TRANSACTION_CONTROL_SERVICE */
     };
 
-    interface LockSet
+#if defined (TAO_HAS_TRANSACTION_CONTROL_SERVICE)
+  interface TransactionalLockSet
     {
-        void lock(in lock_mode mode);
-        boolean try_lock(in lock_mode mode);
-
-        void unlock(in lock_mode mode)
-            raises(LockNotHeld);
-        void change_mode(in lock_mode held_mode,
-                         in lock_mode new_mode)
-           raises(LockNotHeld);
-	#if defined(TAO_HAS_TRANSACTION_CONTROL_SERVICE)
-        LockCoordinator get_coordinator(
-            in CosTransactions::Coordinator which);
-	#endif // TAO_HAS_TRANSACTION_CONTROL_SERVICE
+      void lock (in CosTransactions::Coordinator current,
+                 in lock_mode mode);
+      boolean try_lock (in CosTransactions::Coordinator current,
+                        in lock_mode mode);
+      void unlock (in CosTransactions::Coordinator current,
+                   in lock_mode mode)
+        raises (LockNotHeld);
+      void change_mode (in CosTransactions::Coordinator current,
+                        in lock_mode held_mode,
+                        in lock_mode new_mode)
+        raises (LockNotHeld);
+      LockCoordinator get_coordinator (iin CosTransactions::Coordinator which);
     };
+#endif /* TAO_HAS_TRANSACTION_CONTROL_SERVICE */
 
-    #if defined(TAO_HAS_TRANSACTION_CONTROL_SERVICE)
-    interface TransactionalLockSet
+  interface LockSetFactory
     {
-        void lock(in CosTransactions::Coordinator current,
-                  in lock_mode mode);
-        boolean try_lock(in CosTransactions::Coordinator current,
-                         in lock_mode mode);
-        void unlock(in CosTransactions::Coordinator current,
-                    in lock_mode mode)
-           raises(LockNotHeld);
-        void change_mode(in CosTransactions::Coordinator current,
-                         in lock_mode held_mode,
-                         in lock_mode new_mode)
-           raises(LockNotHeld);
-        LockCoordinator get_coordinator(
-            in CosTransactions::Coordinator which);
-    };
-    #endif // TAO_HAS_TRANSACTION_CONTROL_SERVICE
-
-    interface LockSetFactory
-    {
-        LockSet create();
-        LockSet create_related(in LockSet which);
-	#if defined(TAO_HAS_TRANSACTION_CONTROL_SERVICE)
-        TransactionalLockSet create_transactional();
-        TransactionalLockSet create_transactional_related(in
-            TransactionalLockSet which);
-	#endif // TAO_HAS_TRANSACTION_CONTROL_SERVICE
+      LockSet create ();
+      LockSet create_related (in LockSet which);
+#if defined (TAO_HAS_TRANSACTION_CONTROL_SERVICE)
+      TransactionalLockSet create_transactional ();
+      TransactionalLockSet create_transactional_related (in
+                                                         TransactionalLockSet which);
+#endif /* TAO_HAS_TRANSACTION_CONTROL_SERVICE */
     };
 };
 

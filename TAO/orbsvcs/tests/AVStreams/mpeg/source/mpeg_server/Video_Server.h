@@ -1,7 +1,4 @@
 /* -*- C++ -*- */
-
-
-
 /* $Id$  */
 
 /* Copyright (c) 1995 Oregon Graduate Institute of Science and Technology
@@ -43,13 +40,12 @@
 #include "proto.h"
 #include "Video_Control_State.h"
 
-class Video_Control_Handler 
-  : public virtual ACE_Event_Handler
+class Video_Control_Handler : public virtual ACE_Event_Handler
 {
-  // =TITLE
+  // = TITLE
   //   Defines the event handler class for the Video Control.
   //
-  // =DESCRIPTION
+  // = DESCRIPTION
   //   This class makes use of a TCP socket.It contains a pointer to
   //   the current state which is implemented using the state pattern.
 public:
@@ -75,35 +71,37 @@ private:
   // State pattern - pointer to abstract State object
 
   ACE_HANDLE control_handle_;
-
 };
 
 class Video_Control_Handler_Instance
 {
-  // =TITLE
+  // = TITLE
   //   Defines a Video_Control_Handler_Instance class which is to be
   //   used as a singleton to give access to a Video_Control_Handler
   //   instance to the state pattern classes.
   //
-  // =DESCRIPTION
+  // = DESCRIPTION
   //   The Video_Control_Handler has to be set using the
   //   set_video_control_handler method.
 public:
+  // @@ Please add comments to these methods.
   Video_Control_Handler_Instance (void);
   
   void set_video_control_handler (Video_Control_Handler *h);
   
   Video_Control_Handler *get_video_control_handler (void);
+
 private:
   Video_Control_Handler *video_control_handler_;
 };
 
-typedef ACE_TSS_Singleton <Video_Control_Handler_Instance,
-  ACE_SYNCH_MUTEX> VIDEO_CONTROL_HANDLER_INSTANCE; 
 // Video_Control_Handler instance singleton.
+//@@ Does this really need to be a singleton?
+typedef ACE_TSS_Singleton <Video_Control_Handler_Instance,
+                           ACE_SYNCH_MUTEX>
+        VIDEO_CONTROL_HANDLER_INSTANCE; 
 
-class Video_Sig_Handler 
-  : public virtual ACE_Event_Handler
+class Video_Sig_Handler : public virtual ACE_Event_Handler
 {
   // =TITLE
   //   Defines a video signal handler class which registers itself with the

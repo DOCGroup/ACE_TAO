@@ -297,6 +297,7 @@ Video_Server::init (int ctr_fd,
                   Video_Sig_Handler (this->control_handler_),
                   -1);
 
+  // @@ Can you please change the use of "fd" to "handle" globally?
   // Set the global socket fd's from the arguments.
   VIDEO_SINGLETON::instance ()->serviceSocket = ctr_fd;
   VIDEO_SINGLETON::instance ()->videoSocket = data_fd;
