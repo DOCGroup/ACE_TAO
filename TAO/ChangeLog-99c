@@ -1,29 +1,35 @@
+Tue Mar 23 21:55:21 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * rules.tao.GNU,orbsvcs/orbsvcs/Makefile,docs/configurations.html:
+          moved TAO_ORBSVCS default setting from rule.tao.GNU to
+          orbsvcs/orbsvcs/Makefile.
+
 Tue Mar 23 21:36:12 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Invocation.cpp: 
-	  The error codes returned from invoke_i() were wrong. Resulting
-	  in missing user exceptions and other evil things.
+        * tao/Invocation.cpp:
+          The error codes returned from invoke_i() were wrong. Resulting
+          in missing user exceptions and other evil things.
 
-	* docs/Options.html: 
-	* tao/ORB_Core.cpp: 
-	  Added option to control TAO_debug_level directly.
+        * docs/Options.html:
+        * tao/ORB_Core.cpp:
+          Added option to control TAO_debug_level directly.
 
-	* tao/GIOP.cpp: 
-	  Enabled more debugging messages for the beginning of an outgoing 
-	  buffer, only if TAO_debug_level > 3.
+        * tao/GIOP.cpp:
+          Enabled more debugging messages for the beginning of an outgoing
+          buffer, only if TAO_debug_level > 3.
 
-	* orbsvcs/tests/Simple_Naming/client.cpp: 
-	  Print some debugging messages if the tests fail.
+        * orbsvcs/tests/Simple_Naming/client.cpp:
+          Print some debugging messages if the tests fail.
 
 Tue Mar 23 19:14:23 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
-	* tao/ORB.cpp (multicast_query): Printed the error message in
-	  the accept call only if the TAO_debug_level > 0.
+        * tao/ORB.cpp (multicast_query): Printed the error message in
+          the accept call only if the TAO_debug_level > 0.
 
 Tue Mar 23 10:14:58 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* TAO_IDL/be/be_interface.cpp: There were some missing '\n' that
- 	  were making the ACE_ERROR statements hard to read.
+        * TAO_IDL/be/be_interface.cpp: There were some missing '\n' that
+          were making the ACE_ERROR statements hard to read.
 
 Tue Mar 23 09:27:51 1999  David L. Levine  <levine@cs.wustl.edu>
 
