@@ -15,6 +15,7 @@ IDLFILES = \
 	$(IDLDIR)\sfp.idl
 
 OBJFILES = \
+        $(OBJDIR)\AV_Core.obj \
 	$(OBJDIR)\AVStreams_i.obj \
 	$(OBJDIR)\AVStreamsC.obj \
 	$(OBJDIR)\AVStreamsS.obj \
