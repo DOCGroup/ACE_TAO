@@ -50,14 +50,14 @@ public:
   // This creates and initialises the table.
   // Currently, the hash map manager.
 
-  int add_ior (ACE_CString object_name,
-               ACE_CString ior);
+  int add_ior (ACE_CString &object_name,
+               ACE_CString &ior);
   // Associate <object_name> with <ior>.  If <object_name> is already in the
   // map then the <ACE_Hash_Map_Entry> is not changed.  Returns 0 if a
   // new IOR is bound successfully, returns 1 if an attempt is made
   // to bind an existing object_name, and returns -1 if failures occur.
 
-  int find_ior (ACE_CString object_name,
+  int find_ior (ACE_CString &object_name,
                 ACE_CString &ior);
   // Locate <object_name> and pass out parameter via <ior>.  If the IOR is
   // found, return 0. Return -1 if not found.

@@ -87,22 +87,18 @@ TAO_Default_Reactor::~TAO_Default_Reactor (void)
 int
 TAO_ORB_Core::add_to_ior_table (ACE_CString init_ref, TAO_IOR_LookupTable &table)
 {
-
-  ACE_CString object_id;
-  ACE_CString ior;
-
-  if (ACE_OS::strtok (init_ref.rep (),"=") == 0)
+  int index = 0;
+  if ((index = init_ref.find ("=")) == ACE_CString::npos)
     ACE_ERROR_RETURN ((LM_ERROR,
 		       "Unable to parse -ORBInitRef parameter\n"),
 		      -1);
-
-  // Parse the InitRef to set the object ID and the IOR.
-  object_id.set (ACE_OS::strtok (init_ref.rep (), "="), 1);
-  ior.set (ACE_OS::strtok(0,"="), 1);
-
+  
+  ACE_CString object_id = init_ref.substr (0,index);
+  ACE_CString ior = init_ref.substr (index+1);
+  
   // Add the objectID-IOR to the table and return the status.
   return table.add_ior (object_id, ior);
-
+  
 }
 
 int
