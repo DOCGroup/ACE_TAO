@@ -14,7 +14,7 @@
 //=============================================================================
 
 #include "StubFaultNotifier.h"
-#include <tao/Utils/Server_Main.h>
+#include "tao/Utils/Server_Main.h"
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {

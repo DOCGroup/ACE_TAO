@@ -5,12 +5,12 @@
 #include "PG_Object_Group.h"
 #include "PG_conf.h"
 
-#include <ace/Get_Opt.h>
-#include <ace/Vector_T.h>
-#include <tao/debug.h>
-#include <tao/PortableServer/ORB_Manager.h>
-#include <orbsvcs/orbsvcs/PortableGroup/PG_Operators.h> // Borrow operator == on CosNaming::Name
-#include <orbsvcs/orbsvcs/PortableGroup/PG_Utils.h>
+#include "ace/Get_Opt.h"
+#include "ace/Vector_T.h"
+#include "tao/debug.h"
+#include "tao/PortableServer/ORB_Manager.h"
+#include "orbsvcs/orbsvcs/PortableGroup/PG_Operators.h" // Borrow operator == on CosNaming::Name
+#include "orbsvcs/orbsvcs/PortableGroup/PG_Utils.h"
 
 // Borland C++ 6 Update Pack 4 and earlier give a warning about comparing
 // signed and unsigned values in the minimum_polulate() and

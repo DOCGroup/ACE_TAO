@@ -13,9 +13,9 @@
 
 #include "FT_Notifier_i.h"
 
-#include <ace/Get_Opt.h>
-#include <ace/OS_NS_stdio.h>
-#include <tao/debug.h>
+#include "ace/Get_Opt.h"
+#include "ace/OS_NS_stdio.h"
+#include "tao/debug.h"
 
 // Use this macro at the beginning of CORBA methods
 // to aid in debugging.

@@ -2,8 +2,8 @@
 //---------------------------------------------------------------------------
 #include "pch.h"
 #pragma hdrstop
-#include <ace/ace.h>
-#include <tao/corba.h>
+#include "ace/ace.h"
+#include "tao/corba.h"
 #include "ChatClientWnd.h"
 USERES("ChatClient.res");
 USEFORM("ChatClientWnd.cpp", ChatClientWindow);

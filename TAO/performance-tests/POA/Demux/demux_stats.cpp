@@ -15,8 +15,8 @@
 
 // FUZZ: disable check_for_math_include
 #include <math.h>
-#include <ace/Get_Opt.h>
-#include <tao/corba.h>
+#include "ace/Get_Opt.h"
+#include "tao/corba.h"
 
 class Demux_Stats
 {

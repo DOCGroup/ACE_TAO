@@ -35,8 +35,8 @@
 #ifndef _KOKYU_DSRT_QOS_PIDL_
 #define _KOKYU_DSRT_QOS_PIDL_
 
-#include <tao/TimeBase.pidl>
-#include <tao/RTCORBA/RTCORBA_include.pidl>
+#include "tao/TimeBase.pidl"
+#include "tao/RTCORBA/RTCORBA_include.pidl"
 
 #pragma prefix "omg.org"
 

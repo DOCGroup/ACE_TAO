@@ -15,7 +15,7 @@
  */
 //=============================================================================
 #include "PG_Property_Set.h"
-#include <tao/debug.h>
+#include "tao/debug.h"
 
 //////////////////////
 // PG_Property_Set

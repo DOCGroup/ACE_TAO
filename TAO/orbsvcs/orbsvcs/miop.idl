@@ -19,8 +19,8 @@
 #ifndef MIOP_IDL
 #define MIOP_IDL
 
-#include <tao/IOP.pidl>
-#include <tao/GIOP.pidl>
+#include "tao/IOP.pidl"
+#include "tao/GIOP.pidl"
 
 #pragma prefix "omg.org"
 

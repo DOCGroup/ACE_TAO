@@ -1,3 +1,59 @@
+Wed Mar 31 23:16:00 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* examples/Borland/ChatClient.cpp:
+	* examples/Borland/ORBThread.h:
+	* examples/Borland/pch.h:
+	* examples/Kokyu_dsrt_schedulers/EDF_Scheduling.pidl:
+	* examples/Kokyu_dsrt_schedulers/FP_Scheduling.idl:
+	* examples/Kokyu_dsrt_schedulers/Kokyu_qos.idl:
+	* examples/Kokyu_dsrt_schedulers/MIF_Scheduling.idl:
+	* examples/Kokyu_dsrt_schedulers/MUF_Scheduling.idl:
+	* examples/RTScheduling/FP_Scheduling.pidl:
+	* examples/RTScheduling/MIF_Scheduling.pidl:
+	* orbsvcs/FT_ReplicationManager/FT_DefaultFaultAnalyzer.cpp:
+	* orbsvcs/FT_ReplicationManager/FT_FaultConsumer.cpp:
+	* orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp:
+	* orbsvcs/FT_ReplicationManager/FT_ReplicationManagerFaultAnalyzer.cpp:
+	* orbsvcs/FT_ReplicationManager/FT_ReplicationManager_Main.cpp:
+	* orbsvcs/Fault_Detector/Fault_Detector_Main.cpp:
+	* orbsvcs/Fault_Detector/Fault_Detector_i.cpp:
+	* orbsvcs/Fault_Notifier/FT_Notifier_i.cpp:
+	* orbsvcs/Fault_Notifier/Fault_Notifier_Main.cpp:
+	* orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.mpc:
+	* orbsvcs/examples/FaultTolerance/RolyPoly/RolyPoly.mpc:
+	* orbsvcs/examples/RtEC/Kokyu/RtECKokyu.mpc:
+	* orbsvcs/orbsvcs/PortableGroup.idl:
+	* orbsvcs/orbsvcs/PortableGroup_Simple_DS.idl:
+	* orbsvcs/orbsvcs/SSLIOP.idl:
+	* orbsvcs/orbsvcs/Security.idl:
+	* orbsvcs/orbsvcs/SecurityReplaceable.idl:
+	* orbsvcs/orbsvcs/miop.idl:
+	* orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.h:
+	* orbsvcs/orbsvcs/PortableGroup/PG_Property_Set.cpp:
+	* orbsvcs/tests/FT_App/FTAPP_Analyzer_Main.cpp:
+	* orbsvcs/tests/FT_App/FTAPP_FactoryRegistry_Main.cpp:
+	* orbsvcs/tests/FT_App/FTAPP_FaultConsumer_Main.cpp:
+	* orbsvcs/tests/FT_App/FTAPP_Notifier_Main.cpp:
+	* orbsvcs/tests/FT_App/FT_Replica.cpp:
+	* orbsvcs/tests/FT_App/FT_ReplicaFactory_i.cpp:
+	* orbsvcs/tests/FT_App/FT_TestReplica_i.cpp:
+	* orbsvcs/tests/FT_App/StubBatchConsumer.cpp:
+	* orbsvcs/tests/FT_App/StubFaultAnalyzer.cpp:
+	* orbsvcs/tests/FT_App/StubFaultConsumer.cpp:
+	* orbsvcs/tests/FT_App/StubFaultNotifier.cpp:
+	* performance-tests/POA/Demux/demux_stats.cpp:
+	* tao/orb.idl:
+	* tao/PortableServer/Default_ORT.pidl:
+	* tao/RTPortableServer/RTPortableServer.pidl:
+	* tao/Utils/Server_Main.cpp:
+	* tests/CodeSets/libs/IBM1047_ISO8859/Char_IBM1047_ISO8859_Factory.h:
+	* tests/CodeSets/libs/IBM1047_ISO8859/Wchar_IBM1047_ISO8859_Factory.h:
+	* tests/CodeSets/libs/UCS4_UTF16/WUCS4_UTF16_Factory.h:
+
+	  Fixed fuzz warnings.
+
 Wed Mar 31 18:19:54 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* docs/releasenotes/ftcorba_services.html:
