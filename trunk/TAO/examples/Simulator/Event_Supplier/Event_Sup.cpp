@@ -114,6 +114,7 @@ Demo_Supplier::open_supplier (RtecEventChannelAdmin::EventChannel_ptr ec,
       this->rt_info_ = scheduler_->create (name,
                                            TAO_TRY_ENV);
       scheduler_->set (rt_info_,
+                       RtecScheduler::VERY_LOW_CRITICALITY,
                        ORBSVCS_Time::zero,
                        ORBSVCS_Time::zero,
                        ORBSVCS_Time::zero,
@@ -121,6 +122,7 @@ Demo_Supplier::open_supplier (RtecEventChannelAdmin::EventChannel_ptr ec,
                        RtecScheduler::VERY_LOW_IMPORTANCE,
                        ORBSVCS_Time::zero,
                        1,
+                       RtecScheduler::OPERATION,
                        TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
