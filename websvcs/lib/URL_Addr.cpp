@@ -93,11 +93,11 @@ ACE_URL_Addr*
 ACE_URL_Addr::create_address (LPCTSTR url)
 {
   ACE_URL_Addr* addr = 0;
-  if (ACE_OS::strncmp (http, url, http_size) == 0)
+  if (ACE_OS::strncasecmp (http, url, http_size) == 0)
     ACE_NEW_RETURN (addr, ACE_HTTP_Addr (), 0);
-  else if (ACE_OS::strncmp (ftp, url, ftp_size) == 0)
+  else if (ACE_OS::strncasecmp (ftp, url, ftp_size) == 0)
     ACE_NEW_RETURN (addr, ACE_FTP_Addr (), 0);
-  else if (ACE_OS::strncmp (mailto, url, mailto_size) == 0)
+  else if (ACE_OS::strncasecmp (mailto, url, mailto_size) == 0)
     ACE_NEW_RETURN (addr, ACE_Mailto_Addr (), 0);
   else
     ACE_NEW_RETURN (addr, ACE_URL_Addr (), 0);
@@ -113,35 +113,35 @@ ACE_URL_Addr::create_address (LPCTSTR url)
 int
 ACE_URL_Addr::known_scheme (LPCTSTR url)
 {
-  if (ACE_OS::strncmp (http, url, http_size) == 0)
+  if (ACE_OS::strncasecmp (http, url, http_size) == 0)
     return 1;
-  else if (ACE_OS::strncmp (ftp, url, ftp_size) == 0)
+  else if (ACE_OS::strncasecmp (ftp, url, ftp_size) == 0)
     return 1;
-  else if (ACE_OS::strncmp (mailto, url, mailto_size) == 0)
+  else if (ACE_OS::strncasecmp (mailto, url, mailto_size) == 0)
     return 1;
-  else if (ACE_OS::strncmp (file, url, file_size) == 0)
+  else if (ACE_OS::strncasecmp (file, url, file_size) == 0)
     return 1;
-  else if (ACE_OS::strncmp (afs, url, afs_size) == 0)
+  else if (ACE_OS::strncasecmp (afs, url, afs_size) == 0)
     return 1;
-  else if (ACE_OS::strncmp (news, url, news_size) == 0)
+  else if (ACE_OS::strncasecmp (news, url, news_size) == 0)
     return 1;
-  else if (ACE_OS::strncmp (nntp, url, nntp_size) == 0)
+  else if (ACE_OS::strncasecmp (nntp, url, nntp_size) == 0)
     return 1;
-  else if (ACE_OS::strncmp (cid, url, cid_size) == 0)
+  else if (ACE_OS::strncasecmp (cid, url, cid_size) == 0)
     return 1;
-  else if (ACE_OS::strncmp (mid, url, mid_size) == 0)
+  else if (ACE_OS::strncasecmp (mid, url, mid_size) == 0)
     return 1;
-  else if (ACE_OS::strncmp (wais, url, wais_size) == 0)
+  else if (ACE_OS::strncasecmp (wais, url, wais_size) == 0)
     return 1;
-  else if (ACE_OS::strncmp (prospero, url, prospero_size) == 0)
+  else if (ACE_OS::strncasecmp (prospero, url, prospero_size) == 0)
     return 1;
-  else if (ACE_OS::strncmp (telnet, url, telnet_size) == 0)
+  else if (ACE_OS::strncasecmp (telnet, url, telnet_size) == 0)
     return 1;
-  else if (ACE_OS::strncmp (rlogin, url, rlogin_size) == 0)
+  else if (ACE_OS::strncasecmp (rlogin, url, rlogin_size) == 0)
     return 1;
-  else if (ACE_OS::strncmp (tn3270, url, tn3270_size) == 0)
+  else if (ACE_OS::strncasecmp (tn3270, url, tn3270_size) == 0)
     return 1;
-  else if (ACE_OS::strncmp (gopher, url, gopher_size) == 0)
+  else if (ACE_OS::strncasecmp (gopher, url, gopher_size) == 0)
     return 1;
 
   return 0;
@@ -437,7 +437,7 @@ ACE_HTTP_Addr::string_to_addr (LPCTSTR address)
   if (address == 0)
     return -1;
 
-  if (ACE_OS::strncmp (http, address, http_size) != 0)
+  if (ACE_OS::strncasecmp (http, address, http_size) != 0)
     return -1;
 
   this->clear ();
@@ -708,7 +708,7 @@ ACE_FTP_Addr::string_to_addr (LPCTSTR address)
 {
   if (address == 0)
     return -1;
-  if (ACE_OS::strncmp (ftp, address, ftp_size) != 0)
+  if (ACE_OS::strncasecmp (ftp, address, ftp_size) != 0)
     return -1;
 
   this->clear ();
@@ -896,7 +896,7 @@ ACE_Mailto_Addr::addr_to_string (LPTSTR buffer,
 int
 ACE_Mailto_Addr::string_to_addr (LPCTSTR address)
 {
-  if (ACE_OS::strncmp (mailto, address, mailto_size) != 0)
+  if (ACE_OS::strncasecmp (mailto, address, mailto_size) != 0)
     return -1;
 
   this->clear ();
