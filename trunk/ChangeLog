@@ -1,3 +1,13 @@
+Fri Nov 19 07:33:33 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * examples/APG/Logging/Trace.h:
+        * examples/APG/Logging/Trace_Return.cpp:
+        * examples/APG/Logging/Wrap_Macros.cpp:
+
+          Fixed more VxWorks related build errors.  Apparently, the g++ 2.96
+          that comes with VxWorks can't handle ... in a macro parameter list
+          (however g++ 2.96 on linux can).
+
 Fri Nov 19 06:55:32 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/bor.mpd:
