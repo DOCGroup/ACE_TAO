@@ -74,45 +74,43 @@ be_visitor_operation_interceptors_exceptlist::gen_exceptlist (be_operation *node
 
   // Generate the exception data array.
   *os << be_nl
-      << "static TAO_Exception_Data " << "_tao_" << node->flat_name ()
+      << "static CORBA::TypeCode_ptr " << "_tao_" << node->flat_name ()
       << "_exceptiondata[] = " << be_nl;
   *os << "{" << be_idt_nl;
-  // initialize an iterator to iterate thru the exception list
-  UTL_ExceptlistActiveIterator *ei;
-  ACE_NEW_RETURN (ei,
-                  UTL_ExceptlistActiveIterator (node->exceptions ()),
-                  -1);
-  // continue until each element is visited
 
-  while (!ei->is_done ())
+  // Initialize an iterator to iterate thru the exception list.
+  UTL_ExceptlistActiveIterator ei (node->exceptions ());
+
+  be_exception *excp = 0;
+
+  // Continue until each element is visited.
+  while (!ei.is_done ())
     {
-      be_exception *excp = be_exception::narrow_from_decl (ei->item ());
+      excp = be_exception::narrow_from_decl (ei.item ());
 
       if (excp == 0)
         {
-          delete ei;
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_operation_exceptlist_cs"
-                             "visit_operation - "
-                             "codegen for scope failed\n"), -1);
+          ACE_ERROR_RETURN ((
+              LM_ERROR,
+              "(%N:%l) be_visitor_operation_interceptors_exceptlist"
+              "gen_exceptlist - "
+              "be_exception::narrow_from_decl failed\n"), 
+            -1
+          );
 
-        }
-      *os << "{";
-      // the typecode name
+        }      
+        
       *os << excp->tc_name ();
-      *os << ", ";
-      // allocator method
-      *os << excp->name () << "::_alloc}";
-      ei->next ();
-      if (!ei->is_done ())
-        {
-          *os << ",\n";
-          os->indent ();
-        }
-      // except the last one is processed?
 
-    } // end of while loop
-  delete ei;
+      ei.next ();
+
+      if (!ei.is_done ())
+        {
+          *os << "," << be_nl;
+        }
+
+    }
+
   *os << be_uidt_nl << "};" << be_nl;
 
   long excp_count = (node->exceptions())->length ();
@@ -122,7 +120,7 @@ be_visitor_operation_interceptors_exceptlist::gen_exceptlist (be_operation *node
       << be_idt_nl
       << "{" << be_idt_nl
       << "CORBA::TypeCode_ptr tcp = _tao_" << node->flat_name ()
-      << "_exceptiondata[i].tc;" << be_nl
+      << "_exceptiondata[i];" << be_nl
       << "TAO_Pseudo_Object_Manager<CORBA::TypeCode,CORBA::TypeCode_var> tcp_object (&tcp, 1);" << be_nl
       << "(*exception_list)[i] = tcp_object;" << be_uidt_nl
       << "}\n" << be_uidt;

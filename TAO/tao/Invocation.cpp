@@ -844,11 +844,7 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
 
       for (CORBA::ULong i = 0; i < except_count; ++i)
         {
-          CORBA::TypeCode_ptr tcp = excepts[i].tc;
-          const char *xid = tcp->id (ACE_TRY_ENV);
-          ACE_CHECK_RETURN (TAO_INVOKE_EXCEPTION);
-
-          if (ACE_OS::strcmp (buf.in (), xid) != 0)
+          if (ACE_OS::strcmp (buf.in (), excepts[i].id) != 0)
             {
               continue;
             }
