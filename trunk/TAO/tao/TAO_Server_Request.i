@@ -2,6 +2,8 @@
 //
 // $Id$
 
+#include "operation_details.h"
+
 ACE_INLINE TAO_ORB_Core *
 TAO_ServerRequest::orb_core (void) const
 {
