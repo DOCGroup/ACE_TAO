@@ -33,7 +33,6 @@
 #define ACE_LACKS_MPROTECT
 #define ACE_LACKS_MSYNC
 #define ACE_LACKS_TCP_NODELAY
-#define ACE_LACKS_MSG_WFMO
 
 // There's no host table, by default. So using "localhost" won't work.
 // If your system does have the ability to use "localhost" and you want to,
@@ -53,7 +52,7 @@
 
 // Let the config-win32.h file do its thing
 #undef ACE_CONFIG_H
-#include "ace/config-win32.h"
+#include /**/ "ace/config-win32.h"
 #include /**/ <embkern.h>
 #if defined (ACE_HAS_PHARLAP_RT)
 # include /**/ <embtcpip.h>

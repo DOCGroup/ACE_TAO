@@ -1849,25 +1849,6 @@ SOURCE=.\OS.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\OS_Dirent.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
 SOURCE=.\Pair.cpp
 
 !IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
@@ -4147,10 +4128,6 @@ SOURCE=.\OS.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\OS_Dirent.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Pair.h
 # End Source File
 # Begin Source File
@@ -4628,7 +4605,7 @@ SOURCE=.\XtReactor.h
 # End Group
 # Begin Group "Inline Files"
 
-# PROP Default_Filter "i;inl"
+# PROP Default_Filter "i"
 # Begin Source File
 
 SOURCE=.\Acceptor.i
@@ -5012,10 +4989,6 @@ SOURCE=.\Obstack.i
 # Begin Source File
 
 SOURCE=.\OS.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\OS_Dirent.inl
 # End Source File
 # Begin Source File
 

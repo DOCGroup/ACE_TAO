@@ -127,7 +127,7 @@ ACE_Process_Mutex::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
-#if !defined (ACE_WIN32) && !defined (ACE_HAS_POSIX_SEM) && !defined (ACE_PSOS)
+#if !defined (ACE_WIN32) && !defined (ACE_HAS_POSIX_SEM)
 const ACE_TCHAR *
 ACE_Process_Mutex::unique_name (void)
 {
@@ -137,18 +137,18 @@ ACE_Process_Mutex::unique_name (void)
   ACE::unique_name (this, this->name_, ACE_UNIQUE_NAME_LEN);
   return this->name_;
 }
-#endif /* !ACE_WIN32 && !ACE_HAS_POSIX_SEM && !ACE_PSOS */
+#endif /* !ACE_WIN32 && !ACE_HAS_POSIX_SEM */
 
 ACE_Process_Mutex::ACE_Process_Mutex (const ACE_TCHAR *name, void *arg)
-#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS)
+#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM)
   : lock_ (USYNC_PROCESS, name, (ACE_mutexattr_t *) arg)
 #else
   : lock_ (name ? name : ACE_Process_Mutex::unique_name ())
-#endif /* ACE_WIN32 || ACE_HAS_POSIX_SEM || ACE_PSOS */
+#endif /* ACE_WIN32 || ACE_HAS_POSIX_SEM */
 {
-#if !defined (ACE_WIN32) && !defined (ACE_HAS_POSIX_SEM) && !defined (ACE_PSOS)
+#if !defined (ACE_WIN32) && !defined (ACE_HAS_POSIX_SEM)
   ACE_UNUSED_ARG (arg);
-#endif /* !ACE_WIN32 && !ACE_HAS_POSIX_SEM && !ACE_PSOS */
+#endif /* !ACE_WIN32 && !ACE_HAS_POSIX_SEM */
 }
 
 ACE_Process_Mutex::~ACE_Process_Mutex (void)
@@ -304,11 +304,11 @@ ACE_Process_Semaphore::ACE_Process_Semaphore (u_int count,
                                               const ACE_TCHAR *name,
                                               void *arg,
                                               int max)
-#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS)
+#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM)
   : lock_ (count, USYNC_PROCESS, name, arg, max)
 #else
   : lock_ (name, ACE_SV_Semaphore_Complex::ACE_CREATE, count)
-#endif /* ACE_WIN32 || ACE_HAS_POSIX_SEM || ACE_PSOS */
+#endif /* ACE_WIN32 || ACE_HAS_POSIX_SEM */
 {
   arg = arg;
   max = max;

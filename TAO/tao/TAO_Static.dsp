@@ -527,27 +527,7 @@ SOURCE=.\RT_Current.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\RT_Mutex.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_ORB.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_Policy_i.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\RTCORBAC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\RTCORBAS.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\RTCORBAS_T.cpp
+SOURCE=.\rtcorbafwd.cpp
 # End Source File
 # Begin Source File
 
@@ -1131,27 +1111,7 @@ SOURCE=.\RT_Current.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\RT_Mutex.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_ORB.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_Policy_i.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\RTCORBAC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\RTCORBAS.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\RTCORBAS_T.h
+SOURCE=.\rtcorbafwd.h
 # End Source File
 # Begin Source File
 
@@ -1579,27 +1539,7 @@ SOURCE=.\RT_Current.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\RT_Mutex.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_ORB.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_Policy_i.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\RTCORBAC.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\RTCORBAS.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\RTCORBAS_T.i
+SOURCE=.\rtcorbafwd.i
 # End Source File
 # Begin Source File
 

@@ -223,8 +223,7 @@ Test_ECG::run (int argc, char* argv[])
           FILE* pid = ACE_OS::fopen (this->pid_file_name_, "w");
           if (pid != 0)
             {
-              ACE_OS::fprintf (pid, "%ld\n",
-                               ACE_static_cast (long, ACE_OS::getpid ()));
+              ACE_OS::fprintf (pid, "%d\n", ACE_OS::getpid ());
               ACE_OS::fclose (pid);
             }
         }

@@ -11,7 +11,6 @@ SHLIB    = libACE.$(SOEXT)
 OS_FILES = \
   Basic_Types \
   OS \
-  OS_Dirent \
   Sched_Params
 UTILS_FILES = \
   ACE \

@@ -21,6 +21,7 @@ BIN =   Aio_Platform_Test \
         Cached_Conn_Test \
         Capabilities_Test \
         CDR_File_Test \
+	CDR_Array_Test \
         CDR_Test \
         Collection_Test \
         Conn_Test \
@@ -121,14 +122,6 @@ PSRC=$(addsuffix .cpp,$(BIN))
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
-
-ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
-  ifeq ($(LYNXTARGET),)
-    BIN += CDR_Array_Test
-    BUILD += CDR_Array_Test
-  endif
-endif
-
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU

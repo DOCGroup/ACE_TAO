@@ -36,9 +36,12 @@ TAO_TypeCodeFactory_i::create_struct_tc (
 
   for (CORBA::ULong index = 0; index < len; index++)
     {
-      cdr << members[index].name;
+      // Get the first member which is a string..
+      IR::StructMember struct_member = members[index];
 
-      cdr << members[index].type;
+      cdr << struct_member.name.in ();
+
+      cdr << struct_member.type.in ();
     }
 
   CORBA::TypeCode_ptr struct_typecode = 

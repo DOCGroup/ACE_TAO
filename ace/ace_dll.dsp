@@ -1893,25 +1893,6 @@ SOURCE=.\OS.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\OS_Dirent.cpp
-
-!IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
 SOURCE=.\Pair.cpp
 
 !IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
@@ -4191,10 +4172,6 @@ SOURCE=.\OS.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\OS_Dirent.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Pair.h
 # End Source File
 # Begin Source File
@@ -4672,7 +4649,7 @@ SOURCE=.\XtReactor.h
 # End Group
 # Begin Group "Inline Files"
 
-# PROP Default_Filter "i;inl"
+# PROP Default_Filter "i"
 # Begin Source File
 
 SOURCE=.\Acceptor.i
@@ -5052,10 +5029,6 @@ SOURCE=.\Obstack.i
 # Begin Source File
 
 SOURCE=.\OS.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\OS_Dirent.inl
 # End Source File
 # Begin Source File
 

@@ -237,9 +237,9 @@ Server::parse_args (int argc,char **argv)
           break;
         case 'p':
           this->protocol_ = ACE_OS::strdup (opts.optarg);
-          break;
         default:
           ACE_ERROR_RETURN ((LM_ERROR,"Usage: server -f filename"),-1);
+          break;
         }
     }
   return 0;

@@ -60,19 +60,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   os->indent (); // start with whatever indentation level we are at
 
-  // Generate the destructor and default constructor.
-  *os << be_nl;
-  *os << "// default constructor" << be_nl;
-  *os << node->name () << "::" << node->local_name () 
-      << " (void)" << be_nl;
-  *os << "{}" << be_nl << be_nl;
-
-  *os << "// destructor" << be_nl;
-  *os << node->name () << "::~" << node->local_name () 
-      << " (void)" << be_nl;
-  *os << "{}" << be_nl << be_nl;
-
-  // Then generate the code for the static methods
+  // first generate the code for the static methods
   // Local interfaces don't have any operators.
   if (! node->is_local ())
     *os << "void "

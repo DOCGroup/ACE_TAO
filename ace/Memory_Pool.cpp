@@ -198,19 +198,19 @@ ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (const ACE_TCHAR *backing_store_name,
       ACE_OS::strcpy (this->backing_store_name_,
                       ACE_DEFAULT_BACKING_STORE);
 #else /* ACE_DEFAULT_BACKING_STORE */
-      if (ACE::get_temp_dir (this->backing_store_name_,
+      if (ACE::get_temp_dir (this->backing_store_name_, 
                              MAXPATHLEN - 17) == -1) // -17 for ace-malloc-XXXXXX
         {
-          ACE_ERROR ((LM_ERROR,
+          ACE_ERROR ((LM_ERROR, 
                       ACE_TEXT ("Temporary path too long, ")
                       ACE_TEXT ("defaulting to current directory\n")));
           this->backing_store_name_[0] = 0;
         }
 
       // Add the filename to the end
-      ACE_OS::strcat (this->backing_store_name_,
+      ACE_OS::strcat (this->backing_store_name_, 
                       ACE_TEXT ("ace-malloc-XXXXXX"));
-
+  
 #endif /* ACE_DEFAULT_BACKING_STORE */
     }
   else
@@ -1089,23 +1089,6 @@ ACE_Pagefile_Memory_Pool::init_acquire (size_t nbytes,
     return (void *)((char *) this->local_cb_.mapped_base_
                     + ACE_Pagefile_Memory_Pool::round_to_page_size
                     ((int) sizeof (Control_Block)));
-}
-
-int
-ACE_Pagefile_Memory_Pool::seh_selector (void *ep)
-{
-  int ecode = ((EXCEPTION_POINTERS *) ep)->ExceptionRecord->ExceptionCode;
-
-  if (ecode == EXCEPTION_ACCESS_VIOLATION)
-    {
-      void * fault_addr = (void *)
-        ((EXCEPTION_POINTERS *) ep)->ExceptionRecord->ExceptionInformation[1];
-
-      if (this->remap (fault_addr) == 0)
-        return 1;
-    }
-
-  return 0;
 }
 
 int

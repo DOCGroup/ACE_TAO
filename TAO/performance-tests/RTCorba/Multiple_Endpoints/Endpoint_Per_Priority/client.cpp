@@ -1,7 +1,7 @@
 // $Id$
 
 #include "testC.h"
-#include "tao/RTCORBAC.h"
+#include "tao/rtcorbafwd.h"
 #include "tao/Priority_Mapping.h"
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"

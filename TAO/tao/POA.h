@@ -47,7 +47,7 @@
 #include "tao/POAManager.h"
 
 // RT CORBA
-#include "tao/RTCORBAC.h"
+#include "tao/rtcorbafwd.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.

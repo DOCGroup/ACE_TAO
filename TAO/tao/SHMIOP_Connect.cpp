@@ -108,7 +108,6 @@ TAO_SHMIOP_Server_Connection_Handler::TAO_SHMIOP_Server_Connection_Handler (TAO_
 
 TAO_SHMIOP_Server_Connection_Handler::~TAO_SHMIOP_Server_Connection_Handler (void)
 {
-  delete this->acceptor_factory_;
 }
 
 int

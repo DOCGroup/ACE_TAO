@@ -27,7 +27,6 @@
 
 #define ACE_LACKS_ACE_TOKEN
 #define ACE_LACKS_ACE_OTHER
-#define ACE_LACKS_MSG_WFMO
 
 // You must use MFC with ACE on CE.
 //#if defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)

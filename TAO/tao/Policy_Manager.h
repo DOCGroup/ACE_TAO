@@ -36,12 +36,6 @@ class TAO_RelativeRoundtripTimeoutPolicy;
 class TAO_Client_Priority_Policy;
 class TAO_Sync_Scope_Policy;
 class TAO_Buffering_Constraint_Policy;
-class TAO_PriorityModelPolicy;
-class TAO_ThreadpoolPolicy;
-class TAO_PrivateConnectionPolicy;
-class TAO_PriorityBandedConnectionPolicy;
-class TAO_ServerProtocolPolicy;
-class TAO_ClientProtocolPolicy;
 
 class TAO_Export TAO_Policy_Manager_Impl
 {
@@ -119,17 +113,6 @@ public:
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
-#if (TAO_HAS_RT_CORBA == 1)
-
-  TAO_PriorityModelPolicy *priority_model (void) const;
-  TAO_ThreadpoolPolicy *threadpool (void) const;
-  TAO_PrivateConnectionPolicy *private_connection (void) const;
-  TAO_PriorityBandedConnectionPolicy *priority_banded_connection (void) const;
-  TAO_ServerProtocolPolicy *server_protocol (void) const;
-  TAO_ClientProtocolPolicy *client_protocol (void) const;
-
-#endif /* TAO_HAS_RT_CORBA == 1 */
-
 private:
   ACE_UNIMPLEMENTED_FUNC (TAO_Policy_Manager_Impl operator=(const TAO_Policy_Manager_Impl&))
   ACE_UNIMPLEMENTED_FUNC (TAO_Policy_Manager_Impl(const TAO_Policy_Manager_Impl&))
@@ -166,17 +149,6 @@ private:
   TAO_Buffering_Constraint_Policy *buffering_constraint_;
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
-
-#if (TAO_HAS_RT_CORBA == 1)
-
-  TAO_PriorityModelPolicy *priority_model_;
-  TAO_ThreadpoolPolicy *threadpool_;
-  TAO_PrivateConnectionPolicy *private_connection_;
-  TAO_PriorityBandedConnectionPolicy *priority_banded_connection_;
-  TAO_ServerProtocolPolicy *server_protocol_;
-  TAO_ClientProtocolPolicy *client_protocol_;
-
-#endif /* TAO_HAS_RT_CORBA == 1 */
 
   CORBA::PolicyList other_policies_;
   // Other policies that are not optimized for fast querying
@@ -238,17 +210,6 @@ public:
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
-#if (TAO_HAS_RT_CORBA == 1)
-
-  TAO_PriorityModelPolicy *priority_model (void);
-  TAO_ThreadpoolPolicy *threadpool (void);
-  TAO_PrivateConnectionPolicy *private_connection (void);
-  TAO_PriorityBandedConnectionPolicy *priority_banded_connection (void);
-  TAO_ServerProtocolPolicy *server_protocol (void);
-  TAO_ClientProtocolPolicy *client_protocol (void);
-
-#endif /* TAO_HAS_RT_CORBA == 1 */
-
 private:
   ACE_SYNCH_MUTEX mutex_;
   // Protect access
@@ -307,17 +268,6 @@ public:
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
-#if (TAO_HAS_RT_CORBA == 1)
-
-  TAO_PriorityModelPolicy *priority_model (void) const;
-  TAO_ThreadpoolPolicy *threadpool (void) const;
-  TAO_PrivateConnectionPolicy *private_connection (void) const;
-  TAO_PriorityBandedConnectionPolicy *priority_banded_connection (void) const;
-  TAO_ServerProtocolPolicy *server_protocol (void) const;
-  TAO_ClientProtocolPolicy *client_protocol (void) const;
-
-#endif /* TAO_HAS_RT_CORBA == 1 */
-
 private:
   TAO_Policy_Manager_Impl manager_impl_;
   // The implementation.
@@ -375,17 +325,6 @@ public:
   TAO_Buffering_Constraint_Policy *buffering_constraint (void) const;
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
-
-#if (TAO_HAS_RT_CORBA == 1)
-
-  TAO_PriorityModelPolicy *priority_model (void) const;
-  TAO_ThreadpoolPolicy *threadpool (void) const;
-  TAO_PrivateConnectionPolicy *private_connection (void) const;
-  TAO_PriorityBandedConnectionPolicy *priority_banded_connection (void) const;
-  TAO_ServerProtocolPolicy *server_protocol (void) const;
-  TAO_ClientProtocolPolicy *client_protocol (void) const;
-
-#endif /* TAO_HAS_RT_CORBA == 1 */
 
   // = Set and get the implementation.
   TAO_Policy_Current_Impl &implementation (void) const;

@@ -655,7 +655,7 @@ int be_visitor_args_invoke_cs::visit_string (be_string *node)
                 }
 
               *os << arg->local_name () << ", "
-                  << node->max_size ()->ev ()->u.ulval << ")";
+                  << node->max_size ()->ev ()->u.ulval - 1 << ")";
               break;
             case AST_Argument::dir_OUT:
               if (node->width () == sizeof (char))
@@ -668,7 +668,7 @@ int be_visitor_args_invoke_cs::visit_string (be_string *node)
                 }
 
               *os << arg->local_name () << ".ptr (), "
-                  << node->max_size ()->ev ()->u.ulval << ")";
+                  << node->max_size ()->ev ()->u.ulval - 1 << ")";
               break;
             }
         }

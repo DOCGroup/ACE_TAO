@@ -452,10 +452,10 @@ TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::register_vdev (CO
     {
       char vdev_name [BUFSIZ];
       ACE_OS::sprintf (vdev_name,
-                       "%s:%s:%ld",
+                       "%s:%s:%d",
                        "VDev",
                        this->host_,
-                       ACE_static_cast (long, this->pid_));
+                       this->pid_);
 
       if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"(%P|%t)%s\n",vdev_name));
       // create the name
@@ -698,10 +698,10 @@ TAO_AV_Child_Process_A<T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Child_Proc
 {
   char stream_endpoint_name[BUFSIZ];
   ACE_OS::sprintf (stream_endpoint_name,
-                   "%s:%s:%ld",
+                   "%s:%s:%d",
                    "Stream_Endpoint_A",
                    this->host_,
-                   ACE_static_cast (long, this->pid_));
+                   this->pid_);
 
   if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"(%P|%t)%s\n",stream_endpoint_name));
   this->stream_endpoint_name_.length (1);
@@ -724,10 +724,10 @@ TAO_AV_Child_Process_B<T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Child_Proc
 {
   char stream_endpoint_name[BUFSIZ];
   ACE_OS::sprintf (stream_endpoint_name,
-                   "%s:%s:%ld",
+                   "%s:%s:%d",
                    "Stream_Endpoint_B",
                    this->host_,
-                   ACE_static_cast (long, this->pid_));
+                   this->pid_);
 
   if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"(%P|%t)%s\n",stream_endpoint_name));
   this->stream_endpoint_name_.length (1);

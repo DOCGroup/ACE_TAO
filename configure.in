@@ -824,10 +824,10 @@ dnl Check if t_error incorrectly accepts char *
      [
       ace_cv_lib_has_broken_t_error=yes
      ])
-  ],
+  ],,
   [
    AC_DEFINE(ACE_HAS_BROKEN_T_ERROR)
-  ],)
+  ])
 
 fi dnl test "$ace_has_tli" = yes
 fi dnl test "$ace_has_tli_funcs" = yes

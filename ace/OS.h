@@ -21,12 +21,9 @@
 
 #include "ace/config-all.h"
 
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
-// Include the split up ACE_OS classes
-#include "ace/OS_Dirent.h"
+# if !defined (ACE_LACKS_PRAGMA_ONCE)
+#   pragma once
+# endif /* ACE_LACKS_PRAGMA_ONCE */
 
 # if !defined (ACE_MALLOC_ALIGN)
 #   define ACE_MALLOC_ALIGN ((int) sizeof (long))
@@ -126,6 +123,38 @@ enum ACE_Recyclable_State
 #define ACE_HAS_ASCII
 #define ACE_STANDARD_CHARACTER_SET_SIZE 128
 #endif /* 'a' < 'A' */
+
+// Get OS.h to compile on some of the platforms without DIR info yet.
+# if !defined (ACE_HAS_DIRENT)
+typedef int DIR;
+struct dirent {
+};
+# endif /* ACE_HAS_DIRENT */
+
+#if defined (ACE_WIN32)
+struct dirent {
+  unsigned short d_ino;
+  unsigned short d_off;
+  unsigned short d_reclen;
+  const ACE_TCHAR *d_name;
+};
+struct DIR {
+  ACE_TCHAR *directory_name_;
+  // The name of the directory we are looking into
+
+  HANDLE current_handle_;
+  // Remember the handle between calls.
+
+  dirent dirent_;
+  // The struct for the results
+
+  ACE_TEXT_WIN32_FIND_DATA fdata_;
+  // The struct for intermediate results.
+
+  int started_reading_;
+  // A flag to remember if we started reading already.
+};
+#endif /* defined (ACE_WIN32) */
 
 # if defined (ACE_PSOS_TM)
 typedef long long longlong_t;
@@ -615,6 +644,22 @@ private:
 // include the ACE min()/max() functions.
 # include "ace/Min_Max.h"
 
+// Keep the compiler from complaining about parameters which are not used.
+# if defined (ghs) || defined (__GNUC__) || defined (__hpux) || defined (__sgi) || defined (__DECCXX) || defined (__KCC) || defined (__rational__) || (__USLC__)
+// Some compilers complain about "statement with no effect" with (a).
+// This eliminates the warnings, and no code is generated for the null
+// conditional statement.  NOTE: that may only be true if -O is enabled,
+// such as with GreenHills (ghs) 1.8.8.
+#   define ACE_UNUSED_ARG(a) {if (&a) /* null */ ;}
+# else
+#   define ACE_UNUSED_ARG(a) (a)
+# endif /* ghs */
+
+# if defined (__sgi) || defined (ghs) || defined (__DECCXX) || defined(__BORLANDC__) || defined (__KCC)
+#   define ACE_NOTREACHED(a)
+# else  /* ! defined . . . */
+#   define ACE_NOTREACHED(a) a
+# endif /* ! defined . . . */
 
 # if !defined (ACE_ENDLESS_LOOP)
 #  define ACE_ENDLESS_LOOP
@@ -843,6 +888,12 @@ typedef u_long ACE_idtype_t;
 typedef u_long ACE_id_t;
 #   define ACE_SELF (0)
 typedef u_long ACE_pri_t;
+
+// pHILE+ calls the DIR struct XDIR instead
+#    if !defined (ACE_PSOS_DIAB_PPC)
+typedef XDIR DIR;
+#    endif /* !defined (ACE_PSOS_DIAB_PPC) */
+
 
 // Use pSOS semaphores, wrapped . . .
 typedef struct
@@ -1665,6 +1716,10 @@ struct sembuf
   short sem_flg; // operation flags
 };
 # endif /* ACE_LACKS_SEMBUF_T */
+
+# if defined (ACE_HAS_H_ERRNO)
+void herror (const char *str);
+# endif /* ACE_HAS_H_ERRNO */
 
 # if defined (ACE_LACKS_MSGBUF_T)
 struct msgbuf {};
@@ -2661,6 +2716,8 @@ typedef unsigned int size_t;
 #   undef ACE_DONT_INCLUDE_ACE_SIGNAL_H
 #   endif /* ! ACE_PSOS_DIAB_MIPS && ! VXWORKS */
 
+#   include /**/ <errno.h>
+
 #   if ! defined (ACE_PSOS_DIAB_MIPS)
 #   include /**/ <fcntl.h>
 #   endif /* ! ACE_PSOS_DIAB_MIPS */
@@ -3591,6 +3648,7 @@ typedef void (*__sighandler_t)(int); // keep Signal compilation happy
 #     include /**/ <pwd.h>
 #   endif /* ! VXWORKS */
 #   include /**/ <sys/ioctl.h>
+#   include /**/ <dirent.h>
 
 // IRIX5 defines bzero() in this odd file...
 #   if defined (ACE_HAS_BSTRING)
@@ -3654,6 +3712,10 @@ typedef void (*__sighandler_t)(int); // keep Signal compilation happy
 #       include /**/ <stropts.h>
 #     endif /* AIX */
 #   endif /* ACE_HAS_STREAMS */
+
+#   if defined (ACE_LACKS_T_ERRNO)
+extern int t_errno;
+#   endif /* ACE_LACKS_T_ERRNO */
 
 #   if defined (DIGITAL_UNIX)
   // sigwait is yet another macro on Digital UNIX 4.0, just causing
@@ -4176,9 +4238,17 @@ struct sigaction
 #   define EIDRM 0
 # endif /* !EIDRM */
 
+# if !defined (ENOSYS)
+#   define ENOSYS EFAULT /* Operation not supported or unknown error. */
+# endif /* !ENOSYS */
+
 # if !defined (ENFILE)
 #   define ENFILE EMFILE /* No more socket descriptors are available. */
 # endif /* !ENOSYS */
+
+# if !defined (ENOTSUP)
+#   define ENOTSUP ENOSYS  /* Operation not supported. */
+# endif /* !ENOTSUP */
 
 # if !defined (ECOMM)
     // Not the same, but ECONNABORTED is provided on NT.
@@ -4379,6 +4449,10 @@ typedef int ucontext_t;
 #   include /**/ <tli/timod.h>
 # endif /* ACE_HAS_TIMOD_H */
 
+# if defined rewinddir
+#   undef rewinddir
+# endif /* rewinddir */
+
 class ACE_Export ACE_Thread_ID
 {
   // = TITLE
@@ -4506,6 +4580,15 @@ typedef void (*ACE_CLEANUP_FUNC)(void *object, void *param) /* throw () */;
 # if defined (ACE_HAS_SIG_C_FUNC)
 }
 # endif /* ACE_HAS_SIG_C_FUNC */
+
+// Marker for cleanup, used by ACE_Exit_Info.
+extern int ace_exit_hook_marker;
+
+// For use by <ACE_OS::exit>.
+extern "C"
+{
+  typedef void (*ACE_EXIT_HOOK) (void);
+}
 
 # if defined (ACE_WIN32)
 // Default WIN32 structured exception handler.
@@ -4840,9 +4923,6 @@ public:
   // singleton.
 
 private:
-  friend class ACE_OS_Object_Manager;
-  // Allow OS_Object_Manager to reset the status of <is_constructed_>.
-
   ACE_Thread_Control thread_control_;
   // Automatically add/remove the thread from the
   // <ACE_Thread_Manager>.
@@ -5203,7 +5283,7 @@ private:
   // (ACT).
 };
 
-class ACE_Export ACE_OS : public ACE_OS_Dirent
+class ACE_Export ACE_OS
 {
   // = TITLE
   //     This class defines an OS independent programming API that
@@ -5345,6 +5425,18 @@ public:
                                   int mode = ACE_DEFAULT_SHLIB_MODE);
   static void *dlsym (ACE_SHLIB_HANDLE handle,
                       const ACE_TCHAR *symbol);
+
+  // = A set of wrappers for the directory iterator.
+  static DIR *opendir (const ACE_TCHAR *filename);
+  static void closedir (DIR *);
+  static struct dirent *readdir (DIR *);
+  static int readdir_r (DIR *dirp,
+                        struct dirent *entry,
+                        struct dirent **result);
+  static long telldir (DIR *);
+  static void seekdir (DIR *,
+                       long loc);
+  static void rewinddir (DIR *);
 
   // = A set of wrappers for stdio file operations.
   static int last_error (void);
@@ -7028,6 +7120,65 @@ private:
 #   define ACE_KEY_INDEX(OBJ,KEY) u_int OBJ = KEY
 # endif /* ACE_HAS_NONSCALAR_THREAD_KEY_T */
 
+// A useful abstraction for expressions involving operator new since
+// we can change memory allocation error handling policies (e.g.,
+// depending on whether ANSI/ISO exception handling semantics are
+// being used).
+
+# if defined (ACE_NEW_THROWS_EXCEPTIONS)
+# if (__SUNPRO_CC)
+#      if (__SUNPRO_CC < 0x500) || ((__SUNPRO_CC == 0x500 && __SUNPRO_CC_COMPAT == 4))
+#        include /**/ <exception.h>
+         // Note: we catch ::xalloc rather than just xalloc because of
+         // a name clash with unsafe_ios::xalloc()
+#        define ACE_bad_alloc ::xalloc
+#        define ACE_throw_bad_alloc throw ACE_bad_alloc ("no more memory")
+#      else
+#        include /**/ <new>
+#        define ACE_bad_alloc std::bad_alloc
+#        define ACE_throw_bad_alloc throw ACE_bad_alloc ()
+#      endif /* __SUNPRO_CC < 0x500 */
+#   else
+    // I know this works for HP aC++... if <stdexcept> is used, it
+    // introduces other stuff that breaks things, like <memory>, which
+    // screws up auto_ptr.
+#     include /**/ <new>
+#     if (defined (__HP_aCC) && !defined (RWSTD_NO_NAMESPACE)) \
+         || defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
+#       define ACE_bad_alloc std::bad_alloc
+#     else
+#       define ACE_bad_alloc bad_alloc
+#     endif /* RWSTD_NO_NAMESPACE */
+#     define ACE_throw_bad_alloc throw ACE_bad_alloc ()
+#   endif /* __SUNPRO_CC */
+
+#   define ACE_NEW_RETURN(POINTER,CONSTRUCTOR,RET_VAL) \
+   do { try { POINTER = new CONSTRUCTOR; } \
+        catch (ACE_bad_alloc) { errno = ENOMEM; return RET_VAL; } \
+   } while (0)
+
+#   define ACE_NEW(POINTER,CONSTRUCTOR) \
+   do { try { POINTER = new CONSTRUCTOR; } \
+        catch (ACE_bad_alloc) { errno = ENOMEM; return; } \
+   } while (0)
+
+# else /* ACE_NEW_THROWS_EXCEPTIONS */
+
+#   define ACE_NEW_RETURN(POINTER,CONSTRUCTOR,RET_VAL) \
+   do { POINTER = new CONSTRUCTOR; \
+     if (POINTER == 0) { errno = ENOMEM; return RET_VAL; } \
+   } while (0)
+#   define ACE_NEW(POINTER,CONSTRUCTOR) \
+   do { POINTER = new CONSTRUCTOR; \
+     if (POINTER == 0) { errno = ENOMEM; return; } \
+   } while (0)
+
+# define ACE_throw_bad_alloc \
+      void* gcc_will_complain_if_literal_0_is_returned = 0; \
+      return gcc_will_complain_if_literal_0_is_returned
+
+# endif /* ACE_NEW_THROWS_EXCEPTIONS */
+
 // Some useful abstrations for expressions involving
 // ACE_Allocator.malloc ().  The difference between ACE_NEW_MALLOC*
 // with ACE_ALLOCATOR* is that they call constructors also.
@@ -7310,6 +7461,61 @@ private:
 #   endif /* defined (__Lynx__) && __LYNXOS_SDK_VERSION == 199701L */
 # endif /* defined ! ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR */
 
+# if defined (ACE_HAS_SIGNAL_SAFE_OS_CALLS)
+// The following two macros ensure that system calls are properly
+// restarted (if necessary) when interrupts occur.
+#   define ACE_OSCALL(OP,TYPE,FAILVALUE,RESULT) \
+  do \
+    RESULT = (TYPE) OP; \
+  while (RESULT == FAILVALUE && errno == EINTR && ACE_LOG_MSG->restart ())
+#   define ACE_OSCALL_RETURN(OP,TYPE,FAILVALUE) \
+  do { \
+    TYPE ace_result_; \
+    do \
+      ace_result_ = (TYPE) OP; \
+    while (ace_result_ == FAILVALUE && errno == EINTR && ACE_LOG_MSG->restart ()); \
+    return ace_result_; \
+  } while (0)
+# elif defined (ACE_WIN32)
+#   define ACE_OSCALL_RETURN(X,TYPE,FAILVALUE) \
+  do \
+    return (TYPE) X; \
+  while (0)
+#   define ACE_OSCALL(X,TYPE,FAILVALUE,RESULT) \
+  do \
+    RESULT = (TYPE) X; \
+  while (0)
+#   if defined (__BORLANDC__) && (__BORLANDC__ <= 0x550)
+#   define ACE_WIN32CALL_RETURN(X,TYPE,FAILVALUE) \
+  do { \
+    TYPE ace_result_; \
+    TYPE ace_local_result_ = (TYPE) X; \
+    ace_result_ = ace_local_result_; \
+    if (ace_result_ == FAILVALUE) \
+      ACE_OS::set_errno_to_last_error (); \
+    return ace_result_; \
+  } while (0)
+#   else
+#     define ACE_WIN32CALL_RETURN(X,TYPE,FAILVALUE) \
+  do { \
+    TYPE ace_result_; \
+    ace_result_ = (TYPE) X; \
+    if (ace_result_ == FAILVALUE) \
+      ACE_OS::set_errno_to_last_error (); \
+    return ace_result_; \
+  } while (0)
+#   endif /* defined (__BORLANDC__) && (__BORLANDC__ <= 0x550) */
+#   define ACE_WIN32CALL(X,TYPE,FAILVALUE,RESULT) \
+  do { \
+    RESULT = (TYPE) X; \
+    if (RESULT == FAILVALUE) \
+      ACE_OS::set_errno_to_last_error (); \
+  } while (0)
+# else
+#   define ACE_OSCALL_RETURN(OP,TYPE,FAILVALUE) do { TYPE ace_result_ = FAILVALUE; ace_result_ = ace_result_; return OP; } while (0)
+#   define ACE_OSCALL(OP,TYPE,FAILVALUE,RESULT) do { RESULT = (TYPE) OP; } while (0)
+# endif /* ACE_HAS_SIGNAL_SAFE_OS_CALLS */
+
 # if defined (ACE_HAS_THR_C_FUNC)
 // This is necessary to work around nasty problems with MVS C++.
 extern "C" ACE_Export void ace_mutex_lock_cleanup_adapter (void *args);
@@ -7582,6 +7788,18 @@ private:
 #endif /* ACE_MT_SAFE */
   int error_;
 };
+
+// This is used to indicate that a platform doesn't support a
+// particular feature.
+# if defined ACE_HAS_VERBOSE_NOTSUP
+  // Print a console message with the file and line number of the
+  // unsupported function.
+#   define ACE_NOTSUP_RETURN(FAILVALUE) do { errno = ENOTSUP; ACE_OS::fprintf (stderr, ACE_TEXT ("ACE_NOTSUP: %s, line %d\n"), __FILE__, __LINE__); return FAILVALUE; } while (0)
+#   define ACE_NOTSUP do { errno = ENOTSUP; ACE_OS::fprintf (stderr, ACE_TEXT ("ACE_NOTSUP: %s, line %d\n"), __FILE__, __LINE__); return; } while (0)
+# else /* ! ACE_HAS_VERBOSE_NOTSUP */
+#   define ACE_NOTSUP_RETURN(FAILVALUE) do { errno = ENOTSUP ; return FAILVALUE; } while (0)
+#   define ACE_NOTSUP do { errno = ENOTSUP; return; } while (0)
+# endif /* ! ACE_HAS_VERBOSE_NOTSUP */
 
 # if defined (ACE_WIN32) && ! defined (ACE_HAS_WINCE) \
                          && ! defined (ACE_HAS_PHARLAP)

@@ -25,7 +25,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_WIN32) && !defined (ACE_LACKS_MSG_WFMO)
+#if defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)
 
 class ACE_Export ACE_Msg_WFMO_Reactor : public ACE_WFMO_Reactor
 {
@@ -99,7 +99,7 @@ protected:
   // Dispatches window messages.
 };
 
-#endif /* ACE_WIN32 && !ACE_LACKS_MSG_WFMO */
+#endif /* ACE_WIN32 && !ACE_HAS_PHARLAP */
 
 #if defined (__ACE_INLINE__)
 #include "ace/Msg_WFMO_Reactor.i"

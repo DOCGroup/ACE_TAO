@@ -22,6 +22,7 @@ print STDERR "================ Multi-threaded test\n";
 unlink $iorfile;
 
 $SV = Process::Create ($EXEPREFIX."server$EXE_EXT ",
+                       " -ORBDebugLevel 5".
                        " -ORBSvcConf $server_conf"
 		       . " -ORBEndPoint iiop://$TARGETHOSTNAME:0/priority=0 "
 		       . " -ORBEndPoint iiop://$TARGETHOSTNAME:0/priority=1 "
@@ -47,7 +48,7 @@ if ($client == -1) {
   $CL->Kill (); $CL->TimedWait (1);
 }
 
-$server = $SV->TimedWait (60);
+$server = $SV->TimedWait (10);
 if ($server == -1) {
   print STDERR "ERROR: server timedout\n";
   $SV->Kill (); $SV->TimedWait (1);

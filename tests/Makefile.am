@@ -144,10 +144,6 @@ Buffer_Stream_Test_SOURCES = Buffer_Stream_Test.cpp
 
 CDR_Test_SOURCES = CDR_Test.cpp
 
-CDR_File_Test_SOURCES = CDR_File_Test.cpp
-
-CDR_Array_Test_SOURCES = CDR_Array_Test.cpp
-
 # Cached_Accept_Conn_Test_SOURCES = Cached_Accept_Conn_Test.cpp
 
 Cached_Conn_Test_SOURCES = Cached_Conn_Test.cpp

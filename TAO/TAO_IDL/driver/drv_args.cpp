@@ -116,7 +116,6 @@ DRV_usage (void)
   cerr << GTDEVEL (" -bback_end\t\tcauses specified back end to be used\n");
   cerr << GTDEVEL (" -ci\t\t\tClient inline file name ending. Default is C.i\n");
   cerr << GTDEVEL (" -cs\t\t\tClient stub's file name ending. Default is C.cpp\n");
-  cerr << GTDEVEL (" -d\t\tOutputs (to stdout) a dump of the AST\n");
   cerr << GTDEVEL (" -Dname[=value]\t\tdefines name for preprocessor\n");
   cerr << GTDEVEL (" -E\t\t\truns preprocessor only, prints on stdout\n");
   cerr << GTDEVEL (" -g <gperf_path>\tPath for the GPERF program. Default is $ACE_ROOT/bin/gperf\n");
@@ -130,7 +129,7 @@ DRV_usage (void)
   cerr << GTDEVEL (" -GI[h|s|b|e|c]\tGenerate Implemenation Files \n");
 
   cerr << GTDEVEL (" -GC \t\tGenerate the code for using AMI Call back model\n");
-  cerr << GTDEVEL (" -Gsp \t\tGenerate the code for Smart Proxies\n");
+  cerr << GTDEVEL (" -Gs \t\tGenerate the code for Smart Proxies\n");
   cerr << GTDEVEL ("  \t\t\th - Implementation header file name ending. Default is I.h \n");
   cerr << GTDEVEL ("  \t\t\ts - Implementation skeleton file name ending. Default is I.cpp\n");
   cerr << GTDEVEL ("  \t\t\tb - Prefix to the implementation class names. Default is 'no prefix' \n");
@@ -140,7 +139,6 @@ DRV_usage (void)
   cerr << GTDEVEL (" -hc\t\t\tClient's header file name ending. Default is C.h\n");
   cerr << GTDEVEL (" -hs\t\t\tServer's header file name ending. Default is S.h\n");
   cerr << GTDEVEL (" -hT\t\t\tServer's template hdr file name ending. Default is S_T.h\n");
-  cerr << GTDEVEL (" -H perfect_hash\t\tTo force perfect hashed operation lookup strategy (default)\n");
   cerr << GTDEVEL (" -H dynamic_hash\t\tTo force dynamic hashed operation lookup strategy. Default is perfect hashing\n");
   cerr << GTDEVEL (" -H linear_search\t\tTo force linear searchoperation lookup strategy\n");
   cerr << GTDEVEL (" -H binary_search\t\tTo force binary search operation lookup strategy\n");

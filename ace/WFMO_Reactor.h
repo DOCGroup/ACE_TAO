@@ -1018,7 +1018,8 @@ protected:
 
   virtual ACE_Reactor_Mask upcall (ACE_Event_Handler *event_handler,
                                    ACE_HANDLE io_handle,
-                                   WSANETWORKEVENTS &events);
+                                   ACE_HANDLE event_handle,
+                                   long interested_events);
 
   virtual int calculate_timeout (ACE_Time_Value *time);
   // Used to caluculate the next timeout

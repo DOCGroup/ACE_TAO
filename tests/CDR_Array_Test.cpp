@@ -13,8 +13,7 @@
 //    Checks ACE_InputCDR::read_XX_array.
 //    Checks operator<< and operator>> for CDR Streams in
 //    each of the basic CDR types.
-//    Gives a measure of the speed of the ACE CDR streams wrt those
-//    operations.
+//    Gives a measure of the speed of the ACE CDR streams wrt those operations.
 //
 // = AUTHORS
 //    Cristian Ferretti <cristian_ferretti@yahoo.com>
@@ -190,7 +189,7 @@ CDR_Test<T, H>::CDR_Test (int total, int niter, int use_array)
   char* dstbuf;
   {
     const int stotal =
-      total * H::size () + sizeof(ACE_UINT32) + ACE_CDR::MAX_ALIGNMENT;
+      total*sizeof(T) + sizeof(ACE_UINT32) + ACE_CDR::MAX_ALIGNMENT;
 
     ACE_NEW(srcbuf, char[stotal]);
     if (srcbuf == 0)
@@ -214,13 +213,13 @@ CDR_Test<T, H>::CDR_Test (int total, int niter, int use_array)
       for (t = total - 3; t <= total; t++)
         {
           int delta;
-          if (sizeof(long) <= H::size ())
+          if (sizeof(long) <= sizeof(T))
             {
               delta = 1;
             }
           else
             {
-              delta = (int) (sizeof(long) / H::size ());
+              delta = (int) (sizeof(long)/sizeof(T));
             }
 
           // We want to test all the posible source/destination buffer
@@ -265,9 +264,9 @@ CDR_Test<T, H>::checkval (int i)
       T v;
       unsigned char* s = ACE_reinterpret_cast(unsigned char*, (&v));
       unsigned int j;
-      for (j = 0; j < H::size (); j++)
+      for (j = 0; j < sizeof(T); j++)
         {
-          s[j] = (unsigned char) ((j + i * H::size ()) % 256);
+          s[j] = (unsigned char) ((j + i*sizeof(T)) % 256);
         }
 
       return v;
@@ -297,7 +296,7 @@ CDR_Test<T, H>::ttoh (const T& t, char* s)
     ACE_reinterpret_cast(const unsigned char*, &t);
 
   const unsigned char* q;
-  for (q = p; q < p + H::size (); ++q)
+  for (q = p; q < p + sizeof(T); ++q)
     {
       int k = *q;
       *s++ = digits[ k >> 4 ];
@@ -370,7 +369,7 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
                  total));
     }
 
-  char* src = ACE_ptr_align_binary(srcbuf, H::size ());
+  char* src = ACE_ptr_align_binary(srcbuf, sizeof(T));
   T* idata = ACE_reinterpret_cast(T*, src);
   idata += src_offset;
   src = ACE_reinterpret_cast(char*, idata);
@@ -394,7 +393,7 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
     int n;
     for (n = 0; n < niter; n++)
       {
-        int size = H::size () * (dst_offset + total);
+        int size = sizeof(T)*(dst_offset + total);
         ACE_OutputCDR os (dstbuf, size);
 
         // This is intrusive...
@@ -486,7 +485,7 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
     int n;
     for (n = 0; n < niter; n++)
       {
-        int size = (total + dst_offset) * H::size ();
+        int size = (total + dst_offset)*sizeof(T);
         ACE_InputCDR is (toread, size, opposite_byte_order);
 
         // This is intrusive...
@@ -624,7 +623,7 @@ struct DoubleHelper
     {
       return ACE_TEXT ("CDR::Double");
     }
-  static int integral ()
+  static const int integral ()
     {
       return 0;
     }
@@ -644,10 +643,6 @@ struct DoubleHelper
     {
       ACE_CDR::swap_8 (src, dst);
     }
-  static size_t size ()
-    {
-      return sizeof(ACE_CDR::Double);
-    }
 };
 
 struct FloatHelper
@@ -656,7 +651,7 @@ struct FloatHelper
     {
       return ACE_TEXT ("CDR::Float");
     }
-  static int integral ()
+  static const int integral ()
     {
       return 0;
     }
@@ -676,10 +671,6 @@ struct FloatHelper
     {
       ACE_CDR::swap_4 (src, dst);
     }
-  static size_t size ()
-    {
-      return sizeof(ACE_CDR::Float);
-    }
 };
 
 struct ShortHelper
@@ -688,7 +679,7 @@ struct ShortHelper
     {
       return ACE_TEXT ("CDR::Short");
     }
-  static int integral ()
+  static const int integral ()
     {
       return 1;
     }
@@ -708,10 +699,6 @@ struct ShortHelper
     {
       ACE_CDR::swap_2 (src, dst);
     }
-  static size_t size ()
-    {
-      return sizeof(ACE_CDR::Short);
-    }
 };
 
 struct LongHelper
@@ -720,7 +707,7 @@ struct LongHelper
     {
       return ACE_TEXT ("CDR::Long");
     }
-  static int integral ()
+  static const int integral ()
     {
       return 1;
     }
@@ -740,10 +727,6 @@ struct LongHelper
     {
       ACE_CDR::swap_4 (src, dst);
     }
-  static size_t size ()
-    {
-      return sizeof(ACE_CDR::Long);
-    }
 };
 
 struct LongLongHelper
@@ -752,7 +735,7 @@ struct LongLongHelper
     {
       return ACE_TEXT ("CDR::LongLong");
     }
-  static int integral ()
+  static const int integral ()
     {
       return 1;
     }
@@ -773,10 +756,6 @@ struct LongLongHelper
     {
       ACE_CDR::swap_8 (src, dst);
     }
-  static size_t size ()
-    {
-      return sizeof(ACE_CDR::LongLong);
-    }
 };
 
 struct CharHelper
@@ -785,7 +764,7 @@ struct CharHelper
     {
       return ACE_TEXT ("CDR::Char");
     }
-  static int integral ()
+  static const int integral ()
     {
       return 1;
     }
@@ -804,10 +783,6 @@ struct CharHelper
   static void swap (const char *src, char *dst)
     {
       *dst = *src;
-    }
-  static size_t size ()
-    {
-      return sizeof(ACE_CDR::Char);
     }
 };
 

@@ -583,10 +583,6 @@ TAO_NAMESPACE  IOP
 
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong UnknownExceptionInfo;
 
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong RTCorbaPriority;
-
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong RTCorbaPriorityRange;
-
 }
 TAO_NAMESPACE_CLOSE // module IOP
 

@@ -19,7 +19,7 @@ BS_Server::BS_Server (const char *packet)
            Protocol_Record[this->count_]);
   ACE_NEW (this->sorted_record_,
            Protocol_Record *[this->count_]);
-
+  
   for (int i = 0; i < this->count_; i++)
     {
       Protocol_Record *rec_ptr = &this->protocol_record_[i];
@@ -30,7 +30,7 @@ BS_Server::BS_Server (const char *packet)
       // Skip forward to the start of the next login name.
 
       while (*buf_ptr++ != '\0')
-        continue;
+	continue;
     }
 
 }
@@ -39,7 +39,7 @@ BS_Server::BS_Server (const char *packet)
 // KEY_NAME happens to be one of our friends.  Binary search is used
 // because the Protocol_Manager keeps a sorted representation of the
 // friend names.
-//
+//   
 // Note that this binary search is tuned for unsuccessful searches,
 // since most of the time we the KEY_NAME is *not* a friend (unless
 // you've got *lots* of friends)!
@@ -60,7 +60,7 @@ BS_Server::insert (const char *key_name, int max_len)
   if (ACE_OS::strncmp (last_lookup, key_name, max_len) == 0)
     {
       if (result == 0)
-        return 0;
+	return 0;
     }
   else
     {
@@ -69,32 +69,32 @@ BS_Server::insert (const char *key_name, int max_len)
 
       int hi = this->count_ - 1;
       int lo = 0;
-      int cmp = 0;
+      int cmp;
 
       while (lo < hi)
-        {
-          mid = (hi + lo + 1) / 2;
+	{
+	  mid = (hi + lo + 1) / 2;
 
           cmp = ACE_OS::strncmp (key_name,
                                  buffer[mid]->get_login (),
                                  max_len);
-          if (cmp < 0)
-            hi = mid - 1;
-          else
-            lo = mid;
-        }
+	  if (cmp < 0)
+	    hi = mid - 1;
+	  else
+	    lo = mid;
+	}
 
       // This line is very subtle... ;-)
-      if (!(cmp == 0
+      if (!(cmp == 0 
             || ACE_OS::strncmp (key_name, buffer[--mid]->get_login (), max_len) == 0))
-        {
-          result = 0;
-          return 0;
-        }
+	{
+	  result = 0;
+	  return 0;
+	}
     }
 
   // If we get here we've located a friend.
-
+  
   result = 1;
   return buffer[mid];
 }

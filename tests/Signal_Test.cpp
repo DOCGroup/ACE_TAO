@@ -240,7 +240,7 @@ worker_parent (void *arg)
   // Store the parent's process id so we can pass it to the child
   // portably.  Also, pass the test number, as well.
   ACE_OS::sprintf (pid_str,
-                   "-p %ld -t %d",
+                   "-p %d -t %d",
                    parent_pid,
                    test_number);
 

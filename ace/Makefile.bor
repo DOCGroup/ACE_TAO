@@ -92,7 +92,6 @@ OBJFILES = \
 	$(OBJDIR)\Object_Manager.obj \
 	$(OBJDIR)\Obstack.obj \
 	$(OBJDIR)\OS.obj \
-        $(OBJDIR)\OS_Dirent.obj \
 	$(OBJDIR)\Pair.obj \
 	$(OBJDIR)\Parse_Node.obj \
 	$(OBJDIR)\Pipe.obj \

@@ -49,19 +49,19 @@ public:
   CDR_Test (ACE_CDR::Char o,
             ACE_CDR::Short s,
             ACE_CDR::Long w,
-            ACE_CDR::ULongLong lw,
+            ACE_CDR::LongLong lw,
             ACE_CDR::Float f,
             ACE_CDR::Double d);
   // Constructor.
 
-  int operator == (const CDR_Test &rhs) const;
+  int operator == (const CDR_Test &rhs);
   // Compare <rhs> for equality with <this>.
 
 private:
   ACE_CDR::Char char_;
   ACE_CDR::Short word2_;
   ACE_CDR::Long word4_;
-  ACE_CDR::ULongLong word8_;
+  ACE_CDR::LongLong word8_;
   ACE_CDR::Float fpoint_;
   ACE_CDR::Double dprec_;
 };
@@ -72,19 +72,19 @@ operator << (ostream &os,
 {
   os << "Char:              " << t.char_ << endl
      << "Short:             " << t.word2_ << endl
-     << "Long:              " << t.word4_ << endl;
-
-  ACE_CDR::ULongLong hi = (t.word8_ >> 32);
-  ACE_CDR::ULongLong lo = (t.word8_ & 0xffffffff);
-
-  os << "ULongLong 1st half: "
-     << hex
-     << ACE_U64_TO_U32(hi)
-     << dec << endl
-     << "ULongLong 2nd half: "
-     << hex
-     << ACE_U64_TO_U32(lo)
-     << dec << endl
+     << "Long:              " << t.word4_ << endl
+#if !defined(_MSC_VER)
+     << "LongLong:          " << t.word8_ << endl
+#else
+     << "LongLong 1st half: "
+        << hex
+        << ACE_reinterpret_cast(ACE_UINT32, (t.word8_ >> 32))
+        << dec << endl
+     << "LongLong 2nd half: "
+        << hex
+        << ACE_reinterpret_cast(ACE_UINT32, (t.word8_ & 0xffffffff))
+        << dec << endl
+#endif
      << "Float:             " << t.fpoint_ << endl
      << "Double:            " << t.dprec_ << endl;
   return os;
@@ -103,7 +103,7 @@ CDR_Test::CDR_Test (void)
 CDR_Test::CDR_Test (ACE_CDR::Char o,
                     ACE_CDR::Short s,
                     ACE_CDR::Long w,
-                    ACE_CDR::ULongLong lw,
+                    ACE_CDR::LongLong lw,
                     ACE_CDR::Float f,
                     ACE_CDR::Double d)
   : char_ (o),
@@ -138,23 +138,14 @@ operator >> (ACE_InputCDR &is, CDR_Test &t)
 }
 
 int
-CDR_Test::operator == (const CDR_Test &rhs) const
+CDR_Test::operator == (const CDR_Test &rhs)
 {
-  // @@ Workaround bug in egcs-1.1.1 using a single && expression
-  // results in UMR errors in purify.
-  if (this->char_ != rhs.char_)
-    return 0;
-  if (this->word2_ != rhs.word2_)
-    return 0;
-  if (this->word4_ != rhs.word4_)
-    return 0;
-  if (this->word8_ != rhs.word8_)
-    return 0;
-  if (this->fpoint_ != rhs.fpoint_)
-    return 0;
-  if (this->dprec_ != rhs.dprec_)
-    return 0;
-  return 1;
+  return this->char_ == rhs.char_
+    && this->word2_ == rhs.word2_
+    && this->word4_ == rhs.word4_
+    && this->word8_ == rhs.word8_
+    && this->fpoint_ == rhs.fpoint_
+    && this->dprec_ == rhs.dprec_;
 }
 
 static int

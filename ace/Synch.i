@@ -389,7 +389,7 @@ ACE_Semaphore::tryacquire_write (void)
   return this->tryacquire ();
 }
 
-#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS)
+#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM)
 ACE_INLINE const ACE_mutex_t &
 ACE_Process_Mutex::lock (void) const
 {
@@ -403,7 +403,7 @@ ACE_Process_Semaphore::lock (void) const
 // ACE_TRACE ("ACE_Process_Semaphore::lock");
   return this->lock_.lock ();
 }
-#endif /* ACE_WIN32 || ACE_HAS_POSIX_SEM || ACE_PSOS */
+#endif /* ACE_WIN32 */
 
 // Acquire semaphore ownership.  This calls <acquire> and is only here
 // to make the <ACE_Process_Semaphore> interface consistent with the
