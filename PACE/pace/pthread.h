@@ -525,10 +525,6 @@ extern "C" {
    */
   PACE_INLINE void pace_pthread_testcancel ();
 
-#if defined (PACE_HAS_CPLUSPLUS)
-}
-#endif /* PACE_HAS_CPLUSPLUS */
-
 #if defined (PACE_HAS_INLINE)
 #  if (PACE_HAS_POSIX)
 #    include "pace/posix/pthread.inl"
@@ -538,5 +534,9 @@ extern "C" {
 #    include "pace/win32/pthread.inl"
 #  endif
 #endif /* PACE_HAS_INLINE */
+
+#if defined (PACE_HAS_CPLUSPLUS)
+}
+#endif /* PACE_HAS_CPLUSPLUS */
 
 #endif /* PACE_PTHREAD_H */

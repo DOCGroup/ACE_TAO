@@ -165,10 +165,6 @@ extern "C" {
   /* Requires PACE_HAS_REENTRANT. */
 
 
-#if defined (PACE_HAS_CPLUSPLUS)
-}
-#endif /* PACE_HAS_CPLUSPLUS */
-
 #if defined (PACE_HAS_INLINE)
 #  if (PACE_HAS_POSIX)
 #    include "pace/posix/string.inl"
@@ -178,5 +174,9 @@ extern "C" {
 #    include "pace/win32/string.inl"
 #  endif
 #endif /* PACE_HAS_INLINE */
+
+#if defined (PACE_HAS_CPLUSPLUS)
+}
+#endif /* PACE_HAS_CPLUSPLUS */
 
 #endif /* PACE_STRING_H */

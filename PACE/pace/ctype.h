@@ -121,10 +121,6 @@ extern "C" {
    */
   PACE_INLINE int pace_toupper (int c);
 
-#if defined (PACE_HAS_CPLUSPLUS)
-}
-#endif /* PACE_HAS_CPLUSPLUS */
-
 #if defined (PACE_HAS_INLINE)
 #  if (PACE_HAS_POSIX)
 #    include "pace/posix/ctype.inl"
@@ -134,5 +130,9 @@ extern "C" {
 #    include "pace/win32/ctype.inl"
 #  endif
 #endif /* PACE_HAS_INLINE */
+
+#if defined (PACE_HAS_CPLUSPLUS)
+}
+#endif /* PACE_HAS_CPLUSPLUS */
 
 #endif /* PACE_CTYPE_H */

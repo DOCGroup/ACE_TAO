@@ -147,10 +147,6 @@ extern "C" {
      */
   PACE_INLINE void * pace_realloc (void * ptr, size_t size);
 
-#if defined (PACE_HAS_CPLUSPLUS)
-}
-#endif /* PACE_HAS_CPLUSPLUS */
-
 #if defined (PACE_HAS_INLINE)
 #  if (PACE_HAS_POSIX)
 #    include "pace/posix/stdlib.inl"
@@ -160,5 +156,9 @@ extern "C" {
 #    include "pace/win32/stdlib.inl"
 #  endif
 #endif /* PACE_HAS_INLINE */
+
+#if defined (PACE_HAS_CPLUSPLUS)
+}
+#endif /* PACE_HAS_CPLUSPLUS */
 
 #endif /* PACE_STDLIB_H */

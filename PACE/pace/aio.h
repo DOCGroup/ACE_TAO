@@ -91,10 +91,6 @@ extern "C" {
                                    int nent,
                                    pace_sigevent * sig);
 
-#if defined (PACE_HAS_CPLUSPLUS)
-}
-#endif /* PACE_HAS_CPLUSPLUS */
-
 #if defined (PACE_HAS_INLINE)
 #  if (PACE_HAS_POSIX)
 #    include "pace/posix/aio.inl"
@@ -104,5 +100,9 @@ extern "C" {
 #    include "pace/win32/aio.inl"
 #  endif
 #endif /* PACE_HAS_INLINE */
+
+#if defined (PACE_HAS_CPLUSPLUS)
+}
+#endif /* PACE_HAS_CPLUSPLUS */
 
 #endif /* PACE_AIO_H */

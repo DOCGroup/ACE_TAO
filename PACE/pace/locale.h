@@ -43,10 +43,6 @@ extern "C" {
    */
   PACE_INLINE char * pace_setlocale (int category, const char * locale);
 
-#if defined (PACE_HAS_CPLUSPLUS)
-}
-#endif /* PACE_HAS_CPLUSPLUS */
-
 #if defined (PACE_HAS_INLINE)
 #  if (PACE_HAS_POSIX)
 #    include "pace/posix/locale.inl"
@@ -56,5 +52,9 @@ extern "C" {
 #    include "pace/win32/locale.inl"
 #  endif
 #endif /* PACE_HAS_INLINE */
+
+#if defined (PACE_HAS_CPLUSPLUS)
+}
+#endif /* PACE_HAS_CPLUSPLUS */
 
 #endif /* PACE_LOCALE_H */

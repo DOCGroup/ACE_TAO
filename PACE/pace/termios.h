@@ -53,10 +53,6 @@ extern "C" {
                                   const pace_termios * termios_p);
 
 
-#if defined (PACE_HAS_CPLUSPLUS)
-}
-#endif /* PACE_HAS_CPLUSPLUS */
-
 #if defined (PACE_HAS_INLINE)
 #  if (PACE_HAS_POSIX)
 #    include "pace/posix/termios.inl"
@@ -66,5 +62,9 @@ extern "C" {
 #    include "pace/win32/termios.inl"
 #  endif
 #endif /* PACE_HAS_INLINE */
+
+#if defined (PACE_HAS_CPLUSPLUS)
+}
+#endif /* PACE_HAS_CPLUSPLUS */
 
 #endif /* PACE_SYS_TERMIOS_H */
