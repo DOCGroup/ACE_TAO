@@ -75,6 +75,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Destroy_Thread_Pool"=.\Destroy_Thread_Pool\Destroy_Thread_Pool.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Explicit_Binding Client"=.\Explicit_Binding\client.dsp - Package Owner=<4>
 
 Package=<5>
@@ -171,7 +183,19 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Destroy_Thread_Pool"=.\Destroy_Thread_Pool\Destroy_Thread_Pool.dsp - Package Owner=<4>
+Project: "Persistent_IOR Client"=.\Persistent_IOR\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Persistent_IOR Server"=.\Persistent_IOR\server.dsp - Package Owner=<4>
 
 Package=<5>
 {{{

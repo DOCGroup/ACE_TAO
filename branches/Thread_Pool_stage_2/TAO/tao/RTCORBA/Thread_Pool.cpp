@@ -141,7 +141,8 @@ TAO_Thread_Lane::open (CORBA::Environment &ACE_TRY_ENV)
   // Open the acceptor registry.
   int result = 0;
   result =
-    this->resources_.open_acceptor_registry (ACE_TRY_ENV);
+    this->resources_.open_acceptor_registry (1,
+                                             ACE_TRY_ENV);
   ACE_CHECK;
 
   if (result == -1)

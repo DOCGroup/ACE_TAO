@@ -46,7 +46,8 @@ public:
   int has_acceptor_registry_been_created (void) const;
 
   /// Open the acceptor registry.
-  int open_acceptor_registry (CORBA::Environment &ACE_TRY_ENV);
+  int open_acceptor_registry (int ignore_address,
+                              CORBA::Environment &ACE_TRY_ENV);
 
   /// Finalize resources.
   void finalize (void);

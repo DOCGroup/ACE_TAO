@@ -43,6 +43,9 @@ TAO_POA_RT_Policy_Validator::validate_impl (TAO_Policy_Set &policies,
   this->validate_thread_pool (policies, ACE_TRY_ENV);
   ACE_CHECK;
 
+  this->validate_lifespan (policies, ACE_TRY_ENV);
+  ACE_CHECK;
+
   this->validate_server_protocol (policies, ACE_TRY_ENV);
   ACE_CHECK;
 
@@ -304,6 +307,33 @@ TAO_POA_RT_Policy_Validator::validate_thread_pool (TAO_Policy_Set &policies,
                                                       policies,
                                                       ACE_TRY_ENV);
   ACE_CHECK;
+}
+
+void
+TAO_POA_RT_Policy_Validator::validate_lifespan (TAO_Policy_Set &policies,
+                                                CORBA::Environment &ACE_TRY_ENV)
+{
+  // If this POA is using a RTCORBA thread pool, make sure the
+  // lifespan policy is not persistent since we cannot support it
+  // right now.
+  if (this->thread_pool_ != 0)
+    {
+      CORBA::Policy_var policy =
+        policies.get_cached_policy (TAO_CACHED_POLICY_LIFESPAN);
+      PortableServer::LifespanPolicy_var lifespan_policy =
+        PortableServer::LifespanPolicy::_narrow (policy.in (),
+                                                 ACE_TRY_ENV);
+      ACE_CHECK;
+
+      PortableServer::LifespanPolicyValue lifespan =
+        lifespan_policy->value (ACE_TRY_ENV);
+      ACE_CHECK;
+
+      if (lifespan == PortableServer::PERSISTENT)
+        {
+          ACE_THROW (PortableServer::POA::InvalidPolicy ());
+        }
+    }
 }
 
 void
