@@ -51,13 +51,15 @@ const authenticationFailureOid authenticationFailure;
 const egpNeighborLossOid egpNeighborLoss;
 const snmpTrapEnterpriseOid snmpTrapEnterprise;
 
-Snmp::Snmp(): construct_status_(SNMP_CLASS_ERROR), last_transaction_status_(0)
+Snmp::Snmp(unsigned short port): construct_status_(SNMP_CLASS_ERROR), last_transaction_status_(0)
 {
   ACE_TRACE("Snmp::Snmp");
 
-  ACE_INET_Addr addr; // any port,address is ok
+  ACE_INET_Addr addr(port); // any port,address is ok
   if (iv_snmp_session_.open(addr) < 0) {
      last_transaction_status_ = errno; // open udp/ipv4 socket 
+     ACE_DEBUG((LM_DEBUG, "Snmp::snmp::open port %d failed", port));
+     return;
   } 
 
   // initial request id randomly generated then monotonically incremented 
@@ -70,6 +72,7 @@ Snmp::Snmp(): construct_status_(SNMP_CLASS_ERROR), last_transaction_status_(0)
 Snmp::~Snmp()
 {
   ACE_TRACE("Snmp::~Snmp");
+  iv_snmp_session_.close();
 }
 
 int Snmp::valid() const
