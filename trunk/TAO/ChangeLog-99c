@@ -1,3 +1,17 @@
+Sat Sep 03 19:10:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* tests/AMI/simple_client_muxed.conf,
+	  tests/AMI/simple_client_exclusive.conf:
+	  Removed these files and replaced them with more general ones.
+
+	* tests/AMI/muxed.conf,
+	  tests/AMI/exclusive.conf: Added as replacement for the above 
+	  mentioned files.
+
+	* tests/AMI/ami_test.idl,
+	  tests/AMI/run_test.pl: 
+	  Made some fine tuning.
+
 Sat Sep  4 18:47:58 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* TAO_IDL/driver/drv_preproc.cpp (DRV_pre_proc):
