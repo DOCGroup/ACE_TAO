@@ -1210,6 +1210,17 @@ ACE_WFMO_Reactor::register_handler_i (ACE_HANDLE event_handle,
 				      ACE_Event_Handler *event_handler,
 				      ACE_Reactor_Mask new_masks)
 {
+  // If this is a Winsock 1 system, the underlying event assignment will
+  // not work, so don't try. Winsock 1 must use ACE_Select_Reactor for
+  // reacting to socket activity.
+#if !defined (ACE_HAS_WINSOCK2) || (ACE_HAS_WINSOCK2 == 0)
+  ACE_UNUSED_ARG (event_handle);
+  ACE_UNUSED_ARG (io_handle);
+  ACE_UNUSED_ARG (event_handler);
+  ACE_UNUSED_ARG (new_masks);
+  ACE_NOTSUP_RETURN (-1);
+#else
+
   // Make sure that the <handle> is valid
   if (io_handle == ACE_INVALID_HANDLE)
     io_handle = event_handler->get_handle ();
@@ -1266,6 +1277,7 @@ ACE_WFMO_Reactor::register_handler_i (ACE_HANDLE event_handle,
     }
   else
     return -1;
+#endif /* ACE_HAS_PHARLAP */
 }
 
 int
@@ -1433,11 +1445,21 @@ ACE_WFMO_Reactor::ok_to_wait (ACE_Time_Value *max_wait_time,
   int result = 0;
   while (1)
     {
+#if defined (ACE_HAS_PHARLAP)
+      // PharLap doesn't implement WaitForMultipleObjectsEx, and doesn't
+      // do async I/O, so it's not needed in this case anyway.
+      result = ::WaitForMultipleObjects (sizeof this->atomic_wait_array_ / sizeof (ACE_HANDLE),
+					 this->atomic_wait_array_,
+					 TRUE,
+					 timeout);
+#else
       result = ::WaitForMultipleObjectsEx (sizeof this->atomic_wait_array_ / sizeof (ACE_HANDLE),
 					   this->atomic_wait_array_,
 					   TRUE,
 					   timeout,
 					   alertable);
+#endif /* ACE_HAS_PHARLAP */
+
       if (result != WAIT_IO_COMPLETION)
         break;
     }
@@ -1466,11 +1488,21 @@ ACE_WFMO_Reactor::wait_for_multiple_events (int timeout,
   // Wait for any of handles_ to be active, or until timeout expires.
   // If <alertable> is enabled allow asynchronous completion of
   // ReadFile and WriteFile operations.
+#if defined (ACE_HAS_PHARLAP)
+  // PharLap doesn't do async I/O and doesn't implement
+  // WaitForMultipleObjectsEx, so use WaitForMultipleObjects.
+  ACE_UNUSED_ARG (alertable);
+  return ::WaitForMultipleObjects (this->handler_rep_.max_handlep1 (),
+				   this->handler_rep_.handles (),
+				   FALSE,
+				   timeout);
+#else
   return ::WaitForMultipleObjectsEx (this->handler_rep_.max_handlep1 (),
 				     this->handler_rep_.handles (),
 				     FALSE,
 				     timeout,
 				     alertable);
+#endif /* ACE_HAS_PHARLAP */
 }
 
 DWORD
