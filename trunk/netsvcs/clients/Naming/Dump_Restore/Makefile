@@ -21,7 +21,7 @@ BIN2    = main
 LIB2    = libDump_Restore.a
 SHLIB2  = libDump_Restore.$(SOEXT)
 
-LIBS   += $(ACELIB)
+ACE_SHLIBS   += $(ACELIB)
 
 #### If the ACE library wasn't built with sufficient components, don't
 #### try to build here.
