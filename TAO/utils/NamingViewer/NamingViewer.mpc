@@ -1,6 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : taoexe, portableserver, naming, mfc {
-  
-}
