@@ -1,3 +1,17 @@
+Tue Dec 19 18:39:27 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* ace/WFMO_Reactor.cpp (simple_dispatch_handler):
+
+	  When ACE_HAS_PACE on NT, ACE must use pace_siginfo_t instead
+	  of creating and using its own. The ACE version of siginfo_t
+	  happens to use constructors and so, the code that uses
+	  this ACE siginfor_t instantiates the struct via a constructor.
+	  When ACE_HAS_PACE, the pace_siginfo_t cannot be instantiated
+	  via constructor.
+
+	  My edit just chooses the correct method of instantiation
+	  based on ACE_HAS_PACE.
+
 Tue Dec 19 18:21:52 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* ace/Thread.h (ACE_Thread):
