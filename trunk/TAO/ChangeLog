@@ -1,9 +1,9 @@
-Mon Oct 13 12:51:38 2003  George Edwards <g.edwards@vanderbilt.edu>
+Sat Oct 18 15:14:38 2003  George Edwards <g.edwards@vanderbilt.edu>
 
         * tests/OBV/Supports/Supports_Test_impl.h:
         * tests/OBV/Supports/Supports_Test_impl.cpp:
 
-          Modified factory methods to handle exceptions.
+          Removed CORBA environment variable from factory methods.
 
 Sat Oct 18 12:36:22 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
