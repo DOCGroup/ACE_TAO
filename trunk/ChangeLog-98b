@@ -8,75 +8,75 @@ Thu Oct 15 23:50:41 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Thu Oct 15 22:05:02 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/ACE.cpp (unique_name): Moved the arguments around in the
- 	  sprintf() in order to generate a better "unique name".  Thanks
- 	  to Bob McWhirter for suggesting this.
+        * ace/ACE.cpp (unique_name): Moved the arguments around in the
+          sprintf() in order to generate a better "unique name".  Thanks
+          to Bob McWhirter for suggesting this.
 
 Thu Oct 15 21:20:36 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Hash_Map_Manager.cpp (operator-- and operator++): 
-	* ace/Map_Manager.cpp (operator-- and operator++): 
+        * ace/Hash_Map_Manager.cpp (operator-- and operator++):
+        * ace/Map_Manager.cpp (operator-- and operator++):
 
-	  Fixed by value and by reference return values.
+          Fixed by value and by reference return values.
 
 Thu Oct 15 20:16:46 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
 
-	* docs/ACE-FMM.html: Updated with Bob McWhirter's latest changes.
-	Discussion of race conditions when spawning threads from within a constructor.
+        * docs/ACE-FMM.html: Updated with Bob McWhirter's latest changes.
+        Discussion of race conditions when spawning threads from within a constructor.
 
 Thu Oct 15 18:30:58 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS.h: Added ACE_HTONS(x) macros to complement ACE_HTONL(x)
- 	  macros.  Thanks to Balaji Srinivasan <balaji@cplane.com>
-	  for reporting this.
+        * ace/OS.h: Added ACE_HTONS(x) macros to complement ACE_HTONL(x)
+          macros.  Thanks to Balaji Srinivasan <balaji@cplane.com>
+          for reporting this.
 
-	* ace/[Hash_]Map_Manager.cpp: Postfix and prefix were inverted.
-  	  They are correct now.  Thanks to Balaji Srinivasan
- 	  <balaji@cplane.com> for reporting this.
+        * ace/[Hash_]Map_Manager.cpp: Postfix and prefix were inverted.
+          They are correct now.  Thanks to Balaji Srinivasan
+          <balaji@cplane.com> for reporting this.
 
 Thu Oct 15 18:02:51 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* ace/config-win32.h: For non-winnt systems, define
- 	  ACE_LACKS_RECVMSG and ACE_LACKS_SENDMSG.  Thanks to Bill Hall
- 	  <hts@gte.net> for pointing this out.  BTW, Bill was the 400th
- 	  individual to contribute an ACE/TAO bug report, thanks to
- 	  everyone for all their help over the years!
+        * ace/config-win32.h: For non-winnt systems, define
+          ACE_LACKS_RECVMSG and ACE_LACKS_SENDMSG.  Thanks to Bill Hall
+          <hts@gte.net> for pointing this out.  BTW, Bill was the 400th
+          individual to contribute an ACE/TAO bug report, thanks to
+          everyone for all their help over the years!
 
 Thu Oct 15 16:50:09 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/SOCK_Dgram_Mcast.i (set_option): Need to convert the
-	  <optval> from char to int for Win32 because the shortest length
-	  of <optval> must be at least sizeof (int) on Win32.  Thanks
-	  to Johan Lundin <johan@lundin.com> for reporting this.
+        * ace/SOCK_Dgram_Mcast.i (set_option): Need to convert the
+          <optval> from char to int for Win32 because the shortest length
+          of <optval> must be at least sizeof (int) on Win32.  Thanks
+          to Johan Lundin <johan@lundin.com> for reporting this.
 
 Thu Oct 15 16:40:41 1998  Steve Huston  <shuston@riverace.com>
 
-	* tests/Thread_Manager_Test.cpp: Allow suspend/resume to be tried on
-	  pthreads, but don't allow any error other than ENOTSUP.  This
-	  catches a bug in Thread_Manager that lost the error values on an
-	  error.
+        * tests/Thread_Manager_Test.cpp: Allow suspend/resume to be tried on
+          pthreads, but don't allow any error other than ENOTSUP.  This
+          catches a bug in Thread_Manager that lost the error values on an
+          error.
 
-	* ace/Thread_Manager.cpp (ACE_THR_OP macro): Don't remove a thread
-	  from the active threads list if an operation fails with ENOTSUP.
-	  This was causing calls to suspend_grp/resume_grp to erase the list
-	  of threads in a group on pthreads, then wait_grp didn't wait because
-	  it thought there weren't any more threads.
+        * ace/Thread_Manager.cpp (ACE_THR_OP macro): Don't remove a thread
+          from the active threads list if an operation fails with ENOTSUP.
+          This was causing calls to suspend_grp/resume_grp to erase the list
+          of threads in a group on pthreads, then wait_grp didn't wait because
+          it thought there weren't any more threads.
 
 Thu Oct 15 12:43:46 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Task.cpp (activate): Changed to activate new active objects
- 	  using the same grp_id if this task has been activated before and
- 	  no new grp_id is specified in activate method.  Also, the task's
- 	  grp_id will only get updated if it has never been updated even
- 	  if <force_active> is set.  This prevent the original <grp_id_>
- 	  get lost but the consequence if that if users select to
- 	  force_activate new tasks with a different grp_id, the new grp_id
- 	  will get lost and the only way to wait for these threads is to
- 	  either perform a wait for all threads, or wait for each
- 	  individual thread by waiting on the thread handles returned by
- 	  the activate method.  Thanks to Bob McWhirter
- 	  <bob@netwrench.com> for motivating this change.
-	  (ACE_Task_Base): Changed to initialize <grp_id_> to -1.
+        * ace/Task.cpp (activate): Changed to activate new active objects
+          using the same grp_id if this task has been activated before and
+          no new grp_id is specified in activate method.  Also, the task's
+          grp_id will only get updated if it has never been updated even
+          if <force_active> is set.  This prevent the original <grp_id_>
+          get lost but the consequence if that if users select to
+          force_activate new tasks with a different grp_id, the new grp_id
+          will get lost and the only way to wait for these threads is to
+          either perform a wait for all threads, or wait for each
+          individual thread by waiting on the thread handles returned by
+          the activate method.  Thanks to Bob McWhirter
+          <bob@netwrench.com> for motivating this change.
+          (ACE_Task_Base): Changed to initialize <grp_id_> to -1.
 
 Thu Oct 15 10:07:13 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -88,7 +88,10 @@ Thu Oct 15 09:54:07 1998  David L. Levine  <levine@cs.wustl.edu>
           it doesn't halt on g++/Solaris or DU 4.0.
 
         * include/makeinclude/wrapper_macros.GNU: for g++, added
-          -DACE_LACKS_PRAGMA_ONCE to CCFLAGS.
+          -DACE_LACKS_PRAGMA_ONCE to CCFLAGS.  Thanks to Kirk Ellet
+          <kellet@mdc.com> for pointing out that is has to be done
+          in CCFLAGS rather than as a #define in OS.h, because
+          ace/Synch_T.h uses the pragma before config.h is #included.
 
 Wed Oct 14 23:20:45 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
