@@ -82,7 +82,7 @@ main (int argc, char *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%P|%t) Cannot activate worker threads\n"),
                           1);
-      
+
       ACE_Time_Value tv (5, 0);
 
       orb->run (tv, ACE_TRY_ENV);
@@ -103,7 +103,7 @@ main (int argc, char *argv[])
 
           Simple_Server_var server =
             Simple_Server::_narrow (object.in (), ACE_TRY_ENV);
-          ACE_CHECK;
+          ACE_TRY_CHECK;
 
           server->shutdown (ACE_TRY_ENV);
           ACE_TRY_CHECK;
@@ -144,7 +144,7 @@ Worker::svc (void)
                            "Exception caught in thread (%t)\n");
     }
   ACE_ENDTRY;
-    
+
   return 0;
 }
 
@@ -187,7 +187,7 @@ Worker::run_test (CORBA::Environment &ACE_TRY_ENV)
       CORBA::Boolean r =
         server->test_is_a ("IDL:Foo:1.0", ACE_TRY_ENV);
       ACE_CHECK;
-      
+
       if (r != 0)
         {
           ACE_DEBUG ((LM_DEBUG,

@@ -1,3 +1,12 @@
+Thu Sep 14 11:40:46 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Forwarding/client.cpp:
+          Fixed problem in platforms without native exceptions.
+
+        * orbsvcs/orbsvcs/Event/EC_Gateway.h:
+          Add missing #include, something must have changed in the other
+          included files.
+
 Thu Sep 14 12:15:35 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/tao_static.dsp:
