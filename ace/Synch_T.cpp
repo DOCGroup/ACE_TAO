@@ -21,7 +21,7 @@ ACE_RCSID(ace, Synch_T, "$Id$")
 ACE_ALLOC_HOOK_DEFINE(ACE_Atomic_Op)
 
 // This constructor isn't inlined, because SunPRO C++ 4.2 + patch
-// 104631-07 has trouble compiled TAO with it inline.
+// 104631-07 has trouble compiling TAO with it inline.
 template <class ACE_LOCKING_MECHANISM>
 ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::ACE_Lock_Adapter (void)
   : lock_ (0),
