@@ -388,7 +388,7 @@ Kent Watsen <kent@watsen.net>
 Chris Healey <chealey@entera.com>
 Philippe Klein <Philippe_Klein@vocaltec.com>
 William S. Lear <rael@dejanews.com>
-John Geiss <jtgb@eci-esyst.com>
+John Geiss <John_T_Geiss@raytheon.com>
 Ernesto Guisado <eguisado@saincotrafico.com>
 Stuart Myles <smyles@wsj.dowjones.com>
 Lothar Werzinger <lwerzinger@krones.de>
@@ -1699,6 +1699,8 @@ Scott Gammil <srgammill@sbcglobal.net>
 Nick Lewycky <nicholas@fresco.org>
 Ira Burton <imburton@micron.com>
 Thomas Wiegert <wiegert@schlund.de>
+Craig Watcham <craigw@ananzi.co.za>
+Roland Meub <Roland.Meub@tenovis.com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile

@@ -124,8 +124,11 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
               if (config_.set_binary_value (section, name, data, length))
                 {
                   ACE_OS::fclose (in);
+                  delete [] data;
                   return -4;
                 }
+              else
+                delete [] data;
             }
           else
             {
