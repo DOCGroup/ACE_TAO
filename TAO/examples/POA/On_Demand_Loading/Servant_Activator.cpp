@@ -36,30 +36,24 @@ MyFooServantActivator::incarnate (const PortableServer::ObjectId &oid,
                                   PortableServer::POA_ptr poa,
                                   CORBA::Environment &env)
 {
-  
+  /*#if 0
+  return poa->load_servant (oid, poa, env);
+
+  #else*/
   // Convert ObjectId to String.
-  
+
   CORBA::String_var s = PortableServer::ObjectId_to_string (oid);
 
   // Activate and return the servant else exception.
-  
+
   PortableServer::Servant servant = this->activate_servant (s.in (),
                                                             poa,
                                                             27);
+  //#endif
   if (servant != 0)
     return servant;
   else
-    {
-
-      TAO_THROW_ENV_RETURN (CORBA::OBJECT_NOT_EXIST (CORBA::COMPLETED_NO), env, 0);
-      //*done*
-      // @@ Kirthika, can you please make this work for both
-      // native and non-native C++ exceptions?  Please see
-      // Nanbor if you have any questions.
-      // CORBA::Exception *exception = new CORBA::OBJECT_NOT_EXIST (CORBA::COMPLETED_NO);
-      //env.exception (exception);
-      //return 0;
-    }
+    TAO_THROW_ENV_RETURN (CORBA::OBJECT_NOT_EXIST (CORBA::COMPLETED_NO), env, 0);
 }
 
 // This is the method invoked when the object is deactivated or the
@@ -79,11 +73,11 @@ MyFooServantActivator::etherealize (const PortableServer::ObjectId &oid,
   ACE_UNUSED_ARG (env);
 
   // If there are no remaining activations i.e ObjectIds associated
-  // with MyFooServant object, deactivate it.
-  // Etheralization happens on POA::destroy() and/or Object::deactivate().
+  // with MyFooServant object, deactivate it.  Etheralization happens
+  // on POA::destroy() and/or Object::deactivate().
 
   if (remaining_activations == 0)
-    deactivate_servant (servant);
+    this->deactivate_servant (servant, oid);
 }
 
 // This method loads the dynamically linked library which is the
@@ -91,110 +85,174 @@ MyFooServantActivator::etherealize (const PortableServer::ObjectId &oid,
 // operations in the library.
 
 PortableServer::Servant
-MyFooServantActivator::activate_servant (const char *str, 
+MyFooServantActivator::activate_servant (const char *str,
                                          PortableServer::POA_ptr poa,
                                          long value)
 {
-  // The string format is dllname:factory_method which needs to be parsed.
-  parse_string (str);
 
-  // Now that the library name is available we open the library.  
+ 
+  // The string format is dllname:factory_function that must be
+  // parsed.
+  parse_string (str); 
 
-  // *done*@@
-  // Kirthika, make SURE to check return values from function calls
-  // like this and return failure results correctly...
-  int retval = dll_.open (dllname_);
-  if (retval != 0)
+  ACE_DLL *dll_;
+
+ 
+  // Create the dll object.
+  ACE_NEW_RETURN (dll_,
+                  ACE_DLL,
+                  0);
+
+  
+
+   PortableServer::ObjectId_var oid =
+     PortableServer::string_to_ObjectId (str);
+
+
+  // Make an HASH_MAP entry by binding the object_id and the dll object
+  // associated with it together.
+   int result = this->servant_map_.bind (oid.in (), 
+                                         dll_);
+  
+  if (result == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,                      
+                       "%p\n", 
+                       "Bind failed"),
+                      0);
+   
+  // Now that the library name is available we open the library.
+  result = dll_->open (dllname_);
+  if (result != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p", dll_.error ()),
+                       "%p", dll_->error ()),
                       0);
 
   // The next step is to obtain the symbol for the function that will
   // create the servant object and return it to us.
-  Servant_Creator_Prototype servant_creator;
-  servant_creator = (Servant_Creator_Prototype) dll_.symbol (create_symbol_.in ());
-  
+  SERVANT_FACTORY servant_creator = ACE_reinterpret_cast
+    (SERVANT_FACTORY,
+     dll_->symbol (create_symbol_.in ()));
+
   // Checking whether it is possible to create the servant.
   if (servant_creator == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%s",
-                       dll_.error ()),
+                       "%p", dll_->error ()),
                       0);
-   
-  // Now create and return the servant.
-  return servant_creator (this->orb_.in (), poa, value);
+
+  // Now create and return the servant using the <servant_creator>
+  // factory function.
+  return (*servant_creator) (this->orb_.in (),
+                             poa,
+                             value);
 }
 
 // This method removes the servant and the dll object associated with
-// it after it has performed the opening and symbol obtaining operations.
- 
-void 
-MyFooServantActivator::deactivate_servant (PortableServer::Servant servant)
+// it after it has performed the opening and symbol obtaining
+// operations.
+
+void
+MyFooServantActivator::deactivate_servant (PortableServer::Servant servant,
+                                           const PortableServer::ObjectId &oid)
 {
-  // the servant is destroyed.
+  // The servant is destroyed.
   delete servant;
+
+  ACE_DLL *dll;
+  
+  // Since the servant is no more the dll object associated with it has 
+  // to be destroyed too.
+  this->servant_map_.unbind (oid,
+                             dll);
+  delete dll;                          
+    
 }
 
-// The objectID is in a format of library:factory_method which has to
-// be parsed and separated into tokens to be used.
+// The objectID is in a format of library:factory_function which has
+// to be parsed and separated into tokens to be used.
 
 void
 MyFooServantActivator::parse_string (const char *s)
 {
-  // The format of the object library:factory_method.  This string is
-  // parsed to obtain the library name and the function name which
+  // The format of the object library:factory_function.  This string
+  // is parsed to obtain the library name and the function name which
   // will create trhe servant and return it to us.
 
-  char str[BUFSIZ],func[BUFSIZ], libname [BUFSIZ];
+  // @@ Kirthika, make sure that you first figure out how big the
+  // string <s> is using ACE_OS::strlen() and then use dynamic memory
+  // allocation to make these copies.  Don't forget to delete this
+  // stuff.
+  char str[BUFSIZ], func[BUFSIZ], libname [BUFSIZ];
   char at[2];
 
   at[0]= ':';
   at[1]= '\0';
-  
-  //*done*
-  // @@ Kirthika, please use the ACE_OS::str*() functions
-  // consistently.
+
   ACE_OS::strcpy (func, "");
 
-  // As strtok () puts a NULL in the position after it gives back a
+  // As strtok() puts a NULL in the position after it gives back a
   // token, we make two copies of the input string.
   ACE_OS::strcpy (str, s);
 
   // The strtok() method returns the string until ':' i.e. the
   // function name.
   ACE_OS::strcpy (libname, ACE_OS::strtok (str, at));
-   
+
   // Get to ':' and make func point to the next location in the
   // string.
   ACE_OS::strcpy (func, ACE_OS::strchr (s,':') + 1);
-  
+
   // Assign the respective strings obtained.
 
   this->dllname_ = CORBA::string_dup (libname);
   this->create_symbol_ = CORBA::string_dup (func);
 
   ACE_DEBUG ((LM_DEBUG,
-              "the servant library:%s\n the factory_method:%s\n ", 
+              "the servant library:%s\n the factory_function:%s\n ",
               this->dllname_.in (),
               this->create_symbol_.in ()));
 }
 
-// This method returns an ObjectId when given an library name and the factory method
-// to be invoked in the library.The format of the ObjectId is libname:factory_method.
+// This method returns an ObjectId when given an library name and the
+// factory method to be invoked in the library.  The format of the
+// ObjectId is libname:factory_function.
 
 PortableServer::ObjectId_var
-MyFooServantActivator::create_objectId (const char *libname, const char *factory_method)
+MyFooServantActivator::create_objectId (const char *libname,
+                                        const char *factory_function)
 {
+  // @@ Please make sure that you dynamically allocate <format_string>
+  // so that it's guaranteed to be large enough to contain a
+  // ACE_OS::strlen (libname) + ACE_OS::strlen (factory_function) +
+  // sizeof (':') + 1 (for the terminating '\0').
   char format_string [BUFSIZ];
-  
+
   ACE_OS::strcpy (format_string, libname);
   ACE_OS::strcat (format_string, ":");
-  ACE_OS::strcat (format_string, factory_method);
-  
+  ACE_OS::strcat (format_string, factory_function);
+
   // The object ID is created.
 
   PortableServer::ObjectId_var oid =
-    PortableServer::string_to_ObjectId ( format_string);
+    PortableServer::string_to_ObjectId (format_string);
 
   return oid;
 }
+
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class ACE_Hash_Map_Entry<PortableServer::ObjectId,ACE_DLL*>;
+template class ACE_Hash_Map_Manager<PortableServer::ObjectId,ACE_DLL*, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base<PortableServer::ObjectId,ACE_DLL*, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator<PortableServer::ObjectId,ACE_DLL*, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator<PortableServer::ObjectId,ACE_DLL*, ACE_Null_Mutex>;
+
+#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+ 
+#pragma instantiate ACE_Hash_Map_Entry<PortableServer::ObjectId,ACE_DLL*,ACE_Null_Mutex> 
+#pragma instantiate ACE_Hash_Map_Manager<PortableServer::ObjectId,ACE_DLL*,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base<PortableServer::ObjectId,ACE_DLL*,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator<PortableServer::ObjectId,ACE_DLL*,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterato<PortableServer::ObjectId,ACE_DLL*,ACE_Null_Mutex>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
