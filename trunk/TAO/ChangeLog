@@ -1,3 +1,9 @@
+Fri Mar 25 07:09:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ImR_Client/ImR_Client.cpp:
+          Fixed typo in shutdown message. Thanks to Thomas Lockhart
+          <Thomas dot Lockhart at jpl dot nasa dot gov> for reporting this.
+
 Thu Mar 24 16:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Event/Mcast/Simple/consumer.cpp:
