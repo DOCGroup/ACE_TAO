@@ -188,6 +188,13 @@ new ORB Core structure.
         </li>
 
         <li><p>Added support for CORBA Messaging Spec.</p>
+        </li>
+
+        <li><p>According to tentative CORBA 2.3a spec, once
+            ORB::shutdown has been called, operation invocations on
+            object references obtained from this ORB must throw an
+            <code>BAD_INV_ORDER</code> exception.</p>
+        </li>
       </ol>
 
   <li>Internal restructuring:</li>
