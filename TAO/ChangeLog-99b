@@ -1386,7 +1386,7 @@ Mon Jul 19 15:59:45 1999  Jeff Parsons  <parsons@cs.wustl.edu>
           value or by reference without changing the signature of
           generated operations, as the previous change did.
 
-tMon Jul 19 15:10:01 1999  Ossama Othman  <othman@cs.wustl.edu>
+Mon Jul 19 15:10:01 1999  Ossama Othman  <othman@cs.wustl.edu>
 
         * tao/UIOP_Acceptor.cpp (~TAO_UIOP_Acceptor):
 
@@ -4874,7 +4874,7 @@ Mon Jun 28 18:35:19 1999  Jeff Parsons  <parsons@cs.wustl.edu>
           real disicriminator were a CORBA::ULong and perhaps
           crash if it were a 64-bit type.
 
-]Mon Jun 28 18:24:52 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+Mon Jun 28 18:24:52 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * examples/README: Updated this to describe all the examples.
 
