@@ -1,3 +1,9 @@
+Mon May 10 13:32:11 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Conn_Test.cpp (spawn_threads): wait a maximum
+          of 200 seconds.  Carlos reported that the test sometimes
+          hangs on Irix.
+
 Mon May 10 12:14:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * ace/RB_Tree.cpp: fixed a dangling pointer bug in
