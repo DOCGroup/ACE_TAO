@@ -120,16 +120,25 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       // Instantiate client
-      TimeoutClient* client = new TimeoutClient (orb.in (),
-                                                 timeout_var.in (),
-                                                 timeoutHandler_var.in (),
-                                                 &timeoutHandler_i,
-                                                 msec);
+      TimeoutClient client (orb.in (),
+                            timeout_var.in (),
+                            timeoutHandler_var.in (),
+                            &timeoutHandler_i,
+                            msec);
 
-      client->activate ();
+      client.activate ();
 
       // ORB loop.
-      orb->run ();  // Fetch responses
+      orb->run (ACE_TRY_ENV);  // Fetch responses
+      ACE_TRY_CHECK;
+
+      root_poa->destroy (true,  // ethernalize objects
+ 					               false, // wait for completion
+						             ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      orb->destroy (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "ORB finished\n"));
 

@@ -208,7 +208,7 @@ TimeoutClient::send (bool async,
   ACE_CHECK;
 
   // wait for responses
-  ACE_Time_Value tv (0, (local_timeout + remote_sleep)*2000);
+  ACE_Time_Value tv (0, (local_timeout + remote_sleep)*2000 + 4000);
   ACE_OS::sleep (tv);
 
   ACE_Time_Value &elapsed_time = timeoutHandler_i_->elapsed_time ();

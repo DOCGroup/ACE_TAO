@@ -33,9 +33,9 @@ Timeout_i::sendTimeToWait (CORBA::Long msec,
                            CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "Timeout_i::sendTimeToWait: invoked with msec = %d\n\n",
-              msec));
+  //ACE_DEBUG ((LM_DEBUG,
+  //            "Timeout_i::sendTimeToWait: invoked with msec = %d\n\n",
+  //            msec));
 
   if (msec != 0)
     {
@@ -82,14 +82,29 @@ TimeoutHandler_i::sendTimeToWait (CORBA::Environment &)
 }
 
 void
-TimeoutHandler_i::sendTimeToWait_excep (AMI_TimeoutExceptionHolder *,
-                                        CORBA::Environment &)
+TimeoutHandler_i::sendTimeToWait_excep (AMI_TimeoutExceptionHolder *excep_holder,
+                                        CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  //ACE_DEBUG ((LM_DEBUG,
-  //            "excep"));
-  reply_excep_counter_++;
   timer_.stop ();
+
+  ACE_TRY
+    {
+      excep_holder->raise_sendTimeToWait (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCH (CORBA::TIMEOUT, timeout)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "timeout"));
+      reply_excep_counter_++;
+    }
+  ACE_CATCHALL
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Error: Unexpected exception"));
+    }
+  ACE_ENDTRY;
 }
 
 void
