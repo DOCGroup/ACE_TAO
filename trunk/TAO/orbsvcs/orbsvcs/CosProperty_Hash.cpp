@@ -1,11 +1,16 @@
 // $Id$
+
+// ===============================================================================================
 //
-// FILE
-//   CosProperty_Hash.cpp
+// = FILE
+//     CosProperty_Hash.cpp
 //
-// Description
-//   Defines equal and hash functions for the Hash_Property_Map class.
-//   
+// = Description
+//     Defines equal and hash functions for the Hash_Property_Map class.
+//    
+// = Author
+//     Alexander Babu Arulanthu
+// ================================================================================================
 
 #include "CosProperty_Hash.h"
 
@@ -37,7 +42,6 @@ EXT_ID::hash (void) const
 
 EXT_ID::~EXT_ID () 
 {
-
 }
 
 INT_ID::INT_ID ()
@@ -46,17 +50,17 @@ INT_ID::INT_ID ()
 
 INT_ID::INT_ID (const CORBA::Any &anyvalue)
 {
-  TAO_TRY {
-    pvalue_.replace (anyvalue.type (), anyvalue.value (), CORBA::B_FALSE, TAO_TRY_ENV);
-  }
-  TAO_CATCH (CORBA::SystemException, sysex) {
-    TAO_TRY_ENV.print_exception ("System Exception");
-    //return -1;
-  }
+  TAO_TRY
+    {
+      pvalue_.replace (anyvalue.type (), anyvalue.value (), CORBA::B_FALSE, TAO_TRY_ENV);
+    }
+  TAO_CATCH (CORBA::SystemException, sysex)
+    {
+      TAO_TRY_ENV.print_exception ("System Exception");
+    }
   TAO_CATCH (CORBA::UserException, userex)
     {
       TAO_TRY_ENV.print_exception ("User Exception");
-      //return -1;
     }
   TAO_ENDTRY;
 }
