@@ -1,3 +1,10 @@
+Fri Feb 25 10:15:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-lite.h:
+          Added ifndef ACE_LACKS_DEPRECATED_MACROS around the ACE_x_cast
+          macros so that we can easily prevent the ACE_x_cast macros to be
+          defined so that we can check whether they are used in ACE/TAO
+
 Thu Feb 24 21:05:42 2005  Boris Kolpackov  <boris@kolpackov.net>
 
 	* protocols/ace/RMCast/Socket.h:
