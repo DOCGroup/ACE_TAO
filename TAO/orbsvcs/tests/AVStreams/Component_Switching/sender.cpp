@@ -1,20 +1,46 @@
 // $Id$
 
 #include "sender.h"
-#include "tao/debug.h"
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
 
 typedef ACE_Singleton<Sender, ACE_Null_Mutex> SENDER;
-// Create a singleton instance of the Sender.
+/// Create a singleton instance of the Sender.
+
+ACE_CString &
+Sender_Callback::flowname (void)
+{
+  return this->flowname_;
+}
+
+void 
+Sender_Callback::flowname (const ACE_CString &flowname)
+{
+  this->flowname_ = flowname;
+}
+
 
 int
-Sender_StreamEndPoint::get_callback (const char *,
+Sender_Callback::handle_destroy (void)
+{
+  SENDER::instance ()->connection_manager ().protocol_objects ().unbind (this->flowname_.c_str ());
+   
+  SENDER::instance ()->connection_manager ().streamctrls ().unbind (this->flowname_.c_str ());
+  
+  return 0;
+}
+
+int
+Sender_StreamEndPoint::get_callback (const char * flowname,
                                      TAO_AV_Callback *&callback)
 {
-  // Create and return the client application callback and return to the AVStreams
-  // for further upcalls.
+  /// Create and return the client application callback and return to the AVStreams
+  /// for further upcalls.
   callback = &this->callback_;
+
+  ACE_CString flow_name (flowname);
+  this->callback_.flowname (flow_name);
+    
   return 0;
 }
 
@@ -25,11 +51,11 @@ Sender_StreamEndPoint::set_protocol_object (const char *flowname,
   Connection_Manager &connection_manager =
     SENDER::instance ()->connection_manager ();
 
-  // Add to the map of protocol objects.
+  /// Add to the map of protocol objects.
   connection_manager.protocol_objects ().bind (flowname,
                                                object);
 
-  // Store the related streamctrl.
+  /// Store the related streamctrl.
   connection_manager.add_streamctrl (flowname,
                                      this);
 
@@ -39,8 +65,8 @@ Sender_StreamEndPoint::set_protocol_object (const char *flowname,
 CORBA::Boolean
 Sender_StreamEndPoint::handle_preconnect (AVStreams::flowSpec &flowspec)
 {
-  // If another receiver of the same flowname is in the map, destroy
-  // the old stream.
+  /// If another receiver of the same flowname is in the map, destroy
+  /// the old stream.
   for (CORBA::ULong i = 0;
        i < flowspec.length ();
        i++)
@@ -56,16 +82,16 @@ Sender_StreamEndPoint::handle_preconnect (AVStreams::flowSpec &flowspec)
       int result =
         connection_manager.protocol_objects ().find (flowname);
 
-      // If the flowname is found.
+      /// If the flowname is found.
       if (result == 0)
         {
           ACE_DEBUG ((LM_DEBUG, "\nSender switching receivers\n\n"));
 
-          // Destroy old stream with the same flowname.
+          /// Destroy old stream with the same flowname.
           connection_manager.destroy (flowname);
         }
     }
-  return 0;
+  return 1;
 }
 
 Sender::Sender (void)
@@ -83,7 +109,7 @@ int
 Sender::parse_args (int argc,
                     char **argv)
 {
-  // Parse command line arguments
+  /// Parse command line arguments
   ACE_Get_Opt opts (argc, argv, "s:f:r:d");
 
   int c;
@@ -116,27 +142,27 @@ Sender::init (int argc,
               char **argv,
               CORBA::Environment& ACE_TRY_ENV)
 {
-  // Initialize the endpoint strategy with the orb and poa.
+  /// Initialize the endpoint strategy with the orb and poa.
   int result =
     this->endpoint_strategy_.init (TAO_AV_CORE::instance ()->orb (),
                                    TAO_AV_CORE::instance ()->poa ());
   if (result != 0)
     return result;
 
-  // Initialize the connection manager.
+  /// Initialize the connection manager.
   result =
     this->connection_manager_.init (TAO_AV_CORE::instance ()->orb ());
   if (result != 0)
     return result;
 
-  // Parse the command line arguments
+  /// Parse the command line arguments
   result =
     this->parse_args (argc,
                       argv);
   if (result != 0)
     return result;
 
-  // Open file to read.
+  /// Open file to read.
   this->input_file_ =
     ACE_OS::fopen (this->filename_.c_str (),
                    "r");
@@ -150,12 +176,12 @@ Sender::init (int argc,
     ACE_DEBUG ((LM_DEBUG,
                 "File opened successfully\n"));
 
-  // Register the sender mmdevice object with the ORB
+  /// Register the sender mmdevice object with the ORB
   ACE_NEW_RETURN (this->sender_mmdevice_,
                   TAO_MMDevice (&this->endpoint_strategy_),
                   -1);
 
-  // Servant Reference Counting to manage lifetime
+  /// Servant Reference Counting to manage lifetime
   PortableServer::ServantBase_var safe_mmdevice =
     this->sender_mmdevice_;
 
@@ -163,28 +189,28 @@ Sender::init (int argc,
     this->sender_mmdevice_->_this (ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
-  // Register the object reference with the Naming Service and bind to
-  // the receivers
+  /// Register the object reference with the Naming Service and bind to
+  /// the receivers
   this->connection_manager_.bind_to_receivers (this->sender_name_,
                                                mmdevice.in (),
                                                ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
-  // Connect to the receivers
+  /// Connect to the receivers
   this->connection_manager_.connect_to_receivers (ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
   return 0;
 }
 
-// Method to send data at the specified rate
+/// Method to send data at the specified rate
 int
 Sender::pace_data (CORBA::Environment &ACE_TRY_ENV)
 {
-  // The time that should lapse between two consecutive frames sent.
+  /// The time that should lapse between two consecutive frames sent.
   ACE_Time_Value inter_frame_time;
 
-  // The time between two consecutive frames.
+  /// The time between two consecutive frames.
   inter_frame_time.set (1 / (double) this->frame_rate_);
 
   if (TAO_debug_level > 0)
@@ -196,13 +222,13 @@ Sender::pace_data (CORBA::Environment &ACE_TRY_ENV)
 
   ACE_TRY
     {
-      // The time taken for sending a frame and preparing for the next frame
+      /// The time taken for sending a frame and preparing for the next frame
       ACE_High_Res_Timer elapsed_timer;
 
-      // Continue to send data till the file is read to the end.
+      /// Continue to send data till the file is read to the end.
       while (1)
         {
-          // Read from the file into a message block.
+          /// Read from the file into a message block.
           int n = ACE_OS::fread (this->mb_.wr_ptr (),
                                  1,
                                  this->mb_.size (),
@@ -215,7 +241,7 @@ Sender::pace_data (CORBA::Environment &ACE_TRY_ENV)
 
           if (n == 0)
             {
-              // At end of file break the loop and end the sender.
+              /// At end of file break the loop and end the sender.
               if (TAO_debug_level > 0)
                 ACE_DEBUG ((LM_DEBUG,"Handle_Start:End of file\n"));
               break;
@@ -225,14 +251,14 @@ Sender::pace_data (CORBA::Environment &ACE_TRY_ENV)
 
           if (this->frame_count_ > 1)
             {
-              //
-              // Second frame and beyond
-              //
+              ///
+              /// Second frame and beyond
+              ///
 
-              // Stop the timer that was started just before the previous frame was sent.
+              /// Stop the timer that was started just before the previous frame was sent.
               elapsed_timer.stop ();
 
-              // Get the time elapsed after sending the previous frame.
+              /// Get the time elapsed after sending the previous frame.
               ACE_Time_Value elapsed_time;
               elapsed_timer.elapsed_time (elapsed_time);
 
@@ -241,12 +267,12 @@ Sender::pace_data (CORBA::Environment &ACE_TRY_ENV)
                             "Elapsed Time = %d\n",
                             elapsed_time.msec ()));
 
-              // Check to see if the inter frame time has elapsed.
+              /// Check to see if the inter frame time has elapsed.
               if (elapsed_time < inter_frame_time)
                 {
-                  // Inter frame time has not elapsed.
+                  /// Inter frame time has not elapsed.
 
-                  // Calculate the time to wait before the next frame needs to be sent.
+                  /// Calculate the time to wait before the next frame needs to be sent.
                   ACE_Time_Value wait_time (inter_frame_time - elapsed_time);
 
                   if (TAO_debug_level > 0)
@@ -254,21 +280,21 @@ Sender::pace_data (CORBA::Environment &ACE_TRY_ENV)
                                 "Wait Time = %d\n",
                                 wait_time.msec ()));
 
-                  // Run the orb for the wait time so the sender can
-                  // continue other orb requests.
+                  /// Run the orb for the wait time so the sender can
+                  /// continue other orb requests.
                   TAO_AV_CORE::instance ()->orb ()->run (wait_time,
                                                          ACE_TRY_ENV);
                   ACE_TRY_CHECK;
                 }
             }
 
-          // Start timer before sending the frame.
+          /// Start timer before sending the frame.
           elapsed_timer.start ();
 
           Connection_Manager::Protocol_Objects &protocol_objects =
             this->connection_manager_.protocol_objects ();
 
-          // Send frame to all receivers.
+          /// Send frame to all receivers.
           for (Connection_Manager::Protocol_Objects::iterator iterator = protocol_objects.begin ();
                iterator != protocol_objects.end ();
                ++iterator)
@@ -287,10 +313,10 @@ Sender::pace_data (CORBA::Environment &ACE_TRY_ENV)
                       "Sender::pace_data frame %d was sent succesfully\n",
                       ++this->frame_count_));
 
-          // Reset the message block.
+          /// Reset the message block.
           this->mb_.reset ();
 
-        } // end while
+        } /// end while
     }
   ACE_CATCHANY
     {
@@ -326,7 +352,7 @@ main (int argc,
                                            ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      //Get the POA_var object from Object_var
+      ///Get the POA_var object from Object_var
       PortableServer::POA_var root_poa
         = PortableServer::POA::_narrow (obj.in (),
                                         ACE_TRY_ENV);
@@ -339,13 +365,13 @@ main (int argc,
       mgr->activate (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      // Initialize the AV Stream components.
+      /// Initialize the AV Stream components.
       TAO_AV_CORE::instance ()->init (orb.in (),
                                       root_poa.in (),
                                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      // Initialize the Client.
+      /// Initialize the Client.
       int result = 0;
       result = SENDER::instance ()->init (argc,
                                           argv,

@@ -4,7 +4,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//    TAO/orbsvcs/tests/AVStreams/Asynch_Three_Stage
+//    TAO/orbsvcs/tests/AVStreams/Component_Switching
 //
 // = FILENAME
 //    receiver.h
@@ -33,17 +33,17 @@ class Receiver_Callback : public TAO_AV_Callback
 public:
 
   Receiver_Callback (void);
-  // Constructor.
+  /// Constructor.
 
-  // Method that is called when there is data to be received from a
-  // sender.
+  /// Method that is called when there is data to be received from a
+  /// sender.
   int receive_frame (ACE_Message_Block *frame,
                      TAO_AV_frame_info *frame_info,
                      const ACE_Addr &peer_address);
 
 private:
   int frame_count_;
-  // Keeping a count of the incoming frames.
+  /// Keeping a count of the incoming frames.
 };
 
 class Receiver_StreamEndPoint : public TAO_Server_StreamEndPoint
@@ -54,13 +54,17 @@ class Receiver_StreamEndPoint : public TAO_Server_StreamEndPoint
   // = DESCRIPTION
   //    AVStreams calls this class during connection setup.
 public:
-  // Create a receiver application callback.
+  /// Create a receiver application callback.
   int get_callback (const char *flowname,
                     TAO_AV_Callback *&callback);
+  
+  virtual CORBA::Boolean handle_connection_requested (AVStreams::flowSpec &the_spec,
+                                                      CORBA::Environment &);
+  /// Called when a distributor tries to connect to the receiver
 
 private:
   Receiver_Callback callback_;
-  // Receiver application callback.
+  /// Receiver application callback.
 };
 
 class Receiver
@@ -73,46 +77,46 @@ class Receiver
   //    a file.
 public:
   Receiver (void);
-  // Constructor
+  /// Constructor
 
   ~Receiver (void);
-  // Destructor.
+  /// Destructor.
 
   int init (int argc,
             char **argv,
             CORBA::Environment &);
-  // Initialize data components.
+  /// Initialize data components.
 
   int parse_args (int argc,
                   char **argv);
-  // Parse args.
+  /// Parse args.
 
   ACE_CString output_file_name (void);
-  // Name of the output file.
+  /// Name of the output file.
 
 protected:
   Connection_Manager connection_manager_;
-  // Connection manager.
+  /// Connection manager.
 
   TAO_AV_Endpoint_Reactive_Strategy_B
   <Receiver_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl> reactive_strategy_;
-  // The endpoint reactive strategy.
+  /// The endpoint reactive strategy.
 
   AVStreams::MMDevice_var mmdevice_obj_;
-  // The receiver MMDevice.
+  /// The receiver MMDevice.
 
   TAO_MMDevice *mmdevice_;
-  // Receiver MMDevice.
+  /// Receiver MMDevice.
 
   AVStreams::MMDevice_var sender_mmdevice_;
-  // The sender MMDevice
+  /// The sender MMDevice
 
   ACE_CString output_file_name_;
-  // File name of the file into which received data is written.
+  /// File name of the file into which received data is written.
 
   ACE_CString sender_name_;
-  // Sender name.
+  /// Sender name.
 
   ACE_CString receiver_name_;
-  // Receiver name.
+  /// Receiver name.
 };
