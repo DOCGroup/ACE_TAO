@@ -1,3 +1,9 @@
+Sun Aug 27 17:50:04 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
+          Remove dynamic any files from the TAO projects.
+
 Sun Aug 27 16:02:47 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * New implementation for "Dynamic Management of Anys".  The new

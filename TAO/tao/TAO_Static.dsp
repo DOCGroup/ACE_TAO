@@ -203,34 +203,6 @@ SOURCE=.\DynamicC.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\DynAny_i.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\DynAnyC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\DynArray_i.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\DynEnum_i.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\DynSequence_i.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\DynStruct_i.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\DynUnion_i.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Environment.h
 # End Source File
 # Begin Source File
@@ -320,10 +292,6 @@ SOURCE=.\ImplRepoS.h
 # Begin Source File
 
 SOURCE=.\ImplRepoS_T.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\InconsistentTypeCodeC.h
 # End Source File
 # Begin Source File
 
@@ -831,10 +799,6 @@ SOURCE=.\DynamicC.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\DynAnyC.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\Environment.i
 # End Source File
 # Begin Source File
@@ -1295,38 +1259,6 @@ SOURCE=.\DynamicC.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\DynAny_i.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\DynAnyC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\DynAnyS.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\DynArray_i.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\DynEnum_i.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\DynSequence_i.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\DynStruct_i.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\DynUnion_i.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Encodable.cpp
 # End Source File
 # Begin Source File
@@ -1432,10 +1364,6 @@ SOURCE=.\ImplRepoS.cpp
 # Begin Source File
 
 SOURCE=.\ImplRepoS_T.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\InconsistentTypeCodeC.cpp
 # End Source File
 # Begin Source File
 
