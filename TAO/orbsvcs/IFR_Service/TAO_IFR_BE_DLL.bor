@@ -2,7 +2,11 @@
 # Makefile for building the TAO_IFR_BE_DLL library
 #
 
+!ifndef MINIMUM_CORBA
 NAME = TAO_IFR_BE_DLL
+!else
+!undef NAME
+!endif
 
 OBJFILES = \
 	$(OBJDIR)\be_global.obj \

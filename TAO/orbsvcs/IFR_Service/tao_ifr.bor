@@ -2,7 +2,11 @@
 # Makefile for building the tao_ifr executable
 #
 
+!ifndef MINIMUM_CORBA
 NAME = tao_ifr
+!else
+!undef NAME
+!endif
 
 OBJFILES = \
 	$(OBJDIR)\tao_ifr.obj \

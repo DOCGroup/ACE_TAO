@@ -2,7 +2,11 @@
 # Makefile for building the LoadBalancer Service executable
 #
 
+!ifndef MINIMUM_CORBA
 NAME = LoadBalancer_Service
+!else
+!undef NAME
+!endif
 
 OBJFILES = \
 	$(OBJDIR)\LoadBalancer_Service.obj \
