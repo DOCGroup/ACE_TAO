@@ -26,8 +26,6 @@ project(GPS_svnt) : ciao_servant {
   dynamicflags = GPS_SVNT_BUILD_DLL
 
   CIDL_Files {
-	commandflags += -I../../../../ciao -I../../../../../tao -I../../../../.. -I../../../../../orbsvcs/orbsvcs 
-  
     GPS.cidl
   }
 
