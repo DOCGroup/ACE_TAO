@@ -74,7 +74,7 @@ class ACE_Log_Msg_Manager
 public:
   static ACE_Thread_Mutex *get_lock (void);
 
-  static int open ();
+  static int open (void);
 
 #if defined (VXWORKS)
   // For keeping track of the number of tasks, so we know when to
@@ -102,20 +102,18 @@ private:
 };
 
 int
-ACE_Log_Msg_Manager::open ()
+ACE_Log_Msg_Manager::open (void)
 {
 #if !defined (VXWORKS)
   if (ACE_Log_Msg_Manager::instances_ == 0)
-    {
-      ACE_NEW_RETURN_I (ACE_Log_Msg_Manager::instances_, ACE_Log_Msg_Set, 0);
-    }
+    ACE_NEW_RETURN_I (ACE_Log_Msg_Manager::instances_, ACE_Log_Msg_Set, 0);
 #endif /* ! VXWORKS */
 
   return 1;
 }
 
 void
-ACE_Log_Msg::close ()
+ACE_Log_Msg::close (void)
 {
 #if !defined (VXWORKS)
   // Please note that this will be called by a statement that is
