@@ -49,6 +49,14 @@ Sun Aug 22 09:53:00 UTC 2004  Martin Corino <mcorino@remedy.nl>
           Changed to remove compile warning resulting from bad use
           of ACE_UNUSED_ARG().
 
+Fri Aug 20 15:29:29 MST 2004  Trevor Fields  <fields_t@ociweb.com>
+
+         * bin/auto_run_tests.pl:
+         * tests/run_test.pl:
+           Changed the run test scripts to time the execution
+           and print test finished messages.  This for the
+           generation of statistics.
+
 Fri Aug 20 15:10:08 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* bin/MakeProjectCreator/config/core.mpb:
