@@ -80,7 +80,7 @@ void IORTable::AlreadyBound::_raise ()
 }
 
 void IORTable::AlreadyBound::_tao_encode (
-    TAO_OutputCDR &cdr,
+    TAO_OutputCDR &,
     CORBA::Environment &ACE_TRY_ENV
   ) const
 {
@@ -88,7 +88,7 @@ void IORTable::AlreadyBound::_tao_encode (
 }
 
 void IORTable::AlreadyBound::_tao_decode (
-    TAO_InputCDR &cdr,
+    TAO_InputCDR &,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
@@ -154,7 +154,7 @@ void IORTable::NotFound::_raise ()
 }
 
 void IORTable::NotFound::_tao_encode (
-    TAO_OutputCDR &cdr,
+    TAO_OutputCDR &,
     CORBA::Environment &ACE_TRY_ENV
   ) const
 {
@@ -162,7 +162,7 @@ void IORTable::NotFound::_tao_encode (
 }
 
 void IORTable::NotFound::_tao_decode (
-    TAO_InputCDR &cdr,
+    TAO_InputCDR &,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
