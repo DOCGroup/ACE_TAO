@@ -66,7 +66,7 @@ private:
 
 private:
   /// A stream representing our current output.
-  ostream * output_;
+  FILE * output_;
   bool close_out_;
 
   /// the name of the output file

@@ -182,7 +182,7 @@ SendEvents (void)
 
       ACE_TRY_NEW_ENV
         {
-cout << "Sending events" << endl;
+          ACE_OS::fprintf (stdout, "Sending events\n");
           supplier_1->send_events(events ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
