@@ -1,22 +1,35 @@
+Tue Oct 26 10:02:26 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Completion_Handler.h:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Profile.h:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Transport.h:
+
+          Changed the include path to fix compile errors.
+
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Endpoint.cpp:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Profile.cpp:
+
+          Added include of ace/os_include/os_netdb.h to get MAXHOSTNAMELEN.
+
 Mon Oct 25 23:19:41 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/DsLogAdmin.mpc:
+        * orbsvcs/orbsvcs/DsLogAdmin.mpc:
 
-	  Changed DsLogAdmin_Serv project to omit Log/PersistantStore.cpp.
-	  As of this writing, there is no way to configure the logging
-	  service to use the persistant version of the log record store,
-	  so it only serves to bloat the shared library/DLL.
+          Changed DsLogAdmin_Serv project to omit Log/PersistantStore.cpp.
+          As of this writing, there is no way to configure the logging
+          service to use the persistant version of the log record store,
+          so it only serves to bloat the shared library/DLL.
 
-	* orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
-	* orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.h:
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.h:
 
-	  Changed hash map to store Any_var's instead of Any pointers to
-	  avoid memory leak.
+          Changed hash map to store Any_var's instead of Any pointers to
+          avoid memory leak.
 
-	* orbsvcs/orbsvcs/Log/Log_i.cpp:
+        * orbsvcs/orbsvcs/Log/Log_i.cpp:
 
-	  Changed TAO_Log_i::remove_old_records() to return if
-	  max_record_life_ == 0, which indicates infinite lifetime.
+          Changed TAO_Log_i::remove_old_records() to return if
+          max_record_life_ == 0, which indicates infinite lifetime.
 
 Mon Oct 25 23:30:26 2004  Phil Mesnier  <mesnier_p@ociweb.com>
 
@@ -37,26 +50,26 @@ Mon Oct 25 23:13:31 2004  Phil Mesnier  <mesnier_p@ociweb.com>
 
 Mon Oct 25 14:18:26 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tao\RTCORBA\RT_ORBInitializer.cpp:
+        * tao\RTCORBA\RT_ORBInitializer.cpp:
 
-	  Fixed the <rt_poa_factory_name_> and the
-	  <rt_poa_factory_directive_> from "TAO_RT_POA" to
-	  "TAO_RT_Object_Adapter_Factory".
+          Fixed the <rt_poa_factory_name_> and the
+          <rt_poa_factory_directive_> from "TAO_RT_POA" to
+          "TAO_RT_Object_Adapter_Factory".
 
-	* tao\ORB_Core.cpp:
+        * tao\ORB_Core.cpp:
 
-	  Fixed the <poa_factory_name_> and the <poa_factory_directive_>
-	  from "TAO_POA" to "TAO_Object_Adapter_Factory".
+          Fixed the <poa_factory_name_> and the <poa_factory_directive_>
+          from "TAO_POA" to "TAO_Object_Adapter_Factory".
 
         * tao/PortableServer/Object_Adapter.cpp:
 
           Service name of TAO_Object_Adapter_Factory was changed from
-	  "PortableServer" to "TAO_Object_Adapter_Factory".
+          "PortableServer" to "TAO_Object_Adapter_Factory".
 
         * tao/RTPortableServer/RT_Object_Adapter_Factory.cpp:
 
           Service name of TAO_RT_Object_Adapter_Factory was changed from
-	  "RTPortableServer" to "TAO_RT_Object_Adapter_Factory".
+          "RTPortableServer" to "TAO_RT_Object_Adapter_Factory".
 
 Mon Oct 25 12:48:37 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
