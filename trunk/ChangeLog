@@ -1,3 +1,8 @@
+Tue Nov 30 09:51:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/ACE.inl:
+          Implemented temporary fix for problems with VxWorks GNU toolchains.
+
 Mon Nov 29 17:56:39 2004  Steve Huston  <shuston@riverace.com>
 
 	* tests/Test_Output.cpp: Re this change:
