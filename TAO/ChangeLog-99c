@@ -108,6 +108,9 @@ Mon Sep 13 08:34:30 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	  Cosmetic changes and correction of comments pasted in
 	  unmodified from another file.
 
+	  Thanks to Lars Immisch <lars@ibp.de> for pointing out
+	  the failure on sequences of arrays.
+
 Sun Sep 12 19:25:58 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * TAO version 1.0.4 released.
