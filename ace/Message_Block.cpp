@@ -1061,13 +1061,13 @@ ACE_Dynamic_Message_Strategy::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("static_bit_field_mask_ = %lu\n")
-              ASYS_TEXT ("static_bit_field_shift_ = %lu\n")
-              ASYS_TEXT ("dynamic_priority_max_ = %lu\n")
-              ASYS_TEXT ("dynamic_priority_offset_ = %lu\n")
-              ASYS_TEXT ("max_late_ = [%ld sec, %ld usec]\n")
-              ASYS_TEXT ("min_pending_ = [%ld sec, %ld usec]\n")
-              ASYS_TEXT ("pending_shift_ = [%ld sec, %ld usec]\n"),
+              ASYS_TEXT ("static_bit_field_mask_ = %u\n")
+              ASYS_TEXT ("static_bit_field_shift_ = %u\n")
+              ASYS_TEXT ("dynamic_priority_max_ = %u\n")
+              ASYS_TEXT ("dynamic_priority_offset_ = %u\n")
+              ASYS_TEXT ("max_late_ = [%d sec, %d usec]\n")
+              ASYS_TEXT ("min_pending_ = [%d sec, %d usec]\n")
+              ASYS_TEXT ("pending_shift_ = [%d sec, %d usec]\n"),
               this->static_bit_field_mask_,
               this->static_bit_field_shift_,
               this->dynamic_priority_max_,
