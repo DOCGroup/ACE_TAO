@@ -1621,7 +1621,7 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
     ACE_OS::strcmp (e->get_string (), "CORBA") == 0;
 
   // Iterate over this scope.
-  for (UTL_ScopeActiveIterator i (this, UTL_Scope::IK_both);
+  for (UTL_ScopeActiveIterator i (this, UTL_Scope::IK_decls);
        !i.is_done ();
        i.next ())
     {

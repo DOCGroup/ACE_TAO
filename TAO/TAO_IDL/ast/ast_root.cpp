@@ -230,7 +230,7 @@ AST_Root::destroy ()
       
       if (d->node_type () == AST_Decl::NT_pre_defined)
         {
-          j = i;
+          j = i + 1;
           break;
         }
 
