@@ -22,7 +22,7 @@
 // Normal typedef'd sequence
 module Not_Anon
 {
-  typedef sequence<short > short_seq;
+  typedef sequence<short> short_seq;
 };
 
 // Array is typedef'd, but sequence is not

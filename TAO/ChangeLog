@@ -1,3 +1,20 @@
+Sat Nov 29 11:13:06 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_traits.cpp (visit_array):
+        
+          Added logic to insert an underscore prefix in the last
+          component of the scoped array name and array slice name,
+          if the array is fully anonymous, meaning not in the 
+          case where it is a typedef of an anonymous sequence member.
+          
+        * TAO_IDL/be/be_visitor_array/array_ch.cpp (visit_array):
+        
+          Eliminated an unnecessary temporary local variable.
+          
+        * tests/IDL_Test/anonymous.idl:
+        
+          Cosmetic change.
+
 Sat Nov 29 09:43:09 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_traits.cpp (visit_field):
