@@ -164,7 +164,7 @@ remove_offer (const CosTrading::OfferId offer_id,
 
   if (this->remove_offer (stype,
                           index) == -1)
-    TAO_THROW_RETURN (CosTrading::UnknownOfferId (offer_id),
+    ACE_THROW_RETURN (CosTrading::UnknownOfferId (offer_id),
                       -1);
 
   return 0;
@@ -184,7 +184,7 @@ lookup_offer (const CosTrading::OfferId offer_id,
   ACE_CHECK_RETURN (offer);
 
   if ((offer = this->lookup_offer (type_name, index)) == 0)
-    TAO_THROW_RETURN (CosTrading::UnknownOfferId (offer_id), offer);
+    ACE_THROW_RETURN (CosTrading::UnknownOfferId (offer_id), offer);
 
   return offer;
 }
@@ -205,7 +205,7 @@ lookup_offer (const CosTrading::OfferId offer_id,
   ACE_CHECK_RETURN (offer);
 
   if ((offer = this->lookup_offer (type_name, index)) == 0)
-    TAO_THROW_RETURN (CosTrading::UnknownOfferId (offer_id), offer);
+    ACE_THROW_RETURN (CosTrading::UnknownOfferId (offer_id), offer);
 
   return offer;
 }
@@ -293,7 +293,7 @@ parse_offer_id (const CosTrading::OfferId offer_id,
   *start_of_type = temp;
 
   if (! TAO_Trader_Base::is_valid_identifier_name (service_type))
-    TAO_THROW (CosTrading::IllegalOfferId (offer_id));
+    ACE_THROW (CosTrading::IllegalOfferId (offer_id));
 }
 
 template <class LOCK_TYPE> CosTrading::OfferId

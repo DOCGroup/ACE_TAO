@@ -1,3 +1,14 @@
+Wed Jun 30 10:04:05 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler.h:
+	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler.cpp:
+	* orbsvcs/orbsvcs/Trader/Offer_Database.cpp: 
+	  Use ACE_THROW_SPEC and ACE_THROW instead of TAO_THROW_SPEC or
+	  TAO_THROW.
+
+	* orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp:
+	  Fixed syntax errors.
+
 Tue Jun 28 17:22:20 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils.cpp: added intermediate
