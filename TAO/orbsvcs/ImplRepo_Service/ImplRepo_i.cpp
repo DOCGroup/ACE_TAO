@@ -1415,11 +1415,11 @@ IMR_Forwarder::IMR_Forwarder (CORBA::ORB_ptr orb_ptr,
       CORBA::Object_var tmp =
         this->orb_var_->resolve_initial_references ("POACurrent",
                                                     ACE_TRY_ENV);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
 
       this->poa_current_var_ =
         PortableServer::Current::_narrow (tmp.in (), ACE_TRY_ENV);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
