@@ -163,9 +163,6 @@ Gateway::parse_args (int argc, char *argv[])
 	}
     }
   
-  // Nonblocking connects are currently broken 
-  this->event_channel_.options ().blocking_semantics_ = 1;
-
   return 0;
 }
 
