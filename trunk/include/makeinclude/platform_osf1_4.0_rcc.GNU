@@ -7,7 +7,7 @@ debug = 1
 
 CC              = rcc
 CXX             = RCC
-CFLAGS          += -D_REENTRANT -DRATIONAL
+CFLAGS          += -D_REENTRANT
 CCFLAGS         += $(CFLAGS) -nosienna
 DCFLAGS         += -g -O0
 DLD             = $(CXX)
