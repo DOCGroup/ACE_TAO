@@ -41,8 +41,8 @@ main (int argc, char *argv[])
      + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
 
   ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
-			                  priority,
-					  ACE_SCOPE_PROCESS));
+                                          priority,
+                                          ACE_SCOPE_PROCESS));
 
   int n = 50000;
   int insertion = 1;
@@ -96,8 +96,8 @@ main (int argc, char *argv[])
         ACE_TRY_CHECK;
 
         Param_Test_var param_test =
-	  TAO::Narrow_Utils<Param_Test>::unchecked_narrow (obj.in (),
-			                                   0);
+          TAO::Narrow_Utils<Param_Test>::unchecked_narrow (obj.in (),
+                                                           0);
         ACE_TRY_CHECK;
         TAO_Stub *stub = param_test->_stubobj ();
         stub->type_id = CORBA::string_dup ("IDL:Param_Test:1.0");
@@ -161,7 +161,7 @@ main (int argc, char *argv[])
         stats.dump_results ("Total", gsf);
 
         ACE_Throughput_Stats::dump_throughput ("Total",
-											                         gsf,
+                                                                                                                 gsf,
                                                test_end - test_start,
                                                stats.samples_count ());
       }
@@ -228,7 +228,7 @@ main (int argc, char *argv[])
         stats.dump_results ("Total", gsf);
 
         ACE_Throughput_Stats::dump_throughput ("Total",
-											                         gsf,
+                                                                                                                 gsf,
                                                test_end - test_start,
                                                stats.samples_count ());
       }
@@ -296,7 +296,7 @@ main (int argc, char *argv[])
         stats.dump_results ("Total", gsf);
 
         ACE_Throughput_Stats::dump_throughput ("Total",
-											                         gsf,
+                                                                                                                 gsf,
                                                test_end - test_start,
                                                stats.samples_count ());
       }
@@ -364,7 +364,7 @@ main (int argc, char *argv[])
         stats.dump_results ("Total", gsf);
 
         ACE_Throughput_Stats::dump_throughput ("Total",
-											                         gsf,
+                                                                                                                 gsf,
                                                test_end - test_start,
                                                stats.samples_count ());
       }
@@ -440,7 +440,7 @@ main (int argc, char *argv[])
         stats.dump_results ("Total", gsf);
 
         ACE_Throughput_Stats::dump_throughput ("Total",
-											                         gsf,
+                                                                                                                 gsf,
                                                test_end - test_start,
                                                stats.samples_count ());
       }
@@ -517,7 +517,7 @@ main (int argc, char *argv[])
         stats.dump_results ("Total", gsf);
 
         ACE_Throughput_Stats::dump_throughput ("Total",
-											                         gsf,
+                                                                                                                 gsf,
                                                test_end - test_start,
                                                stats.samples_count ());
       }
@@ -593,7 +593,7 @@ main (int argc, char *argv[])
         stats.dump_results ("Total", gsf);
 
         ACE_Throughput_Stats::dump_throughput ("Total",
-											                         gsf,
+                                                                                                                 gsf,
                                                test_end - test_start,
                                                stats.samples_count ());
       }
@@ -670,7 +670,7 @@ main (int argc, char *argv[])
         stats.dump_results ("Total", gsf);
 
         ACE_Throughput_Stats::dump_throughput ("Total",
-											                         gsf,
+                                                                                                                 gsf,
                                                test_end - test_start,
                                                stats.samples_count ());
       }
@@ -744,7 +744,7 @@ main (int argc, char *argv[])
         stats.dump_results ("Total", gsf);
 
         ACE_Throughput_Stats::dump_throughput ("Total",
-											                         gsf,
+                                                                                                                 gsf,
                                                test_end - test_start,
                                                stats.samples_count ());
       }
@@ -821,7 +821,7 @@ main (int argc, char *argv[])
         stats.dump_results ("Total", gsf);
 
         ACE_Throughput_Stats::dump_throughput ("Total",
-											                         gsf,
+                                                                                                                 gsf,
                                                test_end - test_start,
                                                stats.samples_count ());
       }
@@ -891,7 +891,7 @@ main (int argc, char *argv[])
         stats.dump_results ("Total", gsf);
 
         ACE_Throughput_Stats::dump_throughput ("Total",
-											                         gsf,
+                                                                                                                 gsf,
                                                test_end - test_start,
                                                stats.samples_count ());
       }
@@ -932,7 +932,7 @@ main (int argc, char *argv[])
         stats.dump_results ("Total", gsf);
 
         ACE_Throughput_Stats::dump_throughput ("Total",
-											                         gsf,
+                                                                                                                 gsf,
                                                test_end - test_start,
                                                stats.samples_count ());
       }
