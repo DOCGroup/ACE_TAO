@@ -1,3 +1,36 @@
+Thu Feb 19 10:15:00 1998  Michael Kircher <mk1@cs.wustl.edu>
+	* orbsvcs/test/Simulator:
+	  Intruduced new demo, using the Event Service as transport
+	  media for monitoring events.
+	  See orbsvcs/test/Simulator/README for more information
+	   
+          in orbsvcs/tests/Simulator:
+	     NavWeap.idl - IDL definition of the Navigation and Weapons struct
+	     ss - restart services script
+	
+	  in orbsvcs/tests/Simulator/Event_Supplier:
+	     Event_Sup.cpp - Event Supplier
+	     Event_Sup.h   - Event Supplier class definition
+	     Makefile      - Event Supplier Makefile
+	     (Event_Con.cpp, Event_Con.h - Event Consumer for testing)
+	     svc.conf - helper file
+
+	  in orbsvcs/tests/Simulator/Sim_Display:
+	    Display.java  - Simulation
+	    Display_Client.java - Main Entry point of the Simulation
+	    Display_Consumer.java - Event Consumer
+	    Display_Object.java - Interface for an Display_Object
+	    Display_Weapons.java - Implementation of an Display_Object
+	    Display_Art_Horizon.java - Implementation of an Display_Object
+	    Display_Object_Factory.java - Factory Object for Display_Objects
+	    Graph.java - Simulation
+	    Graph_Panel.java - Simulation
+	    NS_Resolve.java - Resolving the inital reference to the Naming Service
+	    Queue.java - Simulation
+	    Sim_Panel.java - Simulation
+	    Border_Panel.java - Simulation
+
+
 Wed Feb 18 22:15:06 1998  Sumedh Mungee  <sumedh@cs.wustl.edu>
 
 	* tao/tao_util.cpp,h: Updated class to include a constructor so

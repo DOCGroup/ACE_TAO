@@ -1,0 +1,48 @@
+//
+// $Id$
+//
+
+
+// = TITLE
+//    Navigation and Weapon structs for the Boing DOVE/EventService demo
+//
+// = DESCRIPTION
+
+
+struct Navigation {
+	long position_latitude;
+	long position_longitude;
+	unsigned long altitude;
+	long heading;
+	long roll;
+	long pitch;
+	// common part
+	double utilitzation;
+	double overhead;
+	unsigned long arrival_time;
+	unsigned long deadline_time;
+	unsigned long dispatch_time;	
+};
+
+
+struct Weapon {
+        string identifier;
+        unsigned long status;
+        };
+
+struct Weapons {
+	unsigned long number_of_weapons;
+	Weapon weapon1;
+	Weapon weapon2;
+	Weapon weapon3;
+	Weapon weapon4;
+	Weapon weapon5;
+	// common part
+	double utilitzation;
+	double overhead;
+	unsigned long arrival_time;
+	unsigned long deadline_time;
+	unsigned long dispatch_time;		
+}; 
+
+
