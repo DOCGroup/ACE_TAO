@@ -12,6 +12,11 @@
 
 #include "ace/config-sunos5.5.h"
 
+#if defined(__GNUC__) && __GNUC__ >= 2 && __GNUC_MINOR__ >= 95
+// gcc-2.95 fixes this problem for us!
+#undef ACE_HAS_STL_QUEUE_CONFLICT
+#endif /* __GNUC__ */
+
 #if (defined(_POSIX_C_SOURCE) && _POSIX_C_SOURCE >= 199506L) || \
     defined (__EXTENSIONS__)
 # define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
@@ -24,7 +29,7 @@
 // SunOS 5.6 has AIO calls.
 #define ACE_HAS_AIO_CALLS
 
-// Sunos 5.6's aio_* with RT signals is broken.  
+// Sunos 5.6's aio_* with RT signals is broken.
 #define ACE_POSIX_AIOCB_PROACTOR
 
 // SunOS 5.6 has a buggy select
