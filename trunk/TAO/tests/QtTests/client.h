@@ -9,7 +9,7 @@
 //   client.h
 //
 // = AUTHOR
-//   Balachandran  Natarajan <bala@cs.wustl.edu>
+//   Balachandran Natarajan <bala@cs.wustl.edu>
 //
 // ============================================================================
 
