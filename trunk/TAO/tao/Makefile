@@ -101,11 +101,6 @@ include $(TAO_ROOT)/taoconfig.mk
 #	Local targets (and local hacks)
 #----------------------------------------------------------------------------
 
-#### Don't regenerate %[CS].* files using TAO's IDL compiler.  Instead,
-#### always use what's in our CVS repository, or in the TAO distribution.
-%S.h %C.h %S.i %C.i %S.cpp %C.cpp: %.idl
-	@touch $@
-
 ifeq ($(shared_libs),)
   override fakesvcconf = 1
 endif # ($(shared_libs),)
