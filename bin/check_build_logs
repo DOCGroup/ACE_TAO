@@ -1,0 +1,98 @@
+eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
+    & eval 'exec perl -S $0 $argv:q'
+    if 0;
+
+# $Id$
+#
+# Reviews build logs and reports problems, via stdout or mail.
+
+$usage="$0 [-l log directory] [-m mail recipient(s)]\n";
+
+####
+#### Configuration parameters.
+####
+$find = 'find';
+$mail = 'mail';
+
+$ostype = $ENV{'OSTYPE'}  ||  `/bin/uname -s`;
+if ( "$ostype" =~ /(solaris)|(SunOS)/i ) {
+  $find = '/pkg/gnu/bin/find';
+  $mail = 'mailx';
+}
+
+
+$log_directory = '/project/danzontmp/levine/build-logs';
+$mail_recipients = '';
+
+####
+#### Process command line args.
+####
+foreach my $arg (@ARGV) {
+  if ($arg eq '-l') {
+    if ( $ARGV[1] =~ /^[\da-zA-Z]+$/ ) {
+      $log_directory = $ARGV[1];
+      shift;
+    } else {
+      print STDERR "$0:  must provide argument for -l option\n";
+      die $usage;
+    }
+    shift;
+  } elsif ($arg eq '-m') {
+    if ( $ARGV[1] =~ /^[\da-zA-Z]+$/ ) {
+      $mail_recipients = $ARGV[1];
+      shift;
+    } else {
+      print STDERR "$0:  must provide argument for -m option\n";
+      die $usage;
+    }
+    shift;
+  } elsif ($arg eq '-?') {
+    print "$usage";
+    exit;
+  } else {
+    print "$usage";
+    exit;
+  }
+}
+
+
+####
+#### Find the log files.
+####
+chdir $log_directory  ||
+  die "$0: unable to cd to \"$log_directory\"\n";
+
+($log_files = ( `$find . -name '*.log' -daystart -ctime 0 -print` )) =~
+  tr [\n] [ ];
+
+
+####
+#### Grep the log files for problems.
+####
+@output = ();
+open (EGREP, "egrep -n \'Error|errors|[^a][Ss]top|No rule to make|\(undefined symb\)|[Ww]arn|not exist|core dumped|: #[0-9]|cxx:\' $log_files |")  ||
+  die "$0: unable to open egrep\n";
+while (<EGREP>) {
+  push @output, $_;
+}
+close EGREP;
+
+
+####
+#### Produce output, if there were any problems.
+####
+if ($#output > -1) {
+
+  if ("$mail_recipients") {
+    open (MAIL, "| $mail -s 'ACE+TAO build results' $mail_recipients")  ||
+      die "$0: unable to open pipe to $mail\n";
+    select MAIL;
+  }
+
+  print "This is an automatically generated message.\n\n";
+  print "Log files are in $log_directory.\n\n";
+
+  print @output;
+
+  close MAIL if "$mail_recipients";
+}
