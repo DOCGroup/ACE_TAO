@@ -1,5 +1,4 @@
-// This	may look like C, but it's really -*- C++ -*-
-// $Id$
+// This may look like C, but it's really -*- C++ -*-
 // ===================================================================
 /**
  *  @file   SHMIOP_Transport.h
@@ -68,10 +67,10 @@ public:
 
   virtual int idle (void);
 
-  /// Write the	complete Message_Block chain to	the connection.
-  virtual ssize_t send (const ACE_Message_Block	*mblk,
-			const ACE_Time_Value *s	= 0,
-			size_t *bytes_transferred = 0);
+  /// Write the complete Message_Block chain to the connection.
+  virtual ssize_t send (iovec *iov, int iovcnt,
+                        size_t &bytes_transferred,
+                        const ACE_Time_Value *timeout = 0);
 
   /// Read len bytes from into buf.
   virtual ssize_t recv (char *buf,

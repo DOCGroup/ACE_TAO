@@ -1,5 +1,11 @@
 // $Id$
 
+ACE_INLINE CORBA::ULong
+TAO_Transport::tag (void) const
+{
+  return this->tag_;
+}
+
 ACE_INLINE TAO_ORB_Core *
 TAO_Transport::orb_core (void) const
 {
@@ -19,12 +25,7 @@ TAO_Transport::wait_strategy (void) const
   return this->ws_;
 }
 
-ACE_INLINE CORBA::ULong
-TAO_Transport::tag (void) const
-{
-  return this->tag_;
-}
-
+#if 0
 ACE_INLINE long
 TAO_Transport::buffering_timer_id (void) const
 {
@@ -77,6 +78,19 @@ TAO_Transport::dequeue_head (void)
   message_block->release ();
 }
 
+ACE_INLINE void
+TAO_Transport::dequeue_all (void)
+{
+  // Flush all queued messages.
+  if (this->buffering_queue_)
+    {
+      while (!this->buffering_queue_->is_empty ())
+        this->dequeue_head ();
+    }
+}
+
+#endif /* 0 */
+
 ACE_INLINE int
 TAO_Transport::bidirectional_flag (void) const
 {
@@ -87,15 +101,4 @@ ACE_INLINE void
 TAO_Transport::bidirectional_flag (int flag)
 {
   this->bidirectional_flag_ = flag;
-}
-
-ACE_INLINE void
-TAO_Transport::dequeue_all (void)
-{
-  // Flush all queued messages.
-  if (this->buffering_queue_)
-    {
-      while (!this->buffering_queue_->is_empty ())
-        this->dequeue_head ();
-    }
 }

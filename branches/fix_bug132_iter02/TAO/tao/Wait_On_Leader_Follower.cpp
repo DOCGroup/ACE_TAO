@@ -36,7 +36,9 @@ TAO_Wait_On_Leader_Follower::sending_request (TAO_ORB_Core *orb_core,
   // Register the handler.
   // @@ We could probably move this somewhere else, and remove this
   //    function totally. (Alex).
-  this->transport_->register_handler ();
+  // @@ The handler is registered already, when the connection is
+  //    created!
+  // this->transport_->register_handler ();
 
   // Send the request.
   return this->TAO_Wait_Strategy::sending_request (orb_core,

@@ -1,16 +1,262 @@
+Tue Mar  6 11:02:43 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * Merged in changes from the fix_bug132 branch.  I need several
+          bug fixes from the main trunk.  In my experience the easiest way
+          to do this is to create a new branch higher up in the main
+          trunk, close the old branch and propagate its changes to the new
+          one.
+          In this case we created fix_bug132_iter02 (today) merge the
+          changes from fix_bug132 into that branch, and close fix_bug132.
+
+        Mon Mar  5 11:32:14 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Transport.cpp:
+        * tao/IIOP_Transport.cpp:
+          Add debugging messages
+
+        * tests/LongWrites/Makefile:
+          Updates dependencies and object files for the client.
+
+        Fri Mar 02 15:29:17 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Transport.h:
+        * tao/Transport.cpp:
+          Continue implementation of reactive output.
+          On this pass I fixed the code to deal with several error
+          conditions, invoke schedule_output() if the connection returns
+          an EWOULDBLOCK, also cancel the output if there is no data to
+          send.
+          Fix syncronization on send_queued_message()
+          Fix memory allocation for message blocks contained in
+          Queued_Message, they cannot be cloned() because that would
+          allocate from TSS.
+
+        * tao/IIOP_Transport.h:
+        * tao/IIOP_Transport.cpp:
+          Implement schedule_output() and cancel_output() methods.
+
+        * tao/Wait_On_Leader_Follower.cpp:
+          Do not re-insert the transport into the reactor on each wait,
+          once is enough.
+
+        * tao/IIOP_Connection_Handler.h:
+        * tao/IIOP_Connection_Handler.cpp:
+          Implement a handle_output() callback, delegate on the
+          TAO_Transport
+
+        * tao/IIOP_Endpoint.cpp:
+          Remove unused #include
+
+        * tests/LongWrites/Coordinator.h:
+        * tests/LongWrites/Coordinator.cpp:
+        * tests/LongWrites/Receiver.h:
+        * tests/LongWrites/Receiver.cpp:
+        * tests/LongWrites/Sender.h:
+        * tests/LongWrites/Sender.cpp:
+        * tests/LongWrites/client.cpp:
+        * tests/LongWrites/client.dsp:
+        * tests/LongWrites/run_test.pl:
+        * tests/LongWrites/server.cpp:
+        * tests/LongWrites/svc.conf:
+        * tests/LongWrites/Sender_Task.h:
+        * tests/LongWrites/Sender_Task.cpp:
+          Add support for multi-threaded clients.
+          Try to count the number of incoming messages and only exit when
+          all have been received.
+
+        * tests/Queued_Message_Test/Queued_Message_Test.dsp:
+          Removed a number of unused files from this unit test.
+
+        Sun Feb 25 10:22:59 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Queued_Message.h:
+        * tao/Queued_Message.cpp:
+        * tao/Transport.cpp:
+          Instead of releasing the message blocks as soon as possible we
+          delay until the queued message is deallocated.  This will make
+          it possible to release all the data in the same thread that
+          allocated it, preserving the support for TSS allocators.
+
+        * tests/LongWrites/Test.idl:
+        * tests/LongWrites/Receiver.h:
+        * tests/LongWrites/Receiver.cpp:
+        * tests/LongWrites/Sender.h:
+        * tests/LongWrites/Sender.cpp:
+        * tests/LongWrites/client.cpp:
+        * tests/LongWrites/run_test.pl:
+          The test can now send big oneways, big twoways and big twoways
+          with big responses.
+
+        Wed Feb 14 18:38:11 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Queued_Message.cpp:
+          Fixed queue manipulation logic
+
+        * tests/Queued_Message_Test/Queued_Message_Test.cpp:
+          The test was miscounting remove operations from the queue.
+
+        * tests/Queued_Message_Test/Queued_Message_Test.dsw:
+        * tests/Queued_Message_Test/Queued_Message_Test.dsp:
+          Add MSVC project files.
+
+        Wed Feb 14 10:02:44 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Queued_Message.h:
+        * tao/Queued_Message.cpp:
+          Add flag to control message block ownership, used to minimize
+          memory allocations.
+
+        * tao/Transport.cpp:
+          Use the ownership flags for the Queued_Message.
+
+        * tests/Makefile:
+        * tests/Queued_Message_Test/Makefile:
+        * tests/Queued_Message_Test/Queued_Message_Test.cpp:
+          Add new unit test for the TAO_Queued_Message class.
+
+        * tao/Makefile:
+        * tao/Domain/Makefile:
+        * tao/DynamicAny/Makefile:
+        * tao/DynamicInterface/Makefile:
+        * tao/IFR_Client/Makefile:
+          Update dependencies
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+          The ACE_SSL_SOCK_Stream does not support sendv()
+
+        Mon Feb 12 15:44:54 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Makefile:
+          Update makefile to include new files
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+        * tao/Strategies/SHMIOP_Transport.h:
+        * tao/Strategies/SHMIOP_Transport.cpp:
+        * tao/Strategies/UIOP_Transport.h:
+        * tao/Strategies/UIOP_Transport.cpp:
+          Fixed all protocols to use the new send() method with iovec
+          parameters.
+
+        * tao/GIOP_Message_Lite.cpp:
+          Use the send() method with iovec arguments.
+
+        * tao/Sync_Strategies.h:
+        * tao/Sync_Strategies.cpp:
+        * tao/Transport.cpp:
+          More cleanup for the Sync_Strategies, the must_queue() method
+          does not require a Stub argument.
+
+        Mon Feb 12 10:15:47 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Transport.h:
+        * tao/Transport.cpp:
+          Add new method to send a message block chain.
+          The template method to send data takes an iovec argument.
+
+        * tao/IIOP_Transport.h:
+        * tao/IIOP_Transport.cpp:
+          Implement the iovec-based send() template method.
+
+        * tao/Queued_Message.cpp:
+          The cleanup code was broken.
+
+        * tao/GIOP_Message_Base.cpp:
+          Use the message block chain method to send short critical
+          messages.
+
+        Fri Feb 09 10:50:47 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Queued_Message.h:
+        * tao/Queued_Message.inl:
+        * tao/Queued_Message.cpp:
+          Add new class to represent a queued message in the outgoing
+          path.  This class has to keep more than just the message block,
+          it also takes care of timeouts and signaling any waiting thread
+          when the message is sent.
+
+        * tao/Message_Sent_Callback.h:
+        * tao/Message_Sent_Callback.inl:
+        * tao/Message_Sent_Callback.cpp:
+          Define interface to signal threads waiting for a message to be
+          sent out, e.g. twoway requests blocked waiting for a queued
+          message.
+
+        * tao/Flushing_Strategy.h:
+        * tao/Flushing_Strategy.cpp:
+        * tao/Block_Flushing_Strategy.h:
+        * tao/Block_Flushing_Strategy.cpp:
+        * tao/Reactive_Flushing_Strategy.h
+        * tao/Reactive_Flushing_Strategy.cpp:
+          New classes to control how the outgoing data is flushed,
+          either by blocking on write() or by using the reactor.
+
+        * tao/Resource_Factory.h:
+        * tao/default_resource.h:
+        * tao/default_resource.cpp:
+          Add new methods to create the flushing strategy.
+
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.i:
+        * tao/ORB_Core.cpp:
+          Add accessor for the flushing strategy.  Notice that the
+          strategy is stateless so a single instance (per-ORB) is needed.
+
+        * tao/Sync_Strategies.h:
+        * tao/Sync_Strategies.cpp:
+          The Sync_Strategies have been simplified.  They are now
+          stateless, and they only need to answer a couple of questions
+          (1) should a message be buffered, (2) should the ORB flush a
+          queue.
+
+        * performance-tests/Latency/st_client.cpp:
+          Destroy the ORB on shutdown.
+
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
+          Add the new files to the TAO project files.
+
+        * tao/Transport.h:
+        * tao/Transport.inl:
+        * tao/Transport.cpp:
+          Move much of the functionality of sending and outgoing message
+          queue up to the base transport class.  Remove a lot of code
+          deailing with the previous (blocking) queues.
+
+        * tao/IIOP_Transport.cpp:
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/Strategies/SHMIOP_Transport.cpp:
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp:
+        * tao/Strategies/UIOP_Transport.cpp:
+        * tao/Strategies/UIOP_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+          Change the transport and connection handlers to use the new
+          outgoing message queue, the flushing strategy and the changes to
+          the SyncStrategy.
+
+        * tao/GIOP_Message_Base.cpp:
+          Propagate a few interface changes.
+
+        * tests/LongWrites/LongWrites.dsw:
+        * tests/LongWrites/client.dsp:
+        * tests/LongWrites/server.dsp:
+        * tests/LongWrites/run_test.pl:
+          Got the test to compile (and run) under NT.
+
 Tue Mar  6 11:49:37 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Handler.cpp (is_message_ready): 
-	* tao/GIOP_Message_Base.cpp: Made a pass through the code and
-	  fixed a few ACE_DEBUG statements and HEXDUMP statements. Thanks
-	  to Johnny.Willemsen <jwillemsen@mego.nl> for pointing these
-	  out. 
+        * tao/GIOP_Message_Handler.cpp (is_message_ready):
+        * tao/GIOP_Message_Base.cpp: Made a pass through the code and
+          fixed a few ACE_DEBUG statements and HEXDUMP statements. Thanks
+          to Johnny.Willemsen <jwillemsen@mego.nl> for pointing these
+          out.
 
 Tue Mar 06 10:58:15 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
-	* examples/PluggableUDP/tests/client.dsp:
-	* examples/PluggableUDP/tests/server.dsp:
-	  Removed unnecessary libraries in Windows release builds.
+        * examples/PluggableUDP/tests/client.dsp:
+        * examples/PluggableUDP/tests/server.dsp:
+          Removed unnecessary libraries in Windows release builds.
 
 Tue Mar 06 08:29:28 2001  Carlos O'Ryan  <coryan@uci.edu>
 
