@@ -120,7 +120,8 @@ TAO_PropertySetFactory::create_constrained_propertyset (const CosPropertyService
                                                         CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_PropertySet<POA_CosPropertyService::PropertySet> *new_set = 0;
-  
+  CosPropertyService::PropertySet_ptr propset_ptr = 0;
+
   ACE_TRY
     {
       // New a TAO_PropertySet using these constraints.
@@ -136,12 +137,9 @@ TAO_PropertySetFactory::create_constrained_propertyset (const CosPropertyService
       this->propertyset_products_.length (products_len + 1);
       this->propertyset_products_[products_len] = new_set;
 
-      // All done. Return the pointer.
-      CosPropertyService::PropertySet_ptr propset_ptr =
-        new_set->_this (ACE_TRY_ENV);
+      // All done.
+      propset_ptr = new_set->_this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
-      return propset_ptr;
     }
   ACE_CATCH (CORBA::UserException, ex)
     {
@@ -161,8 +159,8 @@ TAO_PropertySetFactory::create_constrained_propertyset (const CosPropertyService
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
-  // To aviod compiler warnings.
-  return 0;
+  
+  return propset_ptr;
 }
 
 // Allows a client to create a new TAO_PropertySet with specific
@@ -173,6 +171,7 @@ TAO_PropertySetFactory::create_initial_propertyset (const CosPropertyService::Pr
                                                     CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_PropertySet<POA_CosPropertyService::PropertySet> *new_set = 0;
+  CosPropertyService::PropertySet_ptr propset_ptr = 0;
 
   ACE_TRY
     {
@@ -188,12 +187,9 @@ TAO_PropertySetFactory::create_initial_propertyset (const CosPropertyService::Pr
       this->propertyset_products_.length (products_len + 1);
       this->propertyset_products_[products_len] = new_set;
 
-      // All done. Return the pointer.
-      CosPropertyService::PropertySet_ptr propset_ptr =
-        new_set->_this (ACE_TRY_ENV);
+      // All done.
+      propset_ptr = new_set->_this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
-      return propset_ptr;
     }
   ACE_CATCH (CosPropertyService::MultipleExceptions, ex)
     {
@@ -213,8 +209,8 @@ TAO_PropertySetFactory::create_initial_propertyset (const CosPropertyService::Pr
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
-  // To aviod compiler warnings.
-  return 0;
+
+  return propset_ptr;
 }
 
 // Destructor.
@@ -262,7 +258,8 @@ TAO_PropertySetDefFactory::create_constrained_propertysetdef (const CosPropertyS
                                                               CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_PropertySetDef *new_set = 0;
-
+  CosPropertyService::PropertySetDef_ptr propsetdef_ptr = 0;
+  
   ACE_TRY
     {
       // New a TAO_PropertySetDef using these constraints.
@@ -279,11 +276,8 @@ TAO_PropertySetDefFactory::create_constrained_propertysetdef (const CosPropertyS
       this->propertysetdef_products_[products_len] = new_set;
 
       // All done. Return the pointer.
-      CosPropertyService::PropertySetDef_ptr propsetdef_ptr = 
-        new_set->_this (ACE_TRY_ENV);
+      propsetdef_ptr = new_set->_this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
-      return propsetdef_ptr;
     }
   ACE_CATCH (CORBA::UserException, ex)
     {
@@ -303,8 +297,8 @@ TAO_PropertySetDefFactory::create_constrained_propertysetdef (const CosPropertyS
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
-  // To aviod compiler warnings.
-  return 0;
+  
+  return propsetdef_ptr;
 }
 
 // Allows the client to create a new TAO_PropertySetDef with specific
@@ -315,6 +309,7 @@ TAO_PropertySetDefFactory::create_initial_propertysetdef (const CosPropertyServi
                                                           CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_PropertySetDef *new_set = 0;
+  CosPropertyService::PropertySetDef_ptr propsetdef_ptr = 0;
 
   ACE_TRY
     {
@@ -330,12 +325,9 @@ TAO_PropertySetDefFactory::create_initial_propertysetdef (const CosPropertyServi
       this->propertysetdef_products_.length (products_len + 1);
       this->propertysetdef_products_[products_len] = new_set;
 
-      // All done. Return the pointer.
-      CosPropertyService::PropertySetDef_ptr propsetdef_ptr = 
-        new_set->_this (ACE_TRY_ENV);
+      // All done.
+      propsetdef_ptr = new_set->_this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
-      return propsetdef_ptr;
     }
   ACE_CATCH (CosPropertyService::MultipleExceptions, ex)
     {
@@ -355,9 +347,10 @@ TAO_PropertySetDefFactory::create_initial_propertysetdef (const CosPropertyServi
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
-  // To aviod compiler warnings.
-  return 0;
+  
+  return propsetdef_ptr;
 }
+
 // Makes default sized hash_table_.
 
 TAO_PropertySetDef::TAO_PropertySetDef (void)
