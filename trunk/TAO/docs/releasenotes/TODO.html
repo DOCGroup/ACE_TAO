@@ -309,14 +309,15 @@
 	    <BR>[DONE]
 	  <P></LI>
 
-	  <LI>The IDL compiler should be able to generate the
+	  <LI><B>IDL Compiler:</B>The IDL compiler should be able to
+            generate the 
 	    alternative mapping, but with the TSS default for the env
 	    argument.
 	    <BR>[DONE]
 	  <P></LI>
 
-	  <LI>The IDL compiler should generate the standard mapping,
-	    without the environment argument.
+	  <LI><B>IDL Compiler:</B>The IDL compiler should generate the
+            standard mapping, without the environment argument.
 	  <P></LI>
 	  
 	  <LI>In general we will need to complete and debug the
@@ -441,22 +442,19 @@ class POA_Foo {
 	number of calls to ORB_Core_instance()
       <P></LI>
  
-      <LI>The TypeCode internal (private) state needs locking, double
-	checked locking is needed to avoid excessive overhead, there
-	is potential for memory leaks if this locking is not used.
-      <P></LI>
-
-      <LI>IDL compiler front-end should be case insensitive,
-	actually it should flag identifiers that only differ by case
-	as a conflict and verify that all uses of an identifier have
-	the same case.
+      <LI><B>IDL Compiler:</B> The IDL compiler front-end should be
+        case insensitive,
+	more precisely it should flag identifiers that only differ by
+        case as a conflict and verify that all uses of an identifier
+        have the same case.
       <P></LI>
 
       <LI>The operation tables do not need to be statics, they could
 	be created on creation of the first servant of that type.
       <P></LI>
       
-      <LI>Support for unions with default cases (implicit or explicit)
+      <LI><B>IDL Compiler:</B>Support for unions with default cases
+        (implicit or explicit)
 	in the IDL compiler is incomplete.
       <P></LI>
 
@@ -464,14 +462,16 @@ class POA_Foo {
 	connector.
       <P></LI>
 
-      <LI>Support for the fixed data type in the IDL compiler
+      <LI><B>IDL Compiler:</B>Support for the <CODE>fixed</CODE> data
+        type in the IDL compiler 
       <P></LI>
 
-      <LI>CDR stream support for wchar is flaky or at least untested.
+      <LI>CDR stream support for <CODE>wchar</CODE> is flaky or at
+        least untested.
       <P></LI>
 
-      <LI>Add a corbafwd.h header file to eliminate the deep (and
-	recursive) header dependencies in TAO.
+      <LI>Add a <CODE>corbafwd.h</CODE> header file to eliminate the
+        deep (and recursive) header dependencies in TAO.
       <P></LI>
 
       <LI>Add &lt&lt and &gt&gt operators to the
@@ -488,17 +488,21 @@ class POA_Foo {
 	is missing.
       <P></LI>
 
-      <LI><P>The IDL compiler could generate files with empty
+      <LI><P><B>IDL Compiler:</B>The IDL compiler could generate files
+          with empty 
 	  implementation classes, just to make the life of implementors
-	  a bit easier.</P>
+	  a bit easier.
+        </P>
       </LI>
 
       <LI>Prepare the 1.0 release:<P>
 	<OL>
 	  <LI>Integrate the compiled marshalling approach.
+            <BR>[STATUS] Andy has made great progress on this. 
 	  </LI>
 	  <LI>Verify the GPERF is working in all the relevant
 	    platforms.
+            <BR>[STATUS] As far as we know it is working correctly.
 	  </LI>
 	  <LI>Integrate active demux of operations?
 	  </LI>
@@ -538,11 +542,11 @@ class POA_Foo {
 	</P>
       </LI>
 
-      <LI>The IDL compiler could generate a static method to access
-	the interface repository ID of a class.
+      <LI><B>IDL Compiler:</B> The IDL compiler could generate a static
+        method to access the interface repository ID of a class.
       <P></LI>
 
-      <LI>The IDL compiler should support
+      <LI><B>IDL Compiler:</B> The IDL compiler should support
 	<CODE>#include "orb.idl"</CODE> properly.
 	IMHO it should not
 	add any <CODE>#include</CODE> to the generated code and the
@@ -571,8 +575,8 @@ class POA_Foo {
 	definitions.
       <P></LI>
 
-      <LI>Resolve the Typecode::equal dilemma: is it structural or
-	type equivalence? Or a mixin?
+      <LI>Resolve the <CODE>Typecode::equal</CODE> dilemma: is it
+        structural or type equivalence? Or a mixin?
 	<BR>[STATUS] The correct interpretation seems to be:
 	<UL>
 	  <LI>If the interface repository ID is not present and/or the
@@ -589,8 +593,9 @@ class POA_Foo {
 	</UL>
       <P></LI>
 
-      <LI><P>The methods on the server side <B>must</B> have a throw
-	  spec, check CORBA 2.2, 20.35</P>
+      <LI><P><B>IDL Compiler:</B> The methods on the server side
+          <B>must</B> have a throw spec, check CORBA 2.2, 20.35
+        </P>
       </LI>
 
       <LI><P>According to Vinoski and Henning the
@@ -619,7 +624,8 @@ class POA_Foo {
 	</P>
       </LI>
 
-      <LI><P>CORBA 2.2 does not allow <CODE>octets</CODE> as
+      <LI><P><B>IDL Compiler:</B> CORBA 2.2 does not allow
+          <CODE>octets</CODE> as
 	  constants, yet the IDL compiler does not complain about it.
 	</P>
       </LI>
@@ -660,20 +666,6 @@ class POA_Foo {
       <LI><P>The <CODE>SINGLE_THREAD_MODEL</CODE> for the POA requires
 	  that the execution for all request on that POA happen on the
 	  same thread.
-	</P>
-      </LI>
-
-      <LI><P>Some ORBs (Visibroker is one example) incorrectly send a
-	  SYSTEM_EXCEPTION status reply when they are actually
-	  throwing a user exception.
-	  TAO is not handling this condition gracefully (this is a
-	  critical problem), but further, it could be interesting to
-	  support a "compatibility with broken ORBs" mode,
-	  and possibly strategize it.
-	  <BR>[STATUS] The ORB will not crash if it receives that
-	  message. It will attempt to parse the exception as a
-	  UserException, even if SYSTEM_EXCEPTION status is returned;
-	  currently there is no strategy to control this.
 	</P>
       </LI>
 
@@ -737,7 +729,7 @@ class POA_Foo {
         </P>
       </LI>
       
-      <LI><P>The CORBA 2.3 spec clarifies the scope of a
+      <LI><P><B>IDL Compiler:</B> The CORBA 2.3 spec clarifies the scope of a
           <CODE>#pragma prefix</CODE>:
           the prefix is supposed to get cleared after each
           <CODE>#include</CODE>,
@@ -749,16 +741,16 @@ class POA_Foo {
         </P>
       </LI>
 
-      <LI><P>GPERF is generating a function for each binary search
-          table;
+      <LI><P><B>IDL Compiler:</B> GPERF is generating a function for
+          each binary search table;
           a generic function could be used, or at least we should add
           an option to gperf to it receives that generic function as
           an argument.
         </P>
       </LI>
 
-      <LI><P>The TAO_IDL compiler does not handle the following code
-          sequence properly:
+      <LI><P><B>IDL Compiler:</B> The TAO_IDL compiler does not handle
+          the following code sequence properly:
 <PRE>
     // IDL
     interface Foo;
@@ -770,6 +762,19 @@ class POA_Foo {
 </PRE>
         It may be necessary to have a multi-pass code generator to
         solve this problem.
+        </P>
+      </LI>
+
+      <LI><P><B>IDL Compiler:</B> Tom Ziomek
+          &lt;tomz@cc.comm.mot.com&gt; reports that the IDL
+          compiler does not verify that <CODE>oneway</CODE> operations
+          cannot include a <CODE>raise</CODE> expression.
+        </P>
+      </LI>
+
+      <LI><P><B>IDL Compiler:</B> We must also check that oneways do
+          not contain any <CODE>out</CODE> or <CODE>inout</CODE>
+          parameters.
         </P>
       </LI>
 
@@ -917,30 +922,30 @@ encapsulation format.
 	    We also need to come out with a scheme to support
 	    interpretive marshalling in the CORBAlite framework (where
 	    TypeCodes don't have enough methods as to traverse them).
-	  </P>
-      <P></LI>
+      </P>
+      <P>
+    </LI>
 
-      <LI>Consider decompositions of the ORB that would allow
-	dynamically linked plug-ins, examples of things that would be
-	easy to implement as plugins:
-	<UL>
-	  <LI>SSL support
-	  <P></LI>
-	  <LI>UNIX socket support
-	  <P></LI>
-	</UL>
-	Things that would be really hard:
-	<UL>
-	  <LI>Dynamically load the support for costly features, as the
-	    ImplRepo or Location Forwarding.
-	  <P></LI>
-	  <LI>Dynamically configure POA with or without support for
-	    holding state.
-	  <P></LI>
-	</UL>
-      <P></LI>
+    <LI><P>Consider decompositions of the ORB that would allow
+	dynamically linked plug-ins, for example it should be easy to
+        dynamically load a pluggable protocol.
+        Other decompositions are harder, but still worthwhile looking
+        at: 
+      <UL>
+        <LI>Dynamically load the support for costly features, as the
+          ImplRepo or Location Forwarding.
+	  <P>
+        </LI>
+        <LI>Dynamically configure POA with or without support for
+          holding state.
+	  <P>
+        </LI>
+      </UL>
+    </P>
+    </LI>
       
-      <LI>Currently the IDL compiler creates an operation table that
+    <LI><P><B>IDL Compiler:</B> Currently the IDL compiler creates an
+        operation table that 
 	includes all the base classes operations; this permits the
 	generation of efficient code that does not rely in
 	dynamic_cast or the _downcast() method for Servants (which
@@ -949,7 +954,7 @@ encapsulation format.
 	were the class only looks its own operations and then tries
 	the parent. This will reduce code size, but will probably
 	decrease performance.
-      <P></LI>
+      </P></LI>
 
       <LI>Server_Request objects in TAO are magical, the _duplicate()
 	method returns 0 and release() does nothing.
@@ -985,6 +990,13 @@ encapsulation format.
       <H3>Completed Tasks</H3>
 
     <OL>
+      <LI><P>The TypeCode internal (private) state needs locking, double
+          checked locking is needed to avoid excessive overhead, there
+          is potential for memory leaks if this locking is not used.
+          <BR>[DONE]
+        </P>
+      </LI>
+
       <LI><P><B>EC:</B>The <CODE>UDP_Receiver</CODE> class has some
           problems on Win32 platforms because a
           <CODE>recvfrom()</CODE> call fails if the buffer is to small
