@@ -1837,6 +1837,103 @@ else
   ace_u_long_long_typedef_set=no
 fi dnl test "$cross_compiling" != yes
 
+AC_CHECK_TYPE([int8_t],
+	      [AC_DEFINE([ACE_HAS_INT8_T], 1,
+			 [Define to 1 if the system has the type `int8_t'.])],
+	      [],
+	      [
+#ifndef ACE_LACKS_STDINT_H
+#include <stdint.h>
+#endif
+#ifndef ACE_LACKS_INTTYPES_H
+#include <inttypes.h>
+#endif])
+
+AC_CHECK_TYPE([uint8_t],
+	      [AC_DEFINE([ACE_HAS_UINT8_T], 1,
+			 [Define to 1 if the system has the type `uint8_t'.])],
+	      [],
+	      [
+#ifndef ACE_LACKS_STDINT_H
+#include <stdint.h>
+#endif
+#ifndef ACE_LACKS_INTTYPES_H
+#include <inttypes.h>
+#endif])
+
+AC_CHECK_TYPE([int16_t],
+	      [AC_DEFINE([ACE_HAS_INT16_T], 1,
+			 [Define to 1 if the system has the type `int16_t'.])],
+	      [],
+	      [
+#ifndef ACE_LACKS_STDINT_H
+#include <stdint.h>
+#endif
+#ifndef ACE_LACKS_INTTYPES_H
+#include <inttypes.h>
+#endif])
+
+AC_CHECK_TYPE([uint16_t],
+	      [AC_DEFINE([ACE_HAS_UINT16_T], 1,
+			 [Define to 1 if the system has the type `uint16_t'.])],
+	      [],
+	      [
+#ifndef ACE_LACKS_STDINT_H
+#include <stdint.h>
+#endif
+#ifndef ACE_LACKS_INTTYPES_H
+#include <inttypes.h>
+#endif])
+
+AC_CHECK_TYPE([int32_t],
+	      [AC_DEFINE([ACE_HAS_INT32_T], 1,
+			 [Define to 1 if the system has the type `int32_t'.])],
+	      [],
+	      [
+#ifndef ACE_LACKS_STDINT_H
+#include <stdint.h>
+#endif
+#ifndef ACE_LACKS_INTTYPES_H
+#include <inttypes.h>
+#endif])
+
+AC_CHECK_TYPE([uint32_t],
+	      [AC_DEFINE([ACE_HAS_UINT32_T], 1,
+			 [Define to 1 if the system has the type `uint32_t'.])],
+	      [],
+	      [
+#ifndef ACE_LACKS_STDINT_H
+#include <stdint.h>
+#endif
+#ifndef ACE_LACKS_INTTYPES_H
+#include <inttypes.h>
+#endif])
+
+AC_CHECK_TYPE([int64_t],
+	      [AC_DEFINE([ACE_HAS_INT64_T], 1,
+			 [Define to 1 if the system has the type `int64_t'.])],
+	      [],
+	      [
+#ifndef ACE_LACKS_STDINT_H
+#include <stdint.h>
+#endif
+#ifndef ACE_LACKS_INTTYPES_H
+#include <inttypes.h>
+#endif])
+
+AC_CHECK_TYPE([uint64_t],
+	      [AC_DEFINE([ACE_HAS_UINT64_T], 1,
+			 [Define to 1 if the system has the type `uint64_t'.])],
+	      [],
+	      [
+#ifndef ACE_LACKS_STDINT_H
+#include <stdint.h>
+#endif
+#ifndef ACE_LACKS_INTTYPES_H
+#include <inttypes.h>
+#endif])
+
+
 dnl Other checks
 
 ACE_VAR_TIMEZONE

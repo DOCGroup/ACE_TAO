@@ -1,3 +1,14 @@
+Thu Mar 24 11:26:58 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/README:
+
+	  Describe new ACE_HAS_{,U}INT32_T macros.
+
+	* configure.ac:
+
+	  Added check for {,u}int{8,16,32,64}_t types and set
+	  ACE_HAS_{,U}INT32_T if found.
+
 Thu Mar 24 13:23:00 2005  Rich Seibel  <seibel_r@ociweb.com>
 
         Moving updates for Mac made by Paul and Chad  to get it to work.
@@ -14,7 +25,6 @@ Thu Mar 24 13:23:00 2005  Rich Seibel  <seibel_r@ociweb.com>
           Add a dependency on the PortableGroup library.  This is
           part of cleaning up the linkage between PortableGroup and
           some of the FT* libraries.
-
 
 Thu Mar 24 14:12:19 2005  Steve Huston  <shuston@riverace.com>
 
