@@ -57,6 +57,7 @@
 #  gtk_reactor      Build the GtkReactor.
 #  ssl              Build with OpenSSL support.
 #  rapi             Build with RAPI
+#  stlport          Build with STLPort support
 #  rwho             Build with rwho, this results in building apps/drwho
 #  pipes            Build with pipe support, resulting in adding -pipe to the
 #                   compiler options.

@@ -1,3 +1,21 @@
+Fri Jun 18 10:12:47 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* ACE-INSTALL.html:
+
+	  Updated ACE-INSTALL with information about a bunch of things
+	  related to MPC. Haven't updated anything about using MPC other
+	  than pointing out the documentation. Need to see what else
+	  should be added. 
+	
+	* docs/msvc_notes.txt:
+
+	  Updated this file about th elocation of libraries. 
+	
+	* include/makeinclude/wrapper_macros.GNU:
+
+	  Added documentation for the option stlport=1 which can be used
+	  in platform_macros.GNU.
+
 Fri Jun 18 11:08:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-lite.h:
@@ -1556,9 +1574,8 @@ Mon May 17 19:19:00 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
         * tests/SOCK_Dgram_Bcast_Test.cpp (run_auto_test):
 
-        Removed warning on declared, but not used function.
-        Added OS_NS_unistd.h include to make sure ACE_OD::sleep is
-        declared.
+          Removed warning on declared, but not used function. Added
+	  OS_NS_unistd.h include to make sure ACE_OD::sleep is declared. 
 
 Mon May 17 13:22:18 2004  Steve Huston  <shuston@riverace.com>
 
@@ -1673,13 +1690,13 @@ Sun May 16 11:31:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 Sat May 15 19:48:00 2004 Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
         * ace/Sock_Connect.cpp (get_bcast_addr):
-        The loop over interfaces was buggy the same way as previously in mk_broadcast.
-        Fixed. It seems sa_len is serious portability problem. Shall
-        ACE_HAS_SA_LEN macro be defined and respected?
+          The loop over interfaces was buggy the same way as previously in
+	  mk_broadcast. Fixed. It seems sa_len is serious portability
+	  problem. Shall ACE_HAS_SA_LEN macro be defined and respected?
 
         * ace/SOCK_Dgram_Bcast.cpp (mk_broadcast):
-        FreeBSD also has sockaddr.sa_len, hence the loop over interfaces shall
-        work correctly.
+          FreeBSD also has sockaddr.sa_len, hence the loop over interfaces
+	  shall work correctly.
 
 Sat May 15 19:48:00 2004 Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
@@ -2196,9 +2213,10 @@ Sun May  9 13:12:37 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 Sun May 9 16:07:00 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
         * bin/fuzz.pl:
-        Script checks now if file names are not too long. Names exceeding 50 characters
-        are classified as an error (QNX limit), MPC files longer than 30 characters
-        lead to warnings as MPC can add some characters eg. .depend.GNUmakefile.
+          Script checks now if file names are not too long. Names
+	  exceeding 50 characters are classified as an error (QNX limit),
+	  MPC files longer than 30 characters lead to warnings as MPC can
+	  add some characters eg. .depend.GNUmakefile. 
 
 Sun May  9 13:20:22 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -2219,7 +2237,7 @@ Sat May  8 16:25:31 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         * ace/Time_Value.h:
         * ace/Time_Value.inl:
 
-          Added an operatot=. Without this, the
+          Added an operator=. Without this, the
           ACE_HAS_TIMED_MESSAGE_BLOCK has no chance of working.
 
 Sat May  8 00:10:23 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
