@@ -66,6 +66,7 @@ be_visitor_valuetype::visit_valuetype_scope (be_valuetype *node)
       for (;!si->is_done ();si->next())
         {
           AST_Decl *d = si->item ();
+
           if (!d)
             {
               delete si;
@@ -74,16 +75,16 @@ be_visitor_valuetype::visit_valuetype_scope (be_valuetype *node)
                                  "bad node in this scope\n"), -1);
 
             }
+
           AST_Field *field = AST_Field::narrow_from_decl (d);
+
           if (field && field->visibility() == AST_Field::vis_PRIVATE)
             {
               continue;      // ignore private fields in this run
               // AST_Attribute derives from AST_Field, so test for
               // vis_PRIVATE is ok (the attribute has it set to vis_NA)
             }
-          ++ n_processed;
-          if (n_processed == 1)
-            this->begin_public ();
+
           be_decl *bd = be_decl::narrow_from_decl (d);
           // set the scope node as "node" in which the code is being
           // generated so that elements in the node's scope can use it
@@ -104,9 +105,10 @@ be_visitor_valuetype::visit_valuetype_scope (be_valuetype *node)
 
             }
         } // end of for loop
+
       delete si;
-     // next run with private fields only
-      n_processed = 0;
+
+      // next run with private fields only
       ACE_NEW_RETURN (si,
                       UTL_ScopeActiveIterator (node,
                                                UTL_Scope::IK_decls),
@@ -790,7 +792,6 @@ be_visitor_valuetype::gen_init_defn (be_valuetype *node)
   TAO_OutStream *os; // output stream
 
   os = this->ctx_->stream ();
-  os->indent (); // start with whatever indentation level we are at
 
   *os << "class " << be_global->skel_export_macro ()
       << " " << node->local_name ()
@@ -808,7 +809,7 @@ be_visitor_valuetype::gen_init_defn (be_valuetype *node)
   *os << "virtual const char* tao_repository_id (void);\n" << be_nl;
   *os << "// create () goes here" << be_nl;  // %!
 
-  *os << be_uidt_nl << "};\n";
+  *os << be_uidt_nl << "};" << be_nl;
 
   return 0;
 }

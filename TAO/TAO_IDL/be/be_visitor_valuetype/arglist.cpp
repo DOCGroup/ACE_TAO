@@ -51,9 +51,13 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << " (";
-  // *os << " (" << be_idt << be_idt << "\n";
+  
+  if (node->argument_count () > 0)
+    {
+      *os << be_idt << be_idt_nl;
+    }
 
-  // all we do is hand over code generation to our scope
+  // All we do is hand over code generation to our scope.
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -63,29 +67,32 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
                         -1);
     }
 
-  // generate the CORBA::Environment parameter for the alternative mapping
+  // Generate the CORBA::Environment parameter for the alternative mapping.
   if (!be_global->exception_support ())
     {
-      // if the operation node has parameters, then we need to insert a comma
+      // If the operation node has parameters, then we need to insert a comma.
       if (node->argument_count () > 0)
-        *os << ",\n";
+        {
+          *os << "," << be_nl;
+        }
+      else
+        {
+          *os << be_idt << be_idt_nl;
+        }
 
-      os->indent ();
-
-      // @@ Michael: This switch statement needs urgently attention!
       switch (this->ctx_->state ())
         {
         case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_CH:
         case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_OBV_CH:
         case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IMPL_CH:
-          // last argument - is always CORBA::Environment
+          // Last argument - is always CORBA::Environment.
           *os << "CORBA::Environment &ACE_TRY_ENV";
           *os << " = " << be_idt_nl
-              << "TAO_default_environment ())"
-              << be_uidt;
+              << "TAO_default_environment ()" << be_uidt
+              << be_uidt_nl << ")";
           break;
         case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IMPL_CS:
-          // last argument - is always CORBA::Environment
+          // Last argument - is always CORBA::Environment.
           *os << "CORBA::Environment &ACE_TRY_ENV)";
           break;
         default:
@@ -95,15 +102,14 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
     }
   else
     {
-      os->indent ();
-      *os << ")";// << be_uidt;
+      *os << ")";
     }
 
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_CH:
-      // each method is pure virtual in the Valuetype class
-      *os << " = 0;\n";
+      // Each method is pure virtual in the Valuetype class.
+      *os << " = 0;" << be_uidt_nl;
       break;
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IH:
       break;
@@ -116,9 +122,9 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
        *os << "\n";
     }
 
-  // @@ Michael: Can we get rid of this one, please!
   if (!this->ctx_->attribute ())    // hack to get a nice newline
-    *os << "\n";
+    *os << be_nl;
+
   return 0;
 }
 

@@ -68,86 +68,91 @@ be_visitor_typedef_ch::visit_typedef (be_typedef *node)
 
   if (this->ctx_->tdef ())
     {
-      // the fact that we are here indicates that we were generating code for a
-      // typedef node whose base type also happens to be another typedef-ed
-      // (i.e. an alias) node for another (possibly alias) node
+      // The fact that we are here indicates that we were generating code for
+      // a typedef node whose base type also happens to be another typedefed
+      // (i.e. an alias) node for another (possibly alias) node.
 
-      this->ctx_->alias (node); // save this alias
+      this->ctx_->alias (node);
 
-      // grab the most primitive base type in the chain to avoid recusrsively
-      // going thru this visit method
+      // Grab the most primitive base type in the chain to avoid recusrsively
+      // going thru this visit method.
       bt = node->primitive_base_type ();
+
       if (!bt)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_ch::"
                              "visit_typedef - "
                              "bad primitive base type\n"
-                             ),  -1);
+                             ),  
+                            -1);
         }
 
-      // accept on this base type, but generate code for the typedef node
+      // Accept on this base type, but generate code for the typedef node.
       if (bt->accept (this) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_ch::"
                              "visit_typedef - "
                              "failed to accept visitor\n"
-                             ),  -1);
+                             ),  
+                            -1);
         }
-      this->ctx_->alias (0); // reset
+
+      this->ctx_->alias (0);
     }
   else
     {
-      // the context has not stored any "tdef" node. So we must be in here for
-      // the first time
-      this->ctx_->tdef (node); // save the typedef node
+      // The context has not stored any "tdef" node. So we must be in here for
+      // the first time.
+      this->ctx_->tdef (node);
 
-      // grab the immediate base type node
+      // Grab the immediate base type node.
       bt = be_type::narrow_from_decl (node->base_type ());
+
       if (!bt)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_ch::"
                              "visit_typedef - "
                              "bad base type\n"
-                             ),  -1);
+                             ),  
+                             -1);
         }
 
-      // accept on this base type, but generate code for the typedef node
+      // accept on this base type, but generate code for the typedef node.
       if (bt->accept (this) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_ch::"
                              "visit_typedef - "
                              "failed to accept visitor\n"
-                             ),  -1);
+                             ), 
+                             -1);
         }
 
-      // generate the typecode decl for this typedef node
+      // Generate the typecode decl for this typedef node.
       // @@ NW: !bt->is_local () is a hack.  There should be a way to
       // propagate bt's info up to typedef.
       if (!node->imported () && !node->is_local () && !bt->is_local ())
         {
-          // by using a visitor to declare and define the TypeCode, we have the
-          // added advantage to conditionally not generate any code. This will be
-          // based on the command line options. This is still TO-DO
           be_visitor *visitor;
           be_visitor_context ctx (*this->ctx_);
           ctx.state (TAO_CodeGen::TAO_TYPECODE_DECL);
           visitor = tao_cg->make_visitor (&ctx);
+
           if (!visitor || (node->accept (visitor) == -1))
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_typedef_ch::"
                                  "visit_typedef - "
                                  "TypeCode declaration failed\n"
-                                 ), -1);
+                                 ), 
+                                -1);
             }
-
-
         }
-      this->ctx_->tdef (0); // reset
+
+      this->ctx_->tdef (0);
     }
 
   return 0;
@@ -156,21 +161,25 @@ be_visitor_typedef_ch::visit_typedef (be_typedef *node)
 int
 be_visitor_typedef_ch::visit_array (be_array *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // output stream
-  be_typedef *tdef = this->ctx_->tdef (); // typedef node
-  be_decl *scope = this->ctx_->scope (); // scope in which it is used
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_typedef *tdef = this->ctx_->tdef ();
+  be_decl *scope = this->ctx_->scope ();
   be_type *bt;
 
-  // is the base type an alias to an array node or an actual array node
+  // Is the base type an alias to an array node or an actual array node.
   if (this->ctx_->alias ())
-    bt = this->ctx_->alias ();
+    {
+      bt = this->ctx_->alias ();
+    }
   else
-    bt = node;
+    {
+      bt = node;
+    }
 
-  // is our base type an array node. If so, generate code for that array node
+  // Is our base type an array node. If so, generate code for that array node.
   if (bt->node_type () == AST_Decl::NT_array)
     {
-      // let the base class visitor handle this case
+      // Let the base class visitor handle this case.
       if (this->be_visitor_typedef::visit_array (node) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -182,16 +191,15 @@ be_visitor_typedef_ch::visit_array (be_array *node)
     }
   else
     {
-      // base type is simply an alias to an array node. Simply output the
-      // required typedefs
+      // Base type is simply an alias to an array node. Simply output the
+      // required typedefs.
 
-      os->indent ();
-      // typedef the type and the _slice type
+      // Typedef the type and the _slice type.
       *os << "typedef " << bt->nested_type_name (scope)
           << " " << tdef->nested_type_name (scope) << ";" << be_nl;
       *os << "typedef " << bt->nested_type_name (scope, "_slice")
           << " " << tdef->nested_type_name (scope, "_slice") << ";" << be_nl;
-      // typedef the _var, _out, and _forany types
+      // Typedef the _var, _out, and _forany types.
       *os << "typedef " << bt->nested_type_name (scope, "_var")
           << " " << tdef->nested_type_name (scope, "_var") << ";" << be_nl;
       *os << "typedef " << bt->nested_type_name (scope, "_out")
@@ -199,7 +207,7 @@ be_visitor_typedef_ch::visit_array (be_array *node)
       *os << "typedef " << bt->nested_type_name (scope, "_forany")
           << " " << tdef->nested_type_name (scope, "_forany") << ";" << be_nl;
 
-      // the _alloc, _dup, copy, and free methods
+      // The _alloc, _dup, copy, and free methods
 
       // Since the function nested_type_name() contains a static buffer,
       // we can have only one call to it from any instantiation per stream
@@ -220,72 +228,79 @@ be_visitor_typedef_ch::visit_array (be_array *node)
       *os << "ACE_INLINE void " << tdef->nested_type_name (scope, "_free") << " (";
       *os << tdef->nested_type_name (scope, "_slice") << " *_tao_slice);" << be_nl;
     }
+
   return 0;
 }
 
 int
 be_visitor_typedef_ch::visit_enum (be_enum *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // output stream
-  be_typedef *tdef = this->ctx_->tdef (); // typedef node
-  be_decl *scope = this->ctx_->scope (); // scope in which it is used
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_typedef *tdef = this->ctx_->tdef ();
+  be_decl *scope = this->ctx_->scope ();
   be_type *bt;
 
-  if (this->ctx_->alias ()) // typedef of a typedef
-    bt = this->ctx_->alias ();
-  else
-    bt = node;
-
-  if (bt->node_type () == AST_Decl::NT_enum) // direct typedef of a base node
-                                              // type
+  // Typedef of a typedef?
+  if (this->ctx_->alias ())
     {
-      // let the base class visitor handle this case
+      bt = this->ctx_->alias ();
+    }
+  else
+    {
+      bt = node;
+    }
+
+  if (bt->node_type () == AST_Decl::NT_enum)
+    {
+      // Let the base class visitor handle this case.
       if (this->be_visitor_typedef::visit_enum (node) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_ch::"
                              "visit_enum - "
                              "base class visitor failed \n"
-                             ),  -1);
+                             ),  
+                            -1);
         }
     }
 
-  // now generate the typedefs
-  os->indent ();
-  // typedef the type and the _slice type
+  // typedef the type and the _slice type.
   *os << "typedef " << bt->nested_type_name (scope)
       << " " << tdef->nested_type_name (scope) << ";" << be_nl;
-  // typedef the _out
+  // Typedef the _out
   *os << "typedef " << bt->nested_type_name (scope, "_out")
       << " " << tdef->nested_type_name (scope, "_out") << ";" << be_nl;
+
   return 0;
 }
 
 int
 be_visitor_typedef_ch::visit_interface (be_interface *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // output stream
-  be_typedef *tdef = this->ctx_->tdef (); // typedef node
-  be_decl *scope = this->ctx_->scope (); // scope in which it is used
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_typedef *tdef = this->ctx_->tdef ();
+  be_decl *scope = this->ctx_->scope ();
   be_type *bt;
 
-  if (this->ctx_->alias ()) // typedef of a typedef
-    bt = this->ctx_->alias ();
+  // Typedef of a typedef?
+  if (this->ctx_->alias ())
+    {
+      bt = this->ctx_->alias ();
+    }
   else
-    bt = node;
+    {
+      bt = node;
+    }
 
-  // now generate the typedefs
-  os->indent ();
-
-  // typedef the object
+  // Typedef the object.
   *os << "typedef " << bt->nested_type_name (scope) << " "
       << tdef->nested_type_name (scope) << ";" << be_nl;
 
-  // typedef the _ptr
+  // Typedef the _ptr.
   *os << "typedef " << bt->nested_type_name (scope, "_ptr")
       << " " << tdef->nested_type_name (scope, "_ptr") << ";" << be_nl;
 
-  // typedef the _var
+  // Typedef the _var.
   *os << "typedef " << bt->nested_type_name (scope, "_var")
       << " " << tdef->nested_type_name (scope, "_var") << ";" << be_nl;
 
@@ -299,51 +314,54 @@ be_visitor_typedef_ch::visit_interface (be_interface *node)
 int
 be_visitor_typedef_ch::visit_predefined_type (be_predefined_type *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // output stream
-  be_typedef *tdef = this->ctx_->tdef (); // typedef node
-  be_decl *scope = this->ctx_->scope (); // scope in which it is used
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_typedef *tdef = this->ctx_->tdef ();
+  be_decl *scope = this->ctx_->scope ();
   be_type *bt;
 
-  if (this->ctx_->alias ()) // typedef of a typedef
-    bt = this->ctx_->alias ();
+  // Typedef of a typedef?
+  if (this->ctx_->alias ())
+    {
+      bt = this->ctx_->alias ();
+    }
   else
-    bt = node;
+    {
+      bt = node;
+    }
 
-  // now generate the typedefs
-  os->indent ();
-  // typedef the type
+  // Typedef the type.
   *os << "typedef " << bt->nested_type_name (scope)
       << " " << tdef->nested_type_name (scope) << ";" << be_nl;
+
   if ((node->pt () == AST_PredefinedType::PT_pseudo) ||
       (node->pt () == AST_PredefinedType::PT_any))
     {
-      // typedef the _ptr and _var
+      // Typedef the _ptr and _var.
       *os << "typedef " << bt->nested_type_name (scope, "_ptr")
           << " " << tdef->nested_type_name (scope, "_ptr") << ";" << be_nl;
       *os << "typedef " << bt->nested_type_name (scope, "_var")
           << " " << tdef->nested_type_name (scope, "_var") << ";" << be_nl;
     }
-  // typedef the _out
+
+  // Typedef the _out.
   *os << "typedef " << bt->nested_type_name (scope, "_out")
       << " " << tdef->nested_type_name (scope, "_out") << ";" << be_nl;
+
   return 0;
 }
 
 int
 be_visitor_typedef_ch::visit_string (be_string *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // output stream
-  be_typedef *tdef = this->ctx_->tdef (); // typedef node
-  be_decl *scope = this->ctx_->scope (); // scope in which it is used
-
-  // now generate the typedefs
-  os->indent ();
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_typedef *tdef = this->ctx_->tdef ();
+  be_decl *scope = this->ctx_->scope ();
 
   if (node->width () == (long) sizeof (char))
     {
       *os << "typedef char *"
           << " " << tdef->nested_type_name (scope) << ";" << be_nl;
-      // typedef the _var, _out, and _forany types
+      // Typedef the _var and _out types.
       *os << "typedef CORBA::String_var"
           << " " << tdef->nested_type_name (scope, "_var") << ";" << be_nl;
       *os << "typedef CORBA::String_out"
@@ -353,7 +371,7 @@ be_visitor_typedef_ch::visit_string (be_string *node)
     {
       *os << "typedef CORBA::WChar *"
           << " " << tdef->nested_type_name (scope) << ";" << be_nl;
-      // typedef the _var, _out, and _forany types
+      // Typedef the _var and _out types.
       *os << "typedef CORBA::WString_var"
           << " " << tdef->nested_type_name (scope, "_var") << ";" << be_nl;
       *os << "typedef CORBA::WString_out"
@@ -366,20 +384,24 @@ be_visitor_typedef_ch::visit_string (be_string *node)
 int
 be_visitor_typedef_ch::visit_sequence (be_sequence *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // output stream
-  be_typedef *tdef = this->ctx_->tdef (); // typedef node
-  be_decl *scope = this->ctx_->scope (); // scope in which it is used
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_typedef *tdef = this->ctx_->tdef ();
+  be_decl *scope = this->ctx_->scope ();
   be_type *bt;
 
-  if (this->ctx_->alias ()) // typedef of a typedef
-    bt = this->ctx_->alias ();
-  else
-    bt = node;
-
-  if (bt->node_type () == AST_Decl::NT_sequence) // direct typedef of a base node
-                                              // type
+  // Typedef of a typedef?
+  if (this->ctx_->alias ())
     {
-      // let the base class visitor handle this case
+      bt = this->ctx_->alias ();
+    }
+  else
+    {
+      bt = node;
+    }
+
+  if (bt->node_type () == AST_Decl::NT_sequence)
+    {
+      // Let the base class visitor handle this case.
       if (this->be_visitor_typedef::visit_sequence (node) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -391,37 +413,40 @@ be_visitor_typedef_ch::visit_sequence (be_sequence *node)
     }
   else
     {
-      // now generate the typedefs
-      os->indent ();
-      // typedef the type
+      // Typedef the type.
       *os << "typedef " << bt->nested_type_name (scope)
           << " " << tdef->nested_type_name (scope) << ";" << be_nl;
-      // typedef the _var, _out types
+      // Typedef the _var and _out types.
       *os << "typedef " << bt->nested_type_name (scope, "_var")
           << " " << tdef->nested_type_name (scope, "_var") << ";" << be_nl;
       *os << "typedef " << bt->nested_type_name (scope, "_out")
           << " " << tdef->nested_type_name (scope, "_out") << ";" << be_nl;
     }
+
   return 0;
 }
 
 int
 be_visitor_typedef_ch::visit_structure (be_structure *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // output stream
-  be_typedef *tdef = this->ctx_->tdef (); // typedef node
-  be_decl *scope = this->ctx_->scope (); // scope in which it is used
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_typedef *tdef = this->ctx_->tdef ();
+  be_decl *scope = this->ctx_->scope ();
   be_type *bt;
 
-  if (this->ctx_->alias ()) // typedef of a typedef
-    bt = this->ctx_->alias ();
-  else
-    bt = node;
-
-  if (bt->node_type () == AST_Decl::NT_struct) // direct typedef of a base node
-                                              // type
+  // Typedef of a typedef?
+  if (this->ctx_->alias ())
     {
-      // let the base class visitor handle this case
+      bt = this->ctx_->alias ();
+    }
+  else
+    {
+      bt = node;
+    }
+
+  if (bt->node_type () == AST_Decl::NT_struct)
+    {
+      // Let the base class visitor handle this case
       if (this->be_visitor_typedef::visit_structure (node) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -432,36 +457,39 @@ be_visitor_typedef_ch::visit_structure (be_structure *node)
         }
     }
 
-  // now generate the typedefs
-  os->indent ();
-  // typedef the type
+  // Typedef the type.
   *os << "typedef " << bt->nested_type_name (scope)
       << " " << tdef->nested_type_name (scope) << ";" << be_nl;
-  // typedef the _var, _out types
+  // typedef the _var and _out types.
   *os << "typedef " << bt->nested_type_name (scope, "_var")
       << " " << tdef->nested_type_name (scope, "_var") << ";" << be_nl;
   *os << "typedef " << bt->nested_type_name (scope, "_out")
       << " " << tdef->nested_type_name (scope, "_out") << ";" << be_nl;
+
   return 0;
 }
 
 int
 be_visitor_typedef_ch::visit_union (be_union *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // output stream
-  be_typedef *tdef = this->ctx_->tdef (); // typedef node
-  be_decl *scope = this->ctx_->scope (); // scope in which it is used
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_typedef *tdef = this->ctx_->tdef ();
+  be_decl *scope = this->ctx_->scope ();
   be_type *bt;
 
-  if (this->ctx_->alias ()) // typedef of a typedef
-    bt = this->ctx_->alias ();
-  else
-    bt = node;
-
-  if (bt->node_type () == AST_Decl::NT_union) // direct typedef of a base node
-                                              // type
+  // Typedef of a typedef?
+  if (this->ctx_->alias ())
     {
-      // let the base class visitor handle this case
+      bt = this->ctx_->alias ();
+    }
+  else
+    {
+      bt = node;
+    }
+
+  if (bt->node_type () == AST_Decl::NT_union)
+    {
+      // Let the base class visitor handle this case.
       if (this->be_visitor_typedef::visit_union (node) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -472,15 +500,14 @@ be_visitor_typedef_ch::visit_union (be_union *node)
         }
     }
 
-  // now generate the typedefs
-  os->indent ();
-  // typedef the type and the _slice type
+  // Typedef the type.
   *os << "typedef " << bt->nested_type_name (scope)
       << " " << tdef->nested_type_name (scope) << ";" << be_nl;
-  // typedef the _var, _out types
+  // Typedef the _var and _out types.
   *os << "typedef " << bt->nested_type_name (scope, "_var")
       << " " << tdef->nested_type_name (scope, "_var") << ";" << be_nl;
   *os << "typedef " << bt->nested_type_name (scope, "_out")
       << " " << tdef->nested_type_name (scope, "_out") << ";" << be_nl;
+
   return 0;
 }

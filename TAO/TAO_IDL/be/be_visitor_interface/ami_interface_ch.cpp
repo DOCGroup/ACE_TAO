@@ -44,31 +44,29 @@ be_visitor_ami_interface_ch::~be_visitor_ami_interface_ch (void)
 int
 be_visitor_ami_interface_ch::visit_interface (be_interface *node)
 {
-  TAO_OutStream *os; // output stream
-
   // No need to check for code already having been generated. This
   // is a separate pass through the AST specific to AMI, and will
   // happen only once.
-  if (!node->imported () &&     // not imported
-      !node->is_local ())       // and not local interface.
+  if (node->imported () || node->is_local ())
     {
-      // Grab the stream.
-      os = this->ctx_->stream ();
-
-
-      os->gen_ifdef_macro (node->replacement ()->flat_name (), "_ptr");
-
-      os->indent (); // start with whatever indentation level we are at
-      // forward declaration
-      *os << "class " << node->replacement ()->local_name () << ";" << be_nl;
-
-      // generate the _ptr declaration
-      *os << "typedef " << node->replacement ()->local_name ()
-          << " *" << node->replacement ()->local_name ()
-          << "_ptr;" << be_nl << be_nl;
-
-      os->gen_endif ();
+      return 0;
     }
+
+  // Grab the stream.
+  TAO_OutStream *os = this->ctx_->stream ();
+
+
+  os->gen_ifdef_macro (node->replacement ()->flat_name (), "_ptr");
+
+  // Forward declaration.
+  *os << "class " << node->replacement ()->local_name () << ";" << be_nl;
+
+  // Generate the _ptr declaration.
+  *os << "typedef " << node->replacement ()->local_name ()
+      << " *" << node->replacement ()->local_name ()
+      << "_ptr;" << be_nl << be_nl;
+
+  os->gen_endif ();
 
   return 0;
 }

@@ -50,12 +50,11 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
 
       os->gen_ifdef_macro (node->flat_name ());
 
-      os->indent ();
       *os << "class " << be_global->stub_export_macro ()
                 << " " << node->local_name ()
                 << " : public CORBA::UserException" << be_nl;
       *os << "{" << be_nl 
-          << "public:\n" << be_idt;
+          << "public:" << be_idt_nl;
 
       // Generate code for field members.
       if (this->visit_scope (node) == -1)

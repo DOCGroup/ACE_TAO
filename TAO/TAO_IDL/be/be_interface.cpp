@@ -532,7 +532,6 @@ be_interface::gen_var_defn (char *interface_name)
   // Depending upon the data type, there are some differences which we account
   // for over here.
 
-  ch->indent (); // start with whatever was our current indent level
   *ch << "class " << be_global->stub_export_macro ()
       << " " << namebuf 
       << " : public TAO_Base_var" << be_nl;
@@ -596,8 +595,10 @@ be_interface::gen_var_defn (char *interface_name)
       << "static " << interface_name 
       << "_ptr nil (void);" << be_nl
       << "static " << interface_name 
-      << "_ptr narrow (CORBA::Object *, "
-      << "CORBA::Environment &);" << be_nl
+      << "_ptr narrow (" << be_idt << be_idt_nl
+      << "CORBA::Object *," << be_nl
+      << "CORBA::Environment &" << be_uidt_nl
+      << ");" << be_uidt_nl
       << "static CORBA::Object * upcast (void *);" << be_uidt_nl << be_nl;
 
   // Private.
@@ -849,9 +850,6 @@ be_interface::gen_out_defn (char *interface_name)
   TAO_OutStream *ch = tao_cg->client_header ();
 
   // Generate the out definition (always in the client header)
-  // start with whatever was our current indent level.
-  ch->indent ();
-
   *ch << "class " << be_global->stub_export_macro ()
       << " " << namebuf << be_nl;
   *ch << "{" << be_nl;
@@ -896,7 +894,7 @@ be_interface::gen_out_defn (char *interface_name)
   *ch << "private:" << be_idt_nl;
   *ch << interface_name << "_ptr &ptr_;" << be_uidt_nl;
 
-  *ch << "};\n\n";
+  *ch << "};" << be_nl << be_nl;
 
   return 0;
 }

@@ -26,13 +26,14 @@ int be_visitor_operation_base_proxy_impl_ch::visit_operation (be_operation *node
   os = this->ctx_->stream ();
   this->ctx_->node (node); // save the node
 
-  os->indent (); // start with the current indentation level
+//  os->indent (); // start with the current indentation level
 
   // every operation is declared virtual in the client code
   *os << "virtual ";
 
   // STEP I: generate the return type
   bt = be_type::narrow_from_decl (node->return_type ());
+
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -65,6 +66,7 @@ int be_visitor_operation_base_proxy_impl_ch::visit_operation (be_operation *node
                          "codegen for return type failed\n"),
                         -1);
     }
+
   delete visitor;
 
   // STEP 2: generate the operation name
@@ -75,6 +77,7 @@ int be_visitor_operation_base_proxy_impl_ch::visit_operation (be_operation *node
   ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_OPERATION_ARGLIST_BASE_PROXY_IMPL_CH);
   visitor = tao_cg->make_visitor (&ctx);
+
   if (!visitor)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -93,6 +96,7 @@ int be_visitor_operation_base_proxy_impl_ch::visit_operation (be_operation *node
                          "codegen for argument list failed\n"),
                         -1);
     }
+
   delete visitor;
 
   return 0;

@@ -47,39 +47,38 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
 {
   TAO_OutStream *os; // output stream
 
-  if (!node->cli_hdr_gen () && !node->imported ()) // not already generated and
-                                                   // not imported
+  if (!node->cli_hdr_gen () && !node->imported ())
     {
-
       os = this->ctx_->stream ();
-      *os << "// valuetype class\n";
+      *os << "// Valuetype class" << be_nl;
 
-      // == STEP 1:  generate the class name and class names we inherit ==
+      // == STEP 1: Generate the class name and class names we inherit ==
 
-      os->indent (); // start with whatever indentation level we are at
-      // forward declaration
+      // Forward declaration.
       *os << "class " << node->local_name () << ";" << be_nl;
 
       *os << "typedef " << node->local_name ()
           << " *" << node->local_name () << "_ptr;" << be_nl;
 
-      // generate the ifdefined macro for the _var type
+      // Generate the ifdefined macro for the _var type.
       os->gen_ifdef_macro (node->flat_name (), "_var");
 
-      // generate the _var declaration
+      // Generate the _var declaration.
       if (node->gen_var_defn () == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_valuetype_ch::"
                              "visit_valuetype - "
-                             "codegen for _var failed\n"), -1);
+                             "codegen for _var failed\n"), 
+                            -1);
         }
+
       os->gen_endif ();
 
-      // generate the ifdef macro for the _out class
+      // Generate the ifdef macro for the _out class.
       os->gen_ifdef_macro (node->flat_name (), "_out");
 
-      // generate the _out declaration - ORBOS/97-05-15 pg 16-20 spec
+      // Generate the _out declaration - ORBOS/97-05-15 pg 16-20 spec.
       if (node->gen_out_defn () == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -87,13 +86,14 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
                              "visit_valuetype - "
                              "codegen for _out failed\n"), -1);
         }
-      // generate the endif macro
+
+      // generate the endif macro.
       os->gen_endif ();
 
-      // generate the ifdef macro for the _init class
+      // Generate the ifdef macro for the _init class.
       os->gen_ifdef_macro (node->flat_name (), "_init");
 
-      // generate the _init declaration - ptc/98-09-03 20.17.10 p.20-93
+      // Generate the _init declaration - ptc/98-09-03 20.17.10 p.20-93.
       if (this->gen_init_defn (node) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -101,24 +101,25 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
                              "visit_valuetype - "
                              "codegen for _init failed\n"), -1);
         }
-      // generate the endif macro
+
+      // Generate the endif macro.
       os->gen_endif ();
 
-      // now the valuetype definition itself
+      // Now the valuetype definition itself.
       os->gen_ifdef_macro (node->flat_name ());
 
-      // now generate the class definition
-      os->indent ();
+      // Now generate the class definition.
       *os << "class " << be_global->stub_export_macro ()
                 << " " << node->local_name ();
 
-      // node valuetype inherits from other valuetypes (OMG 20.17.9)
-      // (ordinary (not abstract) interfaces ignored)
+      // Node valuetype inherits from other valuetypes (OMG 20.17.9)
+      // (ordinary (not abstract) interfaces ignored).
 
-      *os << " : ";
+      *os << be_idt_nl <<": ";
       int i;  // loop index
       int n_inherits_valuetypes = 0;
       idl_bool valuebase_inherited = 0;
+
       if (node->n_inherits () > 0)
         {
           for (i = 0; i < node->n_inherits (); i++)
@@ -127,98 +128,109 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
               // AST_Interface, then type AST_Interface can be used
               be_interface *inherited =
                 be_interface::narrow_from_decl (node->inherits ()[i]);
-              if (!inherited->is_valuetype () &&
-                  !inherited->is_abstract ())
-                continue;
+
+              if (!inherited->is_valuetype () 
+                  && !inherited->is_abstract ())
+                {
+                  continue;
+                }
 
               ++ n_inherits_valuetypes;
+
               if (inherited->is_valuetype())
-                valuebase_inherited = 1;
-              if (n_inherits_valuetypes > 1)  // node is the case of multiple
-                                              // inheritance, so put a comma
                 {
-                  *os << ", ";
-                }
-              be_decl *scope = 0;
-              if (inherited->is_nested ())
-                {
-                  // inherited node is used in the scope of "node" node
-                  scope = be_scope::narrow_from_scope (node->defined_in ())
-                    ->decl ();
+                  valuebase_inherited = 1;
                 }
 
-              // dump the scoped name
+              if (n_inherits_valuetypes > 1)
+                {
+                  *os << "," << be_nl;
+                }
+
+              be_decl *scope = 0;
+
+              if (inherited->is_nested ())
+                {
+                  // Inherited node is used in the scope of "node" node.
+                  scope = 
+                    be_scope::narrow_from_scope (node->defined_in ())->decl ();
+                }
+
+              // Dump the scoped name.
               *os << "public virtual ";
               *os << inherited->nested_type_name (scope);
             }  // end of for loop
+
           if (n_inherits_valuetypes > 0)
-            *os << be_nl;
+            {
+              *os << be_uidt_nl;
+            }
         }
+
       if (!valuebase_inherited)
         {
-          // we do not inherit from any valuetype, hence we do so from the base
-          // CORBA::ValueBase class
-          // Generate code that uses the macro. This is required to deal with
-          // the MSVC++ insanity
-          if (n_inherits_valuetypes > 1)  // node is the case of multiple
-                                          // inheritance, so put a comma
+          // We do not inherit from any valuetype, hence we do so from the base
+          // CORBA::ValueBase class.
+          if (n_inherits_valuetypes > 1)
             {
               *os << ", ";
             }
-          *os << "public virtual CORBA_ValueBase" << be_nl;
+
+          *os << "public virtual CORBA_ValueBase" << be_uidt_nl;
         }
 
-      // generate the body
-
+      // Generate the body.
       *os << "{" << be_nl
-          << "public:" << be_nl
+          << "public:" << be_idt_nl
 
-          // generate the _ptr_type and _var_type typedef
+          // Generate the _ptr_type and _var_type typedef
           // but we must protect against certain versions of g++
-          << "#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)"
-          << be_idt_nl
+          << "\n#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)"
+          << be_nl
           << "typedef " << node->local_name () << "* _ptr_type;" << be_nl
-          << "typedef " << node->local_name () << "_var _var_type;"
-          << be_uidt_nl
-          << "#endif /* ! __GNUC__ || g++ >= 2.8 */\n" << be_idt_nl
+          << "typedef " << node->local_name () << "_var _var_type;\n"
+          << "#endif /* ! __GNUC__ || g++ >= 2.8 */" << be_nl << be_nl
 
-          // generate the static _downcast operation
-          // (see OMG 20.17.{4,5})
+          // Generate the static _downcast operation.
+          // (see OMG 20.17.{4,5}).
           << "static " << node->local_name () << "* "
                 << "_downcast (CORBA::ValueBase* );" << be_nl
           << "// The address of static _downcast is implicit used as type id\n"
           << be_nl
-
           << "// (TAO extensions or internals)" << be_nl
-          << "static CORBA::Boolean _tao_unmarshal (TAO_InputCDR &, "
-          <<    node->local_name () << " *&);" << be_nl
+          << "static CORBA::Boolean _tao_unmarshal (" << be_idt << be_idt_nl
+          << "TAO_InputCDR &," << be_nl
+          << node->local_name () << " *&" << be_uidt_nl
+          << ");" << be_uidt_nl
           << "virtual const char* "
           << "_tao_obv_repository_id () const;"
           << be_nl
           << "static const char* "
-          << "_tao_obv_static_repository_id ();\n";
+          << "_tao_obv_static_repository_id ();" << be_nl << be_nl;
 
-      // generate code for the valuetype definition
+      // Generate code for the valuetype definition.
       if (this->visit_valuetype_scope (node) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_valuetype_ch::"
                              "visit_valuetype - "
-                             "codegen for scope failed\n"), -1);
+                             "codegen for scope failed\n"), 
+                            -1);
         }
 
-      // protected member:
+      // Protected member:
 
-      // generate the "protected" constructor so that users cannot instantiate
-      // us
+      // Generate the "protected" constructor so that users cannot
+      // instantiate us.
       *os << be_uidt_nl << "protected:" << be_idt_nl
-                << node->local_name ()
-                << " ();           // default constructor" << be_nl
+          << node->local_name ()
+          << " ();" << be_nl
           << "virtual ~" << node->local_name () << " ();\n" << be_nl;
 
       *os << "// TAO internals" << be_nl
           << "virtual void *_tao_obv_narrow (ptr_arith_t);" << be_nl;
-      // support for marshalling
+
+      // Support for marshalling.
       if (!node->is_abstract_valuetype ())
         {
           *os << "virtual CORBA::Boolean "
@@ -226,13 +238,13 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
           *os << "virtual CORBA::Boolean "
               << "_tao_unmarshal_v (TAO_InputCDR &);" << be_nl;
           // %! optimize _downcast away: extra parameter with type info
-          // set (void *) in CDR Stream with the right derived pointer
+          // set (void *) in CDR Stream with the right derived pointer.
         }
 
 
-      // private member:
+      // Private member:
 
-      // private copy constructor and assignment operator. These are not
+      // Private copy constructor and assignment operator. These are not
       // allowed, hence they are private.
       *os << be_uidt_nl << "private:" << be_idt_nl;
       *os << node->local_name () << " (const " << node->local_name () << " &);"
@@ -240,18 +252,19 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
           << "void operator= (const " << node->local_name () << " &);"
           << be_nl;
 
-      // map fields to private data (if optimizing)
+      // Map fields to private data (if optimizing).
       if (node->opt_accessor ())
         {
           *os << be_uidt_nl << "protected:" << be_idt_nl;
           *os << "CORBA::Boolean "
               << "_tao_marshal_state (TAO_OutputCDR &);" << be_nl
               << "CORBA::Boolean "
-              << "_tao_unmarshal_state (TAO_InputCDR &);\n\n";
-          *os << be_uidt_nl << "private:\n" << be_idt;
+              << "_tao_unmarshal_state (TAO_InputCDR &);" 
+              << be_uidt_nl << be_nl;
+          *os << "private:" << be_idt_nl;
           this->gen_pd (node);
         }
-      else // need a way to access the state of derived OBV_ classes
+      else // Need a way to access the state of derived OBV_ classes.
         {
           if (!node->is_abstract_valuetype ())
             {
@@ -265,37 +278,30 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
             }
         }
 
-      *os << be_uidt_nl << "};\n";
+      *os << be_uidt_nl << "};" << be_nl;
       os->gen_endif ();
 
-      // by using a visitor to declare and define the TypeCode, we have the
-      // added advantage to conditionally not generate any code. This will be
-      // based on the command line options. This is still TO-DO
-          // (see interface code how to do this. not yet impl.)
-
       node->cli_hdr_gen (I_TRUE);
-    } // if !cli_hdr_gen
+    }
+
   return 0;
 }
 
 
 int
 be_visitor_valuetype_ch::visit_operation (be_operation *node)
-// derived from be_visitor_operation_ch::visit_operation
 {
-  TAO_OutStream *os; // output stream
-  be_type *bt;       // type node
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_type *bt;
 
-  os = this->ctx_->stream ();
   this->ctx_->node (node); // save the node
 
-  os->indent (); // start with the current indentation level
-
-  // every operation is declared virtual in the client code
+  // Every operation is declared virtual in the client code.
   *os << "virtual ";
 
-  // STEP I: generate the return type
+  // STEP I: Generate the return type.
   bt = be_type::narrow_from_decl (node->return_type ());
+
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -305,7 +311,7 @@ be_visitor_valuetype_ch::visit_operation (be_operation *node)
                         -1);
     }
 
-  // grab the right visitor to generate the return type
+  // Grab the right visitor to generate the return type.
   be_visitor_context ctx (*this->ctx_);
   ctx.state (TAO_CodeGen::TAO_OPERATION_RETTYPE_CH);
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
@@ -328,16 +334,18 @@ be_visitor_valuetype_ch::visit_operation (be_operation *node)
                          "codegen for return type failed\n"),
                         -1);
     }
+
   delete visitor;
 
-  // STEP 2: generate the operation name
+  // STEP 2: Generate the operation name.
   *os << " " << node->local_name ();
 
-  // STEP 3: generate the argument list with the appropriate mapping. For these
-  // we grab a visitor that generates the parameter listing
+  // STEP 3: Generate the argument list with the appropriate mapping. For these
+  // we grab a visitor that generates the parameter listing.
   ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_CH);
   visitor = tao_cg->make_visitor (&ctx);
+
   if (!visitor)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -356,6 +364,7 @@ be_visitor_valuetype_ch::visit_operation (be_operation *node)
                          "codegen for argument list failed\n"),
                         -1);
     }
+
   delete visitor;
 
   // @@ Michael: We need to put the exception throw spec here
@@ -367,12 +376,16 @@ int
 be_visitor_valuetype_ch::visit_field (be_field *node)
 {
   be_valuetype *vt = be_valuetype::narrow_from_scope (node->defined_in ());
+
   if (!vt)
-    return -1;
+    {
+      return -1;
+    }
+
   be_visitor_context* ctx = new be_visitor_context (*this->ctx_);
   ctx->state (TAO_CodeGen::TAO_FIELD_OBV_CH);
   be_visitor_valuetype_field_ch *visitor =
-             new be_visitor_valuetype_field_ch (ctx);
+    new be_visitor_valuetype_field_ch (ctx);
 
   if (!visitor)
     {
@@ -383,9 +396,13 @@ be_visitor_valuetype_ch::visit_field (be_field *node)
     }
 
   if (vt->opt_accessor ())
-    visitor->setenclosings ("",";");
+    {
+      visitor->setenclosings ("",";");
+    }
   else
-    visitor->setenclosings ("virtual "," = 0;");
+    {
+      visitor->setenclosings ("virtual "," = 0;");
+    }
 
   if (node->accept (visitor) == -1)
     {
@@ -395,29 +412,22 @@ be_visitor_valuetype_ch::visit_field (be_field *node)
                         "visit_field - codegen failed\n"),
                         -1);
     }
+
   delete visitor;
   return 0;
 }
 
 
 void
-be_visitor_valuetype_ch::begin_public ()
+be_visitor_valuetype_ch::begin_public (void)
 {
-  TAO_OutStream *os; // output stream
-
-  os = this->ctx_->stream ();
-  *os << be_uidt;
-  os->indent ();
-  *os << "public:\n" << be_idt;
+  TAO_OutStream *os = this->ctx_->stream ();
+  *os << "public:" << be_idt_nl;
 }
 
 void
-be_visitor_valuetype_ch::begin_private ()
+be_visitor_valuetype_ch::begin_private (void)
 {
-  TAO_OutStream *os; // output stream
-
-  os = this->ctx_->stream ();
-  *os << be_uidt;
-  os->indent ();
-  *os << "protected:\n" << be_idt;
+  TAO_OutStream *os = this->ctx_->stream ();
+  *os << "protected:" << be_idt_nl;
 }

@@ -45,6 +45,7 @@ int
 be_visitor_valuetype_field_ch::visit_field (be_field *node)
 {
   be_type *bt = be_type::narrow_from_decl (node->field_type ());
+
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -55,6 +56,7 @@ be_visitor_valuetype_field_ch::visit_field (be_field *node)
     }
 
   this->ctx_->node (node); // save the node
+
   if (bt->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -127,7 +129,6 @@ be_visitor_valuetype_field_ch::visit_array (be_array *node)
         }
       delete visitor;
       // now use this array as a "type" for the subsequent declarator
-      os->indent (); // start from current indentation
       // the set method
       *os << pre_op () << "void " << ub->local_name () << " ("
           << "_" << bt->local_name () << ")"
@@ -143,7 +144,6 @@ be_visitor_valuetype_field_ch::visit_array (be_array *node)
   else
     {
       // now use this array as a "type" for the subsequent declarator
-      os->indent (); // start from current indentation
       // the set method
       *os << pre_op () << "void " << ub->local_name () << " ("
           << bt->name () << ")" << post_op () << "    // set"
@@ -219,7 +219,6 @@ be_visitor_valuetype_field_ch::visit_enum (be_enum *node)
     }
 
   // now use this enum as a "type" for the subsequent declarator
-  os->indent (); // start from current indentation
   // the set method
   *os << pre_op () << "void " << ub->local_name () << " ("
       << bt->name () << ")" << post_op () << "    // set"
@@ -257,7 +256,6 @@ be_visitor_valuetype_field_ch::visit_interface (be_interface *node)
 
   os = this->ctx_->stream ();
 
-  os->indent (); // start from current indentation
   // set method
   *os << pre_op() << "void " << ub->local_name () << " ("
       << bt->name () << "_ptr"
@@ -295,7 +293,6 @@ be_visitor_valuetype_field_ch::visit_interface_fwd (be_interface_fwd *node)
 
   os = this->ctx_->stream ();
 
-  os->indent (); // start from current indentation
   // set method
   *os << pre_op () << "void " << ub->local_name () << " ("
       << bt->name () << "_ptr"
@@ -333,7 +330,6 @@ be_visitor_valuetype_field_ch::visit_valuetype (be_valuetype *node)
 
   os = this->ctx_->stream ();
 
-  os->indent (); // start from current indentation
   // set method
   *os << pre_op () << "void " << ub->local_name () << " ("
       << bt->name () << " *"
@@ -371,7 +367,6 @@ be_visitor_valuetype_field_ch::visit_valuetype_fwd (be_valuetype_fwd *node)
 
   os = this->ctx_->stream ();
 
-  os->indent (); // start from current indentation
   // set method
   *os << pre_op () << "void " << ub->local_name () << " ("
       << bt->name () << " *"
@@ -408,7 +403,7 @@ be_visitor_valuetype_field_ch::visit_predefined_type (be_predefined_type *node)
     }
 
   os = this->ctx_->stream ();
-  os->indent (); // start from current indentation
+
   switch (node->pt ())
     {
     case AST_PredefinedType::PT_pseudo:
@@ -520,7 +515,6 @@ be_visitor_valuetype_field_ch::visit_sequence (be_sequence *node)
 
     }
 
-  os->indent ();
   // set method
   *os << pre_op () << "void " << ub->local_name () << " (const "
       << bt->name () << " &)"
@@ -555,8 +549,6 @@ be_visitor_valuetype_field_ch::visit_string (be_string *node)
     }
 
   os = this->ctx_->stream ();
-
-  os->indent ();
 
   // three methods to set the string value
   if (node->width () == (long) sizeof (char))
@@ -649,7 +641,7 @@ be_visitor_valuetype_field_ch::visit_structure (be_structure *node)
         }
       delete visitor;
     }
-  os->indent ();
+
   // set method
   *os << pre_op () << "void " << ub->local_name () << " (const "
       << bt->name () << " &)"
@@ -672,7 +664,6 @@ be_visitor_valuetype_field_ch::visit_typedef (be_typedef *node)
   TAO_OutStream *os; // output stream
 
   os = this->ctx_->stream ();
-  os->indent (); // start from current indentation level
   this->ctx_->alias (node);     // save the node for use in code generation and
                                // indicate that the union_branch of the union_branch node
                                // is a typedefed quantity
@@ -747,7 +738,7 @@ be_visitor_valuetype_field_ch::visit_union (be_union *node)
         }
       delete visitor;
     }
-  os->indent ();
+
   // set method
   *os << pre_op () << "void " << ub->local_name () << " (const "
       << bt->name () << " &)"

@@ -59,8 +59,6 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       // The following two are required to be under the ifdef macro to avoid
       // multiple declarations.
 
-      // Start with whatever indentation level we are at.
-      os->indent ();
       // Forward declaration.
       *os << "class " << node->local_name () << ";" << be_nl;
       // Generate the _ptr declaration.
@@ -78,8 +76,10 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_interface_ch::"
                              "visit_interface - "
-                             "codegen for _var failed\n"), -1);
+                             "codegen for _var failed\n"), 
+                            -1);
         }
+
       os->gen_endif ();
 
       // Generate the ifdef macro for the _out class.
@@ -94,6 +94,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
                              "visit_interface - "
                              "codegen for _out failed\n"), -1);
         }
+
       // Generate the endif macro.
       os->gen_endif ();
     }
@@ -108,7 +109,6 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
   // Now the interface definition itself.
   os->gen_ifdef_macro (node->flat_name ());
-  os->indent ();
 
   if (!node->is_local ())
     {
@@ -120,14 +120,17 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
           << "class " << node->remote_proxy_broker_name () << ";" 
           << be_nl << be_nl;
     }
+
   // Now generate the class definition.
   *os << "class " << be_global->stub_export_macro ()
-      << " " << node->local_name ();
+      << " " << node->local_name () << be_idt_nl
+      << ": " ;
 
   // If node interface inherits from other interfaces.
   if (node->n_inherits () > 0)
     {
-      *os << ": ";
+      *os << be_idt;
+
       for (i = 0; i < node->n_inherits (); i++)
         {
           be_interface *inherited =
@@ -148,17 +151,17 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
           if (i < node->n_inherits () - 1) 
             {
               // Node has multiple inheritance, so put a comma.
-              *os << ", ";
+              *os << ", " << be_nl;
             }
         }  // end of for loop
 
-      *os << be_nl;
+      *os << be_uidt << be_uidt_nl;
     }
   else
     {
       // We do not inherit from anybody, hence we do so from the base
       // CORBA::Object class.
-      *os << " : public virtual CORBA_Object" << be_nl;
+      *os << "public virtual CORBA_Object" << be_uidt_nl;
     }
 
   // Generate the body.
@@ -179,14 +182,14 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       // Generate the static _duplicate, _narrow, and _nil operations.
   *os << "// the static operations" << be_nl
       << "static " << node->local_name () << "_ptr " << "_duplicate ("
-      << node->local_name () << "_ptr obj);" << be_nl
+      << node->local_name () << "_ptr obj);" << be_nl << be_nl
       << "static " << node->local_name () << "_ptr "
       << "_narrow (" << be_idt << be_idt_nl
       << "CORBA::Object_ptr obj," << be_nl
       << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
       << "TAO_default_environment ()"
       << be_uidt << be_uidt_nl
-      << ");" << be_uidt_nl;
+      << ");" << be_uidt_nl << be_nl;
 
   // There's no need for an _unchecked_narrow for locality 
   // constrained object.
@@ -196,7 +199,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
       << "TAO_default_environment ()"
       << be_uidt << be_uidt_nl
-      << ");" << be_uidt_nl;
+      << ");" << be_uidt_nl << be_nl;
 
   // This method is defined in the header file to workaround old
   // g++ problems.
@@ -204,13 +207,12 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       << be_idt_nl << "{" << be_idt_nl
       << "return (" << node->local_name ()
       << "_ptr)0;" << be_uidt_nl
-      << "}" << be_uidt << "\n\n";
+      << "}" << be_uidt_nl << be_nl;
 
   // No Any operator for local interfaces.
   if (! node->is_local ())
     {
-      os->indent ();
-      *os << "static void _tao_any_destructor (void*);\n\n";
+      *os << "static void _tao_any_destructor (void*);" << be_nl << be_nl;
     }
 
   // Generate code for the interface definition by traversing thru the
@@ -226,8 +228,6 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
     }
 
   // The _is_a method
-  os->indent ();
-
   if (! node->is_local ())
     {
       *os << "virtual CORBA::Boolean _is_a (" << be_idt << be_idt_nl
@@ -235,7 +235,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
           << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
           << "TAO_default_environment ()"
           << be_uidt << be_uidt_nl
-          << ");" << be_uidt << be_nl;
+          << ");" << be_uidt_nl << be_nl;
     }
 
   // The _tao_QueryInterface method.
@@ -265,8 +265,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       *os << node->local_name () << " (int collocated = 0);" 
           << be_nl << be_nl;
 
-      *os << "protected:" << be_idt_nl
-          << "// This methods travese the inheritance tree and set the" 
+      *os << "// This methods travese the inheritance tree and set the" 
           << be_nl
           << "// parents piece of the given class in the right mode" 
           << be_nl
@@ -282,9 +281,9 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
   if (! node->is_local ())
     {
       *os << node->local_name ()
-          << " (" << be_idt << be_nl << "TAO_Stub *objref, " << be_nl
+          << " (" << be_idt << be_idt_nl << "TAO_Stub *objref, " << be_nl
           << "CORBA::Boolean _tao_collocated = 0," << be_nl
-          << "TAO_Abstract_ServantBase *servant = 0" <<  be_nl
+          << "TAO_Abstract_ServantBase *servant = 0" <<  be_uidt_nl
           << ");" << be_uidt_nl << be_nl;
 
       // Friends declarations.
@@ -293,10 +292,11 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
           << "friend class " << node->thru_poa_proxy_impl_name () << ";" 
           << be_nl
           << "friend class " << node->direct_proxy_impl_name () << ";" 
-          << be_uidt_nl << be_nl;
+          << be_nl << be_nl;
     }
   // Protected destructor.
-  *os << "virtual ~" << node->local_name () << " (void);" << be_uidt_nl;
+  *os << "virtual ~" << node->local_name () << " (void);" 
+      << be_uidt_nl << be_nl;
 
   // private copy constructor and assignment operator. These are not
   // allowed, hence they are private.
@@ -318,11 +318,11 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
   if (!visitor || (node->accept (visitor) == -1))
     {
       delete visitor;
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_interface_ch::"
-                             "visit_interface - "
-                             "codegen for interceptor classes failed\n"),
-                            -1);
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_interface_ch::"
+                         "visit_interface - "
+                         "codegen for interceptor classes failed\n"),
+                        -1);
     }
 
   delete visitor;
@@ -331,7 +331,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
   ctx = *this->ctx_;
 
   *os << be_uidt_nl;
-  *os << "};\n\n";
+  *os << "};" << be_nl << be_nl;
 
   // Don't support smart proxies for local interfaces.
   if (! node->is_local ())
@@ -398,24 +398,21 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
   os->gen_endif ();
 
-  if (! node->is_local ())
+  if (!node->is_local ())
     {
-      // By using a visitor to declare and define the TypeCode, we
-      // have the added advantage to conditionally not generate
-      // any code. This will be based on the command line
-      // options. This is still TO-DO be_visitor *visitor;
       visitor = 0;
       ctx.state (TAO_CodeGen::TAO_TYPECODE_DECL);
       visitor = tao_cg->make_visitor (&ctx);
+
       if (!visitor || (node->accept (visitor) == -1))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_interface_ch::"
                              "visit_interface - "
                              "TypeCode declaration failed\n"
-                             ), -1);
+                             ), 
+                            -1);
         }
-
     }
 
   node->cli_hdr_gen (I_TRUE);
