@@ -1,3 +1,9 @@
+Sun Sep 26 14:10:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/imr_activator.mpb:
+        * bin/MakeProjectCreator/config/imr_locator.mpb:
+          Added missing Id tag
+
 Sun Sep 26 10:10:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ICMP_Socket.h:

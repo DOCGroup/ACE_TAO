@@ -91,7 +91,7 @@ ACE::ICMP_Socket::open (ACE_Addr const & local,
                         int protocol,
                         int reuse_addr)
 {
-  ACE_TRACE ("ACE::ICMP_Socket::recv");
+  ACE_TRACE ("ACE::ICMP_Socket::open");
 
   if (! this->check_root_euid ())
     {
