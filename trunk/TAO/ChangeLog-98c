@@ -14,6 +14,9 @@ Tue Sep 22 14:29:29 1998  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 Tue Sep 22 13:21:02 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
+	* orbsvcs/Naming_Service/Naming_Service.cpp (init): Don't look for
+ 	  an existing naming service, just become one.
+
 	* orbsvcs/orbsvcs/Naming/CosNaming_i.cpp (destroy): Must destroy
  	  self after release the lock.
 
