@@ -38,9 +38,17 @@
 # endif /* ACE_HAS_BROKEN_R_ROUTINES */
 
 // We need this for MVS... as well as Linux, etc...
+// On Windows, we explicitly set this up as __cdecl so it's correct even
+// if building with another calling convention, such as __stdcall.
+#if defined (ACE_WIN32) && defined (_MSC_VER)
+extern "C" {
+  typedef int (__cdecl *ACE_COMPARE_FUNC)(const void *, const void *);
+}
+#else
 extern "C" {
   typedef int (*ACE_COMPARE_FUNC)(const void *, const void *);
 }
+#endif /* ACE_WIN32 && _MSC_VER */
 
 namespace ACE_OS {
 
