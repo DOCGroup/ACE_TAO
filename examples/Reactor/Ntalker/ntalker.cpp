@@ -10,6 +10,7 @@
 #include "ace/Reactor.h"
 #include "ace/Get_Opt.h"
 #include "ace/Thread_Manager.h"
+#include "ace/Service_Config.h"
 
 #if defined (ACE_HAS_IP_MULTICAST)
 // network interface to subscribe to
@@ -35,9 +36,8 @@ public:
   virtual int handle_input (ACE_HANDLE);
   virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
 
-  //private:
+private:
   ACE_SOCK_Dgram_Mcast mcast_;
-  ACE_Handle_Set handle_set_;
 };
 
 int
@@ -119,11 +119,8 @@ Handler::Handler (u_short udp_port,
   // if (this->mcast_.set_option (IP_MULTICAST_LOOP, 0) == -1 )
   //   ACE_OS::perror (" can't disable loopbacks " ), ACE_OS::exit (1);
 
-  this->handle_set_.set_bit (ACE_STDIN);
-  this->handle_set_.set_bit (this->mcast_.get_handle ());
-
   // Register callbacks with the ACE_Reactor.
-  if (reactor.register_handler (this->handle_set_,
+  if (reactor.register_handler (this->mcast_.get_handle (),
 				this,
 				ACE_Event_Handler::READ_MASK) == -1)
     ACE_OS::perror ("can't register events"), ACE_OS::exit (1);
@@ -150,57 +147,19 @@ parse_args (int argc, char *argv[])
       }
 }
 
-static sig_atomic_t done = 0;
-static ACE_Thread_Manager manager;
-
-// Signal handler.
-
-extern "C" void
-signal_handler (int)
-{
-  done = 1;
-}
-
-void *
-handle_stdin (void *data)
-{
-  ACE_Thread_Control tc (&manager);
-  Handler *handler = (Handler *) data;
-  while (1)
-    handler->handle_input (ACE_STDIN);
-  return 0;
-}
-
-void *
-handle_mcast (void *data)
-{
-  ACE_Thread_Control tc (&manager);
-  Handler *handler = (Handler *) data;
-  while (1)
-    handler->handle_input (handler->mcast_.get_handle ());
-  return 0;
-}
-
 int 
 main (int argc, char *argv[])
 {
   parse_args (argc, argv);
 
-  ACE_Reactor reactor;
-  Handler handler (UDP_PORT, MCAST_ADDR, INTERFACE, reactor);
+  Handler handler (UDP_PORT, MCAST_ADDR, INTERFACE, *ACE_Service_Config::reactor ());
 
-  // main loop
-#if !defined (MULTI_THREADED) && !defined (ACE_WIN32) 
-  ACE_Sig_Action sa ((ACE_SignalHandler) signal_handler, SIGINT);
-  ACE_UNUSED_ARG (sa);
+  ACE::register_stdin_handler (&handler,
+			       ACE_Service_Config::reactor (),
+			       ACE_Service_Config::thr_mgr ());
 
-  while (!done)
-    reactor.handle_events ();
-#else
-  manager.spawn (handle_stdin, &handler);
-  manager.spawn (handle_mcast, &handler);
-  manager.wait ();
-#endif
+  ACE_Service_Config::run_reactor_event_loop ();
+
   cout << "\ntalker Done.\n";
   return 0;
 }
