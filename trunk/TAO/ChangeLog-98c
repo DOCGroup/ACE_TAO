@@ -1,3 +1,8 @@
+Wed Oct 29 16:07:20 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* docs/Options.html: Updated the documentation to reflect recent
+ 	changes.
+
 Wed Oct 29 15:59:30 1997  Sergio Flores  <sergio@polka.cs.wustl.edu>
 
 	* tests/IDL_Cubit/clnt.cpp: OO'ified the code. Added class
