@@ -1,3 +1,11 @@
+Thu Dec 03 01:00:47 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Environment.cpp:
+	* tao/Exception.cpp:
+	* tao/POAC.cpp:
+	* tao/debug.cpp: Changed the uses of "completion ()" to "completed
+	  ()".
+
 Wed Dec  2 21:56:56 1998  Shawn Michael Atkins  <sma1@lambada.cs.wustl.edu>
 
 	* performance-tests/Thruput/TAO/ttcp_decl.h: commented out
