@@ -25,12 +25,14 @@
  * BE_Array
  */
 be_array::be_array (void)
+  :  tao_name_ (0)
 {
 }
 
 be_array::be_array (UTL_ScopedName *n, unsigned long ndims, UTL_ExprList *dims)
   : AST_Array (n, ndims, dims),
-    AST_Decl (AST_Decl::NT_array, n, NULL)
+    AST_Decl (AST_Decl::NT_array, n, NULL),
+    tao_name_ (0)
 {
 #if 0
   // if we are inside of a union, we change our local name to have an
@@ -54,19 +56,85 @@ be_array::be_array (UTL_ScopedName *n, unsigned long ndims, UTL_ExprList *dims)
 #endif
 }
 
+be_array::~be_array (void)
+{
+  if (this->tao_name_ == 0)
+    delete[] tao_name_;
+}
+
 // create a name for ourselves
+const char*
+be_array::tao_name (void)
+{
+  if (this->tao_name_ != 0)
+    return this->tao_name_;
+
+  be_type *bt = be_type::narrow_from_decl (this->base_type ());
+  if (!bt)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_array::"
+                         "tao_name - "
+                         "bad base type\n"),
+                        0);
+    }
+
+  const char prefix[] = "_tc_tao_array_";
+  
+  int l = (ACE_OS::strlen (bt->local_name ()->get_string ())
+	   + ACE_OS::strlen (this->local_name ()->get_string ()) + 1
+	   + sizeof (prefix)
+	   + 5 * this->n_dims ());
+
+  ACE_NEW_RETURN (this->tao_name_, char[l], 0);
+
+  ACE_OS::sprintf (this->tao_name_, "%s%s_%s",
+		   prefix, this->local_name ()->get_string (),
+		   bt->local_name ()->get_string());
+
+  for (int i = 0; i < this->n_dims (); ++i)
+    {
+      AST_Expression *expr = this->dims ()[i]; // retrieve the ith
+
+      // dimension value
+      if ((expr == NULL) || ((expr != NULL) && (expr->ev () == NULL)))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_array::"
+                             "tao_name - "
+                             "bad array dimension\n"),
+                            0);
+        }
+
+      if (expr->ev ()->et != AST_Expression::EV_ulong)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_array::"
+                             "tao_name - "
+                             "bad dimension value\n"),
+                            0);
+	}
+
+      char buf[16];
+      ACE_OS::sprintf (buf, "_%04.4x", ((int)expr->ev ()->u.ulval));
+      ACE_OS::strcat (this->tao_name_, buf);
+    }
+  return this->tao_name_;
+}
+
 int
 be_array::create_name (void)
 {
   char namebuf [NAMEBUFSIZE];
-  be_type *bt; // base type;
   unsigned long i;
   UTL_ScopedName *n = NULL;
   be_decl *scope; // scope in which we are defined
 
   ACE_OS::memset (namebuf, '\0', NAMEBUFSIZE);  // reset the buffer
   // retrieve the base type
-  bt = be_type::narrow_from_decl (this->base_type ());
+  // the name always starts this way
+
+  be_type *bt = be_type::narrow_from_decl (this->base_type ());
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -75,7 +143,7 @@ be_array::create_name (void)
                          "bad base type\n"),
                         0);
     }
-  // the name always starts this way
+
   ACE_OS::sprintf (namebuf, "_tao_array_%s", bt->local_name ()->get_string ());
   // now append dimensions
   for (i = 0; i < this->n_dims (); i++)
@@ -290,8 +358,8 @@ be_array::gen_client_header (void)
         *ch << "static ";
 
       // the return type is a pointer to slice
-      *ch <<  this->local_name () << "_slice *" << this->local_name () <<
-        "_alloc (void);" << nl;
+      *ch <<  this->local_name () << "_slice *"
+	  << this->local_name () << "_alloc (void);" << nl;
       // the T_dup method
       if (this->is_nested ())
         *ch << "static ";
@@ -308,8 +376,8 @@ be_array::gen_client_header (void)
         {
           // we have a scoped name
           ch->indent ();
-          *ch << "static CORBA::TypeCode_ptr " << this->tc_name
-            ()->last_component () << ";\n\n";
+          *ch << "static CORBA::TypeCode_ptr "
+	      << this->tao_name () << ";\n\n";
         }
       else
         {
@@ -318,7 +386,7 @@ be_array::gen_client_header (void)
           *ch << "extern "
 	      << idl_global->export_macro ()
 	      << " CORBA::TypeCode_ptr "
-	      << this->tc_name ()->last_component () << ";\n\n";
+	      << this->tao_name () << ";\n\n";
         }
       ch->gen_endif ();
 
@@ -382,8 +450,8 @@ be_array::gen_client_stubs (void)
 
       // generate the typecode information here
       cs->indent (); // start from current indentation level
-      *cs << "static const CORBA::Long _oc_" << this->flatname () << "[] =" <<
-        nl;
+      *cs << "static const CORBA::Long _oc_"
+	  << this->tao_name () << "[] =" << nl;
       *cs << "{\n";
       cs->incr_indent (0);
       if (this->gen_encapsulation () == -1)
@@ -394,19 +462,24 @@ be_array::gen_client_stubs (void)
       cs->decr_indent ();
       *cs << "};" << nl;
 
-      *cs << "static CORBA::TypeCode _tc__tc_" << this->flatname () <<
-        " (CORBA::tk_sequence, sizeof (_oc_" <<  this->flatname () <<
-        "), (unsigned char *) &_oc_" << this->flatname () <<
-        ", CORBA::B_FALSE);" << nl;
-      *cs << "CORBA::TypeCode_ptr " << this->tc_name () << " = &_tc__tc_" <<
-        this->flatname () << ";\n\n";
+      *cs << "static CORBA::TypeCode _tc__tc_"
+	  << this->tao_name ()
+	  << " (CORBA::tk_sequence, "
+	  << "sizeof (_oc_" <<  this->tao_name ()
+	  << "), (unsigned char *) &_oc_"
+	  << this->tao_name ()
+	  << ", CORBA::B_FALSE);" << nl;
+      *cs << "CORBA::TypeCode_ptr "
+	  << this->tao_name () << " = &_tc__tc_"
+	  << this->tao_name () << ";\n\n";
 
       cg->pop ();
       this->cli_stub_gen_ = I_TRUE;
 
       // T_dup method
       *cs << this->name () << "_slice *" << nl;
-      *cs << this->name () << "_dup (" << this->name () << "_slice * s)" << nl;
+      *cs << this->name () << "_dup (const "
+	  << this->name () << "_slice * s)" << nl;
       *cs << "{\n";
       cs->incr_indent ();
       *cs << this->name () << "_slice *temp;" << nl;
@@ -541,7 +614,9 @@ be_array::gen_client_inline (void)
       *ci << "}\n\n";
 
       // free method
-      *ci << this->name () << "_free (" << this->name () << "_slice *s)" << nl;
+      *ci << "void" << nl
+	  << this->name () << "_free (" << this->name ()
+	  << "_slice *s)" << nl;
       *ci << "{\n";
       ci->incr_indent ();
       *ci << "delete [] s;\n";
@@ -652,7 +727,7 @@ be_array::gen_var_defn (void)
     "_slice &operator[] (CORBA::ULong index) const;" << nl;
 
   // cast operators
-  *ch << "operator const " << this->local_name () << "_slice *&() const;" <<
+  *ch << "operator " << this->local_name () << "_slice * const &() const;" <<
     nl;
   *ch << "operator " << this->local_name () << "_slice *&();" << nl;
 
@@ -789,8 +864,8 @@ be_array::gen_var_impl (void)
   // other extra methods - cast operators ()
   ci->indent ();
   *ci << "ACE_INLINE " << nl;
-  *ci << fname << "::operator const " << this->name () <<
-    "_slice *&() const // cast" << nl;
+  *ci << fname << "::operator " << this->name () <<
+    "_slice * const &() const // cast" << nl;
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "return this->ptr_;\n";
@@ -808,7 +883,7 @@ be_array::gen_var_impl (void)
 
   // two operator []s instead of ->
   ci->indent ();
-  *ci << "ACE_INLINE const" << name () << "_slice &" << nl;
+  *ci << "ACE_INLINE const " << this->name () << "_slice &" << nl;
   *ci << fname << "::operator[] (CORBA::ULong index) const" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -827,7 +902,7 @@ be_array::gen_var_impl (void)
 
   // in, inout, out, and _retn
   ci->indent ();
-  *ci << "ACE_INLINE " << this->name () << "_slice *" << nl;
+  *ci << "ACE_INLINE const " << this->name () << "_slice *" << nl;
   *ci << fname << "::in (void) const" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -845,7 +920,7 @@ be_array::gen_var_impl (void)
   *ci << "}\n\n";
 
   ci->indent ();
-  *ci << "ACE_INLINE " << this->name () << "_slice *" << nl;
+  *ci << "ACE_INLINE " << this->name () << "_slice * &" << nl;
   *ci << fname << "::out (void)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -858,7 +933,7 @@ be_array::gen_var_impl (void)
   *ci << fname << "::_retn (void)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
-  *ci << "return this->val;\n";
+  *ci << "return this->ptr_;\n";
   ci->decr_indent ();
   *ci << "}\n\n";
 
@@ -1110,7 +1185,7 @@ be_array::gen_forany_defn (void)
     "_slice &operator[] (CORBA::ULong index) const;" << nl;
 
   // cast operators
-  *ch << "operator const " << this->local_name () << "_slice *&() const;" <<
+  *ch << "operator " << this->local_name () << "_slice * const &() const;" <<
     nl;
   *ch << "operator " << this->local_name () << "_slice *&();" << nl;
 
@@ -1252,8 +1327,8 @@ be_array::gen_forany_impl (void)
   // other extra methods - cast operators ()
   ci->indent ();
   *ci << "ACE_INLINE " << nl;
-  *ci << fname << "::operator const " << this->name () <<
-    "_slice *&() const // cast" << nl;
+  *ci << fname << "::operator " << this->name ()
+      << "_slice * const &() const // cast" << nl;
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "return this->ptr_;\n";
@@ -1271,7 +1346,7 @@ be_array::gen_forany_impl (void)
 
   // two operator []s instead of ->
   ci->indent ();
-  *ci << "ACE_INLINE const" << name () << "_slice &" << nl;
+  *ci << "ACE_INLINE " << name () << "_slice const &" << nl;
   *ci << fname << "::operator[] (CORBA::ULong index) const" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -1290,7 +1365,7 @@ be_array::gen_forany_impl (void)
 
   // in, inout, out, and _retn
   ci->indent ();
-  *ci << "ACE_INLINE " << this->name () << "_slice *" << nl;
+  *ci << "ACE_INLINE const " << this->name () << "_slice *" << nl;
   *ci << fname << "::in (void) const" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -1308,7 +1383,7 @@ be_array::gen_forany_impl (void)
   *ci << "}\n\n";
 
   ci->indent ();
-  *ci << "ACE_INLINE " << this->name () << "_slice *" << nl;
+  *ci << "ACE_INLINE " << this->name () << "_slice * &" << nl;
   *ci << fname << "::out (void)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -1321,7 +1396,7 @@ be_array::gen_forany_impl (void)
   *ci << fname << "::_retn (void)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
-  *ci << "return this->val;\n";
+  *ci << "return this->ptr_;\n";
   ci->decr_indent ();
   *ci << "}\n\n";
 

@@ -46,11 +46,11 @@ be_type::be_type (AST_Decl::NodeType nt, UTL_ScopedName *n, UTL_StrList *p)
 void
 be_type::compute_tc_name (void)
 {
-  static char namebuf [200];
+  static char namebuf [NAMEBUFSIZE];
   UTL_ScopedName *n;
 
   this->tc_name_ = NULL;
-  ACE_OS::memset (namebuf, '\0', 200);
+  ACE_OS::memset (namebuf, '\0', NAMEBUFSIZE);
   n = this->name ();
   while (n->tail () != NULL)
     {
