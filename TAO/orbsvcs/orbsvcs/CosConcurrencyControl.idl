@@ -30,7 +30,7 @@
 // The part depending on the transaction service may be included by defining
 // TAO_HAS_TRANSACTION_CONTROL_SERVICE
 
-#if defined (TAO_HAS_TRANSACTION_CONTROL_SERVICE)
+#ifdef TAO_HAS_TRANSACTION_CONTROL_SERVICE
 #include <CosTransactions.idl>
 #endif /* TAO_HAS_TRANSACTION_CONTROL_SERVICE */
 
@@ -66,7 +66,7 @@ module CosConcurrencyControl
   // unlock or change the mode of a lock is called and the specified
   // lock is not held
 
-#if defined (TAO_HAS_TRANSACTION_CONTROL_SERVICE)
+#ifdef TAO_HAS_TRANSACTION_CONTROL_SERVICE
   // @@ The lock coordinator is designed for transactional lock sets,
   // so we don't support it (yet).
   interface LockCoordinator
@@ -118,14 +118,14 @@ module CosConcurrencyControl
       // until the new mode can be granted. If the lock is not held in
       // the specified mode the exception LockNotHeld is raised.
 
-#if defined (TAO_HAS_TRANSACTION_CONTROL_SERVICE)
+#ifdef TAO_HAS_TRANSACTION_CONTROL_SERVICE
       LockCoordinator get_coordinator (in CosTransactions::Coordinator which);
       // Returns the lock coordinator associated with the specified
       // transaction.
 #endif /* TAO_HAS_TRANSACTION_CONTROL_SERVICE */
     };
 
-#if defined (TAO_HAS_TRANSACTION_CONTROL_SERVICE)
+#ifdef TAO_HAS_TRANSACTION_CONTROL_SERVICE
   interface TransactionalLockSet
     {
       // = TITLE
@@ -184,7 +184,7 @@ module CosConcurrencyControl
       // Creates a lock set related to the specified lock set. Related lock
       // sets drop their locks together.
 
-#if defined (TAO_HAS_TRANSACTION_CONTROL_SERVICE)
+#ifdef TAO_HAS_TRANSACTION_CONTROL_SERVICE
       TransactionalLockSet create_transactional ();
       // Creates a new TransactionalLockSet and lock coordinator for
       // transactional mode clients.

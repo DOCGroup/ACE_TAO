@@ -202,6 +202,7 @@ inline void *operator new (unsigned int, void *p) { return p; }
 # pragma warning(default: 4201)  /* winnt.h uses nameless structs */
 
 // At least for Win32 - MSVC compiler (ver. 5)
+# define ACE_INT64_FORMAT_SPECIFIER "%I64d"
 # define ACE_UINT64_FORMAT_SPECIFIER "%I64u"
 
 #endif /* _MSC_VER */

@@ -64,6 +64,7 @@
 # define ACE_SIZEOF_LONG_DOUBLE 10
 # define ACE_TEMPLATES_REQUIRE_SOURCE 1
 # define ACE_UINT64_FORMAT_SPECIFIER "%Lu"
+# define ACE_INT64_FORMAT_SPECIFIER "%Ld"
 # define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 
 /* need to ensure these are included before <iomanip> */

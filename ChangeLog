@@ -1,3 +1,10 @@
+Fri Feb 25 10:47:33 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/config-win32-msvc.h,
+	* ace/config-win32-borland.h: Added ACE_INT64_FORMAT_SPECIFIER
+	  for both platforms.  Thanks to Christopher
+          Kohlhoff <chris@kohlhoff.com> for providing the fix.
+
 Thu Feb 24 15:44:42 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/ace-dll.icc: Added Capabilities.h and Capabilities.cpp.
