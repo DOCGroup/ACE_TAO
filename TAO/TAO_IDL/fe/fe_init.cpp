@@ -72,6 +72,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_identifier.h"
 #include "global_extern.h"
 #include "fe_extern.h"
+#include "ace/Env_Value_T.h"
 
 ACE_RCSID (fe,
            fe_init,
@@ -677,3 +678,112 @@ FE_populate (void)
   fe_populate_idl_keywords ();
 }
 
+// Store include paths from the environment variable, if any.
+void
+FE_store_env_include_paths (void)
+{
+  ACE_Env_Value<char*> incl_paths ("INCLUDE",
+                                   (char *) 0);
+  const char *aggr_str = incl_paths;
+
+  if (aggr_str != 0)
+    {
+      char separator;
+#if defined (ACE_WIN32)
+      separator = ';';
+#else
+      separator = ':';
+#endif
+      ACE_CString aggr_cstr (aggr_str);
+      ssize_t pos;
+
+      do
+        {
+          pos = aggr_cstr.find (separator);
+          idl_global->add_include_path (aggr_cstr.substr (0, pos).fast_rep ());
+          aggr_cstr = aggr_cstr.substr (pos + 1);
+        } while (pos != ACE_String_Base_Const::npos);
+    }
+}
+
+const char *
+FE_get_cpp_loc_from_env (void)
+{
+  const char *cpp_loc = 0;
+
+  // See if TAO_IDL_PREPROCESSOR is defined.
+  ACE_Env_Value<char*> preprocessor ("TAO_IDL_PREPROCESSOR",
+                                     (char *) 0);
+
+  // Set cpp_loc to the built in location, unless it has been overriden by
+  // environment variables.
+  if (preprocessor != 0)
+    {
+      cpp_loc = preprocessor;
+    }
+  else
+    {
+      // Check for the deprecated CPP_LOCATION environment variable
+      ACE_Env_Value<char*> cpp_path ("CPP_LOCATION",
+                                     (char *) 0);
+
+      if (cpp_path != 0)
+        {
+          ACE_ERROR ((LM_WARNING,
+                      "WARNING: The environment variable "
+                      "CPP_LOCATION has been deprecated.\n"
+                      "         Please use TAO_IDL_PREPROCESSOR "
+                      "instead.\n"));
+
+          cpp_loc = cpp_path;
+        }
+      else
+        {
+          cpp_loc = idl_global->cpp_location ();
+        }
+    }
+    
+  return cpp_loc;
+}
+
+const char *
+FE_get_cpp_args_from_env (void)
+{
+  const char *cpp_args = 0;
+  
+  // Added some customizable preprocessor options
+  ACE_Env_Value<char*> args1 ("TAO_IDL_PREPROCESSOR_ARGS",
+                              (char *) 0);
+
+  if (args1 != 0)
+    {
+      cpp_args = args1;
+    }
+  else
+    {
+      // Check for the deprecated TAO_IDL_DEFAULT_CPP_FLAGS environment
+      // variable.
+      ACE_Env_Value<char*> args2 ("TAO_IDL_DEFAULT_CPP_FLAGS",
+                                  (char *) 0);
+
+      if (args2 != 0)
+        {
+          ACE_ERROR ((LM_WARNING,
+                      "Warning: The environment variable "
+                      "TAO_IDL_DEFAULT_CPP_FLAGS has been "
+                      "deprecated.\n"
+                      "         Please use "
+                      "TAO_IDL_PREPROCESSOR_ARGS instead.\n"));
+
+          cpp_args = args2;
+        }
+    }
+    
+  return cpp_args;
+}
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template class ACE_Env_Value<char*>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate ACE_Env_Value<char*>
+#endif

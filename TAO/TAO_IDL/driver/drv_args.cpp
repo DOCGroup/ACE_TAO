@@ -69,6 +69,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "idl_defines.h"
 #include "global_extern.h"
 #include "drv_extern.h"
+#include "fe_extern.h"
 #include "be_global.h"
 #include "be_extern.h"
 #include "ace/OS_NS_stdio.h"
@@ -203,7 +204,7 @@ DRV_parse_args (long ac, char **av)
   char *s = 0;
   long i;
 
-  DRV_store_env_include_paths ();
+  FE_store_env_include_paths ();
   DRV_cpp_init ();
   idl_global->set_prog_name (av[0]);
 
