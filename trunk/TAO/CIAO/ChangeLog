@@ -1,3 +1,9 @@
+Fri Jun 18 11:59:56 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* docs/tutorial/Hello/hello_exec.cpp:
+	* docs/tutorial/Hello/hello_exec.h:
+	  Updated these files to follow up the changes in CIDLC.
+
 Fri Jun 18 11:56:09 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/RepositoryManager/Update_Plan.cpp:
