@@ -1,3 +1,12 @@
+Wed Jun 18 19:33:24 2003  Gan Deng <gan.deng@vanderbilt.edu>
+
+        * performance-tests/Sequence_Latency/AMH/*: 
+
+          New test for the sequence of different data types. This is 
+          based on performance-tests/Latency/AMH, but uses different 
+          data types.
+
+
 Wed Jun 18 19:25:32 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/RTPortableServer/RT_Servant_Dispatcher.cpp:
