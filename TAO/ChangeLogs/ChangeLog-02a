@@ -1,3 +1,27 @@
+Thu Apr 26 22:21:26 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tests/IDL_Test/interface.idl:
+        * tests/IDL_Test/generic_object.idl:
+
+          Removed declarations that were put in to test handling
+          of undefined forward declared interfaces, then commented
+          out.
+
+        * tests/IDL_Test/fwd.idl:
+        * tests/IDL_Test/full.idl:
+
+          New files, which test the generated code for undefined
+          forward declared interfaces. Despite the names, the files
+          contain interfaces that are mutually dependent. Each file
+          has a fully defined interface that uses an interface which
+          is fully defined only in the other file.
+
+        * tests/IDL_Test/IDL_Test.dsp:
+        * tests/IDL_Test/Makefile:
+        * tests/IDL_Test/Makefile.bor:
+
+          Added the new IDL files.
+
 Thu Apr 26 20:18:45 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/GIOP_Message_Generator_Parser_12.cpp:
