@@ -2131,7 +2131,7 @@ POA_PortableServer::_tao_collocated_POAManager:: get_state(CORBA::Environment &A
 }
 
 PortableServer::POAManager*
-POA_PortableServer::POAManager::_this (CORBA_Environment &ACE_TRY_ENV)
+POA_PortableServer::POAManager::_this (CORBA_Environment &)
 {
   return new POA_PortableServer::_tao_collocated_POAManager (this, 0);
 }
@@ -2213,7 +2213,7 @@ CORBA::Boolean POA_PortableServer::_tao_collocated_AdapterActivator::unknown_ada
 
 
 PortableServer::AdapterActivator*
-POA_PortableServer::AdapterActivator::_this (CORBA_Environment &ACE_TRY_ENV)
+POA_PortableServer::AdapterActivator::_this (CORBA_Environment &)
 {
   return new POA_PortableServer::_tao_collocated_AdapterActivator (this, 0);
 }
@@ -2280,7 +2280,7 @@ CORBA::Boolean POA_PortableServer::_tao_collocated_ServantManager::_is_a (
 
 
 PortableServer::ServantManager*
-POA_PortableServer::ServantManager::_this (CORBA_Environment &ACE_TRY_ENV)
+POA_PortableServer::ServantManager::_this (CORBA_Environment &)
 {
   return new POA_PortableServer::_tao_collocated_ServantManager (this, 0);
 }
@@ -2383,7 +2383,7 @@ void POA_PortableServer::_tao_collocated_ServantActivator::etherealize (
 
 
 PortableServer::ServantActivator*
-POA_PortableServer::ServantActivator::_this (CORBA_Environment &ACE_TRY_ENV)
+POA_PortableServer::ServantActivator::_this (CORBA_Environment &)
 {
   return new POA_PortableServer::_tao_collocated_ServantActivator (this, 0);
 }
@@ -2490,7 +2490,7 @@ void POA_PortableServer::_tao_collocated_ServantLocator::postinvoke (
 
 
 PortableServer::ServantLocator*
-POA_PortableServer::ServantLocator::_this (CORBA_Environment &ACE_TRY_ENV)
+POA_PortableServer::ServantLocator::_this (CORBA_Environment &)
 {
   return new POA_PortableServer::_tao_collocated_ServantLocator (this, 0);
 }
@@ -2895,7 +2895,7 @@ CORBA::Object_ptr POA_PortableServer::_tao_collocated_POA::id_to_reference (
 
 
 PortableServer::POA*
-POA_PortableServer::POA::_this (CORBA_Environment &ACE_TRY_ENV)
+POA_PortableServer::POA::_this (CORBA_Environment &)
 {
   return new POA_PortableServer::_tao_collocated_POA (this, 0);
 }
@@ -2984,7 +2984,7 @@ PortableServer::ObjectId * POA_PortableServer::_tao_collocated_Current::get_obje
 
 
 PortableServer::Current*
-POA_PortableServer::Current::_this (CORBA_Environment &ACE_TRY_ENV)
+POA_PortableServer::Current::_this (CORBA_Environment &)
 {
   return new POA_PortableServer::_tao_collocated_Current (this, 0);
 }
