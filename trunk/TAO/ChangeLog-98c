@@ -1,3 +1,9 @@
+Wed Jul 22 14:16:53 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
+
+	* Makefile: Removed the reference to "client.h" which was
+	confusing the compiler and causing all sorts of mayhem (since
+	client.h has been removed). Huzzah. 
+	
 Wed Jul 22 2:12:34 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
       * TAO/tests/Cubit/TAO/DII_Cubit/client.cpp

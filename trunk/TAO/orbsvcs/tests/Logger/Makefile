@@ -517,6 +517,5 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/LoggerC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/LoggerC.i \
- client.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
