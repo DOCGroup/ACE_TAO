@@ -1,3 +1,27 @@
+Fri Apr  5 12:10:38 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_exception/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+        * TAO_IDL/be_include/be_visitor_exception.h:
+        * TAO_IDL/be_include/be_visitor_structure.h:
+        * TAO_IDL/be_include/be_visitor_union.h:
+        * TAO_IDL/be_include/be_visitor_exception/any_op_ch.h:
+        * TAO_IDL/be_include/be_visitor_exception/any_op_cs.h:
+        * TAO_IDL/be_include/be_visitor_structure/any_op_ch.h:
+        * TAO_IDL/be_include/be_visitor_structure/any_op_cs.h:
+        * TAO_IDL/be_include/be_visitor_union/any_op_ch.h:
+        * TAO_IDL/be_include/be_visitor_union/any_op_cs.h:
+
+	  Added methods to generate Any operators for exception,
+	  struct and union members defined rather than
+	  referenced. Thanks to Christian Veleba 
+	  <christian.veleba@porsche.co.at> for reporting the
+	  problem.
+
 Fri Apr  5 15:57:54 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Condition.inl: Fixed a compile error with SunCC. 
