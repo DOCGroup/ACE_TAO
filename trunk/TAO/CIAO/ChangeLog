@@ -1,3 +1,26 @@
+Sun May  9 09:08:06 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* examples/OEP/BasicSP/BMClosedED/BMClosedED_exec.cpp:
+	* examples/OEP/BasicSP/BMClosedED/BMClosedED_exec.h:
+	* examples/OEP/BasicSP/BMDevice/BMDevice_exec.cpp:
+	* examples/OEP/BasicSP/BMDevice/BMDevice_exec.h:
+	* examples/OEP/BasicSP/BMDisplay/BMDisplay_exec.cpp:
+	* examples/OEP/BasicSP/BMDisplay/BMDisplay_exec.h:
+	* examples/OEP/BasicSP/EC/EC_exec.cpp:
+	* examples/OEP/BasicSP/EC/EC_exec.h:
+	* examples/OEP/Display/GPS/GPS_exec.cpp:
+	* examples/OEP/Display/GPS/GPS_exec.h:
+	* examples/OEP/Display/GPS/GPS_tracing_exec.cpp:
+	* examples/OEP/Display/GPS/GPS_tracing_exec.h:
+	* examples/OEP/Display/NavDisplay/NavDisplay_exec.cpp:
+	* examples/OEP/Display/NavDisplay/NavDisplay_exec.h:
+	* examples/OEP/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.cpp:
+	* examples/OEP/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.h:
+	* examples/OEP/Display/RateGen/RateGen_exec.cpp:
+	* examples/OEP/Display/RateGen/RateGen_exec.h:
+
+	  More fixes to the executors.
+
 Sun May  9 07:46:35 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ciao/CCM_Component.idl:

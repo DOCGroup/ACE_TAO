@@ -91,6 +91,13 @@ MyImpl::NavDisplayGUI_exec_impl::set_session_context (Components::SessionContext
 }
 
 void
+MyImpl::NavDisplayGUI_exec_impl::ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Components::CCMException))
+{
+}
+
+void
 MyImpl::NavDisplayGUI_exec_impl::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
@@ -121,6 +128,13 @@ MyImpl::NavDisplayGUI_exec_impl::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 
   ACE_DEBUG ((LM_DEBUG, "LEAVE: MyImpl::NavDisplayGUI_exec_impl::ccm_activate\n"));
+}
+
+void
+MyImpl::NavDisplayGUI_exec_impl::ciao_postactivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Components::CCMException))
+{
 }
 
 void

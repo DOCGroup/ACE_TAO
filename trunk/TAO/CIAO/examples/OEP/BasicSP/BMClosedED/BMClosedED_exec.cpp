@@ -100,6 +100,14 @@ MyImpl::BMClosedED_exec_i::set_session_context (Components::SessionContext_ptr c
 }
 
 void
+MyImpl::BMClosedED_exec_i::ciao_preactivate (
+  ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Components::CCMException))
+{
+}
+
+void
 MyImpl::BMClosedED_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
@@ -117,6 +125,14 @@ MyImpl::BMClosedED_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL)
 
   CIAO_REGISTER_VALUE_FACTORY (orb.in(), BasicSP::DataAvailable_init,
                                BasicSP::DataAvailable);
+}
+
+void
+MyImpl::BMClosedED_exec_i::ciao_postactivate (
+  ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Components::CCMException))
+{
 }
 
 void
