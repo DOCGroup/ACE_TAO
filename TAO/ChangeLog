@@ -1,3 +1,16 @@
+Mon Mar 28 12:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Union_TypeCode.{h,cpp}:
+          Fixed compile errors with Borland
+
+        * tao/PortableServer/PS_CurrentA.cpp:
+        * tao/PortableServer/PS_CurrentC.{h,cpp,inl}:
+          Regenerated
+
+        * tao/TypeCode.h:
+        * tao/TypeCode_Constants.h:
+          Added missing TAO_Export
+
 Mon Mar 28 23:55:22 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/DynamicInterface/Context.cpp:
