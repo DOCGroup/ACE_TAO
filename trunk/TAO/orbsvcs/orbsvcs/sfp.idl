@@ -19,7 +19,7 @@ module SFP
   
   struct frame_header
   { 
-    sequence <char, 4> magic_number; 
+    sequence <char> magic_number; 
     // '=', 'S', 'F', 'P' 
     octet flags;   
     // bit 0 = byte order, 
@@ -31,7 +31,7 @@ module SFP
   
   struct fragment
   { 
-    sequence <char, 4> magic_number; 
+    sequence <char> magic_number; 
     // 'F', 'R', 'A', 'G' 
     octet flags; 
     // bit 1 = more fragments 
@@ -44,7 +44,7 @@ module SFP
   
   struct start_message
   { 
-    sequence <char, 4> magic_number; 
+    sequence <char> magic_number; 
     // '=', 'S', 'T', 'A' 
     octet major_version; 
     octet minor_version; 
