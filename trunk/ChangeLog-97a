@@ -1,5 +1,9 @@
 Tue May 13 18:08:32 1997    <irfan@TWOSTEP>
 
+	* examples/ASX/UPIPE_Event_Server: Made enough fixes for this to
+ 	  compile on Win32 but more work need to be done for this to
+	  work on Win32.
+
 	* ace/OS.i (kill): The error result for ::OpenProcess() is null
 	  and *not* invalid handle.
 
