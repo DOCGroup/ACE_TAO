@@ -1,3 +1,13 @@
+Thu Dec 11 22:18:52 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be/be_interface.cpp: Moved the code generation for the
+	_var and _out classes before the actual class declaration, but
+	after the forward declaration. This was necessary if any elements
+	in the scope of the interface are defined to be of the same type
+	as that interface. In such a situation those elements are defined
+	to be of the _var type. Hence the declaration for _var and _out
+	must precede the class declaration.
+
 Thu Dec 11 22:00:52 1997  Sergio Flores  <sergio@tango.cs.wustl.edu>
 
 	* orbsvcs/Naming_Service/Naming_Service.cpp (main): Fixed a bug

@@ -160,6 +160,31 @@ int be_interface::gen_client_header (void)
 
       ch->gen_endif ();
 
+      // generate the ifdefined macro for the var type
+      ch->gen_ifdef_macro (this->flatname (), "_var");
+
+      // generate the _var declaration
+      if (this->gen_var_defn () == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "be_interface - error generating _var definition\n"));
+          return -1;
+        }
+      ch->gen_endif ();
+
+      // generate the ifdef macro for the _out class
+      ch->gen_ifdef_macro (this->flatname (), "_out");
+
+      // generate the _out declaration - ORBOS/97-05-15 pg 16-20 spec
+      if (this->gen_out_defn () == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "be_interface - error generating _var definition\n"));
+          return -1;
+        }
+      // generate the endif macro
+      ch->gen_endif ();
+
       ch->gen_ifdef_macro (this->flatname ());
 
       // now generate the class definition
@@ -239,31 +264,6 @@ int be_interface::gen_client_header (void)
       *ch << "void operator= (const " << local_name () << "&);\n";
       ch->decr_indent ();
       *ch << "};\n\n";
-      ch->gen_endif ();
-
-      // generate the ifdefined macro for the var type
-      ch->gen_ifdef_macro (this->flatname (), "_var");
-
-      // generate the _var declaration
-      if (this->gen_var_defn () == -1)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "be_interface - error generating _var definition\n"));
-          return -1;
-        }
-      ch->gen_endif ();
-
-      // generate the ifdef macro for the _out class
-      ch->gen_ifdef_macro (this->flatname (), "_out");
-
-      // generate the _out declaration - ORBOS/97-05-15 pg 16-20 spec
-      if (this->gen_out_defn () == -1)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "be_interface - error generating _var definition\n"));
-          return -1;
-        }
-      // generate the endif macro
       ch->gen_endif ();
 
 
