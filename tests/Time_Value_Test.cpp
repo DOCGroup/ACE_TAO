@@ -32,7 +32,7 @@ main (int, char *[])
   ACE_Time_Value tv4 (1, 1000000);
   ACE_Time_Value tv5 (2);
   ACE_Time_Value tv6 (1, -1000000);
-  ACE_Time_Value tv7 (2.0);
+  ACE_Time_Value tv7 ((long) 2.0);
 
   ACE_ASSERT (tv1 == ACE_Time_Value (0));
   ACE_ASSERT (tv2 < tv3);
