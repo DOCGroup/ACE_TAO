@@ -174,8 +174,6 @@ int main (int argc, char *argv[])
           ACE_TRY_CHECK;
         }
 
-      ACE_Time_Value tv (60, 0);
-      //      orb->run (tv, ACE_TRY_ENV);
       orb->run ();
       ACE_TRY_CHECK;
 
