@@ -8,18 +8,22 @@
 
 ACE_STATIC_SVC_REQUIRE(HTTP_Server)
 
+#ifdef ACE_HAS_SIG_C_FUNC
 extern "C"
 {
+#endif /* ACE_HAS_SIG_C_FUNC */
 
-  // call exit() so that static destructors get called 
+  // call exit() so that static destructors get called
 static void
-handler (int) 
+handler (int)
 {
   delete (ACE_Filecache *) ACE_Filecache::instance ();
   ACE_OS::exit (0);
 }
 
+#ifdef ACE_HAS_SIG_C_FUNC
 }
+#endif /* ACE_HAS_SIG_C_FUNC */
 
 // This is the driver entry point into JAWS.  It is possible to use
 // JAWS as an ACE Service, as well.
