@@ -44,7 +44,7 @@ CORBA::Object_ptr EventChannelFactory_i::create_object (
 
   file = fopen(conf_file, "r");
   if (file == NULL)
-    ACE_THROW_RETURN(FT::NoFactory(), CORBA::Object::_nil());
+    ACE_TRY_THROW (FT::NoFactory());
 
   ACE_Read_Buffer read_buf(file);
 
@@ -63,7 +63,7 @@ CORBA::Object_ptr EventChannelFactory_i::create_object (
     ACE_RE_THROW;
   }
   ACE_ENDTRY;
-  ACE_CHECK;
+  ACE_CHECK_RETURN(CORBA::Object::_nil());
 
   ACE_THROW_RETURN(FT::ObjectNotCreated(), CORBA::Object::_nil());
 }
