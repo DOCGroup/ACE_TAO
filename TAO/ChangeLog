@@ -1,13 +1,22 @@
+Fri Mar 11 11:23:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/ImplRepo/scale/scaletest.mpc:
+          Added imr_client as base project of the server
+
+        * orbsvcs/tests/ImplRepo/scale/server_i.cpp:
+          Added include of ImR_Client_Adapter_Impl to force the link of the
+          ImR_Client in a static build
+
 Fri Mar 11 05:10:19 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* tests/Bug_1476_Regression/client.cpp:
 
-	  Fixed a compilation error. 
-	
+	  Fixed a compilation error.
+
 	* tests/Faults/test_i.cpp:
 
-	  Fixed some debug statements. 
-	
+	  Fixed some debug statements.
+
 Fri Mar 11 10:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ImR_Client/ImR_Client_Adapter_Impl.cpp:
