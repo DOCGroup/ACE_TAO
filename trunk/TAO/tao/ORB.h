@@ -734,6 +734,9 @@ public:
 #include "tao/Sequence_T.h"
 #include "tao/Object_KeyC.h"
 
+class STUB_Object;
+// Forward declaration.
+
 class TAO_Export CORBA_ORB
 {
   // = TITLE
@@ -764,6 +767,19 @@ public:
   // servers to publish their whereabouts to clients.  The output of
   // this is typically eventually given to <string_to_object()> as an
   // argument.
+
+  virtual int _register_collocation (ACE_Addr &) = 0;
+  // @@ Should I use ACE_Addr instead of void *?
+  // Register an "end-point" where the collocated objects can be
+  // found.  Each type of ORB, e. g., IIOP ORB must implement this.
+  // Returns 0 if the endpoint gets register properly, non-zero
+  // otherwise.
+
+  virtual TAO_ServantBase *_get_collocated_servant (STUB_Object *p) = 0;
+  // Return the object pointer of an collocated object it there is
+  // one, otherwise, return 0.  Each type of ORB, e. g., IIOP ORB,
+  // must implement this and determine what is a collocated object
+  // based on information provided in the STUB_Object.
 
   void create_list (CORBA::Long count,
                     CORBA::NVList_ptr &retval);
@@ -871,6 +887,12 @@ protected:
   CORBA_ORB (void);
   virtual ~CORBA_ORB (void);
 
+  CORBA_Object_ptr resolve_poa (void);
+  // Resolve the POA.
+
+  CORBA_Object_ptr resolve_poa_current (void);
+  // Resolve the POA current.
+
 private:
   CORBA_Object_ptr resolve_name_service (void);
   // Resolve the name service object reference.
@@ -881,12 +903,6 @@ private:
   CORBA_Object_ptr multicast_to_service (TAO_Service_ID service_id,
                                          u_short port);
   // Resolve the refernce of a service of type <name>.
-
-  CORBA_Object_ptr resolve_poa (void);
-  // Resolve the POA.
-
-  CORBA_Object_ptr resolve_poa_current (void);
-  // Resolve the POA current.
 
   ACE_SYNCH_MUTEX lock_;
   u_int refcount_;
