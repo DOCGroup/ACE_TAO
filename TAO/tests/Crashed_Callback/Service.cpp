@@ -38,7 +38,7 @@ Service::run_test (Test::Crashed_Callback_ptr callback,
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) - Service, calling crash_now_please\n"));
       callback->crash_now_please (ACE_TRY_ENV);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY {} ACE_ENDTRY;
 
