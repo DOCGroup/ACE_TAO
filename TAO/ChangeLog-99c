@@ -1,3 +1,22 @@
+Fri Jul 16 16:31:50 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be_include/be_visitor_array/cdr_op_ci.h:
+	* TAO_IDL/be/be_visitor_array/array_ci.cpp:
+	  Fixed typos in comment and ACE_ERROR message.
+
+	* TAO_IDL/be_include/be_visitor_array/cdr_op_cs.h:
+	* TAO_IDL/be/be_visitor_array/cdr_op_cs.cpp:
+	  New files needed for the fix described below.
+
+	* TAO_IDL/be_include/be_visitor_array.h:
+	* TAO_IDL/be/be_visitor_array.cpp:
+	* TAO_IDL/be/be_visitor_factory.cpp:
+	* TAO_IDL/be/be_visitor_array/cdr_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_array/cdr_op_ci.cpp:
+	  Extended the fix made previously for arrays containing
+	  anonymous sequences to work for sequences of
+	  recursive types.
+
 Fri Jul 16 15:51:38 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/IIOP_Profile.cpp:
