@@ -94,8 +94,8 @@ template class ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, u_long, ACE_NUL
   template class Base_Optimizer<Synch_Receiver, ACE_CString>;
   template class Base_Optimizer<Synch_Static_Receiver, ACE_Schedule_All_Reactive_Strategy<Synch_Logging_Handler_Static_Receiver> >;
   template class Base_Optimizer<Synch_Static_Receiver, ACE_Schedule_All_Threaded_Strategy<Synch_Thr_Logging_Handler_Static_Receiver> >;
-  template class Base_Optimizer<Synch_Receiver, ACE_Schedule_All_Reactive_Strategy<Synch_Logging_Handler_Static_Receiver> >;
-  template class Base_Optimizer<Synch_Receiver, ACE_Schedule_All_Threaded_Strategy<Synch_Thr_Logging_Handler_Static_Receiver> >;
+  template class Base_Optimizer<Synch_Receiver, ACE_Schedule_All_Reactive_Strategy<Synch_Logging_Handler_Receiver> >;
+  template class Base_Optimizer<Synch_Receiver, ACE_Schedule_All_Threaded_Strategy<Synch_Thr_Logging_Handler_Receiver> >;
 #endif /* ! (ACE_HAS_BROKEN_HPUX_TEMPLATES) && ! (__GNUG__) */
 
   #if defined (ACE_HAS_THREADS)
@@ -200,8 +200,8 @@ template class ACE_Thr_Server_Logging_Handler<Synch_Receiver>;
   #pragma instantiate Base_Optimizer<Synch_Receiver, ACE_CString>
   #pragma instantiate Base_Optimizer<Synch_Static_Receiver, ACE_Schedule_All_Reactive_Strategy<Synch_Logging_Handler_Static_Receiver> >
   #pragma instantiate Base_Optimizer<Synch_Static_Receiver, ACE_Schedule_All_Threaded_Strategy<Synch_Thr_Logging_Handler_Static_Receiver> >
-  #pragma instantiate Base_Optimizer<Synch_Receiver, ACE_Schedule_All_Reactive_Strategy<Synch_Logging_Handler_Static_Receiver> >
-  #pragma instantiate Base_Optimizer<Synch_Receiver, ACE_Schedule_All_Threaded_Strategy<Synch_Thr_Logging_Handler_Static_Receiver> >
+  #pragma instantiate Base_Optimizer<Synch_Receiver, ACE_Schedule_All_Reactive_Strategy<Synch_Logging_Handler_Receiver> >
+  #pragma instantiate Base_Optimizer<Synch_Receiver, ACE_Schedule_All_Threaded_Strategy<Synch_Thr_Logging_Handler_Receiver> >
 #endif /* ! (ACE_HAS_BROKEN_HPUX_TEMPLATES) && ! (__GNUG__) */
 
   #if defined (ACE_HAS_THREADS)
