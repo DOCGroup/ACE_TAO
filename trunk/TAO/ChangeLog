@@ -1,3 +1,8 @@
+Thu  Feb 27, 2003  15:14:58  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/orbsvcs/CosNotification_Static.dsp:
+	  Updated.
+
 Thu Feb 27 11:27:24 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * TAO_IDL/tao_idl.mpc:
