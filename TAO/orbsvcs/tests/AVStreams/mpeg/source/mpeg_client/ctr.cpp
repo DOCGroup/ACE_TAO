@@ -2972,31 +2972,33 @@ int CTRmain(void)
  
  
   // instantiate our command handler
-  Command_Handler *command_handler;
-  ACE_NEW_RETURN (command_handler,
-                  Command_Handler (cmdSocket),
-                  -1);
+  Command_Handler command_handler (cmdSocket);
+//   ACE_NEW_RETURN (command_handler,
+//                   Command_Handler (cmdSocket),
+//                   -1);
  
-  if (command_handler->init () == -1)
+  //  if (command_handler->init () == -1)
+  if (command_handler.init () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) command_handler: init returned -1"),
                       -1);
  
   // .. and register it with the reactor.
-  if (ACE_Reactor::instance ()->register_handler (command_handler,
+  if (ACE_Reactor::instance ()->register_handler (&command_handler,
                                                   ACE_Event_Handler::READ_MASK) == -1)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%P|%t) register_handler for command_handler failed\n"),
                         -1);
   
   // and now instantiate the sig_handler
-  Client_Sig_Handler *client_sig_handler;
-  ACE_NEW_RETURN (client_sig_handler,
-                  Client_Sig_Handler (command_handler),
-                  -1);
+  Client_Sig_Handler client_sig_handler (&command_handler);
+//   Client_Sig_Handler *client_sig_handler;
+//   ACE_NEW_RETURN (client_sig_handler,
+//                   Client_Sig_Handler (command_handler),
+//                   -1);
  
   // .. and ask it to register itself with the reactor
-  if (client_sig_handler->register_handler () < 0)
+  if (client_sig_handler.register_handler () < 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) register_handler for sig_handler failed\n"),
                       -1);
