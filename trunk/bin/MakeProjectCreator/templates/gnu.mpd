@@ -209,7 +209,6 @@ ADDITIONAL_IDL_TARGETS := $(ADDITIONAL_IDL_TARGETS) <%idlgendir%>/<%basenoextens
 <%idlgendir%>/<%basenoextension(idl_file)%>C.h: <%idl_file%>
 	$(TAO_IDL) -o <%idlgendir%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%>$(TAO_IDLFLAGS)<%endif%> $^
 <%else%>
-
 # IDL File Directory: <%dirname(idl_file)%>
 <%if(dirname_found)%>
 ADDITIONAL_IDL_TARGETS := $(ADDITIONAL_IDL_TARGETS) <%noextension(idl_file)%>C.h
@@ -225,9 +224,21 @@ ADDITIONAL_IDL_TARGETS := $(ADDITIONAL_IDL_TARGETS) <%noextension(idl_file)%>C.h
 <%endif%>
 <%endfor%>
 
+ifneq ($(ADDITIONAL_IDL_TARGETS),)
 idl_stubs: $(ADDITIONAL_IDL_TARGETS)
+endif
 
+<%if(exename)%>
+ifneq ($(BIN),)
+<%else%>
+<%if(sharedname)%>
+ifneq ($(SHLIB),)
+<%else%>
+ifneq ($(LIB),)
+<%endif%>
+<%endif%>
 all: idl_stubs
+endif
 
 .PRECIOUS: $(foreach ext, $(IDL_EXT), $(foreach file, $(IDL_FILES), $(file)$(ext)))
 <%endif%>
