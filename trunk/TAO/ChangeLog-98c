@@ -1,3 +1,9 @@
+Fri Mar 06 09:36:47 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/object.i (CORBA_Object): reordered initializers to match
+          declaration order.  Also, move _set_parent () before the
+          constructor so that it is defined before being used.
+
 Fri Mar 06 00:18:38 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/poaS and poaC: Removed about a 1000 lines of stubs and
