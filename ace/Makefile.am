@@ -160,6 +160,13 @@ LIBACE_OTHER =
 #AM_CPPFLAGS += -DACE_LACKS_ACE_OTHER
 endif
 
+if BUILD_UUID_FILES
+LIBACE_UUID = libACE_UUID.la
+else
+LIBACE_UUID =
+#AM_CPPFLAGS += -DACE_LACKS_ACE_UUID
+endif
+
 if BUILD_FULL_LIBRARY
 LIBACE = libACE.la
 else
@@ -183,7 +190,8 @@ lib_LTLIBRARIES = \
   $(LIBACE_TIMER) \
   $(LIBACE_TOKEN) \
   $(LIBACE_CODECS) \
-  $(LIBACE_OTHER)
+  $(LIBACE_OTHER) \
+  $(LIBACE_UUID)
 
 libACE_OS_la_SOURCES = \
   ARGV.cpp \
@@ -500,6 +508,9 @@ libACE_Other_la_SOURCES = \
   Registry_Name_Space.cpp \
   Remote_Name_Space.cpp
 
+libACE_UUID_la_SOURCES = \
+  UUID.cpp
+
 libACE_la_SOURCES = \
   $(libACE_OS_la_SOURCES) \
   $(libACE_Utils_la_SOURCES) \
@@ -515,7 +526,8 @@ libACE_la_SOURCES = \
   $(libACE_Timer_la_SOURCES) \
   $(libACE_Token_la_SOURCES) \
   $(libACE_Codecs_la_SOURCES) \
-  $(libACE_Other_la_SOURCES)
+  $(libACE_Other_la_SOURCES) \
+  $(libACE_UUID_la_SOURCES)
 
 
 ## ACE's versioning scheme is not compatible with libtool's scheme so
@@ -566,6 +578,9 @@ libACE_Token_la_LDFLAGS = \
   -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@
 
 libACE_Utils_la_LDFLAGS = \
+  -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@
+
+libACE_UUID_la_LDFLAGS = \
   -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@
 
 # We also add any X libraries to the list.
