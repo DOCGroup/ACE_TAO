@@ -465,17 +465,17 @@ create_offer_iterator (const char *type,
 {
   // This is the factory method that creates the appropriate type of
   // offer iterator. If there's no Register interface, then we can
-  // just stick the offers directly into an iterator, since this
+  // just stick the offers directly into an iterator, since these
   // offers will never be removed from the Trader. If there's a
   // Register interface, then there's a chance that by the time the
-  // importer called the next_n method on the iterator that the offer
-  // has been withdrawn. So the Register_Offer_Iterator retains only
+  // importer calls the next_n method on the iterator that the offer
+  // will have been withdrawn. So the Register_Offer_Iterator retains only
   // the offer ids, and will recognize when an offer id no longer
   // identifies an offer in the trader.
 
-  // We pass the property filter to the iterators, so when they
+  // We pass the property filter to the iterators, so when the iterators
   // return the offers, they can remove the undesirable properties
-  // from them.  
+  // from those offers.  
   TAO_Offer_Iterator* iterator = 0;
   
   if (CORBA::is_nil (this->trader_.trading_components ().register_if ()))
@@ -493,7 +493,7 @@ template <class TRADER> CORBA::Boolean
 TAO_Lookup<TRADER>::duplicate_stem_id (TAO_Policies& policies,
 				       CORBA::Environment& _env)
 {
-  // Determine whether the stem_id passed to this query is a one we've 
+  // Determine whether the stem_id passed to this query is one we've 
   // already seen. If this is the case, then we shouldn't pursue this
   // query any further.
   CORBA::Boolean return_value = CORBA::B_FALSE;
