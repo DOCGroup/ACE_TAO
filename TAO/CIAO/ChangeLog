@@ -1,3 +1,9 @@
+Tue Nov 30 21:41:58 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* CIDLC/ServantSourceGenerator.cpp (namespace): 
+
+	  More use of ACE_NEW_THROW_EX instead of ACE_NEW_RETURN.
+
 Tue Nov 30 21:03:00 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* CIDLC/ServantSourceGenerator.cpp (namespace): 
