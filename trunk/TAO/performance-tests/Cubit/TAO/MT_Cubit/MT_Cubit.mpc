@@ -23,4 +23,7 @@ project(*client): taoexe, portableserver, strategies {
     Task_Client.cpp
     client.cpp
   }
+  verbatim(gnuace, local) {
+    LDLIBS += $(MATHLIB)
+  }
 }
