@@ -29,22 +29,7 @@
 #include "ace/Synch.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Message_Block.h"
-
-// User-defined class used for queue data.
-class User_Class
-{
-public:
-  User_Class (const char inputMsg[])
-    : message_ (0)
-  {
-    ACE_NEW (this->message_, char[ACE_OS::strlen (inputMsg) + 1]);
-    ACE_OS::strcpy (this->message_, inputMsg);
-  }
-
-  ~User_Class (void) { delete [] this->message_; }
-private:
-  char *message_;
-};
+#include "Message_Queue_Test_Ex.h"    // Declares User_Class
 
 const ACE_TCHAR usage[] = ACE_TEXT ("usage: Message_Queue_Test_Ex <number of messages>\n");
 
