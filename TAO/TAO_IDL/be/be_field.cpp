@@ -119,6 +119,9 @@ be_field::gen_encapsulation (void)
   long i, arrlen;
   long *arr;  // an array holding string names converted to array of longs
 
+  // Macro to avoid "warning: unused parameter" type warning.
+  ACE_UNUSED_ARG (nl);
+
   cs = cg->client_stubs ();
   cg->node (this); // pass ourselves in case we are needed
   cs->indent (); // start from whatever indentation level we were at
@@ -144,6 +147,9 @@ be_field::tc_encap_len (void)
     {
       be_type *bt;
       long slen;
+
+      // Macro to avoid "warning: unused parameter" type warning.
+      ACE_UNUSED_ARG (slen);
 
       // struct member is represented as the "name" followed by the typecode
 

@@ -49,9 +49,9 @@ be_decl::be_decl (AST_Decl::NodeType type, UTL_ScopedName *n, UTL_StrList
     srv_skel_gen_ (I_FALSE),
     srv_inline_gen_ (I_FALSE),
     seq_names_ (NULL),
-    encap_len_ (-1),
     fullname_ (0),
-    size_type_ (be_decl::FIXED) // everybody is fixed size to start with
+    size_type_ (be_decl::FIXED), // everybody is fixed size to start with
+    encap_len_ (-1)
 {
 }
 
@@ -230,7 +230,7 @@ be_decl::compute_flatname (void)
       this->flatname_ = new char [namelen+1];
       this->flatname_[0] = '\0';
       first = I_TRUE;
-      second - I_FALSE;
+      second = I_FALSE;
       i = new UTL_IdListActiveIterator (this->name ());
       while (!(i->is_done ())) 
         {
@@ -302,7 +302,7 @@ be_decl::compute_repoID (void)
       ACE_OS::sprintf (this->repoID_, "%s", "IDL:");
       i = new UTL_IdListActiveIterator (this->name ());
       first = I_TRUE;
-      second - I_FALSE;
+      second = I_FALSE;
       while (!(i->is_done ())) 
         {
           if (!first)
@@ -338,7 +338,7 @@ be_decl::tc_name2long (const char *name, long *&larr, long &arrlen)
 {
   static char buf [MAXNAMELEN];
   long slen;
-  int i;
+  unsigned int i;
 
   slen = ACE_OS::strlen (name) + 1; // 1 for NULL terminating
 
@@ -471,6 +471,9 @@ be_decl::gen_var_defn (void)
         be_sequence *bs = be_sequence::narrow_from_decl (this);
         be_type *bt = be_type::narrow_from_decl (bs->base_type ());
         
+	// Macro to avoid "warning: unused parameter" type warning.
+	ACE_UNUSED_ARG (bt);
+
         // cast operator
         *ch << "operator const " << local_name () << " &() const;" << nl;
         *ch << "operator " << local_name () << " &();" << nl;
@@ -1081,6 +1084,9 @@ be_decl::gen_var_impl (void)
         be_sequence *bs = be_sequence::narrow_from_decl (this);
         be_type *bt = be_type::narrow_from_decl (bs->base_type ());
 
+	// Macro to avoid "warning: unused parameter" type warning.
+	ACE_UNUSED_ARG (bt);
+
       // default constr
       *ci << "ACE_INLINE" << nl;
       *ci << fname << "::" << lname << 
@@ -1343,6 +1349,9 @@ be_decl::gen_out_defn (void)
         {
           be_sequence *bs = be_sequence::narrow_from_decl (this);
           be_type *bt = be_type::narrow_from_decl (bs->base_type ());
+
+	  // Macro to avoid "warning: unused parameter" type warning.
+	  ACE_UNUSED_ARG (bt);
 
           // overloaded [] operator only for sequence. The const version is not
           // required
