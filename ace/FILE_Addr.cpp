@@ -23,8 +23,8 @@ ACE_FILE_Addr::set (const ACE_FILE_Addr &sa)
   if (sa.get_type () == AF_ANY)
     this->filename_[0] = '\0';
   else
-    (void) ACE_OS::strncpy ((void *) &this->filename_,
-                            (void *) &sa.filename_,
+    (void) ACE_OS::strncpy (this->filename_,
+                            sa.filename_,
                             sa.get_size ());
   return 0;
 }

@@ -23,6 +23,9 @@
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
+// Forward decl.
+class ACE_Reactor;
+
 class ACE_Export ACE_LSOCK_Acceptor : public ACE_SOCK_Acceptor
 {
   // = TITLE

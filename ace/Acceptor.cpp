@@ -80,7 +80,9 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open
 // Simple constructor.
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
-ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Acceptor (ACE_Reactor *reactor)
+ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Acceptor (ACE_Reactor *reactor,
+                                                              int use_select)
+  : use_select_ (use_select)
 {
   ACE_TRACE ("ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Acceptor");
 
@@ -91,11 +93,16 @@ template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
 ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Acceptor
   (const ACE_PEER_ACCEPTOR_ADDR &addr,
    ACE_Reactor *reactor,
-   int flags)
+   int flags,
+   use_select)
+    : use_select_ (use_select)
 {
   ACE_TRACE ("ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Acceptor");
+
   if (this->open (addr, reactor, flags) == -1)
-    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_Acceptor::ACE_Acceptor")));
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT ("%p\n"),
+                ASYS_TEXT ("ACE_Acceptor::ACE_Acceptor")));
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
@@ -332,9 +339,15 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_input (ACE_HANDLE listene
 
       conn_handle.set_bit (listener);
     }
+
   // Now, check to see if there is another connection pending and
   // break out of the loop if there is none.
-  while (ACE_OS::select (int (listener) + 1, conn_handle, 0, 0, &timeout) == 1);
+  while (this->use_select_
+         && ACE_OS::select (int (listener) + 1,
+                            conn_handle,
+                            0,
+                            0,
+                            &timeout) == 1);
   return 0;
 }
 
