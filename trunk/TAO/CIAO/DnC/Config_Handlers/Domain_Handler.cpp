@@ -235,7 +235,6 @@ namespace CIAO
                           attribute_node = named_node_map->item (j);
                           strattrnodename = attribute_node->getNodeName ();
                           aceattrnodename = XMLString::transcode (attribute_node->getNodeName ());
-                          CORBA::String_var attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                           aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                           if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
                             {
@@ -302,7 +301,6 @@ namespace CIAO
                           attribute_node = named_node_map->item (j);
                           strattrnodename = attribute_node->getNodeName ();
                           aceattrnodename = XMLString::transcode (attribute_node->getNodeName ());
-                          CORBA::String_var attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                           aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                           if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
                             {
@@ -367,7 +365,6 @@ namespace CIAO
                         {
                           attribute_node = named_node_map->item (j);
                           strattrnodename = attribute_node->getNodeName ();
-                          CORBA::String_var attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                           aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                           if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
                             {
@@ -430,7 +427,6 @@ namespace CIAO
                         {
                           attribute_node = named_node_map->item (j);
                           strattrnodename = attribute_node->getNodeName ();
-                          CORBA::String_var attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                           aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                           if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
                             {
@@ -498,7 +494,6 @@ namespace CIAO
                         {
                           attribute_node = named_node_map->item (j);
                           strattrnodename = attribute_node->getNodeName ();
-                          CORBA::String_var attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                           aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                           if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
                             {
@@ -670,7 +665,6 @@ namespace CIAO
       ACE_TString aceattrnodevalue;
       ACE_TString acemapname;
       XStr strattrnodename;
-      CORBA::String_var attrnodevalue;
       DOMNamedNodeMap* named_node_map;
       DOMNamedNodeMap* property_node_map;
       XStr node_name;
@@ -754,7 +748,6 @@ namespace CIAO
                                         {
                                           attribute_node = property_node_map->item (j);
                                           strattrnodename = attribute_node->getNodeName ();
-                                          attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                                           aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                                           if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
                                             {
@@ -812,7 +805,6 @@ namespace CIAO
                         {
                           attribute_node = named_node_map->item (j);
                           strattrnodename = attribute_node->getNodeName ();
-                          attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                           aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
 
                           if (strattrnodename == XStr (ACE_TEXT ("href")))
@@ -886,7 +878,6 @@ namespace CIAO
                                                 {
                                                   attribute_node = property_node_map->item (j);
                                                   strattrnodename = attribute_node->getNodeName ();
-                                                  attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                                                   aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                                                   if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
                                                     {
@@ -959,7 +950,6 @@ namespace CIAO
                     {
                       attribute_node = named_node_map->item (j);
                       strattrnodename = attribute_node->getNodeName ();
-                      attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                       aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                       if (strattrnodename == XStr (ACE_TEXT ("XMI:IDREF")))
                         {
@@ -986,7 +976,6 @@ namespace CIAO
                     {
                       attribute_node = named_node_map->item (j);
                       strattrnodename = attribute_node->getNodeName ();
-                      attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                       aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                       if (strattrnodename == XStr (ACE_TEXT ("XMI:IDREF")))
                         {
@@ -1019,7 +1008,6 @@ namespace CIAO
       ACE_TString aceattrnodevalue;
       ACE_TString acemapname;
       XStr strattrnodename;
-      CORBA::String_var attrnodevalue;
       DOMNamedNodeMap* named_node_map;
       DOMNamedNodeMap* property_node_map;
       XStr node_name;
@@ -1102,7 +1090,6 @@ namespace CIAO
                                         {
                                           attribute_node = property_node_map->item (j);
                                           strattrnodename = attribute_node->getNodeName ();
-                                          attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                                           aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                                           if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
                                             {
@@ -1160,7 +1147,6 @@ namespace CIAO
                         {
                           attribute_node = named_node_map->item (j);
                           strattrnodename = attribute_node->getNodeName ();
-                          attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                           aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                           if (strattrnodename == XStr (ACE_TEXT ("href")))
                             {
@@ -1233,7 +1219,6 @@ namespace CIAO
                                                 {
                                                   attribute_node = property_node_map->item (j);
                                                   strattrnodename = attribute_node->getNodeName ();
-                                                  attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                                                   aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                                                   if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
                                                     {
@@ -1307,7 +1292,6 @@ namespace CIAO
                     {
                       attribute_node = named_node_map->item (j);
                       strattrnodename = attribute_node->getNodeName ();
-                      attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                       aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                       if (strattrnodename == XStr (ACE_TEXT ("XMI:IDREF")))
                         {
@@ -1340,7 +1324,6 @@ namespace CIAO
       ACE_TString aceattrnodevalue;
       ACE_TString acemapname;
       XStr strattrnodename;
-      CORBA::String_var attrnodevalue;
       DOMNamedNodeMap* named_node_map;
       DOMNamedNodeMap* property_node_map;
       XStr node_name;
@@ -1424,7 +1407,6 @@ namespace CIAO
                                         {
                                           attribute_node = property_node_map->item (j);
                                           strattrnodename = attribute_node->getNodeName ();
-                                          attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                                           aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                                           if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
                                             {
@@ -1482,7 +1464,6 @@ namespace CIAO
                         {
                           attribute_node = named_node_map->item (j);
                           strattrnodename = attribute_node->getNodeName ();
-                          attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                           aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                           if (strattrnodename == XStr (ACE_TEXT ("href")))
                             {
@@ -1557,7 +1538,6 @@ namespace CIAO
                                                 {
                                                   attribute_node = property_node_map->item (j);
                                                   strattrnodename = attribute_node->getNodeName ();
-                                                  attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                                                   aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                                                   if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
                                                     {
@@ -1631,7 +1611,6 @@ namespace CIAO
                     {
                       attribute_node = named_node_map->item (j);
                       strattrnodename = attribute_node->getNodeName ();
-                      attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                       aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                       if (strattrnodename == XStr (ACE_TEXT ("XMI:IDREF")))
                         {
@@ -1660,7 +1639,6 @@ namespace CIAO
                     {
                       attribute_node = named_node_map->item (j);
                       strattrnodename = attribute_node->getNodeName ();
-                      attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                       aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                       if (strattrnodename == XStr (ACE_TEXT ("XMI:IDREF")))
                         {
@@ -1693,7 +1671,6 @@ namespace CIAO
       ACE_TString aceattrnodevalue;
       ACE_TString acemapname;
       XStr strattrnodename;
-      CORBA::String_var attrnodevalue;
       DOMNamedNodeMap* named_node_map;
       DOMNamedNodeMap* property_node_map;
       XStr node_name;
@@ -1734,7 +1711,6 @@ namespace CIAO
                     {
                       attribute_node = named_node_map->item (j);
                       strattrnodename = attribute_node->getNodeName ();
-                      attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                       aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                       if (strattrnodename == XStr (ACE_TEXT ("XMI:IDREF")))
                         {
@@ -1767,7 +1743,6 @@ namespace CIAO
                         {
                           attribute_node = property_node_map->item (j);
                           strattrnodename = attribute_node->getNodeName ();
-                          attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                           aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                           if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
                             {
@@ -1963,7 +1938,6 @@ namespace CIAO
       ACE_TString aceattrnodevalue;
       ACE_TString acemapname;
       XStr strattrnodename;
-      CORBA::String_var attrnodevalue;
       DOMNamedNodeMap* named_node_map;
       DOMNamedNodeMap* property_node_map;
       XStr node_name;
@@ -2058,7 +2032,6 @@ namespace CIAO
                                         {
                                           attribute_node = property_node_map->item (j);
                                           strattrnodename = attribute_node->getNodeName ();
-                                          attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                                           aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                                           if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
                                             {
@@ -2116,7 +2089,6 @@ namespace CIAO
                         {
                           attribute_node = named_node_map->item (j);
                           strattrnodename = attribute_node->getNodeName ();
-                          attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                           aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
 
                           if (strattrnodename == XStr (ACE_TEXT ("href")))
@@ -2190,7 +2162,6 @@ namespace CIAO
                                                 {
                                                   attribute_node = property_node_map->item (j);
                                                   strattrnodename = attribute_node->getNodeName ();
-                                                  attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                                                   aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                                                   if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
                                                     {
@@ -2263,7 +2234,6 @@ namespace CIAO
                     {
                       attribute_node = named_node_map->item (j);
                       strattrnodename = attribute_node->getNodeName ();
-                      attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                       aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                       if (strattrnodename == XStr (ACE_TEXT ("XMI:IDREF")))
                         {
@@ -2290,7 +2260,6 @@ namespace CIAO
                     {
                       attribute_node = named_node_map->item (j);
                       strattrnodename = attribute_node->getNodeName ();
-                      attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                       aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                       if (strattrnodename == XStr (ACE_TEXT ("XMI:IDREF")))
                         {
@@ -2324,7 +2293,6 @@ namespace CIAO
       ACE_TString aceattrnodevalue;
       ACE_TString acemapname;
       XStr strattrnodename;
-      CORBA::String_var attrnodevalue;
       DOMNamedNodeMap* named_node_map;
       DOMNamedNodeMap* property_node_map;
       XStr node_name;
@@ -2374,7 +2342,6 @@ namespace CIAO
                     {
                       attribute_node = named_node_map->item (j);
                       strattrnodename = attribute_node->getNodeName ();
-                      attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                       aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                       if (strattrnodename == XStr (ACE_TEXT ("XMI:IDREF")))
                         {
@@ -2407,7 +2374,6 @@ namespace CIAO
                         {
                           attribute_node = property_node_map->item (j);
                           strattrnodename = attribute_node->getNodeName ();
-                          attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                           aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                           if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
                             {
@@ -2475,7 +2441,6 @@ namespace CIAO
       ACE_TString aceattrnodevalue;
       ACE_TString acemapname;
       XStr strattrnodename;
-      CORBA::String_var attrnodevalue;
       DOMNamedNodeMap* named_node_map;
       DOMNamedNodeMap* property_node_map;
       XStr node_name;
@@ -2565,7 +2530,6 @@ namespace CIAO
                                         {
                                           attribute_node = property_node_map->item (j);
                                           strattrnodename = attribute_node->getNodeName ();
-                                          attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                                           aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                                           if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
                                             {
@@ -2623,7 +2587,6 @@ namespace CIAO
                         {
                           attribute_node = named_node_map->item (j);
                           strattrnodename = attribute_node->getNodeName ();
-                          attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                           aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                           if (strattrnodename == XStr (ACE_TEXT ("href")))
                             {
@@ -2696,7 +2659,6 @@ namespace CIAO
                                                 {
                                                   attribute_node = property_node_map->item (j);
                                                   strattrnodename = attribute_node->getNodeName ();
-                                                  attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                                                   aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                                                   if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
                                                     {
@@ -2770,7 +2732,6 @@ namespace CIAO
                     {
                       attribute_node = named_node_map->item (j);
                       strattrnodename = attribute_node->getNodeName ();
-                      attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                       aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                       if (strattrnodename == XStr (ACE_TEXT ("XMI:IDREF")))
                         {
@@ -2799,7 +2760,6 @@ namespace CIAO
                     {
                       attribute_node = named_node_map->item (j);
                       strattrnodename = attribute_node->getNodeName ();
-                      attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                       aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                       if (strattrnodename == XStr (ACE_TEXT ("XMI:IDREF")))
                         {
@@ -2837,7 +2797,6 @@ namespace CIAO
       ACE_TString aceattrnodevalue;
       ACE_TString acemapname;
       XStr strattrnodename;
-      CORBA::String_var attrnodevalue;
       DOMNamedNodeMap* named_node_map;
       DOMNamedNodeMap* property_node_map;
       XStr node_name;
@@ -2926,7 +2885,6 @@ namespace CIAO
                                         {
                                           attribute_node = property_node_map->item (j);
                                           strattrnodename = attribute_node->getNodeName ();
-                                          attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                                           aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                                           if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
                                             {
@@ -2984,7 +2942,6 @@ namespace CIAO
                         {
                           attribute_node = named_node_map->item (j);
                           strattrnodename = attribute_node->getNodeName ();
-                          attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                           aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                           if (strattrnodename == XStr (ACE_TEXT ("href")))
                             {
@@ -3057,7 +3014,6 @@ namespace CIAO
                                                 {
                                                   attribute_node = property_node_map->item (j);
                                                   strattrnodename = attribute_node->getNodeName ();
-                                                  attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                                                   aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                                                   if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
                                                     {
@@ -3131,7 +3087,6 @@ namespace CIAO
                     {
                       attribute_node = named_node_map->item (j);
                       strattrnodename = attribute_node->getNodeName ();
-                      attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                       aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                       if (strattrnodename == XStr (ACE_TEXT ("XMI:IDREF")))
                         {
@@ -3168,7 +3123,6 @@ namespace CIAO
       ACE_TString aceattrnodevalue;
       ACE_TString acemapname;
       XStr strattrnodename;
-      CORBA::String_var attrnodevalue;
       DOMNamedNodeMap* property_node_map;
       XStr node_name;
       CORBA::ULong resource_type_length;
@@ -3225,7 +3179,6 @@ namespace CIAO
                         {
                           attribute_node = property_node_map->item (j);
                           strattrnodename = attribute_node->getNodeName ();
-                          attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                           aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                           if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
                             {
