@@ -1,7 +1,7 @@
 // $Id$
 
 #include "tao/corba.h"
-#include "Alternate_Resource_Factory.h"
+#include "Alt_Resource_Factory.h"
 
 class Alternate_Resource_Factory_Export My_Resource_Factory :  public TAO_Resource_Factory 
 {
