@@ -1,0 +1,14 @@
+// -*- C++ -*-
+// $Id$
+
+interface Time_Date
+{
+  // = TITLE
+  //   IDL schema definition for Time and Date interface.
+
+  void bin_date (out long time_date);
+  // Obtain the time and date in binary format.
+
+  void str_date (out string time_date);
+  // Obtain the time and date in string format.
+};
