@@ -127,28 +127,37 @@ int
 be_visitor_operation_rettype_vardecl_ss::
 visit_predefined_type (be_predefined_type *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
-  be_type *bt; // return type
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_type *bt;
 
-  if (this->ctx_->alias ()) // a typedefed return type
-    bt = this->ctx_->alias ();
+  if (this->ctx_->alias ())
+    {
+      bt = this->ctx_->alias ();
+    }
   else
-    bt = node;
+    {
+      bt = node;
+    }
 
   switch (node->pt ())
     {
     case AST_PredefinedType::PT_pseudo:
-      os->indent ();
       *os << bt->name () << "_var _tao_retval;\n";
       break;
     case AST_PredefinedType::PT_any:
-      os->indent ();
       *os << bt->name () << "_var _tao_retval;\n";
       break;
     case AST_PredefinedType::PT_void:
       break;
+    case AST_PredefinedType::PT_longdouble:
+      *os << bt->name () 
+          << " _tao_retval = ACE_CDR_LONG_DOUBLE_INITIALIZER;\n";
+      break;
+    case AST_PredefinedType::PT_longlong:
+      *os << bt->name () 
+          << " _tao_retval = ACE_CDR_LONGLONG_INITIALIZER;\n";
+      break;
     default:
-      os->indent ();
       *os << bt->name () << " _tao_retval = 0;\n";
       break;
     }
