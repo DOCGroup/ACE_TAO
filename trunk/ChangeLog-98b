@@ -1,5 +1,17 @@
 Sun Jan  3 14:39:49 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
+	* ace/FILE_Connector.cpp (connect): When the <remote_sap> argument
+ 	  is ACE_Addr::sap_any, then connect will select a temporary
+ 	  filename using the new ACE_DEFAULT_TEMP_FILE macro and
+ 	  ACE_OS::mktemp().
+
+	* ace/OS.h: Added a new ACE_DEFAULT_TEMP_FILE macro that defaults
+ 	  to "/tmp/ace-file-XXXXXX" and is used by the ACE_FILE_Connector
+ 	  to create a temporary file when it's given an ACE_Addr::sap_any.
+
+	* ace/FILE_Addr.h: The <set> accessor should return an int to be
+ 	  consistent.
+
 	* ace/OS.h: Added a new ACE_sap_any_cast macro, which makes it
  	  much easier to cast the ACE_Addr::sap_any to the right subclass.
 

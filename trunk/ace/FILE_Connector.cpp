@@ -39,11 +39,26 @@ ACE_FILE_Connector::connect (ACE_FILE_IO &new_io,
   ACE_TRACE ("ACE_FILE_Connector::connect");
   ACE_ASSERT (new_io.get_handle () == ACE_INVALID_HANDLE);
 
+  // Check to see if caller has requested that we create the filename.
+  if (ACE_reinterpret_cast (const ACE_Addr &,
+                            ACE_const_cast (ACE_FILE_Addr &, 
+                                            remote_sap)) == ACE_Addr::sap_any)
+    {
+      ACE_FILE_Addr temp_sap (ACE_DEFAULT_TEMP_FILE);
+
+      // Create a temporary file.
+      ACE_OS::mktemp (ACE_const_cast (TCHAR *,
+                                      temp_sap.get_path_name ()));
+      new_io.addr_ = temp_sap; // class copy.
+    }
+  else
+    new_io.addr_ = remote_sap; // class copy.
+
   ACE_HANDLE handle = ACE::handle_timed_open (timeout, 
-						 remote_sap.get_path_name (),
-						 flags, perms);
+                                              new_io.addr_.get_path_name (),
+                                              flags,
+                                              perms);
   new_io.set_handle (handle);
-  new_io.addr_ = remote_sap; // class copy.
   return handle == ACE_INVALID_HANDLE ? -1 : 0;
 }
 

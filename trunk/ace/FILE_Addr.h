@@ -43,7 +43,7 @@ public:
   ACE_FILE_Addr (LPCTSTR filename);
   // Create a ACE_FILE_Addr from a pathname.
 
-  void set (LPCTSTR filename);
+  int set (LPCTSTR filename);
   // Create a ACE_FILE_Addr from a pathname.
 
   ACE_FILE_Addr &operator= (const ACE_FILE_Addr &);

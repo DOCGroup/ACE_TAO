@@ -342,7 +342,8 @@ class ACE_Unbounded_Stack_Iterator
   //     Implement an iterator over an unbounded Stack.
 public:
   // = Initialization method.
-  ACE_Unbounded_Stack_Iterator (ACE_Unbounded_Stack<T> &);
+  ACE_Unbounded_Stack_Iterator (ACE_Unbounded_Stack<T> &stack);
+  // Move to the first element in the <stack>.
 
   // = Iteration methods.
 
