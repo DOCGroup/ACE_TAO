@@ -1,12 +1,7 @@
 // $Id$
 
-// @@ Pradeep: you should always include the header file first, that
-// way it is easier to detect inconsistencies or missing #includes in
-// the .h file, so the first include in this case should be
-// "Notify_ConsumerAdmin_i.h"
-
-#include "orbsvcs/ESF/ESF_Proxy_Collection.h"
 #include "Notify_ConsumerAdmin_i.h"
+#include "orbsvcs/ESF/ESF_Proxy_Collection.h"
 #include "Notify_ProxyPushSupplier_i.h"
 #include "Notify_StructuredProxyPushSupplier_i.h"
 #include "Notify_SequenceProxyPushSupplier_i.h"
@@ -25,10 +20,14 @@
 
 #include "tao/debug.h"
 
-ACE_RCSID(Notify, Notify_ConsumerAdmin_i, "$Id$")
+ACE_RCSID (Notify, 
+           Notify_ConsumerAdmin_i, 
+           "$Id$")
 
 // Implementation skeleton constructor
-TAO_Notify_ConsumerAdmin_i::TAO_Notify_ConsumerAdmin_i (TAO_Notify_EventChannel_i* event_channel)
+TAO_Notify_ConsumerAdmin_i::TAO_Notify_ConsumerAdmin_i (
+    TAO_Notify_EventChannel_i* event_channel
+  )
   :lock_ (0),
    refcount_ (1),
    destory_child_POAs_ (0),
@@ -52,7 +51,11 @@ TAO_Notify_ConsumerAdmin_i::TAO_Notify_ConsumerAdmin_i (TAO_Notify_EventChannel_
 TAO_Notify_ConsumerAdmin_i::~TAO_Notify_ConsumerAdmin_i (void)
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,"in CA %d dtor\n", this->my_id_));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "in CA %d dtor\n", 
+                  this->my_id_));
+    }
 
    delete this->lock_;
 
@@ -68,7 +71,10 @@ TAO_Notify_ConsumerAdmin_i::~TAO_Notify_ConsumerAdmin_i (void)
 CORBA::ULong
 TAO_Notify_ConsumerAdmin_i::_incr_refcnt (void)
 {
-  ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
+  ACE_GUARD_RETURN (ACE_Lock, 
+                    ace_mon, 
+                    *this->lock_, 
+                    0);
   return this->refcount_++;
 }
 
@@ -78,8 +84,11 @@ TAO_Notify_ConsumerAdmin_i::_decr_refcnt (void)
   {
     ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
     this->refcount_--;
+
     if (this->refcount_ != 0)
-      return this->refcount_;
+      {
+        return this->refcount_;
+      }
   }
 
   delete this;
@@ -87,22 +96,24 @@ TAO_Notify_ConsumerAdmin_i::_decr_refcnt (void)
 }
 
 void
-TAO_Notify_ConsumerAdmin_i::_add_ref (ACE_ENV_SINGLE_ARG_DECL_NOT_USED/*ACE_ENV_SINGLE_ARG_PARAMETER*/)
+TAO_Notify_ConsumerAdmin_i::_add_ref (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   this->_incr_refcnt ();
 }
 
 void
-TAO_Notify_ConsumerAdmin_i::_remove_ref (ACE_ENV_SINGLE_ARG_DECL_NOT_USED/*ACE_ENV_SINGLE_ARG_PARAMETER*/)
+TAO_Notify_ConsumerAdmin_i::_remove_ref (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   this->_decr_refcnt ();
 }
 
 void
-TAO_Notify_ConsumerAdmin_i::dispatch_event (TAO_Notify_Event &event ACE_ENV_ARG_DECL)
+TAO_Notify_ConsumerAdmin_i::dispatch_event (TAO_Notify_Event &event 
+                                            ACE_ENV_ARG_DECL)
 {
   // Dispatch the event to all the registered listeners.
-  TAO_Notify_Dispatch_Command_Worker worker (&event, this->event_manager_->event_processor ());
+  TAO_Notify_Dispatch_Command_Worker worker (&event, 
+                                             this->event_manager_->event_processor ());
   // Propogate the filter command.
 
   this->event_listener_list_->for_each (&worker ACE_ENV_ARG_PARAMETER);
@@ -249,7 +260,7 @@ TAO_Notify_ConsumerAdmin_i::destroy_i (ACE_ENV_SINGLE_ARG_DECL)
   this->poa_factory_->deactivate_object (this, this->my_POA_.in ()
                                          ACE_ENV_ARG_PARAMETER);
 
-  // shutdown proxy's.
+  // shutdown proxys.
   TAO_Notify_Shutdown_Worker shutdown_worker;
 
   this->event_listener_list_->for_each (&shutdown_worker ACE_ENV_ARG_PARAMETER);
@@ -327,34 +338,51 @@ TAO_Notify_ConsumerAdmin_i::subscription_change (const CosNotification::EventTyp
   seq_added.populate (p_added);
   seq_removed.populate (p_removed);
 
-  this->event_manager_->subscribe_for_events (this, //*this->event_listener_list_,
-                                              p_added, p_removed ACE_ENV_ARG_PARAMETER);
+  this->event_manager_->subscribe_for_events (this,
+                                              p_added, 
+                                              p_removed 
+                                              ACE_ENV_ARG_PARAMETER);
 
   if (TAO_debug_level > 0)
     {
-      ACE_DEBUG ((LM_DEBUG,"ConsumerAdmin %d: added following types: ",my_id_ ));
+      ACE_DEBUG ((LM_DEBUG,
+                  "ConsumerAdmin %d: added following types: ",
+                  my_id_ ));
 
-      for (CORBA::ULong i = 0; i < p_added.length (); ++i)
-	{
-	  ACE_DEBUG ((LM_DEBUG, "(%s, %s)\t", p_added[i].domain_name.in(), p_added[i].type_name.in()));
-	}
+      CORBA::ULong i = 0;
+
+      for (i = 0; i < p_added.length (); ++i)
+	      {
+	        ACE_DEBUG ((LM_DEBUG, 
+                      "(%s, %s)\t", 
+                      p_added[i].domain_name.in(), 
+                      p_added[i].type_name.in()));
+	      }
 
       ACE_DEBUG ((LM_DEBUG,"\n ConsumerAdmin %d: removed following types: ",my_id_ ));
 
-      for (CORBA::ULong i = 0; i < p_removed.length (); ++i)
-	{
-	  ACE_DEBUG ((LM_DEBUG, "(%s, %s)\t", p_removed[i].domain_name.in(), p_removed[i].type_name.in()));
-	}
+      for (i = 0; i < p_removed.length (); ++i)
+	      {
+	        ACE_DEBUG ((LM_DEBUG, 
+                      "(%s, %s)\t", 
+                      p_removed[i].domain_name.in(), 
+                      p_removed[i].type_name.in()));
+	      }
 
       CosNotification::EventTypeSeq  current;
       this->subscription_list_.populate (current);
 
-      ACE_DEBUG ((LM_DEBUG,"\n ConsumerAdmin %d:current subscriptions: ",my_id_ ));
+      ACE_DEBUG ((LM_DEBUG,
+                  "\n ConsumerAdmin %d:current subscriptions: ",
+                  my_id_));
       
-      for (CORBA::ULong i = 0; i < current.length (); ++i)
-	{
-	  ACE_DEBUG ((LM_DEBUG, "(%s, %s)\n", current[i].domain_name.in(), current[i].type_name.in()));
-	}
+      for (i = 0; i < current.length (); ++i)
+	      {
+	        ACE_DEBUG ((LM_DEBUG, 
+                      "(%s, %s)\n", 
+                      current[i].domain_name.in(), 
+                      current[i].type_name.in()));
+	      }
     }
 }
 

@@ -12,7 +12,9 @@
 #include "Notify_Worker_Task.h"
 #include "Notify_AdminProperties.h"
 
-ACE_RCSID(Notify, Notify_ProxySupplier_T, "$Id$")
+ACE_RCSID (Notify, 
+           Notify_ProxySupplier_T, 
+           "$Id$")
 
 template <class SERVANT_TYPE>
 TAO_Notify_ProxySupplier<SERVANT_TYPE>::TAO_Notify_ProxySupplier (TAO_Notify_ConsumerAdmin_i* consumer_admin)
@@ -189,11 +191,13 @@ TAO_Notify_ProxySupplier<SERVANT_TYPE>::filter_eval_task (void)
 }
 
 template <class SERVANT_TYPE> void
-TAO_Notify_ProxySupplier<SERVANT_TYPE>::subscription_change (const CosNotification::EventTypeSeq & added, const CosNotification::EventTypeSeq & removed ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException,
-                   CosNotifyComm::InvalidEventType
-                   ))
+TAO_Notify_ProxySupplier<SERVANT_TYPE>::subscription_change (
+    const CosNotification::EventTypeSeq & added, 
+    const CosNotification::EventTypeSeq & removed 
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   CosNotifyComm::InvalidEventType))
 {
   TAO_Notify_EventType_List seq_added, seq_removed;
   
@@ -221,32 +225,46 @@ TAO_Notify_ProxySupplier<SERVANT_TYPE>::subscription_change (const CosNotificati
 
       
       if (TAO_debug_level > 0)
-	{
-	    ACE_DEBUG ((LM_DEBUG,"ProxySupplier %d: added following types: ",proxy_id_ ));
-	    
-	    for (CORBA::ULong i = 0; i < p_added.length (); ++i)
 	      {
-		ACE_DEBUG ((LM_DEBUG, "(%s, %s)\t", p_added[i].domain_name.in(), p_added[i].type_name.in()));
-	      }
-	    
-	    ACE_DEBUG ((LM_DEBUG,"\n ProxySupplier %d: removed following types: ",proxy_id_ ));
-	    
-	    for (CORBA::ULong i = 0; i < p_removed.length (); ++i)
-	      {
-		ACE_DEBUG ((LM_DEBUG, "(%s, %s)\t", p_removed[i].domain_name.in(), p_removed[i].type_name.in()));
-	      }
+	        ACE_DEBUG ((LM_DEBUG,
+                      "ProxySupplier %d: added following types: ",
+                      proxy_id_ ));
 
-	    CosNotification::EventTypeSeq  current;
-	    this->subscription_list_.populate (current);
-
-	    ACE_DEBUG ((LM_DEBUG,"\n ProxySupplier %d:current subscriptions: ",proxy_id_ ));
+          CORBA::ULong i = 0;
 	    
-	    for (CORBA::ULong i = 0; i < current.length (); ++i)
-	      {
-		ACE_DEBUG ((LM_DEBUG, "(%s, %s)\n", current[i].domain_name.in(), current[i].type_name.in()));
-	      }
+	        for (i = 0; i < p_added.length (); ++i)
+	          {
+		          ACE_DEBUG ((LM_DEBUG, 
+                          "(%s, %s)\t", 
+                          p_added[i].domain_name.in(), 
+                          p_added[i].type_name.in()));
+	          }
+	        
+	        ACE_DEBUG ((LM_DEBUG,"\n ProxySupplier %d: removed following types: ",proxy_id_ ));
+	        
+	        for (i = 0; i < p_removed.length (); ++i)
+	          {
+		          ACE_DEBUG ((LM_DEBUG, 
+                          "(%s, %s)\t", 
+                          p_removed[i].domain_name.in(), 
+                          p_removed[i].type_name.in()));
+	          }
 
-	  }
+	        CosNotification::EventTypeSeq  current;
+	        this->subscription_list_.populate (current);
+
+	        ACE_DEBUG ((LM_DEBUG,
+                      "\n ProxySupplier %d:current subscriptions: ",
+                      proxy_id_ ));
+	        
+	        for (i = 0; i < current.length (); ++i)
+	          {
+		          ACE_DEBUG ((LM_DEBUG, 
+                          "(%s, %s)\n", 
+                          current[i].domain_name.in(), 
+                          current[i].type_name.in()));
+	          }
+	      }
     }
 }
 
@@ -279,7 +297,9 @@ TAO_Notify_ProxySupplier<SERVANT_TYPE>::on_connected (ACE_ENV_SINGLE_ARG_DECL)
   this->subscription_list_.populate (added);
 
   this->event_manager_->subscribe_for_events (this,
-                                              added, removed ACE_ENV_ARG_PARAMETER);
+                                              added, 
+                                              removed 
+                                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->event_manager_->register_for_publication_updates (this ACE_ENV_ARG_PARAMETER);
