@@ -1,3 +1,21 @@
+Thu Apr 17 08:23:19 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Local_Name_Space.h (ACE_NS_String):
+	* ace/Local_Name_Space.cpp (ACE_NS_String):
+	* ace/Local_Name_Space_T.cpp (shared_rebind_i):
+
+	  The underlying string is now an ACE_WCHAR_T instead of an
+	  ACE_USHORT16.  Not all platforms represent wide characters with
+	  16 bit unsigned integers.  Adjusted all members, return types
+	  and parameters accordingly.  This change was prompted by the
+	  consistency fixes made to ace/Basic_Types.h the "Wed Apr 16
+	  13:35:34 2003  Ossama Othman  <ossama@uci.edu>" ChangeLog
+	  entry.
+
+	  Use rep() instead of ushort_rep() when copying an
+	  ACE_NS_WString.  The latter only works for platforms with 16 bit
+	  wide characters.
+
 Thu Apr 17 13:26:23 2003  Simon McQueen  <sm@prismtechnologies.com>
 
         * bin/MakeProjectCreator/configmessaging_only.mpb:
