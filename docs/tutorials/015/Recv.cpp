@@ -50,6 +50,12 @@ int Recv::recv(ACE_Message_Block * message, ACE_Time_Value *timeout)
            end-of-string NULL character.  Since the OS layers (at leas 
            in Unix) will provide some buffering this isn't as bad as
            it may seem at first.
+
+           The byte-at-a-time recv breaks horribly on Win32 where the
+           WFMO_Reactor is used.  This is because the socket has been
+           placed into non-blocking mode and only the recv() of the
+           first byte will block.  The solution is to use
+           ACE_Select_Reactor and I hope to implement that soon.
         */
     do
     {
