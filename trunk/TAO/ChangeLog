@@ -1,3 +1,13 @@
+Wed Sep  4 15:15:43 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_field/field_ch.cpp: Prevent the generation
+	  of second typedefs for anonymous sequences. Thanks to Jeff
+	  Parsons for suggesting this patch.
+
+	* tao/Messaging/MessagingC.h: 
+	* tao/Messaging/diffs/Messaging.diff: Regenerated these again with
+	  the above change.
+
 Wed Sep  4 13:59:14 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
 
 	* tao/Messaging/MessagingC.h: Removed another typedef declaration
