@@ -1,8 +1,20 @@
+Sat Nov  8 22:06:04 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/diffs/TAO.diff:
+	  
+	  Placed the diffs in a single file. 
+
+	* tao/diffs/TAOC.cpp.diff:
+	* tao/diffs/TAOC.h.diff:
+	* tao/diffs/TAOC.i.diff:
+
+	  Removed the diffs placed in the above files.
+
 Sat Nov  8 22:00:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Acceptor_Impl.cpp:
 	  
-	   #included debug.h. This should fix compilation errorson HPUX. 
+          #included debug.h. This should fix compilation errorson HPUX. 
 	
 	* tao/IIOP_Connection_Handler.cpp:
 	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
