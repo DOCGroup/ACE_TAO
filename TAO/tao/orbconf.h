@@ -60,18 +60,28 @@
 #  define TAO_WORDS_BIGENDIAN 1
 #endif
 
-// The number of bytes in an int. 
-#if defined (_WIN32) || defined (linux) || defined (ACE_NETBSD) || defined (__FreeBSD__) || defined (VXWORKS)
-#  define	SIZEOF_INT	4
-#else	// Win16
-#  define	SIZEOF_INT	2
-#endif	// Win32/Win16
+#if UINT_MAX == 65535UL
+# define SIZEOF_INT 2
+#elif UINT_MAX == 4294967295UL
+# define SIZEOF_INT 4
+#elif UINT_MAX == 18446744073709551615UL
+# define SIZEOF_INT 8
+#else
+# error: unsupported int size, must be updated for this platform!
+#endif /* UINT_MAX */
 
-// The number of bytes in a long.  
-#define SIZEOF_LONG 4
+#if ULONG_MAX == 65535UL
+# define SIZEOF_LONG 2
+#elif ULONG_MAX == 4294967295UL
+# define SIZEOF_LONG 4
+#elif ULONG_MAX == 18446744073709551615UL
+# define SIZEOF_LONG 8
+#else
+# error: unsupported long size, must be updated for this platform!
+#endif /* ULONG_MAX */
 
 // The number of bytes in a void *.  
-#define SIZEOF_VOID_P 4
+#define SIZEOF_VOID_P SIZEOF_LONG
 
 // The number of bytes in a long long.  
 #if !defined (_WIN32) && !defined (VXWORKS)
