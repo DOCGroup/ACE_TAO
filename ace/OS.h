@@ -1996,7 +1996,7 @@ extern "C"
 #endif /* ACE_LACKS_SYSV_MSQ_PROTOS */
 
 #if defined (ACE_HAS_STHREADS)
-#include <sys/priocntl.h>
+#include /**/ <sys/priocntl.h>
 typedef id_t ACE_id_t;
 typedef pri_t ACE_pri_t;
 #else

@@ -26,8 +26,8 @@
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_HAS_STHREADS)
-#include <sys/rtpriocntl.h>
-#include <sys/tspriocntl.h>
+#include /**/ <sys/rtpriocntl.h>
+#include /**/ <sys/tspriocntl.h>
 #endif /* ACE_HAS_STHREADS */
 
 int
