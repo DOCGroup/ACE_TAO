@@ -656,14 +656,17 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
         TAO_ORB_Core_instance ()->orb ()->_get_collocated_servant (objdata);
       CORBA_Object *corba_proxy = 0;
 
-      ACE_NEW_RETURN (corba_proxy,
-                      CORBA_Object (objdata, servant, servant != 0),
-                      CORBA::TypeCode::TRAVERSE_CONTINUE);
+      corba_proxy = new CORBA_Object (objdata, servant, servant != 0);
 
       if (corba_proxy)
         *(CORBA_Object **)data = corba_proxy;
       else
         continue_decoding = CORBA::B_FALSE;
+
+      // the corba proxy would have already incremented the reference count on
+      // the objdata. So we decrement it here by 1 so that the objdata is now
+      // fully owned by the corba_proxy that was created.
+      objdata->Release ();
     }
   if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE
       && continue_decoding == CORBA::B_TRUE)

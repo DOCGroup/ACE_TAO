@@ -54,7 +54,7 @@ be_visitor_union_branch_private_ch::visit_union_branch (be_union_branch *node)
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_union_branch_cs::"
+                         "(%N:%l) be_visitor_union_branch_private_ch::"
                          "visit_union_branch - "
                          "Bad union_branch type\n"
                          ), -1);
@@ -64,7 +64,7 @@ be_visitor_union_branch_private_ch::visit_union_branch (be_union_branch *node)
   if (bt->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_union_branch_cs::"
+                         "(%N:%l) be_visitor_union_branch_private_ch::"
                          "visit_union_branch - "
                          "codegen for union_branch type failed\n"
                          ), -1);
@@ -100,8 +100,21 @@ be_visitor_union_branch_private_ch::visit_array (be_array *node)
   os = this->ctx_->stream ();
 
   os->indent ();
+  // are we fixed size or variable. This will decide our type
+#if 0
+  if (node->size_type () == be_type::VARIABLE)
+    {
+      *os << bt->nested_type_name (bu, "_slice") << " *" << ub->local_name ()
+          << "_;\n";
+    }
+  else
+    {
+      *os << bt->nested_type_name (bu) << " " << ub->local_name () << "_;\n";
+    }
+#endif
   *os << bt->nested_type_name (bu, "_slice") << " *" << ub->local_name ()
       << "_;\n";
+
   return 0;
 }
 
@@ -233,6 +246,14 @@ be_visitor_union_branch_private_ch::visit_predefined_type (be_predefined_type *n
       *os << bt->nested_type_name (bu, "_ptr") << " " << ub->local_name () <<
         "_;\n";
     }
+  else if (node->pt () == AST_PredefinedType::PT_any)
+    {
+      // Cannot have an object inside of a union. In addition, an Any is a
+      // variable data type
+      os->indent (); // start from current indentation
+      *os << bt->nested_type_name (bu) << " *" << ub->local_name () <<
+        "_;\n";
+    }
   else
     {
       os->indent (); // start from current indentation
@@ -299,6 +320,7 @@ be_visitor_union_branch_private_ch::visit_string (be_string *node)
 
   os = this->ctx_->stream ();
 
+  os->indent ();
   *os << "char *" << ub->local_name () << "_;\n";
   return 0;
 }
@@ -329,7 +351,17 @@ be_visitor_union_branch_private_ch::visit_structure (be_structure *node)
   os = this->ctx_->stream ();
 
   os->indent ();
-  *os << bt->nested_type_name (bu) << " " << ub->local_name () << "_;\n";
+
+  // if we are variable sized, we need a pointer type
+  if (node->size_type () == be_type::VARIABLE)
+    {
+      *os << bt->nested_type_name (bu) << " *" << ub->local_name () << "_;\n";
+    }
+  else
+    {
+      *os << bt->nested_type_name (bu) << " " << ub->local_name () << "_;\n";
+    }
+
   return 0;
 }
 
@@ -383,8 +415,7 @@ be_visitor_union_branch_private_ch::visit_union (be_union *node)
   os = this->ctx_->stream ();
 
   os->indent ();
-  // C++ doesn't allow object instances inside unions, so we need a
-  // pointer
+  // C++ doesn't allow instances of classes
   *os << bt->nested_type_name (bu) << " *" << ub->local_name () << "_;\n";
   return 0;
 }

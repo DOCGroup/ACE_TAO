@@ -30,19 +30,22 @@
 // *****************************************************
 
 // constructor
-be_visitor_union_branch_public_ci::be_visitor_union_branch_public_ci (be_visitor_context *ctx)
+be_visitor_union_branch_public_ci::
+be_visitor_union_branch_public_ci (be_visitor_context *ctx)
   : be_visitor_decl (ctx)
 {
 }
 
 // destructor
-be_visitor_union_branch_public_ci::~be_visitor_union_branch_public_ci (void)
+be_visitor_union_branch_public_ci::
+~be_visitor_union_branch_public_ci (void)
 {
 }
 
 // visit the union_branch node
 int
-be_visitor_union_branch_public_ci::visit_union_branch (be_union_branch *node)
+be_visitor_union_branch_public_ci::
+visit_union_branch (be_union_branch *node)
 {
   TAO_OutStream *os;
   be_type *bt; // union_branch's type
@@ -136,8 +139,7 @@ be_visitor_union_branch_public_ci::visit_array (be_array *node)
       << "ACE_INLINE void" << be_nl
       << bu->name () << "::" << ub->local_name () << " (" << bt->name ()
       << " val)// set" << be_nl
-      << "{\n";
-  os->incr_indent ();
+      << "{" << be_idt_nl;
   // set the discriminant to the appropriate label
   if (ub->label ()->label_kind () == AST_UnionLabel::UL_label)
     {
@@ -146,33 +148,43 @@ be_visitor_union_branch_public_ci::visit_array (be_array *node)
       // check if the case label is a symbol or a literal
       if (ub->label ()->label_val ()->ec () == AST_Expression::EC_symbol)
         {
+          *os << "this->reset (" << ub->label ()->label_val ()->n ()
+              << ", 0);" << be_nl;
           *os << "this->disc_ = " << ub->label ()->label_val ()->n ()
               << ";" << be_nl;
         }
       else
         {
+          *os << "this->reset (" << ub->label ()->label_val ()
+              << ", 0);" << be_nl;
           *os << "this->disc_ = " << ub->label ()->label_val () << ";" <<
             be_nl;
         }
-      *os << "// set the value" << be_nl
-          << "this->" << ub->local_name () << "_ = val;\n";
+      *os << "// set the value" << be_nl;
+      *os << "// store current val in a _var so as to free it on an assignment"
+          << be_nl;
+      *os << bt->name () << "_var " << ub->local_name () << "_var (this->"
+          << ub->local_name () << "_);" << be_nl;
+      *os << "// release old and make a deep copy" << be_nl;
+      *os << ub->local_name () << "_var = " << bt->name ()
+          << "_dup (val);" << be_nl;
+      *os << "// the _var gives up ownership" << be_nl;
+      *os << "this->" << ub->local_name () << "_ = "
+          << ub->local_name () << "_var._retn ();" << be_uidt_nl;
     }
   else
     {
       // default label
       // XXXASG - TODO
     }
-  os->decr_indent ();
   *os << "}" << be_nl;
 
   // get method
   *os << "// retrieve the member" << be_nl
       << "ACE_INLINE " << bt->name () << "_slice *" << be_nl
       << bu->name () << "::" << ub->local_name () << " (void) const" << be_nl
-      << "{\n";
-  os->incr_indent ();
-  *os << "return this->" << ub->local_name () << "_;\n";
-  os->decr_indent ();
+      << "{" << be_idt_nl;
+  *os << "return this->" << ub->local_name () << "_;" << be_uidt_nl;
   *os << "}\n\n";
   return 0;
 }
@@ -219,11 +231,15 @@ be_visitor_union_branch_public_ci::visit_enum (be_enum *node)
       // check if the case label is a symbol or a literal
       if (ub->label ()->label_val ()->ec () == AST_Expression::EC_symbol)
         {
+          *os << "this->reset (" << ub->label ()->label_val ()->n ()
+              << ", 0);" << be_nl;
           *os << "this->disc_ = " << ub->label ()->label_val ()->n ()
               << ";" << be_nl;
         }
       else
         {
+          *os << "this->reset (" << ub->label ()->label_val ()
+              << ", 0);" << be_nl;
           *os << "this->disc_ = " << ub->label ()->label_val () << ";" <<
             be_nl;
         }
@@ -292,23 +308,35 @@ be_visitor_union_branch_public_ci::visit_interface (be_interface *node)
       // check if the case label is a symbol or a literal
       if (ub->label ()->label_val ()->ec () == AST_Expression::EC_symbol)
         {
+          *os << "this->reset (" << ub->label ()->label_val ()->n ()
+              << ", 0);" << be_nl;
           *os << "this->disc_ = " << ub->label ()->label_val ()->n ()
               << ";" << be_nl;
         }
       else
         {
+          *os << "this->reset (" << ub->label ()->label_val ()
+              << ", 0);" << be_nl;
           *os << "this->disc_ = " << ub->label ()->label_val () << ";" <<
             be_nl;
         }
-      *os << "// set the value" << be_nl
-          << "this->" << ub->local_name () << "_ = val;\n";
+      *os << "// set the value" << be_nl;
+      *os << "// store current val in a _var so as to free it on an assignment"
+          << be_nl;
+      *os << bt->name () << "_var " << ub->local_name () << "_var (this->"
+          << ub->local_name () << "_);" << be_nl;
+      *os << "// release old storage and make a copy" << be_nl;
+      *os << ub->local_name () << "_var = " << bt->name ()
+          << "::_duplicate (val);" << be_nl;
+      *os << "// the _var gives up ownership" << be_nl;
+      *os << "this->" << ub->local_name () << "_ = "
+          << ub->local_name () << "_var._retn ();" << be_uidt_nl;
     }
   else
     {
       // default label
       // XXXASG - TODO
     }
-  os->decr_indent ();
   *os << "}" << be_nl;
 
   // get method
@@ -343,7 +371,7 @@ be_visitor_union_branch_public_ci::visit_interface_fwd (be_interface_fwd *node)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_ci::"
-                         "visit_interface_fwd - "
+                         "visit_interface - "
                          "bad context information\n"
                          ), -1);
     }
@@ -365,23 +393,35 @@ be_visitor_union_branch_public_ci::visit_interface_fwd (be_interface_fwd *node)
       // check if the case label is a symbol or a literal
       if (ub->label ()->label_val ()->ec () == AST_Expression::EC_symbol)
         {
+          *os << "this->reset (" << ub->label ()->label_val ()->n ()
+              << ", 0);" << be_nl;
           *os << "this->disc_ = " << ub->label ()->label_val ()->n ()
               << ";" << be_nl;
         }
       else
         {
+          *os << "this->reset (" << ub->label ()->label_val ()
+              << ", 0);" << be_nl;
           *os << "this->disc_ = " << ub->label ()->label_val () << ";" <<
             be_nl;
         }
-      *os << "// set the value" << be_nl
-          << "this->" << ub->local_name () << "_ = val;\n";
+      *os << "// set the value" << be_nl;
+      *os << "// store current val in a _var so as to free it on an assignment"
+          << be_nl;
+      *os << bt->name () << "_var " << ub->local_name () << "_var (this->"
+          << ub->local_name () << "_);" << be_nl;
+      *os << "// release old storage and make a copy" << be_nl;
+      *os << ub->local_name () << "_var = " << bt->name ()
+          << "::_duplicate (val);" << be_nl;
+      *os << "// the _var gives up ownership" << be_nl;
+      *os << "this->" << ub->local_name () << "_ = "
+          << ub->local_name () << "_var._retn ();" << be_uidt_nl;
     }
   else
     {
       // default label
       // XXXASG - TODO
     }
-  os->decr_indent ();
   *os << "}" << be_nl;
 
   // get method
@@ -429,9 +469,8 @@ be_visitor_union_branch_public_ci::visit_predefined_type (be_predefined_type *no
       << bu->name () << "::" << ub->local_name () << " (" << bt->name ();
   if (node->pt () == AST_PredefinedType::PT_pseudo)
     *os << "_ptr";
-  *os << " val)// set" << be_nl
-      << "{\n";
-  os->incr_indent ();
+  *os << " val) // set" << be_nl
+      << "{" << be_idt_nl;
   // set the discriminant to the appropriate label
   if (ub->label ()->label_kind () == AST_UnionLabel::UL_label)
     {
@@ -440,37 +479,103 @@ be_visitor_union_branch_public_ci::visit_predefined_type (be_predefined_type *no
       // check if the case label is a symbol or a literal
       if (ub->label ()->label_val ()->ec () == AST_Expression::EC_symbol)
         {
+          *os << "this->reset (" << ub->label ()->label_val ()->n ()
+              << ", 0);" << be_nl;
           *os << "this->disc_ = " << ub->label ()->label_val ()->n ()
               << ";" << be_nl;
         }
       else
         {
+          *os << "this->reset (" << ub->label ()->label_val ()
+              << ", 0);" << be_nl;
           *os << "this->disc_ = " << ub->label ()->label_val () << ";" <<
             be_nl;
         }
-      *os << "// set the value" << be_nl
-          << "this->" << ub->local_name () << "_ = val;\n";
+      switch (node->pt ())
+        {
+        case AST_PredefinedType::PT_pseudo:
+          *os << "// set the value" << be_nl;
+          *os << "// store current val in a _var so as to free it on an assignment"
+              << be_nl;
+          *os << bt->name () << "_var " << ub->local_name () << "_var (this->"
+              << ub->local_name () << "_);" << be_nl;
+          *os << "// release old storage and make a copy" << be_nl;
+          *os << ub->local_name () << "_var = " << bt->name ()
+              << "::_duplicate (val);" << be_nl;
+          *os << "// the _var gives up ownership" << be_nl;
+          *os << "this->" << ub->local_name () << "_ = "
+              << ub->local_name () << "_var._retn ();" << be_uidt_nl;
+          break;
+        case AST_PredefinedType::PT_any:
+          *os << "// set the value" << be_nl;
+          *os << "// store current val in a _var so as to free it on an assignment"
+              << be_nl;
+          *os << bt->name () << "_var " << ub->local_name () << "_var (this->"
+              << ub->local_name () << "_);" << be_nl;
+          *os << "// release old and make a deep copy" << be_nl;
+          *os << ub->local_name () << "_var = new " << bt->name ()
+              << " (val);" << be_nl;
+          *os << "// the _var gives up ownership" << be_nl;
+          *os << "this->" << ub->local_name () << "_ = "
+              << ub->local_name () << "_var._retn ();" << be_uidt_nl;
+          break;
+        case AST_PredefinedType::PT_void:
+          break;
+        default:
+          *os << "// set the value" << be_nl
+              << "this->" << ub->local_name () << "_ = val;" << be_uidt_nl;
+        }
     }
   else
     {
       // default label
       // XXXASG - TODO
     }
-  os->decr_indent ();
   *os << "}" << be_nl;
 
-  // get method
-  *os << "// retrieve the member" << be_nl
-      << "ACE_INLINE " << bt->name ();
-  if (node->pt () == AST_PredefinedType::PT_pseudo)
-    *os << "_ptr";
-  *os << be_nl;
-  *os << bu->name () << "::" << ub->local_name () << " (void) const" << be_nl
-      << "{\n";
-  os->incr_indent ();
-  *os << "return this->" << ub->local_name () << "_;\n";
-  os->decr_indent ();
-  *os << "}\n\n";
+  switch (node->pt ())
+    {
+    case AST_PredefinedType::PT_pseudo:
+      // get method
+      *os << "// retrieve the member" << be_nl
+          << "ACE_INLINE " << bt->name () << "_ptr" << be_nl;
+      *os << bu->name () << "::" << ub->local_name ()
+          << " (void) const" << be_nl
+          << "{" << be_idt_nl
+          << "return this->" << ub->local_name () << "_;" << be_uidt_nl
+          << "}\n\n";
+      break;
+    case AST_PredefinedType::PT_any:
+      // get method with read-only access
+      *os << "// retrieve the member" << be_nl
+          << "ACE_INLINE const " << bt->name () << be_nl;
+      *os << bu->name () << "::" << ub->local_name ()
+          << " (void) const" << be_nl
+          << "{" << be_idt_nl
+          << "return *this->" << ub->local_name () << "_;" << be_uidt_nl
+          << "}" << be_nl;
+
+      // get method with read/write access
+      *os << "// retrieve the member" << be_nl
+          << "ACE_INLINE " << bt->name () << be_nl;
+      *os << bu->name () << "::" << ub->local_name ()
+          << " (void)" << be_nl
+          << "{" << be_idt_nl
+          << "return *this->" << ub->local_name () << "_;" << be_uidt_nl
+          << "}\n\n";
+      break;
+    case AST_PredefinedType::PT_void:
+      break;
+    default:
+      // get method
+      *os << "// retrieve the member" << be_nl
+          << "ACE_INLINE " << bt->name () << be_nl;
+      *os << bu->name () << "::" << ub->local_name ()
+          << " (void) const" << be_nl
+          << "{" << be_idt_nl
+          << "return this->" << ub->local_name () << "_;" << be_uidt_nl
+          << "}\n\n";
+    }
   return 0;
 }
 
@@ -515,19 +620,29 @@ be_visitor_union_branch_public_ci::visit_sequence (be_sequence *node)
       // check if the case label is a symbol or a literal
       if (ub->label ()->label_val ()->ec () == AST_Expression::EC_symbol)
         {
+          *os << "this->reset (" << ub->label ()->label_val ()->n ()
+              << ", 0);" << be_nl;
           *os << "this->disc_ = " << ub->label ()->label_val ()->n ()
               << ";" << be_nl;
         }
       else
         {
+          *os << "this->reset (" << ub->label ()->label_val ()
+              << ", 0);" << be_nl;
           *os << "this->disc_ = " << ub->label ()->label_val () << ";"
               << be_nl;
         }
-      *os << "// set the value" << be_nl
-          << "if (!this->" << ub->local_name () << "_)" << be_idt_nl
-          << "this->" << ub->local_name () << "_ = new "
-          << bt->name () << ";" << be_uidt_nl
-          << "*this->" << ub->local_name () << "_ = val;" << be_uidt_nl;
+      *os << "// set the value" << be_nl;
+      *os << "// store current val in a _var so as to free it on an assignment"
+          << be_nl;
+      *os << bt->name () << "_var " << ub->local_name () << "_var (this->"
+          << ub->local_name () << "_);" << be_nl;
+      *os << "// release old and make a deep copy" << be_nl;
+      *os << ub->local_name () << "_var = new " << bt->name ()
+          << " (val);" << be_nl;
+      *os << "// the _var gives up ownership" << be_nl;
+      *os << "this->" << ub->local_name () << "_ = "
+          << ub->local_name () << "_var._retn ();" << be_uidt_nl;
     }
   else
     {
@@ -598,28 +713,35 @@ be_visitor_union_branch_public_ci::visit_string (be_string *node)
       // check if the case label is a symbol or a literal
       if (ub->label ()->label_val ()->ec () == AST_Expression::EC_symbol)
         {
+          *os << "this->reset (" << ub->label ()->label_val ()->n ()
+              << ", 0);" << be_nl;
           *os << "this->disc_ = " << ub->label ()->label_val ()->n ()
               << ";" << be_nl;
         }
       else
         {
+          *os << "this->reset (" << ub->label ()->label_val ()
+              << ", 0);" << be_nl;
           *os << "this->disc_ = " << ub->label ()->label_val () << ";" <<
             be_nl;
         }
-      *os << "// set the value" << be_nl
-          << "if (!this->" << ub->local_name () << "_) // does not exist"
-          << be_nl
-          << "  this->" << ub->local_name ()
-          << "_ = new CORBA::String_var (val);" << be_nl
-          << "else" << be_nl
-          << "  *this->" << ub->local_name () << "_ = val;";
-    }
+      *os << "// set the value" << be_nl;
+      *os << "// store current val in a _var so as to free it on an assignment"
+          << be_nl;
+      *os << bt->name () << "_var " << ub->local_name () << "_var (this->"
+          << ub->local_name () << "_);" << be_nl;
+      *os << "// release old and make a deep copy" << be_nl;
+      *os << ub->local_name () << "_var = CORBA::string_dup (val);" << be_nl;
+      *os << "// the _var gives up ownership" << be_nl;
+      *os << "this->" << ub->local_name () << "_ = "
+          << ub->local_name () << "_var._retn ();" << be_uidt_nl;
+   }
   else
     {
       // default label
       // XXXASG - TODO
     }
-  *os << be_uidt_nl << "}" << be_nl;
+  *os << "}" << be_nl;
 
   // (2) set method from const char *
   *os << "// accessor to set the member" << be_nl
@@ -636,21 +758,23 @@ be_visitor_union_branch_public_ci::visit_string (be_string *node)
       // check if the case label is a symbol or a literal
       if (ub->label ()->label_val ()->ec () == AST_Expression::EC_symbol)
         {
+          *os << "this->reset (" << ub->label ()->label_val ()->n ()
+              << ", 0);" << be_nl;
           *os << "this->disc_ = " << ub->label ()->label_val ()->n ()
               << ";" << be_nl;
         }
       else
         {
+          *os << "this->reset (" << ub->label ()->label_val ()
+              << ", 0);" << be_nl;
           *os << "this->disc_ = " << ub->label ()->label_val () << ";" <<
             be_nl;
         }
       *os << "// set the value" << be_nl
-          << "if (!this->" << ub->local_name () << "_) // does not exist"
-          << be_nl
-          << "  this->" << ub->local_name ()
-          << "_ = new CORBA::String_var (val);" << be_nl
-          << "else" << be_nl
-          << "  *this->" << ub->local_name () << "_ = val;" << be_uidt_nl;
+          << bt->name () << "_var " << ub->local_name ()
+          << "_var (val);" << be_nl
+          << "this->" << ub->local_name () << "_ = "
+          << ub->local_name () << "_var._retn ();" << be_uidt_nl;
     }
   else
     {
@@ -674,35 +798,37 @@ be_visitor_union_branch_public_ci::visit_string (be_string *node)
       // check if the case label is a symbol or a literal
       if (ub->label ()->label_val ()->ec () == AST_Expression::EC_symbol)
         {
+          *os << "this->reset (" << ub->label ()->label_val ()->n ()
+              << ", 0);" << be_nl;
           *os << "this->disc_ = " << ub->label ()->label_val ()->n ()
               << ";" << be_nl;
         }
       else
         {
+          *os << "this->reset (" << ub->label ()->label_val ()
+              << ", 0);" << be_nl;
           *os << "this->disc_ = " << ub->label ()->label_val () << ";" <<
             be_nl;
         }
       *os << "// set the value" << be_nl
-          << "if (!this->" << ub->local_name () << "_) // does not exist"
-          << be_nl
-          << "  this->" << ub->local_name ()
-          << "_ = new CORBA::String_var (val);" << be_nl
-          << "else" << be_nl
-          << "  *this->" << ub->local_name () << "_ = val;";
+          << bt->name () << "_var " << ub->local_name ()
+          << "_var = val;" << be_nl
+          << "this->" << ub->local_name () << "_ = "
+          << ub->local_name () << "_var._retn ();" << be_uidt_nl;
     }
   else
     {
       // default label
       // XXXASG - TODO
     }
-  *os << be_uidt_nl << "}" << be_nl;
+  *os << "}" << be_nl;
 
   // get method
   *os << "ACE_INLINE const char *" << be_nl
       << bu->name () << "::" << ub->local_name ()
       << " (void) const // get method" << be_nl
       << "{" << be_idt_nl
-      << "return *this->" << ub->local_name () << "_;" << be_uidt_nl
+      << "return this->" << ub->local_name () << "_;" << be_uidt_nl
       << "}\n\n";
   return 0;
 }
@@ -779,16 +905,36 @@ be_visitor_union_branch_public_ci::visit_structure (be_structure *node)
       // check if the case label is a symbol or a literal
       if (ub->label ()->label_val ()->ec () == AST_Expression::EC_symbol)
         {
+          *os << "this->reset (" << ub->label ()->label_val ()->n ()
+              << ", 0);" << be_nl;
           *os << "this->disc_ = " << ub->label ()->label_val ()->n ()
               << ";" << be_nl;
         }
       else
         {
+          *os << "this->reset (" << ub->label ()->label_val ()
+              << ", 0);" << be_nl;
           *os << "this->disc_ = " << ub->label ()->label_val () << ";"
               << be_nl;
         }
-      *os << "// set the value" << be_nl
-          << "this->" << ub->local_name () << "_ = val;" << be_uidt_nl;
+      if (bt->size_type () == be_type::VARIABLE)
+        {
+          *os << "// set the value" << be_nl;
+          *os << "// store current val in a _var so as to free it on an assignment"
+              << be_nl;
+          *os << bt->name () << "_var " << ub->local_name () << "_var (this->"
+              << ub->local_name () << "_);" << be_nl;
+          *os << "// release old and make a deep copy" << be_nl;
+          *os << ub->local_name () << "_var = new " << bt->name ()
+              << " (val);" << be_nl;
+          *os << "// the _var gives up ownership" << be_nl;
+          *os << "this->" << ub->local_name () << "_ = "
+              << ub->local_name () << "_var._retn ();" << be_uidt_nl;
+        }
+      else
+        {
+          *os << "this->" << ub->local_name () << "_ = val;" << be_uidt_nl;
+        }
     }
   else
     {
@@ -801,17 +947,23 @@ be_visitor_union_branch_public_ci::visit_structure (be_structure *node)
   *os << "// readonly get method " << be_nl
       << "ACE_INLINE const " << bt->name () << " &" << be_nl
       << bu->name () << "::" << ub->local_name () << " (void) const" << be_nl
-      << "{" << be_idt_nl
-      << "return this->" << ub->local_name () << "_;" << be_uidt_nl
-      << "}" << be_nl;
+      << "{" << be_idt_nl;
+  if (bt->size_type () == be_type::VARIABLE)
+    *os << "return *this->" << ub->local_name () << "_;" << be_uidt_nl;
+  else
+    *os << "return this->" << ub->local_name () << "_;" << be_uidt_nl;
+  *os << "}" << be_nl;
 
   // read/write get method
   *os << "// read/write get method " << be_nl
       << "ACE_INLINE " << bt->name () << " &" << be_nl
       << bu->name () << "::" << ub->local_name () << " (void)" << be_nl
-      << "{" << be_idt_nl
-      << "return this->" << ub->local_name () << "_;" << be_uidt_nl
-      << "}\n\n";
+      << "{" << be_idt_nl;
+  if (bt->size_type () == be_type::VARIABLE)
+    *os << "return *this->" << ub->local_name () << "_;" << be_uidt_nl;
+  else
+    *os << "return this->" << ub->local_name () << "_;" << be_uidt_nl;
+  *os << "}\n\n";
 
   return 0;
 }
@@ -911,16 +1063,29 @@ be_visitor_union_branch_public_ci::visit_union (be_union *node)
       // check if the case label is a symbol or a literal
       if (ub->label ()->label_val ()->ec () == AST_Expression::EC_symbol)
         {
+          *os << "this->reset (" << ub->label ()->label_val ()->n ()
+              << ", 0);" << be_nl;
           *os << "this->disc_ = " << ub->label ()->label_val ()->n ()
               << ";" << be_nl;
         }
       else
         {
+          *os << "this->reset (" << ub->label ()->label_val ()
+              << ", 0);" << be_nl;
           *os << "this->disc_ = " << ub->label ()->label_val () << ";" <<
             be_nl;
         }
-      *os << "// set the value" << be_nl
-          << "*this->" << ub->local_name () << "_ = val;" << be_uidt_nl;
+      *os << "// set the value" << be_nl;
+      *os << "// store current val in a _var so as to free it on an assignment"
+          << be_nl;
+      *os << bt->name () << "_var " << ub->local_name () << "_var (this->"
+          << ub->local_name () << "_);" << be_nl;
+      *os << "// release old and make a deep copy" << be_nl;
+      *os << ub->local_name () << "_var = new " << bt->name ()
+          << " (val);" << be_nl;
+      *os << "// the _var gives up ownership" << be_nl;
+      *os << "this->" << ub->local_name () << "_ = "
+          << ub->local_name () << "_var._retn ();" << be_uidt_nl;
     }
   else
     {

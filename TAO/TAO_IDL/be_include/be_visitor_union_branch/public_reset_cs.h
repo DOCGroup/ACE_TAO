@@ -9,11 +9,11 @@
 //    TAO IDL
 //
 // = FILENAME
-//    public_assign_cs.h
+//    public_reset_cs.h
 //
 // = DESCRIPTION
 //     Visitor for the Union class.
-//     This one generates code for the assignment operator of the union class
+//     This one generates code for the reset method of the union class
 //     for the union members in the client stubs.
 //
 // = AUTHOR
@@ -21,24 +21,24 @@
 //
 // ============================================================================
 
-#if !defined (_BE_VISITOR_UNION_BRANCH_PUBLIC_ASSIGN_CS_H_)
-#define _BE_VISITOR_UNION_BRANCH_PUBLIC_ASSIGN_CS_H_
+#if !defined (_BE_VISITOR_UNION_BRANCH_PUBLIC_RESET_CS_H_)
+#define _BE_VISITOR_UNION_BRANCH_PUBLIC_RESET_CS_H_
 
-class be_visitor_union_branch_public_assign_cs : public be_visitor_decl
+class be_visitor_union_branch_public_reset_cs : public be_visitor_decl
 {
   //
   // = TITLE
-  //    be_visitor_union_branch_public_assign_cs
+  //    be_visitor_union_branch_public_reset_cs
   //
   // = DESCRIPTION
-  //    This is used to generate the body of the assignment operator and the
+  //    This is used to generate the body of the resetment operator and the
   //    copy constructor of the union class
   //
 public:
-  be_visitor_union_branch_public_assign_cs (be_visitor_context *ctx);
+  be_visitor_union_branch_public_reset_cs (be_visitor_context *ctx);
   // constructor
 
-  ~be_visitor_union_branch_public_assign_cs (void);
+  ~be_visitor_union_branch_public_reset_cs (void);
   // destructor
 
   virtual int visit_union_branch (be_union_branch *node);
@@ -78,4 +78,4 @@ public:
 
 };
 
-#endif /* _BE_VISITOR_UNION_BRANCH_PUBLIC_ASSIGN_CS_H_ */
+#endif /* _BE_VISITOR_UNION_BRANCH_PUBLIC_RESET_CS_H_ */

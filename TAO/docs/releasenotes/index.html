@@ -65,8 +65,18 @@ A complete list of all modifications to TAO is available in the <A HREF="http://
 <A NAME="idl"></A>IDL Compiler</H3>
 Point of contact: <A HREF="mailto:gokhale@cs.wustl.edu">Aniruddha Gokhale</A>
 
-<P>Current status: (As of June 11th, 1998.)
+<P>Current status: (As of June 24th, 1998.)
 <UL>
+<LI>
+Support for Arrays is refined in terms of the code generated for
+    parameters inside stubs and skeletons.
+</LI>
+
+<LI>
+Significantly improved the support for unions. The default case is yet
+to be handled.
+</LI>
+
 <LI>
 Added support for Arrays. Right now, support for typedefed arrays is
 in. Still needs testing.
@@ -187,10 +197,10 @@ name of an extra include file were the macro is defined; the options are
 
 <LI>
 The IDL compiler generates now source code for sequences. The user has now the option
-to use these generated sequence classes or to use, as up to now, the template 
-instatiation. If TAO_LACKS_TEMPLATE_SPECIALIZATION is defined, then 
+to use these generated sequence classes or to use, as up to now, the template
+instatiation. If TAO_LACKS_TEMPLATE_SPECIALIZATION is defined, then
 template instantiation will be used, else not. The reason for this was, that
-some C++ compilers did not support template instantiation properly and 
+some C++ compilers did not support template instantiation properly and
 sequences were based on templates. The generated source code is mainly
 contained in the generated header file directly in the class declaration.</LI>
 
@@ -263,10 +273,10 @@ to generalize the changes necessary to generated code.</LI><P>
 </UL>
 
 <LI>
-The generated sequence classes should not be generated per sequence, but 
+The generated sequence classes should not be generated per sequence, but
 per type and parent scope. Which means, that the overhead of having
 the source code generated serveral times should be reduced. To do this,
-an extra pass over the internal representation of the IDL file has to 
+an extra pass over the internal representation of the IDL file has to
 be done.
 
 <HR>

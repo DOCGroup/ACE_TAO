@@ -104,18 +104,21 @@ be_visitor_args_pre_docall_cs::visit_array (be_array *node)
   switch (this->direction ())
     {
     case AST_Argument::dir_OUT:
-      os->indent ();
-      *os << bt->name () << "_slice *&_tao_base_" << arg->local_name ()
-          << " = " << arg->local_name () << ".ptr ();" << be_nl;
-      if (!this->void_return_type ())
+      if (node->size_type () == be_decl::VARIABLE)
         {
-          *os << "ACE_ALLOCATOR_RETURN (_tao_base_" << arg->local_name ()
-              << ", " << bt->name () << "_alloc (), _tao_retval);\n";
-        }
-      else
-        {
-          *os << "ACE_ALLOCATOR (_tao_base_" << arg->local_name ()
-              << ", " << bt->name () << "_alloc ());\n";
+          os->indent ();
+          *os << bt->name () << "_slice *&_tao_base_" << arg->local_name ()
+              << " = " << arg->local_name () << ".ptr ();" << be_nl;
+          if (!this->void_return_type ())
+            {
+              *os << "ACE_ALLOCATOR_RETURN (_tao_base_" << arg->local_name ()
+                  << ", " << bt->name () << "_alloc (), _tao_retval);\n";
+            }
+          else
+            {
+              *os << "ACE_ALLOCATOR (_tao_base_" << arg->local_name ()
+                  << ", " << bt->name () << "_alloc ());\n";
+            }
         }
       break;
     default:

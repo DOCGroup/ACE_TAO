@@ -1,10 +1,110 @@
+Wed Jun 24 11:13:32 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be_include/be_codegen.h: Added a new state for resetting
+	the appropriate element of a union.
+
+	* TAO_IDL/be_include/be_visitor_union_branch/public_reset_cs.h:
+	Added a new visitor that generates code for resetting elements of
+	a union. This is required in 3 scenarios: (1) for destructor, (2)
+	for union's assignment operator, and (3) individual modifier
+	operations in which a new value is set. This will require freeing
+	of previous value.
+
+	  *NOTE* this is a new file.
+
+	* TAO_IDL/be_include/be_visitor_union_branch/public_assign_cs.h:
+	Added a bunch of methods to the visitor that visit the
+	"type". This was necessary since simple assignment is not
+	anough. We must ensure that old values are freed and the
+	assignment results in deep copies wherever necessary. All this is
+	required for the assignment operator of the union.
+
+	* TAO_IDL/be/be_interpretive.cpp: Handled the newly added case for
+	the union reset visitor.
+
+	* TAO_IDL/be/be_visitor_argument/docall_cs.cpp:
+	  TAO_IDL/be/be_visitor_argument/marshal_ss.cpp:
+	  TAO_IDL/be/be_visitor_argument/pre_docall_cs.cpp:
+	  TAO_IDL/be/be_visitor_argument/vardecl_ss.cpp:
+
+	  Added support for Arrays as in, inout, out parameters.
+
+	* TAO_IDL/be/be_visitor_array/array_ch.cpp:
+	  TAO_IDL/be/be_visitor_array/array_ci.cpp:
+
+	  For fixed size arrays, the _out definition is simply a
+	  typedef. Whereas for arrays whopse base type is of variable
+	  size, we define the _out class.
+
+	* TAO_IDL/be/be_visitor_structure/structure_ch.cpp:
+	  the export macro for structures is always generated, even if it
+	  is nested. This is only valid for the Windows platform since for
+	  the other cases the export macro is NUL.
+
+	* TAO_IDL/be/be_visitor_union/union.cpp:
+	  The generic visitor now also handles the union reset visitor
+	  case.
+
+	* TAO_IDL/be/be_visitor_union/union_ch.cpp:
+	  The union mapping that generates a class now uses the Export
+	  macro even if it was nested. Seth Widoff reported that this was
+	  necessary.
+
+	* TAO_IDL/be/be_visitor_union/union_ci.cpp:
+
+	  The constructor now zeros the entire union on
+	  initialization. Thus, at the start, all the fields will be 0s.
+
+	  The destructor now calls the private "reset" method with the
+	  finalize flag=1 to indicate freeing of all allocated resources.
+
+	* TAO_IDL/be/be_visitor_union/union_cs.cpp:
+
+	  Added code for the reset method. In addition, the assignment
+	  operator first invokes the reset method to clean up old
+	  storage.
+
+	* TAO_IDL/be/be_visitor_union_branch/private_ch.cpp:
+
+	  Members of the private anonymous union inside the union class
+	  may either be pointers or scalar variables. They will be
+	  pointers if their types are aggregate classes or structures that
+	  have ctors. C++ does not allow using the instances of such
+	  aggregate classes.
+
+	* TAO_IDL/be/be_visitor_union_branch/private_assign_cs.cpp:
+
+	  Added code for all the methods that visit the type. Each method
+	  tries to free previous storage (if any) and then does the
+	  necessary deep copying.
+
+	* TAO_IDL/be/be_visitor_union_branch/public_ch.cpp:
+
+	  Some modifier and access methods that were generated had
+	  errors w.r.t the parameters they take. This is now fixed.
+
+	* TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
+
+	  All the modifier methods now call reset to free old storage and
+	  then do the appropriate deep copying of the new value.
+
+	* TAO_IDL/be/be_visitor_union_branch/public_reset_cs.cpp:
+
+	  Code for the reset visitor.
+
+	  *NOTE* this is a new file.
+
+	* tao/decode.cpp: Released the IIOP_Object that is created during
+	the ObjRef::decode method. This was necessary to overcome a
+	memory leak. Thanks to Irfan and Jeff.
+
 Wed Jun 24 09:56:13 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/Cubit/TAO/IDL_Cubit/cubit.idl: 
-	* tests/Cubit/TAO/IDL_Cubit/cubit_i.h: 
-	* tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp: 
-	* tests/Cubit/TAO/IDL_Cubit/client_i.h: 
-	* tests/Cubit/TAO/IDL_Cubit/client_i.cpp: 
+	* tests/Cubit/TAO/IDL_Cubit/cubit.idl:
+	* tests/Cubit/TAO/IDL_Cubit/cubit_i.h:
+	* tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp:
+	* tests/Cubit/TAO/IDL_Cubit/client_i.h:
+	* tests/Cubit/TAO/IDL_Cubit/client_i.cpp:
 	  Removed DII test.
 	  Print clearer messages for sequences (to distinguish octet vs
 	  long sequences).
@@ -17,20 +117,20 @@ Wed Jun 24 02:23:38 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Tue Jun 23 17:30:14 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/Scheduling_Service/Makefile: 
+	* orbsvcs/Scheduling_Service/Makefile:
 	  Updated dependencies.
 
-	* orbsvcs/Event_Service/Event_Service.cpp: 
+	* orbsvcs/Event_Service/Event_Service.cpp:
 	  Improved a debug message.
 
-	* orbsvcs/Event_Service/svc.conf: 
+	* orbsvcs/Event_Service/svc.conf:
 	  The options are more realistic now.
 
-	* orbsvcs/tests/start_services: 
+	* orbsvcs/tests/start_services:
 	  No need to run the Scheduling Service now; the Event_Service
 	  program has a collocated one (by default).
 
-	* docs/releasenotes/ec.html: 
+	* docs/releasenotes/ec.html:
 	  Updated the release notes to reflect the latest changes.
 
 Tue Jun 23 16:47:43 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
