@@ -75,7 +75,7 @@ sub do_test
     sleep(2);
 
     # The client should pass the simple test
-    $CLI->Arguments("$test_initref/DynObject1");
+    $CLI->Arguments("$test_initref/TestObject1");
     $ret = $CLI->SpawnWaitKill(5);
     if ($ret != 0) {
         print "ERROR : spawning test client 1.\n";
@@ -84,7 +84,7 @@ sub do_test
     }
 
     # The client should pass the simple test again, this time with obj #2
-    $CLI->Arguments("$test_initref/DynObject2");
+    $CLI->Arguments("$test_initref/TestObject2");
     $ret = $CLI->SpawnWaitKill(5);
     if ($ret != 0) {
         print "ERROR : spawning test client 2.\n";
@@ -95,15 +95,15 @@ sub do_test
     # The server was autoregistered without any start information. We
     # need to update the registration with a command line so that the
     # activator can be used to re-launch it.
-    $IMRUTIL->Arguments("$imr_initref  update DynObject1 -l $hostname -c \"$test_server -orbuseimr 1 $imr_initref\"");
+    $IMRUTIL->Arguments("$imr_initref  update TestObject1 -l $hostname -c \"$test_server -orbuseimr 1 $imr_initref\"");
     $ret = $IMRUTIL->SpawnWaitKill(5);
     if ($ret != 0) {
-        print "ERROR : Updating DynObject1 cmdline.\n";
+        print "ERROR : Updating TestObject1 cmdline.\n";
         $COMB->TerminateWaitKill(5);
         return $ret;
     }
 
-    # The new command line should now be registered, but only for DynObject1
+    # The new command line should now be registered, but only for TestObject1
     $IMRUTIL->Arguments("$imr_initref list -v");
     $ret = $IMRUTIL->SpawnWaitKill(5);
     if ($ret != 0) {
@@ -113,7 +113,7 @@ sub do_test
     }
 
     # Now we can kill the server.
-    $IMRUTIL->Arguments("$imr_initref shutdown DynObject1");
+    $IMRUTIL->Arguments("$imr_initref shutdown TestObject1");
     $ret = $IMRUTIL->SpawnWaitKill(5);
     if ($ret != 0) {
         print "ERROR : Shutting down test server.\n";
@@ -121,7 +121,7 @@ sub do_test
         return $ret;
     }
 
-    # Both DynObject1 and DynObject2 should now show up as "not running"
+    # Both TestObject1 and TestObject2 should now show up as "not running"
     $IMRUTIL->Arguments("$imr_initref list -v");
     $ret = $IMRUTIL->SpawnWaitKill(5);
     if ($ret != 0) {
@@ -132,7 +132,7 @@ sub do_test
 
     # The client should pass the simple test again, because the Activator will
     # restart test_server
-    $CLI->Arguments("$test_initref/DynObject1");
+    $CLI->Arguments("$test_initref/TestObject1");
     $ret = $CLI->SpawnWaitKill(5);
     if ($ret != 0) {
         print "ERROR : spawning test client 3.\n";
@@ -142,7 +142,7 @@ sub do_test
 
     # The client should pass the simple test again with obj #2, because both
     # are started by the server
-    $CLI->Arguments("$test_initref/DynObject2");
+    $CLI->Arguments("$test_initref/TestObject2");
     $ret = $CLI->SpawnWaitKill(5);
     if ($ret != 0) {
         print "ERROR : spawning test client 4.\n";
