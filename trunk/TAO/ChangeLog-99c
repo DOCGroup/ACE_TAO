@@ -1,3 +1,33 @@
+Fri Mar 12 00:35:47 1999  Marina Spivak  <marina@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/IOR_Multicast.cpp
+	Fixed the problem of client not being able to resolve Naming
+	Service ior through multicast when client and server are run on
+	different hosts.  Thanks to Steve Totten for tracking down since
+	when this was broken, and to Carlos O'Ryan for providing
+	hypotheses as to why.
+
+	Made the server wait a little bit before sending a reply to the
+	multicast as well as send a reply several times.  This 1) gives client
+	a chance to start listening for a reply, 2) provides a better
+	protection against packet loss.  (The problem was occuring because
+	the server sent a reply before the client had a chance to start
+	receiving.  This was happening due to the added dynamic memory
+	allocation in the client code in the interval between
+	multicast_send and reply_receive).
+
+	A more flexible policy-based solution should be added (as opposed
+	to hardcoding intervals and retries).  This will
+	probably be a part of Vishal's upcoming Interoperable Naming Service changes.
+
+	Values encoded in the code now should work for most
+	platforms/networks.  However, they are not guaranteed to work for
+	all!  Part of the problem is that UDP is unreliable, so in theory
+	can be retransmitted 100 times and still not work.  Also, specific
+	network configurations (busy network, busy hosts, old routers,
+	etc.) may have special needs.  Again, this should be better
+	addressed once hardcoded values are replaced by flexible policies.
+
 Thu Mar 11 22:49:35 1999  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tao/ORB.cpp (multicast_query):
