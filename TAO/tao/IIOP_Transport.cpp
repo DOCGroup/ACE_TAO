@@ -146,11 +146,13 @@ TAO_IIOP_Transport::handle (void)
 int
 TAO_IIOP_Client_Transport::send_request (TAO_ORB_Core *orb_core,
                                          TAO_OutputCDR &stream,
-                                         int /* twoway */)
+                                         int two_way)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_IIOP_CLIENT_TRANSPORT_SEND_REQUEST_START);
 
-  return TAO_GIOP::send_request (this, stream, orb_core);
+  return this->ws_->send_request (orb_core, 
+                                  stream,
+                                  two_way);
 }
 
 // int
