@@ -1,3 +1,13 @@
+Wed Aug 28 06:18:35 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+        * ace: Removed the config-sunos5.8-sunc++-5.4.h file since these
+	  changes should go in the config-sunos5.8.h file rather than
+	  a special file.  Thanks to Steve Huston for noticing this.
+    
+	* include/makeincludes: Removed the platform_sunos5_sunc++5.4.GNU
+	  file since it's no different from the platform_sunos5_sunc++.GNU
+	  file.  Thanks to Steve Huston for noticing this.
+
 Wed Aug 28 06:12:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/tao.doxygen:
