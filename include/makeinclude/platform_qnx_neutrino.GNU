@@ -18,7 +18,7 @@ endif # ! repo
 
 CC      = i386-nto-gcc
 CXX     = i386-nto-g++
-CFLAGS  += -pipe -W -Wall -Wpointer-arith -Winline
+CFLAGS  += -pipe -W -Wall -Wpointer-arith
 CCFLAGS += $(CFLAGS) -fno-implicit-templates
 DCFLAGS += -g
 DLD     = $(CXX)
