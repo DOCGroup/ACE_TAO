@@ -1,3 +1,18 @@
+Tue Oct 22 10:20:41 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* examples/C++NPv2/Reactor_Logging_Server_T.cpp: Fixed a typo that
+	  broke the builds. My bad :(
+
+Mon Oct 21 20:13:27 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* examples/C++NPv2/Reactor_Logging_Server_T.cpp:
+	* examples/C++NPv1/Logging_Server.cpp:
+	* examples/C++NPv1/Process_Per_Connection_Logging_Server.cpp:
+	* examples/C++NPv1/RT_Thread_Per_Connection_Logging_Server.cpp: 
+	* examples/C++NPv1/Thread_Per_Connection_Logging_Server.cpp:
+	  Fix for compile errors on Lynx platform. Thanks to Craig
+	  Rodrigues for supplying the patches.
+
 Tue Oct 22 12:36:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Basic_Stats.h:
