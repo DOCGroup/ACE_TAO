@@ -14,7 +14,7 @@ endif # static_libs_only
 # If we are inlining the PACE functions then we don't want to include
 # the PACE library (and we need to define PACE_HAS_INLINE). If we're not
 # inlining then we need to include the PACE library. Inlining is the default.
-LIBS += -L$(PACE_ROOT)/pace -lPACE
+
 ifndef inline
   CFLAGS += -DPACE_HAS_INLINE
 else
@@ -22,8 +22,6 @@ else
     CFLAGS += -DPACE_HAS_INLINE
   endif # inline
 endif # ! inline
-
-LIBS += -L$(PACE_ROOT)/pace -lPACE
 
 #----------------------------------------------------------------------------
 #       Local macros
@@ -58,6 +56,11 @@ endif
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 include $(ACE_ROOT)/PACE/include/makeinclude/rules.common.GNU
+
+# To compile in the PACE lib on platforms that compile c code
+ifeq  (1, $(emulation))
+  LIBS += -L$(PACE_ROOT)/pace -lPACE
+endif # emulation
 
 # To build multiple executables in the same directory on AIX, it works
 # best to wipe out any previously-created tempinc directory.

@@ -75,5 +75,6 @@ endif
 
 ifeq ($(PACE_SYSNAME),Linux)
   VPATH :=.:posix:$(VPATH)
+  emulation=1
   CFLAGS += -DPACE_LINUX=$(PACE_SYSVER)
 endif
