@@ -954,21 +954,36 @@ template class ACE_Timer_Wheel_Iterator_T<ACE_Handler *,
   ACE_SYNCH_RECURSIVE_MUTEX>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Timer_Queue_T<ACE_Handler *,\
-        ACE_Proactor_Handle_Timeout_Upcall, ACE_SYNCH_RECURSIVE_MUTEX>
+  ACE_Proactor_Handle_Timeout_Upcall,\
+  ACE_SYNCH_RECURSIVE_MUTEX>
 #pragma instantiate ACE_Timer_Queue_Iterator_T<ACE_Handler *,\
-        ACE_Proactor_Handle_Timeout_Upcall, ACE_SYNCH_RECURSIVE_MUTEX>
+  ACE_Proactor_Handle_Timeout_Upcall,\
+  ACE_SYNCH_RECURSIVE_MUTEX>
 #pragma instantiate ACE_Timer_List_T<ACE_Handler *,\
-        ACE_Proactor_Handle_Timeout_Upcall, ACE_SYNCH_RECURSIVE_MUTEX>
+  ACE_Proactor_Handle_Timeout_Upcall,\
+  ACE_SYNCH_RECURSIVE_MUTEX>
 #pragma instantiate ACE_Timer_List_Iterator_T<ACE_Handler *,\
-        ACE_Proactor_Handle_Timeout_Upcall, ACE_SYNCH_RECURSIVE_MUTEX>
+  ACE_Proactor_Handle_Timeout_Upcall,\
+  ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate ACE_Timer_Node_T<ACE_Handler *>
+#pragma instantiate ACE_Unbounded_Set<ACE_Timer_Node_T<ACE_Handler *> *>
+#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Timer_Node_T<ACE_Handler *> *>
+#pragma instantiate ACE_Node <ACE_Timer_Node_T<ACE_Handler *> *>
+#pragma instantiate ACE_Free_List<ACE_Timer_Node_T<ACE_Handler *> >
+#pragma instantiate ACE_Locked_Free_List<ACE_Timer_Node_T<ACE_Handler *>,\
+   ACE_Null_Mutex>
 #pragma instantiate ACE_Timer_Heap_T<ACE_Handler *,\
-        ACE_Proactor_Handle_Timeout_Upcall, ACE_SYNCH_RECURSIVE_MUTEX>
+  ACE_Proactor_Handle_Timeout_Upcall,\
+  ACE_SYNCH_RECURSIVE_MUTEX>
 #pragma instantiate ACE_Timer_Heap_Iterator_T<ACE_Handler *,\
-        ACE_Proactor_Handle_Timeout_Upcall, ACE_SYNCH_RECURSIVE_MUTEX>
+  ACE_Proactor_Handle_Timeout_Upcall,\
+  ACE_SYNCH_RECURSIVE_MUTEX>
 #pragma instantiate ACE_Timer_Wheel_T<ACE_Handler *,\
-        ACE_Proactor_Handle_Timeout_Upcall, ACE_SYNCH_RECURSIVE_MUTEX>
+  ACE_Proactor_Handle_Timeout_Upcall,\
+  ACE_SYNCH_RECURSIVE_MUTEX>
 #pragma instantiate ACE_Timer_Wheel_Iterator_T<ACE_Handler *,\
-        ACE_Proactor_Handle_Timeout_Upcall, ACE_SYNCH_RECURSIVE_MUTEX>
+  ACE_Proactor_Handle_Timeout_Upcall,\
+  ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #else /* !ACE_WIN32 || !ACE_HAS_AIO_CALLS */
