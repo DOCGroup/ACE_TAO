@@ -62,7 +62,7 @@ private:
   HANDLE evlog_handle_;
 };
 
-#endif /* ACE_WIN32 && !ACE_HAS_WINCE */
+#endif /* ACE_WIN32 && !ACE_HAS_WINCE && !ACE_HAS_PHARLAP */
 
 #include "ace/post.h"
 #endif /* ACE_LOG_MSG_NT_EVENT_LOG_H */
