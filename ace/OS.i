@@ -4483,7 +4483,7 @@ ACE_SOCKCALL_RETURN (::accept ((ACE_SOCKET) handle,
   ACE_HANDLE ace_result = ::accept ((ACE_SOCKET) handle,
 				    addr,
 				    (ACE_SOCKET_LEN *) addrlen) ;
-  if (ace_result_ == ACE_INVALID_HANDLE && errno == EAGAIN)
+  if (ace_result == ACE_INVALID_HANDLE && errno == EAGAIN)
     errno = EWOULDBLOCK;
   return ace_result;
 
@@ -4610,7 +4610,7 @@ ACE_OS::connect (ACE_HANDLE handle,
 #else  
   ACE_UNUSED_ARG (qos_params);
   return ACE_OS::connect (handle,
-			  addr,
+			  (sockaddr *) addr,
 			  addrlen);
 #endif /* ACE_HAS_WINSOCK2 */
 }
