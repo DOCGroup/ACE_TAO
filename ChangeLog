@@ -15,7 +15,7 @@ Tue Sep 21 20:13:40 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/OS_NS_netdb.inl:
 
-          Changed __GNUC__'s in conditionals to ACE_LACKS_GETIPNODEBYADDR
+          Changed __GLIBC__'s in conditionals to ACE_LACKS_GETIPNODEBYADDR
           or ACE_LACKS_GETIPNODEBYNAME.
 
         * ace/config-linux-common.h:
