@@ -1,3 +1,9 @@
+Thu Sep  9 06:15:38 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/FT_ReplicationManager/FT_ReplicationManager.mpc:
+
+	  Updated library project to inherit from naming_skel.
+
 Thu Sep  9 05:49:49 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/Concurrency_Service/Makefile.am:
