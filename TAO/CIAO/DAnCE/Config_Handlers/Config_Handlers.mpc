@@ -1,15 +1,11 @@
 //$Id$
 
-project (Config_Handlers) : ciao_deployment_stub, ifr_client, valuetype {
+project (Config_Handlers) : ciao_deployment_stub, ifr_client, valuetype, xerces {
 
   after     += CIAO_DnC_Server
   sharedname = Config_Handlers
   dynamicflags   = CONFIG_HANDLER_BUILD_DLL
-  macros   += XML_USE_PTHREADS
   requires += exceptions
-  includes += $(XERCESCROOT)/include
-  libpaths += $(XERCESCROOT)/lib
-  lit_libs += xerces-c
   libs     += CIAO_DnC_Server
 
   Source_Files {
@@ -49,17 +45,14 @@ project (Config_Handlers) : ciao_deployment_stub, ifr_client, valuetype {
   }
 }
 
-project (XSC_Config_Handlers) : ciao_deployment_stub, ifr_client {
+project (XSC_Config_Handlers) : ciao_deployment_stub, ifr_client, xerces {
 
   requires += dummy_label
 
   sharedname = XSC_Config_Handlers
   dynamicflags   = CONFIG_HANDLER_BUILD_DLL
-  macros   += XML_USE_PTHREADS
   requires += exceptions
-  includes += $(XERCESCROOT)/include  .
-  libpaths += $(XERCESCROOT)/lib
-  libs     += xerces-c CIAO_DnC_Server
+  libs     += CIAO_DnC_Server
 
   Source_Files {
     Basic_Deployment_Data.cpp
