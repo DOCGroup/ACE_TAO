@@ -1,3 +1,8 @@
+Fri Sep  7 17:16:50 2001  Anand Krishnan  <anandk@cs.wustl.edu>
+
+	* orbsvcs/tests/Security/MT_SSLIOP/run_test.pl:
+	      Actually committing the file.
+
 Fri Sep  7 12:56:45 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
        * orbsvcs/AV/Protocol_Factory.cpp: Add default constructor.
