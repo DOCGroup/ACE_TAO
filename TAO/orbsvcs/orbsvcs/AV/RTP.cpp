@@ -89,7 +89,7 @@ TAO_AV_RTP::write_header (rtphdr &header,
 }
 
 // TAO_AV_RTP_Object
-           
+
 int
 TAO_AV_RTP_Object::handle_input (void)
 {
@@ -97,35 +97,30 @@ TAO_AV_RTP_Object::handle_input (void)
 
   // Handles the incoming RTP packet input.
 
-//   size_t bufsiz = 2*this->transport_->mtu ();
-//   ACE_NEW_RETURN (data,
-//                   ACE_Message_Block (bufsiz),
-//                   -1);
-  int n = this->transport_->recv (this->data_->rd_ptr (),this->data_->size ());
+  this->frame_.rd_ptr (this->frame_.base ());
+
+  int n = this->transport_->recv (this->frame_.rd_ptr (),
+                                  this->frame_.size ());
   if (n == 0)
     ACE_ERROR_RETURN ( (LM_ERROR,"TAO_AV_RTP::handle_input:connection closed\n"),-1);
   if (n < 0)
     ACE_ERROR_RETURN ( (LM_ERROR,"TAO_AV_RTP::handle_input:recv error\n"),-1);
-  char *wr_ptr = this->data_->rd_ptr ()+n;
-  this->data_->wr_ptr (wr_ptr);
+  this->frame_.wr_ptr (this->frame_.rd_ptr () + n);
   ACE_Addr *addr = this->transport_->get_peer_addr ();
 
-  int result = TAO_AV_RTP::handle_input (this->data_,
+  ACE_Message_Block* data = &this->frame_;
+  int result = TAO_AV_RTP::handle_input (data,
                                          frame_info);
   if (result < 0)
     return 0;
-  result = this->control_object_->handle_control_input (this->data_,
-                                                        *addr);
-  if (result < 0)
-    return 0;
+  this->control_object_->handle_control_input (data,
+                                               *addr);
 
-  char *rd_ptr = this->data_->rd_ptr ()+sizeof (rtphdr);
-  this->data_->rd_ptr (rd_ptr);
-  result = this->callback_->receive_frame (this->data_,
+  this->frame_.rd_ptr (sizeof(rtphdr));
+  result = this->callback_->receive_frame (&this->frame_,
                                            frame_info,
                                            *addr);
-  rd_ptr = this->data_->rd_ptr ()-sizeof (rtphdr);
-  this->data_->rd_ptr (rd_ptr);
+
   return 0;
 }
 
@@ -214,13 +209,11 @@ TAO_AV_RTP_Object::TAO_AV_RTP_Object (TAO_AV_Callback *callback,
                                       TAO_AV_Transport *transport)
   :TAO_AV_Protocol_Object (callback,transport),
    sequence_num_ (0),
-   control_object_ (0),
-   data_ (0)
+   control_object_ (0)
 {
   this->sequence_num_ = ACE_OS::rand ();
-  // Allocate a static message block.
-  ACE_NEW (data_,
-           ACE_Message_Block (2*transport->mtu ()));
+
+  this->frame_.size (2 * this->transport_->mtu ());
 }
 
 TAO_AV_RTP_Object::~TAO_AV_RTP_Object (void)
@@ -306,7 +299,7 @@ TAO_AV_RTP_Flow_Factory::init (int /* argc */,
   return 0;
 }
 
-TAO_AV_Protocol_Object* 
+TAO_AV_Protocol_Object*
 TAO_AV_RTP_Flow_Factory::make_protocol_object (TAO_FlowSpec_Entry *entry,
                                                TAO_Base_StreamEndPoint *endpoint,
                                                TAO_AV_Flow_Handler *handler,

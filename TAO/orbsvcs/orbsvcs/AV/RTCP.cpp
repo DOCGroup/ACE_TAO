@@ -587,7 +587,7 @@ TAO_AV_RTCP_Flow_Factory::init (int /* argc */,
   return 0;
 }
 
-TAO_AV_Protocol_Object* 
+TAO_AV_Protocol_Object*
 TAO_AV_RTCP_Flow_Factory::make_protocol_object (TAO_FlowSpec_Entry *entry,
                                                 TAO_Base_StreamEndPoint *endpoint,
                                                 TAO_AV_Flow_Handler *handler,
@@ -742,7 +742,7 @@ TAO_AV_RTCP_Callback::schedule (int ms)
 int
 TAO_AV_RTCP_Callback::handle_start (void)
 {
-  // 
+  //
   /*
    * schedule a timer for our first report using half the
    * min rtcp interval.  This gives us some time before
@@ -806,15 +806,16 @@ TAO_AV_RTCP_Callback::receive_frame (ACE_Message_Block *frame,
 {
   char *buf = frame->rd_ptr ();
   TAO_AV_RTP::rtphdr *rh = (TAO_AV_RTP::rtphdr *)buf;
-  char *rd_ptr = frame->rd_ptr ()+sizeof (TAO_AV_RTP::rtphdr);
-  frame->rd_ptr (rd_ptr);
+
+  frame->rd_ptr (sizeof (TAO_AV_RTP::rtphdr));
   int result = this->demux (rh,
                             frame,
                             peer_address);
+  frame->rd_ptr (buf);
+
   if (result < 0)
     return result;
-  rd_ptr = frame->rd_ptr ()-sizeof (TAO_AV_RTP::rtphdr);
-  frame->rd_ptr (rd_ptr);
+
   return 0;
 }
 
