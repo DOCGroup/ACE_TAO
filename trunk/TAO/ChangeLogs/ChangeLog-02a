@@ -1,38 +1,50 @@
+Tue Apr 10 19:18:12 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * docs/tutorials/Quoter/Naming_Service/Makefile:
+        * orbsvcs/tests/CosEvent/lib/Makefile:
+          Fixed LDLIBS to make the appease the QNX gods.
+
+        * tests/Crash_On_Write/README:
+          Documented another bug that can be reproduced using this test
+
+        * tests/Hello/client.cpp:
+          Fixed error message.
+
 Tue Apr 10 20:47:38 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Wait_Strategy.h:
-	* tao/Wait_Strategy.cpp:
-	* tao/Wait_Strategy.inl: Added a flag is_registered_. This flag
-	  indicates whether the connection handler that created this
-	  object through the transport has been registered with the
-	  reactor or not.
+        * tao/Wait_Strategy.h:
+        * tao/Wait_Strategy.cpp:
+        * tao/Wait_Strategy.inl: Added a flag is_registered_. This flag
+          indicates whether the connection handler that created this
+          object through the transport has been registered with the
+          reactor or not.
 
-	* tao/Wait_On_Reactor.cpp:
-	* tao/Wait_On_Leader_Follower.cpp: Make a check
-	  to see whether the connection handler has been registered with
-	  the reactor before going ahead and calling the register_handler
-	  (). This should remove a lock along the critical path.
+        * tao/Wait_On_Reactor.cpp:
+        * tao/Wait_On_Leader_Follower.cpp: Make a check
+          to see whether the connection handler has been registered with
+          the reactor before going ahead and calling the register_handler
+          (). This should remove a lock along the critical path.
 
-	* tao/IIOP_Transport.cpp:
-	* tao/Strategies/SHMIOP_Transport.cpp:
-	* tao/Strategies/UIOP_Transport.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp: Set the flag in
-	  the wait strategy before registering the handler with reactor.
+        * tao/IIOP_Transport.cpp:
+        * tao/Strategies/SHMIOP_Transport.cpp:
+        * tao/Strategies/UIOP_Transport.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp: Set the flag in
+          the wait strategy before registering the handler with reactor.
 
 Tue Apr 10 19:57:38 2001  Pradeep Gore  <pradeep@cs.wustl.edu>
 
-	* tao/OctetSeqC.cpp:
-	  Corrected the >> operator logic for the case in which the ORB
-	  core is absent in the CDR Stream.
-	  Thanks to Carlos for spotting this problem.
+        * tao/OctetSeqC.cpp:
+          Corrected the >> operator logic for the case in which the ORB
+          core is absent in the CDR Stream.
+          Thanks to Carlos for spotting this problem.
 
 Tue Apr 10 17:21:00 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/PortableServer/Object_Adapter.cpp:
           Made the TAO_Object_Adapter::close() method atomic (and
-          nil-potent), there was no synchronization on it.
+          nilpotent), there was no synchronization on it.
           Before using the root_ field make sure that it is not nil.
-	  This takes care of [BUGID:855]
+          This takes care of [BUGID:855]
 
 Tue Apr 10 16:19:39 2001  Carlos O'Ryan  <coryan@uci.edu>
 
