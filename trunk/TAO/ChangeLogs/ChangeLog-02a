@@ -1,3 +1,44 @@
+Mon Jan 21 10:51:52 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/examples/Notify/Filter/Filter.dsp:
+        * orbsvcs/examples/Notify/Subscribe/Subscribe.dsp:
+        * orbsvcs/tests/Notify/Basic/AdminProperties_Test.dsp:
+        * orbsvcs/tests/Notify/Basic/ConnectDisconnect.dsp:
+        * orbsvcs/tests/Notify/Basic/Events_Test.dsp:
+        * orbsvcs/tests/Notify/Basic/IdAssignment.dsp:
+        * orbsvcs/tests/Notify/Basic/LifeCycleTest.dsp:
+        * orbsvcs/tests/Notify/Basic/Simple.dsp:
+        * orbsvcs/tests/Notify/Basic/Updates.dsp:
+        * orbsvcs/tests/Notify/Blocking/Structured_Consumer.dsp:
+        * orbsvcs/tests/Notify/Blocking/Structured_Supplier.dsp:
+        * orbsvcs/tests/Notify/Discarding/Sequence_Consumer.dsp:
+        * orbsvcs/tests/Notify/Discarding/Sequence_Supplier.dsp:
+        * orbsvcs/tests/Notify/Discarding/Structured_Consumer.dsp:
+        * orbsvcs/tests/Notify/Discarding/Structured_Supplier.dsp:
+        * orbsvcs/tests/Notify/MT_Dispatching/Structured_Consumer.dsp:
+        * orbsvcs/tests/Notify/MT_Dispatching/Structured_Supplier.dsp:
+        * orbsvcs/tests/Notify/Ordering/Sequence_Consumer.dsp:
+        * orbsvcs/tests/Notify/Ordering/Sequence_Supplier.dsp:
+        * orbsvcs/tests/Notify/Ordering/Structured_Consumer.dsp:
+        * orbsvcs/tests/Notify/Ordering/Structured_Supplier.dsp:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Sequence_Consumer.dsp:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Sequence_Supplier.dsp:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Sequence_Consumer.dsp:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Sequence_Supplier.dsp:
+        * orbsvcs/tests/Notify/Structured_Filter/Structured_Consumer.dsp:
+        * orbsvcs/tests/Notify/Structured_Filter/Structured_Supplier.dsp:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Consumer.dsp:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Supplier.dsp:
+        * orbsvcs/tests/Notify/lib/TAO_NotifyTests.dsp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Sequence_Consumer.dsp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Sequence_Supplier.dsp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Structured_Consumer.dsp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Structured_Supplier.dsp:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen.dsp:
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.dsp:
+
+          Added the ETCL directory to libpath.
+
 Mon Jan 21 10:42:41 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/Notify_Service/Makefile:
