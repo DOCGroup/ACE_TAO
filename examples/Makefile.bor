@@ -9,6 +9,7 @@ DIRS = \
         Mem_Map \
         Misc \
         Naming \
+        NT_Service \
         Reactor \
         Registry \
         RMCast \
