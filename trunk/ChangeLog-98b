@@ -1,13 +1,20 @@
+Fri Jun 19 22:17:35 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * bin/make_release (check_workspace): use cvs checkout instead
+          of update, to reveal new directories that have been added.
+          Filter ^U from checkout output, so that release need not be
+          based on the latest repository versions.
+
 Fri Jun 19 16:51:05 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/config-freebsd-pthread.h (ACE_HAS_NONCONST_MSGSND): Macro
-	  definition added.
+        * ace/config-freebsd-pthread.h (ACE_HAS_NONCONST_MSGSND): Macro
+          definition added.
 
-	* ace/OS.i (sigwait): Suppress compiler warnings on FreeBSD.
-	  (msgsnd):  Separated the case ACE_HAS_NONCONST_MSGSND out.
+        * ace/OS.i (sigwait): Suppress compiler warnings on FreeBSD.
+          (msgsnd):  Separated the case ACE_HAS_NONCONST_MSGSND out.
 
-	  Thanks to Russell L. Carter <rcarter@consys.com> for reporting
-	  the above fix.
+          Thanks to Russell L. Carter <rcarter@consys.com> for reporting
+          the above fix.
 
 Fri Jun 19 11:22:27 1998  David L. Levine  <levine@cs.wustl.edu>
 
