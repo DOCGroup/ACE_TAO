@@ -561,7 +561,7 @@ template ACE_String_Base<ACE_WSTRING_TYPE> operator + (const ACE_WSTRING_TYPE *,
 #pragma instantiate ACE_String_Base<ACE_WSTRING_TYPE> operator + (const ACE_String_Base<ACE_WSTRING_TYPE> &, const ACE_String_Base<ACE_WSTRING_TYPE> &)
 #pragma instantiate ACE_String_Base<ACE_WSTRING_TYPE> operator + (const ACE_String_Base<ACE_WSTRING_TYPE> &, const ACE_WSTRING_TYPE *)
 #pragma instantiate ACE_String_Base<ACE_WSTRING_TYPE> operator + (const ACE_WSTRING_TYPE *,const ACE_String_Base<ACE_WSTRING_TYPE> &)
-#elif defined (__GNUC__) && (defined (_AIX) || defined (__hpux) || defined (VXWORKS) || defined (__Lynx__))
+#elif defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
 template char ACE_String_Base<char>::NULL_String_;
 template ACE_WSTRING_TYPE ACE_String_Base<ACE_WSTRING_TYPE>::NULL_String_;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
