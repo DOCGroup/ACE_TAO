@@ -2,9 +2,10 @@
 #include "PG_MemberInfo.h"
 #include "PG_ObjectGroupManager.h"
 #include "PG_PropertyManager.h"
+#include "PG_Property_Utils.h"
 #include "PG_conf.h"
 
-#include "ace/Auto_Ptr.h"
+//#include "ace/Auto_Ptr.h"
 
 ACE_RCSID (PortableGroup,
            PG_GenericFactory,
@@ -68,24 +69,24 @@ TAO_PG_GenericFactory::create_object (
                                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
+  PortableGroup::MembershipStyleValue membership_style =
+    TAO_PG_MEMBERSHIP_STYLE;
+  PortableGroup::FactoriesValue * factory_infos = 0;  // Memory owned
+                                                      // by Any.
+  PortableGroup::InitialNumberMembersValue initial_number_members =
+    TAO_PG_INITIAL_NUMBER_MEMBERS;
+  PortableGroup::MinimumNumberMembersValue minimum_number_members =
+    TAO_PG_MINIMUM_NUMBER_MEMBERS;
+
   // Make sure the criteria for the object group being created are
   // valid.
-  this->process_criteria (the_criteria
+  this->process_criteria (type_id,
+                          the_criteria,
+                          membership_style,
+                          factory_infos,
+                          initial_number_members,
+                          minimum_number_members
                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
-
-  // Extract the initial number of members to create.
-  PortableGroup::InitialNumberMembersValue initial_number_members = 0;
-    this->property_manager_.initial_number_members (type_id,
-                                                    the_criteria
-                                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
-
-  // Extract the factory information for each of the members.
-  PortableGroup::FactoryInfos_var factory_infos =
-    this->property_manager_.factory_infos (type_id,
-                                           the_criteria
-                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   CORBA::ULong factory_infos_count = factory_infos->length ();
@@ -142,12 +143,13 @@ TAO_PG_GenericFactory::create_object (
                                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
-  if (this->property_manager_.infrastructure_controlled_membership ())
+  if (factory_infos_count > 0
+      && membership_style == PortableGroup::MEMB_INF_CTRL)
     {
       this->populate_object_group (object_group.in (),
                                    oid.in (),
                                    type_id,
-                                   factory_infos.in ()
+                                   *factory_infos
                                    ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
     }
@@ -350,7 +352,7 @@ TAO_PG_GenericFactory::populate_object_group (
 
           factory_set[j] = factory_node;
 
-          this->add_member (object_group,
+          this->object_group_manager_.add_member (object_group,
                             factory_info.the_location,
                             member.in ()
                             ACE_ENV_ARG_PARAMETER);
@@ -368,8 +370,9 @@ TAO_PG_GenericFactory::populate_object_group (
               ACE_TRY_CHECK;
             }
 
-          this->destroy_object_group (oid
-                                      ACE_ENV_ARG_PARAMETER);
+          this->object_group_manager_.destroy_object_group (
+            oid
+            ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           ACE_RE_THROW;
@@ -419,9 +422,66 @@ TAO_PG_GenericFactory::get_ObjectId (
 
 void
 TAO_PG_GenericFactory::process_criteria (
-  const PortableGroup::Criteria & the_criteria
+  const char * type_id,
+  const PortableGroup::Criteria & criteria,
+  PortableGroup::MembershipStyleValue & membership_style,
+  PortableGroup::FactoriesValue * factory_infos,
+  PortableGroup::InitialNumberMembersValue & initial_number_members,
+  PortableGroup::MinimumNumberMembersValue & minimum_number_members
   ACE_ENV_ARG_DECL)
 {
+  // Get type-specific properties.
+  PortableGroup::Properties_var props =
+    this->property_manager_.get_type_properties (type_id
+                                                 ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  // Merge the given criteria with the type-specific criteria.
+  TAO_PG::override_properties (criteria, props.inout ());
+
+  PortableGroup::Name name (1);
+  name.length (1);
+
+  PortableGroup::Value value;
+
+  name[0].id = CORBA::string_dup ("org.omg.pg.MembershipStyle");
+
+  if (TAO_PG::get_property_value (name, props.in (), value)
+      && (!(value >>= membership_style)
+          || (membership_style != PortableGroup::MEMB_APP_CTRL
+              && membership_style != PortableGroup::MEMB_INF_CTRL)))
+    {
+      // This only occurs if extraction of the actual value from the
+      // Any fails.
+      ACE_THROW (PortableGroup::InvalidProperty (name, value));
+    }
+
+  name[0].id = CORBA::string_dup ("org.omg.pg.Factories");
+  if (TAO_PG::get_property_value (name, props.in (), value)
+      && !(value >>= factory_infos))
+    {
+      // This only occurs if extraction of the actual value from the
+      // Any fails.
+      ACE_THROW (PortableGroup::InvalidProperty (name, value));
+    }
+
+  name[0].id = CORBA::string_dup ("org.omg.pg.InitialNumberMembers");
+  if (TAO_PG::get_property_value (name, props.in (), value)
+      && !(value >>= initial_number_members))
+    {
+      // This only occurs if extraction of the actual value from the
+      // Any fails.
+      ACE_THROW (PortableGroup::InvalidProperty (name, value));
+    }
+
+  name[0].id = CORBA::string_dup ("org.omg.pg.MinimumNumberMembers");
+  if (TAO_PG::get_property_value (name, props.in (), value)
+      && !(value >>= minimum_number_members))
+    {
+      // This only occurs if extraction of the actual value from the
+      // Any fails.
+      ACE_THROW (PortableGroup::InvalidProperty (name, value));
+    }
 }
 
 // #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

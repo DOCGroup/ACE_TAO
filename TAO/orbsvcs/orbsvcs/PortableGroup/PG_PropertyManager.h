@@ -158,15 +158,6 @@ private:
                      PortableGroup::InvalidProperty,
                      PortableGroup::UnsupportedProperty));
 
-    /// Override properties in the "properties" sequence with those in
-    /// the "overrides" sequence.
-    /**
-     * If no property is overridden, the override in question will be
-     * appended to the "properties" list.
-     */
-    void override_properties (const PortableGroup::Properties & overrides,
-                              PortableGroup::Properties &properties);
-
 private:
 
   /// Table that maps ObjectId to Object Group related information.

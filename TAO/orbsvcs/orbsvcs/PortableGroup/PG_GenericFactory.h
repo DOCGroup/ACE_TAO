@@ -134,8 +134,24 @@ private:
 
   /// Process criteria to be applied to the object group being
   /// created.
-  void process_criteria (const PortableGroup::Criteria & criteria
-                         ACE_ENV_ARG_DECL);
+  /**
+   * Only the MemberShipStyle, Factories, InitialNumberMembers and
+   * MinimumNumberMembers criteria/properties are defined by the
+   * PortableGroup IDL.  Other services that implement the
+   * GenericFactory interface, such as load balancing and fault
+   * tolerance, may choose to support more.
+   * @par
+   * The extracted criteria are object group-specific.  In particular,
+   * they are the object group creation time criteria.
+   */
+  void process_criteria (
+    const char * type_id,
+    const PortableGroup::Criteria & criteria,
+    PortableGroup::MembershipStyleValue & membership_style,
+    PortableGroup::FactoriesValue * factory_infos,
+    PortableGroup::InitialNumberMembersValue & initial_number_members,
+    PortableGroup::MinimumNumberMembersValue & minimum_number_members
+    ACE_ENV_ARG_DECL);
 
 private:
 
