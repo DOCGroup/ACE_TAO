@@ -1,3 +1,13 @@
+Sat Oct  9 13:55:26 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* bin/MakeProjectCreator/config/ciao_client_dnc.mpb:
+	* bin/MakeProjectCreator/config/ciao_deployment_stub.mpb:
+	* bin/MakeProjectCreator/config/ciao_deployment_svnt.mpb:
+	* bin/MakeProjectCreator/config/ciao_server_dnc.mpb:
+
+	  Fixed library ordering issues. This should fix a few link errors
+	  in CIAO static builds.
+
 Fri Oct  8 23:13:13 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/OS_NS_stdlib.cpp (mkstemp_emulation):
