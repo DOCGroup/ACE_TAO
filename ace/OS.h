@@ -4699,8 +4699,16 @@ public:
                        size_t size,
                        size_t nelems,
                        FILE *fp);
-  static int feof (FILE* fp);
-  static int ferror (FILE* fp);
+
+#if defined (feof)
+#undef feof
+#endif /* feof */
+  static int feof (FILE *fp);
+
+#if defined (ferror)
+#undef ferror
+#endif /* ferror */
+  static int ferror (FILE *fp);
 
   static int fgetc (FILE* fp);
   static void clearerr (FILE* fp);

@@ -1,3 +1,9 @@
+Thu Aug 22 01:16:16 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ace\OS.h:
+
+          Fixed compilation error under Windows by undefining the macros.
+
 Wed Aug 21 22:22:42 2002  Ossama Othman  <ossama@uci.edu>
 
 	* bin/msvc_auto_compile.pl (Build_Core):
