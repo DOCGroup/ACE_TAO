@@ -18,8 +18,9 @@
 
 #include "server.h"
 
-// Callbacks made by the AVStreams library into the application
-Video_Server_StreamEndPoint::Video_Server_StreamEndPoint ()
+// Callbacks made by the AVStreams library into the application.
+
+Video_Server_StreamEndPoint::Video_Server_StreamEndPoint (void)
 {
 }
 
@@ -52,6 +53,7 @@ Video_Server_StreamEndPoint::handle_connection_requested (AVStreams::StreamEndPo
 } 
 
 // Main program
+
 int
 main (int argc, char ** argv)
 {
@@ -59,29 +61,30 @@ main (int argc, char ** argv)
     {
       TAO_ORB_Manager m;
 
-      // Initialize the ORB
+      // Initialize the ORB.
       m.init (argc, 
               argv,
               TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      // Create server-side MMDevice
-      TAO_Server_MMDevice <Video_Server_StreamEndPoint> *mmdevice_impl 
-        = new TAO_Server_MMDevice <Video_Server_StreamEndPoint>;
+      // Create server-side MMDevice.
+      TAO_Server_MMDevice <Video_Server_StreamEndPoint> *mmdevice_impl;
+      ACE_NEW_RETURN (mmdevice_impl,
+                      TAO_Server_MMDevice <Video_Server_StreamEndPoint>,
+                      -1);
       TAO_CHECK_ENV;
 
-      // Activate the MMDevice, i.e. register with POA
-      CORBA::String_var s;
-      s = m.activate (mmdevice_impl,
-                      TAO_TRY_ENV);
+      // Activate the MMDevice, i.e., register with POA.
+      CORBA::String_var s = m.activate (mmdevice_impl,
+                                        TAO_TRY_ENV);
       TAO_CHECK_ENV;
       
-      // Print the IOR
+      // Print the IOR.
       ACE_DEBUG ((LM_DEBUG,
                   "\nThe IOR is: <%s>\n", 
                   s.in ()));
 
-      // Run the ORB Event loop
+      // Run the ORB Event loop.
       m.run (TAO_TRY_ENV);
       TAO_CHECK_ENV;
     }
@@ -96,7 +99,8 @@ main (int argc, char ** argv)
       return -1;
     }
   TAO_ENDTRY;
-  ACE_DEBUG ((LM_DEBUG, "\nServer is terminating"));
+  ACE_DEBUG ((LM_DEBUG,
+              "\nServer is terminating"));
   return 0;
 }
 
