@@ -1,3 +1,40 @@
+Mon Mar 12 14:56:47 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/Buffered_Oneways/Makefile:
+	* examples/PluggableUDP/DIOP/Makefile:
+	* orbsvcs/IFR_Service/Makefile.IFR_Service:
+	* orbsvcs/IFR_Service/Makefile.TypeCodeFactory:
+	* orbsvcs/tests/Event/Basic/Makefile:
+	* orbsvcs/tests/InterfaceRepo/Application_Test/Makefile:
+	* orbsvcs/tests/Notify/Basic/Makefile:
+	* performance-tests/Pluggable/Makefile:
+	* performance-tests/RTCorba/Oneways/Reliable/Makefile:
+	* performance-tests/Thruput/TAO/Makefile:
+	* tests/AMI/Makefile:
+	* tests/Codec/Makefile:
+	* tests/DSI_Gateway/Makefile:
+	* tests/FL_Cube/Makefile:
+	* tests/Forwarding/Makefile:
+	* tests/InterOp-Naming/Makefile:
+	* tests/MProfile/Makefile:
+	* tests/MT_Server/Makefile:
+	* tests/Multiple_Inheritance/Makefile:
+	* tests/Native_Exceptions/Makefile:
+	* tests/OctetSeq/Makefile:
+	* tests/Param_Test/Makefile:
+	* tests/Portable_Interceptors/Benchmark/Makefile:
+	* tests/Portable_Interceptors/Dynamic/Makefile:
+	* tests/Portable_Interceptors/ForwardRequest/Makefile:
+	* tests/Portable_Interceptors/IORInterceptor/Makefile:
+	* tests/Portable_Interceptors/Service_Context_Manipulation/Makefile:
+	* tests/QtTests/Makefile:
+	* tests/Single_Read/Makefile:
+	* tests/Timed_Buffered_Oneways/Makefile:
+	* tests/Timeout/Makefile: Fixed duplicate uses of library.  KCC is
+	  the only compiler that catches this problem.  Usually, this is
+	  caused by Makefiles adding -lTAO into $(LDLIBS) but it has
+	  already been taken care of by rule.tao.GNU.
+
 Mon Mar 12 12:55:50 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * performance-tests/Latency/client.conf:

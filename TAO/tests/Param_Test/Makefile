@@ -12,9 +12,6 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LDLIBS  = -lTAO
-LDFLAGS += -L$(TAO_ROOT)/tao
-
 IDL_FILES = param_test
 IDL_SRC = param_testCli.cpp param_testSer.cpp
 IDL_HDR = param_testCli.h param_testSer.h
