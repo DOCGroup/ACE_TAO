@@ -2,6 +2,9 @@ Sun Jan  9 17:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/System_V_IPC/SV_Semaphores/Semaphores_1.cpp:
         * examples/System_V_IPC/SV_Semaphores/Semaphores_2.cpp:
+        * examples/System_V_IPC/SV_Shared_Memory/SV_Shared_Memory_Test.cpp:
+        * examples/System_V_IPC/SV_Message_Queues/MQ_Client.cpp:
+        * examples/System_V_IPC/SV_Message_Queues/MQ_Server.cpp:
           Fixed unicode compile errors
 
 Sun Jan  9 17:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
