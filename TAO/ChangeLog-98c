@@ -1,3 +1,9 @@
+Tue Oct  6 21:25:22 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* TAO-INSTALL.html: Added an extra note about compiling the
+	  release version.  Care has to be taken since conflicts
+	  between the two tao_idl compilers can occur.
+
 Tue Oct  6 21:02:24 1998  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 	* examples/Simple/bank/AccountManager_i.cpp (close):
