@@ -162,7 +162,7 @@ namespace TAO
 };
 
 #if defined (__ACE_INLINE__)
-#include "HTIOP/HTIOP_Transport.i"
+#include "HTIOP_Transport.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

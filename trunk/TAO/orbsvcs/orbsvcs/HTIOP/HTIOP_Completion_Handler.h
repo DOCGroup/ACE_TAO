@@ -94,7 +94,7 @@ namespace TAO
 };
 
 #if defined (__ACE_INLINE__)
-#include "HTIOP/HTIOP_Completion_Handler.i"
+#include "HTIOP_Completion_Handler.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
