@@ -50,7 +50,7 @@ AV_Audio_MMDevice::connections (void) const
 
 void
 AV_Audio_MMDevice::
-export_static_properties (TAO_Property_Exporter& prop_exporter) const
+export_properties (TAO_Property_Exporter& prop_exporter)
 {
   CORBA::Any connections, max_connections, server_name;
 
@@ -516,13 +516,16 @@ AV_Server::export_properties (CORBA::Environment& _env)
   TAO_Property_Exporter prop_exporter (this->trader_, prop_set);
 
   // Add properties to server description.
-  this->audio_mmdevice_->export_static_properties (prop_exporter);
-  this->mach_props_.export_dynamic_properties (prop_exporter, this->dp_);
-  this->video_rep_.export_dynamic_properties (prop_exporter, this->dp_);
-  
+  this->audio_mmdevice_->export_properties (prop_exporter);
+  this->mach_props_.export_properties (prop_exporter);
+  this->video_rep_.export_properties (prop_exporter);
+
+  CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq super_types;
   this->offer_id_ =
     prop_exporter.export (object_ptr,
 			  (CosTrading::ServiceTypeName) SERVICE_TYPE,
+                          this->prop_seq_,
+                          super_types,
 			  _env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
 }
@@ -549,46 +552,10 @@ AV_Server::resolve_trader (CORBA::Environment& _env)
       this->trader_ = CosTrading::Lookup::_narrow (trading_obj.in (), _env);
       TAO_CHECK_ENV_RETURN (_env, -1);
 
-      CosTrading::TypeRepository_ptr obj = this->trader_->type_repos (_env);
-      CosTradingRepos::ServiceTypeRepository_var str =
-	CosTradingRepos::ServiceTypeRepository::_narrow (obj, _env);
-      TAO_CHECK_ENV_RETURN (_env, -1);
-
-      TAO_TRY
-	{
-	  ACE_DEBUG ((LM_DEBUG, "Checking for the existence of type.\n"));
-	  CosTradingRepos::ServiceTypeRepository::TypeStruct_var
-	    type_struct = str->describe_type (SERVICE_TYPE, TAO_TRY_ENV);
-	  TAO_CHECK_ENV;
-	  return 0;
-	}
-      TAO_CATCH (CosTrading::UnknownServiceType, excp)
-	{
-	  // Export the service types, filling in the service type
-	  // information first. 
-	  CosTradingRepos::ServiceTypeRepository::PropStructSeq prop_seq (12);
-	  CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq type_name_seq;
-	  
-	  // Add property definitions to the service type.
-	  CORBA::ULong offset = this->audio_mmdevice_->define_properties (prop_seq);
-	  offset += this->mach_props_.define_properties (prop_seq, offset);
-	  this->video_rep_.define_properties (prop_seq, offset);
-
-	  ACE_DEBUG ((LM_DEBUG, "Attempting add_type.\n"));
-	  str->add_type (SERVICE_TYPE,
-			 this->audio_mmdevice_->_interface_repository_id (),
-			 prop_seq,
-			 type_name_seq,
-			 _env);
-	  TAO_CHECK_ENV_RETURN (_env, -1);
-	  return 0;
-	}
-      TAO_CATCHANY
-	{
-	  ACE_DEBUG ((LM_DEBUG, "Error in describe_type.\n"));
-	  TAO_RETHROW_RETURN (-1);
-	}
-      TAO_ENDTRY;
+      // Add property definitions to the service type.
+      CORBA::ULong offset = this->audio_mmdevice_->define_properties (this->prop_seq_);
+      offset += this->mach_props_.define_properties (this->prop_seq_, offset);
+      this->video_rep_.define_properties (this->prop_seq_, offset);
     }
 }
 
@@ -650,6 +617,3 @@ main (int argc, char **argv)
   
   return 0;
 }
-
-
-

@@ -77,8 +77,7 @@ public:
   CORBA::ULong connections (void) const;
   // Retrieve the number of connections.
 
-  virtual void
-  export_static_properties (TAO_Property_Exporter& prop_exporter) const;
+  virtual void export_properties (TAO_Property_Exporter& prop_exporter);
 
   virtual int define_properties
     (CosTradingRepos::ServiceTypeRepository::PropStructSeq& prop_seq,
@@ -194,16 +193,15 @@ private:
   TAO_Video_Repository video_rep_;
   // Dynamic property that assesses the contents of the sever's video
   // repository.
-  
-  TAO_DP_Dispatcher dp_;
-  // Demultiplexes and dispatches incoming dynamic property callbacks
-  // to their respective handlers.
-
+ 
   CosTrading::Lookup_var trader_;
   // Reference to the Lookup interface of the trading service.
   
   CosTrading::OfferId_var offer_id_;
   // Server offer id.
+
+  CosTradingRepos::ServiceTypeRepository::PropStructSeq prop_seq_;
+  // Service type definition.
   
   CosNaming::NamingContext_var naming_context_;
   // The root naming context of the naming service
