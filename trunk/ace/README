@@ -764,10 +764,6 @@ ACE_LACKS_RWLOCK_T                      Platform lacks readers/writer
 ACE_LACKS_SBRK                          Platform lacks a working
                                         sbrk() (e.g., Win32 and
                                         VxWorks)
-ACE_LACKS_SCHED_H                       Platform needs to #include
-                                        <sched.h>
-                                        to get thread scheduling
-                                        defs.
 ACE_LACKS_SEEKDIR                       Platform uses ACE_HAS_DIRENT
                                         but does not have seekdir ().
 ACE_LACKS_SEMBUF_T                      Platform lacks struct sembuf
@@ -877,6 +873,10 @@ ACE_NEEDS_LWP_PRIO_SET                  OS has LWPs, and when the
                                         priority of a bound thread is
                                         set, then the LWP priority
                                         must be set also.
+ACE_NEEDS_SCHED_H                       Platform needs to #include
+                                        <sched.h>
+                                        to get thread scheduling
+                                        defs.
 ----------------------------------------
 
 The following is a partial list of where some of these macros are used
