@@ -1,3 +1,9 @@
+Mon Dec 21 21:42:24 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Trader/Constraint_Nodes.cpp
+	  (TAO_Literal_Constraint): Strings carried by any's are managed
+	  by any's.  They must be duplicated before assigned to others.
+
 Mon Dec 21 20:45:26 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* examples/POA/Generic_Servant/MyFooServant.cpp: Changed
