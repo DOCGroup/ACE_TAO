@@ -1,3 +1,10 @@
+Thu Aug  5 20:20:37 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Makefile.am:
+	  Changed custom build rules to use $(srcdir)/<input-file> so
+	  resulting makefiles will work on systems where make doesn't
+	  support VPATH.
+
 Thu Aug  5 07:08:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/PluggableUDP/tests/Performance/run_test.pl:
