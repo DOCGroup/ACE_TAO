@@ -20,7 +20,6 @@
 #include "ace/UPIPE_Connector.h"
 #include "ace/UPIPE_Acceptor.h"
 #include "ace/Auto_Ptr.h"
-#include <fstream.h>
 
 ACE_RCSID(UPIPE_SAP, ex2, "$Id$")
 
