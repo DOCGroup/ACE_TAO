@@ -6,26 +6,16 @@
  *    pace
  *
  * = FILENAME
- *    defines.h
+ *    pace/defines.h
  *
  * = AUTHOR
  *    Luther Baker
  *
  * ============================================================================ */
 
-#ifndef PACE_DEFINES_H
-#define PACE_DEFINES_H
+#ifndef PACE_DEFINES_H_INDIRECT
+#define PACE_DEFINES_H_INDIRECT
 
-#include "pace/config/config.h"
-#include "pace/config/platform.h"
-#include "pace/config/compiler.h"
-#include "pace/config/constants.h"
-#include "pace/config/defaults.h"
-#include "pace/config/types.h"
-#include "pace/config/utility.h"
+/* moved to pace/config/defines.h */
 
-/* Temporary <luther@cs.wustl.edu> */
-#include "pace/config/temp.h"
-
-
-#endif /* PACE_DEFINES_H */
+#endif /* PACE_DEFINES_H_INDIRECT */

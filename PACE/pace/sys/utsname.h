@@ -16,6 +16,8 @@
 #ifndef PACE_SYS_UTSNAME_H_INDIRECT
 #define PACE_SYS_UTSNAME_H_INDIRECT
 
+#include "pace/config/defines.h"
+
 #if defined (PACE_HAS_POSIX)
 # include "pace/posix/utsname.h"
 #elif defined (PACE_VXWORKS)
