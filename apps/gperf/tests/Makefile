@@ -1,3 +1,4 @@
+# $Id: Makefile	1.1	10/18/96
 # Copyright (C) 1989, 1992, 1993 Free Software Foundation, Inc.
 # written by Douglas C. Schmidt (schmidt@ics.uci.edu)
 # 
@@ -17,56 +18,59 @@
 # along with GNU GPERF; see the file COPYING.  If not, write to the Free
 # Software Foundation, 59 Temple Place - Suite 330, Boston, MA 02111, USA. 
 
+#----------------------------------------------------------------------------
+#	Include macros and targets
+#----------------------------------------------------------------------------
+
+include		$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+
 srcdir = .
-
-#### package, host, target, and site dependent Makefile fragments come in here.
-##
-
 GPERF = ../src/gperf
 
 check:
 	@echo "performing some tests of the perfect hash generator"   
-	$(CC) -c $(CFLAGS) $(srcdir)/test.c
-	$(GPERF) -p -c -l -S1 -o $(srcdir)/c.gperf > cinset.c
-	$(CC) $(CFLAGS) -o cout cinset.c test.o
+	$(CXX) -c $(CFLAGS) $(srcdir)/test.cpp
+	$(GPERF) -a -p -c -l -S1 -o $(srcdir)/c.gperf > cinset.cpp
+	$(CXX) $(CFLAGS) -o cout cinset.c test.o
 	@echo "testing ANSI C reserved words, all items should be found in the set"
 	./cout -v < $(srcdir)/c.gperf > c.out
 	-diff -b $(srcdir)/c.exp c.out
-	$(GPERF) -k1,4,'$$' $(srcdir)/ada.gperf > adainset.c
+	$(GPERF) -a -k1,4,'$$' $(srcdir)/ada.gperf > adainset.c
 # double '$$' is only there since make gets confused; programn wants only 1 '$'
-	$(CC) $(CFLAGS) -o aout adainset.c test.o
+	$(CXX) $(CFLAGS) -o aout adainset.c test.o
 	@echo "testing Ada reserved words, all items should be found in the set"
 	./aout -v < $(srcdir)/ada.gperf > ada-res.out
 	-diff -b $(srcdir)/ada-res.exp ada-res.out
-	$(GPERF) -p -D -k1,'$$' -s 2 -o $(srcdir)/adadefs.gperf > preinset.c
-	$(CC) $(CFLAGS) -o preout preinset.c test.o
+	$(GPERF) -a -p -D -k1,'$$' -s 2 -o $(srcdir)/adadefs.gperf > preinset.c
+	$(CXX) $(CFLAGS) -o preout preinset.c test.o
 	@echo "testing Ada predefined words, all items should be found in the set"
 	./preout -v < $(srcdir)/adadefs.gperf > ada-pred.out
 	-diff -b $(srcdir)/ada-pred.exp ada-pred.out
-	$(GPERF) -k1,2,'$$' -o $(srcdir)/modula3.gperf > m3inset.c
-	$(CC) $(CFLAGS) -o m3out m3inset.c test.o
+	$(GPERF) -a -k1,2,'$$' -o $(srcdir)/modula3.gperf > m3inset.c
+	$(CXX) $(CFLAGS) -o m3out m3inset.c test.o
 	@echo "testing Modula3 reserved words, all items should be found in the set"
 	./m3out -v < $(srcdir)/modula3.gperf > modula.out
 	-diff -b $(srcdir)/modula.exp modula.out
-	$(GPERF) -o -S2 -p < $(srcdir)/pascal.gperf > pinset.c
-	$(CC) $(CFLAGS) -o pout pinset.c test.o
+	$(GPERF) -a -o -S2 -p < $(srcdir)/pascal.gperf > pinset.c
+	$(CXX) $(CFLAGS) -o pout pinset.c test.o
 	@echo "testing Pascal reserved words, all items should be found in the set"
 	./pout -v < $(srcdir)/pascal.gperf > pascal.out
 	-diff -b $(srcdir)/pascal.exp pascal.out
 # these next 5 are demos that show off the generated code
-	$(GPERF) -p -j1 -g -o -t -N is_reserved_word -k1,3,'$$' < $(srcdir)/c-parse.gperf > test-1.out
+	$(GPERF) -a -p -j1 -g -o -t -N is_reserved_word -k1,3,'$$' < $(srcdir)/c-parse.gperf > test-1.out
 	-diff -b $(srcdir)/test-1.exp test-1.out
-	$(GPERF) -n -k1-8 -l <$(srcdir)/modula2.gperf > test-2.out
+	$(GPERF) -a -n -k1-8 -l <$(srcdir)/modula2.gperf > test-2.out
 	-diff -b $(srcdir)/test-2.exp test-2.out
-	$(GPERF) -p -j 1 -o -a -C -g -t -k1,4,$$ < $(srcdir)/gplus.gperf > test-3.out
+	$(GPERF) -a -p -j 1 -o -a -C -g -t -k1,4,$$ < $(srcdir)/gplus.gperf > test-3.out
 	-diff -b $(srcdir)/test-3.exp test-3.out
-	$(GPERF) -D -p -t < $(srcdir)/c-parse.gperf > test-4.out
+	$(GPERF) -a -D -p -t < $(srcdir)/c-parse.gperf > test-4.out
 	-diff -b $(srcdir)/test-4.exp test-4.out
-	$(GPERF) -g -o -j1 -t -p -N is_reserved_word < $(srcdir)/gpc.gperf > test-5.out
+	$(GPERF) -a -g -o -j1 -t -p -N is_reserved_word < $(srcdir)/gpc.gperf > test-5.out
 	-diff -b $(srcdir)/test-5.exp test-5.out
 # prints out the help message
-	-$(GPERF) -h > test-6.out 2>&1 || [ a = a ]
+	-$(GPERF) -a -h > test-6.out 2>&1 || [ a = a ]
 	-diff -b $(srcdir)/test-6.exp test-6.out
 	@echo "only if, do, for, case, goto, else, while, and return should be found "
 	./aout -v < $(srcdir)/c.gperf > test-7.out
 	-diff -b $(srcdir)/test-7.exp test-7.out
+

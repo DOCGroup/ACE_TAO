@@ -1,5 +1,5 @@
 /* C code produced by gperf version 2.5 (GNU C++ version) */
-/* Command-line: ../src/gperf -n -k1-8 -l  */
+/* Command-line: ../src/gperf -a -n -k1-8 -l  */
 
 #define TOTAL_KEYWORDS 40
 #define MIN_WORD_LENGTH 2
@@ -9,9 +9,7 @@
 /* maximum key range = 256, duplicates = 0 */
 
 static unsigned int
-hash (str, len)
-     register char *str;
-     register int unsigned len;
+hash (char *str, unsigned int len)
 {
   static unsigned short asso_values[] =
     {
@@ -29,7 +27,7 @@ hash (str, len)
      257, 257, 257, 257, 257, 257, 257, 257, 257, 257,
      257, 257, 257, 257, 257, 257, 257, 257,
     };
-  register int hval = 0;
+  int hval = 0;
 
   switch (len)
     {
@@ -56,9 +54,7 @@ hash (str, len)
 }
 
 char *
-in_word_set (str, len)
-     register char *str;
-     register unsigned int len;
+in_word_set (char *str, unsigned int len)
 {
 
   static unsigned char lengthtable[] =
@@ -168,11 +164,11 @@ in_word_set (str, len)
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
     {
-      register int key = hash (str, len);
+      int key = hash (str, len);
 
       if (key <= MAX_HASH_VALUE && key >= 0)
         {
-          register char *s = wordlist[key];
+          char *s = wordlist[key];
 
           if (len == lengthtable[key]
               && *s == *str && !strcmp (str + 1, s + 1))
