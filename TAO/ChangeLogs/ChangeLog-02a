@@ -1,3 +1,18 @@
+Thu Sep 28 13:22:30 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+	* TAO_IDL/be/be_visitor_sequence/sequence_ci.cpp:
+
+	  The changes from
+
+	  Wed Sep 27 18:54:29 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	  have been reverted for sequences of strings, wstrings, typecodes
+	  and objects (including CORBA::Object). Constant instantiations of
+	  the manager classes for these types cannot be made portable over
+	  all supported compilers and platforms, so some other approach is
+	  needed [BUGID:676].
+
 Thu Sep 28 01:49:36 2000  Marina Spivak  <marina@cs.wustl.edu>
 
         * tao/Endpoint.h
