@@ -9,6 +9,12 @@ ACE_RCSID(tao, SSLIOP_Factory, "$Id$")
 
 static const char prefix_[] = "iiop";
 
+// @@ Very temporary hack that allows us to specify if the client
+//    should use SSLIOP with SSL or SSLIOP without SSL.
+//    This is set in the TAO_SSLIOP_Protocol_Factory::init().
+//         -Ossama
+int using_ssl = 0;
+
 TAO_SSLIOP_Protocol_Factory::TAO_SSLIOP_Protocol_Factory (void)
   :  major_ (TAO_DEF_GIOP_MAJOR),
      minor_ (TAO_DEF_GIOP_MINOR)
@@ -51,9 +57,23 @@ TAO_SSLIOP_Protocol_Factory::make_acceptor (void)
 }
 
 int
-TAO_SSLIOP_Protocol_Factory::init (int /* argc */,
-                                 char* /* argv */ [])
+TAO_SSLIOP_Protocol_Factory::init (int argc,
+                                   char* argv[])
 {
+// @@ Very temporary hack that allows us to specify if the client
+//    should use SSLIOP with SSL or SSLIOP without SSL.
+  if (argc > 0)
+    {
+      if (ACE_OS::strcasecmp (argv[0], "-UseSSL") == 0)
+        {
+          ::using_ssl = 1;
+
+          ACE_OS::printf ("********************************************\n"
+                          "Using SSL in SSLIOP protocol\n"
+                          "********************************************\n");
+        }
+    }
+
   return 0;
 }
 
