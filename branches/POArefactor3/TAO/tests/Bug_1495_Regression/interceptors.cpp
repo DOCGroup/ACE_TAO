@@ -112,7 +112,7 @@ Echo_Server_Request_Interceptor::forward_reference (CORBA::Object_ptr forward_lo
   if (CORBA::is_nil (forward_location))
     ACE_THROW (CORBA::INV_OBJREF (
                  CORBA::SystemException::_tao_minor_code (
-                   TAO_DEFAULT_MINOR_CODE,
+                   TAO::VMCID,
                    EINVAL),
                  CORBA::COMPLETED_NO));
   this->forward_location_ = CORBA::Object::_duplicate (forward_location);

@@ -49,7 +49,7 @@ ServerORBInitializer::post_init (
                                               poa_current.in ()),
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK;
@@ -68,7 +68,7 @@ ServerORBInitializer::post_init (
                     ORT_test_IORInterceptor,
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK;

@@ -77,7 +77,7 @@ namespace
     suicide (#value " in method " #method);                        \
     ACE_THROW (FAULT_CODE (                                        \
       CORBA::SystemException::_tao_minor_code (                    \
-            TAO_DEFAULT_MINOR_CODE,                                \
+            TAO::VMCID,                                \
             EFAULT),                                               \
             CORBA::COMPLETED_NO));                                 \
     } else ;
@@ -87,7 +87,7 @@ namespace
     suicide ("read-only method " #method);                         \
     ACE_THROW (FAULT_CODE (                                        \
       CORBA::SystemException::_tao_minor_code (                    \
-            TAO_DEFAULT_MINOR_CODE,                                \
+            TAO::VMCID,                                \
             EFAULT),                                               \
             CORBA::COMPLETED_NO));                                 \
     } else ;
@@ -97,7 +97,7 @@ namespace
     suicide (#value " in method " #method);                        \
     ACE_THROW_RETURN (FAULT_CODE (                                 \
       CORBA::SystemException::_tao_minor_code (                    \
-            TAO_DEFAULT_MINOR_CODE,                                \
+            TAO::VMCID,                                \
             EFAULT),                                               \
             CORBA::COMPLETED_NO),                                  \
       result);                                                     \
@@ -108,7 +108,7 @@ namespace
     suicide ("read-only method " #method);                         \
     ACE_THROW_RETURN (FAULT_CODE (                                 \
       CORBA::SystemException::_tao_minor_code (                    \
-            TAO_DEFAULT_MINOR_CODE,                                \
+            TAO::VMCID,                                \
             EFAULT),                                               \
             CORBA::COMPLETED_NO),                                  \
             result);                                               \

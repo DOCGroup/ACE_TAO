@@ -3,14 +3,6 @@
 #include "Object_Adapter.h"
 #include "Object_Adapter_Factory.h"
 
-#include "ThreadPolicyFactoryImpl.h"
-#include "LifespanPolicyFactoryImpl.h"
-#include "IdAssignmentPolicyFactoryImpl.h"
-#include "IdUniquenessPolicyFactoryImpl.h"
-#include "ImplicitActivationPolicyFactoryImpl.h"
-#include "RequestProcessingPolicyFactoryImpl.h"
-#include "ServantRetentionPolicyFactoryImpl.h"
-
 #include "ThreadStrategyFactoryImpl.h"
 #include "LifespanStrategyFactoryImpl.h"
 #include "IdAssignmentStrategyFactoryImpl.h"
@@ -56,38 +48,6 @@ ACE_RCSID (PortableServer,
 int
 TAO_POA_Initializer::init (void)
 {
-#if (TAO_HAS_MINIMUM_POA == 0)
-  ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_ThreadPolicyFactoryImpl
-    );
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
-
-  ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_LifespanPolicyFactoryImpl
-    );
-
-  ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_IdAssignmentPolicyFactoryImpl
-    );
-
-  ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_IdUniquenessPolicyFactoryImpl
-    );
-
-#if (TAO_HAS_MINIMUM_POA == 0)
-  ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_ImplicitActivationPolicyFactoryImpl
-    );
-
-  ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_RequestProcessingPolicyFactoryImpl
-    );
-
-  ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_ServantRetentionPolicyFactoryImpl
-    );
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
-
   ACE_Service_Config::process_directive (
       TAO::Portable_Server::ace_svc_desc_IdAssignmentStrategySystem
     );

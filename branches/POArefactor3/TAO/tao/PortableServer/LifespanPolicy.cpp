@@ -9,27 +9,10 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    LifespanPolicy::LifespanPolicy ()
+    LifespanPolicy::LifespanPolicy (
+      ::PortableServer::LifespanPolicyValue value) :
+        value_ (value)
     {
-    }
-
-    void
-    LifespanPolicy::init (
-      const CORBA::Any &value ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::PolicyError))
-    {
-      ::PortableServer::LifespanPolicyValue thrvalue;
-      if ((value >>= thrvalue) == 0)
-        ACE_THROW (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE));
-
-      (void) this->init (thrvalue);
-    }
-
-    void
-    LifespanPolicy::init (
-      ::PortableServer::LifespanPolicyValue value)
-    {
-      value_ = value;
     }
 
     CORBA::Policy_ptr
@@ -38,11 +21,9 @@ namespace TAO
     {
       LifespanPolicy *copy = 0;
       ACE_NEW_THROW_EX (copy,
-                        LifespanPolicy,
+                        LifespanPolicy (this->value_),
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (CORBA::Policy::_nil ());
-
-      (void) copy->init (this->value_);
 
       return copy;
     }

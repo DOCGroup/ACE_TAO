@@ -1,3 +1,15 @@
+Wed Feb 16 14:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/LifespanStrategyPersistent.cpp:
+          Only try to load the ImR_Client library in the startup, in the
+          shutdown, when it is not there, then don't try to load it again
+
+        * tao/PortableServer/PolicyFactory*.*:
+          Removed the usage of svc conf for the policies again, it costs much
+          more then it delivers.
+
+          Also fixed some compile warnings with vc6.
+
 Tue Feb 15 13:51:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Root_POA.cpp:

@@ -10,8 +10,8 @@
  */
 //=============================================================================
 
-#ifndef TAO_POA_ID_ASSIGNMENT_POLICY_H
-#define TAO_POA_ID_ASSIGNMENT_POLICY_H
+#ifndef TAO_POA_LIFESPANPOLICY_H
+#define TAO_POA_LIFESPANPOLICY_H
 #include /**/ "ace/pre.h"
 
 #include "portableserver_export.h"
@@ -34,14 +34,12 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class LifespanPolicyValue;
-
     class TAO_PortableServer_Export LifespanPolicy
       : public virtual ::PortableServer::LifespanPolicy,
         public virtual TAO_Local_RefCounted_Object
     {
     public:
-      LifespanPolicy ();
+      LifespanPolicy (::PortableServer::LifespanPolicyValue value);
 
       CORBA::Policy_ptr copy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((CORBA::SystemException));
@@ -61,13 +59,6 @@ namespace TAO
       /// Returns the scope at which this policy can be applied. See orbconf.h.
       virtual TAO_Policy_Scope _tao_scope (void) const;
 
-      /// Initialise with the passed value
-      void init (::PortableServer::LifespanPolicyValue value);
-
-      /// Initialise with the passed value
-      void init (const CORBA::Any &value ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((CORBA::PolicyError));
-
     private:
       ::PortableServer::LifespanPolicyValue value_;
     };
@@ -79,4 +70,4 @@ namespace TAO
 #endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
-#endif /* TAO_POA_ID_ASSIGNMENT_POLICY_H */
+#endif /* TAO_POA_LIFESPANPOLICY_H */

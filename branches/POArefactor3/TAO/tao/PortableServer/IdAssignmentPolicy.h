@@ -34,14 +34,12 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class IdAssignmentPolicyValue;
-
     class TAO_PortableServer_Export IdAssignmentPolicy
       : public virtual ::PortableServer::IdAssignmentPolicy,
         public virtual TAO_Local_RefCounted_Object
     {
     public:
-      IdAssignmentPolicy ();
+      IdAssignmentPolicy (::PortableServer::IdAssignmentPolicyValue value);
 
       CORBA::Policy_ptr copy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((CORBA::SystemException));
@@ -60,13 +58,6 @@ namespace TAO
 
       /// Returns the scope at which this policy can be applied. See orbconf.h.
       virtual TAO_Policy_Scope _tao_scope (void) const;
-
-      /// Initialise with the passed value
-      void init (::PortableServer::IdAssignmentPolicyValue value);
-
-      /// Initialise with the passed value
-      void init (const CORBA::Any &value ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((CORBA::PolicyError));
 
     private:
       ::PortableServer::IdAssignmentPolicyValue value_;

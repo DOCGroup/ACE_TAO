@@ -32,7 +32,7 @@ Server_Request_Interceptor::forward_references (
   if (CORBA::is_nil (obj1) || CORBA::is_nil (obj2))
     ACE_THROW (CORBA::INV_OBJREF (
                  CORBA::SystemException::_tao_minor_code (
-                   TAO_DEFAULT_MINOR_CODE,
+                   TAO::VMCID,
                    EINVAL),
                  CORBA::COMPLETED_NO));
 

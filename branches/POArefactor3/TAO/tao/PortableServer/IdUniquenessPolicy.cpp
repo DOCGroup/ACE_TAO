@@ -9,27 +9,10 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    IdUniquenessPolicy::IdUniquenessPolicy ()
+    IdUniquenessPolicy::IdUniquenessPolicy (
+      ::PortableServer::IdUniquenessPolicyValue value) :
+        value_ (value)
     {
-    }
-
-    void
-    IdUniquenessPolicy::init (
-      const CORBA::Any &value ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::PolicyError))
-    {
-      ::PortableServer::IdUniquenessPolicyValue thrvalue;
-      if ((value >>= thrvalue) == 0)
-        ACE_THROW (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE));
-
-      (void) this->init (thrvalue);
-    }
-
-    void
-    IdUniquenessPolicy::init (
-      ::PortableServer::IdUniquenessPolicyValue value)
-    {
-      value_ = value;
     }
 
     CORBA::Policy_ptr
@@ -38,11 +21,9 @@ namespace TAO
     {
       IdUniquenessPolicy *copy = 0;
       ACE_NEW_THROW_EX (copy,
-                        IdUniquenessPolicy,
+                        IdUniquenessPolicy (this->value_),
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (CORBA::Policy::_nil ());
-
-      (void) copy->init (this->value_);
 
       return copy;
     }

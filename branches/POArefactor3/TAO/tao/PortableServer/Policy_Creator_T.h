@@ -15,8 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/Dynamic_Service.h"
-#include "ace/Service_Config.h"
+#include "tao/ORB_Constants.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -26,47 +25,22 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    template <class FACTORY,
-              class POLICYTYPE,
-              class POLICYVALUETYPE>
-    class Policy_Creator
-    {
-    public:
-      static
-      POLICYTYPE create (
-        const char *factory_string,
-        const CORBA::Any &value ACE_ENV_ARG_DECL)
-          ACE_THROW_SPEC ((CORBA::PolicyError))
+    template <class POLICYTYPE, class POLICYVALUE>
+    void create_policy (
+        POLICYTYPE *& policy,
+        POLICYVALUE value,
+        const CORBA::Any& val
+        ACE_ENV_ARG_DECL)
       {
-        FACTORY *policy_factory =
-           ACE_Dynamic_Service<FACTORY>::instance (factory_string);
+        if ((val >>= value) == 0)
+          ACE_THROW (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE));
 
-        if (policy_factory == 0)
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%P|%t) \n"),
-                      ACE_TEXT ("Unable to get %s"),
-                      factory_string));
-        else
-          return policy_factory->create (value ACE_ENV_ARG_PARAMETER);
+        ACE_NEW_THROW_EX (policy,
+                          POLICYTYPE (value),
+                          CORBA::NO_MEMORY (TAO::VMCID,
+                                            CORBA::COMPLETED_NO));
+        ACE_CHECK;
       }
-
-      static
-      POLICYTYPE create (
-        const char *factory_string,
-        POLICYVALUETYPE value ACE_ENV_ARG_DECL)
-      {
-        FACTORY *policy_factory =
-           ACE_Dynamic_Service<FACTORY>::instance (factory_string);
-
-        if (policy_factory == 0)
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%P|%t) \n"),
-                      ACE_TEXT ("Unable to get %s"),
-                      factory_string));
-        else
-          return policy_factory->create (value ACE_ENV_ARG_PARAMETER);
-      }
-    };
   }
 }
 
