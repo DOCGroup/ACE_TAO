@@ -1,3 +1,25 @@
+Fri Sep 15 16:01:11 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tao/Makefile.bor:
+	* tao/IORTable/Makefile.bor:
+	* tao/PortableServer/Makefile.bor:
+	* tao/IORManipulation/Makefile.bor:
+	  Update or create the Borland makefiles for the tao directory.
+
+	* tao/IORManipulation/IORManip_Loader.h:
+	* tao/IORManipulation/IORManipulation.cpp:
+	* tao/IORTable/IORTable.h:
+	  Add missing ace/post.h includes
+
+	* tao/DomainC.cpp:
+	* tao/DomainC.h:
+	* tao/PortableServer/DomainS.h:
+	* tao/PortableServer/DomainS.cpp:
+	  Fix reference value mismatchs
+
+	* tao/PortableInterceptor.pidl:
+	  Fix reference to the Portable Interceptor spec.
+
 Fri Sep 15 16:55:01 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Portable_Interceptors/Benchmark/interceptors.h:

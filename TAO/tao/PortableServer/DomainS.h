@@ -111,7 +111,7 @@
       friend class POA_CORBA_DomainManager;
       TAO_ServerRequest_Info_CORBA_DomainManager_get_domain_policy (
         const char *  _tao_operation,
-        IOP::ServiceContextList &_tao_service_context_list            ,      CORBA::PolicyType policy_type      ,
+        IOP::ServiceContextList &_tao_service_context_list            ,      CORBA::PolicyType& policy_type      ,
             CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
       );

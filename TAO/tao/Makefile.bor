@@ -4,7 +4,7 @@
 
 NAME = TAO
 
-DIRS = DynamicAny PortableServer
+DIRS = DynamicAny PortableServer IORTable IORManipulation
 
 OBJFILES = \
 	$(OBJDIR)\Acceptor_Filter.obj \
@@ -33,6 +33,7 @@ OBJFILES = \
 	$(OBJDIR)\DII_Reply_Dispatcher.obj \
 	$(OBJDIR)\Direct_Priority_Mapping.obj \
 	$(OBJDIR)\DLL_ORB.obj \
+	$(OBJDIR)\DLL_Parser.obj \
 	$(OBJDIR)\DomainC.obj \
 	$(OBJDIR)\DynamicC.obj \
 	$(OBJDIR)\Encodable.obj \
@@ -40,6 +41,7 @@ OBJFILES = \
 	$(OBJDIR)\Environment.obj \
 	$(OBJDIR)\Exception.obj \
 	$(OBJDIR)\Exclusive_TMS.obj \
+	$(OBJDIR)\FILE_Parser.obj \
 	$(OBJDIR)\FT_CORBAC.obj \
 	$(OBJDIR)\GIOP_Message_Accept_State.obj \
 	$(OBJDIR)\GIOP_Message_Acceptors.obj \
@@ -64,9 +66,7 @@ OBJFILES = \
 	$(OBJDIR)\Invocation.obj \
 	$(OBJDIR)\IOPC.obj \
 	$(OBJDIR)\IOPS.obj \
-	$(OBJDIR)\IOR_LookupTable.obj \
-	$(OBJDIR)\IORC.obj \
-	$(OBJDIR)\IORManipulation.obj \
+	$(OBJDIR)\IOR_Parser.obj \
 	$(OBJDIR)\Leader_Follower.obj \
 	$(OBJDIR)\Linear_Priority_Mapping.obj \
 	$(OBJDIR)\LocalObject.obj \
@@ -86,6 +86,7 @@ OBJFILES = \
 	$(OBJDIR)\ORB_Core.obj \
 	$(OBJDIR)\ORB_Table.obj \
 	$(OBJDIR)\params.obj \
+	$(OBJDIR)\Parser_Registry.obj \
 	$(OBJDIR)\Pluggable.obj \
 	$(OBJDIR)\Pluggable_Messaging.obj \
 	$(OBJDIR)\Pluggable_Messaging_Utils.obj \
