@@ -1303,10 +1303,17 @@ ACE_Select_Reactor::handle_error (void)
   ACE_TRACE ("ACE_Select_Reactor::handle_error");
   if (errno == EINTR)
     return this->restart_;
+#if defined (__MVS__)
+  // On MVS Open Edition, there can be a number of failure codes on a bad
+  // socket, so check_handles on anything other than EINTR.
+  else
+    return this->check_handles ();
+#else
   else if (errno == EBADF)
     return this->check_handles ();
   else
     return -1;
+#endif  /* __MVS__ */
 }
 
 void
@@ -1861,10 +1868,10 @@ ACE_Select_Reactor::check_handles (void)
 {
   ACE_TRACE ("ACE_Select_Reactor::check_handles");
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) || defined (__MVS__)
   ACE_Time_Value time_poll = ACE_Time_Value::zero;
   ACE_Handle_Set rd_mask;
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 || MVS */
 
   ACE_Event_Handler *eh = 0;
   int result = 0;
@@ -1880,7 +1887,11 @@ ACE_Select_Reactor::check_handles (void)
       if (handle == ACE_INVALID_HANDLE)
         continue;
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) || defined (__MVS__)
+      // Win32 needs to do the check this way because fstat won't work on
+      // a socket handle.  MVS Open Edition needs to do it this way because,
+      // even though the docs say to check a handle with either select or
+      // fstat, the fstat method always says the handle is ok.
       rd_mask.set_bit (handle);
 
       if (ACE_OS::select (int (handle) + 1,
@@ -1892,7 +1903,7 @@ ACE_Select_Reactor::check_handles (void)
                                   ACE_Event_Handler::ALL_EVENTS_MASK);
         }
       rd_mask.clr_bit (handle);
-#else /* !ACE_WIN32 */
+#else /* !ACE_WIN32 && !MVS */
       struct stat temp;
 
       if (ACE_OS::fstat (handle, &temp) == -1)
@@ -1901,7 +1912,7 @@ ACE_Select_Reactor::check_handles (void)
           this->remove_handler_i (handle,
                                   ACE_Event_Handler::ALL_EVENTS_MASK);
         }
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 || MVS */
     }
 
   return result;
