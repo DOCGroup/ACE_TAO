@@ -15,6 +15,12 @@ Fri May 29 21:55:11 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/Makefile: replaced .o with $(OBJEXT) in gethrtime.o target,
           so that make depend doesn't munge it.
 
+        * ace/OS.h: only use the null versions of the
+          ACE_DES_FREE_TEMPLATE* macros with LynxOS 3.0.0.
+
+        * include/makeinclude/platform_lynxos.GNU: commented out -Winline,
+          because it complains too much with -O2, and that's now the default.
+
 Fri May 29 17:52:37 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.5.9 released.
