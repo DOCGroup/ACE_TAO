@@ -185,7 +185,11 @@ TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events,
       cdr.encode (RtecEventComm::_tc_EventData, &e.data, 0, ACE_TRY_ENV);
       ACE_CHECK;
 
+#if defined (ACE_HAS_BROKEN_DGRAM_SENDV)
+      const int TAO_WRITEV_MAX = IOV_MAX - 1;
+#else
       const int TAO_WRITEV_MAX = IOV_MAX;
+#endif /* ACE_HAS_BROKEN_DGRAM_SENDV */
       iovec iov[TAO_WRITEV_MAX];
 
       CORBA::ULong total_length;
