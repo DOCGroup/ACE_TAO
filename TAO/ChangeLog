@@ -1,3 +1,19 @@
+Tue Oct 28 22:04:02 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/examples/CosEC/Factory/FactoryClient.cpp:
+	* orbsvcs/examples/Log/Basic/TLS_Client.cpp:
+	* orbsvcs/examples/ORT/Server_IORInterceptor.h:
+	* orbsvcs/examples/ORT/Server_IORInterceptor_ORBInitializer.cpp:
+	* orbsvcs/examples/ORT/server.cpp:
+	* orbsvcs/tests/InterfaceRepo/Latency_Test/Latency_Query_Client.h:
+	* orbsvcs/tests/LoadBalancing/LoadMonitor/CPU/Makefile:
+	* orbsvcs/tests/Log/Basic_Log_Test/client.cpp:
+	* orbsvcs/tests/RTCosScheduling/client.cpp:
+
+	  All those simple mistakes that were left behind. Changing
+	  corba.h to ORB.h, including additional header files like
+	  ace/Log_Msg.h were done to get these files compiling. 
+
 Tue Oct 28 21:53:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
