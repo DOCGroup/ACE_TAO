@@ -16,6 +16,7 @@
 usage="usage: $0 <target>"
 IFS="|"
 tmp=/tmp
+compilation_log="log/compilations.log"
 
 ####
 #### Process command line arguments.
@@ -40,9 +41,17 @@ fi
 
 run()
 {
-  echo running $1
   /bin/rm -f core log/$1.log
 
+  if [ ! -f "$1" ]; then 
+    echo 1>&2 "Making \`$1'..."
+    remove_exe_after_test="true"
+    make BIN="$1" >> "$compilation_log"
+  else
+    remove_exe_after_test=""
+  fi
+
+  echo "running \`$1'"
   if [ "$chorus" ]; then
     #### Assumes that the PATH has been set on the target.
     rsh $target $run_command $1
@@ -64,6 +73,11 @@ run()
   else
     echo "No log file (log/$1.log) is present"
   fi
+
+  if [ "$remove_exe_after_test" ]; then
+    echo 1>&2 "Discarding \`$1'..."
+    rm -f "$1" ".obj/$1.o"
+  fi
 }
 
 if [ -x /bin/uname -a `uname -s` = 'LynxOS' ]; then
@@ -75,7 +89,9 @@ if [ ! "$chorus" ]; then
   start_test_resources=`ipcs | egrep $user`
 fi # ! chorus
 
-echo "Starting tests..."
+echo "Starting ACE tests . . ."
+
+mv -f "$compilation_log" "$compilation_log.bak" > /dev/null 2>&1
 
 run Basic_Types_Test
 test $chorus || run Env_Value_Test      # tests Env_Value_T and Process
@@ -150,7 +166,7 @@ run Enum_Interfaces_Test                # tests ACE_ACE::get_ip_interfaces()
 test $chorus || run Upgradable_RW_Test  # tests ACE_RW locks
 test $chorus || run Conn_Test           # tests ACE_Thread_Manager, ACE_Acceptor/ACE_Connector, ACE_SOCK_SAP
 
-echo "Tests complete..."
+echo "Finished ACE tests."
 
 /bin/rm -f ace_pipe_name pattern \
            $tmp/ace_temp_file* \
