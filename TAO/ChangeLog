@@ -1,3 +1,17 @@
+Wed Dec 24 14:29:20 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* tao/IOP_Codec.pidl:
+	* tao/IOP_CodecA.cpp:
+	* tao/IOP_CodecA.h:
+	* tao/IOP_CodecC.cpp:
+	* tao/IOP_CodecC.h:
+	* tao/diffs/IOP_Codec.diff:
+
+	  Reverting the change "Wed Dec 24 14:15:24 2003  Balachandran
+	  Natarajan  <bala@dre.vanderbilt.edu>", since it had the reverse
+	  effect. The executable started linking in *A.* files since the
+	  typecodes for exceptions were placed in these files. 
+
 Wed Dec 24 14:15:24 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/IOP_Codec.pidl:
@@ -7,7 +21,7 @@ Wed Dec 24 14:15:24 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/IOP_CodecC.h:
 	* tao/diffs/IOP_Codec.diff:
 
-	  Upadtes for the above file, which primarily consists of moving
+	  Updates for the above file, which primarily consists of moving
 	  the typecodes from *C.* files to *A.* files. 
 	
 Wed Dec 24 13:33:10 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>

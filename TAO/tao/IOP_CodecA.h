@@ -33,18 +33,6 @@
 
 #include /**/ "ace/pre.h"
 
-// ==== Handcrafted
-namespace IOP
-{
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Codec;
-
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_EncodingFormat;
-
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Encoding;
-
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_CodecFactory;
-}
-
 // TAO_IDL - Generated from
 // be/be_visitor_interface/any_op_ch.cpp:52
 
@@ -102,3 +90,4 @@ TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IOP::CodecFacto
 #include /**/ "ace/post.h"
 
 #endif /* ifndef */
+
