@@ -1,3 +1,11 @@
+Sat Jul 24 01:41:42 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_traits.cpp (visit_interface):
+
+	  Prepend a "::" to the node name to force the generated node name
+	  to be relative to the global namespace not the generated TAO
+	  namespace.  Addresses TAO namespace conflicts.
+
 Fri Jul 23 23:18:36 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Security/CSI_Utils.cpp
