@@ -1,3 +1,12 @@
+Fri Jul  4 08:07:45 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Event/lib/Consumer.h:
+        * orbsvcs/tests/Event/lib/Supplier.h:
+        * orbsvcs/tests/Event/lib/Counting_Consumer.h:
+        * orbsvcs/tests/Event/lib/Counting_Supplier.h:
+        * orbsvcs/tests/Event/lib/Driver.h:
+          Fix fuxed errors about incorrect @file tags
+
 Thu Jul  3 17:44:43 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* examples/RTCORBA/Activity/Makefile: Added 'main' to the FILES so
