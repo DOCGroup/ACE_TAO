@@ -1,3 +1,9 @@
+Sat Sep  4 23:16:05 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/IORTable/IORTableC.h:
+
+	  Added missing "tao/SystemException.h" include.
+
 Fri Sep  3 13:55:53 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Event/ECG_CDR_Message_Sender.h:
