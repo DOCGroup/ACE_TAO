@@ -14,7 +14,7 @@ GetOptions ("rt" => \$rt,
             "cos" => \$cos,
             "all" => \$all);
 
-@list=("Paths_1","Paths_5","Paths_10","Paths_20");
+@list=("Paths_1", "Paths_3","Paths_5","Paths_10","Paths_20");
 
 for $file (@list)
 {
