@@ -1,26 +1,32 @@
+Sun Feb 18 10:33:47 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier_Driver.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.cpp:
+          Fixed memory leaks in the test.
+
 Sun Feb 18 03:37:33 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
-	* orbsvcs/IFR_Service/Makefile.IFR_Service (IFR_SVR_OBJS): 
-	Added -I(TAO_ROOT)/tao to LDFLAGS to appease cxx on Tru64.
+        * orbsvcs/IFR_Service/Makefile.IFR_Service (IFR_SVR_OBJS):
+        Added -I(TAO_ROOT)/tao to LDFLAGS to appease cxx on Tru64.
 
 Sun Feb 18 03:33:52 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
-	* tests/Smart_Proxies/On_Demand/Makefile: 
-	Added -I$(TAO_ROOT)/tao to LDFLAGS to appease cxx on Tru64.
+        * tests/Smart_Proxies/On_Demand/Makefile:
+        Added -I$(TAO_ROOT)/tao to LDFLAGS to appease cxx on Tru64.
 
 Sun Feb 18 03:22:01 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
-	* tests/Smart_Proxies/Makefile (LDFLAGS): 
-	Added -I$(TAO_ROOT)/tao to LDFLAGS to appease cxx on Tru64.
+        * tests/Smart_Proxies/Makefile (LDFLAGS):
+        Added -I$(TAO_ROOT)/tao to LDFLAGS to appease cxx on Tru64.
 
 Sat Feb 17 23:08:44 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Handler.cpp: Fixed a problem that showed up
-	  only in EC_throughput. When multiple messages were read out of
-	  the socket and processed, sometime we could be left with
-	  messages that are not even the size of GIOP header length. Added
-	  a conditional check for this case. This fixes the problem in
-	  EC_Throughput.
+        * tao/GIOP_Message_Handler.cpp: Fixed a problem that showed up
+          only in EC_throughput. When multiple messages were read out of
+          the socket and processed, sometime we could be left with
+          messages that are not even the size of GIOP header length. Added
+          a conditional check for this case. This fixes the problem in
+          EC_Throughput.
 
 Sat Feb 17 20:38:10 2001  Darrell Brunsch <brunsch@uci.edu>
 
@@ -51,64 +57,64 @@ Sat Feb 17 19:21:54 2001  Darrell Brunsch <brunsch@uci.edu>
 
 Sat Feb 17 13:39:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Single_Read/test_i.cpp: Added a sleep between incoming
-	  requests.
+        * tests/Single_Read/test_i.cpp: Added a sleep between incoming
+          requests.
 
 Sat Feb 17 12:44:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/orbconf.h: Disabled SHMIOP for the upcoming beta. SHMIOP
-	  does not work with the single read optimizations that have been
-	  integrated in to TAO. This will be enabled after the beta when
-	  we have a fix.
+        * tao/orbconf.h: Disabled SHMIOP for the upcoming beta. SHMIOP
+          does not work with the single read optimizations that have been
+          integrated in to TAO. This will be enabled after the beta when
+          we have a fix.
 
 Fri Sat 17 11:49:29 2001  Pradeep Gore <pradeep@cs.wustl.edu>
 
-	* orbsvcs/tests/Notify/lib/TAO_NotifyTests.dsp:
-	* orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen.dsp:
-	* orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.dsp:
-	* orbsvcs/examples/Notify/Filter/Filter.dsp:
-	* orbsvcs/examples/Notify/Subscribe/Subscribe.dsp:
-	  Modified include settings in these projects.
+        * orbsvcs/tests/Notify/lib/TAO_NotifyTests.dsp:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen.dsp:
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.dsp:
+        * orbsvcs/examples/Notify/Filter/Filter.dsp:
+        * orbsvcs/examples/Notify/Subscribe/Subscribe.dsp:
+          Modified include settings in these projects.
 
         * orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen_Test.h:
-	* orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen_Test.cpp:
-	  Modified event loop to use work-pending/perform-work.
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen_Test.cpp:
+          Modified event loop to use work-pending/perform-work.
 
 Fri Feb 16 20:12:52 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
-	* tests/Smart_Proxies/Makefile:
-  	  Added -I$(TAO_ROOT)/tao to CPPFLAGS to comfort cxx on Tru64 so
- 	  that it could get the template instantiations.
+        * tests/Smart_Proxies/Makefile:
+          Added -I$(TAO_ROOT)/tao to CPPFLAGS to comfort cxx on Tru64 so
+          that it could get the template instantiations.
 
 Fri Feb 16 18:42:29 2001  Pradeep Gore <pradeep@cs.wustl.edu>
 
         * orbsvcs/examples/Notify/Filter/Filter.dsp
-	* orbsvcs/examples/Notify/Subscribe/Subscribe.dsp
-	* orbsvcs/tests/Notify/Basic/AdminProperties_Test.dsp
-	* orbsvcs/tests/Notify/Basic/ConnectDisconnect.dsp
-	* orbsvcs/tests/Notify/Basic/Events_Test.dsp
-	* orbsvcs/tests/Notify/Basic/IdAssignment.dsp
-	* orbsvcs/tests/Notify/Basic/LifeCycleTest.dsp
-	* orbsvcs/tests/Notify/Basic/Simple.dsp
-	* orbsvcs/tests/Notify/Basic/Updates.dsp
-	* orbsvcs/tests/Notify/lib/Notify_Test_Client.h
-	* orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen.dsp
-	* orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.dsp
-	  Updated include paths, exported class Notify_Test_Client
+        * orbsvcs/examples/Notify/Subscribe/Subscribe.dsp
+        * orbsvcs/tests/Notify/Basic/AdminProperties_Test.dsp
+        * orbsvcs/tests/Notify/Basic/ConnectDisconnect.dsp
+        * orbsvcs/tests/Notify/Basic/Events_Test.dsp
+        * orbsvcs/tests/Notify/Basic/IdAssignment.dsp
+        * orbsvcs/tests/Notify/Basic/LifeCycleTest.dsp
+        * orbsvcs/tests/Notify/Basic/Simple.dsp
+        * orbsvcs/tests/Notify/Basic/Updates.dsp
+        * orbsvcs/tests/Notify/lib/Notify_Test_Client.h
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen.dsp
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.dsp
+          Updated include paths, exported class Notify_Test_Client
 
 Fri Feb 16 15:26:29 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* examples/Simulator/DOVEBrowser/NS_Resolve.java:
-	  Cleaned up the code a bit.  Thanks to Kevin Regan
- 	  <kregan@infoglide.com> for contributing this.
+        * examples/Simulator/DOVEBrowser/NS_Resolve.java:
+          Cleaned up the code a bit.  Thanks to Kevin Regan
+          <kregan@infoglide.com> for contributing this.
 
 Fri Feb 16 15:06:17 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Handler.cpp: Fixed a problem in the case when
-	  multiple one way messages were read from the socket. All the
-	  complete calls got processed correctly. One of the incomplete
-	  calls at the boundary was not processed properly. This should
-	  fix the reliable one way test failures.
+        * tao/GIOP_Message_Handler.cpp: Fixed a problem in the case when
+          multiple one way messages were read from the socket. All the
+          complete calls got processed correctly. One of the incomplete
+          calls at the boundary was not processed properly. This should
+          fix the reliable one way test failures.
 
 Fri Feb 16 11:09:41 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -129,16 +135,16 @@ Fri Feb 16 10:53:45 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Fri Feb 16 09:41:54 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* tests/IDL_Test: Added a new Makefile.bor.  Thanks to
-	  Johnny Willemsen for this.
+        * tests/IDL_Test: Added a new Makefile.bor.  Thanks to
+          Johnny Willemsen for this.
 
 Fri Feb 16 02:28:19 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tests/Exposed_Policies/Policy_Verifier.h:
-	* tests/Exposed_Policies/Policy_Verifier.cpp:
+        * tests/Exposed_Policies/Policy_Verifier.h:
+        * tests/Exposed_Policies/Policy_Verifier.cpp:
 
-	  Fixed false warning message that used to detect that
-	  the number of bands was not correct.
+          Fixed false warning message that used to detect that
+          the number of bands was not correct.
 
 Thu Feb 15 19:23:42 2001  Darrell Brunsch <brunsch@uci.edu>
 
@@ -166,19 +172,19 @@ Thu Feb 15 19:23:42 2001  Darrell Brunsch <brunsch@uci.edu>
 
 Thu Feb 15 13:19:47 2001  Ossama Othman  <ossama@uci.edu>
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp
-	  (cube_any, cube_any_struct):
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp
+          (cube_any, cube_any_struct):
 
-	  Fixed a problem where the result check would always fail since
-	  the Any that owned the result was delete()d too early.  delete()
-	  the Any after the result check.
+          Fixed a problem where the result check would always fail since
+          the Any that owned the result was delete()d too early.  delete()
+          the Any after the result check.
 
-	* tests/Portable_Interceptors/Service_Context_Manipulation/interceptors.cpp
-	  (send_request, receive_request_service_contexts):
+        * tests/Portable_Interceptors/Service_Context_Manipulation/interceptors.cpp
+          (send_request, receive_request_service_contexts):
 
-	  Sequence buffers to be released by the sequence should be
-	  allocated with the allocbuf() member, not the new() operator.
-	  Corrected the buffer allocations in these methods accordingly.
+          Sequence buffers to be released by the sequence should be
+          allocated with the allocbuf() member, not the new() operator.
+          Corrected the buffer allocations in these methods accordingly.
 
 Thu Feb 15 14:20:07 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -212,22 +218,22 @@ Thu Feb 15 13:43:50 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Thu Feb 15 11:47:53 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tao/Stub.cpp (parse_policies):
-	  Removed extra parenthesis and changed index type to CORBA::ULong
-	  in the policy list. This should definitively fix the
-	  error/warning on any platform. Thanks to Jeff for the hint.
+        * tao/Stub.cpp (parse_policies):
+          Removed extra parenthesis and changed index type to CORBA::ULong
+          in the policy list. This should definitively fix the
+          error/warning on any platform. Thanks to Jeff for the hint.
 
 Thu Feb 15 11:09:50 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tao/PortableServer/POA.cpp (key_to_stub_i):
-	  Added missing clause for handling the case when the priority
-	  of the object being created differ from the priority of the POA
-	  in the SERVER_DECLARED priority model, and there are priority
-	  bands.
+        * tao/PortableServer/POA.cpp (key_to_stub_i):
+          Added missing clause for handling the case when the priority
+          of the object being created differ from the priority of the POA
+          in the SERVER_DECLARED priority model, and there are priority
+          bands.
 
-	* tao/Stub.cpp:
-	  Fixed compilation error on some platform caused by a wrong
-	  de-referencing of a var type.
+        * tao/Stub.cpp:
+          Fixed compilation error on some platform caused by a wrong
+          de-referencing of a var type.
 
 Thu Feb 15 10:47:18 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -239,35 +245,35 @@ Thu Feb 15 10:47:18 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Thu Feb 15 06:02:55 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Naming/Bindings_Iterator_T.cpp (next_one):
-	  Initialize the hash_entry pointer to 0 to avoid a warning from
- 	  Compaq C++.
+        * orbsvcs/orbsvcs/Naming/Bindings_Iterator_T.cpp (next_one):
+          Initialize the hash_entry pointer to 0 to avoid a warning from
+          Compaq C++.
 
 Thu Feb 15 00:22:42 2001  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp (process_message):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp (process_message):
 
-	  Merged Michael's reply dispatcher related changes from:
-	  "Wed Feb 14 16:30:23 2001  Michael Kircher  <...>" below into
-	  the SSLIOP pluggable protocol.
+          Merged Michael's reply dispatcher related changes from:
+          "Wed Feb 14 16:30:23 2001  Michael Kircher  <...>" below into
+          the SSLIOP pluggable protocol.
 
 Wed Feb 14 20:59:00 2001  Pradeep Gore <pradeep@cs.wustl.edu>
 
-	* orbsvcs/examples/notify/Notify_Examples.dsw:
-	* orbsvcs/examples/notify/Filter/Filter.dsp:
-	* orbsvcs/examples/notify/Subscribe/Subscribe.dsp:
-	* orbsvcs/tests/notify/Notify_Tests.dsw:
-	* orbsvcs/tests/notify/basic/AdminProperties_Test.dsp:
-	* orbsvcs/tests/notify/basic/ConnectDisconnect.dsp:
-	* orbsvcs/tests/notify/basic/Events_Test.dsp:
-	* orbsvcs/tests/notify/basic/IdAssignment.dsp:
-	* orbsvcs/tests/notify/basic/LifeCycleTest.dsp:
-	* orbsvcs/tests/notify/basic/Simple.dsp:
-	* orbsvcs/tests/notify/basic/Updates.dsp:
-	* orbsvcs/tests/notify/lib/TAO_NotifyTests.dsp:
-	* orbsvcs/tests/notify/performance-tests/Throughput/Throughput.dsp:
-	* orbsvcs/tests/notify/performance-tests/RedGreen/RedGreen.dsp:
-	  Added Notification tests and example project files for Windows.
+        * orbsvcs/examples/notify/Notify_Examples.dsw:
+        * orbsvcs/examples/notify/Filter/Filter.dsp:
+        * orbsvcs/examples/notify/Subscribe/Subscribe.dsp:
+        * orbsvcs/tests/notify/Notify_Tests.dsw:
+        * orbsvcs/tests/notify/basic/AdminProperties_Test.dsp:
+        * orbsvcs/tests/notify/basic/ConnectDisconnect.dsp:
+        * orbsvcs/tests/notify/basic/Events_Test.dsp:
+        * orbsvcs/tests/notify/basic/IdAssignment.dsp:
+        * orbsvcs/tests/notify/basic/LifeCycleTest.dsp:
+        * orbsvcs/tests/notify/basic/Simple.dsp:
+        * orbsvcs/tests/notify/basic/Updates.dsp:
+        * orbsvcs/tests/notify/lib/TAO_NotifyTests.dsp:
+        * orbsvcs/tests/notify/performance-tests/Throughput/Throughput.dsp:
+        * orbsvcs/tests/notify/performance-tests/RedGreen/RedGreen.dsp:
+          Added Notification tests and example project files for Windows.
 
 Wed Feb 14 16:30:23 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
@@ -299,9 +305,9 @@ Wed Feb 14 16:30:23 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 Wed Feb 14 15:36:23 2001  Pradeep Gore  <pradeep@cs.wustl.edu>
 
         * docs/orbsvcs.html: Added the Notification Service and it's tests
-	  into this page.Thanks to Samuel Qi Luo
- 	  <Samuel.QiLuo@ericsson.com.au> for pointing out the missing
- 	  documentation.
+          into this page.Thanks to Samuel Qi Luo
+          <Samuel.QiLuo@ericsson.com.au> for pointing out the missing
+          documentation.
 
         * docs/releasenotes/index.html: Updated Notify Status.
 

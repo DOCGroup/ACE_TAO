@@ -71,14 +71,14 @@ ECT_Consumer_Driver::run (int argc, char* argv[])
                       "Execution parameters:\n"
                       "  consumers = <%d>\n"
                       "  suppliers = <%d>\n"
-                      "  type_start = <%d>\n"
+                      "  type start = <%d>\n"
                       "  type count = <%d>\n"
                       "  pid file name = <%s>\n",
 
                       this->n_consumers_,
                       this->n_suppliers_,
                       this->type_start_,
-                      this->type_start_,
+                      this->type_count_,
 
                       this->pid_file_name_?this->pid_file_name_:"nil") );
         }
@@ -169,7 +169,7 @@ ECT_Consumer_Driver::run (int argc, char* argv[])
       ACE_DEBUG ((LM_DEBUG, "running the test\n"));
       for (;;)
         {
-          ACE_Time_Value tv (0, 10000);
+          ACE_Time_Value tv (1, 0);
           this->orb_->perform_work (tv, ACE_TRY_ENV);
           ACE_TRY_CHECK;
           ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 1);
@@ -188,6 +188,12 @@ ECT_Consumer_Driver::run (int argc, char* argv[])
           channel->destroy (ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
+
+      root_poa->destroy (1, 1, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      this->orb_->destroy (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::SystemException, sys_ex)
     {
@@ -269,6 +275,9 @@ ECT_Consumer_Driver::disconnect_consumers (CORBA::Environment &ACE_TRY_ENV)
     {
       this->consumers_[i]->disconnect (ACE_TRY_ENV);
       ACE_CHECK;
+
+      delete this->consumers_[i];
+      this->consumers_[i] = 0;
     }
 }
 
