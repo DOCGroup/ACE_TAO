@@ -1,3 +1,20 @@
+Thu Jun 17 11:52:39 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/SSL/SSL_SOCK_Stream.cpp:
+	* examples/C++NPv2/AC_CLient_Logging_Daemon.cpp:
+	* examples/C++NPv2/AIO_Client_Logging_Daemon.cpp:
+	* examples/IPC_SAP/SSL_SAP/SSL-server-poll.cpp:
+	* tests/CDR_Array_Test.cpp:
+	* tests/CDR_File_Test.cpp:
+	* tests/CDR_Test.cpp:
+	* tests/Config_Test.cpp:
+	* tests/MEM_Stream_Test.cpp:
+	* tests/Pipe_Test.cpp:
+	* tests/Proactor_Test.cpp:
+	* tests/Proactor_Test_IPV6.cpp:
+	* tests/SSL/Thread_Pool_Reactor_SSL_Test.cpp:
+	  Added needed includes to fix AIX Visual Age C++ compile problems.
+
 Thu Jun 17 09:43:49 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* docs/ACE-porting.html: Updated this file so that it mentions

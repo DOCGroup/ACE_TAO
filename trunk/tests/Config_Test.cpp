@@ -22,6 +22,7 @@
 #include "test_config.h"
 #include "Config_Test.h"
 #include "ace/Configuration_Import_Export.h"
+#include "ace/OS_NS_ctype.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
@@ -1426,8 +1427,8 @@ Config_Test::get_section_boolean (ACE_Configuration&             config,
            *pSrc != ACE_TEXT ('\0');
            pSrc++)
         // Convert to uppercase
-        if (islower (*pSrc))
-          *pSrc = tolower (*pSrc);
+        if (ACE_OS::ace_islower (*pSrc))
+          *pSrc = ACE_OS::to_lower (*pSrc);
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("%s = %s\n"),
