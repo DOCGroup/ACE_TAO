@@ -2,6 +2,7 @@
 #include "../Scheduler.h"
 #include "tao/RTScheduling/RTScheduler_Manager.h"
 #include "Thread_Action.h"
+#include "ace/Thread_Manager.h"
 
 int
 main (int argc, char* argv [])
@@ -43,8 +44,7 @@ main (int argc, char* argv [])
       ACE_CHECK;
     
       
-      
-           
+
       current->spawn (&thread_action,
 		      "Harry Potter",
 		      name,
@@ -54,16 +54,12 @@ main (int argc, char* argv [])
 		      0
 		      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
-
-      
-      
     }
   ACE_CATCHANY
     {
 
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+                           "Spawn should be in the context of a Scheduling Segment\n");
 
       //Start - Nested Scheduling Segment
       current->begin_scheduling_segment ("Potter",
@@ -71,10 +67,14 @@ main (int argc, char* argv [])
 					 implicit_sched_param
 					 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      Data spawn_data;
+      spawn_data.data = CORBA::string_dup ("Harry Potter");
+      spawn_data.current = RTScheduling::Current::_duplicate (current);
       
       current->spawn (&thread_action,
-		      "Harry Potter",
-		      name,
+		      &spawn_data,
+		      "Chamber of Secrets",
 		      sched_param,
 		      implicit_sched_param,
 		      0,
@@ -91,8 +91,10 @@ main (int argc, char* argv [])
     }
   ACE_ENDTRY; 
 
-  orb->run ();
-  
+  //  orb->run ();
+
+  ACE_Thread_Manager::instance ()->wait ();
+
   return 0;
 }
 
