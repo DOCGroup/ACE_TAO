@@ -94,23 +94,6 @@ be_visitor_field_ci::visit_array (be_array *node)
 int
 be_visitor_field_ci::visit_sequence (be_sequence *node)
 {
-  if (node->node_type () != AST_Decl::NT_typedef
-      && node->is_child (this->ctx_->scope ()))
-    {
-      be_visitor_context ctx (*this->ctx_);
-      ctx.node (node);
-      be_visitor_sequence_ci visitor (&ctx);
-
-      if (node->accept (&visitor) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_field_ci::"
-                             "visit_sequence - "
-                             "codegen failed\n"), 
-                            -1);
-        }
-    }
-
   return 0;
 }
 

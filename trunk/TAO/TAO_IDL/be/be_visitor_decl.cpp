@@ -68,8 +68,6 @@ be_visitor_decl::gen_anonymous_base_type (be_type *bt,
           }
         case TAO_CodeGen::TAO_ROOT_CI:
           {
-            be_visitor_sequence_ci visitor (&ctx);
-            status = bt->accept (&visitor);
             break;
           }
         case TAO_CodeGen::TAO_ROOT_CS:

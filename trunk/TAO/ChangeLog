@@ -1,3 +1,29 @@
+Sat Apr 10 17:54:54 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_decl.cpp:
+        * TAO_IDL/be/be_visitor_sequence.cpp:
+        * TAO_IDL/be/be_visitor_field/field_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_typedef/typedef.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_ci.cpp:
+        * TAO_IDL/be_include/be_visitor_sequence.h:
+        
+          - Added check for sequence locality (sequence element type
+            is or contains a local interface) before generating CDR
+            stream operators. Thanks to Johny Willemsen
+            <jwillemsen@remedy.nl> for reporting the bug.
+            
+          - Removed calls and inclusions of class be_visitor_sequence_ci,
+            since its only method, visit_sequence() does nothing.
+
+        * TAO_IDL/be_include/be_visitor_sequence/sequence_ci.h:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ci.cpp:
+        
+          Removed files containing class be_visitor_sequence_ci from
+          the repository.
+
 Sat Apr 10 14:21:44 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_structure/cdr_op_cs.cpp:
