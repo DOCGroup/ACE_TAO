@@ -101,7 +101,38 @@ TAO_LB_CPU_Monitor::loads (ACE_ENV_SINGLE_ARG_DECL)
   //       last 5 and 15 minutes can be used instead.
   double loadavg[1];
 
+# if defined (linux) \
+     && ((defined (__GLIBC__) && defined (__GLIBC_MINOR__) \
+          && __GLIBC__ == 2 && __GLIBC_MINOR__ < 2) \
+         || (!defined (_BSD_SOURCE) && !defined (_GNU_SOURCE)))
+
+  // GLibc < 2.2 does not implement getloadavg().  Furthermore,
+  // getloadavg() is only "visible" if _BSD_SOURCE or _GNU_SOURCE is
+  // defined.
+
+  // Obtain the load average directly from the `/proc' filesystem.
+  FILE * s = ::fopen ("/proc/loadavg", "r");
+
+  if (s == 0)
+    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
+                        CORBA::SystemException::_tao_minor_code (
+                          TAO_DEFAULT_MINOR_CODE,
+                          errno)),
+                      0);
+
+  ACE_OS::fscanf (s, "%f", &loadavg[0]);
+
+  (void) fclose (s);
+
+  const int samples = 1;
+
+# else
+
   const int samples = ::getloadavg (loadavg, 1);
+
+# endif  /* linux
+            && ((__GLIBC__ == 2 && __GLIBC_MINOR__ < 2)
+                || (!_BSD_SOURCE && !_GNU_SOURCE)) */
 
   if (samples == 1)
     {
