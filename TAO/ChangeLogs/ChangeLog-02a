@@ -1,3 +1,8 @@
+Mon Mar 26 07:56:56 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/examples/RtEC/Schedule/Service.cpp: Removed redundant
+	  guards for g++ 2.7. This should fix problems in LYNX_I386.
+
 Mon Mar 26 06:38:34 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/IIOP_Connection_Handler.cpp: 
