@@ -4,7 +4,11 @@ PLANNED MAJOR CHANGES TARGETED FOR TAO-1.4.3
 - (Johnny/Ossama) Bug 1420-Protocols in Transport Cache not amenable for
   strict policy enforcement
 
+  . Not started yet
+
 - (Johnny/Ossama) Location Forwarding fixes
+
+  . Not started yet
 
 - (Ossama) Typecode overhaul
 
@@ -20,7 +24,7 @@ PLANNED MAJOR CHANGES TARGETED FOR TAO-1.4.3
 
 - (Johnny/Ossama) POA refactoring/modularization
 
-  . ONGOING - ETA unknown
+  . ONGOING - ETA 10/10
 
 - (JTC/Ossama) autoconf support for TAO
 

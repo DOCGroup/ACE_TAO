@@ -1,3 +1,19 @@
+Fri Sep 17 09:58:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Collocated_Object_Proxy_Broker.cpp:
+        * tao/PortableServer/Default_Acceptor_Filter.cpp:
+        * tao/PortableServer/Default_Servant_Dispatcher.cpp:
+        * tao/PortableServer/Key_Adapters.cpp:
+        * tao/PortableServer/ORB_Manager.cpp:
+        * tao/PortableServer/POA_Cached_Policies.cpp:
+        * tao/PortableServer/POA_Guard.cpp:
+        * tao/PortableServer/POA_Policies.cpp:
+        * tao/PortableServer/POA_Policy_Set.cpp:
+        * tao/PortableServer/POAManager.cpp:
+        * tao/PortableServer/Servant_Dispatcher.cpp:
+        * tao/PortableServer/ServerRequestInfo.cpp:
+          Added or corrected ACE_RSCID's
+
 Fri Sep 17 09:38:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Active_Object_Map.h:
