@@ -299,20 +299,13 @@ TAO_UIOP_Profile::parse_string (const char *string,
 
   if (this->rendezvous_point_)
     {
-      // @@ You are setting this->rendezvous_point_ using CORBA::string_alloc() a
-      // couple of lines below, you should then use CORBA::string_free()
-      // to release it!  In general use a single form of memory
-      // allocation for a field/variable to avoid new/free() and
-      // malloc/delete() mismatches.
-      // Ohh, and if you are going to use CORBA::string_alloc() &
-      // friends you may consider using CORBA::String_var to manage
-      // the memory automatically (though there may be forces that
-      // suggest otherwise).
       delete [] this->rendezvous_point_;
       this->rendezvous_point_ = 0;
     }
 
-  this->rendezvous_point_ = CORBA::string_alloc (1 + cp - start);
+  ACE_NEW_RETURN (this->rendezvous_point_,
+                  char[1 + cp - start],
+                  -1);
 
   ACE_OS::strncpy (this->rendezvous_point_, start, cp - start);
   this->rendezvous_point_[cp - start] = '\0';
@@ -405,7 +398,7 @@ TAO_UIOP_Profile::hash (CORBA::ULong max,
 }
 
 char *
-TAO_UIOP_Profile::addr_to_string(void)
+TAO_UIOP_Profile::addr_to_string (void)
 {
   static char s[MAXPATHLEN + 1];
   ACE_OS::sprintf (s, "%s",
