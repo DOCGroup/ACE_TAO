@@ -31,6 +31,7 @@
 # define ACE_HAS_HI_RES_TIMER
 # define ACE_HAS_SIG_C_FUNC /* Sun CC 5.0 needs this, 4.2 doesn't mind. */
 # define ACE_HAS_TEMPLATE_SPECIALIZATION
+# define ACE_HAS_XPG4_MULTIBYTE_CHAR
 # define ACE_LACKS_LINEBUFFERED_STREAMBUF
 # define ACE_LACKS_SIGNED_CHAR
 
@@ -63,6 +64,7 @@
 # define ACE_HAS_STRING_CLASS
   // Denotes that GNU has cstring.h as standard, to redefine memchr().
 # define ACE_HAS_GNU_CSTRING_H
+# define ACE_HAS_XPG4_MULTIBYTE_CHAR
 # define ACE_MALLOC_ALIGN 8
 
 # if !defined (ACE_MT_SAFE) || ACE_MT_SAFE != 0
@@ -81,10 +83,6 @@
 # define ACE_LACKS_LONGLONG_T /* It really doesn't have it.  Boo. */
 # define ACE_LACKS_SIGNED_CHAR
 
-  // To avoid warning about inconsistent declaration between Sun's
-  // stdlib.h and GreenHills' ctype.h.
-  extern "C" unsigned char __ctype[];
-
 # if !defined (ACE_MT_SAFE) || ACE_MT_SAFE != 0
     // ACE_MT_SAFE is #defined below, for all compilers.
 #   if !defined (_REENTRANT)
@@ -94,6 +92,10 @@
 #     define _REENTRANT
 #   endif /* _REENTRANT */
 # endif /* !ACE_MT_SAFE */
+
+  // To avoid warning about inconsistent declaration between Sun's
+  // stdlib.h and GreenHills' ctype.h.
+# include <stdlib.h>
 
 #else  /* ! __SUNPRO_CC && ! __GNUG__  && ! ghs */
 # error unsupported compiler in ace/config-sunos5.5.h
@@ -214,9 +216,6 @@
 
 // Compiler/platform supports sys_siglist array.
 #define ACE_HAS_SYS_SIGLIST
-
-// Platform supports XPG4 wide characters
-#define ACE_HAS_XPG4_MULTIBYTE_CHAR
 
 #if defined (_REENTRANT)
   // Compile using multi-thread libraries.
