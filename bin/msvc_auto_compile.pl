@@ -227,16 +227,11 @@ sub Build_All ()
     $count = 0;
     foreach $c (@configurations) {
         print STDERR "Configuration ".$count++." of ".$#configurations."\n" if ($print_status == 1);
+        Build_Config ($c)
         if (($Build_DLL && $Build_Debug && $c =~ /Win32 Debug/)
            || ($Build_DLL && $Build_Release && $c =~ /Win32 Release/)
            || ($Build_LIB && $Build_Debug && $c =~ /Win32 Static Debug/)
-           || ($Build_LIB && $Build_Release && $c =~ /Win32 Static Release/))
-        {
-            my $Status = 0;
-            $Status = Build_Config ($c)
-                if (!(($c =~ /Library/) || ($c =~ /DLL/) || ($c =~ /LIB/)));
-            return if ($Status != 0 && !$Ignore_errors);
-        }
+           || ($Build_LIB && $Build_Release && $c =~ /Win32 Static Release/));
     }
 }
 
