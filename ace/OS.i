@@ -874,7 +874,11 @@ ACE_OS::tempnam (const char *dir, const char *pfx)
   ACE_NOTSUP_RETURN (0);
 #else
 #if defined (WIN32)
+#if defined (__BORLANDC__)
+  ACE_OSCALL_RETURN (::_tempnam ((char *) dir, (char *) pfx), char *, 0);
+#else
   ACE_OSCALL_RETURN (::_tempnam (dir, pfx), char *, 0);
+#endif /* __BORLANDC__ */
 #else
   ACE_OSCALL_RETURN (::tempnam (dir, pfx), char *, 0);
 #endif /* WIN32 */
