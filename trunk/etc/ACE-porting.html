@@ -24,6 +24,7 @@ HREF="http://www.cs.wustl.edu/~schmidt/ACE-overview.html">components
 and layers</A> in ACE to a new OS platform.  Once ACE is ported, it is
 straightforward to port TAO, as well.<P>
 
+<hr align=left width="50%"><P>
 <H4>Create a <CODE>config.h</CODE> Header File for the Target OS Platform</H4>
 
 A <CODE>config-*.h</CODE> header file exists in <A
@@ -40,17 +41,44 @@ for platforms with similar characteristics as examples.  Ultimately,
 we plan to <A HREF="http://squall.tn.cornell.edu/aceconf">auto
 configure</A> these files. <P>
 
+<hr align=left width="50%"><P>
 <H4>Port the <CODE>ACE_OS</CODE> Class</H4>
 
 The <CODE>ACE_OS</CODE> class encapsulates most of variation between
-the different OS implementations, e.g., UNIX, Win32, and various
-real-time operating systems.  It is the core class of the ACE OS
-abstraction layer.  Most work required to port ACE to a new OS
+the different OS implementations, <EM>e.g.</EM>, UNIX, Win32, and
+various real-time operating systems.  It is the core class of the ACE
+OS abstraction layer.  Most work required to port ACE to a new OS
 platform resides in this class.  There are <EM>many</EM> examples of
 how ACE has been ported to other operating systems in the
 <CODE>ACE_OS</CODE> class in the
 <CODE>$ACE_ROOT/ace/OS.{h,i,cpp}</CODE> files. <P>
 
+Optional features in pthreads are covered by <CODE>ACE_HAS_*</CODE>
+and/or <CODE>ACE_LACKS_*</CODE> macros, which are described in the <A
+HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ace/README">$ACE_ROOT/ace/README</A>
+file.  Particular platform features, such as DCE pthreads calls that
+end in <CODE>_np</CODE>, should be bracketed by platform defines
+rather than by inventing more <CODE>ACE_HAS_*</CODE> or
+<CODE>ACE_LACKS_*</CODE> definitions. <P>
+
+An important part of porting ACE to a new platform is to map the
+threading API correctly.  Currently, ACE has support for the following
+thread APIs: <P>
+
+<UL>
+<LI> <B>UNIX International (UI) Threads</B>
+    (<CODE>ACE_HAS_STHREADS</CODE>) - Solaris 2, UnixWare. <P>
+
+<LI> <B>POSIX Pthreads</B> (<CODE>ACE_HAS_PTHREADS</CODE>) - drafts 4
+    [DCE], 6 [FSU], 7 [AIX], as well as the final standard (also
+    called draft 10) [MIT, Linux, and Solaris]. <P>
+
+<LI> <B>Win32 Threads</B> (<CODE>ACE_HAS_WTHREADS</CODE>) - Windows
+    NT, Windows '95/98, and Windows CE <P>
+<LI> <B>VxWorks Tasks</B> (<CODE>VXWORKS</CODE>) - VxWorks <P>
+</UL>
+
+<hr align=left width="50%"><P>
 <H4>Port the C++ Wrapper Components</H4>
 
 After porting the <CODE>ACE_OS</CODE> class, the next step is to port
@@ -66,15 +94,17 @@ HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/tests/">$ACE_ROOT/tests/</A>
 directory.  These tests can be used to validate the correctness of the
 various ACE C++ wrappers as they are ported. <P>
 
+<hr align=left width="50%"><P>
 <H4>Port the Higher-level Framework Components of ACE</H4>
 
-Having ported (and tested) all the components of the ACE OS
-adapptation layer and C++ wrappers, you can proceed to port the higher
-level components of ACE, such as the Reactor, Service Configurator,
+Having ported (and tested) all the components of the ACE OS adaptation
+layer and C++ wrappers, you can proceed to port the higher level
+components of ACE, such as the Reactor, Service Configurator,
 Connector, Acceptor, and Streams frameworks.  At this point, it should
 be relatively easy to port the rest of ACE because most of the
 platform-dependent code is localized in the lower layers of ACE. <P>
 
+<hr align=left width="50%"><P>
 <H4>Port TAO</H4>
 
 After porting and successfully testing all the ACE framework
@@ -128,8 +158,8 @@ take advantage of if a compiler supports them:
 <P><HR><P>
 
 Back to the <A
-HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ACE-INSTALL.html">ACE
-installation</A> page.
+HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ACE-documentation.html">ACE
+documentation</A> page.
 
 <!--#include virtual="/~schmidt/cgi-sig.html" -->
 </BODY>
