@@ -1,3 +1,17 @@
+Mon Nov 22 07:44:23 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* Kokyu/Kokyu_dsrt.{cpp,h}: 
+
+          Changed the return type of
+	  DSRT_Dispatcher_Factory::create_dispatcher method from
+	  auto_ptr<DSRT_Dispatcher> to DSRT_Dispatcher*. This was causing
+	  build errors with VxWorks5.5.1_PPC85XX_GCC3.3. Thanks to Johnny
+	  Willemsen (jwillemsen@remedy.nl) for pointing this out.
+
+	* Kokyu/Kokyu.h: 
+
+	  Changed some documentation.
+	
 Sun Nov 21 10:34:42 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ace/Message_Queue_T.h: Changed the access control specifier
