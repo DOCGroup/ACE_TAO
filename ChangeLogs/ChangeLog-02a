@@ -24,6 +24,9 @@ Tue Apr 23 07:35:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
         * ace/config-doxygen.h:
           Added define ACE_YY_USES_PROTOS to parse ace/Svc_Conf_l.cpp correctly
 
+        * tests/MT_Reactor_Upcall_Test.cpp:
+          Fixed unicode and single threaded build errors/warnings
+
 Mon Apr 22 20:40:41 2002  Steve Huston  <shuston@riverace.com>
 
         * examples/C++NPv2/Logging_Event_Handler.{cpp h}:
