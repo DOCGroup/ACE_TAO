@@ -21,6 +21,14 @@ Wed Jul  7 19:24:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  Added a new Resource_Factory that can create XtReactors, but
 	  only after the context has been properly set.
 
+	* tests/FL_Cube/svc.conf:
+	  Fixed the reactor type for this example
+
+	* tests/Xt_Stopwatch/client.cpp:
+	* tests/Xt_Stopwatch/server.cpp:
+	* tests/Xt_Stopwatch/svc.conf:
+	  Use the new TAO_XT_Resource_Factory in this example.
+
 Wed Jul 07 18:26:58 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao: Fixed determination of collocation.  It is not necessary to
