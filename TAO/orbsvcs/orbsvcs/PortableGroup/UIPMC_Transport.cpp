@@ -40,7 +40,7 @@ TAO_UIPMC_Transport::TAO_UIPMC_Transport (TAO_UIPMC_Connection_Handler *handler,
            TAO_GIOP_Message_Base (orb_core,
                                   ACE_MAX_DGRAM_SIZE));
 
-  // Replace the default wait strategy with our own 
+  // Replace the default wait strategy with our own
   // since we don't support waiting on anything.
   delete this->ws_;
   ACE_NEW (this->ws_,
@@ -508,10 +508,10 @@ TAO_UIPMC_Transport::send_message (TAO_OutputCDR &stream,
   // versions seem to need it though.  Leaving it costs little.
 
   // This guarantees to send all data (bytes) or return an error.
-  ssize_t n = this->send_message_i (stub,
-                                    is_synchronous,
-                                    stream.begin (),
-                                    max_wait_time);
+  ssize_t n = this->send_message_shared (stub,
+                                         is_synchronous,
+                                         stream.begin (),
+                                         max_wait_time);
 
   if (n == -1)
     {
@@ -538,8 +538,10 @@ TAO_UIPMC_Transport::messaging_init (CORBA::Octet major,
   return 1;
 }
 
-void
-TAO_UIPMC_Transport::transition_handler_state_i (void)
+ACE_Event_Handler *
+TAO_UIPMC_Transport::invalidate_event_handler_i (void)
 {
+  ACE_Event_Handler * eh = this->connection_handler_;
   this->connection_handler_ = 0;
+  return eh;
 }

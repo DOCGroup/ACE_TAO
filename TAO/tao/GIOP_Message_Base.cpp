@@ -1447,15 +1447,16 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
 
       // Print.
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P | %t): %s GIOP v%c.%c msg, ")
-                  ACE_TEXT ("%d data bytes, %s endian, %s = %u\n"),
-          ACE_TEXT_CHAR_TO_TCHAR(label),
+                  "TAO (%P|%t) - GIOP_Message_Base::dump_msg, "
+                  "%s GIOP v%c.%c msg, %d data bytes, %s endian, "
+                  "Type %s[%u]\n",
+                  label,
                   digits[ptr[TAO_GIOP_VERSION_MAJOR_OFFSET]],
                   digits[ptr[TAO_GIOP_VERSION_MINOR_OFFSET]],
                   len - TAO_GIOP_MESSAGE_HEADER_LEN ,
-          (byte_order == TAO_ENCAP_BYTE_ORDER) ? ACE_LIB_TEXT("my") : ACE_LIB_TEXT("other"),
-          ACE_TEXT_CHAR_TO_TCHAR(message_name),
-          *id));
+                  (byte_order == TAO_ENCAP_BYTE_ORDER) ? ACE_LIB_TEXT("my") : ACE_LIB_TEXT("other"),
+                  ACE_TEXT_CHAR_TO_TCHAR(message_name),
+                  *id));
 
       if (TAO_debug_level >= 10)
         ACE_HEX_DUMP ((LM_DEBUG,

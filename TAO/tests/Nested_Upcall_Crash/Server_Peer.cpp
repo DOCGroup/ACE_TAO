@@ -7,6 +7,7 @@
  *
  */
 #include "Server_Peer.h"
+#include "tao/debug.h"
 
 ACE_RCSID(Nested_Upcall_Crash, Server_Peer, "$Id$")
 
@@ -27,6 +28,13 @@ Server_Peer::callme(Test::Peer_ptr callback,
   ACE_THROW_SPEC((CORBA::SystemException))
 {
   int r = ACE_OS::rand_r(this->seed_) % 50;
+
+  if(TAO_debug_level)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P|%t) Server_Peer::callme[%d], r = %d\n",
+                  max_depth, r));
+    }
 
   if(r == 0)
   {

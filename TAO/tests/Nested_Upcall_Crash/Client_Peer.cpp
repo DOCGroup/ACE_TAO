@@ -32,7 +32,7 @@ Client_Peer::callme(Test::Peer_ptr callback,
                     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
-  ACE_DEBUG ((LM_DEBUG, "Received call, depth = %d\n", max_depth));
+  // ACE_DEBUG ((LM_DEBUG, "Received call, depth = %d\n", max_depth));
   if (max_depth > 0)
   {
     Test::Peer_var me =
@@ -72,6 +72,8 @@ int
 Crasher::handle_timeout (ACE_Time_Value const & ,
                        void const *)
 {
-  ACE_DEBUG ((LM_DEBUG, "Performing intentional crash %a\n"));
+  // ACE_DEBUG ((LM_DEBUG, "(%P|%t) Performing intentional crash
+  // %a\n"));
+  ACE_OS::abort();
   return 0;
 }
