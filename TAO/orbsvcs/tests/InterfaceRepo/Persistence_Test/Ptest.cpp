@@ -252,6 +252,11 @@ Ptest::query (CORBA::Environment &ACE_TRY_ENV)
         ACE_ASSERT (!ACE_OS::strcmp (out_members[i].name, members[i]));
     }
 
+#if defined (ACE_NDEBUG)
+  // ACE_ASSERT macro expands to nothing, so...
+  ACE_UNUSED_ARG (members);
+#endif /* ACE_NDEBUG */
+
   svar->destroy (ACE_TRY_ENV);
   ACE_CHECK;
 }
