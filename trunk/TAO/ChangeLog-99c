@@ -1,3 +1,10 @@
+Tue Apr 27 10:25:47 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp (connect):
+	* orbsvcs/orbsvcs/Naming/Persistent_Context_Index_T.cpp (init):
+	  Added ACE_NOTREACHED macros.  KAI compiler is pretty good at
+	  figuring out unreachable statements.
+
 Mon Apr 26 16:49:24 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO_IDL/fe/lex.yy.cpp: Redefined TAO_YY_BREAK as ACE_NOTREACHED
