@@ -1,3 +1,9 @@
+Fri Jan 16 12:41:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/Fault_Detector_Loader.cpp:
+	  Corrected argument of ACE_AUTO_PTR_RESET call. Thanks to
+          Mickael P. Golovin <migel@garant.ru> for reporting this.
+
 Fri Jan 16 12:33:46 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.cpp:
