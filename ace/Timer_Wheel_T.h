@@ -178,7 +178,7 @@ private:
   u_int calculate_spoke(const ACE_Time_Value& expire) const;
   long generate_timer_id(u_int spoke);
   void schedule_i (ACE_Timer_Node_T<TYPE>* n, u_int spoke, const ACE_Time_Value& expire);
-  void cancel_i (ACE_Timer_Node_T<TYPE>* n, int skip_close);
+  void cancel_i (ACE_Timer_Node_T<TYPE>* n);
   void unlink (ACE_Timer_Node_T<TYPE>* n);
   void recalc_earliest(const ACE_Time_Value& last);
 

@@ -188,7 +188,7 @@ private:
 
   ACE_Timer_Node_T<TYPE>* find_node(long timer_id) const;
 
-  void cancel_i (ACE_Timer_Node_T<TYPE>* n, int skip_close);
+  void cancel_i (ACE_Timer_Node_T<TYPE>* n);
 
   void unlink (ACE_Timer_Node_T<TYPE>* n);
 
