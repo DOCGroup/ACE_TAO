@@ -1,3 +1,10 @@
+Tue Jun 22 17:14:48 1999  John Heitmann  <jwh1@cs.wustl.edu>
+
+	* orbsvcs/tests/Logger/run_test.pl:
+	* orbsvcs/tests/Property/run_test.pl:
+	* orbsvcs/tests/Time/run_test.pl: Updated the tests to
+	  reflect new guidelines concerning timeouts and blocking.
+
 Tue Jun 22 17:07:01 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Any.h:
