@@ -40,7 +40,7 @@ void
 Visual_i::system (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_DEBUG ((LM_DEBUG, "Visual::user, throwning INV_OBJREF\n"));
+  ACE_DEBUG ((LM_DEBUG, "Visual::user, throwing INV_OBJREF\n"));
   ACE_THROW (CORBA::INV_OBJREF ());
 }
 
