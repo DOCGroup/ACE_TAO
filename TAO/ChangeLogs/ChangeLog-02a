@@ -1,3 +1,35 @@
+Mon Mar  5 01:26:42 2001  Fuzz Master D <brunsch@uci.edu>
+
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/run_test.pl:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/run_test2.pl:
+        * orbsvcs/examples/CosEC/Simple/run_test.pl:
+        * orbsvcs/examples/RtEC/Simple/run_test.pl:
+
+          The last of the PerlACE::Run_Test changes.  Everything else
+          that still uses ACEutils does so because they need more help
+          than I can provide right now (mostly using redirection in 
+          the scripts, which does not work on Windows in either the
+          new or old Process module).
+
+          But anyway, I'll still use it to signifythe close to my career 
+          as the the group Perl junkie.  Somewhat fitting that what 
+          started off with what I believe was a run_test script for 
+          IDL_Cubit and its associated Process module ended with 
+          changing most every run_test for a new PerlACE::Process module.
+
+          Let's have a moment of silence for remembrance.
+
+
+
+
+
+
+
+          I think that's long enough.  Seriously, the main reason I 
+          wanted a moment of silence is so I can clearly hear the 
+          anguished cries from all those who find out that they get to 
+          maintain my perl scripts once I leave.  ;-)
+
 Mon Mar 05 09:10:27 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * examples/Makefile.bor:

@@ -5,52 +5,52 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
-unshift @INC, '../../../../../bin';
-require Process;
-require ACEutils;
+use lib '../../../../../bin';
+use PerlACE::Run_Test;
 
-$iorfile = "ec.ior";
+$status = 0;
+
+$iorfile = PerlACE::LocalFile ("ec.ior");
 
 unlink $iorfile;
 
-$T = Process::Create ($EXEPREFIX."Service".$EXE_EXT,
-		      "-o $iorfile");
+$T = new PerlACE::Process ("Service",  "-o $iorfile");
+$C = new PerlACE::Process ("Consumer", "file://$iorfile");
+$S = new PerlACE::Process ("Supplier", "file://$iorfile");
 
-if (ACE::waitforfile_timed ($iorfile, 15) == -1) {
-  print STDERR "ERROR: cannot find file <$iorfile>\n";
-  $NS->Kill (); $NS->TimedWait (1);
-  exit 1;
+$T->Spawn ();
+
+if (PerlACE::waitforfile_timed ($iorfile, 15) == -1) {
+    print STDERR "ERROR: cannot find file <$iorfile>\n";
+    $T->Kill (); 
+    exit 1;
 }
 
-$C = Process::Create ($EXEPREFIX."Consumer".$EXE_EXT,
-		      " file://$iorfile");
+$C->Spawn ();
 
 sleep 5;
 
-$S = Process::Create ($EXEPREFIX."Supplier".$EXE_EXT,
-		      " file://$iorfile");
+$supplier = $S->SpawnWaitKill (120);
 
-if ($S->TimedWait (120) == -1) {
-  print STDERR "ERROR: supplier timedout\n";
-  $S->Kill (); $S->TimedWait (1);
-  $C->Kill (); $C->TimedWait (1);
-  $T->Kill (); $T->TimedWait (1);
-  exit 1;
+if ($supplier != 0) {
+    print STDERR "ERROR: supplier returned $supplier\n";
+    $status = 1;
 }
 
-if ($C->TimedWait (15) == -1) {
-  print STDERR "ERROR: consumer timedout\n";
-  $C->Kill (); $C->TimedWait (1);
-  $T->Kill (); $T->TimedWait (1);
-  exit 1;
+$consumer = $C->WaitKill (15);
+
+if ($consumer != 0) {
+    print STDERR "ERROR: consumer returned $consumer\n";
+    $status = 1;
 }
 
-$T->Terminate (); if ($T->TimedWait (5) == -1) {
-  print STDERR "ERROR: cannot terminate service\n";
-  $T->Kill (); $T->TimedWait (1);
-  exit 1;
+$service = $T->TerminateWaitKill (5);
+
+if ($service != 0) {
+    print STDERR "ERROR: service returned $service\n";
+    $status = 1;
 }
 
 unlink $iorfile;
 
-exit 0;
+exit $status;
