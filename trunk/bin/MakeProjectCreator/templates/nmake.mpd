@@ -189,6 +189,25 @@ SOURCE=.\<%source_file%>
 <%foreach(template_files)%>
 SOURCE=.\<%template_file%>
 <%endfor%>
+<%foreach(idl_files)%>
+SOURCE=.\<%idl_file%>
+
+<%foreach(configurations)%>
+!<%fornotfirst("ELSE")%>IF  "$(CFG)" == "<%platform%> <%configuration%>"
+
+InputPath=.\<%idl_file%>
+InputName=<%noextension(idl_file)%>
+
+".\$(InputName)C.h"	".\$(InputName)C.i"	".\$(InputName)C.cpp"	".\$(InputName)S.h"	".\$(InputName)S.i"	".\$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+	<<tempfile.bat 
+	@echo off 
+	<%tao_idl_exe("$(ACE_ROOT)\\bin\\tao_idl")%> <%idlflags("-Sc")%> $(InputPath)
+<<
+
+<%endfor%>
+!ENDIF
+
+<%endfor%>
 <%foreach(resource_files)%>
 SOURCE=.\<%resource_file%>
 
