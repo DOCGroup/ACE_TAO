@@ -564,8 +564,8 @@ public:
     // = Exception type.
 
     NO_EXCEPTION,
-    SYSTEM_EXCEPTION,
-    USER_EXCEPTION
+    USER_EXCEPTION,
+    SYSTEM_EXCEPTION
   };
 
   // all the system exception classes
