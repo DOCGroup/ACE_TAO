@@ -1168,6 +1168,9 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handle_events
 
   // Update the countdown to reflect time waiting for the mutex.
   countdown.update ();
+#else
+  if (this->deactivated_)
+    return -1;
 #endif /* ACE_MT_SAFE */
 
   return this->handle_events_i (max_wait_time);
