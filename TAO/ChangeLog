@@ -1,3 +1,7 @@
+Thu May 29 18:47:59 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/ObjectKey_Table.cpp: Another cosmetic change. 
+
 Thu May 29 16:46:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* rules.tao.GNU: Reverted the change "Thu May 29 14:30:57 UTC 2003
