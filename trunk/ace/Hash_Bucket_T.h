@@ -59,7 +59,7 @@ class ACE_Hash_Bucket_DLCStack
 // Create a doubly linked circular stack to be managed by the
 // Hash_Bucket_Manager
 {
-  friend ACE_Hash_Bucket_DLCStack_Iterator<EXT_ID, INT_ID>;
+  friend class ACE_Hash_Bucket_DLCStack_Iterator<EXT_ID, INT_ID>;
 
 public:
 
@@ -170,7 +170,7 @@ public:
   // made to bind an existing entry, and returns -1 if failures occur.
 
   int rebind (const EXT_ID &ext_id, const INT_ID &int_id,
-	      EXT_ID &old_ext_id, INT_ID &old_int_id);
+              EXT_ID &old_ext_id, INT_ID &old_int_id);
   // Associate <ext_id> with <int_id>.  If <ext_id> is not in the map
   // then behaves just like <bind>.  Otherwise, store the old values
   // of <ext_id> and <int_id> into the "out" parameters and rebind the
