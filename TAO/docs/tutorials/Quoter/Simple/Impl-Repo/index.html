@@ -92,6 +92,14 @@
 
           Successfully registered server <childPOA>
     </PRE>
+    <p> On Windows platforms, use this command instead to register the server
+      in the implementation repository
+    </p>
+    <PRE>
+    $ACE_ROOT/bin/tao_imr -ORBInitRef ImplRepoService=file://implrepo.ior 
+    add childPOA -c "./server -ORBUseIMR 1 -ORBobjrefstyle URL 
+    -ORBInitRef ImplRepoService=file://implrepo.ior"
+    </PRE>
     <P> We specify the <CODE>-ORBInitRef</CODE> option to use the IOR in 
       the <CODE>implrepo.ior</CODE> file and the <CODE>-ORBUseIMR</CODE> 
       option to tell the server to use the IMR for notification of its
