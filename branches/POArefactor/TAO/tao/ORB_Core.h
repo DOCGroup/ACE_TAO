@@ -78,7 +78,6 @@ class TAO_Thread_Lane_Resources;
 class TAO_Stub_Factory;
 class TAO_Endpoint_Selector_Factory;
 class TAO_Service_Context;
-class TAO_POA_PortableGroup_Hooks;
 class TAO_Request_Dispatcher;
 class TAO_Policy_Set;
 class TAO_Policy_Manager;
@@ -783,10 +782,6 @@ public:
 
   CORBA::Object_ptr resolve_rt_current (ACE_ENV_SINGLE_ARG_DECL);
 
-  /// Set/Get the current PortableGroup POA hooks.
-  TAO_POA_PortableGroup_Hooks *portable_group_poa_hooks (void) const;
-  void portable_group_poa_hooks(TAO_POA_PortableGroup_Hooks *poa_hooks);
-
   /// List all the service known by the ORB
   CORBA::ORB_ObjectIdList *list_initial_references (
       ACE_ENV_SINGLE_ARG_DECL_NOT_USED
@@ -1125,10 +1120,6 @@ protected:
   /// object reference returned by calls to
   ///   CORBA::ORB::resolve_initial_references ("RootPOA").
   CORBA::Object_var root_poa_;
-
-  // Hold a pointer for the POA if it needs to use any of the Portable
-  // group hooks.
-  TAO_POA_PortableGroup_Hooks *portable_group_poa_hooks_;
 
   /// Parameters used by the ORB.
   TAO_ORB_Parameters orb_params_;

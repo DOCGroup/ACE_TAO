@@ -132,7 +132,6 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     ior_table_ (CORBA::Object::_nil ()),
     orb_ (CORBA::ORB::_nil ()),
     root_poa_ (),
-    portable_group_poa_hooks_ (0),
     orb_params_ (),
     init_ref_map_ (TAO_DEFAULT_OBJECT_REF_TABLE_SIZE),
     object_ref_table_ (),
