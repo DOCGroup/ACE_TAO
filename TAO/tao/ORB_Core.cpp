@@ -530,7 +530,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
                 (ACE_TEXT("-ORBPreferredInterfaces"))))
         {
           if (this->orb_params ()->preferred_interfaces (
-                current_arg) == false)
+                ACE_TEXT_ALWAYS_CHAR (current_arg)) == false)
             ACE_THROW_RETURN (CORBA::INTERNAL (
                                   CORBA::SystemException::_tao_minor_code (
                                     TAO_ORB_CORE_INIT_LOCATION_CODE,
@@ -758,7 +758,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
           //
           // All endpoint strings should be of the above form(s).
 
-          this->set_endpoint_helper (ACE_TEXT_ALWAYS_CHAR (TAO_DEFAULT_LANE),
+          this->set_endpoint_helper (TAO_DEFAULT_LANE,
                                      ACE_TEXT_ALWAYS_CHAR (current_arg)
                                      ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
@@ -773,7 +773,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
           // now, I (Priyanka) am leaving so that both options can be
           // used.
 
-          this->set_endpoint_helper (ACE_TEXT_ALWAYS_CHAR (TAO_DEFAULT_LANE),
+          this->set_endpoint_helper (TAO_DEFAULT_LANE,
                                      ACE_TEXT_ALWAYS_CHAR (current_arg)
                                      ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);

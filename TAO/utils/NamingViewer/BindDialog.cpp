@@ -48,54 +48,54 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CBindDialog message handlers
 
-void CBindDialog::OnViewior() 
+void CBindDialog::OnViewior()
 {
 	// TODO: Add your control notification handler code here
   try
   {
     UpdateData();
-    m_Object = m_pORB->string_to_object(m_IOR);
+    m_Object = m_pORB->string_to_object(ACE_TEXT_ALWAYS_CHAR (m_IOR));
   }
   catch(CORBA::Exception& ex)
   {
-    MessageBox(ex._rep_id(), "CORBA::Exception");
+    MessageBox(ACE_TEXT_CHAR_TO_TCHAR (ex._rep_id()), ACE_TEXT ("CORBA::Exception"));
     return;
   }
   ViewIORDialog Dialog(m_pORB, m_Object);
   Dialog.DoModal();
 }
 
-BOOL CBindDialog::OnInitDialog() 
+BOOL CBindDialog::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 	
 	// TODO: Add extra initialization here
 	if(m_Context)
   {
-    SetWindowText("Bind Context");
+    SetWindowText(ACE_TEXT ("Bind Context"));
   }
   else
   {
-    SetWindowText("Bind Object");
+    SetWindowText(ACE_TEXT ("Bind Object"));
   }
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
-void CBindDialog::OnOK() 
+void CBindDialog::OnOK()
 {
 	// TODO: Add extra validation here
 	UpdateData();
   m_Name.length(1);
-  m_Name[0].id = CORBA::string_dup(m_ID);
-  m_Name[0].kind = CORBA::string_dup(m_Kind);
+  m_Name[0].id = CORBA::string_dup(ACE_TEXT_ALWAYS_CHAR (m_ID));
+  m_Name[0].kind = CORBA::string_dup(ACE_TEXT_ALWAYS_CHAR (m_Kind));
   try
   {
-    m_Object = m_pORB->string_to_object(m_IOR);
+    m_Object = m_pORB->string_to_object(ACE_TEXT_ALWAYS_CHAR (m_IOR));
   }
   catch(CORBA::Exception& ex)
   {
-    MessageBox(ex._rep_id(), "Invalid IOR");
+    MessageBox(ACE_TEXT_CHAR_TO_TCHAR (ex._rep_id()), ACE_TEXT ("Invalid IOR"));
     return;
   }
   CDialog::OnOK();

@@ -91,7 +91,7 @@ TAO_NS_FlatFileStream::close()
   ACE_OS::flock_destroy (&filelock_, 0);
 #endif
   ACE_OS::fclose (fl_);  // even though flock_destroy closes the handle
-			 // we still need to destroy the FILE*
+                         // we still need to destroy the FILE*
 
   fl_ = 0;
   return 0;
@@ -181,15 +181,15 @@ TAO_NS_FlatFileStream::operator <<(
   ACE_OS::fprintf(this->fl_, "%d\n", type);
 
   ACE_CString id = record.id();
-  ACE_OS::fprintf(this->fl_, ACE_TEXT_ALWAYS_CHAR(ACE_SIZE_T_FORMAT_SPECIFIER "\n%s\n"),
+  ACE_OS::fprintf(this->fl_, ACE_SIZE_T_FORMAT_SPECIFIER ACE_LIB_TEXT("\n%s\n"),
                   id.length(), id.c_str());
 
   ACE_CString kind = record.kind();
-  ACE_OS::fprintf(this->fl_, ACE_TEXT_ALWAYS_CHAR(ACE_SIZE_T_FORMAT_SPECIFIER "\n%s\n"),
+  ACE_OS::fprintf(this->fl_, ACE_SIZE_T_FORMAT_SPECIFIER ACE_LIB_TEXT ("\n%s\n"),
                   kind.length(), kind.c_str());
 
   ACE_CString ref = record.ref();
-  ACE_OS::fprintf(this->fl_, ACE_TEXT_ALWAYS_CHAR(ACE_SIZE_T_FORMAT_SPECIFIER "\n%s\n"),
+  ACE_OS::fprintf(this->fl_, ACE_SIZE_T_FORMAT_SPECIFIER ACE_LIB_TEXT ("\n%s\n"),
                   ref.length(), ref.c_str());
 
   ACE_OS::fflush(this->fl_);
@@ -211,7 +211,7 @@ TAO_NS_FlatFileStream::operator >>(
   size_t bufSize = 0;
 
   //id
-  fscanf(fl_, ACE_SIZE_T_FORMAT_SPECIFIER "\n", &bufSize);
+  fscanf(fl_, ACE_TEXT_ALWAYS_CHAR (ACE_SIZE_T_FORMAT_SPECIFIER ACE_LIB_TEXT ("\n")), &bufSize);
   char *id = new char[bufSize+1];
   //char *id;
   //ACE_NEW_RETURN (id, char[bufSize+1], 1);
@@ -221,7 +221,7 @@ TAO_NS_FlatFileStream::operator >>(
   delete [] id;
 
   //kind
-  fscanf(fl_, ACE_SIZE_T_FORMAT_SPECIFIER "\n", &bufSize);
+  fscanf(fl_, ACE_TEXT_ALWAYS_CHAR (ACE_SIZE_T_FORMAT_SPECIFIER ACE_LIB_TEXT ("\n")), &bufSize);
   char *kind = new char[bufSize+1];
   //char *kind;
   //ACE_NEW (kind, char[bufSize+1]);
@@ -232,7 +232,7 @@ TAO_NS_FlatFileStream::operator >>(
   delete [] kind;
 
    //ref
-  fscanf(fl_, ACE_SIZE_T_FORMAT_SPECIFIER "\n", &bufSize);
+  fscanf(fl_, ACE_TEXT_ALWAYS_CHAR (ACE_SIZE_T_FORMAT_SPECIFIER ACE_LIB_TEXT ("\n")), &bufSize);
   char *ref = new char[bufSize+1];
   //char *ref;
   //ACE_NEW(ref, char[bufSize+1]);
@@ -275,13 +275,13 @@ TAO_NS_FlatFileStream::operator >>(
 
 TAO_Storable_Base *TAO_NS_FlatFileFactory::create_stream(
                                                        const ACE_CString & file,
-                                                       const char * mode)
+                                                       const ACE_TCHAR * mode)
 {
   ACE_TRACE("TAO_NS_FlatFileFactory::create_stream");
   TAO_Storable_Base *stream = 0;
 
   ACE_NEW_RETURN (stream,
-                  TAO_NS_FlatFileStream(file, ACE_TEXT_ALWAYS_CHAR(mode)),
+                  TAO_NS_FlatFileStream(file, ACE_TEXT_ALWAYS_CHAR (mode)),
                   0);
   return stream;
 }

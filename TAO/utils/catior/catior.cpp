@@ -22,6 +22,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/streams.h"
 #include "ace/OS_NS_ctype.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/Argv_Type_Converter.h"
 #include "tao/corba.h"
 #include "tao/IIOP_Profile.h"
 #include "tao/Messaging_PolicyValueC.h"
@@ -460,14 +462,18 @@ catpoop (char* string
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "f:n:");
-
   ACE_DECLARE_NEW_CORBA_ENV;
-  CORBA::ORB_var orb_var =  CORBA::ORB_init (argc, argv, "TAO" ACE_ENV_ARG_PARAMETER);
+  ACE_Argv_Type_Converter argcon (argcw, argvw);
+  CORBA::ORB_var orb_var =  CORBA::ORB_init (argcon.get_argc (),
+                                             argcon.get_ASCII_argv (),
+                                             "TAO" ACE_ENV_ARG_PARAMETER);
   CORBA::Boolean b = 0;
   int opt;
+
+  ACE_Get_Opt get_opt (argcon.get_argc (), argcon.get_TCHAR_argv (),
+                       ACE_TEXT ("f:n:"));
 
   while ((opt = get_opt ()) != EOF)
     {
@@ -513,12 +519,12 @@ main (int argc, char *argv[])
                     have_some_input = 1;
                   }
 #else
-            FILE* ifstr = ACE_OS::fopen (get_opt.opt_arg (), "r");
+            FILE* ifstr = ACE_OS::fopen (get_opt.opt_arg (), ACE_TEXT ("r"));
 
             if (ifstr && !ferror (ifstr))
               {
                 if (ifstr)
-				  ACE_OS::fclose (ifstr);
+                  ACE_OS::fclose (ifstr);
                 return -1;
               }
 
@@ -596,7 +602,7 @@ main (int argc, char *argv[])
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
             ifstr.close ();
 #else
-			ACE_OS::fclose (ifstr);
+            ACE_OS::fclose (ifstr);
 #endif /* !defined (ACE_LACKS_IOSTREAM_TOTALLY) */
           }
         break;
@@ -611,7 +617,7 @@ main (int argc, char *argv[])
                              "Reads an IOR "
                              "and dumps the contents to stdout "
                              "\n",
-                             argv[0]),
+                             argvw[0]),
                             1);
         }
     }
