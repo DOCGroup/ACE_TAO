@@ -539,13 +539,13 @@ main (int argc, char *argv[])
                 return -1;
               }
 
-            int ch;
+            char ch;
             ACE_CString aString;
 
             while (!ifstr.eof ())
               {
                 ifstr.get (ch);
-                if (ch == '\n' || ch == EOF)
+                if (ch == '\n' || ifstr.eof ())
                   break;
                 aString += ch;
               }
