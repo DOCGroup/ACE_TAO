@@ -23,10 +23,11 @@
 class Hello 
 {
   // = TITLE
-  //   // @@ Kirthika, please fill in here.
+  //    The Hello class in the dynamically linkable library.
   //
   // = DESCRIPTION
-  //   // @@ Kirthika, please fill in here.
+  //    This class is used in this example to show how a library can be loaded
+  //    on demand and its methods called on getting the symbols from the library.
 public:
 
   Hello (void)
@@ -38,14 +39,14 @@ public:
   // @@ Kirthika, please follow the ACE programming 
   // guidelines when naming methods, i.e., say_hello (void) or just
   // hello (void).
-  void sayHello (void)
+  void say_hello (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Hello\t"));
     }
 
   // @@ Same here.
-  void sayNext (void)
+  void say_next (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "How are you?\n"));
@@ -55,14 +56,16 @@ public:
 // This function returns the Hello object pointer.
 
 extern "C"
-// @@ Kirthika, please following ACE programming guidelines to name
+// @@ *done*Kirthika, please following ACE programming guidelines to name
 // this function...
-Hello *getHello (void)
+Hello *get_hello (void)
 {
   Hello *hello;
-  // @@ Kirthika, please always use ACE_NEW_RETURN for dynamic
+  //*done* @@ Kirthika, please always use ACE_NEW_RETURN for dynamic
   // allocation.
-  hello = new Hello;
+
+  ACE_NEW_RETURN (hello, Hello (), -1);
+  // hello = new Hello;
   return hello;
 }
 
@@ -70,8 +73,10 @@ typedef Hello *(*TC)(void);
 
 int 
 main (void)
-{
-  // @@ Kirthika, please follow the conventions for creating tests,
+{ 
+  ACE_START_TEST ("DLL_Test");
+
+  // @@*done* Kirthika, please follow the conventions for creating tests,
   // i.e., use the ACE_START_TEST() and ACE_END_TEST() macros.
 
   // @@ Kirthika, I suspect that the use of ACE_DL_TYPE (0) may not be
@@ -80,20 +85,24 @@ main (void)
   // is?  Note that you'll need to figure out how to use various ACE
   // macros to get this portable...  First get an DLL object. Since
   // the dllname is empty, the symbols are loaded from a.out.
-  ACE_DLL ace_dll_obj (ACE_DL_TYPE (0));
+  ACE_DLL ace_dll_obj ("./DLL_Test.o");// ***check where it is
 
   // @@ Kirthika, I'm not sure, but you may need to prefix a "_"
   // before the "getHello" name, i.e., "_getHello" to make this work
   // on some platforms.  Please use the ACE macros for portable here.
-  TC f = (TC) ace_dll_obj.symbol ("getHello");
-  Hello *my_hello = f ();
+  TC f = (TC) ace_dll_obj.symbol ("get_hello");
+
+  auto_ptr <Hello> my_hello = f ();
+  // Hello *my_hello = f ();
 
   // Make the method calls, now that the object pointer is available.
-  my_hello->sayHello ();
-  my_hello->sayNext ();
+  my_hello->say_hello ();
+  my_hello->say_next ();
 
-  // Please use an auto_ptr<> to make sure that my_hello is properly
+  //*done* Please use an auto_ptr<> to make sure that my_hello is properly
   // deleted when the scope of main() is exited.
-  delete my_hello;
+  // delete my_hello;
+
+  ACE_END_TEST;
   return 0;
 }
