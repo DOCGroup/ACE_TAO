@@ -12,7 +12,9 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID(ace, Timer_Hash_T, "$Id$")
+ACE_RCSID(ace,
+          Timer_Hash_T,
+          "$Id$")
 
 struct Hash_Token
 {
@@ -213,7 +215,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::ACE_Timer_Hash_T (size_t tabl
   ACE_TRACE ("ACE_Timer_Hash_T::ACE_Timer_Hash_T");
 
   ACE_NEW (table_,
-           BUCKET *[table_size]));
+           BUCKET *[table_size]);
 
   this->gettimeofday (ACE_OS::gettimeofday);
 
