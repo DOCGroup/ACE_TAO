@@ -10030,6 +10030,26 @@ ACE_OS::lseek (ACE_HANDLE handle, off_t offset, int whence)
 #endif /* ACE_WIN32 */
 }
 
+#if defined (ACE_HAS_LLSEEK)
+ACE_INLINE ACE_LOFF_T
+ACE_OS::llseek (ACE_HANDLE handle, ACE_LOFF_T offset, int whence)
+{
+  ACE_TRACE ("ACE_OS::llseek");
+
+#if ACE_SIZEOF_LONG == 8
+  /* The native lseek is 64 bit, use it. */
+  return ACE_OS::lseek (handle, offset, whence);
+#elif defined (linux)
+  extern "C" loff_t llseek (int fd, loff_t offset, int whence);
+  ACE_OSCALL_RETURN (::llseek (handle, offset, whence), ACE_LOFF_T, -1);
+#elif defined (__sgi)
+  ACE_OSCALL_RETURN (::lseek64 (handle, offset, whence), ACE_LOFF_T, -1);
+#else
+  ACE_OSCALL_RETURN (::llseek (handle, offset, whence), ACE_LOFF_T, -1);
+#endif
+}
+#endif /* ACE_HAS_LLSEEK */
+
 ACE_INLINE int
 ACE_OS::fseek (FILE *fp, long offset, int whence)
 {
@@ -11279,12 +11299,12 @@ ACE_OS::sigaddset (sigset_t *s, int signum)
 {
   ACE_TRACE ("ACE_OS::sigaddset");
 #if defined (ACE_LACKS_SIGSET) || defined (ACE_LACKS_SIGSET_DEFINITIONS)
-  if (s == NULL) 
+  if (s == NULL)
     {
       errno = EFAULT;
       return -1;
     }
-  else if (signum < 1 || signum >= ACE_NSIG) 
+  else if (signum < 1 || signum >= ACE_NSIG)
     {
       errno = EINVAL;
       return -1;                 // Invalid signum, return error
@@ -11309,12 +11329,12 @@ ACE_INLINE int
 ACE_OS::sigdelset (sigset_t *s, int signum)
 {
 #if defined (ACE_LACKS_SIGSET) || defined (ACE_LACKS_SIGSET_DEFINITIONS)
-  if (s == NULL) 
+  if (s == NULL)
     {
       errno = EFAULT;
       return -1;
     }
-  else if (signum < 1 || signum >= ACE_NSIG) 
+  else if (signum < 1 || signum >= ACE_NSIG)
     {
       errno = EINVAL;
       return -1;                 // Invalid signum, return error
@@ -11339,7 +11359,7 @@ ACE_INLINE int
 ACE_OS::sigemptyset (sigset_t *s)
 {
 #if defined (ACE_LACKS_SIGSET) || defined (ACE_LACKS_SIGSET_DEFINITIONS)
-  if (s == NULL) 
+  if (s == NULL)
     {
       errno = EFAULT;
       return -1;
@@ -11360,7 +11380,7 @@ ACE_INLINE int
 ACE_OS::sigfillset (sigset_t *s)
 {
 #if defined (ACE_LACKS_SIGSET) || defined (ACE_LACKS_SIGSET_DEFINITIONS)
-  if (s == NULL) 
+  if (s == NULL)
     {
       errno = EFAULT;
       return -1;
@@ -11381,12 +11401,12 @@ ACE_INLINE int
 ACE_OS::sigismember (sigset_t *s, int signum)
 {
 #if defined (ACE_LACKS_SIGSET) || defined (ACE_LACKS_SIGSET_DEFINITIONS)
-  if (s == NULL) 
+  if (s == NULL)
     {
       errno = EFAULT;
       return -1;
     }
-  else if (signum < 1 || signum >= ACE_NSIG) 
+  else if (signum < 1 || signum >= ACE_NSIG)
     {
       errno = EINVAL;
       return -1;                 // Invalid signum, return error

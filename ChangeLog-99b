@@ -1,24 +1,30 @@
+Fri Aug 13 07:58:12 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.{h,i},README,config-osf1-4.0.h (llseek): added
+          ACE_HAS_LLSEEK support.  Thanks to Tal Lev-Ami <tla@tici.co.il>
+          for providing this.
+
 Thu Aug 12 22:05:37 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS.i (sema_wait, rw_tryrdlock, rw_trywrlock):
-	  Replaced more ad hoc uses of the  
+        * ace/OS.i (sema_wait, rw_tryrdlock, rw_trywrlock):
+          Replaced more ad hoc uses of the
 
-	  int error = 0;
-	  ...
-	  error = errno;
-	  ...
-	  errno = error;
-  
+          int error = 0;
+          ...
+          error = errno;
+          ...
+          errno = error;
+
           idiom with the ACE_Errno_Guard.
 
-	* ace/Synch.h: Updated the comment to remind folks who would
-	  like to have a working ACE_Process_Condition to contact us if
- 	  they know how to do this.  Thanks to Craig Anderson
- 	  <chanders@timing.com> for motivating this.
+        * ace/Synch.h: Updated the comment to remind folks who would
+          like to have a working ACE_Process_Condition to contact us if
+          they know how to do this.  Thanks to Craig Anderson
+          <chanders@timing.com> for motivating this.
 
-	* tests/Process_Strategy_Test.cpp (open): Clarified the behavior
-	  of the code that's run when fork() is used.  Thanks to Umar
- 	  Syyid for motivating this.
+        * tests/Process_Strategy_Test.cpp (open): Clarified the behavior
+          of the code that's run when fork() is used.  Thanks to Umar
+          Syyid for motivating this.
 
 Thu Aug 12 21:30:09 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
