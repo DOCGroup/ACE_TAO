@@ -21,9 +21,9 @@
 <P ALIGN="CENTER">
 <STRONG>
 <A HREF="http://www.cs.wustl.edu/~fredk/">Fred Kuhns</A>, 
-<A HREF="http://www.eng.uci.edu/~schmidt/">Douglas C. Schmidt</A>,
-<A HREF="http://www.eng.uci.edu/~coryan">Carlos O'Ryan</A>, 
-<A HREF="http://www.eng.uci.edu/~ossama/">Ossama Othman</A>,
+<A HREF="http://www.ece.uci.edu/~schmidt/">Douglas C. Schmidt</A>,
+<A HREF="http://www.ece.uci.edu/~coryan">Carlos O'Ryan</A>, 
+<A HREF="http://www.ece.uci.edu/~ossama/">Ossama Othman</A>,
 and <A HREF="mailto:BTRASK@contactsystems.com">Bruce Trask</A>
 </STRONG> 
 </P>
@@ -2646,26 +2646,34 @@ implement a SCRAMNet pluggable transport protocol with the interface
 TAO's pluggable protocol framework provides and you'd be able to use
 SCRAMNet with TAO just as easily as the IIOP (GIOP over TCP/IP) and
 UIOP (GIOP over Unix domains sockets) protocols.
-<BR>
+<P>
 The idea is to implement GIOP messaging over a SCRAMNet transport.  If
 you model your implementation on TAO's IIOP and UIOP implementations
-then it should be fairly straightforward to add SCRAMNet support to
-TAO.  The hard part is adding SCRAMNet support to ACE.
-<BR>
+then it should be fairly straightforward to create a SCRAMNet
+pluggable protocol to TAO.  The hard part is implementing the
+equivalent ACE classes for SCRAMNet.
+<P>
 . . . 
-<BR>
+<P>
 It's actually not that bad.  The easiest way to add a pluggable protocol
 to TAO, IMO, is to base your pluggable protocol on existing ones.  As
 long as you have the same interface for your protocol as the existing
-ones then it is fairly easy to add support for your protocol to TAO.
-However, in order to do that you have to add ACE_SCRAMNet_{Acceptor,
-Connector, Stream, Addr} implementations, for example, to ACE since
-TAO's existing pluggable protocols use those ACE classes/interfaces.
-<BR>
+ones then it is fairly easy to create your TAO pluggable protocol.
+However, in order to do that you have to create ACE_SCRAMNet_{Acceptor,
+Connector, Stream, Addr} implementations, for example, since TAO's
+existing pluggable protocols use those interfaces.
 
+<P>
 As long as you use the same interface for your protocol as the
 interface for ace/ACE_SOCK* and tao/IIOP* then you shouldn't have much
-of a problem.</BLOCKQUOTE> <P>Note also that the TAO files pluggable.*
+of a problem.
+</BLOCKQUOTE>
+
+<P>
+This also assumes that you're implementation can satisfy the
+conditions stated earlier in this document.
+
+<P>Note also that the TAO files pluggable.*
 are important to review and understand as they contain the abstract
 classes that form the common inteface for TAO's pluggable protocol
 framework.  <BR> <P>Getting a full understanding on how IIOP was
@@ -2681,7 +2689,7 @@ physical memory cards located on two different machines.  When a
 change is made to one memory then that change appears very quickly
 (very low latency here) in the other memory.  I decided that I would
 implement GIOP over SCRAMNet as this seemed to be the simplest.  With
-SCRAMNet, one could implement this transport layer into the TAO ORB in
+SCRAMNet, one could implement this transport layer for the TAO ORB in
 a few different ways, GIOP over SCRAMNet, Environment-specific
 inter-ORB protocol (ESIOP) or using collocation (since it is shared
 replicated memory).  I have not done the latter two, only GIOP over
@@ -2728,363 +2736,7 @@ that uses a Select Reactor and the IIOP protocol.  I won't go into
 much of the SCRAMNet specific stuff as I assume most people are
 interested in adding a pluggable protocol in general.  <BR><P>
 
-For completeness, I show the whole function in some instances even
-though I only needed to add or change a few lines. <P>
-
-<OL>
-<LI> One of the first additions I made was to GIOP.h 
 <P>
-// namespace TAO_IOP
-<BR>
-// Assigned Protocol/Profile tag values.  ORB protcols may be uniquely<BR>
-// identified by tags such as these.  This allows each ORB's own<BR>
-// objref profiles to be interchanged using IORs.<BR>
-//<BR>
-// Email to tag-request@omg.org to allocate tags.<BR>
-typedef CORBA::ULong TAO_IOP_Profile_ID;
-<BR>
-enum
-{
-  <BLOCKQUOTE>TAO_IOP_TAG_INVALID = -1,<BR>
-  TAO_IOP_TAG_INTERNET_IOP = 0,                // IIOP<BR>
-  TAO_IOP_TAG_MULTIPLE_COMPONENTS = 1,         // DCE-CIOP<BR>
-  TAO_IOP_TAG_UNIX_IOP = TAO_TAG_UIOP_PROFILE, // Read corbafwd.h<BR>
-  TAO_IOP_TAG_SCRAMNET_IOP = 3,              // SCRAMNET<BR>
-
-  // = This is a subset of the list of other profile tags.<BR>
-  TAO_IOP_TAG_ONC_IOP = 0x4f4e4300     // ONC IOP</BLOCKQUOTE>
-};<BR><P>
-
-I arbitrarily set the TAO_IOP_TAG_SCRAMNET = 3.  Note that this value was NOT allocated to me by OMG.  I used it just to get things working with the new protocol.
-Adding the new tag was needed (as it says) so that the server and client could interchange IORs (which contain protocol specific information).  
-<P>
-
-<LI> I added the following line to orbconf.h:
-
-<BR>
-// SCRAMNet support (GIOP over the SCRAMNet replicated memory transport)<BR>
-#define TAO_HAS_SCRAMNET
-<BR>
-as I use #ifdefs in other places in the code.
-<P>
-
-<LI> Specifically,  in the file TAO_Internal.cpp:
-<BR><P>
-int
-TAO_Internal::open_services (int &argc,
-<BLOCKQUOTE><BLOCKQUOTE>                             char **argv,<BR>
-                             int ignore_default_svc_conf_file,<BR>
-                             int skip_service_config_open)</BLOCKQUOTE></BLOCKQUOTE><BR>
-{<BR>
-<BLOCKQUOTE>ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, *ACE_Static_Object_Lock::instance (), -1));<BR>
-#if defined (TAO_PLATFORM_SVC_CONF_FILE_NOTSUP)<BR>
-  ignore_default_svc_conf_file = 1;<BR>
-#endif /* TAO_PLATFORM_SVC_CONF_FILE_NOTSUP */</BLOCKQUOTE><BR>
-
-  <BLOCKQUOTE>if (TAO_Internal::service_open_count_++ == 0)<BR>
-    {<BR>
-      <BLOCKQUOTE>ACE_Service_Config::static_svcs ()->insert (&ace_svc_desc_TAO_Default_Resource_Factory);<BR>
-      ACE_Service_Config::static_svcs ()->insert (&ace_svc_desc_TAO_Default_Client_Strategy_Factory);<BR>
-      ACE_Service_Config::static_svcs ()->insert (&ace_svc_desc_TAO_Default_Server_Strategy_Factory);<BR>
-      ACE_Service_Config::static_svcs ()->insert (&ace_svc_desc_TAO_IIOP_Protocol_Factory);<BR>
-#if defined (TAO_HAS_UIOP)<BR>
-      ACE_Service_Config::static_svcs ()->insert (&ace_svc_desc_TAO_UIOP_Protocol_Factory);<BR>
-#endif /* TAO_HAS_UIOP */<BR>
-// HAS SCRAMNET - BRT      <BR>                                 
-<FONT COLOR=Blue>#if defined (TAO_HAS_SCRAMNET)<BR>
-      ACE_Service_Config::static_svcs ()->insert (&ace_svc_desc_TAO_SCRAMNet_Protocol_Factory);<BR>
-#endif /* TAO_HAS_SCRAMNET */<BR></FONT>
-      // add descriptor to list of static objects.<BR>
-
-      int result = 0;<BR>
-
-      if (skip_service_config_open == 0)<BR>
-        result = ACE_Service_Config::open (argc, argv,
-                                          <BLOCKQUOTE> ACE_DEFAULT_LOGGER_KEY,<BR>
-                                           0, // Don't ignore static services.<BR>
-                                           ignore_default_svc_conf_file);</BLOCKQUOTE><BR>
-
-      // @@ What the heck do these things do and do we need to avoid<BR>
-      // calling them if we're not invoking the svc.conf file?<BR>
-      if (TAO_Internal::resource_factory_args_ != 0)<BR>
-        ACE_Service_Config::process_directive (TAO_Internal::resource_factory_args_);<BR>
-      if (TAO_Internal::client_strategy_args_ != 0)<BR>
-        ACE_Service_Config::process_directive (TAO_Internal::client_strategy_args_);<BR>
-      if (TAO_Internal::server_strategy_args_ != 0)<BR>
-        ACE_Service_Config::process_directive (TAO_Internal::server_strategy_args_);<BR>
-
-      return result;</BLOCKQUOTE><BR>
-    }<BR>
-  else<BR>
-    return 0;</BLOCKQUOTE><BR>
-}<BR>
-<BR><P>
-I added the SCRAMNet lines to insert the SCRAMNet protocol factory into the service
-configurator.
-<P>
-<LI> Also, in default resource.cpp:
-
-int<BR>
-TAO_Default_Resource_Factory::init_protocol_factories (void)<BR>
-{<BR>
-  <BLOCKQUOTE>TAO_ProtocolFactorySetItor end = protocol_factories_.end ();<BR>
-  TAO_ProtocolFactorySetItor factory = protocol_factories_.begin ();
-<BR>
-  if (factory == end)<BR>
-    {<BR>
-      <BLOCKQUOTE>TAO_Protocol_Factory *protocol_factory = 0;<BR>
-      TAO_Protocol_Item *item = 0;<BR>
-
-      protocol_factory =
-        ACE_Dynamic_Service<TAO_Protocol_Factory>::instance ("IIOP_Factory");<BR>
-</BLOCKQUOTE>
-     <BLOCKQUOTE> if (protocol_factory == 0)<BR>
-        {<BR>
-      if (TAO_orbdebug)<BR>
-            ACE_ERROR ((LM_WARNING,<BR>
-                        "TAO (%P|%t) No %s found in Service Repository.  "<BR>
-                        "Using default instance IIOP Protocol Factory.\n"));<BR>
-
-          ACE_NEW_RETURN (protocol_factory,<BR>
-                          TAO_IIOP_Protocol_Factory,<BR>
-                          -1);<BR>
-        }<BR></BLOCKQUOTE>
-
-     <BLOCKQUOTE> ACE_NEW_RETURN (item, TAO_Protocol_Item ("IIOP_Factory"), -1);<BR>
-      item->factory (protocol_factory);<BR>
-
-      if (this->protocol_factories_.insert (item) == -1)<BR>
-        {<BR>
-          delete item;<BR>
-          delete protocol_factory;<BR>
-
-          ACE_ERROR_RETURN ((LM_ERROR,<BR>
-                             "TAO (%P|%t) Unable to add "<BR>
-                             "<%s> to protocol factory set.\n",<BR>
-                             item->protocol_name ().c_str ()),<BR>
-                            -1);<BR></BLOCKQUOTE>
-        }<BR>
-
-      if (TAO_debug_level > 0)<BR>
-        {<BLOCKQUOTE>
-          ACE_DEBUG ((LM_DEBUG,<BR>
-                      "TAO (%P|%t) Loaded default protocol <IIOP_Factory>\n"));<BR></BLOCKQUOTE>
-        }<BR>
-
-#if defined (TAO_HAS_UIOP)<BR>
-      protocol_factory =<BR>
-        ACE_Dynamic_Service<TAO_Protocol_Factory>::instance ("UIOP_Factory");<BR>
-
-      if (protocol_factory == 0)<BR>
-        {
-         <BLOCKQUOTE> if (TAO_orbdebug)<BR>
-            ACE_ERROR ((LM_WARNING,<BR>
-                        "(%P|%t) WARNING - No %s found in Service Repository."<BR>
-                        "  Using default instance.\n",<BR>
-                        "UIOP Protocol Factory"));<BR>
-
-          ACE_NEW_RETURN (protocol_factory,<BR>
-                          TAO_UIOP_Protocol_Factory,<BR>
-                          -1);<BR></BLOCKQUOTE>
-        }<BR>
-
-      ACE_NEW_RETURN (item, TAO_Protocol_Item ("UIOP_Factory"), -1);<BR>
-      item->factory (protocol_factory);<BR>
-
-      if (this->protocol_factories_.insert (item) == -1)<BR>
-        {
-          <BLOCKQUOTE>delete item;<BR>
-          delete protocol_factory;<BR>
-
-          ACE_ERROR_RETURN ((LM_ERROR,<BR>
-                             "TAO (%P|%t) Unable to add "<BR>
-                             "<%s> to protocol factory set.\n",<BR>
-                             item->protocol_name ().c_str ()),<BR>
-                            -1);</BLOCKQUOTE>
-        }<BR>
-
-      if (TAO_debug_level > 0)<BR>
-        {<BLOCKQUOTE>
-          ACE_DEBUG ((LM_DEBUG,<BR>
-                      "TAO (%P|%t) Loaded default protocol <UIOP_Factory>\n"));</BLOCKQUOTE>
-        }<BR>
-#endif /* TAO_HAS_UIOP */<BR>
-<FONT COLOR=Blue>#if defined (TAO_HAS_SCRAMNET)<BR>
-      protocol_factory =<BR>
-        ACE_Dynamic_Service<TAO_Protocol_Factory>::instance ("SCRAMNet_Factory");<BR>
-
-      if (protocol_factory == 0)<BR>
-        {
-         <BLOCKQUOTE> if (TAO_orbdebug)<BR>
-            ACE_ERROR ((LM_WARNING,<BR>
-                        "(%P|%t) WARNING - No %s found in Service Repository."<BR>
-                        "  Using default instance.\n",<BR>
-                        "SCRAMNet Protocol Factory"));<BR>
-
-          ACE_NEW_RETURN (protocol_factory,<BR>
-                          TAO_SCRAMNet_Protocol_Factory,<BR>
-                          -1);</BLOCKQUOTE>
-        }<BR>
-
-      ACE_NEW_RETURN (item, TAO_Protocol_Item ("SCRAMNet_Factory"), -1);<BR>
-      item->factory (protocol_factory);<BR>
-
-      if (this->protocol_factories_.insert (item) == -1)<BR>
-        {
-<BLOCKQUOTE>          delete item;<BR>
-          delete protocol_factory;<BR>
-
-          ACE_ERROR_RETURN ((LM_ERROR,<BR>
-                             "TAO (%P|%t) Unable to add "<BR>
-                             "<%s> to protocol factory set.\n",<BR>
-                             item->protocol_name ().c_str ()),<BR>
-                            -1);</BLOCKQUOTE>
-        }<BR>
-
-      if (TAO_debug_level > 0)<BR>
-        {
-<BLOCKQUOTE>          ACE_DEBUG ((LM_DEBUG,<BR>
-                      "TAO (%P|%t) Loaded protocol <SCRAMNet_Factory>\n"));</BLOCKQUOTE>
-        }<BR>
-#endif /* TAO_HAS_SCRAMNET */<BR>
-</FONT>
-
-      return 0;<BR>
-    }<BR>
-
-  for (; factory != end; factory++)<BR>
-    {
-      <BLOCKQUOTE>const ACE_CString &name = (*factory)->protocol_name ();<BR>
-      (*factory)->factory (<BR>
-        ACE_Dynamic_Service<TAO_Protocol_Factory>::instance (name.c_str ()));<BR>
-      if ((*factory)->factory () == 0)<BR>
-        {<BLOCKQUOTE>
-          ACE_ERROR_RETURN ((LM_ERROR,<BR>
-                             "TAO (%P|%t) Unable to load protocol <%s>, %p\n",<BR>
-                             name.c_str (), ""),<BR>
-                            -1);</BLOCKQUOTE>
-        }<BR>
-
-      if (TAO_debug_level > 0)<BR>
-        {
-          <BLOCKQUOTE>ACE_DEBUG ((LM_DEBUG,<BR>
-                      "TAO (%P|%t) Loaded protocol <%s>\n",<BR>
-                      name.c_str ()));</BLOCKQUOTE>
-        }</BLOCKQUOTE>
-    }<BR>
-  return 0;</BLOCKQUOTE><P>
-
-I added the SCRAMNet lines so that the protocol is initialized correctly.  Note here,
-that following how IIOP and UIOP were implemented helped out.
-<BR><P>
-
-Because I am using a WFMO Reactor and an ISR that signals particular Win32 Events,
-I needed to change the registration of the service handlers.  For example in Acceptor.cpp:
-<BR><P>
-// Initialize the appropriate strategies for creation, passive<BR>
-// connection acceptance, and concurrency, and then register <this><BR>
-// with the Reactor and listen for connection requests at the<BR>
-// designated <local_addr>.<BR>
-<BR><P>
-template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int<BR>
-ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open<BR>
-  (const ACE_PEER_ACCEPTOR_ADDR &local_addr,<BR>
-   ACE_Reactor *reactor,<BR>
-   ACE_Creation_Strategy<SVC_HANDLER> *cre_s,<BR>
-   ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2> *acc_s,<BR>
-   ACE_Concurrency_Strategy<SVC_HANDLER> *con_s,<BR>
-   ACE_Scheduling_Strategy<SVC_HANDLER> *sch_s,<BR>
-   const ASYS_TCHAR *service_name,<BR>
-   const ASYS_TCHAR *service_description,<BR>
-   int use_select)<BR>
-{<BR>
-<BLOCKQUOTE>ACE_TRACE ("ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open");<BR>
-
-  if (this->service_name_ == 0 && service_name != 0)
-    <BLOCKQUOTE>ACE_ALLOCATOR_RETURN (this->service_name_,<BR>
-                          ACE_OS::strdup (service_name),<BR>
-                          -1);</BLOCKQUOTE>
-  if (this->service_description_ == 0 && service_description != 0)<BR>
-    ACE_ALLOCATOR_RETURN (this->service_description_,<BR>
-                          ACE_OS::strdup (service_description),<BR>
-                          -1);<BR>
-  this->reactor (reactor);<BR>
-
-  // Must supply a valid Reactor to Acceptor::open()...<BR>
-  if (reactor == 0)<BR>
-    {
-     <BLOCKQUOTE> errno = EINVAL;<BR>
-      return -1;</BLOCKQUOTE>
-    }<BR>
-
-  // Initialize the creation strategy.<BR>
-
-  if (cre_s == 0)<BR>
-    {
-     <BLOCKQUOTE> ACE_NEW_RETURN (cre_s,<BR>
-                      CREATION_STRATEGY,<BR>
-                      -1);<BR>
-      this->delete_creation_strategy_ = 1;</BLOCKQUOTE>
-    }<BR>
-  this->creation_strategy_ = cre_s;<BR>
-
-  // Initialize the accept strategy.<BR>
-
-  if (acc_s == 0)<BR>
-    {
-      <BLOCKQUOTE>ACE_NEW_RETURN (acc_s,<BR>
-                      ACCEPT_STRATEGY (this->reactor ()),<BR>
-                      -1);<BR>
-      this->delete_accept_strategy_ = 1;</BLOCKQUOTE>
-    }<BR>
-  this->accept_strategy_ = acc_s;<BR>
-
-  if (this->accept_strategy_->open (local_addr, 1) == -1)<BR>
-    return -1;<BR>
-
-  // Initialize the concurrency strategy.<BR>
-
-  if (con_s == 0)<BR>
-    {
-      <BLOCKQUOTE>ACE_NEW_RETURN (con_s,<BR>
-                      CONCURRENCY_STRATEGY,<BR>
-                      -1);<BR>
-      this->delete_concurrency_strategy_ = 1;</BLOCKQUOTE>
-    }<BR>
-  this->concurrency_strategy_ = con_s;<BR>
-
-  // Initialize the scheduling strategy.<BR>
-
-  if (sch_s == 0)<BR>
-    {
-      <BLOCKQUOTE>ACE_NEW_RETURN (sch_s,<BR>
-                      SCHEDULING_STRATEGY,<BR>
-                      -1);<BR>
-      this->delete_scheduling_strategy_ = 1;</BLOCKQUOTE>
-    }<BR>
-  this->scheduling_strategy_ = sch_s;<BR>
-
-  this->use_select_ = use_select;<BR>
-
-<FONT COLOR=Blue>//BRT<BR>
-#ifdef ACE_HAS_SCRAMNET<BR>
-  return this->reactor ()->register_handler(this, accept_event2);<BR>
-#else<BR>
-  return this->reactor ()->register_handler(this,<BR>
-     ACE_Event_Handler::ACCEPT_MASK);<BR>
-#endif</BLOCKQUOTE><BR></FONT>
-}<BR>
-<BR><P>
-I needed to associate the acceptor with a Win32 event.  
-<P>
-
-<LI> In OS.h include the following lines:
-<BR><P>
-// Handle ACE_SCRAMNet*<BR>
-#   define ACE_SCRAMNET_ACCEPTOR ACE_SCRAMNet_Acceptor, ACE_SCRAMNet_Addr<BR>
-#   define ACE_SCRAMNET_CONNECTOR ACE_SCRAMNet_Connector, ACE_SCRAMNet_Addr<BR>
-#   define ACE_SCRAMNET_STREAM ACE_SCRAMNet_Stream, ACE_SCRAMNet_Addr<BR>
-<BR><P>
 
 RE: IORs<BR>
 I found that I needed to have a full understanding of what the exact contents of
@@ -3323,7 +2975,7 @@ examples of the Layers architecture.
     <ADDRESS><a href="mailto:ossama@uci.edu">Ossama Othman</a></ADDRESS>
 <!-- Created: Tue Dec 14 16:53:58 CST 1999 -->
 <!-- hhmts start -->
-Last modified: Wed Feb  2 19:19:01 CST 2000
+Last modified: Wed Feb  2 17:45:29 PST 2000
 <!-- hhmts end -->
 </BODY>
 </HTML>
