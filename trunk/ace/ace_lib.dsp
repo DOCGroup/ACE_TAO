@@ -14,24 +14,33 @@ CFG=ACE static library - Win32 Alpha Unicode Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "ace_lib.mak" CFG="ACE static library - Win32 Alpha Unicode Debug"
+!MESSAGE NMAKE /f "ace_lib.mak"\
+ CFG="ACE static library - Win32 Alpha Unicode Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "ACE static library - Win32 Debug" (based on "Win32 (x86) Static Library")
-!MESSAGE "ACE static library - Win32 Release" (based on "Win32 (x86) Static Library")
-!MESSAGE "ACE static library - Win32 Unicode Debug" (based on "Win32 (x86) Static Library")
-!MESSAGE "ACE static library - Win32 Unicode Release" (based on "Win32 (x86) Static Library")
-!MESSAGE "ACE static library - Win32 Alpha Debug" (based on "Win32 (ALPHA) Static Library")
-!MESSAGE "ACE static library - Win32 Alpha Release" (based on "Win32 (ALPHA) Static Library")
-!MESSAGE "ACE static library - Win32 Alpha Unicode Debug" (based on "Win32 (ALPHA) Static Library")
-!MESSAGE "ACE static library - Win32 Alpha Unicode Release" (based on "Win32 (ALPHA) Static Library")
+!MESSAGE "ACE static library - Win32 Debug" (based on\
+ "Win32 (x86) Static Library")
+!MESSAGE "ACE static library - Win32 Release" (based on\
+ "Win32 (x86) Static Library")
+!MESSAGE "ACE static library - Win32 Unicode Debug" (based on\
+ "Win32 (x86) Static Library")
+!MESSAGE "ACE static library - Win32 Unicode Release" (based on\
+ "Win32 (x86) Static Library")
+!MESSAGE "ACE static library - Win32 Alpha Debug" (based on\
+ "Win32 (ALPHA) Static Library")
+!MESSAGE "ACE static library - Win32 Alpha Release" (based on\
+ "Win32 (ALPHA) Static Library")
+!MESSAGE "ACE static library - Win32 Alpha Unicode Debug" (based on\
+ "Win32 (ALPHA) Static Library")
+!MESSAGE "ACE static library - Win32 Alpha Unicode Release" (based on\
+ "Win32 (ALPHA) Static Library")
 !MESSAGE 
 
 # Begin Project
-# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
+# PROP WCE_Configuration "H/PC Ver. 2.00"
 
 !IF  "$(CFG)" == "ACE static library - Win32 Debug"
 
@@ -45,13 +54,11 @@ CFG=ACE static library - Win32 Alpha Unicode Debug
 # PROP Output_Dir ""
 # PROP Intermediate_Dir ".\LIB\Debug"
 # PROP Target_Dir ""
-CPP=cl.exe
-# ADD BASE CPP /nologo /G5 /MTd /W3 /Gm /GX /Zi /Od /Gy /I "..\STL" /I "..\\" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "..\\" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /FD /c
-# SUBTRACT CPP /YX
 RSC=rc.exe
-# ADD BASE RSC /l 0x409
-# ADD RSC /l 0x409
+CPP=cl.exe
+# ADD BASE CPP /nologo /G5 /MTd /W3 /Gm /GX /Zi /Od /Gy /I "..\STL" /I "..\\" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /YX /FD /l 0x409 /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "..\\" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /FD /l 0x409 /c
+# SUBTRACT CPP /YX
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo /o"ace.bsc"
 # ADD BSC32 /nologo /o".\ace.bsc"
@@ -71,13 +78,11 @@ LIB32=link.exe -lib
 # PROP Output_Dir ""
 # PROP Intermediate_Dir ".\LIB\Release"
 # PROP Target_Dir ""
-CPP=cl.exe
-# ADD BASE CPP /nologo /G5 /MT /W3 /GX /O1 /I "..\STL" /I "..\\" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O1 /I "..\\" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /FD /c
-# SUBTRACT CPP /YX
 RSC=rc.exe
-# ADD BASE RSC /l 0x409
-# ADD RSC /l 0x409
+CPP=cl.exe
+# ADD BASE CPP /nologo /G5 /MT /W3 /GX /O1 /I "..\STL" /I "..\\" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /YX /FD /l 0x409 /c
+# ADD CPP /nologo /MD /W3 /GX /O1 /I "..\\" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /FD /l 0x409 /c
+# SUBTRACT CPP /YX
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo /o"ace.bsc"
 # ADD BSC32 /nologo /o".\ace.bsc"
@@ -97,13 +102,11 @@ LIB32=link.exe -lib
 # PROP Output_Dir ""
 # PROP Intermediate_Dir ".\LIB\Unicode_Debug"
 # PROP Target_Dir ""
-CPP=cl.exe
-# ADD BASE CPP /nologo /G5 /MTd /W3 /Gm /GX /Zi /Od /Gy /I "..\STL" /I "..\\" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "..\\" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D "_DEBUG" /D "UNICODE" /D "WIN32" /D "_WINDOWS" /FD /c
-# SUBTRACT CPP /YX
 RSC=rc.exe
-# ADD BASE RSC /l 0x409
-# ADD RSC /l 0x409
+CPP=cl.exe
+# ADD BASE CPP /nologo /G5 /MTd /W3 /Gm /GX /Zi /Od /Gy /I "..\STL" /I "..\\" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /YX /FD /l 0x409 /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "..\\" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D "_DEBUG" /D "UNICODE" /D "WIN32" /D "_WINDOWS" /FD /l 0x409 /c
+# SUBTRACT CPP /YX
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo /o"ace.bsc"
 # ADD BSC32 /nologo /o".\ace.bsc"
@@ -123,13 +126,11 @@ LIB32=link.exe -lib
 # PROP Output_Dir ""
 # PROP Intermediate_Dir ".\LIB\Unicode_Release"
 # PROP Target_Dir ""
-CPP=cl.exe
-# ADD BASE CPP /nologo /G5 /MT /W3 /GX /O1 /I "..\STL" /I "..\\" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O1 /I "..\\" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D "NDEBUG" /D "UNICODE" /D "WIN32" /D "_WINDOWS" /FD /c
-# SUBTRACT CPP /YX
 RSC=rc.exe
-# ADD BASE RSC /l 0x409
-# ADD RSC /l 0x409
+CPP=cl.exe
+# ADD BASE CPP /nologo /G5 /MT /W3 /GX /O1 /I "..\STL" /I "..\\" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /YX /FD /l 0x409 /c
+# ADD CPP /nologo /MD /W3 /GX /O1 /I "..\\" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D "NDEBUG" /D "UNICODE" /D "WIN32" /D "_WINDOWS" /FD /l 0x409 /c
+# SUBTRACT CPP /YX
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo /o"ace.bsc"
 # ADD BSC32 /nologo /o".\ace.bsc"
@@ -151,7 +152,7 @@ LIB32=link.exe -lib
 # PROP Target_Dir ""
 CPP=cl.exe
 # ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\STL" /I "..\\ /D" /D "_DEBUG" /D "_WINDOWS" /YX /FD WIN32" /c
-# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\\ /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D " _DEBUG" /D "_WINDOWS" /FD /D /MTd WIN32" /c
+# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /D "_WINDOWS" /FD /I /D /MTd "..\\ /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D " _DEBUG" WIN32" /c
 # SUBTRACT CPP /YX
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo /o".\ace.bsc"
@@ -174,7 +175,7 @@ LIB32=link.exe -lib
 # PROP Target_Dir ""
 CPP=cl.exe
 # ADD BASE CPP /nologo /Gt0 /W3 /GX /O1 /I "..\STL" /I "..\\ /D" /D "NDEBUG" /D "_WINDOWS" /YX /FD WIN32" /c
-# ADD CPP /nologo /MT /Gt0 /W3 /GX /O1 /I "..\\ /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D " NDEBUG" /D "_WINDOWS" /FD /D WIN32" /c
+# ADD CPP /nologo /MT /Gt0 /W3 /GX /O1 /D "_WINDOWS" /D "WIN32"" /FD /I "..\\ /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D " NDEBUG" /c
 # SUBTRACT CPP /YX
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo /o".\ace.bsc"
@@ -197,7 +198,7 @@ LIB32=link.exe -lib
 # PROP Target_Dir ""
 CPP=cl.exe
 # ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\STL" /I "..\\ /D" /D "_DEBUG" /D "_WINDOWS" /D "UNICODE" /YX /FD WIN32" /c
-# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\\ /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D " _DEBUG" /D "_WINDOWS" /D "UNICODE" /FD /D /MTd WIN32" /c
+# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /D "_WINDOWS" /D "UNICODE" /FD /I /D /MTd "..\\ /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D " _DEBUG" WIN32" /c
 # SUBTRACT CPP /YX
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo /o".\ace.bsc"
@@ -220,7 +221,7 @@ LIB32=link.exe -lib
 # PROP Target_Dir ""
 CPP=cl.exe
 # ADD BASE CPP /nologo /Gt0 /W3 /GX /O1 /I "..\STL" /I "..\\ /D" /D "NDEBUG" /D "_WINDOWS" /D "UNICODE" /YX /FD WIN32" /c
-# ADD CPP /nologo /MT /Gt0 /W3 /GX /O1 /I "..\\ /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D " NDEBUG" /D "_WINDOWS" /D "UNICODE" /FD /D WIN32" /c
+# ADD CPP /nologo /MT /Gt0 /W3 /GX /O1 /D "_WINDOWS" /D "UNICODE" /D "WIN32"" /FD /I "..\\ /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D " NDEBUG" /c
 # SUBTRACT CPP /YX
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo /o".\ace.bsc"
@@ -4031,7 +4032,7 @@ SOURCE=.\Message_Queue.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Method_Request.h
+SOURCE=.\Method_Object.h
 # End Source File
 # Begin Source File
 
