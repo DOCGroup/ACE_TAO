@@ -12,6 +12,7 @@ applications that utilize the ACE features.
 	. Orbix-Examples -- Implements several applications that
 	  integrate ACE and Orbix (which is IONA's implementation of
 	  CORBA).  By default, these aren't compiled since most
-	  platforms don't have Orbix.
+	  platforms don't have Orbix.  These examples are completely
+	  unsupported and may not work...
 
 	. gperf -- The GNU perfect hash function generator.
