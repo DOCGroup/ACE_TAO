@@ -1,3 +1,10 @@
+Sat Oct  2 17:03:42 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/PortableServer/Default_Policy_Validator.cpp:
+
+	  Should be tha last (famous last word) of the remaining problems
+	  with wrong macro usage.
+
 Sat Oct  2 16:28:06 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* performance-tests/Protocols/receiver.cpp:
