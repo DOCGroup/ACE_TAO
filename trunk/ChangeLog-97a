@@ -16,6 +16,10 @@ Thu Jan 16 15:51:16 1997  David L. Levine  <levine@cs.wustl.edu>
 	* Timer_Heap.cpp: changed some int loop indicies to size_t to
 	  make sure that comparisons are consistently signed or unsigned
 
+	* OS.h, config-vxworks*.h: removed ACE_HAS_GREENHILLS_SOCKETS
+	  ACE macro because the code it wrapped applies to all VxWorks
+	  compilers, not just GreenHills
+
 Wed Jan 15 02:06:21 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/Timer_Queue.cpp (expire): Changed a line of code from
