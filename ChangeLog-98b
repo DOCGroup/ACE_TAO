@@ -1,3 +1,8 @@
+Mon Dec 28 10:52:20 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* */Makefile: 
+	  Updated dependencies.
+
 Mon Dec 28 02:34:59 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/Service_Configurator/IPC-tests/server/server_test.cpp
