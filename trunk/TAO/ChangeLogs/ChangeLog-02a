@@ -1,13 +1,13 @@
 Mon Nov 20 15:49:50 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-		* performance-tests/Cubit/TAO/IDL_Cubit/server.dsp
-		* performance-tests/Cubit/TAO/IDL_Cubit/client.dsp
-		  Updated setings.
+	* performance-tests/Cubit/TAO/IDL_Cubit/server.dsp
+	* performance-tests/Cubit/TAO/IDL_Cubit/client.dsp
+	  Updated setings.
 
- 		* performance-tests/Cubit/TAO/IDL_Cubit/svc.conf
+ 	* performance-tests/Cubit/TAO/IDL_Cubit/svc.conf
 
-		  Updated to use the right resource factory keeping in view 
-		  the advanced resource factory arguments passed to it.
+	  Updated to use the right resource factory keeping in view 
+	  the advanced resource factory arguments passed to it.
 
 Mon Nov 20 15:55:38 2000  Ossama Othman  <ossama@uci.edu>
 
@@ -22,15 +22,14 @@ Mon Nov 20 15:20:53 2000  Carlos O'Ryan  <coryan@uci.edu>
         * orbsvcs/TAO_Service/TAO_Service.cpp:
           Fixed warning about unreachable statement
 
-Mon Nov 20 15:04:34 2000  DOC Group CVS Access  <doccvs@ace.cs.wustl.edu>
+Mon Nov 20 15:04:34 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tests/RTCORBA/Server_Declared/server.conf: 
 	  Updated to provide the right arguments.
 	
 	* tests/RTCORBA/Client_Propagated/svc.conf: 
 	  Not needed. Removed.
-	  (Priyanka)
-  	
+
 Mon Nov 20 14:54:59 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/NVList.h:
