@@ -3,6 +3,17 @@
 
 // Thread_Manager.i
 
+ACE_INLINE
+ACE_Thread_Descriptor_Base::ACE_Thread_Descriptor_Base (void)
+  : thr_handle_ (ACE_OS::NULL_hthread)
+{
+}
+
+ACE_INLINE
+ACE_Thread_Descriptor_Base::~ACE_Thread_Descriptor_Base (void)
+{
+}
+
 // Unique thread id.
 ACE_INLINE ACE_thread_t
 ACE_Thread_Descriptor::self (void)
