@@ -23,9 +23,6 @@
 
 #if defined (__GNUG__)
 # include "ace/config-g++-common.h"
-# define ACE_NEEDS_WRITEV
-# define ACE_NEEDS_READV
-# define ACE_HAS_BROKEN_READV
 #elif defined (ghs)
 # define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
 # define ACE_HAS_TANDEM_SIGNALS
@@ -36,6 +33,10 @@
 #endif /* ! __GNUG__ && ! ghs */
 
 // OS-specific configuration
+
+# define ACE_NEEDS_WRITEV
+# define ACE_NEEDS_READV
+# define ACE_HAS_BROKEN_READV
 
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
