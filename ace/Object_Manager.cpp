@@ -665,12 +665,16 @@ ACE_Object_Manager::~ACE_Object_Manager (void)
         (*info.cleanup_hook_) (info.object_, info.param_);
     }
 
+  // Close the main thread's TSS, including its Log_Msg instance.
+  ACE_OS::cleanup_tss (1 /* main thread */);
+
+  //
+  // Note:  Do not access Log Msg after this since it is gone
+  //
+
   // Unlink all services in the Service Repository and close/delete
   // all ACE library services and singletons.
   ACE_Service_Config::close ();
-
-  // Close the main thread's TSS, including its Log_Msg instance.
-  ACE_OS::cleanup_tss (1 /* main thread */);
 
   // Close down Winsock (no-op on other platforms).
   ACE_OS::socket_fini ();

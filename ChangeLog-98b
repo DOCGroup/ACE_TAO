@@ -1,3 +1,26 @@
+Mon Aug 24 18:11:39 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Object_Manager.cpp (~ACE_Object_Manager): Moved TSS cleanup
+ 	  *before* Service_Config::close().  We need this to happen since
+ 	  DLL related TSS objects need to get cleaned up *before* the DLL
+ 	  is unlinked.  The only downside to this order of things is that
+ 	  Log_Msg will also get cleaned up by TSS cleanup, and we need to
+ 	  make sure that we do not access Log_Msg after TSS cleanup.  
+
+	  For this to work, we need to make sure of two things: user code
+ 	  is not called and ACE does not use Log_Msg after this after TSS
+ 	  resources have been cleaned up. The only major code that is
+ 	  called is Service_Config::close().  Since
+ 	  Service_Config::fini_svcs() has already been called,
+ 	  Service_Config::close() only unlinks the DLLs and does not call
+ 	  into user code.
+
+	* ace/Service_Repository.cpp (close): Don't access Log_Msg since
+ 	  it has already been deleted by the time this code runs.
+
+	* ace/Service_Config.cpp (close): Don't access Log_Msg since it
+ 	  has already been deleted by the time this code runs.
+
 Mon Aug 24 18:13:58 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/Aio_Platform_Test.cpp: Fixed a few problems due

@@ -150,8 +150,8 @@ ACE_Service_Repository::close (void)
       while (this->current_size_ > 0)
         {
           int i = --this->current_size_;
-          ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("shutting down %s\n"),
-                      this->service_vector_[i]->name ()));
+          //ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("shutting down %s\n"),
+          //            this->service_vector_[i]->name ()));
           delete (ACE_Service_Type *)this->service_vector_[i];
         }
 
