@@ -203,6 +203,17 @@ TAO_ORB_Parameters::single_read_optimization (int x)
   this->single_read_optimization_ = x;
 }
 
+ACE_INLINE bool
+TAO_ORB_Parameters::disable_rt_collocation_resolver (void) const
+{
+  return this->disable_rt_collocation_resolver_;
+}
+
+ACE_INLINE void
+TAO_ORB_Parameters::disable_rt_collocation_resolver (bool x)
+{
+  this->disable_rt_collocation_resolver_ = x;
+}
 
 #if 0
 
