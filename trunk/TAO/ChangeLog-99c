@@ -1,3 +1,11 @@
+Fri Aug  6 17:10:33 1999  Pradeep Gore  <pradeep@ace.cs.wustl.edu>
+
+	* examples/Event_Comm/Consumer_Handler.cpp:
+	* examples/Event_Comm/Notifier_Handler.cpp:
+	* examples/Event_Comm/Notifier_Server.cpp:
+	Added missing code to activate the POA Manager.
+	Thanks to Hoang Duong <hduong@lycosmail.com> for reporting this.
+
 Fri Aug  6 16:30:30 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/Borland/ChatClientWnd.cpp: Improved the printouts
