@@ -1,3 +1,8 @@
+Sun Jan 24 14:23:07 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/SString.cpp: The substring() method did not check for zero
+ 	  length.  Thanks to Mike Goldman for this fix.
+
 Sun Jan 24 02:08:57 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* websvcs/lib/URL_Addr.cpp: 

@@ -340,9 +340,11 @@ ACE_CString::substring (size_t offset,
   // case 2. start pos l
   if (offset >= this->len_)
     return nil;
-
-  // get all remaining bytes
-  if (length == -1)
+  // No length == empty string.
+  else if (lenth == 0)
+    return nil;
+  // Get all remaining bytes.
+  else if (length == -1)
     count = this->len_ - offset;
 
   return ACE_CString (&this->rep_[offset],
