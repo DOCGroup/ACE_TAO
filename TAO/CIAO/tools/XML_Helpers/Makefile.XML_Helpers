@@ -29,8 +29,8 @@ endif
 IDL_FILES = RTConfiguration
 
 FILES = \
-  RTConfiguration_Stubs \
   RTConfig_Handlers \
+  RTConfigurationC \
   XML_Utils \
   Softpkg_Handlers \
   Cascadable_DocHandler \
