@@ -12,7 +12,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LDLIBS = -lTAO -lTAO_PortableServer 
+LDLIBS = -lTAO_PortableServer -lTAO
 IDL_FILES = time
 IDL_SRC = timeC.cpp timeS.cpp
 IDL_HDR = timeC.h timeS.h
@@ -33,10 +33,8 @@ SIMPLE_SVR_OBJS = \
 		timeS.o \
 		server.o 
 
-
-BIN = server \
-      client
-BUILD = $(BIN)
+BIN2 = server \
+       client
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
@@ -45,6 +43,13 @@ BUILD = $(BIN)
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+
+ifeq ($(corba_messaging),1)
+  BIN = $(BIN2)
+endif # corba_messaging
+
+BUILD = $(BIN)
+
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
