@@ -1,3 +1,10 @@
+1999-06-03  Matthew J Braun  <mjb2@cs.wustl.edu>
+
+	* ace/Functor.i
+	* ace/Functor.h:
+	  Added ACE_Hash <unsigned long long>. It truncates the ULongLong
+	  to a ULong and returns it. Nothing major...
+
 Wed Jun  2 17:50:23 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* include/makeinclude/platform_mvs.GNU:
