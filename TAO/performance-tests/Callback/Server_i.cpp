@@ -18,12 +18,13 @@ Server_i::set_callback (Test::Callback_ptr callback,
 
 void
 Server_i::request (Test::TimeStamp time_stamp,
+                   const Test::Payload &payload,
                    CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (!CORBA::is_nil (this->callback_.in ()))
     {
-      this->callback_->response (time_stamp, ACE_TRY_ENV);
+      this->callback_->response (time_stamp, payload, ACE_TRY_ENV);
     }
 }
 

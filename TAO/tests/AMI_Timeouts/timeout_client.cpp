@@ -72,12 +72,12 @@ TimeoutClient::send (bool async,
       if (async)
         {
           timeoutObject_->sendc_sendTimeToWait (replyHandlerObject_,
-                                                msec, 
+                                                msec,
                                                 ACE_TRY_ENV);
         }
       else // synch
         {
-          timeoutObject_->sendTimeToWait (msec, 
+          timeoutObject_->sendTimeToWait (msec,
                                           ACE_TRY_ENV);
         }
 
@@ -107,8 +107,8 @@ TimeoutClient::svc ()
   ACE_TRY_NEW_ENV
     {
       unsigned long msec = 10;
-      
-      TimeBase::TimeT timeout = 10000 * msec; 
+
+      TimeBase::TimeT timeout = 10000 * msec;
 
       CORBA::Any any_orb;
       any_orb <<= timeout;
@@ -151,7 +151,7 @@ TimeoutClient::svc ()
       ACE_Time_Value tv (1, 0); // wait 1s to give the responses enough time.
       ACE_OS::sleep (tv);
 
-      // shut down ORB 
+      // shut down ORB
       //timeoutObject_->shutdown (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -171,4 +171,3 @@ TimeoutClient::svc ()
 
   return 0;
 };
-

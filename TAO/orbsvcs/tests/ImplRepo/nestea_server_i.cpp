@@ -232,16 +232,16 @@ Nestea_Server_i::run (CORBA::Environment &ACE_TRY_ENV)
 
   ACE_TRY
     {
-      status = this->orb_->run (ACE_TRY_ENV);
+      this->orb_->run (ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
+      status = -1;
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Nestea_i::run");
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
-
   ACE_CHECK_RETURN (-1);
 
   return status;

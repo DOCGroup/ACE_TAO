@@ -5,7 +5,7 @@
 #include "ImplRepo_i.h"
 #include "NT_Service.h"
 
-int 
+int
 run_standalone (void)
 {
   ImplRepo_i server;
@@ -27,7 +27,7 @@ run_standalone (void)
 
           status = server.fini (ACE_TRY_ENV);
           ACE_TRY_CHECK;
-          
+
           if (status == -1)
             return 1;
         }
@@ -48,7 +48,7 @@ run_standalone (void)
       return 1;
     }
   ACE_ENDTRY;
-  
+
   return 0;
 }
 
@@ -66,7 +66,7 @@ run_service (void)
   // being called from the service manager to start the service.
 
   ACE_NT_SERVICE_RUN (service, SERVICE::instance (), ret);
-  
+
   if (ret == 0)
     ACE_ERROR ((LM_ERROR, "%p\n", "Couldn't start service"));
 
@@ -80,7 +80,7 @@ int
 main (int argc, char *argv[])
 {
   int result = OPTIONS::instance ()->init (argc, argv);
-  
+
   if (result < 0)
     return 1;  // Error parsing args
   else if (result > 0)

@@ -156,7 +156,7 @@ Supplier::send_market_status (const char *stock_name,
 
   ACE_TRY
     {
-      
+
       // Make the RMI.
       this->notifier_->market_status (stock_name,
                                       value,
@@ -249,7 +249,7 @@ Supplier::via_naming_service (void)
       return -1;
     }
   ACE_ENDTRY;
-    
+
   return 0;
 }
 
@@ -318,7 +318,7 @@ Supplier::init (int argc, char **argv)
       return -1;
     }
   ACE_ENDTRY;
- 
+
   return 0;
 }
 

@@ -10,7 +10,7 @@ main (int argc, char *argv[])
   Airplane_Server_i server;
 
   ACE_DEBUG ((LM_DEBUG, "\n\tPaper Airplane Server\n\n"));
-  
+
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {

@@ -130,7 +130,8 @@ main (int argc, char *argv[])
 	  ACE_OS::fclose (output_file);
 	}
 
-      orb->run ();
+      orb->run (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
     }

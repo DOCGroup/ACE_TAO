@@ -732,9 +732,9 @@ TAO_IMR_Op_IOR::run (void)
           || !this->implrepo_->_stubobj ()->profile_in_use ())
         {
           ACE_ERROR_RETURN ((
-              LM_ERROR, 
+              LM_ERROR,
               ACE_TEXT ("Invalid Implementation Repository IOR\n")
-            ), 
+            ),
             -1
           );
         }
@@ -743,10 +743,10 @@ TAO_IMR_Op_IOR::run (void)
         this->implrepo_->_stubobj ()->profile_in_use ()->to_string (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      char *pos = ACE_OS::strstr (imr_str.inout (), 
+      char *pos = ACE_OS::strstr (imr_str.inout (),
                                   "://");
 
-      pos = 
+      pos =
         ACE_OS::strchr (
             pos + 3,
             this->implrepo_->_stubobj ()->profile_in_use ()->object_key_delimiter ()
@@ -758,8 +758,8 @@ TAO_IMR_Op_IOR::run (void)
         }
       else
         {
-          ACE_ERROR_RETURN ((LM_ERROR, 
-                             "Could not parse IMR IOR\n"), 
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Could not parse IMR IOR\n"),
                             -1);
         }
 
@@ -768,25 +768,25 @@ TAO_IMR_Op_IOR::run (void)
       // Add the key
       ior += this->server_name_;
 
-      ACE_DEBUG ((LM_DEBUG, 
-                  "%s\n", 
+      ACE_DEBUG ((LM_DEBUG,
+                  "%s\n",
                   ior.c_str ()));
 
       if (this->filename_.length () > 0)
         {
-          FILE *file = ACE_OS::fopen (this->filename_.c_str (), 
+          FILE *file = ACE_OS::fopen (this->filename_.c_str (),
                                       "w");
 
           if (file == 0)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "Error: Unable to open %s for writing: %p\n",
-                                 this->filename_.c_str ()), 
+                                 this->filename_.c_str ()),
                                 -1);
             }
 
-          ACE_OS::fprintf (file, 
-                           "%s", 
+          ACE_OS::fprintf (file,
+                           "%s",
                            ior.c_str ());
           ACE_OS::fclose (file);
         }
@@ -1104,10 +1104,10 @@ TAO_IMR_Op::display_server_information (const ImplementationRepository::ServerIn
     ACE_DEBUG ((LM_DEBUG, "Environment Variable: %s=%s \n",
                 info.startup.environment[i].name.in (),
                 info.startup.environment[i].value.in ()));
- 
+
   // @@ add logical server once implemented
 
- 
+
   if (info.startup.activation == ImplementationRepository::PER_CLIENT)
     ACE_DEBUG ((LM_DEBUG, "  No running info available for PER_CLIENT mode\n"));
   else if (ACE_OS::strlen (info.location) > 0)
@@ -1131,6 +1131,3 @@ TAO_IMR_Op_List::display_server_information (const ImplementationRepository::Ser
   else
     ACE_DEBUG ((LM_DEBUG, "<%s>\n", info.server.in ()));
 }
-
-
-

@@ -149,8 +149,8 @@ main (int argc, char *argv[])
       poa_manager->activate (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      if (orb_ptr->run () == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "run"), -1);
+      orb_ptr->run (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       good_poa->destroy (1,
                          1,

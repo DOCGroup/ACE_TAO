@@ -184,7 +184,7 @@ Client::Client (void)
     orb_ (TAO_AV_CORE::instance ()->orb ()),
     poa_ (TAO_AV_CORE::instance ()->poa ())
 {
-  endpoint_strategy_.init (TAO_AV_CORE::instance ()->orb (), 
+  endpoint_strategy_.init (TAO_AV_CORE::instance ()->orb (),
                            TAO_AV_CORE::instance ()->poa ());
 }
 
@@ -342,8 +342,9 @@ Client::run (void)
 
       // Schedule a timer for the for the flow handler.
       ACE_Time_Value tv (10000,0);
-      if (this->orb_->run (tv) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
+      this->orb_->run (tv, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
       ACE_DEBUG ((LM_DEBUG, "Exited the TAO_AV_Core::run\n"));

@@ -6,8 +6,8 @@
  *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
- *  @author John Tucker <jtucker@infoglide.com> 
- *  @author Mike Vitalo <mvitalo@infoglide.com>   
+ *  @author John Tucker <jtucker@infoglide.com>
+ *  @author Mike Vitalo <mvitalo@infoglide.com>
  */
 //=============================================================================
 

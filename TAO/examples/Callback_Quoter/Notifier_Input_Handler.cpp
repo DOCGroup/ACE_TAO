@@ -69,7 +69,7 @@ Notifier_Input_Handler::init_naming_service (CORBA::Environment &ACE_TRY_ENV)
     {
       Notifier_var notifier_obj = notifier_i_._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       this->orb_manager_.activate_poa_manager (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 

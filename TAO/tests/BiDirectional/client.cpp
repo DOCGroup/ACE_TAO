@@ -138,7 +138,8 @@ main (int argc, char *argv[])
                       r));
         }
 
-       orb->run ();
+      orb->run (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       root_poa->destroy (1, 1, ACE_TRY_ENV);
       ACE_TRY_CHECK;

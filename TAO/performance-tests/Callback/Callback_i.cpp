@@ -17,6 +17,7 @@ Callback_i::done (void)
 
 void
 Callback_i::response (Test::TimeStamp time_stamp,
+                      const Test::Payload &,
                       CORBA::Environment &)
   ACE_THROW_SPEC (())
 {
@@ -24,6 +25,12 @@ Callback_i::response (Test::TimeStamp time_stamp,
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
   if (this->remaining_samples_ == 0)
     return;
+
+  if (this->remaining_samples_ % 1000 == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Only %d messages to go\n",
+                  this->remaining_samples_));
+    }
   this->remaining_samples_--;
   this->history_.sample (now - time_stamp);
 }

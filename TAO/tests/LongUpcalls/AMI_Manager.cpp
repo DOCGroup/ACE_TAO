@@ -90,7 +90,8 @@ Worker::svc (void)
       for (;;)
         {
           ACE_Time_Value tv (0, 1000 * this->milliseconds_);
-          this->orb_->run (tv);
+          this->orb_->run (tv, ACE_TRY_ENV);
+          ACE_TRY_CHECK;
 
           ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, mutex, -1);
           if (pending_requests == 0)

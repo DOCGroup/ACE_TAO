@@ -219,8 +219,8 @@ Event_Service::run (int argc, char* argv[])
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "%s; running event service\n", __FILE__));
-      if (this->orb_->run () == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "run"), 1);
+      this->orb_->run (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       naming_context->unbind (channel_name, ACE_TRY_ENV);
       ACE_TRY_CHECK;

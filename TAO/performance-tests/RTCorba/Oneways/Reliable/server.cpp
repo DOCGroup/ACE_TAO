@@ -72,7 +72,7 @@ set_rt_mode (void)
     ACE_ERROR ((LM_ERROR,
 		"server (%P|%t):thr_setprio failed %p\n",
 		"set_rt_mode"));
-  
+
   // Do a sanity check.
   if (ACE_OS::thr_getprio (self, priority) == 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -151,11 +151,7 @@ main (int argc, char *argv[])
       poa_manager->activate (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      if (orb->run (ACE_TRY_ENV) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%p\n",
-                           "orb->run"),
-                          -1);
+      orb->run (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));

@@ -264,8 +264,8 @@ main (int argc, char **argv)
       ACE_TRY_CHECK;
 
       // Run the ORB.
-      if (orb->run () == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "CORBA::ORB::run"), -1);
+      orb->run (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

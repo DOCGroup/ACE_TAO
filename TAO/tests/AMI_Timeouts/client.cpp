@@ -99,14 +99,14 @@ main (int argc, char *argv[])
         }
 
       // Activate POA to handle the call back.
-      
+
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA");
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
                           1);
-      
+
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -131,7 +131,7 @@ main (int argc, char *argv[])
                                                  timeoutHandler_var.in ());
 
       client->activate ();
-      
+
       // ORB loop.
       ACE_Time_Value time (1,0); // 1 s
       orb->run (time);  // Fetch responses

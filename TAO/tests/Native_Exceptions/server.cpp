@@ -78,8 +78,8 @@ main (int argc, char *argv[])
 
       poa_manager->activate ();
 
-      if (orb->run () == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
+      orb->run ();
+
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
     }
   catch (CORBA::SystemException &ex)

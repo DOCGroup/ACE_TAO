@@ -12,7 +12,7 @@
 //
 // = DESCRIPTION
 //    Driver program that runs the TAO Naming Service as a Windows NT
-//    Service. 
+//    Service.
 //
 // = AUTHORS
 //    John Tucker <jtucker@infoglide.com> and
@@ -99,7 +99,7 @@ void
 Options::parse_args (int argc, char *argv[])
 {
   ACE_Get_Opt get_opt (argc, argv, "i:rskt:d");
-  int c; 
+  int c;
 
   while ((c = get_opt ()) != -1)
     switch (c)
@@ -199,13 +199,12 @@ Options::run (int argc, char* argv[])
                     "%p\n",
                     "Couldn't start service"));
     }
-  
+
   return 0;
 }
 
 int
 main (int argc, char *argv[])
-{	
+{
   return OPTIONS::instance ()->run (argc, argv);
 }
-

@@ -2,6 +2,7 @@
 
 #include "Latency.h"
 #include "orbsvcs/Event_Service_Constants.h"
+#include "tao/Strategies/advanced_resource.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Get_Opt.h"
@@ -49,7 +50,7 @@ main (int argc, char *argv [])
         CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-#if (TAO_HAS_MESSAGING == 1)
+#if (TAO_HAS_CORBA_MESSAGING == 1)
       CORBA::Object_var manager_object =
         orb->resolve_initial_references ("ORBPolicyManager",
                                          ACE_TRY_ENV);
@@ -198,20 +199,24 @@ main (int argc, char *argv [])
 
       task.activate ();
 
+      ACE_hrtime_t start = ACE_OS::gethrtime ();
       while (!task.done () || !consumer.done ())
         {
-          ACE_Time_Value tv (10, 0); //0, 10000);
+          ACE_Time_Value tv (1, 0);
           orb->run (tv, ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
+      ACE_hrtime_t end = ACE_OS::gethrtime ();
 
       ACE_Thread_Manager::instance ()->wait ();
 
       // Calibrate the high resolution timer *before* starting the
       // test.
+      ACE_DEBUG ((LM_DEBUG, "Calibrating high res timer ...."));
       ACE_High_Res_Timer::calibrate ();
 
       ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+      ACE_DEBUG ((LM_DEBUG, "Done (%d)\n", gsf));
       if (do_dump_history)
         {
           history.dump_samples ("HISTORY", gsf);
@@ -220,6 +225,14 @@ main (int argc, char *argv [])
       ACE_Basic_Stats stats;
       history.collect_basic_stats (stats);
       stats.dump_results ("Latency", gsf);
+
+      ACE_hrtime_t elapsed_microseconds = (end - start) / gsf;
+      double elapsed_seconds =
+        ACE_CU64_TO_CU32(elapsed_microseconds) / 1000000.0;
+      double throughput =
+        double(iterations) / elapsed_seconds;
+
+      ACE_DEBUG ((LM_DEBUG, "Throughtput: %f\n", throughput));
 
       proxy_supplier->disconnect_push_supplier (ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -316,6 +329,12 @@ EC_Latency_Consumer::push (const RtecEventComm::EventSet& events,
 
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, *this->mutex_);
   this->history_->sample (now - creation);
+  if (this->remaining_messages_ % 1000 == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Only %d messages to go\n",
+                  this->remaining_messages_));
+    }
+
   this->remaining_messages_--;
 }
 
@@ -363,6 +382,7 @@ Task::svc (void)
       event[0].header.type   = ACE_ES_EVENT_UNDEFINED;
       event[0].header.source = 1;
       event[0].header.ttl    = 1;
+      event[0].data.payload.length(1024);
 
       for (;;)
         {
