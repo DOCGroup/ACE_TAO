@@ -885,7 +885,13 @@ TAO_Persistent_Binding_Iterator::destroy (CORBA::Environment &ACE_TRY_ENV)
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
 template class ACE_Auto_Basic_Ptr<TAO_Persistent_Naming_Context>;
+template class ACE_Auto_Basic_Ptr<ACE_Shared_Hash_Map<TAO_Persistent_Index_ExtId,  TAO_Persistent_Index_IntId>::ITERATOR>;
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_Persistent_Naming_Context>
+#pragma instantiate ACE_Auto_Basic_Ptr<ACE_Shared_Hash_Map<TAO_Persistent_Index_ExtId,  TAO_Persistent_Index_IntId>::ITERATOR>
+
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
