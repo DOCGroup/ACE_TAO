@@ -1,4 +1,3 @@
-// Service_Record.cpp
 // $Id$
 
 #define ACE_BUILD_DLL
@@ -66,10 +65,10 @@ ACE_Service_Type_Impl::fini (void) const
         gobbler_ (this->object ());
       else
         // Cast to remove const-ness.
-        operator delete ((void *) this->object ());	
+        operator delete ((void *) this->object ());
     }
 
-  if (ACE_BIT_ENABLED (this->flags_, 
+  if (ACE_BIT_ENABLED (this->flags_,
                        ACE_Service_Type::DELETE_THIS))
     delete (ACE_Service_Type_Impl *) this;
 
@@ -77,8 +76,8 @@ ACE_Service_Type_Impl::fini (void) const
 }
 
 ACE_Service_Object_Type::ACE_Service_Object_Type (void *so,
-						  const ASYS_TCHAR *s_name,
-						  u_int f,
+                                                  const ASYS_TCHAR *s_name,
+                                                  u_int f,
                                                   ACE_Service_Object_Exterminator gobbler)
   : ACE_Service_Type_Impl (so, s_name, f, gobbler)
 {
@@ -108,8 +107,8 @@ ACE_Module_Type::dump (void) const
 }
 
 ACE_Module_Type::ACE_Module_Type (void *m,
-				  const ASYS_TCHAR *m_name,
-				  u_int f)
+                                  const ASYS_TCHAR *m_name,
+                                  u_int f)
   : ACE_Service_Type_Impl (m, m_name, f)
 {
   ACE_TRACE ("ACE_Module_Type::ACE_Module_Type");
@@ -261,8 +260,8 @@ ACE_Stream_Type::resume (void) const
 }
 
 ACE_Stream_Type::ACE_Stream_Type (void *s,
-				  const ASYS_TCHAR *s_name,
-				  u_int f)
+                                  const ASYS_TCHAR *s_name,
+                                  u_int f)
   : ACE_Service_Type_Impl (s, s_name, f),
     head_ (0)
 {
@@ -330,23 +329,23 @@ ACE_Stream_Type::remove (ACE_Module_Type *mod)
       ACE_Module_Type *link = m->link ();
 
       if (m == mod)
-	{
-	  if (prev == 0)
-	    this->head_ = link;
-	  else
-	    prev->link (link);
+        {
+          if (prev == 0)
+            this->head_ = link;
+          else
+            prev->link (link);
 
-	  // Final arg is an indication to *not* delete the Module.
-	  if (str->remove (m->name (),
+          // Final arg is an indication to *not* delete the Module.
+          if (str->remove (m->name (),
                            MT_Module::M_DELETE_NONE) == -1)
-	    result = -1;
+            result = -1;
 
-	  // This call may end up deleting m, which is ok since we
-	  // don't access it again!
-	  m->fini ();
-	}
+          // This call may end up deleting m, which is ok since we
+          // don't access it again!
+          m->fini ();
+        }
       else
-	prev = m;
+        prev = m;
 
       m = link;
     }
@@ -397,7 +396,7 @@ ACE_Service_Object_Type::fini (void) const
 #if 0
       if (ACE_BIT_ENABLED (this->flags_,
                            ACE_Service_Type::DELETE_OBJ))
-	delete so;
+        delete so;
 #endif /* 1 */
     }
 
