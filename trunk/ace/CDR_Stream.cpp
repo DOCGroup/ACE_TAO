@@ -1014,23 +1014,55 @@ ACE_InputCDR::reset (const ACE_Message_Block* data,
 void
 ACE_InputCDR::steal_from (ACE_InputCDR &cdr)
 {
-#if 0
   this->do_byte_swap_ = cdr.do_byte_swap_;
   this->start_.data_block (cdr.start_.data_block ()->duplicate ());
   this->start_.rd_ptr (cdr.start_.rd_ptr ());
   this->start_.wr_ptr (cdr.start_.wr_ptr ());
-#endif
-  this->steal_data (cdr);
   cdr.reset_contents ();
 }
 
 void
-ACE_InputCDR::steal_data (ACE_InputCDR &cdr)
+ACE_InputCDR::exchange_data_blocks (ACE_InputCDR &cdr)
 {
-  this->do_byte_swap_ = cdr.do_byte_swap_;
-  this->start_.data_block (cdr.start_.data_block ()->duplicate ());
-  this->start_.rd_ptr (cdr.start_.rd_ptr ());
-  this->start_.wr_ptr (cdr.start_.wr_ptr ());
+  // Exchange byte orders
+  int byte_order = cdr.do_byte_swap_;
+  cdr.do_byte_swap_ = this->do_byte_swap_;
+  this->do_byte_swap_ = byte_order;
+
+  // Get the destination read and write pointers
+  size_t drd_pos =
+    cdr.start_.rd_ptr () - cdr.start_.base ();
+  size_t dwr_pos =
+    cdr.start_.wr_ptr () - cdr.start_.base ();
+
+  // Get the source read & write pointers
+  size_t srd_pos =
+    this->start_.rd_ptr () - this->start_.base ();
+  size_t swr_pos =
+    this->start_.wr_ptr () - this->start_.base ();
+
+  // Exchange data_blocks. Dont release any of the data blocks.
+  ACE_Data_Block *dnb =
+    this->start_.replace_data_block (cdr.start_.data_block ());
+  cdr.start_.replace_data_block (dnb);
+
+
+  // Reset the <cdr> pointers to zero before it is set again.
+  cdr.start_.reset ();
+  this->start_.reset ();
+
+  // Set the read and write pointers.
+  if (cdr.start_.size () >= srd_pos)
+    cdr.start_.rd_ptr (srd_pos);
+
+  if (cdr.start_.size () >= swr_pos)
+    cdr.start_.wr_ptr (swr_pos);
+
+  if (this->start_.size () >= drd_pos)
+    this->start_.rd_ptr (drd_pos);
+
+  if (this->start_.size () >= dwr_pos)
+    this->start_.wr_ptr (dwr_pos);
 }
 
 
