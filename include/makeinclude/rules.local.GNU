@@ -125,14 +125,14 @@ $(INSMAN)/man7/% \
 $(INSMAN)/man8/% \
 $(INSMAN)/manl/% \
 $(INSMAN)/mann/% :
-		if test $(shell pwd) != $(@D) ; then \
-			if test -s $@ ; then \
-				echo "$(@F) already installed" ; \
-			else \
-				echo "Installing $(@F) -> $(@D)" ; \
-				ln -s $(shell pwd)/$(@F) $@ ; \
-			fi ; \
-		fi
+	@if test $(shell pwd) != $(@D) ; then \
+		if test -s $@ ; then \
+			echo "$(@F) already installed" ; \
+		else \
+			echo "Installing $(@F) -> $(@D)" ; \
+			ln -s $(shell pwd)/$(@F) $@ ; \
+		fi ; \
+	fi
 ifdef MVSLIB
 #special for MVS in order to use the .x files
 	@if test -w $(@D) ; then \

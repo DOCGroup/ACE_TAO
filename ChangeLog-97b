@@ -1,5 +1,9 @@
 Wed Nov 19 04:02:09 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* include/makeinclude/rules.local.GNU (show_uninit): It seems
+ 	  there was a missing '@' at the beginning of the line.  Thanks to
+ 	  Hans Rohnert for reporting this.
+
 	* tests/Process_Strategy_Test.cpp (handle_input): Fixed Irfan's
  	  code, which keeps breaking ACE ;-).
 
@@ -535,7 +539,7 @@ Wed Nov 12 16:29:15 1997  Sumedh Mungee  <sumedh@lindy.cs.wustl.edu>
         * platform_netbsd.GNU: added /usr/lib/c++rtO.o to SOBUILD to
           insure that static objects' ctors are called.
 
-cvs diWed Nov 12 00:20:38 1997  David L. Levine  <levine@cs.wustl.edu>
+Wed Nov 12 00:20:38 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.{i,cpp} (inet_ntoa): use VxWorks' native inet_ntoa.  It's
           not documented but it works.
