@@ -1130,6 +1130,10 @@ SOURCE=.\ATM_Stream.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Atomic_Op.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Auto_Ptr.h
 # End Source File
 # Begin Source File
@@ -3078,6 +3082,10 @@ SOURCE=.\Active_Map_Manager_T.cpp
 
 SOURCE=.\Asynch_Acceptor.cpp
 # PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Atomic_Op.cpp
 # End Source File
 # Begin Source File
 
