@@ -1,3 +1,7 @@
+Sat Apr 11 19:53:54 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * ACE version 4.4.39, released Sat Apr 11 19:53:54 1998.
+
 Sat Apr 11 18:58:24 1998  Steve Huston  <shuston@riverace.com>
 
 	* ace/INET_Addr.cpp: Fixed missing paren.
