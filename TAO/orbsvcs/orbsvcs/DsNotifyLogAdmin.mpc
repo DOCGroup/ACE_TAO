@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(DsNotifyLogAdmin) : orbsvcslib, core, dseventlogadmin, notification {
+project(DsNotifyLogAdmin) : orbsvcslib, core, dseventlogadmin, notification_skel {
   sharedname   = TAO_DsNotifyLogAdmin
   idlflags    += -Wb,export_macro=TAO_NotifyLog_Export -Wb,export_include=orbsvcs/Log/notifylog_export.h
   dynamicflags = TAO_NOTIFYLOG_BUILD_DLL
