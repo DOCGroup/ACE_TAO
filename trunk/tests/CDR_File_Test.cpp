@@ -24,6 +24,7 @@
 #include "ace/Get_Opt.h"
 #include "test_config.h"
 #include "ace/ACE.h"
+#include "ace/streams.h"
 
 ACE_RCSID(tests, CDR_File_Test, "$Id$")
 

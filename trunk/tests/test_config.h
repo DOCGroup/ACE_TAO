@@ -32,7 +32,7 @@
 
 // This first #undef protects against command-line definitions.
 #undef ACE_NDEBUG
-#include "ace/streams.h"
+#include "ace/OS_NS_errno.h"
 #include "ace/Log_Msg.h"
 
 #if defined (ACE_HAS_WINCE)
