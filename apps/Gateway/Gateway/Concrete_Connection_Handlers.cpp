@@ -277,7 +277,7 @@ Supplier_Handler::recv (ACE_Message_Block *&forward_addr)
       // it directly without having to repeatedly muck with it...
       event->header_.decode ();
 
-      if (event->header_.len_ > sizeof event->data_)
+      if (event->header_.len_ > ACE_INT32 (sizeof event->data_))
 	{
 	  // This data_ payload is too big!
 	  errno = EINVAL;
