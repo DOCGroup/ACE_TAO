@@ -1,0 +1,24 @@
+// $Id$
+
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/OctetSeq
+//
+// = FILENAME
+//    test.idl
+//
+// = DESCRIPTION
+//   Simple IDL file to generate the TypeCodes for sequence<octet> and
+//   sequence<char>.
+//
+// = AUTHORS
+//    Carlos O'Ryan <coryan@cs.wustl.edu>
+//
+// ============================================================================
+
+module Test
+{
+  typedef sequence<octet> OctetSeq;
+  typedef sequence<char> CharSeq;
+};

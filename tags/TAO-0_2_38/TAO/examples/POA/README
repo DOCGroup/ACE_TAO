@@ -1,0 +1,58 @@
+// $Id$
+
+The following TAO applications illustate various Portable Object
+Adapter (POA) interfaces and their usage scenarios.
+
+        Individual README files in the respective directories explain
+these applications further. 
+
+        . RootPOA
+
+                This example explains how to obtain the name of the
+                RootPOA.
+
+        . NewPOA
+
+                This example explains the operations involved in
+                creation of new POAs.
+
+        . FindPOA
+
+                This example explains registering an adapter activator
+                for a POA and also the find_POA operation.
+
+        . Generic_Servant
+
+                A simple interface (Foo) is defined here and its
+                implementations, server and client programs are
+                available, which can be used for testing POA
+                applications.  Several servers for that interface are
+                implemented using different POA policies; a common
+                client for all the servers is also provided.
+
+        . On_Demand_Activation 
+                
+                Contains programs that test the POA's 2 types of
+                activation of objects on demand, namely , Servant
+                Activator approach and Servant Locator , which depend
+                on the RETAIN/NON-RETAIN policy of a POA.
+
+        . Default_Servant 
+		
+		Contains a File IDL module and its implementation and
+		a server,client to test the File Module interfaces.
+		The System interface uses the USE_DEFAULT_MANAGER policy
+		to create a POA and registers a single File Descriptor
+		object as the default servant. The default servant serves
+		requests for many Descriptor objects.
+
+        . Explicit_Activation
+
+                This application explains various operations involved
+                in the explicit activation of objects; including the
+                creation of objects without servants (the servant is
+                created on demand).  NOTE: Currently the example does
+                not work.  < It compiles; but at runtime, _narrow()
+                raises an exception on the client. >
+        
+        
