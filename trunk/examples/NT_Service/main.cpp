@@ -21,8 +21,9 @@
 
 #include "ace/Get_Opt.h"
 #include "ntsvc.h"
+// FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
-#include "ace/OS_main.h"
+#include "ace/OS_NS_errno.h"
 
 // Default for the -i (install) option
 #define DEFAULT_SERVICE_INIT_STARTUP     SERVICE_AUTO_START
