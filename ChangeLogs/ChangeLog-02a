@@ -1,3 +1,10 @@
+Thu Nov  9 18:39:42 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/config-sunos5.5.h:
+
+          Added ACE_LACKS_MEMORY_H for SunCC 5, since it seems there is
+          a bad interaction between memory.h and string.h on that config.
+
 Thu Nov  9 17:47:37 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * examples/IPC_SAP/SPIPE_SAP/producer_msg.cpp:
