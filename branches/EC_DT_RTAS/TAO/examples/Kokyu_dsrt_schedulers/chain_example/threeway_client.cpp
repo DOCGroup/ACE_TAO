@@ -612,7 +612,7 @@ Worker::svc (void)
           DSTRM_EVENT (WORKER_GROUP_FAM, UPDATE_SCHED_SEGMENT_END, 0, sizeof(Object_ID), (char*)&oid);
         }
 
-        TAO_debug_level = 1;
+//        TAO_debug_level = 1;
       if (i==0)
 	start_t =  ACE_OS::gettimeofday ();
       else {
@@ -657,7 +657,7 @@ Worker::svc (void)
         {
           int sleep_t = period_ * 1000 -
             (int)(period_ * rand2 * 1000) +
-            repair_t.sec()*1000 + repair_t.usec();
+            repair_t.sec()*1000000 + repair_t.usec();
 
           if(sleep_t > 0)
             {
