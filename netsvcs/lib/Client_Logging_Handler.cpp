@@ -309,6 +309,10 @@ ACE_Client_Logging_Acceptor::fini (void)
   // we're using STREAM pipes.
   ACE_OS::unlink (this->logger_key_);
 
+  // This memory was allocated by <ACE_OS::strdup>.
+  ACE_OS::free (this->logger_key_);
+  ACE_OS::free (this->server_host_);
+
   return 0;
 }
 
@@ -337,9 +341,9 @@ ACE_Client_Logging_Acceptor::info (char **strp, size_t length) const
 }
 
 ACE_Client_Logging_Acceptor::ACE_Client_Logging_Acceptor (void)
-  : server_host_ (ACE_DEFAULT_SERVER_HOST),
+  : server_host_ (ACE_OS::strdup (ACE_DEFAULT_SERVER_HOST)),
     server_port_ (ACE_DEFAULT_LOGGING_SERVER_PORT),
-    logger_key_ (ACE_DEFAULT_LOGGER_KEY),
+    logger_key_ (ACE_OS::strdup (ACE_DEFAULT_LOGGER_KEY)),
     handler_ (0)
 {
 }
@@ -413,10 +417,10 @@ ACE_Client_Logging_Acceptor::parse_args (int argc, char *argv[])
       switch (c)
 	{
 	case 'h':
-	  this->server_host_ = get_opt.optarg;
+	  this->server_host_ = ACE_OS::strdup (get_opt.optarg);
 	  break;
 	case 'k':
-	  this->logger_key_ = get_opt.optarg;
+	  this->logger_key_ = ACE_OS::strdup (get_opt.optarg);
 	  break;
 	case 'p':
 	  this->server_port_ = ACE_OS::atoi (get_opt.optarg);
