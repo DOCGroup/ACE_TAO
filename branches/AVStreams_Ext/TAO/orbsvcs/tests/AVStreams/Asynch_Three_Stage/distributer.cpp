@@ -97,6 +97,7 @@ Distributer::Distributer (void)
   : sender_name_ ("sender")
   , distributer_name_ ("distributer")
   , done_ (0)
+    , addr_file_ ("addr_file")
 {
 }
 
@@ -115,13 +116,16 @@ Distributer::parse_args (int argc,
                          char **argv)
 {
   // Parse command line arguments
-  ACE_Get_Opt opts (argc, argv, "s:r:");
+  ACE_Get_Opt opts (argc, argv, "s:r:a:");
 
   int c;
   while ((c= opts ()) != -1)
     {
       switch (c)
         {
+	case 'a':
+	  this->addr_file_ = opts.opt_arg ();
+	  break;
         case 's':
           this->sender_name_ = opts.opt_arg ();
           break;
@@ -167,6 +171,8 @@ Distributer::init (int argc,
                       argv);
   if (result != 0)
     return result;
+
+  this->connection_manager_.load_ep_addr (this->addr_file_.c_str ());
 
   ACE_NEW_RETURN (this->distributer_sender_mmdevice_,
                   TAO_MMDevice (&this->sender_endpoint_strategy_),

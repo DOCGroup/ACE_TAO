@@ -112,7 +112,7 @@ public:
   Protocol_Objects &protocol_objects (void);
   StreamCtrls &streamctrls (void);
 
-  void load_ep_addr (char* file_name);
+  void load_ep_addr (const char* file_name);
   
 protected:
 

@@ -11,15 +11,17 @@ Connection_Manager::~Connection_Manager (void)
 }
 
 void
-Connection_Manager::load_ep_addr (char* file_name)
+Connection_Manager::load_ep_addr (const char* file_name)
 {
   FILE* addr_file = ACE_OS::fopen (file_name, "r");
   
   if (addr_file == 0)
-    ACE_ERROR_RETURN ((LM_DEBUG,
-                       "Cannot open addr file %s\n",
-		       file_name),
-                      -1);
+    {
+      ACE_ERROR ((LM_DEBUG,
+		  "Cannot open addr file %s\n",
+		  file_name));
+      return;
+    }
   else
     ACE_DEBUG ((LM_DEBUG,
                 "Addr file opened successfully\n"));
@@ -27,48 +29,71 @@ Connection_Manager::load_ep_addr (char* file_name)
   while (1)
     {
       char buf [BUFSIZ];
+      
       // Read from the file into a buffer
+
+      
+      /*
       int n = ACE_OS::fread (buf,
 			     1,
 			     BUFSIZ,
 			     addr_file);
-      
-      if (n < 0)
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   "Sender::pace_data fread failed\n"),
-			  -1);
+      */
 
-      if (n == 0)
+      if ((ACE_OS::fgets (buf,BUFSIZ,addr_file)) == NULL)
 	{
 	  // At end of file break the loop and end the sender.
 	  if (TAO_debug_level > 0)
 	    ACE_DEBUG ((LM_DEBUG,"End of Addr file\n"));
 	  break;
 	}
+	
+
+      if (TAO_debug_level > 0)
+	ACE_DEBUG ((LM_DEBUG,
+		    "%s\n",
+		    buf));
 
       Endpoint_Addresses* addr;
       ACE_NEW (addr,
 	       Endpoint_Addresses);
 
-      TAO_Tokenizer addr_tokenizer (address,'/');
+      TAO_Tokenizer addr_tokenizer (buf,'/');
 
       ACE_CString flowname;
 
       if (addr_tokenizer [0] == 0)
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   "Corresponding flow name not specified for endpoint addresses\n"),
-			  -1);
+	{
+	  ACE_ERROR ((LM_ERROR,
+		      "Corresponding flow name not specified for endpoint addresses\n"));
+	  return;
+	}
       else
-	  flowname += addr_tokenizer [0];
+	flowname += addr_tokenizer [0];
       
       if (addr_tokenizer [1] != 0)
-	addr->sender_addr += addr_tokenizer [1];
+	addr->sender_addr += CORBA::string_dup (addr_tokenizer [1]);
 
       if (addr_tokenizer [2] != 0)
-	addr->receiver_addr += addr_tokenizer [2];
+	addr->receiver_addr += CORBA::string_dup (addr_tokenizer [2]);
 
-      ep_addr_.bind (flowname,
-		    addr);
+      int result = ep_addr_.bind (flowname,
+				  addr);
+      if (result == 0)
+	{
+	if (TAO_debug_level > 0)
+	  ACE_DEBUG ((LM_DEBUG,
+		      "Flowname %s Bound Successfully\n",
+		      flowname.c_str ()));
+	}
+      else if (result == 1)
+	ACE_DEBUG ((LM_DEBUG,
+		    "Flowname %s already exists\n",
+		    flowname.c_str ()));
+      else ACE_DEBUG ((LM_DEBUG,
+		       "Flowname %s Bound Failed\n",
+		       flowname.c_str ()));
+
       
     }
 
@@ -264,12 +289,26 @@ Connection_Manager::connect_to_receivers (AVStreams::MMDevice_ptr sender
       ACE_CString flowname =
         (*iterator).ext_id_;
 
-      Endpoint_Addresses* addr;
-      ep_addr_.find (floname,
+
+      Endpoint_Addresses* addr = 0;
+      ep_addr_.find (flowname,
 		     addr);
 
-      ACE_INET_Addr sender_addr (addr->sender_addr.c_str ());
-      ACE_INET_Addr receiver_addr (addr->receiver_addr);
+      ACE_CString sender_addr_str;
+      ACE_CString receiver_addr_str;
+
+      if (addr != 0)
+	{
+	  sender_addr_str = addr->sender_addr;
+	  receiver_addr_str = addr->receiver_addr;
+	}
+      else ACE_DEBUG ((LM_DEBUG,
+		       "No endpoint address for flowname %s\n",
+		       flowname.c_str ()));
+
+      ACE_INET_Addr receiver_addr (receiver_addr_str.c_str ());      
+      ACE_INET_Addr sender_addr (sender_addr_str.c_str ());
+
 
       // Create the forward flow specification to describe the flow.
       TAO_Forward_FlowSpec_Entry sender_entry (flowname.c_str (),
@@ -280,6 +319,7 @@ Connection_Manager::connect_to_receivers (AVStreams::MMDevice_ptr sender
                                                &sender_addr);
       
       sender_entry.set_peer_addr (&receiver_addr);
+
 
       // Set the flow specification for the stream between receiver
       // and distributer
@@ -446,23 +486,38 @@ Connection_Manager::connect_to_sender (ACE_ENV_SINGLE_ARG_DECL)
     "_" +
     this->receiver_name_;
 
+
   Endpoint_Addresses* addr;
-  ep_addr_.find (floname,
+  ep_addr_.find (flowname,
 		 addr);
   
-  ACE_INET_Addr sender_addr (addr->sender_addr.c_str ());
-  ACE_INET_Addr receiver_addr (addr->receiver_addr.c_str ());
+  ACE_CString sender_addr_str;
+  ACE_CString receiver_addr_str;
   
+  if (addr != 0)
+    {
+      sender_addr_str = addr->sender_addr;
+      receiver_addr_str = addr->receiver_addr;
+
+      ACE_DEBUG ((LM_DEBUG,
+		  "Address Strings %s %s\n",
+		  sender_addr_str.c_str (),
+		  receiver_addr_str.c_str ()));
+    }
   
+  ACE_INET_Addr sender_addr (sender_addr_str.c_str ());
+  ACE_INET_Addr receiver_addr (receiver_addr_str.c_str ());
+
   // Create the forward flow specification to describe the flow.
   TAO_Forward_FlowSpec_Entry sender_entry (flowname.c_str (),
                                            "IN",
                                            "USER_DEFINED",
                                            "",
                                            "UDP",
-                                           &local_addr);
-
+                                           &sender_addr);
+  
   sender_entry.set_peer_addr (&receiver_addr);
+
 
   // Set the flow specification for the stream between sender and
   // receiver.
