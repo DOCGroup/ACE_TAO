@@ -945,6 +945,10 @@ Service functionality to that server.</p>
     <td width="74%">Port on which to listen for multicast bootstrap requests.</td>
   </tr>
   <tr>
+    <td width="26%"><tt>-ORBtradingserviceport</tt></td>
+    <td width="74%">Port on which to listen for multicast bootstrap requests.</td>
+  </tr>
+  <tr>
     <td width="26%"><tt>-TSdumpior</tt></td>
     <td width="74%">Dumps the trader's IOR to a file (default is stdout).</td>
   </tr>
@@ -1006,10 +1010,13 @@ application, then run the <tt>export_test</tt> executable found in the <tt>orbsv
 directory. When the <tt>export_test</tt> ceases to output data and enters the event loop,
 run the <tt>import_test</tt> found in the same directory. </p>
 
-<p><strong>Note: </strong>The export_test and the Trading_Service executables are servers
---- the export_test is a server of dynamic properties. Hence, if you run both executables
-on the same machine, you must supply them with different ports. For example, add -ORBport
-0 to the export_test command line.&nbsp; </p>
+<p>Also of importance: the <tt>-TSdumpior filename </tt> argument to the trader dumps
+its IOR to the file. You can then paste the contents on the command line to 
+the tests with <tt>-ORBtradingserviceior IOR</tt>, or into the environment variable
+<tt>TradingServiceIOR</tt>.</p> 
+
+<p>The expected output of the tests can be found in the README file in the
+tests directory.</p>
 
 <p>To test federated queries, run at least three copies of the <tt>Trading_Service</tt>
 application, each using the <tt>-TSfederate</tt> flag. The traders will form a complete
