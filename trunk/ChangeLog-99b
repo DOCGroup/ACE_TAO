@@ -1,3 +1,9 @@
+Thu Sep 30 20:40:42 1999  Marina Spivak  <marina@cs.wustl.edu>
+
+	* bin/run_all_list.pm:
+	  Added TAO/examples/Load_Balancing demo to the list of daily
+	  executed tests.
+
 Thu Sep 30 11:36:20 1999  Charles Frasch  <cfrasch@spawar.navy.mil>
 
         * include/makeinclude/wrapper_macros.GNU: in checks for
