@@ -1,9 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-#if !defined (ACE_WIN32)
-// Win32 versions in .cpp file
-
 ACE_INLINE DIR *
 ACE_OS_Dirent::opendir (const ACE_TCHAR *filename)
 {
@@ -15,11 +12,11 @@ ACE_OS_Dirent::opendir (const ACE_TCHAR *filename)
   DIR *dir;
   u_long result;
   ACE_NEW_RETURN (dir, DIR, 0);
-#if defined (ACE_PSOS_DIAB_PPC)
+#    if defined (ACE_PSOS_DIAB_PPC)
   result = ::open_dir (ACE_const_cast (char *, filename), &(dir->xdir));
-#else
+#    else
   result = ::open_dir (ACE_const_cast (char *, filename), dir);
-#endif /* defined ACE_PSOS_DIAB_PPC */
+#    endif /* defined ACE_PSOS_DIAB_PPC */
   if (result == 0)
     return dir;
   else
@@ -28,8 +25,12 @@ ACE_OS_Dirent::opendir (const ACE_TCHAR *filename)
       return 0;
     }
 #  else /* ! defined (ACE_PSOS) */
+#    if defined (ACE_WIN32)
+  return ::ACE_OS_Dirent::opendir_emulation (filename);
+#    else /* ACE_WIN32 */
   // VxWorks' ::opendir () is declared with a non-const argument.
   return ::opendir (ACE_const_cast (char *, filename));
+#    endif /* ACE_WIN32 */
 #  endif /* ! defined (ACE_PSOS) */
 #else
   ACE_UNUSED_ARG (filename);
@@ -41,20 +42,30 @@ ACE_INLINE void
 ACE_OS_Dirent::closedir (DIR *d)
 {
 #if defined (ACE_HAS_DIRENT)
-#  if defined (ACE_PSOS)
+# if defined (ACE_PSOS)
+  
   u_long result;
-#if defined (ACE_PSOS_DIAB_PPC)
+
+#   if defined (ACE_PSOS_DIAB_PPC)
   result = ::close_dir (&(d->xdir));
-#else
+#   else
   result = ::close_dir (d);
-#endif /* defined ACE_PSOS_DIAB_PPC */
+#   endif /* defined ACE_PSOS_DIAB_PPC */
+
   delete d;
   if (result != 0)
     errno = result;
-#  else /* ! defined (ACE_PSOS) */
+
+# else /* ! defined (ACE_PSOS) */
+
+#   if defined (ACE_WIN32)
+  ACE_OS_Dirent::closedir_emulation (d);
+#   else /* ACE_WIN32 */
   ::closedir (d);
-#  endif /* ! defined (ACE_PSOS) */
-#else
+#   endif /* ACE_WIN32 */
+
+# endif /* !ACE_PSOS */
+#else /* ACE_HAS_DIRENT */
   ACE_UNUSED_ARG (d);
 #endif /* ACE_HAS_DIRENT */
 }
@@ -87,15 +98,17 @@ ACE_OS_Dirent::readdir (DIR *d)
     }
 
 #  else /* ! defined (ACE_PSOS) */
+#    if defined (ACE_WIN32)
+  return ACE_OS_Dirent::readdir_emulation (d);
+#    else /* defined (ACE_WIN32) */
   return ::readdir (d);
+#    endif /* defined (ACE_WIN32) */
 #  endif /* ! defined (ACE_PSOS) */
 #else
   ACE_UNUSED_ARG (d);
   ACE_NOTSUP_RETURN (0);
 #endif /* ACE_HAS_DIRENT */
 }
-
-#endif /* !ACE_WIN32 */
 
 ACE_INLINE int
 ACE_OS_Dirent::readdir_r (DIR *dirp,

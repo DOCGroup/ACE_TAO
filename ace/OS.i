@@ -859,7 +859,7 @@ ACE_OS::getopt (int argc, char *const *argv, const char *optstring)
 ACE_INLINE int
 ACE_OS::pipe (ACE_HANDLE fds[])
 {
-# if !defined (ACE_HAS_WINCE) && !defined (__IBMCPP__) //VisualAge C++ 4.0 does not support this
+# if !defined (ACE_HAS_WINCE) && !defined (__IBMCPP__)
   ACE_TRACE ("ACE_OS::pipe");
   ACE_OSCALL_RETURN (::_pipe ((int *) fds, PIPE_BUF, 0),
                      int,
@@ -1275,7 +1275,7 @@ ACE_OS::_exit (int status)
 #elif defined (ACE_PSOSIM)
   ::u_exit (status);
 #elif defined (ACE_PSOS)
-# if defined (ACE_PSOS_LACKS_PREPC)  // pSoS TM does not support exit.
+# if defined (ACE_PSOS_LACKS_PREPC)  /* pSoS TM does not support exit. */
   ACE_UNUSED_ARG (status);
   return;
 # else
@@ -1298,88 +1298,6 @@ ACE_OS::abort (void)
   // @@ CE doesn't support abort?
   exit (1);
 #endif /* ACE_HAS_WINCE */
-}
-
-ACE_INLINE void *
-ACE_OS::malloc (size_t nbytes)
-{
-  ACE_TRACE ("ACE_OS::malloc");
-  return ACE_MALLOC_FUNC (nbytes);
-}
-
-ACE_INLINE void *
-ACE_OS::calloc (size_t elements, size_t sizeof_elements)
-{
-#if !defined (ACE_HAS_WINCE)
-  ACE_TRACE ("ACE_OS::calloc");
-  return ACE_CALLOC_FUNC (elements, sizeof_elements);
-#else
-  // @@ This will probably not work since it doesn't consider
-  // alignment properly.
-  return ACE_MALLOC_FUNC (elements * sizeof_elements);
-#endif /* ACE_HAS_WINCE */
-}
-
-ACE_INLINE void *
-ACE_OS::realloc (void *ptr, size_t nbytes)
-{
-  ACE_TRACE ("ACE_OS::realloc");
-  return ACE_REALLOC_FUNC (ACE_MALLOC_T (ptr), nbytes);
-}
-
-ACE_INLINE void
-ACE_OS::free (void *ptr)
-{
-  // ACE_TRACE ("ACE_OS::free");
-  ACE_FREE_FUNC (ACE_MALLOC_T (ptr));
-}
-
-ACE_INLINE int
-ACE_OS::memcmp (const void *t, const void *s, size_t len)
-{
-  ACE_TRACE ("ACE_OS::memcmp");
-  return ::memcmp (t, s, len);
-}
-
-ACE_INLINE const void *
-ACE_OS::memchr (const void *s, int c, size_t len)
-{
-#if defined (ACE_HAS_MEMCHR)
-  ACE_TRACE ("ACE_OS::memchr");
-  return ::memchr (s, c, len);
-#else
-  const u_char *t = (const u_char *) s;
-  const u_char *e = (const u_char *) s + len;
-
-  while (t < e)
-    if (((int) *t) == c)
-      return t;
-    else
-      t++;
-
-  return 0;
-#endif /* ACE_HAS_MEMCHR */
-}
-
-ACE_INLINE void *
-ACE_OS::memcpy (void *t, const void *s, size_t len)
-{
-  // ACE_TRACE ("ACE_OS::memcpy");
-  return ::memcpy (t, s, len);
-}
-
-ACE_INLINE void *
-ACE_OS::memmove (void *t, const void *s, size_t len)
-{
-  ACE_TRACE ("ACE_OS::memmove");
-  return ::memmove (t, s, len);
-}
-
-ACE_INLINE void *
-ACE_OS::memset (void *s, int c, size_t len)
-{
-  // ACE_TRACE ("ACE_OS::memset");
-  return ::memset (s, c, len);
 }
 
 #if !defined (ACE_HAS_WINCE)
@@ -1438,7 +1356,7 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
       if (::pthread_mutexattr_create (attributes) == 0)
 #   elif defined (ACE_HAS_PTHREADS_DRAFT7) || defined (ACE_HAS_PTHREADS_STD)
       if (ACE_ADAPT_RETVAL (::pthread_mutexattr_init (attributes), result) == 0)
-#   else // draft 6
+#   else /* draft 6 */
       if (::pthread_mutexattr_init (attributes) == 0)
 #   endif /* ACE_HAS_PTHREADS_DRAFT4 */
         result = 0;
@@ -9133,7 +9051,7 @@ ACE_OS::difftime (time_t t1, time_t t0)
 # else
   return ::difftime (t1, t0);
 # endif /* ACE_DIFFTIME  && ! ACE_PSOS_HAS_TIME */
-#endif // ACE_PSOS
+#endif /* ACE_PSOS */
 }
 #endif /* ! ACE_LACKS_DIFFTIME */
 
@@ -9732,7 +9650,7 @@ ACE_OS::execv (const char *path,
     ACE_OS::actorcaps_[result] = cactorcap;
   return result;
 #elif defined (ACE_WIN32)
-# if defined (__BORLANDC__) // VSB
+# if defined (__BORLANDC__) /* VSB */
   return ::execv (path, argv);
 # else
   return ::_execv (path, (const char *const *) argv);
@@ -9763,7 +9681,7 @@ ACE_OS::execve (const char *path,
     ACE_OS::actorcaps_[result] = cactorcap;
   return result;
 #elif defined (ACE_WIN32)
-# if defined (__BORLANDC__) // VSB
+# if defined (__BORLANDC__) /* VSB */
   return ::execve (path, argv, envp);
 # else
   return ::_execve (path, (const char *const *) argv, (const char *const *) envp);
@@ -9792,7 +9710,7 @@ ACE_OS::execvp (const char *file,
     ACE_OS::actorcaps_[result] = cactorcap;
   return result;
 #elif defined (ACE_WIN32)
-# if defined (__BORLANDC__) // VSB
+# if defined (__BORLANDC__) /* VSB */
   return ::execvp (file, argv);
 # else
   return ::_execvp (file, (const char *const *) argv);
@@ -9819,7 +9737,7 @@ ACE_OS::fdopen (ACE_HANDLE handle, const ACE_TCHAR *mode)
 
   if (crt_handle != -1)
     {
-#   if defined(__BORLANDC__) // VSB
+#   if defined(__BORLANDC__) /* VSB */
       file = ::_fdopen (crt_handle, (char *) mode);
 #   elif defined (ACE_USES_WCHAR)
       file = ::_wfdopen (crt_handle, mode);
@@ -11203,19 +11121,6 @@ ACE_OS::pthread_sigmask (int how, const sigset_t *nsp, sigset_t *osp)
   ACE_UNUSED_ARG (osp);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_PTHREADS_STD */
-}
-
-ACE_INLINE void *
-ACE_OS::sbrk (int brk)
-{
-  ACE_TRACE ("ACE_OS::sbrk");
-
-#if defined (ACE_LACKS_SBRK)
-  ACE_UNUSED_ARG (brk);
-  ACE_NOTSUP_RETURN (0);
-#else
-  ACE_OSCALL_RETURN (::sbrk (brk), void *, 0);
-#endif /* VXWORKS */
 }
 
 ACE_INLINE long

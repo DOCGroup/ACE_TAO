@@ -1,8 +1,55 @@
 // $Id$
 
-#include /**/ <string.h>
-#include /**/ <stdlib.h>
+// Matthew Stevens 7-10-95 Fix GNU GCC 2.7 for memchr() problem.
+#if defined (ACE_HAS_GNU_CSTRING_H)
+// Define this file to keep /usr/include/memory.h from being included.
+# include /**/ <cstring>
+#else
+# if !defined (ACE_LACKS_MEMORY_H)
+#   include /**/ <memory.h>
+# endif /* !ACE_LACKS_MEMORY_H */
+#endif /* ACE_HAS_GNU_CSTRING_H */
+
+#if !defined (ACE_PSOS_DIAB_MIPS)
+# include /**/ <stdlib.h>
+# include /**/ <string.h>
+#endif /* !ACE_PSOS_DIAB_MIPS */
+
 #include /**/ <ctype.h>
+
+ACE_INLINE int
+ACE_OS_String::memcmp (const void *t, const void *s, size_t len)
+{
+  return ::memcmp (t, s, len);
+}
+
+ACE_INLINE const void *
+ACE_OS_String::memchr (const void *s, int c, size_t len)
+{
+#if defined (ACE_HAS_MEMCHR)
+  return ::memchr (s, c, len);
+#else /* ACE_HAS_MEMCHR */
+  return ACE_OS_String::memchr_emulation (s, c, len);
+#endif /* ACE_HAS_MEMCHR */
+}
+
+ACE_INLINE void *
+ACE_OS_String::memcpy (void *t, const void *s, size_t len)
+{
+  return ::memcpy (t, s, len);
+}
+
+ACE_INLINE void *
+ACE_OS_String::memmove (void *t, const void *s, size_t len)
+{
+  return ::memmove (t, s, len);
+}
+
+ACE_INLINE void *
+ACE_OS_String::memset (void *s, int c, size_t len)
+{
+  return ::memset (s, c, len);
+}
 
 ACE_INLINE int
 ACE_OS_String::to_lower (int c)
@@ -58,13 +105,7 @@ ACE_OS_String::strchr (char *s, int c)
 #if !defined (ACE_HAS_WINCE)
   return ::strchr (s, c);
 #else
-  for (;;++s)
-    {
-      if (*s == c)
-        return s;
-      if (*s == 0)
-        return 0;
-    }
+  return ACE_OS::strchr_emulation (s, c);
 #endif /* ACE_HAS_WINCE */
 }
 
@@ -82,13 +123,7 @@ ACE_OS_String::strchr (const char *s, int c)
 #if !defined (ACE_HAS_WINCE)
   return (const char *) ::strchr (s, c);
 #else
-  for (;;++s)
-    {
-      if (*s == c)
-        return s;
-      if (*s == 0)
-        return 0;
-    }
+  return ACE_OS_String::strchr_emulation (s, c);
 #endif /* ACE_HAS_WINCE */
 }
 
@@ -100,32 +135,10 @@ ACE_OS_String::strchr (const wchar_t *s, wint_t c)
 }
 #endif /* ACE_HAS_WCHAR */
 
-ACE_INLINE const char *
-ACE_OS_String::strnchr (const char *s, int c, size_t len)
-{
-  for (size_t i = 0; i < len; i++)
-    if (s[i] == c)
-      return s + i;
-
-  return 0;
-}
-
-#if defined (ACE_HAS_WCHAR)
-ACE_INLINE const wchar_t *
-ACE_OS_String::strnchr (const wchar_t *s, wint_t c, size_t len)
-{
-  for (size_t i = 0; i < len; i++)
-    if (s[i] == c)
-      return s + i;
-
-  return 0;
-}
-#endif /* ACE_HAS_WCHAR */
-
 ACE_INLINE char *
 ACE_OS_String::strnchr (char *s, int c, size_t len)
 {
-#if defined ACE_PSOS_DIAB_PPC  //Complier problem Diab 4.2b
+#if defined ACE_PSOS_DIAB_PPC  /* Compiler problem Diab 4.2b */
   const char *const_char_s=s;
   return (char *) ACE_OS_String::strnchr (const_char_s, c, len);
 #else
@@ -137,7 +150,7 @@ ACE_OS_String::strnchr (char *s, int c, size_t len)
 ACE_INLINE wchar_t *
 ACE_OS_String::strnchr (wchar_t *s, wint_t c, size_t len)
 {
-#if defined ACE_PSOS_DIAB_PPC  //Complier problem Diab 4.2b
+#if defined ACE_PSOS_DIAB_PPC  /* Compiler problem Diab 4.2b */
   const wchar_t *const_wchar_s=s;
   return (wchar_t *) ACE_OS_String::strnchr (const_wchar_s, c, len);
 #else
@@ -191,7 +204,7 @@ ACE_OS_String::strlen (const wchar_t *s)
 ACE_INLINE char *
 ACE_OS_String::strnstr (char *s, const char *t, size_t len)
 {
-#if defined ACE_PSOS_DIAB_PPC  //Complier problem Diab 4.2b
+#if defined ACE_PSOS_DIAB_PPC  /* Compiler problem Diab 4.2b */
   const char *const_char_s=s;
   return (char *) ACE_OS_String::strnstr (const_char_s, t, len);
 #else
@@ -213,35 +226,19 @@ ACE_OS_String::strrchr (char *s, int c)
 #if !defined (ACE_LACKS_STRRCHR)
   return ::strrchr (s, c);
 #else
-  char *p = s + ::strlen (s);
-
-  while (*p != c)
-    if (p == s)
-      return 0;
-    else
-      p--;
-
-  return p;
+  return ACE_OS_String::strrchr_emulation (s, c);
 #endif /* ACE_LACKS_STRRCHR */
 }
 
-#if defined (ACE_HAS_WCHAR)
+#if defined (ACE_HAS_WCHAR) 
 ACE_INLINE const wchar_t *
 ACE_OS_String::strrchr (const wchar_t *s, wint_t c)
 {
-# if !defined (ACE_LACKS_WCSRCHR)
+#if !defined (ACE_LACKS_WCSRCHR)
   return (const wchar_t *) ::wcsrchr (s, c);
-# else
-  const wchar_t *p = s + ::wcslen (s);
-
-  while (*p != c)
-    if (p == s)
-      return 0;
-    else
-      p--;
-
-  return p;
-# endif /* ACE_LACKS_WCSRCHR */
+#else 
+  return ACE_OS_String::strrchr (s, c);
+#endif /* ACE_LACKS_WCSRCHR */
 }
 #endif /* ACE_HAS_WCHAR */
 
@@ -250,36 +247,20 @@ ACE_OS_String::strrchr (const char *s, int c)
 {
 #if !defined (ACE_LACKS_STRRCHR)
   return (const char *) ::strrchr (s, c);
-#else
-  const char *p = s + ::strlen (s);
-
-  while (*p != c)
-    if (p == s)
-      return 0;
-    else
-      p--;
-
-  return p;
+#else 
+  return ACE_OS_String::strrchr_emulation (s, c);
 #endif /* ACE_LACKS_STRRCHR */
 }
 
-#if defined (ACE_HAS_WCHAR)
+#if defined (ACE_HAS_WCHAR) 
 ACE_INLINE wchar_t *
 ACE_OS_String::strrchr (wchar_t *s, wint_t c)
 {
-# if !defined (ACE_LACKS_WCSRCHR)
+#if !defined (ACE_LACKS_WCSRCHR)
   return (wchar_t *) ::wcsrchr (s, c);
-# else
-  wchar_t *p = s + ::wcslen (s);
-
-  while (*p != c)
-    if (p == s)
-      return 0;
-    else
-      p--;
-
-  return p;
-# endif /* ACE_LACKS_WCSRCHR */
+#else 
+  return ACE_OS_String::strrchr (s, c);
+#endif /* ACE_LACKS_WCSRCHR */
 }
 #endif /* ACE_HAS_WCHAR */
 
@@ -311,53 +292,13 @@ ACE_OS_String::strcpy (wchar_t *s, const wchar_t *t)
 }
 #endif /* ACE_HAS_WCHAR */
 
-ACE_INLINE char *
-ACE_OS_String::strecpy (char *s, const char *t)
-{
-  register char *dscan = s;
-  register const char *sscan = t;
-
-  while ((*dscan++ = *sscan++) != '\0')
-    continue;
-
-  return dscan;
-}
-
-#if defined (ACE_HAS_WCHAR)
-ACE_INLINE wchar_t *
-ACE_OS_String::strecpy (wchar_t *s, const wchar_t *t)
-{
-  register wchar_t *dscan = s;
-  register const wchar_t *sscan = t;
-
-  while ((*dscan++ = *sscan++) != L'\0')
-    continue;
-
-  return dscan;
-}
-#endif /* ACE_HAS_WCHAR */
-
 ACE_INLINE size_t
 ACE_OS_String::strcspn (const char *s, const char *reject)
 {
 #if !defined (ACE_HAS_WINCE)
   return ::strcspn (s, reject);
-#else
-  const char *scan;
-  const char *rej_scan;
-  int count = 0;
-
-  for (scan = s; *scan; scan++)
-    {
-
-      for (rej_scan = reject; *rej_scan; rej_scan++)
-        if (*scan == *rej_scan)
-          return count;
-
-      count++;
-    }
-
-  return count;
+#else 
+  return ACE_OS_String::strcspn_emulation (s, reject);
 #endif /* ACE_HAS_WINCE */
 }
 
@@ -398,28 +339,7 @@ ACE_OS_String::strcasecmp (const char *s, const char *t)
 {
 #if !defined (ACE_WIN32) || defined (ACE_HAS_WINCE)
 # if defined (ACE_LACKS_STRCASECMP)
-  const char *scan1 = s;
-  const char *scan2 = t;
-
-  while (*scan1 != 0
-         && ACE_OS_String::to_lower (*scan1) == ACE_OS_String::to_lower (*scan2))
-    {
-      ++scan1;
-      ++scan2;
-    }
-
-  // The following case analysis is necessary so that characters which
-  // look negative collate low against normal characters but high
-  // against the end-of-string NUL.
-
-  if (*scan1 == '\0' && *scan2 == '\0')
-    return 0;
-  else if (*scan1 == '\0')
-    return -1;
-  else if (*scan2 == '\0')
-    return 1;
-  else
-    return ACE_OS_String::to_lower (*scan1) - ACE_OS_String::to_lower (*scan2);
+  return ACE_OS_String::strcasecmp_emulation (s, t);
 # else
   return ::strcasecmp (s, t);
 # endif /* ACE_LACKS_STRCASECMP */
@@ -430,71 +350,24 @@ ACE_OS_String::strcasecmp (const char *s, const char *t)
 #endif /* ACE_WIN32 */
 }
 
-#if defined (ACE_HAS_WCHAR)
+#if defined (ACE_HAS_WCHAR) 
 ACE_INLINE int
 ACE_OS_String::strcasecmp (const wchar_t *s, const wchar_t *t)
 {
-# if !defined (ACE_WIN32)
-  const wchar_t *scan1 = s;
-  const wchar_t *scan2 = t;
-
-  while (*scan1 != 0
-         && ACE_OS_String::to_lower (*scan1) == ACE_OS_String::to_lower (*scan2))
-    {
-      ++scan1;
-      ++scan2;
-    }
-
-  // The following case analysis is necessary so that characters which
-  // look negative collate low against normal characters but high
-  // against the end-of-string NUL.
-
-  if (*scan1 == '\0' && *scan2 == '\0')
-    return 0;
-  else if (*scan1 == '\0')
-    return -1;
-  else if (*scan2 == '\0')
-    return 1;
-  else
-    return ACE_OS_String::to_lower (*scan1) - ACE_OS_String::to_lower (*scan2);
-# else /* ACE_WIN32 */
+#if !defined (ACE_WIN32)
+  return ACE_OS_String::strcasecmp_emulation (s, t);
+#else /* ACE_WIN32 */
   return ::_wcsicmp (s, t);
-# endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 */ 
 }
-#endif /* ACE_HAS_WCHAR */
+#endif /* ACE_HAS_WCHAR*/
 
 ACE_INLINE int
 ACE_OS_String::strncasecmp (const char *s, const char *t, size_t len)
 {
 #if !defined (ACE_WIN32) || defined (ACE_HAS_WINCE)
 # if defined (ACE_LACKS_STRCASECMP)
-  const char *scan1 = s;
-  const char *scan2 = t;
-  size_t count = 0;
-
-  while (count++ < len
-         && *scan1 != 0
-         && ACE_OS_String::to_lower (*scan1) == ACE_OS_String::to_lower (*scan2))
-    {
-      ++scan1;
-      ++scan2;
-    }
-
-  if (count > len)
-    return 0;
-
-  // The following case analysis is necessary so that characters which
-  // look negative collate low against normal characters but high
-  // against the end-of-string NUL.
-
-  if (*scan1 == '\0' && *scan2 == '\0')
-    return 0;
-  else if (*scan1 == '\0')
-    return -1;
-  else if (*scan2 == '\0')
-    return 1;
-  else
-    return ACE_OS_String::to_lower (*scan1) - ACE_OS_String::to_lower (*scan2);
+  return ACE_OS_String::strncasecmp_emulation (s, t, len);
 # else
   return ::strncasecmp (s, t, len);
 # endif /* ACE_LACKS_STRCASECMP */
@@ -509,37 +382,11 @@ ACE_OS_String::strncasecmp (const char *s, const char *t, size_t len)
 ACE_INLINE int
 ACE_OS_String::strncasecmp (const wchar_t *s, const wchar_t *t, size_t len)
 {
-# if !defined (ACE_WIN32)
-  const wchar_t *scan1 = s;
-  const wchar_t *scan2 = t;
-  size_t count = 0;
-
-  while (count++ > len
-         && *scan1 != 0
-         && ACE_OS_String::to_lower (*scan1) == ACE_OS_String::to_lower (*scan2))
-    {
-      ++scan1;
-      ++scan2;
-    }
-
-  if (count > len)
-    return 0;
-
-  // The following case analysis is necessary so that characters which
-  // look negative collate low against normal characters but high
-  // against the end-of-string NUL.
-
-  if (*scan1 == '\0' && *scan2 == '\0')
-    return 0;
-  else if (*scan1 == '\0')
-    return -1;
-  else if (*scan2 == '\0')
-    return 1;
-  else
-    return ACE_OS_String::to_lower (*scan1) - ACE_OS_String::to_lower (*scan2);
-# else /* ACE_WIN32 */
+#if !defined (ACE_WIN32)
+  return ACE_OS::strncasecmp_emulation (s, t, len);
+#else /* ACE_WIN32 */
   return ::_wcsnicmp (s, t, len);
-# endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 */
 }
 #endif /* ACE_HAS_WCHAR */
 
@@ -605,19 +452,8 @@ ACE_OS_String::strtok_r (char *s, const char *tokens, char **lasts)
 {
 #if defined (ACE_HAS_REENTRANT_FUNCTIONS)
   return ::strtok_r (s, tokens, lasts);
-#else
-  if (s == 0)
-    s = *lasts;
-  else
-    *lasts = s;
-  if (*s == 0)                  // We have reached the end
-    return 0;
-  int l_org = ACE_OS_String::strlen (s);
-  int l_sub = ACE_OS_String::strlen (s = ::strtok (s, tokens));
-  *lasts = s + l_sub;
-  if (l_sub != l_org)
-    *lasts += 1;
-  return s ;
+#else 
+  return ACE_OS_String::strtok_r_emulation (s, tokens, lasts);
 #endif /* (ACE_HAS_REENTRANT_FUNCTIONS) */
 }
 
