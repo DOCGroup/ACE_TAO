@@ -43,7 +43,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 /machine:IX86
-# ADD LINK32 advapi32.lib user32.lib TAO_RTScheduler.lib TAO_RTCORBA.lib TAO.lib ACE.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\..\lib" /version:1.3.5
+# ADD LINK32 advapi32.lib user32.lib TAO_RTScheduler.lib TAO_RTCORBA.lib TAO.lib ACE.lib /nologo /subsystem:console /machine:I386 /libpath:"../../../../ace" /libpath:"../../../tao" /libpath:"../../../tao/RTCORBA" /libpath:"../../../tao/PortableServer" /libpath:"../../../tao/RTScheduling" /version:1.3.5
 # SUBTRACT LINK32 /pdb:none
 
 !ELSEIF  "$(CFG)" == "VoidData - Win32 Debug"
@@ -52,6 +52,7 @@ LINK32=link.exe
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "."
 # PROP Intermediate_Dir "Debug\VoidData"
+# PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD CPP /nologo /MDd /W3 /Gm /GR /GX /Zi /Gy /I "..\..\.." /I "..\..\..\tao" /I "..\..\..\.." /D "_DEBUG" /D "WIN32" /D "_CONSOLE" /FD /c
 # SUBTRACT CPP /YX
@@ -61,7 +62,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 /machine:IX86
-# ADD LINK32 advapi32.lib user32.lib TAO_RTSchedulerd.lib TAO_RTCORBAd.lib TAOd.lib ACEd.lib /nologo /subsystem:console /incremental:no /debug /machine:I386 /libpath:"..\..\..\..\lib" /version:1.3.5
+# ADD LINK32 advapi32.lib user32.lib TAO_RTSchedulerd.lib TAO_RTCORBAd.lib TAOd.lib ACEd.lib /nologo /subsystem:console /incremental:no /debug /machine:I386 /libpath:"../../../../ace" /libpath:"../../../tao" /libpath:"../../../tao/RTCORBA" /libpath:"../../../tao/PortableServer" /libpath:"../../../tao/RTScheduling" /version:1.3.5
 # SUBTRACT LINK32 /pdb:none
 
 !ENDIF 
