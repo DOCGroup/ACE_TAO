@@ -83,10 +83,22 @@ Indent : #
 	# stuff back out of the Makefile and into a file ".depend" which we then
 	# include just like the makefile components above.
 Depend : depend
-	perl fix.Makefile
+	perl ../fix.Makefile
 
 .depend : #
 	touch .depend
+
+
+HTML : #
+	[ -f hdr ] || $(MAKE) UNSHAR
+	perl ../combine *.pre ; chmod +r *.html
+
+SHAR : #
+	[ ! -f combine.shar ] || exit 1
+	shar -T hdr bodies *.pre > combine.shar && rm -f hdr bodies *.pre *.pst
+
+UNSHAR : #
+	sh combine.shar
 
 #----------------------------------------------------------------------------
 #	Dependencies
