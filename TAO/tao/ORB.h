@@ -387,20 +387,16 @@ protected:
   CORBA_Object_ptr resolve_poa_current (CORBA_Environment &ACE_TRY_ENV);
 
   /// Resolve the Policy Manager for this ORB.
-  /// Resolve the Policy Current for this thread.
   CORBA_Object_ptr resolve_policy_manager (CORBA::Environment&);
+
+  /// Resolve the Policy Current for this thread.
   CORBA_Object_ptr resolve_policy_current (CORBA::Environment&);
-
-
 
   /// Resolve the RTORB.
   CORBA_Object_ptr resolve_rt_orb (CORBA_Environment &ACE_TRY_ENV);
 
   /// Resolve the RT Current.
   CORBA_Object_ptr resolve_rt_current (CORBA_Environment &ACE_TRY_ENV);
-
-  /// Resolve the Priority_Mapping_Manager.
-  CORBA_Object_ptr resolve_priority_mapping_manager (CORBA_Environment &ACE_TRY_ENV);
 
 private:
 

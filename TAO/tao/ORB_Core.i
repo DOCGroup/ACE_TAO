@@ -664,25 +664,41 @@ TAO_ORB_Core::client_priority_policy_selector (void)
 ACE_INLINE CORBA::Object_ptr
 TAO_ORB_Core::rt_orb (CORBA::Environment &ACE_TRY_ENV)
 {
-if (CORBA::is_nil (this->rt_orb_))
+  if (CORBA::is_nil (this->rt_orb_.in ()))
     {
       this->resolve_rt_orb_i (ACE_TRY_ENV);
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
     }
-  return CORBA::Object::_duplicate (this->rt_orb_);
+
+  return CORBA::Object::_duplicate (this->rt_orb_.in ());
 }
 
 ACE_INLINE CORBA::Object_ptr
 TAO_ORB_Core::rt_current (void)
 {
-  return CORBA::Object::_duplicate (this->rt_current_);
+  if (CORBA::is_nil (this->rt_current_.in ()))
+    {
+      ACE_TRY_NEW_ENV
+        {
+          // Make sure the RT ORB is loaded and initialized since it
+          // also initializes the RTCurrent object.
+          this->resolve_rt_orb_i (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
+      ACE_CATCHANY
+        {
+          return CORBA::Object::_nil ();
+        }
+      ACE_ENDTRY;
+    }
+
+  return CORBA::Object::_duplicate (this->rt_current_.in ());
 }
 
 ACE_INLINE void
 TAO_ORB_Core::rt_current (CORBA::Object_ptr current)
 {
-  this->rt_current_ =
-    CORBA::Object::_duplicate (current);
+  this->rt_current_ = CORBA::Object::_duplicate (current);
 }
 
 #endif /* TAO_HAS_RT_CORBA == 1 */

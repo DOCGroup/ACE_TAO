@@ -2,11 +2,11 @@
 
 //=============================================================================
 /**
- *  @file     RT_ORBInitializer.h
+ *  @file RT_ORBInitializer.h
  *
  *  $Id$
  *
- *  @author  Ossama Othman <ossama@uci.edu>
+ *  @author Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================
 
@@ -24,6 +24,7 @@
 
 #include "tao/PortableInterceptorC.h"
 #include "tao/LocalObject.h"
+#include "tao/RT_PolicyFactory.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
@@ -53,11 +54,17 @@ public:
 
 private:
 
-  ////< Register RTCORBA policy factories.
+  /// Register RTCORBA policy factories.
   void register_policy_factories (
-           PortableInterceptor::ORBInitInfo_ptr info
-           TAO_ENV_ARG_DECL
-         );
+    PortableInterceptor::ORBInitInfo_ptr info,
+    CORBA::Environment &ACE_TRY_ENV);
+
+private:
+
+  /// Instance of the RTCORBA policy factory.
+  /// The RTCORBA policy factory is stateless and reentrant, so share
+  /// a single instance between all ORBs.
+  TAO_RT_PolicyFactory policy_factory_;
 
 };
 

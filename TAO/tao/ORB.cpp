@@ -503,22 +503,6 @@ CORBA_ORB::resolve_rt_current (CORBA::Environment &/*ACE_TRY_ENV*/)
 }
 
 CORBA_Object_ptr
-CORBA_ORB::resolve_priority_mapping_manager (CORBA::Environment &/*ACE_TRY_ENV*/)
-{
-
-#if (TAO_HAS_RT_CORBA == 1)
-
-    return this->orb_core_->priority_mapping_manager ();
-
-#else
-
-  return CORBA_Object::_nil ();
-
-#endif /* TAO_HAS_RT_CORBA == 1 */
-
-}
-
-CORBA_Object_ptr
 CORBA_ORB::resolve_rt_orb (CORBA::Environment &ACE_TRY_ENV)
 {
 #if (TAO_HAS_RT_CORBA == 1)
@@ -903,9 +887,6 @@ CORBA_ORB::resolve_initial_references (const char *name,
 
   else if (ACE_OS::strcmp (name, TAO_OBJID_RTORB) == 0)
     return this->resolve_rt_orb (ACE_TRY_ENV);
-
-  else if (ACE_OS::strcmp (name, TAO_OBJID_PRIORITYMAPPINGMANAGER) == 0)
-    return this->resolve_priority_mapping_manager (ACE_TRY_ENV);
 
   else if (ACE_OS::strcmp (name, TAO_OBJID_RTCURRENT) == 0)
     return this->resolve_rt_current (ACE_TRY_ENV);

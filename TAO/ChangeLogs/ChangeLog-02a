@@ -1,3 +1,182 @@
+Sun Feb 11 16:52:55 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Connection_Cache_Manager.cpp
+	  (TAO_Connection_Cache_Mananger):
+
+	  Initialize the lock pointer to zero in the base member
+	  initializer list.  Fixes an access violation that occured upon
+	  premature destruction of the Connection_Cache_Manager.  This
+	  also makes it possible to determine if
+	  Connection_Cache_Manager::open() was ever called.
+
+	* tao/Connection_Cache_Manager.inl (close):
+
+	  Do not attempt to close the connection cache manager if the lock
+	  pointer is zero.  Such a condition implies that the connection
+	  cache was never open()ed.
+
+	* tao/ORB.h:
+	* tao/ORB.cpp (resolve_priority_mapping_manager):
+
+	  Removed resolve_priority_mapping_manager() helper method.  It is
+	  no longer needed since the RT_ORBInitializer registers the
+	  "PriorityMappingManager" reference with the ORB.
+
+	* tao/ORB_Core.h (priority_mapping_manager_):
+
+	  This class member is now a local member, instead of a static
+	  one.  This fixes access violations that occured in the presence
+	  of multiple ORBs.
+
+	  It is also now a "_var".  This cleans up several memory
+	  management issues.
+
+	  (root_poa_):
+
+	  Changed this class member from "_var" to a "_ptr".  The code
+	  from which this reference is obtained
+	  (TAO_Object_Adapter::root()) does not duplicate the RootPOA
+	  reference, so the ORB Core should not attempt to release it.
+	  Rather than duplicate the reference in the ORB core, the code
+	  from which the RootPOA reference is obtained should perform the
+	  duplication.  For now, the class member will remain a "_ptr".
+
+	  (rt_orb_, rt_current_):
+
+	  Changed this class member from "_var" to a "_ptr".  This
+	  addresses some memory leaks.
+
+	* tao/ORB_Core.cpp (TAO_ORB_Core):
+
+	  Initialize the RootPOA reference to the nil reference in the
+	  base member initializer list.
+
+	  (~TAO_ORB_Core):
+
+	  Do not call delete() on the PolicyManager and PolicyCurrent
+	  object references.  They are reference counted.  As such, call
+	  CORBA::release() on them.  Fixes memory violations due to
+	  attempts to release dangling references/pointers.
+
+	  (fini):
+
+	  No need to explicitly release the PriorityMappingManager
+	  reference.  It will be released by the "_var" it is stored in
+	  when the ORB Core is destroyed.
+
+	  (root_poa):
+
+	  The root_poa_ member is no longer a "_var".  Adjusted all
+	  references to this member accordingly (i.e., removed the ".in()"
+	  calls).
+
+	  (priority_mapping_manager):
+
+	  Obtain the PriorityMappingManager object reference from the
+	  Object_Ref_Table, if it hasn't already been cached in the ORB
+	  Core.
+
+	  Removed method that sets the reference to the
+	  PriorityMappingManager object.  It is longer needed since each
+	  ORB now has its own PriorityMappingManager.
+
+	  These two changes address memory access violations that occured
+	  in the presence of multiple ORBs.
+
+	* tao/ORB_Core.i (rt_orb):
+
+	  The rt_orb_ class member is now "_var".  Updated code to use
+	  ".in()" accessors.
+
+	  (rt_current):
+
+	  Make sure the RTORB has been initialized prior to returning the
+	  reference to the RTCurrent object.  This is necessary since
+	  RTORB initialization causes the RTCurrent object to be
+	  initialized as well.
+
+	* tao/RT_Current.h (TAO_RT_Current):
+
+	  Derive this class from the reference counted version of
+	  CORBA::LocalObject, i.e. the "TAO_Local_RefCounted_Object"
+	  extension.  This addresses memory management issues.
+
+	* tao/Priority_Mapping_Manager.h (TAO_Priority_Mapping_Manager):
+	* tao/RT_Current.h (~TAO_RT_Current):
+	* tao/RT_Mutex.h (~TAO_RT_Mutex):
+
+	  Made destructor private to enforce proper memory management of
+	  this reference counted object.
+
+	* tao/RT_Current.cpp (the_priority):
+
+	  Check the return value of the call to
+	  {get,set}_thread_priority().  It isn't enough just to check for
+	  exceptions.
+
+	* tao/RT_ORB.cpp (create_named_mutex):
+
+	  Do not call delete() on a reference counted object.  The code
+	  now properly calls CORBA::release() on the object.
+
+	  Added missing ACE_CHECK_RETURN macro.
+
+	* tao/RT_ORBInitializer.h:
+
+	  The RTCORBA policy factory is stateless and reentrant, so share
+	  a single instance between all ORBs.
+
+	* tao/RT_ORBInitializer.cpp (pre_init):
+
+	  Register the "PriorityMappingManager" object reference with the
+	  ORB's resolve_initial_references() mechanism.
+
+	  (post_init):
+
+	  Do not instantiate the RT policy factory.  It is now a
+	  TAO_RT_ORBInitializer class member (stack allocated).
+
+	* tao/RT_ORB_Loader.h (set_objects):
+
+	  Made this helper method protected.  There is no reason why it
+	  should be public.
+
+	* tao/RT_ORB_Loader.cpp (create_object):
+
+	  Use ACE_NEW_THROW_EX instead ACE_NEW_RETURN.
+
+	  Store RTORB reference in a CORBA::Object_var and relinquish
+	  ownership upon return to the caller.  This improves exception
+	  safety of this method.
+
+	  (set_objects):
+
+	  Use ACE_NEW_THROW_EX instead of the raw "new()" operator.
+
+	* tao/RT_PolicyFactory.h (TAO_RT_PolicyFactory):
+
+	  Derive from CORBA::LocalObject to make reference counting a
+	  no-op.  The TAO_RT_PolicyFactory is now stack allocated.
+
+	* tao/RT_Policy_i.h:
+
+	  Made all policy and property class destructors protected to
+	  enforce proper memory management of those reference counted
+	  objects.
+
+	* tao/RT_Protocols_Hooks.cpp (set_priority_mapping):
+
+	  If the reference to the PriorityMappingManager is nil, then
+	  throw a CORBA::INV_OBJREF exception, i.e. don't just die
+	  quietly.
+
+	  (set_default_policies):
+
+	  Store the newly allocated ServerProtocolPolicy and
+	  ClientProtocolPolicy objects in their corresponding "_var"
+	  objects.  This fixes memory leaks, in addition to making the
+	  code exception safe.
+
 Sun Feb 11 14:44:24 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * tao/orbconf.h:
