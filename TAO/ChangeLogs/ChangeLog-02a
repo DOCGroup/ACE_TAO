@@ -1,3 +1,99 @@
+Sat Sep 02 16:47:29 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/DomainC.cpp:
+          Fixed problems when compiling with smart proxies enabled.
+
+        * tests/Portable_Interceptors/Benchmark/client.cpp:
+        * tests/Portable_Interceptors/Benchmark/interceptors.h:
+        * tests/Portable_Interceptors/Benchmark/marker.h:
+        * tests/Portable_Interceptors/Benchmark/server.cpp:
+          These examples did not compile under NT because some identifiers
+          were already used by the MSVC libraries.
+
+        * TAOACE.dsw:
+        * tests/TAO_Tests.dsw:
+        * examples/TAO_Examples.dsw:
+        * orbsvcs/tests/tests.dsw:
+        * performance-tests/TAO_Perf_Tests.dsw:
+        * tests/Portable_Interceptors/Benchmark/Benchmark.dsw:
+          Add several missing projects to these workspaces.
+
+        * docs/tutorials/Quoter/Naming_Service/client.dsp:
+        * docs/tutorials/Quoter/Naming_Service/server.dsp:
+        * docs/tutorials/Quoter/Simple/Client/client.dsp:
+        * docs/tutorials/Quoter/Simple/Impl-Repo/server.dsp:
+        * docs/tutorials/Quoter/Simple/ImprovedServer/improvedserver.dsp:
+        * docs/tutorials/Quoter/Simple/Persistent/server.dsp:
+        * docs/tutorials/Quoter/Simple/Server/server.dsp:
+        * examples/AMI/FL_Callback/AMI_Peer.dsp:
+        * examples/AMI/FL_Callback/AMI_Progress.dsp:
+        * examples/Buffered_AMI/client.dsp:
+        * examples/Buffered_AMI/server.dsp:
+        * examples/Content_Server/AMI_Iterator/client.dsp:
+        * examples/Content_Server/AMI_Iterator/server.dsp:
+        * examples/Content_Server/AMI_Observer/client.dsp:
+        * examples/Content_Server/AMI_Observer/server.dsp:
+        * examples/Content_Server/SMI_Iterator/server.dsp:
+        * examples/Load_Balancing/client.dsp:
+        * examples/Load_Balancing/server.dsp:
+        * examples/Load_Balancing/service.dsp:
+        * examples/Load_Balancing_persistent/client.dsp:
+        * examples/Load_Balancing_persistent/server.dsp:
+        * examples/Load_Balancing_persistent/service.dsp:
+        * examples/Simulator/Event_Supplier/DualEC_Sup.dsp:
+        * examples/Simulator/Event_Supplier/Event_Sup.dsp:
+        * examples/Simulator/Event_Supplier/Logging_Sup.dsp:
+        * orbsvcs/CosEvent_Service/CosEvent_Service_Native.dsp:
+        * orbsvcs/LoadBalancer/LoadBalancer_Service.dsp:
+        * orbsvcs/Time_Service/Time_Service_Clerk.dsp:
+        * orbsvcs/Time_Service/Time_Service_Server.dsp:
+        * orbsvcs/examples/CosEC/Factory/FactoryClient.dsp:
+        * orbsvcs/examples/CosEC/Factory/FactoryServer.dsp:
+        * orbsvcs/examples/Security/Send_File/Send_File_Server.dsp:
+        * orbsvcs/orbsvcs/Security.dsp:
+        * orbsvcs/tests/AVStreams/benchmark/av_benchmark_child.dsp:
+        * orbsvcs/tests/AVStreams/benchmark/av_benchmark_client.dsp:
+        * orbsvcs/tests/AVStreams/benchmark/av_benchmark_server.dsp:
+        * orbsvcs/tests/Concurrency/CC_client.dsp:
+        * orbsvcs/tests/EC_Basic/EC_Basic.dsp:
+        * orbsvcs/tests/EC_Custom_Marshal/ECCM_Consumer.dsp:
+        * orbsvcs/tests/EC_Custom_Marshal/ECCM_Supplier.dsp:
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.dsp:
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.dsp:
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer.dsp:
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier.dsp:
+        * orbsvcs/tests/EC_Throughput/ECT_Throughput.dsp:
+        * orbsvcs/tests/Event_Latency/Event_Latency.dsp:
+        * orbsvcs/tests/Interoperable_Naming/client.dsp:
+        * orbsvcs/tests/LoadBalancing/client.dsp:
+        * orbsvcs/tests/LoadBalancing/server.dsp:
+        * orbsvcs/tests/Property/client.dsp:
+        * orbsvcs/tests/Property/server.dsp:
+        * orbsvcs/tests/Sched_Conf/Sched_Conf.dsp:
+        * orbsvcs/tests/Sched_Conf/Sched_Conf_Anomalies.dsp:
+        * orbsvcs/tests/Sched_Conf/Sched_Conf_Runtime.dsp:
+        * orbsvcs/tests/Simple_Naming/client.dsp:
+        * orbsvcs/tests/Time/Time_Service_Test.dsp:
+        * orbsvcs/tests/Trading/Colocated_Test.dsp:
+        * orbsvcs/tests/Trading/Export_Test.dsp:
+        * orbsvcs/tests/Trading/Import_Test.dsp:
+        * performance-tests/Latency/st_server.dsp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/Client.dsp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/Server.dsp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Client.dsp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Server.dsp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Client.dsp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Server.dsp:
+        * tests/Portable_Interceptors/Benchmark/client.dsp:
+        * tests/Portable_Interceptors/Benchmark/server.dsp:
+        * tests/Smart_Proxies/client.dsp:
+        * tests/Smart_Proxies/server.dsp:
+        * tests/Smart_Proxies/Collocation/Coll_Test_Stubs.dsp:
+        * tests/Smart_Proxies/Collocation/Collocation.dsp:
+        * tests/Smart_Proxies/Collocation/Diamond.dsp:
+          More DSP files updates to compile with the new PortableServer
+          library.
+
 Sat Sep  2 12:26:40 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/DynamicAny/DynAny_i.cpp:

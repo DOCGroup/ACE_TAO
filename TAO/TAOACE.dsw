@@ -126,6 +126,21 @@ Package=<4>
 
 ###############################################################################
 
+Project: "CosEvent_Service_Native"=.\orbsvcs\CosEvent_Service\CosEvent_Service_Native.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CosEvent
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "CosLifeCycle"=.\orbsvcs\orbsvcs\CosLifeCycle.dsp - Package Owner=<4>
 
 Package=<5>
@@ -199,6 +214,12 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name gperf
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name PortableServer
     End Project Dependency
 }}}
 

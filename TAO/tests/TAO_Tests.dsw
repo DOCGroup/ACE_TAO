@@ -75,30 +75,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "ORB_init"=.\ORB_init\ORB_init.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "ORB_destroy"=.\ORB_destroy\ORB_destroy.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
 Project: "MT_Client Client"=.\MT_Client\client.dsp - Package Owner=<4>
 
 Package=<5>
@@ -172,6 +148,30 @@ Package=<4>
 ###############################################################################
 
 Project: "Multiple Inheritance Server"=.\Multiple_Inheritance\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Native Exceptions Client"=.\Native_Exceptions\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Native Exceptions Server"=.\Native_Exceptions\server.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -267,6 +267,30 @@ Package=<4>
 
 ###############################################################################
 
+Project: "ORB_destroy"=.\ORB_destroy\ORB_destroy.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ORB_init"=.\ORB_init\ORB_init.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "OctetSeq"=.\OctetSeq\OctetSeq.dsp - Package Owner=<4>
 
 Package=<5>
@@ -315,18 +339,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "POA Non_Servant_Upcalls"=.\POA\Non_Servant_Upcalls\Non_Servant_Upcalls.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
 Project: "POA Destruction"=.\POA\Destruction\Destruction.dsp - Package Owner=<4>
 
 Package=<5>
@@ -351,6 +363,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "POA Non_Servant_Upcalls"=.\POA\Non_Servant_Upcalls\Non_Servant_Upcalls.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Param_Test Client"=.\Param_Test\client.dsp - Package Owner=<4>
 
 Package=<5>
@@ -364,6 +388,30 @@ Package=<4>
 ###############################################################################
 
 Project: "Param_Test Server"=.\Param_Test\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Smart_Proxies client"=.\Smart_Proxies\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Smart_Proxies server"=.\Smart_Proxies\server.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -422,3 +470,4 @@ Package=<3>
 }}}
 
 ###############################################################################
+
