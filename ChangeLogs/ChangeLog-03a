@@ -1,3 +1,7 @@
+Wed Aug 29 15:47:33 2001  Steve Huston  <shuston@riverace.com>
+
+        * tests/run_test.lst: Re-enabled MEM_Stream_Test.
+
 Wed Aug 29 12:15:01 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/ace_dll.dsp:
