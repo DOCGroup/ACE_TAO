@@ -373,7 +373,7 @@ run_main (int, ACE_TCHAR *[])
 #if defined (ACE_HAS_WTHREADS)
   thr_mgr->kill_grp (grp_id,
                      SIGINT);
-#elif !defined (ACE_HAS_PTHREADS_DRAFT4)
+#elif !defined (ACE_HAS_PTHREADS_DRAFT4) && !defined(ACE_LACKS_PTHREAD_KILL)
 #if defined (CHORUS)
   ACE_ASSERT (thr_mgr->kill_grp (grp_id,
                                  SIGTHREADKILL) != -1);
