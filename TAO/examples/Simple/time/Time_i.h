@@ -1,3 +1,4 @@
+
 // -*- C++ -*-
 // $Id$
 
@@ -38,10 +39,10 @@ public:
 
   ~Time_i (void);
   // Destructor
-
+  
   virtual CORBA::Long time (CORBA::Environment &env);
-  // Return the current time/date on the server.
-
+  // Return the current time/date on the server
+  
   virtual void shutdown (CORBA::Environment &env);
   // Shutdown the server.
 
