@@ -629,17 +629,14 @@ DRV_pre_proc (const char *myfile)
   ACE_OS::strcat (tmp_file,  ftmpl.substr (0, 9).c_str ());
   ACE_OS::strcat (tmp_ifile, itmpl.substr (0, 9).c_str ());
 
-  ACE_Utils::UUID* uuid =
-    ACE_Utils::UUID_GENERATOR::instance ()->generateUUID ();
+  ACE_CString uuid = FE_generate_UUID ();
 
-  const char *suffix = uuid->to_string ()->c_str ();
+  const char *suffix = uuid.c_str ();
 
   ACE_OS::strcat (tmp_file, suffix);
   ACE_OS::strcat (tmp_ifile, suffix);
   ACE_OS::strcat (tmp_file,  temp_file_extension);
   ACE_OS::strcat (tmp_ifile, temp_file_extension);
-
-  delete uuid;
 
   char * t_file  = tmp_file;
   char * t_ifile = tmp_ifile;

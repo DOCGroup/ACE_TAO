@@ -1,3 +1,24 @@
+Mon Jul 19 11:08:29 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/tao_idl.cpp:
+        * TAO_IDL/driver/drv_preproc.cpp:
+        * TAO_IDL/fe/fe_extern.cpp:
+        * TAO_IDL/fe/fe_init.cpp:
+        * TAO_IDL/include/fe_extern.h:
+        
+          Moved calls to ACE_Utils::UUID_GENERATOR::instance ()
+          (which returns a template singleton instantiation)
+          from the TAO_IDL executable to the front end library.
+          Compiling the executable files in more than one build,
+          as we do now, causes problems with Tru64 if there
+          are templates in any of the executable files, since
+          Tru64 handles template instantiations differently than
+          other compilers. Moving code that involves template
+          instantiations to the front end or back end library
+          solves the problem, since these files are compiled
+          only once. Thanks to Johnny Willemsen <jwillemsen@remedy.nl>
+          for reporting the problem.
+
 Mon Jul 19 06:25:05 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/tests/Bug_1630_Regression/test.mpc:
