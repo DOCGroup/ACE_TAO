@@ -1,5 +1,6 @@
 // $Id$
 
+#include "ace/Synch.h"
 #include "client_i.h"
 #include "server_i.h"
 
@@ -9,13 +10,18 @@ void *
 svr_worker (void *arg)
 {
   Cubit_Server cubit_server;
+  ACE_Barrier *barrier = (ACE_Barrier *) arg;
   char *fake[] = {"server"};
 
   TAO_TRY
     {
       if (cubit_server.init (1, fake, TAO_TRY_ENV) == -1)
         return (void *) 1;
-      else cubit_server.run (TAO_TRY_ENV);
+      else
+        {
+          barrier->wait ();
+          cubit_server.run (TAO_TRY_ENV);
+        }
         TAO_CHECK_ENV;
     }
   TAO_CATCH (CORBA::SystemException, sysex)
@@ -40,14 +46,16 @@ main (int argc, char **argv)
 {
   Cubit_Client cubit_client;
   CORBA::Environment env;
+  ACE_Barrier barrier (2);
 
   int retv = 1;
 
   ACE_DEBUG ((LM_DEBUG,
               "\n \t IDL_Cubit: Collocation test \n\n"));
 
-  ACE_THREAD_MANAGER->spawn (svr_worker);
-  ACE_OS::sleep (5);
+  ACE_THREAD_MANAGER->spawn (svr_worker, &barrier);
+  barrier.wait ();
+  ACE_OS::sleep (1);
 
   if (cubit_client.init (argc, argv) == -1)
     return 1;
