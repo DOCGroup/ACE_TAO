@@ -1,6 +1,11 @@
+Sun Oct 17 22:28:39 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* docs/releasenotes/index.html: Updated release notes on the
+	  Logging Service.
+
 Sun Oct 17 20:42:41 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/QtTests/Makefile: 
+	* tests/QtTests/Makefile:
 	* tests/QtTests/server.cpp:
 	* tests/QtTests/client.cpp:
 	* tests/QtTests/client.h:
@@ -16,7 +21,7 @@ Sun Oct 17 20:42:41 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 Sun Oct 17 20:20:24 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tests/Param_Test/recursive_union.cpp:
-	  In methods that initialize the recursive unions, 
+	  In methods that initialize the recursive unions,
 	  replaced use of the CORBA 2.3 anonymous sequence
 	  typedef to define temporaries with the TAO-specific
 	  type. LynxOS uses the older GNU compiler that doesn't
@@ -30,22 +35,22 @@ Sun Oct 17 19:00:43 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp : Made changes to
 	  incorporate the -ORBMulticastDiscoveryEndpoint option to the
 	  ORB. The option is available now and has been tested. A sample
-	  usage of the option is 
+	  usage of the option is
 
 	  -ORBMulticastDiscoveryEndpoint "224.9.9.3:10014"
 
 Sat Oct 16 19:48:27 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/IOR_Multicast.cpp: 
+	* orbsvcs/orbsvcs/IOR_Multicast.cpp:
 	* orbsvcs/orbsvcs/IOR_Multicast.h:
 	* tao/params.h:
 	* tao/params.i:
 	* tao/ORB_Core.cpp:
 	* tao/ORB.cpp:
-	
+
 	  Made changes towards re-incarnating the
 	  -ORBMulticastDiscoveryEndpoint option to the ORB. The option is
-	  not fully incorporated yet.  
+	  not fully incorporated yet.
 
 Sat Oct 16 14:30:16 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
@@ -105,7 +110,7 @@ Fri Oct 15 17:47:24 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	  An application that uses QtReactor is yet to be written. That
 	  should be available in the next couple of days.
-	
+
 	* tao/Makefile: Added the above files for the build.
 
 Fri Oct 15 17:17:02 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
