@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -6,7 +6,9 @@
  *
  *  $Id$
  *
- *  @authors Jeff Parsons and Carlos O'Ryan
+ *  @author Jeff Parsons
+ *  @author Carlos O'Ryan
+ *  @author Ossama Othman
  */
 //=============================================================================
 
@@ -15,6 +17,7 @@
 #define TAO_FIXED_SIZE_SARGUMENT_T_H
 
 #include /**/ "ace/pre.h"
+
 #include "tao/Argument.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -26,24 +29,47 @@ namespace TAO
   /**
    * @class In_Fixed_Size_SArgument_T
    *
-   * @brief Template class for IN skeleton argument of fixed size IDL types.
+   * @brief Skeleton class template for operation "IN" arguments of
+   *        fixed size IDL types.
    *
+   * Skeleton class template for operation "IN" arguments of fixed
+   * size IDL types.
    */
   template<typename S>
   class In_Fixed_Size_SArgument_T : public Argument
   {
   public:
+
+    /// Constructor.
     In_Fixed_Size_SArgument_T (void);
 
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
+    /**
+     * @name @c TAO::Argument Method Overrides
+     *
+     * @c TAO::Argument method overrides specific to the type of
+     * operation argument represented by this class.
+     *
+     * @see @c TAO::Argument.
+     */
+    //@{
+    virtual CORBA::Boolean demarshal (TAO_InputCDR & cdr);
+
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_param (Dynamic::Parameter &);
+    virtual void interceptor_param (Dynamic::Parameter & p);
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    const S & arg (void) const;
+    //@}
+
+    /// Retrieve underlying argument.
+    S const & arg (void) const;
 
   private:
-    S * x_;
+
+    /// Reference to the "IN" argument.
+    S & arg_;
+
   };
+
+  // ------------------------------------------------------------
 
   /**
    * @class Inout_Fixed_Size_SArgument_T
@@ -55,18 +81,34 @@ namespace TAO
   class Inout_Fixed_Size_SArgument_T : public Argument
   {
   public:
+
+    /// Constructor.
     Inout_Fixed_Size_SArgument_T (void);
 
+    /**
+     * @name @c TAO::Argument Method Overrides
+     *
+     * @c TAO::Argument method overrides specific to the type of
+     * operation argument represented by this class.
+     *
+     * @see @c TAO::Argument.
+     */
+    //@{
     virtual CORBA::Boolean marshal (TAO_OutputCDR &);
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_param (Dynamic::Parameter &);
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
+    //@}
+
     S & arg (void);
 
   private:
+
     S * x_;
   };
+
+  // ------------------------------------------------------------
 
   /**
    * @class Out_Fixed_Size_SArgument_T
@@ -78,17 +120,34 @@ namespace TAO
   class Out_Fixed_Size_SArgument_T : public Argument
   {
   public:
+
+    /// Constructor.
     Out_Fixed_Size_SArgument_T (void);
 
+    /**
+     * @name @c TAO::Argument Method Overrides
+     *
+     * @c TAO::Argument method overrides specific to the type of
+     * operation argument represented by this class.
+     *
+     * @see @c TAO::Argument.
+     */
+    //@{
     virtual CORBA::Boolean marshal (TAO_OutputCDR &);
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_param (Dynamic::Parameter &);
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
+    //@}
+
     S & arg (void);
 
   private:
+
     S x_;
+
   };
+
+  // ------------------------------------------------------------
 
   /**
    * @class Ret_Fixed_Size_SArgument_T
@@ -100,20 +159,37 @@ namespace TAO
   class Ret_Fixed_Size_SArgument_T : public Argument
   {
   public:
+
+    /// Constructor.
     Ret_Fixed_Size_SArgument_T (void);
 
+    /**
+     * @name @c TAO::Argument Method Overrides
+     *
+     * @c TAO::Argument method overrides specific to the type of
+     * operation argument represented by this class.
+     *
+     * @see @c TAO::Argument.
+     */
+    //@{
     virtual CORBA::Boolean marshal (TAO_OutputCDR &);
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_result (CORBA::Any *);
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
+    //@}
+
     S & arg (void);
 
   private:
+
     S * x_;
+
   };
 
+  // ------------------------------------------------------------
+
   /**
-   * @struct Basic_Arg_Traits_T
+   * @struct Fixed_Size_SArg_Traits_T
    *
    * @brief Template class for argument traits of fixed size IDL types.
    *
@@ -122,7 +198,7 @@ namespace TAO
   struct Fixed_Size_SArg_Traits_T
   {
     typedef T                                 ret_type;
-    typedef const T &                         in_type;
+    typedef T const &                         in_type;
     typedef T &                               inout_type;
     typedef T &                               out_type;
 
@@ -131,7 +207,9 @@ namespace TAO
     typedef Out_Fixed_Size_SArgument_T<T>     out_arg_val;
     typedef Ret_Fixed_Size_SArgument_T<T>     ret_val;
   };
-};
+
+}
+
 
 #if defined (__ACE_INLINE__)
 #include "tao/Fixed_Size_SArgument_T.inl"

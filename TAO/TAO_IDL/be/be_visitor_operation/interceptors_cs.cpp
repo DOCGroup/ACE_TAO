@@ -756,7 +756,7 @@ be_visitor_operation_interceptors_cs::generate_class_definition (
       if (this->void_return_type (bt))
         {
           // Return an Any with tk_void TypeCode.
-          *os << "const CORBA::Boolean tk_void_any = 1;" << be_nl
+          *os << "static CORBA::Boolean const tk_void_any = 1;" << be_nl
               << "CORBA::Any *result_any ="  << be_idt_nl
               << "TAO_RequestInfo_Util::make_any "
               << "(tk_void_any ACE_ENV_ARG_PARAMETER);"
@@ -767,7 +767,7 @@ be_visitor_operation_interceptors_cs::generate_class_definition (
         }
       else
         {
-          *os << "const CORBA::Boolean tk_void_any = 0;" << be_nl
+          *os << "static CORBA::Boolean const tk_void_any = 0;" << be_nl
               << "CORBA::Any *result_any ="  << be_idt_nl
               << "TAO_RequestInfo_Util::make_any "
               << "(tk_void_any ACE_ENV_ARG_PARAMETER);"
