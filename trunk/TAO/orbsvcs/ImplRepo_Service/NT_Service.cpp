@@ -26,14 +26,12 @@ ImR_NT_Service::ImR_NT_Service (void)
 {
 }
 
-
 /**
  * Destructor, does nothing special.
  */
 ImR_NT_Service::~ImR_NT_Service (void)
 {
 }
-
 
 /**
  * Handles the SERVICE_CONTROL_SHUTDOWN and SERVICE_CONTROL_STOP commands

@@ -44,9 +44,9 @@ newsgroup. The newsgroup mirrors the mailing list, but not the other way.
 Also, if you use the mailing list, it is best if you join it before sending 
 a question since responses are usually just replied back to the group.
 
-The NT Service part of the ImR was developed by Jeff Parsons
-@<<a href="mailto:parsons@cs.wustl.edu">parsons@cs.wustl.edu</a>@>.
-He can also be reached via the same channels.
+The NT Service part of the ImR was developed by Jeff Parsons @<<a
+href="mailto:parsons@cs.wustl.edu">parsons@cs.wustl.edu</a>@>.  He can
+also be reached via the same channels.
 
 */
 
@@ -312,17 +312,17 @@ persistent ImR is started up.
 /**
 @page ntservice Running as an NT service
 
-The ImplRepo_Service.exe can now also function as a Windows NT Service.  The
--c option can be used to install and remove the service (this requires
-Administrator access on the machine).  
+The ImplRepo_Service.exe can now also function as a Windows NT
+Service.  The -c option can be used to install and remove the service
+(this requires Administrator access on the machine).
 
-@note When using the ImplRepo_Service as a service, it must have all of its 
-required ACE/TAO DLL's in the path or in the same directory.  For example, 
-the run_test.pl copies ImplRepo_Service.exe to the ACE_wrappers@\bin 
-directory before using "-c install".
+@note When using the ImplRepo_Service as a service, it must have all
+of its required ACE/TAO DLL's in the path or in the same directory.
+For example, the run_test.pl copies ImplRepo_Service.exe to the
+ACE_wrappers@\bin directory before using "-c install".
 
-The service can be then started either from the Windows NT "Services" Admin
-Tool or via the "net" program on the command line: 
+The service can be then started either from the Windows NT "Services"
+Admin Tool or via the "net" program on the command line:
 
 <CODE>net start "TAO Implementation Repository"</CODE>
 
