@@ -288,8 +288,10 @@ sub tag () {
   #### cvs tag does not allow dots.
   $tag =~ tr/./_/;
 
-  system ("$cvs -q tag $tag $controlled_files");
+  print "start tagging $tag\n";
+  system ("$cvs -q tag $tag $controlled_files > /dev/null");
   return 1 if $? >> 8;
+  print "finished tagging $tag\n";
 
   0;
 }
