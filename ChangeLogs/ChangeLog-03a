@@ -1,3 +1,24 @@
+Fri May 17 13:24:59 UTC 2002  Don Hinton  <dhinton@ieee.org>
+
+	* tests/Framework_Component_Test.cpp:
+
+	  Modified test to instantiate two different services from the
+	  same dll at different time in order to fully test how ACE_DLL,
+	  the Service Config framework, and ACE_Framework_Repository 
+	  cooperate in managing components in dynamically loaded, and 
+	  unloaded dlls.
+	
+	* tests/Framework_Component_DLL.{h,cpp}:
+
+	  Made the Server class a template with a non-type parameter so
+	  I could easily declare and export multiple services.  Moved 
+	  the Simple_Service class to the header along with the 
+	  adapter class (this should eventually be automatically generated 
+	  by the generate_export_file.pl script).  Added virtual dll_name()
+	  method to Simple_Service to make testing easier (this isn't needed
+	  by real classes that use the adapter template).
+
+
 Thu May 16 17:54:49 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* tests/Framework_Component_Test.{h,cpp}:
