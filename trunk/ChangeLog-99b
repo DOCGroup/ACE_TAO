@@ -1,3 +1,10 @@
+Fri Sep  3 09:05:20 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* ace/Containers_T.cpp (delete_nodes): Removed the redundant check
+	  which was verifying that <cur_size_> was always > 0. But
+	  <cur_size_> itself is unsigned so thsi check was redundant
+	  causing warnings with egcs.
+
 Thu Sep  2 23:54:49 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Containers_T.h (class ACE_Double_Linked_List): Added more
