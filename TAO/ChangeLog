@@ -1,3 +1,11 @@
+Mon Sep 15 11:16:51 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	* tao/RTScheduling/Request_Interceptor.cpp :
+
+	  In send_reply when the DT is cancelled the method should return
+	  and not continue as it used to before. Also corrected the
+	  updation of previous current in TSS. 
+	
 Mon Sep 15 07:05:31 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/RTCORBA/RTCORBA.mpc:
