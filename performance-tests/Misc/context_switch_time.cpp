@@ -64,11 +64,11 @@ static const char usage [] = "[-? |\n"
                              "       [-n to spawn a new LWP with each thread\n"
                              "[<iterations>]]";
 
-#include "Timer.h"
 #include "ace/Scheduling_Params.h"
 #include "ace/ACE.h"
 #include "ace/Task.h"
 #include "ace/Synch.h"
+#include "ace/High_Res_Timer.h"
 #include "ace/Get_Opt.h"
 #include <iomanip.h>
 
@@ -90,7 +90,7 @@ static const unsigned int HIGH_PRIORITY = 1;
 
 // global test configuration parameters
 static unsigned long count = 1;
-static unsigned long iterations = 1000;
+static unsigned long num_iterations = 1000;
 static unsigned int new_lwp = 0;
 
 
@@ -112,7 +112,7 @@ public:
   // continue
   void ready () { initialized_.acquire (); }
 
-  void close ();
+  void done ();
 
   ACE_hthread_t thread_id () const { return thread_id_; }
 private:
@@ -172,7 +172,7 @@ Low_Priority_Null_Task::svc ()
 }
 
 void
-Low_Priority_Null_Task::close ()
+Low_Priority_Null_Task::done ()
 {
   blocked_semaphore_.release ();
 }
@@ -192,15 +192,15 @@ public:
 
   virtual int svc ();
 
-  hrtime_t elapsed_time () const { return elapsed_time_; }
+  ACE_hrtime_t elapsed_time () const { return elapsed_time_; }
 private:
   const unsigned long iterations_;
 
   Low_Priority_Null_Task low_;
 
-  Timer timer_;
+  ACE_High_Res_Timer timer_;
 
-  hrtime_t elapsed_time_;
+  ACE_hrtime_t elapsed_time_;
 
   // force proper construction of independent instances
   Suspend_Resume_Test ();
@@ -260,7 +260,7 @@ Suspend_Resume_Test::svc ()
   timer_.stop ();
   timer_.elapsed_microseconds (elapsed_time_);
 
-  low_.close ();
+  low_.done ();
 
 #if DEBUG > 0
   cout << "Suspend_Resume_Test::svc, finishing" << endl;
@@ -288,7 +288,7 @@ public:
   // continue
   void ready () { initialized_.acquire (); }
 
-  void close ();
+  void done ();
 
   ACE_hthread_t thread_id () const { return thread_id_; }
   unsigned long iterations () const { return iterations_; }
@@ -366,7 +366,7 @@ High_Priority_Simple_Task::svc ()
 
 inline
 void
-High_Priority_Simple_Task::close ()
+High_Priority_Simple_Task::done ()
 {
   terminate_ = 1;
 }
@@ -386,15 +386,15 @@ public:
 
   virtual int svc ();
 
-  hrtime_t elapsed_time () const { return elapsed_time_; }
+  ACE_hrtime_t elapsed_time () const { return elapsed_time_; }
 private:
   const unsigned long iterations_;
 
   High_Priority_Simple_Task high_;
 
-  Timer timer_;
+  ACE_High_Res_Timer timer_;
 
-  hrtime_t elapsed_time_;
+  ACE_hrtime_t elapsed_time_;
 
   // force proper construction of independent instances
   Ping_Suspend_Resume_Test ();
@@ -466,7 +466,7 @@ Ping_Suspend_Resume_Test::svc ()
   timer_.stop ();
   timer_.elapsed_microseconds (elapsed_time_);
 
-  high_.close ();
+  high_.done ();
 #if DEBUG > 0
   cout << "Ping_Suspend_Resume_Test::svc: told high priority task to terminate"
        << endl;
@@ -506,13 +506,13 @@ public:
 
   virtual int svc ();
 
-  hrtime_t elapsed_time () const { return elapsed_time_; }
+  ACE_hrtime_t elapsed_time () const { return elapsed_time_; }
 private:
   const unsigned long iterations_;
 
-  Timer timer_;
+  ACE_High_Res_Timer timer_;
 
-  hrtime_t elapsed_time_;
+  ACE_hrtime_t elapsed_time_;
 
   // force proper construction of independent instances
   Yield_Test ();
@@ -622,7 +622,7 @@ get_options (int argc, char *argv [])
   case 1:
     if (ACE_OS::atoi (argv [get_opt.optind]) > 0)
       {
-        iterations = ACE_OS::atoi (argv [get_opt.optind]);
+        num_iterations = ACE_OS::atoi (argv [get_opt.optind]);
       }
     else
       {
@@ -648,6 +648,12 @@ get_options (int argc, char *argv [])
 int
 main (int argc, char *argv [])
 {
+  if (ACE_High_Res_Timer::supported () == 0)
+    {
+      ACE_OS::fprintf (stderr, "%s: high-resolution time is not supported "
+                               "by ACE on this platform.\n", argv[0]);
+    }
+
   if (get_options (argc, argv)) ACE_OS::exit (-1);
 
   if (ACE_OS::set_sched_params (
@@ -672,12 +678,12 @@ main (int argc, char *argv [])
   while (forever  ||  count-- > 0)
     {
       // run suspend/resume test first . . .
-      Suspend_Resume_Test suspend_resume_test (iterations);
+      Suspend_Resume_Test suspend_resume_test (num_iterations);
       // Wait for all tasks to exit.
       ACE_Service_Config::thr_mgr ()->wait ();
 
       // then Ping Suspend/Resume test
-      Ping_Suspend_Resume_Test ping_suspend_resume_test (iterations);
+      Ping_Suspend_Resume_Test ping_suspend_resume_test (num_iterations);
       // Wait for all tasks to exit.
       ACE_Service_Config::thr_mgr ()->wait ();
 
@@ -687,34 +693,34 @@ main (int argc, char *argv [])
           cout << "context switch time is ("
                << setw (9)
                << (double) ping_suspend_resume_test.elapsed_time () /
-                  iterations
+                  num_iterations
                << " - "
                << setw (9)
-               << (double) suspend_resume_test.elapsed_time () / iterations
+               << (double) suspend_resume_test.elapsed_time () / num_iterations
                << ")/2 = "
                << setw (9)
                << (double) (ping_suspend_resume_test.elapsed_time () -
-                            suspend_resume_test.elapsed_time ()) / iterations /
-                           2
+                            suspend_resume_test.elapsed_time ()) /
+                            num_iterations / 2
                << " microseconds" << endl;
         }
       else
         {
           cout << "ping suspend/resume time of "
                << (double) ping_suspend_resume_test.elapsed_time () /
-                  iterations
+                  num_iterations
                << " usec was less than suspend/resume time of "
-               << (double) suspend_resume_test.elapsed_time () / iterations
+               << (double) suspend_resume_test.elapsed_time () / num_iterations
                << endl;
         }
 
       // then Yield test
-      Yield_Test yield_test (iterations);
+      Yield_Test yield_test (num_iterations);
       // Wait for all tasks to exit.
       ACE_Service_Config::thr_mgr ()->wait ();
 
       cout << "context switch time from yield test is "
-           << (double) yield_test.elapsed_time () / iterations / 2
+           << (double) yield_test.elapsed_time () / num_iterations / 2
            << " microseconds"
            << endl;
     }
