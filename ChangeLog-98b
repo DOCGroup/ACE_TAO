@@ -1,5 +1,9 @@
 Wed Sep  2 11:10:08 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/Task.cpp (activate): Remmber to decrement the thr_count_ if
+ 	  spawn_n() fails.  Thanks to Russ Noseworthy
+ 	  <rnosewor@objectsciences.com> for reporting this fix.
+
 	* examples/IPC_SAP/SOCK_SAP/CPP-inclient.cpp: Fixed another
 	  void * -> char * problem.  Now this stuff all seems to build
 	  fine.
