@@ -278,10 +278,10 @@ be_visitor_arg_traits::visit_operation (be_operation *node)
     {
       return 0;
     }
-    
+
   AST_Type *rt = node->return_type ();
   AST_Decl::NodeType nt = rt->node_type ();
-  
+
   // If our return type is an unaliased bounded (w)string, we create
   // an empty struct using the operation's flat name for the type,
   // and use this type as the Arg_Traits<> template parameter. All
@@ -293,7 +293,7 @@ be_visitor_arg_traits::visit_operation (be_operation *node)
     {
       AST_String *str = AST_String::narrow_from_decl (rt);
       unsigned long bound = str->max_size ()->ev ()->u.ulval;
-      
+
       if (bound > 0)
         {
           TAO_OutStream *os = this->ctx_->stream ();
@@ -351,23 +351,23 @@ be_visitor_arg_traits::visit_argument (be_argument *node)
 
   AST_Type *bt = node->field_type ();
   AST_Decl::NodeType nt = bt->node_type ();
-  
+
   // We are interested here only in unaliased, bounded
   // (w)strings.
-  
+
   if (nt != AST_Decl::NT_string && nt != AST_Decl::NT_wstring)
     {
       return 0;
     }
-    
+
   be_string *st = be_string::narrow_from_decl (bt);
   unsigned long bound = st->max_size ()->ev ()->u.ulval;
-  
+
   if (bound == 0)
     {
       return 0;
     }
-  
+
   TAO_OutStream *os = this->ctx_->stream ();
   idl_bool wide = (st->width () != 1);
 
@@ -401,7 +401,7 @@ be_visitor_arg_traits::visit_argument (be_argument *node)
       << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "};";
-      
+
   this->generated (node, I_TRUE);
   return 0;
 }
@@ -457,7 +457,7 @@ be_visitor_arg_traits::visit_string (be_string *node)
 
   unsigned long bound = node->max_size ()->ev ()->u.ulval;
   be_type *alias = this->ctx_->alias ();
-  
+
   // Unbounded (w)string args are handled as a predefined type.
   // Bounded (w)strings must come in as a typedef - they can't
   // be used directly as arguments or return types.
@@ -490,33 +490,33 @@ be_visitor_arg_traits::visit_string (be_string *node)
       // generated as typedefs of (w)char *.
       *os << be_nl << be_nl
           << "struct ";
-      
+
       if (alias == 0)
         {
           *os << node->flat_name ();
         }
       else
-        {    
+        {
           *os << alias->local_name () << "_" << bound;
         }
-    
+
       *os << " {};";
     }
-    
+
   *os << be_nl << be_nl
       << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
       << "class " << be_global->stub_export_macro () << " "
       << this->S_ << "Arg_Traits<";
-      
+
   if (alias == 0)
     {
       *os << node->flat_name ();
     }
   else
-    {    
+    {
       *os << alias->local_name () << "_" << bound;
     }
-      
+
   *os << ">" << be_idt_nl
       << ": public" << be_idt << be_idt_nl
       << "BD_" << (wide ? "W" : "")
@@ -567,14 +567,14 @@ be_visitor_arg_traits::visit_array (be_array *node)
     }
 
   *os << node->name () << "_forany";
-  
+
   // The SArgument classes don't need the TAG parameter,
   if (ACE_OS::strlen (this->S_) == 0)
     {
       *os << "," << be_nl
           << node->name () << "_tag";
     }
-    
+
   *os << be_uidt_nl
       << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
