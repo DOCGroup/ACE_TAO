@@ -104,7 +104,7 @@ NAMES = \
 
 DIRS = RMCast
 
-MAKEFILES = DLL_Test.bor
+MAKEFILES = DLL_Test.bor Service_Config_DLL.bor
 
 OBJFILES = $(OBJDIR)\$(NAME).obj
 
