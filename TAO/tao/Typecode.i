@@ -83,12 +83,6 @@ CORBA_TypeCode::alignment (CORBA::Environment &env)
     return this->private_alignment (env);
 }
 
-ACE_INLINE void *
-CORBA_TypeCode::operator new (size_t, void *p)
-{
-  return p;
-}
-
 // ****************************************************************
 
 ACE_INLINE

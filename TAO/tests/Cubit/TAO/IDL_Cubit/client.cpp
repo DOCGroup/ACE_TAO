@@ -6,12 +6,6 @@
 #include "client.h"
 #include "orbsvcs/CosNamingC.h"
 
-#define quote(x) #x
-
-const int max_sequence_length = 100;
-// Limit the sequence length, otherwise the time to run the test
-// increases to fast....
-
 // Constructor.
 Cubit_Client::Cubit_Client (void)
   : cubit_factory_key_ (0),
@@ -419,20 +413,23 @@ Cubit_Client::cube_struct (int i)
 // Cube the numbers in a sequence
 
 void
-Cubit_Client::cube_sequence (int i)
+Cubit_Client::cube_sequence (int i, int l)
 {
   this->call_count_++;
-
-  int l = i + 1;
-  if (l > max_sequence_length)
-    l = max_sequence_length;
 
   Cubit::vector input (l);
   input.length (l);
 
+#if 0
   // Fill in the input sequence...
   for (int j = 0; j < l; ++j)
     input[j] = j;
+#else
+  // Just set the first item, otherwise it is hard to compare the
+  // results for longer sequences, i.e. more than just marshalling
+  // gets in the way.
+  input[0] = 4;
+#endif
 
   Cubit::vector_var output;
   Cubit::vector_out vout (output);
@@ -459,15 +456,89 @@ Cubit_Client::cube_sequence (int i)
       u_int rl = output->length ();
       if (input.length () < rl)
         rl = input.length ();
+#if 0      
       for (u_int j = 0; j < rl; ++j)
         {
-          int x = input[j];
+          CORBA::Long x = input[j];
           if (x*x*x != output[j])
             {
               ACE_ERROR ((LM_ERROR, "** cube_sequence ERROR\n"));
               this->error_count_++;
             }
         }
+#else
+      CORBA::Long x = input[0];
+      if (x * x *x != output[0])
+	{
+	  ACE_ERROR ((LM_ERROR, "** cube_sequence ERROR\n"));
+	  this->error_count_++;
+	}
+#endif
+    }
+}
+
+void
+Cubit_Client::cube_raw (int i, int l)
+{
+  this->call_count_++;
+
+  Cubit::Raw input (l);
+  input.length (l);
+
+#if 0
+  // Fill in the input sequence...
+  for (int j = 0; j < l; ++j)
+    input[j] = j;
+#else
+  // Just set the first item, otherwise it is hard to compare the
+  // results for longer sequences, i.e. more than just marshalling
+  // gets in the way.
+  input[0] = 4;
+#endif
+
+  Cubit::Raw_var output;
+  Cubit::Raw_out vout (output);
+
+  // Cube the sequence
+  this->cubit_->cube_raw (input, vout, this->env_);
+
+  //  Cubit::vector& output = *vout.ptr ();
+  //  output = vout;
+
+  if (this->env_.exception () != 0)
+    {
+      this->env_.print_exception ("from cube_struct");
+      this->error_count_++;
+    }
+  else
+    {
+      if (output->length () != input.length ())
+        {
+          ACE_ERROR ((LM_ERROR, "** cube octet, wrong length\n"));
+          this->error_count_++;
+        }
+
+      u_int rl = output->length ();
+      if (input.length () < rl)
+        rl = input.length ();
+#if 0      
+      for (u_int j = 0; j < rl; ++j)
+        {
+          CORBA::Octet x = input[j];
+          if (x*x*x != output[j])
+            {
+              ACE_ERROR ((LM_ERROR, "** cube_octet ERROR\n"));
+              this->error_count_++;
+            }
+        }
+#else
+      CORBA::Octet x = input[0];
+      if (x * x *x != output[0])
+	{
+	  ACE_ERROR ((LM_ERROR, "** cube_octet ERROR\n"));
+	  this->error_count_++;
+	}
+#endif
     }
 }
 
@@ -619,7 +690,8 @@ Cubit_Client::run (void)
       this->cube_octet (i);
       this->cube_long (i);
       this->cube_struct (i);
-      this->cube_sequence (i);
+      this->cube_sequence (i, 4);
+      this->cube_raw (i, 16);
     }
 
   // stop the timer.
@@ -682,21 +754,69 @@ Cubit_Client::run (void)
   // compute call average call time.
   this->print_stats ("cube_union_dii call", elapsed_time);
 
+  // Small Long Sequences
   this->call_count_ = 0;
   this->error_count_ = 0;
 
-  // Sequences
   timer.start ();
 
   // Make the calls in a loop.
   for (i = 0; i < this->loop_count_; i++)
-    this->cube_sequence (this->loop_count_);
+    this->cube_sequence (this->loop_count_, 4);
 
   timer.stop ();
 
   timer.elapsed_time (elapsed_time);
   // compute call average call time.
-  this->print_stats ("cube_sequence", elapsed_time);
+  this->print_stats ("cube_small_sequence", elapsed_time);
+
+  // Large Long Sequences
+  this->call_count_ = 0;
+  this->error_count_ = 0;
+
+  timer.start ();
+
+  // Make the calls in a loop.
+  for (i = 0; i < this->loop_count_; i++)
+    this->cube_sequence (this->loop_count_, 256);
+
+  timer.stop ();
+
+  timer.elapsed_time (elapsed_time);
+  // compute call average call time.
+  this->print_stats ("cube_large_sequence", elapsed_time);
+
+  // Small Octet Sequences
+  this->call_count_ = 0;
+  this->error_count_ = 0;
+
+  timer.start ();
+
+  // Make the calls in a loop.
+  for (i = 0; i < this->loop_count_; i++)
+    this->cube_raw (this->loop_count_, 16);
+
+  timer.stop ();
+
+  timer.elapsed_time (elapsed_time);
+  // compute call average call time.
+  this->print_stats ("cube_small_octet_sequence", elapsed_time);
+
+  // Large Octet Sequences
+  this->call_count_ = 0;
+  this->error_count_ = 0;
+
+  timer.start ();
+
+  // Make the calls in a loop.
+  for (i = 0; i < this->loop_count_; i++)
+    this->cube_raw (this->loop_count_, 1024);
+
+  timer.stop ();
+
+  timer.elapsed_time (elapsed_time);
+  // compute call average call time.
+  this->print_stats ("cube_large_octet_sequence", elapsed_time);
 
   if (this->shutdown_)
     {

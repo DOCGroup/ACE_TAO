@@ -66,6 +66,11 @@ public:
 			      CORBA::Environment &env);
   // Cube a sequence.
 
+  virtual void cube_raw (const Cubit::Raw &input,
+			 Cubit::Raw_out output,
+			 CORBA::Environment &_env);
+  // Cube an octet sequence.
+
   virtual void shutdown (CORBA::Environment &env);
   // Shutdown routine.
 };
