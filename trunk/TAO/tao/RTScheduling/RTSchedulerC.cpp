@@ -29,7 +29,7 @@
 // be/be_codegen.cpp:314
 
 
-#include "RTSchedulerC.h"
+#include "RTScheduler.h"
 #include "tao/Stub.h"
 #include "tao/Invocation.h"
 #include "tao/PortableInterceptor.h"
