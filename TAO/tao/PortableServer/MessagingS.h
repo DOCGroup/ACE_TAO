@@ -64,7 +64,7 @@ TAO_NAMESPACE  POA_Messaging
   class _TAO_ReplyHandler_Direct_Proxy_Impl;
   class _TAO_ReplyHandler_Strategized_Proxy_Broker;
 
-  class TAO_Export ReplyHandler :  public virtual PortableServer::ServantBase
+  class TAO_PortableServer_Export ReplyHandler :  public virtual PortableServer::ServantBase
   {
   protected:
     ReplyHandler (void);
@@ -126,7 +126,7 @@ TAO_NAMESPACE  POA_Messaging
   //               Strategized Proxy Broker Declaration
   //
 
-  class TAO_Export _TAO_ReplyHandler_Strategized_Proxy_Broker : public virtual ::Messaging::_TAO_ReplyHandler_Proxy_Broker
+  class TAO_PortableServer_Export _TAO_ReplyHandler_Strategized_Proxy_Broker : public virtual ::Messaging::_TAO_ReplyHandler_Proxy_Broker
   {
   public:
     _TAO_ReplyHandler_Strategized_Proxy_Broker (void);
@@ -174,7 +174,7 @@ TAO_NAMESPACE  POA_Messaging
   //                    ThruPOA  Impl. Declaration
   //
 
-  class TAO_Export _TAO_ReplyHandler_ThruPOA_Proxy_Impl :
+  class TAO_PortableServer_Export _TAO_ReplyHandler_ThruPOA_Proxy_Impl :
     public virtual ::Messaging::_TAO_ReplyHandler_Proxy_Impl,
     public virtual TAO_ThruPOA_Object_Proxy_Impl
   {
@@ -195,7 +195,7 @@ TAO_NAMESPACE  POA_Messaging
 //                    Direct  Impl. Declaration
 //
 
-class TAO_Export _TAO_ReplyHandler_Direct_Proxy_Impl :
+class TAO_PortableServer_Export _TAO_ReplyHandler_Direct_Proxy_Impl :
   public virtual Messaging::_TAO_ReplyHandler_Proxy_Impl,
   public virtual TAO_Direct_Object_Proxy_Impl
 {
