@@ -1,3 +1,5 @@
+# $Id$
+
 # SunOS 4.x (Solaris 1.x) with SunC++ 4.x
 CC              = cc
 CXX             = CC

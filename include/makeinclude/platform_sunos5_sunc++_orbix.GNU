@@ -1,3 +1,5 @@
+# $Id$
+
 # SunOS 5.x (Solaris 2.x) with SunC++ 4.x
 # *using* MT Orbix
 INCLDIRS	= -I$(ORBIX_ROOT)/include

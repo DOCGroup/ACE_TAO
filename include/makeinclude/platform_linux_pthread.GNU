@@ -1,3 +1,5 @@
+# $Id$
+
 # For pthreads support on Linux, you need
 # -D_MIT_POSIX_THREADS 
 # -D_POSIX_THREADS

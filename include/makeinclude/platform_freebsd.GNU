@@ -1,3 +1,5 @@
+# $Id$
+
 # platform_freebsd.GNU
 
 # ***** Notice: This file is still under testing. *****

@@ -1,3 +1,5 @@
+# $Id$
+
 # SunOS 4.x (Solaris 1.x) with Lucid
 CC		= lcc
 CXX		= lcc

@@ -1,3 +1,5 @@
+# $Id$
+
 # SunOS 5.x (Solaris 2.x) with g++ *not* using Orbix
 #
 # SOBUILD - compile into .so directly

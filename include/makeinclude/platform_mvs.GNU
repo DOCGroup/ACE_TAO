@@ -1,3 +1,5 @@
+# $Id$
+
 # For MVS OpenEdition platform
  
 CXX           = cxx

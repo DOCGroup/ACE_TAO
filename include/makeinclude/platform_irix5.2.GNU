@@ -1,3 +1,5 @@
+# $Id$
+
 # Irix 5.2 with gcc 2.6.1
 MAKE		= gmake
 CC		= gcc

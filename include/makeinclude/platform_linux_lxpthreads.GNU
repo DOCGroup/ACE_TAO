@@ -1,3 +1,5 @@
+# $Id$
+
 # For pthreads support on Linux, you need
 # -D_POSIX_THREADS
 # -D_POSIX_THREAD_SAFE_FUNCTIONS 

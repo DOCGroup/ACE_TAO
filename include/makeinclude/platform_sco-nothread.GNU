@@ -1,3 +1,5 @@
+# $Id$
+
 CC              = gcc
 CXX		= g++
 CFLAGS		+= $(DCFLAGS) -w -O2
