@@ -1,3 +1,8 @@
+Sun Jun 22 17:19:18 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* examples/Threads/process_manager.cpp (main): replaced call to
+	  kill with terminate.
+
 Sat Jun 21 10:48:34 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/Reactor/FIFO: Added a new example that illustrates
