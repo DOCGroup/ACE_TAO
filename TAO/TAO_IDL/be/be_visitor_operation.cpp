@@ -58,6 +58,7 @@
 #include "be_visitor_operation/argument_invoke.cpp"
 #include "be_visitor_operation/argument_marshal.cpp"
 #include "be_visitor_operation/exceptlist_cs.cpp"
+#include "be_visitor_operation/exceptlist_ss.cpp"
 #include "be_visitor_operation/operation_ch.cpp"
 #include "be_visitor_operation/operation_cs.cpp"
 #include "be_visitor_operation/operation_sh.cpp"

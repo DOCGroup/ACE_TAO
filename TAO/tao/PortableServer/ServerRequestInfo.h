@@ -77,7 +77,7 @@ namespace TAO
                        size_t nargs,
                        void * servant_upcall,
                        PortableServer::ServantBase * servant,
-                       CORBA::TypeCode_ptr * exceptions,
+                       CORBA::TypeCode_ptr * exceptions[],
                        size_t nexceptions);
 
     /// Return an ID unique to the current request.  This request ID may
@@ -302,7 +302,7 @@ namespace TAO
 
     /// Array of @c TypeCodes for user exceptions the operation is
     /// capable of raising.
-    CORBA::TypeCode_ptr * const exceptions_;
+    CORBA::TypeCode_ptr ** const exceptions_;
 
     /// The number of elements in the @c exceptions_ array.
     size_t const nexceptions_;

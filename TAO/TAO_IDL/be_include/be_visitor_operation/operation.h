@@ -47,7 +47,7 @@ public:
   virtual int void_return_type (be_type *);
   // is my return type void?
 
-  virtual int has_param_type (be_operation *, 
+  virtual int has_param_type (be_operation *,
                               AST_Argument::Direction);
   // does any of the argument node have the specified direction
 

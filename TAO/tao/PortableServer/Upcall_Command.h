@@ -15,14 +15,11 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/portableserver_export.h"
+#include "ace/CORBA_macros.h"
 
 #ifndef ACE_LACKS_PRAGMA_ONCE
 # pragma once
 #endif /* !ACE_LACKS_PRAGMA_ONCE */
-
-
-#include "ace/CORBA_macros.h"
 
 
 namespace TAO
@@ -40,7 +37,7 @@ namespace TAO
    * @c send_exception() interception point must be invoked when the
    * servant operation throws an exception.
    */
-  class TAO_PortableServer_Export Upcall_Command
+  class Upcall_Command
   {
   public:
 

@@ -396,8 +396,9 @@ private:
   void gen_seq_file_includes (void);
   void gen_any_file_includes (void);
   void gen_var_file_includes (void);
-  void gen_arg_file_includes (TAO_OutStream *stream);
-  void gen_cond_file_include (ACE_UINT64 mask, 
+  void gen_stub_arg_file_includes (TAO_OutStream * stream);
+  void gen_skel_arg_file_includes (TAO_OutStream * stream);
+  void gen_cond_file_include (ACE_UINT64 mask,
                               const char *filepath,
                               TAO_OutStream *stream);
 

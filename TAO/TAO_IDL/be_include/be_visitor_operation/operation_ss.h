@@ -61,6 +61,14 @@ public:
                                   be_type *bt);
   // generate code for marshaling outgoing parameters
 
+  /// Generate the skeleton operation body.
+  int gen_skel_operation_body (be_operation * node,
+                               be_type * return_type);
+
+  /// Generate the skeleton operation argument list.
+  void gen_skel_body_arglist (be_operation * node,
+                              TAO_OutStream * os);
+
   // = helper
   virtual int post_process (be_decl *);
   // stuff to output after every member of the scope is handled

@@ -39,6 +39,7 @@
 #include "be_visitor_operation/rettype_is.h"
 #include "be_visitor_operation/rettype_return_cs.h"
 #include "be_visitor_operation/exceptlist_cs.h"
+#include "be_visitor_operation/exceptlist_ss.h"
 #include "be_visitor_operation/argument.h"
 #include "be_visitor_operation/argument_invoke.h"
 #include "be_visitor_operation/argument_marshal.h"
