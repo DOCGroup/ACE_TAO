@@ -257,7 +257,7 @@ ACE_SSL_Context::verify_private_key (void)
 {
   this->check_context ();
 
-  return (::SSL_CTX_check_private_key (this->context_) <=0 ? -1 : 0);
+  return (::SSL_CTX_check_private_key (this->context_) <= 0 ? -1 : 0);
 }
 
 int
@@ -331,16 +331,16 @@ ACE_SSL_Context::report_error (unsigned long error_code)
 
   (void) ::ERR_error_string (error_code, error_string);
 
-  ACE_ERROR((LM_ERROR,
-             ACE_TEXT("ACE_SSL (%P|%t) error code: %u - %s\n"),
-             error_code,
-             error_string));
+  ACE_ERROR ((LM_ERROR,
+              ACE_TEXT ("ACE_SSL (%P|%t) error code: %u - %s\n"),
+              error_code,
+              error_string));
 }
 
 void
-ACE_SSL_Context::report_error(void)
+ACE_SSL_Context::report_error (void)
 {
-  ACE_SSL_Context::report_error (::ERR_get_error());
+  ACE_SSL_Context::report_error (::ERR_get_error ());
 }
 
 
