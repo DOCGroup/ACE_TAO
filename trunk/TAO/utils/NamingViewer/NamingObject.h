@@ -10,9 +10,9 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-#include "orbsvcs/CosNamingC.h"
+#include "orbsvcs/orbsvcs/CosNamingC.h"
 
-class CNamingObject  
+class CNamingObject
 {
 public:
   CNamingObject (CosNaming::Name& Name,
@@ -30,7 +30,7 @@ public:
   CosNaming::Name& Name (void);
   // returns the name of the object
 
-  bool IsContext (void) { return m_Context; } 
+  bool IsContext (void) { return m_Context; }
 
   // Returns true if this is a context
 private:
