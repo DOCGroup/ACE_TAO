@@ -1,3 +1,9 @@
+Tue Jun 22 20:10:53 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Active_Object_Map.cpp: Removed some statements that were
+	  giving compile errors. They were ACE_UNUSED_ARG ()  which were
+	  not there.
+
 Tue Jun 22 19:27:21 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/tests/Event/Performance/run_test.pl:
