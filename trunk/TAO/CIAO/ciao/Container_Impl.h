@@ -58,8 +58,8 @@ namespace CIAO
     Container_Impl (CORBA::ORB_ptr o,
                     PortableServer::POA_ptr p,
                     Components::Deployment::ComponentServer_ptr server,
-                    int static_config_flag,
-                    const Static_Config_EntryPoints_Maps* static_entrypts_maps);
+                    int static_config_flag =0,
+                    const Static_Config_EntryPoints_Maps* static_entrypts_maps=0);
 
     /// Destructor
     virtual ~Container_Impl (void);

@@ -113,8 +113,8 @@ namespace CIAO
   {
   public:
     Session_Container (CORBA::ORB_ptr o,
-                       int static_config_flag,
-                       const Static_Config_EntryPoints_Maps* static_entrypts_maps
+                       int static_config_flag =0,
+                       const Static_Config_EntryPoints_Maps* static_entrypts_maps =0
                        );
 
     virtual ~Session_Container (void);
