@@ -46,10 +46,13 @@ int
 Supplier_Router::open (void *)
 {
   if (this->is_reader ())
-    // Set the Peer_Router_Context to point back to us so that all the
-    // Peer_Handler's <put> their incoming <Message_Blocks> to our
-    // reader Task.
-    this->context ()->peer_router (this);
+    {
+      // Set the Peer_Router_Context to point back to us so that all the
+      // Peer_Handler's <put> their incoming <Message_Blocks> to our
+      // reader Task.
+      this->context ()->peer_router (this);
+      return 0;
+    }
 
   else // if (this->is_writer ()
     // Make this an active object to handle the error cases in a
