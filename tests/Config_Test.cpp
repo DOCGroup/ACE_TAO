@@ -1,6 +1,6 @@
 // $Id$
 
-//============================================================================
+// ============================================================================
 //
 // = LIBRARY
 //    tests
@@ -15,9 +15,12 @@
 // = AUTHOR
 //    Michael Searles <msearles@base16.com> and Chris Hafey <chafey@stentor.com>
 //
-//============================================================================
+// ============================================================================
 
+#include "tests/test_config.h"
 #include "Config_Test.h"
+
+ACE_RCSID(tests, Config_Test, "$Id$")
 
 static int
 test (ACE_Configuration *config)
@@ -354,7 +357,7 @@ Config_Test::read_config (void)
 {
   if (m_ConfigurationHeap.open () == 0)
     {
-      if (m_ConfigurationHeap.import_config_as_strings ("test.ini") == 0)
+      if (m_ConfigurationHeap.import_config_as_strings ("Config_Test.ini") == 0)
         {
           ACE_Configuration_Section_Key root = m_ConfigurationHeap.root_section ();
           // Process [network] section
@@ -362,28 +365,28 @@ Config_Test::read_config (void)
           if (m_ConfigurationHeap.open_section (root, "network", 1,
                                                 NetworkSection) == 0)
             {
-              get_section_integer (NetworkSection,
-                                   "TimeToLive",
-                                   &m_nTimeToLive,
-                                   1,
-                                   20);
-              get_section_boolean (NetworkSection,
-                                   "Delay",
-                                   &m_bDelay);
-              get_section_string (NetworkSection,
-                                  "DestIPAddress",
-                                  m_pszDestIPAddress,
-                                  TEST_MAX_STRING);
-              get_section_integer (NetworkSection,
-                                   "DestPort",
-                                   &m_nDestPort,
-                                   0,
-                                   65535);
-              get_section_integer (NetworkSection,
-                                   "ReconnectInterval",
-                                   &m_nReconnectInterval,
-                                   0,
-                                   65535);
+              this->get_section_integer (NetworkSection,
+                                         "TimeToLive",
+                                         &m_nTimeToLive,
+                                         1,
+                                         20);
+              this->get_section_boolean (NetworkSection,
+                                         "Delay",
+                                         &m_bDelay);
+              this->get_section_string (NetworkSection,
+                                        "DestIPAddress",
+                                        m_pszDestIPAddress,
+                                        TEST_MAX_STRING);
+              this->get_section_integer (NetworkSection,
+                                         "DestPort",
+                                         &m_nDestPort,
+                                         0,
+                                         65535);
+              this->get_section_integer (NetworkSection,
+                                         "ReconnectInterval",
+                                         &m_nReconnectInterval,
+                                         0,
+                                         65535);
             }
 
           // Process [logger] section
@@ -393,27 +396,27 @@ Config_Test::read_config (void)
                                                 "logger", 1,
                                                 LoggerSection) == 0)
             {
-              get_section_string (LoggerSection, 
-                                  "Heading",
-                                  m_pszHeading,
-                                  TEST_MAX_STRING);
-              get_section_integer (LoggerSection,
-                                   "TraceLevel",
-                                   &m_nTraceLevel,
-                                   1,
-                                   20);
-              get_section_string (LoggerSection,
-                                  "Justification",
-                                  m_pszJustification,
-                                  TEST_MAX_STRING);
-              get_section_string (LoggerSection,
-                                  "LogFilePath",
-                                  m_pszLogFilePath,
-                                  TEST_MAX_STRING);
-              get_section_string (LoggerSection,
-                                  "TransactionFilePath",
-                                  m_pszTransactionFilePath,
-                                  TEST_MAX_STRING);
+              this->get_section_string (LoggerSection, 
+                                        "Heading",
+                                        m_pszHeading,
+                                        TEST_MAX_STRING);
+              this->get_section_integer (LoggerSection,
+                                         "TraceLevel",
+                                         &m_nTraceLevel,
+                                         1,
+                                         20);
+              this->get_section_string (LoggerSection,
+                                        "Justification",
+                                        m_pszJustification,
+                                        TEST_MAX_STRING);
+              this->get_section_string (LoggerSection,
+                                        "LogFilePath",
+                                        m_pszLogFilePath,
+                                        TEST_MAX_STRING);
+              this->get_section_string (LoggerSection,
+                                        "TransactionFilePath",
+                                        m_pszTransactionFilePath,
+                                        TEST_MAX_STRING);
             }
         }
     }
@@ -421,23 +424,29 @@ Config_Test::read_config (void)
 
 void
 Config_Test::get_section_string (ACE_Configuration_Section_Key& SectionKey,
-                                 const ACE_TCHAR* pszName,
-                                 ACE_TCHAR* pszVariable,
+                                 const ACE_TCHAR *pszName,
+                                 ACE_TCHAR *pszVariable,
                                  int nMaxLength)
 {
   ACE_TString StringValue;
 
-  if (m_ConfigurationHeap.get_string_value (SectionKey, pszName, StringValue) == 0)
+  if (m_ConfigurationHeap.get_string_value (SectionKey,
+                                            pszName,
+                                            StringValue) == 0)
     {
-      ACE_OS::strncpy (pszVariable, StringValue.c_str (), nMaxLength);
-      ACE_OS::printf ("%s = %s\n", pszName, pszVariable);
+      ACE_OS::strncpy (pszVariable,
+                       StringValue.c_str (),
+                       nMaxLength);
+      ACE_OS::printf ("%s = %s\n",
+                      pszName,
+                      pszVariable);
     }
 }
 
 void
 Config_Test::get_section_integer (ACE_Configuration_Section_Key& SectionKey,
-                                  const ACE_TCHAR* pszName,
-                                  int* nVariable,
+                                  const ACE_TCHAR *pszName,
+                                  int *nVariable,
                                   int nMinValue,
                                   int nMaxValue)
 {
@@ -446,10 +455,16 @@ Config_Test::get_section_integer (ACE_Configuration_Section_Key& SectionKey,
   ACE_OS::strcpy(pszString, "0");
   int IntegerValue = 0;
 
-  if (m_ConfigurationHeap.get_string_value (SectionKey, pszName, StringValue) == 0)
+  if (m_ConfigurationHeap.get_string_value (SectionKey,
+                                            pszName,
+                                            StringValue) == 0)
     {
-      ACE_OS::strncpy (pszString, StringValue.c_str (), 30);
-      ACE_OS::printf ("%s = %s\n", pszName, pszString);
+      ACE_OS::strncpy (pszString,
+                       StringValue.c_str (),
+                       30);
+      ACE_OS::printf ("%s = %s\n",
+                      pszName,
+                      pszString);
     }
 
   // convert to integer
@@ -470,23 +485,29 @@ Config_Test::get_section_boolean (ACE_Configuration_Section_Key& SectionKey,
   char pszString[10];
   ACE_OS::strcpy (pszString, "0");
 
-  if (m_ConfigurationHeap.get_string_value (SectionKey, pszName, StringValue) == 0)
+  if (m_ConfigurationHeap.get_string_value (SectionKey,
+                                            pszName,
+                                            StringValue) == 0)
     {
-      ACE_OS::strncpy(pszString, StringValue.c_str(), 10);
-      ACE_TCHAR* pSrc = pszString;
-      while (*pSrc != '\0')
-        {
-          // Convert to uppercase
-          if (islower(*pSrc))
-            *pSrc = *pSrc - ' ';
-          pSrc++;
-        }
+      ACE_OS::strncpy (pszString,
+                       StringValue.c_str (),
+                       10);
+      for (ACE_TCHAR* pSrc = pszString;
+           *pSrc != '\0';
+           pSrc++)
+        // Convert to uppercase
+        if (islower (*pSrc))
+          *pSrc = tolower (*pSrc);
 
-      ACE_OS::printf ("%s = %s\n", pszName, pszString);
+      ACE_OS::printf ("%s = %s\n",
+                      pszName,
+                      pszString);
 
-      if (ACE_OS::strcmp (pszString, "TRUE") == 0)
+      if (ACE_OS::strcmp (pszString,
+                          "TRUE") == 0)
         *pVariable = true;
-      else if (ACE_OS::strcmp (pszString, "FALSE") == 0)
+      else if (ACE_OS::strcmp (pszString,
+                               "FALSE") == 0)
         *pVariable = false;
     }
 }
@@ -494,11 +515,14 @@ Config_Test::get_section_boolean (ACE_Configuration_Section_Key& SectionKey,
 int
 main (int, ACE_TCHAR *[])
 {
+  ACE_START_TEST (ACE_TEXT ("Config_Test"));
+
   Config_Test manager;
   manager.read_config ();
 
   run_tests ();
 
+  ACE_END_TEST;
   return 0;
 }
 
