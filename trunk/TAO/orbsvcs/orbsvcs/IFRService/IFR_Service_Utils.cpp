@@ -62,14 +62,18 @@ TAO_IFR_Server::init_with_orb (int argc,
 
       // Get the POA from the ORB.
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA" 
+                                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (poa_object.in ()))
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_LIB_TEXT(" (%P|%t) Unable to initialize the POA.\n")),
-                            -1);
+          ACE_ERROR_RETURN ((
+              LM_ERROR,
+              ACE_LIB_TEXT ("(%P|%t) Unable to initialize the POA.\n")
+            ),
+            -1
+          );
         }
       this->root_poa_ =
         PortableServer::POA::_narrow (poa_object.in ()
@@ -349,12 +353,15 @@ TAO_IFR_Server::create_repository (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK_RETURN (-1);
 
   CORBA::Object_var table_object =
-    this->orb_->resolve_initial_references ("IORTable" ACE_ENV_ARG_PARAMETER);
+    this->orb_->resolve_initial_references ("IORTable" 
+                                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   IORTable::Table_var adapter =
-    IORTable::Table::_narrow (table_object.in () ACE_ENV_ARG_PARAMETER);
+    IORTable::Table::_narrow (table_object.in () 
+                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
+
   if (CORBA::is_nil (adapter.in ()))
     {
       ACE_ERROR_RETURN ((LM_ERROR, "Nil IORTable\n"), -1);
@@ -366,6 +373,12 @@ TAO_IFR_Server::create_repository (ACE_ENV_SINGLE_ARG_DECL)
                      ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
     }
+
+  // Add the repository to the ORB's table of initialized object references.
+  this->orb_->register_initial_reference ("InterfaceRepository", 
+                                          this->repository_ 
+                                          ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN(-1);
 
   FILE *output_file_ =
     ACE_OS::fopen (OPTIONS::instance()->ior_output_file (),
