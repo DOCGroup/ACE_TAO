@@ -844,27 +844,38 @@ AST_Interface::inherited_name_clash ()
           while (!(parent_members->is_done ()))
             {
               parent1_member = parent_members->item ();
-              Identifier *pid = parent1_member->local_name ();
+              AST_Decl::NodeType nt = parent1_member->node_type ();
 
-              if (id->compare (pid) == I_TRUE)
-                {
-                  idl_global->err ()->error2 (UTL_Error::EIDL_REDEF,
-                                              my_member,
-                                              parent1_member);
-                }
-              else if (id->case_compare_quiet (pid) == I_TRUE)
-                {
-                  if (idl_global->case_diff_error ())
+              // All other member types but these may be redefined in
+              // the child.
+              if (nt == AST_Decl::NT_op || nt == AST_Decl::NT_attr)
+                { 
+                  Identifier *pid = parent1_member->local_name ();
+
+                  if (id->compare (pid) == I_TRUE)
                     {
-                      idl_global->err ()->error2 (UTL_Error::EIDL_NAME_CASE_ERROR,
+                      idl_global->err ()->error2 (UTL_Error::EIDL_REDEF,
                                                   my_member,
                                                   parent1_member);
                     }
-                  else
+                  else if (id->case_compare_quiet (pid) == I_TRUE)
                     {
-                      idl_global->err ()->warning2 (UTL_Error::EIDL_NAME_CASE_WARNING,
-                                                    my_member,
-                                                    parent1_member);
+                      if (idl_global->case_diff_error ())
+                        {
+                          idl_global->err ()->error2 (
+                              UTL_Error::EIDL_NAME_CASE_ERROR,
+                              my_member,
+                              parent1_member
+                            );
+                        }
+                      else
+                        {   
+                          idl_global->err ()->warning2 (
+                              UTL_Error::EIDL_NAME_CASE_WARNING,
+                              my_member,
+                              parent1_member
+                            );
+                        }
                     }
                 }
 
