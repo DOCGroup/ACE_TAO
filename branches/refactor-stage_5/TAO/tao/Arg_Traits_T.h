@@ -24,11 +24,21 @@ namespace TAO
 {
   /**
    *
-   * @brief Base class for all arg traits specializations.
+   * @brief Base class for all stub arg traits specializations.
    *
    */
   template<typename T>
   class Arg_Traits
+  {
+  };
+
+  /**
+   *
+   * @brief Base class for all skeleton arg traits specializations.
+   *
+   */
+  template<typename T>
+  class SArg_Traits
   {
   };
 };

@@ -119,95 +119,6 @@ namespace TAO
   };
 
   /**
-   * @class In_Fixed_Array_SArgument_T
-   *
-   * @brief IN skeleton argument of fixed size element array.
-   *
-   */
-  template<typename S, typename S_forany>
-  class In_Fixed_Array_SArgument_T : public Argument
-  {
-  public:
-    In_Fixed_Array_SArgument_T (void);
-
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
-
-    virtual void interceptor_param (Dynamic::Parameter &);
-
-    const S & arg (void) const;
-
-  private:
-    S x_;
-  };
-
-  /**
-   * @class Inout_Fixed_Array_SArgument_T
-   *
-   * @brief INOUT skeleton argument of fixed size element array.
-   *
-   */
-  template<typename S, typename S_forany>
-  class Inout_Fixed_Array_SArgument_T : public Argument
-  {
-  public:
-    Inout_Fixed_Array_SArgument_T (void);
-
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
-
-    virtual void interceptor_param (Dynamic::Parameter &);
-
-    S & arg (void);
-
-  private:
-    S x_;
-  };
-
-  /**
-   * @class Out_Fixed_Array_SArgument_T
-   *
-   * @brief OUT skeleton argument of fixed size element array.
-   *
-   */
-  template<typename S, typename S_forany>
-  class Out_Fixed_Array_SArgument_T : public Argument
-  {
-  public:
-    Out_Fixed_Array_SArgument_T (void);
-
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
-
-    virtual void interceptor_param (Dynamic::Parameter &);
-
-    S & arg (void);
-
-  private:
-    S x_;
-  };
-
-  /**
-   * @class Ret_Fixed_Array_SArgument_T
-   *
-   * @brief Skeleton value of fixed size element array.
-   *
-   */
-  template<typename S_slice, typename S_var, typename S_forany>
-  class Ret_Fixed_Array_SArgument_T : public Argument
-  {
-  public:
-    Ret_Fixed_Array_SArgument_T (void);
-
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
-
-    virtual void interceptor_result (CORBA::Any *);
-
-    S_slice *& arg (void);
-
-  private:
-    S_var x_;
-  };
-
-  /**
    * @struct Fixed_Array_Tag
    *
    * @brief Struct for fixed size element array argument id tag.
@@ -244,14 +155,7 @@ namespace TAO
     typedef Ret_Fixed_Array_Argument_T<T,
                                        T_slice,
                                        T_var,
-                                       T_forany>        stub_ret_val;
-
-    typedef In_Fixed_Array_SArgument_T<T,T_forany>      in_sarg_val;
-    typedef Inout_Fixed_Array_SArgument_T<T,T_forany>   inout_sarg_val;
-    typedef Out_Fixed_Array_SArgument_T<T,T_forany>     out_sarg_val;
-    typedef Ret_Fixed_Array_SArgument_T<T_slice,
-                                        T_var,
-                                        T_forany>       skel_ret_val;
+                                       T_forany>        ret_val;
 
     typedef Fixed_Array_Tag                             idl_tag;
   };

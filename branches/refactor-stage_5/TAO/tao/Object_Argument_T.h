@@ -121,95 +121,6 @@ namespace TAO
   };
 
   /**
-   * @class In_Object_SArgument_T
-   *
-   * @brief Template class for IN skeleton object argument.
-   *
-   */
-  template<typename S_ptr, typename S_var>
-  class In_Object_SArgument_T : public Argument
-  {
-  public:
-    In_Object_SArgument_T (void);
-
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
-
-    virtual void interceptor_param (Dynamic::Parameter &);
-
-    S_ptr arg (void) const;
-
-  private:
-    S_var x_;
-  };
-
-  /**
-   * @class Inout_Object_SArgument_T
-   *
-   * @brief Template class for INOUT skeleton object argument.
-   *
-   */
-  template<typename S_ptr, typename S_var>
-  class Inout_Object_SArgument_T : public Argument
-  {
-  public:
-    Inout_Object_SArgument_T (void);
-
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
-
-    virtual void interceptor_param (Dynamic::Parameter &);
-
-    S_ptr & arg (void);
-
-  private:
-    S_var x_;
-  };
-
-  /**
-   * @class Out_Object_SArgument_T
-   *
-   * @brief Template class for INOUT skeleton object argument.
-   *
-   */
-  template<typename S_ptr, typename S_var, typename S_out>
-  class Out_Object_SArgument_T : public Argument
-  {
-  public:
-    Out_Object_SArgument_T (void);
-
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
-
-    virtual void interceptor_param (Dynamic::Parameter &);
-
-    S_out arg (void);
-
-  private:
-    S_var x_;
-  };
-
-  /**
-   * @class Ret_Object_SArgument_T
-   *
-   * @brief Template class for return skeleton value of object.
-   *
-   */
-  template<typename S_ptr, typename S_var>
-  class Ret_Object_SArgument_T : public Argument
-  {
-  public:
-    Ret_Object_SArgument_T (void);
-
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
-
-    virtual void interceptor_result (CORBA::Any *);
-
-    S_ptr & arg (void);
-
-  private:
-    S_var x_;
-  };
-
-  /**
    * @struct Object_Tag
    *
    * @brief Struct for object arguments id tag.
@@ -220,7 +131,7 @@ namespace TAO
   /**
    * @struct Basic_Arg_Traits_T
    *
-   * @brief Template class for argument traits of objects.
+   * @brief Template class for stub argument traits of objects.
    *
    */
 
@@ -235,12 +146,7 @@ namespace TAO
     typedef In_Object_Argument_T<T_ptr>                   in_arg_val;
     typedef Inout_Object_Argument_T<T_ptr, T_traits>      inout_arg_val;
     typedef Out_Object_Argument_T<T_ptr,T_out>            out_arg_val;
-    typedef Ret_Object_Argument_T<T_ptr,T_var>            stub_ret_val;
-
-    typedef In_Object_SArgument_T<T_ptr,T_var>            in_sarg_val;
-    typedef Inout_Object_SArgument_T<T_ptr,T_var>         inout_sarg_val;
-    typedef Out_Object_SArgument_T<T_ptr,T_var,T_out>     out_sarg_val;
-    typedef Ret_Object_SArgument_T<T_ptr,T_var>           skel_ret_val;
+    typedef Ret_Object_Argument_T<T_ptr,T_var>            ret_val;
 
     typedef Object_Tag                                    idl_tag;
   };

@@ -213,6 +213,10 @@ SOURCE=.\Basic_Arguments.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Basic_SArguments.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\BiDir_Adapter.cpp
 # End Source File
 # Begin Source File
@@ -909,6 +913,10 @@ SOURCE=.\Special_Basic_Arguments.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Special_Basic_SArguments.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\StringSeqC.cpp
 # ADD CPP /GR
 # End Source File
@@ -1149,11 +1157,23 @@ SOURCE=.\Basic_Arguments.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Basic_SArgument_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Basic_SArguments.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Basic_Types.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\BD_String_Argument_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\BD_String_SArgument_T.h
 # End Source File
 # Begin Source File
 
@@ -1389,7 +1409,15 @@ SOURCE=.\Fixed_Array_Argument_T.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Fixed_Array_SArgument_T.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Fixed_Size_Argument_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Fixed_Size_SArgument_T.h
 # End Source File
 # Begin Source File
 
@@ -1657,6 +1685,10 @@ SOURCE=.\Object_Ref_Table.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Object_SArgument_T.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\objectid.h
 # End Source File
 # Begin Source File
@@ -1893,6 +1925,14 @@ SOURCE=.\Special_Basic_Arguments.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Special_Basic_SArgument_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Special_Basic_SArguments.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\StringSeqC.h
 # End Source File
 # Begin Source File
@@ -2021,6 +2061,14 @@ SOURCE=.\UB_String_Arguments.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\UB_String_SArgument_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\UB_String_SArguments.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Valuetype_Adapter.h
 # End Source File
 # Begin Source File
@@ -2029,7 +2077,15 @@ SOURCE=.\Var_Array_Argument_T.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Var_Array_SArgument_T.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Var_Size_Argument_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Var_Size_SArgument_T.h
 # End Source File
 # Begin Source File
 
@@ -2129,7 +2185,15 @@ SOURCE=.\Basic_Argument_T.inl
 # End Source File
 # Begin Source File
 
+SOURCE=.\Basic_SArgument_T.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\BD_String_Argument_T.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\BD_String_SArgument_T.inl
 # End Source File
 # Begin Source File
 
@@ -2273,7 +2337,15 @@ SOURCE=.\Fixed_Array_Argument_T.inl
 # End Source File
 # Begin Source File
 
+SOURCE=.\Fixed_Array_SArgument_T.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\Fixed_Size_Argument_T.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Fixed_Size_SArgument_T.inl
 # End Source File
 # Begin Source File
 
@@ -2481,6 +2553,10 @@ SOURCE=.\Object_Loader.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Object_SArgument_T.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\ObjectIdListC.i
 # End Source File
 # Begin Source File
@@ -2629,6 +2705,10 @@ SOURCE=.\Special_Basic_Argument_T.inl
 # End Source File
 # Begin Source File
 
+SOURCE=.\Special_Basic_SArgument_T.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\StringSeqC.i
 # End Source File
 # Begin Source File
@@ -2713,11 +2793,23 @@ SOURCE=.\UB_String_Argument_T.inl
 # End Source File
 # Begin Source File
 
+SOURCE=.\UB_String_SArgument_T.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\Var_Array_Argument_T.inl
 # End Source File
 # Begin Source File
 
+SOURCE=.\Var_Array_SArgument_T.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\Var_Size_Argument_T.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Var_Size_SArgument_T.inl
 # End Source File
 # Begin Source File
 
@@ -2782,7 +2874,17 @@ SOURCE=.\Basic_Argument_T.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Basic_SArgument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
 SOURCE=.\BD_String_Argument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\BD_String_SArgument_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
@@ -2802,12 +2904,27 @@ SOURCE=.\Fixed_Array_Argument_T.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Fixed_Array_SArgument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
 SOURCE=.\Fixed_Size_Argument_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
+SOURCE=.\Fixed_Size_SArgument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
 SOURCE=.\Object_Argument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Object_SArgument_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
@@ -2842,7 +2959,17 @@ SOURCE=.\Special_Basic_Argument_T.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Special_Basic_SArgument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
 SOURCE=.\UB_String_Argument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\UB_String_SArgument_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
@@ -2852,7 +2979,17 @@ SOURCE=.\Var_Array_Argument_T.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Var_Array_SArgument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
 SOURCE=.\Var_Size_Argument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Var_Size_SArgument_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File

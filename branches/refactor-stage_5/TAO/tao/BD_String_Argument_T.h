@@ -126,112 +126,6 @@ namespace TAO
   };
 
   /**
-   * @class In_BD_String_SArgument_T
-   *
-   * @brief Template class for IN skeleton bd (w)string argument.
-   *
-   */
-  template<typename S, 
-           typename S_var, 
-           typename to_S, 
-           typename from_S, 
-           size_t BOUND>
-  class In_BD_String_SArgument_T : public Argument
-  {
-  public:
-    In_BD_String_SArgument_T (void);
-
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
-
-    virtual void interceptor_param (Dynamic::Parameter &);
-
-    const S * arg (void) const;
-
-  private:
-    S_var x_;
-  };
-
-  /**
-   * @class Inout_BD_String_SArgument_T
-   *
-   * @brief Template class for INOUT skeleton bd (w)string argument.
-   *
-   */
-  template<typename S, 
-           typename S_var, 
-           typename to_S, 
-           typename from_S, 
-           size_t BOUND>
-  class Inout_BD_String_SArgument_T : public Argument
-  {
-  public:
-    Inout_BD_String_SArgument_T (void);
-
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
-
-    virtual void interceptor_param (Dynamic::Parameter &);
-
-    S *& arg (void);
-
-  private:
-    S_var x_;
-  };
-
-  /**
-   * @class Out_BD_String_SArgument_T
-   *
-   * @brief Template class for INOUT skeleton bd (w)string argument.
-   *
-   */
-  template<typename S, 
-           typename S_var,
-           typename S_out,
-           typename to_S, 
-           typename from_S, 
-           size_t BOUND>
-  class Out_BD_String_SArgument_T : public Argument
-  {
-  public:
-    Out_BD_String_SArgument_T (void);
-
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
-
-    virtual void interceptor_param (Dynamic::Parameter &);
-
-    S *& arg (void);
-
-  private:
-    S_var x_;
-  };
-
-  /**
-   * @class Ret_BD_String_SArgument_T
-   *
-   * @brief Template class for return skeleton value of bd (w)string.
-   *
-   */
-  template<typename S, 
-           typename S_var, 
-           typename to_S, 
-           typename from_S, 
-           size_t BOUND>
-  class Ret_BD_String_SArgument_T : public Argument
-  {
-  public:
-    Ret_BD_String_SArgument_T (void);
-
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
-
-    virtual void interceptor_result (CORBA::Any *);
-
-    S *& arg (void);
-
-  private:
-    S_var x_;
-  };
-
-  /**
    * @struct BD_String_Tag
    *
    * @brief Struct for bounded (w)string arguments id tag.
@@ -242,7 +136,7 @@ namespace TAO
   /**
    * @struct Basic_Arg_Traits_T
    *
-   * @brief Template class for argument traits of bounded (w)strings.
+   * @brief Template class for stub argument traits of bounded (w)strings.
    *
    */
   template<typename T, 
@@ -275,29 +169,7 @@ namespace TAO
                                      T_var,
                                      to_T,
                                      from_T,
-                                     BOUND>       stub_ret_val;
-
-    typedef In_BD_String_SArgument_T<T,
-                                     T_var,
-                                     to_T,
-                                     from_T,
-                                     BOUND>       in_sarg_val;
-    typedef Inout_BD_String_SArgument_T<T,
-                                        T_var,
-                                        to_T,
-                                        from_T,
-                                        BOUND>    inout_sarg_val;
-    typedef Out_BD_String_SArgument_T<T,
-                                      T_var,
-                                      T_out,
-                                      to_T,
-                                      from_T,
-                                      BOUND>      out_sarg_val;
-    typedef Ret_BD_String_SArgument_T<T,
-                                      T_var,
-                                      to_T,
-                                      from_T,
-                                      BOUND>      skel_ret_val;
+                                     BOUND>       ret_val;
 
     typedef BD_String_Tag                         idl_tag;
   };
