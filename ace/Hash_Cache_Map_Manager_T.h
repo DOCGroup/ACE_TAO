@@ -78,8 +78,15 @@ class ACE_Hash_Cache_Map_Manager : public ACE_Cache_Map_Manager< KEY, VALUE, HAS
   ~ACE_Hash_Cache_Map_Manager (void);
   // Close down a <Cache_Map_Manager> and release dynamically allocated
   // resources.
-  
-   int bind (const KEY &key,
+
+  int bind (const KEY &key,
+            const VALUE &value);
+  // Associate <key> with <value>.  If <key> is already in the
+  // MAP then the ENTRY is not changed.  Returns 0 if a new entry is
+  // bound successfully, returns 1 if an attempt is made to bind an
+  // existing entry, and returns -1 if failures occur.
+
+  int bind (const KEY &key,
             const VALUE &value,
             CACHE_ENTRY *&entry);
   // Same as a normal bind, except the cache entry is also passed back
@@ -87,8 +94,41 @@ class ACE_Hash_Cache_Map_Manager : public ACE_Cache_Map_Manager< KEY, VALUE, HAS
   // created entry, or the existing one.
 
   int find (const KEY &key,
+            VALUE &value);
+  // Loopkup entry<key,value> in the cache.
+
+  int find (const KEY &key);
+  // Is <key> in the cache?
+
+  int find (const KEY &key,
             CACHE_ENTRY *&entry);
   // Obtain the entry when the find succeeds.
+
+  int rebind (const KEY &key,
+              const VALUE &value);
+  // Reassociate the <key> with <value>. If the <key> already exists
+  // in the cache then returns 1, on a new bind returns 0 and returns
+  // -1 in case of any failures.
+
+  int rebind (const KEY &key,
+              const VALUE &value,
+              VALUE &old_value);
+  // Reassociate <key> with <value>, storing the old value into the
+  // "out" parameter <old_value>.  The function fails if <key> is not
+  // in the cache for caches that do not allow user specified keys.
+  // However, for caches that allow user specified keys, if the key is
+  // not in the cache, a new <key>/<value> association is created.
+
+  int rebind (const KEY &key,
+              const VALUE &value,
+              KEY &old_key,
+              VALUE &old_value);
+  // Reassociate <key> with <value>, storing the old key and value
+  // into the "out" parameters <old_key> and <old_value>.  The
+  // function fails if <key> is not in the cache for caches that do not
+  // allow user specified keys.  However, for caches that allow user
+  // specified keys, if the key is not in the cache, a new <key>/<value>
+  // association is created.
 
   int rebind (const KEY &key,
               const VALUE &value,
@@ -98,14 +138,39 @@ class ACE_Hash_Cache_Map_Manager : public ACE_Cache_Map_Manager< KEY, VALUE, HAS
   // created entry, or the existing one.
 
   int trybind (const KEY &key,
+               VALUE &value);
+  // Associate <key> with <value> if and only if <key> is not in the
+  // cache.  If <key> is already in the cache, then the <value> parameter
+  // is overwritten with the existing value in the cache. Returns 0 if a
+  // new <key>/<value> association is created.  Returns 1 if an
+  // attempt is made to bind an existing entry.  This function fails
+  // for maps that do not allow user specified keys.
+
+  int trybind (const KEY &key,
                VALUE &value,
                CACHE_ENTRY *&entry);
   // Same as a normal trybind, except the cache entry is also passed
   // back to the caller.  The entry in this case will either be the
   // newly created entry, or the existing one.
 
+  int unbind (const KEY &key);
+  // Remove <key> from the cache.
+
+  int unbind (const KEY &key,
+              VALUE &value);
+  // Remove <key> from the cache, and return the <value> associated with
+  // <key>.
+
   int unbind (CACHE_ENTRY *entry);
   // Remove entry from map.
+
+protected:
+
+  typedef ACE_Cache_Map_Manager< KEY, VALUE, HASH_KEY, COMPARE_KEYS,
+                                 ACE_Hash_Map_Manager_Ex<KEY, ACE_Pair<VALUE, ATTRIBUTES>, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>,
+                                 CACHING_STRATEGY, ATTRIBUTES>
+    ACE_HCMM_BASE;
+  // Base class.
 };
 
 
