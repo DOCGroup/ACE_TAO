@@ -9,6 +9,7 @@
 #include "ace/OS_NS_netdb.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_arpa_inet.h"
+#include "ace/OS_NS_sys_time.h"
 
 ACE_RCSID(Logger, Logging_Test_i, "$Id$")
 

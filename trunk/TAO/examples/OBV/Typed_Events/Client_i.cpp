@@ -6,6 +6,7 @@
 #include "tao/ORB_Core.h"
 
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_sys_time.h"
 
 int
 Checkpoint_Client_i::run (const char *name,
