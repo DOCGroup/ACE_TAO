@@ -13,10 +13,10 @@ interface Logger
   // = DESCRIPTION
   //   This implementation provides a CORBA wrapper around the
   //   <ACE_Log_Msg> mechanism.
-	  
+
   enum Log_Priority
   {
-    
+
     LM_SHUTDOWN,
     // Shutdown the logger
 
@@ -72,7 +72,7 @@ interface Logger
     // Do not print messages at all (just leave in thread-specific
     // storage for later inspection).
   };
-    
+
   struct Log_Record
   {
     Log_Priority type;                 // Type of logging message.
@@ -81,9 +81,14 @@ interface Logger
     long host_addr;	               // IP address of the sender.
     string<TAO_MAXLOGMSGLEN> msg_data; // The logging message.
   };
-  
+
   oneway void log (in Log_Record log_rec);
   // Transmit a Log_Record to the logging server.
+
+  oneway void logv (in Log_Record log_rec, 
+		    in Verbosity_Level level);
+  // Log a message with a specific Verbosity level which may be
+  // differeny from the <verbosity_level> 
 
   oneway void verbosity (in Verbosity_Level level);
   // Change the state of the <verbosity_level>.  This controls how
@@ -94,11 +99,11 @@ interface Logger_Factory
 {
   // = TITLE
   //   Create a <Logger> of type <name>.
-  
+
   Logger make_logger (in string name);
   // Returns a new <Logger> instance.  Currently, <name> is unused, but it 
   // could be used to select the appropriate type of <Logger>.
 };
 
-    
-    
+
+

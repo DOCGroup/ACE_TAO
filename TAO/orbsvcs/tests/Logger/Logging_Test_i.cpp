@@ -9,8 +9,8 @@
 
 ACE_RCSID(Logger, Logging_Test_i, "$Id$")
 
-// Constructor
-Logger_Client::Logger_Client (void)
+  // Constructor
+  Logger_Client::Logger_Client (void)
 {
   // Do nothing
 }
@@ -152,7 +152,7 @@ Logger_Client::init_loggers (CORBA::Environment &env)
     ACE_DEBUG ((LM_DEBUG,
 		"Created two loggers\n"));      
 
-    if (TAO_debug_level > 0)
+  if (TAO_debug_level > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
 		  "\nTrying to resolve already created logger..."));
@@ -166,7 +166,7 @@ Logger_Client::init_loggers (CORBA::Environment &env)
 		    "\nResolution succeeded.")); 
     }
     
-    return 0;
+  return 0;
 }
 
 
@@ -177,10 +177,11 @@ Logger_Client::run (void)
 {
   TAO_TRY
     {
-      // Create 2 Log_Records for the test
+      // Create 3 Log_Records for the test
       Logger::Log_Record rec1;
       Logger::Log_Record rec2;
-
+      Logger::Log_Record rec3;
+      
       // Setup the first log record
       this->init_record (rec1,
                          Logger::LM_DEBUG,
@@ -191,6 +192,10 @@ Logger_Client::run (void)
                          Logger::LM_ERROR,
                          "Beware The Stark Fist of Removal. (2)\n");
 
+      this->init_record (rec3,
+			 Logger::LM_INFO,
+			 "Bob loves you. Logv test successful. (3)\n");
+      
       // If debugging, output the new log records
       if (TAO_debug_level > 0)
         {
@@ -201,7 +206,11 @@ Logger_Client::run (void)
           ACE_DEBUG ((LM_DEBUG,
                       "\nSecond Log_Record created. Contents:\n"));
           this->show_record (rec2);
-        }
+
+	  ACE_DEBUG ((LM_DEBUG,
+		      "\nThird log record created. Contents:\n"));
+	  this->show_record (rec3);
+	}
 
       // Change the verbosity.
       this->logger_1_->verbosity (Logger::VERBOSE_LITE, TAO_TRY_ENV);
@@ -218,6 +227,13 @@ Logger_Client::run (void)
       // Log the second Log_Record.
       this->logger_2_->log (rec2, TAO_TRY_ENV);
       TAO_CHECK_ENV;
+
+      // Change the verbosity one last time
+      this->logger_2_->verbosity (Logger::SILENT, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      // Log the third log record using logv ()
+      this->logger_2_->logv (rec3, Logger::VERBOSE, TAO_TRY_ENV);
     }
   TAO_CATCHANY
     {

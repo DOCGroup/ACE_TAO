@@ -144,7 +144,16 @@ Logger_i::verbosity_conversion (Logger::Verbosity_Level verbosity_level)
 
 void
 Logger_i::log (const Logger::Log_Record &log_rec,
-               CORBA::Environment &_env)
+	       CORBA::Environment &_env)
+{
+  this->logv (log_rec, verbosity_level_, _env);
+}
+
+
+void
+Logger_i::logv (const Logger::Log_Record &log_rec,
+	       Logger::Verbosity_Level verbosity,
+	       CORBA::Environment &_env)
 {
   ACE_Time_Value temp (log_rec.time);
 
@@ -184,7 +193,8 @@ Logger_i::log (const Logger::Log_Record &log_rec,
   addy.get_host_name (namebuf,
                       MAXHOSTNAMELEN);
 
-  u_long verb_level = this->verbosity_conversion (this->verbosity_level_);
+
+  u_long verb_level = this->verbosity_conversion (verbosity);
 
   rec.print (namebuf,
              verb_level,
