@@ -1,3 +1,18 @@
+Sun Nov  9 23:06:22 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Asynch_Invocation.cpp:
+	* tao/Asynch_Invocation.h:
+	* tao/Asynch_Invocation.i:
+	* tao/ClientInterceptorAdapter.cpp:
+	* tao/ClientInterceptorAdapter.h:
+	* tao/ClientInterceptorAdapter.inl:
+	* tao/Invocation.cpp:
+	* tao/Invocation.h:
+	* tao/Invocation.i:
+
+	  Their service for our mankind is over. Time to remove them and
+	  go on with others.
+
 Sun Nov  9 17:33:06 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* tests/Timeout/client.cpp (send_echo): Added a comment to
@@ -8,7 +23,9 @@ Mon Nov 10 08:14:26 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/TAO.dsp:
 
-	  Added the new generated files into the project.
+	* tao/Makefile.bor:
+
+  	  Added the new generated files into the project.
 
 
 Sun Nov  9 19:19:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
