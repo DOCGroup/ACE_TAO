@@ -86,9 +86,9 @@ Test_Struct_Sequence::run_sii_test (Param_Test_ptr objref,
 {
   Param_Test::StructSeq_out out (this->out_.out ());
   this->ret_ = objref->test_struct_sequence (this->in_,
-                                           this->inout_.inout (),
-                                           out,
-                                           env);
+                                             this->inout_.inout (),
+                                             out,
+                                             env);
   return (env.exception () ? -1:0);
 }
 
@@ -97,49 +97,62 @@ Test_Struct_Sequence::add_args (CORBA::NVList_ptr param_list,
                                 CORBA::NVList_ptr retval,
                                 CORBA::Environment &env)
 {
-  CORBA::Any in_arg (Param_Test::_tc_StructSeq, (void *) &this->in_, 0);
-  CORBA::Any inout_arg (Param_Test::_tc_StructSeq, &this->inout_.inout (), 0);
-  CORBA::Any out_arg (Param_Test::_tc_StructSeq, this->out_.out (), 0);
+  CORBA::Any in_arg (Param_Test::_tc_StructSeq, 
+                     (void *) &this->in_,
+                     CORBA::B_FALSE);
+
+  CORBA::Any inout_arg (Param_Test::_tc_StructSeq,
+                        &this->inout_.inout (),
+                        CORBA::B_FALSE);
+
+  CORBA::Any out_arg (Param_Test::_tc_StructSeq,
+                      &this->dii_out_,
+                      CORBA::B_FALSE);
 
   // add parameters
-  (void)param_list->add_value ("s1", in_arg, CORBA::ARG_IN, env);
-  (void)param_list->add_value ("s2", inout_arg, CORBA::ARG_INOUT, env);
-  (void)param_list->add_value ("s3", out_arg, CORBA::ARG_OUT, env);
+  param_list->add_value ("s1", in_arg, CORBA::ARG_IN, env);
+  param_list->add_value ("s2", inout_arg, CORBA::ARG_INOUT, env);
+  param_list->add_value ("s3", out_arg, CORBA::ARG_OUT, env);
 
-  // add return value
-  (void)retval->item (0, env)->value ()->replace (Param_Test::_tc_StructSeq,
-                                                  &this->ret_,
-                                                  0, // does not own
-                                                  env);
+  // add return value type
+  retval->item (0, env)->value ()->replace (Param_Test::_tc_StructSeq,
+                                            &this->dii_ret_,
+                                            CORBA::B_FALSE, // does not own
+                                            env);
   return 0;
 }
 
 CORBA::Boolean
-Test_Struct_Sequence::check_validity (void)
+Test_Struct_Sequence::check_validity_engine 
+                (const Param_Test::StructSeq &the_in,
+                 const Param_Test::StructSeq &the_inout,
+                 const Param_Test::StructSeq &the_out,
+                 const Param_Test::StructSeq &the_ret)
 {
-  if (this->compare (this->in_, this->inout_.in ()) &&
-      this->compare (this->in_, this->out_.in ()) &&
-      this->compare (this->in_, this->ret_.in ()))
+  if (this->compare (the_in, the_inout) &&
+      this->compare (the_in, the_out) &&
+      this->compare (the_in, the_ret))
     return 1;
   else
     return 0;
 }
 
 CORBA::Boolean
+Test_Struct_Sequence::check_validity (void)
+{
+  return this->check_validity_engine (this->in_,
+                                      this->inout_.in (),
+                                      this->out_.in (),
+                                      this->ret_.in ());
+}
+
+CORBA::Boolean
 Test_Struct_Sequence::check_validity (CORBA::Request_ptr req)
 {
-#if 0
-  CORBA::Environment env;
-  this->inout_ = new Param_Test::StructSeq (*(Param_Test::StructSeq *)
-                                                req->arguments ()->item
-                                                (1, env)->value ()->value ());
-  this->out_ = new Param_Test::StructSeq (*(Param_Test::StructSeq *) req->arguments
-                                              ()->item (2, env)->value ()->value ());
-  this->ret_ = new Param_Test::StructSeq (*(Param_Test::StructSeq *)req->result
-                                              ()->value ()->value ());
-
-#endif
-  return this->check_validity ();
+  return this->check_validity_engine (this->in_,
+                                      this->inout_.in (),
+                                      this->dii_out_,
+                                      this->dii_ret_);
 }
 
 void
