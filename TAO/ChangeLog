@@ -1,3 +1,25 @@
+Fri Nov 19 14:44:12 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+        
+          Changed call passing scope to use existing local variable
+          rather than accessing the scope again.
+          
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+        
+          Fixed several errors in the computation of repository ids for
+          AMI/AMH reply handlers/exception holders. Thanks to Carlos
+          O'Ryan <coryan@atdesk.com> for reporting the problem with
+          AMI reply handler repo ids.
+          
+        * tests/IDL_Test/main.cpp:
+        * tests/IDL_Test/nested_scope.idl:
+        
+          Added test code contributed by Carlos O'Ryan for the 
+          problem he reported. These fixes close [BUGID:1985].
+
 Fri Nov 19 10:59:00 2004    Gary Maxey  <gary.maxey@hp.com>
 
         * utils/catior/catior.cpp

@@ -1470,7 +1470,7 @@ be_visitor_ccm_pre_proc::create_event_consumer (be_eventtype *node)
   // We're at global scope here so we need to fool the scope stack
   // for a minute so the correct repo id can be calculated at
   // interface construction time.
-  idl_global->scopes ().push (node->defined_in ());
+  idl_global->scopes ().push (s);
 
   Identifier parent_id ("EventConsumerBase");
   UTL_ScopedName parent_local_name (&parent_id,

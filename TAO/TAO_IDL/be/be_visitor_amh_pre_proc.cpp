@@ -143,6 +143,9 @@ be_visitor_amh_pre_proc::create_response_handler (
     dynamic_cast<UTL_ScopedName*> (node->name ()->copy ());
   Identifier *local_name = amh_name->last_component ();
   local_name->replace_string (class_name.c_str ());
+  
+  UTL_Scope *s = node->defined_in ();
+  idl_global->scopes ().push (s);
 
   // @@ Mayur, you are not filling up the list of inherited classes,
   // however, you *are* using that same list in the amh_rh_sh.cpp and
@@ -160,6 +163,8 @@ be_visitor_amh_pre_proc::create_response_handler (
                                 1,          // local
                                 0),         // non-abstract
                   0);
+                  
+  idl_global->scopes ().pop ();
 
   response_handler->set_name (amh_name);
   response_handler->set_defined_in (node->defined_in ());
@@ -585,6 +590,9 @@ be_visitor_amh_pre_proc::create_exception_holder (be_interface *node)
   UTL_ScopedName *excep_holder_name =
     node->compute_name ("AMH_",
                         "ExceptionHolder");
+                        
+  UTL_Scope *s = node->defined_in ();
+  idl_global->scopes ().push (s);
 
   be_valuetype *excep_holder = 0;
   ACE_NEW_RETURN (excep_holder,
@@ -601,6 +609,8 @@ be_visitor_amh_pre_proc::create_exception_holder (be_interface *node)
                                 0,
                                 0),
                   0);
+                  
+  idl_global->scopes ().pop ();
 
   excep_holder->set_name (excep_holder_name);
   excep_holder->set_defined_in (node->defined_in ());
