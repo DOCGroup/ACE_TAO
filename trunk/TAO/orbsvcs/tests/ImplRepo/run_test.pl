@@ -45,24 +45,24 @@ sub airplane_test
 sub airplane_ir_test
 {
   $IR = Process::Create ($implrepo_server, 
-                         "-ORBobjrefstyle url -o $implrepo_ior -d 0");
+                         "-ORBObjRefStyle URL -o $implrepo_ior -d 0");
 
   ACE::waitforfile ($implrepo_ior);
 
-  system ($tao_ir." -ORBImplRepoServiceIOR file://$implrepo_ior add plane -c \"airplane_server -i -ORBImplRepoServiceIOR file://$implrepo_ior\"");
+  system ($tao_ir." -ORBInitRef ImplRepoService=file://$implrepo_ior add plane -c \"airplane_server -i -ORBInitRef ImplRepoService=file://$implrepo_ior\"");
 
   $SV = Process::Create ($airplane_server,
-                         "-o $airplane_ior -i -ORBobjrefstyle url -ORBImplRepoServiceIOR file://$implrepo_ior");
+                         "-o $airplane_ior -i -ORBObjRefStyle URL -ORBInitRef ImplRepoService=file://$implrepo_ior");
 
   ACE::waitforfile ($airplane_ior);
 
   system($airplane_client." -k file://$airplane_ior");
 
-  system($tao_ir." -ORBImplRepoServiceIOR file://$implrepo_ior shutdown plane");
+  system($tao_ir." -ORBInitRef ImplRepoService=file://$implrepo_ior shutdown plane");
 
   system($airplane_client." -k file://$airplane_ior");
 
-  system($tao_ir." -ORBImplRepoServiceIOR file://$implrepo_ior shutdown plane");
+  system($tao_ir." -ORBInitRef ImplRepoService=file://$implrepo_ior shutdown plane");
 
   $IR->Kill (); $IR->Wait ();
 }
@@ -83,24 +83,24 @@ sub nestea_test
 sub nestea_ir_test
 {
   $IR = Process::Create ($implrepo_server, 
-                         "-ORBobjrefstyle url -o $implrepo_ior -d 0");
+                         "-ORBObjRefStyle URL -o $implrepo_ior -d 0");
 
   ACE::waitforfile ($implrepo_ior);
 
-  system ($tao_ir." -ORBImplRepoServiceIOR file://$implrepo_ior add nestea_server -c \"nestea_server -i -ORBImplRepoServiceIOR file://$implrepo_ior\"");
+  system ($tao_ir." -ORBInitRef ImplRepoService=file://$implrepo_ior add nestea_server -c \"nestea_server -i -ORBInitRef ImplRepoService=file://$implrepo_ior\"");
 
   $SV = Process::Create ($nestea_server,
-                         "-o $nestea_ior -i -ORBobjrefstyle url -ORBImplRepoServiceIOR file://$implrepo_ior");
+                         "-o $nestea_ior -i -ORBObjRefStyle URL -ORBInitRef ImplRepoService=file://$implrepo_ior");
 
   ACE::waitforfile ($nestea_ior);
 
   system ($nestea_client." -k file://$nestea_ior");
 
-  system ($tao_ir." -ORBImplRepoServiceIOR file://$implrepo_ior shutdown nestea_server");
+  system ($tao_ir." -ORBInitRef ImplRepoService=file://$implrepo_ior shutdown nestea_server");
 
   system ($nestea_client." -k file://$nestea_ior");
 
-  system ($tao_ir." -ORBImplRepoServiceIOR file://$implrepo_ior shutdown nestea_server");
+  system ($tao_ir." -ORBInitRef ImplRepoService=file://$implrepo_ior shutdown nestea_server");
 
   $IR->Kill (); $IR->Wait ();
 }
@@ -108,17 +108,17 @@ sub nestea_ir_test
 sub both_ir_test
 {
   $IR = Process::Create ($implrepo_server, 
-                         "-ORBobjrefstyle url -o $implrepo_ior -d 0");
+                         "-ORBObjRefStyle URL -o $implrepo_ior -d 0");
 
   ACE::waitforfile ($implrepo_ior);
 
-  system ($tao_ir." -ORBImplRepoServiceIOR file://$implrepo_ior add plane -c \"airplane_server -i -ORBImplRepoServiceIOR file://$implrepo_ior\"");
-  system ($tao_ir." -ORBImplRepoServiceIOR file://$implrepo_ior add nestea -c \"nestea_server -i -ORBImplRepoServiceIOR file://$implrepo_ior\"");
+  system ($tao_ir." -ORBInitRef ImplRepoService=file://$implrepo_ior add plane -c \"airplane_server -i -ORBInitRef ImplRepoService=file://$implrepo_ior\"");
+  system ($tao_ir." -ORBInitRef ImplRepoService=file://$implrepo_ior add nestea -c \"nestea_server -i -ORBInitRef ImplRepoService=file://$implrepo_ior\"");
 
   $ASV = Process::Create ($nestea_server,
-                         "-o $nestea_ior -i -ORBobjrefstyle url -ORBImplRepoServiceIOR file://$implrepo_ior");
+                         "-o $nestea_ior -i -ORBObjRefStyle URL -ORBInitRef ImplRepoService=file://$implrepo_ior");
   $NSV = Process::Create ($airplane_server,
-                         "-o $airplane_ior -i -ORBobjrefstyle url -ORBImplRepoServiceIOR file://$implrepo_ior");
+                         "-o $airplane_ior -i -ORBObjRefStyle URL -ORBInitRef ImplRepoService=file://$implrepo_ior");
 
   ACE::waitforfile ($nestea_ior);
 
