@@ -122,7 +122,6 @@ Nestea_i::save_data (void)
 {
   ACE_FILE_IO file;
   ACE_FILE_Addr filename (this->data_filename_);
-  ACE_FILE_Connector tempfile (file, filename);
 
   char str[MAX_UINT32_STR_LEN];
 
@@ -139,7 +138,6 @@ Nestea_i::load_data (void)
 {
   ACE_FILE_IO file;
   ACE_FILE_Addr filename ("nestea.dat");
-  ACE_FILE_Connector tempfile (file, filename);
 
   char str[12];
 
