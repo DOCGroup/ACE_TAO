@@ -1,3 +1,9 @@
+1998-06-18  Torben Worm  <tworm@cumbia.cs.wustl.edu>
+
+	* orbsvcs/tests/Concurrency/CC_command.tab.cpp
+	  orbsvcs/tests/Concurrency/Makefile
+	  Now the yacc generated file is patched too.
+
 Thu Jun 18 11:38:32 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
 	* orbscvs/tests/AVStreams/server_discovery/TS_Resolve.java:
@@ -7,7 +13,7 @@ Thu Jun 18 11:38:32 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 	* orbsvcs/tests/AVStreams/server_discovery/remote_netscape:
 	The beginnings of a Java tool to locate a best matched server for
 	the A/V demo's client using the Trading Service.
-	
+
 
 1998-06-18  Torben Worm  <tworm@cumbia.cs.wustl.edu>
 
