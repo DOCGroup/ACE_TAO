@@ -73,11 +73,12 @@ sub record_resources ()
 
 ################################################################################
 
-sub check_resources ()
+sub check_resources
 {
+    my($oh) = shift;
     if ($config_list->check_config ('CHECK_RESOURCES')) {
         if (defined $opt_v) {
-            print "memShow();\n";
+            print $oh "memShow();\n";
         }
         else {
             $end_test_resources=`ipcs | egrep $user`;
@@ -131,17 +132,18 @@ sub run_program ($)
 
 ################################################################################
 
-sub output_vxworks_commands ($)
+sub output_vxworks_commands
 {
+  my($oh)      = shift;
   my($program) = shift;
-  my($length) = length($program) + 2;
+  my($length)  = length($program) + 2;
   if ($config_list->check_config ('CHECK_RESOURCES')) {
-    print "memShow();\n";
+    print $oh "memShow();\n";
   }
-  print "write(2, \"\\n$program\\n\", $length);\n" .
-        "ld < $program\n" .
-        "ace_main (0, 0);\n" .
-        "unld \"$program\"\n";
+  print $oh "write(2, \"\\n$program\\n\", $length);\n" .
+            "ld < $program\n" .
+            "ace_main (0, 0);\n" .
+            "unld \"$program\"\n";
 }
 
 ################################################################################
@@ -311,8 +313,8 @@ sub delete_temp_files ()
 
 $config_list->load ("run_test.lst");
 
-if (!getopts ('dhtv') || $opt_h) {
-    print "run_test.pl [-h] [-t file1 file2 ...]\n";
+if (!getopts ('dhtvo:') || $opt_h) {
+    print "run_test.pl [-h] [-v] [-o <output file>] [-t file1 file2 ...]\n";
     print "\n";
     print "Runs the tests listed in run_test.lst\n";
     print "\n";
@@ -320,7 +322,8 @@ if (!getopts ('dhtv') || $opt_h) {
     print "    -d         Debug mode (do not run tests)\n";
     print "    -h         Display this help\n";
     print "    -t         Runs all the tests passed via the cmd line\n";
-    print "    -v         Generate run_test.vxworks\n";
+    print "    -v         Generate commands for VxWorks\n";
+    print "    -o         Put VxWorks commands in output file\n";
     print "\n";
     print "Pass in configs using \"-Config XXXXX\"\n";
     print "\n";
@@ -354,18 +357,27 @@ if (defined $opt_d) {
 
 record_resources () if (!defined $opt_d);
 
+my($oh) = \*STDOUT;
+if (defined $opt_v && defined $opt_o) {
+  $oh = new FileHandle();
+  if (!open($oh, ">$opt_o")) {
+    print STDERR "ERROR: Unable to write to $opt_o\n";
+    exit(1);
+  }
+}
+
 if (defined $opt_v) {
-  print "#\n" .
-        "# ACE one-button test for VxWorks 5.x.\n" .
-        "# To use:  -> < run_test.vxworks > run_test.log\n" .
-        "#\n" .
-        "# NOTE: if you build with a shared ACE library, be sure to load\n" .
-        "# that first:\n" .
-        "#  -> ld < ../ace/libACE.so\n" .
-        "# and unld it after running the tests.\n" .
-        "#\n" .
-        "# The output logs can be checked from a Unix host:\n" .
-        "#    % ./run_tests.check log/*.log\n\n";
+  print $oh "#\n" .
+            "# ACE one-button test for VxWorks 5.x.\n" .
+            "# To use:  -> < run_test.vxworks > run_test.log\n" .
+            "#\n" .
+            "# NOTE: if you build with a shared ACE library, be sure to load\n" .
+            "# that first:\n" .
+            "#  -> ld < ../ace/libACE.so\n" .
+            "# and unld it after running the tests.\n" .
+            "#\n" .
+            "# The output logs can be checked from a Unix host:\n" .
+            "#    % ./run_tests.check log/*.log\n\n";
 }
 
 foreach $test (@tests) {
@@ -376,13 +388,13 @@ foreach $test (@tests) {
         purify_program ($test);
     }
     elsif (defined $opt_v) {
-        output_vxworks_commands ($test);
+        output_vxworks_commands ($oh, $test);
     }
     else {
         run_program ($test);
     }
 }
 
-check_resources () if (!defined $opt_d);
+check_resources ($oh) if (!defined $opt_d);
 
 delete_temp_files ();
