@@ -1,5 +1,8 @@
 Wed Oct 29 07:39:38 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/Synch.cpp: Added an explicit template instantiations for
+ 	  ACE_Guard<ACE_Process_Mutex>.
+
 	* ace/LOCK_SOCK_Acceptor.h: Removed the typedef of
  	  ACE_SOCK_Acceptor with a full expansion of the name to fix a G++
  	  bug.
