@@ -42,9 +42,9 @@
 // This only works on Win32 platforms and on Unix platforms supporting
 // POSIX aio calls.
 
-#if defined ACE_HAS_AIO_CALLS
+#if defined (ACE_HAS_AIO_CALLS)
 #define RESULT_CLASS ACE_POSIX_Asynch_Result
-#elif (defined ACE_WIN32) and (!defined ACE_HAS_WINCE)
+#elif defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
 #define RESULT_CLASS ACE_WIN32_Asynch_Result
 #endif /* ACE_HAS_AIO_CALLS */
 
@@ -70,11 +70,11 @@ public:
                     0, // Priority
                     signal_number),
       sequence_number_ (sequence_number)
-    
-    {};
+    {}
   // Constructor.
   
-  ~My_Result (void) {};
+  virtual ~My_Result (void)
+    {}
   // Destructor.
   
   void complete (u_long bytes_transferred,
@@ -115,10 +115,10 @@ class ACE_Export My_Handler : public  ACE_Handler
   //
   
 public:
-  My_Handler (void) {};
+  My_Handler (void) {}
   // Constructor.
   
-  ~My_Handler (void) {};
+  virtual ~My_Handler (void) {}
   // Destructor.
 
   //  ACE_Atomic_Op <ACE_Thread_Mutex, int> completion_count_;
@@ -133,6 +133,12 @@ class ACE_Export My_Task: public ACE_Task <ACE_NULL_SYNCH>
   //     thread waits for a different signal.
   //
 public:
+  My_Task (void) {}
+  // Constructor.
+  
+  virtual ~My_Task (void) {}
+  // Destructor.
+
   int open (void *proactor)
     {
       // Store the proactor.
@@ -264,6 +270,12 @@ main (int argc, char *argv [])
               "(%P | %t):Test ends\n"));
   return 0;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Task <ACE_NULL_SYNCH>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Task <ACE_NULL_SYNCH>
+#endif /* ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA */
 
 #else /* ACE_WIN32 && !ACE_HAS_WINCE || ACE_HAS_AIO_CALLS && !ACE_POSIX_AIOCB_PROACTOR*/
 
