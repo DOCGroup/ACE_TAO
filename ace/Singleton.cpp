@@ -197,7 +197,10 @@ ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::close (void)
     ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::instance_i ();
 
   if (singleton)
-    singleton->cleanup ();
+    {
+      singleton->cleanup ();
+      ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::instance_i () = 0;
+    }
 }
 
 template <class TYPE, class ACE_LOCK> void
