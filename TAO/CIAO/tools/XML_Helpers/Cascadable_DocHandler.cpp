@@ -23,7 +23,9 @@ CIAO::XMLHelpers::Cascadable_DocHandler::Cascadable_DocHandler (ACEXML_XMLReader
       child_ (0),
       locator_ (0)
 {
+#if !defined (ACE_HAS_EXCEPTIONS)
   ACE_UNUSED_ARG (ACEXML_ENV_SINGLE_ARG_PARAMETER);
+#endif /*ACE_HAS_EXCEPTIONS*/
 }
 
 CIAO::XMLHelpers::Cascadable_DocHandler::~Cascadable_DocHandler ()
