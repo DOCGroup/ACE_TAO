@@ -1,3 +1,8 @@
+Fri Mar  1 17:42:54 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
+
+	* tao/Makefile:
+	  Made changes to get Messaging library compiled always.
+
 Fri Mar  1 18:56:21 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/performance-tests/RTEvent/lib/Auto_Disconnect.h:
