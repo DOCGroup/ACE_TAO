@@ -1,3 +1,33 @@
+Thu Dec 31 03:54:05 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* examples/POA/Loader/Servant_Activator.{h,cpp}: Added the
+	  ServantActivator_i implementation files which load the dll on
+	  creation and make object-servant associations on demand.
+	
+	* examples/POA/Loader/Servant_Locator.{h,cpp}: Added the
+	  ServantLocator_i implementation files which load the dll on
+	  creation and obtain and delete servants on demand per client
+	  request.
+	
+	* examples/POA/Loader/Server_Manager.{h,cpp}: Helper class
+	  implementation used by the server application.
+
+	* examples/POA/Loader/server.cpp: The server application.
+
+	* examples/POA/Loader/Makefile: Added to the repository.
+	
+	* examples/POA/Loader/README: Explains the example.
+
+	* examples/POA/Loader/run_test.pl: Perl script for executing the
+	  example.
+	
+	* examples/POA/Generic_Servant/MyFooServant.cpp (supply_servant):
+	  Added this function. It will provide the appropriate servant
+	  depending on the ObjectId passed to it.
+
+	* examples/POA/Generic_Servant/MyFooServant.cpp (destroy_servant):
+	  Added this function. It will terminate the servant.
+
 Thu Dec 31 00:11:32 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* orbsvcs/tests/Time/Time.dsp: 
