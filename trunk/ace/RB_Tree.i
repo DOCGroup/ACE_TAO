@@ -8,22 +8,6 @@
 // template class ACE_RB_Tree_Node<EXT_ID, INT_ID> //
 /////////////////////////////////////////////////////
 
-// No-op, to avoid accident use.
-template <class EXT_ID, class INT_ID>
-ACE_INLINE void *
-ACE_RB_Tree_Node<EXT_ID, INT_ID>::operator new (size_t)
-{
-  return (void*)0;
-}
-
-// No-op, to avoid accident use.
-template <class EXT_ID, class INT_ID>
-ACE_INLINE void
-ACE_RB_Tree_Node<EXT_ID, INT_ID>::operator delete(void *)
-{
-  // No-Op
-}
-
 
 // Key accessor.
 
@@ -144,6 +128,33 @@ ACE_RB_Tree_Node<EXT_ID, INT_ID>::operator delete(void *p, ACE_Allocator *alloca
     allocator->free (p);
   }
 }
+
+
+// ---------------------------------------------------------------
+
+// This method should never be called for any reason by the client
+// code using this class. Making the method private let's some
+// compiler complains, so now the method asserts to avoid un-intended
+// use.
+template <class EXT_ID, class INT_ID>
+ACE_INLINE void *
+ACE_RB_Tree_Node<EXT_ID, INT_ID>::operator new (size_t)
+{
+  ACE_ASSERT (0);
+  return (void*)0;
+}
+
+template <class EXT_ID, class INT_ID>
+ACE_INLINE void
+ACE_RB_Tree_Node<EXT_ID, INT_ID>::operator delete(void *)
+{
+  ACE_ASSERT (0);
+}
+
+// ---------------------------------------------------------------
+
+
+
 
 ////////////////////////////////////////////////////////////////////////
 // template class ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> //
