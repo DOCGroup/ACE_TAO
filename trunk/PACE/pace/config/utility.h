@@ -71,8 +71,7 @@ return ( (errno = ENOTSUP), FAILVALUE)
 # define PACE_DLL_SUFFIX ".dll"
 # define PACE_DLL_PREFIX ""
 
-# define PACE_ADAPT_RETVAL(OP,RESULT) \
-  ((RESULT = (OP)) != 0 ? (errno = RESULT, -1) : 0)
+# define ACE_ADAPT_RETVAL(OP,RESULT) ((RESULT = (OP)) == FALSE ? -1 : 0)
 
 # define PACE_WIN32CALL_RETURN(X,TYPE,FAILVALUE) \
   do { \
