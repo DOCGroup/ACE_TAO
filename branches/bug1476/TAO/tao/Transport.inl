@@ -151,12 +151,6 @@ TAO_Transport::is_connected (void) const
   return is_connected_;
 }
 
-ACE_INLINE void
-TAO_Transport::is_connected (bool connect)
-{
-  is_connected_ = connect;
-}
-
 ACE_INLINE TAO_Connection_Handler *
 TAO_Transport::connection_handler (void)
 {

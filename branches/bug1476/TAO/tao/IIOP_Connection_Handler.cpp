@@ -9,6 +9,8 @@
 #include "Protocols_Hooks.h"
 #include "Wait_Strategy.h"
 
+#include "Flushing_Strategy.h"
+
 #if !defined (__ACE_INLINE__)
 # include "IIOP_Connection_Handler.i"
 #endif /* ! __ACE_INLINE__ */
@@ -141,14 +143,11 @@ TAO_IIOP_Connection_Handler::open (void*)
                   client, this->peer ().get_handle ()));
     }
 
-  // Set the id in the transport now that we're active.
-  // Use C-style cast b/c otherwise we get warnings on lots of compilers
-  this->transport ()->id ((size_t) this->get_handle ());
-
   this->state_changed (TAO_LF_Event::LFS_SUCCESS);
 
-  // Set that this transport is now connected
-  this->transport ()->is_connected (true);
+  // Set that the transport now is connected
+  // Use C-style cast b/c otherwise we get warnings on lots of compilers
+  this->transport ()->set_connected ((size_t) this->get_handle ());
 
   return 0;
 }

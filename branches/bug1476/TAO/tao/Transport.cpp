@@ -2116,6 +2116,28 @@ TAO_Transport::out_stream (void)
   return this->messaging_object ()->out_stream ();
 }
 
+int
+TAO_Transport::set_connected (size_t id)
+{
+  this->id_ = id;
+  this->is_connected_ = true;
+
+  {
+    ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->handler_lock_, -1);
+
+    if (!this->queue_is_empty_i ())
+      {
+// do something here, we now get into problems because the schedule_output_i has a nill reactor
+
+        TAO_Flushing_Strategy *flushing_strategy =
+          this->orb_core ()->flushing_strategy ();
+        (void) flushing_strategy->schedule_output (this);
+      }
+  }
+
+  return 0;
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class ACE_Reverse_Lock<ACE_Lock>;
