@@ -1,3 +1,301 @@
+Mon Dec 31 11:01:29 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/Sequence_T.h:
+	* tao/Sequence_T.i:
+	* tao/Sequence_T.cpp:
+
+	  Changes by Nanbor Wang <nanbor@cs.wustl.edu> for 
+	  support of sequences of valuetypes.
+
+	* tests/OBV/Factory/client.bor:
+	* tests/OBV/Factory/client.cpp:
+	* tests/OBV/Factory/client.dsp:
+	* tests/OBV/Factory/Factory.dsw:
+	* tests/OBV/Factory/Factory.idl:
+	* tests/OBV/Factory/Makefile:
+	* tests/OBV/Factory/Makefile.bor:
+	* tests/OBV/Factory/README:
+	* tests/OBV/Factory/run_test.pl:
+	* tests/OBV/Factory/server.bor:
+	* tests/OBV/Factory/server.dsp:
+	* tests/OBV/Factory/server.cpp:
+	* tests/OBV/Forward/client.bor:
+	* tests/OBV/Forward/client.cpp:
+	* tests/OBV/Forward/client.dsp:
+	* tests/OBV/Forward/Forward.dsw:
+	* tests/OBV/Forward/Makefile:
+	* tests/OBV/Forward/Makefile.bor:
+	* tests/OBV/Forward/README:
+	* tests/OBV/Forward/run_test.pl:
+	* tests/OBV/Forward/server.bor:
+	* tests/OBV/Forward/server.dsp:
+	* tests/OBV/Forward/server.cpp:
+	* tests/OBV/Forward/Test_impl.cpp:
+	* tests/OBV/Forward/Test_impl.h:
+	* tests/OBV/Forward/TreeBase.idl:
+	* tests/OBV/Forward/TreeController.idl:
+	* tests/OBV/Forward/TreeNode.idl:
+
+	  New value type tests, written by Boris Kolpackov 
+	  <bosk@ipmce.ru>.
+
+	* TAO_IDL/be/be_tmplinst.cpp:
+	* TAO_IDL/fe/fe_tmplinst.cpp:
+
+	  New files containing the explicit template instantiations
+	  gathered fro	* TAO_IDL/the several files where they were
+	  previously located.
+
+
+	* TAO_IDL/ast/ast_factory.cpp:
+	* TAO_IDL/be/be_factory.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_init.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_init_arglist_ch.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_init_ch.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_init_ci.cpp:
+	* TAO_IDL/be/be_visitor_valuetype_fwd/cdr_op_ch.cpp:
+	* TAO_IDL/be_include/be_factory.h:
+	* TAO_IDL/be_include/be_visitor_valuetype/valuetype_init.h:
+	* TAO_IDL/be_include/be_visitor_valuetype/valuetype_init_arglist_ch.h:
+	* TAO_IDL/be_include/be_visitor_valuetype/valuetype_init_ch.h:
+	* TAO_IDL/be_include/be_visitor_valuetype/valuetype_init_ci.h:
+	* TAO_IDL/be_include/be_visitor_valuetype_fwd/cdr_op_ch.h:
+	* TAO_IDL/include/ast_factory.h:
+
+	  New files that are part of the TAO IDL compiler's enhanced support
+	  of value types, written by Boris Kolpackov <bosk@ipmce.ru>.
+
+	* TAO_IDL/Makefile.BE:
+	* TAO_IDL/Makefile.FE:
+	* TAO_IDL/TAO_IDL_BE_DLL.dsp:
+	* TAO_IDL/TAO_IDL_BE_LIB.dsp:
+	* TAO_IDL/TAO_IDL_FE_DLL.dsp:
+	* TAO_IDL/TAO_IDL_FE_LIB.dsp:
+	* TAO_IDL/ast/ast_argument.cpp:
+	* TAO_IDL/ast/ast_array.cpp:
+	* TAO_IDL/ast/ast_attribute.cpp:
+	* TAO_IDL/ast/ast_concrete_type.cpp:
+	* TAO_IDL/ast/ast_constant.cpp:
+	* TAO_IDL/ast/ast_decl.cpp:
+	* TAO_IDL/ast/ast_enum.cpp:
+	* TAO_IDL/ast/ast_enum_val.cpp:
+	* TAO_IDL/ast/ast_exception.cpp:
+	* TAO_IDL/ast/ast_field.cpp:
+	* TAO_IDL/ast/ast_generator.cpp:
+	* TAO_IDL/ast/ast_interface.cpp:
+	* TAO_IDL/ast/ast_interface_fwd.cpp:
+	* TAO_IDL/ast/ast_module.cpp:
+	* TAO_IDL/ast/ast_native.cpp:
+	* TAO_IDL/ast/ast_operation.cpp:
+	* TAO_IDL/ast/ast_predefined_type.cpp:
+	* TAO_IDL/ast/ast_redef.cpp:
+	* TAO_IDL/ast/ast_root.cpp:
+	* TAO_IDL/ast/ast_sequence.cpp:
+	* TAO_IDL/ast/ast_string.cpp:
+	* TAO_IDL/ast/ast_structure.cpp:
+	* TAO_IDL/ast/ast_type.cpp:
+	* TAO_IDL/ast/ast_typedef.cpp:
+	* TAO_IDL/ast/ast_union.cpp:
+	* TAO_IDL/ast/ast_union_branch.cpp:
+	* TAO_IDL/be/Makefile.am:
+	* TAO_IDL/be/be_argument.cpp:
+	* TAO_IDL/be/be_array.cpp:
+	* TAO_IDL/be/be_attribute.cpp:
+	* TAO_IDL/be/be_codegen.cpp:
+	* TAO_IDL/be/be_constant.cpp:
+	* TAO_IDL/be/be_decl.cpp:
+	* TAO_IDL/be/be_enum.cpp:
+	* TAO_IDL/be/be_enum_val.cpp:
+	* TAO_IDL/be/be_exception.cpp:
+	* TAO_IDL/be/be_field.cpp:
+	* TAO_IDL/be/be_generator.cpp:
+	* TAO_IDL/be/be_global.cpp:
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be/be_interface_fwd.cpp:
+	* TAO_IDL/be/be_interface_strategy.cpp:
+	* TAO_IDL/be/be_module.cpp:
+	* TAO_IDL/be/be_native.cpp:
+	* TAO_IDL/be/be_operation.cpp:
+	* TAO_IDL/be/be_predefined_type.cpp:
+	* TAO_IDL/be/be_root.cpp:
+	* TAO_IDL/be/be_scope.cpp:
+	* TAO_IDL/be/be_sequence.cpp:
+	* TAO_IDL/be/be_string.cpp:
+	* TAO_IDL/be/be_structure.cpp:
+	* TAO_IDL/be/be_type.cpp:
+	* TAO_IDL/be/be_typedef.cpp:
+	* TAO_IDL/be/be_union.cpp:
+	* TAO_IDL/be/be_union_branch.cpp:
+	* TAO_IDL/be/be_valuetype.cpp:
+	* TAO_IDL/be/be_valuetype_fwd.cpp:
+	* TAO_IDL/be/be_visitor.cpp:
+	* TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
+	* TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+	* TAO_IDL/be/be_visitor_factory.cpp:
+	* TAO_IDL/be/be_visitor_typecode.cpp:
+	* TAO_IDL/be/be_visitor_valuetype.cpp:
+	* TAO_IDL/be/be_visitor_valuetype_fwd.cpp:
+	* TAO_IDL/be/be_visitor_array/array.cpp:
+	* TAO_IDL/be/be_visitor_attribute/attribute.cpp:
+	* TAO_IDL/be/be_visitor_module/module.cpp:
+	* TAO_IDL/be/be_visitor_root/root.cpp:
+	* TAO_IDL/be/be_visitor_sequence/buffer_type.cpp:
+	* TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_sequence/elemtype.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ci.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_cs.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ch.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_cs.cpp:
+	* TAO_IDL/be/be_visitor_sequence/sequence_base.cpp:
+	* TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+	* TAO_IDL/be/be_visitor_sequence/sequence_ci.cpp:
+	* TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+	* TAO_IDL/be/be_visitor_union/cdr_op_ci.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/ami_exception_holder_ch.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/ami_exception_holder_cs.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/arglist.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/cdr_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/cdr_op_ci.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/field_cs.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/marshal_cs.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_ci.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_obv_ch.cpp:
+	* TAO_IDL/be/be_visitor_valuetype_fwd/cdr_op_ci.cpp:
+	* TAO_IDL/be/be_visitor_valuetype_fwd/valuetype_fwd_ch.cpp:
+	* TAO_IDL/be/be_visitor_valuetype_fwd/valuetype_fwd_ci.cpp:
+	* TAO_IDL/be_include/be.h:
+	* TAO_IDL/be_include/be_argument.h:
+	* TAO_IDL/be_include/be_attribute.h:
+	* TAO_IDL/be_include/be_codegen.h:
+	* TAO_IDL/be_include/be_constant.h:
+	* TAO_IDL/be_include/be_decl.h:
+	* TAO_IDL/be_include/be_enum.h:
+	* TAO_IDL/be_include/be_enum_val.h:
+	* TAO_IDL/be_include/be_exception.h:
+	* TAO_IDL/be_include/be_field.h:
+	* TAO_IDL/be_include/be_generator.h:
+	* TAO_IDL/be_include/be_interface.h:
+	* TAO_IDL/be_include/be_interface_fwd.h:
+	* TAO_IDL/be_include/be_interface_strategy.h:
+	* TAO_IDL/be_include/be_module.h:
+	* TAO_IDL/be_include/be_native.h:
+	* TAO_IDL/be_include/be_operation.h:
+	* TAO_IDL/be_include/be_predefined_type.h:
+	* TAO_IDL/be_include/be_root.h:
+	* TAO_IDL/be_include/be_sequence.h:
+	* TAO_IDL/be_include/be_structure.h:
+	* TAO_IDL/be_include/be_type.h:
+	* TAO_IDL/be_include/be_typedef.h:
+	* TAO_IDL/be_include/be_union.h:
+	* TAO_IDL/be_include/be_union_branch.h:
+	* TAO_IDL/be_include/be_valuetype.h:
+	* TAO_IDL/be_include/be_valuetype_fwd.h:
+	* TAO_IDL/be_include/be_visitor.h:
+	* TAO_IDL/be_include/be_visitor_scope.h:
+	* TAO_IDL/be_include/be_visitor_valuetype.h:
+	* TAO_IDL/be_include/be_visitor_valuetype_fwd.h:
+	* TAO_IDL/be_include/be_visitor_sequence/buffer_type.h:
+	* TAO_IDL/be_include/be_visitor_sequence/cdr_op_cs.h:
+	* TAO_IDL/be_include/be_visitor_sequence/elemtype.h:
+	* TAO_IDL/be_include/be_visitor_sequence/sequence_base.h:
+	* TAO_IDL/be_include/be_visitor_typecode/typecode_defn.h:
+	* TAO_IDL/be_include/be_visitor_valuetype/cdr_op_ch.h:
+	* TAO_IDL/be_include/be_visitor_valuetype/cdr_op_ci.h:
+	* TAO_IDL/be_include/be_visitor_valuetype/valuetype.h:
+	* TAO_IDL/be_include/be_visitor_valuetype_fwd/cdr_op_ci.h:
+	* TAO_IDL/driver/drv_init.cpp:
+	* TAO_IDL/fe/Makefile.am:
+	* TAO_IDL/fe/fe_declarator.cpp:
+	* TAO_IDL/fe/fe_init.cpp:
+	* TAO_IDL/fe/idl.ll:
+	* TAO_IDL/fe/idl.yy:
+	* TAO_IDL/fe/lex.yy.cpp:
+	* TAO_IDL/fe/lex.yy.cpp.diff:
+	* TAO_IDL/fe/y.tab.cpp:
+	* TAO_IDL/fe/y.tab.cpp.diff:
+	* TAO_IDL/include/ast.h:
+	* TAO_IDL/include/ast_argument.h:
+	* TAO_IDL/include/ast_attribute.h:
+	* TAO_IDL/include/ast_concrete_type.h:
+	* TAO_IDL/include/ast_constant.h:
+	* TAO_IDL/include/ast_decl.h:
+	* TAO_IDL/include/ast_enum.h:
+	* TAO_IDL/include/ast_enum_val.h:
+	* TAO_IDL/include/ast_exception.h:
+	* TAO_IDL/include/ast_field.h:
+	* TAO_IDL/include/ast_generator.h:
+	* TAO_IDL/include/ast_interface.h:
+	* TAO_IDL/include/ast_interface_fwd.h:
+	* TAO_IDL/include/ast_module.h:
+	* TAO_IDL/include/ast_native.h:
+	* TAO_IDL/include/ast_operation.h:
+	* TAO_IDL/include/ast_predefined_type.h:
+	* TAO_IDL/include/ast_root.h:
+	* TAO_IDL/include/ast_structure.h:
+	* TAO_IDL/include/ast_type.h:
+	* TAO_IDL/include/ast_typedef.h:
+	* TAO_IDL/include/ast_union.h:
+	* TAO_IDL/include/ast_union_branch.h:
+	* TAO_IDL/include/ast_visitor.h:
+	* TAO_IDL/include/fe_declarator.h:
+	* TAO_IDL/include/idl_global.h:
+	* TAO_IDL/include/utl_decllist.h:
+	* TAO_IDL/include/utl_err.h:
+	* TAO_IDL/include/utl_exceptlist.h:
+	* TAO_IDL/include/utl_exprlist.h:
+	* TAO_IDL/include/utl_idlist.h:
+	* TAO_IDL/include/utl_labellist.h:
+	* TAO_IDL/include/utl_list.h:
+	* TAO_IDL/include/utl_namelist.h:
+	* TAO_IDL/include/utl_scope.h:
+	* TAO_IDL/include/utl_strlist.h:
+	* TAO_IDL/narrow/narrow.cpp:
+	* TAO_IDL/util/utl_decllist.cpp:
+	* TAO_IDL/util/utl_err.cpp:
+	* TAO_IDL/util/utl_exceptlist.cpp:
+	* TAO_IDL/util/utl_exprlist.cpp:
+	* TAO_IDL/util/utl_global.cpp:
+	* TAO_IDL/util/utl_idlist.cpp:
+	* TAO_IDL/util/utl_labellist.cpp:
+	* TAO_IDL/util/utl_list.cpp:
+	* TAO_IDL/util/utl_namelist.cpp:
+	* TAO_IDL/util/utl_scope.cpp:
+	* TAO_IDL/util/utl_stack.cpp:
+	* TAO_IDL/util/utl_strlist.cpp:
+
+	  Modified files that include the following changes --
+
+	  - Enhanced support of value types, by Boris Kolpackov <bosk@ipmce.ru>.
+	    Includes support for value type factories and forward declared
+	    value types. As yet, there is no generation of type codes or Any
+	    insertion/extraction operators for value types.
+
+	  - Support for sequences of value types, by Nanbor Wang 
+	    <nanbor@cs.wustl.edu>.
+
+	  - Re-implementation of #pragma prefix. When the AST is created, the 
+	    'local' prefix, if any, is now cleared upon exit from a scope or 
+	    included IDL file. A complete list of active prefixes seen so far
+	    is maintained in a global stack, but not also in each node, as was
+	    done previously. Each AST node now has knowledge only of its own 
+	    prefix, if any. This means that a list of prefixes seen so far has
+	    been eliminated as an argument to the constructor of all AST node.
+	    classes.
+
+	  - Support for #pragma version and #pragma ID. Since these apply only to
+	    the IDL declaration immediately following, no scope maintenance is
+	    necessary.
+
+	  - Fix to bug that allowed illegal empty module declarations.
+
+	  - Fix to bug that allowed unions to have wchar discriminators. Thanks to
+	    Carlos for pointing out these last two items.
+
 Mon Dec 31 07:55:09 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* orbsvcs/Notify_Service/Notify_Service.cpp: 
