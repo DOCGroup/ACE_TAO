@@ -17,7 +17,8 @@ TAO_EC_RTCORBA_Dispatching::
     , priority_mapping_ (mapping)
     , current_ (RTCORBA::Current::_duplicate (current))
 {
-  ACE_NEW (this->tasks_, TAO_EC_Dispatching_Task[this->lanes_.length ()]);
+  CORBA::ULong number_lanes = this->lanes_.length ();
+  ACE_NEW (this->tasks_, TAO_EC_Dispatching_Task[number_lanes]);
   for (CORBA::ULong i = 0; i != this->lanes_.length (); ++i)
     this->tasks_[i].thr_mgr (&this->thread_manager_);
 }
