@@ -1,3 +1,8 @@
+Fri Sep 18 01:51:46 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/ACE (open_temp_file): Changed the signature of this method
+	  to take a const char * rather than a char *.
+
 Fri Sep 18 00:07:31 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* ace/ACE.h (ACE):  
