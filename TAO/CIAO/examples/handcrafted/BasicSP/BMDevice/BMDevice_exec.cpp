@@ -17,7 +17,6 @@ MyImpl::BMDevice_exec_i::~BMDevice_exec_i ()
 {
 }
 
-// Operations from HUDisplay::BMDevice
 BasicSP::CCM_ReadData_ptr
 MyImpl::BMDevice_exec_i::get_data_read (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))

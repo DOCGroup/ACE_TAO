@@ -20,13 +20,13 @@
 module BasicSP
 {
   local interface CCM_EC_Executor
-    : Components::EnterpriseComponent
+    : Components::EnterpriseComponent, trigger
   {
     attribute long hertz;
   };
 
   local interface CCM_EC
-    : Components::EnterpriseComponent
+    : Components::EnterpriseComponent, trigger
   {
     attribute long hertz;
   };

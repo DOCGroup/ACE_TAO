@@ -90,9 +90,24 @@ main (int argc, char *argv[])
                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      ACE_DEBUG ((LM_DEBUG,
-                  "Start up the Rate Generator\n"));
+      if (turn_on)
+        {
+          pulser->hertz (rate
+                         ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
 
+          ACE_DEBUG ((LM_DEBUG, "Start up the Event services\n"));
+
+          pulser->start (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+      else
+        {
+          pulser->stop (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          ACE_DEBUG ((LM_DEBUG, "Stop the ES\n"));
+        }
 
       orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;

@@ -48,7 +48,9 @@ project(BMDevice_exec) : ciao_server {
   }
 
   Source_Files {
+    BMDeviceES.cpp
     BMDeviceEIC.cpp
+    BMDeviceEIS.cpp 
     BMDevice_exec.cpp
   }
 }

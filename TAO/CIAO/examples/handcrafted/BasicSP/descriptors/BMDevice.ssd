@@ -1,0 +1,42 @@
+<?xml version="1.0"?> <!-- -*- SGML -*-  -->
+
+<!-- XML doesn't really support the following $(CIAO_ROOT) syntax :) -->
+<!DOCTYPE softpkg SYSTEM "$(CIAO_ROOT)/docs/XML/softpkg.dtd">
+
+<!-- RateGen's Servant Software Descriptor  -->
+<!-- This file describes various RateGen servant -->
+<!-- implementations. -->
+
+
+<softpkg name="CIAO-BMDevice-Servant" version="1.0">
+  <pkgtype>CIAO Servant</pkgtype>
+  <title>BasicSP::BMDevice Servants</title>
+  <author>
+    <company>ISIS at Vanderbilt University</company>
+    <webpage href="http://www.dre.vanderbilt.edu/"/>
+  </author>
+  <description>A EC event generator implementation.</description>
+  <license href="http://www.cs.wustl.edu/~schmidt/ACE-copying.html"/>
+  <idl id="IDL:BasicSP/BMDevice:1.0" homeid="IDL:BasicSP/BMDeviceHome:1.0">
+    <fileinarchive name="BMDevice.idl"/>
+  </idl>
+
+  <descriptor type="CORBA Component">
+    <fileinarchive name="BMDevice.ccd"/>
+  </descriptor>
+
+  <implementation id="DCE:93D254CF-9538-44e8-BB98-AABCD134ADD3">
+
+    <dependency type="ORB">
+      <name>TAO</name>
+    </dependency>
+
+    <code>
+      <!-- No need to specify extension below since ACE takes care of that, -->
+      <fileinarchive name="EC_svnt"/>
+      <entrypoint>createBMDeviceHome_Servant</entrypoint>
+    </code>
+
+  </implementation>
+
+</softpkg>

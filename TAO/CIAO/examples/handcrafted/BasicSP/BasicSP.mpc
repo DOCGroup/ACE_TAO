@@ -31,6 +31,8 @@ project(BasicSP_svnt) : ciao_server {
   Source_Files {
     BasicSPC.cpp
     BasicSPS.cpp
+    BasicSPEC.cpp
+    BasicSPES.cpp
     BasicSP_svnt.cpp
   }
 }

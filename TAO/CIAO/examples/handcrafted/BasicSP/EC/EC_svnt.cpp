@@ -636,7 +636,24 @@ CIAO_GLUE_BasicSP::EC_Servant::_ciao_passivate (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 
- CORBA::Long
+void
+CIAO_GLUE_BasicSP::EC_Servant::start (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  cout << "Amba Here ?? " << endl;
+  // Simply relay to executor.  May not need to return the result...
+  return this->executor_->start (ACE_ENV_SINGLE_ARG_PARAMETER);
+}
+
+void
+CIAO_GLUE_BasicSP::EC_Servant::stop (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Simply relay to executor.  May not need to return the result...
+  this->executor_->stop (ACE_ENV_SINGLE_ARG_PARAMETER);
+}
+
+CORBA::Long
 CIAO_GLUE_BasicSP::EC_Servant::hertz (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -644,9 +661,9 @@ CIAO_GLUE_BasicSP::EC_Servant::hertz (ACE_ENV_SINGLE_ARG_DECL)
   return this->executor_->hertz (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
- void
+void
 CIAO_GLUE_BasicSP::EC_Servant::hertz (CORBA::Long hertz
-                                             ACE_ENV_SINGLE_ARG_DECL)
+                                      ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Simply relay to executor.  May not need to return the result...
