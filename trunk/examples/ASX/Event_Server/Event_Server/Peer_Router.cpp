@@ -350,6 +350,7 @@ Peer_Router::control (ACE_Message_Block *mb)
 template class ACE_Acceptor<Peer_Handler, ACE_SOCK_ACCEPTOR>;
 template class ACE_Map_Iterator<ROUTING_KEY, Peer_Handler *, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Map_Manager<ROUTING_KEY, Peer_Handler *, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_SYNCH>;
 
 #if defined (ACE_HAS_THREADS)
   template class ACE_Guard<ACE_SYNCH_RW_MUTEX>;
