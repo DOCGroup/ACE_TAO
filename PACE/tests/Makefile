@@ -84,8 +84,7 @@ endif
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Stdio_Test.o .obj/Stdio_Test.so .shobj/Stdio_Test.o .shobj/Stdio_Test.so: Stdio_Test.c \
- $(ACE_ROOT)/PACE/pace/stdio.h \
+.obj/Stdio_Test.o .obj/Stdio_Test.so .shobj/Stdio_Test.o .shobj/Stdio_Test.so: Stdio_Test.c $(ACE_ROOT)/PACE/pace/stdio.h \
  $(ACE_ROOT)/PACE/pace/config/defines.h \
  $(ACE_ROOT)/PACE/pace/config/platform.h \
  $(ACE_ROOT)/PACE/pace/config/config.h \
@@ -96,7 +95,8 @@ endif
  $(ACE_ROOT)/PACE/pace/config/utility.h \
  $(ACE_ROOT)/PACE/pace/errno.h \
  $(ACE_ROOT)/PACE/pace/config/features.h \
- $(ACE_ROOT)/PACE/pace/unistd.h
+ $(ACE_ROOT)/PACE/pace/unistd.h \
+ $(ACE_ROOT)/PACE/pace/string.h
 
 .obj/Posix_SP_Test.o .obj/Posix_SP_Test.so .shobj/Posix_SP_Test.o .shobj/Posix_SP_Test.so: Posix_SP_Test.c \
  $(ACE_ROOT)/PACE/pace/stdio.h \
