@@ -735,6 +735,7 @@ ACE_Null_Barrier::dump (void) const
 
 ACE_INLINE
 ACE_Null_Mutex::ACE_Null_Mutex (const ACE_TCHAR *)
+  : lock_ (0)
 {
 }
 
