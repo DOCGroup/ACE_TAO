@@ -35,8 +35,7 @@ ACE_Wide_To_Ascii::convert (const wchar_t *wstr)
                                       0, 
                                       NULL, 
                                       NULL);
-# elif defined (VXWORKS)
-  // @todo: we should use a different macro than VXWORKS here, ACE_LACKS_WCSLEN?
+# elif defined (ACE_LACKS_WCSLEN)
   const wchar_t *wtemp = wstr;
   while (wtemp != 0)
     ++wtemp;
