@@ -1,7 +1,7 @@
 // -*- C++ -*-
 // $Id$
 
-#include "ace/OS_NS_errno.h:
+#include "ace/OS_NS_errno.h"
 
 ACE_INLINE void *
 ACE_OS::shmat (int int_id, void *shmaddr, int shmflg)
