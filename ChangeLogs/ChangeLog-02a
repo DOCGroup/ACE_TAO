@@ -1,3 +1,10 @@
+Fri Jul 14 19:03:49 2000  John Heitmann  <jwh1@cs.wustl.edu>
+
+	* ace/OS.h:
+	  Changed typedef of ACE_SignalHandler on LynxOS to
+	  use pace_sig_pf when pace is enabled. Also changed
+	  SIG_IGN accordingly.
+
 Fri Jul 14 17:25:29 2000  Steve Huston  <shuston@riverace.com>
 
         * tests/UNIXserver.conf:
