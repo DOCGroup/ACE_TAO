@@ -85,6 +85,21 @@ main (int argc, char *argv[])
         server_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
+      // Sanity check on SSLIOP profile equivalence.
+      {
+        Foo_i server_impl2 (orb.in (), security_current.in ());
+        Foo::Bar_var server2 =
+          server_impl2._this (ACE_ENV_SINGLE_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+
+        const CORBA::Boolean equivalent =
+          server->_is_equivalent (server2.in ()
+                                 ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+
+        ACE_ASSERT (!equivalent);
+      }
+
       CORBA::String_var ior =
         orb->object_to_string (server.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
