@@ -1,3 +1,11 @@
+Wed Oct  6 09:59:28 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/Connector.cpp (connect_i): On connect fail, use
+	  ACE_OS::last_error(), not errno, to check the cause. Thanks to
+	  Todd Marshall for reporting this.
+
+	* THANKS: Added Todd Marshall to the Hall of Fame.
+
 Tue Oct  5 13:12:56 2004  Dale Wilson  <wilson_d@ociweb.com>
 
         * ace/Dev_Poll_Reactor.cpp:
@@ -10,7 +18,8 @@ Tue Oct  5 11:16:53 2004  Dale Wilson  <wilson_d@ociweb.com>
   
         * ace/OS_NS_stdlib.cpp:
           Build error on VC7.1: initializing float w/ double may lose data
-          There was already a cast there to suppress the warning.  I included entire expression in the cast.
+          There was already a cast there to suppress the warning.  I included
+	  entire expression in the cast.
 
 Tue Oct  5 08:54:20 2004  Chad Elliott  <elliott_c@ociweb.com>
 
