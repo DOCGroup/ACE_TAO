@@ -1,3 +1,9 @@
+Thu Feb 19 12:55:00 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.h: Added /**/ between #include and '<', Thanks to
+	  gonzo@ing.puc.cl (Gonzalo A. Diethelm) for providing the
+	  patches.
+
 Thu Feb 19 11:18:08 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.h: added ACE_MAP_{PRIVATE,SHARED,FIXED}, and
@@ -59,7 +65,7 @@ Wed Feb 18 16:07:14 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 Wed Feb 18 15:30:48 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* include/makeinclude/rules.lib.GNU: 
+	* include/makeinclude/rules.lib.GNU:
 	  Now we can create libraries with some files in
 	  subdirectories. Though the Makefile still needs to set VPATH.
 
@@ -72,7 +78,7 @@ Wed Feb 18 12:22:48 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Wed Feb 18 11:53:00 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* bin/auto_compile: 
+	* bin/auto_compile:
 	  Added netsvcs to auto_compile list.
 
 Tue Feb 17 18:27:15 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
