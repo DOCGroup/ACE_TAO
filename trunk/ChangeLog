@@ -1,3 +1,26 @@
+Wed May 17 10:54:05 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* examples/ConfigViewer/ConfigTreeCtrl.cpp:
+	* examples/ConfigViewer/ConfigTreeCtrl.h:
+ 	* examples/ConfigViewer/ConfigurationViewer.cpp:
+	* examples/ConfigViewer/ConfigurationViewer.dsp:
+	* examples/ConfigViewer/ConfigurationViewer.dsw:
+	* examples/ConfigViewer/ConfigurationViewer.rc:
+	* examples/ConfigViewer/MainFrame.cpp:
+	* examples/ConfigViewer/MainFrame.h:
+	* examples/ConfigViewer/README:
+	* examples/ConfigViewer/ValueDlg.cpp:
+	* examples/ConfigViewer/ValueDlg.h:
+	* examples/ConfigViewer/ValueListCtrl.cpp:
+	* examples/ConfigViewer/ValueListCtrl.h:
+	* examples/ConfigViewer/mondrian.ico:
+	* examples/ConfigViewer/mondrian.xpm:
+	* examples/ConfigViewer/stdafx.cpp:
+	* examples/ConfigViewer/stdafx.h:
+	  Chris Hafey's ACE_Configuration viewer/editor for vxWindows.
+	  For details, see the README file or email Chris at
+	  <chris@stentorsoft.com>.
+
 Tue May 16 12:01:56 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/Msg_WFMO_Reactor.cpp:
