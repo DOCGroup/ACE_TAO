@@ -1,3 +1,27 @@
+Fri May 16 12:25:32 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/config-irix5.3-sgic++.h: Made a few changes to get ACE to
+ 	  work on IRIX 5.3.  Thanks to Eugene R. Somdahl <gene@endo.com>
+ 	  for these fixes.
+
+	* ace/OS: Added calloc() implementation.  I don't know how
+	  this managed to fall through the cracks!
+
+	* include/makeinclude/platform_osf1_4.0.GNU: Added a few more
+ 	  tweaks courtesy of James Johnson.
+
+	* include/makeinclude/platform_osf1_3.2.GNU: Added a few more
+	  tweaks courtesy of Tom Dobridge.
+
+	* include/makeinclude/platform_osf1_4.0.GNU (DLD): Added -shared
+ 	  -expect_unresolved '*' so that calls to the linker via cxx will
+ 	  work correctly.  Thanks to Thilo for this.
+
+	* include/makeinclude/platform_chorus.GNU: Removed CLASSIXDIR =
+ 	   /usr/home/chiang/chorus/merge/extended-i386at, added the
+ 	   nostdinc flag, and removed extra whitespace.  Thanks to Wei
+ 	   Chiang for reporting this.
+
 Fri May 16 11:39:51 1997  Nanbor Wang  <nw1@cs.wustl.edu>
 
 	* ace/OS.i (sigaddset, sigdelset, sigemptyset, sigfillset,

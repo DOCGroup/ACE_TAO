@@ -10,6 +10,9 @@
 
 #define IRIX5
 
+#include <sys/bsd_types.h>
+#define _BSD_TYPES
+
 // Platform supports getpagesize() call.
 #define ACE_HAS_GETPAGESIZE
 
@@ -62,14 +65,15 @@
 // #define ACE_USE_POLL
 
 // Platform supports the /proc file system.
-#define ACE_HAS_PROC_FS 
+// #define ACE_HAS_PROC_FS 
 
 // Compiler/platform defines the sig_atomic_t typedef.
 #define ACE_HAS_SIG_ATOMIC_T 
 
 // Platform supports SVR4 extended signals.
 #define ACE_HAS_SIGINFO_T 
-#define ACE_HAS_UCONTEXT_T 
+// #define ACE_HAS_UCONTEXT_T 
+#define ACE_LACKS_UCONTEXT_H
 
 // Compiler supports the ssize_t typedef.
 #define ACE_HAS_SSIZE_T 
