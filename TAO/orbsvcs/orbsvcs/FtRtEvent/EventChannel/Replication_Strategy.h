@@ -22,7 +22,7 @@
 
 namespace FTEC {
   struct ManagerInfo;
-};
+}
 
 class TAO_FTEC_Event_Channel_Impl;
 class Replication_Strategy
