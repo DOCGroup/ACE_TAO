@@ -29,6 +29,10 @@ public:
 
   // = The skeleton methods
   virtual Test::Session_ptr create_session (Test::Session_Control_ptr control,
+                                            CORBA::ULong payload_size,
+                                            CORBA::ULong thread_count,
+                                            CORBA::ULong message_count,
+                                            CORBA::ULong peer_count,
                                             CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
   virtual void shutdown (CORBA::Environment &ACE_TRY_ENV)

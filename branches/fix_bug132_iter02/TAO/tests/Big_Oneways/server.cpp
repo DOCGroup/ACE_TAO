@@ -7,10 +7,10 @@
 ACE_RCSID(Big_Oneways, server, "$Id$")
 
 const char *ior_output_file = "test.ior";
-CORBA::ULong peer_count   = 4;
-int event_size   = 1024;
-int event_count  = 1000;
-int thread_count = 4;
+CORBA::ULong peer_count    = 4;
+CORBA::ULong payload_size  = 1024;
+CORBA::ULong message_count = 1000;
+CORBA::ULong thread_count  = 4;
 
 int
 parse_args (int argc, char *argv[])
@@ -30,11 +30,11 @@ parse_args (int argc, char *argv[])
         break;
 
       case 'b':
-        event_size  = ACE_OS::atoi (get_opts.optarg);
+        payload_size  = ACE_OS::atoi (get_opts.optarg);
         break;
 
       case 'i':
-        event_count = ACE_OS::atoi (get_opts.optarg);
+        message_count = ACE_OS::atoi (get_opts.optarg);
         break;
 
       case 'n':
@@ -46,9 +46,9 @@ parse_args (int argc, char *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
 			   "-o <iorfile> "
-			   "-o <peer_count> "
-			   "-b <event_size> "
-			   "-i <event_count> "
+			   "-p <peer_count> "
+			   "-b <payload_size> "
+			   "-i <message_count> "
 			   "-n <thread_count> "
                            "\n",
                            argv [0]),
@@ -141,6 +141,9 @@ main (int argc, char *argv[])
 
       Test::Session_List session_list;
       coordinator_impl->create_session_list (session_control.in (),
+                                             payload_size,
+                                             thread_count,
+                                             message_count,
                                              session_list,
                                              ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -161,14 +164,11 @@ main (int argc, char *argv[])
               other_sessions[count++] =
                 Test::Session::_duplicate (session_list[k]);
             }
-          
+
           session_list[j]->start (other_sessions,
-                                  event_size,
-                                  thread_count,
-                                  event_count,
                                   ACE_TRY_ENV);
           ACE_TRY_CHECK;
-          
+
         }
 
       ACE_DEBUG ((LM_DEBUG, "Waiting for sessions . . . \n"));
@@ -189,9 +189,17 @@ main (int argc, char *argv[])
         }
 
       ACE_DEBUG ((LM_DEBUG, "All sessions finished . . . \n"));
+
+      for (j = 0; j != peer_count; ++j)
+        {
+          session_list[j]->destroy (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
+        }
+
       coordinator_impl->shutdown_all_peers (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       root_poa->destroy (1, 1, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 

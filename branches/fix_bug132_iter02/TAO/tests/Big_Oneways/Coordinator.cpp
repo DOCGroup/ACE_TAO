@@ -26,6 +26,9 @@ Coordinator::has_all_peers (void) const
 
 void
 Coordinator::create_session_list (Test::Session_Control_ptr session_control,
+                                  CORBA::ULong payload_size,
+                                  CORBA::ULong thread_count,
+                                  CORBA::ULong message_count,
                                   Test::Session_List &session_list,
                                   CORBA::Environment &ACE_TRY_ENV)
 {
@@ -36,7 +39,12 @@ Coordinator::create_session_list (Test::Session_Control_ptr session_control,
        ++i)
     {
       session_list[count++] =
-        (*i)->create_session (session_control, ACE_TRY_ENV);
+        (*i)->create_session (session_control,
+                              payload_size,
+                              thread_count,
+                              message_count,
+                              this->peer_count_,
+                              ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
 }
@@ -59,7 +67,7 @@ Coordinator::shutdown_all_peers (CORBA::Environment &ACE_TRY_ENV)
 
 void
 Coordinator::add_peer (Test::Peer_ptr peer,
-                       CORBA::Environment &ACE_TRY_ENV)
+                       CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->peer_count_ >= this->peer_max_)

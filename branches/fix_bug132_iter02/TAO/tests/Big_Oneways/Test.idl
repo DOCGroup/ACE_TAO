@@ -27,7 +27,17 @@ module Test
   interface Peer
   {
     /// Create a new session
-    Session create_session (in Session_Control control);
+    /**
+     * @param payload_size The size of each message
+     * @param thread_count The number of threads that each session
+     *        must create
+     * @param message_count How many messages does each thread send.
+     */
+    Session create_session (in Session_Control control,
+                            in unsigned long payload_size,
+                            in unsigned long thread_count,
+                            in unsigned long message_count,
+                            in unsigned long peer_count);
 
     /// Shutdown the peer
     oneway void shutdown ();
@@ -46,19 +56,15 @@ module Test
      * @param other_sessions The list of sessions participating in the
      *        experiment, this list must not include the session
      *        receiving the start() call.
-     * @param payload_size The size of each message
-     * @param thread_count The number of threads that each session
-     *        must create
-     * @param message_count How many messages does each thread send.
      */
-    void start (in Session_List other_sessions,
-                in unsigned long payload_size,
-                in unsigned long thread_count,
-                in unsigned long message_count)
+    void start (in Session_List other_sessions)
       raises (Already_Running, No_Peers);
 
     /// Receive the payload
     oneway void receive_payload (in Payload the_payload);
+
+    /// Destroy the Session object
+    void destroy ();
   };
 
   interface Coordinator

@@ -94,6 +94,9 @@ main (int argc, char *argv[])
       orb->run (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      // Wait for all the threads.
+      ACE_Thread_Manager::instance ()->wait ();
+
       root_poa->destroy (1, 1, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 

@@ -32,6 +32,9 @@ public:
 
   /// Check a session on each peer
   void create_session_list (Test::Session_Control_ptr session_control,
+                            CORBA::ULong payload_size,
+                            CORBA::ULong thread_count,
+                            CORBA::ULong message_count,
                             Test::Session_List &session_list,
                             CORBA::Environment &ACE_TRY_ENV);
 
