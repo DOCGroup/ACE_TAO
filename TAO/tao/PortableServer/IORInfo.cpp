@@ -1,8 +1,3 @@
-// -*- C++ -*-
-//
-// $Id$
-
-
 #include "tao/PortableServer/IORInfo.h"
 #include "tao/PortableServer/PortableServerC.h"
 
@@ -11,7 +6,11 @@
 #include "tao/MProfile.h"
 #include "tao/ORB_Core.h"
 
-ACE_RCSID (PortableServer, IORInfo, "$Id$")
+
+ACE_RCSID (PortableServer,
+           IORInfo,
+           "$Id$")
+
 
 TAO_IORInfo::TAO_IORInfo (TAO_ORB_Core *orb_core,
                           TAO_POA *poa)
@@ -29,8 +28,8 @@ TAO_IORInfo::get_effective_policy (CORBA::PolicyType type
                                    TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CORBA::PolicyList *policy_list
-    = this->poa_->get_policy_list ();
+  CORBA::PolicyList *policy_list =
+    this->poa_->get_policy_list ();
 
   // Check the policy list supplied by the POA.
   CORBA::ULong policy_count = policy_list->length ();
@@ -82,32 +81,17 @@ TAO_IORInfo::add_ior_component_to_profile (
 }
 
 PortableInterceptor::AdapterManagerId
-TAO_IORInfo::manager_id ( TAO_ENV_SINGLE_ARG_DECL)
+TAO_IORInfo::manager_id (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  /// This method is used to provide a handle to the manager of the
-  /// adapter.
-  PortableInterceptor::AdapterManagerId manager_id =
-    this->poa_->get_manager_id (TAO_ENV_SINGLE_ARG_PARAMETER);
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
-                                          CORBA::COMPLETED_NO),
-                    0);
-
-  return manager_id;
+  return this->poa_->get_manager_id (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 PortableInterceptor::AdapterState
 TAO_IORInfo::state (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  PortableInterceptor::AdapterState state =
-    this->poa_->get_adapter_state (TAO_ENV_SINGLE_ARG_PARAMETER);
-
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
-                                          CORBA::COMPLETED_NO),
-                    0);
-
-  return state;
+  return this->poa_->get_adapter_state (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 PortableInterceptor::ObjectReferenceTemplate *
@@ -120,7 +104,6 @@ TAO_IORInfo::adapter_template (TAO_ENV_SINGLE_ARG_DECL)
      add_ior_component_to_profile. Its a const value and its value
      never changes in its life.
   */
-
   PortableInterceptor::ObjectReferenceTemplate *adapter_template =
     this->poa_->get_adapter_template ();
 
@@ -144,29 +127,26 @@ TAO_IORInfo::current_factory (TAO_ENV_SINGLE_ARG_DECL)
      be changed. The value of the current_factory can be changed only
      during the call to components_established method.
   */
-    PortableInterceptor::ObjectReferenceFactory *adapter_factory =
-      this->poa_->get_obj_ref_factory ();
+  PortableInterceptor::ObjectReferenceFactory *adapter_factory =
+    this->poa_->get_obj_ref_factory ();
 
-    if (adapter_factory == 0)
-      {
-        ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
-                                                CORBA::COMPLETED_NO),
-                          0);
-      }
+  if (adapter_factory == 0)
+    {
+      ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
+                                              CORBA::COMPLETED_NO),
+                        0);
+    }
     
-    return adapter_factory;
+  return adapter_factory;
 }
 
 void
-TAO_IORInfo::current_factory (PortableInterceptor::ObjectReferenceFactory * current_factory
-                              TAO_ENV_ARG_DECL)
+TAO_IORInfo::current_factory (
+    PortableInterceptor::ObjectReferenceFactory * current_factory
+    TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->poa_->set_obj_ref_factory (current_factory
                                    TAO_ENV_ARG_PARAMETER);
-
-  ACE_THROW (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
-                                   CORBA::COMPLETED_NO));
-
-  return;
+  ACE_CHECK;
 }
