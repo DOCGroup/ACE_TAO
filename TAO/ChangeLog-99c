@@ -1,3 +1,18 @@
+Thu Feb 11 14:59:52 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* orbsvcs/tests/Property/client.cpp:
+	* orbsvcs/orbsvcs/CosPropertyService.idl:
+	* orbsvcs/orbsvcs/AVStreams.idl: 
+	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp : 
+	Fixed the problem with marshalling/demarshalling multiple
+	exceptions. Also changed PropertyException from exception to struct
+	the CosPropertyService.idl file, as suggested by OMG. But, AVStreams
+	is not updated by OMG yet. All the instances of "raises
+	CosPropertyService::PropertyException" in AVStreams.idl has been
+	changed to "raises AVStreams::PropertyException". Thanks to Carlos for
+	the great help in debugging exception marshalling problem. Thanks to
+	Ulf  <jaehrig@desys.com> for the bug report.
+	
 Thu Feb 11 14:40:01 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
         * tao/DynanyC.cpp:

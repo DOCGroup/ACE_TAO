@@ -100,11 +100,11 @@ module CosPropertyService
     read_only_property
   };
 
-  exception PropertyException
-    {
+  struct PropertyException
+  {
       ExceptionReason reason;
       PropertyName failing_property_name;
-    };
+  };
   
   typedef sequence<PropertyException> PropertyExceptions;
 
