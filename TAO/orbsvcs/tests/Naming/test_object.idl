@@ -1,3 +1,5 @@
-interface test_object
+interface Test_Object
 {
+  // = TITLE
+  //   This is a simple "no-op" interface to test the Naming Service.
 };

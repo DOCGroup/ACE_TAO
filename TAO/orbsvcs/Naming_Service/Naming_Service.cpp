@@ -62,9 +62,10 @@ Naming_Service::parse_args (int argc,
                            "usage:  %s "
                            "-o <ior_output_file> "
 			   "-p <pid_file_name> "
-                           "\n",
+			   "\n",
                            argv [0]),
                           -1);
+        break;
       }
   return 0;
 }
@@ -75,6 +76,8 @@ Naming_Service::init (int argc,
                       char* argv[])
 {
   int result;
+  CORBA::ORB_var orb;
+  PortableServer::POA_var child_poa;
 
   TAO_TRY
     {
@@ -83,13 +86,14 @@ Naming_Service::init (int argc,
                                          "child_poa",
                                          TAO_TRY_ENV);
       TAO_CHECK_ENV;
-
-      CORBA::ORB_ptr orb = this->orb_manager_.orb ();
-      PortableServer::POA_ptr
-        child_poa = this->orb_manager_.child_poa ();
-
+      
+      orb = this->orb_manager_.orb ();
+      child_poa = this->orb_manager_.child_poa ();
+      
       result = this->my_naming_server_.init (orb,
-                                             child_poa);
+                                             child_poa,
+					     argc,
+					     argv);
       TAO_CHECK_ENV;
       if (result < 0)
         return result;
@@ -107,7 +111,7 @@ Naming_Service::init (int argc,
 
   if (result < 0)
     return result;
-  if (this->ior_output_file_ != 0)
+  if (this->ior_output_file_ != 0) 
     {
       CORBA::String_var str =
         this->my_naming_server_.naming_service_ior ();
@@ -158,6 +162,7 @@ main (int argc, char* argv[])
     {
       naming_service.run (TAO_TRY_ENV);
       TAO_CHECK_ENV;
+
     }
   TAO_CATCHANY
     {
