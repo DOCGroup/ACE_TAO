@@ -244,12 +244,7 @@ ACE_Profile_Timer::elapsed_time (ACE_Elapsed_Time &et)
   ACE_hrtime_t delta_t; /* nanoseconds */
   timer_.elapsed_time (delta_t);
 
-#if defined (ACE_WIN32) || defined (ACE_HAS_LONGLONG_T)
-  et.real_time = delta_t / (double) ACE_ONE_SECOND_IN_NSECS;
-#else
-  et.real_time = (double) ULONG_MAX / (double) ACE_ONE_SECOND_IN_NSECS * (double) delta_t.hi () +
-                 (double) delta_t.lo () / (double) ACE_ONE_SECOND_IN_NSECS;
-#endif /* ACE_WIN32 || ACE_HAS_LONGLONG_T */
+  et.real_time = (double) (delta_t / (ACE_UINT32) ACE_ONE_SECOND_IN_NSECS);
   et.user_time = 0;
   et.system_time = 0;
 
