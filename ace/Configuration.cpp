@@ -1035,17 +1035,13 @@ ACE_Configuration_Value_IntId& ACE_Configuration_Value_IntId::operator= (const A
 }
 
 void
-ACE_Configuration_Value_IntId::free (ACE_Allocator* allocator)
+ACE_Configuration_Value_IntId::free (ACE_Allocator *alloc)
 {
   if (this->type_ == ACE_Configuration::STRING
       || this->type_ == ACE_Configuration::BINARY)
-    {
-      allocator->free ((void *) (data_));
-    }
+    alloc->free ((void *) (data_));
   // Do nothing in other cases...
 }
-
-/////////////////////////////////////////////////////////////////////////////
 
 ACE_Configuration_ExtId::ACE_Configuration_ExtId (void)
   : name_ (0)
@@ -1100,9 +1096,9 @@ ACE_Configuration_ExtId::name (void)
 }
 
 void
-ACE_Configuration_ExtId::free (ACE_Allocator* allocator)
+ACE_Configuration_ExtId::free (ACE_Allocator *alloc)
 {
-  allocator->free ((void *) (name_));
+  alloc->free ((void *) (name_));
 }
 
 ///////////////////////////////////////////////////////////////////////
@@ -1142,10 +1138,10 @@ ACE_Configuration_Section_IntId::operator= (const ACE_Configuration_Section_IntI
 }
 
 void
-ACE_Configuration_Section_IntId::free (ACE_Allocator* allocator)
+ACE_Configuration_Section_IntId::free (ACE_Allocator *alloc)
 {
-  allocator->free ((void *) (value_hash_map_));
-  allocator->free ((void *) (section_hash_map_));
+  alloc->free ((void *) (value_hash_map_));
+  alloc->free ((void *) (section_hash_map_));
 }
 
 ACE_Configuration_Section_Key_Heap::ACE_Configuration_Section_Key_Heap (const ACE_TCHAR* path)
