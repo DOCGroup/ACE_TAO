@@ -32,22 +32,32 @@ ServantLocator_i::ServantLocator_i (CORBA::ORB_ptr orb,
                                     const char *garbage_collection_function)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {
- // The dll is opened using the dllname passed.
-   if (this->dll_.open (dllname) == -1)
-     ACE_ERROR ((LM_ERROR,
-                 "%p",
-                 this->dll_.error ()));
+  // The dll is opened using the dllname passed.
+  if (this->dll_.open (dllname) == -1)
+    ACE_ERROR ((LM_ERROR,
+                "%p",
+                this->dll_.error ()));
 
-  // Obtain the symbol for the function that will
-  // get the servant object.
+  // Obtain the symbol for the function that will get the servant
+  // object.
+
+  //
+  // Cannot go from void* to function pointer directly. Cast the void*
+  // to long first.
+  //
+  void *symbol = this->dll_.symbol (factory_function);
+  long function = ACE_reinterpret_cast (long, symbol);
+
   servant_supplier_ =
-    (SERVANT_FACTORY) this->dll_.symbol (factory_function);
+    ACE_reinterpret_cast (SERVANT_FACTORY, function);
 
-  // Obtain tne symbol for the function which
-  // will destroy the servant.
+  // Obtain the symbol for the function which will destroy the
+  // servant.
+  symbol = this->dll_.symbol (garbage_collection_function);
+  function = ACE_reinterpret_cast (long, symbol);
+
   servant_garbage_collector_ =
-    (SERVANT_GARBAGE_COLLECTOR) this->dll_.symbol (garbage_collection_function);
-
+    ACE_reinterpret_cast (SERVANT_GARBAGE_COLLECTOR, function);
 }
 
 // This method associates an servant with the ObjectID.
