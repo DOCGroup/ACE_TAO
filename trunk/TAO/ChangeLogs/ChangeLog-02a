@@ -1,3 +1,12 @@
+Mon Nov 13 10:20:48 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_argument/request_info_ch.cpp:
+
+	  In ClientRequestInfo subclass generation, changed the type
+	  of private valuetype member for an IN argument from *& 
+	  to *. Again, thanks to Johnny Willemsen 
+	  <Johnny.Willemsen@meco.nl> for pointing this out.
+
 Mon Nov 13 09:50:06 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/IIOP_Connect.cpp (open):
