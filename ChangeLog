@@ -1,13 +1,23 @@
+Mon Sep 27 13:46:21 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Modified the template to override the value of INSBIN if it is set
+          to '.'.  This is similar to what is done for INSLIB and is an
+          iteration with rules.local.GNU.  When installing, it checks for
+          $PWD but does not account for the fact that '.' is the same as
+          $PWD.
+
 Mon Sep 27 15:34:35 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* bin/MakeProjectCreator/config/ciao_deployment_stub.mpb:
+        * bin/MakeProjectCreator/config/ciao_deployment_stub.mpb:
 
-	  Added CIAO_DnC_Client to the list of libraries being linked in. 
+          Added CIAO_DnC_Client to the list of libraries being linked in.
 
 Mon Sep 27 09:25:37 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * performance-tests/Server_Concurrency/Leader_Follower/RT_CORBA_Leader_Follower.cpp:
-        
+
           Put back the recently-removed ACE_UINT64_DBLCAST_ADAPTER,
           so now it and static_cast<double> are both applied to the
           computation of elapsed_time_per_invocation, which will hopefully
