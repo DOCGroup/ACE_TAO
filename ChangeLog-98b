@@ -1,3 +1,18 @@
+Mon Oct 19 20:44:33 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
+
+	* docs/tutorials/015:
+	Once again I've modified just about every file.  Finally though
+	Tutorial 015:  Protocol Stream is done!
+
+	* docs/tutorials/combine
+	Get rid of that silly "links" file and add "bodies".  The new file 
+	is an ordered list of files to use when assembling the HTML
+	pages.  This makes it easier to stuff source code into the pages.
+	
+	* docs/tutorials/index.html
+	I could have sworn that I linked in 014 many moons ago.
+	Appologies to Bob McWhirter for leaving this out for so long!
+
 Mon Oct 19 17:00:52 EDT 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
 
         * docs/tutorials/015:

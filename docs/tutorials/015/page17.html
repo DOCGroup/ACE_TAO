@@ -12,8 +12,10 @@
 
 <P>
 <HR WIDTH="100%">
-This and the next three pages present the protocol objects that
-provide compression and encryption.  If you were hoping to 
+The Recv implementation is nearly as simple as Xmit.  There's
+opportunity for error when we get the message size and we have to
+manage the lifetime of the tickler but other than that it's pretty
+basic stuff.
 <HR>
 <PRE>
 
@@ -103,4 +105,4 @@ int <font color=#008888>Recv::recv</font>(ACE_Message_Block * message, ACE_Time_
 }
 </PRE>
 <P><HR WIDTH="100%">
-<CENTER>[<A HREF="..">Tutorial Index</A>] </CENTER>
+<CENTER>[<A HREF="..">Tutorial Index</A>] [<A HREF="page18.html">Continue This Tutorial</A>]</CENTER>
