@@ -36,22 +36,22 @@ USA.  */
 // now use alloca!
 
 Hash_Table::Hash_Table (List_Node **table_ptr, int s)
-  : collisions (0), 
-    size (s), 
-    table (table_ptr)
+  : table (table_ptr),
+    size (s),
+    collisions (0)
 {
   memset ((char *) table, 0, size * sizeof *table);
 }
 
-Hash_Table::~Hash_Table (void) 
-{ 
+Hash_Table::~Hash_Table (void)
+{
   if (option[DEBUG])
     {
       int field_width = option.get_max_keysig_size ();
 
       fprintf (stderr, "\ndumping the hash table\ntotal available table slots = %d, total bytes = %d, total collisions = %d\n"
-               "location, %*s, keyword\n", size, size * sizeof *table, collisions, field_width, "keysig");
-    
+               "location, %*s, keyword\n", size, size * (int) sizeof *table, collisions, field_width, "keysig");
+
       for (int i = size - 1; i >= 0; i--)
         if (table[i])
           fprintf (stderr, "%8d, %*s, %s\n",
@@ -66,12 +66,12 @@ Hash_Table::~Hash_Table (void)
 // double hashing.
 
 List_Node *
-Hash_Table::operator() (List_Node *item, int ignore_length) 
+Hash_Table::operator() (List_Node *item, int ignore_length)
 {
   unsigned hash_val  = ACE::hash_pjw (item->char_set);
   int      probe     = hash_val & size - 1;
   int      increment = (hash_val ^ item->length | 1) & size - 1;
-  
+
   while (table[probe]
          && (strcmp (table[probe]->char_set, item->char_set)
              || (!ignore_length && table[probe]->length != item->length)))
