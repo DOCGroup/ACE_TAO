@@ -79,8 +79,7 @@ OBJFILES = \
 	$(OBJDIR)\be_visitor_structure.obj \
 	$(OBJDIR)\be_visitor_structure_fwd.obj \
 	$(OBJDIR)\be_visitor_traits.obj \
-	$(OBJDIR)\be_visitor_tmplinst_cs.obj \
-	$(OBJDIR)\be_visitor_arg_tmplinst.obj \
+	$(OBJDIR)\be_visitor_tmplinst.obj \
 	$(OBJDIR)\be_visitor_typecode.obj \
 	$(OBJDIR)\be_visitor_typedef.obj \
 	$(OBJDIR)\be_visitor_union.obj \

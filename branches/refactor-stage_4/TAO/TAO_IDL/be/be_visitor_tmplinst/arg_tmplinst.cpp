@@ -1,6 +1,6 @@
 //=============================================================================
 /**
-*  @file   be_visitor_arg_tmplinst.cpp
+*  @file   arg_tmplinst.cpp
 *
 *  $Id$
 *
@@ -11,27 +11,6 @@
 *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
 */
 //=============================================================================
-
-#include "be_visitor_arg_tmplinst.h"
-#include "be_visitor_context.h"
-#include "be_interface.h"
-#include "be_valuetype.h"
-#include "be_interface_fwd.h"
-#include "be_valuetype_fwd.h"
-#include "be_eventtype.h"
-#include "be_eventtype_fwd.h"
-#include "be_array.h"
-#include "be_enum.h"
-#include "be_sequence.h"
-#include "be_string.h"
-#include "be_structure.h"
-#include "be_structure_fwd.h"
-#include "be_field.h"
-#include "be_union.h"
-#include "be_union_fwd.h"
-#include "be_union_branch.h"
-#include "be_typedef.h"
-#include "be_helper.h"
 
 be_visitor_arg_tmplinst::be_visitor_arg_tmplinst (
     be_visitor_context *ctx,
@@ -65,7 +44,7 @@ be_visitor_arg_tmplinst::visit_interface (be_interface *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << be_nl << be_nl
-      << this->prefix_ << be_idt << be_idt_nl
+      << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
       << "TAO::";
 
   this->gen_direction (os);
@@ -129,7 +108,7 @@ be_visitor_arg_tmplinst::visit_valuetype (be_valuetype *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << be_nl << be_nl
-      << this->prefix_ << be_idt << be_idt_nl 
+      << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl 
       << "TAO::";
 
   this->gen_direction (os);
@@ -205,7 +184,7 @@ be_visitor_arg_tmplinst::visit_sequence (be_sequence *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << be_nl << be_nl
-      << this->prefix_ << be_idt << be_idt_nl 
+      << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl 
       << "TAO::";
 
   this->gen_direction (os);
@@ -260,7 +239,7 @@ be_visitor_arg_tmplinst::visit_string (be_string *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << be_nl << be_nl
-      << this->prefix_ << be_idt << be_idt_nl 
+      << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl 
       << "TAO::";
 
   this->gen_direction (os);
@@ -307,14 +286,14 @@ be_visitor_arg_tmplinst::visit_array (be_array *node)
   idl_bool fixed = (node->size_type () == AST_Type::FIXED);
 
   *os << be_nl << be_nl
-      << this->prefix_ << be_idt << be_idt_nl 
+      << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl 
       << "TAO::";
 
   this->gen_direction (os);
 
   *os << "_" << (fixed ? "Fixed" : "Var") << "_Array_" 
-      << this-> S_ << "Argument_T<" 
-      << this->linebreak_ << be_idt << be_idt_nl
+      << this->S_ << "Argument_T<" << this->linebreak_ 
+      << be_idt << be_idt_nl
       << node->name () << "," << this->linebreak_ << be_nl;
 
   switch (this->dir_)
@@ -357,12 +336,13 @@ be_visitor_arg_tmplinst::visit_enum (be_enum *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << be_nl << be_nl
-      << this->prefix_ << be_idt << be_idt_nl 
+      << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl 
       << "TAO::";
 
   this->gen_direction (os);
 
-  *os << "_Basic_" << this->S_ << "Argument_T<" << be_idt << be_idt_nl
+  *os << "_Basic_" << this->S_ << "Argument_T<" << this->linebreak_ 
+      << be_idt << be_idt_nl
       << node->name () << this->linebreak_ << be_uidt_nl
       << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
 
@@ -382,13 +362,13 @@ be_visitor_arg_tmplinst::visit_structure (be_structure *node)
   idl_bool fixed = (node->size_type () == AST_Type::FIXED);
 
   *os << be_nl << be_nl
-      << this->prefix_ << be_idt << be_idt_nl 
+      << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl 
       << "TAO::";
 
   this->gen_direction (os);
 
   *os << "_" << (fixed ? "Fixed" : "Var") << "_Size_" 
-      << this->S_ << "Argument_T<" 
+      << this->S_ << "Argument_T<" << this->linebreak_ 
       << be_idt << be_idt_nl
       << node->name ();
   
@@ -476,13 +456,13 @@ be_visitor_arg_tmplinst::visit_union (be_union *node)
   idl_bool fixed = (node->size_type () == AST_Type::FIXED);
 
   *os << be_nl << be_nl
-      << this->prefix_ << be_idt << be_idt_nl 
+      << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl 
       << "TAO::";
 
   this->gen_direction (os);
 
   *os << "_" << (fixed ? "Fixed" : "Var") << "_Size_" 
-      << this-> S_ << "Argument_T<" 
+      << this->S_ << "Argument_T<" << this->linebreak_ 
       << be_idt << be_idt_nl
       << node->name ();
   
@@ -607,19 +587,25 @@ be_visitor_arg_tmplinst::direction (AST_Argument::Direction dir)
 idl_bool
 be_visitor_arg_tmplinst::this_mode_and_dir_generated (be_decl *node) const
 {
+  idl_bool cli = (ACE_OS::strlen (this->S_) == 0);
+
   switch (this->mode_)
     {
       case be_visitor_tmplinst_cs::TMPL_CLASS:
         switch (this->dir_)
           {
             case _tao_IN:
-              return node->cli_inarg_tmpl_class_gen ();
+              return (cli ? node->cli_inarg_tmpl_class_gen ()
+                          : node->srv_inarg_tmpl_class_gen ());
             case _tao_INOUT:
-              return node->cli_inoutarg_tmpl_class_gen ();
+              return (cli ? node->cli_inoutarg_tmpl_class_gen ()
+                          : node->srv_inoutarg_tmpl_class_gen ());
             case _tao_OUT:
-              return node->cli_outarg_tmpl_class_gen ();
+              return (cli ? node->cli_outarg_tmpl_class_gen ()
+                          : node->srv_outarg_tmpl_class_gen ());
             case _tao_RET:
-              return node->cli_retarg_tmpl_class_gen ();
+              return (cli ? node->cli_retarg_tmpl_class_gen ()
+                          : node->srv_retarg_tmpl_class_gen ());
             default:
               return I_FALSE;
           }
@@ -627,13 +613,17 @@ be_visitor_arg_tmplinst::this_mode_and_dir_generated (be_decl *node) const
         switch (this->dir_)
           {
             case _tao_IN:
-              return node->cli_inarg_pragma_inst_gen ();
+              return (cli ? node->cli_inarg_pragma_inst_gen ()
+                          : node->srv_inarg_pragma_inst_gen ());
             case _tao_INOUT:
-              return node->cli_inoutarg_pragma_inst_gen ();
+              return (cli ? node->cli_inoutarg_pragma_inst_gen ()
+                          : node->srv_inoutarg_pragma_inst_gen ());
             case _tao_OUT:
-              return node->cli_outarg_pragma_inst_gen ();
+              return (cli ? node->cli_outarg_pragma_inst_gen ()
+                          : node->srv_outarg_pragma_inst_gen ());
             case _tao_RET:
-              return node->cli_retarg_pragma_inst_gen ();
+              return (cli ? node->cli_retarg_pragma_inst_gen ()
+                          : node->srv_retarg_pragma_inst_gen ());
             default:
               return I_FALSE;
           }
@@ -646,22 +636,28 @@ void
 be_visitor_arg_tmplinst::this_mode_and_dir_generated (be_decl *node,
                                                       idl_bool val)
 {
+  idl_bool cli = (ACE_OS::strlen (this->S_) == 0);
+
   switch (this->mode_)
     {
       case be_visitor_tmplinst_cs::TMPL_CLASS:
         switch (this->dir_)
           {
             case _tao_IN:
-              node->cli_inarg_tmpl_class_gen (val);
+              cli ? node->cli_inarg_tmpl_class_gen (val)
+                  : node->srv_inarg_tmpl_class_gen (val);
               break;
             case _tao_INOUT:
-              node->cli_inoutarg_tmpl_class_gen (val);
+              cli ? node->cli_inoutarg_tmpl_class_gen (val)
+                  : node->srv_inoutarg_tmpl_class_gen (val);
               break;
             case _tao_OUT:
-              node->cli_outarg_tmpl_class_gen (val);
+              cli ? node->cli_outarg_tmpl_class_gen (val)
+                  : node->srv_outarg_tmpl_class_gen (val);
               break;
             case _tao_RET:
-              node->cli_retarg_tmpl_class_gen (val);
+              cli ? node->cli_retarg_tmpl_class_gen (val)
+                  : node->srv_retarg_tmpl_class_gen (val);
               break;
             default:
               break;
@@ -671,16 +667,20 @@ be_visitor_arg_tmplinst::this_mode_and_dir_generated (be_decl *node,
         switch (this->dir_)
           {
             case _tao_IN:
-              node->cli_inarg_pragma_inst_gen (val);
+              cli ? node->cli_inarg_pragma_inst_gen (val)
+                  : node->srv_inarg_pragma_inst_gen (val);
               break;
             case _tao_INOUT:
-              node->cli_inoutarg_pragma_inst_gen (val);
+              cli ? node->cli_inoutarg_pragma_inst_gen (val)
+                  : node->srv_inoutarg_pragma_inst_gen (val);
               break;
             case _tao_OUT:
-              node->cli_outarg_pragma_inst_gen (val);
+              cli ? node->cli_outarg_pragma_inst_gen (val)
+                  : node->srv_outarg_pragma_inst_gen (val);
               break;
             case _tao_RET:
-              node->cli_retarg_pragma_inst_gen (val);
+              cli ? node->cli_retarg_pragma_inst_gen (val)
+                  : node->srv_retarg_pragma_inst_gen (val);
               break;
             default:
               break;

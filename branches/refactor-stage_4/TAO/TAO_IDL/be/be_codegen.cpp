@@ -1154,7 +1154,7 @@ int
 TAO_CodeGen::end_server_skeletons (void)
 {
   // Code to put the last #endif.
-  *this->server_skeletons_ << "\n#endif /* ifndef */\n";
+  *this->server_skeletons_ << "\n\n#endif /* ifndef */\n";
 
   return 0;
 }

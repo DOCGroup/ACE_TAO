@@ -1,3 +1,39 @@
+Mon Jul 14 22:37:22 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_arg_tmplinst.cpp:
+        * TAO_IDL/be/be_visitor_tmplinst_cs.cpp:
+        * TAO_IDL/be_include/be_visitor_arg_tmplinst.h:
+        * TAO_IDL/be_include/be_visitor_tmplinst_cs.h:
+
+	  Rearranged visitors by removing the above files and adding
+	  the ones below.
+
+        * TAO_IDL/be/be_visitor_tmplinst.cpp:
+        * TAO_IDL/be/be_visitor_tmplinst/arg_tmplinst.cpp:
+        * TAO_IDL/be/be_visitor_tmplinst/tmplinst.cpp:
+        * TAO_IDL/be_include/be_visitor_tmplinst.h:
+        * TAO_IDL/be_include/be_visitor_tmplinst/arg_tmplinst.h:
+        * TAO_IDL/be_include/be_visitor_tmplinst/tmplinst.h:
+
+	  New visitors that take over the function of the ones removed
+	  above.
+
+        * TAO_IDL/Makefile.BE:
+        * TAO_IDL/TAO_IDL_BE.bor:
+        * TAO_IDL/TAO_IDL_BE_DLL.dsp:
+        * TAO_IDL/TAO_IDL_BE_LIB.dsp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_decl.cpp:
+        * TAO_IDL/be/be_visitor_root.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+        * TAO_IDL/be_include/be_decl.h:
+        * TAO_IDL/be_include/be_visitor_root/root.h:
+
+	  Updated projects and makefiles, and started moving existing
+	  template instantiation code generation to the new visitors.
+
 Sun Jul 13 14:40:35 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_decl.cpp:
@@ -130,6 +166,7 @@ Fri Jul 11 08:19:27 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 	  includes for whatever types are used in operation
 	  signatures.
 
+>>>>>>> 1.5.18.29
 Thu Jul 10 16:05:26 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Fixed_Size_Argument_T.cpp:

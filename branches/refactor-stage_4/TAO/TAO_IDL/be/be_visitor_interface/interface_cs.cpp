@@ -209,31 +209,6 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "}";
     }
 
-  *os << be_nl
-      << "\n#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)" << be_idt_nl
-      << "template class" << be_idt_nl
-      << "TAO_Objref_Var_T<" << be_idt << be_idt_nl
-      << node->name () << "," << be_nl
-      << node->fwd_helper_name () << "_life" << be_uidt_nl
-      << ">;" << be_uidt << be_uidt_nl
-      << "template class" << be_idt_nl
-      << "TAO_Objref_Out_T<" << be_idt << be_idt_nl
-      << node->name () << "," << be_nl
-      << node->fwd_helper_name () << "_life" << be_uidt_nl
-      << ">;" << be_uidt << be_uidt << be_uidt_nl
-      << "#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)" << be_nl
-      << "# pragma instantiate \\" << be_idt << be_idt_nl
-      << "TAO_Objref_Var_T< \\" << be_idt << be_idt_nl
-      << node->name () << ", \\" << be_nl
-      << node->fwd_helper_name () << "_life \\" << be_uidt_nl
-      << ">" << be_uidt << be_uidt << be_uidt_nl
-      << "# pragma instantiate \\" << be_idt << be_idt_nl
-      << "TAO_Objref_Out_T< \\" << be_idt << be_idt_nl
-      << node->name () << ", \\" << be_nl
-      << node->fwd_helper_name () << "_life \\" << be_uidt_nl
-      << ">" << be_uidt << be_uidt << be_uidt_nl
-      << "#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */";
-
   be_visitor_context ctx = (*this->ctx_);
 
   // Interceptor classes.  The interceptors helper classes must be
