@@ -507,13 +507,13 @@ ACE_OS_String::itoa_emulation (int value, char *string, int radix)
   // Now reverse the string to get the correct result
 
   while (e > b)
-  {
-    char temp = *e;
-    *e = *b;
-    *b = temp;
-    ++b;
-    --e;
-  }
+    {
+      char temp = *e;
+      *e = *b;
+      *b = temp;
+      ++b;
+      --e;
+    }
 
   return string;
 }
