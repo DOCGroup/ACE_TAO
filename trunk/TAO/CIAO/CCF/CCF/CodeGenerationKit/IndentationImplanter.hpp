@@ -28,8 +28,8 @@ namespace Indentation
     int_type;
 
   public:
-    ToStreamBufAdapter (Buffer<C>& buffer)
-        : buffer_ (buffer)
+    ToStreamBufAdapter (Buffer<C>& b)
+        : buffer_ (b)
     {
     }
 
@@ -70,15 +70,15 @@ namespace Indentation
     Exception;
 
   public:
-    FromStreamBufAdapter (std::basic_streambuf<C>& buffer)
-        : buffer_ (buffer)
+    FromStreamBufAdapter (std::basic_streambuf<C>& b)
+        : buffer_ (b)
     {
     }
 
     virtual int_type
     put (char_type c) throw (Exception, ExH::System::Exception)
-    {
-      return buffer_.sputc (traits_type::to_int_type (c));
+    {  
+      return buffer_.sputc (c);
     }
 
     virtual void
@@ -99,7 +99,7 @@ namespace Indentation
     std::basic_streambuf<C>& buffer_;
   };
 
-  template <template <typename> class Buffer, typename C = char>
+  template <template <typename> class BufferType, typename C = char>
   class Implanter
   {
   public:
@@ -144,7 +144,7 @@ namespace Indentation
 
     FromStreamBufAdapter<C> from_adapter_;
 
-    Buffer<C> buffer_;
+    BufferType<C> buffer_;
 
     ToStreamBufAdapter<C> to_adapter_;
   };
