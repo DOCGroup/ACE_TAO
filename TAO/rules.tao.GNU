@@ -12,7 +12,7 @@ endif
 
 .SUFFIXES:	S.h C.h S.i C.i S.cpp C.cpp
 
-%S.h %C.h %S.i %C.i %S.cpp %C.cpp:	%.idl
+%S.h %C.h %S.i %C.i %S.cpp %C.cpp:	$(TAO_IDL) %.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) $?
 
 ifeq ($(findstring g++,$(CXX)),g++)
