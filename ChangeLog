@@ -1,3 +1,10 @@
+Thu Nov 11 19:05:45 2004  Krishnakumar B  <kitty@spam.invalid.domain>
+
+        * bin/MakeProjectCreator/config/ciao_component_dnc.mpb (project):
+          Added a dependency from ciao_component_dnc to
+          ciao_deployment_stub to resolve errors in building examples
+          based on DAnCE framework.
+
 Thu Nov 11 15:56:00 2004  Gary Maxey    <gary.maxey@hp.com>
 
         * ace/OS_NS_time.h
@@ -35,7 +42,7 @@ Thu Nov 11 15:56:00 2004  Gary Maxey    <gary.maxey@hp.com>
 
 Thu Nov 11 17:27:24 2004  Kobi Cohen-Arazi  <kobi.cohenarazi@gmail.com>
 
-      * ace/Logging_Strategy.cpp: 
+      * ace/Logging_Strategy.cpp:
         Fixed handle_timeout conditional test to check the max_size against the size of the
         file and not the value of a pointer.
         Fix init to handle re-init correctly. When wipeout_logfile_ is true, than
