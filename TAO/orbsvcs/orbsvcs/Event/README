@@ -15,7 +15,8 @@ channel, yet it will be properly strategized so it can be adapted and
 extended to other domains (such as distributed interactive
 simulation).
 
-= Thanks to Irfan for providing feedback on this document.
+= Thanks to Irfan for providing feedback on this document and
+  designing the delayed operation for the event dispatching.
 
 = The module architecture
 
@@ -32,6 +33,8 @@ in an arbitrary way; even more, we have found that only a few
 operations on each module need to be strategized, and that using
 Template Method or Strategy on each module would be a better solution
 than to replace the module wholesale.
+
+= The new architecture
 
         The new Event Channel will consist of the following
 components:
@@ -63,7 +66,10 @@ components:
   are needed (until we arrive to the dispatching module).
 
     This filter objects can also be used to strategize the priority
-  assignment in conjuctive and disjunctive correlations.
+  assignment in conjuctive and disjunctive correlations; for example,
+  some consumers may require a fixed priority for disjunctions or the
+  highest priority for conjunctions, instead of just the priority of
+  the last event.
 
 - The Dispatching module: as in the original event channel
   implementation there are multiple ways to dispatch events, this
@@ -90,21 +96,22 @@ components:
   channel implementation to create the objects, and provides a simple
   mechanism to control the object activation in different POAs: it
   queries the Event Channel for the right POA to use.
-      Possible implementations: it could keep the suppliers classified 
-  by the events they push, minimizing the time required to
-  connect/disconnect a consumer.
+      Possible implementations: it could keep the consumers classified 
+  by the events they consume, minimizing the time required to
+  connect/disconnect a consumer or to dispatch an event
+  [see the relationship with SupplierFiltering]
 
 - The SupplierAdmin module: this is a factory for the
   ProxyPushConsumer objects (again delegating on the event channel);
   it also provides the user with control over the proxy activation.
-  It provides two template method that can be used to:
+  It provides two template methods that can be used to:
     + Inform all supplier that a consumer has connected/disconnected.
     + Inform only the suppliers that are publish the events in the
       consumer.
     + Do not inform the suppliers.
-      Possible implementations: it could keep the consumers classified 
-  by the events they push, minimizing the time to connect/disconnect a
-  supplier.
+      Possible implementations: it could keep the supplier classified 
+  by the events they publish, minimizing the time to
+  connect/disconnect a supplier.
 
 - The ProxyPushSupplier object delegates on the filter to do most of
   its job, but it can be subclassed to provide event counting and
@@ -141,10 +148,11 @@ components:
        for filtering (using the EC_Filter objects).
 
   An interesting aspect of this object is how is it to manage event
-  dispatching: will it iterate over the set of consumers (holdign a
+  dispatching: will it iterate over the set of consumers (holding a
   lock?) and just dispatch the event to each one? Will it make a copy
   of the consumers (reducing the duration of the lock)?  We forsee
   several alternatives:
+
 	+ Simply iterate over the set of consumers for the current
 	  supplier (can be a global set), holding a lock as we go.
 	  This is potentially the most efficient version, but it can
@@ -152,14 +160,7 @@ components:
 	  a long time. 
 	  It can also produce dead-locks if there is no queueing in
 	  the dispatching module. 
-	+ Mark the list as "busy" so no changes will be made to it
-	  while we iterate over it.  Instead, any changes to the list
-	  are "posted" in a list of Command objects.
-	  After finishing the iteration the lock is acquired again,
-	  the is is marked as "idle" and any posted operations are
-	  executed.
-	  "busy" and "idle" could be implemented using a reference
-	  count.
+
 	+ Make a copy of the current set of consumers, unfortunately
 	  this could requires a memory allocation, and potentially
 	  increasing the reference count on the consumers.
@@ -177,6 +178,20 @@ components:
 	  the array, the dispatching to each consumer is done after
 	  releasing the global lock.
 
+	+ Mark the list as "busy" so no changes will be made to it
+	  while we iterate over it.  Instead, any changes to the list
+	  are "posted" in a list of Command objects.
+	  After finishing the iteration the lock is acquired again,
+	  the is is marked as "idle" and any posted operations are
+	  executed.
+	  "busy" and "idle" could be implemented using a reference
+	  count; so multiple "reader" threads can go in [with a
+	  limit?]
+	  Drawbacks: can lead to dead-lock if the HWM is reached when
+	  a consumer that also plays the Supplier role pushes an event 
+	  as part of its upcall.
+	  Can give too much priority to the writes if the HWM is 1.
+
 - The Timer_Module: this is used by the EC_Filter_Builder to create
   per-consumer timeout events. It will simply push events directly to
   the EC_ProxyPushSupplier objects.
@@ -191,6 +206,30 @@ components:
   all the object creations in the EC; notice that this is an abstract
   factory because not all the combinations of the classes described
   make sense.
+
+= Interactions
+
+  The architecture described above is a bit hard to understand if we
+  don't describe the interaction between all the components above:
+
+  - Dispatching an event: the path to dispatch an event starts with an 
+    EC_ProxyPushConsumer that receives the event from its supplier, 
+    it simply delegates on the SupplierFiltering object bound to it at 
+    creation time.
+    The SupplierFiltering object pushes the event [since the event is
+    a set it has to push one event at a time] to the a set of
+    ProxyPushSuppliers [recall that this are the consumer ambassadors] 
+    
+
+  - Adding a consumer:
+
+  - Adding a supplier:
+
+  - Removing a consumer:
+
+  - Removing a supplier:
+
+  - Shutting down the event channel:
 
 = Performance
 
