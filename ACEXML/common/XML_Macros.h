@@ -30,6 +30,8 @@
 #   pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Exception_Macros.h"
+
 // The following macros assume that an environment variable is passed
 // in/out of each function that can throw an exception. The type of the
 // environment variable is defined by ACEXML_ENV_TYPE.
@@ -63,22 +65,6 @@
 // environment variable is determined by ACEXML_ENV_TYPE.
 #define ACEXML_DECLARE_NEW_ENV \
      ACEXML_ENV_TYPE ACEXML_TRY_ENV
-
-// If the compiler does supports exceptions handling, make sure that native
-// exception handling is enabled. See CORBA_macros.h for tweaking this.
-#if defined (ACE_HAS_EXCEPTIONS)
-#  if defined (ACE_USES_NATIVE_EXCEPTIONS)
-#    if (ACE_USES_NATIVE_EXCEPTIONS == 0)
-#      undef ACE_USES_NATIVE_EXCEPTIONS
-#    endif /* ACE_USES_NATIVE_EXCEPTIONS == 0 */
-#  else
-#    define ACE_USES_NATIVE_EXCEPTIONS
-#  endif /* ACE_USES_NATIVE_EXCEPTIONS */
-#else /* ! ACE_HAS_EXCEPTIONS */
-#  if defined (ACE_USES_NATIVE_EXCEPTIONS)
-#    undef ACE_USES_NATIVE_EXCEPTIONS
-#  endif /* ACE_USES_NATIVE_EXCEPTIONS */
-#endif /* ACE_HAS_EXCEPTIONS */
 
 #if defined (ACE_USES_NATIVE_EXCEPTIONS)
 // -----------------------------------------------------------------

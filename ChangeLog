@@ -1,3 +1,22 @@
+Sun Oct 13 19:38:35 2002  Krishnakumar B  <kitty@cse.wustl.edu>
+
+        * ace/Exception_Macros.h:
+
+          Consolidated the checking of exceptions preprocessor hacking
+          into this file.
+
+        * ACEXML/common/XML_Macros.h:
+
+          Include the above file and get rid of redundant and broken
+          checking for exceptions.
+
+        * ace/CORBA_macros.h:
+
+          Moved over the stuff from Exception_Macros.h to where it was
+          originally. This should fix all the build breakage. Thanks to
+          Bala for pointing out the errors in the build.
+
+
 Sun Oct 13 15:57:04 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* ace/Asynch_IO.cpp:
@@ -8,13 +27,13 @@ Sun Oct 13 15:57:04 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	* ace/WIN32_Asynch_IO.h: Protected
 	  ACE_WIN32_Asynch_Read_File::readv () and
 	  ACE_WIN32_Asynch_Write_File::writev () from being called when
-	  ACE_HAS_WINNT4 == 0. 
+	  ACE_HAS_WINNT4 == 0.
 
 	  Thanks to Eric Frias <efrias@syncad.com> for reporting the
 	  problem and Alex Libman for suggesting the fix.
 
 	* THANKS: Added Eric Frias <efrias@syncad.com> to the hall of
-	  fame. 
+	  fame.
 
 Sun Oct 13 15:54:59 2002  Krishnakumar B  <kitty@cse.wustl.edu>
 
