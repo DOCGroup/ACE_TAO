@@ -466,6 +466,7 @@ ACE_OutputCDR::align_write_ptr (size_t alignment)
 
 // ****************************************************************
 
+ACE_INLINE 
 ACE_InputCDR::~ACE_InputCDR (void)
 {
 }
