@@ -28,6 +28,10 @@ Thu Apr 03 08:52:34 1997  David L. Levine  <levine@cs.wustl.edu>
 	  ACE_HAS_INLINED_OSCALLS because it's no longer needed in the
 	  config files:	 it's #defined in OS.h if needed.
 
+	* ace/OS.i (mutex_init): added missing ")" in
+	  ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP case.  Thanks to
+	  Chuck Gehr <gehr@sweng.stortek.com> for reporting this.
+
 Thu Apr  3 01:48:01 1997  Tim H. Harrison  <harrison@lambada.cs.wustl.edu>
 
 	* ace/Malloc.i (malloc): ACE_New_Allocator::malloc only calls new

@@ -1018,7 +1018,7 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
 #else
     if (::pthread_mutexattr_init (&attributes) == 0
 #if defined (ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP)
-	&& ::pthread_mutexattr_setkind_np (&attributes, type) == 0
+	&& ::pthread_mutexattr_setkind_np (&attributes, type) == 0)
       {
 #endif /* ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP */
 	&& ::pthread_mutex_init (m, &attributes) == 0)
