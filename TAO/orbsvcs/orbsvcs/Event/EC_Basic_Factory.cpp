@@ -10,7 +10,7 @@
 #include "EC_SupplierFiltering.h"
 #include "EC_ObserverStrategy.h"
 #include "EC_ProxyPushSupplier_Set_T.h"
-#include "Timer_Module.h"
+#include "EC_Reactive_Timeout_Generator.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "EC_Basic_Factory.i"
@@ -37,9 +37,9 @@ TAO_EC_Basic_Factory::destroy_dispatching (TAO_EC_Dispatching *x)
 }
 
 TAO_EC_Filter_Builder*
-TAO_EC_Basic_Factory::create_filter_builder (TAO_EC_Event_Channel *)
+TAO_EC_Basic_Factory::create_filter_builder (TAO_EC_Event_Channel *ec)
 {
-  return new TAO_EC_Basic_Filter_Builder;
+  return new TAO_EC_Basic_Filter_Builder (ec);
 }
 
 void
@@ -100,16 +100,16 @@ TAO_EC_Basic_Factory::destroy_proxy_push_consumer (TAO_EC_ProxyPushConsumer *x)
   delete x;
 }
 
-TAO_EC_Timer_Module*
-TAO_EC_Basic_Factory::create_timer_module (TAO_EC_Event_Channel *ec)
+TAO_EC_Timeout_Generator*
+TAO_EC_Basic_Factory::create_timeout_generator (TAO_EC_Event_Channel *ec)
 {
   // @@ TODO fixme
   TAO_ORB_Core* orb_core = TAO_ORB_Core_instance ();
-  return new TAO_EC_ST_Timer_Module (orb_core->reactor ());
+  return new TAO_EC_Reactive_Timeout_Generator (orb_core->reactor ());
 }
 
 void
-TAO_EC_Basic_Factory::destroy_timer_module (TAO_EC_Timer_Module *x)
+TAO_EC_Basic_Factory::destroy_timeout_generator (TAO_EC_Timeout_Generator *x)
 {
   delete x;
 }

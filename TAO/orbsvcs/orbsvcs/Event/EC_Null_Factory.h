@@ -12,10 +12,6 @@
 // = AUTHOR
 //   Carlos O'Ryan (coryan@cs.wustl.edu)
 //
-// = DESCRIPTION
-//   A factory for a simple event channel: no filtering or any
-//   real-time features.
-//
 // = CREDITS
 //   Based on previous work by Tim Harrison (harrison@cs.wustl.edu)
 //   and other members of the DOC group.
@@ -85,18 +81,18 @@ public:
       create_proxy_push_consumer (TAO_EC_Event_Channel*);
   virtual void
       destroy_proxy_push_consumer (TAO_EC_ProxyPushConsumer*);
-  virtual TAO_EC_Timer_Module*
-      create_timer_module (TAO_EC_Event_Channel*);
+  virtual TAO_EC_Timeout_Generator*
+      create_timeout_generator (TAO_EC_Event_Channel*);
   virtual void
-      destroy_timer_module (TAO_EC_Timer_Module*);
+      destroy_timeout_generator (TAO_EC_Timeout_Generator*);
   virtual TAO_EC_ObserverStrategy*
       create_observer_strategy (TAO_EC_Event_Channel*);
   virtual void
       destroy_observer_strategy (TAO_EC_ObserverStrategy*);
   virtual TAO_EC_ProxyPushSupplier_Set*
-      create_proxy_push_supplier_set (TAO_EC_Event_Channel*) = 0;
+      create_proxy_push_supplier_set (TAO_EC_Event_Channel*);
   virtual void
-      destroy_proxy_push_supplier_set (TAO_EC_ProxyPushSupplier_Set*) = 0;
+      destroy_proxy_push_supplier_set (TAO_EC_ProxyPushSupplier_Set*);
 
   virtual PortableServer::POA_ptr
        consumer_poa (CORBA::Environment& env);

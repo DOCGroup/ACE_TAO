@@ -95,9 +95,10 @@ TAO_Marshal_Primitive::encode (CORBA::TypeCode_ptr tc,
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
   else
     {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO_Marshal_Primitive::encode detected error\n"));
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO_Marshal_Primitive::encode detected error"));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -144,9 +145,10 @@ TAO_Marshal_Any::encode (CORBA::TypeCode_ptr,
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
   else
     {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO_Marshal_Any::encode detected error\n"));
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO_Marshal_Any::encode detected error"));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -184,8 +186,9 @@ TAO_Marshal_TypeCode::encode (CORBA::TypeCode_ptr,
           // Indirected typecodes can't occur at "top level" like
           // this, only nested inside others!
         case ~0u:
-          ACE_DEBUG ((LM_DEBUG,
-                      "indirected typecode at top level!"));
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_DEBUG,
+                        "indirected typecode at top level!\n"));
           continue_encoding = 0;
           break;
 
@@ -212,9 +215,10 @@ TAO_Marshal_TypeCode::encode (CORBA::TypeCode_ptr,
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
   else
     {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO_Marshal_TypeCode::encode detected error\n"));
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO_Marshal_TypeCode::encode detected error"));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -246,9 +250,10 @@ TAO_Marshal_Principal::encode (CORBA::TypeCode_ptr,
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
   else
     {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO_Marshal_Principal::encode detected error\n"));
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO_Marshal_Principal::encode detected error"));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -469,9 +474,10 @@ TAO_Marshal_Struct::encode (CORBA::TypeCode_ptr tc,
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
   else
     {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO_Marshal_Struct::encode detected error\n"));
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-      ACE_DEBUG ((LM_DEBUG,
-                  "marshaling encode_struct detected error"));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -601,10 +607,13 @@ TAO_Marshal_Union::encode (CORBA::TypeCode_ptr tc,
                                       discrim_matched = 1;
                                   }
                                   break;
+
                                 default:
                                   env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
-                                  ACE_DEBUG ((LM_DEBUG,
-                                              "Union::encode - Bad discriminant type"));
+                                  if (TAO_debug_level > 0)
+                                    ACE_DEBUG ((LM_DEBUG,
+                                                "Union::encode - "
+                                                "Bad discriminant type\n"));
                                   return CORBA::TypeCode::TRAVERSE_STOP;
                                 }// end of switch
 
@@ -629,8 +638,11 @@ TAO_Marshal_Union::encode (CORBA::TypeCode_ptr tc,
                               else // error getting member type
                                 {
                                   env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
-                                  ACE_DEBUG ((LM_DEBUG,
-                                              "Union::encode - error getting member type:%d",i));
+                                  if (TAO_debug_level > 0)
+                                    ACE_DEBUG ((LM_DEBUG,
+                                                "Union::encode - error "
+                                                "getting member type:%d\n",
+                                                i));
                                   return CORBA::TypeCode::TRAVERSE_STOP;
                                 }
 
@@ -639,7 +651,8 @@ TAO_Marshal_Union::encode (CORBA::TypeCode_ptr tc,
                             {
                               env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
                               ACE_DEBUG ((LM_DEBUG,
-                                          "Union::encode - error member label : %d", i));
+                                          "Union::encode - error "
+                                          "member label : %d\n", i));
                               return CORBA::TypeCode::TRAVERSE_STOP;
                             }
                         } // end of while
@@ -652,48 +665,59 @@ TAO_Marshal_Union::encode (CORBA::TypeCode_ptr tc,
                       else
                         {
                           env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
-                          ACE_DEBUG ((LM_DEBUG,
-                                      "Union::encode - failed. No match and no default case"));
+                          if (TAO_debug_level > 0)
+                            ACE_DEBUG ((LM_DEBUG,
+                                        "Union::encode - failed. "
+                                        "No match and no default case\n"));
                           return CORBA::TypeCode::TRAVERSE_STOP;
                         }
                     }
                   else // error getting member count
                     {
                       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
-                      ACE_DEBUG ((LM_DEBUG,
-                                  "Union::encode - error getting member count"));
+                      if (TAO_debug_level > 0) 
+                        ACE_DEBUG ((LM_DEBUG,
+                                    "Union::encode - error getting "
+                                    "member count\n"));
                       return CORBA::TypeCode::TRAVERSE_STOP;
                     }
                 }
               else // error getting default index
                 {
                   env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
-                  ACE_DEBUG ((LM_DEBUG,
-                              "Union::encode - error getting default used"));
+                  if (TAO_debug_level > 0)
+                    ACE_DEBUG ((LM_DEBUG,
+                                "Union::encode - error getting "
+                                "default used\n"));
                   return CORBA::TypeCode::TRAVERSE_STOP;
                 }
             }
           else // error getting discrim_pad_size
             {
               env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
-              ACE_DEBUG ((LM_DEBUG,
-                          "Union::encode - error getting discrim padded size"));
+              if (TAO_debug_level > 0)
+                ACE_DEBUG ((LM_DEBUG,
+                            "Union::encode - error getting "
+                            "discrim padded size\n"));
               return CORBA::TypeCode::TRAVERSE_STOP;
             }
         }
       else // error encoding discriminant
         {
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_DEBUG,
+                        "Union::encode - error encoding discriminant\n"));
           env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-          ACE_DEBUG ((LM_DEBUG,
-                      "Union::encode - error encoding discriminant"));
           return CORBA::TypeCode::TRAVERSE_STOP;
         }
     }
   else // error getting the discriminant
     {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "Union::encode - error getting "
+                    "the discriminant typecode\n"));
       env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
-      ACE_DEBUG ((LM_DEBUG,
-                  "Union::encode - error getting the discriminant typecode"));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -1080,10 +1104,12 @@ TAO_Marshal_Array::encode (CORBA::TypeCode_ptr tc,
             } // no exception computing size
         } // no exception computing content type
     } // no exception computing bounds
+
   // error exit
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG,
+                "TAO_Marshal_Sequence::encode detected error\n"));
   env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
-  ACE_DEBUG ((LM_DEBUG,
-              "marshaling TAO_Marshal_Sequence::encode detected error"));
   return CORBA::TypeCode::TRAVERSE_STOP;
 }
 
@@ -1164,9 +1190,10 @@ TAO_Marshal_Alias::encode (CORBA::TypeCode_ptr tc,
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
   else
     {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO_Marshal_Alias::encode detected error\n"));
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO_Marshal_Alias::encode detected error"));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -1285,9 +1312,10 @@ TAO_Marshal_Except::encode (CORBA::TypeCode_ptr tc,
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
   else
     {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO_Marshal_Except::encode detected error\n"));
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO_Marshal_Except detected error"));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }

@@ -12,11 +12,6 @@
 // = AUTHOR
 //   Carlos O'Ryan (coryan@cs.wustl.edu)
 //
-// = DESCRIPTION
-//   Implement the RtecEventChannelAdmin::ConsumerAdmin interface.
-//   This class is an Abstract Factory for the
-//   TAO_EC_ProxyPushSupplier.
-//
 // = CREDITS
 //   Based on previous work by Tim Harrison (harrison@cs.wustl.edu)
 //   and other members of the DOC group.

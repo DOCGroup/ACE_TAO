@@ -12,8 +12,10 @@
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/Sched/Config_Scheduler.h"
 #include "orbsvcs/Runtime_Scheduler.h"
-#include "orbsvcs/Event/Event_Channel.h"
-#include "orbsvcs/Event/Module_Factory.h"
+
+#include "orbsvcs/Event/EC_Event_Channel.h"
+#include "orbsvcs/Event/EC_Basic_Factory.h"
+
 #include "EC_Mcast.h"
 
 #if !defined (__ACE_INLINE__)
@@ -120,30 +122,6 @@ ECM_Driver::run (int argc, char* argv[])
             }
         }
 
-#if 0
-      int min_priority =
-        ACE_Sched_Params::priority_min (ACE_SCHED_FIFO);
-        // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
-
-      if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
-                                                  min_priority,
-                                                  ACE_SCOPE_PROCESS)) != 0)
-        {
-          if (ACE_OS::last_error () == EPERM)
-            ACE_DEBUG ((LM_DEBUG,
-                        "%s: user is not superuser, "
-                        "so remain in time-sharing class\n", argv[0]));
-          else
-            ACE_ERROR ((LM_ERROR,
-                        "%s: ACE_OS::sched_params failed\n", argv[0]));
-        }
-
-      if (ACE_OS::thr_setprio (min_priority) == -1)
-        {
-          ACE_DEBUG ((LM_DEBUG, "(%P|%t) main thr_setprio failed\n"));
-        }
-#endif /* 0 */
-
       ACE_Config_Scheduler scheduler_impl;
       RtecScheduler::Scheduler_var scheduler =
         scheduler_impl._this (TAO_TRY_ENV);
@@ -158,12 +136,9 @@ ECM_Driver::run (int argc, char* argv[])
       if (ACE_Scheduler_Factory::server (scheduler.in ()) == -1)
         return -1;
 
-      // Create the EventService implementation, but don't start its
-      // internal threads.
-      TAO_Reactive_Module_Factory module_factory;
-      ACE_EventChannel ec_impl (0,
-                                ACE_DEFAULT_EVENT_CHANNEL_TYPE,
-                                &module_factory);
+      TAO_EC_Basic_Factory ec_factory (root_poa.in ());
+
+      TAO_EC_Event_Channel ec_impl (&ec_factory);
 
       // Register Event_Service with the Naming Service.
       RtecEventChannelAdmin::EventChannel_var ec =
@@ -178,34 +153,33 @@ ECM_Driver::run (int argc, char* argv[])
       poa_manager->activate (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      RtecEventChannelAdmin::EventChannel_var local_ec =
-        ec_impl._this (TAO_TRY_ENV);
+      ec_impl.activate (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       ACE_DEBUG ((LM_DEBUG, "EC_Mcast: local EC objref ready\n"));
 
-      this->open_federations (local_ec.in (),
+      this->open_federations (ec.in (),
                               scheduler.in (),
                               TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       ACE_DEBUG ((LM_DEBUG, "EC_Mcast: open_federations done\n"));
 
-      this->open_senders (local_ec.in (),
+      this->open_senders (ec.in (),
                           scheduler.in (),
                           TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       ACE_DEBUG ((LM_DEBUG, "EC_Mcast: open_senders done\n"));
 
-      this->open_receivers (local_ec.in (),
+      this->open_receivers (ec.in (),
                             scheduler.in (),
                             TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       ACE_DEBUG ((LM_DEBUG, "EC_Mcast: open_receivers done\n"));
 
-      this->activate_federations (local_ec.in (),
+      this->activate_federations (ec.in (),
                                   scheduler.in (),
                                   TAO_TRY_ENV);
       TAO_CHECK_ENV;
@@ -213,9 +187,6 @@ ECM_Driver::run (int argc, char* argv[])
       ACE_DEBUG ((LM_DEBUG, "EC_Mcast: activate_federations done\n"));
 
       ACE_DEBUG ((LM_DEBUG, "EC_Mcast: activate the  EC\n"));
-
-      // Create the EC internal threads
-      ec_impl.activate ();
 
       ACE_DEBUG ((LM_DEBUG, "EC_Mcast: running the test\n"));
       if (this->orb_->run () == -1)
@@ -232,7 +203,9 @@ ECM_Driver::run (int argc, char* argv[])
       TAO_CHECK_ENV;
 
       ACE_DEBUG ((LM_DEBUG, "EC_Mcast: shutdown the EC\n"));
-      ec_impl.shutdown ();
+
+      ec_impl.shutdown (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       ACE_DEBUG ((LM_DEBUG, "EC_Mcast: shutdown grace period\n"));
 

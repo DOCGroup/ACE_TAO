@@ -12,14 +12,6 @@
 // = AUTHOR
 //   Carlos O'Ryan (coryan@cs.wustl.edu)
 //
-// = DESCRIPTION
-//   The dispatching strategies.
-//   The EC may be configured with different dispatching strategies,
-//   for instance, it can use a pool of threads to dispatch the
-//   events, or a set of queues with threads at different priorities
-//   for each queue or can simply push the event to the consumer in
-//   FIFO order.
-//
 // = CREDITS
 //   Based on previous work by Tim Harrison (harrison@cs.wustl.edu)
 //   and other members of the DOC group.
@@ -48,7 +40,12 @@ class TAO_ORBSVCS_Export TAO_EC_Dispatching
   //   Abstract base class for the dispatching strategies.
   //
   // = DESCRIPTION
-  //   Defines the dispatching strategy interface.
+  //   The dispatching strategies.
+  //   The EC may be configured with different dispatching strategies,
+  //   for instance, it can use a pool of threads to dispatch the
+  //   events, or a set of queues with threads at different priorities
+  //   for each queue or can simply push the event to the consumer in
+  //   FIFO order.
   //
 public:
   virtual ~TAO_EC_Dispatching (void);

@@ -5,6 +5,7 @@
 #include "EC_Type_Filter.h"
 #include "EC_Conjunction_Filter.h"
 #include "EC_Disjunction_Filter.h"
+#include "EC_Timeout_Filter.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "EC_Basic_Filter_Builder.i"
@@ -57,6 +58,15 @@ TAO_EC_Basic_Filter_Builder::
           pos++;
         }
       return new TAO_EC_Disjunction_Filter (children, n);
+    }
+  else if (e.header.type == ACE_ES_EVENT_INTERVAL_TIMEOUT
+           || e.header.type == ACE_ES_EVENT_DEADLINE_TIMEOUT)
+    {
+      pos++;
+      TAO_EC_QOS_Info qos_info;
+      return new TAO_EC_Timeout_Filter (this->event_channel_,
+                                        qos_info,
+                                        e.header.creation_time);
     }
   return new TAO_EC_Type_Filter (e.header);
 }

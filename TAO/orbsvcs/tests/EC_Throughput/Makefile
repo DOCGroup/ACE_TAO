@@ -9,9 +9,7 @@ TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs \
-            -I$(TAO_ROOT) \
-	    $(foreach svc, $(TAO_ORBSVCS), -DTAO_ORBSVCS_HAS_$(svc))
-
+            -I$(TAO_ROOT)
 
 ECT_Supplier_OBJS=$(addsuffix .o,ECT_Supplier ECT_Driver ECT_Supplier_Driver)
 ECT_Consumer_OBJS=$(addsuffix .o,ECT_Consumer ECT_Driver ECT_Consumer_Driver)

@@ -60,7 +60,7 @@ TAO_EC_ProxyPushSupplier::set_default_POA (PortableServer::POA_ptr poa)
 PortableServer::POA_ptr
 TAO_EC_ProxyPushSupplier::_default_POA_i ()
 {
-  return PortableServer::POA::_duplicate (this->default_POA_);
+  return PortableServer::POA::_duplicate (this->default_POA_.in ());
 }
 
 PortableServer::POA_ptr
@@ -199,7 +199,7 @@ TAO_EC_ProxyPushSupplier::push (const RtecEventComm::EventSet& event,
   // Do not take a lock, this is a call back from our child filter, so
   // we are holding the lock already (in the filter() method).
   this->event_channel_->dispatching ()->push (this,
-                                              this->consumer_,
+                                              this->consumer_.in (),
                                               event,
                                               qos_info,
                                               ACE_TRY_ENV);
@@ -214,7 +214,7 @@ TAO_EC_ProxyPushSupplier::push_nocopy (RtecEventComm::EventSet& event,
   // Do not take a lock, this is a call back from our child filter, so
   // we are holding the lock already (in the filter() method).
   this->event_channel_->dispatching ()->push_nocopy (this,
-                                                     this->consumer_,
+                                                     this->consumer_.in (),
                                                      event,
                                                      qos_info,
                                                      ACE_TRY_ENV);

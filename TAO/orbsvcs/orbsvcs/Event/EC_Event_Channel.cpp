@@ -5,7 +5,7 @@
 #include "EC_Dispatching.h"
 #include "EC_ConsumerAdmin.h"
 #include "EC_SupplierAdmin.h"
-#include "Timer_Module.h"
+#include "EC_Timeout_Generator.h"
 #include "EC_ObserverStrategy.h"
 
 #if ! defined (__ACE_INLINE__)
@@ -27,8 +27,8 @@ TAO_EC_Event_Channel::TAO_EC_Event_Channel (TAO_EC_Factory* factory)
     this->factory_->create_consumer_admin (this);
   this->supplier_admin_ =
     this->factory_->create_supplier_admin (this);
-  this->timer_module_ =
-    this->factory_->create_timer_module (this);
+  this->timeout_generator_ =
+    this->factory_->create_timeout_generator (this);
   this->observer_strategy_ =
     this->factory_->create_observer_strategy (this);
 }
@@ -43,8 +43,8 @@ TAO_EC_Event_Channel::~TAO_EC_Event_Channel (void)
   this->consumer_admin_ = 0;
   this->factory_->destroy_supplier_admin (this->supplier_admin_);
   this->supplier_admin_ = 0;
-  this->factory_->destroy_timer_module (this->timer_module_);
-  this->timer_module_ = 0;
+  this->factory_->destroy_timeout_generator (this->timeout_generator_);
+  this->timeout_generator_ = 0;
   this->factory_->destroy_observer_strategy (this->observer_strategy_);
   this->observer_strategy_ = 0;
 }
@@ -53,7 +53,7 @@ void
 TAO_EC_Event_Channel::activate (CORBA::Environment& ACE_TRY_ENV)
 {
   this->dispatching_->activate ();
-  this->timer_module_->activate ();
+  this->timeout_generator_->activate ();
 
   PortableServer::POA_var supplier_poa =
     this->factory_->supplier_poa (ACE_TRY_ENV);
@@ -70,7 +70,7 @@ void
 TAO_EC_Event_Channel::shutdown (CORBA::Environment& ACE_TRY_ENV)
 {
   this->dispatching_->shutdown ();
-  this->timer_module_->shutdown ();
+  this->timeout_generator_->shutdown ();
 
   PortableServer::POA_var consumer_poa =
     this->consumer_admin_->_default_POA (ACE_TRY_ENV);
