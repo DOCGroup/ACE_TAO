@@ -102,6 +102,45 @@ TAO_Trader_Base::is_valid_identifier_name (const char* ident)
   return return_value;
 }
 
+// = Methods to deal with ACE_Hash_Map_Manager.
+
+TAO_String_Hash_Key::TAO_String_Hash_Key (void)
+{
+}
+
+TAO_String_Hash_Key::TAO_String_Hash_Key (char * name)
+  : CORBA::String_var (name)
+{
+}
+
+TAO_String_Hash_Key::TAO_String_Hash_Key (const char * name)
+  : CORBA::String_var (name)
+{
+}
+
+TAO_String_Hash_Key::TAO_String_Hash_Key (const CORBA::String_var &src)
+  : CORBA::String_var (src)
+{
+}
+
+int
+TAO_String_Hash_Key::operator == (const TAO_String_Hash_Key &hash_key) const
+{
+  return ACE_OS::strcmp (this->in (), hash_key.in ()) == 0;
+}
+
+u_long
+TAO_String_Hash_Key::hash (void) const
+{
+  u_long ret = ACE::hash_pjw (this->in ());
+  return ret; 
+}
+
+TAO_String_Hash_Key::~TAO_String_Hash_Key (void)
+{
+}
+
+
 int
 operator< (const CosTradingRepos::ServiceTypeRepository::IncarnationNumber &l,
 	   const CosTradingRepos::ServiceTypeRepository::IncarnationNumber &r)

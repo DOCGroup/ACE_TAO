@@ -19,9 +19,7 @@
 #ifndef TAO_LINK_H
 #define TAO_LINK_H
 
-#include "Attributes.h"
-#include "Monitor.h" 
-#include "stl.h"
+#include "Trader.h"
 
 template <class TRADER, class MAP_LOCK_TYPE>
 class TAO_Link : 
@@ -177,13 +175,14 @@ public:
   		
 private:
 
-  typedef TAO_Monitor
+  typedef ACE_Hash_Map_Manager
   <
-  map <string, CosTrading::Link::LinkInfo, less <string> >, 
+  TAO_String_Hash_Key,
+  CosTrading::Link::LinkInfo,
   MAP_LOCK_TYPE
   >
   LINKS;
-
+  
   LINKS links_;
   // The collection of link connecting this trader to others in the
   // federation. 
