@@ -51,7 +51,6 @@ TAO_UIOP_Connector::TAO_UIOP_Connector (CORBA::Boolean flag)
     null_activation_strategy_ (),
     connect_strategy_ (),
     base_connector_ (),
-    orb_core_ (0),
     lite_flag_ (flag)
 {
 }
