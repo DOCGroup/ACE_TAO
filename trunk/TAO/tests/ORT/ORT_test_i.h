@@ -13,10 +13,12 @@
  */
 //=============================================================================
 
+
 #ifndef ORT_TEST_I_H
 #define ORT_TEST_I_H
 
 #include "ORT_testS.h"
+
 
 class ORT_test_i : public virtual POA_ObjectReferenceTemplate::ORT_test
 {
@@ -24,15 +26,17 @@ public:
 
   ORT_test_i (CORBA::ORB_ptr orb);
 
-  CORBA::Boolean request_server (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::Boolean request_server (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
 
   CORBA::ORB_var orb_;
+
 };
+
 
 #endif  /* ORT_TEST_I_H */
