@@ -4,8 +4,6 @@
 #include "ace/Get_Opt.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
-//#include "../check_supported_priorities.cpp"
-//#include "../main_thread_policy.cpp"
 #include "tao/RTCORBA/Network_Priority_Mapping_Manager.h"
 #include "tao/RTCORBA/Network_Priority_Mapping.h"
 #include "Custom_Network_Priority_Mapping.h"
@@ -97,7 +95,7 @@ parse_args (int argc, char *argv[])
   while ((c = get_opts ()) != -1)
     switch (c)
       {
-      case 'p':
+      case 'k':
         ior_output_file1 = get_opts.opt_arg ();
         break;
 
@@ -105,7 +103,7 @@ parse_args (int argc, char *argv[])
         ior_output_file2 = get_opts.opt_arg ();
         break;
 
-      case 'a':
+      case 'p':
         result = ::sscanf (get_opts.opt_arg (),
                            "%hd",
                            &poa_priority);
@@ -123,38 +121,19 @@ parse_args (int argc, char *argv[])
 	test_client = 1;
 	test_server = 0;
 	break;
-
-//        case 'b':
-//          result = ::sscanf (get_opts.opt_arg (),
-//                             "%hd",
-//                             &object_priority);
-//          if (result == 0 || result == EOF)
-//            ACE_ERROR_RETURN ((LM_ERROR,
-//                               "Unable to process <-b> option"),
-//                              -1);
-//          break;
-
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
-                           "-p <iorfile1> "
+                           "-k <iorfile1> "
                            "-o <iorfile2> "
-                           "-a <poa_priority> "
-                           "-b <object_priority> "
+                           "-p <poa_priority> "
+			   "-s [test_server setting of dscp]"
+			   "-c [test client setting of dscp]"
                            "\n",
                            argv [0]),
                           -1);
       }
-
-  //  if (poa_priority < 0)
-  //  ACE_ERROR_RETURN ((LM_ERROR,
-  //                         "Valid poa and object priorities must be"
-  //                         " specified.\nSee README file for more info\n"),
-  //                        -1);
-  
-  //    if (object_priority < 0)
-  //      object_priority = poa_priority;
 
   return 0;
 }
@@ -182,12 +161,6 @@ create_object (RTPortableServer::POA_ptr poa,
   // Register with poa.
   PortableServer::ObjectId_var id;
 
-  //if (priority > -1)
-  //  id = poa->activate_object_with_priority (server_impl,
-  //                                               priority
-  //                                               ACE_ENV_ARG_PARAMETER);
-  //    else
-  
   id = poa->activate_object (server_impl ACE_ENV_ARG_PARAMETER);
   
   ACE_CHECK_RETURN (-1);
@@ -234,9 +207,6 @@ main (int argc, char *argv[])
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      //        set_main_thread_policy (orb.in ());
-      //        check_supported_priorities (orb.in ());
-      
       // Parse arguments.
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -266,10 +236,6 @@ main (int argc, char *argv[])
         root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      // Create child POA with SERVER_DECLARED PriorityModelPolicy,
-      // and MULTIPLE_ID id uniqueness policy (so we can use one
-      // servant to create several objects).
-
       // Servant.
       Test_i server_impl (orb.in ());
 
@@ -280,11 +246,6 @@ main (int argc, char *argv[])
       if (test_client)
 	{
 	  poa_policy_list.length (1);
-	  //poa_policy_list[0] =
-	  // rt_orb->create_priority_model_policy (RTCORBA::SERVER_DECLARED,
-	  //  						  poa_priority
-	  //  						  ACE_ENV_ARG_PARAMETER);
-	  //  	  ACE_TRY_CHECK;
 	  
 	  poa_policy_list[0] =
 	    root_poa->create_id_uniqueness_policy (PortableServer::MULTIPLE_ID
@@ -306,7 +267,7 @@ main (int argc, char *argv[])
 	  if (check_for_nil (poa_without_ds.in (), "RTPOA") == -1)
 	    return 1;
 
-	  // Create object 2 (override POA's priority).
+	  // Create object 1 
 	  ACE_DEBUG ((LM_DEBUG, "\nActivated object two as "));
 	  result = create_object (rt_poa_without_ds.in (), orb.in (), &server_impl,
 				  ior_output_file1 ACE_ENV_ARG_PARAMETER);
@@ -375,7 +336,7 @@ main (int argc, char *argv[])
 	    return 1;
 	  
 
-	  // Create object 1 (it will inherit POA's priority).
+	  // Create object 2 (it will inherit POA's priority).
 	  ACE_DEBUG ((LM_DEBUG, "\nActivated object one as "));
 	  result = create_object (rt_poa_with_ds.in (), orb.in (), &server_impl,
 				   ior_output_file2 ACE_ENV_ARG_PARAMETER);

@@ -1,15 +1,12 @@
 // $Id$
 
 #include "testC.h"
-//#include "Client_ORBInitializer.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/RTCORBA/RT_Policy_i.h"
 #include "tao/RTCORBA/Network_Priority_Mapping_Manager.h"
 #include "tao/RTCORBA/Network_Priority_Mapping.h"
 #include "ace/Get_Opt.h"
 #include "Custom_Network_Priority_Mapping.h"
-//#include "../check_supported_priorities.cpp"
-//#include "../main_thread_policy.cpp"
 #include "tao/Stub.h"
 
 const char *ior = "file://test1.ior";
@@ -73,7 +70,7 @@ change_network_priority (int enable_network_priority,
 	RTCORBA::ProtocolProperties::_duplicate (tcp_properties.in ());
       protocols[0].orb_protocol_properties =
 	RTCORBA::ProtocolProperties::_nil ();
-  
+      
       CORBA::PolicyList policy_list;
       policy_list.length (1);
       policy_list[0] =
@@ -165,6 +162,8 @@ parse_args (int argc, char *argv[])
                            "-k <ior> "
 			   "-n <number_of_iterations>"
 			   "-p <desired priority>"
+			   "-s [test server setting dscp]"
+			   "-c [test client setting dscp]"
                            "\n",
                            argv [0]),
                           -1);
@@ -180,6 +179,7 @@ toggle (int &i)
 		i = 1;
 	else i = 0;
 }
+
 int
 main (int argc, char *argv[])
 {
@@ -188,22 +188,14 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       
-      // Initialize and obtain reference to the Test object.
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       
-      //set_main_thread_policy (orb.in ());
-      
-      // Make sure we can support multiple priorities that are required
-      // for this test.
-      // check_supported_priorities ();
-      //check_supported_priorities (orb.in ());
-
-	
       if (parse_args (argc, argv) != 0)
         return 1;
 
+      // Initialize and obtain reference to the Test object.
       CORBA::Object_var client_object =
         orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -220,33 +212,7 @@ main (int argc, char *argv[])
                             1);
         }
       
-      // Check that the object is configured with CLIENT_PROPAGATED
-      // PriorityModelPolicy.
-      //  CORBA::Policy_var policy =
-      //          server->_get_policy (RTCORBA::PRIORITY_MODEL_POLICY_TYPE
-      //                               ACE_ENV_ARG_PARAMETER);
-      //        ACE_TRY_CHECK;
-      
-      //  RTCORBA::PriorityModelPolicy_var priority_policy =
-      //          RTCORBA::PriorityModelPolicy::_narrow (policy.in () ACE_ENV_ARG_PARAMETER);
-      //        ACE_TRY_CHECK;
-      
-      //        if (CORBA::is_nil (priority_policy.in ()))
-      //          ACE_ERROR_RETURN ((LM_ERROR,
-      //                             "ERROR: Priority Model Policy not exposed!\n"),
-      //                            1);
-      
-      //        RTCORBA::PriorityModel priority_model =
-      //          priority_policy->priority_model (ACE_ENV_SINGLE_ARG_PARAMETER);
-      //        ACE_TRY_CHECK;
-      
-      //        if (priority_model != RTCORBA::CLIENT_PROPAGATED)
-      //          ACE_ERROR_RETURN ((LM_ERROR,
-      //                             "ERROR: priority_model != "
-      //                             "RTCORBA::CLIENT_PROPAGATED!\n"),
-      //                            1);
-      
-      
+      //Resolve the Network priority Mapping Manager
       CORBA::Object_var object = orb->resolve_initial_references ("NetworkPriorityMappingManager"
 								  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -256,18 +222,16 @@ main (int argc, char *argv[])
 							 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       
+      // Initialize the custom priority mapping
       TAO_Custom_Network_Priority_Mapping *cnpm = 0;
       ACE_NEW_RETURN  (cnpm,
 		       TAO_Custom_Network_Priority_Mapping,
 		       -1);
       
+      //Set the desired corba priority on the network mapping manager
       cnpm->desired_priority (desired_priority);
-      
-      //RTCORBA::NetworkPriorityMapping_var npm =
-      //RTCORBA::NetworkPriorityMapping::_narrow (tnpm
-      //	  ACE_ENV_ARG_PARAMETER);
-      //ACE_TRY_CHECK;
 
+      //Load the custom network priority mapping object in the network priority      //mapping manager. The user can thus add his own priority mapping. 
       mapping_manager->mapping (cnpm);
 
       ACE_DEBUG ((LM_DEBUG,
@@ -280,23 +244,14 @@ main (int argc, char *argv[])
       RTCORBA::Current_var current =
         RTCORBA::Current::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
+
+      // Set the native priority
       current->the_priority (0 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       
-      //CORBA::Short priority =
-      //  	current->the_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
-      //        ACE_TRY_CHECK;
-      
-      //        if (desired_priority != priority)
-      //  	ACE_ERROR_RETURN ((LM_ERROR,
-      //  			   "ERROR: Unable to set thread "
-      //  			   "priority to %d\n", desired_priority),
-      //  			  1);
-      
       int enp = 0;	 //enable_network_priority
-      // Make several invocation, 
 
+      // Make several invocation, 
       for (int i = 0; i < n; ++i)
         {
 	  switch (i)
@@ -323,6 +278,7 @@ main (int argc, char *argv[])
           ACE_TRY_CHECK;
 
 	}
+
       // Shut down Server ORB.
       server->shutdown ();//(0 ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
