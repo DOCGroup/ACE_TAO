@@ -872,7 +872,15 @@ ACE_Log_Msg::log (const ASYS_TCHAR *format_str,
 #else
                   ACE_hthread_t t_id;
                   ACE_Thread::self (t_id);
+#  if defined (ACE_HAS_PTHREADS_DRAFT4) && defined (HPUX_10)
+		  // HP-UX 10.x DCE's thread ID is a pointer.  Grab the
+		  // more meaningful, readable, thread ID.  This will match
+		  // the one seen in the debugger as well.
+		  ACE_OS::sprintf (bp, ASYS_TEXT ("%u"),
+				   pthread_getunique_np(&t_id));
+#  else
                   ACE_OS::sprintf (bp, ASYS_TEXT ("%u"), t_id);
+#  endif /* ACE_HAS_PTHREADS_DRAFT4 && HPUX_10 */
 #endif /* ACE_WIN32 */
                   break;
                 case 's':
