@@ -167,7 +167,8 @@ main (int argc, char **argv)
       // Create an employee
       Database::Entry_var entry =
         database_agent->create_entry ("irfan",
-                                      "Employee",
+                                      ACE_const_cast (const Database::Identifier,
+                                                      "Employee"),
                                       employee_attributes
                                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -203,7 +204,8 @@ main (int argc, char **argv)
       ACE_OS::strcpy (str, "Database::Entry::destroy");
       // Destroy the employee
       database_agent->destroy_entry ("irfan",
-                                     "Employee"
+                                     ACE_const_cast (const Database::Identifier,
+                                                     "Employee")
                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
