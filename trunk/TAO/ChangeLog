@@ -1,3 +1,10 @@
+Fri Nov 14 02:28:09 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * tao/Messaging/Asynch_Invocation_Adapter.{h,cpp,inl}:
+          Added new file, Asynch_Invocation_Adapter.inl, and added invoke
+          method that matches the one in the base class that had been
+          hidden by the new one with different parameters.
+
 Thu Nov 13 21:02:31 2003  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* tao/Queued_Message.cpp:

@@ -12,6 +12,10 @@
 #include "tao/debug.h"
 #include "ace/Auto_Ptr.h"
 
+#if !defined (__ACE_INLINE__)
+#include "Asynch_Invocation_Adapter.inl"
+#endif /* __ACE_INLINE__ */
+
 ACE_RCSID (Messaging,
            Asynch_Invocation_Adapter,
            "$Id$")

@@ -66,6 +66,9 @@ namespace TAO
                  const TAO_Reply_Handler_Skeleton &reply_handler_skel
                  ACE_ENV_ARG_DECL);
 
+    virtual void invoke (TAO::Exception_Data *ex,
+                         unsigned long ex_count
+                         ACE_ENV_ARG_DECL);
   protected:
 
     /**
@@ -93,6 +96,10 @@ namespace TAO
   };
 } // End namespace TAO
 
+
+#if defined (__ACE_INLINE__)
+#include "Asynch_Invocation_Adapter.inl"
+#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 #endif /*TAO_MESSAGING_ASYNCH_INVOCATION_ADAPTER_H*/
