@@ -1,3 +1,10 @@
+Fri Oct 12 14:54:58 2001  Craig Rodrigues  <crodrigu@bbn.com>
+
+        * ace/OS.i:
+          Remove extraneous check for macro ACE_HAS_WINSOCK2_GQOS,
+          which was breaking various builds under Windows.
+          Thanks to Jeff McNiel <JMcNiel@datacrit.com> for pointing it out.
+
 Fri Oct 12 12:15:22 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/nightlybuilds/builds.lst:
