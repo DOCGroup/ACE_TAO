@@ -18,6 +18,8 @@
 #endif /* __ACE_INLINE__ */
 BEGIN_DEPLOYMENT_NAMESPACE
 
+class parser_error { };
+
 template <typename VALUE, typename DATA>
 void process_element_attributes(DOMNamedNodeMap* named_node_map,
                                 DOMDocument* doc,
@@ -79,10 +81,20 @@ void process_element_attributes(DOMNamedNodeMap* named_node_map,
               if (xml_url.isRelative ())
                 {
                   href_doc = parser->parseURI (final_url.c_str ());
+                  if (handler.getErrors ())
+                    {
+                      ACE_DEBUG ((LM_DEBUG, "XML descriptor error\n"));
+                      throw parser_error ();
+                    }
                 }
               else
                 {
                   href_doc = parser->parseURI (url_string.c_str ());
+                  if (handler.getErrors ())
+                    {
+                      ACE_DEBUG ((LM_DEBUG, "XML descriptor error\n"));
+                      throw parser_error ();
+                    }
                 }
 
               DOMDocumentTraversal* traverse = href_doc;
@@ -101,7 +113,8 @@ void process_element_attributes(DOMNamedNodeMap* named_node_map,
     }
   catch (...)
     {
-      ACE_DEBUG ((LM_DEBUG, "caught DOM exception\n"));
+      ACE_DEBUG ((LM_DEBUG, "Caught DOM exception\n"));
+      //throw parser_error ();
     }
 }
 
