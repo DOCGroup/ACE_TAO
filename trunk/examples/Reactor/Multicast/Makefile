@@ -51,6 +51,7 @@ include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/OS.h \
  $(WRAPPER_ROOT)/ace/config.h \
  $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/OS.i \
  $(WRAPPER_ROOT)/ace/Trace.h \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
@@ -58,13 +59,20 @@ include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Log_Record.i \
  $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/High_Res_Timer.h \
+ $(WRAPPER_ROOT)/ace/High_Res_Timer.i \
+ $(WRAPPER_ROOT)/ace/Profile_Timer.i \
  $(WRAPPER_ROOT)/ace/INET_Addr.h \
  $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/Addr.i \
+ $(WRAPPER_ROOT)/ace/INET_Addr.i \
+ $(WRAPPER_ROOT)/ace/SOCK_Dgram_Mcast.h \
  $(WRAPPER_ROOT)/ace/SOCK_Dgram.h \
  $(WRAPPER_ROOT)/ace/SOCK.h \
  $(WRAPPER_ROOT)/ace/IPC_SAP.h \
  $(WRAPPER_ROOT)/ace/IPC_SAP.i \
  $(WRAPPER_ROOT)/ace/SOCK.i \
- $(WRAPPER_ROOT)/ace/SOCK_Dgram.i
+ $(WRAPPER_ROOT)/ace/SOCK_Dgram.i \
+ $(WRAPPER_ROOT)/ace/SOCK_Dgram_Mcast.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

@@ -1,3 +1,9 @@
+Mon Apr 28 02:16:19 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* tests/Conn_Test.cpp: Removed some extraneous template
+ 	  specializations.  Thanks to Nanbor Wang <nw1@cs.wustl.edu> for
+ 	  reporting these.
+
 Mon Apr 28 00:25:17 1997    <irfan@TWOSTEP>
 
 	* apps/JAWS/client: Removed ACE_Export macro from class
@@ -36,6 +42,17 @@ Sun Apr 27 22:22:14 1997    <irfan@TWOSTEP>
  	  affected by the above change.
 
 Sun Apr 27 17:44:28 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/OS.h: Added a new #define called ACE_DEFAULT_HTTP_SERVER_PORT.
+	  Naturally, this defaults to 80...
+
+	* apps/JAWS/client/blobby.cpp: Cleaned up the blobby example so
+ 	  that it conforms more closely to the ACE style guide.
+
+	* examples/IPC_SAP/SOCK_SAP/CPP-in{server,client}.cpp: Took out
+ 	  the VxWorks-specific #ifdefs.  I believe this is fixed in ACE_OS
+ 	  now.  If not, the burden of proof is on the VxWorks testers to
+ 	  prove me wrong ;-).
 
 	* ace/Synch_T.h: Added a new macro ACE_SYNCH_RW_MUTEX to
  	  complement the existing ACE_SYNCH_MUTEX and ACE_SYNCH_CONDITION

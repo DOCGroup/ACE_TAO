@@ -41,6 +41,7 @@ include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/OS.h \
  $(WRAPPER_ROOT)/ace/config.h \
  $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/OS.i \
  $(WRAPPER_ROOT)/ace/Trace.h \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
@@ -50,6 +51,10 @@ include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Log_Record.i \
  $(WRAPPER_ROOT)/ace/FILE_Addr.h \
  $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/Addr.i \
+ $(WRAPPER_ROOT)/ace/FILE_Addr.i \
+ $(WRAPPER_ROOT)/ace/SString.h \
+ $(WRAPPER_ROOT)/ace/SString.i \
  $(WRAPPER_ROOT)/ace/FILE_Connector.h \
  $(WRAPPER_ROOT)/ace/FILE_IO.h \
  $(WRAPPER_ROOT)/ace/FILE.h \
