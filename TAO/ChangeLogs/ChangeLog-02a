@@ -1,3 +1,16 @@
+Fri Jul  6 13:19:25 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_wstr_sequence_ch.cpp:
+
+          Added generation of 'TAO_EXPORT_MACRO' to class declaration.
+
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ch.cpp:
+
+          Changed generation of 'TAO_EXPORT_NESTED_MACRO' to 'TAO_EXPORT_MACRO'.
+
 Fri Jul  6 12:38:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Transport.cpp: Fixed a bug with thread-per-connection
