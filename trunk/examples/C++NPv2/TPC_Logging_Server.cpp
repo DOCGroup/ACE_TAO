@@ -33,7 +33,7 @@ int TPC_Logging_Handler::open (void *) {
 
   logging_handler_.peer ().set_handle (peer ().get_handle ());
 
-  return activate (THR_NEW_LWP | THR_DETACHED); 
+  return activate (THR_NEW_LWP | THR_DETACHED);
 }
 
 
@@ -76,7 +76,7 @@ int TPC_Logging_Acceptor::handle_close (ACE_HANDLE h,
 }
 
 
-int TPC_Logging_Acceptor::accept_svc_handler 
+int TPC_Logging_Acceptor::accept_svc_handler
     (TPC_Logging_Handler *sh) {
   if (PARENT::accept_svc_handler (sh) == -1) return -1;
   SSL_clear (ssl_);  // Reset for new SSL connection.
@@ -86,7 +86,7 @@ int TPC_Logging_Acceptor::accept_svc_handler
     (ssl_,
      SSL_VERIFY_PEER | SSL_VERIFY_FAIL_IF_NO_PEER_CERT,
      0);
-  if (SSL_accept (ssl_) == -1 
+  if (SSL_accept (ssl_) == -1
       || SSL_shutdown (ssl_) == -1) return -1;
   return 0;
 }
