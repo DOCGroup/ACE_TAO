@@ -43,7 +43,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:66
+// be\be_visitor_arg_traits.cpp:69
 
 // Arg traits specializations.
 namespace TAO
@@ -52,7 +52,7 @@ namespace TAO
 #if !defined (_PORTABLEINTERCEPTOR_OBJECTREFERENCEFACTORY__ARG_TRAITS_CS_)
 #define _PORTABLEINTERCEPTOR_OBJECTREFERENCEFACTORY__ARG_TRAITS_CS_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   class TAO_IORInterceptor_Export Arg_Traits<PortableInterceptor::ObjectReferenceFactory>
     : public
         Object_Arg_Traits_T<
@@ -73,7 +73,6 @@ namespace TAO
 
 // Traits specializations for PortableInterceptor::IORInfo.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableInterceptor::IORInfo_ptr
 TAO::Objref_Traits<PortableInterceptor::IORInfo>::duplicate (
     PortableInterceptor::IORInfo_ptr p
@@ -82,7 +81,6 @@ TAO::Objref_Traits<PortableInterceptor::IORInfo>::duplicate (
   return PortableInterceptor::IORInfo::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<PortableInterceptor::IORInfo>::release (
     PortableInterceptor::IORInfo_ptr p
@@ -91,14 +89,12 @@ TAO::Objref_Traits<PortableInterceptor::IORInfo>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableInterceptor::IORInfo_ptr
 TAO::Objref_Traits<PortableInterceptor::IORInfo>::nil (void)
 {
   return PortableInterceptor::IORInfo::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<PortableInterceptor::IORInfo>::marshal (
     PortableInterceptor::IORInfo_ptr p,
@@ -159,6 +155,12 @@ PortableInterceptor::IORInfo::_duplicate (IORInfo_ptr obj)
   return obj;
 }
 
+void
+PortableInterceptor::IORInfo::_tao_release (IORInfo_ptr obj)
+{
+  CORBA::release (obj);
+}
+
 CORBA::Boolean
 PortableInterceptor::IORInfo::_is_a (
     const char *value
@@ -200,7 +202,7 @@ PortableInterceptor::IORInfo::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1509
+// be\be_visitor_root/root.cpp:1619
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

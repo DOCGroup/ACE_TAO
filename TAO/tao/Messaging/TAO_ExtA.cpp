@@ -67,7 +67,7 @@ static CORBA::TypeCode _tc_TAO_tc_TAO_ConnectionTimeoutPolicy (
 
 namespace TAO
 {
-  ::CORBA::TypeCode_ptr _tc_ConnectionTimeoutPolicy =
+  ::CORBA::TypeCode_ptr const _tc_ConnectionTimeoutPolicy =
     &_tc_TAO_tc_TAO_ConnectionTimeoutPolicy;
 }
 

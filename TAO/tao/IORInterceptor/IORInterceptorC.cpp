@@ -42,7 +42,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:66
+// be\be_visitor_arg_traits.cpp:69
 
 // Arg traits specializations.
 namespace TAO
@@ -55,7 +55,6 @@ namespace TAO
 
 // Traits specializations for PortableInterceptor::IORInterceptor.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableInterceptor::IORInterceptor_ptr
 TAO::Objref_Traits<PortableInterceptor::IORInterceptor>::duplicate (
     PortableInterceptor::IORInterceptor_ptr p
@@ -64,7 +63,6 @@ TAO::Objref_Traits<PortableInterceptor::IORInterceptor>::duplicate (
   return PortableInterceptor::IORInterceptor::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<PortableInterceptor::IORInterceptor>::release (
     PortableInterceptor::IORInterceptor_ptr p
@@ -73,14 +71,12 @@ TAO::Objref_Traits<PortableInterceptor::IORInterceptor>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableInterceptor::IORInterceptor_ptr
 TAO::Objref_Traits<PortableInterceptor::IORInterceptor>::nil (void)
 {
   return PortableInterceptor::IORInterceptor::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<PortableInterceptor::IORInterceptor>::marshal (
     PortableInterceptor::IORInterceptor_ptr p,
@@ -141,6 +137,12 @@ PortableInterceptor::IORInterceptor::_duplicate (IORInterceptor_ptr obj)
   return obj;
 }
 
+void
+PortableInterceptor::IORInterceptor::_tao_release (IORInterceptor_ptr obj)
+{
+  CORBA::release (obj);
+}
+
 CORBA::Boolean
 PortableInterceptor::IORInterceptor::_is_a (
     const char *value
@@ -186,7 +188,7 @@ PortableInterceptor::IORInterceptor::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1509
+// be\be_visitor_root/root.cpp:1619
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

@@ -42,7 +42,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:66
+// be\be_visitor_arg_traits.cpp:69
 
 // Arg traits specializations.
 namespace TAO
@@ -55,7 +55,6 @@ namespace TAO
 
 // Traits specializations for Messaging::SyncScopePolicy.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::SyncScopePolicy_ptr
 TAO::Objref_Traits<Messaging::SyncScopePolicy>::duplicate (
     Messaging::SyncScopePolicy_ptr p
@@ -64,7 +63,6 @@ TAO::Objref_Traits<Messaging::SyncScopePolicy>::duplicate (
   return Messaging::SyncScopePolicy::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<Messaging::SyncScopePolicy>::release (
     Messaging::SyncScopePolicy_ptr p
@@ -73,14 +71,12 @@ TAO::Objref_Traits<Messaging::SyncScopePolicy>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::SyncScopePolicy_ptr
 TAO::Objref_Traits<Messaging::SyncScopePolicy>::nil (void)
 {
   return Messaging::SyncScopePolicy::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<Messaging::SyncScopePolicy>::marshal (
     Messaging::SyncScopePolicy_ptr p,
@@ -149,6 +145,12 @@ Messaging::SyncScopePolicy::_duplicate (SyncScopePolicy_ptr obj)
   return obj;
 }
 
+void
+Messaging::SyncScopePolicy::_tao_release (SyncScopePolicy_ptr obj)
+{
+  CORBA::release (obj);
+}
+
 CORBA::Boolean
 Messaging::SyncScopePolicy::_is_a (
     const char *value
@@ -194,7 +196,7 @@ Messaging::SyncScopePolicy::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1509
+// be\be_visitor_root/root.cpp:1619
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

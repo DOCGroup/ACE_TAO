@@ -42,7 +42,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:66
+// be\be_visitor_arg_traits.cpp:69
 
 // Arg traits specializations.
 namespace TAO
@@ -55,7 +55,6 @@ namespace TAO
 
 // Traits specializations for TAO::ConnectionTimeoutPolicy.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 TAO::ConnectionTimeoutPolicy_ptr
 TAO::Objref_Traits<TAO::ConnectionTimeoutPolicy>::duplicate (
     TAO::ConnectionTimeoutPolicy_ptr p
@@ -64,7 +63,6 @@ TAO::Objref_Traits<TAO::ConnectionTimeoutPolicy>::duplicate (
   return TAO::ConnectionTimeoutPolicy::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<TAO::ConnectionTimeoutPolicy>::release (
     TAO::ConnectionTimeoutPolicy_ptr p
@@ -73,14 +71,12 @@ TAO::Objref_Traits<TAO::ConnectionTimeoutPolicy>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 TAO::ConnectionTimeoutPolicy_ptr
 TAO::Objref_Traits<TAO::ConnectionTimeoutPolicy>::nil (void)
 {
   return TAO::ConnectionTimeoutPolicy::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<TAO::ConnectionTimeoutPolicy>::marshal (
     TAO::ConnectionTimeoutPolicy_ptr p,
@@ -149,6 +145,12 @@ TAO::ConnectionTimeoutPolicy::_duplicate (ConnectionTimeoutPolicy_ptr obj)
   return obj;
 }
 
+void
+TAO::ConnectionTimeoutPolicy::_tao_release (ConnectionTimeoutPolicy_ptr obj)
+{
+  CORBA::release (obj);
+}
+
 CORBA::Boolean
 TAO::ConnectionTimeoutPolicy::_is_a (
     const char *value
@@ -194,7 +196,7 @@ TAO::ConnectionTimeoutPolicy::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1509
+// be\be_visitor_root/root.cpp:1619
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
