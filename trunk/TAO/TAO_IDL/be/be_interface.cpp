@@ -98,7 +98,7 @@ be_interface::compute_coll_name (int type)
   // prefix and the local name and the (optional) "::"
   const char *collocated = collocated_names[type];
 
-  int namelen = sizeof (collocated) + sizeof (poa);
+  int namelen = ACE_OS::strlen (collocated) + sizeof (poa) + 1;
 
   UTL_IdListActiveIterator *i;
   ACE_NEW (i, UTL_IdListActiveIterator (this->name ()));
