@@ -1,3 +1,33 @@
+Fri Aug 18 23:20:56 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/RTCORBA.pidl
+	* tao/RTCORBAC.cpp
+	* tao/RTCORBAC.h
+	* tao/RTCORBAC.i
+	* tao/RT_Policy_i.cpp
+	* tao/RT_Policy_i.h
+	* tao/diffs/RTCORBAC.cpp.diff
+	* tao/diffs/RTCORBAC.h.diff
+	* tao/diffs/RTCORBAC.i.diff:
+
+	  Added idl interfaces to allow configuration of UIOP and SHMIOP
+	  protocol properties through RTCORBA's ServerProtocolPolicy
+	  and ClientProtocolPolicy.
+
+	* tao/diffs/TAOC.h.diff
+	* tao/TAO.pidl
+
+	  Updated comments.
+
+	* tao/Policy_Manager.cpp (set_policy_overrides):
+
+	  Only one ServerProtocolPolicy should be included in a
+          given PolicyList (section 4.15.2 of RTCORBA 1.0, i.e.,
+          ptc/99-05-03).
+
+
+
+
 Fri Aug 18 19:30:00 2000  Kirthika  Parameswaran  <kirthika@cs.wustl.edu>
 	Visitors implemented as part of the TAO_IDL to generate
 	infrastructure for Portable Interceptors:
@@ -46,7 +76,7 @@ Fri Aug 18 19:30:00 2000  Kirthika  Parameswaran  <kirthika@cs.wustl.edu>
 	Most of the TAO_IDL changes are to add new visitors for generation
 	of the nested RequestInfo classes per operation of an interface
 	and also to be able to query the RequestInfo classes for argument
-	list etc on demand.	
+	list etc on demand.
 	TAO/tao additions:
 	* tao/PortableInterceptor.{h,i,cpp}:
 	* tao/PortableInterceptorC.{h,i,cpp}:
@@ -56,8 +86,8 @@ Fri Aug 18 19:30:00 2000  Kirthika  Parameswaran  <kirthika@cs.wustl.edu>
 	* tao/IOP_N.pidl:
 	* tao/Request_Info.{h,cpp}:
 	All the above are new Portable Interceptor related additions
-	to TAO/tao.	
-	* tao/ORB.h: 
+	to TAO/tao.
+	* tao/ORB.h:
 	* tao/corba.h:
 	included PortableInterceptor.h
 	* tao/ImplRepoC,S.cpp:
@@ -128,15 +158,15 @@ Fri Aug 18 19:30:00 2000  Kirthika  Parameswaran  <kirthika@cs.wustl.edu>
 	* tests/PortableInterceptors/Benchmark/test.idl:
 	* tests/PortableInterceptors/Benchmark/test_i.cpp:
 	* tests/PortableInterceptors/Benchmark/test_i.h:
-	* tests/PortableInterceptors/Benchmark/marker.h:		
+	* tests/PortableInterceptors/Benchmark/marker.h:
 	* tests/PortableInterceptors/Benchmark/marker.cpp:
 	This is a benchamrking test used and explained in
 	http://www.cs.wustl.edu/~schmidt/PDF/COOTS-00.pdf
-	* TAO/docs/interceptor.html: updated documentation to 
-	reflect these changes.  
+	* TAO/docs/interceptor.html: updated documentation to
+	reflect these changes.
 	Thanks to Nanbor for brainstorming and guidance,
-	Jeff for help on nitty-gritty IDL bugs and Doug on helping 
-	to put all this on white paper! 
+	Jeff for help on nitty-gritty IDL bugs and Doug on helping
+	to put all this on white paper!
 
 Fri Aug 18 17:46:34 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 

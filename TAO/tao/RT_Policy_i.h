@@ -99,9 +99,6 @@ public:
   virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
   // This method reads the object state from a CDR representation.
 
-  // = Override CORBA::LocalObject no-op methods to
-  // provide reference counting.
-
 protected:
 
   friend class TAO_Policy_Factory;
@@ -151,13 +148,10 @@ public:
   virtual CORBA::Policy_ptr copy (CORBA::Environment &ACE_TRY_ENV =
                                   TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual void destroy (CORBA::Environment &ACE_TRY_ENV =
                         TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
-
-  // = Override CORBA::LocalObject no-op methods to
-  // provide reference counting.
 
 private:
 
@@ -201,10 +195,6 @@ public:
   virtual void destroy (CORBA::Environment &ACE_TRY_ENV =
                         TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
-
-  // = Override CORBA::LocalObject no-op methods to
-  // provide reference counting.
-
 };
 
 ////////////////////////////////////////////////////////////////////////////
@@ -263,9 +253,6 @@ public:
   virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
   // This method reads the object state from a CDR representation.
 
-  // = Override CORBA::LocalObject no-op methods to
-  // provide reference counting.
-
 protected:
 
   friend class TAO_Policy_Factory;
@@ -318,9 +305,6 @@ public:
   virtual void destroy (CORBA::Environment &ACE_TRY_ENV =
                         TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
-
-  // = Override CORBA::LocalObject no-op methods to
-  // provide reference counting.
 
 private:
 
@@ -381,9 +365,6 @@ public:
 
   virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
   // This method reads the object state from a CDR representation.
-
-  // = Override CORBA::LocalObject no-op methods to
-  // provide reference counting.
 
 protected:
 
@@ -478,9 +459,6 @@ public:
   virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
   // This method reads the object state from a CDR representation.
 
-  // = Override CORBA::LocalObject no-op methods to
-  // provide reference counting.
-
 private:
   // = Attributes.
 
@@ -491,7 +469,120 @@ private:
   CORBA::Boolean no_delay_;
 };
 
-class  TAO_Protocol_Properties_Factory;
+//////////////////////////////////////////////////////////////////////
+
+class TAO_Export TAO_Unix_Domain_Properties :
+  public RTCORBA::ProtocolProperties,
+  public TAO_Local_RefCounted_Object
+{
+  // = TITLE
+  //   RTCORBA::UnixDomainProtocolProperties implementation.
+  //
+  // = DESCRIPTION
+  //   Stores Unix Domain Sockets (Local IPC) Protocol configuration
+  //   properties.
+  //
+public:
+  TAO_Unix_Domain_Properties (CORBA::Long send_buffer_size =
+                              ACE_DEFAULT_MAX_SOCKET_BUFSIZ,
+                              CORBA::Long recv_buffer_size =
+                              ACE_DEFAULT_MAX_SOCKET_BUFSIZ);
+
+  // Constructor.
+
+  virtual ~TAO_Unix_Domain_Properties (void);
+  // Destructor.
+
+  virtual CORBA::Long send_buffer_size (CORBA::Environment
+                                        &ACE_TRY_ENV =
+                                        TAO_default_environment ())
+    ACE_THROW_SPEC (());
+
+  virtual void send_buffer_size (CORBA::Long send_buffer_size,
+                                 CORBA::Environment &ACE_TRY_ENV =
+                                 TAO_default_environment ())
+    ACE_THROW_SPEC (());
+
+  virtual CORBA::Long recv_buffer_size (CORBA::Environment
+                                        &ACE_TRY_ENV =
+                                        TAO_default_environment ())
+    ACE_THROW_SPEC (());
+
+  virtual void recv_buffer_size (CORBA::Long recv_buffer_size,
+                                 CORBA::Environment &ACE_TRY_ENV =
+                                 TAO_default_environment ())
+    ACE_THROW_SPEC (());
+
+private:
+
+  // = Attributes.
+  CORBA::Long send_buffer_size_;
+  CORBA::Long recv_buffer_size_;
+};
+
+//////////////////////////////////////////////////////////////////////
+
+class TAO_Export TAO_SMEM_Properties :
+  public RTCORBA::ProtocolProperties,
+  public TAO_Local_RefCounted_Object
+{
+  // = TITLE
+  //   RTCORBA::SharedMemoryProtocolProperties implementation.
+  //
+  // = DESCRIPTION
+  //   Stores Shared Memory Protocol configuration
+  //   properties.
+  //
+public:
+  TAO_SMEM_Properties (CORBA::Long preallocate_buffer_size = 0,
+                       const char * mmap_filename = 0,
+                       const char * mmap_lockname = 0);
+  // Constructor.
+
+  virtual ~TAO_SMEM_Properties (void);
+  // Destructor.
+
+  // = IDL interface methods.
+
+  virtual CORBA::Long preallocate_buffer_size (CORBA::Environment
+                                               &ACE_TRY_ENV =
+                                               TAO_default_environment
+                                               ())
+    ACE_THROW_SPEC (());
+
+  virtual void preallocate_buffer_size (CORBA::Long preallocate_buffer_size,
+                                        CORBA::Environment
+                                        &ACE_TRY_ENV = TAO_default_environment
+                                        ())
+    ACE_THROW_SPEC (());
+
+  virtual char * mmap_filename (CORBA::Environment &ACE_TRY_ENV =
+                                TAO_default_environment ())
+    ACE_THROW_SPEC (());
+
+  virtual void mmap_filename (const char * mmap_filename,
+                              CORBA::Environment &ACE_TRY_ENV =
+                              TAO_default_environment ())
+    ACE_THROW_SPEC (());
+
+  virtual char * mmap_lockname (CORBA::Environment &ACE_TRY_ENV =
+                                TAO_default_environment ())
+    ACE_THROW_SPEC (());
+
+  virtual void mmap_lockname (const char * mmap_lockname,
+                              CORBA::Environment &ACE_TRY_ENV =
+                              TAO_default_environment ())
+    ACE_THROW_SPEC (());
+
+private:
+
+  // = Attributes.
+  CORBA::Long preallocate_buffer_size_;
+  ACE_CString mmap_filename_;
+  ACE_CString mmap_lockname_;
+};
+
+/////////////////////////////////////////////////////////////////////////
 
 class TAO_Export TAO_GIOP_Properties :
   public RTCORBA::GIOPProtocolProperties,
@@ -501,18 +592,17 @@ public:
   virtual ~TAO_GIOP_Properties ();
 
   // = CDR encoding methods
-  
+
   virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
 
   virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
-
-  // = Override CORBA::LocalObject no-op methods to
-  // provide reference counting.
 
 protected:
   friend class TAO_Protocol_Properties_Factory;
   TAO_GIOP_Properties (void);
 };
+
+//////////////////////////////////////////////////////////////////////////
 
 class TAO_Export TAO_Protocol_Properties_Factory
 {
