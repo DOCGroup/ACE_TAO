@@ -17,7 +17,7 @@
 #ifndef ACE_FUTURE_SET_H
 #define ACE_FUTURE_SET_H
 
-#include "ace/Hash_Map_Manager.h"
+#include "ace/Map_Manager.h"
 #include "ace/Strategies_T.h"
 #include "ace/Thread.h"
 #include "ace/Message_Queue.h"
@@ -41,7 +41,7 @@ class ACE_Future_Set : public ACE_Future_Observer<T>
   //     reader threads as they become available.
 public:
   // = Initialization and termination methods.
-        
+
   ACE_Future_Set (ACE_Message_Queue<ACE_SYNCH> *future_notification_queue_ = 0);
   // Constructor.
 
@@ -81,7 +81,7 @@ private:
   ACE_Future_Set (const ACE_Future_Set &r);
   // Copy constructor binds <this> and <r> to the same
   // <ACE_Future_Set>. An <ACE_Future_Set> is created if necessary.
-        
+
   typedef ACE_Future<T>
           FUTURE;
 
@@ -91,19 +91,16 @@ private:
   typedef ACE_Future_Holder<T>
           FUTURE_HOLDER;
 
-  typedef ACE_Hash_Addr<FUTURE_REP*>
-          FUTURE_REP_HASH_ADDR;
+  typedef ACE_Map_Manager<FUTURE_REP*, FUTURE_HOLDER *, ACE_Null_Mutex>
+          FUTURE_MAP;
 
-  typedef ACE_Hash_Map_Manager<FUTURE_REP_HASH_ADDR, FUTURE_HOLDER *, ACE_Null_Mutex>
-          FUTURE_HASH_MAP;
+  typedef ACE_Map_Iterator<FUTURE_REP*, FUTURE_HOLDER *, ACE_Null_Mutex>
+          FUTURE_ITERATOR;
 
-  typedef ACE_Hash_Map_Iterator<FUTURE_REP_HASH_ADDR, FUTURE_HOLDER *, ACE_Null_Mutex>
-          FUTURE_HASH_ITERATOR;
+  typedef ACE_Map_Entry<FUTURE_REP*, FUTURE_HOLDER *>
+          FUTURE_ENTRY;
 
-  typedef ACE_Hash_Map_Entry<FUTURE_REP_HASH_ADDR, FUTURE_HOLDER *>
-          FUTURE_HASH_ENTRY;
-
-  FUTURE_HASH_MAP future_map_;
+  FUTURE_MAP future_map_;
   // Map of ACE_Futures, subjects, which have not been written to by
   // client's writer thread.
 
@@ -125,4 +122,3 @@ private:
 
 #endif /* ACE_HAS_THREADS */
 #endif /* ACE_FUTURE_SET_H */
-
