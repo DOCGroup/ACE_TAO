@@ -274,7 +274,7 @@ TAO_AV_RTCP::rtcp_interval (int members,
   if (initial)
     {
       // initialize the random number generator
-      ACE_OS::srand(ACE_OS::time(0L));
+      ACE_OS::srand((unsigned int)avg_rtcp_size);
 
       rtcp_min_time /= 2;
       *avg_rtcp_size = 128;

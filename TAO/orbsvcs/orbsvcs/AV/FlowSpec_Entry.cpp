@@ -116,6 +116,23 @@ TAO_FlowSpec_Entry::TAO_FlowSpec_Entry (const char *flowname,
 // Destructor.
 TAO_FlowSpec_Entry::~TAO_FlowSpec_Entry (void)
 {
+  if (this->address_)
+    delete this->address_;
+
+  if (this->control_address_)
+    delete this->control_address_;
+
+  if (this->protocol_object_)
+    delete this->protocol_object_;
+
+  if (this->control_protocol_object_)
+    delete this->control_protocol_object_;
+
+  if (this->handler_)
+    delete this->handler_;
+
+  if (this->control_handler_)
+    delete this->control_handler_;
 
 }
 

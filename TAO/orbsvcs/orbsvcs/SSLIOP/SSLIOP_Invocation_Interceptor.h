@@ -27,7 +27,7 @@
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
-#if defined (_MSC_VER)
+#if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
 #pragma warning(push)
 #endif /* _MSC_VER >= 1200 */
@@ -56,9 +56,6 @@ public:
 
   /**
    * @name PortableInterceptor::ServerRequestInterceptor Methods
-   *
-   * Methods required by the
-   * PortableInterceptor::ServerRequestInterceptor interface.
    */
   //@{
   virtual char * name (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
@@ -100,20 +97,13 @@ public:
 protected:
 
   /// Destructor
-  /**
-   * Protected destructor to force deallocation by the reference
-   * counting mechanism.
-   */
+  /// Protected to force allocation on the heap.
   ~TAO_SSLIOP_Server_Invocation_Interceptor (void);
 
 private:
 
-  /**
-   * @name Copying and Assignment
-   *
-   * Protected to prevent copying through the copy constructor and the
-   * assignment operator.
-   */
+  /// Prevent copying through the copy constructor and the assignment
+  /// operator.
   //@{
   ACE_UNIMPLEMENTED_FUNC (
     TAO_SSLIOP_Server_Invocation_Interceptor (const TAO_SSLIOP_Server_Invocation_Interceptor &))
@@ -129,10 +119,9 @@ private:
   /// interceptor will allow requests coming in on the insecure port
   /// to be handled.
   int no_protection_;
-
 };
 
-#if defined (_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
