@@ -14,7 +14,7 @@
 //      pthreads.
 //
 // = AUTHOR
-//    Michael Kircher <mk1@cs.wustl.edu>, Prashant Jain, and Doug C. Schmidt
+//    Michael Kircher <mk1@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -24,7 +24,6 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Get_Opt.h"
 #include "ace/SString.h"
-#include "ace/Hash_Map_Manager.h"
 #include "ace/Profile_Timer.h"
 
 #if defined (__BORLANDC__) && __BORLANDC__ >= 0x0530
@@ -35,83 +34,101 @@ USELIB ("..\ace\aced.lib");
 #if defined (ACE_HAS_THREADS)
 
 // Default number of iterations.
-#if defined (ACE_HAS_WINCE)
 static size_t n_iterations = 50;
-#else
-static size_t n_iterations = 50;
-#endif /* ACE_HAS_WINCE */
 
+// Maximum string length used
 #define MAX_STRING_SIZE 200
 
+// switch on RW mutexes, else use ordinary mutexes
+#define RW_MUTEX 1
+
 // Default number of loops.
-static size_t n_loops = 100;
+static size_t n_loops = 1000;
 
 // Default number of readers.
-static size_t n_readers = 6;
+static size_t n_readers = 10;
 
 // Default number of writers.
-static size_t n_writers = 4;
-
-// Thread id of last writer.
-static ACE_thread_t shared_data;
-
-// Lock for shared_data.
-static ACE_RW_Thread_Mutex rw_mutex;
+static size_t n_writers = 0;
 
 // Number of entries in the hash map
 static u_int n_entries = 10;
 
 // Try to upgrade to a write lock, by default don't try.
-static u_int use_try_upgrade = 0;
+static unsigned long use_try_upgrade = 0;
 
-static u_int upgraded = 0;
+// number of readers, which were able to upgrade
+static unsigned long upgraded = 0;
+
+// count the number of find calls
+static unsigned long find_called = 0;
+
+// number of readers, failing or not allowed to upgrade
 static u_int not_upgraded = 0;
+
+// Lock for shared_data (upgraded, not_upgraded, hash_Map)
+#if defined RW_MUTEX
+  static ACE_RW_Thread_Mutex rw_mutex;
+#else
+  static ACE_Thread_Mutex mutex;
+#endif
 
 // Count of the number of readers and writers.
 static ACE_Atomic_Op<ACE_Thread_Mutex, int> current_readers;
 static ACE_Atomic_Op<ACE_Thread_Mutex, int> current_writers;
 
-typedef ACE_Hash_Map_Entry<ACE_CString, ACE_CString> 
-        Hash_Map_Entry;
-typedef ACE_Hash_Map_Manager<ACE_CString, ACE_CString, ACE_Null_Mutex> 
-        Hash_Map;
-typedef ACE_Hash_Map_Iterator<ACE_CString, ACE_CString, ACE_Null_Mutex> 
-        Hash_Map_Iterator;
+class Element;
 
-Hash_Map *hash_Map_ptr;
-
-static int 
-find (const char *search_string)
+class Element
 {
-  ACE_CString cString1 (search_string);
-  ACE_CString cString2;
+  friend class ACE_Double_Linked_List<Element>;
+  friend class ACE_Double_Linked_List_Iterator<Element>;
 
-  if (hash_Map_ptr->find (cString1, cString2) == 0)
-    return 0;
-  else 
-    return 1;
+public:
+  Element (ACE_CString* item = 0, Element* p = 0, Element* n = 0)
+    : item_(item), prev_(p), next_(n)
+  { 
+  }
 
-#if 0
-  // @@ Michael, do we need this code here?
-    Hash_Map_Entry *entry;
-    u_int i = 0;
+  ACE_CString* value (void)
+  {
+    return this->item_;
+  }
 
-    for (Hash_Map_Iterator hash_Map_Iterator (hash_Map);
-         hash_Map_Iterator.next (entry) != 0;
-         hash_Map_Iterator.advance (), i++)
-      {
-        ACE_DEBUG ((LM_DEBUG, 
-                    ASYS_TEXT ("iterating (%d): [%s, %s]\n"),
-                    i,
-                    (ASYS_TCHAR *) entry->ext_id_.c_str (),
-                    (ASYS_TCHAR *) entry->int_id_.c_str ()));
+private:
+  Element* next_;
+  Element* prev_;
+  ACE_CString* item_;
+};
 
-        if (entry->ext_id_.compare (ACE_CString (search_string)) == 0)
-          return 0;
-    }
+typedef ACE_Double_Linked_List<Element>  Linked_List;
 
-  return 1;
-#endif /* 0 */
+Linked_List *linked_List_ptr;
+
+// Returns 1 if found,
+//         0 if not found,
+//        -1 on an error
+static int 
+find_last ()
+{
+  find_called++;
+
+  char search_string[MAX_STRING_SIZE];
+  ACE_OS::sprintf(search_string,"%d",n_entries-1);
+  ACE_CString cString (search_string);
+  Element* element_ptr;
+
+  for (ACE_Double_Linked_List_Iterator<Element> iterator(*linked_List_ptr); 
+       !iterator.done();
+       iterator.advance())
+       {
+         if (element_ptr = iterator.next())
+          if (*element_ptr->value() == cString)
+             return 1;
+       }
+
+  return 0;
+
 }
 
 // Explain usage and exit.
@@ -163,61 +180,61 @@ reader (void *)
 {
   // ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) reader starting\n")));
 
-  // We use a random pause, around 2msec with 1msec jittering.
-  int usecs = 1000;
-  ACE_Time_Value pause (0, usecs);
 
   for (size_t iterations = 1;
        iterations <= n_iterations;
        iterations++)
     {
-      //    ACE_OS::sleep (pause);
-      int result;
+      ACE_Thread::yield ();      
+
+      int result = 0;
+
       {
-        ACE_Read_Guard<ACE_RW_Thread_Mutex> g (rw_mutex);
+#if defined RW_MUTEX
+          ACE_Read_Guard<ACE_RW_Thread_Mutex> g (rw_mutex);
+#else
+          ACE_Guard<ACE_Thread_Mutex> g (mutex);
+#endif
 
-        find ("100");
+        find_last ();
 
-        result = rw_mutex.tryacquire_write_upgrade ();
+#if defined RW_MUTEX
+        if (use_try_upgrade)
+          result = rw_mutex.tryacquire_write_upgrade ();
+#endif
      
         // True, when we were able to upgrade.
         if (result == 0 && use_try_upgrade) 
           {
-            find ("100");
-            // ACE_DEBUG ((LM_DEBUG,
-            //            "(%t) upgraded to write lock!\n"));
+            //find_last ();
+            // try to find something which is not in there
             upgraded++;
-
-            // We were a writer.
-            return 0;
+            
+            continue;
           }
       }
 
-      ACE_Thread::yield ();      
 
-      if (result == -1 && errno == EBUSY || !use_try_upgrade)
+      if ((result == -1 && errno == EBUSY)  // we tried and failed
+          || !use_try_upgrade)              // we did not try at all
         {
-          ACE_Write_Guard<ACE_RW_Thread_Mutex> g (rw_mutex);
+#if defined RW_MUTEX
+            ACE_Write_Guard<ACE_RW_Thread_Mutex> g (rw_mutex);
+#else
+            ACE_Guard<ACE_Thread_Mutex> g (mutex);
+#endif
 
           not_upgraded++;
 
-          find ("100");
+          find_last ();
 
-          // ACE_DEBUG ((LM_DEBUG,
-          //            ASYS_TEXT ("(%t) could not upgrade to write lock!\n")));
         }
-      else // result == -1
+      else if (result == -1 && errno != EBUSY) 
         {
           ACE_ERROR ((LM_ERROR,
                       ASYS_TEXT ("(%t) failure in upgrading to write lock!\n"),
                       1));
         }
-      // ACE_DEBUG ((LM_DEBUG,
-      //             ASYS_TEXT ("(%t) done with reading guarded data\n")));
-
-      // ACE_DEBUG ((LM_DEBUG,
-      //            ASYS_TEXT ("(%t) reader finished %d iterations at %T\n"),
-      //            iterations)); *
     }
 
   return 0;
@@ -229,28 +246,22 @@ reader (void *)
 static void *
 writer (void *)
 {
-  // ACE_DEBUG ((LM_DEBUG,
-  //             ASYS_TEXT ("(%t) writer starting\n")));
-
-  // We use a random pause, around 2msec with 1msec jittering.
-  int usecs = 1000;
-  ACE_Time_Value pause (0, usecs);
 
   for (size_t iterations = 1;
        iterations <= n_iterations;
        iterations++)
     {
-      // ACE_OS::sleep (pause);
-
-      ACE_Write_Guard<ACE_RW_Thread_Mutex> g (rw_mutex);
-
-      find ("100");
       ACE_Thread::yield ();
 
+#if defined RW_MUTEX
+      ACE_Write_Guard<ACE_RW_Thread_Mutex> g (rw_mutex);
+#else
+      ACE_Guard<ACE_Thread_Mutex> g (mutex);
+#endif
+
+      find_last ();
+
       current_writers--;
-       
-      // ACE_DEBUG ((LM_DEBUG,
-      //             ASYS_TEXT ("(%t) write %d done at %T\n"), iterations));
     }
   return 0;
 }
@@ -287,30 +298,24 @@ print_stats (ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time,
 }
 
 int 
-init (u_int kind)
+init ()
 {
-  ACE_NEW_RETURN (hash_Map_ptr, 
-                  Hash_Map (n_entries), 
-                  -1);
-  switch (kind)
-    {
-    default:
-    case 0:
-      // The space will be reused several times, We can do this
-      // because the map copies the strings
-      char entry[MAX_STRING_SIZE]; 
-      ACE_CString cString1;
-      ACE_CString cString2;
+  char entry[MAX_STRING_SIZE]; 
+  ACE_CString* cString_ptr;
+  Element* element_ptr;
 
-      for (u_int i = 0; i < n_entries; i++)
-        {
-          ACE_OS::sprintf(entry,"%d",i);
-          cString1.set (/*entry*/"100");
-          cString2.set (ACE_OS::strcat (entry,"X"));
-          hash_Map_ptr->bind (cString1, cString2);
-        }    
-      break;                     
-    }
+  ACE_NEW_RETURN (linked_List_ptr, 
+                  Linked_List, 
+                  -1);
+
+  for (unsigned long i = 0; i < n_entries; i++)
+  {
+    ACE_OS::sprintf(entry,"%d",i);
+    ACE_NEW_RETURN (cString_ptr, ACE_CString(entry), -1);
+    ACE_NEW_RETURN (element_ptr, Element(cString_ptr), -1);
+
+    linked_List_ptr->insert_tail(element_ptr);
+  }
   return 0;
 }
 
@@ -332,15 +337,21 @@ template class ACE_Guard<ACE_RW_Mutex>;
 
 int main (int argc, ASYS_TCHAR *argv[])
 {
-  ACE_START_TEST (ASYS_TEXT ("Reader_Writer_Test"));
+  ACE_START_TEST (ASYS_TEXT ("Upgradable_RW_Test"));
 
 #if defined (ACE_HAS_THREADS)
   parse_args (argc, argv);
 
+#if !defined RW_MUTEX
+        use_try_upgrade = 0;
+        // make sure that we have to acquire the write lock
+#endif
+
+
   current_readers = 0; // Possibly already done
   current_writers = 0; // Possibly already done
 
-  init (0);
+  init ();
 
   ACE_DEBUG ((LM_DEBUG, 
               ASYS_TEXT ("(%t) main thread starting\n")));
@@ -367,7 +378,7 @@ int main (int argc, ASYS_TCHAR *argv[])
                        ASYS_TEXT ("spawn_n")), 1);
 
   ACE_Thread_Manager::instance ()->wait ();
-
+  
   // Stop the timer.
   timer.stop ();
   timer.elapsed_time (elapsed_time);
@@ -381,9 +392,29 @@ int main (int argc, ASYS_TCHAR *argv[])
                 (float) upgraded/ (float) (not_upgraded + upgraded)));
 
   ACE_DEBUG ((LM_DEBUG, 
+              ASYS_TEXT ("Number of times, that find was called: %d\n"), 
+              find_called));
+
+
+  ACE_DEBUG ((LM_DEBUG, 
               ASYS_TEXT ("(%t) exiting main thread\n")));
 
-  delete hash_Map_ptr;
+  // delete the memory of the Double_Linked_List
+  ACE_CString* cString_ptr;
+  Element* element_ptr;
+  for (unsigned int i = 0; 
+       i < n_entries;
+       i++)
+       {
+         if (element_ptr = linked_List_ptr->delete_head())
+         {
+           cString_ptr = element_ptr->value();
+           delete cString_ptr;
+           delete element_ptr;
+         }
+       }
+  delete linked_List_ptr;
+
 #else
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
