@@ -33,7 +33,7 @@ ACE_Local_Memory_Pool::acquire (size_t nbytes,
   void *cp = (void *) new char[rounded_bytes];
 
   if (cp == 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %u\n", cp), 0);
+    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("(%P|%t) %u\n"), cp), 0);
   else
     // ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("(%P|%t) acquired more chunks, nbytes = %d, rounded_bytes = %d, new break = %d\n"), nbytes, rounded_bytes, cp));
   return cp;
@@ -184,7 +184,8 @@ ACE_MMAP_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
       file_offset = ACE_OS::lseek (this->mmap_.handle () , seek_len - 1, SEEK_END);
 
       if (file_offset == -1 || ACE_OS::write (this->mmap_.handle (), "", 1) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n", this->backing_store_name_), -1);
+        ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("(%P|%t) %p\n"),
+                           this->backing_store_name_), -1);
     }
 
   // Increment by one to put us at the beginning of the next chunk...
@@ -207,7 +208,7 @@ ACE_MMAP_Memory_Pool::map_file (off_t file_offset)
                        this->flags_, this->base_addr_, 0, this->sa_) == -1
       || this->base_addr_ != 0 && this->mmap_.addr () != this->base_addr_)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%P|%t) base_addr = %u, addr = %u, file_offset = %u, %p\n",
+                       ASYS_TEXT ("(%P|%t) base_addr = %u, addr = %u, file_offset = %u, %p\n"),
                       this->mmap_.addr (), this->base_addr_,
                        file_offset, this->backing_store_name_), -1);
 
@@ -338,7 +339,7 @@ ACE_MMAP_Memory_Pool::handle_signal (int signum, siginfo_t *siginfo, ucontext_t 
 
   if (signum != SIGSEGV)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%P|%t) ignoring signal %S\n",
+                       ASYS_TEXT ("(%P|%t) ignoring signal %S\n"),
                        signum), -1);
   else
     ; // ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("(%P|%t) received %S\n"), signum));
