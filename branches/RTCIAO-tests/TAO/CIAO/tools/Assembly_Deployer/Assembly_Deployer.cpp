@@ -80,6 +80,14 @@ main (int argc, char *argv[])
                                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
+      if (CORBA::is_nil (as_svc.in ()))
+        {
+          ACE_ERROR_RETURN ((LM_DEBUG,
+                             "Nil Assembly Service reference <%s>\n",
+                             ior),
+                            1);
+        }
+
       ::Components::Deployment::AssemblyFactory_var factory =
           as_svc->get_assemblyfactory (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -87,7 +95,7 @@ main (int argc, char *argv[])
       if (CORBA::is_nil (factory.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
-                             "Nil ServerActivator reference <%s>\n",
+                             "Nil AssemblyFactory reference <%s>\n",
                              ior),
                             1);
         }
