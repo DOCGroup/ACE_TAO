@@ -102,6 +102,9 @@ Grid_Client_i::run (int argc,
       TAO_CHECK_ENV;
 
       ACE_ASSERT (ret_val == value_);
+  
+      if (client.shutdown () == 1)
+        client->shutdown (TAO_TRY_ENV);
       ACE_UNUSED_ARG (ret_val);
     }
   TAO_CATCH (CORBA::UserException, range_ex)
