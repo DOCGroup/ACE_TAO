@@ -3,6 +3,8 @@
 #include "LB_LoadAlert_Handler.h"
 #include "LB_RoundRobin.h"
 #include "LB_Random.h"
+#include "LB_LoadMinimum.h"
+#include "LB_LoadAverage.h"
 #include "LB_LeastLoaded.h"
 #include "LB_conf.h"
 
@@ -43,6 +45,8 @@ TAO_LB_LoadManager::TAO_LB_LoadManager (void)
     round_robin_ (),
     random_ (),
     least_loaded_ (),
+    load_minimum_ (),
+    load_average_ (),
     built_in_balancing_strategy_info_name_ (1),
     built_in_balancing_strategy_name_ (1),
     custom_balancing_strategy_name_ (1)
@@ -1175,7 +1179,100 @@ TAO_LB_LoadManager::make_strategy (CosLoadBalancing::StrategyInfo * info
           return ll_servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
         }
     }
+  else if (ACE_OS::strcmp (info->name.in (), "LoadMinimum") == 0)
+    {
 
+      if (info->props.length () == 0)
+        {
+          {
+            ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                              monitor,
+                              this->lock_,
+                              CosLoadBalancing::Strategy::_nil ());
+
+            if (CORBA::is_nil (this->load_minimum_.in ()))
+              {
+                TAO_LB_LoadMinimum * lm_servant;
+                ACE_NEW_THROW_EX (lm_servant,
+                                  TAO_LB_LoadMinimum (this->root_poa_.in ()),
+                                  CORBA::NO_MEMORY ());
+                ACE_CHECK_RETURN (CosLoadBalancing::Strategy::_nil ());
+
+                PortableServer::ServantBase_var s = lm_servant;
+
+                this->load_minimum_ =
+                  lm_servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+                ACE_CHECK_RETURN (CosLoadBalancing::Strategy::_nil ());
+              }
+          }
+
+          return
+            CosLoadBalancing::Strategy::_duplicate (this->load_minimum_.in ());
+        }
+      else
+        {
+          TAO_LB_LoadMinimum * lm_servant;
+          ACE_NEW_THROW_EX (lm_servant,
+                            TAO_LB_LoadMinimum (this->root_poa_.in ()),
+                            CORBA::NO_MEMORY ());
+          ACE_CHECK_RETURN (CosLoadBalancing::Strategy::_nil ());
+
+          PortableServer::ServantBase_var s = lm_servant;
+
+          lm_servant->init (info->props
+                            ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK_RETURN (CosLoadBalancing::Strategy::_nil ());
+
+          return lm_servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+        }
+    }
+  else if (ACE_OS::strcmp (info->name.in (), "LoadAverage") == 0)
+    {
+
+      if (info->props.length () == 0)
+        {
+          {
+            ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                              monitor,
+                              this->lock_,
+                              CosLoadBalancing::Strategy::_nil ());
+
+            if (CORBA::is_nil (this->load_average_.in ()))
+              {
+                TAO_LB_LoadAverage * la_servant;
+                ACE_NEW_THROW_EX (la_servant,
+                                  TAO_LB_LoadAverage (this->root_poa_.in ()),
+                                  CORBA::NO_MEMORY ());
+                ACE_CHECK_RETURN (CosLoadBalancing::Strategy::_nil ());
+
+                PortableServer::ServantBase_var s = la_servant;
+
+                this->load_average_ =
+                  la_servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+                ACE_CHECK_RETURN (CosLoadBalancing::Strategy::_nil ());
+              }
+          }
+
+          return
+            CosLoadBalancing::Strategy::_duplicate (this->load_average_.in ());
+        }
+      else
+        {
+          TAO_LB_LoadAverage * la_servant;
+          ACE_NEW_THROW_EX (la_servant,
+                            TAO_LB_LoadAverage (this->root_poa_.in ()),
+                            CORBA::NO_MEMORY ());
+          ACE_CHECK_RETURN (CosLoadBalancing::Strategy::_nil ());
+
+          PortableServer::ServantBase_var s = la_servant;
+
+          la_servant->init (info->props
+                            ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK_RETURN (CosLoadBalancing::Strategy::_nil ());
+
+          return la_servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+        }
+    }
   return CosLoadBalancing::Strategy::_nil ();
 }
 
