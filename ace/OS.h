@@ -1957,7 +1957,7 @@ struct stat
 
 
 #if defined (ACE_HAS_NO_THROW_SPEC)
-#   define ACE_THROW_SPEC(X) 
+#   define ACE_THROW_SPEC(X)
 #else
 # if defined (ACE_HAS_EXCEPTIONS)
 #   define ACE_THROW_SPEC(X) throw X
@@ -4236,7 +4236,7 @@ struct sigaction
 # endif /* SEM_UNDO */
 
 # if defined (__Lynx__)
-  // LynxOS sets NSIG to the highest-numbered signal.
+    // LynxOS Neutrino sets NSIG to the highest-numbered signal.
 #   define ACE_NSIG (NSIG + 1)
 # else
   // All other platforms set NSIG to one greater than the
@@ -6882,6 +6882,9 @@ private:
 
   int at_exit (ACE_EXIT_HOOK func);
   // For <ACE_OS::atexit> support.
+
+  static void print_error_message (u_int line_number, LPCTSTR message);
+  // For use by init () and fini (), to consolidate error reporting.
 
   friend class ACE_OS;
   friend class ACE_Object_Manager;
