@@ -53,4 +53,3 @@ TAO_PG_Group_Guard::release (void)
 {
   this->released_ = 1;
 }
-

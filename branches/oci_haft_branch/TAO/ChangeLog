@@ -1,17 +1,54 @@
+Tue Sep 23 21:30:00 2003  Curt Hibbs  <hibbs_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/CosLoadBalancing.mpc
+        * orbsvcs/orbsvcs/FTORB.mpc
+        * orbsvcs/tests/FaultTolerance/IOGRManipulation/FaultTolerance_IOGRManipulation.mpc
+        * orbsvcs/orbsvcs/PortableGroup.mpc
+        Changed to eliminate link errors.
+
+        * orbsvcs/orbsvcs/FT_CORBA_ORB.idl
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp
+        * orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.cpp
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.cpp
+        * orbsvcs/orbsvcs/PortableGroup/PG_Default_Property_Validator.h
+        * orbsvcs/orbsvcs/PortableGroup/PG_Factory_Set.h
+        * orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.cpp
+        * orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.h
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Guard.cpp
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Guard.h
+        * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.cpp
+        * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.h
+        * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroup_Map.cpp
+        * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroup_Map.h
+        * orbsvcs/orbsvcs/PortableGroup/PG_PropertyManager.cpp
+        * orbsvcs/orbsvcs/PortableGroup/PG_PropertyManager.h
+        * orbsvcs/orbsvcs/PortableGroup/PG_Property_Utils.cpp
+        TagFTGroupTaggedComponent was previously moved to Portablegroups as
+        TagGroupTaggedComponent, but was never removed from FT_CORBA_ORB.idl.
+        Consequently, some code was using the PortableGroup version and some
+        code was using the FT version. This removes the FT version and changes
+        all code that referenced it to now use the PortableGroup version.
+
+        * orbsvcs/tests/FT_App/FT_Client.cpp
+        * orbsvcs/tests/FT_App/FT_UnitTests.cpp
+        * orbsvcs/tests/FaultTolerance/IOGRManipulation/IOGRTest.cpp
+        Changed to eliminate compile errors due to merging changes.
+
 Tue Sep 23 17:19:48 2003  Steve Totten  <totten_s@ociweb.com>
 
         * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.mpc:
         * orbsvcs/Fault_Detector/Fault_Detector.mpc:
         * orbsvcs/Fault_Notifier/Fault_Notifier.mpc:
-	  Added inheritance from orbsvcsexe base project to resolve include
-	  path problems.
+    Added inheritance from orbsvcsexe base project to resolve include
+    path problems.
 
         * orbsvcs/orbsvcs/FaultTolerance.mpc:
-	  Manipulated the SourceFiles list to resolve some link errors.
+    Manipulated the SourceFiles list to resolve some link errors.
 
         * orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.h:
-	  Changed forward declaration of IOP::ServiceContext to quiet
-	  compiler warnings on VC++ 6.0.
+    Changed forward declaration of IOP::ServiceContext to quiet
+    compiler warnings on VC++ 6.0.
 
 Tue Sep 23 17:03:40 2003  Dale Wilson  <wilson_d@ociweb.com>
 

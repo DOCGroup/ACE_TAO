@@ -130,7 +130,7 @@ FT_ReplicationManager::init (TAO_ORB_Manager & orbManager
   );
   ACE_CHECK;
 
-  property_manager_.init (property_validator);
+  this->property_manager_.init (property_validator);
 
   // Register with the ORB.
   ior_ = orbManager.activate (this
@@ -138,7 +138,7 @@ FT_ReplicationManager::init (TAO_ORB_Manager & orbManager
   ACE_CHECK_RETURN (-1);
 
   //TODO - the poa should be externally settable
-  this->object_group_manager_.poa(orbManager.root_poa());
+  this->object_group_manager_.init (orb_, orbManager.root_poa());
 
   // Get an object reference for the ORBs IORManipulation object!
   CORBA::Object_var IORM =
@@ -525,98 +525,12 @@ FT_ReplicationManager::create_test_iogr (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      // Create a few fictitious IORs
-      CORBA::Object_var name1 =
-        orb_->string_to_object ("iiop://acme.cs.wustl.edu:6060/xyz"
-                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      CORBA::Object_var name2 =
-        orb_->string_to_object ("iiop://tango.cs.wustl.edu:7070/xyz"
-                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      // **********************************************************************
-      // Create IOR list for use with merge_iors.
-      TAO_IOP::TAO_IOR_Manipulation::IORList iors (2);
-      iors.length (2);
-      iors [0] = name1;
-      iors [1] = name2;
-      // **********************************************************************
-
-      test_iogr_ = iorm_->merge_iors (iors ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      // Make a dummy property set
-      FT::TagFTGroupTaggedComponent ft_tag_component;
-      TAO_FT_IOGR_Property prop (ft_tag_component);
-
-      // Check for set and get primaries
-      CORBA::Boolean retval =
-        iorm_->set_primary (&prop, name2.in (), test_iogr_.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      if (retval != 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("\tThe primary has been set\n")));
-      else
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("\tError in setting primary\n")));
-        }
-
-      // Check whether a primary has been set
-      retval = iorm_->is_primary_set (&prop,
-                                    test_iogr_.in ()
-                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      if (retval)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("\tis_primary_set () returned true\n")));
-      else
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("\tis_primary_set () returned false\n")));
-        }
-
-      // Get the primary
-      CORBA::Object_var prim =
-        iorm_->get_primary (&prop,
-                          test_iogr_.in ()
-                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      // Check whether we got back the right primary
-      if (prim->_is_equivalent (name2.in ()))
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("\tWe got the right primary back\n")));
-        }
-      else
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("\tWe have a problem in getting the right primary\n")));
-        }
-      // **********************************************************************
-      // Set properties
-      // Property values
-
-      // Major and Minor revision numbers
-      ft_tag_component.version.major = (CORBA::Octet) 1;
-      ft_tag_component.version.minor = (CORBA::Octet) 0;
 
       // Domain id
-      const char *id = "IDL:FT_TEST/TestReplica:1.0";
-      ft_tag_component.ft_domain_id = id;
+      const char * domain_id = "TestFTDomains";
 
       // Object group id
       test_iogr_group_id_ = (CORBA::ULongLong) 10;
-      ft_tag_component.object_group_id = test_iogr_group_id_;
-
-      // Version
-      ft_tag_component.object_group_ref_version =
-        (CORBA::ULong) 5;
-
 
       // create a property set
       TAO_PG::Properties_Encoder encoder;
@@ -637,22 +551,47 @@ FT_ReplicationManager::create_test_iogr (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
         encoder.encode(props_in);
       }
 
-      //TODO - eventually this will really create an IOGR and this whole test_iogr code
-      //       will no longer be needed.
-      object_group_manager_.create_object_group(
-        ft_tag_component.object_group_id,
-        "my-dummy-type-id",
-        props_in);
-
-      // Set the property
-      retval = iorm_->set_property (&prop,
-                                    test_iogr_.in ()
-                                    ACE_ENV_ARG_PARAMETER);
+      // Create a few fictitious IORs
+      CORBA::Object_var name1 =
+        orb_->string_to_object ("iiop://acme.cs.wustl.edu:6060/xyz"
+                                ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      CORBA::Object_var name2 =
+        orb_->string_to_object ("iiop://tango.cs.wustl.edu:7070/xyz"
+                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (retval)
+      // Create IOR list for use with merge_iors.
+      TAO_IOP::TAO_IOR_Manipulation::IORList iors (3);
+      iors.length (3);
+      iors [0] = object_group_manager_.create_object_group(
+                         test_iogr_group_id_,
+                         domain_id,
+                         "my-dummy-type-id",
+                         props_in);
+      iors [1] = name1;
+      iors [2] = name2;
+
+      test_iogr_ = iorm_->merge_iors (iors ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      // we only need this so we can call IORManipulation's set_primary
+      FT::TagFTGroupTaggedComponent ft_tag_component;
+      TAO_FT_IOGR_Property ft_prop (ft_tag_component);
+
+      // set primary
+      CORBA::Boolean retval =
+        iorm_->set_primary (&ft_prop, name2.in (), test_iogr_.in () ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (retval != 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("\tWe have set the property\n")));
+                    ACE_TEXT ("\tThe primary has been set\n")));
+      else
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("\tError in setting primary\n")));
+        }
     }
   ACE_CATCH (TAO_IOP::NotFound, userex)
     {

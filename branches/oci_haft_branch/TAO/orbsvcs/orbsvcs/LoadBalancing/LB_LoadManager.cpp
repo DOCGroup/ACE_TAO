@@ -936,7 +936,7 @@ TAO_LB_LoadManager::init (ACE_Reactor * reactor,
                                        ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      this->object_group_manager_.poa (this->poa_.in ());
+      this->object_group_manager_.init (orb, this->poa_.in ());
       this->generic_factory_.poa (this->poa_.in ());
 
       // Activate the child POA.

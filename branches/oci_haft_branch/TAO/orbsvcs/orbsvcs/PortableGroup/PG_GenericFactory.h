@@ -14,7 +14,7 @@
 #ifndef TAO_PG_GENERIC_FACTORY_H
 #define TAO_PG_GENERIC_FACTORY_H
 
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -26,7 +26,6 @@
 
 #include "tao/PortableServer/PortableServerC.h"
 #include "orbsvcs/PortableGroupC.h"
-#include "ace/Null_Mutex.h"
 
 
 /// Forward declarations.
@@ -154,7 +153,7 @@ public:
                      PortableGroup::InvalidCriteria,
                      PortableGroup::InvalidProperty,
                      PortableGroup::CannotMeetCriteria,
-		     PortableGroup::MemberAlreadyPresent));
+         PortableGroup::MemberAlreadyPresent));
 
 private:
 
@@ -245,6 +244,6 @@ private:
 };
 
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 
 #endif  /* TAO_PG_GENERIC_FACTORY_H */

@@ -14,12 +14,14 @@
 #include "tao/ORB.h"
 #include "orbsvcs/FT_CORBA_ORBC.h"
 
+#include <iostream>
+#include <fstream>
 
 
 /////////////////////////////////////////////////////
 // Test default properties
 //
-int FT_UnitTests::test_001 (int run_test, 
+int FT_UnitTests::test_001 (int run_test,
                             CORBA::String_var & desc)
 {
   int result = 0;
@@ -86,7 +88,7 @@ int FT_UnitTests::test_001 (int run_test,
         ::TAO_PG::Properties_Decoder decoder_out(p_out);
         int len_out = p_out.length ();
 
-        if (len_out != len_in) 
+        if (len_out != len_in)
         {
           std::cout << "FT UnitTest[001]: Wrong number of properties." << std::endl;
           result = 1;
@@ -138,7 +140,7 @@ int FT_UnitTests::test_001 (int run_test,
 /////////////////////////////////////////////////////
 // Test type properties
 //
-int FT_UnitTests::test_002 (int run_test, 
+int FT_UnitTests::test_002 (int run_test,
                             CORBA::String_var & desc)
 {
   int result = 0;
@@ -186,7 +188,6 @@ int FT_UnitTests::test_002 (int run_test,
                                   ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
-        //TODO: do a get props and check the return value
         FT::Properties_var props_out;
         props_out = rm_->get_type_properties (type_id
                                               ACE_ENV_ARG_PARAMETER);
@@ -202,7 +203,7 @@ int FT_UnitTests::test_002 (int run_test,
         // Note: the output properties is the merged set of the
         // default properties and the type properties. Therefore,
         // we *can* get back more properties than we set. However,
-        // the ones that we did set should come back with the same 
+        // the ones that we did set should come back with the same
         // values.
 
         for (int i = 0; i < len_in; ++i)
@@ -251,7 +252,7 @@ int FT_UnitTests::test_002 (int run_test,
 /////////////////////////////////////////////////////
 // Test object group properties
 //
-int FT_UnitTests::test_003 (int run_test, 
+int FT_UnitTests::test_003 (int run_test,
                             CORBA::String_var & desc)
 {
   int result = 0;
@@ -306,7 +307,7 @@ int FT_UnitTests::test_003 (int run_test,
         // Note: the output properties is the merged set of the
         // default properties and the type properties. Therefore,
         // we *can* get back more properties than we set. However,
-        // the ones that we did set should come back with the same 
+        // the ones that we did set should come back with the same
         // values.
 
         for (int i = 0; i < len_in; ++i)
@@ -353,9 +354,77 @@ int FT_UnitTests::test_003 (int run_test,
 }
 
 /////////////////////////////////////////////////////
+// Test create_object
+//
+int FT_UnitTests::test_004 (int run_test,
+                            CORBA::String_var & desc)
+{
+  int result = 0;
+
+  ACE_TRY_NEW_ENV
+  {
+    desc = CORBA::string_dup(
+      "FT UnitTest[002]: create_object.");
+    if (run_test)
+    {
+      // create a test type-id
+      const char * type_id = "IDL:FT_TEST/TestReplica:1.0";
+
+      // create a property set
+      TAO_PG::Properties_Encoder encoder;
+      PortableGroup::Value value;
+
+      value <<= ::FT::MEMB_APP_CTRL;
+      encoder.add(::FT::FT_MEMBERSHIP_STYLE, value);
+
+      value <<= ::FT::CONS_INF_CTRL;
+      encoder.add(::FT::FT_CONSISTENCY_STYLE, value);
+
+      value <<= 3;
+      encoder.add(::FT::FT_INITIAL_NUMBER_REPLICAS, value);
+
+      value <<= 2;
+      encoder.add(::FT::FT_MINIMUM_NUMBER_REPLICAS, value);
+
+      // allocate and populate the criteria
+      FT::Properties_var props_in;
+      ACE_NEW_NORETURN (props_in, FT::Properties);
+      if (props_in.ptr() == 0)
+      {
+        ACE_ERROR((LM_ERROR,
+          "Error cannot allocate properties.\n"
+          ));
+          result = 1;
+      }
+      else
+      {
+        encoder.encode(props_in);
+
+        PortableGroup::GenericFactory::FactoryCreationId_var fcid;
+        CORBA::Object_var my_object_group =
+        rm_->create_object (type_id,
+                            props_in,
+                            fcid.out()
+                            ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+
+      }
+    }
+  }
+  ACE_CATCHANY
+  {
+    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught");
+    result = 1;
+  }
+  ACE_ENDTRY;
+
+  return result;
+}
+
+/////////////////////////////////////////////////////
 // Test ???
 //
-int FT_UnitTests::test_004 (int run_test, 
+int FT_UnitTests::test_005 (int run_test,
                             CORBA::String_var & desc)
 {
   int result = 0;
@@ -371,7 +440,7 @@ int FT_UnitTests::test_004 (int run_test,
 /////////////////////////////////////////////////////
 // Test ???
 //
-int FT_UnitTests::test_005 (int run_test, 
+int FT_UnitTests::test_006 (int run_test,
                             CORBA::String_var & desc)
 {
   int result = 0;
@@ -387,7 +456,7 @@ int FT_UnitTests::test_005 (int run_test,
 /////////////////////////////////////////////////////
 // Test ???
 //
-int FT_UnitTests::test_006 (int run_test, 
+int FT_UnitTests::test_007 (int run_test,
                             CORBA::String_var & desc)
 {
   int result = 0;
@@ -403,7 +472,7 @@ int FT_UnitTests::test_006 (int run_test,
 /////////////////////////////////////////////////////
 // Test ???
 //
-int FT_UnitTests::test_007 (int run_test, 
+int FT_UnitTests::test_008 (int run_test,
                             CORBA::String_var & desc)
 {
   int result = 0;
@@ -419,7 +488,7 @@ int FT_UnitTests::test_007 (int run_test,
 /////////////////////////////////////////////////////
 // Test ???
 //
-int FT_UnitTests::test_008 (int run_test, 
+int FT_UnitTests::test_009 (int run_test,
                             CORBA::String_var & desc)
 {
   int result = 0;
@@ -435,7 +504,7 @@ int FT_UnitTests::test_008 (int run_test,
 /////////////////////////////////////////////////////
 // Test ???
 //
-int FT_UnitTests::test_009 (int run_test, 
+int FT_UnitTests::test_010 (int run_test,
                             CORBA::String_var & desc)
 {
   int result = 0;
@@ -451,23 +520,7 @@ int FT_UnitTests::test_009 (int run_test,
 /////////////////////////////////////////////////////
 // Test ???
 //
-int FT_UnitTests::test_010 (int run_test, 
-                            CORBA::String_var & desc)
-{
-  int result = 0;
-  desc = CORBA::string_dup(
-    "This test has not been implemented.");
-  if (run_test)
-  {
-    // put the test code here
-  }
-  return result;
-}
-
-/////////////////////////////////////////////////////
-// Test ???
-//
-int FT_UnitTests::test_011 (int run_test, 
+int FT_UnitTests::test_011 (int run_test,
                             CORBA::String_var & desc)
 {
   int result = 0;
@@ -555,7 +608,7 @@ int FT_UnitTests::readIORFile(const char * fileName, CORBA::String_var & ior)
   return result;
 }
 
-  int 
+  int
   FT_UnitTests::init ()
   {
     ACE_TRY
@@ -572,26 +625,26 @@ int FT_UnitTests::readIORFile(const char * fileName, CORBA::String_var & ior)
 
     return 0;
   }
-  
-  int 
+
+  int
   FT_UnitTests::test_count ()
   {
     return 0;
   }
 
-  int 
+  int
   FT_UnitTests::run_all_tests ()
   {
     return 0;
   }
 
-  const char * 
+  const char *
   FT_UnitTests::test_desc (int test_number)
   {
     return "not implemented";
   }
 
-  int 
+  int
   FT_UnitTests::run_test (int test_number)
   {
     int result = 1;

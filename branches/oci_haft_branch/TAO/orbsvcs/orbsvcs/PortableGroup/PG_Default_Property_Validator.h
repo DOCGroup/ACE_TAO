@@ -13,7 +13,7 @@
 #ifndef TAO_PG_DEFAULT_PROPERTY_VALIDATOR_H
 #define TAO_PG_DEFAULT_PROPERTY_VALIDATOR_H
 
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "orbsvcs/PortableGroupC.h"
 
@@ -28,7 +28,7 @@
  * @brief Default property validator implementation.
  *
  * This Property_Validator verifies that all properties defined in the
- * PortableGroup IDL module are valid. This property validator can be 
+ * PortableGroup IDL module are valid. This property validator can be
  * subclassed to validate a different property set.
  */
 class TAO_PortableGroup_Export TAO_PG_Default_Property_Validator
@@ -77,6 +77,6 @@ private:
 
 };
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 
 #endif  /* TAO_PG_PROPERTY_VALIDATOR_H */
