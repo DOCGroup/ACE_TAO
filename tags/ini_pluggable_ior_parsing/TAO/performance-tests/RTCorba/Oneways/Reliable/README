@@ -1,0 +1,91 @@
+
+
+Server:
+
+Type 'server' with no args. Server outputs its IOR
+to the screen for a sanity check.
+
+
+Client:
+
+Type 'client' with one or more of the following args:
+
+-k ior		-- input specific IOR.
+-s payload size -- size of payload if payload test is used.
+-p payload test -- use payload test.
+-t test type    -- runs only one type of oneway test.
+-i iterations   -- number of calls in each test.
+-l level	-- selects level at which SyncScope policy is set.
+-m buffer size	-- queue size for buffered oneways.
+-w servant work -- number of loops of 1000 done by servant
+-x		-- shuts down server after testing.
+
+levels:
+
+orb		-- sets SyncScope policy at the ORB level.
+thread		-- sets SyncScope policy at the thread level.
+object		-- sets SyncScope policy at the object level (default);
+
+test types:
+
+none		-- sets SyncScope policy value to SYNC_NONE.
+transport	-- sets SyncScope policy value to SYNC_WITH_TRANSPORT.
+server		-- sets SyncScope policy value to SYNC_WITH_SERVER.
+target		-- sets SyncScope policy value to SYNC_WITH_TARGET.
+twoway		-- makes regular twoway requests.
+
+If the test type is 'none', request buffering is enabled, and
+a buffering constraint policy is created, based on the number of
+requests the queue should hold, as passed in the -m argument. If the
+test type is anything else, the -m argument is not used. To get
+reasonable results with buffered oneway requests, it's a good idea
+to make the number of iterations -i a multiple of the queue size -m.
+This will insure that there are no requests left in the queue to be
+sent when the tests are done with their timings. For buffered 
+oneways, control is returned to the application as soon as the 
+request is placed on the queue, or, if the queue is being flushed,
+as soon as all the requests are sent.
+
+If the test type is 'transport', the oneway requests are handled the
+same way they have always been handled in TAO, that is, control is
+returned to the application when the request is handed off to the
+transport (usually TCP) layer.
+
+If the test type is 'server', control is returned to the application
+after any servant locator is called, but before the servant 
+executes the request. This will enable any location forwarding
+information to be returned to the client.
+
+If the test type is 'target', the oneway request is handled as if
+it were a twoway request, i.e., control is returned to the
+application only after the servant has executed the request. Any
+system exceptions that may be raised will be sent back to the
+client.
+
+If the test type is 'twoway', the tests will be run with standard
+twoways requests, in order to compare the data with the results
+from the various SyncScope policy values of oneway requests.
+
+The -w option sets the number of empty loops of 1000 performed by
+the servant. To test the advantage of SYNC_WITH_SERVER over
+SYNC_WITH_TARGET and twoway requests, the servant must perform
+some 'significant' work that a oneway request with a SyncScope
+policy value of SYNC_WITH_SERVER does not wait on, while the 
+other two types of requests mentioned above do.
+
+
+All the above command line options except -k, -s, -p and -x may be 
+used with the perl script run_test.pl. If no test type is specified, 
+the script will run each test type in turn before the server is shut 
+down.
+
+There is also a perl script called client_test.pl, which facilitates
+testing with the client and server on different machines. To use
+this script, first run the server manually, then run client_test.pl.
+With this script, the server will not shut down automatically.
+
+There is code in the test to set the priorities of the client and
+server threads to values consistent with a real time priority 
+class on Solaris and other Unix systems. If the user is not logged
+in as a superuser, a message will be output that the threads are
+running in a timesharing priority class.	
