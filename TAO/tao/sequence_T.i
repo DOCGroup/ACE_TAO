@@ -35,15 +35,15 @@ TAO_Unbounded_Sequence<T>::buffer (void) const
 template <class T> ACE_INLINE
 TAO_Unbounded_Sequence<T>::TAO_Unbounded_Sequence (CORBA::ULong maximum)
   : TAO_Unbounded_Base_Sequence (maximum,
-				 TAO_Unbounded_Sequence<T>::allocbuf (maximum))
+                                 TAO_Unbounded_Sequence<T>::allocbuf (maximum))
 {
 }
 
 template <class T> ACE_INLINE
 TAO_Unbounded_Sequence<T>::TAO_Unbounded_Sequence (CORBA::ULong maximum,
-						   CORBA::ULong length,
-						   T *data,
-						   CORBA::Boolean release)
+                                                   CORBA::ULong length,
+                                                   T *data,
+                                                   CORBA::Boolean release)
   : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
 {
 }
@@ -175,9 +175,9 @@ TAO_Unbounded_Object_Sequence<T>::TAO_Unbounded_Object_Sequence (void)
 template <class T> ACE_INLINE
 TAO_Unbounded_Object_Sequence<T>::
 TAO_Unbounded_Object_Sequence (CORBA::ULong maximum,
-			       CORBA::ULong length,
-			       T* *value,
-			       CORBA::Boolean release)
+                               CORBA::ULong length,
+                               T* *value,
+                               CORBA::Boolean release)
   : TAO_Unbounded_Base_Sequence (maximum, length, value, release)
 {
 }
@@ -186,7 +186,7 @@ template <class T> ACE_INLINE TAO_Object_Manager<T>
 TAO_Unbounded_Object_Sequence<T>::operator[] (CORBA::ULong index) const
 {
   ACE_ASSERT (index < this->maximum_);
-  T **tmp = ACE_reinterpret_cast (T **const, this->buffer_);
+  T **tmp = ACE_reinterpret_cast (T **, this->buffer_);
   return Manager (tmp + index, this->release_);
 }
 
@@ -203,8 +203,8 @@ TAO_Bounded_Object_Sequence<T,MAX>::~TAO_Bounded_Object_Sequence (void)
 template <class T, CORBA::ULong MAX> ACE_INLINE
 TAO_Bounded_Object_Sequence<T,MAX>::
 TAO_Bounded_Object_Sequence (CORBA::ULong length,
-			     T* *value,
-			     CORBA::Boolean release)
+                             T* *value,
+                             CORBA::Boolean release)
   : TAO_Bounded_Base_Sequence (MAX, length, value, release)
 {
 }
@@ -230,8 +230,8 @@ TAO_Bounded_String_Sequence<MAX>::~TAO_Bounded_String_Sequence (void)
 template<CORBA::ULong MAX> ACE_INLINE
 TAO_Bounded_String_Sequence<MAX>::
 TAO_Bounded_String_Sequence (CORBA::ULong length,
-			     char* *value,
-			     CORBA::Boolean release)
+                             char* *value,
+                             CORBA::Boolean release)
   : TAO_Bounded_Base_Sequence (MAX, length, value, release)
 {
 }
@@ -243,4 +243,3 @@ TAO_Bounded_String_Sequence<MAX>::operator[] (CORBA::ULong index) const
   char** tmp = ACE_reinterpret_cast (char**, this->buffer_);
   return Manager(tmp + index, this->release_);
 }
-
