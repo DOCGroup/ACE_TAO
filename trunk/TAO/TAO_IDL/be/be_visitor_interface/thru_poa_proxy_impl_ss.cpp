@@ -70,7 +70,7 @@ be_visitor_interface_thru_poa_proxy_impl_ss::gen_abstract_ops_helper (
     TAO_OutStream *os
   )
 {
-  if (node == base)
+  if (!base->is_abstract ())
     {
       return 0;
     }
@@ -90,7 +90,7 @@ be_visitor_interface_thru_poa_proxy_impl_ss::gen_abstract_ops_helper (
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_interface_thru_poa_proxy"
-                             "_impl_ss::abstract_base_ops_helper - "
+                             "_impl_ss::gen_abstract_ops_helper - "
                              "bad node in this scope\n"),
                             -1);
         }

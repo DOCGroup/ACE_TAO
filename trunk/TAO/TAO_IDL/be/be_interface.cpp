@@ -1360,7 +1360,10 @@ be_interface::analyze_parentage (void)
 
   for (long i = 0; i < this->pd_n_inherits; ++i)
     {
-      if (this->pd_inherits[i]->is_abstract ())
+      be_interface *parent =
+        be_interface::narrow_from_decl (this->pd_inherits[i]);
+    
+      if (parent->is_abstract () || parent->has_mixed_parentage ())
         {
           this->has_mixed_parentage_ = 1;
           break;
