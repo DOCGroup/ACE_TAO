@@ -1,3 +1,11 @@
+Wed Jan 23 11:05:04 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * examples/Quoter/Quoter.idl:
+
+          Added leading underscore to an operation parameter
+          named 'object' because it clashes with the IDL 
+          keyword 'Object'.
+
 Wed Jan 23 16:14:43 2002 Boris Kolpackov  <bosk@ipmce.ru>
         
 	* TAO_IDL/be/be_visitor_operation/rettype_vardecl_cs.cpp:
