@@ -296,3 +296,11 @@ main (int argc, char **argv)
   else
     return nestedupcalls_client.run ();
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class auto_ptr<EventHandler_i>;
+template class ACE_Auto_Basic_Ptr<EventHandler_i>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate auto_ptr<EventHandler_i>
+#pragma instantiate ACE_Auto_Basic_Ptr<EventHandler_i>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
