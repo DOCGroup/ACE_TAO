@@ -4,6 +4,7 @@
 #include "EC_ConsumerAdmin.h"
 #include "EC_ProxySupplier.h"
 #include "EC_Event_Channel.h"
+#include "EC_Command.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "EC_ConsumerAdmin.i"

@@ -56,7 +56,7 @@ TAO_EC_Conjunction_Filter::all_received (void) const
        i != this->bitvec_ + this->nwords_;
        ++i)
     {
-      if (*i != ~0)
+      if (*i != ACE_static_cast(Word,~0))
         return 0;
     }
   return 0;
@@ -103,7 +103,7 @@ TAO_EC_Conjunction_Filter::push (const RtecEventComm::EventSet& event,
                                  TAO_EC_QOS_Info& qos_info,
                                  CORBA::Environment& ACE_TRY_ENV)
 {
-  offset_t pos = this->current_child_ - this->begin ();
+  CORBA::Long pos = this->current_child_ - this->begin ();
   int w = pos / bits_per_word;
   int b = pos % bits_per_word;
   if (ACE_BIT_ENABLED (this->bitvec_[w], 1<<b))

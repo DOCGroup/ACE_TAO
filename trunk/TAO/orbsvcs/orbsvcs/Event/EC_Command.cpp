@@ -16,7 +16,7 @@ TAO_EC_Connected_Command<Target,Object>::execute (void* arg)
 {
   CORBA::Environment *env = &CORBA::default_environment ();
   if (arg != 0)
-    env = ACE_dynamic_cast(CORBA::Environment*, arg);
+    env = ACE_static_cast(CORBA::Environment*, arg);
 
   this->target_->connected_i (this->object_, *env);
   return 0;
@@ -29,7 +29,7 @@ TAO_EC_Disconnected_Command<Target,Object>::execute (void* arg)
 {
   CORBA::Environment *env = &CORBA::default_environment ();
   if (arg != 0)
-    env = ACE_dynamic_cast(CORBA::Environment*, arg);
+    env = ACE_static_cast(CORBA::Environment*, arg);
 
   this->target_->disconnected_i (this->object_, *env);
   return 0;
