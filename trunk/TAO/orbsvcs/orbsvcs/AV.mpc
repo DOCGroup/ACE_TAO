@@ -3,8 +3,6 @@ project(AV) : orbsvcslib, core, property, naming, qos {
   idlflags     += -Wb,export_macro=TAO_AV_Export -Wb,export_include=AV/AV_export.h
   dynamicflags  = TAO_AV_BUILD_DLL
   tagchecks     = AV
-  pch_header    =
-  pch_source    =
 
   IDL_Files {
     AVStreams.idl

@@ -1,6 +1,6 @@
 project(FTORB) : orbsvcslib, core, iormanip, portableserver {
   sharedname   = TAO_FTORB
-  idlflags    += -Wb,pch_include=FTORB_pch.h -Wb,export_macro=TAO_FT_Export -Wb,export_include=FaultTolerance/fault_tol_export.h -Wb,skel_export_include=tao/PortableServer/PolicyS.h
+  idlflags    += -Wb,export_macro=TAO_FT_Export -Wb,export_include=FaultTolerance/fault_tol_export.h -Wb,skel_export_include=tao/PortableServer/PolicyS.h
   dynamicflags = TAO_FT_BUILD_DLL
   tagchecks    = FTORB
   // Add this include path for precompiled headers

@@ -1,6 +1,6 @@
 project(CosNaming) : orbsvcslib, core, svc_utils, iortable {
   sharedname   = TAO_CosNaming
-  idlflags    += -Wb,pch_include=CosNaming_pch.h -Wb,export_macro=TAO_Naming_Export -Wb,export_include=Naming/naming_export.h
+  idlflags    += -Wb,export_macro=TAO_Naming_Export -Wb,export_include=Naming/naming_export.h
   dynamicflags = TAO_NAMING_BUILD_DLL
   tagchecks    = Naming
   // Add this include path for precompiled headers

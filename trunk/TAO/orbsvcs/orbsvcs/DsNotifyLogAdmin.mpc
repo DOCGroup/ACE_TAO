@@ -5,8 +5,6 @@ project(DsNotifyLogAdmin) : orbsvcslib, core, dslogadmin, notification {
   idlflags    += -Wb,export_macro=TAO_NotifyLog_Export -Wb,export_include=Log/notifylog_export.h
   dynamicflags = TAO_NOTIFYLOG_BUILD_DLL
   tagchecks    = Log
-  pch_header   =
-  pch_source   =
 
   IDL_Files {
     DsNotifyLogAdmin.idl

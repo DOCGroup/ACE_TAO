@@ -3,8 +3,6 @@ project(DsLogAdmin) : orbsvcslib, core, etcl, naming, svc_utils, dynamicany {
   idlflags    += -Wb,export_macro=TAO_Log_Export -Wb,export_include=Log/log_export.h
   dynamicflags = TAO_LOG_BUILD_DLL
   tagchecks    = Log
-  pch_header   =
-  pch_source   =
 
   IDL_Files {
     DsLogAdmin.idl

@@ -4,8 +4,6 @@ project(RTEventLogAdmin) : orbsvcslib, core, etcl, trading, iortable, naming, \
   idlflags    += -Wb,export_macro=TAO_RTEventLog_Export -Wb,export_include=Log/rteventlog_export.h
   dynamicflags = TAO_RTEVENTLOG_BUILD_DLL
   tagchecks    = RTEventLog
-  pch_header   =
-  pch_source   =
 
   IDL_Files {
     RTEventLogAdmin.idl

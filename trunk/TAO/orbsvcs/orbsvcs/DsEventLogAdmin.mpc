@@ -3,8 +3,6 @@ project(DsEventLogAdmin) : orbsvcslib, core, dslogadmin, event {
   idlflags    += -Wb,export_macro=TAO_EventLog_Export -Wb,export_include=Log/eventlog_export.h
   dynamicflags = TAO_EVENTLOG_BUILD_DLL
   tagchecks    = EventLog
-  pch_header   =
-  pch_source   =
 
   IDL_Files {
     DsEventLogAdmin.idl
