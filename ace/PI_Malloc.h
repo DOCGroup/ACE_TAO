@@ -165,11 +165,13 @@ public:
   ACE_Malloc_Stats malloc_stats_;
 #define ACE_PI_CONTROL_BLOCK_SIZE ((int)(sizeof (NAME_NODE_PTR) \
                                          + sizeof (MALLOC_HEADER_PTR) \
+                                         + sizeof (int) \
                                          + MAXNAMELEN  \
                                          + sizeof (ACE_Malloc_Stats)))
 #else
 #define ACE_PI_CONTROL_BLOCK_SIZE ((int)(sizeof (NAME_NODE_PTR) \
                                          + sizeof (MALLOC_HEADER_PTR) \
+                                         + sizeof (int) \
                                          + MAXNAMELEN))
 #endif /* ACE_HAS_MALLOC_STATS */
 
