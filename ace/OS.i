@@ -192,7 +192,6 @@ ACE_Time_Value::set (long sec, long usec)
   this->tv_.tv_usec = usec;
 }
 
-#if !defined (ACE_LACKS_FLOATING_POINT)
 ACE_INLINE void
 ACE_Time_Value::set (double d)
 {
@@ -202,7 +201,6 @@ ACE_Time_Value::set (double d)
   this->tv_.tv_usec = (long) ((d - (double) l) * ACE_ONE_SECOND_IN_USECS);
   this->normalize ();
 }
-#endif /* ! ACE_LACKS_FLOATING_POINT */
 
 // Initializes a timespec_t.  Note that this approach loses precision
 // since it converts the nano-seconds into micro-seconds.  But then
@@ -261,43 +259,6 @@ ACE_Time_Value::ACE_Time_Value (long sec, long usec)
   this->set (sec, usec);
   this->normalize ();
 }
-
-ACE_INLINE
-ACE_Time_Value::ACE_Time_Value (unsigned long sec, unsigned long usec)
-{
-  // ACE_TRACE ("ACE_Time_Value::ACE_Time_Value");
-  this->set (ACE_static_cast (long, sec),
-             ACE_static_cast (long, usec));
-  this->normalize ();
-}
-
-ACE_INLINE
-ACE_Time_Value::ACE_Time_Value (int sec, int usec)
-{
-  // ACE_TRACE ("ACE_Time_Value::ACE_Time_Value");
-  this->set (ACE_static_cast (long, sec),
-             ACE_static_cast (long, usec));
-  this->normalize ();
-}
-
-ACE_INLINE
-ACE_Time_Value::ACE_Time_Value (unsigned int sec, unsigned int usec)
-{
-  // ACE_TRACE ("ACE_Time_Value::ACE_Time_Value");
-  this->set (ACE_static_cast (long, sec),
-             ACE_static_cast (long, usec));
-  this->normalize ();
-}
-
-#if !defined (ACE_LACKS_FLOATING_POINT)
-ACE_INLINE
-ACE_Time_Value::ACE_Time_Value (double t)
-{
-  // ACE_TRACE ("ACE_Time_Value::ACE_Time_Value");
-  this->set (t);
-  // set () calls normalize.
-}
-#endif /* ! ACE_LACKS_FLOATING_POINT */
 
 // True if tv1 > tv2.
 
