@@ -1,3 +1,11 @@
+Tue Jul  2 13:24:33 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+
+          Put back code to generated a default constructor for
+          local interfaces - it was removed by mistake.
+
 Tue Jul  2 12:39:21 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Big_Oneways/Session.cpp (start): Fixed a problem in the
