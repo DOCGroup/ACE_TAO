@@ -1,3 +1,8 @@
+Mon Mar 12 14:16:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Local_Name_Space_T.cpp (create_manager_i): Fixed a compile
+	  error on Win32 Unicode platforms.
+
 Mon Mar 12 12:12:36 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ACE-INSTALL.html: Also mentioned Windows 2000 explicitly in the
