@@ -29,9 +29,12 @@
 
     <OL>
       <LI><P><B>EC:</B> Automate EC multicast group usage. This probably
-	requires some kind of server that mantains the relation
-	between event type/source and the mcast groups.
-	<BR>[STATUS] Carlos is working on this.
+	  requires some kind of server that mantains the relation
+	  between event type/source and the mcast groups.
+	  <BR>[STATUS] Carlos is working on this.
+	  <BR>[STATUS] An advanced example that uses multiple mcast
+	  groups per process was developed; this example would be used
+	  to test the required features for general mcast support.
 	</P>
       </LI>
 
@@ -544,14 +547,34 @@ class Foo {
 	</P>
       </LI>
 
-      <!-- Things below this point are "big" tasks" that -->
-      <!-- could require major work -->
+      <LI><P>The methods in <CODE>CORBA::TypeCode</CODE> should be
+	  <CODE>const</CODE>.
+	</P>
+      </LI>
+
+      <LI><P>Some ORBs (Visibroker is one example) incorrectly send a
+	  SYSTEM_EXCEPTION status reply when they are actually
+	  throwing a user exception.
+	  TAO is not handling this condition gracefully (this is a
+	  critical problem), but further, it could be interesting to
+	  support a "compatibility with broken ORBs" mode,
+	  and possibly strategize it.
+	</P>
+      </LI>
+
+  <!-- Things below this point are "big" tasks" that -->
+  <!-- could require major work -->
 
       <LI><P>The ORB should support server side and client side
 	  interceptors</P>
       </LI>
       
       <LI><P>The ORB does not have an interface repository</P>
+      </LI>
+
+      <LI><P>Once the interface repository is in place we could add
+	  support for CORBA script
+	</P>
       </LI>
 
       <LI>The current scheme for Typecode (keeping a CDR buffer with
