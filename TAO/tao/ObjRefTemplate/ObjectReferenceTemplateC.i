@@ -529,8 +529,8 @@ TAO_NAMESPACE_CLOSE
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/cdr_op_ci.cpp:60
 
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableInterceptor::ObjectReferenceFactory *);
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableInterceptor::ObjectReferenceFactory *&);
+TAO_ORT_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableInterceptor::ObjectReferenceFactory *);
+TAO_ORT_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableInterceptor::ObjectReferenceFactory *&);
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:712
@@ -549,8 +549,8 @@ TAO_NAMESPACE_CLOSE
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/cdr_op_ci.cpp:60
 
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableInterceptor::ObjectReferenceTemplate *);
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableInterceptor::ObjectReferenceTemplate *&);
+TAO_ORT_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableInterceptor::ObjectReferenceTemplate *);
+TAO_ORT_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableInterceptor::ObjectReferenceTemplate *&);
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:84
@@ -558,12 +558,12 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableInterceptor::Objec
 #if !defined _TAO_CDR_OP_PortableInterceptor_ObjectReferenceTemplateSeq_I_
 #define _TAO_CDR_OP_PortableInterceptor_ObjectReferenceTemplateSeq_I_
 
-CORBA::Boolean TAO_Export operator<< (
+CORBA::Boolean TAO_ORT_Export operator<< (
     TAO_OutputCDR &,
     const PortableInterceptor::ObjectReferenceTemplateSeq &
   );
 
-CORBA::Boolean TAO_Export operator>> (
+CORBA::Boolean TAO_ORT_Export operator>> (
     TAO_InputCDR &,
     PortableInterceptor::ObjectReferenceTemplateSeq &
   );

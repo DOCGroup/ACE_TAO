@@ -1,3 +1,42 @@
+Fri Apr 11 17:18:16 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAOACE.dsw:
+        * tao/AbstractBase.cpp:
+        * tao/Makefile.bor:
+        * tao/Makefile.dirs:
+        * tao/Makefile.tao:
+        * tao/PortableInterceptorC.h:
+        * tao/TAO.dsp:
+        * tao/DynamicInterface/Makefile:
+        * tao/IORInterceptor/IORInterceptor.pidl
+        * tao/IORInterceptor/IORInterceptorC.h:
+        * tao/IORInterceptor/Makefile:
+        * tao/IORInterceptor/TAO_IORInterceptor.dsp
+        * tao/PortableServer/Default_ORTC.h:
+        * tao/PortableServer/Makefile:
+        * tao/PortableServer/Makefile.bor:
+        * tao/PortableServer/POAManager.h:
+        * tao/PortableServer/TAO_PortableServer.dsp:
+
+	  More subsetting-related changes.
+
+        * tao/ObjRefTemplate/ObjectReferenceTemplate.pidl:
+        * tao/ObjRefTemplate/ObjectReferenceTemplateC.cpp:
+        * tao/ObjRefTemplate/ObjectReferenceTemplateC.h:
+        * tao/ObjRefTemplate/ObjectReferenceTemplateC.i:
+        * tao/ObjRefTemplate/TAO_ObjRefTemplate.dsp:
+        * tao/ObjRefTemplate/ort_export.h:
+
+	  Library created from ObjectReferenceTemplate*
+	  files moved from TAO.
+
+        * tao/ObjectReferenceTemplate.pidl:
+        * tao/ObjectReferenceTemplateC.cpp:
+        * tao/ObjectReferenceTemplateC.h:
+        * tao/ObjectReferenceTemplateC.i:
+
+	  Corresponding files removed from TAO.
+
 Fri Apr 11 13:01:04 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAOACE.dsw:

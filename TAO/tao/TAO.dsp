@@ -678,11 +678,6 @@ SOURCE=.\ObjectIdListC.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\ObjectReferenceTemplateC.cpp
-# ADD CPP /GR
-# End Source File
-# Begin Source File
-
 SOURCE=.\OctetSeqC.cpp
 # ADD CPP /GR
 # End Source File
@@ -1553,10 +1548,6 @@ SOURCE=.\ObjectIdListC.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\ObjectReferenceTemplateC.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\OctetSeqC.h
 # End Source File
 # Begin Source File
@@ -2262,10 +2253,6 @@ SOURCE=.\Object_Loader.i
 # Begin Source File
 
 SOURCE=.\ObjectIdListC.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\ObjectReferenceTemplateC.i
 # End Source File
 # Begin Source File
 

@@ -5,6 +5,7 @@
 NAME = TAO
 
 DIRS = \
+        ObjRefTemplate \
         IORInterceptor \
 	PortableServer \
         Messaging \
@@ -148,7 +149,6 @@ OBJFILES = \
 	$(OBJDIR)\Object_Proxy_Broker.obj \
 	$(OBJDIR)\Object_Proxy_Impl.obj \
 	$(OBJDIR)\Object_Ref_Table.obj \
-        $(OBJDIR)\ObjectReferenceTemplateC.obj \
 	$(OBJDIR)\OctetSeqC.obj \
 	$(OBJDIR)\Parser_Registry.obj \
 	$(OBJDIR)\PICurrent.obj \
