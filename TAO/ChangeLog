@@ -1,3 +1,17 @@
+Mon Feb 24 16:49:34 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.h:
+
+	  New files for template classes containing utility methods
+	  used by several IFR implementation classes.
+
+	* orbsvcs/orbsvcs/IFRService/tmplinst.cpp:
+
+	  Added additional explicit template instantiations corresponding
+	  to actual uses of the template classes in the above files.
+
+
 Mon Feb 24 000:27:32 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService/ComponentDef_i.cpp:
