@@ -79,7 +79,7 @@ private:
     if (this->setStdHandles (options) == -1 ||
         this->setEnvVariable (options) == -1)
       return -1;
-#if !defined (ACE_WIN32)
+#if !defined (ACE_WIN32) && !defined (ACE_LACKS_PWD_FUNCTIONS)
     return this->setUserID (options);
 #else
     return 0;
@@ -117,7 +117,7 @@ private:
     return 0;
   }
  // Listing 10
-#endif /* ACE_WIN32 */
+#endif /* !ACE_WIN32 && !ACE_LACKS_PWD_FUNCTIONS */
 
 private:
   ACE_HANDLE outputfd_;
