@@ -2,6 +2,7 @@
 
 #include "tao/RT_Endpoint_Selector_Factory.h"
 #include "tao/RT_Invocation_Endpoint_Selectors.h"
+#include "tao/Client_Priority_Policy.h"
 #include "tao/Invocation.h"
 
 ACE_RCSID(tao, RT_Endpoint_Selector_Factory, "$Id$")
