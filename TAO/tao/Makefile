@@ -47,7 +47,7 @@ OTHERS_SRCS = \
 FILES	 = $(OTHERS_SRCS) $(CORBA_SRCS)
 
 ifndef TAO_ROOT
-TAO_ROOT = $(TAO_ROOT)
+TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
 COMPATDIR = $(TAO_ROOT)/tao/compat

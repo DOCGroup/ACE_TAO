@@ -1,3 +1,8 @@
+Fri Aug 29 10:59:34 1997  Chris Cleeland  <cleeland@lambada.cs.wustl.edu>
+
+	* tao/Makefile (TAO_ROOT): FINALLY corrected the default
+ 	definition of TAO_ROOT.
+
 Thu Aug 28 14:04:44 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tao/orbobj.i (CORBA_ORB): Removed assertion that was incorrect
