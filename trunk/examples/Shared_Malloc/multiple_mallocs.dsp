@@ -89,12 +89,28 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"
 # Begin Source File
 
+SOURCE=.\Malloc.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Options.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\test_multiple_mallocs.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
 
 # PROP Default_Filter "h;hpp;hxx;hm;inl;fi;fd"
+# Begin Source File
+
+SOURCE=.\Malloc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Options.h
+# End Source File
 # End Group
 # Begin Group "Resource Files"
 
