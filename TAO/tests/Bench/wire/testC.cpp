@@ -379,7 +379,7 @@ char * _TAO_foo_Remote_Proxy_Impl::all_str (
                                   7);
 
   _tao_call.invoke (ACE_ENV_SINGLE_ARG_DECL);
-  ACE_CHECK_RETURN (_tao_retval.excp ());
+  ACE_CHECK_RETURN (_tao_retval.retn ());
 
 #if 0
   TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
