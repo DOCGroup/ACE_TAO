@@ -1,3 +1,13 @@
+Fri Nov  1 20:12:09 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (connect): 
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h: Added the overloaded
+	  connect () method without the timeout. The implementation just
+	  calls the method with timeout value. It shouldnt be necessary,
+	  but one build in the borland compiler warns about one of the
+	  connect () methods hiding the other one. Hopefully, this should
+	  resolve the warning.
+
 Fri Nov 01 20:09:44 2002  Pradeep Gore  <pradeep@oomworks.com>
 
         * orbsvcs/tests/Notify/Basic/AdminProperties_Test.dsp:

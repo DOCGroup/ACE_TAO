@@ -58,6 +58,9 @@ public:
   virtual int open (TAO_ORB_Core *orb_core);
   virtual int close (void);
   virtual int connect (TAO_GIOP_Invocation *invocation,
+                       TAO_Transport_Descriptor_Interface *desc
+                       ACE_ENV_ARG_DECL);
+  virtual int connect (TAO_GIOP_Invocation *invocation,
                        TAO_Transport_Descriptor_Interface *desc,
                        ACE_Time_Value *timeout
                        ACE_ENV_ARG_DECL);
