@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef lint
 char ace_yysccsid[] = "@(#)yaccpar	1.4 (Berkeley) 02/25/90 \n\
  Modified 5/2/90 by J. Roskind to support graphic debugging modes";
@@ -47,56 +45,59 @@ short ace_yylhs[] = {                                        -1,
     0,    0,    0,   14,   14,   14,   14,   14,   14,    5,
     6,    7,    8,    9,   11,   18,   11,   15,   15,   19,
    12,   12,   10,   10,   13,   13,   13,   13,   13,   16,
-    4,    4,    4,   17,   17,    3,    3,    3,    2,    2,
-    1,    1,
+    4,    4,    4,   17,   17,   17,    3,    3,    3,    2,
+    2,    1,    1,
 };
 short ace_yylen[] = {                                         2,
     2,    2,    0,    1,    1,    1,    1,    1,    1,    3,
     3,    2,    2,    2,    3,    0,    4,    1,    1,    0,
     4,    0,    2,    0,    1,    1,    1,    1,    1,    4,
-    1,    1,    0,    3,    5,    2,    2,    2,    1,    0,
-    1,    1,
+    1,    1,    0,    3,    5,    4,    2,    2,    2,    1,
+    0,    1,    1,
 };
 short ace_yydefred[] = {                                      3,
     0,    2,    0,    0,    0,    0,    0,    0,    4,    5,
     6,    7,    8,    9,    1,    0,    0,    0,   12,   13,
-   14,   16,   18,   19,    0,    0,    0,    0,    0,   39,
-   10,   11,    0,   20,   15,   36,   38,   37,   41,   42,
-    0,    0,   17,   24,    0,   31,   32,   30,    0,    0,
-   21,   25,   26,   27,   28,   29,   23,    0,   35,
+   14,   16,   18,   19,    0,    0,    0,    0,    0,   40,
+   10,   11,    0,   20,   15,   37,   39,   38,   42,   43,
+    0,    0,    0,   17,   24,    0,    0,   31,   32,   30,
+    0,    0,    0,   21,   25,   26,   27,   28,   29,   23,
+   36,    0,   35,
 };
 short ace_yydgoto[] = {                                       1,
-   41,   31,   29,   48,    9,   10,   11,   12,   13,   49,
-   14,   35,   57,   15,   25,   17,   42,   33,   44,
+   42,   31,   29,   50,    9,   10,   11,   12,   13,   51,
+   14,   35,   60,   15,   25,   17,   43,   33,   45,
 };
 short ace_yysindex[] = {                                      0,
- -244,    0, -266, -260, -250, -243, -241, -247,    0,    0,
-    0,    0,    0,    0,    0, -240, -237, -237,    0,    0,
-    0,    0,    0,    0, -238, -236, -233, -231, -239,    0,
-    0,    0, -238,    0,    0,    0,    0,    0,    0,    0,
- -242, -235,    0,    0, -232,    0,    0,    0, -253, -226,
-    0,    0,    0,    0,    0,    0,    0, -234,    0,
+ -228,    0, -266, -260, -254, -246, -244, -247,    0,    0,
+    0,    0,    0,    0,    0, -251, -235, -235,    0,    0,
+    0,    0,    0,    0, -237, -249, -238, -236, -252,    0,
+    0,    0, -237,    0,    0,    0,    0,    0,    0,    0,
+ -231, -234, -248,    0,    0, -230, -229,    0,    0,    0,
+ -253, -225, -227,    0,    0,    0,    0,    0,    0,    0,
+    0, -224,    0,
 };
 short ace_yyrindex[] = {                                      0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,   27,   27,    0,    0,
     0,    0,    0,    0,   46,    0,    0,    0,    0,    0,
     0,    0,   46,    0,    0,    0,    0,    0,    0,    0,
-    0,   20,    0,    0,    0,    0,    0,    0,    0,    1,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,
+    0,    0,   20,    0,    0,    0,    0,    0,    0,    0,
+    0,    0,    1,    0,    0,    0,    0,    0,    0,    0,
+    0,    0,    0,
 };
 short ace_yygindex[] = {                                      0,
-    0,   18,    0,    0,   -8,   -6,   -9,   -2,   -1,    0,
-    0,   16,    0,    0,    0,    0,    0,    0,    0,
+    0,   31,    0,    0,   -8,   -6,   -1,    2,    3,    0,
+    0,   18,    0,    0,    0,    0,    0,    0,    0,
 };
 #define YYTABLESIZE 308
 short ace_yytable[] = {                                      23,
    34,   24,   16,    3,    4,    5,    6,    7,   18,    3,
-    4,    2,    3,    4,    5,    6,    7,    8,   19,   33,
-   51,   22,   26,   27,   28,   20,   40,   21,   39,   40,
-   46,   47,   30,   45,   34,   32,   50,   59,   36,   54,
-   52,   37,   53,   38,   58,   22,   55,   56,   43,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+    4,   26,   27,   28,   19,   39,   40,   48,   49,   33,
+   54,   22,   20,   41,   21,   36,   41,    2,    3,    4,
+    5,    6,    7,    8,   30,   34,   37,   46,   38,   53,
+   52,   47,   55,   62,   56,   22,   61,   63,   32,   57,
+   44,    0,   58,   59,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
@@ -119,17 +120,17 @@ short ace_yytable[] = {                                      23,
     0,    0,    0,    0,    0,    0,   34,   34,   34,   34,
    34,   34,   34,    0,    0,    0,   34,   34,    0,    0,
    34,    0,    0,   34,   34,   33,   33,   33,   33,   33,
-   33,   33,   40,   40,   40,   40,   40,   40,   40,   33,
-    0,    0,   33,   33,    0,    0,    0,    0,    0,   40,
-   40,   22,   22,   22,   22,   22,   22,   22,
+   33,   33,   41,   41,   41,   41,   41,   41,   41,   33,
+    0,    0,   33,   33,    0,    0,    0,    0,    0,   41,
+   41,   22,   22,   22,   22,   22,   22,   22,
 };
 short ace_yycheck[] = {                                       8,
     0,    8,  269,  257,  258,  259,  260,  261,  269,  257,
-  258,  256,  257,  258,  259,  260,  261,  262,  269,    0,
-  274,  269,  263,  264,  265,  269,    0,  269,  268,  269,
-  266,  267,  270,  276,  273,   18,  269,  272,  275,   49,
-   49,  275,   49,  275,  271,    0,   49,   49,   33,   -1,
-   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
+  258,  263,  264,  265,  269,  268,  269,  266,  267,    0,
+  274,  269,  269,  276,  269,  275,    0,  256,  257,  258,
+  259,  260,  261,  262,  270,  273,  275,  269,  275,  269,
+  271,  276,   51,  271,   51,    0,  272,  272,   18,   51,
+   33,   -1,   51,   51,   -1,   -1,   -1,   -1,   -1,   -1,
    -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
    -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
    -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
@@ -212,6 +213,7 @@ char *ace_yyrule[] = {
 "status :",
 "svc_initializer : pathname ACE_COLON ACE_IDENT",
 "svc_initializer : pathname ACE_COLON ACE_IDENT ACE_LPAREN ACE_RPAREN",
+"svc_initializer : ACE_COLON ACE_IDENT ACE_LPAREN ACE_RPAREN",
 "type : ACE_MODULE_T ACE_STAR",
 "type : ACE_SVC_OBJ_T ACE_STAR",
 "type : ACE_STREAM_T ACE_STAR",
@@ -241,7 +243,7 @@ YYSTYPE ace_yylval;
 #define ace_yystacksize YYSTACKSIZE
 short ace_yyss[YYSTACKSIZE];
 YYSTYPE ace_yyvs[YYSTACKSIZE];
-#line 257 "Svc_Conf.y"
+#line 261 "Svc_Conf.y"
 // Prints the error string to standard output.  Cleans up the error
 // messages.
 
@@ -350,7 +352,7 @@ main (int argc, char *argv[])
   return ace_yyparse ();
 }
 #endif /* DEBUGGING */
-#line 352 "Svc_Conf_y.cpp"
+#line 356 "Svc_Conf_y.cpp"
 #define YYABORT goto ace_yyabort
 #define YYACCEPT goto ace_yyaccept
 #define YYERROR goto ace_yyerrlab
@@ -378,7 +380,7 @@ int ace_yyindent;
 #endif /* YYDEBUG_INDENT */
 #ifndef YYDEBUG_REDUCE
 #ifdef __cplusplus
-void YYDEBUG_REDUCE(int /* ace_yynew_state */, int /* ace_yyrule_num */, char *ace_yyrule_string, int ace_yynew_indent, int ace_yyrhs_count)
+void YYDEBUG_REDUCE(int ace_yynew_state, int ace_yyrule_num, char *ace_yyrule_string, int ace_yynew_indent, int ace_yyrhs_count)
 #else
 YYDEBUG_REDUCE(ace_yynew_state, ace_yyrule_num, ace_yyrule_string, ace_yynew_indent, ace_yyrhs_count)
 int ace_yynew_state;
@@ -408,7 +410,7 @@ int ace_yyrhs_count;
 #endif /* YYDEBUG_REDUCE */
 #ifndef YYDEBUG_SHIFT_LEXEME
 #ifdef __cplusplus
-void YYDEBUG_SHIFT_LEXEME(int /* ace_yyold_state */, int /* ace_yynew_state */, char *ace_yytoken_string, int ace_yynew_indent)
+void YYDEBUG_SHIFT_LEXEME(int ace_yyold_state, int ace_yynew_state, char *ace_yytoken_string, int ace_yynew_indent)
 #else
 YYDEBUG_SHIFT_LEXEME(ace_yyold_state, ace_yynew_state, ace_yytoken_string, ace_yynew_indent)
 int ace_yyold_state;
@@ -423,7 +425,7 @@ int ace_yynew_indent;
 #endif /*  YYDEBUG_SHIFT_LEXEME */
 #ifndef YYDEBUG_LOOK_AHEAD
 #ifdef __cplusplus
-void YYDEBUG_LOOK_AHEAD(int /* ace_yynew_state */, int ace_yytoken_num, char *ace_yytoken_string, int ace_yyindent)
+void YYDEBUG_LOOK_AHEAD(int ace_yynew_state, int ace_yytoken_num, char *ace_yytoken_string, int ace_yyindent)
 #else
 YYDEBUG_LOOK_AHEAD(ace_yynew_state, ace_yytoken_num, ace_yytoken_string, ace_yyindent)
 int ace_yynew_state;
@@ -440,7 +442,7 @@ int ace_yyindent;
 #endif /* YYDEBUG_LOOK_AHEAD */
 #ifndef YYDEBUG_DISCARD_STATE
 #ifdef __cplusplus
-void YYDEBUG_DISCARD_STATE(int /* ace_yynew_state */, int ace_yyindent)
+void YYDEBUG_DISCARD_STATE(int ace_yynew_state, int ace_yyindent)
 #else
 YYDEBUG_DISCARD_STATE(ace_yynew_state, ace_yyindent)
 int ace_yynew_state;
@@ -468,7 +470,7 @@ int ace_yyindent;
 #endif /* YYDEBUG_DISCARD_STATE */
 #ifndef YYDEBUG_DISCARD_TOKEN
 #ifdef __cplusplus
-void YYDEBUG_DISCARD_TOKEN(int /* ace_yynew_state */, int /* ace_yytoken_num */, char *ace_yytoken_string, int ace_yyindent)
+void YYDEBUG_DISCARD_TOKEN(int ace_yynew_state, int ace_yytoken_num, char *ace_yytoken_string, int ace_yyindent)
 #else
 YYDEBUG_DISCARD_TOKEN(ace_yynew_state, ace_yytoken_num, ace_yytoken_string, ace_yyindent)
 int ace_yynew_state;
@@ -483,7 +485,7 @@ int ace_yyindent;
 #endif /* YYDEBUG_DISCARD_TOKEN */
 #ifndef YYDEBUG_SHIFT_ERROR_LEXEME
 #ifdef __cplusplus
-void YYDEBUG_SHIFT_ERROR_LEXEME(int /* ace_yyold_state */, int /* ace_yynew_state */, int ace_yyindent)
+void YYDEBUG_SHIFT_ERROR_LEXEME(int ace_yyold_state, int ace_yynew_state, int ace_yyindent)
 #else
 YYDEBUG_SHIFT_ERROR_LEXEME(ace_yyold_state, ace_yynew_state, ace_yyindent)
 int ace_yyold_state;
@@ -509,7 +511,7 @@ ace_yyparse()
     extern char *ace_foo();
 #endif
 
-    if ((ace_yys = ACE_OS::getenv("YYDEBUG")))
+    if (ace_yys = ACE_OS::getenv("YYDEBUG"))
     {
         ace_yyn = *ace_yys;
         if (ace_yyn >= '0' && ace_yyn <= '9')
@@ -526,7 +528,7 @@ ace_yyparse()
     *ace_yyssp = ace_yystate = 0;
 
 ace_yyloop:
-    if ((ace_yyn = ace_yydefred[ace_yystate])) goto ace_yyreduce;
+    if (ace_yyn = ace_yydefred[ace_yystate]) goto ace_yyreduce;
     if (ace_yychar < 0)
     {
         if ((ace_yychar = ace_yylex()) < 0) ace_yychar = 0;
@@ -861,28 +863,34 @@ case 35:
     }
 break;
 case 36:
-#line 233 "Svc_Conf.y"
+#line 230 "Svc_Conf.y"
 {
-      ace_yyval.type_ = ACE_MODULE_T;
+      ace_yyval.location_node_ = new ACE_Static_Function_Node (ace_yyvsp[-2].ident_);
     }
 break;
 case 37:
 #line 237 "Svc_Conf.y"
 {
-      ace_yyval.type_ = ACE_SVC_OBJ_T;
+      ace_yyval.type_ = ACE_MODULE_T;
     }
 break;
 case 38:
 #line 241 "Svc_Conf.y"
 {
+      ace_yyval.type_ = ACE_SVC_OBJ_T;
+    }
+break;
+case 39:
+#line 245 "Svc_Conf.y"
+{
       ace_yyval.type_ = ACE_STREAM_T;
     }
 break;
-case 40:
-#line 248 "Svc_Conf.y"
+case 41:
+#line 252 "Svc_Conf.y"
 { ace_yyval.ident_ = 0; }
 break;
-#line 883 "Svc_Conf_y.cpp"
+#line 893 "Svc_Conf_y.cpp"
     }
     ace_yyssp -= ace_yym;
     ace_yystate = *ace_yyssp;

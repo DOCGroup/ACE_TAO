@@ -40,11 +40,9 @@
 
 class ACE_Synchronous_Cancellation_Required
   // = TITLE
-  // 
   //     ACE_Synchronous_Cancellation_Required
   //     
   // = DESCRIPTION
-  // 
   //     Stick one of these at the beginning of a block that can't
   //     support asynchronous cancellation, and which must be
   //     cancel-safe.

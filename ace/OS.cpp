@@ -1410,6 +1410,22 @@ ACE_Thread_Adapter::invoke (void)
     // exits.
   }
 
+#if 0
+  if (func == ACE_Task_Base::svc_run)
+    {
+      ACE_Task_Base *task_ptr = (ACE_Task_Base *) arg;
+      ACE_Thread_Manager *thr_mgr_ptr = task_ptr->thr_mgr (); 
+
+      // This calls the Task->close() hook.      
+      task_ptr->cleanup (task_ptr, 0);       
+
+      // This prevents a second invocation of the cleanup code (called
+      // later by ACE_Thread_Manager::exit()).
+  
+      thr_mgr_ptr->at_exit (task_ptr, NULL, 0);
+    }
+#endif /* 0 */
+
   // If dropped off end, call destructors for thread-specific storage.
   ACE_TSS_Cleanup::instance ()->exit (status);
 
@@ -1425,7 +1441,25 @@ ACE_Thread_Adapter::invoke (void)
     }
 # endif /* ACE_WIN32 && ACE_HAS_MFC && ACE_HAS_MFS != 0*/
 
-  return status;
+  void *result = (void *) (*func) (arg);  // Call thread entry point.
+
+#if 0
+  if (func == ACE_Task_Base::svc_run)
+    {
+      ACE_Task_Base *task_ptr = (ACE_Task_Base *) arg;
+      ACE_Thread_Manager *thr_mgr_ptr = task_ptr->thr_mgr (); 
+      
+      // This calls the Task->close() hook.      
+      task_ptr->cleanup (task_ptr, 0);       
+      
+      // This prevents a second invocation of the cleanup code (called
+      // later by ACE_Thread_Manager::exit()).
+  
+      thr_mgr_ptr->at_exit (task_ptr, NULL, 0);
+    }
+#endif /* 0 */
+
+  return result;
 #else
   return (void *) (*func) (arg);  // Call thread entry point.
 #endif /* ACE_WIN32 || ACE_HAS_TSS_EMULATION */
