@@ -1,3 +1,10 @@
+Thu Mar  9 19:49:00 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Reactor.h: Clarified that ACE_Reactor::end_event_loop() should
+	 only be used for the "singleton reactor" and not for user defined
+ 	  reactors.  Thanks to Adrian Miranda <ade@psg.com> for motivating
+ 	  this.
+
 Thu Mar 09 18:20:00 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* ace/Asynch_IO.h:
