@@ -2,6 +2,7 @@
 
 #include "tao/IIOP_Wait_Strategy.h"
 #include "tao/Pluggable.h"
+#include "tao/ORB_Core.h"
 
 // Constructor.
 TAO_IIOP_Wait_Strategy::TAO_IIOP_Wait_Strategy (TAO_Transport *transport)
@@ -30,13 +31,27 @@ TAO_Wait_On_Reactor::~TAO_Wait_On_Reactor (void)
 int
 TAO_Wait_On_Reactor::wait (void)
 {
-  int end_loop_flag = 0;
+  // Result of the Reactor event loop.
   int result = 0;
   
-  while (result != -1 && end_loop_flag == 0)
-    result = this->transport_->orb_core_->reactor ()->handle_events (/* timeout */);  
+  // Flag that tells when we have finished reading the whole of the
+  // incoming message.
+  // int end_loop_flag = 0;
+  
+  while (result == 0) //  != -1 && end_loop_flag == 0)
+    {
+      // Do the event loop.
+      result = this->transport_->orb_core ()->reactor ()->handle_events (/* timeout */);
+      
+      // Check for ending the event loop.
+      // if (this->transport_->message_size () == this->transport_->message_offset ())
+      //  end_loop_flag = 1;
+    }
 
-  return 0;
+  if (result == -1)
+    return -1;
+  else
+    return 0;
 }
 
 // *********************************************************************
@@ -120,7 +135,7 @@ int
 TAO_Wait_On_Read::wait (void)
 {
   int received_reply = 0;
-  while (!received_reply and received_reply != -1)
+  while (received_reply == 0  && received_reply != -1)
     {
       // @@ In this case sockets *must* be blocking.
       //    We need to control how they are set!
