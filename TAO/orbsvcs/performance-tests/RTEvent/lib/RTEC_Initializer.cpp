@@ -19,7 +19,7 @@ TAO_EC_Event_Channel *
 RTEC_Initializer::create (PortableServer::POA_ptr consumer_poa,
                           PortableServer::POA_ptr supplier_poa,
                           RTCORBA_Setup * rtcorba_setup
-                          ACE_ENV_ARG_DECL)
+                          ACE_ENV_ARG_DECL_NOT_USED)
 {
   auto_ptr<TAO_EC_Factory> factory;
   if (rtcorba_setup == 0)

@@ -17,22 +17,29 @@ RIR_Narrow<Interface>::resolve (CORBA::ORB_ptr orb,
                                 const char *object_id
                                 ACE_ENV_ARG_DECL)
 {
-  CORBA::Object_var object =
-    orb->resolve_initial_references (object_id
-                                     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  Interface_var interface;
 
-  Interface_var interface =
-    Interface::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  if (CORBA::is_nil (interface.in ()))
+  ACE_TRY
     {
-      ACE_ERROR ((LM_ERROR,
-                  "Panic - error while narrowing <%s>\n",
-                  object_id));
-      ACE_OS::exit (1);
+      CORBA::Object_var object =
+        orb->resolve_initial_references (object_id
+                                         ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+
+      interface = Interface::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+
+      if (CORBA::is_nil (interface.in ()))
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "Panic - error while narrowing <%s>\n",
+                      object_id));
+          ACE_OS::exit (1);
+        }
+    }ACE_CATCHANY{
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Caught an exception \n");
     }
+  ACE_ENDTRY;
   return interface._retn ();
 }
 

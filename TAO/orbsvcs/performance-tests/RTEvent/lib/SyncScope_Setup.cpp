@@ -16,7 +16,7 @@
 ACE_RCSID(TAO_PERF_RTEC, SyncScope_Setup, "$Id$")
 
 SyncScope_Setup::SyncScope_Setup (CORBA::ORB_ptr orb,
-                                  Messaging::SyncScope value
+                                  Messaging::SyncScope /*value*/
                                   ACE_ENV_ARG_DECL)
 {
   CORBA::PolicyManager_var policy_manager =
