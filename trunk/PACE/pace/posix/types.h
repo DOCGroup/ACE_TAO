@@ -15,6 +15,7 @@
  * ============================================================================ */
 
 #include <sys/types.h>
+#include <pthread.h>
 
 #ifndef PACE_SYS_TYPES_H
 #define PACE_SYS_TYPES_H

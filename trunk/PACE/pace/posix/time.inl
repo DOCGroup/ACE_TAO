@@ -72,7 +72,12 @@ int
 pace_clock_settime (clockid_t clock_id,
                     const struct timespec * tp)
 {
+#if PACE_HAS_POSIX == PACE_LYNXOS
+  /* Cast away const for Lynx prototype compatability. */
+  return clock_settime (clock_id, (struct timespec *) tp);
+#else
   return clock_settime (clock_id, tp);
+#endif /* PACE_LYNXOS */
 }
 
 PACE_INLINE
