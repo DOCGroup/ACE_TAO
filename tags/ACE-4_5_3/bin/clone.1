@@ -1,0 +1,297 @@
+.TH CLONE 1 "6 June 1989" ""
+.SH NAME
+clone \- make a clone of an entire directory tree
+.SH SYNOPSIS
+.B clone
+[
+.B -q
+] [
+.B -v
+] [
+.B -f
+] [
+.B -c | -s
+] [
+.B -S
+]
+.I "dir1 dir2"
+.SH DESCRIPTION
+.I Clone
+makes an identical copy of an entire (source) directory tree rooted at
+the directory named
+.I dir1
+into the (target) directory tree
+rooted at
+.I dir2.
+The target directory
+.I dir2
+will be created if it does not already exist.
+On the other hand, if the directory
+.I dir2
+exists, or if the
+.I dir2
+directory has any existing subdirectories, then these
+directories will
+.B not
+be deleted or replaced by
+.I clone.
+.PP
+.I Clone
+normally creates the clone
+directory tree by creating any new directories needed
+beneath
+.I dir2
+(possibly including
+.I dir2
+itself).
+.I Clone
+then fills in the new directories with hard links
+to all of the files in the original (source) directory tree
+.I dir1
+such that the new (target) directory tree appears to also contain
+all of the files and subdirectories contained in the original (source)
+directory tree.
+Hard links are normally used when creating
+.I clones
+of the files in the source directory tree
+inside the new (target) directory tree.
+This insures that the cost (in disk space) of
+.I cloning
+a given source directory tree will be very low.
+If desired, the new (clone) directory tree can be filled in with
+symbolic links or with actual copies of the original files (instead of
+using hard links).
+.PP
+.I Clone
+may  be particularly useful for maintaining multiple versions
+of nearly identical source trees.
+.PP
+An important feature of
+.I clone
+is that the
+.I dir2
+argument may already exist and may already contain some
+files and subdirectories.  In such cases,
+.I clone
+does not disturb these existing files or subdirectories.
+Rather, it simply adds the material from the source directory,
+.I dir1,
+to the material already present within
+.I dir2.
+In cases where
+there are conflicts between files or directories which
+already exist in
+.I dir2
+but which also exist in
+.I dir1,
+.I clone
+(by default) leaves the files or directories in the target directory
+.I dir2
+untouched unless the
+.B -f
+(force) flag is used, in which case,
+.I clone
+will override (i.e. delete) the conflicting entries
+from the target directory
+.I dir2
+and replace them with clones from the source directory
+.I dir1.
+.SH OPTIONS
+.I Clone
+recognizes the following options:
+.TP
+.BI \-q
+Quite mode.  Suppress all warnings and non-fatal error messages.
+.TP
+.BI \-v
+Verbose mode.  Print verbose messages which describe each individual
+linking (or copying) action, as well as all
+.I mkdir
+actions that
+.I clone
+executes.
+.TP
+.BI \-f
+Force mode.  In cases where an item (i.e. either a file or a directory)
+exists in the source directory tree
+.I dir1,
+and also already exists in the target directory tree
+.I dir2,
+delete the item (ether a file or a directory) in 
+the target directory tree and then replace it with a clone
+of the corresponding item from the source directory tree.
+All such deletions causes warning to be issued to
+.I stderr
+unless the
+.B \-q
+(quite mode)
+option is also specified.
+Note that if a given item already exists in the target directory tree,
+and if it also exists in the source directory tree, and if both the
+(existing) source and target items are themselves directories, then the
+.B \-f
+option has no effect for these items.  Existing directories in the
+target directory tree are never deleted by
+.I clone
+unless there is a corresponding item in the source directory tree which is
+.B not
+a directory (i.e. is a regular file) and the
+.B \-f
+option is in effect.
+.TP
+.BI \-s
+Symbolic link mode (not available on System V).  When used, this
+option causes all non-directory files to be
+.I cloned
+by making symbolic links from the target directory tree into the source
+directory tree.  This mode overrides the default mode in which
+hard links are used to clone all non-directory files.
+.TP
+.BI \-c
+Copy mode.
+In this mode, a physical copy of each non-directory file in the source directory
+tree is created in the target directory tree. Note that when this mode is used,
+it is an error for the source directory tree to contain any block or character
+device files, or any named pipe files.
+.TP
+.BI \-S
+SCCS mode.
+In this mode, only the source tree structure is cloned, not its contents.
+Symbolic links are created within the destination tree to subdirectories 
+in the source tree named
+.B SCCS.
+This mode is useful when multiple developers work from a common SCCS project
+tree. To accomplish this, each developer creates a local project tree by
+.I cloning
+the common SCCS project directory, specifying the 
+.B \-S
+option.
+Individual developers are then able to work within their local project tree while 
+ensuring that all SCCS operations are applied to the common SCCS project tree.
+Use of the 
+.B \-S
+option implies the use of the 
+.B \-s
+option and is thus not available on System V.
+.SH EXAMPLES
+Assume that you have
+two directory trees called
+.I src1
+and
+.I src2
+and that you wish to combine the contents of these
+two directories into a new directory named
+.I dst
+such that if there are any files with duplicate names in both
+.I src1
+and in
+.I src2
+the files from the
+.I src2
+directory tree will take precedence
+over the corresponding files in the directory tree
+.I src1.
+The following commands would accomplish this task:
+.sp 1
+.in +0.4i
+.ft B
+clone  src1 dst
+.br
+clone  -f src2 dst
+.sp 1
+.in -0.4i
+.ft R
+Or alternatively, for this simple case, you could have said:
+.ft B
+.in +0.4i
+.sp 1
+clone  src2 dst
+.br
+clone  src1 dst
+.br
+.sp 1
+.in -04.i
+.ft R
+.PP
+To clone an SCCS project tree, such as
+.B /pub/EOS_client_server,
+one might use the following command, shown with the resulting output:
+.sp 1
+.in +0.4i
+.ft B
+doc% clone -S -v  /pub/EOS_client_server ~/EOS_CS
+.br
+clone: created new output directory: /home/ebupsn/EOS_CS
+.br
+clone: created new output directory: /home/ebupsn/EOS_CS/bin
+.br
+clone: created new output directory: /home/ebupsn/EOS_CS/lib
+.br
+clone: created new output directory: /home/ebupsn/EOS_CS/include
+.br
+clone: created new output directory: /home/ebupsn/EOS_CS/cmd
+.br
+clone: created new output directory: /home/ebupsn/EOS_CS/cmd/clone
+.br
+clone: created symlink /home/ebupsn/EOS_CS/cmd/clone/SCCS -> /pub/EOS_client_server/cmd/clone/SCCS
+.br
+clone: created symlink /home/ebupsn/EOS_CS/cmd/SCCS -> /pub/EOS_client_server/cmd/SCCS
+.br
+clone: created new output directory: /home/ebupsn/EOS_CS/man
+.br
+clone: created new output directory: /home/ebupsn/EOS_CS/man/man1
+.br
+clone: created new output directory: /home/ebupsn/EOS_CS/man/man3
+.br
+clone: created new output directory: /home/ebupsn/EOS_CS/man/cat1
+.br
+clone: created new output directory: /home/ebupsn/EOS_CS/man/cat3
+.br
+clone: created symlink /home/ebupsn/EOS_CS/SCCS -> /pub/EOS_client_server/SCCS
+.br
+.sp 1
+.in -0.4i
+.ft R
+.SH CAVEATS
+On BSD systems, if there are symbolic links in the source tree,
+the effects of
+.I cloning
+may not be what you expect. 
+A symbolic link within the source tree results in the creation of an 
+identical symbolic link within the destination tree.
+A warning is issued if the symbolic link is either absolute and points 
+into the source directory or if the symbolic link is relative and 
+points out of the source tree.
+.PP
+If the 
+.B \-S
+option is in effect and the source directory is itself a symbolic link
+to a directory, the contents of the symbolic link are cloned in the
+destination directory rather than setting the destination directory 
+to be an identical symbolic link.
+The rational for this is as follows.  
+In networked environments, SCCS project directories are often configured
+as NFS file systems managed by an NFS auto-mount daemon.
+The NFS auto-mount daemon mounts NFS file systems in a temporary locations
+and then creates symbolic links to the temporary locations.
+Accesses to this symbolic links trigger the NFS auto-mount daemon.
+It is therefore necessary that symbolic links in the destination tree
+refer to the NFS auto-mount point symbolic link rather than to the NFS 
+auto-mount point itself.
+Symbolic links within the source tree are ignored.
+.SH WARNINGS
+There are numerous possible warning and/or error messages which
+.I clone
+will issue for strange circumstances.
+These should all be self-explanatory.
+.SH FILES
+.ta 1.7i
+/usr/local/bin/clone	The clone program
+.SH "SEE ALSO"
+ln(1), link(2), symlink(2), readlink(2), mkdir (1), mkdir (2)
+.SH AUTHORS
+Written by Ron Guilmette at the Microelectronics and Computer Technology
+Corporation.  Current E-mail address is rfg@ics.uci.edu.
+.PP
+SCCS mode added 07-April-1993 by Paul Stephenson at Ericsson Business
+Communications.  Current E-mail address is paul.stephenson@ebu.ericsson.se.
