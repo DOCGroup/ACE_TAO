@@ -19,8 +19,7 @@
 /**
  * @class ACEXML_FileCharStream FileCharStream.h "ACEXML/common/FileCharStream.h"
  *
- * An implementation of ACEXML_CharStream for reading
- * input from a file.
+ * An implementation of ACEXML_CharStream for reading input from a file.
  */
 class ACEXML_Export ACEXML_FileCharStream : public ACEXML_CharStream
 {
@@ -65,6 +64,7 @@ public:
    * character if succeess, -1 if EOS is reached.
    */
   virtual int peek (void);
+
 
 private:
   ACEXML_Char *filename_;

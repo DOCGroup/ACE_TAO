@@ -22,7 +22,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("sf:l"));
   ACE_TCHAR c;
 
-  while ((c = get_opt ()) != -1)
+  while ((c = get_opt ()) != EOF)
     {
       switch (c)
         {
@@ -75,7 +75,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     if (sax == 0)
       ACE_NEW_RETURN (handler,
-                      ACEXML_Print_Handler (),
+                      ACEXML_Print_Handler (filename),
                       -1);
     else
       ACE_NEW_RETURN (handler,
@@ -93,8 +93,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     ACEXML_Env xmlenv;
 
     parser.parse (&input, xmlenv);
-    if (xmlenv.exception ())
-      xmlenv.exception ()->print ();
+    //    if (xmlenv.exception ())
+    //      xmlenv.exception ()->print ();
   }
   delete handler;
   return 0;

@@ -199,7 +199,6 @@ public:
 
 private:
   size_t indent_;
-
 };
 
 #if defined (__ACEXML_INLINE__)

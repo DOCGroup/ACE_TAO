@@ -61,10 +61,10 @@ ACEXML_Parser::is_whitespace (ACEXML_Char c)
 {
   switch (c)
     {
+    case 0xa:
     case 0x20:
     case 0x9:
     case 0xd:
-    case 0xa:
       return 1;
     default:
       return 0;
@@ -75,29 +75,19 @@ ACEXML_Parser::is_whitespace (ACEXML_Char c)
 ACEXML_INLINE int
 ACEXML_Parser::is_whitespace_or_equal (ACEXML_Char c)
 {
-  switch (c)
-    {
-    case 0x20:
-    case 0x9:
-    case 0xd:
-    case 0xa:
-    case '=':
-      return 1;
-    default:
-      return 0;
-    }
+  return (is_whitespace (c) || c == '=') ? 1 : 0;
 }
 
 ACEXML_INLINE int
 ACEXML_Parser::is_nonname (ACEXML_Char c)
 {
+  // Handle this separately as doing so avoids code duplication and enables
+  // setting of line and column numbers in one place.
+  if (is_whitespace_or_equal (c))
+    return 1;
+
   switch (c)
     {
-    case 0x20:
-    case 0x9:
-    case 0xd:
-    case 0xa:
-    case '=':
     case '/':
     case '?':
     case '>':
@@ -126,6 +116,11 @@ ACEXML_Parser::get (void)
     {
       ACEXML_Char ch;
       this->instream_->get (ch);
+      this->locator_.incrColumnNumber();
+      if (ch == 0x0A) {
+        this->locator_.incrLineNumber();
+        this->locator_.setColumnNumber (0);
+      }
       return ch;
     }
   return 0;

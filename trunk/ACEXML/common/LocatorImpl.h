@@ -64,7 +64,7 @@ public:
    * still keep the original values (and it can be used outside the
    * scope of DocumentHandler methods).
    */
-  ACEXML_LocatorImpl (const ACEXML_Locator *locator);
+  ACEXML_LocatorImpl (const ACEXML_Locator& locator);
 
   /*
    * Destructor.
@@ -110,6 +110,24 @@ public:
    * Set the system identifier of this locator.
    */
   void setSystemId (const ACEXML_Char *id);
+
+  /*
+   * Increment the line number.
+   */
+  void incrLineNumber ();
+
+  /*
+   * Increment the column number.
+   */
+  void incrColumnNumber ();
+
+  /*
+   * Reset the Locator information. This is necessary because one might
+   * want to use the same parser to parse multiple files. In that case,
+   * tying the life of the Locator with the parser is not appropriate. The
+   * parser calls this method as soon as issuing an endDocument() call.
+   */
+  void reset (void);
 
 private:
   ACEXML_Char *publicId_;
