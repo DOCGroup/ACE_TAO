@@ -4,7 +4,7 @@ Sat Sep 29 18:07:55 2001  Ossama Othman  <ossama@uci.edu>
 
 	  Use the double-checked locking optimization to remove a lock
 	  from the critical path.  The lock will only be acquired/released
-	  once instead per initialization of the IIOP_Endpoint instead of
+	  once per initialization of the IIOP_Endpoint instead of
 	  once per invocation of this method.
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.i (object_addr):
