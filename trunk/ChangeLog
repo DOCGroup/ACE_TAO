@@ -1,3 +1,10 @@
+Mon Feb 24 15:37:06 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/TTY_IO.h (ACE_TTY_IO): Added the dtrdisable member to
+	  Serial_Params.  This finishes a fix suggested by Ray Limpus
+ 	  <ray.limpus@boeing.com>.  Thanks to Jeff Parsons for noticing
+ 	  this.
+
 Mon Feb 24 08:53:52 2003  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Basic_Types.i (operator++, operator--):
