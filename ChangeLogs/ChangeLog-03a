@@ -1,3 +1,18 @@
+Wed Jul 24 13:10:19 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          Add README and readme to the default documentation
+          files.
+
+        * bin/MakeProjectCreator/modules/Creator.pm:
+        * bin/MakeProjectCreator/modules/GUID.pm:
+        * bin/MakeProjectCreator/modules/VC7ProjectCreator.pm:
+
+          Change the GUID generation code to be deterministic (but still
+          unique) to allow for multiple solution files to contain the same
+          project files without having to regenerate the solutions.
+
 Wed Jul 24 13:42:37 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/OS.cpp (uname): Added case for PROCESSOR_ARCHITECTURE_IA64

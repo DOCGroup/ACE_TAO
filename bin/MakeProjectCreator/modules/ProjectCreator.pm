@@ -100,7 +100,7 @@ sub new {
              'header_files'        => [ "\\.h", "\\.hxx", "\\.hh", ],
              'inline_files'        => [ "\\.i", "\\.inl", ],
              'idl_files'           => [ "\\.idl", ],
-             'documentation_files' => [ "\\.doc", "\\.txt", ],
+             'documentation_files' => [ "README", "readme", "\\.doc", "\\.txt", ],
              'resource_files'      => [ "\\.rc", ],
             );
 
