@@ -52,7 +52,7 @@ if ($server != 0) {
     $status = 1;
 }
 
-$load_manager = $LM->WaitKill (10);
+$load_manager = $LM->TerminateWaitKill (10);
 
 if ($load_manager != 0) {
     print STDERR "ERROR: LoadManager returned $load_manager\n";
