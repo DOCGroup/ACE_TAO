@@ -40,7 +40,7 @@ ACE_Log_Msg_UNIX_Syslog::open (const ACE_TCHAR * logger_key)
   // options LOG_CONS and LOG_PID to be set.  There really should be a
   // logging strategy option to control the syslog log options,
   // however, we'll take the easy way out for now.
-  openlog (ACE_const_cast (char *, logger_key),
+  openlog (const_cast<char *> (logger_key),
            LOG_CONS|LOG_PID,
            ACE_DEFAULT_SYSLOG_FACILITY);
 

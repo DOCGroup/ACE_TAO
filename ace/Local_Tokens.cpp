@@ -108,8 +108,8 @@ ACE_TPQ_Entry::ACE_TPQ_Entry (const ACE_Token_Proxy *new_proxy,
       ACE_OS::sprintf (name,
                        ACE_LIB_TEXT ("/%s/%u/%lu"),
                        host_name,
-                       ACE_static_cast (u_int, ACE_OS::getpid ()),
-                       *ACE_reinterpret_cast (u_long *, &thread_id));
+                       static_cast<u_int> (ACE_OS::getpid ()),
+                       *reinterpret_cast<u_long *> (&thread_id));
 
       this->client_id (name);
     }
@@ -1077,10 +1077,7 @@ ACE_Token_Proxy::client_id (void) const
 {
   ACE_TRACE ("ACE_Token_Proxy::client_id");
   // Thread-specific.
-  ACE_Token_Proxy *nc_this =
-    ACE_const_cast (ACE_Token_Proxy *, this);
-  const ACE_TPQ_Entry *temp =
-    nc_this->waiter_.operator->();
+  const ACE_TPQ_Entry *temp = this->waiter_.operator->();
   const ACE_TCHAR *id = temp->client_id ();
 
   if (id == 0)
@@ -1157,7 +1154,7 @@ ACE_Token_Proxy::open (const ACE_TCHAR *token_name,
   if (token_name == 0)
     {
       ACE_OS::sprintf (name, ACE_LIB_TEXT ("token %lx"),
-                       ACE_reinterpret_cast (long, this));
+                       reinterpret_cast<long> (this));
       token_name = name;
     }
 

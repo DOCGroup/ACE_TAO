@@ -72,9 +72,8 @@ ACE_Reactive_MEM_IO::send_buf (ACE_MEM_SAP_Node *buf,
   if (this->shm_malloc_ == 0 || this->handle_ == ACE_INVALID_HANDLE)
     return -1;
 
-  off_t offset = ACE_reinterpret_cast (char *, buf) -
-    ACE_static_cast (char *, this->shm_malloc_->base_addr ());
-                                              // the offset.
+  off_t offset = reinterpret_cast<char *> (buf) -
+    static_cast<char *> (this->shm_malloc_->base_addr ()); // the offset.
   // Send the offset value over the socket.
   if (ACE::send (this->handle_,
                  (const char *) &offset,
@@ -195,7 +194,7 @@ ACE_MT_MEM_IO::init (ACE_HANDLE handle,
                             this->shm_malloc_->malloc (2 * sizeof (MQ_Struct)),
                             -1);
 
-      MQ_Struct *mymq = ACE_reinterpret_cast (MQ_Struct *, ptr);
+      MQ_Struct *mymq = reinterpret_cast<MQ_Struct *> (ptr);
       mymq->tail_ = 0;
       mymq->head_ = 0;
       (mymq + 1)->tail_ = 0;
@@ -225,7 +224,7 @@ ACE_MT_MEM_IO::init (ACE_HANDLE handle,
   else
     {
       // we are client.
-      MQ_Struct *mymq = ACE_reinterpret_cast (MQ_Struct *, to_server_ptr);
+      MQ_Struct *mymq = reinterpret_cast<MQ_Struct *> (to_server_ptr);
       this->recv_channel_.queue_.init (mymq +1, this->shm_malloc_);
       ACE_NEW_RETURN (this->recv_channel_.sema_,
                       ACE_SYNCH_PROCESS_SEMAPHORE (0, client_sema),
@@ -376,12 +375,12 @@ ACE_MEM_IO::send (const ACE_Message_Block *message_block,
   if (len != 0)
     {
       ACE_MEM_SAP_Node *buf =
-        ACE_reinterpret_cast (ACE_MEM_SAP_Node *,
-                              this->deliver_strategy_->acquire_buffer (len));
+        reinterpret_cast<ACE_MEM_SAP_Node *> (
+          this->deliver_strategy_->acquire_buffer (len));
       ssize_t n = 0;
       while (message_block != 0)
         {
-          ACE_OS::memcpy (ACE_static_cast (char *, buf->data ()) + n,
+          ACE_OS::memcpy (static_cast<char *> (buf->data ()) + n,
                           message_block->rd_ptr (),
                           message_block->length ());
           n += message_block->length ();

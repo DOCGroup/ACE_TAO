@@ -1,3 +1,32 @@
+Wed May 12 20:13:41 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Local_Tokens.cpp:
+	* ace/Log_Msg_IPC.cpp:
+	* ace/Log_Msg_NT_Event_Log.cpp:
+	* ace/Log_Msg_UNIX_Syslog.cpp:
+	* ace/Log_Record.cpp:
+	* ace/MEM_Acceptor.cpp:
+	* ace/MEM_IO.cpp:
+	* ace/Memory_Pool.cpp:
+	* ace/Message_Block.cpp:
+	* ace/Message_Block_T.cpp:
+	* ace/Message_Queue.cpp:
+
+          Replaced deprecated ACE cast macro usage with ANSI C++ cast
+          counterparts.
+
+	* ace/Profile_Timer.h (ACE_Profile_Timer::ACE_Elapsed_Time):
+
+	  Corrected Doxygen documentation for this class.
+
+	* ace/Profile_Timer.cpp (elapsed_time):
+
+	  Corrected comments in this method.
+
+	* ace/RW_Mutex.h:
+
+	  Nuked trailing whitespace.
+
 Wed May 12 16:48:41 2004  Steve Huston  <shuston@riverace.com>
 
 	* examples/C++NPv2/AIO_Client_Logging_Daemon.cpp: If built on
