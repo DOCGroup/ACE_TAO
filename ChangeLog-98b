@@ -1,14 +1,14 @@
 Sun Sep 20 20:41:29 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Accept.{h,cpp}: Added an extra argument to constructors of
+	* ace/Acceptor.{h,cpp}: Added an extra argument to constructors of
 	  ACE_Strategy_Acceptor and open method so that we can accept only
 	  one connection request every time handle_input is called.
 
 Sun Sep 20 20:30:36 1998  Marina Igorevna Spivak  <marina@mambo.cs.wustl.edu>
 
 	* ace/OS.h : added ACE_GUARD_THROW, ACE_GUARD_THROW_RETURN,
-	ACE_NEW_TRY_THROW, ACE_NEW_TRY_THROW_RETURN macros to utilize new
-	exceptions macros.
+ 	  ACE_NEW_TRY_THROW, ACE_NEW_TRY_THROW_RETURN macros to utilize
+ 	  new exceptions macros.
 
 Sun Sep 20 19:18:00 CDT 1998  Chris Gill <cdgill@cs.wustl.edu>
 
