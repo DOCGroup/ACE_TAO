@@ -1,3 +1,22 @@
+Sun Oct 31 20:11:43 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	* tao/orbconf.h:
+	* tao/ORB_Core.cpp:
+	* tao/params.h:
+	* tao/params.cpp:
+	* tao/params.i:
+	* tao/ORB.cpp:
+	* tao/ORB.h:
+
+	Abstracted out the code for location of different services through
+	resolve_initial_references () by the ORB. This reduces the
+	footprint of the ORB as now there is a single method to locate 
+	services instead of a different method for each service.
+
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp:
+	Made changes in this file to reflect the changes made to the ORB
+	Core since a single method is now used to get/set the service port.	
+
 Sat Oct 30 21:40:48 1999  Luther J Baker  <ljb1@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp (init): Removed ACE_IOSTREAM_TYPE and replaced
