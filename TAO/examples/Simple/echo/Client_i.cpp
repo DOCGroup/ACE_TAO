@@ -12,7 +12,7 @@ Client_i::Client_i (void)
   : ior_ (0),
     loop_count_ (10),
     shutdown_ (0),
-    use_naming_service_ (1),
+    use_naming_service_ (0),
     server_ ()
 {
 }
@@ -81,7 +81,7 @@ Client_i::parse_args (void)
         break;
 
       case 's': // don't use the naming service
-        this->use_naming_service_ = 0;
+        this->use_naming_service_ = 1;
         break;
 
       case 'x':
@@ -107,17 +107,44 @@ Client_i::parse_args (void)
   return 0;
 }
 
-//Display the message on the screen
-
 void
-Client_i::echo (const char *message)
+Client_i::echo_list (const char *message)
 {
-  // @@ Please make sure to test that exception handling is working.
   TAO_TRY
     {
       // Make the RMI.
-      CORBA::String_var s = this->server_->echo (message,
-                                                 TAO_TRY_ENV);
+      Echo::List *l = this->server_->echo_list 
+        (message, 
+         TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      for (u_int i = 0; i < l->length (); i++) 
+        {
+          CORBA::Object_ptr obj = (*l)[i];
+
+          ACE_DEBUG ((LM_DEBUG,
+                      "list elem %d = %s\n",
+                      i,
+                      orb_->object_to_string (obj)));
+        }
+    }
+  TAO_CATCHANY
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Exception raised!\n"));
+    }
+  TAO_ENDTRY;
+}
+
+void
+Client_i::echo_string (const char *message)
+{
+  TAO_TRY
+    {
+      // Make the RMI.
+      CORBA::String_var s = this->server_->echo_string 
+        (message,
+         TAO_TRY_ENV);
       TAO_CHECK_ENV;
       ACE_DEBUG ((LM_DEBUG,
                   "%s\n",
@@ -129,6 +156,15 @@ Client_i::echo (const char *message)
                   "Exception raised!\n"));
     }
   TAO_ENDTRY;
+}
+
+//Display the message on the screen
+
+void
+Client_i::echo (const char *message)
+{
+  this->echo_list (message);
+  this->echo_string (message);
 }
 
 // Execute client example code.
