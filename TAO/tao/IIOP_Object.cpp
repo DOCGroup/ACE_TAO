@@ -108,7 +108,7 @@ IIOP::Profile::set (const ACE_INET_Addr &addr,
     }
   else
     {
-      const char *tempaddr = addr.get_host_addr ();
+      const char *tempaddr = addr.get_host_name ();
       if (tempaddr == 0)
         return -1;
       else
@@ -139,7 +139,7 @@ IIOP::Profile::set (const ACE_INET_Addr &addr,
     }
   else
     {
-      const char *tempaddr = addr.get_host_addr ();
+      const char *tempaddr = addr.get_host_name ();
       if (tempaddr == 0)
         return -1;
       else

@@ -307,7 +307,8 @@ public:
 
   // = Socket connection establishment calls.
 
-  static int bind_port (ACE_HANDLE handle);
+  static int bind_port (ACE_HANDLE handle,
+                        ACE_UINT32 ip_addr = INADDR_ANY);
   // Bind a new unused port to <handle>.
 
   static int get_bcast_addr (ACE_UINT32 &bcast_addr,

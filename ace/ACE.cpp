@@ -1526,12 +1526,12 @@ ACE::handle_timed_accept (ACE_HANDLE listener,
 // Bind socket to an unused port.
 
 int
-ACE::bind_port (ACE_HANDLE handle)
+ACE::bind_port (ACE_HANDLE handle,
+                ACE_UINT32 ip_addr)
 {
   ACE_TRACE ("ACE::bind_port");
+
   sockaddr_in sin;
-  // This should be a constant, so I hope they never change the number
-  // of bits in a port number!
   static u_short upper_limit = ACE_MAX_DEFAULT_PORT;
   int lower_limit = IPPORT_RESERVED;
   int round_trip = upper_limit;
@@ -1541,7 +1541,7 @@ ACE::bind_port (ACE_HANDLE handle)
 #if defined (ACE_HAS_SIN_LEN)
   sin.sin_len = sizeof sin;
 #endif /* ACE_HAS_SIN_LEN */
-  sin.sin_addr.s_addr = INADDR_ANY;
+  sin.sin_addr.s_addr = ip_addr;
 
   for (;;)
     {
@@ -1551,7 +1551,7 @@ ACE::bind_port (ACE_HANDLE handle)
         {
 #if defined (ACE_WIN32)
           upper_limit--;
-#endif
+#endif /* ACE_WIN32 */
           return 0;
         }
       else if (errno != EADDRINUSE)
