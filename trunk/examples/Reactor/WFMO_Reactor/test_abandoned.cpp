@@ -19,8 +19,8 @@
 // ============================================================================
 
 #include "ace/Reactor.h"
-#include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
+#include "ace/Process_Mutex.h"
 
 ACE_RCSID(ReactorEx, test_abandoned, "$Id$")
 

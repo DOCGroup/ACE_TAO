@@ -1,3 +1,10 @@
+Tue Sep 26 22:39:42 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * examples/Reactor/WFMO_Reactor/test_abandoned.cpp:
+
+          Changed the include of Synch.h to Process_Mutex.h since
+          Process Mutex was moved there.
+
 Tue Sep 26 15:06:05 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 
         * ace/config-all.h:
