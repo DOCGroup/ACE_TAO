@@ -1,3 +1,22 @@
+Sun May 27 22:43:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
+
+        * tests/ior_corbaloc/Makefile:
+        * tests/ior_corbaloc/Makefile.bor:
+        * tests/ior_corbaloc/README:
+        * tests/ior_corbaloc/client.cpp:
+        * tests/ior_corbaloc/corbaname_client.bor: (Added)
+        * tests/ior_corbaloc/corbaname_client.cpp: (Added)
+        * tests/ior_corbaloc/ior_corbaloc_client_i.cpp:
+        * tests/ior_corbaloc/ior_corbaloc_client_i.h:
+        * tests/ior_corbaloc/run_test.pl:
+        * tests/ior_corbaloc/server.cpp:
+        * tests/ior_corbaloc/status_i.cpp:
+        * tests/ior_corbaloc/status_i.h:
+
+          Updated the ior_corbaloc to fix a few bugs, improve
+          documentation, and clarify debug output.
+          Added tests for the corbaname: URL.
+
 Sun May 27 21:11:49 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp: Uncommented the

@@ -57,8 +57,8 @@ IOR_corbaloc_Client_i::run (CORBA::Environment &ACE_TRY_ENV)
       if (CORBA::is_nil (factory.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Object reference <%s> is nil\n",
-                             this->argv_[1]),
+                             "Object reference is nil for: %s\n",
+                             corbaloc_url_.c_str() ),
                             1);
         }
 
@@ -67,16 +67,12 @@ IOR_corbaloc_Client_i::run (CORBA::Environment &ACE_TRY_ENV)
         factory->print_status (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      if (ret_value == 0)
+      if (ret_value != 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      "The server has been contacted !!\n",
-                      0));
-        }
-      else
         ACE_DEBUG ((LM_DEBUG,
                     "The server has not been contacted. Error!!\n",
                     0));
+	}
     }
   ACE_CATCH (CosNaming::NamingContext::NotFound, ex)
     {
@@ -97,27 +93,31 @@ IOR_corbaloc_Client_i::run (CORBA::Environment &ACE_TRY_ENV)
 }
 
 int
-IOR_corbaloc_Client_i::init (int argc,
-                             char **argv,
+IOR_corbaloc_Client_i::init (int& argc,
+                             char *argv[],
                              CORBA::Environment &ACE_TRY_ENV)
 {
-
-  this->argc_ = argc;
-  this->argv_ = argv;
 
   ACE_TRY
     {
 
       // First initialize the ORB, that will remove some arguments...
       CORBA::ORB_var orb =
-        CORBA::ORB_init (this->argc_,
-                         this->argv_,
+        CORBA::ORB_init (argc,
+                         argv,
                          "" /* the ORB name, it can be anything! */,
                          ACE_TRY_ENV);
 
+      if(argc < 2){
+	      ACE_DEBUG((LM_DEBUG, "\nUsage:\n  %s [corbaloc URL for NameService]\n", argv[0]));
+	      ACE_OS::exit(-1);
+      }
+
+      corbaloc_url_ = argv[1];
+
       // Get a reference to the Naming Service
       CORBA::Object_var naming_context_object =
-        orb->string_to_object (this->argv_[1],
+        orb->string_to_object (corbaloc_url_.c_str(),
                                ACE_TRY_ENV);
       ACE_TRY_CHECK;
 

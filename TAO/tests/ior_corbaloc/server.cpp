@@ -6,7 +6,6 @@
 #include "tao/PortableServer/PortableServer.h"
 #include "orbsvcs/orbsvcs/CosNamingC.h"
 
-#include <iostream>
 
 int main (int argc, char* argv[])
 {
@@ -22,6 +21,10 @@ int main (int argc, char* argv[])
                          ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      if(argc < 2){
+         ACE_DEBUG((LM_DEBUG, "\nUsage:\n  %s [NAME to insert in Naming Service]\n", argv[0]));
+         return -1;
+      }
       // Get a reference to the RootPOA
       CORBA::Object_var poa_object =
         orb->resolve_initial_references ("RootPOA", ACE_TRY_ENV);
@@ -43,10 +46,11 @@ int main (int argc, char* argv[])
 
       // Create the servant
       corbaloc_Status_i status_i;
-
+      status_i.set_name(argv[1]);
       // Activate it to obtain the reference
       corbaloc::Status_var status =
         status_i._this ();
+      ACE_TRY_CHECK;
 
       // Get a reference to Naming Context
       CORBA::Object_var naming_context_object =
@@ -62,9 +66,10 @@ int main (int argc, char* argv[])
       // Bind Iterator_Factory to the Naming Context
       CosNaming::Name name (1);
       name.length (1);
-      name[0].id = CORBA::string_dup ("STATUS");
+      name[0].id = CORBA::string_dup (argv[1]);
 
-      naming_context->bind (name, status.in ());
+      naming_context->rebind (name, status.in ());
+      ACE_TRY_CHECK;
 
       // Run the orb
       orb->run (ACE_TRY_ENV);
@@ -77,8 +82,11 @@ int main (int argc, char* argv[])
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::SystemException, ex) {
-    std::cerr << "CORBA exception raised! " << ex << std::endl;
+    ACE_PRINT_EXCEPTION(ex, "CORBA exception raised! ");
   }
+  ACE_CATCHANY {
+    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught in server");
+  }	    
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
 
