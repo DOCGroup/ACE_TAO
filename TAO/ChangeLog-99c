@@ -1,156 +1,162 @@
+Fri Jul 16 07:13:08 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils_T.cpp (visit):
+          replaced use of implicit conversion from 64-bit int
+          to pointer with use of ACE_LONGLONG_TO_PTR macro.
+
 Thu Jul 15 23:16:29 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/svc.mt_server.conf:
-	* performance-tests/Cubit/TAO/IDL_Cubit/svc.st_server.conf:
-	* performance-tests/Cubit/TAO/IDL_Cubit/svc.st_client.conf:
-	  Alternative configurations that do not exploit any specific
-	  knowledge about the application, only that if the client or
-	  server are single threaded.
+        * performance-tests/Cubit/TAO/IDL_Cubit/svc.mt_server.conf:
+        * performance-tests/Cubit/TAO/IDL_Cubit/svc.st_server.conf:
+        * performance-tests/Cubit/TAO/IDL_Cubit/svc.st_client.conf:
+          Alternative configurations that do not exploit any specific
+          knowledge about the application, only that if the client or
+          server are single threaded.
 
 Thu Jul 15 22:14:18 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * TAO/tao/IIOP_Connector.cpp
         * TAO/tao/UIOP_Connector.cpp
 
-	  Added template instantiations.
+          Added template instantiations.
 
 Thu Jul 15 21:53:18 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_union/cdr_op_ci.cpp:
-	  Added check and CORBA_Any::from_* construction for generation of
-	  CDR insertion operators similarly to the change made for the
-	  generated extraction operators listed in a recent commit.
-	  MSVC didn't mind, but SunOS/egcs complained.
+        * TAO_IDL/be/be_visitor_union/cdr_op_ci.cpp:
+          Added check and CORBA_Any::from_* construction for generation of
+          CDR insertion operators similarly to the change made for the
+          generated extraction operators listed in a recent commit.
+          MSVC didn't mind, but SunOS/egcs complained.
 
 Thu Jul 15 21:03:31 1999  Marina Spivak  <marina@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp
-	* orbsvcs/orbsvcs/Naming/Persistent_Context_Index.{h,cpp}:
-	  Changed TAO_Persistent_Context_Index to store/return reference
-	  to the root Naming Context, rather than its stringified ior.
-	  This saves <object_to_string> conversion, and a <narrow> call
-	  later on.
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp
+        * orbsvcs/orbsvcs/Naming/Persistent_Context_Index.{h,cpp}:
+          Changed TAO_Persistent_Context_Index to store/return reference
+          to the root Naming Context, rather than its stringified ior.
+          This saves <object_to_string> conversion, and a <narrow> call
+          later on.
 
 Thu Jul 15 21:01:28 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_helper.cpp:
-	* TAO_IDL/be/be_sequence.cpp:
-	  Made some print format symbols agree with their
-	  arguments, warnings from the new egcs.
+        * TAO_IDL/be/be_helper.cpp:
+        * TAO_IDL/be/be_sequence.cpp:
+          Made some print format symbols agree with their
+          arguments, warnings from the new egcs.
 
-	* TAO_IDL/be/be_sunsoft.cpp:
-	  Changed added 'u' and 'f' suffixes to integer and
-	  float literals to upper case for readability.
+        * TAO_IDL/be/be_sunsoft.cpp:
+          Changed added 'u' and 'f' suffixes to integer and
+          float literals to upper case for readability.
 
 Thu Jul 15 20:50:01 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO/tests/Makefile:
-	  Removed IDL_Test from the build until I fix some of these errors.
+        * TAO/tests/Makefile:
+          Removed IDL_Test from the build until I fix some of these errors.
 
 Thu Jul 15 20:29:51 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO/tests/IDL_Test/main.cpp:
-	  removed 'argc' and 'argv' from main, they're unused.
+        * TAO/tests/IDL_Test/main.cpp:
+          removed 'argc' and 'argv' from main, they're unused.
 
-	* TAO/tests/IDL_Test/Makefile:
-	  Fixed some typos.
+        * TAO/tests/IDL_Test/Makefile:
+          Fixed some typos.
 
 Thu Jul 15 20:26:00 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_union/union_cs.cpp:
-	  Uncommented an arg in generated code that was actually
-	  used by the generated function.
+        * TAO_IDL/be/be_visitor_union/union_cs.cpp:
+          Uncommented an arg in generated code that was actually
+          used by the generated function.
 
-	* TAO_IDL/be/be_sunsoft.cpp:
-	  Added 'u' to the end of integer literals, if they
-	  are unsigned.
+        * TAO_IDL/be/be_sunsoft.cpp:
+          Added 'u' to the end of integer literals, if they
+          are unsigned.
 
 Thu Jul 15 19:40:46 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO/tests/DynAny_Test/da_test.idl:
-	* TAO/tests/DynAny_Test/data.h:
-	* TAO/tests/DynAny_Test/data.cpp:
-	* TAO/tests/DynAny_Test/test_dynstruct.cpp:
-	  VxWorks caught me trying to use CORBA::LongLong.
+        * TAO/tests/DynAny_Test/da_test.idl:
+        * TAO/tests/DynAny_Test/data.h:
+        * TAO/tests/DynAny_Test/data.cpp:
+        * TAO/tests/DynAny_Test/test_dynstruct.cpp:
+          VxWorks caught me trying to use CORBA::LongLong.
 
 Thu Jul 15 19:09:19 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO/tests/Param_Test/param_test_i.h:
-	* TAO/tests/Param_Test/param_test_i.cpp:
-	* TAO/tests/Param_Test/client.cpp:
-	* TAO_IDL/be/be_array.cpp:
-	  Fixed various warnings from the new version of egcs.
+        * TAO/tests/Param_Test/param_test_i.h:
+        * TAO/tests/Param_Test/param_test_i.cpp:
+        * TAO/tests/Param_Test/client.cpp:
+        * TAO_IDL/be/be_array.cpp:
+          Fixed various warnings from the new version of egcs.
 
 Thu Jul 15 17:35:07 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tao/ORB_Core.*:
+        * tao/ORB_Core.*:
 
-	  Changed TAO_ORB_Parameters pointer member to a non-pointer
-	  member.  The main reason why it was made a pointer member was to
-	  reduce compile-time dependencies.  However, params.h is already
-	  included, so we gain nothing by keeping it a pointer.  It's
-	  safer this way, anyway.
+          Changed TAO_ORB_Parameters pointer member to a non-pointer
+          member.  The main reason why it was made a pointer member was to
+          reduce compile-time dependencies.  However, params.h is already
+          included, so we gain nothing by keeping it a pointer.  It's
+          safer this way, anyway.
 
 Thu Jul 15 18:19:42 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO/tests/Makefile:
-	  Added IDL_Test directory to Makefile.
+        * TAO/tests/Makefile:
+          Added IDL_Test directory to Makefile.
 
 Thu Jul 15 17:52:26 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO/tests/IDL_Test/anonymous.idl:
-	* TAO/tests/IDL_Test/array.idl:
-	* TAO/tests/IDL_Test/constants.idl:
-	* TAO/tests/IDL_Test/enum_in_struct.idl:
-	* TAO/tests/IDL_Test/generic_object.idl:
-	* TAO/tests/IDL_Test/included.idl:
-	* TAO/tests/IDL_Test/including.idl:
-	* TAO/tests/IDL_Test/interface.idl:
-	* TAO/tests/IDL_Test/keywords.idl:
-	* TAO/tests/IDL_Test/reopened_modules.idl:
-	* TAO/tests/IDL_Test/sequence.idl:
-	* TAO/tests/IDL_Test/typedef.idl:
-	* TAO/tests/IDL_Test/union.idl:
-	* TAO/tests/IDL_Test/main.cpp:
-	* TAO/tests/IDL_Test/IDL_Test.dsw:
-	* TAO/tests/IDL_Test/idl_test.dsp:
-	* TAO/tests/IDL_Test/Makefile:
-	* TAO/tests/IDL_Test/README:
-	  New files and directory. A new test which is
-	  a collection of many IDL examples that have
-	  uncovered bugs in the past. The idea is to
-	  make sure these bugs never recur. Some of the
-	  examples are adapted from IDL code sent in
-	  by ACE and TAO users - many thanks to all those
-	  who helped dig out the bugs!
+        * TAO/tests/IDL_Test/anonymous.idl:
+        * TAO/tests/IDL_Test/array.idl:
+        * TAO/tests/IDL_Test/constants.idl:
+        * TAO/tests/IDL_Test/enum_in_struct.idl:
+        * TAO/tests/IDL_Test/generic_object.idl:
+        * TAO/tests/IDL_Test/included.idl:
+        * TAO/tests/IDL_Test/including.idl:
+        * TAO/tests/IDL_Test/interface.idl:
+        * TAO/tests/IDL_Test/keywords.idl:
+        * TAO/tests/IDL_Test/reopened_modules.idl:
+        * TAO/tests/IDL_Test/sequence.idl:
+        * TAO/tests/IDL_Test/typedef.idl:
+        * TAO/tests/IDL_Test/union.idl:
+        * TAO/tests/IDL_Test/main.cpp:
+        * TAO/tests/IDL_Test/IDL_Test.dsw:
+        * TAO/tests/IDL_Test/idl_test.dsp:
+        * TAO/tests/IDL_Test/Makefile:
+        * TAO/tests/IDL_Test/README:
+          New files and directory. A new test which is
+          a collection of many IDL examples that have
+          uncovered bugs in the past. The idea is to
+          make sure these bugs never recur. Some of the
+          examples are adapted from IDL code sent in
+          by ACE and TAO users - many thanks to all those
+          who helped dig out the bugs!
 
-	  It is hoped that there will be regular additions
-	  to these examples, making the tests more rigorous
-	  and comprehensive.
+          It is hoped that there will be regular additions
+          to these examples, making the tests more rigorous
+          and comprehensive.
 
 Thu Jul 15 17:44:46 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/GIOP.h:
-	* tao/GIOP.i:
-	* tao/Transport_Mux_Strategy.cpp:
-	  Optimized TSS buffer managment: the input CDR was reset twice
-	  during the upcall.
+        * tao/GIOP.h:
+        * tao/GIOP.i:
+        * tao/Transport_Mux_Strategy.cpp:
+          Optimized TSS buffer managment: the input CDR was reset twice
+          during the upcall.
 
 Thu Jul 15 17:25:29 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_union/union_cs.cpp (visit_union): Made a
-	  change to the signatures of the generated methods _access and
-	  _reset. These two methods were taking in a Boolean with a
-	  variable name. These variable names were not used. This was
-	  generating warnings on Linux_EGCS. So the variable name was
-	  commented out. Thanks to Mike Moran (mm4@cs.wustl.edu) for
-	  reporting this.
+        * TAO_IDL/be/be_visitor_union/union_cs.cpp (visit_union): Made a
+          change to the signatures of the generated methods _access and
+          _reset. These two methods were taking in a Boolean with a
+          variable name. These variable names were not used. This was
+          generating warnings on Linux_EGCS. So the variable name was
+          commented out. Thanks to Mike Moran (mm4@cs.wustl.edu) for
+          reporting this.
 
 Thu Jul 15 16:51:36 1999  Marina Spivak  <marina@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/IOR_Multicast.cpp
-	* orbsvcs/tests/Simple_Naming/client.cpp:
-	  Removed/protected debugging messages.
+        * orbsvcs/orbsvcs/IOR_Multicast.cpp
+        * orbsvcs/tests/Simple_Naming/client.cpp:
+          Removed/protected debugging messages.
 
 Thu Jul 15 16:11:04 1999  David L. Levine  <levine@cs.wustl.edu>
 
