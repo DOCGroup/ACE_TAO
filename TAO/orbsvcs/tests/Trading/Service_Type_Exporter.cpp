@@ -217,12 +217,15 @@ TAO_Service_Type_Exporter::list_all_types (CORBA::Environment& ACE_TRY_ENV)
         this->repos_->list_types (sst, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      for (CORBA::ULong i = type_names->length (); i > 0;)
+      CORBA::ULong l = type_names->length ();
+      for (CORBA::ULong i = 0; i != l; ++i)
         {
+          CORBA::ULong index = l - 1 - i;
           if (this->verbose_)
             {
               ACE_DEBUG ((LM_DEBUG, "type name: %s\n",
-                          ACE_static_cast (const char *, type_names[--i])));
+                          ACE_static_cast (const char *,
+                                           type_names[index])));
             }
         }
     }

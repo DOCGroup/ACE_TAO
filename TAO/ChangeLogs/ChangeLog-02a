@@ -1,3 +1,17 @@
+Mon May  8 09:42:47 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/tests/Trading/run_test.pl:
+          If the export_test crashed the script did not terminate the
+          Trading Service process, which in turns hangs the build.
+
+        * orbsvcs/tests/Trading/Service_Type_Exporter.cpp:
+          A loop was accessing out-of-bounds data, causing a crash on the
+          export_test.
+
+        * tests/IDL_Test/Makefile:
+          Fixed the Makefile.  Apparently I inconsistently renamed some of
+          the macros when fixing the process to create the dependencies.
+
 Sat May  6 19:44:44 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * tests/Smart_Proxies/client.dsp:
@@ -11,8 +25,8 @@ Sat May  6 19:44:44 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Sat May  6 11:04:08 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* rules.tao.GNU: Removed the use of (BIN_TRUE).  Using "true"
-	  works just fine.  Thanks to David for pointing this out.
+        * rules.tao.GNU: Removed the use of (BIN_TRUE).  Using "true"
+          works just fine.  Thanks to David for pointing this out.
 
 Sat May  6 16:44:46 2000  Carlos O'Ryan  <coryan@uci.edu>
 
