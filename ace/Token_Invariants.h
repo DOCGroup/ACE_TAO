@@ -27,7 +27,7 @@
 #include "ace/Map_Manager.h"
 #include "ace/Local_Tokens.h"
 
-class ACE_Mutex_Invariants
+class ACE_Export ACE_Mutex_Invariants
 {
   // = TITLE
   //     Mutex Invariants
@@ -61,7 +61,7 @@ private:
   // Number of owners.  This had better be 0 >= owners_ <= 1;
 };
 
-class ACE_RWLock_Invariants
+class ACE_Export ACE_RWLock_Invariants
 {
   // = TITLE
   //     RWLock Invariants

@@ -604,7 +604,7 @@ protected:
 };
 
 // a..
-class ACE_Token_Name
+class ACE_Export ACE_Token_Name
 {
   // = TITLE
   //     Allows Token_Manger to identify tokens.

@@ -52,7 +52,7 @@ typedef string ACE_IOStream_String;
 #endif /* __DECCXX_VER */
 
 
-class ACE_Quoted_String : public ACE_IOStream_String
+class ACE_Export ACE_Quoted_String : public ACE_IOStream_String
 {
 public:
   inline ACE_Quoted_String (void) { *this = ""; }
