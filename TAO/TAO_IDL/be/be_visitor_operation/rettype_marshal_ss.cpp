@@ -23,8 +23,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_operation, 
-           rettype_marshal_ss, 
+ACE_RCSID (be_visitor_operation,
+           rettype_marshal_ss,
            "$Id$")
 
 // ****************************************************************************
@@ -355,7 +355,7 @@ int be_visitor_operation_rettype_marshal_ss::visit_sequence (be_sequence *)
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_OUTPUT)
     {
-      *os << "(_tao_retval.ptr () == 0 ? (CORBA::Long)0 : _tao_retval.in ())";
+      *os << "_tao_retval.in ()";
     }
   else if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
     {
@@ -537,5 +537,3 @@ be_visitor_operation_rettype_marshal_ss::visit_home (be_home *node)
 {
   return this->visit_interface (node);
 }
-
-

@@ -19,8 +19,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_argument, 
-           marshal_ss, 
+ACE_RCSID (be_visitor_argument,
+           marshal_ss,
            "$Id$")
 
 
@@ -574,9 +574,7 @@ int be_visitor_args_marshal_ss::visit_sequence (be_sequence *)
           *os << arg->local_name ();
           break;
         case AST_Argument::dir_OUT:
-          *os << "(" << arg->local_name () 
-              << ".ptr () == 0 ? (CORBA::Long)0 : " 
-              << arg->local_name () << ".in ())";
+          *os << arg->local_name () << ".in ()";
           break;
         }
     }
@@ -828,6 +826,3 @@ be_visitor_args_marshal_ss::visit_home (
 {
   return this->visit_interface (node);
 }
-
-
-

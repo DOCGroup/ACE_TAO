@@ -689,18 +689,27 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
   *os << "// Accessor to set the member." << be_nl
       << "ACE_INLINE" << be_nl
       << "void" << be_nl
-      << bu->name () << "::" << ub->local_name () << " (const " << bt->name ();
+      << bu->name () << "::" << ub->local_name () << " (";
+  
 
   AST_PredefinedType::PredefinedType pt = node->pt ();
 
   if (pt == AST_PredefinedType::PT_pseudo
       || pt == AST_PredefinedType::PT_object)
     {
-      *os << "_ptr";
+      *os << "const "
+          << bt->name ()
+          << "_ptr";
     }
   else if (pt == AST_PredefinedType::PT_any)
     {
-      *os << " &";
+      *os << "const "
+          << bt->name ()
+          << " &";
+    }
+  else 
+    {
+      *os << bt->name ();
     }
 
   *os << " val)" << be_nl
