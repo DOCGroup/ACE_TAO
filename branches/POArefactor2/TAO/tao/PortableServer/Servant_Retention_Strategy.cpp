@@ -1150,8 +1150,8 @@ namespace TAO
                                        priority);
 
       return this->poa_->invoke_key_to_object_helper_i (intf,
-                                                  user_id
-                                                  ACE_ENV_ARG_PARAMETER);
+                                                        user_id
+                                                        ACE_ENV_ARG_PARAMETER);
 
     }
 

@@ -9,23 +9,24 @@
  */
 //=============================================================================
 
-#include "Request_Processing_Strategy.h"
-#include "ServantRetentionStrategy.h"
-#include "Lifespan_Strategy.h"
-#include "ServantActivatorC.h"
-#include "ServantLocatorC.h"
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/ORB_Core.h"
-#include "Non_Servant_Upcall.h"
-#include "POA.h"
-#include "POA_Current_Impl.h"
-#include "Servant_Upcall.h"
 #include "tao/TSS_Resources.h"
+
+#include "tao/PortableServer/ServantActivatorC.h"
+#include "tao/PortableServer/ServantLocatorC.h"
+
+#include "tao/PortableServer/Request_Processing_Strategy.h"
+#include "tao/PortableServer/ServantRetentionStrategy.h"
+#include "tao/PortableServer/Lifespan_Strategy.h"
+#include "tao/PortableServer/Non_Servant_Upcall.h"
+#include "tao/PortableServer/POA.h"
+#include "tao/PortableServer/POA_Current_Impl.h"
+#include "tao/PortableServer/Servant_Upcall.h"
 
 ACE_RCSID (PortableServer,
            Request_Processing,
            "$Id$")
-
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
@@ -102,7 +103,7 @@ namespace TAO
     AOM_Only_Request_Processing_Strategy::locate_servant (
       const PortableServer::ObjectId &system_id,
       PortableServer::Servant &servant
-      ACE_ENV_ARG_DECL)
+      ACE_ENV_ARG_DECL_NOT_USED)
     {
       ACE_UNUSED_ARG (system_id);
       ACE_UNUSED_ARG (servant);
@@ -156,7 +157,7 @@ namespace TAO
     }
 
     PortableServer::Servant
-    Default_Servant_Request_Processing_Strategy::get_servant (ACE_ENV_SINGLE_ARG_DECL)
+    Default_Servant_Request_Processing_Strategy::get_servant (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableServer::POA::WrongPolicy))
     {
@@ -202,7 +203,7 @@ namespace TAO
     Default_Servant_Request_Processing_Strategy::locate_servant (
       const PortableServer::ObjectId &system_id,
       PortableServer::Servant &servant
-      ACE_ENV_ARG_DECL)
+      ACE_ENV_ARG_DECL_NOT_USED)
     {
       ACE_UNUSED_ARG (system_id);
       ACE_UNUSED_ARG (servant);
@@ -288,7 +289,7 @@ namespace TAO
     }
 
     PortableServer::ServantManager_ptr
-    Servant_Activator_Request_Processing_Strategy::get_servant_manager (ACE_ENV_SINGLE_ARG_DECL)
+    Servant_Activator_Request_Processing_Strategy::get_servant_manager (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableServer::POA::WrongPolicy))
     {
@@ -330,7 +331,7 @@ namespace TAO
     Servant_Activator_Request_Processing_Strategy::locate_servant (
       const PortableServer::ObjectId &system_id,
       PortableServer::Servant &servant
-      ACE_ENV_ARG_DECL)
+      ACE_ENV_ARG_DECL_NOT_USED)
     {
       ACE_UNUSED_ARG (system_id);
       ACE_UNUSED_ARG (servant);
@@ -503,7 +504,7 @@ namespace TAO
     }
 
     PortableServer::ServantManager_ptr
-    Servant_Locator_Request_Processing_Strategy::get_servant_manager (ACE_ENV_SINGLE_ARG_DECL)
+    Servant_Locator_Request_Processing_Strategy::get_servant_manager (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableServer::POA::WrongPolicy))
     {
@@ -545,7 +546,7 @@ namespace TAO
     Servant_Locator_Request_Processing_Strategy::locate_servant (
       const PortableServer::ObjectId &system_id,
       PortableServer::Servant &servant
-      ACE_ENV_ARG_DECL)
+      ACE_ENV_ARG_DECL_NOT_USED)
     {
       ACE_UNUSED_ARG (system_id);
       ACE_UNUSED_ARG (servant);
