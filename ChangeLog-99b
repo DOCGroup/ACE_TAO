@@ -1,9 +1,13 @@
 Thu Jan 14 16:18:37 EST 1999  James CE Johnson  <jcej@lads.com>
 
-	* docs/tutorials/ACE_wrappers/001/page02.html:
-	  docs/tutorials/ACE_wrappers/001/page03.html:
-		Included Kirthika Parameswaran's <Kirthika@cs.wustl.edu> abstract and
-		analogy.  Thanks Kirthika!
+  * docs/tutorials/ACE_wrappers/001/page02.html:
+    docs/tutorials/ACE_wrappers/001/page03.html:
+    Included Kirthika Parameswaran's <Kirthika@cs.wustl.edu> abstract and
+    analogy.  Thanks Kirthika!
+
+	* docs/tutorials/ACE_wrappers/002/page0[23].html:
+	  docs/tutorials/ACE_wrappers/002/handler.h:
+		Added improvements from Kirthika, Pradeep and Yamuna
 
 Thu Jan 14 11:46:25 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
