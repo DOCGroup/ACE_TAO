@@ -502,6 +502,7 @@ ACE_GQoS_Session::qos (ACE_SOCK *socket,
 int
 ACE_GQoS_Session::update_qos (void)
 {
+  // WSAIoctl (GET_QOS) call goes here...
   return 0;
 }
 

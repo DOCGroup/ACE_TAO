@@ -21,6 +21,7 @@
 #include "ace/Reactor.h"
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Dgram_Mcast.h"
+#include "ace/QoS_Session.h"
 
 ACE_RCSID(Receiver_QOS_Event_Handler, Receiver_QOS_Event_Handler, "$Id$")
 
@@ -31,7 +32,8 @@ public:
   ACE_QOS_Event_Handler (void);
   // Constructor.
 
-  ACE_QOS_Event_Handler::ACE_QOS_Event_Handler (const ACE_SOCK_Dgram_Mcast &dgram_mcast);
+  ACE_QOS_Event_Handler::ACE_QOS_Event_Handler (const ACE_SOCK_Dgram_Mcast &dgram_mcast,
+												ACE_QoS_Session *qos_session);
   // Constructor.
 
   ~ACE_QOS_Event_Handler (void);
@@ -51,6 +53,7 @@ public:
 private:
   ACE_SOCK_Dgram_Mcast dgram_mcast_;
   ACE_INET_Addr remote_addr_;
+  ACE_QoS_Session *qos_session_;
 };
 
 #endif  /* RECEIVER_QOS_EVENT_HANDLER_H */
