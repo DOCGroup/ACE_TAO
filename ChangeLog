@@ -1,3 +1,21 @@
+Thu Mar 24 13:23:00 2005  Rich Seibel  <seibel_r@ociweb.com>
+
+        Moving updates for Mac made by Paul and Chad  to get it to work.
+
+        * include/makeinclude/platform_macosx.GNU:
+
+          Explicitly default the threads variable to threads=1.  This
+          was preventing ACE_TMCast from building.
+          Change the optimization option to -O2.  -O3 was causing some
+          link problems in the IDL compiler.
+
+        * bin/MakeProjectCreator/config/ftorbutils.mpb:
+
+          Add a dependency on the PortableGroup library.  This is
+          part of cleaning up the linkage between PortableGroup and
+          some of the FT* libraries.
+
+
 Thu Mar 24 14:12:19 2005  Steve Huston  <shuston@riverace.com>
 
 	* include/makeinclude/platform_hpux_aCC.GNU: Rather than hand-set all
