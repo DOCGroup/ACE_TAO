@@ -9,10 +9,10 @@ Timer_Service::init (int argc, char *argv[])
 	      "in Timer_Service::init, argv[0] = %s, argc == %d\n", 
 	      argv[0], argc));
 
-  for (size_t i = 0; i < argc; i++)
+  for (int i = 0; i < argc; i++)
     ACE_DEBUG ((LM_DEBUG, "argv[%d] = %s\n", i, argv[i]));
 
-  int interval;
+  int interval = Timer_Service::TIMEOUT;
 
   if (argc > 1)
     {
