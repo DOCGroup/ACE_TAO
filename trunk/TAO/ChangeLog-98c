@@ -1,3 +1,10 @@
+Wed Feb 25 18:03:35 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile: 
+	* orbsvcs/tests/AVStreams/Makefile: 
+	* tests/Cubit/TAO/IDL_Cubit/Makefile: 
+	  Updated dependencies.
+
 Wed Feb 25 17:13:05 1998  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
 
 	* orbsvcs/Naming_Service/Naming_Service.cpp (Naming_Service):
