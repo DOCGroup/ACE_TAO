@@ -1,3 +1,31 @@
+Fri Dec 19 10:46:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Codeset_Registry.cpp:
+          Removed not needed ; after ACE_RCSID to fix Tru64 warning.
+
+        * ace/OS.h:
+        * ace/OS_TLI.h:
+        * ace/UUID.{h,cpp,inl}:
+        * ace/OS_NS_arpa_inet.h:
+          Removed not needed ; after namespace close } to fix Tru64 warning.
+
+        * ace/config-cxx-common.h:
+          Added ACE_HAS_STD_TEMPLATE_CLASS_MEMBER_SPECIALIZATION. I hope all
+          version of the Compaq CC compiler will support this, V6.5 needs this
+
+        * ace/config-tru64.h:
+          Tru64 5.1 doesn't have stdint.h so added ACE_LACKS_STDINT_H. I don't
+          know of previous versions, so made this dependent on the version of
+          Tru64.
+
+        * ace/config-osf1-4.0.h:
+          Moved check for ACE_MT_SAFE for ACE_LACKS_CLEARERR a little bit down,
+          so that ACE_MT_SAFE is always defined to fix compile error on Tru64.
+
+        * tests/Reference_Counted_Event_Handler_Test.cpp:
+          Make sure we don't have local variables with the same name but
+          different type to fix Tru64 warning.
+
 Fri Dec 19 03:29:33 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * examples/System_V_IPC/SV_Semaphores/Semaphores_1.cpp:
@@ -8,7 +36,7 @@ Fri Dec 19 03:29:33 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Fri Dec 19 01:27:00 UTC 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* examples/Reactor/WFMO_Reactor/Abandoned.cpp (handle_timeout): 
+	* examples/Reactor/WFMO_Reactor/Abandoned.cpp (handle_timeout):
 
 	  Must remove handler from the Reactor before the handler dies.
 	  Otherwise, a call back from the Reactor will result in a seg
