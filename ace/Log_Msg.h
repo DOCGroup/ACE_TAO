@@ -640,7 +640,8 @@ private:
   /// Process id of the current process.
   static pid_t pid_;
 
-  /// Options flags.
+  /// Options flags used to hold the logger flag options, e.g., 
+  /// STDERR, LOGGER, OSTREAM, MSG_CALLBACK, etc.
   static u_long flags_;
 
   /// Offset of msg_[].
