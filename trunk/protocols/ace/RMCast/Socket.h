@@ -20,10 +20,12 @@
 #include "Retransmit.h"
 #include "Acknowledge.h"
 
+#include "RMCast_Export.h"
+
 
 namespace ACE_RMCast
 {
-  class Socket : protected Element
+  class ACE_RMCast_Export Socket : protected Element
   {
   public:
     ~Socket ();
