@@ -81,6 +81,7 @@ BIN =   Aio_Platform_Test \
         Reactors_Test \
         Reactor_Exceptions_Test \
         Reactor_Notify_Test \
+	Select_Reactor_Notify_Stress_Test \
         Reactor_Dispatch_Order_Test \
         Reactor_Performance_Test \
         Reactor_Timer_Test \
