@@ -55,7 +55,7 @@ void
 be_valuetype_fwd::set_abstract_valuetype ()
 {
   this->full_definition()->set_abstract_valuetype();
-};
+}
 
 // generate the var definition
 int

@@ -93,7 +93,7 @@ void
 be_valuetype::set_abstract_valuetype ()
 {
   abstract_ = 1;
-};
+}
 
 // compute stringified fully scoped skeleton name (OBV_name)
 void
