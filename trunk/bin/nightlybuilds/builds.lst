@@ -113,7 +113,7 @@ LIST   = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/tango_NoInline/
 WEB    = http://doc.ece.uci.edu/cgi-bin/show_log_dir.pl?tango_NoInline
 STATUS = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/tango_NoInline/status.txt
 
-[Debian_GCC_3.0.3]
+[Debian_GCC_3.0.4]
 LIST   = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/rumba_GCC_3.0/
 WEB    = http://doc.ece.uci.edu/cgi-bin/show_log_dir.pl?rumba_GCC_3.0
 STATUS = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/rumba_GCC_3.0/status.txt
