@@ -36,6 +36,7 @@ TAO_GIOP_Message_Handler::read_parse_message (TAO_Transport *transport)
   // Read the message from the transport. The size of the message read
   // is the maximum size of the buffer that we have less the amount of
   // data that has already been read in to the buffer.
+
   ssize_t n = transport->recv (this->current_buffer_.wr_ptr (),
                                this->current_buffer_.space ());
 
@@ -57,7 +58,7 @@ TAO_GIOP_Message_Handler::read_parse_message (TAO_Transport *transport)
 
   if (TAO_debug_level > 8)
     {
-      ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - received %d bytes\n", n));
+      ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - received %d bytes 1\n", n));
     }
 
   // Check what message are we waiting for and take suitable action
@@ -269,7 +270,7 @@ TAO_GIOP_Message_Handler::read_ulong (const char *ptr)
 }
 
 int
-TAO_GIOP_Message_Handler::is_message_ready (void)
+TAO_GIOP_Message_Handler::is_message_ready (TAO_Transport *transport)
 {
   if (this->message_status_ == TAO_GIOP_WAITING_FOR_PAYLOAD)
     {
@@ -327,6 +328,43 @@ TAO_GIOP_Message_Handler::is_message_ready (void)
           this->current_buffer_.wr_ptr (rd_pos +
                                         this->message_state_.message_size);
 
+          return this->message_state_.is_complete (this->current_buffer_);
+        }
+      // @@ This is the ultimate hack for SHMIOP and related protocols
+      // @@ that uses the reactor for signalling rather than for data
+      // @@ transfer. This hack was done in the at the last minute for
+      // @@ the beta 1.1.13. This hack needs to be removed for the
+      // @@ next beta - Bala
+      else if (transport->reactor_signalling ())
+        {
+          // If the reactor is used by the transport for signalling,
+          // then do the rest of the read here.
+          ssize_t n = transport->recv (this->current_buffer_.wr_ptr (),
+                                       this->current_buffer_.space ());
+
+          if (n == -1)
+            {
+              if (errno == EWOULDBLOCK)
+                return 0;
+
+              return -1;
+            }
+          // @@ What are the other error handling here??
+          else if (n == 0)
+            {
+              return -1;
+            }
+
+          // Now we have a succesful read. First adjust the write pointer
+          this->current_buffer_.wr_ptr (n);
+
+          if (TAO_debug_level > 8)
+          {
+            ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - received %d bytes\n", n));
+          }
+
+          // By now we should be having the whole message read in.
+          this->message_status_ = TAO_GIOP_WAITING_FOR_HEADER;
           return this->message_state_.is_complete (this->current_buffer_);
         }
     }

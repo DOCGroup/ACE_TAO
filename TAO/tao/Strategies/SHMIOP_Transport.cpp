@@ -293,6 +293,12 @@ TAO_SHMIOP_Transport::messaging_init (CORBA::Octet major,
 }
 
 int
+TAO_SHMIOP_Transport::reactor_signalling (void)
+{
+  return 1;
+}
+
+int
 TAO_SHMIOP_Transport::process_message (void)
 {
   // Get the <message_type> that we have received
@@ -384,7 +390,7 @@ TAO_SHMIOP_Transport::process_message (void)
           // The reply dispatcher was no longer registered.
           // This can happened when the request/reply
           // times out.
-          // To throw away all registered reply handlers is 
+          // To throw away all registered reply handlers is
           // not the right thing, as there might be just one
           // old reply coming in and several valid new ones
           // pending. If we would invoke <connection_closed>
