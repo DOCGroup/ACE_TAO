@@ -38,7 +38,7 @@ TAO_NS_ThreadPool_Task::init (TAO_NS_AdminProperties& admin_properties)
 void
 TAO_NS_ThreadPool_Task::init (const NotifyExt::ThreadPoolParams& tp_params, TAO_NS_AdminProperties& admin_properties  ACE_ENV_ARG_DECL)
 {
-  long flags = THR_NEW_LWP | THR_JOINABLE;
+  long flags = THR_SCHED_DEFAULT|THR_BOUND|THR_NEW_LWP;
 
   flags |=
     TAO_NS_PROPERTIES::instance()->scope_policy () |
@@ -48,7 +48,7 @@ TAO_NS_ThreadPool_Task::init (const NotifyExt::ThreadPoolParams& tp_params, TAO_
   if (this->ACE_Task <ACE_SYNCH>::activate (flags,
                                             tp_params.static_threads,
                                             0,
-                                            ACE_DEFAULT_THREAD_PRIORITY) == -1)
+                                            ACE_THR_PRI_OTHER_DEF) == -1)
     {
       if (TAO_debug_level > 0)
         {
@@ -98,10 +98,10 @@ TAO_NS_ThreadPool_Task::svc (void)
                           "EC (%P|%t) getq error in Dispatching Queue\n"));
 
           // Decrement the global event count.
-          this->queue_length_--;
+          (*this->queue_length_)--;
 
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG, "removing from queue\n"));
+            ACE_DEBUG ((LM_DEBUG, "removing from queue, queue_length = %d\n",this->queue_length_->value () ));
           TAO_NS_Method_Request *request =
             ACE_dynamic_cast (TAO_NS_Method_Request*, mb);
 
