@@ -1,3 +1,10 @@
+Sun Aug 24 14:09:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Extended fuzz script to check for id which should be Id.
+          Found some by accident and now extending fuzz script to find
+          all and make sure in the future this kind of problem is found.
+
 Sat Aug 23 12:55:04 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/DLL.cpp (ACE_DLL, open_i):
