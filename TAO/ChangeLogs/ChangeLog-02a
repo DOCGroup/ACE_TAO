@@ -1,3 +1,11 @@
+Wed Jun 26 14:07:59 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* orbsvcs/orbsvcs/IOR_Multicast.cpp:
+	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
+	* orbsvcs/orbsvcs/AV/MCast.cpp:
+	  Remove SOCK_Dgram_Mcast_T references.
+
 Tue Jun 25 16:29:44 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/RTCORBA/: Eliminated an unnecessary 10 second wait for
