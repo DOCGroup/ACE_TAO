@@ -1,8 +1,14 @@
+Fri Nov 06 08:57:49 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Mem_Map_Test.cpp (reverse_file): put the volatile
+          qualifier back in.  LynxOS 3.0.0/PowerPC needs it with -O2
+          and without ACE_HAS_INLINE.
+
 Thu Nov  5 23:10:46 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Thread_Manager.cpp (wait_task): Fixed a wrong parenthesis
-	  pair.  Thanks to Bob McWhirter <bob@werken.com> for figuring
-	  this out.
+        * ace/Thread_Manager.cpp (wait_task): Fixed a wrong parenthesis
+          pair.  Thanks to Bob McWhirter <bob@werken.com> for figuring
+          this out.
 
 Thu Nov  5 21:41:26 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
 
