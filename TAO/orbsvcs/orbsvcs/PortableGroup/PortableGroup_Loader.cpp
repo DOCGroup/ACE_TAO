@@ -19,8 +19,6 @@ int
 TAO_PortableGroup_Loader::init (int /*argc*/,
                                 char* /*argv*/ [])
 {
-
-  ACE_DEBUG ((LM_DEBUG, " BIGGER DEAL AMBA \n"));
   ACE_TRACE ("TAO_PortableGroup_Loader::init");
   // Register the ORB initializer.
   ACE_TRY_NEW_ENV
