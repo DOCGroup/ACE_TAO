@@ -59,6 +59,7 @@ be_visitor_enum_any_op_cs::visit_enum (be_enum *node)
       << node->name () << " *_any_val;" << be_nl
       << "ACE_NEW (_any_val, " << node->name ()
       << " (_tao_elem));" << be_nl
+      << "if (!_any_val) return;" << be_nl
       << "TAO_TRY" << be_nl
       << "{" << be_idt_nl
       << "_tao_any.replace (" << node->tc_name ()
