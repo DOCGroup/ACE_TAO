@@ -1,5 +1,8 @@
 Fri Aug 21 11:57:57 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* src/Version.cpp: Updated the version to 2.7 to reflect the
+	  new changes.
+
 	* src/Options.cpp (operator): Added a new -V option, which just
  	  exits with a value of 0.  This is useful for checking if gperf
  	  exists in the search path.  We use the feature in TAO.

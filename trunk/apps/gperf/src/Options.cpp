@@ -212,7 +212,7 @@ Options::operator() (int argc, char *argv[])
 {
   ACE_LOG_MSG->open (argv[0]);
 
-  ACE_Get_Opt getopt (argc, argv, "adcCDe:Ef:gGhH:i:IJj:k:K:lL:mMnN:oOprs:S:tTvZ:");
+  ACE_Get_Opt getopt (argc, argv, "adcCDe:Ef:gGhH:i:IJj:k:K:lL:mMnN:oOprs:S:tTvVZ:");
   int option_char;
 
   argument_count  = argc;
