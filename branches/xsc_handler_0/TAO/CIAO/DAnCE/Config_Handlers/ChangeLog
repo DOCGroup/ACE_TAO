@@ -1,3 +1,10 @@
+Tue Sep 28 15:26:41 2004  Jules White  <jules@dre.vanderbilt.edu>
+                                                                                
+        * DAnCE/Config_Handlers/Base_Handler.cpp:
+        * DAnCE/Config_Handlers/Base_Handler.h:
+  
+        Removed Base_Handler since it is no longer used.
+
 Tue Sep 28 18:38:41 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* DAnCE/Config_Handlers/ADD_Handler.cpp:
