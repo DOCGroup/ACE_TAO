@@ -216,7 +216,7 @@ int be_visitor_root::visit_root (be_root *node)
   // Make one more pass over the entire tree and generate the OBV_ namespaces
   // and OBV_ classes.
 
-  idl_bool obv = 0;
+  idl_bool obv = 1;
   int status = 0;
 
   switch (this->ctx_->state ())
@@ -231,20 +231,24 @@ int be_visitor_root::visit_root (be_root *node)
       ctx.state (TAO_CodeGen::TAO_MODULE_OBV_CS);
       break;
     default:
+      obv = 0;
       break;
     }
 
-  obv = 1;
-  be_visitor_obv_module visitor (&ctx);
-  status = visitor.visit_scope (node);
-
-  if (obv == 1 && status == -1)
+  if (obv == 1)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_root::"
-                         "visit_root - "
-                         "failed to generate OBV_ things\n"),  
-                        -1);
+      be_visitor_obv_module visitor (&ctx);
+      status = visitor.visit_scope (node);
+      obv = 0;
+
+      if (status == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_root::"
+                             "visit_root - "
+                             "failed to generate OBV_ things\n"),  
+                            -1);
+        }
     }
 
   // The next thing we need to do is make one more pass thru the entire tree

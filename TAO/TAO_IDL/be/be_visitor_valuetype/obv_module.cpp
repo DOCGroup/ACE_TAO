@@ -199,29 +199,22 @@ be_visitor_obv_module::visit_eventtype (be_eventtype *node)
 
   switch (this->ctx_->state ())
     {
-    case TAO_CodeGen::TAO_MODULE_OBV_CH:
-      ctx.state (TAO_CodeGen::TAO_VALUETYPE_OBV_CH);
-      break;
-    case TAO_CodeGen::TAO_MODULE_OBV_CI:
-      {
-        // This context state is not involved in any strategies.
-        ctx.state (TAO_CodeGen::TAO_VALUETYPE_OBV_CI);
-        be_visitor_eventtype_obv_ci visitor (&ctx);
-        status = node->accept (&visitor);
+      case TAO_CodeGen::TAO_MODULE_OBV_CH:
+        ctx.state (TAO_CodeGen::TAO_VALUETYPE_OBV_CH);
         break;
-      }
-    case TAO_CodeGen::TAO_MODULE_OBV_CS:
-      ctx.state (TAO_CodeGen::TAO_VALUETYPE_OBV_CS);
-      break;
-  default:
-      {
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%N:%l) be_visitor_obv_module::"
-                           "visit_valuetype - "
-                           "Bad context state\n"
-                           ), 
-                          -1);
-      }
+      case TAO_CodeGen::TAO_MODULE_OBV_CI:
+        {
+          // This context state is not involved in any strategies.
+          ctx.state (TAO_CodeGen::TAO_VALUETYPE_OBV_CI);
+          be_visitor_eventtype_obv_ci visitor (&ctx);
+          status = node->accept (&visitor);
+          break;
+        }
+      case TAO_CodeGen::TAO_MODULE_OBV_CS:
+        ctx.state (TAO_CodeGen::TAO_VALUETYPE_OBV_CS);
+        break;
+      default:
+        return 0;
     }
 
   if (status == 0)
