@@ -1154,7 +1154,7 @@ ACEXML_Parser::parse_content (const ACEXML_Char* startname,
             this->obstack_.grow (ch);
         }
     }
-  return 0;
+  ACE_NOTREACHED (return 0;)
 }
 
 
@@ -1393,7 +1393,6 @@ ACEXML_Parser::parse_attlist_decl (ACEXML_ENV_SINGLE_ARG_DECL)
       ACEXML_CHECK_RETURN (-1);
     }
   ACEXML_Char fwd = 0;
-  ACEXML_Char* attname = 0;
   count = this->skip_whitespace_count (&fwd);
   // Parse AttDef*
   while (fwd != '>')
@@ -1411,7 +1410,7 @@ ACEXML_Parser::parse_attlist_decl (ACEXML_ENV_SINGLE_ARG_DECL)
       count = this->check_for_PE_reference (ACEXML_ENV_SINGLE_ARG_PARAMETER);
       ACEXML_CHECK_RETURN (-1);
 
-      attname = this->parse_attname (ACEXML_ENV_SINGLE_ARG_PARAMETER);
+      this->parse_attname (ACEXML_ENV_SINGLE_ARG_PARAMETER);
       ACEXML_CHECK_RETURN (-1);
 
       count = this->check_for_PE_reference (ACEXML_ENV_SINGLE_ARG_PARAMETER);

@@ -1,10 +1,36 @@
+Wed Nov  3 07:13:19 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ACEXML/parser/parser/Parser.i:
+
+          Removed unused variable 'ch'.
+
+        * ACEXML/parser/parser/Parser.cpp:
+
+          Added ACE_NOTREACHED around return to avoid warnings from Tru64
+          compiler.
+
+        * ASNMP/asnmp/address.cpp:
+        * ASNMP/asnmp/octet.cpp:
+        * ASNMP/asnmp/oid.h:
+        * ASNMP/asnmp/oid.cpp:
+        * ASNMP/asnmp/smival.h:
+        * ASNMP/asnmp/transaction.cpp:
+
+          Getting rid of build warnings from various compilers (cxx, aCC,
+          etc.)
+
+        * examples/IPC_SAP/SSL_SAP/SSL-client.cpp:
+
+          Because of my Tue Nov  2 13:51:15 2004 change, cast -1 to size_t
+          in a couple of places.
+
 Tue Nov  2 18:37:22 2004  Steve Huston  <shuston@riverace.com>
 
-	* tests/SOCK_SEQPACK_SCTP_Test.cpp: Reverted:
-	  Tue Nov  2 10:15:01 2004  Chad Elliott  <elliott_c@ociweb.com>
-	  and changed the Server() and Client() return types from void*
-	  to ACE_THR_FUNC_RETURN to fix compile errors. Also changed a
-	  char to unsigned char to avoid a truncation warning.
+        * tests/SOCK_SEQPACK_SCTP_Test.cpp: Reverted:
+          Tue Nov  2 10:15:01 2004  Chad Elliott  <elliott_c@ociweb.com>
+          and changed the Server() and Client() return types from void*
+          to ACE_THR_FUNC_RETURN to fix compile errors. Also changed a
+          char to unsigned char to avoid a truncation warning.
 
 Tue Nov  2 14:09:57 2004  Chad Elliott  <elliott_c@ociweb.com>
 

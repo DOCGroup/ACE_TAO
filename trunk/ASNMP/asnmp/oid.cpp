@@ -187,8 +187,8 @@ Oid& Oid::operator=( const Oid &oid)
   if ( oid.smival.value.oid.len == 0)
      return *this;
 
-  init_value((const SmiLPOID) &(oid.smival.value.oid),
-                 oid.smival.value.oid.len);
+  const SmiLPOID srcOid = (SmiLPOID) &(oid.smival.value.oid);
+  init_value(srcOid, oid.smival.value.oid.len);
   return *this;
 }
 
