@@ -188,8 +188,6 @@ be_visitor_sequence_ci::gen_var_impl (be_sequence *node)
   TAO_OutStream *os = this->ctx_->stream ();
   char fname [NAMEBUFSIZE];
   char lname [NAMEBUFSIZE];
-  be_type *bt = 0;
-
 
   ACE_OS::memset (fname, 
                   '\0', 
@@ -208,7 +206,7 @@ be_visitor_sequence_ci::gen_var_impl (be_sequence *node)
                    node->local_name ()->get_string ());
 
   // Retrieve base type.
-  bt = be_type::narrow_from_decl (node->base_type ());
+  be_type *bt = be_type::narrow_from_decl (node->base_type ());
 
   if (bt == 0)
     {
@@ -224,37 +222,34 @@ be_visitor_sequence_ci::gen_var_impl (be_sequence *node)
   *os << "// *************************************************************"
       << be_nl;
   *os << "// Inline operations for class " << fname << be_nl;
-  *os << "// *************************************************************\n\n";
+  *os << "// *************************************************************"
+      << be_nl << be_nl;
 
   // Default constuctor.
   *os << "ACE_INLINE" << be_nl
       << fname << "::" << lname
       << " (void) // default constructor" << be_nl
       << "  " << ": ptr_ (0)" << be_nl
-      << "{}\n\n";
+      << "{}" << be_nl << be_nl;
 
   // Constuctorr from a _ptr.
-  os->indent ();
   *os << "ACE_INLINE" << be_nl;
   *os << fname << "::" << lname << " (" << node->local_name () 
       << " *p)" << be_nl;
   *os << "  : ptr_ (p)" << be_nl;
-  *os << "{}\n\n";
+  *os << "{}" << be_nl << be_nl;
 
   // Copy constructor.
-  os->indent ();
   *os << "ACE_INLINE" << be_nl;
   *os << fname << "::" << lname << " (const ::" << fname 
       << " &p) // copy constructor" << be_nl;
-  *os << "{\n";
-  os->incr_indent ();
+  *os << "{" << be_idt_nl;
   *os << "if (p.ptr_)" << be_idt_nl;
   *os << "ACE_NEW (this->ptr_, ::" << node->name () 
       << " (*p.ptr_));" << be_uidt_nl;
   *os << "else" << be_nl;
-  *os << "  this->ptr_ = 0;\n";
-  os->decr_indent ();
-  *os << "}\n\n";
+  *os << "  this->ptr_ = 0;" << be_uidt_nl;
+  *os << "}" << be_nl << be_nl;
 
   // Fixed-size base types only.
   if (bt->size_type () == be_decl::FIXED)
@@ -263,148 +258,111 @@ be_visitor_sequence_ci::gen_var_impl (be_sequence *node)
       *os << "ACE_INLINE" << be_nl;
       *os << fname << "::" << lname << " (const ::" 
           << node->name () << " &p)" << be_nl;
-      *os << "{\n";
-      os->incr_indent ();
+      *os << "{" << be_idt_nl;
       *os << "ACE_NEW (this->ptr_, ::" << node->name () 
-          << " (p));\n";
-      os->decr_indent ();
-      *os << "}\n\n";
+          << " (p));" << be_uidt_nl;
+      *os << "}" << be_nl << be_nl;
     }
 
   // Destructor.
-  os->indent ();
   *os << "ACE_INLINE" << be_nl;
   *os << fname << "::~" << lname << " (void) // destructor" << be_nl;
-  *os << "{\n";
-  os->incr_indent ();
-  *os << "delete this->ptr_;\n";
-  os->decr_indent ();
-  *os << "}\n\n";
+  *os << "{" << be_idt_nl;
+  *os << "delete this->ptr_;" << be_uidt_nl;
+  *os << "}" << be_nl << be_nl;
 
   // Assignment operator from a pointer.
-  os->indent ();
   *os << "ACE_INLINE " << fname << " &" << be_nl;
   *os << fname << "::operator= (" << node->local_name () 
       << " *p)" << be_nl;
-  *os << "{\n";
-  os->incr_indent ();
+  *os << "{" << be_idt_nl;
   *os << "delete this->ptr_;" << be_nl;
   *os << "this->ptr_ = p;" << be_nl;
-  *os << "return *this;\n";
-  os->decr_indent ();
-  *os << "}\n\n";
+  *os << "return *this;" << be_uidt_nl;
+  *os << "}" << be_nl << be_nl;
 
   // Assignment operator from _var.
-  os->indent ();
   *os << "ACE_INLINE " << fname << " &" << be_nl;
   *os << fname << "::operator= (const ::" << fname 
       << " &p) // deep copy" << be_nl;
-  *os << "{\n";
-  os->incr_indent ();
+  *os << "{" << be_idt_nl;
   *os << "if (this != &p)" << be_nl;
-  *os << "{\n";
-  os->incr_indent ();
+  *os << "{" << be_idt_nl;
   *os << "delete this->ptr_;" << be_nl;
   *os << "ACE_NEW_RETURN (this->ptr_, ::" 
-      << node->name () << " (*p.ptr_), *this);\n";
-  os->decr_indent ();
+      << node->name () << " (*p.ptr_), *this);" << be_uidt_nl;
   *os << "}" << be_nl;
-  *os << "return *this;\n";
-  os->decr_indent ();
-  *os << "}\n\n";
+  *os << "return *this;" << be_uidt_nl;
+  *os << "}" << be_nl << be_nl;
 
   // Fixed-size base types only.
   if (bt->size_type () == be_decl::FIXED)
     {
-      os->indent ();
       *os << "// fixed-size types only" << be_nl;
       *os << "ACE_INLINE ::" << fname << " &" << be_nl;
       *os << fname << "::operator= (const ::" << node->name () 
           << " &p)" << be_nl;
-      *os << "{\n";
-      os->incr_indent ();
+      *os << "{" << be_idt_nl;
       *os << "if (this->ptr_ != &p)" << be_nl;
-      *os << "{\n";
-      os->incr_indent ();
+      *os << "{" << be_idt_nl;
       *os << "delete this->ptr_;" << be_nl;
       *os << "ACE_NEW_RETURN (this->ptr_, ::" 
-          << node->name () << " (p), *this);\n";
-      os->decr_indent ();
+          << node->name () << " (p), *this);" << be_uidt_nl;
       *os << "}" << be_nl;
-      *os << "return *this;\n";
-      os->decr_indent ();
-      *os << "}\n\n";
+      *os << "return *this;" << be_uidt_nl;
+      *os << "}" << be_nl << be_nl;
     }
 
   // Two arrow operators.
-  os->indent ();
   *os << "ACE_INLINE const ::" << node->name () << " *" << be_nl;
   *os << fname << "::operator-> (void) const" << be_nl;
-  *os << "{\n";
-  os->incr_indent ();
-  *os << "return this->ptr_;\n";
-  os->decr_indent ();
-  *os << "}\n\n";
+  *os << "{" << be_idt_nl;
+  *os << "return this->ptr_;" << be_uidt_nl;
+  *os << "}" << be_nl << be_nl;
 
-  os->indent ();
   *os << "ACE_INLINE ::" << node->name () << " *" << be_nl;
   *os << fname << "::operator-> (void)" << be_nl;
-  *os << "{\n";
-  os->incr_indent ();
-  *os << "return this->ptr_;\n";
-  os->decr_indent ();
-  *os << "}\n\n";
+  *os << "{" << be_idt_nl;
+  *os << "return this->ptr_;" << be_uidt_nl;
+  *os << "}" << be_nl << be_nl;
 
   // Other extra methods - 3 cast operator ().
-  os->indent ();
   *os << "ACE_INLINE " << be_nl;
   *os << fname << "::operator const ::" << node->name () 
       << " &() const // cast" << be_nl;
-  *os << "{\n";
-  os->incr_indent ();
-  *os << "return *this->ptr_;\n";
-  os->decr_indent ();
-  *os << "}\n\n";
+  *os << "{" << be_idt_nl;
+  *os << "return *this->ptr_;" << be_uidt_nl;
+  *os << "}" << be_nl << be_nl;
 
-  os->indent ();
   *os << "ACE_INLINE " << be_nl;
   *os << fname << "::operator ::" << node->name () 
       << " &() // cast " << be_nl;
-  *os << "{\n";
-  os->incr_indent ();
-  *os << "return *this->ptr_;\n";
-  os->decr_indent ();
-  *os << "}\n\n";
+  *os << "{" << be_idt_nl;
+  *os << "return *this->ptr_;" << be_uidt_nl;
+  *os << "}" << be_nl << be_nl;
 
-  os->indent ();
   *os << "ACE_INLINE " << be_nl;
   *os << fname << "::operator ::" << node->name () 
       << " &() const // cast " << be_nl;
-  *os << "{\n";
-  os->incr_indent ();
-  *os << "return *this->ptr_;\n";
-  os->decr_indent ();
-  *os << "}\n\n";
+  *os << "{" << be_idt_nl;
+  *os << "return *this->ptr_;" << be_uidt_nl;
+  *os << "}" << be_nl << be_nl;
 
   // Variable-size base types only.
   if (bt->size_type () == be_decl::VARIABLE)
     {
-      os->indent ();
       *os << "// variable-size types only" << be_nl;
       *os << "ACE_INLINE" << be_nl;
       *os << fname << "::operator ::" << node->name () 
           << " *&() // cast " << be_nl;
-      *os << "{\n";
-      os->incr_indent ();
-      *os << "return this->ptr_;\n";
-      os->decr_indent ();
-      *os << "}\n\n";
+      *os << "{" << be_idt_nl;
+      *os << "return this->ptr_;" << be_uidt_nl;
+      *os << "}" << be_nl << be_nl;
     }
 
   // The [] operators.
 
   // Non-const.
-  os->indent ();
   *os << "ACE_INLINE ";
 
   be_visitor_context ctx (*this->ctx_);
@@ -430,96 +388,97 @@ be_visitor_sequence_ci::gen_var_impl (be_sequence *node)
 
   *os << be_nl;
   *os << fname << "::operator[] (CORBA::ULong index)" << be_nl;
-  *os << "{\n";
-  os->incr_indent ();
-  *os << "return this->ptr_->operator[] (index);\n";
-  os->decr_indent ();
-  *os << "}\n\n";
+  *os << "{" << be_idt_nl;
+  *os << "return this->ptr_->operator[] (index);" << be_uidt_nl;
+  *os << "}" << be_nl << be_nl;
 
-  // Const.
-  os->indent ();
-  *os << "ACE_INLINE const ";
+  AST_Decl::NodeType nt = bt->base_node_type ();
+  AST_PredefinedType::PredefinedType pdt = AST_PredefinedType::PT_void;
 
-  if (bt->accept (visitor) == -1)
+  if (nt == AST_Decl::NT_pre_defined)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_sequence_ci::"
-                         "gen_var_impl - "
-                         "[] ret type gen failed\n"),
-                        -1);
+      AST_PredefinedType *p = AST_PredefinedType::narrow_from_decl (bt);
+      pdt = p->pt ();
     }
 
-  *os << be_nl;
-  *os << fname << "::operator[] (CORBA::ULong index) const" << be_nl;
-  *os << "{\n";
-  os->incr_indent ();
-  *os << "return ACE_const_cast (const ";
-
-  if (bt->accept (visitor) == -1)
+  // @@ (JP) Problems with constant instantiations of TAO_Object_Manager, 
+  // TAO_Pseudo_Object_Manager, TAO_SeqElem_WString_Manager and
+  // TAO_SeqElem_String_Manager make these impossible right now.
+  if (nt != AST_Decl::NT_string
+      && nt != AST_Decl::NT_wstring
+      && nt != AST_Decl::NT_interface
+      && nt != AST_Decl::NT_interface_fwd
+      && pdt != AST_PredefinedType::PT_pseudo)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_sequence_ci::"
-                         "gen_var_impl - "
-                         "[] ret type gen failed\n"),
-                        -1);
-    }
+      // Const.
+      *os << "ACE_INLINE const ";
 
-  *os << ", this->ptr_->operator[] (index));\n";
-  os->decr_indent ();
-  *os << "}\n\n";
+      if (bt->accept (visitor) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_sequence_ci::"
+                             "gen_var_impl - "
+                             "[] ret type gen failed\n"),
+                            -1);
+        }
+
+      *os << be_nl;
+      *os << fname << "::operator[] (CORBA::ULong index) const" << be_nl;
+      *os << "{" << be_idt_nl;
+
+      *os << "return ACE_const_cast (const ";
+  
+      if (bt->accept (visitor) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_sequence_ci::"
+                             "gen_var_impl - "
+                             "[] ret type gen failed\n"),
+                            -1);
+        }
+
+      *os << ", this->ptr_->operator[] (index));" << be_uidt_nl;
+
+      *os << "}" << be_nl << be_nl;
+    }
 
   delete visitor;
 
   // in, inout, out, and _retn.
-  os->indent ();
   *os << "ACE_INLINE const ::" << node->name () << " &" << be_nl;
   *os << fname << "::in (void) const" << be_nl;
-  *os << "{\n";
-  os->incr_indent ();
-  *os << "return *this->ptr_;\n";
-  os->decr_indent ();
-  *os << "}\n\n";
+  *os << "{" << be_idt_nl;
+  *os << "return *this->ptr_;" << be_uidt_nl;
+  *os << "}" << be_nl << be_nl;
 
-  os->indent ();
   *os << "ACE_INLINE ::" << node->name () << " &" << be_nl;
   *os << fname << "::inout (void)" << be_nl;
-  *os << "{\n";
-  os->incr_indent ();
-  *os << "return *this->ptr_;\n";
-  os->decr_indent ();
-  *os << "}\n\n";
+  *os << "{" << be_idt_nl;
+  *os << "return *this->ptr_;" << be_uidt_nl;
+  *os << "}" << be_nl << be_nl;
 
-  os->indent ();
   *os << "// mapping for variable size " << be_nl;
   *os << "ACE_INLINE ::" << node->name () << " *&" << be_nl;
   *os << fname << "::out (void)" << be_nl;
-  *os << "{\n";
-  os->incr_indent ();
+  *os << "{" << be_idt_nl;
   *os << "delete this->ptr_;" << be_nl;
   *os << "this->ptr_ = 0;" << be_nl;
-  *os << "return this->ptr_;\n";
-  os->decr_indent ();
-  *os << "}\n\n";
+  *os << "return this->ptr_;" << be_uidt_nl;
+  *os << "}" << be_nl << be_nl;
 
-  os->indent ();
   *os << "ACE_INLINE ::" << node->name () << " *" << be_nl;
   *os << fname << "::_retn (void)" << be_nl;
-  *os << "{\n";
-  os->incr_indent ();
+  *os << "{" << be_idt_nl;
   *os << "::" << node->name () << " *tmp = this->ptr_;" << be_nl;
   *os << "this->ptr_ = 0;" << be_nl;
-  *os << "return tmp;\n";
-  os->decr_indent ();
-  *os << "}\n\n";
+  *os << "return tmp;" << be_uidt_nl;
+  *os << "}" << be_nl << be_nl;
 
   // The additional ptr () member function.
-  os->indent ();
   *os << "ACE_INLINE ::" << node->name () << " *" << be_nl;
   *os << fname << "::ptr (void) const" << be_nl;
-  *os << "{\n";
-  os->incr_indent ();
-  *os << "return this->ptr_;\n";
-  os->decr_indent ();
+  *os << "{" << be_idt_nl;
+  *os << "return this->ptr_;" << be_uidt_nl;
   *os << "}\n\n";
 
   return 0;
@@ -531,7 +490,6 @@ be_visitor_sequence_ci::gen_out_impl (be_sequence *node)
   TAO_OutStream *os = this->ctx_->stream ();
   char fname [NAMEBUFSIZE];
   char lname [NAMEBUFSIZE];
-  be_type *bt = 0;
 
 
   ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
@@ -541,7 +499,7 @@ be_visitor_sequence_ci::gen_out_impl (be_sequence *node)
   ACE_OS::sprintf (lname, "%s_out", node->local_name ()->get_string ());
 
   // Retrieve base type.
-  bt = be_type::narrow_from_decl (node->base_type ());
+  be_type *bt = be_type::narrow_from_decl (node->base_type ());
 
   if (bt == 0)
     {
@@ -558,102 +516,80 @@ be_visitor_sequence_ci::gen_out_impl (be_sequence *node)
   *os << "// *************************************************************"
       << be_nl;
   *os << "// Inline operations for class " << fname << be_nl;
-  *os << "// *************************************************************\n\n";
+  *os << "// *************************************************************"
+      << be_nl << be_nl;
 
   // Constuctorr from a pointer.
-  os->indent ();
   *os << "ACE_INLINE" << be_nl;
   *os << fname << "::" << lname << " (" << node->local_name () 
       << " *&p)" << be_nl;
   *os << "  : ptr_ (p)" << be_nl;
-  *os << "{\n";
-  os->incr_indent ();
-  *os << "this->ptr_ = 0;\n";
-  os->decr_indent ();
-  *os << "}\n\n";
+  *os << "{" << be_idt_nl;
+  *os << "this->ptr_ = 0;" << be_uidt_nl;
+  *os << "}" << be_nl << be_nl;
 
   // Constructor from _var &.
-  os->indent ();
   *os << "ACE_INLINE" << be_nl;
   *os << fname << "::" << lname << " (" << node->local_name () 
       << "_var &p) // constructor from _var" << be_nl;
   *os << "  : ptr_ (p.out ())" << be_nl;
-  *os << "{\n";
-  os->incr_indent ();
+  *os << "{" << be_idt_nl;
   *os << "delete this->ptr_;" << be_nl;
-  *os << "this->ptr_ = 0;\n";
-  os->decr_indent ();
-  *os << "}\n\n";
+  *os << "this->ptr_ = 0;" << be_uidt_nl;
+  *os << "}" << be_nl << be_nl;
 
   // Copy constructor.
-  os->indent ();
   *os << "ACE_INLINE" << be_nl;
   *os << fname << "::" << lname << " (const ::" << fname 
       << " &p) // copy constructor" << be_nl;
   *os << "  : ptr_ (ACE_const_cast (" << lname 
       << "&, p).ptr_)" << be_nl;
-  *os << "{}\n\n";
+  *os << "{}" << be_nl << be_nl;
 
   // Assignment operator from _out &.
-  os->indent ();
   *os << "ACE_INLINE ::" << fname << " &" << be_nl;
   *os << fname << "::operator= (const ::" << fname 
       << " &p)" << be_nl;
-  *os << "{\n";
-  os->incr_indent ();
+  *os << "{" << be_idt_nl;
   *os << "this->ptr_ = ACE_const_cast (" << lname 
       << "&, p).ptr_;" << be_nl;
-  *os << "return *this;\n";
-  os->decr_indent ();
-  *os << "}\n\n";
+  *os << "return *this;" << be_uidt_nl;
+  *os << "}" << be_nl << be_nl;
 
   // Assignment from _var is not allowed by a private declaration.
 
   // Assignment operator from pointer.
-  os->indent ();
   *os << "ACE_INLINE ::" << fname << " &" << be_nl;
   *os << fname << "::operator= (" << node->local_name () 
       << " *p)" << be_nl;
-  *os << "{\n";
-  os->incr_indent ();
+  *os << "{" << be_idt_nl;
   *os << "this->ptr_ = p;" << be_nl;
-  *os << "return *this;\n";
-  os->decr_indent ();
-  *os << "}\n\n";
+  *os << "return *this;" << be_uidt_nl;
+  *os << "}" << be_nl << be_nl;
 
   // Other extra methods - cast operator ().
-  os->indent ();
   *os << "ACE_INLINE " << be_nl;
   *os << fname << "::operator ::" << node->name () 
       << " *&() // cast" << be_nl;
-  *os << "{\n";
-  os->incr_indent ();
-  *os << "return this->ptr_;\n";
-  os->decr_indent ();
-  *os << "}\n\n";
+  *os << "{" << be_idt_nl;
+  *os << "return this->ptr_;" << be_uidt_nl;
+  *os << "}" << be_nl << be_nl;
 
   // ptr function.
-  os->indent ();
   *os << "ACE_INLINE ::" << node->name () << " *&" << be_nl;
   *os << fname << "::ptr (void) // ptr" << be_nl;
-  *os << "{\n";
-  os->incr_indent ();
-  *os << "return this->ptr_;\n";
-  os->decr_indent ();
-  *os << "}\n\n";
+  *os << "{" << be_idt_nl;
+  *os << "return this->ptr_;" << be_uidt_nl;
+  *os << "}" << be_nl << be_nl;
 
   // operator ->.
-  os->indent ();
   *os << "ACE_INLINE ::" << node->name () << " *" << be_nl;
   *os << fname << "::operator-> (void)" << be_nl;
-  *os << "{\n";
-  os->incr_indent ();
-  *os << "return this->ptr_;\n";
-  os->decr_indent ();
-  *os << "}\n\n";
+  *os << "{" << be_idt_nl;
+  *os << "return this->ptr_;" << be_uidt_nl;
+  *os << "}" << be_nl << be_nl;
 
   // Sequence has an additional method.
-  os->indent ();
   *os << "ACE_INLINE ";
 
   be_visitor_context ctx (*this->ctx_);
@@ -681,10 +617,8 @@ be_visitor_sequence_ci::gen_out_impl (be_sequence *node)
 
   *os << be_nl;
   *os << fname << "::operator[] (CORBA::ULong index)" << be_nl;
-  *os << "{\n";
-  os->incr_indent ();
-  *os << "return this->ptr_->operator[] (index);\n";
-  os->decr_indent ();
+  *os << "{" << be_idt_nl;
+  *os << "return this->ptr_->operator[] (index);" << be_uidt_nl;
   *os << "}\n\n";
 
   return 0;
