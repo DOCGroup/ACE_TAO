@@ -159,7 +159,7 @@ be_visitor_operation_rettype_vardecl_cs::visit_valuetype (be_valuetype *node)
 
   os->indent ();
 
-  *os << bt->name () << "_var _tao_retval (0);\n\n"
+  *os << "::" << bt->name () << "_var _tao_retval;\n\n"
       << be_nl;
 
   return 0;
@@ -177,7 +177,7 @@ be_visitor_operation_rettype_vardecl_cs::visit_valuetype_fwd (be_valuetype_fwd *
     bt = node;
 
   os->indent ();
-  *os << bt->name () << "_var _tao_retval (0);\n\n"
+  *os << "::" << bt->name () << "_var _tao_retval;\n\n"
       << be_nl;
 
   return 0;
