@@ -5,7 +5,7 @@
 
 // This should really be a configurable value.  CIAO doesn't suppor
 // this yet but the new D&C shall support this RSN.
-static local_primer_ = 9619;
+static long local_primer_ = 9619;
 
 /// Default constructor.
 MyImpl::CB_Worker_exec::CB_Worker_exec ()
