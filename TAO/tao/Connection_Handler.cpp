@@ -8,7 +8,6 @@
 #include "Resume_Handle.h"
 #include "Transport.h"
 #include "Wait_Strategy.h"
-#include "Resume_Handle.h"
 
 #include "ace/SOCK.h"
 #include "ace/Reactor.h"
