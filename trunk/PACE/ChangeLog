@@ -15,6 +15,30 @@ Sat Apr 21 17:37:40 2001  Carlos O'Ryan  <coryan@uci.edu>
         * pace/win32/socket.c:
           Make Fuzz happy, some RCS ids went missing.
 
+Sat Apr 21 15:31:27 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * PACE/pace/ctype.h:
+        * PACE/pace/config/compiler.h:
+        * PACE/pace/config/platform.h:
+        * PACE/pace/win32/pthread.c:
+        * PACE/pace/win32/pthread.inl:
+        * PACE/pace/win32/semaphore.c:
+        * PACE/pace/win32/semaphore.h:
+        * PACE/pace/win32/signal.inl:
+        * PACE/pace/win32/socket.c:
+        * PACE/pace/win32/socket.h:
+        * PACE/pace/win32/socket.inl:
+        * PACE/pace/win32/stdlib.inl:
+        * PACE/pace/win32/unistd.h:
+        * PACE/pace/win32/unistd.inl:
+        * PACE/pace/win32/utime.c:
+        * PACE/pace/win32/utsname.c:
+        * PACE/pace/win32/utsname.inl:
+        * PACE/pace/win32/wait.inl:
+          Add support for mingw (www.mingw.org) and partial support for
+          cygwin (http://cygwin.com/).  Many thanks to Cristian Ferretti
+          <cristian_ferretti@yahoo.com>
+
 Mon Apr 16 16:17:35 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * pace/posix/socket.h:
