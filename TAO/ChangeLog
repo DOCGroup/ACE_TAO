@@ -1,20 +1,27 @@
+Fri Nov  5 11:50:39 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
+
+          Choose .in() on the any instead of the * operator.  This will help
+          Borland get past the ambiguity.
+
 Fri Nov  5 16:14:52 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/DynamicInterface/DII_Arguments.cpp (interceptor_paramlist):
+        * tao/DynamicInterface/DII_Arguments.cpp (interceptor_paramlist):
 
-	  Do not insert the argument into any Any. Just call replace () to
-	  make a logical copy of the TAO::Any_impl. 
+          Do not insert the argument into any Any. Just call replace () to
+          make a logical copy of the TAO::Any_impl.
 
-	* tao/PortableServer/Object_Adapter.cpp:
-	* tao/PortableServer/POA.cpp:
+        * tao/PortableServer/Object_Adapter.cpp:
+        * tao/PortableServer/POA.cpp:
 
-	  Reorganized the lock strategy which prevents deadlocks with
-	  ImR. Please see
+          Reorganized the lock strategy which prevents deadlocks with
+          ImR. Please see
 
-	  http://groups.yahoo.com/group/tao-users/message/18317
+          http://groups.yahoo.com/group/tao-users/message/18317
 
-	  for the original bug report and the suggested solution from
-	  Bill Somerville <bill at classdesign dot com>.
+          for the original bug report and the suggested solution from
+          Bill Somerville <bill at classdesign dot com>.
 
 Fri Nov  5 07:02:01 2004  Chad Elliott  <elliott_c@ociweb.com>
 
