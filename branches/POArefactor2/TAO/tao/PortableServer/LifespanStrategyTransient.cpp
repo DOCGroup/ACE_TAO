@@ -108,6 +108,12 @@ namespace TAO
         this->poa_->tao_poa_manager().check_state (ACE_ENV_SINGLE_ARG_PARAMETER);
       }
     }
+
+    ::PortableServer::LifespanPolicyValue
+    LifespanStrategyTransient::type() const
+    {
+      return ::PortableServer::TRANSIENT;
+    }
   } /* namespace Portable_Server */
 } /* namespace TAO */
 

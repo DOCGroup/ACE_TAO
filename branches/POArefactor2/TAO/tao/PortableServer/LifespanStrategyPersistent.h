@@ -56,6 +56,8 @@ namespace TAO
       /// Check the state of the POA.
       virtual void check_state (ACE_ENV_SINGLE_ARG_DECL);
 
+      virtual ::PortableServer::LifespanPolicyValue type() const;
+
     private:
     };
   } /* namespace Portable_Server */

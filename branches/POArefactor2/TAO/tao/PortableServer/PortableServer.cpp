@@ -45,6 +45,9 @@
 
 #include "IdUniquenessStrategyUniqueFactoryImpl.h"
 
+#include "LifespanStrategyPersistentFactoryImpl.h"
+#include "LifespanStrategyTransientFactoryImpl.h"
+
 ACE_RCSID (PortableServer,
            PortableServer,
            "$Id$")
@@ -146,6 +149,14 @@ TAO_POA_Initializer::init (void)
 
   ACE_Service_Config::process_directive (
       TAO::Portable_Server::ace_svc_desc_LifespanStrategyFactoryImpl
+    );
+
+  ACE_Service_Config::process_directive (
+      TAO::Portable_Server::ace_svc_desc_LifespanStrategyPersistentFactoryImpl
+    );
+
+  ACE_Service_Config::process_directive (
+      TAO::Portable_Server::ace_svc_desc_LifespanStrategyTransientFactoryImpl
     );
 
   ACE_Service_Config::process_directive (

@@ -1,9 +1,8 @@
 // $Id$
 
 #include "LifespanStrategyFactoryImpl.h"
+#include "LifespanStrategy.h"
 #include "ace/Dynamic_Service.h"
-#include "LifespanStrategyTransient.h"
-#include "LifespanStrategyPersistent.h"
 
 ACE_RCSID (PortableServer,
            LifespanStrategyFactoryImpl,
@@ -21,17 +20,36 @@ namespace TAO
       ::PortableServer::LifespanPolicyValue value)
     {
       LifespanStrategy* strategy = 0;
-// @todo make these loadable
+
       switch (value)
       {
         case ::PortableServer::PERSISTENT :
         {
-          ACE_NEW_RETURN (strategy, LifespanStrategyPersistent, 0);
+          LifespanStrategyFactory *strategy_factory =
+            ACE_Dynamic_Service<LifespanStrategyFactory>::instance ("LifespanStrategyPersistentFactory");
+
+          if (strategy_factory != 0)
+            strategy = strategy_factory->create (value);
+          else
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("(%P|%t) %p\n"),
+                        ACE_TEXT ("Unable to get ")
+                        ACE_TEXT ("LifespanStrategyPersistentFactory")));
+
           break;
         }
         case ::PortableServer::TRANSIENT :
         {
-          ACE_NEW_RETURN (strategy, LifespanStrategyTransient, 0);
+          LifespanStrategyFactory *strategy_factory =
+            ACE_Dynamic_Service<LifespanStrategyFactory>::instance ("LifespanStrategyTransientFactory");
+
+          if (strategy_factory != 0)
+            strategy = strategy_factory->create (value);
+          else
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("(%P|%t) %p\n"),
+                        ACE_TEXT ("Unable to get ")
+                        ACE_TEXT ("LifespanStrategyTransientFactory")));
           break;
         }
       }
@@ -44,7 +62,33 @@ namespace TAO
       LifespanStrategy *strategy
       ACE_ENV_ARG_DECL)
     {
-      delete strategy;
+      switch (strategy->type ())
+      {
+        case ::PortableServer::PERSISTENT :
+        {
+          LifespanStrategyFactory *strategy_factory =
+            ACE_Dynamic_Service<LifespanStrategyFactory>::instance ("LifespanStrategyPersistentFactory");
+
+          if (strategy_factory != 0)
+            {
+              strategy_factory->destroy (strategy ACE_ENV_ARG_PARAMETER);
+              ACE_CHECK;
+            }
+          break;
+        }
+        case ::PortableServer::TRANSIENT :
+        {
+          LifespanStrategyFactory *strategy_factory =
+            ACE_Dynamic_Service<LifespanStrategyFactory>::instance ("LifespanStrategyTransientFactory");
+
+          if (strategy_factory != 0)
+            {
+              strategy_factory->destroy (strategy ACE_ENV_ARG_PARAMETER);
+              ACE_CHECK;
+            }
+          break;
+        }
+      }
     }
 
     ACE_STATIC_SVC_DEFINE (

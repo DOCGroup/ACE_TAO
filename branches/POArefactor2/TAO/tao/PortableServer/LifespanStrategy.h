@@ -21,6 +21,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "Policy_Strategy.h"
+#include "LifespanPolicyC.h"
 #include "tao/Object_KeyC.h"
 
 namespace TAO
@@ -71,6 +72,8 @@ namespace TAO
 
       /// Check the state of the POA.
       virtual void check_state (ACE_ENV_SINGLE_ARG_DECL) = 0;
+
+      virtual ::PortableServer::LifespanPolicyValue type() const = 0;
 
     protected:
       TAO_Root_POA *poa_;
