@@ -45,9 +45,9 @@
 
 // I will integrate this, together with the sqrt() function when
 // the implementation is complete.  --Sergio.
+// levine 1 nov 98 % Note: I removed fabs () because we no longer use it.
 #if defined (ACE_LACKS_FLOATING_POINT)
-#define fabs(X) ((X) >= 0 ? (X) : -(X))
-// the following is just temporary, until we finish the sqrt()
+// The following is just temporary, until we finish the sqrt()
 // implementation.
 #define sqrt(X) (1)
 #endif /* ACE_LACKS_FLOATING_POINT */
@@ -360,10 +360,3 @@ private:
 };
 
 #endif /* !defined (TASK_CLIENT_H) */
-
-
-
-
-
-
-
