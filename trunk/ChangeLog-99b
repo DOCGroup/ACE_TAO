@@ -1,3 +1,8 @@
+Tue May 11 18:11:51 1999  James C. Hu <jxh@entera.com>
+
+        * ace/config-sunos5.7.h: SunOS 5.7 (aka Solaris 7) does not
+          have a limited select.
+
 Tue May 11 17:11:51 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Conn_Test.cpp (spawn_threads): changed some ACE_NEW
