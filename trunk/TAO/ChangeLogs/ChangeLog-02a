@@ -6,7 +6,7 @@ Tue Oct 03 10:08:19 2000  David L. Levine <levine@cs.wustl.edu>
 
 Mon Oct  2 17:21:25 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-        * docs/INS.html (src):
+        * docs/INS.html:
           Updated to reflect the change from iioploc to corbaloc format.
 
 Mon Oct  2 15:25:16 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
