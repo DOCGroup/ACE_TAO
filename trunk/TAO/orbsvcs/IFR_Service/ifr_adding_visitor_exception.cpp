@@ -243,7 +243,7 @@ ifr_adding_visitor_exception::visit_exception (AST_Exception *node)
       CORBA_ExceptionDef_var new_def =
         current_scope->create_exception (node->repoID (),
                                          node->local_name ()->get_string (),
-                                         this->gen_version (node),
+                                         node->version (),
                                          this->members_
                                          TAO_ENV_ARG_PARAMETER);
 
@@ -332,7 +332,7 @@ ifr_adding_visitor_exception::visit_enum (AST_Enum *node)
             be_global->repository ()->create_enum (
                                           node->repoID (),
                                           node->local_name ()->get_string (),
-                                          this->gen_version (node),
+                                          node->version (),
                                           members
                                           TAO_ENV_ARG_PARAMETER
                                         );

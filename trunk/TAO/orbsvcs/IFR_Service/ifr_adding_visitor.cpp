@@ -127,7 +127,7 @@ ifr_adding_visitor::visit_module (AST_Module *node)
               new_def = container->create_module (
                                        node->repoID (),
                                        node->local_name ()->get_string (),
-                                       this->gen_version (node)
+                                       node->version ()
                                        TAO_ENV_ARG_PARAMETER
                                      );
               ACE_TRY_CHECK;
@@ -264,18 +264,51 @@ ifr_adding_visitor::visit_interface (AST_Interface *node)
               //    interface or of some other type.
               // If prev_def would narrow successfully to an InterfaceDef, we
               // have NO WAY of knowing if we are defining or clobbering. So
-              // we take the path of other ORB vendors and destroy the
-              // previous IFR entry, then create a new one.
+              // we destroy the contents of the previous entry (we don't want
+              // to destroy the entry itself, since it may have already been
+              // made a member of some other entry, and destroying it would
+              // make the containing entry's section key invalid) and repopulate.
+              // On the other hand, if prev_def is NOT an interface, we can
+              // safely destroy it, since we know we are not redefining a
+              // previous entry, forward declared or not.
               if (node->ifr_fwd_added () == 0)
                 {
-                  prev_def->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+                  CORBA::DefinitionKind kind = 
+                    prev_def->def_kind (TAO_ENV_SINGLE_ARG_PARAMETER);
                   ACE_TRY_CHECK;
 
-                  int status = this->create_interface_def (node
-                                                           TAO_ENV_ARG_PARAMETER);
-                  ACE_TRY_CHECK;
+                  if (kind == CORBA::dk_Interface)
+                    {
+                      CORBA::InterfaceDef_var iface =
+                        CORBA::InterfaceDef::_narrow (prev_def.in ()
+                                                      TAO_ENV_ARG_PARAMETER);
+                      ACE_TRY_CHECK;
 
-                  return status;
+                      CORBA::ContainedSeq_var contents = 
+                        iface->contents (CORBA::dk_all,
+                                         1
+                                         TAO_ENV_ARG_PARAMETER);
+                      ACE_TRY_CHECK;
+
+                      CORBA::ULong length = contents->length ();
+
+                      for (CORBA::ULong i = 0; i < length; ++i)
+                        {
+                          contents[i]->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+                          ACE_TRY_CHECK;
+                        }
+                    }
+                  else
+                    {
+                      prev_def->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+                      ACE_TRY_CHECK;
+
+                      int status = this->create_interface_def (node
+                                                               TAO_ENV_ARG_PARAMETER);
+                      ACE_TRY_CHECK;
+
+                      return status;
+                    }
                 }
 
               CORBA::ULong n_parents = ACE_static_cast (CORBA::ULong,
@@ -452,7 +485,7 @@ ifr_adding_visitor::visit_interface_fwd (AST_InterfaceFwd *node)
                     current_scope->create_local_interface (
                                        i->repoID (),
                                        i->local_name ()->get_string (),
-                                       this->gen_version (i),
+                                       i->version (),
                                        bases
                                        TAO_ENV_ARG_PARAMETER
                                      );
@@ -463,7 +496,7 @@ ifr_adding_visitor::visit_interface_fwd (AST_InterfaceFwd *node)
                     current_scope->create_interface (
                                        i->repoID (),
                                        i->local_name ()->get_string (),
-                                       this->gen_version (i),
+                                       i->version (),
                                        bases
                                        TAO_ENV_ARG_PARAMETER
                                      );
@@ -484,31 +517,9 @@ ifr_adding_visitor::visit_interface_fwd (AST_InterfaceFwd *node)
             }
 
           node->ifr_added (1);
-        }
-      else
-        {
-          // If the line below is true, we are clobbering a previous
-          // entry from another IDL file. In that
-          // case we do what other ORB vendors do, and destroy the
-          // original entry, create the new one, and let the user beware.
-          if (node->ifr_added () == 0)
-            {
-              prev_def->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
-
-              // This call will take the other branch of
-              // "if (CORBA::is_nil (prev_def.in ()))"
-              return this->visit_interface_fwd (node);
-            }
-
-          // There is already an entry in the repository, so just update
-          // the current IR object holder.
-          this->ir_current_ = CORBA_IDLType::_narrow (prev_def.in ()
-                                                      TAO_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          i->ifr_fwd_added (1);
         }
 
-      i->ifr_fwd_added (1);
    }
   ACE_CATCHANY
     {
@@ -661,7 +672,7 @@ ifr_adding_visitor::visit_enum (AST_Enum *node)
                 current_scope->create_enum (
                     node->repoID (),
                     node->local_name ()->get_string (),
-                    this->gen_version (node),
+                    node->version (),
                     members
                     TAO_ENV_ARG_PARAMETER
                   );
@@ -782,7 +793,7 @@ ifr_adding_visitor::visit_attribute (AST_Attribute *node)
           CORBA_AttributeDef_var new_def =
             iface->create_attribute (node->repoID (),
                                      node->local_name ()->get_string (),
-                                     this->gen_version (node),
+                                     node->version (),
                                      this->ir_current_.in (),
                                      mode
                                      TAO_ENV_ARG_PARAMETER);
@@ -938,7 +949,7 @@ ifr_adding_visitor::visit_constant (AST_Constant *node)
             current_scope->create_constant (
                 id,
                 node->local_name ()->get_string (),
-                this->gen_version (node),
+                node->version (),
                 idl_type.in (),
                 any
                 TAO_ENV_ARG_PARAMETER
@@ -1104,7 +1115,7 @@ ifr_adding_visitor::visit_typedef (AST_Typedef *node)
                 current_scope->create_alias (
                    node->repoID (),
                    node->local_name ()->get_string (),
-                   this->gen_version (node),
+                   node->version (),
                    this->ir_current_.in ()
                    TAO_ENV_ARG_PARAMETER
                  );
@@ -1240,7 +1251,7 @@ ifr_adding_visitor::visit_native (AST_Native *node)
                 current_scope->create_native (
                     node->repoID (),
                     node->local_name ()->get_string (),
-                    this->gen_version (node)
+                    node->version ()
                     TAO_ENV_ARG_PARAMETER
                   );
               ACE_TRY_CHECK;
@@ -1468,13 +1479,6 @@ ifr_adding_visitor::load_any (AST_Expression::AST_ExprValue *ev,
     }
 }
 
-// This may get more elaborate someday.
-const char *
-ifr_adding_visitor::gen_version (AST_Decl *)
-{
-  return "1.0";
-}
-
 void
 ifr_adding_visitor::element_type (AST_Type *base_type
                                   TAO_ENV_ARG_DECL)
@@ -1576,7 +1580,7 @@ ifr_adding_visitor::create_interface_def (AST_Interface *node
             current_scope->create_local_interface (
                                node->repoID (),
                                node->local_name ()->get_string (),
-                               this->gen_version (node),
+                               node->version (),
                                bases
                                TAO_ENV_ARG_PARAMETER
                              );
@@ -1587,7 +1591,7 @@ ifr_adding_visitor::create_interface_def (AST_Interface *node
             current_scope->create_interface (
                                node->repoID (),
                                node->local_name ()->get_string (),
-                               this->gen_version (node),
+                               node->version (),
                                bases
                                TAO_ENV_ARG_PARAMETER
                              );
