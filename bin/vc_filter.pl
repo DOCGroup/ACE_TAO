@@ -14,10 +14,10 @@ $kosher_b = "";
 $kosher_e = "";
 
 $in_sin_b = "<FONT COLOR=\"RED\">";
-$in_sin_e = "</FONE>";
+$in_sin_e = "</FONT>";
 
-$new_build_b = "<P>";
-$new_build_e = "";
+$new_build_b = "<P><EM>";
+$new_build_e = "</EM>";
 
 $fname = $ARGV[0];
 
