@@ -24,10 +24,10 @@ RIR_Narrow<Interface>::resolve (CORBA::ORB_ptr orb,
       CORBA::Object_var object =
         orb->resolve_initial_references (object_id
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
 
       interface = Interface::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (interface.in ()))
         {
