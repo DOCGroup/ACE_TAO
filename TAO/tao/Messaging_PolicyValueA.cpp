@@ -36,15 +36,14 @@
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:34
+// be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_Messaging_PolicyValue[] =
+static TAO::TypeCode::Struct_Field<char const *> _tao_fields_Messaging_PolicyValue[] =
   {
     { "ptype", &CORBA::_tc_PolicyType },
     { "pvalue", &CORBA::_tc_OctetSeq }
     
   };
-
 static TAO::TypeCode::Struct<char const *,
                              TAO::TypeCode::Struct_Field<char const *> const *,
                              CORBA::tk_struct,
@@ -64,25 +63,35 @@ namespace Messaging
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:744
+// be/be_visitor_typecode/typecode_defn.cpp:743
 
-static TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
-  _tao_tc_Messaging_PolicyValueSeq_0 (
-    CORBA::tk_sequence,
-    &Messaging::_tc_PolicyValue,
-    0U);
-  
+namespace TAO
+{
+  namespace TypeCode
+  {
+    TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
+      Messaging_PolicyValueSeq_0 (
+        CORBA::tk_sequence,
+        &Messaging::_tc_PolicyValue,
+        0U);
+      
+    ::CORBA::TypeCode_ptr const tc_Messaging_PolicyValueSeq_0 =
+      &Messaging_PolicyValueSeq_0;
+    
+  }
+}
+
 static TAO::TypeCode::Alias<char const *,
                             TAO::Null_RefCount_Policy>
   _tao_tc_Messaging_PolicyValueSeq (
     "IDL:omg.org/Messaging/PolicyValueSeq:1.0",
     "PolicyValueSeq",
-    &::_tao_tc_Messaging_PolicyValueSeq_0);
+    &TAO::TypeCode::tc_Messaging_PolicyValueSeq_0);
   
 namespace Messaging
 {
@@ -93,7 +102,7 @@ namespace Messaging
 
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/any_op_cs.cpp:54
+// be/be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -151,7 +160,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_sequence/any_op_cs.cpp:54
+// be/be_visitor_sequence/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -162,7 +171,7 @@ void operator<<= (
   TAO::Any_Dual_Impl_T<Messaging::PolicyValueSeq>::insert_copy (
       _tao_any,
       Messaging::PolicyValueSeq::_tao_any_destructor,
-      Messaging_PolicyValueSeq_0,
+      TAO::TypeCode::tc_Messaging_PolicyValueSeq_0,
       _tao_elem
     );
 }
@@ -176,7 +185,7 @@ void operator<<= (
   TAO::Any_Dual_Impl_T<Messaging::PolicyValueSeq>::insert (
       _tao_any,
       Messaging::PolicyValueSeq::_tao_any_destructor,
-      Messaging_PolicyValueSeq_0,
+      TAO::TypeCode::tc_Messaging_PolicyValueSeq_0,
       _tao_elem
     );
 }
@@ -203,7 +212,7 @@ CORBA::Boolean operator>>= (
     TAO::Any_Dual_Impl_T<Messaging::PolicyValueSeq>::extract (
         _tao_any,
         Messaging::PolicyValueSeq::_tao_any_destructor,
-        Messaging_PolicyValueSeq_0,
+        TAO::TypeCode::tc_Messaging_PolicyValueSeq_0,
         _tao_elem
       );
 }

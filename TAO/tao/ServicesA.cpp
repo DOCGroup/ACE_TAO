@@ -35,14 +35,14 @@
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
                             TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_ServiceType (
     "IDL:omg.org/CORBA/ServiceType:1.0",
     "ServiceType",
-    &::_tao_tc_CORBA::_tc_ushort);
+    &CORBA::_tc_ushort);
   
 namespace CORBA
 {
@@ -53,14 +53,14 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
                             TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_ServiceOption (
     "IDL:omg.org/CORBA/ServiceOption:1.0",
     "ServiceOption",
-    &::_tao_tc_CORBA::_tc_ulong);
+    &CORBA::_tc_ulong);
   
 namespace CORBA
 {
@@ -71,14 +71,14 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
                             TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_ServiceDetailType (
     "IDL:omg.org/CORBA/ServiceDetailType:1.0",
     "ServiceDetailType",
-    &::_tao_tc_CORBA::_tc_ulong);
+    &CORBA::_tc_ulong);
   
 namespace CORBA
 {
@@ -89,30 +89,40 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:744
+// be/be_visitor_typecode/typecode_defn.cpp:743
 
-static TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
-  _tao_tc_CORBA_sequence_0 (
-    CORBA::tk_sequence,
-    &::_tao_tc_CORBA::_tc_octet,
-    0U);
-  
+namespace TAO
+{
+  namespace TypeCode
+  {
+    TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
+      CORBA_sequence_0 (
+        CORBA::tk_sequence,
+        &CORBA::_tc_octet,
+        0U);
+      
+    ::CORBA::TypeCode_ptr const tc_CORBA_sequence_0 =
+      &CORBA_sequence_0;
+    
+  }
+}
+
 static TAO::TypeCode::Alias<char const *,
                             TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_OctetSeq (
     "IDL:omg.org/CORBA/OctetSeq:1.0",
     "OctetSeq",
-    &::_tao_tc_CORBA_sequence_0);
+    &TAO::TypeCode::tc_CORBA_sequence_0);
   
 namespace CORBA
 {
@@ -136,24 +146,24 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:744
+// be/be_visitor_typecode/typecode_defn.cpp:743
 
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
                             TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_ServiceOption (
     "IDL:omg.org/CORBA/ServiceOption:1.0",
     "ServiceOption",
-    &::_tao_tc_CORBA::_tc_ulong);
+    &CORBA::_tc_ulong);
   
 namespace CORBA
 {
@@ -161,18 +171,28 @@ namespace CORBA
     &_tao_tc_CORBA_ServiceOption;
 }
 
-static TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
-  _tao_tc_CORBA_ServiceOptionSeq_0 (
-    CORBA::tk_sequence,
-    &CORBA::_tc_ServiceOption,
-    0U);
-  
+namespace TAO
+{
+  namespace TypeCode
+  {
+    TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
+      CORBA_ServiceOptionSeq_0 (
+        CORBA::tk_sequence,
+        &CORBA::_tc_ServiceOption,
+        0U);
+      
+    ::CORBA::TypeCode_ptr const tc_CORBA_ServiceOptionSeq_0 =
+      &CORBA_ServiceOptionSeq_0;
+    
+  }
+}
+
 static TAO::TypeCode::Alias<char const *,
                             TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_ServiceOptionSeq (
     "IDL:omg.org/CORBA/ServiceOptionSeq:1.0",
     "ServiceOptionSeq",
-    &::_tao_tc_CORBA_ServiceOptionSeq_0);
+    &TAO::TypeCode::tc_CORBA_ServiceOptionSeq_0);
   
 namespace CORBA
 {
@@ -183,15 +203,14 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:34
+// be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_CORBA_ServiceDetail[] =
+static TAO::TypeCode::Struct_Field<char const *> _tao_fields_CORBA_ServiceDetail[] =
   {
     { "service_detail_type", &CORBA::_tc_ServiceDetailType },
     { "service_detail", &CORBA::_tc_ServiceDetailData }
     
   };
-
 static TAO::TypeCode::Struct<char const *,
                              TAO::TypeCode::Struct_Field<char const *> const *,
                              CORBA::tk_struct,
@@ -211,25 +230,35 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:744
+// be/be_visitor_typecode/typecode_defn.cpp:743
 
-static TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
-  _tao_tc_CORBA_ServiceDetailSeq_0 (
-    CORBA::tk_sequence,
-    &CORBA::_tc_ServiceDetail,
-    0U);
-  
+namespace TAO
+{
+  namespace TypeCode
+  {
+    TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
+      CORBA_ServiceDetailSeq_0 (
+        CORBA::tk_sequence,
+        &CORBA::_tc_ServiceDetail,
+        0U);
+      
+    ::CORBA::TypeCode_ptr const tc_CORBA_ServiceDetailSeq_0 =
+      &CORBA_ServiceDetailSeq_0;
+    
+  }
+}
+
 static TAO::TypeCode::Alias<char const *,
                             TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_ServiceDetailSeq (
     "IDL:omg.org/CORBA/ServiceDetailSeq:1.0",
     "ServiceDetailSeq",
-    &::_tao_tc_CORBA_ServiceDetailSeq_0);
+    &TAO::TypeCode::tc_CORBA_ServiceDetailSeq_0);
   
 namespace CORBA
 {
@@ -240,15 +269,14 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:34
+// be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_CORBA_ServiceInformation[] =
+static TAO::TypeCode::Struct_Field<char const *> _tao_fields_CORBA_ServiceInformation[] =
   {
     { "service_options", &CORBA::_tc_ServiceOptionSeq },
     { "service_details", &CORBA::_tc_ServiceDetailSeq }
     
   };
-
 static TAO::TypeCode::Struct<char const *,
                              TAO::TypeCode::Struct_Field<char const *> const *,
                              CORBA::tk_struct,
@@ -268,7 +296,7 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from 
-// be\be_visitor_sequence/any_op_cs.cpp:54
+// be/be_visitor_sequence/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -279,7 +307,7 @@ void operator<<= (
   TAO::Any_Dual_Impl_T<CORBA::ServiceOptionSeq>::insert_copy (
       _tao_any,
       CORBA::ServiceOptionSeq::_tao_any_destructor,
-      CORBA_ServiceOptionSeq_0,
+      TAO::TypeCode::tc_CORBA_ServiceOptionSeq_0,
       _tao_elem
     );
 }
@@ -293,7 +321,7 @@ void operator<<= (
   TAO::Any_Dual_Impl_T<CORBA::ServiceOptionSeq>::insert (
       _tao_any,
       CORBA::ServiceOptionSeq::_tao_any_destructor,
-      CORBA_ServiceOptionSeq_0,
+      TAO::TypeCode::tc_CORBA_ServiceOptionSeq_0,
       _tao_elem
     );
 }
@@ -320,13 +348,13 @@ CORBA::Boolean operator>>= (
     TAO::Any_Dual_Impl_T<CORBA::ServiceOptionSeq>::extract (
         _tao_any,
         CORBA::ServiceOptionSeq::_tao_any_destructor,
-        CORBA_ServiceOptionSeq_0,
+        TAO::TypeCode::tc_CORBA_ServiceOptionSeq_0,
         _tao_elem
       );
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/any_op_cs.cpp:54
+// be/be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -384,7 +412,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_sequence/any_op_cs.cpp:54
+// be/be_visitor_sequence/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -395,7 +423,7 @@ void operator<<= (
   TAO::Any_Dual_Impl_T<CORBA::ServiceDetailSeq>::insert_copy (
       _tao_any,
       CORBA::ServiceDetailSeq::_tao_any_destructor,
-      CORBA_ServiceDetailSeq_0,
+      TAO::TypeCode::tc_CORBA_ServiceDetailSeq_0,
       _tao_elem
     );
 }
@@ -409,7 +437,7 @@ void operator<<= (
   TAO::Any_Dual_Impl_T<CORBA::ServiceDetailSeq>::insert (
       _tao_any,
       CORBA::ServiceDetailSeq::_tao_any_destructor,
-      CORBA_ServiceDetailSeq_0,
+      TAO::TypeCode::tc_CORBA_ServiceDetailSeq_0,
       _tao_elem
     );
 }
@@ -436,13 +464,13 @@ CORBA::Boolean operator>>= (
     TAO::Any_Dual_Impl_T<CORBA::ServiceDetailSeq>::extract (
         _tao_any,
         CORBA::ServiceDetailSeq::_tao_any_destructor,
-        CORBA_ServiceDetailSeq_0,
+        TAO::TypeCode::tc_CORBA_ServiceDetailSeq_0,
         _tao_elem
       );
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/any_op_cs.cpp:54
+// be/be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (

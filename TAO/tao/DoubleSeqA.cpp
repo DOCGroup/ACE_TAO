@@ -35,25 +35,35 @@
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:744
+// be/be_visitor_typecode/typecode_defn.cpp:743
 
-static TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
-  _tao_tc_CORBA_DoubleSeq_0 (
-    CORBA::tk_sequence,
-    &::_tao_tc_CORBA::_tc_double,
-    0U);
-  
+namespace TAO
+{
+  namespace TypeCode
+  {
+    TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
+      CORBA_DoubleSeq_0 (
+        CORBA::tk_sequence,
+        &CORBA::_tc_double,
+        0U);
+      
+    ::CORBA::TypeCode_ptr const tc_CORBA_DoubleSeq_0 =
+      &CORBA_DoubleSeq_0;
+    
+  }
+}
+
 static TAO::TypeCode::Alias<char const *,
                             TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_DoubleSeq (
     "IDL:omg.org/CORBA/DoubleSeq:1.0",
     "DoubleSeq",
-    &::_tao_tc_CORBA_DoubleSeq_0);
+    &TAO::TypeCode::tc_CORBA_DoubleSeq_0);
   
 namespace CORBA
 {
@@ -64,7 +74,7 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from 
-// be\be_visitor_sequence/any_op_cs.cpp:54
+// be/be_visitor_sequence/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -75,7 +85,7 @@ void operator<<= (
   TAO::Any_Dual_Impl_T<CORBA::DoubleSeq>::insert_copy (
       _tao_any,
       CORBA::DoubleSeq::_tao_any_destructor,
-      CORBA_DoubleSeq_0,
+      TAO::TypeCode::tc_CORBA_DoubleSeq_0,
       _tao_elem
     );
 }
@@ -89,7 +99,7 @@ void operator<<= (
   TAO::Any_Dual_Impl_T<CORBA::DoubleSeq>::insert (
       _tao_any,
       CORBA::DoubleSeq::_tao_any_destructor,
-      CORBA_DoubleSeq_0,
+      TAO::TypeCode::tc_CORBA_DoubleSeq_0,
       _tao_elem
     );
 }
@@ -116,7 +126,7 @@ CORBA::Boolean operator>>= (
     TAO::Any_Dual_Impl_T<CORBA::DoubleSeq>::extract (
         _tao_any,
         CORBA::DoubleSeq::_tao_any_destructor,
-        CORBA_DoubleSeq_0,
+        TAO::TypeCode::tc_CORBA_DoubleSeq_0,
         _tao_elem
       );
 }

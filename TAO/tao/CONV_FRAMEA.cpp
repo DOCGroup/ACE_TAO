@@ -35,14 +35,14 @@
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
                             TAO::Null_RefCount_Policy>
   _tao_tc_CONV_FRAME_CodeSetId (
     "IDL:omg.org/CONV_FRAME/CodeSetId:1.0",
     "CodeSetId",
-    &::_tao_tc_CORBA::_tc_ulong);
+    &CORBA::_tc_ulong);
   
 namespace CONV_FRAME
 {
@@ -53,24 +53,24 @@ namespace CONV_FRAME
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:744
+// be/be_visitor_typecode/typecode_defn.cpp:743
 
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
                             TAO::Null_RefCount_Policy>
   _tao_tc_CONV_FRAME_CodeSetId (
     "IDL:omg.org/CONV_FRAME/CodeSetId:1.0",
     "CodeSetId",
-    &::_tao_tc_CORBA::_tc_ulong);
+    &CORBA::_tc_ulong);
   
 namespace CONV_FRAME
 {
@@ -78,18 +78,28 @@ namespace CONV_FRAME
     &_tao_tc_CONV_FRAME_CodeSetId;
 }
 
-static TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
-  _tao_tc_CONV_FRAME_CodeSetIdSeq_0 (
-    CORBA::tk_sequence,
-    &CONV_FRAME::_tc_CodeSetId,
-    0U);
-  
+namespace TAO
+{
+  namespace TypeCode
+  {
+    TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
+      CONV_FRAME_CodeSetIdSeq_0 (
+        CORBA::tk_sequence,
+        &CONV_FRAME::_tc_CodeSetId,
+        0U);
+      
+    ::CORBA::TypeCode_ptr const tc_CONV_FRAME_CodeSetIdSeq_0 =
+      &CONV_FRAME_CodeSetIdSeq_0;
+    
+  }
+}
+
 static TAO::TypeCode::Alias<char const *,
                             TAO::Null_RefCount_Policy>
   _tao_tc_CONV_FRAME_CodeSetIdSeq (
     "IDL:omg.org/CONV_FRAME/CodeSetIdSeq:1.0",
     "CodeSetIdSeq",
-    &::_tao_tc_CONV_FRAME_CodeSetIdSeq_0);
+    &TAO::TypeCode::tc_CONV_FRAME_CodeSetIdSeq_0);
   
 namespace CONV_FRAME
 {
@@ -100,15 +110,14 @@ namespace CONV_FRAME
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:34
+// be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_CONV_FRAME_CodeSetComponent[] =
+static TAO::TypeCode::Struct_Field<char const *> _tao_fields_CONV_FRAME_CodeSetComponent[] =
   {
     { "native_code_set", &CONV_FRAME::_tc_CodeSetId },
     { "conversion_code_sets", &CONV_FRAME::_tc_CodeSetIdSeq }
     
   };
-
 static TAO::TypeCode::Struct<char const *,
                              TAO::TypeCode::Struct_Field<char const *> const *,
                              CORBA::tk_struct,
@@ -128,15 +137,14 @@ namespace CONV_FRAME
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:34
+// be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_CONV_FRAME_CodeSetComponentInfo[] =
+static TAO::TypeCode::Struct_Field<char const *> _tao_fields_CONV_FRAME_CodeSetComponentInfo[] =
   {
     { "ForCharData", &CONV_FRAME::_tc_CodeSetComponent },
     { "ForWcharData", &CONV_FRAME::_tc_CodeSetComponent }
     
   };
-
 static TAO::TypeCode::Struct<char const *,
                              TAO::TypeCode::Struct_Field<char const *> const *,
                              CORBA::tk_struct,
@@ -156,15 +164,14 @@ namespace CONV_FRAME
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:34
+// be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_CONV_FRAME_CodeSetContext[] =
+static TAO::TypeCode::Struct_Field<char const *> _tao_fields_CONV_FRAME_CodeSetContext[] =
   {
     { "char_data", &CONV_FRAME::_tc_CodeSetId },
     { "wchar_data", &CONV_FRAME::_tc_CodeSetId }
     
   };
-
 static TAO::TypeCode::Struct<char const *,
                              TAO::TypeCode::Struct_Field<char const *> const *,
                              CORBA::tk_struct,
@@ -184,7 +191,7 @@ namespace CONV_FRAME
 
 
 // TAO_IDL - Generated from 
-// be\be_visitor_sequence/any_op_cs.cpp:54
+// be/be_visitor_sequence/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -195,7 +202,7 @@ void operator<<= (
   TAO::Any_Dual_Impl_T<CONV_FRAME::CodeSetIdSeq>::insert_copy (
       _tao_any,
       CONV_FRAME::CodeSetIdSeq::_tao_any_destructor,
-      CONV_FRAME_CodeSetIdSeq_0,
+      TAO::TypeCode::tc_CONV_FRAME_CodeSetIdSeq_0,
       _tao_elem
     );
 }
@@ -209,7 +216,7 @@ void operator<<= (
   TAO::Any_Dual_Impl_T<CONV_FRAME::CodeSetIdSeq>::insert (
       _tao_any,
       CONV_FRAME::CodeSetIdSeq::_tao_any_destructor,
-      CONV_FRAME_CodeSetIdSeq_0,
+      TAO::TypeCode::tc_CONV_FRAME_CodeSetIdSeq_0,
       _tao_elem
     );
 }
@@ -236,13 +243,13 @@ CORBA::Boolean operator>>= (
     TAO::Any_Dual_Impl_T<CONV_FRAME::CodeSetIdSeq>::extract (
         _tao_any,
         CONV_FRAME::CodeSetIdSeq::_tao_any_destructor,
-        CONV_FRAME_CodeSetIdSeq_0,
+        TAO::TypeCode::tc_CONV_FRAME_CodeSetIdSeq_0,
         _tao_elem
       );
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/any_op_cs.cpp:54
+// be/be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -300,7 +307,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/any_op_cs.cpp:54
+// be/be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -358,7 +365,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/any_op_cs.cpp:54
+// be/be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
