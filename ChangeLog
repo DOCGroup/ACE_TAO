@@ -1,3 +1,9 @@
+Fri Jan 23 10:04:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-borland.h:
+          ACE_STRCASECMP_EQUIVALENT and ACE_STRNCASECMP_EQUIVALENT are not
+          needed anymore for the CBuilderX Preview compiler
+
 Fri Jan 23 09:42:15 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_time.inl:
