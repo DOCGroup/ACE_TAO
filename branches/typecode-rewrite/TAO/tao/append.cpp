@@ -28,6 +28,7 @@
 #include "tao/Any_Unknown_IDL_Type.h"
 #include "tao/CDR.h"
 #include "tao/SystemException.h"
+#include "tao/TypeCode_Constants.h"
 
 #include "ace/Dynamic_Service.h"
 
