@@ -11,7 +11,7 @@
    % ./pingpong hello
 
    You should see lots of the following output:
-   
+
    writing <4> [7860]
    writing <4> [7860]
    writing <4> [7860]
@@ -70,7 +70,7 @@ Ping_Pong::Ping_Pong (char b[], ACE_HANDLE f)
 {
   *((int *) this->buf_) = (int) this->pid_;
   *((int *) (this->buf_ + sizeof (int))) = 0;
-  ACE_OS::strcpy (this->buf_ + (2 * sizeof (int)), b); 
+  ACE_OS::strcpy (this->buf_ + (2 * sizeof (int)), b);
   this->buf_[this->buflen_ - 1] = '\n';
   this->buf_[this->buflen_] = '\0';
 }
@@ -81,7 +81,7 @@ Ping_Pong::get_handle (void) const
   return this->handle_;
 }
 
-int 
+int
 Ping_Pong::handle_input (ACE_HANDLE)
 {
 #if defined (ACE_HAS_STREAM_PIPES)
@@ -92,11 +92,11 @@ Ping_Pong::handle_input (ACE_HANDLE)
   if (n != (ssize_t) this->buflen_)
     ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) reading [%d] %p\n", handle_, "read"), -1);
 
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
 	      "(%P|%t) reading <%d> (%d) [%d] = %s\n",
-	      this->handle_, 
-	      *(int *) this->buf_, 
-	      *(int *) (this->buf_ + sizeof (int)), 
+	      this->handle_,
+	      *(int *) this->buf_,
+	      *(int *) (this->buf_ + sizeof (int)),
 	      this->buf_ + (2 * sizeof (int))));
 #else
   ssize_t n = ACE::recv (this->handle_, this->buf_, this->buflen_);
@@ -113,7 +113,7 @@ Ping_Pong::handle_input (ACE_HANDLE)
   return 0;
 }
 
-int 
+int
 Ping_Pong::handle_output (ACE_HANDLE)
 {
 #if defined (ACE_HAS_STREAM_PIPES)
@@ -125,8 +125,8 @@ Ping_Pong::handle_output (ACE_HANDLE)
     return -1;
   else
     {
-      ACE_DEBUG ((LM_DEBUG, 
-		  "(%P|%t) writing <%d> [%d]\n", 
+      ACE_DEBUG ((LM_DEBUG,
+		  "(%P|%t) writing <%d> [%d]\n",
 		  this->handle_, this->pid_));
       return 0;
     }
@@ -135,15 +135,15 @@ Ping_Pong::handle_output (ACE_HANDLE)
     return -1;
   else
     {
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
 		  "(%P|%t) writing <%d>\n", this->handle_));
       return 0;
     }
 #endif /* ACE_HAS_STREAM_PIPES */
 }
 
-int 
-Ping_Pong::handle_timeout (const ACE_Time_Value &, 
+int
+Ping_Pong::handle_timeout (const ACE_Time_Value &,
 			   const void *)
 {
   this->set (1);
@@ -167,7 +167,7 @@ run_svc (ACE_HANDLE handle)
   // timer-based events.
 
   if (reactor.register_handler (&callback,
-				ACE_Event_Handler::READ_MASK 
+				ACE_Event_Handler::READ_MASK
 				| ACE_Event_Handler::WRITE_MASK) == -1
 #if !defined (CHORUS)
       || reactor.register_handler (SIGINT, &callback) == -1
@@ -197,7 +197,7 @@ worker (void *arg)
 }
 #endif /* ACE_WIN32 */
 
-int 
+int
 main (int argc, char *argv[])
 {
   ACE_LOG_MSG->open (argv[0]);
@@ -213,8 +213,8 @@ main (int argc, char *argv[])
   ACE_Pipe pipe (handles);
 
 #if defined (ACE_WIN32) || defined (CHORUS)
-  if (ACE_Thread::spawn (ACE_THR_FUNC (worker), 
-			 (void *) handles[0], 
+  if (ACE_Thread::spawn (ACE_THR_FUNC (worker),
+			 (void *) handles[0],
 			 THR_DETACHED) == -1
       || ACE_Thread::spawn (ACE_THR_FUNC (worker),
 			    (void *) handles[1],
@@ -239,6 +239,9 @@ main (int argc, char *argv[])
   return 0;
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Test_and_Set<ACE_Null_Mutex, sig_atomic_t>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Test_and_Set<ACE_Null_Mutex, sig_atomic_t>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

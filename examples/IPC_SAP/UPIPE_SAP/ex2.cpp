@@ -24,7 +24,7 @@ static void *
 supplier (void *)
 {
   // Insert thread into thr_mgr.
-  ACE_Thread_Control thread_control (&thr_mgr); 
+  ACE_Thread_Control thread_control (&thr_mgr);
   ACE_UPIPE_Stream s_stream;
 
   ACE_UPIPE_Addr c_addr ("pattern");
@@ -39,7 +39,7 @@ supplier (void *)
   ACE_UPIPE_Connector con;
 
   if (con.connect (s_stream, c_addr) == -1)
-    ACE_DEBUG ((LM_DEBUG, "(%t) %p\n", 
+    ACE_DEBUG ((LM_DEBUG, "(%t) %p\n",
 		"ACE_UPIPE_Acceptor.connect failed"));
 
   // Test asynchronisity.
@@ -47,8 +47,8 @@ supplier (void *)
 
   for (int j = 0; j < iterations; j++)
     {
-      ACE_Message_Block *mb_p = 
-	new ACE_Message_Block (size, ACE_Message_Block::MB_DATA, 
+      ACE_Message_Block *mb_p =
+	new ACE_Message_Block (size, ACE_Message_Block::MB_DATA,
 			       (ACE_Message_Block *) 0, mybuf);
 
       if (s_stream.send (mb_p) == -1)
@@ -65,7 +65,7 @@ supplier (void *)
       cout << "error put" << endl;
       return 0;
     }
-  
+
   s_stream.close ();
   return 0;
 }
@@ -74,7 +74,7 @@ static void *
 consumer (void *)
 {
   // Insert thread into thr_mgr.
-  ACE_Thread_Control thread_control (&thr_mgr); 
+  ACE_Thread_Control thread_control (&thr_mgr);
   ACE_UPIPE_Stream c_stream;
 
   // Set the high water mark to size to achieve optimum performance.
@@ -98,7 +98,7 @@ consumer (void *)
   ACE_DEBUG ((LM_DEBUG, "(%t) consumer starting accept\n"));
 
   if (acc.accept (c_stream) == -1)
-    ACE_DEBUG ((LM_DEBUG, "(%t) %p\n", 
+    ACE_DEBUG ((LM_DEBUG, "(%t) %p\n",
 		"ACE_UPIPE_Acceptor.accept failed"));
 
   // time measurement
@@ -108,7 +108,7 @@ consumer (void *)
 
   int received_messages = 0;
 
-  for (ACE_Message_Block *mb = 0; 
+  for (ACE_Message_Block *mb = 0;
        c_stream.recv (mb) != -1 && mb->size () != 0;
        mb->release ())
     received_messages++;
@@ -116,7 +116,7 @@ consumer (void *)
   ACE_OS::time (&currsec);
   time_t secs = (time_t) currsec - start;
 
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
 	      "(%t) Transferred %d blocks of size %d\n"
 	      "The program ran %d seconds\n",
 	      received_messages, size, secs));
@@ -125,7 +125,7 @@ consumer (void *)
   return 0;
 }
 
-int 
+int
 main (int argc, char *argv[])
 {
   size = argc > 1 ? ACE_OS::atoi (argv[1]) : 32;
@@ -136,13 +136,13 @@ main (int argc, char *argv[])
 		     THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ( (LM_ERROR, "%p\n", "spawn"), 1);
 
-  // Wait for producer and consumer threads to exit.  
+  // Wait for producer and consumer threads to exit.
   thr_mgr.wait ();
   return 0;
 }
 
 #else
-int 
+int
 main (int, char *[])
 {
   ACE_ERROR ( (LM_ERROR, "threads not supported on this platform\n"));
@@ -151,6 +151,9 @@ main (int, char *[])
 #endif /* ACE_HAS_THREADS */
 
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class auto_builtin_ptr <char>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate auto_builtin_ptr <char>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

@@ -12,7 +12,7 @@
 // Static definitions.
 
 #if defined (ACE_HAS_SIG_C_FUNC)
-extern "C" void 
+extern "C" void
 ace_sig_handler_dispatch (int signum, siginfo_t *info, ucontext_t *context)
 {
   ACE_TRACE ("ace_signal_handler_dispatch");
@@ -22,7 +22,7 @@ ace_sig_handler_dispatch (int signum, siginfo_t *info, ucontext_t *context)
 static ACE_SignalHandler ace_signal_handler_dispatcher = ACE_SignalHandler (ace_sig_handler_dispatch);
 
 #if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES)
-extern "C" void 
+extern "C" void
 ace_sig_handlers_dispatch (int signum, siginfo_t *info, ucontext_t *context)
 {
   ACE_TRACE ("ace_signal_handlers_dispatch");
@@ -100,9 +100,9 @@ ACE_Sig_Action::ACE_Sig_Action (ACE_SignalHandler sig_handler,
   else
     this->sa_.sa_mask = *sig_mask; // Structure assignment...
 
-#if !defined(ACE_HAS_TANDEM_SIGNALS)                                  
+#if !defined(ACE_HAS_TANDEM_SIGNALS)
   this->sa_.sa_handler = ACE_SignalHandlerV (sig_handler);
-#else                                                                 
+#else
   this->sa_.sa_handler = (void (*)()) ACE_SignalHandlerV (sig_handler);
 #endif /* !ACE_HAS_TANDEM_SIGNALS */
 }
@@ -120,9 +120,9 @@ ACE_Sig_Action::ACE_Sig_Action (ACE_SignalHandler sig_handler,
   else
     this->sa_.sa_mask = *sig_mask; // Structure assignment...
 
-#if !defined(ACE_HAS_TANDEM_SIGNALS)                                  
+#if !defined(ACE_HAS_TANDEM_SIGNALS)
   this->sa_.sa_handler = ACE_SignalHandlerV (sig_handler);
-#else                                                                 
+#else
   this->sa_.sa_handler = (void (*)()) ACE_SignalHandlerV (sig_handler);
 #endif /* !ACE_HAS_TANDEM_SIGNALS */
   ACE_OS::sigaction (signum, &this->sa_, 0);
@@ -144,7 +144,7 @@ ACE_Sig_Handler::sig_pending (void)
   return ACE_Sig_Handler::sig_pending_;
 }
 
-void 
+void
 ACE_Sig_Handler::sig_pending (sig_atomic_t pending)
 {
   ACE_TRACE ("ACE_Sig_Handler::sig_pending");
@@ -172,9 +172,9 @@ ACE_Sig_Handler::handler (int signum, ACE_Event_Handler *new_sh)
 
   if (ACE_Sig_Handler::in_range (signum))
     {
-      ACE_Event_Handler *sh = ACE_Sig_Handler::signal_handlers_[signum]; 
+      ACE_Event_Handler *sh = ACE_Sig_Handler::signal_handlers_[signum];
 
-      ACE_Sig_Handler::signal_handlers_[signum] = new_sh;    
+      ACE_Sig_Handler::signal_handlers_[signum] = new_sh;
       return sh;
     }
   else
@@ -184,9 +184,9 @@ ACE_Sig_Handler::handler (int signum, ACE_Event_Handler *new_sh)
 // Register an ACE_Event_Handler along with the corresponding SIGNUM.
 
 int
-ACE_Sig_Handler::register_handler (int signum, 
-				   ACE_Event_Handler *new_sh, 
-				   ACE_Sig_Action *new_disp, 
+ACE_Sig_Handler::register_handler (int signum,
+				   ACE_Event_Handler *new_sh,
+				   ACE_Sig_Action *new_disp,
 				   ACE_Event_Handler **old_sh,
 				   ACE_Sig_Action *old_disp)
 {
@@ -196,18 +196,18 @@ ACE_Sig_Handler::register_handler (int signum,
   if (ACE_Sig_Handler::in_range (signum))
     {
       ACE_Sig_Action sa; // Define a "null" action.
-      ACE_Event_Handler *sh = this->handler (signum, new_sh); 
+      ACE_Event_Handler *sh = this->handler (signum, new_sh);
 
       // Stack the old ACE_Sig_Handler if the user gives us a pointer
-      // to a object. 
+      // to a object.
       if (old_sh != 0)
 	*old_sh = sh;
 
       // Make sure that new_disp points to a valid location if the
-      // user doesn't care... 
+      // user doesn't care...
       if (new_disp == 0)
         new_disp = &sa;
-  
+
       new_disp->handler (ace_signal_handler_dispatcher);
       new_disp->flags (new_disp->flags () | SA_SIGINFO);
       return new_disp->register_action (signum, old_disp);
@@ -219,7 +219,7 @@ ACE_Sig_Handler::register_handler (int signum,
 // Remove an ACE_Event_Handler.
 
 int
-ACE_Sig_Handler::remove_handler (int signum, 
+ACE_Sig_Handler::remove_handler (int signum,
 				 ACE_Sig_Action *new_disp,
 				 ACE_Sig_Action *old_disp,
 				 int)
@@ -247,8 +247,8 @@ ACE_Sig_Handler::remove_handler (int signum,
 // dispatches one handler...
 
 void
-ACE_Sig_Handler::dispatch (int signum, 
-			   siginfo_t *siginfo, 
+ACE_Sig_Handler::dispatch (int signum,
+			   siginfo_t *siginfo,
 			   ucontext_t *ucontext)
 {
   ACE_TRACE ("ACE_Sig_Handler::dispatch");
@@ -262,12 +262,12 @@ ACE_Sig_Handler::dispatch (int signum,
   // Darn well better be in range since the OS dispatched this...
   ACE_ASSERT (ACE_Sig_Handler::in_range (signum));
 
-  ACE_Event_Handler *eh = ACE_Sig_Handler::signal_handlers_[signum]; 
+  ACE_Event_Handler *eh = ACE_Sig_Handler::signal_handlers_[signum];
 
   if (eh != 0 && eh->handle_signal (signum, siginfo, ucontext) == -1)
     {
       // Define the default disposition.
-      ACE_Sig_Action sa (SIG_DFL); 
+      ACE_Sig_Action sa (SIG_DFL);
 
       ACE_Sig_Handler::signal_handlers_[signum] = 0;
 
@@ -314,8 +314,8 @@ ACE_Sig_Adapter::sigkey (void)
 }
 
 int
-ACE_Sig_Adapter::handle_signal (int signum, 
-				siginfo_t *siginfo, 
+ACE_Sig_Adapter::handle_signal (int signum,
+				siginfo_t *siginfo,
 				ucontext_t *ucontext)
 {
   ACE_TRACE ("ACE_Sig_Adapter::handle_signal");
@@ -364,20 +364,20 @@ ACE_Sig_Adapter::handle_signal (int signum,
 int ACE_Sig_Handlers::sigkey_ = 0;
 
 // If this is > 0 then a 3rd party library has registered a
-// handler...  
+// handler...
 int ACE_Sig_Handlers::third_party_sig_handler_ = 0;
 
 // Make life easier by defining typedefs...
-typedef ACE_Fixed_Set <ACE_Event_Handler *, ACE_MAX_SIGNAL_HANDLERS> 
+typedef ACE_Fixed_Set <ACE_Event_Handler *, ACE_MAX_SIGNAL_HANDLERS>
 	ACE_SIG_HANDLERS_SET;
-typedef ACE_Fixed_Set_Iterator <ACE_Event_Handler *, ACE_MAX_SIGNAL_HANDLERS> 
+typedef ACE_Fixed_Set_Iterator <ACE_Event_Handler *, ACE_MAX_SIGNAL_HANDLERS>
 	ACE_SIG_HANDLERS_ITERATOR;
 
 class ACE_Sig_Handlers_Set
 {
 public:
   static ACE_SIG_HANDLERS_SET *instance (int signum);
-  
+
 private:
   static ACE_SIG_HANDLERS_SET *sig_handlers_[NSIG];
 };
@@ -410,9 +410,9 @@ ACE_Sig_Handlers::dump (void) const
 // (beckerd@erlh.siemens.de).
 
 int
-ACE_Sig_Handlers::register_handler (int signum, 
-				    ACE_Event_Handler *new_sh, 
-				    ACE_Sig_Action *new_disp, 
+ACE_Sig_Handlers::register_handler (int signum,
+				    ACE_Event_Handler *new_sh,
+				    ACE_Sig_Action *new_disp,
 				    ACE_Event_Handler **,
 				    ACE_Sig_Action *old_disp)
 {
@@ -423,7 +423,7 @@ ACE_Sig_Handlers::register_handler (int signum,
     {
       ACE_Sig_Adapter *ace_sig_adapter = 0; // Our signal handler.
       ACE_Sig_Adapter *extern_sh = 0; // An external signal handler.
-      ACE_Sig_Action sa; 
+      ACE_Sig_Action sa;
 
       // Get current signal disposition.
       sa.retrieve_action (signum);
@@ -444,7 +444,7 @@ ACE_Sig_Handlers::register_handler (int signum,
 	      && ACE_Sig_Handlers::third_party_sig_handler_)
 	    // Toggling is disallowed since we might break 3rd party
 	    // code.
-	    return -1; 
+	    return -1;
 
 	  // Note that we've seen a 3rd party handler...
 	  ACE_Sig_Handlers::third_party_sig_handler_ = 1;
@@ -528,7 +528,7 @@ ACE_Sig_Handlers::register_handler (int signum,
 // -1 if <signum> is invalid.
 
 int
-ACE_Sig_Handlers::remove_handler (int signum, 
+ACE_Sig_Handlers::remove_handler (int signum,
 				  ACE_Sig_Action *new_disp,
 				  ACE_Sig_Action *old_disp,
 				  int sigkey)
@@ -545,8 +545,8 @@ ACE_Sig_Handlers::remove_handler (int signum,
 
       // Iterate through the set of handlers for this signal.
 
-      for (ACE_Event_Handler **eh; 
-	   handler_iterator.next (eh) != 0; 
+      for (ACE_Event_Handler **eh;
+	   handler_iterator.next (eh) != 0;
 	   handler_iterator.advance ())
 	{
 	  // Type-safe downcast would be nice here...
@@ -586,8 +586,8 @@ ACE_Sig_Handlers::remove_handler (int signum,
 // dispatches *all* the handlers...
 
 void
-ACE_Sig_Handlers::dispatch (int signum, 
-			    siginfo_t *siginfo, 
+ACE_Sig_Handlers::dispatch (int signum,
+			    siginfo_t *siginfo,
 			    ucontext_t *ucontext)
 {
   ACE_TRACE ("ACE_Sig_Handlers::dispatch");
@@ -607,7 +607,7 @@ ACE_Sig_Handlers::dispatch (int signum,
   ACE_SIG_HANDLERS_ITERATOR handler_iterator (*handler_set);
 
   for (ACE_Event_Handler **eh = 0;
-       handler_iterator.next (eh) != 0; 
+       handler_iterator.next (eh) != 0;
        handler_iterator.advance ())
     {
       if ((*eh)->handle_signal (signum, siginfo, ucontext) == -1)
@@ -668,10 +668,18 @@ ACE_Sig_Handlers::handler (int signum, ACE_Event_Handler *new_sh)
   return *eh;
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 ACE_MT (template class ACE_TSS_Guard<ACE_Recursive_Thread_Mutex>);
 ACE_MT (template class ACE_Guard<ACE_Recursive_Thread_Mutex>);
 template class ACE_Fixed_Set<ACE_Event_Handler *, ACE_MAX_SIGNAL_HANDLERS>;
 template class ACE_Fixed_Set_Iterator<ACE_Event_Handler *, ACE_MAX_SIGNAL_HANDLERS>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+#pragma instantiate ACE_TSS_Guard<ACE_Recursive_Thread_Mutex>
+#pragma instantiate ACE_Guard<ACE_Recursive_Thread_Mutex>
+#endif /* ACE_MT_SAFE */
+#pragma instantiate ACE_Fixed_Set<ACE_Event_Handler *, ACE_MAX_SIGNAL_HANDLERS>
+#pragma instantiate ACE_Fixed_Set_Iterator<ACE_Event_Handler *, ACE_MAX_SIGNAL_HANDLERS>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 #endif /* ACE_HAS_BROKEN_HPUX_TEMPLATES */

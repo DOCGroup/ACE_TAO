@@ -29,10 +29,10 @@ class Worker_Task : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
 
-  Worker_Task (ACE_Thread_Manager *thr_mgr, 
-	       int n_threads, 
+  Worker_Task (ACE_Thread_Manager *thr_mgr,
+	       int n_threads,
 	       int inp_serialize = 1);
-  
+
   virtual int Producer (void);
   // produce input for workers
 
@@ -56,7 +56,7 @@ private:
   // = Not needed for this test.
   virtual int open (void *) { return 0; }
   virtual int close (u_long) {ACE_DEBUG ((LM_DEBUG,"(%t) in close of worker\n")); return 0; }
-  
+
   int nt_;
   // Number of worker threads to run.
   int inp_serialize_;
@@ -65,10 +65,10 @@ private:
 };
 
 template <class BARRIER>
-Worker_Task<BARRIER>::Worker_Task (ACE_Thread_Manager *thr_mgr, 
-				   int n_threads, 
-				   int inp_serialize) 
-  : ACE_Task<ACE_MT_SYNCH> (thr_mgr), 
+Worker_Task<BARRIER>::Worker_Task (ACE_Thread_Manager *thr_mgr,
+				   int n_threads,
+				   int inp_serialize)
+  : ACE_Task<ACE_MT_SYNCH> (thr_mgr),
     barrier_ (n_threads)
 {
   nt_ = n_threads;
@@ -87,10 +87,10 @@ Worker_Task<BARRIER>::Worker_Task (ACE_Thread_Manager *thr_mgr,
 
 template <class BARRIER> int
 Worker_Task<BARRIER>::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
-{ 
+{
   int result;
   if (this->inp_serialize_)
-    result = this->putq (mb, tv); 
+    result = this->putq (mb, tv);
   else
     {
       static int iter = 0;
@@ -104,8 +104,8 @@ Worker_Task<BARRIER>::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
   return result;
 }
 
-template <class BARRIER> int 
-Worker_Task<BARRIER>::service (ACE_Message_Block *mb, int iter) 
+template <class BARRIER> int
+Worker_Task<BARRIER>::service (ACE_Message_Block *mb, int iter)
 {
   int length = mb->length ();
 
@@ -121,9 +121,9 @@ Worker_Task<BARRIER>::service (ACE_Message_Block *mb, int iter)
 // Iterate <n_iterations> time printing off a message and "waiting"
 // for all other threads to complete this iteration.
 
-template <class BARRIER> int 
-Worker_Task<BARRIER>::svc (void) 
-{  
+template <class BARRIER> int
+Worker_Task<BARRIER>::svc (void)
+{
   // Note that the ACE_Task::svc_run () method automatically adds us
   // to the Thread_Manager when the thread begins.
 
@@ -131,14 +131,14 @@ Worker_Task<BARRIER>::svc (void)
   // message with a length == 0, which signals us to quit.
 
   for (int iter = 1; ;iter++)
-    {       
+    {
       ACE_Message_Block *mb = 0;
 
       int result = this->getq (mb);
 
       if (result == -1)
 	{
-	  ACE_ERROR ((LM_ERROR, 
+	  ACE_ERROR ((LM_ERROR,
 		      "(%t) in iteration %d\n", "error waiting for message in iteration", iter));
 	  break;
 	}
@@ -179,7 +179,7 @@ Worker_Task<BARRIER>::Producer (void)
 	return -1;
     }
 
-  return 0; 
+  return 0;
 }
 
 template <class BARRIER>int
@@ -205,7 +205,7 @@ Worker_Task<BARRIER>::input (ACE_Message_Block *mb)
   if (n <= 1)
 #else
     ACE_DEBUG ((LM_DEBUG,"(%t) press chars and enter to put a new message into task queue ...\n"));
-  if ((n = read (0, mb->rd_ptr (), mb->size ())) <= 1) 
+  if ((n = read (0, mb->rd_ptr (), mb->size ())) <= 1)
 #endif // manual
     {
       // Send a shutdown message to the waiting threads and exit.
@@ -233,21 +233,21 @@ Worker_Task<BARRIER>::input (ACE_Message_Block *mb)
       if (this->put (mb) == -1)
 	ACE_ERROR ((LM_ERROR, "(%t) %p\n", "put"));
     }
-  return 0; 
+  return 0;
 }
 
-int 
+int
 main (int argc, char *argv[])
 {
   int n_threads = argc > 1 ? ACE_OS::atoi (argv[1]) : ACE_DEFAULT_THREADS;
-  
+
   ACE_DEBUG ((LM_DEBUG,"(%t) worker threads running=%d\n",n_threads));
 
-  
-  Worker_Task<BARRIER_TYPE> *worker_task = 
-	  new Worker_Task<BARRIER_TYPE> (ACE_Thread_Manager::instance (), 
-				   /*n_threads*/ 0,0); 
-  
+
+  Worker_Task<BARRIER_TYPE> *worker_task =
+	  new Worker_Task<BARRIER_TYPE> (ACE_Thread_Manager::instance (),
+				   /*n_threads*/ 0,0);
+
   worker_task->Producer ();
 
   // Wait for all the threads to reach their exit point.
@@ -260,12 +260,15 @@ main (int argc, char *argv[])
   return 0;
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class Worker_Task<ACE_Null_Barrier>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate Worker_Task<ACE_Null_Barrier>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 
 #else
-int 
+int
 main (int, char *[])
 {
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));

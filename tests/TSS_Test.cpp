@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    tests
-// 
+//
 // = FILENAME
 //    TSS_Test.cpp
 //
@@ -13,11 +13,11 @@
 //     wrapper transparently ensures that the objects of this class
 //     will be placed in thread-specific storage. All calls on
 //     ACE_TSS::operator->() are delegated to the appropriate method
-//     in the Errno class. 
+//     in the Errno class.
 //
 // = AUTHOR
 //    Prashant Jain and Doug Schmidt
-// 
+//
 // ============================================================================
 
 #include "ace/Service_Config.h"
@@ -25,7 +25,7 @@
 #include "TSS_Test_Errno.h"
 #include "test_config.h"
 
-#if defined (ACE_HAS_THREADS) 
+#if defined (ACE_HAS_THREADS)
 
 static const int ITERATIONS = 100;
 
@@ -48,7 +48,7 @@ static ACE_Null_Mutex cout_lock;
 typedef ACE_Guard<ACE_Null_Mutex> GUARD;
 #endif /* ACE_HAS_THREADS */
 
-extern "C" void 
+extern "C" void
 cleanup (void *ptr)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) in cleanup, ptr = %x\n", ptr));
@@ -146,24 +146,27 @@ worker (void *c)
   return 0;
 }
 
-extern "C" void 
+extern "C" void
 handler (int signum)
 {
   ACE_DEBUG ((LM_DEBUG, "signal = %S\n", signum));
   ACE_Thread_Manager::instance ()->exit (0);
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_TSS<Errno>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_TSS<Errno>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 
 #endif /* ACE_HAS_THREADS */
 
-int 
+int
 main (int, char *[])
 {
   ACE_START_TEST ("TSS_Test");
-  
+
 #if defined (ACE_HAS_THREADS)
   ACE_Thread_Control tc (ACE_Thread_Manager::instance ());
 
@@ -171,15 +174,15 @@ main (int, char *[])
   ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
   ACE_UNUSED_ARG (sa);
 
-  if (ACE_Thread_Manager::instance ()->spawn_n (ACE_MAX_THREADS, 
-					       ACE_THR_FUNC (&worker), 
+  if (ACE_Thread_Manager::instance ()->spawn_n (ACE_MAX_THREADS,
+					       ACE_THR_FUNC (&worker),
 					       (void *) ITERATIONS,
 					       THR_BOUND | THR_DETACHED) == -1)
     ACE_OS::perror ("ACE_Thread_Manager::spawn_n");
 
   ACE_Thread_Manager::instance ()->wait ();
 #else
-  ACE_ERROR ((LM_ERROR, 
+  ACE_ERROR ((LM_ERROR,
 	      "threads are not supported on this platform\n"));
 #endif /* ACE_HAS_THREADS */
   ACE_END_TEST;

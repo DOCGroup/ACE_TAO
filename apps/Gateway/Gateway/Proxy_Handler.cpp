@@ -18,13 +18,13 @@ Proxy_Handler::id (void)
 
 // The total number of bytes sent/received on this Proxy.
 
-size_t 
+size_t
 Proxy_Handler::total_bytes (void)
 {
   return this->total_bytes_;
 }
 
-void 
+void
 Proxy_Handler::total_bytes (size_t bytes)
 {
   this->total_bytes_ += bytes;
@@ -84,7 +84,7 @@ Proxy_Handler::timeout (void)
 {
   int old_timeout = this->timeout_;
   this->timeout_ *= 2;
-  
+
   if (this->timeout_ > this->max_timeout_)
     this->timeout_ = this->max_timeout_;
 
@@ -110,16 +110,16 @@ Proxy_Handler::max_timeout (void)
 // Restart connection asynchronously when timeout occurs.
 
 int
-Proxy_Handler::handle_timeout (const ACE_Time_Value &, 
+Proxy_Handler::handle_timeout (const ACE_Time_Value &,
 			       const void *)
 {
-  ACE_DEBUG ((LM_DEBUG, 
-	     "(%t) attempting to reconnect Proxy_Handler %d with timeout = %d\n", 
+  ACE_DEBUG ((LM_DEBUG,
+	     "(%t) attempting to reconnect Proxy_Handler %d with timeout = %d\n",
              this->id (), this->timeout_));
 
   // Delegate the re-connection attempt to the Event Channel.
   this->event_channel_->initiate_proxy_connection (this);
-  
+
   return 0;
 }
 
@@ -128,11 +128,11 @@ Proxy_Handler::handle_timeout (const ACE_Time_Value &,
 int
 Proxy_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 {
-  ACE_DEBUG ((LM_DEBUG, 
-	      "(%t) shutting down %s Proxy_Handler %d on handle %d\n", 
-	      this->proxy_role () == 'C' ? "Consumer" : "Supplier", 
+  ACE_DEBUG ((LM_DEBUG,
+	      "(%t) shutting down %s Proxy_Handler %d on handle %d\n",
+	      this->proxy_role () == 'C' ? "Consumer" : "Supplier",
 	      this->id (), this->get_handle ()));
-  
+
   // Restart the connection, if possible.
   return this->event_channel_->reinitiate_proxy_connection (this);
 }
@@ -152,7 +152,7 @@ int
 Proxy_Handler::open (void *)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) %s Proxy_Handler's handle = %d\n",
-	      this->proxy_role () == 'C' ? "Consumer" : "Supplier", 
+	      this->proxy_role () == 'C' ? "Consumer" : "Supplier",
 	      this->peer ().get_handle ()));
 
   // Call back to the <Event_Channel> to complete our initialization.
@@ -164,7 +164,7 @@ Proxy_Handler::open (void *)
     ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "enable"), -1);
 
   // Register ourselves to receive input events.
-  else if (ACE_Reactor::instance ()->register_handler 
+  else if (ACE_Reactor::instance ()->register_handler
       (this, ACE_Event_Handler::READ_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "register_handler"), -1);
   else
@@ -224,7 +224,7 @@ Proxy_Handler_Factory::make_proxy_handler (const Proxy_Config_Info &pci)
     {
 #if defined (ACE_HAS_THREADS)
       // Create a threaded Supplier_Proxy.
-      if (ACE_BIT_ENABLED (pci.event_channel_->options ().threading_strategy_, 
+      if (ACE_BIT_ENABLED (pci.event_channel_->options ().threading_strategy_,
 			   ACE_Event_Channel_Options::INPUT_MT))
 	ACE_NEW_RETURN (proxy_handler,
 			Thr_Supplier_Proxy (pci),
@@ -241,10 +241,17 @@ Proxy_Handler_Factory::make_proxy_handler (const Proxy_Config_Info &pci)
   return proxy_handler;
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Map_Entry<Event_Key, Consumer_Dispatch_Set *>;
 template class ACE_Map_Iterator<Event_Key, Consumer_Dispatch_Set *, MAP_MUTEX>;
 template class ACE_Map_Manager<Event_Key, Consumer_Dispatch_Set *, MAP_MUTEX>;
 template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_SYNCH>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Map_Entry<Event_Key, Consumer_Dispatch_Set *>
+#pragma instantiate ACE_Map_Iterator<Event_Key, Consumer_Dispatch_Set *, MAP_MUTEX>
+#pragma instantiate ACE_Map_Manager<Event_Key, Consumer_Dispatch_Set *, MAP_MUTEX>
+#pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+#pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_SYNCH>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

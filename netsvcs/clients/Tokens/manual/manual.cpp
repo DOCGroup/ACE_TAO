@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    examples
-// 
+//
 // = FILENAME
 //    manual.cpp
 //
@@ -13,7 +13,7 @@
 //
 // = AUTHOR
 //    Tim Harrison
-// 
+//
 // ============================================================================
 
 #include "ace/OS.h"
@@ -42,7 +42,7 @@ public:
 
   int parse_args (int argc, char *argv[]);
   // Parse command-line arguments.
-  
+
   int open (int argc, char *argv[]);
   // Register with whatever event dispatcher is needed and run.
 
@@ -78,7 +78,7 @@ private:
 
   COLLECTIONS collections_;
   // A collection for each <tid>.
-  
+
   char *server_host_;
   int server_port_;
   int ignore_deadlock_;
@@ -93,7 +93,7 @@ STDIN_Token::STDIN_Token (void)
   debug_ (0),
   remote_ (0)
 {
-}  
+}
 
 int
 STDIN_Token::parse_args (int argc, char *argv[])
@@ -123,7 +123,7 @@ STDIN_Token::parse_args (int argc, char *argv[])
 	case 'u':
 	  // usage: fallthrough
 	default:
-	  ACE_ERROR_RETURN ((LM_ERROR, 
+	  ACE_ERROR_RETURN ((LM_ERROR,
 			    "%n:\n"
 			     "[-h <remote host>]\n"
 			     "[-p <remote port>]\n"
@@ -146,18 +146,18 @@ STDIN_Token::open (int argc, char *argv[])
     return -1;
 
   // Register for signals.
-  if (ACE_Reactor::instance ()->register_handler 
+  if (ACE_Reactor::instance ()->register_handler
       (SIGINT, this) == -1)
     ACE_DEBUG ((LM_DEBUG, "Can't register signal handler\n"));
 
 #if (ACE_WIN32)
-  
+
 #else
   // Register for STDIN events with Reactor.
   if (ACE_Reactor::instance ()->register_handler
       (ACE_STDIN, this, ACE_Event_Handler::READ_MASK) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG, "Can't register signal handler\n"), 0);
-    
+
 
 #endif /* ACE_WIN32 */
 
@@ -165,7 +165,7 @@ STDIN_Token::open (int argc, char *argv[])
   this->display_menu ();
 
 #if (ACE_WIN32)
-  
+
 #else
   ACE_Reactor::run_event_loop ();
 #endif /* ACE_WIN32 */
@@ -174,7 +174,7 @@ STDIN_Token::open (int argc, char *argv[])
   return 0;
 }
 
-int 
+int
 STDIN_Token::handle_input (ACE_HANDLE fd)
 {
   ACE_UNUSED_ARG (fd);
@@ -189,8 +189,8 @@ STDIN_Token::handle_input (ACE_HANDLE fd)
       ACE_OS::printf ("Try again.\n");
       return 0;
     }
-  
-  ACE_Token_Proxy *proxy = 
+
+  ACE_Token_Proxy *proxy =
     this->get_proxy (tid, token, type[0]);
 
   if (proxy == 0)
@@ -255,7 +255,7 @@ STDIN_Token::display_menu (void)
   ACE_OS::printf ("<tid> <token> <type> <operation>\n");
 }
 
-int 
+int
 STDIN_Token::handle_exception (ACE_HANDLE fd)
 {
   ACE_UNUSED_ARG (fd);
@@ -352,7 +352,11 @@ main (int argc, char* argv[])
   return st.open (argc, argv);
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Map_Entry<STDIN_Token::TID, ACE_Token_Collection *>;
 template class ACE_Map_Manager<STDIN_Token::TID, ACE_Token_Collection *, ACE_Null_Mutex>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Map_Entry<STDIN_Token::TID, ACE_Token_Collection *>
+#pragma instantiate ACE_Map_Manager<STDIN_Token::TID, ACE_Token_Collection *, ACE_Null_Mutex>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

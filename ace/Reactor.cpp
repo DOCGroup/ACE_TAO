@@ -91,9 +91,9 @@ ACE_Reactor_Handler_Repository::open (size_t size)
   this->max_handlep1_ = 0;
 
 #if defined (ACE_WIN32)
-  // Try to allocate the memory. 
-  ACE_NEW_RETURN (this->event_handlers_, 
-		  ACE_NT_EH_Record[size], 
+  // Try to allocate the memory.
+  ACE_NEW_RETURN (this->event_handlers_,
+		  ACE_NT_EH_Record[size],
 		  -1);
 
   // Initialize the ACE_Event_Handler * to { ACE_INVALID_HANDLE, 0 }.
@@ -103,9 +103,9 @@ ACE_Reactor_Handler_Repository::open (size_t size)
       ACE_REACTOR_EVENT_HANDLER (this, h) = 0;
     }
 #else
-  // Try to allocate the memory. 
-  ACE_NEW_RETURN (this->event_handlers_, 
-		  ACE_Event_Handler *[size], 
+  // Try to allocate the memory.
+  ACE_NEW_RETURN (this->event_handlers_,
+		  ACE_Event_Handler *[size],
 		  -1);
 
   // Initialize the ACE_Event_Handler * to NULL.
@@ -119,7 +119,7 @@ ACE_Reactor_Handler_Repository::open (size_t size)
 
 ACE_Reactor_Handler_Repository::ACE_Reactor_Handler_Repository (ACE_Reactor &reactor)
   : reactor_ (reactor),
-    max_size_ (0),    
+    max_size_ (0),
     max_handlep1_ (0),
     event_handlers_ (0)
 {
@@ -130,8 +130,8 @@ int
 ACE_Reactor_Handler_Repository::unbind_all (void)
 {
   // Unbind all of the <handle, ACE_Event_Handler>s.
-  for (int handle = 0; 
-       handle < this->max_handlep1_; 
+  for (int handle = 0;
+       handle < this->max_handlep1_;
        handle++)
     this->unbind (ACE_REACTOR_HANDLE (handle),
 		  ACE_Event_Handler::ALL_EVENTS_MASK);
@@ -187,7 +187,7 @@ ACE_Reactor_Handler_Repository::find (ACE_HANDLE handle,
     // g++ can't figure out that i won't be used below if the handle
     // is out of range, so keep it happy by defining i here . . .
     i = 0;
-  
+
   if (eh != 0 && index_p != 0)
     *index_p = i;
   else
@@ -198,8 +198,8 @@ ACE_Reactor_Handler_Repository::find (ACE_HANDLE handle,
 
 // Bind the <ACE_Event_Handler *> to the <ACE_HANDLE>.
 
-int 
-ACE_Reactor_Handler_Repository::bind (ACE_HANDLE handle, 
+int
+ACE_Reactor_Handler_Repository::bind (ACE_HANDLE handle,
 				      ACE_Event_Handler *event_handler,
 				      ACE_Reactor_Mask mask)
 {
@@ -236,7 +236,7 @@ ACE_Reactor_Handler_Repository::bind (ACE_HANDLE handle,
     }
   else if (this->max_handlep1_ < this->max_size_)
     {
-      // Insert at the end of the active portion. 
+      // Insert at the end of the active portion.
       ACE_REACTOR_HANDLE (this->max_handlep1_) = handle;
       ACE_REACTOR_EVENT_HANDLER (this, this->max_handlep1_) = event_handler;
       this->max_handlep1_++;
@@ -255,8 +255,8 @@ ACE_Reactor_Handler_Repository::bind (ACE_HANDLE handle,
 #endif /* ACE_WIN32 */
 
   // Add the <mask> for this <handle> in the Reactor's wait_set.
-  this->reactor_.bit_ops (handle, 
-			  mask, 
+  this->reactor_.bit_ops (handle,
+			  mask,
 			  this->reactor_.wait_set_,
 			  ACE_Reactor::ADD_MASK);
 
@@ -272,7 +272,7 @@ ACE_Reactor_Handler_Repository::bind (ACE_HANDLE handle,
 
 // Remove the binding of <ACE_HANDLE>.
 
-int 
+int
 ACE_Reactor_Handler_Repository::unbind (ACE_HANDLE handle,
 					ACE_Reactor_Mask mask)
 {
@@ -285,8 +285,8 @@ ACE_Reactor_Handler_Repository::unbind (ACE_HANDLE handle,
     return -1;
 
   // Clear out the <mask> bits in the Reactor's wait_set.
-  this->reactor_.bit_ops (handle, 
-			  mask, 
+  this->reactor_.bit_ops (handle,
+			  mask,
 			  this->reactor_.wait_set_,
 			  ACE_Reactor::CLR_MASK);
 
@@ -303,7 +303,7 @@ ACE_Reactor_Handler_Repository::unbind (ACE_HANDLE handle,
   // If there are no longer any outstanding events on this <handle>
   // then we can totally shut down the Event_Handler.
   if (this->reactor_.wait_set_.rd_mask_.is_set (handle) == 0
-      && this->reactor_.wait_set_.wr_mask_.is_set (handle) == 0 
+      && this->reactor_.wait_set_.wr_mask_.is_set (handle) == 0
       && this->reactor_.wait_set_.ex_mask_.is_set (handle) == 0)
 #if defined (ACE_WIN32)
     {
@@ -311,7 +311,7 @@ ACE_Reactor_Handler_Repository::unbind (ACE_HANDLE handle,
       ACE_REACTOR_EVENT_HANDLER (this, index) = 0;
 
       if (this->max_handlep1_ == (int) index + 1)
-	{	      
+	{
 	  // We've deleted the last entry (i.e., i + 1 == the current
 	  // size of the array), so we need to figure out the last
 	  // valid place in the array that we should consider in
@@ -321,14 +321,14 @@ ACE_Reactor_Handler_Repository::unbind (ACE_HANDLE handle,
 	       i >= 0 && ACE_REACTOR_HANDLE (i) == ACE_INVALID_HANDLE;
 	       i--)
 	    continue;
-	  
+
 	  this->max_handlep1_ = i + 1;
 	}
     }
 #else
-    {     
+    {
       ACE_REACTOR_EVENT_HANDLER (this, handle) = 0;
-      
+
       if (this->max_handlep1_ == handle + 1)
 	{
 	  // We've deleted the last entry, so we need to figure out
@@ -352,7 +352,7 @@ ACE_Reactor_Handler_Repository::unbind (ACE_HANDLE handle,
   return 0;
 }
 
-ACE_Reactor_Handler_Repository_Iterator::ACE_Reactor_Handler_Repository_Iterator 
+ACE_Reactor_Handler_Repository_Iterator::ACE_Reactor_Handler_Repository_Iterator
   (const ACE_Reactor_Handler_Repository *s)
   : rep_ (s),
     current_ (-1)
@@ -363,7 +363,7 @@ ACE_Reactor_Handler_Repository_Iterator::ACE_Reactor_Handler_Repository_Iterator
 // Pass back the <next_item> that hasn't been seen in the Set.
 // Returns 0 when all items have been seen, else 1.
 
-int 
+int
 ACE_Reactor_Handler_Repository_Iterator::next (ACE_Event_Handler *&next_item)
 {
   int result = 1;
@@ -371,12 +371,12 @@ ACE_Reactor_Handler_Repository_Iterator::next (ACE_Event_Handler *&next_item)
   if (this->current_ >= this->rep_->max_handlep1_)
     result = 0;
   else
-    next_item = ACE_REACTOR_EVENT_HANDLER (this->rep_, 
+    next_item = ACE_REACTOR_EVENT_HANDLER (this->rep_,
 					   this->current_);
   return result;
 }
 
-int 
+int
 ACE_Reactor_Handler_Repository_Iterator::done (void) const
 {
   return this->current_ >= this->rep_->max_handlep1_;
@@ -384,7 +384,7 @@ ACE_Reactor_Handler_Repository_Iterator::done (void) const
 
 // Move forward by one element in the set.
 
-int 
+int
 ACE_Reactor_Handler_Repository_Iterator::advance (void)
 {
   if (this->current_ < this->rep_->max_handlep1_)
@@ -396,12 +396,12 @@ ACE_Reactor_Handler_Repository_Iterator::advance (void)
     else
      this->current_++;
 
-  return this->current_ < this->rep_->max_handlep1_;    
+  return this->current_ < this->rep_->max_handlep1_;
 }
 
 // Dump the state of an object.
 
-void 
+void
 ACE_Reactor_Handler_Repository_Iterator::dump (void) const
 {
   ACE_TRACE ("ACE_Reactor_Handler_Repository_Iterator::dump");
@@ -409,7 +409,7 @@ ACE_Reactor_Handler_Repository_Iterator::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, "rep_ = %u", this->rep_));
   ACE_DEBUG ((LM_DEBUG, "current_ = %d", this->current_));
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));    
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
 void
@@ -418,9 +418,9 @@ ACE_Reactor_Handler_Repository::dump (void) const
   ACE_TRACE ("ACE_Reactor_Handler_Repository::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
               "(%t) max_handlep1_ = %d, max_size_ = %d\n",
-              this->max_handlep1_, this->max_size_)); 
+              this->max_handlep1_, this->max_size_));
   ACE_DEBUG ((LM_DEBUG, "["));
 
   ACE_Event_Handler *eh = 0;
@@ -428,16 +428,16 @@ ACE_Reactor_Handler_Repository::dump (void) const
   for (ACE_Reactor_Handler_Repository_Iterator iter (this);
        iter.next (eh) != 0;
        iter.advance ())
-    ACE_DEBUG ((LM_DEBUG, " (eh = %x, eh->handle_ = %d)", 
+    ACE_DEBUG ((LM_DEBUG, " (eh = %x, eh->handle_ = %d)",
 		eh, eh->get_handle ()));
 
   ACE_DEBUG ((LM_DEBUG, " ]"));
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));    
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Reactor_Handler_Repository_Iterator)
 
-int 
+int
 ACE_Reactor::any_ready (ACE_Reactor_Handle_Set &wait_set)
 {
   ACE_TRACE ("ACE_Reactor::fill_in_ready");
@@ -447,7 +447,7 @@ ACE_Reactor::any_ready (ACE_Reactor_Handle_Set &wait_set)
   ACE_Sig_Guard sb;
 #endif /* ACE_WIN32 */
 
-  int number_ready = this->ready_set_.rd_mask_.num_set () 
+  int number_ready = this->ready_set_.rd_mask_.num_set ()
     + this->ready_set_.wr_mask_.num_set ()
     + this->ready_set_.ex_mask_.num_set ();
 
@@ -465,7 +465,7 @@ ACE_Reactor::any_ready (ACE_Reactor_Handle_Set &wait_set)
   return number_ready;
 }
 
-int 
+int
 ACE_Reactor::handler_i (int signum, ACE_Event_Handler **eh)
 {
   ACE_TRACE ("ACE_Reactor::handler_i");
@@ -496,7 +496,7 @@ ACE_Reactor::owner (ACE_thread_t tid, ACE_thread_t *o_id)
     *o_id = this->owner_;
 
   this->owner_ = tid;
-  
+
   return 0;
 }
 
@@ -509,7 +509,7 @@ ACE_Reactor::owner (ACE_thread_t *t_id)
   return 0;
 }
 
-void 
+void
 ACE_Reactor::requeue_position (int rp)
 {
   ACE_TRACE ("ACE_Reactor::requeue_position");
@@ -522,7 +522,7 @@ ACE_Reactor::requeue_position (int rp)
 #endif /* ACE_WIN32 */
 }
 
-int 
+int
 ACE_Reactor::requeue_position (void)
 {
   ACE_TRACE ("ACE_Reactor::requeue_position");
@@ -530,7 +530,7 @@ ACE_Reactor::requeue_position (void)
   return this->requeue_position_;
 }
 
-void 
+void
 ACE_Reactor::max_notify_iterations (int iterations)
 {
   ACE_TRACE ("ACE_Reactor::max_notify_iterations");
@@ -543,7 +543,7 @@ ACE_Reactor::max_notify_iterations (int iterations)
   this->max_notify_iterations_ = iterations;
 }
 
-int 
+int
 ACE_Reactor::max_notify_iterations (void)
 {
   ACE_TRACE ("ACE_Reactor::max_notify_iterations");
@@ -553,7 +553,7 @@ ACE_Reactor::max_notify_iterations (void)
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 // Enqueue ourselves into the list of waiting threads.
-void 
+void
 ACE_Reactor::renew (void)
 {
   ACE_TRACE ("ACE_Reactor::renew");
@@ -567,7 +567,7 @@ ACE_Reactor_Token::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, "\n"));
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));    
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
 ACE_Reactor_Token::ACE_Reactor_Token (ACE_Reactor &r)
@@ -597,7 +597,7 @@ ACE_Reactor_Notify::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, "reactor_ = %x", this->reactor_));
   this->notification_pipe_.dump ();
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));    
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
 int
@@ -612,11 +612,11 @@ ACE_Reactor_Notify::open (ACE_Reactor *r)
 
   // There seems to be a Win32 bug with this...  Set this into
   // non-blocking mode.
-  if (ACE::set_flags (this->notification_pipe_.read_handle (), 
+  if (ACE::set_flags (this->notification_pipe_.read_handle (),
 		      ACE_NONBLOCK) == -1)
     return -1;
-  else 
-    return this->reactor_->register_handler 
+  else
+    return this->reactor_->register_handler
       (this->notification_pipe_.read_handle (),
        this,
        ACE_Event_Handler::READ_MASK);
@@ -630,8 +630,8 @@ ACE_Reactor_Notify::close (void)
 }
 
 ssize_t
-ACE_Reactor_Notify::notify (ACE_Event_Handler *eh, 
-			    ACE_Reactor_Mask mask, 
+ACE_Reactor_Notify::notify (ACE_Event_Handler *eh,
+			    ACE_Reactor_Mask mask,
 			    ACE_Time_Value *timeout)
 {
   ACE_TRACE ("ACE_Reactor_Notify::notify");
@@ -639,7 +639,7 @@ ACE_Reactor_Notify::notify (ACE_Event_Handler *eh,
   ACE_Notification_Buffer buffer (eh, mask);
 
   ssize_t n = ACE::send (this->notification_pipe_.write_handle (),
-			 (char *) &buffer, 
+			 (char *) &buffer,
 			 sizeof buffer,
 			 timeout);
   return n == -1 ? -1 : 0;
@@ -654,7 +654,7 @@ ACE_Reactor_Notify::dispatch_notifications (int &number_of_active_handles,
 {
   ACE_TRACE ("ACE_Reactor_Notify::handle_notification");
 
-  ACE_HANDLE read_handle = 
+  ACE_HANDLE read_handle =
     this->notification_pipe_.read_handle ();
 
   if (rd_mask.is_set (read_handle))
@@ -685,7 +685,7 @@ ACE_Reactor_Notify::handle_input (ACE_HANDLE handle)
   while ((n = ACE::recv (handle, (char *) &buffer, sizeof buffer)) > 0)
     {
       // Check to see if we've got a short read.
-      if (n != sizeof buffer)      
+      if (n != sizeof buffer)
 	{
 	  ssize_t remainder = sizeof buffer - n;
 
@@ -722,7 +722,7 @@ ACE_Reactor_Notify::handle_input (ACE_HANDLE handle)
               ACE_ERROR ((LM_ERROR, "invalid mask = %d\n", buffer.mask_));
             }
           if (result == -1)
-            buffer.eh_->handle_close (ACE_INVALID_HANDLE, 
+            buffer.eh_->handle_close (ACE_INVALID_HANDLE,
 				      ACE_Event_Handler::EXCEPT_MASK);
         }
 
@@ -750,7 +750,7 @@ ACE_Reactor_Notify::handle_input (ACE_HANDLE handle)
 #endif /* ACE_MT_SAFE */
 
 int
-ACE_Reactor::notify (ACE_Event_Handler *eh, 
+ACE_Reactor::notify (ACE_Event_Handler *eh,
                      ACE_Reactor_Mask mask,
 		     ACE_Time_Value *timeout)
 {
@@ -821,7 +821,7 @@ ACE_Reactor::resume_handlers (void)
 }
 
 int
-ACE_Reactor::register_handler (ACE_Event_Handler *handler, 
+ACE_Reactor::register_handler (ACE_Event_Handler *handler,
                                ACE_Reactor_Mask mask)
 {
   ACE_TRACE ("ACE_Reactor::register_handler");
@@ -830,8 +830,8 @@ ACE_Reactor::register_handler (ACE_Event_Handler *handler,
 }
 
 int
-ACE_Reactor::register_handler (ACE_HANDLE handle, 
-			       ACE_Event_Handler *handler, 
+ACE_Reactor::register_handler (ACE_HANDLE handle,
+			       ACE_Event_Handler *handler,
 			       ACE_Reactor_Mask mask)
 {
   ACE_TRACE ("ACE_Reactor::register_handler");
@@ -840,8 +840,8 @@ ACE_Reactor::register_handler (ACE_HANDLE handle,
 }
 
 int
-ACE_Reactor::register_handler (const ACE_Handle_Set &handles, 
-			       ACE_Event_Handler *handler, 
+ACE_Reactor::register_handler (const ACE_Handle_Set &handles,
+			       ACE_Event_Handler *handler,
 			       ACE_Reactor_Mask mask)
 {
   ACE_TRACE ("ACE_Reactor::register_handler");
@@ -850,8 +850,8 @@ ACE_Reactor::register_handler (const ACE_Handle_Set &handles,
 }
 
 int
-ACE_Reactor::handler (ACE_HANDLE handle, 
-		      ACE_Reactor_Mask mask, 
+ACE_Reactor::handler (ACE_HANDLE handle,
+		      ACE_Reactor_Mask mask,
 		      ACE_Event_Handler **handler)
 {
   ACE_TRACE ("ACE_Reactor::handler");
@@ -860,7 +860,7 @@ ACE_Reactor::handler (ACE_HANDLE handle,
 }
 
 int
-ACE_Reactor::remove_handler (const ACE_Handle_Set &handles, 
+ACE_Reactor::remove_handler (const ACE_Handle_Set &handles,
                              ACE_Reactor_Mask mask)
 {
   ACE_TRACE ("ACE_Reactor::remove_handler");
@@ -869,7 +869,7 @@ ACE_Reactor::remove_handler (const ACE_Handle_Set &handles,
 }
 
 int
-ACE_Reactor::remove_handler (ACE_Event_Handler *handler, 
+ACE_Reactor::remove_handler (ACE_Event_Handler *handler,
                              ACE_Reactor_Mask mask)
 {
   ACE_TRACE ("ACE_Reactor::remove_handler");
@@ -878,7 +878,7 @@ ACE_Reactor::remove_handler (ACE_Event_Handler *handler,
 }
 
 int
-ACE_Reactor::remove_handler (ACE_HANDLE handle, 
+ACE_Reactor::remove_handler (ACE_HANDLE handle,
 			     ACE_Reactor_Mask mask)
 {
   ACE_TRACE ("ACE_Reactor::remove_handler");
@@ -889,13 +889,13 @@ ACE_Reactor::remove_handler (ACE_HANDLE handle,
 // Performs operations on the "ready" bits.
 
 int
-ACE_Reactor::ready_ops (ACE_HANDLE handle, 
-			ACE_Reactor_Mask mask, 
+ACE_Reactor::ready_ops (ACE_HANDLE handle,
+			ACE_Reactor_Mask mask,
 			int ops)
 {
   ACE_TRACE ("ACE_Reactor::ready_ops");
   ACE_MT (ACE_GUARD_RETURN (ACE_REACTOR_MUTEX, ace_mon, this->token_, -1));
-  return this->bit_ops (handle, 
+  return this->bit_ops (handle,
 			mask,
 			this->ready_set_,
                         ops);
@@ -905,16 +905,16 @@ ACE_Reactor *
 ACE_Reactor::instance (size_t size /* = ACE_Reactor::DEFAULT_SIZE */)
 {
   ACE_TRACE ("ACE_Reactor::instance");
-  
+
   if (ACE_Reactor::reactor_ == 0)
     {
       // Perform Double-Checked Locking Optimization.
       ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon,
 				*ACE_Static_Object_Lock::instance (), 0));
-      
+
       if (ACE_Reactor::reactor_ == 0)
 	{
-	  ACE_NEW_RETURN (ACE_Reactor::reactor_, ACE_Reactor (size), NULL);	  
+	  ACE_NEW_RETURN (ACE_Reactor::reactor_, ACE_Reactor (size), NULL);
 	  ACE_Reactor::delete_reactor_ = 1;
 	}
     }
@@ -1007,7 +1007,7 @@ ACE_Reactor::end_event_loop (void)
 
   // Send a notification, but don't block if there's no one to receive
   // it.
-  return ACE_Reactor::instance ()->notify 
+  return ACE_Reactor::instance ()->notify
     (0, ACE_Event_Handler::NULL_MASK, (ACE_Time_Value *) &ACE_Time_Value::zero);
 }
 
@@ -1022,8 +1022,8 @@ ACE_Reactor::event_loop_done (void)
 // Initialize the ACE_Reactor
 
 int
-ACE_Reactor::open (size_t size, 
-		   int restart, 
+ACE_Reactor::open (size_t size,
+		   int restart,
 		   ACE_Sig_Handler *sh,
 		   ACE_Timer_Queue *tq)
 {
@@ -1045,7 +1045,7 @@ ACE_Reactor::open (size_t size,
   if (this->signal_handler_ == 0)
     {
       this->signal_handler_ = new ACE_Sig_Handler;
-      
+
       if (this->signal_handler_ == 0)
 	result = -1;
       else
@@ -1101,8 +1101,8 @@ ACE_Reactor::ACE_Reactor (ACE_Sig_Handler *sh,
 
 // Initialize ACE_Reactor.
 
-ACE_Reactor::ACE_Reactor (size_t size, 
-			  int rs, 
+ACE_Reactor::ACE_Reactor (size_t size,
+			  int rs,
 			  ACE_Sig_Handler *sh,
 			  ACE_Timer_Queue *tq)
   : handler_rep_ (*this),
@@ -1148,7 +1148,7 @@ ACE_Reactor::close (void)
 #endif /* ACE_MT_SAFE */
   this->initialized_ = 0;
 }
-  
+
 ACE_Reactor::~ACE_Reactor (void)
 {
   ACE_TRACE ("ACE_Reactor::~ACE_Reactor");
@@ -1168,12 +1168,12 @@ ACE_Reactor::remove_handler_i (const ACE_Handle_Set &handles,
     if (this->remove_handler_i (h, mask) == -1)
       return -1;
 
-  return 0;    
+  return 0;
 }
 
 int
-ACE_Reactor::register_handler_i (const ACE_Handle_Set &handles, 
-				 ACE_Event_Handler *handler, 
+ACE_Reactor::register_handler_i (const ACE_Handle_Set &handles,
+				 ACE_Event_Handler *handler,
 				 ACE_Reactor_Mask mask)
 {
   ACE_TRACE ("ACE_Reactor::register_handler_i");
@@ -1184,11 +1184,11 @@ ACE_Reactor::register_handler_i (const ACE_Handle_Set &handles,
     if (this->register_handler_i (h, handler, mask) == -1)
       return -1;
 
-  return 0;    
+  return 0;
 }
 
 int
-ACE_Reactor::register_handler (const ACE_Sig_Set &sigset, 
+ACE_Reactor::register_handler (const ACE_Sig_Set &sigset,
                                ACE_Event_Handler *new_sh,
                                ACE_Sig_Action *new_disp)
 {
@@ -1199,9 +1199,9 @@ ACE_Reactor::register_handler (const ACE_Sig_Set &sigset,
 #if (NSIG > 0)
 
   for (int s = 1; s < NSIG; s++)
-    if (sigset.is_member (s) 
-        && this->signal_handler_->register_handler (s, new_sh, 
-						    new_disp) == -1) 
+    if (sigset.is_member (s)
+        && this->signal_handler_->register_handler (s, new_sh,
+						    new_disp) == -1)
       result = -1;
 #endif /* NSIG */
   return result;
@@ -1215,35 +1215,35 @@ ACE_Reactor::remove_handler (const ACE_Sig_Set &sigset)
 
 #if (NSIG == 0)
   for (int s = 1; s < NSIG; s++)
-    if (sigset.is_member (s) 
+    if (sigset.is_member (s)
         && this->signal_handler_->remove_handler (s) == -1)
       result = -1;
 #else
   ACE_UNUSED_ARG (sigset);
 #endif /* NSIG */
 
-  return result;    
+  return result;
 }
 
-// Note the queue handles its own locking. 
+// Note the queue handles its own locking.
 
 long
-ACE_Reactor::schedule_timer (ACE_Event_Handler *handler, 
+ACE_Reactor::schedule_timer (ACE_Event_Handler *handler,
                              const void *arg,
-                             const ACE_Time_Value &delta_time, 
+                             const ACE_Time_Value &delta_time,
                              const ACE_Time_Value &interval)
 {
   ACE_TRACE ("ACE_Reactor::schedule_timer");
   ACE_MT (ACE_GUARD_RETURN (ACE_REACTOR_MUTEX, ace_mon, this->token_, -1));
 
-  return this->timer_queue_->schedule 
+  return this->timer_queue_->schedule
     (handler, arg, timer_queue_->gettimeofday () + delta_time, interval);
 }
 
 // Main event loop driver that blocks for <max_wait_time> before
 // returning (will return earlier if I/O or signal events occur).
 
-int 
+int
 ACE_Reactor::handle_events (ACE_Time_Value &max_wait_time)
 {
   ACE_TRACE ("ACE_Reactor::handle_events");
@@ -1264,8 +1264,8 @@ ACE_Reactor::handle_error (void)
 }
 
 void
-ACE_Reactor::notify_handle (ACE_HANDLE handle, 
-                            ACE_Reactor_Mask mask, 
+ACE_Reactor::notify_handle (ACE_HANDLE handle,
+                            ACE_Reactor_Mask mask,
                             ACE_Handle_Set &ready_mask,
                             ACE_Event_Handler *event_handler,
                             ACE_EH_PTMF ptmf)
@@ -1288,10 +1288,10 @@ ACE_Reactor::notify_handle (ACE_HANDLE handle,
 // GET = 1, Retrieve current value
 // SET = 2, Set value of bits to new mask (changes the entire mask)
 // ADD = 3, Bitwise "or" the value into the mask (only changes
-//          enabled bits) 
+//          enabled bits)
 // CLR = 4  Bitwise "and" the negation of the value out of the mask
-//          (only changes enabled bits) 
-// 
+//          (only changes enabled bits)
+//
 // Returns the original mask.  Must be called with locks held.
 
 int
@@ -1305,7 +1305,7 @@ ACE_Reactor::bit_ops (ACE_HANDLE handle,
     return -1;
 
 #if !defined (ACE_WIN32)
-  ACE_Sig_Guard sb; // Block out all signals until method returns. 
+  ACE_Sig_Guard sb; // Block out all signals until method returns.
 #endif /* ACE_WIN32 */
 
   ACE_FDS_PTMF ptmf  = &ACE_Handle_Set::set_bit;
@@ -1361,32 +1361,32 @@ ACE_Reactor::bit_ops (ACE_HANDLE handle,
       else if (ops == ACE_Reactor::SET_MASK)
         handle_set.ex_mask_.clr_bit (handle);
       break;
-    default: 
+    default:
       return -1;
     }
   return omask;
 }
 
 // Perform GET, CLR, SET, and ADD operations on the select()
-// Handle_Sets. 
+// Handle_Sets.
 //
 // GET = 1, Retrieve current value
-// SET = 2, Set value of bits to new mask (changes the entire mask) 
+// SET = 2, Set value of bits to new mask (changes the entire mask)
 // ADD = 3, Bitwise "or" the value into the mask (only changes
-//          enabled bits) 
+//          enabled bits)
 // CLR = 4  Bitwise "and" the negation of the value out of the mask
-//          (only changes enabled bits) 
+//          (only changes enabled bits)
 //
 // Returns the original mask.
 
 int
-ACE_Reactor::mask_ops (ACE_HANDLE handle, 
-		       ACE_Reactor_Mask mask, 
+ACE_Reactor::mask_ops (ACE_HANDLE handle,
+		       ACE_Reactor_Mask mask,
 		       int ops)
 {
   ACE_TRACE ("ACE_Reactor::mask_ops");
   ACE_MT (ACE_GUARD_RETURN (ACE_REACTOR_MUTEX, ace_mon, this->token_, -1));
-  return this->bit_ops (handle, mask, 
+  return this->bit_ops (handle, mask,
                         this->wait_set_,
                         ops);
 }
@@ -1394,9 +1394,9 @@ ACE_Reactor::mask_ops (ACE_HANDLE handle,
 // Must be called with locks held.
 
 int
-ACE_Reactor::handler_i (ACE_HANDLE handle, 
-			ACE_Reactor_Mask mask, 
-                        ACE_Event_Handler **handler) 
+ACE_Reactor::handler_i (ACE_HANDLE handle,
+			ACE_Reactor_Mask mask,
+                        ACE_Event_Handler **handler)
 {
   ACE_TRACE ("ACE_Reactor::handler_i");
   ACE_Event_Handler *h = this->handler_rep_.find (handle);
@@ -1413,7 +1413,7 @@ ACE_Reactor::handler_i (ACE_HANDLE handle,
           && this->wait_set_.wr_mask_.is_set (handle) == 0)
         return -1;
       if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::EXCEPT_MASK)
-          && this->wait_set_.ex_mask_.is_set (handle) == 0)          
+          && this->wait_set_.ex_mask_.is_set (handle) == 0)
         return -1;
     }
 
@@ -1430,7 +1430,7 @@ ACE_Reactor::resume_i (ACE_HANDLE handle)
   ACE_TRACE ("ACE_Reactor::resume");
   if (this->handler_rep_.find (handle) == 0)
     return -1;
-  
+
   this->wait_set_.rd_mask_.set_bit (handle);
   this->wait_set_.wr_mask_.set_bit (handle);
   this->wait_set_.ex_mask_.set_bit (handle);
@@ -1455,7 +1455,7 @@ ACE_Reactor::suspend_i (ACE_HANDLE handle)
 // Must be called with locks held
 
 int
-ACE_Reactor::register_handler_i (ACE_HANDLE handle, 
+ACE_Reactor::register_handler_i (ACE_HANDLE handle,
 				 ACE_Event_Handler *event_handler,
 				 ACE_Reactor_Mask mask)
 {
@@ -1467,7 +1467,7 @@ ACE_Reactor::register_handler_i (ACE_HANDLE handle,
 }
 
 int
-ACE_Reactor::remove_handler_i (ACE_HANDLE handle, 
+ACE_Reactor::remove_handler_i (ACE_HANDLE handle,
 			       ACE_Reactor_Mask mask)
 {
   ACE_TRACE ("ACE_Reactor::remove_handler_i");
@@ -1478,7 +1478,7 @@ ACE_Reactor::remove_handler_i (ACE_HANDLE handle,
 
 // Must be called with lock held.
 
-int 
+int
 ACE_Reactor::wait_for_multiple_events (ACE_Reactor_Handle_Set &dispatch_set,
                                        ACE_Time_Value *max_wait_time)
 {
@@ -1500,19 +1500,19 @@ ACE_Reactor::wait_for_multiple_events (ACE_Reactor_Handle_Set &dispatch_set,
 						     this_timeout) == 0) {
 	    this_timeout = 0 ;
 	  }
-      
+
 	  width = (u_long) this->handler_rep_.max_handlep1 ();
 
 	  dispatch_set.rd_mask_ = this->wait_set_.rd_mask_;
 	  dispatch_set.wr_mask_ = this->wait_set_.wr_mask_;
 	  dispatch_set.ex_mask_ = this->wait_set_.ex_mask_;
 
-	  number_of_active_handles = ACE_OS::select (int (width), 
-						     dispatch_set.rd_mask_, 
-						     dispatch_set.wr_mask_, 
-						     dispatch_set.ex_mask_, 
+	  number_of_active_handles = ACE_OS::select (int (width),
+						     dispatch_set.rd_mask_,
+						     dispatch_set.wr_mask_,
+						     dispatch_set.ex_mask_,
 						     this_timeout);
-	} 
+	}
       while (number_of_active_handles == -1 && this->handle_error () > 0);
 
       if (number_of_active_handles > 0)
@@ -1527,7 +1527,7 @@ ACE_Reactor::wait_for_multiple_events (ACE_Reactor_Handle_Set &dispatch_set,
     }
 
   // Return the number of events to dispatch.
-  return number_of_active_handles; 
+  return number_of_active_handles;
 }
 
 int
@@ -1547,9 +1547,9 @@ ACE_Reactor::dispatch_notification_handlers (int &number_of_active_handles,
       // other threads are trying to update the ACE_Reactor's internal
       // tables.  We'll handle all these threads and then break out to
       // continue the event loop.
-  
-  int number_dispatched = 
-    this->notify_handler_.dispatch_notifications (number_of_active_handles, 
+
+  int number_dispatched =
+    this->notify_handler_.dispatch_notifications (number_of_active_handles,
 						  dispatch_set.rd_mask_);
   return this->state_changed_ ? -1 : number_dispatched;
 #else
@@ -1582,9 +1582,9 @@ ACE_Reactor::dispatch_io_handlers (int &number_of_active_handles,
 	  number_dispatched++;
 	  this->notify_handle (handle,
 			       ACE_Event_Handler::WRITE_MASK,
-			       this->ready_set_.wr_mask_, 
+			       this->ready_set_.wr_mask_,
 			       this->handler_rep_.find (handle),
-			       &ACE_Event_Handler::handle_output); 
+			       &ACE_Event_Handler::handle_output);
 	}
     }
 
@@ -1605,15 +1605,15 @@ ACE_Reactor::dispatch_io_handlers (int &number_of_active_handles,
 
       ACE_Handle_Set_Iterator handle_iter_ex (dispatch_set.ex_mask_);
 
-      while ((handle = handle_iter_ex ()) != ACE_INVALID_HANDLE 
+      while ((handle = handle_iter_ex ()) != ACE_INVALID_HANDLE
 	     && number_dispatched < number_of_active_handles
 	     && this->state_changed_ == 0)
 	{
 	  this->notify_handle (handle,
 			       ACE_Event_Handler::EXCEPT_MASK,
-			       this->ready_set_.ex_mask_, 
+			       this->ready_set_.ex_mask_,
 			       this->handler_rep_.find (handle),
-			       &ACE_Event_Handler::handle_exception); 
+			       &ACE_Event_Handler::handle_exception);
 	  number_dispatched++;
 	}
     }
@@ -1635,15 +1635,15 @@ ACE_Reactor::dispatch_io_handlers (int &number_of_active_handles,
 
       ACE_Handle_Set_Iterator handle_iter_rd (dispatch_set.rd_mask_);
 
-      while ((handle = handle_iter_rd ()) != ACE_INVALID_HANDLE 
+      while ((handle = handle_iter_rd ()) != ACE_INVALID_HANDLE
 	     && number_dispatched < number_of_active_handles
 	     && this->state_changed_ == 0)
 	{
 	  this->notify_handle (handle,
 			       ACE_Event_Handler::READ_MASK,
-			       this->ready_set_.rd_mask_, 
+			       this->ready_set_.rd_mask_,
 			       this->handler_rep_.find (handle),
-			       &ACE_Event_Handler::handle_input); 
+			       &ACE_Event_Handler::handle_input);
 	  number_dispatched++;
 	}
     }
@@ -1660,7 +1660,7 @@ ACE_Reactor::dispatch_io_handlers (int &number_of_active_handles,
 }
 
 int
-ACE_Reactor::dispatch (int number_of_active_handles, 
+ACE_Reactor::dispatch (int number_of_active_handles,
                        ACE_Reactor_Handle_Set &dispatch_set)
 {
   ACE_TRACE ("ACE_Reactor::dispatch");
@@ -1694,14 +1694,14 @@ ACE_Reactor::dispatch (int number_of_active_handles,
       if (this->dispatch_timer_handlers () == -1)
 	// State has changed or timer queue has failed, exit inner
 	// loop.
-	break; 
+	break;
       else if (number_of_active_handles <= 0)
 	// Bail out since we got here since select() was interrupted.
 	{
 	  if (ACE_Sig_Handler::sig_pending () != 0)
 	    {
 	      ACE_Sig_Handler::sig_pending (0);
-	      
+
 	      // If any HANDLES in the <ready_set_> are activated as a
 	      // result of signals they should be dispatched since
 	      // they may be time critical...
@@ -1710,13 +1710,13 @@ ACE_Reactor::dispatch (int number_of_active_handles,
 	  else
 	    return number_of_active_handles;
 	}
-      else if (this->dispatch_notification_handlers 
+      else if (this->dispatch_notification_handlers
 	       (number_of_active_handles, dispatch_set) == -1)
 	break; // State has changed, exit inner loop.
-      else if (this->dispatch_io_handlers 
+      else if (this->dispatch_io_handlers
 	       (number_of_active_handles, dispatch_set) == -1)
 	// State has changed, so exit the inner loop.
-	break; 
+	break;
 
     }
   while (number_of_active_handles > 0);
@@ -1735,7 +1735,7 @@ ACE_Reactor::release_token (void)
 #endif /* ACE_WIN32 */
 }
 
-int 
+int
 ACE_Reactor::handle_events (ACE_Time_Value *max_wait_time)
 {
   ACE_TRACE ("ACE_Reactor::handle_events");
@@ -1758,7 +1758,7 @@ ACE_Reactor::handle_events (ACE_Time_Value *max_wait_time)
   return this->handle_events_i (max_wait_time);
 }
 
-int 
+int
 ACE_Reactor::handle_events_i (ACE_Time_Value *max_wait_time)
 {
   int result;
@@ -1766,9 +1766,9 @@ ACE_Reactor::handle_events_i (ACE_Time_Value *max_wait_time)
   ACE_SEH_TRY {
     ACE_Reactor_Handle_Set dispatch_set;
 
-    int number_of_active_handles = 
-      this->wait_for_multiple_events (dispatch_set, 
-				      max_wait_time); 
+    int number_of_active_handles =
+      this->wait_for_multiple_events (dispatch_set,
+				      max_wait_time);
 
     result = this->dispatch (number_of_active_handles, dispatch_set);
   }
@@ -1805,12 +1805,12 @@ ACE_Reactor::check_handles (void)
 
       rd_mask.set_bit (handle);
 
-      if (ACE_OS::select (int (handle) + 1, 
-			  rd_mask, 0, 0, 
+      if (ACE_OS::select (int (handle) + 1,
+			  rd_mask, 0, 0,
 			  &time_poll) < 0)
 	{
 	  result = 1;
-	  this->remove_handler_i (handle, 
+	  this->remove_handler_i (handle,
 				  ACE_Event_Handler::ALL_EVENTS_MASK);
 	}
       rd_mask.clr_bit (handle);
@@ -1829,8 +1829,8 @@ ACE_Reactor::dump (void) const
   this->timer_queue_->dump ();
   this->handler_rep_.dump ();
   this->signal_handler_->dump ();
-  ACE_DEBUG ((LM_DEBUG, 
-	      "delete_signal_handler_ = %d\n", 
+  ACE_DEBUG ((LM_DEBUG,
+	      "delete_signal_handler_ = %d\n",
 	      this->delete_signal_handler_));
 
   ACE_HANDLE h;
@@ -1875,10 +1875,16 @@ ACE_Reactor::dump (void) const
   this->token_.dump ();
 #endif /* ACE_MT_SAFE */
 
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));    
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 ACE_MT (template class ACE_Guard<ACE_REACTOR_MUTEX>);
 template class ACE_Event_Handler_Handle_Timeout_Upcall<ACE_SYNCH_RECURSIVE_MUTEX>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+#pragma instantiate ACE_Guard<ACE_REACTOR_MUTEX>
+#endif /* ACE_MT_SAFE */
+#pragma instantiate ACE_Event_Handler_Handle_Timeout_Upcall<ACE_SYNCH_RECURSIVE_MUTEX>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

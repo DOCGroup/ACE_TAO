@@ -11,7 +11,7 @@ int
 Consumer_Handler::open (void *a)
 {
   CONSUMER_FACTORY *af = (CONSUMER_FACTORY *) a;
-  this->router_task_ = af->router (); 
+  this->router_task_ = af->router ();
   return this->Peer_Handler<CONSUMER_ROUTER, CONSUMER_KEY>::open (a);
 }
 
@@ -62,7 +62,7 @@ Consumer_Router::close (u_long)
 
 // Handle incoming messages in a separate thread..
 
-int 
+int
 Consumer_Router::svc (void)
 {
   ACE_Thread_Control tc (this->thr_mgr ());
@@ -85,7 +85,7 @@ Consumer_Router::svc (void)
 
 // Send a MESSAGE_BLOCK to the supplier(s)..
 
-int 
+int
 Consumer_Router::put (ACE_Message_Block *mb, ACE_Time_Value *)
 {
   ACE_ASSERT (this->is_reader ());
@@ -104,21 +104,21 @@ Consumer_Router::put (ACE_Message_Block *mb, ACE_Time_Value *)
 
 // Return information about the Client_Router ACE_Module..
 
-int 
+int
 Consumer_Router::info (char **strp, size_t length) const
 {
   char	     buf[BUFSIZ];
   ACE_UPIPE_Addr  addr;
   const char *mod_name = this->name ();
   ACE_UPIPE_Acceptor &sa = (ACE_UPIPE_Acceptor &) *this->acceptor_;
-  
+
   if (sa.get_local_addr (addr) == -1)
     return -1;
-  
+
   ACE_OS::sprintf (buf, "%s\t /%s %s",
 	     mod_name,  "upipe",
 	     "# consumer router\n");
-  
+
   if (*strp == 0 && (*strp = ACE_OS::strdup (mod_name)) == 0)
     return -1;
   else
@@ -126,7 +126,7 @@ Consumer_Router::info (char **strp, size_t length) const
   return ACE_OS::strlen (mod_name);
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Acceptor<Consumer_Handler, ACE_UPIPE_ACCEPTOR>;
 template class Acceptor_Factory<Consumer_Handler, CONSUMER_KEY>;
 template class Peer_Handler<CONSUMER_ROUTER, CONSUMER_KEY>;
@@ -134,5 +134,14 @@ template class Peer_Router<Consumer_Handler, CONSUMER_KEY>;
 template class ACE_Map_Entry<CONSUMER_KEY, Consumer_Handler *>;
 template class ACE_Map_Iterator<CONSUMER_KEY, Consumer_Handler *, ACE_RW_Mutex>;
 template class ACE_Map_Manager<CONSUMER_KEY, Consumer_Handler *, ACE_RW_Mutex>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Acceptor<Consumer_Handler, ACE_UPIPE_ACCEPTOR>
+#pragma instantiate Acceptor_Factory<Consumer_Handler, CONSUMER_KEY>
+#pragma instantiate Peer_Handler<CONSUMER_ROUTER, CONSUMER_KEY>
+#pragma instantiate Peer_Router<Consumer_Handler, CONSUMER_KEY>
+#pragma instantiate ACE_Map_Entry<CONSUMER_KEY, Consumer_Handler *>
+#pragma instantiate ACE_Map_Iterator<CONSUMER_KEY, Consumer_Handler *, ACE_RW_Mutex>
+#pragma instantiate ACE_Map_Manager<CONSUMER_KEY, Consumer_Handler *, ACE_RW_Mutex>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 #endif /* ACE_HAS_THREADS */

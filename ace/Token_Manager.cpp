@@ -48,24 +48,24 @@ ACE_Token_Manager::instance (void)
 
       if (token_manager_ == 0)
 	ACE_NEW_RETURN (token_manager_, ACE_Token_Manager, 0);
-    }  
+    }
 
   return token_manager_;
 }
 
 void
-ACE_Token_Manager::get_token (ACE_Token_Proxy *proxy, 
-			      const char *token_name)  
+ACE_Token_Manager::get_token (ACE_Token_Proxy *proxy,
+			      const char *token_name)
 {
   ACE_TRACE ("ACE_Token_Manager::get");
   // Hmm.  I think this makes sense.  We perform our own locking here
   // (see safe_acquire.)  We have to make sure that only one thread
   // uses the collection at a time.
-  
+
   ACE_GUARD (ACE_TOKEN_CONST::MUTEX, ace_mon, this->lock_);
 
   TOKEN_NAME name (token_name);
-  
+
   if (collection_.find (name, proxy->token_) == -1)
     // We did not find one in the collection.
     {
@@ -84,7 +84,7 @@ ACE_Token_Manager::get_token (ACE_Token_Proxy *proxy,
     proxy->token_->inc_reference ();
 
   // We may be returning proxy->token_ == 0 if new failed, caller must
-  // check. 
+  // check.
 }
 
 // 0. check_deadlock (TOKEN)
@@ -97,7 +97,7 @@ ACE_Token_Manager::get_token (ACE_Token_Proxy *proxy,
 // 7.	 else, if check_deadlock (NEW_TOKEN) == 1, return *DEADLOCK*
 // 8. return 0.
 
-int 
+int
 ACE_Token_Manager::check_deadlock (ACE_Token_Proxy *proxy)
 {
   ACE_TRACE ("ACE_Token_Manager::check_deadlock");
@@ -116,7 +116,7 @@ ACE_Token_Manager::check_deadlock (ACE_Token_Proxy *proxy)
   return result;
 }
 
-int 
+int
 ACE_Token_Manager::check_deadlock (ACE_Tokens *token, ACE_Token_Proxy *proxy)
 {
   ACE_TRACE ("ACE_Token_Manager::check_deadlock");
@@ -127,7 +127,7 @@ ACE_Token_Manager::check_deadlock (ACE_Tokens *token, ACE_Token_Proxy *proxy)
   token->visit (1);
 
   ACE_Tokens::OWNER_STACK owners;
-  
+
   int is_owner = token->owners (owners, proxy->client_id ());
 
   switch (is_owner)
@@ -140,10 +140,10 @@ ACE_Token_Manager::check_deadlock (ACE_Tokens *token, ACE_Token_Proxy *proxy)
       if (debug_)
 	{
 	  ACE_DEBUG ((LM_DEBUG, "(%t) Deadlock detected.\n"));
-	  ACE_DEBUG ((LM_DEBUG, "%s owns %s and is waiting for %s.\n", 
+	  ACE_DEBUG ((LM_DEBUG, "%s owns %s and is waiting for %s.\n",
 		      proxy->client_id (),
 		      token->name (),
-		      proxy->token_->name ())); 
+		      proxy->token_->name ()));
 	}
 
       return 1;
@@ -161,7 +161,7 @@ ACE_Token_Manager::check_deadlock (ACE_Tokens *token, ACE_Token_Proxy *proxy)
 	    {
 	      if (debug_)
 		{
-		  ACE_DEBUG ((LM_DEBUG, 
+		  ACE_DEBUG ((LM_DEBUG,
 			      "%s owns %s and is waiting for %s.\n",
 			      e->client_id (),
 			      token->name (),
@@ -248,11 +248,16 @@ ACE_Token_Manager::dump (void) const
   lock_.dump ();
   ACE_DEBUG ((LM_DEBUG, "collection_\n"));
   collection_.dump ();
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));    
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Map_Manager <ACE_Token_Name, ACE_Tokens *, ACE_Null_Mutex>;
 template class ACE_Map_Iterator<ACE_Token_Name, ACE_Tokens *, ACE_Null_Mutex>;
 template class ACE_Map_Entry <ACE_Token_Name, ACE_Tokens *>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Map_Manager <ACE_Token_Name, ACE_Tokens *, ACE_Null_Mutex>
+#pragma instantiate ACE_Map_Iterator<ACE_Token_Name, ACE_Tokens *, ACE_Null_Mutex>
+#pragma instantiate ACE_Map_Entry <ACE_Token_Name, ACE_Tokens *>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

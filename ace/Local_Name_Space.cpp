@@ -66,7 +66,7 @@ ACE_NS_String::strstr (const ACE_NS_String &s) const
       // They're smaller than we are...
       size_t len = (this->len_ - s.len_) / sizeof (ACE_USHORT16);
       size_t pat_len = s.len_ / sizeof (ACE_USHORT16) - 1;
-      
+
       for (size_t i = 0; i <= len; i++)
 	{
 	  size_t j;
@@ -74,12 +74,12 @@ ACE_NS_String::strstr (const ACE_NS_String &s) const
 	  for (j = 0; j < pat_len; j++)
 	    if (this->rep_[i + j] != s.rep_[j])
 	      break;
-	  
+
 	  if (j == pat_len)
 	    // Found a match!  Return the index.
 	    return i;
 	}
-      
+
       return -1;
     }
 }
@@ -89,7 +89,7 @@ ACE_NS_String::operator == (const ACE_NS_String &s) const
 {
   ACE_TRACE ("ACE_NS_String::operator ==");
   return this->len_ == s.len_
-    && ACE_OS::memcmp ((void *) this->rep_, 
+    && ACE_OS::memcmp ((void *) this->rep_,
 		       (void *) s.rep_, this->len_) == 0;
 }
 
@@ -100,17 +100,17 @@ ACE_NS_String::operator != (const ACE_NS_String &s) const
   return !this->operator == (s);
 }
 
-ACE_NS_String::ACE_NS_String (ACE_USHORT16 *dst, 
-			      const ACE_USHORT16 *src, 
+ACE_NS_String::ACE_NS_String (ACE_USHORT16 *dst,
+			      const ACE_USHORT16 *src,
 			      size_t bytes)
-  : len_ (bytes), 
+  : len_ (bytes),
     rep_ (dst)
 {
   ACE_TRACE ("ACE_NS_String::ACE_NS_String");
   ACE_OS::memcpy (this->rep_, src, bytes);
 }
 
-size_t 
+size_t
 ACE_NS_String::hash (void) const
 {
   return ACE::hash_pjw (this->rep_);
@@ -129,7 +129,7 @@ ACE_NS_Internal::ACE_NS_Internal (ACE_NS_String &value, const char *type)
 
 int
 ACE_NS_Internal::operator == (const ACE_NS_Internal &s) const
-{  
+{
   ACE_TRACE ("ACE_NS_Internal::operator ==");
   return this->value_ == s.value_;
 }
@@ -148,7 +148,7 @@ ACE_NS_Internal::type (void)
   return this->type_;
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 #if (1)
 template class ACE_Hash_Map_Manager<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex>;
@@ -167,5 +167,25 @@ template class ACE_Node<ACE_Name_Binding>;
 template class ACE_Guard<ACE_RW_Process_Mutex>;
 template class ACE_Read_Guard<ACE_RW_Process_Mutex>;
 template class ACE_Write_Guard<ACE_RW_Process_Mutex>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#if (1)
+#pragma instantiate ACE_Hash_Map_Manager<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Entry <ACE_NS_String, ACE_NS_Internal>
+#else
+#pragma instantiate ACE_Map_Manager<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex>
+#pragma instantiate ACE_Map_Iterator<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex>
+#pragma instantiate ACE_Map_Entry <ACE_NS_String, ACE_NS_Internal>
+#endif
+#pragma instantiate ACE_Unbounded_Set<ACE_Name_Binding>
+#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Name_Binding>
+#pragma instantiate ACE_Unbounded_Set<ACE_WString>
+#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_WString>
+#pragma instantiate ACE_Node<ACE_WString>
+#pragma instantiate ACE_Node<ACE_Name_Binding>
+#pragma instantiate ACE_Guard<ACE_RW_Process_Mutex>
+#pragma instantiate ACE_Read_Guard<ACE_RW_Process_Mutex>
+#pragma instantiate ACE_Write_Guard<ACE_RW_Process_Mutex>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 #endif /* ACE_LOCAL_NAME_SPACE_C */

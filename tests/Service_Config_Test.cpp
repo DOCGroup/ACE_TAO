@@ -92,8 +92,13 @@ main (int argc, char *argv[])
   return 0;
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class mySingleton<1>;
 template class mySingleton<2>;
 template class mySingleton<3>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate mySingleton<1>
+#pragma instantiate mySingleton<2>
+#pragma instantiate mySingleton<3>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

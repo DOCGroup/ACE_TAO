@@ -20,7 +20,7 @@ ACE_Token::dump (void) const
   ACE_TRACE ("ACE_Token::dump");
 }
 
-ACE_Token::ACE_Queue_Entry::ACE_Queue_Entry (ACE_Thread_Mutex &m, 
+ACE_Token::ACE_Queue_Entry::ACE_Queue_Entry (ACE_Thread_Mutex &m,
 					     ACE_thread_t t_id)
   : next_ (0),
     thread_id_ (t_id),
@@ -31,10 +31,10 @@ ACE_Token::ACE_Queue_Entry::ACE_Queue_Entry (ACE_Thread_Mutex &m,
 }
 
 ACE_Token::ACE_Token (LPCTSTR name, void *any)
-  : head_ (0), 
-    tail_ (0), 
+  : head_ (0),
+    tail_ (0),
     lock_ (name, any),
-    in_use_ (0), 
+    in_use_ (0),
     waiters_ (0),
     nesting_level_ (0)
 {
@@ -46,7 +46,7 @@ ACE_Token::~ACE_Token (void)
   ACE_TRACE ("ACE_Token::~ACE_Token");
 }
 
-// Remove an entry from the list.  Must be 
+// Remove an entry from the list.  Must be
 // called with locks held.
 
 void
@@ -65,21 +65,21 @@ ACE_Token::remove_entry (ACE_Token::ACE_Queue_Entry *entry)
     prev = curr;
 
   if (curr == 0) // Didn't find the entry...
-    return; 
+    return;
   else if (prev == 0) // Delete at the head.
     this->head_ = this->head_->next_;
   else // Delete in the middle.
     prev->next_ = curr->next_;
 
-  // We need to update the tail of the list 
-  // if we've deleted the last entry. 
+  // We need to update the tail of the list
+  // if we've deleted the last entry.
 
   if (curr->next_ == 0)
     this->tail_ = curr;
 }
 
-int 
-ACE_Token::shared_acquire (void (*sleep_hook_func)(void *), 
+int
+ACE_Token::shared_acquire (void (*sleep_hook_func)(void *),
 			   void *arg,
 			   ACE_Time_Value *timeout)
 {
@@ -96,9 +96,9 @@ ACE_Token::shared_acquire (void (*sleep_hook_func)(void *),
 #endif /* DEBUGGING */
 
   if (this->in_use_) // Someone already holds the token.
-    {	
+    {
       if (ACE_OS::thr_equal (thr_id, this->owner_)) // I own it!
-	{	
+	{
 	  this->nesting_level_++;
 	  return 0;
 	}
@@ -117,7 +117,7 @@ ACE_Token::shared_acquire (void (*sleep_hook_func)(void *),
 	  int ret = 0;
 
 	  if (this->head_ == 0) // I'm first and only waiter in line...
-	    {	
+	    {
 	      this->head_ = &my_entry;
 	      this->tail_ = &my_entry;
 	    }
@@ -125,13 +125,13 @@ ACE_Token::shared_acquire (void (*sleep_hook_func)(void *),
 	    {
 	      this->tail_->next_ = &my_entry;
 	      this->tail_ = &my_entry;
-	    } 
+	    }
 
 	  this->waiters_++;
 
 	  // Execute appropriate <sleep_hook> callback.
 	  // (@@ should these methods return a success/failure
-	  // status, and if so, what should we do with it?) 
+	  // status, and if so, what should we do with it?)
 
 	  if (sleep_hook_func)
 	    {
@@ -154,8 +154,8 @@ ACE_Token::shared_acquire (void (*sleep_hook_func)(void *),
 		continue;
 #if defined (DEBUGGING)
 	      cerr << '(' << ACE_Thread::self () << ')'
-		   << " acquire: " 
-		   << (errno == ETIME ? "timed out" : "error occurred") 
+		   << " acquire: "
+		   << (errno == ETIME ? "timed out" : "error occurred")
 		   << endl;
 #endif /* DEBUGGING */
 	      // We come here if a timeout occurs or some serious
@@ -175,7 +175,7 @@ ACE_Token::shared_acquire (void (*sleep_hook_func)(void *),
   else
     {
       this->in_use_ = 1;
-      this->owner_ = thr_id; // Its mine! 
+      this->owner_ = thr_id; // Its mine!
       return 0;
     }
 }
@@ -189,7 +189,7 @@ ACE_Token::sleep_hook (void)
   ACE_TRACE ("ACE_Token::sleep_hook");
 }
 
-int 
+int
 ACE_Token::acquire (ACE_Time_Value *timeout)
 {
   ACE_TRACE ("ACE_Token::acquire");
@@ -199,8 +199,8 @@ ACE_Token::acquire (ACE_Time_Value *timeout)
 // Acquire the token, sleeping until it is obtained or until
 // <timeout> expires.
 
-int 
-ACE_Token::acquire (void (*sleep_hook_func)(void *), 
+int
+ACE_Token::acquire (void (*sleep_hook_func)(void *),
 		void *arg,
 		ACE_Time_Value *timeout)
 {
@@ -218,8 +218,8 @@ ACE_Token::renew (int requeue_position, ACE_Time_Value *timeout)
 
 #if defined (DEBUGGING)
   cerr << '(' << ACE_Thread::self () << ')'
-       << " renew: owner_ thr = " << this->owner_ 
-       << ", owner_ addr = " << &this->owner_ 
+       << " renew: owner_ thr = " << this->owner_
+       << ", owner_ addr = " << &this->owner_
        << ", nesting level = " << this->nesting_level_ << endl;
 #endif /* DEBUGGING */
   ACE_ASSERT (ACE_OS::thr_equal (ACE_Thread::self (), this->owner_));
@@ -239,11 +239,11 @@ ACE_Token::renew (int requeue_position, ACE_Time_Value *timeout)
 
       this->head_ = this->head_->next_;
 
-      if (this->head_ == 0) // No other threads - just add me 
-	{	
+      if (this->head_ == 0) // No other threads - just add me
+	{
 	  this->head_ = &my_entry;
 	  this->tail_ = &my_entry;
-	} 
+	}
       else if (requeue_position == -1) // Insert at the end of the queue.
 	{
 	  this->tail_->next_ = &my_entry;
@@ -259,7 +259,7 @@ ACE_Token::renew (int requeue_position, ACE_Time_Value *timeout)
 	  ACE_Token::ACE_Queue_Entry *insert_after = this->head_;
 
 	  // Determine where our thread should go in the queue of
-	  // waiters. 
+	  // waiters.
 
 	  while (requeue_position-- && insert_after->next_ != 0)
 	    insert_after = insert_after->next_;
@@ -282,10 +282,10 @@ ACE_Token::renew (int requeue_position, ACE_Time_Value *timeout)
 	    continue;
 #if defined (DEBUGGING)
 	  cerr << '(' << ACE_Thread::self () << ')'
-	       << " renew: " 
+	       << " renew: "
 	       << (errno == ETIME ? "timed out" : "error occurred") << endl;
 #endif /* DEBUGGING */
-	  // We come here if a timeout occurs or 
+	  // We come here if a timeout occurs or
 	  // some serious ACE_Condition object error.
 	  this->remove_entry (&my_entry);
 	  return -1;
@@ -311,18 +311,18 @@ ACE_Token::release (void)
 
 #if defined (DEBUGGING)
   cerr << '(' << ACE_Thread::self () << ')'
-       << " release: owner_ thr = " << this->owner_ 
-       << ", owner_ addr = " << &this->owner_ 
+       << " release: owner_ thr = " << this->owner_
+       << ", owner_ addr = " << &this->owner_
        << ", nesting level = " << this->nesting_level_ << endl;
 #endif /* DEBUGGING */
 
   if (this->nesting_level_ > 0)
     --this->nesting_level_;
-  else 
+  else
     {
       if (this->head_ == 0)
 	this->in_use_ = 0; // No more waiters...
-      else 
+      else
 	{
 	  this->owner_ = this->head_->thread_id_;
 	  --this->waiters_;
@@ -335,12 +335,14 @@ ACE_Token::release (void)
 
 	  if (this->head_ == 0)
 	    this->tail_ = 0;
-	} 
+	}
     }
   return 0;
 }
 
 #endif /* ACE_HAS_THREADS */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

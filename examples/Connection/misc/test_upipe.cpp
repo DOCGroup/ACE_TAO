@@ -51,7 +51,7 @@ class Server : public ACE_Strategy_Acceptor <Server_Service, ACE_UPIPE_ACCEPTOR>
 public:
   Server (ACE_Thread_Manager *thr_mgr,
 	  ACE_Reactor *reactor)
-    : reactor_ (reactor), 
+    : reactor_ (reactor),
       thr_mgr_ (thr_mgr)
     {
       ACE_TRACE ("Server::Server");
@@ -63,7 +63,7 @@ public:
       const char *l_addr = argc > 1 ? argv[1] : ACE_DEFAULT_RENDEZVOUS;
 
       ACE_UPIPE_Addr local_addr (l_addr);
-      
+
       if (this->thr_strategy_.open (this->thr_mgr_, THR_DETACHED | THR_NEW_LWP) == -1)
 	return -1;
       else if (this->open (local_addr, this->reactor_,
@@ -78,10 +78,10 @@ public:
 private:
   ACE_Reactor *reactor_;
   // Our instance of the reactor.
-  
+
   ACE_Thread_Manager *thr_mgr_;
   // Our instance of a thread manager.
-  
+
   ACE_Thread_Strategy<Server_Service> thr_strategy_;
   // Our concurrency strategy.
 };
@@ -139,7 +139,7 @@ public:
     ACE_UPIPE_Addr remote_addr (r_addr);
 
     Client_Service *cs;
-    
+
     ACE_NEW_RETURN (cs, Client_Service (this->thr_mgr_), -1);
 
     return this->connect (cs, remote_addr);
@@ -150,9 +150,9 @@ private:
 };
 
 //----------------------------------------
-                                       
-int main (int argc, char *argv[])                       
-{                                                       
+
+int main (int argc, char *argv[])
+{
   ACE_Service_Config svc_conf;
   ACE_Thread_Manager thr_mgr;
 
@@ -169,9 +169,9 @@ int main (int argc, char *argv[])
   // Wait for threads to exit.
   thr_mgr.wait ();
   return 0;
-}                                                       
+}
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Accept_Strategy<Server_Service, ACE_UPIPE_ACCEPTOR>;
 template class ACE_Acceptor<Server_Service, ACE_UPIPE_ACCEPTOR>;
 template class ACE_Concurrency_Strategy<Server_Service>;
@@ -185,7 +185,22 @@ template class ACE_Strategy_Acceptor<Server_Service, ACE_UPIPE_ACCEPTOR>;
 template class ACE_Svc_Handler<ACE_UPIPE_STREAM, ACE_NULL_SYNCH>;
 template class ACE_Svc_Tuple<Client_Service>;
 template class ACE_Thread_Strategy<Server_Service>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Accept_Strategy<Server_Service, ACE_UPIPE_ACCEPTOR>
+#pragma instantiate ACE_Acceptor<Server_Service, ACE_UPIPE_ACCEPTOR>
+#pragma instantiate ACE_Concurrency_Strategy<Server_Service>
+#pragma instantiate ACE_Connector<Client_Service, ACE_UPIPE_CONNECTOR>
+#pragma instantiate ACE_Creation_Strategy<Server_Service>
+#pragma instantiate ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<Client_Service> *>
+#pragma instantiate ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Client_Service> *, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<Client_Service> *, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Scheduling_Strategy<Server_Service>
+#pragma instantiate ACE_Strategy_Acceptor<Server_Service, ACE_UPIPE_ACCEPTOR>
+#pragma instantiate ACE_Svc_Handler<ACE_UPIPE_STREAM, ACE_NULL_SYNCH>
+#pragma instantiate ACE_Svc_Tuple<Client_Service>
+#pragma instantiate ACE_Thread_Strategy<Server_Service>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 
 #else
 int

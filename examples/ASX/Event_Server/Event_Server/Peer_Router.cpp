@@ -17,7 +17,7 @@ Peer_Router_Context::send_peers (ACE_Message_Block *mb)
 
   // Skip past the header and get the message to send.
   ACE_Message_Block *data_block = mb->cont ();
-  
+
   // "Multicast" the data to *all* the registered peers.
 
   for (PEER_ENTRY *ss = 0;
@@ -25,13 +25,13 @@ Peer_Router_Context::send_peers (ACE_Message_Block *mb)
        map_iter.advance ())
     {
       if (Options::instance ()->debug ())
-	ACE_DEBUG ((LM_DEBUG, 
-		    "(%t) sending to peer via handle %d\n", 
+	ACE_DEBUG ((LM_DEBUG,
+		    "(%t) sending to peer via handle %d\n",
 		    ss->ext_id_));
       iterations++;
       // Increment reference count before sending since the
       // Peer_Handler might be running in its own thread of control.
-      bytes += ss->int_id_->put (data_block->duplicate ()); 
+      bytes += ss->int_id_->put (data_block->duplicate ());
     }
 
   mb->release ();
@@ -61,7 +61,7 @@ Peer_Router_Context::release (void)
 }
 
 int
-Peer_Router_Context::bind_peer (ROUTING_KEY key, 
+Peer_Router_Context::bind_peer (ROUTING_KEY key,
 				Peer_Handler *peer_handler)
 {
   return this->peer_map_.bind (key, peer_handler);
@@ -81,17 +81,17 @@ Peer_Router_Context::Peer_Router_Context (u_short port)
   else
     {
       ACE_INET_Addr addr;
-      
+
       if (this->acceptor().get_local_addr (addr) != -1)
-	ACE_DEBUG ((LM_DEBUG, 
-		    "(%t) initializing %s on port = %d, handle = %d, this = %u\n", 
-		    addr.get_port_number () == Options::instance ()->supplier_port () ? 
+	ACE_DEBUG ((LM_DEBUG,
+		    "(%t) initializing %s on port = %d, handle = %d, this = %u\n",
+		    addr.get_port_number () == Options::instance ()->supplier_port () ?
 		    "Supplier_Handler" : "Consumer_Handler",
 		    addr.get_port_number (),
-		    this->acceptor().get_handle (), 
+		    this->acceptor().get_handle (),
 		    this));
       else
-	ACE_ERROR ((LM_ERROR, 
+	ACE_ERROR ((LM_ERROR,
 		    "%p\n", "get_local_addr"));
     }
 }
@@ -99,7 +99,7 @@ Peer_Router_Context::Peer_Router_Context (u_short port)
 Peer_Router_Context::~Peer_Router_Context (void)
 {
   // Free up the handle and close down the listening socket.
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
 	      "(%t) closing down Peer_Router_Context\n"));
 
   // Close down the Acceptor and take ourselves out of the Reactor.
@@ -114,8 +114,8 @@ Peer_Router_Context::~Peer_Router_Context (void)
        map_iter.advance ())
     {
       if (Options::instance ()->debug ())
-	ACE_DEBUG ((LM_DEBUG, 
-		    "(%t) closing down peer on handle %d\n", 
+	ACE_DEBUG ((LM_DEBUG,
+		    "(%t) closing down peer on handle %d\n",
 		    ss->ext_id_));
 
       if (ACE_Reactor::instance ()->remove_handler
@@ -141,7 +141,7 @@ Peer_Router_Context::peer_router (Peer_Router *pr)
 
 int
 Peer_Router_Context::make_svc_handler (Peer_Handler *&sh)
-{ 
+{
   ACE_NEW_RETURN (sh, Peer_Handler (this), -1);
   return 0;
 }
@@ -175,9 +175,9 @@ Peer_Handler::svc (void)
     {
       db = new Message_Block (BUFSIZ);
       hb = new Message_Block (sizeof (ROUTING_KEY), Message_Block::MB_PROTO, db);
-   
+
       if ((n = this->peer_.recv (db->rd_ptr (), db->size ())) == -1)
-	LM_ERROR_RETURN ((LOG_ERROR, "%p", "recv failed"), -1);    
+	LM_ERROR_RETURN ((LOG_ERROR, "%p", "recv failed"), -1);
       else if (n == 0) // Client has closed down the connection.
 	{
 	  if (this->prc_->peer_router ()->unbind_peer (this->get_handle ()) == -1)
@@ -186,7 +186,7 @@ Peer_Handler::svc (void)
 	  return -1; // We do not need to be deregistered by reactor
 	  // as we were not registered at all
 	}
-      else 
+      else
 	// Transform incoming buffer into a Message and pass
 	// downstream.
 	{
@@ -216,7 +216,7 @@ Peer_Handler::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
 
   int result = 0;
 
-  result = this->peer ().send_n (mb->rd_ptr (), 
+  result = this->peer ().send_n (mb->rd_ptr (),
 				 mb->length ());
   // Release the memory.
   mb->release ();
@@ -241,11 +241,11 @@ Peer_Handler::open (void *)
   // here.
   if (this->activate (Options::instance ()->t_flags ()) == -1)
      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "activation of thread failed"), -1);
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
 	      "(%t) Peer_Handler::open registering with Reactor for handle_input\n"));
 #else
   // Register with the Reactor to receive messages from our Peer.
-  if (ACE_Reactor::instance ()->register_handler 
+  if (ACE_Reactor::instance ()->register_handler
       (this, ACE_Event_Handler::READ_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "register_handler"), -1);
 #endif
@@ -284,7 +284,7 @@ Peer_Handler::handle_input (ACE_HANDLE h)
   ssize_t n = this->peer ().recv (db->rd_ptr (), db->size ());
 
   if (n == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p", "recv failed"), -1);    
+    ACE_ERROR_RETURN ((LM_ERROR, "%p", "recv failed"), -1);
   else if (n == 0) // Client has closed down the connection.
     {
       if (this->prc_->unbind_peer (this->get_handle ()) == -1)
@@ -293,7 +293,7 @@ Peer_Handler::handle_input (ACE_HANDLE h)
       ACE_DEBUG ((LM_DEBUG, "(%t) shutting down handle %d\n", h));
       return -1; // Instruct the ACE_Reactor to deregister us by returning -1.
     }
-  else 
+  else
     {
       // Transform incoming buffer into a Message.
 
@@ -302,7 +302,7 @@ Peer_Handler::handle_input (ACE_HANDLE h)
       db->wr_ptr (n);
 
       // Second, copy the "address" into the header block.
-      *(ACE_HANDLE *) hb->rd_ptr () = this->get_handle (); 
+      *(ACE_HANDLE *) hb->rd_ptr () = this->get_handle ();
 
       // Third, update the write pointer in the header block.
       hb->wr_ptr (sizeof (ACE_HANDLE));
@@ -353,10 +353,17 @@ Peer_Router::control (ACE_Message_Block *mb)
 
 #endif /* _PEER_ROUTER_C */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Acceptor<Peer_Handler, ACE_SOCK_ACCEPTOR>;
 template class ACE_Map_Entry<ROUTING_KEY, Peer_Handler *>;
 template class ACE_Map_Iterator<ROUTING_KEY, Peer_Handler *, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Map_Manager<ROUTING_KEY, Peer_Handler *, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_SYNCH>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Acceptor<Peer_Handler, ACE_SOCK_ACCEPTOR>
+#pragma instantiate ACE_Map_Entry<ROUTING_KEY, Peer_Handler *>
+#pragma instantiate ACE_Map_Iterator<ROUTING_KEY, Peer_Handler *, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Manager<ROUTING_KEY, Peer_Handler *, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_SYNCH>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
