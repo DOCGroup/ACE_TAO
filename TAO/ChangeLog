@@ -1,4 +1,9 @@
-﻿Fri Dec  5 14:10:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+Sat Dec  6 13:43:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* tests/Bug_1639_Regression/struct_client.cpp:
+	  Fixed warning
+
+Fri Dec  5 14:10:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* orbsvcs/orbsvcs/DsEventLogAdmin.dsp:
 	* orbsvcs/orbsvcs/DsNotifyLogAdmin.dsp:
