@@ -84,13 +84,13 @@ ace_main; unld "Timer_Queue_Test"
 ld < SOCK_Connector_Test
 write 2, "SOCK_Connector_Test ", 20
 ace_main; unld "SOCK_Connector_Test"
- 
+
 ld < Task_Test
 write 2, "Task_Test ", 10
 ace_main; unld "Task_Test"
- 
+
 ld < OrdMultiSet_Test
-write 2, "OrdMultiSet_Test ", 10
+write 2, "OrdMultiSet_Test ", 17
 ace_main; unld "OrdMultiSet_Test"
 
 ld < Thread_Manager_Test
