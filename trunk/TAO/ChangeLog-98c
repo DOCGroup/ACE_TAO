@@ -1,3 +1,18 @@
+
+Sat Oct 24 23:56:45 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* examples/Callback_Quoter/
+	  added files:
+	  Consumer_Handler.h
+	  Consumer_Handler.cpp
+	  Consumer_Signal_Handler.h
+	  Consumer_Signal_Handler.cpp
+
+	  Consumer_Handler creates the Consumer_Input_Handler and the
+	  Consumer_Signal_Handler objects which are derived from
+	  ACE_Event_Handler for managing events of input and signal type.
+
+
 Sat Oct 24 14:51:29 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp (supplier_task):
@@ -26,6 +41,7 @@ Fri Oct 23 18:45:43 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
           Fixed signed/unsigned problem.
 
           Thanks to John Morey<jmorey@tbi.com> for reporting them.
+
 
 Fri Oct 23 18:23:07 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
