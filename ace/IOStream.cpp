@@ -83,9 +83,14 @@
   // function will be invoked by the first >>.  Since it returns
   // a myiostream&, the second >> will be invoked as desired.  */
 
+ACE_HANDLE 
+ACE_Streambuf::get_handle (void)
+{
+  return 0;
+}
 
 ACE_Time_Value *
-ACE_Streambuf::recv_timeout (ACE_Time_Value * tv)
+ACE_Streambuf::recv_timeout (ACE_Time_Value *tv)
 {
   ACE_Time_Value * rval = recv_timeout_;
   if (tv)
