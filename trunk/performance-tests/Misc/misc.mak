@@ -4,9 +4,8 @@
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
 !IF "$(CFG)" == ""
-CFG=childbirth_time - Win32 Debug
-!MESSAGE No configuration specified.  Defaulting to childbirth_time - Win32\
- Debug.
+CFG=basic_perf - Win32 Debug
+!MESSAGE No configuration specified.  Defaulting to basic_perf - Win32 Debug.
 !ENDIF 
 
 !IF "$(CFG)" != "context_switch_time - Win32 Release" && "$(CFG)" !=\
@@ -15,12 +14,13 @@ CFG=childbirth_time - Win32 Debug
  "test_singleton - Win32 Release" && "$(CFG)" != "test_singleton - Win32 Debug"\
  && "$(CFG)" != "test_naming - Win32 Release" && "$(CFG)" !=\
  "test_naming - Win32 Debug" && "$(CFG)" != "childbirth_time - Win32 Release" &&\
- "$(CFG)" != "childbirth_time - Win32 Debug"
+ "$(CFG)" != "childbirth_time - Win32 Debug" && "$(CFG)" !=\
+ "basic_perf - Win32 Release" && "$(CFG)" != "basic_perf - Win32 Debug"
 !MESSAGE Invalid configuration "$(CFG)" specified.
 !MESSAGE You can specify a configuration when running NMAKE on this makefile
 !MESSAGE by defining the macro CFG on the command line.  For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "misc.mak" CFG="childbirth_time - Win32 Debug"
+!MESSAGE NMAKE /f "misc.mak" CFG="basic_perf - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
@@ -43,6 +43,10 @@ CFG=childbirth_time - Win32 Debug
 !MESSAGE "childbirth_time - Win32 Release" (based on\
  "Win32 (x86) Console Application")
 !MESSAGE "childbirth_time - Win32 Debug" (based on\
+ "Win32 (x86) Console Application")
+!MESSAGE "basic_perf - Win32 Release" (based on\
+ "Win32 (x86) Console Application")
+!MESSAGE "basic_perf - Win32 Debug" (based on\
  "Win32 (x86) Console Application")
 !MESSAGE 
 !ERROR An invalid configuration is specified.
@@ -648,6 +652,127 @@ LINK32_OBJS= \
   $(LINK32_FLAGS) $(LINK32_OBJS)
 <<
 
+!ELSEIF  "$(CFG)" == "basic_perf - Win32 Release"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 0
+# PROP BASE Output_Dir "basic_perf\Release"
+# PROP BASE Intermediate_Dir "basic_perf\Release"
+# PROP BASE Target_Dir "basic_perf"
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 0
+# PROP Output_Dir "."
+# PROP Intermediate_Dir ".\Release"
+# PROP Target_Dir "basic_perf"
+OUTDIR=.\.
+INTDIR=.\Release
+
+ALL : "$(OUTDIR)\basic_perf.exe"
+
+CLEAN : 
+	-@erase "$(INTDIR)\basic_func.obj"
+	-@erase "$(INTDIR)\basic_perf.obj"
+	-@erase "$(OUTDIR)\basic_perf.exe"
+
+"$(OUTDIR)" :
+    if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
+
+"$(INTDIR)" :
+    if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
+
+# ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /YX /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /YX /c
+CPP_PROJ=/nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE"\
+ /Fp"$(INTDIR)/basic_perf.pch" /YX /Fo"$(INTDIR)/" /c 
+CPP_OBJS=.\.\Release/
+CPP_SBRS=.\.
+# ADD BASE RSC /l 0x409 /d "NDEBUG"
+# ADD RSC /l 0x409 /d "NDEBUG"
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+BSC32_FLAGS=/nologo /o"$(OUTDIR)/basic_perf.bsc" 
+BSC32_SBRS= \
+	
+LINK32=link.exe
+# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
+# ADD LINK32 ace-r.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
+LINK32_FLAGS=ace-r.lib kernel32.lib user32.lib gdi32.lib winspool.lib\
+ comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib\
+ odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:no\
+ /pdb:"$(OUTDIR)/basic_perf.pdb" /machine:I386 /out:"$(OUTDIR)/basic_perf.exe" 
+LINK32_OBJS= \
+	"$(INTDIR)\basic_func.obj" \
+	"$(INTDIR)\basic_perf.obj"
+
+"$(OUTDIR)\basic_perf.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
+    $(LINK32) @<<
+  $(LINK32_FLAGS) $(LINK32_OBJS)
+<<
+
+!ELSEIF  "$(CFG)" == "basic_perf - Win32 Debug"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 1
+# PROP BASE Output_Dir "basic_perf\Debug"
+# PROP BASE Intermediate_Dir "basic_perf\Debug"
+# PROP BASE Target_Dir "basic_perf"
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 1
+# PROP Output_Dir "."
+# PROP Intermediate_Dir ".\Debug"
+# PROP Target_Dir "basic_perf"
+OUTDIR=.\.
+INTDIR=.\Debug
+
+ALL : "$(OUTDIR)\basic_perf.exe"
+
+CLEAN : 
+	-@erase "$(INTDIR)\basic_func.obj"
+	-@erase "$(INTDIR)\basic_perf.obj"
+	-@erase "$(INTDIR)\vc40.idb"
+	-@erase "$(INTDIR)\vc40.pdb"
+	-@erase "$(OUTDIR)\basic_perf.exe"
+	-@erase "$(OUTDIR)\basic_perf.ilk"
+	-@erase "$(OUTDIR)\basic_perf.pdb"
+
+"$(OUTDIR)" :
+    if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
+
+"$(INTDIR)" :
+    if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
+
+# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
+ /Fp"$(INTDIR)/basic_perf.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\.\Debug/
+CPP_SBRS=.\.
+# ADD BASE RSC /l 0x409 /d "_DEBUG"
+# ADD RSC /l 0x409 /d "_DEBUG"
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+BSC32_FLAGS=/nologo /o"$(OUTDIR)/basic_perf.bsc" 
+BSC32_SBRS= \
+	
+LINK32=link.exe
+# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
+# ADD LINK32 ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib\
+ comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib\
+ odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:yes\
+ /pdb:"$(OUTDIR)/basic_perf.pdb" /debug /machine:I386\
+ /out:"$(OUTDIR)/basic_perf.exe" 
+LINK32_OBJS= \
+	"$(INTDIR)\basic_func.obj" \
+	"$(INTDIR)\basic_perf.obj"
+
+"$(OUTDIR)\basic_perf.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
+    $(LINK32) @<<
+  $(LINK32_FLAGS) $(LINK32_OBJS)
+<<
+
 !ENDIF 
 
 .c{$(CPP_OBJS)}.obj:
@@ -1128,6 +1253,65 @@ DEP_CPP_CHILD=\
 	
 
 "$(INTDIR)\childbirth_time.obj" : $(SOURCE) $(DEP_CPP_CHILD) "$(INTDIR)"
+
+
+# End Source File
+# End Target
+################################################################################
+# Begin Target
+
+# Name "basic_perf - Win32 Release"
+# Name "basic_perf - Win32 Debug"
+
+!IF  "$(CFG)" == "basic_perf - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "basic_perf - Win32 Debug"
+
+!ENDIF 
+
+################################################################################
+# Begin Source File
+
+SOURCE=.\basic_func.cpp
+DEP_CPP_BASIC=\
+	".\basic_func.h"\
+	
+
+"$(INTDIR)\basic_func.obj" : $(SOURCE) $(DEP_CPP_BASIC) "$(INTDIR)"
+
+
+# End Source File
+################################################################################
+# Begin Source File
+
+SOURCE=.\basic_perf.cpp
+DEP_CPP_BASIC_=\
+	".\basic_func.h"\
+	{$(INCLUDE)}"\ace\ACE.h"\
+	{$(INCLUDE)}"\ace\ACE.i"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
+	{$(INCLUDE)}"\ace\config-win32-common.h"\
+	{$(INCLUDE)}"\ace\config.h"\
+	{$(INCLUDE)}"\ace\Get_Opt.h"\
+	{$(INCLUDE)}"\ace\Get_Opt.i"\
+	{$(INCLUDE)}"\ace\High_Res_Timer.h"\
+	{$(INCLUDE)}"\ace\High_Res_Timer.i"\
+	{$(INCLUDE)}"\ace\Log_Msg.h"\
+	{$(INCLUDE)}"\ace\Log_Priority.h"\
+	{$(INCLUDE)}"\ace\Log_Record.h"\
+	{$(INCLUDE)}"\ace\Log_Record.i"\
+	{$(INCLUDE)}"\ace\OS.h"\
+	{$(INCLUDE)}"\ace\OS.i"\
+	{$(INCLUDE)}"\ace\SString.h"\
+	{$(INCLUDE)}"\ace\SString.i"\
+	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	
+
+"$(INTDIR)\basic_perf.obj" : $(SOURCE) $(DEP_CPP_BASIC_) "$(INTDIR)"
 
 
 # End Source File
