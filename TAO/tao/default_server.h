@@ -93,9 +93,6 @@ protected:
   Lock_Type poa_lock_type_;
   // The type of lock to be returned by <create_poa_lock()>.
 
-  Lock_Type poa_mgr_lock_type_;
-  // The type of lock to be returned by <create_poa_mgr_lock()>.
-
   Lock_Type event_loop_lock_type_;
   // The type of lock to be returned by <create_event_loop_lock()>.
 

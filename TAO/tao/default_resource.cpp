@@ -26,7 +26,6 @@ ACE_RCSID(tao, default_resource, "$Id$")
 
 TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
   : resource_source_ (TAO_GLOBAL),
-    poa_source_ (TAO_GLOBAL),
     reactor_type_ (TAO_REACTOR_SELECT_MT),
     cdr_allocator_source_ (TAO_GLOBAL)
 {
@@ -49,25 +48,7 @@ int
 TAO_Default_Resource_Factory::init (int argc, char **argv)
 {
   ACE_TRACE ("TAO_Default_Server_Strategy_Factory::parse_args");
-  // This table shows the arguments that are parsed with their valid
-  // combinations.
-  //
-  //   ORB      POA    comments
-  // +-------+-------+-----------------+
-  // | TSS   | TSS   | if ORB==TSS     |
-  // |       |       | then POA=TSS    |
-  // |       |       | as def.value.   |
-  // +-------+-------+-----------------+
-  // | TSS   | GLOBAL| ok.             |
-  // +-------+-------+-----------------+
-  // | GLOBAL| GLOBAL| if ORB==Global  |
-  // |       |       | then POA=Global |
-  // |       |       | as def.value.   |
-  // +-------+-------+-----------------+
-  // | GLOBAL| TSS   | *NOT VALID*     |
-  // +-------+-------+-----------------+
 
-  int local_poa_source      = -1;
   int local_resource_source = -1;
 
   for (int curarg = 0; curarg < argc; curarg++)
@@ -85,22 +66,6 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
             else if (ACE_OS::strcasecmp (name,
                                          "tss") == 0)
               local_resource_source = TAO_TSS;
-          }
-      }
-    else if (ACE_OS::strcasecmp (argv[curarg],
-                                 "-ORBPOA") == 0)
-      {
-        curarg++;
-        if (curarg < argc)
-          {
-            char *name = argv[curarg];
-
-            if (ACE_OS::strcasecmp (name,
-                                    "global") == 0)
-              local_poa_source = TAO_GLOBAL;
-            else if (ACE_OS::strcasecmp (name,
-                                         "tss") == 0)
-              local_poa_source = TAO_TSS;
           }
       }
     else if (ACE_OS::strcasecmp (argv[curarg],
@@ -214,27 +179,9 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
           }
       }
 
-  // Don't allow a global ORB and a tss POA.
-  if (local_resource_source == TAO_GLOBAL
-      && local_poa_source == TAO_TSS)
-    return -1;
-
-  // Make poa=tss the default, if ORB is tss and the user didn't
-  // specify a value.
-  if (local_resource_source == TAO_TSS
-      && local_poa_source == -1)
-    local_poa_source = TAO_TSS;
-
   // Update the object data members.
   if (local_resource_source != -1)
     this->resource_source_ = local_resource_source;
-  if (local_poa_source != -1)
-    this->poa_source_ = local_poa_source;
-
-  // Don't allow a global ORB and a tss POA.
-  if (this->resource_source_ == TAO_GLOBAL
-      && this->poa_source_ == TAO_TSS)
-    return -1;
 
   return 0;
 }
