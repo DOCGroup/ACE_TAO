@@ -75,7 +75,7 @@ ACE_Log_Record::priority (void) const
   // Get the priority of the <Log_Record> <type_>.  This is computed
   // as the base 2 logarithm of <type_> (which must be a power of 2,
   // as defined by the enums in <ACE_Log_Priority>).
-  return ACE::log2 (this->type_);
+  return ACE::log2 ((u_long) this->type_);
 }
 
 void
@@ -85,7 +85,7 @@ ACE_Log_Record::priority (u_long p)
 
   // Set the priority of the <Log_Record> <type_> (which must be a
   // power of 2, as defined by the enums in <ACE_Log_Priority>).
-  this->type_ = p;
+  this->type_ = (ACE_UINT32) p;
 }
 
 void
@@ -95,9 +95,9 @@ ACE_Log_Record::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("length_ = %d\n"), this->length_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\ntype_ = %d\n"), this->type_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\ntime_stamp_ = (%d, %d)\n"), this->time_stamp_.sec (), this->time_stamp_.usec ()));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\npid_ = %d\n"), this->pid_));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\ntype_ = %u\n"), this->type_));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\ntime_stamp_ = (%d, %d)\n"), this->secs_, this->usecs_));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\npid_ = %u\n"), this->pid_));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nmsg_data_ = %s\n"), this->msg_data_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
@@ -114,9 +114,10 @@ ACE_Log_Record::ACE_Log_Record (ACE_Log_Priority lp,
                                 long ts_sec,
                                 long p)
   : length_ (0),
-    type_ (long (lp)),
-    time_stamp_ (ts_sec),
-    pid_ (p)
+    type_ (ACE_UINT32 (lp)),
+    secs_ (ts_sec),
+    usecs_ (0),
+    pid_ (ACE_UINT32 (p))
 {
   // ACE_TRACE ("ACE_Log_Record::ACE_Log_Record");
 }
@@ -125,9 +126,10 @@ ACE_Log_Record::ACE_Log_Record (ACE_Log_Priority lp,
                                 const ACE_Time_Value &ts,
                                 long p)
   : length_ (0),
-    type_ (long (lp)),
-    time_stamp_ (ts),
-    pid_ (p)
+    type_ (ACE_UINT32 (lp)),
+    secs_ ((ACE_UINT32) ts.sec ()),
+    usecs_ ((ACE_UINT32) ts.usec ()),
+    pid_ (ACE_UINT32 (p))
 {
   // ACE_TRACE ("ACE_Log_Record::ACE_Log_Record");
 }
@@ -148,7 +150,8 @@ ACE_Log_Record::round_up (void)
 ACE_Log_Record::ACE_Log_Record (void)
   : length_ (0),
     type_ (0),
-    time_stamp_ (0L),
+    secs_ (0),
+    usecs_ (0),
     pid_ (0)
 {
   // ACE_TRACE ("ACE_Log_Record::ACE_Log_Record");
@@ -168,7 +171,7 @@ ACE_Log_Record::format_msg (const ACE_TCHAR *host_name,
       || ACE_BIT_ENABLED (verbose_flag,
                           ACE_Log_Msg::VERBOSE_LITE))
     {
-      time_t now = this->time_stamp_.sec ();
+      time_t now = this->secs_;
       ACE_TCHAR ctp[26]; // 26 is a magic number...
 
       if (ACE_OS::ctime_r (&now, ctp, sizeof ctp) == 0)
@@ -183,7 +186,7 @@ ACE_Log_Record::format_msg (const ACE_TCHAR *host_name,
       ACE_OS::sprintf (timestamp,
                        ACE_LIB_TEXT ("%s.%03ld %s"),
                        ctp + 4,
-                       this->time_stamp_.usec () / 1000,
+                       this->usecs_ / 1000,
                        ctp + 20);
     }
 
@@ -200,7 +203,7 @@ ACE_Log_Record::format_msg (const ACE_TCHAR *host_name,
                                       : host_name);
 # endif /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
       ACE_OS::sprintf (verbose_msg,
-                       ACE_LIB_TEXT ("%s@%s@%ld@%s@%s"),
+                       ACE_LIB_TEXT ("%s@%s@%u@%s@%s"),
                        timestamp,
                        lhost_name,
                        this->pid_,
