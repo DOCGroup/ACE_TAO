@@ -1,3 +1,13 @@
+Mon Aug 14 12:34:28 2000  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/LoadBalancing/ReplicaLocator.cpp (preinvoke):
+
+	  Store replica reference obtained from Load Balancer in an
+	  Object_var since the Load Balancer returns a duplicated
+	  reference.  This ensures that the preinvoke() implementation is
+	  exception safe.
+	  Reported by JM Strauss <jms97@club-internet.fr>
+
 Mon Aug 14 12:32:22 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* orbsvcs/Naming_Service/Naming_Service.h: 
