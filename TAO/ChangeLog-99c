@@ -1,3 +1,15 @@
+Thu Mar  4 20:19:32 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_enum/any_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+	  Removed redundant cast to ACE_Message_Block* of
+	  the return value of _tao_get_cdr().
+
 Thu Mar  4 18:40:45 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/CurrentC.cpp:
