@@ -33,7 +33,7 @@
 #ifndef _OBJECT_REFERENCE_TEMPLATE_IDL_
 #define _OBJECT_REFERENCE_TEMPLATE_IDL_
 
-#include "tao/PI_Forward.pidl"
+#include <PI_Forward.pidl>
 
 module PortableInterceptor
 {
