@@ -231,9 +231,9 @@ namespace CIAO
                                     Chained_Artifacts,
                                     ACE_Hash<ACE_CString>,
                                     ACE_Equal_To<ACE_CString>,
-                                    ACE_Null_Mutex> Artifacts_Table;
+                                    ACE_Null_Mutex> Chained_Artifacts_Table;
                                     
-    Artifacts_Table artifact_map_;
+    Chained_Artifacts_Table artifact_map_;
 
     /// The deployment information data file.
     const char * deployment_file_;
