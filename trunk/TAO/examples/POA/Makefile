@@ -11,7 +11,6 @@
 #----------------------------------------------------------------------------
 
 DIRS  = Generic_Servant \
-	On_Demand_Loading \
 	RootPOA \
 	Reference_Counted_Servant
 
@@ -47,6 +46,7 @@ ifndef minimum_corba
   DIRS += Forwarding
   DIRS += Loader
   DIRS += On_Demand_Activation
+  DIRS += On_Demand_Loading
 
 # Some POA policies unavailable in minimum CORBA
   DIRS += NewPOA
