@@ -141,7 +141,7 @@ Test_Consumer::push (const RtecEventComm::EventSet& events,
   this->recv_count_ += events.length ();
 
   if (TAO_debug_level > 0
-      && this->recv_count_ % 1000 == 0)
+      && this->recv_count_ % 100 == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "ECT_Consumer (%P|%t): %d events received\n",

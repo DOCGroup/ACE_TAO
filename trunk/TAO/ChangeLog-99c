@@ -1,3 +1,9 @@
+Thu May  6 09:24:30 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp:
+	* orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp:
+	  Small changes in debugging messages.
+
 Wed May 05 15:11:26 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Time_Utilities.i (Time_Value_to_TimeT):
