@@ -133,7 +133,7 @@ Task_Entry::effective_execution_time () const
   // Just use low 32 bits.  This will have to change when CosTimeBase.idl
   // is finalized.
   ACE_UINT32 worst_case_execution_time =
-    ACE_static_cast (ACE_UINT32, rt_info_->worst_case_execution_time);
+    ACE_U64_TO_U32 (rt_info_->worst_case_execution_time);
 
   return (rt_info_->info_type == RtecScheduler::OPERATION)
          ? worst_case_execution_time * dispatches_.size ()
@@ -399,4 +399,3 @@ TimeLine_Entry_Link::operator < (const TimeLine_Entry_Link &l) const
   return (entry_ < l.entry_) ? 1 : 0;
 }
   // comparison operator
-
