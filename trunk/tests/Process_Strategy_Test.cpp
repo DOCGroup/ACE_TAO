@@ -46,6 +46,8 @@
 #include "test_config.h"
 #include "Process_Strategy_Test.h"	// Counting_Service and Options in here
 
+u_int shutting_down = 0;
+
 // Define a <Strategy_Acceptor> that's parameterized by the
 // <Counting_Service>.
 
@@ -202,7 +204,9 @@ Options::concurrency_type (Options::Concurrency_Type cs)
 int
 Options::handle_signal (int signum, siginfo_t *, ucontext_t *)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) signal %S\n", signum));
+  if (! shutting_down)
+    // Don't risk using ACE_Log_Msg while it's being deleted.
+    ACE_DEBUG ((LM_DEBUG, "(%P|%t) signal %S\n", signum));
 
   switch (signum)
     {
@@ -210,7 +214,8 @@ Options::handle_signal (int signum, siginfo_t *, ucontext_t *)
       pid_t pid;
 
       while ((pid = ACE_OS::waitpid (-1, 0, WNOHANG)) > 0)
-	ACE_DEBUG ((LM_DEBUG, "(%P|%t) reaping child %d\n", pid));
+        if (! shutting_down)
+	  ACE_DEBUG ((LM_DEBUG, "(%P|%t) reaping child %d\n", pid));
       break;
 
     case SIGINT:
@@ -542,6 +547,8 @@ main (int argc, char *argv[])
       "(%P|%t) only one thread may be run in a process on this platform\n%a", 1));
 #endif /* ACE_HAS_THREADS */
     }
+
+  shutting_down = 1;
 
   ACE_END_TEST;
   return 0;
