@@ -85,30 +85,3 @@ TAO_IIOP_Profile::forward_to_i (void)
 {
   return this->forward_to_;
 }
-
-#if defined (TAO_USES_FLICK)
-ACE_INLINE char *&
-TAO_IIOP_Profile::_host_ (void)
-{
-  return this->host_;
-}
-
-ACE_INLINE CORBA::UShort &
-TAO_IIOP_Profile::_port_ (void)
-{
-  return this->port_;
-}
-
-ACE_INLINE TAO_ObjectKey&
-TAO_IIOP_Profile::_object_key_ (void)
-{
-  return this->object_key_;
-}
-
-ACE_INLINE int
-TAO_IIOP_Profile::reset_object_addr (void)
-{
-  return this->object_addr_.set (this->port_,
-                                 this->host_);
-}
-#endif /* TAO_USES_FLICK */
