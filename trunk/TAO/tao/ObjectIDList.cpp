@@ -78,12 +78,6 @@ static const CORBA::Long _oc_CORBA_ORB_ObjectIdList[] =
 static CORBA::TypeCode _tc_TAO_tc_CORBA_ORB_ObjectIdList (CORBA::tk_alias, sizeof (_oc_CORBA_ORB_ObjectIdList), (char *) &_oc_CORBA_ORB_ObjectIdList, 0, sizeof (CORBA_ORB_ObjectIdList));
 CORBA::TypeCode_ptr CORBA::ORB::_tc_ObjectIdList = &_tc_TAO_tc_CORBA_ORB_ObjectIdList;
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class TAO_Object_Field_T<CORBA::ORB>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<CORBA::ORB>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 void operator<<= (
     CORBA::Any &_tao_any,
     const CORBA_ORB_ObjectIdList &_tao_elem

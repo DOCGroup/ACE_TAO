@@ -124,9 +124,6 @@ private:
 
 #endif /* end #if !defined */
 
-static CORBA::TypeCode_ptr _tc_CORBA_ORB_ObjectIdList;
-
-
 #ifndef __ACE_INLINE__
 
 CORBA::Boolean  operator<< (TAO_OutputCDR &, const CORBA::ORB::CORBA_ORB_ObjectIdList &); // 
