@@ -2428,11 +2428,13 @@ HANDLE WINAPI __IBMCPP__beginthreadex(void *stack,
 #elif defined (ACE_HAS_WINCE) && defined (UNDER_CE) && (UNDER_CE >= 211)
 #define ACE_BEGINTHREADEX(STACK, STACKSIZE, ENTRY_POINT, ARGS, FLAGS, THR_ID) \
       CreateThread (NULL, STACKSIZE, (unsigned long (__stdcall *) (void *)) ENTRY_POINT, ARGS, (FLAGS) & CREATE_SUSPENDED, (unsigned long *) THR_ID)
-#elsif defined(ACE_HAS_WTHREADS) && defined(ghs)
-// Green Hills compiler gets confused when __stdcall is imbedded in
-// parameter list, so we define the type ACE_WIN32THRFUNC_T and use it
-// instead.
-      typedef unsigned (__stdcall *ACE_WIN32THRFUNC_T)(void*);
+#else
+# if defined(ghs)
+  // Green Hills compiler gets confused when __stdcall is imbedded in
+  // parameter list, so we define the type ACE_WIN32THRFUNC_T and use it
+  // instead.
+  typedef unsigned (__stdcall *ACE_WIN32THRFUNC_T)(void*);
+# endif /* ghs */
 #define ACE_BEGINTHREADEX(STACK, STACKSIZE, ENTRY_POINT, ARGS, FLAGS, THR_ID) \
       ::_beginthreadex (STACK, STACKSIZE, (ACE_WIN32THRFUNC_T) ENTRY_POINT, ARGS, FLAGS, (unsigned int *) THR_ID)
 #endif /* defined (__IBMCPP__) && (__IBMCPP__ >= 400) */
