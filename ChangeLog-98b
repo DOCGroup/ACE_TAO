@@ -3,21 +3,23 @@ Tue Sep 15 20:25:23 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
         * tests/test_config.h: Always #undef ACE_NLOGGING so the tests
           will produce output!  Thanks to Chuck Gehr for reporting this.
 
+        * ace/OS.i: Added a new ACE_LACKS_TRUNCATE flag to work around
+          platforms that lack the truncate() call.  Thanks to
+          Sergio for reporting this.
+
 Tue Sep 15 17:57:26 1998  Sergio Flores  <sergio@tango.cs.wustl.edu>
 
         * ace/config-vxworks5.x.h: Added ACE_LACKS_TRUNCATE to VxWorks
           configuration.
 
-Tue Sep 15 17:33:41 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-        * ace/OS.i: Added a new ACE_LACKS_TRUNCATE flag to work around
-          platforms that lack the truncate() call.  Thanks to
-          Sergio for reporting this.
-
 Tue Sep 15 16:58:18 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
         * include/makeinclude/platform_chorus_ghs.GNU: Changed the
           MVME_DIR to /project/doc/mvme/mvme177.
+
+        * ace/ARGV.cpp (ACE_ARGV::argv_to_string): Fixed the problem where
+          we were allocating space only for the length of the string whereas
+          strecpy was inserting the extra '\0' leading to Array bounds write.
 
 Tue Sep 15 16:34:47 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -30,16 +32,13 @@ Tue Sep 15 16:34:47 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/config-lynxos.h: added ACE_HAS_PENTIUM, to provide
           high-res timer support on LynxOS.
 
-Tue Sep 15 16:28:12 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
-
-        * ace/ARGV.cpp (ACE_ARGV::argv_to_string): Fixed the problem where
-          we were allocating space only for the length of the string whereas
-          strecpy was inserting the extra '\0' leading to Array bounds write.
-
 Tue Sep 15 13:33:26 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/config-{WinCE,g++-common}.h:
         * ace/OS.{h,i,cpp}: Deprecated ACE_LACKS_GETS and ACE_OS::gets (void).
+
+        * apps/gperf/src/gperf_lib.dsp: Enabled c++ exception handling to
+          avoid warning when compiling with standard c++ libraries.
 
 Tue Sep 15 11:22:53 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
@@ -47,11 +46,6 @@ Tue Sep 15 11:22:53 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-lab
 
           Added definition for the "stat" data structure. Also added the
           definition for the "truncate" function.
-
-Tue Sep 15 09:44:07 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-        * apps/gperf/src/gperf_lib.dsp: Enabled c++ exception handling to
-          avoid warning when compiling with standard c++ libraries.
 
 Mon Sep 14 23:28:24 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
