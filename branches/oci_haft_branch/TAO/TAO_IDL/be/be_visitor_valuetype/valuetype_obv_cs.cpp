@@ -57,6 +57,16 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
+  *os << node->full_obv_skel_name () << "::";
+
+  if (! node->is_nested ())
+    {
+      *os << "OBV_";
+    }
+
+  *os << node->local_name () << " (void)" << be_nl
+      << "{}" << be_nl << be_nl;
+  
   *os << node->full_obv_skel_name () << "::~";
 
   if (! node->is_nested ())
@@ -66,6 +76,7 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
 
   *os << node->local_name () << " (void)" << be_nl
       << "{}";
+
 
   // OBV_ class has no accessors or modifiers if we are optimizing
   // or the valuetype is abstract.

@@ -3,7 +3,7 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "TAO_IDL Compiler"=.\tao_idl.dsp - Package Owner=<4>
+Project: "TAO_IDL_EXE"=TAO_IDL_EXE.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -12,16 +12,16 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name TAO_IDL_BE_DLL
+    Project_Dep_Name TAO_IDL_BE
     End Project Dependency
     Begin Project Dependency
-    Project_Dep_Name TAO_IDL_FE_DLL
+    Project_Dep_Name TAO_IDL_FE
     End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "TAO_IDL Compiler Static"=.\tao_idl_static.dsp - Package Owner=<4>
+Project: "TAO_IDL_BE"=TAO_IDL_BE.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -30,58 +30,13 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name TAO_IDL_BE_LIB
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL_FE_LIB
+    Project_Dep_Name TAO_IDL_FE
     End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "TAO_IDL_BE_DLL"=.\TAO_IDL_BE_DLL.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL_FE_DLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "TAO_IDL_BE_LIB"=.\TAO_IDL_BE_LIB.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL_FE_LIB
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "TAO_IDL_FE_DLL"=.\TAO_IDL_FE_DLL.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "TAO_IDL_FE_LIB"=.\TAO_IDL_FE_LIB.dsp - Package Owner=<4>
+Project: "TAO_IDL_FE"=TAO_IDL_FE.dsp - Package Owner=<4>
 
 Package=<5>
 {{{

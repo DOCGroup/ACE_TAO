@@ -251,7 +251,11 @@ DRV_usage (void)
     ));
   ACE_DEBUG ((
       LM_DEBUG,
-      ACE_TEXT (" -GC \t\tGenerate the code for using AMI Call back model\n")
+      ACE_TEXT (" -GC \t\tGenerate the AMI classes\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -GH \t\tGenerate the AMH classes\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
@@ -1237,7 +1241,7 @@ DRV_parse_args (long ac, char **av)
                 }
               else if (av[i][2] == 'v')
                 {
-                  // enable OBV (Valuetype) support
+                  // enable OBV (Valuetype) support.
                   idl_global->obv_support (1);
                 }
               else if (av[i][2] == 'I')
@@ -1245,7 +1249,7 @@ DRV_parse_args (long ac, char **av)
                   size_t options = ACE_OS::strlen(av[i]) - 3;
                   size_t j;
                   size_t k = i;
-                  // optimized typecode support
+                  // generate implementation files.
                   be_global->gen_impl_files (1);
 
                   for (j = 0; j < options; ++j)

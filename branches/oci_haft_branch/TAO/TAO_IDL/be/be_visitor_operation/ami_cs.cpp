@@ -127,11 +127,16 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
   // Generate the actual code for the stub. However, if any of the argument
   // types is "native", we flag a MARSHAL exception.
   // last argument - is always ACE_ENV_ARG_PARAMETER
-  *os << "{" << be_idt_nl;
+  *os << be_nl << "{" << be_idt;
 
-  *os << this->gen_environment_var () << be_nl;
+  if (be_global->exception_support ())
+    {
+      *os << be_nl 
+          << "ACE_DECLARE_NEW_CORBA_ENV;";
+    }
 
-  be_type *bt = be_type::narrow_from_decl (node->arguments ()->return_type ());
+  be_type *bt = 
+    be_type::narrow_from_decl (node->arguments ()->return_type ());
 
   // Generate any pre stub info if and only if none of our parameters is of the
   // native type.
@@ -172,8 +177,9 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
       // Generate code that retrieves the underlying stub object and then
       // invokes do_static_call on it.
       *os << be_nl
-          << "TAO_Stub *istub = this->_stubobj ();" << be_nl
-          << "if (istub == 0)" << be_idt_nl;
+          << "TAO_Stub *istub = this->_stubobj ();" << be_nl << be_nl
+          << "if (istub == 0)" << be_idt_nl
+          << "{" << be_idt_nl;
 
       // If the stub object was bad, then we raise a system exception.
       if (this->gen_raise_exception (bt, "CORBA::INV_OBJREF",
@@ -186,7 +192,9 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
                             -1);
 
         }
-      *os << be_uidt_nl << "\n";
+
+      *os << be_uidt_nl
+          << "}" << be_uidt_nl << be_nl;
 
       // Generate the code for marshaling in the parameters and transmitting
       // them.
@@ -268,14 +276,12 @@ be_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation *node,
   TAO_OutStream *os = this->ctx_->stream ();
   be_visitor_context ctx;
 
-  os->indent ();
-
   // Check the flags just once, and assert, getting in this state
   // indicates a severe bug in the IDL compiler.
   ACE_ASSERT (node->flags () != AST_Operation::OP_oneway
               || !"Cannot generate AMI calls for oneways");
 
-  *os << "TAO_GIOP_Twoway_Asynch_Invocation _tao_call("
+  *os << "TAO_GIOP_Twoway_Asynch_Invocation _tao_call ("
       << be_idt << be_idt_nl
       << "istub," << be_nl;
   *os << "\"";

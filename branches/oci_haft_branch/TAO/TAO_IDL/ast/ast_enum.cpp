@@ -71,6 +71,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_identifier.h"
 #include "utl_err.h"
 #include "utl_indenter.h"
+#include "ace/streams.h"
 
 ACE_RCSID (ast, 
            ast_enum, 
