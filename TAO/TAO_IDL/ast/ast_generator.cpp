@@ -73,6 +73,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_root.h"
 #include "ast_valuetype.h"
 #include "ast_valuetype_fwd.h"
+#include "ast_component.h"
+#include "ast_component_fwd.h"
+#include "ast_home.h"
 #include "ast_exception.h"
 #include "ast_enum.h"
 #include "ast_attribute.h"
@@ -282,9 +285,6 @@ AST_ValueTypeFwd *
 AST_Generator::create_valuetype_fwd (UTL_ScopedName *n,
                                      idl_bool abstract)
 {
-  // See note in create_valuetype().
-  // Dummy placeholder must return true from is_valuetype().
-
   AST_ValueType *dummy = this->create_valuetype (n,
                                                  0,
                                                  -1,
@@ -306,6 +306,62 @@ AST_Generator::create_valuetype_fwd (UTL_ScopedName *n,
   return retval;
 }
 
+AST_Component *
+AST_Generator::create_component (UTL_ScopedName *n,
+                                 AST_Component *base_component,
+                                 AST_Interface **supports,
+                                 long n_supports,
+                                 AST_Interface **supports_flat,
+                                 long n_supports_flat)
+{
+  AST_Component *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Component (n,
+                                 base_component,
+                                 supports,
+                                 n_supports,
+                                 supports_flat,
+                                 n_supports_flat),
+                  0);
+
+  return retval;
+}
+
+AST_ComponentFwd *
+AST_Generator::create_component_fwd (UTL_ScopedName *n)
+{
+  AST_Component *dummy = this->create_component (n,
+                                                 0,
+                                                 0,
+                                                 -1,
+                                                 0,
+                                                 0);
+
+  AST_ComponentFwd *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_ComponentFwd (dummy,
+                                    n),
+                  0);
+
+  return retval;
+}
+
+AST_Home *
+AST_Generator::create_home (UTL_ScopedName *n,
+                            AST_Home *base_home,
+                            AST_Component *managed_component,
+                            AST_ValueType *primary_key)
+{
+  AST_Home *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Home (n,
+                            base_home,
+                            managed_component,
+                            primary_key),
+                  0);
+
+  return retval;
+}
 
 AST_Exception *
 AST_Generator::create_exception (UTL_ScopedName *n,

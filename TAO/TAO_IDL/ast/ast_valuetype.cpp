@@ -102,6 +102,7 @@ AST_ValueType::truncatable (void) const
 void
 AST_ValueType::destroy (void)
 {
+  this->AST_Interface::destroy ();
 }
 
 void
@@ -140,7 +141,7 @@ AST_ValueType::dump (ACE_OSTREAM_TYPE &o)
 
   if (this->pd_n_supports > 0)
     {
-      o << ": ";
+      o << "supports ";
 
       for (long i = 0; i < this->pd_n_supports; ++i)
         {

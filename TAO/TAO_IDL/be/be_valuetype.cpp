@@ -762,6 +762,7 @@ be_valuetype::accept (be_visitor *visitor)
 void
 be_valuetype::destroy (void)
 {
+  this->be_interface::destroy ();
 }
 
 ACE_CDR::ULong

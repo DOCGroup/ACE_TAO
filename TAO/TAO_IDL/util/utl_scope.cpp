@@ -1379,7 +1379,8 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
               // In this case, we want to return
               // the full definition member, whether defined yet or not
               if (nt == AST_Decl::NT_interface_fwd
-                  || nt == AST_Decl::NT_valuetype_fwd)
+                  || nt == AST_Decl::NT_valuetype_fwd
+                  || nt == AST_Decl::NT_component_fwd)
                 {
                   d = AST_InterfaceFwd::narrow_from_decl (d)->full_definition ();
                 }

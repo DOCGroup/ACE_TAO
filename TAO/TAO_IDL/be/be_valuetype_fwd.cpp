@@ -59,6 +59,7 @@ be_valuetype_fwd::accept (be_visitor *visitor)
 void
 be_valuetype_fwd::destroy (void)
 {
+  this->be_interface_fwd::destroy ();
 }
 
 // Narrowing.

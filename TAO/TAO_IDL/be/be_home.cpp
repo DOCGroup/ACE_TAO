@@ -1,0 +1,85 @@
+// $Id$
+
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_home.cpp
+//
+// = DESCRIPTION
+//    Extension of class AST_Home that provides additional means for C++
+//    mapping of a component home.
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
+
+#include "be_home.h"
+#include "be_visitor.h"
+
+ACE_RCSID (be, 
+           be_home, 
+           "$Id$")
+
+be_home::be_home (void)
+{
+  this->size_type (AST_Type::VARIABLE);
+}
+
+be_home::be_home (UTL_ScopedName *n,
+                  AST_Home *base_home,
+                  AST_Component *managed_component,
+                  AST_ValueType *primary_key)
+  : be_interface (n,
+                  0,
+                  0,
+                  0,
+                  0,
+                  I_TRUE,
+                  I_FALSE),
+    AST_Home (n,
+              base_home,
+              managed_component,
+              primary_key),
+    AST_Interface (n,
+                   0,
+                   0,
+                   0,
+                   0,
+                   I_TRUE,
+                   I_FALSE),
+    AST_Type (AST_Decl::NT_home,
+              n),
+    AST_Decl (AST_Decl::NT_home,
+              n),
+    UTL_Scope (AST_Decl::NT_home),
+    COMMON_Base (I_TRUE,
+                 I_FALSE)
+{
+  this->size_type (AST_Type::VARIABLE);
+}
+
+be_home::~be_home (void)
+{
+}
+
+void
+be_home::destroy (void)
+{
+  this->be_interface::destroy ();
+  this->AST_Home::destroy ();
+}
+
+int
+be_home::accept (be_visitor *visitor)
+{
+  return visitor->visit_home (this);
+}
+
+// Narrowing
+IMPL_NARROW_METHODS2 (be_home, be_interface, AST_Home);
+IMPL_NARROW_FROM_DECL (be_home);
+IMPL_NARROW_FROM_SCOPE (be_home);

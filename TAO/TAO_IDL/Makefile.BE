@@ -26,6 +26,8 @@ SHLIB = $(LIBNAME).$(SOEXT)
 FILES = be/be_array \
         be/be_argument \
         be/be_attribute \
+        be/be_component \
+        be/be_component_fwd \
         be/be_constant \
         be/be_enum \
         be/be_enum_val \
@@ -34,6 +36,7 @@ FILES = be/be_array \
         be/be_factory \
         be/be_field \
 	be/be_global \
+        be/be_home \
         be/be_interface \
 	be/be_interface_strategy \
         be/be_interface_fwd \
@@ -70,12 +73,15 @@ FILES = be/be_array \
         be/be_visitor_argument \
         be/be_visitor_array \
         be/be_visitor_attribute \
+        be/be_visitor_component \
+        be/be_visitor_component_fwd \
         be/be_visitor_constant \
         be/be_visitor_context \
         be/be_visitor_decl \
         be/be_visitor_enum \
         be/be_visitor_exception \
         be/be_visitor_field \
+        be/be_visitor_home \
         be/be_visitor_interface \
         be/be_visitor_interface_fwd \
         be/be_visitor_valuetype \

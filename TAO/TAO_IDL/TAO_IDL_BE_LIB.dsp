@@ -111,6 +111,14 @@ SOURCE=.\be\be_codegen.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\be\be_component.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\be\be_component_fwd.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\be\be_constant.cpp
 # End Source File
 # Begin Source File
@@ -152,6 +160,10 @@ SOURCE=.\be\be_global.cpp
 # Begin Source File
 
 SOURCE=.\be\be_helper.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\be\be_home.cpp
 # End Source File
 # Begin Source File
 
@@ -283,6 +295,14 @@ SOURCE=.\be\be_visitor_attribute.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\be\be_visitor_component.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\be\be_visitor_component_fwd.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\be\be_visitor_constant.cpp
 # End Source File
 # Begin Source File
@@ -308,6 +328,10 @@ SOURCE=.\be\be_visitor_factory.cpp
 # Begin Source File
 
 SOURCE=.\be\be_visitor_field.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\be\be_visitor_home.cpp
 # End Source File
 # Begin Source File
 
@@ -395,6 +419,14 @@ SOURCE=.\be_include\be_codegen.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\be_include\be_component.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_component_fwd.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\be_include\be_constant.h
 # End Source File
 # Begin Source File
@@ -440,6 +472,10 @@ SOURCE=.\be_include\be_global.h
 # Begin Source File
 
 SOURCE=.\be_include\be_helper.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_home.h
 # End Source File
 # Begin Source File
 
@@ -559,6 +595,14 @@ SOURCE=.\be_include\be_visitor_attribute.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\be_include\be_visitor_component.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_visitor_component_fwd.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\be_include\be_visitor_constant.h
 # End Source File
 # Begin Source File
@@ -584,6 +628,10 @@ SOURCE=.\be_include\be_visitor_factory.h
 # Begin Source File
 
 SOURCE=.\be_include\be_visitor_field.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_visitor_home.h
 # End Source File
 # Begin Source File
 

@@ -73,10 +73,11 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "be_root.h"
 #include "be_predefined_type.h"
 #include "be_module.h"
-#include "be_interface.h"
-#include "be_interface_fwd.h"
 #include "be_valuetype.h"
 #include "be_valuetype_fwd.h"
+#include "be_component.h"
+#include "be_component_fwd.h"
+#include "be_home.h"
 #include "be_union.h"
 #include "be_union_fwd.h"
 #include "be_structure.h"
@@ -230,15 +231,17 @@ be_generator::create_interface_fwd (UTL_ScopedName *n,
                                     idl_bool local,
                                     idl_bool abstract)
 {
+  AST_Interface *dummy = this->create_interface (n,
+                                                 0,
+                                                 -1,
+                                                 0,
+                                                 0,
+                                                 local,
+                                                 abstract);
+
   be_interface_fwd *retval = 0;
   ACE_NEW_RETURN (retval,
-                  be_interface_fwd (this->create_interface (n,
-                                                            0,
-                                                            -1,
-                                                            0,
-                                                            0,
-                                                            local,
-                                                            abstract),
+                  be_interface_fwd (dummy,
                                     n),
                    0);
 
@@ -280,20 +283,79 @@ AST_ValueTypeFwd *
 be_generator::create_valuetype_fwd (UTL_ScopedName *n,
                                     idl_bool abstract)
 {
+  AST_ValueType *dummy = this->create_valuetype (n,
+                                                 0,
+                                                 -1,
+                                                 0,
+                                                 0,
+                                                 0,
+                                                 0,
+                                                 0,
+                                                 0,
+                                                 abstract,
+                                                 0);
+
   be_valuetype_fwd *retval = 0;
   ACE_NEW_RETURN (retval,
-                  be_valuetype_fwd (this->create_valuetype (n,
-                                                            0,
-                                                            -1,
-                                                            0,
-                                                            0,
-                                                            0,
-                                                            0,
-                                                            0,
-                                                            0,
-                                                            abstract,
-                                                            0),
+                  be_valuetype_fwd (dummy,
                                     n),
+                  0);
+
+  return retval;
+}
+
+AST_Component *
+be_generator::create_component (UTL_ScopedName *n,
+                                AST_Component *base_component,
+                                AST_Interface **supports,
+                                long n_supports,
+                                AST_Interface **supports_flat,
+                                long n_supports_flat)
+{
+  be_component *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  be_component (n,
+                                base_component,
+                                supports,
+                                n_supports,
+                                supports_flat,
+                                n_supports_flat),
+                  0);
+
+  return retval;
+}
+
+AST_ComponentFwd *
+be_generator::create_component_fwd (UTL_ScopedName *n)
+{
+  AST_Component *dummy = this->create_component (n,
+                                                 0,
+                                                 0,
+                                                 -1,
+                                                 0,
+                                                 0);
+
+  be_component_fwd *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  be_component_fwd (dummy,
+                                    n),
+                  0);
+
+  return retval;
+}
+
+AST_Home *
+be_generator::create_home (UTL_ScopedName *n,
+                           AST_Home *base_home,
+                           AST_Component *managed_component,
+                           AST_ValueType *primary_key)
+{
+  be_home *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  be_home (n,                           
+                           base_home,
+                           managed_component,
+                           primary_key),
                   0);
 
   return retval;

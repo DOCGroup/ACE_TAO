@@ -9,6 +9,8 @@ OBJFILES = \
 	$(OBJDIR)\be_array.obj \
 	$(OBJDIR)\be_attribute.obj \
 	$(OBJDIR)\be_codegen.obj \
+	$(OBJDIR)\be_component.obj \
+	$(OBJDIR)\be_component_fwd.obj \
 	$(OBJDIR)\be_constant.obj \
 	$(OBJDIR)\be_decl.obj \
 	$(OBJDIR)\be_enum.obj \
@@ -20,6 +22,7 @@ OBJFILES = \
 	$(OBJDIR)\be_generator.obj \
 	$(OBJDIR)\be_global.obj \
 	$(OBJDIR)\be_helper.obj \
+	$(OBJDIR)\be_home.obj \
 	$(OBJDIR)\be_interface.obj \
 	$(OBJDIR)\be_interface_fwd.obj \
 	$(OBJDIR)\be_interface_strategy.obj \
@@ -51,6 +54,8 @@ OBJFILES = \
 	$(OBJDIR)\be_visitor_argument.obj \
 	$(OBJDIR)\be_visitor_array.obj \
 	$(OBJDIR)\be_visitor_attribute.obj \
+	$(OBJDIR)\be_visitor_component.obj \
+	$(OBJDIR)\be_visitor_component_fwd.obj \
 	$(OBJDIR)\be_visitor_constant.obj \
 	$(OBJDIR)\be_visitor_context.obj \
 	$(OBJDIR)\be_visitor_decl.obj \
@@ -58,6 +63,7 @@ OBJFILES = \
 	$(OBJDIR)\be_visitor_exception.obj \
 	$(OBJDIR)\be_visitor_factory.obj \
 	$(OBJDIR)\be_visitor_field.obj \
+	$(OBJDIR)\be_visitor_home.obj \
 	$(OBJDIR)\be_visitor_interface.obj \
 	$(OBJDIR)\be_visitor_interface_fwd.obj \
 	$(OBJDIR)\be_visitor_module.obj \

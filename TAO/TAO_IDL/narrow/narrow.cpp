@@ -67,6 +67,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_module.h"
 #include "ast_root.h"
 #include "ast_valuetype.h"
+#include "ast_component.h"
+#include "ast_home.h"
 #include "ast_operation.h"
 #include "ast_factory.h"
 #include "ast_exception.h"
@@ -96,6 +98,10 @@ ScopeAsDecl (UTL_Scope *s)
       return AST_Interface::narrow_from_scope (s);
     case AST_Decl::NT_valuetype:
       return AST_ValueType::narrow_from_scope (s);
+    case AST_Decl::NT_component:
+      return AST_Component::narrow_from_scope (s);
+    case AST_Decl::NT_home:
+      return AST_Home::narrow_from_scope (s);
     case AST_Decl::NT_op:
       return AST_Operation::narrow_from_scope (s);
     case AST_Decl::NT_factory:
@@ -136,6 +142,10 @@ DeclAsScope (AST_Decl *d)
         return AST_Interface::narrow_from_decl (d);
      case AST_Decl::NT_valuetype:
         return AST_ValueType::narrow_from_decl (d);
+     case AST_Decl::NT_component:
+        return AST_Component::narrow_from_decl (d);
+     case AST_Decl::NT_home:
+        return AST_Home::narrow_from_decl (d);
      case AST_Decl::NT_module:
         return AST_Module::narrow_from_decl (d);
      case AST_Decl::NT_root:

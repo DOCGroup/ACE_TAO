@@ -29,6 +29,11 @@ class AST_PredefinedType;
 class AST_Module;
 class AST_Interface;
 class AST_InterfaceFwd;
+class AST_ValueType;
+class AST_ValueTypeFwd;
+class AST_Component;
+class AST_ComponentFwd;
+class AST_Home;
 class AST_Factory;
 class AST_Structure;
 class AST_StructureFwd;
@@ -94,10 +99,19 @@ public:
   virtual int visit_interface_fwd (AST_InterfaceFwd *node) = 0;
   // Visit interface_fwd
 
-  virtual int visit_valuetype (AST_Interface *node) = 0;
+  virtual int visit_valuetype (AST_ValueType *node) = 0;
   // Visit valuetype.
 
-  virtual int visit_valuetype_fwd (AST_InterfaceFwd *node) = 0;
+  virtual int visit_valuetype_fwd (AST_ValueTypeFwd *node) = 0;
+  // Visit valuetype_fwd
+
+  virtual int visit_component (AST_Component *node) = 0;
+  // Visit valuetype.
+
+  virtual int visit_home (AST_Home *node) = 0;
+  // Visit valuetype.
+
+  virtual int visit_component_fwd (AST_ComponentFwd *node) = 0;
   // Visit valuetype_fwd
 
   virtual int visit_factory (AST_Factory *node) = 0;

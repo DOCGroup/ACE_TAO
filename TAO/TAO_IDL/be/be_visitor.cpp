@@ -82,6 +82,21 @@ int be_visitor::visit_valuetype_fwd (be_valuetype_fwd *)
   return 0;
 }
 
+int be_visitor::visit_component (be_component *)
+{
+  return 0;
+}
+
+int be_visitor::visit_component_fwd (be_component_fwd *)
+{
+  return 0;
+}
+
+int be_visitor::visit_home (be_home *)
+{
+  return 0;
+}
+
 int be_visitor::visit_factory (be_factory *)
 {
   return 0;

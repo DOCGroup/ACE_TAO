@@ -78,6 +78,9 @@ class UTL_ExprList;
 class AST_StructureFwd;
 class AST_UnionFwd;
 class AST_ValueTypeFwd;
+class AST_Component;
+class AST_ComponentFwd;
+class AST_Home;
 
 // Defines base class for node generators.
 
@@ -136,6 +139,29 @@ public:
   virtual AST_ValueTypeFwd *create_valuetype_fwd (
       UTL_ScopedName *n,
       idl_bool abstract
+    );
+
+  // Create a node representing a component.
+  virtual AST_Component *create_component (
+      UTL_ScopedName *n,
+      AST_Component *base_component,
+      AST_Interface **supports,
+      long n_supports,
+      AST_Interface **supports_flat,
+      long n_supports_flat
+    );
+
+  // Create a node representing a forward declaration of a component.
+  virtual AST_ComponentFwd *create_component_fwd (
+      UTL_ScopedName *n
+    );
+
+  // Create a node representing a component home.
+  virtual AST_Home *create_home (
+      UTL_ScopedName *n,
+      AST_Home *base_home,
+      AST_Component *managed_component,
+      AST_ValueType *primary_key
     );
 
   // Create a node representing an exception.
