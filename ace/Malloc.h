@@ -350,20 +350,23 @@ public:
     void dump (void) const;
   };
 
+  /// Print out a bunch of size info for debugging.
   static void print_alignment_info (void);
-  // Print out a bunch of size info for debugging.
 
+  /// Reference counter.
+  int ref_counter_;
+
+  /// Head of the linked list of Name Nodes.
   ACE_Name_Node *name_head_;
-  // Head of the linked list of Name Nodes.
 
+  /// Current head of the freelist.
   ACE_Malloc_Header *freep_;
-  // Current head of the freelist.
 
+  /// Name of lock thats ensures mutual exclusion.
   char lock_name_[MAXNAMELEN];
-  // Name of lock thats ensures mutual exclusion.
 
 #if defined (ACE_HAS_MALLOC_STATS)
-  // Keep statistics about ACE_Malloc state and performance.
+  /// Keep statistics about ACE_Malloc state and performance.
   ACE_Malloc_Stats malloc_stats_;
 #define ACE_CONTROL_BLOCK_SIZE ((int)(sizeof (ACE_Name_Node*) \
                                       + sizeof (ACE_Malloc_Header*) \
@@ -390,11 +393,11 @@ public:
   // Force alignment.
 #endif /* ACE_CONTROL_BLOCK_ALIGN_LONGS && ACE_CONTROL_BLOCK_ALIGN_LONGS == 0 */
 
+  /// Dummy node used to anchor the freelist.  This needs to come last...
   ACE_Malloc_Header base_;
-  // Dummy node used to anchor the freelist.  This needs to come last...
 
+  /// Dump the state of the object.
   void dump (void) const;
-  // Dump the state of the object.
 };
 
 #if defined (__ACE_INLINE__)

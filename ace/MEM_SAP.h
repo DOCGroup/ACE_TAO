@@ -93,7 +93,7 @@ public:
    * Finalizing the MEM_SAP object.  This method doesn't invoke
    * the <remove> method.
    */
-  virtual int fini (int remove) = 0;
+  virtual int fini ();
 
   /**
    * Fetch location of next available data into <recv_buffer_>.
@@ -138,9 +138,9 @@ protected:
   int create_shm_malloc (const ACE_TCHAR *name,
                          MALLOC_OPTIONS *options);
 
-  /// Close down the share memory pool.  If <remove> != 0, then the
-  /// mmap file will also get removed.
-  int close_shm_malloc (const int remove = 0);
+  /// Close down the share memory pool.  Clean up the
+  /// mmap file if we are the last one using it.
+  int close_shm_malloc (void);
 
   ACE_HANDLE handle_;
 

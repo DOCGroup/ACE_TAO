@@ -7,14 +7,12 @@
 
 ASYS_INLINE
 ACE_MEM_Stream::ACE_MEM_Stream (void)
-  : cleanup_ (0)
 {
   // ACE_TRACE ("ACE_MEM_Stream::ACE_MEM_Stream");
 }
 
 ASYS_INLINE
 ACE_MEM_Stream::ACE_MEM_Stream (ACE_HANDLE h)
-  : cleanup_ (0)
 {
   // ACE_TRACE ("ACE_MEM_Stream::ACE_MEM_Stream");
   this->set_handle (h);
@@ -24,12 +22,6 @@ ASYS_INLINE
 ACE_MEM_Stream::~ACE_MEM_Stream (void)
 {
   // ACE_TRACE ("ACE_MEM_Stream::~ACE_MEM_Stream");
-}
-
-ASYS_INLINE void
-ACE_MEM_Stream::cleanup (int set)
-{
-  this->cleanup_ = set;
 }
 
 ASYS_INLINE int

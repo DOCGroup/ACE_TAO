@@ -22,63 +22,6 @@
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 #include "ace/Based_Pointer_T.h"
-#endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
-
-#if defined (ACE_HAS_MALLOC_STATS)
-#include "ace/Synch_T.h"
-#if defined (ACE_HAS_THREADS)
-#define ACE_PROCESS_MUTEX ACE_Process_Mutex
-#else
-#include "ace/SV_Semaphore_Simple.h"
-#define ACE_PROCESS_MUTEX ACE_SV_Semaphore_Simple
-#endif /* ACE_HAS_THREADS */
-
-typedef ACE_Atomic_Op<ACE_PROCESS_MUTEX, int> ACE_INT;
-
-/// This keeps stats on the usage of the memory manager.
-struct ACE_Export ACE_Malloc_Stats
-{
-  ACE_Malloc_Stats (void);
-  void dump (void) const;
-
-  /// Coarse-grained unit of allocation.
-  ACE_INT nchunks_;
-
-  /// Fine-grained unit of allocation.
-  ACE_INT nblocks_;
-
-  /// Number of blocks in use
-  ACE_INT ninuse_;
-};
-#define ACE_MALLOC_STATS(X) X
-#else
-#define ACE_MALLOC_STATS(X)
-#endif /* ACE_HAS_MALLOC_STATS */
-
-#if !defined (ACE_MALLOC_PADDING)
-// ACE_MALLOC_PADDING allows you to insure that allocated regions are
-// at least <ACE_MALLOC_PADDING> bytes long.  It is especially useful
-// when you want areas to be at least a page long, or 32K long, or
-// something like that.  It doesn't guarantee alignment to an address
-// multiple, like 8-byte data alignment, etc.  The allocated area's
-// padding to your selected size is done with an added array of long[]
-// and your compiler will decide how to align things in memory.
-
-#define ACE_MALLOC_PADDING 1
-#endif /* ACE_MALLOC_PADDING */
-
-#if !defined (ACE_MALLOC_ALIGN)
-// Align the malloc header size to a multiple of a double.
-#define ACE_MALLOC_ALIGN (sizeof (double))
-#endif /* ACE_MALLOC_ALIGN */
-
-// ACE_MALLOC_HEADER_SIZE is the normalized malloc header size.
-#define ACE_MALLOC_HEADER_SIZE (ACE_MALLOC_PADDING % ACE_MALLOC_ALIGN == 0 \
-                                ? ACE_MALLOC_PADDING \
-                                : (((ACE_MALLOC_PADDING / ACE_MALLOC_ALIGN) + 1) \
-                                   * ACE_MALLOC_ALIGN))
-
-#if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 
 // prepare for position independent malloc
 /**
@@ -205,6 +148,9 @@ public:
   /// Print out a bunch of size info for debugging.
   static void print_alignment_info (void);
 
+  /// Reference counter.
+  int ref_counter_;
+
   /// Head of the linked list of Name Nodes.
   NAME_NODE_PTR name_head_;
 
@@ -215,7 +161,7 @@ public:
   char lock_name_[MAXNAMELEN];
 
 #if defined (ACE_HAS_MALLOC_STATS)
-  // Keep statistics about ACE_Malloc state and performance.
+  /// Keep statistics about ACE_Malloc state and performance.
   ACE_Malloc_Stats malloc_stats_;
 #define ACE_PI_CONTROL_BLOCK_SIZE ((int)(sizeof (NAME_NODE_PTR) \
                                          + sizeof (MALLOC_HEADER_PTR) \

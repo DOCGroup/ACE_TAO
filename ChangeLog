@@ -1,3 +1,43 @@
+Wed Apr 25 03:15:34 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * ace/Malloc.h:
+        * ace/PI_Malloc.h: Added new variables to reference counting the
+	  Malloc.
+
+        * ace/Malloc_T.cpp:
+        * ace/Malloc_T.h:
+        * ace/Malloc_T.i: Added 2 new methods to query the reference
+	  counter and to release the reference counter.  The reference
+	  counter is created with 1 when the malloc first use a new
+	  backing store.  Later malloc that attaches to the same backing
+	  store will increase the reference counter.  It's the user's
+	  responsibility to invoke release when the malloc is no longer
+	  needed.  The reference counter provides a way to indication it's
+	  safe to clean up the backing store without upsetting other
+	  malloc that might still need it.  Note, however, the malloc will
+	  not cleanup the backing store automatically when the reference
+	  counter drops to 0 because we may want to attach another malloc
+	  to it in some later point.
+
+        * ace/MEM_IO.cpp:
+        * ace/MEM_IO.h:
+        * ace/MEM_SAP.cpp:
+        * ace/MEM_SAP.h: Use the aforementioned reference counter to
+	  cleanup the backing store automagically.
+
+        * ace/MEM_Stream.h:
+        * ace/MEM_Stream.i: Removed cleanup method as it is no longer
+	  needed with the previous changes.  Removed unnecesary <remove>
+	  argument from fini () method.
+
+        * ace/MEM_Stream.cpp: Simply calling fini () without worrying
+	  about cleaning up the backing store.
+
+        * tests/MEM_Stream_Test.cpp: No longer need to hint for cleanup.
+
+        * tests/Malloc_Test.cpp: Added ACE_ASSERT to check for proper
+	  operation of reference counter.
+
 Tue Apr 24 17:54:00 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/Makefile:
