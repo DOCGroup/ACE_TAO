@@ -1,3 +1,13 @@
+Tue May 12 08:29:50 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Malloc.cpp (ACE_Allocator::instance): replaced dynamic
+          allocation of the default ACE_Allocator with allocation from
+          the data segment.  Thanks to Ben Eng <ben@jetpen.com> for
+          providing the stack trace that revealed the problem.
+
+        * ace/Malloc.h: added comments to not add data members to
+          ACE_Allocator or ACE_New_Allocator.
+
 Tue May 12 02:59:27 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* performance-tests/Misc/childbirth_time.cpp: Added ACE_OS::sleep
