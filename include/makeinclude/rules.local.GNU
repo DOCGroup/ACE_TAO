@@ -41,7 +41,7 @@ endif
 ifneq ($(mingw32),1)
 makefile_name.local:
 	@echo
-	@echo GNUmakefile: $(shell pwd)/$(MAKEFILE)
+	@echo GNUmakefile: $(shell pwd)/$(MAKEFILE) MAKEFLAGS=$(MAKEFLAGS)
 	@echo
 else
 makefile_name.local:
