@@ -2,11 +2,12 @@
 
 #include "JAWS/server/HTTP_Helpers.h"
 
+// = Static initialization.
 ACE_Thread_Mutex HTTP_Status_Code::lock_;
 int HTTP_Status_Code::instance_ = 0;
-const char * HTTP_Status_Code::Reason[HTTP_Status_Code::MAX_STATUS_CODE+1];
+const char *HTTP_Status_Code::Reason[HTTP_Status_Code::MAX_STATUS_CODE + 1];
 
-const char * 
+const char **
 HTTP_Status_Code::instance (void)
 {
   if (HTTP_Status_Code::instance_ == 0) 
@@ -15,7 +16,7 @@ HTTP_Status_Code::instance (void)
       
       if (HTTP_Status_Code::instance_ == 0) 
 	{
-	  for (int i = 0; i < HTTP_Status_Code::MAX_STATUS_CODE+1; i++) 
+	  for (size_t i = 0; i < HTTP_Status_Code::MAX_STATUS_CODE + 1; i++) 
 	    {
 	      switch (i) 
 		{

@@ -1,19 +1,22 @@
 // HTTP_Helpers.h
 
-// Design around the Singleton pattern
-// Simplify interface to HTTP_types:
-//  -> type(path) returns the type of the path matched by extension.
-//  -> app(path) returns the app for the path matched by extension.
-
 #if !defined (HTTP_HELPERS_H)
 #define HTTP_HELPERS_H
 
 #include "ace/Synch.h"
 
 class HTTP_Status_Code
+  // = TITLE
+  //    Simplify interface to HTTP_types:
+  //     -> type(path) returns the type of the path matched by extension.
+  //     -> app(path) returns the app for the path matched by extension.
+  //
+  // = DESCRIPTION
+  //     Design around the Singleton pattern
 {
 public:
-  static const char *instance(void);
+  static const char **instance(void);
+  // Singleton access point.
 
   enum STATUS_CODE {
     STATUS_OK = 200,
@@ -37,10 +40,9 @@ public:
   enum {MAX_STATUS_CODE=599};
 
 private:
-  static const char * Reason[MAX_STATUS_CODE+1];
+  static const char * Reason[MAX_STATUS_CODE + 1];
   static int instance_;
   static ACE_Thread_Mutex lock_;
-
 };
 
 #endif /* HTTP_HELPERS_H */

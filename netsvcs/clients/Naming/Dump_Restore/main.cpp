@@ -17,6 +17,7 @@ main (int argc, char *argv[])
   for (;;)
     daemon.run_reactor_event_loop ();
   
+  /* NOTREACHED */
   ACE_DEBUG ((LM_DEBUG, "leaving main\n"));
   return 0;
 }
