@@ -1,3 +1,15 @@
+Fri Jul 24 01:40:53 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/CDR.cpp: 
+	  The check for memory ownership of the Message_Block was
+	  inverted, thanks to Dave Meyer <dmeyer@std.saic.com> for
+	  catching this one.
+
+	* release.chk: 
+	  Updated the file to include the new platforms, the new tests in
+	  Param_Test and to remove the old info (that is probably
+	  outdated)
+
 Thu Jul 23 23:15:33 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Cubit/TAO/MT_Cubit/server.cpp (start_servants):

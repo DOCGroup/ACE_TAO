@@ -10,111 +10,110 @@ Legend:
         A = Solaris/CC
         B = NT (MSVC++ 5.0)
         C = Solaris/g++
-        D = IRIX
+        D = IRIX 
         E = Linux/g++
-        F = Other (Linux/egcs, Solaris/egcs, etc.)
+	F = Solaric/EGCS
+	G = DEC
+        H = Other (Linux/egcs, ????) Specify in the NOTES section
 
-        The state is indicated as a tri-state value, e.g.,
+        The state is indicated using the following symbols:
 
         0 = doesn't work
         1 = works
+	c = compiles but does not work correctly
         x = not attempted or unknown
+	P = Purified
 
+ A B C D E F G H
+[x x x x x x x x] libTAO compiles
+[x x x x x x x x] TAO_IDL compiles
+[x x x x x x x x] liborbsvcs compiles
 
-[11111 ] libTAO and TAO_IDL compile.
+[x x x x x x x x] IDL_Cubit server
+[x x x x x x x x] IDL_Cubit client
 
-[1111x ] IDL_Cubit compiles
-[1111x ] 	svr runs
-[1111x ]	clnt runs
-     
-[1111x ] POA/RootPOA compiles
-[1111x ] 	POA/RootPOA runs
-[1111x ] POA/FindPOA compiles
-[1111x ] 	POA/FindPOA runs
-[1111x ] POA/NewPOA compiles
-[1111x ] 	POA/NewPOA runs
-[1111x ] POA/Generic_Servant compiles
-[1111x ] 	POA/Generic_Servant runs
-[1111x ] POA/On_Demand_Activation compiles
-[1111x ] 	POA/On_Demand_Activation runs
-[1111x ] POA/Explicit_Activation compiles
-[1111x ] 	POA/Explicit_Activation runs
-[1111x ] POA/Default_Servant compiles
-[x0xxx ] 	POA/Default_Servant runs
-    
-[1111x ] Param_Test compiles
-[1111x ] 	SII short
-[1111x ] 	SII ubstring
-[1111x ] 	SII fixed_struct
-[1111x ] 	SII strseq
-[0111x ] 	SII var_struct
-[0111x ] 	SII nested_struct
-[0000x ] 	SII struct_seq
-[0000x ] 	SII objref
-    
-[1111x ] 	DII short
-[1111x ] 	DII ubstring
-[1111x ] 	DII fixed_struct
-[0000x ] 	DII strseq
-[0000x ] 	DII var_struct
-[0000x ] 	DII nested_struct
-[0000x ] 	DII struct_seq
-[0000x ] 	DII objref
-    
-[0x0x0 ] Thruput/TAO compiles
-   
-[1111x ] liborbsvcs compiles
-[1111x ] Naming_Service compiles
-[1111x ] Simple_Naming compiles
-[1x10x ] 	Simple_Naming runs
-[1x11x ] Logger compiles
-[1x10x ] 	Logger runs
-[11111 ] Scheduling_Service compiles
-[1110x ]        Scheduling_Service runs
-[11110 ] Event_Service compiles
-[1110x ]        Event_Service runs
-[11110 ] Dump_Schedule compiles
-[xxxxx ]        Dump_Schedule runs
-[11111 ] Event_Latency compiles
-[1110x ]        Event_Latency runs
-    
-[110100] MT_Cubit compiles
-[xxx0xx] 	runs for Octet
-[xxx0xx] 	runs for Short
-[xxx0xx] 	runs for Long
-[xxx0xx] 	runs for Struct
+[x x x x x x x x] POA/RootPOA
+[x x x x x x x x] POA/FindPOA
+[x x x x x x x x] POA/NewPOA
+[x x x x x x x x] POA/Generic_Servant
+[x x x x x x x x] POA/On_Demand_Activation
+[x x x x x x x x] POA/Explicit_Activation
+[x x x x x x x x] POA/Default_Servant
+
+[x x x x x x x x] Param_Test compiles
+[x x x x x x x x]    SII short
+[x x x x x x x x]    SII ubstring
+[x x x x x x x x]    SII bdstring
+[x x x x x x x x]    SII fixed_struct
+[x x x x x x x x]    SII strseq
+[x x x x x x x x]    SII bounded_strseq
+[x x x x x x x x]    SII var_struct
+[x x x x x x x x]    SII nested_struct
+[x x x x x x x x]    SII struct_seq
+[x x x x x x x x]    SII bounded_struct_seq
+[x x x x x x x x]    SII any
+[x x x x x x x x]    SII objref
+[x x x x x x x x]    SII objref_sequence
+[x x x x x x x x]    SII any_sequence
+[x x x x x x x x]    SII short_sequence
+[x x x x x x x x]    SII long_sequence
+[x x x x x x x x]    SII bounded_short_sequence
+[x x x x x x x x]    SII bounded_long_sequence
+[x x x x x x x x]    SII fixed_array
+[x x x x x x x x]    SII var_array
+
+[x x x x x x x x]    DII short
+[x x x x x x x x]    DII ubstring
+[x x x x x x x x]    DII bdstring
+[x x x x x x x x]    DII fixed_struct
+[x x x x x x x x]    DII strseq
+[x x x x x x x x]    DII bounded_strseq
+[x x x x x x x x]    DII var_struct
+[x x x x x x x x]    DII nested_struct
+[x x x x x x x x]    DII struct_seq
+[x x x x x x x x]    DII bounded_struct_seq
+[x x x x x x x x]    DII any
+[x x x x x x x x]    DII objref
+[x x x x x x x x]    DII objref_sequence
+[x x x x x x x x]    DII any_sequence
+[x x x x x x x x]    DII short_sequence
+[x x x x x x x x]    DII long_sequence
+[x x x x x x x x]    DII bounded_short_sequence
+[x x x x x x x x]    DII bounded_long_sequence
+[x x x x x x x x]    DII fixed_array
+[x x x x x x x x]    DII var_array
+
+[x x x x x x x x] DII_Cubit client
+[x x x x x x x x] Thruput/TAO
+
+[x x x x x x x x] Naming_Service
+[x x x x x x x x] Simple_Naming
+[x x x x x x x x] Logger
+[x x x x x x x x] Scheduling_Service
+[x x x x x x x x] Event_Service
+[x x x x x x x x] Dump_Schedule
+[x x x x x x x x] Event_Latency
+
+[x x x x x x x x] MT_Cubit compiles
+[x x x x x x x x] 	runs for Octet
+[x x x x x x x x] 	runs for Short
+[x x x x x x x x] 	runs for Long
+[x x x x x x x x] 	runs for Struct
 
 NOTES
 * Solaris/CC
 
-** Thruput/TAO/server.cpp -same errors as Logger/svr.cpp
-** ParamTest/var_struct,nested_struct,struct_seq - seg. fault , but
-   able to fix manually the tao_idl compiler generated files, works
-   fine then.
-
 * NT
-** Warnings on libTAO and tao_idl compilation.
-** Param_Test with struct_seq segfaults server.
-** MT_Cubit client segfaults after transactions made.
 
 * Solaris/g++
-** Warnings during tao_idl compilation.
-** MT Cubit fails to link due to missing -lposix4 library
 
 * IRIX
-** Event Latency won't work because unproper detection of failures for
-   priority change.
-** MT_Cubit does not compile
-   An extra library (-lposix4) is only present in Solaris; IMHO that
-   should go into the platform file for Solaris/CC
-** Param_Test does not connect on the first attempt, even for simple
-   types like <short>
 
 * Linux/g++
-** IDL Cubit clnt works, but generates a SEGV on shutdown
-** IDL Cubit svr executes, but returns object references across the
-   wire with host of 127.0.0.1 The remote client gets a MARSHAL
-   exception.
+
+* Solaris/EGCS
+
+* DEC
 
 * Other (Linux/egcs, Solaris/egcs, etc.)
 
