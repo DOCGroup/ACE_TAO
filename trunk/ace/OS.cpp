@@ -466,7 +466,19 @@ int
 ACE_OS::sched_params (const ACE_Sched_Params &sched_params)
 {
   // ACE_TRACE ("ACE_OS::sched_params");
-#if defined (ACE_HAS_STHREADS)
+#if defined (CHORUS)
+  int result;
+  struct sched_param param;
+  ACE_thread_t thr_id = ACE_OS::thr_self ();
+
+  param.sched_priority = sched_params.priority ();
+
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setschedparam (thr_id,
+								sched_params.policy (),
+								&param),
+				       result),
+		     int, -1);
+#elif defined (ACE_HAS_STHREADS)
   // Set priority class, priority, and quantum of this LWP or process as
   // specified in sched_params.
 
@@ -631,19 +643,6 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params)
 
   // Set the thread priority on the current thread.
   return ACE_OS::thr_setprio (sched_params.priority ());
-
-#elif defined (CHORUS)
-  int result;
-  struct sched_param param;
-  ACE_thread_t thr_id = ACE_OS::thr_self ();
-
-  param.sched_priority = sched_params.priority ();
-
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setschedparam (thr_id,
-								sched_params.policy (),
-								&param),
-				       result),
-		     int, -1);
 #else
   ACE_UNUSED_ARG (sched_params);
   ACE_NOTSUP_RETURN (-1);
@@ -1280,6 +1279,14 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
   if (stacksize < ACE_NEEDS_HUGE_THREAD_STACKSIZE)
     stacksize = ACE_NEEDS_HUGE_THREAD_STACKSIZE;
 #    endif /* ACE_NEEDS_HUGE_THREAD_STACKSIZE */
+
+#     if defined (CHORUS)
+  // if it is a super actor, we can't set stacksize.
+  // But for the time bing we are all non-super actors
+  // To be fixed later
+  if (stacksize == 0)
+      stacksize = 0x100000;
+#     endif /*CHORUS */
 
   if (stacksize != 0)
     {

@@ -4137,9 +4137,16 @@ ACE_OS::thr_min_stack (void)
   // ACE_TRACE ("ACE_OS::thr_min_stack");
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_STHREADS)
+#if defined (ACE_HAS_THR_MINSTACK)
+  // Tandem did some weirdo mangling of STHREAD names...
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_minstack (), 
+				       ace_result_), 
+		     int, -1);
+#else                                                      
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_min_stack (), 
-                                       ace_result_), 
-                     int, -1);
+                                       ace_result_),       
+		     int, -1);      
+#endif /* !ACE_HAS_THR_MINSTACK */                         
 #elif (defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)) && !defined (ACE_HAS_SETKIND_NP)
 #if defined (ACE_HAS_IRIX62_THREADS)
   return (size_t) ACE_OS::sysconf (_SC_THREAD_STACK_MIN);
@@ -6372,7 +6379,7 @@ ACE_OS::sleep (u_int seconds)
 #if defined (ACE_WIN32)
   ::Sleep (seconds * 1000);
   return 0;
-#elif defined (VXWORKS)
+#elif defined (ACE_HAS_CLOCK_GETTIME)
   struct timespec rqtp;
   // Initializer doesn't work with Green Hills 1.8.7
   rqtp.tv_sec = seconds;

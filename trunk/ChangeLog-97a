@@ -1,3 +1,37 @@
+Sat May 24 12:07:48 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/Reactor.cpp (bind): Fixed a stupid typo where I was using
+ 	  the ACE_REACTOR_EVENT_HANDLER macro instead of the
+ 	  ACE_REACTOR_HANDLE macro.  Thanks to Detlef for reporting this.
+
+	* ace/OS.i: Added a new macro called ACE_HAS_THR_MINSTACK to deal
+ 	  with weirdo mangling of names by Tandem.  Thanks to Jan Perman
+ 	  <uabjjpp@osd.ericsson.se> for reporting this.
+
+	* ace/OS.h: Added a new macro ACE_LACKS_PRI_T for those platforms
+	  using STHREADS (e.g., Tandem NonStop OS) that don't have pri_t
+	  defined.  Thanks to Jan Perman <uabjjpp@osd.ericsson.se> for
+	  reporting this.
+
+	* ace/Connector.cpp (connect): Make sure to save/restore errno
+ 	  since svc_handler->close() may change it.  Thanks to Michael
+ 	  Hartman <c62nt57@ibx.com> for reporting this.
+
+	* include/makeinclude/platform_chorus.GNU: Added a new platform
+ 	  macros file for Chorus.  Thanks to Wei Chang for this.
+
+	* ace/OS.cpp (sched_params): Reordered the #ifdefs so that Chorus
+ 	  comes first.
+
+	* ace/OS.i (sleep): If the platform defines ACE_HAS_CLOCK_GETTIME
+ 	  then we'll use the nanosleep() method rather than sleep().
+
+	* ace/OS.h: disabled THR_NEW_LWP for Chorus.  Thanks to Wei Chang
+ 	  for reporting this.
+
+	* ace/Sched_Params.cpp: ACE_SCHED_OTHER and ACE_SCHED_RR have the
+ 	  same value on Chorus.  Thanks to Wei Chang for reporting this.
+
 Sat May 24 09:21:08 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* netsvcs/lib/Server_Logging_Handler.cpp: protected second
@@ -31,6 +65,20 @@ Sat May 24 01:53:22 1997  James C Hu  <jxh@polka.cs.wustl.edu>
 	* performance-tests/Misc/test_naming.cpp (do_testing): Thanks to
 	  Sandro Doro, squashed a bug where we were trying to concatenate
 	  onto a string constant.
+
+Fri May 23 01:01:01 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/config-hpux-9.x.h: Added
+
+	  #define ACE_HAS_BROKEN_ENUMS
+	  #define ACE_HAS_IP_MULTICAST
+	  #define ACE_LACKS_GETPGID
+
+	  Thanks to Neil Cohen for reporting these.
+
+	* ace/Thread_Manager.h: Made the private methods and data members
+ 	  protected so that subclasses can extend it.  Thanks to Hamutal
+ 	  Yanay for this suggestion.
 
 Fri May 23 21:27:05 1997  David L. Levine  <levine@cs.wustl.edu>
 
@@ -72,19 +120,17 @@ Fri May 23 21:27:05 1997  David L. Levine  <levine@cs.wustl.edu>
 	  close the Task, and added printout to main () after all tasks have
 	  been spawned to help debug non-termination.
 
-Fri May 23 20:12:33 1997  James C Hu  <jxh@polka.cs.wustl.edu>
-
-	* tests/SV_Shared_Memory_Test.cpp: Thanks to Chuck Gehr, fixed
-	  ASCII dependent code in the parent and child routines.
-
-Fri May 23 10:11:26 1997  David L. Levine  <levine@cs.wustl.edu>
-
 	* ace/OS.cpp: (thr_create, with STHREADS only): *thr_handle was
 	  used but *thr_id had been set by ::thr_create, so threads never
 	  got activated.  Fixed by using *thr_id instead of *thr_handle
 	  in the calls to ACE_OS::thr_setprio and ACE_OS::continue.
 	  Thanks to Jan Perman <uabjjpp@osd.ericsson.se> for reporting
 	  this problem.
+
+Fri May 23 20:12:33 1997  James C Hu  <jxh@polka.cs.wustl.edu>
+
+	* tests/SV_Shared_Memory_Test.cpp: Thanks to Chuck Gehr, fixed
+	  ASCII dependent code in the parent and child routines.
 
 Fri May 23 02:58:28 1997  Nanbor Wang  <nw1@siesta.cs.wustl.edu>
 

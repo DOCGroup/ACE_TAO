@@ -1073,7 +1073,11 @@ typedef pthread_mutex_t ACE_thread_mutex_t;
 #    endif /* ACE_HAS_DCETHREADS */
 
 #    define THR_BOUND               0x00000001
+#  if defined (CHORUS)
+#    define THR_NEW_LWP             0x00000000
+#  else
 #    define THR_NEW_LWP             0x00000002
+#  endif /* CHORUS */
 #    define THR_DETACHED            0x00000040
 #    define THR_SUSPENDED           0x00000080
 #    define THR_DAEMON              0x00000100
@@ -2076,6 +2080,9 @@ extern "C"
 
 #if defined (ACE_HAS_STHREADS)
 #include /**/ <sys/priocntl.h>
+#if defined (ACE_LACKS_PRI_T)
+typedef int pri_t;
+#endif /* ACE_LACKS_PRI_T */
 typedef id_t ACE_id_t;
 typedef pri_t ACE_pri_t;
 #else
