@@ -40,7 +40,6 @@ USELIB("..\ace\aced.lib");
 // symbols dynamically at runtime.
 
 #if defined (ACE_WIN32)
-#define ACE_HAS_SVR4_DYNAMIC_LINKING
 #  define OBJ_SUFFIX ".exe"
 #  define OBJ_PREFIX ""
 #else
@@ -89,7 +88,8 @@ Hello *get_hello (void)
 
 typedef Hello *(*TC) (void);
 
-#if defined (ACE_HAS_SVR4_DYNAMIC_LINKING) 
+#if defined (ACE_WIN32) 
+#elif defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
 int
 main (int argc, char *argv[])
 {
@@ -124,7 +124,7 @@ main (int argc, char *argv[])
   ACE_END_TEST;
   return 0;
 }
-#endif /* ACE_HAS_SVR4_DYNAMIC_LINKING */
+#endif /* ACE_WIN32 || ACE_HAS_SVR4_DYNAMIC_LINKING */
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class auto_ptr <Hello>;
