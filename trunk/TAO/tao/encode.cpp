@@ -507,8 +507,7 @@ TAO_Marshal_Union::encode (CORBA::TypeCode_ptr tc,
         case CORBA::tk_enum:
           {
             CORBA::ULong ul;
-            TAO_InputCDR stream ((ACE_Message_Block *)
-                                 member_label->_tao_get_cdr ());
+            TAO_InputCDR stream (member_label->_tao_get_cdr ());
             (void)stream.decode (discrim_tc, &ul, 0, ACE_TRY_ENV);
             ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
             if (ul == *(CORBA::ULong *) discrim_val)
