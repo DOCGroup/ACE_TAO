@@ -30,6 +30,11 @@
 #define TAO_IDL_POA_CORBA_H
 
 #include "tao/CurrentC.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "tao/PolicyC.h"
 #include "tao/DynAnyC.h"
 #include "tao/DomainC.h"

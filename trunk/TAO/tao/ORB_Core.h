@@ -18,6 +18,11 @@
 #define TAO_ORB_CORE_H
 
 #include "tao/corbafwd.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "tao/Environment.h"
 #include "tao/Policy_Manager.h"
 #include "tao/Resource_Factory.h"

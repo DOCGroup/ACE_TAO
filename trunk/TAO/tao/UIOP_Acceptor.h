@@ -23,6 +23,10 @@
 
 #include "ace/Acceptor.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 # if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
 #include "ace/LSOCK_Acceptor.h"
@@ -82,7 +86,7 @@ private:
   // Implement the common part of the open*() methods
 
   void rendezvous_point (ACE_UNIX_Addr &, const char *rendezvous);
-  // Set the rendezvous point and verify that it is 
+  // Set the rendezvous point and verify that it is
   // valid (e.g. wasn't truncated because it was too long).
 
 private:

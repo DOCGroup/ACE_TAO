@@ -23,6 +23,10 @@
 
 #include "ace/Connector.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 # if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
 #include "ace/LSOCK_Connector.h"

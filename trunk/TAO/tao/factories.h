@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    TAO
-// 
+//
 // = FILENAME
 //     factories.h
 //
@@ -15,11 +15,16 @@
 //     $Id$
 // ============================================================================
 
-#if !defined (TAO_FACTORIES_H)
+#ifndef TAO_FACTORIES_H
 #  define TAO_FACTORIES_H
 
 #if 0
 #  include "ace/SOCK_Acceptor.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #  include "ace/SOCK_Connector.h"
 #  include "ace/Strategies_T.h"
 #  include "ace/Connector.h"
@@ -59,25 +64,25 @@ class TAO_Client_Factory
   //    strategies used on the client side.
 {
 public:
-  typedef ACE_Strategy_Connector<TAO_Client_Connection_Handler, ACE_SOCK_CONNECTOR> 
+  typedef ACE_Strategy_Connector<TAO_Client_Connection_Handler, ACE_SOCK_CONNECTOR>
           CONNECTOR;
-  typedef ACE_NOOP_Creation_Strategy<TAO_Client_Connection_Handler> 
+  typedef ACE_NOOP_Creation_Strategy<TAO_Client_Connection_Handler>
           NULL_CREATION_STRATEGY;
-  typedef ACE_Cached_Connect_Strategy<TAO_Client_Connection_Handler, 
+  typedef ACE_Cached_Connect_Strategy<TAO_Client_Connection_Handler,
                                       ACE_SOCK_CONNECTOR,
-				      ACE_SYNCH_RW_MUTEX>
+                                      ACE_SYNCH_RW_MUTEX>
           CACHED_CONNECT_STRATEGY;
 
 #if defined (TAO_HAS_CLIENT_CONCURRENCY)
   CONCURRENCY_STRATEGY *concurrency_strategy (void);
 #endif
-  
+
   CONNECTOR *connector (void);
   // Return a pointer to a connector using appropriate strategies.
 
   TAO_Client_Factory (void);
   ~TAO_Client_Factory (void);
-  
+
 private:
 #if defined (TAO_HAS_CLIENT_CONCURRENCY)
   CONCURRENCY_STRATEGY *concurrency_strategy_;
@@ -116,7 +121,7 @@ public:
 
   TAO_Server_Factory (void);
   // constructor
-  
+
 private:
   // = COMMON
   ACE_Thread_Strategy<TAO_OA_Connection_Handler> threaded_strategy_;

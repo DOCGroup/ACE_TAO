@@ -5,6 +5,10 @@
 
 #include "tao/try_macros.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 // Convenient macro for testing for deadlock, as well as for detecting
 // when mutexes fail.
 #define TAO_POA_GUARD(MUTEX,OBJ,LOCK) \
