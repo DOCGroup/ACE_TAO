@@ -15,6 +15,72 @@ CIAO_HelloWorld_Context::~CIAO_HelloWorld_Context ()
 
 }
 
+void *
+CIAO_HelloWorld_Context::_tao_QueryInterface (ptr_arith_t type)
+{
+  void *retv = 0;
+
+  if (type == ACE_reinterpret_cast (
+              ptr_arith_t,
+              &CCM_HelloWorld_Context::_tao_class_id)
+            )
+    {
+      retv = ACE_reinterpret_cast (void*, this);
+    }
+  else if (type == ACE_reinterpret_cast (
+              ptr_arith_t,
+              &::Components::SessionContext::_tao_class_id)
+            )
+    {
+      retv =
+        ACE_reinterpret_cast (
+            void *,
+            ACE_static_cast (
+                Components::SessionContext_ptr,
+                this
+              )
+          );
+    }
+  else if (type == ACE_reinterpret_cast (
+              ptr_arith_t,
+              &::Components::CCMContext::_tao_class_id)
+            )
+    {
+      retv =
+        ACE_reinterpret_cast (
+            void *,
+            ACE_static_cast (
+                Components::CCMContext_ptr,
+                this
+              )
+          );
+    }
+  else if (type == ACE_reinterpret_cast (
+               ptr_arith_t,
+               &CORBA::Object::_tao_class_id)
+             )
+    {
+      retv =
+        ACE_reinterpret_cast (
+            void *,
+            ACE_static_cast (CORBA::Object_ptr, this)
+          );
+    }
+
+  if (retv != 0)
+    {
+      this->_add_ref ();
+    }
+
+  return retv;
+}
+
+const char*
+CIAO_HelloWorld_Context::_interface_repository_id (void) const
+{
+  return CCM_HelloWorld_Context::_interface_repository_id ();
+}
+
 // Operations for HellowWorld attributes, event source, and
 // receptable defined in CCM_HelloWorld_Context.
 
