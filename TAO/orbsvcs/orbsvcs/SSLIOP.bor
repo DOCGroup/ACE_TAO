@@ -20,7 +20,6 @@ OBJFILES = \
 	$(OBJDIR)\IIOP_SSL_Connector.obj \
         $(OBJDIR)\ssl_endpoints.obj \
 	$(OBJDIR)\SSLIOP_Acceptor.obj \
-	$(OBJDIR)\SSLIOP_Connect.obj \
 	$(OBJDIR)\SSLIOP_Connection_Handler.obj \
 	$(OBJDIR)\SSLIOP_Connector.obj \
 	$(OBJDIR)\SSLIOP_Current.obj \

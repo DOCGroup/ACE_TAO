@@ -1,17 +1,22 @@
+Wed Dec 13 08:22:00 2000  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Ssliop.bor:
+          Removed SSLIOP_Connect from makefile because it was removed
+
 Tue Dec 12 23:33:07 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.h: 
-	* orbsvcs/orbsvcs/AV/AV_Core.cpp: 
+	* orbsvcs/orbsvcs/AV/AVStreams_i.h:
+	* orbsvcs/orbsvcs/AV/AV_Core.cpp:
         * orbsvcs/orbsvcs/Makefile.av:
-			
-	  Fixed compile problems.	
+
+	  Fixed compile problems.
 
 Tue Dec 12 15:58:03 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* docs/INS.html:
 	  Updated the document to the correct style of corbaloc URL.
 	  corbaloc:iiop:$TARGETHOSTNAME:$PORT/object_name.
-	  
+
 	  Thanks to Russell L. Carter <rcarter@pinyon.org> for
 	  motivating the fix.
 
@@ -22,9 +27,9 @@ Tue Dec 12  3:23:15 2000  Jeff Parsons   <parsons@cs.wustl.edu>
 
           Added flag ifr_fwd_added_. It defaults to 0 and
           is set by the tao_ifr backend when a forward declaration
-          is seen. A later check of this flag lets us know if a 
+          is seen. A later check of this flag lets us know if a
           forward declaration has been seen in the same file, and
-          can help detect redefinition errors when adding the 
+          can help detect redefinition errors when adding the
           contents of multiple IDL files to the interface repository.
 
 Tue Dec 12 12:44:02 2000  Darrell Brunsch <brunsch@uci.edu>
@@ -34,8 +39,8 @@ Tue Dec 12 12:44:02 2000  Darrell Brunsch <brunsch@uci.edu>
           ImplRepo wasn't working on any platform except windows
           because the load_registry_settings wasn't protected by
           a #if defined (ACE_WIN32).  Before this change, running
-          the ImR on non-Win32 platforms would result in a 
-          "Service not available on this platform" message and 
+          the ImR on non-Win32 platforms would result in a
+          "Service not available on this platform" message and
           the ImR would immediately exit.
 
 Tue Dec 12 11:57:59 2000  Darrell Brunsch <brunsch@uci.edu>
@@ -54,7 +59,7 @@ Tue Dec 12 13:49:49 2000  Marina Spivak  <marina@cs.wustl.edu>
 	* docs/rtcorba/queue-per-lane.gif:
 
 	  Added pictures for architecture description.
-	
+
 	* docs/rtcorba/omg_issues.html:
 
 	  Populated the page with content.
@@ -62,15 +67,15 @@ Tue Dec 12 13:49:49 2000  Marina Spivak  <marina@cs.wustl.edu>
 	* docs/rtcorba/issues.html:
 
 	  Added one new issue.
-	
+
 	* docs/rtcorba/index.html:
 
 	  Added page title.
-	
+
 	* docs/rtcorba/content.html:
 
 	  Removed examples section.
-	
+
 	* docs/rtcorba/faq.html
 	* docs/rtcorba/status.html:
 
@@ -127,7 +132,7 @@ Mon Dec 11 04:31:31 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	  These files were added and then removed to be replaced by the
 	  ones below (in order to change .htm to .html).
-	
+
 	* docs/rtcorba/index.html
 	* docs/rtcorba/content.html
 	* docs/rtcorba/status.html
