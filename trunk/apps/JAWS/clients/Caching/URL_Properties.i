@@ -2,6 +2,12 @@
 
 // $Id$
 
+ACE_INLINE size_t
+ACE_WString_Helper::bsize (ACE_WString *wstr)
+{
+  return (wstr->length () + 1) * sizeof (ACE_USHORT16);
+}
+
 ACE_INLINE
 ACE_URL_Property::ACE_URL_Property (const char *name, const char *value)
 {
