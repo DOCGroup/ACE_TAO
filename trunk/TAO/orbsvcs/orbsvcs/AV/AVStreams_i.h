@@ -407,7 +407,7 @@ class TAO_ORBSVCS_Export TAO_MMDevice
 {
  protected:
   
-  TAO_Endpoint_Strategy *endpoint_strategy_;
+  TAO_AV_Endpoint_Strategy *endpoint_strategy_;
 
  public:
 
