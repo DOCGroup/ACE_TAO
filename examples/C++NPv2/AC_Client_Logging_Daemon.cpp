@@ -47,8 +47,7 @@ protected:
   virtual int svc ();
 
   // Send the buffered log records using a gather-write operation.
-  virtual int AC_Output_Handler::send
-    (ACE_Message_Block *blocks[], size_t &count);
+  virtual int send (ACE_Message_Block *blocks[], size_t &count);
 };
 
 class AC_Input_Handler 
@@ -77,7 +76,7 @@ class AC_CLD_Acceptor
 public:
   // Constructor.
   AC_CLD_Acceptor (AC_Output_Handler *handler = 0)
-    : output_handler_ (handler), input_handler_ (*handler) {}
+    : output_handler_ (handler), input_handler_ (handler) {}
 
 protected:
   typedef ACE_Acceptor<AC_Input_Handler, ACE_SOCK_Acceptor> 
@@ -157,7 +156,8 @@ protected:
 public:
   // Constructor.
   AC_Client_Logging_Daemon ()
-    : acceptor_ (&output_handler_), connector_ (&output_handler_) {}
+    : acceptor_ (&output_handler_),
+      connector_ (&output_handler_) {}
 
   // Service Configurator hook methods.
   virtual int init (int argc, ACE_TCHAR *argv[]);
@@ -184,7 +184,7 @@ int AC_Output_Handler::open (void *connector) {
     return -1;
   if (msg_queue ()->activate () 
       == ACE_Message_Queue_Base::WAS_ACTIVE) {
-    msg_queue ()->high_water_mark (AC_Output_Handler::QUEUE_MAX);
+    msg_queue ()->high_water_mark (QUEUE_MAX);
     return activate (THR_SCOPE_SYSTEM);
   } else return 0;
 }
@@ -196,7 +196,8 @@ int AC_Output_Handler::put (ACE_Message_Block *mb,
 int AC_Output_Handler::handle_input (ACE_HANDLE h) {
   peer ().close ();
   reactor ()->remove_handler
-    (h, ACE_Event_Handler::READ_MASK | ACE_Event_Handler::DONT_CALL);
+    (h, ACE_Event_Handler::READ_MASK
+        | ACE_Event_Handler::DONT_CALL);
   msg_queue ()->deactivate ();
   return 0;
 }
@@ -277,8 +278,8 @@ int AC_Input_Handler::close (u_int) {
   ACE_NEW_RETURN 
     (shutdown_message,
      ACE_Message_Block (0, ACE_Message_Block::MB_STOP), -1);
-
   output_handler_->put (shutdown_message);
+
   reactor ()->remove_handler
     (connected_clients_, ACE_Event_Handler::READ_MASK);
   return output_handler_->wait ();
@@ -306,13 +307,13 @@ int AC_Input_Handler::handle_close (ACE_HANDLE handle,
 /********************************************************/
 
 int AC_CLD_Acceptor::make_svc_handler (AC_Input_Handler *&sh) 
-{ sh = input_handler_; return 0; }
+{ sh = &input_handler_; return 0; }
 
 
 int AC_CLD_Acceptor::handle_close (ACE_HANDLE, 
                                    ACE_Reactor_Mask) {
   PARENT::handle_close ();
-  input_handler_->close ();
+  input_handler_.close ();
   return 0;
 }
 
@@ -367,7 +368,7 @@ int AC_CLD_Connector::connect_svc_handler
 
 int AC_CLD_Connector::reconnect () {
   // Maximum number of times to retry connect.
-  static const size_t MAX_RETRIES = 5;
+  const size_t MAX_RETRIES = 5;
   ACE_Time_Value timeout (1);
   size_t i;
   for (i = 0; i < MAX_RETRIES; ++i) {
@@ -383,7 +384,8 @@ int AC_CLD_Connector::reconnect () {
 
 /******************************************************/
 
-int AC_Client_Logging_Daemon::init (int argc, ACE_TCHAR *argv[]) {
+int AC_Client_Logging_Daemon::init
+      (int argc, ACE_TCHAR *argv[]) {
   u_short cld_port = ACE_DEFAULT_SERVICE_PORT;
   u_short sld_port = ACE_DEFAULT_LOGGING_SERVER_PORT;
   ACE_TCHAR sld_host[MAXHOSTNAMELEN];
@@ -417,7 +419,8 @@ int AC_Client_Logging_Daemon::init (int argc, ACE_TCHAR *argv[]) {
   ACE_INET_Addr sld_addr (sld_port, sld_host);
 
   if (acceptor_.open (cld_addr) == -1) return -1;
-  else if (connector_.connect (&output_handler_, sld_addr) == -1)
+  AC_Output_Handler *oh = &output_handler_;
+  if (connector_.connect (oh, sld_addr) == -1)
   { acceptor_.close (); return -1; }
   return 0;
 }

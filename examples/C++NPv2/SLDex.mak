@@ -10,7 +10,6 @@
 
 SHLIB   = libSLDex.$(SOEXT)
 FILES   = SLDex \
-          Logging_Acceptor_Ex \
           Logging_Event_Handler_Ex \
           Server_Shutdown
 LSRC    = $(addsuffix .cpp,$(FILES))
