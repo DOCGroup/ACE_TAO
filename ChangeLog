@@ -1,3 +1,11 @@
+Mon Apr 14 12:56:07 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* Kokyu/DSRT_Dispatcher_Impl.h:
+	* Kokyu/DSRT_Dispatcher_Impl.cpp:
+	* Kokyu/DSRT_Dispatcher_Impl.i:
+	  
+	  Added new files for Dynamic scheduling support.
+
 Mon Apr 14 17:28:56 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-cygwin32-common.h:
