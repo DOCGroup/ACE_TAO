@@ -522,23 +522,23 @@ typedef int key_t;
 ///////////////////////////////////////////
 
 #if defined (ACE_HAS_PACE)
-#include "pace/dirent.h"
-#include "pace/fcntl.h"
-#include "pace/sys/mman.h"
-#include "pace/pthread.h"
-#include "pace/pwd.h"
-#include "pace/stdio.h"
-#include "pace/stdlib.h"
-#include "pace/sched.h"
-#include "pace/semaphore.h"
-#include "pace/signal.h"
-#include "pace/sys/stat.h"
-#include "pace/stdio.h"
-#include "pace/time.h"
-#include "pace/unistd.h"
-#include "pace/sys/utsname.h"
-#include "pace/sys/wait.h"
-#define ACE_HAS_POSIX_SEM
+# include "pace/dirent.h"
+# include "pace/fcntl.h"
+# include "pace/sys/mman.h"
+# include "pace/pthread.h"
+# include "pace/pwd.h"
+# include "pace/stdio.h"
+# include "pace/stdlib.h"
+# include "pace/sched.h"
+# include "pace/semaphore.h"
+# include "pace/signal.h"
+# include "pace/sys/stat.h"
+# include "pace/stdio.h"
+# include "pace/time.h"
+# include "pace/unistd.h"
+# include "pace/sys/utsname.h"
+# include "pace/sys/wait.h"
+# define ACE_HAS_POSIX_SEM
 #endif /* ACE_HAS_PACE */
 
 # if defined (ACE_PSOS)
@@ -2272,13 +2272,16 @@ typedef struct
 // Wrapper for NT Events.
 typedef HANDLE ACE_event_t;
 
+#   if !defined (ACE_HAS_PACE)
+// This can probably get _wider_ as more types are defined in PACE.
+// ie: see above ACE_mutex_t
+
 //@@ ACE_USES_WINCE_SEMA_SIMULATION is used to debug
 //   semaphore simulation on WinNT.  It should be
 //   changed to ACE_USES_HAS_WINCE at some later point.
 #     if !defined (ACE_USES_WINCE_SEMA_SIMULATION)
 typedef HANDLE ACE_sema_t;
 #     else
-
 class ACE_Export ACE_sema_t
 {
   // = TITLE
@@ -2295,6 +2298,7 @@ public:
 };
 
 #     endif /* ACE_USES_WINCE_SEMA_SIMULATION */
+#   endif /* !ACE_HAS_PACE */
 
 // These need to be different values, neither of which can be 0...
 #     define USYNC_THREAD 1
