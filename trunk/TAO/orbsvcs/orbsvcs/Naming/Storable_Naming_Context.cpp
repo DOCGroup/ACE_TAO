@@ -161,7 +161,7 @@ void TAO_Storable_Bindings_Map::Write(TAO_Writer_Base& wrtr)
 
   ACE_CString name(my_name);
   header.context_name (name);
-  header.size ((const unsigned short)map_.current_size());
+  header.size ((unsigned int)map_.current_size());
 
   wrtr << header;
 
