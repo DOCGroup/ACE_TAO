@@ -1,3 +1,12 @@
+Sat Jan 29 23:44:37 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* examples/ASX/Event_Server/Event_Server/event_server.cpp:
+	* examples/ASX/Event_Server/Transceiver/transceiver.cpp:
+	* examples/ASX/UPIPE_Event_Server/event_server.cpp:
+
+	  Added missing "ace/OS_NS_unistd.h" include directives.  Fixes
+	  compile-time errors related to missing function prototypes.
+
 Sat Jan 29 11:12:58 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* examples/OS/Process/process.cpp:

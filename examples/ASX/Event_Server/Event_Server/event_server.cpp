@@ -5,6 +5,7 @@
 #include "ace/OS_main.h"
 #include "ace/Stream.h"
 #include "ace/Service_Config.h"
+#include "ace/OS_NS_unistd.h"
 #include "Options.h"
 #include "Consumer_Router.h"
 #include "Event_Analyzer.h"
