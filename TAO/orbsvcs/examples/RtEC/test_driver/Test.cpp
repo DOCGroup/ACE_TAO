@@ -10,6 +10,7 @@
 #include "ACEXML/common/InputSource.h"
 #include "ACEXML/common/FileCharStream.h"
 #include "ACEXML/common/DefaultHandler.h"
+#include "orbsvcs/Event/EC_Gateway_IIOP_Factory.h"
 
 #include "ECConfig.h"
 #include "Config_Factory.h"
@@ -27,6 +28,10 @@ int parse_args (int argc, char *argv[],Arguments &args);
 int
 main (int argc, char *argv[])
 {
+  TAO_EC_Kokyu_Factory::init_svcs();
+  TAO_EC_Gateway_IIOP_Factory::init_svcs();
+  ConfigFactory::Default_Config_Factory::init_svcs();
+
   int retval = 0;
   ds_control ctrl ("Test start","Test.dsui");
 
