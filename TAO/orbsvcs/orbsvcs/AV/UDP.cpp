@@ -88,7 +88,7 @@ TAO_AV_UDP_Transport::set_remote_address (const ACE_INET_Addr &address)
 }
 
 int
-TAO_AV_UDP_Transport::open (ACE_Addr */*address*/)
+TAO_AV_UDP_Transport::open (ACE_Addr * /*address*/)
 {
   return 0;
 }
@@ -622,7 +622,7 @@ TAO_AV_UDP_Object::handle_input (void)
 
 int
 TAO_AV_UDP_Object::send_frame (ACE_Message_Block *frame,
-                               TAO_AV_frame_info */*frame_info*/)
+                               TAO_AV_frame_info * /*frame_info*/)
 {
   if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_Object::send_frame\n"));
   int result = this->transport_->send (frame);
@@ -634,7 +634,7 @@ TAO_AV_UDP_Object::send_frame (ACE_Message_Block *frame,
 int 
 TAO_AV_UDP_Object::send_frame (const iovec *iov,
                                int iovcnt,
-                               TAO_AV_frame_info */*frame_info*/)
+                               TAO_AV_frame_info * /*frame_info*/)
 {
   return this->transport_->send (iov,iovcnt);
 }

@@ -22,7 +22,7 @@ TAO_AV_TCP_Transport::~TAO_AV_TCP_Transport (void)
 }
 
 int
-TAO_AV_TCP_Transport::open (ACE_Addr */*address*/)
+TAO_AV_TCP_Transport::open (ACE_Addr * /*address*/)
 {
   return 0;
 }
@@ -213,7 +213,7 @@ TAO_AV_TCP_Object::handle_input (void)
 
 int
 TAO_AV_TCP_Object::send_frame (ACE_Message_Block *frame,
-                               TAO_AV_frame_info */*frame_info*/)
+                               TAO_AV_frame_info * /*frame_info*/)
 {
   int result = this->transport_->send (frame);
   if (result < 0)
@@ -224,7 +224,7 @@ TAO_AV_TCP_Object::send_frame (ACE_Message_Block *frame,
 int
 TAO_AV_TCP_Object::send_frame (const iovec *iov,
                                int iovcnt,
-                               TAO_AV_frame_info */*frame_info*/)
+                               TAO_AV_frame_info * /*frame_info*/)
 {
   return this->transport_->send (iov,iovcnt);
 }
@@ -562,7 +562,7 @@ TAO_AV_TCP_Acceptor::close (void)
 // TAO_AV_TCP_Flow_Handler
 //------------------------------------------------------------
 
-TAO_AV_TCP_Flow_Handler::TAO_AV_TCP_Flow_Handler (TAO_AV_Callback */*callback*/)
+TAO_AV_TCP_Flow_Handler::TAO_AV_TCP_Flow_Handler (TAO_AV_Callback * /*callback*/)
   //  :TAO_AV_Flow_Handler (callback)
 {
   ACE_NEW (this->transport_,
@@ -576,7 +576,7 @@ TAO_AV_TCP_Flow_Handler::transport (void)
 }
 
 int
-TAO_AV_TCP_Flow_Handler::open (void */*arg*/)
+TAO_AV_TCP_Flow_Handler::open (void * /*arg*/)
 {
 
   int nodelay = 1;

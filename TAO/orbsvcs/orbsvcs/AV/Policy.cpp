@@ -64,7 +64,7 @@ TAO_AV_Callback::handle_stop (void)
 }
 
 int
-TAO_AV_Callback::receive_frame (ACE_Message_Block */*frame*/,
+TAO_AV_Callback::receive_frame (ACE_Message_Block * /*frame*/,
                                 TAO_AV_frame_info *,
                                 const ACE_Addr &)
 {
@@ -87,14 +87,14 @@ TAO_AV_Callback::handle_destroy (void)
 }
 
 void
-TAO_AV_Callback::get_timeout (ACE_Time_Value *&/*tv*/,
-                              void *&/*arg*/)
+TAO_AV_Callback::get_timeout (ACE_Time_Value *& /*tv*/,
+                              void *& /*arg*/)
 {
   if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_Callback::get_timeout\n"));
 }
 
 int
-TAO_AV_Callback::handle_timeout (void */*arg*/)
+TAO_AV_Callback::handle_timeout (void * /*arg*/)
 {
   if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_Callback::handle_timeout\n"));
   return 0;
