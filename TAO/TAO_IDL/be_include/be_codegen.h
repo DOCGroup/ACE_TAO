@@ -59,6 +59,17 @@ public:
     // headers, inlines, stubs.
     TAO_ARGUMENT_ARGLIST_CH,                 // argument in op signature of
                                              // ... client header
+    TAO_ARGUMENT_ARGLIST_SH,                 // argument in op signature of
+                                             // ... server header
+    TAO_ARGUMENT_INTERCEPTORS_ARGLIST_CH,    // ... client header
+    TAO_ARGUMENT_INTERCEPTORS_ARGLIST_CS,    // ... client source
+    TAO_ARGUMENT_INTERCEPTORS_INFO_ARGLIST_CH,    // ... client header
+    TAO_ARGUMENT_INTERCEPTORS_INFO_ARGLIST_CS,    // ... client source
+    TAO_ARGUMENT_INTERCEPTORS_PARAMLIST,    // ... client source
+    TAO_ARGUMENT_INTERCEPTORS_RESULT,    // ... client source
+    TAO_ARGUMENT_INTERCEPTORS_ARGLIST_SH,    // ... server header
+    TAO_ARGUMENT_INTERCEPTORS_ARGLIST_SS,    // ... server source
+    TAO_ARGUMENT_INTERCEPTORS_INFO_ARGLIST_SS,    // ... server source
     TAO_ARGUMENT_ARGLIST_OTHERS,             // ... in other cases
     TAO_ARGUMENT_PRE_INVOKE_CS,              // preprocessing of argument
                                              // variable before passing to
@@ -90,6 +101,10 @@ public:
                                              // collocated
     TAO_ATTRIBUTE_SMART_PROXY_CH,            // in client header
     TAO_ATTRIBUTE_SMART_PROXY_CS,            // in client source
+    TAO_ATTRIBUTE_INTERCEPTORS_CH,           // in client header
+    TAO_ATTRIBUTE_INTERCEPTORS_CS,           // in client source 
+    TAO_ATTRIBUTE_INTERCEPTORS_SH,           // in server header
+    TAO_ATTRIBUTE_INTERCEPTORS_SS,           // in server source 
 
     TAO_ATTRIBUTE_TIE_SH,
     TAO_ATTRIBUTE_TIE_SI,
@@ -162,6 +177,10 @@ public:
     TAO_INTERFACE_TIE_SI,
     TAO_INTERFACE_SMART_PROXY_CH,
     TAO_INTERFACE_SMART_PROXY_CS,
+    TAO_INTERFACE_INTERCEPTORS_CH,
+    TAO_INTERFACE_INTERCEPTORS_CS,
+    TAO_INTERFACE_INTERCEPTORS_SH,
+    TAO_INTERFACE_INTERCEPTORS_SS,
 
     // emitting code for the interface forward declaration
     TAO_INTERFACE_FWD_CH,
@@ -235,14 +254,34 @@ public:
 
     TAO_OPERATION_SMART_PROXY_CH,           // in client header
     TAO_OPERATION_SMART_PROXY_CS,           // in client stubs
+    TAO_OPERATION_INTERCEPTORS_CH,           // in client header
+    TAO_OPERATION_INTERCEPTORS_CS,           // in client source
+    TAO_OPERATION_INTERCEPTORS_SH,           // in server header
+    TAO_OPERATION_INTERCEPTORS_SS,           // in server source
 
     TAO_OPERATION_RETTYPE_CH,                // return type in client header op
+                                             // signature
+    TAO_OPERATION_INTERCEPTORS_INFO_RETTYPE_CH, // return type in client header op
+                                             // signature for RequestInfo class
+    TAO_OPERATION_RETTYPE_SH,                // return type in server header op
                                              // signature
     TAO_OPERATION_RETTYPE_IS,                // return type in client header op
     TAO_OPERATION_RETTYPE_OTHERS,            // ... in other cases
     TAO_OPERATION_ARGLIST_CH,                // parameter list in op signature
                                              // ... for client header
     TAO_OPERATION_ARGLIST_SH,                // ... for server header
+    TAO_OPERATION_INTERCEPTORS_ARGLIST_CH,   // private member list list for request info
+    TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_CH,   // private member list list for request info
+    TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_CS,   // arglist for request info obj instantiation
+    TAO_OPERATION_INTERCEPTORS_ARGLIST_CS,   // private member list list for request info                                                                         // ... for client source
+    TAO_OPERATION_INTERCEPTORS_PARAMLIST,   // create the paramlist on demand
+    TAO_OPERATION_INTERCEPTORS_RESULT,   // create the result on demand
+    TAO_OPERATION_INTERCEPTORS_EXCEPTLIST,   // create the exceptionlist on demand
+    TAO_OPERATION_INTERCEPTORS_ARGLIST_SH,   // private member list list for request info
+    TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_SH,   // private member list list for request info
+    TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_SS,   // arglist for request info obj instantiation
+    TAO_OPERATION_INTERCEPTORS_ARGLIST_SS,   // private member list list for request info                                                                  // ... for server source 
+
     TAO_OPERATION_ARGLIST_IH,                // ... for implementation header
     TAO_OPERATION_ARGLIST_IS,                // ... for implementation header
     TAO_OPERATION_ARGLIST_COLLOCATED_SH,     // ... for collocated server
@@ -271,6 +310,8 @@ public:
     TAO_OPERATION_COLLOCATED_ARG_UPCALL_SS,  // variables to upcall for
                                              // collocated op
     TAO_OPERATION_ARG_POST_UPCALL_SS,        //   return and argument variables
+    TAO_OPERATION_INTERCEPTORS_ARG_INFO_CS,  // Interceptor args
+    TAO_OPERATION_INTERCEPTORS_ARG_INFO_SS,  // Interceptor args
     TAO_OPERATION_RESULT_SS,                 // XXXASG rm?
     TAO_OPERATION_TIE_SH,
     TAO_OPERATION_TIE_SI,
