@@ -553,7 +553,7 @@ private:
    *
    * @see TAO_Object_Manager
    */
-template<class T, class T_var>
+template<typename T, typename T_var>
 class TAO_Abstract_Manager
 {
 //  friend class TAO_Unbounded_Abstract_Sequence<T,T_var>;
@@ -584,7 +584,9 @@ public:
    * @@ TODO what happens if rhs.release_ is true an this->relase_ is
    * false?
    */
-  TAO_Abstract_Manager<T,T_var> &operator= (const TAO_Abstract_Manager<T,T_var> &rhs);
+  TAO_Abstract_Manager<T,T_var> &operator= (
+      const TAO_Abstract_Manager<T,T_var> & rhs
+    );
 
   /// Assignment from T *.
   TAO_Abstract_Manager<T,T_var> &operator= (T *);
@@ -596,17 +598,17 @@ public:
   T *operator-> (void) const;
 
   /// Cast (read-only).
-  operator const T *() const;
+  operator const T * () const;
 
   /// Cast.
-  operator T *&();
+  operator T *& ();
 
   /// Cast (read-only) so that assignment from a structured
   /// type to a T_var will make a copy.
   operator const T_var () const;
 
   /// for in parameter.
-  T *in (void) const;
+  T * in (void) const;
 
   /// for inout parameter.
   T *& inout (void);
@@ -615,12 +617,12 @@ public:
   T *& out (void);
 
   /// for return type
-  T *_retn (void);
+  T * _retn (void);
 
 private:
   /// data member, notice that it is a pointer, to implement the
   /// reference behavior for assignment.
-  T **ptr_;
+  T ** ptr_;
 
   /// release flag based on parent's flag
   CORBA::Boolean release_;
@@ -1269,6 +1271,8 @@ public:
   /// Release all the elements.
   static void freebuf (T *);
 
+  static void _tao_any_destructor (void *);
+
   /// allocate a buffer of the requested length. The buffer is allocated for the
   /// right type
   virtual void _allocate_buffer (CORBA::ULong length);
@@ -1365,6 +1369,8 @@ public:
   /// Free a buffer allocated by allocbuf() and release each element on
   /// it.
   static void freebuf (T *buffer);
+
+  static void _tao_any_destructor (void *);
 
   /// allocate a buffer of the requested length. The buffer is allocated for the
   /// right type

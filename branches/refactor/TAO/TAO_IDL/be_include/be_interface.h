@@ -335,9 +335,6 @@ public:
   void var_out_seq_decls_gen (int val);
   // Accessors for the members.
 
-  const char *fwd_helper_name (void) const;
-  // Accessor to the member.
-
 private:
   void gen_gperf_input_header (TAO_OutStream *ss);
   // Output the header (type declaration and %%) to the gperf's input
@@ -393,9 +390,6 @@ private:
 
   int var_out_seq_decls_gen_;
   // Have these been done already?
-
-  ACE_CString fwd_helper_name_;
-  // Calculate this in one place.
 };
 
 /**

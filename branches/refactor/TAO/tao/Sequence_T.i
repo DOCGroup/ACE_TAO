@@ -453,7 +453,7 @@ TAO_Valuetype_Manager<T,T_var,T_life>::_retn (void)
 // Inline operations for class TAO_Abstract_Manager
 // *************************************************************
 
-template <class T, class T_var> ACE_INLINE
+template <typename T, typename T_var> ACE_INLINE
 TAO_Abstract_Manager<T,T_var>::~TAO_Abstract_Manager (void)
 {
 }
@@ -494,13 +494,13 @@ TAO_Abstract_Manager<T,T_var>::operator const T_var () const
 }
 
 template <class T, class T_var> ACE_INLINE
-TAO_Abstract_Manager<T,T_var>::operator const T* () const // cast
+TAO_Abstract_Manager<T,T_var>::operator const T* () const
 {
   return *this->ptr_;
 }
 
 template <class T, class T_var> ACE_INLINE
-TAO_Abstract_Manager<T,T_var>::operator T* &() // cast
+TAO_Abstract_Manager<T,T_var>::operator T* &()
 {
   return *this->ptr_;
 }

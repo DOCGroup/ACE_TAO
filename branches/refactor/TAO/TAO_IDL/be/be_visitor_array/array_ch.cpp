@@ -175,14 +175,23 @@ int be_visitor_array_ch::visit_array (be_array *node)
 
   *os << " ";
 
-  if (!this->ctx_->tdef ())
+  char anon_p [2];
+  ACE_OS::memset (anon_p, 
+                  '\0', 
+                  2);
+
+  if (this->ctx_->tdef ())
     {
-      // We are dealing with an anonymous array case. Generate a typedef with
-      // an _ prepended to the name.
-      *os << "_";
+      ACE_OS::sprintf (anon_p, 
+                       "");
+    }
+  else
+    {
+      ACE_OS::sprintf (anon_p, 
+                       "_");
     }
 
-  *os << node->local_name () << "_slice";
+  *os << anon_p << node->local_name () << "_slice";
 
   if (node->gen_dimensions (os, 1) == -1)
     {
@@ -195,50 +204,66 @@ int be_visitor_array_ch::visit_array (be_array *node)
 
   *os << ";";
 
+  // Generate helper struct for use of array in a sequence.
+  *os << be_nl << be_nl
+      << "struct tao_" << node->local_name () << "_life" << be_nl
+      << "{" << be_idt_nl
+      << "static void tao_free (" << anon_p << node->local_name () 
+      << "_slice * _tao_slice);" << be_nl
+      << "static " << anon_p << node->local_name () 
+      << "_slice * tao_dup (" << be_idt << be_idt_nl
+      << "const " << anon_p << node->local_name () << "_slice * _tao_slice"
+      << be_uidt_nl
+      << ");" << be_uidt_nl
+      << "static void tao_copy (" << be_idt << be_idt_nl
+      << anon_p << node->local_name () << "_slice * _tao_to," << be_nl
+      << "const " << anon_p << node->local_name () 
+      << "_slice * _tao_from" << be_uidt_nl
+      << ");" << be_uidt << be_uidt_nl
+      << "};";
+
   // No _var or _out class for an anonymous (non-typedef'd) array.
   if (this->ctx_->tdef () != 0)
     {
-      // Generate the _var and _out class declarations.
-      if (this->gen_var_defn (node) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_array_ch::"
-                             "visit_argument - "
-                             "var_defn failed\n"),
-                            -1);
-        }
-
-      // An out defn is generated only for a variable size array.
+      // Generate _var class decl.
+      // An _out decl is generated only for a variable size array.
       if (node->size_type () == AST_Type::VARIABLE)
         {
-          if (this->gen_out_defn (node) == -1)
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "be_visitor_array_ch::"
-                                 "visit_argument - "
-                                 "out_defn failed\n"),
-                                -1);
-            }
+          *os << be_nl << be_nl 
+              << "typedef TAO_VarArray_Var_T<" << be_idt << be_idt_nl
+              << node->local_name () << "_slice," << be_nl
+              << "tao_" << node->local_name () << "_life" << be_uidt_nl
+              << ">" << be_nl 
+              << node->local_name () << "_var;" << be_uidt_nl;
+
+          *os << "typedef TAO_Array_Out_T<" << be_idt << be_idt_nl
+              << node->local_name () << "_var," << be_nl
+              << node->local_name () << "_slice," << be_nl
+              << "tao_" << node->local_name () << "_life" << be_uidt_nl
+              << ">" << be_nl 
+              << node->local_name () << "_out;" << be_uidt;
         }
       else
         {
-          *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
-                       << "// " __FILE__ << ":" << __LINE__;
+          *os << be_nl << be_nl
+              << "typedef TAO_FixedArray_Var_T<" << be_idt << be_idt_nl
+              << node->local_name () << "_slice," << be_nl
+              << "tao_" << node->local_name () << "_life" << be_uidt_nl
+              << ">" << be_nl
+              << node->local_name () << "_var;" << be_uidt_nl;
 
-          *os << be_nl << be_nl 
-              << "typedef " << node->local_name () << " "
-              << node->local_name () << "_out;";
+          *os << "typedef " << node->local_name () << " "
+              << node->local_name () << "_out;" << be_uidt;
         }
     }
 
-  if (this->gen_forany_defn (node) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_array_ch::"
-                         "visit_argument - "
-                         "forany_defn failed\n"),
-                        -1);
-    }
+  // Generate _forany decl.
+  *os << be_nl << be_nl
+      << "typedef TAO_Array_Forany_T<" << be_idt << be_idt_nl
+      << anon_p << node->local_name () << "_slice," << be_nl
+      << "tao_" << node->local_name () << "_life" << be_uidt_nl
+      << ">" << be_nl
+      << anon_p << node->local_name () << "_forany;" << be_uidt;
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
                << "// " __FILE__ << ":" << __LINE__;
@@ -334,307 +359,3 @@ int be_visitor_array_ch::visit_array (be_array *node)
   return 0;
 }
 
-// Generate the var definition.
-int
-be_visitor_array_ch::gen_var_defn (be_array *node)
-{
-  TAO_OutStream *os = this->ctx_->stream ();
-  char namebuf [NAMEBUFSIZE];
-  char varnamebuf [NAMEBUFSIZE];
-
-  ACE_OS::memset (namebuf,
-                  '\0',
-                  NAMEBUFSIZE);
-  ACE_OS::memset (varnamebuf,
-                  '\0',
-                  NAMEBUFSIZE);
-
-  if (this->ctx_->tdef ())
-    {
-      // Typedefed array.
-      ACE_OS::sprintf (namebuf,
-                       "%s",
-                       node->local_name ()->get_string ());
-      ACE_OS::sprintf (varnamebuf,
-                       "%s_var",
-                       node->local_name ()->get_string ());
-    }
-  else
-    {
-      ACE_OS::sprintf (namebuf,
-                       "_%s",
-                       node->local_name ()->get_string ());
-      ACE_OS::sprintf (varnamebuf,
-                       "_%s_var",
-                       node->local_name ()->get_string ());
-    }
-
-  // Generate the var definition (always in the client header).
-  // Depending upon the data type, there are some differences which we account
-  // for over here.
-
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
-               << "// " __FILE__ << ":" << __LINE__;
-
-  *os << be_nl << be_nl
-      << "class " << be_global->stub_export_macro ()
-      << " " << varnamebuf << be_nl;
-  *os << "{" << be_nl;
-  *os << "public:" << be_idt_nl;
-  // default constr
-  *os << varnamebuf << " (void);" << be_nl;
-  // constr from pointer to slice
-  *os << varnamebuf << " (" << namebuf << "_slice *);" << be_nl;
-  // copy constructor
-  *os << varnamebuf << " (const " << varnamebuf <<
-    " &);" << be_nl;
-  // destructor
-  *os << "~" << varnamebuf << " (void);" << be_nl;
-  *os << be_nl;
-  // assignment operator from a pointer to slice
-  *os << varnamebuf << " &operator= (" << namebuf << "_slice *);"
-      << be_nl;
-  // assignment from _var
-  *os << varnamebuf << " &operator= (const " << varnamebuf << " &);" << be_nl;
-
-  // arrow operator
-  // nothing here
-  *os << be_nl;
-
-  // other extra types (cast operators, [] operator, and others)
-  // overloaded [] operator
-  *os << namebuf << "_slice &operator[] (CORBA::ULong index);"
-      << be_nl;
-  *os << "const " << namebuf
-      << "_slice &operator[] (CORBA::ULong index) const;" << be_nl;
-
-  // cast operators
-  *os << "operator " << namebuf << "_slice * const &() const;"
-      << be_nl;
-
-  if (node->size_type () == AST_Type::VARIABLE)
-    {
-      *os << "operator " << namebuf << "_slice *&();" << be_nl;
-    }
-
-  *os << be_nl;
-
-  // Non-spec helper function used if array is a sequence element.
-  *os << "// Calls " << namebuf << "_copy "
-      << "(used in sequences of " << namebuf << ")." << be_nl;
-  *os << "static void copy (" << be_idt << be_idt_nl
-      << namebuf << "_slice *_tao_to," << be_nl
-      << "const " << namebuf << "_slice *_tao_from" << be_uidt_nl
-      << ");" << be_uidt_nl << be_nl;
-
-  // in, inout, out and _retn
-  *os << "// in, inout, out, _retn " << be_nl;
-  *os << "const " << namebuf << "_slice *in (void) const;" << be_nl;
-
-  if (node->size_type () == AST_Type::FIXED)
-    {
-      *os << namebuf << "_slice *inout (void);" << be_nl;
-    }
-  else
-    {
-      *os << namebuf << "_slice *&inout (void);" << be_nl;
-    }
-
-  *os << namebuf << "_slice *&out (void);" << be_nl;
-  *os << namebuf << "_slice *_retn (void);" << be_nl;
-
-  // Generate an additional member function that returns the
-  // underlying pointer.
-  *os << namebuf << "_slice *ptr (void) const;" << be_uidt_nl;
-
-  // Generate the private section.
-  *os << "private:" << be_idt_nl;
-  *os << namebuf << "_slice *ptr_;" << be_uidt_nl;
-  *os << "};";
-
-  return 0;
-}
-
-// Generate the _out definition.
-int
-be_visitor_array_ch::gen_out_defn (be_array *node)
-{
-  TAO_OutStream *os = this->ctx_->stream ();
-  char namebuf [NAMEBUFSIZE];
-  char outnamebuf [NAMEBUFSIZE];
-
-  ACE_OS::memset (namebuf,
-                  '\0',
-                  NAMEBUFSIZE);
-  ACE_OS::memset (outnamebuf,
-                  '\0',
-                  NAMEBUFSIZE);
-
-  if (this->ctx_->tdef ())
-    {
-      ACE_OS::sprintf (namebuf,
-                       "%s",
-                       node->local_name ()->get_string ());
-      ACE_OS::sprintf (outnamebuf,
-                       "%s_out",
-                       node->local_name ()->get_string ());
-    }
-  else
-    {
-      // Anonymous array.
-      ACE_OS::sprintf (namebuf,
-                       "_%s",
-                       node->local_name ()->get_string ());
-      ACE_OS::sprintf (outnamebuf,
-                       "_%s_out",
-                       node->local_name ()->get_string ());
-    }
-
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
-               << "// " __FILE__ << ":" << __LINE__;
-
-  // Generate the out definition (always in the client header).
-  *os << be_nl << be_nl
-      << "class " << be_global->stub_export_macro ()
-      << " " << outnamebuf << be_nl;
-  *os << "{" << be_nl;
-  *os << "public:" << be_idt_nl;
-
-  // No default constructor
-
-  // Constructor from a pointer to slice.
-  *os << outnamebuf << " (" << namebuf << "_slice *&);" << be_nl;
-  // Constructor from a _var &
-  *os << outnamebuf << " (" << namebuf << "_var &);" << be_nl;
-  // Constructor from a _out &
-  *os << outnamebuf << " (const " << outnamebuf << " &);" << be_nl << be_nl;
-  // Assignment operator from a _out &
-  *os << outnamebuf << " &operator= (const " << outnamebuf << " &);" << be_nl;
-  // Assignment from slice *
-  *os << outnamebuf << " &operator= (" << namebuf << "_slice *);"
-      << be_nl << be_nl;
-  // Cast
-  *os << "operator " << namebuf << "_slice *&();" << be_nl;
-  // ptr function
-  *os << namebuf << "_slice *&ptr (void);" << be_nl << be_nl;
-  // operator [] instead of ->
-  *os << namebuf << "_slice &operator[] (CORBA::ULong index);" << be_nl;
-  *os << "const " << namebuf << "_slice &operator[] "
-      << "(CORBA::ULong index) const;" << be_uidt_nl;
-
-  *os << "private:" << be_idt_nl;
-  *os << namebuf << "_slice *&ptr_;" << be_nl;
-  *os << "// Assignment from T_var not allowed." << be_nl;
-  *os << "void operator= (const " << namebuf << "_var &);" << be_uidt_nl;
-  *os << "};";
-
-  return 0;
-}
-
-// Generate the _forany definition for ourself.
-int
-be_visitor_array_ch::gen_forany_defn (be_array *node)
-{
-  TAO_OutStream *os = this->ctx_->stream ();
-  char namebuf [NAMEBUFSIZE];
-  char foranyname [NAMEBUFSIZE];
-
-  ACE_OS::memset (namebuf,
-                  '\0',
-                  NAMEBUFSIZE);
-  ACE_OS::memset (foranyname,
-                  '\0',
-                  NAMEBUFSIZE);
-
-  if (this->ctx_->tdef ())
-    {
-      ACE_OS::sprintf (namebuf,
-                       "%s",
-                       node->local_name ()->get_string ());
-      ACE_OS::sprintf (foranyname,
-                       "%s_forany",
-                       node->local_name ()->get_string ());
-    }
-  else
-    {
-      // Anonymous array case.
-      ACE_OS::sprintf (namebuf,
-                       "_%s",
-                       node->local_name ()->get_string ());
-      ACE_OS::sprintf (foranyname,
-                       "_%s_forany",
-                       node->local_name ()->get_string ());
-    }
-
-  // Generate the forany definition (always in the client header).
-  // Depending upon the data type, there are some differences which we account
-  // for over here.
-
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
-               << "// " __FILE__ << ":" << __LINE__;
-
-  *os << be_nl << be_nl
-      << "class " << be_global->stub_export_macro ()
-      << " " << foranyname << be_nl;
-  *os << "{" << be_nl;
-  *os << "public:" << be_idt_nl;
-
-  // Default constuctor.
-  *os << foranyname << " (void);" << be_nl;
-  // Constuctor from pointer to slice.
-  *os << foranyname << " (" << be_idt << be_idt_nl
-      << namebuf << "_slice *," << be_nl
-      << "CORBA::Boolean nocopy = 0" << be_uidt_nl
-      << ");" << be_uidt_nl;
-  // Copy constructor.
-  *os << foranyname << " (const " << foranyname
-      << " &);" << be_nl;
-  // Destructor.
-  *os << "~" << foranyname << " (void);" << be_nl << be_nl;
-
-  if (be_global->any_support ())
-    {
-      *os << "static void _tao_any_destructor (void*);" << be_nl << be_nl;
-    }
-
-  // assignment operator from a pointer to slice
-  *os << foranyname << " &operator= (" << namebuf << "_slice *);"
-      << be_nl;
-  // assignment from _var
-  *os << foranyname << " &operator= (const " << foranyname << " &);"
-      << be_nl << be_nl;
-
-  // Other extra types (cast operators, [] operator, and others)
-  // overloaded [] operator
-  *os << namebuf << "_slice &operator[] (CORBA::ULong index);"
-      << be_nl;
-  *os << "const " << namebuf
-      << "_slice &operator[] (CORBA::ULong index) const;" << be_nl << be_nl;
-
-  // cast operators
-  *os << "operator " << namebuf << "_slice * const &() const;"
-      << be_nl;
-  *os << "operator " << namebuf << "_slice *&();" << be_nl << be_nl;
-
-  // in, inout, out and _retn
-  *os << "// in, inout, out, _retn " << be_nl;
-  *os << "const " << namebuf << "_slice *in (void) const;" << be_nl;
-  *os << namebuf << "_slice *inout (void);" << be_nl;
-  *os << namebuf << "_slice *&out (void);" << be_nl;
-  *os << namebuf << "_slice *_retn (void);" << be_nl;
-
-  // Generate an additional member function that returns the
-  // underlying pointer.
-  *os << namebuf << "_slice *ptr (void) const;" << be_nl;
-
-  // Additional member function that returns the NOCOPY flag.
-  *os << "CORBA::Boolean nocopy (void) const;" << be_uidt_nl;
-
-  // Generate the private section.
-  *os << "private:" << be_idt_nl;
-  *os << namebuf << "_slice *ptr_;" << be_nl;
-  *os << "CORBA::Boolean nocopy_;" << be_uidt_nl;
-  *os << "};";
-
-  return 0;
-}

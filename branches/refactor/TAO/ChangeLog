@@ -1,6 +1,6 @@
 Sun Mar 23 23:42:37 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
-        *         * tao/Array_VarOut_T.cpp:
+        * tao/Array_VarOut_T.cpp:
         * tao/Array_VarOut_T.h:
         * tao/Array_VarOut_T.inl:
         * tao/VarOut_T.cpp:
