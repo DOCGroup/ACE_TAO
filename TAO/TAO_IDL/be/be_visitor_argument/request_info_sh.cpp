@@ -341,7 +341,7 @@ int be_visitor_args_request_info_sh::visit_valuetype (be_valuetype *node)
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
-      *os << this->type_name (node) << " *&";
+      *os << this->type_name (node) << " *";
       break;
     case AST_Argument::dir_INOUT:
       *os << this->type_name (node) << " *&";
@@ -360,7 +360,7 @@ int be_visitor_args_request_info_sh::visit_valuetype_fwd (be_valuetype_fwd *node
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
-      *os << "const " << this->type_name (node) << " *&";
+      *os << "const " << this->type_name (node) << " *";
       break;
     case AST_Argument::dir_INOUT:
       *os << this->type_name (node) << " *&";
