@@ -23,8 +23,8 @@ NOTES: The IDL_Cubit server used to run a Naming Service so the client
 server:
 -------
 
-% server [-d] [-ORBhost <serverhost>] [-ORBport <portnum>]
-           [-n <number-of-cubit-objects>] [-o <ior_output_file>]
+% server [-ORBhost <serverhost>] [-ORBport <portnum>]
+         [-d] [-o <ior_output_file>]
 
 Options:
 -------
@@ -32,11 +32,6 @@ Options:
          the debugging level).
 
 -o       Outputs the cubit_factory IOR to a file.
-
--n       Number of cubit objects exported by the server.
-
-The server cubit factory maintains num_of_cubit objects (default =
-1). They are assigned keys that look like "key0", "key1", ...
 
 When the server is started and you have used the -d flag, you should
 see as the first line of output something that looks like the follow:
