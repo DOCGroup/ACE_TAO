@@ -1,3 +1,8 @@
+Sun Nov 30 19:20:44 2003  Nanbor Wang  <nanbor@cse.wustl.edu>
+
+	* docs/RT-Extension.html: Added documentation for RT extension in
+	  CIAO.
+
 Sat Nov 29 11:08:08 2003  Nanbor Wang  <nanbor@cse.wustl.edu>
 
 	* docs/EnvVars.html: Documented the environment variables
