@@ -14,6 +14,20 @@
 
 ACE_RCSID(ace, Process_Manager, "$Id$")
 
+#if defined (ACE_HAS_SIG_C_FUNC)
+extern "C" void
+ACE_Process_Manager_cleanup (void *instance, void *arg)
+{
+  ACE_Process_Manager::cleanup (instance, arg);
+}
+#endif
+
+void
+ACE_Process_Manager::cleanup (void *, void *)
+{
+  ACE_Process_Manager::close_singleton ();
+}
+
 class ACE_Managed_Process : public ACE_Process
 {
   // = TITLE
@@ -114,6 +128,21 @@ ACE_Process_Manager::instance (void)
                           ACE_Process_Manager,
                           0);
           ACE_Process_Manager::delete_instance_ = 1;
+
+          // Register with the Object_Manager so that the wrapper to
+          // delete the proactor will be called when Object_Manager is
+          // being terminated.
+
+#if defined ACE_HAS_SIG_C_FUNC
+          ACE_Object_Manager::at_exit (ACE_Process_Manager::instance_,
+                                       ACE_Process_Manager_cleanup,
+                                       0);
+#else
+          ACE_Object_Manager::at_exit (ACE_Process_Manager::instance_,
+                                       ACE_Process_Manager::cleanup,
+                                       0);
+#endif /* ACE_HAS_SIG_C_FUNC */
+
         }
     }
 
@@ -130,6 +159,20 @@ ACE_Process_Manager::instance (ACE_Process_Manager *tm)
   ACE_Process_Manager *t = ACE_Process_Manager::instance_;
   // We can't safely delete it since we don't know who created it!
   ACE_Process_Manager::delete_instance_ = 0;
+
+          // Register with the Object_Manager so that the wrapper to
+          // delete the proactor will be called when Object_Manager is
+          // being terminated.
+
+#if defined ACE_HAS_SIG_C_FUNC
+          ACE_Object_Manager::at_exit (ACE_Process_Manager::instance_,
+                                       ACE_Process_Manager_cleanup,
+                                       0);
+#else
+          ACE_Object_Manager::at_exit (ACE_Process_Manager::instance_,
+                                       ACE_Process_Manager::cleanup,
+                                       0);
+#endif /* ACE_HAS_SIG_C_FUNC */
 
   ACE_Process_Manager::instance_ = tm;
   return t;
