@@ -534,6 +534,9 @@ Paced_Worker::svc (void)
         this->setup (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      if (result != 0)
+        return result;
+
       for (CORBA::ULong i = 0;
            i != this->history_.max_samples ();
            ++i)
@@ -744,6 +747,9 @@ Continuous_Worker::svc (void)
       int result =
         this->setup (ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+      if (result != 0)
+        return result;
 
       for (CORBA::ULong i = 0;
            i != history.max_samples () && !done;
