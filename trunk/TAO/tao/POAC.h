@@ -299,6 +299,11 @@ public:
   class TAO_Export ThreadPolicy: public virtual ACE_CORBA_1(Policy)
   {
   public:
+  #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+    typedef ThreadPolicy_ptr _ptr_type;
+    typedef ThreadPolicy_var _var_type;
+  #endif /* __GNUC__ */
+
     // the static operations
     static ThreadPolicy_ptr _duplicate (ThreadPolicy_ptr obj);
     static ThreadPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
@@ -398,6 +403,11 @@ public:
   class TAO_Export LifespanPolicy: public virtual ACE_CORBA_1(Policy)
   {
   public:
+  #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+    typedef LifespanPolicy_ptr _ptr_type;
+    typedef LifespanPolicy_var _var_type;
+  #endif /* __GNUC__ */
+
     // the static operations
     static LifespanPolicy_ptr _duplicate (LifespanPolicy_ptr obj);
     static LifespanPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
@@ -497,6 +507,11 @@ public:
   class TAO_Export IdUniquenessPolicy: public virtual ACE_CORBA_1(Policy)
   {
   public:
+  #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+    typedef IdUniquenessPolicy_ptr _ptr_type;
+    typedef IdUniquenessPolicy_var _var_type;
+  #endif /* __GNUC__ */
+
     // the static operations
     static IdUniquenessPolicy_ptr _duplicate (IdUniquenessPolicy_ptr obj);
     static IdUniquenessPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
@@ -596,6 +611,11 @@ public:
   class TAO_Export IdAssignmentPolicy: public virtual ACE_CORBA_1(Policy)
   {
   public:
+  #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+    typedef IdAssignmentPolicy_ptr _ptr_type;
+    typedef IdAssignmentPolicy_var _var_type;
+  #endif /* __GNUC__ */
+
     // the static operations
     static IdAssignmentPolicy_ptr _duplicate (IdAssignmentPolicy_ptr obj);
     static IdAssignmentPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
@@ -698,6 +718,11 @@ public:
   class TAO_Export ImplicitActivationPolicy: public virtual ACE_CORBA_1(Policy)
   {
   public:
+  #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+    typedef ImplicitActivationPolicy_ptr _ptr_type;
+    typedef ImplicitActivationPolicy_var _var_type;
+  #endif /* __GNUC__ */
+
     // the static operations
     static ImplicitActivationPolicy_ptr _duplicate (ImplicitActivationPolicy_ptr obj);
     static ImplicitActivationPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
@@ -802,6 +827,11 @@ public:
   class TAO_Export ServantRetentionPolicy: public virtual ACE_CORBA_1(Policy)
   {
   public:
+  #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+    typedef ServantRetentionPolicy_ptr _ptr_type;
+    typedef ServantRetentionPolicy_var _var_type;
+  #endif /* __GNUC__ */
+
     // the static operations
     static ServantRetentionPolicy_ptr _duplicate (ServantRetentionPolicy_ptr obj);
     static ServantRetentionPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
@@ -907,6 +937,11 @@ public:
   class TAO_Export RequestProcessingPolicy: public virtual ACE_CORBA_1(Policy)
   {
   public:
+  #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+    typedef RequestProcessingPolicy_ptr _ptr_type;
+    typedef RequestProcessingPolicy_var _var_type;
+  #endif /* __GNUC__ */
+
     // the static operations
     static RequestProcessingPolicy_ptr _duplicate (RequestProcessingPolicy_ptr obj);
     static RequestProcessingPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
@@ -999,6 +1034,11 @@ public:
   class TAO_Export POAManager: public virtual ACE_CORBA_1 (Object)
   {
   public:
+  #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+    typedef POAManager_ptr _ptr_type;
+    typedef POAManager_var _var_type;
+  #endif /* __GNUC__ */
+
     // the static operations
     static POAManager_ptr _duplicate (POAManager_ptr obj);
     static POAManager_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
@@ -1133,6 +1173,11 @@ public:
   class TAO_Export AdapterActivator: public virtual ACE_CORBA_1 (Object)
   {
   public:
+  #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+    typedef AdapterActivator_ptr _ptr_type;
+    typedef AdapterActivator_var _var_type;
+  #endif /* __GNUC__ */
+
     // the static operations
     static AdapterActivator_ptr _duplicate (AdapterActivator_ptr obj);
     static AdapterActivator_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
@@ -1225,6 +1270,11 @@ public:
   class TAO_Export ServantManager: public virtual ACE_CORBA_1 (Object)
   {
   public:
+  #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+    typedef ServantManager_ptr _ptr_type;
+    typedef ServantManager_var _var_type;
+  #endif /* __GNUC__ */
+
     // the static operations
     static ServantManager_ptr _duplicate (ServantManager_ptr obj);
     static ServantManager_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
@@ -1315,6 +1365,11 @@ public:
   class TAO_Export ServantActivator: public virtual ServantManager
   {
   public:
+  #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+    typedef ServantActivator_ptr _ptr_type;
+    typedef ServantActivator_var _var_type;
+  #endif /* __GNUC__ */
+
     // the static operations
     static ServantActivator_ptr _duplicate (ServantActivator_ptr obj);
     static ServantActivator_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
@@ -1410,6 +1465,11 @@ public:
 
     typedef void *Cookie;
 
+  #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+    typedef ServantLocator_ptr _ptr_type;
+    typedef ServantLocator_var _var_type;
+  #endif /* __GNUC__ */
+
     // the static operations
     static ServantLocator_ptr _duplicate (ServantLocator_ptr obj);
     static ServantLocator_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
@@ -1503,6 +1563,11 @@ public:
   class TAO_Export POA: public virtual ACE_CORBA_1 (Object)
   {
   public:
+  #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+    typedef POA_ptr _ptr_type;
+    typedef POA_var _var_type;
+  #endif /* __GNUC__ */
+
     // the static operations
     static POA_ptr _duplicate (POA_ptr obj);
     static POA_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
@@ -2008,6 +2073,11 @@ public:
   class TAO_Export Current: public virtual ACE_CORBA_1(Current)
   {
   public:
+  #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+    typedef Current_ptr _ptr_type;
+    typedef Current_var _var_type;
+  #endif /* __GNUC__ */
+
     // the static operations
     static Current_ptr _duplicate (Current_ptr obj);
     static Current_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());

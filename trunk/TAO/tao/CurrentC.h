@@ -107,6 +107,11 @@ private:
 class  CORBA_Current : public virtual ACE_CORBA_1 (Object)
 {
  public:
+  #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+    typedef CORBA_Current_ptr _ptr_type;
+    typedef CORBA_Current_var _var_type;
+  #endif /* __GNUC__ */
+
   // the static operations
   static CORBA_Current_ptr _duplicate (CORBA_Current_ptr obj);
   static CORBA_Current_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
