@@ -1,3 +1,11 @@
+Fri Jun 11 17:31:04 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * DnC/Config_Handlers/Utils.h:
+        * DnC/Config_Handlers/Utils.cpp:
+
+          Removed un-used methods create_document, parse_href_tags from
+          the Utils directory.
+
 Fri Jun 11 16:59:35 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
         * DnC/tests/Config_Handlers/HUDisplay/HUDisplay.cdp:
@@ -55,7 +63,6 @@ Fri Jun 11 14:15:04 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
           Made some cosmetic changes.
 
->>>>>>> 1.682
 Fri Jun 11 13:07:35 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/RepositoryManager/Repository_Manager.cpp:
@@ -95,6 +102,15 @@ Fri Jun 11 00:10:42 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
           Fixed segmentation faults, traced during integration
           teting.
+
+Thu Jun 10 18:38:46 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * DnC/Config_Handlers/Any_Handler.cpp:
+        * DnC/Config_Handlers/CPK_Handler.cpp:
+        * DnC/Config_Handlers/Utils.cpp:
+        * DnC/Config_Handlers/Handler_Test.i:
+
+          Fixed errors based on errors discovered using Purify
 
 Thu Jun 10 18:24:58 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
@@ -142,7 +158,7 @@ Thu Jun 10 17:46:10 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
         * DnC/Config_Handlers/Utils.cpp:
         * DnC/Config_Handlers/TPD_Handler.cpp:
 
-          Fixe memory leaks pertaining to ACE_TString making copies of
+          Fixed memory leaks pertaining to ACE_TString making copies of
           dynamically allocated memory. The memory supplied to ACE_TString
           has to be deleted! Fixed memory for these.
 
