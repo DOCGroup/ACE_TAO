@@ -1,3 +1,10 @@
+Thu Jun 18 16:25:28 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Thread_Manager.cpp (ACE_EXECUTE_OP,kill): We need to guard
+ 	  against non-existing target thread after searching the thread
+ 	  table.  Thanks to Savas Parastatidis
+ 	  <Savas.Parastatidis@ncl.ac.uk> for noticing the problem.
+
 Thu Jun 18 09:23:39 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/config-win32-common.h: Fixed the inclusion of winsock
