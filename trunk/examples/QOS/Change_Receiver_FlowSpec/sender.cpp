@@ -137,10 +137,9 @@ main (int argc, char * argv[])
       // Create a QoS Session Factory.
       ACE_QoS_Session_Factory session_factory;
       
-      // Ask the factory to create a QoS session. This could be RAPI or
-      // GQoS based on the parameter passed.
+      // Ask the factory to create a QoS session.
       ACE_QoS_Session *qos_session = 
-        session_factory.create_session (ACE_QoS_Session_Factory::ACE_RAPI_SESSION);
+        session_factory.create_session ();
       
       // Create a destination address for the QoS session. The same
       // address should be used for the subscribe call later. A copy is
@@ -294,21 +293,6 @@ main (int argc, char * argv[])
 
 
 
-//        // Instantiate a QOS Event Handler and pass the Dgram_Mcast and QoS
-//        // session object into it.
-//        ACE_QOS_Event_Handler qos_event_handler (dgram_mcast_qos,
-//                                                 qos_session);
-
-//        ACE_RAPI_Event_Handler rapi_event_handler (qos_session);
-
-//        // Register the RAPI Event Handler with the Reactor. This
-//        // handles the QoS events.
-//        if (ACE_Reactor::instance ()->register_handler
-//            (&rapi_event_handler,
-//             ACE_Event_Handler::QOS_MASK | ACE_Event_Handler::READ_MASK) == -1)
-//          ACE_ERROR_RETURN ((LM_ERROR,
-//                             "Error in registering the RAPI Event Handler\n"),
-//                            -1);
       
       // Start the event loop.
       ACE_DEBUG ((LM_DEBUG,
