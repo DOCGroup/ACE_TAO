@@ -100,10 +100,10 @@ class ACE_TS_Server_Acceptor : public ACE_Strategy_Acceptor<ACE_TS_Server_Handle
   //     easily be factored into the <ACE_Strategy_Acceptor>.
 
 public:
-  virtual int init (int argc, char *argv[]);
+  virtual int init (int argc, ACE_TCHAR *argv[]);
   // Dynamic linking hook.
 
-  int parse_args (int argc, char *argv[]);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
   // Parse svc.conf arguments.
 
 private:

@@ -10,8 +10,8 @@ ACE_RCSID(lib, Log_Message_Receiver, "$Id$")
 
 // Type based log message receiver
 template<ACE_SYNCH_DECL> void
-Static_Log_Message_Receiver<ACE_SYNCH_USE>::log_record (char const *hostname,
-						      ACE_Log_Record &record)
+Static_Log_Message_Receiver<ACE_SYNCH_USE>::log_record (const ACE_TCHAR *hostname,
+                                                        ACE_Log_Record &record)
 {
 #if defined (ACE_HAS_THREADS)
     static ACE_SYNCH_MUTEX_T lock_;
@@ -24,7 +24,7 @@ Static_Log_Message_Receiver<ACE_SYNCH_USE>::log_record (char const *hostname,
 }
 
 template<ACE_SYNCH_DECL> void
-Static_Log_Message_Receiver<ACE_SYNCH_USE>::log_output (char const *hostname,
+Static_Log_Message_Receiver<ACE_SYNCH_USE>::log_output (const ACE_TCHAR *hostname,
                                                         ACE_Log_Record &record,
                                                         ostream *outputfile)
 {
@@ -106,8 +106,8 @@ Log_Message_Receiver_Impl<ACE_SYNCH_USE>::detach (Log_Message_Receiver_Impl<ACE_
 
 // Type based log message receiver
 template<ACE_SYNCH_DECL> void
-Log_Message_Receiver_Impl<ACE_SYNCH_USE>::log_record (char const *hostname,
-						    ACE_Log_Record &record)
+Log_Message_Receiver_Impl<ACE_SYNCH_USE>::log_record (const ACE_TCHAR *hostname,
+                                                      ACE_Log_Record &record)
 {
   ACE_MT (ACE_GUARD (ACE_SYNCH_MUTEX_T, guard, print_lock_));
   record.print (hostname,
@@ -116,7 +116,7 @@ Log_Message_Receiver_Impl<ACE_SYNCH_USE>::log_record (char const *hostname,
 }
 
 template<ACE_SYNCH_DECL> void
-Log_Message_Receiver_Impl<ACE_SYNCH_USE>::log_output (char const *hostname,
+Log_Message_Receiver_Impl<ACE_SYNCH_USE>::log_output (const ACE_TCHAR *hostname,
                                                       ACE_Log_Record &record,
                                                       ostream *outputfile)
 {
@@ -152,15 +152,15 @@ Log_Message_Receiver<ACE_SYNCH_USE>::Log_Message_Receiver
 
 // Type based log message receiver
 template<ACE_SYNCH_DECL> void
-Log_Message_Receiver<ACE_SYNCH_USE>::log_record(char const *hostname,
-                                              ACE_Log_Record &record)
+Log_Message_Receiver<ACE_SYNCH_USE>::log_record(const ACE_TCHAR *hostname,
+                                                ACE_Log_Record &record)
 {
   ACE_ASSERT (receiver_impl_ != 0);
   receiver_impl_->log_record (hostname, record);
 }
 
 template<ACE_SYNCH_DECL> void
-Log_Message_Receiver<ACE_SYNCH_USE>::log_output(char const *hostname,
+Log_Message_Receiver<ACE_SYNCH_USE>::log_output(const ACE_TCHAR *hostname,
                                                 ACE_Log_Record &record,
                                                 ostream *outputfile)
 {

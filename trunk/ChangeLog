@@ -1,3 +1,16 @@
+Fri Aug 27 12:01:37 2004  Steve Huston  <shuston@riverace.com>
+
+	* netsvcs/lib/Client_Logging_Handler.cpp:
+	* netsvcs/lib/Log_Message_Receiver.{h cpp}:
+	* netsvcs/lib/Name_Handler.{h cpp}:
+	* netsvcs/lib/Server_Logging_Handler_T.{h cpp}:
+	* netsvcs/lib/TS_Server_Handler.{h cpp}:
+	* netsvcs/lib/TS_Clerk_Handler.{h cpp}: Correct Service Configurator
+	  framework entrypoints (init(), etc.) to match ACE_TCHAR* instead of
+	  char*. Also corrected char-width problems and naked text literals.
+
+	* ACEXML/parser/parser/Parser.cpp: Fixed uninitialized variable.
+
 Fri Aug 27 08:18:21 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/footprint_stats.sh:

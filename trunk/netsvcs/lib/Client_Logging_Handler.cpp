@@ -300,12 +300,12 @@ ACE_Client_Logging_Handler::send (ACE_Log_Record &log_record)
   // since otherwise the values of the <log_record> fields will be in
   // network byte order.
   if (orig_ostream)
-    log_record.print ("<localhost>",
+    log_record.print (ACE_TEXT ("<localhost>"),
                       ACE_Log_Msg::instance ()->flags (),
                       *orig_ostream);
 
   if (this->logging_output_ == ACE_STDERR)
-    log_record.print ("<localhost>",
+    log_record.print (ACE_TEXT ("<localhost>"),
                       ACE_Log_Msg::instance ()->flags (),
                       stderr);
   else
@@ -345,13 +345,13 @@ public:
 
 protected:
   // = Dynamic linking hooks.
-  virtual int init (int argc, char *argv[]);
+  virtual int init (int argc, ACE_TCHAR *argv[]);
   // Called when service is linked.
 
   virtual int fini (void);
   // Called when service is unlinked.
 
-  virtual int info (char **strp, size_t length) const;
+  virtual int info (ACE_TCHAR **strp, size_t length) const;
   // Called to determine info about the service.
 
   virtual int make_svc_handler (ACE_Client_Logging_Handler *&sh);
@@ -362,10 +362,10 @@ protected:
   virtual int resume (void);
 
 private:
-  int parse_args (int argc, char *argv[]);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
   // Parse svc.conf arguments.
 
-  const char *server_host_;
+  const ACE_TCHAR *server_host_;
   // Host where the logging server is located.
 
   u_short server_port_;
@@ -375,7 +375,7 @@ private:
   ACE_INET_Addr server_addr_;
   // Address of the logging server.
 
-  const char *logger_key_;
+  const ACE_TCHAR *logger_key_;
   // Communication endpoint where the client logging daemon will
   // listen for connections from clients.
 
@@ -411,11 +411,11 @@ ACE_Client_Logging_Acceptor::make_svc_handler (ACE_Client_Logging_Handler *&sh)
 }
 
 int
-ACE_Client_Logging_Acceptor::info (char **strp, size_t length) const
+ACE_Client_Logging_Acceptor::info (ACE_TCHAR **strp, size_t length) const
 {
-  char buf[BUFSIZ];
+  ACE_TCHAR buf[BUFSIZ];
 
-  ACE_OS::sprintf (buf, "%d/%s %s",
+  ACE_OS::sprintf (buf, ACE_TEXT ("%d/%s %s"),
 		   this->server_addr_.get_port_number (), "tcp",
 		   "# client logging daemon\n");
 
@@ -435,10 +435,10 @@ ACE_Client_Logging_Acceptor::ACE_Client_Logging_Acceptor (void)
 }
 
 int
-ACE_Client_Logging_Acceptor::init (int argc, char *argv[])
+ACE_Client_Logging_Acceptor::init (int argc, ACE_TCHAR *argv[])
 {
   // We'll log *our* error and debug messages to stderr!
-  ACE_LOG_MSG->open ("Client Logging Service");
+  ACE_LOG_MSG->open (ACE_TEXT ("Client Logging Service"));
 
   // Use the options hook to parse the command line arguments and set
   // options.
@@ -495,9 +495,9 @@ ACE_Client_Logging_Acceptor::init (int argc, char *argv[])
 }
 
 int
-ACE_Client_Logging_Acceptor::parse_args (int argc, char *argv[])
+ACE_Client_Logging_Acceptor::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "h:k:p:", 0);
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("h:k:p:"), 0);
 
   for (int c; (c = get_opt ()) != -1; )
     {
