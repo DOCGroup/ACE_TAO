@@ -6,6 +6,7 @@ TAO_EC_Kokyu_Shutdown_Command::
 TAO_EC_Kokyu_Shutdown_Command (ACE_Allocator* allocator)
   :  Kokyu::Dispatch_Command ()
 {
+  ACE_UNUSED_ARG (allocator);
 }
 
 // ****************************************************************
