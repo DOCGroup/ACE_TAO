@@ -254,74 +254,83 @@ Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr 
   ACE_DEBUG ((LM_DEBUG,
 	      "Server_Interceptor::receive_request\n"));
 
-  RTScheduling::Current::IdType_var guid_var;
-  char* name = 0;
-  CORBA::Policy_ptr sched_param = 0;
-  CORBA::Policy_ptr implicit_sched_param = 0;
+  IOP::ServiceContext* serv_cxt =
+    ri->get_request_service_context (Server_Interceptor::SchedulingInfo);
+
+  if (serv_cxt != 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+		  "Request from Distributable Thread\n"));
+
+      RTScheduling::Current::IdType_var guid_var;
+      char* name = 0;
+      CORBA::Policy_ptr sched_param = 0;
+      CORBA::Policy_ptr implicit_sched_param = 0;
   
-  TAO_RTScheduler_Current_i* new_current;
-  ACE_NEW_THROW_EX (new_current,
-		    TAO_RTScheduler_Current_i (this->current_->orb (),
-					       this->current_->dt_hash ()),
-		    CORBA::NO_MEMORY (
-					    CORBA::SystemException::_tao_minor_code (
-					  TAO_DEFAULT_MINOR_CODE,
-					  ENOMEM),
+      TAO_RTScheduler_Current_i* new_current;
+      ACE_NEW_THROW_EX (new_current,
+			TAO_RTScheduler_Current_i (this->current_->orb (),
+						   this->current_->dt_hash ()),
+			CORBA::NO_MEMORY (
+					  CORBA::SystemException::_tao_minor_code (
+										   TAO_DEFAULT_MINOR_CODE,
+										   ENOMEM),
 					  CORBA::COMPLETED_NO));
 
   
-  // Scheduler retrieves scheduling parameters
-  // from request and populates the out
-  // parameters.
-  new_current->scheduler()->receive_request(ri,
-					    guid_var.out (),
-					    name,
-					    sched_param,
-					    implicit_sched_param);
+      // Scheduler retrieves scheduling parameters
+      // from request and populates the out
+      // parameters.
+      new_current->scheduler()->receive_request(ri,
+						guid_var.out (),
+						name,
+						sched_param,
+						implicit_sched_param);
   
   
-  RTScheduling::Current::IdType guid;	
-  guid.length (sizeof (long));	
-  ACE_OS::memcpy (guid.get_buffer (),
-		  guid_var->get_buffer (),
-		  sizeof (long));
+      RTScheduling::Current::IdType guid;	
+      guid.length (sizeof (long));	
+      ACE_OS::memcpy (guid.get_buffer (),
+		      guid_var->get_buffer (),
+		      sizeof (long));
   
-  int id;
-  ACE_OS::memcpy (&id,
-		  guid.get_buffer (),
-		  guid.length ());
+      int id;
+      ACE_OS::memcpy (&id,
+		      guid.get_buffer (),
+		      guid.length ());
   
-  ACE_DEBUG ((LM_DEBUG,
-	      "The Guid is %d \n",
-	      id));
+      ACE_DEBUG ((LM_DEBUG,
+		  "The Guid is %d \n",
+		  id));
 
       
-  // Create new DT.
-  RTScheduling::DistributableThread_var dt = TAO_DistributableThread_Factory::create_DT ();
+      // Create new DT.
+      RTScheduling::DistributableThread_var dt = TAO_DistributableThread_Factory::create_DT ();
       
-  // Add new DT to map.
-  int result = new_current->dt_hash ()->bind (guid, dt);
+      // Add new DT to map.
+      int result = new_current->dt_hash ()->bind (guid, dt);
 
-  if (result != 0)
-    {
-      ACE_THROW (CORBA::INTERNAL ());
-    }
-  // Create new temporary current. Note that
-  // the new <sched_param> is the current
-  // <implicit_sched_param> and there is no
-  // segment name.
-  new_current->id (guid);
-  new_current->name (name);
-  new_current->scheduling_parameter (sched_param);
-  new_current->implicit_scheduling_parameter (implicit_sched_param);
-  new_current->DT (dt.in ());
+      if (result != 0)
+	{
+	  ACE_THROW (CORBA::INTERNAL ());
+	}
+      // Create new temporary current. Note that
+      // the new <sched_param> is the current
+      // <implicit_sched_param> and there is no
+      // segment name.
+      new_current->id (guid);
+      new_current->name (name);
+      new_current->scheduling_parameter (sched_param);
+      new_current->implicit_scheduling_parameter (implicit_sched_param);
+      new_current->DT (dt.in ());
 	  
-  // Install new current in the ORB and store the previous
-  // current implementation
-  //current->implementation (new_current) 
-  TAO_TSS_Resources *tss = TAO_TSS_RESOURCES::instance ();
+      // Install new current in the ORB and store the previous
+      // current implementation
+      //current->implementation (new_current) 
+      TAO_TSS_Resources *tss = TAO_TSS_RESOURCES::instance ();
   
-  tss->rtscheduler_previous_current_impl_ = this->current_->implementation (new_current);
+      tss->rtscheduler_previous_current_impl_ = this->current_->implementation (new_current);
+    }
 }
 
 void 
