@@ -1,3 +1,13 @@
+Tue Aug 17 13:59:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IORInterceptor/IORInterceptor_List/{h,cpp}:
+          Added adapter_state_changed, this gets a normal
+          TAO_ObjectReferenceTemplate_Array, converts this into a corba
+          sequence and calls adapter_state_change for each interceptor.
+
+        * tao/PortableServer/diffs/Default_ORT.diff:
+          Zap this file
+
 Tue Aug 17 10:31:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/ObjectReferenceTemplate_Adapter.h:

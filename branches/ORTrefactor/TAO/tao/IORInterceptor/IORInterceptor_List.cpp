@@ -52,6 +52,36 @@ TAO_IORInterceptor_List::add_interceptor (
     PortableInterceptor::IORInterceptor::_duplicate (interceptor);
 }
 
+void
+TAO_IORInterceptor_List::adapter_state_changed (
+  const TAO_ObjectReferenceFactory_Array &array_obj_ref_template,
+  PortableInterceptor::AdapterState state
+  ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  const size_t interceptor_count = this->interceptors_.size ();
+
+  if (interceptor_count == 0)
+    return;
+
+  PortableInterceptor::ObjectReferenceTemplateSeq seq_obj_ref_template;
+
+  seq_obj_ref_template.length (array_obj_ref_template.size());
+
+  for (size_t counter = 0; counter < array_obj_ref_template.size(); ++counter)
+    {
+      seq_obj_ref_template[counter] = array_obj_ref_template[counter];
+    }
+
+  for (size_t i = 0; i < interceptor_count; ++i)
+    {
+      this->interceptors_[i]->adapter_state_changed (seq_obj_ref_template,
+                                                     state
+                                                     ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+    }
+
+}
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
