@@ -31,13 +31,6 @@ CORBA_Object::_duplicate (CORBA_Object_ptr obj)
   return obj;
 }
 
-ACE_INLINE void
-CORBA::release (CORBA_Object_ptr obj)
-{
-  if (obj)
-    obj->_decr_refcnt ();
-}
-
 // Null pointers represent nil objects.
 
 ACE_INLINE CORBA_Object_ptr

@@ -15,6 +15,7 @@
 
 #include "tao/Object.h"
 #include "tao/Typecode.h"
+#include "tao/Marshal.h"
 #include "tao/InconsistentTypeCodeC.h"
 #include "tao/NVList.h"
 #include "tao/Stub.h"
@@ -1042,6 +1043,15 @@ CORBA_ORB::init_orb_globals (CORBA::Environment &env)
 // which are added separately, e.g. through a DLL listed in the
 // registry.  Registry will be used to assign orb names and to
 // establish which is the default.
+
+CORBA::ORB_ptr
+CORBA::ORB_init (int &argc,
+                 char *const *argv,
+                 const char * orb_name)
+{
+  return CORBA::ORB_init (argc, argv, orb_name,
+                          CORBA::default_environment ());
+}
 
 CORBA::ORB_ptr
 CORBA::ORB_init (int &argc,

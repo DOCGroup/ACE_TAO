@@ -32,9 +32,8 @@
 
 #include "tao/Any.h"
 #include "tao/Typecode.h"
+#include "tao/Marshal.h"
 #include "tao/Object.h"
-// The next one is only needed for sizeof(String_var)
-#include "tao/ORB.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Any.i"

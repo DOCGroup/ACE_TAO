@@ -29,6 +29,11 @@ public:
   // Returns hash value.
 };
 
+// Defined in Stub.cpp for TAO_opaque (an alias of
+// PortableServer::ObjectId).
+extern TAO_Export int operator== (const PortableServer::ObjectId &l,
+                                  const PortableServer::ObjectId &r);
+
 class TAO_Export TAO_Active_Object_Map_Entry
 {
   // = TITLE
