@@ -44,7 +44,6 @@ Tue Jun  1 15:30:49 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
           Made changes to fix some testing errors
 
->>>>>>> 1.587
 Tue Jun  1 15:08:23 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * DnC/NodeManager/NodeApplicationManager_Impl.h:
