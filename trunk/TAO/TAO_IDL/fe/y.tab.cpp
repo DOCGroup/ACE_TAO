@@ -307,7 +307,7 @@ typedef union TAO_YYSTYPE {
   FE_Declarator                 *deval;         /* Declarator value     */
   idl_bool                      bval;           /* Boolean value        */
   long                          ival;           /* Long value           */
-  ACE_UINT64                    uival;          /* Unsigned long value  */
+  idl_uns_long                  uival;          /* Unsigned long value  */
   double                        dval;           /* Double value         */
   float                         fval;           /* Float value          */
   char                          cval;           /* Char value           */
@@ -3694,6 +3694,7 @@ tao_yyreduce:
                     }
 
                   break;
+#if !defined (ACE_LACKS_LONGLONG_T)
                 case AST_Expression::EV_ulonglong:
                   if (ev->u.ullval == 0)
                     {
@@ -3701,6 +3702,7 @@ tao_yyreduce:
                     }
 
                   break;
+#endif
                 case AST_Expression::EV_octet:
                   if (ev->u.oval == 0)
                     {
@@ -5110,7 +5112,7 @@ tao_yyreduce:
                   tao_yyval.dcval =
                     idl_global->gen ()->create_sequence (
                         idl_global->gen ()->create_expr (
-                                                (ACE_UINT64) 0,
+                                                (idl_uns_long) 0,
                                                 AST_Expression::EV_ulong
                                               ),
                         tp,
@@ -5210,7 +5212,7 @@ tao_yyreduce:
            */
           tao_yyval.dcval =
             idl_global->gen ()->create_string (
-                idl_global->gen ()->create_expr ((ACE_UINT64) 0,
+                idl_global->gen ()->create_expr ((idl_uns_long) 0,
                                                  AST_Expression::EV_ulong)
               );
           /*
@@ -5288,7 +5290,7 @@ tao_yyreduce:
            */
           tao_yyval.dcval =
             idl_global->gen ()->create_wstring (
-                idl_global->gen ()->create_expr ((ACE_UINT64) 0,
+                idl_global->gen ()->create_expr ((idl_uns_long) 0,
                                                  AST_Expression::EV_ulong)
               );
           /*

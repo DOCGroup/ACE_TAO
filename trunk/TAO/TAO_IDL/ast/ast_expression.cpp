@@ -237,7 +237,7 @@ AST_Expression::AST_Expression (unsigned long ulv)
 }
 
 // An AST_Expression denoting an unsigned long integer.
-AST_Expression::AST_Expression (ACE_UINT64 ulv,
+AST_Expression::AST_Expression (idl_uns_long ulv,
                                 ExprType t)
   : pd_ec (EC_none),
     pd_ev (0),
@@ -252,7 +252,11 @@ AST_Expression::AST_Expression (ACE_UINT64 ulv,
            AST_ExprValue);
 
   this->pd_ev->et = t;
+#if defined (ACE_LACKS_LONGLONG_T)
+  this->pd_ev->u.ulval = ulv;
+#else
   this->pd_ev->u.ullval = ulv;
+#endif
 }
 
 // An AST_Expression denoting a 32-bit floating point number.
