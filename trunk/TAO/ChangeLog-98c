@@ -4,6 +4,9 @@ Sun Oct 18 09:32:38 1998  David L. Levine  <levine@cs.wustl.edu>
           start_generating_events): fixed a couple of 64-to-32
           bit casts so that it will compile for VxWorks.
 
+        * examples/Callback_Quoter/Supplier_i.cpp (Supplier):
+          reordered initializers to match declaration order.
+
 Sat Oct 17 13:04:50 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.2.30 released.
