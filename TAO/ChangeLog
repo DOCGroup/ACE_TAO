@@ -4,8 +4,8 @@ Wed Apr 28 06:32:15 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/Exception.cpp:
 
 	  Removed the comment that _type () is decremented. Infact its
-	  not. 
-	  
+	  not.
+
 Wed Apr 28 10:41:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/AMH_Oneway/client.cpp:
