@@ -226,12 +226,13 @@ specific storage.  This field is specified in only one
 place, in ace/OS.i, so it can easily be changed to one
 of the other spare fields, if necessary.<P>
 
-The current version of ACE, 4.3.3, destroys dynamically
-allocated singletons in the ACE library.  But, it may not
+Versions of ACE from 4.3.3 and beyond destroy dynamically
+allocated singletons in the ACE library.  But, they may not
 properly destroy some static objects.  If you have trouble
 running a program multiple times, it may be necessary to
-unload the module, using unld, and reload it between
-runs.<P>
+unload the module, using unld, and reload it between runs.
+Alternatively, you could try calling <code>cplusDtors</code>
+and then <code>cplusCtors</code> between runs.<P>
 
 <DT><B>MVS OpenEdition</B> <BR><BR>
 
