@@ -1,3 +1,8 @@
+Thu Sep 17 14:18:19 1998  Jeff Parsons <jp4@cs.wustl.edu>
+
+	* TAO/tests/DynAny_Test/README.txt
+	  Added this new file.
+
 Thu Sep 17 09:04:34 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp: 
