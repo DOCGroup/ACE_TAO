@@ -661,6 +661,8 @@ ImplRepo_i::list (CORBA::ULong how_many,
 void 
 ImplRepo_i::shutdown_server (const char *server,
                              CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   ImplementationRepository::Administration::NotFound))
 {
   ACE_TString server_object_ior, host;
   unsigned short port;
