@@ -203,11 +203,11 @@ namespace CORBA
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 
   // Required by C++ mapping.
-  TAO_Export ostream& operator<< (ostream &os,
-                                  const CORBA::Exception &e);
+  TAO_Export ACE_OSTREAM_TYPE& operator<< (ACE_OSTREAM_TYPE &os,
+                                          const CORBA::Exception &e);
 
-  TAO_Export ostream& operator<< (ostream &os,
-                                  const CORBA::Exception *e);
+  TAO_Export ACE_OSTREAM_TYPE& operator<< (ACE_OSTREAM_TYPE &os,
+                                           const CORBA::Exception *e);
 
 #endif /* (ACE_LACKS_IOSTREAM_TOTALLY) */
 } // End CORBA namespace

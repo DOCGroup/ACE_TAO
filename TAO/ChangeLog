@@ -1,4 +1,9 @@
-Mon Mar 28 12:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+Tue Mar 29 15:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Exception.{h,cpp}:
+          Replaced ostream with ACE_OSTREAM_TYPE
+
+Tue Mar 29 12:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Union_TypeCode.{h,cpp}:
           Fixed compile errors with Borland
