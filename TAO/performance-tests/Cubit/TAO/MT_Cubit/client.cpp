@@ -536,7 +536,7 @@ Client_i::print_util_stats (void)
       ACE_DEBUG ((LM_DEBUG,
                   "(%t) Scavenger task performed \t%u computations\n"
                   "(%t) CLIENT task performed \t\t%u CORBA calls as requested\n\n"
-                  "(%t) Utilization test time is \t\t%f seconds\n\t%s\n",
+                  "(%t) Utilization test time is \t\t%f microseconds\n\t%s\n",
                   this->util_thread_->get_number_of_computations (),
                   this->ts_->loop_count_,
                   this->ts_->util_test_time_,
@@ -544,6 +544,9 @@ Client_i::print_util_stats (void)
                     "NOW run the same test again, adding the \"-l\" option.  See README file for explanation.":
                     " "
                   ));
+
+      // Exit.  Otherwise, the process just waits forever.
+      ACE_OS::exit ();
     }
 }
 
