@@ -221,6 +221,10 @@ public:
   int inc (void);
   int dec (void);
 
+  // = Get/set trace depth.
+  int trace_depth (void);
+  void trace_depth (int);
+
   // = Get/set trace active status.
   int trace_active (void);
   void trace_active (int value);
