@@ -46,7 +46,9 @@ public:
   virtual int open (void *);
   // Activation template method.
 
-  virtual int send_request (TAO_OutputCDR &stream, int is_twoway);
+  virtual int send_request (TAO_ORB_Core* orb_core,
+                            TAO_OutputCDR &stream,
+                            int is_twoway);
   // Send the request in <stream>.  If it is a twoway invocation, then
   // this re-enters the reactor event loop so that incoming requests
   // can continue to be serviced.  This insures that a nested upcall,
@@ -87,7 +89,9 @@ public:
 
   virtual ~TAO_ST_Client_Connection_Handler (void);
 
-  virtual int send_request (TAO_OutputCDR &stream, int is_twoway);
+  virtual int send_request (TAO_ORB_Core* orb_core,
+                            TAO_OutputCDR &stream,
+                            int is_twoway);
   // Send the request in <stream>.  If it is a twoway invocation, then
   // this re-enters the reactor event loop so that incoming requests
   // can continue to be serviced.  This insures that a nested upcall,
@@ -108,7 +112,9 @@ public:
 
   virtual ~TAO_MT_Client_Connection_Handler (void);
 
-  virtual int send_request (TAO_OutputCDR &stream, int is_twoway);
+  virtual int send_request (TAO_ORB_Core* orb_core,
+                            TAO_OutputCDR &stream,
+                            int is_twoway);
   // Send the request in <stream>.  If it is a twoway invocation, then
   // this re-enters the reactor event loop so that incoming requests
   // can continue to be serviced.  This insures that a nested upcall,

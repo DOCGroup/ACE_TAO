@@ -1,3 +1,15 @@
+Wed Sep 30 15:47:26 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Connect.h: 
+	* tao/Connect.cpp: 
+	* tao/Invocation.cpp: 
+	  Removed some calls to TAO_ORB_Core_instance(), we use the
+	  ORB_Core cached in the Invocation and pass it down to the GIOP
+	  module and eventually to the Client_Connection_Handler.
+
+	* tao/ORB_Core.cpp: 
+	  Fixed silly syntax errors.
+
 Wed Sep 30 14:58:16 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* tao/ORB_Core.{h,i}: Had problems with the explicit template

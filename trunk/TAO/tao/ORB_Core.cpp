@@ -1505,8 +1505,8 @@ TAO_ORB_Core_instance (void)
     template void ACE_Convert (const char *, u_int &);
 # endif /* __GNUG__ */
 
-template class ACE_Malloc<ACE_MEMORY_POOL,ACE_SYNCH_MUTEX>;
-template class ACE_Allocator_Adapter<ACE_Malloc<ACE_MEMORY_POOL,ACE_SYNCH)MUTEX> >;
+template class ACE_Malloc<ACE_LOCAL_MEMORY_POOL,ACE_SYNCH_MUTEX>;
+template class ACE_Allocator_Adapter<ACE_Malloc<ACE_LOCAL_MEMORY_POOL,ACE_SYNCH_MUTEX> >;
 template class ACE_Env_Value<int>;
 template class ACE_Env_Value<u_int>;
 template class ACE_Strategy_Acceptor<TAO_Server_Connection_Handler, TAO_SOCK_ACCEPTOR>;
@@ -1557,8 +1557,8 @@ template class ACE_Select_Reactor_T< ACE_Select_Reactor_Token_T<ACE_Noop_Token> 
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Malloc<ACE_MEMORY_POOL,ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Allocator_Adapter<ACE_Malloc<ACE_MEMORY_POOL,ACE_SYNCH)MUTEX> >
+#pragma instantiate ACE_Malloc<ACE_LOCAL_MEMORY_POOL,ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Allocator_Adapter<ACE_Malloc<ACE_LOCAL_MEMORY_POOL,ACE_SYNCH_MUTEX> >
 #pragma instantiate ACE_Env_Value<int>
 #pragma instantiate ACE_Env_Value<u_int>
 #pragma instantiate ACE_Strategy_Acceptor<TAO_Server_Connection_Handler, TAO_SOCK_ACCEPTOR>

@@ -369,7 +369,8 @@ TAO_GIOP_Invocation::invoke (CORBA::Boolean is_roundtrip,
 {
   // Send Request, return on error or if we're done
 
-  if (this->data_->handler ()->send_request (this->out_stream_,
+  if (this->data_->handler ()->send_request (this->orb_core_,
+                                             this->out_stream_,
                                              is_roundtrip) == -1)
     {
       // send_request () closed the connection; we just set the
@@ -1038,7 +1039,9 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &env)
 {
   // Send Request, return on error or if we're done
 
-  if (this->data_->handler ()->send_request (this->out_stream_, 1) == -1)
+  if (this->data_->handler ()->send_request (this->orb_core_,
+                                             this->out_stream_,
+                                             1) == -1)
     {
       // send_request () closed the connection; we just set the
       // handler to 0 here.
