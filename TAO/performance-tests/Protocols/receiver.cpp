@@ -131,7 +131,7 @@ test_i::start_test (CORBA::Long session_id,
 		    CORBA::ULong invocation_rate,
 		    CORBA::ULong message_size,		  
 		    CORBA::ULong iterations
-                    ACE_ENV_ARG_DECL)
+                    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_debug_level > 0)
@@ -174,7 +174,7 @@ test_i::start_test (CORBA::Long session_id,
 }
 
 void
-test_i::end_test (ACE_ENV_SINGLE_ARG_DECL)
+test_i::end_test (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Record end time.
@@ -238,13 +238,13 @@ test_i::end_test (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-test_i::oneway_sync (ACE_ENV_SINGLE_ARG_DECL)
+test_i::oneway_sync (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
-test_i::twoway_sync (ACE_ENV_SINGLE_ARG_DECL)
+test_i::twoway_sync (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
