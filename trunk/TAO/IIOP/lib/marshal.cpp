@@ -53,8 +53,8 @@
 #		include <widec.h>
 #else
     extern "C" {
-	unsigned	wslen (const wchar_t *);
-	wchar_t		*wscpy (wchar_t *, const wchar_t *);
+	unsigned	wslen (const CORBA_WChar *);
+	CORBA_WChar		*wscpy (CORBA_WChar *, const CORBA_WChar *);
     }
 #endif
 
@@ -430,7 +430,7 @@ CDR::encoder (
 
       case tk_wstring:
         {
-	    wchar_t		*str = *(wchar_t **) data;
+	    CORBA_WChar		*str = *(CORBA_WChar **) data;
 	    CORBA_ULong		len, bounds;
 
 	    //
@@ -475,7 +475,7 @@ CDR::encoder (
 	break;
 
       case tk_wchar:
-	continue_encoding = stream->put_wchar (*(wchar_t *)data);
+	continue_encoding = stream->put_wchar (*(CORBA_WChar *)data);
 	break;
 	
       // case ~0:
@@ -1059,7 +1059,7 @@ CDR::decoder (
 
       case tk_wstring:
         {
-	    wchar_t		*str;
+	    CORBA_WChar		*str;
 	    CORBA_ULong	len = 0;
 
 	    //
@@ -1072,7 +1072,7 @@ CDR::decoder (
 	    // specs, but we will accept them when it's clear how to do so.
 	    //
 	    continue_decoding = stream->get_ulong (len);
-	    *((wchar_t **)data) = str = new wchar_t [(size_t) (len)];
+	    *((CORBA_WChar **)data) = str = new CORBA_WChar [(size_t) (len)];
 	    if (len != 0) {
 		while (continue_decoding != CORBA_B_FALSE && len--) {
 		    continue_decoding = stream->get_wchar (*str);
@@ -1088,7 +1088,7 @@ CDR::decoder (
 	break;
 
       case tk_wchar:
-	continue_decoding = stream->get_wchar (*(wchar_t *)data);
+	continue_decoding = stream->get_wchar (*(CORBA_WChar *)data);
 	break;
 
       // case ~0:

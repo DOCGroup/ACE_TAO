@@ -364,7 +364,7 @@ CORBA_Object::_is_equivalent (
 // COM's IUnknown support
 //
 
-#if	unix
+#if	unix || defined (VXWORKS)
 //
 // XXX this is not the GUID that Microsoft uses.  It can matter.
 //

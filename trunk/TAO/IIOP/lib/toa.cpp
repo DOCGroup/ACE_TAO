@@ -11,16 +11,19 @@
 //
 
 #include	<assert.h>
+#if defined (VXWORKS)
+#include        <stdarg.h>
+#endif
 #include	<stdio.h>
 #include	<string.h>
 
 #if	unix
-#include	<unistd.h>
-#include	<netdb.h>
-
+#   include	<unistd.h>
+#   include	<netdb.h>
+#elif defined (VXWORKS)
+#   include	<unistd.h>
 #else
-#include	<winsock.h>
-
+#   include	<winsock.h>
 #endif
 
 #include	<orb.hh>

@@ -152,7 +152,7 @@ struct _EXPCLASS CDR
 
     inline CORBA_Boolean	put_char (CORBA_Char c)
 				{ return put_byte ((char) c); }
-    inline CORBA_Boolean	put_wchar (wchar_t wc)
+    inline CORBA_Boolean	put_wchar (CORBA_WChar wc)
 				{
 				    //
 				    // "wchar_t" isn't always 2 bytes, such
@@ -210,7 +210,7 @@ struct _EXPCLASS CDR
 
     inline CORBA_Boolean	get_char (CORBA_Char &o)
 				{ return get_byte ((char &) o); }
-    inline CORBA_Boolean	get_wchar (wchar_t &wc)
+    inline CORBA_Boolean	get_wchar (CORBA_WChar &wc)
 				{
 				    short s;
 

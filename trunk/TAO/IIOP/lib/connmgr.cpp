@@ -644,7 +644,7 @@ server_endpoint::block_for_connection (
 	  }
 	else
 	  value = ACE_OS::select (max_fd + 1, &read_fdset,
-				  (fd_set*)NULL, (fd_set*)NULL, NULL);
+				  (fd_set*)NULL, (fd_set*)NULL, 0);
 	
 
 #ifdef	_POSIX_THREADS

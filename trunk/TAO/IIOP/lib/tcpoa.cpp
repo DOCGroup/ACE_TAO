@@ -14,16 +14,19 @@
 //
 
 #include	<assert.h>
+#if defined (VXWORKS)
+#include        <stdarg.h>
+#endif
 #include	<stdio.h>
 #include	<string.h>
 
 #if	unix
-#include	<unistd.h>
-#include	<netdb.h>
-
+#   include	<unistd.h>
+#   include	<netdb.h>
+#elif defined (VXWORKS)
+#   include     <unistd.h>
 #else
-#include	<winsock.h>
-
+#   include	<winsock.h>
 #endif
 
 #include	<orb.hh>
@@ -678,10 +681,12 @@ TCP_OA::get_request (
 	    dexc (env, "TCP_OA, block for connection");
 	    return;
 	}
+#if 0
 	if (fd == 0) {
 	    do_exit = CORBA_B_TRUE;
 	    return;
 	}
+#endif
 
 	//
 	// THREADING NOTE:  This is the last of the need to have the OA
