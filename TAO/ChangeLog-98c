@@ -1,3 +1,8 @@
+Thu Sep  3 22:52:39 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* utils/catior/catior.cpp: 
+	  Fixed off-by-one problem in the substring extraction.
+
 Thu Sep  3 20:49:13 1998  Sergio Flores  <sergio@tango.cs.wustl.edu>
 
         * tests/Cubit/TAO/MT_Cubit/server.cpp: Removed some warnings about

@@ -157,8 +157,8 @@ catior (CORBA::String str,
 
   if (tmp [0] && !isspace (tmp [0]))
     {
-      env.exception (new CORBA::BAD_PARAM (CORBA::COMPLETED_NO));
-      return  0;
+      ACE_DEBUG ((LM_DEBUG,
+		  "Badly terminated IOR string (%s)\n", tmp));
     }
 
   // Create deencapsulation stream ... then unmarshal objref from that
@@ -576,7 +576,7 @@ main (int argc, char *argv[])
                 ACE_CString subString =
                   aString.substring (prefixLength,
                                      aString.length () - prefixLength);
-                subString[subString.length () - 1] = '\0';
+                subString[subString.length ()] = '\0';
                 str = subString.rep ();
                 b = catior (str, env);
               }
