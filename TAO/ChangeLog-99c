@@ -1,3 +1,8 @@
+Mon Jul  5 10:09:15 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/tests/Param_Test/objref.cpp:
+	  Moved an unreachable return statement.
+
 Sun Jul  4 22:27:42 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl:
