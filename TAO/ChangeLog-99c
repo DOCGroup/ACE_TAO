@@ -31,6 +31,17 @@ Mon Aug 30 23:24:35 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* tao/Single_Reactor.cpp:
 	  Minor cosmetic fixes.
 
+	* tao/Pool_Per_Endpoint.h:
+	* tao/Pool_Per_Endpoint.i:
+	* tao/Pool_Per_Endpoint.cpp:
+	  Added option to control the thread creation flags.
+
+	* tests/Endpoint_Per_Priority/Makefile:
+	  Updated dependencies.
+
+	* tests/Endpoint_Per_Priority/server.cpp:
+	  Use the new <flags> option in the Pool_Per_Endpoint strategy.
+
 Mon Aug 30 17:10:30 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* TAO-INSTALL.html: Added a note on Connection Caching feature
