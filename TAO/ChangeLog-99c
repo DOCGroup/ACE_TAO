@@ -1,3 +1,35 @@
+Mon Sep 06 03:10:41 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV.dsp:
+	* orbsvcs/orbsvcs/orbsvcs.dsp:
+	* orbsvcs/orbsvcs/orbsvcs.dsw:
+	* orbsvcs/orbsvcs/orbsvcs_static.dsp: AV service does not build on
+	  VC6.  Separated AV service from orbsvcs projects into its own
+	  project file so people who are not working on AV stream service
+	  can move forward.  We can move it back into orbsvcs if needs
+	  to.  There's only DLL project settings available and the
+	  generated libraries are called orbsvcsAV[d].dll.
+
+	* orbsvcs/orbsvcs/AV/AV_export.h: AV Stream now has its own export
+	  macro file.
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.h:
+	* orbsvcs/orbsvcs/AV/AV_Core.h:
+	* orbsvcs/orbsvcs/AV/Endpoint_Strategy.h:
+	* orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.h:
+	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.h:
+	* orbsvcs/orbsvcs/AV/Flows_T.h:
+	* orbsvcs/orbsvcs/AV/Nil.h:
+	* orbsvcs/orbsvcs/AV/Policy.h:
+	* orbsvcs/orbsvcs/AV/Protocol_Factory.h:
+	* orbsvcs/orbsvcs/AV/RTCP.h:
+	* orbsvcs/orbsvcs/AV/RTP.h:
+	* orbsvcs/orbsvcs/AV/TCP.h:
+	* orbsvcs/orbsvcs/AV/Transport.h:
+	* orbsvcs/orbsvcs/AV/UDP.h:
+	* orbsvcs/orbsvcs/AV/sfp.h:  Changed to include AV_Export.h and/or
+	  to use TAO_AV_Export macro.
+
 Sat Sep 05 01:05:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* TAO_IDL/be/be_visitor_operation/ami_handler_arglist.cpp:
