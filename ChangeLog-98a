@@ -1,3 +1,40 @@
+Fri Mar 13 01:10:36 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/WFMO_Reactor: The following changes were made to make the
+ 	  registration and removal of event_handlers from WFMO_Reactor
+ 	  more robust. Thanks to Jonathan Biggar <jon@floorboard.com> for
+ 	  helping out.
+
+	  - ACE_WFMO_Reactor_Handler_Repository::Common_Info now contains
+ 	    the delete_entry_ and close_masks_ fields as these were now
+ 	    common to all three structures.
+
+	  - handle_additions() and handle_deletions() were changed to
+ 	    make_changes_in_current_infos(),
+ 	    make_changes_in_suspension_infos(), and
+ 	    make_changes_in_to_be_added_infos()
+
+	  - Correct range for suspend_handlers() is 0 to max_handlep1_
+ 	    rather than (max_handlep1_ - 1)
+
+	  - suspend_handlers(),
+	    resume_handlers(),
+	    add_network_events_i(),
+	    unbind_i(),
+	    suspend_handler_i(),
+	    resume_handler_i(),
+	    unbind_all(),
+
+	    now go through the to_be_add_info_ array when making changes.
+
+	* examples/Reactor/ReactorEx/test_prerun_state_changes.cpp: New
+ 	  test added to check the Reactor's ability to handle state
+ 	  changes before getting a chance to run.
+
+	* examples/Reactor/ReactorEx/test_talker.cpp (main): Remove the
+ 	  Procator from the Reactor so that the Proactor is not called
+ 	  after it has been destroyed.
+
 Thu Mar 12 19:36:43 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ACE-INSTALL.html: Tidied up a bunch of things in this file.

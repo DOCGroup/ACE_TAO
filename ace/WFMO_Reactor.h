@@ -83,6 +83,14 @@ public:
     // <Event_Handler> removes itself from <WFMO_Reactor>.  This entry
     // is only valid if the <io_entry_> flag is true.
 
+    int delete_entry_;
+    // This is set when the entry needed to be deleted.
+
+    ACE_Reactor_Mask close_masks_;
+    // These are the masks related to <handle_close> for the
+    // <Event_Handler>.  This is only valid when >delete_entry_> is
+    // set.
+
     Common_Info (void);
     // Constructor used for initializing the structure
 
@@ -93,7 +101,9 @@ public:
 	      ACE_Event_Handler *event_handler,
 	      ACE_HANDLE io_handle,
 	      long network_events,
-	      int delete_event);
+	      int delete_event,
+              int delete_entry,
+              ACE_Reactor_Mask close_masks);
     // Set the structure to these new values
 
     void set (Common_Info &common_info);
@@ -108,13 +118,6 @@ public:
     //     information for current entries.
     //
   public:
-    int delete_entry_;
-    // This is set when the entry needed to be deleted.
-
-    ACE_Reactor_Mask close_masks_;
-    // These are the masks related to <handle_close> for the
-    // <Event_Handler>.
-
     int suspend_entry_;
     // This is set when the entry needed to be suspended.
 
@@ -130,13 +133,11 @@ public:
 	      long network_events,
 	      int delete_event,
 	      int delete_entry = 0,
-	      ACE_Reactor_Mask close_masks = 0,
-	      int suspend_entry = 0);
+	      ACE_Reactor_Mask close_masks = ACE_Event_Handler::NULL_MASK,
+              int suspend_entry = 0);
     // Set the structure to these new values
 
     void set (Common_Info &common_info,
-	      int delete_entry = 0,
-	      ACE_Reactor_Mask close_masks = 0,
 	      int suspend_entry = 0);
     // Set the structure to these new values
   };
@@ -152,6 +153,9 @@ public:
     ACE_HANDLE event_handle_;
     // Handle for the event
 
+    int suspend_entry_;
+    // This is set when the entry needed to be suspended.
+
     To_Be_Added_Info (void);
     // Default constructor
 
@@ -163,11 +167,15 @@ public:
 	      ACE_Event_Handler *event_handler,
 	      ACE_HANDLE io_handle,
 	      long network_events,
-	      int delete_event);
+	      int delete_event,
+              int delete_entry = 0,
+              ACE_Reactor_Mask close_masks = ACE_Event_Handler::NULL_MASK,
+              int suspend_entry = 0);
     // Set the structure to these new values
 
     void set (ACE_HANDLE event_handle,
-	      Common_Info &common_info);
+	      Common_Info &common_info,
+	      int suspend_entry = 0);
     // Set the structure to these new values
   };
 
@@ -181,13 +189,6 @@ public:
   public:
     ACE_HANDLE event_handle_;
     // Handle for the event
-
-    int delete_entry_;
-    // This is set when the entry needed to be deleted.
-
-    ACE_Reactor_Mask close_masks_;
-    // These are the masks related to <handle_close> for the
-    // <Event_Handler>.
 
     int resume_entry_;
     // This is set when the entry needed to be resumed.
@@ -204,16 +205,14 @@ public:
 	      ACE_HANDLE io_handle,
 	      long network_events,
 	      int delete_event,
-	      int resume = 0,
 	      int delete_entry = 0,
-	      ACE_Reactor_Mask close_masks = 0);
+	      ACE_Reactor_Mask close_masks = 0,
+	      int resume_entry = 0);
     // Set the structure to these new values
 
     void set (ACE_HANDLE event_handle,
 	      Common_Info &common_info,
-	      int resume = 0,
-	      int delete_entry = 0,
-	      ACE_Reactor_Mask close_masks = 0);
+	      int resume_entry = 0);
     // Set the structure to these new values
   };
 
@@ -302,11 +301,15 @@ public:
 			int &changes_required);
   // Resume suspended entry
 
-  int handle_deletions (void);
-  // Remove handles from the handle set
+  int make_changes_in_current_infos (void);
+  // Deletions and suspensions in current_info_
 
-  int handle_additions (void);
-  // Add handles to the handle set
+  int make_changes_in_suspension_infos (void);
+  // Deletions and resumptions in current_suspended_info_
+
+  int make_changes_in_to_be_added_infos (void);
+  // Deletions in to_be_added_info_, or transfers to current_info_ or
+  // current_suspended_info_ from to_be_added_info_
 
   int remove_handler_i (size_t index,
 			ACE_Reactor_Mask mask);
@@ -314,6 +317,10 @@ public:
 
   int remove_suspended_handler_i (size_t index,
 				  ACE_Reactor_Mask mask);
+  // Removes the <ACE_Event_Handler> at <index> from the table.
+
+  int remove_to_be_added_handler_i (size_t index,
+                                    ACE_Reactor_Mask to_be_removed_masks);
   // Removes the <ACE_Event_Handler> at <index> from the table.
 
   void dump (void) const;
@@ -326,9 +333,6 @@ protected:
   size_t max_size_;
   // Maximum number of handles.
 
-  size_t max_handlep1_;
-  // A count of the number of active handles.
-
   ACE_HANDLE *current_handles_;
   // Array of <ACE_HANDLEs> passed to <WaitForMultipleObjects>.  This
   // is not part of the structure as the handle array needs to be
@@ -337,8 +341,14 @@ protected:
   Current_Info *current_info_;
   // Array of current entries in the table
 
+  size_t max_handlep1_;
+  // A count of the number of active handles.
+
   To_Be_Added_Info *to_be_added_info_;
   // Information for entries to be added
+
+  size_t handles_to_be_added_;
+  // Number of records to be added
 
   Suspended_Info *current_suspended_info_;
   // Currently suspended handles
@@ -355,8 +365,6 @@ protected:
   size_t handles_to_be_deleted_;
   // Number of records to be deleted
 
-  size_t handles_to_be_added_;
-  // Number of records to be added
 };
 
 class ACE_Export ACE_WFMO_Reactor_Notify : public ACE_Event_Handler

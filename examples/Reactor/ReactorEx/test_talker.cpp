@@ -542,5 +542,11 @@ main (int argc, char *argv[])
   // Run main event demultiplexor.
   ACE_Reactor::run_event_loop ();
 
+  // Remove proactor with Reactor.
+  if (ACE_Reactor::instance ()->remove_handler 
+      (ACE_Proactor::instance (), ACE_Event_Handler::DONT_CALL) != 0)
+    ACE_ERROR_RETURN ((LM_ERROR, "%p failed to register Proactor.\n",
+		       argv[0]), -1);  
+
   return 0;
 }
