@@ -1,7 +1,7 @@
 //$Id$
 
 /**
- * @file MIF_Scheduling.pidl
+ * @file MIF_Scheduling.idl
  *
  * $Id$
  *
@@ -14,13 +14,13 @@
  *   1. Run the tao_idl compiler on the pidl file.  The command used for
  *   this is:
  *
- *     tao_idl -I $TAO_ROOT -Ge 1 
- *             -Wb,export_macro=Kokyu_DSRT_Schedulers_Export 
+ *     tao_idl -I $TAO_ROOT -Ge 1
+ *             -Wb,export_macro=Kokyu_DSRT_Schedulers_Export
  *             -Wb,export_include=Kokyu_dsrt_schedulers_export.h
  *
  *
  *   2. Then apply the patches in MIF_SchedulingC.h.diff to the generated code.
- *   The patch will replace the inclusion of RTCORBAC.h and RTSchedulerC.h 
+ *   The patch will replace the inclusion of RTCORBAC.h and RTSchedulerC.h
  *   with RTCORBA.h and RTScheduler.h respectively.
  *
  * Apply patches using the following command:
@@ -51,11 +51,11 @@ module MIF_Scheduling
   {
     attribute SchedulingParameter value;
   };
-  
+
   local interface Scheduler : RTScheduling::Scheduler
   {
     SchedulingParameterPolicy
-      create_scheduling_parameter 
+      create_scheduling_parameter
         (in SchedulingParameter value);
   };
 };
