@@ -11,7 +11,7 @@
 #include "tao/ORB.h"
 #include "tao/CDR.h"
 #include "tao/Timeprobe.h"
-
+#include "tao/Server_Strategy_Factory.h"
 #include "tao/Messaging_Policy_i.h"
 
 #if !defined (__ACE_INLINE__)
@@ -204,7 +204,18 @@ TAO_UIOP_Server_Connection_Handler::handle_close (ACE_HANDLE handle,
 
   --this->refcount_;
   if (this->refcount_ == 0)
-    return TAO_UIOP_SVC_HANDLER::handle_close (handle, rm);
+    {
+      // Remove the handle from the ORB Core's handle set so that it
+      // isn't included in the set that is passed to the reactor upon
+      // ORB destruction.
+      TAO_Server_Strategy_Factory *f =
+        this->orb_core_->server_factory ();
+
+      if (f->activate_server_connections () == 0)
+        (void) this->orb_core_->remove_handle (handle);
+
+      return TAO_UIOP_SVC_HANDLER::handle_close (handle, rm);
+    }
 
   return 0;
 }
