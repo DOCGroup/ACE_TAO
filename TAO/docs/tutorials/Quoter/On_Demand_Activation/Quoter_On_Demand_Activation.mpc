@@ -15,6 +15,6 @@ project(*server) : taoexe, portableserver, naming, ami {
     server.cpp
     Stock_Factory_i.cpp
     Stock_i.cpp
-    Stock_Factory_Locator.cpp
+    Stock_Factory_Locator_i.cpp
   }
 }
