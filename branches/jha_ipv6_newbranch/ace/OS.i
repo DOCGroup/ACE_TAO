@@ -5888,17 +5888,15 @@ ACE_OS::getipnodebyname (const char *name, int family, int flags)
   ACE_UNUSED_ARG (family);
   ACE_NOTSUP_RETURN (0);
 # elif defined (ACE_HAS_IPV6)
-#   if defined (whatever_doesnt_have_getipnodebyname)
-  ACE_UNUSED_ARG (flags)
+#   if defined (__GLIBC__)
+  ACE_UNUSED_ARG (flags);
 #     if defined (ACE_HAS_NONCONST_GETBY)
   ACE_SOCKCALL_RETURN (::gethostbyname2 (ACE_const_cast (char *, name),
                                          family),
-                       struct hostent *,
-                       0);
+                       struct hostent *, 0);
 #     else
   ACE_SOCKCALL_RETURN (::gethostbyname2 (name, family),
-                       struct hostent *,
-                       0);
+                       struct hostent *, 0);
 #     endif /* ACE_HAS_NONCONST_GETBY */
 #   else
   struct hostent *hptr;
@@ -5908,7 +5906,7 @@ ACE_OS::getipnodebyname (const char *name, int family, int flags)
       errno = errnum;
     }
   return hptr;
-#   endif /* whatever_doesnt_have_getipnodebyname */
+#   endif /* __GLIBC__ */
 # else
   // IPv4-only implementation
   if (family == AF_INET)
@@ -5923,7 +5921,7 @@ ACE_INLINE struct hostent *
 ACE_OS::getipnodebyaddr (const void *src, size_t len, int family)
 {
 #if defined (ACE_HAS_IPV6)
-#  if defined (whatever_doesnt_have_getipnodebyaddr)
+#  if defined (__GLIBC__)
   ACE_UNUSED_ARG (src);
   ACE_UNUSED_ARG (len);
   ACE_UNUSED_ARG (family);
