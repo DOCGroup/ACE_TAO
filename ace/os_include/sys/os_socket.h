@@ -141,6 +141,13 @@ extern "C"
 #  define ACE_PROTOCOL_FAMILY_INET PF_INET
 #endif /* ACE_HAS_IPV6 */
 
+#if defined (ACE_HAS_LKSCTP)
+extern "C"
+{
+#include /**/ <netinet/sctp.h>
+}
+#endif /* ACE_HAS_LKSCTP */
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
