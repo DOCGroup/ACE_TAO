@@ -239,8 +239,18 @@ TAO_ClientRequestInfo::get_request_policy (CORBA::PolicyType type,
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // @@ Do we need to look anywhere else for the request policies?
+
+#if TAO_HAS_CORBA_MESSAGING == 1
   return this->target_->_get_policy (type,
                                      ACE_TRY_ENV);
+#else
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
+                      CORBA::SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        ENOTSUP),
+                      CORBA::COMPLETED_NO),
+                    0);
+#endif  /* TAO_HAS_CORBA_MESSAGING == 1 */
 }
 
 void
@@ -319,7 +329,7 @@ TAO_ClientRequestInfo::contexts (CORBA::Environment &ACE_TRY_ENV)
 Dynamic::RequestContext *
 TAO_ClientRequestInfo::operation_context (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
-{ 
+{
   ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (10, CORBA::COMPLETED_NO),
                     0);
 }
