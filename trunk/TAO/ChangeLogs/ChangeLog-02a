@@ -1,3 +1,10 @@
+Mon Jun 12 12:00:14 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* tao/MProfile.i
+
+	  Moved <create_policy_list> implementation so that no problem
+	  occurs when inlining is enabled.
+
 Sun Jun 11 20:55:08 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * rules.tao.GNU:
