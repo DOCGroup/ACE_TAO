@@ -306,6 +306,23 @@ protected:
   ACE_CString activator_;
 };
 
+/**
+ * @class TAO_IMR_Op_Shutdown_Repo
+ *
+ * @brief Shutdown the repository
+ *
+ * Shutdown_repo is used to shutdown the repository via an IDL operation.
+ */
+class TAO_IMR_Op_Shutdown_Repo : public TAO_IMR_Op
+{
+public:
+  virtual int parse (int argc, ACE_TCHAR **argv);
+  virtual int run (void);
+
+protected:
+  /// Prints a message about the usage
+  void print_usage (void);
+};
 
 /**
  * @class TAO_IMR_Op_Update

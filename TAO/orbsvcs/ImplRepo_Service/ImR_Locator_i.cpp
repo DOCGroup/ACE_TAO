@@ -31,10 +31,10 @@ ImR_Locator_i::ImR_Locator_i ()
 int
 ImR_Locator_i::init (ACE_ENV_SINGLE_ARG_DECL)
 {
-  CORBA::ORB_var orb = OPTIONS::instance()->orb();
+  orb_ = OPTIONS::instance()->orb();
 
   CORBA::Object_var obj =
-    orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
+    orb_->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   PortableServer::POA_var root_poa =
@@ -83,7 +83,7 @@ ImR_Locator_i::init (ACE_ENV_SINGLE_ARG_DECL)
 
   // Register 'this' with the ImR_Forwarder
   ACE_NEW_RETURN (this->forwarder_impl_,
-                  ImR_Forwarder (this, orb.in ()),
+                  ImR_Forwarder (this, orb_.in ()),
                   -1);
 
   // Get the ObjectID for the string child POA name.
@@ -102,7 +102,7 @@ ImR_Locator_i::init (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK_RETURN (-1);
 
   // Get the reference to IORTable.
-  obj = orb->resolve_initial_references ("IORTable" ACE_ENV_ARG_PARAMETER);
+  obj = orb_->resolve_initial_references ("IORTable" ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Narrow it down to the correct type
@@ -124,7 +124,7 @@ ImR_Locator_i::init (ACE_ENV_SINGLE_ARG_DECL)
 
       // Get the stringified format of the locator's object
       // reference.
-      ior = orb->object_to_string (locator_obj.in () ACE_ENV_ARG_PARAMETER);
+      ior = orb_->object_to_string (locator_obj.in () ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
       // Finally, bind this ior to the child POA's name in the
@@ -154,7 +154,7 @@ ImR_Locator_i::init (ACE_ENV_SINGLE_ARG_DECL)
 
   if (OPTIONS::instance()->multicast())
     {
-      ACE_Reactor *reactor = orb->orb_core ()->reactor ();
+      ACE_Reactor *reactor = orb_->orb_core ()->reactor ();
 
       ACE_Process_Manager process_manager;
       process_manager.open (ACE_Process_Manager::DEFAULT_SIZE, reactor);
@@ -173,7 +173,7 @@ ImR_Locator_i::init (ACE_ENV_SINGLE_ARG_DECL)
   poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-  orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
+  orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   return 0;
@@ -790,7 +790,38 @@ ImR_Locator_i::find_ior (const char *object_name ACE_ENV_ARG_DECL)
   return 0;
 }
 
+void ImR_Locator_i::shutdown_repo (ACE_ENV_SINGLE_ARG_DECL)
+ 	   ACE_THROW_SPEC ( (CORBA::SystemException) )
+{
+  if (OPTIONS::instance()->debug() >= 1)
+    {
+      ACE_DEBUG ((LM_DEBUG, "ImR Locator: Shutting down repository\n"));
+    }
 
+  ActivatorMap::ENTRY *next_entry = 0;
+  
+  for (ActivatorMap::ITERATOR iterator (this->activator_map_);
+       iterator.next (next_entry) != 0;
+       iterator.advance ())
+    {
+      ImplementationRepository::Administration_ptr admin_ref = next_entry->int_id_.admin.in();;
+
+      ACE_TRY
+        {
+          admin_ref->shutdown_repo (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;    
+        }
+      ACE_CATCH (ImplementationRepository::NotFound, ex)
+        {
+          ACE_UNUSED_ARG(ex);
+        }
+      ACE_ENDTRY; 	  
+    }
+       
+  // Finally shutdown the ORB.
+  //
+  orb_->shutdown (0) ;
+}
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Hash_Map_Manager<ACE_CString, ActivatorInfo, ACE_Null_Mutex>;

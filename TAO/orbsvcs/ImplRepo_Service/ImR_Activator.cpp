@@ -27,9 +27,8 @@ run_standalone (void)
           server.run (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          // End the server after its work is done.
-          status = server.fini (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          // We should only get here if the shutdown_repo operation has
+          // been called. That operation saves the Activator's state.  
 
           if (status == -1)
             return 1;

@@ -958,7 +958,7 @@ ImR_Activator_i::init (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 int
-ImR_Activator_i::fini (ACE_ENV_SINGLE_ARG_DECL)
+ImR_Activator_i::fini1 (ACE_ENV_SINGLE_ARG_DECL)
 {
   CORBA::ORB_var orb = OPTIONS::instance ()->orb ();
 
@@ -983,6 +983,22 @@ ImR_Activator_i::fini (ACE_ENV_SINGLE_ARG_DECL)
           ACE_TRY_CHECK;
         }
 
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Server_i::init");
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
+  return 0;
+}
+ 	 
+int
+ImR_Activator_i::fini2 (ACE_ENV_SINGLE_ARG_DECL)
+{
+  ACE_TRY
+    {
       this->imr_poa_->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -1302,6 +1318,15 @@ ImR_Activator_i::shutdown_server (const char *server ACE_ENV_ARG_DECL)
         }
       ACE_ENDTRY;
     }
+}
+
+void ImR_Activator_i::shutdown_repo( ACE_ENV_SINGLE_ARG_DECL )
+ 	              ACE_THROW_SPEC( (CORBA::SystemException) )
+{
+  CORBA::ORB_var orb = OPTIONS::instance ()->orb () ;
+  this->fini1 (ACE_ENV_SINGLE_ARG_PARAMETER);
+  orb->shutdown (0);
+  this->fini2 (ACE_ENV_SINGLE_ARG_PARAMETER) ;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

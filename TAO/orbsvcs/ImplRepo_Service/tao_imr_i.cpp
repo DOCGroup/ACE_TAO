@@ -138,6 +138,7 @@ TAO_IMR_i::print_usage (void)
                         "    list      List the entries in the IR\n"
                         "    remove    Remove an entry from the IR\n"
                         "    shutdown  Shuts down a server through the IR\n"
+                        "    shutdown-repo  Shuts down the IR\n"
                         "    update    Update an entry in the IR\n"
                         "  where [command-arguments] depend on the command\n"));
 }
@@ -162,6 +163,8 @@ TAO_IMR_Op::make_op (const ACE_TCHAR *op_name)
     return new TAO_IMR_Op_Remove ();
   else if (ACE_OS::strcasecmp (op_name, ACE_TEXT ("shutdown")) == 0)
     return new TAO_IMR_Op_Shutdown ();
+  else if (ACE_OS::strcasecmp (op_name, ACE_TEXT ("shutdown-repo")) == 0)
+    return new TAO_IMR_Op_Shutdown_Repo ();
   else if (ACE_OS::strcasecmp (op_name, ACE_TEXT ("update")) == 0)
     return new TAO_IMR_Op_Update ();
 
@@ -605,6 +608,36 @@ TAO_IMR_Op_Shutdown::parse (int argc, ACE_TCHAR **argv)
       case 'h': 
       default:
         this->print_usage ();
+        return -1;
+      }
+
+  // Success
+  return 0;
+}
+
+void
+TAO_IMR_Op_Shutdown_Repo::print_usage (void)
+{
+  ACE_ERROR ((LM_ERROR, "Shuts down the Implementation Repository\n"
+ 	                "\n"
+ 	                "Usage: tao_imr [options] shutdown-repo [command-arguments]\n"
+ 	                "  where [options] are ORB options\n"
+ 	                "  where [command-arguments] can be\n"
+ 	                "    -h            Displays this\n"));
+}
+
+int
+TAO_IMR_Op_Shutdown_Repo::parse (int argc, ACE_TCHAR **argv)
+{
+  // Skip both the program name and the "shutdown" command
+  ACE_Get_Opt get_opts (argc, argv, "h");
+  int c;
+  while ((c = get_opts ()) != -1)
+    switch (c)
+      {
+        case 'h':  // display help
+        default:
+          this->print_usage ();
         return -1;
       }
 
@@ -1143,6 +1176,29 @@ TAO_IMR_Op_Shutdown::run (void)
 
   // Success
   return TAO_IMR_Op::NORMAL;
+}
+
+int
+TAO_IMR_Op_Shutdown_Repo::run (void)
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      this->imr_locator_->shutdown_repo( ACE_ENV_SINGLE_ARG_PARAMETER ) ;
+      ACE_TRY_CHECK;
+
+      ACE_DEBUG((LM_DEBUG,
+ 	        "Successfully shut down Implementation Repository\n"));
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Shutting Down Repository");
+      return UNKNOWN;
+    }
+  ACE_ENDTRY;
+
+ // Success
+ return NORMAL;
 }
 
 int

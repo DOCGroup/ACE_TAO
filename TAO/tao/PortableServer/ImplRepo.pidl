@@ -10,7 +10,7 @@
  *
  * The command used to generate code from this file is:
  *
- *   tao_idl.exe -o orig -Gp -Gd -Ge 1 -Sc -GT -Wb,export_macro=TAO_PortableServer_Export -Wb,export_include=portableserver_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" ImplRepo.pidl
+ *   tao_idl.exe -o orig -ci C.i -si S.i -st S_T.i -Gp -Gd -Ge 1 -Sc -GT -Wb,export_macro=TAO_PortableServer_Export -Wb,export_include=portableserver_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" ImplRepo.pidl
  *
  */
 //=============================================================================
@@ -195,6 +195,9 @@ module ImplementationRepository
     // are additional servers, they can be received through the
     // <server_iterator>.  If there are no more servers, then
     // <server_iterator> is null.
+
+    void shutdown_repo() ;
+    // Shuts down the repository
 
     string find_ior (in string object_name)
       raises (NotFound);
