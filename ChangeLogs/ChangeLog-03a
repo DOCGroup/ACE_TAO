@@ -1,3 +1,10 @@
+Thu Nov 14 06:16:51 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/Parser.pm:
+
+          Take into account relative directories in the cd() method.
+          The original optimization overlooked this.
+
 Thu Nov 14 06:59:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Date_Time.{h,i}:
