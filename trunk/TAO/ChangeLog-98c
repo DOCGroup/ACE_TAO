@@ -1,5 +1,9 @@
 Sun Sep 27 00:58:31 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* tao/Object_Table.cpp: Cleaned up the code a bit and got it to
+ 	  work on SunC++ again.  This may break DU's C++ compiler, but
+ 	  we'll take on step at a time here...
+
 	* TAO_IDL/be/be_interface.cpp: Generate the "unsigned int"
  	  signatures for hash() and lookup() to match the changes in
  	  gperf.
