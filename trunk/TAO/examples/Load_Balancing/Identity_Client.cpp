@@ -99,6 +99,8 @@ Identity_Client::init (int argc,
 int
 Identity_Client::run (CORBA::Environment &ACE_TRY_ENV)
 {
+  ACE_DEBUG ((LM_DEBUG, "Identity_Client: Initialized \n"));
+
   // Contact the <Object_Group_Factory> to obtain an <Object_Group>.
   CORBA::ORB_var orb = orb_manager_.orb ();
   CORBA::Object_var obj =
@@ -117,10 +119,13 @@ Identity_Client::run (CORBA::Environment &ACE_TRY_ENV)
 
   const char *group_name;
   if (this->use_random_)
-    group_name = "Random group";
+    group_name = "Identity, Random";
   else
-    group_name = "Round Robin group";
+    group_name = "Identity, Round Robin";
 
+  ACE_DEBUG ((LM_DEBUG,
+              "Identity_Client: Requesting Object Group "
+              "with id <%s>\n", group_name));
   Load_Balancer::Object_Group_var object_group =
     factory->resolve (group_name,
                       ACE_TRY_ENV);
@@ -129,17 +134,28 @@ Identity_Client::run (CORBA::Environment &ACE_TRY_ENV)
   // List <Object_Group>'s id.
   CORBA::String_var id = object_group->id (ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
-  ACE_DEBUG ((LM_DEBUG, "Object Group's id is: %s\n\n", id.in ()));
+
+  if (ACE_OS::strcmp (id.in (), group_name) != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Identity_Client: incorrect object group"
+                       "returned from factory->resolve\n"),
+                      -1);
 
   // List all <Object_Group>s members.
+  ACE_DEBUG ((LM_DEBUG,
+              "Identity_Client: Requesting member list of <%s> Object Group\n",
+              group_name));
+
   Load_Balancer::Member_ID_List_var id_list =
     object_group->members (ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
+
   ACE_DEBUG ((LM_DEBUG,
-              "The group contains %d members:\n",
+              "Identity_Client: The Group contains %d members:\n",
               id_list->length ()));
   for (CORBA::ULong i = 0; i < id_list->length (); ++i)
-    ACE_DEBUG ((LM_DEBUG, "%s\n", (id_list[i]).in ()));
+    ACE_DEBUG ((LM_DEBUG, "                 <%s>\n",
+                (id_list[i]).in ()));
 
   // Perform <number_of_invocations_> method calls on <Identity>
   // objects, which are members of the <Object_Group>.  Before each
@@ -147,6 +163,14 @@ Identity_Client::run (CORBA::Environment &ACE_TRY_ENV)
   // invocation from our <Object_Group>.
   Identity_var identity_object;
   CORBA::String_var identity;
+
+  ACE_DEBUG ((LM_DEBUG,
+              "Identity_Client: Performing %d invocation(s), "
+              "consulting the <%s> Group\n"
+              "                 for Identity object "
+              "to use before each invocation\n",
+              this->number_of_invocations_,
+              group_name));
 
   for (size_t ind = 0; ind < this->number_of_invocations_; ++ind)
     {
@@ -161,14 +185,13 @@ Identity_Client::run (CORBA::Environment &ACE_TRY_ENV)
                            "Identity_Client: cannot narrow an object received from"
                            "<Object_Group::resolve> to <Identity>\n"),
                           -1);
-      identity_object->get_name (identity.out ());
-      ACE_CHECK_RETURN (-1);
-      ACE_DEBUG ((LM_DEBUG,
-                  "Invocation %d: %s\n",
-                  ind,
-                  identity.in ()));
+      identity_object->get_name (identity.out (),
+                                 ACE_TRY_ENV);
       ACE_CHECK_RETURN (-1);
     }
+
+  ACE_DEBUG ((LM_DEBUG,
+              "Identity_Client: Done\n"));
 
   return 0;
 }

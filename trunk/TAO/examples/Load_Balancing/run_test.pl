@@ -73,9 +73,10 @@ sub client
 # and test description.
 @client_opts = ("", "-r");
 
-@test_heading = ("Client using Round Robin Object Group (10 iterations): \n",
-                 "Client using Random Object Group (10 iterations): \n");
+@test_heading = ("Client using Round Robin Object Group (10 iterations): \n\n",
+                 "Client using Random Object Group (10 iterations): \n\n");
 
+print STDERR "\n    Starting Load Balancing Server and Identity Server \n\n";
 load_balancing_server ("");
 server ("");
 

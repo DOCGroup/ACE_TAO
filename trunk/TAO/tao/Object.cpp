@@ -534,7 +534,10 @@ CORBA_Object::_validate_connection (CORBA::PolicyList_out inconsistent_policies,
                                     CORBA::Environment &ACE_TRY_ENV)
 {
   inconsistent_policies = 0;
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+
+#if defined (TAO_HAS_MINIMUM_CORBA)
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
+#else
   // If the object is collocated then use non_existent to see whether
   // it's there.
   if (this->is_collocated_)
