@@ -1,3 +1,10 @@
+Wed May 23 18:53:12 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+        * tao/RTPOA.pidl:
+          Removed file, since it is not used anymore and is replaced by
+          tao/PortableServer/RTPortableServer.pidl.  Thanks to Steve
+          Totten <totten_s@ociweb.com> for pointing this out.
+
 Wed May 23 15:11:29 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * performance-tests/Makefile:
