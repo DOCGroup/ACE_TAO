@@ -7,7 +7,7 @@
 //
 // = AUTHOR
 //    Tim Harrison
-// 
+//
 // ============================================================================
 
 #if !defined (ACE_GPlot_File_H)
@@ -77,8 +77,9 @@ private:
   // = map_ stores all values.  It is sync'ed to file when this->close
   // is called.
   typedef ACE_Map_Entry <long, char *> GPLOT_ENTRY;
-  typedef ACE_Map_Iterator <long, char *, ACE_Null_Mutex> GPLOT_ITERATOR;
   typedef ACE_Map_Manager<long, char *, ACE_Null_Mutex> GPLOT_MAP;
+  typedef ACE_Map_Iterator <long, char *, ACE_Null_Mutex> GPLOT_ITERATOR;
+
   GPLOT_MAP map_;
 
   char filename_[BUFSIZ];
