@@ -101,9 +101,6 @@ interface Logger_Factory
   //   Create a <Logger> of type <name>.
 
   Logger make_logger (in string name);
-  // Returns a new <Logger> instance.  Currently, <name> is unused, but it 
-  // could be used to select the appropriate type of <Logger>.
+  // Returns a new <Logger> instance if <name> is unique, or retuns a
+  // previously created instance of that name
 };
-
-
-
