@@ -313,6 +313,7 @@
 
 // Platform has XPG4 wide character support
 #define ACE_HAS_XPG4_MULTIBYTE_CHAR
+#define ACE_HAS_WCHAR
 
 // Platform lacks a typedef for timespec_t, but has struct timespec
 #define ACE_LACKS_TIMESPEC_T
