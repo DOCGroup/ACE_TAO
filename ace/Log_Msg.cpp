@@ -1440,7 +1440,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
   *bp = '\0'; // Terminate bp, but don't auto-increment this!
 
   // Check that memory was not corrupted.
-  if (bp >= this->msg_ + ACE_Log_Record::MAXLOGMSGLEN)
+  if (bp >= this->msg_ + sizeof this->msg_)
     {
       abort_prog = 1;
       ACE_OS::fprintf (stderr,
