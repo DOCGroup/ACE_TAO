@@ -1371,7 +1371,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << "{\n";
   os->incr_indent ();
   *os << "TAO_Skeleton skel; // pointer to skeleton for operation" << be_nl;
-  *os << "CORBA::String opname = req.op_name (); // retrieve operation name"
+  *os << "const char *opname = req.operation (); // retrieve operation name"
       << be_nl;
   *os << "// find the skeleton corresponding to this opname" << be_nl;
   *os << "if (this->_find (opname, skel) == -1)" << be_nl;

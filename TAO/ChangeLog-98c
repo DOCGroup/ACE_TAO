@@ -1,3 +1,49 @@
+Tue Mar 24 14:07:08 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* tao/Server_Request.{h, i, cpp}: Made the class compliant with
+	the latest CORBA v2.2. Added some extensions. There were some
+	subtle bugs related to user defined exceptions that were not being
+	reported back to the caller. Modified the constructor to take a
+	GIOP_RequestHeader as a parameter.
+
+	* tao/IIOP_Interpreter.{h, cpp}: Removed the "struct_traverse" and
+	"union_traverse" methods as they were no longer used.
+
+	* tao/Typecode.{h, cpp}: Removed the original interpreter
+	"traverse" as it is no longer used since its logic is included in
+	the different encode and decode methods.
+
+	* tao/POA.cpp: changed the usage of "op_name" to "operation" since
+	that is the correct method name of the ServerRequest class
+	according to the CORBA v2.2 spec.
+
+	* tao/POAS.cpp: Massive changes made to use the new style of
+	skeleton code that the IDL compiler generates
+
+	* tao/{Servant_Base, Operation_Table}.{h, cpp}: The "_find" and
+	"_bind" operations now take a "const char *opname" rather than
+	"CORBA::String  &opname".
+
+	* tao/Connect.cpp: Server_Request creation now uses the modified
+	constructor.
+
+	* TAO_IDL/be/{be_visitor_operation, be_interpretive}.cpp: Added
+	another visitor that generates the exceptionlist for the client
+	stub.
+
+	* TAO_IDL/be/be_visitor_interface.cpp: Change in generated code to
+	use the "operation" method on class Server_Request rather than the
+	non-compliant "op_name".
+
+	* TAO_IDL/be/be_visitor_sequence.cpp: Minor correction to get some
+	formatting in generated code correct.
+
+	* TAO_IDL/be_include/be_codegen.h: Added a state for exception
+	list generation
+
+	* TAO_IDL/be_include/be_visitor_operation.h: Added a new visitor
+	for exception list generation.
+
 Tue Mar 24 11:01:33 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/TAO.dsp:  Added Stub.cpp into the project.

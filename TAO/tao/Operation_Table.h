@@ -4,13 +4,13 @@
 //
 // = LIBRARY
 //    TAO
-// 
+//
 // = FILENAME
 //    optable.h
 //
 // = AUTHOR
 //    Aniruddha Gokhale
-// 
+//
 // ============================================================================
 
 #if !defined (TAO_OPTABLE_H)
@@ -32,16 +32,16 @@ struct TAO_operation_db_entry
 class TAO_Export TAO_Operation_Table
   // = TITLE
   //     Abstract class for maintaining and lookup of CORBA IDL
-  //     operation names. 
+  //     operation names.
 {
 public:
-  virtual int find (const CORBA::String &opname, 
+  virtual int find (const char *opname,
 		   TAO_Skeleton &skelfunc) = 0;
   // Uses <{opname}> to look up the skeleton function and pass it back
   // in <{skelfunc}>.  Returns non-negative integer on success, or -1
   // on failure.
 
-  virtual int bind (const CORBA::String &opname,
+  virtual int bind (const char *opname,
 		    const TAO_Skeleton skel_ptr) = 0;
   // Associate the skeleton <{skel_ptr}> with an operation named
   // <{opname}>.  Returns -1 on failure, 0 on success, 1 on duplicate.
@@ -52,7 +52,7 @@ public:
 // Dynamic hashing.  We use template specialization here to use const
 // char* as the external ID. The template specialization is needed
 // since the "hash" method is not defined on type "char *".
-typedef ACE_Hash_Map_Manager<const char *, TAO_Skeleton, ACE_SYNCH_NULL_MUTEX> 
+typedef ACE_Hash_Map_Manager<const char *, TAO_Skeleton, ACE_SYNCH_NULL_MUTEX>
         OP_MAP_MANAGER;
 
 class TAO_Export TAO_Dynamic_Hash_OpTable : public TAO_Operation_Table
@@ -67,17 +67,17 @@ public:
   // Initialize the dynamic hash operation table with a database of operation
   // names. The hash table size may be different from the size of the
   // database. Hence we use the third argument to specify the size of the
-  // internal hash table. 
+  // internal hash table.
 
   ~TAO_Dynamic_Hash_OpTable (void);
   // destructor
 
-  virtual int bind (const CORBA::String &opname, 
+  virtual int bind (const char *opname,
 		    const TAO_Skeleton skel_ptr);
   // Associate the skeleton <{skel_ptr}> with an operation named
   // <{opname}>.  Returns -1 on failure, 0 on success, 1 on duplicate.
 
-  virtual int find (const CORBA::String &opname,
+  virtual int find (const char *opname,
 		    TAO_Skeleton &skelfunc);
   // Uses <{opname}> to look up the skeleton function and pass it back
   // in <{skelfunc}>.  Returns non-negative integer on success, or -1
@@ -114,18 +114,18 @@ public:
   TAO_Linear_OpTable (const TAO_operation_db_entry *db, CORBA::ULong dbsize);
   // constructor.
   // Initialize the linear search operation table with a database of operation
-  // names 
+  // names
 
   ~TAO_Linear_OpTable (void);
   // destructor
 
-  virtual int find (const CORBA::String &opname,
+  virtual int find (const char *opname,
 		    TAO_Skeleton &skel_ptr);
   // Uses <{opname}> to look up the skeleton function and pass it back
   // in <{skelfunc}>.  Returns non-negative integer on success, or -1
   // on failure.
 
-  virtual int bind (const CORBA::String &opname,
+  virtual int bind (const char *opname,
 		    const TAO_Skeleton skelptr);
   // Associate the skeleton <{skel_ptr}> with an operation named
   // <{opname}>.  Returns -1 on failure, 0 on success, 1 on duplicate.
@@ -168,13 +168,13 @@ public:
   ~TAO_Active_Demux_OpTable (void);
   // destructor
 
-  virtual int find (const CORBA::String &opname,
+  virtual int find (const char *opname,
 		    TAO_Skeleton &skel_ptr);
   // Uses <{opname}> to look up the skeleton function and pass it back
   // in <{skelfunc}>.  Returns non-negative integer on success, or -1
   // on failure.
 
-  virtual int bind (const CORBA::String &opname,
+  virtual int bind (const char *opname,
 		    const TAO_Skeleton skelptr);
   // Associate the skeleton <{skel_ptr}> with an operation named
   // <{opname}>.  Returns -1 on failure, 0 on success, 1 on duplicate.
@@ -214,14 +214,14 @@ public:
 
   DEMUX_STRATEGY lookup_strategy (void) const;
   // return the enumerated value for the lookup strategy. Default is Dynamic
-  // Hashing. 
+  // Hashing.
 
   void concrete_strategy (TAO_Operation_Table *ot);
   // Provide a data structure that will do the lookup. This is useful for
   // user-defined lookup strategies.
 
   TAO_Operation_Table *concrete_strategy (void);
-  // return the 
+  // return the
 
   TAO_Operation_Table_Parameters (void);
   // constructor
@@ -237,7 +237,7 @@ private:
 };
 
 // Define a singleton instance of operation table parameters.
-typedef ACE_Singleton<TAO_Operation_Table_Parameters, ACE_SYNCH_RECURSIVE_MUTEX> 
+typedef ACE_Singleton<TAO_Operation_Table_Parameters, ACE_SYNCH_RECURSIVE_MUTEX>
         TAO_OP_TABLE_PARAMETERS;
 
 class TAO_Export TAO_Operation_Table_Factory
@@ -257,7 +257,7 @@ public:
 };
 
 // Define a singleton instance of the operation table factory.
-typedef ACE_Singleton<TAO_Operation_Table_Factory, ACE_SYNCH_RECURSIVE_MUTEX> 
+typedef ACE_Singleton<TAO_Operation_Table_Factory, ACE_SYNCH_RECURSIVE_MUTEX>
         TAO_OP_TABLE_FACTORY;
 
 #endif /* TAO_OPTABLE_H */

@@ -59,14 +59,14 @@ TAO_Dynamic_Hash_OpTable::~TAO_Dynamic_Hash_OpTable (void)
 }
 
 int
-TAO_Dynamic_Hash_OpTable::bind (const CORBA::String &opname,
+TAO_Dynamic_Hash_OpTable::bind (const char *opname,
                                 const TAO_Skeleton skel_ptr)
 {
   return this->hash_.bind (CORBA::string_dup (opname), skel_ptr);
 }
 
 int
-TAO_Dynamic_Hash_OpTable::find (const CORBA::String &opname,
+TAO_Dynamic_Hash_OpTable::find (const char *opname,
                                 TAO_Skeleton& skel_ptr)
 {
   return this->hash_.find ((const char *)opname, skel_ptr);
@@ -94,7 +94,7 @@ TAO_Linear_OpTable::~TAO_Linear_OpTable (void)
 }
 
 int
-TAO_Linear_OpTable::bind (const CORBA::String &opname,
+TAO_Linear_OpTable::bind (const char *opname,
                           const TAO_Skeleton skel_ptr)
 {
   CORBA::ULong i = this->next_;
@@ -111,7 +111,7 @@ TAO_Linear_OpTable::bind (const CORBA::String &opname,
 }
 
 int
-TAO_Linear_OpTable::find (const CORBA::String &opname,
+TAO_Linear_OpTable::find (const char *opname,
                           TAO_Skeleton& skel_ptr)
 {
   ACE_ASSERT (this->next_ <= this->tablesize_);
@@ -166,7 +166,7 @@ TAO_Active_Demux_OpTable::~TAO_Active_Demux_OpTable (void)
 }
 
 int
-TAO_Active_Demux_OpTable::bind (const CORBA::String &opname,
+TAO_Active_Demux_OpTable::bind (const char *opname,
 				const TAO_Skeleton skel_ptr)
 {
   CORBA::ULong i = ACE_OS::atoi (opname);
@@ -186,7 +186,7 @@ TAO_Active_Demux_OpTable::bind (const CORBA::String &opname,
 }
 
 int
-TAO_Active_Demux_OpTable::find (const CORBA::String &opname,
+TAO_Active_Demux_OpTable::find (const char *opname,
                                 TAO_Skeleton& skel_ptr)
 {
   CORBA::ULong i = ACE_OS::atoi (opname);
