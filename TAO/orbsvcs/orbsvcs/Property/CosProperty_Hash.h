@@ -23,7 +23,7 @@
 #include "ace/Synch.h"
 #include "orbsvcs/CosPropertyServiceS.h"
 
-class Tao_ORBSVCS_Export CosProperty_Hash_Key 
+class TAO_ORBSVCS_Export CosProperty_Hash_Key 
 {
   // = TITLE
   //     Key for the Hash Table.
