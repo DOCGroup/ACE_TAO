@@ -729,6 +729,29 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
+<<<<<<< Makefile
+ $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/FaultTolerance/FT_Service_Activate.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/FaultTolerance/fault_tol_export.h \
+ $(TAO_ROOT)/tao/Services_Activate.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/FT_CORBAC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/FT_CORBAC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.i
+=======
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/FaultTolerance/FT_Service_Activate.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/FaultTolerance/fault_tol_export.h \
@@ -753,6 +776,7 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/FT_CORBAC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.i
+>>>>>>> 1.4
 
 .obj/testC.o .obj/testC.so .shobj/testC.o .shobj/testC.so: testC.cpp testC.h \
  $(TAO_ROOT)/tao/corba.h \

@@ -129,7 +129,9 @@ Manager::init (int argc,
 
   // Obtain the RootPOA.
   CORBA::Object_var obj_var =
-    this->orb_->resolve_initial_references ("RootPOA");
+    this->orb_->resolve_initial_references ("RootPOA",
+                                            ACE_TRY_ENV);
+  ACE_CHECK;
 
   // Get the POA_var object from Object_var.
   PortableServer::POA_var root_poa_var =
