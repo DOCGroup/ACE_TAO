@@ -158,10 +158,24 @@ public:
   static size_t total_length (const ACE_Message_Block *begin,
                               const ACE_Message_Block *end);
 
-  // Definitions of the IDL basic types, for use in the CDR
-  // classes. The cleanest way to avoid complaints from all compilers
-  // is to define them all.
+  /**
+   * @name Basic OMG IDL Types
+   *
+   * These types are for use in the CDRclasses.  The cleanest way to
+   * avoid complaints from all compilers is to define them all.
+   */
+  //@{
+
+  // Versions of GNU G++ less than version 3.0 defined a pre-C99
+  // bool type that was an enumeration.  In some cases the enumeration
+  // could be promoted to an int, causing a potential problem where a
+  // 4 byte integer (for example) could be selected when attempting to
+  // send a boolean over a CDR stream.
+#if defined (__GNUC__) && __GNUC__ < 3
+  typedef unsigned char Boolean;
+#else
   typedef bool Boolean;
+#endif  /* bool || __GNUC__ < 3 */
   typedef unsigned char Octet;
   typedef char Char;
   typedef ACE_WCHAR_T WChar;
@@ -271,6 +285,8 @@ public:
          // @@ also need other comparison operators.
        };
 #    endif /* ACE_SIZEOF_LONG_DOUBLE != 16 */
+
+  //@}
 
 #if !defined (ACE_CDR_GIOP_MAJOR_VERSION)
 #   define ACE_CDR_GIOP_MAJOR_VERSION 1
