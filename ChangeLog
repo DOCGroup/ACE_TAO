@@ -1,3 +1,9 @@
+Thu Jan  8 16:38:56 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* apps/JAWS3/jaws3/Export.h:
+	  Set the JAWS_HAS_DLL define correctly when not set. This fixes
+	  the linker errors in the CBX MPC build.
+
 Thu Jan  8 16:16:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ace/Date_Time.i:
