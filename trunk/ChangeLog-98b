@@ -15,6 +15,8 @@ Fri Jul 17 07:32:26 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/run_tests.{sh,vxworks}: added Semaphore_Test.
 
+        * ACE-INSTALL.html: updated multicast on Linux discussion.
+
 Thu Jul 16 18:28:31 1998  Steve Huston  <shuston@riverace.com>
 
         * ace/OS.i (ACE_OS::sema_wait(ACE_sema_t*, ACE_Time_Value&)):
