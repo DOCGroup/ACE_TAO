@@ -544,19 +544,24 @@ public:
 
   /// Get a policy.  First, check the ORB-level Policy Manager, then
   /// check the ORB defaults.
-  CORBA::Policy_ptr get_policy (CORBA::PolicyType type);
+  CORBA::Policy_ptr get_policy (CORBA::PolicyType type
+                                ACE_ENV_ARG_DECL);
 
   /// Get a policy.  First, check the thread current, then check the
   /// ORB-level Policy Manager, then check the ORB defaults.
-  CORBA::Policy_ptr get_policy_including_current (CORBA::PolicyType type);
+  CORBA::Policy_ptr get_policy_including_current (CORBA::PolicyType type
+                                                  ACE_ENV_ARG_DECL);
 
   /// Get a cached policy.  First, check the ORB-level Policy Manager,
   /// then check the ORB defaults.
-  CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type);
+  CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type
+                                       ACE_ENV_ARG_DECL);
 
   /// Get a cached policy.  First, check the thread current, then
   /// check the ORB-level Policy Manager, then check the ORB defaults.
-  CORBA::Policy_ptr get_cached_policy_including_current (TAO_Cached_Policy_Type type);
+  CORBA::Policy_ptr get_cached_policy_including_current (
+      TAO_Cached_Policy_Type type
+      ACE_ENV_ARG_DECL);
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 

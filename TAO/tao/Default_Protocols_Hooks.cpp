@@ -104,7 +104,7 @@ TAO_Default_Protocols_Hooks::rt_service_context (TAO_Stub *,
 CORBA::Boolean 
 TAO_Default_Protocols_Hooks::set_client_network_priority (IOP::ProfileId,
                                                           TAO_Stub *
-                                                          ACE_ENV_ARG_DECL)
+                                                          ACE_ENV_ARG_DECL_NOT_USED)
 {
   return false;
 }
@@ -112,7 +112,7 @@ TAO_Default_Protocols_Hooks::set_client_network_priority (IOP::ProfileId,
 CORBA::Boolean 
 TAO_Default_Protocols_Hooks::set_server_network_priority (IOP::ProfileId,
                                                           CORBA::Policy *
-                                                          ACE_ENV_ARG_DECL)
+                                                          ACE_ENV_ARG_DECL_NOT_USED)
 {
   return false;
 }

@@ -1,3 +1,13 @@
+Fri Oct  1 18:13:17 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Default_Protocols_Hooks.cpp:
+	* tao/ORB_Core.cpp:
+	* tao/ORB_Core.h:
+	* tao/Remote_Invocation.cpp:
+	* tao/Stub.cpp:
+
+	  Fixed improper use of exception macros.
+
 Fri Oct  1 17:25:29 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/RTCORBA/RT_Policy_i.h (create_transport_protocol_property): 
