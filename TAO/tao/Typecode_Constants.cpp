@@ -35,6 +35,7 @@
 #include "tao/CurrentC.h"
 #include "tao/InconsistentTypeCodeC.h"
 #include "tao/DomainC.h"
+#include "tao/WrongTransactionC.h"
 #include "tao/NVList.h"
 #if defined(TAO_POLLER)
 #include "tao/PollableC.h"
@@ -94,6 +95,7 @@ CORBA::TypeCode_ptr CORBA_ORB::_tc_ObjectId = 0;
 CORBA::TypeCode_ptr CORBA_ORB::_tc_InconsistentTypeCode = 0;
 CORBA::TypeCode_ptr CORBA::_tc_ConstructionPolicy = 0;
 CORBA::TypeCode_ptr CORBA::_tc_NamedValue = 0;
+CORBA::TypeCode_ptr CORBA::_tc_WrongTransaction = 0;
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
 CORBA::TypeCode_ptr CORBA::_tc_PolicyErrorCode = 0;
@@ -352,7 +354,7 @@ TAO_TypeCodes::init (void)
 
   static const CORBA::Long _oc_CORBA_ObjectId[] =
   {
-    TAO_ENCAP_BYTE_ORDER, // byte order
+    TAO_ENCAP_BYTE_ORDER,     // byte order
     31,
     ACE_NTOHL (0x49444c3a),
     ACE_NTOHL (0x6f6d672e),
@@ -361,13 +363,14 @@ TAO_TypeCodes::init (void)
     ACE_NTOHL (0x412f4f62),
     ACE_NTOHL (0x6a656374),
     ACE_NTOHL (0x49643a31),
-    ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/ObjectId:1.0
+    ACE_NTOHL (0x2e300000),  // repository ID = 
+                             //   IDL:omg.org/CORBA/ObjectId:1.0
     9,
     ACE_NTOHL (0x4f626a65),
     ACE_NTOHL (0x63744964),
-    ACE_NTOHL (0x0),  // name = ObjectId
+    ACE_NTOHL (0x0),        // name = ObjectId
     CORBA::tk_string,
-    0, // string length
+    0,                      // string length
   };
   CORBA_ORB::_tc_ObjectId =
     new CORBA::TypeCode (CORBA::tk_alias,
@@ -393,7 +396,7 @@ TAO_TypeCodes::init (void)
     ACE_NTOHL (0x7065436f),
     ACE_NTOHL (0x64653a31),
     ACE_NTOHL (0x2e3000fd), // repository ID =
-                            // IDL:omg.org/CORBA/ORB/InconsistentTypeCode:1.0
+                            //   IDL:omg.org/CORBA/ORB/InconsistentTypeCode:1.0
     21,
     ACE_NTOHL (0x496e636f),
     ACE_NTOHL (0x6e736973),
@@ -426,7 +429,7 @@ TAO_TypeCodes::init (void)
     ACE_NTOHL (0x6c696379), 
     ACE_NTOHL (0x3a312e30), 
     ACE_NTOHL (0x0),          // repository ID = 
-                              //IDL:omg.org/CORBA/ConstructionPolicy:1.0
+                              //   IDL:omg.org/CORBA/ConstructionPolicy:1.0
     19, 
     ACE_NTOHL (0x436f6e73), 
     ACE_NTOHL (0x74727563), 
@@ -442,31 +445,62 @@ TAO_TypeCodes::init (void)
                          sizeof (CORBA::ConstructionPolicy));
 
 
-static const CORBA::Long _oc_corba_NamedValue[] =
-{
-  TAO_ENCAP_BYTE_ORDER, // byte order
-  33, 
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x636f7262), 
-  ACE_NTOHL (0x612f4e61), 
-  ACE_NTOHL (0x6d656456), 
-  ACE_NTOHL (0x616c7565), 
-  ACE_NTOHL (0x3a312e30), 
-  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/corba/NamedValue:1.0
-  11, 
-  ACE_NTOHL (0x4e616d65), 
-  ACE_NTOHL (0x6456616c), 
-  ACE_NTOHL (0x75650000),  // name = NamedValue,
-};
+  static const CORBA::Long _oc_corba_NamedValue[] =
+  {
+    TAO_ENCAP_BYTE_ORDER,     // byte order
+    33, 
+    ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
+    ACE_NTOHL (0x636f7262), 
+    ACE_NTOHL (0x612f4e61), 
+    ACE_NTOHL (0x6d656456), 
+    ACE_NTOHL (0x616c7565), 
+    ACE_NTOHL (0x3a312e30), 
+    ACE_NTOHL (0x0),          // repository ID = 
+                              //   IDL:omg.org/corba/NamedValue:1.0
+    11, 
+    ACE_NTOHL (0x4e616d65), 
+    ACE_NTOHL (0x6456616c), 
+    ACE_NTOHL (0x75650000),  // name = NamedValue,
+  };
 
-CORBA::_tc_NamedValue = 
-  new CORBA::TypeCode (CORBA::tk_objref,
-                       sizeof (_oc_corba_NamedValue),
-                       (char *) &_oc_corba_NamedValue,
-                       0,
-                       sizeof (CORBA::NamedValue));
+  CORBA::_tc_NamedValue = 
+    new CORBA::TypeCode (CORBA::tk_objref,
+                         sizeof (_oc_corba_NamedValue),
+                         (char *) &_oc_corba_NamedValue,
+                         0,
+                         sizeof (CORBA::NamedValue));
+
+  static const CORBA::Long _oc_CORBA_WrongTransaction[] =
+  {
+    TAO_ENCAP_BYTE_ORDER,     // byte order
+    39, 
+    ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e),     
+    ACE_NTOHL (0x6f72672f), 
+    ACE_NTOHL (0x434f5242), 
+    ACE_NTOHL (0x412f5772), 
+    ACE_NTOHL (0x6f6e6754), 
+    ACE_NTOHL (0x72616e73), 
+    ACE_NTOHL (0x61637469), 
+    ACE_NTOHL (0x6f6e3a31), 
+    ACE_NTOHL (0x2e300000),   // repository ID = 
+                              //   IDL:omg.org/CORBA/WrongTransaction:1.0
+    17, 
+    ACE_NTOHL (0x57726f6e), 
+    ACE_NTOHL (0x67547261), 
+    ACE_NTOHL (0x6e736163), 
+    ACE_NTOHL (0x74696f6e), 
+    ACE_NTOHL (0x0),          // name = WrongTransaction
+    0,                        // member count
+  };
+  CORBA::_tc_WrongTransaction =
+    new CORBA::TypeCode (CORBA::tk_except, 
+                         sizeof (_oc_CORBA_WrongTransaction), 
+                         (char *) &_oc_CORBA_WrongTransaction, 
+                         0, 
+                         sizeof (CORBA::WrongTransaction));
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
@@ -1210,6 +1244,8 @@ TAO_TypeCodes::fini (void)
   CORBA::release (CORBA::_tc_ConstructionPolicy);
 
   CORBA::release (CORBA::_tc_NamedValue);
+
+  CORBA::release (CORBA::_tc_WrongTransaction);
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
   CORBA::release (CORBA_ORB::_tc_ObjectId);
