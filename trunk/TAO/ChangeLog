@@ -1,3 +1,8 @@
+Thu Aug 19 08:44:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * PROBLEM-REPORT-FORM:
+          Ask for the default.features file used by MPC.
+
 Wed Aug 18 23:09:29 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ClientCredentials.cpp:

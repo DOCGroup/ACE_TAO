@@ -1,3 +1,8 @@
+Thu Aug 19 08:44:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * PROBLEM-REPORT-FORM:
+          Ask for the default.features file used by MPC.
+
 Wed Aug 18 14:21:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/NodeManager/NodeDaemon_Impl.h:
@@ -5,16 +10,14 @@ Wed Aug 18 14:21:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Aug 17 14:29:00 2004  Jules White <jules@dre.vanderbilt.edu>
 
-    * CIAO/ciao/Servant_Impl_Base.h:
-    * CIAO/ciao/Servant_Impl_Base.cpp:
-    
-    Added a method to create and return the StandardConfigurator for a component. 
-    Overrided _default_POA so that it returns the POA of the servant's container.
-    
-    * CIAO/ciao/StandardConfigurator_Impl.h:
-    * CIAO/ciao/StandardConfigurator_Impl.cpp:
-    
-    Created an implementation of the StandardConfigurator interface.
+        * CIAO/ciao/Servant_Impl_Base.h:
+        * CIAO/ciao/Servant_Impl_Base.cpp:
+          Added a method to create and return the StandardConfigurator for a component.
+          Overrided _default_POA so that it returns the POA of the servant's container.
+
+        * CIAO/ciao/StandardConfigurator_Impl.h:
+        * CIAO/ciao/StandardConfigurator_Impl.cpp:
+          Created an implementation of the StandardConfigurator interface.
 
 Mon Aug 16 22:15:52 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
