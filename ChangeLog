@@ -1,3 +1,8 @@
+Wed Aug 21 11:57:37 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* bin/msvc_auto_compile.pl: Added ACEXML/apps to the list of
+	  compiled ACE directories.
+
 Wed Aug 21 11:15:11 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/NMakeWorkspaceCreator.pm:
