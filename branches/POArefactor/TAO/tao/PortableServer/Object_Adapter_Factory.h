@@ -24,11 +24,6 @@
 #include "tao/Adapter.h"
 #include "ace/Service_Config.h"
 
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
 class TAO_PortableServer_Export TAO_Object_Adapter_Factory : public TAO_Adapter_Factory
 {
 public:
@@ -45,10 +40,6 @@ public:
 
 ACE_STATIC_SVC_DECLARE (TAO_Object_Adapter_Factory)
 ACE_FACTORY_DECLARE (TAO_PortableServer, TAO_Object_Adapter_Factory)
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
 
