@@ -136,12 +136,15 @@ Session::start (const Test::Session_List &other_sessions
 
     if (this->active_thread_count_ != this->thread_count_)
       return;
-
-    this->barrier_.wait ();
-
-    if (this->running_ != 0)
-      return;
   }
+
+  this->validate_connections (ACE_ENV_SINGLE_ARG_PARAMETER);
+
+  this->barrier_.wait ();
+
+  if (this->running_ != 0)
+    return;
+
   /// None of the threads are running, this session is useless at
   /// this point, report the problem and destroy the local objects
   this->terminate (0 ACE_ENV_ARG_PARAMETER);
@@ -220,6 +223,34 @@ Session::more_work (void) const
     return 1;
 
   return 0;
+}
+
+void
+Session::validate_connections (ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC (())
+{
+  CORBA::ULong session_count =
+    this->other_sessions_.length ();
+  for (CORBA::ULong j = 0; j != session_count; ++j)
+    {
+      ACE_TRY
+        {
+#if (TAO_HAS_MESSAGING == 1)
+          CORBA::PolicyList_var unused;
+          this->other_sessions_[j]->_validate_connection(unused
+                                                         ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+#else
+          (void) this->other_sessions_[j]->_is_a("Not_An_IDL_Type"
+                                                 ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+#endif /* TAO_HAS_MESSAGING == 1 */
+        }
+      ACE_CATCHANY
+        {
+        }
+      ACE_ENDTRY;
+    }
 }
 
 void
