@@ -1,3 +1,14 @@
+Mon Apr 15 17:01:00 1997  Brian Mendel  <bmendel@mdc.com>
+
+	- Changes required to run on Windows NT.
+
+   * roa.cpp: Added return statement to ROA_Handler::open(void*) method.
+   * giop.cpp: Modified giop::read_buffer to replace undefined fc with
+               peer.get_handle().  Modified giop::incoming_message method 
+               parameter list to match function prototype exactly.
+   * tcpoa.cpp: Replaced fd instances in debug messages with peer.get_handle()
+                calls.
+
 Mon Apr 14 13:45:54 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* roa.{hh,i,cpp},tcpoa.cpp,svr.cpp: Replaced ACE_ROA with
