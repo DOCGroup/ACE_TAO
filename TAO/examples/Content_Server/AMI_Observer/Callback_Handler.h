@@ -36,8 +36,7 @@ class Callback_Handler
     public virtual PortableServer::RefCountServantBase
 {
 public:
-
-  Callback_Handler (const char * pathname,
+  Callback_Handler (const char *pathname,
                     Web_Server::Callback_ptr callback);
   // Constructor that creates a content iterator corresponding to the
   // name of the file being retrieved from the web server.
@@ -59,9 +58,8 @@ public:
   // retrieval completes.
 
 private:
-
   ~Callback_Handler (void);
-  // Destructor  (private to ensure that Callback_Handler is allocated
+  // Destructor (private to ensure that Callback_Handler is allocated
   // on the heap).
 
   void open_file (CORBA::Environment &ACE_TRY_ENV)

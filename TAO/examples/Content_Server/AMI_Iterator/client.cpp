@@ -137,8 +137,8 @@ get_iterator (CORBA::ORB_ptr o,
   ACE_CHECK_RETURN (Web_Server::Iterator_Factory::_nil ());
 
   // Narrow to a Naming Context
-  CosNaming::NamingContext_var nc;
-  nc = CosNaming::NamingContext::_narrow (obj.in (), ACE_TRY_ENV);
+  CosNaming::NamingContext_var nc = 
+    CosNaming::NamingContext::_narrow (obj.in (), ACE_TRY_ENV);
   ACE_CHECK_RETURN (Web_Server::Iterator_Factory::_nil ());
 
   if (CORBA::is_nil (obj.in ()))

@@ -11,7 +11,7 @@
 
 ACE_RCSID(AMI_Observer, Callback, "$Id$")
 
-Callback_i::Callback_i (int * request_count)
+Callback_i::Callback_i (int *request_count)
   : file_ (ACE_sap_any_cast (ACE_FILE_Addr &)),
     file_io_ (),
     ami_handler_ (),
@@ -67,7 +67,6 @@ Callback_i::next_chunk (const Web_Server::Chunk_Type & chunk_data,
                       ACE_TEXT ("Unable to write retrieved data to ")
                       ACE_TEXT ("file <%s>"),
                       this->file_.get_path_name ()));
-
           return;
         }
     }
@@ -104,7 +103,7 @@ Callback_i::next_chunk (const Web_Server::Chunk_Type & chunk_data,
 }
 
 void
-Callback_i::metadata (const Web_Server::Metadata_Type & metadata)
+Callback_i::metadata (const Web_Server::Metadata_Type &metadata)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
@@ -166,10 +165,11 @@ Callback_i::content_received (void)
 }
 
 int
-Callback_i::get_viewer (char * viewer,
+Callback_i::get_viewer (char *viewer,
                         size_t length)
 {
-  const char * content_type = this->metadata_.content_type.in ();
+  const char *content_type = 
+    this->metadata_.content_type.in ();
 
   if (ACE_OS::strcasecmp (content_type, "text/html") == 0)
     {

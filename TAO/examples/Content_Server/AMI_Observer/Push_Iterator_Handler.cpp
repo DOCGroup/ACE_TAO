@@ -24,9 +24,9 @@ Push_Iterator_Handler::~Push_Iterator_Handler (void)
 }
 
 void
-Push_Iterator_Handler::register_callback (
-    const Web_Server::Metadata_Type & metadata,
-    CORBA::Environment &ACE_TRY_ENV)
+Push_Iterator_Handler::register_callback 
+  (const Web_Server::Metadata_Type &metadata,
+   CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->callback_servant_->metadata (metadata);
@@ -37,7 +37,7 @@ Push_Iterator_Handler::register_callback (
 }
 
 void
-Push_Iterator_Handler::run (int * request_count,
+Push_Iterator_Handler::run (int *request_count,
                             const char *pathname,
                             Web_Server::Iterator_Factory_ptr factory,
                             CORBA::Environment &ACE_TRY_ENV)
@@ -53,11 +53,13 @@ Push_Iterator_Handler::run (int * request_count,
   PortableServer::ServantBase_var tmp (this->callback_servant_);
 
   // Activate the Callback.
-  this->callback_ = this->callback_servant_->_this (ACE_TRY_ENV);
+  this->callback_ =
+    this->callback_servant_->_this (ACE_TRY_ENV);
   ACE_CHECK;
 
   // Activate this Reply Handler.
-  this->ami_handler_ = this->_this (ACE_TRY_ENV);
+  this->ami_handler_ =
+    this->_this (ACE_TRY_ENV);
   ACE_CHECK;
 
   // Register the client callback with the server asynchronously.
