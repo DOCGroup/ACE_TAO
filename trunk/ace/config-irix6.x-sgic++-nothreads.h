@@ -1,11 +1,8 @@
 /* -*- C++ -*- */
 // $Id$
 
-// NOTE: THIS IS NOT A COMPLETE CONFIG FILE.
-
-// The following configuration file keeps the common part to IRIX 6.2,
-// 6.4 and hopefully 6.3 config files.
-// Any difference is covered in the config-irix6.{2,4} files.
+// This is the config file for IRIX 6.2, 6.4 and hopefully 6.3, using
+// the SGI C++ compiler (7.1 or higher).
 
 // For IRIX 6.2 there are several patches that should be applied to
 // get reliable operation with multi-threading and exceptions.
@@ -19,8 +16,8 @@
 // contact or search SGI's web site (http://www.sgi.com) for the latest
 // version.
 
-// Since this files gets included from several config file we cannot
-// call it the true config.h file.
+// Since this files gets included from config-irix6.x-sgic++.h we
+// cannot use ACE_CONFIG_H here.
 #if !defined (ACE_CONFIG_IRIX6X_NTHR_H)
 #define ACE_CONFIG_IRIX6X_NTHR_H
 
@@ -29,6 +26,9 @@
 #define ACE_HAS_SETOWN
 #define ACE_HAS_SYSENT_H
 #define ACE_HAS_SYSINFO
+
+// We need to setup a very high address or Naming_Test won't run.
+#define ACE_DEFAULT_BASE_ADDR ((char *) (1024U * 1024 * 1024)) 
 
 // Include XtReactor into the library.
 #define ACE_HAS_XT
