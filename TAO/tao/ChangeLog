@@ -1,15 +1,30 @@
 Fri Jul 12 14:10:14 2002   Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* M Asynch_Queued_Message.cpp
-M Asynch_Queued_Message.h
-M IIOP_Transport.cpp
-M Invocation.cpp
-M Invocation.h
-M Queued_Message.h
-M Synch_Queued_Message.cpp
-M Synch_Queued_Message.h
-M Transport.cpp
-M Transport.h
-M Strategies/DIOP_Transport.cpp
-M Strategies/SHMIOP_Transport.cpp
-M Strategies/UIOP_Transport.cpp
+	* tao/Transport.h: 
+	* tao/Transport.cpp: 
+	  - Added a new enum enumerating the different message types
+	    recognised within the ORB. 
+
+	  - Added two new methods send_reply_message_i () and
+	    send_synch_message_helper_i (). The method
+	    send_reply_message_i () seperates the path of the reply
+	    message from the send_synchronous_message_i () method. The
+	    method send_synch_message_helper_i () is a helper method
+	    containing common code for the request and reply paths. 
+
+	  - The methods, send_message (), send_message_shared () and
+	    send_message_shared_i () had a variable named
+	    is_synchronous. The variable name has been changed to reflect
+	    the right usage.
+
+	* tao/IIOP_Transport.cpp:
+	* tao/Strategies/DIOP_Transport.cpp:
+	* tao/Strategies/SHMIOP_Transport.cpp:
+	* tao/Strategies/UIOP_Transport.cpp: The variable names
+	  is_synchronous was changed to reflect the usage.
+	
+	* tao/Invocation.cpp:
+	* tao/Invocation.h: Instead of calling invoke () with a magic
+	  number, used the enumeration defined in Transport.h.
+
+	
