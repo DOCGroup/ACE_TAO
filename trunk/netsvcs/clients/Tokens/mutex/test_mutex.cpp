@@ -1,6 +1,6 @@
-// ============================================================================
 // $Id$
 
+// ============================================================================
 //
 // = LIBRARY
 //    examples
@@ -22,9 +22,9 @@
 #include "ace/Thread.h"
 #include "ace/Thread_Manager.h"
 
-ACE_RCSID(mutex, test_mutex, "$Id$")
+#if defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREADS_LIBRARY)
 
-#if defined (ACE_HAS_THREADS)
+ACE_RCSID(mutex, test_mutex, "$Id$")
 
 static ACE_Token_Proxy *mutex;
 static int remote_mutexes = 0;

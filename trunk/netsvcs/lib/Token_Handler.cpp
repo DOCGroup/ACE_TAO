@@ -5,6 +5,8 @@
 #include "ace/Get_Opt.h"
 #include "Token_Handler.h"
 
+#if defined (ACE_HAS_TOKENS_LIBRARY)
+
 ACE_RCSID(lib, Token_Handler, "$Id$")
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
@@ -654,3 +656,5 @@ ACE_TS_WLock::clone (void) const
   ACE_NEW_RETURN (temp, ACE_TS_WLock (*this), 0);
   return temp;
 }
+
+#endif /* ACE_HAS_TOKENS_LIBRARY */

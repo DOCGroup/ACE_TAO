@@ -1,5 +1,12 @@
 Sun Feb 18 09:59:18 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
+	* netsvcs/clients/Tokens:
+	* netsvcs/servers/main.cpp (main): 
+	* netsvcs/servers/svc.conf: 
+	* netsvcs/lib/Token_Handler: Only compile this stuff if the
+	  ACE_HAS_TOKENS_LIBRARY macro is enabled.  Thanks to Carlos
+	  for reporting this.
+
         * ace/Object_Manager.cpp: Added a check for ACE_HAS_TOKENS_LIBRARY
 	  so we can skip initializing certain things if that macro is
  	  undefined.

@@ -29,6 +29,8 @@
 #include "ace/Token_Collection.h"
 #include "ace/Token_Request_Reply.h"
 
+#if defined (ACE_HAS_TOKENS_LIBRARY)
+
 class ACE_Svc_Export ACE_Token_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
   // = TITLE
@@ -257,4 +259,5 @@ private:
 
 ACE_SVC_FACTORY_DECLARE (ACE_Token_Acceptor)
 
+#endif /* ACE_HAS_TOKENS_LIBRARY */
 #endif /* ACE_TOKEN_HANDLER_H */

@@ -1,4 +1,5 @@
 // $Id$
+
 // ============================================================================
 //
 // = LIBRARY
@@ -25,6 +26,8 @@
 #include "ace/Token_Collection.h"
 #include "ace/Map_Manager.h"
 #include "ace/Service_Config.h"
+
+#if defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREADS_LIBRARY)
 
 ACE_RCSID(manual, manual, "$Id$")
 
@@ -366,3 +369,5 @@ template class ACE_Map_Reverse_Iterator<STDIN_Token::TID, ACE_Token_Collection *
 #pragma instantiate ACE_Map_Iterator<STDIN_Token::TID, ACE_Token_Collection *, ACE_Null_Mutex>
 #pragma instantiate ACE_Map_Reverse_Iterator<STDIN_Token::TID, ACE_Token_Collection *, ACE_Null_Mutex>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#endif /* ACE_HAS_THREADS && ACE_HAS_TOKENS_LIBRARY */
