@@ -1,3 +1,11 @@
+Fri Jan  4 15:50:42 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/SSL/SSL_SOCK_Acceptor.cpp (ssl_accept):
+        * ace/SSL/SSL_SOCK_Connector.cpp (ssl_connect):
+          On ACE::select-reported timeout or failure, set status to return
+          a -1 to caller, not 0. Thanks to Vladimir Chovanec
+          <Vladimir.CHOVANEC@asset.sk> for reporting this and sending a fix.
+
 Fri Jan  4 08:31:49 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* tests/Thread_Manager_Test.cpp (test_task_record_keeping): Fixed
