@@ -1,3 +1,10 @@
+Tue Mar 16 10:38:35 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/Hash_Bucket_T.cpp: 
+	  Removed default parameter declaration from the constructor for
+	  ACE_Hash_Bucket_Manager definition. Default parameter
+	  declarations can only show up in the function declaration.
+
 Tue Mar 16 08:12:54 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/Thread_Manager.cpp: In thread_within(ACE_thread_t), replaced use
@@ -8,6 +15,7 @@ Tue Mar 16 08:12:54 1999  Steve Huston  <shuston@riverace.com>
         * README: Added Peter Windle to the list of distinguished contributors.
 
 Tue Mar 16 03:05:22 1999  James Hu <jxh@entera.com>
+
         * ace/Cache_Hash_T.{cpp,h}:
         * ace/Cache_Heap_T.{cpp,h}:
         * ace/Cache_List_T.{cpp,h}:
