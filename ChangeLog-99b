@@ -1,3 +1,9 @@
+Fri Jun 25 22:20:16 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Future.cpp (detach): changed equality comparison of
+          curr_observer from itself to the observer argument.
+          Thanks to egcs -W for snagging this.
+
 Fri Jun 25 21:46:46 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.h,ace/Signal.h,ace/config-psos-tm.h
