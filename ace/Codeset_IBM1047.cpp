@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 // ============================================================================
@@ -9,19 +10,17 @@
 //    Codeset_IBM1047.cpp
 //
 // = DESCRIPTION
-//   Defines the arrays required to convert between ISO8859 (aka
-//   Latin/1) and IBM1047 (aka EBCDIC).
+//    Defines the arrays required to convert between ISO8859 (aka
+//    Latin/1) and IBM1047 (aka EBCDIC).
 //
 // = AUTHOR
-//   Jim Rogers (jrogers@viasoft.com)
+//    Jim Rogers (jrogers@viasoft.com)
 //
 // ============================================================================
 
-#include "ace/inc_user_config.h"
+#include "ace/Codeset_IBM1047.h"
 
 #if defined(ACE_MVS)
-
-#include "ace/Codeset_IBM1047.h"
 
 ACE_RCSID(ace, Codeset_IBM1047, "$Id$")
 

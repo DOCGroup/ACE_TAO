@@ -228,6 +228,11 @@ libACE_Sockets_la_SOURCES = \
 libACE_IPC_la_SOURCES = \
         Addr.cpp \
 	ATM_Addr.cpp \
+	ATM_Acceptor.cpp \
+	ATM_Connector.cpp \
+	ATM_Params.cpp \
+	ATM_QoS.cpp \
+	ATM_Stream.cpp \
         DEV.cpp \
         DEV_Addr.cpp \
         DEV_Connector.cpp \
@@ -264,7 +269,8 @@ libACE_IPC_la_SOURCES = \
         UNIX_Addr.cpp \
         UPIPE_Acceptor.cpp \
         UPIPE_Connector.cpp \
-        UPIPE_Stream.cpp
+        UPIPE_Stream.cpp \
+	XTI_ATM_Mcast.cpp
 
 libACE_Svcconf_la_SOURCES = \
         DLL.cpp \
@@ -449,6 +455,18 @@ pkginclude_HEADERS = \
         ARGV.i \
         ATM_Addr.h \
         ATM_Addr.i \
+	ATM_Acceptor.h \
+	ATM_Acceptor.i \
+	ATM_Addr.h \
+	ATM_Addr.i \
+	ATM_Connector.h \
+	ATM_Connector.i \
+	ATM_Params.h \
+	ATM_Params.i \
+	ATM_QoS.h \
+	ATM_QoS.i \
+	ATM_Stream.h \
+	ATM_Stream.i \
         Acceptor.h \
         Acceptor.i \
         Activation_Queue.h \
@@ -838,6 +856,8 @@ pkginclude_HEADERS = \
         WIN32_Asynch_IO.i \
         WIN32_Proactor.h \
         WIN32_Proactor.i \
+	XTI_ATM_Mcast.h \
+	XTI_ATM_Mcast.i \
         XtReactor.h \
         config.h \
         inc_user_config.h \
