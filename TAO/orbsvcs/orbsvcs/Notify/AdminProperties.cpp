@@ -11,10 +11,12 @@ ACE_RCSID(Notify, TAO_NS_AdminProperties, "$id$")
 #include "orbsvcs/CosNotificationC.h"
 
 TAO_NS_AdminProperties::TAO_NS_AdminProperties (void)
-  : max_queue_length_ (CosNotification::MaxQueueLength, 0),
-    max_consumers_ (CosNotification::MaxSuppliers, 0),
-    max_suppliers_ (CosNotification::MaxConsumers, 0),
-    reject_new_events_ (CosNotification::RejectNewEvents, 0)
+  : max_global_queue_length_ (CosNotification::MaxQueueLength, 0),
+    max_consumers_ (CosNotification::MaxConsumers, 0),
+    max_suppliers_ (CosNotification::MaxSuppliers, 0),
+    reject_new_events_ (CosNotification::RejectNewEvents, 0),
+    global_queue_length_ (0),
+    global_queue_not_full_condition_ (global_queue_lock_)
 {
 }
 
@@ -28,7 +30,7 @@ TAO_NS_AdminProperties::init (const CosNotification::PropertySeq& prop_seq)
   if (TAO_NS_PropertySeq::init (prop_seq) != 0)
     return -1;
 
-  this->max_queue_length_.set (*this);
+  this->max_global_queue_length_.set (*this);
   this->max_consumers_.set (*this);
   this->max_suppliers_.set (*this);
   this->reject_new_events_.set (*this);
@@ -42,10 +44,12 @@ TAO_NS_AdminProperties::init (const CosNotification::PropertySeq& prop_seq)
 CORBA::Boolean
 TAO_NS_AdminProperties::queue_full (void)
 {
-  if (this->max_queue_length () == 0)
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->global_queue_lock_, 1);
+
+  if (this->max_global_queue_length () == 0)
     return 0;
   else
-    if (this->queue_length ().value () > this->max_queue_length ().value ())
+    if (this->global_queue_length_ > this->max_global_queue_length ().value ())
       return 1;
 
   return 0;
@@ -55,12 +59,10 @@ TAO_NS_AdminProperties::queue_full (void)
 
 template class ACE_Atomic_Op<TAO_SYNCH_MUTEX,int>;
 template class ACE_Atomic_Op_Ex<TAO_SYNCH_MUTEX,int>;
-template class TAO_Notify_Signal_Property<TAO_SYNCH_MUTEX,int>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Atomic_Op<TAO_SYNCH_MUTEX,int>
 #pragma instantiate ACE_Atomic_Op_Ex<TAO_SYNCH_MUTEX,int>
-#pragma instantiate TAO_Notify_Signal_Property<TAO_SYNCH_MUTEX,int>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

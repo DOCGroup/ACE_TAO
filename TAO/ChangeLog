@@ -1,3 +1,153 @@
+Wed Dec 11 19:18:33 2002  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/orbsvcs/Notify/Notify_Signal_Property_T.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Signal_Property_T.h:
+        * orbsvcs/orbsvcs/Notify/Sequence/EventBatch.cpp:
+        * orbsvcs/orbsvcs/Notify/Sequence/EventBatch.h:
+        * orbsvcs/orbsvcs/Notify/Sequence/EventBatch.inl:
+        * orbsvcs/orbsvcs/Notify/Sequence/Method_Request_Dispatch_EventBatch.cpp:
+        * orbsvcs/orbsvcs/Notify/Sequence/Method_Request_Dispatch_EventBatch.h:
+        * orbsvcs/orbsvcs/Notify/Sequence/Method_Request_Dispatch_EventBatch.inl:
+          Removed the following files obsoleted by the changes to Buffering
+          and Sequences described below.
+
+        * orbsvcs/orbsvcs/Notify/Timer.h:
+          Abstract Timer object that is obtained via the Proxy.
+
+        * orbsvcs/orbsvcs/Notify/Timer_Queue.cpp:
+        * orbsvcs/orbsvcs/Notify/Timer_Queue.h:
+        * orbsvcs/orbsvcs/Notify/Timer_Queue.inl:
+          Timer implementation that uses the ACE_Timer_Queue.
+
+        * orbsvcs/orbsvcs/Notify/Timer_Reactor.cpp:
+        * orbsvcs/orbsvcs/Notify/Timer_Reactor.h:
+        * orbsvcs/orbsvcs/Notify/Timer_Reactor.inl:
+          Timer implementation that uses the ACE_Reactor::instance. This timer
+          assumes that the Reactor is run by the main thread.
+
+        * orbsvcs/orbsvcs/Notify/Sequence/Batch_Buffering_Strategy.cpp:
+        * orbsvcs/orbsvcs/Notify/Sequence/Batch_Buffering_Strategy.h:
+        * orbsvcs/orbsvcs/Notify/Sequence/Batch_Buffering_Strategy.inl:
+          The Batch Buffering strategy that extends the base
+          Buffering_Strategy by adding methods to extract batch size events.
+
+        * orbsvcs/orbsvcs/Notify/AdminProperties.cpp:
+        * orbsvcs/orbsvcs/Notify/AdminProperties.h:
+        * orbsvcs/orbsvcs/Notify/AdminProperties.inl:
+          Added a global queue lock and condition for global queue not
+          empty. Added a TAO_NS_AdminProperties_var to manage
+          AdminProperty lifetime.
+
+        * orbsvcs/orbsvcs/Notify/Buffering_Strategy.cpp:
+        * orbsvcs/orbsvcs/Notify/Buffering_Strategy.h:
+        * orbsvcs/orbsvcs/Notify/Buffering_Strategy.inl:
+          The Buffering Strategy(BS) has been re-implemented:
+          The BS now checks for a local and global maxima when enqueing
+          events. If either maxima is reached and discarding is enabled,
+          queued messages are discarded according to the discard policy.
+          The global lock in the AdminProperties class (created per
+          Event Channel)is used to serialize access to the global message
+          count and condition variables.
+          Note that the local maxima is infact due to the
+          MaxEventsPerConsumer QoS property. Hence to use this property
+          there must be a queue configured per proxy supplier. (using
+          -AllocateTaskPerProxy directive in the svc.conf. see
+          $TAO_ROOT/orbsvcs/tests/Notify/Discarding/notify.conf for an example)
+
+        * orbsvcs/orbsvcs/Notify/Builder.cpp:
+        * orbsvcs/orbsvcs/Notify/Builder.h:
+          Removed <apply_threadpool_qos> and <apply_threadpool_lane_qos>
+          methods. The TAO_NS_Object now provides protected virtual
+          methods to override concurrency related QoS application.
+
+        * orbsvcs/orbsvcs/Notify/EventChannel.cpp:
+          Removed deletion of AdminProperties Object. As this object is
+          now refcounted, it automatically gets destroyed when the
+          EventChannel is destroyed. However, the EC might be destroyed
+          before its child objects.
+
+        * orbsvcs/orbsvcs/Notify/FilterAdmin.cpp:
+        * orbsvcs/orbsvcs/Notify/FilterAdmin.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_No_Filtering.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_No_Filtering.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup.h:
+        * orbsvcs/orbsvcs/Notify/Proxy.cpp:
+        * orbsvcs/orbsvcs/Notify/Proxy.h:
+          "Constified" TAO_NS_Event_var parameter.
+
+        * orbsvcs/orbsvcs/Notify/Method_Request.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request.h:
+          - Provided concrete implementations for the <execute> and <copy>
+          methods.
+          - Added <event> method to obtain the event wrapped by this
+          Message.
+
+        * orbsvcs/orbsvcs/Notify/Notify_Service.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Service.h:
+          - Added <set_event_channel_threads> method.
+          - Removed check for "threads > 0" in set_XXX_qos_properties
+          method. If 0 threads are specified, the QoS property for
+          concurrency defaults to a Reactive model.
+
+        * orbsvcs/orbsvcs/Notify/Object.cpp:
+        * orbsvcs/orbsvcs/Notify/Object.h:
+        * orbsvcs/orbsvcs/Notify/Object.inl:
+          - Added <apply_reactive_concurrency>,
+          <apply_thread_pool_concurrency> and <apply_lane_concurrency> methods.
+          These methods can be overridden for NS_Object specific concurrency QoS.
+
+        * orbsvcs/orbsvcs/Notify/Property.h:
+          - Removed reference to Notify_Signal_Property_T.
+
+        * orbsvcs/orbsvcs/Notify/ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/ProxySupplier.h:
+          Overide TAO_NS_Object::qos_changed method. This method checks
+          for the MaxEventsPerConsumer QoS property and applies it to the
+          Buffering Strategy of the Worker Task.
+
+        * orbsvcs/orbsvcs/Notify/Reactive_Task.cpp:
+        * orbsvcs/orbsvcs/Notify/Reactive_Task.h:
+        * orbsvcs/orbsvcs/Notify/Reactive_Task.inl:
+          Added acessors for timer and buffering strategy.
+          The reactor base timer is used and there is no buffering
+          strategy.
+
+        * orbsvcs/orbsvcs/Notify/ThreadPool_Task.cpp:
+        * orbsvcs/orbsvcs/Notify/ThreadPool_Task.h:
+        * orbsvcs/orbsvcs/Notify/ThreadPool_Task.inl:
+          This task delegates message enqueues and dequeues to the
+          buffering strategy. The Timer_Queue is used to schedule timers.
+          The <svc> method thus dispatches timers and executes command objects.
+
+        * orbsvcs/orbsvcs/Notify/Worker_Task.cpp:
+        * orbsvcs/orbsvcs/Notify/Worker_Task.h:
+          Added abstract accessors for timer and buffering strategy.
+
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushSupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushSupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushSupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushSupplier.h:
+          Added NULL check before <release>ing the peer object.
+
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.h:
+          Changed timer handling and related code. Timers are set via the
+          TAO_NS_Timer object obtained via this objects Proxy. If a
+          dispatching thread is configured, events are now dispatched in
+          the context of the dispatching thread and not in the main thread.
+
+        * orbsvcs/orbsvcs/Makefile.CosNotification:
+        * orbsvcs/Orbsvcs/CosNotification.dsp:
+        * orbsvcs/Orbsvcs/CosNotification_Static.dsp:
+        * orbsvcs/Orbsvcs/CosNotification.bor:
+          Updated.
+
 Wed Dec 11 16:26:48 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp: Removed redundant

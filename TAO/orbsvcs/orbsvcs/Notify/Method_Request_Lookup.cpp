@@ -19,7 +19,7 @@ ACE_RCSID(RT_Notify, TAO_NS_Method_Request_Lookup, "$Id$")
 #include "EventChannelFactory.h"
 #include "Notify_Service.h"
 
-TAO_NS_Method_Request_Lookup::TAO_NS_Method_Request_Lookup (TAO_NS_Event_var& event, TAO_NS_ProxyConsumer* proxy_consumer, TAO_NS_Consumer_Map* map)
+TAO_NS_Method_Request_Lookup::TAO_NS_Method_Request_Lookup (const TAO_NS_Event_var& event, TAO_NS_ProxyConsumer* proxy_consumer, TAO_NS_Consumer_Map* map)
   : TAO_NS_Method_Request_Event (event), proxy_consumer_ (proxy_consumer), map_ (map),
     refcountable_guard_ (*proxy_consumer)
 {

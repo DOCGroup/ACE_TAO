@@ -25,14 +25,10 @@
 #include "orbsvcs/NotifyExtC.h"
 
 template <class LOCK, class TYPE> class ACE_Atomic_Op;
-template <class LOCK, class TYPE> class TAO_Notify_Signal_Property;
-
 template <class TYPE> class TAO_NS_Property_T;
 template <class TYPE> class TAO_NS_StructProperty_T;
 
 typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX,CORBA::Long> TAO_NS_Atomic_Property_Long;
-typedef TAO_Notify_Signal_Property <TAO_SYNCH_MUTEX,CORBA::Long> TAO_NS_Signal_Property_Long;
-
 typedef TAO_NS_Property_T<CORBA::Long> TAO_NS_Property_Long;
 typedef TAO_NS_Property_T<CORBA::Short> TAO_NS_Property_Short;
 typedef TAO_NS_Property_T<TimeBase::TimeT> TAO_NS_Property_Time;

@@ -48,20 +48,29 @@ public:
 /**
  * @class TAO_NS_Method_Request_Event
  *
- * @brief Base class for NS method Requests on Events.
+\ * @brief Base class for NS method Requests on Events.
  *
  */
 class TAO_Notify_Export TAO_NS_Method_Request_Event : public TAO_NS_Method_Request
 {
 public:
   /// Constuctor
-  TAO_NS_Method_Request_Event (TAO_NS_Event_var& event);
+  TAO_NS_Method_Request_Event (const TAO_NS_Event_var& event);
 
   /// Destructor
   virtual ~TAO_NS_Method_Request_Event ();
 
+  /// Execute the Request
+  virtual int execute (ACE_ENV_SINGLE_ARG_DECL);
+
+  /// Create a copy of this object.
+  virtual TAO_NS_Method_Request* copy (void);
+
+  /// Obtain the event.
+  const TAO_NS_Event_var& event (void);
+
 protected:
-  TAO_NS_Event_var event_;
+  const TAO_NS_Event_var event_;
 };
 
 /***********************************************************************/

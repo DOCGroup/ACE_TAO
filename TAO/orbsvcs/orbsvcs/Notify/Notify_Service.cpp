@@ -31,10 +31,13 @@ TAO_NS_Notify_Service::init (int argc, char *argv[])
 
   const ACE_TCHAR *current_arg = 0;
 
+  // Default to an all reactive system.
+  int ec_threads = 0;
   int dispatching_threads = 0;
   int listener_threads = 0;
   int source_threads = 0;
   int lookup_threads = 0;
+
   int task_per_proxy = 0;
 
   while (arg_shifter.is_anything_left ())
@@ -92,6 +95,8 @@ TAO_NS_Notify_Service::init (int argc, char *argv[])
         }
     }
 
+  this->set_event_channel_threads (ec_threads);
+
   if (task_per_proxy == 0)
     {
       this->set_consumer_admin_threads (dispatching_threads + listener_threads);
@@ -107,71 +112,73 @@ TAO_NS_Notify_Service::init (int argc, char *argv[])
 }
 
 void
+TAO_NS_Notify_Service::set_event_channel_threads (int threads)
+{
+  NotifyExt::ThreadPoolParams tp_params =
+    {0, (unsigned)threads, 0, 0, 0, 0, 0 };
+  CosNotification::QoSProperties qos;
+
+  qos.length (1);
+  qos[0].name = CORBA::string_dup (NotifyExt::ThreadPool);
+  qos[0].value <<= tp_params;
+
+  TAO_NS_PROPERTIES::instance()->default_event_channel_qos_properties (qos);
+}
+
+void
 TAO_NS_Notify_Service::set_consumer_admin_threads (int threads)
 {
-  if (threads > 0)
-    {
-      NotifyExt::ThreadPoolParams tp_params =
-        {0, (unsigned)threads, 0, 0, 0, 0, 0 };
-      CosNotification::QoSProperties qos;
+  NotifyExt::ThreadPoolParams tp_params =
+    {0, (unsigned)threads, 0, 0, 0, 0, 0 };
+  CosNotification::QoSProperties qos;
 
-      qos.length (1);
-      qos[0].name = CORBA::string_dup (NotifyExt::ThreadPool);
-      qos[0].value <<= tp_params;
+  qos.length (1);
+  qos[0].name = CORBA::string_dup (NotifyExt::ThreadPool);
+  qos[0].value <<= tp_params;
 
-      TAO_NS_PROPERTIES::instance()->default_consumer_admin_qos_properties (qos);
-    }
+  TAO_NS_PROPERTIES::instance()->default_consumer_admin_qos_properties (qos);
 }
 
 void
 TAO_NS_Notify_Service::set_supplier_admin_threads (int threads)
 {
-  if (threads > 0)
-    {
-      NotifyExt::ThreadPoolParams tp_params =
-        {0, (unsigned)threads, 0, 0, 0, 0, 0 };
-      CosNotification::QoSProperties qos;
+  NotifyExt::ThreadPoolParams tp_params =
+    {0, (unsigned)threads, 0, 0, 0, 0, 0 };
+  CosNotification::QoSProperties qos;
 
-      qos.length (1);
-      qos[0].name = CORBA::string_dup (NotifyExt::ThreadPool);
-      qos[0].value <<= tp_params;
+  qos.length (1);
+  qos[0].name = CORBA::string_dup (NotifyExt::ThreadPool);
+  qos[0].value <<= tp_params;
 
-      TAO_NS_PROPERTIES::instance()->default_supplier_admin_qos_properties (qos);
-    }
+  TAO_NS_PROPERTIES::instance()->default_supplier_admin_qos_properties (qos);
 }
 
 void
 TAO_NS_Notify_Service::set_proxy_consumer_threads (int threads)
 {
-  if (threads > 0)
-    {
-      NotifyExt::ThreadPoolParams tp_params =
-        {0, (unsigned)threads, 0, 0, 0, 0, 0 };
-      CosNotification::QoSProperties qos;
+  NotifyExt::ThreadPoolParams tp_params =
+    {0, (unsigned)threads, 0, 0, 0, 0, 0 };
+  CosNotification::QoSProperties qos;
 
-      qos.length (1);
-      qos[0].name = CORBA::string_dup (NotifyExt::ThreadPool);
-      qos[0].value <<= tp_params;
+  qos.length (1);
+  qos[0].name = CORBA::string_dup (NotifyExt::ThreadPool);
+  qos[0].value <<= tp_params;
 
-      TAO_NS_PROPERTIES::instance()->default_proxy_consumer_qos_properties (qos);
-    }
+  TAO_NS_PROPERTIES::instance()->default_proxy_consumer_qos_properties (qos);
 }
 
 void
 TAO_NS_Notify_Service::set_proxy_supplier_threads (int threads)
 {
-  if (threads > 0)
-    {
-      NotifyExt::ThreadPoolParams tp_params =
-        {0, (unsigned)threads, 0, 0, 0, 0, 0 };
-      CosNotification::QoSProperties qos;
+  NotifyExt::ThreadPoolParams tp_params =
+    {0, (unsigned)threads, 0, 0, 0, 0, 0 };
+  CosNotification::QoSProperties qos;
 
-      qos.length (1);
-      qos[0].name = CORBA::string_dup (NotifyExt::ThreadPool);
-      qos[0].value <<= tp_params;
+  qos.length (1);
+  qos[0].name = CORBA::string_dup (NotifyExt::ThreadPool);
+  qos[0].value <<= tp_params;
 
-      TAO_NS_PROPERTIES::instance()->default_proxy_supplier_qos_properties (qos);
-    }
+  TAO_NS_PROPERTIES::instance()->default_proxy_supplier_qos_properties (qos);
 }
 
 int

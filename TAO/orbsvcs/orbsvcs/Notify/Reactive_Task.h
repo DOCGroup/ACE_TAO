@@ -20,6 +20,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "Worker_Task.h"
+#include "Timer_Reactor.h"
 
 /**
  * @class TAO_NS_Reactive_Task
@@ -36,8 +37,21 @@ public:
   /// Destructor
   ~TAO_NS_Reactive_Task ();
 
+  /// Shutdown task
+  virtual void shutdown (void);
+
   /// Exec the request.
   virtual void exec (TAO_NS_Method_Request& method_request);
+
+  /// The object used by clients to register timers. This method returns a Reactor based Timer.
+  virtual TAO_NS_Timer* timer (void);
+
+  /// Returns NULL.
+  virtual TAO_NS_Buffering_Strategy* buffering_strategy (void);
+
+protected:
+  /// The timer.
+  TAO_NS_Timer_Reactor timer_;
 };
 
 #if defined (__ACE_INLINE__)

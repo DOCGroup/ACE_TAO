@@ -26,6 +26,9 @@ TAO_NS_ProxyPushConsumer::~TAO_NS_ProxyPushConsumer ()
 void
 TAO_NS_ProxyPushConsumer::release (void)
 {
+  if (this->supplier_)
+    this->supplier_->release ();
+
   delete this;
   //@@ inform factory
 }

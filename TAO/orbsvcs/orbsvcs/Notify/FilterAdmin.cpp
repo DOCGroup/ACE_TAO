@@ -15,7 +15,7 @@ TAO_NS_FilterAdmin::~TAO_NS_FilterAdmin (void)
 }
 
 CORBA::Boolean
-TAO_NS_FilterAdmin::match (TAO_NS_Event_var &event ACE_ENV_ARG_DECL)
+TAO_NS_FilterAdmin::match (const TAO_NS_Event_var &event ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosNotifyFilter::UnsupportedFilterableData

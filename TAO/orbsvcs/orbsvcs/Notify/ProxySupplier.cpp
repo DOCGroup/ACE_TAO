@@ -19,6 +19,7 @@ ACE_RCSID(RT_Notify, TAO_NS_ProxySupplier, "$Id$")
 #include "Notify_Service.h"
 #include "Method_Request_Dispatch.h"
 #include "Worker_Task.h"
+#include "Buffering_Strategy.h"
 
 TAO_NS_ProxySupplier::TAO_NS_ProxySupplier (void)
   :consumer_ (0)
@@ -112,7 +113,7 @@ TAO_NS_ProxySupplier::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_NS_ProxySupplier::push (TAO_NS_Event_var &event)
+TAO_NS_ProxySupplier::push (const TAO_NS_Event_var &event)
 {
   TAO_NS_Method_Request_Dispatch request (event, this);
 
@@ -120,9 +121,32 @@ TAO_NS_ProxySupplier::push (TAO_NS_Event_var &event)
 }
 
 void
-TAO_NS_ProxySupplier::push_no_filtering (TAO_NS_Event_var &event)
+TAO_NS_ProxySupplier::push_no_filtering (const TAO_NS_Event_var &event)
 {
   TAO_NS_Method_Request_Dispatch_No_Filtering request (event, this);
 
   this->worker_task ()->exec (request);
+}
+
+void
+TAO_NS_ProxySupplier::qos_changed (const TAO_NS_QoSProperties& qos_properties)
+{
+  TAO_NS_Property_Long mepc_qos (CosNotification::MaxEventsPerConsumer);
+
+  if (mepc_qos.set (qos_properties) != -1)
+    {
+      // Does the Proxy own the Worker Task?
+      if (own_worker_task_)
+        {
+          TAO_NS_Buffering_Strategy* bs = this->worker_task_->buffering_strategy ();
+
+          // Apply this QoS to the Proxy's Buffering Strategy.
+          if (bs)
+            {
+              bs->max_local_queue_length (mepc_qos.value ());
+            }
+        }
+    }
+
+  TAO_NS_Proxy::qos_changed (qos_properties);
 }

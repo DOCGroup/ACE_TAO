@@ -24,7 +24,6 @@ ACE_RCSID(RT_Notify, TAO_NS_EventChannel, "$Id$")
 TAO_NS_EventChannel::~TAO_NS_EventChannel ()
 {
   delete this->event_manager_;
-  delete this->admin_properties_;
 }
 
 void
