@@ -1,3 +1,10 @@
+Sun Jun 29 02:09:20 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/Connection_Manager.cpp: 
+
+	  Added explicit template instantiation for hash map of endpoint
+	  addresses. This should fix the compile problem on sun solaris.
+	
 Sun Jun 29 00:26:56 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	* tao/corbafwd.h: 
