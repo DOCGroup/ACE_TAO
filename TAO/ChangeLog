@@ -1,3 +1,8 @@
+Sat Nov 23 10:52:28 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/IIOP_Transport.cpp: Cosmetic fixes to the debugging
+	  statements. 
+
 Fri Nov 22 15:30:28 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
