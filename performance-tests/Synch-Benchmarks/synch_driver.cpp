@@ -102,12 +102,12 @@ Benchmark_Test::init (int argc, char **argv)
   // Iteratively execute each service loaded in from the svc.conf
   // file.
 
-  for (const ACE_Service_Record *sr; 
+  for (const ACE_Service_Type *sr; 
        sri.next (sr) != 0; 
        sri.advance ())
     {
       // This would greatly benefit from RTTI typesafe downcasting...
-      const ACE_Service_Type *type = sr->type ();
+      const ACE_Service_Type_Impl *type = sr->type ();
       const void *obj = type->object ();
       ACE_Service_Object *so = (ACE_Service_Object *) obj;
       Benchmark *bp = (Benchmark *) so;
