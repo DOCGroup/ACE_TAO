@@ -1149,10 +1149,10 @@ nobase_include_HEADERS += \
   IFR_Client/IFR_ComponentsC.h \
   IFR_Client/IFR_ExtendedC.h \
   IFR_Client/ifr_client_export.h \
-  IFR_Client/IFR_BaseC.i \
-  IFR_Client/IFR_BasicC.i \
-  IFR_Client/IFR_ComponentsC.i \
-  IFR_Client/IFR_ExtendedC.i \
+  IFR_Client/IFR_BaseC.inl \
+  IFR_Client/IFR_BasicC.inl \
+  IFR_Client/IFR_ComponentsC.inl \
+  IFR_Client/IFR_ExtendedC.inl \
   IFR_Client/IFR_Base.pidl \
   IFR_Client/IFR_Basic.pidl \
   IFR_Client/IFR_Components.pidl \

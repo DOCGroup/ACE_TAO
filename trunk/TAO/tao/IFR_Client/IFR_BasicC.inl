@@ -889,4 +889,3 @@ CORBA::ExtLocalInterfaceDef::ExtLocalInterfaceDef (
 }
 
 #endif /* end #if !defined */
-
