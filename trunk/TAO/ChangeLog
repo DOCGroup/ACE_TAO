@@ -1,3 +1,15 @@
+Wed Mar 30 13:32:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* tests/DynAny_Test/data.cpp:
+	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.cpp:
+	* examples/POA/DSI/Database_i.cpp:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.cpp:
+	* tests/Portable_Interceptors/Dynamic/interceptors.cpp:
+	* tests/Portable_Interceptors/Collocated/Dynamic/interceptors.cpp:
+	* examples/Simulator/Event_Supplier/Event_Con.cpp:
+	* orbsvcs/orbsvcs/Log/PersistStore.h:
+          Fixed include of Typecode.h to TypeCode.h
+
 Wed Mar 30 12:59:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* tao/Enum_TypeCode.h:
