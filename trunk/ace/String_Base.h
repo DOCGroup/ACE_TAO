@@ -129,7 +129,7 @@ public:
   /// Return the length of the string.
   size_t length (void) const;
 
-  /// Get a copy of the underlying pointer.
+  /// Get a copy of the underlying representation.
   CHAR *rep (void) const;
 
   /**
