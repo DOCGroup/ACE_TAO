@@ -4,7 +4,7 @@
 #include "ace/Dynamic_Service.h"
 
 ACE_RCSID (PortableServer,
-           POA_ThreadPolicy,
+           ThreadPolicy,
            "$Id$")
 
 #if (TAO_HAS_MINIMUM_POA == 0)

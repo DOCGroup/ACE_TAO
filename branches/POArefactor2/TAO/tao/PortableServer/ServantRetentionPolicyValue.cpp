@@ -3,7 +3,7 @@
 #include "ace/Dynamic_Service.h"
 
 ACE_RCSID (PortableServer,
-           POA_ThreadPolicy,
+           ServantRetentionPolicyValue,
            "$Id$")
 
 #if (TAO_HAS_MINIMUM_POA == 0)
