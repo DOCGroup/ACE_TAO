@@ -1,3 +1,16 @@
+Tue Jun 29 19:30:31 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Dev_Poll_Reactor.h (mask_ops, mask_ops_i):
+
+	  Added return value documentation for these methods.
+
+	* ace/Dev_Poll_Reactor.cpp (remove_handler_i):
+
+	  Corrected problem where error condition may be incorrectly
+	  detected in some cases.  Thanks to Jaroslaw Nozderko
+	  <jaroslaw.nozderko@polkomtel.com.pl> for pointing out the
+	  problem.
+
 Tue Jun 29 08:36:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/tao_ifr.doxygen:

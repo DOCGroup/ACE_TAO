@@ -1657,7 +1657,7 @@ ACE_Dev_Poll_Reactor::remove_handler_i (ACE_HANDLE handle,
   ACE_Event_Handler *eh = this->handler_rep_.find (handle);
 
   if (eh == 0
-      || this->mask_ops_i (handle, mask, ACE_Reactor::CLR_MASK) != 0)
+      || this->mask_ops_i (handle, mask, ACE_Reactor::CLR_MASK) == -1)
     return -1;
 
   // If there are no longer any outstanding events on the given handle
