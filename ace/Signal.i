@@ -14,21 +14,17 @@ ACE_INLINE
 ACE_Sig_Set::ACE_Sig_Set (int fill)
 {
   ACE_TRACE ("ACE_Sig_Set::ACE_Sig_Set");
-#if !defined (ACE_WIN32)
   if (fill)
     ACE_OS::sigfillset (&this->sigset_);
   else
     ACE_OS::sigemptyset (&this->sigset_);
-#endif /* ACE_WIN32 */
 }
 
 ACE_INLINE
 ACE_Sig_Set::~ACE_Sig_Set (void)
 {
   ACE_TRACE ("ACE_Sig_Set::~ACE_Sig_Set");
-#if !defined (ACE_WIN32)
   ACE_OS::sigemptyset (&this->sigset_);
-#endif /* ACE_WIN32 */
 }
 
 ACE_INLINE int
@@ -174,8 +170,6 @@ ACE_Sig_Guard::ACE_Sig_Guard (ACE_Sig_Set *mask)
 {
   ACE_TRACE ("ACE_Sig_Guard::ACE_Sig_Guard");
 
-#if !defined (ACE_WIN32)
-
   // If MASK is 0 then block all signals!
   if (mask == 0)
     {
@@ -197,7 +191,6 @@ ACE_Sig_Guard::ACE_Sig_Guard (ACE_Sig_Set *mask)
     ACE_OS::sigprocmask (SIG_BLOCK, (sigset_t *) *mask, (sigset_t *)
 			 this->omask_); 
 #endif /* ACE_MT_SAFE */
-#endif /* ACE_WIN32 */
 }
 
 // Restore the signal mask.
@@ -206,13 +199,11 @@ ACE_INLINE
 ACE_Sig_Guard::~ACE_Sig_Guard (void)
 {
   ACE_TRACE ("ACE_Sig_Guard::~ACE_Sig_Guard");
-#if !defined (ACE_WIN32)
 #if 0 /* defined (ACE_MT_SAFE) */
   ACE_OS::thr_sigsetmask (SIG_SETMASK, (sigset_t *) this->omask_, 0);
 #else
   ACE_OS::sigprocmask (SIG_SETMASK, (sigset_t *) this->omask_, 0);
 #endif /* ACE_MT_SAFE */
-#endif /* ACE_WIN32 */
 }
 
 ACE_INLINE int
