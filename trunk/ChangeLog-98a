@@ -1,4 +1,4 @@
-Fri Dec  5 00:37:54 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
+Fri Dec  5 00:58:23 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
 
 	* ace/Dynamic.h:
 	* ace/CORBA_Ref.h:
@@ -12,6 +12,7 @@ Fri Dec  5 00:37:54 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
 	* ace/Name_Request_Reply.h:
 	* ace/Naming_Context.h:
 	* ace/Name_Proxy.h:
+	* ace/Local_Name_Space.h:
 	* ace/Local_Name_Space_T.h: Corrected erroneous comments.  These
 	  files all contain incorrect filename info in the preambles which
 	  make erroneous auto-generated man pages.
