@@ -14,14 +14,12 @@ use lib "../../../../../bin";
 
 require ACEutils;
 
-$nsport = 20000 + ACE::uniqueid ();
 $iorfile = "cubit.ior";
 $exepref = '.' . $DIR_SEPARATOR;
 $svnsflags = " -o $iorfile";
 $clnsflags = " -f $iorfile";
 $clflags = "";
 $svflags = "";
-$mcast = 0;
 
 # Make sure the file is gone, so we can wait on it.
 unlink $iorfile;
@@ -34,24 +32,16 @@ for ($i = 0; $i <= $#ARGV; $i++)
   {
     if ($ARGV[$i] eq "-h" || $ARGV[$i] eq "-?")
     {
-      print "run_test [-h] [-n num] [-mcast] [-sleeptime t] [-debug] [-release] [-orblite]\n";
+      print "run_test [-h] [-n num] [-sleeptime t] [-debug] [-release] [-orblite]\n";
       print "\n";
       print "-h                  -- prints this information\n";
       print "-n num              -- client uses <num> iterations\n";
-      print "-mcast              -- uses the multicast version of the nameservice\n";
       print "-sleeptime t        -- run_test should sleep for <t> seconds between running\n";
       print "                       the server and client (default is 5 seconds)\n";
       print "-debug              -- sets the debug flag for both client and server\n";
       print "-release            -- runs the Release version of the test (for NT use)\n";
       print "-orblite            -- Use the lite version of the orb";
       exit;
-    }
-    if ($ARGV[$i] eq "-mcast")
-    {
-      $mcast = 1;
-      $clnsflags = " -ORBnameserviceport $nsport";
-      $svnsflags = " -ORBnameserviceport $nsport";
-      last SWITCH;
     }
     if ($ARGV[$i] eq "-debug")
     {
@@ -95,23 +85,15 @@ $SV = Process::Create ($exepref."server".$Process::EXE_EXT,
                        $svnsflags);
 
 # Put in a wait between the server and client
-if ($mcast == 1)
-{
-  sleep $ACE::sleeptime;
-}
-else
-{
-  if (ACE::waitforfile_timed ($iorfile, 10) == -1) {
-    print STDERR "ERROR: cannot find file <$iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-  }
+
+if (ACE::waitforfile_timed ($iorfile, 10) == -1) {
+  print STDERR "ERROR: cannot find file <$iorfile>\n";
+  $SV->Kill (); $SV->TimedWait (1);
+  exit 1;
 }
 
-$CL = Process::Create ($exepref . "client".$Process::EXE_EXT.
-                       $clflags .
-                       $clnsflags .
-                       " -x");
+$CL = Process::Create ($exepref . "client".$Process::EXE_EXT,
+                       " $clflags $clnsflags -x");
 
 $client = $CL->TimedWait (60);
 if ($client == -1) {
