@@ -1,3 +1,7 @@
+Sat Jan 13 18:25:47 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/IIOP_Transport.cpp: Fixed a compile error in g++.
+
 Sat Jan 13 10:36:11 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/IIOP_Acceptor.h (TAO_IIOP_Acceptor): Made hostname ()
