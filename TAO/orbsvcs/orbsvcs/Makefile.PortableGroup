@@ -58,6 +58,7 @@ FILES = \
   PortableGroup/UIPMC_Profile \
   PortableGroup/UIPMC_Transport \
   PortableGroup/UIPMC_Wait_Never \
+  PortableGroup/PG_Default_Property_Validator \
   PortableGroup/PG_Factory_Map \
   PortableGroup/PG_Factory_Set \
   PortableGroup/PG_GenericFactory \

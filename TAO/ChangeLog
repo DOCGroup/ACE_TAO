@@ -1,3 +1,10 @@
+Mon Jul 22 20:16:04 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* orbsvcs/orbsvcs/Makefile.PortableGroup: Add 
+	  PG_Default_Property_Validator.cpp to list of files being built.
+	* orbsvcs/tests/Miop/McastHello/Makefile: Add -lTAO_PortableGroup to
+	  link line.  Fix for TRU64 Unix build. 
+
 Mon Jul 22 14:22:49 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/CosLoadBalancing.idl:
