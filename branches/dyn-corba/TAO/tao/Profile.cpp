@@ -408,15 +408,15 @@ TAO_Unknown_Profile::encode_endpoints (void)
   return 0;
 }
 
-const TAO_ObjectKey &
+const TAO::ObjectKey &
 TAO_Unknown_Profile::object_key (void) const
 {
   // @@ TODO this is wrong, but the function is deprecated anyway....
-  static TAO_ObjectKey empty_key;
+  static TAO::ObjectKey empty_key;
   return empty_key;
 }
 
-TAO_ObjectKey *
+TAO::ObjectKey *
 TAO_Unknown_Profile::_key (void) const
 {
   return 0;

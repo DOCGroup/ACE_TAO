@@ -66,7 +66,7 @@ CORBA_LocalObject::_is_equivalent (CORBA_Object_ptr other_obj
 // TAO's extensions
 
 
-TAO_ObjectKey *
+TAO::ObjectKey *
 CORBA_LocalObject::_key (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_ERROR((LM_ERROR,

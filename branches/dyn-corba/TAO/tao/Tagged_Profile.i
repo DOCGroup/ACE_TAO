@@ -14,7 +14,7 @@ TAO_Tagged_Profile::TAO_Tagged_Profile (TAO_ORB_Core *orb_core)
 }
 
 
-ACE_INLINE TAO_ObjectKey &
+ACE_INLINE TAO::ObjectKey &
 TAO_Tagged_Profile::object_key (void)
 {
   if (this->object_key_extracted_ == 0)
@@ -24,7 +24,7 @@ TAO_Tagged_Profile::object_key (void)
 }
 
 ACE_INLINE void
-TAO_Tagged_Profile::object_key (TAO_ObjectKey &object_key)
+TAO_Tagged_Profile::object_key (TAO::ObjectKey &object_key)
 {
   this->object_key_.replace (object_key.length (),
                              object_key.length (),
@@ -32,7 +32,7 @@ TAO_Tagged_Profile::object_key (TAO_ObjectKey &object_key)
   this->object_key_extracted_ = 1;
 }
 
-ACE_INLINE const TAO_ObjectKey &
+ACE_INLINE const TAO::ObjectKey &
 TAO_Tagged_Profile::object_key (void) const
 {
   return ACE_const_cast(TAO_Tagged_Profile *, this)->object_key ();

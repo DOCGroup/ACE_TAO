@@ -477,7 +477,8 @@ TAO_GIOP_Message_Generator_Parser_12::marshall_target_spec (
         msg << GIOP::KeyAddr;
 
         // Get the object key
-        const TAO_ObjectKey *key = spec.object_key ();
+        const TAO::ObjectKey *key = spec.object_key ();
+
         if (key)
           {
             // Marshall in the object key

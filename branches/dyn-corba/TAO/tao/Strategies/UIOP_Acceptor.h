@@ -77,7 +77,7 @@ public:
                             int version_minor,
                             const char *options = 0);
   virtual int close (void);
-  virtual int create_profile (const TAO_ObjectKey &object_key,
+  virtual int create_profile (const TAO::ObjectKey &object_key,
                               TAO_MProfile &mprofile,
                               CORBA::Short priority);
 
@@ -85,7 +85,7 @@ public:
   virtual CORBA::ULong endpoint_count (void);
 
   virtual int object_key (IOP::TaggedProfile &profile,
-                          TAO_ObjectKey &key);
+                          TAO::ObjectKey &key);
   //@}
 
 private:
@@ -105,12 +105,12 @@ private:
   int init_uiop_properties (void);
 
   /// Create a UIOP profile representing this acceptor.
-  int create_new_profile (const TAO_ObjectKey &object_key,
+  int create_new_profile (const TAO::ObjectKey &object_key,
                           TAO_MProfile &mprofile,
                           CORBA::Short priority);
 
   /// Add the endpoints on this acceptor to a shared profile.
-  int create_shared_profile (const TAO_ObjectKey &object_key,
+  int create_shared_profile (const TAO::ObjectKey &object_key,
                              TAO_MProfile &mprofile,
                              CORBA::Short priority);
 

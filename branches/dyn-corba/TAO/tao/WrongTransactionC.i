@@ -19,20 +19,33 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-// *************************************************************
-// Inline operations for exception CORBA::WrongTransaction
-// *************************************************************
 
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const CORBA::WrongTransaction &_tao_aggregate)
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/cdr_op_ci.cpp:103
+
+ACE_INLINE
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const CORBA::WrongTransaction &_tao_aggregate
+  )
 {
-  // first marshal the repository ID
+  // First marshal the repository ID.
   if (strm << _tao_aggregate._rep_id ())
-    return 1;
+    {
+      return 1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,CORBA::WrongTransaction&)
+ACE_INLINE
+CORBA::Boolean operator>> (
+    TAO_InputCDR &,
+    CORBA::WrongTransaction&
+  )
 {
   return 1;
 }
+

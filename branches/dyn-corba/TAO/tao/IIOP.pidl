@@ -8,7 +8,7 @@
 //   is:
 //
 //     tao_idl \
-//        -o orig -Gp -Gd -Ge 1 -Gv -DCORBA3
+//        -o orig -Gp -Gd -Ge 1
 //          -Wb,export_macro=TAO_Export \
 //          -Wb,export_include="tao/TAO_Export.h" \
 //          -Wb,pre_include="ace/pre.h" \
@@ -38,9 +38,5 @@ module IIOP
     ListenPointList listen_points;
   };
 };
-
-
-
-#pragma prefix ""
 
 #endif  /* TAO_IIOP_PIDL */

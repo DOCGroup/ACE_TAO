@@ -152,10 +152,10 @@ public:
   const PortableServer::ObjectId &object_id (void) const;
 
   /// Set the object key.
-  void object_key (const TAO_ObjectKey &key);
+  void object_key (const TAO::ObjectKey &key);
 
   /// Get the object key.
-  const TAO_ObjectKey &object_key (void) const;
+  const TAO::ObjectKey &object_key (void) const;
 
   /// Set the servant for the current upcall.
   void servant (PortableServer::Servant servant);
@@ -177,7 +177,7 @@ public:
 
   /// Setup the current.
   void setup (TAO_POA *impl,
-              const TAO_ObjectKey &key);
+              const TAO::ObjectKey &key);
 
 protected:
   /// The POA implementation invoking an upcall
@@ -191,7 +191,7 @@ protected:
   PortableServer::ObjectId object_id_;
 
   /// The object key of the current context.
-  const TAO_ObjectKey *object_key_;
+  const TAO::ObjectKey *object_key_;
 
   /// The servant for the current upcall.
   PortableServer::Servant servant_;
@@ -238,15 +238,15 @@ public:
   /// Destructor.
   ~TAO_Object_Adapter (void);
 
-  int dispatch_servant (const TAO_ObjectKey &key,
+  int dispatch_servant (const TAO::ObjectKey &key,
                         TAO_ServerRequest &req,
                         CORBA::Object_out forward_to
                         ACE_ENV_ARG_DECL);
 
-  int locate_servant (const TAO_ObjectKey &key
+  int locate_servant (const TAO::ObjectKey &key
                       ACE_ENV_ARG_DECL);
 
-  TAO_SERVANT_LOCATION find_servant (const TAO_ObjectKey &key,
+  TAO_SERVANT_LOCATION find_servant (const TAO::ObjectKey &key,
                                      PortableServer::Servant &servant
                                      ACE_ENV_ARG_DECL);
 
@@ -312,7 +312,7 @@ public:
   virtual void check_close (int wait_for_completion
                             ACE_ENV_ARG_DECL);
   virtual int priority (void) const;
-  virtual int dispatch (TAO_ObjectKey &key,
+  virtual int dispatch (TAO::ObjectKey &key,
                         TAO_ServerRequest &request,
                         CORBA::Object_out foward_to
                         ACE_ENV_ARG_DECL)
@@ -324,19 +324,19 @@ public:
 
 protected:
 
-  int locate_servant_i (const TAO_ObjectKey &key
+  int locate_servant_i (const TAO::ObjectKey &key
                         ACE_ENV_ARG_DECL);
 
-  TAO_SERVANT_LOCATION find_servant_i (const TAO_ObjectKey &key,
+  TAO_SERVANT_LOCATION find_servant_i (const TAO::ObjectKey &key,
                                        PortableServer::Servant &servant
                                        ACE_ENV_ARG_DECL);
 
-  void dispatch_servant_i (const TAO_ObjectKey &key,
+  void dispatch_servant_i (const TAO::ObjectKey &key,
                            TAO_ServerRequest &req,
                            void *context
                            ACE_ENV_ARG_DECL);
 
-  void locate_poa (const TAO_ObjectKey &key,
+  void locate_poa (const TAO::ObjectKey &key,
                    PortableServer::ObjectId &id,
                    TAO_POA *&poa
                    ACE_ENV_ARG_DECL);
@@ -686,7 +686,7 @@ public:
     ~Servant_Upcall (void);
 
     /// Locate POA and servant.
-    int prepare_for_upcall (const TAO_ObjectKey &key,
+    int prepare_for_upcall (const TAO::ObjectKey &key,
                             const char *operation,
                             CORBA::Object_out forward_to
                             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
@@ -702,7 +702,7 @@ public:
     void post_invoke (void);
 
     /// Locate POA.
-    TAO_POA *lookup_POA (const TAO_ObjectKey &key
+    TAO_POA *lookup_POA (const TAO::ObjectKey &key
                          ACE_ENV_ARG_DECL);
 
     /// POA accessor.

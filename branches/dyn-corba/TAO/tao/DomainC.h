@@ -19,8 +19,11 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#ifndef _TAO_IDL_DOMAINC_H_
-#define _TAO_IDL_DOMAINC_H_
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:151
+
+#ifndef _TAO_IDL_ORIG_DOMAINC_H_
+#define _TAO_IDL_ORIG_DOMAINC_H_
 
 #include "ace/pre.h"
 #include "tao/corba.h"
@@ -29,9 +32,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/corbafwd.h"
 #include "PolicyC.h"
-#include "Sequence.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -56,20 +57,28 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:48
+
 TAO_NAMESPACE  CORBA
 {
   
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:52
+
 #if !defined (_CORBA_DOMAINMANAGER___PTR_CH_)
 #define _CORBA_DOMAINMANAGER___PTR_CH_
   
   class DomainManager;
   typedef DomainManager *DomainManager_ptr;
-  
+
 #endif /* end #if !defined */
-  
-  
+
 #if !defined (_CORBA_DOMAINMANAGER___VAR_CH_)
 #define _CORBA_DOMAINMANAGER___VAR_CH_
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
   
   class TAO_Export DomainManager_var : public TAO_Base_var
   {
@@ -110,12 +119,13 @@ TAO_NAMESPACE  CORBA
     DomainManager_var &operator= (const TAO_Base_var &rhs);
   };
 
-
 #endif /* end #if !defined */
-  
-  
+
 #if !defined (_CORBA_DOMAINMANAGER___OUT_CH_)
 #define _CORBA_DOMAINMANAGER___OUT_CH_
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
   
   class TAO_Export DomainManager_out
   {
@@ -133,35 +143,26 @@ TAO_NAMESPACE  CORBA
   private:
     DomainManager_ptr &ptr_;
   };
-  
-  
+
 #endif /* end #if !defined */
   
-  // *************************************************************
-  // CORBA::DomainManager
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/interface_ch.cpp:106
-  // *************************************************************
-  
-  
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
+
 #if !defined (_CORBA_DOMAINMANAGER_CH_)
 #define _CORBA_DOMAINMANAGER_CH_
   
-  // Forward Classes Declaration.
   class _TAO_DomainManager_Proxy_Impl;
   class _TAO_DomainManager_Remote_Proxy_Impl;
   class _TAO_DomainManager_Proxy_Broker;
   class _TAO_DomainManager_Remote_Proxy_Broker;
   
   class TAO_Export DomainManager
-    : public virtual CORBA_Object
+    : public virtual CORBA::Object
   {
   public:
-  #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef DomainManager_ptr _ptr_type;
     typedef DomainManager_var _var_type;
-  #endif /* ! __GNUC__ || g++ >= 2.8 */
-
     static int _tao_class_id;
     
     // The static operations.
@@ -182,7 +183,10 @@ TAO_NAMESPACE  CORBA
         return (DomainManager_ptr)0;
       }
     
-    static void _tao_any_destructor (void*);
+    static void _tao_any_destructor (void *);
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual ::CORBA::Policy_ptr get_domain_policy (
         CORBA::PolicyType policy_type
@@ -192,23 +196,26 @@ TAO_NAMESPACE  CORBA
         CORBA::SystemException
       ));
     
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
+    
     virtual CORBA::Boolean _is_a (
-        const CORBA::Char *type_id
+        const char *type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
     virtual void *_tao_QueryInterface (ptr_arith_t type);
     
     virtual const char* _interface_repository_id (void) const;
-
+    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
   private:
     _TAO_DomainManager_Proxy_Broker *the_TAO_DomainManager_Proxy_Broker_;
-    
+  
   protected:
     DomainManager (int collocated = 0);
     
     // These methods travese the inheritance tree and set the
-    // parents piece of the given class in the right mode
+    // parents piece of the given class in the right mode.
     virtual void CORBA_DomainManager_setup_collocation (int collocated);
     
     DomainManager (
@@ -216,12 +223,11 @@ TAO_NAMESPACE  CORBA
         CORBA::Boolean _tao_collocated = 0,
         TAO_Abstract_ServantBase *servant = 0
       );
+    virtual ~DomainManager (void);
     
     friend class _TAO_DomainManager_Remote_Proxy_Impl;
     friend class _TAO_DomainManager_ThruPOA_Proxy_Impl;
     friend class _TAO_DomainManager_Direct_Proxy_Impl;
-    
-    virtual ~DomainManager (void);
   
   private:
     DomainManager (const DomainManager &);
@@ -229,19 +235,26 @@ TAO_NAMESPACE  CORBA
   };
   
   // The Proxy Implementations are used by each interface to
-  // perform a call. Each different implementation encapsulate
-  // an invocation logics.
+  // perform a call. Each different implementation encapsulates
+  // an invocation logic.
   
   
   ///////////////////////////////////////////////////////////////////////
   //                    Base Proxy Impl. Declaration
   //
   
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/base_proxy_impl_ch.cpp:35
+  
   class TAO_Export _TAO_DomainManager_Proxy_Impl
     : public virtual TAO_Object_Proxy_Impl
   {
   public:
-    virtual ~_TAO_DomainManager_Proxy_Impl (void) { }
+    virtual ~_TAO_DomainManager_Proxy_Impl (void) {}
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/base_proxy_impl_ch.cpp:24
+    
     virtual ::CORBA::Policy_ptr get_domain_policy (
         CORBA_Object *_collocated_tao_target_,
         CORBA::PolicyType policy_type
@@ -250,8 +263,7 @@ TAO_NAMESPACE  CORBA
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
-    
+  
   protected:
     _TAO_DomainManager_Proxy_Impl (void);
   };
@@ -265,6 +277,9 @@ TAO_NAMESPACE  CORBA
   //                Remote Proxy Impl. Declaration
   //
   
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/remote_proxy_impl_ch.cpp:37
+  
   class TAO_Export _TAO_DomainManager_Remote_Proxy_Impl
     : public virtual _TAO_DomainManager_Proxy_Impl,
       public virtual TAO_Remote_Object_Proxy_Impl
@@ -272,7 +287,11 @@ TAO_NAMESPACE  CORBA
   public:
     _TAO_DomainManager_Remote_Proxy_Impl (void);
     
-    virtual ~_TAO_DomainManager_Remote_Proxy_Impl (void) { }
+    virtual ~_TAO_DomainManager_Remote_Proxy_Impl (void) {}
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
+    
     virtual ::CORBA::Policy_ptr get_domain_policy (
         CORBA_Object *_collocated_tao_target_,
         CORBA::PolicyType policy_type
@@ -281,8 +300,6 @@ TAO_NAMESPACE  CORBA
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
-    
-    
   };
   
   //
@@ -294,12 +311,14 @@ TAO_NAMESPACE  CORBA
   // collocation scheme, the proxy to be used can vary on
   // a call by call basis.
   
-  
   ///////////////////////////////////////////////////////////////////////
   //                 Base Proxy Broker Declaration 
   //
   
-    class TAO_Export _TAO_DomainManager_Proxy_Broker
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/base_proxy_broker_ch.cpp:35
+  
+  class TAO_Export _TAO_DomainManager_Proxy_Broker
   {
   public:
     virtual ~_TAO_DomainManager_Proxy_Broker (void);
@@ -321,6 +340,9 @@ TAO_NAMESPACE  CORBA
   ///////////////////////////////////////////////////////////////////////
   //                 Remote Proxy Broker Declaration 
   //
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/remote_proxy_broker_ch.cpp:40
   
   class TAO_Export _TAO_DomainManager_Remote_Proxy_Broker
     : public virtual _TAO_DomainManager_Proxy_Broker
@@ -348,26 +370,35 @@ TAO_NAMESPACE  CORBA
   //
   //              End Remote Proxy Broker Declaration 
   ///////////////////////////////////////////////////////////////////////
-  
-  
+
 #endif /* end #if !defined */
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
   
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_DomainManager;
   
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong SecConstruction;
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
   
+  const CORBA::ULong SecConstruction = 11U;
   
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:52
+
 #if !defined (_CORBA_CONSTRUCTIONPOLICY___PTR_CH_)
 #define _CORBA_CONSTRUCTIONPOLICY___PTR_CH_
   
   class ConstructionPolicy;
   typedef ConstructionPolicy *ConstructionPolicy_ptr;
-  
+
 #endif /* end #if !defined */
-  
-  
+
 #if !defined (_CORBA_CONSTRUCTIONPOLICY___VAR_CH_)
 #define _CORBA_CONSTRUCTIONPOLICY___VAR_CH_
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
   
   class TAO_Export ConstructionPolicy_var : public TAO_Base_var
   {
@@ -408,12 +439,13 @@ TAO_NAMESPACE  CORBA
     ConstructionPolicy_var &operator= (const TAO_Base_var &rhs);
   };
 
-
 #endif /* end #if !defined */
-  
-  
+
 #if !defined (_CORBA_CONSTRUCTIONPOLICY___OUT_CH_)
 #define _CORBA_CONSTRUCTIONPOLICY___OUT_CH_
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
   
   class TAO_Export ConstructionPolicy_out
   {
@@ -431,21 +463,15 @@ TAO_NAMESPACE  CORBA
   private:
     ConstructionPolicy_ptr &ptr_;
   };
-  
-  
+
 #endif /* end #if !defined */
   
-  // *************************************************************
-  // CORBA::ConstructionPolicy
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/interface_ch.cpp:106
-  // *************************************************************
-  
-  
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
+
 #if !defined (_CORBA_CONSTRUCTIONPOLICY_CH_)
 #define _CORBA_CONSTRUCTIONPOLICY_CH_
   
-  // Forward Classes Declaration.
   class _TAO_ConstructionPolicy_Proxy_Impl;
   class _TAO_ConstructionPolicy_Remote_Proxy_Impl;
   class _TAO_ConstructionPolicy_Proxy_Broker;
@@ -455,11 +481,8 @@ TAO_NAMESPACE  CORBA
     : public virtual CORBA::Policy
   {
   public:
-  #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef ConstructionPolicy_ptr _ptr_type;
     typedef ConstructionPolicy_var _var_type;
-  #endif /* ! __GNUC__ || g++ >= 2.8 */
-
     static int _tao_class_id;
     
     // The static operations.
@@ -480,7 +503,10 @@ TAO_NAMESPACE  CORBA
         return (ConstructionPolicy_ptr)0;
       }
     
-    static void _tao_any_destructor (void*);
+    static void _tao_any_destructor (void *);
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void make_domain_manager (
         CORBA::InterfaceDef_ptr object_type,
@@ -491,23 +517,26 @@ TAO_NAMESPACE  CORBA
         CORBA::SystemException
       ));
     
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
+    
     virtual CORBA::Boolean _is_a (
-        const CORBA::Char *type_id
+        const char *type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
     virtual void *_tao_QueryInterface (ptr_arith_t type);
     
     virtual const char* _interface_repository_id (void) const;
-
+    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
   private:
     _TAO_ConstructionPolicy_Proxy_Broker *the_TAO_ConstructionPolicy_Proxy_Broker_;
-    
+  
   protected:
     ConstructionPolicy (int collocated = 0);
     
     // These methods travese the inheritance tree and set the
-    // parents piece of the given class in the right mode
+    // parents piece of the given class in the right mode.
     virtual void CORBA_ConstructionPolicy_setup_collocation (int collocated);
     
     ConstructionPolicy (
@@ -515,12 +544,11 @@ TAO_NAMESPACE  CORBA
         CORBA::Boolean _tao_collocated = 0,
         TAO_Abstract_ServantBase *servant = 0
       );
+    virtual ~ConstructionPolicy (void);
     
     friend class _TAO_ConstructionPolicy_Remote_Proxy_Impl;
     friend class _TAO_ConstructionPolicy_ThruPOA_Proxy_Impl;
     friend class _TAO_ConstructionPolicy_Direct_Proxy_Impl;
-    
-    virtual ~ConstructionPolicy (void);
   
   private:
     ConstructionPolicy (const ConstructionPolicy &);
@@ -528,19 +556,26 @@ TAO_NAMESPACE  CORBA
   };
   
   // The Proxy Implementations are used by each interface to
-  // perform a call. Each different implementation encapsulate
-  // an invocation logics.
+  // perform a call. Each different implementation encapsulates
+  // an invocation logic.
   
   
   ///////////////////////////////////////////////////////////////////////
   //                    Base Proxy Impl. Declaration
   //
   
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/base_proxy_impl_ch.cpp:35
+  
   class TAO_Export _TAO_ConstructionPolicy_Proxy_Impl
     : public virtual CORBA::_TAO_Policy_Proxy_Impl
   {
   public:
-    virtual ~_TAO_ConstructionPolicy_Proxy_Impl (void) { }
+    virtual ~_TAO_ConstructionPolicy_Proxy_Impl (void) {}
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/base_proxy_impl_ch.cpp:24
+    
     virtual void make_domain_manager (
         CORBA_Object *_collocated_tao_target_,
         CORBA::InterfaceDef_ptr object_type,
@@ -550,8 +585,7 @@ TAO_NAMESPACE  CORBA
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
-    
+  
   protected:
     _TAO_ConstructionPolicy_Proxy_Impl (void);
   };
@@ -565,6 +599,9 @@ TAO_NAMESPACE  CORBA
   //                Remote Proxy Impl. Declaration
   //
   
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/remote_proxy_impl_ch.cpp:37
+  
   class TAO_Export _TAO_ConstructionPolicy_Remote_Proxy_Impl
     : public virtual _TAO_ConstructionPolicy_Proxy_Impl,
       public virtual TAO_Remote_Object_Proxy_Impl,
@@ -573,7 +610,11 @@ TAO_NAMESPACE  CORBA
   public:
     _TAO_ConstructionPolicy_Remote_Proxy_Impl (void);
     
-    virtual ~_TAO_ConstructionPolicy_Remote_Proxy_Impl (void) { }
+    virtual ~_TAO_ConstructionPolicy_Remote_Proxy_Impl (void) {}
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
+    
     virtual void make_domain_manager (
         CORBA_Object *_collocated_tao_target_,
         CORBA::InterfaceDef_ptr object_type,
@@ -583,8 +624,6 @@ TAO_NAMESPACE  CORBA
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
-    
-    
   };
   
   //
@@ -596,12 +635,14 @@ TAO_NAMESPACE  CORBA
   // collocation scheme, the proxy to be used can vary on
   // a call by call basis.
   
-  
   ///////////////////////////////////////////////////////////////////////
   //                 Base Proxy Broker Declaration 
   //
   
-    class TAO_Export _TAO_ConstructionPolicy_Proxy_Broker
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/base_proxy_broker_ch.cpp:35
+  
+  class TAO_Export _TAO_ConstructionPolicy_Proxy_Broker
   {
   public:
     virtual ~_TAO_ConstructionPolicy_Proxy_Broker (void);
@@ -623,6 +664,9 @@ TAO_NAMESPACE  CORBA
   ///////////////////////////////////////////////////////////////////////
   //                 Remote Proxy Broker Declaration 
   //
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/remote_proxy_broker_ch.cpp:40
   
   class TAO_Export _TAO_ConstructionPolicy_Remote_Proxy_Broker
     : public virtual _TAO_ConstructionPolicy_Proxy_Broker
@@ -650,23 +694,26 @@ TAO_NAMESPACE  CORBA
   //
   //              End Remote Proxy Broker Declaration 
   ///////////////////////////////////////////////////////////////////////
-  
-  
+
 #endif /* end #if !defined */
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
   
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ConstructionPolicy;
   
-  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_obj_sequence_ch.cpp:62
+
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_DOMAINMANAGERLIST_CH_)
 #define __TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_DOMAINMANAGERLIST_CH_
   
-  class TAO_EXPORT_MACRO _TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList
+  class TAO_Export _TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList
     : public TAO_Unbounded_Base_Sequence
   {
   public:
-    // = Initialization and termination methods.
     _TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList (void);
     _TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList (CORBA::ULong maximum);
     _TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList (
@@ -707,54 +754,60 @@ TAO_NAMESPACE  CORBA
       );
     virtual CORBA_Object* _upcast (void *src) const;
   };
-  
+
 #endif /* end #if !defined */
-  
-  
+
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-  
+
 #if !defined (_CORBA_DOMAINMANAGERLIST_CH_)
 #define _CORBA_DOMAINMANAGERLIST_CH_
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:371
   
   class DomainManagerList;
   class DomainManagerList_var;
   
   // *************************************************************
-  // DomainManagerList
+  // CORBA::DomainManagerList
   // *************************************************************
   
   class TAO_Export DomainManagerList : public 
+  
+  // TAO_IDL - Generated from 
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:51
+
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Object_Sequence<DomainManager,DomainManager_var>
+
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
   {
   public:
-    DomainManagerList (void); // default ctor
-    DomainManagerList (CORBA::ULong max); // uses max size
+    DomainManagerList (void);
+    DomainManagerList (CORBA::ULong max);
     DomainManagerList (
         CORBA::ULong max, 
         CORBA::ULong length, 
         DomainManager_ptr *buffer, 
         CORBA::Boolean release = 0
       );
-    DomainManagerList (const DomainManagerList &); // copy ctor
+    DomainManagerList (const DomainManagerList &);
     ~DomainManagerList (void);
+    
     static void _tao_any_destructor (void*);
     
-#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef DomainManagerList_var _var_type;
-#endif /* ! __GNUC__ || g++ >= 2.8 */
-    
-    
   };
-  
+
 #endif /* end #if !defined */
-  
-  
+
 #if !defined (_CORBA_DOMAINMANAGERLIST___VAR_CH_)
 #define _CORBA_DOMAINMANAGERLIST___VAR_CH_
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:549
   
   // *************************************************************
   // class CORBA::DomainManagerList_var
@@ -776,7 +829,9 @@ TAO_NAMESPACE  CORBA
     operator const DomainManagerList &() const;
     operator DomainManagerList &();
     operator DomainManagerList &() const;
-    operator DomainManagerList *&(); // variable-size base types only
+    
+    // Variable-size base types only.
+    operator DomainManagerList *&();
     
     TAO_Object_Manager<DomainManager, DomainManager_var> operator[] (CORBA::ULong index);
     
@@ -790,13 +845,14 @@ TAO_NAMESPACE  CORBA
   private:
     DomainManagerList *ptr_;
   };
-  
-  
+
 #endif /* end #if !defined */
-  
-  
+
 #if !defined (_CORBA_DOMAINMANAGERLIST___OUT_CH_)
 #define _CORBA_DOMAINMANAGERLIST___OUT_CH_
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:753
   
   class TAO_Export DomainManagerList_out
   {
@@ -816,17 +872,24 @@ TAO_NAMESPACE  CORBA
     // Assignment from T_var not allowed.
     void operator= (const DomainManagerList_var &);
   };
-  
-  
+
 #endif /* end #if !defined */
   
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_DomainManagerList;
-  
-  
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:67
+
 }
 TAO_NAMESPACE_CLOSE // module CORBA
 
 // Proxy Broker Factory function pointer declarations.
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/root.cpp:80
 
 extern TAO_Export
 CORBA::_TAO_DomainManager_Proxy_Broker *
@@ -840,25 +903,47 @@ CORBA::_TAO_ConstructionPolicy_Proxy_Broker *
     CORBA::Object_ptr obj
   );
 
-// Any operators for interface CORBA::DomainManager
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_ch.cpp:52
+
 TAO_Export void operator<<= (CORBA::Any &, CORBA::DomainManager_ptr); // copying
 TAO_Export void operator<<= (CORBA::Any &, CORBA::DomainManager_ptr *); // non-copying
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::DomainManager_ptr &);
-// Any operators for interface CORBA::ConstructionPolicy
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_ch.cpp:52
+
 TAO_Export void operator<<= (CORBA::Any &, CORBA::ConstructionPolicy_ptr); // copying
 TAO_Export void operator<<= (CORBA::Any &, CORBA::ConstructionPolicy_ptr *); // non-copying
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::ConstructionPolicy_ptr &);
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/any_op_ch.cpp:52
+
 TAO_Export void operator<<= (CORBA::Any &, const CORBA::DomainManagerList &); // copying version
 TAO_Export void operator<<= (CORBA::Any &, CORBA::DomainManagerList*); // noncopying version
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::DomainManagerList *&); // deprecated
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::DomainManagerList *&);
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:48
+
 #ifndef __ACE_INLINE__
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_ch.cpp:55
 
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::DomainManager_ptr );
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::DomainManager_ptr &);
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_ch.cpp:55
+
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::ConstructionPolicy_ptr );
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::ConstructionPolicy_ptr &);
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ch.cpp:57
 
 #if !defined _TAO_CDR_OP_CORBA_DomainManagerList_H_
 #define _TAO_CDR_OP_CORBA_DomainManagerList_H_
@@ -874,9 +959,13 @@ TAO_Export CORBA::Boolean operator>> (
 
 #endif /* _TAO_CDR_OP_CORBA_DomainManagerList_H_ */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:64
 
 #endif /* __ACE_INLINE__ */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1009
 
 #if defined (__ACE_INLINE__)
 #include "DomainC.i"
@@ -892,3 +981,4 @@ TAO_Export CORBA::Boolean operator>> (
 
 #include "ace/post.h"
 #endif /* ifndef */
+

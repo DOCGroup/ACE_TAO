@@ -19,8 +19,11 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#ifndef _TAO_IDL_CORBA_STRINGSEQC_H_
-#define _TAO_IDL_CORBA_STRINGSEQC_H_
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:151
+
+#ifndef _TAO_IDL_ORIG_STRINGSEQC_H_
+#define _TAO_IDL_ORIG_STRINGSEQC_H_
 
 #include "ace/pre.h"
 
@@ -55,264 +58,322 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:48
+
+TAO_NAMESPACE  CORBA
+{
+
 #if !defined (_CORBA_STRINGSEQ_CH_)
 #define _CORBA_STRINGSEQ_CH_
-
-  class CORBA_StringSeq;
-  class CORBA_StringSeq_var;
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:371
+  
+  class StringSeq;
+  class StringSeq_var;
   
   // *************************************************************
   // CORBA::StringSeq
   // *************************************************************
   
-  class TAO_Export CORBA_StringSeq : public 
+  class TAO_Export StringSeq : public 
+  
+  // TAO_IDL - Generated from 
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:51
+
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-    TAO_Unbounded_String_Sequence
+  TAO_Unbounded_String_Sequence
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-    TAO_Unbounded_String_Sequence
+  TAO_Unbounded_String_Sequence
+
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
   {
   public:
-    CORBA_StringSeq (void); // default ctor
-    CORBA_StringSeq (CORBA::ULong max); // uses max size
-    CORBA_StringSeq (
-      CORBA::ULong max, 
-      CORBA::ULong length, 
-      char * *buffer, 
-      CORBA::Boolean release = 0
-    );
-    CORBA_StringSeq (const CORBA_StringSeq &); // copy ctor
-    ~CORBA_StringSeq (void);
+    StringSeq (void);
+    StringSeq (CORBA::ULong max);
+    StringSeq (
+        CORBA::ULong max, 
+        CORBA::ULong length, 
+        char * *buffer, 
+        CORBA::Boolean release = 0
+      );
+    StringSeq (const StringSeq &);
+    ~StringSeq (void);
+    
     static void _tao_any_destructor (void*);
-
-#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-    typedef CORBA_StringSeq_var _var_type;
-#endif /* ! __GNUC__ || g++ >= 2.8 */
-
+    
+    typedef StringSeq_var _var_type;
   };
-  
-#endif /* end #if !defined */
 
+#endif /* end #if !defined */
 
 #if !defined (_CORBA_STRINGSEQ___VAR_CH_)
 #define _CORBA_STRINGSEQ___VAR_CH_
-
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:549
+  
   // *************************************************************
   // class CORBA::StringSeq_var
   // *************************************************************
-
-  class TAO_Export CORBA_StringSeq_var
+  
+  class TAO_Export StringSeq_var
   {
   public:
-    CORBA_StringSeq_var (void); // default constructor
-    CORBA_StringSeq_var (CORBA_StringSeq *);
-    CORBA_StringSeq_var (const CORBA_StringSeq_var &); // copy constructor
-    ~CORBA_StringSeq_var (void); // destructor
+    StringSeq_var (void);
+    StringSeq_var (StringSeq *);
+    StringSeq_var (const StringSeq_var &);
+    ~StringSeq_var (void);
     
-    CORBA_StringSeq_var &operator= (CORBA_StringSeq *);
-    CORBA_StringSeq_var &operator= (const CORBA_StringSeq_var &);
-    CORBA_StringSeq *operator-> (void);
-    const CORBA_StringSeq *operator-> (void) const;
+    StringSeq_var &operator= (StringSeq *);
+    StringSeq_var &operator= (const StringSeq_var &);
+    StringSeq *operator-> (void);
+    const StringSeq *operator-> (void) const;
     
-    operator const CORBA_StringSeq &() const;
-    operator CORBA_StringSeq &();
-    operator CORBA_StringSeq &() const;
-    operator CORBA_StringSeq *&(); // variable-size base types only
+    operator const StringSeq &() const;
+    operator StringSeq &();
+    operator StringSeq &() const;
+    
+    // Variable-size base types only.
+    operator StringSeq *&();
     
     TAO_SeqElem_String_Manager operator[] (CORBA::ULong index);
     
     // in, inout, out, _retn 
-    const CORBA_StringSeq &in (void) const;
-    CORBA_StringSeq &inout (void);
-    CORBA_StringSeq *&out (void);
-    CORBA_StringSeq *_retn (void);
-    CORBA_StringSeq *ptr (void) const;
-
+    const StringSeq &in (void) const;
+    StringSeq &inout (void);
+    StringSeq *&out (void);
+    StringSeq *_retn (void);
+    StringSeq *ptr (void) const;
+  
   private:
-    CORBA_StringSeq *ptr_;
+    StringSeq *ptr_;
   };
 
-
 #endif /* end #if !defined */
-
 
 #if !defined (_CORBA_STRINGSEQ___OUT_CH_)
 #define _CORBA_STRINGSEQ___OUT_CH_
-
-  class TAO_Export CORBA_StringSeq_out
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:753
+  
+  class TAO_Export StringSeq_out
   {
   public:
-    CORBA_StringSeq_out (CORBA_StringSeq *&);
-    CORBA_StringSeq_out (CORBA_StringSeq_var &);
-    CORBA_StringSeq_out (const CORBA_StringSeq_out &);
-    CORBA_StringSeq_out &operator= (const CORBA_StringSeq_out &);
-    CORBA_StringSeq_out &operator= (CORBA_StringSeq *);
-    operator CORBA_StringSeq *&();
-    CORBA_StringSeq *&ptr (void);
-    CORBA_StringSeq *operator-> (void);
+    StringSeq_out (StringSeq *&);
+    StringSeq_out (StringSeq_var &);
+    StringSeq_out (const StringSeq_out &);
+    StringSeq_out &operator= (const StringSeq_out &);
+    StringSeq_out &operator= (StringSeq *);
+    operator StringSeq *&();
+    StringSeq *&ptr (void);
+    StringSeq *operator-> (void);
     TAO_SeqElem_String_Manager operator[] (CORBA::ULong index);
-    
+  
   private:
-    CORBA_StringSeq *&ptr_;
-    // assignment from T_var not allowed
-    void operator= (const CORBA_StringSeq_var &);
+    StringSeq *&ptr_;
+    // Assignment from T_var not allowed.
+    void operator= (const StringSeq_var &);
   };
 
-
 #endif /* end #if !defined */
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_StringSeq;
 
 #if !defined (_CORBA_WSTRINGSEQ_CH_)
 #define _CORBA_WSTRINGSEQ_CH_
-
-  class CORBA_WStringSeq;
-  class CORBA_WStringSeq_var;
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:371
+  
+  class WStringSeq;
+  class WStringSeq_var;
   
   // *************************************************************
   // CORBA::WStringSeq
   // *************************************************************
   
-  class TAO_Export CORBA_WStringSeq : public 
+  class TAO_Export WStringSeq : public 
+  
+  // TAO_IDL - Generated from 
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:51
+
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-    TAO_Unbounded_WString_Sequence
+  TAO_Unbounded_WString_Sequence
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-    TAO_Unbounded_WString_Sequence
+  TAO_Unbounded_WString_Sequence
+
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
   {
   public:
-    CORBA_WStringSeq (void); // default ctor
-    CORBA_WStringSeq (CORBA::ULong max); // uses max size
-    CORBA_WStringSeq (
-      CORBA::ULong max, 
-      CORBA::ULong length, 
-      CORBA::WChar * *buffer, 
-      CORBA::Boolean release = 0
-    );
-    CORBA_WStringSeq (const CORBA_WStringSeq &); // copy ctor
-    ~CORBA_WStringSeq (void);
+    WStringSeq (void);
+    WStringSeq (CORBA::ULong max);
+    WStringSeq (
+        CORBA::ULong max, 
+        CORBA::ULong length, 
+        CORBA::WChar * *buffer, 
+        CORBA::Boolean release = 0
+      );
+    WStringSeq (const WStringSeq &);
+    ~WStringSeq (void);
+    
     static void _tao_any_destructor (void*);
-
-#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-    typedef CORBA_WStringSeq_var _var_type;
-#endif /* ! __GNUC__ || g++ >= 2.8 */
-
+    
+    typedef WStringSeq_var _var_type;
   };
-  
-#endif /* end #if !defined */
 
+#endif /* end #if !defined */
 
 #if !defined (_CORBA_WSTRINGSEQ___VAR_CH_)
 #define _CORBA_WSTRINGSEQ___VAR_CH_
-
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:549
+  
   // *************************************************************
-  // class CORBA_WStringSeq_var
+  // class CORBA::WStringSeq_var
   // *************************************************************
-
-  class TAO_Export CORBA_WStringSeq_var
+  
+  class TAO_Export WStringSeq_var
   {
   public:
-    CORBA_WStringSeq_var (void); // default constructor
-    CORBA_WStringSeq_var (CORBA_WStringSeq *);
-    CORBA_WStringSeq_var (const CORBA_WStringSeq_var &); // copy constructor
-    ~CORBA_WStringSeq_var (void); // destructor
+    WStringSeq_var (void);
+    WStringSeq_var (WStringSeq *);
+    WStringSeq_var (const WStringSeq_var &);
+    ~WStringSeq_var (void);
     
-    CORBA_WStringSeq_var &operator= (CORBA_WStringSeq *);
-    CORBA_WStringSeq_var &operator= (const CORBA_WStringSeq_var &);
-    CORBA_WStringSeq *operator-> (void);
-    const CORBA_WStringSeq *operator-> (void) const;
+    WStringSeq_var &operator= (WStringSeq *);
+    WStringSeq_var &operator= (const WStringSeq_var &);
+    WStringSeq *operator-> (void);
+    const WStringSeq *operator-> (void) const;
     
-    operator const CORBA_WStringSeq &() const;
-    operator CORBA_WStringSeq &();
-    operator CORBA_WStringSeq &() const;
-    operator CORBA_WStringSeq *&(); // variable-size base types only
+    operator const WStringSeq &() const;
+    operator WStringSeq &();
+    operator WStringSeq &() const;
+    
+    // Variable-size base types only.
+    operator WStringSeq *&();
     
     TAO_SeqElem_WString_Manager operator[] (CORBA::ULong index);
     
     // in, inout, out, _retn 
-    const CORBA_WStringSeq &in (void) const;
-    CORBA_WStringSeq &inout (void);
-    CORBA_WStringSeq *&out (void);
-    CORBA_WStringSeq *_retn (void);
-    CORBA_WStringSeq *ptr (void) const;
-
+    const WStringSeq &in (void) const;
+    WStringSeq &inout (void);
+    WStringSeq *&out (void);
+    WStringSeq *_retn (void);
+    WStringSeq *ptr (void) const;
+  
   private:
-    CORBA_WStringSeq *ptr_;
+    WStringSeq *ptr_;
   };
 
-
 #endif /* end #if !defined */
-
 
 #if !defined (_CORBA_WSTRINGSEQ___OUT_CH_)
 #define _CORBA_WSTRINGSEQ___OUT_CH_
-
-  class TAO_Export CORBA_WStringSeq_out
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:753
+  
+  class TAO_Export WStringSeq_out
   {
   public:
-    CORBA_WStringSeq_out (CORBA_WStringSeq *&);
-    CORBA_WStringSeq_out (CORBA_WStringSeq_var &);
-    CORBA_WStringSeq_out (const CORBA_WStringSeq_out &);
-    CORBA_WStringSeq_out &operator= (const CORBA_WStringSeq_out &);
-    CORBA_WStringSeq_out &operator= (CORBA_WStringSeq *);
-    operator CORBA_WStringSeq *&();
-    CORBA_WStringSeq *&ptr (void);
-    CORBA_WStringSeq *operator-> (void);
+    WStringSeq_out (WStringSeq *&);
+    WStringSeq_out (WStringSeq_var &);
+    WStringSeq_out (const WStringSeq_out &);
+    WStringSeq_out &operator= (const WStringSeq_out &);
+    WStringSeq_out &operator= (WStringSeq *);
+    operator WStringSeq *&();
+    WStringSeq *&ptr (void);
+    WStringSeq *operator-> (void);
     TAO_SeqElem_WString_Manager operator[] (CORBA::ULong index);
-    
+  
   private:
-    CORBA_WStringSeq *&ptr_;
-    // assignment from T_var not allowed
-    void operator= (const CORBA_WStringSeq_var &);
+    WStringSeq *&ptr_;
+    // Assignment from T_var not allowed.
+    void operator= (const WStringSeq_var &);
   };
 
-
 #endif /* end #if !defined */
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_WStringSeq;
 
-// Proxy Broker Factory function pointer declarations.
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:67
 
-TAO_Export void operator<<= (CORBA::Any &, const CORBA_StringSeq &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, CORBA_StringSeq*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_StringSeq *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA_StringSeq *&);
-TAO_Export void operator<<= (CORBA::Any &, const CORBA_WStringSeq &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, CORBA_WStringSeq*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_WStringSeq *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA_WStringSeq *&);
+}
+TAO_NAMESPACE_CLOSE // module CORBA
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/any_op_ch.cpp:52
+
+TAO_Export void operator<<= (CORBA::Any &, const CORBA::StringSeq &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, CORBA::StringSeq*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::StringSeq *&); // deprecated
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::StringSeq *&);
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/any_op_ch.cpp:52
+
+TAO_Export void operator<<= (CORBA::Any &, const CORBA::WStringSeq &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, CORBA::WStringSeq*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::WStringSeq *&); // deprecated
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::WStringSeq *&);
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:48
 
 #ifndef __ACE_INLINE__
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ch.cpp:57
 
 #if !defined _TAO_CDR_OP_CORBA_StringSeq_H_
 #define _TAO_CDR_OP_CORBA_StringSeq_H_
 
 TAO_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
-    const CORBA_StringSeq &
+    const CORBA::StringSeq &
   );
 TAO_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
-    CORBA_StringSeq &
+    CORBA::StringSeq &
   );
 
 #endif /* _TAO_CDR_OP_CORBA_StringSeq_H_ */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ch.cpp:57
 
 #if !defined _TAO_CDR_OP_CORBA_WStringSeq_H_
 #define _TAO_CDR_OP_CORBA_WStringSeq_H_
 
 TAO_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
-    const CORBA_WStringSeq &
+    const CORBA::WStringSeq &
   );
 TAO_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
-    CORBA_WStringSeq &
+    CORBA::WStringSeq &
   );
 
 #endif /* _TAO_CDR_OP_CORBA_WStringSeq_H_ */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:64
 
 #endif /* __ACE_INLINE__ */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1009
 
 #if defined (__ACE_INLINE__)
 #include "StringSeqC.i"
@@ -328,3 +389,4 @@ TAO_Export CORBA::Boolean operator>> (
 
 #include "ace/post.h"
 #endif /* ifndef */
+

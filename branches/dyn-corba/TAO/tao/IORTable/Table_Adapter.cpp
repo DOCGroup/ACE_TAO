@@ -53,14 +53,14 @@ TAO_Table_Adapter::priority (void) const
 }
 
 int
-TAO_Table_Adapter::dispatch (TAO_ObjectKey &key,
+TAO_Table_Adapter::dispatch (TAO::ObjectKey &key,
                              TAO_ServerRequest &,
                              CORBA::Object_out forward_to
                              ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::String_var object_key;
-  TAO_ObjectKey::encode_sequence_to_string (object_key.out (),
+  TAO::ObjectKey::encode_sequence_to_string (object_key.out (),
                                             key);
   ACE_TRY
     {

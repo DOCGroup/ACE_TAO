@@ -20,31 +20,48 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+
 #if !defined (_CORBA_POLLABLE___CI_)
 #define _CORBA_POLLABLE___CI_
 
+ACE_INLINE
+CORBA::Boolean
+CORBA::Pollable::marshal (TAO_OutputCDR &)
+{
+  return 0;
+}
 
 #endif /* end #if !defined */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_CORBA_DIIPOLLABLE___CI_)
 #define _CORBA_DIIPOLLABLE___CI_
 
+ACE_INLINE
+CORBA::Boolean
+CORBA::DIIPollable::marshal (TAO_OutputCDR &)
+{
+  return 0;
+}
 
 #endif /* end #if !defined */
 
-// *************************************************************
-// Inline operations for exception CORBA::PollableSet::NoPossiblePollable
-// *************************************************************
-
-// *************************************************************
-// Inline operations for exception CORBA::PollableSet::UnknownPollable
-// *************************************************************
-
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_CORBA_POLLABLESET___CI_)
 #define _CORBA_POLLABLESET___CI_
 
+ACE_INLINE
+CORBA::Boolean
+CORBA::PollableSet::marshal (TAO_OutputCDR &)
+{
+  return 0;
+}
 
 #endif /* end #if !defined */
 

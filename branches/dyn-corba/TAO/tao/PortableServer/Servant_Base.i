@@ -13,10 +13,10 @@ TAO_Local_ServantBase::_create_stub (ACE_ENV_SINGLE_ARG_DECL)
   PortableServer::ObjectId_var invalid_oid =
     PortableServer::string_to_ObjectId ("invalid");
 
-  TAO_ObjectKey tmp_key (invalid_oid->length (),
-                         invalid_oid->length (),
-                         invalid_oid->get_buffer (),
-                         0);
+  TAO::ObjectKey tmp_key (invalid_oid->length (),
+                          invalid_oid->length (),
+                          invalid_oid->get_buffer (),
+                          0);
 
   // It is ok to use TAO_ORB_Core_instance here since the locality
   // constrained servant does not really register with a POA or get

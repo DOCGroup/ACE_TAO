@@ -31,7 +31,7 @@ TAO_SHMIOP_Profile::object_key_delimiter (void) const
 }
 
 TAO_SHMIOP_Profile::TAO_SHMIOP_Profile (const ACE_MEM_Addr &addr,
-                                        const TAO_ObjectKey &object_key,
+                                        const TAO::ObjectKey &object_key,
                                         const TAO_GIOP_Message_Version &version,
                                         TAO_ORB_Core *orb_core)
   : TAO_Profile (TAO_TAG_SHMEM_PROFILE, orb_core, version),
@@ -45,7 +45,7 @@ TAO_SHMIOP_Profile::TAO_SHMIOP_Profile (const ACE_MEM_Addr &addr,
 
 TAO_SHMIOP_Profile::TAO_SHMIOP_Profile (const char* host,
                                         CORBA::UShort port,
-                                        const TAO_ObjectKey &object_key,
+                                        const TAO::ObjectKey &object_key,
                                         const ACE_INET_Addr &addr,
                                         const TAO_GIOP_Message_Version &version,
                                         TAO_ORB_Core *orb_core)
@@ -321,7 +321,7 @@ TAO_SHMIOP_Profile::parse_string (const char *string
 
   start = ++okd;  // increment past the object key separator
 
-  TAO_ObjectKey::decode_string_to_sequence (this->object_key_, start);
+  TAO::ObjectKey::decode_string_to_sequence (this->object_key_, start);
 }
 
 CORBA::Boolean
@@ -392,7 +392,7 @@ char *
 TAO_SHMIOP_Profile::to_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   CORBA::String_var key;
-  TAO_ObjectKey::encode_sequence_to_string (key.inout(),
+  TAO::ObjectKey::encode_sequence_to_string (key.inout(),
                                              this->object_key_);
 
   u_int buflen = (8 /* corbaloc */ +
