@@ -71,6 +71,12 @@ TAO_ServantBase::_is_a (const char* logical_type_id,
   return 0;
 }
 
+CORBA::Boolean
+TAO_ServantBase::_non_existent (CORBA::Environment &)
+{
+  return 0;
+}
+
 int
 TAO_ServantBase::_find (const char *opname,
                         TAO_Skeleton& skelfunc,
