@@ -150,7 +150,7 @@ private:
   CORBA::TypeCode_var type_;
   // Holds the typecode of the array
 
-  CORBA::Long index_;
+  CORBA::Long current_index_;
   // Slot of the current component
 
   ACE_Array_Base<CORBA_DynAny_var> da_members_;

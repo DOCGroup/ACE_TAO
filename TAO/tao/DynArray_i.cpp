@@ -25,7 +25,7 @@
 
 TAO_DynArray_i::TAO_DynArray_i (const CORBA_Any& any)
   : type_ (any.type ()),
-    index_ (0),
+    current_index_ (0),
     da_members_ (0)
 {
   CORBA::Environment env;
@@ -72,7 +72,7 @@ TAO_DynArray_i::TAO_DynArray_i (const CORBA_Any& any)
 
 TAO_DynArray_i::TAO_DynArray_i (CORBA_TypeCode_ptr tc)
   : type_ (CORBA::TypeCode::_duplicate (tc)),
-    index_ (0),
+    current_index_ (0),
     da_members_ (0)
 {
   CORBA::Environment env;
@@ -306,11 +306,11 @@ TAO_DynArray_i::current_component (CORBA::Environment &env)
   if (this->da_members_.size () == 0)
     return 0;
 
-  if (!this->da_members_[this->index_].in ())
-    this->da_members_[this->index_] =
+  if (!this->da_members_[this->current_index_].in ())
+    this->da_members_[this->current_index_] =
       TAO_DynAny_i::create_dyn_any (this->get_element_type (env),
                                     env);
-  return this->da_members_[this->index_].in ();
+  return this->da_members_[this->current_index_].in ();
 }
 
 CORBA::Boolean
@@ -318,10 +318,10 @@ TAO_DynArray_i::next (CORBA::Environment &)
 {
   CORBA::Long size = (CORBA::Long) this->da_members_.size ();
 
-  if (size == 0 || this->index_ + 1 == size)
+  if (size == 0 || this->current_index_ + 1 == size)
     return 0;
 
-  ++this->index_;
+  ++this->current_index_;
   return 1;
 }
 
@@ -332,14 +332,14 @@ TAO_DynArray_i::seek (CORBA::Long slot,
   if (slot < 0 || slot >= (CORBA::Long) this->da_members_.size ())
     return 0;
 
-  this->index_ = slot;
+  this->current_index_ = slot;
   return 1;
 }
 
 void
 TAO_DynArray_i::rewind (CORBA::Environment &)
 {
-  this->index_ = 0;
+  this->current_index_ = 0;
 }
 
 // The insert-primitive and get-primitive functions are required by
@@ -585,7 +585,7 @@ CORBA::Boolean
 TAO_DynArray_i::get_boolean (CORBA::Environment &env)
 {
   CORBA::Boolean val = 0;
-  CORBA_DynAny_ptr dp = this->da_members_[this->index_].in ();
+  CORBA_DynAny_ptr dp = this->da_members_[this->current_index_].in ();
 
   if (dp)
     {
@@ -607,7 +607,7 @@ CORBA::Octet
 TAO_DynArray_i::get_octet (CORBA::Environment &env)
 {
   CORBA::Octet val = 0;
-  CORBA_DynAny_ptr dp = this->da_members_[this->index_].in ();
+  CORBA_DynAny_ptr dp = this->da_members_[this->current_index_].in ();
 
   if (dp)
     {
@@ -629,7 +629,7 @@ CORBA::Char
 TAO_DynArray_i::get_char (CORBA::Environment &env)
 {
   CORBA::Char val = 0;
-  CORBA_DynAny_ptr dp = this->da_members_[this->index_].in ();
+  CORBA_DynAny_ptr dp = this->da_members_[this->current_index_].in ();
 
   if (dp)
     {
@@ -651,7 +651,7 @@ CORBA::Short
 TAO_DynArray_i::get_short (CORBA::Environment &env)
 {
   CORBA::Short val = 0;
-  CORBA_DynAny_ptr dp = this->da_members_[this->index_].in ();
+  CORBA_DynAny_ptr dp = this->da_members_[this->current_index_].in ();
 
   if (dp)
     {
@@ -673,7 +673,7 @@ CORBA::UShort
 TAO_DynArray_i::get_ushort (CORBA::Environment &env)
 {
   CORBA::UShort val = 0;
-  CORBA_DynAny_ptr dp = this->da_members_[this->index_].in ();
+  CORBA_DynAny_ptr dp = this->da_members_[this->current_index_].in ();
 
   if (dp)
     {
@@ -695,7 +695,7 @@ CORBA::Long
 TAO_DynArray_i::get_long (CORBA::Environment &env)
 {
   CORBA::Long val = 0;
-  CORBA_DynAny_ptr dp = this->da_members_[this->index_].in ();
+  CORBA_DynAny_ptr dp = this->da_members_[this->current_index_].in ();
 
   if (dp)
     {
@@ -717,7 +717,7 @@ CORBA::ULong
 TAO_DynArray_i::get_ulong (CORBA::Environment &env)
 {
   CORBA::ULong val = 0;
-  CORBA_DynAny_ptr dp = this->da_members_[this->index_].in ();
+  CORBA_DynAny_ptr dp = this->da_members_[this->current_index_].in ();
 
   if (dp)
     {
@@ -739,7 +739,7 @@ CORBA::Float
 TAO_DynArray_i::get_float (CORBA::Environment &env)
 {
   CORBA::Float val = 0;
-  CORBA_DynAny_ptr dp = this->da_members_[this->index_].in ();
+  CORBA_DynAny_ptr dp = this->da_members_[this->current_index_].in ();
 
   if (dp)
     {
@@ -761,7 +761,7 @@ CORBA::Double
 TAO_DynArray_i::get_double (CORBA::Environment &env)
 {
   CORBA::Double val = 0;
-  CORBA_DynAny_ptr dp = this->da_members_[this->index_].in ();
+  CORBA_DynAny_ptr dp = this->da_members_[this->current_index_].in ();
 
   if (dp)
     {
@@ -783,7 +783,7 @@ char *
 TAO_DynArray_i::get_string (CORBA::Environment &env)
 {
   CORBA::Char *val = 0;
-  CORBA_DynAny_ptr dp = this->da_members_[this->index_].in ();
+  CORBA_DynAny_ptr dp = this->da_members_[this->current_index_].in ();
 
   if (dp)
     {
@@ -805,7 +805,7 @@ CORBA::Object_ptr
 TAO_DynArray_i::get_reference (CORBA::Environment &env)
 {
   CORBA_Object_ptr val = 0;
-  CORBA_DynAny_ptr dp = this->da_members_[this->index_].in ();
+  CORBA_DynAny_ptr dp = this->da_members_[this->current_index_].in ();
 
   if (dp)
     {
@@ -827,7 +827,7 @@ CORBA::TypeCode_ptr
 TAO_DynArray_i::get_typecode (CORBA::Environment &env)
 {
   CORBA_TypeCode_ptr val = 0;
-  CORBA_DynAny_ptr dp = this->da_members_[this->index_].in ();
+  CORBA_DynAny_ptr dp = this->da_members_[this->current_index_].in ();
 
   if (dp)
     {
@@ -853,7 +853,7 @@ TAO_DynArray_i::get_longlong (CORBA::Environment &env)
 #else  /* ! ACE_LACKS_LONGLONG_T */
   CORBA::LongLong val = 0;
 #endif /* ! ACE_LACKS_LONGLONG_T */
-  CORBA_DynAny_ptr dp = this->da_members_[this->index_].in ();
+  CORBA_DynAny_ptr dp = this->da_members_[this->current_index_].in ();
 
   if (dp)
     {
@@ -875,7 +875,7 @@ CORBA::ULongLong
 TAO_DynArray_i::get_ulonglong (CORBA::Environment &env)
 {
   CORBA::ULongLong val = 0;
-  CORBA_DynAny_ptr dp = this->da_members_[this->index_].in ();
+  CORBA_DynAny_ptr dp = this->da_members_[this->current_index_].in ();
 
   if (dp)
     {
@@ -897,7 +897,7 @@ CORBA::WChar
 TAO_DynArray_i::get_wchar (CORBA::Environment &env)
 {
   CORBA::WChar val = 0;
-  CORBA_DynAny_ptr dp = this->da_members_[this->index_].in ();
+  CORBA_DynAny_ptr dp = this->da_members_[this->current_index_].in ();
 
   if (dp)
     {
@@ -919,7 +919,7 @@ CORBA::Any_ptr
 TAO_DynArray_i::get_any (CORBA::Environment &env)
 {
   CORBA_Any_ptr val = 0;
-  CORBA_DynAny_ptr dp = this->da_members_[this->index_].in ();
+  CORBA_DynAny_ptr dp = this->da_members_[this->current_index_].in ();
 
   if (dp)
     {
