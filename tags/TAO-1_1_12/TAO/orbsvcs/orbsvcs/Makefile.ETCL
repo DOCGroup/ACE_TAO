@@ -1,0 +1,188 @@
+#----------------------------------------------------------------------------
+#
+# $Id$
+#
+#----------------------------------------------------------------------------
+ifndef TAO_ROOT
+  TAO_ROOT = $(ACE_ROOT)/TAO
+endif # ! TAO_ROOT
+
+MAKEFILE = Makefile.ETCL
+LIBNAME  = libTAO_ETCL
+LIB      = $(LIBNAME).a
+SHLIB    = $(LIBNAME).$(SOEXT)
+
+VPATH=.
+
+ACE_SHLIBS = -lTAO -lTAO_PortableServer -lACE
+
+#----------------------------------------------------------------------------
+#       Include macros and targets
+#----------------------------------------------------------------------------
+
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include $(TAO_ROOT)/rules.tao.GNU
+
+# On non-Windows environment, we should at least define
+# the export_include IDL flag.
+override TAO_IDLFLAGS += \
+        -I$(TAO_ROOT) -Ge 1 \
+        -Wb,export_macro=TAO_ETCL_Export \
+        -Wb,export_include=ETCL/etcl_export.h \
+        -Wb,pre_include=ace/pre.h \
+        -Wb,post_include=ace/post.h
+
+IDL_FILES +=
+CPP_SRCS += \
+        ETCL/ETCL_Constraint \
+	ETCL/ETCL_l \
+	ETCL/ETCL_y
+
+IDL_SRC = \
+        $(addsuffix S.cpp, $(IDL_FILES)) \
+        $(addsuffix C.cpp, $(IDL_FILES))
+FILES = $(CPP_SRCS)
+DEFS  = $(addsuffix .h,$(FILES))
+LSRC  = $(addsuffix .cpp,$(FILES)) $(IDL_SRC)
+
+include $(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
+
+#----------------------------------------------------------------------------
+#       Local targets (and local hacks)
+#----------------------------------------------------------------------------
+
+LDFLAGS += -L$(TAO_ROOT)/tao -L$(TAO_ROOT)/orbsvcs/orbsvcs
+CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs \
+        -I$(TAO_ROOT)/orbsvcs/orbsvcs/Event \
+        $(foreach svc, $(TAO_ORBSVCS), -DTAO_ORBSVCS_HAS_$(svc))
+
+# Extra dependencies not caught by make depend.
+
+.PRECIOUS: $(foreach file, $(IDL_FILES), $(foreach ext, $(IDL_EXT), $(file)$(ext))))
+
+realclean: clean
+	-$(RM) $(foreach file, $(IDL_FILES), $(foreach ext, $(IDL_EXT), $(file)$(ext)))
+
+#----------------------------------------------------------------------------
+#       Dependencies
+#----------------------------------------------------------------------------
+
+ETCL/ETCL_l.cpp: ETCL/ETCL.ll
+	@echo "WARNING: Potentially outdated $@"
+	@echo "         either touch(1) the file or explicitly"
+	@echo "         generate it using:"
+	@echo "    make ETCL/ETCL_l"
+
+.PHONY: ETCL/ETCL_l
+ETCL/ETCL_l:
+	flex -PTAO_ETCL_ -t ETCL/ETCL.ll | \
+	sed -e "s@#include <unistd\.h>@#include \"ace/Synch.h\"@" \
+	    -e 's/\$$Hea''der.*\$$/$$I''d$$/' > ETCL/ETCL_l.cpp
+	(cd ETCL ; patch < ETCL_l.cpp.diff)
+
+ETCL/ETCL_y.h ETCL/ETCL_y.cpp:	ETCL/ETCL.yy
+	@echo "WARNING: Potentially outdated $@"
+	@echo "         either touch(1) the file or explicitly"
+	@echo "         generate it using:"
+	@echo "    make ETCL/ETCL_y"
+
+.PHONY: ETCL/ETCL_y
+
+ETCL/ETCL_y: ETCL/ETCL.yy
+	bison --name-prefix=TAO_ETCL_yy --defines ETCL/ETCL.yy
+	echo '// $$I''d$$' > ETCL/ETCL_y.cpp
+	cat ETCL/ETCL.yy.tab.c >> ETCL/ETCL_y.cpp
+	echo '// $$I''d$$' > ETCL/ETCL_y.h
+	cat ETCL/ETCL.yy.tab.h >> ETCL/ETCL_y.h
+	$(RM) ETCL/ETCL.yy.tab.c ETCL/ETCL.yy.tab.h
+# (cd ETCL ; patch < ETCL_y.cpp.diff)
+
+# DO NOT DELETE THIS LINE -- g++dep uses it.
+# DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
+
+
+.obj/ETCL_Constraint.o .obj/ETCL_Constraint.so .shobj/ETCL_Constraint.o .shobj/ETCL_Constraint.so: ETCL/ETCL_Constraint.cpp ETCL/ETCL_Constraint.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/Min_Max.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ ETCL/ETCL_Constraint.i ETCL/ETCL_y.h
+
+.obj/ETCL_l.o .obj/ETCL_l.so .shobj/ETCL_l.o .shobj/ETCL_l.so: ETCL/ETCL_l.cpp \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/Min_Max.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
+ ETCL/ETCL_Constraint.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ ETCL/ETCL_Constraint.i ETCL/ETCL_y.h
+
+.obj/ETCL_y.o .obj/ETCL_y.so .shobj/ETCL_y.o .shobj/ETCL_y.so: ETCL/ETCL_y.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL/ETCL_Constraint.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/Min_Max.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL/ETCL_Constraint.i
+
+# IF YOU PUT ANYTHING HERE IT WILL GO AWAY
