@@ -1,0 +1,30 @@
+// -*- MPC -*-
+// $Id$
+
+project(*sender): avstreamsexe, strategies {
+  exename  = sender
+
+  Source_Files {
+    Connection_Manager.cpp
+    sender.cpp
+  }
+}
+
+project(*distributer): avstreamsexe, strategies {
+  exename  = distributer
+
+  Source_Files {
+    Connection_Manager.cpp
+    distributer.cpp
+  }
+}
+
+project(*receiver): avstreamsexe, strategies {
+  exename  = receiver
+
+  Source_Files {
+    Connection_Manager.cpp
+    receiver.cpp
+  }
+}
+

@@ -1,0 +1,5 @@
+//$Id$
+project : taolib, core {
+  sharedname    = TAO_DynamicAny
+  dynamicflags  = TAO_DYNAMICANY_BUILD_DLL
+}
