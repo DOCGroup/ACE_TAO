@@ -38,13 +38,13 @@ TAO::be_visitor_struct_typecode::visit_structure (AST_Structure * node)
                                  + node->flat_name ());
 
   // Generate array containing struct field characteristics.
-  os << "static TAO::TypeCode::Struct_Field<char const *> ";
+  os << "static TAO::TypeCode::Struct_Field<char const *> const ";
 
   if (node->nfields () == 0)
     {
       // Should only be possible for user exceptions with no fields.
 
-      os << " * const " << fields_name.c_str () << " = 0;" << be_nl;
+      os << "* const " << fields_name.c_str () << " = 0;" << be_nl;
     }
   else
     {
