@@ -1,3 +1,8 @@
+Wed Apr  9 11:01:12 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_1482_Regression/client.bor:
+          Fixed error in this BCB makefile.
+
 Tue Apr  8 23:52:35 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Any.cpp:
