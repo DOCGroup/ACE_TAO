@@ -1,3 +1,15 @@
+Sat Feb 21 23:51:25 2004  .  <.@isis.vanderbilt.edu>
+
+        * common/Exception.h:
+        * common/Exception.cpp:
+        * common/SAXExceptions.h:
+        * common/SAXExceptions.cpp:
+
+          Fixed a few bugs in the way the exceptions were set-up in the
+          case when exceptions=0. Provided implementations for operator
+          assignment and duplicate(). This should fix problems with
+          throwing and catching exceptions when exceptions=0.
+
 Sat Jan 31 20:06:57 2004  Krishnakumar B  <kitty@cse.wustl.edu>
 
         * parser/parser/Parser.cpp (parse_PE_reference): Added ACE_TEXT
