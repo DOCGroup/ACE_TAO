@@ -36,7 +36,7 @@ Hash_Replica_Impl::do_hash (const char *str,
     ACE_OS::gettimeofday () - this->start_;
 
   this->requests_++;
-  CORBA::Float load = this->requests_ / elapsed_time.sec ();
+  CORBA::Float load = CORBA::Float(this->requests_) / elapsed_time.sec ();
 
   this->balancer_proxy_->current_load (load,
                                        ACE_TRY_ENV);
