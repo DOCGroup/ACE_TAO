@@ -89,6 +89,54 @@ parse_args (int argc, char **argv)
   return 0;
 }
 
+int do_calls (Foo_ptr foo_ptr)
+{
+  CORBA::Environment env;
+
+  CORBA::Long result = 0;
+  
+  for (int i = 1; i <= iterations; i++)
+    {
+      // About half way through
+      if (i % 3 == 0)
+        {
+          foo_ptr->forward (env);
+	  
+          // If exception
+          if (env.exception () != 0)
+            {
+              env.print_exception ("Foo::forward");
+              return -1;
+            }
+        }
+      else
+        {
+          // Invoke the doit() method of the foo reference.
+          result = foo_ptr->doit (env);
+	  
+          // If exception
+          if (env.exception () != 0)
+          {
+            env.print_exception ("calling doit");
+          }
+          else
+            // Print the result of doit () method of the foo
+            // reference.
+            ACE_DEBUG ((LM_DEBUG,
+                        "doit() returned %d \n",
+                        result));
+        }
+    }
+  foo_ptr->shutdown (env);
+  // If exception
+  if (env.exception () != 0)
+  {
+    env.print_exception ("calling shutdown");
+  }
+  return 0;
+}
+
+
 int
 main (int argc, char **argv)
 {
@@ -119,7 +167,7 @@ main (int argc, char **argv)
     }
   
   // Try to narrow the object reference to a Foo reference.
-  Foo_var foo = Foo::_narrow (object.in (), env);
+  Foo_var foo_var = Foo::_narrow (object.in (), env);
   
   if (env.exception () != 0)
     {
@@ -128,7 +176,7 @@ main (int argc, char **argv)
     }
   
   CORBA::String_var original_location =
-    orb->object_to_string (foo.in (), env);
+    orb->object_to_string (foo_var.in (), env);
 
   if (env.exception () == 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -139,40 +187,9 @@ main (int argc, char **argv)
       env.print_exception ("ORB::object_to_string");
       return -1;
     }
-  
-  CORBA::Long result = 0;
-  
-  for (int i = 1; i <= iterations; i++)
-    {
-      // About half way through
-      if (i % 3 == 0)
-        {
-          foo->forward (env);
-	  
-          // If exception
-          if (env.exception () != 0)
-            {
-              env.print_exception ("Foo::forward");
-              return -1;
-            }
-        }
-      else
-        {
-          // Invoke the doit() method of the foo reference.
-          result = foo->doit (env);
-	  
-          // If exception
-          if (env.exception () != 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        "Got an exception. :-(\n"));
-          else
-            // Print the result of doit () method of the foo
-            // reference.
-            ACE_DEBUG ((LM_DEBUG,
-                        "doit() returned %d \n",
-                        result));
-        }
-    }
+
+  if (do_calls (foo_var.in()) == -1)
+    return -1;
   
   return 0;
 }
