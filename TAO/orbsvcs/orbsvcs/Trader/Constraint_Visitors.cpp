@@ -1,27 +1,10 @@
 // $Id$
 
-// ========================================================================
-//
-// = LIBRARY
-//    orbsvcs
-//
-// = FILENAME
-//    Constraint_Visitors.cpp
-//
-// = AUTHOR
-//    Seth Widoff <sbw1@cs.wustl.edu>
-//
-// ========================================================================
-
 #include "Constraint_Visitors.h"
 #include "Constraint_Nodes.h"
 #include "Trader_T.h"
 
 ACE_RCSID(Trader, Constraint_Visitors, "$Id$")
-
-  // *************************************************************
-  // TAO_Constraint_Evaluator
-  // *************************************************************
 
 TAO_Constraint_Evaluator::Operand_Queue::Operand_Queue (void)
 {

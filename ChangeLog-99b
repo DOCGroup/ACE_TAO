@@ -1,5 +1,12 @@
 Sat Jun 26 12:45:26 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* tests/Cache_Map_Manager_Test.cpp: Fixed this test so that it
+	  compiles with SunC++ 4.2 and its broken C++ templates...  Thanks
+ 	  to David Levine for reporting this.
+
+	* ace/Malloc_T.i: Make sure to put ACE_INLINE on all the methods
+	  in the .i files.  Thank to Marina for reporting this.
+
 	* ace/Hash_Map_Manager_T.h: Fixed the programming style a bit.
 
 	* ace/Arg_Shifter.cpp (ACE_Arg_Shifter): Reformatted this

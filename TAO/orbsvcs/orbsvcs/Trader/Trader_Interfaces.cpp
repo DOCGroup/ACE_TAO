@@ -1,17 +1,4 @@
-// ========================================================================
 // $Id$
-//
-// = LIBRARY
-//    orbsvcs
-//
-// = FILENAME
-//    Trader_Interfaces.cpp
-//
-// = AUTHOR
-//    Marina Spivak <marina@cs.wustl.edu>
-//    Seth Widoff <sbw1@cs.wustl.edu>
-//
-// ========================================================================
 
 #if !defined (TAO_TRADER_INTERFACES_C)
 #define TAO_TRADER_INTERFACES_C

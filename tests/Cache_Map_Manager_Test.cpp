@@ -9,12 +9,14 @@
 //    Cache_Map_Manager_Test.cpp
 //
 // = DESCRIPTION
-//     This is a simple test of the <ACE_Cache_Map_Manager> and
-//     <ACE_Hash_Cache_Map_Manager> that illustrates how to use the forward
-//     and reverse iterators as well as the purging and caching features.
+//     This is a test of the <ACE_Cache_Map_Manager> and
+//     <ACE_Hash_Cache_Map_Manager> that illustrates how to use the
+//     forward and reverse iterators, as well as the purging and
+//     caching features.
 //
 // = AUTHOR
 //    Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+//
 // ============================================================================
 
 #include "ace/OS.h"
@@ -47,13 +49,22 @@ typedef ACE_Equal_To<KEY> COMPARE_KEYS;
 typedef ACE_Hash_Map_Manager_Ex<KEY, CACHE_VALUE, ACE_Hash<KEY>, ACE_Equal_To<KEY>, ACE_Null_Mutex>
         HASH_MAP_MANAGER;
 
+typedef ACE_Hash_Map_Iterator_Ex<KEY, CACHE_VALUE, ACE_Hash<KEY>, ACE_Equal_To<KEY>, ACE_Null_Mutex>
+        HASH_MAP_MANAGER_ITERATOR;
+
 typedef ACE_Map_Manager<KEY, CACHE_VALUE, ACE_Null_Mutex>
         MAP_MANAGER;
 
-typedef ACE_Pair_Caching_Utility<KEY, CACHE_VALUE, HASH_MAP_MANAGER, HASH_MAP_MANAGER::iterator, ATTR>
+typedef ACE_Map_Iterator<KEY, CACHE_VALUE, ACE_Null_Mutex>
+        MAP_MANAGER_ITERATOR;
+
+typedef ACE_Map_Reverse_Iterator<KEY, CACHE_VALUE, ACE_Null_Mutex>
+        MAP_MANAGER_REVERSE_ITERATOR;
+
+typedef ACE_Pair_Caching_Utility<KEY, CACHE_VALUE, HASH_MAP_MANAGER, HASH_MAP_MANAGER_ITERATOR, ATTR>
         HASH_MAP_CACHING_UTILITY;
 
-typedef ACE_Pair_Caching_Utility<KEY, CACHE_VALUE, MAP_MANAGER, MAP_MANAGER::iterator, ATTR>
+typedef ACE_Pair_Caching_Utility<KEY, CACHE_VALUE, MAP_MANAGER, MAP_MANAGER_ITERATOR, ATTR>
         MAP_CACHING_UTILITY;
 
 typedef ACE_LRU_Caching_Strategy<KEY, CACHE_VALUE, HASH_MAP_MANAGER, ATTR, HASH_MAP_CACHING_UTILITY>
@@ -62,10 +73,10 @@ typedef ACE_LRU_Caching_Strategy<KEY, CACHE_VALUE, HASH_MAP_MANAGER, ATTR, HASH_
 typedef ACE_LRU_Caching_Strategy<KEY, CACHE_VALUE, MAP_MANAGER, ATTR, MAP_CACHING_UTILITY>
         MAP_LRU;
 
-typedef ACE_Hash_Cache_Map_Manager<KEY, VALUE, HASH_KEY, COMPARE_KEYS, HASH_MAP_LRU, ATTR>
+typedef ACE_Hash_Cache_Map_Manager<KEY, VALUE, ACE_Hash<KEY>, ACE_Equal_To<KEY>, HASH_MAP_LRU, ATTR>
         HASH_MAP_CACHE;
 
-typedef ACE_Cache_Map_Manager<KEY, VALUE, MAP_MANAGER, MAP_MANAGER::iterator, MAP_MANAGER::reverse_iterator, MAP_LRU, ATTR>
+typedef ACE_Cache_Map_Manager<KEY, VALUE, MAP_MANAGER, MAP_MANAGER_ITERATOR, MAP_MANAGER_REVERSE_ITERATOR, MAP_LRU, ATTR>
         MAP_CACHE;
 
 static size_t iterations = ACE_MAX_ITERATIONS;
@@ -73,7 +84,7 @@ static size_t no_of_lookups = iterations / 2;
 static int randomize_lookups = 1;
 static int purge_percent = 10;
 
-void
+static void
 run_iterator_cache (MAP_CACHE &cache)
 {
   size_t iterations = cache.current_size ();
@@ -101,7 +112,7 @@ run_iterator_cache (MAP_CACHE &cache)
   ACE_ASSERT (counter == iterations);
 }
 
-void
+static void
 run_iterator_hash_cache (HASH_MAP_CACHE &cache)
 {
   size_t iterations = cache.current_size ();
@@ -129,7 +140,7 @@ run_iterator_hash_cache (HASH_MAP_CACHE &cache)
   ACE_ASSERT (counter == iterations);
 }
 
-void
+static void
 run_reverse_iterator_cache (MAP_CACHE &cache)
 {
   size_t counter = cache.current_size ();
@@ -154,7 +165,7 @@ run_reverse_iterator_cache (MAP_CACHE &cache)
   ACE_ASSERT (counter == 0);
 }
 
-void
+static void
 run_reverse_iterator_hash_cache (HASH_MAP_CACHE &cache)
 {
   size_t counter = cache.current_size ();
@@ -179,7 +190,7 @@ run_reverse_iterator_hash_cache (HASH_MAP_CACHE &cache)
   ACE_ASSERT (counter == 0);
 }
 
-void
+static void
 find_test_cache (MAP_CACHE &cache)
 {
   ACE_DEBUG ((LM_DEBUG, "find\n"));
@@ -206,7 +217,8 @@ find_test_cache (MAP_CACHE &cache)
   ACE_DEBUG ((LM_DEBUG, "\n"));
 }
 
-void find_test_hash_cache (HASH_MAP_CACHE &cache)
+static void 
+find_test_hash_cache (HASH_MAP_CACHE &cache)
 {
   ACE_DEBUG ((LM_DEBUG, "find\n"));
 
@@ -232,7 +244,8 @@ void find_test_hash_cache (HASH_MAP_CACHE &cache)
   ACE_DEBUG ((LM_DEBUG, "\n"));
 }
 
-void purge_test_cache (MAP_CACHE &cache)
+static void 
+purge_test_cache (MAP_CACHE &cache)
 {
   // Get the number of entries in the container.
   size_t current_map_size = cache.current_size ();
@@ -252,7 +265,8 @@ void purge_test_cache (MAP_CACHE &cache)
               current_map_size - entries_to_remove);
 }
 
-void purge_test_hash_cache (HASH_MAP_CACHE &cache)
+static void 
+purge_test_hash_cache (HASH_MAP_CACHE &cache)
 {
   // Get the number of entries in the container.
   size_t current_map_size = cache.current_size ();
@@ -272,7 +286,7 @@ void purge_test_hash_cache (HASH_MAP_CACHE &cache)
               current_map_size - entries_to_remove);
 }
 
-void
+static void
 functionality_test_cache (void)
 {
   MAP_CACHE cache;
@@ -310,7 +324,7 @@ functionality_test_cache (void)
   run_reverse_iterator_cache (cache);
 }
 
-void
+static void
 functionality_test_hash_cache (void)
 {
   HASH_MAP_CACHE cache;
@@ -325,7 +339,8 @@ functionality_test_hash_cache (void)
     {
       int result = cache.bind (i, j);
       ACE_ASSERT (result != -1);
-      ACE_DEBUG ((LM_DEBUG, "keys[%d]=%d value=[%d]=%d\n",
+      ACE_DEBUG ((LM_DEBUG,
+                  "keys[%d]=%d value=[%d]=%d\n",
                   i, i, j, j));
       ++counter;
       ACE_ASSERT (cache.current_size () == counter);
@@ -406,7 +421,6 @@ main (int argc, ASYS_TCHAR *argv[])
 
   return 0;
 }
-
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
