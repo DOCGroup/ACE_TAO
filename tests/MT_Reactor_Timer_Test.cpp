@@ -46,9 +46,12 @@ Time_Handler::Time_Handler (void)
 void 
 Time_Handler::setup (void)
 {
-  this->timer_id_[1] = the_reactor->schedule_timer (this,
-                                                    (const void *) 1,
-                                                    ACE_Time_Value (5));
+  this->timer_id_[1] = the_reactor->schedule_timer 
+    (this,
+     (const void *) 1,
+     ACE_Time_Value (5));
+
+  ACE_ASSERT (this->timer_id_[1] != -1);
 }
 
 // In the secondary thread, set a heartbeat timer to go off every
@@ -58,16 +61,36 @@ Time_Handler::setup (void)
 int 
 Time_Handler::svc (void)
 {
-  ACE_Time_Value backstop (30);
+  ACE_Time_Value backstop (10);
 
-  this->timer_id_[2] = the_reactor->schedule_timer (this,
-                                                    (const void *) 2,
-                                                    ACE_Time_Value (3));
+  this->timer_id_[2] = the_reactor->schedule_timer 
+    (this,
+     (const void *) 2,
+     ACE_Time_Value (3));
+
+  ACE_ASSERT (this->timer_id_[2] != -1);
+
   this->my_reactor_.owner (ACE_OS::thr_self ());
-  this->my_reactor_.schedule_timer (this, (const void *) 0,
-                                    ACE_Time_Value (1),
-                                    ACE_Time_Value (1));
-  this->my_reactor_.run_event_loop (backstop);
+
+  long result = this->my_reactor_.schedule_timer 
+    (this,
+     (const void *) 0,
+     ACE_Time_Value (1),
+     ACE_Time_Value (1)) != -1;
+  ACE_ASSERT (result != -1);
+  
+  for (;;)
+    {
+      result = this->my_reactor_.handle_events (backstop);
+      ACE_ASSERT (result != -1);
+      if (result == 0)
+        break;
+    }
+
+  ACE_ASSERT (result != -1);
+
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("%T (%t): leaving svc thread\n")));              
   return 0;
 }
 
@@ -78,30 +101,41 @@ Time_Handler::handle_timeout (const ACE_Time_Value &tv,
   long time_tag = ACE_reinterpret_cast (long, arg);
   ACE_UNUSED_ARG(tv);
 
+  if (time_tag == -1)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ASYS_TEXT ("%T (%t): heartbeat from main thread\n")));
+      return 0;
+    }
   if (time_tag == 0) 
     {	// Heartbeat.
       int i;
 
       ACE_DEBUG ((LM_DEBUG,
                   ASYS_TEXT ("%T (%t): heartbeat\n")));
+
       // See if all of the timers have fired.  If so, leave the
-      // thread's reactor loop which will exit the thread and end the
+      // thread's reactor loop, which will exit the thread and end the
       // test.
 
       for (i = 0; i < Time_Handler::TIMER_SLOTS; i++) 
         if (this->timer_id_[i] != -1)
           break;
 
+      // All timers should be gone.
       if (i == Time_Handler::TIMER_SLOTS)
-        {	// All timers should be gone.
-
+        {	
           // Cancel heartbeat.
-          ACE_ASSERT (this->my_reactor_.cancel_timer (this) == 1);	
+          i = this->my_reactor_.cancel_timer (this);
+          ACE_ASSERT (i == 1);
 
+          i = the_reactor->cancel_timer (this);
           // Shouldn't be any.
-          ACE_ASSERT (the_reactor->cancel_timer (this) == 0); 
+          ACE_ASSERT (i == 0);
+
           this->my_reactor_.end_event_loop ();
         }
+
       return 0;
     }
 
@@ -133,7 +167,9 @@ Dispatch_Count_Handler::Dispatch_Count_Handler (void)
                 ASYS_TEXT ("%p\n"),
                 ASYS_TEXT ("register_handler")));
   // Put something in our pipe and smoke it... ;-)
-  else if (ACE_OS::write (this->pipe_.write_handle (), "z", 1) == -1)
+  else if (ACE_OS::write (this->pipe_.write_handle (),
+                          "z",
+                          1) == -1)
     ACE_ERROR ((LM_ERROR,
                 ASYS_TEXT ("%p\n"),
                 ASYS_TEXT ("write")));
@@ -144,19 +180,42 @@ Dispatch_Count_Handler::Dispatch_Count_Handler (void)
                 ASYS_TEXT ("notify")));
 }
 
+int
+Dispatch_Count_Handler::handle_close (ACE_HANDLE h,
+                                      ACE_Reactor_Mask m)
+{
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("%T (%t): handle_close\n")));
+
+  ACE_ASSERT (h == this->pipe_.read_handle ()
+              && m == ACE_Event_Handler::READ_MASK);
+  
+  if (the_reactor->remove_handler (this->pipe_.read_handle (),
+                                   ACE_Event_Handler::READ_MASK 
+                                   | ACE_Event_Handler::DONT_CALL) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ASYS_TEXT ("%p\n"),
+                       ASYS_TEXT ("remove_handler")),
+                      -1);
+  return 0;
+}
+
 int 
 Dispatch_Count_Handler::handle_input (ACE_HANDLE h)
 {
   char c;
+
   if (ACE_OS::read (h, &c, 1) != 1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ASYS_TEXT ("%p\n"),
                        ASYS_TEXT ("read")),
                       -1);
+
   ACE_ASSERT (c == 'z');
   ACE_DEBUG ((LM_DEBUG,
               ASYS_TEXT ("%T (%t): handle_input\n")));
-  return 0;
+  // Trigger the <handle_close> hook.
+  return -1;
 }
 
 int 
@@ -213,13 +272,21 @@ main (int, ASYS_TCHAR *[])
   other_thread.setup ();
 
   // Schedule a timeout to expire in 5 seconds.
-  the_reactor->schedule_timer (&other_thread,
-                               (const void *) 1,
-                               ACE_Time_Value (5));
+  result = the_reactor->schedule_timer (&other_thread,
+                                        (const void *) -1,
+                                        ACE_Time_Value (5));
+  ACE_ASSERT (result != -1);
 
-  other_thread.activate (THR_NEW_LWP | THR_JOINABLE);
-  the_reactor->run_event_loop ();
-  other_thread.wait ();
+  result = other_thread.activate (THR_NEW_LWP | THR_JOINABLE);
+  ACE_ASSERT (result != -1);
+
+  // Note that we can only call run_event_loop() on the Singleton
+  // thread!
+  result = the_reactor->run_event_loop ();
+  ACE_ASSERT (result != -1);
+
+  result = other_thread.wait ();
+  ACE_ASSERT (result != -1);
 #else
   ACE_ERROR ((LM_ERROR,
               ASYS_TEXT ("threads not supported on this platform\n")));
