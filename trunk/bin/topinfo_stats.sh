@@ -65,10 +65,10 @@ fi
 
 
 cd $DEST/source
-
+STRING=""
 FILES="start after_invoke after_peer_death"
 for i in $FILES ; do
 /usr/bin/tac st_${i}_size.txt > $DEST/data/st_${i}_size.txt
 /usr/bin/tail -5 st_${i}_size.txt > $DEST/data/LAST_st_${i}_size.txt
-$ROOT/bin/generate_topinfo_charts.sh st_${i}_size.txt $DEST/images/st_${i}_size.png st_${i}_size.txt
+$ROOT/bin/generate_topinfo_charts.sh st_${i}_size.txt $DEST/images/st_${i}_size.png st_${i}_size.txt $STRING
 done
