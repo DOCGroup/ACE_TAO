@@ -185,8 +185,8 @@ MyImpl::BMClosedEDHome_exec_i::create (ACE_ENV_SINGLE_ARG_DECL)
   Components::EnterpriseComponent_ptr tmp =
     Components::EnterpriseComponent::_nil ();
   ACE_NEW_THROW_EX (tmp,
-		                MyImpl::BMClosedED_exec_i,
-		                CORBA::NO_MEMORY ());
+                                MyImpl::BMClosedED_exec_i,
+                                CORBA::NO_MEMORY ());
   return tmp;
 }
 
