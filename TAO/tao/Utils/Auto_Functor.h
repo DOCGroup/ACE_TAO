@@ -8,8 +8,8 @@
  * @author Carlos O'Ryan <coryan@atdesk.com>
  */
 //=============================================================================
-#ifndef TAO_AUTO_FUNCTOR_H
-#define TAO_AUTO_FUNCTOR_H
+#ifndef TAO_UTILS_AUTO_FUNCTOR_H
+#define TAO_UTILS_AUTO_FUNCTOR_H
 #include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
@@ -31,4 +31,4 @@ namespace TAO
 }
 
 #include /**/ "ace/post.h"
-#endif /* TAO_AUTO_FUNCTOR_H*/
+#endif /* TAO_UTILS_AUTO_FUNCTOR_H */

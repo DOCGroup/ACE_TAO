@@ -1,3 +1,19 @@
+Wed May  5 09:13:46 2004  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* tao/tao.mpc:
+	* tao/Auto_Functor.h:
+	* tao/Auto_Functor.inl:
+	* tao/Auto_Functor.cpp:
+	  Moved the implementation to the ACE library.  Take advantage of
+	  the 'using namespace' directive to preserve backwards
+	  compatibility.
+
+	* tao/Utils/Utils.mpc:
+	* tao/Utils/Auto_Functor.h:
+	  This header was dropped when the class template was moved up,
+	  re-introduced said header file to recover backwards
+	  compatibility.
+
 Tue May  4 00:12:26 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.cpp:
