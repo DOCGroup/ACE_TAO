@@ -1,3 +1,79 @@
+Fri Aug 27 00:25:47 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/ORB_Constants.h:
+
+	  No need to include "tao/TAO_Export.h".
+
+	  (CORBA::OMGVMCID):
+
+	  Added documentation about how and when to use this constant.
+
+	  (TAO_DEFAULT_MINOR_CODE, TAO_MAX_MINOR_CODE):
+
+	  Deprecated these constants.  They have been replaced with
+	  counterparts in the TAO namespace, as described below, but still
+	  exist in order to maintain backward compatibility for a
+	  reasonable amount of time.
+
+	  Added documentation that details how TAO_DEFAULT_MINOR_CODE is
+	  often misused.
+
+	  (TAO::VMCID):
+
+	  New constant in the TAO namespace that replaces
+	  global namespace constant TAO_DEFAULT_MINOR_CODE.  The latter
+	  constant name was not very descriptive about what the constant
+	  represents.  "TAO::VMCID" is improves on that, and is also more
+	  consistent with OMG naming conventions.
+
+	  (TAO::MAX_MINOR_CODE):
+
+	  Moved the global namespace TAO_MAX_MINOR_CODE constant into the
+	  TAO namespace to be consistent with the above TAO::VMCID
+	  change.
+
+	  Added documentation that makes it obvious how this constant is
+	  determined.  Previously, a "magic number" was assigned to this
+	  constant (actuallly TAO_MAX_MINOR_CODE).  This constant is now
+	  defined in terms of TAO::VMCID.
+
+	  (TAO::VPVID):
+
+	  New TAO namespace constant that is TAO's OMG assigned Vendor
+	  PolicyType Valueset ID (VPVID).  This constant is the same as
+	  the VMCID, and is automatically assigned by the OMG in this
+	  manner when a VMCID is reserved for a given vendor (i.e TAO /
+	  DOC group in this case).  Please refer to the documentation for
+	  this constant when creating new TAO-specific CORBA::PolicyType
+	  values.
+
+	* tao/Exception.cpp:
+
+	  Use new TAO::VMCID instead of the deprecated
+	  TAO_DEFAULT_MINOR_CODE constant.
+
+	* tao/CORBA.pidl:
+
+	  Removed this file.  It has been deprecated for at least four
+	  years.
+
+	* tao/Invocation_Endpoint_Selectors.cpp:
+	* tao/Profile_Transport_Resolver.cpp:
+
+	  Corrected grammar in a comment.
+
+	* tao/Policy_Forward.pidl:
+
+	  Added a "-*- IDL -*-" Emacs mode comment to this file so that we
+	  can automatically get some syntax highlighting and automatic
+	  indenting.
+
+	* tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+
+	  Corrected minor codes passed to CORBA::SystemException
+	  constructors.  They were not logically OR-ed with the
+	  CORBA::OMGVMCID constant.
+
 Fri Aug 27 00:03:51 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/AV/Makefile.am:

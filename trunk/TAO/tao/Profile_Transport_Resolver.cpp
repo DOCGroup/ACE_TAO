@@ -120,18 +120,17 @@ namespace TAO
   {
     TAO_Connector_Registry *conn_reg =
       this->stub_->orb_core ()->connector_registry (
-                                    ACE_ENV_SINGLE_ARG_PARAMETER
-                                  );
+        ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK_RETURN (false);
 
     if (conn_reg == 0)
       {
         ACE_THROW_RETURN (CORBA::INTERNAL (
-            CORBA::SystemException::_tao_minor_code (
-              TAO_DEFAULT_MINOR_CODE,
-              EINVAL),
-            CORBA::COMPLETED_NO),
-                          0);
+                            CORBA::SystemException::_tao_minor_code (
+                              TAO_DEFAULT_MINOR_CODE,
+                              EINVAL),
+                            CORBA::COMPLETED_NO),
+                          false);
       }
 
     ACE_Time_Value connection_timeout;
@@ -161,20 +160,20 @@ namespace TAO
         ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (false);
 
-    // A timeout error occurred
-    // If the user has set a roundtrip timeout policy, then throw a
-    // timeout exception, else just fall through and return false to
-    // look at the next endpoint
-    if (this->transport_ == 0 &&
-        errno == ETIME &&
-        is_conn_timeout == false)
+    // A timeout error occurred.
+    // If the user has set a roundtrip timeout policy, throw a timeout
+    // exception.  Otherwise, just fall through and return false to
+    // look at the next endpoint.
+    if (this->transport_ == 0
+        && is_conn_timeout == false
+        && errno == ETIME)
       {
         ACE_THROW_RETURN (CORBA::TIMEOUT (
-            CORBA::SystemException::_tao_minor_code (
-                 TAO_TIMEOUT_CONNECT_MINOR_CODE,
-                 errno),
-            CORBA::COMPLETED_NO),
-            false);
+                            CORBA::SystemException::_tao_minor_code (
+                              TAO_TIMEOUT_CONNECT_MINOR_CODE,
+                              errno),
+                            CORBA::COMPLETED_NO),
+                          false);
       }
     else if (this->transport_ == 0)
       {

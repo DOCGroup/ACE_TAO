@@ -466,7 +466,7 @@ CORBA::SystemException::_tao_minor_code (u_int location,
                                          int errno_value)
 {
   return
-    TAO_DEFAULT_MINOR_CODE
+    TAO::VMCID
     | location
     | _tao_errno (errno_value);
 }
@@ -492,9 +492,10 @@ CORBA::SystemException::_info (void) const
   info += this->_rep_id ();
   info += "'\n";
 
+  /// Mask off the lower order 12 bits to get the VMCID.
   const CORBA::ULong VMCID = this->minor () & 0xFFFFF000u;
 
-  if (VMCID == TAO_DEFAULT_MINOR_CODE)
+  if (VMCID == TAO::VMCID)
     {
       // @@ Move the following code to a subroutine, it is too long already!
       const char *location;
@@ -1287,7 +1288,7 @@ STANDARD_EXCEPTION_LIST
 CORBA::name ::name (void) \
   :  CORBA::SystemException ("IDL:omg.org/CORBA/" #name ":1.0", \
                              #name, \
-                             TAO_DEFAULT_MINOR_CODE, \
+                             TAO::VMCID, \
                              CORBA::COMPLETED_NO) \
 { \
 } \
