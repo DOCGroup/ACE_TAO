@@ -1,3 +1,13 @@
+Mon Aug 23 16:58:18 UTC 2004  Don Hinton  <don.hinton@vanderbilt.edu>
+
+        * include/makeinclude/rules.local.GNU:
+          Added CCFLAGS to the list of arguments passed to the dependency
+          generator.  Thanks to Matthew Townsend <mtownsen@harris.com>
+          for reporting the problem.
+
+        * THANKS:
+          Added Matthew Townsend to the hall of fame.
+
 Mon Aug 23 08:34:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-hpux11.h:
