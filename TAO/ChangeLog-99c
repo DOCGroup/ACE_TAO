@@ -1,3 +1,10 @@
+Fri Jun 25 21:27:45 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/DynAny_i.cpp:
+	  Made full use of exception macros everywhere 
+	  ACE_TRY_ENV was used, made other enhancements
+	  and cosmetic changes.
+
 Fri Jun 25 20:59:08 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/tests/Param_Test/any.cpp:
