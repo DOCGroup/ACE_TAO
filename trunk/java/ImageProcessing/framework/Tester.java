@@ -10,12 +10,49 @@ import JACE.OS.*;
 
 public class Tester implements Runnable
 {
-  public Tester (String testInFile, String server, int port, ImageApp parent)
+  public static final String DEFAULT_TEST_SERVER = "siesta.cs.wustl.edu";
+  public static final int DEFAULT_TEST_SERVER_PORT = 7787;
+  public static final String DEFAULT_JAWS_SERVER = "siesta.cs.wustl.edu";
+  public static final int DEFAULT_JAWS_SERVER_PORT = 5432;
+
+  public Tester (String testInFile, 
+		 ImageApp parent)
   {
     this.testInFile_ = testInFile;
-    this.server_ = server;
-    this.port_ = port;
     this.parent_ = parent;
+  }
+
+  public void initialize ()
+  {
+    System.out.println ("Initializing tester...");
+
+    // Get the hostname of the test server
+    this.server_ = this.parent_.getParameter ("testServer");
+    if (this.server_ == null)
+      this.server_ = DEFAULT_TEST_SERVER;
+
+    // Get the port number of the test server
+    String testPortString = this.parent_.getParameter ("testPort");
+    if (testPortString == null)
+      this.port_ = DEFAULT_TEST_SERVER_PORT;
+    else
+      this.port_ = (new Integer (testPortString)).intValue ();
+
+    // Get the hostname of the JAWS server
+    this.JAWSServer_ = this.parent_.getParameter ("JAWSServer");
+    if (this.JAWSServer_ == null)
+      this.JAWSServer_ = DEFAULT_JAWS_SERVER;
+
+    // Get the port number of the JAWS server
+    String JAWSPortString = this.parent_.getParameter ("JAWSPort");
+    if (JAWSPortString == null)
+      this.JAWSServerPort_ = DEFAULT_JAWS_SERVER_PORT;
+    else
+      this.JAWSServerPort_ = (new Integer (JAWSPortString)).intValue ();
+
+    System.out.println ("Test Input File: " + this.testInFile_);
+    System.out.println ("Test Server: " + this.server_ + "\tPort: " + this.port_);
+    System.out.println ("JAWS Server: " + this.JAWSServer_ + "\tPort: " + this.JAWSServerPort_);
 
     // Run in your own thread of control
     (new Thread (this)).start ();
@@ -32,9 +69,6 @@ public class Tester implements Runnable
     String imageList = null;
     try
       {
-	System.out.println ("Test Input File: " + this.testInFile_);
-	System.out.println ("Server: " + this.server_ + "\tPort: " + this.port_);
-
 	// Create input URL
 	inputURL = new URL (this.testInFile_);
 
@@ -70,8 +104,9 @@ public class Tester implements Runnable
     // running then we will write to standard output.
 
     // Create a handler which will handle our connection.
-    TestHandler handler = new TestHandler (imageList, this.parent_);
-
+    TestHandler handler = new TestHandler (imageList, 
+					   this.JAWSServer_, this.JAWSServerPort_,
+					   this.parent_);
     try
       {
 	Connector connector = new Connector ();
@@ -84,6 +119,7 @@ public class Tester implements Runnable
       }
     catch (SocketException e)
       {
+	System.out.println ("Test Server not running! Writing to standard out...");
 	// The server is not running so write all the output to screen
 	handler.doTesting ();
       }
@@ -105,5 +141,8 @@ public class Tester implements Runnable
   private ImageApp parent_ = null;
   private String server_ = "siesta.cs.wustl.edu";
   private int port_ = 7787;
+
+  private String JAWSServer_ = "siesta.cs.wustl.edu";
+  private int JAWSServerPort_ = 5432;
 }
 

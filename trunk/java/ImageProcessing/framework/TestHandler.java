@@ -11,9 +11,13 @@ import JACE.Timers.*;
 
 public class TestHandler extends SvcHandler
 {
-  public TestHandler (String imageList, ImageApp parent)
+  public TestHandler (String imageList,
+		      String JAWSServer, int JAWSPort,
+		      ImageApp parent)
   {
     this.imageList_ = imageList;
+    this.JAWSServer_ = JAWSServer;
+    this.JAWSPort_ = JAWSPort;
     this.parent_ = parent;
     this.filterTable_ = this.parent_.filterTable();
   }
@@ -45,19 +49,26 @@ public class TestHandler extends SvcHandler
       }
   }
 
-  private void process (String image)
+  private void write (String data)
   {
     try
       {
+	// If we are connected to the server then send the data to the
+	// server, otherwise write it to standard out.
 	if (stdOut)
-	  System.out.println ("Image: " + image);
+	  System.out.print (data);
 	else
-	  this.peer ().send ("Image: " + image + "\n");
+	  this.peer ().send (data);
       }
     catch (IOException e)
       {
 	ACE.ERROR (e);
       }
+  }
+
+  private void process (String image)
+  {
+    this.write ("Image: " + image + "\n");
 
     this.loadImage (image);
     this.processImage (image);
@@ -66,78 +77,65 @@ public class TestHandler extends SvcHandler
 
   private void loadImage (String image)
   {
-    try
-      {
-	if (stdOut)
-	  System.out.print ("\tLoading...");
-	else
-	  this.peer ().send ("\tLoading...");
+    this.write ("\tLoading...");
+    
+    // Start the timer
+    timer_.start ();
+    
+    // Load the image
+    parent_.openURL (image);
+    
+    // Stop the timer
+    timer_.stop ();
+    long time = timer_.elapsedTime ();
 
-	// Start the timer
-	timer_.start ();
-
-	// Load the image
-	parent_.openURL (image);
-
-	// Stop the timer
-	timer_.stop ();
-	long time = timer_.elapsedTime ();
-	if (stdOut)
-	  System.out.println ("done (" + ((double) time)/1000 + " seconds).");
-	else
-	  this.peer ().send ("done (" + ((double) time)/1000 + " seconds).\n");
-      }
-    catch (IOException e)
-      {
-	ACE.ERROR (e);
-      }
-
+    this.write ("done (" + ((double) time)/1000 + " seconds).\n");
   }
 
   private void processImage (String image)
   {
-    try
+    this.write ("\tProcessing...\n");
+
+    for (Enumeration e = filterTable_.keys (); e.hasMoreElements (); )
       {
-	if (stdOut)
-	  System.out.println ("\tProcessing...");
-	else
-	  this.peer ().send ("\tProcessing...\n");
+	String filterName = (String) e.nextElement ();
 
-	for (Enumeration e = filterTable_.keys (); e.hasMoreElements (); )
-	  {
-	    String filterName = (String) e.nextElement ();
-	    if (stdOut)
-	      System.out.print ("\t\t" + filterName + "...");
-	    else
-	      this.peer ().send ("\t\t" + filterName + "...");
-
-	    ImageFilter filter = (ImageFilter) filterTable_.get (filterName);
-
-	    // Start the timer
-	    timer_.start ();
-
-	    this.parent_.apply (filter);
-
-	    // Stop the timer
-	    timer_.stop ();
-	    long time = timer_.elapsedTime ();
-
-	    if (stdOut)
-	      System.out.println ("done (" + ((double) time)/1000 + " seconds).");
-	    else
-	      this.peer ().send ("done (" + ((double) time)/1000 + " seconds).\n");
-	    this.parent_.resetImage ();
-	  }
-      }
-    catch (IOException e)
-      {
-	ACE.ERROR (e);
+	this.write ("\t\t" + filterName + "...");
+	
+	ImageFilter filter = (ImageFilter) filterTable_.get (filterName);
+	    
+	// Start the timer
+	timer_.start ();
+	
+	this.parent_.apply (filter);
+	
+	// Stop the timer
+	timer_.stop ();
+	long time = timer_.elapsedTime ();
+	
+	this.write ("done (" + ((double) time)/1000 + " seconds).\n");
+	
+	this.parent_.resetImage ();
       }
   }
    
   private void uploadImage (String image)
   {
+    int index = image.lastIndexOf ("/");
+    String imageName = image.substring (index+1);
+    String url = "http://" + this.JAWSServer_ + ":" + this.JAWSPort_ + "/" + imageName;
+    this.write ("\tUploading " + url + "...");
 
+    // Start the timer
+    timer_.start ();
+
+    this.parent_.saveFile (url);
+
+    // Stop the timer
+    timer_.stop ();
+    long time = timer_.elapsedTime ();
+
+    this.write ("done (" + ((double) time)/1000 + " seconds).\n");		       
   }
 
   private ImageApp parent_ = null;
@@ -145,5 +143,6 @@ public class TestHandler extends SvcHandler
   private String imageList_ = null;
   private boolean stdOut = true;
   private Hashtable filterTable_ = null;
-
+  private String JAWSServer_ = null;
+  private int JAWSPort_ = 5432;
 }
