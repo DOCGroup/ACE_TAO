@@ -1,3 +1,8 @@
+Sun Oct 20 11:31:45 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* ACEXML/common/Makefile.bor: Added Encoding.obj to the list of
+	  object files. Thanks to Johnny for pointing this out.
+
 Sun Oct 20 11:30:04 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/SPIPE_Test.cpp: Fixed compile errors in Borland builds. 
