@@ -54,38 +54,59 @@ pace_difftime (pace_time_t time1, pace_time_t time2)
 
 PACE_INLINE
 int
-pace_clock_getres (clockid_t clock_id,
+pace_clock_getres (pace_clockid_t clock_id,
                    pace_timespec * res)
 {
+#if PACE_LINUX
+  errno = ENOSYS;
+  PACE_UNUSED_ARG (clock_id);
+  PACE_UNUSED_ARG (res);
+  return -1;
+#else
   return clock_getres (clock_id, res);
+#endif /* PACE_LINUX */
 }
 
 PACE_INLINE
 int
-pace_clock_gettime (clockid_t clock_id,
+pace_clock_gettime (pace_clockid_t clock_id,
                     pace_timespec * tp)
 {
+#if PACE_LINUX
+  errno = ENOSYS;
+  PACE_UNUSED_ARG (clock_id);
+  PACE_UNUSED_ARG (tp);
+  return -1;
+#else
   return clock_gettime (clock_id, tp);
+#endif /* PACE_LINUX */
 }
 
 PACE_INLINE
 int
-pace_clock_settime (clockid_t clock_id,
+pace_clock_settime (pace_clockid_t clock_id,
                     const pace_timespec * tp)
 {
+#if PACE_LINUX
+  errno = ENOSYS;
+  PACE_UNUSED_ARG (clock_id);
+  PACE_UNUSED_ARG (tp);
+  return -1;
+#else
   return clock_settime (clock_id, PACE_NONCONST_ARG_CAST (struct timespec *) tp);
+#endif /* PACE_LINUX */
 }
 
 PACE_INLINE
 char *
-pace_ctime (const time_t * clock)
+pace_ctime (const pace_time_t * clock)
 {
   return ctime (clock);
 }
 
 PACE_INLINE
 char *
-pace_ctime_r (const time_t * clock, char * buf)
+pace_ctime_r (const pace_time_t * clock, char * buf)
 {
 # if defined (PACE_HAS_POSIX_PTHREAD_SEMANTICS)
   return ctime_r (clock, buf);
@@ -99,14 +120,14 @@ pace_ctime_r (const time_t * clock, char * buf)
 
 PACE_INLINE
 pace_tm *
-pace_gmtime (const time_t * clock)
+pace_gmtime (const pace_time_t * clock)
 {
   return gmtime (clock);
 }
 
 PACE_INLINE
 pace_tm *
-pace_gmtime_r (const time_t * clock, pace_tm * result)
+pace_gmtime_r (const pace_time_t * clock, pace_tm * result)
 {
 # if defined (PACE_HAS_POSIX_PTHREAD_SEMANTICS)
   return gmtime_r (clock, result);
@@ -120,14 +141,14 @@ pace_gmtime_r (const time_t * clock, pace_tm * result)
 
 PACE_INLINE
 pace_tm *
-pace_localtime (const time_t * clock)
+pace_localtime (const pace_time_t * clock)
 {
   return localtime (clock);
 }
 
 PACE_INLINE
 pace_tm *
-pace_localtime_r (const time_t * clock, pace_tm * result)
+pace_localtime_r (const pace_time_t * clock, pace_tm * result)
 {
 # if defined (PACE_HAS_POSIX_PTHREAD_SEMANTICS)
   return localtime_r (clock, result);
@@ -156,7 +177,7 @@ pace_nanosleep (const pace_timespec * rqtp,
 
 PACE_INLINE
 size_t
-pace_strftime (char *s, size_t maxsize,
+pace_strftime (char *s, pace_size_t maxsize,
                const char *format,
                const pace_tm *timeptr)
 {
@@ -165,51 +186,78 @@ pace_strftime (char *s, size_t maxsize,
 
 PACE_INLINE
 time_t
-pace_time (time_t * tloc)
+pace_time (pace_time_t * tloc)
 {
   return time (tloc);
 }
 
 PACE_INLINE
 int
-pace_timer_create (clockid_t clock_id,
+pace_timer_create (pace_clockid_t clock_id,
                    pace_sigevent * evp,
-                   timer_t *timerid)
+                   pace_timer_t *timerid)
 {
+#if PACE_LINUX
+  return pace_emu_timer_create (clock_id, evp, timerid);
+#else
   return timer_create (clock_id, evp, timerid);
+#endif /* PACE_LINUX */
 }
 
 PACE_INLINE
 int
-pace_timer_delete (timer_t timerid)
+pace_timer_delete (pace_timer_t timerid)
 {
+#if PACE_LINUX
+  return pace_emu_timer_delete (timerid);
+#else
   return timer_delete (timerid);
+#endif /* PACE_LINUX */
 }
 
 PACE_INLINE
 int
-pace_timer_getoverrun (timer_t timerid)
+pace_timer_getoverrun (pace_timer_t timerid)
 {
+#if PACE_LINUX
+  return pace_emu_timer_getoverrun (timerid);
+#else
   return timer_getoverrun (timerid);
+#endif /* PACE_LINUX */
 }
 
 PACE_INLINE
 int
-pace_timer_gettime (timer_t timerid,
+pace_timer_gettime (pace_timer_t timerid,
                     pace_itimerspec * value)
 {
+#if PACE_LINUX
+  errno = ENOSYS;
+  PACE_UNUSED_ARG (timerid);
+  PACE_UNUSED_ARG (value);
+  return -1;
+#else
   return timer_gettime (timerid, value);
+#endif /* PACE_LINUX */
 }
 
 PACE_INLINE
 int
-pace_timer_settime (timer_t timerid,
+pace_timer_settime (pace_timer_t timerid,
                     int flags,
                     const pace_itimerspec * value,
                     pace_itimerspec * ovalue)
 {
-  return timer_settime (timerid, flags, PACE_NONCONST_ARG_CAST (struct itimerspec *) value,
-                        ovalue);
+#if PACE_LINUX
+  errno = ENOSYS;
+  PACE_UNUSED_ARG (timerid);
+  PACE_UNUSED_ARG (flags);
+  PACE_UNUSED_ARG (value);
+  PACE_UNUSED_ARG (ovalue);
+  return -1;
+#else
+  return timer_settime (timerid, flags, PACE_NONCONST_ARG_CAST (struct itimerspec *) value, ovalue);
+#endif /* PACE_LINUX */
 }
 
 PACE_INLINE

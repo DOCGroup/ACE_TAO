@@ -73,7 +73,7 @@ extern "C" {
    */
   PACE_INLINE ssize_t pace_mq_receive (pace_mqd_t mqdes,
                                        char * msg_ptr,
-                                       size_t msg_len,
+                                       pace_size_t msg_len,
                                        unsigned int * nmsg_prio);
 
   /**
@@ -83,7 +83,7 @@ extern "C" {
    */
   PACE_INLINE int pace_mq_send (pace_mqd_t mqdes,
                                 const char * mst_ptr,
-                                size_t msg_len,
+                                pace_size_t msg_len,
                                 unsigned int psg_prio);
 
   /**

@@ -6,7 +6,7 @@
 *    pace
 *
 * = FILENAME
-*    pace/posix/errno.h
+*    pace/stddef.h
 *
 * = AUTHOR
 *    John Heitmann

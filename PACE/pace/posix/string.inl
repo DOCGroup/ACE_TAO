@@ -14,6 +14,43 @@
  * ============================================================================= */
 
 #include <string.h>
+#include "pace/string.h"
+
+PACE_INLINE
+void *
+pace_memchr (const void *s, int c, pace_size_t n)
+{
+  return memchr (s, c, n);
+}
+
+PACE_INLINE
+int
+pace_memcmp (const void *s1, const void *s2, pace_size_t n)
+{
+  return memcmp (s1, s2, n);
+}
+
+PACE_INLINE
+void *
+pace_memcpy (void * s1, const void * s2, pace_size_t n)
+{
+  return memcpy (s1, s2, n);
+}
+
+PACE_INLINE
+void *
+pace_memmove (void *s1, const void *s2, pace_size_t n)
+{
+  return memmove (s1, s2, n);
+}
+
+PACE_INLINE
+void *
+pace_memset (void *s, int c, pace_size_t n)
+{
+  return memset (s, c, n);
+}
+
 
 PACE_INLINE
 char *
