@@ -95,13 +95,14 @@ Handler::handle_output (ACE_HANDLE)
   ACE_DEBUG ((LM_DEBUG,
               "Handler::handle_output\n"));
 
-#if defined (__OpenBSD__)
+#if defined (__OpenBSD__) || \
+  ( defined (__Lynx__) && _POSIX_VERSION <= 199506L ) // LynxOS 3.x
   // All that we need written has been written, so don't
   // call handle_output again.
   this->reactor ()->mask_ops (this->pipe_.read_handle (),
                               ACE_Event_Handler::WRITE_MASK,
                               ACE_Reactor::CLR_MASK);
-#endif /* __OpenBSD__ */
+#endif /* __OpenBSD__ || __Lynx__ ... */
 
   return 0;
 }
