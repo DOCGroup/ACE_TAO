@@ -193,7 +193,7 @@ PACE_INLINE
 char *
 pace_strtok_r (char * s, const char * sep, char ** lasts)
 {
-# if defined (PACE_HAS_REENTRANT)
+# if defined (PACE_HAS_REENTRANT) || (PACE_LYNXOS) || (PACE_SUNOS)    
   return strtok_r (s, sep, lasts);
 # else  /* ! PACE_HAS_REENTRANT */
   PACE_UNUSED_ARG (s);
