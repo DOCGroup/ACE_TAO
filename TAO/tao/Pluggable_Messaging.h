@@ -135,11 +135,13 @@ public:
       TAO_OutputCDR &cdr,
       TAO_Pluggable_Reply_Params &params,
       CORBA::Exception &x) = 0;
-  // Generate a reply message with the exception <ex>.
 
+  /// Is the messaging object ready for processing BiDirectional
+  /// request/response?
   virtual int is_ready_for_bidirectional (void) = 0;
-  // Is the messaging object ready for processing BiDirectional
-  // request/response?
+
+  /// Are there any more messages that needs processing?
+  virtual int more_messages (void);
 };
 
 #if defined (__ACE_INLINE__)

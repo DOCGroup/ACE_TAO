@@ -1,3 +1,78 @@
+Thu Jan 11 14:02:25 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	  This set of changes are for making the server side of the
+	  completely reactive. This is achieved by doing a single read on
+	  the socket when the reactor calls the service handler for
+	  reading GIOP messages. The message is first read into a buffer
+	  and then apropriate checking is performed. Then the message is
+	  put into a CDR steam and sent to the higher layers of the ORB
+	  for processing. 
+	
+        * tao/GIOP_Message_Handler.cpp
+        * tao/GIOP_Message_Handler.h:
+	* tao/GIOP_Message_Handler.inl: A new class. This class basically
+	  does the following functions (1) reads messages from the socket
+	  in to a buffer (2) checks whether the message is a GIOP message
+	  (3) calculates the size of the payload and figures if any part
+	  of the message has been left unread (4) some memory and buffer
+	  management for the incoming messages. 
+	
+	* tao/GIOP_Message_Base.h:
+	* tao/GIOP_Message_Base.cpp: Moved some portion of the GIOP header
+	  checking routines like parse_header () to GIOP_Message_handler
+	  class. This class now sends requests to the higher layers by
+	  creating a CDR stream on the stack from the buffer in the
+	  GIOP_Message_Handler class. 
+
+	* tao/GIOP_Message_State.i:
+	* tao/GIOP_Message_State.h:
+	* tao/GIOP_Message_State.cpp: Removed the Input CDR from this
+	  class. Changed the way fragments are managed.
+
+	* tao/GIOP_Message_Lite.cpp: 
+	* tao/GIOP_Message_Lite.h: This still uses a CDR stream to read
+	  the incoming messages. So moved the CDR stream that is used to
+	  read the incoming messages from the GIOP message state in to
+	  this class. 
+	  
+	* tao/IIOP_Connection_Handler.cpp: Made the socket non-blocking. 
+
+	* tao/IIOP_Transport.cpp: The call process_message () now checks
+	  if more messages are available in the buffer for processing. The
+	  call read_process_message () calls process_message () in a loop
+	  to process all the messages, if the read has read more than one
+	  message in to the buffer .
+	
+	* tao/GIOP_Message_Generator_Parser_Impl.h: Made check_revision ()
+	  a static method.
+
+	
+	* tao/Pluggable.h:
+	* tao/Pluggable.i: Added a new call read () that does a
+	  non-blocking read on the socket.
+	
+	* tao/Pluggable_Messaging.cpp:
+	* tao/Pluggable_Messaging.h: Added a call more_messages () to
+	  check whether any messages need to be processed. 
+	
+	* tao/TAO.dsp: 
+	* tao/TAO_Static.dsp: Added the new files.
+	* tao/Makefile: Added new files and updated dependencies.
+
+	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
+	* tao/Strategies/SHMIOP_Transport.cpp:
+	* tao/Strategies/UIOP_Connection_Handler.cpp:
+	* tao/Strategies/UIOP_Transport.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp: 
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp: Replicated
+	  changes made to IIOP.
+	
+	* tao/IORManipulation/Makefile:
+	* tao/IORTable/Makefile:
+	* tao/PortableServer/Makefile:
+	* tao/SmartProxies/Makefile:
+	* tao/Strategies/Makefile: Updated dependencies.
+
 Thu Jan 11 13:44:42 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/SmartProxies/Makefile.bor:
@@ -23,6 +98,7 @@ Wed Jan 10 17:21:12 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 	  succesfully loaded the necessary instance of TAO_Protocols_Hooks
 	  and if it is unsuccessful, loaded the same in a hard-coded way.
 	
+>>>>>>> 1.2313
 Wed Jan 10 17:02:42 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * tao/Policy_Manager.cpp:

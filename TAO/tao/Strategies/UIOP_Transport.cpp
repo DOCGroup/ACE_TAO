@@ -145,7 +145,6 @@ TAO_UIOP_Transport::recv (char *buf,
                                                    max_wait_time);
 }
 
-
 int
 TAO_UIOP_Transport::read_process_message (ACE_Time_Value *max_wait_time,
                                           int block)
@@ -169,9 +168,15 @@ TAO_UIOP_Transport::read_process_message (ACE_Time_Value *max_wait_time,
     return result;
 
   // Now we know that we have been able to read the complete message
-  // here..
-  return this->process_message ();
+  // here.. We loop here to see whether we have read more than one
+  // message in our read.
+  do
+    {
+      result = this->process_message ();
+    }
+  while (result > 1);
 
+  return result;
 }
 
 
@@ -424,8 +429,7 @@ TAO_UIOP_Transport::process_message (void)
       return -1;
     }
 
-  this->messaging_object_->reset ();
-  return 1;
+  return this->messaging_object_->more_messages ();
 }
 
 #endif  /* TAO_HAS_UIOP */

@@ -123,6 +123,16 @@ public:
                         size_t len,
                         const ACE_Time_Value *s = 0) = 0;
 
+  /**
+   * Try to read len bytes from into buf.
+   * @@ The ACE_Time_Value *s is just a place holder for now.  It is
+   * not clear this this is the best place to specify this.  The actual
+   * timeout values will be kept in the Policies.
+   */
+  ssize_t read (char *buf,
+                size_t len,
+                const ACE_Time_Value *s = 0);
+
 
   /// Fill into <output> the right headers to make a request.
   virtual void start_request (TAO_ORB_Core *orb_core,

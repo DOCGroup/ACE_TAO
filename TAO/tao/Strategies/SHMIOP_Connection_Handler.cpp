@@ -67,14 +67,6 @@ TAO_SHMIOP_Connection_Handler::~TAO_SHMIOP_Connection_Handler (void)
 }
 
 
-// @@ Should I do something here to enable non-blocking?? (Alex).
-// @@ Alex: I don't know if this is the place to do it, but the way to
-//    do it is:
-//    if (this->peer ().enable (ACE_NONBLOCK) == -1)
-//       return -1;
-//    Probably we will need to use the transport to decide if it is
-//    needed or not.
-
 int
 TAO_SHMIOP_Connection_Handler::open (void*)
 {
@@ -94,6 +86,9 @@ TAO_SHMIOP_Connection_Handler::open (void*)
                                 sizeof (int)) == -1)
     return -1;
 #endif /* ! ACE_LACKS_TCP_NODELAY */
+
+  if (this->peer ().enable (ACE_NONBLOCK) == -1)
+    return -1;
 
   // Called by the <Strategy_Acceptor> when the handler is
   // completely connected.

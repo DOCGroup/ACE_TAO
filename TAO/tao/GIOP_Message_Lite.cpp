@@ -27,7 +27,11 @@ TAO_GIOP_Message_Lite::TAO_GIOP_Message_Lite (TAO_ORB_Core *orb_core)
       ),
     cdr_dblock_alloc_ (
         orb_core->resource_factory ()->output_cdr_dblock_allocator ()
-      )
+      ),
+   input_cdr_ (orb_core->create_input_cdr_data_block (ACE_CDR::DEFAULT_BUFSIZE),
+        TAO_ENCAP_BYTE_ORDER,
+        orb_core),
+   current_offset_ (0)
 {
 #if defined (ACE_HAS_PURIFY)
   (void) ACE_OS::memset (this->repbuf_,
@@ -74,7 +78,7 @@ int
 TAO_GIOP_Message_Lite::parse_header (void)
 {
   // Get the read pointer
-  char *buf = this->message_state_.cdr.rd_ptr ();
+  char *buf = this->input_cdr_.rd_ptr ();
 
   // @@ Bala: i added the following comment, does it make sense?
   // In GIOPLite the version, byte order info, etc. are hardcoded, and
@@ -86,10 +90,10 @@ TAO_GIOP_Message_Lite::parse_header (void)
   // Get the message type.
   this->message_state_.message_type = buf[TAO_GIOP_LITE_MESSAGE_TYPE_OFFSET];
 
-  this->message_state_.cdr.reset_byte_order (this->message_state_.byte_order);
+  this->input_cdr_.reset_byte_order (this->message_state_.byte_order);
 
   // The first bytes are the length of the message.
-  this->message_state_.cdr.read_ulong (this->message_state_.message_size);
+  this->input_cdr_.read_ulong (this->message_state_.message_size);
 
   return 0;
 }
@@ -101,6 +105,8 @@ TAO_GIOP_Message_Lite::reset (int reset_flag)
   // Reset the message state
   this->message_state_.reset (reset_flag);
 
+  if (reset_flag)
+    this->input_cdr_.reset_contents ();
   //What else???
 }
 
@@ -211,7 +217,7 @@ TAO_GIOP_Message_Lite::read_message (TAO_Transport *transport,
     {
       int retval =
         TAO_GIOP_Utils::read_bytes_input (transport,
-                                          message_state_.cdr,
+                                          this->input_cdr_,
                                           TAO_GIOP_LITE_HEADER_LEN ,
                                           max_wait_time);
       if (retval == -1)
@@ -237,8 +243,8 @@ TAO_GIOP_Message_Lite::read_message (TAO_Transport *transport,
           return -1;
         }
 
-      if (this->message_state_.cdr.grow (TAO_GIOP_LITE_HEADER_LEN  +
-                                         this->message_state_.message_size) == -1)
+      if (this->input_cdr_.grow (TAO_GIOP_LITE_HEADER_LEN  +
+                                 this->message_state_.message_size) == -1)
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
@@ -250,16 +256,16 @@ TAO_GIOP_Message_Lite::read_message (TAO_Transport *transport,
       // Growing the buffer may have reset the rd_ptr(), but we want
       // to leave it just after the GIOP header (that was parsed
       // already);
-      this->message_state_.cdr.skip_bytes (TAO_GIOP_LITE_HEADER_LEN);
+      this->input_cdr_.skip_bytes (TAO_GIOP_LITE_HEADER_LEN);
     }
 
   size_t missing_data =
-    this->message_state_.message_size - this->message_state_.current_offset;
+    this->message_state_.message_size - this->current_offset_;
 
   ssize_t n =
     TAO_GIOP_Utils::read_buffer (transport,
-                                 this->message_state_.cdr.rd_ptr ()
-                                 + this->message_state_.current_offset,
+                                 this->input_cdr_.rd_ptr ()
+                                 + this->current_offset_,
                                  missing_data,
                                  max_wait_time);
 
@@ -280,18 +286,18 @@ TAO_GIOP_Message_Lite::read_message (TAO_Transport *transport,
       return -1;
     }
 
-   this->message_state_.current_offset += n;
+   this->current_offset_ += n;
 
-  if (this->message_state_.current_offset ==
+  if (this->current_offset_ ==
       this->message_state_.message_size)
     {
       if (TAO_debug_level >= 4)
         {
           size_t header_len = TAO_GIOP_LITE_HEADER_LEN ;
 
-          char *buf = this->message_state_.cdr.rd_ptr ();
+          char *buf = this->input_cdr_.rd_ptr ();
           buf -= header_len;
-          size_t msg_len = this->message_state_.cdr.length () + header_len;
+          size_t msg_len = this->input_cdr_.length () + header_len;
           this->dump_msg ("recv",
                           ACE_reinterpret_cast (u_char *,
                                                 buf),
@@ -299,7 +305,10 @@ TAO_GIOP_Message_Lite::read_message (TAO_Transport *transport,
         }
     }
 
-  return this->message_state_.is_complete ();
+  if (this->current_offset_ != this->message_state_.message_size)
+    return 0;
+
+  return 1;
 }
 
 
@@ -407,7 +416,7 @@ TAO_GIOP_Message_Lite::process_request_message (TAO_Transport *transport,
   // same Event_Handler in two threads at the same time.
 
   // Steal the input CDR from the message state.
-  TAO_InputCDR input_cdr (ACE_InputCDR::Transfer_Contents (this->message_state_.cdr),
+  TAO_InputCDR input_cdr (ACE_InputCDR::Transfer_Contents (this->input_cdr_),
                           orb_core);
 
   // Send the message state for the service layer like FT to log the
@@ -450,12 +459,12 @@ TAO_GIOP_Message_Lite::process_reply_message (
     {
     case TAO_GIOP_REPLY:
       // Should be taken care by the state specific parsing
-      return this->parse_reply (this->message_state_.cdr,
+      return this->parse_reply (this->input_cdr_,
                                 params);
     case TAO_GIOP_LOCATEREPLY:
       // We call parse_reply () here because, the message format for
       // the LOCATEREPLY & REPLY are same.
-      return this->parse_reply (this->message_state_.cdr,
+      return this->parse_reply (this->input_cdr_,
                                 params);
     default:
       return -1;
