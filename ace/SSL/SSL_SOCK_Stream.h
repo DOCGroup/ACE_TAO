@@ -260,7 +260,8 @@ protected:
   /// methods.
   ssize_t recv_i (void *buf,
                   size_t n,
-                  int flags) const;
+                  int flags,
+                  const ACE_Time_Value *timeout) const;
 
 private:
 
@@ -284,4 +285,3 @@ protected:
 #include "ace/post.h"
 
 #endif /* ACE_SSL_SOCK_STREAM_H */
-

@@ -130,13 +130,25 @@ ACE_SSL_SOCK_Stream::send (const void *buf,
 ASYS_INLINE ssize_t
 ACE_SSL_SOCK_Stream::recv_i (void *buf,
                              size_t n,
-                             int flags) const
+                             int flags,
+                             const ACE_Time_Value *timeout) const
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::recv_i");
 
   // NOTE: Caller must provide thread-synchronization.
 
   int bytes_read = 0;
+  const ACE_HANDLE &handle = this->get_handle ();
+
+  // Flag that forces another iteration of the read loop.
+  int ssl_read = 0;
+
+  // Value for current I/O mode (blocking/non-blocking)
+  int val = 0;
+
+  if (timeout != 0)
+    ACE::record_and_set_non_blocking_mode (handle,
+                                           val);
 
   // The SSL_read() and SSL_peek() calls are wrapped in a
   // do/while(SSL_pending()) loop to force a full SSL record (SSL is a
@@ -164,13 +176,34 @@ ACE_SSL_SOCK_Stream::recv_i (void *buf,
       switch (status)
         {
         case SSL_ERROR_NONE:
+          if (timeout != 0)
+            ACE::restore_non_blocking_mode (handle, val);
+
           return bytes_read;
 
         case SSL_ERROR_WANT_READ:
         case SSL_ERROR_WANT_WRITE:
+          // Only block on select() with a timeout if no SSL record is
+          // pending read completion for the same reasons stated
+          // above, i.e. a full record must be read before blocking on
+          // select().
+          if (timeout != 0
+              && !SSL_pending (this->ssl_))
+            {
+              if (ACE::enter_recv_timedwait (handle,
+                                             timeout,
+                                             val) == -1)
+                return -1;
+              else
+                ssl_read = 1;
+            }
+
           break;
 
         case SSL_ERROR_ZERO_RETURN:
+          if (timeout != 0)
+            ACE::restore_non_blocking_mode (handle, val);
+
           // @@ This appears to be the right/expected thing to do.
           //    However, it'd be nice if someone could verify this.
           //
@@ -178,6 +211,7 @@ ACE_SSL_SOCK_Stream::recv_i (void *buf,
           // the SSL "close_notify" message so we need to
           // shutdown, too.
           (void) ::SSL_shutdown (this->ssl_);
+
           return bytes_read;
 
         case SSL_ERROR_SYSCALL:
@@ -195,7 +229,7 @@ ACE_SSL_SOCK_Stream::recv_i (void *buf,
           return -1;
         }
     }
-  while (::SSL_pending (this->ssl_));
+  while (::SSL_pending (this->ssl_) || ssl_read);
 
   // If we get this far then we would have blocked.
   errno = EWOULDBLOCK;
@@ -208,7 +242,7 @@ ACE_SSL_SOCK_Stream::recv (void *buf,
                            size_t n,
                            int flags) const
 {
-  return this->recv_i (buf, n, flags);
+  return this->recv_i (buf, n, flags, 0);
 }
 
 ASYS_INLINE ssize_t
@@ -226,7 +260,7 @@ ACE_SSL_SOCK_Stream::recv (void *buf,
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::recv");
 
-  return this->recv_i (buf, n, 0);
+  return this->recv_i (buf, n, 0, 0);
 }
 
 ASYS_INLINE ssize_t
