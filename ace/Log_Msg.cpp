@@ -948,8 +948,8 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
   ACE_TRACE ("ACE_Log_Msg::log");
   // External decls.
 
-// sys_nerr is deprecated on some platforms, and is declared by 
-// system header files on others. 
+// sys_nerr is deprecated on some platforms, and is declared by
+// system header files on others.
 #if ! (defined(__BORLANDC__) && __BORLANDC__ >= 0x0530) \
     && !defined(__MINGW32__) && !defined(__GLIBC__)  \
     && !defined(__FreeBSD__) && !defined(__NetBSD__) && !defined(__OpenBSD__) \
@@ -1820,10 +1820,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                     if (sizeof (ACE_OS::WChar) != sizeof (wchar_t))
                       {
                         size_t len = ACE_OS::wslen (wchar_str) + 1;
-                        //@@ Bad, but there is no such ugly thing as
-                        // ACE_NEW_BREAK and ACE_NEW has a return
-                        // statement inside.
-                        ACE_NEW_RETURN(wchar_t_str, wchar_t[len], 0);
+                        ACE_NEW_NORETURN(wchar_t_str, wchar_t[len]);
                         if (wchar_t_str == 0)
                           break;
 
@@ -2626,14 +2623,14 @@ ACE_Log_Msg::inherit_hook (ACE_OS_Thread_Descriptor *thr_desc,
 
 # else  /* Don't inherit Log Msg */
 #  if defined (ACE_PSOS)
-  //Create a special name for each thread...
+  // Create a special name for each thread...
   char new_name[MAXPATHLEN]={"Ace_thread-"};
   char new_id[2]={0,0};  //Now it's pre-terminated!
 
   new_id[0] = '0' + (ACE_PSOS_unique_file_id++);  //Unique identifier
   ACE_OS::strcat(new_name, new_id);
 
-  //Initialize the task specific logger
+  // Initialize the task specific logger
   ACE_LOG_MSG->open(new_name);
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("(%P|%t) starting %s thread at %D\n"),new_name));
 #  endif /* ACE_PSOS */

@@ -1,3 +1,13 @@
+Sun Sep 12 17:20:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Log_Msg.cpp (log):
+          In then handling of %Z replaced an ACE_NEW_RETURN with a
+          ACE_NEW_NORETURN, so that when allocation fails, we just do
+          a break instead of return. Seems this code was written before
+          the existence of ACE_NEW_NORETURN. This also fixes the crashing
+          of the Intel 8.0 C++ Compiler on Itanium on this file, no idea
+          why this caused a crash, that is one for Intel to sort out.
+
 Sat Sep 11 11:41:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * apps/Gateway/Peer/Peer.cpp:
