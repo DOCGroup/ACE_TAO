@@ -22,6 +22,12 @@ use vars qw(@ISA);
 # Subroutine Section
 # ************************************************************
 
+sub compare_output {
+  #my($self) = shift;
+  return 1;
+}
+
+
 sub file_sorter {
   my($self)  = shift;
   my($left)  = shift;

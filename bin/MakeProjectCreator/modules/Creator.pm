@@ -769,6 +769,12 @@ sub get_name_modifier {
 # Virtual Methods To Be Overridden
 # ************************************************************
 
+sub compare_output {
+  #my($self) = shift;
+  return 0;
+}
+
+
 sub handle_scoped_end {
   #my($self)  = shift;
   #my($type)  = shift;

@@ -21,6 +21,12 @@ use vars qw(@ISA);
 # Subroutine Section
 # ************************************************************
 
+sub compare_output {
+  #my($self) = shift;
+  return 1;
+}
+
+
 sub base_project_name {
   my($self) = shift;
   return $self->transform_file_name($self->project_name());

@@ -23,6 +23,12 @@ use vars qw(@ISA);
 # ************************************************************
 
 
+sub compare_output {
+  #my($self) = shift;
+  return 1;
+}
+
+
 sub crlf {
   my($self) = shift;
   return $self->windows_crlf();
@@ -44,12 +50,6 @@ sub pre_workspace {
   print $fh "Microsoft Developer Studio Workspace File, Format Version 6.00$crlf" .
             "# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!$crlf" .
             $crlf;
-}
-
-
-sub allow_duplicates {
-  #my($self) = shift;
-  return 0;
 }
 
 

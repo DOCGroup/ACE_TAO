@@ -22,6 +22,12 @@ use vars qw(@ISA);
 # Subroutine Section
 # ************************************************************
 
+sub compare_output {
+  #my($self) = shift;
+  return 1;
+}
+
+
 sub crlf {
   my($self) = shift;
   return $self->windows_crlf();
@@ -76,7 +82,7 @@ sub print_dependencies {
   my($pjs)  = shift;
   my($crlf) = $self->crlf();
 
-  ## I hate to add yet another loop through all the projects, but 
+  ## I hate to add yet another loop through all the projects, but
   ## we must have some way to map plain project names to guids.
   my(%name_to_guid_map) = ();
   foreach my $project(@$list) {
@@ -115,7 +121,7 @@ sub write_comps {
   my(@list)     = $self->sort_dependencies($projects, $pjs);
   my($crlf)     = $self->crlf();
 
-  ## I hate to add yet another loop through all the projects, but 
+  ## I hate to add yet another loop through all the projects, but
   ## we must have some way to map plain project names to guids.
   my(%name_to_guid_map) = ();
   foreach my $project(@list) {

@@ -94,6 +94,9 @@ project (workspace) name contains a capital letter then each word will be
 capitalized.  For instance, if the above mpc file example was named
 Example.mpc, then the modified project name would be Example_Client.
 
+If multiple projects are going to be contained within a single workspace
+(using mwc.pl), there can be no duplication of project names.  This is
+disallowed due to limitations of some workspace tools.
 
 Project Keywords
 ----------------
