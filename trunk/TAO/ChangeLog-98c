@@ -3,6 +3,9 @@ Mon Sep 28 21:35:47 1998  David L. Levine  <levine@cs.wustl.edu>
         * orbsvcs/orbsvcs/Time_Utilities.cpp: removed #define ACE_BUILD_DLL.
           Thanks to Irfan for reporting that it's not correct.
 
+        * performance-tests/Cubit/COOL/MT_Cubit/Task_Client.cpp: changed
+          USE_QUANTIFY to ACE_HAS_QUANTIFY.
+
 Mon Sep 28 16:39:30 1998  Sergio Flores  <sergio@tango.cs.wustl.edu>
 
         * TAO/performance-tests/Cubit/TAO/MT_Cubit/Task_Client.h:
