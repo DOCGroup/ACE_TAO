@@ -339,7 +339,7 @@ main (int, ACE_TCHAR *[])
 
     Printer_var r (printer1);
 
-    for(int i = 0; i < n_loops; i++)
+    for (int i = 0; i < n_loops; i++)
       // Spawn off the methods, which run in a separate thread as
       // active object invocations.
       scheduler->print (r);
@@ -359,10 +359,7 @@ main (int, ACE_TCHAR *[])
 #endif /* ACE_HAS_THREADS */
   ACE_END_TEST;
 
-#if defined (DIGITAL_UNIX)
-  // Never terminates on Tru64 5.1 [Bug
   ACE_OS::exit (0);
-#endif /* DIGITAL_UNIX */
-
+  /* NOTREACHED */
   return 0;
 }
