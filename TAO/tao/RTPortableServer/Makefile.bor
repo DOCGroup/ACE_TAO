@@ -1,24 +1,39 @@
 #
-# Makefile for building the TAO RTCorba library
+# Makefile for building the TAO RTPortableServer library
 #
 
-NAME = TAO_RTCORBA
+NAME = TAO_RTPortableServer
 
 OBJFILES = \
-	$(OBJDIR)\ThruPOA_Object_Proxy_Impl.obj
+	$(OBJDIR)\RTPortableServer.obj \
+	$(OBJDIR)\RTPortableServerC.obj \
+	$(OBJDIR)\RT_Acceptor_Filters.obj \
+	$(OBJDIR)\RT_Object_Adapter_Factory.obj \
+	$(OBJDIR)\RT_POA.obj \
+	$(OBJDIR)\RT_POA_Initializer.obj \
+	$(OBJDIR)\RT_Policy_Validator.obj \
+	$(OBJDIR)\RT_Servant_Dispatcher.obj
 
 !ifdef STATIC
-CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_RTCORBA_CFLAGS)
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS) \
+	$(TAO_RTCORBA_CFLAGS) \
+	$(TAO_RTPORTABLESERVER_CFLAGS)
 !else
-CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_RTCORBA_CFLAGS) \
-	-DTAO_RTCORBA_BUILD_DLL
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS) \
+	$(TAO_RTCORBA_CFLAGS) \
+	$(TAO_RTPORTABLESERVER_CFLAGS) \
+	-DTAO_RTPORTABLESERVER_BUILD_DLL
 !endif
 
 CPPDIR = .
 
-INCDIR_NAME = tao\RTCORBA
-INCLUDES = *.h *.i *.inl *_T.cpp PortableServer.pidl ImplRepo.pidl
+INCDIR_NAME = tao\RTPortableServer
+INCLUDES = *.h *.i *.pidl
 
-LIBFILES = $(ACE_LIB) $(TAO_LIB)
+LIBFILES = $(ACE_LIB) $(TAO_LIB) $(TAO_RTCORBA_LIB)
 
 !include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>

@@ -15,7 +15,9 @@ DIRS = \
 	IFR_Client \
 	Domain \
 	TypeCodeFactory \
-	SmartProxies
+	SmartProxies \
+	RTCORBA \
+	RTPortableServer
 
 OBJFILES = \
 	$(OBJDIR)\Abstract_Servant_Base.obj \
@@ -37,7 +39,6 @@ OBJFILES = \
 	$(OBJDIR)\CDR.obj \
 	$(OBJDIR)\CDR_Encaps_Codec.obj \
 	$(OBJDIR)\Cleanup_Func_Registry.obj \
-	$(OBJDIR)\Client_Priority_Policy.obj \
 	$(OBJDIR)\Client_Strategy_Factory.obj \
 	$(OBJDIR)\ClientRequestInfo.obj \
 	$(OBJDIR)\CodecFactory.obj \
@@ -57,9 +58,11 @@ OBJFILES = \
 	$(OBJDIR)\CurrentC.obj \
 	$(OBJDIR)\debug.obj \
 	$(OBJDIR)\default_client.obj \
+	$(OBJDIR)\Default_Endpoint_Selector_Factory.obj \
 	$(OBJDIR)\Default_Protocols_Hooks.obj \
 	$(OBJDIR)\default_resource.obj \
 	$(OBJDIR)\default_server.obj \
+	$(OBJDIR)\Default_Stub_Factory.obj \
 	$(OBJDIR)\DLL_ORB.obj \
 	$(OBJDIR)\DLL_Parser.obj \
 	$(OBJDIR)\DomainC.obj \
@@ -82,9 +85,9 @@ OBJFILES = \
 	$(OBJDIR)\GIOP_Message_Generator_Parser_Impl.obj \
 	$(OBJDIR)\GIOP_Message_Lite.obj \
 	$(OBJDIR)\GIOP_Message_Locate_Header.obj \
-        $(OBJDIR)\GIOP_Message_Reactive_Handler.obj \
-        $(OBJDIR)\GIOP_Message_State.obj \
-        $(OBJDIR)\GIOP_Message_Version.obj \
+	$(OBJDIR)\GIOP_Message_Reactive_Handler.obj \
+	$(OBJDIR)\GIOP_Message_State.obj \
+	$(OBJDIR)\GIOP_Message_Version.obj \
 	$(OBJDIR)\GIOP_Utils.obj \
 	$(OBJDIR)\GIOPC.obj \
 	$(OBJDIR)\IFR_TypeCodes.obj \
@@ -136,20 +139,18 @@ OBJFILES = \
 	$(OBJDIR)\params.obj \
 	$(OBJDIR)\Parser_Registry.obj \
 	$(OBJDIR)\Pluggable.obj \
+	$(OBJDIR)\POA_Extension_Initializer.obj \
 	$(OBJDIR)\Transport.obj \
 	$(OBJDIR)\Transport_Timer.obj \
 	$(OBJDIR)\Pluggable_Messaging.obj \
 	$(OBJDIR)\Pluggable_Messaging_Utils.obj \
 	$(OBJDIR)\Policy_Manager.obj \
+	$(OBJDIR)\Policy_Set.obj \
 	$(OBJDIR)\PolicyC.obj \
 	$(OBJDIR)\PolicyFactory_Registry.obj \
 	$(OBJDIR)\PollableC.obj \
-	$(OBJDIR)\Pool_Per_Endpoint.obj \
 	$(OBJDIR)\PortableInterceptorC.obj \
 	$(OBJDIR)\Principal.obj \
-	$(OBJDIR)\Priority_Mapping.obj \
-	$(OBJDIR)\Priority_Mapping_Manager.obj \
-	$(OBJDIR)\Private_Transport_Descriptor.obj \
 	$(OBJDIR)\Queued_Message.obj \
 	$(OBJDIR)\Profile.obj \
 	$(OBJDIR)\Protocol_Factory.obj \
@@ -161,21 +162,6 @@ OBJFILES = \
 	$(OBJDIR)\Reply_Dispatcher.obj \
 	$(OBJDIR)\Resource_Factory.obj \
 	$(OBJDIR)\RequestInfo_Util.obj \
-	$(OBJDIR)\RT_Current.obj \
-	$(OBJDIR)\RT_Endpoint_Selector_Factory.obj \
-        $(OBJDIR)\RT_Endpoint_Utils.obj \
-	$(OBJDIR)\RT_Invocation_Endpoint_Selectors.obj \
-	$(OBJDIR)\RT_Mutex.obj \
-	$(OBJDIR)\RT_ORB.obj \
-        $(OBJDIR)\RT_Stub.obj \
-        $(OBJDIR)\RT_Stub_Factory.obj \
-	$(OBJDIR)\Thread_Pool.obj \
-	$(OBJDIR)\RT_ORBInitializer.obj \
-	$(OBJDIR)\RT_ORB_Loader.obj \
-	$(OBJDIR)\RT_Policy_i.obj \
-	$(OBJDIR)\RT_PolicyFactory.obj \
-	$(OBJDIR)\RT_Protocols_Hooks.obj \
-	$(OBJDIR)\RTCORBAC.obj \
 	$(OBJDIR)\Sequence.obj \
 	$(OBJDIR)\Server_Strategy_Factory.obj \
 	$(OBJDIR)\Services.obj \
@@ -185,7 +171,7 @@ OBJFILES = \
 	$(OBJDIR)\Single_Reactor.obj \
 	$(OBJDIR)\skip.obj \
 	$(OBJDIR)\Stub.obj \
-        $(OBJDIR)\Stub_Factory.obj \
+	$(OBJDIR)\Stub_Factory.obj \
 	$(OBJDIR)\Sync_Strategies.obj \
 	$(OBJDIR)\Synch_Queued_Message.obj \
 	$(OBJDIR)\Synch_Reply_Dispatcher.obj \
