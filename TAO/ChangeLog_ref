@@ -1,3 +1,9 @@
+Tue Sep 30 17:15:58 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Invocation_Adapter.h (TAO): Fixed a simple compile errors in
+	  VC6.0, which was caused due to a struct being forwarde declared
+	  as a class.
+
 Tue Sep 30 16:53:14 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Exception.h: Included orbconf.h. This is required to get the
@@ -31,7 +37,6 @@ Tue Sep 30 16:53:14 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/Messaging/Messaging.h: Changed the signature of  exception
 	  data to be compliant with the above change. 
 
-	
 	* tao/MProfile.h: Cosmetic fix. 
 
 	* tao/Makefile.tao
