@@ -1,3 +1,9 @@
+Sun Mar 10 08:05:36 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLUIOP_Transport.cpp: Pass the CDR
+	  stream to check whether BiDirectional GIOP can be enabled or
+	  not. 
+
 Sun Mar 10 05:48:37 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Muxed_GIOP_Versions/run_test.pl: Changed the timeouts a
@@ -32,7 +38,7 @@ Sat Mar  9 21:00:18 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tests/Muxed_GIOP_Versions/Makefile:
         * tests/Muxed_GIOP_Versions/server.dsp:
 	* tests/Muxed_GIOP_Versions/run_test.pl: New stress test for bug
-	  1159.  
+	  1159. Thanks to Duane Binder for donating this test.
 
 Sat Mar  9 20:02:34 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -49,8 +55,10 @@ Sat Mar  9 20:02:34 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	  Removed shared state information of the GIOP version from the
 	  GIOP_Message_Base class. All the state information is now on the
-	  stack of the thread processing the request.  This should fix
-	  [BUG 1159]. 
+	  stack of the thread processing the request. In places where we
+	  dont have the version information ready, we use the CDR stream
+	  created by the thread to check for GIOP versions. This should
+	  fix [BUG 1159]. 
 	
 	* tao/TAO_Server_Request.cpp: If the upcall thread sends an
 	  exception to the client, we were creating a new output CDR

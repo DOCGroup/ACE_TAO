@@ -227,7 +227,7 @@ TAO_SSLIOP_Transport::generate_request_header (TAO_Operation_Details &opdetails,
   // and also make sure that we have not recd. or sent any information
   // regarding this before...
   if (this->orb_core ()->bidir_giop_policy () &&
-      this->messaging_object_->is_ready_for_bidirectional () &&
+      this->messaging_object_->is_ready_for_bidirectional (msg) &&
       this->bidirectional_flag () < 0)
     {
       this->set_bidir_context_info (opdetails);
