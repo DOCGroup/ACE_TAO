@@ -63,7 +63,7 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
   // now generate the class definition
   *os << "class " << idl_global->export_macro ()
       << " " <<idl_global->impl_class_prefix () << namebuf << idl_global->impl_class_suffix () << " : ";
-  
+  /*
   if (node->n_inherits () > 0)
     {
       // this interface inherits from other interfaces
@@ -87,9 +87,10 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
   
   else
     {
+  */
       //inherit from the base skeleton file
       *os<<"public virtual "<<node->full_skel_name ();
-      }
+      //  }
   
     
   *os << be_nl
@@ -127,7 +128,27 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
                         -1);
     }
   
-  
+ if (node->n_inherits () > 0)
+    {
+      // this interface inherits from other interfaces
+      be_interface *intf; // inherited interface
+
+      for (i = 0; i < node->n_inherits (); i++)
+	{
+	  intf = be_interface::narrow_from_decl (node->inherits ()[i]);
+	  // generate code for elements in the scope (e.g., operations)
+	  if (this->visit_scope (intf) ==  -1)
+	    {
+	      ACE_ERROR_RETURN ((LM_ERROR,
+				 "be_visitor_interface_ih::"
+				 "visit_interface - "
+			     "codegen for scope failed\n"),
+				-1);
+	    }
+	}
+      
+    }
+ 
   *os << "};" << be_nl <<be_nl;
   return 0;
 }
