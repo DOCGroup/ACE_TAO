@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file Incoming_Queued_Message.h
+ *  @file Incoming_Message_Queue.h
  *
  *  $Id$
  *

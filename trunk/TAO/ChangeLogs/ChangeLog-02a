@@ -1,3 +1,9 @@
+Fri Jul  6 08:27:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Incoming_Message_Queue.h:
+	* tao/Resume_Handle.h:
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Transport.h: Fixed fuzz errors. 
+
 Fri Jul  6 08:14:48 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* performance-tests/Cubit/TAO/MT_Cubit/Makefile:

@@ -86,5 +86,5 @@ private:
 # include "Resume_Handle.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/pre.h"
+#include "ace/post.h"
 #endif /*TAO_RESUME_HANDLE*/
