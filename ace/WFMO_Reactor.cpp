@@ -660,12 +660,6 @@ ACE_WFMO_Reactor::open (size_t size,
   else
     this->delete_handler_rep_ = 1;
 
-  // Open the notification handler
-  if (this->notify_handler_.open (*this, timer_queue_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", 
-		       "opening notify handler "), 
-		      -1);
-
   // Register for <wakeup_all_threads> event
   if (this->register_handler (&this->wakeup_all_threads_handler_, 
 			      this->wakeup_all_threads_.handle ()) == -1)
@@ -698,6 +692,12 @@ ACE_WFMO_Reactor::open (size_t size,
       this->timer_queue_ = tq;
       this->delete_timer_queue_ = 0;
     }
+
+  // Open the notification handler
+  if (this->notify_handler_.open (*this, this->timer_queue_) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", 
+		       "opening notify handler "), 
+		      -1);
 
   // Signal Handler 
   if (this->delete_signal_handler_)
