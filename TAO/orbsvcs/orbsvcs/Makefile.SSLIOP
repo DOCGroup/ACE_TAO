@@ -246,6 +246,8 @@ realclean: clean
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/Principal.i \
   $(TAO_ROOT)/tao/ORB.h \
+  $(TAO_ROOT)/tao/Services.h \
+  $(TAO_ROOT)/tao/Services.i \
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
   $(TAO_ROOT)/tao/objectid.h \
@@ -644,6 +646,8 @@ realclean: clean
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/Principal.i \
   $(TAO_ROOT)/tao/ORB.h \
+  $(TAO_ROOT)/tao/Services.h \
+  $(TAO_ROOT)/tao/Services.i \
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
   $(TAO_ROOT)/tao/objectid.h \
@@ -1017,6 +1021,8 @@ realclean: clean
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/Principal.i \
   $(TAO_ROOT)/tao/ORB.h \
+  $(TAO_ROOT)/tao/Services.h \
+  $(TAO_ROOT)/tao/Services.i \
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
   $(TAO_ROOT)/tao/objectid.h \
@@ -1373,6 +1379,8 @@ realclean: clean
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/Principal.i \
   $(TAO_ROOT)/tao/ORB.h \
+  $(TAO_ROOT)/tao/Services.h \
+  $(TAO_ROOT)/tao/Services.i \
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
   $(TAO_ROOT)/tao/objectid.h \
@@ -1780,6 +1788,8 @@ realclean: clean
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/Principal.i \
   $(TAO_ROOT)/tao/ORB.h \
+  $(TAO_ROOT)/tao/Services.h \
+  $(TAO_ROOT)/tao/Services.i \
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
   $(TAO_ROOT)/tao/objectid.h \
@@ -1984,6 +1994,8 @@ realclean: clean
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/Principal.i \
   $(TAO_ROOT)/tao/ORB.h \
+  $(TAO_ROOT)/tao/Services.h \
+  $(TAO_ROOT)/tao/Services.i \
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
   $(TAO_ROOT)/tao/objectid.h \
@@ -2188,6 +2200,8 @@ realclean: clean
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/Principal.i \
   $(TAO_ROOT)/tao/ORB.h \
+  $(TAO_ROOT)/tao/Services.h \
+  $(TAO_ROOT)/tao/Services.i \
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
   $(TAO_ROOT)/tao/objectid.h \
@@ -2390,6 +2404,8 @@ realclean: clean
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/Principal.i \
   $(TAO_ROOT)/tao/ORB.h \
+  $(TAO_ROOT)/tao/Services.h \
+  $(TAO_ROOT)/tao/Services.i \
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
   $(TAO_ROOT)/tao/objectid.h \
@@ -2611,6 +2627,8 @@ realclean: clean
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/Principal.i \
   $(TAO_ROOT)/tao/ORB.h \
+  $(TAO_ROOT)/tao/Services.h \
+  $(TAO_ROOT)/tao/Services.i \
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
   $(TAO_ROOT)/tao/objectid.h \
@@ -2896,6 +2914,8 @@ realclean: clean
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/Principal.i \
   $(TAO_ROOT)/tao/ORB.h \
+  $(TAO_ROOT)/tao/Services.h \
+  $(TAO_ROOT)/tao/Services.i \
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
   $(TAO_ROOT)/tao/objectid.h \
@@ -3187,6 +3207,8 @@ realclean: clean
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/Principal.i \
   $(TAO_ROOT)/tao/ORB.h \
+  $(TAO_ROOT)/tao/Services.h \
+  $(TAO_ROOT)/tao/Services.i \
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
   $(TAO_ROOT)/tao/objectid.h \
@@ -3388,6 +3410,8 @@ realclean: clean
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/Principal.i \
   $(TAO_ROOT)/tao/ORB.h \
+  $(TAO_ROOT)/tao/Services.h \
+  $(TAO_ROOT)/tao/Services.i \
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
   $(TAO_ROOT)/tao/objectid.h \
@@ -3683,6 +3707,8 @@ realclean: clean
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/Principal.i \
   $(TAO_ROOT)/tao/ORB.h \
+  $(TAO_ROOT)/tao/Services.h \
+  $(TAO_ROOT)/tao/Services.i \
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
   $(TAO_ROOT)/tao/objectid.h \
@@ -4113,6 +4139,8 @@ realclean: clean
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/Principal.i \
   $(TAO_ROOT)/tao/ORB.h \
+  $(TAO_ROOT)/tao/Services.h \
+  $(TAO_ROOT)/tao/Services.i \
   $(TAO_ROOT)/tao/objectid.h \
   $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/CurrentC.h \
@@ -4338,6 +4366,8 @@ realclean: clean
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/Principal.i \
   $(TAO_ROOT)/tao/ORB.h \
+  $(TAO_ROOT)/tao/Services.h \
+  $(TAO_ROOT)/tao/Services.i \
   $(TAO_ROOT)/tao/objectid.h \
   $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/CurrentC.h \
@@ -4840,6 +4870,8 @@ realclean: clean
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/Principal.i \
   $(TAO_ROOT)/tao/ORB.h \
+  $(TAO_ROOT)/tao/Services.h \
+  $(TAO_ROOT)/tao/Services.i \
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
   $(TAO_ROOT)/tao/objectid.h \
@@ -5192,6 +5224,8 @@ realclean: clean
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/Principal.i \
   $(TAO_ROOT)/tao/ORB.h \
+  $(TAO_ROOT)/tao/Services.h \
+  $(TAO_ROOT)/tao/Services.i \
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
   $(TAO_ROOT)/tao/objectid.h \
@@ -5726,6 +5760,8 @@ realclean: clean
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/Principal.i \
   $(TAO_ROOT)/tao/ORB.h \
+  $(TAO_ROOT)/tao/Services.h \
+  $(TAO_ROOT)/tao/Services.i \
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
   $(TAO_ROOT)/tao/objectid.h \
@@ -5983,6 +6019,8 @@ realclean: clean
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/Principal.i \
   $(TAO_ROOT)/tao/ORB.h \
+  $(TAO_ROOT)/tao/Services.h \
+  $(TAO_ROOT)/tao/Services.i \
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
   $(TAO_ROOT)/tao/objectid.h \
@@ -6539,6 +6577,8 @@ realclean: clean
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/Principal.i \
   $(TAO_ROOT)/tao/ORB.h \
+  $(TAO_ROOT)/tao/Services.h \
+  $(TAO_ROOT)/tao/Services.i \
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
   $(TAO_ROOT)/tao/objectid.h \
@@ -6924,6 +6964,8 @@ realclean: clean
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/Principal.i \
   $(TAO_ROOT)/tao/ORB.h \
+  $(TAO_ROOT)/tao/Services.h \
+  $(TAO_ROOT)/tao/Services.i \
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
   $(TAO_ROOT)/tao/objectid.h \
@@ -7165,6 +7207,8 @@ realclean: clean
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/Principal.i \
   $(TAO_ROOT)/tao/ORB.h \
+  $(TAO_ROOT)/tao/Services.h \
+  $(TAO_ROOT)/tao/Services.i \
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
   $(TAO_ROOT)/tao/objectid.h \
@@ -7364,6 +7408,8 @@ realclean: clean
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/Principal.i \
   $(TAO_ROOT)/tao/ORB.h \
+  $(TAO_ROOT)/tao/Services.h \
+  $(TAO_ROOT)/tao/Services.i \
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
   $(TAO_ROOT)/tao/objectid.h \
