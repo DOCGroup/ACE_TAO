@@ -573,7 +573,11 @@ module CosTradingDynamic {
 	};
 
 	struct DynamicProp {
+#if defined TAO_HAS_DYNAMIC_PROPERTY_BUG
+	         string eval_if;
+#else
 		 DynamicPropEval eval_if;
+#endif /* TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG */
 		 TypeCode returned_type;
 		 any extra_info;
 	};
