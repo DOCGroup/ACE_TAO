@@ -15,6 +15,9 @@ Thu Aug 13 13:34:52 1998  David L. Levine  <levine@cs.wustl.edu>
         * os-patches/linux-patches.html: the af_inet.c patch is only
           needed through Linux kernel version 2.0.34.
 
+        * tests/Conn_Test.cpp: disabled ACE_Hash_Addr template
+          specialization on non-egcs g++.
+
 Wed Aug 12 22:45:50 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * tests/MsgQueue_Notifications_Test.cpp: Added an explicit
