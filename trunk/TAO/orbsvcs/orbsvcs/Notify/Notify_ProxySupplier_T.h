@@ -1,15 +1,12 @@
-//=============================================================================
 /**
- *  @file   Notify_ProxySupplier.h
+ * @file Notify_ProxySupplier_T.h
  *
- *  $Id$
+ * $Id$
  *
  * Template Base class for all Proxy Suppliers.
  *
- *
- *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ * @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_NOTIFY_PROXY_SUPPLIER_T_H
 #define TAO_NOTIFY_PROXY_SUPPLIER_T_H

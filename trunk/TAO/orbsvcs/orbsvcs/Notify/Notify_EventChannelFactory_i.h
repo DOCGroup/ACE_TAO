@@ -1,11 +1,10 @@
 //=============================================================================
 /**
- *  @file   Notify_EventChannelFactory_i
+ * @file Notify_EventChannelFactory_i.h
  *
- *  $Id$
+ * $Id$
  *
  * Implements the CosNotifyChannelAdmin::EventChannelFactory interface.
- *
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */

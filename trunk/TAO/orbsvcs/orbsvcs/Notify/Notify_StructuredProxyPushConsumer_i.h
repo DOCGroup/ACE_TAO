@@ -1,18 +1,16 @@
 /* -*- C++ -*- */
 //=============================================================================
 /**
- *  @file   TAO_Notify_StructuredProxyPushConsumer_i.h
+ * @file Notify_StructuredProxyPushConsumer_i.h
  *
- *  $Id$
+ * $Id$
  *
  * Implements the CosNotifyChannelAdmin::StructuredProxyPushConsumer
  * interface.
  *
- *
- *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ * @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef TAO_NOTIFY_STRUCTUREDPROXYPUSHCONSUMER_I_H
 #define TAO_NOTIFY_STRUCTUREDPROXYPUSHCONSUMER_I_H
