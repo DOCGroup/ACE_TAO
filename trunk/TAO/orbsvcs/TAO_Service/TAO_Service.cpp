@@ -46,7 +46,8 @@ main (int argc, ACE_TCHAR *argv[])
         {
           ACE_Time_Value tv (5, 0);
 
-          orb->perform_work (tv);
+          orb->perform_work (tv, ACE_TRY_ENV);
+          ACE_TRY_CHECK;
 
           ACE_DEBUG ((LM_DEBUG,
                       "Reconfig flag = %d\n",
@@ -64,5 +65,4 @@ main (int argc, ACE_TCHAR *argv[])
     }
   ACE_ENDTRY;
   return 0;
-
 }

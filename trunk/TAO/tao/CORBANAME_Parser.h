@@ -17,17 +17,13 @@
 #define TAO_CORBANAME_PARSER_H
 #include "ace/pre.h"
 
-#include "tao/Object_Loader.h"
-#include "tao/Object.h"
-#include "tao/corba.h"
-#include "tao/ORB.h"
-
 #include "tao/IOR_Parser.h"
-#include "ior_corbaname_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Service_Config.h"
 
 class TAO_Export TAO_CORBANAME_Parser : public TAO_IOR_Parser
 {

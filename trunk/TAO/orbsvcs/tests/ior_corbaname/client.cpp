@@ -27,7 +27,6 @@ int main (int argc, char *argv [])
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-
       IOR_corbaname_Client_i client;
 
       if (client.init (argc, argv) == -1)
@@ -41,8 +40,7 @@ int main (int argc, char *argv [])
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "client");
-      ACE_RE_THROW;
     }
   ACE_ENDTRY;
-  return 0;
+  return 1;
 }

@@ -15,9 +15,9 @@ endif # ! TAO_ROOT
 #LDLIBS = -lTAO_FaultTolerance -lTAO -lACE
 
 IDLFILES = testC testS
-BIN = server Manager 
+BIN_UNCHECKED = server Manager 
 
-SRC = $(addsuffix .cpp, $(BIN) $(IDLFILES) test_i)
+SRC = $(addsuffix .cpp, $(BIN_UNCHECKED) $(IDLFILES) test_i)
 
 SERVER_OBJS = server.o test_i.o $(addsuffix .o, $(IDLFILES))
 MANAGER_OBJS = Manager.o testC.o
@@ -31,6 +31,12 @@ TAO_IDLFLAGS += -Ge 1
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+
+TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
+ifeq (FaultTolerance,$(findstring FaultTolerance,$(TAO_ORBSVCS)))
+  BIN = $(BIN_UNCHECKED)
+endif # FaultTolerance
+
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU

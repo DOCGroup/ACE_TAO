@@ -375,8 +375,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
- $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  IORTableC.i Table_Adapter.h
 
 .obj/IORTableC.o .obj/IORTableC.so .shobj/IORTableC.o .shobj/IORTableC.so: IORTableC.cpp IORTableC.h \
@@ -699,8 +697,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
- $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  iortable_export.h IORTableC.i
 
 .obj/Table_Adapter.o .obj/Table_Adapter.so .shobj/Table_Adapter.o .shobj/Table_Adapter.so: Table_Adapter.cpp Table_Adapter.h \
@@ -1025,13 +1021,11 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
- $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  IORTableC.i
 
 .obj/IOR_Table_Impl.o .obj/IOR_Table_Impl.so .shobj/IOR_Table_Impl.o .shobj/IOR_Table_Impl.so: IOR_Table_Impl.cpp IOR_Table_Impl.h \
- $(ACE_ROOT)/ace/pre.h IORTable.h \
- iortable_export.h \
+ $(ACE_ROOT)/ace/pre.h \
+ IORTable.h iortable_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1351,8 +1345,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
- $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  IORTableC.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

@@ -29,8 +29,7 @@ public:
 
   virtual CORBA::ULong do_hash (const char * str,
                                 CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::ForwardRequest));
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Perform a simple hashing operation on the input string <str> and
   // return the hashed string <hash_str>.
 
