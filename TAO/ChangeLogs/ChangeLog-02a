@@ -1,3 +1,10 @@
+Mon Dec 10 20:24:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/Dispatching_Modules.h: Fixed a compile
+	  error. 
+
+	* orbsvcs/orbsvcs/Makefile.*: Updated dependencies. 
+	
 Mon Dec 10 17:57:59 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/AV.dsp:
