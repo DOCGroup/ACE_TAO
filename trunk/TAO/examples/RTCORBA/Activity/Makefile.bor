@@ -1,58 +1,24 @@
+#----------------------------------------------------------------------------
+#       Borland Workspace
+#----------------------------------------------------------------------------
 
-#
-# Makefile for building the Activity RTCorba example
-#
+!include <$(ACE_ROOT)\include\makeinclude\make_flags.bor>
 
-NAME = activity
+all:
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.Activity_Lib.bor all
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.Activity.bor all
 
-TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe -I$(ACE_ROOT)/TAO/orbsvcs/orbsvcs -Ge 1
+clean:
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.Activity_Lib.bor clean
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.Activity.bor clean
 
-OBJFILES = \
-        $(OBJDIR)\JobC.obj \
-        $(OBJDIR)\JobS.obj \
-        $(OBJDIR)\Periodic_Task.obj \
-        $(OBJDIR)\Thread_Task.obj \
-        $(OBJDIR)\Activity.obj \
-        $(OBJDIR)\Builder.obj \
-        $(OBJDIR)\POA_Holder.obj \
-        $(OBJDIR)\Job_i.obj \
-        $(OBJDIR)\Task_Stats.obj
+realclean:
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.Activity_Lib.bor realclean
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.Activity.bor realclean
 
-CFLAGS = \
-	$(ACE_CFLAGS) \
-	$(TAO_CFLAGS) \
-        $(TAO_PORTABLESERVER_CFLAGS) \
-        $(TAO_NAMING_CFLAGS) \
-        $(TAO_RTCORBA_CFLAGS) \
-        $(TAO_RTPORTABLESERVER_CFLAGS) \
-        $(TAO_VALUETYPE_CFLAGS) \
-	$(TAO_IORINTERCEPTOR_CFLAGS) \
-	$(TAO_ORT_CFLAGS)
+install:
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.Activity_Lib.bor install
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.Activity.bor install
 
-LIBFILES = \
-	$(ACE_LIB) \
-	$(TAO_LIB) \
-        $(TAO_PORTABLESERVER_LIB) \
-        $(TAO_NAMING_LIB) \
-        $(TAO_RTCORBA_LIB) \
-        $(TAO_RTPORTABLESERVER_LIB) \
-        $(TAO_VALUETYPE_LIB) \
-	$(TAO_IORINTERCEPTOR_LIB) \
-	$(TAO_ORT_LIB)
-
-IDLFILES = \
-        $(IDLDIR)\Job.idl
-
-CPPDIR = .
-
-IDLDIR = .
-
-!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
-
-#
-# IDL Build rules
-#
-
-$(IDLDIR)\JobC.cpp $(IDLDIR)\JobS.cpp: $(IDLDIR)\Job.idl
-	$(TAO_IDL) $**
-
+regenerate:
+	C:\Perl\bin\perl.exe \ACElatest\ACE_wrappers\bin\mwc.pl -type borland
