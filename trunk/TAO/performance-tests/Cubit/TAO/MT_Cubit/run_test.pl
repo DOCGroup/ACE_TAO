@@ -11,9 +11,8 @@ $server_port = 0;
 $iorfile = "theior";
 $sleeptime = 3;
 
-$SV = Process::Create ("server".$Process::EXE_EXT, 
+$SV = Process::Create ("server".$Process::EXE_EXT,
                        " -ORBport ".$server_port.
-		       " -ORBobjrefstyle url".
 		       " -s -f $iorfile");
 
 sleep $sleeptime;
