@@ -435,7 +435,12 @@ ACE_Timer_Heap::schedule (ACE_Event_Handler *handler,
 
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
 
-  if (this->cur_size_ < this->max_size_)
+  if (handler == 0)
+    {
+      errno = EINVAL;
+      return -1;
+    }
+  else if (this->cur_size_ < this->max_size_)
     {
       // Obtain the next unique sequence number.
       int timer_id = this->timer_id ();
@@ -466,7 +471,8 @@ ACE_Timer_Heap::schedule (ACE_Event_Handler *handler,
 
 int
 ACE_Timer_Heap::cancel (int timer_id, 
-                        const void **arg)
+                        const void **arg,
+			int dont_call_handle_close)
 {
   ACE_TRACE ("ACE_Timer_Heap::cancel");
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
@@ -484,9 +490,10 @@ ACE_Timer_Heap::cancel (int timer_id,
     {
       ACE_Timer_Node *temp = this->remove (timer_node_slot);
 
-      // Call the close hook.
-      temp->handler_->handle_close (ACE_INVALID_HANDLE, 
-				    ACE_Event_Handler::TIMER_MASK);
+      if (dont_call_handle_close)
+	// Call the close hook.
+	temp->handler_->handle_close (ACE_INVALID_HANDLE, 
+				      ACE_Event_Handler::TIMER_MASK);
       if (arg != 0)
         *arg = temp->arg_;
 
@@ -498,7 +505,8 @@ ACE_Timer_Heap::cancel (int timer_id,
 // Locate and remove all values of <handler> from the timer queue.
 
 int
-ACE_Timer_Heap::cancel (ACE_Event_Handler *handler)
+ACE_Timer_Heap::cancel (ACE_Event_Handler *handler,
+			int dont_call_handle_close)
 {
   ACE_TRACE ("ACE_Timer_Heap::cancel");
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
@@ -515,7 +523,8 @@ ACE_Timer_Heap::cancel (ACE_Event_Handler *handler)
 
           number_of_cancellations++;
 
-	  if (number_of_cancellations == 1)
+	  if (dont_call_handle_close == 0
+	      && number_of_cancellations == 1)
 	    // Call the close hook.
 	    temp->handler_->handle_close (ACE_INVALID_HANDLE, 
 					  ACE_Event_Handler::TIMER_MASK);

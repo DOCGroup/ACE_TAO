@@ -148,9 +148,10 @@ void ACE_XtReactor::InputCallbackProc (XtPointer closure,
     }
 }
 
-int ACE_XtReactor::XtWaitForMultipleEvents (int width, 
-					    ACE_Reactor_Handle_Set &wait_set,
-					    ACE_Time_Value *)
+int 
+ACE_XtReactor::XtWaitForMultipleEvents (int width, 
+					ACE_Reactor_Handle_Set &wait_set,
+					ACE_Time_Value *)
 {
   // Check to make sure our handle's are all usable.
 
@@ -167,7 +168,7 @@ int ACE_XtReactor::XtWaitForMultipleEvents (int width,
   // for a single event.
 
   // Wait for something to happen.
-  XtAppProcessEvent (context_, XtIMAll);
+  ::XtAppProcessEvent (context_, XtIMAll);
 
   // Now actually read the result needed by the Reactor using select.
   return ACE_OS::select (width,
@@ -193,7 +194,7 @@ ACE_XtReactor::register_handler_i (ACE_HANDLE handle,
 
   int result = ACE_Reactor::register_handler_i (handle, handler, mask);
 
-  if (result < 0)
+  if (result == -1)
     return -1;
 
   // Ensure the list of InputId's is big enough
@@ -227,13 +228,13 @@ ACE_XtReactor::register_handler_i (ACE_HANDLE handle,
   if (condition != 0)
     {
       if (ids_[handle].good_id)
-	XtRemoveInput (ids_[handle].id);
+	::XtRemoveInput (ids_[handle].id);
 
-      ids_[handle].id = XtAppAddInput (context_, 
-				       handle, 
-				       (XtPointer) condition, 
-				       InputCallbackProc, 
-				       (XtPointer) this);
+      ids_[handle].id = ::XtAppAddInput (context_, 
+					 handle, 
+					 (XtPointer) condition, 
+					 InputCallbackProc, 
+					 (XtPointer) this);
       ids_[handle].good_id = 1;
     }
   return 0;
@@ -252,7 +253,7 @@ ACE_XtReactor::remove_handler_i (ACE_HANDLE handle,
   if (handle <= id_len_)
     { 
       if (ids_[handle].good_id)
-	XtRemoveInput (ids_[handle].id);
+	::XtRemoveInput (ids_[handle].id);
       else
 	ACE_DEBUG ((LM_DEBUG, "Handle id is not good %d\n", handle));
       ids_[handle].good_id = 0;
@@ -260,7 +261,7 @@ ACE_XtReactor::remove_handler_i (ACE_HANDLE handle,
   else 
     ACE_DEBUG ((LM_DEBUG, "Handle out of range %d\n", handle));
 
-  if (result < 0)
+  if (result == -1)
     return result;
   else
     return 0;
@@ -272,19 +273,20 @@ ACE_XtReactor::remove_handler_i (ACE_HANDLE handle,
 void ACE_XtReactor::reset_timeout (void)
 {
   if (timeout_)
-    XtRemoveTimeOut (timeout_);
+    ::XtRemoveTimeOut (timeout_);
   timeout_ = 0;
 
-  ACE_Time_Value *max_wait_time;
-  max_wait_time = this->timer_queue_->calculate_timeout (0);
+  ACE_Time_Value *max_wait_time = 
+    this->timer_queue_->calculate_timeout (0);
 
   if (max_wait_time)
     {
       ACE_DEBUG ((LM_DEBUG, "       %ld\n", max_wait_time->msec ()));
 
-      timeout_ = 
-	XtAppAddTimeOut (context_, max_wait_time->msec (), 
-			 TimerCallbackProc, (XtPointer) this);
+      timeout_ = ::XtAppAddTimeOut (context_, 
+				    max_wait_time->msec (), 
+				    TimerCallbackProc, 
+				    (XtPointer) this);
     }
 }
 
@@ -300,7 +302,7 @@ ACE_XtReactor::schedule_timer (ACE_Event_Handler *handler,
   int result = 
     ACE_Reactor::schedule_timer (handler, arg, delta_time, interval);
 
-  if (result < 0)
+  if (result == -1)
     return result;
 
   this->reset_timeout ();
@@ -308,13 +310,15 @@ ACE_XtReactor::schedule_timer (ACE_Event_Handler *handler,
 }
 
 int
-ACE_XtReactor::cancel_timer (ACE_Event_Handler *handler)
+ACE_XtReactor::cancel_timer (ACE_Event_Handler *handler,
+			     int dont_call_handle_close)
 {
   ACE_TRACE ("ACE_XtReactor::cancel_timer");
 
-  int result = ACE_Reactor::cancel_timer (handler);
+  int result = ACE_Reactor::cancel_timer (handler, 
+					  dont_call_handle_close);
       
-  if (result < 0)
+  if (result == -1)
     return -1;
 
   this->reset_timeout ();
@@ -322,13 +326,16 @@ ACE_XtReactor::cancel_timer (ACE_Event_Handler *handler)
 }
 
 int
-ACE_XtReactor::cancel_timer (int timer_id, const void **arg)
+ACE_XtReactor::cancel_timer (int timer_id, 
+			     const void **arg,
+			     int dont_call_handle_close)
 {
   ACE_TRACE ("ACE_XtReactor::cancel_timer");
 
-  int result = ACE_Reactor::cancel_timer (timer_id, arg);
-
-  if (result < 0)
+  int result = ACE_Reactor::cancel_timer (timer_id, 
+					  arg,
+					  dont_call_handle_close);
+  if (result == -1)
     return -1;
 
   this->reset_timeout ();

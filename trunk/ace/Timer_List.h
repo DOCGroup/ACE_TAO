@@ -98,11 +98,16 @@ public:
   // timer.  Returns -1 on failure (which is guaranteed never to be a
   // valid <timer_id>).
 
-  virtual int cancel (ACE_Event_Handler *event_handler);
+  virtual int cancel (ACE_Event_Handler *event_handler,
+		      int dont_call_handle_close = 1);
   // Cancel all <event_handlers> that match the address of
-  // <event_handler>.  Returns number of handler's cancelled.
+  // <event_handler>.  If <dont_call_handle_close> is 0 then the
+  // <handle_close> method of <event_handler> will be invoked.
+  // Returns number of handler's cancelled.
 
-  virtual int cancel (int timer_id, const void **arg = 0);
+  virtual int cancel (int timer_id, 
+		      const void **arg = 0,
+		      int dont_call_handle_close = 1);
   // Cancel the single <ACE_Event_Handler> that matches the <timer_id>
   // value (which was returned from the <schedule> method).  If arg is
   // non-NULL then it will be set to point to the ``magic cookie''

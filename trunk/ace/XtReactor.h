@@ -61,8 +61,11 @@ public:
 		              const ACE_Time_Value &delta_time, 
 		              const ACE_Time_Value &interval);
 
-  virtual int cancel_timer (ACE_Event_Handler *handler);
-  virtual int cancel_timer (int timer_id, const void **arg);
+  virtual int cancel_timer (ACE_Event_Handler *handler,
+			    int dont_call_handle_close = 1);
+  virtual int cancel_timer (int timer_id, 
+			    const void **arg = 0,
+			    int dont_call_handle_close = 1);
 
 protected:
 
