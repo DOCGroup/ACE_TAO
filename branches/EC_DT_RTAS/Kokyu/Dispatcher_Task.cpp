@@ -125,6 +125,9 @@ Dispatcher_Task::svc (void)
       Dispatch_Queue_Item *qitem =
         ACE_dynamic_cast(Dispatch_Queue_Item*, mb);
 
+      Kokyu::Object_Counter::object_id oid = qitem->command()->getID();
+      DSUI_EVENT_LOG (DISP_TASK_FAM, ENQUEUE_QUEUE_LEVEL, this->msg_queue()->message_count(), sizeof(Kokyu::Object_Counter::object_id), (char*)&oid);
+
       if (qitem == 0)
         {
           ACE_Message_Block::release (mb);
@@ -135,7 +138,6 @@ Dispatcher_Task::svc (void)
 
       //@BT INSTRUMENT with event ID: EVENT_DEQUEUED Measure time
       //between event released (enqueued) and dispatched
-      Kokyu::Object_Counter::object_id oid = command->getID();
       DSUI_EVENT_LOG (DISP_TASK_FAM, EVENT_DEQUEUED, 0, sizeof(Kokyu::Object_Counter::object_id), (char*)&oid);
       ACE_ASSERT(command != 0);
 
