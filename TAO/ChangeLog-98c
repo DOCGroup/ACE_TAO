@@ -1,3 +1,17 @@
+Fri Apr 18 08:09:19 1997  Brian Mendel   <bmendel@mdc.com>
+
+Changes required to compile on VxWorks:
+ 
+cdr.hh, corbacom.{hh,cpp}, giop.cpp, marsgall.cpp, typecode.cpp  -
+              Changes required for WChar missed in earlier committed code.
+connmgr.cpp - Changes required for select statement.
+nvlist.cpp -  Conditional include for memory.h added.  VxWorks does not have memory.h.
+object.cpp -  Added conditional for VXWORKS to define IID_IUnknown.
+orbconf.hh -  Minor tuning of the configuration file.
+tcpoa.{hh,cpp} - Added VXWORKS conditional includes.
+toa.cpp - Added VXWORKS conditional includes.
+
+
 Mon Apr 15 17:01:00 1997  Brian Mendel  <bmendel@mdc.com>
 
 	- Changes required to run on Windows NT.
