@@ -1,3 +1,12 @@
+Fri Jul 14 20:05:33 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/win32/pace_dll.dsp:
+	* pace/win32/pace_lib.dsp:
+
+	  Default the build to all POSIX units of functionality.
+	  Defined PACE_HAS_ALL_POSIX_FUNCS in
+	  Settings >> C/C++ >> Preprocessor
+
 Fri Jul 14 19:06:09 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
         * ../include/makeinclude/wrappermacros.GNU:
