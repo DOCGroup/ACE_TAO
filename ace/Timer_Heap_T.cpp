@@ -562,7 +562,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, LOCK>::cancel (long timer_id,
 
   long timer_node_slot = this->timer_ids_[timer_id];
 
-  if (timer_node_slot == -1) // Check to see if timer_id is still valid.
+  if (timer_node_slot < 0) // Check to see if timer_id is still valid.
     return 0;
 
   if (timer_id != this->heap_[timer_node_slot]->get_timer_id ())
