@@ -888,5 +888,18 @@ ACE_RW_Thread_Mutex::dump (void) const
   ACE_RW_Mutex::dump ();
 }
 
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+// These are only specialized with ACE_HAS_THREADS.
+template class ACE_Guard<ACE_SYNCH_RW_MUTEX>;
+template class ACE_Read_Guard<ACE_SYNCH_RW_MUTEX>;
+template class ACE_Write_Guard<ACE_SYNCH_RW_MUTEX>;
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
 #endif /* ACE_HAS_THREADS */
+
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+// These are specialized both with and without ACE_HAS_THREADS.
+template class ACE_Guard<ACE_Null_Mutex>;
+template class ACE_Read_Guard<ACE_Null_Mutex>;
+template class ACE_Write_Guard<ACE_Null_Mutex>;
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
 #endif /* ACE_SYNCH_C */
