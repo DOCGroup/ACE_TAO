@@ -1,3 +1,19 @@
+Tue Sep 15 17:07:19 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
+
+	* tests/POA/Default_Servant/test: Modified the permissions (they
+	  were breaking things). There were _no_ permissions set, so I
+	  added read and write access.
+
+	* tests/POA/Default_Servant/run_test.pl: The wonderful new test
+	  script (huzzah!).
+
+	* tests/POA/Default_Servant/server.cpp: Changed the syntax for
+	  writing the IOR to a file to be more in line with the syntax of
+	  the new test scripts. 
+
+	* tests/POA/Default_Servant/client.cpp: Added support for reading
+	  the IOR from a file, a requirement for the new test script.
+
 Tue Sep 15 16:23:31 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 	
 	* tests/Cubit/TAO/MT_Cubit/client.cpp(~Client_i) :

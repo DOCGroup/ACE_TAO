@@ -17,11 +17,13 @@
 
 #include "ace/streams.h"
 #include "ace/Get_Opt.h"
+#include "ace/Read_Buffer.h"
+#include "ace/OS.h"
 #include "FileC.h"
 
 ACE_RCSID(Default_Servant, client, "$Id$")
 
-static char *ior = 0;
+static char *iorfile = 0;
 static char *filename = "test";
 static char *message = "POA rules!!";
 
@@ -35,7 +37,7 @@ parse_args (int argc, char **argv)
     switch (c)
       {
       case 'k':
-        ior = get_opts.optarg;
+        iorfile = ACE_OS::strdup (get_opts.optarg);
         break;
       case 'f':
         filename = get_opts.optarg;
@@ -47,13 +49,15 @@ parse_args (int argc, char **argv)
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s"
-                           "-k IOR"
+                           "[-k <iorfile>]"
+			   "[-f <filename>]"
+			   "[-m <message>]"
                            "\n",
                            argv [0]),
                           -1);
       }
 
-  if (ior == 0)
+  if (iorfile == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Please specify the IOR for the servant"), -1);
 
@@ -65,7 +69,7 @@ int
 main (int argc, char **argv)
 {
   CORBA::Environment env;
-
+  char* ior=0;
   // Initialize the ORB
   CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0, env);
   if (env.exception () != 0)
@@ -77,7 +81,27 @@ main (int argc, char **argv)
   // Parse the command-line arguments to get the IOR 
   parse_args (argc, argv);
 
-  // Get the object reference with the IOR
+  // parse args should catch this, but just in case...
+  if (iorfile == 0)
+    return 0;
+
+  // Read the file, and get the IOR
+  ACE_HANDLE input_file = ACE_OS::open (iorfile, 0);
+  if (input_file == ACE_INVALID_HANDLE)
+    ACE_ERROR_RETURN ((LM_DEBUG,
+		       "Cannot open input file for reading IOR: %s\n", 
+		       iorfile),
+		      -1);
+  ACE_Read_Buffer ior_buffer (input_file);
+  char *data = ior_buffer.read ();
+  if (data == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+		       "Unable to read ior\n"),
+		      -1);
+  ior = ACE_OS::strdup (data);
+  ior_buffer.alloc ()-> free (data);
+  ACE_OS::close (input_file);
+  
   CORBA::Object_var object = orb->string_to_object (ior, env);
   if (env.exception () != 0)
     {
