@@ -413,18 +413,18 @@ include $(TAO_ROOT)/taoconfig.mk
 
 # @@ Can we generalize this to something like this:
 # $(MANAGED_PIDL).target:
-#         ......
+# 	......
 #interceptor.target:
-#        $(TAO_ROOT)/TAO_IDL/tao_idl -Ge 1 -Wb,export_macro=TAO_Export Interceptor.pidl; \
-#        $(RM) -f InterceptorS.* InterceptorS_T.*; \
-#        patch < diffs/InterceptorC.h.diff; \
-#        patch < diffs/InterceptorC.cpp.diff
+#	$(TAO_ROOT)/TAO_IDL/tao_idl -Ge 1 -Wb,export_macro=TAO_Export Interceptor.pidl; \
+#	$(RM) -f InterceptorS.* InterceptorS_T.*; \
+#	patch < diffs/InterceptorC.h.diff; \
+#	patch < diffs/InterceptorC.cpp.diff
 #.PHONY interceptor.target:
 # Need to add how to generate for PortableInterceptor.pidl and Dynamic.pidl
 ior.target:
-        $(TAO_ROOT)/TAO_IDL/tao_idl -Ge 1 -Wb,export_macro=TAO_Export IOR.pidl; \
-        $(RM) -f IORS.* IORS_T.*; \
-        patch < diffs/IORC.h.diff
+	$(TAO_ROOT)/TAO_IDL/tao_idl -Ge 1 -Wb,export_macro=TAO_Export IOR.pidl; \
+	$(RM) -f IORS.* IORS_T.*; \
+	patch < diffs/IORC.h.diff
 .PHONY ior.target:
 
 ifeq ($(fakesvcconf),1)
@@ -435,8 +435,8 @@ ifeq ($(LYNXTARGET),ppc)
 #### POA.cpp raises internal compiler error with LynxOS 3.0.0 g++, but
 #### only when optimization is enabled.  Disable it . . .
 .obj/POA.o .obj/POA.so .shobj/POA.o .shobj/POA.so: POA.cpp
-        @echo NOTE: compiling POA.cpp with -O instead of -O2, see Makefile.
-        $(subst $(OCFLAGS) ,-O ,$(COMPILE.cc)) -o $@ $<
+	@echo NOTE: compiling POA.cpp with -O instead of -O2, see Makefile.
+	$(subst $(OCFLAGS) ,-O ,$(COMPILE.cc)) -o $@ $<
 endif # LYNXTARGET == ppc
 
 #RLDFLAGS := $(subst -L,-Wl\,-rpath ,$(LDFLAGS))
@@ -447,36 +447,36 @@ LDFLAGS += $(RLDFLAGS)
 
 .PHONY: TAO_COMPONENTS
 TAO_COMPONENTS:
-        @sh $(ACE_ROOT)/bin/ace_components --tao --set ' $(TAO_COMPONENTS) '
+	@sh $(ACE_ROOT)/bin/ace_components --tao --set ' $(TAO_COMPONENTS) '
 
 .PHONY: SIZES
 MODULES= \
-        PLUGGABLE_PROTOCOLS_FILES \
-        DEFAULT_RESOURCES_FILES \
-        INTERPRETIVE_MARSHALING_FILES \
-        IDL_COMPILER_FILES \
-        ORB_CORE_FILES \
-        DYNAMIC_ANY_FILES \
-        PLUGGABLE_MESSAGING_FILES \
-        INTERFACE_REPO_FILES \
-        FT_CORBA_FILES
+	PLUGGABLE_PROTOCOLS_FILES \
+	DEFAULT_RESOURCES_FILES \
+	INTERPRETIVE_MARSHALING_FILES \
+	IDL_COMPILER_FILES \
+	ORB_CORE_FILES \
+	DYNAMIC_ANY_FILES \
+	PLUGGABLE_MESSAGING_FILES \
+	INTERFACE_REPO_FILES \
+	FT_CORBA_FILES
 
 SIZES: $(addsuffix .size, $(MODULES))
-        @for i in $^; do \
-          b=`cat $$i`; \
-          echo $$i : $$b; \
-        done
+	@for i in $^; do \
+	  b=`cat $$i`; \
+	  echo $$i : $$b; \
+	done
 
 %.size:
-        @size $(addsuffix .o, $(addprefix .obj/,$($*))) | \
-          sort -n -k 4,4 >$@.details
-        @size $(addsuffix .o, $(addprefix .obj/,$($*))) | \
-        grep -v ' text ' | \
-        awk '{s += $$4} END {print s}' > $@
+	@size $(addsuffix .o, $(addprefix .obj/,$($*))) | \
+	  sort -n -k 4,4 >$@.details
+	@size $(addsuffix .o, $(addprefix .obj/,$($*))) | \
+	grep -v ' text ' | \
+	awk '{s += $$4} END {print s}' > $@
 
 
 realclean:
-        @sh $(ACE_ROOT)/bin/ace_components --tao --remove
+	@sh $(ACE_ROOT)/bin/ace_components --tao --remove
 
 #----------------------------------------------------------------------------
 #       Dependencies
