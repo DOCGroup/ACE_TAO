@@ -1,5 +1,5 @@
 // -*- MPC -*-
-// ace_gtk.mpb,v
+// $Id$
 
 project {
   macros   += ACE_HAS_GTK

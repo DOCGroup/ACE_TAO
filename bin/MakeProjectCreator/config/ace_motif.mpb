@@ -1,5 +1,5 @@
 // -*- MPC -*-
-// ace_motif.mpb,v
+// $Id$
 
 project: ace_xt {
   requires += motif

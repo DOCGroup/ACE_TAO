@@ -1,5 +1,5 @@
 // -*- MPC -*-
-// ace_athena.mpb,v
+// $Id$
 
 project: ace_xt {
   requires += athena
