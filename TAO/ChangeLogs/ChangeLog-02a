@@ -1,3 +1,9 @@
+Wed Mar 13 10:47:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/AV.dsp:
+          Added missing ace/QoS directory to the libpath of several
+          configurations
+
 Tue Mar 12 17:12:51 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/fe/idl.ll:
@@ -15,7 +21,7 @@ Tue Mar 12 16:19:28 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 Tue Mar 12 15:33:45 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* PROBLEM-REPORT-FORM (Subject): Added a request for the version
-	  of winsock on Windows based OS's. 
+	  of winsock on Windows based OS's.
 
 Tue Mar 12 15:27:17 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -34,7 +40,7 @@ Tue Mar 12 12:30:16 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/Notify_ID_Pool_T.cpp:
 
-        Switch the code back to use the postfix ++ operator.  
+        Switch the code back to use the postfix ++ operator.
         Using the prefix ++ operator was causing problems with the default
         supplier and consumer admins.
 
