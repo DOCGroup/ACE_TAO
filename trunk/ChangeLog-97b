@@ -1,3 +1,16 @@
+Thu Sep 11 00:24:04 1997  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
+
+	* netsvcs/lib/README: The entry point for the time service client
+ 	  is _make_ACE_TS_Clerk_Processor and not
+ 	  _make_ACE_TS_Clerk_Connector.  Thanks to Ivan for pointing this
+ 	  out.
+
+Wed Sep 10 22:58:10 1997  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
+
+	* ace/Thread_Manager.cpp (exit): Reordered the code so that it
+ 	  will keep the lock held long enough to copy out the thread exit
+ 	  hook but will release the lock before calling this hook.
+
 Wed Sep 10 11:04:08 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/config-sunos5.5-g++.h: added
