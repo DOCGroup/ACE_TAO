@@ -144,12 +144,12 @@ main (int, ASYS_TCHAR *[])
 
   catch (...)
     {
-# if !defined (__DECCXX)
-      // DEC cxx 6.2 catches its default, NoNamedException.  Let it slide.
-      ACE_ERROR((LM_ERROR,
-      "Caught exception during test; ACE_bad_alloc not defined correctly.\n"));
+      ACE_ERROR ((LM_ERROR,
+        "Caught exception during test; "
+        "ACE_bad_alloc not defined correctly, or\n"));
+      ACE_ERROR ((LM_ERROR,
+        "ACE_NEW_THROWS_EXCEPTIONS is not #defined (and should be).\n"));
       status = 1;        // Mark test failure
-# endif /* ! __DECCXX */
     }
 #endif /* ACE_HAS_EXCEPTIONS */
 #endif /* __SUNPRO_CC && !ACE_HAS_EXCEPTIONS */
