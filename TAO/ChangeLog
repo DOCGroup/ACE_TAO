@@ -1,3 +1,9 @@
+Wed Oct  1 08:19:03 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/server.bor: 
+	  Applied patches that Johnny sent me to fix compile errors in the
+	  static builds.
+
 Tue Sep 30 10:31:04 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/CosTypedEventChannelAdmin.idl:
