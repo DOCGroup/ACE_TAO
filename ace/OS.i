@@ -5365,34 +5365,27 @@ ACE_Flow_Spec::priority (int p)
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
-ACE_INLINE
-ACE_QoS::ACE_QoS (void)
-  : sending_flowspec_ (0),
-    receiving_flowspec_ (0)
-{
-}
-
-ACE_INLINE ACE_Flow_Spec*
+ACE_INLINE ACE_Flow_Spec
 ACE_QoS::sending_flowspec (void) const
 {
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
-  return (ACE_Flow_Spec *) this->SendingFlowspec;
+  return (ACE_Flow_Spec &) this->SendingFlowspec;
 #else
   return this->sending_flowspec_;
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
 ACE_INLINE void
-ACE_QoS::sending_flowspec (ACE_Flow_Spec *fs)
+ACE_QoS::sending_flowspec (const ACE_Flow_Spec &fs)
 {
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
-  this->SendingFlowspec = (FLOWSPEC*) fs;
+  this->SendingFlowspec = (FLOWSPEC) fs;
 #else
   this->sending_flowspec_ = fs;
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
-ACE_INLINE ACE_Flow_Spec*
+ACE_INLINE ACE_Flow_Spec
 ACE_QoS::receiving_flowspec (void) const
 {
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
@@ -5403,10 +5396,10 @@ ACE_QoS::receiving_flowspec (void) const
 }
 
 ACE_INLINE void
-ACE_QoS::receiving_flowspec (ACE_Flow_Spec *fs)
+ACE_QoS::receiving_flowspec (const ACE_Flow_Spec &fs)
 {
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
-  this->ReceivingFlowspec = (FLOWSPEC*) fs;
+  this->ReceivingFlowspec = (FLOWSPEC) fs;
 #else
   this->receiving_flowspec_ = fs;
 #endif /* ACE_HAS_WINSOCK2 */
@@ -5416,7 +5409,7 @@ ACE_INLINE iovec
 ACE_QoS::provider_specific (void) const
 {
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
-  return (iovec&) this->ProviderSpecific;
+  return (iovec &) this->ProviderSpecific;
 #else
   ACE_NOTSUP_RETURN (iovec ());
 #endif /* ACE_HAS_WINSOCK2 */
