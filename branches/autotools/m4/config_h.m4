@@ -9,7 +9,7 @@ dnl       header.
 dnl
 dnl -------------------------------------------------------------------------
 
-dnl  Copyright (C) 2002  Ossama Othman
+dnl  Copyright (C) 2002, 2003  Ossama Othman
 dnl
 dnl  All Rights Reserved
 dnl
@@ -743,6 +743,9 @@ AH_TEMPLATE([ACE_LACKS_NETDB_REENTRANT_FUNCTIONS],
 AH_TEMPLATE([ACE_HAS_REGEX],
 [Platform supports the POSIX regular expression library])
 
+AH_TEMPLATE([ACE_HAS_SCANDIR],
+[Platform supports the scandir() function.])
+
 AH_TEMPLATE([ACE_HAS_SELECT_H],
 [Platform has special header for select().])
 
@@ -1195,6 +1198,9 @@ AH_TEMPLATE([ACE_LACKS_SIGSET],
 
 AH_TEMPLATE([ACE_LACKS_STRRCHR],
 [Platform/compiler lacks strrchr () function.])
+
+AH_TEMPLATE([ACE_LACKS_STRUCT_DIR],
+[Platform lacks dirent structure.])
 
 AH_TEMPLATE([ACE_LACKS_SYS_NERR],
 [Platforms/compiler lacks the sys_nerr variable (e.g., VxWorks and MVS).])

@@ -12,7 +12,7 @@ AC_INIT([ACE],[TEST-VERSION],[ace-bugs@cs.wustl.edu],[ace])
 AC_REVISION([$Id$])
 
 AC_COPYRIGHT([ACE(TM) and TAO(TM) are copyrighted by Douglas C. Schmidt and
-his research group at Washington University, Copyright (c) 1993-2002,
+his research group at Washington University, Copyright (c) 1993-2003,
 all rights reserved.  Since ACE and TAO are open-source, free
 software, you are free to use, modify, and distribute the ACE and TAO
 source code and object code produced from the source, as long as you
@@ -24,7 +24,7 @@ additional details.])
 
 
 dnl Require GNU Autoconf 2.57 or better.
-AC_PREREQ(2.57)dnl
+AC_PREREQ([2.57])
 
 AC_CONFIG_SRCDIR([ace/ACE.cpp])
 
@@ -1188,6 +1188,7 @@ dnl SECTION 7: checks for structures
 
 
 dnl TODO: Check whether these structures can be defined somewhere else.
+ACE_CHECK_STRUCT([dirent],[dirent.h],,[AC_DEFINE([ACE_LACKS_STRUCT_DIR])])
 ACE_CHECK_STRUCT([flock],[fcntl.h],,[AC_DEFINE([ACE_LACKS_FILELOCKS])])
 ACE_CHECK_STRUCT([rwlock_t],[synch.h],,[AC_DEFINE([ACE_LACKS_RWLOCK_T])])
 ACE_CHECK_STRUCT([strbuf],[stropts.h],[AC_DEFINE([ACE_HAS_STRBUF_T])],)
@@ -3314,13 +3315,23 @@ AC_CHECK_FUNC([access],
   ,
   [AC_DEFINE([ACE_LACKS_ACCESS])])
 
+dnl Temporarily select C as the test language to work around a bug in
+dnl some versions of Autoconf when C++ is selected as the test
+dnl language.
+AC_LANG_PUSH([C])
 AC_CHECK_FUNC([bsearch],
   ,
   [AC_DEFINE([ACE_LACKS_BSEARCH])])
+AC_LANG_POP([C])
 
+dnl Temporarily select C as the test language to work around a bug in
+dnl some versions of Autoconf when C++ is selected as the test
+dnl language.
+AC_LANG_PUSH([C])
 AC_CHECK_FUNC([qsort],
   ,
   [AC_DEFINE([ACE_LACKS_QSORT])])
+AC_LANG_POP([C])
 
 dnl ACE uses execv, execvp and execve, so we don't bother to check
 dnl for the others (e.g. execl, execlp, execle)
@@ -3731,9 +3742,14 @@ AC_CHECK_FUNC([mkfifo],
   ,
   [AC_DEFINE([ACE_LACKS_MKFIFO])])
 
+dnl Temporarily select C as the test language to work around a bug in
+dnl some versions of Autoconf when C++ is selected as the test
+dnl language.
+AC_LANG_PUSH([C])
 AC_CHECK_FUNC([mktemp],
   ,
   [AC_DEFINE([ACE_LACKS_MKTEMP])])
+AC_LANG_POP([C])
 
 AC_CHECK_FUNC([madvise],
   ,
@@ -4449,7 +4465,12 @@ AC_CHECK_FUNC([sigwait],
 
 dnl Check for reentrant functions
 if test "$ace_user_enable_reentrant_funcs" = yes; then
+  dnl Temporarily select C as the test language to work around a bug in
+  dnl some versions of Autoconf when C++ is selected as the test
+  dnl language.
+  AC_LANG_PUSH([C])
   AC_CHECK_FUNC([rand_r],,)
+  AC_LANG_POP([C])
 
   AC_CHECK_FUNC([strtok_r],
     [
@@ -4497,6 +4518,15 @@ fi dnl End checks for reentrant functions
 AC_CHECK_FUNC([readdir_r],
   ,
   [AC_DEFINE([ACE_LACKS_READDIR_R])])
+
+dnl Disabled until we figure out what to do with the comparator
+dnl function argument inconsistencies between different platforms.
+dnl For example:
+dnl    int comparator (const void * d1, const void * d2)
+dnl instead of:
+dnl    int comparator (const dirent ** d1, const dirent ** d2)
+dnl
+dnl AC_CHECK_FUNC([scandir], [AC_DEFINE([ACE_HAS_SCANDIR])], [])
 
 AC_CHECK_FUNC([seekdir],
   ,
