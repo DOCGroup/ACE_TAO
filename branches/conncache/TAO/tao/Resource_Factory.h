@@ -137,6 +137,14 @@ public:
   // from the service configurator.  It is assumed
   // that only one thread will call this method at ORB initialization.
   // NON-THREAD-SAFE
+  
+  virtual int get_connection_caching_strategy_type (void) const;
+  // This accesses the connection caching strategy we use for managing
+  // purging of unused entries from the connection cache on demnad.
+
+  virtual double get_purge_percentage (void) const;
+  // This denotes the amount of entries to remove from the connection
+  // cache. 
 };
 
 #endif /* TAO_RESOURCE_FACTORY_H */
