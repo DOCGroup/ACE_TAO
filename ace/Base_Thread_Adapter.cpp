@@ -43,6 +43,9 @@ ACE_Base_Thread_Adapter::ACE_Base_Thread_Adapter (
           , handler
 # endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
           );
+#ifdef ACE_USES_GPROF
+  getitimer (ITIMER_PROF, &itimer_);
+#endif // ACE_USES_GPROF
 }
 
 ACE_Base_Thread_Adapter::~ACE_Base_Thread_Adapter (void)
@@ -119,6 +122,10 @@ ace_thread_adapter (void *args)
 
   ACE_Base_Thread_Adapter *thread_args =
     ACE_static_cast (ACE_Base_Thread_Adapter *, args);
+
+#ifdef ACE_USES_GPROF  
+  setitimer (ITIMER_PROF, thread_args->timerval (), 0);
+#endif // ACE_USES_GPROF
 
   // Invoke the user-supplied function with the args.
   ACE_THR_FUNC_RETURN status = thread_args->invoke ();
