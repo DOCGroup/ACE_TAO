@@ -1,4 +1,4 @@
-Thu Feb 18 11:49:18 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Thu Feb 18 14:12:28 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* netsvcs/clients/Naming/Client/svc.conf: Changed to start up
 	  ACE_Naming_Context as dynamic service.  Thanks to Darren
@@ -8,6 +8,9 @@ Thu Feb 18 11:49:18 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 	  ACE_Time_Value::zero accidentally when we want blocking
 	  connect.  Thanks to Darren Whobrey <whobrey@fecit.co.uk> for
 	  reporting the bug.
+
+	* ace/CDR_Stream.{h,i} (ACE_InputCDR::do_byte_swap): Added
+	  accessor function for Flick.
 
 	* ace/CORBA_macros.h (ACE_THROW_INT): This should return a new
 	  instance of the exception.  Thanks to Andy for pointing this
