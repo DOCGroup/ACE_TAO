@@ -14,7 +14,7 @@
 //
 // = AUTHOR
 //   Douglas C. Schmidt <schmidt@cs.wustl.edu>
-//    
+//
 // ============================================================================
 
 #ifndef TIME_DATE_CLIENT_I_H
@@ -46,7 +46,7 @@ public:
   // Parses the command line arguments
 
 private:
-  Client<Time_Date_Factory, Time_Date_Factory_var> client;
+  Client<Time_Date, Time_Date_var> client;
   // Instantiate the client object.
 };
 

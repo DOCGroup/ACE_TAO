@@ -17,17 +17,33 @@ Time_Date_i::~Time_Date_i (void)
   // no-op.
 }
 
-// Obtain the time and date in binary format.
-
 void
-Time_Date::bin_date (CORBA::Long_out time_date)
+Time_Date_i::bin_date (CORBA::Long_out time_date,
+                       CORBA::Environment &ACE_TRY_ENV)
 {
+  time_date = CORBA::Long (ACE_OS::time (0));
 }
 
-// Obtain the time and date in string format.
-
-void 
-Time_Date::str_date (CORBA::String_out time_date)
+void
+Time_Date_i::str_date (CORBA::String_out time_date,
+                       CORBA::Environment &ACE_TRY_ENV)
 {
 
+}
+
+void
+Time_Date_i::orb (CORBA::ORB_ptr o)
+{
+  this->orb_ = CORBA::ORB::_duplicate (o);
+}
+
+void
+Time_Date_i::shutdown (CORBA::Environment & )
+{
+  ACE_DEBUG ((LM_DEBUG,
+              "%s\n",
+              "Time_i is shutting down"));
+
+  // Instruct the ORB to shutdown.
+  this->orb_->shutdown ();
 }

@@ -141,7 +141,7 @@ SOURCE=.\Bank.idl
 
 !IF  "$(CFG)" == "Simple Bank Server - Win32 Release"
 
-# Begin Custom Build - Invoking TAO_IDL Compiler
+# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
 InputPath=.\Bank.idl
 InputName=Bank
 
@@ -179,7 +179,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "Simple Bank Server - Win32 Debug"
 
 USERDEP__BANK_="..\..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compiler
+# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
 InputPath=.\Bank.idl
 InputName=Bank
 

@@ -1,47 +1,47 @@
-# Microsoft Developer Studio Project File - Name="Simple Time Server" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="Simple Time Date Client" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 # TARGTYPE "Win32 (ALPHA) Console Application" 0x0603
 
-CFG=Simple Time Server - Win32 Alpha Debug
+CFG=Simple Time Date Client - Win32 Alpha Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE 
-!MESSAGE NMAKE /f "server.mak".
-!MESSAGE 
+!MESSAGE
+!MESSAGE NMAKE /f "client.mak".
+!MESSAGE
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE 
-!MESSAGE NMAKE /f "server.mak" CFG="Simple Time Server - Win32 Alpha Debug"
-!MESSAGE 
+!MESSAGE
+!MESSAGE NMAKE /f "client.mak" CFG="Simple Time Date Client - Win32 Alpha Debug"
+!MESSAGE
 !MESSAGE Possible choices for configuration are:
-!MESSAGE 
-!MESSAGE "Simple Time Server - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "Simple Time Server - Win32 Debug" (based on "Win32 (x86) Console Application")
-!MESSAGE "Simple Time Server - Win32 Alpha Debug" (based on "Win32 (ALPHA) Console Application")
-!MESSAGE "Simple Time Server - Win32 Alpha Release" (based on "Win32 (ALPHA) Console Application")
-!MESSAGE 
+!MESSAGE
+!MESSAGE "Simple Time Date Client - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "Simple Time Date Client - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "Simple Time Date Client - Win32 Alpha Debug" (based on "Win32 (ALPHA) Console Application")
+!MESSAGE "Simple Time Date Client - Win32 Alpha Release" (based on "Win32 (ALPHA) Console Application")
+!MESSAGE
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 
-!IF  "$(CFG)" == "Simple Time Server - Win32 Release"
+!IF  "$(CFG)" == "Simple Time Date Client - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir ".\server\Release"
-# PROP BASE Intermediate_Dir ".\server\Release"
-# PROP BASE Target_Dir ".\server"
+# PROP BASE Output_Dir ".\client\Release"
+# PROP BASE Intermediate_Dir ".\client\Release"
+# PROP BASE Target_Dir ".\client"
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "Release"
 # PROP Intermediate_Dir "Release"
 # PROP Ignore_Export_Lib 0
-# PROP Target_Dir ".\server"
+# PROP Target_Dir ".\client"
 CPP=cl.exe
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\..\\" /I "..\..\..\..\\" /I "..\..\..\orbsvcs" /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /FD /c
@@ -56,19 +56,19 @@ LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
 # ADD LINK32 ace.lib TAO.lib orbsvcs.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace" /libpath:"..\..\..\orbsvcs\orbsvcs"
 
-!ELSEIF  "$(CFG)" == "Simple Time Server - Win32 Debug"
+!ELSEIF  "$(CFG)" == "Simple Time Date Client - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir ".\server\Debug"
-# PROP BASE Intermediate_Dir ".\server\Debug"
-# PROP BASE Target_Dir ".\server"
+# PROP BASE Output_Dir ".\client\Debug"
+# PROP BASE Intermediate_Dir ".\client\Debug"
+# PROP BASE Target_Dir ".\client"
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir ""
 # PROP Intermediate_Dir ".\Debug"
 # PROP Ignore_Export_Lib 0
-# PROP Target_Dir ".\server"
+# PROP Target_Dir ".\client"
 CPP=cl.exe
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\..\\" /I "..\..\..\..\\" /I "..\..\..\orbsvcs" /D "_DEBUG" /D "WIN32" /D "_CONSOLE" /FD /c
@@ -83,20 +83,20 @@ LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
 # ADD LINK32 aced.lib TAOd.lib orbsvcsd.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace" /libpath:"..\..\..\orbsvcs\orbsvcs"
 
-!ELSEIF  "$(CFG)" == "Simple Time Server - Win32 Alpha Debug"
+!ELSEIF  "$(CFG)" == "Simple Time Date Client - Win32 Alpha Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "server\Alpha Debug"
-# PROP BASE Intermediate_Dir "server\Alpha Debug"
+# PROP BASE Output_Dir "client\Alpha Debug"
+# PROP BASE Intermediate_Dir "client\Alpha Debug"
 # PROP BASE Ignore_Export_Lib 0
-# PROP BASE Target_Dir "server"
+# PROP BASE Target_Dir "client"
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "Debug"
 # PROP Ignore_Export_Lib 0
-# PROP Target_Dir "server"
+# PROP Target_Dir "client"
 CPP=cl.exe
 # ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "..\..\..\\ /I" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FD ..\..\..\..\\ /c
 # SUBTRACT BASE CPP /YX
@@ -112,20 +112,20 @@ LINK32=link.exe
 # ADD BASE LINK32 aced.lib TAOd.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:ALPHA /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace"
 # ADD LINK32 aced.lib TAOd.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:ALPHA /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace"
 
-!ELSEIF  "$(CFG)" == "Simple Time Server - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "Simple Time Date Client - Win32 Alpha Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "server\Alpha Release"
-# PROP BASE Intermediate_Dir "server\Alpha Release"
+# PROP BASE Output_Dir "client\Alpha Release"
+# PROP BASE Intermediate_Dir "client\Alpha Release"
 # PROP BASE Ignore_Export_Lib 0
-# PROP BASE Target_Dir "server"
+# PROP BASE Target_Dir "client"
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "Release"
 # PROP Intermediate_Dir "Release"
 # PROP Ignore_Export_Lib 0
-# PROP Target_Dir "server"
+# PROP Target_Dir "client"
 CPP=cl.exe
 # ADD BASE CPP /nologo /Gt0 /W3 /GX /O2 /I "..\..\..\\ /I" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /FD ..\..\..\..\\ /c
 # SUBTRACT BASE CPP /YX
@@ -141,28 +141,28 @@ LINK32=link.exe
 # ADD BASE LINK32 ace.lib TAO.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /machine:ALPHA /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace"
 # ADD LINK32 ace.lib TAO.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /machine:ALPHA /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace"
 
-!ENDIF 
+!ENDIF
 
 # Begin Target
 
-# Name "Simple Time Server - Win32 Release"
-# Name "Simple Time Server - Win32 Debug"
-# Name "Simple Time Server - Win32 Alpha Debug"
-# Name "Simple Time Server - Win32 Alpha Release"
+# Name "Simple Time Date Client - Win32 Release"
+# Name "Simple Time Date Client - Win32 Debug"
+# Name "Simple Time Date Client - Win32 Alpha Debug"
+# Name "Simple Time Date Client - Win32 Alpha Release"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"
 # Begin Source File
 
-SOURCE=.\server.cpp
+SOURCE=.\client.cpp
 
-!IF  "$(CFG)" == "Simple Time Server - Win32 Release"
+!IF  "$(CFG)" == "Simple Time Date Client - Win32 Release"
 
-!ELSEIF  "$(CFG)" == "Simple Time Server - Win32 Debug"
+!ELSEIF  "$(CFG)" == "Simple Time Date Client - Win32 Debug"
 
-!ELSEIF  "$(CFG)" == "Simple Time Server - Win32 Alpha Debug"
+!ELSEIF  "$(CFG)" == "Simple Time Date Client - Win32 Alpha Debug"
 
-DEP_CPP_SERVE=\
+DEP_CPP_CLIEN=\
 	"..\..\..\..\ace\Acceptor.cpp"\
 	"..\..\..\..\ace\Acceptor.h"\
 	"..\..\..\..\ace\Acceptor.i"\
@@ -306,11 +306,11 @@ DEP_CPP_SERVE=\
 	"..\..\..\..\ace\Thread.i"\
 	"..\..\..\..\ace\Thread_Manager.h"\
 	"..\..\..\..\ace\Thread_Manager.i"\
-	"..\..\..\..\ace\Time_Value.h"\
-	"..\..\..\..\ace\Timer_Queue.h"\
-	"..\..\..\..\ace\Timer_Queue_T.cpp"\
-	"..\..\..\..\ace\Timer_Queue_T.h"\
-	"..\..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\..\ace\Time_Date_Value.h"\
+	"..\..\..\..\ace\Time_Dater_Queue.h"\
+	"..\..\..\..\ace\Time_Dater_Queue_T.cpp"\
+	"..\..\..\..\ace\Time_Dater_Queue_T.h"\
+	"..\..\..\..\ace\Time_Dater_Queue_T.i"\
 	"..\..\..\..\ace\Trace.h"\
 	"..\..\..\..\ace\WFMO_Reactor.h"\
 	"..\..\..\..\ace\WFMO_Reactor.i"\
@@ -319,6 +319,7 @@ DEP_CPP_SERVE=\
 	"..\..\..\tao\Any.i"\
 	"..\..\..\tao\CDR.h"\
 	"..\..\..\tao\CDR.i"\
+	"..\..\..\tao\CDR_Interpreter.h"\
 	"..\..\..\tao\Client_Strategy_Factory.h"\
 	"..\..\..\tao\Connect.h"\
 	"..\..\..\tao\Connect.i"\
@@ -383,65 +384,56 @@ DEP_CPP_SERVE=\
 	"..\..\..\tao\singletons.h"\
 	"..\..\..\tao\Stub.h"\
 	"..\..\..\tao\Stub.i"\
-	"..\..\..\tao\TAO.h"\
 	"..\..\..\tao\Typecode.h"\
 	"..\..\..\tao\Typecode.i"\
 	"..\..\..\tao\Union.h"\
 	"..\..\..\tao\varout.cpp"\
 	"..\..\..\tao\varout.h"\
 	"..\..\..\tao\varout.i"\
-	
-NODEP_CPP_SERVE=\
+
+NODEP_CPP_CLIEN=\
 	"..\..\..\..\ace\sys_conf.h"\
 	"..\..\..\tao\Align.h"\
-	"..\..\..\tao\IIOP_Interpreter.h"\
 	"..\..\..\tao\IIOP_Object.h"\
 	"..\..\..\tao\IIOP_Object.i"\
 	"..\..\..\tao\IIOP_ORB.h"\
 	"..\..\..\tao\IIOP_ORB.i"\
 	"..\..\..\tao\Object_Table.h"\
-	".\Server_impl.h"\
-	".\Time_impl.h"\
-	".\TimeC.h"\
-	".\TimeC.i"\
-	".\TimeS.h"\
-	".\TimeS.i"\
-	".\TimeS_T.cpp"\
-	".\TimeS_T.h"\
-	".\TimeS_T.i"\
-	
+	".\Client_impl.h"\
+	".\Time_DateC.h"\
 
-!ELSEIF  "$(CFG)" == "Simple Time Server - Win32 Alpha Release"
 
-!ENDIF 
+!ELSEIF  "$(CFG)" == "Simple Time Date Client - Win32 Alpha Release"
+
+!ENDIF
 
 # End Source File
 # Begin Source File
 
-SOURCE=.\Time_i.cpp
+SOURCE=.\Time_Date_Client_i.cpp
 
-!IF  "$(CFG)" == "Simple Time Server - Win32 Release"
+!IF  "$(CFG)" == "Simple Time Date Client - Win32 Release"
 
-!ELSEIF  "$(CFG)" == "Simple Time Server - Win32 Debug"
+!ELSEIF  "$(CFG)" == "Simple Time Date Client - Win32 Debug"
 
-!ELSEIF  "$(CFG)" == "Simple Time Server - Win32 Alpha Debug"
+!ELSEIF  "$(CFG)" == "Simple Time Date Client - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "Simple Time Server - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "Simple Time Date Client - Win32 Alpha Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
 
-SOURCE=.\TimeC.cpp
+SOURCE=.\Time_DateC.cpp
 
-!IF  "$(CFG)" == "Simple Time Server - Win32 Release"
+!IF  "$(CFG)" == "Simple Time Date Client - Win32 Release"
 
-!ELSEIF  "$(CFG)" == "Simple Time Server - Win32 Debug"
+!ELSEIF  "$(CFG)" == "Simple Time Date Client - Win32 Debug"
 
-!ELSEIF  "$(CFG)" == "Simple Time Server - Win32 Alpha Debug"
+!ELSEIF  "$(CFG)" == "Simple Time Date Client - Win32 Alpha Debug"
 
-DEP_CPP_TIMEC=\
+DEP_CPP_Time_DateC=\
 	"..\..\..\..\ace\Acceptor.cpp"\
 	"..\..\..\..\ace\Acceptor.h"\
 	"..\..\..\..\ace\Acceptor.i"\
@@ -585,11 +577,11 @@ DEP_CPP_TIMEC=\
 	"..\..\..\..\ace\Thread.i"\
 	"..\..\..\..\ace\Thread_Manager.h"\
 	"..\..\..\..\ace\Thread_Manager.i"\
-	"..\..\..\..\ace\Time_Value.h"\
-	"..\..\..\..\ace\Timer_Queue.h"\
-	"..\..\..\..\ace\Timer_Queue_T.cpp"\
-	"..\..\..\..\ace\Timer_Queue_T.h"\
-	"..\..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\..\ace\Time_Date_Value.h"\
+	"..\..\..\..\ace\Time_Dater_Queue.h"\
+	"..\..\..\..\ace\Time_Dater_Queue_T.cpp"\
+	"..\..\..\..\ace\Time_Dater_Queue_T.h"\
+	"..\..\..\..\ace\Time_Dater_Queue_T.i"\
 	"..\..\..\..\ace\Trace.h"\
 	"..\..\..\..\ace\WFMO_Reactor.h"\
 	"..\..\..\..\ace\WFMO_Reactor.i"\
@@ -598,6 +590,7 @@ DEP_CPP_TIMEC=\
 	"..\..\..\tao\Any.i"\
 	"..\..\..\tao\CDR.h"\
 	"..\..\..\tao\CDR.i"\
+	"..\..\..\tao\CDR_Interpreter.h"\
 	"..\..\..\tao\Client_Strategy_Factory.h"\
 	"..\..\..\tao\Connect.h"\
 	"..\..\..\tao\Connect.i"\
@@ -668,41 +661,40 @@ DEP_CPP_TIMEC=\
 	"..\..\..\tao\varout.cpp"\
 	"..\..\..\tao\varout.h"\
 	"..\..\..\tao\varout.i"\
-	
-NODEP_CPP_TIMEC=\
+
+NODEP_CPP_Time_DateC=\
 	"..\..\..\..\ace\sys_conf.h"\
 	"..\..\..\tao\Align.h"\
-	"..\..\..\tao\IIOP_Interpreter.h"\
 	"..\..\..\tao\IIOP_Object.h"\
 	"..\..\..\tao\IIOP_Object.i"\
 	"..\..\..\tao\IIOP_ORB.h"\
 	"..\..\..\tao\IIOP_ORB.i"\
 	"..\..\..\tao\Object_Table.h"\
-	".\TimeC.h"\
-	".\TimeC.i"\
-	".\TimeS.h"\
-	".\TimeS.i"\
-	".\TimeS_T.cpp"\
-	".\TimeS_T.h"\
-	".\TimeS_T.i"\
-	
+	".\Time_DateC.h"\
+	".\Time_DateC.i"\
+	".\Time_DateS.h"\
+	".\Time_DateS.i"\
+	".\Time_DateS_T.cpp"\
+	".\Time_DateS_T.h"\
+	".\Time_DateS_T.i"\
 
-!ELSEIF  "$(CFG)" == "Simple Time Server - Win32 Alpha Release"
 
-!ENDIF 
+!ELSEIF  "$(CFG)" == "Simple Time Date Client - Win32 Alpha Release"
+
+!ENDIF
 
 # End Source File
 # Begin Source File
 
-SOURCE=.\TimeS.cpp
+SOURCE=.\Time_DateS.cpp
 
-!IF  "$(CFG)" == "Simple Time Server - Win32 Release"
+!IF  "$(CFG)" == "Simple Time Date Client - Win32 Release"
 
-!ELSEIF  "$(CFG)" == "Simple Time Server - Win32 Debug"
+!ELSEIF  "$(CFG)" == "Simple Time Date Client - Win32 Debug"
 
-!ELSEIF  "$(CFG)" == "Simple Time Server - Win32 Alpha Debug"
+!ELSEIF  "$(CFG)" == "Simple Time Date Client - Win32 Alpha Debug"
 
-DEP_CPP_TIMES=\
+DEP_CPP_Time_DateS=\
 	"..\..\..\..\ace\Acceptor.cpp"\
 	"..\..\..\..\ace\Acceptor.h"\
 	"..\..\..\..\ace\Acceptor.i"\
@@ -846,11 +838,11 @@ DEP_CPP_TIMES=\
 	"..\..\..\..\ace\Thread.i"\
 	"..\..\..\..\ace\Thread_Manager.h"\
 	"..\..\..\..\ace\Thread_Manager.i"\
-	"..\..\..\..\ace\Time_Value.h"\
-	"..\..\..\..\ace\Timer_Queue.h"\
-	"..\..\..\..\ace\Timer_Queue_T.cpp"\
-	"..\..\..\..\ace\Timer_Queue_T.h"\
-	"..\..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\..\ace\Time_Date_Value.h"\
+	"..\..\..\..\ace\Time_Dater_Queue.h"\
+	"..\..\..\..\ace\Time_Dater_Queue_T.cpp"\
+	"..\..\..\..\ace\Time_Dater_Queue_T.h"\
+	"..\..\..\..\ace\Time_Dater_Queue_T.i"\
 	"..\..\..\..\ace\Trace.h"\
 	"..\..\..\..\ace\WFMO_Reactor.h"\
 	"..\..\..\..\ace\WFMO_Reactor.i"\
@@ -859,6 +851,7 @@ DEP_CPP_TIMES=\
 	"..\..\..\tao\Any.i"\
 	"..\..\..\tao\CDR.h"\
 	"..\..\..\tao\CDR.i"\
+	"..\..\..\tao\CDR_Interpreter.h"\
 	"..\..\..\tao\Client_Strategy_Factory.h"\
 	"..\..\..\tao\Connect.h"\
 	"..\..\..\tao\Connect.i"\
@@ -929,28 +922,27 @@ DEP_CPP_TIMES=\
 	"..\..\..\tao\varout.cpp"\
 	"..\..\..\tao\varout.h"\
 	"..\..\..\tao\varout.i"\
-	
-NODEP_CPP_TIMES=\
+
+NODEP_CPP_Time_DateS=\
 	"..\..\..\..\ace\sys_conf.h"\
 	"..\..\..\tao\Align.h"\
-	"..\..\..\tao\IIOP_Interpreter.h"\
 	"..\..\..\tao\IIOP_Object.h"\
 	"..\..\..\tao\IIOP_Object.i"\
 	"..\..\..\tao\IIOP_ORB.h"\
 	"..\..\..\tao\IIOP_ORB.i"\
 	"..\..\..\tao\Object_Table.h"\
-	".\TimeC.h"\
-	".\TimeC.i"\
-	".\TimeS.h"\
-	".\TimeS.i"\
-	".\TimeS_T.cpp"\
-	".\TimeS_T.h"\
-	".\TimeS_T.i"\
-	
+	".\Time_DateC.h"\
+	".\Time_DateC.i"\
+	".\Time_DateS.h"\
+	".\Time_DateS.i"\
+	".\Time_DateS_T.cpp"\
+	".\Time_DateS_T.h"\
+	".\Time_DateS_T.i"\
 
-!ELSEIF  "$(CFG)" == "Simple Time Server - Win32 Alpha Release"
 
-!ENDIF 
+!ELSEIF  "$(CFG)" == "Simple Time Date Client - Win32 Alpha Release"
+
+!ENDIF
 
 # End Source File
 # End Group
@@ -959,7 +951,7 @@ NODEP_CPP_TIMES=\
 # PROP Default_Filter "h;hpp;hxx;hm;inl;fi;fd"
 # Begin Source File
 
-SOURCE=.\Time_i.h
+SOURCE=.\Time_Date_Client_i.h
 # End Source File
 # End Group
 # Begin Group "IDL Files"
@@ -967,14 +959,15 @@ SOURCE=.\Time_i.h
 # PROP Default_Filter ".idl"
 # Begin Source File
 
-SOURCE=.\Time.idl
+SOURCE=.\Time_Date.idl
 
-!IF  "$(CFG)" == "Simple Time Server - Win32 Release"
+!IF  "$(CFG)" == "Simple Time Date Client - Win32 Release"
 
-USERDEP__TIME_="..\..\..\..\bin\Release\tao_idl.exe"	
+# PROP Ignore_Default_Tool 1
+USERDEP__Time_Date_="..\..\..\..\bin\Release\tao_idl.exe"
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
-InputPath=.\Time.idl
-InputName=Time
+InputPath=.\Time_Date.idl
+InputName=Time_Date
 
 BuildCmds= \
 	..\..\..\..\bin\Release\tao_idl $(InputName).idl
@@ -1007,13 +1000,13 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ELSEIF  "$(CFG)" == "Simple Time Server - Win32 Debug"
+!ELSEIF  "$(CFG)" == "Simple Time Date Client - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__TIME_="..\..\..\..\bin\tao_idl.exe"	
+USERDEP__Time_Date_="..\..\..\..\bin\tao_idl.exe"
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
-InputPath=.\Time.idl
-InputName=Time
+InputPath=.\Time_Date.idl
+InputName=Time_Date
 
 BuildCmds= \
 	..\..\..\..\bin\tao_idl $(InputName).idl
@@ -1046,14 +1039,14 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ELSEIF  "$(CFG)" == "Simple Time Server - Win32 Alpha Debug"
+!ELSEIF  "$(CFG)" == "Simple Time Date Client - Win32 Alpha Debug"
 
 # PROP BASE Ignore_Default_Tool 1
 # PROP Ignore_Default_Tool 1
-USERDEP__TIME_="..\..\..\tao_idl\tao_idl.exe"	
+USERDEP__Time_Date_="..\..\..\tao_idl\tao_idl.exe"
 # Begin Custom Build - Invoking TAO_IDL Compiler
-InputPath=.\Time.idl
-InputName=Time
+InputPath=.\Time_Date.idl
+InputName=Time_Date
 
 BuildCmds= \
 	..\..\..\tao_idl\tao_idl $(InputName).idl
@@ -1086,12 +1079,14 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ELSEIF  "$(CFG)" == "Simple Time Server - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "Simple Time Date Client - Win32 Alpha Release"
 
-USERDEP__TIME_="..\..\..\tao_idl\Release\tao_idl.exe"	
+# PROP BASE Ignore_Default_Tool 1
+# PROP Ignore_Default_Tool 1
+USERDEP__Time_Date_="..\..\..\tao_idl\Release\tao_idl.exe"
 # Begin Custom Build - Invoking TAO_IDL Compiler
-InputPath=.\Time.idl
-InputName=Time
+InputPath=.\Time_Date.idl
+InputName=Time_Date
 
 BuildCmds= \
 	..\..\..\tao_idl\Release\tao_idl $(InputName).idl
@@ -1124,7 +1119,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # End Group

@@ -41,25 +41,19 @@ Time_Date_Client_i::run (char *name,
 
   ACE_TRY
     {
-      Time_Date_ptr time_date;
-
       CORBA::Long l;
 
       // Get the time_date.
-      time_date->bin_date (l,
-                           ACE_TRY_ENV);
+      client->bin_date (l,
+                        ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Binary time_date = %d\n",
                   l));
 
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) Setting a value for the time_date\n"));
-
       if (client.shutdown () == 1)
         client->shutdown (ACE_TRY_ENV);
-      ACE_UNUSED_ARG (ret_val);
     }
   ACE_CATCH (CORBA::UserException, range_ex)
     {

@@ -136,38 +136,38 @@ SOURCE=.\Foo.idl
 !IF  "$(CFG)" == "POA TIE Server - Win32 Release"
 
 USERDEP__FOO_I="..\..\..\..\bin\Release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL compiler
+# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
 InputPath=.\Foo.idl
 InputName=Foo
 
 BuildCmds= \
-	tao_idl $(InputName).idl
+	..\..\..\..\bin\release\tao_idl $(InputName).idl
 
-"$(InputPath)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputPath)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputPath)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputPath)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputPath)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputPath)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputPath)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputPath)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputPath)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 # End Custom Build
 
@@ -175,12 +175,12 @@ BuildCmds= \
 
 # PROP Ignore_Default_Tool 1
 USERDEP__FOO_I="..\..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL compiler
+# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
 InputPath=.\Foo.idl
 InputName=Foo
 
 BuildCmds= \
-	tao_idl $(InputName).idl
+	..\..\..\..\bin\tao_idl $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
