@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -13,18 +13,19 @@
 
 #ifndef TAO_VALUEBASE_H
 #define TAO_VALUEBASE_H
+
 #include "ace/pre.h"
 
-#include "ace/OS.h"           /* for ptr_arith_t */
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/corbafwd.h"
-
 #ifdef TAO_HAS_VALUETYPE
 
+#include "ace/OS.h"           /* for ptr_arith_t */
+#include "tao/corbafwd.h"
 
 /**
  * @class CORBA_ValueBase
@@ -172,5 +173,7 @@ public:
 #endif /* __ACE_INLINE__) */
 
 #endif /* TAO_HAS_VALUETYPE */
+
 #include "ace/post.h"
+
 #endif /* TAO_VALUEBASE_H */

@@ -1,3 +1,11 @@
+Wed Apr 10 14:26:05 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ValueBase.h:
+
+	  Moved inclusion of "ace/OS.h" and "tao/corbafwd.h" within the
+	  TAO_HAS_VALUETYPE block.  No need include those headers if CORBA
+	  ValueType support is not enabled.
+
 Wed Apr 10 15:07:03 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/MT_BiDir/client.dsp (BuildCmds): 
