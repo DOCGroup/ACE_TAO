@@ -3,6 +3,17 @@ Mon Aug 10 20:12:21 1998  Steve Huston  <shuston@riverace.com>
 	* ace/Log_Msg.cpp: On HP-UX 10.x, display thread's readable number
 	  rather than an int represenation of a pointer.
 
+	* tests/test_config.h (ACE_Test_Output): When destroying
+	  ACE_Test_Output, make sure to remove all traces of it from
+	  ACE_Log_Msg instance.
+
+	* tests/Dynamic_Priority_Test.cpp: Don't try to set process-wide
+	  scheduling if it's not supported on the platform.
+
+	* tests/Thread_Manager_Test.cpp: Don't do a kill on pthreads draft
+	  4 platforms.  This is a NOP for now - it will make a difference when
+	  I check in more threads-related changes later.
+
 Mon Aug 10 10:35:26 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* Added the ACE-subsets.html file to the ACE directory so that
