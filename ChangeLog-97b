@@ -1,3 +1,9 @@
+Mon Nov 10 13:33:02 1997    <irfan@TWOSTEP>
+
+	* ace/OS.i (thread_mutex_trylock): Fixed the return value and
+ 	  errno for this system call such that it is consistent with other
+ 	  trylock calls.
+
 Mon Nov 10 10:21:55 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/INET_Addr.cpp: updated gethostbyname/addr support for
