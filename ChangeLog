@@ -1,5 +1,9 @@
 Tue Jan 30 01:05:51 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
+	* tests/Message_Queue_Test_Ex.cpp (single_thread_performance_test): 
+	  Add cases for VxWorks and NT.  Thanks to Sharath for reporting
+ 	  this.
+
 	* ace/OS.h: #define _SC_AIO_MAX to 1 if it's not set by default.
 	  Thanks to Jean-Francois Daune <Daune@IBA.be> for reporting this
 	  fix for VxWorks.
