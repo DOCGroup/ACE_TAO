@@ -1,3 +1,9 @@
+Wed May 12 19:22:28 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/corba.h:
+	  Added some missing #includes which turned up in the
+	  branding tests.
+
 Wed May 12 18:02:20 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Any.{h,i}:

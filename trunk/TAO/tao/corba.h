@@ -80,6 +80,9 @@
 #include "tao/ValueBase.h"
 #include "tao/ValueFactory.h"
 #include "tao/Services.h"
+#include "tao/ObjectIDList.h"
+#include "tao/DomainC.h"
+#include "tao/WrongTransactionC.h"
 
 #if !defined (ACE_NESTED_CLASS)
 #if defined (ACE_WIN32)
