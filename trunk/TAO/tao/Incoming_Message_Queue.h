@@ -66,7 +66,7 @@ public:
   TAO_Queued_Data *dequeue_tail (void);
   int enqueue_tail (TAO_Queued_Data *nd);
 
-  /// Copy message from <block> to the tail of the queue. The size
+  /// Copy message from @a block to the tail of the queue. The size
   /// of message that is copied to the tail node is returned. The
   /// number of bytes copied depends on the amount of bytes needed to
   /// make the tail node consistent.
@@ -87,7 +87,6 @@ public:
 
   /// Return the size of data that is missing in tail of the queue.
   size_t missing_data_tail (void) const;
-  ///  void missing_data (size_t data);
 
 private:
 

@@ -77,7 +77,7 @@ private:
   /// The actual handle that needs resumption..
   ACE_HANDLE handle_;
 
-  /// Th flag for indicating whether the handle has been resumed or
+  /// The flag for indicating whether the handle has been resumed or
   /// not. A value of '0' indicates that the handle needs resumption.
   TAO_Handle_Resume_Flag flag_;
 };
