@@ -1,3 +1,38 @@
+Fri May 15 16:55:34 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+        * ace/OS: Fixed a number of problems that occurred when trying to
+ 	  use the PTHREAD implementation on Solaris without using
+ 	  ACE_HAS_STHREADS.  The problems related primarily to the
+ 	  ACE_OS::rw*() functions.  To fix the problems, the following
+	  changes were made.
+
+	  Remove the #if defined (ACE_HAS_STHREADS) from the case where we
+ 	  have the native rw*() functions.  We just use the
+ 	  ACE_LACKS_RWLOCK_T compile flag to determine whether we have the
+ 	  native functions.
+
+	  Without the ACE_HAS_STHREAD flag, ACE_rwlock_t comes up
+	  undefined.  To fix this, moved the definition at approx. line
+	  1868 above the #else at approx. line 1865 as the following:
+
+	  #if ! defined (ACE_LACKS_RWLOCK_T)
+	  #include <synch.h>
+	  typedef rwlock_t ACE_rwlock_t;
+	  #endif  // ! ACE_LACKS_RWLOCK_T
+
+	  Finally, the ACE_idtype_t type was also undefined.  To fix this,
+	  moved the typedef from within the #if defined (ACE_HAS_STHREADS) ||
+	  defined (DIGITAL_UNIX) block and create a new ifdef block:
+
+	  #if defined (ACE_HAS_IDTYPE_T)
+	  typedef idtype_t ACE_idtype_t;
+	  #else
+	  typedef int ACE_idtype_t;
+	  #endif
+
+	  Thanks to Chris Lahey <CLahey@cccis.com> for his through help at
+	  recognizing and fixing these problems.
+
 Fri May 15 09:38:37 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * bin/make_release: redirect cvs tag output to /dev/null.

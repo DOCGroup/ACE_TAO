@@ -3375,7 +3375,7 @@ ACE_OS::rw_tryrdlock (ACE_rwlock_t *rw)
 {
   // ACE_TRACE ("ACE_OS::rw_tryrdlock");
 #if defined (ACE_HAS_THREADS)
-#if defined (ACE_HAS_STHREADS) && !defined (ACE_LACKS_RWLOCK_T)
+#if !defined (ACE_LACKS_RWLOCK_T)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::rw_tryrdlock (rw), ace_result_), int, -1);
 #else /* NT, POSIX, and VxWorks don't support this natively. */
   int result = -1;
@@ -3411,7 +3411,7 @@ ACE_OS::rw_trywrlock (ACE_rwlock_t *rw)
 {
   // ACE_TRACE ("ACE_OS::rw_trywrlock");
 #if defined (ACE_HAS_THREADS)
-#if defined (ACE_HAS_STHREADS) && !defined (ACE_LACKS_RWLOCK_T)
+#if !defined (ACE_LACKS_RWLOCK_T)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::rw_trywrlock (rw), ace_result_), int, -1);
 #else /* NT, POSIX, and VxWorks don't support this natively. */
   int result = -1;
@@ -3447,7 +3447,7 @@ ACE_OS::rw_rdlock (ACE_rwlock_t *rw)
 {
   // ACE_TRACE ("ACE_OS::rw_rdlock");
 #if defined (ACE_HAS_THREADS)
-#if defined (ACE_HAS_STHREADS) && !defined (ACE_LACKS_RWLOCK_T)
+#if !defined (ACE_LACKS_RWLOCK_T)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::rw_rdlock (rw), ace_result_), int, -1);
 #else /* NT, POSIX, and VxWorks don't support this natively. */
 #if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
@@ -3490,7 +3490,7 @@ ACE_OS::rw_wrlock (ACE_rwlock_t *rw)
 {
   // ACE_TRACE ("ACE_OS::rw_wrlock");
 #if defined (ACE_HAS_THREADS)
-#if defined (ACE_HAS_STHREADS) && !defined (ACE_LACKS_RWLOCK_T)
+#if !defined (ACE_LACKS_RWLOCK_T)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::rw_wrlock (rw), ace_result_), int, -1);
 #else /* NT, POSIX, and VxWorks don't support this natively. */
 #if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
@@ -3535,7 +3535,7 @@ ACE_OS::rw_unlock (ACE_rwlock_t *rw)
 {
   // ACE_TRACE ("ACE_OS::rw_unlock");
 #if defined (ACE_HAS_THREADS)
-#if defined (ACE_HAS_STHREADS) && !defined (ACE_LACKS_RWLOCK_T)
+#if !defined (ACE_LACKS_RWLOCK_T)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::rw_unlock (rw), ace_result_), int, -1);
 #else /* NT, POSIX, and VxWorks don't support this natively. */
   if (ACE_OS::mutex_lock (&rw->lock_) == -1)
@@ -3584,7 +3584,7 @@ ACE_OS::rw_trywrlock_upgrade (ACE_rwlock_t *rw)
 {
   // ACE_TRACE ("ACE_OS::rw_wrlock");
 #if defined (ACE_HAS_THREADS)
-#if defined (ACE_HAS_STHREADS) && !defined (ACE_LACKS_RWLOCK_T)
+#if !defined (ACE_LACKS_RWLOCK_T)
   // Solaris rwlocks don't support the upgrade feature...
   ACE_UNUSED_ARG (rw);
   ACE_NOTSUP_RETURN (-1);
@@ -3646,7 +3646,7 @@ ACE_OS::rwlock_destroy (ACE_rwlock_t *rw)
 {
   // ACE_TRACE ("ACE_OS::rwlock_destroy");
 #if defined (ACE_HAS_THREADS)
-#if defined (ACE_HAS_STHREADS) && !defined (ACE_LACKS_RWLOCK_T)
+#if !defined (ACE_LACKS_RWLOCK_T)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::rwlock_destroy (rw), ace_result_), int, -1);
 #else /* NT, POSIX, and VxWorks don't support this natively. */
   ACE_OS::mutex_destroy (&rw->lock_);
