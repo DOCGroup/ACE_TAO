@@ -201,7 +201,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
   *os << ";";
 
   // No _var or _out class for an anonymous (non-typedef'd) array.
-  if (this->ctx_->tdef () != 0)
+  if (td != 0)
     {
       // Generate _var class decl.
       // An _out decl is generated only for a variable size array.
