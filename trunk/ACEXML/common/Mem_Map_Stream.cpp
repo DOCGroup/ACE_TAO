@@ -243,3 +243,11 @@ ACEXML_Mem_Map_Stream::~ACEXML_Mem_Map_Stream (void)
   // Remove the mapping and the file.
   this->mem_map_.remove ();
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
+template class ACE_Connector <Svc_Handler, ACE_SOCK_CONNECTOR>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+#pragma instantiate ACE_Connector <Svc_Handler, ACE_SOCK_CONNECTOR>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
