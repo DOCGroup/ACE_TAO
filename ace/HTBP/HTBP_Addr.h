@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    ACE_HTBP_Addr.h
+ *  @file    HTBP_Addr.h
  *
  *  $Id$
  *
@@ -12,7 +12,7 @@
 
 #ifndef ACE_HTBP_ADDR_H
 #define ACE_HTBP_ADDR_H
-#include <ace/pre.h>
+#include /**/ "ace/pre.h"
 
 #include "HTBP_Export.h"
 
@@ -83,5 +83,5 @@ namespace ACE
   };
 };
 
-#include <ace/post.h>
+#include /**/ "ace/post.h"
 #endif /* ACE_HTBP_ADDR_H */
