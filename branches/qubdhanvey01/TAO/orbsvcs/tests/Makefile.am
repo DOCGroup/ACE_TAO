@@ -30,7 +30,8 @@ SUBDIRS = \
         Simple_Naming \
         Simulator \
         Time \
-        Trading
+        Trading \
+	Log
 
 noinst_SCRIPTS = start_services
 

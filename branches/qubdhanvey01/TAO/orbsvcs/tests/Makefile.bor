@@ -20,6 +20,7 @@ DIRS = \
 	Property \
         Simple_Naming \
         Time \
-	Trading
+	Trading \
+	Log
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
