@@ -2,7 +2,7 @@
 // $Id$
 
 #if defined (ACE_WIN32)
-ACE_INLINE PROCESS_INFORMATION 
+ACE_INLINE PROCESS_INFORMATION
 ACE_Process::process_info (void)
 {
   return process_info_;
@@ -68,17 +68,17 @@ ACE_Process_Options::startup_info (void)
 #endif /* !ACE_HAS_WINCE */
 }
 
-ACE_INLINE const LPSECURITY_ATTRIBUTES 
+ACE_INLINE LPSECURITY_ATTRIBUTES
 ACE_Process_Options::get_process_attributes (void) const
-{  
+{
 #if !defined (ACE_HAS_WINCE)
   return process_attributes_;
 #else
   return 0;
 #endif /* !ACE_HAS_WINCE */
 }
- 
-ACE_INLINE LPSECURITY_ATTRIBUTES 
+
+ACE_INLINE LPSECURITY_ATTRIBUTES
 ACE_Process_Options::set_process_attributes (void)
 {
 #if !defined (ACE_HAS_WINCE)
@@ -88,8 +88,8 @@ ACE_Process_Options::set_process_attributes (void)
   return 0;
 #endif /* !ACE_HAS_WINCE */
 }
- 
-ACE_INLINE const LPSECURITY_ATTRIBUTES 
+
+ACE_INLINE LPSECURITY_ATTRIBUTES
 ACE_Process_Options::get_thread_attributes (void) const
 {
 #if !defined (ACE_HAS_WINCE)
@@ -99,7 +99,7 @@ ACE_Process_Options::get_thread_attributes (void) const
 #endif /* !ACE_HAS_WINCE */
 }
 
-ACE_INLINE LPSECURITY_ATTRIBUTES 
+ACE_INLINE LPSECURITY_ATTRIBUTES
 ACE_Process_Options::set_thread_attributes (void)
 {
 #if !defined (ACE_HAS_WINCE)
@@ -139,13 +139,13 @@ ACE_Process_Options::get_stdin (void)
   return stdin_;
 }
 
-ACE_INLINE ACE_HANDLE 
+ACE_INLINE ACE_HANDLE
 ACE_Process_Options::get_stdout (void)
 {
   return stdout_;
 }
 
-ACE_INLINE ACE_HANDLE 
+ACE_INLINE ACE_HANDLE
 ACE_Process_Options::get_stderr (void)
 {
   return stderr_;
@@ -159,7 +159,7 @@ ACE_Process_Options::command_line_buf (void)
   return command_line_buf_;
 }
 
-ACE_INLINE LPTSTR 
+ACE_INLINE LPTSTR
 ACE_Process_Options::working_directory (void)
 {
 #if !defined (ACE_HAS_WINCE)
@@ -175,7 +175,7 @@ ACE_Process_Options::working_directory (void)
 ACE_INLINE void
 ACE_Process_Options::working_directory (LPCTSTR wd)
 {
-#if !defined(ACE_HAS_WINCE) 
+#if !defined(ACE_HAS_WINCE)
   ACE_OS::strcpy (working_directory_, wd);
 #else
   ACE_UNUSED_ARG (wd);
