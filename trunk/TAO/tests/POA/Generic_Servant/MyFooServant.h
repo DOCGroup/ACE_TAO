@@ -17,7 +17,6 @@
 #define MYFOOSERVANT_H
 
 #include "FooS.h"
-#include "generic_servant_export.h"
 
 class GENERIC_SERVANT_Export MyFooServant : public POA_Foo
 {

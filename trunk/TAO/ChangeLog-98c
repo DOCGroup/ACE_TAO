@@ -1,3 +1,12 @@
+Fri Mar 20 16:21:28 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/POA/Generic_Servant/MyFooServant.h: No need to include
+ 	  generic_servant_export.h.
+	
+	* tests/POA/Generic_Servant/Makefile: Added flags to the idl
+ 	  compiler so that the server library can be made as a dynamic
+ 	  library.
+
 Thu Mar 20 16:12:42 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
         * $TAO_ROOT/orbsvcs/tests/Simulator/Event_Supplier: 
