@@ -1,3 +1,9 @@
+Sat Jun 19 07:39:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/QoS/SOCK_Dgram_Mcast_QoS.{h,cpp,i}:
+          Changed checks for ACE_LACKS_INLINE_FUNCTIONS with __ACE_INLINE__ in
+          the h/cpp files. In the .i files changed ASYS_INLINE with ACE_INLINE.
+
 Sat Jun 19 07:31:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/SSL/SSL_SOCK_Acceptor.cpp:
