@@ -68,7 +68,6 @@ TAO_AV_RTP::handle_input (ACE_Message_Block *&data,
 }
 
 
-ACE_INLINE
 int
 TAO_AV_RTP::write_header (rtphdr &header,
                           int format,
