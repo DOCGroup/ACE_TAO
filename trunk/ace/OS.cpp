@@ -617,7 +617,9 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params)
       return -1;
     }
 
-  if (::priocntl ((idtype_t) sched_params.scope (), P_MYID, PC_SETPARMS,
+  if (::priocntl ((idtype_t) (sched_params.scope () == ACE_SCOPE_THREAD
+                                ? ACE_SCOPE_PROCESS
+                                : sched_params.scope ()), P_MYID, PC_SETPARMS,
                   (char *) &pcparms) < 0)
     {
       return ACE_OS::last_error ();
