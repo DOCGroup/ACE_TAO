@@ -26,7 +26,9 @@ ACE_INLINE
 ACE_Sig_Set::~ACE_Sig_Set (void)
 {
   ACE_TRACE ("ACE_Sig_Set::~ACE_Sig_Set");
+#if !defined (ACE_WIN32)
   ACE_OS::sigemptyset (&this->sigset_);
+#endif /* ACE_WIN32 */
 }
 
 ACE_INLINE int
