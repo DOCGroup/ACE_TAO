@@ -1,24 +1,24 @@
-# Microsoft Developer Studio Project File - Name="AVStreams Simple Ftp" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="AVStreams Asynch_Three_Stage Distributer" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=AVStreams Simple Ftp - Win32 Debug
+CFG=AVStreams Asynch_Three_Stage Distributer - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
-!MESSAGE NMAKE /f "ftp.mak".
+!MESSAGE NMAKE /f "distributer.mak".
 !MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "ftp.mak" CFG="AVStreams Simple Ftp - Win32 Debug"
+!MESSAGE NMAKE /f "distributer.mak" CFG="AVStreams Asynch_Three_Stage Distributer - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "AVStreams Simple Ftp - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "AVStreams Simple Ftp - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "AVStreams Asynch_Three_Stage Distributer - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "AVStreams Asynch_Three_Stage Distributer - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
@@ -28,7 +28,7 @@ CFG=AVStreams Simple Ftp - Win32 Debug
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "AVStreams Simple Ftp - Win32 Release"
+!IF  "$(CFG)" == "AVStreams Asynch_Three_Stage Distributer - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -54,7 +54,7 @@ LINK32=link.exe
 # ADD LINK32 tao.lib ace.lib TAO_PortableServer.lib TAO_AV.lib TAO_CosProperty.lib TAO_CosNaming.lib TAO_Svc_Utils.lib TAO_IORTable.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\orbsvcs" /libpath:"..\..\..\..\tao\IORTable"
 # SUBTRACT LINK32 /pdb:none
 
-!ELSEIF  "$(CFG)" == "AVStreams Simple Ftp - Win32 Debug"
+!ELSEIF  "$(CFG)" == "AVStreams Asynch_Three_Stage Distributer - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -77,21 +77,25 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 TAOd.lib aced.lib TAO_PortableServerd.lib TAO_AVd.lib TAO_CosPropertyd.lib TAO_CosNamingd.lib TAO_Svc_Utilsd.lib TAO_IORTabled.lib /nologo /subsystem:console /debug /machine:I386 /out:"ftp.exe" /pdbtype:sept /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\orbsvcs" /libpath:"..\..\..\..\tao\IORTable"
+# ADD LINK32 TAOd.lib aced.lib TAO_PortableServerd.lib TAO_AVd.lib TAO_CosPropertyd.lib TAO_CosNamingd.lib TAO_Svc_Utilsd.lib TAO_IORTabled.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\orbsvcs" /libpath:"..\..\..\..\tao\IORTable"
 # SUBTRACT LINK32 /pdb:none
 
 !ENDIF 
 
 # Begin Target
 
-# Name "AVStreams Simple Ftp - Win32 Release"
-# Name "AVStreams Simple Ftp - Win32 Debug"
+# Name "AVStreams Asynch_Three_Stage Distributer - Win32 Release"
+# Name "AVStreams Asynch_Three_Stage Distributer - Win32 Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\ftp.cpp
+SOURCE=.\Connection_Manager.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\distributer.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -99,7 +103,11 @@ SOURCE=.\ftp.cpp
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\foo.h
+SOURCE=.\Connection_Manager.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\distributer.h
 # End Source File
 # End Group
 # End Target

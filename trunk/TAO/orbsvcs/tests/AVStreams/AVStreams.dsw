@@ -39,7 +39,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Simple ftp"=.\Simple\ftp.dsp - Package Owner=<4>
+Project: "Simple_Two_Stage sender"=.\Simple_Two_Stage\sender.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -51,7 +51,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Simple server"=.\Simple\server.dsp - Package Owner=<4>
+Project: "Simple_Two_Stage receiver"=.\Simple_Two_Stage\receiver.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -184,6 +184,78 @@ Package=<4>
 ###############################################################################
 
 Project: "Simple_Three_Stage distributer"=.\Simple_Three_Stage\distributer.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Asynch_Three_Stage sender"=.\Asynch_Three_Stage\sender.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Asynch_Three_Stage receiver"=.\Asynch_Three_Stage\receiver.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Asynch_Three_Stage distributer"=.\Asynch_Three_Stage\distributer.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Component_Switching sender"=.\Component_Switching\sender.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Component_Switching receiver"=.\Component_Switching\receiver.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Component_Switching distributer"=.\Component_Switching\distributer.dsp - Package Owner=<4>
 
 Package=<5>
 {{{

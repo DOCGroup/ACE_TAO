@@ -4,7 +4,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//    TAO/orbsvcs/tests/AVStreams/Asynch_Three_Stage
+//    TAO/orbsvcs/tests/AVStreams/Simple
 //
 // = FILENAME
 //    receiver.h
@@ -18,7 +18,7 @@
 //
 // ============================================================================
 
-#include "Connection_Manager.h"
+#include "orbsvcs/Naming/Naming_Utils.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/Endpoint_Strategy.h"
 #include "orbsvcs/AV/Policy.h"
@@ -87,36 +87,14 @@ public:
             CORBA::Environment &);
   // Initialize data components.
 
-  int parse_args (int argc,
-                  char **argv);
-  // Parse args.
-
-  ACE_CString output_file_name (void);
-  // Name of the output file.
-
 protected:
-  Connection_Manager connection_manager_;
-  // Connection manager.
+  TAO_Naming_Client naming_client_;
+  // The Naming Service Client.
 
   TAO_AV_Endpoint_Reactive_Strategy_B
   <Receiver_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl> reactive_strategy_;
   // The endpoint reactive strategy.
 
-  AVStreams::MMDevice_var mmdevice_obj_;
-  // The receiver MMDevice.
-
   TAO_MMDevice *mmdevice_;
   // Receiver MMDevice.
-
-  AVStreams::MMDevice_var sender_mmdevice_;
-  // The sender MMDevice
-
-  ACE_CString output_file_name_;
-  // File name of the file into which received data is written.
-
-  ACE_CString sender_name_;
-  // Sender name.
-
-  ACE_CString receiver_name_;
-  // Receiver name.
 };

@@ -10,7 +10,7 @@ use PerlACE::Run_Test;
 
 # amount of delay between running the servers
 
-$sleeptime = 6;
+$sleeptime = 2;
 $status = 0;
 
 $nsior = PerlACE::LocalFile ("ns.ior");
@@ -34,15 +34,15 @@ if (PerlACE::waitforfile_timed ($nsior, 5) == -1) {
     exit 1;
 }
 
-print STDERR "Starting Sender\n";
-
-$SV->Spawn ();
-
-sleep $sleeptime;
-
 print STDERR "Starting Receiver\n";
 
 $RE->Spawn ();
+
+sleep $sleeptime;
+
+print STDERR "Starting Sender\n";
+
+$SV->Spawn ();
 
 sleep $sleeptime;
 

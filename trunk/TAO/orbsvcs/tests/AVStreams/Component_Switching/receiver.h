@@ -1,79 +1,76 @@
 /* -*- C++ -*- */
 // $Id$
+
 // ============================================================================
 //
 // = LIBRARY
-//    TAO/orbsvcs/tests/AVStreams/Three_Stage
+//    TAO/orbsvcs/tests/AVStreams/Asynch_Three_Stage
 //
 // = FILENAME
 //    receiver.h
 //
 // = DESCRIPTION
-//    Receiver to receive data from the distributer
+//    This application receives data from a AV sender and writes it to
+//    a file.
 //
 // = AUTHOR
 //    Yamuna Krishnamurthy <yamuna@cs.wustl.edu>
 //
 // ============================================================================
 
-#ifndef RECEIVER_H
-#define RECEIVER_H
-
-#include "orbsvcs/Naming/Naming_Utils.h"
+#include "Connection_Manager.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/Endpoint_Strategy.h"
 #include "orbsvcs/AV/Policy.h"
-#include "Connection_Setup_Helper.h"
 
 class Receiver_Callback : public TAO_AV_Callback
 {
   // = TITLE
-  //    Defines a class for the application callback.
+  //    Application defined callback object.
   //
   // = DESCRIPTION
-  //    This class overides the methods of the TAO_AV_Callback so the 
-  //    AVStreams can make upcalls to the application.
-  
+  //    AVStreams calls this class when data shows up from a sender.
 public:
 
-  // Method that is called when there is data to be received from the distributer
+  Receiver_Callback (void);
+  // Constructor.
+
+  // Method that is called when there is data to be received from a
+  // sender.
   int receive_frame (ACE_Message_Block *frame,
                      TAO_AV_frame_info *frame_info,
                      const ACE_Addr &peer_address);
 
-  // Called when the distributer has finished sending the data and wants
-  // to close down the connection.
-  int handle_destroy (void);
-
-  int handle_stop (void);
+private:
+  int frame_count_;
+  // Keeping a count of the incoming frames.
 };
 
 class Receiver_StreamEndPoint : public TAO_Server_StreamEndPoint
 {
   // = TITLE
-  //    Defines the aplication stream endpoint
+  //    Application defined stream endpoint object.
   //
   // = DESCRIPTION
-  //    This is the class that overrides the tao_server_enpodint to handle
-  //    pre and post connect processing.
+  //    AVStreams calls this class during connection setup.
 public:
-  // Create the application callback.
+  // Create a receiver application callback.
   int get_callback (const char *flowname,
                     TAO_AV_Callback *&callback);
 
 private:
   Receiver_Callback callback_;
-  // reference to the server application callback.
+  // Receiver application callback.
 };
 
 class Receiver
 {
   // = TITLE
-  //    Defines the receiver application class.
-  // 
+  //    Receiver application class.
+  //
   // = DESCRIPTION
-  //    The receiver progarm that receives data
-  //    sent by the distributer.
+  //    This class receives data from a AV sender and writes it to
+  //    a file.
 public:
   Receiver (void);
   // Constructor
@@ -86,33 +83,36 @@ public:
             CORBA::Environment &);
   // Initialize data components.
 
+  int parse_args (int argc,
+                  char **argv);
+  // Parse args.
+
+  ACE_CString output_file_name (void);
+  // Name of the output file.
 
 protected:
+  Connection_Manager connection_manager_;
+  // Connection manager.
 
   TAO_AV_Endpoint_Reactive_Strategy_B
   <Receiver_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl> reactive_strategy_;
   // The endpoint reactive strategy.
-  
+
   AVStreams::MMDevice_var mmdevice_obj_;
   // The receiver MMDevice.
 
   TAO_MMDevice *mmdevice_;
+  // Receiver MMDevice.
 
   AVStreams::MMDevice_var sender_mmdevice_;
   // The sender MMDevice
-  
-  ACE_CString address_;
 
-  int default_port_;
-  
-  ACE_CString protocol_;
-  // Stream protocol defualted to UDP.
+  ACE_CString output_file_name_;
+  // File name of the file into which received data is written.
 
-  Connection_Setup_Helper helper_;
-  // Helper class to bind to sender and connect to it.
+  ACE_CString sender_name_;
+  // Sender name.
 
-  StreamCtrl_Map streamctrl_map_;
-  // Streamctrl Hash Map
+  ACE_CString receiver_name_;
+  // Receiver name.
 };
-
-#endif /*RECEIVER_H*/

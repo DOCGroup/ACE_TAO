@@ -38,6 +38,10 @@ public:
   // Set protocol object corresponding to the transport protocol
   // chosen.
 
+  CORBA::Boolean handle_preconnect (AVStreams::flowSpec &flowspec);
+  // Perform application specific actions before accepting new
+  // connections.
+
 protected:
   TAO_AV_Callback callback_;
   // Application callback.

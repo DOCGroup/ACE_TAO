@@ -1,24 +1,24 @@
-# Microsoft Developer Studio Project File - Name="AVStreams Simple Server" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="AVStreams Component_Switching Receiver" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=AVStreams Simple Server - Win32 Debug
+CFG=AVStreams Component_Switching Receiver - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
-!MESSAGE NMAKE /f "server.mak".
+!MESSAGE NMAKE /f "receiver.mak".
 !MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "server.mak" CFG="AVStreams Simple Server - Win32 Debug"
+!MESSAGE NMAKE /f "receiver.mak" CFG="AVStreams Component_Switching Receiver - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "AVStreams Simple Server - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "AVStreams Simple Server - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "AVStreams Component_Switching Receiver - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "AVStreams Component_Switching Receiver - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
@@ -28,7 +28,7 @@ CFG=AVStreams Simple Server - Win32 Debug
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "AVStreams Simple Server - Win32 Release"
+!IF  "$(CFG)" == "AVStreams Component_Switching Receiver - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -54,7 +54,7 @@ LINK32=link.exe
 # ADD LINK32 tao.lib ace.lib TAO_PortableServer.lib TAO_AV.lib TAO_CosProperty.lib TAO_CosNaming.lib TAO_Svc_Utils.lib TAO_IORTable.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\orbsvcs" /libpath:"..\..\..\..\tao\IORTable"
 # SUBTRACT LINK32 /pdb:none
 
-!ELSEIF  "$(CFG)" == "AVStreams Simple Server - Win32 Debug"
+!ELSEIF  "$(CFG)" == "AVStreams Component_Switching Receiver - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -84,14 +84,18 @@ LINK32=link.exe
 
 # Begin Target
 
-# Name "AVStreams Simple Server - Win32 Release"
-# Name "AVStreams Simple Server - Win32 Debug"
+# Name "AVStreams Component_Switching Receiver - Win32 Release"
+# Name "AVStreams Component_Switching Receiver - Win32 Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\server.cpp
+SOURCE=.\Connection_Manager.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\receiver.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -99,7 +103,11 @@ SOURCE=.\server.cpp
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\server.h
+SOURCE=.\Connection_Manager.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\receiver.h
 # End Source File
 # End Group
 # End Target

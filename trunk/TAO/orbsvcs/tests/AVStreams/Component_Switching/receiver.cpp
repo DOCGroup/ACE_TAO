@@ -6,9 +6,6 @@
 static FILE *output_file = 0;
 // File handle of the file into which received data is written.
 
-static const char *output_file_name = "output";
-// File name of the file into which received data is written.
-
 int
 Receiver_StreamEndPoint::get_callback (const char *,
                                        TAO_AV_Callback *&callback)
@@ -57,33 +54,11 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
   return 0;
 }
 
-int
-Receiver_Callback::handle_destroy (void)
-{
-  // Called when the distributer requests the stream to be shutdown.
-  ACE_DEBUG ((LM_DEBUG,
-              "Receiver_Callback::end_stream\n"));
-
-  ACE_TRY_NEW_ENV
-    {
-      TAO_AV_CORE::instance ()->orb ()->shutdown (0,
-                                                  ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Receiver_Callback::handle_destroy Failed\n");
-      return -1;
-
-    }
-  ACE_ENDTRY;
-
-  return 0;
-}
-
 Receiver::Receiver (void)
-  : mmdevice_ (0)
+  : mmdevice_ (0),
+    output_file_name_ ("output"),
+    sender_name_ ("distributer"),
+    receiver_name_ ("receiver")
 {
 }
 
@@ -103,6 +78,12 @@ Receiver::init (int,
   if (result != 0)
     return result;
 
+  // Initialize the connection manager.
+  result =
+    this->connection_manager_.init (TAO_AV_CORE::instance ()->orb ());
+  if (result != 0)
+    return result;
+
   // Register the receiver mmdevice object with the ORB
   ACE_NEW_RETURN (this->mmdevice_,
                   TAO_MMDevice (&this->reactive_strategy_),
@@ -112,40 +93,32 @@ Receiver::init (int,
   PortableServer::ServantBase_var safe_mmdevice =
     this->mmdevice_;
 
-  CORBA::Object_var mmdevice =
+  AVStreams::MMDevice_var mmdevice =
     this->mmdevice_->_this (ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
-  // Register the mmdevice with the naming service.
-  CosNaming::Name name (1);
-  name.length (1);
-  name [0].id =
-    CORBA::string_dup ("Receiver");
+  // Bind to sender.
+  this->connection_manager_.bind_to_sender (this->sender_name_,
+                                            this->receiver_name_,
+                                            mmdevice.in (),
+                                            ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
 
-  // Initialize the naming services
-  if (this->naming_client_.init (TAO_AV_CORE::instance ()->orb ()) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to initialize "
-                       "the TAO_Naming_Client\n"),
-                      -1);
-
-  // Register the receiver object with the naming server.
-  this->naming_client_->rebind (name,
-                                mmdevice.in (),
-                                ACE_TRY_ENV);
+  // Connect to the sender.
+  this->connection_manager_.connect_to_sender (ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
   return 0;
 }
 
 int
-parse_args (int argc,
-            char **argv)
+Receiver::parse_args (int argc,
+                      char **argv)
 {
   // Parse the command line arguments
   ACE_Get_Opt opts (argc,
                     argv,
-                    "f:");
+                    "f:s:r:");
 
   int c;
   while ((c = opts ()) != -1)
@@ -153,7 +126,13 @@ parse_args (int argc,
       switch (c)
         {
         case 'f':
-          output_file_name = opts.optarg;
+          this->output_file_name_ = opts.optarg;
+          break;
+        case 's':
+          this->sender_name_ = opts.optarg;
+          break;
+        case 'r':
+          this->receiver_name_ = opts.optarg;
           break;
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -163,6 +142,12 @@ parse_args (int argc,
     }
 
   return 0;
+}
+
+ACE_CString
+Receiver::output_file_name (void)
+{
+  return this->output_file_name_;
 }
 
 int
@@ -204,27 +189,27 @@ main (int argc,
                                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      Receiver receiver;
       int result =
-        parse_args (argc,
-                    argv);
-
+        receiver.parse_args (argc,
+                             argv);
       if (result == -1)
         return -1;
 
       // Make sure we have a valid <output_file>
-      output_file = ACE_OS::fopen (output_file_name,
-                                   "w");
+      output_file =
+        ACE_OS::fopen (receiver.output_file_name ().c_str (),
+                       "w");
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_DEBUG,
                            "Cannot open output file %s\n",
-                           output_file_name),
+                           receiver.output_file_name ().c_str ()),
                           -1);
 
       else
         ACE_DEBUG ((LM_DEBUG,
                     "File Opened Successfull\n"));
 
-      Receiver receiver;
       result =
         receiver.init (argc,
                        argv,
