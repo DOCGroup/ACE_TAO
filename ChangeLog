@@ -1,3 +1,14 @@
+Fri May 30 00:24:05 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * tests/Makefile.am:
+          Reverse link order of -lTest_Output and -lACE so that -lACE
+          appears after -lTest_Output.  This will clear up link problems
+          on platforms like HPUX where the order matters.
+
+        * tests/Makefile.tests:
+          Changed LIB to LDLIB, which solves the same problem.  Thanks to
+          Steve Huston for reporting the problem.
+
 Thu May 29 11:08:44 2003  Simon McQueen  <sm@prismtechnologies.com>
 
         * tests/RMCast/RMCast_Fragment_Test.dsp:

@@ -131,7 +131,7 @@ BIN2 =  Naming_Test \
         FlReactor_Test \
         TkReactor_Test
 
-LIBS += -lTest_Output
+LDLIBS += -lTest_Output
 
 SRC = Main.cpp
 

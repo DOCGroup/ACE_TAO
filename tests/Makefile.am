@@ -27,7 +27,7 @@ libdir = $(shell pwd)
 ##
 ## We override the "LIBS" variable provided by the configure script since
 ## we should only need to link against the ACE library for these tests.
-LDADD = $(top_builddir)/ace/libACE.la $(libdir)/libTest_Output.la
+LDADD = $(libdir)/libTest_Output.la $(top_builddir)/ace/libACE.la
 ##LIBS = $(top_builddir)/ace/libACE.la
 
 noinst_SCRIPTS = \
