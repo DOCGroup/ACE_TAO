@@ -1,3 +1,17 @@
+Thu May 20 13:40:25 2004  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tests/RTCCM/DiffServ/Sender/Sender.mpc: 
+	* tests/RTCCM/DiffServ/Sender/Custom_Network_Priority_Mapping.cpp: 
+
+	  Simply refer to the same files in TAO/tests/RTCORBA/Diffserv
+	  instead of making a copy here.
+
+	* tests/RTCCM/DiffServ/Receiver/Receiver_exec.cpp:
+	* tests/RTCCM/DiffServ/Sender/Sender_exec.cpp: 
+	* tests/RTCCM/DiffServ/descriptors/run_test.pl: 
+
+	  Minor fixes.
+
 Thu May 20 11:34:33 2004  Irfan Pyarali  <irfan@oomworks.com>
 
 	* tools/ComponentServer/ComponentServer.cpp: 
