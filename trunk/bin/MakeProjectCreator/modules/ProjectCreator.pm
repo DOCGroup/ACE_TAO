@@ -1391,8 +1391,8 @@ sub get_component_list {
 
 
 sub need_to_write_project {
-  my($self)  = shift;
-  foreach my $key (keys %{$self->{'valid_components'}}) {
+  my($self) = shift;
+  foreach my $key ('source_files', 'idl_files') {
     my($names) = $self->{$key};
     foreach my $name (keys %$names) {
       foreach my $key (sort keys %{$names->{$name}}) {
