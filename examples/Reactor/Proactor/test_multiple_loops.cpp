@@ -94,7 +94,7 @@ public:
 };
 
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   Timeout_Handler handler;
   ACE_WIN32_Proactor win32_proactor (0, 1);
