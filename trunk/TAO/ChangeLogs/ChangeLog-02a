@@ -1,3 +1,12 @@
+Fri Jan 18 13:21:28 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_interface.cpp:
+
+          Added patch sent in by Andy Olsen <olsona@uswest.net> that
+          limits the last component of the name of the temporary file
+          used by gperf to no more than 48 characters, when the 
+          platform is QNX.
+
 Fri Jan 18 22:16:06 2002  Boris Kolpackov <bosk@ipmce.ru>
 	
 	* TAO_IDL/be_include/be_visitor_typecode/typecode_decl.h:
