@@ -50,10 +50,14 @@ realclean:
 @del ) $(IDLFILES:.idl=Ser_T.h ^
 @del ) $(IDLFILES:.idl=Ser_T.i ^
 @del ) $(RESOURCE)
-@del ) $(TARGET)
-@del ) $(TARGET:.exe=.tds)
-@del ) $(TARGET:.dll=.tds)
-@del ) $(TARGET:.dll=.lib)
 ! realclean_$(NAME)~.bat 1> NUL
 	-@realclean_$(NAME)~.bat 2> NUL
 	@del realclean_$(NAME)~.bat
+	-@del $(TARGET) 2>NUL
+	-@del $(TARGET:.exe=.tds) 2>NUL
+	-@del $(TARGET:.dll=.tds) 2>NUL
+	-@del $(TARGET:.dll=.lib) 2>NUL
+!ifdef CORE_TARGET
+	-@del $(CORE_TARGET) 2>NUL
+	-@del $(CORE_TARGET:.exe=.tds) 2>NUL
+!endif

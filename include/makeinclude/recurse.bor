@@ -208,10 +208,4 @@ $(NAMES_INSTALL):
 # Set the name of the current target.
 NAME = $(TARGET_NAME)
 
-# The list of object files defaults to the contents of a macro based on the
-# target name.
-!ifndef OBJFILES
-OBJFILES = $($(NAME)_OBJFILES)
-!endif
-
 !endif

@@ -12,6 +12,26 @@ STATIC_FLAG = -DSTATIC
 
 !ifdef PASCAL
 PASCAL_FLAG = -DPASCAL
+!if $(BCBVER) != 4
+!ifndef FORCE_PASCAL
+!message
+!message -------------------------------------------------------------
+!message The PASCAL build configuration is *not* required for use with
+!message Borland C++Builder 5.
+!message
+!message Since both VCL and non-VCL applications share a common run-
+!message time library (i.e. cc3250mt.dll), you can simply link your
+!message VCL code with a non-PASCAL build of the ACE+TAO libraries.
+!message
+!message If you still really want to build a PASCAL configuration, add
+!message -DFORCE_PASCAL to your make command.
+!message -------------------------------------------------------------
+!message
+!error Aborting build
+!else
+PASCAL_FLAG = -DPASCAL -DFORCE_PASCAL
+!endif
+!endif
 !endif
 
 !ifdef CODEGUARD
