@@ -162,7 +162,7 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::close_i (void)
           ACE_Hash_Map_Entry<EXT_ID, INT_ID> *entry = &table_[i];
           // The "if" second argument results in a no-op instead of
           // deallocation.
-          ACE_DES_FREE_TEMPLATE2 (entry, if,
+          ACE_DES_FREE_TEMPLATE2 (entry, ACE_NOOP,
                                   ACE_Hash_Map_Entry, EXT_ID, INT_ID);
         }
 
