@@ -57,7 +57,7 @@ public:
   Bounded_Packet_Relay_Driver (void);
   // Constructor.
 
-  ~Bounded_Packet_Relay_Driver (void);
+  virtual ~Bounded_Packet_Relay_Driver (void);
   // Destructor.
 
   virtual int parse_commands (const char *buf);
