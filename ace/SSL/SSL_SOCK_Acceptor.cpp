@@ -168,60 +168,30 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
   // the Reactor is used, this isn't a busy wait.
   while (!SSL_is_init_finished (ssl))
     {
-      // Before blocking in the Reactor, do an SSL_accept() in case
-      // OpenSSL buffered additional data sent within an SSL record
-      // during session negotiation.  The buffered data must be
-      // handled prior to entering the Reactor event loop since the
-      // Reactor may end up waiting indefinitely for data that has
-      // already arrived.
-      int status = ::SSL_accept (ssl);
-
-      switch (::SSL_get_error (ssl, status))
+      // If data is still buffered within OpenSSL's internal buffer,
+      // then notify the Reactor that it should invoke the event
+      // handler with the given reactor mask in order to force the
+      // Reactor to invoke the SSL accept event handler before waiting
+      // for more data (e.g. blocking on select()).  All pending data
+      // must be processed before waiting for more data to come in on
+      // the SSL handle.
+      if (::SSL_pending (ssl)
+          && this->reactor_->notify (&eh,
+                                     reactor_mask,
+                                     timeout) != 0)
         {
-        case SSL_ERROR_NONE:
-          break;
-
-        case SSL_ERROR_WANT_WRITE:
-        case SSL_ERROR_WANT_READ:
-          // No data buffered by OpenSSL, so wait for data in the
-          // Reactor.
-          if (this->reactor_->handle_events (timeout) == -1
-              || new_stream.get_handle () == ACE_INVALID_HANDLE)
-            {
-              (void) this->reactor_->remove_handler (&eh, reactor_mask);
-              (void) this->reactor_->owner (old_owner);
-              return -1;
-            }
-
-          break;
-
-        case SSL_ERROR_ZERO_RETURN:
-          // The peer has notified us that it is shutting down via
-          // the SSL "close_notify" message so we need to
-          // shutdown, too.
-          //
-          // Removing the event handler from the Reactor causes the
-          // SSL stream to be shutdown.
           (void) this->reactor_->remove_handler (&eh, reactor_mask);
           (void) this->reactor_->owner (old_owner);
-
-          return -1;
-
-        case SSL_ERROR_SYSCALL:
-          // On some platforms (e.g. MS Windows) OpenSSL does not
-          // store the last error in errno so explicitly do so.
-          ACE_OS::set_errno_to_last_error ();
-
-        default:
-
-          ACE_SSL_Context::report_error ();
-
-          (void) this->reactor_->remove_handler (&eh, reactor_mask);
-          (void) this->reactor_->owner (old_owner);
-
           return -1;
         }
 
+      if (this->reactor_->handle_events (timeout) == -1
+          || new_stream.get_handle () == ACE_INVALID_HANDLE)
+        {
+          (void) this->reactor_->remove_handler (&eh, reactor_mask);
+          (void) this->reactor_->owner (old_owner);
+          return -1;
+        }
     }
 
   // SSL passive connection was completed.  Deregister the event

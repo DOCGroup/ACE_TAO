@@ -21,7 +21,9 @@ ACE_ALLOC_HOOK_DEFINE(ACE_SSL_SOCK_Stream)
 
 ACE_SSL_SOCK_Stream::ACE_SSL_SOCK_Stream (ACE_SSL_Context *context)
   : ssl_ (0),
-    stream_ ()
+    stream_ (),
+    reactor_ (0),
+    handler_ (0)
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::ACE_SSL_SOCK_Stream");
 
@@ -43,6 +45,19 @@ ACE_SSL_SOCK_Stream::ACE_SSL_SOCK_Stream (ACE_SSL_Context *context)
                   "- cannot allocate new SSL structure %p\n",
                   ACE_TEXT ("")));
     }
+}
+
+ACE_SSL_SOCK_Stream::~ACE_SSL_SOCK_Stream (void)
+{
+  ACE_TRACE ("ACE_SSL_SOCK_Stream::~ACE_SSL_SOCK_Stream");
+
+  ::SSL_free (this->ssl_);
+  this->ssl_ = 0;
+
+  // @@ Question: should we reference count the Context object or
+  // leave that to the application developer? We do not reference
+  // count reactors (for example) and following some simple rules
+  // seems to work fine!
 }
 
 ssize_t
@@ -446,4 +461,17 @@ ACE_SSL_SOCK_Stream::recvv_n (iovec iov[], size_t iovcnt) const
     }
 
   return bytes_read;
+}
+
+void
+ACE_SSL_SOCK_Stream::reactor (ACE_Reactor *reactor)
+
+{
+  this->reactor_ = reactor;
+}
+
+void
+ACE_SSL_SOCK_Stream::handler (ACE_Event_Handler *handler)
+{
+  this->handler_ = handler;
 }
