@@ -1,3 +1,16 @@
+Wed Mar 19 16:05:11 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_component/component_cs.cpp:Added a check
+	  for is_evaluated () before creating a new CORBA::Object () in
+	  _unchecked_narrow (). If the call is_evaluated fails, we just
+	  reinterpret cat the CORBA::Object to the right type of object.
+
+Wed Mar 19 15:35:16 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp: Added a check
+	  for is_evaluated () along with _is_local () before creating a
+	  new CORBA::Object () in _unchecked_narrow ().
+	
 Wed Mar 19 14:30:43 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/Connector_Registry.cpp: Removed preconnect () completely

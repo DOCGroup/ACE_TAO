@@ -441,6 +441,7 @@ be_visitor_component_cs::gen_unchecked_narrow (be_component *node,
                                                be_type *bt,
                                                TAO_OutStream *os)
 {
+  //  This part of the code is not formatted right. ..
   *os << node->full_name () << "_ptr "  << be_nl
       << node->full_name () << "::_unchecked_narrow ("
       << be_idt << be_idt_nl
@@ -453,6 +454,8 @@ be_visitor_component_cs::gen_unchecked_narrow (be_component *node,
       << "return " << bt->nested_type_name (this->ctx_->scope ())
       << "::_nil ();" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
+      << "if (obj->is_evaluated ())" << be_idt_nl
+      << "{"
       << "TAO_Stub* stub = obj->_stubobj ();" << be_nl << be_nl
       << "if (stub != 0)" << be_idt_nl
       << "{" << be_idt_nl
@@ -515,6 +518,20 @@ be_visitor_component_cs::gen_unchecked_narrow (be_component *node,
     {
       *os << "return default_proxy;" << be_uidt_nl;
     }
+
+  *os << "}" << be_nl << be_nl;
+
+  // Lazily evaluated IOR
+  *os << "return" << be_idt_nl
+      << "ACE_reinterpret_cast (" << be_idt << be_idt_nl
+      << node->local_name () << "_ptr," << be_nl
+      << "obj->_tao_QueryInterface (" << be_idt << be_idt_nl
+      << "ACE_reinterpret_cast (" << be_idt << be_idt_nl
+      << "ptr_arith_t," << be_nl
+      << "&" << node->local_name () << "::_tao_class_id" << be_uidt_nl
+      << ")" << be_uidt << be_uidt_nl
+      << ")" << be_uidt << be_uidt_nl
+      << ");" << be_uidt << be_uidt << be_uidt << be_uidt_nl;
 
   *os << "}" << be_nl << be_nl;
 }
