@@ -1,3 +1,9 @@
+Mon Aug 30 15:58:44 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/TAO.dsp:
+	* tao/TAO_Static.dsp:
+	  Added the new files to the MSVC projects.
+
 Mon Aug 30 15:56:09 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Interceptors/Makefile: Updated dependencies.
