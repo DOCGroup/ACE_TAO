@@ -1,3 +1,11 @@
+Fri Jun 11 16:46:25 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DnC/Config_Handlers/Plan_Handler.cpp:
+        * DnC/Config_Handlers/Process_Basic_Type.i:
+        * DnC/RepositoryManager/Repository_Manager.cpp:
+
+          Made some more cosing standard changes.
+
 Fri Jun 11 16:12:54 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/Config_Handlers/CPK_Handler.cpp:

@@ -79,6 +79,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       pc = rep_impl.findPackageByName ("PC");
       //Deployment::DnC_Dump::dump (*pc);
 
+/*
       // Pass the parsed plan to the Execution Manager to start the
       // Deployment Process.
       CORBA::Object_var obj = orb->string_to_object (exec_ior
@@ -92,7 +93,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (exec_mgr.in ()))
         {
           ACE_DEBUG ((LM_DEBUG, 
-                      "Executor: nil Execution Manager reference, 
+                      "Executor: nil Execution Manager reference, \ 
                        narrow failed\n"));
           return 1;
 
@@ -105,7 +106,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (dapp_mgr.in ()))
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "Executor:preparePlan call failed:nil 
+                      "Executor:preparePlan call failed:nil \
                        DomainApplicationManager reference\n"));
           return 1;
         }
@@ -142,6 +143,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Executor: destroy the manager....."));
       exec_mgr->destroyManager (dapp_mgr.in ());
+*/
       ACE_DEBUG ((LM_DEBUG, "[success]\n"));
 
     }
