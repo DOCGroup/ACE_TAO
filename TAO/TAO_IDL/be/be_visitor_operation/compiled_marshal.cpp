@@ -315,7 +315,7 @@ int be_visitor_operation_rettype_compiled_marshal::visit_sequence (be_sequence *
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_OUTPUT)
     {
-      *os << "_tao_retval";
+      *os << "_tao_retval.in ()";
     }
   else if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
     {
@@ -376,7 +376,10 @@ int be_visitor_operation_rettype_compiled_marshal::visit_structure (be_structure
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_OUTPUT)
     {
-      *os << "_tao_retval";
+      if (node->size_type () == be_decl::VARIABLE)
+        *os << "_tao_retval.in ()";
+      else
+        *os << "_tao_retval";
     }
   else if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
     {
@@ -402,7 +405,10 @@ int be_visitor_operation_rettype_compiled_marshal::visit_union (be_union *node)
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_OUTPUT)
     {
-      *os << "_tao_retval";
+      if (node->size_type () == be_decl::VARIABLE)
+        *os << "_tao_retval.in ()";
+      else
+        *os << "_tao_retval";
     }
   else if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
     {
