@@ -1443,7 +1443,7 @@ ifr_adding_visitor::load_any (AST_Expression::AST_ExprValue *ev,
       any <<= ev->u.usval;
       break;
     case AST_Expression::EV_long:
-      any <<= ev->u.lval;
+      any <<= ACE_static_cast (CORBA::Long, ev->u.lval);
       break;
     case AST_Expression::EV_ulong:
       any <<= ACE_static_cast (CORBA::ULong, ev->u.ulval);
