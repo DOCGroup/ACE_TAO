@@ -1,3 +1,16 @@
+Thu Nov 11 12:10:40 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Process_Manager.cpp,
+	  ace/Process.cpp: It looks like the thread that's going to use
+ 	  the Process_Manager object must do a setpgid (0, 0) in order to
+ 	  establish a process group for its children.  Apparently, when
+ 	  you run the test program from the command line, the shell sets
+ 	  the process up in a group of its own, but when you run it from
+ 	  the test script, it's a member of the script's group.  In the
+ 	  latter case, when you spawn a child process, you can't add it to
+ 	  your own group (because your group doesn't exist!).  Thanks to
+ 	  Dave Madden <dhm@mersenne.com> for contributing this fix.
+
 Thu Nov 11 01:54:55 1999  Luther J Baker  <ljb1@cs.wustl.edu>
 
 	* ace/Log_Msg.h (msg_ostream):
