@@ -18,26 +18,36 @@
 #define _FILE_MANAGER_H
 
 #include "global.h"
+#include "ace/Singleton.h"
+#include "ace/Mem_Map.h"
 
 class File_Manager
 {
   // = TITLE
   //   This class provides a file ADT for our friends info.
 public:
-  static int open_file (const char *filename);
-  static int get_login_and_real_name (char *&login_name,
-                                      char *&real_name);
+  int open_file (const char *filename);
+  int get_login_and_real_name (char *&login_name,
+                               char *&real_name);
+
+  File_Manager (void);
+  // Constructor.
 
 private:
-  static int number_of_friends;
-  static int max_key_length;
+  int number_of_friends;
+  int max_key_length;
 
-  static char *buffer_ptr;
-  static char *current_ptr;
-  static int buffer_size;
+  char *buffer_ptr;
+  char *current_ptr;
+  int buffer_size;
 
-  static int open_friends_file (const char *filename);
-  static int open_passwd_file (void);
+  int open_friends_file (const char *filename);
+  int open_passwd_file (void);
+
+  ACE_Mem_Map mmap_;
 };
+
+// Make a Singleton.
+typedef ACE_Singleton <File_Manager, ACE_Null_Mutex> FILE_MANAGER;
 
 #endif /* _FILE_MANAGER_H */

@@ -6,7 +6,7 @@
 
 BS_Client::BS_Client (void)
 {
-  this->count_ = File_Manager::open_file (Options::friend_file);
+  this->count_ = FILE_MANAGER::instance ()->open_file (Options::friend_file);
 
   if (this->count_ < 0)
     ACE_ERROR ((LM_ERROR,
@@ -24,8 +24,8 @@ BS_Client::BS_Client (void)
           Protocol_Record *rec_ptr = &this->protocol_record_[i];
 
           this->sorted_record_[i] = rec_ptr;
-          File_Manager::get_login_and_real_name (rec_ptr->key_name1_, 
-                                                 rec_ptr->key_name2_);
+          FILE_MANAGER::instance ()->get_login_and_real_name 
+            (rec_ptr->key_name1_, rec_ptr->key_name2_);
         }
   
       ACE_OS::qsort (this->sorted_record_,

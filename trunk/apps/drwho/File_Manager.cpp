@@ -1,34 +1,34 @@
 // $Id$
 
 #include "File_Manager.h"
-#include "ace/Mem_Map.h"
 
-// Initialize statics...
+File_Manager::File_Manager (void)
+  : current_ptr (0),
+    number_of_friends (0),
+    max_key_length (0),
+    buffer_ptr (0),
+    buffer_size (0)
+{
+}
 
-char *File_Manager::current_ptr = 0;
-int File_Manager::number_of_friends = 0;
-int File_Manager::max_key_length = 0;
-char *File_Manager::buffer_ptr = 0;
-int File_Manager::buffer_size = 0;
-
-// Either opens the friends file (if FILE_NAME is not a NULL pointer)
+// Either opens the friends file (if FILENAME is not a NULL pointer)
 // or opens up the password file.  In either case, the number of
 // entries in the file are returned, i.e., number of friends...
 
 int	
-File_Manager::open_file (const char *file_name)
+File_Manager::open_file (const char *filename)
 {
-  return file_name == 0
-    ? File_Manager::open_passwd_file ()
-    : File_Manager::open_friends_file (file_name);
+  return filename == 0
+    ? this->open_passwd_file ()
+    : this->open_friends_file (filename);
 }
 
-// Returns the next LOGIN_NAME and REAL_NAME from the file. 
+// Returns the next LOGIN_NAME and REAL_NAME from the file.
 
 int	
 File_Manager::get_login_and_real_name (char *&login_name, char *&real_name)
 {
-  char *buf_ptr = File_Manager::current_ptr;
+  char *buf_ptr = this->current_ptr;
 
   login_name = buf_ptr;
 
@@ -59,7 +59,7 @@ File_Manager::get_login_and_real_name (char *&login_name, char *&real_name)
   while (*buf_ptr == '\n')
     buf_ptr++;
 
-  File_Manager::current_ptr = buf_ptr;
+  this->current_ptr = buf_ptr;
   return 1;
 }
 
@@ -68,8 +68,8 @@ File_Manager::get_login_and_real_name (char *&login_name, char *&real_name)
 int
 File_Manager::open_passwd_file (void)
 {
-  const char *file_name = ACE_OS::tempnam ();
-  FILE *fp = fopen (file_name, "w");
+  const char *filename = ACE_OS::tempnam ();
+  FILE *fp = ACE_OS::fopen (filename, "w");
 
   if (fp == 0)
     return -1;
@@ -89,80 +89,82 @@ File_Manager::open_passwd_file (void)
                          "%-8.8s %s\n",
                          pwent->pw_name,
                          pwent->pw_gecos);
-	File_Manager::number_of_friends++;
+	this->number_of_friends++;
       }
   
   ACE_OS::endpwent ();
   
   ACE_OS::fclose (fp);
   
-  ACE_Mem_Map mmap (file_name);
+  if (this->mmap_.map (filename) == -1)
+    return -1;
 
-  File_Manager::buffer_ptr = (char *) mmap.addr ();
+  this->buffer_ptr = (char *) this->mmap_.addr ();
 
-  if (File_Manager::buffer_ptr >= 0)
+  if (this->buffer_ptr >= 0)
     {
-      File_Manager::buffer_size = mmap.size ();
-      File_Manager::current_ptr = File_Manager::buffer_ptr;
-      return File_Manager::number_of_friends;
+      this->buffer_size = this->mmap_.size ();
+      this->current_ptr = this->buffer_ptr;
+      return this->number_of_friends;
     }
 
   return -1;
 }
 
-// This function opens up FILE_NAME and memory maps it in our address
+// This function opens up FILENAME and memory maps it in our address
 // space.
 
 int
-File_Manager::open_friends_file (const char *file_name)
+File_Manager::open_friends_file (const char *filename)
 {
-  ACE_HANDLE fd;
-  
-  const char *fnp = ACE_OS::strrchr (file_name, '/');
-  
-  // Split file_name into directory/file_name. 
+  char directory[MAXPATHLEN];
+  const char *pathname = directory;
 
-  if (fnp != 0)
-    fd = ACE_OS::open (file_name, O_RDONLY);
+  // See if we've got a filename or a pathname (i.e., directory/filename).
+
+  if (ACE_OS::strrchr (filename, '/') != 0)
+    // We've got a complete pathname.
+    pathname = filename;
   else
     {
-      char directory[MAXPATHLEN];
-      
-      ACE_OS::strcpy (directory, ACE_OS::getenv ("HOME")); 
-      ACE_OS::strcat (directory, "/");
-      ACE_OS::strcat (directory, file_name);
-      fd = ACE_OS::open (directory, O_RDONLY);
+      directory[0] = '\0';
+
+      const char *home = ACE_OS::getenv ("HOME");
+      if (home != 0)
+        {
+          ACE_OS::strcat (directory, home);
+          ACE_OS::strcat (directory, "/");
+        }
+      ACE_OS::strcat (directory, filename);
     }
   
-  // Do the mmaping if we got the file opened correctly... 
-  
-  if (fd < 0)
+  // Do the mmap'ing.
+
+  if (this->mmap_.map (pathname) == -1)
     return -1;
 
-  ACE_Mem_Map mmap (fd);
+  this->buffer_ptr = (char *) this->mmap_.addr ();
 
-  File_Manager::buffer_ptr = (char *) mmap.addr ();
-
-  if (File_Manager::buffer_ptr >= 0)
+  if (this->buffer_ptr >= 0)
     {
-      File_Manager::buffer_size = mmap.size ();
-      File_Manager::current_ptr = File_Manager::buffer_ptr;
+      this->buffer_size = this->mmap_.size ();
+      this->current_ptr = this->buffer_ptr;
 
       // Determine how many friends there are by counting the newlines.
   
-      for (char *cp = File_Manager::buffer_ptr + File_Manager::buffer_size; 
-	   cp > File_Manager::buffer_ptr
+      for (char *cp = this->buffer_ptr + this->buffer_size; 
+	   cp > this->buffer_ptr
 	   ; )
 	if (*--cp == '\n')
 	  {
-	    File_Manager::number_of_friends++;
+	    this->number_of_friends++;
 
-	    /* Skip consecutive newlines. */
+	    // Skip consecutive newlines.
 	    while (cp[-1] == '\n')
 	      --cp;
 	  }
 
-      return File_Manager::number_of_friends;
+      return this->number_of_friends;
     }
 
   return -1;

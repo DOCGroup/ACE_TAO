@@ -28,7 +28,6 @@ make_client (void)
   SM_Client *client = 0;
 
   if (Options::get_opt (Options::REMOTE_USAGE) == 0)
-
     ACE_NEW_RETURN (client,
                     SML_Client,
                     0);
