@@ -51,10 +51,6 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  // Make sure we can support multiple priorities that are required
-  // for this test.
-  check_supported_priorities ();
-
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
@@ -65,6 +61,10 @@ main (int argc, char *argv[])
         parse_args (argc, argv);
       if (result != 0)
       return result;
+      
+      // Make sure we can support multiple priorities that are required
+      // for this test.
+      check_supported_priorities (orb.in());
 
       CORBA::Object_var object =
         orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);

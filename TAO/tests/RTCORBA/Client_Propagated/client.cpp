@@ -37,10 +37,6 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  // Make sure we can support multiple priorities that are required
-  // for this test.
-  check_supported_priorities ();
-
   ACE_TRY_NEW_ENV
     {
       // Register the interceptors to check for the RTCORBA
@@ -64,6 +60,10 @@ main (int argc, char *argv[])
 
       if (parse_args (argc, argv) != 0)
         return 1;
+
+      // Make sure we can support multiple priorities that are required
+      // for this test.
+      check_supported_priorities (orb.in());
 
       CORBA::Object_var object =
         orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
@@ -128,9 +128,9 @@ main (int argc, char *argv[])
         mapping_manager->mapping ();
 
       int max_priority =
-        ACE_Sched_Params::priority_max (ACE_SCHED_OTHER);
+        ACE_Sched_Params::priority_max (ACE_SCHED_FIFO);
       int min_priority =
-        ACE_Sched_Params::priority_min (ACE_SCHED_OTHER);
+        ACE_Sched_Params::priority_min (ACE_SCHED_FIFO);
 
       CORBA::Short native_priority =
         (max_priority + min_priority) / 2;

@@ -3,6 +3,7 @@
 #include "tao/corba.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "ace/Get_Opt.h"
+#include "../check_supported_priorities.cpp"
 
 int
 test_multiple_orbs (const char *test_name,
@@ -33,6 +34,10 @@ test_multiple_orbs (const char *test_name,
                              name
                              ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
+
+          // Make sure we can support multiple priorities that are required
+          // for this test.
+          check_supported_priorities (orbs[i].in());
 
           if (rt_orb)
             {

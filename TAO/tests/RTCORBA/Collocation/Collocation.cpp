@@ -425,6 +425,10 @@ Server::Server (int argc,
                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
+  // Make sure we can support multiple priorities that are required
+  // for this test.
+  check_supported_priorities (this->orb_.in ());
+
   CORBA::Object_var object =
     this->orb_->resolve_initial_references ("RTORB"
                                             ACE_ENV_ARG_PARAMETER);
@@ -850,10 +854,6 @@ Server::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 int
 main (int argc, char *argv[])
 {
-  // Make sure we can support multiple priorities that are required
-  // for this test.
-  check_supported_priorities ();
-
   ACE_TRY_NEW_ENV
     {
       Server server (argc,

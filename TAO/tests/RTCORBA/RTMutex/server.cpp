@@ -5,6 +5,7 @@
 #include "ace/Thread_Manager.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Get_Opt.h"
+#include "../check_supported_priorities.cpp"
 
 static int test_try_lock_flag =
 #if defined (ACE_HAS_MUTEX_TIMEOUTS) && !defined (ACE_HAS_WTHREADS)
@@ -512,6 +513,10 @@ main (int argc, char *argv[])
       // Parse arguments.
       if (parse_args (argc, argv) != 0)
         return 1;
+        
+      // Make sure we can support multiple priorities that are required
+      // for this test.
+      check_supported_priorities (orb.in());
 
       // RTORB.
       CORBA::Object_var object =
