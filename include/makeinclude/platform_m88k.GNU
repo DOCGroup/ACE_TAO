@@ -24,5 +24,5 @@ SOBUILD		= $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $<; \
 		  $(SOLINK.cc) -o $@ -h $@ $(LDFLAGS) $(VSHDIR)$*.o
 PRELIB	= (echo "int main() { return 0; }" > gcctemp.c && \
 	  $(COMPILE.cc) -o gcctemp.o gcctemp.c && \
-	  $(LINK.cc) -o gcctemp gcctemp.o $^ $(LDFLAGS) $(VLDLIBS); \
+	  $(LINK.cc) -o gcctemp gcctemp.o $^ $(LDFLAGS) -lACE $(LIBS); \
 	  status=$$?; rm -f gcctemp*; exit $$status)
