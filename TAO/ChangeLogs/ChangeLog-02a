@@ -5,11 +5,11 @@ Tue Jun 27 10:45:17 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 	* tao/ior_corbaloc/CORBALOC_Parser.i : 
 	* tao/ior_corbaloc/CORBALOC_Parser.h: 
 	* tao/ior_corbaloc/CORBALOC_Parser.cpp : 
-
-	  Implement the corbaloc: style parser.
+	  Implemented part of  the corbaloc: style parser. Able to support
+	  <corbaloc:rir:/>. Done with seperating the <obj_addr> from the
+	  <obj_addr_list>
 
 	* tao/ORB.cpp : 
-
 	  Removed the file_string_to_object function as it is no longer
 	  needed.
 	
