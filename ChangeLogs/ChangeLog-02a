@@ -1,3 +1,8 @@
+Fri Sep  7 16:40:37 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* ace/OS.h: 
+	  Added an if-def case for IP_MULTICAST_TTL too.
+
 Fri Sep  7 17:09:04 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Thread_Pool_Reactor_Resume_Test.cpp: Initialised the lock

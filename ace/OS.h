@@ -4428,6 +4428,10 @@ struct sigaction
 #   define IP_MULTICAST_IF 0
 #endif /* IP_MULTICAST_IF */
 
+# if !defined (IP_MULTICAST_TTL)
+#   define IP_MULTICAST_TTL 1
+#endif /* IP_MULTICAST_TTL */
+
 # if !defined (IP_MAX_MEMBERSHIPS)
 #   define IP_MAX_MEMBERSHIPS 0
 # endif /* IP_MAX_MEMBERSHIP */
