@@ -1,18 +1,11 @@
 #
- # Makefile for building the log_ms ace examples
- #
+# Makefile for building the log_msg ace examples
+#
 
- !include <$(ACE_ROOT)\include\makeinclude\make_flags.bor>
-
- TESTS = \
-        test_callback \
-        test_log_msg \
-        test_ostream
-
-all_tests: $(TESTS)
-
-$(TESTS):
-	$(MAKE) -fMakefile.bor -DNAME=$@ $(MAKE_FLAGS) $(BINDIR)\$@.exe
+NAMES = \
+	test_callback \
+	test_log_msg \
+	test_ostream
 
 OBJFILES = $(OBJDIR)\$(NAME).obj
 
@@ -22,4 +15,5 @@ CPPDIR = .
 
 LIBFILES = $(ACE_LIB)
 
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
 !include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>

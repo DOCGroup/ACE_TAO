@@ -1,16 +1,8 @@
 #
- # Makefile for building the test_hash_map_manager ace examples
- #
+# Makefile for building the test_hash_map_manager ace examples
+#
 
- !include <$(ACE_ROOT)\include\makeinclude\make_flags.bor>
-
- TESTS = \
-        test_hash_map_manager
-
-all_tests: $(TESTS)
-
-$(TESTS):
-	$(MAKE) -fMakefile.bor -DNAME=$@ $(MAKE_FLAGS) $(BINDIR)\$@.exe
+NAME = test_hash_map_manager
 
 OBJFILES = $(OBJDIR)\$(NAME).obj
 
