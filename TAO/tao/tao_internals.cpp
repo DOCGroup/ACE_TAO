@@ -28,7 +28,8 @@ TAO_Internal::fake_service_entries_i (void)
     }\
   while (0) //;
 
-  char *rfactory_args[] = { "-ORBresources", "global" };
+    //  char *rfactory_args[] = { "-ORBresources", "global" };
+  char *rfactory_args[] = { "-ORBresources", "tss" };
   FAKE_SVC_ENTRY ("Resource_Factory",
                   TAO_Resource_Factory,
                   sizeof rfactory_args / sizeof rfactory_args[0],
