@@ -324,6 +324,13 @@ private:
 #define ACE_UNUSED_ARG(a) (a)
 #endif /* ghs */
 
+#if defined (ACE_REQUIRES_FUNC_DEFINITIONS)
+  // Provide a null definition for the function.  Not pleasant.
+# define ACE_UNIMPLEMENTED_FUNC(f) f {}
+#else
+# define ACE_UNIMPLEMENTED_FUNC(f) f;
+#endif /* ACE_REQUIRES_FUNC_DEFINITIONS */
+
 // These hooks enable ACE to have all dynamic memory management
 // automatically handled on a per-object basis.
 
