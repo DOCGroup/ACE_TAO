@@ -1,3 +1,8 @@
+Sat Jun 26 08:21:52 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Signal.h: reordered #includes to avoid warning about
+          #pragma once.
+
 Fri Jun 25 22:30:24 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * docs/ACE-guidelines.html: always test on egcs before
