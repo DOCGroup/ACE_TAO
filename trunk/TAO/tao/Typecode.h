@@ -149,7 +149,7 @@ public:
                   size_t length,
                   char *buffer,
                   CORBA::Boolean orb_owns_tc,
-		  CORBA::TypeCode_ptr parent = 0);
+                  CORBA::TypeCode_ptr parent = 0);
   // This constructor is used both for typecode constants and for
   // heap-allocated TypeCodes.  The two are distinguished by the
   // orb_owns_tc flag passed in by the creator.
@@ -507,5 +507,9 @@ public:
 private:
   CORBA_TypeCode_ptr &ptr_;
 };
+
+#if defined (__ACE_INLINE__)
+# include "tao/Typecode.i"
+#endif /* __ACE_INLINE__ */
 
 #endif /* TAO_TYPECODE_H */

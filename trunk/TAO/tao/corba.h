@@ -81,15 +81,15 @@
 // configure fixed one-byte alignment policy, since some fixed policy
 // needs to apply throughout an ORB.
 
-#if	defined (_MSC_VER)
-#	pragma	pack (push, 1)		// VC++, stack 1-byte alignment policy
+#if     defined (_MSC_VER)
+#       pragma  pack (push, 1)          // VC++, stack 1-byte alignment policy
 
-#	ifdef	_DEBUG			// convert from VC++ convention ...
-#		define	DEBUG		// ... to normal convention
-#	endif
+#       ifdef   _DEBUG                  // convert from VC++ convention ...
+#               define  DEBUG           // ... to normal convention
+#       endif
 
-#elif	defined (__BORLANDC__)
-#	pragma option -a		// BC++, use 1 byte alignment
+#elif   defined (__BORLANDC__)
+#       pragma option -a                // BC++, use 1 byte alignment
 
 #endif /* _MSC_VER */
 
@@ -141,7 +141,7 @@ class CORBA_String_var;
 typedef u_int CORBA_Flags;
 
 typedef void (*TAO_Skeleton)(CORBA_ServerRequest &,
-                             //			     CORBA_Object_ptr,
+                             //                      CORBA_Object_ptr,
                              void *,
                              void *,
                              CORBA_Environment &);
@@ -149,8 +149,8 @@ typedef void (*TAO_Skeleton)(CORBA_ServerRequest &,
 // NOTE: stub APIs are nonportable, and must be explicitly #included
 // by code emitted from an IDL compiler.
 
-#if	defined (_MSC_VER)
-#	pragma pack (pop)		// VC++, goes back to other padding rules
+#if     defined (_MSC_VER)
+#       pragma pack (pop)               // VC++, goes back to other padding rules
 #endif /* _MSC_VER */
 
 // Alignment macros
@@ -162,6 +162,7 @@ typedef void (*TAO_Skeleton)(CORBA_ServerRequest &,
 typedef TAO_Unbounded_Sequence<CORBA::Octet> TAO_opaque;
 extern CORBA::TypeCode TC_opaque;
 
+#include "tao/Exception.h"
 #include "tao/Any.h"
 
 #include "tao/params.h"
@@ -170,7 +171,6 @@ extern CORBA::TypeCode TC_opaque;
 #include "tao/default_client.h"
 #include "tao/default_server.h"
 
-#include "tao/Exception.h"
 #include "tao/NVList.h"
 #include "tao/Object.h"
 #include "tao/Principal.h"
@@ -211,16 +211,20 @@ extern TAO_Export int operator== (const TAO_ObjectKey &l,
 #    define do_undef_on_ACE_INLINE
 #  endif
 
+#if 0 /* These are now #included by their .h/.cpp files. */
 #include "tao/ORB_Core.i"
 #include "tao/Typecode.i"
 #include "tao/NVList.i"
 #include "tao/Any.i"
 #include "tao/Stub.i"
+#endif /* 0 */
+
 #include "tao/Object.i"
 #include "tao/ORB.i"
 #include "tao/Marshal.i"
 #include "tao/CDR.i"
 #include "tao/GIOP.i"
+
 #include "tao/IIOP_ORB.i"
 #include "tao/IIOP_Object.i"
 #include "tao/Server_Request.i"

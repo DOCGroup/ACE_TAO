@@ -29,6 +29,7 @@ ORBCORE_SRCS = \
 	Request \
 	Sequence \
 	Server_Request \
+	Stub \
 	Typecode \
 	Arg_Shifter \
 	CDR \

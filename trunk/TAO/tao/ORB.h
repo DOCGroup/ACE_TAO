@@ -35,7 +35,7 @@ typedef enum
 {
   TAO_SERVICEID_NAMESERVICE,
   TAO_SERVICEID_TRADINGSERVICE
-} TAO_Service_ID; 
+} TAO_Service_ID;
 
 // For some reason, PC compilers don't implement "natural" alignment,
 // but only use fixed alignment policies.  The following #pragmas
@@ -747,12 +747,12 @@ public:
   // can be used for initialization or in comparisons.
 
   virtual CORBA::Object_ptr string_to_object (CORBA::String str,
-					      CORBA::Environment &env) = 0;
+                                              CORBA::Environment &env) = 0;
   // Turn a string-ified object reference back into an object pointer.
   // Each type of ORB, e.g. an IIOP ORB, must implement this.
   // Typically these strings are created using <object_to_string()>.
   virtual CORBA::String object_to_string (CORBA::Object_ptr obj,
-					  CORBA::Environment &env) = 0;
+                                          CORBA::Environment &env) = 0;
   // Turn an object reference into a string.  Each type of ORB,
   // e.g. an IIOP ORB, must implement this.  This can be used by
   // servers to publish their whereabouts to clients.  The output of
@@ -873,15 +873,15 @@ private:
   // Resolve the trading object reference.
 
   CORBA_Object_ptr multicast_to_service (TAO_Service_ID service_id,
-					 u_short port);
+                                         u_short port);
   // Resolve the refernce of a service of type <name>.
-  
+
   CORBA_Object_ptr resolve_poa (void);
   // Resolve the POA.
-  
+
   CORBA_Object_ptr resolve_poa_current (void);
   // Resolve the POA current.
-  
+
   ACE_SYNCH_MUTEX lock_;
   u_int refcount_;
   ACE_Atomic_Op<ACE_SYNCH_MUTEX, CORBA::Boolean> open_called_;
@@ -906,7 +906,7 @@ private:
   CORBA_Object_ptr trading_service_;
   // If this is non-_nil(), then this is the object reference to our
   // configured Trading.
-  
+
   // = NON-PROVIDED METHODS
   CORBA_ORB (const CORBA_ORB &);
   CORBA_ORB &operator= (const CORBA_ORB &);

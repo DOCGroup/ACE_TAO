@@ -8,6 +8,10 @@
 #include "tao/TAO_Internal.h"
 #include "tao/Arg_Shifter.h"
 
+#if !defined (__ACE_INLINE__)
+# include "tao/ORB_Core.i"
+#endif /* ! __ACE_INLINE__ */
+
 typedef ACE_TSS_Singleton<TAO_ORB_Core, ACE_SYNCH_MUTEX>
         TAO_ORB_CORE;
 

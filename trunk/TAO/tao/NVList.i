@@ -48,16 +48,3 @@ CORBA_NVList::count (void) const
 {
   return this->max_;
 }
-
-ACE_INLINE CORBA::NamedValue_ptr
-CORBA_NVList::item (CORBA::ULong n, CORBA::Environment &env)
-{
-  env.clear ();
-  if (n >= this->max_) // 0 based indexing
-    {
-      env.exception (new CORBA::TypeCode::Bounds ());
-      return 0;
-    }
-  else
-    return &this->values_ [n];
-}
