@@ -320,6 +320,9 @@ namespace TAO
                             0);
         }
 
+      poa_current_impl.object_id(user_id);
+      servant_upcall.user_id (&user_id);
+
       // If the POA has the RETAIN policy, the POA looks in the Active
       // Object Map to find if there is a servant associated with the
       // Object Id value from the request. If such a servant exists, the
@@ -335,9 +338,6 @@ namespace TAO
 
       if (result == 0)
         {
-          poa_current_impl.object_id(user_id);
-          servant_upcall.user_id (&user_id);
-
           servant_upcall.active_object_map_entry (active_object_map_entry);
 
           // Increment the reference count.
