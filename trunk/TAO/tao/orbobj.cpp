@@ -9,7 +9,7 @@
 // component and have a loose table-driven coupling to ORB/protocol
 // library components.
 
-//#include "ace/OS.h"    // WARNING! This MUST come before objbase.h on WIN32!
+#include "ace/OS.h"    // WARNING! This MUST come before objbase.h on WIN32!
 #include <objbase.h>
 #include <initguid.h>
 
