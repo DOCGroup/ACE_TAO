@@ -68,8 +68,6 @@ parse_args (int argc, char *argv[])
 static void
 acquire_release (void)
 {
-  ACE_OS::fprintf (stderr, "acquire_release\n");
-  ACE_DEBUG ((LM_DEBUG, "acquire_release\n"));
   ACE_Process_Mutex mutex (ACE_WIDE_STRING (mutex_name));
   // Make sure the constructor succeeded
   ACE_ASSERT (ACE_LOG_MSG->op_status () == 0);
