@@ -103,6 +103,7 @@ if test -d m4; then
     export PATH
   fi
 
+  # Provide some "useful" information.
   echo Bootstrapping...
 
   # Generate an `aclocal.m4' file from all existing m4 macro files
@@ -179,6 +180,8 @@ if test -d m4; then
   echo Creating a NEWS file
   cp VERSION NEWS
 
+  # Provide some more "useful" information.
+  echo Done bootstrapping.
 else
   echo ACE must be bootstrapped from the top-level ACE source directory.
   exit 1;
