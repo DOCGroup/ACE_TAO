@@ -23,28 +23,28 @@ ACE_RCSID (Log,
            "$Id$")
 
 
-RTEventLogNotification::RTEventLogNotification (RtecEventChannelAdmin::EventChannel_ptr ec)
-: LogNotification (), event_channel_ (RtecEventChannelAdmin::EventChannel::_duplicate (ec))
+TAO_RTEventLogNotification::TAO_RTEventLogNotification (RtecEventChannelAdmin::EventChannel_ptr ec)
+: TAO_LogNotification (), event_channel_ (RtecEventChannelAdmin::EventChannel::_duplicate (ec))
 {
   ACE_DECLARE_NEW_CORBA_ENV;
 
   obtainProxyConsumer (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
-RTEventLogNotification::~RTEventLogNotification (void)
+TAO_RTEventLogNotification::~TAO_RTEventLogNotification (void)
 {
   // No-Op.
 }
 
 void
-RTEventLogNotification::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_RTEventLogNotification::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // No-Op.
 }
 
 void
-RTEventLogNotification::obtainProxyConsumer (ACE_ENV_SINGLE_ARG_DECL)
+TAO_RTEventLogNotification::obtainProxyConsumer (ACE_ENV_SINGLE_ARG_DECL)
 {  
   RtecEventChannelAdmin::SupplierAdmin_var supplier_admin = 
     event_channel_->for_suppliers();
@@ -67,7 +67,7 @@ RTEventLogNotification::obtainProxyConsumer (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-RTEventLogNotification::send_notification (const CORBA::Any& any)
+TAO_RTEventLogNotification::send_notification (const CORBA::Any& any)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   RtecEventComm::EventSet event (1);

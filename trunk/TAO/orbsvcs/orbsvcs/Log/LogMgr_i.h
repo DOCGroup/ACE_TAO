@@ -14,68 +14,80 @@
  */
 //=============================================================================
 
-#ifndef TLS_LOGMGR_I_H
-#define TLS_LOGMGR_I_H
+#ifndef TAO_TLS_LOGMGR_I_H
+#define TAO_TLS_LOGMGR_I_H
 #include "ace/pre.h"
 
 #include "orbsvcs/DsLogAdminS.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "orbsvcs/Log/Log_i.h"
 
 #include "log_export.h"
 
-class TAO_Log_Export LogMgr_i : public virtual POA_DsLogAdmin::LogMgr
+/**
+ * @class TAO_LogMgr_i
+ *
+ * @brief Factory of Logs. Contains list of Logs created.
+ *
+ * This factory base class is used to maintain a list of logs 
+ * created by it. Logs can also be removed from the list.
+ */
+class TAO_Log_Export TAO_LogMgr_i : public virtual POA_DsLogAdmin::LogMgr
 {
-  // = TITLE
-  //   LogMgr_i
-  // = DESCRIPTION
-  //   This class has methods to query for Log objects.
-  //
 public:
-  // Initialization and Termination Methods
-  LogMgr_i (void);
-  // Constructor.
 
-  ~LogMgr_i ();
-  // Destructor.
+  // = Initialization and Termination Methods
 
+  /// Constructor.
+  TAO_LogMgr_i (void);
+
+  /// Destructor.
+  ~TAO_LogMgr_i ();
+
+  /// Lists all logs created by the log factory.
   DsLogAdmin::LogList *
     list_logs (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
-  // Lists all logs created by the log factory
 
+  /// Returns a reference to the log with the supplied id.
   DsLogAdmin::Log_ptr
     find_log (DsLogAdmin::LogId id
               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
-  // Returns a reference to the log with the supplied id
 
+  /// Lists all log ids.
   DsLogAdmin::LogIdList *
   list_logs_by_id (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
-  // Lists all log ids
 
+ /// remove the given entry from the hash table.
  int remove (DsLogAdmin::LogId id);
- // remove the given entry from the hash table.
+
 
 protected:
+
+  /// Define the HASHMAP.
   typedef ACE_Hash_Map_Manager <DsLogAdmin::LogId,
     DsLogAdmin::Log_var,TAO_SYNCH_MUTEX> HASHMAP;
-  // Define the HASHMAP.
 
+  /// The map of Logs created.
   HASHMAP hash_map_;
-  // The map of Logs created.
 
+  /// The Max id assigned so far.
   DsLogAdmin::LogId max_id_;
-  // The Max id assigned so far.
 
+  /// A list of the current log ids.
   DsLogAdmin::LogIdList logid_list_;
-  // A list of the current log ids.
 };
 #include "ace/post.h"
-#endif /* TLS_LOGMGR_I_H */
+#endif /* TAO_TLS_LOGMGR_I_H */

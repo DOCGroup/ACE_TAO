@@ -26,23 +26,23 @@ ACE_RCSID (Log,
 
 
 
-RTEventLogFactory_i::RTEventLogFactory_i (void)
+TAO_RTEventLogFactory_i::TAO_RTEventLogFactory_i (void)
 : poa_ (PortableServer::POA::_nil ()),
 naming_ (CosNaming::NamingContext::_nil ())
 {
   // No-Op.
 }
 
-RTEventLogFactory_i::~RTEventLogFactory_i()
+TAO_RTEventLogFactory_i::~TAO_RTEventLogFactory_i()
 {
   // No-Op.
 }
 
 int
-RTEventLogFactory_i::init (PortableServer::POA_ptr poa,
-                           const char* child_poa_name,
-                           CosNaming::NamingContext_ptr naming
-                           ACE_ENV_ARG_DECL)
+TAO_RTEventLogFactory_i::init (PortableServer::POA_ptr poa,
+                               const char* child_poa_name,
+                               CosNaming::NamingContext_ptr naming
+                               ACE_ENV_ARG_DECL)
 {
   if (CORBA::is_nil (poa))
     return -1;
@@ -125,14 +125,14 @@ RTEventLogFactory_i::init (PortableServer::POA_ptr poa,
   this->consumer_admin_ = this->event_channel_->for_consumers(ACE_ENV_SINGLE_ARG_PARAMETER);
 
   ACE_NEW_THROW_EX (this->notifier_, 
-                    RTEventLogNotification(this->event_channel_.in ()),
+                    TAO_RTEventLogNotification(this->event_channel_.in ()),
                     CORBA::NO_MEMORY ());
   return 0;
 }
 
 RTEventLogAdmin::EventLogFactory_ptr
-RTEventLogFactory_i::activate (PortableServer::POA_ptr poa
-                           ACE_ENV_ARG_DECL)
+TAO_RTEventLogFactory_i::activate (PortableServer::POA_ptr poa
+                                   ACE_ENV_ARG_DECL)
 {
   RTEventLogAdmin::EventLogFactory_var v_return;
 
@@ -161,7 +161,7 @@ RTEventLogFactory_i::activate (PortableServer::POA_ptr poa
 }
 
 RTEventLogAdmin::EventLog_ptr 
-RTEventLogFactory_i::create (
+TAO_RTEventLogFactory_i::create (
         DsLogAdmin::LogFullActionType full_action,
         CORBA::ULongLong max_rec_size,
         const DsLogAdmin::CapacityAlarmThresholdList & thresholds,
@@ -197,7 +197,7 @@ RTEventLogFactory_i::create (
 }
 
 RTEventLogAdmin::EventLog_ptr 
-RTEventLogFactory_i::create_with_id (
+TAO_RTEventLogFactory_i::create_with_id (
         DsLogAdmin::LogId id,
         DsLogAdmin::LogFullActionType full_action,
         CORBA::ULongLong max_size,
@@ -221,17 +221,17 @@ RTEventLogFactory_i::create_with_id (
   RTEventLogAdmin::EventLog_var event_log;
   // Object to return.
 
-  RTEventLog_i* event_log_i;
+  TAO_RTEventLog_i* event_log_i;
 
   ACE_NEW_THROW_EX (event_log_i,
-                    RTEventLog_i (*this,
-                                this->log_mgr_.in (),
-                                this,
-                                this->notifier_,
-                                id,
-                                full_action,
-                                max_size                              
-                                ),
+                    TAO_RTEventLog_i (*this,
+                                      this->log_mgr_.in (),
+                                      this,
+                                      this->notifier_,
+                                      id,
+                                      full_action,
+                                      max_size                              
+                                      ),
                     CORBA::NO_MEMORY ());
 
   ACE_CHECK_RETURN (event_log._retn ());
@@ -250,11 +250,11 @@ RTEventLogFactory_i::create_with_id (
   ACE_CHECK_RETURN (event_log._retn ());
 
   // Add to the Hash table..
-  if (hash_map_.bind (id, event_log.in ()) == -1)
+  if (hash_map_.bind (id, RTEventLogAdmin::EventLog::_duplicate(event_log.in ())) == -1)
     ACE_THROW_RETURN (CORBA::INTERNAL (),
                       RTEventLogAdmin::EventLog::_nil ());
 
-  notifier_->object_creation (event_log.in (),
+  notifier_->object_creation (RTEventLogAdmin::EventLog::_duplicate(event_log.in ()),
                               id ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (RTEventLogAdmin::EventLog::_nil ());
 
@@ -262,7 +262,7 @@ RTEventLogFactory_i::create_with_id (
 }
 
 RtecEventChannelAdmin::ProxyPushSupplier_ptr 
-RTEventLogFactory_i::obtain_push_supplier (
+TAO_RTEventLogFactory_i::obtain_push_supplier (
         ACE_ENV_SINGLE_ARG_DECL_NOT_USED
       )
       ACE_THROW_SPEC ((
@@ -274,12 +274,12 @@ RTEventLogFactory_i::obtain_push_supplier (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class auto_ptr <RTEventLog_i>;
-template class ACE_Auto_Basic_Ptr<RTEventLog_i>;
+template class auto_ptr <TAO_RTEventLog_i>;
+template class ACE_Auto_Basic_Ptr<TAO_RTEventLog_i>;
 
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate auto_ptr <RTEventLog_i>
-#pragma instantiate ACE_Auto_Event_Ptr <RTEventLog_i>
+#pragma instantiate auto_ptr <TAO_RTEventLog_i>
+#pragma instantiate ACE_Auto_Event_Ptr <TAO_RTEventLog_i>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

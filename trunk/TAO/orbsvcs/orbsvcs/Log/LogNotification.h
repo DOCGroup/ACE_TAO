@@ -19,33 +19,34 @@
 #include "ace/pre.h"
 
 #include "orbsvcs/DsLogAdminS.h"
-//#include "orbsvcs/DsEventLogAdminS.h"
-#include "orbsvcs/DsLogNotificationS.h"
-
-#include "log_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "orbsvcs/DsLogNotificationS.h"
+
+#include "log_export.h"
+
 
 /**
- * @class LogNotification
+ * @class TAO_LogNotification
  *
  * @brief Used to forward log generated events to a logging server
  *
  * This implementation attempts to conform to the telecom
  * logging specification.
  */
-class TAO_Log_Export LogNotification
+class TAO_Log_Export TAO_LogNotification
 {
 
 public:
+
   /// Constructor.
-  LogNotification (void);
+  TAO_LogNotification (void);
 
   /// Destructor.
-  virtual ~LogNotification (void);
+  virtual ~TAO_LogNotification (void);
 
   /// Event generated when a new log is created.
   void object_creation (DsLogAdmin::Log_ptr log, DsLogAdmin::LogId id

@@ -7,7 +7,7 @@ ACE_RCSID (Log,
            "$Id$")
 
 
-EventLogFactory_i::EventLogFactory_i (void)
+TAO_EventLogFactory_i::TAO_EventLogFactory_i (void)
 {
   TAO_CEC_Default_Factory::init_svcs ();
 
@@ -38,14 +38,14 @@ EventLogFactory_i::EventLogFactory_i (void)
   ACE_CHECK;
 }
 
-EventLogFactory_i::~EventLogFactory_i (void)
+TAO_EventLogFactory_i::~TAO_EventLogFactory_i (void)
 {
   // No-Op.
 }
 
 CosEventChannelAdmin::EventChannel_ptr
-EventLogFactory_i::init (PortableServer::POA_ptr /* poa */
-                         ACE_ENV_ARG_DECL)
+TAO_EventLogFactory_i::init (PortableServer::POA_ptr /* poa */
+                             ACE_ENV_ARG_DECL)
 {
 
   ACE_ASSERT (!CORBA::is_nil (this->poa_.in ()));
@@ -74,8 +74,8 @@ EventLogFactory_i::init (PortableServer::POA_ptr /* poa */
 }
 
 DsEventLogAdmin::EventLogFactory_ptr
-EventLogFactory_i::activate (PortableServer::POA_ptr poa
-                             ACE_ENV_ARG_DECL)
+TAO_EventLogFactory_i::activate (PortableServer::POA_ptr poa
+                                 ACE_ENV_ARG_DECL)
 {
   this->poa_ = poa;
   this->event_channel_ = init (this->poa_.in () ACE_ENV_ARG_PARAMETER);
@@ -85,7 +85,7 @@ EventLogFactory_i::activate (PortableServer::POA_ptr poa
   ACE_CHECK_RETURN (DsEventLogAdmin::EventLogFactory::_nil ());
 
   ACE_NEW_THROW_EX (this->notifier_,
-                    EventLogNotification(this->event_channel_.in ()),
+                    TAO_EventLogNotification(this->event_channel_.in ()),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (DsEventLogAdmin::EventLogFactory::_nil ());
 
@@ -116,7 +116,7 @@ EventLogFactory_i::activate (PortableServer::POA_ptr poa
 }
 
 DsEventLogAdmin::EventLog_ptr
-EventLogFactory_i::create (
+TAO_EventLogFactory_i::create (
     DsLogAdmin::LogFullActionType full_action,
     CORBA::ULongLong max_rec_size,
     const DsLogAdmin::CapacityAlarmThresholdList & thresholds,
@@ -133,7 +133,7 @@ EventLogFactory_i::create (
     this->create_with_id (this->max_id_,
                           full_action,
                           max_rec_size,
-                          thresholds//,
+                          thresholds
                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsEventLogAdmin::EventLog::_nil ());
 
@@ -149,7 +149,7 @@ EventLogFactory_i::create (
 }
 
 DsEventLogAdmin::EventLog_ptr
-EventLogFactory_i::create_with_id (
+TAO_EventLogFactory_i::create_with_id (
     DsLogAdmin::LogId id,
     DsLogAdmin::LogFullActionType full_action,
     CORBA::ULongLong max_size,
@@ -168,17 +168,17 @@ EventLogFactory_i::create_with_id (
   DsEventLogAdmin::EventLog_var event_log;
   // Object to return.
 
-  EventLog_i* event_log_i;
+  TAO_EventLog_i* event_log_i;
 
   ACE_NEW_THROW_EX (event_log_i,
-                    EventLog_i (*this,
-                                this->log_mgr_.in (),
-                                this,
-                                this->notifier_,
-                                id,
-                                full_action,
-                                max_size
-                                ),
+                    TAO_EventLog_i (*this,
+                                    this->log_mgr_.in (),
+                                    this,
+                                    this->notifier_,
+                                    id,
+                                    full_action,
+                                    max_size
+                                    ),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (DsEventLogAdmin::EventLog::_nil ());
 
@@ -197,26 +197,26 @@ EventLogFactory_i::create_with_id (
   ACE_CHECK_RETURN (DsEventLogAdmin::EventLog::_nil ());
 
   // Add to the Hash table..
-  if (hash_map_.bind (id, event_log.in ()) == -1)
+  if (hash_map_.bind (id, DsEventLogAdmin::EventLog::_duplicate (event_log.in ())) == -1)
     ACE_THROW_RETURN (CORBA::INTERNAL (),
                       DsEventLogAdmin::EventLog::_nil ());
 
-  notifier_->object_creation (event_log.in (), id
+  notifier_->object_creation (DsEventLogAdmin::EventLog::_duplicate (event_log.in ()), id
                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsEventLogAdmin::EventLog::_nil ());
+  //ACE_CHECK_RETURN (DsEventLogAdmin::EventLog::_nil ());
 
   return event_log._retn ();
 }
 
 CosEventChannelAdmin::ProxyPushSupplier_ptr
-EventLogFactory_i::obtain_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
+TAO_EventLogFactory_i::obtain_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return consumer_admin_->obtain_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 CosEventChannelAdmin::ProxyPullSupplier_ptr
-EventLogFactory_i::obtain_pull_supplier (ACE_ENV_SINGLE_ARG_DECL)
+TAO_EventLogFactory_i::obtain_pull_supplier (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 
 {

@@ -15,17 +15,20 @@
  */
 //=============================================================================
 
-#ifndef TLS_ITERATOR_H
-#define TLS_ITERATOR_H
+#ifndef TAO_TLS_ITERATOR_H
+#define TAO_TLS_ITERATOR_H
 #include "ace/pre.h"
 
 #include "orbsvcs/DsLogAdminS.h"
-#include "orbsvcs/Log/LogRecordStore.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "orbsvcs/Log/LogRecordStore.h"
+
+// This is to remove "inherits via dominance" warnings from MSVC.
+// MSVC is being a little too paranoid.
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
 #pragma warning(push)
@@ -33,50 +36,54 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_Log_Export Iterator_i : public POA_DsLogAdmin::Iterator,
-                                  public virtual PortableServer::RefCountServantBase
+/**
+ * @class TAO_Iterator_i
+ *
+ * @brief Iterator to get LogRecords for the log via a query.
+ */
+class TAO_Log_Export TAO_Iterator_i : 
+  public POA_DsLogAdmin::Iterator,
+  public virtual PortableServer::RefCountServantBase
 {
-  // = TITLE
-  //   Iterator_i
-  // = DESCRIPTION
-  //   Iterator to get LogRecords for the Log via a query.
-  //
 public:
+
   // = Initialization and Termination methods.
-  Iterator_i (LogRecordStore::LOG_RECORD_STORE &store,
-              CORBA::ULong start,
-              const char *constraint,
-              CORBA::ULong max_store_size,
-              CORBA::ULong max_rec_list_len
-              );
-  //Constructor
 
-  ~Iterator_i (void);
-  //Destructor
+  /// Constructor.
+  TAO_Iterator_i (TAO_LogRecordStore::LOG_RECORD_STORE &store,
+                  CORBA::ULong start,
+                  const char *constraint,
+                  CORBA::ULong max_store_size,
+                  CORBA::ULong max_rec_list_len
+                  );
 
+  /// Destructor.
+  ~TAO_Iterator_i (void);
+
+  /// Gets a list of LogRecords.
   DsLogAdmin::RecordList* get (CORBA::ULong position,
-                               CORBA::ULong how_many//,
+                               CORBA::ULong how_many
                                ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      DsLogAdmin::InvalidParam));
-  // Gets a list of LogRecords.
 
+  /// This destroys the iterator.
   void destroy (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  // This destroys the iterator.
 
 private:
-  LogRecordStore::LOG_RECORD_HASH_MAP_ITER iter_;
-  // Storage.
 
+  /// Storage.
+  TAO_LogRecordStore::LOG_RECORD_HASH_MAP_ITER iter_;
+
+  /// Constraint.
   const char *constraint_;
-  // Constraint.
 
+  /// Max entries in the storage.
   CORBA::ULong max_store_size_;
-  // max entries in the storage.
 
+  /// Max rec list length.
   CORBA::ULong max_rec_list_len_;
-  // Max rec list length.
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
@@ -84,4 +91,4 @@ private:
 #endif /* _MSC_VER */
 
 #include "ace/post.h"
-#endif /* TLS_ITERATOR_H */
+#endif /* TAO_TLS_ITERATOR_H */

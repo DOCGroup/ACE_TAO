@@ -4,18 +4,18 @@ ACE_RCSID (Log,
            LogMgr_i,
            "$Id$")
 
-LogMgr_i::LogMgr_i (void)
+TAO_LogMgr_i::TAO_LogMgr_i (void)
 {
   // No-Op.
 }
 
-LogMgr_i::~LogMgr_i ()
+TAO_LogMgr_i::~TAO_LogMgr_i ()
 {
   // No-Op.
 }
 
 DsLogAdmin::LogList*
-LogMgr_i::list_logs (ACE_ENV_SINGLE_ARG_DECL)
+TAO_LogMgr_i::list_logs (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
@@ -51,8 +51,8 @@ LogMgr_i::list_logs (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 DsLogAdmin::Log_ptr
-LogMgr_i::find_log (DsLogAdmin::LogId id
-                    ACE_ENV_ARG_DECL_NOT_USED)
+TAO_LogMgr_i::find_log (DsLogAdmin::LogId id
+                        ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
@@ -81,7 +81,7 @@ LogMgr_i::find_log (DsLogAdmin::LogId id
 }
 
 DsLogAdmin::LogIdList*
-LogMgr_i::list_logs_by_id (ACE_ENV_SINGLE_ARG_DECL)
+TAO_LogMgr_i::list_logs_by_id (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
@@ -96,7 +96,7 @@ LogMgr_i::list_logs_by_id (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 int
-LogMgr_i::remove (DsLogAdmin::LogId id)
+TAO_LogMgr_i::remove (DsLogAdmin::LogId id)
 {
   return this->hash_map_.unbind (id);
 }

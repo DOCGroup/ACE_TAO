@@ -8,8 +8,8 @@ ACE_RCSID (Log,
            "$Id$")
 
 
-NotifyLogNotification::NotifyLogNotification (CosNotifyChannelAdmin::EventChannel_ptr ec)
-: LogNotification (), event_channel_ (CosNotifyChannelAdmin::EventChannel::_duplicate (ec))
+TAO_NotifyLogNotification::TAO_NotifyLogNotification (CosNotifyChannelAdmin::EventChannel_ptr ec)
+: TAO_LogNotification (), event_channel_ (CosNotifyChannelAdmin::EventChannel::_duplicate (ec))
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   
@@ -42,13 +42,13 @@ NotifyLogNotification::NotifyLogNotification (CosNotifyChannelAdmin::EventChanne
   ACE_CHECK;
 }
 
-NotifyLogNotification::~NotifyLogNotification (void)
+TAO_NotifyLogNotification::~TAO_NotifyLogNotification (void)
 {
   // No-Op.
 }
 
 void
-NotifyLogNotification::send_notification (const CORBA::Any& any)
+TAO_NotifyLogNotification::send_notification (const CORBA::Any& any)
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ))
@@ -57,7 +57,7 @@ NotifyLogNotification::send_notification (const CORBA::Any& any)
 }
 
 void
-NotifyLogNotification::subscription_change
+TAO_NotifyLogNotification::subscription_change
    (const CosNotification::EventTypeSeq & /*added*/,
     const CosNotification::EventTypeSeq & /*removed */
     ACE_ENV_ARG_DECL_NOT_USED)
@@ -70,7 +70,7 @@ NotifyLogNotification::subscription_change
 }
 
 void
-NotifyLogNotification::disconnect_push_supplier
+TAO_NotifyLogNotification::disconnect_push_supplier
    (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
