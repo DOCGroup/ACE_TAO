@@ -221,6 +221,20 @@ ACE_Thread_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *svc_handler
     return svc_handler->activate (this->thr_flags_, this->n_threads_);
 }
 
+template <class SVC_HANDLER> int
+ACE_Thread_Pool_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *svc_handler,
+                                                             void *arg)
+{
+  ACE_TRACE ("ACE_Thread_Pool_Strategy<SVC_HANDLER>::activate_svc_handler");
+  // Call up to our parent to do the SVC_HANDLER initialization.
+  if (this->inherited::activate_svc_handler (svc_handler, arg) == -1)
+    return -1;
+  else
+    // Turn the <svc_handler> into an active object (if it isn't
+    // already one as a result of the first activation...)
+    return svc_handler->svc ();
+}
+
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
 ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Accept_Strategy
   (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
@@ -636,6 +650,12 @@ ACE_Thread_Strategy<SVC_HANDLER>::dump (void) const
   ACE_TRACE ("ACE_Thread_Strategy<SVC_HANDLER>::dump");
 }
 
+template <class SVC_HANDLER> void
+ACE_Thread_Pool_Strategy<SVC_HANDLER>::dump (void) const
+{
+  ACE_TRACE ("ACE_Thread_Pool_Strategy<SVC_HANDLER>::dump");
+}
+
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> void
 ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::dump (void) const
 {
@@ -693,9 +713,11 @@ ACE_Creation_Strategy<SVC_HANDLER>::dump (void) const
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Creation_Strategy)
 ACE_ALLOC_HOOK_DEFINE(ACE_Singleton_Strategy)
+ACE_ALLOC_HOOK_DEFINE(ACE_Svc_Handler_Pool_Strategy)
 ACE_ALLOC_HOOK_DEFINE(ACE_DLL_Strategy)
 ACE_ALLOC_HOOK_DEFINE(ACE_Concurrency_Strategy)
 ACE_ALLOC_HOOK_DEFINE(ACE_Thread_Strategy)
+ACE_ALLOC_HOOK_DEFINE(ACE_Thread_Pool_Strategy)
 ACE_ALLOC_HOOK_DEFINE(ACE_Connect_Strategy)
 ACE_ALLOC_HOOK_DEFINE(ACE_Process_Strategy)
 ACE_ALLOC_HOOK_DEFINE(ACE_Accept_Strategy)
