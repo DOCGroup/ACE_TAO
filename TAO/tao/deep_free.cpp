@@ -120,7 +120,7 @@ DEEP_FREE (CORBA::TypeCode_ptr  param,
 // deep free for primitives
 CORBA::TypeCode::traverse_status
 TAO_Marshal_Primitive::deep_free (CORBA::TypeCode_ptr  tc,
-                                  const void *source,
+                                  const void *,
                                   const void *,
                                   CORBA::Environment &ACE_TRY_ENV)
 {
