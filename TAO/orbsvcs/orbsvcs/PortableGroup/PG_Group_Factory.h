@@ -102,25 +102,6 @@ namespace TAO
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableGroup::ObjectNotFound));
 
-    /**
-     * Create a new object group member using the supplied FactoryInfo
-     * and RepositoryId and add it to the given object group.
-     * @note This method is only used by the infrastructure.
-     */
-    PortableGroup::GenericFactory::FactoryCreationId * create_member (
-        PortableGroup::ObjectGroup_ptr object_group,
-        const PortableGroup::FactoryInfo & factory_info,
-        const char * type_id,
-        const CORBA::Boolean propagate_member_already_present
-        ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableGroup::NoFactory,
-                       PortableGroup::ObjectNotCreated,
-                       PortableGroup::InvalidCriteria,
-                       PortableGroup::InvalidProperty,
-                       PortableGroup::CannotMeetCriteria,
-           PortableGroup::MemberAlreadyPresent));
-
 
     /**
      * insert existing group.  Take ownership

@@ -577,8 +577,6 @@ void TAO::PG_Object_Group::create_members (size_t count ACE_ENV_ARG_DECL)
         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  ACE_ASSERT (!CORBA::_nil (factories.in ()));
-
   CORBA::ULong factory_count = factories->length ();
   if (factory_count > 0)
   {
