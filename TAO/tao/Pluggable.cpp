@@ -4,7 +4,6 @@
 #include "tao/Pluggable.h"
 #include "tao/Stub.h"
 #include "tao/Environment.h"
-#include "tao/GIOP.h"
 #include "tao/ORB_Core.h"
 #include "tao/Client_Strategy_Factory.h"
 #include "tao/Wait_Strategy.h"
@@ -13,10 +12,12 @@
 #include "tao/debug.h"
 
 #include "ace/ACE.h"
+#include "tao/target_identifier.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Pluggable.i"
 #endif /* __ACE_INLINE__ */
+
 
 ACE_RCSID(tao, Pluggable, "$Id$")
 
@@ -172,6 +173,13 @@ TAO_Transport::reset_message (ACE_Message_Block *message_block,
     }
 }
 
+int
+TAO_Transport::messaging_init (CORBA::Octet /*major*/,
+                               CORBA::Octet /*minor*/)
+{
+  ACE_NOTSUP_RETURN (-1);
+}
+
 // Read and handle the reply. Returns 0 when there is Short Read on
 // the connection. Returns 1 when the full reply is read and
 // handled. Returns -1 on errors.
@@ -216,7 +224,7 @@ TAO_Transport::leader_follower_condition_variable (void)
 
 void
 TAO_Transport::start_request (TAO_ORB_Core *,
-                              const TAO_Profile *,
+                              TAO_Target_Specification & /*spec */,
                               TAO_OutputCDR &,
                               CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -226,8 +234,8 @@ TAO_Transport::start_request (TAO_ORB_Core *,
 
 void
 TAO_Transport::start_locate (TAO_ORB_Core *,
-                             const TAO_Profile *,
-                             CORBA::ULong,
+                             TAO_Target_Specification & /*spec */,
+                             TAO_Operation_Details & /* */,
                              TAO_OutputCDR &,
                              CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))

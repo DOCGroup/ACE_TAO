@@ -28,7 +28,8 @@
 #include "tao/Resource_Factory.h"
 #include "tao/params.h"
 #include "tao/POAC.h"
-#include "tao/GIOP.h"
+
+
 
 #include "ace/Map_Manager.h"
 #include "ace/Singleton.h"

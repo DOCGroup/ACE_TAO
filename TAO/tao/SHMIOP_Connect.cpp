@@ -9,7 +9,8 @@
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"
 #include "tao/CDR.h"
-#include "tao/GIOP.h"
+#include "tao/GIOP_Message_Acceptors.h"
+#include "tao/GIOP_Message_Lite.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/SHMIOP_Connect.i"
@@ -68,6 +69,7 @@ TAO_SHMIOP_Handler_Base::TAO_SHMIOP_Handler_Base (ACE_Thread_Manager *t)
 TAO_SHMIOP_Server_Connection_Handler::TAO_SHMIOP_Server_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_SHMIOP_Handler_Base (t),
     transport_ (this, 0),
+    acceptor_factory_ (0),
     orb_core_ (0),
     tss_resources_ (0),
     refcount_ (1)
@@ -81,13 +83,26 @@ TAO_SHMIOP_Server_Connection_Handler::TAO_SHMIOP_Server_Connection_Handler (ACE_
   ACE_ASSERT (this->orb_core_ != 0);
 }
 
-TAO_SHMIOP_Server_Connection_Handler::TAO_SHMIOP_Server_Connection_Handler (TAO_ORB_Core *orb_core)
+TAO_SHMIOP_Server_Connection_Handler::TAO_SHMIOP_Server_Connection_Handler (TAO_ORB_Core *orb_core,
+                                                                            CORBA::Boolean flag)
   : TAO_SHMIOP_Handler_Base (orb_core),
     transport_ (this, orb_core),
+    acceptor_factory_ (0),
     orb_core_ (orb_core),
     tss_resources_ (orb_core->get_tss_resources ()),
-    refcount_ (1)
+    refcount_ (1),
+    lite_flag_ (flag)
 {
+    if (lite_flag_)
+    {
+      ACE_NEW (this->acceptor_factory_,
+               TAO_GIOP_Message_Lite (orb_core));
+    }
+  else
+    {
+      ACE_NEW (this->acceptor_factory_,
+               TAO_GIOP_Message_Acceptors (orb_core));
+    }
 }
 
 TAO_SHMIOP_Server_Connection_Handler::~TAO_SHMIOP_Server_Connection_Handler (void)
@@ -268,10 +283,10 @@ TAO_SHMIOP_Server_Connection_Handler::handle_input_i (ACE_HANDLE,
 {
   this->refcount_++;
 
-  int result = TAO_GIOP::handle_input (this->transport (),
-                                       this->orb_core_,
-                                       this->transport_.message_state_,
-                                       max_wait_time);
+  int result = this->acceptor_factory_->handle_input (this->transport (),
+                                                      this->orb_core_,
+                                                      this->transport_.message_state_,
+                                                      max_wait_time);
 
   if (result == -1 && TAO_debug_level > 0)
     {
@@ -312,11 +327,11 @@ TAO_SHMIOP_Server_Connection_Handler::handle_input_i (ACE_HANDLE,
   // Reset the message state.
   this->transport_.message_state_.reset (0);
 
-  result = TAO_GIOP::process_server_message (this->transport (),
-                                             this->orb_core_,
-                                             input_cdr,
-                                             message_type,
-                                             giop_version);
+  result = 
+    this->acceptor_factory_->process_connector_messages (this->transport (),
+                                                         this->orb_core_,
+                                                         input_cdr,
+                                                         message_type);
   if (result != -1)
     result = 0;
 
@@ -332,11 +347,14 @@ TAO_SHMIOP_Server_Connection_Handler::handle_input_i (ACE_HANDLE,
 //    transport obj.
 TAO_SHMIOP_Client_Connection_Handler::
 TAO_SHMIOP_Client_Connection_Handler (ACE_Thread_Manager *t,
-                                      TAO_ORB_Core* orb_core)
+                                      TAO_ORB_Core* orb_core,
+                                      CORBA::Boolean flag)
   : TAO_SHMIOP_Handler_Base (t),
     transport_ (this, orb_core),
-    orb_core_ (orb_core)
+    orb_core_ (orb_core),
+    lite_flag_ (flag)
 {
+  this->transport_.use_lite (lite_flag_);
 }
 
 TAO_SHMIOP_Client_Connection_Handler::~TAO_SHMIOP_Client_Connection_Handler (void)

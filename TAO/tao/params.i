@@ -77,6 +77,8 @@ TAO_ORB_Parameters::cdr_memcpy_tradeoff (int x)
   this->cdr_memcpy_tradeoff_ = x;
 }
 
+#if 0
+// Supprt has been deprecated.
 ACE_INLINE int
 TAO_ORB_Parameters::use_lite_protocol (void) const
 {
@@ -88,6 +90,7 @@ TAO_ORB_Parameters::use_lite_protocol (int x)
 {
   this->use_lite_protocol_ = x;
 }
+#endif /*if 0*/
 
 ACE_INLINE int
 TAO_ORB_Parameters::use_dotted_decimal_addresses (void) const

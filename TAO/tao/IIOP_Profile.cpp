@@ -2,10 +2,8 @@
 // $Id$
 
 
-
 #include "tao/IIOP_Profile.h"
 #include "tao/IIOP_Connect.h"
-#include "tao/GIOP.h"
 #include "tao/CDR.h"
 #include "tao/Environment.h"
 #include "tao/ORB.h"
@@ -28,6 +26,7 @@ TAO_IIOP_Profile::object_key_delimiter (void) const
 {
   return TAO_IIOP_Profile::object_key_delimiter_;
 }
+
 
 TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr &addr,
                                     const TAO_ObjectKey &object_key,

@@ -57,7 +57,7 @@ TAO_IIOP_Profile::version (void) const
 }
 
 ACE_INLINE TAO_IIOP_Client_Connection_Handler *&
-TAO_IIOP_Profile::hint(void)
+TAO_IIOP_Profile::hint (void)
 {
   return this->hint_;
 }

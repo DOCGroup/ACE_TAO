@@ -14,6 +14,7 @@
 
 #include "tao/Messaging_Policy_i.h"
 #include "tao/Client_Priority_Policy.h"
+#include "tao/target_identifier.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Invocation.i"
@@ -73,9 +74,7 @@ TAO_GIOP_Invocation::TAO_GIOP_Invocation (TAO_Stub *stub,
                                           CORBA::ULong opname_len,
                                           TAO_ORB_Core* orb_core)
   : stub_ (stub),
-    opname_ (operation),
-    opname_len_ (opname_len),
-    request_id_ (0),
+    op_details_ (operation, opname_len),
     out_stream_ (buffer, sizeof buffer, /* ACE_CDR::DEFAULT_BUFSIZE */
                  TAO_ENCAP_BYTE_ORDER,
                  orb_core->output_cdr_buffer_allocator (),
@@ -296,7 +295,9 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
     }
 
   // Obtain unique request id from the RMS.
-  this->request_id_ = this->transport_->tms ()->request_id ();
+  this->op_details_.request_id (
+        this->transport_->tms ()->request_id ());  
+
 }
 
 void
@@ -306,30 +307,19 @@ TAO_GIOP_Invocation::prepare_header (CORBA::Octet response_flags,
 {
   // Then fill in the rest of the RequestHeader
   //
-  // The first element of header is service context list;
-  // transactional context would be acquired here using the
-  // transaction service APIs.  Other kinds of context are as yet
-  // undefined.
-  //
-  // Last element of request header is the principal; no portable way
-  // to get it, we just pass empty principal (convention: indicates
-  // "anybody").  Steps upward in security include passing an
-  // unverified user ID, and then verifying the message (i.e. a dummy
-  // service context entry is set up to hold a digital signature for
-  // this message, then patched shortly before it's sent).
-  static CORBA::Principal_ptr principal = 0;
+  // The target specification mode
+  this->target_spec_.target_specifier (this->profile_->object_key ());
+  
+  // Update the response flags
+  this->op_details_.response_flags (response_flags);
 
-  if (TAO_GIOP::write_request_header (this->service_info_,
-                                      this->request_id_,
-                                      response_flags,
-                                      this->profile_->object_key (),
-                                      this->opname_,
-                                      this->opname_len_,
-                                      principal,
-                                      this->out_stream_,
-                                      this->orb_core_) == 0)
+  //Send the request for the header
+  if (this->transport_->send_request_header (this->op_details_,
+                                             this->target_spec_,
+                                             this->out_stream_) == 0)
     ACE_THROW (CORBA::MARSHAL ());
 }
+
 
 // Send request.
 int
@@ -537,8 +527,9 @@ TAO_GIOP_Twoway_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
   this->TAO_GIOP_Invocation::start (ACE_TRY_ENV);
   ACE_CHECK;
 
+  this->target_spec_.target_specifier (this->profile_->object_key ());
   this->transport_->start_request (this->orb_core_,
-                                   this->profile_,
+                                   this->target_spec_,
                                    this->out_stream_,
                                    ACE_TRY_ENV);
 }
@@ -722,7 +713,7 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
 
   // Bind.
   int retval =
-    this->transport_->tms ()->bind_dispatcher (this->request_id_,
+    this->transport_->tms ()->bind_dispatcher (this->op_details_.request_id (),
                                                &this->rd_);
   if (retval == -1)
     {
@@ -830,15 +821,15 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
 
   switch (reply_status)
     {
-    case TAO_GIOP_NO_EXCEPTION:
+    case TAO_PLUGGABLE_MESSAGE_NO_EXCEPTION:
       // Return so that the STUB can demarshal the reply.
       return TAO_INVOKE_OK;
 
-    case TAO_GIOP_USER_EXCEPTION:
+    case TAO_PLUGGABLE_MESSAGE_USER_EXCEPTION:
       // Return so the exception can be handled.
       return TAO_INVOKE_EXCEPTION;
 
-    case TAO_GIOP_SYSTEM_EXCEPTION:
+    case TAO_PLUGGABLE_MESSAGE_SYSTEM_EXCEPTION:
       {
         // @@ Add the location macros for this exceptions...
 
@@ -889,7 +880,7 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
       }
       // NOTREACHED.
 
-    case TAO_GIOP_LOCATION_FORWARD:
+    case TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD:
       // Handle the forwarding and return so the stub restarts the
       // request!
       return this->location_forward (this->inp_stream (), ACE_TRY_ENV);
@@ -932,8 +923,11 @@ TAO_GIOP_Oneway_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
   this->TAO_GIOP_Invocation::start (ACE_TRY_ENV);
   ACE_CHECK;
 
+  // Make sure that you have the right object key
+  this->target_spec_.target_specifier (this->profile_->object_key ());
+  
   this->transport_->start_request (this->orb_core_,
-                                   this->profile_,
+                                   this->target_spec_,
                                    this->out_stream_,
                                    ACE_TRY_ENV);
 }
@@ -953,13 +947,13 @@ TAO_GIOP_Oneway_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
 
   // Create this only if a reply is required.
   TAO_Synch_Reply_Dispatcher rd (this->orb_core_,
-                                 this->service_info_);
+                                 this->op_details_.service_info ());
 
   // The rest of this function is very similar to
   // TWO_GIOP_Twoway_Invocation::invoke_i, because we must
   // wait for a reply. See comments in that code.
   int retval =
-    this->transport_->tms ()->bind_dispatcher (this->request_id_,
+    this->transport_->tms ()->bind_dispatcher (this->op_details_.request_id (),
                                                &rd);
   if (retval == -1)
     {
@@ -1034,11 +1028,11 @@ TAO_GIOP_Oneway_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
 
   switch (reply_status)
     {
-    case TAO_GIOP_NO_EXCEPTION:
+    case TAO_PLUGGABLE_MESSAGE_NO_EXCEPTION:
       // Return so that the STUB can demarshal the reply.
       return TAO_INVOKE_OK;
 
-    case TAO_GIOP_USER_EXCEPTION:
+    case TAO_PLUGGABLE_MESSAGE_USER_EXCEPTION:
       {
         // Pull the exception from the stream.
         CORBA::String_var buf;
@@ -1059,7 +1053,7 @@ TAO_GIOP_Oneway_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
                           TAO_INVOKE_EXCEPTION);
       }
 
-    case TAO_GIOP_SYSTEM_EXCEPTION:
+    case TAO_PLUGGABLE_MESSAGE_SYSTEM_EXCEPTION:
       {
         // @@ Add the location macros for these exceptions...
 
@@ -1108,7 +1102,7 @@ TAO_GIOP_Oneway_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
         return TAO_INVOKE_OK;
       }
 
-    case TAO_GIOP_LOCATION_FORWARD:
+    case TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD:
       // Handle the forwarding and return so the stub restarts the
       // request!
       return this->location_forward (rd.reply_cdr (),
@@ -1134,9 +1128,12 @@ TAO_GIOP_Locate_Request_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
   this->TAO_GIOP_Invocation::start (ACE_TRY_ENV);
   ACE_CHECK;
 
+  // Just make sure that you pass in the object key
+  this->target_spec_.target_specifier (this->profile_->object_key ());
+  
   this->transport_->start_locate (this->orb_core_,
-                                  this->profile_,
-                                  this->request_id_,
+                                  this->target_spec_,
+                                  this->op_details_,
                                   this->out_stream_,
                                   ACE_TRY_ENV);
 }
@@ -1157,7 +1154,7 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
 
   // Bind.
   int retval =
-    this->transport_->tms ()->bind_dispatcher (this->request_id_,
+    this->transport_->tms ()->bind_dispatcher (this->op_details_.request_id (),
                                                &this->rd_);
   if (retval == -1)
     {
