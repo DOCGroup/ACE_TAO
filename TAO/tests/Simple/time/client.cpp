@@ -2,7 +2,7 @@
 
 #include "client_impl.h"
 
-ACE_RCSID(Simple, client, "$Id$")
+ACE_RCSID(Time, client, "$Id$")
 
 // This function runs the test.
 
