@@ -1,3 +1,12 @@
+Thu Nov 27 18:07:15 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/ORB_Core.cpp (root_poa): 
+
+	  Added a double-checked-locking in the implementation of
+	  root_poa. Thanks to Sebastien Lalonde for pointing this
+	  out. Looks like the intial authors thought that users wouldn't
+	  call resolve_initial_references () from multiple threads. 
+
 Thu Nov 27 17:41:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/ImplRepo_Service/implrepo.dsp: 

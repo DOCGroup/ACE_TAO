@@ -1524,36 +1524,48 @@ TAO_ORB_Core::inherit_from_parent_thread (
 CORBA::Object_ptr
 TAO_ORB_Core::root_poa (ACE_ENV_SINGLE_ARG_DECL)
 {
-  if (!CORBA::is_nil (this->root_poa_.in ()))
-    return CORBA::Object::_duplicate (this->root_poa_.in ());
-
-  TAO_ORB_Core_Static_Resources* static_resources =
-    TAO_ORB_Core_Static_Resources::instance ();
-  TAO_Adapter_Factory *factory =
-    ACE_Dynamic_Service<TAO_Adapter_Factory>::instance (static_resources->poa_factory_name_.c_str());
-  if (factory == 0)
+  // DCL ..
+  if (CORBA::is_nil (this->root_poa_.in ()))
     {
-      ACE_Service_Config::process_directive (ACE_TEXT_CHAR_TO_TCHAR(static_resources->poa_factory_directive_.c_str()));
-      factory =
-        ACE_Dynamic_Service<TAO_Adapter_Factory>::instance (static_resources->poa_factory_name_.c_str());
+      ACE_GUARD (TAO_SYNCH_MUTEX, monitor, this->lock_);
+
+      if (CORBA::is_nil (this->root_poa_.in ()))
+        {
+          TAO_ORB_Core_Static_Resources* static_resources =
+            TAO_ORB_Core_Static_Resources::instance ();
+
+          TAO_Adapter_Factory *factory =
+            ACE_Dynamic_Service<TAO_Adapter_Factory>::instance (
+              static_resources->poa_factory_name_.c_str());
+
+          if (factory == 0)
+            {
+              ACE_Service_Config::process_directive (
+                ACE_TEXT_CHAR_TO_TCHAR (
+                    static_resources->poa_factory_directive_.c_str()));
+              factory =
+                ACE_Dynamic_Service<TAO_Adapter_Factory>::instance (
+                  static_resources->poa_factory_name_.c_str());
+            }
+
+          if (factory == 0)
+            {
+              // It really failed, raise an exception!
+              ACE_THROW_RETURN (CORBA::ORB::InvalidName (),
+                                CORBA::Object::_nil ());
+            }
+
+          // @@ Not exception safe
+          TAO_Adapter *poa_adapter = factory->create (this);
+          poa_adapter->open (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
+          this->root_poa_ = poa_adapter->root ();
+
+          this->adapter_registry_.insert (poa_adapter ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK_RETURN (CORBA::Object::_nil ());
+        }
     }
-
-  if (factory == 0)
-    {
-      // It really failed, raise an exception!
-      ACE_THROW_RETURN (CORBA::ORB::InvalidName (),
-                        CORBA::Object::_nil ());
-    }
-
-  // @@ Not exception safe
-  TAO_Adapter *poa_adapter = factory->create (this);
-  poa_adapter->open (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
-
-  this->root_poa_ = poa_adapter->root ();
-
-  this->adapter_registry_.insert (poa_adapter ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   return CORBA::Object::_duplicate (this->root_poa_.in ());
 }
