@@ -287,7 +287,7 @@ main (int argc, char *argv[])
   Worker_Task<BARRIER_TYPE> worker_task (ACE_Thread_Manager::instance (),
                                          /* n_threads */ 0,
                                          0);
-  worker_task->producer ();
+  worker_task.producer ();
 
   // Wait for all the threads to reach their exit point.
   ACE_DEBUG ((LM_DEBUG,
