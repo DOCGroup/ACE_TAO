@@ -898,8 +898,8 @@ realclean: clean
  $(TAO_ROOT)/tao/StringSeq.h \
  $(TAO_ROOT)/tao/StringSeq.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/ORB.i PP_Test_i.h \
- PP_TestS.h PP_TestC.h \
+ $(TAO_ROOT)/tao/ORB.i \
+ PP_Test_i.h PP_TestS.h PP_TestC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
@@ -1222,8 +1222,8 @@ realclean: clean
  $(TAO_ROOT)/tao/StringSeq.h \
  $(TAO_ROOT)/tao/StringSeq.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/ORB.i PP_Test_i.h \
- PP_TestS.h PP_TestC.h \
+ $(TAO_ROOT)/tao/ORB.i \
+ PP_Test_i.h PP_TestS.h PP_TestC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
