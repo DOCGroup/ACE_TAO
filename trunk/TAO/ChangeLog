@@ -1,3 +1,30 @@
+Tue Oct 26 10:12:38 2004  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Factory.cpp:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Factory.h:
+          Fixed the service config factory declaration/definition macros
+          to use the newly defined ACE_FACTORY_NAMESPACE_DEFINE to get the
+          right _make_ function name.
+
+        * tests/HTIOP/AMI/#svc.conf#:
+        * tests/HTIOP/AMI/AMI.mwc:
+        * tests/HTIOP/BiDirectional/BiDirectional.mwc:
+          Removed redundant or inadvertantly committed files.
+
+        * tests/HTIOP/AMI/AMI.mpc:
+        * tests/HTIOP/AMI/HTIOP_AMI.mpc:
+        * tests/HTIOP/BiDirectional/BiDirectional.mpc:
+        * tests/HTIOP/BiDirectional/HTIOP_BiDirectional.mpc:
+        * tests/HTIOP/Hello/Hello.mpc:
+        * tests/HTIOP/Hello/HTIOP_Hello.mpc:
+          Renamed the mpc files to avoid project name collisions.
+
+        * tests/HTIOP/AMI/svc.conf:
+        * tests/HTIOP/BiDirectional/outside.conf:
+        * tests/HTIOP/Hello/outside.conf:
+        * tests/HTIOP/Hello/svc.conf:
+          Removed inacurate comments.
+
 Tue Oct 26 10:02:26 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/HTIOP/HTIOP_Completion_Handler.h:

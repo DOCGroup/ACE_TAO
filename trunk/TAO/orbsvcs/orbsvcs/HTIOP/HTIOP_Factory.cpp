@@ -122,13 +122,21 @@ TAO::HTIOP::Protocol_Factory::requires_explicit_endpoint (void) const
   return 0;
 }
 
-using namespace TAO::HTIOP;
+
 ACE_STATIC_SVC_DEFINE (TAO_HTIOP_Protocol_Factory,
                        ACE_TEXT ("HTIOP_Factory"),
                        ACE_SVC_OBJ_T,
-                       &ACE_SVC_NAME (Protocol_Factory),
+                       &ACE_SVC_NAME (TAO_HTIOP_Protocol_Factory),
                        ACE_Service_Type::DELETE_THIS |
                        ACE_Service_Type::DELETE_OBJ,
                        0)
 
-ACE_FACTORY_DEFINE (HTIOP,Protocol_Factory)
+
+// Since the actual class instantiated by the factory is scoped inside a
+// namespace, this macro is used in place of ACE_FACTORY_DEFINE, athough
+// the declaration macro is the same. Note that the second argument must
+// match the name class name used in the ACE_FACTORY_DECLARE, and the
+// third argument is the fully scoped class to be instantiated.
+ACE_FACTORY_NAMESPACE_DEFINE (HTIOP,
+                              TAO_HTIOP_Protocol_Factory,
+                              TAO::HTIOP::Protocol_Factory)

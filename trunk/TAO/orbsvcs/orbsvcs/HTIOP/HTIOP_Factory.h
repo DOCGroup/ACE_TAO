@@ -78,12 +78,16 @@ namespace TAO
       /// if -1. The default is -1.
       int inside_;
     };
-
-ACE_STATIC_SVC_DECLARE_EXPORT (HTIOP, Protocol_Factory)
-ACE_FACTORY_DECLARE (HTIOP, Protocol_Factory)
-
   };
 };
+
+// Note that these declarations are placed outside of the scope of the
+// namespace. The generated functions use a C style signature which does
+// not accomodate namespaces, so assuming namespace concatination is an
+// error. The service class name should be composed of a flattened class
+// name, with the namespaces preceeding the class name with '_'.
+ACE_STATIC_SVC_DECLARE_EXPORT (HTIOP, TAO_HTIOP_Protocol_Factory)
+ACE_FACTORY_DECLARE (HTIOP, TAO_HTIOP_Protocol_Factory)
 
 #include "ace/post.h"
 #endif /* HTIOP_FACTORY_H */
