@@ -1,3 +1,40 @@
+Sat Feb 03 09:06:22 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORB_Core.cpp (create_stub_object):
+
+	  Removed useless call to TAO_Profile::the_stub().  It sets the
+	  TAO_Stub pointer associated with the profile, yet the stub hasn't
+	  been initialized at this point in the code.  The stub pointer is
+	  set in each profile in the TAO_Stub constructor anyway.
+
+	* tao/Profile.i (TAO_Profile):
+
+	  Initialize the stub_ pointer member to zero in the base member
+	  initializer list.  Previously it was not initialized.
+
+	* tests/Portable_Interceptors/Benchmark/Client_ORBInitializer.cpp
+	  (post_init):
+	* tests/Portable_Interceptors/Benchmark/Server_ORBInitializer.cpp
+	  (post_init):
+	* tests/Portable_Interceptors/Benchmark/interceptors.cpp:
+	* tests/Portable_Interceptors/Dynamic/interceptors.cpp:
+	* tests/Portable_Interceptors/Dynamic/client.cpp (main):
+
+	  Fixed memory leaks.
+
+	  Added missing ACE_CHECKs.
+
+	* tests/Portable_Interceptors/Dynamic/server.cpp (main):
+
+	  Added missing ACE_TRY_CHECKs.
+
+	  Fixed mismatched use of ACE_CHECK_RETURN within an ACE_TRY
+	  block.
+
+	* tests/Portable_Interceptors/IORInterceptor/FOO_ClientRequestInterceptor.h:
+
+	  Corrected class description.
+
 Sun Feb  4 15:30:00 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
 
         * tests/AMI_Timeouts/client.cpp:
@@ -591,7 +628,8 @@ Sat Jan 27 18:41:28 2001  Ossama Othman  <ossama@uci.edu>
         * tao/ORB_Core.cpp (priority_mapping_manager):
 
           Fixed problem where this (accessor) method would always return a
-          nil object reference.
+          nil object reference.  Thanks to Michael Hampel for detecting
+	  this problem.
 
           Release the old reference before setting the new one in the
           mutator version of this method.  Fixes a memory leak.  We won't
