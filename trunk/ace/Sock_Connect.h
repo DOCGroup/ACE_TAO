@@ -36,7 +36,8 @@ class ACE_Export ACE_Sock_Connect
 
   /// Bind a new unused port to <handle>.
   static int bind_port (ACE_HANDLE handle,
-                        ACE_UINT32 ip_addr = INADDR_ANY);
+                        ACE_UINT32 ip_addr = INADDR_ANY,
+                        int address_family = AF_UNSPEC);
 
   /**
    * Get our broadcast address based on our <host_addr>.  If
