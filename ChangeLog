@@ -1,3 +1,10 @@
+Thu Apr 10 09:41:13 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:
+
+          Forgot to change the usage of GNUProjectCreator to
+          GNUACEProjectCreator.
+
 Thu Apr 10 06:52:41 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/USAGE:
