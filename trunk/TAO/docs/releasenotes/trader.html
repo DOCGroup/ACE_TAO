@@ -969,6 +969,11 @@ application, then run the <tt>export_test</tt> executable found in the <tt>orbsv
 directory. When the <tt>export_test</tt> ceases to output data and enters the event loop,
 run the <tt>import_test</tt> found in the same directory. </p>
 
+<p><strong>Note: </strong>The export_test and the Trading_Service executables are servers
+--- the export_test is a server of dynamic properties. Hence, if you run both executables
+on the same machine, you must supply them with different ports. For example, add -ORBport
+0 to the export_test command line.&nbsp; </p>
+
 <p>To test federated queries, run at least three copies of the <tt>Trading_Service</tt>
 application, each using the <tt>-TSfederate</tt> flag. The traders will form a complete
 graph, with each link follow policy set to <tt>CosTrading::always</tt>. When run with the <tt>-f</tt>
