@@ -174,7 +174,7 @@ ECT_Throughput::run (int argc, char* argv[])
 #else
 #include "ECT_Scheduler_Info.h"
       ACE_Runtime_Scheduler scheduler_impl (
-	runtime_configs_size,
+        runtime_configs_size,
         runtime_configs,
         runtime_infos_size,
         runtime_infos);
@@ -648,11 +648,11 @@ ECT_Throughput::parse_args (int argc, char *argv [])
 
   if (this->ec_concurrency_hwm_ <= 0)
     {
+      this->ec_concurrency_hwm_ = 1;
       ACE_ERROR_RETURN ((LM_DEBUG,
                          "%s: invalid concurrency HWM, "
                          "reset to default (%d)\n",
                          argv[0], 1), -1);
-      this->ec_concurrency_hwm_ = 1;
     }
 
   return 0;
