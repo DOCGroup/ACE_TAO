@@ -7799,7 +7799,6 @@ ACE_OS::open (const char *filename,
   return 0;
 #elif defined (ACE_WIN32)
   ACE_UNUSED_ARG (perms);
-  // Warning: This function ignores _O_APPEND
 
   DWORD access = GENERIC_READ;
   if (ACE_BIT_ENABLED (mode, O_WRONLY))
