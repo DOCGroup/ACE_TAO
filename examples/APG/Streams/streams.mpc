@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(Answerer) : aceexe {
   exename = Answerer
   Source_Files {
