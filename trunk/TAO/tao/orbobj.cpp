@@ -162,7 +162,7 @@ argvec_shift (int& argc, char *const *argv, int numslots)
 {
   ACE_OS::memmove ((void *) &argv[0],
 		   (void *) &argv[numslots],
-		   (argc - numslots) * sizeof argv[0]);
+		   (argc - numslots - 1) * sizeof argv[0]);
   argc -= numslots;
 }
   
@@ -307,7 +307,8 @@ CORBA::ORB_init (int &argc,
       if (ACE_OS::hostname (hbuf, sizeof(hbuf)-1) == -1)
         ACE_DEBUG ((LM_ERROR, "(%P|%t) %p, unable to obtain host name\n"));
 
-      host = &hbuf[0];
+      CORBA::String_var h = CORBA::string_dup(hbuf);
+      host = h;
     }
 
   // The conditional catches errors in hbuf
@@ -358,8 +359,7 @@ CORBA::ORB_init (int &argc,
     return 0;
 
   // Initialize the Service Configurator
-  //#if !defined (VXWORKS)
-#if ! defined (VXWORKS)
+#if !defined (VXWORKS)
   ACE_Service_Config::open (svc_config_argc, svc_config_argv);
 #else
   // Statically stick in the appropriate abstract factories for now.
