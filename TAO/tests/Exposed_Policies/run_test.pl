@@ -13,8 +13,8 @@ $obj_file = PerlACE::LocalFile ("Object.cfg");
 $server_conf = PerlACE::LocalFile ("server.conf");
 
 $SV = new PerlACE::Process ("server", "-ORBSvcConf $server_conf"
-                                      . " -ORBendpoint iiop://localhost:0/priority=5"
-                                      . " -ORBendpoint iiop://localhost:0/priority=15"
+                                      . " -ORBendpoint iiop://localhost:0/priority=1"
+                                      . " -ORBendpoint iiop://localhost:0/priority=4"
                                       . " -POAConfigFile $poa_file"
                                       . " -ObjectConfigFile $obj_file");
 
