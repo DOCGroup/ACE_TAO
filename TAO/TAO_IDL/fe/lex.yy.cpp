@@ -2096,7 +2096,7 @@ char msg[];
 #endif
 	{
 	(void) fprintf( stderr, "%s\n", msg );
-	exit( TAO_YY_EXIT_FAILURE );
+	ACE_OS::exit (TAO_YY_EXIT_FAILURE);
 	}
 
 

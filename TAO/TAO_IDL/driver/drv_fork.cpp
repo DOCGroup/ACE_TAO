@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -66,13 +66,13 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 /*
  * DRV_fork.cc - Fork a process for each file to be processed, wait for
- *		 status from the child process
+ *               status from the child process
  */
 
-#include	"idl.h"
-#include	"idl_extern.h"
+#include        "idl.h"
+#include        "idl_extern.h"
 
-#include	"drv_private.h"
+#include        "drv_private.h"
 
 #include "ace/Process_Manager.h"
 
@@ -99,31 +99,31 @@ DRV_fork()
       ACE_Process_Manager manager;
       pid_t child_pid = manager.spawn (options);
       if (child_pid == 0)
-	{
-	  /*
-	   * OK, do it to this file (in the child)
-	   */
-	  DRV_drive(DRV_files[DRV_file_index]);
-	  ACE_OS::exit(0);
-	}
+        {
+          /*
+           * OK, do it to this file (in the child)
+           */
+          DRV_drive(DRV_files[DRV_file_index]);
+          ACE_OS::exit(0);
+        }
 
       if (child_pid == -1)
-	{
-	  cerr << GTDEVEL("IDL: spawn failed\n");
-	  ACE_OS::exit (99);
-	  /*NOTREACHED*/
-	}
+        {
+          cerr << GTDEVEL("IDL: spawn failed\n");
+          ACE_OS::exit (99);
+          /*NOTREACHED*/
+        }
 
       // child_pid is the process id of something at this point.
       if (manager.wait () == -1)
-	{
-	  cerr << GTDEVEL("IDL: wait failed\n");
-	  ACE_OS::exit (99);
-	  /*NOTREACHED*/
-	}
+        {
+          cerr << GTDEVEL("IDL: wait failed\n");
+          ACE_OS::exit (99);
+          /*NOTREACHED*/
+        }
     }
   /*
    * Now the parent process can exit
    */
-  exit(0);
+  ACE_OS::exit (0);
 }
