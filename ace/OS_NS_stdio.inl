@@ -622,7 +622,7 @@ ACE_INLINE int
 ACE_OS::fclose (FILE *fp)
 {
   ACE_OS_TRACE ("ACE_OS::fclose");
-  ACE_OSCALL_RETURN (::fclose (fp), int, -1);
+  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::fclose (fp), int, -1);
 }
 
 ACE_INLINE FILE *
@@ -688,19 +688,19 @@ ACE_OS::fflush (FILE *fp)
     }
 #endif /* VXWORKS */
 
-  ACE_OSCALL_RETURN (::fflush (fp), int, -1);
+  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::fflush (fp), int, -1);
 }
 
 ACE_INLINE int
 ACE_OS::fgetc (FILE* fp)
 {
-  ACE_OSCALL_RETURN (::fgetc (fp), int, -1);
+  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::fgetc (fp), int, -1);
 }
 
 ACE_INLINE int
 ACE_OS::fgetpos (FILE* fp, fpos_t* pos)
 {
-  ACE_OSCALL_RETURN (::fgetpos (fp, pos), int, -1);
+  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::fgetpos (fp, pos), int, -1);
 }
 
 ACE_INLINE ACE_TCHAR *
@@ -710,7 +710,7 @@ ACE_OS::fgets (ACE_TCHAR *buf, int size, FILE *fp)
 #if defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
   ACE_OSCALL_RETURN (::fgetws (buf, size, fp), wchar_t *, 0);
 #else /* ACE_WIN32 */
-  ACE_OSCALL_RETURN (::fgets (buf, size, fp), char *, 0);
+  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::fgets (buf, size, fp), char *, 0);
 #endif /* ACE_WIN32 && ACE_USES_WCHAR */
 }
 
@@ -732,7 +732,7 @@ ACE_OS::fputs (const ACE_TCHAR *s, FILE *stream)
 #if defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
   ACE_OSCALL_RETURN (::fputws (s, stream), int, -1);
 #else /* ACE_WIN32 */
-  ACE_OSCALL_RETURN (::fputs (s, stream), int, -1);
+  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::fputs (s, stream), int, -1);
 #endif /* ACE_WIN32 && ACE_USES_WCHAR */
 }
 
@@ -743,7 +743,7 @@ ACE_OS::fread (void *ptr, size_t size, size_t nelems, FILE *fp)
 #if defined (ACE_LACKS_POSIX_PROTOTYPES)
   ACE_OSCALL_RETURN (::fread ((char *) ptr, size, nelems, fp), int, 0);
 #else
-  ACE_OSCALL_RETURN (::fread (ptr, size, nelems, fp), int, 0);
+  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::fread (ptr, size, nelems, fp), int, 0);
 #endif /* ACE_LACKS_POSIX_PROTOTYPES */
 }
 
@@ -754,7 +754,7 @@ ACE_OS::freopen (const ACE_TCHAR *filename, const ACE_TCHAR *mode, FILE* stream)
 #if defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
   ACE_OSCALL_RETURN (::_wfreopen (filename, mode, stream), FILE *, 0);
 #else
-  ACE_OSCALL_RETURN (::freopen (filename, mode, stream), FILE *, 0);
+  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::freopen (filename, mode, stream), FILE *, 0);
 #endif /* ACE_WIN32 && ACE_USES_WCHAR */
 }
 
@@ -781,7 +781,7 @@ ACE_OS::fseek (FILE *fp, long offset, int whence)
     }
 #   endif  /* SEEK_SET != FILE_BEGIN || SEEK_CUR != FILE_CURRENT || SEEK_END != FILE_END */
 # endif   /* ACE_WIN32 */
-  ACE_OSCALL_RETURN (::fseek (fp, offset, whence), int, -1);
+  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::fseek (fp, offset, whence), int, -1);
 }
 
 ACE_INLINE int
@@ -793,7 +793,7 @@ ACE_OS::fsetpos (FILE* fp, fpos_t* pos)
 ACE_INLINE long
 ACE_OS::ftell (FILE* fp)
 {
-  ACE_OSCALL_RETURN (::ftell (fp), long, -1);
+  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::ftell (fp), long, -1);
 }
 
 ACE_INLINE size_t
@@ -803,7 +803,7 @@ ACE_OS::fwrite (const void *ptr, size_t size, size_t nitems, FILE *fp)
 #if defined (ACE_LACKS_POSIX_PROTOTYPES)
   ACE_OSCALL_RETURN (::fwrite ((const char *) ptr, size, nitems, fp), int, 0);
 #else
-  ACE_OSCALL_RETURN (::fwrite (ptr, size, nitems, fp), int, 0);
+  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::fwrite (ptr, size, nitems, fp), int, 0);
 #endif /* ACE_LACKS_POSIX_PROTOTYPES */
 }
 
