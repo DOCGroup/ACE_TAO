@@ -1,3 +1,17 @@
+Mon Jul 02 23:16:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/IIOP_Transport.cpp:
+	* tao/IIOP_Transport.h: Removed some functions which would no
+	  longer be used.
+
+	* tao/Transport.h: Added some documentation for the incoming data
+	  path.
+
+	* tao/Strategies/UIOP_Transport.h:
+	* tao/Strategies/UIOP_Transport.cpp:
+	* tao/Strategies/UIOP_Connection_Handler.cpp: Brought them up in
+	  sync with IIOP.
+
 Mon Jul 02 20:28:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	This checkin fixes many problems with multiple calls being read in
