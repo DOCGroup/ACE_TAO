@@ -95,8 +95,9 @@ static const CORBA::Long _oc_CORBA_StringSeq[] =
 };
 static CORBA::TypeCode _tc_TAO_tc_CORBA_StringSeq (CORBA::tk_alias, sizeof (_oc_CORBA_StringSeq), (char *) &_oc_CORBA_StringSeq, 0, sizeof (CORBA_StringSeq));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_CORBA_StringSeq, &_tc_TAO_tc_CORBA_StringSeq)
-
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_StringSeq, &_tc_TAO_tc_CORBA_StringSeq)
+TAO_NAMESPACE_END
 
 #if !defined (_CORBA_WSTRINGSEQ_CS_)
 #define _CORBA_WSTRINGSEQ_CS_
@@ -160,7 +161,9 @@ static const CORBA::Long _oc_CORBA_WStringSeq[] =
 };
 static CORBA::TypeCode _tc_TAO_tc_CORBA_WStringSeq (CORBA::tk_alias, sizeof (_oc_CORBA_WStringSeq), (char *) &_oc_CORBA_WStringSeq, 0, sizeof (CORBA_WStringSeq));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_CORBA_WStringSeq, &_tc_TAO_tc_CORBA_WStringSeq)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_WStringSeq, &_tc_TAO_tc_CORBA_WStringSeq)
+TAO_NAMESPACE_END
 
 void operator<<= (
     CORBA::Any &_tao_any,
@@ -171,7 +174,7 @@ void operator<<= (
   if (stream << _tao_elem)
   {
     _tao_any._tao_replace (
-        _tc_CORBA_StringSeq,
+        CORBA::_tc_StringSeq,
         TAO_ENCAP_BYTE_ORDER,
         stream.begin ()
       );
@@ -183,7 +186,7 @@ void operator<<= (CORBA::Any &_tao_any, CORBA_StringSeq *_tao_elem) // non copyi
   TAO_OutputCDR stream;
   stream << *_tao_elem;
   _tao_any._tao_replace (
-      _tc_CORBA_StringSeq,
+      CORBA::_tc_StringSeq,
       TAO_ENCAP_BYTE_ORDER,
       stream.begin (),
       1,
@@ -206,7 +209,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA_StringSeq *&
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (_tc_CORBA_StringSeq, ACE_TRY_ENV)) // not equal
+    if (!type->equivalent (CORBA::_tc_StringSeq, ACE_TRY_ENV)) // not equal
       {
         return 0;
       }
@@ -230,7 +233,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA_StringSeq *&
       if (stream >> *tmp)
       {
         ((CORBA::Any *)&_tao_any)->_tao_replace (
-            _tc_CORBA_StringSeq,
+            CORBA::_tc_StringSeq,
             1,
             ACE_static_cast (void *, tmp),
             CORBA_StringSeq::_tao_any_destructor
@@ -260,7 +263,7 @@ void operator<<= (
   if (stream << _tao_elem)
   {
     _tao_any._tao_replace (
-        _tc_CORBA_WStringSeq,
+        CORBA::_tc_WStringSeq,
         TAO_ENCAP_BYTE_ORDER,
         stream.begin ()
       );
@@ -272,7 +275,7 @@ void operator<<= (CORBA::Any &_tao_any, CORBA_WStringSeq *_tao_elem) // non copy
   TAO_OutputCDR stream;
   stream << *_tao_elem;
   _tao_any._tao_replace (
-      _tc_CORBA_WStringSeq,
+      CORBA::_tc_WStringSeq,
       TAO_ENCAP_BYTE_ORDER,
       stream.begin (),
       1,
@@ -295,7 +298,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA_WStringSeq *
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (_tc_CORBA_WStringSeq, ACE_TRY_ENV)) // not equal
+    if (!type->equivalent (CORBA::_tc_WStringSeq, ACE_TRY_ENV)) // not equal
       {
         return 0;
       }
@@ -319,7 +322,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA_WStringSeq *
       if (stream >> *tmp)
       {
         ((CORBA::Any *)&_tao_any)->_tao_replace (
-            _tc_CORBA_WStringSeq,
+            CORBA::_tc_WStringSeq,
             1,
             ACE_static_cast (void *, tmp),
             CORBA_WStringSeq::_tao_any_destructor
