@@ -111,7 +111,7 @@ TAO::HTIOP::Transport::recv (char *buf,
     {
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - TAO::HTIOP::Transport[%d]::recv_i, "),
+                  ACE_TEXT ("TAO (%P|%t) - TAO::HTIOP::Transport[%d]::recv_i, ")
                   ACE_TEXT ("read failure - %m"),
                   this->id ()));
     }

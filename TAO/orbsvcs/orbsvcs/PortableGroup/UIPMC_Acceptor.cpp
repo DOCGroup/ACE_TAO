@@ -96,7 +96,7 @@ TAO_UIPMC_Acceptor::open (TAO_ORB_Core *orb_core,
       // This is bad mojo, i.e. an internal TAO error.
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("TAO (%P|%t) ")
-                         ACE_TEXT ("UIPMC_Acceptor::open - "),
+                         ACE_TEXT ("UIPMC_Acceptor::open - ")
                          ACE_TEXT ("hostname already set\n\n")),
                         -1);
     }
