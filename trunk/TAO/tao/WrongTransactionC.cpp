@@ -13,25 +13,25 @@
 #include "WrongTransactionC.h"
 
 // default constructor
-CORBA::WrongTransaction::WrongTransaction (void)
+CORBA_WrongTransaction::CORBA_WrongTransaction (void)
   : CORBA_UserException (CORBA::_tc_WrongTransaction)
 {
 }
 
 // destructor - all members are of self managing types
-CORBA::WrongTransaction::~WrongTransaction (void)
+CORBA_WrongTransaction::~CORBA_WrongTransaction (void)
 {
 }
 
 // copy constructor
-CORBA::WrongTransaction::WrongTransaction (const CORBA::WrongTransaction &_tao_excp)
+CORBA_WrongTransaction::CORBA_WrongTransaction (const CORBA_WrongTransaction &_tao_excp)
   : CORBA_UserException (_tao_excp._type ())
 {
 }
 
 // assignment operator
-CORBA::WrongTransaction&
-CORBA::WrongTransaction::operator= (const CORBA::WrongTransaction &_tao_excp)
+CORBA_WrongTransaction&
+CORBA_WrongTransaction::operator= (const CORBA_WrongTransaction &_tao_excp)
 {
 
   this->CORBA_UserException::operator= (_tao_excp);
@@ -39,25 +39,25 @@ CORBA::WrongTransaction::operator= (const CORBA::WrongTransaction &_tao_excp)
 }
 
 // narrow
-CORBA::WrongTransaction_ptr 
-CORBA::WrongTransaction::_narrow (CORBA::Exception *exc)
+CORBA_WrongTransaction_ptr 
+CORBA_WrongTransaction::_narrow (CORBA::Exception *exc)
 {
   if (!ACE_OS::strcmp ("IDL:omg.org/CORBA/WrongTransaction:1.0", exc->_id ())) // same type
-    return ACE_dynamic_cast (CORBA::WrongTransaction_ptr, exc);
+    return ACE_dynamic_cast (CORBA_WrongTransaction_ptr, exc);
   else
     return 0;
 }
 
 
-void CORBA::WrongTransaction::_raise ()
+void CORBA_WrongTransaction::_raise ()
 {
   TAO_RAISE(*this);
 }
 
 // TAO extension - the _alloc method
-CORBA::Exception *CORBA::WrongTransaction::_alloc (void)
+CORBA::Exception *CORBA_WrongTransaction::_alloc (void)
 {
-  return new CORBA::WrongTransaction;
+  return new CORBA_WrongTransaction;
 }
 
 #endif /* ! defined TAO_HAS_MINIMUM_CORBA */
