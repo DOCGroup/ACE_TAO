@@ -1,3 +1,12 @@
+Tue Jan 27 15:09:08 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/OS.i,
+	* ace/Timer_Queue_Adapters.cpp:
+	  When using ACE_CLEANUP_???_POP macros, it was being called with
+ 	  argument 1, which should be 0 (don't execute the cleanup).
+	  Thanks to Arturo Montes <mitosys@colomsat.net.co> for reporting
+ 	  argument 1, which should be 0 (don't execute the cleanup).this.
+
 Tue Jan 27 14:56:49 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Basic_Types.*: more cleanup: got rid of ACE_USES_ACE_U_LONGLONG,
