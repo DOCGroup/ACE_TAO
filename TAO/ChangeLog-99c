@@ -1,3 +1,11 @@
+Tue Jul 20 07:34:11 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp
+          (universal_time): inserted missing 0x in front of
+          the magic constant on platforms that lack 64-bit ints.
+          Also, changed name of MAGIC_OFFSET to TAO_Time_Base_Offset,
+          to avoid potential namespace collisions.
+
 Tue Jul 20 07:06:28 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/DII_Cubit/Makefile:
