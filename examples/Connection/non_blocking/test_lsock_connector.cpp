@@ -1,6 +1,20 @@
 // $Id$
 
 #include "ace/LSOCK_Connector.h"
+
+#if defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
+int
+main (int, char *argv[])
+{
+  ACE_ERROR_RETURN ((LM_INFO,
+                     ASYS_TEXT ("%s: not supported with ")
+                     ASYS_TEXT ("ACE_LACKS_UNIX_DOMAIN_SOCKETS\n"),
+                     argv[0]),
+                     -1);
+}
+
+#else  /* ! ACE_LACKS_UNIX_DOMAIN_SOCKETS */
+
 #include "ace/UNIX_Addr.h"
 #include "CPP-connector.h"
 
@@ -51,3 +65,5 @@ template class ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<PEER_HANDLER> *, ACE_SY
 #pragma instantiate ACE_Map_Reverse_Iterator<ACE_HANDLE, ACE_Svc_Tuple<PEER_HANDLER> *, ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<PEER_HANDLER> *, ACE_SYNCH_RW_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#endif /* ! ACE_LACKS_UNIX_DOMAIN_SOCKETS */
