@@ -1,3 +1,17 @@
+Thu Apr 24 13:55:00 UTC 2003  Gautam Thaker  <gthaker@atl.lmco.com>
+
+        * README.SCTP 
+          Edited for content. This file provides SCTP network level 
+          information.
+        * README.OpenSS7
+          Added. This file provides OpenSS7 implementation
+          specific information.
+        * README.SCIOP
+          Added. This file provides TAO SCIOP level related 
+          README information. Ideally it might be put some place
+          under TAO/ but it is kept here with other SCTP related
+          README files.
+
 Thu Apr 24 08:14:42 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/Parser.pm:
