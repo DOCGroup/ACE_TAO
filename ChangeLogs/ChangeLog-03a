@@ -1,7 +1,19 @@
+Mon Dec  9 17:02:41 2002  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/platform_aix_ibm.GNU: Change from using
+          -qtemplateregistry to use -qtempinc for Visual Age C++ 6 template
+          handling. -qtemplateregistry is a nice idea, but generates too
+          many errors from missing templates. Using -qtempinc still generates
+          gobs of multiple-instantiation warnings, but the build is correct
+          and the tests run.
+
+        * bin/aix_shr: Add the error number patterns for VA 6's multiple
+          template instantiation warnings to the filter-out pattern.
+
 Mon Dec  9 15:42:39 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* examples/C++NPv1/Reactive_Logging_Server_Ex.cpp:  Removed
-	  duplicate template specilization for ACE_Hash<ACE_HANDLE> on
+	  duplicate template specialization for ACE_Hash<ACE_HANDLE> on
 	  Windows that's no longer needed.
 
 Mon Dec  9 07:41:39 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>

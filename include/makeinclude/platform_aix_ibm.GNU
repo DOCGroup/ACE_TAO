@@ -104,7 +104,8 @@ else    # Visual Age 5 and 6
     TEMPINCDIR  = tempinc
   else
     ifeq ($(XLCVERSION),0x0600)
-      CCFLAGS    += -qflag=w:w -qstaticinline -qfuncsect -qtemplateregistry
+      CCFLAGS    += -qflag=w:w -qstaticinline -qfuncsect -qtempinc
+      TEMPINCDIR = tempinc
     else
       CXX = echo "Unrecognized compiler version $(XLCVERSION)\n"
     endif
