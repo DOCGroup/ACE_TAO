@@ -612,8 +612,14 @@ TAO_Transport::send_reply_message_i (const ACE_Message_Block *mb,
 
   ACE_ASSERT (n == 0);
 
-  ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) Going to queue and leave \n"));
+  if (TAO_debug_level > 3)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - Transport[%d]::send_reply_message_i, "
+                  "preparing to add to queue before leaving \n",
+                  this->id ()));
+    }
+
   // Till this point we shouldnt have any copying and that is the
   // point anyway. Now, remove the node from the list
   synch_message.remove_from_list (this->head_,
@@ -631,9 +637,6 @@ TAO_Transport::send_reply_message_i (const ACE_Message_Block *mb,
     this->orb_core ()->flushing_strategy ();
 
   (void) flushing_strategy->schedule_output (this);
-
-  // @@todo: Not sure at this point what will happen if the transport
-  // get destroyed in between...
 
   return 1;
 }
