@@ -262,7 +262,12 @@ will try to use less space if the enum values are small enough, the IDL
 compiler now appends <enum name>_TAO_ENUM_32BIT_ENFORCER = 0xFFFFFFFF to
 every enum. This appended enum value is not part of the IDL compiler's
 internal representation of the enum, so unions that use the enum as a
-discriminator will not have incorrect _default() code generated for them.
+discriminator will not have incorrect _default() code generated for them.</li>
+
+<li>
+The IDL compiler generates a C++ ostream operator for IDL exceptions. So
+far only the repository ID is output, but this may be enhanced when
+requirements and/or desires become clearer.
 </ul>
 
 <p><br>Known bugs/unimplemented constructs:
