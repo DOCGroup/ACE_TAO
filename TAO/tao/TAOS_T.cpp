@@ -10,10 +10,6 @@
 #ifndef _TAO_IDL__PROJECT_DOC_MARINA_ACE_WRAPPERS_TAO_TAO_TAOS_T_CPP_
 #define _TAO_IDL__PROJECT_DOC_MARINA_ACE_WRAPPERS_TAO_TAO_TAOS_T_CPP_
 
-#if defined(_MSC_VER)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
 #include "tao/TAOS_T.h"
 
 #if !defined (__ACE_INLINE__)
