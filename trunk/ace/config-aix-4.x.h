@@ -40,7 +40,6 @@
 
    // These are for Visual Age C++ only
 #  if defined (__IBMCPP__) && (__IBMCPP__ >= 400)
-#    define ACE_TEMPLATES_REQUIRE_SOURCE
 #    define ACE_HAS_STD_TEMPLATE_SPECIALIZATION
 #    define ACE_HAS_TYPENAME_KEYWORD
 #    undef WIFEXITED
@@ -48,6 +47,11 @@
 #    if (__IBMCPP__ >= 500)  /* Visual Age C++ 5 */
 #      define ACE_HAS_STANDARD_CPP_LIBRARY 1
 #      define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
+#      if !defined (__TEMPINC__)
+         // Visual Age C++ 5 without -qtempinc is asking for explicit
+         // template instantiation.
+#        define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
+#      endif /* __TEMPINC__ */
 #    endif /* __IBMCPP__ >= 500 */
 #  endif /* __IBMCPP__ */
 
