@@ -118,6 +118,10 @@ class ImR_Locator_i : public virtual POA_ImplementationRepository::Locator
                                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException, ImplementationRepository::NotFound));
 
+  // Shuts down the repository.
+  virtual void shutdown_repo (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) 
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
   // Invoked by the server to update transient information such as current
   // activator of the <server> and its ServerObject.
   virtual void server_is_running_in_activator (const char *server,
@@ -203,6 +207,9 @@ class ImR_Locator_i : public virtual POA_ImplementationRepository::Locator
 
   /// The locator interface for the IORTable
   IORTable::Locator_var ins_locator_;
+
+  // The ORB.
+  CORBA::ORB_var orb_ ;
 };
 
 #include /**/ "ace/post.h"
