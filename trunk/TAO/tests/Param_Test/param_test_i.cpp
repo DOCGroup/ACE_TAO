@@ -382,8 +382,32 @@ Param_Test_i::test_any (const CORBA::Any &a1,
                         CORBA::Environment &env)
 {
   CORBA::Any *ret;
+  CORBA::Short short_in;
+  char *str_in;
+
   a2 = a1;
   a3 = new CORBA::Any (a1);
   ret = new CORBA::Any (a1);
+
+  // debug the incoming Any
+  if (a1 >>= short_in)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Received short = %d\n", short_in));
+      a2 >>= short_in;
+      ACE_DEBUG ((LM_DEBUG, "inout short = %d\n", short_in));
+      *a3.ptr () >>= short_in;
+      ACE_DEBUG ((LM_DEBUG, "out short = %d\n", short_in));
+      *ret >>= short_in;
+      ACE_DEBUG ((LM_DEBUG, "ret short = %d\n", short_in));
+    }
+  else if (a1 >>= str_in)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Received unbounded string = %s\n", str_in));
+    }
+  else
+    {
+      ACE_DEBUG ((LM_DEBUG, "Received UNKNOWN type\n"));
+    }
+
   return ret;
 }

@@ -1590,13 +1590,13 @@ Test_Any::init_parameters (Param_Test_ptr objref,
   Generator *gen = GENERATOR::instance (); // value generator
   CORBA::ULong index = (CORBA::ULong) (gen->gen_long () % 2);
 
-  index = 1;
   switch (index)
     {
     case 0:
       {
         CORBA::Short s;
         s = gen->gen_short ();
+        ACE_DEBUG ((LM_DEBUG, "setting short = %d\n", s));
         this->in_ <<= s;
         this->inout_ <<= s;
       }
@@ -1604,6 +1604,7 @@ Test_Any::init_parameters (Param_Test_ptr objref,
     case 1:
       {
         char *str = gen->gen_string ();
+        ACE_DEBUG ((LM_DEBUG, "setting string = %s\n", str));
         this->in_ <<= str;
         this->inout_ <<= str;
       }
@@ -1687,6 +1688,10 @@ Test_Any::check_validity (void)
       (this->out_.in () >>= short_out) &&
       (this->ret_.in () >>= short_ret))
     {
+      ACE_DEBUG ((LM_DEBUG, "Received shorts: in = %d, "
+                  "inout = %d, out = %d, ret = %d\n",
+                  short_in, short_inout, short_out, short_ret));
+
       if ((short_in == short_inout) &&
           (short_in == short_out) &&
           (short_in == short_ret))

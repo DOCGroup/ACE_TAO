@@ -1,3 +1,28 @@
+Sat Apr 18 10:14:13 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* tao/Any.cpp: There was a mistake in some of the the >>=
+	operators in which for the "any owns data" case, we were
+	retrieving the data from the value_ field instead of the cdr_
+	field.
+
+	* tao/GIOP.cpp: An unwanted explicit template instantiation for
+	Unbounded sequences of TypeCode is now removed.
+
+	* tao/decode.cpp: A very very subtle error. For the case of
+	Any::decode, our strategy was to let the Any maintain a pointer to
+	the CDR stream and eventually let the >>= operators do the
+	retrieve part. We were correctly maintaining pointers to the
+	duplicated ACE_Message_Block. Unfortunately, this
+	ACE_Message_Block was maintaining a data member which is the CDR
+	stream which was allocated on the function call stack of
+	"do_static_call". As a result, all kinds of weird results started
+	showing up. We now make an explicit copy. Although this scheme
+	will slow down the performance for Anys, at this time, this is the
+	only feasible solution to get things working.
+
+	* tests/CDR: Added test for Any in basic_types.cpp
+
+	* tests/Param_Test: Added some debug statements.
 
 Fri Apr 17 19:15:24 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
@@ -7,14 +32,14 @@ Fri Apr 17 19:15:24 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
 Fri Apr 17 15:35:27 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Naming/CosNaming_i.cpp: 
+	* orbsvcs/orbsvcs/Naming/CosNaming_i.cpp:
 	  An explicit ACE_Thread_Mutex was used, this is non-portable to
 	  platforms without threads, the "Right Thing" is to use the macro
 	  ACE_SYNCH_MUTEX.
 
 Fri Apr 17 13:29:46 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/skip.cpp (skip): 
+	* tao/skip.cpp (skip):
 	* tao/deep_copy.cpp (deep_copy):
 	* TAO_IDL/be/be_decl.cpp (tc_name2long): Removed unreferenced
  	  variables.

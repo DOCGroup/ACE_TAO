@@ -32,7 +32,8 @@ struct CDR_Test_Types
   CORBA::Long l;
   CORBA::String str;
   CORBA::Double d;
-  
+  CORBA::Any any;
+
   enum {
     ARRAY_SIZE = 10
   };
@@ -42,7 +43,8 @@ struct CDR_Test_Types
 
 CDR_Test_Types::CDR_Test_Types (void)
 :
-  o (1), s (2), l (4), str ("abc"), d (8)
+  o (1), s (2), l (4), str ("abc"), d (8), any (CORBA::_tc_short, new
+                                              CORBA::Short (s), 1)
 {
   for (int i = 0; i < CDR_Test_Types::ARRAY_SIZE; ++i)
     {
@@ -55,6 +57,8 @@ test_put (TAO_OutputCDR &cdr, CDR_Test_Types &test_types)
 {
   for (int i = 0; i < n; ++i)
     {
+      CORBA::Environment env;
+
       if (cdr.write_octet (test_types.o) == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "write_octet[%d] failed\n",
@@ -87,6 +91,12 @@ test_put (TAO_OutputCDR &cdr, CDR_Test_Types &test_types)
 			   i),
 			  1);
 #endif
+      if (cdr.encode (CORBA::_tc_any, &test_types.any, 0, env) !=
+          CORBA::TypeCode::TRAVERSE_CONTINUE)
+	ACE_ERROR_RETURN ((LM_ERROR,
+			   "encode Any [%d] failed\n",
+			   i),
+			  1);
     }
 
   return 0;
@@ -99,6 +109,9 @@ test_get (TAO_InputCDR &cdr, const CDR_Test_Types &test_types)
   CORBA::Short xs;
   CORBA::Long xl;
   CORBA::String xstr;
+  CORBA::Any any;
+
+  CORBA::Environment env;
 
   for (int i = 0; i < n; ++i)
     {
@@ -164,19 +177,60 @@ test_get (TAO_InputCDR &cdr, const CDR_Test_Types &test_types)
                           1);
       CORBA::string_free (xstr);
 #endif
+      if (cdr.decode (CORBA::_tc_any, &any, 0, env) ==
+          CORBA::TypeCode::TRAVERSE_CONTINUE)
+        {
+          CORBA::Short s;
+          if (any >>= s)
+            {
+              if (test_types.s != s)
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   "Any short mismatch [%d != %d in loop %d]\n",
+                                   test_types.s,
+                                   s,
+                                   i),
+                                  1);
+            }
+          else
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Any did not receive a short [%d] \n",
+                               i),
+                              1);
+        }
+      else
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Any decode failed [%d] \n",
+                           i),
+                          1);
     }
 
   return 0;
 }
 
 int
-main (int, char *[])
+main (int argc, char *argv[])
 {
+  TAO_TRY
+    {
+      CORBA::ORB_var orb = CORBA::ORB_init (argc,
+                                            argv,
+                                            0,
+					    TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+    }
+  TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("TC");
+      return 0;
+
+    }
+  TAO_ENDTRY;
+
   for (int i = 0; i < nloops; ++i)
     {
       TAO_OutputCDR output;
       CDR_Test_Types test_types;
- 
+
       if (test_put (output, test_types) != 0)
 	{
 	  return 1;

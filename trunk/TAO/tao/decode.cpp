@@ -171,14 +171,57 @@ TAO_Marshal_Any::decode (CORBA::TypeCode_ptr,
       == CORBA::TypeCode::TRAVERSE_CONTINUE)
     {
       // Let the Any maintain a pointer to the CDR stream
+      // @@ ASG + CORYAN - The following commented line would have been a great
+      // optimization. However, it turns out that although the Message_Block is
+      // heap-allocated, the actual buffer i.e., data block is allocated on the
+      // function call stack. Once we are out of these chain of functions and
+      // return into the stub, we have lost the activation record for the
+      // actual buffer. Hence it makes no sense keeping pointers to stack
+      // memory.
+      //
+      // See IIOP_Object.cpp::do_static_call in which a GIOP_Invocation is
+      // allocated on stack
+#if 0
       any->cdr_ = ACE_Message_Block::duplicate ((ACE_Message_Block *)
                                                 stream->start ());
-      any->any_owns_data_ = 1;
-      any->value_ = 0;
-      elem_tc->AddRef ();
-      any->type_ = elem_tc;
-      // now skip the value
-      retval = stream->skip (elem_tc, env);
+#endif
+      // one solution is to heap allocate the GIOP_Invocation. However, that
+      // would be bad since not all requests will use Anys.
+      //
+      // One solution is to allocate a new Message_Block with its own heap
+      // allocated data_block. (We may optimize this using allocators for known
+      // sizes). We allocate a Message_Block of the size that is required by
+      // the data type held by the Any. To find what is the size of this data
+      // in the CDR, we traverse the CDR by skipping past this data type. We
+      // then get an offset using the "begin" and "end" shown below that tells
+      // us the size. The skipping is done on a temporary CDR stream and not on
+      // the actual incoming CDR stream. Once we have allocated a new
+      // Message_Block, we simply append the data into it from the original CDR
+      // stream.
+      char *begin, *end;
+      TAO_InputCDR temp (*stream);
+
+      begin = stream->rd_ptr ();
+      retval = temp.skip (elem_tc, env);
+      if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
+        {
+          end = temp.rd_ptr ();
+
+          ACE_NEW_RETURN (any->cdr_, ACE_Message_Block (end - begin),
+                          CORBA::TypeCode::TRAVERSE_STOP);
+          TAO_OutputCDR out (any->cdr_);
+
+          retval = out.append (elem_tc, stream, env);
+          if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
+            {
+              any->any_owns_data_ = 1;
+              any->value_ = 0;
+              elem_tc->AddRef ();
+              any->type_ = elem_tc;
+              // now skip the value
+              //      retval = stream->skip (elem_tc, env);
+            }
+        }
     }
   if (retval != CORBA::TypeCode::TRAVERSE_CONTINUE)
     {
