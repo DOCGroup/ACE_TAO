@@ -1,20 +1,15 @@
 Thu May 01 00:05:59 1997    <irfan@TWOSTEP>
 
-	* tests/Time_Service_Test.cpp (main): Added two config files for
-	  this test: Time_Server.conf (for the Time Server) and
-	  Time_Clerk.conf (for the Time Clerk). Therefore changed the
-	  config file names in Time_Service_Test.cpp. 
-
-	  Made sure that the backing store is not there at the start of
- 	  the program. We need to make sure because this test kills the
- 	  Time Clerk and on some platforms the Clerk is not allowed to do
- 	  a graceful shutdown. By cleaning the backing store here, we are
- 	  sure that we get a fresh start and no garbage data from a
- 	  possible aborted run. The old code of waiting for the Clerk to
- 	  go away and deleting the backing store is still there but does
- 	  not work as unlink fails with ERROR_ACCESS_DENIED. I am not sure
-	  why this is happening! For now the unlink at the start of the
-	  program will do. 
+	* tests/Time_Service_Test.cpp (main): Made sure that the backing
+ 	  store is not there at the start of the program. We need to make
+ 	  sure because this test kills the Time Clerk and on some
+ 	  platforms the Clerk is not allowed to do a graceful shutdown. By
+ 	  cleaning the backing store here, we are sure that we get a fresh
+ 	  start and no garbage data from a possible aborted run. The old
+ 	  code of waiting for the Clerk to go away and deleting the
+ 	  backing store is still there but does not work as unlink fails
+ 	  with ERROR_ACCESS_DENIED. I am not sure why this is happening!
+ 	  For now the unlink at the start of the program will do.
 
 	* netsvcs/lib/TS_Clerk_Handler.cpp: Fixed an obscure bug with
  	  ACE_TS_Clerk_Processor. ACE_TS_Clerk_Processor (which is an
