@@ -657,9 +657,9 @@ template class ACE_Hash_Map_Manager_Ex<TAO_Cache_ExtId, TAO_Cache_IntId, ACE_Has
 template class ACE_Hash_Map_Iterator_Base_Ex<TAO_Cache_ExtId, TAO_Cache_IntId, ACE_Hash<TAO_Cache_ExtId>, ACE_Equal_To<TAO_Cache_ExtId>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Ex<TAO_Cache_ExtId, TAO_Cache_IntId, ACE_Hash<TAO_Cache_ExtId>, ACE_Equal_To<TAO_Cache_ExtId>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_Cache_ExtId, TAO_Cache_IntId, ACE_Hash<TAO_Cache_ExtId>, ACE_Equal_To<TAO_Cache_ExtId>, ACE_Null_Mutex>;
-template class ACE_Unbounded_Set<TAO_Connection_Handler*>;
-template class ACE_Unbounded_Set_Iterator<TAO_Connection_Handler*>;
-template class ACE_Node<TAO_Connection_Handler*>;
+template class ACE_Unbounded_Set<ACE_Event_Handler*>;
+template class ACE_Unbounded_Set_Iterator<ACE_Event_Handler*>;
+template class ACE_Node<ACE_Event_Handler*>;
 template class ACE_Unbounded_Stack<TAO_Transport*>;
 template class ACE_Node <TAO_Transport *>;
 
@@ -674,9 +674,9 @@ template class TAO_Condition<ACE_SYNCH_MUTEX>;
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<TAO_Cache_ExtId, TAO_Cache_IntId, ACE_Hash<TAO_Cache_ExtId>, ACE_Equal_To<TAO_Cache_ExtId>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Ex<TAO_Cache_ExtId, TAO_Cache_IntId, ACE_Hash<TAO_Cache_ExtId>, ACE_Equal_To<TAO_Cache_ExtId>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<TAO_Cache_ExtId, TAO_Cache_IntId, ACE_Hash<TAO_Cache_ExtId>, ACE_Equal_To<TAO_Cache_ExtId>, ACE_Null_Mutex>
-#pragma instantiate ACE_Unbounded_Set<TAO_Connection_Handler*>
-#pragma instantiate ACE_Unbounded_Set_Iterator<TAO_Connection_Handler*>
-#pragma instantiate ACE_Node<TAO_Connection_Handler*>
+#pragma instantiate ACE_Unbounded_Set<ACE_Event_Handler*>
+#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Event_Handler*>
+#pragma instantiate ACE_Node<ACE_Event_Handler*>
 #pragma instantiate ACE_Unbounded_Stack<TAO_Transport*>
 #pragma instantiate ACE_Node <TAO_Transport *>
 

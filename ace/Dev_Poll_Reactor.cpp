@@ -2084,14 +2084,6 @@ ACE_Dev_Poll_Reactor::purge_pending_notifications (ACE_Event_Handler * eh,
   return this->notify_handler_->purge_pending_notifications (eh, mask);
 }
 
-ACE_Event_Handler *
-ACE_Dev_Poll_Reactor::find_handler (ACE_HANDLE handle)
-{
-  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0));
-
-  return this->handler_rep_.find (handle);
-}
-
 int
 ACE_Dev_Poll_Reactor::handler (ACE_HANDLE handle,
                                ACE_Reactor_Mask mask,

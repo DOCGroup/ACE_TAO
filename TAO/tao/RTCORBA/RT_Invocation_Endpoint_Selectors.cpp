@@ -1,5 +1,7 @@
 #include "RT_Invocation_Endpoint_Selectors.h"
 
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 #if !defined (__ACE_INLINE__)
 #include "RT_Invocation_Endpoint_Selectors.i"
 #endif /* __ACE_INLINE__ */
@@ -10,8 +12,8 @@
 #include "tao/Profile.h"
 #include "tao/Endpoint.h"
 #include "RT_Stub.h"
-#include "RT_Transport_Descriptor.h"
-#include "RT_Transport_Descriptor_Property.h"
+#include "Private_Transport_Descriptor.h"
+#include "tao/Base_Transport_Property.h"
 #include "RT_Endpoint_Utils.h"
 #include "RT_Protocols_Hooks.h"
 #include "tao/debug.h"
@@ -299,36 +301,30 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
           invocation->profile ()->endpoint_count () == 1 &&
           endpoint_priority == TAO_INVALID_PRIORITY)
         {
-          TAO_RT_Transport_Descriptor_Private_Connection_Property
-            private_connection_descriptor_property;
-
-          TAO_RT_Transport_Descriptor_Banded_Connection_Property
-            banded_connection_descriptor_property;
-
-          TAO_RT_Transport_Descriptor
-            rt_transport_descriptor (invocation->endpoint ());
-
+          int status;
           if (rt_stub->private_connection ())
             {
-              private_connection_descriptor_property.init
-                (ACE_static_cast (long,
-                                  ACE_reinterpret_cast (ptrdiff_t,
-                                                        invocation->stub ())));
-              rt_transport_descriptor.insert
-                (&private_connection_descriptor_property);
-            }
+              TAO_Private_Transport_Descriptor private_desc (
+                invocation->endpoint (),
+                ACE_static_cast (long,
+                                 ACE_reinterpret_cast (ptrdiff_t,
+                                                       invocation->stub ())));
 
-          if (match_bands)
+              status =
+                invocation->perform_call (private_desc
+                                          ACE_ENV_ARG_PARAMETER);
+              ACE_CHECK_RETURN (-1);
+            }
+          else
             {
-              banded_connection_descriptor_property.init
-                (min_priority, max_priority);
+              TAO_Base_Transport_Property default_desc (
+                invocation->endpoint ());
 
-              rt_transport_descriptor.insert
-                (&banded_connection_descriptor_property);
+              status =
+                invocation->perform_call (default_desc
+                                          ACE_ENV_ARG_PARAMETER);
+              ACE_CHECK_RETURN (-1);
             }
-
-          int status = invocation->perform_call (rt_transport_descriptor ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
 
           // Check if the invocation has completed.
           if (status == 1)
@@ -341,3 +337,5 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
 
   return 0;
 }
+
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

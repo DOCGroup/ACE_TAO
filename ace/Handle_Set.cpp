@@ -372,7 +372,7 @@ ACE_Handle_Set_Iterator::operator () (void)
        while (lsb == 0);
 
        // Set index to word boundary.
-       this->handle_index_ = ACE_MULT_BY_WORDSIZE (this->word_num_);
+       this->handle_index_ = ACE_MULT_BY_WORDSIZE(this->word_num_);
 
        // Put new word_val.
        this->word_val_ = lsb;

@@ -41,14 +41,6 @@ public:
       CORBA::AbstractBase_ptr p
     ) = 0;
 
-  virtual CORBA::Boolean stream_to_value (TAO_InputCDR &,
-                                          CORBA::ValueBase *&) = 0;
-
-  virtual CORBA::Boolean stream_to_abstract_base (
-      TAO_InputCDR &,
-      CORBA::AbstractBase_ptr &
-    ) = 0;
-
   virtual CORBA::ULong type_info_single (void) const = 0;
 
   virtual int vf_map_rebind (const char *,

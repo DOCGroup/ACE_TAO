@@ -4,7 +4,6 @@ configurations = gcc
 soext          = so
 ssl_libs       = ssl crypto
 zzip_libs      = z zziplib
-cppflags       =
 
 gcc {
   cxx       = g++
@@ -13,7 +12,7 @@ gcc {
   platforms = linux
 }
 
-SunCC {
+CC {
   cxx       = CC
   pic       = -KPIC
   shflags   = -G
@@ -39,6 +38,6 @@ solaris {
 hpux {
   soext  = sl
   ldlibs = -lxti -lpthread -lrt -ldld
-}
+  }
 
 conditional_include "zziplib"

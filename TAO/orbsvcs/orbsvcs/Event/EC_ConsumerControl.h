@@ -37,10 +37,11 @@ class TAO_EC_ProxyPushSupplier;
 class TAO_RTEvent_Export TAO_EC_ConsumerControl
 {
 public:
-  /// Constructor.
+  /// Constructor.  It does not assume ownership of the <event_channel>
+  /// parameter.
   TAO_EC_ConsumerControl (void);
 
-  /// Destructor.
+  /// Destructor...
   virtual ~TAO_EC_ConsumerControl (void);
 
   /// Activate any internal threads or timers used to poll the state of

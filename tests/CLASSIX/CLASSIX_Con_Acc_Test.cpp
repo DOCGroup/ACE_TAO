@@ -340,7 +340,6 @@ main (int argc, char *argv[])
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Connector_Base<Write_Handler>;
 template class ACE_Connector<Write_Handler, ACE_CLASSIX_CO_CONNECTOR>;
 template class ACE_Acceptor<Read_Handler, ACE_CLASSIX_CO_ACCEPTOR>;
 template class ACE_Svc_Handler<ACE_CLASSIX_STREAM, ACE_SYNCH>;
@@ -352,7 +351,6 @@ template class ACE_NonBlocking_Connect_Handler<Write_Handler>;
 template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Connector_Base<Write_Handler>
 #pragma instantiate ACE_Connector<Write_Handler, ACE_CLASSIX_CONNECTOR>
 #pragma instantiate ACE_Acceptor<Read_Handler, ACE_CLASSIX_ACCEPTOR>
 #pragma instantiate ACE_Svc_Handler<ACE_CLASSIX_STREAM, ACE_SYNCH>

@@ -65,14 +65,14 @@ private:
 class TAO_RTEvent_Export TAO_EC_Reactive_ConsumerControl : public TAO_EC_ConsumerControl
 {
 public:
-  /// Constructor.  It does not assume ownership of the @a event_channel
+  /// Constructor.  It does not assume ownership of the <event_channel>
   /// parameter.
   TAO_EC_Reactive_ConsumerControl (const ACE_Time_Value &rate,
                                    const ACE_Time_Value &timeout,
                                    TAO_EC_Event_Channel_Base *event_channel,
                                    CORBA::ORB_ptr orb);
 
-  /// Destructor.
+  /// destructor...
   virtual ~TAO_EC_Reactive_ConsumerControl (void);
 
   /// Receive the timeout from the adapter

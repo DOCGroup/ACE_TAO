@@ -19,7 +19,7 @@ $Naming = new PerlACE::Process ("../../../../../../Naming_Service/Naming_Service
 
 $Collocated = new PerlACE::Process ("../../../../Driver/Notify_Tests_Driver");
 
-$Collocated_Args = "-ORBInitRef NameService=file://$naming_ior -ORBSvcConf $collocated_conf -Skip_Priority_Levels_Check";
+$Collocated_Args = "-ORBInitRef NameService=file://$naming_ior -ORBSvcConf $collocated_conf";
 
 unlink $naming_ior;
 $Naming->Spawn ();

@@ -955,7 +955,7 @@ sub verify_build_ordering {
   my($projects) = $self->get_projects();
 
   foreach my $project (@$projects) {
-    $self->get_validated_ordering($project, 1);
+    $self->get_validated_ordering($project);
   }
 }
 
@@ -963,7 +963,6 @@ sub verify_build_ordering {
 sub get_validated_ordering {
   my($self)     = shift;
   my($project)  = shift;
-  my($warn)     = shift;
   my($pjs)      = $self->get_project_info();
 
   my($name, $deps) = @{$$pjs{$project}};
@@ -981,7 +980,7 @@ sub get_validated_ordering {
           }
         }
         if (!$found) {
-          if ($warn && defined $ENV{MPC_VERBOSE_ORDERING}) {
+          if (defined $ENV{MPC_VERBOSE_ORDERING}) {
             print "WARNING: '$name' references '$dep' which has " .
                   "not been processed\n";
           }

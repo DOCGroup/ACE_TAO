@@ -4852,12 +4852,9 @@ ACE_OS::inet_aton (const char *host_name, struct in_addr *addr)
       return 1;
     }
 #elif defined (VXWORKS)
-  // inet_aton() returns OK (0) on success and ERROR (-1) on failure.
-  // Must reset errno first. Refer to WindRiver SPR# 34949, SPR# 36026
-  ::errnoSet(0);
-  int result = ERROR;
-  ACE_OSCALL (::inet_aton ((char*)host_name, addr), int, ERROR, result);
-  return (result == ERROR) ? 0 : 1;
+  // inet_aton() returns 0 upon failure, not -1 since -1 is a valid
+  // address (255.255.255.255).
+  ACE_OSCALL_RETURN (::inet_aton ((char*)host_name, addr), int, 0);
 #else
   // inet_aton() returns 0 upon failure, not -1 since -1 is a valid
   // address (255.255.255.255).
@@ -4894,9 +4891,9 @@ ACE_OS::localtime_r (const time_t *t, struct tm *res)
   // This is really stupid, converting FILETIME to timeval back and
   // forth.  It assumes FILETIME and DWORDLONG are the same structure
   // internally.
-
+ 
   TIME_ZONE_INFORMATION pTz;
-
+ 
   const unsigned short int __mon_yday[2][13] =
   {
     /* Normal years.  */
@@ -4904,10 +4901,10 @@ ACE_OS::localtime_r (const time_t *t, struct tm *res)
     /* Leap years.  */
     { 0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366 }
   };
-
+ 
   ULARGE_INTEGER _100ns;
   ::GetTimeZoneInformation (&pTz);
-
+ 
   _100ns.QuadPart = (DWORDLONG) *t * 10000 * 1000 + ACE_Time_Value::FILETIME_to_timval_skew;
   FILETIME file_time;
   file_time.dwLowDateTime = _100ns.LowPart;
@@ -4919,16 +4916,16 @@ ACE_OS::localtime_r (const time_t *t, struct tm *res)
   FileTimeToSystemTime (&localtime, &systime);
 
   res->tm_hour = systime.wHour;
-
+ 
   if(pTz.DaylightBias!=0)
     res->tm_isdst = 1;
   else
     res->tm_isdst = 1;
-
+ 
    int iLeap;
    iLeap = (res->tm_year % 4 == 0 && (res->tm_year% 100 != 0 || res->tm_year % 400 == 0));
    // based on leap select which group to use
-
+   
    res->tm_mday = systime.wDay;
    res->tm_min = systime.wMinute;
    res->tm_mon = systime.wMonth;
@@ -4937,7 +4934,7 @@ ACE_OS::localtime_r (const time_t *t, struct tm *res)
    res->tm_yday = __mon_yday[iLeap][systime.wMonth] + systime.wDay;
    res->tm_year = systime.wYear;// this the correct year but bias the value to start at the 1900
    res->tm_year = res->tm_year - 1900;
-
+ 
    return res;
 #else
   // @@ Same as ACE_OS::localtime (), you need to implement it

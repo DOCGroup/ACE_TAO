@@ -16,7 +16,7 @@
 #include "Loopback.h"
 
 #include "orbsvcs/Event/EC_Event_Channel.h"
-#include "orbsvcs/Event/EC_Gateway_IIOP.h"
+#include "orbsvcs/Event/EC_Gateway.h"
 
 ACE_RCSID (TAO_RTEC_Perf, Peer_Base, "$Id$")
 

@@ -886,13 +886,9 @@ TAO_Transport::report_invalid_event_handler (const char *caller)
 void
 TAO_Transport::send_connection_closed_notifications (void)
 {
-  {
-    ACE_MT (ACE_GUARD (ACE_Lock, guard, *this->handler_lock_));
+  ACE_MT (ACE_GUARD (ACE_Lock, guard, *this->handler_lock_));
 
-    this->send_connection_closed_notifications_i ();
-  }
-
-  this->tms ()->connection_closed ();
+  this->send_connection_closed_notifications_i ();
 }
 
 void
@@ -911,6 +907,7 @@ TAO_Transport::send_connection_closed_notifications_i (void)
       i->destroy ();
     }
 
+  this->tms ()->connection_closed ();
   this->messaging_object ()->reset ();
 }
 

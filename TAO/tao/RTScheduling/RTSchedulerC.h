@@ -46,11 +46,6 @@
 #include "tao/PortableServer/PortableServerC.h"
 #include "tao/PortableInterceptorC.h"
 
-#ifndef TAO_RTSCHEDULER_SAFE_INCLUDE
-#error "You should not include RTSchedulerC.h directly, use RTScheduler.h"
-#endif /* !TAO_RTSCHEDULER_SAFE_INCLUDE */
-
-
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif

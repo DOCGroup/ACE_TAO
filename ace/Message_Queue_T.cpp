@@ -852,7 +852,8 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_head_i (ACE_Message_Block *&first_item
   if (this->head_ == 0)
     this->tail_ = 0;
   else
-    // The prev pointer of first message block must point to 0...
+    // The prev pointer of the first message block has to point to
+    // NULL...
     this->head_->prev (0);
 
   size_t mb_bytes = 0;
@@ -866,10 +867,6 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_head_i (ACE_Message_Block *&first_item
 
   if (this->cur_count_ == 0 && this->head_ == this->tail_)
     this->head_ = this->tail_ = 0;
-
-  // Make sure that the prev and next fields are 0!
-  first_item->prev (0);
-  first_item->next (0);
 
   // Only signal enqueueing threads if we've fallen below the low
   // water mark.
@@ -907,20 +904,29 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_prio_i (ACE_Message_Block *&dequeued)
 
   // If every message block is the same priority, pass back the first one
   if (chosen == 0)
-    chosen = this->head_;
-
+    {
+      chosen = this->head_;
+    }
 
   // Patch up the queue.  If we don't have a previous
   // then we are at the head of the queue.
   if (chosen->prev () == 0)
-    this->head_ = chosen->next ();
+    {
+      this->head_ = chosen->next ();
+    }
   else
-    chosen->prev ()->next (chosen->next ());
+    {
+      chosen->prev ()->next (chosen->next ());
+    }
 
   if (chosen->next () == 0)
-    this->tail_ = chosen->prev ();
+    {
+      this->tail_ = chosen->prev ();
+    }
   else
-    chosen->next ()->prev (chosen->prev ());
+    {
+      chosen->next ()->prev (chosen->prev ());
+    }
 
   // Pass back the chosen block
   dequeued = chosen;
@@ -936,10 +942,6 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_prio_i (ACE_Message_Block *&dequeued)
 
   if (this->cur_count_ == 0 && this->head_ == this->tail_)
     this->head_ = this->tail_ = 0;
-
-  // Make sure that the prev and next fields are 0!
-  dequeued->prev (0);
-  dequeued->next (0);
 
   // Only signal enqueueing threads if we've fallen below the low
   // water mark.
@@ -986,10 +988,6 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_tail_i (ACE_Message_Block *&dequeued)
   if (this->cur_count_ == 0 && this->head_ == this->tail_)
     this->head_ = this->tail_ = 0;
 
-  // Make sure that the prev and next fields are 0!
-  dequeued->prev (0);
-  dequeued->next (0);
-
   // Only signal enqueueing threads if we've fallen below the low
   // water mark.
   if (this->cur_bytes_ <= this->low_water_mark_
@@ -1017,28 +1015,40 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_deadline_i (ACE_Message_Block *&dequeu
   ACE_Message_Block* chosen = 0;
   ACE_Time_Value deadline = ACE_Time_Value::max_time;
   for (ACE_Message_Block *temp = this->head_; temp != 0; temp = temp->next ())
-    if (temp->msg_deadline_time () < deadline)
-      {
-        deadline = temp->msg_deadline_time ();
-        chosen = temp;
-      }
+    {
+      if (temp->msg_deadline_time () < deadline)
+        {
+          deadline = temp->msg_deadline_time ();
+          chosen = temp;
+        }
+    }
 
   // If every message block is the same deadline time,
   // pass back the first one
   if (chosen == 0)
-    chosen = this->head_;
+    {
+      chosen = this->head_;
+    }
 
   // Patch up the queue.  If we don't have a previous
   // then we are at the head of the queue.
   if (chosen->prev () == 0)
-    this->head_ = chosen->next ();
+    {
+      this->head_ = chosen->next ();
+    }
   else
-    chosen->prev ()->next (chosen->next ());
+    {
+      chosen->prev ()->next (chosen->next ());
+    }
 
   if (chosen->next () == 0)
-    this->tail_ = chosen->prev ();
+    {
+      this->tail_ = chosen->prev ();
+    }
   else
-    chosen->next ()->prev (chosen->prev ());
+    {
+      chosen->next ()->prev (chosen->prev ());
+    }
 
   // Pass back the chosen block
   dequeued = chosen;
@@ -1054,10 +1064,6 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_deadline_i (ACE_Message_Block *&dequeu
 
   if (this->cur_count_ == 0 && this->head_ == this->tail_)
     this->head_ = this->tail_ = 0;
-
-  // Make sure that the prev and next fields are 0!
-  dequeued->prev (0);
-  dequeued->next (0);
 
   // Only signal enqueueing threads if we've fallen below the low
   // water mark.
@@ -1096,8 +1102,8 @@ ACE_Message_Queue<ACE_SYNCH_USE>::peek_dequeue_head (ACE_Message_Block *&first_i
 }
 
 template <ACE_SYNCH_DECL> int
-ACE_Message_Queue<ACE_SYNCH_USE>::wait_not_full_cond (ACE_Guard<ACE_SYNCH_MUTEX_T> &,
-                                                      ACE_Time_Value *timeout)
+ACE_Message_Queue<ACE_SYNCH_USE>::wait_not_full_cond
+    (ACE_Guard<ACE_SYNCH_MUTEX_T> &, ACE_Time_Value *timeout)
 {
   int result = 0;
 

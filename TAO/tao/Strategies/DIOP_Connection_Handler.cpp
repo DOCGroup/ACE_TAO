@@ -207,11 +207,7 @@ int
 TAO_DIOP_Connection_Handler::handle_close (ACE_HANDLE,
                                            ACE_Reactor_Mask)
 {
-  // No asserts here since the handler is registered with the Reactor
-  // and the handler ownership is given to the Reactor.  When the
-  // Reactor closes, it will call handle_close() on the handler.  It
-  // is however important to overwrite handle_close() to do nothing
-  // since the base class does too much.
+  ACE_ASSERT (0);
   return 0;
 }
 

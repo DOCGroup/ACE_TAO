@@ -89,7 +89,7 @@ TAO_Notify_Tests_Options_Parser::execute (CosNotification::QoSProperties& qos, A
       qos[0].value <<= tp_params;
 
     } /* ThreadPool */
-  else if (arg_shifter.cur_arg_strncasecmp ("-Lanes") == 0) // -Lanes lane_count -Lane prio static_thr dy_thr
+  else if (arg_shifter.cur_arg_strncasecmp ("-ThreadPoolLanes") == 0) // -ThreadPoolLanes lane_count -Lane prio static_thr dy_thr
     {
       arg_shifter.consume_arg ();
 

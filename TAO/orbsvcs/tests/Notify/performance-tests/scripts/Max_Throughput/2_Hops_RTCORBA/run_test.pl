@@ -9,12 +9,16 @@ use lib "../../../../../../../../bin";
 use PerlACE::Run_Test;
 use File::Copy;
 
-$experiment_timeout = 600;
-$startup_timeout = 600;
+$experiment_timeout = 60;
+$startup_timeout = 60;
 $naming_ior = PerlACE::LocalFile ("naming.ior");
 $consumer_ior = PerlACE::LocalFile ("consumer.ior");
+$relay_ior = PerlACE::LocalFile ("relay.ior");
+
 $supplier_conf = PerlACE::LocalFile ("supplier.conf");
 $consumer_conf = PerlACE::LocalFile ("consumer.conf");
+$relay_conf = PerlACE::LocalFile ("relay.conf");
+
 $status = 0;
 
 $Naming = new PerlACE::Process ("../../../../../../Naming_Service/Naming_Service",
@@ -22,12 +26,15 @@ $Naming = new PerlACE::Process ("../../../../../../Naming_Service/Naming_Service
 
 $Supplier = new PerlACE::Process ("../../../../Driver/Notify_Tests_Driver");
 
-$Supplier_Args = "-ORBInitRef NameService=file://$naming_ior -IORinput file://$consumer_ior -ORBSvcConf $supplier_conf";
+$Supplier_Args = "-ORBInitRef NameService=file://$naming_ior -IORinput file://$relay_ior -ORBSvcConf $supplier_conf";
 
 $Consumer = new PerlACE::Process ("../../../../Driver/Notify_Tests_Driver");
 
-#$Consumer_Args = "-ORBInitRef NameService=file://$naming_ior -IORoutput $consumer_ior -ORBSvcConf $consumer_conf -ORBDebugLevel 1";
 $Consumer_Args = "-ORBInitRef NameService=file://$naming_ior -IORoutput $consumer_ior -ORBSvcConf $consumer_conf";
+
+$Relay = new PerlACE::Process ("../../../../Driver/Notify_Tests_Driver");
+
+$Relay_Args = "-ORBInitRef NameService=file://$naming_ior -IORoutput $relay_ior -IORinput file://$consumer_ior -ORBSvcConf $relay_conf";
 
 unlink $naming_ior;
 $Naming->Spawn ();
@@ -50,6 +57,19 @@ if (PerlACE::waitforfile_timed ($consumer_ior, $startup_timeout) == -1) {
   exit 1;
 }
 
+unlink $relay_ior;
+$Relay->Arguments ($Relay_Args);
+$args = $Relay->Arguments ();
+print STDERR "Running Relay with arguments: $args\n";
+$status = $Relay->Spawn ();
+
+if (PerlACE::waitforfile_timed ($relay_ior, $startup_timeout) == -1) {
+  print STDERR "ERROR: waiting for the Relay to start\n";
+  $Consumer->Kill ();
+  $Naming->Kill ();
+  exit 1;
+}
+
 $Supplier->Arguments ($Supplier_Args);
 $args = $Supplier->Arguments ();
 print STDERR "Running Supplier with arguments: $args\n";
@@ -64,9 +84,11 @@ if ($status != 0)
     exit 1;
   }
 
-
 $Consumer->Wait ();
+$Relay->Kill ();
+
 unlink $consumer_ior;
+unlink $relay_ior;
 
 $Naming->Kill ();
 unlink $naming_ior;

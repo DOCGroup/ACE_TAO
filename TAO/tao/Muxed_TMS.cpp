@@ -12,6 +12,7 @@
 
 ACE_RCSID(tao, Muxed_TMS, "$Id$")
 
+
 TAO_Muxed_TMS::TAO_Muxed_TMS (TAO_Transport *transport)
   : TAO_Transport_Mux_Strategy (transport)
     , request_id_generator_ (0)
@@ -196,49 +197,27 @@ TAO_Muxed_TMS::connection_closed (void)
              ace_mon,
              *this->lock_);
 
-  int retval = 0;
-  do
-    {
-      retval = this->clear_cache ();
-    }
-  while (retval != -1);
-
-}
-
-int
-TAO_Muxed_TMS::clear_cache (void)
-{
-  if (this->dispatcher_table_.current_size () == 0)
-    return -1;
-
   REQUEST_DISPATCHER_TABLE::ITERATOR end =
     this->dispatcher_table_.end ();
 
-  ACE_Unbounded_Stack <TAO_Reply_Dispatcher *> ubs;
-
   for (REQUEST_DISPATCHER_TABLE::ITERATOR i =
          this->dispatcher_table_.begin ();
-       i != end;
-       ++i)
+       i != end;)
     {
       CORBA::ULong request_id = (*i).ext_id_;
 
-      ubs.push ((*i).int_id_);
+      (*i).int_id_->connection_closed ();
+
+      // OK, maybe the first element was removed, check again...
+      i = this->dispatcher_table_.begin ();
+      if((*i).ext_id_ == request_id)
+        {
+          // Nope, it was not removed, it is our job to do so:
+          this->dispatcher_table_.unbind(request_id);
+          i = this->dispatcher_table_.begin ();
+        }
+      // else, nothing to do, already moved to the next element
     }
-
-  this->dispatcher_table_.unbind_all ();
-  size_t sz =  ubs.size ();
-
-  for (size_t k = 0 ; k != sz ; ++k)
-    {
-      TAO_Reply_Dispatcher *rd = 0;
-
-      ubs.pop (rd);
-
-      rd->connection_closed ();
-    }
-
-  return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
@@ -269,9 +248,6 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<CORBA::ULong,
                                                 ACE_Equal_To<CORBA::ULong>,
                                                 ACE_Null_Mutex>;
 
-template class ACE_Unbounded_Stack<TAO_Reply_Dispatcher*>;
-template class ACE_Node<TAO_Reply_Dispatcher*>;
-
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Hash_Map_Manager_Ex <CORBA::ULong, TAO_Reply_Dispatcher *, ACE_Hash <CORBA::ULong>, ACE_Equal_To <CORBA::ULong>, ACE_Null_Mutex>
 
@@ -282,10 +258,5 @@ template class ACE_Node<TAO_Reply_Dispatcher*>;
 #pragma instantiate ACE_Hash_Map_Iterator_Ex<CORBA::ULong, TAO_Reply_Dispatcher*, ACE_Hash<CORBA::ULong>, ACE_Equal_To<CORBA::ULong>, ACE_Null_Mutex>
 
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<CORBA::ULong, TAO_Reply_Dispatcher*, ACE_Hash<CORBA::ULong>, ACE_Equal_To<CORBA::ULong>, ACE_Null_Mutex>
-
-
-#pragma instantiate ACE_Unbounded_Stack<TAO_Reply_Dispatcher*>
-
-#pragma instantiate ACE_Node<TAO_Reply_Dispatcher*>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

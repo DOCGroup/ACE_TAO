@@ -5,7 +5,7 @@
 
 #include "rtscheduler_export.h"
 #include "tao/PortableInterceptorC.h"
-#include "RTScheduler.h"
+#include "RTSchedulerC.h"
 #include "ace/Atomic_Op.h"
 #include "Current.h"
 

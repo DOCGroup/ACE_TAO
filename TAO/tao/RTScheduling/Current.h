@@ -5,7 +5,7 @@
 
 #include "ace/Hash_Map_Manager_T.h"
 #include "rtscheduler_export.h"
-#include "RTScheduler.h"
+#include "RTSchedulerC.h"
 #include "ace/Task.h"
 #include "ace/Atomic_Op.h"
 

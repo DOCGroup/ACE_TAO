@@ -279,30 +279,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Priority_Inversion_With_Bands Client"=.\Priority_Inversion_With_Bands\client.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Priority_Inversion_With_Bands Server"=.\Priority_Inversion_With_Bands\server.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
 Project: "Private_Connection Client"=.\Private_Connection\client.dsp - Package Owner=<4>
 
 Package=<5>

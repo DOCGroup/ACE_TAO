@@ -140,9 +140,6 @@ protected:
 
   /// The file for input
   ACE_CString ior_input_file_;
-
-  /// Set to skip the check for multiple priority levels.
-  int skip_priority_levels_check_;
 };
 
 #include "ace/post.h"

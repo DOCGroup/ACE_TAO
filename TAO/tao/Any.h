@@ -343,10 +343,6 @@ namespace TAO
     virtual void assign_translator (CORBA::TCKind,
                                     TAO_InputCDR *cdr);
 
-    virtual CORBA::Boolean to_object (CORBA::Object_ptr &) const;
-    virtual CORBA::Boolean to_value (CORBA::ValueBase *&) const;
-    virtual CORBA::Boolean to_abstract_base (CORBA::AbstractBase_ptr &) const;
-
   private:
     ACE_Message_Block *cdr_;
     int byte_order_;

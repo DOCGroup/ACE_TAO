@@ -84,7 +84,7 @@ if ($status != 0)
     exit 1;
   }
 
-$Supplier->Kill ();
+$Supplier->Wait ();
 unlink $supplier_ior;
 
 $Notification->Kill ();

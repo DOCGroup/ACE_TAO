@@ -46,36 +46,28 @@ TAO_EC_Event_Channel_Base (const TAO_EC_Event_Channel_Attributes& attr,
 
 TAO_EC_Event_Channel_Base::~TAO_EC_Event_Channel_Base (void)
 {
-  // Destroy Strategies in the reverse order of creation, they
-  // refere to each other during destruction and thus need to be
-  // cleaned up properly.
-  this->factory_->destroy_supplier_control (this->supplier_control_);
-  this->supplier_control_ = 0;
-  this->factory_->destroy_consumer_control (this->consumer_control_);
-  this->consumer_control_ = 0;
+  this->factory_->destroy_dispatching (this->dispatching_);
+  this->dispatching_ = 0;
+  this->factory_->destroy_filter_builder (this->filter_builder_);
+  this->filter_builder_ = 0;
+  this->factory_->destroy_supplier_filter_builder (this->supplier_filter_builder_);
+  this->supplier_filter_builder_ = 0;
+  this->factory_->destroy_consumer_admin (this->consumer_admin_);
+  this->consumer_admin_ = 0;
+  this->factory_->destroy_supplier_admin (this->supplier_admin_);
+  this->supplier_admin_ = 0;
+  this->factory_->destroy_timeout_generator (this->timeout_generator_);
+  this->timeout_generator_ = 0;
+  this->factory_->destroy_observer_strategy (this->observer_strategy_);
+  this->observer_strategy_ = 0;
 
   this->factory_->destroy_scheduling_strategy (this->scheduling_strategy_);
   this->scheduling_strategy_ = 0;
 
-  this->factory_->destroy_observer_strategy (this->observer_strategy_);
-  this->observer_strategy_ = 0;
-
-  this->factory_->destroy_timeout_generator (this->timeout_generator_);
-  this->timeout_generator_ = 0;
-
-  this->factory_->destroy_supplier_admin (this->supplier_admin_);
-  this->supplier_admin_ = 0;
-  this->factory_->destroy_consumer_admin (this->consumer_admin_);
-  this->consumer_admin_ = 0;
-
-  this->factory_->destroy_supplier_filter_builder (this->supplier_filter_builder_);
-  this->supplier_filter_builder_ = 0;
-
-  this->factory_->destroy_filter_builder (this->filter_builder_);
-  this->filter_builder_ = 0;
-
-  this->factory_->destroy_dispatching (this->dispatching_);
-  this->dispatching_ = 0;
+  this->factory_->destroy_consumer_control (this->consumer_control_);
+  this->consumer_control_ = 0;
+  this->factory_->destroy_supplier_control (this->supplier_control_);
+  this->supplier_control_ = 0;
 
   this->factory (0, 0);
 }

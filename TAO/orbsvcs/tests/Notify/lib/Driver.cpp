@@ -161,7 +161,7 @@ TAO_Notify_Tests_ORB_Run_Worker::svc (void)
 /*****************************************************************/
 
 TAO_Notify_Tests_Driver::TAO_Notify_Tests_Driver (void)
-  :cmd_builder_ (0), activation_manager_ (0), run_period_ (0,0), skip_priority_levels_check_ (0)
+  :cmd_builder_ (0), activation_manager_ (0), run_period_ (0,0)
 {
   this->activation_manager_ = new TAO_Notify_Tests_Activation_Manager ();
   LOOKUP_MANAGER->_register (this->activation_manager_);
@@ -210,12 +210,6 @@ TAO_Notify_Tests_Driver::parse_args (int argc, char *argv[])
 
           arg_shifter.consume_arg ();
         }
-      else if (arg_shifter.cur_arg_strncasecmp ("-Skip_Priority_Levels_Check") == 0) // Skip the check for multiple priority levels.
-        {
-          this->skip_priority_levels_check_ = 1;
-
-          arg_shifter.consume_arg ();
-        }
       else
         {
           arg_shifter.ignore_arg ();
@@ -241,8 +235,7 @@ TAO_Notify_Tests_Driver::init (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL)
 
   // Make sure we can support multiple priorities that are required
   // for this test.
-  if (skip_priority_levels_check_ == 0)
-    check_supported_priorities (this->orb_.in());
+  check_supported_priorities (this->orb_.in());
 
   LOOKUP_MANAGER->init (this->orb_.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);

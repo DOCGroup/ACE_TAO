@@ -1,14 +1,3 @@
-Sun Jul 13 20:14:42 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-	* README: Updated information on MPC tools.  ACE/TAO are in
-	  transition to use MPC based solution exclusively (like what CIAO
-	  is doing already.)  There are currently some mismatch between
-	  MPC genearted Makefile/project files and the stock ones.  Be
-	  caution.
-
-	  Once we switch to all MPC based approach, this will no longer be
-	  a problem.
-
 Wed Jul 09 21:06:12 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tools/ServerActivator/ServerActivator.cpp: Fixed compilation due

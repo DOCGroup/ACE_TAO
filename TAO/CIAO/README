@@ -15,32 +15,6 @@ BUILDING CIAO
 
 * Preparation - Compiling ACE and TAO:
 
-    *************************************************
-
-    There has been some big changes in MPC and
-    a few "problems" are being sorted out before
-    ACE/TAO switched to use MPC generated Makefile
-    projects files exclusively.  CIAO only uses
-    MPC.  MPC, however, assumes a slightly different
-    directory structure than the stock, old ACE
-    Makefile/project files.  Therefore, it is
-    a bit adventurous to compile CIAO at this time
-    of transition.  Here are some hints that you
-    can try to make this work a bit easier.
-
-    1. Make sure to add $ACE_ROOT/lib into your
-       PATH, or LD_LIBRARY_PATH (before
-       $ACE_ROOT/bin)
-
-    2. Make sure you don't have old CIAO libraries
-       DLL and so files) hanging around.
-
-    3. If prefered, you can re-generate the Makefile,
-       project files for all/core ACE/TAO libraries.
-       (e.g., using $ACE_ROOT/TAO/TAOACE.mwc.)
-
-    *************************************************
-
   CIAO depends on many CORBA features to function properly so you need
   to compile them first.  Here is a non-exhaustive list:
 

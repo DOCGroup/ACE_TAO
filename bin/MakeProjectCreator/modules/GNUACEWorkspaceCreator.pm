@@ -72,7 +72,8 @@ sub write_comps {
   }
 
   print $fh $crlf .
-            "\$(TARGETS_NESTED):$crlf";
+            "\$(TARGETS_NESTED):$crlf" .
+            "ifneq (Windows,\$(findstring Windows,\$(OS)))$crlf";
 
   ## If there is more than one project, use a for loop
   if ($#list > 0) {
@@ -84,6 +85,12 @@ sub write_comps {
     ## Otherwise, just list the call to make without a for loop
     print $fh "\t\@\$(MAKE) -f " . basename($list[0]) . ' -C ' . dirname($list[0]) . " \$(\@);$crlf";
   }
+
+  print $fh "else$crlf";
+  foreach my $project (@list) {
+    print $fh "\t-\@cmd /c \"\$(MAKE) -f " . basename($project) . ' -C ' . dirname($project) . " \$(\@)\"$crlf";
+  }
+  print $fh "endif$crlf";
 }
 
 
