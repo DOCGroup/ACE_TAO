@@ -17,7 +17,8 @@ public:
   test_i (CORBA::ORB_ptr orb,
           PortableServer::POA_ptr poa);
 
-  void method (CORBA::Environment &)
+  void method (CORBA::ULong work_in_milli_seconds,
+               CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void shutdown (CORBA::Environment &)
@@ -38,12 +39,18 @@ test_i::test_i (CORBA::ORB_ptr orb,
 }
 
 void
-test_i::method (CORBA::Environment &)
+test_i::method (CORBA::ULong work_in_milli_seconds,
+                CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_Time_Value sleep_time;
+  sleep_time.msec (work_in_milli_seconds);
+  ACE_OS::sleep (sleep_time);
+
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-                "test_i::method\n"));
+                "test_i::method: %d milli second of work\n",
+                work_in_milli_seconds));
 }
 
 PortableServer::POA_ptr
