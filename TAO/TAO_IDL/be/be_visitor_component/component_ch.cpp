@@ -110,10 +110,6 @@ be_visitor_component_ch::visit_component (be_component *node)
       << "typedef " << node->local_name () << "_var _var_type;"
       << be_nl;
 
-
-  // Generate the static variable that we use for narrowing.
-  *os << "static int _tao_class_id;" << be_nl << be_nl;
-
   // Generate the static _duplicate, _narrow, and _nil operations.
   *os << "// The static operations." << be_nl
       << "static " << node->local_name () << "_ptr " << "_duplicate ("

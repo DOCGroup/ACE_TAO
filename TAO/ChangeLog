@@ -1,3 +1,17 @@
+Tue Feb 15 21:47:15 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be_include/be_interface.h:
+        
+          Removed the static method queryinterface_helper(), which is
+          no longer used.
+          
+        * TAO_IDL/be/be_visitor_component/component_ch.cpp:
+        
+          Removed generation of the static in _tao_class_id. It is
+          not used and was removed from interface code generation
+          some time ago.
+
 Tue Feb 15 18:09:46 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* TAO_IDL/Makefile.am:
