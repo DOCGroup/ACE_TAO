@@ -1,3 +1,10 @@
+Wed Jul 14 21:18:23 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_array/array_cs.cpp:
+	  In code generation for the foo_copy() method, modified code to
+	  check for more than one level of typedef when determining if 
+	  the element type is a typedef of another array type.
+
 Wed Jul 14 18:07:00 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/POA.cpp (create_reference_i,create_reference_with_id_i):
