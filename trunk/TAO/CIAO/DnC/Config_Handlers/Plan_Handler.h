@@ -82,10 +82,6 @@ namespace CIAO
       /// Process the plan type
       void process_plan (Deployment::DeploymentPlan& plan);
 
-      /// Process the UUID attribute
-      void process_uuid (const XMLCh* uuid,
-                         Deployment::DeploymentPlan& plan);
-
       /// Process the label attribute
       void process_label (const XMLCh* label,
                           Deployment::DeploymentPlan& plan);

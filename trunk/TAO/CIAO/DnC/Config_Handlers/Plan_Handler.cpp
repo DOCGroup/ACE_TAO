@@ -59,12 +59,6 @@ namespace CIAO
                (ACE_TEXT ("Deployment:DeploymentPlan")))
             {
             }
-          else if (node_name == XStr (ACE_TEXT ("UUID")))
-            {
-              node = this->iter_->nextNode();
-              DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-              this->process_uuid (text->getNodeValue(), plan);
-            }
           else if (node_name == XStr (ACE_TEXT ("label")))
             {
               node = this->iter_->nextNode();
@@ -131,18 +125,6 @@ namespace CIAO
       this->update_pspe_refs (plan);
       this->update_pspr_refs (plan);
       return;
-    }
-
-    /// handle uuid attribute
-    void Plan_Handler::process_uuid 
-         (const XMLCh* uuid,
-          Deployment::DeploymentPlan& plan)
-    {
-      if (uuid)
-        {
-          CORBA::String_var value (XMLString::transcode (uuid));
-          plan.UUID = value.in ();
-        }
     }
 
     /// handle label attribute
@@ -811,17 +793,18 @@ namespace CIAO
                     }
                 }
             }
-          else if (node_name == XStr (ACE_TEXT ("implementation")))
+          else if (node_name == XStr (ACE_TEXT ("implementationRef")))
             {
-              CORBA::ULong implementation_length =
-                idd.implementation.length ();
-              idd.implementation.length (implementation_length + 1);
-              idd.implementation[implementation_length] = 0;
+/*              CORBA::ULong implementation_length =
+                idd.implementationRef.length ();
+              idd.implementationRef.length (implementation_length + 1);
+              idd.implementationRef[implementation_length] = 0;
               if (node->hasAttributes ())
                 {
                   DOMNamedNodeMap* named_node_map = node->getAttributes ();
                   this->process_refs (named_node_map);
                 }
+*/
             }
           else if (node_name == XStr (ACE_TEXT ("deployedResource")))
             {
@@ -1013,7 +996,7 @@ namespace CIAO
             }
           else if (node_name == XStr (ACE_TEXT ("artifact")))
             {
-              CORBA::ULong artifact_length =
+/*              CORBA::ULong artifact_length =
                 mdd.artifact.length ();
               mdd.artifact.length (artifact_length + 1);
               mdd.artifact[artifact_length] = 0;
@@ -1022,7 +1005,7 @@ namespace CIAO
                   DOMNamedNodeMap* named_node_map = node->getAttributes ();
                   this->process_refs (named_node_map);
                 }
-            }
+*/            }
           else
             {
               iter->previousNode();
@@ -1541,7 +1524,7 @@ namespace CIAO
             }
           else if (node_name == XStr (ACE_TEXT ("instance")))
             {
-              CORBA::ULong instance_length =
+/*              CORBA::ULong instance_length =
                 pspr.instance.length ();
               pspr.instance.length (instance_length + 1);
               pspr.instance[instance_length] = 0;
@@ -1550,7 +1533,7 @@ namespace CIAO
                   DOMNamedNodeMap* named_node_map = node->getAttributes ();
                   this->process_refs (named_node_map);
                 }
-            }
+*/            }
           else
             {
               iter->previousNode();
@@ -1583,7 +1566,7 @@ namespace CIAO
             }
           else if (node_name == XStr (ACE_TEXT ("instance")))
             {
-              CORBA::ULong instance_length =
+/*              CORBA::ULong instance_length =
                 pspe.instance.length ();
               pspe.instance.length (instance_length + 1);
               pspe.instance[instance_length] = 0;
@@ -1592,7 +1575,7 @@ namespace CIAO
                   DOMNamedNodeMap* named_node_map = node->getAttributes ();
                   this->process_refs (named_node_map);
                 }
-            }
+*/            }
           else
             {
               iter->previousNode();
@@ -2262,7 +2245,7 @@ namespace CIAO
 
     void Plan_Handler::update_mdd_refs (Deployment::DeploymentPlan& plan)
     {
-      CORBA::ULong x;
+/*      CORBA::ULong x;
       CORBA::ULong y;
       int ref_value;
       int orig_value;
@@ -2282,11 +2265,11 @@ namespace CIAO
                 }
             }  
         }
-    }
+*/   }
 
     void Plan_Handler::update_idd_refs (Deployment::DeploymentPlan& plan)
     {
-      CORBA::ULong x;
+/*      CORBA::ULong x;
       CORBA::ULong y;
       int ref_value;
       int orig_value;
@@ -2306,11 +2289,11 @@ namespace CIAO
                 }
             }  
         }
-    }
+*/    }
 
     void Plan_Handler::update_pspe_refs (Deployment::DeploymentPlan& plan)
     {
-      CORBA::ULong x;
+/*      CORBA::ULong x;
       CORBA::ULong y;
       CORBA::ULong z;
       int ref_value;
@@ -2339,11 +2322,11 @@ namespace CIAO
                 }
             }  
         }
-    }
+*/    }
 
     void Plan_Handler::update_pspr_refs (Deployment::DeploymentPlan& plan)
     {
-      CORBA::ULong x;
+/*      CORBA::ULong x;
       CORBA::ULong y;
       CORBA::ULong z;
       int ref_value;
@@ -2372,7 +2355,7 @@ namespace CIAO
                 }
             }  
         }
-    }
+*/    }
 
   }
 }

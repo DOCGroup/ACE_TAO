@@ -209,13 +209,13 @@ namespace Deployment
     ACE_DEBUG ((LM_DEBUG, "  UUID: %s\n", pc.UUID.in ()));
 
     ACE_DEBUG ((LM_DEBUG, "  specializedConfig: \n"));
-    for (CORBA::ULong i = 0;
+    /*    for (CORBA::ULong i = 0;
          i < pc.specializedConfigRef.length ();
          ++i)
       {
         ACE_DEBUG ((LM_DEBUG, "%i\n", pc.specializedConfigRef[i]));
       }
-
+    */
     ACE_DEBUG ((LM_DEBUG, "  configProperty: \n"));
     for (CORBA::ULong i = 0;
          i < pc.configProperty.length ();
@@ -530,7 +530,7 @@ namespace Deployment
     ACE_DEBUG ((LM_DEBUG, "UUID: %s \n", cid.UUID.in ()));
     ACE_DEBUG ((LM_DEBUG, "specificType: %s \n", cid.specificType.in ()));
     DnC_Dump::dump ("supportedType", cid.supportedType); // string sequence
-    ACE_DEBUG ((LM_DEBUG, "idlFile: %s \n", cid.idlFile.in ()));
+    //    ACE_DEBUG ((LM_DEBUG, "idlFile: %s \n", cid.idlFile.in ()));
     DnC_Dump::dump_sequence ("configProperty", cid.configProperty); // Property seq.
     DnC_Dump::dump_sequence ("infoProperty", cid.infoProperty); // Property seq.
     DnC_Dump::dump_sequence ("port", cid.port); // ComponentPortDescription seq.
@@ -699,7 +699,7 @@ namespace Deployment
   {
     ACE_DEBUG ((LM_DEBUG, "label: %s", iad.label.in ()));
     ACE_DEBUG ((LM_DEBUG, "UUID: %s", iad.UUID.in ()));
-    ACE_DEBUG ((LM_DEBUG, "location: %s", iad.location.in ()));
+    //    ACE_DEBUG ((LM_DEBUG, "location: %s", iad.location.in ()));
     DnC_Dump::dump_sequence ("execParameter", iad.execParameter); // Property seq.
     DnC_Dump::dump_sequence ("infoProperty", iad.infoProperty); // Property seq.
     DnC_Dump::dump_sequence ("deployRequirement", iad.deployRequirement); // Requirement seq.
@@ -708,8 +708,8 @@ namespace Deployment
 
   void DnC_Dump::dump (const ::Deployment::ImplementationRequirement &ir)
   {
-    DnC_Dump::dump ("resourcePort", ir.resourcePort); // string sequence
-    DnC_Dump::dump ("componentPort", ir.componentPort); // string sequence
+    //    DnC_Dump::dump ("resourcePort", ir.resourcePort); // string sequence
+    //    DnC_Dump::dump ("componentPort", ir.componentPort); // string sequence
     DnC_Dump::dump_sequence ("resourceUsage", ir.resourceUsage); // ResourceUsageKind seq.
     ACE_DEBUG ((LM_DEBUG, "resourceType: %s", ir.resourceType.in ()));
     ACE_DEBUG ((LM_DEBUG, "name: %s", ir.name.in ()));
