@@ -130,7 +130,6 @@ check_PROGRAMS = \
   Timeprobe_Test \
   Timer_Queue_Test \
   UPIPE_SAP_Test \
-  Unbounded_Set_Test \
   Upgradable_RW_Test \
   \
   Naming_Test \
@@ -304,8 +303,6 @@ UPIPE_SAP_Test_SOURCES = UPIPE_SAP_Test.cpp
 
 Upgradable_RW_Test_SOURCES = Upgradable_RW_Test.cpp \
                              Upgradable_RW_Test.h
-
-Unbounded_Set_Test_SOURCES = Unbounded_Set_Test.cpp
 
 XtReactor_Test_SOURCES = XtReactor_Test.cpp
 XtReactor_Test_LDADD = $(top_builddir)/ace/libACE.la @XTREACTOR_TEST_XLIBS@
