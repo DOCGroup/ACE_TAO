@@ -22,6 +22,7 @@ ACE_Timer_Node_T<TYPE, FUNCTOR>::dump (void) const
   ACE_DEBUG ((LM_DEBUG, "\nact_ = %x", this->act_));
   this->timer_value_.dump ();
   this->interval_.dump ();
+  ACE_DEBUG ((LM_DEBUG, "\nprev_ = %x", this->prev_));
   ACE_DEBUG ((LM_DEBUG, "\nnext_ = %x", this->next_));
   ACE_DEBUG ((LM_DEBUG, "\ntimer_id_ = %d", this->timer_id_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
@@ -44,11 +45,32 @@ ACE_Timer_Node_T<TYPE, FUNCTOR>::ACE_Timer_Node_T (const TYPE &type,
     act_ (a), 
     timer_value_ (t), 
     interval_ (i), 
+    prev_ (0),
     next_ (n),
     timer_id_ (timer_id)
 {
   ACE_TRACE ("ACE_Timer_Node::ACE_Timer_Node");
 }
+
+template <class TYPE, class FUNCTOR> 
+ACE_Timer_Node_T<TYPE, FUNCTOR>::ACE_Timer_Node_T (const TYPE &type, 
+						   const void *a, 
+						   const ACE_Time_Value &t, 
+						   const ACE_Time_Value &i, 
+						   ACE_Timer_Node_T<TYPE, FUNCTOR> *p,
+                                                   ACE_Timer_Node_T<TYPE, FUNCTOR> *n,
+						   int timer_id)
+  : type_ (type), 
+    act_ (a), 
+    timer_value_ (t), 
+    interval_ (i), 
+    prev_ (p),
+    next_ (n),
+    timer_id_ (timer_id)
+{
+  ACE_TRACE ("ACE_Timer_Node::ACE_Timer_Node");
+}
+
 
 template <class TYPE, class FUNCTOR> 
 ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR>::ACE_Timer_Queue_Iterator_T (void)
