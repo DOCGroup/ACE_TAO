@@ -1,3 +1,16 @@
+Fri Feb  7 14:04:59 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/IFRService/InterfaceDef_i.cpp:
+
+          Added a check, when iterating through inherited operations
+          and attributes, for the existence of an attribute or
+          operation subsection in each parent, before trying to
+          read the number of operations or attributes the parent
+          has. If an interface has no operations, the operations
+          ACE_Configuration subsection will not have been created,
+          likewise for attributes. Thanks to Matej Sekoranja 
+          <matej.sekoranja@ijs.si> for pointing out the potential bug.
+
 Thu Feb  6 16:47:02 2003  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* tests/AMH_Oneway
