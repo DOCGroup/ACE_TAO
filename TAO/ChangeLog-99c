@@ -1,3 +1,7 @@
+Mon Jun 14 09:58:47 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* TAO-INSTALL.html: Updated Barry Hoggard's CORBA page URL.
+
 Mon Jun 14 08:56:02 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Naming/Transient_Naming_Context.cpp:
@@ -26,13 +30,13 @@ Mon Jun 14 03:57:48 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp
 	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp
 	  (visit_interface): Added code to generate the declaration and
-	  the default implementation of <_create_collocated_objref>
-	  method.  The default implementation only returns a
-	  _tao_collocated_* object because I didn't separate the
-	  implementation of Thru_POA and Direct collocated object
-	  implementation.  Users are allowed to overwrite this method to
-	  provide more nifty collocated objects.  However, this method is
-	  not CORBA compliant.
+ 	  the default implementation of <_create_collocated_objref>
+ 	  method.  The default implementation only returns a
+ 	  _tao_collocated_* object because I didn't separate the
+ 	  implementation of Thru_POA and Direct collocated object
+ 	  implementation.  Users are allowed to overwrite this method to
+ 	  provide more nifty collocated objects.  However, this method is
+ 	  not CORBA compliant.
 
 	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp
 	  (visit_interface): First attemp to decouple stubs from skeleton
