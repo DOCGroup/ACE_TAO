@@ -132,7 +132,7 @@ main (int argc, char *argv[])
 
       CIAO::Daemon_Impl *daemon_servant = 0;
       ACE_NEW_RETURN (daemon_servant,
-                      CIAO::Daemon_Impl ("CIAO-Daemon",
+                      CIAO::Daemon_Impl ("CIAODaemon",
                                          orb.in (),
                                          poa.in ()),
                       -1);
