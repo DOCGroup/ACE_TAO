@@ -1,3 +1,10 @@
+Wed Jun 25 16:00:02 2003  George Edwards <g.edwards@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_valuetype/arglist.cpp:
+
+          Fixed bug in argument list generation for valutypes supporting
+          interfaces.
+
 Wed Jun 25 13:52:13 2003  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * performance-tests/Sequence_Latency/DSI/Makefile
