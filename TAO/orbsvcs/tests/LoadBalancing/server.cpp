@@ -1,10 +1,49 @@
 // -*- C++ -*-
-
+//
 // $Id$
 
-#include "orbsvcs/orbsvcs/LoadBalancingC.h"
-#include "Hash_ReplicaControl.h"
 #include "ace/Get_Opt.h"
+
+#include "orbsvcs/LoadBalancingC.h"
+
+#include "PropertyManagerTest.h"
+
+ACE_RCSID (LoadBalancer,
+           server.cpp,
+           "$Id$")
+
+const char *ior_output_file = 0;
+
+int
+parse_args (int argc, char *argv[])
+{
+  ACE_Get_Opt get_opts (argc, argv, "o:");
+  int c;
+
+  while ((c = get_opts ()) != -1)
+    switch (c)
+      {
+      case 'o':
+        ior_output_file = get_opts.optarg;
+        break;
+//       case 'i':
+//         // Infrastructure-controlled membership test
+//         break;
+//       case 'a':
+//         // Application-controlled membership test
+//         break;
+      default:
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Usage: %s "
+                           "-o <iorfile>"
+                           "\n",
+                           argv[0]),
+                          -1);
+      }
+
+  // Indicates sucessful parsing of the command line
+  return 0;
+}
 
 int
 main (int argc, char *argv[])
@@ -12,48 +51,25 @@ main (int argc, char *argv[])
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      // Initialize ORB.
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc,
+                                            argv,
+                                            "test_orb",
+                                            ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      const char *balancer_ior = "file://test.ior";
-      const char *ior_output = "server.ior";
-
-      // Parse the application options after the ORB has been
-      // initialized.
-      ACE_Get_Opt options (argc, argv, "k:");
-      int c = 0;
-
-      while ((c = options ()) != -1)
-        switch (c)
-          {
-          case 'k':
-            balancer_ior = options.optarg;
-            break;
-
-          case 'o':
-            ior_output = options.optarg;
-            break;
-          default:
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Usage: %s -k <Load Balancer IOR>\n",
-                               argv[0]),
-                              -1);
-          }
-
-      CORBA::Object_var poa_object =
-        orb->resolve_initial_references ("RootPOA", ACE_TRY_ENV);
+      CORBA::Object_var obj =
+        orb->resolve_initial_references ("RootPOA",
+                                         ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
-      if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
-                          1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in (), ACE_TRY_ENV);
+        PortableServer::POA::_narrow (obj.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+      if (CORBA::is_nil (root_poa.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Unable to obtain RootPOA reference.\n"),
+                          -1);
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager (ACE_TRY_ENV);
@@ -62,60 +78,89 @@ main (int argc, char *argv[])
       poa_manager->activate (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      CORBA::Object_var obj =
-        orb->string_to_object (balancer_ior, ACE_TRY_ENV);
+      if (parse_args (argc, argv) != 0)
+        return -1;
+
+      // @@ Is _interface_repository_id() portable?
+      const char * type_id = replica->_interface_repository_id ();
+
+      // Obtain Reference to the TAO LoadBalancer ReplicationManager
+      CORBA::Object_var lb =
+        orb->resolve_initial_references ("TAO_LoadBalancer",
+                                         ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      LoadBalancing::LoadBalancer_var load_balancer =
-        LoadBalancing::LoadBalancer::_narrow (obj.in (),
-                                              ACE_TRY_ENV);
+      TAO_LoadBalancer::GenericFactory_var factory =
+        TAO_LoadBalancer::GenericFactory::_narrow (lb.in (),
+                                                   ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      if (CORBA::is_nil (load_balancer.in ()))
+      if (CORBA::is_nil (factory.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Invalid Load Balancer IOR.\n")),
+                           "GenericFactory reference is nil.\n"),
                           -1);
 
-      CORBA::Object_var group =
-        load_balancer->group_identity (ACE_TRY_ENV);
+      TAO_LoadBalancer::PropertyManager_var property_manager =
+        TAO_LoadBalancer::PropertyManager::_narrow (lb.in (),
+                                                    ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      CORBA::String_var str =
-        orb->object_to_string (group.in (), ACE_TRY_ENV);
+      if (CORBA::is_nil (property_manager.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "PropertManager reference is nil.\n"),
+                          -1);
+
+      // Run the PropertyManager tests, in addition to setting up the
+      // Load Balancer for the remainder of this test.
+
+      // The FactoryCreationId 
+      TAO_LoadBalancer::FactoryCreationId_var factory_creation_id;
+
+      // Create a replicated Hasherobject (object group)
+      obj = factory->create_object (HasherFactory::repository_type_id (),
+                                    the_criteria,
+                                    factory_creation_id.out (),
+                                    ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      FILE *ior = ACE_OS::fopen (ior_output, "w");
-      ACE_OS::fprintf (ior, "%s", str.in ());
-      ACE_OS::fclose (ior);
-
-      Hash_ReplicaControl control;
-      control.init (orb.in (),
-                    load_balancer.in (),
-                    ACE_TRY_ENV);
+      // @@ Move this to a point just before shutdown!
+      // Destroy the object group.
+      factory->delete_object (factory_creation_id.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-#ifndef ACE_WIN32
-      orb->run (ACE_TRY_ENV);
+      // Application-Controlled MembershipStyle
+
+      if (CORBA::is_nil (obj.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Replica group reference is nil.\n"),
+                          -1);
+
+      CORBA::String_var ior =
+        orb->object_to_string (obj.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-#else
-      while (1)
+
+      ACE_DEBUG ((LM_INFO, "Hasher: <%s>\n", ior.in ()));
+
+      // If the ior_output_file exists, output the IOR to it.
+      if (ior_output_file != 0)
         {
-          ACE_Time_Value tv (1, 0);
-          orb->run (tv, ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-          control.handle_timeout (tv, 0);
+          FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
+          if (output_file == 0)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Cannot open output file for writing "
+                               "IOR: %s",
+                               ior_output_file),
+                              -1);
+          ACE_OS::fprintf (output_file, "%s", ior.in ());
+          ACE_OS::fclose (output_file);
         }
-#endif
-
-      root_poa->destroy (1, 1, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      orb->destroy (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "SYS_EX");
+      ACE_PRINT_EXCEPTION (&ACE_ANY_EXCEPTION,
+                           "Caught exception:");
+
+      return -1;
     }
   ACE_ENDTRY;
 

@@ -1,7 +1,9 @@
 
-#include "LB_test.h"
+#include "GenericFactory.h"
 
-ACE_RCSID (LB_test, GenericFactory, "$Id$")
+ACE_RCSID (LB_test,
+           GenericFactory,
+           "$Id$")
 
 int
 LB_test::create_object (void)
@@ -49,9 +51,9 @@ LB_test::test_no_factory (void)
       TAO_LoadBalancer::Location &location =
         ex.the_location;
 
-      for (int i = 0; i < location.length (); ++i)
+      for (CORBA::ULong i = 0; i < location.length (); ++i)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("          Location[%d].id:   %s\n")
+                    ACE_TEXT ("          Location[%u].id:   %s\n")
                     ACE_TEXT ("                       kind: %s\n"),
                     location[i].id,
                     location[i].kind));
@@ -195,8 +197,8 @@ int LB_test::delete_object (void)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      this->load_balancer->delete_object (this->factory_creation_id_.in ()
-                                          ACE_TRY_ENV);
+      this->load_balancer_->delete_object (this->factory_creation_id_.in ()
+                                           ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
