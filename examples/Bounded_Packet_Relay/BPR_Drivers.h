@@ -59,9 +59,7 @@ class Bounded_Packet_Relay_Base
   //     This enum must go here to avoid confusing certain broken C++
   //     compilers.
 public:
-
   // = Enumerates possible status values for a transmission.
-
   enum Transmission_Status 
   {
     UN_INITIALIZED,
@@ -77,15 +75,17 @@ template <ACE_SYNCH_DECL>
 class Bounded_Packet_Relay : public Bounded_Packet_Relay_Base
 {
   // = TITLE
-  //     This class defines a packet relay abstraction for a transmission
-  //     bounded external commands to start and end the transmission.  The
-  //     transmission may be bounded by the number of packets to send, the
-  //     dration of the transmission, or any other factors.
+  //     This class defines a packet relay abstraction for a
+  //     transmission bounded external commands to start and end the
+  //     transmission.  The transmission may be bounded by the number
+  //     of packets to send, the dration of the transmission, or any
+  //     other factors.
   //
   // = DESCRIPTION
-  //     The relay abstraction implemented by this class registers a callback
-  //     command with an input device wrapper, and relays input to an output
-  //     device at a pace specified in the start transmission call.
+  //     The relay abstraction implemented by this class registers a
+  //     callback command with an input device wrapper, and relays
+  //     input to an output device at a pace specified in the start
+  //     transmission call.
 public:
 
   typedef int (Bounded_Packet_Relay::*ACTION) (void *);
@@ -158,15 +158,14 @@ private:
 
 };
 
-
 class Input_Device_Wrapper_Base : public ACE_Task_Base
 {
   // = TITLE
-  //    This class defines an abstract base class for an input device wrapper
-  //    that hides the details of the specific device and provides a
-  //    consistent message passing interface without knowing anything
-  //    about the implementation of the input device or the message
-  //    receiver.
+  //    This class defines an abstract base class for an input device
+  //    wrapper that hides the details of the specific device and
+  //    provides a consistent message passing interface without
+  //    knowing anything about the implementation of the input device
+  //    or the message receiver.
   //
   //    The abstract base class ctor takes a command template object
   //    that is instantiated with the correct receiver and action
@@ -193,7 +192,8 @@ public:
   // Destructor.
  
   int set_send_input_msg_cmd (Command_Base *send_input_msg_cmd);
-  // Sets send input message command in the input device driver object.
+  // Sets send input message command in the input device driver
+  // object.
 
   int set_input_period (u_long input_period);
   // Sets period (in usecs) between when inputs are created.
@@ -202,9 +202,9 @@ public:
   // Sets count of messages to send.
 
   int request_stop (void);
-  // Requests that the input device stop sending messages and terminate
-  // its thread.  Should return 1 if it will do so, 0 if it has
-  // already done so, or -1 if there is a problem doing so.
+  // Requests that the input device stop sending messages and
+  // terminate its thread.  Should return 1 if it will do so, 0 if it
+  // has already done so, or -1 if there is a problem doing so.
 
   virtual int svc (void);
   // This method runs the input device loop in the new thread.
@@ -240,10 +240,10 @@ protected:
 class Output_Device_Wrapper_Base
 {
   // = TITLE
-  //    This class defines an abstract base class for an output device wrapper
-  //    that hides the details of the specific device and provides a
-  //    consistent write method interface without knowing anything
-  //    about the implementation.
+  //    This class defines an abstract base class for an output device
+  //    wrapper that hides the details of the specific device and
+  //    provides a consistent write method interface without knowing
+  //    anything about the implementation.
   //
   // = DESCRIPTION
   //    The abstract methods write_output_message () and
@@ -256,16 +256,16 @@ public:
   // output device.
 
   virtual int modify_device_settings (void *) = 0;
-  // Provides an abstract interface to allow modifying device settings.
+  // Provides an abstract interface to allow modifying device
+  // settings.
 };
-
 
 template <class TQ>
 class Bounded_Packet_Relay_Driver
 {
   // = TITLE
-  //    This abstract base class provides a simple abstraction for
-  //    a test driver for the bounded packet relay example.
+  //    This abstract base class provides a simple abstraction for a
+  //    test driver for the bounded packet relay example.
   //
   // = DESCRIPTION
   //    This is the place where the common code to test the different
