@@ -347,6 +347,13 @@ The -St option to suppress generation of typecodes now also suppresses the
 generation of the Any insertion and extraction operators. The extraction
 operators require the associated typecode, so the generated code for those
 operators would not compile when the -St option was used. </li>
+
+<li>
+Option -Ge 2 added which generates 'throw' instead of ACE_THROW_SPEC, ACE_THROW,
+and ACE_RETHROW. Since the expansion of ACE_THROW_RETURN is platform-dependent,
+it was left as is. Same for TAO_INTERCEPTOR_THROW, since it sometimes
+expands to ACE_THROW_RETURN. Of course ACE_HAS_EXCEPTIONS must be defined for
+this option to work.
 </ul>
 
 <p><br>Known bugs/unimplemented constructs:
