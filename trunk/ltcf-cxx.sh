@@ -415,15 +415,18 @@ case "$host_os" in
         # dependencies.
         output_verbose_link_cmds='templist=`$CC $CFLAGS -v conftest.$objext 2>&1 | egrep "\-R|\-L"`; list=""; for z in $templist; do case $z in conftest.$objext) list="$list $z";; *.$objext);; *) list="$list $z";;esac; done; echo $list'
 
-        AR="$CXX"
-        old_archive_cmds='$AR -xar -o $oldlib $oldobjs'
+	# Archives containing C++ object files must be created using
+	# "CC -xar", where "CC" is the Sun C++ compiler.  This is
+        # necessary to make sure instantiated templates are included
+        # in the archive.
+        old_archive_cmds='$CC -xar -o $oldlib $oldobjs'
         ;;
       gcx)
         # Green Hills C++ Compiler
         archive_cmds='$CC -shared $libobjs $deplibs $linker_flags ${wl}-h $wl$soname -o $lib'
 
-        AR="$CXX $LDFLAGS"
-        old_archive_cmds='$AR -archive -o $oldlib $oldobjs'
+        # The C++ compiler must be used to create the archive.
+        old_archive_cmds='$CC $LDFLAGS -archive -o $oldlib $oldobjs'
         ;;
       *)
         # GNU C++ compiler
@@ -508,13 +511,23 @@ if eval $ac_compile 2>&5; then
   for p in `eval $output_verbose_link_cmds`; do
     case $p in
     *.$objext | -L* | -R* | -l*)
+       # Some compilers place space between "-{L,R}" and the path.
+       # Remove the space.
+       if test $p = "-L" \
+          || test $p = "-R"; then
+         prev=$p
+         continue
+       else
+         prev=
+       fi
+
        # This assumes that the test object file only shows up
        # once in the compiler output.
        if test "$p" != "conftest.$objext"; then
          if test "$pre_object_deps_done" = no; then
-           predeps="$predeps $p"
+           predeps="${predeps} ${prev}${p}"
          else
-           postdeps="$postdeps $p"
+           postdeps="${postdeps} ${prev}${p}"
          fi
        else
          pre_object_deps_done=yes
