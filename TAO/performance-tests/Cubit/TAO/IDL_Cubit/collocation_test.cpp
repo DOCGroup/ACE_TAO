@@ -18,7 +18,7 @@ svr_worker (void *arg)
 
   int argc = 3;
   CORBA::String_var argv0 = CORBA::string_dup ("server");
-  CORBA::String_var argv1 = CORBA::string_dup ("-o");
+  CORBA::String_var argv1 = CORBA::string_dup ("-f");
   CORBA::String_var argv2 = CORBA::string_dup (THE_IOR_FILE);
   //CORBA::String_var argv3 = CORBA::string_dup ("-ORBCollocationStrategy");
   //CORBA::String_var argv4 = CORBA::string_dup ("direct");
