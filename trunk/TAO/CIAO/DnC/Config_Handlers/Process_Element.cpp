@@ -20,12 +20,12 @@ DOMDocument* create_document (const char *url)
 
   DOMImplementation* impl
     = DOMImplementationRegistry::getDOMImplementation(gLS);
-  auto_ptr<DOMImplementation> cleanup_impl (impl);
+  //auto_ptr<DOMImplementation> cleanup_impl (impl);
 
   DOMBuilder* parser =
     ((DOMImplementationLS*)impl)->createDOMBuilder
     (DOMImplementationLS::MODE_SYNCHRONOUS, 0);
-  auto_ptr<DOMBuilder> cleanup_parser (parser);
+  //auto_ptr<DOMBuilder> cleanup_parser (parser);
 
   // Discard comment nodes in the document
   parser->setFeature (XMLUni::fgDOMComments, false);
@@ -63,7 +63,7 @@ DOMDocument* create_document (const char *url)
 
 
   DOMDocument* doc = parser->parseURI (url);
-  auto_ptr<DOMDocument> cleanup_doc (doc);
+  //auto_ptr<DOMDocument> cleanup_doc (doc);
   ACE_TString root_node_name;
   char* root_node_name_ch = XMLString::transcode
     (doc->getDocumentElement ()->getNodeName ());
@@ -89,7 +89,7 @@ process_refs(DOMNode*& node,
   if (node->hasAttributes())
     {
       DOMNamedNodeMap* named_node_map = node->getAttributes ();
-      auto_ptr<DOMNamedNodeMap> cleanup_nodemap (named_node_map);
+      //auto_ptr<DOMNamedNodeMap> cleanup_nodemap (named_node_map);
       
       int length = named_node_map->getLength ();
       
@@ -120,7 +120,7 @@ process_ref(DOMNode*& node,
   if (node->hasAttributes ())
     {
       DOMNamedNodeMap* named_node_map = node->getAttributes ();
-      auto_ptr<DOMNamedNodeMap> cleanup_nodemap (named_node_map);
+      //auto_ptr<DOMNamedNodeMap> cleanup_nodemap (named_node_map);
       
       int length = named_node_map->getLength ();
       

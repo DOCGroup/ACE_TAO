@@ -29,8 +29,10 @@ installPackage (const char* installation_name,
                    Deployment::NameExists,
                    Deployment::PackageError))
 {
-  DOMDocument* top_pc_doc = 
-     CIAO::Config_Handler::Utils::create_document (location);
+  DOMBuilder* parser = 
+     CIAO::Config_Handler::Utils::create_parser (location);
+  DOMDocument* top_pc_doc = parser->parseURI (location);
+  auto_ptr<DOMBuilder> cleanup_parser (parser);
   CIAO::Config_Handler::TPD_Handler top_pc_handler (top_pc_doc,
                                                DOMNodeFilter::SHOW_ELEMENT |
                                                DOMNodeFilter::SHOW_TEXT);
@@ -42,16 +44,15 @@ installPackage (const char* installation_name,
                                                DOMNodeFilter::SHOW_ELEMENT |
                                                DOMNodeFilter::SHOW_TEXT);
   pc_handler.process_PackageConfiguration (this->pc_);
-  //Deployment::DnC_Dump::dump (this->pc_);
   this->pc_table_.bind (installation_name, &(pc_));
 }
 
 void
 CIAO::RepositoryManager_Impl::
-createPackage (const char* installation_name,
-               const Deployment::PackageConfiguration& pc,
-               const char* base_location,
-               CORBA::Boolean replace
+createPackage (const char*,
+               const Deployment::PackageConfiguration&,
+               const char*,
+               CORBA::Boolean
                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::NameExists,
@@ -77,7 +78,7 @@ findPackageByName (const char* name
 
 Deployment::PackageConfiguration*
 CIAO::RepositoryManager_Impl::
-findPackageByUUID (const char* name
+findPackageByUUID (const char*
                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::NoSuchName))
@@ -87,7 +88,7 @@ findPackageByUUID (const char* name
 
 CORBA::StringSeq*
 CIAO::RepositoryManager_Impl::
-findNamesByType (const char* type
+findNamesByType (const char*
                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -112,7 +113,7 @@ getAllTypes (ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
 void
 CIAO::RepositoryManager_Impl::
-deletePackage (const char* name
+deletePackage (const char*
                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::NoSuchName))
