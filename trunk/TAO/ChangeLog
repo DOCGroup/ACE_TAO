@@ -1,3 +1,8 @@
+Tue Nov 05 12:01:25 2002  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/orbsvcs/Notify/Any/PushSupplier.cpp:
+	  ENV variable was being used in <init>, changed it back to ACE_ENV_ARG_DECL.
+
 Tue Nov  5 08:28:23 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_valuetype/field_cs.cpp (visit_enum): Changed
