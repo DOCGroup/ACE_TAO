@@ -44,18 +44,18 @@ Handler::set_id (int id)
 
 int
 Handler::handle_timeout (const ACE_Time_Value &current_time,
- 			const void *)
+                        const void *)
 {
   ACE_Time_Value delay = current_time - this->expires_;
 
   // No need to protect this printf is always called from a Async safe
   // point.
   ACE_OS::printf ("\nexpiring timer %d at %u.%07.7u secs\n"
-		  "\tthere was a %u.%07.7u secs delay\n",
-		  this->id_,
-		  current_time.sec (),
-		  current_time.usec (),
-		  delay.sec (), delay.usec ());
+                  "\tthere was a %u.%07.7u secs delay\n",
+                  this->id_,
+                  current_time.sec (),
+                  current_time.usec (),
+                  delay.sec (), delay.usec ());
 
   // Notice this delete is protected.
   delete this;
@@ -72,7 +72,7 @@ Handler::cancelled (void)
 }
 
 Input_Task::Input_Task (Thread_Timer_Queue *queue,
-			Thread_Timer_Queue_Test_Driver &timer_queue_driver)
+                        Thread_Timer_Queue_Test_Driver &timer_queue_driver)
   : ACE_Task_Base (ACE_Thread_Manager::instance ()),
     queue_ (queue),
     usecs_ (ACE_ONE_SECOND_IN_USECS),
@@ -173,7 +173,7 @@ Input_Task::shutdown_timer (void *argument)
 void
 Input_Task::dump (void)
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->queue_->lock ());
+  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->queue_->mutex ());
 
   ACE_DEBUG ((LM_DEBUG, "begin dumping timer queue\n"));
 
@@ -222,20 +222,20 @@ Thread_Timer_Queue_Test_Driver::init (void)
   // initialize the <Command> objects with their corresponding
   // methods from <Input_Task>
   ACE_NEW_RETURN (schedule_cmd_,
-		  COMMAND (input_task_, &Input_Task::add_timer),
-		  -1);
+                  COMMAND (input_task_, &Input_Task::add_timer),
+                  -1);
 
   ACE_NEW_RETURN (cancel_cmd_,
-		  COMMAND (input_task_, &Input_Task::cancel_timer),
-		  -1);
+                  COMMAND (input_task_, &Input_Task::cancel_timer),
+                  -1);
 
   ACE_NEW_RETURN (list_cmd_,
-		  COMMAND (input_task_, &Input_Task::list_timer),
-		  -1);
+                  COMMAND (input_task_, &Input_Task::list_timer),
+                  -1);
 
   ACE_NEW_RETURN (shutdown_cmd_,
-		  COMMAND (input_task_, &Input_Task::shutdown_timer),
-		  -1);
+                  COMMAND (input_task_, &Input_Task::shutdown_timer),
+                  -1);
 
   if (this->input_task_.activate () == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "cannot activate input task"), -1);
