@@ -4518,6 +4518,8 @@ ACE_OS::thread_mutex_unlock (ACE_thread_mutex_t *m)
 //#   define ACE_SPECIAL_INLINE inline
 # endif
 
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+
 ACE_INLINE
 int
 ACE_OS_Thread_Mutex_Guard::acquire (void)
@@ -4587,3 +4589,4 @@ ACE_OS_Recursive_Thread_Mutex_Guard::~ACE_OS_Recursive_Thread_Mutex_Guard ()
 {
   release ();
 }
+#endif /* ACE_MT_SAFE && ACE_MT_SAFE != 0 */

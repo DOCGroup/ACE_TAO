@@ -18,6 +18,7 @@
 
 #include "ace/ACE_export.h"
 #include "ace/Object_Manager_Base.h"
+#include "ace/Global_Macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

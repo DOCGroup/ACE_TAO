@@ -14,6 +14,7 @@ ACE_RCSID (tao,
 #endif /* __ACE_INLINE__ */
 
 #include "ace/OS_NS_stdio.h"
+#include "ace/os_include/os_netdb.h"
 
 TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const ACE_INET_Addr &addr,
                                       int use_dotted_decimal_addresses)
