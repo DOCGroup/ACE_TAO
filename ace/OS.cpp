@@ -3736,3 +3736,80 @@ ace_sysconf_dump (void)
               ACE_OS::sysconf (_SC_VERSION)));
 }
 #endif
+
+#if defined (ACE_HAS_WINCE)
+ACE_CE_Bridge *ACE_CE_Bridge::default_text_bridge_ = 0;
+
+ACE_CE_Bridge::ACE_CE_Bridge (void)
+  : text_output_ (0),
+    notification_ (0),
+    idc_ (0)
+{
+}
+
+ACE_CE_Bridge::ACE_CE_Bridge (CWnd *w, int n, int i)
+  : text_output_ (w),
+    notification_ (n),
+    idc_ (i)
+{
+}
+
+void
+ACE_CE_Bridge::set_window (CWnd *w, int n, int i)
+{
+  this->text_output_ = w;
+  this->notification_ = n;
+  this->idc_ = i;
+}
+
+ACE_CE_Bridge::~ACE_CE_Bridge (void)
+{
+  // This method needs to be defined because there seems to be a bug
+  // in CE's compiler.
+}
+
+void
+ACE_CE_Bridge::set_self_default (void)
+{
+  ACE_CE_Bridge::default_text_bridge_ = this;
+}
+
+int 
+ACE_CE_Bridge::notification (void)
+{
+  return this->notification_;
+}
+
+int
+ACE_CE_Bridge::idc (void)
+{
+  return this->idc_;
+}
+
+CWnd *
+ACE_CE_Bridge::window (void)
+{
+  return this->text_output_;
+}
+
+ACE_CE_Bridge *
+ACE_CE_Bridge::get_default_winbridge (void)
+{
+  return ACE_CE_Bridge::default_text_bridge_;
+}
+
+int
+ACE_CE_Bridge::write_msg (LPCTSTR str)
+{
+  return this->write_msg (new CString (str));
+}
+
+int
+ACE_CE_Bridge::write_msg (CString *s)
+{
+  return                        // Don't ask!
+    this->text_output_->PostMessage (WM_COMMAND,
+                                     MAKEWORD (this->idc_, this->notification_),
+                                     (long)((void *) s));
+}
+#endif /* ACE_HAS_WINCE */
