@@ -36,6 +36,9 @@ static int child = 0;
 // Keep track of the child pid.
 static pid_t child_pid = 0;
 
+// Keep track of the (original) parent pid.
+static pid_t parent_pid = 0;
+
 // Coordinate the shutdown between threads.
 static ACE_Atomic_Op<ACE_SYNCH_MUTEX, int> shut_down (0);
 
@@ -210,11 +213,10 @@ worker_child (void *)
       // After 1000 iterations sent a SIGHUP to our parent.
       if ((i % 1000) == 0)
         {
-          pid_t pid = ACE_OS::getppid ();
           ACE_DEBUG ((LM_DEBUG,
                       ASYS_TEXT ("(%P|%t) sending SIGHUP to parent process %d\n"),
-                      pid));
-          int result = ACE_OS::kill (pid, SIGHUP);
+                      parent_pid));
+          int result = ACE_OS::kill (parent_pid, SIGHUP);
           ACE_ASSERT (result != -1);
         }
     }
@@ -337,6 +339,10 @@ main (int argc, ASYS_TCHAR *argv[])
     {
       ACE_APPEND_LOG (ASYS_TEXT ("Signal_Test-child"));
       parse_args (argc, argv);
+
+      // Obtain this information here because wierd things happen on
+      // Linux due to their threading model.
+      parent_pid = ACE_OS::getppid ();
 
       run_test (worker_child);
       ACE_END_LOG;
