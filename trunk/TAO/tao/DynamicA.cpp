@@ -41,7 +41,7 @@
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:808
+// be\be_visitor_typecode/typecode_defn.cpp:914
 
 namespace TAO
 {
@@ -98,7 +98,7 @@ namespace Dynamic
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:808
+// be\be_visitor_typecode/typecode_defn.cpp:914
 
 namespace TAO
 {

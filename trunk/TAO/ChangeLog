@@ -1,3 +1,21 @@
+Sun Apr  3 17:18:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/DynamicA.cpp:
+        * tao/DynamicC.{h,cpp,inl}:
+          Regenerated
+
+        * tao/DynamicS.h:
+          New file, needed when someone includes Dynamic.pidl in their own idl
+          file. Thanks to Gary Duzan <gduzan at bbn dot com> for reporting that
+          we missed this file.
+
+        * tao/Dynamic.pidl:
+          Added -SS to the tao_idl compiler options
+
+        * tao/tao.mpc:
+        * tao/Makefile.am:
+          Added DynamicS.h
+
 Sat Apr  2 09:09:40 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_typecode/struct_typecode.cpp
