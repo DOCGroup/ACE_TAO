@@ -756,8 +756,6 @@ realclean:
  $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Transport_Descriptor_Interface.h \
- Endpoint.h \
- Endpoint.i \
  Transport_Descriptor_Interface.inl \
  Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
@@ -845,11 +843,7 @@ realclean:
  LocalObject.i \
  debug.h \
  Policy_Manager.i \
- Resource_Factory.h \
- Pluggable.h \
- Pluggable.i \
- Protocol_Factory.h \
- params.h \
+ Resource_Factory.h params.h \
  CORBA_String.h \
  params.i \
  TAO_Singleton_Manager.h \
@@ -1089,9 +1083,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  CORBA_String.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -1317,16 +1308,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- IOPC.h \
- Exception.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  CORBA_String.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -1345,12 +1326,18 @@ realclean:
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
  TAO_Singleton_Manager.h \
- Adapter.h Adapter.i PolicyFactory_Registry.h PortableInterceptorC.h \
- DynamicC.h DynamicC.i ObjectReferenceTemplateC.h OctetSeqC.h \
- Sequence.h OctetSeqC.i StringSeqC.h StringSeqC.i ValueBase.h \
+ Adapter.h \
+ Exception.h \
+ Adapter.i PolicyFactory_Registry.h PortableInterceptorC.h DynamicC.h \
+ Any.h \
+ Typecode.h \
+ Typecode.i \
+ Any.i DynamicC.i \
+ ObjectReferenceTemplateC.h OctetSeqC.h Sequence.h OctetSeqC.i \
+ StringSeqC.h StringSeqC.i ValueBase.h \
  ValueBase.i \
- ObjectReferenceTemplateC.i Messaging_SyncScopeC.h IOPC.h \
- Messaging_SyncScopeC.i PortableInterceptorC.i \
+ ObjectReferenceTemplateC.i Messaging_SyncScopeC.h IOPC.h Object.h \
+ Any.h IOPC.i Messaging_SyncScopeC.i PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -1372,6 +1359,7 @@ realclean:
  Parser_Registry.h \
  Parser_Registry.i \
  Service_Callbacks.h \
+ IOPC.h \
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
@@ -1569,9 +1557,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -1923,15 +1908,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- IOPC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable.i \
- Protocol_Factory.h \
  TAO_Singleton_Manager.h \
  TAO_Singleton_Manager.inl \
  TAO_Singleton.h \
@@ -1947,6 +1923,10 @@ realclean:
  PolicyFactory_Registry.h \
  PortableInterceptorC.h \
  DynamicC.h \
+ Any.h \
+ Typecode.h \
+ Typecode.i \
+ Any.i \
  DynamicC.i \
  ObjectReferenceTemplateC.h \
  OctetSeqC.h \
@@ -1957,6 +1937,8 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ IOPC.h \
+ IOPC.i \
  Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -2022,6 +2004,9 @@ realclean:
  GIOP_Message_Version.h \
  GIOP_Message_Version.inl \
  Profile.i \
+ Pluggable.h \
+ Pluggable.i \
+ Protocol_Factory.h \
  Endpoint.h \
  Endpoint.i \
  Transport_Descriptor_Interface.h \
@@ -2144,8 +2129,6 @@ realclean:
  $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Transport_Descriptor_Interface.h \
- Endpoint.h \
- Endpoint.i \
  Transport_Descriptor_Interface.inl \
  Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
@@ -2239,9 +2222,6 @@ realclean:
  debug.h \
  Policy_Manager.i \
  Resource_Factory.h \
- Pluggable.h \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  params.i \
  TAO_Singleton_Manager.h \
@@ -2409,9 +2389,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- IOPC.h \
- Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/String_Base_Const.h \
@@ -2421,6 +2398,11 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
+ Acceptor_Registry.i \
+ Profile.h \
+ Tagged_Components.h \
+ IOPC.h \
+ Exception.h \
  Exception.i \
  Object.h \
  Policy_ForwardC.h \
@@ -2444,11 +2426,6 @@ realclean:
  Typecode.i \
  Any.i \
  IOPC.i \
- Pluggable.i \
- Protocol_Factory.h \
- Acceptor_Registry.i \
- Profile.h \
- Tagged_Components.h \
  CONV_FRAMEC.h \
  CONV_FRAMEC.i \
  Tagged_Components.i \
@@ -2462,6 +2439,9 @@ realclean:
  GIOP_Message_Version.h \
  GIOP_Message_Version.inl \
  Profile.i \
+ Pluggable.h \
+ Pluggable.i \
+ Protocol_Factory.h \
  ORB_Core.h \
  ORB.h \
  Services.h \
@@ -3158,8 +3138,6 @@ realclean:
  $(ACE_ROOT)/ace/SOCK.i \
  Transport.h \
  Transport_Descriptor_Interface.h \
- Endpoint.h \
- Endpoint.i \
  Transport_Descriptor_Interface.inl \
  Transport_Cache_Manager.h \
  Cache_Entries.h \
@@ -3515,8 +3493,6 @@ realclean:
  $(ACE_ROOT)/ace/SOCK.i \
  Transport.h \
  Transport_Descriptor_Interface.h \
- Endpoint.h \
- Endpoint.i \
  Transport_Descriptor_Interface.inl \
  Transport_Cache_Manager.h \
  Cache_Entries.h \
@@ -3812,9 +3788,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -4002,8 +3975,6 @@ realclean:
  $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Transport_Descriptor_Interface.h \
- Endpoint.h \
- Endpoint.i \
  Transport_Descriptor_Interface.inl \
  Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
@@ -4182,7 +4153,6 @@ realclean:
  debug.h \
  Policy_Manager.i \
  Resource_Factory.h \
- Protocol_Factory.h \
  params.h \
  params.i \
  TAO_Singleton_Manager.h \
@@ -4248,6 +4218,8 @@ realclean:
  Object_KeyC.h \
  Object_KeyC.i \
  IIOP_Endpoint.h \
+ Endpoint.h \
+ Endpoint.i \
  IIOP_Endpoint.i \
  IIOP_Profile.i \
  Acceptor_Registry.h \
@@ -4551,8 +4523,6 @@ realclean:
  Connection_Handler.h \
  Transport.h \
  Transport_Descriptor_Interface.h \
- Endpoint.h \
- Endpoint.i \
  Transport_Descriptor_Interface.inl \
  Transport_Cache_Manager.h \
  Cache_Entries.h \
@@ -4591,6 +4561,8 @@ realclean:
  Object_KeyC.h \
  Object_KeyC.i \
  IIOP_Endpoint.h \
+ Endpoint.h \
+ Endpoint.i \
  ORB.h \
  Services.h \
  Services.i \
@@ -4608,7 +4580,6 @@ realclean:
  LocalObject.i \
  Policy_Manager.i \
  Resource_Factory.h \
- Protocol_Factory.h \
  params.h \
  params.i \
  TAO_Singleton_Manager.h \
@@ -4913,8 +4884,6 @@ realclean:
  $(ACE_ROOT)/ace/SOCK.i \
  Transport.h \
  Transport_Descriptor_Interface.h \
- Endpoint.h \
- Endpoint.i \
  Transport_Descriptor_Interface.inl \
  Transport_Cache_Manager.h \
  Cache_Entries.h \
@@ -4965,7 +4934,6 @@ realclean:
  debug.h \
  Policy_Manager.i \
  Resource_Factory.h \
- Protocol_Factory.h \
  params.h \
  params.i \
  TAO_Singleton_Manager.h \
@@ -5031,6 +4999,8 @@ realclean:
  Object_KeyC.h \
  Object_KeyC.i \
  IIOP_Endpoint.h \
+ Endpoint.h \
+ Endpoint.i \
  IIOP_Endpoint.i \
  IIOP_Profile.i \
  MProfile.h \
@@ -5249,8 +5219,6 @@ realclean:
  Exception.h \
  Exception.i \
  Transport_Descriptor_Interface.h \
- Endpoint.h \
- Endpoint.i \
  Transport_Descriptor_Interface.inl \
  Transport_Cache_Manager.h \
  Cache_Entries.h \
@@ -5323,9 +5291,6 @@ realclean:
  LocalObject.i \
  Policy_Manager.i \
  Resource_Factory.h \
- Pluggable.h \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  params.i \
  TAO_Singleton_Manager.h \
@@ -5370,6 +5335,8 @@ realclean:
  ORB_Core.i \
  Server_Strategy_Factory.h \
  IIOP_Endpoint.h \
+ Endpoint.h \
+ Endpoint.i \
  IIOP_Endpoint.i \
  Thread_Lane_Resources.h \
  Thread_Lane_Resources.i \
@@ -5830,15 +5797,6 @@ realclean:
  debug.h \
  Policy_Manager.i \
  Resource_Factory.h \
- Pluggable.h \
- IOPC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  params.i \
  TAO_Singleton_Manager.h \
@@ -5856,6 +5814,10 @@ realclean:
  PolicyFactory_Registry.h \
  PortableInterceptorC.h \
  DynamicC.h \
+ Any.h \
+ Typecode.h \
+ Typecode.i \
+ Any.i \
  DynamicC.i \
  ObjectReferenceTemplateC.h \
  OctetSeqC.h \
@@ -5866,6 +5828,8 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ IOPC.h \
+ IOPC.i \
  Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -6089,15 +6053,6 @@ realclean:
  debug.h \
  Policy_Manager.i \
  Resource_Factory.h \
- Pluggable.h \
- IOPC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  params.i \
  TAO_Singleton_Manager.h \
@@ -6115,6 +6070,10 @@ realclean:
  PolicyFactory_Registry.h \
  PortableInterceptorC.h \
  DynamicC.h \
+ Any.h \
+ Typecode.h \
+ Typecode.i \
+ Any.i \
  DynamicC.i \
  ObjectReferenceTemplateC.h \
  OctetSeqC.h \
@@ -6125,6 +6084,8 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ IOPC.h \
+ IOPC.i \
  Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -6216,17 +6177,24 @@ realclean:
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Service_Object.i \
  TAO_Export.h \
- Pluggable.h \
- corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Base.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Unbounded_Set.h \
+ $(ACE_ROOT)/ace/Node.h \
+ $(ACE_ROOT)/ace/Node.cpp \
+ $(ACE_ROOT)/ace/Unbounded_Set.inl \
+ $(ACE_ROOT)/ace/Unbounded_Set.cpp \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base_Const.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -6241,7 +6209,6 @@ realclean:
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Malloc_Allocator.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc_Allocator.i \
  $(ACE_ROOT)/ace/Free_List.h \
  $(ACE_ROOT)/ace/Free_List.i \
@@ -6257,57 +6224,11 @@ realclean:
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Unbounded_Set.h \
- $(ACE_ROOT)/ace/Node.h \
- $(ACE_ROOT)/ace/Node.cpp \
- $(ACE_ROOT)/ace/Unbounded_Set.inl \
- $(ACE_ROOT)/ace/Unbounded_Set.cpp \
  $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/Message_Block_T.h \
- $(ACE_ROOT)/ace/Message_Block_T.i \
- $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/CDR_Base.inl \
- $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- corbafwd.i \
- IOPC.h \
- Exception.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/String_Base.h \
- $(ACE_ROOT)/ace/String_Base_Const.h \
- $(ACE_ROOT)/ace/String_Base.i \
- $(ACE_ROOT)/ace/String_Base.cpp \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable.i \
- Protocol_Factory.h \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -6328,13 +6249,44 @@ realclean:
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  default_resource.i \
  ORB_Core.h \
+ corbafwd.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Message_Block.i \
+ $(ACE_ROOT)/ace/Message_Block_T.h \
+ $(ACE_ROOT)/ace/Message_Block_T.i \
+ $(ACE_ROOT)/ace/Message_Block_T.cpp \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
+ $(ACE_ROOT)/ace/CORBA_macros.h \
+ orbconf.h \
+ varbase.h \
+ corbafwd.i \
  ORB.h \
+ Exception.h \
+ Exception.i \
  Services.h \
+ Sequence.h \
+ Managed_Types.h \
+ Managed_Types.i \
+ Sequence.i \
+ Sequence_T.h \
+ Sequence_T.i \
+ Sequence_T.cpp \
+ Environment.h \
+ Environment.i \
  Services.i \
  CORBA_String.h \
  CORBA_String.inl \
  PolicyC.h \
  CurrentC.h \
+ Object.h \
+ Policy_ForwardC.h \
+ CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
+ CDR.i \
+ Policy_ForwardC.i \
+ Object.i \
  CurrentC.i \
  Remote_Object_Proxy_Impl.h \
  Object_Proxy_Impl.h \
@@ -6365,6 +6317,10 @@ realclean:
  PolicyFactory_Registry.h \
  PortableInterceptorC.h \
  DynamicC.h \
+ Any.h \
+ Typecode.h \
+ Typecode.i \
+ Any.i \
  DynamicC.i \
  ObjectReferenceTemplateC.h \
  OctetSeqC.h \
@@ -6375,6 +6331,8 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ IOPC.h \
+ IOPC.i \
  Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -6418,6 +6376,7 @@ realclean:
  $(ACE_ROOT)/ace/Thread_Manager.i \
  ORB_Core.i \
  IIOP_Factory.h \
+ Protocol_Factory.h \
  Acceptor_Registry.h \
  Acceptor_Registry.i \
  Connector_Registry.h \
@@ -6514,17 +6473,24 @@ realclean:
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Service_Object.i \
  TAO_Export.h \
- Pluggable.h \
- corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Base.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Unbounded_Set.h \
+ $(ACE_ROOT)/ace/Node.h \
+ $(ACE_ROOT)/ace/Node.cpp \
+ $(ACE_ROOT)/ace/Unbounded_Set.inl \
+ $(ACE_ROOT)/ace/Unbounded_Set.cpp \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base_Const.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -6539,7 +6505,6 @@ realclean:
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Malloc_Allocator.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc_Allocator.i \
  $(ACE_ROOT)/ace/Free_List.h \
  $(ACE_ROOT)/ace/Free_List.i \
@@ -6555,57 +6520,11 @@ realclean:
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Unbounded_Set.h \
- $(ACE_ROOT)/ace/Node.h \
- $(ACE_ROOT)/ace/Node.cpp \
- $(ACE_ROOT)/ace/Unbounded_Set.inl \
- $(ACE_ROOT)/ace/Unbounded_Set.cpp \
  $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/Message_Block_T.h \
- $(ACE_ROOT)/ace/Message_Block_T.i \
- $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/CDR_Base.inl \
- $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- corbafwd.i \
- IOPC.h \
- Exception.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/String_Base.h \
- $(ACE_ROOT)/ace/String_Base_Const.h \
- $(ACE_ROOT)/ace/String_Base.i \
- $(ACE_ROOT)/ace/String_Base.cpp \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable.i \
- Protocol_Factory.h \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -6675,17 +6594,24 @@ realclean:
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Service_Object.i \
  TAO_Export.h \
- Pluggable.h \
- corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Base.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Unbounded_Set.h \
+ $(ACE_ROOT)/ace/Node.h \
+ $(ACE_ROOT)/ace/Node.cpp \
+ $(ACE_ROOT)/ace/Unbounded_Set.inl \
+ $(ACE_ROOT)/ace/Unbounded_Set.cpp \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base_Const.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -6700,7 +6626,6 @@ realclean:
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Malloc_Allocator.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc_Allocator.i \
  $(ACE_ROOT)/ace/Free_List.h \
  $(ACE_ROOT)/ace/Free_List.i \
@@ -6716,57 +6641,11 @@ realclean:
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Unbounded_Set.h \
- $(ACE_ROOT)/ace/Node.h \
- $(ACE_ROOT)/ace/Node.cpp \
- $(ACE_ROOT)/ace/Unbounded_Set.inl \
- $(ACE_ROOT)/ace/Unbounded_Set.cpp \
  $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/Message_Block_T.h \
- $(ACE_ROOT)/ace/Message_Block_T.i \
- $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/CDR_Base.inl \
- $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- corbafwd.i \
- IOPC.h \
- Exception.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/String_Base.h \
- $(ACE_ROOT)/ace/String_Base_Const.h \
- $(ACE_ROOT)/ace/String_Base.i \
- $(ACE_ROOT)/ace/String_Base.cpp \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable.i \
- Protocol_Factory.h \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -7540,11 +7419,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- IOPC.h \
- IOPC.i \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -7573,6 +7447,8 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ IOPC.h \
+ IOPC.i \
  Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -8016,11 +7892,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- IOPC.h \
- IOPC.i \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -8051,6 +7922,8 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ IOPC.h \
+ IOPC.i \
  Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -8265,15 +8138,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- IOPC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -8294,6 +8158,10 @@ realclean:
  PolicyFactory_Registry.h \
  PortableInterceptorC.h \
  DynamicC.h \
+ Any.h \
+ Typecode.h \
+ Typecode.i \
+ Any.i \
  DynamicC.i \
  ObjectReferenceTemplateC.h \
  OctetSeqC.h \
@@ -8304,6 +8172,8 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ IOPC.h \
+ IOPC.i \
  Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -8544,15 +8414,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- IOPC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -8573,6 +8434,10 @@ realclean:
  PolicyFactory_Registry.h \
  PortableInterceptorC.h \
  DynamicC.h \
+ Any.h \
+ Typecode.h \
+ Typecode.i \
+ Any.i \
  DynamicC.i \
  ObjectReferenceTemplateC.h \
  OctetSeqC.h \
@@ -8583,6 +8448,8 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ IOPC.h \
+ IOPC.i \
  Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -8795,15 +8662,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- IOPC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -8824,6 +8682,10 @@ realclean:
  PolicyFactory_Registry.h \
  PortableInterceptorC.h \
  DynamicC.h \
+ Any.h \
+ Typecode.h \
+ Typecode.i \
+ Any.i \
  DynamicC.i \
  ObjectReferenceTemplateC.h \
  OctetSeqC.h \
@@ -8834,6 +8696,8 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ IOPC.h \
+ IOPC.i \
  Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -9409,14 +9273,6 @@ realclean:
  debug.h \
  Policy_Manager.i \
  Resource_Factory.h \
- Pluggable.h \
- IOPC.h \
- Any.h \
- Typecode.h \
- Any.i \
- IOPC.i \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  Adapter.h \
  Adapter.i \
@@ -9424,6 +9280,9 @@ realclean:
  PortableInterceptorC.h \
  CurrentC.h \
  DynamicC.h \
+ Any.h \
+ Typecode.h \
+ Any.i \
  DynamicC.i \
  ObjectReferenceTemplateC.h \
  OctetSeqC.h \
@@ -9434,6 +9293,8 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ IOPC.h \
+ IOPC.i \
  Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -9768,16 +9629,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- IOPC.h \
- Any.h \
- CDR.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -9798,6 +9649,11 @@ realclean:
  PolicyFactory_Registry.h \
  PortableInterceptorC.h \
  DynamicC.h \
+ Any.h \
+ CDR.h \
+ Typecode.h \
+ Typecode.i \
+ Any.i \
  DynamicC.i \
  ObjectReferenceTemplateC.h \
  OctetSeqC.h \
@@ -9808,6 +9664,8 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ IOPC.h \
+ IOPC.i \
  Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -10051,15 +9909,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- IOPC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -10081,6 +9930,10 @@ realclean:
  PortableInterceptorC.h \
  CurrentC.h \
  DynamicC.h \
+ Any.h \
+ Typecode.h \
+ Typecode.i \
+ Any.i \
  DynamicC.i \
  ObjectReferenceTemplateC.h \
  OctetSeqC.h \
@@ -10091,6 +9944,8 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ IOPC.h \
+ IOPC.i \
  Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -10328,16 +10183,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- IOPC.h \
- Exception.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  CORBA_String.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -10356,12 +10201,18 @@ realclean:
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
  TAO_Singleton_Manager.h \
- Adapter.h Adapter.i PolicyFactory_Registry.h PortableInterceptorC.h \
- DynamicC.h DynamicC.i ObjectReferenceTemplateC.h OctetSeqC.h \
- Sequence.h OctetSeqC.i StringSeqC.h StringSeqC.i ValueBase.h \
+ Adapter.h \
+ Exception.h \
+ Adapter.i PolicyFactory_Registry.h PortableInterceptorC.h DynamicC.h \
+ Any.h \
+ Typecode.h \
+ Typecode.i \
+ Any.i DynamicC.i \
+ ObjectReferenceTemplateC.h OctetSeqC.h Sequence.h OctetSeqC.i \
+ StringSeqC.h StringSeqC.i ValueBase.h \
  ValueBase.i \
- ObjectReferenceTemplateC.i Messaging_SyncScopeC.h IOPC.h \
- Messaging_SyncScopeC.i PortableInterceptorC.i \
+ ObjectReferenceTemplateC.i Messaging_SyncScopeC.h IOPC.h Object.h \
+ Any.h IOPC.i Messaging_SyncScopeC.i PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -10383,6 +10234,7 @@ realclean:
  Parser_Registry.h \
  Parser_Registry.i \
  Service_Callbacks.h \
+ IOPC.h \
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
@@ -11071,11 +10923,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- IOPC.h \
- IOPC.i \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -11106,6 +10953,8 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ IOPC.h \
+ IOPC.i \
  Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -11388,9 +11237,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  params.i \
  TAO_Singleton_Manager.h \
@@ -11669,11 +11515,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- IOPC.h \
- IOPC.i \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -11694,6 +11535,8 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ IOPC.h \
+ IOPC.i \
  Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -12308,15 +12151,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- IOPC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -12337,6 +12171,10 @@ realclean:
  PolicyFactory_Registry.h \
  PortableInterceptorC.h \
  DynamicC.h \
+ Any.h \
+ Typecode.h \
+ Typecode.i \
+ Any.i \
  DynamicC.i \
  ObjectReferenceTemplateC.h \
  OctetSeqC.h \
@@ -12347,6 +12185,8 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ IOPC.h \
+ IOPC.i \
  Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -12435,7 +12275,6 @@ realclean:
  Asynch_Reply_Dispatcher_Base.h \
  Transport.h \
  Transport_Descriptor_Interface.h \
- Endpoint.h \
  Transport_Descriptor_Interface.inl \
  Transport_Cache_Manager.h \
  Cache_Entries.h \
@@ -12763,15 +12602,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- IOPC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -12792,6 +12622,10 @@ realclean:
  PolicyFactory_Registry.h \
  PortableInterceptorC.h \
  DynamicC.h \
+ Any.h \
+ Typecode.h \
+ Typecode.i \
+ Any.i \
  DynamicC.i \
  ObjectReferenceTemplateC.h \
  OctetSeqC.h \
@@ -12802,6 +12636,8 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ IOPC.h \
+ IOPC.i \
  Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -13297,15 +13133,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- IOPC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -13326,6 +13153,10 @@ realclean:
  PolicyFactory_Registry.h \
  PortableInterceptorC.h \
  DynamicC.h \
+ Any.h \
+ Typecode.h \
+ Typecode.i \
+ Any.i \
  DynamicC.i \
  ObjectReferenceTemplateC.h \
  OctetSeqC.h \
@@ -13336,6 +13167,8 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ IOPC.h \
+ IOPC.i \
  Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -14141,9 +13974,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -14230,8 +14060,6 @@ realclean:
  $(ACE_ROOT)/ace/Timeprobe.h \
  Object_KeyC.h debug.h Transport.h Exception.h \
  Transport_Descriptor_Interface.h \
- Endpoint.h \
- Endpoint.i \
  Transport_Descriptor_Interface.inl \
  Transport_Cache_Manager.h \
  Cache_Entries.h \
@@ -14254,7 +14082,9 @@ realclean:
  Bind_Dispatcher_Guard.h \
  Bind_Dispatcher_Guard.i \
  Transport_Mux_Strategy.h \
- Endpoint.h GIOP_Utils.h \
+ Endpoint.h \
+ Endpoint.i \
+ GIOP_Utils.h \
  GIOP_Utils.i \
  ORB_Core.h Endpoint_Selector_Factory.h \
  Invocation_Endpoint_Selectors.h \
@@ -14456,9 +14286,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -14726,8 +14553,6 @@ realclean:
  Asynch_Reply_Dispatcher_Base.h \
  Transport.h \
  Transport_Descriptor_Interface.h \
- Endpoint.h \
- Endpoint.i \
  Transport_Descriptor_Interface.inl \
  Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
@@ -14797,9 +14622,6 @@ realclean:
  debug.h \
  Policy_Manager.i \
  Resource_Factory.h \
- Pluggable.h \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  params.i \
  Adapter.h \
@@ -15344,9 +15166,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -15740,9 +15559,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  CORBA_String.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -15957,15 +15773,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- IOPC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -15986,9 +15793,15 @@ realclean:
  PolicyFactory_Registry.h \
  PortableInterceptorC.h \
  DynamicC.h \
+ Any.h \
+ Typecode.h \
+ Typecode.i \
+ Any.i \
  DynamicC.i \
  ObjectReferenceTemplateC.h \
  Messaging_SyncScopeC.h \
+ IOPC.h \
+ IOPC.i \
  Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -16244,10 +16057,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- IOPC.h \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -16288,6 +16097,7 @@ realclean:
  Parser_Registry.h \
  Parser_Registry.i \
  Service_Callbacks.h \
+ IOPC.h \
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
@@ -16515,10 +16325,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- IOPC.h \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  CORBA_String.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -16559,6 +16365,7 @@ realclean:
  Parser_Registry.h \
  Parser_Registry.i \
  Service_Callbacks.h \
+ IOPC.h \
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
@@ -16754,10 +16561,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- IOPC.h \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  CORBA_String.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -16798,6 +16601,7 @@ realclean:
  Parser_Registry.h \
  Parser_Registry.i \
  Service_Callbacks.h \
+ IOPC.h \
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
@@ -17109,12 +16913,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- IOPC.h \
- Any.h \
- IOPC.i \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  CORBA_String.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -17134,11 +16932,12 @@ realclean:
  $(ACE_ROOT)/ace/Managed_Object.cpp \
  TAO_Singleton_Manager.h \
  Adapter.h Adapter.i PolicyFactory_Registry.h PortableInterceptorC.h \
- DynamicC.h DynamicC.i ObjectReferenceTemplateC.h StringSeqC.h \
- StringSeqC.i ValueBase.h \
+ DynamicC.h Any.h \
+ DynamicC.i ObjectReferenceTemplateC.h StringSeqC.h StringSeqC.i \
+ ValueBase.h \
  ValueBase.i \
- ObjectReferenceTemplateC.i Messaging_SyncScopeC.h IOPC.h \
- Messaging_SyncScopeC.i PortableInterceptorC.i \
+ ObjectReferenceTemplateC.i Messaging_SyncScopeC.h IOPC.h Object.h \
+ IOPC.i Messaging_SyncScopeC.i PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -17160,6 +16959,7 @@ realclean:
  Parser_Registry.h \
  Parser_Registry.i \
  Service_Callbacks.h \
+ IOPC.h \
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
@@ -17471,16 +17271,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- IOPC.h \
- Exception.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  CORBA_String.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -17499,12 +17289,18 @@ realclean:
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
  TAO_Singleton_Manager.h \
- Adapter.h Adapter.i PolicyFactory_Registry.h PortableInterceptorC.h \
- DynamicC.h DynamicC.i ObjectReferenceTemplateC.h OctetSeqC.h \
- Sequence.h OctetSeqC.i StringSeqC.h StringSeqC.i ValueBase.h \
+ Adapter.h \
+ Exception.h \
+ Adapter.i PolicyFactory_Registry.h PortableInterceptorC.h DynamicC.h \
+ Any.h \
+ Typecode.h \
+ Typecode.i \
+ Any.i DynamicC.i \
+ ObjectReferenceTemplateC.h OctetSeqC.h Sequence.h OctetSeqC.i \
+ StringSeqC.h StringSeqC.i ValueBase.h \
  ValueBase.i \
- ObjectReferenceTemplateC.i Messaging_SyncScopeC.h IOPC.h \
- Messaging_SyncScopeC.i PortableInterceptorC.i \
+ ObjectReferenceTemplateC.i Messaging_SyncScopeC.h IOPC.h Object.h \
+ Any.h IOPC.i Messaging_SyncScopeC.i PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -17526,6 +17322,7 @@ realclean:
  Parser_Registry.h \
  Parser_Registry.i \
  Service_Callbacks.h \
+ IOPC.h \
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
@@ -17597,8 +17394,6 @@ realclean:
  Sync_Strategies.h \
  Transport.h \
  Transport_Descriptor_Interface.h \
- Endpoint.h \
- Endpoint.i \
  Transport_Descriptor_Interface.inl \
  Transport_Cache_Manager.h \
  Cache_Entries.h \
@@ -18214,33 +18009,28 @@ realclean:
  LocalObject.i \
  debug.h \
  Policy_Manager.i \
- Resource_Factory.h \
- Pluggable.h \
- IOPC.h \
+ Resource_Factory.h params.h \
+ CORBA_String.h \
+ params.i \
+ TAO_Singleton_Manager.h TAO_Singleton.h Adapter.h \
  Exception.h \
+ Adapter.i PolicyFactory_Registry.h PortableInterceptorC.h DynamicC.h \
  Any.h \
  Typecode.h \
  Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable.i \
- Protocol_Factory.h \
- params.h \
- CORBA_String.h \
- params.i \
- TAO_Singleton_Manager.h TAO_Singleton.h Adapter.h Adapter.i \
- PolicyFactory_Registry.h PortableInterceptorC.h DynamicC.h DynamicC.i \
+ Any.i DynamicC.i \
  ObjectReferenceTemplateC.h OctetSeqC.h Sequence.h OctetSeqC.i \
  StringSeqC.h StringSeqC.i ValueBase.h \
  ValueBase.i \
- ObjectReferenceTemplateC.i Messaging_SyncScopeC.h IOPC.h \
- Messaging_SyncScopeC.i PortableInterceptorC.i \
+ ObjectReferenceTemplateC.i Messaging_SyncScopeC.h IOPC.h Object.h \
+ Any.h IOPC.i Messaging_SyncScopeC.i PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
  Parser_Registry.h \
  Parser_Registry.i \
  Service_Callbacks.h \
+ IOPC.h \
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
@@ -18421,15 +18211,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- IOPC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -18450,6 +18231,10 @@ realclean:
  PolicyFactory_Registry.h \
  PortableInterceptorC.h \
  DynamicC.h \
+ Any.h \
+ Typecode.h \
+ Typecode.i \
+ Any.i \
  DynamicC.i \
  ObjectReferenceTemplateC.h \
  OctetSeqC.h \
@@ -18460,6 +18245,8 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ IOPC.h \
+ IOPC.i \
  Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -18681,15 +18468,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- IOPC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -18710,6 +18488,10 @@ realclean:
  PolicyFactory_Registry.h \
  PortableInterceptorC.h \
  DynamicC.h \
+ Any.h \
+ Typecode.h \
+ Typecode.i \
+ Any.i \
  DynamicC.i \
  ObjectReferenceTemplateC.h \
  OctetSeqC.h \
@@ -18720,6 +18502,8 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ IOPC.h \
+ IOPC.i \
  Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -18942,15 +18726,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- IOPC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -18971,6 +18746,10 @@ realclean:
  PolicyFactory_Registry.h \
  PortableInterceptorC.h \
  DynamicC.h \
+ Any.h \
+ Typecode.h \
+ Typecode.i \
+ Any.i \
  DynamicC.i \
  ObjectReferenceTemplateC.h \
  OctetSeqC.h \
@@ -18981,6 +18760,8 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ IOPC.h \
+ IOPC.i \
  Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -19202,15 +18983,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- IOPC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -19231,6 +19003,10 @@ realclean:
  PolicyFactory_Registry.h \
  PortableInterceptorC.h \
  DynamicC.h \
+ Any.h \
+ Typecode.h \
+ Typecode.i \
+ Any.i \
  DynamicC.i \
  ObjectReferenceTemplateC.h \
  OctetSeqC.h \
@@ -19241,6 +19017,8 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ IOPC.h \
+ IOPC.i \
  Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -19313,8 +19091,6 @@ realclean:
  LF_Event_Binder.inl \
  Transport.h \
  Transport_Descriptor_Interface.h \
- Endpoint.h \
- Endpoint.i \
  Transport_Descriptor_Interface.inl \
  Transport_Cache_Manager.h \
  Cache_Entries.h \
@@ -19493,15 +19269,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- IOPC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -19522,6 +19289,10 @@ realclean:
  PolicyFactory_Registry.h \
  PortableInterceptorC.h \
  DynamicC.h \
+ Any.h \
+ Typecode.h \
+ Typecode.i \
+ Any.i \
  DynamicC.i \
  ObjectReferenceTemplateC.h \
  OctetSeqC.h \
@@ -19532,6 +19303,8 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ IOPC.h \
+ IOPC.i \
  Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -19596,8 +19369,6 @@ realclean:
  Leader_Follower.i \
  Transport.h \
  Transport_Descriptor_Interface.h \
- Endpoint.h \
- Endpoint.i \
  Transport_Descriptor_Interface.inl \
  Transport_Cache_Manager.h \
  Cache_Entries.h \
@@ -19779,15 +19550,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- IOPC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -19808,6 +19570,10 @@ realclean:
  PolicyFactory_Registry.h \
  PortableInterceptorC.h \
  DynamicC.h \
+ Any.h \
+ Typecode.h \
+ Typecode.i \
+ Any.i \
  DynamicC.i \
  ObjectReferenceTemplateC.h \
  OctetSeqC.h \
@@ -19818,6 +19584,8 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ IOPC.h \
+ IOPC.i \
  Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -20177,15 +19945,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- IOPC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -20206,6 +19965,10 @@ realclean:
  PolicyFactory_Registry.h \
  PortableInterceptorC.h \
  DynamicC.h \
+ Any.h \
+ Typecode.h \
+ Typecode.i \
+ Any.i \
  DynamicC.i \
  ObjectReferenceTemplateC.h \
  OctetSeqC.h \
@@ -20216,6 +19979,8 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ IOPC.h \
+ IOPC.i \
  Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -20447,17 +20212,24 @@ realclean:
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Service_Object.i \
  TAO_Export.h \
- Pluggable.h \
- corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Base.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Unbounded_Set.h \
+ $(ACE_ROOT)/ace/Node.h \
+ $(ACE_ROOT)/ace/Node.cpp \
+ $(ACE_ROOT)/ace/Unbounded_Set.inl \
+ $(ACE_ROOT)/ace/Unbounded_Set.cpp \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base_Const.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -20472,7 +20244,6 @@ realclean:
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Malloc_Allocator.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc_Allocator.i \
  $(ACE_ROOT)/ace/Free_List.h \
  $(ACE_ROOT)/ace/Free_List.i \
@@ -20488,12 +20259,12 @@ realclean:
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Unbounded_Set.h \
- $(ACE_ROOT)/ace/Node.h \
- $(ACE_ROOT)/ace/Node.cpp \
- $(ACE_ROOT)/ace/Unbounded_Set.inl \
- $(ACE_ROOT)/ace/Unbounded_Set.cpp \
  $(ACE_ROOT)/ace/Memory_Pool.i \
+ $(ACE_ROOT)/ace/SString.i \
+ Protocol_Factory.h \
+ corbafwd.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -20503,17 +20274,11 @@ realclean:
  orbconf.h \
  varbase.h \
  corbafwd.i \
- IOPC.h \
+ ORB_Core.h \
+ ORB.h \
  Exception.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/String_Base.h \
- $(ACE_ROOT)/ace/String_Base_Const.h \
- $(ACE_ROOT)/ace/String_Base.i \
- $(ACE_ROOT)/ace/String_Base.cpp \
- $(ACE_ROOT)/ace/SString.i \
  Exception.i \
- Object.h \
- Policy_ForwardC.h \
+ Services.h \
  Sequence.h \
  Managed_Types.h \
  Managed_Types.i \
@@ -20523,27 +20288,19 @@ realclean:
  Sequence_T.cpp \
  Environment.h \
  Environment.i \
+ Services.i \
+ CORBA_String.h \
+ CORBA_String.inl \
+ PolicyC.h \
+ CurrentC.h \
+ Object.h \
+ Policy_ForwardC.h \
  CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  CDR.i \
  Policy_ForwardC.i \
  Object.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable.i \
- Protocol_Factory.h \
- ORB_Core.h \
- ORB.h \
- Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- PolicyC.h \
- CurrentC.h \
  CurrentC.i \
  Remote_Object_Proxy_Impl.h \
  Object_Proxy_Impl.h \
@@ -20577,6 +20334,10 @@ realclean:
  PolicyFactory_Registry.h \
  PortableInterceptorC.h \
  DynamicC.h \
+ Any.h \
+ Typecode.h \
+ Typecode.i \
+ Any.i \
  DynamicC.i \
  ObjectReferenceTemplateC.h \
  OctetSeqC.h \
@@ -20587,6 +20348,8 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ IOPC.h \
+ IOPC.i \
  Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -20860,8 +20623,6 @@ realclean:
  $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Transport_Descriptor_Interface.h \
- Endpoint.h \
- Endpoint.i \
  Transport_Descriptor_Interface.inl \
  Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
@@ -20977,9 +20738,6 @@ realclean:
  debug.h \
  Policy_Manager.i \
  Resource_Factory.h \
- Pluggable.h \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  params.i \
  Adapter.h \
@@ -21169,12 +20927,17 @@ realclean:
  default_client.i \
  default_resource.h \
  Resource_Factory.h \
- Pluggable.h \
- IOPC.h \
+ default_resource.i \
+ IIOP_Factory.h \
+ Protocol_Factory.h \
+ MCAST_Parser.h \
+ IOR_Parser.h \
  Exception.h \
  Exception.i \
- Object.h \
- Policy_ForwardC.h \
+ IOR_Parser.i \
+ ORB_Core.h \
+ ORB.h \
+ Services.h \
  Sequence.h \
  Managed_Types.h \
  Managed_Types.i \
@@ -21184,31 +20947,19 @@ realclean:
  Sequence_T.cpp \
  Environment.h \
  Environment.i \
+ Services.i \
+ CORBA_String.h \
+ CORBA_String.inl \
+ PolicyC.h \
+ CurrentC.h \
+ Object.h \
+ Policy_ForwardC.h \
  CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  CDR.i \
  Policy_ForwardC.i \
  Object.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable.i \
- Protocol_Factory.h \
- default_resource.i \
- IIOP_Factory.h MCAST_Parser.h \
- IOR_Parser.h \
- IOR_Parser.i \
- ORB_Core.h \
- ORB.h \
- Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- PolicyC.h \
- CurrentC.h \
  CurrentC.i \
  Remote_Object_Proxy_Impl.h \
  Object_Proxy_Impl.h \
@@ -21239,6 +20990,10 @@ realclean:
  PolicyFactory_Registry.h \
  PortableInterceptorC.h \
  DynamicC.h \
+ Any.h \
+ Typecode.h \
+ Typecode.i \
+ Any.i \
  DynamicC.i \
  ObjectReferenceTemplateC.h \
  OctetSeqC.h \
@@ -21249,6 +21004,8 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ IOPC.h \
+ IOPC.i \
  Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -21498,9 +21255,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  CORBA_String.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -21575,8 +21329,6 @@ realclean:
  GIOP_Utils.h \
  GIOP_Utils.i \
  Transport.h Transport_Descriptor_Interface.h \
- Endpoint.h \
- Endpoint.i \
  Transport_Descriptor_Interface.inl \
  Transport_Cache_Manager.h \
  Cache_Entries.h \
@@ -22108,8 +21860,6 @@ realclean:
  $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Transport_Descriptor_Interface.h \
- Endpoint.h \
- Endpoint.i \
  Transport_Descriptor_Interface.inl \
  Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
@@ -22356,15 +22106,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- IOPC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -22385,6 +22126,10 @@ realclean:
  PolicyFactory_Registry.h \
  PortableInterceptorC.h \
  DynamicC.h \
+ Any.h \
+ Typecode.h \
+ Typecode.i \
+ Any.i \
  DynamicC.i \
  ObjectReferenceTemplateC.h \
  OctetSeqC.h \
@@ -22395,6 +22140,8 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ IOPC.h \
+ IOPC.i \
  Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -22442,8 +22189,6 @@ realclean:
  ORB_Core.i \
  Transport.h \
  Transport_Descriptor_Interface.h \
- Endpoint.h \
- Endpoint.i \
  Transport_Descriptor_Interface.inl \
  Transport_Cache_Manager.h \
  Cache_Entries.h \
@@ -22623,15 +22368,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- IOPC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -22652,6 +22388,10 @@ realclean:
  PolicyFactory_Registry.h \
  PortableInterceptorC.h \
  DynamicC.h \
+ Any.h \
+ Typecode.h \
+ Typecode.i \
+ Any.i \
  DynamicC.i \
  ObjectReferenceTemplateC.h \
  OctetSeqC.h \
@@ -22662,6 +22402,8 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ IOPC.h \
+ IOPC.i \
  Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -22732,8 +22474,6 @@ realclean:
  Leader_Follower.i \
  Transport.h \
  Transport_Descriptor_Interface.h \
- Endpoint.h \
- Endpoint.i \
  Transport_Descriptor_Interface.inl \
  Transport_Cache_Manager.h \
  Cache_Entries.h \
@@ -23033,8 +22773,6 @@ realclean:
  Pluggable_Messaging_Utils.i \
  debug.h \
  Transport.h corbafwd.h Exception.h Transport_Descriptor_Interface.h \
- Endpoint.h \
- Endpoint.i \
  Transport_Descriptor_Interface.inl \
  Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
@@ -23253,8 +22991,6 @@ realclean:
  Pluggable_Messaging_Utils.h \
  Pluggable_Messaging_Utils.i \
  Transport.h corbafwd.h Exception.h Transport_Descriptor_Interface.h \
- Endpoint.h \
- Endpoint.i \
  Transport_Descriptor_Interface.inl \
  Transport_Cache_Manager.h \
  Cache_Entries.h \
@@ -23569,9 +23305,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -23663,8 +23396,6 @@ realclean:
  Pluggable_Messaging_Utils.i \
  Transport.h \
  Transport_Descriptor_Interface.h \
- Endpoint.h \
- Endpoint.i \
  Transport_Descriptor_Interface.inl \
  Transport_Cache_Manager.h \
  Cache_Entries.h \
@@ -23792,8 +23523,6 @@ realclean:
  $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Transport_Descriptor_Interface.h \
- Endpoint.h \
- Endpoint.i \
  Transport_Descriptor_Interface.inl \
  Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
@@ -23889,9 +23618,6 @@ realclean:
  debug.h \
  Policy_Manager.i \
  Resource_Factory.h \
- Pluggable.h \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  params.i \
  TAO_Singleton_Manager.h \
@@ -24113,10 +23839,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- IOPC.h \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -24148,6 +23870,7 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ IOPC.h \
  Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -24394,15 +24117,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- IOPC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -24423,6 +24137,10 @@ realclean:
  PolicyFactory_Registry.h \
  PortableInterceptorC.h \
  DynamicC.h \
+ Any.h \
+ Typecode.h \
+ Typecode.i \
+ Any.i \
  DynamicC.i \
  ObjectReferenceTemplateC.h \
  OctetSeqC.h \
@@ -24433,6 +24151,8 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ IOPC.h \
+ IOPC.i \
  Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -24819,9 +24539,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -25335,15 +25052,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- IOPC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -25364,6 +25072,10 @@ realclean:
  PolicyFactory_Registry.h \
  PortableInterceptorC.h \
  DynamicC.h \
+ Any.h \
+ Typecode.h \
+ Typecode.i \
+ Any.i \
  DynamicC.i \
  ObjectReferenceTemplateC.h \
  OctetSeqC.h \
@@ -25374,6 +25086,8 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ IOPC.h \
+ IOPC.i \
  Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -26217,15 +25931,6 @@ realclean:
  debug.h \
  Policy_Manager.i \
  Resource_Factory.h \
- Pluggable.h \
- IOPC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -26244,6 +25949,10 @@ realclean:
  PolicyFactory_Registry.h \
  PortableInterceptorC.h \
  DynamicC.h \
+ Any.h \
+ Typecode.h \
+ Typecode.i \
+ Any.i \
  DynamicC.i \
  ObjectReferenceTemplateC.h \
  OctetSeqC.h \
@@ -26254,6 +25963,8 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ IOPC.h \
+ IOPC.i \
  Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -26730,15 +26441,6 @@ realclean:
  debug.h \
  Policy_Manager.i \
  Resource_Factory.h \
- Pluggable.h \
- IOPC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -26759,6 +26461,10 @@ realclean:
  PolicyFactory_Registry.h \
  PortableInterceptorC.h \
  DynamicC.h \
+ Any.h \
+ Typecode.h \
+ Typecode.i \
+ Any.i \
  DynamicC.i \
  ObjectReferenceTemplateC.h \
  OctetSeqC.h \
@@ -26769,6 +26475,8 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ IOPC.h \
+ IOPC.i \
  Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -27444,17 +27152,7 @@ realclean:
  LocalObject.i \
  debug.h \
  Policy_Manager.i \
- Resource_Factory.h \
- Pluggable.h \
- IOPC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable.i \
- Protocol_Factory.h \
- params.h \
+ Resource_Factory.h params.h \
  CORBA_String.h \
  params.i \
  TAO_Singleton_Manager.h \
@@ -27470,17 +27168,22 @@ realclean:
  $(ACE_ROOT)/ace/Managed_Object.cpp \
  TAO_Singleton_Manager.h \
  Adapter.h Adapter.i PolicyFactory_Registry.h PortableInterceptorC.h \
- DynamicC.h DynamicC.i ObjectReferenceTemplateC.h OctetSeqC.h \
- Sequence.h OctetSeqC.i StringSeqC.h StringSeqC.i ValueBase.h \
+ DynamicC.h Any.h \
+ Typecode.h \
+ Typecode.i \
+ Any.i DynamicC.i \
+ ObjectReferenceTemplateC.h OctetSeqC.h Sequence.h OctetSeqC.i \
+ StringSeqC.h StringSeqC.i ValueBase.h \
  ValueBase.i \
- ObjectReferenceTemplateC.i Messaging_SyncScopeC.h IOPC.h \
- Messaging_SyncScopeC.i PortableInterceptorC.i \
+ ObjectReferenceTemplateC.i Messaging_SyncScopeC.h IOPC.h Object.h \
+ Any.h IOPC.i Messaging_SyncScopeC.i PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
  Parser_Registry.h \
  Parser_Registry.i \
  Service_Callbacks.h \
+ IOPC.h \
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
@@ -27727,9 +27430,6 @@ realclean:
  debug.h \
  Policy_Manager.i \
  Resource_Factory.h \
- Pluggable.h \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  params.i \
  Adapter.h \
@@ -27944,15 +27644,6 @@ realclean:
  debug.h \
  Policy_Manager.i \
  Resource_Factory.h \
- Pluggable.h \
- IOPC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -27973,6 +27664,10 @@ realclean:
  PolicyFactory_Registry.h \
  PortableInterceptorC.h \
  DynamicC.h \
+ Any.h \
+ Typecode.h \
+ Typecode.i \
+ Any.i \
  DynamicC.i \
  ObjectReferenceTemplateC.h \
  OctetSeqC.h \
@@ -27983,6 +27678,8 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ IOPC.h \
+ IOPC.i \
  Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -28366,9 +28063,6 @@ realclean:
  debug.h \
  Policy_Manager.i \
  Resource_Factory.h \
- Pluggable.h \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -28878,10 +28572,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- IOPC.h \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  CORBA_String.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -28922,6 +28612,7 @@ realclean:
  Parser_Registry.h \
  Parser_Registry.i \
  Service_Callbacks.h \
+ IOPC.h \
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
@@ -29286,7 +28977,6 @@ realclean:
  Cache_Entries.h \
  $(ACE_ROOT)/ace/pre.h \
  Transport_Descriptor_Interface.h \
- Endpoint.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
@@ -29382,7 +29072,6 @@ realclean:
  varbase.h \
  TAO_Export.h \
  corbafwd.i \
- Endpoint.i \
  Transport_Descriptor_Interface.inl \
  $(ACE_ROOT)/ace/Recyclable.h \
  $(ACE_ROOT)/ace/Recyclable.inl \
@@ -29469,7 +29158,6 @@ realclean:
  Base_Transport_Property.h \
  $(ACE_ROOT)/ace/pre.h \
  Transport_Descriptor_Interface.h \
- Endpoint.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
@@ -29565,8 +29253,9 @@ realclean:
  varbase.h \
  TAO_Export.h \
  corbafwd.i \
- Endpoint.i \
  Transport_Descriptor_Interface.inl \
+ Endpoint.h \
+ Endpoint.i \
  Base_Transport_Property.inl
 
 .obj/Transport_Cache_Manager.o .obj/Transport_Cache_Manager.so .shobj/Transport_Cache_Manager.o .shobj/Transport_Cache_Manager.so: Transport_Cache_Manager.cpp \
@@ -29696,7 +29385,6 @@ realclean:
  TAO_Export.h \
  Cache_Entries.h \
  Transport_Descriptor_Interface.h \
- Endpoint.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -29709,7 +29397,6 @@ realclean:
  orbconf.h \
  varbase.h \
  corbafwd.i \
- Endpoint.i \
  Transport_Descriptor_Interface.inl \
  $(ACE_ROOT)/ace/Recyclable.h \
  $(ACE_ROOT)/ace/Recyclable.inl \
@@ -29773,9 +29460,6 @@ realclean:
  LocalObject.i \
  Policy_Manager.i \
  Resource_Factory.h \
- Pluggable.h \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  params.i \
  TAO_Singleton_Manager.h \
@@ -29943,7 +29627,6 @@ realclean:
 .obj/Transport_Descriptor_Interface.o .obj/Transport_Descriptor_Interface.so .shobj/Transport_Descriptor_Interface.o .shobj/Transport_Descriptor_Interface.so: Transport_Descriptor_Interface.cpp \
  Transport_Descriptor_Interface.h \
  $(ACE_ROOT)/ace/pre.h \
- Endpoint.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
@@ -30039,8 +29722,9 @@ realclean:
  varbase.h \
  TAO_Export.h \
  corbafwd.i \
- Endpoint.i \
- Transport_Descriptor_Interface.inl
+ Transport_Descriptor_Interface.inl \
+ Endpoint.h \
+ Endpoint.i
 
 .obj/Object_Ref_Table.o .obj/Object_Ref_Table.so .shobj/Object_Ref_Table.o .shobj/Object_Ref_Table.so: Object_Ref_Table.cpp Object_Ref_Table.h \
  $(ACE_ROOT)/ace/pre.h corbafwd.h \
@@ -31060,8 +30744,6 @@ realclean:
  $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Transport_Descriptor_Interface.h \
- Endpoint.h \
- Endpoint.i \
  Transport_Descriptor_Interface.inl \
  Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
@@ -31245,8 +30927,6 @@ realclean:
  $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Transport_Descriptor_Interface.h \
- Endpoint.h \
- Endpoint.i \
  Transport_Descriptor_Interface.inl \
  Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
@@ -31334,11 +31014,7 @@ realclean:
  LocalObject.i \
  debug.h \
  Policy_Manager.i \
- Resource_Factory.h \
- Pluggable.h \
- Pluggable.i \
- Protocol_Factory.h \
- params.h \
+ Resource_Factory.h params.h \
  CORBA_String.h \
  params.i \
  TAO_Singleton_Manager.h \
@@ -31797,8 +31473,6 @@ realclean:
  $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Transport_Descriptor_Interface.h \
- Endpoint.h \
- Endpoint.i \
  Transport_Descriptor_Interface.inl \
  Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
@@ -31996,8 +31670,6 @@ realclean:
  $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Transport_Descriptor_Interface.h \
- Endpoint.h \
- Endpoint.i \
  Transport_Descriptor_Interface.inl \
  Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
@@ -32490,15 +32162,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- IOPC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -32519,6 +32182,10 @@ realclean:
  PolicyFactory_Registry.h \
  PortableInterceptorC.h \
  DynamicC.h \
+ Any.h \
+ Typecode.h \
+ Typecode.i \
+ Any.i \
  DynamicC.i \
  ObjectReferenceTemplateC.h \
  OctetSeqC.h \
@@ -32529,6 +32196,8 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ IOPC.h \
+ IOPC.i \
  Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -32591,8 +32260,6 @@ realclean:
  Transport_Cache_Manager.h \
  Cache_Entries.h \
  Transport_Descriptor_Interface.h \
- Endpoint.h \
- Endpoint.i \
  Transport_Descriptor_Interface.inl \
  $(ACE_ROOT)/ace/Recyclable.h \
  $(ACE_ROOT)/ace/Recyclable.inl \
@@ -32771,15 +32438,6 @@ realclean:
  debug.h \
  Policy_Manager.i \
  Resource_Factory.h \
- Pluggable.h \
- IOPC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -32800,6 +32458,10 @@ realclean:
  PolicyFactory_Registry.h \
  PortableInterceptorC.h \
  DynamicC.h \
+ Any.h \
+ Typecode.h \
+ Typecode.i \
+ Any.i \
  DynamicC.i \
  ObjectReferenceTemplateC.h \
  OctetSeqC.h \
@@ -32810,6 +32472,8 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ IOPC.h \
+ IOPC.i \
  Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -33053,15 +32717,6 @@ realclean:
  debug.h \
  Policy_Manager.i \
  Resource_Factory.h \
- Pluggable.h \
- IOPC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  params.i \
  TAO_Singleton_Manager.h \
@@ -33079,6 +32734,10 @@ realclean:
  PolicyFactory_Registry.h \
  PortableInterceptorC.h \
  DynamicC.h \
+ Any.h \
+ Typecode.h \
+ Typecode.i \
+ Any.i \
  DynamicC.i \
  ObjectReferenceTemplateC.h \
  OctetSeqC.h \
@@ -33089,6 +32748,8 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ IOPC.h \
+ IOPC.i \
  Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -33320,15 +32981,6 @@ realclean:
  debug.h \
  Policy_Manager.i \
  Resource_Factory.h \
- Pluggable.h \
- IOPC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  params.i \
  TAO_Singleton_Manager.h \
@@ -33346,6 +32998,10 @@ realclean:
  PolicyFactory_Registry.h \
  PortableInterceptorC.h \
  DynamicC.h \
+ Any.h \
+ Typecode.h \
+ Typecode.i \
+ Any.i \
  DynamicC.i \
  ObjectReferenceTemplateC.h \
  OctetSeqC.h \
@@ -33356,6 +33012,8 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ IOPC.h \
+ IOPC.i \
  Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -33571,9 +33229,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  CORBA_String.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -33795,11 +33450,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- IOPC.h \
- IOPC.i \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -33830,6 +33480,8 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ IOPC.h \
+ IOPC.i \
  Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -34295,15 +33947,6 @@ realclean:
  debug.h \
  Policy_Manager.i \
  Resource_Factory.h \
- Pluggable.h \
- IOPC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -34324,6 +33967,10 @@ realclean:
  PolicyFactory_Registry.h \
  PortableInterceptorC.h \
  DynamicC.h \
+ Any.h \
+ Typecode.h \
+ Typecode.i \
+ Any.i \
  DynamicC.i \
  ObjectReferenceTemplateC.h \
  OctetSeqC.h \
@@ -34334,6 +33981,8 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ IOPC.h \
+ IOPC.i \
  Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -34547,15 +34196,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- IOPC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -34576,6 +34216,10 @@ realclean:
  PolicyFactory_Registry.h \
  PortableInterceptorC.h \
  DynamicC.h \
+ Any.h \
+ Typecode.h \
+ Typecode.i \
+ Any.i \
  DynamicC.i \
  ObjectReferenceTemplateC.h \
  OctetSeqC.h \
@@ -34586,6 +34230,8 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ IOPC.h \
+ IOPC.i \
  Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -34972,10 +34618,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- IOPC.h \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -35007,6 +34649,7 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ IOPC.h \
  Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -35257,10 +34900,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- IOPC.h \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -35292,6 +34931,7 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ IOPC.h \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -35677,9 +35317,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -35950,8 +35587,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- Protocol_Factory.h \
  params.h \
  CORBA_String.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -36046,8 +35681,6 @@ realclean:
  Tagged_Profile.h \
  GIOP_Message_Locate_Header.i \
  Transport.h Transport_Descriptor_Interface.h \
- Endpoint.h \
- Endpoint.i \
  Transport_Descriptor_Interface.inl \
  Transport_Cache_Manager.h \
  Cache_Entries.h \
@@ -36253,9 +35886,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -36364,8 +35994,6 @@ realclean:
  LF_Strategy.inl \
  Transport.h \
  Transport_Descriptor_Interface.h \
- Endpoint.h \
- Endpoint.i \
  Transport_Descriptor_Interface.inl \
  Transport_Cache_Manager.h \
  Cache_Entries.h \
@@ -37021,8 +36649,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- Protocol_Factory.h \
  params.h \
  CORBA_String.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -37077,8 +36703,6 @@ realclean:
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
  ORB_Core.i Transport.h Transport_Descriptor_Interface.h \
- Endpoint.h \
- Endpoint.i \
  Transport_Descriptor_Interface.inl \
  Transport_Cache_Manager.h \
  Cache_Entries.h \
@@ -37373,9 +36997,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -37464,8 +37085,6 @@ realclean:
  $(ACE_ROOT)/ace/Thread_Manager.i \
  ORB_Core.i \
  Transport.h corbafwd.h Exception.h Transport_Descriptor_Interface.h \
- Endpoint.h \
- Endpoint.i \
  Transport_Descriptor_Interface.inl \
  Transport_Cache_Manager.h \
  Cache_Entries.h \
@@ -37924,15 +37543,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- IOPC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -37953,6 +37563,10 @@ realclean:
  PolicyFactory_Registry.h \
  PortableInterceptorC.h \
  DynamicC.h \
+ Any.h \
+ Typecode.h \
+ Typecode.i \
+ Any.i \
  DynamicC.i \
  ObjectReferenceTemplateC.h \
  OctetSeqC.h \
@@ -37963,6 +37577,8 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ IOPC.h \
+ IOPC.i \
  Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -38020,6 +37636,8 @@ realclean:
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
  ORB_Core.i \
+ Pluggable.h \
+ Pluggable.i \
  GIOP_Message_Base.h \
  Pluggable_Messaging.h \
  Pluggable_Messaging_Utils.h \
@@ -38292,9 +37910,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- Pluggable.h \
- Pluggable.i \
- Protocol_Factory.h \
  params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -38386,6 +38001,8 @@ realclean:
  Acceptor_Registry.i \
  Thread_Lane_Resources.h \
  Thread_Lane_Resources.i \
+ Pluggable.h \
+ Pluggable.i \
  target_specification.h \
  target_specification.i
 
