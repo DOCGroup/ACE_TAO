@@ -119,6 +119,7 @@ Cubit_Server::init_naming_service (CORBA::Environment& env)
                               factory.in (),
                               env);
   TAO_CHECK_ENV_RETURN (env,-1);
+  return 0;
 }
 
 int
@@ -198,6 +199,7 @@ main (int argc, char** argv)
       return -1;
     }
   TAO_ENDTRY;
+  return 0;
 }
 
 
