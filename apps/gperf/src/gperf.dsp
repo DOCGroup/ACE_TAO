@@ -5,26 +5,26 @@
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 # TARGTYPE "Win32 (ALPHA) Console Application" 0x0603
 
-CFG=gperf - Win32 Alpha Debug
+CFG=gperf - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE 
+!MESSAGE
 !MESSAGE NMAKE /f "gperf.mak".
-!MESSAGE 
+!MESSAGE
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE 
-!MESSAGE NMAKE /f "gperf.mak" CFG="gperf - Win32 Alpha Debug"
-!MESSAGE 
+!MESSAGE
+!MESSAGE NMAKE /f "gperf.mak" CFG="gperf - Win32 Debug"
+!MESSAGE
 !MESSAGE Possible choices for configuration are:
-!MESSAGE 
+!MESSAGE
 !MESSAGE "gperf - Win32 Release" (based on "Win32 (x86) Console Application")
 !MESSAGE "gperf - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE "gperf - Win32 Alpha Debug" (based on\
  "Win32 (ALPHA) Console Application")
 !MESSAGE "gperf - Win32 Alpha Release" (based on\
  "Win32 (ALPHA) Console Application")
-!MESSAGE 
+!MESSAGE
 
 # Begin Project
 # PROP Scc_ProjName ""
@@ -148,7 +148,7 @@ LINK32=link.exe
 # ADD LINK32 gperf.lib ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /machine:ALPHA /out:"..\..\..\bin\Release\gperf.exe" /libpath:"..\..\..\ace" /libpath:".\lib"
 # SUBTRACT LINK32 /nodefaultlib
 
-!ENDIF 
+!ENDIF
 
 # Begin Target
 
@@ -209,9 +209,9 @@ DEP_CPP_GPERF=\
 	".\List_Node.h"\
 	".\Options.h"\
 	".\Vectors.h"\
-	
 
-!ENDIF 
+
+!ENDIF
 
 # End Source File
 # End Group
