@@ -2,7 +2,7 @@ Tue Mar  5 12:20:26 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ace/INET_Addr.cpp (get_host_name_i, set):
 
-	  h_errno -> h_error.  h_errno conflicts with a declaration
+	  h_errno -> h_error.  h_errno conflicts with a declaration in
 	  Microsoft's Winsock headers.  Thanks to Nanbor for pointing out
 	  the problem.
 
