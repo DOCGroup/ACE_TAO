@@ -1,3 +1,46 @@
+Mon Feb 26 12:52:48 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/Asynch_Invocation.h:
+	* tao/Asynch_Invocation.i:
+	* tao/Invocation.cpp:
+	* tao/Invocation.h:
+	* tao/Invocation.i:
+	* tao/DynamicInterface/DII_Invocation.h:
+	* tao/DynamicInterface/DII_Invocation.inl:
+
+	  Added default argument to constructors that will
+	  determine the byte order of the contained CDR
+	  stream. The default is native byte order, but can
+	  be modified by a gateway if it is handling a request
+	  in non-native byte order.
+
+	* tao/GIOP_Message_Base.cpp:
+
+  	  In write_protocol_header(), added code to toggle the byte 
+	  order field based on the byte order of the CDR stream that 
+	  is passed in.
+
+	* tao/DynamicInterface/Request.cpp:
+	* tao/DynamicInterface/Request.h:
+	* tao/DynamicInterface/Request.inl:
+	* tao/DynamicInterface/Server_Request.h:
+	* tao/DynamicInterface/Server_Request.inl:
+
+	  Added accessors to the byte order of the underlying
+	  invocation. These will be used by a gateway to 
+	  preserve the byte order of a request it is handling,
+	  even if it is a byte order different than that of the
+	  gateway's platform. CORBA::Request also stores the
+	  byte order as state, so the reply can be checked for a
+	  change in byte order.
+
+	* tests/DSI_Gateway/test_dsi.cpp:
+
+	  Added lines to the gateway's invoke() method to use the 
+	  above accessors, to get and set the appropriate byte orders
+	  immediately before and after the call to 
+	  CORBA::Request::invoke().
+
 Mon Feb 26 10:28:45 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * tests/Param_Test/anyop.dsp:
