@@ -39,8 +39,7 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
   // No CDR operations for local interfaces.
   // already generated and/or we are imported. Don't do anything.
   if (node->cli_stub_cdr_op_gen ()
-      || node->imported ()
-      || node->is_local ())
+      || node->imported ())
     {
       return 0;
     }

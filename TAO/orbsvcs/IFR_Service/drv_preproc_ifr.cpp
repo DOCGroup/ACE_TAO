@@ -66,12 +66,14 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // Pass an IDL file through the C preprocessor
 
+#include "drv_extern_ifr.h"
+#include "be_global.h"
+#include "be_extern.h"
+
 #include "idl_bool.h"
 #include "idl_defines.h"
 #include "global_extern.h"
 #include "fe_extern.h"
-#include "be_extern.h"
-#include "drv_extern_ifr.h"
 #include "utl_string.h"
 #include "ace/Process_Manager.h"
 #include "ace/SString.h"
@@ -266,10 +268,11 @@ DRV_cpp_init (void)
   // Add any flags in cpp_args to cpp's arglist.
   ACE_ARGV arglist (cpp_args);
 
-  for (size_t arg_cnt = 0; arg_cnt < arglist.argc (); ++arg_cnt)
+  for (size_t arg_cnt = 0; arg_cnt < (size_t)arglist.argc (); ++arg_cnt)
     {
       // Check for an argument that specifies the preprocessor's output file.
-      if (ACE_OS::strstr (arglist[arg_cnt], "%s") != 0 && output_arg_format == 0)
+      if (ACE_OS::strstr (arglist[arg_cnt], "%s") != 0 
+          && output_arg_format == 0)
         {
           output_arg_format = ACE::strnew (arglist[arg_cnt]);
           output_arg_index = argcount;

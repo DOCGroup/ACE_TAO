@@ -316,7 +316,7 @@ DRV_cpp_init (void)
   // Add any flags in cpp_args to cpp's arglist.
   ACE_ARGV arglist (cpp_args);
 
-  for (size_t arg_cnt = 0; arg_cnt < arglist.argc (); ++arg_cnt)
+  for (size_t arg_cnt = 0; arg_cnt < (size_t)arglist.argc (); ++arg_cnt)
     {
       // Check for an argument that specifies the preprocessor's output file.
       if (ACE_OS::strstr (arglist[arg_cnt], "%s") != 0 
