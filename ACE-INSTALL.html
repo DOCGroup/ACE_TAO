@@ -871,6 +871,27 @@ If you use the GNU GCC g++ compiler please note the following:
        Thanks to <a href="mailto:ssweeney@sanders.com">Skye Sweeney</a> for trying it
        out and <a href="mailto:othman@cs.wustl.edu">Ossama Othman</a> for discovering the
        option with egcs.<p>
+
+       Heres a note on how to go about this (contributed by Skye
+       Sweeney):<p>
+
+       1) -fsquangle  the name is a combination of squash and mangle!<p>
+
+       2) -fsquangle  compresses the mangled names.<p>
+
+       3) All libraries must be compiles with the option. You cannot simply
+       compile modules that have large names with it. This includes system
+       libraries and vendor libraries like RogueWave.<p>
+
+       4) The "simple" solution is not to add the option to each makefile,
+       but rather recompile the compiler to have the option on by default.
+       This is done by editing the file `gcc/cp/decl2.c', setting 
+       `flag_do_squangling = 1', then rebuilding the compiler and
+       libraries.<p>
+
+       5) After many false starts and linking snafus, I can recompile my
+       ACE/TAO/RogueWave/Lex/Yacc 100 Meg application.<p>
+
 </ul>
 
 
