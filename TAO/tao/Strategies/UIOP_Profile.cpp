@@ -2,7 +2,7 @@
 
 #if TAO_HAS_UIOP == 1
 
-#include "uiop_endpoints.h"
+#include "uiop_endpointsC.h"
 
 #include "tao/CDR.h"
 #include "tao/Environment.h"
