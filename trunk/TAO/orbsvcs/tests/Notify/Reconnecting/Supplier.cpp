@@ -4,9 +4,9 @@
 #include "orbsvcs/CosNotifyChannelAdminC.h"
 #include "tao/debug.h"
 #include "tao/PortableServer/PortableServerC.h"
-#include <tao/TimeBaseC.h>
-#include <ace/OS_NS_stdio.h>
-#include <ace/OS_NS_strings.h>
+#include "tao/TimeBaseC.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_strings.h"
 
 ACE_RCSID (Notify_Tests, Supplier_Main, "$Id$")
 

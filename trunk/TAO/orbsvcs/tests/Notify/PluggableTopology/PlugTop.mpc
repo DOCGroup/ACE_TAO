@@ -1,3 +1,5 @@
+// $Id$
+
 project(*lib): orbsvcslib, notify_serv {
   requires += exceptions
   sharedname = NotifyPlugTop
