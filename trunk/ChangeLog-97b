@@ -1,3 +1,12 @@
+Sat Sep 20 17:32:23 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/Object_Manager.{h,cpp},Managed_Object.*,
+	  CORBA_Handler.{h,cpp},Dump.{h,cpp},Log_Msg.cpp,OS.cpp
+	  revised ACE_Object_Manager interface for preallocated objects.
+
+	  Also, added documentation of ACE_Object_Manager interface to
+	  Object_Manager.h and Managed_Object.h.
+
 Sat Sep 20 11:47:14 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* ace/Timer_Queue_T.cpp: 
@@ -6,9 +15,6 @@ Sat Sep 20 11:47:14 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 	  throughout ACE.
 
 Sat Sep 20 08:07:36 1997  David L. Levine  <levine@cs.wustl.edu>
-
-	* ace/Timer_Queue_T.h (schedule_ualaram): changed return type
-	  to "ong to match its definition.
 
 	* ace/OS.i (gethrtime): on Linux only, removed "volatile" qualifier
 	  from declaration of local variable "now".  I don't think that
