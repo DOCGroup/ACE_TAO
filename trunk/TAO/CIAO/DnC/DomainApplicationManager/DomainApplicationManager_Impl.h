@@ -76,7 +76,7 @@ namespace CIAO
      *
      * @@ What else do we need to initialize here?
      */
-    void init (void)
+    void init (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((Deployment::ResourceNotAvailable,
                        Deployment::StartError,
                        Deployment::PlanError));
@@ -199,6 +199,16 @@ namespace CIAO
 
     /// Deployment Configuration info, which contains the deployment topology.
     Deployment_Configuration deployment_config_;
+
+    /// Maintain a list of NodeApplicationManager references, each of which 
+    /// is returned by calling the preparePlan() method on the corresponding
+    /// NodeManager object.
+    /// @@ Use Object_Set_T help class?
+    //NodeApplication
+
+    /// Maintain a list of NodeApplication references, each of which
+    /// is returned by calling the startLaunch () method on the corresponding
+    /// NodeApplicationManager object.
   };
 }
 
