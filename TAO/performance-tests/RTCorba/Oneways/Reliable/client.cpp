@@ -332,7 +332,7 @@ main (int argc, char *argv[])
   // Do a sanity check.
   if (ACE_OS::thr_getprio (self, priority) == 0)
     ACE_DEBUG ((LM_DEBUG, 
-                "server (%P|%t): thread priority = %d.\n", 
+                "client (%P|%t): thread priority = %d.\n", 
                 priority));
 
   ACE_TRY_NEW_ENV
