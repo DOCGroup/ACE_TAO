@@ -1,3 +1,13 @@
+Thu Aug 21 13:33:50 2003  Simon McQueen  <sm@prismtechnologies.com>
+
+        * orbsvcs/orbsvcs/CosNaming.idl:
+        * orbsvcs/orbsvcs/Naming/Naming_Context_Interface.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Context_Interface.cpp:
+
+          Removed AlreadyBound exception from signature of resolve_str
+          operation as per http://www.omg.org/docs/formal/02-09-02.pdf.
+          This closes bug #1453.
+
 Wed Aug 20 15:52:03 2003  George Edwards <g.edwards@vanderbilt.edu>
 
         * tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/*.*

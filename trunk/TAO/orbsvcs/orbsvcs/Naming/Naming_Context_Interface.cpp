@@ -515,8 +515,8 @@ TAO_Naming_Context::resolve_str (const char * n
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosNaming::NamingContext::NotFound,
                    CosNaming::NamingContext::CannotProceed,
-                   CosNaming::NamingContext::InvalidName,
-                   CosNaming::NamingContext::AlreadyBound))
+                   CosNaming::NamingContext::InvalidName
+                   ))
 {
   // Similar to <resolve> above. It accepts a strigified name as an
   // argument instead of a Name.
