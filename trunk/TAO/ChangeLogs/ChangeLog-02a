@@ -1,3 +1,102 @@
+Fri Dec  1 13:16:10 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/InterfaceC.h:
+	* tao/InterfaceC.i:
+	* tao/InterfaceC.cpp:
+	* tao/ifrfwd.h:
+
+	  Removed use of IR namespace, as preparation for moving
+	  IfR code to the CORBA namespace in the future, regenerated
+	  files with the new collocation scheme, and removed code for
+	  smart proxies.
+
+	* tao/Interface.pidl:
+
+	  Removed TypeCodeFactory declarations. Now this file can
+	  be regenerated without IDL compile errors.
+
+	* tao/PortableServer/POA_CORBA.h:
+
+	  Updated code for CORBA::IRObject to reflect the new
+	  collocation scheme.
+
+	* orbsvcs/IFR_Service/InterfaceS.h:
+	* orbsvcs/IFR_Service/InterfaceS.cpp:
+	* orbsvcs/IFR_Service/InterfaceS_T.i:
+
+	  Regenerated files with the new collocation scheme, and removed
+	  use of IR namespace.
+
+	* orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_CLient.cpp:
+	* orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_CLient.h:
+	* orbsvcs/tests/InterfaceRepo/Persistence_Test/Ptest.cpp:
+	* orbsvcs/tests/InterfaceRepo/Persistence_Test/Ptest.h:
+
+	  Removed use of IR namespace.
+
+	* tao/Stub.h:
+
+	  Removed enum TAO_Param_Type because it isn't used and
+	  because its members conflict with those of IR_ParameterMode.
+
+	* tao/TAO.dsp:
+	* tao/TAO_Static.dsp:
+	* tao/Makefile:
+	* tao/Makefile.bor:
+	* tao/Makefile.am:
+	* tao/Smart_Proxies.cpp:
+	* tao/Smart_Proxies.i:
+	* tao/Smart_Proxies.h:
+
+	  Removed the source files from the directory and updated
+	  the projects and makefiles.
+
+	* tao/corba.h:
+
+	  Removed inclusion of Smart_Proxy.h.
+
+	* tao/MessagingC.cpp:
+	* tao/MessagingC.i:
+	* tao/MesssagingC.h:
+
+	  Removed smart proxy code.
+
+	* TAO_IDL/be/be_codegen.cpp:
+	* TAO_IDL/be/be_global.cpp:
+
+	  Made generation of smart proxy code dependent only on
+	  the command line -Gsp option, and not also on 
+	  TAO_HAS_SMART_PROXIES as before. Also added
+	  generation of '#include tao/SmartProxies/Smart_Proxy.h'
+	  with the option.
+
+	* tao/orbconf.h:
+
+	  Removed the TAO_HAS_SMART_PROXIES macro.
+
+	* tao/SmartProxies/Smart_Proxies.cpp:
+	* tao/SmartProxies/Smart_Proxies.inl:
+	* tao/SmartProxies/Smart_Proxies.h:
+	* tao/SmartProxies/smartproxy_export.h:
+	* tao/SmartProxies/SmartProxies.dsp:
+	* tao/SmartProxies/Makefile:
+	* tao/SmartProxiess/Makefile.bor:
+
+	  Added these files to the new smart proxies library.
+
+	* tests/Smart_Proxies/Makefile:
+	* tests/Smart_Proxies/client.dsp:
+	* tests/Smart_Proxies/server.dsp:
+	* tests/Smart_Proxies/Benchmark/Makefile:
+	* tests/Smart_Proxies/Collocation/Coll_Test_Stubs.bor:
+	* tests/Smart_Proxies/Collocation/Coll_Test_Stubs.dsp:
+	* tests/Smart_Proxies/Collocation/Collocation.dsp:
+	* tests/Smart_Proxies/Collocation/Diamond.dsp:
+	* tests/Smart_Proxies/On_Demand/Makefile:
+	* tests/Smart_Proxies/Policy/Makefile:
+
+	  Modified these files to link to the new library.
+
 Fri Dec  1 09:31:28 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * utils/wxNamingViewer/Makefile:
