@@ -303,6 +303,7 @@ template class ACE_Future_Rep<char const *>;
 template class ACE_Future_Rep<int>;
 template class ACE_Future_Rep<u_long>;
 template class auto_ptr<ACE_Method_Object>;
+template class auto_basic_ptr<ACE_Method_Object>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
 
 #endif /* ACE_HAS_THREADS */
