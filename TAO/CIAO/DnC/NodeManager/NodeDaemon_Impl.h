@@ -7,7 +7,11 @@
  *  $Id$
  *
  *  This file contains servant implementation for Deployment:NodeManager
- *  interface.
+ *  interface. In the current design of the NodeManager, as with the legacy
+ *  implementation of CIAO, Each NodeManager corresponds to ONE NodeApplication
+ *  Manager. Though, the name intuitively suggests that there be one NodeManager
+ *  for every node, our design, allows the end-user to have multiple components
+ *  run on the same node.
  *
  *  @author Arvind S. Krishna <arvindk@dre.vanderbilt.edu>
  */
@@ -24,9 +28,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Synch.h"
-#include "ace/Hash_Map_Manager.h"
-#include "ace/Functor.h"
 
 namespace CIAO
 {
@@ -90,12 +91,6 @@ namespace CIAO
                        Deployment::StopError));
 
   protected:
-    typedef ACE_Hash_Map_Manager_Ex<const char *,
-                                    CORBA::Object_ptr,
-                                    ACE_Hash<const char *>, ACE_Equal_To<const char *>,
-                                    TAO_SYNCH_MUTEX> Table;
-    typedef Table::iterator Iterator;
-
     // Helper operations to maintain list of NodeApplication
     // Managers
     int bind (const char *id,
@@ -120,9 +115,6 @@ namespace CIAO
 
     /// Spawn delay for the NodeAppMgr
     int spawn_delay_;
-
-    /// Internal object hash table.
-    Table table_;
   };
 }
 

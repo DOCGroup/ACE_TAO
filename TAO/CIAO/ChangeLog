@@ -1,3 +1,13 @@
+Wed Jun  2 18:37:24 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * DnC/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+        * DnC/NodeManager/NodeDaemon_Impl.cpp:
+        * DnC/NodeManager/Node_Daemon.cpp:
+
+          Changes to ensure that the DomainApplicationManager is capable
+          of calling the NodeDaemon to spawn a NodeApplicationManager for
+          the corresponding application.
+
 Wed Jun  2 16:38:48 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/Config_Handlers/CompImplDesc_Handler.cpp:
