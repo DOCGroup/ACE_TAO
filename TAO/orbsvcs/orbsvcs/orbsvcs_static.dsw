@@ -147,18 +147,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "LoadBalancing_Static"=.\LoadBalancing_Static.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
 Project: "RTCORBAEvent_Static"=.\RTCORBAEvent_Static.dsp - Package Owner=<4>
 
 Package=<5>
