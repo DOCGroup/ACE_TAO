@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_WAIT_ON_REACTOR_H
 #define TAO_WAIT_ON_REACTOR_H
 #include /**/ "ace/pre.h"

@@ -248,32 +248,6 @@ be_visitor_component_ch::visit_component (be_component *node)
                         -1);
     }
 
-  // Proxy Implementation Declaration.
-  ctx = *this->ctx_;
-  be_visitor_interface_proxy_impls_ch spi_visitor (&ctx);
-
-  if (node->accept (&spi_visitor) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_component_ch::"
-                         "visit_component - "
-                         "codegen for Proxy Broker classes failed\n"),
-                        -1);
-    }
-
-  // Proxy Broker Declaration.
-  ctx = *this->ctx_;
-  be_visitor_interface_proxy_brokers_ch pb_visitor (&ctx);
-
-  if (node->accept (&pb_visitor) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_component_ch::"
-                         "visit_component - "
-                         "codegen for Proxy Broker classes failed\n"),
-                        -1);
-    }
-
   os->gen_endif ();
 
   if (be_global->tc_support ())

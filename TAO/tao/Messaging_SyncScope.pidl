@@ -9,7 +9,7 @@
  * The command used to generate code from this file is:
  *
  *   tao_idl.exe
- *        -o orig -Gp -Gd
+ *        -o orig -St
  *        -Wb,export_macro=TAO_Export
  *        -Wb,export_include=tao/corbafwd.h
  *        -Wb,pre_include="ace/pre.h"

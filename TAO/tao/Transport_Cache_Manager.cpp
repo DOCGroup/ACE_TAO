@@ -1,3 +1,4 @@
+//$Id$
 #include "tao/Transport_Cache_Manager.h"
 #include "tao/Transport.h"
 #include "tao/debug.h"
@@ -222,12 +223,12 @@ TAO_Transport_Cache_Manager::find_i (const TAO_Cache_ExtId &key,
             {
               // Successfully found a TAO_Transport.
 
+              entry->int_id_.recycle_state (ACE_RECYCLABLE_BUSY);
+
               // NOTE: This assignment operator indirectly incurs two
               //       lock operations since it duplicates and releases
               //       TAO_Transport objects.
               value = entry->int_id_;
-
-              entry->int_id_.recycle_state (ACE_RECYCLABLE_BUSY);
 
               if (TAO_debug_level > 4)
                 {

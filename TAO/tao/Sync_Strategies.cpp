@@ -1,9 +1,10 @@
 // $Id$
 
-#include "tao/Sync_Strategies.h"
-#include "tao/Buffering_Constraint_Policy.h"
-#include "tao/Stub.h"
-#include "tao/debug.h"
+#include "Sync_Strategies.h"
+#include "Buffering_Constraint_Policy.h"
+#include "Stub.h"
+#include "debug.h"
+#include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Sync_Strategies.i"

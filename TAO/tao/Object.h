@@ -15,7 +15,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_CORBA_OBJECT_H
 #define TAO_CORBA_OBJECT_H
 
@@ -29,6 +28,8 @@
 
 #include "tao/Pseudo_VarOut_T.h"
 #include "tao/IOP_IORC.h"
+#include "tao/Object_Argument_T.h"
+#include "tao/Arg_Traits_T.h"
 
 class TAO_Stub;
 class TAO_Abstract_ServantBase;
@@ -378,6 +379,19 @@ namespace CORBA
     ACE_Lock * refcount_lock_;
   };
 }   // End CORBA namespace.
+
+/// Used in generated code if CORBA::Object is an argument or return type.
+namespace TAO
+{
+  template<>
+  class TAO_Export Arg_Traits<CORBA::Object>
+    : public Object_Arg_Traits_T<CORBA::Object_ptr,
+                                 CORBA::Object_var,
+                                 CORBA::Object_out,
+                                 TAO::Objref_Traits<CORBA::Object> >
+  {
+  };
+};
 
 /// This function pointer is set only when the Portable server
 /// library is present.

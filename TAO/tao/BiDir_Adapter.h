@@ -11,18 +11,25 @@
 //=============================================================================
 #ifndef TAO_BIDIR_ADAPTER_H
 #define TAO_BIDIR_ADAPTER_H
-#include /**/ "ace/pre.h"
 
-#include "tao/Exception.h"
+#include /**/ "ace/pre.h"
+#include "ace/Service_Object.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Service_Object.h"
+#include "tao/Exception.h"
 
 class TAO_ORB_Core;
 class TAO_Policy_Validator;
+
+namespace CORBA
+{
+  class ORB;
+  typedef ORB *ORB_ptr;
+};
+
 /**
  * @class TAO_BiDir_Adapter
  *
@@ -31,7 +38,6 @@ class TAO_Policy_Validator;
  * Class that offers an interface to the ORB to load and manipulate
  * BiDirGIOP library.
  */
-
 class TAO_Export TAO_BiDir_Adapter : public ACE_Service_Object
 {
 public:

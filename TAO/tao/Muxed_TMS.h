@@ -62,8 +62,8 @@ public:
 
   virtual int dispatch_reply (TAO_Pluggable_Reply_Params &params);
 
-  virtual int idle_after_send (void);
-  virtual int idle_after_reply (void);
+  virtual bool idle_after_send (void);
+  virtual bool idle_after_reply (void);
   virtual void connection_closed (void);
 
 protected:
@@ -86,7 +86,6 @@ protected:
 
 protected:
   int clear_cache (void);
-
 };
 
 #include /**/ "ace/post.h"

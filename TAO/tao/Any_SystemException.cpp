@@ -1,5 +1,4 @@
 // $Id$
-
 #include "Any_SystemException.h"
 #include "CDR.h"
 #include "Exception.h"
@@ -9,7 +8,7 @@
 #include "ace/Auto_Ptr.h"
 
 #include "ace/CORBA_macros.h"
-
+#include "ace/Auto_Ptr.h"
 
 ACE_RCSID (tao,
            Any_SystemException,
@@ -204,4 +203,3 @@ TAO::Any_SystemException::demarshal_value (TAO_InputCDR &cdr)
   ACE_ENDTRY;
   return 0;
 }
-

@@ -15,22 +15,41 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_ABSTRACT_SERVANT_BASE_H_
 #define TAO_ABSTRACT_SERVANT_BASE_H_
 
 #include /**/ "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "ace/CORBA_macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/CORBA_macros.h"
+#include "tao/corbafwd.h"
+#include "tao/TAO_Export.h"
+#include "tao/Pseudo_VarOut_T.h"
 
 class TAO_ServerRequest;
 class TAO_Stub;
+
+namespace CORBA
+{
+  class InterfaceDef;
+  typedef InterfaceDef *InterfaceDef_ptr;
+
+  class Environment;
+
+  class Object;
+  typedef Object *Object_ptr;
+  typedef TAO_Pseudo_Var_T<Object> Object_var;
+  typedef TAO_Pseudo_Out_T<Object, Object_var> Object_out;
+};
+
+namespace TAO
+{
+  class Argument;
+};
 
 typedef void (*TAO_Skeleton)(
     TAO_ServerRequest &,
@@ -41,11 +60,15 @@ typedef void (*TAO_Skeleton)(
 #endif
   );
 
-namespace CORBA
-{
-  class InterfaceDef;
-  typedef InterfaceDef *InterfaceDef_ptr;
-};
+typedef void (*TAO_Collocated_Skeleton)(
+    CORBA::Object_ptr,
+    CORBA::Object_out,
+    TAO::Argument **,
+    int
+#if !defined (TAO_HAS_EXCEPTIONS) || defined (ACE_ENV_BKWD_COMPAT)
+    , CORBA::Environment &
+#endif
+  );
 
 class TAO_Export TAO_Abstract_ServantBase
 {
@@ -86,6 +109,20 @@ public:
   /// This is an auxiliary method for _this() and _narrow().
   virtual TAO_Stub *_create_stub (ACE_ENV_SINGLE_ARG_DECL) = 0;
 
+    /// Find an operation in the operation table and return a
+  /// TAO_Skeleton which can be used to make upcalls
+  virtual int _find (const char *opname,
+                     TAO_Skeleton &skelfunc,
+                     const unsigned int length = 0) = 0;
+
+  /// Find an operation in the operation table and return a
+  /// TAO_Collocated_Skeleton which can be used to make upcalls onto
+  /// collocated servants.
+  virtual int _find (const char *opname,
+                     TAO_Collocated_Skeleton &skelfunc,
+                     TAO::Collocation_Strategy s,
+                     const unsigned int length = 0) = 0;
+
 protected:
 
   /// Default constructor, only derived classes can be created.
@@ -113,15 +150,10 @@ protected:
                                             void *derived_this
                                             ACE_ENV_ARG_DECL) = 0;
 
-  /// Find an operation in the operation table.
-  virtual int _find (const char *opname,
-                     TAO_Skeleton &skelfunc,
-                     const unsigned int length = 0) = 0;
-
   /// Register a CORBA IDL operation name.
-  virtual int _bind (const char *opname,
+  /*virtual int _bind (const char *opname,
                      const TAO_Skeleton skel_ptr) = 0;
-
+  */
   /// Get this interface's repository id (TAO specific).
   virtual const char *_interface_repository_id (void) const = 0;
 

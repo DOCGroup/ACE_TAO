@@ -75,7 +75,7 @@ be_visitor_component_cs::visit_component (be_component *node)
       *os << parent->name () << "::";
     }
 
-  *os << "tao_" << node->local_name () << "_life::"
+  *os << "TAO::Objref_Traits<" << node->name () << ">::"
       << "tao_duplicate (" << be_idt << be_idt_nl
       << node->full_name () << "_ptr p" << be_uidt_nl
       << ")" << be_uidt_nl
@@ -91,7 +91,7 @@ be_visitor_component_cs::visit_component (be_component *node)
       *os << parent->name () << "::";
     }
 
-  *os << "tao_" << node->local_name () << "_life::"
+  *os << "TAO::Objref_Traits<" << node->name () << ">::"
       << "tao_release (" << be_idt << be_idt_nl
       << node->full_name () << "_ptr p" << be_uidt_nl
       << ")" << be_uidt_nl
@@ -106,7 +106,7 @@ be_visitor_component_cs::visit_component (be_component *node)
       *os << parent->name () << "::";
     }
 
-  *os << "tao_" << node->local_name () << "_life::"
+  *os << "TAO::Objref_Traits<" << node->name () << ">::"
       << "tao_nil (" << be_idt << be_idt_nl
       << "void" << be_uidt_nl
       << ")" << be_uidt_nl
@@ -122,7 +122,7 @@ be_visitor_component_cs::visit_component (be_component *node)
       *os << parent->name () << "::";
     }
 
-  *os << "tao_" << node->local_name () << "_life::"
+  *os << "TAO::Objref_Traits<" << node->name () << ">::"
       << "tao_marshal (" << be_idt << be_idt_nl
       << node->name () << "_ptr p," << be_nl
       << "TAO_OutputCDR &cdr" << be_uidt_nl
@@ -176,50 +176,6 @@ be_visitor_component_cs::visit_component (be_component *node)
       << "return p->marshal (strm);" << be_uidt_nl
       << "}";
 
-
-  be_visitor_context ctx (*this->ctx_);
-
-  // Interceptor classes.  The interceptors helper classes must be
-  // defined before the interface operations because they are used in
-  // the implementation of said operations.
-
-  ctx.state (TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_CS);
-  be_visitor_interface_interceptors_cs ii_visitor (&ctx);
-
-  if (node->accept (&ii_visitor) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_component_cs::"
-                         "visit_component - "
-                         "codegen for interceptors classes failed\n"),
-                        -1);
-    }
-
-  ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_INTERFACE_REMOTE_PROXY_IMPL_CS);
-  be_visitor_interface_remote_proxy_impl_cs irpi_visitor (&ctx);
-
-  if (node->accept (&irpi_visitor) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_component_cs::"
-                         "visit_component - "
-                         "codegen for Base Proxy Broker class failed\n"),
-                        -1);
-    }
-
-  ctx = *this->ctx_;
-  be_visitor_interface_remote_proxy_broker_cs irpb_visitor (&ctx);
-
-  if (node->accept (&irpb_visitor) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_component_cs::"
-                         "visit_component - "
-                         "codegen for Base Proxy Broker class failed\n"),
-                        -1);
-    }
-
   *os << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
@@ -271,9 +227,9 @@ be_visitor_component_cs::visit_component (be_component *node)
           << node->name ()
           << "::_tao_any_destructor (void *_tao_void_pointer)" << be_nl
           << "{" << be_idt_nl
-          << node->local_name () << " *tmp = ACE_static_cast ("
+          << node->local_name () << " *_tao_tmp_pointer = ACE_static_cast ("
           << node->local_name () << " *, _tao_void_pointer);" << be_nl
-          << "CORBA::release (tmp);" << be_uidt_nl
+          << "CORBA::release (_tao_tmp_pointer);" << be_uidt_nl
           << "}" << be_nl << be_nl;
     }
 
@@ -445,6 +401,8 @@ be_visitor_component_cs::visit_component (be_component *node)
                          "codegen for scope failed\n"),
                         -1);
     }
+
+  be_visitor_context ctx (*this->ctx_);
 
   // Smart Proxy classes.
   if (be_global->gen_smart_proxies ())

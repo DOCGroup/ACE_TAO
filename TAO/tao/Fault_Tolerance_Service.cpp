@@ -10,7 +10,6 @@
 # include "tao/Fault_Tolerance_Service.i"
 #endif /* __ACE_INLINE__ */
 
-
 ACE_RCSID (tao,
            Fault_Tolerance_Service,
            "$Id$")

@@ -9,7 +9,7 @@
 #include "debug.h"
 #include "Connect_Strategy.h"
 #include "Client_Strategy_Factory.h"
-
+#include "Base_Transport_Property.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Transport_Connector.inl"
@@ -261,6 +261,47 @@ TAO_Connector::connect (TAO_GIOP_Invocation *invocation,
 
   return this->make_connection (invocation,
                                 desc,
+                                timeout);
+}
+
+
+TAO_Transport*
+TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
+                        TAO_Transport_Descriptor_Interface *desc,
+                        ACE_Time_Value *timeout
+                        ACE_ENV_ARG_DECL_NOT_USED)
+{
+  if ((this->set_validate_endpoint (desc->endpoint ()) == -1) ||
+      desc == 0)
+    return 0;
+
+  TAO_Transport *base_transport = 0;
+
+  // Check the Cache first for connections
+  // If transport found, reference count is incremented on assignment
+  // @@todo: We need to send the timeout value to the cache registry
+  // too. That should be the next step!
+  if (this->orb_core ()->lane_resources ().transport_cache ().find_transport (
+        desc,
+        base_transport) == 0)
+    {
+      if (TAO_debug_level > 2)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO (%P|%t) - Transport_Connector::connect, "
+                    "got an existing Transport[%d]\n",
+                    base_transport->id ()));
+
+      // No need to _duplicate since things are taken care within the
+      // cache manager.
+      return base_transport;
+    }
+
+  // @@TODO: This is not the right place for this!
+  // Purge connections (if necessary)
+  this->orb_core_->lane_resources ().transport_cache ().purge ();
+
+  return this->make_connection (r,
+                                *desc,
                                 timeout);
 }
 

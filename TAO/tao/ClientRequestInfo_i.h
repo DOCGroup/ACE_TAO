@@ -1,5 +1,4 @@
 // -*- C++ -*-
-
 //=============================================================================
 /**
  * @file ClientRequestInfo_i.h
@@ -19,7 +18,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -29,10 +28,15 @@
 
 #include "tao/PortableInterceptorC.h"
 #include "tao/PICurrent.h"
+#include "tao/Invocation_Utils.h"
 
-
-class TAO_GIOP_Invocation;
 class TAO_Service_Context;
+class TAO_GIOP_Invocation;
+
+namespace TAO
+{
+  class Invocation_Base;
+}
 
 /**
  * @class TAO_ClientRequestInfo_i
@@ -45,12 +49,16 @@ class TAO_Export TAO_ClientRequestInfo_i
 public:
 
   /// Constructor from concrete interface.
-  TAO_ClientRequestInfo_i (TAO_GIOP_Invocation *invocation,
-                           CORBA::Object_ptr target);
+  TAO_ClientRequestInfo_i (TAO::Invocation_Base *invocation);
+
+  //// @@ NEED TO GO.... For backward compatibility
+  TAO_ClientRequestInfo_i (TAO_GIOP_Invocation *,
+                           CORBA::Object_ptr ) {};
 
   /// Constructor from abstract interface.
-  TAO_ClientRequestInfo_i (TAO_GIOP_Invocation *invocation,
-                           CORBA::AbstractBase_ptr abstract_target);
+  TAO_ClientRequestInfo_i (TAO::Invocation_Base *invocation,
+                           CORBA::AbstractBase_ptr abstract_target,
+                           CORBA::Boolean response_expected = 1);
 
   /// Destructor.
   virtual ~TAO_ClientRequestInfo_i (void);
@@ -209,10 +217,14 @@ public:
 
   /// Set the flag that states whether or not a response is expected.
   /// For example, no response is expected in a one-way operation.
+  // @@@@@ Need to go
   void response_expected (CORBA::Boolean flag);
 
   /// Set the status of the received reply.
-  void reply_status (int invoke_status);
+  void reply_status (TAO::Invocation_Status s);
+
+  // @@@@ NEEd to go
+  void reply_status (int s);
 
   /// Extract the forward object reference from the
   /// PortableInterceptor::ForwardRequest exception, and set the reply
@@ -233,22 +245,18 @@ protected:
       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  TAO_Stub *stub (void) const;
+
 protected:
 
-  /// Pointer to the GIOP invocation object.
-  TAO_GIOP_Invocation *invocation_;
-
-  /// Reference to the target object.
-  CORBA::Object_ptr target_;
+  /// Pointer to the invocation object.
+  TAO::Invocation_Base *invocation_;
 
   /// Reference to the abstract interface target.
   CORBA::AbstractBase_ptr abstract_target_;
 
   /// Pointer to the caught exception.
   CORBA::Exception *caught_exception_;
-
-  /// True if a two-way operation, false otherwise.
-  CORBA::Boolean response_expected_;
 
   /// Reply status for the current request.
   PortableInterceptor::ReplyStatus reply_status_;

@@ -128,14 +128,8 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
           switch (this->ctx_->state ())
             {
             case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_CH:
-            case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_OBV_CH:
-            case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IMPL_CH:
               // Last argument - is always ACE_ENV_ARG_DECL.
               *os << "_WITH_DEFAULTS" << be_uidt_nl;
-              break;
-            case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IMPL_CS:
-              // Last argument - is always ACE_ENV_ARG_DECL.
-              *os << be_uidt_nl;
               break;
             default:
               *os << be_uidt_nl;
@@ -178,10 +172,6 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IH:
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IS:
       break;
-    case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IMPL_CH:
-      *os << ";";
-      break;
-    case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IMPL_CS:
     default:
        break;
     }
@@ -251,7 +241,6 @@ be_visitor_obv_operation_arglist::visit_argument (be_argument *node)
         status = bt->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_OTHERS:
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_SH:
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IH:
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IS:
@@ -291,7 +280,6 @@ be_visitor_obv_operation_arglist::post_process (be_decl *bd)
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_CH:
-    case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_OTHERS:
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_SH:
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IH:
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IS:

@@ -1,13 +1,14 @@
 #include "ValueFactory_Map.h"
 #include "ValueFactory.h"
+#include "tao/CORBA_String.h"
 
 #if !defined (__ACE_INLINE__)
 # include "ValueFactory_Map.inl"
 #endif /* ! __ACE_INLINE__ */
 
 
-ACE_RCSID (tao, 
-           ValueFactory_Map, 
+ACE_RCSID (tao,
+           ValueFactory_Map,
            "$Id$")
 
 
@@ -127,4 +128,3 @@ template class TAO_Singleton<TAO_ValueFactory_Map, TAO_SYNCH_MUTEX>;
 template TAO_Singleton<TAO_ValueFactory_Map, TAO_SYNCH_MUTEX> * TAO_Singleton<TAO_ValueFactory_Map, TAO_SYNCH_MUTEX>::singleton_;
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

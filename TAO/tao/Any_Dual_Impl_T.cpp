@@ -121,9 +121,6 @@ TAO::Any_Dual_Impl_T<T>::extract (const CORBA::Any & any,
           return 1;
         }
 
-      CORBA::TCKind kind = any_tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
-
       T *empty_value = 0;
       ACE_NEW_RETURN (empty_value,
                       T,
@@ -142,8 +139,11 @@ TAO::Any_Dual_Impl_T<T>::extract (const CORBA::Any & any,
                         mb->rd_ptr () - mb->base (),
                         mb->wr_ptr () - mb->base (),
                         impl->_tao_byte_order (),
-                                                            TAO_DEF_GIOP_MAJOR,
-                                                            TAO_DEF_GIOP_MINOR);
+                        TAO_DEF_GIOP_MAJOR,
+                        TAO_DEF_GIOP_MINOR);
+
+      CORBA::TCKind kind = any_tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
 
       impl->assign_translator (kind, &cdr);
       CORBA::Boolean result = replacement->demarshal_value (cdr);

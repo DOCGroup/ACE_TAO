@@ -15,17 +15,25 @@
 //       Irvine, CA
 //       USA
 //       http://doc.ece.uci.edu/
+// and
+//       Institute for Software Integrated Systems
+//       Vanderbilt University
+//       Nashville, TN
+//       USA
+//       http://www.isis.vanderbilt.edu/
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:314
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:301
 
 
 #include "Messaging_PolicyValueC.h"
-#include "tao/Stub.h"
-#include "tao/ORB_Core.h"
+#include "Stub.h"
+#include "Typecode.h"
+#include "Any_Dual_Impl_T.h"
+#include "ORB_Core.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -34,6 +42,14 @@
 #if !defined (__ACE_INLINE__)
 #include "Messaging_PolicyValueC.i"
 #endif /* !defined INLINE */
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_arg_traits.cpp:59
+
+// Arg traits specializations.
+namespace TAO
+{
+};
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
@@ -100,41 +116,47 @@ static CORBA::TypeCode _tc_TAO_tc_Messaging_PolicyValue (
     sizeof (Messaging::PolicyValue)
   );
 
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (Messaging)
-TAO_NAMESPACE_DEFINE (
-    ::CORBA::TypeCode_ptr,
-    _tc_PolicyValue,
-    &_tc_TAO_tc_Messaging_PolicyValue
-  )
-TAO_NAMESPACE_END
+namespace Messaging
+{
+  ::CORBA::TypeCode_ptr _tc_PolicyValue =
+    &_tc_TAO_tc_Messaging_PolicyValue;
+}
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_cs.cpp:66
 
-void Messaging::PolicyValue::_tao_any_destructor (void *_tao_void_pointer)
+void
+Messaging::PolicyValue::_tao_any_destructor (
+    void *_tao_void_pointer
+  )
 {
-  PolicyValue *tmp = ACE_static_cast (PolicyValue*, _tao_void_pointer);
-  delete tmp;
+  PolicyValue *_tao_tmp_pointer =
+    ACE_static_cast (PolicyValue *, _tao_void_pointer);
+  delete _tao_tmp_pointer;
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:50
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:66
 
-Messaging::PolicyValue::_tao_seq_Octet::_tao_seq_Octet (void)
+#if !defined (_MESSAGING_POLICYVALUE__TAO_SEQ_CORBA_OCTET__CS_)
+#define _MESSAGING_POLICYVALUE__TAO_SEQ_CORBA_OCTET__CS_
+
+Messaging::PolicyValue::_tao_seq_CORBA_Octet_::_tao_seq_CORBA_Octet_ (void)
 {}
 
-Messaging::PolicyValue::_tao_seq_Octet::_tao_seq_Octet (CORBA::ULong max)
+Messaging::PolicyValue::_tao_seq_CORBA_Octet_::_tao_seq_CORBA_Octet_ (
+    CORBA::ULong max
+  )
   : TAO_Unbounded_Sequence<
         CORBA::Octet
       >
     (max)
 {}
 
-Messaging::PolicyValue::_tao_seq_Octet::_tao_seq_Octet (
+Messaging::PolicyValue::_tao_seq_CORBA_Octet_::_tao_seq_CORBA_Octet_ (
     CORBA::ULong max,
     CORBA::ULong length,
-    CORBA::Octet *buffer,
+    CORBA::Octet * buffer,
     CORBA::Boolean release
   )
   : TAO_Unbounded_Sequence<
@@ -143,60 +165,41 @@ Messaging::PolicyValue::_tao_seq_Octet::_tao_seq_Octet (
     (max, length, buffer, release)
 {}
 
-Messaging::PolicyValue::_tao_seq_Octet::_tao_seq_Octet (const _tao_seq_Octet &seq)
+Messaging::PolicyValue::_tao_seq_CORBA_Octet_::_tao_seq_CORBA_Octet_ (
+    const _tao_seq_CORBA_Octet_ &seq
+  )
   : TAO_Unbounded_Sequence<
         CORBA::Octet
       >
     (seq)
 {}
 
-Messaging::PolicyValue::_tao_seq_Octet::~_tao_seq_Octet (void)
+Messaging::PolicyValue::_tao_seq_CORBA_Octet_::~_tao_seq_CORBA_Octet_ (void)
 {}
 
-void Messaging::PolicyValue::_tao_seq_Octet::_tao_any_destructor (void *_tao_void_pointer)
+void Messaging::PolicyValue::_tao_seq_CORBA_Octet_::_tao_any_destructor (
+    void * _tao_void_pointer
+  )
 {
-  _tao_seq_Octet *tmp = ACE_static_cast (_tao_seq_Octet*, _tao_void_pointer);
-  delete tmp;
+  _tao_seq_CORBA_Octet_ * _tao_tmp_pointer =
+    ACE_static_cast (_tao_seq_CORBA_Octet_ *, _tao_void_pointer);
+  delete _tao_tmp_pointer;
 }
 
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:274
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class
-  TAO_Var_Var_T<
-      Messaging::PolicyValue
-    >;
-
-template class
-  TAO_Out_T<
-      Messaging::PolicyValue,
-      Messaging::PolicyValue_var
-    >;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate \
-  TAO_Var_Var_T< \
-      Messaging::PolicyValue \
-    >
-
-# pragma instantiate \
-  TAO_Out_T< \
-      Messaging::PolicyValue, \
-      Messaging::PolicyValue_var \
-    >
-
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:50
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:66
+
+#if !defined (_MESSAGING_POLICYVALUESEQ_CS_)
+#define _MESSAGING_POLICYVALUESEQ_CS_
 
 Messaging::PolicyValueSeq::PolicyValueSeq (void)
 {}
 
-Messaging::PolicyValueSeq::PolicyValueSeq (CORBA::ULong max)
+Messaging::PolicyValueSeq::PolicyValueSeq (
+    CORBA::ULong max
+  )
   : TAO_Unbounded_Sequence<
         Messaging::PolicyValue
       >
@@ -206,7 +209,7 @@ Messaging::PolicyValueSeq::PolicyValueSeq (CORBA::ULong max)
 Messaging::PolicyValueSeq::PolicyValueSeq (
     CORBA::ULong max,
     CORBA::ULong length,
-    Messaging::PolicyValue *buffer,
+    Messaging::PolicyValue * buffer,
     CORBA::Boolean release
   )
   : TAO_Unbounded_Sequence<
@@ -215,7 +218,9 @@ Messaging::PolicyValueSeq::PolicyValueSeq (
     (max, length, buffer, release)
 {}
 
-Messaging::PolicyValueSeq::PolicyValueSeq (const PolicyValueSeq &seq)
+Messaging::PolicyValueSeq::PolicyValueSeq (
+    const PolicyValueSeq &seq
+  )
   : TAO_Unbounded_Sequence<
         Messaging::PolicyValue
       >
@@ -225,51 +230,16 @@ Messaging::PolicyValueSeq::PolicyValueSeq (const PolicyValueSeq &seq)
 Messaging::PolicyValueSeq::~PolicyValueSeq (void)
 {}
 
-void Messaging::PolicyValueSeq::_tao_any_destructor (void *_tao_void_pointer)
+void Messaging::PolicyValueSeq::_tao_any_destructor (
+    void * _tao_void_pointer
+  )
 {
-  PolicyValueSeq *tmp = ACE_static_cast (PolicyValueSeq*, _tao_void_pointer);
-  delete tmp;
+  PolicyValueSeq * _tao_tmp_pointer =
+    ACE_static_cast (PolicyValueSeq *, _tao_void_pointer);
+  delete _tao_tmp_pointer;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class
-  TAO_VarSeq_Var_T<
-      Messaging::PolicyValueSeq,
-      Messaging::PolicyValue
-    >;
-
-template class TAO_Unbounded_Sequence<Messaging::PolicyValue>;
-template class TAO_Var_Base_T<Messaging::PolicyValue>;
-template class TAO_Seq_Var_Base_T<Messaging::PolicyValueSeq,
-                                  Messaging::PolicyValue>;
-template class
-  TAO_Seq_Out_T<
-      Messaging::PolicyValueSeq,
-      Messaging::PolicyValueSeq_var,
-      Messaging::PolicyValue
-    >;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate \
-  TAO_VarSeq_Var_T< \
-      Messaging::PolicyValueSeq, \
-      Messaging::PolicyValue \
-    >
-
-#pragma instantiate TAO_Seq_Var_Base_T<Messaging::PolicyValueSeq,
-                                       Messaging::PolicyValue>
-#pragma instantiate TAO_Unbounded_Sequence<Messaging::PolicyValue>
-#pragma instantiate TAO_Var_Base_T<Messaging::PolicyValue>;
-# pragma instantiate \
-  TAO_Seq_Out_T< \
-      Messaging::PolicyValueSeq, \
-      Messaging::PolicyValueSeq_var, \
-      Messaging::PolicyValue \
-    >
-
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* end #if !defined */
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
@@ -362,14 +332,11 @@ static CORBA::TypeCode _tc_TAO_tc_Messaging_PolicyValueSeq (
     sizeof (Messaging::PolicyValueSeq)
   );
 
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (Messaging)
-TAO_NAMESPACE_DEFINE (
-    ::CORBA::TypeCode_ptr,
-    _tc_PolicyValueSeq,
-    &_tc_TAO_tc_Messaging_PolicyValueSeq
-  )
-TAO_NAMESPACE_END
+namespace Messaging
+{
+  ::CORBA::TypeCode_ptr _tc_PolicyValueSeq =
+    &_tc_TAO_tc_Messaging_PolicyValueSeq;
+}
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/any_op_cs.cpp:54
@@ -429,13 +396,6 @@ CORBA::Boolean operator>>= (
       );
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
-    defined (ACE_HAS_GNU_REPO)
-template class TAO::Any_Dual_Impl_T<Messaging::PolicyValue>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO::Any_Dual_Impl_T<Messaging::PolicyValue>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/any_op_cs.cpp:54
 
@@ -494,22 +454,15 @@ CORBA::Boolean operator>>= (
       );
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
-    defined (ACE_HAS_GNU_REPO)
-  template class TAO::Any_Dual_Impl_T<Messaging::PolicyValueSeq>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO::Any_Dual_Impl_T<Messaging::PolicyValueSeq>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:93
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:95
 
-#if !defined _TAO_CDR_OP_Messaging_PolicyValue__tao_seq_Octet_CPP_
-#define _TAO_CDR_OP_Messaging_PolicyValue__tao_seq_Octet_CPP_
+#if !defined _TAO_CDR_OP_Messaging_PolicyValue__tao_seq_CORBA_Octet__CPP_
+#define _TAO_CDR_OP_Messaging_PolicyValue__tao_seq_CORBA_Octet__CPP_
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
-    const Messaging::PolicyValue::_tao_seq_Octet &_tao_sequence
+    const Messaging::PolicyValue::_tao_seq_CORBA_Octet_ &_tao_sequence
   )
 {
   CORBA::ULong _tao_seq_len = _tao_sequence.length ();
@@ -521,7 +474,7 @@ CORBA::Boolean operator<< (
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
       {
         TAO_Unbounded_Sequence<CORBA::Octet> *oseq =
-          ACE_static_cast (TAO_Unbounded_Sequence<CORBA::Octet>*, (Messaging::PolicyValue::_tao_seq_Octet *)&_tao_sequence);
+          ACE_static_cast (TAO_Unbounded_Sequence<CORBA::Octet>*, (Messaging::PolicyValue::_tao_seq_CORBA_Octet_ *)&_tao_sequence);
         if (oseq->mb ())
           return strm.write_octet_array_mb (oseq->mb ());
         else
@@ -539,7 +492,7 @@ CORBA::Boolean operator<< (
 
 CORBA::Boolean operator>> (
     TAO_InputCDR &strm,
-    Messaging::PolicyValue::_tao_seq_Octet &_tao_sequence
+    Messaging::PolicyValue::_tao_seq_CORBA_Octet_ &_tao_sequence
   )
 {
   CORBA::ULong _tao_seq_len;
@@ -587,15 +540,19 @@ CORBA::Boolean operator>> (
       return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
 
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
+
     }
 
   return 0;
 }
 
-#endif /* _TAO_CDR_OP_Messaging_PolicyValue__tao_seq_Octet_CPP_ */
+#endif /* _TAO_CDR_OP_Messaging_PolicyValue__tao_seq_CORBA_Octet__CPP_ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:93
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:95
+
+#if !defined _TAO_CDR_OP_Messaging_PolicyValueSeq_CPP_
+#define _TAO_CDR_OP_Messaging_PolicyValueSeq_CPP_
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -655,7 +612,239 @@ CORBA::Boolean operator>> (
         }
 
       return _tao_marshal_flag;
+
     }
 
   return 0;
 }
+
+#endif /* _TAO_CDR_OP_Messaging_PolicyValueSeq_CPP_ */
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/root.cpp:1703
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+  template class
+    TAO::Any_Basic_Impl_T<
+        CORBA::SetOverrideType
+      >;
+
+  template class
+    TAO::Any_Dual_Impl_T<
+        CORBA::PolicyError
+      >;
+
+  template class
+    TAO::Any_Dual_Impl_T<
+        CORBA::InvalidPolicies
+      >;
+
+  template class
+    TAO::Any_Basic_Impl_T<
+        CORBA::TCKind
+      >;
+
+  template class
+    TAO::Any_Basic_Impl_T<
+        CORBA::exception_type
+      >;
+
+  template class
+    TAO::Any_Basic_Impl_T<
+        CORBA::ParameterMode
+      >;
+
+  template class
+    TAO::Any_Dual_Impl_T<
+        IOP::Codec::InvalidTypeForEncoding
+      >;
+
+  template class
+    TAO::Any_Dual_Impl_T<
+        IOP::Codec::FormatMismatch
+      >;
+
+  template class
+    TAO::Any_Dual_Impl_T<
+        IOP::Codec::TypeMismatch
+      >;
+
+  template class
+    TAO::Any_Dual_Impl_T<
+        IOP::CodecFactory::UnknownEncoding
+      >;
+
+  template class
+    TAO::Any_Dual_Impl_T<
+        Messaging::PolicyValue::_tao_seq_CORBA_Octet_
+      >;
+
+  template class
+    TAO_Var_Var_T<
+        Messaging::PolicyValue
+      >;
+
+  template class
+    TAO_Var_Base_T<
+        Messaging::PolicyValue
+      >;
+
+  template class
+    TAO_Out_T<
+        Messaging::PolicyValue,
+        Messaging::PolicyValue_var
+      >;
+
+  template class
+    TAO::Any_Dual_Impl_T<
+        Messaging::PolicyValue
+      >;
+
+  template class
+    TAO_VarSeq_Var_T<
+        Messaging::PolicyValueSeq,
+        Messaging::PolicyValue
+      >;
+
+  template class
+    TAO_Seq_Var_Base_T<
+        Messaging::PolicyValueSeq,
+        Messaging::PolicyValue
+      >;
+
+  template class
+    TAO_Seq_Out_T<
+        Messaging::PolicyValueSeq,
+        Messaging::PolicyValueSeq_var,
+        Messaging::PolicyValue
+      >;
+
+#if !defined (_MESSAGING_POLICYVALUESEQ_CS_)
+#define _MESSAGING_POLICYVALUESEQ_CS_
+
+  template class
+    TAO_Unbounded_Sequence<
+        Messaging::PolicyValue
+      >;
+
+#endif /* end #if !defined */
+
+  template class
+    TAO::Any_Dual_Impl_T<
+        Messaging::PolicyValueSeq
+      >;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+# pragma instantiate \
+    TAO::Any_Basic_Impl_T< \
+        CORBA::SetOverrideType \
+      >
+
+# pragma instantiate \
+    TAO::Any_Dual_Impl_T< \
+        CORBA::PolicyError \
+      >
+
+# pragma instantiate \
+    TAO::Any_Dual_Impl_T< \
+        CORBA::InvalidPolicies \
+      >
+
+# pragma instantiate \
+    TAO::Any_Basic_Impl_T< \
+        CORBA::TCKind \
+      >
+
+# pragma instantiate \
+    TAO::Any_Basic_Impl_T< \
+        CORBA::exception_type \
+      >
+
+# pragma instantiate \
+    TAO::Any_Basic_Impl_T< \
+        CORBA::ParameterMode \
+      >
+
+# pragma instantiate \
+    TAO::Any_Dual_Impl_T< \
+        IOP::Codec::InvalidTypeForEncoding \
+      >
+
+# pragma instantiate \
+    TAO::Any_Dual_Impl_T< \
+        IOP::Codec::FormatMismatch \
+      >
+
+# pragma instantiate \
+    TAO::Any_Dual_Impl_T< \
+        IOP::Codec::TypeMismatch \
+      >
+
+# pragma instantiate \
+    TAO::Any_Dual_Impl_T< \
+        IOP::CodecFactory::UnknownEncoding \
+      >
+
+# pragma instantiate \
+    TAO::Any_Dual_Impl_T< \
+        Messaging::PolicyValue::_tao_seq_CORBA_Octet_ \
+      >
+
+# pragma instantiate \
+    TAO_Var_Var_T< \
+        Messaging::PolicyValue \
+      >
+
+# pragma instantiate \
+    TAO_Var_Base_T< \
+        Messaging::PolicyValue \
+      >
+
+# pragma instantiate \
+    TAO_Out_T< \
+        Messaging::PolicyValue, \
+        Messaging::PolicyValue_var \
+      >
+
+# pragma instantiate \
+    TAO::Any_Dual_Impl_T< \
+        Messaging::PolicyValue \
+      >
+
+# pragma instantiate \
+    TAO_VarSeq_Var_T< \
+        Messaging::PolicyValueSeq, \
+        Messaging::PolicyValue \
+      >
+
+# pragma instantiate \
+    TAO_Seq_Var_Base_T< \
+        Messaging::PolicyValueSeq, \
+        Messaging::PolicyValue \
+      >
+
+# pragma instantiate \
+    TAO_Seq_Out_T< \
+        Messaging::PolicyValueSeq, \
+        Messaging::PolicyValueSeq_var, \
+        Messaging::PolicyValue \
+      >
+
+#if !defined (_MESSAGING_POLICYVALUESEQ_CS_)
+#define _MESSAGING_POLICYVALUESEQ_CS_
+
+# pragma instantiate \
+    TAO_Unbounded_Sequence< \
+        Messaging::PolicyValue \
+      >
+
+#endif /* end #if !defined */
+
+# pragma instantiate \
+    TAO::Any_Dual_Impl_T< \
+        Messaging::PolicyValueSeq \
+      >
+
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

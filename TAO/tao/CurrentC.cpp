@@ -15,16 +15,23 @@
 //       Irvine, CA
 //       USA
 //       http://doc.ece.uci.edu/
+// and
+//       Institute for Software Integrated Systems
+//       Vanderbilt University
+//       Nashville, TN
+//       USA
+//       http://www.isis.vanderbilt.edu/
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:314
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:301
 
 
 #include "CurrentC.h"
-#include "tao/Sequence_T.h"
+#include "Typecode.h"
+#include "ace/OS.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -35,12 +42,20 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:61
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_arg_traits.cpp:59
 
-int CORBA::Current::_tao_class_id = 0;
+// Arg traits specializations.
+namespace TAO
+{
+};
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:60
+
+// Traits specializations for CORBA::Current.
 
 CORBA::Current_ptr
-CORBA::tao_Current_life::tao_duplicate (
+TAO::Objref_Traits<CORBA::Current>::tao_duplicate (
     CORBA::Current_ptr p
   )
 {
@@ -48,7 +63,7 @@ CORBA::tao_Current_life::tao_duplicate (
 }
 
 void
-CORBA::tao_Current_life::tao_release (
+TAO::Objref_Traits<CORBA::Current>::tao_release (
     CORBA::Current_ptr p
   )
 {
@@ -56,67 +71,25 @@ CORBA::tao_Current_life::tao_release (
 }
 
 CORBA::Current_ptr
-CORBA::tao_Current_life::tao_nil (
-    void
-  )
+TAO::Objref_Traits<CORBA::Current>::tao_nil (void)
 {
   return CORBA::Current::_nil ();
 }
 
 CORBA::Boolean
-CORBA::tao_Current_life::tao_marshal (
+TAO::Objref_Traits<CORBA::Current>::tao_marshal (
     CORBA::Current_ptr p,
-    TAO_OutputCDR &cdr
+    TAO_OutputCDR & cdr
   )
 {
   return p->marshal (cdr);
 }
 
-CORBA::Current_ptr
-CORBA::tao_Current_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return CORBA::Current::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-CORBA::tao_Current_cast::tao_upcast (
-    void *src
-  )
-{
-  CORBA::Current **tmp =
-    ACE_static_cast (CORBA::Current **, src);
-  return *tmp;
-}
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class
-    TAO_Objref_Var_T<
-        CORBA::Current,
-        CORBA::tao_Current_life
-      >;
-  template class
-    TAO_Objref_Out_T<
-        CORBA::Current,
-        CORBA::tao_Current_life
-      >;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate \
-    TAO_Objref_Var_T< \
-        CORBA::Current, \
-        CORBA::tao_Current_life \
-      >
-# pragma instantiate \
-    TAO_Objref_Out_T< \
-        CORBA::Current, \
-        CORBA::tao_Current_life \
-      >
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:232
+// Function pointer for collocation factory initialization.
+TAO::Collocation_Proxy_Broker *
+(*CORBA__TAO_Current_Proxy_Broker_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  ) = 0;
 
 CORBA::Current::Current (void)
 {}
@@ -124,43 +97,21 @@ CORBA::Current::Current (void)
 CORBA::Current::~Current (void)
 {}
 
-void
-CORBA::Current::_tao_any_destructor (void *_tao_void_pointer)
-{
-  Current *tmp = ACE_static_cast (Current *, _tao_void_pointer);
-  CORBA::release (tmp);
-}
-
 CORBA::Current_ptr
 CORBA::Current::_narrow (
-    CORBA::Object_ptr obj
-    ACE_ENV_ARG_DECL
-  )
-{
-  return Current::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Current_ptr
-CORBA::Current::_unchecked_narrow (
-    CORBA::Object_ptr obj
+    CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (obj))
+  if (CORBA::is_nil (_tao_objref))
     {
       return Current::_nil ();
     }
 
-  return
-      ACE_reinterpret_cast (
-          Current_ptr,
-          obj->_tao_QueryInterface (
-              ACE_reinterpret_cast (
-                  ptrdiff_t,
-                  &Current::_tao_class_id
-                )
-            )
-        );
+  Current_ptr proxy =
+    dynamic_cast<Current_ptr> (_tao_objref);
+
+  return Current::_duplicate (proxy);
 }
 
 CORBA::Current_ptr
@@ -174,35 +125,33 @@ CORBA::Current::_duplicate (Current_ptr obj)
   return obj;
 }
 
-void *CORBA::Current::_tao_QueryInterface (ptrdiff_t type)
+CORBA::Boolean
+CORBA::Current::_is_a (
+    const char *value
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
 {
-  void *retv = 0;
-
-  if (type == ACE_reinterpret_cast (
-              ptrdiff_t,
-              &ACE_NESTED_CLASS (::CORBA, Current)::_tao_class_id)
-            )
+  if (
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/CORBA/Current:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/CORBA/LocalObject:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/CORBA/Object:1.0"
+        )
+     )
     {
-      retv = ACE_reinterpret_cast (void*, this);
+      return 1; // success using local knowledge
     }
-  else if (type == ACE_reinterpret_cast (
-               ptrdiff_t,
-               &CORBA::Object::_tao_class_id)
-             )
+  else
     {
-      retv =
-        ACE_reinterpret_cast (
-            void *,
-            ACE_static_cast (CORBA::Object_ptr, this)
-          );
+      return 0;
     }
-
-  if (retv != 0)
-    {
-      this->_add_ref ();
-    }
-
-  return retv;
 }
 
 const char* CORBA::Current::_interface_repository_id (void) const
@@ -244,63 +193,41 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_Current (
     sizeof (CORBA::Current)
   );
 
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (
-    ::CORBA::TypeCode_ptr,
-    _tc_Current,
-    &_tc_TAO_tc_CORBA_Current
-  )
-TAO_NAMESPACE_END
+namespace CORBA
+{
+  ::CORBA::TypeCode_ptr _tc_Current =
+    &_tc_TAO_tc_CORBA_Current;
+}
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_cs.cpp:52
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/root.cpp:1703
 
-// Copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    CORBA::Current_ptr _tao_elem
-  )
-{
-  CORBA::Current_ptr _tao_objptr =
-    CORBA::Current::_duplicate (_tao_elem);
-  _tao_any <<= &_tao_objptr;
-}
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-// Non-copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    CORBA::Current_ptr *_tao_elem
-  )
-{
-  TAO::Any_Impl_T<CORBA::Current>::insert (
-      _tao_any,
-      CORBA::Current::_tao_any_destructor,
-      CORBA::_tc_Current,
-      *_tao_elem
-    );
-}
+  template class
+    TAO_Objref_Var_T<
+        CORBA::Current,
+        TAO::Objref_Traits<CORBA::Current>
+      >;
 
-CORBA::Boolean
-operator>>= (
-    const CORBA::Any &_tao_any,
-    CORBA::Current_ptr &_tao_elem
-  )
-{
-  return
-    TAO::Any_Impl_T<CORBA::Current>::extract (
-        _tao_any,
-        CORBA::Current::_tao_any_destructor,
-        CORBA::_tc_Current,
-        _tao_elem
-      );
-}
+  template class
+    TAO_Objref_Out_T<
+        CORBA::Current,
+        TAO::Objref_Traits<CORBA::Current>
+      >;
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
-    defined (ACE_HAS_GNU_REPO)
-  template class TAO::Any_Impl_T<CORBA::Current>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO::Any_Impl_T<CORBA::Current>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+# pragma instantiate \
+    TAO_Objref_Var_T< \
+        CORBA::Current, \
+        TAO::Objref_Traits<CORBA::Current> \
+      >
+
+# pragma instantiate \
+    TAO_Objref_Out_T< \
+        CORBA::Current, \
+        TAO::Objref_Traits<CORBA::Current> \
+      >
+
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

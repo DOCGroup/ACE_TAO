@@ -1,0 +1,52 @@
+. GIOP versions in the outbound stream within GIOP_Message_Base. 
+
+. Oneways and Asynch invocation (needs investigation)
+
+. type of exception thrown to the client. Is it CORBA exception or C++
+  exception if you receive one? 
+
+. Test location forwards with collocated servants for remote servants
+  AND collcoated servants for collcoated servants.
+
+. test user exceptions
+
+. Move TAO_Exception_Data elsewhere
+
+. Remove extraneous calls and enums for collocation from
+  corbafwd.h. and _new form ORB_Core.h
+
+. Test case for forwarded objects in collocated mode being remote
+
+. Recursive location forwards is broken still.
+
+. Oneways and location forwards
+
+. Oneways and collocation -- lots of issues
+
+. Bug 1476
+
+. Check for Interceptor calls..
+
+. Multiprofile IOR and fallback in case of failure
+
+. Interaction between abstract interfaces and collocation.
+
+. Interaction between location forward and collocation.
+
+. Memory leaks with Transport, run valgrind in Param_Test
+
+. Move traits classes in the header file to the cpp file.
+
+. Collocation and AMI
+
+. Real-time CORBA testing
+
+. Code set translators 
+
+. Complete documentation
+
+. Add the BAD_PARAM exception for bounded strings
+
+. Different versions of GIOP
+
+. What about AMH

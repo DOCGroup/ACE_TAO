@@ -3,6 +3,8 @@
 #include "Key_Adapters.h"
 #include "ace/ACE.h"
 
+#include "ace/ACE.h"
+
 #if !defined (__ACE_INLINE__)
 # include "Key_Adapters.i"
 #endif /* __ACE_INLINE__ */

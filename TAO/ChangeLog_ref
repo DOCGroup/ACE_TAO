@@ -1,0 +1,3071 @@
+Wed Sep  3 16:47:23 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* Merged with the main trunk and created a new branch
+	  refactor-stage_7.  
+
+Wed Sep  3 11:41:31 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/IORManipulation/IORC.cpp: 
+	* tao/IORManipulation/IORC.h:
+	* tao/IORManipulation/IORC.i: Regenerated the code. 
+	
+	* tao/PortableServer/PolicyS.h: Fixed a compile error on g++.
+
+Tue Sep  2 20:39:57 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAOACE.dsw:
+
+  	  Added dependency of TAO_IORInterceptor on TAO_Valuetype.
+
+        * tao/IORInterceptor/IORInterceptor.dsp:
+
+	  Added link to TAO_Valuetype library.
+
+        * tao/PortableInterceptorC.h:
+        * tao/IORInterceptor/IORInterceptorC.h:
+
+	  Added template specialization declaration, with export
+	  macro, of 3 PortableInterceptor interfaces - ORBInitializer,
+	  IORInfo and PolicyFactory. While these are not forward
+	  declared (if they were the declaration would be generated),
+	  they are needed by TAO_PortableServer, and thus the
+	  need for the export macros.
+
+        * tao/PortableServer/Default_ORT.pidl:
+        * tao/PortableServer/Default_ORTC.cpp:
+        * tao/PortableServer/Default_ORTC.h:
+        * tao/PortableServer/Default_ORTC.i:
+        * tao/PortableServer/ImR_Activator.pidl:
+        * tao/PortableServer/ImR_ActivatorS.h:
+        * tao/PortableServer/ImR_ActivatorS_T.h:
+        * tao/PortableServer/ImR_Locator.pidl
+        * tao/PortableServer/ImR_LocatorC.cpp:
+        * tao/PortableServer/ImR_LocatorC.h:
+        * tao/PortableServer/ImR_LocatorC.i:
+        * tao/PortableServer/ImR_LocatorS.cpp:
+        * tao/PortableServer/ImR_LocatorS.h:
+        * tao/PortableServer/ImR_LocatorS.i:
+        * tao/PortableServer/ImR_LocatorS_T.cpp:
+        * tao/PortableServer/ImR_LocatorS_T.h:
+        * tao/PortableServer/ImR_LocatorS_T.i:
+        * tao/PortableServer/ImplRepo.pidl:
+        * tao/PortableServer/ImplRepoC.cpp:
+        * tao/PortableServer/ImplRepoC.h:
+        * tao/PortableServer/ImplRepoC.i:
+        * tao/PortableServer/ImplRepoS.cpp:
+        * tao/PortableServer/ImplRepoS.h:
+        * tao/PortableServer/ImplRepoS.i:
+        * tao/PortableServer/ImplRepoS_T.cpp:
+        * tao/PortableServer/ImplRepoS_T.h:
+        * tao/PortableServer/ImplRepoS_T.i:
+        * tao/PortableServer/POA.cpp:
+        * tao/PortableServer/PolicyS.cpp:
+        * tao/PortableServer/PolicyS.h:
+        * tao/PortableServer/PolicyS.i:
+        * tao/PortableServer/PolicyS_T.cpp:
+        * tao/PortableServer/PolicyS_T.h:
+        * tao/PortableServer/PolicyS_T.i:
+        * tao/PortableServer/PortableServer.pidl:
+        * tao/PortableServer/PortableServerC.cpp:
+        * tao/PortableServer/PortableServerC.h:
+        * tao/PortableServer/PortableServerC.i:
+
+	  Regenerated hand-crafted files in TAO_PortableServer.
+
+        * tao/PortableServer/ORB_Manager.cpp:
+
+          Cosmetic changes.
+        * TO_IDL/be/be_codegen.cpp:
+
+	  Changed generation of Object_T.h include in the 
+	  skeleton source file to be unconditional.
+
+        * TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
+
+	  Since local interfaces generate no inline code,
+	  added a check to return from this visitor immediately,
+	  avoiding the generation of empty #ifdef guards.
+
+Tue Sep  2 16:32:01 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/RTCORBA/Network_Priority_Mapping_Manager.h:
+	* tao/RTCORBA/RTCORBAC.cpp:
+	* tao/RTCORBA/RTCORBAC.h:
+	* tao/RTCORBA/RTCORBAC.i:
+	* tao/RTPortableServer/RTPortableServerC.cpp:
+	* tao/RTPortableServer/RTPortableServerC.h:
+	* tao/RTPortableServer/RTPortableServerC.i:
+	* tao/RTScheduling/Current.h:
+	* tao/RTScheduling/RTScheduler.pidl:
+	* tao/RTScheduling/RTSchedulerC.cpp:
+	* tao/RTScheduling/RTSchedulerC.h:
+	* tao/RTScheduling/RTSchedulerC.i:
+	* tao/RTScheduling/RTScheduler_Manager.h:
+	* tao/TypeCodeFactory/TypeCodeFactory.pidl:
+	* tao/TypeCodeFactory/TypeCodeFactoryC.cpp:
+	* tao/TypeCodeFactory/TypeCodeFactoryC.h:
+	* tao/TypeCodeFactory/TypeCodeFactoryC.inl: Generated and
+	  handcrafted code.
+
+Tue Sep  2 11:46:33 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/TAO.dsp:
+          
+          Added GIOPS*.* generated files to the project, for easier access
+          in the MSVC editor. The files are empty so they don't add
+          anything to the build.
+
+Tue Sep  2 10:48:44 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Any.h:
+  	* tao/Any.i: Any_var class gets a new ptr () method which is used
+  	  by the argument classes. 
+  	
+  	* tao/BiDir_GIOP/BiDirPolicyC.cpp:
+  	* tao/BiDir_GIOP/BiDirPolicyC.h:
+  	* tao/Domain/DomainS.cpp:
+  	* tao/Domain/DomainS.h:
+  	* tao/Domain/DomainS.i:
+  	* tao/Domain/DomainS_T.cpp:
+  	* tao/Domain/DomainS_T.h:
+  	* tao/Domain/DomainS_T.i:
+  	* tao/DynamicAny/DynAnyFactory.h
+  	* tao/DynamicAny/DynAny_i.h:
+  	* tao/DynamicAny/DynArray_i.h:
+  	* tao/DynamicAny/DynEnum_i.h:
+  	* tao/DynamicAny/DynSequence_i.h:
+  	* tao/DynamicAny/DynStruct_i.h:
+  	* tao/DynamicAny/DynUnion_i.h:
+  	* tao/DynamicAny/DynamicAny.pidl:
+  	* tao/DynamicAny/DynamicAnyC.cpp:
+  	* tao/DynamicAny/DynamicAnyC.h:
+  	* tao/DynamicAny/DynamicAnyC.i:
+  	* tao/IFR_Client/IFR_BaseC.cpp:
+  	* tao/IFR_Client/IFR_BaseC.h:
+  	* tao/IFR_Client/IFR_BaseC.i:
+  	* tao/IFR_Client/IFR_BaseS.h:
+  	* tao/IFR_Client/IFR_BasicC.cpp:
+  	* tao/IFR_Client/IFR_BasicC.h:
+  	* tao/IFR_Client/IFR_BasicC.i:
+  	* tao/IFR_Client/IFR_ComponentsC.cpp:
+  	* tao/IFR_Client/IFR_ComponentsC.h:
+  	* tao/IFR_Client/IFR_ComponentsC.i:
+  	* tao/IFR_Client/IFR_ExtendedC.cpp:
+  	* tao/IFR_Client/IFR_ExtendedC.h:
+  	* tao/IFR_Client/IFR_ExtendedC.i:
+  	* tao/IORInterceptor/IORInterceptor.pidl:
+  	* tao/IORInterceptor/IORInterceptorC.cpp:
+  	* tao/IORInterceptor/IORInterceptorC.h:
+  	* tao/IORInterceptor/IORInterceptorC.i:
+  	* tao/IORManipulation/IOR.pidl:
+  	* tao/IORManipulation/IORC.cpp:
+  	* tao/IORManipulation/IORC.h:
+  	* tao/IORManipulation/IORC.i:
+  	* tao/IORTable/IORTable.pidl:
+  	* tao/IORTable/IORTableC.cpp:
+  	* tao/IORTable/IORTableC.h:
+  	* tao/IORTable/IORTableC.i:
+  	* tao/IORTable/IOR_Table_Impl.h:
+  	* tao/Messaging/Messaging.pidl:
+  	* tao/Messaging/MessagingC.cpp:
+  	* tao/Messaging/MessagingC.h:
+  	* tao/Messaging/MessagingC.i:
+  	* tao/Messaging/MessagingS.cpp:
+  	* tao/Messaging/MessagingS.h:
+  	* tao/Messaging/MessagingS.i:
+  	* tao/Messaging/MessagingS_T.cpp:
+	* tao/Messaging/MessagingS_T.h:
+	* tao/Messaging/MessagingS_T.i:
+	* tao/Messaging/Messaging_No_ImplC.cpp:
+	* tao/Messaging/Messaging_No_ImplC.h:
+	* tao/Messaging/Messaging_No_ImplC.i:
+	* tao/Messaging/Messaging_RT_PolicyC.cpp:
+	* tao/Messaging/Messaging_RT_PolicyC.h:
+	* tao/Messaging/Messaging_RT_PolicyC.i:
+	* tao/Messaging/Messaging_SyncScope_PolicyC.cpp:
+	* tao/Messaging/Messaging_SyncScope_PolicyC.h:
+	* tao/Messaging/Messaging_SyncScope_PolicyC.i:
+	* tao/Messaging/TAO_ExtC.cpp:
+	* tao/Messaging/TAO_ExtC.h:
+	* tao/Messaging/TAO_ExtC.i:
+	* tao/ObjRefTemplate/ObjectReferenceTemplate.pidl:
+	* tao/ObjRefTemplate/ObjectReferenceTemplateC.cpp:
+	* tao/ObjRefTemplate/ObjectReferenceTemplateC.h:
+	* tao/ObjRefTemplate/ObjectReferenceTemplateC.i:
+	* tao/PortableServer/PortableServerC.h: Regenerated code and
+	  improved documentation for pidl files.
+
+
+Tue Sep  2 10:47:26 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be_include/be_codegen.h:
+        * TAO_IDL/be/be_codegen.cpp:
+
+          Added separate method for generating include file statements
+          in the skeleton source file, similar to what has already been
+          done for the stub header and source files. Also added
+          inclusion of tao/Object_T.h to the skeleton source file,
+          conditional on AMI being enabled. The reason in that we need
+          to call _unchecked_narrow() in the _this() method body of
+          the reply handler.
+
+Mon Sep  1 19:13:01 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/BiDir_GIOP/BiDirPolicyC.h: 
+	* tao/BiDir_GIOP/BiDirPolicyC.cpp:
+	* tao/BiDir_GIOP/BiDirPolicyC.i: Regenerated the files. 
+
+	* tao/BiDir_GIOP/BiDirPolicy.pidl: IMproved documentation.
+
+Mon Sep  1 13:51:32 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/BoundsC.h:
+        * tao/CONV_FRAMEC.h:
+        * tao/CurrentC.cpp:
+        * tao/CurrentC.h:
+        * tao/DomainC.cpp:
+        * tao/DomainC.h:
+        * tao/DynamicC.h:
+        * tao/GIOPC.h:
+        * tao/IIOPC.h:
+        * tao/IOPC.h:
+        * tao/IOP_CodecC.cpp:
+        * tao/IOP_CodecC.h:
+        * tao/IOP_CodecC.i:
+        * tao/IOP_IORC.h:
+        * tao/Messaging_PolicyValueC.h:
+        * tao/ObjectIdList.pidl:
+        * tao/ObjectIdListC.cpp:
+        * tao/ObjectIdListC.h:
+        * tao/ObjectIdListC.i:
+        * tao/Object_KeyC.cpp:
+        * tao/Object_KeyC.h:
+        * tao/Object_KeyC.i:
+        * tao/Objref_VarOut_T.cpp:
+        * tao/OctetSeq.pidl:
+        * tao/OctetSeqC.cpp:
+        * tao/OctetSeqC.h:
+        * tao/OctetSeqC.i:
+        * tao/PI_Forward.pidl:
+        * tao/PI_ForwardC.cpp:
+        * tao/PI_ForwardC.h:
+        * tao/PI_ForwardC.i:
+        * tao/PolicyC.cpp:
+        * tao/PolicyC.h:
+        * tao/PolicyC.i:
+        * tao/Policy_Forward.pidl:
+        * tao/Policy_ForwardC.cpp:
+        * tao/Policy_ForwardC.h:
+        * tao/Policy_ForwardC.i:
+        * tao/Pollable.pidl:
+        * tao/PollableC.cpp:
+        * tao/PollableC.h:
+        * tao/PollableC.i:
+        * tao/PortableInterceptor.pidl:
+        * tao/PortableInterceptorC.cpp:
+        * tao/PortableInterceptorC.h:
+        * tao/PortableInterceptorC.i:
+        * tao/Services.pidl:
+        * tao/ServicesC.cpp:
+        * tao/ServicesC.h:
+        * tao/ServicesC.i:
+        * tao/StringSeq.pidl:
+        * tao/StringSeqC.cpp:
+        * tao/StringSeqC.h:
+        * tao/StringSeqC.i:
+        * tao/TAO.pidl:
+        * tao/TAOC.cpp:
+        * tao/TAOC.h:
+        * tao/TAOC.i:
+        * tao/TimeBase.pidl:
+        * tao/TimeBaseC.cpp:
+        * tao/TimeBaseC.h:
+        * tao/TimeBaseC.i:
+        * tao/WrongTransaction.pidl:
+        * tao/WrongTransactionC.cpp:
+        * tao/WrongTransactionC.h:
+        * tao/WrongTransactionC.i:
+
+	  Finished regeneration of hand-crafted files in 
+	  $TAO_ROOT/tao. Also made minor changes to files
+          regenerated in checkin last night.
+
+Mon Sep  1 13:41:47 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_root/root_ch.cpp:
+
+          Added generation of forward declaration for the TAO::Narrow_Utils
+          template class.
+
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+
+          Fixed code generation of _narrow() for local interfaces.
+
+Mon Sep  1 13:26:03 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Sync_Strategies.h: Removed Transport.h inclusion
+
+	* tao/Asynch_Reply_Dispatcher_Base.h:
+	* tao/Asynch_Reply_Dispatcher_Base.cpp:
+	* tao/Asynch_Reply_Dispatcher_Base.i: Removed inclusion of
+	  Transport.h from the header file. Moved the method transport ()
+	  from the inlined file to the cpp file which helped us to get rid
+	  of the Transport.h inclusion.
+
+Mon Sep  1 11:08:43 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/CurrentC.h: Removed inclusion of Object_T.h.
+	
+	* tao/CurrentC.cpp (_is_a): Fixed a unused variable warning. 
+
+	* tao/Object_T.cpp: #include'd Stub.h
+
+	* tao/Invocation_Base.cpp: Rearranged initialization list to
+	  prevent warnings from gcc.
+
+	* tao/IOP_CodecC.*: Regenerated the handcrafted files. 
+
+Mon Sep  1 10:43:00 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp (visit_interface): 
+
+	  Use _NOT_USED in the argument list for _is_a () only if the
+	  interface is local. 
+	
+Mon Sep  1 10:19:16 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_exception/exception_ci.cpp:
+        * TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+
+          Uninlined the generation of the (de)marshal_value overrides
+          for exception containing a local interface at some level.
+
+Mon Sep  1 09:34:44 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+
+          Moved generation of the Object_T.h include to the source
+          file from the header file.
+
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+
+          Added _NOT_USED to the environment variable signature of _is_a.
+
+Mon Sep  1 08:44:06 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+
+          Added the '/**/' prefix to the generation of ace/pre.h 
+          and ace/post.h includes. This has come into recent use
+          because it helps doxygen.
+
+Sun Aug 31 19:50:47 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ci.cpp:
+
+          Moved generation of Any widening extraction to Object
+          and to ValueBase from inline file to source file. Did
+          the same for the no-op specializations for marshal_value()
+          and demarshal_value() necessary for local interfaces.
+          This will allow all inclusions of Any-related ORB files
+          to occur in the source file and thus avoid the propagation
+          that would occur if they were included in the header file.
+
+Sun Aug 31 19:39:16 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Bounds.pidl:
+        * tao/BoundsC.cpp:
+        * tao/BoundsC.h:
+        * tao/BoundsC.i:
+        * tao/CONV_FRAME.pidl:
+        * tao/CONV_FRAMEC.cpp:
+        * tao/CONV_FRAMEC.h:
+        * tao/CONV_FRAMEC.i:
+        * tao/Current.pidl:
+        * tao/CurrentC.cpp:
+        * tao/CurrentC.h:
+        * tao/CurrentC.i:
+        * tao/Domain.pidl:
+        * tao/DomainC.cpp:
+        * tao/DomainC.h:
+        * tao/DomainC.i:
+        * tao/Dynamic.pidl:
+        * tao/DynamicC.cpp:
+        * tao/DynamicC.h:
+        * tao/DynamicC.i:
+        * tao/GIOP.pidl:
+        * tao/GIOPC.cpp:
+        * tao/GIOPC.h:
+        * tao/GIOPC.i:
+        * tao/IIOP.pidl:
+        * tao/IIOPC.cpp:
+        * tao/IIOPC.h:
+        * tao/IIOPC.i:
+        * tao/IOP.pidl:
+        * tao/IOPC.cpp:
+        * tao/IOPC.h:
+        * tao/IOPC.i:
+        * tao/IOP_Codec.pidl:
+        * tao/IOP_CodecC.cpp:
+        * tao/IOP_CodecC.h:
+        * tao/IOP_CodecC.i:
+        * tao/IOP_IOR.pidl:
+        * tao/IOP_IORC.cpp:
+        * tao/IOP_IORC.h:
+        * tao/IOP_IORC.i:
+        * tao/Messaging_PolicyValue.pidl:
+        * tao/Messaging_PolicyValueC.cpp:
+        * tao/Messaging_PolicyValueC.h:
+        * tao/Messaging_PolicyValueC.i:
+        * tao/Messaging_SyncScope.pidl:
+        * tao/Messaging_SyncScopeC.cpp:
+        * tao/Messaging_SyncScopeC.h:
+        * tao/Messaging_SyncScopeC.i:
+        * tao/ObjectIdList.pidl:
+
+	  Regenerated the above hand-crafted files and updated
+	  the command line documentation in the corresponding
+	  .pidl files.
+
+        * tao/Object_T.h:
+
+	  Added #include of ace/CORBA_macros.h.
+
+        * tao/PolicyC.cpp:
+        * tao/PolicyC.h:
+        * tao/PolicyC.i:
+
+	  Hacked these files to compile until I get a chance
+	  to regenerate them.
+
+        * tao/Tagged_Profile.cpp:
+
+	  Corrected name of struct member type in declaration.
+
+Sun Aug 31 15:49:35 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Object_T.h:
+        * tao/Object_T.cpp:
+
+          New template files, for now containing a class to handle
+          _narrow() and _unchecked_narrow() generically.
+
+        * tao/TAO.dsp:
+
+          Added new files to project.
+
+        * TAO_IDL/be_include/be_visitor_arg_traits.h:
+        * TAO_IDL/be/be_visitor_arg_traits.cpp:
+
+          New visitor specializing in the generation of arg traits
+          template class specializations. This functionality was
+          moved here from the be_visitor_traits visitor, which
+          now generates only Objref_Traits and Value_Traits for
+          non-defined forward declared interfaces, components,
+          valuetypes and eventtypes.
+
+        * TAO_IDL/Makefile.BE:
+        * TAO_IDL/TAO_IDL_BE.bor:
+        * TAO_IDL/TAO_IDL_BE_DLL.dsp:
+        * TAO_IDL/TAO_IDL_BE_LIB.dsp:
+
+          Added the above new files to the makefiles and project files.
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_decl.cpp:
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_visitor_root.cpp:
+        * TAO_IDL/be/be_visitor_traits.cpp:
+        * TAO_IDL/be/be_visitor_tmplinst/tmplinst_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/structure_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/union_cs.cpp:
+        * TAO_IDL/be_include/be_codegen.h:
+        * TAO_IDL/be_include/be_decl.h:
+        * TAO_IDL/be_include/be_visitor_traits.h:
+        * TAO_IDL/be_include/be_visitor_tmplinst/tmplinst_cs.h:
+
+          - Changed generated code to call the appropriate templatized
+            static function for _narrow(), and removed generation of
+            _unchecked_narrow() and _tao_QueryInterface() altogether.
+            A side effect of this change is the removal of the 
+            environment/try block/catch block from CDR extraction operators
+            for interfaces.
+
+          - Moved generation of arg traits class specializations, and
+            the includes they need, from *C.h to *C.cpp (and to *S.cpp, if
+            either kind of collocation is supported).
+
+          - Moved generation of explicit template instantiation for 
+            exception Any operators to the template instantiation visitor.
+
+          - Cosmetic changes to the generated _tao_any_destructors.
+
+Sat Aug 30 09:53:30 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/ORB_Core.cpp:
+        * tao/ORB_Core.i:
+        * tao/Objref_VarOut_T.cpp:
+        * tao/Thread_Lane_Resources.cpp:
+
+          Cosmetic changes.
+
+Fri Aug 29 17:52:12 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_string.cpp:
+
+          Changed the constructor to proactively compute and store the flat
+          name for unbounded (w)strings, as it already did for bounded
+          (w)strings. This simplifies consistent generation of the ifdef
+          guards by the traits visitor.
+
+Fri Aug 29 16:31:12 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+
+          Removed the check for non-local interface around the 
+          generation of the declaration of the _is_a() method -
+          this was overlooked in
+
+          Fri Aug 29 15:05:33 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+
+          Added the global :: qualifier before the generated scoped
+          names on the lhs and in the template parameter of the
+          dynamic_cast statement at the end of _unchecked_narrow().
+          MSVC needs this for nested scoped with repeated names.
+
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be_include/be_sequence.h:
+
+          Removed the default arg value in create_name() - it is never
+          used. Also made minor changes to gen_name() to correct its
+          use in the traits visitor when handling sequences of strings.
+
+Fri Aug 29 15:35:05 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Thread_Lane_Resources.cpp (finalize): Initialize the output
+	  cdr allocators before using them. Thanks to valgrind for picking
+	  this up.
+
+Fri Aug 29 15:05:33 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+
+          Changed the _unchecked_narrow() methods to use dynamic_cast
+          instead of _tao_QueryInterface() and removed generation of
+          _tao_QueryInterface.
+
+Fri Aug 29 10:55:35 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Collocated_Invocation.cpp (TAO): 
+	* tao/Invocation_Base.h: Fixed compilation errors when built with
+	  interceptors == 0. The problems were basically wrong scoping of
+	  the TAO_HAS_INTERCEPTORS == 1 flag.
+
+Thu Aug 28 19:38:38 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/ClientRequestInfo_i.cpp:
+	* tao/ClientRequestInterceptor_Adapter.cpp:
+	* tao/Invocation_Adapter.cpp:
+	* tao/Synch_Invocation.cpp:
+	* tao/Messaging/Asynch_Invocation.h:
+	* tao/RTCORBA/RT_Endpoint_Utils.cpp: Fixed compilation errors when
+	  native exceptions are turned off. Most of the compilation errors
+	  are due to wrong macros usage. 
+
+Thu Aug 28 18:36:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Portable_Interceptors/Dynamic/client.cpp:
+	* tests/Portable_Interceptors/Dynamic/interceptors.cpp:
+	* tests/Portable_Interceptors/Dynamic/test.idl:
+	* tests/Portable_Interceptors/Dynamic/test_i.cpp:
+	* tests/Portable_Interceptors/Dynamic/test_i.h: Test "out"
+	  arguments in the IDL. There was no support for out arguments
+	  before in interceptors. With the new architecture this shold
+	  work. 
+	
+Thu Aug 28 17:51:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.cpp:
+	  Changed the code generation for collocated calls.
+
+Thu Aug 28 16:50:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Abstract_Servant_Base.h (_find): Added a new _find () method
+	  that returns the static function pointer of functions that does
+	  an upcall on a collocated object. Further, moved the _find ()
+	  methods to be public so that they can be used in the generated
+	  code. 
+
+	* tao/PortableServer/Operation_Details.h:
+	* tao/PortableServer/Operation_Details.cpp:
+          Made the following changes 
+
+	  (1) Added a new version of find () that is useful to get the
+	  function pointer for collocated calls. This has been
+	  implemented for all the lookup strategies in the POA. 
+
+	  (2) Added a struct that encapulates all the skeleton pointers,
+	  since they all the skeleton pointers are generated in the
+	  skeleton code. 
+
+	  (3) Changed the implementation of the dynamic hash and active
+	  demux. We now cache all the pointers that are provided by the
+	  generated code in the map instead of just one pointer. 
+	
+	* tao/PortableServer/Servant_Base.h:
+	* tao/PortableServer/Servant_Base.cpp: Provided an implementation
+	  of _find (). 
+
+Thu Aug 28 13:27:04 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+
+          Added generation of _is_a() for local interfaces, as per
+          CORBA 3.0.2.
+
+        * tao/Special_Basic_Argument_T (interceptor_result).cpp:
+
+          Added missing 'from_xxx' to the Any insertion.     
+
+Thu Aug 28 12:16:16 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/obv_module.cpp:
+
+          Fixed code generation bugs related to AMI.
+
+Thu Aug 28 11:42:46 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_traits.cpp:
+        * TAO_IDL/be_include/be_interface.h:
+        * TAO_IDL/be_include/be_sequence.h:
+        * TAO_IDL/include/ast_decl.h:
+
+          Fixed code generation bugs caught by building the ORB services.
+          Also made all the flat_name() methods virtual and non-const,
+          since the be_interface version overrides the AST_Decl version,
+          and the AST_Decl version is non-const. Finally, made
+          be_sequence::gen_name() public, since it is now used by the
+          traits visitor to guard against duplicate arg traits template
+          class specializations when a sequence is used in an operation
+          in multiple IDL files, perhaps with an additional layer of
+          typedef.
+
+Thu Aug 28 10:19:58 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * tao/Profile_Transport_Resolver.cpp:
+	* tao/Profile_Transport_Resolver.h:
+	* tao/Profile_Transport_Resolver.inl: This class will now store a
+	  pointer to a list of inconsistent policies. This is used by
+	  _validate_connection () in RTCORBA.  Provided an accessor and a
+	  initialization method for the policy list. 
+
+	  Please see the documentation for more details about this. 
+
+	  Changed the try_connect () call to take a transport descriptor
+	  instead of anedpoint.
+	
+	* tao/Invocation_Endpoint_Selectors.cpp (select_endpoint): Create
+	  a transport property descriptor to pass to try_connect () call. 
+
+	* tao/Remote_Invocation.cpp (target_spec_init): Call the hooks
+	  registered with the orb_core. This is used by the external
+	  services like RTCORBA to add service contexts tothe outgoing
+	  message. 
+
+	* tao/Synch_Invocation.cpp: Cosmetic fix.
+
+	* tao/Transport_Connector.cpp:
+	* tao/Transport_Connector.h:  The connect () call now takes in a
+	  transport decsriptor instead of an endpoint.
+
+	* tao/RTCORBA/RT_Endpoint_Selector_Factory.cpp:
+	* tao/RTCORBA/RT_Endpoint_Selector_Factory.h:
+	* tao/RTCORBA/RT_Endpoint_Utils.cpp:
+	* tao/RTCORBA/RT_Endpoint_Utils.h:
+	* tao/RTCORBA/RT_Invocation_Endpoint_Selectors.cpp:
+	* tao/RTCORBA/RT_Invocation_Endpoint_Selectors.h: 
+	  Changes necessiated by the changes that have been done so
+	  far. Almost all the methods that take TAO_GIOP_Invocation as one
+	  of its arguments, has an overloaded method in the same class
+	  that takes in TAO::Profile_Transport_Resolver. This is necessary
+	  for us to retire the Invocation classes. 
+
+        * tao/RTScheduling/RTSchedulerC.h:
+	* tao/RTPortableServer/RTPortableServerC.h: Fixed compile errors
+	  that were caused by changes in the number of template arguments
+	  for TAO_Objref_Var_T and TAO_Objref_Out_T.  
+
+Wed Aug 27 15:34:16 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_attribute.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
+
+          Fixed various errors in code generation caught by IDL_Test.
+
+Tue Aug 26 17:44:56 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Strategies/DIOP_Connector.cpp:
+	* tao/Strategies/DIOP_Connector.h
+	* tao/Strategies/SCIOP_Connector.cpp
+	* tao/Strategies/SCIOP_Connector.h:
+	* tao/Strategies/SHMIOP_Connector.cpp:
+	* tao/Strategies/SHMIOP_Connector.h:
+	* tao/Strategies/UIOP_Connector.cpp:
+	* tao/Strategies/UIOP_Connector.h (make_connection): Implemented
+	  the new virtual function in all the protocols. This should get
+	  the strategies library building cleanly now.
+	
+	* tao/Strategies/advanced_resource.cpp: Added a couple of new
+	  #includes 
+
+Tue Aug 26 16:33:07 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Transport.h:
+	* tao/Transport.cpp: Changed the signatures of idle_after_reply ()
+	  and idle_after_send () to return a bool instead of an int. With
+	  these sets of changes simple multi-threaded tests work.
+
+Tue Aug 26 16:42:05 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Asynch_Reply_Dispatcher_Base.cpp: Removed the call to
+	  idle_after_reply () since it is taken care by the transport
+	  resolver. 
+
+	* tao/Asynch_Reply_Dispatcher_Base.i: Cosmetic fix
+
+	* tao/Exclusive_TMS.cpp:
+	* tao/Exclusive_TMS.h:
+	* tao/Muxed_TMS.cpp:
+	* tao/Muxed_TMS.h:
+	* tao/Transport_Mux_Strategy.h: Changed the signature of
+	  idle_after_send () and idle_after_reply () to return a
+	  bool instead of an int.
+
+	* tao/ORB_Core.cpp:
+	* tao/ORB_Core.h: Remove the output CDR allocators from the
+	  TSS. They now go into the lanes. This is needed since the CDR's
+	  are now housed within the transport. 
+
+	* tao/Thread_Lane_Resources.cpp:
+	* tao/Thread_Lane_Resources.h: The output CDR's are now here
+	  instead of the TSS. 
+
+	* tao/GIOP_Message_Base.cpp: Cosmetic fix.
+	
+	* tao/Profile_Transport_Resolver.cpp:
+	* tao/Profile_Transport_Resolver.h:
+	* tao/Profile_Transport_Resolver.inl: Added a new method
+	  transport_released () method that sets a flag is_released_ to
+	  true. The flag is used to indicate whether the transport has
+	  been released to the transport cache or not. 
+	
+	* tao/IIOP_Transport.cpp: 
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+	* tao/Strategies/SCIOP_Transport.cpp:
+	* tao/Strategies/SHMIOP_Transport.cpp:
+	* tao/Strategies/UIOP_Transport.cpp: The method send_message ()
+	  does not call idle_after_send () anymore. This is taken care
+	  elsewhere. 
+
+	* tao/Remote_Invocation.cpp: Cosmetic fix.
+
+	* tao/Synch_Invocation.cpp:
+	* tao/Messaging/Asynch_Invocation.cpp: Call idle_after_send () and
+	  idle_after_reply () on the transport after sending and receiving
+	  the replies. This is used to release the transport in case
+	  errors occur. 
+
+	* tao/Transport.cpp: Added a debug statement
+
+	* tao/Transport_Cache_Manager.cpp: Cosmetic fix. 
+	
+	* tao/default_resource.cpp: The output cdr now uses global locked
+	  allocater instead of the non-locked ones that were used. Removed
+	  the typedef's of the lock free allocators. 
+	
+	* tao/orbconf.h: Added a #if defined for local memory pools. This
+	  is in reference to this change "Fri Jul 18 17:26:32 2003  Chris
+	  Cleeland  <cleeland_c@ociweb.com>". The above change always set
+	  the allocator to use the the ACE_New_Allocator. 
+
+	  With the addition to orbconf.h file, the user can choose to use
+	  the type of allocator at compile time. The option now defaults
+	  to use the local memory pool. It would be better to use a
+	  runtime option instead of this compile time option. Will get to
+	  that later. 
+
+Tue Aug 26 10:05:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_codegen.cpp: Included the new header for AMI
+	* TAO_IDL/be/be_visitor_operation/ami_cs.cpp: Added ";" after
+	  generating the array of arguments.
+
+Mon Aug 25 20:08:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.cpp
+	  (visit_interface): 
+	  Fixed warnings in the generated code if the interface is empty
+	  without any operations.
+
+Mon Aug 25 19:58:39 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_interface.cpp(gen_collocated_skel_body): Added a
+	  new line to prevent warnings with gcc 3.3.1
+	
+	* TAO_IDL/be/be_visitor_operation/direct_proxy_impl_ss.cpp: DO not
+	  generate variable names for forwarded object references. This
+	  prevents warnings with gcc 3.3.1.
+
+Mon Aug 25 19:15:32 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/BD_String_SArgument_T.cpp:
+        * tao/BD_String_SArgument_T.h:
+        * tao/BD_String_SArgument_T.inl:
+        * tao/Basic_SArgument_T.cpp:
+        * tao/Basic_SArgument_T.h:
+        * tao/Basic_SArgument_T.inl:
+        * tao/Basic_SArguments.cpp:
+        * tao/Basic_SArguments.h:
+        * tao/Fixed_Array_SArgument_T.cpp:
+        * tao/Fixed_Array_SArgument_T.h:
+        * tao/Fixed_Array_SArgument_T.inl:
+        * tao/Fixed_Size_SArgument_T.cpp:
+        * tao/Fixed_Size_SArgument_T.h:
+        * tao/Fixed_Size_SArgument_T.inl:
+        * tao/Object_SArgument_T.cpp:
+        * tao/Object_SArgument_T.h:
+        * tao/Object_SArgument_T.inl:
+        * tao/Special_Basic_SArgument_T.cpp:
+        * tao/Special_Basic_SArgument_T.h:
+        * tao/Special_Basic_SArgument_T.inl:
+        * tao/Special_Basic_SArguments.cpp:
+        * tao/Special_Basic_SArguments.h:
+        * tao/UB_String_SArgument_T.cpp:
+        * tao/UB_String_SArgument_T.h:
+        * tao/UB_String_SArgument_T.inl:
+        * tao/UB_String_SArguments.cpp:
+        * tao/UB_String_SArguments.h:
+        * tao/Var_Array_SArgument_T.cpp:
+        * tao/Var_Array_SArgument_T.h:
+        * tao/Var_Array_SArgument_T.inl:
+        * tao/Var_Size_SArgument_T.cpp:
+        * tao/Var_Size_SArgument_T.h:
+        * tao/Var_Size_SArgument_T.inl:
+
+	  New files containing the skeleton argument classes,
+	  now in a set of files separated from the stub
+	  argument classes.
+
+        * tao/Arg_Traits_T.h:
+        * tao/BD_String_Argument_T.cpp:
+        * tao/BD_String_Argument_T.h:
+        * tao/BD_String_Argument_T.inl:
+        * tao/Basic_Argument_T.cpp:
+        * tao/Basic_Argument_T.h:
+        * tao/Basic_Argument_T.inl:
+        * tao/Basic_Arguments.cpp:
+        * tao/Basic_Arguments.h:
+        * tao/Fixed_Array_Argument_T.cpp:
+        * tao/Fixed_Array_Argument_T.h:
+        * tao/Fixed_Array_Argument_T.inl:
+        * tao/Fixed_Size_Argument_T.cpp:
+        * tao/Fixed_Size_Argument_T.h:
+        * tao/Fixed_Size_Argument_T.inl:
+        * tao/Object_Argument_T.cpp:
+        * tao/Object_Argument_T.h:
+        * tao/Object_Argument_T.inl:
+        * tao/Special_Basic_Argument_T.cpp:
+        * tao/Special_Basic_Argument_T.h:
+        * tao/Special_Basic_Argument_T.inl:
+        * tao/Special_Basic_Arguments.cpp:
+        * tao/UB_String_Argument_T.cpp:
+        * tao/UB_String_Argument_T.h:
+        * tao/UB_String_Argument_T.inl:
+        * tao/UB_String_Arguments.cpp:
+        * tao/Var_Array_Argument_T.cpp:
+        * tao/Var_Array_Argument_T.h:
+        * tao/Var_Array_Argument_T.inl:
+        * tao/Var_Size_Argument_T.cpp:
+        * tao/Var_Size_Argument_T.h:
+        * tao/Var_Size_Argument_T.inl:
+
+	  Removed the skeleton argument classes from these
+	  files.
+
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
+
+          Updated source file contents of these projects.
+
+	* TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/direct_proxy_impl_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation.cpp:
+	* TAO_IDL/be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:
+
+          Minor changes required by the changes above.
+
+	* TAO_IDL/be_include/be_visitor_operation/operation.h:
+	* TAO_IDL/be_include/be_visitor_operation/operation_ss.h:
+
+	  Files overlooked in a previous checkin.
+
+Mon Aug 25 18:44:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Invocation_Base.inl
+	* tao/Invocation_Base.cpp (TAO): Moved the method operation_name
+	  () from the inlined file to the CPP file. 
+
+Mon Aug 25 18:39:00 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * tao/Invocation_Base.inl:
+	* tao/Invocation_Base.cpp:
+	* tao/Invocation_Base.h: Added doxygen documentation. Created an
+	  inlined file for optimization purposes.
+
+        * tao/Profile_Transport_Resolver.cpp:
+	* tao/Profile_Transport_Resolver.h:
+	* tao/Profile_Transport_Resolver.inl: Added doxygen
+	  documentation. Created an inlined file for optimization
+	  purposes. 
+	
+	* tao/Invocation_Adapter.cpp:
+	* tao/Invocation_Adapter.h: Added a new method inoke_remote_i
+	  (). This method now houses some refactored code that could be
+	  used by the collocated and remote calls. 
+
+	* tao/Sequence_T.cpp: Removed SunCC4.2 specific #if defines. 
+
+	* tao/TAO.dsp: Added new inlined files into the project.
+
+Mon Aug 25 17:39:19 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Messaging/Asynch_Invocation_Adapter.cpp (TAO): 
+	* tao/Messaging/Asynch_Invocation_Adapter.h:
+	* tao/Messaging/Asynch_Invocation.h:
+	* tao/Messaging/Asynch_Invocation.cpp: Invocation code for the
+	  asynch operations.
+
+Thu Aug 21 17:59:39 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_visitor_traits.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_exception_holder_operation_cs.cpp:
+
+          Changes to support refactoring of AMI operations.
+
+        * TAO_IDLbe/be_visitor_operation/operation.cpp:
+        * TAO_IDLbe_include/be_visitor_operation/operation.h:
+        * TAO_IDLbe_include/be_visitor_operation/operation_ss.h:
+        * TAO_IDLbe/be_visitor_operation/operation_cs.cpp:
+        * TAO_IDLbe/be_visitor_operation/operation_ss.cpp:
+
+          Removed unused class members.
+
+        * TAO_IDLbe/be_visitor_amh_pre_proc.cpp:
+        * TAO_IDLbe/be_visitor_ccm_pre_proc.cpp:
+
+          Cosmetic changes.
+
+Mon Aug 18 11:23:59 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_operation/operation.cpp: Removed the check
+	  for ami. There is a seperate visitor for AMI and all of these
+	  should probably go there.
+
+Sun Aug 17 11:15:36 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Var_Array_Argument_T.h:
+	* tao/Var_Array_Argument_T.inl:
+        * tao/Var_Size_Argument_T.cpp:
+	* tao/Fixed_Array_Argument_T.cpp:
+	* tao/Fixed_Array_Argument_T.h:
+	* tao/Fixed_Array_Argument_T.inl: The Inout and Out stub argument
+	  classes will take a reference to the slice pointer. Without this
+	  the values copied were getting lost and for right reasons!
+
+	* tao/Sequence_T.cpp: Converted all usage of reinterpret cast
+	  T_slice ** to T *. Usage of T_slice ** is totally nutty since
+	  the compiler doesn't know what the other * is for. Usage of **
+	  lead to reinterpret cast returning null. This crashed all the
+	  sequence related tests in Param_Test.
+
+	* tao/Synch_Invocation.cpp: Cosmetic fix.
+
+Sun Aug 17 11:07:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_operation/operation.cpp: For attribute
+	  operations generate the "_set_" and "_get_" prefix to the
+	  operation name.
+
+Thu Aug 14 16:09:15 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/ClientRequestInfo.cpp: Removed extraneous header inclusion. 
+	
+	* tao/ClientRequestInfo_i.cpp:
+	* tao/ClientRequestInfo_i.h: Cleaned up the implementation of
+	  target (), effective_target (), effective_profile (),
+	  effective_tagged_component (), and response_expected (). 
+
+	* tao/ClientRequestInterceptor_Adapter.h: Removed the
+	  invok_status_ member from the class. 
+
+	* tao/Collocated_Invocation.cpp:
+	* tao/Collocated_Invocation.h: Interceptors have been enabled for
+	  collocated invocations. 
+
+	* tao/Invocation_Adapter.cpp:
+	* tao/Invocation_Base.cpp:
+	* tao/Invocation_Base.h:
+	* tao/Remote_Invocation.cpp:
+	* tao/Remote_Invocation.h:
+	* tao/Synch_Invocation.cpp:
+	* tao/Synch_Invocation.h: Changes to get the effective target and
+	  target right for interceptors. We now cache the original target
+	  as well as the original target within the Invocation_Base
+	  class. 
+
+Wed Aug 13 18:16:24 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be_include/be_global.h:
+        * TAO_IDL/driver/drv_args.cpp:
+
+          Added command line option to generate explicit template
+          instantiations, which is now off by default.
+
+Tue Aug 12 13:45:47 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_interface.cpp:
+
+          Fixed bug in code generation where the fully scoped name of
+          the collocated proxy class wasn't always getting generated
+          where necessary.
+
+Tue Aug 12 13:25:28 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TOA_IDL/be/be_sequence.cpp:
+
+          Fixed mistake in code generation for array sequence base
+          class.
+
+Tue Aug 12 13:12:05 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_interface.cpp:
+
+          Fixed typos in code generation for dynamic hash operation tables.
+
+Tue Aug 12 12:47:17 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_operation/direct_proxy_impl_ss.cpp: Fixed
+	  a unused variable warning. 
+
+Tue Aug 12 12:01:47 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface.cpp:
+        * TAO_IDL/be/be_visitor_operation.cpp:
+        * TAO_IDL/be/be_visitor_component/component_ch.cpp:
+        * TAO_IDL/be/be_visitor_component/component_cs.cpp:
+        * TAO_IDL/be_include/be_visitor_interface.h:
+        * TAO_IDL/be_include/be_visitor_operation.h:
+
+	  Third pass at removing code now unused due to
+	  refactoring changes.
+
+        * TAO_IDL/be/be_visitor_interface/base_proxy_broker_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/proxy_brokers_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/remote_proxy_broker_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/remote_proxy_broker_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_ch.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_pre_invoke_cs.cpp:
+        * TAO_IDL/be_include/be_visitor_interface/base_proxy_broker_ch.h:
+        * TAO_IDL/be_include/be_visitor_interface/proxy_brokers_ch.h:
+        * TAO_IDL/be_include/be_visitor_interface/remote_proxy_broker_ch.h:
+        * TAO_IDL/be_include/be_visitor_interface/remote_proxy_broker_cs.h:
+        * TAO_IDL/be_include/be_visitor_operation/interceptors_ch.h:
+        * TAO_IDL/be_include/be_visitor_operation/rettype_pre_invoke_cs.h:
+
+	  Third pass at removing files containing visitors no
+	  longer used due to refactoring changes.
+
+Tue Aug 12 11:14:29 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_valuetype/arglist.cpp:
+        * TAO_IDL/be_include/be_codegen.h:
+
+          Removed a few more unused context states.
+
+Tue Aug 12 10:53:16 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_argument.cpp:
+        * TAO_IDL/be/be_visitor_operation/arglist.cpp:
+        * TAO_IDL/be/be_visitor_operation/argument.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_arglist.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+        * TAO_IDL/be_include/be_codegen.h:
+        * TAO_IDL/be_include/be_visitor_argument.h:
+
+          Second pass at removing code now unused due to the
+          refactoring changes.
+
+        * TAO_IDL/be/be_visitor_argument/pre_invoke_cs.cpp:
+        * TAO_IDL/be/be_visitor_argument/request_info_ch.cpp:
+        * TAO_IDL/be/be_visitor_argument/request_info_cs.cpp:
+        * TAO_IDL/be_include/be_visitor_argument/pre_invoke_cs.h:
+        * TAO_IDL/be_include/be_visitor_argument/request_info_ch.h:
+        * TAO_IDL/be_include/be_visitor_argument/request_info_cs.h:
+
+          Second pass at removing files containing visitors no longer
+          used due to the refactoring changes.
+
+Tue Aug 12 10:15:02 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * be/be_visitor_argument.cpp:
+        * be/be_visitor_interface.cpp:
+        * be/be_visitor_operation.cpp:
+        * be/be_visitor_attribute/attribute.cpp:
+        * be/be_visitor_component/component_ch.cpp:
+        * be/be_visitor_component/component_cs.cpp:
+        * be/be_visitor_interface/interface.cpp:
+        * be/be_visitor_interface/interface_cs.cpp:
+        * be/be_visitor_operation/argument.cpp:
+        * be/be_visitor_operation/operation.cpp:
+        * be/be_visitor_operation/operation_ss.cpp:
+        * be_include/be_codegen.h:
+        * be_include/be_visitor_argument.h:
+        * be_include/be_visitor_interface.h:
+        * be_include/be_visitor_operation.h:
+        * be_include/be_visitor_operation/operation.h:
+        * be_include/be_visitor_operation/operation_ss.h:
+
+	  First pass at removing code now unused due to
+	  the refactoring changes.
+
+        * be/be_visitor_argument/post_invoke_cs.cpp:
+        * be/be_visitor_interface/base_proxy_impl_ch.cpp:
+        * be/be_visitor_interface/interceptors_cs.cpp:
+        * be/be_visitor_interface/proxy_impls_ch.cpp:
+        * be/be_visitor_interface/remote_proxy_impl_cs.cpp:
+        * be/be_visitor_operation/base_proxy_impl_ch.cpp:
+        * be/be_visitor_operation/interceptors_cs.cpp:
+        * be/be_visitor_operation/remote_proxy_impl_cs.cpp:
+        * be/be_visitor_operation/rettype_vardecl_cs.cpp:
+        * be_include/be_visitor_argument/post_invoke_cs.h:
+        * be_include/be_visitor_interface/base_proxy_impl_ch.h:
+        * be_include/be_visitor_interface/interceptors_cs.h:
+        * be_include/be_visitor_interface/proxy_impls_ch.h:
+        * be_include/be_visitor_interface/remote_proxy_impl_cs.h:
+        * be_include/be_visitor_operation/base_proxy_impl_ch.h:
+        * be_include/be_visitor_operation/interceptors_cs.h:
+        * be_include/be_visitor_operation/remote_proxy_impl_cs.h:
+        * be_include/be_visitor_operation/rettype_vardecl_cs.h:
+
+	  First pass at removing files containing visitors no
+	  longer used due to the refactoring changes.
+
+Tue Aug 12 07:50:52 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Abstract_Servant_Base.h:
+
+          Added typedef for function pointer to the static collocation
+          skeletons.
+
+        * tao/PortableServer/Operation_Table.h:
+
+          Expanded the definition of the class TAO_operation_db_entry
+          to include two function pointers of the type described above,
+          one each for direct and through-POA collocation.
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_interface/direct_proxy_impl_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_si.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp:
+        * TAO_IDL/be_include/be_interface.h:
+
+          Enabled collocated calls to use the existing operation table.
+          This involved changes in two areas.
+
+          - Added traversals of the inheritance graph for the direct and
+            through-POA proxy classes. To use the table, static methods
+            must exist for all operations of the base classes. Since the
+            implementation of these methods is just a delegation, they are
+            inlined, as are the non-collocated skeletons for base class
+            operations. Since the code generation for the implementation
+            of the direct and through-POA collocations differ only in a
+            piece of the class name, just a specialized helper for the
+            inheritance graph traversal mechanism, which is called from
+            the be_visitor_interface_si visitor, was created.
+
+          - Added two elements to each operation table entry, corresponding
+            to the additional elements in TAO_operation_db_entry described
+            above. If direct and/or through-POA collocation code
+            generation is not turned on, the corresponding 
+            TAO_operation_db_entry slots will be 0.
+
+Mon Aug 11 23:05:14 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Invocation_Base.cpp (reply_service_context): Return the
+	  reply service context from the operation details. This typo
+	  fixes a bug with PI implementation in this branch.
+	
+	* tao/operation_details.cpp (parameter_list): A bit of
+	  manipulation. Since the first pointer in the array of arguments
+	  actually points to a return value, we just omit that while
+	  trying to create a argument list. This change fixes yet another
+	  bug. 
+
+	  But there is still one problem lurking. If the argument list is
+	  void we would be in soup. 
+
+Mon Aug 11 12:22:00 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/direct_proxy_impl_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/direct_proxy_impl_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/direct_proxy_impl_ss.cpp:
+
+          Overhauled generation of direct collocation operations to
+          match the changes for through-POA collocation.
+
+        * TAO_IDL/be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:
+
+          Cosmetic changes to generated code.
+
+Mon Aug 11 12:02:38 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Invocation_Adapter.cpp: Initialized boolean value. 
+	* tao/ORB_Core.cpp(call_timeout_hook): Fixed a typo which caused
+	  the "has_timeout" to be set to true if the hook was present. 
+	
+	* tao/Synch_Invocation.cpp:Remove some debug messages. 
+
+	* tao/Messaging/Messaging_Policy_i.cpp:
+	* tao/Messaging/Messaging_Policy_i.h: Fixed compile errors with
+	  g++ 3.3. 
+
+Mon Aug 11 11:31:48 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp:
+
+          Fixed generated comment.
+
+        * TAO_IDL/be/be_visitor_operation/proxy_impl_xh.cpp:
+        * TAO_IDL/be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:
+        * TAO_IDL/be_include/be_visitor_operation/proxy_impl_xh.h:
+
+          Added generation of throw spec to thruPOA collocation proxy
+          operations.
+
+Mon Aug 11 10:54:13 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TOA_IDL/be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:
+
+          Added check that eliminates generation of the argument name
+          for the TAO::Argument ** parameter, if it is not used, i.e.,
+          if the operation has a void return type and no parameters.
+
+Mon Aug 11 09:52:14 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Fixed_Array_Argument_T.inl:
+        * tao/Var_Array_Argument_T.inl:
+        * tao/Fixed_Array_Argument_T.h:
+        * tao/Var_Array_Argument_T.h:
+
+          In the constructor of the IN argument class, changed the cast
+          of the argument (from const S to S_slice*) to use the C++
+          const_cast instead of the C-type cast. Also changed the signature
+          of the constructor to take a const S_slice * instead of const S.
+
+Mon Aug 11 09:05:31 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component/component_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/structure_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+
+          Change the name of the local pointer variable in _tao_any_destructor
+          to '_tao_tmp_pointer' from 'tmp' to avoid a name clash with an
+          IDL type called 'tmp'.
+
+Mon Aug 11 08:56:42 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/ClientRequestInterceptor_Adapter.h:
+
+          Moved #include of Interceptor_List.h up to be above the check
+          for TAO_HAS_INTERCEPTORS. Otherewise the only include before that
+          line in config-all.h, and so TAO_HAS_INTERCEPTORS is not yet 
+          defined.
+
+Sun Aug 10 22:40:49 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/ClientRequestInfo_i.h:
+	* tao/ClientRequestInfo_i.inl:
+	* tao/ClientRequestInterceptor_Adapter.cpp:
+	* tao/Exception.cpp:
+	* tao/Invocation_Base.h:
+	* tao/Synch_Invocation.h: Fixed syntax errors that prevented
+	  compilation of code on VC6.0
+	
+	* tao/TAO.dsp: Added new files into the project.
+
+Sat Aug  9 23:17:09 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/ClientRequestInterceptor_Adapter.cpp:
+	* tao/ClientRequestInterceptor_Adapter.h:
+	* tao/ClientRequestInterceptor_Adapter.inl: A new adapter class
+	  for the client request interceptors. This is based on the
+	  original implementation in ClientInterceptorAdapter.{h,cpp,inl}
+	  files with suitable modifications to indicate the latest trends.
+
+	* tao/Invocation_Utils.h: A new header file that has the requisite
+	  enum information. This header allows us the flexibility of using
+	  the enum information without any baggage.
+	
+	* tao/ClientRequestInfo_i.cpp (reply_status):
+	* tao/ClientRequestInfo_i.h:
+	* tao/ClientRequestInfo_i.inl: Added an argument to the
+	  constructor to indicate whether a response is expected from the
+	  server or not. This would be utilized by the new Interception
+	  points that have been implemented.
+
+	  Further changed the implementation of the reply_status ()
+	  method. This sets the status based on the Invocation_Status that
+	  would be passed to it.
+	
+	* tao/Collocated_Invocation.cpp:
+	* tao/Collocated_Invocation.h (invoke): Changed the exception
+	  specification to allwo user exceptions from the servant to be
+	  propagated back.
+
+	* tao/Exception.cpp:
+	* tao/Exception.h: #included corbafwd.h and removed include of
+	  Basic_Types.h. 
+
+	* tao/Invocation.cpp: Use a bool instead of an int while trying to
+	  access the sync_scope policies. 
+
+	* tao/Invocation_Adapter.h: Removed exception specification for
+	  invoke (). Adding the exception specification requires an
+	  include of Exception.h which gets a whole slew of
+	  stuff. Since this is only the adapter class, we allow all
+	  the exception specifications to be in the concrete classes
+	  that does the actual work. 
+
+	* tao/Invocation_Adapter.cpp: Added some debug
+          statements. Fixed a small problem with oneways with no
+          sync_scope policies set. Further, handled the locate forward
+          exception with oneways. It is pretty much possible that a
+          client side interceptor is throwing a forward exception when
+          sending oneway messages and needs to be handled anyways.
+
+        * tao/Invocation_Base.cpp:
+        * tao/Invocation_Base.h: Added support for client side
+        * interceptors. They have not been tested yet. 
+        
+        * tao/Makefile.tao: Added new files for the builds.
+
+        * tao/ORB_Core.cpp:
+        * tao/ORB_Core.h: Cosmetic fixes with call_sync_scope_hook
+          (). 
+
+        * tao/Profile_Transport_Resolver.h: #included Exception.h
+
+        * tao/Remote_Invocation.cpp:
+        * tao/Remote_Invocation.h: Pass the target object to the base
+          class while constructing the base class. 
+
+        * tao/Sequence_T.cpp: #included Array_VarOut_T.h
+
+        * tao/Stub.cpp: The methid sync_strategy () will now use a
+          bool instead of an int.
+
+        * tao/Synch_Invocation.cpp:
+        * tao/Synch_Invocation.h: Added and changed exception
+          specification for a bunch of methods. Fixed bugs that showed
+          up while testing support for system and user exception from
+          the server.
+
+          Added a new class Reply_Guard which will be used for setting
+          the reply status for the PortableInterceptor.
+
+
+        * tao/WrongTransactionC.cpp: Cosmetic fix.
+
+        * tao/operation_details.cpp:
+        * tao/operation_details.h: Added support for colelcting the
+          result and querying about the exceptions for
+          PortableInterceptors. 
+
+        * tao/Messaging/Messaging_Policy_i.cpp: Used bool instead of
+          an int.
+
+        * tao/*/Makefile*: Updated dependencies.  
+
+Sat Aug  9 17:22:59 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_sh.cpp: 
+	* TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.cpp: 
+
+	  Changed the exception specification from SystemException to
+	  simple CORBA Exception.
+
+Fri Aug  8 08:58:02 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp: #included config-all.h for getting
+	  the declaration of ACE_UNUSED_ARG
+
+	* TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.cpp:
+	  Removed an argument name to prevent unused variable warnings. 
+	
+	* TAO_IDL/be/be_visitor_operation/proxy_impl_xh.cpp: Removed
+	  exception specification. We should use the "right" exception
+	  specifications. Need to discuss this with Jeff. 
+	
+	* TAO_IDL/be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:
+	  Removed an argument name to prevent unused variable warnings. 
+
+Thu Aug  7 17:15:08 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_array/array_ci.cpp:
+        * TAO_IDL/be/be_visitor_array/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_component/component_cs.cpp:
+        * TAO_IDL/be/be_visitor_field/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_typedef/typedef_ch.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
+        * tao/Sequence_T.cpp:
+        * tao/Sequence_T.h:
+        * tao/Sequence_T.i:
+
+          Changed over all remaining ORB code and generated code to
+          use TAO::Objref_Traits<> or TAO::Array_Traits<>, instead
+          of the generated structs used previously. Changes to TAO
+          sequence classes affect only array sequences in this checkin.
+
+Thu Aug  7 15:41:53 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_exceptlist.cpp:
+        * TAO_IDL/be/be_visitor_sequence/elemtype.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_tmplinst/tmplinst_cs.cpp:
+        * tao/DynamicC.cpp:
+        * tao/DynamicC.h:
+        * tao/ORB.h:
+        * tao/Sequence_T.cpp:
+        * tao/Sequence_T.h:
+        * tao/Sequence_T.i:
+        * tao/PortableServer/ImR_LocatorC.cpp:
+        * tao/PortableServer/ImR_LocatorS.cpp:
+        * tao/PortableServer/ImplRepoC.cpp:
+        * tao/PortableServer/ImplRepoS.cpp:
+
+          Removed the T_var template parameter from TAO_Pseudo_Object_Manager,
+          TAO_Unbounded_Pseudo_Sequence, and TAO_Bounded_Pseudo_Sequence,
+          in the template classes themselves, instantiations in ORB code,
+          and in generated code.
+
+Thu Aug  7 13:35:19 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_visitor_traits.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_tmplinst/tmplinst.cpp:
+        * TAO_IDL/be/be_visitor_tmplinst/tmplinst_cs.cpp:
+        * TAO_IDL/be_include/be_sequence.h:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_global.cpp:
+        * tao/Valuetype/Sequence_T.cpp:
+        * tao/Valuetype/Sequence_T.h:
+        * tao/Valuetype/Sequence_T.inl:
+
+          Removed TAO_Unbounded_Abstract_Sequence<>,
+          TAO_Bounded_Abstract_Sequence<> and TAO_Abstract_Manager<>,
+          along with the corresponding generated code. There is
+          no difference in the way a sequence handles concrete and
+          abstract interfaces. Also fixed a bugs in the traits and
+          template instantiation visitors' handling of recursive
+          valuetypes.
+
+Wed Aug  6 21:44:19 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Object.h:
+        * tao/Object_Argument_T.cpp:
+        * tao/Object_Argument_T.h:
+        * tao/Object_Argument_T.inl:
+        * tao/Typecode.h:
+        * tao/corba.h:
+        * tao/Valuetype/Value_VarOut_T.cpp:
+        * tao/Valuetype/Value_VarOut_T.h:
+        * TAO_IDL/be/be_array.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_enum.cpp:
+        * TAO_IDL/be/be_exception.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_predefined_type.cpp:
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_string.cpp:
+        * TAO_IDL/be/be_structure.cpp:
+        * TAO_IDL/be/be_union.cpp:
+        * TAO_IDL/be/be_valuetype.cpp:
+        * TAO_IDL/be/be_visitor_traits.cpp:
+        * TAO_IDL/be/be_visitor_operation/exceptlist_cs.cpp:
+        * TAO_IDL/be_include/be_codegen.h:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_global.cpp:
+
+          - Removed Any, _var and _out template header file includes
+            from corba.h and instead made them selectively generated based on
+            what is seen in the IDL file.
+
+          - Added the exception type code to the elements of ExceptionData
+            generated for operations that raise user-defined exceptions.
+
+          - Removed generated includes for interceptor-related files,
+            since interceptor code is now being factored into the ORB.
+
+          - Added 'tao_release' to TAO::Value_Traits<> and a traits
+            parameter to TAO::Objref_Arg_Traits, so the demarshal()
+            method for the INOUT arg class can call the common release
+            method, and so can be used for both value types and object
+            reference type arguments.
+
+Mon Aug  4 23:31:34 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+
+          Replaced generation of interceptor code.
+
+Mon Aug  4 22:27:08 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/ObjectKey_Table.h:
+	* tao/Sequence.h:
+	* tao/BiDir_GIOP/BiDirPolicyC.h:
+	* tao/DynamicAny/DynamicAnyC.cpp:
+	* tao/DynamicAny/DynamicAnyC.h:
+	* tao/DynamicInterface/Context.h:
+	* tao/DynamicInterface/ExceptionList.h:
+	* tao/IORManipulation/IORC.h:
+	* tao/IORTable/IORTableC.h:
+	* tao/RTCORBA/RTCORBAC.h: Fixe compile errors.
+
+Mon Aug  4 10:55:58 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/corba.h:
+        * TAO_IDL/be/be_codegen.cpp:
+
+          Removed inclusion of header files for the Any template classes from
+          corba.h and added their generation to the stub source file.
+
+Mon Aug  4 10:08:56 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+
+          Replaced instantiation and invocation of visitor to generate
+          skeleton-side interceptor classes, which was inadvertently
+          removed.
+
+        * tao/TAO.dsp:
+
+          Restored files to build which were excluded pending Bala's
+          update to bring them in synch with recent reactor and POA
+          changes.
+
+        * tao/Typecode.h:
+        * tao/PortableServer/Key_Adapters.cpp:
+
+          Added additional includes required by recent changes to ACE.
+
+Sun Aug  3 16:37:20 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Any_Basic_Impl_T.cpp:
+	* tao/Any_Dual_Impl_T.cpp:
+	* tao/Any_Impl_T.cpp:
+	* tao/Any_SystemException.cpp:
+	* tao/Codeset_Manager.h:
+	* tao/Exception.cpp:
+	* tao/Fault_Tolerance_Service.cpp
+	* tao/Fault_Tolerance_Service.h:
+	* tao/Typecode.cpp:
+	* tao/Typecode.h:
+	* tao/PortableServer/Operation_Table.h: Fixed compilation errors
+	  that were introduced due to refactoring of ACE.
+
+	* tao/Profile_Transport_Resolver.cpp:
+	* tao/IIOP_Transport.cpp:
+	* tao/IIOP_Connector.cpp: Fixed compilation errors that came
+	  around due to the merge.
+
+Sun Aug  3 16:32:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.cpp: 
+
+          Fixed compilation from wrong environmental variable usage. 
+
+Sun Aug  3 09:05:32 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_include/be_visitor_tmplinst.h: Added to the branch
+	  refactor-stage_5.
+
+Tue Jul 29 11:52:12 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        Merged with the main trunk and created a new branch,\
+        called refactor-stage_5.
+
+Mon Jul 28 15:48:13 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/ORB_Core.cpp:
+
+          Added #include of ace/streams,
+
+        * tao/Messaging/Connection_Timeout_Policy_i.cpp:
+        * tao/Messaging/Connection_Timeout_Policy_i.h:
+        * tao/Messaging/Messaging_Policy_i.cpp:
+        * tao/Messaging/Messaging_Policy_i.h:
+        * tao/Messaging/Messaging_RT_PolicyC.cpp:
+        * tao/Messaging/Messaging_RT_PolicyC.h:
+
+          Changed signature of the hook() method to use bool&
+          instead of int&, to interoperate with changes in the
+          ORB core.
+
+        * tao/Messaging/MessagingC.cpp:
+        * tao/Messaging/MessagingC.h:
+        * tao/Messaging/Messaging_No_ImplC.cpp:
+        * tao/Messaging/Messaging_No_ImplC.h:
+        * tao/Messaging/Messaging_SyncScope_PolicyC.cpp:
+        * tao/Messaging/Messaging_SyncScope_PolicyC.h:
+        * tao/Messaging/TAO_ExtC.cpp:
+        * tao/Messaging/TAO_ExtC.h:
+
+          Removed tao_*_life and tao_*_cast.
+
+Mon Jul 28 15:16:03 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:
+
+          Removed names of unused arguments in source code methods parameter
+          lists.
+
+Wed Jul 23 13:28:17 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Argument.cpp:
+        * tao/Argument.h:
+        * tao/BD_String_Argument_T.cpp:
+        * tao/BD_String_Argument_T.h:
+        * tao/Basic_Argument_T.cpp:
+        * tao/Basic_Argument_T.h:
+        * tao/Fixed_Array_Argument_T.cpp:
+        * tao/Fixed_Array_Argument_T.h:
+        * tao/Fixed_Array_Argument_T.inl:
+        * tao/Fixed_Size_Argument_T.cpp:
+        * tao/Fixed_Size_Argument_T.h:
+        * tao/Object_Argument_T.cpp:
+        * tao/Object_Argument_T.h:
+        * tao/Special_Basic_Argument_T.cpp:
+        * tao/Special_Basic_Argument_T.h:
+        * tao/UB_String_Argument_T.cpp:
+        * tao/UB_String_Argument_T.h:
+        * tao/Var_Array_Argument_T.cpp:
+        * tao/Var_Array_Argument_T.h:
+        * tao/Var_Array_Argument_T.inl:
+        * tao/Var_Size_Argument_T.cpp:
+        * tao/Var_Size_Argument_T.h:
+
+	  Added and removed methods related to interceptors
+	  based on a clearer understanding, thanks to Ossama
+	  <ossama@dre.vanderbilt.edu> and Bala <bala@dre.vanderbilt.edu>.
+	  Also change the return signature of some of the arg()
+	  methods for arrays.
+
+        * tao/TAO.dsp:
+
+	  Added a missing file to the project.
+
+        * TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+        * TAO_IDL/be/be_visitor_operation/exceptlist_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+        * TAO_IDL/be/be_visitor_operation/proxy_impl_xh.cpp:
+        * TAO_IDL/be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:
+
+	  Added generation of '_set' or '_get_ prefix to 
+	  operation names for atttributes in thru-POA
+	  collocated proxy classes on the skeleton side.
+          Also added generation of exception data in stub operations.
+
+Tue Jul 22 17:44:40 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:
+        * tao/Invocation_Adapter.cpp:
+
+          Cosmetic changes.
+
+Tue Jul 22 13:02:16 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+        * TAO_IDL/be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:
+        * TAO_IDL/be_include/be_visitor_interface/strategized_proxy_broker_ss.h:
+        * TAO_IDL/be_include/be_visitor_operation/operation.h:
+
+          Modified skeleton-side generated source files to match
+          Bala's latest hand-crafted changes to support collocation.
+
+        * tao/Collocation_Proxy_Broker.h (dispatch):
+
+          Changed the type of the 'op_len' parameter (which holds the
+          length of the operation string name) from int to size_t, since
+          the latter type is returned from strlen(). Also changed
+          instances of Object * to Object_ptr.
+
+Mon Jul 21 21:36:44 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp:
+        * TAO_IDL/be/be_visitor_operation/proxy_impl_xh.cpp:
+
+          Modified skeleton-side generated header files to match
+          Bala's latest hand-crafted changes to support collocation.
+
+Mon Jul 21 20:55:38 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_valuetype.cpp:
+        * TAO_IDL/be/be_visitor_constant/constant_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/smart_proxy_ch.cpp:
+        * TAO_IDL/be/be_visitor_module/module_ch.cpp:
+        * TAO_IDL/be/be_visitor_module/module_sh.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_root/root_ch.cpp:
+        * TAO_IDL/be/be_visitor_root/root_sth.cpp:
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/obv_module.cpp:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_global.cpp:
+
+	  - Replaced use of 'TAO_NAMESPACE' in generated code with
+	    'namespace', along with related macros.
+
+	  - Modified stub-side generated code to match Bala's
+	    latest hand-crafted changes to support collocation.
+
+Mon Jul 21 13:11:40 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
+
+          Added Bala's new collocation-related files to these projects.
+
+Mon Jul 21 11:41:17 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/utl_idlist.h:
+        * TAO_IDL/include/utl_indenter.h:
+        * TAO_IDL/include/utl_strlist.h:
+
+	  Added include of ace/streams.h to each of these files, necessitated
+	  by changes of include structure in ACE.
+
+Mon Jul 21 07:19:17 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/CORBA_String.cpp: Include ace/streams.h for getting it to
+	  compile properly.  Thanks to Jeff for reporting this.
+
+Sun Jul 20 14:02:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_tmplinst/tmplinst_cs.cpp:
+	* TAO_IDL/be/be_visitor_tmplinst/tmplinst_ss.cpp:
+	* TAO_IDL/be_include/be_visitor_tmplinst/tmplinst_cs.h:
+	* TAO_IDL/be_include/be_visitor_tmplinst/tmplinst_ss.h: Added
+	  these files into the branch.
+
+Sun Jul 20 13:00:24 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Abstract_Servant_Base.h: #include'd corbafwd.h to get the
+	  definition of TAO_default_environment ().
+	
+	* tao/BoundsC.h: #include'd CDR.h to get the CDR operators for
+	  basic types. 
+
+	* tao/CORBA_String.h: #include'd Basic_Types.h and
+	  TAO_Export.h. Forward declared TAO_String_Manager and
+	  TAO_WString_Manager. 
+	
+	* tao/CORBA_String.cpp:
+	* tao/CORBA_String.inl: Moved constructors that used
+	  String_Manager and WString_Manager from the inlined file to the
+	  cpp file to get it compilig without errors with g++.
+
+	* tao/Collocated_Invocation.cpp:
+	* tao/ClientRequestInfo_i.cpp: Fixed unused variable warnings in
+	  the methiod sync_scope ().
+
+	* tao/Dynamic_Adapter.h:
+	* tao/Collocation_Resolver.h:
+	* tao/Default_Collocation_Resolver.h: Forward declared class
+	  Environment. 
+	
+	* tao/Exception.h: Forward declared class Environment and added an
+	  undef for "minor". The undef is available in orbconf.h. Since
+	  Exception.h doesnt include orbconf.h directly or indirectly,
+	  this is required. 
+
+	* tao/Invocation_Base.cpp: 
+	* tao/Invocation_Adapter.cpp: Fixed compile errors from wrong
+	  usage of ACE_ENV macros. 
+	
+
+	* tao/Makefile.tao: Added new files for compilation.
+	
+	* tao/Managed_Types.h: #include'd CORBA_String.h
+
+	* tao/ORB_Core.cpp: Fixed warnings due to incorrect casting. 
+	
+	* tao/Synch_Invocation.cpp: Fixed unused variable warnings.
+
+	* tao/TypeCodeFactory_Adapter.h:
+	* tao/Typecode.h: #include'd corbafwd.h to get
+	  TAO_default_environment (). 
+
+	* tao/operation_details.cpp: Fixed warnings that arose due to
+	  comparison operator between a signed and unsigned integer. 
+
+	
+Sun Jul 20 10:13:24 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_codegen.cpp: Changed the inclusion from
+	  Invocation_Base to Invocation_Adapter.h. 
+	
+	* TAO_IDL/be/be_visitor_operation/operation.cpp: Changed the
+	  argument in the constructor to pass  a null pointer. This is NOT
+	  right. This is a workaround for the timebeing. 
+
+Sun Jul 20 09:47:02 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/PortableServer/ObjectReferenceTemplate.cpp: 
+	* tao/Valuetype/ValueFactory_Map.cpp: Fixed compile errors by
+	  including CORBA_String.h
+
+Sun Jul 20 07:56:17 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Collocated_Invocation.cpp:
+	* tao/Collocated_Invocation.h: New files which provide the actual
+	  implementation for making collocated calls on the servant. This
+	  class should deal with everything related to collocation like
+	  forwarding, interceptors, special ways for AMI etc. 
+	
+	* tao/Collocation_Proxy_Broker.h: A abstract base class which will
+	  be implemented in the generated code for the client side calls
+	  to be converted as upcalls in the skeleton code. 
+
+	* tao/Invocation_Adapter.cpp:
+	* tao/Invocation_Adapter.h: The original implementation of
+	  Invocation_Base is now renamed to be TAO::Invocation_Adapter
+	  since this sounded more correct. The invocation adapter has a
+	  wide range of responsibilities including making the right type
+	  of invocation object (like oneways, twoays, collocated etc.) and 
+	  delegating further responsibilities to those classes. 
+	  
+	* tao/Argument.h: Cosmetic fix. 
+
+	* tao/ClientRequestInfo_i.cpp:
+	* tao/ClientRequestInfo_i.h: This class uses the TAO::Invocation_Base
+	  object instead of the age old TAO_GIOP_Invocation class. 
+	
+	* tao/Invocation.cpp: Changed the usage of int to bool in the
+	  calls to the ORB_Core that fetches the timeout.
+
+	* tao/Invocation_Base.cpp:
+	* tao/Invocation_Base.h: New class that serves as a base class for
+	  Remote and colloctaed invocations. This base class provides the
+	  right implementations for interceptors. 
+
+	* tao/Invocation_Endpoint_Selectors.cpp: 
+	* tao/Invocation_Endpoint_Selectors.h: Added timeout to the
+	  select_endpoint () call. 
+	
+	* tao/ORB_Core.cpp:
+	* tao/ORB_Core.h: Changed the calls, connection_timeout () and
+	  timeout () to take a boolean. This is just a simple
+	  C++'ification our code. Added a call collocation_strategy_new ()
+	  whose implementation is exactly the same as collocation_strategy
+	  () but returns a TAO::Collocation_Strategy instead of an
+	  int. The old call will be retired and the _new () call will
+	  replace the original call. The _new is provided as a backward
+	  compatibility measure to get our workspace compiling. 
+
+	* tao/Remote_Invocation.cpp:
+	* tao/Remote_Invocation.h: 
+	* tao/Profile_Transport_Resolver.cpp:
+	* tao/Profile_Transport_Resolver.h: Added support for connection
+	  and roundtrip timeouts.
+
+	* tao/Stub.h: The struct TAO_Exception_Data will now take a
+	  typecode pointer to the exception. 
+	
+	* tao/Synch_Invocation.cpp:
+	* tao/Synch_Invocation.h: Lots of refactoring to support timeouts
+	  in the code. 
+	
+	* tao/corbafwd.h: A new enum is now added and the old enum within
+	  namepsace TAO_Collocation_Strategy needs to be retired. Infact
+	  the namepscae itself needs to go. 
+	
+	* tao/operation_details.cpp:
+	* tao/operation_details.h:
+	* tao/operation_details.i: More or less all the details of the
+	  operation are now stored here. This makes it easier for
+	  accessing the information for interceptors. 
+
+Thu Jul 17 20:59:34 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Abstract_Servant_Base.h:
+        * tao/Acceptor_Filter.h:
+        * tao/Acceptor_Impl.cpp:
+        * tao/Acceptor_Impl.h:
+        * tao/Acceptor_Registry.h:
+        * tao/Argument.h:
+        * tao/BiDir_Adapter.h:
+        * tao/Bind_Dispatcher_Guard.h:
+        * tao/BoundsC.h:
+        * tao/CDR.h:
+        * tao/CORBA_String.cpp:
+        * tao/CORBA_String.h:
+        * tao/CORBA_String.inl:
+        * tao/ClientRequestInfo_i.h:
+        * tao/Codeset_Translator_Factory.h:
+        * tao/Collocation_Resolver.h:
+        * tao/Connector_Impl.h:
+        * tao/Connector_Registry.h:
+        * tao/Dynamic_Adapter.h:
+        * tao/Encodable.h:
+        * tao/Endpoint.h:
+        * tao/Exception.h:
+        * tao/Managed_Types.h:
+        * tao/Object_Loader.h:
+        * tao/Resource_Factory.h:
+        * tao/Sequence.cpp:
+        * tao/TAO.dsp:
+        * tao/TypeCodeFactory_Adapter.h:
+        * tao/Typecode.h:
+        * tao/corbafwd.cpp:
+        * tao/corbafwd.h:
+        * tao/corbafwd.i:
+
+	  Cleaned up include structure a little by substituting for
+	  includes of corbafwd.h in some of TAO's files. Some
+	  declarations and definitions were moved around to accomplish
+	  this.
+
+	* tao/Basic_Types.h:
+
+	  Moved typedefs of basic IDL types (from the corresponding
+	  ACE_CDR declarations) to a new file.
+
+	* tao/OBV_Constants.h:
+
+	  Moved constants and typedefs related to valuetypes to a
+	  new file.
+
+Wed Jul 16 14:38:02 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_type.cpp:
+        * TAO_IDL/be/be_visitor_tmplinst.cpp:
+        * TAO_IDL/be/be_visitor_traits.cpp:
+        * TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ch.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ci.cpp:
+        * TAO_IDL/be/be_visitor_array/array_cs.cpp:
+        * TAO_IDL/be/be_visitor_enum/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/smart_proxy_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/structure_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/union_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+        * TAO_IDL/be_include/be_sequence.h:
+        * TAO_IDL/be_include/be_type.h:
+        * TAO_IDL/be_include/be_visitor_tmplinst.h:
+        * TAO_IDL/be_include/be_visitor_array/array_cs.h:
+        * TAO_IDL/be_include/be_visitor_sequence/sequence_cs.h:
+        * tao/Array_VarOut_T.cpp:
+        * tao/Array_VarOut_T.h:
+        * tao/Array_VarOut_T.inl:
+        * tao/BD_String_Argument_T.cpp:
+        * tao/BD_String_Argument_T.h:
+        * tao/BD_String_Argument_T.inl:
+        * tao/Basic_Argument_T.h:
+        * tao/Basic_Argument_T.inl:
+        * tao/CurrentC.cpp:
+        * tao/CurrentC.h:
+        * tao/DomainC.cpp:
+        * tao/DomainC.h:
+        * tao/Fixed_Array_Argument_T.h:
+        * tao/Fixed_Array_Argument_T.inl:
+        * tao/Fixed_Size_Argument_T.h:
+        * tao/Fixed_Size_Argument_T.inl:
+        * tao/IOP_CodecC.cpp:
+        * tao/IOP_CodecC.h:
+        * tao/Object_Argument_T.h:
+        * tao/Object_Argument_T.inl:
+        * tao/Objref_VarOut_T.cpp:
+        * tao/Objref_VarOut_T.h:
+        * tao/PolicyC.cpp:
+        * tao/PolicyC.h:
+        * tao/Policy_ForwardC.cpp:
+        * tao/Policy_ForwardC.h:
+        * tao/PortableInterceptorC.cpp:
+        * tao/PortableInterceptorC.h:
+        * tao/Sequence_T.cpp:
+        * tao/Sequence_T.h:
+        * tao/Sequence_T.i:
+        * tao/Special_Basic_Argument_T.h:
+        * tao/Special_Basic_Argument_T.inl:
+        * tao/TAOC.cpp:
+        * tao/TAOC.h:
+        * tao/UB_String_Argument_T.h:
+        * tao/UB_String_Argument_T.inl:
+        * tao/Var_Array_Argument_T.h:
+        * tao/Var_Array_Argument_T.inl:
+        * tao/Var_Size_Argument_T.h:
+        * tao/Var_Size_Argument_T.inl:
+        * tao/IORInterceptor/IORInterceptorC.cpp:
+        * tao/IORInterceptor/IORInterceptorC.h:
+        * tao/Messaging/MessagingC.h:
+        * tao/ObjRefTemplate/ObjectReferenceTemplateC.cpp:
+        * tao/ObjRefTemplate/ObjectReferenceTemplateC.h:
+        * tao/PortableServer/Default_ORTC.cpp:
+        * tao/PortableServer/Default_ORTC.h:
+        * tao/PortableServer/ImR_LocatorC.cpp:
+        * tao/PortableServer/ImR_LocatorC.h:
+        * tao/PortableServer/ImplRepoC.cpp:
+        * tao/PortableServer/ImplRepoC.h:
+        * tao/PortableServer/PortableServerC.cpp:
+        * tao/PortableServer/PortableServerC.h:
+        * tao/Valuetype/Sequence_T.cpp:
+        * tao/Valuetype/Sequence_T.h:
+        * tao/Valuetype/Sequence_T.inl:
+        * tao/Valuetype/ValueBase.cpp:
+        * tao/Valuetype/ValueBase.h:
+        * tao/Valuetype/ValueFactory.cpp:
+        * tao/Valuetype/ValueFactory.h:
+        * tao/Valuetype/Value_VarOut_T.cpp:
+        * tao/Valuetype/Value_VarOut_T.h:
+
+	  - Removed all remaining vestiges of the tao_*_life and
+`	    tao_*_cast structs. The latter was not needed and the
+	    former has been replace by TAO::*_Traits<T>. This
+	    change includes hand-crafted and generated code.
+
+	  - Added arg() methods to the stub side argument helper
+	    template classes. These have the same return types as
+	    the ones for the corresponding skeleton arg helper
+	    classes, but will be used in collocated calls.
+
+Mon Jul 14 22:37:22 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_arg_tmplinst.cpp:
+        * TAO_IDL/be/be_visitor_tmplinst_cs.cpp:
+        * TAO_IDL/be_include/be_visitor_arg_tmplinst.h:
+        * TAO_IDL/be_include/be_visitor_tmplinst_cs.h:
+
+	  Rearranged visitors by removing the above files and adding
+	  the ones below.
+
+        * TAO_IDL/be/be_visitor_tmplinst.cpp:
+        * TAO_IDL/be/be_visitor_tmplinst/arg_tmplinst.cpp:
+        * TAO_IDL/be/be_visitor_tmplinst/tmplinst.cpp:
+        * TAO_IDL/be_include/be_visitor_tmplinst.h:
+        * TAO_IDL/be_include/be_visitor_tmplinst/arg_tmplinst.h:
+        * TAO_IDL/be_include/be_visitor_tmplinst/tmplinst.h:
+
+	  New visitors that take over the function of the ones removed
+	  above.
+
+        * TAO_IDL/Makefile.BE:
+        * TAO_IDL/TAO_IDL_BE.bor:
+        * TAO_IDL/TAO_IDL_BE_DLL.dsp:
+        * TAO_IDL/TAO_IDL_BE_LIB.dsp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_decl.cpp:
+        * TAO_IDL/be/be_visitor_root.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+        * TAO_IDL/be_include/be_decl.h:
+        * TAO_IDL/be_include/be_visitor_root/root.h:
+
+	  Updated projects and makefiles, and started moving existing
+	  template instantiation code generation to the new visitors.
+
+Sun Jul 13 14:40:35 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_decl.cpp:
+        * TAO_IDL/be/be_visitor_root.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be_include/be_decl.h:
+        * TAO_IDL/be_include/be_visitor_arg_tmplinst.h:
+        * TAO_IDL/be/be_visitor_arg_tmplinst.cpp:
+
+          Finished implementation of code generation for explicit
+          template instantiation for the arg template helper classes.
+
+        * TAO_IDL/be_include/be_visitor_tmplinst_cs.h:
+        * TAO_IDL/be/be_visitor_tmplinst_cs.cpp:
+
+          Renamed be_visitor_tmplinst* class and files and
+          be_visitor_tmplinst_cs*, since we are going to have to
+          generate explicit template instantiations for the skeleton-
+          side arg helper classes as well.
+
+        * TAO_IDL/Makefile.BE:
+        * TAO_IDL/TAO_IDL_BE.bor:
+        * TAO_IDL/TAO_IDL_BE_DLL.dsp:
+        * TAO_IDL/TAO_IDL_BE_LIB.dsp:
+
+          Update project and makefiles with the renamed files.
+
+Sat Jul 12 18:42:40 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_decl.cpp:
+        * TAO_IDL/be/be_visitor_arg_tmplinst.cpp:
+        * TAO_IDL/be/be_visitor_tmplinst.cpp:
+        * TAO_IDL/be_include/be_decl.h:
+        * TAO_IDL/be_include/be_visitor_arg_tmplinst.h:
+        * TAO_IDL/be_include/be_visitor_tmplinst.h:
+
+          Finished generation of explicit template instantiations for
+          argument helper template classes on the stub side.
+
+Sat Jul 12 14:14:18 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Basic_Arguments.cpp:
+        * tao/Special_Basic_Arguments.cpp:
+        * tao/UB_String_Arguments.cpp:
+
+          Added explicit template instantiations of the individual
+          argument direction and return value classes for the IDL
+          basic types, including unbounded (w)strings.
+
+        * tao/Fixed_Array_Argument_T.cpp:
+        * tao/Fixed_Size_Argument_T.cpp:
+        * tao/Var_Array_Argument_T.inl:
+
+          Fixed typos and made cosmetic changes.
+
+Sat Jul 12 11:35:37 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_tmplinst.cpp:
+        * TAO_IDL/be_include/be_visitor_tmplinst.h:
+        * TAO_IDL/be/be_visitor_arg_tmplinst.cpp:
+        * TAO_IDL/be_include/be_visitor_arg_tmplinst.h:
+
+          New files, to generate explicit template instantiations
+          for argument traits classes and individual argument helper classes.
+
+        * TAO_IDL/TAO_IDL_BE_DLL.dsp:
+        * TAO_IDL/TAO_IDL_BE_LIB.dsp:
+        * TAO_IDL/TAO_IDL_BE.bor:
+        * TAO_IDL/Makefile.BE:
+
+          Added new files to projects and makefiles.
+
+        * TAO_IDL/be/be_argument.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_decl.cpp:
+        * TAO_IDL/be/be_operation.cpp:
+        * TAO_IDL/be/be_visitor_root.cpp:
+        * TAO_IDL/be/be_visitor_traits.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be_include/be_decl.h:
+
+          Changes related to the above new files and to explicit
+          template instantiation generation in general.
+
+Fri Jul 11 08:19:27 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/BD_String_Argument_T.inl:
+        * tao/Basic_Argument_T.inl:
+        * tao/Fixed_Array_Argument_T.inl:
+        * tao/Fixed_Size_Argument_T.inl:
+        * tao/Object_Argument_T.inl:
+        * tao/Special_Basic_Argument_T.inl:
+        * tao/UB_String_Argument_T.inl:
+        * tao/Var_Array_Argument_T.inl:
+        * tao/Var_Size_Argument_T.inl:
+
+	  New files, containing all constructors and
+	  non-virtual functions.
+
+        * tao/BD_String_Argument_T.cpp:
+        * tao/BD_String_Argument_T.h:
+        * tao/Basic_Argument_T.cpp:
+        * tao/Basic_Argument_T.h:
+        * tao/Fixed_Array_Argument_T.cpp:
+        * tao/Fixed_Array_Argument_T.h:
+        * tao/Fixed_Size_Argument_T.cpp:
+        * tao/Fixed_Size_Argument_T.h:
+        * tao/Object_Argument_T.cpp:
+        * tao/Object_Argument_T.h:
+        * tao/Special_Basic_Argument_T.cpp:
+        * tao/Special_Basic_Argument_T.h:
+        * tao/UB_String_Argument_T.cpp:
+        * tao/UB_String_Argument_T.h:
+        * tao/Var_Array_Argument_T.cpp:
+        * tao/Var_Array_Argument_T.h:
+        * tao/Var_Size_Argument_T.cpp:
+        * tao/Var_Size_Argument_T.h:
+
+	  Modified these files accordingly from the changes
+	  above.
+
+        * tao/TAO.dsp:
+
+	  Added new files to the project.
+
+        * tao/corba.h:
+
+	  Removed includes of the above header files, since
+	  the IDL compiler now generates the necessary 
+	  includes for whatever types are used in operation
+	  signatures.
+
+Thu Jul 10 16:05:26 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Fixed_Size_Argument_T.cpp:
+        * tao/Fixed_Size_Argument_T.h:
+        * tao/Var_Array_Argument_T.cpp:
+        * tao/Var_Array_Argument_T.h:
+        * tao/Var_Size_Argument_T.cpp:
+
+	  Fixed bugs uncovered by running Param_Test. Also moved memory
+	  allocation for OUT arguments and return values of variable size
+	  from the constructor to the demarshal() method. This delay will
+	  allow the allocation to be skipped for collocated calls.
+
+Thu Jul 10 09:36:44 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Any.cpp:
+        * tao/Any.h:
+
+          Added argument traits template class specialization for anys
+          that are used in operations.
+
+        * tao/Profile_Transport_Resolver.cpp:
+
+          Commented out unused variable.
+
+        * TAO_IDL/be/be_visitor_traits.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ci.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * tao/Array_VarOut_T.inl:
+        * tao/BD_String_Argument_T.cpp:
+        * tao/Basic_Argument_T.cpp:
+        * tao/Basic_Arguments.h:
+        * tao/Special_Basic_Argument_T.cpp:
+        * tao/Special_Basic_Argument_T.h:
+        * tao/UB_String_Argument_T.cpp:
+        * tao/Var_Size_Argument_T.cpp:
+
+          Fixed bugs uncovered by compiling Param_Test.
+
+Wed Jul  9 14:46:25 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Profile_Transport_Resolver.cpp (TAO): Minor fix for the
+	  minor version of GIOP.
+
+Wed Jul  9 14:33:17 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Remote_Invocation.cpp (TAO): 
+	* tao/Remote_Invocation.h: Added some error checking in
+	  send_message (). 
+
+	* tao/Synch_Invocation.h:
+	* tao/Synch_Invocation.cpp: Changed the names of communicate in
+	  twoway and oneway invcation classes as remote_oneway and
+	  remote_twoway. Seems like the method communicate () in both
+	  classes seem to have a problem.
+
+	* tao/IIOP_Connector.cpp: Fixed a unused variable warning.
+
+Wed Jul  9 12:43:37 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Synch_Invocation.cpp (TAO): Got the semantics of
+	  SYNC_WITH_TRANSPORT right.
+
+Wed Jul  9 12:14:15 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Invocation_Base.cpp (TAO): Fixed a logic problem in the loop
+	  to make the invocation in the loop. 
+	
+Wed Jul  9 11:10:20 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/ast/ast_string.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_visitor_traits.cpp:
+        * TAO_IDL/be/be_visitor_operation/exceptlist_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_vardecl_cs.cpp:
+        * TAO_IDL/be_include/be_visitor_operation/operation.h:
+        * TAO_IDL/include/ast_decl.h:
+
+	  Changes to generated code, and the hand-crafted
+	  example, to deal with exceptions, oneways and
+	  AMI flags in the invoke() parameter list.
+
+Tue Jul  8 20:24:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/operation_details.i:
+	* tao/operation_details.cpp (corba_exception): 
+	* tao/operation_details.h: This class will henceforth have the
+	  information about the exceptions declared in the IDL for every
+	  operation. This detail would be used by the ORB to find out the
+	  right exception that needs to be raised if the incoming GIOP
+	  message is flagged as a user defined exception. This information
+	  is used by the new Invocation classes. A new method,
+	  corba_exception () has been added which converts a repo id into
+	  an equivalent CORBA exception
+
+	* tao/Invocation_Base.h:
+	* tao/Invocation_Base.cpp: The invoke () creates the
+	  TAO_Operation_Details object with the exception list and a count
+	  of the number of the exceptions specified in the IDL file.
+
+	* tao/Synch_Invocation.h:
+	* tao/Synch_Invocation.cpp: Added support for raising the right
+	  type of user exceptions to the application if the message
+	  received indicates the content to be of type user exception.
+
+	* tao/UB_String_Argument_T.cpp: Fixed compile errors on win32 by
+	  applying the right const qualifier.
+
+Tue Jul  8 15:00:12 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Synch_Invocation.cpp (TAO): 
+	* tao/Synch_Invocation.h: Added support for location forward. 
+
+	* tao/Invocation_Base.h:
+	* tao/Invocation_Base.cpp: Added two more parameters to the invoke
+	  () call. They are required to access the exception types defined
+	  in the IDL. Further added a loop around the place to handle
+	  location forwards. 
+
+	* tao/Remote_Invocation.h: Added a enum for passing the status of
+	  the invocation around. 
+
+Tue Jul  8 12:50:23 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be_include/be_codegen.h:
+
+          Created a separate function call for the generation of file includes 
+          for the stub source file, and moved the generation of arg class file
+          includes there, along with the existing file include generations.
+
+        * TAO_IDL/util/utl_global.cpp:
+
+          Fixed initialization of the bitmasks used to modify the bit vector
+          used to select ORB file includes for code generation.
+
+Mon Jul  7 21:38:01 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Any.h:
+	* tao/Any.cpp: Cosmetic fix. Changed char*& in the >>= operator to
+	  CORBA::Char *&.
+
+	* tao/Basic_Arguments.h: Added a public keyword in the class
+	  Arg_Traits<void>. Classes by default have all the members
+	  private unlike structs which are the other way around.
+
+	* tao/Synch_Invocation.h: Fixed typos.
+
+	* tao/UB_String_Argument_T.h: Fixed a typo in the doxygen
+	  comments. 
+	
+	* tao/UB_String_Argument_T.cpp (interceptor_replace): Fixed a
+	  bunch of compile errors with g++ 3.3 which required a explicit
+	  const qualifier to pick up the right extraction operator. 
+
+Mon Jul  7 17:53:06 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_argument.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_decl.cpp:
+        * TAO_IDL/be/be_operation.cpp:
+        * TAO_IDL/be_include/be_codegen.h:
+        * TAO_IDL/be_include/be_decl.h:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_global.cpp:
+
+          Separated the generation of file includes in the stub header file
+          into its own function call, and added a mechanism for generating
+          includes of the ORB argument template classes based on what has
+          been seen in the IDL file's operation declarations.
+
+Mon Jul  7 14:39:48 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Argument.cpp:
+        * tao/Argument.h:
+
+          Added virtual destructor to argument base class.
+
+Mon Jul  7 14:00:01 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Var_Array_Argument_T.cpp:
+        * tao/Var_Array_Argument_T.h:
+
+          Added template parameter required by use of TAO::Array_Traits<>.
+
+Mon Jul  7 06:03:26 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Array_VarOut_T.inl:
+	* tao/BD_String_Argument_T.cpp:
+	* tao/UB_String_Argument_T.cpp: Fixed compile errors with g++
+	  3.3. There is one more error which is a show-stopper.
+
+Mon Jul  7 04:55:40 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/IIOP_Transport.cpp:
+	* tao/Invocation_Base.h:
+	* tao/Makefile.tao:
+	* tao/Profile_Transport_Resolver.cpp:
+	* tao/Profile_Transport_Resolver.h:
+	* tao/Remote_Invocation.cpp:
+	* tao/Remote_Invocation.h:
+	* tao/Synch_Invocation.cpp: Fixed compile errors with exceptions=0. 
+
+Sat Jul 05 18:38:58 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Synch_Invocation.cpp (TAO): 
+	* tao/Synch_Invocation.h: Added support for oneways.
+
+Sat Jul 05 16:46:24 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	
+        * tao/Array_VarOut_T.inl: Fixed a compile error on Win32 which
+	  probably resulted from the merge.
+	 
+	* tao/GIOP_Message_Base.cpp:
+	* tao/GIOP_Message_Base.h: Moved the OutpoutCDR to this
+	  class. Provided an accessor to access the CDR stream. The init
+	  () method now initializes CDR stream's GIOP version numbers. 
+	
+	* tao/GIOP_Message_Lite.cpp:
+	* tao/GIOP_Message_Lite.h:  Similar changes as GIOP for GIOP
+	  lite. 
+
+	* tao/Transport_Connector.cpp:
+	* tao/Transport_Connector.h: Added two new methods,
+	  make_connection () and connect (). These two methods perform
+	  similar tasks as that of other functions but use a
+	  Profile_Transport_Resolver class instead of the Invocation
+	  class. These methods are required for us to deprecate the GIOP
+	  classes. 
+	
+	* tao/IIOP_Connector.cpp:
+	* tao/IIOP_Connector.h: Provided concrete implementation for the
+	  make_connection () method.
+
+	* tao/IIOP_Transport.cpp: #if 0'ed the GIOP lite stuff. Looks like
+	  it is a waste in TAO. We can slowly start deprecating it.
+
+	* tao/Invocation_Base.cpp:
+	* tao/Invocation_Base.h: New class that will serve as a bridge
+	  class for the IDL compiler. The class is intentionally kept
+	  simple so that the IDL the exposed code to the application will
+	  not take much time to compile. The complexity is hidden off
+	  elsewhere which will be within the ORB. 
+	
+	* tao/Invocation_Endpoint_Selectors.cpp:
+	* tao/Invocation_Endpoint_Selectors.h: Added a new method
+	  select_endpoint () which uses the resolver class. 
+	
+	* tao/ORB_Core.cpp: 
+	
+	* tao/Pluggable_Messaging.h: Added an accessor for the getting the
+	  outbound CDR streams. 
+	  
+	* tao/Synch_Invocation.cpp:
+	* tao/Synch_Invocation.h: Concrete implementations for synchronous
+	  twoway and oneway operations. We have preliminary support for
+	  simple twoway operations. 
+
+	* tao/TAO.dsp: Added the new files into the project file. 
+	
+	* tao/Transport.h: Made the method messaging_object () to be
+	  publically accessible. 
+
+	* tao/operation_details.h: 
+	* tao/target_specification.h: Cosmetic fixes. 
+	
+	* tao/Profile_Transport_Resolver.cpp: 
+	* tao/Profile_Transport_Resolver.h: Simple class that does 
+
+	  - selects the profile and the endpoint within the profile on
+	    which the invocation is to be made. 
+
+	  - finds out a connection from the transport cache if there is
+	    a free one available or creates a new connection if needed. 
+
+	* tao/Remote_Invocation.cpp:
+	* tao/Remote_Invocation.h: Base class that encapsulates a bunch of
+	  common invocation code. I am still not sure whether this should
+	  be used as a base class or a helper utility class. Using it as a
+	  base class creates a deeply coupled structure. 
+
+Wed Jul  2 06:05:09 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Connection_Resolver.cpp:
+	* tao/Connection_Resolver.h:
+	* tao/Default_Endpoint_Selector_Factory.cpp:
+	* tao/Default_Endpoint_Selector_Factory.h:
+	* tao/Endpoint_Selector_Factory.h:
+	* tao/GIOP_Message_Base.cpp:
+	* tao/IIOP_Connector.cpp:
+	* tao/IIOP_Connector.h:
+	* tao/Invocation_Base.cpp:
+	* tao/Invocation_Base.h:
+	* tao/Invocation_Endpoint_Selectors.cpp:
+	* tao/Invocation_Endpoint_Selectors.h:
+	* tao/Transport_Connector.cpp:
+	* tao/Transport_Connector.h: Temporary checkto move things to my
+	  laptop. 
+	  
+
+Tue Jul  1 07:08:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* Merged with the main trunk and created a branch
+	  refactor-stage_4. 
+
+Fri Jun 27 14:42:02 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_traits.cpp:
+
+          Changed logic for generation of declarations for Objref_Traits,
+          Value_Traits, and Array_Traits specializations. These may
+          not need to be generated in all cases.
+
+        * tao/Arg_Traits_T.h:
+
+          Cosmetic changes.
+
+        * tao/Basic_Arguments.cpp:
+
+          Added missing explicit template instantiation.
+
+        * tao/TAO.dsp:
+
+          Added missing header file to project.
+
+Fri Jun 27 11:16:04 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_traits.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ci.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+
+          Replace 'template<>' with 'ACE_TEMPLATE_SPECIALIZATION'
+          in declarations of specialized template classes in
+          generated stub header files. Also removed 'template<>'
+          from the specialization implementations in the stub
+          source file. These changes please a larger number of
+          compilers.
+
+        * tao/PolicyC.cpp:
+        * tao/Policy_ForwardC.h:
+
+          Made changes corresponding to those above for the one
+          interface in TAO that is forward declared in one .pidl
+          files and fully defined in another - CORBA::Policy.
+
+        * tao/Object_Argument_T.cpp:
+
+          Removed #if 0/#endif pair that was inadvertently checked
+          in.
+
+        * tao/Sequence_T.h:
+
+          Added include file need by gcc/cygwin.
+
+Thu Jun 26 17:13:39 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_array/array_ch.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ci.cpp:
+        * TAO_IDL/be/be_visitor_array/array_cs.cpp:
+        * tao/Array_VarOut_T.cpp:
+        * tao/Array_VarOut_T.h:
+        * tao/Array_VarOut_T.inl:
+
+          Added Array_Traits to Array_VarOut_T.h. Even though
+          only the slice type is used in this traits template,
+          I had to have the array type for a parameter as well,
+          to distinguish among more than one array with the 
+          same element type. So this parameter had to be added
+          to the _var and _out classes, and changed in generated
+          code.
+
+        * TAO_IDL/be_include/be_typedef.h:
+        * TAO_IDL/be/be_typedef.cpp:
+
+          Added overrides for the seen_in_* and used_in_*
+          methods to propagate these flags to the underlying
+          type.
+
+        * TAO_IDL/be/be_visitor_traits.cpp:
+        * TAO_IDL/be_include/be_visitor_traits.h:
+
+          Completed the traits generation methods.
+
+        * tao/BD_String_Argument_T.cpp:
+        * tao/BD_String_Argument_T.h:
+        * tao/Fixed_Array_Argument_T.cpp:
+        * tao/Fixed_Array_Argument_T.h:
+        * tao/Object_Argument_T.h:
+        * tao/Var_Array_Argument_T.cpp:
+        * tao/Var_Array_Argument_T.h:
+
+          Minor changes.
+
+        * tao/corba.h:
+
+          Added the argument helper files to corba.h.
+
+Wed Jun 25 19:01:33 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be_include/be_visitor_traits.h:
+        * TAO_IDL/be/be_visitor_traits.cpp:
+
+          New files, a visitor that generates specialized traits template
+          classes in a separate pass over the AST.
+
+        * TAO_IDL/Makefile.BE:
+        * TAO_IDL/TAO_IDL_BE.bor:
+        * TAO_IDL/TAO_IDL_BE_DLL.dsp:
+        * TAO_IDL/be/be_argument.cpp:
+        * TAO_IDL/be/be_decl.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_interface_fwd.cpp:
+        * TAO_IDL/be/be_operation.cpp:
+        * TAO_IDL/be/be_type.cpp:
+        * TAO_IDL/be/be_valuetype.cpp:
+        * TAO_IDL/be/be_visitor_root.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+        * TAO_IDL/be_include/be_decl.h:
+        * TAO_IDL/be_include/be_interface_fwd.h:
+        * TAO_IDL/be_include/be_type.h:
+        * tao/Objref_VarOut_T.cpp:
+        * tao/Objref_VarOut_T.h:
+        * tao/PolicyC.cpp:
+        * tao/Policy_ForwardC.h:
+        * tao/Sequence_T.cpp:
+        * tao/Sequence_T.h:
+        * tao/Valuetype/Sequence_T.inl:
+        * tao/Valuetype/Value_VarOut_T.cpp:
+        * tao/Valuetype/Value_VarOut_T.h:
+
+          Partial support for traits code generation, along with
+          corresponding changes to ORB code, some of it temporary
+	  until the hand-crafted files can be regenerated. These
+	  changes add code generation for interface and valuetype
+	  traits, and  modify sequence code to use some of these
+	  traits.
+
+          Also removed the _upcast and _downcast methods from
+          bounded and unbounded versions of object sequences.
+          These methods never seem to be called.
+
+Wed Jun 25 08:36:06 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Sequence_T.cpp:
+        * tao/Sequence_T.i:
+
+          Added the TAO::Object_Cast<> template struct that contains static
+          wrappers for the _narrow() and upcast() methods for interfaces.
+          This template is used instead of the existing tao_*_cast structs
+          in generated code by sequences of interfaces. Specializations of
+          this template will be added to generated code, however, to deal 
+          with the case when an undefined forward declared interface is
+          used in a sequence.
+
+        * tao/PolicyC.cpp:
+        * tao/Policy_ForwardC.h:
+
+          Hand-crafted additions of TAO::Objref_Traits<> and 
+          TAO::Object_Cast<> for CORBA::Policy, since it is forward declared
+          in Policy_Forward.pidl and defined in Policy.pidl.
+
+Tue Jun 24 18:12:24 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Arg_Traits_T.h:
+
+          Cosmetic changes.
+
+        * tao/Object.cpp:
+        * tao/Object.h:
+        * tao/Typecode.cpp:
+        * tao/Typecode.h:
+
+          Changed these predefined pseudo objects to use the
+          specialization approach for their argument traits,
+          instead of the typedef approach, as mentioned in
+
+          Tue Jun 24 13:48:20 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Objref_VarOut_T.cpp:
+        * tao/Objref_VarOut_T.h:
+
+          Added template base class for the interface traits - the static
+          methods used by the _var, _out and sequence classes. At the
+          moment, the interface _var and _out template classes are
+          using these template-wrapped static methods. The base class is
+          specialized in generated code. When the existing hand-crafted
+          files are regenerated, the template implementations in
+          Objref_VarOut_T.cpp can be removed, as well as the T_life
+          parameter from the _var and _out template classes.
+
+        * tao/Sequence_T.cpp:
+        * tao/Sequence_T.h:
+
+          Corresponding changes for the T_cast parameter, passed to 
+          sequence of objects. This struct parameter wraps methods used
+          in object sequences to narrow and widen interfaces.
+
+Tue Jun 24 13:48:20 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Arg_Traits_T.h:
+
+          Added this file to the repository again, decided to go back to
+          the template specialization approach to specific arg traits
+          instead of the typedef approach.
+
+        * tao/Basic_Arguments.cpp:
+        * tao/Basic_Arguments.h:
+        * tao/Special_Basic_Arguments.cpp:
+        * tao/Special_Basic_Arguments.h:
+        * tao/UB_String_Arguments.cpp:
+        * tao/UB_String_Arguments.h:
+
+          Change to support the above change in approach.
+
+        * tao/Objref_VarOut_T.cpp:
+        * tao/Objref_VarOut_T.h:
+
+          Made a start on templatizing helper structs of interface
+          traits that have been generated by the IDL compler up to now.
+
+        * tests/Bench/wire/testC.cpp:
+        * tests/Bench/wire/testS.cpp:
+
+          Changed test code to reflect the change in approach to
+          specific arg traits mentioned above.
+
+Mon Jun 23 16:50:31 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Cleanup_Func_Registry.h:
+
+          Added #include that was added in the main trunk, to avoid a
+          build errorin this branch.
+
+        * tao/Fixed_Array_Argument_T.cpp:
+        * tao/Fixed_Array_Argument_T.h:
+        * tao/Var_Array_Argument_T.cpp:
+        * tao/Var_Array_Argument_T.h:
+
+          New files, for handling array arguments.
+
+        * tao/TAO.dsp:
+        * tao/Makefile.tao:
+
+          Added new files to project and makefile.
+
+        * tao/Var_Size_Argument_T.cpp:
+
+          Changed demarshaling and Any extraction methods to call
+          .inout() on the _var member instead of .out(). The _var's
+          pointer has already been allocated but not initialized,
+          and calling .out() will destroy it, expecting a new
+          allocation, which is not the intended behavior.
+
+Sun Jun 22 000:31:20 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/BD_String_Argument_T.cpp:
+        * tao/BD_String_Argument_T.h:
+        * tao/UB_String_Argument_T.cpp:
+        * tao/UB_String_Argument_T.h:
+
+          Removed unnecessary template parameter.
+
+        * tao/Var_Size_Argument_T.cpp:
+        * tao/Var_Size_Argument_T.h:
+        * tao/Fixed_Size_Argument_T.cpp:
+        * tao/Fixed_Size_Argument_T.h:
+        * tao/Makefile.tao:
+        * tao/TAO.dsp:
+
+          Added new files and classes for fixed and variable size structs,
+          unions, and sequences.
+
+Fri Jun 20 17:17:57 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Basic_Argument_T.h:
+        * tao/Basic_Arguments.h:
+        * tao/UB_String_Argument_T.h:
+        * tao/UB_String_Arguments.h:
+
+          Made sure at least one significant included file appears before
+          the '#pragma once' directive.
+
+        * tao/Makefile.bor:
+        * tao/Makefile.tao:
+
+          Added new files to the makefiles.
+
+Fri Jun 20 16:09:52 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Argument.cpp:
+
+          New file. Placing TAO::Argument's method implementations in
+          the header file was causing circular dependencies.
+
+        * tao/TAO.dsp:
+
+          Added new file to project.
+
+        * tao/Argument.h:
+        * tao/Object_Argument_T.cpp:
+        * tao/Object_Argument_T.h:
+        * tao/Special_Basic_Arguments.h:
+
+          Changes to file includes.
+
+        * tao/Object.cpp:
+        * tao/Object.h:
+        * tao/Typecode.cpp:
+        * tao/Typecode.h:
+
+          Added typedefs for TypeCode_Arg_Traits and Object_Arg_Traits,
+          to be used in generated code.
+
+        * tao/Policy_ForwardC.cpp:
+
+          Corrected typo in #pragma instantiation.
+
+Fri Jun 20 13:12:35 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Arg_Traits_T.h:
+
+          Eliminated the need for the TAO::Arg_Traits_T<> class
+          and removed this file.
+
+        * tao/BD_String_Argument_T.h:
+        * tao/Basic_Arguments.cpp:
+        * tao/Basic_Arguments.h:
+        * tao/Special_Basic_Arguments.cpp:
+        * tao/Special_Basic_Arguments.h:
+        * tao/UB_String_Argument_T.cpp:
+        * tao/UB_String_Arguments.cpp:
+        * tao/UB_String_Arguments.h:
+
+          Replaced TAO::Arg_Traits_T<> subclass of the above
+          basic arguments type classes with typedefs whose
+          names can be easily generated by the IDL compiler.
+
+        * tao/Object_Argument_T.cpp:
+        * tao/Object_Argument_T.h:
+
+          New files, for interface and pseudo object arguments.
+
+        * tests/Bench/wire/testC.cpp:
+        * tests/Bench/wire/testS.cpp:
+
+          Changed these hand crafted files to use the typedefs
+          mentioned above.
+
+Thu Jun 19 22:24:47 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/BD_String_Argument_T.cpp:
+        * tao/BD_String_Argument_T.h:
+        * tao/Basic_Argument_T.cpp:
+        * tao/Basic_Argument_T.h:
+        * tao/Special_Basic_Argument_T.cpp:
+        * tao/Special_Basic_Argument_T.h:
+
+	  Updated the interface of the rest of the existing template
+	  classes for IDL argument types.
+
+Thu Jun 19 20:39:25 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/BD_String_Argument_T.cpp:
+        * tao/BD_String_Argument_T.h:
+
+          Updates to make these files correspond with the 
+          unbounded version.
+
+Thu Jun 19 17:31:11 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/Bench/wire/client.cpp:
+        * tests/Bench/wire/client.dsp:
+        * tests/Bench/wire/server.cpp:
+        * tests/Bench/wire/server.dsp:
+        * tests/Bench/wire/test.idl:
+        * tests/Bench/wire/testC.cpp:
+        * tests/Bench/wire/testC.h:
+        * tests/Bench/wire/testC.i:
+        * tests/Bench/wire/testS.cpp:
+        * tests/Bench/wire/testS.h:
+        * tests/Bench/wire/test_i.cpp:
+        * tests/Bench/wire/test_i.h:
+
+	  New files, handcrafted example for testing changes in this
+	  branch. 
+
+        * tao/Argument.h:
+        * tao/BD_String_Argument_T.h:
+        * tao/Basic_Argument_T.cpp:
+        * tao/Basic_Argument_T.h:
+        * tao/Basic_Arguments.cpp:
+        * tao/Basic_Arguments.h:
+        * tao/Special_Basic_Argument_T.cpp:
+        * tao/Special_Basic_Argument_T.h:
+        * tao/UB_String_Argument_T.cpp:
+        * tao/UB_String_Argument_T.h:
+        * tao/UB_String_Arguments.h:
+
+          Changes to the new TAO template args/traits interface.
+
+        * tao/CORBA_String.h:
+        * tao/CORBA_String.inl:
+
+	  Added ptr() method to (w)string _var classes, to get a return
+	  value of T * without giving up ownership of the underlying
+	  pointer. 
+
+Wed Jun 18 22:57:37 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/BD_String_Argument_T.cpp:
+        * tao/BD_String_Argument_T.h:
+	* tao/TAO.dsp:
+
+	  New files, for bounded string and wstring arguments.
+
+        * tao/Arg_Traits_T.h:
+        * tao/UB_String_Argument_T.h:
+        * tao/UB_String_Arguments.cpp:
+
+	  Fixed mistakes in comments.
+
+Wed Jun 18 19:09:55 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Arg_Traits_T.h:
+
+          Renamed Traits_T.h as this.
+
+        * tao/Argument.h:
+        * tao/Basic_Argument_T.cpp:
+        * tao/Basic_Argument_T.h:
+        * tao/Basic_Arguments.cpp:
+        * tao/Basic_Arguments.h:
+        * tao/Special_Basic_Argument_T.cpp:
+        * tao/Special_Basic_Argument_T.h:
+        * tao/Special_Basic_Arguments.cpp:
+        * tao/Special_Basic_Arguments.h:
+
+          Removed string argument name member - it's never used.
+
+        * tao/Traits_T.h:
+
+          Renamed this as Arg_Traits_T.h.
+
+        * tao/UB_String_Argument_T.cpp:
+        * tao/UB_String_Argument_T.h:
+        * tao/UB_String_Arguments.cpp:
+        * tao/UB_String_Arguments.h:
+        * tao/TAO.dsp:
+
+          New files, for unbounded string and wstring arguments.
+
+Tue Jun 17 18:27:44 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Argument.h:
+        * tao/Basic_Argument_T.cpp:
+        * tao/Basic_Argument_T.h:
+        * tao/TAO.dsp:
+
+          Changes to existing files added to this branch.
+
+        * tao/Basic_Arguments.cpp:
+        * tao/Basic_Arguments.h:
+        * tao/Special_Basic_Argument_T.cpp:
+        * tao/Special_Basic_Argument_T.h:
+        * tao/Special_Basic_Arguments.cpp:
+        * tao/Special_Basic_Arguments.h:
+        * tao/Traits_T.h:
+
+          New files, completing support for the basic IDL argument
+          types.
+
+Fri Jun 13 18:20:19 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Argument.h:
+        * tao/Basic_Argument_T.cpp:
+        * tao/Basic_Argument_T.h:
+
+          New files, a start on refactoring arg handling during invocations
+          and upcalls.
+
+        * tao/TAO.dsp:
+
+          Added new files to project.
+

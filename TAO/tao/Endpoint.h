@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_ENDPOINT_H
 #define TAO_ENDPOINT_H
 #include /**/ "ace/pre.h"
@@ -25,7 +24,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Thread_Mutex.h"
-
 
 /**
  * @class TAO_Endpoint

@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_PORTABLESERVER_ORB_INITIALIZER_H
 #define TAO_PORTABLESERVER_ORB_INITIALIZER_H
 

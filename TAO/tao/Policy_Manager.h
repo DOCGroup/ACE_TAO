@@ -22,14 +22,15 @@
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "tao/Policy_Set.h"
 #include "tao/LocalObject.h"
 #include "tao/PolicyC.h"
 #include "tao/debug.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
+#include "ace/Guard_T.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)

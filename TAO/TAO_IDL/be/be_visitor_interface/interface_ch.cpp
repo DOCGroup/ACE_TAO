@@ -21,6 +21,7 @@
 ACE_RCSID (be_visitor_interface,
            interface_ch,
            "$Id$")
+
 // ******************************************************
 // Interface visitor for client header
 // ******************************************************
@@ -54,16 +55,6 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
   // Now the interface definition itself.
   os->gen_ifdef_macro (node->flat_name ());
-
-  if (!node->is_local () && !node->is_abstract ())
-    {
-      // Forward class declarations.
-      *os << be_nl << be_nl
-          << "class " << node->base_proxy_impl_name () << ";" << be_nl
-          << "class " << node->remote_proxy_impl_name () << ";" << be_nl
-          << "class " << node->base_proxy_broker_name () << ";" << be_nl
-          << "class " << node->remote_proxy_broker_name () << ";";
-    }
 
   // Now generate the class definition.
   *os << be_nl << be_nl
@@ -126,16 +117,18 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
   // Generate the body.
 
   *os << "{" << be_nl
-      << "public:" << be_idt_nl
+      << "public:" << be_idt_nl;
 
-      // Generate the _ptr_type and _var_type typedefs.
-      << "typedef " << node->local_name () << "_ptr _ptr_type;"
+  if (!node->is_local ())
+    {
+      *os << "friend class TAO::Narrow_Utils<"
+          << node->local_name () << ">;" << be_nl;
+    }
+
+  *os << "typedef " << node->local_name () << "_ptr _ptr_type;"
       << be_nl
       << "typedef " << node->local_name () << "_var _var_type;"
-      << be_nl;
-
-  // Generate the static variable that we use for narrowing.
-  *os << "static int _tao_class_id;" << be_nl << be_nl;
+      << be_nl << be_nl;
 
   // Generate the static _duplicate, _narrow, and _nil operations.
   *os << "// The static operations." << be_nl
@@ -143,23 +136,6 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       << node->local_name () << "_ptr obj);" << be_nl << be_nl
       << "static " << node->local_name () << "_ptr "
       << "_narrow (" << be_idt << be_idt_nl;
-
-  if (node->is_abstract ())
-    {
-      *os << "CORBA::AbstractBase_ptr obj" << be_nl;
-    }
-  else
-    {
-      *os << "CORBA::Object_ptr obj" << be_nl;
-    }
-
-  *os << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
-      << ");" << be_uidt_nl << be_nl;
-
-  // There's no need for an _unchecked_narrow for locality
-  // constrained object.
-  *os << "static " << node->local_name () << "_ptr "
-      << "_unchecked_narrow (" << be_idt << be_idt_nl;
 
   if (node->is_abstract ())
     {
@@ -223,17 +199,10 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
     }
 
   // The _is_a method
-  if (! node->is_local ())
-    {
-      *os << "virtual CORBA::Boolean _is_a (" << be_idt << be_idt_nl
-          << "const char *type_id" << be_nl
-          << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
-          << ");" << be_uidt_nl << be_nl;
-    }
-
-  // The _tao_QueryInterface method.
-  *os << "virtual void *_tao_QueryInterface (ptrdiff_t type);"
-      << be_nl << be_nl;
+  *os << "virtual CORBA::Boolean _is_a (" << be_idt << be_idt_nl
+      << "const char *type_id" << be_nl
+      << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
+      << ");" << be_uidt_nl << be_nl;
 
   // The _interface_repository_id method.
   *os << "virtual const char* _interface_repository_id (void) const;";
@@ -256,7 +225,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       // Add the Proxy Broker member variable.
       *os << be_uidt_nl
           << "private:" << be_idt_nl
-          << node->base_proxy_broker_name () << " *"
+          << "TAO::Collocation_Proxy_Broker *"
           << "the" << node->base_proxy_broker_name ()
           << "_;";
     }
@@ -313,17 +282,6 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
   // Protected destructor.
   *os << "virtual ~" << node->local_name () << " (void);";
 
-  if (! node->is_abstract () && ! node->is_local ())
-    {
-      // Friends declarations.
-      *os << be_nl << be_nl
-          << "friend class " << node->remote_proxy_impl_name () << ";"
-          << be_nl
-          << "friend class " << node->thru_poa_proxy_impl_name () << ";"
-          << be_nl
-          << "friend class " << node->direct_proxy_impl_name () << ";";
-    }
-
   // Private copy constructor and assignment operator. These are not
   // allowed, hence they are private.
   *os << be_uidt_nl << be_nl
@@ -349,47 +307,28 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
   // Don't support smart proxies for local interfaces.
   // @@@ (JP) This is TODO for abstract interfaces.
-  if (! node->is_local () && ! node->is_abstract ())
+  if (! node->is_local ()
+      && ! node->is_abstract ())
     {
-      *os << be_nl << be_nl;
+      // List that generates proxy broker factory function pointer.
+      be_global->non_local_interfaces.enqueue_tail (node);
 
-      // Smart Proxy related classes.
-      ctx.state (TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CH);
-      be_visitor_interface_smart_proxy_ch sp_visitor (&ctx);
-
-      if (node->accept (&sp_visitor) == -1)
+      if (be_global->gen_smart_proxies ())
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_interface_ch::"
-                             "visit_interface - "
-                             "codegen for smart proxy classes failed\n"),
-                            -1);
-        }
+          *os << be_nl << be_nl;
 
-      // Proxy Implementation Declaration.
-      ctx = *this->ctx_;
-      be_visitor_interface_proxy_impls_ch spi_visitor (&ctx);
+          // Smart Proxy related classes.
+          ctx.state (TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CH);
+          be_visitor_interface_smart_proxy_ch sp_visitor (&ctx);
 
-      if (node->accept (&spi_visitor) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_interface_ch::"
-                             "visit_interface - "
-                             "codegen for Proxy Broker classes failed\n"),
-                            -1);
-        }
-
-      // Proxy Broker Declaration.
-      ctx = *this->ctx_;
-      be_visitor_interface_proxy_brokers_ch pb_visitor (&ctx);
-
-      if (node->accept (&pb_visitor) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_interface_ch::"
-                             "visit_interface - "
-                             "codegen for Proxy Broker classes failed\n"),
-                            -1);
+          if (node->accept (&sp_visitor) == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "be_visitor_interface_ch::"
+                                 "visit_interface - "
+                                 "codegen for smart proxy classes failed\n"),
+                                -1);
+            }
         }
     }
 

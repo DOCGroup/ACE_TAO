@@ -163,8 +163,9 @@ TAO_Connection_Handler::transport (TAO_Transport* transport)
   this->transport_ = transport;
 
   // Enable reference counting on the event handler.
-  this->transport_->event_handler_i ()->reference_counting_policy ().value
-    (ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
+  this->transport_->event_handler_i ()->reference_counting_policy ().value (
+      ACE_Event_Handler::Reference_Counting_Policy::ENABLED
+    );
 }
 
 int

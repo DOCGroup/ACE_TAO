@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_THRUPOA_OBJECT_PROXY_IMPL_H_
 #define TAO_THRUPOA_OBJECT_PROXY_IMPL_H_
 

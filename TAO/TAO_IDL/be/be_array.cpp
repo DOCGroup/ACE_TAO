@@ -26,6 +26,8 @@
 #include "be_visitor.h"
 #include "utl_identifier.h"
 #include "idl_defines.h"
+#include "global_extern.h"
+
 #include "ace/Log_Msg.h"
 
 ACE_RCSID (be, 
@@ -67,6 +69,8 @@ be_array::be_array (UTL_ScopedName *n,
     be_type (AST_Decl::NT_array,
              n)
 {
+  ACE_SET_BITS (idl_global->decls_seen_info_,
+                idl_global->decls_seen_masks.array_seen_);
 }
 
 be_array::~be_array (void)

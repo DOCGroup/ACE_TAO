@@ -13,22 +13,19 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_ACCEPTOR_REGISTRY_H
 #define TAO_ACCEPTOR_REGISTRY_H
 
 #include /**/ "ace/pre.h"
-
-#include "tao/corbafwd.h"
+#include "ace/SStringfwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/TAO_Export.h"
 #include "tao/Resource_Factory.h"
 #include "tao/Exception.h"
-
-#include "ace/SStringfwd.h"
 
 // Forward declarations.
 class ACE_Addr;

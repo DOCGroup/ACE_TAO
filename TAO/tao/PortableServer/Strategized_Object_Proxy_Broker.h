@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_STRATEGIZED_OBJECT_PROXY_BROKER_H_
 #define TAO_STRATEGIZED_OBJECT_PROXY_BROKER_H_
 

@@ -41,7 +41,10 @@ void
 run_test (Test_Interceptors::Visual_ptr server
           ACE_ENV_ARG_DECL)
 {
-  server->normal (10
+  CORBA::String_var msg;
+
+  server->normal (10,
+                  msg.out ()
                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 

@@ -24,7 +24,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Transport.h"
 #include "tao/TAOC.h"
 
 /// Define the interface for the Queueing Strategy

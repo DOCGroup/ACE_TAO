@@ -10,7 +10,10 @@
  * command:
  *
  *   tao_idl.exe
- *        -o orig -Gp -Gd -Ge 1
+ *        -o orig -Ge 1 -GT
+ *        -I../..
+ *        -Wb,export_macro=TAO_PortableServer_Export \
+ *        -Wb,export_include="portableserver_export.h" \
  *        -Wb,pre_include="ace/pre.h"
  *        -Wb,post_include="ace/post.h"
  *        Default_ORT.pidl
@@ -35,12 +38,14 @@
 #ifndef TAO_DEFAULT_ORT_PIDL
 #define TAO_DEFAULT_ORT_PIDL
 
-#include <ObjectReferenceTemplate.pidl>
+#include <tao/ObjRefTemplate/ObjectReferenceTemplate.pidl>
 
 module TAO_Default_ORT
 {
   valuetype ObjectReferenceTemplate
-    : PortableInterceptor::ObjectReferenceTemplate {};
+    : PortableInterceptor::ObjectReferenceTemplate 
+  {
+  };
 };
 
 #endif /* TAO_DEFAULT_ORT_PIDL */

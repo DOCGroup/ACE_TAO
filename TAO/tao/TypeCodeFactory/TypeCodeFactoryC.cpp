@@ -15,25 +15,32 @@
 //       Irvine, CA
 //       USA
 //       http://doc.ece.uci.edu/
+// and
+//       Institute for Software Integrated Systems
+//       Vanderbilt University
+//       Nashville, TN
+//       USA
+//       http://www.isis.vanderbilt.edu/
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:314
+// be/be_codegen.cpp:301
 
 
-#include "TypeCodeFactoryC.h"
+#include "TypeCodeFactory_Loader.h"
 #include "tao/Stub.h"
-#include "tao/Invocation.h"
-#include "tao/PortableInterceptor.h"
-
-#if TAO_HAS_INTERCEPTORS == 1
-#include "tao/RequestInfo_Util.h"
-#include "tao/ClientRequestInfo_i.h"
-#include "tao/ClientInterceptorAdapter.h"
-#endif  /* TAO_HAS_INTERCEPTORS == 1 */
-
+#include "tao/Invocation_Adapter.h"
+#include "tao/Object_T.h"
+#include "tao/Any_Impl_T.h"
+#include "tao/Any_Dual_Impl_T.h"
+#include "tao/Any_Basic_Impl_T.h"
+#include "tao/Basic_Arguments.h"
+#include "tao/Object_Argument_T.h"
+#include "tao/Special_Basic_Arguments.h"
+#include "tao/UB_String_Arguments.h"
+#include "tao/Var_Size_Argument_T.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -44,12 +51,96 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:61
+// be/be_visitor_arg_traits.cpp:59
 
-int CORBA::TypeCodeFactory::_tao_class_id = 0;
+// Arg traits specializations.
+namespace TAO
+{
+
+  // TAO_IDL - Generated from
+  // be/be_visitor_arg_traits.cpp:262
+
+#if !defined (__TAO_SEQ_CORBA_STRUCTMEMBER___ARG_TRAITS_CS_)
+#define __TAO_SEQ_CORBA_STRUCTMEMBER___ARG_TRAITS_CS_
+
+  ACE_TEMPLATE_SPECIALIZATION
+  class TAO_TypeCodeFactory_Export Arg_Traits<CORBA::StructMemberSeq>
+    : public
+        Var_Size_Arg_Traits_T<
+            CORBA::StructMemberSeq,
+            CORBA::StructMemberSeq_var,
+            CORBA::StructMemberSeq_out
+          >
+  {
+  };
+
+#endif /* end #if !defined */
+
+  // TAO_IDL - Generated from
+  // be/be_visitor_arg_traits.cpp:262
+
+#if !defined (__TAO_SEQ_CORBA_UNIONMEMBER___ARG_TRAITS_CS_)
+#define __TAO_SEQ_CORBA_UNIONMEMBER___ARG_TRAITS_CS_
+
+  ACE_TEMPLATE_SPECIALIZATION
+  class TAO_TypeCodeFactory_Export Arg_Traits<CORBA::UnionMemberSeq>
+    : public
+        Var_Size_Arg_Traits_T<
+            CORBA::UnionMemberSeq,
+            CORBA::UnionMemberSeq_var,
+            CORBA::UnionMemberSeq_out
+          >
+  {
+  };
+
+#endif /* end #if !defined */
+
+  // TAO_IDL - Generated from
+  // be/be_visitor_arg_traits.cpp:262
+
+#if !defined (__TAO_SEQ_CORBA_IDENTIFIER___ARG_TRAITS_CS_)
+#define __TAO_SEQ_CORBA_IDENTIFIER___ARG_TRAITS_CS_
+
+  ACE_TEMPLATE_SPECIALIZATION
+  class TAO_TypeCodeFactory_Export Arg_Traits<CORBA::EnumMemberSeq>
+    : public
+        Var_Size_Arg_Traits_T<
+            CORBA::EnumMemberSeq,
+            CORBA::EnumMemberSeq_var,
+            CORBA::EnumMemberSeq_out
+          >
+  {
+  };
+
+#endif /* end #if !defined */
+
+  // TAO_IDL - Generated from
+  // be/be_visitor_arg_traits.cpp:262
+
+#if !defined (__TAO_SEQ_CORBA_VALUEMEMBER___ARG_TRAITS_CS_)
+#define __TAO_SEQ_CORBA_VALUEMEMBER___ARG_TRAITS_CS_
+
+  ACE_TEMPLATE_SPECIALIZATION
+  class TAO_TypeCodeFactory_Export Arg_Traits<CORBA::ValueMemberSeq>
+    : public
+        Var_Size_Arg_Traits_T<
+            CORBA::ValueMemberSeq,
+            CORBA::ValueMemberSeq_var,
+            CORBA::ValueMemberSeq_out
+          >
+  {
+  };
+
+#endif /* end #if !defined */
+};
+
+// TAO_IDL - Generated from
+// be/be_visitor_interface/interface_cs.cpp:60
+
+// Traits specializations for CORBA::TypeCodeFactory.
 
 CORBA::TypeCodeFactory_ptr
-CORBA::tao_TypeCodeFactory_life::tao_duplicate (
+TAO::Objref_Traits<CORBA::TypeCodeFactory>::tao_duplicate (
     CORBA::TypeCodeFactory_ptr p
   )
 {
@@ -57,7 +148,7 @@ CORBA::tao_TypeCodeFactory_life::tao_duplicate (
 }
 
 void
-CORBA::tao_TypeCodeFactory_life::tao_release (
+TAO::Objref_Traits<CORBA::TypeCodeFactory>::tao_release (
     CORBA::TypeCodeFactory_ptr p
   )
 {
@@ -65,67 +156,25 @@ CORBA::tao_TypeCodeFactory_life::tao_release (
 }
 
 CORBA::TypeCodeFactory_ptr
-CORBA::tao_TypeCodeFactory_life::tao_nil (
-    void
-  )
+TAO::Objref_Traits<CORBA::TypeCodeFactory>::tao_nil (void)
 {
   return CORBA::TypeCodeFactory::_nil ();
 }
 
 CORBA::Boolean
-CORBA::tao_TypeCodeFactory_life::tao_marshal (
+TAO::Objref_Traits<CORBA::TypeCodeFactory>::tao_marshal (
     CORBA::TypeCodeFactory_ptr p,
-    TAO_OutputCDR &cdr
+    TAO_OutputCDR & cdr
   )
 {
   return p->marshal (cdr);
 }
 
-CORBA::TypeCodeFactory_ptr
-CORBA::tao_TypeCodeFactory_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return CORBA::TypeCodeFactory::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-CORBA::tao_TypeCodeFactory_cast::tao_upcast (
-    void *src
-  )
-{
-  CORBA::TypeCodeFactory **tmp =
-    ACE_static_cast (CORBA::TypeCodeFactory **, src);
-  return *tmp;
-}
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class
-    TAO_Objref_Var_T<
-        CORBA::TypeCodeFactory,
-        CORBA::tao_TypeCodeFactory_life
-      >;
-  template class
-    TAO_Objref_Out_T<
-        CORBA::TypeCodeFactory,
-        CORBA::tao_TypeCodeFactory_life
-      >;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate \
-    TAO_Objref_Var_T< \
-        CORBA::TypeCodeFactory, \
-        CORBA::tao_TypeCodeFactory_life \
-      >
-# pragma instantiate \
-    TAO_Objref_Out_T< \
-        CORBA::TypeCodeFactory, \
-        CORBA::tao_TypeCodeFactory_life \
-      >
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:232
+// Function pointer for collocation factory initialization.
+TAO::Collocation_Proxy_Broker *
+(*CORBA__TAO_TypeCodeFactory_Proxy_Broker_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  ) = 0;
 
 CORBA::TypeCodeFactory::TypeCodeFactory (void)
 {}
@@ -136,40 +185,21 @@ CORBA::TypeCodeFactory::~TypeCodeFactory (void)
 void
 CORBA::TypeCodeFactory::_tao_any_destructor (void *_tao_void_pointer)
 {
-  TypeCodeFactory *tmp = ACE_static_cast (TypeCodeFactory *, _tao_void_pointer);
-  CORBA::release (tmp);
+  TypeCodeFactory *_tao_tmp_pointer =
+    ACE_static_cast (TypeCodeFactory *, _tao_void_pointer);
+  CORBA::release (_tao_tmp_pointer);
 }
 
 CORBA::TypeCodeFactory_ptr
 CORBA::TypeCodeFactory::_narrow (
-    CORBA::Object_ptr obj
-    ACE_ENV_ARG_DECL
-  )
-{
-  return TypeCodeFactory::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::TypeCodeFactory_ptr
-CORBA::TypeCodeFactory::_unchecked_narrow (
-    CORBA::Object_ptr obj
+    CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (obj))
-    {
-      return TypeCodeFactory::_nil ();
-    }
-
-  return
-      ACE_reinterpret_cast (
-          TypeCodeFactory_ptr,
-          obj->_tao_QueryInterface (
-              ACE_reinterpret_cast (
-                  ptrdiff_t,
-                  &TypeCodeFactory::_tao_class_id
-                )
-            )
-        );
+  TypeCodeFactory_ptr proxy =
+    dynamic_cast<TypeCodeFactory_ptr> (_tao_objref);
+  proxy->_add_ref ();
+  return proxy;
 }
 
 CORBA::TypeCodeFactory_ptr
@@ -183,35 +213,33 @@ CORBA::TypeCodeFactory::_duplicate (TypeCodeFactory_ptr obj)
   return obj;
 }
 
-void *CORBA::TypeCodeFactory::_tao_QueryInterface (ptrdiff_t type)
+CORBA::Boolean
+CORBA::TypeCodeFactory::_is_a (
+    const char *value
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
 {
-  void *retv = 0;
-
-  if (type == ACE_reinterpret_cast (
-              ptrdiff_t,
-              &ACE_NESTED_CLASS (::CORBA, TypeCodeFactory)::_tao_class_id)
-            )
+  if (
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/CORBA/TypeCodeFactory:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/CORBA/LocalObject:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/CORBA/Object:1.0"
+        )
+     )
     {
-      retv = ACE_reinterpret_cast (void*, this);
+      return 1; // success using local knowledge
     }
-  else if (type == ACE_reinterpret_cast (
-               ptrdiff_t,
-               &CORBA::Object::_tao_class_id)
-             )
+  else
     {
-      retv =
-        ACE_reinterpret_cast (
-            void *,
-            ACE_static_cast (CORBA::Object_ptr, this)
-          );
+      return 0;
     }
-
-  if (retv != 0)
-    {
-      this->_add_ref ();
-    }
-
-  return retv;
 }
 
 const char* CORBA::TypeCodeFactory::_interface_repository_id (void) const
@@ -226,7 +254,7 @@ CORBA::TypeCodeFactory::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_CORBA_TypeCodeFactory[] =
 {
@@ -257,17 +285,14 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_TypeCodeFactory (
     sizeof (CORBA::TypeCodeFactory)
   );
 
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (
-    ::CORBA::TypeCode_ptr,
-    _tc_TypeCodeFactory,
-    &_tc_TAO_tc_CORBA_TypeCodeFactory
-  )
-TAO_NAMESPACE_END
+namespace CORBA
+{
+  ::CORBA::TypeCode_ptr _tc_TypeCodeFactory =
+    &_tc_TAO_tc_CORBA_TypeCodeFactory;
+}
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_cs.cpp:52
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 // Copying insertion.
 void
@@ -311,11 +336,321 @@ operator>>= (
       );
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
-    defined (ACE_HAS_GNU_REPO)
-template class TAO_Object_Manager<CORBA::TypeCodeFactory,CORBA::TypeCodeFactory_var,CORBA::tao_TypeCodeFactory_life>;
-template class TAO::Any_Impl_T<CORBA::TypeCodeFactory>;
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<CORBA::TypeCodeFactory>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<CORBA::TypeCodeFactory>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<CORBA::TypeCodeFactory>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
+
+// TAO_IDL - Generated from
+// be/be_visitor_root/root.cpp:1703
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+  template class
+    TAO::Any_Basic_Impl_T<
+        CORBA::SetOverrideType
+      >;
+
+  template class
+    TAO::Any_Dual_Impl_T<
+        CORBA::PolicyError
+      >;
+
+  template class
+    TAO::Any_Dual_Impl_T<
+        CORBA::InvalidPolicies
+      >;
+
+  template class
+    TAO::Any_Basic_Impl_T<
+        CORBA::TCKind
+      >;
+
+  template class
+    TAO::Any_Basic_Impl_T<
+        CORBA::exception_type
+      >;
+
+  template class
+    TAO::Any_Basic_Impl_T<
+        CORBA::ParameterMode
+      >;
+
+  template class
+    TAO::Any_Basic_Impl_T<
+        CORBA::DefinitionKind
+      >;
+
+#if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
+#define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
+
+  template class TAO::Arg_Traits<CORBA::ValueMemberSeq>;
+
+  template class
+    TAO::Var_Size_Arg_Traits<
+        CORBA::ValueMemberSeq,
+        CORBA::ValueMemberSeq_var,
+        CORBA::ValueMemberSeq_out
+      >;
+
+#endif /* end #if !defined */
+
+#if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
+#define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
+
+  template class TAO::Arg_Traits<CORBA::StructMemberSeq>;
+
+  template class
+    TAO::Var_Size_Arg_Traits<
+        CORBA::StructMemberSeq,
+        CORBA::StructMemberSeq_var,
+        CORBA::StructMemberSeq_out
+      >;
+
+#endif /* end #if !defined */
+
+#if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
+#define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
+
+  template class TAO::Arg_Traits<CORBA::UnionMemberSeq>;
+
+  template class
+    TAO::Var_Size_Arg_Traits<
+        CORBA::UnionMemberSeq,
+        CORBA::UnionMemberSeq_var,
+        CORBA::UnionMemberSeq_out
+      >;
+
+#endif /* end #if !defined */
+
+#if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
+#define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
+
+  template class TAO::Arg_Traits<CORBA::EnumMemberSeq>;
+
+  template class
+    TAO::Var_Size_Arg_Traits<
+        CORBA::EnumMemberSeq,
+        CORBA::EnumMemberSeq_var,
+        CORBA::EnumMemberSeq_out
+      >;
+
+#endif /* end #if !defined */
+
+  template class
+    TAO::Any_Basic_Impl_T<
+        CORBA::PrimitiveKind
+      >;
+
+  template class
+    TAO::Any_Basic_Impl_T<
+        CORBA::AttributeMode
+      >;
+
+  template class
+    TAO::Any_Basic_Impl_T<
+        CORBA::OperationMode
+      >;
+
+  template class
+    TAO::In_Var_Size_Argument_T<
+        CORBA::sequence
+      >;
+
+  template class
+    TAO::In_Var_Size_Argument_T<
+        CORBA::sequence
+      >;
+
+  template class
+    TAO::In_Var_Size_Argument_T<
+        CORBA::sequence
+      >;
+
+  template class
+    TAO::In_Var_Size_Argument_T<
+        CORBA::sequence
+      >;
+
+  template class
+    TAO_Objref_Var_T<
+        CORBA::TypeCodeFactory,
+        TAO::Objref_Traits<CORBA::TypeCodeFactory>
+      >;
+
+  template class
+    TAO_Objref_Out_T<
+        CORBA::TypeCodeFactory,
+        TAO::Objref_Traits<CORBA::TypeCodeFactory>
+      >;
+
+  template class
+    TAO::Any_Impl_T<
+        CORBA::TypeCodeFactory
+      >;
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<CORBA::TypeCodeFactory, CORBA::TypeCodeFactory_var,CORBA::tao_TypeCodeFactory_life>
-# pragma instantiate TAO::Any_Impl_T<CORBA::TypeCodeFactory>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+# pragma instantiate \
+    TAO::Any_Basic_Impl_T< \
+        CORBA::SetOverrideType \
+      >
+
+# pragma instantiate \
+    TAO::Any_Dual_Impl_T< \
+        CORBA::PolicyError \
+      >
+
+# pragma instantiate \
+    TAO::Any_Dual_Impl_T< \
+        CORBA::InvalidPolicies \
+      >
+
+# pragma instantiate \
+    TAO::Any_Basic_Impl_T< \
+        CORBA::TCKind \
+      >
+
+# pragma instantiate \
+    TAO::Any_Basic_Impl_T< \
+        CORBA::exception_type \
+      >
+
+# pragma instantiate \
+    TAO::Any_Basic_Impl_T< \
+        CORBA::ParameterMode \
+      >
+
+# pragma instantiate \
+    TAO::Any_Basic_Impl_T< \
+        CORBA::DefinitionKind \
+      >
+
+#if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
+#define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
+
+# pragma instantiate TAO::Arg_Traits<CORBA::ValueMemberSeq>
+
+# pragma instantiate \
+    TAO::Var_Size_Arg_Traits< \
+        CORBA::ValueMemberSeq, \
+        CORBA::ValueMemberSeq_var, \
+        CORBA::ValueMemberSeq_out \
+      >
+
+#endif /* end #if !defined */
+
+#if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
+#define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
+
+# pragma instantiate TAO::Arg_Traits<CORBA::StructMemberSeq>
+
+# pragma instantiate \
+    TAO::Var_Size_Arg_Traits< \
+        CORBA::StructMemberSeq, \
+        CORBA::StructMemberSeq_var, \
+        CORBA::StructMemberSeq_out \
+      >
+
+#endif /* end #if !defined */
+
+#if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
+#define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
+
+# pragma instantiate TAO::Arg_Traits<CORBA::UnionMemberSeq>
+
+# pragma instantiate \
+    TAO::Var_Size_Arg_Traits< \
+        CORBA::UnionMemberSeq, \
+        CORBA::UnionMemberSeq_var, \
+        CORBA::UnionMemberSeq_out \
+      >
+
+#endif /* end #if !defined */
+
+#if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
+#define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
+
+# pragma instantiate TAO::Arg_Traits<CORBA::EnumMemberSeq>
+
+# pragma instantiate \
+    TAO::Var_Size_Arg_Traits< \
+        CORBA::EnumMemberSeq, \
+        CORBA::EnumMemberSeq_var, \
+        CORBA::EnumMemberSeq_out \
+      >
+
+#endif /* end #if !defined */
+
+# pragma instantiate \
+    TAO::Any_Basic_Impl_T< \
+        CORBA::PrimitiveKind \
+      >
+
+# pragma instantiate \
+    TAO::Any_Basic_Impl_T< \
+        CORBA::AttributeMode \
+      >
+
+# pragma instantiate \
+    TAO::Any_Basic_Impl_T< \
+        CORBA::OperationMode \
+      >
+
+# pragma instantiate \
+    TAO::In_Var_Size_Argument_T< \
+        CORBA::sequence \
+      >
+
+# pragma instantiate \
+    TAO::In_Var_Size_Argument_T< \
+        CORBA::sequence \
+      >
+
+# pragma instantiate \
+    TAO::In_Var_Size_Argument_T< \
+        CORBA::sequence \
+      >
+
+# pragma instantiate \
+    TAO::In_Var_Size_Argument_T< \
+        CORBA::sequence \
+      >
+
+# pragma instantiate \
+    TAO_Objref_Var_T< \
+        CORBA::TypeCodeFactory, \
+        TAO::Objref_Traits<CORBA::TypeCodeFactory> \
+      >
+
+# pragma instantiate \
+    TAO_Objref_Out_T< \
+        CORBA::TypeCodeFactory, \
+        TAO::Objref_Traits<CORBA::TypeCodeFactory> \
+      >
+
+# pragma instantiate \
+    TAO::Any_Impl_T< \
+        CORBA::TypeCodeFactory \
+      >
+
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

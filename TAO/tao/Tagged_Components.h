@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_TAGGED_COMPONENTS_H
 #define TAO_TAGGED_COMPONENTS_H
 #include /**/ "ace/pre.h"

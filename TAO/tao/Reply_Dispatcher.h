@@ -1,6 +1,5 @@
 // This may look like C, but it's really -*- C++ -*-
 
-
 //=============================================================================
 /**
  *  @file     Reply_Dispatcher.h
@@ -13,7 +12,6 @@
  *  @author  Alexander Babu Arulanthu <alex@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef TAO_REPLY_DISPATCHER_H
 #define TAO_REPLY_DISPATCHER_H

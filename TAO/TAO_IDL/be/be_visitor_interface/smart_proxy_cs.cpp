@@ -43,9 +43,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
 
   if (be_global->gen_smart_proxies ())
     {
-
       TAO_OutStream *os = this->ctx_->stream ();
-
       this->ctx_->node (node);
 
       os->indent ();
@@ -343,29 +341,6 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
           << "}" << be_uidt_nl
           << "return this->proxy_.in ();" << be_uidt_nl
           << "}" << be_nl << be_nl;
-
-      os->indent ();
-      *os << "#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \\"
-          << be_idt_nl<<"defined (ACE_HAS_GNU_REPO)"<<be_uidt_nl
-          << "template class TAO_Singleton<";
-      *os << scope->full_name ();
-
-      // Only if there exists any nesting "::" is needed!
-      if (node->is_nested ())
-        *os << "::";
-      *os <<"TAO_" <<node->flat_name ()
-          << "_Proxy_Factory_Adapter, TAO_SYNCH_RECURSIVE_MUTEX >;"<<be_nl
-          << "#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)"
-          << be_nl
-          << "#pragma instantiate TAO_Singleton<";
-      *os << scope->full_name ();
-
-      // Only if there exists any nesting "::" is needed!
-      if (node->is_nested ())
-        *os << "::";
-      *os << "TAO_"<<node->flat_name ()
-          << "_Proxy_Factory_Adapter, TAO_SYNCH_RECURSIVE_MUTEX>"<<be_nl
-          << "#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */"<<be_nl<<be_nl;
     }
   else
     {

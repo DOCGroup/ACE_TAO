@@ -3,13 +3,14 @@
 
 // Implementation of Named Value List and NamedValue classes
 
-#include "tao/NVList.h"
+#include "NVList.h"
 
-#include "tao/Exception.h"
-#include "tao/BoundsC.h"
-#include "tao/debug.h"
-#include "tao/Typecode.h"
-#include "tao/Marshal.h"
+#include "Exception.h"
+#include "BoundsC.h"
+#include "debug.h"
+#include "Typecode.h"
+#include "Marshal.h"
+#include "CORBA_String.h"
 #include "ace/Auto_Ptr.h"
 
 #if !defined (__ACE_INLINE__)

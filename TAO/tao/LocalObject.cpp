@@ -10,6 +10,8 @@
 
 #include "PolicyC.h"
 #include "debug.h"
+#include "ace/Log_Msg.h"
+#include "ace/Guard_T.h"
 
 ACE_RCSID (tao,
            LocalObject,
@@ -249,4 +251,3 @@ TAO_Local_RefCounted_Object::_remove_ref (void)
 # pragma instantiate TAO_Pseudo_Out_T<CORBA::LocalObject, CORBA::LocalObject_var>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

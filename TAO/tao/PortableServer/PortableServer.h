@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_PORTABLESERVER_H
 #define TAO_PORTABLESERVER_H
 #include /**/ "ace/pre.h"

@@ -146,13 +146,13 @@ TAO_Transport::provide_handler (TAO_Connection_Handler_Set &handlers)
   handlers.insert (this->connection_handler_i ());
 }
 
-int
+bool
 TAO_Transport::idle_after_send (void)
 {
   return this->tms ()->idle_after_send ();
 }
 
-int
+bool
 TAO_Transport::idle_after_reply (void)
 {
   return this->tms ()->idle_after_reply ();
@@ -266,6 +266,12 @@ TAO_Transport::purge_entry (void)
 int
 TAO_Transport::make_idle (void)
 {
+  if (TAO_debug_level > 3)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - Transport[%d]::make_idle\n",
+                  this->id ()));
+    }
   return this->transport_cache_manager ().make_idle (this->cache_map_entry_);
 }
 

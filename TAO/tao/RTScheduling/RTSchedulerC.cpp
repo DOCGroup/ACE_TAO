@@ -26,20 +26,18 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:314
+// be/be_codegen.cpp:301
 
 
-#include "RTScheduler.h"
+#include "RTSchedulerC.h"
 #include "tao/Stub.h"
-#include "tao/Invocation.h"
-#include "tao/PortableInterceptor.h"
-
-#if TAO_HAS_INTERCEPTORS == 1
-#include "tao/RequestInfo_Util.h"
-#include "tao/ClientRequestInfo_i.h"
-#include "tao/ClientInterceptorAdapter.h"
-#endif  /* TAO_HAS_INTERCEPTORS == 1 */
-
+#include "tao/Invocation_Adapter.h"
+#include "tao/Object_T.h"
+#include "tao/Basic_Arguments.h"
+#include "tao/Object_Argument_T.h"
+#include "tao/Special_Basic_Arguments.h"
+#include "tao/UB_String_Arguments.h"
+#include "tao/Var_Size_Argument_T.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -50,88 +48,247 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:57
+// be/be_visitor_arg_traits.cpp:59
 
-int RTScheduling::ThreadAction::_tao_class_id = 0;
+// Arg traits specializations.
+namespace TAO
+{
+
+#if !defined (_CORBA_POLICY__ARG_TRAITS_CS_)
+#define _CORBA_POLICY__ARG_TRAITS_CS_
+
+  ACE_TEMPLATE_SPECIALIZATION
+  class TAO_RTScheduler_Export Arg_Traits<CORBA::Policy>
+    : public
+        Object_Arg_Traits_T<
+            CORBA::Policy_ptr,
+            CORBA::Policy_var,
+            CORBA::Policy_out,
+            TAO::Objref_Traits<CORBA::Policy>
+          >
+  {
+  };
+
+#endif /* end #if !defined */
+
+  // TAO_IDL - Generated from
+  // be/be_visitor_arg_traits.cpp:262
+
+#if !defined (__TAO_SEQ_CORBA_POLICY___ARG_TRAITS_CS_)
+#define __TAO_SEQ_CORBA_POLICY___ARG_TRAITS_CS_
+
+  ACE_TEMPLATE_SPECIALIZATION
+  class TAO_RTScheduler_Export Arg_Traits<CORBA::PolicyList>
+    : public
+        Var_Size_Arg_Traits_T<
+            CORBA::PolicyList,
+            CORBA::PolicyList_var,
+            CORBA::PolicyList_out
+          >
+  {
+  };
+
+#endif /* end #if !defined */
+
+#if !defined (_CORBA_POLICY__ARG_TRAITS_CS_)
+#define _CORBA_POLICY__ARG_TRAITS_CS_
+
+  ACE_TEMPLATE_SPECIALIZATION
+  class TAO_RTScheduler_Export Arg_Traits<CORBA::Policy>
+    : public
+        Object_Arg_Traits_T<
+            CORBA::Policy_ptr,
+            CORBA::Policy_var,
+            CORBA::Policy_out,
+            TAO::Objref_Traits<CORBA::Policy>
+          >
+  {
+  };
+
+#endif /* end #if !defined */
+
+#if !defined (_PORTABLEINTERCEPTOR_CLIENTREQUESTINFO__ARG_TRAITS_CS_)
+#define _PORTABLEINTERCEPTOR_CLIENTREQUESTINFO__ARG_TRAITS_CS_
+
+  ACE_TEMPLATE_SPECIALIZATION
+  class TAO_RTScheduler_Export Arg_Traits<PortableInterceptor::ClientRequestInfo>
+    : public
+        Object_Arg_Traits_T<
+            PortableInterceptor::ClientRequestInfo_ptr,
+            PortableInterceptor::ClientRequestInfo_var,
+            PortableInterceptor::ClientRequestInfo_out,
+            TAO::Objref_Traits<PortableInterceptor::ClientRequestInfo>
+          >
+  {
+  };
+
+#endif /* end #if !defined */
+
+#if !defined (_PORTABLEINTERCEPTOR_SERVERREQUESTINFO__ARG_TRAITS_CS_)
+#define _PORTABLEINTERCEPTOR_SERVERREQUESTINFO__ARG_TRAITS_CS_
+
+  ACE_TEMPLATE_SPECIALIZATION
+  class TAO_RTScheduler_Export Arg_Traits<PortableInterceptor::ServerRequestInfo>
+    : public
+        Object_Arg_Traits_T<
+            PortableInterceptor::ServerRequestInfo_ptr,
+            PortableInterceptor::ServerRequestInfo_var,
+            PortableInterceptor::ServerRequestInfo_out,
+            TAO::Objref_Traits<PortableInterceptor::ServerRequestInfo>
+          >
+  {
+  };
+
+#endif /* end #if !defined */
+
+#if !defined (_RTSCHEDULING_THREADACTION__ARG_TRAITS_CS_)
+#define _RTSCHEDULING_THREADACTION__ARG_TRAITS_CS_
+
+  ACE_TEMPLATE_SPECIALIZATION
+  class TAO_RTScheduler_Export Arg_Traits<RTScheduling::ThreadAction>
+    : public
+        Object_Arg_Traits_T<
+            RTScheduling::ThreadAction_ptr,
+            RTScheduling::ThreadAction_var,
+            RTScheduling::ThreadAction_out,
+            TAO::Objref_Traits<RTScheduling::ThreadAction>
+          >
+  {
+  };
+
+#endif /* end #if !defined */
+
+#if !defined (_RTSCHEDULING_DISTRIBUTABLETHREAD__ARG_TRAITS_CS_)
+#define _RTSCHEDULING_DISTRIBUTABLETHREAD__ARG_TRAITS_CS_
+
+  ACE_TEMPLATE_SPECIALIZATION
+  class TAO_RTScheduler_Export Arg_Traits<RTScheduling::DistributableThread>
+    : public
+        Object_Arg_Traits_T<
+            RTScheduling::DistributableThread_ptr,
+            RTScheduling::DistributableThread_var,
+            RTScheduling::DistributableThread_out,
+            TAO::Objref_Traits<RTScheduling::DistributableThread>
+          >
+  {
+  };
+
+#endif /* end #if !defined */
+
+  // TAO_IDL - Generated from
+  // be/be_visitor_arg_traits.cpp:390
+
+#if !defined (_RTSCHEDULING_DISTRIBUTABLETHREAD_DT_STATE__ARG_TRAITS_CS_)
+#define _RTSCHEDULING_DISTRIBUTABLETHREAD_DT_STATE__ARG_TRAITS_CS_
+
+  ACE_TEMPLATE_SPECIALIZATION
+  class TAO_RTScheduler_Export Arg_Traits<RTScheduling::DistributableThread::DT_State>
+    : public
+        Basic_Arg_Traits_T<
+            RTScheduling::DistributableThread::DT_State
+          >
+  {
+  };
+
+#endif /* end #if !defined */
+
+  // TAO_IDL - Generated from
+  // be/be_visitor_arg_traits.cpp:262
+
+#if !defined (__TAO_SEQ_CORBA_OCTET___ARG_TRAITS_CS_)
+#define __TAO_SEQ_CORBA_OCTET___ARG_TRAITS_CS_
+
+  ACE_TEMPLATE_SPECIALIZATION
+  class TAO_RTScheduler_Export Arg_Traits<RTScheduling::Current::IdType>
+    : public
+        Var_Size_Arg_Traits_T<
+            RTScheduling::Current::IdType,
+            RTScheduling::Current::IdType_var,
+            RTScheduling::Current::IdType_out
+          >
+  {
+  };
+
+#endif /* end #if !defined */
+
+  // TAO_IDL - Generated from
+  // be/be_visitor_arg_traits.cpp:262
+
+#if !defined (__TAO_SEQ_CORBA_STRING___ARG_TRAITS_CS_)
+#define __TAO_SEQ_CORBA_STRING___ARG_TRAITS_CS_
+
+  ACE_TEMPLATE_SPECIALIZATION
+  class TAO_RTScheduler_Export Arg_Traits<RTScheduling::Current::NameList>
+    : public
+        Var_Size_Arg_Traits_T<
+            RTScheduling::Current::NameList,
+            RTScheduling::Current::NameList_var,
+            RTScheduling::Current::NameList_out
+          >
+  {
+  };
+
+#endif /* end #if !defined */
+
+#if !defined (_RTSCHEDULING_RESOURCEMANAGER__ARG_TRAITS_CS_)
+#define _RTSCHEDULING_RESOURCEMANAGER__ARG_TRAITS_CS_
+
+  ACE_TEMPLATE_SPECIALIZATION
+  class TAO_RTScheduler_Export Arg_Traits<RTScheduling::ResourceManager>
+    : public
+        Object_Arg_Traits_T<
+            RTScheduling::ResourceManager_ptr,
+            RTScheduling::ResourceManager_var,
+            RTScheduling::ResourceManager_out,
+            TAO::Objref_Traits<RTScheduling::ResourceManager>
+          >
+  {
+  };
+
+#endif /* end #if !defined */
+};
+
+// TAO_IDL - Generated from
+// be/be_visitor_interface/interface_cs.cpp:60
+
+// Traits specializations for RTScheduling::ThreadAction.
 
 RTScheduling::ThreadAction_ptr
-RTScheduling::tao_ThreadAction_life::tao_duplicate (
-    ThreadAction_ptr p
+TAO::Objref_Traits<RTScheduling::ThreadAction>::tao_duplicate (
+    RTScheduling::ThreadAction_ptr p
   )
 {
-  return ThreadAction::_duplicate (p);
+  return RTScheduling::ThreadAction::_duplicate (p);
 }
 
 void
-RTScheduling::tao_ThreadAction_life::tao_release (
-    ThreadAction_ptr p
+TAO::Objref_Traits<RTScheduling::ThreadAction>::tao_release (
+    RTScheduling::ThreadAction_ptr p
   )
 {
   CORBA::release (p);
 }
 
 RTScheduling::ThreadAction_ptr
-RTScheduling::tao_ThreadAction_life::tao_nil (
-    void
-  )
+TAO::Objref_Traits<RTScheduling::ThreadAction>::tao_nil (void)
 {
-  return ThreadAction::_nil ();
+  return RTScheduling::ThreadAction::_nil ();
 }
 
 CORBA::Boolean
-RTScheduling::tao_ThreadAction_life::tao_marshal (
-    ThreadAction_ptr p,
-    TAO_OutputCDR &cdr
+TAO::Objref_Traits<RTScheduling::ThreadAction>::tao_marshal (
+    RTScheduling::ThreadAction_ptr p,
+    TAO_OutputCDR & cdr
   )
 {
   return p->marshal (cdr);
 }
 
-RTScheduling::ThreadAction_ptr
-RTScheduling::tao_ThreadAction_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return ThreadAction::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-RTScheduling::tao_ThreadAction_cast::tao_upcast (
-    void *src
-  )
-{
-  ThreadAction **tmp =
-    ACE_static_cast (ThreadAction **, src);
-  return *tmp;
-}
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class
-    TAO_Objref_Var_T<
-        RTScheduling::ThreadAction,
-        RTScheduling::tao_ThreadAction_life
-      >;
-  template class
-    TAO_Objref_Out_T<
-        RTScheduling::ThreadAction,
-        RTScheduling::tao_ThreadAction_life
-      >;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate \
-    TAO_Objref_Var_T< \
-        RTScheduling::ThreadAction, \
-        RTScheduling::tao_ThreadAction_life \
-      >
-# pragma instantiate \
-    TAO_Objref_Out_T< \
-        RTScheduling::ThreadAction, \
-        RTScheduling::tao_ThreadAction_life \
-      >
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-// TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:239
+// Function pointer for collocation factory initialization.
+TAO::Collocation_Proxy_Broker *
+(*RTScheduling__TAO_ThreadAction_Proxy_Broker_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  ) = 0;
 
 RTScheduling::ThreadAction::ThreadAction (void)
 {}
@@ -139,43 +296,16 @@ RTScheduling::ThreadAction::ThreadAction (void)
 RTScheduling::ThreadAction::~ThreadAction (void)
 {}
 
-void
-RTScheduling::ThreadAction::_tao_any_destructor (void *_tao_void_pointer)
-{
-  ThreadAction *tmp = ACE_static_cast (ThreadAction *, _tao_void_pointer);
-  CORBA::release (tmp);
-}
-
 RTScheduling::ThreadAction_ptr
 RTScheduling::ThreadAction::_narrow (
-    CORBA::Object_ptr obj
-    ACE_ENV_ARG_DECL
-  )
-{
-  return ThreadAction::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
-}
-
-RTScheduling::ThreadAction_ptr
-RTScheduling::ThreadAction::_unchecked_narrow (
-    CORBA::Object_ptr obj
+    CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (obj))
-    {
-      return ThreadAction::_nil ();
-    }
-
-  return
-      ACE_reinterpret_cast (
-          ThreadAction_ptr,
-          obj->_tao_QueryInterface (
-              ACE_reinterpret_cast (
-                  ptrdiff_t,
-                  &ThreadAction::_tao_class_id
-                )
-            )
-        );
+  ThreadAction_ptr proxy =
+    dynamic_cast<ThreadAction_ptr> (_tao_objref);
+  proxy->_add_ref ();
+  return proxy;
 }
 
 RTScheduling::ThreadAction_ptr
@@ -189,35 +319,33 @@ RTScheduling::ThreadAction::_duplicate (ThreadAction_ptr obj)
   return obj;
 }
 
-void *RTScheduling::ThreadAction::_tao_QueryInterface (ptrdiff_t type)
+CORBA::Boolean
+RTScheduling::ThreadAction::_is_a (
+    const char *value
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
 {
-  void *retv = 0;
-
-  if (type == ACE_reinterpret_cast (
-              ptrdiff_t,
-              &ACE_NESTED_CLASS (::RTScheduling, ThreadAction)::_tao_class_id)
-            )
+  if (
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:RTScheduling/ThreadAction:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/CORBA/LocalObject:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/CORBA/Object:1.0"
+        )
+     )
     {
-      retv = ACE_reinterpret_cast (void*, this);
+      return 1; // success using local knowledge
     }
-  else if (type == ACE_reinterpret_cast (
-               ptrdiff_t,
-               &CORBA::Object::_tao_class_id)
-             )
+  else
     {
-      retv =
-        ACE_reinterpret_cast (
-            void *,
-            ACE_static_cast (CORBA::Object_ptr, this)
-          );
+      return 0;
     }
-
-  if (retv != 0)
-    {
-      this->_add_ref ();
-    }
-
-  return retv;
 }
 
 const char* RTScheduling::ThreadAction::_interface_repository_id (void) const
@@ -262,98 +390,53 @@ static CORBA::TypeCode _tc_TAO_tc_RTScheduling_ThreadAction (
     sizeof (RTScheduling::ThreadAction)
   );
 
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (RTScheduling)
-TAO_NAMESPACE_DEFINE (
-    ::CORBA::TypeCode_ptr,
-    _tc_ThreadAction,
-    &_tc_TAO_tc_RTScheduling_ThreadAction
-  )
-TAO_NAMESPACE_END
+namespace RTScheduling
+{
+  ::CORBA::TypeCode_ptr _tc_ThreadAction =
+    &_tc_TAO_tc_RTScheduling_ThreadAction;
+}
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:57
+// be/be_visitor_interface/interface_cs.cpp:60
 
-int RTScheduling::DistributableThread::_tao_class_id = 0;
+// Traits specializations for RTScheduling::DistributableThread.
 
 RTScheduling::DistributableThread_ptr
-RTScheduling::tao_DistributableThread_life::tao_duplicate (
-    DistributableThread_ptr p
+TAO::Objref_Traits<RTScheduling::DistributableThread>::tao_duplicate (
+    RTScheduling::DistributableThread_ptr p
   )
 {
-  return DistributableThread::_duplicate (p);
+  return RTScheduling::DistributableThread::_duplicate (p);
 }
 
 void
-RTScheduling::tao_DistributableThread_life::tao_release (
-    DistributableThread_ptr p
+TAO::Objref_Traits<RTScheduling::DistributableThread>::tao_release (
+    RTScheduling::DistributableThread_ptr p
   )
 {
   CORBA::release (p);
 }
 
 RTScheduling::DistributableThread_ptr
-RTScheduling::tao_DistributableThread_life::tao_nil (
-    void
-  )
+TAO::Objref_Traits<RTScheduling::DistributableThread>::tao_nil (void)
 {
-  return DistributableThread::_nil ();
+  return RTScheduling::DistributableThread::_nil ();
 }
 
 CORBA::Boolean
-RTScheduling::tao_DistributableThread_life::tao_marshal (
-    DistributableThread_ptr p,
-    TAO_OutputCDR &cdr
+TAO::Objref_Traits<RTScheduling::DistributableThread>::tao_marshal (
+    RTScheduling::DistributableThread_ptr p,
+    TAO_OutputCDR & cdr
   )
 {
   return p->marshal (cdr);
 }
 
-RTScheduling::DistributableThread_ptr
-RTScheduling::tao_DistributableThread_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return DistributableThread::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-RTScheduling::tao_DistributableThread_cast::tao_upcast (
-    void *src
-  )
-{
-  DistributableThread **tmp =
-    ACE_static_cast (DistributableThread **, src);
-  return *tmp;
-}
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class
-    TAO_Objref_Var_T<
-        RTScheduling::DistributableThread,
-        RTScheduling::tao_DistributableThread_life
-      >;
-  template class
-    TAO_Objref_Out_T<
-        RTScheduling::DistributableThread,
-        RTScheduling::tao_DistributableThread_life
-      >;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate \
-    TAO_Objref_Var_T< \
-        RTScheduling::DistributableThread, \
-        RTScheduling::tao_DistributableThread_life \
-      >
-# pragma instantiate \
-    TAO_Objref_Out_T< \
-        RTScheduling::DistributableThread, \
-        RTScheduling::tao_DistributableThread_life \
-      >
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-// TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:239
+// Function pointer for collocation factory initialization.
+TAO::Collocation_Proxy_Broker *
+(*RTScheduling__TAO_DistributableThread_Proxy_Broker_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  ) = 0;
 
 RTScheduling::DistributableThread::DistributableThread (void)
 {}
@@ -361,43 +444,16 @@ RTScheduling::DistributableThread::DistributableThread (void)
 RTScheduling::DistributableThread::~DistributableThread (void)
 {}
 
-void
-RTScheduling::DistributableThread::_tao_any_destructor (void *_tao_void_pointer)
-{
-  DistributableThread *tmp = ACE_static_cast (DistributableThread *, _tao_void_pointer);
-  CORBA::release (tmp);
-}
-
 RTScheduling::DistributableThread_ptr
 RTScheduling::DistributableThread::_narrow (
-    CORBA::Object_ptr obj
-    ACE_ENV_ARG_DECL
-  )
-{
-  return DistributableThread::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
-}
-
-RTScheduling::DistributableThread_ptr
-RTScheduling::DistributableThread::_unchecked_narrow (
-    CORBA::Object_ptr obj
+    CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (obj))
-    {
-      return DistributableThread::_nil ();
-    }
-
-  return
-      ACE_reinterpret_cast (
-          DistributableThread_ptr,
-          obj->_tao_QueryInterface (
-              ACE_reinterpret_cast (
-                  ptrdiff_t,
-                  &DistributableThread::_tao_class_id
-                )
-            )
-        );
+  DistributableThread_ptr proxy =
+    dynamic_cast<DistributableThread_ptr> (_tao_objref);
+  proxy->_add_ref ();
+  return proxy;
 }
 
 RTScheduling::DistributableThread_ptr
@@ -411,35 +467,33 @@ RTScheduling::DistributableThread::_duplicate (DistributableThread_ptr obj)
   return obj;
 }
 
-void *RTScheduling::DistributableThread::_tao_QueryInterface (ptrdiff_t type)
+CORBA::Boolean
+RTScheduling::DistributableThread::_is_a (
+    const char *value
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
 {
-  void *retv = 0;
-
-  if (type == ACE_reinterpret_cast (
-              ptrdiff_t,
-              &ACE_NESTED_CLASS (::RTScheduling, DistributableThread)::_tao_class_id)
-            )
+  if (
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:RTScheduling/DistributableThread:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/CORBA/LocalObject:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/CORBA/Object:1.0"
+        )
+     )
     {
-      retv = ACE_reinterpret_cast (void*, this);
+      return 1; // success using local knowledge
     }
-  else if (type == ACE_reinterpret_cast (
-               ptrdiff_t,
-               &CORBA::Object::_tao_class_id)
-             )
+  else
     {
-      retv =
-        ACE_reinterpret_cast (
-            void *,
-            ACE_static_cast (CORBA::Object_ptr, this)
-          );
+      return 0;
     }
-
-  if (retv != 0)
-    {
-      this->_add_ref ();
-    }
-
-  return retv;
 }
 
 const char* RTScheduling::DistributableThread::_interface_repository_id (void) const
@@ -487,224 +541,53 @@ static CORBA::TypeCode _tc_TAO_tc_RTScheduling_DistributableThread (
     sizeof (RTScheduling::DistributableThread)
   );
 
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (RTScheduling)
-TAO_NAMESPACE_DEFINE (
-    ::CORBA::TypeCode_ptr,
-    _tc_DistributableThread,
-    &_tc_TAO_tc_RTScheduling_DistributableThread
-  )
-TAO_NAMESPACE_END
+namespace RTScheduling
+{
+  ::CORBA::TypeCode_ptr _tc_DistributableThread =
+    &_tc_TAO_tc_RTScheduling_DistributableThread;
+}
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:57
+// be/be_visitor_interface/interface_cs.cpp:60
 
-int RTScheduling::Current::_tao_class_id = 0;
+// Traits specializations for RTScheduling::Current.
 
 RTScheduling::Current_ptr
-RTScheduling::tao_Current_life::tao_duplicate (
-    Current_ptr p
+TAO::Objref_Traits<RTScheduling::Current>::tao_duplicate (
+    RTScheduling::Current_ptr p
   )
 {
-  return Current::_duplicate (p);
+  return RTScheduling::Current::_duplicate (p);
 }
 
 void
-RTScheduling::tao_Current_life::tao_release (
-    Current_ptr p
+TAO::Objref_Traits<RTScheduling::Current>::tao_release (
+    RTScheduling::Current_ptr p
   )
 {
   CORBA::release (p);
 }
 
 RTScheduling::Current_ptr
-RTScheduling::tao_Current_life::tao_nil (
-    void
-  )
+TAO::Objref_Traits<RTScheduling::Current>::tao_nil (void)
 {
-  return Current::_nil ();
+  return RTScheduling::Current::_nil ();
 }
 
 CORBA::Boolean
-RTScheduling::tao_Current_life::tao_marshal (
-    Current_ptr p,
-    TAO_OutputCDR &cdr
+TAO::Objref_Traits<RTScheduling::Current>::tao_marshal (
+    RTScheduling::Current_ptr p,
+    TAO_OutputCDR & cdr
   )
 {
   return p->marshal (cdr);
 }
 
-RTScheduling::Current_ptr
-RTScheduling::tao_Current_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return Current::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-RTScheduling::tao_Current_cast::tao_upcast (
-    void *src
-  )
-{
-  Current **tmp =
-    ACE_static_cast (Current **, src);
-  return *tmp;
-}
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class
-    TAO_Objref_Var_T<
-        RTScheduling::Current,
-        RTScheduling::tao_Current_life
-      >;
-  template class
-    TAO_Objref_Out_T<
-        RTScheduling::Current,
-        RTScheduling::tao_Current_life
-      >;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate \
-    TAO_Objref_Var_T< \
-        RTScheduling::Current, \
-        RTScheduling::tao_Current_life \
-      >
-# pragma instantiate \
-    TAO_Objref_Out_T< \
-        RTScheduling::Current, \
-        RTScheduling::tao_Current_life \
-      >
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-// TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:239
-
-RTScheduling::Current::Current (void)
-{}
-
-RTScheduling::Current::~Current (void)
-{}
-
-void
-RTScheduling::Current::_tao_any_destructor (void *_tao_void_pointer)
-{
-  Current *tmp = ACE_static_cast (Current *, _tao_void_pointer);
-  CORBA::release (tmp);
-}
-
-RTScheduling::Current_ptr
-RTScheduling::Current::_narrow (
+// Function pointer for collocation factory initialization.
+TAO::Collocation_Proxy_Broker *
+(*RTScheduling__TAO_Current_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
-    ACE_ENV_ARG_DECL
-  )
-{
-  return Current::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
-}
-
-RTScheduling::Current_ptr
-RTScheduling::Current::_unchecked_narrow (
-    CORBA::Object_ptr obj
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
-{
-  if (CORBA::is_nil (obj))
-    {
-      return Current::_nil ();
-    }
-
-  return
-      ACE_reinterpret_cast (
-          Current_ptr,
-          obj->_tao_QueryInterface (
-              ACE_reinterpret_cast (
-                  ptrdiff_t,
-                  &Current::_tao_class_id
-                )
-            )
-        );
-}
-
-RTScheduling::Current_ptr
-RTScheduling::Current::_duplicate (Current_ptr obj)
-{
-  if (! CORBA::is_nil (obj))
-    {
-      obj->_add_ref ();
-    }
-
-  return obj;
-}
-
-void *RTScheduling::Current::_tao_QueryInterface (ptrdiff_t type)
-{
-  void *retv = 0;
-
-  if (type == ACE_reinterpret_cast (
-              ptrdiff_t,
-              &ACE_NESTED_CLASS (::RTScheduling, Current)::_tao_class_id)
-            )
-    {
-      retv = ACE_reinterpret_cast (void*, this);
-    }
-  else if (type == ACE_reinterpret_cast (
-              ptrdiff_t,
-              &::RTCORBA::Current::_tao_class_id)
-            )
-    {
-      retv =
-        ACE_reinterpret_cast (
-            void *,
-            ACE_static_cast (
-                RTCORBA::Current_ptr,
-                this
-              )
-          );
-    }
-  else if (type == ACE_reinterpret_cast (
-              ptrdiff_t,
-              &::CORBA::Current::_tao_class_id)
-            )
-    {
-      retv =
-        ACE_reinterpret_cast (
-            void *,
-            ACE_static_cast (
-                CORBA::Current_ptr,
-                this
-              )
-          );
-    }
-  else if (type == ACE_reinterpret_cast (
-               ptrdiff_t,
-               &CORBA::Object::_tao_class_id)
-             )
-    {
-      retv =
-        ACE_reinterpret_cast (
-            void *,
-            ACE_static_cast (CORBA::Object_ptr, this)
-          );
-    }
-
-  if (retv != 0)
-    {
-      this->_add_ref ();
-    }
-
-  return retv;
-}
-
-const char* RTScheduling::Current::_interface_repository_id (void) const
-{
-  return "IDL:RTScheduling/Current:1.0";
-}
-
-CORBA::Boolean
-RTScheduling::Current::marshal (TAO_OutputCDR &)
-{
-  return 0;
-}
+  ) = 0;
 
 // TAO_IDL - Generated from
 // be/be_visitor_exception/exception_cs.cpp:63
@@ -734,12 +617,6 @@ RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE::operator= (const ::RTS
 {
   this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
   return *this;
-}
-
-void RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE::_tao_any_destructor (void *_tao_void_pointer)
-{
-  UNSUPPORTED_SCHEDULING_DISCIPLINE *tmp = ACE_static_cast (UNSUPPORTED_SCHEDULING_DISCIPLINE*, _tao_void_pointer);
-  delete tmp;
 }
 
 RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE *
@@ -849,7 +726,7 @@ static CORBA::TypeCode _tc_TAO_tc_RTScheduling_Current_UNSUPPORTED_SCHEDULING_DI
   &_tc_TAO_tc_RTScheduling_Current_UNSUPPORTED_SCHEDULING_DISCIPLINE;
 
 // TAO_IDL - Generated from
-// be/be_visitor_sequence/sequence_cs.cpp:72
+// be/be_visitor_sequence/sequence_cs.cpp:66
 
 #if !defined (_RTSCHEDULING_CURRENT_IDTYPE_CS_)
 #define _RTSCHEDULING_CURRENT_IDTYPE_CS_
@@ -889,62 +766,6 @@ RTScheduling::Current::IdType::IdType (
 
 RTScheduling::Current::IdType::~IdType (void)
 {}
-
-void RTScheduling::Current::IdType::_tao_any_destructor (
-    void * _tao_void_pointer
-  )
-{
-  IdType * tmp =
-    ACE_static_cast (
-        IdType *,
-        _tao_void_pointer
-      );
-  delete tmp;
-}
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class
-  TAO_FixedSeq_Var_T<
-      RTScheduling::Current::IdType,
-      CORBA::Octet
-    >;
-
-template class
-  TAO_Seq_Var_Base_T<
-      RTScheduling::Current::IdType,
-      CORBA::Octet
-    >;
-
-template class
-  TAO_Seq_Out_T<
-      RTScheduling::Current::IdType,
-      RTScheduling::Current::IdType_var,
-      CORBA::Octet
-    >;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate \
-  TAO_FixedSeq_Var_T< \
-      IdType, \
-      CORBA::Octet \
-    >
-
-# pragma instantiate \
-  TAO_Seq_Var_Base_T< \
-      IdType, \
-      CORBA::Octet \
-    >
-
-# pragma instantiate \
-  TAO_Seq_Out_T< \
-      IdType, \
-      IdType_var, \
-      CORBA::Octet \
-    >
-
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* end #if !defined */
 
@@ -988,7 +809,7 @@ static CORBA::TypeCode _tc_TAO_tc_RTScheduling_Current_IdType (
   &_tc_TAO_tc_RTScheduling_Current_IdType;
 
 // TAO_IDL - Generated from
-// be/be_visitor_sequence/sequence_cs.cpp:72
+// be/be_visitor_sequence/sequence_cs.cpp:66
 
 #if !defined (_RTSCHEDULING_CURRENT_NAMELIST_CS_)
 #define _RTSCHEDULING_CURRENT_NAMELIST_CS_
@@ -1022,62 +843,6 @@ RTScheduling::Current::NameList::NameList (
 
 RTScheduling::Current::NameList::~NameList (void)
 {}
-
-void RTScheduling::Current::NameList::_tao_any_destructor (
-    void * _tao_void_pointer
-  )
-{
-  NameList * tmp =
-    ACE_static_cast (
-        NameList *,
-        _tao_void_pointer
-      );
-  delete tmp;
-}
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class
-  TAO_MngSeq_Var_T<
-      RTScheduling::Current::NameList,
-      TAO_SeqElem_String_Manager
-    >;
-
-template class
-  TAO_Seq_Var_Base_T<
-      RTScheduling::Current::NameList,
-      TAO_SeqElem_String_Manager
-    >;
-
-template class
-  TAO_MngSeq_Out_T<
-      RTScheduling::Current::NameList,
-      RTScheduling::Current::NameList_var,
-      TAO_SeqElem_String_Manager
-    >;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate \
-  TAO_MngSeq_Var_T< \
-      RTScheduling::Current::NameList, \
-      TAO_SeqElem_String_Manager \
-    >
-
-# pragma instantiate \
-  TAO_Seq_Var_Base_T< \
-      RTScheduling::Current::NameList, \
-      TAO_SeqElem_String_Manager \
-    >
-
-# pragma instantiate \
-  TAO_MngSeq_Out_T< \
-      RTScheduling::Current::NameList, \
-      RTScheduling::Current::NameList_var, \
-      TAO_SeqElem_String_Manager \
-    >
-
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* end #if !defined */
 
@@ -1122,6 +887,83 @@ static CORBA::TypeCode _tc_TAO_tc_RTScheduling_Current_NameList (
 ::CORBA::TypeCode_ptr RTScheduling::Current::_tc_NameList =
   &_tc_TAO_tc_RTScheduling_Current_NameList;
 
+RTScheduling::Current::Current (void)
+{}
+
+RTScheduling::Current::~Current (void)
+{}
+
+RTScheduling::Current_ptr
+RTScheduling::Current::_narrow (
+    CORBA::Object_ptr _tao_objref
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  Current_ptr proxy =
+    dynamic_cast<Current_ptr> (_tao_objref);
+  proxy->_add_ref ();
+  return proxy;
+}
+
+RTScheduling::Current_ptr
+RTScheduling::Current::_duplicate (Current_ptr obj)
+{
+  if (! CORBA::is_nil (obj))
+    {
+      obj->_add_ref ();
+    }
+
+  return obj;
+}
+
+CORBA::Boolean
+RTScheduling::Current::_is_a (
+    const char *value
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  if (
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/CORBA/Current:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/RTCORBA/Current:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:RTScheduling/Current:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/CORBA/LocalObject:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/CORBA/Object:1.0"
+        )
+     )
+    {
+      return 1; // success using local knowledge
+    }
+  else
+    {
+      return 0;
+    }
+}
+
+const char* RTScheduling::Current::_interface_repository_id (void) const
+{
+  return "IDL:RTScheduling/Current:1.0";
+}
+
+CORBA::Boolean
+RTScheduling::Current::marshal (TAO_OutputCDR &)
+{
+  return 0;
+}
+
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/typecode_defn.cpp:284
 
@@ -1150,98 +992,53 @@ static CORBA::TypeCode _tc_TAO_tc_RTScheduling_Current (
     sizeof (RTScheduling::Current)
   );
 
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (RTScheduling)
-TAO_NAMESPACE_DEFINE (
-    ::CORBA::TypeCode_ptr,
-    _tc_Current,
-    &_tc_TAO_tc_RTScheduling_Current
-  )
-TAO_NAMESPACE_END
+namespace RTScheduling
+{
+  ::CORBA::TypeCode_ptr _tc_Current =
+    &_tc_TAO_tc_RTScheduling_Current;
+}
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:57
+// be/be_visitor_interface/interface_cs.cpp:60
 
-int RTScheduling::ResourceManager::_tao_class_id = 0;
+// Traits specializations for RTScheduling::ResourceManager.
 
 RTScheduling::ResourceManager_ptr
-RTScheduling::tao_ResourceManager_life::tao_duplicate (
-    ResourceManager_ptr p
+TAO::Objref_Traits<RTScheduling::ResourceManager>::tao_duplicate (
+    RTScheduling::ResourceManager_ptr p
   )
 {
-  return ResourceManager::_duplicate (p);
+  return RTScheduling::ResourceManager::_duplicate (p);
 }
 
 void
-RTScheduling::tao_ResourceManager_life::tao_release (
-    ResourceManager_ptr p
+TAO::Objref_Traits<RTScheduling::ResourceManager>::tao_release (
+    RTScheduling::ResourceManager_ptr p
   )
 {
   CORBA::release (p);
 }
 
 RTScheduling::ResourceManager_ptr
-RTScheduling::tao_ResourceManager_life::tao_nil (
-    void
-  )
+TAO::Objref_Traits<RTScheduling::ResourceManager>::tao_nil (void)
 {
-  return ResourceManager::_nil ();
+  return RTScheduling::ResourceManager::_nil ();
 }
 
 CORBA::Boolean
-RTScheduling::tao_ResourceManager_life::tao_marshal (
-    ResourceManager_ptr p,
-    TAO_OutputCDR &cdr
+TAO::Objref_Traits<RTScheduling::ResourceManager>::tao_marshal (
+    RTScheduling::ResourceManager_ptr p,
+    TAO_OutputCDR & cdr
   )
 {
   return p->marshal (cdr);
 }
 
-RTScheduling::ResourceManager_ptr
-RTScheduling::tao_ResourceManager_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return ResourceManager::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-RTScheduling::tao_ResourceManager_cast::tao_upcast (
-    void *src
-  )
-{
-  ResourceManager **tmp =
-    ACE_static_cast (ResourceManager **, src);
-  return *tmp;
-}
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class
-    TAO_Objref_Var_T<
-        RTScheduling::ResourceManager,
-        RTScheduling::tao_ResourceManager_life
-      >;
-  template class
-    TAO_Objref_Out_T<
-        RTScheduling::ResourceManager,
-        RTScheduling::tao_ResourceManager_life
-      >;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate \
-    TAO_Objref_Var_T< \
-        RTScheduling::ResourceManager, \
-        RTScheduling::tao_ResourceManager_life \
-      >
-# pragma instantiate \
-    TAO_Objref_Out_T< \
-        RTScheduling::ResourceManager, \
-        RTScheduling::tao_ResourceManager_life \
-      >
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-// TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:239
+// Function pointer for collocation factory initialization.
+TAO::Collocation_Proxy_Broker *
+(*RTScheduling__TAO_ResourceManager_Proxy_Broker_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  ) = 0;
 
 RTScheduling::ResourceManager::ResourceManager (void)
 {}
@@ -1249,43 +1046,16 @@ RTScheduling::ResourceManager::ResourceManager (void)
 RTScheduling::ResourceManager::~ResourceManager (void)
 {}
 
-void
-RTScheduling::ResourceManager::_tao_any_destructor (void *_tao_void_pointer)
-{
-  ResourceManager *tmp = ACE_static_cast (ResourceManager *, _tao_void_pointer);
-  CORBA::release (tmp);
-}
-
 RTScheduling::ResourceManager_ptr
 RTScheduling::ResourceManager::_narrow (
-    CORBA::Object_ptr obj
-    ACE_ENV_ARG_DECL
-  )
-{
-  return ResourceManager::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
-}
-
-RTScheduling::ResourceManager_ptr
-RTScheduling::ResourceManager::_unchecked_narrow (
-    CORBA::Object_ptr obj
+    CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (obj))
-    {
-      return ResourceManager::_nil ();
-    }
-
-  return
-      ACE_reinterpret_cast (
-          ResourceManager_ptr,
-          obj->_tao_QueryInterface (
-              ACE_reinterpret_cast (
-                  ptrdiff_t,
-                  &ResourceManager::_tao_class_id
-                )
-            )
-        );
+  ResourceManager_ptr proxy =
+    dynamic_cast<ResourceManager_ptr> (_tao_objref);
+  proxy->_add_ref ();
+  return proxy;
 }
 
 RTScheduling::ResourceManager_ptr
@@ -1299,49 +1069,37 @@ RTScheduling::ResourceManager::_duplicate (ResourceManager_ptr obj)
   return obj;
 }
 
-void *RTScheduling::ResourceManager::_tao_QueryInterface (ptrdiff_t type)
+CORBA::Boolean
+RTScheduling::ResourceManager::_is_a (
+    const char *value
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
 {
-  void *retv = 0;
-
-  if (type == ACE_reinterpret_cast (
-              ptrdiff_t,
-              &ACE_NESTED_CLASS (::RTScheduling, ResourceManager)::_tao_class_id)
-            )
+  if (
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/RTCORBA/Mutex:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:RTScheduling/ResourceManager:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/CORBA/LocalObject:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/CORBA/Object:1.0"
+        )
+     )
     {
-      retv = ACE_reinterpret_cast (void*, this);
+      return 1; // success using local knowledge
     }
-  else if (type == ACE_reinterpret_cast (
-              ptrdiff_t,
-              &::RTCORBA::Mutex::_tao_class_id)
-            )
+  else
     {
-      retv =
-        ACE_reinterpret_cast (
-            void *,
-            ACE_static_cast (
-                RTCORBA::Mutex_ptr,
-                this
-              )
-          );
+      return 0;
     }
-  else if (type == ACE_reinterpret_cast (
-               ptrdiff_t,
-               &CORBA::Object::_tao_class_id)
-             )
-    {
-      retv =
-        ACE_reinterpret_cast (
-            void *,
-            ACE_static_cast (CORBA::Object_ptr, this)
-          );
-    }
-
-  if (retv != 0)
-    {
-      this->_add_ref ();
-    }
-
-  return retv;
 }
 
 const char* RTScheduling::ResourceManager::_interface_repository_id (void) const
@@ -1387,196 +1145,53 @@ static CORBA::TypeCode _tc_TAO_tc_RTScheduling_ResourceManager (
     sizeof (RTScheduling::ResourceManager)
   );
 
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (RTScheduling)
-TAO_NAMESPACE_DEFINE (
-    ::CORBA::TypeCode_ptr,
-    _tc_ResourceManager,
-    &_tc_TAO_tc_RTScheduling_ResourceManager
-  )
-TAO_NAMESPACE_END
+namespace RTScheduling
+{
+  ::CORBA::TypeCode_ptr _tc_ResourceManager =
+    &_tc_TAO_tc_RTScheduling_ResourceManager;
+}
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:57
+// be/be_visitor_interface/interface_cs.cpp:60
 
-int RTScheduling::Scheduler::_tao_class_id = 0;
+// Traits specializations for RTScheduling::Scheduler.
 
 RTScheduling::Scheduler_ptr
-RTScheduling::tao_Scheduler_life::tao_duplicate (
-    Scheduler_ptr p
+TAO::Objref_Traits<RTScheduling::Scheduler>::tao_duplicate (
+    RTScheduling::Scheduler_ptr p
   )
 {
-  return Scheduler::_duplicate (p);
+  return RTScheduling::Scheduler::_duplicate (p);
 }
 
 void
-RTScheduling::tao_Scheduler_life::tao_release (
-    Scheduler_ptr p
+TAO::Objref_Traits<RTScheduling::Scheduler>::tao_release (
+    RTScheduling::Scheduler_ptr p
   )
 {
   CORBA::release (p);
 }
 
 RTScheduling::Scheduler_ptr
-RTScheduling::tao_Scheduler_life::tao_nil (
-    void
-  )
+TAO::Objref_Traits<RTScheduling::Scheduler>::tao_nil (void)
 {
-  return Scheduler::_nil ();
+  return RTScheduling::Scheduler::_nil ();
 }
 
 CORBA::Boolean
-RTScheduling::tao_Scheduler_life::tao_marshal (
-    Scheduler_ptr p,
-    TAO_OutputCDR &cdr
+TAO::Objref_Traits<RTScheduling::Scheduler>::tao_marshal (
+    RTScheduling::Scheduler_ptr p,
+    TAO_OutputCDR & cdr
   )
 {
   return p->marshal (cdr);
 }
 
-RTScheduling::Scheduler_ptr
-RTScheduling::tao_Scheduler_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return Scheduler::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-RTScheduling::tao_Scheduler_cast::tao_upcast (
-    void *src
-  )
-{
-  Scheduler **tmp =
-    ACE_static_cast (Scheduler **, src);
-  return *tmp;
-}
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class
-    TAO_Objref_Var_T<
-        RTScheduling::Scheduler,
-        RTScheduling::tao_Scheduler_life
-      >;
-  template class
-    TAO_Objref_Out_T<
-        RTScheduling::Scheduler,
-        RTScheduling::tao_Scheduler_life
-      >;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate \
-    TAO_Objref_Var_T< \
-        RTScheduling::Scheduler, \
-        RTScheduling::tao_Scheduler_life \
-      >
-# pragma instantiate \
-    TAO_Objref_Out_T< \
-        RTScheduling::Scheduler, \
-        RTScheduling::tao_Scheduler_life \
-      >
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-// TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:239
-
-RTScheduling::Scheduler::Scheduler (void)
-{}
-
-RTScheduling::Scheduler::~Scheduler (void)
-{}
-
-void
-RTScheduling::Scheduler::_tao_any_destructor (void *_tao_void_pointer)
-{
-  Scheduler *tmp = ACE_static_cast (Scheduler *, _tao_void_pointer);
-  CORBA::release (tmp);
-}
-
-RTScheduling::Scheduler_ptr
-RTScheduling::Scheduler::_narrow (
+// Function pointer for collocation factory initialization.
+TAO::Collocation_Proxy_Broker *
+(*RTScheduling__TAO_Scheduler_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
-    ACE_ENV_ARG_DECL
-  )
-{
-  return Scheduler::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
-}
-
-RTScheduling::Scheduler_ptr
-RTScheduling::Scheduler::_unchecked_narrow (
-    CORBA::Object_ptr obj
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
-{
-  if (CORBA::is_nil (obj))
-    {
-      return Scheduler::_nil ();
-    }
-
-  return
-      ACE_reinterpret_cast (
-          Scheduler_ptr,
-          obj->_tao_QueryInterface (
-              ACE_reinterpret_cast (
-                  ptrdiff_t,
-                  &Scheduler::_tao_class_id
-                )
-            )
-        );
-}
-
-RTScheduling::Scheduler_ptr
-RTScheduling::Scheduler::_duplicate (Scheduler_ptr obj)
-{
-  if (! CORBA::is_nil (obj))
-    {
-      obj->_add_ref ();
-    }
-
-  return obj;
-}
-
-void *RTScheduling::Scheduler::_tao_QueryInterface (ptrdiff_t type)
-{
-  void *retv = 0;
-
-  if (type == ACE_reinterpret_cast (
-              ptrdiff_t,
-              &ACE_NESTED_CLASS (::RTScheduling, Scheduler)::_tao_class_id)
-            )
-    {
-      retv = ACE_reinterpret_cast (void*, this);
-    }
-  else if (type == ACE_reinterpret_cast (
-               ptrdiff_t,
-               &CORBA::Object::_tao_class_id)
-             )
-    {
-      retv =
-        ACE_reinterpret_cast (
-            void *,
-            ACE_static_cast (CORBA::Object_ptr, this)
-          );
-    }
-
-  if (retv != 0)
-    {
-      this->_add_ref ();
-    }
-
-  return retv;
-}
-
-const char* RTScheduling::Scheduler::_interface_repository_id (void) const
-{
-  return "IDL:RTScheduling/Scheduler:1.0";
-}
-
-CORBA::Boolean
-RTScheduling::Scheduler::marshal (TAO_OutputCDR &)
-{
-  return 0;
-}
+  ) = 0;
 
 // TAO_IDL - Generated from
 // be/be_visitor_exception/exception_cs.cpp:63
@@ -1606,12 +1221,6 @@ RTScheduling::Scheduler::INCOMPATIBLE_SCHEDULING_DISCIPLINES::operator= (const :
 {
   this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
   return *this;
-}
-
-void RTScheduling::Scheduler::INCOMPATIBLE_SCHEDULING_DISCIPLINES::_tao_any_destructor (void *_tao_void_pointer)
-{
-  INCOMPATIBLE_SCHEDULING_DISCIPLINES *tmp = ACE_static_cast (INCOMPATIBLE_SCHEDULING_DISCIPLINES*, _tao_void_pointer);
-  delete tmp;
 }
 
 RTScheduling::Scheduler::INCOMPATIBLE_SCHEDULING_DISCIPLINES *
@@ -1721,6 +1330,75 @@ static CORBA::TypeCode _tc_TAO_tc_RTScheduling_Scheduler_INCOMPATIBLE_SCHEDULING
 ::CORBA::TypeCode_ptr RTScheduling::Scheduler::_tc_INCOMPATIBLE_SCHEDULING_DISCIPLINES =
   &_tc_TAO_tc_RTScheduling_Scheduler_INCOMPATIBLE_SCHEDULING_DISCIPLINES;
 
+RTScheduling::Scheduler::Scheduler (void)
+{}
+
+RTScheduling::Scheduler::~Scheduler (void)
+{}
+
+RTScheduling::Scheduler_ptr
+RTScheduling::Scheduler::_narrow (
+    CORBA::Object_ptr _tao_objref
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  Scheduler_ptr proxy =
+    dynamic_cast<Scheduler_ptr> (_tao_objref);
+  proxy->_add_ref ();
+  return proxy;
+}
+
+RTScheduling::Scheduler_ptr
+RTScheduling::Scheduler::_duplicate (Scheduler_ptr obj)
+{
+  if (! CORBA::is_nil (obj))
+    {
+      obj->_add_ref ();
+    }
+
+  return obj;
+}
+
+CORBA::Boolean
+RTScheduling::Scheduler::_is_a (
+    const char *value
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  if (
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:RTScheduling/Scheduler:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/CORBA/LocalObject:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/CORBA/Object:1.0"
+        )
+     )
+    {
+      return 1; // success using local knowledge
+    }
+  else
+    {
+      return 0;
+    }
+}
+
+const char* RTScheduling::Scheduler::_interface_repository_id (void) const
+{
+  return "IDL:RTScheduling/Scheduler:1.0";
+}
+
+CORBA::Boolean
+RTScheduling::Scheduler::marshal (TAO_OutputCDR &)
+{
+  return 0;
+}
+
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/typecode_defn.cpp:284
 
@@ -1750,271 +1428,569 @@ static CORBA::TypeCode _tc_TAO_tc_RTScheduling_Scheduler (
     sizeof (RTScheduling::Scheduler)
   );
 
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (RTScheduling)
-TAO_NAMESPACE_DEFINE (
-    ::CORBA::TypeCode_ptr,
-    _tc_Scheduler,
-    &_tc_TAO_tc_RTScheduling_Scheduler
-  )
-TAO_NAMESPACE_END
+namespace RTScheduling
+{
+  ::CORBA::TypeCode_ptr _tc_Scheduler =
+    &_tc_TAO_tc_RTScheduling_Scheduler;
+}
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_root/root.cpp:1703
 
-// Copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    RTScheduling::ThreadAction_ptr _tao_elem
-  )
-{
-  RTScheduling::ThreadAction_ptr _tao_objptr =
-    RTScheduling::ThreadAction::_duplicate (_tao_elem);
-  _tao_any <<= &_tao_objptr;
-}
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-// Non-copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    RTScheduling::ThreadAction_ptr *_tao_elem
-  )
-{
-  TAO::Any_Impl_T<RTScheduling::ThreadAction>::insert (
-      _tao_any,
-      RTScheduling::ThreadAction::_tao_any_destructor,
-      RTScheduling::_tc_ThreadAction,
-      *_tao_elem
-    );
-}
+#if !defined (_CORBA_POLICY__ARG_TRAITS_TMPLINST_CS_)
+#define _CORBA_POLICY__ARG_TRAITS_TMPLINST_CS_
 
-CORBA::Boolean
-operator>>= (
-    const CORBA::Any &_tao_any,
-    RTScheduling::ThreadAction_ptr &_tao_elem
-  )
-{
-  return
-    TAO::Any_Impl_T<RTScheduling::ThreadAction>::extract (
-        _tao_any,
-        RTScheduling::ThreadAction::_tao_any_destructor,
-        RTScheduling::_tc_ThreadAction,
-        _tao_elem
-      );
-}
+  template class TAO::Arg_Traits<CORBA::Policy>;
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
-    defined (ACE_HAS_GNU_REPO)
-  template class TAO::Any_Impl_T<RTScheduling::ThreadAction>;
+  template class
+    TAO::Object_Arg_Traits_T<
+        CORBA::Policy_ptr,
+        CORBA::Policy_var,
+        CORBA::Policy_out
+      >;
+
+#endif /* end #if !defined */
+
+#if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
+#define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
+
+  template class TAO::Arg_Traits<CORBA::PolicyList>;
+
+  template class
+    TAO::Var_Size_Arg_Traits<
+        CORBA::PolicyList,
+        CORBA::PolicyList_var,
+        CORBA::PolicyList_out
+      >;
+
+#endif /* end #if !defined */
+
+#if !defined (_PORTABLEINTERCEPTOR_CLIENTREQUESTINFO__ARG_TRAITS_TMPLINST_CS_)
+#define _PORTABLEINTERCEPTOR_CLIENTREQUESTINFO__ARG_TRAITS_TMPLINST_CS_
+
+  template class TAO::Arg_Traits<PortableInterceptor::ClientRequestInfo>;
+
+  template class
+    TAO::Object_Arg_Traits_T<
+        PortableInterceptor::ClientRequestInfo_ptr,
+        PortableInterceptor::ClientRequestInfo_var,
+        PortableInterceptor::ClientRequestInfo_out
+      >;
+
+#endif /* end #if !defined */
+
+#if !defined (_PORTABLEINTERCEPTOR_SERVERREQUESTINFO__ARG_TRAITS_TMPLINST_CS_)
+#define _PORTABLEINTERCEPTOR_SERVERREQUESTINFO__ARG_TRAITS_TMPLINST_CS_
+
+  template class TAO::Arg_Traits<PortableInterceptor::ServerRequestInfo>;
+
+  template class
+    TAO::Object_Arg_Traits_T<
+        PortableInterceptor::ServerRequestInfo_ptr,
+        PortableInterceptor::ServerRequestInfo_var,
+        PortableInterceptor::ServerRequestInfo_out
+      >;
+
+#endif /* end #if !defined */
+
+#if !defined (_RTSCHEDULING_THREADACTION__ARG_TRAITS_TMPLINST_CS_)
+#define _RTSCHEDULING_THREADACTION__ARG_TRAITS_TMPLINST_CS_
+
+  template class TAO::Arg_Traits<RTScheduling::ThreadAction>;
+
+  template class
+    TAO::Object_Arg_Traits_T<
+        RTScheduling::ThreadAction_ptr,
+        RTScheduling::ThreadAction_var,
+        RTScheduling::ThreadAction_out
+      >;
+
+#endif /* end #if !defined */
+
+  template class
+    TAO_Objref_Var_T<
+        RTScheduling::ThreadAction,
+        TAO::Objref_Traits<RTScheduling::ThreadAction>
+      >;
+
+  template class
+    TAO_Objref_Out_T<
+        RTScheduling::ThreadAction,
+        TAO::Objref_Traits<RTScheduling::ThreadAction>
+      >;
+
+#if !defined (_RTSCHEDULING_DISTRIBUTABLETHREAD__ARG_TRAITS_TMPLINST_CS_)
+#define _RTSCHEDULING_DISTRIBUTABLETHREAD__ARG_TRAITS_TMPLINST_CS_
+
+  template class TAO::Arg_Traits<RTScheduling::DistributableThread>;
+
+  template class
+    TAO::Object_Arg_Traits_T<
+        RTScheduling::DistributableThread_ptr,
+        RTScheduling::DistributableThread_var,
+        RTScheduling::DistributableThread_out
+      >;
+
+#endif /* end #if !defined */
+
+#if !defined (_RTSCHEDULING_DISTRIBUTABLETHREAD_DT_STATE__ARG_TRAITS_TMPLINST_CS_)
+#define _RTSCHEDULING_DISTRIBUTABLETHREAD_DT_STATE__ARG_TRAITS_TMPLINST_CS_
+
+  template class TAO::Arg_Traits<RTScheduling::DistributableThread::DT_State>;
+
+  template class TAO::Basic_Arg_Traits_T<RTScheduling::DistributableThread::DT_State>;
+
+#endif /* end #if !defined */
+
+  template class
+    TAO_Objref_Var_T<
+        RTScheduling::DistributableThread,
+        TAO::Objref_Traits<RTScheduling::DistributableThread>
+      >;
+
+  template class
+    TAO_Objref_Out_T<
+        RTScheduling::DistributableThread,
+        TAO::Objref_Traits<RTScheduling::DistributableThread>
+      >;
+
+  template class
+    TAO::Ret_Object_Argument_T<
+        RTScheduling::DistributableThread_ptr,
+        RTScheduling::DistributableThread_var
+      >;
+
+  template class
+    TAO::In_Object_Argument_T<
+        RTScheduling::ThreadAction_ptr
+      >;
+
+  template class
+    TAO::In_Object_Argument_T<
+        CORBA::Policy_ptr
+      >;
+
+#if !defined (_RTSCHEDULING_CURRENT_IDTYPE__ARG_TRAITS_TMPLINST_CS_)
+#define _RTSCHEDULING_CURRENT_IDTYPE__ARG_TRAITS_TMPLINST_CS_
+
+  template class TAO::Arg_Traits<RTScheduling::Current::IdType>;
+
+  template class
+    TAO::Var_Size_Arg_Traits<
+        RTScheduling::Current::IdType,
+        RTScheduling::Current::IdType_var,
+        RTScheduling::Current::IdType_out
+      >;
+
+#endif /* end #if !defined */
+
+  template class
+    TAO_FixedSeq_Var_T<
+        RTScheduling::Current::IdType,
+        CORBA::Octet
+      >;
+
+  template class
+    TAO_Seq_Var_Base_T<
+        RTScheduling::Current::IdType,
+        CORBA::Octet
+      >;
+
+  template class
+    TAO_Seq_Out_T<
+        RTScheduling::Current::IdType,
+        RTScheduling::Current::IdType_var,
+        CORBA::Octet
+      >;
+
+  template class
+    TAO::In_Var_Size_Argument_T<
+        RTScheduling::Current::IdType
+      >;
+
+#if !defined (_RTSCHEDULING_CURRENT_NAMELIST__ARG_TRAITS_TMPLINST_CS_)
+#define _RTSCHEDULING_CURRENT_NAMELIST__ARG_TRAITS_TMPLINST_CS_
+
+  template class TAO::Arg_Traits<RTScheduling::Current::NameList>;
+
+  template class
+    TAO::Var_Size_Arg_Traits<
+        RTScheduling::Current::NameList,
+        RTScheduling::Current::NameList_var,
+        RTScheduling::Current::NameList_out
+      >;
+
+#endif /* end #if !defined */
+
+  template class
+    TAO_MngSeq_Var_T<
+        RTScheduling::Current::NameList,
+        TAO_SeqElem_String_Manager
+      >;
+
+  template class
+    TAO_Seq_Var_Base_T<
+        RTScheduling::Current::NameList,
+        TAO_SeqElem_String_Manager
+      >;
+
+  template class
+    TAO_MngSeq_Out_T<
+        RTScheduling::Current::NameList,
+        RTScheduling::Current::NameList_var,
+        TAO_SeqElem_String_Manager
+      >;
+
+  template class
+    TAO_Objref_Var_T<
+        RTScheduling::Current,
+        TAO::Objref_Traits<RTScheduling::Current>
+      >;
+
+  template class
+    TAO_Objref_Out_T<
+        RTScheduling::Current,
+        TAO::Objref_Traits<RTScheduling::Current>
+      >;
+
+#if !defined (_RTSCHEDULING_RESOURCEMANAGER__ARG_TRAITS_TMPLINST_CS_)
+#define _RTSCHEDULING_RESOURCEMANAGER__ARG_TRAITS_TMPLINST_CS_
+
+  template class TAO::Arg_Traits<RTScheduling::ResourceManager>;
+
+  template class
+    TAO::Object_Arg_Traits_T<
+        RTScheduling::ResourceManager_ptr,
+        RTScheduling::ResourceManager_var,
+        RTScheduling::ResourceManager_out
+      >;
+
+#endif /* end #if !defined */
+
+  template class
+    TAO_Objref_Var_T<
+        RTScheduling::ResourceManager,
+        TAO::Objref_Traits<RTScheduling::ResourceManager>
+      >;
+
+  template class
+    TAO_Objref_Out_T<
+        RTScheduling::ResourceManager,
+        TAO::Objref_Traits<RTScheduling::ResourceManager>
+      >;
+
+  template class
+    TAO::Ret_Object_Argument_T<
+        RTScheduling::ResourceManager_ptr,
+        RTScheduling::ResourceManager_var
+      >;
+
+  template class
+    TAO::In_Object_Argument_T<
+        PortableInterceptor::ClientRequestInfo_ptr
+      >;
+
+  template class
+    TAO::In_Object_Argument_T<
+        PortableInterceptor::ServerRequestInfo_ptr
+      >;
+
+  template class
+    TAO::Out_Var_Size_Argument_T<
+        RTScheduling::Current::IdType,
+        RTScheduling::Current::IdType_out
+      >;
+
+  template class
+    TAO::Out_Object_Argument_T<
+        CORBA::Policy_ptr,
+        CORBA::Policy_out
+      >;
+
+  template class
+    TAO_Objref_Var_T<
+        RTScheduling::Scheduler,
+        TAO::Objref_Traits<RTScheduling::Scheduler>
+      >;
+
+  template class
+    TAO_Objref_Out_T<
+        RTScheduling::Scheduler,
+        TAO::Objref_Traits<RTScheduling::Scheduler>
+      >;
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO::Any_Impl_T<RTScheduling::ThreadAction>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-// TAO_IDL - Generated from
-// be/be_visitor_interface/any_op_cs.cpp:50
+#if !defined (_CORBA_POLICY__ARG_TRAITS_TMPLINST_CS_)
+#define _CORBA_POLICY__ARG_TRAITS_TMPLINST_CS_
 
-// Copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    RTScheduling::DistributableThread_ptr _tao_elem
-  )
-{
-  RTScheduling::DistributableThread_ptr _tao_objptr =
-    RTScheduling::DistributableThread::_duplicate (_tao_elem);
-  _tao_any <<= &_tao_objptr;
-}
+# pragma instantiate TAO::Arg_Traits<CORBA::Policy>
 
-// Non-copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    RTScheduling::DistributableThread_ptr *_tao_elem
-  )
-{
-  TAO::Any_Impl_T<RTScheduling::DistributableThread>::insert (
-      _tao_any,
-      RTScheduling::DistributableThread::_tao_any_destructor,
-      RTScheduling::_tc_DistributableThread,
-      *_tao_elem
-    );
-}
+# pragma instantiate \
+    TAO::Object_Arg_Traits_T< \
+        CORBA::Policy_ptr, \
+        CORBA::Policy_var, \
+        CORBA::Policy_out \
+      >
 
-CORBA::Boolean
-operator>>= (
-    const CORBA::Any &_tao_any,
-    RTScheduling::DistributableThread_ptr &_tao_elem
-  )
-{
-  return
-    TAO::Any_Impl_T<RTScheduling::DistributableThread>::extract (
-        _tao_any,
-        RTScheduling::DistributableThread::_tao_any_destructor,
-        RTScheduling::_tc_DistributableThread,
-        _tao_elem
-      );
-}
+#endif /* end #if !defined */
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
-    defined (ACE_HAS_GNU_REPO)
-  template class TAO::Any_Impl_T<RTScheduling::DistributableThread>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO::Any_Impl_T<RTScheduling::DistributableThread>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
+#define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
 
-// TAO_IDL - Generated from
-// be/be_visitor_interface/any_op_cs.cpp:50
+# pragma instantiate TAO::Arg_Traits<CORBA::PolicyList>
 
-// Copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    RTScheduling::Current_ptr _tao_elem
-  )
-{
-  RTScheduling::Current_ptr _tao_objptr =
-    RTScheduling::Current::_duplicate (_tao_elem);
-  _tao_any <<= &_tao_objptr;
-}
+# pragma instantiate \
+    TAO::Var_Size_Arg_Traits< \
+        CORBA::PolicyList, \
+        CORBA::PolicyList_var, \
+        CORBA::PolicyList_out \
+      >
 
-// Non-copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    RTScheduling::Current_ptr *_tao_elem
-  )
-{
-  TAO::Any_Impl_T<RTScheduling::Current>::insert (
-      _tao_any,
-      RTScheduling::Current::_tao_any_destructor,
-      RTScheduling::_tc_Current,
-      *_tao_elem
-    );
-}
+#endif /* end #if !defined */
 
-CORBA::Boolean
-operator>>= (
-    const CORBA::Any &_tao_any,
-    RTScheduling::Current_ptr &_tao_elem
-  )
-{
-  return
-    TAO::Any_Impl_T<RTScheduling::Current>::extract (
-        _tao_any,
-        RTScheduling::Current::_tao_any_destructor,
-        RTScheduling::_tc_Current,
-        _tao_elem
-      );
-}
+#if !defined (_PORTABLEINTERCEPTOR_CLIENTREQUESTINFO__ARG_TRAITS_TMPLINST_CS_)
+#define _PORTABLEINTERCEPTOR_CLIENTREQUESTINFO__ARG_TRAITS_TMPLINST_CS_
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
-    defined (ACE_HAS_GNU_REPO)
-  template class TAO::Any_Impl_T<RTScheduling::Current>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO::Any_Impl_T<RTScheduling::Current>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+# pragma instantiate TAO::Arg_Traits<PortableInterceptor::ClientRequestInfo>
 
-// TAO_IDL - Generated from
-// be/be_visitor_interface/any_op_cs.cpp:50
+# pragma instantiate \
+    TAO::Object_Arg_Traits_T< \
+        PortableInterceptor::ClientRequestInfo_ptr, \
+        PortableInterceptor::ClientRequestInfo_var, \
+        PortableInterceptor::ClientRequestInfo_out \
+      >
 
-// Copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    RTScheduling::ResourceManager_ptr _tao_elem
-  )
-{
-  RTScheduling::ResourceManager_ptr _tao_objptr =
-    RTScheduling::ResourceManager::_duplicate (_tao_elem);
-  _tao_any <<= &_tao_objptr;
-}
+#endif /* end #if !defined */
 
-// Non-copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    RTScheduling::ResourceManager_ptr *_tao_elem
-  )
-{
-  TAO::Any_Impl_T<RTScheduling::ResourceManager>::insert (
-      _tao_any,
-      RTScheduling::ResourceManager::_tao_any_destructor,
-      RTScheduling::_tc_ResourceManager,
-      *_tao_elem
-    );
-}
+#if !defined (_PORTABLEINTERCEPTOR_SERVERREQUESTINFO__ARG_TRAITS_TMPLINST_CS_)
+#define _PORTABLEINTERCEPTOR_SERVERREQUESTINFO__ARG_TRAITS_TMPLINST_CS_
 
-CORBA::Boolean
-operator>>= (
-    const CORBA::Any &_tao_any,
-    RTScheduling::ResourceManager_ptr &_tao_elem
-  )
-{
-  return
-    TAO::Any_Impl_T<RTScheduling::ResourceManager>::extract (
-        _tao_any,
-        RTScheduling::ResourceManager::_tao_any_destructor,
-        RTScheduling::_tc_ResourceManager,
-        _tao_elem
-      );
-}
+# pragma instantiate TAO::Arg_Traits<PortableInterceptor::ServerRequestInfo>
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
-    defined (ACE_HAS_GNU_REPO)
-  template class TAO::Any_Impl_T<RTScheduling::ResourceManager>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO::Any_Impl_T<RTScheduling::ResourceManager>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+# pragma instantiate \
+    TAO::Object_Arg_Traits_T< \
+        PortableInterceptor::ServerRequestInfo_ptr, \
+        PortableInterceptor::ServerRequestInfo_var, \
+        PortableInterceptor::ServerRequestInfo_out \
+      >
 
-// TAO_IDL - Generated from
-// be/be_visitor_interface/any_op_cs.cpp:50
+#endif /* end #if !defined */
 
-// Copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    RTScheduling::Scheduler_ptr _tao_elem
-  )
-{
-  RTScheduling::Scheduler_ptr _tao_objptr =
-    RTScheduling::Scheduler::_duplicate (_tao_elem);
-  _tao_any <<= &_tao_objptr;
-}
+#if !defined (_RTSCHEDULING_THREADACTION__ARG_TRAITS_TMPLINST_CS_)
+#define _RTSCHEDULING_THREADACTION__ARG_TRAITS_TMPLINST_CS_
 
-// Non-copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    RTScheduling::Scheduler_ptr *_tao_elem
-  )
-{
-  TAO::Any_Impl_T<RTScheduling::Scheduler>::insert (
-      _tao_any,
-      RTScheduling::Scheduler::_tao_any_destructor,
-      RTScheduling::_tc_Scheduler,
-      *_tao_elem
-    );
-}
+# pragma instantiate TAO::Arg_Traits<RTScheduling::ThreadAction>
 
-CORBA::Boolean
-operator>>= (
-    const CORBA::Any &_tao_any,
-    RTScheduling::Scheduler_ptr &_tao_elem
-  )
-{
-  return
-    TAO::Any_Impl_T<RTScheduling::Scheduler>::extract (
-        _tao_any,
-        RTScheduling::Scheduler::_tao_any_destructor,
-        RTScheduling::_tc_Scheduler,
-        _tao_elem
-      );
-}
+# pragma instantiate \
+    TAO::Object_Arg_Traits_T< \
+        RTScheduling::ThreadAction_ptr, \
+        RTScheduling::ThreadAction_var, \
+        RTScheduling::ThreadAction_out \
+      >
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
-    defined (ACE_HAS_GNU_REPO)
-  template class TAO::Any_Impl_T<RTScheduling::Scheduler>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO::Any_Impl_T<RTScheduling::Scheduler>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* end #if !defined */
+
+# pragma instantiate \
+    TAO_Objref_Var_T< \
+        RTScheduling::ThreadAction, \
+        TAO::Objref_Traits<RTScheduling::ThreadAction> \
+      >
+
+# pragma instantiate \
+    TAO_Objref_Out_T< \
+        RTScheduling::ThreadAction, \
+        TAO::Objref_Traits<RTScheduling::ThreadAction> \
+      >
+
+#if !defined (_RTSCHEDULING_DISTRIBUTABLETHREAD__ARG_TRAITS_TMPLINST_CS_)
+#define _RTSCHEDULING_DISTRIBUTABLETHREAD__ARG_TRAITS_TMPLINST_CS_
+
+# pragma instantiate TAO::Arg_Traits<RTScheduling::DistributableThread>
+
+# pragma instantiate \
+    TAO::Object_Arg_Traits_T< \
+        RTScheduling::DistributableThread_ptr, \
+        RTScheduling::DistributableThread_var, \
+        RTScheduling::DistributableThread_out \
+      >
+
+#endif /* end #if !defined */
+
+#if !defined (_RTSCHEDULING_DISTRIBUTABLETHREAD_DT_STATE__ARG_TRAITS_TMPLINST_CS_)
+#define _RTSCHEDULING_DISTRIBUTABLETHREAD_DT_STATE__ARG_TRAITS_TMPLINST_CS_
+
+# pragma instantiate TAO::Arg_Traits<RTScheduling::DistributableThread::DT_State>
+
+# pragma instantiate TAO::Basic_Arg_Traits_T<RTScheduling::DistributableThread::DT_State>
+
+#endif /* end #if !defined */
+
+# pragma instantiate \
+    TAO_Objref_Var_T< \
+        RTScheduling::DistributableThread, \
+        TAO::Objref_Traits<RTScheduling::DistributableThread> \
+      >
+
+# pragma instantiate \
+    TAO_Objref_Out_T< \
+        RTScheduling::DistributableThread, \
+        TAO::Objref_Traits<RTScheduling::DistributableThread> \
+      >
+
+# pragma instantiate \
+    TAO::In_Object_Argument_T< \
+        RTScheduling::ThreadAction_ptr \
+      >
+
+# pragma instantiate \
+    TAO::In_Object_Argument_T< \
+        CORBA::Policy_ptr \
+      >
+
+#if !defined (_RTSCHEDULING_CURRENT_IDTYPE__ARG_TRAITS_TMPLINST_CS_)
+#define _RTSCHEDULING_CURRENT_IDTYPE__ARG_TRAITS_TMPLINST_CS_
+
+# pragma instantiate TAO::Arg_Traits<RTScheduling::Current::IdType>
+
+# pragma instantiate \
+    TAO::Var_Size_Arg_Traits< \
+        RTScheduling::Current::IdType, \
+        RTScheduling::Current::IdType_var, \
+        RTScheduling::Current::IdType_out \
+      >
+
+#endif /* end #if !defined */
+
+# pragma instantiate \
+    TAO_FixedSeq_Var_T< \
+        RTScheduling::Current::IdType, \
+        CORBA::Octet \
+      >
+
+# pragma instantiate \
+    TAO_Seq_Var_Base_T< \
+        RTScheduling::Current::IdType, \
+        CORBA::Octet \
+      >
+
+# pragma instantiate \
+    TAO_Seq_Out_T< \
+        RTScheduling::Current::IdType, \
+        RTScheduling::Current::IdType_var, \
+        CORBA::Octet \
+      >
+
+# pragma instantiate \
+    TAO::In_Var_Size_Argument_T< \
+        RTScheduling::Current::IdType \
+      >
+
+#if !defined (_RTSCHEDULING_CURRENT_NAMELIST__ARG_TRAITS_TMPLINST_CS_)
+#define _RTSCHEDULING_CURRENT_NAMELIST__ARG_TRAITS_TMPLINST_CS_
+
+# pragma instantiate TAO::Arg_Traits<RTScheduling::Current::NameList>
+
+# pragma instantiate \
+    TAO::Var_Size_Arg_Traits< \
+        RTScheduling::Current::NameList, \
+        RTScheduling::Current::NameList_var, \
+        RTScheduling::Current::NameList_out \
+      >
+
+#endif /* end #if !defined */
+
+# pragma instantiate \
+    TAO_MngSeq_Var_T< \
+        RTScheduling::Current::NameList, \
+        TAO_SeqElem_String_Manager \
+      >
+
+# pragma instantiate \
+    TAO_Seq_Var_Base_T< \
+        RTScheduling::Current::NameList, \
+        TAO_SeqElem_String_Manager \
+      >
+
+# pragma instantiate \
+    TAO_MngSeq_Out_T< \
+        RTScheduling::Current::NameList, \
+        RTScheduling::Current::NameList_var, \
+        TAO_SeqElem_String_Manager \
+      >
+
+# pragma instantiate \
+    TAO_Objref_Var_T< \
+        RTScheduling::Current, \
+        TAO::Objref_Traits<RTScheduling::Current> \
+      >
+
+# pragma instantiate \
+    TAO_Objref_Out_T< \
+        RTScheduling::Current, \
+        TAO::Objref_Traits<RTScheduling::Current> \
+      >
+
+#if !defined (_RTSCHEDULING_RESOURCEMANAGER__ARG_TRAITS_TMPLINST_CS_)
+#define _RTSCHEDULING_RESOURCEMANAGER__ARG_TRAITS_TMPLINST_CS_
+
+# pragma instantiate TAO::Arg_Traits<RTScheduling::ResourceManager>
+
+# pragma instantiate \
+    TAO::Object_Arg_Traits_T< \
+        RTScheduling::ResourceManager_ptr, \
+        RTScheduling::ResourceManager_var, \
+        RTScheduling::ResourceManager_out \
+      >
+
+#endif /* end #if !defined */
+
+# pragma instantiate \
+    TAO_Objref_Var_T< \
+        RTScheduling::ResourceManager, \
+        TAO::Objref_Traits<RTScheduling::ResourceManager> \
+      >
+
+# pragma instantiate \
+    TAO_Objref_Out_T< \
+        RTScheduling::ResourceManager, \
+        TAO::Objref_Traits<RTScheduling::ResourceManager> \
+      >
+
+# pragma instantiate \
+    TAO::In_Object_Argument_T< \
+        PortableInterceptor::ClientRequestInfo_ptr \
+      >
+
+# pragma instantiate \
+    TAO::In_Object_Argument_T< \
+        PortableInterceptor::ServerRequestInfo_ptr \
+      >
+
+# pragma instantiate \
+    TAO::Out_Var_Size_Argument_T< \
+        RTScheduling::Current::IdType, \
+        RTScheduling::Current::IdType_out \
+      >
+
+# pragma instantiate \
+    TAO::Out_Object_Argument_T< \
+        CORBA::Policy_ptr, \
+        CORBA::Policy_out \
+      >
+
+# pragma instantiate \
+    TAO_Objref_Var_T< \
+        RTScheduling::Scheduler, \
+        TAO::Objref_Traits<RTScheduling::Scheduler> \
+      >
+
+# pragma instantiate \
+    TAO_Objref_Out_T< \
+        RTScheduling::Scheduler, \
+        TAO::Objref_Traits<RTScheduling::Scheduler> \
+      >
+
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

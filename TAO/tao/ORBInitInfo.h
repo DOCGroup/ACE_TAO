@@ -42,11 +42,11 @@ class TAO_ORBInitInfo;
 typedef TAO_ORBInitInfo *TAO_ORBInitInfo_ptr;
 struct tao_TAO_ORBInitInfo_life;
 
-typedef TAO_Objref_Var_T<TAO_ORBInitInfo,
-                         tao_TAO_ORBInitInfo_life> TAO_ORBInitInfo_var;
+typedef TAO_Objref_Var_T<TAO_ORBInitInfo>
+                          TAO_ORBInitInfo_var;
 
-typedef TAO_Objref_Out_T<TAO_ORBInitInfo,
-                         tao_TAO_ORBInitInfo_life> TAO_ORBInitInfo_out;
+typedef TAO_Objref_Out_T<TAO_ORBInitInfo>
+                          TAO_ORBInitInfo_out;
 
 struct TAO_Export tao_TAO_ORBInitInfo_life
 {

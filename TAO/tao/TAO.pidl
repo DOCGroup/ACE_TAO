@@ -15,7 +15,7 @@
  *   this is:
  *
  *   tao_idl
- *       -o orig -Gp -Gd -Ge 1
+ *       -o orig -Gp -Gd -Ge 1 -GT
  *       -Wb,export_macro=TAO_Export
  *       -Wb,pre_include="ace/pre.h"
  *       -Wb,post_include="ace/post.h"
@@ -71,6 +71,7 @@ module TAO
   };
 
   const CORBA::PolicyType BUFFERING_CONSTRAINT_POLICY_TYPE = 0x54410001;
+
   local interface BufferingConstraintPolicy : CORBA::Policy
     {
       readonly attribute BufferingConstraint buffering_constraint;

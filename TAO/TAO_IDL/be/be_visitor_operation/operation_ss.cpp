@@ -27,14 +27,12 @@ ACE_RCSID (be_visitor_operation,
 // ************************************************************
 
 be_visitor_operation_ss::be_visitor_operation_ss (be_visitor_context *ctx)
-  : be_visitor_operation (ctx),
-    operation_name_ (0)
+  : be_visitor_operation (ctx)
 {
 }
 
 be_visitor_operation_ss::~be_visitor_operation_ss (void)
 {
-  delete [] this->operation_name_;
 }
 
 // Processing to be done after every element in the scope is processed.
@@ -738,42 +736,3 @@ be_visitor_operation_ss::gen_marshal_params (be_operation *node,
   return 0;
 }
 
-const char *
-be_visitor_operation_ss::compute_operation_name (be_operation *node)
-{
-  if (this->operation_name_ == 0)
-    {
-      size_t len = 3;           // The null termination char.
-
-      if (this->ctx_->attribute ())
-        {
-          len += 5;               // "Added length for "_set_" or "_get_".
-        }
-
-      len += ACE_OS::strlen (node->local_name ()->get_string ());
-
-      ACE_NEW_RETURN (this->operation_name_,
-                      char [len],
-                      0);
-
-      ACE_OS::strcpy (this->operation_name_, "\"");
-
-      if (this->ctx_->attribute ())
-        {
-          if (node->nmembers () == 1)
-            {
-              ACE_OS::strcat (this->operation_name_, "_set_");
-            }
-          else
-            {
-              ACE_OS::strcat (this->operation_name_, "_get_");
-            }
-        }
-
-      ACE_OS::strcat (this->operation_name_,
-                      node->local_name ()->get_string ());
-      ACE_OS::strcat (this->operation_name_, "\"");
-    }
-
-  return this->operation_name_;
-}

@@ -780,7 +780,7 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
             this->server_object_->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK;
 
-          tao_poa = poa->_tao_poa_downcast();
+          tao_poa = poa->_tao_poa_downcast ();
           PortableServer::ObjectId_var id =
             tao_poa->servant_to_id_i (this->server_object_
                                       ACE_ENV_ARG_PARAMETER);

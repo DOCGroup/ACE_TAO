@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_KEY_ADAPTERS_H
 #define TAO_KEY_ADAPTERS_H
 #include /**/ "ace/pre.h"
