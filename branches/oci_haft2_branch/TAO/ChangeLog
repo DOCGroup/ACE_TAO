@@ -1,3 +1,15 @@
+Tue Nov 11 14:36:55 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Decoder.h:
+        * orbsvcs/tests/FT_App/FT_ReplicaFactory_i.cpp:
+          Get rid of templated method.  Replace it with in-line code.
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Decoder_Find.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Decoder_Find.i:
+          Delete these.  They still didn't build on linux.
+
+
 Tue Nov 11 08:56:34 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Decoder.h:

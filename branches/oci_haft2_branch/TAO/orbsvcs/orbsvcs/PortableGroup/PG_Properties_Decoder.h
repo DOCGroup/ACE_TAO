@@ -17,7 +17,7 @@
 #include <orbsvcs/PortableGroupS.h>
 #include <orbsvcs/CosNamingC.h>
 #include <ace/Hash_Map_Manager.h>
-#include <ace/SSTring.h>
+#include <ace/SString.h>
 
 namespace TAO_PG
 {
@@ -63,6 +63,6 @@ namespace TAO_PG
 
 ////////////////////////////////////
 // include templated helper function
-#include "PG_Properties_Decoder_Find.h"
+// DISABLE THIS #include "PG_Properties_Decoder_Find.h"
 
 #endif // TAO_PG_PROPERTIES_DECODER_H
