@@ -1,3 +1,11 @@
+PLANNED MAJOR CHANGES TARGETED FOR TAO-1.4.3
+====================================================
+
+- (DOC-ISIS) Changes to DAnCE
+
+- (Jeff/Boris) CIDL compiler generates dummy implementation code
+
+
 USER VISIBLE CHANGES BETWEEN CIAO-0.4.1 and CIAO-0.4.2
 ======================================================
 
