@@ -1,6 +1,12 @@
+Mon Nov 11 16:17:59 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* bin/MakeProjectCreator/modules/TemplateParser.pm (relative):
+	  Changed to invoke slash_to_backslash from $self.  The original
+	  code only runs on some specific version of perl.
+
 Mon Nov 11 13:35:53 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Hash_Map_Manager_T.h: Updated 
+	* ace/Hash_Map_Manager_T.h: Updated
 	  comments on the class ACE_Hash_Map_Bucket_Iterator.  Thanks to
  	  Kitty and Irfan for helping with this.
 
@@ -54,7 +60,7 @@ Sun Nov 10 19:38:45 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 Sat Nov  9 12:37:54 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* docs/ACE-guidelines.html: Updated the ACE guidelines to
-	  refer to the correct Doxygen links.  Thanks to 
+	  refer to the correct Doxygen links.  Thanks to
 	  Johnny Willemsen for reporting this.
 
 Sat Nov  9 21:48:31 2002  Steve Huston  <shuston@riverace.com>
