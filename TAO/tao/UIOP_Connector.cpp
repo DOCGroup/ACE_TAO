@@ -30,7 +30,7 @@ TAO_UIOP_NULL_CREATION_STRATEGY TAO_UIOP_Connector::UIOP_Null_Creation_Strategy_
 TAO_UIOP_NULL_ACTIVATION_STRATEGY TAO_UIOP_Connector::UIOP_Null_Activation_Strategy_;
 
 TAO_UIOP_Connector::TAO_UIOP_Connector (void)
-  : TAO_Connector (TAO_IOP_TAG_INTERNET_IOP), // @@ FIXME -- IIOP specific?
+  : TAO_Connector (TAO_IOP_TAG_UNIX_IOP),
     base_connector_ ()
 {
 }
@@ -39,7 +39,7 @@ int
 TAO_UIOP_Connector::connect (TAO_Profile *profile,
                              TAO_Transport *& transport)
 {
-  if (profile->tag () != TAO_IOP_TAG_INTERNET_IOP) // @@ FIXME: IIOP specific?
+  if (profile->tag () != TAO_IOP_TAG_UNIX_IOP)
     return -1;
 
   TAO_UIOP_Profile *uiop_profile =

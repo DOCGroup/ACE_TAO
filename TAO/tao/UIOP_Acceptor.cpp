@@ -34,7 +34,7 @@ UIOP_CONCURRENCY_STRATEGY TAO_UIOP_Acceptor::UIOP_Concurrency_Strategy_;
 UIOP_SCHEDULING_STRATEGY TAO_UIOP_Acceptor::UIOP_Scheduling_Strategy_;
 
 TAO_UIOP_Acceptor::TAO_UIOP_Acceptor (void)
-  : TAO_Acceptor (TAO_IOP_TAG_INTERNET_IOP),  // @@ FIXME:  IIOP specific?
+  : TAO_Acceptor (TAO_IOP_TAG_UNIX_IOP),
     base_acceptor_ ()
 {
 }
