@@ -64,7 +64,7 @@ the initial object reference.
 Related material:
 
       - Persistent version of this Load Balancing Service can be found
-        in TAO/exapmples/Load_Balancing_persistent.
+        in TAO/examples/Load_Balancing_persistent.
 
       - TAO's Load Balancing Service (definition, implementation and
         tests are located in TAO/orbsvcs tree) This is a more
