@@ -438,7 +438,7 @@ The correct way is:
 <H3><A NAME="#VC">How to add IDL files into your Visual C++ projects</A></H3>
 Point of contact: <A HREF="mailto:nanbor@cs.wustl.edu">Nanbor Wang</A>.
 
-<P>Each IDL file generates .h, .i and .cpp files. Here is an example of
+<P>Each IDL file generates .h, .inl and .cpp files. Here is an example of
 adding an IDL file named foobar.idl into a VC project.
 <OL>
   <LI>Create/open the workspace. In addition to creating server
@@ -448,8 +448,8 @@ adding an IDL file named foobar.idl into a VC project.
        other non-IDL generated files into both client and server
        projects.</LI>
 
-  <LI>Added foobarC.h, foobarC.i, foobarC.cpp, foobarS.h, foobarS.i, and
-      foobarS.cpp into server project and foobarC.h, foobarC.i,
+  <LI>Added foobarC.h, foobarC.inl, foobarC.cpp, foobarS.h, foobarS.inl, and
+      foobarS.cpp into server project and foobarC.h, foobarC.inl,
       foobarC.cpp into client projects.</LI>
 
   <LI>Now open the project setting window of foobar_idl (Project -&gt;
@@ -469,12 +469,12 @@ adding an IDL file named foobar.idl into a VC project.
       <PRE>
       $(InputDir)\$(InputName)S.h
       $(InputDir)\$(InputName)C.h
-      $(InputDir)\$(InputName)C.i
+      $(InputDir)\$(InputName)C.inl
       $(InputDir)\$(InputName)C.cpp
-      $(InputDir)\$(InputName)S.i
+      $(InputDir)\$(InputName)S.inl
       $(InputDir)\$(InputName)S.cpp
       $(InputDir)\$(InputName)S_T.h
-      $(InputDir)\$(InputName)S_T.i
+      $(InputDir)\$(InputName)S_T.inl
       $(InputDir)\$(InputName)S_T.cpp
       </PRE>
       Add only one entry in each line.</LI>
