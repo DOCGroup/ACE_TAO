@@ -18,7 +18,7 @@ ACE_RCSID (LoadBalancing,
            "$Id$")
 
 
-TAO_LB_LoadManager::TAO_LB_LoadManager (void) 
+TAO_LB_LoadManager::TAO_LB_LoadManager (void)
   : reactor_ (0),
     poa_ (),
     monitor_lock_ (),
@@ -838,7 +838,6 @@ TAO_LB_LoadManager::init (ACE_Reactor * reactor,
         root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
-
       // The child POA's name will consist of a string that includes
       // the current time in milliseconds in hexidecimal format (only
       // four bytes will be used).  This is an attempt to prevent
@@ -855,8 +854,9 @@ TAO_LB_LoadManager::init (ACE_Reactor * reactor,
         + sizeof (poa_name)
         - 9 /* 8 + 1 */;
 
-      // Overwrite the last 8 characters in the POA name.
-      ACE_OS::sprintf (astr, "%d", time);
+      // Overwrite the last 8 characters in the POA name with the
+      // hexadecimal representation of the time in milliseconds.
+      ACE_OS::sprintf (astr, "%x", time);
 
       this->poa_ = root_poa->create_POA (poa_name,
                                          poa_manager.in (),
@@ -996,8 +996,8 @@ TAO_LB_LoadManager::built_in_strategy (CosLoadBalancing::StrategyInfo * info
     {
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
-                    "ERROR: TAO_LB_LoadManager::built_in_strategy - "
-                    "Unknown/unexpected built-in strategy:\n"
+                    "ERROR: TAO_LB_LoadManager::next_member - "
+                    "Unknown/unexpected built-in Strategy:\n"
                     "     \"%s\"\n",
                     strategy));
 
