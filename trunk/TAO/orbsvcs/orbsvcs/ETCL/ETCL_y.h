@@ -1,7 +1,4 @@
 // $Id$
-#ifndef YYSTYPE
-#define YYSTYPE int
-#endif
 #define	TAO_ETCL_GT	257
 #define	TAO_ETCL_GE	258
 #define	TAO_ETCL_LT	259
@@ -33,7 +30,7 @@
 #define	TAO_ETCL_SIGNED	285
 #define	TAO_ETCL_DOUBLE	286
 #define	TAO_ETCL_CONSTRAINT	287
-#define	TAO_ETCL_SEQUENCE	288
+#define	TAO_ETCL_COMPONENT	288
 #define	TAO_ETCL_WITH	289
 #define	TAO_ETCL_MAX	290
 #define	TAO_ETCL_MIN	291

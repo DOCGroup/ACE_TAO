@@ -14,7 +14,7 @@ SHLIB    = $(LIBNAME).$(SOEXT)
 
 VPATH=.
 
-ACE_SHLIBS = -lTAO -lTAO_PortableServer -lACE
+ACE_SHLIBS = -lTAO -lACE
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -35,6 +35,7 @@ override TAO_IDLFLAGS += \
 IDL_FILES +=
 CPP_SRCS += \
         ETCL/ETCL_Constraint \
+        ETCL/ETCL_Interpreter \
 	ETCL/ETCL_l \
 	ETCL/ETCL_y
 
@@ -100,7 +101,7 @@ ETCL/ETCL_y: ETCL/ETCL.yy
 	echo '// $$I''d$$' > ETCL/ETCL_y.h
 	cat ETCL/ETCL.yy.tab.h >> ETCL/ETCL_y.h
 	$(RM) ETCL/ETCL.yy.tab.c ETCL/ETCL.yy.tab.h
-# (cd ETCL ; patch < ETCL_y.cpp.diff)
+ (cd ETCL ; patch < ETCL_y.cpp.diff ; patch < ETCL_y.h.diff)
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.

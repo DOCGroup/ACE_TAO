@@ -14,14 +14,11 @@
 //
 // ========================================================================
 
-#include "orbsvcs/ETCL/ETCL_Constraint.h"
+#include "ETCL_y.h"
+#include "ETCL_Constraint.h"
+#include "ETCL_Interpreter.h"
 
-#define YYPARSE_PARAM lex_state
-#define YYLEX_PARAM lex_state
-
-//#define YYDEBUG 1
-
-#define YYSTYPE TAO_ETCL_YYSTYPE
+extern int yylex (void);
 
 static void yyerror (const char *)
 {
@@ -29,30 +26,51 @@ static void yyerror (const char *)
   // Ignore error messages
 }
 
-extern int yylex (YYSTYPE *lvalp, void *lex_state);
-
 %}
 
-%token TAO_ETCL_GT TAO_ETCL_GE TAO_ETCL_LT TAO_ETCL_LE
-%token TAO_ETCL_EQ TAO_ETCL_NE
-%token TAO_ETCL_EXIST TAO_ETCL_DEFAULT
-%token TAO_ETCL_AND TAO_ETCL_OR TAO_ETCL_NOT
-%token TAO_ETCL_IN TAO_ETCL_TWIDDLE
+%token TAO_ETCL_GT 
+%token TAO_ETCL_GE 
+%token TAO_ETCL_LT 
+%token TAO_ETCL_LE
+%token TAO_ETCL_EQ 
+%token TAO_ETCL_NE
+%token TAO_ETCL_EXIST 
+%token TAO_ETCL_DEFAULT
+%token TAO_ETCL_AND 
+%token TAO_ETCL_OR 
+%token TAO_ETCL_NOT
+%token TAO_ETCL_IN 
+%token TAO_ETCL_TWIDDLE
 %token TAO_ETCL_BOOLEAN
-%token TAO_ETCL_PLUS TAO_ETCL_MINUS TAO_ETCL_MULT TAO_ETCL_DIV
+%token TAO_ETCL_PLUS 
+%token TAO_ETCL_MINUS 
+%token TAO_ETCL_MULT 
+%token TAO_ETCL_DIV
 %token TAO_ETCL_UMINUS
-%token TAO_ETCL_INTEGER TAO_ETCL_FLOAT  TAO_ETCL_STRING
-%token TAO_ETCL_RPAREN TAO_ETCL_LPAREN
-%token TAO_ETCL_RBRA TAO_ETCL_LBRA
+%token TAO_ETCL_INTEGER 
+%token TAO_ETCL_FLOAT  
+%token TAO_ETCL_STRING
+%token TAO_ETCL_RPAREN 
+%token TAO_ETCL_LPAREN
+%token TAO_ETCL_RBRA 
+%token TAO_ETCL_LBRA
 %token TAO_ETCL_IDENT
-%token TAO_ETCL_UNSIGNED TAO_ETCL_SIGNED TAO_ETCL_DOUBLE
-%token TAO_ETCL_CONSTRAINT TAO_ETCL_SEQUENCE 
-%token TAO_ETCL_WITH TAO_ETCL_MAX TAO_ETCL_MIN
-%token TAO_ETCL_FIRST TAO_ETCL_RANDOM
-
-%token TAO_ETCL_DOLLAR TAO_ETCL_DOT
-%token TAO_ETCL_DISCRIMINANT TAO_ETCL_LENGTH
-%token TAO_ETCL_TYPE_ID TAO_ETCL_REPOS_ID
+%token TAO_ETCL_UNSIGNED 
+%token TAO_ETCL_SIGNED 
+%token TAO_ETCL_DOUBLE
+%token TAO_ETCL_CONSTRAINT 
+%token TAO_ETCL_COMPONENT 
+%token TAO_ETCL_WITH 
+%token TAO_ETCL_MAX 
+%token TAO_ETCL_MIN
+%token TAO_ETCL_FIRST 
+%token TAO_ETCL_RANDOM
+%token TAO_ETCL_DOLLAR 
+%token TAO_ETCL_DOT
+%token TAO_ETCL_DISCRIMINANT 
+%token TAO_ETCL_LENGTH
+%token TAO_ETCL_TYPE_ID 
+%token TAO_ETCL_REPOS_ID
 
 
 %type <constraint> TAO_ETCL_IDENT
@@ -68,7 +86,6 @@ extern int yylex (YYSTYPE *lvalp, void *lex_state);
 %type <constraint> component_dot component_ext component
 
 %start constraint
-%pure_parser
 
 %%
 
@@ -77,15 +94,15 @@ constraint: bool_or
 	;
 
 preference:     TAO_ETCL_MIN bool_or
-{ $$ = new TAO_ETCL_Preference (TAO_ETCL_MIN, $2); }
+        { $$ = new TAO_ETCL_Preference (TAO_ETCL_MIN, $2); }
         |       TAO_ETCL_MAX bool_or
-{ $$ = new TAO_ETCL_Preference (TAO_ETCL_MAX, $2); }
+        { $$ = new TAO_ETCL_Preference (TAO_ETCL_MAX, $2); }
         |       TAO_ETCL_WITH bool_or
-{ $$ = new TAO_ETCL_Preference (TAO_ETCL_WITH, $2); }
+        { $$ = new TAO_ETCL_Preference (TAO_ETCL_WITH, $2); }
         |       TAO_ETCL_FIRST
-{ $$ = new TAO_ETCL_Preference (TAO_ETCL_FIRST); }
+        { $$ = new TAO_ETCL_Preference (TAO_ETCL_FIRST); }
         |       TAO_ETCL_RANDOM
-{ $$ = new TAO_ETCL_Preference (TAO_ETCL_RANDOM); }
+        { $$ = new TAO_ETCL_Preference (TAO_ETCL_RANDOM); }
         ;
 
 bool_or:	bool_or TAO_ETCL_OR bool_and
@@ -146,34 +163,36 @@ factor_not:	TAO_ETCL_NOT factor
 
 factor:		TAO_ETCL_LPAREN bool_or TAO_ETCL_RPAREN
 	{ $$ = $2; }
-
 	|	TAO_ETCL_INTEGER
 	{ $$ = $1; }
 	|	TAO_ETCL_PLUS TAO_ETCL_INTEGER
 	{ $$ = new TAO_ETCL_Unary_Expr (TAO_ETCL_PLUS, $2); }
 	|	TAO_ETCL_MINUS TAO_ETCL_INTEGER
 	{ $$ = new TAO_ETCL_Unary_Expr (TAO_ETCL_MINUS, $2); }
-
 	|	TAO_ETCL_FLOAT
 	{ $$ = $1; }
 	|	TAO_ETCL_PLUS TAO_ETCL_FLOAT
 	{ $$ = new TAO_ETCL_Unary_Expr (TAO_ETCL_PLUS, $2); }
 	|	TAO_ETCL_MINUS TAO_ETCL_FLOAT
 	{ $$ = new TAO_ETCL_Unary_Expr (TAO_ETCL_MINUS, $2); }
-
 	|	TAO_ETCL_STRING
+	{ $$ = $1; }
 	|	TAO_ETCL_BOOLEAN
-
+	{ $$ = $1; }
+	|	TAO_ETCL_EXIST TAO_ETCL_IDENT
+	{ $$ = new TAO_ETCL_Exist ($2); }
 	|	TAO_ETCL_EXIST TAO_ETCL_DOLLAR component
 	{ $$ = new TAO_ETCL_Exist ($3); }
 	|	TAO_ETCL_DEFAULT TAO_ETCL_DOLLAR component
 	{ $$ = new TAO_ETCL_Default ($3); }
 	|	TAO_ETCL_DOLLAR component
 	{ $$ = new TAO_ETCL_Eval ($2); }
+	| 	TAO_ETCL_IDENT
+	{ $$ = $1; }
 	;
 
 component:	/* empty */
-	{ $$ = 0 }
+	{ $$ = 0; }
 	| TAO_ETCL_DOT component_dot
 	{ $$ = new TAO_ETCL_Dot ($2); }
 
@@ -185,7 +204,7 @@ component:	/* empty */
 	;
 
 component_ext:	/* empty */
-	{ $$ = 0 }
+	{ $$ = 0; }
 	| TAO_ETCL_DOT component_dot
 	{ $$ = new TAO_ETCL_Dot ($2); }
 
@@ -237,4 +256,3 @@ union_val:  /* empty */
 
 %%
 
-//extern int yydebug = 1;
