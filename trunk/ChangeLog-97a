@@ -1,3 +1,15 @@
+Tue Jun  3 00:26:06 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.h: Changed the access protection for ACE_cond_t,
+ 	  ACE_sema_t, ACE_event_t, and ACE_rwlock_t so that it is
+ 	  protected rather than private.  In addition, added ACE_Export to
+ 	  all of these classes so that they are visible outside of a DLL.
+  	  Thanks to Ivan Murphy for these suggestions.
+
+	* ace/OS.h: Changed the value of ACE_MAX_DEFAULT_PORT on Win32 to
+ 	  0 in order to work around a nasty NTism...  Thanks to Jon Biggar
+	  <jon@sems.com> for reporting this.
+
 Mon Jun  2 16:29:48 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
 
 	* ace/Process.*:
