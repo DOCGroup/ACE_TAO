@@ -1,3 +1,16 @@
+Sat Aug 30 12:10:00 2003 Justin Michel <michel_j@ociweb.com>
+
+        * bin/create_ace_build.pl:
+
+          Changed to continue linking even when some source files can't
+        be found. It appears that the perl link() function doesn't work
+        correctly on Windows Server 2003. A little investigating shows that
+        several other file functions have problems with long path names on
+        that os unless you use the Unicode versions. I verified this with a
+        simple c++ program, that tried to use _fullpath() and CreateHardLink().
+        Currently the only problems are in the Notify service performance tests,
+        because these have extremely long path names.
+
 Fri Aug 29 15:18:36 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * apps/JAWS/clients/Blobby/blobby.mpc:
