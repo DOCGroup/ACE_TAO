@@ -25,7 +25,7 @@ class ACE_Notification_Strategy;
 template <ACE_SYNCH_DECL> class ACE_Message_Queue_Iterator;
 template <ACE_SYNCH_DECL> class ACE_Message_Queue_Reverse_Iterator;
 
-struct ACE_Export ACE_Message_Queue_Base
+class ACE_Export ACE_Message_Queue_Base
 {
   // = TITLE
   //   Workaround HP/C++ compiler bug with enums in templates.
@@ -34,7 +34,7 @@ struct ACE_Export ACE_Message_Queue_Base
   //   The ever lamest HP/C++ compiler seems to fail if enums are
   //   defined inside a template, hence we have to move them into a
   //   base class.
-
+public:
   // = Default high and low water marks.
   enum
   {

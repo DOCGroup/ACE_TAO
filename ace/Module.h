@@ -20,10 +20,7 @@
 #include "ace/ACE.h"
 #include "ace/Task_T.h"
 
-// Forward decl.
-// template <ACE_SYNCH_DECL> class ACE_Task;
-
-struct ACE_Export ACE_Module_Base
+class ACE_Export ACE_Module_Base
 {
   // = TITLE
   //   Workaround HP/C++ compiler bug with enums in templates.
@@ -32,7 +29,7 @@ struct ACE_Export ACE_Module_Base
   //   The ever lamest HP/C++ compiler seems to fail if enums are
   //   defined inside a template, hence we have to move them into a
   //   base class.
-
+public:
   enum
   {
     M_DELETE_NONE = 0,
@@ -50,7 +47,6 @@ struct ACE_Export ACE_Module_Base
     // The <M_DELETE_READER> and <M_DELETE_WRITER> flags may be or'ed
     // together.
   };
-
 };
 
 template <ACE_SYNCH_DECL>
