@@ -1,5 +1,10 @@
 Wed Sep 29 09:30:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
+        * tao/PortableServer/Id_Uniqueness_Strategy.h:
+          Just class definition for this strategy.
+
+Wed Sep 29 09:30:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
         * tao/PortableServer/Id_Assignment_Strategy.h:
           Just class definition for this strategy.
 
