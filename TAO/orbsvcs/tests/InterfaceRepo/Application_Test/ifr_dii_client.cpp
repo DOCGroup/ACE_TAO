@@ -349,6 +349,7 @@ IFR_DII_Client::invoke_and_display (ACE_ENV_SINGLE_ARG_DECL)
       
       const char *correct = "Sgt. Pepper's Lonely Hearts Club Band";
       ACE_ASSERT (ACE_OS::strcmp (title, correct) == 0);
+      ACE_UNUSED_ARG (correct);
 
       CORBA::Float price = 0.0f;
       ACE_ASSERT ((*args->item (2)->value () >>= price) == TRUE);
@@ -372,10 +373,11 @@ IFR_DII_Client::invoke_and_display (ACE_ENV_SINGLE_ARG_DECL)
       CORBA::Boolean in_stock = 0;
 
       CORBA::Boolean ret_status =
-        this->req_->return_value () >>= CORBA::Any::to_boolean (in_stock);
+        (this->req_->return_value () >>= CORBA::Any::to_boolean (in_stock));
+      ACE_UNUSED_ARG (ret_status);
         
-      ACE_ASSERT (ret_status == TRUE);
-      ACE_ASSERT (in_stock == TRUE);
+      ACE_ASSERT (ret_status == 1);
+      ACE_ASSERT (in_stock == 1);
 
       if (this->debug_)
         {
