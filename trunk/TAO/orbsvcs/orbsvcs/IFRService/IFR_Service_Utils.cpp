@@ -20,7 +20,7 @@ TAO_IFR_Server::TAO_IFR_Server (void)
     ior_multicast_ (0),
     config_ (0),
     repo_impl_ (0),
-    repository_ (CORBA_Repository::_nil ())
+    repository_ (CORBA::Repository::_nil ())
 {
 }
 
@@ -62,7 +62,7 @@ TAO_IFR_Server::init_with_orb (int argc,
 
       // Get the POA from the ORB.
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references ("RootPOA" 
+        orb->resolve_initial_references ("RootPOA"
                                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -353,12 +353,12 @@ TAO_IFR_Server::create_repository (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK_RETURN (-1);
 
   CORBA::Object_var table_object =
-    this->orb_->resolve_initial_references ("IORTable" 
+    this->orb_->resolve_initial_references ("IORTable"
                                             ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   IORTable::Table_var adapter =
-    IORTable::Table::_narrow (table_object.in () 
+    IORTable::Table::_narrow (table_object.in ()
                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
@@ -375,8 +375,8 @@ TAO_IFR_Server::create_repository (ACE_ENV_SINGLE_ARG_DECL)
     }
 
   // Add the repository to the ORB's table of initialized object references.
-  this->orb_->register_initial_reference ("InterfaceRepository", 
-                                          this->repository_ 
+  this->orb_->register_initial_reference ("InterfaceRepository",
+                                          this->repository_
                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN(-1);
 

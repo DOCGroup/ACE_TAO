@@ -39,7 +39,7 @@ class TAO_IFRService_Export TAO_IFR_Server
 public:
   TAO_IFR_Server (void);
   // Default constructor.
- 
+
   int init_with_orb (int argc,
                      ACE_TCHAR *argv [],
                      CORBA::ORB_ptr orb,
@@ -54,7 +54,7 @@ public:
   // Destructor.
 
 protected:
-  
+
   int create_poas (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   // Two persistent POAs, one using a servant locator.
 
@@ -95,7 +95,7 @@ protected:
   TAO_Repository_i *repo_impl_;
   // The IFR implementation instance.
 
-  CORBA_Repository_ptr repository_;
+  CORBA::Repository_ptr repository_;
   // The Interface Repository object reference.
 
   CORBA::String_var ifr_ior_;
