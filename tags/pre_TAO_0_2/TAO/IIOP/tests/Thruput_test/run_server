@@ -1,0 +1,10 @@
+#!/bin/csh
+#
+# Usage: server <switches>
+# -u : use IOR 
+# -f m : output results in Mbps
+# -b <sock Q size> ** not implemented **
+# -OAhost <host name>  ************* must provide this for this version
+# -OAthread : use threaded version as opposed to reactive
+#
+server -u -f m -b 65536 -OAhost mambo-cip #-OAthread
