@@ -197,3 +197,23 @@ FactoryCosEventChannel_i::destroy (CORBA::Environment &ACE_TRY_ENV)
                                  ACE_TRY_ENV);
   ACE_CHECK;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class ACE_Auto_Basic_Ptr<ACE_Config_Scheduler>;
+template class auto_ptr<ACE_Config_Scheduler>;
+template class ACE_Auto_Basic_Ptr<TAO_EC_Event_Channel>;
+template class auto_ptr<TAO_EC_Event_Channel>;
+template class ACE_Auto_Basic_Ptr<TAO_CosEC_EventChannel_i>;
+template class auto_ptr<TAO_CosEC_EventChannel_i>;
+
+#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Auto_Basic_Ptr<ACE_Config_Scheduler>
+#pragma instantiate auto_ptr<ACE_Config_Scheduler>
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO_EC_Event_Channel>
+#pragma instantiate auto_ptr<TAO_EC_Event_Channel>
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO_CosEC_EventChannel_i>
+#pragma instantiate auto_ptr<TAO_CosEC_EventChannel_i>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
