@@ -1,3 +1,22 @@
+Thu Aug 10 11:16:26 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+
+	  To pass the value of the response flag to the function
+	  that writes the GIOP header, a local variable called
+	  'flag' was created in generated code. If an argument
+	  to the operation also had the name 'flag', there
+	  were build errors. The name of the local variable has
+	  been changed to '_tao_response_flag'. Also, in ami_cs.cpp,
+	  for a twoway operation, the variable assigned to the
+	  response flag was changed from TAO::SYNC_WITH_TARGET to
+	  TAO_TWOWAY_RESPONSE_FLAG, as it is in operation_cs.cpp.
+	  Finally, cosmetic indenting changes were made to code
+	  generation of the entire operation. Thanks to 
+	  Craig Rodrigues <rodrigc@mediaone.net> for reporting
+	  this bug.
+
 Thu Aug 10 11:10:56 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_typedef/typedef_ci.cpp:
