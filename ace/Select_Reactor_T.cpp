@@ -456,7 +456,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::ACE_Select_Reactor_T (ACE_Sig_Ha
 {
   ACE_TRACE ("ACE_Select_Reactor_T::ACE_Select_Reactor_T");
 
-  if (this->open (ACE_Select_Reactor_T::DEFAULT_SIZE,
+  if (this->open (ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::DEFAULT_SIZE,
                   0,
                   sh,
                   tq,
