@@ -1,3 +1,11 @@
+Fri Jun 11 17:26:06 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp:
+	* TAO/performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.h:
+	* TAO/performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp:
+	  Various maneuvers to avoid SunC++ 5.0 "string literal to
+	  char*" warnings.
+
 Fri Jun 11 17:08:05 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/tests/DynAny_Test/data.h:
