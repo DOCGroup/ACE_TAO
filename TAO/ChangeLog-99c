@@ -1,3 +1,13 @@
+Mon Jul 12 14:58:13 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/NestedUpcall/Simple/server.cpp: Fixed constness warning.
+
+	* examples/POA/Forwarding/MyFooServant.cpp:
+	* tests/POA/Identity/Identity.cpp:
+	* tests/POA/Deactivation/Deactivation.cpp:
+
+	  Added ACE_UNUSED_ARGs.
+
 Mon Jul 12 14:46:43 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* examples/Event_Comm/Consumer.dsp:

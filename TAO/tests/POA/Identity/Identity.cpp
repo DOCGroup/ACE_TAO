@@ -178,6 +178,7 @@ test_poas (CORBA::ORB_ptr orb,
 
     ACE_ASSERT (servant_from_reference == servant_from_id);
     ACE_ASSERT (servant_from_reference == &servant);
+    ACE_UNUSED_ARG (servant_from_id);
 
     obj = root_poa->servant_to_reference (&servant,
                                           ACE_TRY_ENV);
@@ -302,6 +303,7 @@ test_poas (CORBA::ORB_ptr orb,
 
     ACE_ASSERT (servant_from_reference == servant_from_id);
     ACE_ASSERT (servant_from_reference == &servant);
+    ACE_UNUSED_ARG (servant_from_id);
 
     first_poa->deactivate_object (id.in (),
                                   ACE_TRY_ENV);
@@ -401,6 +403,7 @@ test_poas (CORBA::ORB_ptr orb,
 
     ACE_ASSERT (servant_from_reference == servant_from_id);
     ACE_ASSERT (servant_from_reference == &servant);
+    ACE_UNUSED_ARG (servant_from_id);
 
     obj = second_poa->servant_to_reference (&servant,
                                             ACE_TRY_ENV);
@@ -532,6 +535,7 @@ test_poas (CORBA::ORB_ptr orb,
 
     ACE_ASSERT (servant_from_reference == servant_from_id);
     ACE_ASSERT (servant_from_reference == &servant);
+    ACE_UNUSED_ARG (servant_from_id);
 
     obj = third_poa->servant_to_reference (&servant,
                                            ACE_TRY_ENV);
@@ -633,6 +637,7 @@ test_poas (CORBA::ORB_ptr orb,
 
     ACE_ASSERT (servant_from_reference == servant_from_id);
     ACE_ASSERT (servant_from_reference == &servant);
+    ACE_UNUSED_ARG (servant_from_id);
 
     forth_poa->deactivate_object (id.in ());
 
