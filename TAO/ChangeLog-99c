@@ -1,3 +1,17 @@
+Thu Mar 25 20:26:40 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+	* tao/ORB.cpp : Fixed some memory leaks in 
+	  resolve_initial_references (). Called resolve_service for 
+	  service names other than those statically defined in the orb.
+	  The resolve_service was initially resolve_naming_service. Now
+	  it takes a string as a parameter for the service name to be
+	  resolved.
+	
+	* tao/ORB.h : Changed the function resolve_naming_service () to
+	  resolve_service passing in the service name as a parameter.
+	  This function calls multicast_to_service () with the given 
+	  service name.
+
 Thu Mar 25 16:34:55 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/be/be_union_branch.cpp:
