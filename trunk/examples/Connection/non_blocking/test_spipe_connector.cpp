@@ -47,7 +47,7 @@ template class Peer_Handler<ACE_SPIPE_STREAM>;
 
 #else
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
                      "This test is not ported to Win32 (yet)\n"),
