@@ -284,38 +284,49 @@ ACE_CString::set (const char *s,
   // Free memory if necessary
 
   // Going from memory to no memory
-  if ((!release || s == 0 || s[0] == '\0')
+  if ((!release || s == 0 || s[0] == '\0' || len == 0)
       && this->release_)
-    this->allocator_->free (this->rep_);
-
+    {
+      this->allocator_->free (this->rep_);
+    }
   // Going from memory to more memory
   else if (this->len_ < len
            && this->release_)
-    this->allocator_->free (this->rep_);
+    {
+      this->allocator_->free (this->rep_);
+    }
 
   // Figure out future ownership
-  if (!release || s == 0 || s[0] == '\0')
-    this->release_ = 0;
+  if (!release || s == 0 || s[0] == '\0' || len == 0)
+    {
+      this->release_ = 0;
+    }
   else
-    this->release_ = 1;
+    {
+      this->release_ = 1;
+    }
 
   // Allocate memory if owner and necessary
 
   // Len is greater than 0, so must allocate space for it.
   if (this->release_ && this->len_ < len)
-    this->rep_ = (char *) this->allocator_->malloc (len + 1);
+    {
+      this->rep_ = (char *) this->allocator_->malloc (len + 1);
+    }
 
   // set new length
   this->len_ = len;
 
   // If no string or null string is specified by the user.
-  if (s == 0 || s[0] == '\0')
-    this->rep_ = &ACE_CString::NULL_CString_;
-
+  if (s == 0 || s[0] == '\0' || len == 0)
+    {
+      this->rep_ = &ACE_CString::NULL_CString_;
+    }
   // If we don't own the string.
   else if (!this->release_)
-    this->rep_ = (char *) s;
-
+    {
+      this->rep_ = (char *) s;
+    }
   // We own the string.
   else
     {
@@ -337,7 +348,7 @@ ACE_CString::substring (size_t offset,
   if (this->len_ == 0)
     return nil;
 
-  // case 2. start pos l
+  // case 2. start pos past our end
   if (offset >= this->len_)
     return nil;
   // No length == empty string.
