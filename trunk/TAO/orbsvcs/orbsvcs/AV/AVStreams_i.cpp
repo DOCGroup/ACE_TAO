@@ -37,6 +37,8 @@ TAO_Basic_StreamCtrl::stop (const AVStreams::flowSpec &the_spec,
 {
   if (CORBA::is_nil (stream_endpoint_a_.in ()))
     return;
+
+  // Make the upcall into the application
   this->stream_endpoint_a_->stop (the_spec, env);
 }
 
@@ -48,6 +50,8 @@ TAO_Basic_StreamCtrl::start (const AVStreams::flowSpec &the_spec,
 {
   if (CORBA::is_nil (this->stream_endpoint_a_.in ()))
     return;
+
+  // Make the upcall into the application
   this->stream_endpoint_a_->start (the_spec, env);
 }
 
@@ -60,6 +64,8 @@ TAO_Basic_StreamCtrl::destroy (const AVStreams::flowSpec &the_spec,
 {
   if (CORBA::is_nil (this->stream_endpoint_a_.in ()))
     return;
+
+  // Make the upcall into the application
   this->stream_endpoint_a_->destroy (the_spec, env);
 }
 
@@ -258,6 +264,8 @@ void
 TAO_StreamEndPoint::stop (const AVStreams::flowSpec &the_spec,  
                           CORBA::Environment &env)
 {
+  // Make the upcall into the app
+  this->handle_stop (the_spec, env);
 }
 
 // Start the physical flow of data on the stream
@@ -266,6 +274,8 @@ void
 TAO_StreamEndPoint::start (const AVStreams::flowSpec &the_spec,  
                            CORBA::Environment &env)
 {
+  // Make the upcall into the app
+  this->handle_start (the_spec, env);
 }
 
 // Close the connection
@@ -273,6 +283,8 @@ void
 TAO_StreamEndPoint::destroy (const AVStreams::flowSpec &the_spec,  
                              CORBA::Environment &env)
 {
+  // Make the upcall into the app
+  this->handle_destroy (the_spec, env);
 }
 
 // Called by streamctrl, requesting us to call request_connection 
@@ -283,14 +295,13 @@ TAO_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
                              const AVStreams::flowSpec &the_spec,  
                              CORBA::Environment &env)
 {
-  ACE_DEBUG ((LM_DEBUG, "\n(%P|%t) In TAO_StreamEndPoint::connect"));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) In TAO_StreamEndPoint::connect\n"));
   responder->request_connection (this->_this (env),
                                  0,
                                  qos_spec,
                                  the_spec,
                                  env);
   TAO_CHECK_ENV_RETURN (env, 1);
-  return 0;
 }
   
 // Called by our peer endpoint, requesting us to establish
@@ -311,6 +322,7 @@ TAO_StreamEndPoint::request_connection (AVStreams::StreamEndPoint_ptr initiator,
   for (int i = 0; i < the_spec.length (); i++)
     ACE_DEBUG ((LM_DEBUG,
                 the_spec [i]));
+
   return 0;
 }
   
@@ -387,17 +399,38 @@ TAO_StreamEndPoint::~TAO_StreamEndPoint (void)
 }
 
 // ----------------------------------------------------------------------
-// TAO_StreamEndPoint_A
+// TAO_Client_StreamEndPoint
 // ----------------------------------------------------------------------
 
-TAO_StreamEndPoint_A::TAO_StreamEndPoint_A (void)
+TAO_Client_StreamEndPoint::TAO_Client_StreamEndPoint (void)
 {
   ACE_DEBUG ((LM_DEBUG, 
-              "\n(%P|%t) TAO_StreamEndPoint_A::TAO_StreamEndPoint_A: created"));
+              "\n(%P|%t) TAO_Client_StreamEndPoint::TAO_Client_StreamEndPoint: created"));
 }
 
 CORBA::Boolean 
-TAO_StreamEndPoint_A::multiconnect (AVStreams::streamQoS &the_qos, 
+TAO_Client_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder, 
+                                    AVStreams::streamQoS &qos_spec, 
+                                    const AVStreams::flowSpec &the_spec,  
+                                    CORBA::Environment &env)
+{
+  // Use the base class implementation of connect
+  TAO_StreamEndPoint::connect (responder, 
+                               qos_spec, 
+                               the_spec,  
+                               env);
+
+  // Make the upcall to the app
+  return this->handle_connection_established (responder, 
+                                              qos_spec, 
+                                              the_spec,  
+                                              env);
+  
+}
+
+
+CORBA::Boolean 
+TAO_Client_StreamEndPoint::multiconnect (AVStreams::streamQoS &the_qos, 
                                     AVStreams::flowSpec &the_spec,  
                                     CORBA::Environment &env)
 {
@@ -405,7 +438,7 @@ TAO_StreamEndPoint_A::multiconnect (AVStreams::streamQoS &the_qos,
 }
   
 CORBA::Boolean 
-TAO_StreamEndPoint_A::connect_leaf (AVStreams::StreamEndPoint_B_ptr the_ep, 
+TAO_Client_StreamEndPoint::connect_leaf (AVStreams::StreamEndPoint_B_ptr the_ep, 
                                     AVStreams::streamQoS &the_qos, 
                                     const AVStreams::flowSpec &the_flows,  
                                     CORBA::Environment &env)
@@ -414,35 +447,58 @@ TAO_StreamEndPoint_A::connect_leaf (AVStreams::StreamEndPoint_B_ptr the_ep,
 }
   
 void 
-TAO_StreamEndPoint_A::disconnect_leaf (AVStreams::StreamEndPoint_B_ptr the_ep, 
+TAO_Client_StreamEndPoint::disconnect_leaf (AVStreams::StreamEndPoint_B_ptr the_ep, 
                                        const AVStreams::flowSpec &theSpec,  
                                        CORBA::Environment &env)
 {
 }
   
-TAO_StreamEndPoint_A::~TAO_StreamEndPoint_A (void)
+TAO_Client_StreamEndPoint::~TAO_Client_StreamEndPoint (void)
 {
 }
 
 // ----------------------------------------------------------------------
-// TAO_StreamEndPoint_B
+// TAO_Server_StreamEndPoint
 // ----------------------------------------------------------------------
 
-TAO_StreamEndPoint_B::TAO_StreamEndPoint_B (void)
+TAO_Server_StreamEndPoint::TAO_Server_StreamEndPoint (void)
 {
   ACE_DEBUG ((LM_DEBUG, 
-              "\n(%P|%t) TAO_StreamEndPoint_B::TAO_StreamEndPoint_B: created"));
+              "\n(%P|%t) TAO_Server_StreamEndPoint::TAO_Server_StreamEndPoint: created"));
 }
 
 CORBA::Boolean 
-TAO_StreamEndPoint_B::multiconnect (AVStreams::streamQoS &the_qos, 
-                                    AVStreams::flowSpec &the_spec,  
-                                    CORBA::Environment &env)
+TAO_Server_StreamEndPoint::request_connection (AVStreams::StreamEndPoint_ptr initiator, 
+                                               CORBA::Boolean is_mcast, 
+                                               AVStreams::streamQoS &qos, 
+                                               AVStreams::flowSpec &the_spec,  
+                                               CORBA::Environment &env)
+
+{
+  // Use the base class implementation of request_connection
+  TAO_StreamEndPoint::request_connection (initiator, 
+                                          is_mcast, 
+                                          qos, 
+                                          the_spec,  
+                                          env);
+
+  // Make the upcall to the app
+  return this->handle_connection_requested (initiator, 
+                                            is_mcast, 
+                                            qos, 
+                                            the_spec,  
+                                            env);
+
+}
+CORBA::Boolean 
+TAO_Server_StreamEndPoint::multiconnect (AVStreams::streamQoS &the_qos, 
+                                         AVStreams::flowSpec &the_spec,  
+                                         CORBA::Environment &env)
 {
   return 0;
 }
 
-TAO_StreamEndPoint_B::~TAO_StreamEndPoint_B (void)
+TAO_Server_StreamEndPoint::~TAO_Server_StreamEndPoint (void)
 {
 }
 
@@ -516,63 +572,20 @@ TAO_VDev::~TAO_VDev (void)
 // TAO_MMDevice
 // ----------------------------------------------------------------------
 
-TAO_MMDevice::TAO_MMDevice (void)
+
+
+TAO_MMDevice::TAO_MMDevice ()
 {
-  ACE_DEBUG ((LM_DEBUG,"\n(%P|%t) TAO_MMDevice created"));
-}
-
-// We have been asked to create a new stream_endpoint and a vdev.
-AVStreams::StreamEndPoint_A_ptr  
-TAO_MMDevice::create_A (AVStreams::StreamCtrl_ptr the_requester, 
-                        AVStreams::VDev_out the_vdev, 
-                        AVStreams::streamQoS &the_qos, 
-                        CORBA::Boolean_out met_qos, 
-                        char *&named_vdev, 
-                        const AVStreams::flowSpec &the_spec,  
-                        CORBA::Environment &env)
-{
-  ACE_DEBUG ((LM_DEBUG, 
-              "\n(%P|%t) TAO_MMDevice::create_A: called"));
-
-  TAO_VDev *vdev = new TAO_VDev;
-  the_vdev = AVStreams::VDev::_duplicate (vdev->_this (env));
-
-  TAO_StreamEndPoint_A *stream_endpoint_a = 
-    new TAO_StreamEndPoint_A;
-  return AVStreams::StreamEndPoint_A::_duplicate 
-    (stream_endpoint_a->_this (env));
-}
-
-// We have been asked to create a new stream_endpoint and a vdev.
-AVStreams::StreamEndPoint_B_ptr  
-TAO_MMDevice::create_B (AVStreams::StreamCtrl_ptr the_requester, 
-                        AVStreams::VDev_out the_vdev, 
-                        AVStreams::streamQoS &the_qos, 
-                        CORBA::Boolean_out met_qos, 
-                        char *&named_vdev, 
-                        const AVStreams::flowSpec &the_spec,  
-                        CORBA::Environment &env)
-{
-  ACE_DEBUG ((LM_DEBUG, 
-              "\n(%P|%t) TAO_MMDevice::create_B: called"));
-
-  TAO_VDev *vdev = new TAO_VDev;
-  the_vdev = AVStreams::VDev::_duplicate (vdev->_this (env));
-
-  TAO_StreamEndPoint_B *stream_endpoint_b = 
-    new TAO_StreamEndPoint_B;
-  return AVStreams::StreamEndPoint_B::_duplicate 
-    (stream_endpoint_b->_this (env));
 }
 
 // create a streamctrl which is colocated with me, use that streamctrl
 // to bind the peer_device with me.
 AVStreams::StreamCtrl_ptr  
-TAO_MMDevice::bind (AVStreams::MMDevice_ptr peer_device,
-                    AVStreams::streamQoS &the_qos,
-                    CORBA::Boolean_out is_met,
-                    const AVStreams::flowSpec &the_spec,
-                    CORBA::Environment &env)
+TAO_MMDevice ::bind (AVStreams::MMDevice_ptr peer_device,
+                     AVStreams::streamQoS &the_qos,
+                     CORBA::Boolean_out is_met,
+                     const AVStreams::flowSpec &the_spec,
+                     CORBA::Environment &env)
 {
 #if 0
   TAO_TRY
@@ -644,8 +657,93 @@ TAO_MMDevice::remove_fdev (const char *flow_name,
 {
 }
 
-
 TAO_MMDevice::~TAO_MMDevice (void)
 {
+}
+
+template <class T>
+TAO_Client_MMDevice <T>::TAO_Client_MMDevice ()
+{
+}
+
+// We have been asked to create a new stream_endpoint and a vdev.
+template <class T>
+AVStreams::StreamEndPoint_A_ptr  
+TAO_Client_MMDevice <T>::create_A (AVStreams::StreamCtrl_ptr the_requester, 
+                                   AVStreams::VDev_out the_vdev, 
+                                   AVStreams::streamQoS &the_qos, 
+                                   CORBA::Boolean_out met_qos, 
+                                   char *&named_vdev, 
+                                   const AVStreams::flowSpec &the_spec,  
+                                   CORBA::Environment &env)
+{
+  ACE_DEBUG ((LM_DEBUG, 
+              "\n(%P|%t) TAO_MMDevice::create_A: called"));
+
+  TAO_VDev *vdev = new TAO_VDev;
+  the_vdev = AVStreams::VDev::_duplicate (vdev->_this (env));
+
+  TAO_Client_StreamEndPoint *stream_endpoint_a = 
+    new T;
+  return AVStreams::StreamEndPoint_A::_duplicate 
+    (stream_endpoint_a->_this (env));
+}
+
+template <class T>
+AVStreams::StreamEndPoint_B_ptr  
+TAO_Client_MMDevice <T>::create_B (AVStreams::StreamCtrl_ptr the_requester, 
+                                   AVStreams::VDev_out the_vdev, 
+                                   AVStreams::streamQoS &the_qos, 
+                                   CORBA::Boolean_out met_qos, 
+                                   char *&named_vdev, 
+                                   const AVStreams::flowSpec &the_spec,  
+                                   CORBA::Environment &env)
+{
+  ACE_ERROR_RETURN ((LM_ERROR, 
+                     "(%P|%t) Cannot create a B device on the client side!\n"),
+                    0);
+}
+
+template <class T>
+TAO_Server_MMDevice <T>::TAO_Server_MMDevice ()
+{
+}
+
+template <class T>
+AVStreams::StreamEndPoint_A_ptr  
+TAO_Server_MMDevice <T>::create_A (AVStreams::StreamCtrl_ptr the_requester, 
+                                   AVStreams::VDev_out the_vdev, 
+                                   AVStreams::streamQoS &the_qos, 
+                                   CORBA::Boolean_out met_qos, 
+                                   char *&named_vdev, 
+                                   const AVStreams::flowSpec &the_spec,  
+                                   CORBA::Environment &env)
+{
+  ACE_ERROR_RETURN ((LM_ERROR, 
+                     "(%P|%t) Cannot create a A device on the server side!\n"),
+                    0);
+}
+
+// We have been asked to create a new stream_endpoint and a vdev.
+template <class T>
+AVStreams::StreamEndPoint_B_ptr  
+TAO_Server_MMDevice <T>::create_B (AVStreams::StreamCtrl_ptr the_requester, 
+                                   AVStreams::VDev_out the_vdev, 
+                                   AVStreams::streamQoS &the_qos, 
+                                   CORBA::Boolean_out met_qos, 
+                                   char *&named_vdev, 
+                                   const AVStreams::flowSpec &the_spec,  
+                                   CORBA::Environment &env)
+{
+  ACE_DEBUG ((LM_DEBUG, 
+              "\n(%P|%t) TAO_MMDevice::create_B: called"));
+
+  TAO_VDev *vdev = new TAO_VDev;
+  the_vdev = AVStreams::VDev::_duplicate (vdev->_this (env));
+
+  TAO_Server_StreamEndPoint *stream_endpoint_b = 
+    new T;
+  return AVStreams::StreamEndPoint_B::_duplicate 
+    (stream_endpoint_b->_this (env));
 }
 
