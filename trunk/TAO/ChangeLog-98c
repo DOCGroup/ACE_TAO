@@ -1,131 +1,136 @@
+Thu Oct 01 10:39:44 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/ORB_Core.cpp (input_cdr_dblock_allocator): wrapped
+          break following return with ACE_NOTREACHED, in two places.
+
 Thu Oct 01 00:17:17 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/ORB_Core.h: Removed template specialization for
- 	  INET_Addr.hash(). Also changed/fixed explicit template
- 	  instantiations.
+        * tao/ORB_Core.h: Removed template specialization for
+          INET_Addr.hash(). Also changed/fixed explicit template
+          instantiations.
 x
 Wed Sep 30 15:47:26 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Connect.h: 
-	* tao/Connect.cpp: 
-	* tao/Invocation.cpp: 
-	  Removed some calls to TAO_ORB_Core_instance(), we use the
-	  ORB_Core cached in the Invocation and pass it down to the GIOP
-	  module and eventually to the Client_Connection_Handler.
+        * tao/Connect.h:
+        * tao/Connect.cpp:
+        * tao/Invocation.cpp:
+          Removed some calls to TAO_ORB_Core_instance(), we use the
+          ORB_Core cached in the Invocation and pass it down to the GIOP
+          module and eventually to the Client_Connection_Handler.
 
-	* tao/ORB_Core.cpp: 
-	  Fixed silly syntax errors.
+        * tao/ORB_Core.cpp:
+          Fixed silly syntax errors.
 
 Wed Sep 30 14:58:16 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* tao/ORB_Core.{h,i}: Had problems with the explicit template
-	  instantiation for two hash_i functions on MSVC 6.  So, Irfan
-	  and I decided to move it into the .h and make them real
-	  "inline" functions for now.  Otherwise, the compiler doesn't
-	  seem to understand the hint made by the prototype and will
-	  not use the explicitly defined method.
+        * tao/ORB_Core.{h,i}: Had problems with the explicit template
+          instantiation for two hash_i functions on MSVC 6.  So, Irfan
+          and I decided to move it into the .h and make them real
+          "inline" functions for now.  Otherwise, the compiler doesn't
+          seem to understand the hint made by the prototype and will
+          not use the explicitly defined method.
 
 Wed Sep 30 11:14:35 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* tao/POA.cpp: Needed to properly terminate a CString in 
-	  locate_poa_and_servant_i () by copying it to another 
-	  CString and then extracting the char * from it.
+        * tao/POA.cpp: Needed to properly terminate a CString in
+          locate_poa_and_servant_i () by copying it to another
+          CString and then extracting the char * from it.
 
 Wed Sep 30 10:32:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
         * docs/releasenotes/index.html
           orbsvcs/tests/Simulator/README
-          orbsvcs/tests/Simulator/NavWeap.idl          
+          orbsvcs/tests/Simulator/NavWeap.idl
           orbsvcs/tests/Simulator/DOVEBrowser/DataHandler.java
           orbsvcs/tests/Simulator/DOVEBrowser/DemoCore.java
           orbsvcs/tests/Simulator/DOVEBrowser/NavWeapDataHandler.java
           orbsvcs/tests/Simulator/DOVEBrowser/Properties.java
           orbsvcs/tests/Simulator/DOVEBrowser/PushConsumer.java
-	  orbsvcs/tests/Simulator/DOVEBrowser/make.bat
-	  orbsvcs/tests/Simulator/Event_Supplier/DOVE_Supplier.cpp
-	  orbsvcs/tests/Simulator/Event_Supplier/Event_Sup.{cpp, dsp}
-	  orbsvcs/tests/Simulator/Event_Supplier/Logging_Sup.{cpp, dsp, h}:
-	  Enhancements for Boeing demo: expanded and revised make.bat to build
+          orbsvcs/tests/Simulator/DOVEBrowser/make.bat
+          orbsvcs/tests/Simulator/Event_Supplier/DOVE_Supplier.cpp
+          orbsvcs/tests/Simulator/Event_Supplier/Event_Sup.{cpp, dsp}
+          orbsvcs/tests/Simulator/Event_Supplier/Logging_Sup.{cpp, dsp, h}:
+          Enhancements for Boeing demo: expanded and revised make.bat to build
           java browser using Visibroker on NT.  Revised supplier and consumer
-	  logic to allow an ACT to indicate whether or not to update the
-	  scheduling information with actual data xollected by the EC.  Added
-	  a logging supplier that sets this ACT to request actual data update.
-	  Modified java consumer so entire event is passed to data handler.
-	  This allows the DOVE Browser to view either simulated or "live"
-	  scheduling data.
-	
+          logic to allow an ACT to indicate whether or not to update the
+          scheduling information with actual data xollected by the EC.  Added
+          a logging supplier that sets this ACT to request actual data update.
+          Modified java consumer so entire event is passed to data handler.
+          This allows the DOVE Browser to view either simulated or "live"
+          scheduling data.
+
 Wed Sep 30 03:47:31 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* performance-tests/Thruput/TAO/server.cpp:
-	  Added code to write ior to a file with the option -o.
-	
-	* performance-tests/Thruput/TAO/client.cpp: 
-	  Added code to read ior from a file with option -f.
-	
-	* performance-tests/Thruput/TAO/run_server:
-	* performance-tests/Thruput/TAO/run_test:
-	* performance-tests/Thruput/TAO/run_client:
-	  Used the -o and -f options on server and client to avoid cut and
-	  paste of iors.
-	
+        * performance-tests/Thruput/TAO/server.cpp:
+          Added code to write ior to a file with the option -o.
+
+        * performance-tests/Thruput/TAO/client.cpp:
+          Added code to read ior from a file with option -f.
+
+        * performance-tests/Thruput/TAO/run_server:
+        * performance-tests/Thruput/TAO/run_test:
+        * performance-tests/Thruput/TAO/run_client:
+          Used the -o and -f options on server and client to avoid cut and
+          paste of iors.
+
 Wed Sep 30 02:44:59 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao: Removed some cases of explicit template instantiation of
- 	  ACE_Hash_Addr from TAO since it is no longer used inside the
- 	  cached connector. It is still necessary since it is used inside
-	  the collocation table.
+        * tao: Removed some cases of explicit template instantiation of
+          ACE_Hash_Addr from TAO since it is no longer used inside the
+          cached connector. It is still necessary since it is used inside
+          the collocation table.
 
-	* tao/ORB_Core: Changed return type of ACE_Hash_Addr::hash_i() to
- 	  u_long.  Also added template specialization for
- 	  ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>::hash_i().
-	
-	* tao/POA.cpp (dispatch_servant_i): Reduced access to
-	  TAO_ORB_Core_instance() inside the POA.
+        * tao/ORB_Core: Changed return type of ACE_Hash_Addr::hash_i() to
+          u_long.  Also added template specialization for
+          ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>::hash_i().
+
+        * tao/POA.cpp (dispatch_servant_i): Reduced access to
+          TAO_ORB_Core_instance() inside the POA.
 
 Wed Sep 30 02:18:36 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/README: 
-	* performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl: 
-	* performance-tests/Cubit/TAO/IDL_Cubit/Makefile: 
-	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Server.h: 
-	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Server.cpp: 
-	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.h: 
-	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp: 
-	  IDL_Cubit does *not* use the Naming Service anymore. It was
-	  simply too slow to compile orbsvcs and the Naming Service has
-	  many other examples that show how to use it and this test is
-	  compiled often after changin the ORB.
+        * performance-tests/Cubit/TAO/IDL_Cubit/README:
+        * performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl:
+        * performance-tests/Cubit/TAO/IDL_Cubit/Makefile:
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Server.h:
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Server.cpp:
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.h:
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp:
+          IDL_Cubit does *not* use the Naming Service anymore. It was
+          simply too slow to compile orbsvcs and the Naming Service has
+          many other examples that show how to use it and this test is
+          compiled often after changin the ORB.
 
 Wed Sep 30 00:26:44 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/ORB_Core.h: 
-	* tao/ORB_Core.i: 
-	* tao/ORB_Core.cpp: 
-	* tao/CDR.h: 
-	* tao/CDR.cpp: 
-	* tao/Connect.cpp: 
-	* tao/Invocation.i: 
-	* tao/Invocation.cpp: 
-	  The resource factory can create either TSS or global allocators
-	  for the InputCDR stream, thus applications that don't need the
-	  CDR stream buffer to survive after the upcall, or release it in
-	  another thread (most CORBA compliant apps fall in this category)
-	  can benefit from this feature that reduces locks and
-	  fragmentation in the global heap.
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.i:
+        * tao/ORB_Core.cpp:
+        * tao/CDR.h:
+        * tao/CDR.cpp:
+        * tao/Connect.cpp:
+        * tao/Invocation.i:
+        * tao/Invocation.cpp:
+          The resource factory can create either TSS or global allocators
+          for the InputCDR stream, thus applications that don't need the
+          CDR stream buffer to survive after the upcall, or release it in
+          another thread (most CORBA compliant apps fall in this category)
+          can benefit from this feature that reduces locks and
+          fragmentation in the global heap.
 
-	* tao/default_client.h: 
-	  Fixed minor syntax error (comma at the end of an enum).
+        * tao/default_client.h:
+          Fixed minor syntax error (comma at the end of an enum).
 
-	* orbsvcs/tests/EC_Custom_Marshal/svc.conf: 
-	* orbsvcs/tests/EC_Custom_Marshal/svc.conf: 
-	  Use a global allocator for the CDR stream.
+        * orbsvcs/tests/EC_Custom_Marshal/svc.conf:
+        * orbsvcs/tests/EC_Custom_Marshal/svc.conf:
+          Use a global allocator for the CDR stream.
 
 Tue Sep 29 21:57:02 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* examples/TAO_Examples.dsw: Removed incorrect dependency.	
+        * examples/TAO_Examples.dsw: Removed incorrect dependency.
 
-	* examples/POA/FindPOA/FindPOA.dsp: Renamed from FindPOA Server to
-	  simply FindPOA.
+        * examples/POA/FindPOA/FindPOA.dsp: Renamed from FindPOA Server to
+          simply FindPOA.
 
 Tue Sep 29 19:17:17 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
@@ -183,10 +188,10 @@ Tue Sep 29 13:23:25 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
 Tue Sep 29 13:09:49 1998  Sergio Flores  <sergio@tango.cs.wustl.edu>
 
-	* TAO/performance-tests/Cubit/TAO/MT_Cubit/client.cpp:	
-	* TAO/performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp: Used
- 	begin() to obtain iterator fom the ACE_Unbounded_Queue class.  In
- 	addition, I made changes to fix minor warnings.
+        * TAO/performance-tests/Cubit/TAO/MT_Cubit/client.cpp:
+        * TAO/performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp: Used
+        begin() to obtain iterator fom the ACE_Unbounded_Queue class.  In
+        addition, I made changes to fix minor warnings.
 
 Tue Sep 29 12:20:16 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
