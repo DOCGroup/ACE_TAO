@@ -38,6 +38,10 @@
 #include "tao/Request.h"
 #include "tao/MProfile.h"
 
+#ifdef (TAO_HAS_INTERFACE_REPOSITORY)
+#  include "tao/InterfaceC.h"
+#endif /*TAO_HAS_INTERFACE_REPOSITORY */
+
 #if defined (TAO_HAS_VALUETYPE)
 #  include "tao/ValueFactory_Map.h"
 #endif /* TAO_HAS_VALUETYPE */
@@ -996,7 +1000,7 @@ CORBA_ORB::create_dyn_enum      (CORBA_TypeCode_ptr tc,
   return TAO_DynAny_i::create_dyn_enum (tc, ACE_TRY_ENV);
 }
 
-#ifdef TAO_HAS_INTERFACE_REPOSITORY
+#ifdef (TAO_HAS_INTERFACE_REPOSITORY)
 
 void string2long (const char *str,
                   ACE_CDR::ULong *&arr,
@@ -1067,7 +1071,7 @@ CORBA_ORB::create_enum_tc (const char *id,
 
   string2long (id, larr, arrlen);
 
-  for (ACE_CDR::Ulong i = 0; i < arrlen; i++)
+  for (ACE_CDR::ULong i = 0; i < arrlen; i++)
     cdr << larr [i];
 
   // Name of the enum
