@@ -1,3 +1,16 @@
+Sun Jun 17 18:24:18 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* performance-tests/RTCorba/Multiple_Endpoints/Makefile:
+	* performance-tests/RTCorba/Multiple_Endpoints/Common/Makefile:
+	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Makefile:
+	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/client.cpp:
+	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/server.cpp:
+	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Makefile:
+	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/client.cpp:
+	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/server.cpp:
+	  Fixed compilation problems by adding the missing include, and
+	  regenerated dependencies.
+	
 Sun Jun 17 10:12:49 2001  Craig Rodrigues  <crodrigues@bbn.com>
 
         * tests/RTCORBA/MT_Client_Protocol_Priority/client.cpp: 

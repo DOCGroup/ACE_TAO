@@ -14,10 +14,10 @@ endif # ! TAO_ROOT
 
 # On non-Windows environment, we should at least define
 # the export_include IDL flag.
-TAO_IDLFLAGS +=\
+TAO_IDLFLAGS += -Ge 1\
  -Wb,export_macro=RTCORBA_COMMON_Export \
  -Wb,export_include=rtcorba_common_export.h \
- -Ge 1
+ 
 
 LIB = libRTCORBA_Common.a
 SHLIB = libRTCORBA_Common.$(SOEXT)
