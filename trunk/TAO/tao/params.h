@@ -1,16 +1,17 @@
 /* -*- C++ -*- */
+// $Id$
 
 // ============================================================================
 //
 // = LIBRARY
 //    TAO
-// 
+//
 // = FILENAME
 //    params.h
 //
 // = AUTHOR
 //    Chris Cleeland
-// 
+//
 // ============================================================================
 
 #if !defined (TAO_PARAMS_H)
@@ -43,10 +44,10 @@ class TAO_Export TAO_ORB_Parameters
 public:
   TAO_ORB_Parameters (void);
   // Constructor.
-  
+
   ~TAO_ORB_Parameters (void);
   // Destructor.
-  
+
   void addr (const ACE_INET_Addr &addr);
   // Set the address on which we're listening.
 
@@ -64,7 +65,7 @@ public:
 
   CORBA::UShort name_service_port (void);
   // Get the port of our name service.
-  
+
   void trading_service_ior (CORBA::String ns);
   // Set the IOR of our trading service.
 
@@ -90,7 +91,7 @@ public:
   // Set the size to be used for a socket's send buffer.
 
 private:
-  ACE_INET_Addr addr_;          
+  ACE_INET_Addr addr_;
   // host + port number we are listening on
 
   CORBA::String name_service_ior_;
@@ -112,7 +113,7 @@ private:
   // Size to be used for a socket's send buffer.
 };
 
-typedef enum 
+typedef enum
 {
   TAO_NONE,
   TAO_LINEAR,
@@ -138,16 +139,16 @@ public:
 
   TAO_LOCAL_INLINE ~TAO_OA_Parameters (void);
   // Destructor
-  
+
   void demux_strategy (const char *strategy);
   // Specify the demultiplexing strategy to be used via <{strategy}>.
   // Valid values are one of (case matters) "linear", "dynamic_hash",
   // "user_def", or "active_demux".  If the value is not valid, then
   // <Dynamic Hash> is used as a default.
-  
+
   TAO_LOCAL_INLINE void demux_strategy (TAO_Demux_Strategy s);
   // Specify the demultiplexing strategy to be used.
-  
+
   TAO_LOCAL_INLINE TAO_Demux_Strategy demux_strategy (void);
   // Return the demultiplexing strategy being used.
 
@@ -165,14 +166,18 @@ public:
   // get the table size for the lookup table
 
 private:
-  TAO_Demux_Strategy demux_;  
+  TAO_Demux_Strategy demux_;
   // demux strategy
 
-  CORBA::ULong tablesize_;       
+  CORBA::ULong tablesize_;
   // size of object lookup table
 
   TAO_Object_Table_Impl *ot_;
   // concrete lookup table instance
 };
+
+#if defined (__ACE_INLINE__)
+# include "tao/params.i"
+#endif /* __ACE_INLINE__ */
 
 #endif /* TAO_PARAMS_H */

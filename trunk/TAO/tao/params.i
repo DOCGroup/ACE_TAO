@@ -1,16 +1,17 @@
 /* -*- C++ -*- */
+// $Id$
 
 // ============================================================================
 //
 // = LIBRARY
 //    TAO
-// 
+//
 // = FILENAME
 //    params.i
 //
 // = AUTHOR
 //    Chris Cleeland
-// 
+//
 // ============================================================================
 
 ACE_INLINE
@@ -48,7 +49,7 @@ TAO_OA_Parameters::tablesize (void)
   return this->tablesize_;
 }
 
-ACE_INLINE void 
+ACE_INLINE void
 TAO_OA_Parameters::userdef_lookup_strategy (TAO_Object_Table_Impl *&ot)
 {
   // provide a way for user defined object key lookup strategies to be plugged

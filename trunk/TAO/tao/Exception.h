@@ -1,4 +1,5 @@
 // This may look like C, but it's really -*- C++ -*-
+// $Id$
 
 // ============================================================================
 //
@@ -146,8 +147,8 @@ public:
   // extension
 
   CORBA_SystemException (CORBA::TypeCode_ptr tc,
-			 CORBA::ULong code,
-			 CORBA::CompletionStatus completed);
+                         CORBA::ULong code,
+                         CORBA::CompletionStatus completed);
   // ctor using a TypeCode
 
   virtual int _is_a (const char *type_id) const;
@@ -286,5 +287,9 @@ public:
 
   static CORBA::ExceptionList system_exceptions;
 };
+
+#if defined (__ACE_INLINE__)
+# include "tao/Exception.i"
+#endif /* __ACE_INLINE__ */
 
 #endif /* TAO_EXCEPTION_H */

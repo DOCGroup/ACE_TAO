@@ -1,4 +1,4 @@
-// $id: Exception.cpp,v 1.29 1998/03/16 17:19:58 coryan Exp $
+// $Id$
 
 // Copyright 1994-1995 by Sun Microsystems Inc.
 // All Rights Reserved
@@ -11,7 +11,7 @@
 #include "tao/corba.h"
 
 #if !defined (__ACE_INLINE__)
-#  include "Exception.i"
+# include "tao/Exception.i"
 #endif /* __ACE_INLINE__ */
 
 // Static initializers.
@@ -217,7 +217,7 @@ CORBA_SystemException::operator = (const CORBA_SystemException &src)
   this->type_ = src.type_;
   if (this->type_)
     this->type_->AddRef ();
-  
+
   this->minor_ = src.minor_;
   this->completed_ = src.completed_;
 

@@ -226,6 +226,8 @@ extern TAO_Export int operator== (const TAO_ObjectKey &l,
 #include "tao/IIOP_Object.i"
 #include "tao/Server_Request.i"
 #include "tao/Request.i"
+#include "tao/params.i"
+#include "Exception.i"
 #endif /* 0 */
 
 #  if defined (do_undef_on_ACE_INLINE)
@@ -236,8 +238,6 @@ extern TAO_Export int operator== (const TAO_ObjectKey &l,
 
 // The following *.i files are conditionally included here.
 #if defined (__ACE_INLINE__)
-#include "tao/params.i"
-#include "Exception.i"
 #include "tao/default_client.i"
 #include "tao/default_server.i"
 #include "tao/Connect.i"
