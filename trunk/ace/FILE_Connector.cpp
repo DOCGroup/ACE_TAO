@@ -32,12 +32,12 @@ ACE_FILE_Connector::ACE_FILE_Connector (void)
 
 int
 ACE_FILE_Connector::connect (ACE_FILE_IO &new_io,
-			     const ACE_FILE_Addr &remote_sap,
-			     ACE_Time_Value *timeout,
-			     const ACE_Addr &,
-			     int,
-			     int flags,
-			     int perms)
+                             const ACE_FILE_Addr &remote_sap,
+                             ACE_Time_Value *timeout,
+                             const ACE_Addr &,
+                             int,
+                             int flags,
+                             int perms)
 {
   ACE_TRACE ("ACE_FILE_Connector::connect");
   ACE_ASSERT (new_io.get_handle () == ACE_INVALID_HANDLE);

@@ -78,8 +78,8 @@ ACE_Asynch_Acceptor<HANDLER>::open (const ACE_INET_Addr &address,
     {
       ACE_Errno_Guard g (errno);
       ACE_ERROR ((LM_ERROR,
-		  ACE_LIB_TEXT ("%p\n"),
-		  ACE_LIB_TEXT ("ACE_Asynch_Accept::open")));
+                  ACE_LIB_TEXT ("%p\n"),
+                  ACE_LIB_TEXT ("ACE_Asynch_Accept::open")));
       ACE_OS::closesocket (this->listen_handle_);
       this->listen_handle_ = ACE_INVALID_HANDLE;
       return -1;
@@ -94,15 +94,15 @@ ACE_Asynch_Acceptor<HANDLER>::open (const ACE_INET_Addr &address,
                               SO_REUSEADDR,
                               (const char*) &one,
                               sizeof one) == -1)
-	{
-	  ACE_Errno_Guard g (errno);
-	  ACE_ERROR ((LM_ERROR,
-		      ACE_LIB_TEXT ("%p\n"),
-		      ACE_LIB_TEXT ("ACE_OS::setsockopt")));
-	  ACE_OS::closesocket (this->listen_handle_);
-	  this->listen_handle_ = ACE_INVALID_HANDLE;
-	  return -1;
-	}
+        {
+          ACE_Errno_Guard g (errno);
+          ACE_ERROR ((LM_ERROR,
+                      ACE_LIB_TEXT ("%p\n"),
+                      ACE_LIB_TEXT ("ACE_OS::setsockopt")));
+          ACE_OS::closesocket (this->listen_handle_);
+          this->listen_handle_ = ACE_INVALID_HANDLE;
+          return -1;
+        }
     }
 
   // If port is not specified, bind to any port.
@@ -110,13 +110,13 @@ ACE_Asynch_Acceptor<HANDLER>::open (const ACE_INET_Addr &address,
 
   if (address == sa &&
       ACE::bind_port (this->listen_handle_,
-	                           INADDR_ANY,
-				   address.get_type()) == -1)
+                                   INADDR_ANY,
+                                   address.get_type()) == -1)
     {
       ACE_Errno_Guard g (errno);
       ACE_ERROR ((LM_ERROR,
-		  ACE_LIB_TEXT ("%p\n"),
-		  ACE_LIB_TEXT ("ACE::bind_port")));
+                  ACE_LIB_TEXT ("%p\n"),
+                  ACE_LIB_TEXT ("ACE::bind_port")));
       ACE_OS::closesocket (this->listen_handle_);
       this->listen_handle_ = ACE_INVALID_HANDLE;
       return -1;
@@ -129,8 +129,8 @@ ACE_Asynch_Acceptor<HANDLER>::open (const ACE_INET_Addr &address,
     {
       ACE_Errno_Guard g (errno);
       ACE_ERROR ((LM_ERROR,
-		  ACE_LIB_TEXT ("%p\n"),
-		  ACE_LIB_TEXT ("ACE_OS::bind")));
+                  ACE_LIB_TEXT ("%p\n"),
+                  ACE_LIB_TEXT ("ACE_OS::bind")));
       ACE_OS::closesocket (this->listen_handle_);
       this->listen_handle_ = ACE_INVALID_HANDLE;
       return -1;
@@ -141,8 +141,8 @@ ACE_Asynch_Acceptor<HANDLER>::open (const ACE_INET_Addr &address,
     {
       ACE_Errno_Guard g (errno);
       ACE_ERROR ((LM_ERROR,
-		  ACE_LIB_TEXT ("%p\n"),
-		  ACE_LIB_TEXT ("ACE_OS::listen")));
+                  ACE_LIB_TEXT ("%p\n"),
+                  ACE_LIB_TEXT ("ACE_OS::listen")));
       ACE_OS::closesocket (this->listen_handle_);
       this->listen_handle_ = ACE_INVALID_HANDLE;
       return -1;
@@ -156,15 +156,15 @@ ACE_Asynch_Acceptor<HANDLER>::open (const ACE_INET_Addr &address,
     {
       // Initiate accepts.
       if (this->accept (bytes_to_read) == -1)
-	{
-	  ACE_Errno_Guard g (errno);
-	  ACE_ERROR ((LM_ERROR,
-		      ACE_LIB_TEXT ("%p\n"),
-		      ACE_LIB_TEXT ("ACE_Asynch_Acceptor::accept")));
-	  ACE_OS::closesocket (this->listen_handle_);
-	  this->listen_handle_ = ACE_INVALID_HANDLE;
-	  return -1;
-	}
+        {
+          ACE_Errno_Guard g (errno);
+          ACE_ERROR ((LM_ERROR,
+                      ACE_LIB_TEXT ("%p\n"),
+                      ACE_LIB_TEXT ("ACE_Asynch_Acceptor::accept")));
+          ACE_OS::closesocket (this->listen_handle_);
+          this->listen_handle_ = ACE_INVALID_HANDLE;
+          return -1;
+        }
     }
 
   return 0;

@@ -46,10 +46,10 @@ int check_type_consistency (const ACE_INET_Addr &addr)
   if (addr.get_type () != family)
     {
       ACE_ERROR ((LM_ERROR,
-		  ACE_TEXT ("Inconsistency between ACE_SOCK::addr_type_ (%d) ")
-		  ACE_TEXT ("and the sockaddr family (%d)\n"),
-		  addr.get_type (),
-		  family));
+                  ACE_TEXT ("Inconsistency between ACE_SOCK::addr_type_ (%d) ")
+                  ACE_TEXT ("and the sockaddr family (%d)\n"),
+                  addr.get_type (),
+                  family));
       return 1;
     }
   return 0;
@@ -202,7 +202,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
       for (int i=0; ipv6_addresses[i] != 0; i++)
         {
           ACE_INET_Addr addr (80, ipv6_addresses[i]);
-	  status |= check_type_consistency (addr);
+          status |= check_type_consistency (addr);
 
           if (0 != ACE_OS::strcmp (addr.get_host_addr (), ipv6_addresses[i]))
             {

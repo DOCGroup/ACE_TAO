@@ -82,14 +82,14 @@ ACE_System_Time::get_master_system_time (ACE_UINT32 &time_out)
       // Try to find it
       void * temp;
       if (this->shmem_->find (ACE_DEFAULT_TIME_SERVER_STR, temp) ==  -1)
-	{
-	  // No time entry in shared memory (meaning no Clerk exists)
-	  // so return the local time of the host.
-	  return this->get_local_system_time (time_out);
-	}
+        {
+          // No time entry in shared memory (meaning no Clerk exists)
+          // so return the local time of the host.
+          return this->get_local_system_time (time_out);
+        }
       else
-	// Extract the delta time.
-	this->delta_time_ = (long *) temp;
+        // Extract the delta time.
+        this->delta_time_ = (long *) temp;
     }
 
   ACE_UINT32 local_time;
@@ -141,4 +141,3 @@ template class ACE_Allocator_Adapter<ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Null_M
 #pragma instantiate ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>
 #pragma instantiate ACE_Allocator_Adapter<ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> >
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

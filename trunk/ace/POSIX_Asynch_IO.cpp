@@ -421,7 +421,7 @@ ACE_POSIX_Asynch_Write_Stream::write (ACE_Message_Block &message_block,
      bytes_to_write = len;
 
   if (bytes_to_write == 0)
-    ACE_ERROR_RETURN 
+    ACE_ERROR_RETURN
       ((LM_ERROR,
         ACE_LIB_TEXT ("ACE_POSIX_Asynch_Write_Stream::write:")
         ACE_LIB_TEXT ("Attempt to write 0 bytes\n")),
@@ -536,7 +536,7 @@ ACE_POSIX_Asynch_Read_File::read (ACE_Message_Block &message_block,
      bytes_to_read=space;
 
   if ( bytes_to_read == 0 )
-    ACE_ERROR_RETURN 
+    ACE_ERROR_RETURN
       ((LM_ERROR,
         ACE_LIB_TEXT ("ACE_POSIX_Asynch_Read_File::read:")
         ACE_LIB_TEXT ("Attempt to read 0 bytes or no space in the message block\n")),
@@ -667,7 +667,7 @@ ACE_POSIX_Asynch_Write_File::write (ACE_Message_Block &message_block,
      bytes_to_write = len;
 
   if (bytes_to_write == 0)
-    ACE_ERROR_RETURN 
+    ACE_ERROR_RETURN
       ((LM_ERROR,
         ACE_LIB_TEXT ("ACE_POSIX_Asynch_Write_File::write:")
         ACE_LIB_TEXT ("Attempt to write 0 bytes\n")),
@@ -2512,15 +2512,15 @@ ACE_POSIX_Asynch_Read_Dgram::recv (ACE_Message_Block *message_block,
   ACE_POSIX_Proactor *proactor = this->posix_proactor ();
   ACE_NEW_RETURN (result,
                   ACE_POSIX_Asynch_Read_Dgram_Result (*this->handler_,
-						      this->handle_,
-						      message_block,
-						      space,
-						      flags,
-						      protocol_family,
-						      act,
-						      proactor->get_handle (),
-						      priority,
-						      signal_number),
+                                                      this->handle_,
+                                                      message_block,
+                                                      space,
+                                                      flags,
+                                                      protocol_family,
+                                                      act,
+                                                      proactor->get_handle (),
+                                                      priority,
+                                                      signal_number),
                   -1);
 
   int return_val = proactor->start_aio (result, ACE_POSIX_Proactor::READ);
@@ -2554,7 +2554,7 @@ ACE_POSIX_Asynch_Write_Dgram::send (ACE_Message_Block *message_block,
 {
   size_t len = message_block->length ();
   if (len == 0)
-    ACE_ERROR_RETURN 
+    ACE_ERROR_RETURN
       ((LM_ERROR,
         ACE_LIB_TEXT ("ACE_POSIX_Asynch_Write_Stream::write:")
         ACE_LIB_TEXT ("Attempt to write 0 bytes\n")),
@@ -2564,14 +2564,14 @@ ACE_POSIX_Asynch_Write_Dgram::send (ACE_Message_Block *message_block,
   ACE_POSIX_Proactor *proactor = this->posix_proactor ();
   ACE_NEW_RETURN (result,
                   ACE_POSIX_Asynch_Write_Dgram_Result (*this->handler_,
-						       this->handle_,
-						       message_block,
-						       len,
-						       flags,
-						       act,
-						       proactor->get_handle (),
-						       priority,
-						       signal_number),
+                                                       this->handle_,
+                                                       message_block,
+                                                       len,
+                                                       flags,
+                                                       act,
+                                                       proactor->get_handle (),
+                                                       priority,
+                                                       signal_number),
                   -1);
 
   int return_val = proactor->start_aio (result, ACE_POSIX_Proactor::WRITE);
