@@ -9,7 +9,7 @@ Wed Jun 30 18:01:58 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* CIDLC/ServantSourceGenerator.cpp:
 
-	  Fixed anoher bug in the receptacle code generation. Thanks to
+	  Fixed another bug in the receptacle code generation. Thanks to
 	  Gary Duzan for reporting the problem <gduzan at bbn dot com>.
 
 Wed Jun 30 17:16:53 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
