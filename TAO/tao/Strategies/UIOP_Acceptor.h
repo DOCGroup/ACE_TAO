@@ -62,7 +62,7 @@ public:
   /**
    * @name The TAO_Acceptor Methods
    *
-   * Please check the documentation in Pluggable.h for details.
+   * Please check the documentation in Transport_Acceptor.h for details.
    */
   //@{
   virtual int open (TAO_ORB_Core *orb_core,
