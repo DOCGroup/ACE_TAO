@@ -1,3 +1,13 @@
+Wed Aug  4 16:33:14 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/Select_Reactor_T.cpp:
+
+	  Fix for Bug 1893. Please see 
+
+	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1893
+
+	  for details. Thanks to Alan L Batongbacal for the patch. 
+
 Wed Aug  4 08:31:43 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ace/config-linux-common.h: If the version of glibc
