@@ -1,7 +1,20 @@
-Thu Nov 28 03:07:48 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
+Sat Nov 30 12:02:00 1996  Douglas C. Schmidt  <schmidt@lambada.cs.wustl.edu>
 
-	* netsvcs: netsvcs.mak and netsvcs.mdp were changes such that it
- 	  becomes easier to find ace.lib while compiling netsvcs.lib.
+	* ace/OS.h: Added a new pragma that disables warning #4097 in
+ 	  MSVC++ (typedef-name used as synonym for class-name).  This
+ 	  keeps Win32 clients from getting warning on Win32.  Thanks to
+ 	  Matthias Kerkhoff <make@cs.tu-berlin.de> for this.
+
+	* ace/Log_Msg.cpp: Created a new macro called ACE_NEW_RETURN_I,
+ 	  which is used withing ACE_Log_Msg::instance().  We can't afford
+ 	  to call ACE_LOG_MSG->instance() from within
+ 	  ACE_Log_Msg::instance() or else we will recurse infinitely!
+  	  Thanks to Irfan for finding this.
+
+	* ace/OS.i (mprotect): Added a #if !defined (ACE_LACKS_MPROTECT)
+ 	  conditional compilation directive to support the EPLX real time
+ 	  OS from CDC (based on LYNX).  Thanks to Alexandre Karev
+ 	  <karev@cern.ch> for reporting this.
 
 Fri Nov 29 12:54:12 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
@@ -56,6 +69,9 @@ Fri Nov 29 12:23:45 1996  Prashant Jain  <pjain@merengue.cs.wustl.edu>
 	  backing store every time the test is run.
 
 Thu Nov 28 03:07:48 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
+
+	* netsvcs: netsvcs.mak and netsvcs.mdp were changed such that
+	  it becomes easier to find ace.lib while compiling netsvcs.lib.
 
 	* tests/Pipe_Test.cpp: Add more instances of ACE_Pipes to the test
  	  and also added an option to close down the pipe.

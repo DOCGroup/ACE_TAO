@@ -929,6 +929,7 @@ typedef void (*ACE_SignalHandlerV)(...);
 #pragma warning(disable: 4275)  // deriving exported class from non-exported
 #pragma warning(disable: 4251)  // using non-exported as public in exported
 #pragma warning(disable: 4786)  // identifier was truncated to '255' characters in the browser information
+#pragma warning(disable: 4097)  // typedef-name used as synonym for class-name
 #endif //!ALL_WARNINGS
 // We're on WinNT or Win95
 #define ACE_PLATFORM "Win32"
@@ -2352,17 +2353,6 @@ private:
      ACE_LOG_MSG->op_status (-1); \
      errno = ace_error; return RET_VAL; \
    } } while (0)
-
-#if 0
-#define ACE_NEW(POINTER,CONSTRUCTOR) \
-   do { POINTER = new CONSTRUCTOR; \
-     if (POINTER == 0) errno = ENOMEM;  \
-   return; } while (0)
-#define ACE_NEW_RETURN(POINTER,CONSTRUCTOR,RET_VAL) \
-   do { POINTER = new CONSTRUCTOR; \
-     if (POINTER == 0) { errno = ENOMEM; return RET_VAL; } \
-     else return POINTER; } while (0)
-#endif
 
 #if defined (ACE_HAS_INLINED_OSCALLS)
 #if defined (ACE_INLINE)

@@ -126,6 +126,7 @@ main (int argc, char *argv[])
   ACE_Name_Options *name_options = ns_context->name_options ();
 
   name_options->parse_args (argc, argv);
+
   name_options->database (ACE::basename (name_options->process_name (),
 					 ACE_DIRECTORY_SEPARATOR_CHAR));
   
