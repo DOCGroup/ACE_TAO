@@ -7,24 +7,16 @@
 //    tests
 //
 // = FILENAME
-//    Con_Acc__Test.cpp
+//    CLASSIX_Con_Acc_Test.cpp
 //
 // = DESCRIPTION
 //     Based on $ACE_ROOT/tests/Priority_Reactor_Test.cpp
-//     
-//     This is a test of the <ACE_Priority_Reactor>.  The test forks
-//     two processes (for a total of three processes) which connect to
-//     the main process and The clients send data to a connector,
-//     interestingly enough the acceptor will give more priority to
-//     the second connection, which should run always before the first
-//     one.
-//
-//     The test itself is interesting, it shows how to write very
-//     simple <ACE_Svc_Handler>, <ACE_Connectors> and <ACE_Acceptors>.
-//
-// = AUTHOR
-//    Carlos O'Ryan
-//
+//     However, this test is not to test the priority aspect of the
+//     CLASSIX Reactor.  In fact <ACE_CLASSIX_Select_Reactor> does not
+//     handle priorities.
+//    
+//     This is a test for <ACE_CLASSIX_CO_Connector> and
+//     <ACE_CLASSIX_CO_Acceptor> 
 // ============================================================================
 
 #include "ace/Get_Opt.h"
@@ -57,6 +49,9 @@ static int opt_priority_reactor = 1;
 // Maximum time to wait for the test termination (-t)
 static int opt_max_duration = 60;
 
+// Maximum number of unread messages (-i)
+static int opt_max_msgs = 300;
+
 // Maximum number of retries to connect, it can be changed using the
 // -m option.
 static int max_retries = 5;
@@ -70,6 +65,10 @@ typedef ACE_CLASSIX_Port ADDR;
 
 ACE_Atomic_Op<ACE_Thread_Mutex, int> Read_Handler::waiting_ = 0;
 ACE_Atomic_Op<ACE_Thread_Mutex, int> Read_Handler::started_ = 0;
+
+// Maximum number of unread messages
+// This is to overcome the blocking problem with ipcSend() in ClassixOS 3.1
+ACE_Atomic_Op<ACE_Thread_Mutex, int> max_msg = 0;
 
 void
 Read_Handler::set_countdown (int nchildren)
@@ -86,8 +85,6 @@ Read_Handler::get_countdown (void)
 int
 Read_Handler::open (void *)
 {
-  ACE_DEBUG ((LM_DEBUG, "Read_Hanlder::open()- %d\n", started_.value()));
-
   if (this->peer ().enable (ACE_NONBLOCK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) Read_Handler::open, "
@@ -106,10 +103,8 @@ Read_Handler::open (void *)
   started_++;
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) created svc_handler for handle %d "
-              "with priority %d\n",
-              get_handle (),
-              priority ()));
+              "(%P|%t) created svc_handler for handle %d\n",
+              get_handle ()));
   return 0;
 }
 
@@ -122,10 +117,20 @@ Read_Handler::handle_input (ACE_HANDLE h)
 //	     "(%P|%t|%x) read from handle %d...", this, h));
   ssize_t result = this->peer ().recv (buf, sizeof (buf));
 
+  //
+  // Work around the blocking problem with ipcSend() in ClassixOS 3.1
+  // This counter ensures that the reader reads before the writer sends too
+  // many messages.
+  // 
+  max_msg--;
+
   if (result <= 0)
     {
       if (result < 0 && errno == EWOULDBLOCK)
-        return 0;
+      {
+	  max_msg++;
+	  return 0;
+      }
 
       if (result != 0)
         ACE_DEBUG ((LM_DEBUG, "(%P|%t) %p\n",
@@ -159,29 +164,29 @@ Write_Handler::open (void *)
 int
 Write_Handler::svc (void)
 {
-    ACE_DEBUG ((LM_DEBUG, "(%P|%t) Write_Hanlder in svc\n"));
   // Send several short messages, doing pauses between each message.
   // The number of messages can be controlled from the command line.
 
     ACE_Time_Value pause (0, 1000);
     for (int i = 0; i < opt_nloops; ++i)
     {
-	ACE_DEBUG((LM_DEBUG, "(%t) send..."));
+	// Work around the blocking problem with ipcSend() in ClassixOS 3.1
+	// ipcSend() will block instead of returning K_EFULL value,
+	// if resources are not available.
+	// 
+	// sleep for the reader to empty some messages
+	while (max_msg.value() >= opt_max_msgs)
+	    ACE_OS::sleep(pause);
+
+
 	if (this->peer ().send_n (ACE_ALPHABET,
 				  sizeof (ACE_ALPHABET) - 1) == -1)
 	{
 	    ACE_DEBUG((LM_DEBUG, "%t %p\n", "send_n\n"));
 	    ACE_OS::sleep (pause);
+	    continue;
 	}
-	// A debug message to check if ipcSend() is blocking
-	ACE_DEBUG((LM_DEBUG, " ...\n"));
-
-	// Work around block problem with ipcSend():
-	// ipcSend() will block instead of returning K_EFULL value,
-	// if resources are not available.
-	// 
-	// sleep for a while to allow the reader to empty the ipc poul
-	ACE_OS::sleep(pause);
+	max_msg++;
     }
   this->peer().close_writer();
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Write Handler exiting svc\n"));
@@ -222,10 +227,7 @@ client (void *arg)
       else
         {
 	    // Let the new Svc_Handler to its job...
-	    ACE_DEBUG ((LM_DEBUG, "(%P|%t) client running svc\n"));
 	    writer->svc ();
-
-	    ACE_DEBUG ((LM_DEBUG, "(%P|%t) client finishing\n"));
 
 	    // then close the connection and release the Svc_Handler.
 	    writer->destroy ();
@@ -248,13 +250,16 @@ main (int argc, char *argv[])
   // initialize environment, eg. reactor, etc.
   ACE_CLASSIX_OS os;
   
-  ACE_Get_Opt getopt (argc, argv, "dc:l:m:t:", 1);
+  ACE_Get_Opt getopt (argc, argv, "dc:l:m:t:i:", 1);
 
   for (int c; (c = getopt ()) != -1; )
     switch (c)
       {
       case 'd':
         opt_priority_reactor = 0;
+        break;
+      case 'i':
+        opt_max_msgs = atoi (getopt.optarg);
         break;
       case 'c':
         opt_nchildren = atoi (getopt.optarg);
@@ -272,29 +277,13 @@ main (int argc, char *argv[])
       default:
         ACE_ERROR_RETURN ((LM_ERROR, "Usage: Priority_Reactor_Test "
                            "   [-d] (disable priority reactor)\n"
+                           "   [-i max_msgs] (max. unread messages)\n"
                            "   [-c nchildren] (number of threads/processes)\n"
                            "   [-l loops] (number of loops per child)\n"
                            "   [-m maxretries] (attempts to connect)\n"
                            "   [-t max_time] (limits test duration)\n"), -1);
         ACE_NOTREACHED (break);
       }
-#if 0
-  // Manage memory automagically.
-  // Note:  This ordering is very subtle...
-  auto_ptr<ACE_Reactor> reactor;
-  auto_ptr<ACE_Select_Reactor> impl;
-
-  if (opt_priority_reactor)
-    {
-      ACE_Select_Reactor *impl_ptr;
-      ACE_NEW_RETURN (impl_ptr, ACE_Priority_Reactor, -1);
-      impl = auto_ptr<ACE_Select_Reactor> (impl_ptr);
-      ACE_Reactor *reactor_ptr;
-      ACE_NEW_RETURN (reactor_ptr, ACE_Reactor (impl_ptr), -1);
-      reactor = auto_ptr<ACE_Reactor> (reactor_ptr);
-      ACE_Reactor::instance (reactor_ptr);
-    }
-#endif
 
   Read_Handler::set_countdown (opt_nchildren);
 
@@ -320,7 +309,6 @@ main (int argc, char *argv[])
 
   int i;
 
-#if defined (ACE_HAS_THREADS)
   for (i = 0; i < opt_nchildren; ++i)
     {
       if (ACE_Thread_Manager::instance ()->spawn
@@ -329,29 +317,6 @@ main (int argc, char *argv[])
            THR_NEW_LWP | THR_DETACHED) == -1)
         ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "thread create failed"));
     }
-#elif !defined (ACE_LACKS_FORK)
-  for (i = 0; i < opt_nchildren; ++i)
-    {
-      switch (ACE_OS::fork ("child"))
-        {
-        case -1:
-          ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "fork failed"));
-          exit (-1);
-          /* NOTREACHED */
-        case 0:
-          client (&connection_addr);
-          exit (0);
-          break;
-          /* NOTREACHED */
-        default:
-          break;
-          /* NOTREACHED */
-        }
-    }
-#else
-  ACE_ERROR ((LM_ERROR,
-              "(%P|%t) only one thread may be run in a process on this platform\n%a", 1));
-#endif /* ACE_HAS_THREADS */
 
   ACE_Time_Value tv (opt_max_duration);
 
@@ -368,18 +333,7 @@ main (int argc, char *argv[])
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) waiting for the children...\n"));
 
-#if defined (ACE_HAS_THREADS)
   ACE_Thread_Manager::instance ()->wait ();
-#elif !defined (ACE_WIN32) && !defined (VXWORKS) && !defined (ACE_PSOS)
-  for (i = 0; i < opt_nchildren; ++i)
-    {
-      pid_t pid = ACE_OS::wait();
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) child %d terminated\n", pid));
-    }
-#else
-  /* NOTREACHED */
-  // We aborted on the previous #ifdef
-#endif /* ACE_HAS_THREADS */
 
   ACE_END_TEST;
   return 0;
