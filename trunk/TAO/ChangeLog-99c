@@ -1,4 +1,8 @@
-Tue Apr 27 10:25:47 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Tue Apr 27 12:01:38 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/Event_Service/Event_Service.cpp (main): Changed to use
+	  TAO_EC_Default_Factory::init_svcs () to add the static service
+	  into service configurator.
 
 	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp (connect):
 	* orbsvcs/orbsvcs/Naming/Persistent_Context_Index_T.cpp (init):
