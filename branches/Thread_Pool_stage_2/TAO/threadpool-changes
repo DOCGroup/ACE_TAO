@@ -194,6 +194,11 @@ Fri Aug 24 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
           - (native_priority): Each lane remembers its native priority
             in addition to its CORBA priority.
 
+          - (destroy_threadpool_i): We now shutdown the reactors in
+            the thread pool, wait for the threads in the pool to exit,
+            finalize the resources in the pool, and only then delete
+            the thread pool.
+            
 	* tao/RTCORBA/RT_Protocols_Hooks.cpp
 	  (set_default_server_protocol_policy): Don't include all the
 	  protocols that the ORB knows about in the default server
@@ -734,6 +739,10 @@ Fri Aug 24 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	  - README: Updated to reflect changes in the test.
 
+	* tests/RTCORBA/Destroy_Thread_Pool: New test added that tests
+          the creation and destruction of thread pools (with and
+          without lanes).
+
 	* tests/RTCORBA/Banded_Connections:
 
 	  - server.cpp: 
@@ -849,8 +858,8 @@ Fri Aug 24 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 	* tests/RTCORBA/Makefile: 
 	* tests/RTCORBA/Makefile.bor: 
 
-	  Added new tests ORB_init, Policy_Combinations, and
-	  Linear_Priority.
+	  Added new tests ORB_init, Policy_Combinations,
+	  Destroy_Thread_Pool, and Linear_Priority.
 
         * tests/RTCORBA/Banded_Connections/Makefile:
         * tests/RTCORBA/Banded_Connections/client.bor:

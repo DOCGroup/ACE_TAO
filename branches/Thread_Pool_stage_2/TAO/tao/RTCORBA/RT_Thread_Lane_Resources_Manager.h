@@ -49,8 +49,8 @@ public:
   /// Open default resources.
   int open_default_resources (CORBA_Environment &ACE_TRY_ENV);
 
-  /// Shutdown all reactors.
-  int shutdown_all_reactors (CORBA_Environment &ACE_TRY_ENV);
+  /// Shutdown reactor.
+  void shutdown_reactor (void);
 
   /// @name Accessors
   // @{
@@ -64,10 +64,6 @@ public:
   // @}
 
 protected:
-
-  /// Shutdown reactors.
-  int shutdown_reactors (TAO_Thread_Lane_Resources &lane_resources,
-                         CORBA_Environment &ACE_TRY_ENV);
 
   /// Mutual exclusion for calling open.
   TAO_SYNCH_MUTEX open_lock_;

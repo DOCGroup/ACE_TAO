@@ -80,37 +80,10 @@ TAO_Default_Thread_Lane_Resources_Manager::default_lane_resources (void)
   return this->lane_resources ();
 }
 
-int
-TAO_Default_Thread_Lane_Resources_Manager::shutdown_all_reactors (CORBA_Environment &)
+void
+TAO_Default_Thread_Lane_Resources_Manager::shutdown_reactor (void)
 {
-  // Get to the leader/follower class.
-  TAO_Leader_Follower &leader_follower =
-    this->lane_resources_->leader_follower ();
-
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
-                    ace_mon,
-                    leader_follower.lock (),
-                    -1);
-
-  // Wakeup all the threads waiting blocked in the event loop, this
-  // does not guarantee that they will all go away, but reduces the
-  // load on the POA....
-  ACE_Reactor *reactor =
-    leader_follower.reactor ();
-
-  reactor->wakeup_all_threads ();
-
-  // If there are some client threads running we have to wait until
-  // they finish, when the last one does it will shutdown the reactor
-  // for us.  Meanwhile no new requests will be accepted because the
-  // POA will not process them.
-  if (!leader_follower.has_clients ())
-    {
-      // Wake up all waiting threads in the reactor.
-      reactor->end_reactor_event_loop ();
-    }
-
-  return 0;
+  this->lane_resources_->shutdown_reactor ();
 }
 
 TAO_Thread_Lane_Resources_Manager *

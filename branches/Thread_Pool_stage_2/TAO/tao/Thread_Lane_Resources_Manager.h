@@ -49,8 +49,8 @@ public:
   /// Open default resources.
   virtual int open_default_resources (CORBA_Environment &ACE_TRY_ENV) = 0;
 
-  /// Shutdown all reactors.
-  virtual int shutdown_all_reactors (CORBA_Environment &ACE_TRY_ENV) = 0;
+  /// Shutdown reactor.
+  virtual void shutdown_reactor (void) = 0;
 
   /// @name Accessors
   // @{
