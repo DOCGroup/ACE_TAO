@@ -399,6 +399,7 @@ ACE_OS_String::memchr_emulation (const void *s, int c, size_t len)
   return 0;
 }
 
+#if !defined (ACE_HAS_ITOA)
 char *
 ACE_OS_String::itoa_emulation (int value, char *string, int radix)
 {
@@ -500,4 +501,4 @@ ACE_OS_String::itoa_emulation (int value, wchar_t *string, int radix)
   return string;
 }
 #endif /* ACE_HAS_WCHAR */
-
+#endif /* !ACE_HAS_ITOA */
