@@ -1,3 +1,15 @@
+Tue Jan 27 12:05:13 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* examples/Hello/Sender/Sender_exec.cpp:
+	* examples/Hello/Sender/Sender_exec.h:
+
+	  New EI-less implementation.
+
+	* CIDLC/CIDLC.sln:
+        * CIDLC/CIDLC.vcproj:
+
+	  Updated projects to compile with boost out-of-the-box.
+
 Tue Jan 27 11:33:39 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* examples/Hello/Sender/Sender_exec.h:
