@@ -124,6 +124,11 @@ namespace Kokyu
     int most_eligible (DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits>&
                        item);
 
+    /**
+     * change blocked_prio_ item to inactive_prio_
+     */
+    int change_prio (int old_prio, int new_prio, int policy);
+
     void dump();
 
   private:
