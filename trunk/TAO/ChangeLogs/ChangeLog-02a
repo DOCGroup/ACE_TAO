@@ -1,3 +1,37 @@
+Sun Mar 04 16:01:50 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/RT_Current.h:
+	* tao/RT_Mutex.h:
+	* tao/RT_ORB.h:
+	* tao/RT_Policy_i.h:
+
+	  Removed inclusion of `tao/RTCORBAS.h'.  The RTCORBA module only
+	  defines local interfaces, so there is no need to include this
+	  header.  Included `tao/RTCORBAC.h' instead.  This reduces header
+	  dependencies.
+
+	* tao/RTCORBAC.cpp:
+	* tao/TAOC.cpp:
+	* tao/TimeBaseC.cpp:
+
+	  We should never include a skeleton header for the same IDL in
+	  the corresponding stub sources.  Removed those includes
+	  (e.g. removed '#include "tao/TAOS.h"' from TAOC.cpp).
+
+	* tao/Makefile:
+	* tao/Makefile.bor:
+	* tao/TAO.dsp:
+	* tao/TAO_Static.dsp:
+
+	  Do not compile the following empty skeleton files:
+
+	    CONV_FRAMES
+	    GIOPS
+	    IOPS
+	    PollableS
+	    RTCORBAS
+	    TAOS
+
 Sun Mar 04 13:55:28 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * examples/AMI/FL_Callback/peer.cpp:
