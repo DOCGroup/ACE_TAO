@@ -8,7 +8,7 @@
 # Jan Rychter <jwr@icm.edu.pl>
 
 CC              = gcc -w
-CXX		= g++ -w -I. -fno-strict-prototypes -D_MIT_POSIX_THREADS -D_POSIX_THREADS -D_POSIX_THREAD_SAFE_FUNCTIONS # -D__ACE_INLINE__ 
+CXX		= g++ -w -I. -fno-strict-prototypes -D_MIT_POSIX_THREADS -D_POSIX_THREADS -D_POSIX_THREAD_SAFE_FUNCTIONS
 DLD             = $(CXX)
 LD		= $(CXX) 
 LIBS            += -lpthreads -lstdc++
