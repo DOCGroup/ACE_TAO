@@ -3,7 +3,7 @@
 #include "tao/corba.h"
 #include "Alt_Resource_Factory.h"
 
-class Alternate_Resource_Factory_Export My_Resource_Factory :  public TAO_Resource_Factory 
+class Alt_Resource_Factory_Export My_Resource_Factory :  public TAO_Resource_Factory 
 {
 public:
   virtual ACE_Reactor *get_reactor (void);
@@ -21,5 +21,5 @@ private:
   typedef ACE_TSS_Singleton<My_Reactors, ACE_SYNCH_MUTEX> TSS_REACTORS;
 };
 
-ACE_FACTORY_DECLARE (Alternate_Resource_Factory, My_Resource_Factory)
+ACE_FACTORY_DECLARE (Alt_Resource_Factory, My_Resource_Factory)
 

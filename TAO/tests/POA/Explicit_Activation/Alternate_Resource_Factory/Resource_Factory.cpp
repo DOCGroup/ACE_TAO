@@ -23,4 +23,4 @@ My_Resource_Factory::get_reactor (void)
   return 0;
 }
 
-ACE_FACTORY_DEFINE (Alternate_Resource_Factory, My_Resource_Factory)
+ACE_FACTORY_DEFINE (Alt_Resource_Factory, My_Resource_Factory)
