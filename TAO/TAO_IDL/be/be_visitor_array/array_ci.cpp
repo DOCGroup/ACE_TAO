@@ -192,6 +192,14 @@ int be_visitor_array_ci::visit_array (be_array *node)
       << fname << "_copy (_tao_to, _tao_from);" << be_uidt_nl
       << "}";
 
+  *os << be_nl << be_nl
+      << "ACE_INLINE" << be_nl
+      << fname << "_slice *" << be_nl
+      << node->fwd_helper_name () << "_life::tao_alloc (void)" << be_nl
+      << "{" << be_idt_nl
+      << "return " << fname << "_alloc ();" << be_uidt_nl
+      << "}";
+
   node->cli_inline_gen (1);
   return 0;
 }

@@ -359,3 +359,11 @@ TAO_Array_Forany_T<T_slice,T_life>::nocopy (void) const
   return this->nocopy_;
 }
 
+template<typename T_slice, typename T_life>
+ACE_INLINE
+T_slice *
+TAO_Array_Forany_T<T_slice,T_life>::tao_alloc (void)
+{
+  return T_life::tao_alloc ();
+}
+

@@ -15,6 +15,11 @@ Fri Apr 11 21:50:43 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
           by the changes above) visible to the Any impl class
           TAO_Any_Array_Impl_T<>, where it is used in extraction.
 
+        * tao/TAO.dsp:
+
+          Added new generated files IOP_IORC.* and IOP_CodecC.* to the
+          project.
+
 Fri Apr 11 14:41:11 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* Merged with the main trunk and compiled the core ORB and the IDL
