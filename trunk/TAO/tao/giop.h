@@ -126,6 +126,8 @@ struct TAO_Version
   CORBA::Octet minor;
 };
 
+// @@ Is it possible to put these enums into a class so they don't
+// pollute the global namespace?
 enum
 {
   // = DESCRIPTION
@@ -133,23 +135,6 @@ enum
 
   MY_MAJOR = 1,
   MY_MINOR = 0
-};
-
-enum TAO_GIOP_MsgType
-{
-  // = DESCRIPTION
-  //   All GIOP messages include a header and message type.  Not
-  //   really a message type, but needed to bring that information
-  //   back somehow
-
-  TAO_GIOP_EndOfFile = -1, // "discovered" by either
-  TAO_GIOP_Request = 0, // sent by client
-  TAO_GIOP_Reply = 1, // by server
-  TAO_GIOP_CancelRequest = 2, // by client
-  TAO_GIOP_LocateRequest = 3, // by client
-  TAO_GIOP_LocateReply = 4, // by server
-  TAO_GIOP_CloseConnection = 5, // by server
-  TAO_GIOP_MessageError = 6 // by both
 };
 
 class TAO_GIOP_MessageHeader
@@ -324,13 +309,15 @@ public:
   // <start> goes beyond initialising data structures, and makes calls
   // that may fail -- and thus throw exceptions.
 
-  // @@ Andy, can you please document the following methods.
+  // @@ Andy, can you please document this method?
   void put_param (CORBA::TypeCode_ptr tc,
                   void *value,
                   CORBA::Environment &env);
 
   TAO_GIOP_ReplyStatusType invoke (CORBA::ExceptionList &exceptions,
                                    CORBA::Environment &env);
+  // Send request, block until any reply comes back, and unmarshal
+  // reply parameters as appropriate.
 
   void get_value (CORBA::TypeCode_ptr tc,
                   void *value,
@@ -338,7 +325,7 @@ public:
   // No CORBA::Context support (deprecated).
 
   CDR &stream (void);
-  // return the underlying stream
+  // Return the underlying stream.
 
 private:
   IIOP_Object *data_;
@@ -364,20 +351,37 @@ private:
 };
 
 class TAO_Export TAO_GIOP
+{
   // = TITLE
   //   A namespace for GIOP-related operations.
   //
   // = DESCRIPTION
   //   Only put static methods within this scope.
-{
   ACE_CLASS_IS_NAMESPACE (TAO_GIOP);
 
 public:
-  // = Close a connection, first sending GIOP::CloseConnection
+  enum Message_Type
+  {
+    // = DESCRIPTION
+    //   All GIOP messages include a header and message type.  Not
+    //   really a message type, but needed to bring that information
+    //   back somehow
+
+    EndOfFile = -1, // "discovered" by either
+    Request = 0, // sent by client
+    Reply = 1, // by server
+    CancelRequest = 2, // by client
+    LocateRequest = 3, // by client
+    LocateReply = 4, // by server
+    CloseConnection = 5, // by server
+    MessageError = 6 // by both
+  };
+
   static void close_connection (TAO_Client_Connection_Handler *&handle,
                                 void *ctx);
+  // Close a connection, first sending GIOP::CloseConnection.
 
-  static CORBA::Boolean start_message (TAO_GIOP_MsgType t,
+  static CORBA::Boolean start_message (TAO_GIOP::Message_Type t,
                                        CDR &msg);
   // Build the header for a message of type <t> into stream <msg>.
 
@@ -385,7 +389,7 @@ public:
                                       CDR &stream);
   // Send message, returns TRUE if success, else FALSE.
 
-  static TAO_GIOP_MsgType recv_request (TAO_SVC_HANDLER *&handler,
+  static TAO_GIOP::Message_Type recv_request (TAO_SVC_HANDLER *&handler,
                                         CDR &msg,
                                         CORBA::Environment &env);
   // Reads message, returns message type from header.
@@ -393,6 +397,23 @@ public:
   static void make_error (CDR &msg, ...);
   // Construct a message containing an error so that it can be sent as
   // a response to a request.
+
+  static void dump_msg (const char *label,
+                        const u_char *ptr,
+                        size_t len);
+  // Print out a message header.
+
+  static void send_error (TAO_Client_Connection_Handler *&handler);
+  // Send an error message back to a caller.
+
+  static ssize_t read_buffer (ACE_SOCK_Stream &peer,
+                              char *buf,
+                              size_t len);
+  // Loop on data read ... this is required since <recv> won't block
+  // until the requested amount of data is available.
+
+  static const char *message_name (TAO_GIOP::Message_Type which);
+  // Returns the stringified <MsgType>.
 };
 
 #endif /* TAO_GIOP_H */
