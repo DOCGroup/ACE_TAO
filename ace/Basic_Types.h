@@ -183,6 +183,8 @@
       ACE_UINT32 operator/ (const ACE_UINT32) const;
       ACE_UINT32 operator% (const ACE_UINT32) const;
 
+      double operator/ (const double) const;
+
       ACE_U_LongLong &operator+= (const ACE_U_LongLong &);
       ACE_U_LongLong &operator-= (const ACE_U_LongLong &);
       ACE_U_LongLong &operator++ ();
