@@ -1,10 +1,17 @@
+Wed Apr 21 09:25:16 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/NestedUpcall/MT_Client_Test/client.cpp (main),
+          examples/Quoter/client.cpp (main):
+          replaced ACE_SCHED_FIFO with THR_SCHED_FIFO in activate calls.
+          Thanks to Carlos for finding this subtle error.
+
 Wed Apr 21 09:12:20 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* performance-tests/Cubit/TAO/MT_Cubit/client.cpp:
-	* performance-tests/Cubit/TAO/MT_Cubit/server.cpp:
-	  The activate() function was called with the wrong flag,
-	  ACE_SCHED_FIFO was used, but THR_SCHED_FIFO is the Right
-	  Thing[tm]
+        * performance-tests/Cubit/TAO/MT_Cubit/client.cpp:
+        * performance-tests/Cubit/TAO/MT_Cubit/server.cpp:
+          The activate() function was called with the wrong flag,
+          ACE_SCHED_FIFO was used, but THR_SCHED_FIFO is the Right
+          Thing[tm]
 
 Wed Apr 21 03:41:51 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -12,41 +19,41 @@ Wed Apr 21 03:41:51 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Wed Apr 21 01:24:26 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/default_resource.cpp: Removed extra #pragma instantiates for
-	  TAO_Collocation_Table_Lock.
+        * tao/default_resource.cpp: Removed extra #pragma instantiates for
+          TAO_Collocation_Table_Lock.
 
 Wed Apr 21 00:56:21 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Property/CosPropertyService_i_T.cpp
-	  (operator=): Added an empty implementation to stop MSVC from
-	  complaining.
+        * orbsvcs/orbsvcs/Property/CosPropertyService_i_T.cpp
+          (operator=): Added an empty implementation to stop MSVC from
+          complaining.
 
 Tue Apr 20 23:21:22 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Typecode.cpp:
-	  Removed a superfluous duplication of an ACE_Message_Block
-	  in private_member_label(). This got rid of another memory
-	  leak associated with unions. In general, it's never necessary
-	  to duplicate a message block before calling the Any
-	  constructor that takes a message block or either of the
-	  Any::_tao_replace() functions. All of these duplicate the
-	  message block themselves.
+        * tao/Typecode.cpp:
+          Removed a superfluous duplication of an ACE_Message_Block
+          in private_member_label(). This got rid of another memory
+          leak associated with unions. In general, it's never necessary
+          to duplicate a message block before calling the Any
+          constructor that takes a message block or either of the
+          Any::_tao_replace() functions. All of these duplicate the
+          message block themselves.
 
 Tue Apr 20 22:57:57 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
-	  <<= was causing a memory leak. Removed the ->clone ()
-	  from the message block being inserted into the Any.
-	  Tested both copying and non-copying versions of <<=,
-	  over the wire, with a dynamically allocated type inside
-	  the union. All worked ok, and the leak was gone.
+        * TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+          <<= was causing a memory leak. Removed the ->clone ()
+          from the message block being inserted into the Any.
+          Tested both copying and non-copying versions of <<=,
+          over the wire, with a dynamically allocated type inside
+          the union. All worked ok, and the leak was gone.
 
 Tue Apr 20 20:43:25 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Property/CosPropertyService_i_T.h: Added a
-	operator= declaration to avoid this being generated which leads to
-	undefined operator= for the PropertyTypes member when linking orbsvcs.
-	Thanks to Irfan Pyarali for the fix.
+        * orbsvcs/orbsvcs/Property/CosPropertyService_i_T.h: Added a
+        operator= declaration to avoid this being generated which leads to
+        undefined operator= for the PropertyTypes member when linking orbsvcs.
+        Thanks to Irfan Pyarali for the fix.
 
 Tue Apr 20 20:27:48 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -59,9 +66,9 @@ Tue Apr 20 20:27:48 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Tue Apr 20 17:31:28 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* docs: Performed copy editing on a bunch of documentation and
- 	  added the new Interoperable Naming Service documentation to the
- 	  main documentation page.
+        * docs: Performed copy editing on a bunch of documentation and
+          added the new Interoperable Naming Service documentation to the
+          main documentation page.
 
 Tue Apr 20 15:24:00 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -71,120 +78,120 @@ Tue Apr 20 15:24:00 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Tue Apr 20 15:18:35 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	* TAO_ROOT/docs/INS.html: Added this page. It documents the
-  	  InterOperable Naming Service.
-	* TAO_ROOT/docs/releasenotes/index.html: Added a link to INS.html
+        * TAO_ROOT/docs/INS.html: Added this page. It documents the
+          InterOperable Naming Service.
+        * TAO_ROOT/docs/releasenotes/index.html: Added a link to INS.html
 
 Tue Apr 20 14:27:07 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/deep_free.cpp:
-	  Removed local variable discrim_size_with_pad, which is no
-	  longer being used.
+        * tao/deep_free.cpp:
+          Removed local variable discrim_size_with_pad, which is no
+          longer being used.
 
 Tue Apr 20 11:09:07 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp:
-	  Removed several memory leaks, including the ORB_Core itself: it
-	  wasn't destroyed when the last ORB reference went away.
+        * tao/ORB_Core.cpp:
+          Removed several memory leaks, including the ORB_Core itself: it
+          wasn't destroyed when the last ORB reference went away.
 
-	* tao/ORB.cpp:
-	  Fixed resource leak in file_string_to_object()
+        * tao/ORB.cpp:
+          Fixed resource leak in file_string_to_object()
 
-	* tao/default_resource.h:
-	* tao/default_resource.i:
-	* tao/default_resource.cpp:
-	  Merged the App_Allocated and Pre_Allocated classes into a single
-	  class, it is easier to control their lifetime and it didn't make
-	  sense to have two.
+        * tao/default_resource.h:
+        * tao/default_resource.i:
+        * tao/default_resource.cpp:
+          Merged the App_Allocated and Pre_Allocated classes into a single
+          class, it is easier to control their lifetime and it didn't make
+          sense to have two.
 
-	* tao/IIOP_Connector.cpp:
-	  Fixed comment.
+        * tao/IIOP_Connector.cpp:
+          Fixed comment.
 
-	* tests/MT_Client/client.global.conf:
-	* tests/MT_Client/client.tss.conf:
-	  Use static services.
+        * tests/MT_Client/client.global.conf:
+        * tests/MT_Client/client.tss.conf:
+          Use static services.
 
-	* tests/MT_Client/orb_creation.cpp:
-	* tests/MT_Client/server.cpp:
-	* tests/MT_Client/client.cpp:
-	  Use the ACE macros to print out exceptions.
+        * tests/MT_Client/orb_creation.cpp:
+        * tests/MT_Client/server.cpp:
+        * tests/MT_Client/client.cpp:
+          Use the ACE macros to print out exceptions.
 
-	* tao/MessagingC.cpp:
-	  Fixed warnings about unitialized variables.
+        * tao/MessagingC.cpp:
+          Fixed warnings about unitialized variables.
 
-	* tests/MT_Client/Makefile:
-	  Updated dependencies
+        * tests/MT_Client/Makefile:
+          Updated dependencies
 
-	* tests/MT_Client/run_test.pl:
-	  Added support for the orb_creation test.
+        * tests/MT_Client/run_test.pl:
+          Added support for the orb_creation test.
 
 Tue Apr 20 02:47:32 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/Param_Test/param_test_i.cpp (test_exception): It was still
-	  using environment to throw exceptions.  Changed to use ACE_THROW.
+        * tests/Param_Test/param_test_i.cpp (test_exception): It was still
+          using environment to throw exceptions.  Changed to use ACE_THROW.
 
-	* tests/Param_Test/except.{h,cpp}: Differentiated results based on
-	  the exception received in that iteration so we can determine if
-	  the exception is the one the test is waiting.  Egcs on Linux
-	  seems to have trouble downcasting exceptions.
+        * tests/Param_Test/except.{h,cpp}: Differentiated results based on
+          the exception received in that iteration so we can determine if
+          the exception is the one the test is waiting.  Egcs on Linux
+          seems to have trouble downcasting exceptions.
 
 Mon Apr 19 22:17:28 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp
-	  (visit_interface): Removed access to input CDR since it is not
-	  used in this function.  Thanks to David for pointing this out.
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp
+          (visit_interface): Removed access to input CDR since it is not
+          used in this function.  Thanks to David for pointing this out.
 
 Mon Apr 19 20:17:02 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Any.{h,i}:
-	  Changed the signature of the constructor for Any::to_object
-	  to reflect the change set out in issue 154 of the 1.3 RTF.
-	  This makes the caller responsible for disposing of the
-	  results of extracting to to_object, and allows the constructor
-	  to be passed an Object_var to facilitate this.
-	  Also had to add '#include Object.h' to keep sunc++ happy.
+        * tao/Any.{h,i}:
+          Changed the signature of the constructor for Any::to_object
+          to reflect the change set out in issue 154 of the 1.3 RTF.
+          This makes the caller responsible for disposing of the
+          results of extracting to to_object, and allows the constructor
+          to be passed an Object_var to facilitate this.
+          Also had to add '#include Object.h' to keep sunc++ happy.
 
 Mon Apr 19 17:09:14 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* performance-tests/Cubit/TAO/MT_Cubit/client.cpp (start_servant):
- 	  Arrgh!  There was a missing comma that caused the test to fail!
-  	  Thanks to David H. Whittington <david.h.whittington@boeing.com>
- 	  for reporting this.
+        * performance-tests/Cubit/TAO/MT_Cubit/client.cpp (start_servant):
+          Arrgh!  There was a missing comma that caused the test to fail!
+          Thanks to David H. Whittington <david.h.whittington@boeing.com>
+          for reporting this.
 
 Mon Apr 19 16:26:43 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/deep_free.cpp:
-	  Updated TAO_Marshal_Union::deep_free to use the
-	  Union class virtual functions. The old code was
-	  bumpint the void *data pointer along to point to
-	  the discriminator value, then to the member value.
-	  This wasn't working on NT where the first thing
-	  in the union class memory layout is the vptr. Also
-	  changed the use of value() to _tao_get_cdr() on
-	  the elements of the member label list. That
-	  wouldn't work on any platform because those Anys
-	  are all created with void *value = 0;
+        * tao/deep_free.cpp:
+          Updated TAO_Marshal_Union::deep_free to use the
+          Union class virtual functions. The old code was
+          bumpint the void *data pointer along to point to
+          the discriminator value, then to the member value.
+          This wasn't working on NT where the first thing
+          in the union class memory layout is the vptr. Also
+          changed the use of value() to _tao_get_cdr() on
+          the elements of the member label list. That
+          wouldn't work on any platform because those Anys
+          are all created with void *value = 0;
 
-	* tao/decode.cpp,
-	* tao/encode.cpp,
-	* tao/skip.cpp:
-	  Changed the tk_enum case for the discriminator inside
-	  the TAO_Marshal_Union versions to use CORBA::ULong as
-	  was determined to be the correct mapping earlier today.
-	  Also finished implementing the tk_wchar cases, which
-	  Andy had marked TODO.
+        * tao/decode.cpp,
+        * tao/encode.cpp,
+        * tao/skip.cpp:
+          Changed the tk_enum case for the discriminator inside
+          the TAO_Marshal_Union versions to use CORBA::ULong as
+          was determined to be the correct mapping earlier today.
+          Also finished implementing the tk_wchar cases, which
+          Andy had marked TODO.
 
 Mon Apr 19 15:23:56 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* orbsvcs/tests/Trading/colocated_test.cpp (main):
-	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp (run):
-	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp (run):
-	* orbsvcs/Trading_Service/Trading_Service.cpp (init):
+        * orbsvcs/tests/Trading/colocated_test.cpp (main):
+        * orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp (run):
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp (run):
+        * orbsvcs/Trading_Service/Trading_Service.cpp (init):
         * tao/Stub.cpp (set_policy_overrides):
         * tao/POA.cpp (create_POA):
 
           Avoided annoying g++ warning about <auto_ptr> by explicitly
-	  making a temporary. Thanks to David for pointing this out.
+          making a temporary. Thanks to David for pointing this out.
 
 Mon Apr 19 13:54:10 1999  David L. Levine  <levine@cs.wustl.edu>
 
