@@ -16,6 +16,7 @@ LD		= $(CXX)
 # In Irix 6.2 w/o the thread patches this macro should have no effect.
 CPPFLAGS	+= -D_SGI_MP_SOURCE
 OCCFLAGS	+= -O
+DCCFLAGS	+= -g
 
 # Enable exceptions even in the o32 bit ABI.
 CCFLAGS		+= -exceptions
