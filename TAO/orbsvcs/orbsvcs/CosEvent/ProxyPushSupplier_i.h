@@ -24,7 +24,7 @@
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/CosEventChannelAdminC.h"
 
-class ProxyPushSupplier_i : public POA_CosEventChannelAdmin::ProxyPushSupplier
+class TAO_ORBSVCS_Export ProxyPushSupplier_i : public POA_CosEventChannelAdmin::ProxyPushSupplier
 {
   // = TITLE
   //   class ProxyPushSupplier-i implements the ProxyPushConsumer interface.
