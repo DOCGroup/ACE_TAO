@@ -85,7 +85,7 @@ TAO_Notify_EventChannel_i::MyFactory (CORBA::Environment &ACE_TRY_ENV)
 }
 
 CosNotifyChannelAdmin::ConsumerAdmin_ptr
-TAO_Notify_EventChannel_i::default_consumer_admin (CORBA::Environment& ACE_TRY_ENV)
+TAO_Notify_EventChannel_i::default_consumer_admin (CORBA::Environment& /*ACE_TRY_ENV*/)
   ACE_THROW_SPEC ((CORBA::SystemException
                    ))
 {
