@@ -241,8 +241,6 @@
                                         /*Compiler implements template
                                         specialization*/
 
-#define ACE_HAS_STD_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 1
-
 #define ACE_HAS_TEMPLATE_TYPEDEFS 1
                                         /*Compiler implements templates
                                         that support typedefs inside

@@ -130,7 +130,7 @@
 #   define ACE_HAS_PTHREADS_DRAFT4
 #   define ACE_HAS_STDARG_THR_DEST
 #   define ACE_LACKS_MUTEXATTR_PSHARED
-    // Without TSS emulation, you'll only have 3 native TSS keys on 
+    // Without TSS emulation, you'll only have 3 native TSS keys on
     // LynxOS 3.0.0/ppc.
 #   define ACE_HAS_TSS_EMULATION
 # endif /* LynxOS < 3.1.0 */
@@ -163,8 +163,6 @@
 #if __GNUC__ == 2  &&  __GNUC_MINOR__ == 9
   // config-g++-common.h defines these incorrectly for LynxOS 3.x
   // with G++ version 2.9-gnupro-98r2
-# define ACE_HAS_STD_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-# define ACE_HAS_STD_TEMPLATE_SPECIALIZATION
 # define ACE_HAS_TEMPLATE_SPECIALIZATION
 # define ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION
 # undef ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES

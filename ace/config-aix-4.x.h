@@ -52,7 +52,6 @@
 
    // These are for Visual Age C++ only
 #  if defined (__IBMCPP__) && (__IBMCPP__ >= 400)
-#    define ACE_HAS_STD_TEMPLATE_SPECIALIZATION
 #    define ACE_EXPLICIT_TEMPLATE_DESTRUCTOR_TAKES_ARGS
 #    define ACE_HAS_TYPENAME_KEYWORD
 #    undef WIFEXITED
@@ -63,7 +62,6 @@
 #      endif /* ACE_HAS_USING_KEYWORD */
 #      define ACE_HAS_STANDARD_CPP_LIBRARY 1
 #      define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
-#      define ACE_HAS_STD_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 #    endif /* __IBMCPP__ >= 500 */
 #  endif /* __IBMCPP__ */
 

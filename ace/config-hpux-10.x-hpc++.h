@@ -72,10 +72,6 @@
 #      define ACE_HAS_EXCEPTIONS 1
 #    endif
 
-// Compiler enforces need for 'template<>" when specializing template
-// classes.
-#  define ACE_HAS_STD_TEMPLATE_SPECIALIZATION
-
 // If the -AA compile option is used, the compiler defines _HP_NAMESPACE_STD.
 // The -AA option enables the 2.0 standard C++ library. If not used, then
 // we have the old, 1.2.1 C++ library.
