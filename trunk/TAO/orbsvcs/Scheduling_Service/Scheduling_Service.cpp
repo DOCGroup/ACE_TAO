@@ -6,6 +6,11 @@
 #include "tao/corba.h"
 
 #include "orbsvcs/CosNamingC.h"
+
+#if defined (TAO_USES_STRATEGY_SCHEDULER)
+#include "orbsvcs/Sched/Strategy_Scheduler.h"
+#endif /* defined (TAO_USES_STRATEGY_SCHEDULER) */
+
 #include "orbsvcs/Sched/Config_Scheduler.h"
 
 const char* service_name = "ScheduleService";
