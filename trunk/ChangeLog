@@ -1,3 +1,9 @@
+Mon Dec 20 12:54:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/INET_Addr.cpp {get_port_number_from_name):
+          Only check for ACE_LACKS_GETSERVBYNAME, VxWorks and Chorus have
+          this define also set
+
 Mon Dec 20 11:44:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-vxworks5.x.h:
