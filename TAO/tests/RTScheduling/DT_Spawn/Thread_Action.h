@@ -51,7 +51,7 @@ Test_Thread_Action::_cxx_do (CORBA::VoidData data
   
   RTScheduling::Current::NameList* segment_name_list = 
     tmp->current->current_scheduling_segment_names (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
   
   ACE_DEBUG ((LM_DEBUG,
 	      "Segment Names for DT %d:\n",
