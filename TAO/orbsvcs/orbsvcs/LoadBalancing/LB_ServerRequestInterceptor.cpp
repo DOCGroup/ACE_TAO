@@ -94,7 +94,7 @@ TAO_LB_ServerRequestInterceptor::receive_request_service_contexts (
 
           // Make sure we get a CORBA::BAD_PARAM for the right
           // reason.
-          if (ex.minor () != TAO_OMG_VMCID | 26)
+          if (ex.minor () != (TAO_OMG_VMCID | 26))
             ACE_RE_THROW;
         }
       ACE_ENDTRY;
