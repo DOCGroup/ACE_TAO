@@ -1,3 +1,15 @@
+Fri Jul 16 02:28:10 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Log_Msg.cpp (log): Changed (*va_arg (argp,PTF))(), which
+	  extracts a function pointer from va_list and makes a call using
+	  the pointer pointer to ACE_reinterpret_cast (PTF, va_arg (argp,
+	  long))().  This assumes the sizeof (long) is exactly equal to
+	  the size of a function pointer.
+
+	* tests/Basic_Types_Test.cpp (main): Narrow down the check to
+	  ensure sizeof(long) == sizeof (a function pointer) (which is
+	  true for all the platforms that ACE runs on.)
+
 Fri Jul 16 00:07:23 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/Cached_Accept_Conn_Test.cpp (test_connection_management):
