@@ -20,7 +20,7 @@ ACE_Message_Queue_Iterator<ACE_SYNCH_USE>::ACE_Message_Queue_Iterator (ACE_Messa
 {
 }
 
-template <ACE_SYNCH_DECL> int 
+template <ACE_SYNCH_DECL> int
 ACE_Message_Queue_Iterator<ACE_SYNCH_USE>::next (ACE_Message_Block *&entry)
 {
   ACE_Read_Guard<ACE_SYNCH_MUTEX_T> m (this->queue_.lock_);
@@ -34,7 +34,7 @@ ACE_Message_Queue_Iterator<ACE_SYNCH_USE>::next (ACE_Message_Block *&entry)
     return 0;
 }
 
-template <ACE_SYNCH_DECL> int 
+template <ACE_SYNCH_DECL> int
 ACE_Message_Queue_Iterator<ACE_SYNCH_USE>::done (void) const
 {
   ACE_Read_Guard<ACE_SYNCH_MUTEX_T> m (this->queue_.lock_);
@@ -51,7 +51,7 @@ ACE_Message_Queue_Iterator<ACE_SYNCH_USE>::advance (void)
   return this->curr_ != 0;
 }
 
-template <ACE_SYNCH_DECL> void 
+template <ACE_SYNCH_DECL> void
 ACE_Message_Queue_Iterator<ACE_SYNCH_USE>::dump (void) const
 {
 }
@@ -65,7 +65,7 @@ ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_USE>::ACE_Message_Queue_Reverse_Ite
 {
 }
 
-template <ACE_SYNCH_DECL> int 
+template <ACE_SYNCH_DECL> int
 ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_USE>::next (ACE_Message_Block *&entry)
 {
   ACE_Read_Guard<ACE_SYNCH_MUTEX_T> m (this->queue_.lock_);
@@ -79,7 +79,7 @@ ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_USE>::next (ACE_Message_Block *&ent
     return 0;
 }
 
-template <ACE_SYNCH_DECL> int 
+template <ACE_SYNCH_DECL> int
 ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_USE>::done (void) const
 {
   ACE_Read_Guard<ACE_SYNCH_MUTEX_T> m (this->queue_.lock_);
@@ -96,7 +96,7 @@ ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_USE>::advance (void)
   return this->curr_ != 0;
 }
 
-template <ACE_SYNCH_DECL> void 
+template <ACE_SYNCH_DECL> void
 ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_USE>::dump (void) const
 {
 }
@@ -115,9 +115,9 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dump (void) const
               "head_ = %u\n"
               "tail_ = %u\n",
               this->deactivated_,
-              this->low_water_mark_, 
+              this->low_water_mark_,
               this->high_water_mark_,
-              this->cur_bytes_, 
+              this->cur_bytes_,
               this->cur_count_,
               this->head_,
               this->tail_));
@@ -129,7 +129,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dump (void) const
 }
 
 template <ACE_SYNCH_DECL>
-ACE_Message_Queue<ACE_SYNCH_USE>::ACE_Message_Queue (size_t hwm, 
+ACE_Message_Queue<ACE_SYNCH_USE>::ACE_Message_Queue (size_t hwm,
                                                      size_t lwm,
                                                      ACE_Notification_Strategy *ns)
 #if defined (ACE_HAS_OPTIMIZED_MESSAGE_QUEUE)
@@ -155,13 +155,13 @@ ACE_Message_Queue<ACE_SYNCH_USE>::~ACE_Message_Queue (void)
   if (this->head_ != 0 && this->close () == -1)
     ACE_ERROR ((LM_ERROR, "close"));
 }
-  
+
 // Don't bother locking since if someone calls this function more than
 // once for the same queue, we're in bigger trouble than just
 // concurrency control!
 
-template <ACE_SYNCH_DECL> int 
-ACE_Message_Queue<ACE_SYNCH_USE>::open (size_t hwm, 
+template <ACE_SYNCH_DECL> int
+ACE_Message_Queue<ACE_SYNCH_USE>::open (size_t hwm,
                                         size_t lwm,
                                         ACE_Notification_Strategy *ns)
 {
@@ -184,7 +184,7 @@ template <ACE_SYNCH_DECL> int
 ACE_Message_Queue<ACE_SYNCH_USE>::deactivate_i (void)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::deactivate_i");
-  int current_status = 
+  int current_status =
     this->deactivated_ ? WAS_INACTIVE : WAS_ACTIVE;
 
   // Wakeup all waiters.
@@ -201,13 +201,13 @@ template <ACE_SYNCH_DECL> int
 ACE_Message_Queue<ACE_SYNCH_USE>::activate_i (void)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::activate_i");
-  int current_status = 
+  int current_status =
     this->deactivated_ ? WAS_INACTIVE : WAS_ACTIVE;
   this->deactivated_ = 0;
   return current_status;
 }
 
-// Clean up the queue if we have not already done so! 
+// Clean up the queue if we have not already done so!
 
 template <ACE_SYNCH_DECL> int
 ACE_Message_Queue<ACE_SYNCH_USE>::close (void)
@@ -217,7 +217,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::close (void)
 
   int res = this->deactivate_i ();
 
-  // Free up the remaining message on the list 
+  // Free up the remaining message on the list
 
   for (this->tail_ = 0; this->head_ != 0; )
     {
@@ -227,7 +227,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::close (void)
 
       // Decrement all the counts.
       for (temp = this->head_;
-           temp != 0; 
+           temp != 0;
            temp = temp->cont ())
         this->cur_bytes_ -= temp->size ();
 
@@ -295,7 +295,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_tail_i (ACE_Message_Block *new_item)
       new_item->prev (0);
     }
   // Link at the end.
-  else 
+  else
     {
       new_item->next (0);
       this->tail_->next (new_item);
@@ -303,10 +303,10 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_tail_i (ACE_Message_Block *new_item)
       this->tail_ = new_item;
     }
 
-  // Make sure to count *all* the bytes in a composite message!!! 
+  // Make sure to count *all* the bytes in a composite message!!!
 
-  for (ACE_Message_Block *temp = new_item; 
-       temp != 0; 
+  for (ACE_Message_Block *temp = new_item;
+       temp != 0;
        temp = temp->cont ())
     this->cur_bytes_ += temp->size ();
 
@@ -318,7 +318,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_tail_i (ACE_Message_Block *new_item)
     return this->cur_count_;
 }
 
-// Actually put the node at the head (no locking) 
+// Actually put the node at the head (no locking)
 
 template <ACE_SYNCH_DECL> int
 ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_head_i (ACE_Message_Block *new_item)
@@ -340,8 +340,8 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_head_i (ACE_Message_Block *new_item)
 
   // Make sure to count *all* the bytes in a composite message!!!
 
-  for (ACE_Message_Block *temp = new_item; 
-       temp != 0; 
+  for (ACE_Message_Block *temp = new_item;
+       temp != 0;
        temp = temp->cont ())
     this->cur_bytes_ += temp->size ();
 
@@ -409,8 +409,8 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_i (ACE_Message_Block *new_item)
 
   // Make sure to count *all* the bytes in a composite message!!!
 
-  for (ACE_Message_Block *temp = new_item; 
-       temp != 0; 
+  for (ACE_Message_Block *temp = new_item;
+       temp != 0;
        temp = temp->cont ())
     this->cur_bytes_ += temp->size ();
 
@@ -442,8 +442,8 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_head_i (ACE_Message_Block *&first_item
 
   // Make sure to subtract off all of the bytes associated with this
   // message.
-  for (ACE_Message_Block *temp = first_item; 
-       temp != 0; 
+  for (ACE_Message_Block *temp = first_item;
+       temp != 0;
        temp = temp->cont ())
     this->cur_bytes_ -= temp->size ();
 
@@ -455,10 +455,10 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_head_i (ACE_Message_Block *&first_item
     return this->cur_count_;
 }
 
-// Take a look at the first item without removing it. 
+// Take a look at the first item without removing it.
 
 template <ACE_SYNCH_DECL> int
-ACE_Message_Queue<ACE_SYNCH_USE>::peek_dequeue_head (ACE_Message_Block *&first_item, 
+ACE_Message_Queue<ACE_SYNCH_USE>::peek_dequeue_head (ACE_Message_Block *&first_item,
                                                      ACE_Time_Value *tv)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::peek_dequeue_head");
@@ -472,7 +472,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::peek_dequeue_head (ACE_Message_Block *&first_i
 
   // Wait for at least one item to become available.
 
-  if (this->wait_not_empty_cond_ (ace_mon, tv) == -1)
+  if (this->wait_not_empty_cond (ace_mon, tv) == -1)
     return -1;
 
   first_item = this->head_;
@@ -493,7 +493,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::wait_not_full_cond (ACE_Guard<ACE_SYNCH_MUTEX_
       if (tv == 0)
         result = this->not_full_cond_.acquire ();
       else
-        result = this->not_full_cond_.acquire (*tv);        
+        result = this->not_full_cond_.acquire (*tv);
       mon.acquire ();
     }
 #else
@@ -522,7 +522,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::wait_not_full_cond (ACE_Guard<ACE_SYNCH_MUTEX_
 }
 
 template <ACE_SYNCH_DECL> int
-ACE_Message_Queue<ACE_SYNCH_USE>::wait_not_empty_cond (ACE_Guard<ACE_SYNCH_MUTEX_T> &mon, 
+ACE_Message_Queue<ACE_SYNCH_USE>::wait_not_empty_cond (ACE_Guard<ACE_SYNCH_MUTEX_T> &mon,
                                                        ACE_Time_Value *tv)
 {
   int result = 0;
@@ -570,8 +570,8 @@ ACE_Message_Queue<ACE_SYNCH_USE>::wait_not_empty_cond (ACE_Guard<ACE_SYNCH_MUTEX
 // Block indefinitely waiting for an item to arrive, does not ignore
 // alerts (e.g., signals).
 
-template <ACE_SYNCH_DECL> int 
-ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_head (ACE_Message_Block *new_item, 
+template <ACE_SYNCH_DECL> int
+ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_head (ACE_Message_Block *new_item,
                                                 ACE_Time_Value *tv)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_head");
@@ -601,8 +601,8 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_head (ACE_Message_Block *new_item,
 // accordance with its <msg_priority> (0 is lowest priority).  Returns
 // -1 on failure, else the number of items still on the queue.
 
-template <ACE_SYNCH_DECL> int 
-ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_prio (ACE_Message_Block *new_item, 
+template <ACE_SYNCH_DECL> int
+ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_prio (ACE_Message_Block *new_item,
                                                 ACE_Time_Value *tv)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_prio");
@@ -628,8 +628,8 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_prio (ACE_Message_Block *new_item,
     }
 }
 
-template <ACE_SYNCH_DECL> int 
-ACE_Message_Queue<ACE_SYNCH_USE>::enqueue (ACE_Message_Block *new_item, 
+template <ACE_SYNCH_DECL> int
+ACE_Message_Queue<ACE_SYNCH_USE>::enqueue (ACE_Message_Block *new_item,
                                          ACE_Time_Value *tv)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::enqueue");
@@ -637,10 +637,10 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue (ACE_Message_Block *new_item,
 }
 
 // Block indefinitely waiting for an item to arrive,
-// does not ignore alerts (e.g., signals). 
+// does not ignore alerts (e.g., signals).
 
-template <ACE_SYNCH_DECL> int 
-ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_tail (ACE_Message_Block *new_item, 
+template <ACE_SYNCH_DECL> int
+ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_tail (ACE_Message_Block *new_item,
                                               ACE_Time_Value *tv)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_tail");
@@ -666,12 +666,12 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_tail (ACE_Message_Block *new_item,
     }
 }
 
-// Remove an item from the front of the queue.  If TV == 0 block 
+// Remove an item from the front of the queue.  If TV == 0 block
 // indefinitely (or until an alert occurs).  Otherwise, block for upto
-// the amount of time specified by TV. 
+// the amount of time specified by TV.
 
-template <ACE_SYNCH_DECL> int 
-ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_head (ACE_Message_Block *&first_item, 
+template <ACE_SYNCH_DECL> int
+ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_head (ACE_Message_Block *&first_item,
                                               ACE_Time_Value *tv)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_head");
