@@ -1,3 +1,14 @@
+Tue Nov 11 00:36:39 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
+
+	* tao/orbobj.cpp (resolve_name_service): changed macro for default
+ 	multicast port.  
+	- Added support for multicast mechanism to resolve the name
+ 	service.
+
+	* tao/orbconf.h: Added some definitions for TAO's default
+ 	multicast and reply port, and the default timeout value.
+
+	
 Tue Nov 11 00:06:57 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* tao/orbconf.h: Started putting a more sane way of automatically
