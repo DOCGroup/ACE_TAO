@@ -270,6 +270,30 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::schedule (const TYPE &type,
   return -1;
 }
 
+// Locate and update the inteval on the timer_id
+
+template <class TYPE, class FUNCTOR, class ACE_LOCK> int 
+ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::reset_interval (const long timer_id, 
+                                                            const ACE_Time_Value &interval)
+{
+  ACE_TRACE ("ACE_Timer_Wheel_T::reset_interval");
+  ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));
+
+  // Make sure we are getting a valid <timer_id>, not an error
+  // returned by <schedule>.
+  if (timer_id == -1)
+    return 0;
+
+  ACE_Timer_Node_T<TYPE> *node =
+    (ACE_Timer_Node_T<TYPE> *) timer_id;
+
+  // Check to see if the node looks like a true ACE_Timer_Node_T<TYPE>
+  if (timer_id != node->get_timer_id ())
+    return 0;
+
+  node->set_interval (interval);
+}
+
 // Goes through every list in the wheel and if it finds a node with <type>
 // then it removes the node and continues on looking for other nodes
 

@@ -624,6 +624,39 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::cancel (long timer_id,
     }
 }
 
+// Locate and update the inteval on the timer_id
+
+template <class TYPE, class FUNCTOR, class ACE_LOCK> int 
+ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::reset_interval (const long timer_id, 
+                                                           const ACE_Time_Value &interval)
+{
+  ACE_TRACE ("ACE_Timer_Heap_T::reset_interval");
+  ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));
+
+  // Locate the ACE_Timer_Node that corresponds to the timer_id.
+
+  // Check to see if the timer_id is out of range
+  if (timer_id < 0 || (size_t) timer_id > this->max_size_)
+    return 0;
+
+  long timer_node_slot = this->timer_ids_[timer_id];
+
+  if (timer_node_slot < 0) // Check to see if timer_id is still valid.
+    return 0;
+
+  if (timer_id != this->heap_[timer_node_slot]->get_timer_id ())
+    {
+      ACE_ASSERT (timer_id == this->heap_[timer_node_slot]->get_timer_id ());
+      return 0;
+    }
+  else
+    {
+      // Reset the timer interval
+      this->heap_[timer_node_slot]->set_interval (interval);
+      return 1;
+    }
+}
+
 // Locate and remove all values of <type> from the timer queue.
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK> int

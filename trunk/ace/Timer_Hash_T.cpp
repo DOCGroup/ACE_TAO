@@ -365,6 +365,27 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::schedule (const TYPE &type,
                                h);
 }
 
+// Locate and update the inteval on the timer_id
+
+template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET> int 
+ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::reset_interval (const long timer_id, 
+                                                                   const ACE_Time_Value &interval)
+{
+  ACE_TRACE ("ACE_Timer_Hash_T::reset_interval");
+  ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));
+
+  // Make sure we are getting a valid <timer_id>, not an error
+  // returned by <schedule>.
+  if (timer_id == -1)
+    return 0;
+
+  Hash_Token *h = ACE_reinterpret_cast (Hash_Token *,
+                                        timer_id);
+
+  return this->table_[h->pos_]->reset_interval (h->orig_id_,
+                                                interval);
+}
+
 // Locate and remove the single <ACE_Event_Handler> with a value of
 // <timer_id> from the correct table timer queue.
 

@@ -134,6 +134,13 @@ public:
   // timer.  Returns -1 on failure (which is guaranteed never to be a
   // valid <timer_id>).
 
+  virtual int reset_interval (const long timer_id, 
+                              const ACE_Time_Value &interval);
+  // Resets the interval of the timer represented by <timer_id> to 
+  // <interval>.  If <interval> is equal to <ACE_Time_Value::zero>,
+  // the timer will become a non-rescheduling timer.  Returns 1 if
+  // successful, 0 if not.
+
   virtual int cancel (const TYPE &type,
                       int dont_call_handle_close = 1);
   // Cancel all timer associated with <type>.  If <dont_call> is 0
