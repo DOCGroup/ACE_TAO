@@ -33,10 +33,6 @@
 #include "tao/MProfile.h"
 #include "tao/Object_Loader.h"
 
-#if (TAO_HAS_INTERFACE_REPOSITORY == 1)
-#  include "tao/InterfaceC.h"
-#endif /*TAO_HAS_INTERFACE_REPOSITORY */
-
 #if defined (TAO_HAS_VALUETYPE)
 #  include "tao/ValueFactory_Map.h"
 #endif /* TAO_HAS_VALUETYPE */
@@ -819,6 +815,10 @@ CORBA_ORB::resolve_initial_references (const char *name,
   else if (ACE_OS::strcmp (name, TAO_OBJID_IORMANIPULATION) == 0)
     return this->resolve_ior_manipulation (ACE_TRY_ENV);
 
+  else if (ACE_OS::strcmp (name, TAO_OBJID_TYPECODEFACTORY) == 0)
+    return this->string_to_object ("DLL:TypeCodeFactory",
+                                   ACE_TRY_ENV);
+
   // Is not one of the well known services, try to find it in the
   // InitRef table....
 
@@ -1028,192 +1028,6 @@ CORBA_ORB::create_dyn_enum      (CORBA_TypeCode_ptr tc,
   return TAO_DynAny_i::create_dyn_enum (tc, ACE_TRY_ENV);
 }
 
-#if (TAO_HAS_INTERFACE_REPOSITORY == 1)
-
-CORBA_TypeCode_ptr
-CORBA_ORB::create_interface_tc (const char * id,
-                                const char * name,
-                                CORBA::Environment &ACE_TRY_ENV)
-{
-  TAO_OutputCDR cdr;
-
-  // The piece of code that follows has been based on the code in the
-  // IDL compiler
-  cdr << TAO_ENCAP_BYTE_ORDER; // Byte Order
-
-  // Use the overloaded operator from the TAO_Output CDR class
-  cdr << id;
-
-  // Send the name
-  cdr << name;
-
-  CORBA_TypeCode_ptr interface_typecode = CORBA::TypeCode::_nil ();
-  ACE_NEW_THROW_EX (interface_typecode,
-                    CORBA_TypeCode (CORBA::tk_objref,
-                                    cdr.total_length (),
-                                    cdr.buffer (),
-                                    0,
-                                    0),
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
-
-  return interface_typecode;
-}
-
-CORBA_TypeCode_ptr
-CORBA_ORB::create_enum_tc (const char *id,
-                           const char *name,
-                           CORBA_EnumMemberSeq &members,
-                           CORBA::Environment &ACE_TRY_ENV)
-{
-  TAO_OutputCDR cdr;
-
-  // The piece of code that follows has been based on the code in the
-  // IDL compiler
-  cdr << TAO_ENCAP_BYTE_ORDER; // Byte Order
-
-  cdr << id;
-
-  cdr << name;
-
-  CORBA::ULong len = members.length ();
-
-  cdr << len;
-
-  for (CORBA::ULong index = 0; index < len; index++)
-    {
-      cdr << members[index].in ();
-    }
-
-  CORBA_TypeCode_ptr interface_typecode = CORBA::TypeCode::_nil ();
-  ACE_NEW_THROW_EX (interface_typecode,
-                    CORBA_TypeCode (CORBA::tk_enum,
-                                    cdr.total_length (),
-                                    cdr.buffer (),
-                                    0,
-                                    0),
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
-
-  return interface_typecode;
-}
-
-CORBA_TypeCode_ptr
-CORBA_ORB::create_exception_tc (const char *id,
-                                const char *name,
-                                CORBA_StructMemberSeq &members,
-                                CORBA::Environment &ACE_TRY_ENV)
-{
-  TAO_OutputCDR cdr;
-
-  // The piece of code that follows has been based on the code in the
-  // IDL compiler
-  cdr << TAO_ENCAP_BYTE_ORDER; // Byte Order
-
-  cdr << id;
-
-  cdr << name;
-
-  // Number of members..
-  CORBA::ULong len = members.length ();
-  cdr << len;
-
-  for (CORBA::ULong index = 0; index < len; index++)
-    {
-      // Get the first member which is a string..
-      CORBA_StructMember struct_member = members[index];
-
-      cdr << struct_member.name.in ();
-
-      cdr << struct_member.type.in ();
-    }
-
-  CORBA_TypeCode_ptr interface_typecode = CORBA::TypeCode::_nil ();
-  ACE_NEW_THROW_EX (interface_typecode,
-                    CORBA_TypeCode (CORBA::tk_except,
-                                    cdr.total_length (),
-                                    cdr.buffer (),
-                                    0,
-                                    0),
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
-
-  return interface_typecode;
-}
-
-
-CORBA_TypeCode_ptr
-CORBA_ORB::create_alias_tc (const char *id,
-                            const char *name,
-                            const CORBA::TypeCode_ptr original_type,
-                            CORBA::Environment &ACE_TRY_ENV)
-{
-  TAO_OutputCDR cdr;
-
-  cdr << TAO_ENCAP_BYTE_ORDER;
-
-  cdr << id;
-
-  cdr << name;
-
-  cdr << original_type;
-
-  CORBA_TypeCode_ptr interface_typecode = CORBA::TypeCode::_nil ();
-
-  ACE_NEW_THROW_EX (interface_typecode,
-                    CORBA_TypeCode (CORBA::tk_alias,
-                                    cdr.total_length (),
-                                    cdr.buffer (),
-                                    0,
-                                    0),
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
-
-  return interface_typecode;
-}
-
-CORBA_TypeCode_ptr
-CORBA_ORB::create_struct_tc (const char *id,
-                            const char *name,
-                            CORBA_StructMemberSeq &members,
-                            CORBA::Environment &ACE_TRY_ENV)
-{
-  TAO_OutputCDR cdr;
-
-  cdr << TAO_ENCAP_BYTE_ORDER;
-
-  cdr << id;
-
-  cdr << name;
-
-  // Number of members..
-  CORBA::ULong len = members.length ();
-  cdr << len;
-
-  for (CORBA::ULong index = 0; index < len; index++)
-    {
-      // Get the first member which is a string..
-      CORBA_StructMember struct_member = members[index];
-
-      cdr << struct_member.name.in ();
-
-      cdr << struct_member.type.in ();
-    }
-
-  CORBA_TypeCode_ptr interface_typecode = CORBA::TypeCode::_nil ();
-  ACE_NEW_THROW_EX (interface_typecode,
-                    CORBA_TypeCode (CORBA::tk_struct,
-                                    cdr.total_length (),
-                                    cdr.buffer (),
-                                    0,
-                                    0),
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
-
-  return interface_typecode;
-}
-
-#endif /*TAO_HAS_INTERFACE_REPOSITORY */
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
 // ****************************************************************
@@ -1688,7 +1502,7 @@ CORBA_ORB::string_to_object (const char *str,
                           CORBA::COMPLETED_NO),
                       CORBA::Object::_nil ());
 
-
+  
   if (ACE_OS::strncmp (str,
                        file_prefix,
                        sizeof file_prefix - 1) == 0)
@@ -1830,7 +1644,7 @@ CORBA_ORB::ior_string_to_object (const char *str,
 
   // Create deencapsulation stream ... then unmarshal objref from that
   // stream.
-
+  
   int byte_order = *(mb.rd_ptr ());
   mb.rd_ptr (1);
   mb.wr_ptr (len);

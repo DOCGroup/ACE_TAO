@@ -494,38 +494,6 @@ public:
                                                CORBA::Environment &ACE_TRY_ENV
                                                = TAO_default_environment ());
 
-#if (TAO_HAS_INTERFACE_REPOSITORY == 1)
-  //Methods added for Philipe Merle for CORBA Script..
-  CORBA_TypeCode_ptr create_interface_tc (const char * id,
-                                          const char * name,
-                                          CORBA::Environment &ACE_TRY_ENV =
-                                          TAO_default_environment ());
-  CORBA_TypeCode_ptr create_enum_tc (const char *id,
-                                     const char *name,
-                                     CORBA_EnumMemberSeq &members,
-                                     CORBA::Environment &ACE_TRY_ENV =
-                                     TAO_default_environment ());
-
-  CORBA_TypeCode_ptr create_exception_tc (const char *id,
-                                          const char *name,
-                                          CORBA_StructMemberSeq &members,
-                                          CORBA::Environment &ACE_TRY_ENV =
-                                          TAO_default_environment ());
-
-  CORBA_TypeCode_ptr create_alias_tc (const char *id,
-                                      const char *name,
-                                      const CORBA::TypeCode_ptr original_type,
-                                      CORBA::Environment &ACE_TRY_ENV =
-                                      TAO_default_environment ());
-
-  CORBA_TypeCode_ptr create_struct_tc (const char *id,
-                                       const char *name,
-                                       CORBA_StructMemberSeq &members,
-                                       CORBA::Environment &ACE_TRY_ENV =
-                                       TAO_default_environment ());
-
-
-#endif /*TAO_HAS_INTERFACE_REPOSITORY */
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
@@ -808,7 +776,7 @@ private:
   // If non-0 then this is the Factory for OBV unmarshaling
 #endif /* TAO_HAS_VALUETYPE */
 
-#if (TAO_HAS_INTERCEPTORS == 1)
+#if defined (TAO_HAS_INTERCEPTORS)
   PortableInterceptor::ClientRequestInterceptor_var client_interceptor_;
   PortableInterceptor::ServerRequestInterceptor_var server_interceptor_;
   // Interceptor registries.

@@ -10,7 +10,7 @@
 //   POA_CORBA.h
 //
 //   This file is created by merging the CurrentS.h, PolicyS.h,
-//   PollableS.h, DomainS.h, DynAnyS.h and InterfaceS.h files which
+//   PollableS.h, DomainS.h, DynAnyS.h and InterfaceS.h files which 
 //   have been removed.
 //
 // = AUTHOR
@@ -54,6 +54,8 @@
 #endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
+
+class IR_InterfaceDef;
 
 class TAO_Export  POA_CORBA
 {
@@ -295,7 +297,7 @@ public:
 
   class PolicyCurrent;
   typedef PolicyCurrent *PolicyCurrent_ptr;
-  class TAO_Export PolicyCurrent : public virtual PolicyManager,
+  class TAO_Export PolicyCurrent : public virtual PolicyManager, 
                                    public virtual Current
   {
   protected:
@@ -1766,7 +1768,7 @@ public:
 
     virtual const char* _interface_repository_id (void) const;
     virtual void make_domain_manager (
-      CORBA::InterfaceDef_ptr object_type,
+      IR_InterfaceDef *object_type,
       CORBA::Boolean constr_policy,
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
@@ -1791,7 +1793,7 @@ public:
       );
     ConstructionPolicy_ptr _get_servant (void) const;
         virtual void make_domain_manager (
-        CORBA::InterfaceDef_ptr object_type,
+        IR_InterfaceDef *object_type,
         CORBA::Boolean constr_policy,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -1825,7 +1827,7 @@ public:
 
     virtual CORBA::Boolean _is_a (
         const char* logical_type_id,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
@@ -1837,7 +1839,7 @@ public:
         CORBA::ServerRequest &req,
         void *obj,
         void *context,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
@@ -1845,26 +1847,26 @@ public:
         CORBA::ServerRequest &req,
         void *obj,
         void *context,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
     virtual void _dispatch (
         CORBA::ServerRequest &_tao_req,
         void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
     ::CORBA::IRObject *_this (
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
     virtual const char* _interface_repository_id (void) const;
 
     virtual IR::DefinitionKind def_kind (
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -1872,15 +1874,15 @@ public:
       )) = 0;
 
     static void _get_def_kind_skel (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_obj,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::ServerRequest &_tao_req, 
+        void *_tao_obj, 
+        void *_tao_context, 
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
     virtual void destroy (
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -1888,15 +1890,15 @@ public:
       )) = 0;
 
     static void destroy_skel (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_obj,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::ServerRequest &_tao_req, 
+        void *_tao_obj, 
+        void *_tao_context, 
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
   };
 
-  class  _tao_thru_poa_collocated_IRObject : public virtual ::CORBA::IRObject
+  class  _tao_thru_poa_collocated_IRObject : public virtual CORBA::IRObject
   {
   public:
     _tao_thru_poa_collocated_IRObject (
@@ -1906,13 +1908,13 @@ public:
         const CORBA::Char *logical_type_id,
         CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
       );
-
+    
     virtual CORBA::Boolean _non_existent(
         CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
       );
-
+    
         virtual IR::DefinitionKind def_kind (
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -1920,7 +1922,7 @@ public:
       ));
 
     virtual void destroy (
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -1942,7 +1944,7 @@ public:
 
     virtual CORBA::Boolean _is_a (
         const char* logical_type_id,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
@@ -1954,7 +1956,7 @@ public:
         CORBA::ServerRequest &req,
         void *obj,
         void *context,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
@@ -1962,19 +1964,19 @@ public:
         CORBA::ServerRequest &req,
         void *obj,
         void *context,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
     virtual void _dispatch (
         CORBA::ServerRequest &_tao_req,
         void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
     ::CORBA::TypeCodeFactory *_this (
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
@@ -1984,7 +1986,7 @@ public:
         const char * id,
         const char * name,
         const IR::StructMemberSeq & members,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -1992,10 +1994,10 @@ public:
       )) = 0;
 
     static void create_struct_tc_skel (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_obj,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::ServerRequest &_tao_req, 
+        void *_tao_obj, 
+        void *_tao_context, 
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
@@ -2004,7 +2006,7 @@ public:
         const char * name,
         CORBA::TypeCode_ptr discriminator_type,
         const IR::UnionMemberSeq & members,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -2012,10 +2014,10 @@ public:
       )) = 0;
 
     static void create_union_tc_skel (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_obj,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::ServerRequest &_tao_req, 
+        void *_tao_obj, 
+        void *_tao_context, 
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
@@ -2023,7 +2025,7 @@ public:
         const char * id,
         const char * name,
         const IR::EnumMemberSeq & members,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -2031,10 +2033,10 @@ public:
       )) = 0;
 
     static void create_enum_tc_skel (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_obj,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::ServerRequest &_tao_req, 
+        void *_tao_obj, 
+        void *_tao_context, 
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
@@ -2042,7 +2044,7 @@ public:
         const char * id,
         const char * name,
         CORBA::TypeCode_ptr original_type,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -2050,10 +2052,10 @@ public:
       )) = 0;
 
     static void create_alias_tc_skel (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_obj,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::ServerRequest &_tao_req, 
+        void *_tao_obj, 
+        void *_tao_context, 
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
@@ -2061,7 +2063,7 @@ public:
         const char * id,
         const char * name,
         const IR::StructMemberSeq & members,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -2069,17 +2071,17 @@ public:
       )) = 0;
 
     static void create_exception_tc_skel (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_obj,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::ServerRequest &_tao_req, 
+        void *_tao_obj, 
+        void *_tao_context, 
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
     virtual CORBA::TypeCode_ptr create_interface_tc (
         const char * id,
         const char * name,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -2087,16 +2089,16 @@ public:
       )) = 0;
 
     static void create_interface_tc_skel (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_obj,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::ServerRequest &_tao_req, 
+        void *_tao_obj, 
+        void *_tao_context, 
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
     virtual CORBA::TypeCode_ptr create_string_tc (
         CORBA::ULong bound,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -2104,16 +2106,16 @@ public:
       )) = 0;
 
     static void create_string_tc_skel (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_obj,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::ServerRequest &_tao_req, 
+        void *_tao_obj, 
+        void *_tao_context, 
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
     virtual CORBA::TypeCode_ptr create_wstring_tc (
         CORBA::ULong bound,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -2121,17 +2123,17 @@ public:
       )) = 0;
 
     static void create_wstring_tc_skel (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_obj,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::ServerRequest &_tao_req, 
+        void *_tao_obj, 
+        void *_tao_context, 
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
     virtual CORBA::TypeCode_ptr create_fixed_tc (
         CORBA::UShort digits,
         CORBA::UShort scale,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -2139,17 +2141,17 @@ public:
       )) = 0;
 
     static void create_fixed_tc_skel (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_obj,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::ServerRequest &_tao_req, 
+        void *_tao_obj, 
+        void *_tao_context, 
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
     virtual CORBA::TypeCode_ptr create_sequence_tc (
         CORBA::ULong bound,
         CORBA::TypeCode_ptr element_type,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -2157,17 +2159,17 @@ public:
       )) = 0;
 
     static void create_sequence_tc_skel (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_obj,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::ServerRequest &_tao_req, 
+        void *_tao_obj, 
+        void *_tao_context, 
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
     virtual CORBA::TypeCode_ptr create_array_tc (
         CORBA::ULong length,
         CORBA::TypeCode_ptr element_type,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -2175,10 +2177,10 @@ public:
       )) = 0;
 
     static void create_array_tc_skel (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_obj,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::ServerRequest &_tao_req, 
+        void *_tao_obj, 
+        void *_tao_context, 
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
@@ -2188,7 +2190,7 @@ public:
         CORBA::ValueModifier type_modifier,
         CORBA::TypeCode_ptr concrete_base,
         const IR::ValueMemberSeq & members,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -2196,10 +2198,10 @@ public:
       )) = 0;
 
     static void create_value_tc_skel (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_obj,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::ServerRequest &_tao_req, 
+        void *_tao_obj, 
+        void *_tao_context, 
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
@@ -2207,7 +2209,7 @@ public:
         const char * id,
         const char * name,
         CORBA::TypeCode_ptr boxed_type,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -2215,17 +2217,17 @@ public:
       )) = 0;
 
     static void create_value_box_tc_skel (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_obj,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::ServerRequest &_tao_req, 
+        void *_tao_obj, 
+        void *_tao_context, 
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
     virtual CORBA::TypeCode_ptr create_native_tc (
         const char * id,
         const char * name,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -2233,16 +2235,16 @@ public:
       )) = 0;
 
     static void create_native_tc_skel (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_obj,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::ServerRequest &_tao_req, 
+        void *_tao_obj, 
+        void *_tao_context, 
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
     virtual CORBA::TypeCode_ptr create_recursive_tc (
         const char * id,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -2250,17 +2252,17 @@ public:
       )) = 0;
 
     static void create_recursive_tc_skel (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_obj,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::ServerRequest &_tao_req, 
+        void *_tao_obj, 
+        void *_tao_context, 
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
     virtual CORBA::TypeCode_ptr create_abstract_interface_tc (
         const char * id,
         const char * name,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -2268,17 +2270,17 @@ public:
       )) = 0;
 
     static void create_abstract_interface_tc_skel (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_obj,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::ServerRequest &_tao_req, 
+        void *_tao_obj, 
+        void *_tao_context, 
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
     virtual CORBA::TypeCode_ptr create_component_tc (
         const char * id,
         const char * name,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -2286,17 +2288,17 @@ public:
       )) = 0;
 
     static void create_component_tc_skel (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_obj,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::ServerRequest &_tao_req, 
+        void *_tao_obj, 
+        void *_tao_context, 
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
     virtual CORBA::TypeCode_ptr create_home_tc (
         const char * id,
         const char * name,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -2304,17 +2306,17 @@ public:
       )) = 0;
 
     static void create_home_tc_skel (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_obj,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::ServerRequest &_tao_req, 
+        void *_tao_obj, 
+        void *_tao_context, 
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
 
   };
 
-  class  _tao_thru_poa_collocated_TypeCodeFactory     : public virtual ::CORBA::TypeCodeFactory
+  class  _tao_thru_poa_collocated_TypeCodeFactory : public virtual CORBA::TypeCodeFactory
   {
   public:
     _tao_thru_poa_collocated_TypeCodeFactory (
@@ -2324,16 +2326,16 @@ public:
         const CORBA::Char *logical_type_id,
         CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
       );
-
+    
     virtual CORBA::Boolean _non_existent(
         CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
       );
-
+    
         virtual CORBA::TypeCode_ptr create_struct_tc (
         const char * id,
         const char * name,
         const IR::StructMemberSeq & members,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -2345,7 +2347,7 @@ public:
         const char * name,
         CORBA::TypeCode_ptr discriminator_type,
         const IR::UnionMemberSeq & members,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -2356,7 +2358,7 @@ public:
         const char * id,
         const char * name,
         const IR::EnumMemberSeq & members,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -2367,7 +2369,7 @@ public:
         const char * id,
         const char * name,
         CORBA::TypeCode_ptr original_type,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -2378,7 +2380,7 @@ public:
         const char * id,
         const char * name,
         const IR::StructMemberSeq & members,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -2388,7 +2390,7 @@ public:
     virtual CORBA::TypeCode_ptr create_interface_tc (
         const char * id,
         const char * name,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -2397,7 +2399,7 @@ public:
 
     virtual CORBA::TypeCode_ptr create_string_tc (
         CORBA::ULong bound,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -2406,7 +2408,7 @@ public:
 
     virtual CORBA::TypeCode_ptr create_wstring_tc (
         CORBA::ULong bound,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -2416,7 +2418,7 @@ public:
     virtual CORBA::TypeCode_ptr create_fixed_tc (
         CORBA::UShort digits,
         CORBA::UShort scale,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -2426,7 +2428,7 @@ public:
     virtual CORBA::TypeCode_ptr create_sequence_tc (
         CORBA::ULong bound,
         CORBA::TypeCode_ptr element_type,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -2436,7 +2438,7 @@ public:
     virtual CORBA::TypeCode_ptr create_array_tc (
         CORBA::ULong length,
         CORBA::TypeCode_ptr element_type,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -2449,7 +2451,7 @@ public:
         CORBA::ValueModifier type_modifier,
         CORBA::TypeCode_ptr concrete_base,
         const IR::ValueMemberSeq & members,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -2460,7 +2462,7 @@ public:
         const char * id,
         const char * name,
         CORBA::TypeCode_ptr boxed_type,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -2470,7 +2472,7 @@ public:
     virtual CORBA::TypeCode_ptr create_native_tc (
         const char * id,
         const char * name,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -2479,7 +2481,7 @@ public:
 
     virtual CORBA::TypeCode_ptr create_recursive_tc (
         const char * id,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -2489,7 +2491,7 @@ public:
     virtual CORBA::TypeCode_ptr create_abstract_interface_tc (
         const char * id,
         const char * name,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -2499,7 +2501,7 @@ public:
     virtual CORBA::TypeCode_ptr create_component_tc (
         const char * id,
         const char * name,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -2509,7 +2511,7 @@ public:
     virtual CORBA::TypeCode_ptr create_home_tc (
         const char * id,
         const char * name,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((

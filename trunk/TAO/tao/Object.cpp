@@ -422,14 +422,12 @@ CORBA_Object::_request (const CORBA::Char *operation,
       ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::Request::_nil ());
 }
 
-CORBA::InterfaceDef_ptr
+#if (TAO_HAS_INTERFACE_REPOSITORY == 1)
+
+IR::InterfaceDef_ptr
 CORBA_Object::_get_interface (CORBA::Environment &ACE_TRY_ENV)
 {
-#if (TAO_HAS_INTERFACE_REPOSITORY == 1)
-  CORBA::InterfaceDef_ptr _tao_retval = CORBA::InterfaceDef::_nil();
-#else
-  CORBA::InterfaceDef_ptr _tao_retval = 0;
-#endif  /* TAO_HAS_INTERFACE_REPOSITORY == 1 */
+  IR::InterfaceDef_ptr _tao_retval = IR::InterfaceDef::_nil();
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
@@ -471,7 +469,6 @@ CORBA_Object::_get_interface (CORBA::Environment &ACE_TRY_ENV)
       break;
     }
 
-#if (TAO_HAS_INTERFACE_REPOSITORY == 1)
   TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
   if (!(
         (_tao_in >> _tao_retval)
@@ -479,11 +476,9 @@ CORBA_Object::_get_interface (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
 
   return _tao_retval;
-#else
-  ACE_UNUSED_ARG (_tao_retval);
-  ACE_THROW_RETURN (CORBA::INTF_REPOS (), _tao_retval);
-#endif  /* TAO_HAS_INTERFACE_REPOSITORY == 1 */
 }
+
+#endif  /* TAO_HAS_INTERFACE_REPOSITORY == 1 */
 
 CORBA::ImplementationDef_ptr
 CORBA_Object::_get_implementation (CORBA::Environment &)

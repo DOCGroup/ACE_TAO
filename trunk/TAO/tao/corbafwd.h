@@ -353,47 +353,6 @@ typedef CORBA_ORB_ObjectIdList *CORBA_ORB_ObjectIdList_ptr;
 // Forward declarations for INTERFACE REPO..Bala
 #if (TAO_HAS_INTERFACE_REPOSITORY == 1)
 
-// To avoid cyclic dependencies, this is defined here and 
-// typedef'd to DefinitionKind inside the IR namespace.
-enum TAO_Export IR_DefinitionKind
-  {
-        dk_none,
-        dk_all,
-        dk_Attribute,
-        dk_Constant,
-        dk_Exception,
-        dk_Interface,
-        dk_Module,
-        dk_Operation,
-        dk_Typedef,
-        dk_Alias,
-        dk_Struct,
-        dk_Union,
-        dk_Enum,
-        dk_Primitive,
-        dk_String,
-        dk_Sequence,
-        dk_Array,
-        dk_Repository,
-        dk_Wstring,
-        dk_Fixed,
-        dk_Value,
-        dk_ValueBox,
-        dk_ValueMember,
-        dk_Native,
-        dk_Component,
-        dk_Home,
-        dk_Factory,
-        dk_Finder,
-        dk_PrimaryKey,
-        dk_Emits,
-        dk_Publishes,
-        dk_Consumes,
-        dk_Provides,
-        dk_Uses,
-        IR_DefinitionKind_TAO_ENUM_32BIT_ENFORCER = 0x7FFFFFFF
-  };
-
 class CORBA_IRObject;
 class CORBA_IRObject_var;
 class CORBA_IRObject_out;
@@ -405,10 +364,6 @@ class CORBA_TypeCodeFactory_out;
 typedef CORBA_TypeCodeFactory *CORBA_TypeCodeFactory_ptr;
 
 #endif /* TAO_HAS_INTERFACE_REPOSITORY == 1 */
-
-#if (TAO_HAS_SMART_PROXIES == 1)
-class TAO_Smart_Proxy_Base;
-#endif /*TAO_HAS_SMART_PROXIES == 1*/
 
 class CORBA_Bounds;
 typedef CORBA_Bounds *CORBA_Bounds_ptr;
@@ -603,7 +558,6 @@ TAO_NAMESPACE CORBA
   typedef CORBA_ServerRequest ServerRequest;
   typedef ServerRequest *ServerRequest_ptr;
 
-
   typedef CORBA_TypeCode TypeCode;
   typedef CORBA_TypeCode *TypeCode_ptr;
   typedef CORBA_TypeCode_var TypeCode_var;
@@ -614,11 +568,6 @@ TAO_NAMESPACE CORBA
   typedef CORBA_ExceptionList *ExceptionList_ptr;
 
   typedef CORBA_ImplementationDef *ImplementationDef_ptr;
-
-  typedef CORBA_InterfaceDef InterfaceDef;
-  typedef CORBA_InterfaceDef *InterfaceDef_ptr;
-  typedef CORBA_InterfaceDef_var InterfaceDef_var;
-  typedef CORBA_InterfaceDef_out InterfaceDef_out;
 
   typedef CORBA_Current Current;
   typedef CORBA_Current *Current_ptr;
@@ -809,7 +758,7 @@ TAO_NAMESPACE CORBA
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
   TAO_NAMESPACE_STORAGE_CLASS TypeCode_ptr _tc_NamedValue;
-#endif /* End of Minimum CORBA */
+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
   enum
   {
     // = Flags for NVList add methods
@@ -974,7 +923,7 @@ TAO_NAMESPACE CORBA
   typedef CORBA_NameValuePairSeq_out NameValuePairSeq_out;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_NameValuePairSeq;
 
-#endif /* ! TAO_HAS_MINIMUM_CORBA */
+#endif /* ! defined (TAO_HAS_MINIMUM_CORBA) */
 
   // ****************************************************************
 
