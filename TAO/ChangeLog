@@ -1,3 +1,54 @@
+2002-11-27  D A Hanvey  <dhanvey@qub.ac.uk>
+
+	* BasicLogFactory_i.cpp:
+	* BasicLogFactory_i.h:
+	* BasicLog_i.cpp:
+	* BasicLog_i.h:
+	* EventLogConsumer.cpp:
+	* EventLogConsumer.h:
+	* EventLogFactory_i.cpp:
+	* EventLogFactory_i.h:
+	* EventLogNotification.cpp:
+	* EventLogNotification.h:
+	* EventLog_i.cpp:
+	* EventLog_i.h:
+	* Iterator_i.cpp:
+	* Iterator_i.h:
+	* LogMgr_i.cpp:
+	* LogMgr_i.h:
+	* LogNotification.cpp:
+	* LogNotification.h:
+	* LogRecordStore.cpp:
+	* LogRecordStore.h:
+	* LogRecordStore_persist.cpp:
+	* LogRecordStore_persist.h:
+	* Log_Constraint_Interpreter.cpp:
+	* Log_Constraint_Interpreter.h:
+	* Log_Constraint_Visitors.cpp:
+	* Log_Constraint_Visitors.h:
+	* Log_i.cpp:
+	* Log_i.h:
+	* NotifyLogConsumer.cpp:
+	* NotifyLogConsumer.h:
+	* NotifyLogFactory_i.cpp:
+	* NotifyLogFactory_i.h:
+	* NotifyLogNotification.cpp:
+	* NotifyLogNotification.h:
+	* NotifyLog_i.cpp:
+	* NotifyLog_i.h:
+	* PersistStore.cpp:
+	* PersistStore.h:
+	* RTEventLogConsumer.cpp:
+	* RTEventLogConsumer.h:
+	* RTEventLogFactory_i.cpp:
+	* RTEventLogFactory_i.h:
+	* RTEventLogNotification.cpp:
+	* RTEventLogNotification.h:
+	* RTEventLog_i.cpp:
+	* RTEventLog_i.h:
+
+	Documentation changes to files.
+
 Wed Nov 27 10:14:26 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 
 	* orbsvcs/orbsvcs/RTEventLog.dsp: 
