@@ -54,6 +54,25 @@ LIBFILES = \
 	$(TAO_LIB) \
 	$(TAO_PORTABLESERVER_LIB)
 
+IDLFILES = \
+        $(IDLDIR)\anonymous.idl \
+        $(IDLDIR)\array.idl \
+        $(IDLDIR)\constants.idl \
+        $(IDLDIR)\enum_in_struct.idl \
+        $(IDLDIR)\generic_object.idl \
+        $(IDLDIR)\included.idl \
+        $(IDLDIR)\including.idl \
+        $(IDLDIR)\interface.idl \
+        $(IDLDIR)\keywords.idl \
+        $(IDLDIR)\pragma.idl \
+        $(IDLDIR)\sequence.idl \
+        $(IDLDIR)\typedef.idl \
+        $(IDLDIR)\union.idl \
+        $(IDLDIR)\nested_scope.idl \
+        $(IDLDIR)\reopened_modules.idl \
+        $(IDLDIR)\reopen_include1.idl \
+        $(IDLDIR)\reopen_include2.idl
+
 IDLDIR = .
 CPPDIR = .
 
