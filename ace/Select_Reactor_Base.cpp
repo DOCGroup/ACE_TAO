@@ -783,6 +783,62 @@ ACE_Select_Reactor_Notify::notify_handle (void)
 // other than the main <ACE_Select_Reactor> thread.  All we do is
 // write data to a pipe that the <ACE_Select_Reactor> is listening on.
 // Thanks to Paul Stephenson for suggesting this approach.
+int
+ACE_Select_Reactor_Notify::is_dispatchable (ACE_Notification_Buffer &buffer)
+{
+   // There is tonnes of code that can be abstracted...
+#if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
+  {
+    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->notify_queue_lock_, -1);
+
+    ACE_Notification_Buffer *temp;
+
+    ACE_UNUSED_ARG (buffer);
+
+    // If the queue is empty just return 0
+    if (notify_queue_.is_empty ())
+      return 0;
+
+    if (this->notify_queue_.dequeue_head (temp) == -1)
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_LIB_TEXT ("%p\n"),
+                         ACE_LIB_TEXT ("dequeue_head")),
+                        -1);
+    if (temp->eh_ != 0)
+      {
+        // If the queue had a buffer that has an event handler, put
+        // the element  back in the queue and return a 1
+        if (this->notify_queue_.enqueue_head (temp) == -1)
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_LIB_TEXT ("%p\n"),
+                               ACE_LIB_TEXT ("enque_head")),
+                              -1);
+          }
+
+        return 1;
+      }
+    // Else put the element in the free queue
+    if (free_queue_.enqueue_head (temp) == -1)
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_LIB_TEXT ("%p\n"),
+                         ACE_LIB_TEXT ("enqueue_head")),
+                        -1);
+  }
+#else
+  // If eh == 0 then another thread is unblocking the
+  // <ACE_Select_Reactor> to update the <ACE_Select_Reactor>'s
+  // internal structures.  Otherwise, we need to dispatch the
+  // appropriate handle_* method on the <ACE_Event_Handler>
+  // pointer we've been passed.
+  if (buffer.eh_ != 0)
+    return 1;
+
+#endif /*ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
+
+  // has no dispatchable buffer
+  return 0;
+}
 
 int
 ACE_Select_Reactor_Notify::dispatch_notify (ACE_Notification_Buffer &buffer)

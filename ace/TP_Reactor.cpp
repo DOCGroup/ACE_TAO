@@ -285,7 +285,7 @@ ACE_TP_Reactor::handle_timer_events (int & /*event_count*/,
 
 
 int
-ACE_TP_Reactor::handle_notify_events (int &event_count,
+ACE_TP_Reactor::handle_notify_events (int & /*event_count*/,
                                       ACE_TP_Token_Guard &guard)
 {
   // Get the handle on which notify calls could have occured
@@ -294,21 +294,29 @@ ACE_TP_Reactor::handle_notify_events (int &event_count,
 
   int result = 0;
 
-  if (notify_handle != ACE_INVALID_HANDLE)
+  // The notify was not in the list returned by
+  // wait_for_multiple_events ().
+  if (notify_handle == ACE_INVALID_HANDLE)
+    return result;
+
+  // Now just do a read on the pipe..
+  ACE_Notification_Buffer buffer;
+
+  // Clear the handle of the read_mask of our <ready_set_>
+  this->ready_set_.rd_mask_.clr_bit (notify_handle);
+
+  // Keep reading notifies till we empty it or till we have a
+  // dispatchable buffer
+  while (this->notify_handler_->read_notify_pipe (notify_handle,
+                                                  buffer) > 0)
     {
-      // Now just do a read on the pipe..
-      ACE_Notification_Buffer buffer;
-
-      if (this->notify_handler_->read_notify_pipe (notify_handle,
-                                                    buffer) > 0)
+      // Just figure out whether we can read  any buffer that has
+      // dispatchable info. If not we have just been unblocked by
+      // another thread trying to update the reactor. If we get any
+      // buffer that needs dispatching we will dispatch that after
+      // releasing the lock
+      if (this->notify_handler_->is_dispatchable (buffer) > 0)
         {
-          // Decerement the number of event counts that still remains
-          // to be handled.
-          event_count--;
-
-          // Clear the handle of the read_mask of our <ready_set_>
-          // this->ready_set_.rd_mask_.clr_bit (notify_handle);
-
           // Release the token before dispatching notifies...
           guard.release_token ();
 
@@ -318,19 +326,16 @@ ACE_TP_Reactor::handle_notify_events (int &event_count,
           // We had a successful dispatch.
           result = 1;
 
-          // Put ourseleves in the queue
-          this->renew ();
+          // break out of the while loop
+          break;
         }
-
-      // Read from the pipe failed..
-      return result;
     }
 
-  // The notify was not in the list returned by
-  // wait_for_multiple_events ().
+  // If we did ssome work, then we just return 1 which will allow us
+  // to get out of here. If we return 0, then we will be asked to do
+  // some work ie. dispacth socket events
   return result;
 }
-
 
 int
 ACE_TP_Reactor::handle_socket_events (int &event_count,
