@@ -62,7 +62,9 @@ include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 
 ifeq ($(minimum_corba),0)
-  BIN = $(BIN_UNCHECKED)
+  ifneq (Compilers 4.2,$(findstring Compilers 4.2,$(CC_VERSION)))
+    BIN = $(BIN_UNCHECKED)
+  endif # findstring Compilers 4.2
 endif # minimum_corba
 
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
