@@ -134,10 +134,15 @@ int
 TAO_DIOP_Connection_Handler::open_server (void)
 {
   this->udp_socket_.open (this->local_addr_);
-  ACE_DEBUG ((LM_DEBUG,
-              "Opened acceptor on %s:%d\n",
-              this->local_addr_.get_host_name (),
-              this->local_addr_.get_port_number ()));
+  if( TAO_debug_level > 5)
+  {
+     ACE_DEBUG ((LM_DEBUG,
+                 ACE_TEXT("\nTAO (%P|%t) TAO_DIOP_Connection_Handler::open_server -")
+                 ACE_TEXT("listening on %s:%d\n"),
+                 this->local_addr_.get_host_name (),
+                 this->local_addr_.get_port_number ()
+               ));
+  }
 
   this->transport ()->id ((int) this->get_handle ());
 
