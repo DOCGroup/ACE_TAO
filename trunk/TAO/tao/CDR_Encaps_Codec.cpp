@@ -320,6 +320,6 @@ TAO_CDR_Encaps_Codec::check_type_for_encoding (
   CORBA::TypeCode_var typecode = data.type ();
   if (this->major_ == 1
       && this->minor_ == 0
-      && typecode->equivalent (CORBA::_tc_wstring))
+      && typecode->equivalent (CORBA::_tc_wstring ACE_ENV_ARG_PARAMETER))
     ACE_THROW (IOP::Codec::InvalidTypeForEncoding ());
 }
