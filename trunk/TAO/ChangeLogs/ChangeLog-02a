@@ -1,3 +1,9 @@
+Mon Jan 17 22:53:53 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/orbsvcs.dsp:
+	* orbsvcs/orbsvcs/orbsvcs_static.dsp:
+	  Updated the NT project files.
+
 Tue Jan 18 20:44:02 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* tao/Object.cpp:
