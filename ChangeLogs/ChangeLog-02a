@@ -1,8 +1,13 @@
+Tue Apr 25 15:11:41 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * THANKS:
+          Add new member to the list.
+
 Tue Apr 25 11:35:07 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/Local_Name_Space.cpp:
 
-          The hash function was using the wrong length of the USHORT16 
+          The hash function was using the wrong length of the USHORT16
           string representation.  The len_ actually is the length in bytes,
           not characters.
 
@@ -10,7 +15,7 @@ Tue Apr 25 08:57:59 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ASNMP/tests/test_config.h:
 
-          Was using XXX_A and XXX_W macros which really do not make sense 
+          Was using XXX_A and XXX_W macros which really do not make sense
           anymore.  Removed them and replaced with just the XXX macro which
           uses ACE_TEXT.
 
@@ -27,40 +32,40 @@ Tue Apr 25 08:57:59 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Tue Apr 25 00:02:08 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Log_Msg.h (ACE_Log_Msg): Split msg_ostream() into two functions,
-	  one of which allows the delete_ostream_ flag to be reset and the
- 	  other that doesn't.  Thanks to Boris Sukholitko
- 	  <palisander@hotmail.com> for reporting this.
+        * ace/Log_Msg.h (ACE_Log_Msg): Split msg_ostream() into two functions,
+          one of which allows the delete_ostream_ flag to be reset and the
+          other that doesn't.  Thanks to Boris Sukholitko
+          <palisander@hotmail.com> for reporting this.
 
-	* ace/Message_Block.i (replace_data_block): If a data block is replaced
-	  with a NULL pointer then don't bother doing certain operations!
-  	  Thanks to Boris Sukholitko <palisander@hotmail.com> for
- 	  reporting this.
+        * ace/Message_Block.i (replace_data_block): If a data block is replaced
+          with a NULL pointer then don't bother doing certain operations!
+          Thanks to Boris Sukholitko <palisander@hotmail.com> for
+          reporting this.
 
-	* ace/OS.i (dlerror): Changed sizeof buf to sizeof buf / sizeof buf[0]
-	  to avoid over-allocating a buffer in the
- 	  ACE_TEXT_FormateMessage() function.  Thanks to Valery
- 	  Arkhangorodsky <valerya@servicesoft.com> for reporting this.
+        * ace/OS.i (dlerror): Changed sizeof buf to sizeof buf / sizeof buf[0]
+          to avoid over-allocating a buffer in the
+          ACE_TEXT_FormateMessage() function.  Thanks to Valery
+          Arkhangorodsky <valerya@servicesoft.com> for reporting this.
 
-	* ace/Service_Repository.cpp: The fini() method was claiming
-	  it was the close() method.  Likewise, changed the close() method
- 	  so that it keeps decrementing the current_size each time through
- 	  the look to allow checking the respository size or doing other
- 	  work from inside the fini() call.  Thanks to Valery
- 	  Arkhangorodsky <valerya@servicesoft.com> for reporting this.
+        * ace/Service_Repository.cpp: The fini() method was claiming
+          it was the close() method.  Likewise, changed the close() method
+          so that it keeps decrementing the current_size each time through
+          the look to allow checking the respository size or doing other
+          work from inside the fini() call.  Thanks to Valery
+          Arkhangorodsky <valerya@servicesoft.com> for reporting this.
 
 Mon Apr 24 17:44:21 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/Object_Manager.cpp:
-         
+
           Ai Carumba!  I disabled some stuff here a while back when
           I first disabled the Naming Service, but forgot to enable
-          it again once I fixed that.  
+          it again once I fixed that.
 
 Mon Apr 24 16:44:22 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/SString.i:
-          
+
           A couple of compilers were having problems with some
           casting I was doing in a const hash method.  Changed the
           types of casts to hopefully make the compilers happy.
@@ -90,23 +95,23 @@ Sun Apr 23 19:51:41 2000  Darrell Brunsch <brunsch@uci.edu>
           or char's used instead of ACE_TCHAR's.
 
         * tests/Process_Mutex_Test.cpp:
-          
+
           Was still using an old ACE_DEFAULT_MUTEX_A macro (updated to
           ACE_DEFAULT_MUTEX).
 
         * ace/ace_lib.dsp:
-           
+
           Added "static" to the config names (Win32 Debug => Win32 Static
           Debug) so it is easier for the msvc_auto_compile.pl script to
-          figure out which is which. 
+          figure out which is which.
 
 Sun Apr 23 18:14:33 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/ace_wchar.h:
-          
-          Added compatibility for all the old ASYS_* macros by default. 
-          But no part of ACE/TAO should still use them anymore.  This 
-          compatibility can be turned off by defining 
+
+          Added compatibility for all the old ASYS_* macros by default.
+          But no part of ACE/TAO should still use them anymore.  This
+          compatibility can be turned off by defining
           ACE_ONLY_LATEST_AND_GREATEST.
 
         * ace/SString.cpp:
@@ -141,7 +146,7 @@ Sat Apr 22 22:01:15 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/Local_Name_Space_T.cpp:
         * ace/Naming_Context.cpp:
-          
+
           Fixed some wchar related changes.
 
 Sat Apr 22 20:53:11 2000  Darrell Brunsch <brunsch@uci.edu>
@@ -149,7 +154,7 @@ Sat Apr 22 20:53:11 2000  Darrell Brunsch <brunsch@uci.edu>
           This is my first checkin of my Unicode changes.  They should be
           mostly harmless, since most platforms and build do not use Unicode
           stuff, in which these changes *should* result in the exact same
-          behavior as before.  
+          behavior as before.
 
           But, if Unicode was being used, then chances are it is not going
           to work without a few changes.  A summary of the changes are:
@@ -165,17 +170,17 @@ Sat Apr 22 20:53:11 2000  Darrell Brunsch <brunsch@uci.edu>
             loose ends that need to be cleaned up.
 
             Note also that even if ACE_USES_WCHAR is defined or not, both
-            wide and narrow versions of the string operations will be 
+            wide and narrow versions of the string operations will be
             available.
 
           - Removed all the ASYS_* macros (besides ASYS_INLINE).  So all code
-            using ASYS_TEXT and ASYS_TCHAR should now use ACE_TEXT and 
+            using ASYS_TEXT and ASYS_TCHAR should now use ACE_TEXT and
             ACE_TCHAR.  And unlike their predecessers, these *will* turn into
             wide character versions when ACE_USES_WCHAR is defined.
 
-          - Removed the macros ACE_HAS_WCHAR_TYPEDEFS_USHORT and 
+          - Removed the macros ACE_HAS_WCHAR_TYPEDEFS_USHORT and
             ACE_HAS_WCHAR_TYPEDEFS_CHAR since ACE will not depend on what
-            wchar_t defaults to.  
+            wchar_t defaults to.
 
           - Messed around with Windows CE support, most likely it broke it
             even more.  I've halted my work on Windows CE until after this
@@ -187,7 +192,7 @@ Sat Apr 22 20:53:11 2000  Darrell Brunsch <brunsch@uci.edu>
           The motivation for this change was that the Unicode support was
           a mess and was very unintuitive.  Since I was given the job of
           maintaining it (since I'm doing Windows CE stuff now), I decided
-          to fix it instead of try to figure out what was currently 
+          to fix it instead of try to figure out what was currently
           happening.  A consistent design is much easier to explain and
           maintain.
 
@@ -200,20 +205,20 @@ Sat Apr 22 20:53:11 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/ace_wchar.h: (added)
 
-          Moved all the unicode specific stuff here.  
+          Moved all the unicode specific stuff here.
 
         * ace/SString.cpp:
         * ace/SString.h:
         * ace/SString.i:
-          
+
           ACE_WString used to use ACE_USHORT16 instead of wchar_t.  I
           changed it so it does, since it will be more useful and intuitive
-          this way.  
+          this way.
 
         * ace/Log_Record.cpp:
 
-          We were using ACE_OS::fwrite to print the string.  This didn't work 
-          when the string was wchar_t, so this was changed to ACE_OS::fprintf 
+          We were using ACE_OS::fwrite to print the string.  This didn't work
+          when the string was wchar_t, so this was changed to ACE_OS::fprintf
           instead.
 
         * TODO:
@@ -642,23 +647,23 @@ Sat Apr 22 20:53:11 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Sat Apr 22 18:41:06 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	* ace/SOCK_Dgram_Mcast.h:
-	* ace/SOCK_Dgram_Mcast.cpp:
-	* ace/SOCK_Dgram_Mcast.i: Removed the QoS enabled overloaded
-	  methods.
+        * ace/SOCK_Dgram_Mcast.h:
+        * ace/SOCK_Dgram_Mcast.cpp:
+        * ace/SOCK_Dgram_Mcast.i: Removed the QoS enabled overloaded
+          methods.
 
-	* ace/SOCK_Dgram_Mcast_QoS.h:
-	* ace/SOCK_Dgram_Mcast_QoS.cpp:
-	* ace/SOCK_Dgram_Mcast_QoS.i: Added this new class that derives from
-	  ACE_SOCK_Dgram_Mcast and handles all the QoS functionality that 
-	  was being done by the latter. 
+        * ace/SOCK_Dgram_Mcast_QoS.h:
+        * ace/SOCK_Dgram_Mcast_QoS.cpp:
+        * ace/SOCK_Dgram_Mcast_QoS.i: Added this new class that derives from
+          ACE_SOCK_Dgram_Mcast and handles all the QoS functionality that
+          was being done by the latter.
 
-	* ace/ace_dll.dsp:
-	* ace/ace_lib.dsp: Added the ace/SOCK_Dgram_Mcast_QoS.{cpp,i,h}
-	
+        * ace/ace_dll.dsp:
+        * ace/ace_lib.dsp: Added the ace/SOCK_Dgram_Mcast_QoS.{cpp,i,h}
+
 Fri Apr 21 10:23:19 2000  Darrell Brunsch <brunsch@uci.edu>
 
-        * bin/msvc_auto_compile.pl: 
+        * bin/msvc_auto_compile.pl:
 
           Removed all chdir's and fixed a bug with specifying multiple -dir's.
 
