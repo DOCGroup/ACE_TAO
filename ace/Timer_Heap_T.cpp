@@ -118,7 +118,8 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::ACE_Timer_Heap_T (size_t size,
         &this->preallocated_nodes_[0];
     }
 
-  iterator_ = new HEAP_ITERATOR(*this);
+  ACE_NEW (iterator_,
+           HEAP_ITERATOR (*this));
 }
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK>
@@ -154,7 +155,8 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::ACE_Timer_Heap_T (FUNCTOR *upcall_fun
        i++)
     this->timer_ids_[i] = -((long) (i + 1));
 
-  iterator_ = new HEAP_ITERATOR(*this);
+  ACE_NEW (iterator_,
+           HEAP_ITERATOR (*this));
 }
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK>
@@ -404,7 +406,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::grow_heap (void)
 
    // First grow the heap itself.
 
-  ACE_Timer_Node_T<TYPE> **new_heap;
+  ACE_Timer_Node_T<TYPE> **new_heap = 0;
 
 #if defined (__IBMCPP__) && (__IBMCPP__ >= 400)
   ACE_NEW (new_heap,
@@ -413,9 +415,6 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::grow_heap (void)
   ACE_NEW (new_heap,
            ACE_Timer_Node_T<TYPE> *[new_size]);
 #endif /* defined (__IBMCPP__) && (__IBMCPP__ >= 400) */
-
-  ACE_NEW (new_heap,
-           ACE_Timer_Node_T<TYPE> *[new_size]);
   ACE_OS::memcpy (new_heap,
                   this->heap_,
                   max_size_ * sizeof *new_heap);
@@ -424,7 +423,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::grow_heap (void)
 
   // Grow the array of timer ids.
 
-  long *new_timer_ids;
+  long *new_timer_ids = 0;
 
   ACE_NEW (new_timer_ids, 
            long[new_size]);
