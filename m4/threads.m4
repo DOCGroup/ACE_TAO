@@ -37,6 +37,23 @@ dnl  AC_REQUIRE([AC_LANG_CPLUSPLUS])
  ACE_CACHE_CHECK(if compiler may need a thread flag,
    ace_cv_feature_may_need_thread_flag,
    [
+    ifelse(AC_LANG, [CPLUSPLUS],
+      [ace_save_CXXFLAGS="$CXXFLAGS"
+       case "$target" in
+         *solaris2*)
+           dnl Sun C++ 4.2/5.0 weirdness
+           dnl Sun C++ 4.2/5.0 links a thread function stub library in
+           dnl the single threaded case, which causes the link test in
+           dnl ACE_CHECK_THREAD_FLAGS to pass.
+           if (CC -V 2>&1 | egrep 'Compilers 4\.2' > /dev/null) \
+              || (CC -V 2>&1 | egrep 'Compilers 5\.0' > /dev/null); then
+             CXXFLAGS="-xnolib"
+           fi
+           ;;
+       esac
+      ],
+      [ace_save_CFLAGS="$CFLAGS"])
+
     ACE_CHECK_THREAD_FLAGS(
       [
        ace_cv_feature_may_need_thread_flag=no
@@ -44,6 +61,11 @@ dnl  AC_REQUIRE([AC_LANG_CPLUSPLUS])
       [
        ace_cv_feature_may_need_thread_flag=yes
       ])
+    dnl Reset the flags to a consistent state.
+    dnl This prevents duplicate flags from being added to
+    dnl the C/CXXFLAGS variable.
+    ifelse(AC_LANG, [CPLUSPLUS],
+           [CXXFLAGS="$ace_save_CXXFLAGS"],[CFLAGS="$ace_save_CFLAGS"])
    ],
    [
     dnl The compiler/platform has no thread support linked in by default

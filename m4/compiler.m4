@@ -179,9 +179,11 @@ changequote([, ])dnl
          ;;
        aCC)
          CXXFLAGS="$CXXFLAGS"
-         ACE_CXXFLAGS="$ACE_CXXFLAGS +W829,302"
+         ACE_CXXFLAGS="$ACE_CXXFLAGS +W302,495,667,829"
          DCXXFLAGS="-g"
          OCXXFLAGS=""
+         WERROR="+We67"
+         # Warning 67: Invalid pragma name -- needed for ACE_LACKS_PRAGMA_ONCE
          ;;
        *)
          if test -n "$GXX"; then
@@ -261,6 +263,10 @@ changequote([, ])dnl
          dnl Sun C++ 5.0 weirdness
          if (CC -V 2>&1 | egrep 'Compilers 5\.0' > /dev/null); then
            CXXFLAGS="$CXXFLAGS -library=iostream,no%Cstd -instances=explicit"
+
+           dnl Inlining appears to cause link problems with early
+           dnl releases of CC 5.0.
+	   AC_DEFINE(ACE_LACKS_INLINE_FUNCTIONS)
 
            if test "$ace_user_enable_exceptions" != yes; then
              dnl See /opt/SUNWspro_5.0/SC5.0/include/CC/stdcomp.h.
