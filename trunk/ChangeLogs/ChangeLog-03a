@@ -1,3 +1,12 @@
+Wed Mar 21 13:33:58 2001  Ossama Othman  <ossama@uci.edu>
+
+	* examples/IPC_SAP/SSL_SAP/SSL-server-fancy.cpp:
+
+	  Patched this file so that the example actually works.  It now
+	  correctly interacts with the SSL client in this example.  Thanks
+	  to Defang Zhou <dzhou@inktomi.com> for contributing the
+	  patch/changes necessary to make it work.
+
 Wed Mar 21 07:23:15 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* tests/SOCK_Connector_Test.cpp (find_another_host): Make the
