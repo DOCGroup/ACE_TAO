@@ -14,6 +14,8 @@ ACE_RCSID(RT_Notify, TAO_NS_StructuredProxyPushConsumer, "$Id$")
 #include "StructuredPushSupplier.h"
 #include "StructuredEvent.h"
 #include "../AdminProperties.h"
+#include "../Method_Request_Lookup.h"
+#include "../Worker_Task.h"
 
 TAO_NS_StructuredProxyPushConsumer::TAO_NS_StructuredProxyPushConsumer (void)
 {
@@ -90,11 +92,11 @@ TAO_NS_StructuredProxyPushConsumer::push_structured_event (const CosNotification
       ACE_THROW (CosEventComm::Disconnected ());
     }
 
-  // Convert
-  TAO_NS_Event_var event (new TAO_NS_StructuredEvent (notification));
+  TAO_NS_StructuredEvent_No_Copy event (notification);
 
-  // Continue processing.
-  this->push (event);
+  TAO_NS_Method_Request_Lookup_No_Copy request (&event, this);
+
+  this->worker_task ()->execute (request ACE_ENV_ARG_PARAMETER);
 }
 
 void

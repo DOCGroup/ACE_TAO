@@ -17,7 +17,7 @@ TAO_NS_Properties::TAO_NS_Properties (void)
 {
   // In case no conf. file is specified, the EC will default to reactive concurrency.
   NotifyExt::ThreadPoolParams tp_params =
-    {0, 0, 0, 0, 0, 0, 0 };
+    {NotifyExt::CLIENT_PROPAGATED,0, 0, 0, 0, 0, 0, 0,0};
 
   this->ec_qos_.length (1);
   this->ec_qos_[0].name = CORBA::string_dup (NotifyExt::ThreadPool);

@@ -35,10 +35,10 @@ class TAO_NS_PropertyBase_T
 {
 public:
   /// Constuctor
-  TAO_NS_PropertyBase_T (const ACE_CString& name, const TYPE& initial);
+  TAO_NS_PropertyBase_T (const char* name, const TYPE& initial);
 
   /// Constuctor
-  TAO_NS_PropertyBase_T (const ACE_CString& name);
+  TAO_NS_PropertyBase_T (const char* name);
 
   /// Copy Constuctor
   TAO_NS_PropertyBase_T (const TAO_NS_PropertyBase_T &rhs);
@@ -47,7 +47,7 @@ public:
   ~TAO_NS_PropertyBase_T ();
 
   /// Assignment from TAO_NS_PropertyBase_T
-  TAO_NS_PropertyBase_T& operator= (const TAO_NS_PropertyBase_T& rhs);
+  // TAO_NS_PropertyBase_T& operator= (const TAO_NS_PropertyBase_T& rhs);
 
   /// Assignment from TYPE
   TAO_NS_PropertyBase_T& operator= (const TYPE& rhs);
@@ -72,13 +72,16 @@ public:
 
 protected:
   /// The Property name.
-  ACE_CString name_;
+  const char* name_;
 
   /// The value
   TYPE value_;
 
   /// Is the value valid
   CORBA::Boolean valid_;
+
+private:
+  ACE_UNIMPLEMENTED_FUNC (TAO_NS_PropertyBase_T& operator= (const TAO_NS_PropertyBase_T& rhs))
 };
 
 
@@ -94,10 +97,10 @@ class TAO_NS_Property_T : public TAO_NS_PropertyBase_T<TYPE>
 {
 public:
   /// Constuctor
-  TAO_NS_Property_T (const ACE_CString& name, const TYPE& initial);
+  TAO_NS_Property_T (const char* name, const TYPE& initial);
 
   /// Constuctor
-  TAO_NS_Property_T (const ACE_CString& name);
+  TAO_NS_Property_T (const char* name);
 
   /// Assignment from TYPE
   TAO_NS_Property_T& operator= (const TYPE& rhs);
@@ -105,6 +108,10 @@ public:
   /// Init this Property from the sequence.
   /// Returns 0 on success, -1 on error
   int set (const TAO_NS_PropertySeq& property_seq);
+
+  /// Init this Property from the CosNotification::PropertyValue
+  /// Returns 0 on success, -1 on error
+  int set (const CosNotification::PropertyValue &value);
 };
 
 /*******************************************************************************/
@@ -119,10 +126,10 @@ class TAO_NS_StructProperty_T
 {
 public:
   /// Constuctor
-  TAO_NS_StructProperty_T (const ACE_CString& name, const TYPE& initial);
+  TAO_NS_StructProperty_T (const char* name, const TYPE& initial);
 
   /// Constuctor
-  TAO_NS_StructProperty_T (const ACE_CString& name);
+  TAO_NS_StructProperty_T (const char* name);
 
   /// Init this Property from the sequence.
   /// Returns 0 on success, -1 on error
@@ -136,7 +143,7 @@ public:
 
 protected:
   /// The Property name.
-  ACE_CString name_;
+  const char* name_;
 
   /// The value
   TYPE value_;

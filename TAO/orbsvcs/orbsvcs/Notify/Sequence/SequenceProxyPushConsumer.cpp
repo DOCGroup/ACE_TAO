@@ -11,6 +11,8 @@ ACE_RCSID(Notify, TAO_NS_SequenceProxyPushConsumer, "$id$")
 #include "tao/debug.h"
 #include "SequencePushSupplier.h"
 #include "../AdminProperties.h"
+#include "../Method_Request_Lookup.h"
+#include "../Worker_Task.h"
 #include "../Structured/StructuredEvent.h"
 
 TAO_NS_SequenceProxyPushConsumer::TAO_NS_SequenceProxyPushConsumer (void)
@@ -92,9 +94,11 @@ TAO_NS_SequenceProxyPushConsumer::push_structured_events (const CosNotification:
     {
       const CosNotification::StructuredEvent& notification = event_batch[i];
 
-      TAO_NS_Event_var event (new TAO_NS_StructuredEvent (notification));
+      TAO_NS_StructuredEvent_No_Copy event (notification);
 
-      this->push (event);
+      TAO_NS_Method_Request_Lookup_No_Copy request (&event, this);
+
+      this->worker_task ()->execute (request ACE_ENV_ARG_PARAMETER);
     }
 }
 

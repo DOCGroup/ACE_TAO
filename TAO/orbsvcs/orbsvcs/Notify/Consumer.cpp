@@ -30,39 +30,7 @@ TAO_NS_Consumer::proxy (void)
 }
 
 void
-TAO_NS_Consumer::push (const TAO_NS_Event_var &event ACE_ENV_ARG_DECL)
-{
-  if (this->is_suspended_ == 1) // If we're suspended, queue for later delivery.
-    {
-      ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, *this->proxy_lock ());
-      this->event_collection_->enqueue_head (event);
-
-      return;
-    }
-
-  ACE_TRY
-    {
-      this->push_i (event ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCH (CORBA::OBJECT_NOT_EXIST, not_exist)
-    {
-      this->handle_dispatch_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCH (CORBA::SystemException, sysex)
-    {
-      this->handle_dispatch_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-    }
-  ACE_ENDTRY;
-}
-
-void
-TAO_NS_Consumer::dispatch_pending (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_NS_Consumer::dispatch_pending (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (this->is_suspended_ == 1)
     return; // Do nothing if we're suspended.
@@ -83,7 +51,7 @@ TAO_NS_Consumer::dispatch_pending (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     {
       if (event_collection_copy.dequeue_head (event) == 0)
         {
-          proxy_supplier->push_no_filtering (event);
+          proxy_supplier->push_no_filtering (event ACE_ENV_ARG_PARAMETER);
         }
     }
 }
