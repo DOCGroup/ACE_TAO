@@ -2445,15 +2445,19 @@ the section of that email that was particularly useful to me. (In the
 email, he is responding to someone who had inquired about adding the
 ATM protocol).  <p>
 
-Basically, you need to look at the following files:
+<BLOCKQUOTE>
+Basically, you need to look at the following files:<BR>
 
+<BLOCKQUOTE>
 IIOP_Profile.{h,i,cpp}<BR>
 IIOP_Connector.{h,i,cpp}<BR>
 IIOP_Acceptor.{h,i,cpp}<BR>
 IIOP_Factory.{h,i,cpp}<BR>
 IIOP_Transport.{h,i,cpp}<BR>
-Connect.{h,i,cpp} [probably will be renamed IIOP_Connect VSN]<P>
+Connect.{h,i,cpp} [probably will be renamed IIOP_Connect VSN]
+</BLOCKQUOTE>
 
+<P>
 The profile class handles the addressing format for your transport.
 It would basically be a wrapper around the ACE_ATM_Addr() class.  The
 Connector and Acceptor classes are simply wrappers around
@@ -2468,7 +2472,9 @@ simply ACE_Svc_Handler&lt;ACE_ATM_Stream&gt;, but they don't do much work, they
 just delegate on the Transport classes.  This somewhat strange design is easy to
 understand once you realize that all the ACE_Svc_Handler&lt;&gt; classes are not type
 compatible (except in their most basic ACE_Event_Handler form).  So they must
-be wrapped using the TAO_Transport class.<P>
+be wrapped using the TAO_Transport class.
+</BLOCKQUOTE>
+
 
 <P>Make sure to review the
 ``<A HREF="../releasenotes/index.html#pp">Pluggable Protocols</A>''
@@ -3089,7 +3095,7 @@ examples of the Layers architecture.
     <ADDRESS><a href="mailto:othman@cs.wustl.edu">Ossama Othman</a></ADDRESS>
 <!-- Created: Tue Dec 14 16:53:58 CST 1999 -->
 <!-- hhmts start -->
-Last modified: Thu Dec 16 21:13:57 CST 1999
+Last modified: Thu Dec 16 21:18:46 CST 1999
 <!-- hhmts end -->
 </BODY>
 </HTML>
