@@ -15,12 +15,12 @@
 #define TAO_ABSTRACTBASE_H
 
 #include "ace/pre.h"
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/corbafwd.h"
 #include "tao/Object.h"
 #include "tao/ValueBase.h"
 #include "tao/ValueFactory.h"
