@@ -401,3 +401,8 @@ main (int, char *[])
   return 0;
 }
 
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class auto_ptr<ACE_Method_Object>;
+template class ACE_Future_Rep<char const *>;
+template class ACE_Future_Rep<unsigned long>;
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */

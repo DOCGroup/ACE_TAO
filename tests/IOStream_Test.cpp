@@ -334,3 +334,8 @@ main (int argc, char *argv[])
 	ACE_END_TEST;
 	return error_at_client || error_at_server;
 }
+
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class ACE_IOStream<ACE_SOCK_Stream>;
+template class ACE_Streambuf<ACE_SOCK_Stream>;
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
