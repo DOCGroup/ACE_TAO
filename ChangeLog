@@ -1,3 +1,8 @@
+Fri Dec  5 10:20:23 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/TTCP/ACE-C++/wrapper-new-ttcp.cpp:
+          Removed not used local variable
+
 Fri Dec  5 07:28:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Vector_Test.cpp:
