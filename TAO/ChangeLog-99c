@@ -905,7 +905,6 @@ Tue Sep 14 16:47:52 1999  Jeff Parsons  <parsons@cs.wustl.edu>
           don't handle casts very well.
 
 Tue Sep 14 14:42:04 1999  Ossama Othman  <othman@cs.wustl.edu>
-<<<<<<< ChangeLog
 
 	* tao/ORB.h:
 	* tao/ORB.cpp:
@@ -914,27 +913,11 @@ Tue Sep 14 14:42:04 1999  Ossama Othman  <othman@cs.wustl.edu>
 	* tao/ORB_Core.i:
 
 	  CORBA 2.3 Updates:
-=======
->>>>>>> 1.2870
 
-<<<<<<< ChangeLog
 	  No longer destroy the ORB_Core in the ORB's destructor.  Let the
 	  ORB_Table handle ORB_Core deallocation.  CORBA::ORB::destroy()
 	  will also destroy the ORB's underlying ORB_Core.  It is the
 	  user's responsibility to release an ORB.
-=======
-        * tao/ORB.h:
-        * tao/ORB.cpp:
-        * tao/ORB_Core.h:
-        * tao/ORB_Core.cpp:
-        * tao/ORB_Core.i:
-
-          CORBA 2.3 Updates:
-
-          No longer destroy the ORB_Core in the ORB's destructor.  Let the
-          ORB_Table handle ORB_Core deallocation.  CORBA::ORB::destroy()
-          will also destroy the ORB's underlying ORB_Core.  It is the
-          user's responsibility to release an ORB.
 
           All ORB methods that access the ORB_Core in some way now check
           that the ORB_Core hasn't been shutdown or destroyed before
@@ -943,33 +926,12 @@ Tue Sep 14 14:42:04 1999  Ossama Othman  <othman@cs.wustl.edu>
           Moved exception and type code destruction to the ORB_Table since
           exceptions must be kept around during the lifetime of the
           application.
->>>>>>> 1.2870
 
-<<<<<<< ChangeLog
-	  All ORB methods that access the ORB_Core in some way now check
-	  that the ORB_Core hasn't been shutdown or destroyed before
-	  continuing.
-=======
-          Summary of Changes:
->>>>>>> 1.2870
-
-<<<<<<< ChangeLog
-	  Moved exception and type code destruction to the ORB_Table since
-	  exceptions must be kept around during the lifetime of the
-	  application.
-=======
-          These changes allow code such as the following:
->>>>>>> 1.2870
-
-<<<<<<< ChangeLog
 	  Summary of Changes:
 
 	  These changes allow code such as the following:
 
 	    {
-=======
-            {
->>>>>>> 1.2870
              ORB_var orb = CORBA::ORB_init (argc, argv, "my_orb");
             }
             {
