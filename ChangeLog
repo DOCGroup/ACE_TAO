@@ -1,3 +1,9 @@
+Wed Aug 25 11:46:49 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/os_include/sys/os_pstat.h: If ACE_HAS_SYS_PSTAT_H, include
+	  <sys/param.h> and <sys/pstat.h> (not <time.h>) as directed by
+	  HP-UX man page. HP-UX 11 is the only config that sets this.
+
 Wed Aug 25 08:46:02 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * include/makeinclude/wrapper_macros.GNU:

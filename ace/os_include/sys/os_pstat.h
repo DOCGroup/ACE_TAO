@@ -24,7 +24,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (ACE_HAS_SYS_PSTAT_H)
-#  include /**/ <sys/times.h>
+#  include /**/ <sys/param.h>
+#  include /**/ <sys/pstat.h>
 #endif /* ACE_HAS_SYS_PSTAT_H */
 
 // Place all additions (especially function declarations) within extern "C" {}
