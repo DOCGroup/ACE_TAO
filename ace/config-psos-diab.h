@@ -204,7 +204,6 @@
 
 #define ACE_LACKS_UNIX_SIGNALS
 
-// #define ACE_MALLOC_ALIGN 8
 // #define ACE_LACKS_SYSTIME_H
 
 #define ACE_PAGE_SIZE 4096

@@ -84,7 +84,6 @@
 #define ACE_LACKS_STRCASECMP
 #define ACE_LACKS_TIMESPEC_T
 #define ACE_LACKS_UCONTEXT_H
-#define ACE_MALLOC_ALIGN 8
 // LynxOS, through 3.0.0, does not support MAP_PRIVATE, so map it to
 // MAP_SHARED.
 #define ACE_MAP_PRIVATE ACE_MAP_SHARED
