@@ -77,7 +77,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib TAOd.lib /nologo /subsystem:console /debug /machine:I386 /out:"Impl_Repo.exe" /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace"
+# ADD LINK32 aced.lib TAOd.lib /nologo /subsystem:console /incremental:no /debug /machine:I386 /out:"Impl_Repo.exe" /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace"
 # SUBTRACT LINK32 /profile
 
 !ENDIF 
@@ -99,15 +99,19 @@ SOURCE=.\Impl_RepoS.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ir_implrepo_impl.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\ir_server.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\ir_server_impl.cpp
+SOURCE=.\Simple_ObjectC.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\ir_simple_object_impl.cpp
+SOURCE=.\Simple_ObjectS.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -115,15 +119,7 @@ SOURCE=.\ir_simple_object_impl.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl;fi;fd"
 # Begin Source File
 
-SOURCE=.\Impl_RepoS.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\ir_server_impl.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\ir_simple_object_impl.h
+SOURCE=.\ir_implrepo_impl.h
 # End Source File
 # End Group
 # Begin Group "IDL Files"
@@ -163,7 +159,7 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "ImplRepoTest ImplRepo - Win32 Debug"
 
-# Begin Custom Build
+# Begin Custom Build - Invoking TAO_IDL compiler
 InputPath=.\Impl_Repo.idl
 InputName=Impl_Repo
 

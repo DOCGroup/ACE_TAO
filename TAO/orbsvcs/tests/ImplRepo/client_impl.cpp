@@ -36,7 +36,7 @@ Client_Impl::read_ior (char *filename)
                        "Unable to allocate memory to read ior: %p\n"),
                       -1);
 
-  ACE_OS::close (filename);
+  ACE_OS::close (f_handle_);
   return 0;
 }
 
