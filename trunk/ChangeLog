@@ -1,3 +1,22 @@
+Wed May 21 19:55:54 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	  Thanks to Tongzhe Cui <tonycui@yahoo.com> for motivating the
+	  following changes.
+
+	* ace/MEM_Acceptor.h:
+	* ace/MEM_Acceptor.i (init_buffer_size): Added this new helper
+	  function to set the initial buffer size of the newly created
+	  ACE_MEM_Stream the acceptor creates subsequently.
+
+	* ace/MEM_Connector.h:
+	* ace/MEM_Connector.i:
+	* ace/MEM_Acceptor.h:
+	* ace/MEM_Acceptor.i: Marked the malloc_options accessor function
+	  as deprecated.
+
+	* tests/MEM_Stream_Test.cpp (test_concurrent): Changed to use the
+	  new init_buffer_size method to set the buffer size.
+
 Thu May 22 00:16:11 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/os_include/math.h:
@@ -47,7 +66,7 @@ Wed May 21 14:32:13 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * tests/Test_Output.dsp:
           Removed post build step that cleaned up old versions of
-          Test_Output*.dll. 
+          Test_Output*.dll.
 
 Wed May 21 09:25:16 2003  Chad Elliott  <elliott_c@ociweb.com>
 
