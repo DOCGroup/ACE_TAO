@@ -3271,33 +3271,33 @@ ACE_OS::mmap (void *addr,
     {
 #if !defined(ACE_HAS_WINCE) && (!defined (ACE_HAS_WINNT4) || (ACE_HAS_WINNT4 == 0))
       int try_create = 1;
-      if (file_mapping_name != 0)
-	{
-	  // On Win9x, we first try to OpenFileMapping to
-	  // file_mapping_name. Only if there is no mapping object
+      if ((file_mapping_name != 0) && (*file_mapping_name != 0))
+        {
+          // On Win9x, we first try to OpenFileMapping to
+          // file_mapping_name. Only if there is no mapping object
           // with that name we try CreateFileMapping.
 
-	  *file_mapping = ACE_TEXT_OpenFileMapping (nt_flags,
+          *file_mapping = ACE_TEXT_OpenFileMapping (nt_flags,
                                                     0,
                                                     file_mapping_name);
           if (*file_mapping != 0
               || ::GetLastError () != ERROR_INVALID_NAME)
             try_create = 0;
-	}
+        }
 
       if (try_create)
 #endif /* !ACE_HAS_WINCE && (ACE_HAS_WINNT4 || ACE_HAS_WINNT4 == 0) */
-	{
-	  const LPSECURITY_ATTRIBUTES attr =
-	    ACE_OS::default_win32_security_attributes (sa);
+        {
+          const LPSECURITY_ATTRIBUTES attr =
+            ACE_OS::default_win32_security_attributes (sa);
 
-	  *file_mapping = ACE_TEXT_CreateFileMapping (file_handle,
+          *file_mapping = ACE_TEXT_CreateFileMapping (file_handle,
                                                       attr,
                                                       prot,
                                                       0,
                                                       0,
                                                       file_mapping_name);
-	}
+        }
     }
 
   if (*file_mapping == 0)
