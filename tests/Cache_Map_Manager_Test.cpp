@@ -11,7 +11,7 @@
 // = DESCRIPTION
 //     This is a simple test of the <ACE_Cache_Map_Manager> and
 //     <ACE_Hash_Cache_Map_Manager> that illustrates how to use the forward
-//     and reverse iterators.
+//     and reverse iterators as well as the purging and caching features.
 //
 // = AUTHOR
 //    Kirthika Parameswaran  <kirthika@cs.wustl.edu>
