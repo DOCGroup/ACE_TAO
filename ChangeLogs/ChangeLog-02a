@@ -1,3 +1,11 @@
+Thu Aug 30 18:08:32 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ace/config-linux-common.h:
+
+          Added some more missing stuff which might break compilations.
+          The previous change also removed the existing definition for
+          ACE_TIMER_SKEW so add it back till the new version is checked in.
+
 Thu Aug 30 17:54:40 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ace/config-linux-common.h:
