@@ -311,7 +311,11 @@ TAO_DynStruct_i::get_members (ACE_ENV_SINGLE_ARG_DECL)
   CORBA::Any_var temp;
   CORBA::TypeCode_var unaliased_tc;
 
-  if (this->type_->kind_ == CORBA::tk_alias)
+  CORBA::TCKind const tc_kind =
+    this->type_->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  if (tc_kind == CORBA::tk_alias)
     {
       unaliased_tc =
         TAO_DynAnyFactory::strip_alias (this->type_.in ()
@@ -571,7 +575,8 @@ TAO_DynStruct_i::from_any (const CORBA::Any & any
 
       CORBA::TypeCode_var field_tc;
       CORBA::TypeCode_var unaliased =
-        this->type_.in ()->unalias (ACE_ENV_SINGLE_ARG_PARAMETER);
+        TAO::unaliased_typecode (this->type_.in ()
+                                 ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       for (CORBA::ULong i = 0; i < this->component_count_; ++i)

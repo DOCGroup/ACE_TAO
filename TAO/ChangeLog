@@ -1,3 +1,25 @@
+Mon Mar 28 02:15:09 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/DynamicAny/DynamicAnyC.cpp:
+	* tao/DynamicAny/DynamicAnyC.h:
+	* tao/DynamicAny/DynamicAnyC.inl
+	* tao/IFR_Client/*{A,C}.{h,inl,cpp}:
+
+	  Regenerated.
+
+	* tao/DynamicAny/DynStruct_i.cpp:
+
+	  Updated to use TAO TypeCode interface.
+
+Mon Mar 28 01:40:24 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Marshal.h:
+	* tao/append.cpp:
+
+	  Removed internally used TAO::TC_opaque TypeCode.  It refered to
+	  an octet sequence.  Just use the standard CORBA::_tc_OctetSeq
+	  TypeCode instead.
+
 Sat Mar 26 02:34:11 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Exception.h (global_allocator_, initialized_):
