@@ -13,7 +13,7 @@
 #include "tao/Transport_Cache_Manager.h"
 #include "tao/Invocation.h"
 #include "tao/Thread_Lane_Resources.h"
-#include "tao/Blocked_Connect_Strategy.h"
+#include "tao/Connect_Strategy.h"
 #include "ace/Strategies_T.h"
 
 ACE_RCSID (TAO_SSLIOP,
@@ -74,13 +74,9 @@ TAO_IIOP_SSL_Connector::open (TAO_ORB_Core *orb_core)
 {
   this->orb_core (orb_core);
 
-  // Not sure whether we should have blocked connect strategy
-  // here. Ossama mentions that non-blocking may not work
-  // properly. Keeping it as blocked till someone decides to fall in
-  // line with protocols like IIOP.
-  ACE_NEW_RETURN (this->active_connect_strategy_,
-                  TAO_Blocked_Connect_Strategy (orb_core),
-                  -1);
+  // Create our connect strategy
+  if (this->create_connect_strategy () == -1)
+    return -1;
 
   if (this->init_tcp_properties () != 0)
     return -1;
@@ -186,8 +182,20 @@ TAO_IIOP_SSL_Connector::make_connection (
   // Get the right synch options
   ACE_Synch_Options synch_options;
 
-  ACE_Time_Value *max_wait_time =
-    invocation->max_wait_time ();
+  ACE_Time_Value *max_wait_time = 0;
+
+  ACE_Time_Value connection_timeout;
+  int timeout = 0;
+
+  this->orb_core ()->connection_timeout (invocation->stub (),
+                                         timeout,
+                                         connection_timeout);
+  if (!timeout)
+    max_wait_time =
+      invocation->max_wait_time ();
+  else
+    max_wait_time = &connection_timeout;
+
 
   this->active_connect_strategy_->synch_options (max_wait_time,
                                                  synch_options);
@@ -198,7 +206,6 @@ TAO_IIOP_SSL_Connector::make_connection (
    int result = this->base_connector_.connect (svc_handler,
                                                remote_address,
                                                synch_options);
-
 
    if (result == -1 && errno == EWOULDBLOCK)
      {
