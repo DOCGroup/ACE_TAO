@@ -1,3 +1,11 @@
+Thu Feb  1 21:00:57 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* bin/auto_compile_win32.pl:
+	* bin/run_all_list.pm:
+	
+	  Added TAO RT Mutex unit tests to auto build and test
+	  lists.
+
 Thu Feb 01 18:52:27 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* RTJava:
