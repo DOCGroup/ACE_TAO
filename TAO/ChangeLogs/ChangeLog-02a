@@ -1,3 +1,16 @@
+Mon Jan 10 12:53:08 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/GIOP.cpp:
+	* tao/GIOP_Server_Request.cpp:
+	  Since Reliable Oneways depend on a feature of GIOP 1.2,
+	  and GIOP 1.2 has not yet been fully implemented in TAO,
+	  a temporary workaround was added so that a TAO server
+	  will not confuse a twoway request from a GIOP 1.1
+	  client with a oneway SYNC_WITH_SERVER request. When
+	  GIOP 1.2 is fully implemented in TAO, the TAO server
+	  can then check the version in the message header and
+	  behave accordingly.
+
 Mon Jan 10 11:51:33 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
