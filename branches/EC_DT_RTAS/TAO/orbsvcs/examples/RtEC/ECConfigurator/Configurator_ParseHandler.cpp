@@ -389,6 +389,8 @@ Configurator_ParseHandler::parseECConfiguration (ECConfiguration* vs, void* arg)
 {
   ACE_UNUSED_ARG(arg);
 
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("ParseHandler visiting ECConfiguration\n")));
+
   this->ecconfiguration = vs;
 
   this->scope_.push(vs);
@@ -399,6 +401,8 @@ int
 Configurator_ParseHandler::parseEvent (Event* vs, void* arg)
   ACE_THROW_SPEC ((ACEXML_SAXException))
 {
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("ParseHandler visiting Event\n")));
+
   if (this->scope_.top()->getSyntaxType() != VisitableSyntax::ECCONFIGURATION)
     ACEXML_THROW (ACEXML_SAXException (ACE_TEXT("Event not child of ECConfiguration")));
 
@@ -550,6 +554,8 @@ int
 Configurator_ParseHandler::parseTimeout (Timeout* vs, void* arg)
   ACE_THROW_SPEC ((ACEXML_SAXException))
 {
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("ParseHandler visiting Timeout\n")));
+
   if (this->scope_.top()->getSyntaxType() != VisitableSyntax::ECCONFIGURATION)
     ACEXML_THROW (ACEXML_SAXException (ACE_TEXT("Timeout not a child of ECConfiguration")));
 
@@ -584,6 +590,8 @@ int
 Configurator_ParseHandler::parseLocalEventChannel (LocalEventChannel* vs, void* arg)
   ACE_THROW_SPEC ((ACEXML_SAXException))
 {
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("ParseHandler visiting LocalEventChannel\n")));
+
   if (this->scope_.top()->getSyntaxType() != VisitableSyntax::ECCONFIGURATION)
     ACEXML_THROW (ACEXML_SAXException (ACE_TEXT("LocalEventChannel not child of ECConfiguration")));
 
@@ -618,6 +626,8 @@ int
 Configurator_ParseHandler::parseRemoteEventChannel (RemoteEventChannel* vs, void* arg)
   ACE_THROW_SPEC ((ACEXML_SAXException))
 {
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("ParseHandler visiting RemoteEventChannel\n")));
+
   ACE_UNUSED_ARG(arg);
 
   if (this->scope_.top()->getSyntaxType() != VisitableSyntax::ECCONFIGURATION)
@@ -654,6 +664,8 @@ int
 Configurator_ParseHandler::parseSchedulingStrategy (SchedulingStrategy* vs, void* arg)
   ACE_THROW_SPEC ((ACEXML_SAXException))
 {
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("ParseHandler visiting SchedulingStrategy\n")));
+
   ACE_UNUSED_ARG(arg);
 
   if (this->scope_.top()->getSyntaxType() != VisitableSyntax::LOCALEVENTCHANNEL)
@@ -713,6 +725,8 @@ int
 Configurator_ParseHandler::parseConsumer (Consumer* vs, void* arg)
   ACE_THROW_SPEC ((ACEXML_SAXException))
 {
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("ParseHandler visiting Consumer\n")));
+
   ACE_UNUSED_ARG(vs);
   ACE_UNUSED_ARG(arg);
 
@@ -752,6 +766,8 @@ Configurator_ParseHandler::parseConsumer (Consumer* vs, void* arg)
       ACEXML_THROW (ACEXML_SAXException (error.c_str()));
     }
 
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Consumer dependants at %@\n"),vs->dependants));
+
   this->scope_.push(vs);
   return 0;
 }
@@ -760,6 +776,8 @@ int
 Configurator_ParseHandler::parseSubscriptions (Subscriptions* vs, void* arg)
   ACE_THROW_SPEC ((ACEXML_SAXException))
 {
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("ParseHandler visiting Subscriptions\n")));
+
   ACE_UNUSED_ARG(arg);
 
   if (this->scope_.top()->getSyntaxType() != VisitableSyntax::CONSUMER)
@@ -769,6 +787,7 @@ Configurator_ParseHandler::parseSubscriptions (Subscriptions* vs, void* arg)
   ACE_ASSERT(parent);
   parent->subscriptions = vs;
 
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Consumer dependants at %@\n"),parent->dependants));
   this->scope_.push(vs);
   return 0;
 }
@@ -777,8 +796,11 @@ int
 Configurator_ParseHandler::parseDependants (Dependants* vs, void* arg)
   ACE_THROW_SPEC ((ACEXML_SAXException))
 {
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("ParseHandler visiting Dependants\n")));
+
   ACE_UNUSED_ARG(arg);
 
+  // BUG: Never called
   if (this->scope_.top()->getSyntaxType() != VisitableSyntax::CONSUMER)
     ACEXML_THROW (ACEXML_SAXException (ACE_TEXT("Dependants not child of Consumer")));
 
@@ -786,6 +808,7 @@ Configurator_ParseHandler::parseDependants (Dependants* vs, void* arg)
   ACE_ASSERT(parent);
   parent->dependants = vs;
 
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Consumer dependants at %@\n"),parent->dependants));
   this->scope_.push(vs);
   return 0;
 }
@@ -794,6 +817,8 @@ int
 Configurator_ParseHandler::parseSupplier (Supplier* vs, void* arg)
   ACE_THROW_SPEC ((ACEXML_SAXException))
 {
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("ParseHandler visiting Supplier\n")));
+
   ACE_UNUSED_ARG(arg);
 
   if (this->scope_.top()->getSyntaxType() != VisitableSyntax::LOCALEVENTCHANNEL
@@ -853,6 +878,8 @@ int
 Configurator_ParseHandler::parsePublications (Publications* vs, void* arg)
   ACE_THROW_SPEC ((ACEXML_SAXException))
 {
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("ParseHandler visiting Publications\n")));
+
   ACE_UNUSED_ARG(arg);
 
   if (this->scope_.top()->getSyntaxType() != VisitableSyntax::SUPPLIER)
@@ -870,6 +897,8 @@ int
 Configurator_ParseHandler::parseTriggers (Triggers* vs, void* arg)
   ACE_THROW_SPEC ((ACEXML_SAXException))
 {
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("ParseHandler visiting Triggers\n")));
+
   ACE_UNUSED_ARG(arg);
 
   if (this->scope_.top()->getSyntaxType() != VisitableSyntax::SUPPLIER)
@@ -887,6 +916,8 @@ int
 Configurator_ParseHandler::parseTestDriver (TestDriver* vs, void* arg)
   ACE_THROW_SPEC ((ACEXML_SAXException))
 {
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("ParseHandler visiting TestDriver\n")));
+
   ACE_UNUSED_ARG(arg);
 
   if (this->scope_.top()->getSyntaxType() != VisitableSyntax::ECCONFIGURATION)
@@ -904,6 +935,8 @@ int
 Configurator_ParseHandler::parseStartCondition (StartCondition* vs, void* arg)
   ACE_THROW_SPEC ((ACEXML_SAXException))
 {
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("ParseHandler visiting StartCondition\n")));
+
   if (this->scope_.top()->getSyntaxType() != VisitableSyntax::TESTDRIVER)
     ACEXML_THROW (ACEXML_SAXException (ACE_TEXT("StartCondition not child of TestDriver")));
 
@@ -950,6 +983,8 @@ int
 Configurator_ParseHandler::parseStopCondition (StopCondition* vs, void* arg)
   ACE_THROW_SPEC ((ACEXML_SAXException))
 {
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("ParseHandler visiting StopCondition\n")));
+
   if (this->scope_.top()->getSyntaxType() != VisitableSyntax::TESTDRIVER)
     ACEXML_THROW (ACEXML_SAXException (ACE_TEXT("StopCondition not child of TestDriver")));
 
@@ -983,6 +1018,8 @@ int
 Configurator_ParseHandler::parseEventName (EventName* vs, void* arg)
     ACE_THROW_SPEC ((ACEXML_SAXException))
 {
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("ParseHandler visiting EventName\n")));
+
   ACE_UNUSED_ARG(arg);
 
   if (this->scope_.top()->getSyntaxType() != VisitableSyntax::SUBSCRIPTIONS
@@ -1010,6 +1047,8 @@ int
 Configurator_ParseHandler::parseSupplierName (SupplierName* vs, void* arg)
     ACE_THROW_SPEC ((ACEXML_SAXException))
 {
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("ParseHandler visiting SupplierName\n")));
+
   ACE_UNUSED_ARG(arg);
 
   if (this->scope_.top()->getSyntaxType() != VisitableSyntax::DEPENDANTS)
@@ -1027,6 +1066,8 @@ int
 Configurator_ParseHandler::parseTimeoutName (TimeoutName* vs, void* arg)
     ACE_THROW_SPEC ((ACEXML_SAXException))
 {
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("ParseHandler visiting TimeoutName\n")));
+
   ACE_UNUSED_ARG(arg);
 
   if (this->scope_.top()->getSyntaxType() != VisitableSyntax::TRIGGERS)
@@ -1044,6 +1085,8 @@ int
 Configurator_ParseHandler::parseIORFile (IORFile* vs, void* arg)
   ACE_THROW_SPEC ((ACEXML_SAXException))
 {
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("ParseHandler visiting IORFile\n")));
+
   ACE_UNUSED_ARG(arg);
 
   if (this->scope_.top()->getSyntaxType() != VisitableSyntax::REMOTEEVENTCHANNEL)
@@ -1157,6 +1200,8 @@ int
 Configurator_ParseHandler::parseTime (Time* vs, void* arg)
   ACE_THROW_SPEC ((ACEXML_SAXException))
 {
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("ParseHandler visiting Time\n")));
+
   ACE_UNUSED_ARG(arg);
 
   if (this->scope_.top()->getSyntaxType() != VisitableSyntax::STARTCONDITION)
@@ -1174,6 +1219,8 @@ int
 Configurator_ParseHandler::parseValue (Value* vs, void* arg)
   ACE_THROW_SPEC ((ACEXML_SAXException))
 {
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("ParseHandler visiting Value\n")));
+
   ACE_UNUSED_ARG(arg);
 
   if (this->scope_.top()->getSyntaxType() != VisitableSyntax::STOPCONDITION)
