@@ -96,7 +96,7 @@ TAO_UIOP_Profile::endpoint_count (void)
 
 void
 TAO_UIOP_Profile::parse_string_i (const char *string
-                                ACE_ENV_ARG_DECL)
+                                  ACE_ENV_ARG_DECL)
 {
   // Pull off the "rendezvous point" part of the objref
   // Copy the string because we are going to modify it...
@@ -133,10 +133,12 @@ TAO_UIOP_Profile::parse_string_i (const char *string
 
   start = ++cp;  // increment past the object key separator
 
-  TAO::ObjectKey &ok = ACE_const_cast (TAO::ObjectKey&,
-                                       this->ref_object_key_->object_key ());
+  TAO::ObjectKey ok;
   TAO::ObjectKey::decode_string_to_sequence (ok,
                                              start);
+
+  (void) this->orb_core ()->object_key_table ().bind (ok,
+                                                      this->ref_object_key_);
 }
 
 CORBA::Boolean
