@@ -109,7 +109,7 @@ void TAO_FTEC_ProxyPushConsumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DE
 
 void TAO_FTEC_ProxyPushConsumer::get_state(FtRtecEventChannelAdmin::ProxyPushConsumerStat& state)
 {
-  state.object_id = this->object_id_;
+  state.object_id = this->object_id_.in ();
   if (this->is_connected()) {
     FtRtecEventChannelAdmin::ProxyPushConsumerConnectionInfo info;
     info.push_supplier = this->supplier();
