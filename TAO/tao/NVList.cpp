@@ -215,7 +215,7 @@ CORBA_NVList::add_value_consume (char * /*name*/,
   // not implemented because we need to see how we can consume the value
   // One soln is to make the any_ member of NamedValue to be a Any_ptr or
   // Any_var
-  // XXXTAO (ASG) - TODO
+  // @@ (ASG) - TODO
   return 0;
 }
 
@@ -224,7 +224,7 @@ void
 CORBA_NVList::remove (CORBA::ULong /*n*/, CORBA::Environment &/*env*/)
 {
   // not implemented
-  // XXXTAO (ASG) - TODO
+  // @@ (ASG) - TODO
 
 }
 

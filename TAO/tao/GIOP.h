@@ -154,7 +154,7 @@ public:
 // requirements (like 8 byte boundaries); hence the size of it may not
 // match the size of the header on the wire.
 //#define	TAO_GIOP_HEADER_LEN sizeof (TAO_GIOP_MessageHeader)
-// XXXTAO - I made this explicitly 12 (ASG)
+// @@ - I made this explicitly 12 (ASG)
 #define	TAO_GIOP_HEADER_LEN 12
 
 // Support for Implicit ORB Service Context.

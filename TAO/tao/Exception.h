@@ -163,7 +163,7 @@ private:
 
 // Declarations for all of the CORBA standard exceptions.
 //
-// XXXTAO - shouldn't have a default minor code, at least for code that's
+// @@ - shouldn't have a default minor code, at least for code that's
 // inside the ORB.  All minor codes should be symbolically catalogued.
 
 #define TAO_SYSTEM_EXCEPTION(name) \

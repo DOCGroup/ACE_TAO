@@ -277,7 +277,7 @@ TAO_Server_Connection_Handler::handle_request (const TAO_GIOP_RequestHeader &hdr
                              env);
   svr_req.release ();
 #if 0
-  // XXXTAO (ASG) - this commented out code must remain here since the DSI will use
+  // @@ (ASG) - this commented out code must remain here since the DSI will use
   // it. Please keep it here until I have figured out the best way out 03/22/98.
 
   // If no reply is necessary (i.e., oneway), then return!

@@ -607,13 +607,13 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
 
         str.setup_encapsulation (ACE_reinterpret_cast(char*,buf), tmp);
 
-        // XXXTAO Does IIOP_Object duplicate 'type_hint' below so
+        // @@ Does IIOP_Object duplicate 'type_hint' below so
         // that we can safely free it?  It does now!
         ACE_NEW_RETURN (objdata,
                         IIOP_Object (type_hint),
                         CORBA::TypeCode::TRAVERSE_STOP);
 
-        // XXXTAO The IIOP_Object created here has a String_var
+        // @@ The IIOP_Object created here has a String_var
         // member to keep the string, this member is constructed using
         // type_hint, at that time a plain (char*). Hence the string
         // is *not* copied and it cannot be released, so the following
@@ -1091,7 +1091,7 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
                   // Allocate the buffer using the virtual
                   // _allocate_buffer method, hence the right
                   // constructors are invoked and size for the array
-                  // is OK. XXXTAO Who will free this memory?  (coryan):
+                  // is OK. @@ Who will free this memory?  (coryan):
                   // the sequence will release it, since its release_
                   // field is 1.
                   seq->_allocate_buffer (bounds);
