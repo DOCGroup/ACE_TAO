@@ -148,9 +148,15 @@ worker (void *c)
       delete ip;
 #endif /* ! ACE_HAS_PTHREADS_DRAFT4 */
 
+      // We don't do keyfree for ACE_HAS_PTHREADS_DRAFT4 (or 6) since it
+      // is not supported there, and will generate an error anyway. Unless
+      // ACE_HAS_TSS_EMULATION is turned on, then it should work.
+#if !(defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)) \
+    || defined (ACE_HAS_TSS_EMULATION)
       if (ACE_Thread::keyfree (key) == -1)
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
                     ACE_TEXT ("ACE_Thread::keyfree")));
+#endif /* !(PTHREADS_DRAFT4 or 6) || defined (ACE_HAS_TSS_EMULATION) */
 
       // Cause an error.
       ACE_OS::read (ACE_INVALID_HANDLE, 0, 0);
@@ -218,14 +224,21 @@ worker (void *c)
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
                     ACE_TEXT ("ACE_Thread::setspecific")));
 
-#if !defined (ACE_HAS_PTHREADS_DRAFT4)
+#  if !defined (ACE_HAS_PTHREADS_DRAFT4)
       // See comment in cleanup () above.
       delete ip;
-#endif /* ! ACE_HAS_PTHREADS_DRAFT4 */
+#  endif /* ! ACE_HAS_PTHREADS_DRAFT4 */
 
+      // We don't do keyfree for ACE_HAS_PTHREADS_DRAFT4 (or 6) since it
+      // is not supported there, and will generate an error anyway. Unless
+      // ACE_HAS_TSS_EMULATION is turned on, then it should work.
+#  if !(defined (ACE_HAS_PTHREADS_DRAFT4) || \
+        defined (ACE_HAS_PTHREADS_DRAFT6)  ) \
+      || defined (ACE_HAS_TSS_EMULATION)
       if (ACE_Thread::keyfree (key) == -1)
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
                     ACE_TEXT ("ACE_Thread::keyfree")));
+#  endif /* !(PTHREADS_DRAFT4 or 6) || defined (ACE_HAS_TSS_EMULATION) */
 #endif /* ! __Lynx__ || ACE_HAS_TSS_EMULATION */
     }
 
