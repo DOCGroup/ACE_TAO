@@ -20,14 +20,6 @@
 
 module A 
   {
-
-    struct X 
-      {
-
-        long a;
-
-      };
-
     exception DidNotWork {
       long id;
       string whatDidNotWork;
@@ -38,10 +30,7 @@ module A
         long foo (out long out_l, 
                   in long in_l,
                   in string in_str)
-                  raises (DidNotWork);
-
-        // Get the number as the return value as well as the out value and
-        // also puts the value.  
+          raises (DidNotWork);
   
         // attribute long yadda;
         //  oneway void shutdown ();
