@@ -141,6 +141,22 @@ If you use the GNU GCC C++ compiler please note the following:
 	  that initializes static objects.  Please see GCC's 
 	  documentation for using "collect2."
 
+	. By default, gcc (thru version 2.7.2, at least) uses
+	  implicit template instantiation.  Besides wasting space,
+	  this breaks the use of ACE_Singleton:  instead of one
+	  one singleton instance, there could be one instance per
+	  .o file that "sees" the template.  Therefore, we strongly
+	  encourage you to add the -fno-implicit-templates option
+	  to CXXFLAGS in include/makeinclude/platform_macros.GNU.
+	  The disadvantage of this approach is that you must then
+	  add template specializations for all templates that your
+	  application uses to your own code.  (The ACE libraries are
+	  self-contained:  you don't need to add the templates that
+	  they use internally.)
+	  Alternatively, you could apply the Cygnus template
+	  repository patches and use the -repo options.  Please see
+	  the g++ FAQ and gcc manual for more information.
+
 --------------------------------------------------
 
 INSTALLATION PROCESS FOR UNIX 
