@@ -264,7 +264,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   while (arg_shifter.is_anything_left ())
     {
       char *current_arg = 0;
-      
+
       if (arg_shifter.cur_arg_strncasecmp ("-ORBSvcConf") != -1)
         {
           // Specify the name of the svc.conf file to be used.
@@ -297,13 +297,6 @@ TAO_ORB_Core::init (int &argc, char *argv[])
               arg_shifter.consume_arg ();
             }
         }
-      else if (arg_shifter.cur_arg_strncasecmp ("-ORBDebug") != -1)
-        {
-          // Turn on debugging
-          ACE::debug (1);
-          TAO_orbdebug = 1;
-          arg_shifter.consume_arg ();
-        }
       else if (arg_shifter.cur_arg_strncasecmp ("-ORBDebugLevel") != -1)
         {
           arg_shifter.consume_arg ();
@@ -314,6 +307,13 @@ TAO_ORB_Core::init (int &argc, char *argv[])
                 ACE_OS::atoi (arg_shifter.get_current ());
               arg_shifter.consume_arg ();
             }
+        }
+      else if (arg_shifter.cur_arg_strncasecmp ("-ORBDebug") != -1)
+        {
+          // Turn on debugging
+          ACE::debug (1);
+          TAO_orbdebug = 1;
+          arg_shifter.consume_arg ();
         }
       else if (arg_shifter.cur_arg_strncasecmp ("-ORBEndpoint") != -1)
         {
@@ -592,6 +592,21 @@ TAO_ORB_Core::init (int &argc, char *argv[])
               arg_shifter.consume_arg ();
             }
         }
+      else if (arg_shifter.cur_arg_strncasecmp ("-ORBCollocationStrategy") != -1)
+        // Specify which collocation policy we want to use.
+        {
+          arg_shifter.consume_arg ();
+          if (arg_shifter.is_parameter_next ())
+            {
+              char *opt = arg_shifter.get_current ();
+              if (ACE_OS::strcasecmp (opt, "thru_poa") == 0)
+                this->collocation_strategy_ = THRU_POA;
+              else if (ACE_OS::strcasecmp (opt, "direct") == 0)
+                this->collocation_strategy_ = DIRECT;
+
+              arg_shifter.consume_arg ();
+            }
+        }
       else if (arg_shifter.cur_arg_strncasecmp ("-ORBCollocation") == 0)
         // Specify whether we want to optimize against collocation
         // objects.  Valid arguments are: "yes" and "no".  Default is
@@ -624,21 +639,6 @@ TAO_ORB_Core::init (int &argc, char *argv[])
                   this->opt_for_collocation_ = 1;
                   this->use_global_collocation_ = 0;
                 }
-
-              arg_shifter.consume_arg ();
-            }
-        }
-      else if (arg_shifter.cur_arg_strncasecmp ("-ORBCollocationStrategy") != -1)
-        // Specify which collocation policy we want to use.
-        {
-          arg_shifter.consume_arg ();
-          if (arg_shifter.is_parameter_next ())
-            {
-              char *opt = arg_shifter.get_current ();
-              if (ACE_OS::strcasecmp (opt, "thru_poa") == 0)
-                this->collocation_strategy_ = THRU_POA;
-              else if (ACE_OS::strcasecmp (opt, "direct") == 0)
-                this->collocation_strategy_ = DIRECT;
 
               arg_shifter.consume_arg ();
             }
