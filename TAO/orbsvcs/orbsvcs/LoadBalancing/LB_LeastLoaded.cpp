@@ -210,12 +210,31 @@ TAO_LB_LeastLoaded::get_location (
     {
       const PortableGroup::Location & loc = locations[i];
 
-      // Retrieve the load list for the location from the LoadManager
-      // and push it to this Strategy's load processor.
-      CosLoadBalancing::LoadList_var current_loads =
-        load_manager->get_loads (loc
-                                 ACE_ENV_ARG_PARAMETER);
+      CosLoadBalancing::LoadList_var current_loads;
+      CORBA::Boolean continue_loop = 0;
+
+      ACE_TRY
+        {
+          // Retrieve the load list for the location from the LoadManager
+          // and push it to this Strategy's load processor.
+          current_loads = load_manager->get_loads (loc
+                                                   ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+      ACE_CATCH (CosLoadBalancing::LocationNotFound, ex)
+        {
+          // No load available for the requested location.  Try the
+          // next location.
+
+          continue_loop = 1;  // Can't "continue" here since a
+                              // do/while() loop is used to implement
+                              // the ACE exception macros.
+        }
+      ACE_ENDTRY;
       ACE_CHECK_RETURN (0);
+
+      if (continue_loop)
+        continue;
 
       CosLoadBalancing::Load load;
       this->push_loads (loc,
