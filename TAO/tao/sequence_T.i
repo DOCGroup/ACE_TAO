@@ -29,6 +29,7 @@ TAO_Unbounded_Sequence<T>::TAO_Unbounded_Sequence (void)
 template <class T> ACE_INLINE T *
 TAO_Unbounded_Sequence<T>::get_buffer (CORBA::Boolean orphan)
 {
+  // @@ This is broken...
   return (T *) this->buffer_;
 }
 
@@ -97,7 +98,8 @@ TAO_Unbounded_Sequence<T>::freebuf (T *buffer)
 template <class T> ACE_INLINE T *
 TAO_Bounded_Sequence<T>::get_buffer (CORBA::Boolean orphan)
 {
-  return ;
+  // @@ This is broken...
+  return (T *) this->buffer_;
 }
 
 template <class T> ACE_INLINE const T *
