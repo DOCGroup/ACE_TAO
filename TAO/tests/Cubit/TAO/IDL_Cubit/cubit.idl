@@ -65,7 +65,7 @@ interface Cubit
 		      out vector output);
   // Cube several longs...
 
-  oneway void please_exit ();
+  oneway void shutdown ();
   // shutdown the application.
 };
 
