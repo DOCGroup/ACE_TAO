@@ -10,7 +10,8 @@
 #       Local macros
 #----------------------------------------------------------------------------
 
-DIRS  = Client_Propagated \
+DIRS  = Banded_Connections \
+	Client_Propagated \
 	Client_Protocol \
 	Server_Declared \
         Server_Protocol \

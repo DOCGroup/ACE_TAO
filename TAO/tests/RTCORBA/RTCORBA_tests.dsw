@@ -3,6 +3,30 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
+Project: "Banded_Connections Client"=.\Banded_Connections\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Banded_Connections Server"=.\Banded_Connections\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Client_Propagated Client"=.\Client_Propagated\client.dsp - Package Owner=<4>
 
 Package=<5>
