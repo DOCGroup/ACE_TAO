@@ -50,63 +50,9 @@ namespace TAO
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
-
-static const CORBA::Long _oc_TAO_IIOP_Endpoint_Info[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  31,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x54414f2f), 
-  ACE_NTOHL (0x49494f50), 
-  ACE_NTOHL (0x5f456e64), 
-  ACE_NTOHL (0x706f696e), 
-  ACE_NTOHL (0x745f496e), 
-  ACE_NTOHL (0x666f3a31), 
-  ACE_NTOHL (0x2e300000),  // repository ID = IDL:TAO/IIOP_Endpoint_Info:1.0
-    19,
-  ACE_NTOHL (0x49494f50), 
-  ACE_NTOHL (0x5f456e64), 
-  ACE_NTOHL (0x706f696e), 
-  ACE_NTOHL (0x745f496e), 
-  ACE_NTOHL (0x666f0000),  // name = IIOP_Endpoint_Info
-  3, // member count
-    5,
-  ACE_NTOHL (0x686f7374), 
-  ACE_NTOHL (0x0),  // name = host
-    CORBA::tk_string, 
-  0U, // string length
-  5,
-  ACE_NTOHL (0x706f7274), 
-  ACE_NTOHL (0x0),  // name = port
-    CORBA::tk_short,
-
-  9,
-  ACE_NTOHL (0x7072696f), 
-  ACE_NTOHL (0x72697479), 
-  ACE_NTOHL (0x0),  // name = priority
-    CORBA::tk_short,
-
-};
-
-static CORBA::TypeCode _tc_TAO_tc_TAO_IIOP_Endpoint_Info (
-    CORBA::tk_struct,
-    sizeof (_oc_TAO_IIOP_Endpoint_Info),
-    (char *) &_oc_TAO_IIOP_Endpoint_Info,
-    0,
-    sizeof (TAO::IIOP_Endpoint_Info)
-  );
-
-namespace TAO
-{
-  ::CORBA::TypeCode_ptr _tc_IIOP_Endpoint_Info =
-    &_tc_TAO_tc_TAO_IIOP_Endpoint_Info;
-}
-
-// TAO_IDL - Generated from 
 // be/be_visitor_structure/structure_cs.cpp:66
 
-void 
+void
 TAO::IIOP_Endpoint_Info::_tao_any_destructor (
     void *_tao_void_pointer
   )
@@ -116,7 +62,7 @@ TAO::IIOP_Endpoint_Info::_tao_any_destructor (
   delete _tao_tmp_pointer;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_TAO_IIOPENDPOINTSEQUENCE_CS_)
@@ -170,86 +116,6 @@ void TAO::IIOPEndpointSequence::_tao_any_destructor (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
-
-static const CORBA::Long _oc_TAO_IIOPEndpointSequence[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  33,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x54414f2f), 
-  ACE_NTOHL (0x49494f50), 
-  ACE_NTOHL (0x456e6470), 
-  ACE_NTOHL (0x6f696e74), 
-  ACE_NTOHL (0x53657175), 
-  ACE_NTOHL (0x656e6365), 
-  ACE_NTOHL (0x3a312e30), 
-  ACE_NTOHL (0x0),  // repository ID = IDL:TAO/IIOPEndpointSequence:1.0
-    21,
-  ACE_NTOHL (0x49494f50), 
-  ACE_NTOHL (0x456e6470), 
-  ACE_NTOHL (0x6f696e74), 
-  ACE_NTOHL (0x53657175), 
-  ACE_NTOHL (0x656e6365), 
-  ACE_NTOHL (0x0),  // name = IIOPEndpointSequence
-    CORBA::tk_sequence, // typecode kind
-  140, // encapsulation length
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    CORBA::tk_struct, // typecode kind
-    124, // encapsulation length
-      TAO_ENCAP_BYTE_ORDER, // byte order
-      31,
-      ACE_NTOHL (0x49444c3a), 
-      ACE_NTOHL (0x54414f2f), 
-      ACE_NTOHL (0x49494f50), 
-      ACE_NTOHL (0x5f456e64), 
-      ACE_NTOHL (0x706f696e), 
-      ACE_NTOHL (0x745f496e), 
-      ACE_NTOHL (0x666f3a31), 
-      ACE_NTOHL (0x2e300000),  // repository ID = IDL:TAO/IIOP_Endpoint_Info:1.0
-            19,
-      ACE_NTOHL (0x49494f50), 
-      ACE_NTOHL (0x5f456e64), 
-      ACE_NTOHL (0x706f696e), 
-      ACE_NTOHL (0x745f496e), 
-      ACE_NTOHL (0x666f0000),  // name = IIOP_Endpoint_Info
-      3, // member count
-            5,
-      ACE_NTOHL (0x686f7374), 
-      ACE_NTOHL (0x0),  // name = host
-            CORBA::tk_string, 
-      0U, // string length
-      5,
-      ACE_NTOHL (0x706f7274), 
-      ACE_NTOHL (0x0),  // name = port
-            CORBA::tk_short,
-
-      9,
-      ACE_NTOHL (0x7072696f), 
-      ACE_NTOHL (0x72697479), 
-      ACE_NTOHL (0x0),  // name = priority
-            CORBA::tk_short,
-
-
-    0U,
-
-};
-
-static CORBA::TypeCode _tc_TAO_tc_TAO_IIOPEndpointSequence (
-    CORBA::tk_alias,
-    sizeof (_oc_TAO_IIOPEndpointSequence),
-    (char *) &_oc_TAO_IIOPEndpointSequence,
-    0,
-    sizeof (TAO::IIOPEndpointSequence)
-  );
-
-namespace TAO
-{
-  ::CORBA::TypeCode_ptr _tc_IIOPEndpointSequence =
-    &_tc_TAO_tc_TAO_IIOPEndpointSequence;
-}
-
-// TAO_IDL - Generated from
 // be/be_visitor_sequence/cdr_op_cs.cpp:95
 
 #if !defined _TAO_CDR_OP_TAO_IIOPEndpointSequence_CPP_
@@ -261,20 +127,20 @@ CORBA::Boolean operator<< (
   )
 {
   CORBA::ULong _tao_seq_len = _tao_sequence.length ();
-  
+
   if (strm << _tao_seq_len)
     {
       // Encode all elements.
       CORBA::Boolean _tao_marshal_flag = 1;
-      
+
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
           _tao_marshal_flag = (strm << _tao_sequence[i]);
         }
-      
+
       return _tao_marshal_flag;
     }
-  
+
   return 0;
 }
 
@@ -284,7 +150,7 @@ CORBA::Boolean operator>> (
   )
 {
   CORBA::ULong _tao_seq_len;
-  
+
   if (strm >> _tao_seq_len)
     {
       // Add a check to the length of the sequence
@@ -294,28 +160,28 @@ CORBA::Boolean operator>> (
         {
           return 0;
         }
-      
+
       // Set the length of the sequence.
       _tao_sequence.length (_tao_seq_len);
-      
+
       // If length is 0 we return true.
-      if (0 >= _tao_seq_len) 
+      if (0 >= _tao_seq_len)
         {
           return 1;
         }
-      
+
       // Retrieve all the elements.
       CORBA::Boolean _tao_marshal_flag = 1;
-      
+
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
           _tao_marshal_flag = (strm >> _tao_sequence[i]);
         }
-      
+
       return _tao_marshal_flag;
-    
+
     }
-  
+
   return 0;
 }
 
@@ -418,5 +284,4 @@ CORBA::Boolean operator>> (
 
 #endif /* end #if !defined */
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
-
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

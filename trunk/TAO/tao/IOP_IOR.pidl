@@ -20,9 +20,12 @@
  * and then:
  *
  * cp orig/IOP_IORC.{h,i,cpp} .
- * patch < diffs/IOPC.diff
+ * cp orig/IOP_IORA.{h,cpp} .
  *
- * The code left in IOP_IORC.{h,i,cpp} is ready for use.
+ * patch < diffs/IOP_IOR.diff
+ *
+ * The code left in IOP_IORC.{h,i,cpp} and IOP_IORA.{h,cpp} is ready
+ * for use. 
  *
  */
 

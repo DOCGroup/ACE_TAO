@@ -24,17 +24,10 @@
  *          -Wb,post_include="ace/post.h"
  *          Policy.pidl
  *
- *   2. Then patch the generated code.  This patch (a) eliminates
- *   cycles in the include dependencies; (b) adds the TAO_Encodable
- *   methods to the Policy class; (c) fixes the #includes in the
- *   PolicyS.h file.
- *
- *   Apply patches using the following commands:
- *
- *   cp orig/PolicyC.{h,i,cpp} .
- *   cp orig/PolicyS.{h,i,cpp} PortableServer
- *   cp orig/PolicyS_T.{h,i,cpp} PortableServer
- *   patch < diffs/Policy.diff
+ *   2. Then patch the generated code using patches in
+ *      diff/Policy.diff. To patch  the generated code in
+ *      PortableServer look for diffs in PortableServer/diffs
+ *      directory.
  *
  *   Note: The diffs were generated with these commands:
  *
