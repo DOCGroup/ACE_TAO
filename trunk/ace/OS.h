@@ -2582,7 +2582,11 @@ typedef unsigned int size_t;
 #endif
 
 #   if !defined (ACE_LACKS_NEW_H)
-#     include /**/ <new.h>
+#     if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
+#       include /**/ <new>
+#     else     
+#       include /**/ <new.h>
+#     endif /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
 #   endif /* ! ACE_LACKS_NEW_H */
 
 #   if !defined (ACE_PSOS_DIAB_MIPS)  &&  !defined (VXWORKS)
