@@ -43,9 +43,13 @@ ACE_LRU_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTI
 {
   if (this->delete_cleanup_strategy_ == 1)
     delete this->cleanup_strategy_;
+  this->delete_cleanup_strategy_ = 0;
+  this->cleanup_strategy_ = 0;
 
   if (this->delete_caching_strategy_utility_ == 1)
     delete this->caching_strategy_utility_;
+  this->delete_caching_strategy_utility_ = 0;
+  this->caching_strategy_utility_ = 0;
 }
 
 template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY> int
@@ -57,24 +61,27 @@ ACE_LRU_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTI
   // Initialise the cleanup strategy.
 
   // First we decide whether we need to clean up.
-  if (this->cleanup_strategy_ != 0 &&
+   if (this->cleanup_strategy_ != 0 &&
       this->delete_cleanup_strategy_ == 1 &&
       cleanup_s != 0)
     {
       delete this->cleanup_strategy_;
       this->cleanup_strategy_ = 0;
+      this->delete_cleanup_strategy_ = 0;
+    }
+   
+  if (cleanup_s != 0)
+    {
+      this->cleanup_strategy_ = cleanup_s;
       this->delete_cleanup_strategy_ = delete_cleanup_strategy;
     }
-
-  if (cleanup_s != 0)
-    this->cleanup_strategy_ = cleanup_s;
   else if (this->cleanup_strategy_ == 0)
     {
       ACE_NEW_RETURN (this->cleanup_strategy_,
                       CLEANUP_STRATEGY,
                       -1);
 
-      this->delete_cleanup_strategy_ = delete_cleanup_strategy;
+      this->delete_cleanup_strategy_ = 1;
     }
 
   // Initialise the caching strategy utility.
@@ -86,18 +93,21 @@ ACE_LRU_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTI
     {
       delete this->caching_strategy_utility_;
       this->caching_strategy_utility_ = 0;
+      this->delete_caching_strategy_utility_ = 0;
+    }
+  
+  if (utility_s != 0)
+    {
+      this->caching_strategy_utility_ = utility_s;
       this->delete_caching_strategy_utility_ = delete_caching_strategy_utility;
     }
-
-  if (utility_s != 0)
-    this->caching_strategy_utility_ = utility_s;
   else if (this->caching_strategy_utility_ == 0)
     {
       ACE_NEW_RETURN (this->caching_strategy_utility_,
                       CACHING_STRATEGY_UTILITY,
                       -1);
 
-      this->delete_caching_strategy_utility_ = delete_caching_strategy_utility;
+      this->delete_caching_strategy_utility_ = 1;
     }
 
   return 0;
