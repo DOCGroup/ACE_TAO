@@ -4,9 +4,11 @@
 
 ACE_INLINE
 TAO_Tagged_Components::TAO_Tagged_Components (void)
-  :  orb_type_ (0),
-     orb_type_set_ (0),
-     code_sets_set_ (0)
+  :  orb_type_ (0)
+     , components_ (0)
+     , orb_type_set_ (0)
+     , code_sets_set_ (0)
+
 {
 }
 
@@ -60,8 +62,11 @@ TAO_Tagged_Components::unique_tag (IOP::ComponentId tag) const
           || tag == IOP::TAG_DCE_NO_PIPES);
 }
 
-ACE_INLINE IOP::MultipleComponentProfile&
+ACE_INLINE IOP::MultipleComponentProfile *
 TAO_Tagged_Components::components (void)
 {
-  return this->components_;
+  if (this->components_ != 0)
+    return this->components_;
+
+  return 0;
 }

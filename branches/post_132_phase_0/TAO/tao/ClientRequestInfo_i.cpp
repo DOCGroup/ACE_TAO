@@ -210,35 +210,38 @@ TAO_ClientRequestInfo_i::get_effective_component (
   TAO_Tagged_Components &ecs =
     this->target_->_stubobj ()->profile_in_use ()->tagged_components ();
 
-  IOP::MultipleComponentProfile &components = ecs.components ();
+  IOP::MultipleComponentProfile *components =
+    ecs.components ();
 
-  CORBA::ULong len = components.length ();
-  for (CORBA::ULong i = 0; i < len; ++i)
+  if (components)
     {
-      if (components[i].tag == id)
+      CORBA::ULong len = components->length ();
+      for (CORBA::ULong i = 0; i < len; ++i)
         {
-          IOP::TaggedComponent *tagged_component = 0;
+          if ((*components)[i].tag == id)
+            {
+              IOP::TaggedComponent *tagged_component = 0;
 
-          // Only allocate a sequence if we have a tagged component
-          // that matches the given IOP::ComponentId.
-          ACE_NEW_THROW_EX (tagged_component,
-                            IOP::TaggedComponent,
-                            CORBA::NO_MEMORY (
-                              CORBA::SystemException::_tao_minor_code (
-                                TAO_DEFAULT_MINOR_CODE,
-                                ENOMEM),
-                              CORBA::COMPLETED_NO));
-          ACE_CHECK_RETURN (0);
+              // Only allocate a sequence if we have a tagged component
+              // that matches the given IOP::ComponentId.
+              ACE_NEW_THROW_EX (tagged_component,
+                                IOP::TaggedComponent,
+                                CORBA::NO_MEMORY (
+                                    CORBA::SystemException::_tao_minor_code (
+                                        TAO_DEFAULT_MINOR_CODE,
+                                        ENOMEM),
+                                    CORBA::COMPLETED_NO));
+              ACE_CHECK_RETURN (0);
 
-          IOP::TaggedComponent_var safe_tagged_component =
-            tagged_component;
+              IOP::TaggedComponent_var safe_tagged_component =
+                tagged_component;
 
-          (*tagged_component) = components[i];  // Deep copy
+              (*tagged_component) = (*components)[i];  // Deep copy
 
-          return safe_tagged_component._retn ();
+              return safe_tagged_component._retn ();
+            }
         }
     }
-
   // No tagged component was found that matched the given
   // IOP::ComponentId.
   ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 28,
@@ -255,36 +258,38 @@ TAO_ClientRequestInfo_i::get_effective_components (
   TAO_Tagged_Components &ecs =
     this->target_->_stubobj ()->profile_in_use ()->tagged_components ();
 
-  IOP::MultipleComponentProfile &components = ecs.components ();
+  IOP::MultipleComponentProfile *components = ecs.components ();
 
   IOP::TaggedComponentSeq *tagged_components = 0;
   IOP::TaggedComponentSeq_var safe_tagged_components;
-
-  CORBA::ULong len = components.length ();
-  for (CORBA::ULong i = 0; i < len; ++i)
+  if (components)
     {
-      if (components[i].tag == id)
+      CORBA::ULong len = components->length ();
+      for (CORBA::ULong i = 0; i < len; ++i)
         {
-          if (tagged_components == 0)
+          if ((*components)[i].tag == id)
             {
-              // Only allocate a sequence if we have tagged components
-              // to place into the sequence.
-              ACE_NEW_THROW_EX (tagged_components,
-                                IOP::TaggedComponentSeq,
-                                CORBA::NO_MEMORY (
-                                  CORBA::SystemException::_tao_minor_code (
+              if (tagged_components == 0)
+                {
+                  // Only allocate a sequence if we have tagged components
+                  // to place into the sequence.
+                  ACE_NEW_THROW_EX (tagged_components,
+                                    IOP::TaggedComponentSeq,
+                                    CORBA::NO_MEMORY (
+                                                      CORBA::SystemException::_tao_minor_code (
                                     TAO_DEFAULT_MINOR_CODE,
                                     ENOMEM),
                                   CORBA::COMPLETED_NO));
-              ACE_CHECK_RETURN (0);
+                  ACE_CHECK_RETURN (0);
 
-              safe_tagged_components = tagged_components;
+                  safe_tagged_components = tagged_components;
+                }
+
+              CORBA::ULong old_len = safe_tagged_components->length ();
+              safe_tagged_components->length (old_len + 1);
+
+              safe_tagged_components[old_len] = (*components)[i];  // Deep copy
             }
-
-          CORBA::ULong old_len = safe_tagged_components->length ();
-          safe_tagged_components->length (old_len + 1);
-
-          safe_tagged_components[old_len] = components[i];  // Deep copy
         }
     }
 

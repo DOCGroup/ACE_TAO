@@ -1,3 +1,16 @@
+Wed Feb 12 15:40:46 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Tagged_Components.h:
+	* tao/Tagged_Components.cpp:
+	* tao/Tagged_Components.i (TAO_Tagged_Components): Create
+	  IOP::MultipleComponentProfile lazily, instead of creating
+	  actively on the stack and increase the runtime footprint. If we
+	  do this we only pay when TAO gets something that TAO doesnt
+	  understand. This changed forced us to change the signature of
+	  the components (). Instead of returning a reference we now
+	  return a pointer to the underlying
+	  IOP::MultipleComponentProfile. 
+
 Thu Feb  6 17:51:06 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/Tagged_Components.cpp: Removed some vague print statements. 
