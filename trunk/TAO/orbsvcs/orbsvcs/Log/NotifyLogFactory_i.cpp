@@ -87,7 +87,7 @@ TAO_NotifyLogFactory_i::create (
         const DsLogAdmin::CapacityAlarmThresholdList & thresholds,
         const CosNotification::QoSProperties & initial_qos,
         const CosNotification::AdminProperties & initial_admin,
-        DsLogAdmin::LogId_out id
+        DsLogAdmin::LogId_out id_out
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
@@ -98,11 +98,14 @@ TAO_NotifyLogFactory_i::create (
         CosNotification::UnsupportedAdmin
       ))
 {
-  // Get an id for this Log.
-  this->max_id_++;
+  DsLogAdmin::LogId id;
+
+  // Get an unused/unique id for this Log.
+  while (hash_map_.find ((id = this->next_id_++)) == 0)
+    ;
 
   DsNotifyLogAdmin::NotifyLog_ptr notifylog =
-    this->create_with_id (this->max_id_,
+    this->create_with_id (id,
                           full_action,
                           max_rec_size,
                           thresholds,
@@ -112,7 +115,7 @@ TAO_NotifyLogFactory_i::create (
   ACE_CHECK_RETURN (DsNotifyLogAdmin::NotifyLog::_nil ());
 
   // Set the id to return..
-  id = this->max_id_;
+  id_out = id;
 
   return notifylog;
 }
