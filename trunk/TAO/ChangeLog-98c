@@ -1,3 +1,11 @@
+Wed Nov 11 14:47:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Sched/DynSched.{cpp, h}
+          orbsvcs/orbsvcs/Sched/SchedEntry.{cpp, h}
+          orbsvcs/tests/Sched_Conf/Sched_Conf_Anomalies_Runtime.h: 
+	  Added reporting of specific RT_Info entry points with unresolved 
+	  local or remote dependencies in the generated schedule header file.
+
 Wed Nov 11 14:47:41 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/IDL_Cubit/client.cpp,Cubit_Client.cpp:

@@ -7,8 +7,20 @@
 
 
 // The following scheduling anomalies were detected:
-// WARNING: ST_UNRESOLVED_REMOTE_DEPENDENCIES
 ERROR: ST_UNRESOLVED_LOCAL_DEPENDENCIES
+ERROR: The following entry points have unresolved local dependencies:
+// unresolved_local_supplier
+// unresolved_local_consumer
+// both_unresolved_consumer_1
+// both_unresolved_consumer_2
+
+// WARNING: ST_UNRESOLVED_REMOTE_DEPENDENCIES
+// WARNING: The following entry points have unresolved remote dependencies:
+// unresolved_remote_supplier
+// unresolved_remote_consumer
+// both_unresolved_consumer_1
+// both_unresolved_consumer_2
+
 
 
 static ACE_Scheduler_Factory::POD_RT_Info infos[] = {
