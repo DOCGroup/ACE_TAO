@@ -45,13 +45,15 @@ HPUX_VERS	:= $(join $(word 2,$(HPVERS_WORDS)),$(word 3,$(HPVERS_WORDS)))
 CC		= /bin/cc
 CXX		= aCC
 
+# Determine compiler version
+CXXVERS_WORDS := $(subst ., , $(shell $(CXX) -V 2>&1))
+CXXMINORVERS := $(word 8, $(CXXVERS_WORDS))
+CXXMAJORVERS := $(word 7, $(CXXVERS_WORDS))
+
 ifeq (,$(stdcpplib))
 # If the user didn't explicitly set stdcpplib, assume that the compiler
 # can do -AA, unless it's a .2x version (e.g., 03.24). 03.27 can do -AA,
 # so check for that one explicitly and enable it if so.
-  CXXVERS_WORDS := $(subst ., , $(shell $(CXX) -V 2>&1))
-  CXXMINORVERS := $(word 8, $(CXXVERS_WORDS))
-  CXXMAJORVERS := $(word 7, $(CXXVERS_WORDS))
   ifeq (,$(filter 2%,$(CXXMINORVERS)))
     stdcpplib = 1
   else
@@ -65,13 +67,20 @@ endif
 
 ifeq (1,$(stdcpplib))
   CCFLAGS += -AA
-  # Warning 930 is spurious when new(std::nothrow) is used. Reported to HP
-  # as support call 3201224717. (Steve Huston, 23-Nov-2002)
-  CCFLAGS += +W930
+  ifeq (03,$(CXXMAJORVERS))
+    # Warning 930 is spurious when new(std::nothrow) is used. Reported to HP
+    # as support call 3201224717. (Steve Huston, 23-Nov-2002)
+    CCFLAGS += +W930
+  endif
 # Compile errors using -AA and +noeh together - HP problem report
 # JAGad12608, fix slated for Dec 2001 Release -- Steve Huston, April 10, 2001.
 # If you still have problems with this area, uncomment the following line:
 #  exceptions = 1
+endif
+
+ifeq (05,$(CXXMAJORVERS))
+  # Warnings about binary incompatiblity
+  CCFLAGS += +W1016,1031
 endif
 
 # Set the appropriate preprocessor defs for threading based on OS version
@@ -103,8 +112,10 @@ ifeq ($(HPMODEL), ia64)
   itanium = 1
 endif
 
-# Suppress Warning 302 ((...) parameter list is a non-portable feature)
-CCFLAGS		+= +W302
+ifeq (03,$(CXXMAJORVERS))
+  # Suppress Warning 302 ((...) parameter list is a non-portable feature)
+  CCFLAGS                += +W302
+endif
 CPPFLAGS	+= $(THR_DEFS) -D_HPUX_SOURCE -DHPUX_VERS=$(HPUX_VERS) -DACE_LACKS_PRAGMA_ONCE
 
 # If exception support is explicitly disabled, tell the compiler.
