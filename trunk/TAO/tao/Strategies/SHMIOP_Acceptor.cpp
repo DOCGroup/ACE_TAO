@@ -299,6 +299,9 @@ TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core)
   this->base_acceptor_.acceptor().malloc_options ().minimum_bytes_
     = this->mmap_size_;
 
+  if (orb_core->server_factory ()->activate_server_connections () != 0)
+    this->base_acceptor_.acceptor().preferred_strategy (ACE_MEM_IO::MT);
+
   // @@ Should this be a catastrophic error???
   if (this->base_acceptor_.acceptor ().get_local_addr (this->address_) != 0)
     {

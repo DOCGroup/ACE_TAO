@@ -195,6 +195,12 @@ TAO_Default_Client_Strategy_Factory::create_wait_strategy (TAO_Transport *transp
   return ws;
 }
 
+int
+TAO_Default_Client_Strategy_Factory::allow_callback (void)
+{
+  return (this->wait_strategy_ != TAO_WAIT_ON_READ);
+}
+
 ACE_Lock *
 TAO_Default_Client_Strategy_Factory::create_ft_service_retention_id_lock (void)
 {
