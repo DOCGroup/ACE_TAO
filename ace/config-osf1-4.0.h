@@ -83,7 +83,7 @@
 #     pragma message disable intconlosbit
 #   endif /* __DECCXX_VER >= 60190029 */
 
-#   if defined (DIGITAL_UNIX)  &&  DIGITAL_UNIX == 0x50
+#   if defined (DIGITAL_UNIX)  &&  DIGITAL_UNIX == 0x500
       // variable "PTHREAD_THIS_CATCH_NP" was declared but never referenced
 #     pragma message disable declbutnotref
 #   endif /* DIGITAL_UNIX 5 */
@@ -122,7 +122,7 @@
 # define ACE_LACKS_T_ERRNO
 # define ACE_POLL_IS_BROKEN
 # if !defined (DIGITAL_UNIX)
-#   define DIGITAL_UNIX 0x40
+#   define DIGITAL_UNIX 0x400
 # endif /* ! DIGITAL_UNIX */
   // DJT removed this due to some minor issues related to the
   // definitions of timestruc_t and tid_t in procfs.h not sure what

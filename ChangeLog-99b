@@ -1,3 +1,10 @@
+Tue Jul 13 08:18:56 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-osf1.h,config-osf1-4.0.h,
+          include/makeinclude/platform_osf1_cxx.GNU:
+          added another significant figure to the version identifer,
+          e.g., 0x40F and 0x500. [Bug 65]
+
 Tue Jul 13 06:45:53 1999  Steve Huston  <shuston@riverace.com>
 
         * examples/Shared_Malloc/test_position_independent_malloc.cpp: Moved
@@ -21,7 +28,7 @@ Mon Jul 12 18:24:34 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
         * tests/Cached_Accept_Conn_Test.cpp:
           This tests explicit purging from the server's point of view.
           When the acceptor in either its accept_svc_handler () or open ()
-          runs out of descriptors, purging of unused svc_handlers from the 
+          runs out of descriptors, purging of unused svc_handlers from the
           connecton cache is requested.
 
         * tests/Cached_Conn_Test.cpp:
@@ -31,7 +38,7 @@ Mon Jul 12 18:24:34 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
           necessary for compilers which dont accept long template lists,
           for example GNUC version < 8.0. Total credit for this hack
           to get through the old GNUC compiler goes to Irfan
-          <irfan@cs.wustl.edu> of the DOC group.	
+          <irfan@cs.wustl.edu> of the DOC group.
 
         * tests/Makefile:
           Added Cached_Accept_Conn_Test.cpp.
@@ -47,17 +54,17 @@ Mon Jul 12 18:24:34 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 Mon Jul 12 17:31:28 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* bin/run_all_win32.pl: Fixed the missing execution output problem
-	  and simplified how the script gets invoked.  See comments for
-	  more details.
+        * bin/run_all_win32.pl: Fixed the missing execution output problem
+          and simplified how the script gets invoked.  See comments for
+          more details.
 
-	* ace/config-win32.h:
-	* ace/Object_Manager.h: Updated some unclear comments regarding
-	  the use and instantiation of non-static object manager.  Thanks
-	  to John Morey and David for pointing this out.
+        * ace/config-win32.h:
+        * ace/Object_Manager.h: Updated some unclear comments regarding
+          the use and instantiation of non-static object manager.  Thanks
+          to John Morey and David for pointing this out.
 
-	* ace/ace_dll.dsp: Merged additional MFC configuration.  Thanks to
-	  John Morey <jmorey@tbi.com> for submitting the patch.
+        * ace/ace_dll.dsp: Merged additional MFC configuration.  Thanks to
+          John Morey <jmorey@tbi.com> for submitting the patch.
 
 Mon Jul 12 15:27:37 1999  David L. Levine  <levine@cs.wustl.edu>
 
