@@ -153,14 +153,7 @@ TAO::TypeCode::Struct<StringType,
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  // Call kind_i() instead of using CORBA::tk_struct directly since a
-  // subclass, such as Except_TypeCode, can use this equivalent_i()
-  // implementation.
-  CORBA::TCKind const this_kind =
-    this->kind_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
-  if (tc_kind != this_kind)
+  if (tc_kind != Kind)
     return 0;
 
   char const * const this_id = this->base_attributes_.id ();
@@ -216,7 +209,7 @@ TAO::TypeCode::Struct<StringType,
                       RefCountPolicy>::kind_i (
   ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
 {
-  return Struct_Traits<Kind>::kind;
+  return Kind;
 }
 
 template <typename StringType,
@@ -271,11 +264,7 @@ TAO::TypeCode::Struct<StringType,
                         CORBA::TypeCode::_nil ());
     }
 
-  CORBA::TCKind const this_kind =
-    this->kind_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
-
-  tc = adapter->_tao_create_struct_except_tc (this_kind,
+  tc = adapter->_tao_create_struct_except_tc (Kind,
                                               this->base_attributes_.id (),
                                               ""  /* empty name */,
                                               tc_fields,

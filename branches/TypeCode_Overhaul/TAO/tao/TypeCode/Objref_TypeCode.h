@@ -43,8 +43,6 @@ namespace TAO
     template <>
     struct Objref_Traits<CORBA::tk_abstract_interface>
     {
-      enum { kind = CORBA::tk_abstract_interface };
-
       static
       CORBA::TypeCode_ptr
       create_compact_typecode (TAO_TypeCodeFactory_Adapter * factory,
@@ -60,8 +58,6 @@ namespace TAO
     template <>
     struct Objref_Traits<CORBA::tk_component>
     {
-      enum { kind = CORBA::tk_component };
-
       static
       CORBA::TypeCode_ptr
       create_compact_typecode (TAO_TypeCodeFactory_Adapter * factory,
@@ -78,8 +74,6 @@ namespace TAO
     template <>
     struct Objref_Traits<CORBA::tk_home>
     {
-      enum { kind = CORBA::tk_home };
-
       static
       CORBA::TypeCode_ptr
       create_compact_typecode (TAO_TypeCodeFactory_Adapter * factory,
@@ -95,8 +89,6 @@ namespace TAO
     template <>
     struct Objref_Traits<CORBA::tk_local_interface>
     {
-      enum { kind = CORBA::tk_local_interface };
-
       static
       CORBA::TypeCode_ptr
       create_compact_typecode (TAO_TypeCodeFactory_Adapter * factory,
@@ -112,8 +104,6 @@ namespace TAO
     template <>
     struct Objref_Traits<CORBA::tk_native>
     {
-      enum { kind = CORBA::tk_native };
-
       static CORBA::TypeCode_ptr
       create_compact_typecode (TAO_TypeCodeFactory_Adapter * factory,
                                char const * id
@@ -128,8 +118,6 @@ namespace TAO
     template <>
     struct Objref_Traits<CORBA::tk_objref>
     {
-      enum { kind = CORBA::tk_objref };
-
       static
       CORBA::TypeCode_ptr
       create_compact_typecode (TAO_TypeCodeFactory_Adapter * factory,

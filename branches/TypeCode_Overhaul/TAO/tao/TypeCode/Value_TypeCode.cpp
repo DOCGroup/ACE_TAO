@@ -116,10 +116,6 @@ TAO::TypeCode::Value<StringType,
       if (ACE_OS::strcmp (lhs_name, rhs_name) != 0)
         return 0;
 
-
-ADD MISSING ATTRIBUTES
-
-
       CORBA::TypeCode_ptr const lhs_tc = *(lhs_field.type);
       CORBA::TypeCode_var const rhs_tc =
         tc->member_type (i
@@ -133,6 +129,15 @@ ADD MISSING ATTRIBUTES
 
       if (!equal_members)
         return 0;
+
+      CORBA::Visibility const lhs_visibility = lhs_field.visibility;
+      CORBA::Visibility const rhs_visibility =
+	tc->member_visibility_i (i
+				 ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
+
+      if (lhs_visibility != rhs_visibility)
+	return 0;
     }
 
   return 1;
@@ -161,14 +166,7 @@ TAO::TypeCode::Value<StringType,
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  // Call kind_i() instead of using CORBA::tk_value directly since a
-  // subclass, such as Except_TypeCode, can use this equivalent_i()
-  // implementation.
-  CORBA::TCKind const this_kind =
-    this->kind_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
-  if (tc_kind != this_kind)
+  if (tc_kind != Kind)
     return 0;
 
   char const * const this_id = this->base_attributes_.id ();
@@ -284,11 +282,7 @@ TAO::TypeCode::Value<StringType,
                         CORBA::TypeCode::_nil ());
     }
 
-  CORBA::TCKind const this_kind =
-    this->kind_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
-
-  tc = adapter->_tao_create_value_event_tc (this_kind,
+  tc = adapter->_tao_create_value_event_tc (Kind,
                                             this->base_attributes_.id (),
                                             ""  /* empty name */,
                                             this->value_modifier_,
