@@ -1,3 +1,9 @@
+Sat Mar 21 12:21:19 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/Threads/task_five.cpp: Allow users to set thread stack
+	  size from command lines.  If a user doesn't give one, it will be
+	  set to 8k on non-Windows platforms.
+
 Fri Mar 20 22:07:15 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/ACE_Library.{mak,mdp}: Added Msg_WFMO_Reactor.
