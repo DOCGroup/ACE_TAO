@@ -153,6 +153,7 @@
 #endif /* ACE_TIMER_SKEW */
 
 #define ACE_HAS_NONCONST_SELECT_TIMEVAL
+#define ACE_HAS_BROKEN_DGRAM_SENDV
 
 // Turns off the tracing feature.
 #if !defined (ACE_NTRACE)

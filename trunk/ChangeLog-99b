@@ -1,3 +1,14 @@
+Wed Aug 18 17:58:06 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* THANKS: 
+	* ace/README: 
+	* ace/config-irix6.x-common.h:
+	  Added new macro (ACE_HAS_BROKEN_DGRAM_SENDV) to handle platforms 
+	  where using sendmsg with exactly IOV_MAX elements in the iovec
+	  fails (normally the number of elements can be up to and
+	  including IOV_MAX).  Thanks to Tobin Bergen-Hill
+	  <tbhill@dctd.saic.com> for tracking this down.
+
 Wed Aug 18 16:08:46 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* tests/SOCK_Send_Recv_Test.cpp: Reformatted this test so
