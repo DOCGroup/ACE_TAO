@@ -26,6 +26,13 @@
 #include "tao/ORB.h"
 #include "tao/ORB_Core_Auto_Ptr.h"
 
+#if defined (HPUX) && defined (IOR)
+   /* HP-UX 11.11 defines IOR in /usr/include/pa/inline.h
+      and we don't want that definition.  See IOP_IORC.h. */
+# undef IOR
+#endif /* HPUX && IOR */
+
+
 // Forward declarations.
 class TAO_RelativeRoundtripTimeoutPolicy;
 class TAO_Client_Priority_Policy;
