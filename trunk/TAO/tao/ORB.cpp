@@ -680,7 +680,6 @@ CORBA_ORB::multicast_query (char *buf,
     }
   else
     {
-      // This starts out initialized to all zeros!
       ACE_INET_Addr multicast_addr (port,
                                     ACE_DEFAULT_MULTICAST_ADDR);
       // Open the datagram.
