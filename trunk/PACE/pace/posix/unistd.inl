@@ -227,12 +227,16 @@ PACE_INLINE
 int
 pace_getlogin_r (char * name, size_t namesize)
 {
-#if (PACE_SUNOS) || (PACE_LYNXOS)
-  if (getlogin_r (name, (int) namesize) == 0)
-    return errno;
-  return 0;
-#else
+#if (PACE_HAS_REENTRANT)
+  // supported call
   return getlogin_r (name, namesize);
+#else
+  // unsupported call (emulated)
+  // careful, emulation is not reentrant safe
+  char * retval = getlogin ();
+  if (0 == retval)
+    return errno;
+  return retval;
 #endif /* SUN_OS */
 }
 #endif /* PACE_HAS_POSIX_UGR_UOF */
