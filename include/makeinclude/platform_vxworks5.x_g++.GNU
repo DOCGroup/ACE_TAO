@@ -10,7 +10,7 @@ GCCLIB_DIR	= $(HOST_DIR)/lib/gcc-lib/powerpc-wrs-vxworks/cygnus-2.7.2-960126
 
 CC		= $(BIN_DIR)/g++ppc
 #### CXX		= $(BIN_DIR)/g++ppc -D__INLINE__
-CXX		= $(BIN_DIR)/g++ppc
+CXX		= $(CC)
 CCFLAGS		+= -B$(GCCLIB_DIR)/ -DCPU=PPC604 -DVXWORKS
 INCLDIRS	+= -I$(TARGET_DIR)/h
 LD		= $(BIN_DIR)/ldppc
@@ -25,3 +25,5 @@ PRELIB	= (echo "main() { }" > gcctemp.c && \
 	  $(LD) $^ $(LDFLAGS) $(LIBS); \
 	  status=$$?; rm -f gcctemp.* a.out; exit $$status)
 
+#### don't build shared objects:
+BUILD           = $(VOBJS) $(VLIB) $(VBIN)
