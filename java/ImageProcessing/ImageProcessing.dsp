@@ -123,10 +123,6 @@ SOURCE=.\framework\FilePanel.java
 # End Source File
 # Begin Source File
 
-SOURCE=.\framework\FilterTest.java
-# End Source File
-# Begin Source File
-
 SOURCE=.\framework\GifEncoder.java
 # End Source File
 # Begin Source File
@@ -179,6 +175,10 @@ SOURCE=.\framework\ListFiles.java
 # End Source File
 # Begin Source File
 
+SOURCE=.\framework\LoadURLFrame.java
+# End Source File
+# Begin Source File
+
 SOURCE=.\filters\MedFilter.java
 # End Source File
 # Begin Source File
@@ -200,6 +200,10 @@ SOURCE=.\filters\RandomizeFilter.java
 # Begin Source File
 
 SOURCE=.\filters\RotateFilter.java
+# End Source File
+# Begin Source File
+
+SOURCE=.\framework\SaveURLFrame.java
 # End Source File
 # Begin Source File
 
@@ -244,10 +248,6 @@ SOURCE=.\framework\TestHandler.java
 # Begin Source File
 
 SOURCE=.\filters\Timer.java
-# End Source File
-# Begin Source File
-
-SOURCE=.\framework\URLFrame.java
 # End Source File
 # End Target
 # End Project
