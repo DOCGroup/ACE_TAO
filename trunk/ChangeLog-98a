@@ -5,6 +5,9 @@ Thu Jan 29 10:52:34 1998  David L. Levine  <levine@cs.wustl.edu>
         * include/makeinclude/platform_sunos5_g++.GNU: added comment
           about disabling optimization with g++ 2.8.0.
 
+        * ace/config-sunos5.5-g++.h: don't #define ACE_HAS_STRING_CLASS
+          with g++ 2.8.0.
+
         * include/makeinclude/platform_sunos5_egcs.GNU: include
           the g++ platform file, it works just fine.  The net effect
           on egcs is these three changes:
