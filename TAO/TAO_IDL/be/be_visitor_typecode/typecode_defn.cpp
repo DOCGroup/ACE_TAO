@@ -285,7 +285,7 @@ be_visitor_typecode_defn::visit_type (be_type *node)
                              "Error parsing nested name\n"),
                             -1);
         }
-      *os << "TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_";
+      *os << "TAO_NAMESPACE_DEFINE (::CORBA::TypeCode_ptr, _tc_";
 
       // Local name generation.
       *os << node->local_name ();
@@ -310,7 +310,7 @@ be_visitor_typecode_defn::visit_type (be_type *node)
   else
     {
       // outermost scope.
-      *os << "CORBA::TypeCode_ptr ";
+      *os << "::CORBA::TypeCode_ptr ";
 
       // Tc name generation.
       *os << node->tc_name ();
