@@ -230,12 +230,11 @@ ACE_Thread_Manager::close_singleton (void)
   ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon,
                      *ACE_Static_Object_Lock::instance ()));
 
-#if defined (ACE_WIN32)
-  ACE_Thread_Manager::thr_mgr_->wait_on_exit (0);
-#endif /* ACE_WIN32 */
-
   if (ACE_Thread_Manager::delete_thr_mgr_)
     {
+#if defined (ACE_WIN32)
+      ACE_Thread_Manager::thr_mgr_->wait_on_exit (0);
+#endif /* ACE_WIN32 */
       // First, we clean up the thread descriptor list.
       ACE_Thread_Manager::thr_mgr_->close ();
       delete ACE_Thread_Manager::thr_mgr_;
