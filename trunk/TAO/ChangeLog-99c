@@ -1,3 +1,9 @@
+Fri Jul  9 15:22:20 1999  Marina Spivak  <marina@cs.wustl.edu>
+
+	* orbsvcs/Naming_Service/Naming_Service.cpp:
+	  Added a check for error conditions in the <init> method, after
+	  <init_child_poa>, in order to shut down gracefully.
+
 Fri Jul  9 14:26:28 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be_include/be_string.h:
@@ -21,7 +27,7 @@ Fri Jul  9 12:59:05 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* examples/Simple/grid/Grid_i.h :
 	* examples/Simple/grid/Grid_i.cpp :Fixed a warning on
 	  HP_UX. Thanks to Carlos for reporting this.
-	
+
 Fri Jul  9 11:14:03 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* docs/releasenotes/index.html:
