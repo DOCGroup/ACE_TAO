@@ -99,8 +99,8 @@ public:
   Handler (void) {};
 
   void foo (CORBA::Long result,
-                       CORBA::Long out_l,
-                       CORBA::Environment&)
+            CORBA::Long out_l,
+            CORBA::Environment&)
     {
       if (debug)
         {
@@ -237,8 +237,9 @@ Client::svc (void)
       for (int i = 0; i < this->niterations_; ++i)
         {
           ami_test_var_->sendc_foo (the_handler_var_.in (),
-                                         number,
-                                         ACE_TRY_ENV);
+                                    number,
+                                    "Let's talk AMI.",
+                                    ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
       if (debug)

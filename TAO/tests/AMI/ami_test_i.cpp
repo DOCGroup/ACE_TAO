@@ -32,14 +32,16 @@ AMI_Test_i::AMI_Test_i (CORBA::ORB_ptr orb)
 CORBA::Long
 AMI_Test_i::foo (CORBA::Long_out out_l,
                  CORBA::Long in_l,
+                 const char* in_str,
                  CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   out_l = 931233;
-  if (TAO_debug_level > 0)
+  //if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-                "%N:%l:(%P:%t):AMI_Test_i::foo:  %d\n",
-                in_l));
+                "%N:%l:(%P:%t):AMI_Test_i::foo:  %d %s\n",
+                in_l,
+                in_str));
 
   return 931234;
 }
@@ -58,7 +60,7 @@ CORBA::Long
 AMI_Test_i::yadda (CORBA::Environment &ACE_TRY_ENV)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  if (TAO_debug_level > 0)
+//  if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "%N:%l:(%P:%t):AMI_Test_i::(get_)yadda\n"));
   return yadda_;
@@ -70,7 +72,7 @@ AMI_Test_i::yadda (CORBA::Long yadda,
                    CORBA::Environment &ACE_TRY_ENV)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  if (TAO_debug_level > 0)
+//  if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "%N:%l:(%P:%t):AMI_Test_i::(set_)yadda\n"));
   yadda_ = yadda;

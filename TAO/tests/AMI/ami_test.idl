@@ -30,7 +30,9 @@ module A
 
     interface AMI_Test
       {
-        long foo (out long out_l, in long in_l);
+        long foo (out long out_l, 
+                  in long in_l,
+                  in string in_str);
         // Get the number as the return value as well as the out value and
         // also puts the value.  
   

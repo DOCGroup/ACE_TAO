@@ -1,3 +1,12 @@
+Sat Sep 03 16:55:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* tests/AMI/ami_test.idl,
+	  tests/AMI/ami_test_i.cpp,
+	  tests/AMI/ami_test_i.h,
+	  tests/AMI/client.cpp,
+	  tests/AMI/simple_client.cpp:
+	  Enhanced the test to have a string as an in parameter. 	  
+
 Sat Sep 04 09:05:16 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO_IDL/Makefile: ran make depend so that tao_idl will build
