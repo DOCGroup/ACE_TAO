@@ -339,6 +339,11 @@ public:
   void remove (CORBA::ULong index, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // remove the typecode at index i. Raises the "Bounds" exception
 
+#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+  typedef CORBA::ExceptionList_ptr _ptr_type;
+#endif /* __GNUC__ */
+  // Useful for template programming.
+
 private:
   // not allowed
   CORBA_ExceptionList (const CORBA_ExceptionList &);
