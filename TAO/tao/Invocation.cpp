@@ -207,7 +207,7 @@ TAO_GIOP_Invocation::start (TAO_ENV_SINGLE_ARG_DECL)
   this->countdown_ = &countdown;
 
   this->endpoint_selector_->select_endpoint (this
-                                              TAO_ENV_ARG_PARAMETER);
+                                             TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Set the unique request ID associated with this request.
@@ -311,7 +311,7 @@ TAO_GIOP_Invocation::prepare_header (CORBA::Octet response_flags
   ACE_CHECK;
 
   // Set the target specification mode
-  switch (this->profile_->addressing_mode ()) 
+  switch (this->profile_->addressing_mode ())
     {
     case TAO_Target_Specification::Key_Addr:
       this->target_spec_.target_specifier (
@@ -333,7 +333,7 @@ TAO_GIOP_Invocation::prepare_header (CORBA::Octet response_flags
       IOP::IOR *ior_info = 0;
       int retval = this->stub_->create_ior_info (ior_info,
                                                  index
-                                                  TAO_ENV_ARG_PARAMETER);
+                                                 TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       if (retval == -1)
@@ -564,8 +564,8 @@ TAO_GIOP_Synch_Invocation::invoke_i (CORBA::Boolean is_locate_request
   // preallocated reply dispatcher.
 
   // Bind.
-
-  TAO_Transport_Mux_Strategy *tms = this->transport_->tms ();
+  TAO_Transport_Mux_Strategy *tms =
+    this->transport_->tms ();
 
   TAO_Bind_Dispatcher_Guard dispatch_guard (
     this->op_details_.request_id (),

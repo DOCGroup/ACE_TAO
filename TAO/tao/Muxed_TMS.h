@@ -83,19 +83,6 @@ protected:
   /// Keep track of the orb core pointer. We need to this to create the
   /// Reply Dispatchers.
   TAO_ORB_Core *orb_core_;
-
-  // @@ Commented for the time being, let the commented line stay for
-  //    sometime - Bala
-  // TAO_GIOP_Message_State *message_state_;
-  // Message state where the current input message is being read. This
-  // is created at start of each incoming message. When that message
-  // is read, the message is processed and for the next message a new
-  // message state is created.
-
-  // @@ Having members of type TAO_GIOP* indicates that we
-  // (Transport_Mux_Strategy) are aware of the underlying messaging
-  // protocol. But for the present let us close our eyes till we are
-  // able to iterate on a use case - Bala.
 };
 
 #include "ace/post.h"

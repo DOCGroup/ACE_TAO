@@ -1,3 +1,23 @@
+Mon Feb 11 14:03:18 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Transport.h: Removed the virtual declaration from the method
+	  bidirectional_flag (). It shouldnt have been virtual to start
+	  with. 
+
+	* tao/Muxed_TMS.h: Removed some old comments
+
+	* tao/Muxed_TMS.cpp (request_id): 
+	* tao/Exclusive_TMS.cpp: Added a condition within request_id
+	  (). The request_id that is generated will obey BiDirGIOP rules,
+	  ie. the originator will send even number requests and the
+	  receiver send odd numbered requests. The old method of
+	  generation was giving problems in MT cases. 
+	
+	* tao/Invocation.cpp: Minor cosmetic changes.
+	* tao/IIOP_Transport.cpp: Modify the request id only for the first
+	  request during BiDir connection origination. 
+
+	
 Thu Jan 31 11:23:59 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Cache_Entries.cpp: Did a cosmetic fix.

@@ -260,8 +260,8 @@ public:
                               CORBA::Octet minor) = 0;
 
   /// Get/Set the bidirectional flag
-  virtual int bidirectional_flag (void) const;
-  virtual void bidirectional_flag (int flag);
+  int bidirectional_flag (void) const;
+  void bidirectional_flag (int flag);
 
   /// Fill in a handle_set with any associated handler's reactor handle.
   /**

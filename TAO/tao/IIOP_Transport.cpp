@@ -214,11 +214,12 @@ TAO_IIOP_Transport::generate_request_header (TAO_Operation_Details &opdetails,
 
       // Set the flag to 0  (i.e., originating side)
       this->bidirectional_flag (0);
-    }
 
-  // Modify the request id if we have BiDirectional client/server
-  // setup
-  opdetails.modify_request_id (this->bidirectional_flag ());
+      // Modify the request id if we have BiDirectional client/server
+      // setup.
+      // @@ Is this needed at all?
+      opdetails.modify_request_id (this->bidirectional_flag ());
+    }
 
 
   return TAO_Transport::generate_request_header (opdetails,
