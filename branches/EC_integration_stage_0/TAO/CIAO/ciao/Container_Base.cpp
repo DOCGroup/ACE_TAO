@@ -194,7 +194,7 @@ CIAO::Container::push_event (
     CORBA::SystemException))
 {
 
-  ACE_DEBUG ((LM_DEBUG, "CIAO::Container::push_event\n"));
+  //ACE_DEBUG ((LM_DEBUG, "CIAO::Container::push_event\n"));
 
   CIAO::EventServiceBase * event_service;
   // ACE_DEBUG ((LM_DEBUG, "Pushing from supplier id: %s\n", connection_id));
