@@ -78,8 +78,11 @@ CIAO::NodeApplication_Impl::finishLaunch (
                 _narrow (providedReference[i].endpoint.in ()
                          ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
+
               if (CORBA::is_nil (consumer.in ()))
-                ACE_THROW (Deployment::InvalidConnection ());
+				{              
+				  ACE_THROW (Deployment::InvalidConnection ());
+				}
 
               comp->subscribe (providedReference[i].portName.in (),
                                consumer.in ()
