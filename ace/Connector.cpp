@@ -87,6 +87,12 @@ ACE_Connector<SH, PR_CO_2>::activate_svc_handler (SVC_HANDLER *svc_handler)
     return 0;
 }
 
+template <class SH, PR_CO_1> ACE_PEER_CONNECTOR &
+ACE_Connector<SH, PR_CO_2>::connector (void) const
+{
+  return this->connector_;
+}
+
 template <class SH, PR_CO_1> int
 ACE_Connector<SH, PR_CO_2>::connect_svc_handler (SVC_HANDLER *&svc_handler,
                                                  const PR_AD &remote_addr,
