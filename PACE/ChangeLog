@@ -1,3 +1,39 @@
+Thu Jul 13 00:46:37 2000  John Heitmann  <jwh1@cs.wustl.edu>
+
+	* pace/signal.h
+	* pace/posix/signal.h
+	* pace/posix/signal.inl
+
+	  Changed the typedef of pace_s_sigevent
+	  to pace_sigevent_s to match up with pace_stat_s. The
+	  problem with both of these is that the data type names
+	  conflict with function names.
+
+	* pace/stdio.h
+	* pace/posix/stdio.c
+
+	  Changed all '...' functions to defines. Now the library
+	  should be totally empty on platforms without emulation code.
+
+	* include/makeinclude/rules.common.GNU
+	* tests/Makefile
+
+	  Because the library can be empty again, don't include
+	  the library by default. As a temporary kludge emulation=1
+	  is set in rules.common.GNU for Linux, which is the only
+	  platform thus far which has a non-empty library.
+
+	* pace/emulation/mqueue.c
+	* pace/emulation/mqueue.h
+
+	  Support for all functionality is now complete, cleaner,
+	  and somewhat less buggy.
+
+	* tests/mqueue_test.c
+
+	  Borrowed a test from Konstantin Knizhnik's web site,
+	  will eventually have to make this a one-button test.
+
 Wed Jul 12 17:30:54 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
 	* pace/posix/types.h
