@@ -1,6 +1,7 @@
 // $Id$
 
 #define  ACE_BUILD_SVC_DLL
+#include "ace/OS_NS_unistd.h"
 #include "ace/Service_Repository.h"
 #include "ace/Get_Opt.h"
 #include "ace/Thread_Manager.h"

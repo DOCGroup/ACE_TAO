@@ -1,6 +1,7 @@
 // $Id$
 
 #define  ACE_BUILD_SVC_DLL
+#include "ace/Recursive_Thread_Mutex.h"
 #include "Performance_Test_Options.h"
 #include "Benchmark_Performance.h"
 

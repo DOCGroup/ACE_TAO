@@ -1,3 +1,45 @@
+Fri May  7 17:26:33 2004  Steve Huston  <shuston@riverace.com>
+
+	* include/makeinclude/platform_aix_ibm.GNU: Changed the rtti default
+	  to 1 and changed the associated -qrtti option from dynamiccast to
+	  all since some parts of ACE use type IDs.
+
+	* ASNMP/asnmp/sagent.h: Added implied keyword "private" to sagent's
+	  derivation. Quiets a warning from Visual Age C++.
+
+	* apps/JAWS3/jaws3/Event_Dispatcher.cpp: Added #include
+	  "ace/Log_Msg.h" to pick up logging macros. Removed #include
+	  "ace/OS.h".
+
+	* examples/Reactor/Proactor/test_cancel.cpp:
+	* examples/Reactor/Proactor/test_proactor.cpp:
+	* examples/Reactor/Proactor/test_udp_proactor.cpp:
+	* performance-tests/Synch-Benchmarks/synch_driver.cpp:
+	* performance-tests/Synch-Benchmarks/Perf_Test/adaptive_mutex_test.cpp:
+	* performance-tests/Synch-Benchmarks/Perf_Test/adaptive_recursive_lock_test.cpp:
+	* performance-tests/Synch-Benchmarks/Perf_Test/adaptive_sema_test.cpp:
+	* performance-tests/Synch-Benchmarks/Perf_Test/pipe_proc_test.cpp:
+	* performance-tests/Synch-Benchmarks/Perf_Test/pipe_thr_test.cpp:
+	* performance-tests/Synch-Benchmarks/Base_Test/Baseline_Test.cpp:
+	* performance-tests/Synch-Benchmarks/Base_Test/base_test.cpp:
+	* performance-tests/Synch-Benchmarks/Base_Test/mutex_test.cpp:
+	  Added #include for OS_NS_*.h methods and/or "ace/Log_Msg.h" to
+	  pick up logging macros.
+
+	* performance-tests/Synch-Benchmarks/Perf_Test/guard_test.cpp: Added
+	  #include "ace/Guard_T.h" to see ACE_GUARD macros and classes.
+
+	* performance-tests/Synch-Benchmarks/Perf_Test/memory_test.cpp: Added
+	  #include "ace/OS_NS_string.h" to see ACE_OS stuff.
+
+	* performance-tests/Synch-Benchmarks/Perf_Test/recursive_lock_test.cpp:
+	  Added #include "ace/Recursive_Thread_Mutex.h" to find that class.
+
+	* performance-tests/Synch-Benchmarks/Perf_Test/rwrd_test.cpp:
+	* performance-tests/Synch-Benchmarks/Perf_Test/rwwr_test.cpp: Added
+	  #include "ace/RW_Mutex.h" to find that class.
+
+
 Fri May  7 14:25:07 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Log_Msg.cpp:

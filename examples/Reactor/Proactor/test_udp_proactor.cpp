@@ -27,6 +27,7 @@
 #include "ace/SOCK_Dgram.h"
 #include "ace/Message_Block.h"
 #include "ace/Get_Opt.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(Proactor, test_udp_proactor, "test_proactor.cpp,v 1.29 2001/02/02 23:41:16 shuston Exp")
 
