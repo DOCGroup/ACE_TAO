@@ -6,11 +6,10 @@
 #define ACE_RMCAST_STACK_H
 
 #include "Protocol.h"
-#include "RMCast_Export.h"
 
 namespace ACE_RMCast
 {
-  struct ACE_RMCast_Export Out_Element
+  struct Out_Element
   {
     virtual
     ~Out_Element ();
@@ -31,7 +30,7 @@ namespace ACE_RMCast
   };
 
 
-  struct ACE_RMCast_Export In_Element
+  struct In_Element
   {
     virtual
     ~In_Element ();
@@ -52,7 +51,7 @@ namespace ACE_RMCast
   };
 
 
-  struct ACE_RMCast_Export Element : In_Element, Out_Element
+  struct Element : In_Element, Out_Element
   {
   };
 }

@@ -27,7 +27,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
   {
     if (argc < 2) throw args ();
 
-    ACE_RMCast::Address addr (argv[1]);
+    ACE_INET_Addr addr (argv[1]);
 
     ACE_RMCast::Socket socket (addr);
 
