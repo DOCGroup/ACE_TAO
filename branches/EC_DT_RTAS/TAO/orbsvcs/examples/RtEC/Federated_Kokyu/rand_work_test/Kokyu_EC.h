@@ -14,6 +14,15 @@
 #include "tao/Utils/Servant_Var.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
 
+struct subtask_t
+{
+  int task_index;
+  int subtask_index;
+  ACE_Time_Value exec;
+  ACE_Time_Value period;
+  ACE_Time_Value phase;
+}; //struct subtask_t
+
 class Kokyu_EC : public POA_RtEventChannelAdmin::RtSchedEventChannel
 {
 public:
@@ -27,7 +36,7 @@ public:
       return (tv.sec () * 1000000 + tv.usec ())*10;
     }
 
-    int init(const char* schedule_discipline, PortableServer::POA_ptr poa);
+    int init(const char* schedule_discipline, PortableServer::POA_ptr poa, ACE_Reactor * reactor = 0);
 
     virtual RtEventChannelAdmin::handle_t register_consumer (
         const char * entry_point,
@@ -92,6 +101,24 @@ public:
                                    Supplier * supplier_impl,
                                    const char * supp_entry_point,
                                    RtecEventComm::EventType supp_type,
+                                   Supplier_Timeout_Handler * timeout_handler_impl,
+                                   ACE_Time_Value phase,
+                                   ACE_Time_Value period
+                                   ACE_ENV_ARG_DECL
+                                   )
+      ACE_THROW_SPEC ((
+                       CORBA::SystemException
+                       , RtecScheduler::UNKNOWN_TASK
+                       , RtecScheduler::INTERNAL
+                       , RtecScheduler::SYNCHRONIZATION_FAILURE
+                       ));
+
+  /*
+    ///Takes ownership of Supplier and Timeout_Consumer
+    void add_supplier_with_timeout(
+                                   Supplier * supplier_impl,
+                                   const char * supp_entry_point,
+                                   RtecEventComm::EventType supp_type,
                                    Timeout_Consumer * timeout_consumer_impl,
                                    const char * timeout_entry_point,
                                    ACE_Time_Value period,
@@ -122,7 +149,7 @@ public:
                      , RtecScheduler::INTERNAL
                      , RtecScheduler::SYNCHRONIZATION_FAILURE
                      ));
-
+  */
     ///Takes ownership of Supplier
     void add_supplier(
                       Supplier * supplier_impl,
@@ -174,6 +201,35 @@ public:
                        , RtecScheduler::SYNCHRONIZATION_FAILURE
                        ));
 
+  void set_up_last_subtask (subtask_t subtask,
+                            RtecEventComm::EventType in_type ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException
+                     , RtecScheduler::UNKNOWN_TASK
+                     , RtecScheduler::INTERNAL
+                     , RtecScheduler::SYNCHRONIZATION_FAILURE
+                     ));
+
+  void set_up_first_subtask (subtask_t subtask,
+                             RtecEventComm::EventSourceID supp_id1, RtecEventComm::EventSourceID supp_id2,
+                             RtecEventComm::EventType in_type, RtecEventComm::EventType out_type ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException
+                     , RtecScheduler::UNKNOWN_TASK
+                     , RtecScheduler::INTERNAL
+                     , RtecScheduler::SYNCHRONIZATION_FAILURE
+                     ));
+
+  void set_up_middle_subtask (subtask_t subtask,
+                              RtecEventComm::EventSourceID supp_id,
+                              RtecEventComm::EventType in_type, RtecEventComm::EventType out_type ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException
+                     , RtecScheduler::UNKNOWN_TASK
+                     , RtecScheduler::INTERNAL
+                     , RtecScheduler::SYNCHRONIZATION_FAILURE
+                     ));
+
 private:
   TAO::Utils::Servant_Var<POA_RtecScheduler::Scheduler> scheduler_impl_;
   TAO::Utils::Servant_Var<TAO_EC_Event_Channel> ec_impl_;
@@ -182,8 +238,11 @@ private:
   RtecScheduler::Scheduler_var scheduler_;
 
   ACE_Vector<Supplier*> suppliers_;
-  ACE_Vector<Timeout_Consumer*> timeout_consumers_;
+  ACE_Vector<Supplier_Timeout_Handler*> timeout_handlers_;
   ACE_Vector<Consumer*> consumers_;
+
+  ACE_Reactor *reactor_;
+  ACE_Vector<long> timer_handles_;
 }; //class Kokyu_EC
 
 class Reactor_Task : public ACE_Task<ACE_SYNCH>
@@ -255,4 +314,4 @@ private:
   ACE_Reactor *react_;
 }; //class Reactor_Task
 
-#endif
+#endif //KOKYU_EC_H
