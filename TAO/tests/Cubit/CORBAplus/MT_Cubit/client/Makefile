@@ -11,7 +11,7 @@
 
 LDLIBS     =  -lmtcorba -lmtunixsvc -lmtpbroker -lmtboadc -lmtnaming -lmtlifecycl -lmtfsstream
 
-IDL_SRC	= cubit.cpp 
+IDL_SRC	= cubit.cpp
 PROG_SRCS = $(IDL_SRC) Task_Client.cpp client.cpp
 
 LSRC = $(PROG_SRCS)
@@ -22,8 +22,6 @@ BIN = client
 BUILD = $(BIN)
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 VBIN = $(BIN:%=%$(VAR))
-
-WRAPPER_ROOT = $(ACE_ROOT)/
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
@@ -44,7 +42,7 @@ LDFLAGS += -L$(PBHOME)/lib
 CPPFLAGS += -I$(PBHOME)/include
 
 $(IDL_SRC): cubit.idl
-	$(PBHOME)/bin/idlc cubit.idl 
+	$(PBHOME)/bin/idlc cubit.idl
 	-/bin/mv cubit.C cubit.cpp
 
 client:	$(addprefix $(VDIR),$(CUBIT_CLIENT_OBJS))
