@@ -6172,10 +6172,9 @@ CORBA::Boolean operator>>= (
   }
   ACE_CATCHANY
   {
-    _tao_elem = Messaging::RebindPolicy::_nil ();
-    return 0;
   }
   ACE_ENDTRY;
+  _tao_elem = Messaging::RebindPolicy::_nil ();
   return 0;
 }
 
@@ -6251,10 +6250,9 @@ TAO_Messaging_Export CORBA::Boolean operator>>= (
   }
   ACE_CATCHANY
   {
-    _tao_elem = Messaging::SyncScopePolicy::_nil ();
-    return 0;
   }
   ACE_ENDTRY;
+  _tao_elem = Messaging::SyncScopePolicy::_nil ();
   return 0;
 }
 
@@ -6460,10 +6458,9 @@ TAO_Messaging_Export CORBA::Boolean operator>>= (
   }
   ACE_CATCHANY
   {
-    _tao_elem = Messaging::RequestPriorityPolicy::_nil ();
-    return 0;
   }
   ACE_ENDTRY;
+  _tao_elem = Messaging::RequestPriorityPolicy::_nil ();
   return 0;
 }
 
@@ -6540,10 +6537,9 @@ TAO_Messaging_Export CORBA::Boolean operator>>= (
   }
   ACE_CATCHANY
   {
-    _tao_elem = Messaging::ReplyPriorityPolicy::_nil ();
-    return 0;
   }
   ACE_ENDTRY;
+  _tao_elem = Messaging::ReplyPriorityPolicy::_nil ();
   return 0;
 }
 
@@ -6621,10 +6617,9 @@ TAO_Messaging_Export CORBA::Boolean operator>>= (
   }
   ACE_CATCHANY
   {
-    _tao_elem = Messaging::RequestStartTimePolicy::_nil ();
-    return 0;
   }
   ACE_ENDTRY;
+  _tao_elem = Messaging::RequestStartTimePolicy::_nil ();
   return 0;
 }
 
@@ -6702,10 +6697,9 @@ TAO_Messaging_Export CORBA::Boolean operator>>= (
   }
   ACE_CATCHANY
   {
-    _tao_elem = Messaging::RequestEndTimePolicy::_nil ();
-    return 0;
   }
   ACE_ENDTRY;
+  _tao_elem = Messaging::RequestEndTimePolicy::_nil ();
   return 0;
 }
 
@@ -6782,10 +6776,9 @@ TAO_Messaging_Export CORBA::Boolean operator>>= (
   }
   ACE_CATCHANY
   {
-    _tao_elem = Messaging::ReplyStartTimePolicy::_nil ();
-    return 0;
   }
   ACE_ENDTRY;
+  _tao_elem = Messaging::ReplyStartTimePolicy::_nil ();
   return 0;
 }
 
@@ -6862,10 +6855,9 @@ TAO_Messaging_Export CORBA::Boolean operator>>= (
   }
   ACE_CATCHANY
   {
-    _tao_elem = Messaging::ReplyEndTimePolicy::_nil ();
-    return 0;
   }
   ACE_ENDTRY;
+  _tao_elem = Messaging::ReplyEndTimePolicy::_nil ();
   return 0;
 }
 
@@ -6942,10 +6934,9 @@ TAO_Messaging_Export CORBA::Boolean operator>>= (
   }
   ACE_CATCHANY
   {
-    _tao_elem = Messaging::RelativeRequestTimeoutPolicy::_nil ();
-    return 0;
   }
   ACE_ENDTRY;
+  _tao_elem = Messaging::RelativeRequestTimeoutPolicy::_nil ();
   return 0;
 }
 
@@ -7022,10 +7013,9 @@ TAO_Messaging_Export CORBA::Boolean operator>>= (
   }
   ACE_CATCHANY
   {
-    _tao_elem = Messaging::RelativeRoundtripTimeoutPolicy::_nil ();
-    return 0;
   }
   ACE_ENDTRY;
+  _tao_elem = Messaging::RelativeRoundtripTimeoutPolicy::_nil ();
   return 0;
 }
 
@@ -7230,10 +7220,9 @@ TAO_Messaging_Export CORBA::Boolean operator>>= (
   }
   ACE_CATCHANY
   {
-    _tao_elem = Messaging::RoutingPolicy::_nil ();
-    return 0;
   }
   ACE_ENDTRY;
+  _tao_elem = Messaging::RoutingPolicy::_nil ();
   return 0;
 }
 
@@ -7310,10 +7299,9 @@ TAO_Messaging_Export CORBA::Boolean operator>>= (
   }
   ACE_CATCHANY
   {
-    _tao_elem = Messaging::MaxHopsPolicy::_nil ();
-    return 0;
   }
   ACE_ENDTRY;
+  _tao_elem = Messaging::MaxHopsPolicy::_nil ();
   return 0;
 }
 
@@ -7390,10 +7378,9 @@ TAO_Messaging_Export CORBA::Boolean operator>>= (
   }
   ACE_CATCHANY
   {
-    _tao_elem = Messaging::QueueOrderPolicy::_nil ();
-    return 0;
   }
   ACE_ENDTRY;
+  _tao_elem = Messaging::QueueOrderPolicy::_nil ();
   return 0;
 }
 
