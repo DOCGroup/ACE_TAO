@@ -277,7 +277,7 @@ TAO_Object_Manager<T,T_var>::operator=(const T_var &p)
       // that of a var variable.  Therefore we duplicate p's
       // pointer before assigning it to the internal
       // variable.
-      T_var::release (*this->ptr_);
+      T_var::tao_release (*this->ptr_);
       *this->ptr_ = T_var::tao_duplicate (p.in ());
     }
   else
