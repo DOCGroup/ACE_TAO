@@ -93,12 +93,11 @@ protected:
 
   // @@ Angelo, Do we want this friendship or should we just make the
   // default constructor public?  Check with Irfan or Carlos...
-  friend class Policy_Factory;
+  friend class TAO_Policy_Factory;
   TAO_PriorityModelPolicy (void);
   // This constructor is used by TAO_Policy_Factory when decoding
   // policies from tagged components in an IOR.
 
-  // @@ Angelo, please don't use 'in fact' in your comments.
 private:
 
   RTCORBA::PriorityModel priority_model_;
@@ -222,28 +221,28 @@ public:
                                          TAO_default_environment ());
 
   virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
-  // This method writes a CDR representation of the current object
+  // This method writes a CDR representation of the current object.
 
   virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
   // This method reads the object state from a CDR representation.
 
   // @@ Angelo, please use dot at the end of all your comments.
+  // Marina DONE.
 
 protected:
 
-  friend class Policy_Factory;
-  // @@ Angelo, spaces and voids...
-  TAO_PriorityBandedConnectionPolicy();
-  // This constructor is needed to create and instance
-  // and then restore its state from the CDR stream. In
-  // fact the logic of how the policy is streamed out and
-  // in a CDR stream is encapsulated in the class.
+  friend class TAO_Policy_Factory;
+  TAO_PriorityBandedConnectionPolicy (void);
+  // This constructor is used by TAO_Policy_Factory when decoding
+  // policies from tagged components in an IOR.
 
   // @@ Angelo, please look at how I changed a copy of the comment for
   // default constructor above in PriorityModelPolicy implementation
   // class.  Reword and clarify the comment above or just paste the
   // modified version from PriorityModelPolicy.
   // Apply the same fix to other classes.
+
+  // @@ Marina DONE.
 private:
 
   RTCORBA::PriorityBands priority_bands_;
@@ -286,25 +285,11 @@ public:
   virtual void destroy (CORBA::Environment &ACE_TRY_ENV =
                                          TAO_default_environment ());
 
-  // = CDR Encoder/Decoder.
-
-  virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
-  // This method writes a CDR representation of the current object
-
-  virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
-  // This method reads the object state from a CDR representation
-
+  
   // @@ Angelo, the ServerProtocolPolicy is not client-exposed, the
   // ClientProtocolPolicy is.
 
-protected:
-
-  friend class Policy_Factory;
-  TAO_ServerProtocolPolicy (void);
-  // This constructor is needed to create and instance
-  // and then restore its state from the CDR stream. In
-  // fact the logic of how the policy is streamed out and
-  // in a CDR stream is encapsulated in the class.
+  // Marina DONE.
 
 private:
 
@@ -348,6 +333,21 @@ public:
 
   virtual void destroy (CORBA::Environment &ACE_TRY_ENV =
                                          TAO_default_environment ());
+
+  // CDR Encoder/Decoder.
+  
+  virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
+  // This method writes a CDR representation of the current object.
+  
+  virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
+  // This method reads the object state from a CDR representation.
+  
+protected:
+
+  friend class TAO_Policy_Factory;
+  TAO_ClientProtocolPolicy (void);
+  // This constructor is used by TAO_Policy_Factory when decoding
+  // policies from tagged components in an IOR.
 
 private:
 
@@ -431,7 +431,7 @@ public:
   // This method writes a CDR representation of TCPProtocolProperties.
 
   virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
-  // This method reads the object state from a CDR representation
+  // This method reads the object state from a CDR representation.
 
 private:
   // = Attributes.
@@ -445,7 +445,7 @@ private:
 
 // @@ Angelo, please use words, i.e., Protocol instead of Proto
 // below.  You are only saving 3 chars but adding confusion.
-class  TAO_Proto_Properties_Factory;
+class  TAO_Protocol_Properties_Factory;
 
 class TAO_Export TAO_GIOP_Properties :
   public RTCORBA::GIOPProtocolProperties
@@ -454,11 +454,11 @@ public:
   virtual ~TAO_GIOP_Properties ();
 
 protected:
-  friend class TAO_Export TAO_Proto_Properties_Factory;
+  friend class TAO_Protocol_Properties_Factory;
   TAO_GIOP_Properties (void);
 };
 
-class TAO_Export TAO_Proto_Properties_Factory
+class TAO_Export TAO_Protocol_Properties_Factory
 {
 public:
 
@@ -479,7 +479,7 @@ public:
   // describes the ORB messaging protocol.
 
 protected:
-  TAO_Proto_Properties_Factory (void);
+  TAO_Protocol_Properties_Factory (void);
 };
 
 #if defined (__ACE_INLINE__)
@@ -494,3 +494,7 @@ protected:
 
 #include "ace/post.h"
 #endif /* TAO_RT_POLICY_I_H */
+
+
+
+

@@ -1,3 +1,52 @@
+Fri Jun 09 12:49:46 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* tao/Encodable.h
+        * tao/PolicyC.h
+        * tao/Policy_Factory.h
+        
+          Coding style and comments rewiew plus code review
+          comments for Marina.
+          
+        * tao/Policy_Factory.i        
+            
+          Added ACE_UNUSED_ARG to fix warning when TAO_HAS_RT_CORBA 
+          is not enabled.
+          
+          Coding style and comments rewiew plus code review
+          comments for Marina.
+
+        * tao/Profile.h
+        * tao/Profile.i
+        * tao/Profile.cpp
+
+          Fixed memory management problem related to <policy_list_>.
+          
+          Coding style and comments rewiew plus code review
+          comments for Marina.
+          
+        * tao/RTCORBAC.h
+
+          Coding style and comments rewiew.
+
+        * tao/Policy_Factory.h
+        * tao/Policy_Factory.i
+
+          Renamed class <Policy_Factory> to <TAO_Policy_Factory>.
+	  
+	  Updated factory method to create <TAO_ClientProtocolPolicy>
+	  instead of <TAO_ServerProtocolPolicy>.
+	
+        * tao/RT_Policy_i.cpp
+        * tao/RT_Policy_i.h
+
+          Renamed class <TAO_Proto_Properties_Factory> to
+          <TAO_Protocol_Properties_Factory>.
+	  
+	  Changed <TAO_ClientProtocolPolicy> to be client exposed
+	  instead of <TAO_ServerProtocolPolicy>.
+	
+          Coding style and comments rewiew.
+
 Fri Jun  9 09:45:03 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Exception.i:
