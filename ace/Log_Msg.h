@@ -321,9 +321,9 @@ public:
    */
   void thr_desc (ACE_Thread_Descriptor *td);
 
-#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS) && !defined(ACE_HAS_LASTEST_AND_GREATEST)
-  // These functions are disabled with ACE_HAS_LATEST_AND_GREATEST
-  // because the *semantics* have changed (they objects are no longer
+#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS) && defined(ACE_LEGACY_MODE)
+  // These functions are disabled without ACE_LEGACY_MODE
+  // because the *semantics* have changed (the objects are no longer
   // TSS).
   /// Get/Set TSS exception action.
   /// NOTE: The action is no longer TSS, they are global!
@@ -334,7 +334,7 @@ public:
   /// NOTE: The handler is no longer TSS, they are global!
   ACE_SEH_EXCEPT_HANDLER seh_except_handler (void);
   ACE_SEH_EXCEPT_HANDLER seh_except_handler (ACE_SEH_EXCEPT_HANDLER);
-#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS && ! ACE_HAS_GREATES_AND_LATEST*/
+#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS && ACE_LEGACY_MODE */
 
   // = Stop/start/query tracing status on a per-thread basis...
   void stop_tracing (void);
