@@ -1,3 +1,53 @@
+Thurs June 12 12:52:06 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	 * orbsvcs/orbsvcs/AV/AV_Core.cpp: Check if the peer address is
+	   set for B endpoint when initializing forward flows. If set use
+	   that address to create acceptors. This case happens when no
+ 	   address is specified for the A endpoint.
+
+	 * orbsvcs/orbsvcs/AV/FlowSpec_Entry.h:
+	 * orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp: Changed the flow spec entry from
+	   "Flowname\Direction\Format\Flow_Prtocol\Sender_Address" to
+	   "Flowname\Direction\Format\Flow_Prtocol\Sender_Address\Receiver_Address".
+	   The additonal Receiver_Address field allows the user to specify
+	   the receiver address that will be used to receive the
+	   data. This addition helps to solve the problem arising on a
+	   multihomed host where the acceptor was by default accepting on
+	   all interfaces. This was not acceptable in some cases. Hence,
+	   by specifying the sender and receiver addresses explicitly only
+	   the required interfaces on a multihomed host are used.
+
+	 * orbsvcs/orbsvcs/AV/QoS_UDP.cpp: 
+	 * orbsvcs/orbsvcs/AV/UDP.cpp:Made changes to create sockets on the
+	 specified local and remote addresses to send and receive data
+	 correspondingly.
+
+	 * orbsvcs/orbsvcs/AV/QoS_UDP.cpp: The source host and port in the
+	   TSpec for setting the RSVP sending_qos were not set
+	   correctly. This was fixed.
+
+	 * orbsvcs/tests/AVStreams/Asynch_Three_Stage/Connection_Manager.cpp:
+	 * orbsvcs/tests/AVStreams/Asynch_Three_Stage/Connection_Manager.h:
+	   Added load_ep () method to read an address file (if available)
+	   to get the sender and receiver endpoints for each flow that is
+	   set up. The address file has entries in the format:
+	   Flowname/Sender_Host:Port/Reciever_Host:Port. If the address
+	   file or endpoints are not specified then the connection manager
+	   uses INADDR_ANY for the endpoints.
+
+	 * orbsvcs/tests/AVStreams/Asynch_Three_Stage/Sender.h:
+	 * orbsvcs/tests/AVStreams/Asynch_Three_Stage/Sender.cpp:
+	 * orbsvcs/tests/AVStreams/Asynch_Three_Stage/Receiver.h:
+	 * orbsvcs/tests/AVStreams/Asynch_Three_Stage/Receiver.cpp:
+	 * orbsvcs/tests/AVStreams/Asynch_Three_Stage/Distributer.h:
+	 * orbsvcs/tests/AVStreams/Asynch_Three_Stage/Distributer.cpp:
+	   Added additional parameter -a <address_file> to the command line
+	   arguments to specify the endpoint address file from which to
+	   load the flow endpoint addresses. Also, made a call to the
+	   Connection_Manager::load_ep () method that reads the address
+	   file and stores the endpoint addresses for each speficied flow
+	   in a hash map.
+
 Wed Feb 19 12:52:06 2003  Heather Drury  <oci@cs.wustl.edu>
 
         * TAO version 1.3.1 released.
