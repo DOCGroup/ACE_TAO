@@ -1825,7 +1825,7 @@ CORBA_ORB::dll_string_to_object (const char *str,
          CORBA::Object::_nil ());
     }
 
-  return loader->create_object (this, ACE_TRY_ENV);
+  return loader->create_object (this, 0, 0, ACE_TRY_ENV);
 }
 
 // ****************************************************************
@@ -2047,6 +2047,13 @@ CORBA_ORB::_tao_add_to_IOR_table (const ACE_CString &object_id,
                       -1);
 
   return 0;
+}
+
+// Remove a mapping ObjectID->IOR from the table.
+int
+CORBA_ORB::_tao_del_from_IOR_table (const ACE_CString &object_id)
+{
+  return this->lookup_table_.del_ior (object_id);
 }
 
 // Find an IOR in the table for the given ObjectID.
