@@ -263,10 +263,47 @@ AST_Decl::set_prefix_with_typeprefix_r (char *value,
       return;
     }
 
+  if (this->prefix_scope_ != 0)
+    {
+      AST_Decl *decl = ScopeAsDecl (this->prefix_scope_);
+
+      idl_bool overridden =
+        decl->has_ancestor (ScopeAsDecl (appeared_in));
+
+      if (overridden)
+        {
+          return;
+        }
+    }
+
   delete [] this->repoID_;
   this->repoID_ = 0;
   this->prefix (value);
   this->prefix_scope_ = appeared_in;
+
+  UTL_Scope *s = DeclAsScope (this);
+
+  if (s != 0)
+    {
+      AST_Decl *tmp = 0;
+      UTL_Scope *s_tmp = 0;
+
+      for (UTL_ScopeActiveIterator i (s, UTL_Scope::IK_decls); 
+           !i.is_done ();
+           i.next ())
+        {
+          tmp = i.item ();
+          s_tmp = DeclAsScope (tmp);
+
+          if (s_tmp == 0)
+            {
+              continue;
+            }
+
+          tmp->set_prefix_with_typeprefix_r (value,
+                                             appeared_in);
+        }
+    }
 
   // This will recursively catch all previous openings of a module.
   if (this->node_type () == AST_Decl::NT_module)
