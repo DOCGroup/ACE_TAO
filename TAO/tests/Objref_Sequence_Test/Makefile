@@ -40,8 +40,6 @@ include $(TAO_ROOT)/taoconfig.mk
 
 .PRECIOUS: $(foreach ext, $(IDL_EXT), Test$(ext))
 
-TAO_SRVR_LIBS += -lTAO_CosNaming
-TAO_CLNT_LIBS += -lTAO_CosNaming
 server: $(addprefix $(VDIR),$(SERVER_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_SRVR_LIBS) $(POSTLINK)
 
