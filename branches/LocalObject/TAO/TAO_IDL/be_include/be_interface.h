@@ -293,7 +293,7 @@ private:
   be_interface *original_interface_;
 };
 
-class be_local_interface : public be_interface
+class be_local_interface : public virtual be_interface
 {
 public:
   be_local_interface (UTL_ScopedName *n,
@@ -308,7 +308,7 @@ public:
   virtual idl_bool is_local_interface ();
 };
 
-class be_abstract_interface : public be_interface
+class be_abstract_interface : public virtual be_interface
 {
 public:
   be_abstract_interface (UTL_ScopedName *n,

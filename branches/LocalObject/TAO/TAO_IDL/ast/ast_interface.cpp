@@ -925,12 +925,16 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
               // All OK, do the redefinition
               else
                 {
-#                 ifdef IDL_HAS_VALUETYPE
 
                   // only redefinition of the same kind
-                  if ((i->is_valuetype () != fd->is_valuetype ())
+                  if ((i->is_local_interface () != fd->is_local_interface ())
+#                 ifdef IDL_HAS_VALUETYPE
+                      ||(i->is_valuetype () != fd->is_valuetype ())
                       || (i->is_abstract_valuetype () != fd->is_abstract_valuetype ())
-                      || (i->is_abstract_interface () != fd->is_abstract_interface ()))
+                      || (i->is_abstract_interface () != fd->is_abstract_interface ())
+#                 endif /* IDL_HAS_VALUETYPE */
+                      )
+
                     {
                       idl_global->err ()->error2 (UTL_Error::EIDL_REDEF,
                                                   i,
@@ -938,7 +942,6 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
                       return;
                     }
 
-#                 endif /* IDL_HAS_VALUETYPE */
 
                   fd->redefine (i,
                                 p);

@@ -430,7 +430,8 @@ FE_InterfaceHeader::check_first (AST_Interface *i)
 idl_bool
 FE_InterfaceHeader::check_further (AST_Interface *i)
 {
-  if (i && ! i->is_valuetype ())
+  if (i && ! i->is_valuetype () &&
+      (this->is_local () || !i->is_local_interface ()))
     {
       return 1;
     }
@@ -491,10 +492,11 @@ FE_InterfaceHeader::n_inherits_flat (void)
 
 FE_Local_InterfaceHeader::FE_Local_InterfaceHeader (UTL_ScopedName *n,
                                                     UTL_NameList *nl,
-                                                    UTL_NameList *supports,
-                                                    idl_bool compile_now)
-  : FE_InterfaceHeader (n, nl, supports, compile_now)
+                                                    UTL_NameList *supports)
+  : FE_InterfaceHeader (n, nl, supports, 0)
 {
+  compile_inheritance (nl,
+                       supports);
 }
 
 idl_bool
@@ -505,10 +507,12 @@ FE_Local_InterfaceHeader::is_local (void)
 
 FE_Abstract_InterfaceHeader::FE_Abstract_InterfaceHeader (UTL_ScopedName *n,
                                                           UTL_NameList *nl,
-                                                          UTL_NameList *supports,
-                                                          idl_bool compile_now)
-  : FE_InterfaceHeader (n, nl, supports, compile_now)
+                                                          UTL_NameList *supports)
+
+  : FE_InterfaceHeader (n, nl, supports, 0)
 {
+  compile_inheritance (nl,
+                       supports);
 }
 
 idl_bool

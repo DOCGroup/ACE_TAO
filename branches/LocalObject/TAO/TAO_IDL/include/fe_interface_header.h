@@ -142,8 +142,7 @@ class FE_Local_InterfaceHeader : public FE_InterfaceHeader
 public:
   FE_Local_InterfaceHeader (UTL_ScopedName *n,
                             UTL_NameList *l,
-                            UTL_NameList *supports = 0,
-                            idl_bool compile_now = 1);
+                            UTL_NameList *supports = 0);
 
   virtual idl_bool is_local (void);
   // See if we are a local interface.
@@ -154,8 +153,7 @@ class FE_Abstract_InterfaceHeader : public FE_InterfaceHeader
 public:
   FE_Abstract_InterfaceHeader (UTL_ScopedName *n,
                                UTL_NameList *l,
-                               UTL_NameList *supports = 0,
-                               idl_bool compile_now = 1);
+                               UTL_NameList *supports = 0);
 
   virtual idl_bool is_abstract (void);
   // See if we are a local interface.
