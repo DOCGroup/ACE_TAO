@@ -1,17 +1,24 @@
+Thu Oct  2 13:02:44 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/Creator.pm:
+
+          When generating project names from '*' remove trailing
+          underscores.
+
 Thu Oct  2 07:33:07 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* Kokyu/Default_Dispatcher_Impl.{cpp,i}:
-	* Kokyu/Dispatcher_Task.{cpp,h,i}:
-	  Fixed to use allocators instead of new.
+        * Kokyu/Default_Dispatcher_Impl.{cpp,i}:
+        * Kokyu/Dispatcher_Task.{cpp,h,i}:
+          Fixed to use allocators instead of new.
 
-	* Kokyu/Kokyu_defs.{cpp,i,h}:
-	* Kokyu/Kokyu_dsrt.h:
-	  Moved some structure definitions around.
+        * Kokyu/Kokyu_defs.{cpp,i,h}:
+        * Kokyu/Kokyu_dsrt.h:
+          Moved some structure definitions around.
 
-	* Kokyu/tests/EDF/test.cpp:
-	* Kokyu/tests/FIFO/test.cpp:	
-	  Added shutdown of the dispatcher at the end.
-	  
+        * Kokyu/tests/EDF/test.cpp:
+        * Kokyu/tests/FIFO/test.cpp:
+          Added shutdown of the dispatcher at the end.
+
 
 Wed Oct  1 10:59:35 2003  Chad Elliott  <elliott_c@ociweb.com>
 
