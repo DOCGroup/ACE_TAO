@@ -1275,7 +1275,7 @@ TAO_AV_SFP_Factory::make_protocol_object (TAO_FlowSpec_Entry *entry,
                                                  transport,
                                                  flow_string),
                         0);
-	entry->flow_protocol_str( flow_string.c_str() );
+        entry->flow_protocol_str( flow_string.c_str() );
       }
       break;
     case TAO_FlowSpec_Entry::TAO_AV_INVALID_ROLE:
@@ -1300,6 +1300,7 @@ TAO_SFP_Frame_State::TAO_SFP_Frame_State (void)
                             0,
                             0,
                             0),
+        0,
         TAO_ENCAP_BYTE_ORDER),
    more_fragments_ (0),
    frame_block_ (0)
