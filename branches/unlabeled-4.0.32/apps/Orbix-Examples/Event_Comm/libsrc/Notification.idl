@@ -1,0 +1,42 @@
+/* -*- C++ -*- */
+// @(#)Notification.idl	1.1	10/18/96
+
+
+// ============================================================================
+//
+// = LIBRARY
+//    EventComm
+// 
+// = FILENAME
+//    Notification.idl
+//
+// = DESCRIPTION 
+//    This is the CORBA IDL interface for the Event Communication <Notification>.
+//
+// = AUTHOR
+//    Douglas C. Schmidt (schmidt@cs.wustl.edu)
+// 
+// ============================================================================
+
+#ifndef _NOTIFICATION_IDL
+#define _NOTIFICATION_IDL
+
+struct Notification
+  // = TITLE
+  //   Defines the interface for an event <Notification>.
+  //
+  // = This is the type passed by the Notifier to the Notification_Receiver.
+  //   Since it contains an <any>, it can hold any values.  Naturally,
+  //   the consumer must understand how to interpret this!
+{
+  string tag_;
+  // Tag for the notification.
+
+//  any value_;
+  // A notification can contain anything.
+
+  Object object_ref_;
+  // Object reference for callbacks.
+};
+
+#endif /* _NOTIFICATION_IDL */

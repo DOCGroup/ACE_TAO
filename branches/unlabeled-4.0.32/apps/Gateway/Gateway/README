@@ -1,0 +1,22 @@
+This application illustrates an application-level Gateway which
+routes messages between a set of Peers in a distributed environment.
+
+The default configuration is single-threaded, i.e., all Input_Channels
+and Output_Channels are multiplexed via the Reactor on a single thread
+of control.  To obtain a version that multi-threads both input and
+output simply set the following flag in the Makefile:
+
+DEFFLAGS += -DUSE_OUTPUT_MT -DUSE_INPUT_MT
+
+To get a version that uses single-threading for all Input_Channels,
+but a separate thread per-Output_Channel set the following flag in the
+Makefile:
+
+DEFFLAGS += -DUSE_OUTPUT_MT 
+
+If you examine the source code, you'll see that very few changes are
+required in the source code to switch between single-threading and
+multi-threading.  The ACE Task class is primarily responsible for
+enabling the flexible modification of concurrency strategies with
+little modification to the source code, design, and system
+architecture.
