@@ -781,8 +781,8 @@ class ACE_Export ACE_Asynch_Accept_Handler : public ACE_Event_Handler
   // = DESCRIPTION
   //      
 public:
-  ACE_Asynch_Accept_Handler (ACE_Reactor* reactor,
-                             ACE_Proactor* proactor);
+  ACE_Asynch_Accept_Handler (ACE_Reactor* reactor = 0,
+                             ACE_Proactor* proactor = 0);
   // Constructor. Give the reactor so that it can activate/deactivate
   // the handlers. Give also the proactor used here, so that the
   // handler can send information through the notification pipe of the

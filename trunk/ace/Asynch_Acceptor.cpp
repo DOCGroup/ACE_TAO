@@ -134,7 +134,7 @@ ACE_Asynch_Acceptor<HANDLER>::get_handle (void) const
 }
  
 template <class HANDLER> int
-ACE_Asynch_Acceptor<HANDLER>::accept (size_t bytes_to_read)
+ACE_Asynch_Acceptor<HANDLER>::accept (size_t bytes_to_read, const void *act)
 {
   ACE_Message_Block *message_block = 0;
   size_t space_needed = bytes_to_read + 2 * this->address_size ();
@@ -144,7 +144,9 @@ ACE_Asynch_Acceptor<HANDLER>::accept (size_t bytes_to_read)
 
   // Initiate asynchronous accepts
   if (this->asynch_accept_.accept (*message_block,
-				   bytes_to_read) == -1)
+				   bytes_to_read,
+                                   ACE_INVALID_HANDLE,
+                                   act) == -1)
     {
       // Cleanup on error
       message_block->release ();
