@@ -197,6 +197,10 @@ SOURCE=.\short.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\small_union.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\tmplinst.cpp
 # End Source File
 # Begin Source File
@@ -370,6 +374,10 @@ SOURCE=.\results.h
 # Begin Source File
 
 SOURCE=.\short.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\small_union.h
 # End Source File
 # Begin Source File
 
