@@ -47,12 +47,12 @@ TAO/tests/RTCORBA/Client_Protocol/run_test.pl: !MINIMUM
 TAO/tests/RTCORBA/Private_Connection/run_test.pl: !MINIMUM
 TAO/tests/RTCORBA/Explicit_Binding/run_test.pl: !MINIMUM
 TAO/tests/RTCORBA/Thread_Pool/run_test.pl: !MINIMUM !ST
-TAO/tests/RTCORBA/ORB_init/run_test.pl: !MINIMUM 
+TAO/tests/RTCORBA/ORB_init/run_test.pl: !MINIMUM
 TAO/tests/Hello/run_test.pl
 TAO/tests/Muxing/run_test.pl: !ST
 TAO/tests/MT_Client/run_test.pl: !ST
 TAO/tests/MT_Server/run_test.pl: !ST
-# DISABLED TAO/tests/Client_Leaks/run_test.pl: !ST !TRU_64
+# DISABLED TAO/tests/Client_Leaks/run_test.pl: !ST !Tru64
 TAO/tests/Server_Leaks/run_test.pl
 TAO/tests/Faults/run_test.pl: !MINIMUM
 TAO/tests/Crashed_Callback/run_test.pl: !MINIMUM
@@ -85,7 +85,7 @@ TAO/tests/DynAny_Test/run_test.pl: !MINIMUM
 TAO/tests/LongUpcalls/run_test.pl: !MINIMUM
 TAO/tests/LongUpcalls/run_ami_test.pl: !MINIMUM
 TAO/tests/Reliable_Oneways/run_test.pl: !MINIMUM
-TAO/tests/Blocking_Sync_None/run_test.pl: !MINIMUM
+TAO/tests/Blocking_Sync_None/run_test.pl: !MINIMUM !Tru64
 TAO/tests/Oneway_Buffering/run_message_count.pl: !MINIMUM
 TAO/tests/Oneway_Buffering/run_buffer_size.pl: !MINIMUM
 TAO/tests/Oneway_Buffering/run_timeout.pl: !MINIMUM

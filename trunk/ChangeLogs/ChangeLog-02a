@@ -1,10 +1,25 @@
+Fri Aug 10 19:39:48 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * bin/auto_run_tests.lst:
+
+          Disabled the Blocking_Sync_None test from running under Tru64.
+          Also changed the config parameter passed to the auto_compile
+          script from TRU_64 to Tru64 in
+               ~bugzilla/bin/auto_compile_tru64_cxx.
+
+          This is so that the test is disabled only for the WashU builds.
+          The reason being that Bala was not too happy with changing the
+          default values for all the platforms and we also wanted to avoid
+          more #ifdefs in the code. Other builds might have better values
+          and the test might succeed. Have to confirm this though.
+
 Fri Aug 10 17:59:47 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Svc_Conf_y.cpp:
-	* ace/OS.h: Added /**/ between #include and <sys/modem.h> and
-	  <alloca.h> to avoid warning from CE compiler.
+        * ace/Svc_Conf_y.cpp:
+        * ace/OS.h: Added /**/ between #include and <sys/modem.h> and
+          <alloca.h> to avoid warning from CE compiler.
 
-	* ace/ace_dll.vcp: Added Svc_Conf_Lexer_Guard.* to the project.
+        * ace/ace_dll.vcp: Added Svc_Conf_Lexer_Guard.* to the project.
 
 Fri Aug 10 13:40:46 2001  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -29,43 +44,43 @@ Fri Aug 10 11:06:23 2001  Chad Elliott  <elliott_c@ociweb.com>
 
 Thu Aug  9 16:56:05 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Hash_Map_Manager_T.i:
-	* ace/Hash_Map_Manager_T.cpp: We seem to be re-inventing wheels
-	  again and again.  A few months back we had a show stopper in a
-	  beta which was caused by usage of static cast. The cast was not
-	  to the liking of SunCC 4.2. Looks like we had to change a bunch
-	  of static cast sprayed in these two files to a C style cast as
-	  4.2 doesnt like them. Compilers like Borland handle these
-	  better, but not 4.2.
+        * ace/Hash_Map_Manager_T.i:
+        * ace/Hash_Map_Manager_T.cpp: We seem to be re-inventing wheels
+          again and again.  A few months back we had a show stopper in a
+          beta which was caused by usage of static cast. The cast was not
+          to the liking of SunCC 4.2. Looks like we had to change a bunch
+          of static cast sprayed in these two files to a C style cast as
+          4.2 doesnt like them. Compilers like Borland handle these
+          better, but not 4.2.
 
 Thu Aug  9 11:51:10 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* include/makeinclude/platform_hpux_aCC.GNU: On popular mandate we
-	  have the -w flag removed from CCFLAGS in the above file. Looks
-	  like the -w disables lots of warnings that may be useful.
+        * include/makeinclude/platform_hpux_aCC.GNU: On popular mandate we
+          have the -w flag removed from CCFLAGS in the above file. Looks
+          like the -w disables lots of warnings that may be useful.
 
 Thu Aug  9 11:41:01 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/CDR_Stream.h (ACE_OutputCDR): Fixed the ambigous constructor
-	  problem. The InputCDR class had two constructors which were
-	  similar if the default values for the arguments were
-	  exercised. Thanks to Torbjorn Backstrom
-	  <torbjorn.k.backstrom@volvo.com>  for reporting this.
+        * ace/CDR_Stream.h (ACE_OutputCDR): Fixed the ambigous constructor
+          problem. The InputCDR class had two constructors which were
+          similar if the default values for the arguments were
+          exercised. Thanks to Torbjorn Backstrom
+          <torbjorn.k.backstrom@volvo.com>  for reporting this.
 
 Wed Aug 08 21:27:50 2001  Ossama Othman  <ossama@uci.edu>
 
-	* bin/nightlybuilds/builds.lst (Debian_Wchar, Debian_GCC_3.0):
+        * bin/nightlybuilds/builds.lst (Debian_Wchar, Debian_GCC_3.0):
 
-	  The host these nightly builds were built on is now called
-	  "rumba" (previously "valinor").  Updated the build list
-	  accordingly.
+          The host these nightly builds were built on is now called
+          "rumba" (previously "valinor").  Updated the build list
+          accordingly.
 
 Wed Aug 08 21:19:09 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tests/Service_Config_Test.UTF-16.conf:
+        * tests/Service_Config_Test.UTF-16.conf:
 
-	  Removed extraneous characters from this file that were causing
-	  the Service Configurator's underlying lexer to "choke."
+          Removed extraneous characters from this file that were causing
+          the Service Configurator's underlying lexer to "choke."
 
 Wed Aug  8 16:23:31 2001  Carlos O'Ryan  <coryan@uci.edu>
 
