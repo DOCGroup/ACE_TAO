@@ -28,7 +28,7 @@ TAO::TypeCode::Sequence<RefCountPolicy>::tao_marshal (
 
   // Create a CDR encapsulation.
   return
-    (cdr << TAO_ENCAP_BYTE_ORDER)
+    (cdr << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER))
     && (cdr << *(this->content_type_))
     && (cdr << this->length_);
 }

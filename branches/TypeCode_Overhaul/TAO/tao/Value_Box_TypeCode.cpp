@@ -29,7 +29,7 @@ TAO::TypeCode::Value_Box<StringType, RefCountPolicy>::tao_marshal (
 
   // Create a CDR encapsulation.
   return
-    (cdr << TAO_ENCAP_BYTE_ORDER)
+    (cdr << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER))
     && (cdr << this->attributes_.id ())
     && (cdr << this->attributes_.name ())
     && (cdr << *(this->content_type_.in ()));
