@@ -206,7 +206,7 @@ public:
 
   // = Cancel methods, which provides a cooperative thread-termination mechanism (will not block).
   int cancel_all (void);
-  // Send signum to all stopped threads 
+  // Cancel's all the threads.
   int cancel (ACE_thread_t);
   // Cancel a single thread.
   int cancel_grp (int grp_id);

@@ -755,7 +755,6 @@ ACE_RW_Token::acquire (ACE_TPQ_Entry *caller,
   ACE_RETURN (-1);
 }
 
-
 int 
 ACE_RW_Token::tryacquire (ACE_TPQ_Entry *caller)
 {

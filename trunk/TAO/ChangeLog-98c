@@ -1,3 +1,8 @@
+Fri Jul  4 00:18:21 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tao/roa.h: Removed derogatory COMments ;-).  Thanks to Anton van
+ 	  Straaten <anton@appsolutions.com> for reporting this.
+
 Thu Jul  3 16:16:14 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* Added ACE_Svc_Export to a couple of declarations to make NT 

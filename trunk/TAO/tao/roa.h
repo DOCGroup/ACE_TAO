@@ -109,7 +109,6 @@ public:
   void please_shutdown (CORBA_Environment &env);
 
   // = COM IUnknown Support
-  //     The <__stdcall> needs to remain here until we get rid of COM crap.
   ULONG __stdcall AddRef (void);
   ULONG __stdcall Release (void);
   HRESULT __stdcall QueryInterface (REFIID riid, void** ppv);
