@@ -148,10 +148,13 @@ Sender::init (int argc,
                 "File opened successfully\n"));
 
   // Resolve the object reference of the receiver from the Naming Service.
-  if (this->bind_to_receiver (ACE_TRY_ENV) == -1)
+  result = this->bind_to_receiver (ACE_TRY_ENV);
+  
+  if (result != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) Error binding to the naming service\n"),
                       -1);
+
 
   // Initialize the  QoS
   AVStreams::streamQoS_var the_qos (new AVStreams::streamQoS);
