@@ -12,13 +12,14 @@ SRC = cubitS.cpp cubit_impl.cpp server.cpp
 
 SVR_OBJS = cubitS.o cubit_impl.o server.o
 
-LDLIBS	 = 
+LDLIBS	 = -lorbixmt
 
 VLDLIBS	 = $(LDLIBS:%=%$(VAR))
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
 #----------------------------------------------------------------------------
+exceptions = 1
 
 include		$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include		$(ACE_ROOT)/include/makeinclude/macros.GNU
@@ -34,8 +35,8 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 
 ORBIX_BINDIR    = $(ORBIX_ROOT)/bin
-ORBIX_LIBDIR    = $(ORBIX_ROOT)/corba2/lib
-ORBIX_INCDIR    = $(ORBIX_ROOT)/corba2/include
+ORBIX_LIBDIR    = $(ORBIX_ROOT)/lib
+ORBIX_INCDIR    = $(ORBIX_ROOT)/inc
 
 # Remove -DCubit_USE_BOA from below to use the TIE approach
 
@@ -53,37 +54,20 @@ all: server
 server: $(addprefix $(VDIR),$(SVR_OBJS))
 	$(LINK.cc) -o server $(addprefix $(VDIR),$(SVR_OBJS)) $(LDFLAGS) $(ITIIOP) $(ITSRV) $(VLDLIBS) $(POSTLINK)
 
+realclean: clean
+	-/bin/rm -rf server cubitC.* cubitS.* cubit.hh
 #----------------------------------------------------------------------------
 #	Dependencies
 #----------------------------------------------------------------------------
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
-.obj/cubit_impl.o .shobj/cubit_impl.so: cubit_impl.cpp cubit_impl.h cubit.h \
- $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5-sunc++-4.x.h \
+.obj/cubitS.o .obj/cubitS.so .shobj/cubitS.o .shobj/cubitS.so: cubitS.cpp cubit.hh cubitC.cpp
+.obj/cubit_impl.o .obj/cubit_impl.so .shobj/cubit_impl.o .shobj/cubit_impl.so: cubit_impl.cpp cubit_impl.h cubit.hh
+.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i
-.obj/server.o .shobj/server.so: server.cpp cubit_impl.h cubit.h \
- $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5-sunc++-4.x.h \
- $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i
+ $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h cubit_impl.h \
+ cubit.hh
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
