@@ -11,10 +11,6 @@
   <li>Currently, replacement of parameterized reference (PEReference) is
       not working.
 
-  <li>The encoding attributes in xml decl element is ignored. We have
-      no plan to support different character encoding other than
-      UNICODE ones.
-
 </ul>
 
 
