@@ -1,10 +1,16 @@
+Tue Nov 28 08:09:35 2000  David L. Levine <levine@cs.wustl.edu>
+
+        * tests/run_test.pl: added some more diagnostics to try
+          to figure out why run_tests.sh can't be exec'd on
+          UCI machines.
+
 Mon Nov 27 17:02:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ACE-INSTALL.html:
 
           While checking to make sure I did remove all references to
           .mdp files, I noticed that some of the Win32 instructions
-          could use some updating.  
+          could use some updating.
 
 Mon Nov 27 17:44:52 2000  David L. Levine <levine@cs.wustl.edu>
 
