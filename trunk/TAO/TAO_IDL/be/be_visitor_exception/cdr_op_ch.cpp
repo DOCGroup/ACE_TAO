@@ -51,10 +51,10 @@ be_visitor_exception_cdr_op_ch::visit_exception (be_exception *node)
 
   // generate the Cdr <<= and >>= operator declarations
   os->indent ();
-  *os << "CORBA::Boolean " << idl_global->export_macro ()
+  *os << "CORBA::Boolean " << idl_global->stub_export_macro ()
       << " operator<< (TAO_OutputCDR &, const " << node->name ()
       << " &); // " << be_nl;
-  *os << "CORBA::Boolean " << idl_global->export_macro ()
+  *os << "CORBA::Boolean " << idl_global->stub_export_macro ()
       << " operator>> (TAO_InputCDR &, "
       << node->name () << " &);\n";
 
@@ -74,4 +74,3 @@ be_visitor_exception_cdr_op_ch::visit_exception (be_exception *node)
   node->cli_hdr_cdr_op_gen (1);
   return 0;
 }
-

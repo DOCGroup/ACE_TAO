@@ -51,10 +51,10 @@ be_visitor_structure_cdr_op_ch::visit_structure (be_structure *node)
 
   // generate the CDR << and >> operator declarations
   os->indent ();
-  *os << "CORBA::Boolean " << idl_global->export_macro ()
+  *os << "CORBA::Boolean " << idl_global->stub_export_macro ()
       << " operator<< (TAO_OutputCDR &, const " << node->name ()
       << " &);" << be_nl;
-  *os << "CORBA::Boolean " << idl_global->export_macro ()
+  *os << "CORBA::Boolean " << idl_global->stub_export_macro ()
       << " operator>> (TAO_InputCDR &, "
       << node->name () << " &);\n";
 

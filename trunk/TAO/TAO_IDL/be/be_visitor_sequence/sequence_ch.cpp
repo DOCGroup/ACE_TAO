@@ -130,7 +130,7 @@ be_visitor_sequence_ch::gen_base_sequence_class (be_sequence *node)
           *os << ", " << node->max_size () << ">";
         }
     }
- 
+
   os->gen_endif_AHETI();
 
   return 0;
@@ -164,7 +164,7 @@ be_visitor_sequence_ch::instantiate_sequence (be_sequence *node)
     case be_sequence::MNG_STRING: // sequence of strings
       if (!node->unbounded ())
         this->gen_bounded_str_sequence (node);
-      // else 
+      // else
       //   inheriting from the right class is enough
       break;
     default: // not a managed type
@@ -176,9 +176,9 @@ be_visitor_sequence_ch::instantiate_sequence (be_sequence *node)
 	  be_predefined_type *predef = 0;
 	  if (bt->base_node_type () == AST_Type::NT_pre_defined)
 	    {
-	      be_typedef* alias = 
+	      be_typedef* alias =
 		be_typedef::narrow_from_decl (bt);
-	      
+
 	      if (alias == 0)
 		{
 		  predef =
@@ -199,7 +199,7 @@ be_visitor_sequence_ch::instantiate_sequence (be_sequence *node)
 	    this->gen_unbounded_sequence (node);
 #else
 	  // @@ This needs to be fixed. (Michael)
-	  be_predefined_type * bpt = 
+	  be_predefined_type * bpt =
 	    be_predefined_type::narrow_from_decl (node->base_type());
 	  if (bpt)
 	    {
@@ -271,7 +271,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
       << be_nl << be_nl;
 
   // generate a typedef to a parametrized sequence
-  *os << "class " << idl_global->export_macro ()
+  *os << "class " << idl_global->stub_export_macro ()
       << " " << node->local_name () << " : public ";
 
   if (this->gen_base_sequence_class (node) == -1)
@@ -332,7 +332,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
   be_predefined_type *predef = 0;
   if (bt->base_node_type () == AST_Type::NT_pre_defined)
     {
-      be_typedef* alias = 
+      be_typedef* alias =
 	be_typedef::narrow_from_decl (bt);
 
       if (alias == 0)
@@ -454,7 +454,7 @@ be_visitor_sequence_ch::gen_var_defn (be_sequence *node)
   // for over here.
 
   os->indent (); // start with whatever was our current indent level
-  *os << "class " << idl_global->export_macro ()
+  *os << "class " << idl_global->stub_export_macro ()
       << " " << namebuf << be_nl;
   *os << "{" << be_nl;
   *os << "public:\n";
@@ -563,7 +563,7 @@ be_visitor_sequence_ch::gen_out_defn (be_sequence *node)
   // generate the out definition (always in the client header)
   os->indent (); // start with whatever was our current indent level
 
-  *os << "class " << idl_global->export_macro () << " "
+  *os << "class " << idl_global->stub_export_macro () << " "
       << namebuf << be_nl;
   *os << "{" << be_nl;
   *os << "public:\n";

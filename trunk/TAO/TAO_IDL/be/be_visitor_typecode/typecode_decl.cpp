@@ -73,7 +73,7 @@ be_visitor_typecode_decl::visit_type (be_type *node)
     {
       // we are in the ROOT scope
       os->indent ();
-      *os << "extern " << idl_global->export_macro () << " CORBA::TypeCode_ptr "
+      *os << "extern " << idl_global->stub_export_macro () << " CORBA::TypeCode_ptr "
           << " " << node->tc_name (prefix, postfix)->last_component () << ";\n\n";
     }
   return 0;

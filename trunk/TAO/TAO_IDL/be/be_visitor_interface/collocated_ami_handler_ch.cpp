@@ -25,7 +25,7 @@
 
 #include "be_visitor_interface.h"
 
-ACE_RCSID(be_visitor_interface, collocated_ami_handler_ch, "$Id$") 
+ACE_RCSID(be_visitor_interface, collocated_ami_handler_ch, "$Id$")
 
 
 // ************************************************************
@@ -51,17 +51,17 @@ be_visitor_interface_collocated_ami_handler_ch::visit_interface (be_interface *n
   char *ifdef_string = 0;
   ACE_NEW_RETURN (ifdef_string,
                   char [ACE_OS::strlen ("AMI_") +
-                       ACE_OS::strlen (node->flatname ()) + 
+                       ACE_OS::strlen (node->flatname ()) +
                        ACE_OS::strlen ("_Handler") +
                        // end of string
                        1],
                   0);
-  ACE_OS::sprintf (ifdef_string, 
+  ACE_OS::sprintf (ifdef_string,
                    "AMI_%s_Handler",
                    node->flatname ());
-  
+
   os->gen_ifdef_macro (ifdef_string, "_collocated");
-  
+
   // Prepare the local name for the class.
   char *local_name = 0;
   ACE_NEW_RETURN (local_name,
@@ -71,17 +71,17 @@ be_visitor_interface_collocated_ami_handler_ch::visit_interface (be_interface *n
                        // end of string
                        1],
                   0);
-  ACE_OS::sprintf (local_name, 
+  ACE_OS::sprintf (local_name,
                    "AMI_%s_Handler",
                    node->local_name ()->get_string ());
 
   // Get the coll names.
   char *coll_local_name, *coll_full_name;
-  node->compute_coll_names (local_name, coll_local_name, coll_full_name); 
-  
+  node->compute_coll_names (local_name, coll_local_name, coll_full_name);
+
   // Output the class defn.
   os->indent ();
-  *os << "class " << idl_global->export_macro ()
+  *os << "class " << idl_global->stub_export_macro ()
       << " " << coll_local_name;
   os->incr_indent ();
   *os << " : public virtual " << local_name;
@@ -107,7 +107,7 @@ be_visitor_interface_collocated_ami_handler_ch::visit_interface (be_interface *n
 
   *os << local_name << "_ptr "
       << " servant," << be_nl;
-  
+
   *os << "TAO_Stub *stub\n";
   os->decr_indent ();
   *os << ");\n";
@@ -121,7 +121,7 @@ be_visitor_interface_collocated_ami_handler_ch::visit_interface (be_interface *n
       << "const CORBA::Char *logical_type_id," << be_nl
       << "CORBA_Environment &TAO_IN_ENV = TAO_default_environment ()" << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
-  
+
   // _get_servant method.
 
   if (!node->is_nested ())
@@ -151,7 +151,7 @@ be_visitor_interface_collocated_ami_handler_ch::visit_interface (be_interface *n
     }
 
   os->decr_indent ();
-  
+
   *os << be_nl << "private:\n";
   os->incr_indent ();
   if (!node->is_nested ())
