@@ -313,6 +313,16 @@ public:
     ACE_CDR::Boolean nocopy_;
   };
 
+  struct ACE_Export from_wstring
+  {
+    from_wstring (ACE_CDR::WChar* ws,
+                  ACE_CDR::ULong b,
+                  ACE_CDR::Boolean nocopy = 0);
+    ACE_CDR::WChar *val_;
+    ACE_CDR::ULong bound_;
+    ACE_CDR::Boolean nocopy_;
+  };
+
   // = We have one method per basic IDL type....
   // They return 0 on failure and 1 on success.
   ACE_CDR::Boolean write_boolean (ACE_CDR::Boolean x);
@@ -607,8 +617,17 @@ public:
 
   struct ACE_Export to_string
   {
-    to_string (ACE_CDR::Char *&s, ACE_CDR::ULong b);
+    to_string (ACE_CDR::Char *&s, 
+               ACE_CDR::ULong b);
     ACE_CDR::Char *&val_;
+    ACE_CDR::ULong bound_;
+  };
+
+  struct ACE_Export to_wstring
+  {
+    to_wstring (ACE_CDR::WChar *&ws,
+                ACE_CDR::ULong b);
+    ACE_CDR::WChar *&val_;
     ACE_CDR::ULong bound_;
   };
 
@@ -1018,7 +1037,12 @@ extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
 extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
                                                ACE_OutputCDR::from_string x);
 extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
+                                               ACE_OutputCDR::from_wstring x);
+extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
                                                const ACE_CDR::Char* x);
+extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
+                                               const ACE_CDR::WChar* x);
+
 // CDR input operators for primitive types
 extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
                                                ACE_CDR::Short &x);
@@ -1053,7 +1077,11 @@ extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
 extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
                                                ACE_InputCDR::to_string x);
 extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
+                                               ACE_InputCDR::to_wstring x);
+extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
                                                ACE_CDR::Char*& x);
+extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
+                                               ACE_CDR::WChar*& x);
 
 #endif /* __ACE_INLINE */
 
