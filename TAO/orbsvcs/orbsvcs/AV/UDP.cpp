@@ -362,7 +362,7 @@ TAO_AV_UDP_Acceptor::open (TAO_Base_StreamEndPoint *endpoint,
   if (flow_comp == TAO_AV_Core::TAO_AV_CONTROL)
     {
       this->flowname_ = TAO_AV_Core::get_control_flowname (entry->flowname ());
-    inet_addr = (ACE_INET_Addr *) entry->control_address ();
+      inet_addr = (ACE_INET_Addr *) entry->control_address ();
     }
   else
     {
@@ -370,14 +370,17 @@ TAO_AV_UDP_Acceptor::open (TAO_Base_StreamEndPoint *endpoint,
       inet_addr = (ACE_INET_Addr *) entry->address ();
     }
 
-  char buf[BUFSIZ];
-  inet_addr->addr_to_string (buf,
-                             BUFSIZ);
+  if (inet_addr != 0)
+    {
+      char buf[BUFSIZ];
+      inet_addr->addr_to_string (buf,
+				 BUFSIZ);
 
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "TAO_AV_UDP_Acceptor::open: %s\n",
-                buf));
+      if (TAO_debug_level > 0)
+	ACE_DEBUG ((LM_DEBUG,
+		    "TAO_AV_UDP_Acceptor::open: %s\n",
+		    buf));
+    }
 
   int result = this->open_i (inet_addr, 0);
 
@@ -422,10 +425,10 @@ TAO_AV_UDP_Acceptor::open_i (ACE_INET_Addr *inet_addr,
                              int is_default_addr)
 {
   int result = -1;
-
+  
   ACE_INET_Addr *local_addr = 0;
   TAO_AV_Flow_Handler *flow_handler = 0;
-
+  
   // if using a default address and this is the control flow component, the
   //  handler and local address are already set in the flow spec entry
   if (is_default_addr &&
@@ -827,16 +830,16 @@ TAO_AV_UDP_Connection_Setup::setup (TAO_AV_Flow_Handler *&flow_handler,
   else
     {
       if (local_addr == 0)
-	 	ACE_NEW_RETURN (local_addr,
+	ACE_NEW_RETURN (local_addr,
 			ACE_INET_Addr ("0"),
 			-1);
-
-	  char buf [BUFSIZ];
-	  local_addr->addr_to_string (buf, BUFSIZ);
-	  ACE_DEBUG ((LM_DEBUG,
-				  "Local Address %s\n",
-				  buf));
-
+      
+      char buf [BUFSIZ];
+      local_addr->addr_to_string (buf, BUFSIZ);
+      ACE_DEBUG ((LM_DEBUG,
+		  "Local Address %s\n",
+		  buf));
+      
       TAO_AV_UDP_Flow_Handler *handler;
       ACE_NEW_RETURN (handler,
                       TAO_AV_UDP_Flow_Handler,
@@ -847,10 +850,10 @@ TAO_AV_UDP_Connection_Setup::setup (TAO_AV_Flow_Handler *&flow_handler,
       if (ct == ACCEPTOR)
         result = handler->open (*inet_addr);
       else
-      result = handler->open (*local_addr);
+	result = handler->open (*local_addr);
       if (result < 0)
         ACE_ERROR_RETURN ((LM_ERROR,"handler::open failed\n"),-1);
-
+      
       // set the socket buffer sizes to 64k.
       int sndbufsize = ACE_DEFAULT_MAX_SOCKET_BUFSIZ;
       int rcvbufsize = ACE_DEFAULT_MAX_SOCKET_BUFSIZ;
