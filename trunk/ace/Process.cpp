@@ -167,11 +167,11 @@ ACE_Process_Options::ACE_Process_Options (int ie,
     set_handles_called_ (0),
     environment_buf_index_ (0),
     environment_argv_index_ (0),
-#endif /* !ACE_HAS_WINCE */
     environment_buf_ (0),
     environment_buf_len_ (ebl),
     max_environment_args_ (mea),
     max_environ_argv_index_ (mea - 1),
+#endif /* !ACE_HAS_WINCE */
     command_line_argv_calculated_ (0),
     command_line_buf_ (0)
 {
@@ -449,11 +449,10 @@ ACE_Process_Options::~ACE_Process_Options (void)
 #endif /* ACE_WIN32 */
       set_handles_called_ = 0;
     }
-#endif /* !ACE_HAS_WINCE */
-
-  delete [] command_line_buf_;
   delete [] environment_buf_;
   delete [] environment_argv_;
+#endif /* !ACE_HAS_WINCE */
+  delete [] command_line_buf_;
 }
 
 int
