@@ -180,6 +180,18 @@ AST_Union::~AST_Union (void)
 
 // Public operations.
 
+// Return the default_index.
+int
+AST_Union::default_index (void)
+{
+  if (this->default_index_ == -2)
+    {
+      this->compute_default_index ();
+    }
+
+  return this->default_index_;
+}
+
 // Are we or the parameter node involved in any recursion?
 idl_bool
 AST_Union::in_recursion (AST_Type *node)
@@ -501,17 +513,14 @@ AST_Union::compute_default_value (void)
   int total_case_members = 0;
 
   // Instantiate a scope iterator.
-  UTL_ScopeActiveIterator *si = 0;
-  ACE_NEW_RETURN (si,
-                  UTL_ScopeActiveIterator (this,
-                                           UTL_Scope::IK_decls),
-                  -1);
+  UTL_ScopeActiveIterator si (this,
+                              UTL_Scope::IK_decls);
 
-  while (!si->is_done ())
+  while (!si.is_done ())
     {
       // Get the next AST decl node.
       AST_UnionBranch *ub =
-        AST_UnionBranch::narrow_from_decl (si->item ());
+        AST_UnionBranch::narrow_from_decl (si.item ());
 
       if (ub != 0)
         {
@@ -527,10 +536,8 @@ AST_Union::compute_default_value (void)
             }
         }
 
-      si->next ();
+      si.next ();
     }
-
-  delete si;
 
   // Check if the total_case_members cover the entire
   // range of values that are permitted by the discriminant type. If they do,
@@ -636,7 +643,7 @@ AST_Union::compute_default_value (void)
   // If we have determined that we don't need a default case and even then a
   // default case was provided, flag this off as error.
   if ((this->default_value_.computed_ == 0) 
-      && (this->default_index_ != -1))
+      && (this->default_index () != -1))
     {
       // Error.
       this->default_value_.computed_ = -1;
@@ -702,18 +709,16 @@ AST_Union::compute_default_value (void)
   while (this->default_value_.computed_ == -2)
     {
       // Instantiate a scope iterator.
-      ACE_NEW_RETURN (si,
-                      UTL_ScopeActiveIterator (this, 
-                                               UTL_Scope::IK_decls),
-                      -1);
+      UTL_ScopeActiveIterator si (this, 
+                                  UTL_Scope::IK_decls);
 
       int break_loop = 0;
 
-      while (!si->is_done () && break_loop == 0)
+      while (!si.is_done () && break_loop == 0)
         {
           // Get the next AST decl node
           AST_UnionBranch *ub = 
-            AST_UnionBranch::narrow_from_decl (si->item ());
+            AST_UnionBranch::narrow_from_decl (si.item ());
 
           if (ub != 0)
             {
@@ -830,10 +835,8 @@ AST_Union::compute_default_value (void)
                 } // End of for loop going thru all labels.
             } // If valid union branch.
 
-          si->next ();
+          si.next ();
         } // End of while scope iterator loop.
-
-      delete si;
 
       // We have not aborted the inner loops which means we have found the
       // default value.
@@ -843,6 +846,61 @@ AST_Union::compute_default_value (void)
         }
 
     } // End of outer while (default_value.computed == -2).
+
+  return 0;
+}
+
+// Private  operations.
+
+// Compute the default index.
+int
+AST_Union::compute_default_index (void)
+{
+  AST_Decl *d = 0;
+  AST_UnionBranch *ub = 0;
+  int i = 0;
+
+  // If default case does not exist, it will have a value of -1 according to
+  // the spec.
+  this->default_index_ = -1;
+
+  // If there are elements in this scope...
+  if (this->nmembers () > 0)
+    {
+      // Instantiate a scope iterator.
+      UTL_ScopeActiveIterator si (this,
+                                  UTL_Scope::IK_decls);
+      while (!si.is_done ())
+        {
+          // Get the next AST decl node.
+          d = si.item ();
+
+          if (!d->imported ())
+            {
+              ub = AST_UnionBranch::narrow_from_decl (d);
+
+              for (unsigned long j = 0;
+                   j < ub->label_list_length ();
+                   ++j)
+                {
+                  // Check if we are printing the default case.
+                  if (ub->label (j)->label_kind ()
+                        == AST_UnionLabel::UL_default)
+                    {
+                      // Zero based indexing.
+                      this->default_index_ = i;
+                    }
+                }
+
+              // TAO's Typecode class keeps only a member count (not
+              // a label count) so this increment has been moved
+              // out of the inner loop.
+              i++;
+            }
+
+          si.next ();
+        }
+    }
 
   return 0;
 }

@@ -132,15 +132,14 @@ public:
   int default_value (DefaultValue &);
   // Get the default value.
 
+  virtual int default_index (void);
+  // Return the default index used.
+
   // AST Dumping.
   virtual void dump (ostream &);
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
-
-protected:
-  int default_index_;
-  // Default label index (zero based indexing).
 
 private:
   // Data.
@@ -184,8 +183,14 @@ private:
   virtual int compute_default_value (void);
   // Compute the default value (if any).
 
+  int compute_default_index (void);
+  // Count the default index.
+
   DefaultValue default_value_;
   // Default value (if any).
+
+  int default_index_;
+  // Default label index (zero based indexing).
 };
 
 #endif           // _AST_UNION_AST_UNION_HH
