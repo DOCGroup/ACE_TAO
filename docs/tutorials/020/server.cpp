@@ -26,7 +26,7 @@ main (int, char *[])
     while (*shm != '*')
         ACE_OS::sleep (1);
 
-    for (char *s = shm; *s != '\0'; s++)
+    for (s = shm; *s != '\0'; s++)
     {
         putchar (*s);
     }

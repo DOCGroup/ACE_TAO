@@ -73,7 +73,7 @@ int main (int argc, char *argv[])
 
     ACE_DEBUG ((LM_DEBUG, "(%P|%t) Application exiting\n"));
 
-    exit (0);
+    return (0);
 }
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Guard < ACE_Mutex >;

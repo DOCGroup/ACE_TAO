@@ -1,3 +1,25 @@
+Wed Jan 13 18:48:30 EST 1999  James CE Johnson  <jcej@lads.com>
+
+	* docs/tutorials/004/client.cpp:
+	  docs/tutorials/010/message_queue.cp:
+	  docs/tutorials/011/message_queue.cpp:
+	  docs/tutorials/012/message_queue.cpp:
+	  docs/tutorials/013/message_queue.cpp:
+	  docs/tutorials/014/EndTask.h:
+	  docs/tutorials/019/client.cpp:
+	  docs/tutorials/019/client2.cpp:
+	  docs/tutorials/019/server.cpp:
+	  docs/tutorials/019/server2.cpp:
+	  docs/tutorials/019/shmem.cpp:
+	  docs/tutorials/020/client.cpp:
+	  docs/tutorials/020/server.cpp:
+	  docs/tutorials/021/client.cpp:
+	  docs/tutorials/021/mpool.cpp:
+	  docs/tutorials/021/mpool.h:
+	  docs/tutorials/021/server.cpp:
+		Fixed many NT issues found by Irfan.  Most are related to the
+		fact that NT doesn't have SysV shared memory.
+
 Wed Jan 13 16:40:08 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.h: Reversed the definitions for ACE_DES_FREE_TEMPLATE*

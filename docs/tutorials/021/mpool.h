@@ -7,6 +7,9 @@
 // Everything else we need is in this one header
 #include "ace/Malloc.h"
 
+
+#if ! defined(ACE_LACKS_SYSV_SHMEM)
+
 /*
   With this we will abstract away some of the details of the memory
   pool.  Note that we don't treat this as a singleton because an
@@ -60,4 +63,6 @@ public:
     static const char * RegionName;
 };
 
-#endif
+#endif // ACE_LACKS_SYSV_SHMEM
+
+#endif // MPOOL_H
