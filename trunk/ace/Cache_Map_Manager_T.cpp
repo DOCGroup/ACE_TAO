@@ -20,16 +20,16 @@
 ACE_RCSID(ace, Cache_Map_Manager_T, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Cache_Map_Manager)
-
+  
 ACE_ALLOC_HOOK_DEFINE(ACE_Cache_Map_Iterator)
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Cache_Map_Reverse_Iterator)
 
-template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class MAP, class CACHING_STRATEGY, class ATTRIBUTES> 
-ACE_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, MAP, CACHING_STRATEGY, ATTRIBUTES>::ACE_Cache_Map_Manager (size_t size,
-                                                                                                                      ACE_Allocator *alloc,
-                                                                                                                      CACHING_STRATEGY *caching_s,
-                                                                                                                      int delete_caching_strategy)
+template <class KEY, class VALUE, class MAP, class CACHING_STRATEGY, class ATTRIBUTES> 
+ACE_Cache_Map_Manager<KEY, VALUE,  MAP, CACHING_STRATEGY, ATTRIBUTES>::ACE_Cache_Map_Manager (size_t size,
+                                                                                              ACE_Allocator *alloc,
+                                                                                              CACHING_STRATEGY *caching_s,
+                                                                                              int delete_caching_strategy)
   : caching_strategy_ (0)
 {
   if (this->open (size, alloc, caching_s, delete_caching_strategy) == -1)
@@ -39,16 +39,16 @@ ACE_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, MAP, CACHING_STRATEGY
   
 }
 
-template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class MAP, class CACHING_STRATEGY, class ATTRIBUTES>
-ACE_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, MAP, CACHING_STRATEGY, ATTRIBUTES>::~ACE_Cache_Map_Manager (void)
+template <class KEY, class VALUE, class MAP, class CACHING_STRATEGY, class ATTRIBUTES>
+ACE_Cache_Map_Manager<KEY, VALUE,  MAP, CACHING_STRATEGY, ATTRIBUTES>::~ACE_Cache_Map_Manager (void)
 {
 }
 
-template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class MAP, class CACHING_STRATEGY, class ATTRIBUTES> int
-ACE_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, MAP, CACHING_STRATEGY, ATTRIBUTES>::open (size_t length,
-                                                                                                     ACE_Allocator *alloc,
-                                                                                                     CACHING_STRATEGY *caching_s,
-                                                                                                     int delete_caching_strategy)  
+template <class KEY, class VALUE, class MAP, class CACHING_STRATEGY, class ATTRIBUTES> int
+ACE_Cache_Map_Manager<KEY, VALUE,  MAP, CACHING_STRATEGY, ATTRIBUTES>::open (size_t length,
+                                                                             ACE_Allocator *alloc,
+                                                                             CACHING_STRATEGY *caching_s,
+                                                                             int delete_caching_strategy)  
 {
   // Create the map.
   if (this->map_.open (length,
@@ -87,8 +87,8 @@ ACE_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, MAP, CACHING_STRATEGY
   return 0;
 }
 
-template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class MAP, class CACHING_STRATEGY, class ATTRIBUTES> int
-ACE_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, MAP, CACHING_STRATEGY, ATTRIBUTES>::close (void)
+template <class KEY, class VALUE, class MAP, class CACHING_STRATEGY, class ATTRIBUTES> int
+ACE_Cache_Map_Manager<KEY, VALUE,  MAP, CACHING_STRATEGY, ATTRIBUTES>::close (void)
 {
   if (this->delete_caching_strategy_ == 1)
     delete this->caching_strategy_;
@@ -100,9 +100,9 @@ ACE_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, MAP, CACHING_STRATEGY
   return this->map_.close ();
 }
 
-template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class MAP, class CACHING_STRATEGY, class ATTRIBUTES> int
-ACE_Cache_Map_Manager<KEY, VALUE, HASH_KEY, COMPARE_KEYS, MAP, CACHING_STRATEGY, ATTRIBUTES>::bind (const KEY &key,
-                                                                                                    const VALUE &value)
+template <class KEY, class VALUE, class MAP, class CACHING_STRATEGY, class ATTRIBUTES> int
+ACE_Cache_Map_Manager<KEY, VALUE, MAP, CACHING_STRATEGY, ATTRIBUTES>::bind (const KEY &key,
+                                                                            const VALUE &value)
 {
   // Insert an entry which has the <key> and the <cache_value> which
   // is the combination of the <value> and the attributes of the
@@ -136,9 +136,9 @@ ACE_Cache_Map_Manager<KEY, VALUE, HASH_KEY, COMPARE_KEYS, MAP, CACHING_STRATEGY,
 }
 
 
-template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class MAP, class CACHING_STRATEGY, class ATTRIBUTES> int
-ACE_Cache_Map_Manager<KEY, VALUE, HASH_KEY, COMPARE_KEYS, MAP, CACHING_STRATEGY, ATTRIBUTES>::rebind (const KEY &key,
-                                                                                                      const VALUE &value)
+template <class KEY, class VALUE, class MAP, class CACHING_STRATEGY, class ATTRIBUTES> int
+ACE_Cache_Map_Manager<KEY, VALUE, MAP, CACHING_STRATEGY, ATTRIBUTES>::rebind (const KEY &key,
+                                                                              const VALUE &value)
 {
   CACHE_VALUE cache_value (value,
                            this->caching_strategy_->attributes ());
@@ -173,10 +173,10 @@ ACE_Cache_Map_Manager<KEY, VALUE, HASH_KEY, COMPARE_KEYS, MAP, CACHING_STRATEGY,
 }
 
 
-template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class MAP, class CACHING_STRATEGY, class ATTRIBUTES> int
-ACE_Cache_Map_Manager<KEY, VALUE, HASH_KEY, COMPARE_KEYS, MAP, CACHING_STRATEGY, ATTRIBUTES>::rebind (const KEY &key,
-                                                                                                      const VALUE &value,
-                                                                                                      VALUE &old_value)
+template <class KEY, class VALUE, class MAP, class CACHING_STRATEGY, class ATTRIBUTES> int
+ACE_Cache_Map_Manager<KEY, VALUE, MAP, CACHING_STRATEGY, ATTRIBUTES>::rebind (const KEY &key,
+                                                                              const VALUE &value,
+                                                                              VALUE &old_value)
 {
   CACHE_VALUE cache_value (value,
                            this->caching_strategy_->attributes ());
@@ -220,11 +220,11 @@ ACE_Cache_Map_Manager<KEY, VALUE, HASH_KEY, COMPARE_KEYS, MAP, CACHING_STRATEGY,
   return rebind_result;
 }
 
-template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class MAP, class CACHING_STRATEGY, class ATTRIBUTES> int
-ACE_Cache_Map_Manager<KEY, VALUE, HASH_KEY, COMPARE_KEYS, MAP, CACHING_STRATEGY, ATTRIBUTES>::rebind (const KEY &key,
-                                                                                                      const VALUE &value,
-                                                                                                      KEY &old_key,
-                                                                                                      VALUE &old_value)
+template <class KEY, class VALUE, class MAP, class CACHING_STRATEGY, class ATTRIBUTES> int
+ACE_Cache_Map_Manager<KEY, VALUE, MAP, CACHING_STRATEGY, ATTRIBUTES>::rebind (const KEY &key,
+                                                                              const VALUE &value,
+                                                                              KEY &old_key,
+                                                                              VALUE &old_value)
 {
   CACHE_VALUE cache_value (value,
                            this->caching_strategy_->attributes ());
@@ -269,9 +269,9 @@ ACE_Cache_Map_Manager<KEY, VALUE, HASH_KEY, COMPARE_KEYS, MAP, CACHING_STRATEGY,
   return rebind_result;
 }
 
-template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class MAP, class CACHING_STRATEGY, class ATTRIBUTES> int
-ACE_Cache_Map_Manager<KEY, VALUE, HASH_KEY, COMPARE_KEYS, MAP, CACHING_STRATEGY, ATTRIBUTES>::trybind (const KEY &key,
-                                                                                                       VALUE &value)
+template <class KEY, class VALUE, class MAP, class CACHING_STRATEGY, class ATTRIBUTES> int
+ACE_Cache_Map_Manager<KEY, VALUE, MAP, CACHING_STRATEGY, ATTRIBUTES>::trybind (const KEY &key,
+                                                                               VALUE &value)
 {
   CACHE_VALUE cache_value (value,
                            this->caching_strategy_->attributes ());
@@ -311,9 +311,9 @@ ACE_Cache_Map_Manager<KEY, VALUE, HASH_KEY, COMPARE_KEYS, MAP, CACHING_STRATEGY,
   return trybind_result;
 }
 
-template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class MAP, class CACHING_STRATEGY, class ATTRIBUTES> int
-ACE_Cache_Map_Manager<KEY, VALUE, HASH_KEY, COMPARE_KEYS, MAP, CACHING_STRATEGY, ATTRIBUTES>::find (const KEY &key,
-                                                                                                    VALUE &value)
+template <class KEY, class VALUE, class MAP, class CACHING_STRATEGY, class ATTRIBUTES> int
+ACE_Cache_Map_Manager<KEY, VALUE, MAP, CACHING_STRATEGY, ATTRIBUTES>::find (const KEY &key,
+                                                                            VALUE &value)
 {
   // Lookup the key and populate the <value>.
   CACHE_VALUE cache_value;
@@ -350,8 +350,8 @@ ACE_Cache_Map_Manager<KEY, VALUE, HASH_KEY, COMPARE_KEYS, MAP, CACHING_STRATEGY,
   return find_result;
 }
 
-template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class MAP, class CACHING_STRATEGY, class ATTRIBUTES> int
-ACE_Cache_Map_Manager<KEY, VALUE, HASH_KEY, COMPARE_KEYS, MAP, CACHING_STRATEGY, ATTRIBUTES>::find (const KEY &key)
+template <class KEY, class VALUE, class MAP, class CACHING_STRATEGY, class ATTRIBUTES> int
+ACE_Cache_Map_Manager<KEY, VALUE, MAP, CACHING_STRATEGY, ATTRIBUTES>::find (const KEY &key)
 {
   // Lookup the key and populate the <value>.
   CACHE_VALUE cache_value;
@@ -388,8 +388,8 @@ ACE_Cache_Map_Manager<KEY, VALUE, HASH_KEY, COMPARE_KEYS, MAP, CACHING_STRATEGY,
 }
 
 
-template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class MAP, class CACHING_STRATEGY, class ATTRIBUTES> int
-ACE_Cache_Map_Manager<KEY, VALUE, HASH_KEY, COMPARE_KEYS, MAP, CACHING_STRATEGY, ATTRIBUTES>::unbind (const KEY &key)
+template <class KEY, class VALUE, class MAP, class CACHING_STRATEGY, class ATTRIBUTES> int
+ACE_Cache_Map_Manager<KEY, VALUE, MAP, CACHING_STRATEGY, ATTRIBUTES>::unbind (const KEY &key)
 {
   // Remove the entry from the cache.
   CACHE_VALUE cache_value;
@@ -411,9 +411,9 @@ ACE_Cache_Map_Manager<KEY, VALUE, HASH_KEY, COMPARE_KEYS, MAP, CACHING_STRATEGY,
   return unbind_result;
 }
 
-template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class MAP, class CACHING_STRATEGY, class ATTRIBUTES> int
-ACE_Cache_Map_Manager<KEY, VALUE, HASH_KEY, COMPARE_KEYS, MAP, CACHING_STRATEGY, ATTRIBUTES>::unbind (const KEY &key,
-                                                                                                      VALUE &value)
+template <class KEY, class VALUE, class MAP, class CACHING_STRATEGY, class ATTRIBUTES> int
+ACE_Cache_Map_Manager<KEY, VALUE, MAP, CACHING_STRATEGY, ATTRIBUTES>::unbind (const KEY &key,
+                                                                              VALUE &value)
 {
   // Remove the entry from the cache.
   CACHE_VALUE cache_value;
@@ -438,8 +438,8 @@ ACE_Cache_Map_Manager<KEY, VALUE, HASH_KEY, COMPARE_KEYS, MAP, CACHING_STRATEGY,
 }
 
 
-template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class MAP, class CACHING_STRATEGY, class ATTRIBUTES> void
-ACE_Cache_Map_Manager<KEY, VALUE, HASH_KEY, COMPARE_KEYS, MAP, CACHING_STRATEGY, ATTRIBUTES>::dump (void) const
+template <class KEY, class VALUE, class MAP, class CACHING_STRATEGY, class ATTRIBUTES> void
+ACE_Cache_Map_Manager<KEY, VALUE, MAP, CACHING_STRATEGY, ATTRIBUTES>::dump (void) const
 {
   this->map_.dump ();
   
