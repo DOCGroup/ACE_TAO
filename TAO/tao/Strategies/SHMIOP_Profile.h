@@ -36,7 +36,6 @@
 
 #include "ace/Synch.h"
 
-class TAO_SHMIOP_Client_Connection_Handler;
 
 // TAO SHMIOP_Profile concrete Profile definitions
 class TAO_Strategies_Export TAO_SHMIOP_Profile : public TAO_Profile

@@ -29,7 +29,6 @@
 
 #include "ace/Synch.h"
 
-class TAO_IIOP_Client_Connection_Handler;
 
 // TAO IIOP_Profile concrete Profile definitions
 /**
