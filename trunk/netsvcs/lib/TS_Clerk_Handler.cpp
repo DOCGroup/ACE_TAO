@@ -561,7 +561,7 @@ ACE_TS_Clerk_Processor::parse_args (int argc, char *argv[])
 	  // Get the poolname
 	  ACE_OS::strncpy (this->poolname_,
 			   ACE_WIDE_STRING (get_opt.optarg),
-			   sizeof this->poolname_ / sizeof TCHAR);
+			   sizeof this->poolname_ / sizeof (TCHAR));
 	  break;
 	case 'b':
 	  // Blocking semantics
