@@ -294,14 +294,12 @@ TAO_Transport::bind_reply_dispatcher (CORBA::ULong request_id,
 // handled. Returns -1 on errors.
 // If <block> is 1, then reply is read in a blocking manner.
 
-// @@ Should this be an pure virtual method? (Alex)
 int
 TAO_Transport::handle_client_input (int /* block */)
 {
   ACE_NOTSUP_RETURN (-1);
 }
 
-// @@ Should this be an pure virtual method? (Alex)
 int
 TAO_Transport::register_handler (void)
 {
