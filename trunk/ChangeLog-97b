@@ -1,3 +1,9 @@
+Thu Oct 30 06:14:58 1997  David L. Levine  <levine@cs.wustl.edu>
+
+        * Makefile,ACE-INSTALL: removed ACE-INSTALL from CVS control.
+          It will only be created when a release is made in
+          /project/adaptive/ACE_wrappers, and not put under CVS control.
+
 Thu Oct 30 03:25:13 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* ace/Hash_Map_Manager.cpp (close_i): Can't use ACE_DES*
