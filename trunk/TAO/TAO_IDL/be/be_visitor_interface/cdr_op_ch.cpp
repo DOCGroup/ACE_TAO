@@ -42,7 +42,7 @@ int
 be_visitor_interface_cdr_op_ch::visit_interface (be_interface *node)
 {
   // No CDR operations for locality constraint interfaces.
-  if (node->cli_hdr_cdr_op_gen () || node->imported () || node->is_local ())
+  if (node->cli_hdr_cdr_op_gen () || node->imported ())
     {
       return 0;
     }
