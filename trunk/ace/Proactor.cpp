@@ -514,11 +514,10 @@ ACE_Proactor::proactor_end_event_loop (void)
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, mutex_, -1));
 
     // Set the end flag.
-    ACE_Proactor::end_event_loop_ = 1;
+    this->end_event_loop_ = 1;
 
     // Number of completions to post.
-    how_many = ACE_Proactor::event_loop_thread_count_;
-
+    how_many = this->event_loop_thread_count_;
     if (how_many == 0)
       return 0;
   }

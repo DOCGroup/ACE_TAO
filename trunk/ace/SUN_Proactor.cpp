@@ -95,13 +95,13 @@ ACE_SUN_Proactor::handle_events (u_long milli_seconds)
       result = aiowait (&timeout);
     }
 
-  if (ACE_reinterpret_cast (long, result) == 0)
+  if (result == 0)
     {
       // timeout, do nothing,
       // we should process "post_completed" queue 
     }
   else if (ACE_reinterpret_cast (long, result) == -1)
-    { 
+    {
       // Check errno  for  EINVAL,EAGAIN,EINTR ??
       switch (errno)
        {
@@ -169,24 +169,20 @@ ACE_SUN_Proactor::get_result_status (ACE_POSIX_Asynch_Result* asynch_result,
        return 0;  // not completed
      }
 
-#if 0
    if (error_status == -1)   // should never be
       ACE_ERROR ((LM_ERROR,
                   "%N:%l:(%P | %t)::%p\n",
                   "ACE_SUN_Proactor::get_result_status:"
                   "<aio_errno> has failed\n"));
-#endif /* 0 */
 
    if (return_status < 0)
     {
       return_status = 0; // zero bytes transferred
-#if 0
       if (error_status == 0)  // nonsense
         ACE_ERROR ((LM_ERROR,   
                     "%N:%l:(%P | %t)::%p\n",
                     "ACE_SUN_Proactor::get_result_status:"
                     "<aio_return> failed\n"));
-#endif /* 0 */
     }
 
    return 1; // completed
@@ -219,12 +215,10 @@ ACE_SUN_Proactor::find_completed_aio (aio_result_t *result,
                                error_status,
                                return_status) == 0)
     { // should never be
-#if 0
       ACE_ERROR ((LM_ERROR,
                   "%N:%l:(%P | %t)::%p\n",
                   "ACE_SUN_Proactor::find_completed_aio:"
                   "should never be !!!\n"));
-#endif /* 0 */
       return 0;
     }
 
