@@ -83,8 +83,6 @@ Timer_Helper::handle_timeout (const ACE_Time_Value &time,
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Unbounded_Set <CosTime::TimeService_var>;
-template class TAO_Unbounded_Sequence<CosNaming::NameComponent>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Unbounded_Set <CosTime::TimeService_var>
-#pragma instantiate TAO_Unbounded_Sequence<CosNaming::NameComponent>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

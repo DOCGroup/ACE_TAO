@@ -1,3 +1,13 @@
+Thu Dec 31 15:04:57 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile: 
+	  Added the CosEC files to the Makefile; it compiles with both
+	  Sun/CC and egcs.
+
+	* orbsvcs/orbsvcs/Time/Timer_Helper.cpp: 
+	  Removed template instantiations, they are in
+	  orbsvcs-tmplinst.cpp already.
+
 1998-12-31  Seth Widoff  <swidoff@cs.cmu.edu>
 
 	* orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp:
