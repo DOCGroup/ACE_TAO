@@ -24,6 +24,21 @@
 
 #include "orbsvcs/SecurityLevel2C.h"
 
+/**
+ * @class TAO_EstablishTrustPolicy
+ *
+ * @brief Implementation of the SecurityLevel2::EstablishTrustPolicy.
+ *
+ * This policy can be used to enable or disable establishment of trust
+ * in the client or the target or both on a per-object basis.  For
+ * example, it can be set as a policy override using the standard
+ * CORBA::Object::_set_policy_overrides() method.
+ * @par
+ * This policy can be created by using the CORBA::ORB::create_policy()
+ * method by passing it the Security::SecEstablishTrustPolicy policy
+ * type, and the appropriate Security::EstablishTrust structure
+ * (inserted into a CORBA::Any).
+ */
 class TAO_Security_Export TAO_EstablishTrustPolicy
   : public virtual SecurityLevel2::EstablishTrustPolicy,
     public virtual TAO_Local_RefCounted_Object
@@ -51,7 +66,7 @@ public:
 
   /// Return the "establish trust" value associated with this
   /// policy.
-  virtual Security::EstablishTrust *trust (
+  virtual Security::EstablishTrust trust (
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
