@@ -8,11 +8,15 @@ use lib "../../../../bin";
 require ACEutils;
 require Process;
 
+$iorfile = "echo.ior";
 
-$SV = Process::Create ($EXEPREFIX."server$Process::EXE_EXT", " ");
+$SV = Process::Create ("server$Process::EXE_EXT", "-o $iorfile ");
+
 sleep ($ACE::sleeptime);
-$status = system ($EXEPREFIX."client$Process::EXE_EXT  -x");
+$status = system ("client$Process::EXE_EXT -f $iorfile -x");
 
 $SV->Kill (); $SV->Wait ();
+
+unlink $iorfile;
 
 exit $status;

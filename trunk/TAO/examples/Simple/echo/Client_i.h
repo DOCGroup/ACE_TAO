@@ -61,6 +61,12 @@ private:
   void echo (const char *message);
   // Displays the message on the screen.
 
+  void echo_list (const char *message);
+  // Displays the message on the screen.
+
+  void echo_string (const char *message);
+  // Displays the message on the screen.
+
   int argc_;
   // # of arguments on the command line.
 

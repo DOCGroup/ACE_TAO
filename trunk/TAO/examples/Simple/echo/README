@@ -7,14 +7,15 @@ shuts down the server.
 server:
 -------
 
-server [-d] [-o <ior_output_file>]
+server [-d] [-o <ior_output_file>] [-s]
 
 Options:
 -------
 -d    Debug flag (It is additive more -d flags will give debugging).
 -o    Outputs the ior to the file
-      The ior is the refernce using which the client can interact with
+      The ior is the reference using which the client can interact with
       the target server object.
+-s    Use the naming service
 
 When the server is started, you should see as the first line of output
 something that looks like
@@ -33,7 +34,7 @@ options are ignored.
 client:
 -------
 
-client [-d] [-x] [-f <Server_ior_file>] [-n iterations] [-k ior]
+client [-d] [-x] [-f <Server_ior_file>] [-n iterations] [-k ior] [-s]
 
 Options:
 -------
@@ -42,11 +43,12 @@ Options:
 -f    Reads the server ior from the file
 -n    no. of iterations
 -k    IOR
+-s    Use the naming service
 
 You can either cut and paste the IOR from the server to the client
-(with the -k option), or have the client read the IOR from a file
-using the -f option. (This file is produced using the -o option of the
-server.)
+(with the -k option), have the client read the IOR from a file using
+the -f option (this file is produced using the -o option of the
+server), or use the naming service (with the -s option).
 
 run_test.pl:
 ------------

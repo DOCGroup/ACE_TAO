@@ -7,11 +7,18 @@
 interface Echo
 {
   // = TITLE
-  // Defines an interface that encapsulates operations that
-  // return the mesg string to be displayed and shuts down the server.
+  // Defines an interface that encapsulates operations that return the
+  // mesg string to be displayed and shuts down the server.
 
-  string echo (in string mesg);
-  // This operation returns the message and displays it on the screen.
+  typedef sequence<Object> List;
+	
+  List echo_list (in string message);
+  // This operation returns the message as a sequence of Objects and
+  // displays it on the screen as a string.
+
+  string echo_string (in string message);
+  // This operation returns the message as a string and displays it on
+  // the screen.
 
   oneway void shutdown ();
   // This operation will shutdown the server.
