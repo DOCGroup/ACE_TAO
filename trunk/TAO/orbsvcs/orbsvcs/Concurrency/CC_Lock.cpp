@@ -31,7 +31,7 @@ CC_Lock::~CC_Lock (void)
 {
 }
 
-void 
+void
 CC_Lock::lock (CORBA::Environment &_env)
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -42,7 +42,7 @@ CC_Lock::lock (CORBA::Environment &_env)
     TAO_THROW (CORBA::INTERNAL (CORBA::COMPLETED_NO));
 }
 
-CORBA::Boolean 
+CORBA::Boolean
 CC_Lock::try_lock (CORBA::Environment &_env)
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -59,9 +59,9 @@ CC_Lock::try_lock (CORBA::Environment &_env)
   ACE_DEBUG ((LM_DEBUG,
               "success: %i\n", success));
 
-  if (success == -1) 
+  if (success == -1)
     {
-      if (errno == EBUSY) 
+      if (errno == EBUSY)
         {
           lock_held_--;
           return CORBA::B_FALSE;
@@ -70,10 +70,14 @@ CC_Lock::try_lock (CORBA::Environment &_env)
         TAO_THROW_RETURN (CORBA::INTERNAL (CORBA::COMPLETED_NO),
                           CORBA::B_FALSE);
     }
+  ACE_DEBUG ((LM_DEBUG,
+              "lock_held_: %i, ",
+              lock_held_));
+
   return CORBA::B_TRUE;
 }
 
-void 
+void
 CC_Lock::unlock (CORBA::Environment &_env)
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -83,13 +87,17 @@ CC_Lock::unlock (CORBA::Environment &_env)
 
   int success = semaphore_.release ();
 
-  if (success == -1) 
+  if (success == -1)
     TAO_THROW (CORBA::INTERNAL (CORBA::COMPLETED_NO));
 
   lock_held_--;
+
+  ACE_DEBUG ((LM_DEBUG,
+              "lock_held_: %i, ",
+              lock_held_));
 }
 
-void 
+void
 CC_Lock::change_mode (CosConcurrencyControl::lock_mode new_mode,
                       CORBA::Environment &_env)
 {
@@ -105,7 +113,7 @@ CC_Lock::change_mode (CosConcurrencyControl::lock_mode new_mode,
 
   this->mode_ = new_mode;
 }
-  
+
 CORBA::Boolean CC_Lock::Compatible (const CC_Lock &other)
 {
   return this->Compatible (other.mode_);
@@ -142,4 +150,3 @@ CORBA::Boolean CC_Lock::compatible_[NUMBER_OF_LOCK_MODES][NUMBER_OF_LOCK_MODES] 
   {CORBA::B_TRUE, CORBA::B_FALSE, CORBA::B_FALSE, CORBA::B_TRUE, CORBA::B_FALSE},
   {CORBA::B_TRUE, CORBA::B_FALSE, CORBA::B_TRUE, CORBA::B_TRUE, CORBA::B_TRUE},
   {CORBA::B_FALSE, CORBA::B_FALSE, CORBA::B_FALSE, CORBA::B_TRUE, CORBA::B_TRUE}};
-
