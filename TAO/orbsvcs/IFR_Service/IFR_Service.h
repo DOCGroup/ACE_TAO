@@ -89,7 +89,7 @@ protected:
   // Our servant locator implementation instance.
 
   TAO_IOR_Multicast *ior_multicast_;
-  // Event handler that responds to resolve_initial_references requests.
+  // Event handler that responds to multicast requests.
 
   ACE_Configuration *config_;
   // Database for the IFR.
