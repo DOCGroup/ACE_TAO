@@ -10,32 +10,32 @@
 //
 // = DESCRIPTION
 //
-//    This application tests the working of ReactorEx when users are
-//    interested in console input.
+//    This application tests the working of WFMO_Reactor when users
+//    are interested in console input.
 //
 // = AUTHOR
 //    Irfan Pyarali
 // 
 // ============================================================================
 
-#include "ace/ReactorEx.h"
+#include "ace/Reactor.h"
 
 class Event_Handler : public ACE_Event_Handler
 {
 public:
-  Event_Handler (ACE_ReactorEx &reactorEx);
+  Event_Handler (ACE_Reactor &reactor);
   int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);  
   int handle_close (ACE_HANDLE handle,
 		    ACE_Reactor_Mask close_mask);
 };
 
-Event_Handler::Event_Handler (ACE_ReactorEx &reactorEx)
+Event_Handler::Event_Handler (ACE_Reactor &reactor)
 {
-  this->reactorEx (&reactorEx);
+  this->reactor (&reactor);
 
-  if (this->reactorEx ()->register_handler (this,
-					    ACE_STDIN) != 0)
-    ACE_ERROR ((LM_ERROR, "Registration with ReactorEx could not be done\n"));		    
+  if (this->reactor ()->register_handler (this,
+					  ACE_STDIN) != 0)
+    ACE_ERROR ((LM_ERROR, "Registration with Reactor could not be done\n"));		    
 }
 
 int 
@@ -47,12 +47,12 @@ Event_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
 
   if (result <= 0)
     {
-      this->reactorEx ()->close ();
+      this->reactor ()->close ();
       ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_OS::read"), -1);
     }
 
   if (ACE_OS::strcmp (__TEXT("quit\r\n"), buffer) == 0)
-    this->reactorEx ()->close ();
+    this->reactor ()->close ();
 
   ACE_DEBUG ((LM_DEBUG, "User input: %s", buffer));
   
@@ -63,19 +63,19 @@ int
 Event_Handler::handle_close (ACE_HANDLE handle,
 			     ACE_Reactor_Mask close_mask)
 {
-  ACE_DEBUG ((LM_DEBUG, "Event_Handler removed from ReactorEx\n"));
+  ACE_DEBUG ((LM_DEBUG, "Event_Handler removed from Reactor\n"));
   return 0;
 }
 
 int
 main (int, char *[])
 {
-  ACE_ReactorEx reactorEx;
-  Event_Handler handler (reactorEx);
+  ACE_Reactor reactor;
+  Event_Handler handler (reactor);
 
   int result = 0;
   while (result != -1)
-    result = reactorEx.handle_events ();
+    result = reactor.handle_events ();
 
   return 0;
 }

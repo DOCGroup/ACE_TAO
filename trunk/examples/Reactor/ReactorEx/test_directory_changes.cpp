@@ -10,15 +10,15 @@
 //
 // = DESCRIPTION
 //
-//    This application tests the working of ReactorEx when users are
-//    interested in monitoring changes in the filesystem.
+//    This application tests the working of WFMO_Reactor when users
+//    are interested in monitoring changes in the filesystem.
 //
 // = AUTHOR
 //    Irfan Pyarali
 // 
 // ============================================================================
 
-#include "ace/ReactorEx.h"
+#include "ace/Reactor.h"
 
 static int stop_test = 0;
 static LPCTSTR directory = __TEXT (".");
@@ -27,7 +27,7 @@ static LPCTSTR temp_file = __TEXT ("foo");
 class Event_Handler : public ACE_Event_Handler
 {
 public:
-  Event_Handler (ACE_ReactorEx &reactorEx);
+  Event_Handler (ACE_Reactor &reactor);
   ~Event_Handler (void);
   int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);  
   int handle_close (ACE_HANDLE handle,
@@ -37,10 +37,10 @@ private:
   ACE_HANDLE handle_;
 };
 
-Event_Handler::Event_Handler (ACE_ReactorEx &reactorEx)
+Event_Handler::Event_Handler (ACE_Reactor &reactor)
   : handle_ (ACE_INVALID_HANDLE)
 {
-  this->reactorEx (&reactorEx);
+  this->reactor (&reactor);
 
   int change_notification_flags = FILE_NOTIFY_CHANGE_FILE_NAME; 
 
@@ -51,9 +51,9 @@ Event_Handler::Event_Handler (ACE_ReactorEx &reactorEx)
   if (this->handle_ == ACE_INVALID_HANDLE)
     ACE_ERROR ((LM_ERROR, "FindFirstChangeNotification could not be setup\n"));
   
-  if (this->reactorEx ()->register_handler (this,
-					    this->handle_) != 0)
-    ACE_ERROR ((LM_ERROR, "Registration with ReactorEx could not be done\n"));		    
+  if (this->reactor ()->register_handler (this,
+					  this->handle_) != 0)
+    ACE_ERROR ((LM_ERROR, "Registration with Reactor could not be done\n"));		    
 }
 
 Event_Handler::~Event_Handler (void)
@@ -66,7 +66,7 @@ Event_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
   ACE_DEBUG ((LM_DEBUG, "(%t) Something changed in this directory\n"));
   ::FindNextChangeNotification (this->handle_);
   if (stop_test)
-    this->reactorEx ()->close ();
+    this->reactor ()->close ();
   return 0;
 }
 
@@ -74,7 +74,7 @@ int
 Event_Handler::handle_close (ACE_HANDLE handle,
 			     ACE_Reactor_Mask close_mask)
 {
-  ACE_DEBUG ((LM_DEBUG, "Event_Handler removed from ReactorEx\n"));
+  ACE_DEBUG ((LM_DEBUG, "Event_Handler removed from Reactor\n"));
   ::FindCloseChangeNotification (this->handle_);
   return 0;
 }
@@ -101,14 +101,14 @@ worker (void)
 int
 main (int, char *[])
 {
-  ACE_ReactorEx reactorEx;
-  Event_Handler handler (reactorEx);
+  ACE_Reactor reactor;
+  Event_Handler handler (reactor);
 
   ACE_ASSERT (ACE_OS::thr_create ((ACE_THR_FUNC) worker, 0, 0, 0) == 0);
 
   int result = 0;
   while (result != -1)
-    result = reactorEx.handle_events ();
+    result = reactor.handle_events ();
 
   return 0;
 }

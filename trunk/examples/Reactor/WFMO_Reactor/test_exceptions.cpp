@@ -10,11 +10,11 @@
 //
 // = DESCRIPTION
 //
-//    This test application tests the state of ReactorEx when
+//    This test application tests the state of WFMO_Reactor when
 //    exceptions occurs when executing user callbacks. 
 //
-//    The thread count in ReactorEx is used to ensure that state of
-//    ReactorEx is not fouled up when exceptions occur in user code.
+//    The thread count in WFMO_Reactor is used to ensure that state of
+//    WFMO_Reactor is not fouled up when exceptions occur in user code.
 //    This example also shows how to write event loops that survive
 //    user exceptions
 //
@@ -23,7 +23,7 @@
 // 
 // ============================================================================
 
-#include "ace/ReactorEx.h"
+#include "ace/WFMO_Reactor.h"
 
 class Event_Handler : public ACE_Event_Handler
 {
@@ -51,25 +51,25 @@ private:
   ACE_Manual_Event event_;
 };
 
-class ACE_ReactorEx_Test
+class ACE_WFMO_Reactor_Test
 {
 public:
-  static void doit ()
+  static void doit (ACE_WFMO_Reactor &wfmo_reactor)
   {
     for (int i = 1; i <= 10; i++)
       {
-	ACE_DEBUG ((LM_DEBUG, "Active threads in ReactorEx (before handle_events) = %d\n", 
-		    ACE_ReactorEx::instance ()->active_threads_));
+	ACE_DEBUG ((LM_DEBUG, "Active threads in WFMO_Reactor (before handle_events) = %d\n", 
+		    wfmo_reactor.active_threads_));
 	ACE_SEH_TRY 
 	  {
-	    ACE_ReactorEx::instance ()->handle_events ();
+	    wfmo_reactor.handle_events ();
 	  }
 	ACE_SEH_EXCEPT (EXCEPTION_EXECUTE_HANDLER)
 	  {
 	    ACE_DEBUG ((LM_DEBUG, "Exception occurred\n"));
 	  }
-	ACE_DEBUG ((LM_DEBUG, "Active threads in ReactorEx (after handle_events) = %d\n", 
-		    ACE_ReactorEx::instance ()->active_threads_));
+	ACE_DEBUG ((LM_DEBUG, "Active threads in WFMO_Reactor (after handle_events) = %d\n", 
+		    wfmo_reactor.active_threads_));
       }
   }
 };
@@ -78,8 +78,9 @@ int
 main (int, char *[])
 {
   Event_Handler handler;
-  ACE_ReactorEx::instance ()->register_handler (&handler);
-  ACE_ReactorEx_Test::doit ();
+  ACE_WFMO_Reactor wfmo_reactor;
+  wfmo_reactor.register_handler (&handler);
+  ACE_WFMO_Reactor_Test::doit (wfmo_reactor);
   return 0;
 }
 

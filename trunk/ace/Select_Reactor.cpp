@@ -1296,26 +1296,26 @@ ACE_Select_Reactor::handler_i (ACE_HANDLE handle,
 // Must be called with locks held
 
 int
-ACE_Reactor::resume_i (ACE_HANDLE handle)
+ACE_Select_Reactor::resume_i (ACE_HANDLE handle)
 {
-  ACE_TRACE ("ACE_Reactor::resume");
+  ACE_TRACE ("ACE_Select_Reactor::resume");
   if (this->handler_rep_.find (handle) == 0)
     return -1;
 
   if (this->suspend_set_.rd_mask_.is_set (handle))
     {
       this->wait_set_.rd_mask_.set_bit (handle);
-      this->suspend_set_.rd_mask_.clr_bit(handle);
+      this->suspend_set_.rd_mask_.clr_bit (handle);
     }
   if (this->suspend_set_.wr_mask_.is_set (handle))
     {  
       this->wait_set_.wr_mask_.set_bit (handle);
-      this->suspend_set_.wr_mask_.clr_bit(handle);
+      this->suspend_set_.wr_mask_.clr_bit (handle);
     }
   if (this->suspend_set_.ex_mask_.is_set (handle))
     {
       this->wait_set_.ex_mask_.set_bit (handle);
-      this->suspend_set_.ex_mask_.clr_bit(handle);
+      this->suspend_set_.ex_mask_.clr_bit (handle);
     }
   return 0;
 }
@@ -1323,26 +1323,26 @@ ACE_Reactor::resume_i (ACE_HANDLE handle)
 // Must be called with locks held
 
 int
-ACE_Reactor::suspend_i (ACE_HANDLE handle)
+ACE_Select_Reactor::suspend_i (ACE_HANDLE handle)
 {
-  ACE_TRACE ("ACE_Reactor::suspend");
+  ACE_TRACE ("ACE_Select_Reactor::suspend");
   if (this->handler_rep_.find (handle) == 0)
     return -1;
 
   if (this->wait_set_.rd_mask_.is_set (handle))
     {
       this->suspend_set_.rd_mask_.set_bit (handle);
-      this->wait_set_.wr_mask_.clr_bit(handle);
+      this->wait_set_.wr_mask_.clr_bit (handle);
     }
   if (this->wait_set_.wr_mask_.is_set (handle))
     {
       this->suspend_set_.wr_mask_.set_bit (handle);
-      this->wait_set_.wr_mask_.clr_bit(handle);
+      this->wait_set_.wr_mask_.clr_bit (handle);
     }
   if (this->wait_set_.ex_mask_.is_set (handle))
     {
       this->suspend_set_.ex_mask_.set_bit (handle);
-      this->ex_mask_.clr_bit(handle);
+      this->wait_set_.ex_mask_.clr_bit (handle);
     }
   return 0;
 }

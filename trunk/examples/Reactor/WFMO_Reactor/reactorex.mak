@@ -52,7 +52,7 @@ NULL=nul
 !ENDIF 
 ################################################################################
 # Begin Project
-# PROP Target_Last_Scanned "Timeouts - Win32 Debug"
+# PROP Target_Last_Scanned "Registry_Changes - Win32 Debug"
 RSC=rc.exe
 CPP=cl.exe
 
@@ -89,8 +89,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Exceptions.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -150,8 +148,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Multithreading.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -211,8 +207,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Network_Events.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -272,8 +266,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Registration.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -333,8 +325,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Removals.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -394,8 +384,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Talker.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -454,8 +442,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Timeouts.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -515,8 +501,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Directory_Changes.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -558,15 +542,15 @@ LINK32_OBJS= \
 OUTDIR=.\.
 INTDIR=.\Debug
 
-ALL : "$(OUTDIR)\console_input.exe"
+ALL : "$(OUTDIR)\Console_Input.exe"
 
 CLEAN : 
 	-@erase "$(INTDIR)\test_console_input.obj"
 	-@erase "$(INTDIR)\vc40.idb"
 	-@erase "$(INTDIR)\vc40.pdb"
-	-@erase "$(OUTDIR)\console_input.exe"
-	-@erase "$(OUTDIR)\console_input.ilk"
-	-@erase "$(OUTDIR)\console_input.pdb"
+	-@erase "$(OUTDIR)\Console_Input.exe"
+	-@erase "$(OUTDIR)\Console_Input.ilk"
+	-@erase "$(OUTDIR)\Console_Input.pdb"
 
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
@@ -576,8 +560,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Console_Input.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -599,7 +581,7 @@ LINK32_FLAGS=aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib\
 LINK32_OBJS= \
 	"$(INTDIR)\test_console_input.obj"
 
-"$(OUTDIR)\console_input.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
+"$(OUTDIR)\Console_Input.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
   $(LINK32_FLAGS) $(LINK32_OBJS)
 <<
@@ -637,8 +619,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Registry_Changes.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -666,6 +646,9 @@ LINK32_OBJS= \
 <<
 
 !ENDIF 
+
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
+ /Fp"$(INTDIR)/Exceptions.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 
 .c{$(CPP_OBJS)}.obj:
    $(CPP) $(CPP_PROJ) $<  
@@ -696,10 +679,6 @@ SOURCE=.\test_exceptions.cpp
 DEP_CPP_TEST_=\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Addr.h"\
-	{$(INCLUDE)}"\ace\Addr.i"\
-	{$(INCLUDE)}"\ace\Asynch_IO.h"\
-	{$(INCLUDE)}"\ace\Asynch_IO.i"\
 	{$(INCLUDE)}"\ace\Atomic_Op.i"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
@@ -719,15 +698,7 @@ DEP_CPP_TEST_=\
 	{$(INCLUDE)}"\ace\Handle_Set.i"\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
-	{$(INCLUDE)}"\ace\High_Res_Timer.h"\
-	{$(INCLUDE)}"\ace\High_Res_Timer.i"\
-	{$(INCLUDE)}"\ace\INET_Addr.h"\
-	{$(INCLUDE)}"\ace\INET_Addr.i"\
 	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
-	{$(INCLUDE)}"\ace\IPC_SAP.h"\
-	{$(INCLUDE)}"\ace\IPC_SAP.i"\
-	{$(INCLUDE)}"\ace\Local_Tokens.h"\
-	{$(INCLUDE)}"\ace\Local_Tokens.i"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
@@ -737,9 +708,8 @@ DEP_CPP_TEST_=\
 	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
 	{$(INCLUDE)}"\ace\Malloc_T.h"\
 	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
-	{$(INCLUDE)}"\ace\Map_Manager.h"\
-	{$(INCLUDE)}"\ace\Map_Manager.i"\
+	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
+	{$(INCLUDE)}"\ace\Managed_Object.h"\
 	{$(INCLUDE)}"\ace\Mem_Map.h"\
 	{$(INCLUDE)}"\ace\Mem_Map.i"\
 	{$(INCLUDE)}"\ace\Memory_Pool.h"\
@@ -753,14 +723,9 @@ DEP_CPP_TEST_=\
 	{$(INCLUDE)}"\ace\Object_Manager.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Pipe.h"\
-	{$(INCLUDE)}"\ace\Pipe.i"\
-	{$(INCLUDE)}"\ace\Proactor.h"\
-	{$(INCLUDE)}"\ace\Proactor.i"\
 	{$(INCLUDE)}"\ace\Reactor.h"\
 	{$(INCLUDE)}"\ace\Reactor.i"\
-	{$(INCLUDE)}"\ace\ReactorEx.h"\
-	{$(INCLUDE)}"\ace\ReactorEx.i"\
+	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
 	{$(INCLUDE)}"\ace\Service_Config.h"\
 	{$(INCLUDE)}"\ace\Service_Config.i"\
 	{$(INCLUDE)}"\ace\Service_Object.h"\
@@ -769,12 +734,6 @@ DEP_CPP_TEST_=\
 	{$(INCLUDE)}"\ace\Shared_Object.i"\
 	{$(INCLUDE)}"\ace\Signal.h"\
 	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SOCK.h"\
-	{$(INCLUDE)}"\ace\SOCK.i"\
-	{$(INCLUDE)}"\ace\SOCK_IO.h"\
-	{$(INCLUDE)}"\ace\SOCK_IO.i"\
-	{$(INCLUDE)}"\ace\SOCK_Stream.h"\
-	{$(INCLUDE)}"\ace\SOCK_Stream.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
 	{$(INCLUDE)}"\ace\stdcpp.h"\
@@ -794,25 +753,13 @@ DEP_CPP_TEST_=\
 	{$(INCLUDE)}"\ace\Synch_T.i"\
 	{$(INCLUDE)}"\ace\Thread.h"\
 	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Thread_Manager.h"\
-	{$(INCLUDE)}"\ace\Thread_Manager.i"\
-	{$(INCLUDE)}"\ace\Time_Value.h"\
-	{$(INCLUDE)}"\ace\Timer_Heap.h"\
-	{$(INCLUDE)}"\ace\Timer_Heap_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Heap_T.h"\
-	{$(INCLUDE)}"\ace\Timer_List.h"\
-	{$(INCLUDE)}"\ace\Timer_List_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_List_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
-	{$(INCLUDE)}"\ace\Timer_Wheel.h"\
-	{$(INCLUDE)}"\ace\Timer_Wheel_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Wheel_T.h"\
-	{$(INCLUDE)}"\ace\Token.h"\
-	{$(INCLUDE)}"\ace\Token.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
@@ -832,10 +779,6 @@ SOURCE=.\test_multithreading.cpp
 DEP_CPP_TEST_M=\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Addr.h"\
-	{$(INCLUDE)}"\ace\Addr.i"\
-	{$(INCLUDE)}"\ace\Asynch_IO.h"\
-	{$(INCLUDE)}"\ace\Asynch_IO.i"\
 	{$(INCLUDE)}"\ace\Atomic_Op.i"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
@@ -857,15 +800,7 @@ DEP_CPP_TEST_M=\
 	{$(INCLUDE)}"\ace\Handle_Set.i"\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
-	{$(INCLUDE)}"\ace\High_Res_Timer.h"\
-	{$(INCLUDE)}"\ace\High_Res_Timer.i"\
-	{$(INCLUDE)}"\ace\INET_Addr.h"\
-	{$(INCLUDE)}"\ace\INET_Addr.i"\
 	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
-	{$(INCLUDE)}"\ace\IPC_SAP.h"\
-	{$(INCLUDE)}"\ace\IPC_SAP.i"\
-	{$(INCLUDE)}"\ace\Local_Tokens.h"\
-	{$(INCLUDE)}"\ace\Local_Tokens.i"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
@@ -875,9 +810,8 @@ DEP_CPP_TEST_M=\
 	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
 	{$(INCLUDE)}"\ace\Malloc_T.h"\
 	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
-	{$(INCLUDE)}"\ace\Map_Manager.h"\
-	{$(INCLUDE)}"\ace\Map_Manager.i"\
+	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
+	{$(INCLUDE)}"\ace\Managed_Object.h"\
 	{$(INCLUDE)}"\ace\Mem_Map.h"\
 	{$(INCLUDE)}"\ace\Mem_Map.i"\
 	{$(INCLUDE)}"\ace\Memory_Pool.h"\
@@ -894,14 +828,9 @@ DEP_CPP_TEST_M=\
 	{$(INCLUDE)}"\ace\Object_Manager.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Pipe.h"\
-	{$(INCLUDE)}"\ace\Pipe.i"\
-	{$(INCLUDE)}"\ace\Proactor.h"\
-	{$(INCLUDE)}"\ace\Proactor.i"\
 	{$(INCLUDE)}"\ace\Reactor.h"\
 	{$(INCLUDE)}"\ace\Reactor.i"\
-	{$(INCLUDE)}"\ace\ReactorEx.h"\
-	{$(INCLUDE)}"\ace\ReactorEx.i"\
+	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
 	{$(INCLUDE)}"\ace\Service_Config.h"\
 	{$(INCLUDE)}"\ace\Service_Config.i"\
 	{$(INCLUDE)}"\ace\Service_Object.h"\
@@ -910,12 +839,6 @@ DEP_CPP_TEST_M=\
 	{$(INCLUDE)}"\ace\Shared_Object.i"\
 	{$(INCLUDE)}"\ace\Signal.h"\
 	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SOCK.h"\
-	{$(INCLUDE)}"\ace\SOCK.i"\
-	{$(INCLUDE)}"\ace\SOCK_IO.h"\
-	{$(INCLUDE)}"\ace\SOCK_IO.i"\
-	{$(INCLUDE)}"\ace\SOCK_Stream.h"\
-	{$(INCLUDE)}"\ace\SOCK_Stream.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
 	{$(INCLUDE)}"\ace\stdcpp.h"\
@@ -945,23 +868,13 @@ DEP_CPP_TEST_M=\
 	{$(INCLUDE)}"\ace\Thread.i"\
 	{$(INCLUDE)}"\ace\Thread_Manager.h"\
 	{$(INCLUDE)}"\ace\Thread_Manager.i"\
-	{$(INCLUDE)}"\ace\Time_Value.h"\
-	{$(INCLUDE)}"\ace\Timer_Heap.h"\
-	{$(INCLUDE)}"\ace\Timer_Heap_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Heap_T.h"\
-	{$(INCLUDE)}"\ace\Timer_List.h"\
-	{$(INCLUDE)}"\ace\Timer_List_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_List_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
-	{$(INCLUDE)}"\ace\Timer_Wheel.h"\
-	{$(INCLUDE)}"\ace\Timer_Wheel_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Wheel_T.h"\
-	{$(INCLUDE)}"\ace\Token.h"\
-	{$(INCLUDE)}"\ace\Token.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
@@ -983,8 +896,6 @@ DEP_CPP_TEST_N=\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Addr.h"\
 	{$(INCLUDE)}"\ace\Addr.i"\
-	{$(INCLUDE)}"\ace\Asynch_IO.h"\
-	{$(INCLUDE)}"\ace\Asynch_IO.i"\
 	{$(INCLUDE)}"\ace\Atomic_Op.i"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
@@ -1002,17 +913,10 @@ DEP_CPP_TEST_N=\
 	{$(INCLUDE)}"\ace\Free_List.i"\
 	{$(INCLUDE)}"\ace\Handle_Set.h"\
 	{$(INCLUDE)}"\ace\Handle_Set.i"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
-	{$(INCLUDE)}"\ace\High_Res_Timer.h"\
-	{$(INCLUDE)}"\ace\High_Res_Timer.i"\
 	{$(INCLUDE)}"\ace\INET_Addr.h"\
 	{$(INCLUDE)}"\ace\INET_Addr.i"\
-	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
 	{$(INCLUDE)}"\ace\IPC_SAP.h"\
 	{$(INCLUDE)}"\ace\IPC_SAP.i"\
-	{$(INCLUDE)}"\ace\Local_Tokens.h"\
-	{$(INCLUDE)}"\ace\Local_Tokens.i"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
@@ -1022,36 +926,19 @@ DEP_CPP_TEST_N=\
 	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
 	{$(INCLUDE)}"\ace\Malloc_T.h"\
 	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
-	{$(INCLUDE)}"\ace\Map_Manager.h"\
-	{$(INCLUDE)}"\ace\Map_Manager.i"\
+	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
+	{$(INCLUDE)}"\ace\Managed_Object.h"\
 	{$(INCLUDE)}"\ace\Mem_Map.h"\
 	{$(INCLUDE)}"\ace\Mem_Map.i"\
 	{$(INCLUDE)}"\ace\Memory_Pool.h"\
 	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Message_Block.h"\
-	{$(INCLUDE)}"\ace\Message_Block.i"\
-	{$(INCLUDE)}"\ace\Message_Queue.cpp"\
-	{$(INCLUDE)}"\ace\Message_Queue.h"\
-	{$(INCLUDE)}"\ace\Message_Queue.i"\
 	{$(INCLUDE)}"\ace\Object_Manager.h"\
 	{$(INCLUDE)}"\ace\Object_Manager.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Pipe.h"\
-	{$(INCLUDE)}"\ace\Pipe.i"\
-	{$(INCLUDE)}"\ace\Proactor.h"\
-	{$(INCLUDE)}"\ace\Proactor.i"\
 	{$(INCLUDE)}"\ace\Reactor.h"\
 	{$(INCLUDE)}"\ace\Reactor.i"\
-	{$(INCLUDE)}"\ace\ReactorEx.h"\
-	{$(INCLUDE)}"\ace\ReactorEx.i"\
-	{$(INCLUDE)}"\ace\Service_Config.h"\
-	{$(INCLUDE)}"\ace\Service_Config.i"\
-	{$(INCLUDE)}"\ace\Service_Object.h"\
-	{$(INCLUDE)}"\ace\Service_Object.i"\
-	{$(INCLUDE)}"\ace\Shared_Object.h"\
-	{$(INCLUDE)}"\ace\Shared_Object.i"\
+	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
 	{$(INCLUDE)}"\ace\Signal.h"\
 	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\SOCK.h"\
@@ -1065,40 +952,22 @@ DEP_CPP_TEST_N=\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
 	{$(INCLUDE)}"\ace\stdcpp.h"\
-	{$(INCLUDE)}"\ace\Strategies.h"\
-	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
-	{$(INCLUDE)}"\ace\Strategies_T.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Svc_Conf_Tokens.h"\
 	{$(INCLUDE)}"\ace\Synch.h"\
 	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_Options.h"\
 	{$(INCLUDE)}"\ace\Synch_T.cpp"\
 	{$(INCLUDE)}"\ace\Synch_T.h"\
 	{$(INCLUDE)}"\ace\Synch_T.i"\
 	{$(INCLUDE)}"\ace\Thread.h"\
 	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Thread_Manager.h"\
-	{$(INCLUDE)}"\ace\Thread_Manager.i"\
 	{$(INCLUDE)}"\ace\Time_Value.h"\
-	{$(INCLUDE)}"\ace\Timer_Heap.h"\
-	{$(INCLUDE)}"\ace\Timer_Heap_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Heap_T.h"\
-	{$(INCLUDE)}"\ace\Timer_List.h"\
-	{$(INCLUDE)}"\ace\Timer_List_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_List_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
-	{$(INCLUDE)}"\ace\Timer_Wheel.h"\
-	{$(INCLUDE)}"\ace\Timer_Wheel_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Wheel_T.h"\
-	{$(INCLUDE)}"\ace\Token.h"\
-	{$(INCLUDE)}"\ace\Token.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
@@ -1119,10 +988,6 @@ SOURCE=.\test_registration.cpp
 DEP_CPP_TEST_R=\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Addr.h"\
-	{$(INCLUDE)}"\ace\Addr.i"\
-	{$(INCLUDE)}"\ace\Asynch_IO.h"\
-	{$(INCLUDE)}"\ace\Asynch_IO.i"\
 	{$(INCLUDE)}"\ace\Atomic_Op.i"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
@@ -1140,17 +1005,6 @@ DEP_CPP_TEST_R=\
 	{$(INCLUDE)}"\ace\Free_List.i"\
 	{$(INCLUDE)}"\ace\Handle_Set.h"\
 	{$(INCLUDE)}"\ace\Handle_Set.i"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
-	{$(INCLUDE)}"\ace\High_Res_Timer.h"\
-	{$(INCLUDE)}"\ace\High_Res_Timer.i"\
-	{$(INCLUDE)}"\ace\INET_Addr.h"\
-	{$(INCLUDE)}"\ace\INET_Addr.i"\
-	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
-	{$(INCLUDE)}"\ace\IPC_SAP.h"\
-	{$(INCLUDE)}"\ace\IPC_SAP.i"\
-	{$(INCLUDE)}"\ace\Local_Tokens.h"\
-	{$(INCLUDE)}"\ace\Local_Tokens.i"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
@@ -1160,81 +1014,39 @@ DEP_CPP_TEST_R=\
 	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
 	{$(INCLUDE)}"\ace\Malloc_T.h"\
 	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
-	{$(INCLUDE)}"\ace\Map_Manager.h"\
-	{$(INCLUDE)}"\ace\Map_Manager.i"\
+	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
+	{$(INCLUDE)}"\ace\Managed_Object.h"\
 	{$(INCLUDE)}"\ace\Mem_Map.h"\
 	{$(INCLUDE)}"\ace\Mem_Map.i"\
 	{$(INCLUDE)}"\ace\Memory_Pool.h"\
 	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Message_Block.h"\
-	{$(INCLUDE)}"\ace\Message_Block.i"\
-	{$(INCLUDE)}"\ace\Message_Queue.cpp"\
-	{$(INCLUDE)}"\ace\Message_Queue.h"\
-	{$(INCLUDE)}"\ace\Message_Queue.i"\
 	{$(INCLUDE)}"\ace\Object_Manager.h"\
 	{$(INCLUDE)}"\ace\Object_Manager.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Pipe.h"\
-	{$(INCLUDE)}"\ace\Pipe.i"\
-	{$(INCLUDE)}"\ace\Proactor.h"\
-	{$(INCLUDE)}"\ace\Proactor.i"\
 	{$(INCLUDE)}"\ace\Reactor.h"\
 	{$(INCLUDE)}"\ace\Reactor.i"\
-	{$(INCLUDE)}"\ace\ReactorEx.h"\
-	{$(INCLUDE)}"\ace\ReactorEx.i"\
-	{$(INCLUDE)}"\ace\Service_Config.h"\
-	{$(INCLUDE)}"\ace\Service_Config.i"\
-	{$(INCLUDE)}"\ace\Service_Object.h"\
-	{$(INCLUDE)}"\ace\Service_Object.i"\
-	{$(INCLUDE)}"\ace\Shared_Object.h"\
-	{$(INCLUDE)}"\ace\Shared_Object.i"\
+	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
 	{$(INCLUDE)}"\ace\Signal.h"\
 	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SOCK.h"\
-	{$(INCLUDE)}"\ace\SOCK.i"\
-	{$(INCLUDE)}"\ace\SOCK_IO.h"\
-	{$(INCLUDE)}"\ace\SOCK_IO.i"\
-	{$(INCLUDE)}"\ace\SOCK_Stream.h"\
-	{$(INCLUDE)}"\ace\SOCK_Stream.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
 	{$(INCLUDE)}"\ace\stdcpp.h"\
-	{$(INCLUDE)}"\ace\Strategies.h"\
-	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
-	{$(INCLUDE)}"\ace\Strategies_T.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Svc_Conf_Tokens.h"\
 	{$(INCLUDE)}"\ace\Synch.h"\
 	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_Options.h"\
 	{$(INCLUDE)}"\ace\Synch_T.cpp"\
 	{$(INCLUDE)}"\ace\Synch_T.h"\
 	{$(INCLUDE)}"\ace\Synch_T.i"\
 	{$(INCLUDE)}"\ace\Thread.h"\
 	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Thread_Manager.h"\
-	{$(INCLUDE)}"\ace\Thread_Manager.i"\
-	{$(INCLUDE)}"\ace\Time_Value.h"\
-	{$(INCLUDE)}"\ace\Timer_Heap.h"\
-	{$(INCLUDE)}"\ace\Timer_Heap_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Heap_T.h"\
-	{$(INCLUDE)}"\ace\Timer_List.h"\
-	{$(INCLUDE)}"\ace\Timer_List_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_List_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
-	{$(INCLUDE)}"\ace\Timer_Wheel.h"\
-	{$(INCLUDE)}"\ace\Timer_Wheel_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Wheel_T.h"\
-	{$(INCLUDE)}"\ace\Token.h"\
-	{$(INCLUDE)}"\ace\Token.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
@@ -1255,10 +1067,6 @@ SOURCE=.\test_removals.cpp
 DEP_CPP_TEST_RE=\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Addr.h"\
-	{$(INCLUDE)}"\ace\Addr.i"\
-	{$(INCLUDE)}"\ace\Asynch_IO.h"\
-	{$(INCLUDE)}"\ace\Asynch_IO.i"\
 	{$(INCLUDE)}"\ace\Atomic_Op.i"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
@@ -1276,17 +1084,6 @@ DEP_CPP_TEST_RE=\
 	{$(INCLUDE)}"\ace\Free_List.i"\
 	{$(INCLUDE)}"\ace\Handle_Set.h"\
 	{$(INCLUDE)}"\ace\Handle_Set.i"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
-	{$(INCLUDE)}"\ace\High_Res_Timer.h"\
-	{$(INCLUDE)}"\ace\High_Res_Timer.i"\
-	{$(INCLUDE)}"\ace\INET_Addr.h"\
-	{$(INCLUDE)}"\ace\INET_Addr.i"\
-	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
-	{$(INCLUDE)}"\ace\IPC_SAP.h"\
-	{$(INCLUDE)}"\ace\IPC_SAP.i"\
-	{$(INCLUDE)}"\ace\Local_Tokens.h"\
-	{$(INCLUDE)}"\ace\Local_Tokens.i"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
@@ -1296,30 +1093,19 @@ DEP_CPP_TEST_RE=\
 	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
 	{$(INCLUDE)}"\ace\Malloc_T.h"\
 	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
-	{$(INCLUDE)}"\ace\Map_Manager.h"\
-	{$(INCLUDE)}"\ace\Map_Manager.i"\
+	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
+	{$(INCLUDE)}"\ace\Managed_Object.h"\
 	{$(INCLUDE)}"\ace\Mem_Map.h"\
 	{$(INCLUDE)}"\ace\Mem_Map.i"\
 	{$(INCLUDE)}"\ace\Memory_Pool.h"\
 	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Message_Block.h"\
-	{$(INCLUDE)}"\ace\Message_Block.i"\
-	{$(INCLUDE)}"\ace\Message_Queue.cpp"\
-	{$(INCLUDE)}"\ace\Message_Queue.h"\
-	{$(INCLUDE)}"\ace\Message_Queue.i"\
 	{$(INCLUDE)}"\ace\Object_Manager.h"\
 	{$(INCLUDE)}"\ace\Object_Manager.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Pipe.h"\
-	{$(INCLUDE)}"\ace\Pipe.i"\
-	{$(INCLUDE)}"\ace\Proactor.h"\
-	{$(INCLUDE)}"\ace\Proactor.i"\
 	{$(INCLUDE)}"\ace\Reactor.h"\
 	{$(INCLUDE)}"\ace\Reactor.i"\
-	{$(INCLUDE)}"\ace\ReactorEx.h"\
-	{$(INCLUDE)}"\ace\ReactorEx.i"\
+	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
 	{$(INCLUDE)}"\ace\Service_Config.h"\
 	{$(INCLUDE)}"\ace\Service_Config.i"\
 	{$(INCLUDE)}"\ace\Service_Object.h"\
@@ -1328,18 +1114,9 @@ DEP_CPP_TEST_RE=\
 	{$(INCLUDE)}"\ace\Shared_Object.i"\
 	{$(INCLUDE)}"\ace\Signal.h"\
 	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SOCK.h"\
-	{$(INCLUDE)}"\ace\SOCK.i"\
-	{$(INCLUDE)}"\ace\SOCK_IO.h"\
-	{$(INCLUDE)}"\ace\SOCK_IO.i"\
-	{$(INCLUDE)}"\ace\SOCK_Stream.h"\
-	{$(INCLUDE)}"\ace\SOCK_Stream.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
 	{$(INCLUDE)}"\ace\stdcpp.h"\
-	{$(INCLUDE)}"\ace\Strategies.h"\
-	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
-	{$(INCLUDE)}"\ace\Strategies_T.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
@@ -1347,30 +1124,15 @@ DEP_CPP_TEST_RE=\
 	{$(INCLUDE)}"\ace\Svc_Conf_Tokens.h"\
 	{$(INCLUDE)}"\ace\Synch.h"\
 	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_Options.h"\
 	{$(INCLUDE)}"\ace\Synch_T.cpp"\
 	{$(INCLUDE)}"\ace\Synch_T.h"\
 	{$(INCLUDE)}"\ace\Synch_T.i"\
 	{$(INCLUDE)}"\ace\Thread.h"\
 	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Thread_Manager.h"\
-	{$(INCLUDE)}"\ace\Thread_Manager.i"\
-	{$(INCLUDE)}"\ace\Time_Value.h"\
-	{$(INCLUDE)}"\ace\Timer_Heap.h"\
-	{$(INCLUDE)}"\ace\Timer_Heap_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Heap_T.h"\
-	{$(INCLUDE)}"\ace\Timer_List.h"\
-	{$(INCLUDE)}"\ace\Timer_List_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_List_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
-	{$(INCLUDE)}"\ace\Timer_Wheel.h"\
-	{$(INCLUDE)}"\ace\Timer_Wheel_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Wheel_T.h"\
-	{$(INCLUDE)}"\ace\Token.h"\
-	{$(INCLUDE)}"\ace\Token.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
@@ -1423,8 +1185,6 @@ DEP_CPP_TEST_T=\
 	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
 	{$(INCLUDE)}"\ace\IPC_SAP.h"\
 	{$(INCLUDE)}"\ace\IPC_SAP.i"\
-	{$(INCLUDE)}"\ace\Local_Tokens.h"\
-	{$(INCLUDE)}"\ace\Local_Tokens.i"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
@@ -1434,9 +1194,8 @@ DEP_CPP_TEST_T=\
 	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
 	{$(INCLUDE)}"\ace\Malloc_T.h"\
 	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
-	{$(INCLUDE)}"\ace\Map_Manager.h"\
-	{$(INCLUDE)}"\ace\Map_Manager.i"\
+	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
+	{$(INCLUDE)}"\ace\Managed_Object.h"\
 	{$(INCLUDE)}"\ace\Mem_Map.h"\
 	{$(INCLUDE)}"\ace\Mem_Map.i"\
 	{$(INCLUDE)}"\ace\Memory_Pool.h"\
@@ -1453,14 +1212,11 @@ DEP_CPP_TEST_T=\
 	{$(INCLUDE)}"\ace\Object_Manager.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Pipe.h"\
-	{$(INCLUDE)}"\ace\Pipe.i"\
 	{$(INCLUDE)}"\ace\Proactor.h"\
 	{$(INCLUDE)}"\ace\Proactor.i"\
 	{$(INCLUDE)}"\ace\Reactor.h"\
 	{$(INCLUDE)}"\ace\Reactor.i"\
-	{$(INCLUDE)}"\ace\ReactorEx.h"\
-	{$(INCLUDE)}"\ace\ReactorEx.i"\
+	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
 	{$(INCLUDE)}"\ace\Service_Config.h"\
 	{$(INCLUDE)}"\ace\Service_Config.i"\
 	{$(INCLUDE)}"\ace\Service_Object.h"\
@@ -1522,8 +1278,6 @@ DEP_CPP_TEST_T=\
 	{$(INCLUDE)}"\ace\Timer_Wheel.h"\
 	{$(INCLUDE)}"\ace\Timer_Wheel_T.cpp"\
 	{$(INCLUDE)}"\ace\Timer_Wheel_T.h"\
-	{$(INCLUDE)}"\ace\Token.h"\
-	{$(INCLUDE)}"\ace\Token.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
@@ -1544,10 +1298,6 @@ SOURCE=.\test_timeouts.cpp
 DEP_CPP_TEST_TI=\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Addr.h"\
-	{$(INCLUDE)}"\ace\Addr.i"\
-	{$(INCLUDE)}"\ace\Asynch_IO.h"\
-	{$(INCLUDE)}"\ace\Asynch_IO.i"\
 	{$(INCLUDE)}"\ace\Atomic_Op.i"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
@@ -1565,17 +1315,6 @@ DEP_CPP_TEST_TI=\
 	{$(INCLUDE)}"\ace\Free_List.i"\
 	{$(INCLUDE)}"\ace\Handle_Set.h"\
 	{$(INCLUDE)}"\ace\Handle_Set.i"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
-	{$(INCLUDE)}"\ace\High_Res_Timer.h"\
-	{$(INCLUDE)}"\ace\High_Res_Timer.i"\
-	{$(INCLUDE)}"\ace\INET_Addr.h"\
-	{$(INCLUDE)}"\ace\INET_Addr.i"\
-	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
-	{$(INCLUDE)}"\ace\IPC_SAP.h"\
-	{$(INCLUDE)}"\ace\IPC_SAP.i"\
-	{$(INCLUDE)}"\ace\Local_Tokens.h"\
-	{$(INCLUDE)}"\ace\Local_Tokens.i"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
@@ -1585,30 +1324,19 @@ DEP_CPP_TEST_TI=\
 	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
 	{$(INCLUDE)}"\ace\Malloc_T.h"\
 	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
-	{$(INCLUDE)}"\ace\Map_Manager.h"\
-	{$(INCLUDE)}"\ace\Map_Manager.i"\
+	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
+	{$(INCLUDE)}"\ace\Managed_Object.h"\
 	{$(INCLUDE)}"\ace\Mem_Map.h"\
 	{$(INCLUDE)}"\ace\Mem_Map.i"\
 	{$(INCLUDE)}"\ace\Memory_Pool.h"\
 	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Message_Block.h"\
-	{$(INCLUDE)}"\ace\Message_Block.i"\
-	{$(INCLUDE)}"\ace\Message_Queue.cpp"\
-	{$(INCLUDE)}"\ace\Message_Queue.h"\
-	{$(INCLUDE)}"\ace\Message_Queue.i"\
 	{$(INCLUDE)}"\ace\Object_Manager.h"\
 	{$(INCLUDE)}"\ace\Object_Manager.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Pipe.h"\
-	{$(INCLUDE)}"\ace\Pipe.i"\
-	{$(INCLUDE)}"\ace\Proactor.h"\
-	{$(INCLUDE)}"\ace\Proactor.i"\
 	{$(INCLUDE)}"\ace\Reactor.h"\
 	{$(INCLUDE)}"\ace\Reactor.i"\
-	{$(INCLUDE)}"\ace\ReactorEx.h"\
-	{$(INCLUDE)}"\ace\ReactorEx.i"\
+	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
 	{$(INCLUDE)}"\ace\Service_Config.h"\
 	{$(INCLUDE)}"\ace\Service_Config.i"\
 	{$(INCLUDE)}"\ace\Service_Object.h"\
@@ -1617,18 +1345,9 @@ DEP_CPP_TEST_TI=\
 	{$(INCLUDE)}"\ace\Shared_Object.i"\
 	{$(INCLUDE)}"\ace\Signal.h"\
 	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SOCK.h"\
-	{$(INCLUDE)}"\ace\SOCK.i"\
-	{$(INCLUDE)}"\ace\SOCK_IO.h"\
-	{$(INCLUDE)}"\ace\SOCK_IO.i"\
-	{$(INCLUDE)}"\ace\SOCK_Stream.h"\
-	{$(INCLUDE)}"\ace\SOCK_Stream.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
 	{$(INCLUDE)}"\ace\stdcpp.h"\
-	{$(INCLUDE)}"\ace\Strategies.h"\
-	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
-	{$(INCLUDE)}"\ace\Strategies_T.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
@@ -1636,30 +1355,15 @@ DEP_CPP_TEST_TI=\
 	{$(INCLUDE)}"\ace\Svc_Conf_Tokens.h"\
 	{$(INCLUDE)}"\ace\Synch.h"\
 	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_Options.h"\
 	{$(INCLUDE)}"\ace\Synch_T.cpp"\
 	{$(INCLUDE)}"\ace\Synch_T.h"\
 	{$(INCLUDE)}"\ace\Synch_T.i"\
 	{$(INCLUDE)}"\ace\Thread.h"\
 	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Thread_Manager.h"\
-	{$(INCLUDE)}"\ace\Thread_Manager.i"\
-	{$(INCLUDE)}"\ace\Time_Value.h"\
-	{$(INCLUDE)}"\ace\Timer_Heap.h"\
-	{$(INCLUDE)}"\ace\Timer_Heap_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Heap_T.h"\
-	{$(INCLUDE)}"\ace\Timer_List.h"\
-	{$(INCLUDE)}"\ace\Timer_List_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_List_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
-	{$(INCLUDE)}"\ace\Timer_Wheel.h"\
-	{$(INCLUDE)}"\ace\Timer_Wheel_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Wheel_T.h"\
-	{$(INCLUDE)}"\ace\Token.h"\
-	{$(INCLUDE)}"\ace\Token.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
@@ -1680,10 +1384,6 @@ SOURCE=.\test_directory_changes.cpp
 DEP_CPP_TEST_D=\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Addr.h"\
-	{$(INCLUDE)}"\ace\Addr.i"\
-	{$(INCLUDE)}"\ace\Asynch_IO.h"\
-	{$(INCLUDE)}"\ace\Asynch_IO.i"\
 	{$(INCLUDE)}"\ace\Atomic_Op.i"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
@@ -1701,17 +1401,6 @@ DEP_CPP_TEST_D=\
 	{$(INCLUDE)}"\ace\Free_List.i"\
 	{$(INCLUDE)}"\ace\Handle_Set.h"\
 	{$(INCLUDE)}"\ace\Handle_Set.i"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
-	{$(INCLUDE)}"\ace\High_Res_Timer.h"\
-	{$(INCLUDE)}"\ace\High_Res_Timer.i"\
-	{$(INCLUDE)}"\ace\INET_Addr.h"\
-	{$(INCLUDE)}"\ace\INET_Addr.i"\
-	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
-	{$(INCLUDE)}"\ace\IPC_SAP.h"\
-	{$(INCLUDE)}"\ace\IPC_SAP.i"\
-	{$(INCLUDE)}"\ace\Local_Tokens.h"\
-	{$(INCLUDE)}"\ace\Local_Tokens.i"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
@@ -1721,81 +1410,39 @@ DEP_CPP_TEST_D=\
 	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
 	{$(INCLUDE)}"\ace\Malloc_T.h"\
 	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
-	{$(INCLUDE)}"\ace\Map_Manager.h"\
-	{$(INCLUDE)}"\ace\Map_Manager.i"\
+	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
+	{$(INCLUDE)}"\ace\Managed_Object.h"\
 	{$(INCLUDE)}"\ace\Mem_Map.h"\
 	{$(INCLUDE)}"\ace\Mem_Map.i"\
 	{$(INCLUDE)}"\ace\Memory_Pool.h"\
 	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Message_Block.h"\
-	{$(INCLUDE)}"\ace\Message_Block.i"\
-	{$(INCLUDE)}"\ace\Message_Queue.cpp"\
-	{$(INCLUDE)}"\ace\Message_Queue.h"\
-	{$(INCLUDE)}"\ace\Message_Queue.i"\
 	{$(INCLUDE)}"\ace\Object_Manager.h"\
 	{$(INCLUDE)}"\ace\Object_Manager.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Pipe.h"\
-	{$(INCLUDE)}"\ace\Pipe.i"\
-	{$(INCLUDE)}"\ace\Proactor.h"\
-	{$(INCLUDE)}"\ace\Proactor.i"\
 	{$(INCLUDE)}"\ace\Reactor.h"\
 	{$(INCLUDE)}"\ace\Reactor.i"\
-	{$(INCLUDE)}"\ace\ReactorEx.h"\
-	{$(INCLUDE)}"\ace\ReactorEx.i"\
-	{$(INCLUDE)}"\ace\Service_Config.h"\
-	{$(INCLUDE)}"\ace\Service_Config.i"\
-	{$(INCLUDE)}"\ace\Service_Object.h"\
-	{$(INCLUDE)}"\ace\Service_Object.i"\
-	{$(INCLUDE)}"\ace\Shared_Object.h"\
-	{$(INCLUDE)}"\ace\Shared_Object.i"\
+	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
 	{$(INCLUDE)}"\ace\Signal.h"\
 	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SOCK.h"\
-	{$(INCLUDE)}"\ace\SOCK.i"\
-	{$(INCLUDE)}"\ace\SOCK_IO.h"\
-	{$(INCLUDE)}"\ace\SOCK_IO.i"\
-	{$(INCLUDE)}"\ace\SOCK_Stream.h"\
-	{$(INCLUDE)}"\ace\SOCK_Stream.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
 	{$(INCLUDE)}"\ace\stdcpp.h"\
-	{$(INCLUDE)}"\ace\Strategies.h"\
-	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
-	{$(INCLUDE)}"\ace\Strategies_T.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Svc_Conf_Tokens.h"\
 	{$(INCLUDE)}"\ace\Synch.h"\
 	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_Options.h"\
 	{$(INCLUDE)}"\ace\Synch_T.cpp"\
 	{$(INCLUDE)}"\ace\Synch_T.h"\
 	{$(INCLUDE)}"\ace\Synch_T.i"\
 	{$(INCLUDE)}"\ace\Thread.h"\
 	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Thread_Manager.h"\
-	{$(INCLUDE)}"\ace\Thread_Manager.i"\
-	{$(INCLUDE)}"\ace\Time_Value.h"\
-	{$(INCLUDE)}"\ace\Timer_Heap.h"\
-	{$(INCLUDE)}"\ace\Timer_Heap_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Heap_T.h"\
-	{$(INCLUDE)}"\ace\Timer_List.h"\
-	{$(INCLUDE)}"\ace\Timer_List_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_List_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
-	{$(INCLUDE)}"\ace\Timer_Wheel.h"\
-	{$(INCLUDE)}"\ace\Timer_Wheel_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Wheel_T.h"\
-	{$(INCLUDE)}"\ace\Token.h"\
-	{$(INCLUDE)}"\ace\Token.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
@@ -1817,10 +1464,6 @@ SOURCE=.\test_console_input.cpp
 DEP_CPP_TEST_C=\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Addr.h"\
-	{$(INCLUDE)}"\ace\Addr.i"\
-	{$(INCLUDE)}"\ace\Asynch_IO.h"\
-	{$(INCLUDE)}"\ace\Asynch_IO.i"\
 	{$(INCLUDE)}"\ace\Atomic_Op.i"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
@@ -1838,17 +1481,6 @@ DEP_CPP_TEST_C=\
 	{$(INCLUDE)}"\ace\Free_List.i"\
 	{$(INCLUDE)}"\ace\Handle_Set.h"\
 	{$(INCLUDE)}"\ace\Handle_Set.i"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
-	{$(INCLUDE)}"\ace\High_Res_Timer.h"\
-	{$(INCLUDE)}"\ace\High_Res_Timer.i"\
-	{$(INCLUDE)}"\ace\INET_Addr.h"\
-	{$(INCLUDE)}"\ace\INET_Addr.i"\
-	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
-	{$(INCLUDE)}"\ace\IPC_SAP.h"\
-	{$(INCLUDE)}"\ace\IPC_SAP.i"\
-	{$(INCLUDE)}"\ace\Local_Tokens.h"\
-	{$(INCLUDE)}"\ace\Local_Tokens.i"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
@@ -1858,81 +1490,39 @@ DEP_CPP_TEST_C=\
 	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
 	{$(INCLUDE)}"\ace\Malloc_T.h"\
 	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
-	{$(INCLUDE)}"\ace\Map_Manager.h"\
-	{$(INCLUDE)}"\ace\Map_Manager.i"\
+	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
+	{$(INCLUDE)}"\ace\Managed_Object.h"\
 	{$(INCLUDE)}"\ace\Mem_Map.h"\
 	{$(INCLUDE)}"\ace\Mem_Map.i"\
 	{$(INCLUDE)}"\ace\Memory_Pool.h"\
 	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Message_Block.h"\
-	{$(INCLUDE)}"\ace\Message_Block.i"\
-	{$(INCLUDE)}"\ace\Message_Queue.cpp"\
-	{$(INCLUDE)}"\ace\Message_Queue.h"\
-	{$(INCLUDE)}"\ace\Message_Queue.i"\
 	{$(INCLUDE)}"\ace\Object_Manager.h"\
 	{$(INCLUDE)}"\ace\Object_Manager.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Pipe.h"\
-	{$(INCLUDE)}"\ace\Pipe.i"\
-	{$(INCLUDE)}"\ace\Proactor.h"\
-	{$(INCLUDE)}"\ace\Proactor.i"\
 	{$(INCLUDE)}"\ace\Reactor.h"\
 	{$(INCLUDE)}"\ace\Reactor.i"\
-	{$(INCLUDE)}"\ace\ReactorEx.h"\
-	{$(INCLUDE)}"\ace\ReactorEx.i"\
-	{$(INCLUDE)}"\ace\Service_Config.h"\
-	{$(INCLUDE)}"\ace\Service_Config.i"\
-	{$(INCLUDE)}"\ace\Service_Object.h"\
-	{$(INCLUDE)}"\ace\Service_Object.i"\
-	{$(INCLUDE)}"\ace\Shared_Object.h"\
-	{$(INCLUDE)}"\ace\Shared_Object.i"\
+	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
 	{$(INCLUDE)}"\ace\Signal.h"\
 	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SOCK.h"\
-	{$(INCLUDE)}"\ace\SOCK.i"\
-	{$(INCLUDE)}"\ace\SOCK_IO.h"\
-	{$(INCLUDE)}"\ace\SOCK_IO.i"\
-	{$(INCLUDE)}"\ace\SOCK_Stream.h"\
-	{$(INCLUDE)}"\ace\SOCK_Stream.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
 	{$(INCLUDE)}"\ace\stdcpp.h"\
-	{$(INCLUDE)}"\ace\Strategies.h"\
-	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
-	{$(INCLUDE)}"\ace\Strategies_T.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Svc_Conf_Tokens.h"\
 	{$(INCLUDE)}"\ace\Synch.h"\
 	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_Options.h"\
 	{$(INCLUDE)}"\ace\Synch_T.cpp"\
 	{$(INCLUDE)}"\ace\Synch_T.h"\
 	{$(INCLUDE)}"\ace\Synch_T.i"\
 	{$(INCLUDE)}"\ace\Thread.h"\
 	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Thread_Manager.h"\
-	{$(INCLUDE)}"\ace\Thread_Manager.i"\
-	{$(INCLUDE)}"\ace\Time_Value.h"\
-	{$(INCLUDE)}"\ace\Timer_Heap.h"\
-	{$(INCLUDE)}"\ace\Timer_Heap_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Heap_T.h"\
-	{$(INCLUDE)}"\ace\Timer_List.h"\
-	{$(INCLUDE)}"\ace\Timer_List_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_List_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
-	{$(INCLUDE)}"\ace\Timer_Wheel.h"\
-	{$(INCLUDE)}"\ace\Timer_Wheel_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Wheel_T.h"\
-	{$(INCLUDE)}"\ace\Token.h"\
-	{$(INCLUDE)}"\ace\Token.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
@@ -1953,10 +1543,6 @@ SOURCE=.\test_registry_changes.cpp
 DEP_CPP_TEST_REG=\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Addr.h"\
-	{$(INCLUDE)}"\ace\Addr.i"\
-	{$(INCLUDE)}"\ace\Asynch_IO.h"\
-	{$(INCLUDE)}"\ace\Asynch_IO.i"\
 	{$(INCLUDE)}"\ace\Atomic_Op.i"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
@@ -1974,17 +1560,6 @@ DEP_CPP_TEST_REG=\
 	{$(INCLUDE)}"\ace\Free_List.i"\
 	{$(INCLUDE)}"\ace\Handle_Set.h"\
 	{$(INCLUDE)}"\ace\Handle_Set.i"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
-	{$(INCLUDE)}"\ace\High_Res_Timer.h"\
-	{$(INCLUDE)}"\ace\High_Res_Timer.i"\
-	{$(INCLUDE)}"\ace\INET_Addr.h"\
-	{$(INCLUDE)}"\ace\INET_Addr.i"\
-	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
-	{$(INCLUDE)}"\ace\IPC_SAP.h"\
-	{$(INCLUDE)}"\ace\IPC_SAP.i"\
-	{$(INCLUDE)}"\ace\Local_Tokens.h"\
-	{$(INCLUDE)}"\ace\Local_Tokens.i"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
@@ -1994,82 +1569,40 @@ DEP_CPP_TEST_REG=\
 	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
 	{$(INCLUDE)}"\ace\Malloc_T.h"\
 	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
-	{$(INCLUDE)}"\ace\Map_Manager.h"\
-	{$(INCLUDE)}"\ace\Map_Manager.i"\
+	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
+	{$(INCLUDE)}"\ace\Managed_Object.h"\
 	{$(INCLUDE)}"\ace\Mem_Map.h"\
 	{$(INCLUDE)}"\ace\Mem_Map.i"\
 	{$(INCLUDE)}"\ace\Memory_Pool.h"\
 	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Message_Block.h"\
-	{$(INCLUDE)}"\ace\Message_Block.i"\
-	{$(INCLUDE)}"\ace\Message_Queue.cpp"\
-	{$(INCLUDE)}"\ace\Message_Queue.h"\
-	{$(INCLUDE)}"\ace\Message_Queue.i"\
 	{$(INCLUDE)}"\ace\Object_Manager.h"\
 	{$(INCLUDE)}"\ace\Object_Manager.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Pipe.h"\
-	{$(INCLUDE)}"\ace\Pipe.i"\
-	{$(INCLUDE)}"\ace\Proactor.h"\
-	{$(INCLUDE)}"\ace\Proactor.i"\
 	{$(INCLUDE)}"\ace\Reactor.h"\
 	{$(INCLUDE)}"\ace\Reactor.i"\
-	{$(INCLUDE)}"\ace\ReactorEx.h"\
-	{$(INCLUDE)}"\ace\ReactorEx.i"\
+	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
 	{$(INCLUDE)}"\ace\Registry.h"\
-	{$(INCLUDE)}"\ace\Service_Config.h"\
-	{$(INCLUDE)}"\ace\Service_Config.i"\
-	{$(INCLUDE)}"\ace\Service_Object.h"\
-	{$(INCLUDE)}"\ace\Service_Object.i"\
-	{$(INCLUDE)}"\ace\Shared_Object.h"\
-	{$(INCLUDE)}"\ace\Shared_Object.i"\
 	{$(INCLUDE)}"\ace\Signal.h"\
 	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SOCK.h"\
-	{$(INCLUDE)}"\ace\SOCK.i"\
-	{$(INCLUDE)}"\ace\SOCK_IO.h"\
-	{$(INCLUDE)}"\ace\SOCK_IO.i"\
-	{$(INCLUDE)}"\ace\SOCK_Stream.h"\
-	{$(INCLUDE)}"\ace\SOCK_Stream.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
 	{$(INCLUDE)}"\ace\stdcpp.h"\
-	{$(INCLUDE)}"\ace\Strategies.h"\
-	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
-	{$(INCLUDE)}"\ace\Strategies_T.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Svc_Conf_Tokens.h"\
 	{$(INCLUDE)}"\ace\Synch.h"\
 	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_Options.h"\
 	{$(INCLUDE)}"\ace\Synch_T.cpp"\
 	{$(INCLUDE)}"\ace\Synch_T.h"\
 	{$(INCLUDE)}"\ace\Synch_T.i"\
 	{$(INCLUDE)}"\ace\Thread.h"\
 	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Thread_Manager.h"\
-	{$(INCLUDE)}"\ace\Thread_Manager.i"\
-	{$(INCLUDE)}"\ace\Time_Value.h"\
-	{$(INCLUDE)}"\ace\Timer_Heap.h"\
-	{$(INCLUDE)}"\ace\Timer_Heap_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Heap_T.h"\
-	{$(INCLUDE)}"\ace\Timer_List.h"\
-	{$(INCLUDE)}"\ace\Timer_List_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_List_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
-	{$(INCLUDE)}"\ace\Timer_Wheel.h"\
-	{$(INCLUDE)}"\ace\Timer_Wheel_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Wheel_T.h"\
-	{$(INCLUDE)}"\ace\Token.h"\
-	{$(INCLUDE)}"\ace\Token.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	{$(INCLUDE)}"\algobase.h"\
