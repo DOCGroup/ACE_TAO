@@ -1,3 +1,10 @@
+Thu Nov 13 19:11:36 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* TAO/tests/Cubit/TAO/IDL_Cubit/svr.cpp (parse_args): Assume for
+ 	  the moment that any arguments starting with `-O' are `-ORB' or
+ 	  `-OA'.  This should be fixed by having the ORB_init() and
+ 	  POA_init() methods consume their argv/argc's.
+
 Thu Nov 13 16:18:32 1997    <nw1@CHA-CHA>
 
 	* tao/TAO.mak:
