@@ -41,6 +41,12 @@ public:
   ~Cubit_i (void);
   // Destructor
 
+  virtual void cube_oneway (CORBA::Environment &env);
+  // Test a oneway call.
+
+  virtual void cube_void (CORBA::Environment &env);
+  // Test a twoway call.
+
   virtual CORBA::Octet cube_octet (CORBA::Octet o,
                                    CORBA::Environment &env);
   // Cube an octet
