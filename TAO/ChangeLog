@@ -1,14 +1,34 @@
+Fri Dec  3 11:34:37 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/Admin.h:
+        * orbsvcs/orbsvcs/Notify/Admin.cpp:
+        * orbsvcs/orbsvcs/Notify/EventChannel.h:
+        * orbsvcs/orbsvcs/Notify/EventChannel.cpp:
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer.h:
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/ProxySupplier.h:
+        * orbsvcs/orbsvcs/Notify/ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Topology_Object.h:
+        * orbsvcs/orbsvcs/Notify/Topology_Object.cpp:
+          To the extent possible:
+          Avoid overloading the init method name -- use
+          other names.
+          Make the init method(s) non-virtual.
+          AFAIK the only one "questionable" usage is:
+          TAO_Notify_Supplier_Admin and TAO_Notify_Consumer_Admin
+          override the non-virtual init method in TAO_Notify_Admin.
+
 Fri Dec  3 09:20:38 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/Logging_Service/Notify_Logging_Service/Makefile.am:
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Makefile.am:
 
-	  Updated.
+          Updated.
 
-	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
-	  Removed unnecessary/unused #include "tao/IORTable/IORTable.h".
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
+          Removed unnecessary/unused #include "tao/IORTable/IORTable.h".
 
-	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.mpc:
-	  Removed inheritance from iortable.
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.mpc:
+          Removed inheritance from iortable.
 
 Fri Dec  3 09:13:46 2004  Dale Wilson  <wilson_d@ociweb.com>
 

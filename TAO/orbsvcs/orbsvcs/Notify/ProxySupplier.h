@@ -45,7 +45,7 @@ public:
   virtual ~TAO_Notify_ProxySupplier ();
 
   /// Init
-  virtual void init (TAO_Notify_ConsumerAdmin* consumer_admin ACE_ENV_ARG_DECL);
+  void init (TAO_Notify_ConsumerAdmin* consumer_admin ACE_ENV_ARG_DECL);
 
   /// Connect
   void connect (TAO_Notify_Consumer* consumer ACE_ENV_ARG_DECL)
