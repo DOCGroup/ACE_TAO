@@ -1,7 +1,6 @@
 // $Id$
 
 // Test program for different methods of copying files.
-#if !defined(_WIN32)
 
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
@@ -13,6 +12,8 @@
 #include "IO_Test.h"
 
 ACE_RCSID(IO_tests, test_io, "$Id$")
+
+#if !defined(_WIN32)
 
 // Name of program.
 static const ACE_TCHAR *program_name;
