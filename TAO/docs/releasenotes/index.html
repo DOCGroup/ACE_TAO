@@ -267,7 +267,14 @@ discriminator will not have incorrect _default() code generated for them.</li>
 <li>
 The IDL compiler generates a C++ ostream operator for IDL exceptions. So
 far only the repository ID is output, but this may be enhanced when
-requirements and/or desires become clearer.
+requirements and/or desires become clearer.</li>
+
+<li>
+IDL compiler now supports the CORBA AMI callback model, generating code
+for reply handlers and reply stubs if the -GC command line option is
+used. For now, TAO_HAS_CORBA_MESSAGING and TAO_HAS_AMI_CALLBACK must
+be defined in ace/config.h, but in the future these conditions will 
+become the default.
 </ul>
 
 <p><br>Known bugs/unimplemented constructs:
