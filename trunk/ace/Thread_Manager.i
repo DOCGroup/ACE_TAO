@@ -336,3 +336,9 @@ ACE_Thread_Manager::register_as_terminated (ACE_Thread_Descriptor *td)
 #endif /* ! VXWORKS */
   return 0;
 }
+
+ACE_INLINE int
+ACE_Thread_Manager::count_threads (void) const
+{
+  return this->thr_list_->size ();
+}
