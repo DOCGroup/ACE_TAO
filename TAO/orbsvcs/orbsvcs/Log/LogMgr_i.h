@@ -33,7 +33,7 @@
  *
  * @brief Factory of Logs. Contains list of Logs created.
  *
- * This factory base class is used to maintain a list of logs 
+ * This factory base class is used to maintain a list of logs
  * created by it. Logs can also be removed from the list.
  */
 class TAO_Log_Serv_Export TAO_LogMgr_i : public virtual POA_DsLogAdmin::LogMgr
@@ -77,16 +77,14 @@ protected:
 
   /// Define the HASHMAP.
   typedef ACE_Hash_Map_Manager <DsLogAdmin::LogId,
-    DsLogAdmin::Log_var,TAO_SYNCH_MUTEX> HASHMAP;
+				DsLogAdmin::Log_var,
+				TAO_SYNCH_MUTEX> HASHMAP;
 
   /// The map of Logs created.
   HASHMAP hash_map_;
 
   /// The Max id assigned so far.
   DsLogAdmin::LogId max_id_;
-
-  /// A list of the current log ids.
-  DsLogAdmin::LogIdList logid_list_;
 };
 
 #include /**/ "ace/post.h"

@@ -1,3 +1,16 @@
+Tue Oct 26 11:14:22 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp:
+	* orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp:
+	* orbsvcs/orbsvcs/Log/LogMgr_i.cpp:
+	* orbsvcs/orbsvcs/Log/LogMgr_i.h:
+	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.cpp:
+	* orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp:
+
+	  Don't maintain a separate array of log id's, as it wasn't being
+	  updated when logs were removed, copied, etc.  Generate the list
+	  only when it is needed in TAO_LogMgr_i::list_logs_by_id().
+
 Tue Oct 26 12:59:47 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/HTIOP.mpc:

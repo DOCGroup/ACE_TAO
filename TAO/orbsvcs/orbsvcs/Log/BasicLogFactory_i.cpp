@@ -58,11 +58,6 @@ TAO_BasicLogFactory_i::create (DsLogAdmin::LogFullActionType full_action,
   // Set the id to return..
   id = this->max_id_;
 
-  // Store the id in the LogIdList.
-  CORBA::ULong len = logid_list_.length ();
-  logid_list_.length (len + 1);
-  logid_list_[len] = id;
-
   return basiclog;
 }
 
