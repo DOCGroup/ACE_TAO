@@ -18,6 +18,7 @@
 // ============================================================================
 
 #include "ace/Capabilities.h"
+#include "test_config.h"
 
 ACE_RCSID(tests, Capabilities_Test, "$Id$")
 
