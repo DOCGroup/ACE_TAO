@@ -1,3 +1,10 @@
+Sun Feb 5 10:33:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Service_Object.cpp:
+        * ace/LSOCK_Stream.cpp:
+        * ace/Event_Handler.cpp:
+          Replaced c-style casts with C++ casts
+
 Sat Feb 4 20:12:37 2005  Martin Corino  <mcorino@remedy.nl>
 
 	* ace/OS_NS_Thread.cpp:
