@@ -21,6 +21,8 @@ ACE_Streambuf_T<STREAM>::recv (char *buf,
                                int flags,
                                ACE_Time_Value * tv)
 {
+  this->timeout_ = 0;
+  errno = ESUCCESS;
   ssize_t rval = peer_->recv (buf, len, flags, tv);
   if (errno == ETIME)
     this->timeout_ = 1;
@@ -34,8 +36,9 @@ ACE_Streambuf_T<STREAM>::recv_n (char *buf,
                                  ACE_Time_Value *tv)
 {
   this->timeout_ = 0;
+  errno = ESUCCESS;
   ssize_t rval = peer_->recv_n (buf, len, flags, tv);
-  if (rval == -1  &&  errno == ETIME)
+  if (errno == ETIME)
     this->timeout_ = 1;
   return rval;
 }
@@ -49,13 +52,6 @@ ACE_Streambuf_T<STREAM>::get_handle (void)
 template <class STREAM> ACE_INLINE int
 ACE_IOStream<STREAM>::eof (void) const
 {
-#if 0
-  char c;
-  return ACE_OS::recv (this->get_handle (),
-                       &c,
-                       sizeof c,
-                       MSG_PEEK) <= 0;
-#endif /* 0 */
   // Get the timeout value of the streambuf
   ACE_Time_Value *timeout = this->streambuf_->recv_timeout (0);
 
@@ -68,9 +64,16 @@ ACE_IOStream<STREAM>::eof (void) const
                                        MSG_PEEK,
                                        timeout);
 
-  // If recv_n() didn't fail or failed because of timeout we're not at
-  // EOF.
-  return rval == -1  &&  ! this->streambuf_->timeout();
+  // Timeout, not an eof
+  if (this->streambuf_->timeout())
+    return 0;
+
+  // No timeout, got enough data:  not eof
+  if (rval == sizeof(char))
+    return 0;
+
+  // No timeout, not enough data:  definately eof
+  return 1;
 }
 
 template <class STREAM> ACE_INLINE
