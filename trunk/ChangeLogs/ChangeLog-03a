@@ -1,3 +1,13 @@
+Mon Aug 12 10:17:55 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Thread_Manager.h (ACE_Thread_Manager): Fixed a type where
+	  "manipulated" was spelled "maniputated".  Thanks to
+	 Eric Newton <ecn@metaslash.com> for reporting this.
+  
+	* PROBLEM-REPORT-FORM: Fixed a typo where "ASCII text" was spelled
+	  "ASCII test".  Thanks to Eric Newton <ecn@metaslash.com> for
+	  reporting this. 
+
 Fri Aug  9 12:13:21 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 
 	* bin/nightlybuilds/builds.1st:
