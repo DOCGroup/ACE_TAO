@@ -49,9 +49,13 @@ module RTScheduling
         DistributableThread
             spawn
                 (in ThreadAction      start,
-                 in unsigned long     stack_size,
+		in CORBA::VoidData data,
+		in string name,
+	        in CORBA::Policy sched_param,
+      		in CORBA::Policy implicit_sched_param,
+                in unsigned long     stack_size,
                     // zero means use the O/S default
-in RTCORBA::Priority base_priority);
+		in RTCORBA::Priority base_priority);
 
         exception UNSUPPORTED_SCHEDULING_DISCIPLINE {};
     // The scheduling_parameter argument didn't match the

@@ -36,7 +36,7 @@
 
 #include "rtscheduler_export.h"
 
-#include "c:/ACE_wrappers/TAO/tao/RTCORBA/RTCORBA.h"
+#include "c:/ACE_wrappers/TAO/tao/RTCORBA/RTCORBAC.h"
 #include "c:/ACE_wrappers/TAO/tao/PortableServer/PortableServerC.h"
 #include "c:/ACE_wrappers/TAO/tao/PortableInterceptorC.h"
 
@@ -68,8 +68,7 @@
 
 TAO_NAMESPACE  CORBA
 {
-  typedef void* VoidData;
-
+  
   // TAO_IDL - Generated from
   // C:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_ch.cpp:51
 
@@ -587,6 +586,10 @@ TAO_NAMESPACE  RTScheduling
     
     virtual ::RTScheduling::DistributableThread_ptr spawn (
         RTScheduling::ThreadAction_ptr start,
+        CORBA::VoidData data,
+        const char * name,
+        CORBA::Policy_ptr sched_param,
+        CORBA::Policy_ptr implicit_sched_param,
         CORBA::ULong stack_size,
         RTCORBA::Priority base_priority
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
