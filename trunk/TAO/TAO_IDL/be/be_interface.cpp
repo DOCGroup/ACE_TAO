@@ -440,7 +440,8 @@ be_interface::gen_var_defn (char* interface_name)
 
   // default constr
   *ch << namebuf << " (void); // default constructor" << nl;
-  *ch << namebuf << " (" << interface_name << "_ptr);" << nl;
+  *ch << namebuf << " (" << interface_name << "_ptr p)" 
+      << " : ptr_ (p) {} " << nl;
 
   // copy constructor
   *ch << namebuf << " (const " << namebuf <<
@@ -554,14 +555,6 @@ be_interface::gen_var_impl (char *interface_local_name,
       << " (void) // default constructor" << nl;
   *ci << "  " << ": ptr_ (" << interface_local_name
       << "::_nil ())" << nl;
-  *ci << "{}\n\n";
-
-  // constr from a _ptr
-  ci->indent ();
-  *ci << "ACE_INLINE" << nl;
-  *ci << fname << "::" << lname << " (" << interface_local_name
-      << "_ptr p)" << nl;
-  *ci << "  : ptr_ (p)" << nl;
   *ci << "{}\n\n";
 
   // the additional ptr () member function. This member function must be
