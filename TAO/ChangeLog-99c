@@ -1,3 +1,10 @@
+Sun Feb  7 01:06:58 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/CDR.h: 
+	* tao/CDR.i: 
+	  Yet another extraction operator for CDR streams (for
+	  CORBA::Char*).
+
 Sun Feb  7 00:52:36 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
         * orbsvcs/tests/EC_Custom_Marshal/ECCM_Consumer.dsp:
