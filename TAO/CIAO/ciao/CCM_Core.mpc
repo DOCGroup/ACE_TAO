@@ -97,7 +97,7 @@ project (CIAO_Container) : orbsvcslib, portableserver, security, iorinterceptor,
 project (CIAO_Server) : orbsvcslib, portableserver, valuetype, ifr_client, security {
   after += CIAO_Container
   sharedname  = CIAO_Server
-  libs += CIAO_Client
+  libs += CIAO_Container CIAO_Client
   idlflags  += -Wb,export_include=CIAO_Server_Export.h -Wb,export_macro=CIAO_SERVER_Export
   dynamicflags    = CIAO_SERVER_BUILD_DLL
 
