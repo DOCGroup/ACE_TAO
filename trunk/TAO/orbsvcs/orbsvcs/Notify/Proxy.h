@@ -22,6 +22,7 @@
 #include "Object_T.h"
 #include "EventTypeSeq.h"
 #include "FilterAdmin.h"
+#include "Admin.h"
 
 class TAO_NS_Admin;
 class TAO_NS_Peer;
