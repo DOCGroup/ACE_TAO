@@ -705,6 +705,12 @@ extern "C" u_long CLS##_Export _get_dll_unload_policy (void) \
 # define ACE_NOTSUP do { errno = ENOTSUP; return; } while (0)
 #endif /* ! ACE_HAS_VERBOSE_NOTSUP */
 
+#if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) && (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB == 1)
+#  define ACE_STD_NAMESPACE std
+#else
+#  define ACE_STD_NAMESPACE
+#endif
+
 // empty ACE_OS namespace to help identify compiler errors more easily.
 namespace ACE_OS {}
 #if !defined (ACE_OS_String)

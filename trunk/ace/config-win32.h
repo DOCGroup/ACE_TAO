@@ -37,11 +37,10 @@
 #endif /* !__BORLANDC__ */
 
 // Include the config-win32-* file specific to the compiler
-
-#if defined (_MSC_VER)
-#    include "ace/config-win32-msvc.h"
-#elif defined (__BORLANDC__)
+#if defined (__BORLANDC__)
 #    include "ace/config-win32-borland.h"
+#elif defined (_MSC_VER)
+#    include "ace/config-win32-msvc.h"
 #elif defined (__IBMCPP__)
 #    include "ace/config-win32-visualage.h"
 #elif defined (ghs)
