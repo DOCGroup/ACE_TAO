@@ -23,7 +23,15 @@ public:
     ACE_OS::sleep (2);
     ACE_Message_Block *mb;
     while (this->getq (mb) != -1)
-      process_message (mb);
+      {
+        if (mb->msg_type () == ACE_Message_Block::MB_BREAK)
+          {
+            mb->release ();
+            break;
+          }
+        process_message (mb);
+        mb->release ();
+      }
     return 0;
   }
 
@@ -66,10 +74,16 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_Message_Block mb;
   for (int i = 0; i < 100; i++)
     {
-      hp_handler.putq (&mb);
-      lp_handler.putq (&mb);
+      ACE_Message_Block *mb_hp, *mb_lp;
+      mb_hp = mb.clone ();
+      mb_lp = mb.clone ();
+      hp_handler.putq (mb_hp);
+      lp_handler.putq (mb_lp);
     }
 
+  ACE_Message_Block stop (0, ACE_Message_Block::MB_BREAK);
+  hp_handler.putq (stop.clone ());
+  lp_handler.putq (stop.clone ());
   hp_handler.wait ();
   lp_handler.wait ();
 
