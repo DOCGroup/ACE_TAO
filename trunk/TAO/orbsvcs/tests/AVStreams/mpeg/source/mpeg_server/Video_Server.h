@@ -54,7 +54,7 @@ int send_to_network(int timeToUse);
 void StartPlayLiveVideo (void);
 void GetFeedBack (void);
 int SendPicture (int *frame);
-int play_send (void);
+int play_send (int debug=0);
 int fast_play_send (void);
 
 // %% comments
@@ -135,6 +135,10 @@ public:
                 int rttag,
                 int max_pkt_size);
   // constructor taking the handles
+
+  ~Video_Server ();
+  // Destructor
+
   int init (int control_fd,
             int data_fd,
             int rttag,
@@ -176,7 +180,6 @@ private:
   Video_Sig_Handler *sig_handler_;
   // signal handler for SIGALRM to periodically send the video frames
   // to the client
-
 
 };
 

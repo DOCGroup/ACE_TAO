@@ -231,17 +231,125 @@ Mpeg_Svc_Handler::handle_timeout (const ACE_Time_Value &,
   return 0;
 }
 
-// Default Constructor
-Mpeg_Server::Mpeg_Server ()
+// AV_Server_Sig_Handler routines
+// Video_Sig_Handler methods
+// handles the timeout SIGALRM signal
+// %% this should *not* register itself,but it should
+// be registered by the Video_Server::run, alongwith
+// the remaining  handlers.
+AV_Server_Sig_Handler::AV_Server_Sig_Handler (void)
 {
+}
 
+int
+AV_Server_Sig_Handler::register_handler (void)
+{
+  // Assign the Sig_Handler a dummy I/O descriptor.  Note that even
+  // though we open this file "Write Only" we still need to use the
+  // ACE_Event_Handler::NULL_MASK when registering this with the
+  // ACE_Reactor (see below).
+  this->handle_ = ACE_OS::open (ACE_DEV_NULL, O_WRONLY);
+  ACE_ASSERT (this->handle_ != -1);
+
+  // Register signal handler object.  Note that NULL_MASK is used to
+  // keep the ACE_Reactor from calling us back on the "/dev/null"
+  // descriptor.
+  if (ACE_Reactor::instance ()->register_handler 
+      (this, ACE_Event_Handler::NULL_MASK) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, 
+                       "%p\n", 
+                       "register_handler"),
+                      -1);
+
+  // Create a sigset_t corresponding to the signals we want to catch.
+  ACE_Sig_Set sig_set;
+
+  //  sig_set.sig_add (SIGINT);
+  // sig_set.sig_add (SIGQUIT);
+  sig_set.sig_add (SIGCHLD);  
+  sig_set.sig_add (SIGBUS);
+  sig_set.sig_add (SIGINT);
+  sig_set.sig_add (SIGTERM);
+
+  // Register the signal handler object to catch the signals.
+  if (ACE_Reactor::instance ()->register_handler (sig_set, 
+                                                  this) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, 
+                       "%p\n", 
+                       "register_handler"),
+                      -1);
+
+  return 0;
+}
+// Called by the ACE_Reactor to extract the fd.
+
+ACE_HANDLE
+AV_Server_Sig_Handler::get_handle (void) const
+{
+  return this->handle_;
+}
+
+int 
+AV_Server_Sig_Handler::handle_input (ACE_HANDLE)
+{
+  ACE_DEBUG ((LM_DEBUG, "(%t) handling asynchonrous input...\n"));
+  return 0;
+}
+
+int 
+AV_Server_Sig_Handler::shutdown (ACE_HANDLE, ACE_Reactor_Mask)
+{
+  ACE_DEBUG ((LM_DEBUG, "(%t) closing down Sig_Handler...\n"));
+  return 0;
+}
+
+// This method handles all the signals that are being caught by this
+// object.  In our simple example, we are simply catching SIGALRM,
+// SIGINT, and SIGQUIT.  Anything else is logged and ignored.
+//
+// There are several advantages to using this approach.  First, 
+// the behavior triggered by the signal is handled in the main event
+// loop, rather than in the signal handler.  Second, the ACE_Reactor's 
+// signal handling mechanism eliminates the need to use global signal 
+// handler functions and data. 
+
+int
+AV_Server_Sig_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
+{
+  //  ACE_DEBUG ((LM_DEBUG, "(%t) received signal %S\n", signum));
+
+  switch (signum)
+    {
+    case SIGCHLD:
+      // Handle the timeout
+      AV_Server::clear_child (SIGCHLD);
+      break;
+    case SIGBUS:
+    case SIGINT:
+    case SIGTERM:
+      AV_Server::int_handler (signum);
+      ACE_DEBUG ((LM_DEBUG, 
+		  "(%t) %S: not handled, returning to program\n", 
+                  signum));
+      break;
+    }
+  return 0;
+}
+
+
+// AV_Server routines
+
+// Default Constructor
+AV_Server::AV_Server ()
+{
+  this->sh_ = new AV_Server_Sig_Handler ;
 }
 
 //  Cluttering the code with various signal handlers here.
 
-//  ctrl-c handler
+//  ctrl-c handler,Bus error handler,interrupt sig handler
 void
-Mpeg_Server::int_handler (int sig)
+AV_Server::int_handler (int sig)
 {
   ACE_DEBUG ((LM_DEBUG, 
               "(%P|%t) killed by signal %d",
@@ -250,7 +358,7 @@ Mpeg_Server::int_handler (int sig)
 }
 
 void
-Mpeg_Server::on_exit_routine (void)
+AV_Server::on_exit_routine (void)
 {
   // %% what does the following do
   if (Mpeg_Global::parentpid != ACE_OS::getpid ()) 
@@ -268,11 +376,13 @@ Mpeg_Server::on_exit_routine (void)
 
 // SIGCHLD handler
 void
-Mpeg_Server::clear_child (int sig)
+AV_Server::clear_child (int sig)
 {
   int pid;
   int status;
   
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) Reaping the children"));
   // reap the children
   while ((pid = ACE_OS::waitpid (-1, 
                                  &status, 
@@ -316,7 +426,7 @@ Mpeg_Server::clear_child (int sig)
 
 // Parses the command line arguments
 int
-Mpeg_Server::parse_args (int argc,
+AV_Server::parse_args (int argc,
                          char **argv)
 {
   ACE_Get_Opt get_opts (argc, argv, "rd:s:vamh");
@@ -358,7 +468,7 @@ Mpeg_Server::parse_args (int argc,
 
 // sets the handlers for the various signals
 int
-Mpeg_Server::set_signals ()
+AV_Server::set_signals ()
 {
   setsignal (SIGCHLD, clear_child);
   setsignal (SIGPIPE, SIG_IGN);    
@@ -372,7 +482,7 @@ Mpeg_Server::set_signals ()
         
 // Initializes the mpeg server
 int
-Mpeg_Server::init (int argc,
+AV_Server::init (int argc,
                    char **argv)
 {
   int result;
@@ -381,7 +491,14 @@ Mpeg_Server::init (int argc,
   if (result < 0)
     return result;
 
-  this->set_signals ();
+  // This code has become obsolete with the new AV_Server_Sig_Handler class..
+  //  this->set_signals ();
+  // Register the various signal handlers with the reactor.
+  result = this->sh_->register_handler ();
+
+  if (result < 0)
+    return result;
+
   Mpeg_Global::parentpid = ACE_OS::getpid ();
   
   ::atexit (on_exit_routine);
@@ -425,7 +542,7 @@ Mpeg_Server::init (int argc,
 
 // Runs the mpeg server
 int
-Mpeg_Server::run ()
+AV_Server::run ()
 {
   int result;
   this->server_control_addr_.set (VCR_TCP_PORT);
@@ -437,20 +554,22 @@ Mpeg_Server::run ()
   ACE_Reactor::instance ()->run_event_loop ();
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P)Mpeg_Server::run () "
+              "(%P)AV_Server::run () "
               "came out of the (acceptor) "
               "event loop %p\n",
               "run_event_loop\n"));
 }
 
-Mpeg_Server::~Mpeg_Server (void)
+AV_Server::~AV_Server (void)
 {
+  if (this->sh_ != 0)
+    delete this->sh_;
 }
 
 int
 main (int argc, char **argv)
 {
-  Mpeg_Server vcr_server;
+  AV_Server vcr_server;
   
   // parses the arguments, and initializes the server
   if (vcr_server.init (argc, argv) < 0)

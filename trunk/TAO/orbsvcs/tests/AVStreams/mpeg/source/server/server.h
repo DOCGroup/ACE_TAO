@@ -93,19 +93,44 @@ private:
   Video_Server vs_;
 };
 
-class Mpeg_Server
+class AV_Server_Sig_Handler 
+  : public virtual ACE_Event_Handler
+{
+public:
+  AV_Server_Sig_Handler (void);
+
+  virtual ACE_HANDLE get_handle (void) const;
+
+  int register_handler (void);
+  // this will register this sig_handler
+  // with the reactor
+
+  virtual int shutdown (ACE_HANDLE, 
+                        ACE_Reactor_Mask);
+
+  virtual int handle_input (ACE_HANDLE);
+
+  virtual int handle_signal (ACE_HANDLE signum,
+                             siginfo_t * = 0,
+                             ucontext_t* = 0);
+private:
+  ACE_HANDLE handle_;
+};
+
+
+class AV_Server
 {
   // =TITLE
   //   Defines a class that abstracts the functionality of a mpeg
   //   video and audio server.
 public:
-  Mpeg_Server ();
+  AV_Server ();
   int init (int argc,
             char **argv);
-  // Initialize the mpeg_server
+  // Initialize the AV_Server
 
   int run ();
-  // Run the Mpeg_Server
+  // Run the AV_Server
 
   static  void int_handler (int sig);
   static  void on_exit_routine (void);
@@ -114,19 +139,14 @@ public:
   // we need them to be static 
   static void init_static (void);
 
-  ~Mpeg_Server ();
+  ~AV_Server ();
 private:
 
   Mpeg_Acceptor acceptor_;
   // the acceptor
 
-  // %% why is this here  ? this should be in video_server
-  // if you are newing the other handlers, you should new 
-  // this one also, and destroy them in the destructor
-  // for video_server
-  //  Video_Sig_Handler vh_;
-  // signal handler for SIGALRM to periodically send the video frames
-  // to the client
+  AV_Server_Sig_Handler *sh_;
+  // Signal handler for SIGCHLD,SIGINT,SIGTERM,SIGBUS
 
   ACE_INET_Addr server_control_addr_;
   // Control (TCP) Address of this server.

@@ -10,7 +10,7 @@ Things to do
 
 - Remove kerberos warnings
 
-- Need to fix the following warnings:
++ Need to fix the following warnings:
     "Video_Server.cpp", line 880: Warning: para hides Video_Server::para.
     "Video_Server.cpp", line 906: Warning: para hides Video_Server::para.
 
@@ -19,18 +19,18 @@ Things to do
   -- I think I've fixed this! Naga, can you confirm that it doesnt crash
      anymore ?
 
-- Parent-Child relationship
++ Parent-Child relationship
    -- parent goes back and listens for new connections
    -- child handles this connection
 
 - rttag is enabled with -r
   does it work ?
 
-- rename Mpeg_Server to AV_Server
++ rename Mpeg_Server to AV_Server
 
 - Make #define's into enums in common.h/globals.h
 
-- Change handle_input to handle_connection in
++ Change handle_input to handle_connection in
   Mpeg_Svc_Handler
 
 + Video_Sig_Handler is in Mpeg_Server -- needs to be moved to Video_Server
