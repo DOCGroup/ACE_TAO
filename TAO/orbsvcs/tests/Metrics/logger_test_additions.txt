@@ -1,0 +1,301 @@
+TAO_METRICS_LOGGER_SINGLETON::instance();  // access as C++ pointer to local object
+
+*TAO_METRICS_LOGGER_REF_SINGLETON::instance() = logger_ref; // access as CORBA object via IOR
+
+logger_ref->send_banner ("Logger Ref Singleton Initialized", ACE_TRY_ENV);
+ACE_TRY_CHECK;
+
+TAO_METRICS_CACHE * cache_ptr = TAO_METRICS_CACHE_SINGLETON::instance();
+
+TAO_METRICS_FRAME_MGR_TYPE * frame_mgr_ptr = TAO_METRICS_FRAME_MGR_SINGLETON::instance();
+
+// Handle for METRICS INSTRUMENTATION
+RtecScheduler::handle_t RTARM_triggered_adaptation_metrics_handle_;
+
+// Obtain local handle for WSOA METRICS INSTRUMENTATION
+this->RTARM_triggered_adaptation_metrics_handle_ = 
+  WSOA_METRICS_HANDLES_SINGLETON::instance()->
+	RTARM_triggered_adaptation_metrics_handle_;	   
+
+// METRICS INSTRUMENTATION POINT (RTARM triggered adaptation overhead start)
+START_DISPATCH_METRIC(TAO_METRICS_CACHE_SINGLETON::instance(),
+                      base_metrics,
+                      this->RTARM_triggered_adaptation_metrics_handle_);
+
+
+// METRICS INSTRUMENTATION POINT (RTARM triggered adaptation overhead stop)
+STOP_DISPATCH_METRIC(TAO_METRICS_CACHE_SINGLETON::instance(),
+                     base_metrics,
+                     this->RTARM_triggered_adaptation_metrics_handle_);
+
+// METRICS INSTRUMENTATION: local copy of metrics reporting handles
+RtecScheduler::handle_t tile_processed_first_metrics_handle_;
+RtecScheduler::handle_t image_processed_metrics_handle_;
+
+this->tile_processed_first_metrics_handle_ = 
+  WSOA_METRICS_HANDLES_SINGLETON::instance()->
+	tile_processed_first_metrics_handle_;	   
+
+this->image_processed_metrics_handle_ = 
+  WSOA_METRICS_HANDLES_SINGLETON::instance()->
+	image_processed_metrics_handle_;	   
+
+
+// METRICS INSTRUMENTATION POINT (stop tile processed interval)
+// uses tilesProcessedSC_ to determine the handle
+// Note: the image and tile metrics are different from the others in that they record latency of progress points
+// rather than latency of processing overhead - i.e., they include time spent on the network and C2 server.
+STOP_DISPATCH_METRIC(TAO_METRICS_CACHE_SINGLETON::instance(),
+                     base_metrics,
+                     tile_processed_first_metrics_handle_ + tilesProcessedSC_->longValue());
+
+tilesProcessedSC_->longValue(tilesProcessedSC_->longValue() + 1);
+
+// METRICS INSTRUMENTATION POINT (stop image processed interval)
+if (tilesProcessedSC_->longValue()
+    == WSOA_METRICS_HANDLES_SINGLETON::instance()->tiles_requested_)
+ {
+   STOP_DISPATCH_METRIC(TAO_METRICS_CACHE_SINGLETON::instance(),
+                        base_metrics,
+                        image_processed_metrics_handle_);
+ }
+
+
+
+   // Obtain local handles for WSOA METRICS INSTRUMENTATION
+   this->RTARM_region_transition_metrics_handle_ =
+	  WSOA_METRICS_HANDLES_SINGLETON::instance()->RTARM_region_transition_metrics_handle_;
+   this->QuO_contract_eval_metrics_handle_ =
+	  WSOA_METRICS_HANDLES_SINGLETON::instance()->QuO_contract_eval_metrics_handle_;
+   this->tile_request_delegate_metrics_handle_ =
+	  WSOA_METRICS_HANDLES_SINGLETON::instance()->tile_request_delegate_metrics_handle_;
+
+   // METRICS INSTRUMENTATION POINT (tile request delegate overhead suspend)
+   PAUSE_DISPATCH_METRIC(TAO_METRICS_CACHE_SINGLETON::instance(),
+                         base_metrics,
+                         this->tile_request_delegate_metrics_handle_);
+
+   // METRICS INSTRUMENTATION POINT (quo contract eval suspend)
+   PAUSE_DISPATCH_METRIC(TAO_METRICS_CACHE_SINGLETON::instance(),
+                           base_metrics,
+                           this->QuO_contract_eval_metrics_handle_);
+
+   // METRICS INSTRUMENTATION POINT (RTARM region transition overhead start)
+   START_DISPATCH_METRIC(TAO_METRICS_CACHE_SINGLETON::instance(),
+                         base_metrics,
+                         this->RTARM_region_transition_metrics_handle_);
+
+   rtarmPtr_->SetGroupQOS_Region("imageload", targetRegion, ACE_TRY_ENV);
+
+   // METRICS INSTRUMENTATION POINT (RTARM region transition overhead stop)
+   STOP_DISPATCH_METRIC(TAO_METRICS_CACHE_SINGLETON::instance(),
+                        base_metrics,
+                        this->RTARM_region_transition_metrics_handle_);
+
+   // METRICS INSTRUMENTATION POINT (quo contract eval resume)
+   RESUME_DISPATCH_METRIC(TAO_METRICS_CACHE_SINGLETON::instance(),
+                          base_metrics,
+                          this->QuO_contract_eval_metrics_handle_);
+
+   // METRICS INSTRUMENTATION POINT (tile request delegate overhead resume)
+   RESUME_DISPATCH_METRIC(TAO_METRICS_CACHE_SINGLETON::instance(),
+                          base_metrics,
+                          this->tile_request_delegate_metrics_handle_);
+
+
+
+  // Local handles for WSOA METRICS INSTRUMENTATION
+  RtecScheduler::handle_t RTARM_region_transition_metrics_handle_;
+  RtecScheduler::handle_t QuO_contract_eval_metrics_handle_;
+  RtecScheduler::handle_t tile_request_delegate_metrics_handle_;
+
+
+   // Obtain local handles for WSOA METRICS INSTRUMENTATION
+   this->QuO_contract_eval_metrics_handle_ =
+	  WSOA_METRICS_HANDLES_SINGLETON::instance()->QuO_contract_eval_metrics_handle_;
+
+   this->tile_request_delegate_metrics_handle_ =
+	  WSOA_METRICS_HANDLES_SINGLETON::instance()->tile_request_delegate_metrics_handle_;
+
+   this->image_received_metrics_handle_ =
+	  WSOA_METRICS_HANDLES_SINGLETON::instance()->image_received_metrics_handle_;
+
+   this->image_processed_metrics_handle_ =
+	  WSOA_METRICS_HANDLES_SINGLETON::instance()->image_processed_metrics_handle_;
+
+   this->image_quiescent_metrics_handle_ =
+	  WSOA_METRICS_HANDLES_SINGLETON::instance()->image_quiescent_metrics_handle_;
+
+   this->tile_received_first_metrics_handle_ =
+	  WSOA_METRICS_HANDLES_SINGLETON::instance()->tile_received_first_metrics_handle_;
+
+   this->tile_processed_first_metrics_handle_ =
+	  WSOA_METRICS_HANDLES_SINGLETON::instance()->tile_processed_first_metrics_handle_;
+
+
+   // METRICS INSTRUMENTATION POINT (tile request delegate overhead start)
+   START_DISPATCH_METRIC(TAO_METRICS_CACHE_SINGLETON::instance(),
+                          base_metrics,
+                          this->tile_request_delegate_metrics_handle_);
+
+   // METRICS INSTRUMENTATION POINT (quo contract eval start)
+   START_DISPATCH_METRIC(TAO_METRICS_CACHE_SINGLETON::instance(),
+                          base_metrics,
+                          this->QuO_contract_eval_metrics_handle_);
+
+
+   CurrentTime->wsoa_update();
+   ExpectedBytesIfEarly->wsoa_update();
+   ExpectedBytesIfLate->wsoa_update();
+
+   quo::SignalEvent  quo_sig1;
+   quo::RegionSeq* quo_currentRegions = quo_ProgressContract->signalAndEvalAndGetCurrentRegion(quo_sig1);
+
+   // METRICS INSTRUMENTATION POINT (quo contract eval stop)
+   STOP_DISPATCH_METRIC(TAO_METRICS_CACHE_SINGLETON::instance(),
+                        base_metrics,
+                        this->QuO_contract_eval_metrics_handle_);
+
+
+        // METRICS INSTRUMENTATION POINT (stop image quiescent interval)
+        // This is where we're again quiescent, i.e., we've *detected*
+	    // that the image is done being processed.
+        STOP_DISPATCH_METRIC(TAO_METRICS_CACHE_SINGLETON::instance(),
+                             base_metrics,
+                             image_quiescent_metrics_handle_);
+
+		// METRICS INSTRUMENTATION: reset the tiles requested count to zero until we
+		// request a new image from the C2 server.
+		WSOA_METRICS_HANDLES_SINGLETON::instance()->tiles_requested_ = 0;
+
+
+
+	  // METRICS INSTRUMENTATION POINT (start tile received interval)
+      // uses numberOfTilesRequested to determine the handle
+      // Note: the image and tile metrics are different from the others in that they record latency of progress points
+      // rather than latency of processing overhead - i.e., they include time spent on the network and C2 server.
+      START_DISPATCH_METRIC(TAO_METRICS_CACHE_SINGLETON::instance(),
+                            base_metrics,
+                            tile_received_first_metrics_handle_ + numberOfTilesRequested);
+
+      // METRICS INSTRUMENTATION POINT (start tile processed interval)
+      // uses numberOfTilesRequested to determine the handle
+      // Note: the image and tile metrics are different from the others in that they record latency of progress points
+      // rather than latency of processing overhead - i.e., they include time spent on the network and C2 server.
+      START_DISPATCH_METRIC(TAO_METRICS_CACHE_SINGLETON::instance(),
+                            base_metrics,
+                            tile_processed_first_metrics_handle_ + numberOfTilesRequested);
+
+
+  // METRICS INSTRUMENTATION POINT (tile request delegate overhead stop)
+  STOP_DISPATCH_METRIC(TAO_METRICS_CACHE_SINGLETON::instance(),
+                       base_metrics,
+                       this->tile_request_delegate_metrics_handle_);
+
+
+  // METRICS INSTRUMENTATION: store number of tiles requested, in metrics handle class.
+  WSOA_METRICS_HANDLES_SINGLETON::instance()->tiles_requested_ = totalNumberOfTiles;
+
+
+  // METRICS INSTRUMENTATION POINT (start image received interval)
+  // Note: the image and tile metrics are different from the others in that they record latency of progress points
+  // rather than latency of processing overhead - i.e., they include time spent on the network and C2 server.
+  START_DISPATCH_METRIC(TAO_METRICS_CACHE_SINGLETON::instance(),
+                        base_metrics,
+                        image_received_metrics_handle_);
+
+  // METRICS INSTRUMENTATION POINT (start image processed interval)
+  START_DISPATCH_METRIC(TAO_METRICS_CACHE_SINGLETON::instance(),
+                        base_metrics,
+                        image_processed_metrics_handle_);
+
+  // METRICS INSTRUMENTATION POINT (start image quiescent interval)
+  START_DISPATCH_METRIC(TAO_METRICS_CACHE_SINGLETON::instance(),
+                        base_metrics,
+                        image_quiescent_metrics_handle_);
+
+  // CDG - TBD - METRICS INSTRUMENTATION POINT (requested compression ratio)
+  // use value in compressionRatio
+
+  // METRICS INSTRUMENTATION POINT (start tile received interval)
+  // uses base handle as this is the first tile request
+  // Note: the image and tile metrics are different from the others in that they record latency of progress points
+  // rather than latency of processing overhead - i.e., they include time spent on the network and C2 server.
+  START_DISPATCH_METRIC(TAO_METRICS_CACHE_SINGLETON::instance(),
+                        base_metrics,
+                        tile_received_first_metrics_handle_);
+  
+  // METRICS INSTRUMENTATION POINT (start tile processed interval)
+  // uses base handle as this is the first tile request
+  // Note: the image and tile metrics are different from the others in that they record latency of progress points
+  // rather than latency of processing overhead - i.e., they include time spent on the network and C2 server.
+  START_DISPATCH_METRIC(TAO_METRICS_CACHE_SINGLETON::instance(),
+                        base_metrics,
+                        tile_processed_first_metrics_handle_);
+
+
+      // METRICS INSTRUMENTATION POINT (start tile received interval)
+      // uses numberOfTilesRequested to determine the handle
+      // Note: the image and tile metrics are different from the others in that they record latency of progress points
+      // rather than latency of processing overhead - i.e., they include time spent on the network and C2 server.
+      START_DISPATCH_METRIC(TAO_METRICS_CACHE_SINGLETON::instance(),
+                            base_metrics,
+                            tile_received_first_metrics_handle_ + numberOfTilesRequested);
+
+      // METRICS INSTRUMENTATION POINT (start tile processed interval)
+      // uses numberOfTilesRequested to determine the handle
+      // Note: the image and tile metrics are different from the others in that they record latency of progress points
+      // rather than latency of processing overhead - i.e., they include time spent on the network and C2 server.
+      START_DISPATCH_METRIC(TAO_METRICS_CACHE_SINGLETON::instance(),
+                            base_metrics,
+                            tile_processed_first_metrics_handle_ + numberOfTilesRequested);
+
+
+   // Local handles for METRICS INSTRUMENTATION
+   RtecScheduler::handle_t QuO_contract_eval_metrics_handle_;
+   RtecScheduler::handle_t tile_request_delegate_metrics_handle_;
+   RtecScheduler::handle_t image_received_metrics_handle_;
+   RtecScheduler::handle_t image_processed_metrics_handle_;
+   RtecScheduler::handle_t image_quiescent_metrics_handle_;
+   RtecScheduler::handle_t tile_received_first_metrics_handle_;
+   RtecScheduler::handle_t tile_processed_first_metrics_handle_;
+
+
+   // METRICS INSTRUMENTATION: initialize local handles
+
+   this->tile_received_first_metrics_handle_ =
+     WSOA_METRICS_HANDLES_SINGLETON::instance()->tile_received_first_metrics_handle_;
+
+   this->image_received_metrics_handle_ =
+     WSOA_METRICS_HANDLES_SINGLETON::instance()->image_received_metrics_handle_;
+
+
+   // METRICS INSTRUMENTATION POINT (stop tile received interval)
+   // uses tilesReceivedSC_ to determine the handle
+   // Note: the image and tile metrics are different from the others in that they record latency of progress points
+   // rather than latency of processing overhead - i.e., they include time spent on the network and C2 server.
+      STOP_DISPATCH_METRIC(TAO_METRICS_CACHE_SINGLETON::instance(),
+                           base_metrics,
+                           tile_received_first_metrics_handle_ + tilesReceivedSC_->longValue());
+
+   tilesReceivedSC_->longValue(tilesReceivedSC_->longValue() + 1);
+
+   // METRICS INSTRUMENTATION POINT (stop image processed interval)
+   if (tilesReceivedSC_->longValue()
+	   == WSOA_METRICS_HANDLES_SINGLETON::instance()->tiles_requested_)
+   {
+      STOP_DISPATCH_METRIC(TAO_METRICS_CACHE_SINGLETON::instance(),
+                           base_metrics,
+                           image_received_metrics_handle_);
+   }
+
+
+      // METRICS INSTRUMENTATION: local copies of metrics reporting handles.
+	  RtecScheduler::handle_t tile_received_first_metrics_handle_;
+	  RtecScheduler::handle_t image_received_metrics_handle_;
+
+
+
+
+
+

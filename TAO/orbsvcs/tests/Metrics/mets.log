@@ -1,0 +1,21 @@
+g++ -W -Wall -Wpointer-arith -pipe -g   -fno-exceptions -fcheck-new -DACE_USE_RCSID=0 -D_REENTRANT -DACE_HAS_AIO_CALLS  -I/u/storri/ACE_CVS -I/u/storri/ACE_CVS/TAO    -I/u/storri/ACE_CVS/TAO/orbsvcs    -L/u/storri/ACE_CVS/TAO/tao -L/u/storri/ACE_CVS/ace -L./ -o Metrics_Local_Cache .obj/Metrics_Local_Cache_Test.o -lTAO_Metrics -lTAO_RTCORBA -lTAO_PortableServer -lTAO -lACE -ldl -lpthread -lrt 
+/u/storri/ACE_CVS/ace/libACE.a(Log_Msg.o)(.text+0x4f82): In function `ACE_Log_Msg::log(char const*, ACE_Log_Priority, void*)':
+itimerspec/Log_Msg.cpp:1161: `sys_nerr' is deprecated; use `strerror' or `strerror_r' instead
+.obj/Metrics_Local_Cache_Test.o(.text+0x402): In function `TAO_Metrics_Local_Cache_Test::TAO_Metrics_Local_Cache_Test[not-in-charge](int, int)':
+sockaddr_storage::operator=(sockaddr_storage const&)/Metrics_Local_Cache_Test.cpp:103: undefined reference to `RtecEventComm::EventSet::EventSet[in-charge]()'
+.obj/Metrics_Local_Cache_Test.o(.text+0xa22): In function `TAO_Metrics_Local_Cache_Test::TAO_Metrics_Local_Cache_Test[in-charge](int, int)':
+sockaddr_storage::operator=(sockaddr_storage const&)/Metrics_Local_Cache_Test.cpp:103: undefined reference to `RtecEventComm::EventSet::EventSet[in-charge]()'
+.obj/Metrics_Local_Cache_Test.o(.text+0x1122): In function `TAO_Metrics_Local_Cache_Test::TAO_Metrics_Local_Cache_Test[not-in-charge](int, char**, int, int)':
+sockaddr_storage::operator=(sockaddr_storage const&)/Metrics_Local_Cache_Test.cpp:131: undefined reference to `RtecEventComm::EventSet::EventSet[in-charge]()'
+.obj/Metrics_Local_Cache_Test.o(.text+0x18b2): In function `TAO_Metrics_Local_Cache_Test::TAO_Metrics_Local_Cache_Test[in-charge](int, char**, int, int)':
+sockaddr_storage::operator=(sockaddr_storage const&)/Metrics_Local_Cache_Test.cpp:131: undefined reference to `RtecEventComm::EventSet::EventSet[in-charge]()'
+.obj/Metrics_Local_Cache_Test.o(.text+0x1bc2): In function `TAO_Metrics_Local_Cache_Test::~TAO_Metrics_Local_Cache_Test [not-in-charge]()':
+sockaddr_storage::operator=(sockaddr_storage const&)/Metrics_Local_Cache_Test.cpp:139: undefined reference to `RtecEventComm::EventSet::~EventSet [in-charge]()'
+.obj/Metrics_Local_Cache_Test.o(.text+0x1fd2): In function `TAO_Metrics_Local_Cache_Test::~TAO_Metrics_Local_Cache_Test [in-charge]()':
+sockaddr_storage::operator=(sockaddr_storage const&)/Metrics_Local_Cache_Test.cpp:139: undefined reference to `RtecEventComm::EventSet::~EventSet [in-charge]()'
+.obj/Metrics_Local_Cache_Test.o(.text+0x23e2): In function `TAO_Metrics_Local_Cache_Test::~TAO_Metrics_Local_Cache_Test [in-charge deleting]()':
+sockaddr_storage::operator=(sockaddr_storage const&)/Metrics_Local_Cache_Test.cpp:139: undefined reference to `RtecEventComm::EventSet::~EventSet [in-charge]()'
+.obj/Metrics_Local_Cache_Test.o(.text+0x2982): In function `TAO_Metrics_Local_Cache_Test::generate_orb_args(char*&)':
+sockaddr_storage::operator=(sockaddr_storage const&)/Metrics_Local_Cache_Test.cpp:172: undefined reference to `TAO_Rate_Group_Info::TAO_Rate_Group_Info[in-charge]()'
+collect2: ld returned 1 exit status
+make: *** [Metrics_Local_Cache] Error 1
