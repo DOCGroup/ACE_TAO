@@ -70,7 +70,7 @@ TAO_Notify_Default_CO_Factory::create_consumer_admin (TAO_Notify_EventChannel_i*
                            event_channel->get_qos (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      consumer_admin_i->set_qos ((CosNotification::QoSProperties &)qos
+      consumer_admin_i->set_qos (qos.in ()
                                  TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
@@ -100,7 +100,7 @@ TAO_Notify_Default_CO_Factory::create_supplier_admin (TAO_Notify_EventChannel_i*
                            event_channel->get_qos (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      supplier_admin_i->set_qos ((CosNotification::QoSProperties &)qos
+      supplier_admin_i->set_qos (qos.in ()
                                  TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
@@ -140,7 +140,8 @@ TAO_Notify_Default_CO_Factory::create_struct_proxy_pushsupplier (TAO_Notify_Cons
                            parent->get_qos (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      proxy->set_qos ((CosNotification::QoSProperties &)qos TAO_ENV_ARG_PARAMETER);
+      proxy->set_qos (qos.in ()
+                      TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -167,7 +168,8 @@ TAO_Notify_Default_CO_Factory::create_seq_proxy_pushsupplier (TAO_Notify_Consume
                            parent->get_qos (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      proxy->set_qos ((CosNotification::QoSProperties &)qos TAO_ENV_ARG_PARAMETER);
+      proxy->set_qos (qos.in ()
+                      TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -194,7 +196,8 @@ TAO_Notify_Default_CO_Factory::create_proxy_pushsupplier (TAO_Notify_ConsumerAdm
                            parent->get_qos (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      proxy->set_qos ((CosNotification::QoSProperties &)qos TAO_ENV_ARG_PARAMETER);
+      proxy->set_qos (qos.in ()
+                      TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -222,7 +225,8 @@ TAO_Notify_Default_CO_Factory::create_struct_proxy_pushconsumer (TAO_Notify_Supp
                            parent->get_qos (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      proxy->set_qos ((CosNotification::QoSProperties &)qos TAO_ENV_ARG_PARAMETER);
+      proxy->set_qos (qos.in ()
+                      TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -249,7 +253,8 @@ TAO_Notify_Default_CO_Factory::create_proxy_pushconsumer (TAO_Notify_SupplierAdm
                            parent->get_qos (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      proxy->set_qos ((CosNotification::QoSProperties &)qos TAO_ENV_ARG_PARAMETER);
+      proxy->set_qos (qos.in ()
+                      TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -276,7 +281,8 @@ TAO_Notify_Default_CO_Factory::create_seq_proxy_pushconsumer (TAO_Notify_Supplie
                            parent->get_qos (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      proxy->set_qos ((CosNotification::QoSProperties &)qos TAO_ENV_ARG_PARAMETER);
+      proxy->set_qos (qos.in ()
+                      TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
