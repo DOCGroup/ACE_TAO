@@ -19,6 +19,9 @@ Wed Dec 09 07:02:06 1998  David L. Levine  <levine@cs.wustl.edu>
         * tests/Timeprobe_Test.cpp: disabled ACE_ENABLE_TIMEPROBES,
           because the ACE lib is built by default without them.
 
+        * performance-tests/Misc/context_switch_time.cpp: disabled
+          Yield_Test on VxWorks, because it doesn't run properly there.
+
 1998-12-09  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * tests/Collection_Test.cpp: Added new test for ACE collections.
