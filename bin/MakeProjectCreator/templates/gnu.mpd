@@ -123,16 +123,18 @@ endif
 OUTPUT_DIRECTORY = $(INSLIB)
 <%endif%>
 
-<%if(version)%>
-SOVERSION = .<%version%>
-<%endif%>
-
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 ## We don't need the ACELIB setting from wrapper_macros.GNU
 ACELIB =
 <%if(tao)%>
 tao_dont_use_idl_make_rule = 1
 include $(TAO_ROOT)/rules.tao.GNU
+<%endif%>
+<%if(version)%>
+
+ifeq ($(versioned_so),1)
+SOVERSION = .<%version%>
+endif
 <%endif%>
 
 # To build multiple targets in the same directory on AIX, it works
@@ -321,7 +323,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 ifneq ($(OUTPUT_DIRECTORY),)
 ifneq ($(OUTPUT_DIRECTORY),.)
   INSTALL = $(VBIN:%=$(INSBIN)/%)
-  CLEANUP_INSTALL += $(CLEANUP_BIN:%=$(INSBIN)/%)
+  CLEANUP_INSTALL += $(CLEANUP_BIN:%=$(INSBIN)/%$(VAR)$(EXEEXT))
 endif
 endif
 

@@ -1,9 +1,24 @@
+Mon Nov 29 07:04:58 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Moved the setting of SOVERSION below the include for
+          wrapper_macros.GNU and enclose it in a if check for versioned_so
+          to be 1.  This allows users to build without versioned shared
+          libraries.
+
+          Also, fixed a problem with the realclean target.  The executable
+          extension was not added when the installed target was added to the
+          CLEANUP_INSTALL macro.
+
+          Thanks to Johnny Willemsen for reporting both of these problems.
+
 Sun Nov 28 22:10:48 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* bin/am_edit:
+        * bin/am_edit:
 
-	  Removed old file.  MPC-generated Makefile.am's make this script
-	  obsolete.
+          Removed old file.  MPC-generated Makefile.am's make this script
+          obsolete.
 
 Mon Nov 29 07:36:03 2004  Olli Savia  <ops@iki.fi>
 
