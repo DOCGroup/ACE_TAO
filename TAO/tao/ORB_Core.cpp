@@ -1198,16 +1198,6 @@ TAO_ORB_Core::server_factory (void)
   return this->server_factory_;
 }
 
-CORBA::ORB_ptr
-TAO_ORB_Core::orb (CORBA::ORB_ptr op)
-{
-  // Shouldn't need to check for ptr validity at this point b/c we
-  // already did in ::init()
-  CORBA::ORB_ptr old_orb = this->orb_;
-  this->orb_ = op;
-  return old_orb;
-}
-
 int
 TAO_ORB_Core::inherit_from_parent_thread (TAO_ORB_Core_TSS_Resources *tss_resources)
 {

@@ -251,7 +251,6 @@ public:
   TAO_ProtocolFactorySet *protocol_factories (void);
 
   // = Set/get pointer to the ORB.
-  CORBA::ORB_ptr orb (CORBA::ORB_ptr);
   CORBA::ORB_ptr orb (void);
 
   // = Set/get the <ACE_Reactor>.
