@@ -1,10 +1,13 @@
-// $Id$
-
 #include "ace/OS.h"
 #include "ace/Codecs.h"
 #include "ace/Log_Msg.h"
 
-const ACE_Byte ACE_Base64::alphabet_[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+ACE_RCSID (ace,
+           Codecs,
+           "$Id$")
+
+const ACE_Byte ACE_Base64::alphabet_[] =
+  "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
 const ACE_Byte ACE_Base64::pad_ = '=';
 
@@ -41,11 +44,6 @@ ACE_Base64::encode (const ACE_Byte* input,
 
   for (size_t i = 0; i < input_len; ++i)
     {
-      if (input[i] > 255) {
-        delete[] result;
-        return 0;
-      }
-
       bits += input[i];
       char_count++;
 
@@ -137,7 +135,7 @@ ACE_Base64::decode (const ACE_Byte* input, size_t* output_len)
     {
       if (input[i] == pad_)
         break;
-      if (input[i] > 255 || !ACE_Base64::member_[input[i]])
+      if (!ACE_Base64::member_[input[i]])
         continue;
       bits += decoder_[input[i]];
       char_count++;
