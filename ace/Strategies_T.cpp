@@ -682,7 +682,7 @@ Hash_Addr<ADDR_T,SVC_HANDLER>::hash() const
   return hash_value_;
 }
 
-template<class ADDR_T, class SVC_HANDLER>
+template<class ADDR_T, class SVC_HANDLER> int
 Hash_Addr<ADDR_T,SVC_HANDLER>::operator==(const Hash_Addr<ADDR_T,SVC_HANDLER>& rhs) const
 {
   if (svc_handler_ == 0)
