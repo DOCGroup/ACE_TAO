@@ -235,7 +235,7 @@ releasetao:
 ####      recursively invoking make release in the TAO directory.
 ####      The make then recursively invokes make releasetao in this
 ####      directory to create the combined ACE-TAO kit.
-releaseall: $(APPLY_NEW_TAG) ACE-INSTALL
+releaseall: $(APPLY_NEW_TAG)
 	@cd TAO  &&  $(MAKE) -s release REL=$(REL)
 
 .PHONY: show_controlled_files show_release_files show_release_lib_files
