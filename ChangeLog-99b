@@ -1,3 +1,12 @@
+Tue Jul 06 21:57:59 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.i (thr_kill, thr_setprio, sema_destroy, sema_wait, chdir,
+          unlink, sema_post, thr_continue, thr_getprio, thr_suspend, ioctl):
+          on VxWorks only, removed ACE_ADAPT_RETVAL wrapper from system
+          call, because it returns OK/ERROR (except for ioctl, which
+          returns driver number/ERROR).  Thanks to
+          Elias Sreih <sealstd1@nortelnetworks.com> for reporting this.
+
 Tue Jul 06 21:32:31 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/SOCK_Send_Recv_Test.cpp (server): added 5 second
