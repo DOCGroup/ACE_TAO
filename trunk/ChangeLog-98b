@@ -4,6 +4,9 @@ Wed Jun 17 07:34:11 1998  David L. Levine  <levine@cs.wustl.edu>
           used to check for valid double.  Thanks to Mark Kettner
           <m.kettner@elsevier.nl> for reporting this.
 
+        * performance-tests/UDP/udp_test.cpp: added a few
+          ACE_U64_TO_U32 explicit conversions.
+
 Tue Jun 16 20:29:32 1998  Steve Huston  <shuston@riverace.com>
 
         * ACE-INSTALL.html: Added some comments concerning MSVC 5.0 and SP3.
