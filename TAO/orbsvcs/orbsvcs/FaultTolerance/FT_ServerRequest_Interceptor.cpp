@@ -154,7 +154,7 @@ namespace TAO
         this->object_group_ref_version_)
       {
         ACE_ERROR ((LM_ERROR,
-                    "TAO-FT (%P|%t) - Wrong version information ",
+                    "TAO-FT (%P|%t) - Wrong version information "
                     "within the interceptor \n"));
       }
     else if (fgvsc.object_group_ref_version <
