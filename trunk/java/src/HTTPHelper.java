@@ -1,6 +1,5 @@
 package JACE.Connection;
 
-import java.lang.*;
 import JACE.OS.*;
 // Collection of various methods that have to do with HTTP
 
