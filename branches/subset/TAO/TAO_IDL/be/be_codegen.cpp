@@ -201,6 +201,16 @@ TAO_CodeGen::start_client_header (const char *fname)
                                       "tao/SmartProxies/Smart_Proxies.h");
         }
 
+      if (be_global->valuetype_seen ())
+        {
+          this->gen_standard_include (this->client_header_,
+                                      "tao/Valuetype/ValueBase.h");
+          this->gen_standard_include (this->client_header_,
+                                      "tao/Valuetype/ValueFactory.h");
+          this->gen_standard_include (this->client_header_,
+                                      "tao/Valuetype/Valuetype_Adapter_Impl.h");
+        }
+
       size_t nfiles = idl_global->n_included_idl_files ();
 
       if (nfiles > 0)

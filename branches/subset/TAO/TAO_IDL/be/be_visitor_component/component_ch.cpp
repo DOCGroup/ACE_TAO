@@ -219,7 +219,7 @@ be_visitor_component_ch::visit_component (be_component *node)
 
   // The _tao_QueryInterface method.
   *os << be_nl << be_nl
-      << "virtual void *_tao_QueryInterface (ptr_arith_t type);";
+      << "virtual void *_tao_QueryInterface (ptrdiff_t type);";
 
   // The _interface_repository_id method.
   *os << be_nl << be_nl

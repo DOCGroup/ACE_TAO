@@ -4,7 +4,7 @@
 
 NAME = server
 
-TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe -Gv -Ge 1
+TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe -Ge 1
 
 OBJFILES = \
 	$(OBJDIR)\TreeBaseC.obj \
@@ -19,12 +19,14 @@ OBJFILES = \
 CFLAGS = \
 	$(ACE_CFLAGS) \
 	$(TAO_CFLAGS) \
-	$(TAO_PORTABLESERVER_CFLAGS)
+	$(TAO_PORTABLESERVER_CFLAGS) \
+	$(TAO_VALUETYPE_CFLAGS)
 
 LIBFILES = \
 	$(ACE_LIB) \
 	$(TAO_LIB) \
-	$(TAO_PORTABLESERVER_LIB)
+	$(TAO_PORTABLESERVER_LIB) \
+	$(TAO_VALUETYPE_LIB)
 
 IDLFILES = \
         $(IDLDIR)\TreeBase.idl \

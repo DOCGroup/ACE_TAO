@@ -73,7 +73,8 @@ BE_GlobalData::BE_GlobalData (void)
     gen_inline_constants_ (I_FALSE),
     lookup_strategy_ (TAO_PERFECT_HASH),
     void_type_ (0),
-    ccmobject_ (0)
+    ccmobject_ (0),
+    valuetype_seen_ (I_FALSE)
 {
 }
 
@@ -889,5 +890,17 @@ void
 BE_GlobalData::ccmobject (be_interface *val)
 {
   this->ccmobject_ = val;
+}
+
+idl_bool
+BE_GlobalData::valuetype_seen (void) const
+{
+  return this->valuetype_seen_;
+}
+
+void
+BE_GlobalData::valuetype_seen (idl_bool val)
+{
+  this->valuetype_seen_ = val;
 }
 
