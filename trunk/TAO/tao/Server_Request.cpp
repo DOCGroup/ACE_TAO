@@ -321,10 +321,13 @@ IIOP_ServerRequest::marshal (CORBA::Environment &env,  // exception reporting
     {
       void *ptr = va_arg (param_vector, void *);
 
-      if ((pdp->mode == 0) &&
-          (pdp->tc->kind (env2) != CORBA::tk_void)) // return type
+      if (pdp->mode == 0)
         {
-          this->retval_ = new CORBA::Any (pdp->tc, ptr, pdp->own);
+          // check if the return type is not void
+          if (pdp->tc->kind (env2) != CORBA::tk_void)
+            {
+              this->retval_ = new CORBA::Any (pdp->tc, ptr, pdp->own);
+            }
           continue;
         }
 
