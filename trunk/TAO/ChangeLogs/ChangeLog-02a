@@ -1,20 +1,28 @@
+Thu Feb 15 00:22:42 2001  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp (process_message):
+
+	  Merged Michael's reply dispatcher related changes from:
+	  "Wed Feb 14 16:30:23 2001  Michael Kircher  <...>" below into
+	  the SSLIOP pluggable protocol.
+
 Wed Feb 14 20:59:00 2001  Pradeep Gore <pradeep@cs.wustl.edu>
         
-		* orbsvcs/examples/notify/Notify_Examples.dsw:
-		* orbsvcs/examples/notify/Filter/Filter.dsp:
-        * orbsvcs/examples/notify/Subscribe/Subscribe.dsp:
-		* orbsvcs/tests/notify/Notify_Tests.dsw:
-        * orbsvcs/tests/notify/basic/AdminProperties_Test.dsp:
-        * orbsvcs/tests/notify/basic/ConnectDisconnect.dsp:
-		* orbsvcs/tests/notify/basic/Events_Test.dsp:
-		* orbsvcs/tests/notify/basic/IdAssignment.dsp:
-		* orbsvcs/tests/notify/basic/LifeCycleTest.dsp:
-		* orbsvcs/tests/notify/basic/Simple.dsp:
-		* orbsvcs/tests/notify/basic/Updates.dsp:
-		* orbsvcs/tests/notify/lib/TAO_NotifyTests.dsp:
-		* orbsvcs/tests/notify/performance-tests/Throughput/Throughput.dsp:
-		* orbsvcs/tests/notify/performance-tests/RedGreen/RedGreen.dsp:
-		  Added Notification tests and example project files for Windows.
+	* orbsvcs/examples/notify/Notify_Examples.dsw:
+	* orbsvcs/examples/notify/Filter/Filter.dsp:
+	* orbsvcs/examples/notify/Subscribe/Subscribe.dsp:
+	* orbsvcs/tests/notify/Notify_Tests.dsw:
+	* orbsvcs/tests/notify/basic/AdminProperties_Test.dsp:
+	* orbsvcs/tests/notify/basic/ConnectDisconnect.dsp:
+	* orbsvcs/tests/notify/basic/Events_Test.dsp:
+	* orbsvcs/tests/notify/basic/IdAssignment.dsp:
+	* orbsvcs/tests/notify/basic/LifeCycleTest.dsp:
+	* orbsvcs/tests/notify/basic/Simple.dsp:
+	* orbsvcs/tests/notify/basic/Updates.dsp:
+	* orbsvcs/tests/notify/lib/TAO_NotifyTests.dsp:
+	* orbsvcs/tests/notify/performance-tests/Throughput/Throughput.dsp:
+	* orbsvcs/tests/notify/performance-tests/RedGreen/RedGreen.dsp:
+	  Added Notification tests and example project files for Windows.
 
 Wed Feb 14 16:30:23 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
@@ -42,7 +50,6 @@ Wed Feb 14 16:30:23 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
           case of a timeout. This should fix a bug, where the condition
           variable of the follower thread kept being registered
           with the leader follower model while it went already away.
-
 
 Wed Feb 14 15:36:23 2001  Pradeep Gore  <pradeep@cs.wustl.edu>
 
