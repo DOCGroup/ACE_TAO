@@ -48,19 +48,20 @@ main (int, ASYS_TCHAR *[])
   for (i = -10; i < 10; ++i)
     set.insert (2 * i + 1);
 
-  // put in an interleaved range of even ints, using an iterator
+  // Put in an interleaved range of even ints, using an iterator.
   for (i = -10; i <= 10; ++i)
     set.insert (2 * i, iter);
 
-  // remove the first and last elements of range
+  // Remove the first and last elements of range.
   while (set.remove (-20) == 0);
   while (set.remove (20) == 0);
 
-  // should still have 39 elements in the set
+  // Should still have 39 elements in the set.
   ACE_ASSERT (set.is_empty () == 0);
   ACE_ASSERT (set.size () == 39);
 
-  // iterate forward through the range we created: should be one of each
+  // Iterate forward through the range we created: should be one of
+  // each.
   iter.first ();
   for (i = -19; i <= 19; ++i)
     {
@@ -76,33 +77,34 @@ main (int, ASYS_TCHAR *[])
       iter.advance ();
     }
 
-  // we should have iterated through the entire set
+  // We should have iterated through the entire set.
   ACE_ASSERT (iter.done () != 0);
 
-  // iterate backward through the range we created: should be one of each
+  // Iterate backward through the range we created: should be one of
+  // each.
   iter.last ();
   for (i = 19; i >= -19; --i)
     {
-      // we should still be in the set
+      // We should still be in the set.
       ACE_ASSERT (iter.done () == 0);
 
-      // make sure the current element is what we expect
+      // Make sure the current element is what we expect.
       int *ptr;
       iter.next (ptr);
       ACE_ASSERT (ptr != 0);
       ACE_ASSERT (*ptr == i);
     
-      // move to the previous element in the set
+      // Move to the previous element in the set.
       iter.retreat ();
     }
 
-  // we should have iterated through the entire set
+  // We should have iterated through the entire set.
   ACE_ASSERT (iter.done () != 0);
 
-  // clear the set, restart the iterator, and make sure 
-  // the iterator is out of range at both ends, the set is empty,
-  // and a subsequent advance or retreat on an out of range iterator
-  // does not cause problems 
+  // Clear the set, restart the iterator, and make sure the iterator
+  // is out of range at both ends, the set is empty, and a subsequent
+  // advance or retreat on an out of range iterator does not cause
+  // problems
   set.reset ();
   ACE_ASSERT (set.is_empty () != 0);
   iter.first ();
@@ -112,8 +114,8 @@ main (int, ASYS_TCHAR *[])
   ACE_ASSERT (iter.done () != 0);
   iter.advance ();
 
-  // put in a bunch of ints in various relative positions, 
-  // using an iterator for the odds and no iterator for the evens
+  // Put in a bunch of ints in various relative positions, using an
+  // iterator for the odds and no iterator for the evens.
   set.insert (203, iter);
   set.insert (202);
   set.insert (204);
@@ -137,8 +139,8 @@ main (int, ASYS_TCHAR *[])
   while (set.remove (202) == 0);
   while (set.remove (203) == 0);
 
-  // put the iterator out of range and make sure it stays 
-  // that way for finds on the missing elements
+  // Put the iterator out of range and make sure it stays 
+  // that way for finds on the missing elements.
   iter.last ();
   iter.advance ();
   set.find (203, iter);
@@ -148,7 +150,7 @@ main (int, ASYS_TCHAR *[])
   set.find (204, iter);
   ACE_ASSERT (iter.done () != 0);
 
-  // make sure the other elements can be found
+  // Make sure the other elements can be found.
   set.find (205, iter);
   ACE_ASSERT (iter.done () == 0);  
   iter.next (ptr);
@@ -160,34 +162,36 @@ main (int, ASYS_TCHAR *[])
   ACE_ASSERT (ptr != 0);  
   ACE_ASSERT (*ptr == 201);  
 
-  // finally, iterate through the set and make sure its
-  // contents are correct (one 201 and five 205s)
+  // Finally, iterate through the set and make sure its contents are
+  // correct (one 201 and five 205s).
   iter.first ();
   ACE_ASSERT (iter.done () == 0);
   iter.next (ptr);
   ACE_ASSERT (ptr != 0);
   ACE_ASSERT (*ptr == 201);  
   iter.advance ();
+
   for (i = 1; i <= 5; ++i)
     {
-      // should be in the set, able to access the element, value should be 205
+      // Should be in the set, able to access the element, value
+      // should be 205
       ACE_ASSERT (iter.done () == 0);
       iter.next (ptr);
       ACE_ASSERT (ptr != 0);
       ACE_ASSERT (*ptr == 205);  
 
-      // move to the next element in the set
+      // Move to the next element in the set.
       iter.advance ();
     }
 
-  // should not be anything else in the set
+  // Should not be anything else in the set.
   ACE_ASSERT (iter.done () != 0);
 
   // remove the rest
   while (set.remove (205) == 0);
   while (set.remove (201) == 0);
 
-  // should have no more elements in the set
+  // Should have no more elements in the set.
   ACE_ASSERT (set.is_empty () != 0);
   ACE_ASSERT (set.size () == 0);
   iter.first ();
@@ -195,12 +199,10 @@ main (int, ASYS_TCHAR *[])
   iter.last ();
   ACE_ASSERT (iter.done () != 0);
 
-
   ACE_END_TEST;
 
   return ret;
 }
-
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

@@ -247,11 +247,15 @@ run_test (void)
 
     for (HASH_STRING_ITER hash_iter (hash);
          hash_iter.next (entry) != 0;
-         hash_iter.advance (), i++)
-      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("iterating (%d): [%s, %s]\n"),
-                  i,
-                  (ASYS_TCHAR *) entry->ext_id_,
-                  (ASYS_TCHAR *) entry->int_id_));
+         hash_iter.advance ())
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    ASYS_TEXT ("iterating (%d): [%s, %s]\n"),
+                    i,
+                    (ASYS_TCHAR *) entry->ext_id_,
+                    (ASYS_TCHAR *) entry->int_id_));
+        i++;
+      }
   }
 
   hash.unbind (string_table[2].key_, entry);
@@ -276,11 +280,15 @@ run_test (void)
 
     for (HASH_STRING_REVERSE_ITER hash_iter (hash);
          hash_iter.next (entry) != 0;
-         hash_iter.advance (), i++)
-      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("iterating (%d): [%s, %s]\n"),
-                  i,
-                  (ASYS_TCHAR *) entry->ext_id_,
-                  (ASYS_TCHAR *) entry->int_id_));
+         hash_iter.advance ())
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    ASYS_TEXT ("iterating (%d): [%s, %s]\n"),
+                    i,
+                    (ASYS_TCHAR *) entry->ext_id_,
+                    (ASYS_TCHAR *) entry->int_id_));
+        i++;
+      }
   }
 
   alloc.dump ();

@@ -11,9 +11,8 @@
 // = DESCRIPTION
 //      This test program verifies the functionality of the ACE_OS
 //      implementation of readers/writer locks on Win32 and Posix
-//      pthreads.
-//      Use the RW_Mutex define switch to use readers/writer mutexes or
-//      regular mutexes.
+//      pthreads.  Use the RW_Mutex define switch to use
+//      readers/writer mutexes or regular mutexes.
 //
 // = AUTHOR
 //    Michael Kircher <mk1@cs.wustl.edu>
@@ -35,7 +34,7 @@ ACE_RCSID(tests, Upgradable_RW_Test, "$Id$")
 static size_t n_iterations = 50;
 
 // Maximum string length used
-#define MAX_STRING_SIZE 200
+static const MAX_STRING_SIZE = 200;
 
 // switch on RW mutexes, else use ordinary mutexes
 // #define RW_MUTEX 1
@@ -50,53 +49,52 @@ static size_t n_writers = 0;
 static u_int n_entries = 10;
 
 // Try to upgrade to a write lock, by default don't try.
-static unsigned long use_try_upgrade = 0;
+static u_long use_try_upgrade = 0;
 
 // number of readers, which were able to upgrade
-static unsigned long upgraded = 0;
+static u_long upgraded = 0;
 
 // count the number of find calls
-static unsigned long find_called = 0;
+static u_long find_called = 0;
 
 // number of readers, failing or not allowed to upgrade
 static u_int not_upgraded = 0;
 
 // Lock for shared_data (upgraded, not_upgraded, hash_Map)
-#if defined RW_MUTEX
+#if defined (RW_MUTEX)
 static ACE_RW_Thread_Mutex rw_mutex;
 #else
 static ACE_Thread_Mutex mutex;
-#endif
+#endif /* RW_MUTEX */
 
 // Count of the number of readers and writers.
 static ACE_Atomic_Op<ACE_Thread_Mutex, int> current_readers;
 static ACE_Atomic_Op<ACE_Thread_Mutex, int> current_writers;
 
-Linked_List *linked_List_ptr;
-
-
-
-
+static Linked_List *linked_list_ptr;
 
 // Returns 1 if found,
 //         0 if not found,
 //        -1 on an error
 static int
-find_last ()
+find_last (void)
 {
   find_called++;
 
   char search_string[MAX_STRING_SIZE];
-  ACE_OS::sprintf(search_string,"%d",n_entries-1);
+  ACE_OS::sprintf (search_string,
+                   "%d",
+                   n_entries - 1);
   ACE_CString cString (search_string);
   Element* element_ptr;
 
-  for (ACE_Double_Linked_List_Iterator<Element> iterator(*linked_List_ptr);
-       !iterator.done();
-       iterator.advance())
+  for (ACE_Double_Linked_List_Iterator<Element> iterator (*linked_list_ptr);
+       !iterator.done ();
+       iterator.advance ())
     {
-      if ((element_ptr = iterator.next()))
-        if (*element_ptr->value() == cString)
+      element_ptr = iterator.next ();
+      if (element_ptr)
+        if (*element_ptr->value () == cString)
           return 1;
     }
 
@@ -149,18 +147,16 @@ parse_args (int argc, ASYS_TCHAR *argv[])
 // while we have a read lock.
 
 int
-Reader_Task::svc ()
+Reader_Task::svc (void)
 {
   ACE_Profile_Timer timer;
   ACE_Profile_Timer::ACE_Elapsed_Time elapsed_time;
 
-  barrier_.wait();
-  // wait at the barrier
-
+  barrier_.wait ();
+  // Wait at the barrier.
 
   // We start an ACE_Profile_Timer here...
   timer.start ();
-
 
   for (size_t iterations = 1;
        iterations <= n_iterations;
@@ -171,51 +167,44 @@ Reader_Task::svc ()
       int result = 0;
 
       {
-#if defined RW_MUTEX
+#if defined (RW_MUTEX)
         ACE_Read_Guard<ACE_RW_Thread_Mutex> g (rw_mutex);
 #else
         ACE_Guard<ACE_Thread_Mutex> g (mutex);
-#endif
-
+#endif /* RW_MUTEX */
         find_last ();
-
-#if defined RW_MUTEX
+#if defined (RW_MUTEX)
         if (use_try_upgrade)
-          result = rw_mutex.tryacquire_write_upgrade ();
-#endif
+          result = 
+            rw_mutex.tryacquire_write_upgrade ();
+#endif /* RW_MUTEX */
 
         // True, when we were able to upgrade.
         if (result == 0 && use_try_upgrade)
           {
-            //find_last ();
-            // try to find something which is not in there
+            //find_last (); try to find something which is not in
+            //there
             upgraded++;
-
             continue;
           }
       }
 
-
-      if ((result == -1 && errno == EBUSY)  // we tried and failed
-          || !use_try_upgrade)              // we did not try at all
+      if (result == -1 && errno == EBUSY // we tried and failed
+          || !use_try_upgrade)           // we did not try at all
         {
-#if defined RW_MUTEX
+#if defined (RW_MUTEX)
           ACE_Write_Guard<ACE_RW_Thread_Mutex> g (rw_mutex);
 #else
           ACE_Guard<ACE_Thread_Mutex> g (mutex);
-#endif
+#endif /* RW_MUTEX */
 
           not_upgraded++;
-
           find_last ();
-
         }
       else if (result == -1 && errno != EBUSY)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      ASYS_TEXT ("(%t) failure in upgrading to write lock!\n"),
-                      1));
-        }
+        ACE_ERROR ((LM_ERROR,
+                    ASYS_TEXT (" (%t) failure in upgrading to write lock!\n"),
+                    1));
     }
 
   // Stop the timer.
@@ -231,13 +220,13 @@ Reader_Task::svc ()
 // checking that nobody steps on it while we can write it.
 
 int
-Writer_Task::svc ()
+Writer_Task::svc (void)
 {
   ACE_Profile_Timer timer;
   ACE_Profile_Timer::ACE_Elapsed_Time elapsed_time;
 
-  barrier_.wait();
-  // wait at the barrier
+  barrier_.wait ();
+  // Wait at the barrier
 
   // We start an ACE_Profile_Timer here...
   timer.start ();
@@ -248,17 +237,16 @@ Writer_Task::svc ()
     {
       ACE_Thread::yield ();
 
-#if defined RW_MUTEX
+#if defined (RW_MUTEX)
       ACE_Write_Guard<ACE_RW_Thread_Mutex> g (rw_mutex);
 #else
       ACE_Guard<ACE_Thread_Mutex> g (mutex);
-#endif
+#endif /* RW_MUTEX */
 
       find_last ();
 
       current_writers--;
     }
-
 
   // Stop the timer.
   timer.stop ();
@@ -282,10 +270,10 @@ Time_Calculation::report_time (ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time
 }
 
 void
-Time_Calculation ::print_stats ()
+Time_Calculation ::print_stats (void)
 {
   ACE_Profile_Timer::ACE_Elapsed_Time elapsed_time = this->times_;
-  unsigned int iterations = 1;
+  u_int iterations = 1;
 
   if (iterations > 0)
     {
@@ -299,11 +287,12 @@ Time_Calculation ::print_stats ()
 
       double tmp = 1000 / elapsed_time.real_time;
 
-      ACE_DEBUG ((LM_DEBUG,ASYS_TEXT ("\n"
-                                      "\treal_time\t = %0.06f ms, \n"
-                                      "\tuser_time\t = %0.06f ms, \n"
-                                      "\tsystem_time\t = %0.06f ms, \n"
-                                      "\t%0.00f calls/second\n"),
+      ACE_DEBUG ((LM_DEBUG,
+                  ASYS_TEXT ("\n"
+                             "\treal_time\t = %0.06f ms, \n"
+                             "\tuser_time\t = %0.06f ms, \n"
+                             "\tsystem_time\t = %0.06f ms, \n"
+                             "\t%0.00f calls/second\n"),
                   elapsed_time.real_time   < 0.0 ? 0.0 : elapsed_time.real_time,
                   elapsed_time.user_time   < 0.0 ? 0.0 : elapsed_time.user_time,
                   elapsed_time.system_time < 0.0 ? 0.0 : elapsed_time.system_time,
@@ -312,32 +301,33 @@ Time_Calculation ::print_stats ()
       ACE_DEBUG ((LM_DEBUG,
                   ASYS_TEXT ("Number of reported times: %d\n"),
                   this->reported_times_));
-
     }
   else
     ACE_ERROR ((LM_ERROR,
                 "\tNo time stats printed.  Zero iterations or error ocurred.\n"));
 }
 
-
-int
-init ()
+static int
+init (void)
 {
   char entry[MAX_STRING_SIZE];
-  ACE_CString* cString_ptr;
-  Element* element_ptr;
+  ACE_CString *cString_ptr;
+  Element *element_ptr;
 
-  ACE_NEW_RETURN (linked_List_ptr,
+  ACE_NEW_RETURN (linked_list_ptr,
                   Linked_List,
                   -1);
 
-  for (unsigned long i = 0; i < n_entries; i++)
+  for (u_long i = 0; i < n_entries; i++)
     {
-      ACE_OS::sprintf(entry,"%d",i);
-      ACE_NEW_RETURN (cString_ptr, ACE_CString(entry), -1);
-      ACE_NEW_RETURN (element_ptr, Element(cString_ptr), -1);
-
-      linked_List_ptr->insert_tail(element_ptr);
+      ACE_OS::sprintf (entry, "%d", i);
+      ACE_NEW_RETURN (cString_ptr,
+                      ACE_CString (entry),
+                      -1);
+      ACE_NEW_RETURN (element_ptr,
+                      Element (cString_ptr),
+                      -1);
+      linked_list_ptr->insert_tail (element_ptr);
     }
   return 0;
 }
@@ -364,14 +354,11 @@ main (int argc, ASYS_TCHAR *argv[])
   ACE_START_TEST (ASYS_TEXT ("Upgradable_RW_Test"));
 
 #if defined (ACE_HAS_THREADS)
-
   parse_args (argc, argv);
-
-#if !defined RW_MUTEX
+#if !defined (RW_MUTEX)
   use_try_upgrade = 0;
   // make sure that we have to acquire the write lock
-#endif
-
+#endif /* RW_MUTEX */
 
   current_readers = 0; // Possibly already done
   current_writers = 0; // Possibly already done
@@ -379,7 +366,7 @@ main (int argc, ASYS_TCHAR *argv[])
   init ();
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%t) main thread starting\n")));
+              ASYS_TEXT (" (%t) main thread starting\n")));
 
   Time_Calculation time_Calculation;
   // for the time calculation
@@ -387,21 +374,20 @@ main (int argc, ASYS_TCHAR *argv[])
   ACE_Barrier barrier (n_readers + n_writers);
   // for a nice start of all threads (for much contention)
 
-  // Initialize the readers
+  // Initialize the readers.
   Reader_Task** reader_tasks;
 
   ACE_NEW_RETURN (reader_tasks,
                   Reader_Task*[n_readers],
                   -1);
-
-  unsigned int i;
+  u_int i;
 
   for (i = 0;
        i < n_readers;
        i++)
     {
       ACE_NEW_RETURN (reader_tasks[i],
-                      Reader_Task(time_Calculation,
+                      Reader_Task (time_Calculation,
                                   barrier),
                       -1);
       reader_tasks[i]->activate (THR_BOUND | ACE_SCHED_FIFO,
@@ -410,7 +396,6 @@ main (int argc, ASYS_TCHAR *argv[])
                                  ACE_DEFAULT_THREAD_PRIORITY);
     }
 
-
   // Create all the writers
   Writer_Task** writer_tasks;
 
@@ -418,13 +403,12 @@ main (int argc, ASYS_TCHAR *argv[])
                   Writer_Task*[n_writers],
                   -1);
 
-
   for (i = 0;
        i < n_writers;
        i++)
     {
       ACE_NEW_RETURN (writer_tasks[i],
-                      Writer_Task(time_Calculation,
+                      Writer_Task (time_Calculation,
                                   barrier),
                       -1);
       writer_tasks[i]->activate (THR_BOUND | ACE_SCHED_FIFO,
@@ -441,7 +425,7 @@ main (int argc, ASYS_TCHAR *argv[])
   if (not_upgraded != 0 || upgraded != 0)
     ACE_DEBUG ((LM_DEBUG,
                 ASYS_TEXT ("upgraded to not upgraded ratio = %f \n"),
-                (float) upgraded/ (float) (not_upgraded + upgraded)));
+                (float) upgraded / (float) (not_upgraded + upgraded)));
 
   ACE_DEBUG ((LM_DEBUG,
               ASYS_TEXT ("Number of times, that find was called: %d\n"),
@@ -449,40 +433,39 @@ main (int argc, ASYS_TCHAR *argv[])
 
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%t) exiting main thread\n")));
+              ASYS_TEXT (" (%t) exiting main thread\n")));
 
-  // delete the memory of the Double_Linked_List
-  ACE_CString* cString_ptr;
-  Element* element_ptr;
+  // Delete the memory of the Double_Linked_List
+  ACE_CString *cString_ptr;
+  Element *element_ptr;
+
   for (i = 0;
        i < n_entries;
        i++)
     {
-      if ((element_ptr = linked_List_ptr->delete_head()))
+      if ((element_ptr = linked_list_ptr->delete_head ()))
         {
-          cString_ptr = element_ptr->value();
+          cString_ptr = element_ptr->value ();
           delete cString_ptr;
           delete element_ptr;
         }
     }
-  delete linked_List_ptr;
+
+  delete linked_list_ptr;
 
   for (i = 0;
        i < n_writers;
        i++)
-    {
-      delete writer_tasks[i];
-    }
+    delete writer_tasks[i];
+
   delete [] writer_tasks;
 
   for (i = 0;
        i < n_readers;
        i++)
-    {
-      delete reader_tasks [i];
-    }
-  delete [] reader_tasks;
+    delete reader_tasks [i];
 
+  delete [] reader_tasks;
 #else
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
