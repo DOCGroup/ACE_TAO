@@ -1,6 +1,6 @@
 Mon Aug 27 20:16:38 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/run_test.lst: Removed the MEM_Stream_Test from the daily
+	* tests/run_tests.lst: Removed the MEM_Stream_Test from the daily
 	  builds as they were hanging. This was causing the builds to
 	  choke. I will keep Steve Huston informed on this so that he can
 	  reenable them once he has fixed the test.
