@@ -36,7 +36,7 @@ class TAO_PortableGroup_Loader;
 class TAO_PortableGroup_Export PortableGroup_Request_Dispatcher :
   public TAO_Request_Dispatcher
 {
-  friend class TAO_POA_Hooks;
+  friend class TAO_GOA;
 
 public:
   /// Destructor.

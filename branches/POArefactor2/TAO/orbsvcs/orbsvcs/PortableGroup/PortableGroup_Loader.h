@@ -37,8 +37,6 @@
 class TAO_PortableGroup_Export TAO_PortableGroup_Loader
   : public ACE_Service_Object
 {
-  friend class TAO_POA_Hooks;
-
 public:
   /// Constructor.
   TAO_PortableGroup_Loader (void);
@@ -65,7 +63,7 @@ TAO_Requires_PortableGroup_Initializer =
 #else
 
 static int
-TAO_Requires_PortableGroup_Initializer = 
+TAO_Requires_PortableGroup_Initializer =
   TAO_PortableGroup_Loader::Initializer ();
 
 #endif /* ACE_HAS_BROKEN_STATIC_CONSTRUCTORS */
