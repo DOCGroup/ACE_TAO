@@ -1,3 +1,8 @@
+Mon Aug 30 17:10:30 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* TAO-INSTALL.html: Added a note on Connection Caching feature
+	  which contains the "-fsquangle" option info too.
+	
 Mon Aug 30 17:16:27 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_scope.cpp:
