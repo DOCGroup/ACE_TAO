@@ -234,12 +234,12 @@ CORBA::Boolean
 Video_Server_StreamEndPoint::handle_connection_requested (AVStreams::flowSpec &the_spec,  
                                                           CORBA::Environment &env) 
 {
-  ACE_DEBUG ((LM_DEBUG,"(%P|%t) Video_Server_StreamEndPoint::handle_connection_requested:() %s \n",
-              the_spec[0]));
+  //  ACE_DEBUG ((LM_DEBUG,"(%P|%t) Video_Server_StreamEndPoint::handle_connection_requested:() %s \n",
+  //              the_spec[0]));
 
   char *server_string;
 
-  server_string = (const char *) the_spec [0];
+  server_string = CORBA::string_dup ((const char *) the_spec [0]);
   CORBA::Boolean result;
   result = VIDEO_CONTROL_I::instance ()->set_peer (server_string,env);
   // Get media control from my vdev and call set_peer on that.
