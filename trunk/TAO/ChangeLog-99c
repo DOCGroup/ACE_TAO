@@ -1,3 +1,11 @@
+Sat Apr 24 22:57:42 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_interface.cpp:
+	  Fixed a typo that was causing a derived interface's
+	  _set_xxx_skel method to call the base class'
+	  _get_xxx_skel method. Thanks to Kris Johnson 
+	  <kjohnson@gardnersys.com> for pointing this out.
+
 Sat Apr 24 08:51:11 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Factory.cpp:
