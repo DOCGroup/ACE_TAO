@@ -44,9 +44,9 @@ TAO_Notify_StructuredProxyPushConsumer_i::connect_structured_push_supplier (CosN
       {
         ACE_GUARD_THROW_EX (TAO_Notify_Unlock, ace_mon, reverse_lock,
                             CORBA::INTERNAL ());
-        ACE_CHECK;
+        ACE_TRY_CHECK;
 
-        this->event_manager_->register_for_subscription_updates (this, ACE_TRY_ENV);
+        this->on_connected (ACE_TRY_ENV);
         ACE_TRY_CHECK;
       }
     }
@@ -55,7 +55,7 @@ TAO_Notify_StructuredProxyPushConsumer_i::connect_structured_push_supplier (CosN
       this->push_supplier_ =
         CosNotifyComm::StructuredPushSupplier::_nil ();
 
-      this->is_connected_ = 1;
+      this->is_connected_ = 0;
     }
   ACE_ENDTRY;
 }
@@ -111,9 +111,12 @@ TAO_Notify_StructuredProxyPushConsumer_i::disconnect_structured_push_consumer (C
                    CORBA::SystemException
                    ))
 {
-  // ask our parent to deaactivate us.
+  // ask our parent to deactivate us.
   this->supplier_admin_->
     deactivate_proxy_pushconsumer (this, ACE_TRY_ENV);
+  ACE_CHECK;
+
+  this->on_disconnected (ACE_TRY_ENV);
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

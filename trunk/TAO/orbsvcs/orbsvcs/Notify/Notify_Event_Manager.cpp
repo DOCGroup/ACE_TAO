@@ -6,6 +6,7 @@
 #include "Notify_Worker_Task.h"
 #include "Notify_Event_Manager_Objects_Factory.h"
 #include "Notify_Update_Dispatch_Command.h"
+#include "Notify_AdminProperties.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "Notify_Event_Manager.i"
@@ -18,7 +19,8 @@ TAO_Notify_Event_Manager::TAO_Notify_Event_Manager (TAO_Notify_EventChannel_i* e
    event_map_ (0),
    event_processor_ (0),
    updates_dispatching_task_ (0),
-   emo_factory_ (TAO_Notify_Factory::get_event_manager_objects_factory ())
+   emo_factory_ (TAO_Notify_Factory::get_event_manager_objects_factory ()),
+   admin_properties_ (0)
 {
 }
 
@@ -28,6 +30,7 @@ TAO_Notify_Event_Manager::~TAO_Notify_Event_Manager ()
   delete this->event_processor_;
   delete this->updates_dispatching_task_;
   delete this->lock_;
+  delete this->admin_properties_;
 }
 
 void
@@ -38,6 +41,9 @@ TAO_Notify_Event_Manager::init (CORBA::Environment &ACE_TRY_ENV)
                     CORBA::NO_MEMORY ());
 
   // Create members.
+
+  this->admin_properties_ = new TAO_Notify_AdminProperties ();
+
   this->event_map_ =
     this->emo_factory_->create_event_map (ACE_TRY_ENV);
   ACE_CHECK;
@@ -59,7 +65,8 @@ TAO_Notify_Event_Manager::init (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK;
 
   // @@ check return value
-  this->updates_dispatching_task_->open (0);
+  this->updates_dispatching_task_->init_task (this->admin_properties_);
+  // The updates task doesn't really use admin properties but this makes it future proof.
 }
 
 void

@@ -9,6 +9,7 @@
 #include "Notify_Channel_Objects_Factory.h"
 #include "Notify_Event_Manager_Objects_Factory.h"
 #include "Notify_Worker_Task.h"
+#include "Notify_AdminProperties.h"
 
 ACE_RCSID(Notify, Notify_ProxyConsumer_T, "$Id$")
 
@@ -40,8 +41,12 @@ TAO_Notify_ProxyConsumer<SERVANT_TYPE>::init (CosNotifyChannelAdmin::ProxyID pro
     event_manager_objects_factory->create_listener_eval_task (ACE_TRY_ENV);
   ACE_CHECK;
 
+  // Get hold of the admin properties.
+  TAO_Notify_AdminProperties* const admin_properties =
+    this->event_manager_->admin_properties ();
+
   // open the tasks
-  this->filter_eval_task_->open (0);
+  this->filter_eval_task_->init_task (admin_properties);
 }
 
 // Implementation skeleton destructor
@@ -98,7 +103,30 @@ TAO_Notify_ProxyConsumer<SERVANT_TYPE>::filter_eval_task (void)
 template <class SERVANT_TYPE> void
 TAO_Notify_ProxyConsumer<SERVANT_TYPE>::on_connected (CORBA::Environment &ACE_TRY_ENV)
 {
+  // Get hold of the admin properties.
+  TAO_Notify_AdminProperties* const admin_properties =
+    this->event_manager_->admin_properties ();
+
+  TAO_Notify_Property_Long* const supplier_count =
+    admin_properties->suppliers ();
+
+  if (admin_properties->max_suppliers () != 0 &&
+      supplier_count->value () >= admin_properties->max_suppliers ())
+    ACE_THROW (CORBA::IMP_LIMIT ()); // we've reached the limit of suppliers connected.
+
   this->event_manager_->register_for_subscription_updates (this, ACE_TRY_ENV);
+
+  (*supplier_count)++;
+}
+
+template <class SERVANT_TYPE> void
+TAO_Notify_ProxyConsumer<SERVANT_TYPE>::on_disconnected (CORBA::Environment &/*ACE_TRY_ENV*/)
+{
+  // Get hold of the admin properties.
+  TAO_Notify_AdminProperties* const admin_properties =
+    this->event_manager_->admin_properties ();
+
+  (*(admin_properties->suppliers ()))--;
 }
 
 template <class SERVANT_TYPE> void

@@ -9,7 +9,7 @@
 //   Notify_QoSAdmin_i.h
 //
 // = DESCRIPTION
-//
+//   Implements get/set methods for QoS properties.
 //
 // = AUTHOR
 //    Pradeep Gore <pradeep@cs.wustl.edu>

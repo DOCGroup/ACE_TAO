@@ -2,10 +2,15 @@
 #include "Notify_Listeners.h"
 #include "Notify_Event_Map.h"
 #include "Notify_Event_Processor.h"
+#include "Notify_AdminProperties.h"
+#include "tao/corba.h"
 
 ACE_INLINE void
 TAO_Notify_Event_Manager::process_event  (TAO_Notify_Event* event, TAO_Notify_EventSource* event_source, CORBA::Environment &ACE_TRY_ENV)
 {
+  if (admin_properties_->reject_new_events () == 1)
+    ACE_THROW (CORBA::IMP_LIMIT ());
+
   this->event_processor_->evaluate_source_filter (event, event_source, ACE_TRY_ENV);
   // Start by checking if the event passes through the Source's filter.
 }
@@ -60,4 +65,10 @@ ACE_INLINE CosNotification::EventTypeSeq*
 TAO_Notify_Event_Manager::obtain_subscription_types (void)
 {
   return this->event_map_->obtain_subscription_types ();
+}
+
+ACE_INLINE TAO_Notify_AdminProperties* const
+TAO_Notify_Event_Manager::admin_properties (void)
+{
+  return this->admin_properties_;
 }

@@ -298,25 +298,6 @@ protected:
   const CosNotifyChannelAdmin::AdminID default_id_;
   // Default id's to CosEventChannelAdmin::ConsumerAdmin, SupplierAdmin.
 
-  // @@ Pradeep can you explain why there is any maximum for these
-  // values? Should they be configurable by the user so the resource
-  // requirements can be bounded?
-
-  // = Admin. properties
-  // for all these properties the default O implies no limit
-  CORBA::Long max_queue_length_;
-  // The maximum number of events that will be queued by the channel before
-  // the channel begins discarding events or rejecting new events upon
-  // receipt of each new event.
-
-  CORBA::Long max_consumers_;
-  // The maximum number of consumers that can be connected to the channel at
-  // any given time.
-
-  CORBA::Long max_suppliers_;
-  // The maximum number of suppliers that can be connected to the channel at
-  // any given time.
-
   TAO_Notify_QoSAdmin_i qos_admin_;
   // Handle QoS admin methods.
 

@@ -9,6 +9,7 @@
 #include "Notify_Worker_Task.h"
 #include "Notify_Factory.h"
 #include "Notify_Event.h"
+#include "Notify_MT_Worker_Task.h"
 
 ACE_RCSID(Notify, Notify_Default_EMO_Factory, "$Id$")
 
@@ -113,9 +114,13 @@ TAO_Notify_Default_EMO_Factory::create_source_eval_task (CORBA::Environment &ACE
 {
   // @@ pass the correct option to initialize this as passive/active object.
   TAO_Notify_Worker_Task* task;
-  ACE_NEW_THROW_EX (task,
-                    TAO_Notify_Worker_Task (this->mt_source_eval_),
-                    CORBA::NO_MEMORY ());
+
+  if (this->mt_source_eval_ == 1)
+    ACE_NEW_THROW_EX (task, TAO_Notify_MT_Worker_Task (), CORBA::NO_MEMORY ());
+  else
+    ACE_NEW_THROW_EX (task,
+                      TAO_Notify_Worker_Task (),
+                      CORBA::NO_MEMORY ());
   return task;
 }
 
@@ -124,9 +129,13 @@ TAO_Notify_Default_EMO_Factory::create_lookup_task (CORBA::Environment &ACE_TRY_
 {
   // @@ pass the correct option to initialize this as passive/active object.
   TAO_Notify_Worker_Task* task;
-  ACE_NEW_THROW_EX (task,
-                    TAO_Notify_Worker_Task (this->mt_lookup_),
-                    CORBA::NO_MEMORY ());
+
+  if (this->mt_lookup_ == 1)
+    ACE_NEW_THROW_EX (task, TAO_Notify_MT_Worker_Task (), CORBA::NO_MEMORY ());
+  else
+    ACE_NEW_THROW_EX (task,
+                      TAO_Notify_Worker_Task (),
+                      CORBA::NO_MEMORY ());
   return task;
 }
 
@@ -135,23 +144,29 @@ TAO_Notify_Default_EMO_Factory::create_listener_eval_task (CORBA::Environment &A
 {
   // @@ pass the correct option to initialize this as passive/active object.
   TAO_Notify_Worker_Task* task;
-  ACE_NEW_THROW_EX (task,
-                    TAO_Notify_Worker_Task (this->mt_listener_eval_),
-                    CORBA::NO_MEMORY ());
+
+  if (this->mt_listener_eval_ == 1)
+    ACE_NEW_THROW_EX (task, TAO_Notify_MT_Worker_Task (), CORBA::NO_MEMORY ());
+  else
+    ACE_NEW_THROW_EX (task,
+                      TAO_Notify_Worker_Task (),
+                      CORBA::NO_MEMORY ());
   return task;
 }
 
 TAO_Notify_Worker_Task*
 TAO_Notify_Default_EMO_Factory::create_dispatching_task (CORBA::Environment &ACE_TRY_ENV)
 {
-  // @@ pass the correct option to initialize this as passive/active object.
   TAO_Notify_Worker_Task* task;
-  ACE_NEW_THROW_EX (task,
-                    TAO_Notify_Worker_Task (this->mt_dispatching_),
-                    CORBA::NO_MEMORY ());
+
+  if (this->mt_dispatching_ == 1)
+    ACE_NEW_THROW_EX (task, TAO_Notify_MT_Worker_Task (), CORBA::NO_MEMORY ());
+  else
+    ACE_NEW_THROW_EX (task,
+                      TAO_Notify_Worker_Task (),
+                      CORBA::NO_MEMORY ());
   return task;
 }
-
 
 // ****************************************************************
 
