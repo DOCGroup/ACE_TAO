@@ -1,3 +1,11 @@
+Fri Jul 17 11:02:29 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/source/mpeg/server/Machine_Properties.{h,cpp}:
+	* orbsvcs/tests/AVStreams/source/mpeg/server/Video_Repository.{h,cpp}:
+	* orbsvcs/tests/AVStreams/source/mpeg/server/Property_Exporter.{h,cpp}:
+	* orbsvcs/tests/AVStreams/source/mpeg/server/augmented_server.{h,cpp}:
+	Updated these files in light of recent changes to the Trading Service.
+
 Fri Jul 17 09:46:56 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tao/POAC.h: Replaced #endif // ... with #endif /* ... */ since
