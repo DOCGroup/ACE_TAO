@@ -1,3 +1,10 @@
+Thu Jun 15 20:01:35 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS.i (ACE_OS::tempnam): Made the (__IBMCPP__) a 'defined' check
+          and combined it with defined (ACE_WIN32) so it works right on AIX.
+          Moved the NOTSUP stuff for ACE_HAS_WINCE to the section with the
+          other platforms that don't support it.
+
 Thu Jun 15 16:10:51 2000  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/platform_aix4_cset++.GNU: Force exceptions=1
