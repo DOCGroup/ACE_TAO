@@ -1,3 +1,29 @@
+Thu Jul 30 13:07:00 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
+
+	* Logging_service/Makefile: New file. Makefile for the Logging
+	service.
+
+	* tests/Logger/Makefile: Eliminated server compilation. Changed
+	client name to Logging_Test
+
+	* Logging_Service/Logging_Service_i.{h,cpp}: New files, renamed
+	from tests/Logger/server_i.{h,cpp}. Migrated from a test to a
+	service. Added ability to name the factory from the command line. 
+
+	* tests/Logger/Logging_Test_i.cpp: New file, renamed from
+	tests/Logger/client_i.cpp. Altered includes to reflect transition
+	of server from test server to actual service. 
+
+	* tests/Logger/Logging_Test_i.h: New file, renamed from
+	tests/Logger/client_i.h. Added multiple include protection. 
+
+	* tests/Logger/Logging_Test.cpp: New file, renamed from
+	tests/Logger/server.cpp. Removed some debugging code.
+
+	* tests/Logger/Logging_Test.cpp: New file, renamed from
+	tests/Logger/client.cpp. Edited to reflect changed filenames.  
+	
+	
 Thu Jul 30 00:39:10 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* orbsvcs/tests/Concurrency/{CC_command.tab,lex.CC_command}.cpp.diff:
