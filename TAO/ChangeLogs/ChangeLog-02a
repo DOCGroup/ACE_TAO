@@ -1,3 +1,15 @@
+Mon Jul 16 22:24:17 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/PluggableUDP/tests/SimplePerformance/run_test.pl: 
+	* examples/PluggableUDP/tests/Basic/run_test.pl: Fixed the run
+	  test scripts to make sure that a DIOP endpoint is specified when
+	  the server is invoked. This would fix the errors seen in our
+	  builds. 
+
+	* examples/PluggableUDP/tests/Basicsvc.conf: Just removed the file
+	  from the repository. Looks like it was not needed and confused
+	  the client too much leading to SEGV's.
+
 Mon Jul 16 22:03:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/IIOP_Connection_Handler.cpp:
