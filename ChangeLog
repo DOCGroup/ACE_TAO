@@ -1,3 +1,10 @@
+Sat Jul 31 05:47:31 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* Release:
+	* bin/make_release:
+	  
+	  Changed the pattern for looking at borland makefiles. 
+
 Sat Jul 31 03:15:39 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* Release: Include ACE.mwc which is very important.

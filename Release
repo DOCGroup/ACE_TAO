@@ -88,7 +88,7 @@ RELEASE_FILES = \
         ACE_wrappers/GNUmake* \
         ACE_wrappers/*.dsw \
         ACE_wrappers/*.sln \
-        ACE_wrappers/Makefile*\
+        ACE_wrappers/*.bor \
         ACE_wrappers/man
 
 AUTOCONF_RELEASE_FILES = \
