@@ -269,6 +269,10 @@ public:
   UTL_ScopedName *last_referenced_as (void) const;
   void last_referenced_as (UTL_ScopedName *n);
 
+  // Accessors for the prefix_socpe_ member.
+  UTL_Scope *prefix_scope (void);
+  void prefix_scope (UTL_Scope *s);
+
   // Useful for GIOP to know if a wstring is being marshaled.
   virtual int contains_wstring (void);
   void contains_wstring (int val);
@@ -346,6 +350,9 @@ private:
   UTL_ScopedName *last_referenced_as_;
   // Temporary holder of the most recent way we were reference.
   // The top level component of this is added to pd_name_referenced.
+
+  // The scope in which our prefix, if any, was assigned.
+  UTL_Scope *prefix_scope_;
 
 private:
   void compute_full_name (UTL_ScopedName *n);
