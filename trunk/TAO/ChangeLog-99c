@@ -1,3 +1,24 @@
+Wed Feb 24 22:54:59 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/TAO_Internal.i (_svc_conf): This new function allows user to
+	  overwrite TAO_DEFAULT_*_ARGS settings at application's main
+	  without recompiling TAO library.  Notice these settings are
+	  further overwritten by external svc.conf files because svc.conf
+	  files are parsed before these fake entries.
+
+	* performance-tests/Cubit/TAO/MT_Cubit/svc.conf: -ORBdemuxstrategy
+	  has become -ORBsystemidpolicystrategy now.
+
+	* performance-tests/Cubit/TAO/MT_Cubit/svc.conf.static: Fixed
+	  static service's names.  Changed to use
+	  -ORBsystemidpolicystrategy.
+
+	* tao/orbconf.cpp: Fixed TAO_DEFAULT_*_ARGS.
+
+	* tao/ORB_Core.cpp:
+	* tao/default_client.cpp:
+	* tao/default_server.cpp: Corrected names of the static services.
+
 Wed Feb 24 17:08:27 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Basic_Factory.cpp:
@@ -11,7 +32,7 @@ Wed Feb 24 17:08:27 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 Wed Feb 24 16:01:53 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-        * tao/Stub.cpp: Fred and I fixed up Location Forward logic in 
+        * tao/Stub.cpp: Fred and I fixed up Location Forward logic in
           do_static_call ().  It wasn't advancing the profiles when a
           location forward message was returned.
 
