@@ -71,7 +71,7 @@ class AV_Svc_Handler
   //   This class defines the service handler for a new connection to
   //   the AV_Server.
   //
-  // =DESCRIPTION
+  // = DESCRIPTION
   //   This calls the handle_connection method for a new connection
   //   which demuxes the connection to a video or audio server
   //   depending on the connection request.
@@ -160,7 +160,7 @@ class AV_Server
   //   Using the class is as simple as calling init () first and then
   //   run. It uses an acceptor with the default ACE_Reactor::instance ().
 public:
-  AV_Server ();
+  AV_Server (void);
   // constructor
 
   int init (int argc,
@@ -174,15 +174,18 @@ public:
   static void on_exit_routine (void);
   // Routine called when this process exits.
 
-  ~AV_Server ();
+  ~AV_Server (void);
   // Destructor
 private:
 
-  TAO_ORB_Manager *orb_manager_;
-  // the TAO ORB manager.
+  // @@ Why are some of these data members pointers and others
+  // objects?  Shouldn't we be consistent here?
 
   TAO_Naming_Server naming_server_;
   // the TAO naming server
+
+  TAO_ORB_Manager *orb_manager_;
+  // the TAO ORB manager.
 
   Video_Control_i *video_control_;
   // The Video_Control implementation object.
@@ -198,7 +201,7 @@ private:
 
   int parse_args (int argcs,
                   char **argv);
-  // parse the arguments
+  // Parse the arguments.
 };
 
 #endif /* TAO_AV_SERVER_H */

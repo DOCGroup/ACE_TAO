@@ -2,7 +2,7 @@
 
 #include "server.h"
 
-// creates a svc handler by passing "this", i.e.  a reference to the
+// Creates a svc handler by passing "this", i.e.  a reference to the
 // acceptor that created it this is needed by the svc_handler to
 // remove the acceptor handle from the reactor called by the acceptor
 // to create a new svc_handler to handle the new connection.
@@ -215,8 +215,7 @@ AV_Svc_Handler::handle_connection (ACE_HANDLE)
                             Mpeg_Global::rttag, 
                             -INET_SOCKET_BUFFER_SIZE);
       //    ACE_Reactor::instance ()->end_event_loop ();
-      TAO_ORB_Core_instance ()->orb ()->shutdown ();
-
+      TAO_ORB_Core_instance ()->reactor ()->end_event_loop ();
       if (result != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%P|%t)handle_connection : "),
@@ -282,15 +281,14 @@ AV_Server_Sig_Handler::register_handler (void)
   sig_set.sig_add (SIGINT);
   sig_set.sig_add (SIGTERM);
 
-  // Register the signal handler object to catch the signals.
-  //  if (ACE_Reactor::instance ()->register_handler (sig_set, 
-  if (TAO_ORB_Core_instance ()->reactor ()->register_handler (sig_set,
-                                                  this) == -1)
+  // Register the signal handler object to catch the signals.  if
+  // (ACE_Reactor::instance ()->register_handler (sig_set,
+  if (TAO_ORB_Core_instance ()->reactor ()->register_handler 
+      (sig_set, this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, 
                        "%p\n", 
                        "register_handler"),
                       -1);
-
   return 0;
 }
 
@@ -389,11 +387,11 @@ AV_Server_Sig_Handler::clear_child (int sig)
       {
         // %% can we remove the below ?
 #if defined(_HPUX_SOURCE) || defined(__svr4__) || defined(IRIX)
-        fprintf(stderr, "terminated at signal %d%s.\n", WTERMSIG(status),
-                WCOREDUMP(status) ? ", core dumped" : "");
+        fprintf (stderr, "terminated at signal %d%s.\n", WTERMSIG(status),
+                 WCOREDUMP(status) ? ", core dumped" : "");
 #else
-        fprintf(stderr, "terminated at signal %d.\n", WTERMSIG(status));
-#endif
+        fprintf (stderr, "terminated at signal %d.\n", WTERMSIG(status));
+#endif /* defined(_HPUX_SOURCE) || defined(__svr4__) || defined(IRIX) */
       }
     else if (WIFSTOPPED(status)) 
       fprintf(stderr, "stopped at signal %d\n", WSTOPSIG(status));
@@ -405,16 +403,17 @@ void
 AV_Server_Sig_Handler::int_handler (int sig)
 {
   ACE_DEBUG ((LM_DEBUG, 
-              "(%P|%t) Received signal %d, shutting down the event loop\n",
+              "(%P|%t) killed by signal %d",
               sig));
-  TAO_ORB_Core_instance ()->orb ()->shutdown ();
+  exit (0);
 }
 
 // AV_Server routines
 
 // Default Constructor
-AV_Server::AV_Server ()
+AV_Server::AV_Server (void)
 {
+  // @@ Sumedh, why are these allocated dynamically?
   this->signal_handler_ = new AV_Server_Sig_Handler ;
   this->orb_manager_ = new TAO_ORB_Manager ;
   this->video_control_ = new Video_Control_i;
@@ -433,8 +432,10 @@ AV_Server::on_exit_routine (void)
     }
   
   // %% what does the following do
-  if (Mpeg_Global::live_audio > 1) ExitLiveAudio ();
-  if (Mpeg_Global::live_video > 1) ExitLiveVideo ();
+  if (Mpeg_Global::live_audio > 1)
+    ExitLiveAudio ();
+  if (Mpeg_Global::live_video > 1)
+    ExitLiveVideo ();
   //  ComCloseServer();
 }
 
@@ -588,19 +589,22 @@ AV_Server::run (CORBA::Environment& env)
   // Run the ORB event loop
   this->orb_manager_->run (env);
 
+  TAO_CHECK_ENV_RETURN (env,-1);
+
   ACE_DEBUG ((LM_DEBUG,
               "(%P)AV_Server::run () "
               "came out of the (acceptor) "
               "event loop %p\n",
               "run_event_loop\n"));
-
-  TAO_CHECK_ENV_RETURN (env,-1);
 }
 
 AV_Server::~AV_Server (void)
 {
   if (this->signal_handler_ != 0)
     delete this->signal_handler_;
+
+  // @@ Shouldn't you delete the orb_manager_ and other objects you
+  // allocated dynamically?
 }
 
 int
@@ -610,12 +614,12 @@ main (int argc, char **argv)
 
   TAO_TRY
     {
-    // parses the arguments, and initializes the server
-  if (vcr_server.init (argc, argv,TAO_TRY_ENV) < 0)
-    return 1;
+      // Parses the arguments, and initializes the server.
+      if (vcr_server.init (argc, argv, TAO_TRY_ENV) == -1)
+        return 1;
   
-  // runs the reactor event loop
-  vcr_server.run (TAO_TRY_ENV);
+      // Runs the reactor event loop.
+      vcr_server.run (TAO_TRY_ENV);
     }
   TAO_CATCHANY
     {
