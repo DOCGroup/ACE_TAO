@@ -1,20 +1,17 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ========================================================================
-//
-// = LIBRARY
-//    orbsvcs
-//
-// = FILENAME
-//    Trader.h
-//
-// = AUTHOR
-//    Marina Spivak <marina@cs.wustl.edu>
-//    Seth Widoff <sbw1@cs.wustl.edu>
-//    Irfan Pyarali <irfan@cs.wustl.edu>
-//
-// ========================================================================
+//=============================================================================
+/**
+ *  @file    Trader.h
+ *
+ *  $Id$
+ *
+ *  @author Marina Spivak <marina@cs.wustl.edu>
+ *  @author Seth Widoff <sbw1@cs.wustl.edu>
+ *  @author Irfan Pyarali <irfan@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_TRADER_H
 #define TAO_TRADER_H
@@ -37,48 +34,51 @@
 
 class TAO_DynSequence_i;
 
+/**
+ * @class TAO_Trader
+ *
+ * @brief This class packages together all the various pieces that
+ * provide functionality specified in COS Trading specification.
+ *
+ * TAO_Trader contains all the components that together represent
+ * a single trader.  Based on its constructor arguments,
+ * TAO_Trader creates instances of appropriate interface
+ * implementations as well as instances of objects common to
+ * more than one interface (offers, attributes, etc.).
+ * TAO_Trader also enforces the proper order on all
+ * initializations.  TAO_Trader acts like a "glue" class that
+ * creates appropriate components, holds everything together,
+ * and enforces order. TAO_Trader is parameterized by two types
+ * of locks: one for its service service offers, one for its
+ * state (configuration).
+ */
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 class TAO_Trader : public TAO_Trader_Base
-  //
-  // = TITLE
-  //     This class packages together all the various pieces that
-  //     provide functionality specified in COS Trading specification.
-  //
-  // = DESCRIPTION
-  //     TAO_Trader contains all the components that together represent
-  //     a single trader.  Based on its constructor arguments,
-  //     TAO_Trader creates instances of appropriate interface
-  //     implementations as well as instances of objects common to
-  //     more than one interface (offers, attributes, etc.).
-  //     TAO_Trader also enforces the proper order on all
-  //     initializations.  TAO_Trader acts like a "glue" class that
-  //     creates appropriate components, holds everything together,
-  //     and enforces order. TAO_Trader is parameterized by two types
-  //     of locks: one for its service service offers, one for its
-  //     state (configuration).
 {
 public:
 
   // The desired combination of interfaces to be passed to the
   // TAO_Trader constructor.
 
+  /// Offer Database Trait.
   typedef TAO_Offer_Database<MAP_LOCK_TYPE> Offer_Database;
-  // Offer Database Trait.
 
+  /**
+   * Constructor which based on its arguments will create
+   * a particular type of trader (e.g. Query trader, Simple trader, etc.)
+   * The argument is a bitwise OR of desired Trader_Components as listed
+   * in enumerated type above.
+   */
   TAO_Trader (Trader_Components components = LOOKUP);
-  // Constructor which based on its arguments will create
-  // a particular type of trader (e.g. Query trader, Simple trader, etc.)
-  // The argument is a bitwise OR of desired Trader_Components as listed
-  // in enumerated type above.
 
+  /// Destructor.
   virtual ~TAO_Trader (void);
-  // destructor.
 
+  /// Accessor for the structure with all the service offers.
   Offer_Database& offer_database (void);
-  // Accessor for the structure with all the service offers.
 
+  /// Returns the trader
   ACE_Lock &lock (void);
-  // returns the trader
 
 protected:
 
@@ -86,8 +86,8 @@ protected:
 
   Offer_Database offer_database_;
 
+  /// Lock that guards the state of the trader (its configuration).
   ACE_Lock_Adapter<TRADER_LOCK_TYPE> lock_;
-  // lock that guards the state of the trader (its configuration).
 
   enum { LOOKUP_IF, REGISTER_IF, ADMIN_IF, PROXY_IF, LINK_IF };
 
@@ -113,30 +113,30 @@ public:
   TAO_Trader_Components (const TAO_Trading_Components_i& comps);
 
   // = CosTrading::TraderComponents methods.
+  /// Returns an object reference to the Lookup interface of the trader.
+  /// Returns nil if the trader does not support Lookup interface.
   virtual CosTrading::Lookup_ptr lookup_if (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  // Returns an object reference to the Lookup interface of the trader.
-  // Returns nil if the trader does not support Lookup interface.
 
+  /// Returns object reference for the Register interface of the trader.
+  /// Returns nil if the trader does not support Register interface.
   virtual CosTrading::Register_ptr register_if (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  // Returns object reference for the Register interface of the trader.
-  // Returns nil if the trader does not support Register interface.
 
+  /// Returns object reference for the Link interface of the trader.
+  /// Returns nil if the trader does not support Link interface.
   virtual CosTrading::Link_ptr link_if (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  // Returns object reference for the Link interface of the trader.
-  // Returns nil if the trader does not support Link interface.
 
+  /// Returns object reference to the Proxy interface of the trader.
+  /// Returns nil if the trader does not support Proxy interface.
   virtual CosTrading::Proxy_ptr proxy_if (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  // Returns object reference to the Proxy interface of the trader.
-  // Returns nil if the trader does not support Proxy interface.
 
+  /// Returns object reference for the Admin interface of the trader.
+  /// Returns nil if the trader does not support Admin interface.
   virtual CosTrading::Admin_ptr admin_if (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  // Returns object reference for the Admin interface of the trader.
-  // Returns nil if the trader does not support Admin interface.
 
 private:
 
@@ -247,18 +247,21 @@ private:
   // TAO_Sequence_Extracter
   // *************************************************************
 
+/**
+ * @class TAO_Element_Equal
+ *
+ * @brief Function object for determining if the sequence element at the
+ * current position of the dynamic sequence any parameter is equal to
+ * the element parameter.
+ */
 template <class ELEMENT_TYPE>
 class TAO_Element_Equal
 {
-  // = TITLE
-  //   Function object for determining if the sequence element at the
-  //   current position of the dynamic sequence any parameter is equal to
-  //   the element parameter.
 public:
+  /// Calls the correct method on dyn_seq to extract the element type, then
+  /// uses the appropriate form of equals comparison.
   int operator () (TAO_DynSequence_i& dyn_any,
                    const ELEMENT_TYPE& element);
-  // Calls the correct method on dyn_seq to extract the element type, then
-  // uses the appropriate form of equals comparison.
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ========================================================================
-//
-// = LIBRARY
-//    orbsvcs
-//
-// = FILENAME
-//    Interpreter.h
-//
-// = AUTHOR
-//    Seth Widoff <sbw1@cs.wustl.edu>
-//
-// ========================================================================
+//=============================================================================
+/**
+ *  @file    Interpreter.h
+ *
+ *  $Id$
+ *
+ *  @author Seth Widoff <sbw1@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_TCL_INTERPRETER_H
 #define TAO_TCL_INTERPRETER_H
@@ -25,32 +22,35 @@
 class TAO_Constraint_Evaluator;
 class TAO_Constraint_Validator;
 
+/**
+ * @class TAO_Interpreter
+ *
+ * @brief TAO_Interpreter is the superclass for all interpreters. Its
+ * build tree method invokes the yacc parser to parse a constraint
+ * or preference string.
+ */
 class TAO_Trading_Export TAO_Interpreter
 {
-  // = TITLE
-  //      TAO_Interpreter is the superclass for all interpreters. Its
-  //      build tree method invokes the yacc parser to parse a constraint
-  //      or preference string.
 protected:
   // = Initialization and termination methods.
+  /// Constructor.
   TAO_Interpreter (void);
-  // Constructor.
 
+  /// Destructor.
   ~TAO_Interpreter (void);
-  // Destructor.
 
+  /// Using the Yacc generated parser, construct an expression tree
+  /// representing <constraints> from the tokens returned by it.
   int build_tree (const char* preferences);
-  // Using the Yacc generated parser, construct an expression tree
-  // representing <constraints> from the tokens returned by it.
 
   static int is_empty_string (const char* str);
 
+  /// The root of the expression tree, not equal to null if build_tree
+  /// successfully builds a tree from the constraints.
   TAO_Constraint* root_;
-  // The root of the expression tree, not equal to null if build_tree
-  // successfully builds a tree from the constraints.
 private:
+  /// This mutex protects the <build_tree> method from reentrance.
   static TAO_SYNCH_MUTEX parserMutex__;
-  // This mutex protects the <build_tree> method from reentrance.
 };
 
 
@@ -66,26 +66,29 @@ extern int yylex (void);
 #undef yyerror
 #define yyerror(x)
 
+/**
+ * @class TAO_Lex_String_Input
+ *
+ * @brief Have Lex read from a string and not from stdin. Essentially,
+ * the interpreter needs to call yylex() until EOF, and call
+ * TAO_Lex_String_Input::reset() with the new string, prior to
+ * calling yyparse.
+ */
 class TAO_Lex_String_Input
 {
-  // = TITLE
-  //   Have Lex read from a string and not from stdin. Essentially,
-  //   the interpreter needs to call yylex() until EOF, and call
-  //   TAO_Lex_String_Input::reset() with the new string, prior to
-  //   calling yyparse.
 public:
+  /// Reset the lex input.
   static void reset (char* input_string);
-  // Reset the lex input.
 
+  /// Method lex will call to read from the input string.
   static int copy_into (char* buf, int max_size);
-  // Method lex will call to read from the input string.
 
 private:
 
+  /// Pointers to keep track of the input string.
   static char* string_;
   static char* current_;
   static char* end_;
-  // Pointers to keep track of the input string.
 };
 
 // The union used by lex and yacc to build the Abstract Syntax Tree.

@@ -1,19 +1,16 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ========================================================================
-//
-// = LIBRARY
-//    orbsvcs
-//
-// = FILENAME
-//    Offer_Iterators_T.h
-//
-// = AUTHOR
-//    Marina Spivak <marina@cs.wustl.edu>
-//    Seth Widoff <sbw1@cs.wustl.edu>
-//
-// ========================================================================
+//=============================================================================
+/**
+ *  @file    Offer_Iterators_T.h
+ *
+ *  $Id$
+ *
+ *  @author Marina Spivak <marina@cs.wustl.edu>
+ *  @author Seth Widoff <sbw1@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_REGISTER_OFFER_ITERATOR_H
 #define TAO_REGISTER_OFFER_ITERATOR_H
@@ -28,55 +25,59 @@
 #endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
+/**
+ * @class TAO_Register_Offer_Iterator
+ *
+ * @brief An implementation of CosTrading::OfferIterator IDL interface
+ * appropriate when trader has Register functionality.
+ *
+ * Stores ids of offers to be iterated over.  Before returning
+ * an offer, checks if the offer is still there (since it may
+ * have been removed by the Register).
+ */
 template <class MAP_LOCK_TYPE>
 class TAO_Register_Offer_Iterator : public TAO_Offer_Iterator
 {
-  // = TITLE
-  //     An implementation of CosTrading::OfferIterator IDL interface
-  //     appropriate when trader has Register functionality.
-  //
-  // = DESCRIPTION
-  //     Stores ids of offers to be iterated over.  Before returning
-  //     an offer, checks if the offer is still there (since it may
-  //     have been removed by the Register).
 public:
 
   // = Initialization and termination methods.
 
+  /// Takes service type and trader reference in order to
+  /// later locate offers using their ids.
   TAO_Register_Offer_Iterator (TAO_Offer_Database<MAP_LOCK_TYPE> &db,
                                const TAO_Property_Filter& pfilter);
-  // Takes service type and trader reference in order to
-  // later locate offers using their ids.
 
+  /// Destructor.
   virtual ~TAO_Register_Offer_Iterator (void);
-  // destructor.
 
+  /// Deposit at maximum n offers into the return sequence and return 1,
+  /// or return 0 if the iterator is done and no offers are returned.
   virtual CORBA::Boolean next_n (CORBA::ULong n,
                                  CosTrading::OfferSeq_out offers
                                  ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  // Deposit at maximum n offers into the return sequence and return 1,
-  // or return 0 if the iterator is done and no offers are returned.
 
+  /**
+   * Throws CosTrading::UnknownMaxLeft since with the presence of
+   * "Register" functionality, the iterator cannot guarantee that
+   * the trader will have all the offers it has now when the time
+   * to return them comes.
+   */
   virtual CORBA::ULong max_left (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException,
                     CosTrading::UnknownMaxLeft));
-  // Throws CosTrading::UnknownMaxLeft since with the presence of
-  // "Register" functionality, the iterator cannot guarantee that
-  // the trader will have all the offers it has now when the time
-  // to return them comes.
 
+  /// Add an offer the iterator should iterate over.
   void add_offer (CosTrading::OfferId id,
                   const CosTrading::Offer *);
-  // Add an offer the iterator should iterate over.
 
 private:
 
+  /// A reference to the trader is needed for access to the map of offers.
   TAO_Offer_Database<MAP_LOCK_TYPE> &db_;
-  // A reference to the trader is needed for access to the map of offers.
 
+  /// Offer ids of offers to iterate over.
   TAO_String_Queue offer_ids_;
-  // Offer ids of offers to iterate over.
 };
 
 

@@ -1,20 +1,17 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ========================================================================
-//
-// = LIBRARY
-//    orbsvcs
-//
-// = FILENAME
-//    Trader_Interfaces.h
-//
-// = AUTHOR
-//    Marina Spivak <marina@cs.wustl.edu>
-//    Seth Widoff <sbw1@cs.wustl.edu>
-//    Irfan Pyarali <irfan@cs.wustl.edu>
-//
-// ========================================================================
+//=============================================================================
+/**
+ *  @file    Trader_Interfaces.h
+ *
+ *  $Id$
+ *
+ *  @author Marina Spivak <marina@cs.wustl.edu>
+ *  @author Seth Widoff <sbw1@cs.wustl.edu>
+ *  @author Irfan Pyarali <irfan@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_TRADER_INTERFACES_H
 #define TAO_TRADER_INTERFACES_H
@@ -46,18 +43,16 @@ template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE> class TAO_Link;
 
 #include "Trader_T.h"
 
-  // *************************************************************
-  // TAO_Lookup
-  // *************************************************************
-
+/**
+ * @class TAO_Lookup
+ *
+ * @brief This class implements CosTrading::Lookup IDL interface.
+ */
 template<class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 class TAO_Lookup :
   public TAO_Trader_Components<POA_CosTrading::Lookup>,
   public TAO_Support_Attributes<POA_CosTrading::Lookup>,
   public TAO_Import_Attributes<POA_CosTrading::Lookup>
-//
-// = TITLE
-//     This class implements CosTrading::Lookup IDL interface.
 {
 public:
 
@@ -169,10 +164,12 @@ public:
 
 private:
 
+  /// Factory method for creating an appropriate Offer Iterator based
+  /// on the presence of the Register Interface.
   TAO_Offer_Iterator* create_offer_iterator (const TAO_Property_Filter&);
-  // Factory method for creating an appropriate Offer Iterator based
-  // on the presence of the Register Interface.
 
+  /// Traverse the type hierarchy to pull the matching offers from all
+  /// subtypes of the root type.
   void lookup_all_subtypes (const char* type,
                             CosTradingRepos::ServiceTypeRepository::IncarnationNumber& inc_num,
                             TAO_Offer_Database<MAP_LOCK_TYPE>& offer_database,
@@ -181,17 +178,22 @@ private:
                             TAO_Preference_Interpreter& pref_inter,
                             TAO_Offer_Filter& offer_filter
                             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-  // Traverse the type hierarchy to pull the matching offers from all
-  // subtypes of the root type.
 
+  /// Check if offers of a type fit the constraints and order them
+  /// according to the preferences submitted.
   void lookup_one_type (const char* type,
                         TAO_Offer_Database<MAP_LOCK_TYPE>& offer_database,
                         TAO_Constraint_Interpreter& constr_inter,
                         TAO_Preference_Interpreter& pref_inter,
                         TAO_Offer_Filter& offer_filter);
-  // Check if offers of a type fit the constraints and order them
-  // according to the preferences submitted.
 
+  /**
+   * This method takes the list of ordered offers and places a number
+   * of them in the sequence of returned offers and the rest into thr
+   * iterator. In addition, fill_receptacles uses the
+   * TAO_Property_Filter to ensure the returned offers contain the
+   * properties specified in the desired_props in parameter.
+   */
   int fill_receptacles (const char *,
                         CORBA::ULong how_many,
                         const CosTrading::Lookup::SpecifiedProps& desired_props,
@@ -202,12 +204,9 @@ private:
                         ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CosTrading::IllegalPropertyName,
                     CosTrading::DuplicatePropertyName));
-  // This method takes the list of ordered offers and places a number
-  // of them in the sequence of returned offers and the rest into thr
-  // iterator. In addition, fill_receptacles uses the
-  // TAO_Property_Filter to ensure the returned offers contain the
-  // properties specified in the desired_props in parameter.
 
+  /// If a starting_trader policy was specfied, foward the query to the
+  /// next link in the sequence.
   void forward_query (const char* next_hop,
                       const char *type,
                       const char *constr,
@@ -230,20 +229,25 @@ private:
                      CosTrading::IllegalPropertyName,
                      CosTrading::DuplicatePropertyName,
                      CosTrading::DuplicatePolicyName));
-  // If a starting_trader policy was specfied, foward the query to the
-  // next link in the sequence.
 
+  /**
+   * Assemble a sequence of links that the federate_query method
+   * should follow. Use the starting_trader policy, if one's provided,
+   * otherwise use the Link interface to determine which of the
+   * registered links should be followed in this query.
+   */
   CORBA::Boolean retrieve_links (TAO_Policies& policies,
                                  CORBA::ULong offer_returned,
                                  CosTrading::LinkNameSeq_out links
                                  ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::Lookup::PolicyTypeMismatch));
-  // Assemble a sequence of links that the federate_query method
-  // should follow. Use the starting_trader policy, if one's provided,
-  // otherwise use the Link interface to determine which of the
-  // registered links should be followed in this query.
 
+  /**
+   * Perform and pass on a query over a set of links. Merge the
+   * results of the federated queries into a single set of results
+   * suitable for returning to the user.
+   */
   void federated_query (const CosTrading::LinkNameSeq& links,
                         const TAO_Policies& policies,
                         const CosTrading::Admin::OctetSeq& request_id,
@@ -268,13 +272,10 @@ private:
                      CosTrading::IllegalPropertyName,
                      CosTrading::DuplicatePropertyName,
                      CosTrading::DuplicatePolicyName));
-  // Perform and pass on a query over a set of links. Merge the
-  // results of the federated queries into a single set of results
-  // suitable for returning to the user.
 
+  /// Merge the results from a federated query into the collected results.
   void order_merged_sequence (TAO_Preference_Interpreter& pref_inter,
                               CosTrading::OfferSeq& offers);
-  // Merge the results from a federated query into the collected results.
 
   CORBA::Boolean seen_request_id (TAO_Policies& policies,
                                   CosTrading::Admin::OctetSeq*& seq
@@ -288,30 +289,27 @@ private:
 
   const unsigned int IDS_SAVED;
 
+  /// A reference to the trader for obtaining offer maps.
   TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader_;
-  // A reference to the trader for obtaining offer maps.
 
   typedef ACE_Unbounded_Queue<CosTrading::Admin::OctetSeq*> Request_Ids;
 
+  /// A list of recent request_id_stems
   Request_Ids request_ids_;
-  // A list of recent request_id_stems
 
+  /// Lock to secure the set of request ids.
   TRADER_LOCK_TYPE lock_;
-  // Lock to secure the set of request ids.
 };
 
-
-  // *************************************************************
-  // TAO_Register
-  // *************************************************************
-
+/**
+ * @class TAO_Register
+ *
+ * @brief This class implements CosTrading::Register IDL interface.
+ */
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 class TAO_Register :
   public TAO_Trader_Components<POA_CosTrading::Register>,
   public TAO_Support_Attributes<POA_CosTrading::Register>
-  //
-  // = TITLE
-  //     This class implements CosTrading::Register IDL interface.
 {
 public:
 
@@ -583,36 +581,33 @@ public:
   TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader_;
 };
 
-  // *************************************************************
-  // TAO_Admin
-  // *************************************************************
-
+/**
+ * @class TAO_Admin
+ *
+ * @brief This class implements CosTrading::Admin IDL interface.
+ *
+ * DESCRIPTION (FROM SPEC)
+ * The admin interface enables the values of the trader attributes to
+ * be read and written. All attributes are defined as readonly in
+ * either SupportAttributes, ImportAttributes, LinkAttributes, or
+ * Admin. To set the trader "attribute" to a new value,
+ * set_<attribute_name> operations are defined in Admin. Each of these
+ * set operations returns the previous value of the attribute as its
+ * function value. If the admin interface operation
+ * set_support_proxy_offers is invoked with a value set to FALSE in a
+ * trader which supports the proxy interface, the
+ * set_support_proxy_offer value does not affect the function of
+ * operations in the proxy interface. However, in this case, it does
+ * have the effect of making any proxy offers exported via the proxy
+ * interface for that trader unavailable to satisfy queries on that
+ * trader's lookup interface.
+ */
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 class TAO_Admin :
   public TAO_Trader_Components <POA_CosTrading::Admin>,
   public TAO_Support_Attributes <POA_CosTrading::Admin>,
   public TAO_Import_Attributes <POA_CosTrading::Admin>,
   public TAO_Link_Attributes <POA_CosTrading::Admin>
-//
-// = TITLE
-//     This class implements CosTrading::Admin IDL interface.
-//
-// = DESCRIPTION (FROM SPEC)
-//
-// The admin interface enables the values of the trader attributes to
-// be read and written. All attributes are defined as readonly in
-// either SupportAttributes, ImportAttributes, LinkAttributes, or
-// Admin. To set the trader "attribute" to a new value,
-// set_<attribute_name> operations are defined in Admin. Each of these
-// set operations returns the previous value of the attribute as its
-// function value. If the admin interface operation
-// set_support_proxy_offers is invoked with a value set to FALSE in a
-// trader which supports the proxy interface, the
-// set_support_proxy_offer value does not affect the function of
-// operations in the proxy interface. However, in this case, it does
-// have the effect of making any proxy offers exported via the proxy
-// interface for that trader unavailable to satisfy queries on that
-// trader's lookup interface.
 {
 public:
 
@@ -622,34 +617,36 @@ public:
 
   // = Importing Parameters (used by the Lookup Interface)
 
+  /// Search card is the cardinality of the offers searched for
+  /// constraint compliance.
   virtual CORBA::ULong set_def_search_card (CORBA::ULong value
                                             ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
   virtual CORBA::ULong set_max_search_card (CORBA::ULong value
                                             ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  // search card is the cardinality of the offers searched for
-  // constraint compliance.
 
 
+  /// Match card is the cardinality of offers found compliant with the
+  /// constraints.
   virtual CORBA::ULong set_def_match_card (CORBA::ULong value
                                             ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
   virtual CORBA::ULong set_max_match_card (CORBA::ULong value
                                             ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  // match card is the cardinality of offers found compliant with the
-  // constraints.
 
+  /// Return card is the cardinality of the offers returned from
+  /// Lookup.
   virtual CORBA::ULong set_def_return_card (CORBA::ULong value
                                             ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
   virtual CORBA::ULong set_max_return_card (CORBA::ULong value
                                             ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  // return card is the cardinality of the offers returned from
-  // Lookup.
 
+  /// Types of offers available for consideration. Ween out those
+  /// offers with modifiable properties
   virtual CORBA::ULong set_max_list (CORBA::ULong value
                                      ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -665,8 +662,6 @@ public:
     set_supports_proxy_offers (CORBA::Boolean value
                                ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  // Types of offers available for consideration. Ween out those
-  // offers with modifiable properties
 
   // = Link Interface parameters
 
@@ -747,19 +742,19 @@ private:
 
   TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader_;
 
+  /// Unique prefix to create a sequence number space.
   CosTrading::Admin::OctetSeq stem_id_;
-  // Unique prefix to create a sequence number space.
 
+  /// Current sequence number.
   CORBA::ULong sequence_number_;
-  // Current sequence number.
 
   TRADER_LOCK_TYPE lock_;
 };
 
-  // *************************************************************
-  // TAO_Link
-  // *************************************************************
 
+/**
+ * @class TAO_Link
+ */
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 class TAO_Link :
   public TAO_Trader_Components <POA_CosTrading::Link>,
@@ -772,6 +767,12 @@ public:
 
   ~TAO_Link (void);
 
+  /**
+   * BEGIN SPEC
+   * The add_link operation allows a trader subsequently to use the
+   * service of another trader in the performance of its own trading
+   * service operations.
+   */
   virtual void add_link (const char *name,
                          CosTrading::Lookup_ptr target,
                          CosTrading::FollowOption def_pass_on_follow_rule,
@@ -783,10 +784,6 @@ public:
                     CosTrading::InvalidLookupRef,
                     CosTrading::Link::DefaultFollowTooPermissive,
                     CosTrading::Link::LimitingFollowTooPermissive));
-  // BEGIN SPEC
-  // The add_link operation allows a trader subsequently to use the
-  // service of another trader in the performance of its own trading
-  // service operations.
 
   // The "name" parameter is used in subsequent link management
   // operations to identify the intended link. If the parameter is not
@@ -928,9 +925,9 @@ private:
   >
   Links;
 
+  /// The collection of link connecting this trader to others in the
+  /// federation.
   Links links_;
-  // The collection of link connecting this trader to others in the
-  // federation.
 
   TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader_;
 };
