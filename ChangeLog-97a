@@ -1,3 +1,15 @@
+Sun Feb 09 21:44:34 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* tests/IOStream_Test.cpp,Makefile: added IOStream_Test,
+	  complements of James CE Johnson <jcej@lads.com>.
+
+	* examples/IPC_SAP/UPIPE_SAP/ex1.cpp (peer1, peer2): removed
+	  unused variables c_addr and serv_addr: they were replaced by
+	  a global.
+
+	* netsvcs/clients/Naming/Dump_Restore/createfile.cpp: removed
+	  #include of math.h, it wasn't needed.
+
 Sat Feb 08 15:19:50 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/ReactorEx.h: commented out ACE_ReactorEx_Notify::message_queue_
