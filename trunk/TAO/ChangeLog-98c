@@ -1,3 +1,19 @@
+Thu Jan 29 14:59:01 1998  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
+
+	* tests/Param_Test/run_test: Added a longer delay, changed port #,
+ 	and made all output be prefaced by either "SERVER: " or
+ 	"CLIENT(<type>): ".
+
+	* tao/poa.cpp: Re-ordered member initializers to de-warn g++.
+
+	* orbsvcs/Dump_Schedule/Dump_Schedule.cpp: _narrow needs to be
+ 	passed a .in() from _vars (you get a lollipop if you understand
+ 	that comment).
+
+	* docs/poa_migration.html: Added this file to start the ball
+ 	rolling.  Right now it's poorly-formatted and a rehash of some
+ 	emails, but it will be refined and grow over time.
+
 Thu Jan 29 12:33:30 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/tests/Simple_Naming/clnt.cpp: 

@@ -3207,9 +3207,9 @@ TAO_Strategy_POA_Manager::lock (void)
 TAO_POA_Current::TAO_POA_Current (void)
   : poa_impl_ (0),
     object_id_ (0),
-    servant_ (0),
     object_key_ (0),
-    cookie_ (0)
+    cookie_ (0),
+    servant_ (0)
 {
 }
 

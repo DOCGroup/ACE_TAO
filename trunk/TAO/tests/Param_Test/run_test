@@ -1,10 +1,10 @@
 #!/bin/sh
 
-PORT=20000
+PORT=20001
 IORFILE=theior
 start_server()
 {
-  ./server -ORBport $PORT -o $IORFILE &
+  ./server -ORBport $PORT -o $IORFILE 2>&1 | sed -e 's/^/SERVER: /' &
 }
 
 # Restart the server if we get SIGCHLD, i.e., the server died.
@@ -16,7 +16,7 @@ TYPES="short ubstring fixed_struct var_struct nested_struct struct_seq objref"
 for type in $TYPES
 do
   echo "BEGIN Testing type $type"
-  sleep 1	# Give the server a chance to start up
-  ./client -f `cat $IORFILE` -t $type
+  sleep 2	# Give the server a chance to start up
+  ./client -f `cat $IORFILE` -t $type 2>&1 | sed -e "s/^/CLIENT($type): /"
   echo "END   Testing type $type"
 done 
