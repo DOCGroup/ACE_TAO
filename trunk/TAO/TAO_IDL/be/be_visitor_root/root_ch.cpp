@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_root, 
-           root_ch, 
+ACE_RCSID (be_visitor_root,
+           root_ch,
            "$Id$")
 
 // ********************************
@@ -57,15 +57,20 @@ be_visitor_root_ch::init (void)
     {
       TAO_OutStream *os = this->ctx_->stream ();
 
-      *os << be_nl << be_nl 
-          << "// TAO_IDL - Generated from " << be_nl 
+      *os << be_nl << be_nl
+          << "// TAO_IDL - Generated from " << be_nl
           << "// " << __FILE__ << ":" << __LINE__;
 
       *os << be_nl << be_nl
           << "namespace TAO" << be_nl
-          << "{" << be_idt_nl
-          << "class Collocation_Proxy_Broker;" << be_nl << be_nl
-          << "template<typename T> class Narrow_Utils;" << be_nl
+          << "{" << be_idt_nl;
+
+      if (idl_global->non_local_iface_seen_)
+        {
+          *os << "class Collocation_Proxy_Broker;" << be_nl;
+        }
+
+      *os << "template<typename T> class Narrow_Utils;" << be_nl
           << "template<typename T> class AbstractBase_Narrow_Utils;" << be_uidt_nl
           << "}";
     }
