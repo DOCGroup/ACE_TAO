@@ -1,3 +1,26 @@
+Fri Jul  2 13:54:14 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.cpp: Removed unnecessary ';' after ACE_BEGINTHREADEX() and 
+	  ACE_ENDTHREADEX().  Thanks to Kris Johnson
+ 	  <kjohnson@gardnersys.com> for reporting this.
+  
+	* ace/Service_Config.cpp (open_i): It appears that
+
+	  if (ACE::debug ())
+	    ACE_Log_Msg::disable_debug_messages ();
+
+          should really be
+
+	  if (ACE::debug () == 0)
+	    ACE_Log_Msg::disable_debug_messages ();
+
+          Thanks to Jonathan Reis <reis@minniemouse.cemax.com> for
+	  reporting this.
+
+	* tests/Future_Test.cpp   (main): Make sure to use absolute time
+	  rather than relative time for the timeouts.  Thanks to Peter
+ 	  Brandstrom <peter.brandstrom@ericsson.com> for reporting this.
+
 Fri Jul  2 11:49:12 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * Initialized some variables to zero to avoid some silly warnings
@@ -21,24 +44,16 @@ Fri Jul  2 11:49:12 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 	  "purge_connections ()" which allows explicit purging of
  	  connnections from the connection cache.
 
-Fri Jul  2 11:49:12 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-	* ace/Service_Config.cpp (open_i): It appears that
-
-	  if (ACE::debug ())
-	    ACE_Log_Msg::disable_debug_messages ();
-
-          should really be
-
-	  if (ACE::debug () == 0)
-	    ACE_Log_Msg::disable_debug_messages ();
-
-          Thanks to Jonathan Reis <reis@minniemouse.cemax.com> for
-	  reporting this.
-
-	* tests/Future_Test.cpp   (main): Make sure to use absolute time
-	  rather than relative time for the timeouts.  Thanks to Peter
- 	  Brandstrom <peter.brandstrom@ericsson.com> for reporting this.
+Fri Jul  2 11:49:12 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+  
+  	* tests/Cached_Conn_Test.cpp: This is a test which shows how the 
+	  Strategy Connector can automagically as well as explicitly cache
+ 	  and purge connection from its connection cache using different
+ 	  caching strategies.
+	
+	* ace/Cached_Connect_Strategy_T.{h, cpp}: Added a method
+	  "purge_connections ()" which allows explicit purging of
+ 	  connnections from the connection cache.
 
 Fri Jul 01 11:50:21 1999  Steve Huston  <shuston@riverace.com>
 
