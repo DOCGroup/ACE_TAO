@@ -1,3 +1,11 @@
+Tue Mar 25 09:27:00 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* OS.cpp (thr_create): on VxWorks, always pass 0 as first arg to
+	  ::taskSpawn () so that VxWorks will generate the task ID.
+	  Thanks to Dave Mayerhoefer <m210229@svappl36.mdc.com>
+	  for providing this fix, without which random task names would
+	  be assigned.
+
 Mon Mar 24 14:08:48 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/SOCK_Dgram_Bcast.cpp (mk_broadcast): Cleaned up the code a
