@@ -1,3 +1,48 @@
+Fri Aug 25 14:29:27 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/Select_Reactor_T.h: Added new method, is_suspended_i (ACE_HANDLE)
+          to see if the handle is suspended or not. It's used in the TP_Reactor
+          to avoid dispatching suspended handlers.
+
+        * ace/Select_Reactor_T.cpp: New method, is_suspended_i.
+             (any_ready_i): Do not clear this->ready_set_ if that's the
+                            set that was scanned for ready bits. TP_Reactor
+                            now uses that set directly, and clearing it
+                            sort of defeats the purpose.
+             (suspend_i): Fixed function name in ACE_TRACE.
+
+        * ace/TP_Reactor.h: Added dispatch_i function; Removed dispatch_io_set
+          function and the ACE_EH_Dispatch_Info dispatch_info_ member -
+          they're not used anymore.
+
+        * ace/TP_Reactor.cpp (handle_events): Does not call handle_events_i
+          in Select_Reactor_T anymore. New function, dispatch_i, handles
+          the work that handle_events_i does for ACE_Select_Reactor - does
+          the wait_for_multiple_events, dispatches timers, signals, and
+          notifications; then, though, it records one dispatchable I/O
+          event for return to handle_events (similarly to what dispatch_io_set
+          used to do when it was called from handle_events_i). All of the
+          token acquiring and releasing now goes on in this function only.
+          Also, the return value (number of dispatched events) is now
+          correct.
+
+          The effect of all this is that TP_Reactor now saves the
+          ready_set_ bits and the threads running the reactor will dispatch
+          the handlers one by one until they're gone or the reactor state
+          changes in a way that forces select to be re-done.
+
+          This set of changes fixes Bugzilla # 567.
+
+Fri Aug 25 14:23:36 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/Handle_Set.i (reset): Commented out the #if !defined for
+          ACE_HAS_BIG_FD_SET; use FD_ZERO to clear the fd bits. This was
+          previously not being done for Linux (which has ACE_HAS_BIG_FD_SET)
+          and it caused grief in the reactor when scanning for bits in
+          sync (). This caused the (new, see above) TP_Reactor to always
+          think there were many bits set in ready_set_ after each dispatched
+          I/O and needlessly scan through them all.
+
 Fri Aug 25 09:22:11 2000  Chad Elliott  <elliott_c@ociweb.com>
 
         * include/makeinclude/platform_sunos5_sunc++.GNU
