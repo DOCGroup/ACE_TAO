@@ -542,14 +542,15 @@ ACE_Log_Msg::~ACE_Log_Msg (void)
   // this block.
   if (instance_count == 0)
     {
+      // Destroy the message queue instance.
+      if (ACE_Log_Msg_Manager::ipc_backend_ != 0)
+        ACE_Log_Msg_Manager::ipc_backend_->close ();
+
 #     if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 #       if defined (ACE_HAS_TSS_EMULATION)
           ACE_Log_Msg_Manager::close ();
 #       endif /* ACE_HAS_TSS_EMULATION */
 #     endif /* ACE_MT_SAFE */
-
-      // Destroy the message queue instance.
-      ACE_Log_Msg_Manager::ipc_backend_->close ();
 
       if (ACE_Log_Msg::program_name_)
         {
