@@ -1,5 +1,7 @@
 // $Id$
 
+#include "JAWS/JAWS.h"
+
 #include "JAWS/Concurrency.h"
 #include "JAWS/IO_Handler.h"
 #include "JAWS/Pipeline.h"
@@ -8,7 +10,38 @@
 #include "JAWS/Data_Block.h"
 
 JAWS_Concurrency_Base::JAWS_Concurrency_Base (void)
+  : mb_acquired_ (0),
+    mb_ (0)
 {
+}
+
+JAWS_Concurrency_Base::~JAWS_Concurrency_Base (void)
+{
+}
+
+ACE_Message_Block *
+JAWS_Concurrency_Base::singleton_mb (void)
+{
+  if (this->mb_acquired_ == 0)
+    {
+      ACE_Guard<ACE_Thread_Mutex> g(this->lock_);
+
+      if (this->mb_acquired_ == 0)
+        {
+          int result;
+          ACE_Message_Block *mb;
+
+          result = this->getq (mb);
+          this->mb_acquired_ = 1;
+
+          if (result == -1 || mb == 0)
+            return 0;
+
+          this->mb_ = mb;
+        }
+    }
+
+  return this->mb_;
 }
 
 int
@@ -20,29 +53,38 @@ JAWS_Concurrency_Base::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
 int
 JAWS_Concurrency_Base::svc (void)
 {
+  ACE_Message_Block *mb;         // The message queue element
+
+  JAWS_Data_Block *db;           // Contains the task list
+  JAWS_Dispatch_Policy *policy;  // Contains task policies
+  JAWS_IO_Handler *handler;      // Keeps the state of the task
+  JAWS_Pipeline_Handler *task;   // The task itself
+
+  // Thread specific message block and data block
+  JAWS_Data_Block ts_db;
+  ACE_Message_Block ts_mb (&ts_db);
+
   int result = 0;
+
+  mb = this->singleton_mb ();
+
+  if (mb == 0)
+    {
+      JAWS_TRACE ("JAWS_Concurrency_Base::svc, empty message block");
+      return -1;
+    }
 
   for (;;)
     {
-      ACE_Message_Block *mb;  // The message queue element
-
-      JAWS_Data_Block *db;           // Contains the task list
-      JAWS_Dispatch_Policy *policy;  // Contains task policies
-      JAWS_IO_Handler *handler;      // Keeps the state of the task
-      JAWS_Pipeline_Handler *task;   // The task itself
-
-      // At this point we could set a timeout value so that the
-      // threading strategy can delete a thread if there is nothing to
-      // do.  Carefully think how to implement it so you don't leave
-      // yourself with 0 threads.
-      result = this->getq (mb);
-
-      // Use a NULL message block to indicate that the thread should shut
+      // A NULL data block indicates that the thread should shut
       // itself down
-      if (result == -1 || mb == 0)
-        break;
-
       db = ACE_dynamic_cast (JAWS_Data_Block *, mb->data_block ());
+      if (db == 0)
+        {
+          JAWS_TRACE ("JAWS_Concurrency_Base::svc, empty data block");
+          break;
+        }
+
       policy = db->policy ();
 
       // Each time we iterate, we create a handler to maintain
@@ -56,10 +98,6 @@ JAWS_Concurrency_Base::svc (void)
 
       // Set the initial task in the handler
       handler->task (db->task ());
-
-      // Thread specific message block
-      JAWS_Data_Block ts_db;
-      ACE_Message_Block ts_mb (&ts_db);
 
       ts_db.task (db->task ());
       ts_db.policy  (db->policy ());
@@ -79,7 +117,7 @@ JAWS_Concurrency_Base::svc (void)
 
           if (result == 1)
             {
-              ACE_TRACE (("%p\n", "JAWS_Concurrency_Base::svc, waiting"));
+              JAWS_TRACE ("JAWS_Concurrency_Base::svc, waiting");
               // need to wait for an asynchronous event
               // I don't know how to do this yet, so pretend it's
               // an error
@@ -93,6 +131,7 @@ JAWS_Concurrency_Base::svc (void)
           if (result == -1)
             {
               // definately something wrong.
+              JAWS_TRACE ("JAWS_Concurrency_Base::svc, negative result");
               ACE_ERROR ((LM_ERROR, "%p\n", "JAWS_Concurrency_Base::svc"));
               break;
             }
@@ -102,6 +141,8 @@ JAWS_Concurrency_Base::svc (void)
 
       policy->ioh_factory ()->destroy_io_handler (handler);
     }
+
+  JAWS_TRACE ("JAWS_Concurrency_Base::svc, shutting down");
 
   return 0;
 }
