@@ -1,3 +1,9 @@
+Wed Aug 15 12:06:20 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_State.cpp:
+	* tao/GIOP_Message_State.h: Cosmetic changes to the debug
+	  statements and comments.
+
 Wed Aug 15 11:35:18 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Transport.cpp: Added a debugging statement that is going to

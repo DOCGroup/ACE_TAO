@@ -17,8 +17,9 @@ ACE_RCSID(tao, GIOP_Message_State, "$Id$")
 
 TAO_GIOP_Message_State::TAO_GIOP_Message_State (
     TAO_ORB_Core * /*orb_core*/,
-    TAO_GIOP_Message_Base * /*base*/)
-  : giop_version_ (TAO_DEF_GIOP_MAJOR,
+    TAO_GIOP_Message_Base *base)
+  : base_ (base),
+    giop_version_ (TAO_DEF_GIOP_MAJOR,
                    TAO_DEF_GIOP_MINOR),
     byte_order_ (0),
     message_type_ (0),
@@ -82,7 +83,8 @@ TAO_GIOP_Message_State::parse_message_header_i (ACE_Message_Block &incoming)
           if (TAO_debug_level > 0)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) Error Message recd. \n")));
+                          "TAO (%P|%t) -"
+                          "GIOP_MESSAGE_ERROR received \n"));
             }
           return 0;
         }
@@ -90,17 +92,16 @@ TAO_GIOP_Message_State::parse_message_header_i (ACE_Message_Block &incoming)
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%P|%t) Message with size 0 recd.. \n")));
+                        "TAO (%P|%t) - "
+                        "Message of  size zero recd. \n"));
           return -1;
         }
     }
 
   if (this->more_fragments_)
     {
-      // Parse the
-      /*int retval = */
-      this->parse_fragment_header (buf,
-                                   incoming.length ());
+      (void) this->parse_fragment_header (buf,
+                                          incoming.length ());
     }
 
   return 0;
@@ -120,7 +121,7 @@ TAO_GIOP_Message_State::parse_magic_bytes (char *buf)
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) bad header, "
+                    ACE_TEXT ("TAO (%P|%t) - bad header, "
                               "magic word [%2.2x,%2.2x,%2.2x,%2.2x]\n"),
                     buf[0],
                     buf[1],
@@ -137,7 +138,7 @@ TAO_GIOP_Message_State::get_version_info (char *buf)
 {
   if (TAO_debug_level > 8)
     {
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Getting version info.. \n"));
+      ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - Getting version info.. \n"));
     }
 
   // We have a GIOP message on hand. Get its revision numbers
@@ -154,7 +155,7 @@ TAO_GIOP_Message_State::get_version_info (char *buf)
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t|%N|%l) bad version <%d.%d>\n"),
+                      ACE_TEXT ("TAO (%P|%t) - bad version <%d.%d>\n"),
                       incoming_major, incoming_minor));
         }
 
@@ -173,7 +174,7 @@ TAO_GIOP_Message_State::get_byte_order_info (char *buf)
 {
   if (TAO_debug_level > 8)
     {
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Getting byte order info.. \n"));
+      ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) -  Getting byte order info.. \n"));
     }
 
     // Let us be specific that this is for 1.0
@@ -188,7 +189,7 @@ TAO_GIOP_Message_State::get_byte_order_info (char *buf)
         {
           if (TAO_debug_level > 2)
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("TAO (%P|%t) invalid byte order <%d>")
+                        ACE_TEXT ("TAO (%P|%t) - invalid byte order <%d>")
                         ACE_TEXT (" for version <1.0>\n"),
                         this->byte_order_));
           return -1;
@@ -208,7 +209,7 @@ TAO_GIOP_Message_State::get_byte_order_info (char *buf)
         {
           if (TAO_debug_level > 2)
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) invalid flags for <%d>")
+                      ACE_TEXT ("TAO (%P|%t) - invalid flags for <%d>")
                       ACE_TEXT (" for version <%d %d> \n"),
                       buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET],
                       this->giop_version_.major,
