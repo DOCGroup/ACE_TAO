@@ -51,6 +51,12 @@ public:
   virtual void *calloc (size_t nbytes, char initial_value = '\0') = 0;
   // Allocate <nbytes>, giving them <initial_value>.
 
+  virtual void *calloc (size_t n_elem,
+                        size_t elem_size,
+                        char initial_value = '\0') = 0;
+  // Allocate <n_elem> each of size <elem_size>, giving them
+  // <initial_value>.
+
   virtual void free (void *ptr) = 0;
   // Free <ptr> (must have been allocated by <ACE_Allocator::malloc>).
 

@@ -73,6 +73,7 @@ class ACE_Export ACE_New_Allocator : public ACE_Allocator
 public:
   virtual void *malloc (size_t nbytes);
   virtual void *calloc (size_t nbytes, char initial_value = '\0');
+  virtual void *calloc (size_t n_elem, size_t elem_size, char initial_value = '\0');
   virtual void free (void *ptr);
   virtual int remove (void);
   virtual int bind (const char *name, void *pointer, int duplicates = 0);
@@ -114,6 +115,7 @@ public:
   ACE_Static_Allocator_Base (char *buffer, size_t size);
   virtual void *malloc (size_t nbytes);
   virtual void *calloc (size_t nbytes, char initial_value = '\0');
+  virtual void *calloc (size_t n_elem, size_t elem_size, char initial_value = '\0');
   virtual void free (void *ptr);
   virtual int remove (void);
   virtual int bind (const char *name, void *pointer, int duplicates = 0);

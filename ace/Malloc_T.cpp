@@ -436,7 +436,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::malloc (size_t nbytes)
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> void *
 ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::calloc (size_t nbytes,
-                                                      char initial_value)
+                                                        char initial_value)
 {
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::calloc");
   void *ptr = this->malloc (nbytes);
@@ -445,6 +445,16 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::calloc (size_t nbytes,
     ACE_OS::memset (ptr, initial_value, nbytes);
 
   return ptr;
+}
+
+template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> void *
+ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::calloc (size_t n_elem,
+                                                        size_t elem_size,
+                                                        char initial_value)
+{
+  ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::calloc");
+
+  return this->calloc (n_elem * elem_size, initial_value);
 }
 
 // Put block AP in the free list (must be called with locks held!)

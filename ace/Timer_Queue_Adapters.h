@@ -113,7 +113,7 @@ public:
   // Creates the timer queue.  Activation of the task is the user's
   // responsibility.
 
-  long schedule (ACE_Event_Handler* handler,
+  long schedule (ACE_Event_Handler *handler,
                  const void *act,
                  const ACE_Time_Value &delay,
                  const ACE_Time_Value &interval = ACE_Time_Value::zero);
