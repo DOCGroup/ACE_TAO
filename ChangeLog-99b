@@ -1,3 +1,15 @@
+Sat Mar 20 15:51:14 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* configure.in:
+	  Added tests for: ACE_HAS_BROKEN_NAMESPACES
+	                   ACE_HAS_BROKEN_CONVERSIONS
+	                   ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS
+	                   ACE_HAS_PTHREAD_CONDATTR_SETKIND_NP
+	                   ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP
+	                   ACE_HAS_PTHREAD_PROCESS_ENUM
+	
+	  Added some minor updates and corrections.
+
 Sat Mar 20 09:06:10 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Map_Manager_Test.cpp: changed index () to slot_index ()

@@ -1369,7 +1369,7 @@ dnl TODO: Double check the above comment.
 AC_CHECK_HEADER(cstring, dnl
   AC_DEFINE(ACE_HAS_GNU_CSTRING_H),)
 
-AC_CHECK_HEADER(auto_ptr,,) dnl
+AC_CHECK_HEADER(memory,,) dnl
 
 AC_CHECK_HEADER(map, dnl
 [
@@ -1428,7 +1428,7 @@ AC_CHECK_HEADER(queue, dnl
 ],)
 
 dnl Check for availablity of "new style" C++ stream headers
-AC_CHECK_HEADERS(iomanip ios iostream istream ostream fstream streambuf,
+AC_CHECK_HEADERS(iomanip ios iostream istream ostream fstream streambuf, dnl
   ,
   AC_DEFINE(ACE_USES_OLD_IOSTREAMS))
 
@@ -2276,7 +2276,59 @@ class Derived
                   ])
   ], AC_DEFINE(ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR),)
 
-dnl Checkfor C++ "using" keyword support
+dnl Check for working C++ conversions
+ACE_CACHE_CHECK(for working C++ conversions,
+  ace_cv_feature_cxx_working_conversions,
+  [
+   AC_TRY_COMPILE([
+                   template <class T>
+                   class Foo
+                   {
+                    public:
+                      Foo (void) { ace_ptr = 0; }
+                      operator T * (void) { return ace_ptr; }
+
+                    private:
+                      T * ace_ptr;
+                   };
+                  ],
+                  [
+                   Foo<char> Bar;
+
+                   Foo<char> * Bar_ptr = &Bar;
+
+                   char * p = Bar_ptr->operator char * ();
+                  ],
+                  [
+                   ace_cv_feature_cxx_working_conversions=yes
+                  ],
+                  [
+                   ace_cv_feature_cxx_working_conversions=no
+                  ])
+  ], , AC_DEFINE(ACE_HAS_BROKEN_CONVERSIONS))
+
+dnl Check for C++ namespace support
+ACE_CACHE_CHECK(for C++ namespace support,
+  ace_cv_feature_cxx_namespaces,
+  [
+   AC_TRY_COMPILE([
+                   namespace ACE
+                   {
+                     int x;
+                   }
+                  ],
+                  [
+                   ACE::x = 0;
+                  ],
+                  [
+                   ace_cv_feature_cxx_namespaces=yes
+                  ],
+                  [
+                   ace_cv_feature_cxx_namespaces=no
+                  ])
+  ], , AC_DEFINE(ACE_HAS_BROKEN_NAMESPACES))
+
+dnl Check for C++ "using" keyword support
 ACE_CACHE_CHECK(for C++ \"using\" keyword support,
   ace_cv_feature_cxx_using_keyword,
   [
@@ -2401,6 +2453,25 @@ ACE_CACHE_CHECK(for ANSI C++ cast support,
      AC_DEFINE(ACE_LACKS_RTTI)
    fi
   ],)
+
+dnl Check if const char * can be rvalue in conditional operator
+ACE_CACHE_CHECK(if const char * can be rvalue in conditional operator,
+  ace_cv_feature_conditional_str_cast,
+  [
+   AC_TRY_COMPILE(,
+                  [
+                   const char * foo = 0;
+                   const char * bar = 0;
+
+                   const char * ace = ((1 < 2) ? foo : bar);
+                  ],
+                  [
+                   ace_cv_feature_conditional_str_cast=yes
+                  ],
+                  [
+                   ace_cv_feature_conditional_str_cast=no
+                  ])
+  ], , AC_DEFINE(ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS))
 
 dnl Check if platform supports explicit template instantiation
 ACE_CACHE_CHECK(if platform supports explicit template instantiation,
@@ -2669,11 +2740,11 @@ dnl   [
 dnl   ],)
 
 dnl Check whether platform supports the standard C++ library
-dnl TODO: For now, check whether headers <new> and <iomanip>
-dnl       and <auto_ptr> exist; is there a better way?
+dnl TODO: For now, check whether headers <new>, <iomanip>
+dnl       and <memory> exist; is there a better way?
 if test "$ac_cv_header_new" = yes &&
    test "$ac_cv_header_iomanip" = yes &&
-   test "$ac_cv_header_auto_ptr" = yes; then
+   test "$ac_cv_header_memory" = yes; then
   AC_DEFINE(ACE_HAS_STANDARD_CPP_LIBRARY)
 fi
 
@@ -3183,6 +3254,12 @@ dnl name.
     AC_DEFINE(ACE_HAS_THREAD_SPECIFIC_STORAGE),
     AC_DEFINE(ACE_HAS_TSS_EMULATION))
 
+  AC_CHECK_FUNC(pthread_condattr_setkind_np, dnl
+    AC_DEFINE(ACE_HAS_PTHREAD_CONDATTR_SETKIND_NP),)
+
+  AC_CHECK_FUNC(pthread_mutexattr_setkind_np, dnl
+    AC_DEFINE(ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP),)
+
   AC_CHECK_FUNC(pthread_condattr_setpshared, dnl
     ,
     AC_DEFINE(ACE_LACKS_CONDATTR_PSHARED))
@@ -3257,15 +3334,37 @@ dnl We already check for this during the library checks
 
 dnl Check if platform has thread_self() rather than pthread_self()
   ACE_CHECK_FUNC(pthread_self, pthread.h, dnl
-                ,
-                [
-                 AC_CHECK_FUNC(thread_self,
-                   [
-                    AC_DEFINE(ACE_HAS_THREAD_SELF)
-                   ],)
-                ])
+                 ,
+                 [
+                  AC_CHECK_FUNC(thread_self,
+                    [
+                     AC_DEFINE(ACE_HAS_THREAD_SELF)
+                    ],)
+                 ])
 
-
+dnl Check if pthread.h declares an enum with PTHREAD_PROCESS_PRIVATE and
+dnl PTHREAD_PROCESS_SHARED values
+  ACE_CACHE_CHECK(for PTHREAD_PROCESS_* values in <pthread.h>, dnl
+                  ace_cv_lib_pthread_process_enum,
+                  [
+                   AC_TRY_COMPILE(
+                     [
+#include <pthread.h>
+                     ],
+                     [
+int foo = PTHREAD_PROCESS_SHARED;
+                     ],
+                     [
+                      ace_cv_lib_pthread_process_enum=yes
+                     ],
+                     [
+                      ace_cv_lib_pthread_process_enum=no
+                     ])
+                  ],
+                  [
+                   AC_DEFINE(ACE_HAS_PTHREAD_PROCESS_ENUM)
+                  ],)
+                  
 dnl FIXME: These tests look sloppy to me.  -Ossama
   AC_CACHE_CHECK(if platform defines a minimum thread priority,
     ace_cv_lib_pthread_pthread_min_priority,[
