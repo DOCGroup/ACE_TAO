@@ -295,7 +295,11 @@ public:
   // "Do-nothing" Condition type.
 };
 #else /* Necessary to support broken cfront-based C++ compilers... */
+#if defined (ACE_LACKS_COND_T)
+#define ACE_NULL_SYNCH ACE_Null_Mutex, ACE_Null_Mutex,
+#else
 #define ACE_NULL_SYNCH ACE_Null_Mutex, ACE_Null_Condition_Mutex
+#endif /* ACE_LACKS_COND_T */
 #endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
 
 template <class ACE_LOCK>
@@ -732,7 +736,11 @@ public:
 #define ACE_SYNCH_NULL_SEMAPHORE ACE_MT_SYNCH::NULL_SEMAPHORE
 #define ACE_SYNCH_SEMAPHORE ACE_MT_SYNCH::SEMAPHORE
 #else /* Necessary to support broken cfront-based C++ compilers... */
+#if defined (ACE_LACKS_COND_T)
+#define ACE_MT_SYNCH ACE_Thread_Mutex, ACE_Thread_Semaphore
+#else
 #define ACE_MT_SYNCH ACE_Thread_Mutex, ACE_Condition_Thread_Mutex
+#endif /* ACE_LACKS_COND_T */
 #define ACE_SYNCH_MUTEX ACE_Thread_Mutex
 #define ACE_SYNCH_NULL_MUTEX  ACE_Null_Mutex;
 #define ACE_SYNCH_PROCESS_MUTEX  ACE_Process_Mutex;
