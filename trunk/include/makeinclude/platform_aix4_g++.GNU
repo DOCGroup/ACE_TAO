@@ -34,10 +34,11 @@ endif
 # grab it here and pass it all to the compiler as well.
 AIX_MAJOR_VERS := $(shell uname -v)
 AIX_MINOR_VERS := $(shell uname -r)
+AIX_VERS := $(AIX_MAJOR_VERS)0$(AIX_MINOR_VERS)
 
 CC             = gcc
 CXX            = g++
-CFLAGS         += -W -Wall -pipe -mcpu=common -DACE_AIX_MAJOR_VERS=$(AIX_MAJOR_VERS) -DACE_AIX_MINOR_VERS=$(AIX_MINOR_VERS)
+CFLAGS         += -W -Wall -pipe -mcpu=common -DACE_AIX_VERS=$(AIX_VERS)
 CCFLAGS        += $(CFLAGS) -fno-implicit-templates
 DCFLAGS        += -g
 DLD             = $(CXX)
