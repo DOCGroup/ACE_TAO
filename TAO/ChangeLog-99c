@@ -1,8 +1,29 @@
+Tue Sep 21 11:53:36 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* Added the following changes from Christopher Kohlhoff 
+	  <chris@kohlhoff.com>:
+  
+          examples/Borland/Broadcaster.idl: Chat example IDL file must be
+ 	  changed to prevent the TAO_IDL compiler error about identifiers
+ 	  differing only in case.
+  
+          orbsvcs/orbsvcs/Makefile.bor: AVStreams support has been removed
+ 	  from the orbsvcs library.
+
+	  tests/Connection_Purging: Makefile.bor,
+	  tests/DynAny_Test: Makefile.bor,
+	  tests/IDL_Test: Makefile.bor:
+	  New Borland Makefiles for building TAO tests
+  
+          tests/Param_Test/results.cpp: A division-by-zero floating point
+ 	  exception sometimes occurred when the tests ran too fast for the
+ 	  system time resolution.
+	
 Mon Sep 21 09:20:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 	
 	* TAO_IDL/be/be_visitor_factory.cpp:
-	  Removed some AMI visitors for interpretive marshaling because
-	  we do not support interpretive marshaling for AMI anyway. 
+	  Removed some AMI visitors for interpretive marshaling because we
+ 	  do not support interpretive marshaling for AMI anyway.
 
 	* TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
 	  Fixed some code generation problem with the ACE_NESTED_CLASS

@@ -1,5 +1,5 @@
 // $Id$
-//
+
 // ============================================================================
 //
 // = LIBRARY
@@ -419,7 +419,7 @@ STDIN_Handler::STDIN_Handler (MT_TASK &ph)
   // Registering this signal handler just tells the kernel that we
   // know what we're doing; to leave us alone.
 
-  ACE_OS::signal (SIGINT, ACE_SignalHandler (STDIN_Handler::handler));
+  ACE_OS::signal (SIGINT, (ACE_SignalHandler) STDIN_Handler::handler);
 };
 
 // Activate object.

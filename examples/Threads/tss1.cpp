@@ -31,14 +31,6 @@ ACE_RCSID(Threads, tss1, "$Id$")
 
 #include "thread_specific.h"
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_TSS<Errno>;
-template class Tester<ACE_MT_SYNCH>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_TSS<Errno>
-#pragma instantiate Tester<ACE_MT_SYNCH>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 // (Sun C++ 4.2 with -O3 won't link if the following is not const.)
 static const int iterations = 100;
 
@@ -115,6 +107,14 @@ int Tester<ACE_SYNCH_USE>::close (u_long)
   close_started = 0;
   return 0;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_TSS<Errno>;
+template class Tester<ACE_MT_SYNCH>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_TSS<Errno>
+#pragma instantiate Tester<ACE_MT_SYNCH>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 int
 main (int, char *[])
