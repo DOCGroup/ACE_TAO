@@ -1,3 +1,34 @@
+Thu Nov 11 09:04:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Active_Object_Map.{cpp,h,i}:
+        * tao/PortableServer/Collocated_Object_Proxy_Broker.cpp
+        * tao/PortableServer/Object_Adapter.cpp
+        * tao/PortableServer/POA.cpp
+        * tao/PortableServer/Servant_Upcall.{cpp,h,inl}:
+        * tao/PortableServer/ServantRetentionStrategy.h:
+        * tao/PortableServer/ServantRetentionStrategyNonRetain.{h,cpp}:
+        * tao/PortableServer/ServantRetentionStrategyRetain.{h,cpp}:
+          Moved the struct Map_Entry outside the TAO_Active_Object_Map and
+          called it TAO_Active_Object_Map_Entry. This way we can just use a
+          forward declaration in the strategy interfaces and don't need to
+          include the Active Object Map on so many places. This reduces the
+          number of includes and reduces compile time
+
+Thu Nov 11 08:27:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/IdUniquenessStrategy*.{h,cpp};
+          Added allow_multiple_activations() that can be used from other
+          places
+
+        * tao/PortableServer/ServantRetentionStrategy*.{h,cpp}:
+          Removed get_aom(), added servant_has_remaining_activations() which
+          can then be used by the request processing strategy. With these
+          changes no other strategies need to have the active object map
+
+        * tao/PortableServer/RequesProcessingStrategy*.{h,cpp}:
+          Removed the aom from the strategy_init call, use the servant
+          retention strategy instead of the aom.
+
 Wed Nov 10 20:20:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/RequestProcessingStrategyServantActivator.{h,cpp}:
