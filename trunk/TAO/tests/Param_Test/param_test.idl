@@ -68,6 +68,26 @@ interface Param_Test
                       out StrSeq s3);
 
 
+  // variable structures
+  struct Var_Struct
+  {
+    StrSeq seq; // this field makes the structure variable
+  };
+
+  Var_Struct test_var_struct (in Var_Struct s1,
+                              inout Var_Struct s2,
+                              out Var_Struct s3);
+
+  // nested structs (We reuse the var_struct defn above to make a very
+  // complicated nested structure)
+  struct Nested_Struct
+  {
+    Var_Struct vs;
+  };
+
+  Nested_Struct test_nested_struct (in Nested_Struct s1,
+                                    inout Nested_Struct s2,
+                                    out Nested_Struct s3);
   /*
   // object references
   Coffee make_coffee (); // make a Coffee object
@@ -99,20 +119,6 @@ interface Param_Test
                          inout MYSTRING s2,
                          out MYSTRING s3);
 
-
-  // structures (variable)
-  struct var_struct
-  {
-    Coffee o;
-    string s;
-    sequence<octet> ObjectKey;
-    sequence<octet> bogus;
-  };
-  var_struct test_vstruct (in var_struct s1,
-                           inout var_struct s2,
-                           out var_struct s3);
-
-  // nested structs (we use a combination of fixed and var sized)
 
   // arrays (fixed)
 

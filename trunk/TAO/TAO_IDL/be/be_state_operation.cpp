@@ -473,6 +473,7 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
           break;
           case TAO_CodeGen::TAO_OPERATION_RETVAL_RETURN_CS:
             {
+#if 0
               be_sequence *seq = be_sequence::narrow_from_decl (type);
               // init_mgr method for managed types
               switch (seq->managed_type ())
@@ -484,6 +485,7 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
                 default:
                   break;
                 }
+#endif
               // if we are sequence, call init manager
               *os << "return retval;" << nl;
             }

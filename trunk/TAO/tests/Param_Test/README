@@ -1,3 +1,4 @@
+
 // $Id$
 
 // ============================================================================
@@ -52,3 +53,5 @@ To run the client, type
        short                for shorts
        ubstring             for unbounded string
        fixed_struct         for fixed sized structs
+       var_struct           for variable structs
+       nested_struct        for nested structs

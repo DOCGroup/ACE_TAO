@@ -80,6 +80,10 @@ Options::parse_args (int argc, char **argv)
           this->test_type_ = Options::TEST_FIXED_STRUCT;
         else if (!ACE_OS::strcmp (get_opts.optarg, "strseq"))
           this->test_type_ = Options::TEST_STRING_SEQUENCE;
+        else if (!ACE_OS::strcmp (get_opts.optarg, "var_struct"))
+          this->test_type_ = Options::TEST_VAR_STRUCT;
+        else if (!ACE_OS::strcmp (get_opts.optarg, "nested_struct"))
+          this->test_type_ = Options::TEST_NESTED_STRUCT;
         break;
       case '?':
       default:

@@ -94,3 +94,45 @@ Param_Test_i::test_strseq (const Param_Test::StrSeq &s1,
   s3 = out;
   return ret;
 }
+
+// test for variable structs
+Param_Test::Var_Struct *
+Param_Test_i::test_var_struct (const Param_Test::Var_Struct &s1,
+                             Param_Test::Var_Struct &s2,
+                             Param_Test::Var_Struct_out s3,
+                             CORBA::Environment &env)
+{
+  // we copy the "in" sequences into all the inout, out and return sequences.
+
+  Param_Test::Var_Struct
+    *ret = new Param_Test::Var_Struct,
+    *out = new Param_Test::Var_Struct;
+
+  // now copy all elements of s1 into the others
+  s2 = s1;
+  *out = s1;
+  *ret = s1;
+  s3 = out;
+  return ret;
+}
+
+// test for nested structs
+Param_Test::Nested_Struct *
+Param_Test_i::test_nested_struct (const Param_Test::Nested_Struct &s1,
+                                  Param_Test::Nested_Struct &s2,
+                                  Param_Test::Nested_Struct_out s3,
+                                  CORBA::Environment &env)
+{
+  // we copy the "in" sequences into all the inout, out and return sequences.
+
+  Param_Test::Nested_Struct
+    *ret = new Param_Test::Nested_Struct,
+    *out = new Param_Test::Nested_Struct;
+
+  // now copy all elements of s1 into the others
+  s2 = s1;
+  *out = s1;
+  *ret = s1;
+  s3 = out;
+  return ret;
+}
