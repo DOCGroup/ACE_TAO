@@ -940,19 +940,12 @@ CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
 
   TAO_Stub *stub = 0;
 
-  // First we create a profile list, well actually a list of one!
-  // @@ should go to the acceptor for this, the orb delegates to the acceptor
-  // to create Profiles!
-  TAO_MProfile mp (1);
+  // First we create a profile list, well actually the empty container
+  TAO_MProfile mp (0);
 
   TAO_ORB_Parameters *orb_params =
     this->orb_core_->orb_params ();
 
-  // @@ Ug, broken.  Again, we need to go to the acceptor registry
-  //    (when we got one) for this!!! [fredk]
-  // @@ Fred&Ossama: You guys have one now ;-)  I still believe that
-  //    the right way to do this is something along these lines:
-  //
   // size_t pfile_count =
   //     this->orb_core_->acceptor_registry ()->count_profiles ();
   // {
@@ -969,8 +962,6 @@ CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
   //       mp.give_profile (new Right_Endpoint (e, key));
   //   }
   // }
-  //
-  //    What do you think?
 
   TAO_IIOP_Profile *pfile;
   ACE_NEW_THROW_EX (pfile,

@@ -63,9 +63,10 @@ public:
   int open (TAO_ORB_Core *orb_core, ACE_CString &address);
   // initialize acceptor for this address.
 
-  virtual TAO_Profile *create_profile (TAO_ObjectKey& object_key);
-  // create profile object for this Acceptor using the SAP
-  // (service access point, Host and Port) and object_key.
+  int create_mprofile (const TAO_ObjectKey &object_key,
+                      TAO_MProfile  *&mprofile);
+  // create profile objects for this Acceptor using the SAP
+  // (service access point) and object_key.
 
   // = See TAO_Acceptor
   virtual int is_collocated (const TAO_Profile*);

@@ -286,16 +286,9 @@ public:
 
   TAO_Acceptor (CORBA::ULong tag);
 
-  virtual TAO_Profile *create_profile (TAO_ObjectKey &object_key) = 0;
+  virtual int create_mprofile (const TAO_ObjectKey &object_key,
+                               TAO_MProfile  *&mprofile) = 0;
   // Create the corresponding profile for this endpoint.
-  // @@ Fred: that <object_key> should be const.
-  // @@ Fred: we haven't thought about acceptors that service more
-  //    than one endpoint (for example: listening on sap_any). Maybe a
-  //    better interface is:
-  //    virtual int add_profiles (const TAO_ObjectKey& key,
-  //                              TAO_MProfile& mprofile) const = 0;
-  //    // Add the profiles serviced by this acceptor to the
-  //    // <mprofile> list. Use <key> to fill in the profiles.
 
   virtual int open (TAO_ORB_Core *orb_core, ACE_CString &address) = 0;
   // method to initialize acceptor for address.
@@ -308,6 +301,11 @@ public:
 
   CORBA::ULong tag (void) const;
   // The tag, each concrete class will have a specific tag value.
+
+  CORBA::ULong endpoint_count (void);
+  // returns the number of endpoints this acceptor is listening on.  This
+  // is used for determining how many profiles will be generated
+  // for this acceptor.
 
   virtual ~TAO_Acceptor (void);
   // Destructor

@@ -39,9 +39,33 @@ TAO_UIOP_Acceptor::TAO_UIOP_Acceptor (void)
 }
 
 TAO_Profile *
-TAO_UIOP_Acceptor::create_profile (TAO_ObjectKey &)
+TAO_UIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
+                                    TAO_MProfile  *&mprofile) 
 {
+  ACE_UNIX_Addr new_address;
+
+  if (base_acceptor_.acceptor ().get_local_addr (new_address) == -1)
+    return 0;
+
+  // we only make one
+  int count = mprofile->profile_count ();
+  if ((mprofile->size () - count) < 1)
+    {
+      if (mprofile->grow (count + 1) == -1)
+        return -1;
+    }
+
+  TAO_UIOP_Profile pfile;
+  ACE_NEW_RETURN (pfile
+                  TAO_UIOP_Profile (new_address, object_key),
+                  -1);
+
+  if (mprofile->give_profile (pfile) == -1)
+    return -1;
+
   return 0;
+}
+
 }
 
 int
