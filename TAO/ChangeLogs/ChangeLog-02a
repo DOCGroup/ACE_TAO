@@ -1,3 +1,10 @@
+Tue Nov 21 09:40:51 2000  Ossama Othman  <ossama@uci.edu>
+
+	* docs/releasenotes/index.html:
+
+	  Updated the Security Service release notes with information
+	  about the new SSLIOP features.
+
 Tue Nov 21 10:41:11 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/GIOP_Message_Accept_State.cpp: We align the write pointers
@@ -20,8 +27,8 @@ Tue Nov 21 10:10:07 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* TAO_IDL/be_include/be_interface.h:
 
-	  Removed typo (i.e.  ",") from the last element of the enum that defines
-	  the collocation strategy.
+	  Removed typo (i.e.  ",") from the last element of the enum that
+	  defines the collocation strategy.
 
 Tue Nov 21 07:32:28 2000  Chris Kohlhoff  <chris@kohlhoff.com>
 

@@ -1672,6 +1672,21 @@ Implemented Features:
   <LI>
     IIOP over SSL integration via TAO's
     <A HREF="http://doc.ece.uci.edu/TAO/Security/SSLIOP.html">SSLIOP pluggable protocol</A>.
+    <UL>
+      <LI>
+        Added an <CODE>SSLIOP::Current</CODE> implementation that can
+        be used to obtain the SSL session state for the current
+        execution context.  This is useful for obtaining the SSL peer
+        certificate chain associated with the current request, for
+        example.
+      </LI>
+      <LI>
+        TAO's SSLIOP pluggable protocol now registers a secure
+        invocation server request interceptor.  It enforces secure
+        invocation by rejecting requests coming in on the insecure
+        port if the server is configured to do so (default behavior).
+      </LI>
+    </UL>
   </LI>
 </UL>
 
@@ -1686,7 +1701,11 @@ Current Status:
 Schedule:
 <UL>
   <LI>
-    Security Level 1 completion by Winter 2000.
+    Provisions for finer-grained, i.e. per-object, secure invocation
+    enforcement are slated for TAO 1.1.12.
+  </LI>
+  <LI>
+    Security Level 1 completion by February 2001.
   </LI>
   <LI>
     Security Level 2 completion by <FONT COLOR=RED><STRONG>TBD</STRONG></FONT>.
