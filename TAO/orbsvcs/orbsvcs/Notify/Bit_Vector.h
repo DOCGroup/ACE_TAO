@@ -21,7 +21,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "notify_export.h"
+#include "notify_serv_export.h"
 
 #include "ace/Vector_T.h"
 #include "ace/Basic_Types.h"
@@ -33,7 +33,7 @@ namespace TAO_NOTIFY
 ///
 /// Written to support block allocation from persistent storage.
 /// Should be promoted to the ACE level to make it generally usable.
-class TAO_Notify_Export Bit_Vector
+class TAO_Notify_Serv_Export Bit_Vector
 {
   typedef ACE_UINT32 BASIC_UINT_TYPE;
   typedef ACE_Vector<BASIC_UINT_TYPE> VECTOR_TYPE;

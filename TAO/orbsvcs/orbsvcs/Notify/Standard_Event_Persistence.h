@@ -33,7 +33,7 @@ static const ACE_UINT32 ROUTING_SLIP_ROOT_BLOCK_NUMBER = 0;
 static const ACE_UINT64 ROUTING_SLIP_ROOT_SERIAL_NUMBER = 1;
 
 /// \brief Standard (i.e. default) implementation of Event_Persistence_Factory interface
-class TAO_Notify_Export Standard_Event_Persistence_Factory :
+class TAO_Notify_Serv_Export Standard_Event_Persistence_Factory :
   public Event_Persistence_Factory
 {
 public:
@@ -95,7 +95,7 @@ private:
 
 /// \brief The standard implementation of the
 /// Event_Persistence_Strategy interface.
-class TAO_Notify_Export Standard_Event_Persistence :
+class TAO_Notify_Serv_Export Standard_Event_Persistence :
   public Event_Persistence_Strategy
 {
 public :

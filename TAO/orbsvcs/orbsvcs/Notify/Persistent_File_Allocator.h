@@ -7,8 +7,8 @@
  *  $Id$
  *
  *  A Persistent_File_Allocator manages a free list and allocates and
- *  deallocates blocks from a Persistent_File.  There should be only one
- *  Persistent_File_Allocator for each Persistent_File.
+ *  deallocates blocks from a Random_File.  There should be only one
+ *  Persistent_File_Allocator for each Random_File.
  *
  *  @author Jonathan Pollack <pollack_j@ociweb.com>
  */
@@ -23,8 +23,8 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "notify_export.h"
-#include "Persistent_File.h"
+#include "notify_serv_export.h"
+#include "Random_File.h"
 #include "Bit_Vector.h"
 #include "ace/Containers_T.h"
 #include "ace/Unbounded_Queue.h"
@@ -36,7 +36,7 @@ namespace TAO_NOTIFY
 
 /// \brief An interface to allow callbacks on completion of persistent storage
 /// requests.
-class TAO_Notify_Export Persistent_Callback
+class TAO_Notify_Serv_Export Persistent_Callback
 {
 public:
   /// \brief Called by a Persistent_File_Allocator when a write request has
@@ -51,7 +51,7 @@ public:
  * positioning information, synchronization information, and a pointer
  * to a callback.
  */
-class TAO_Notify_Export Persistent_Storage_Block
+class TAO_Notify_Serv_Export Persistent_Storage_Block
 {
 public:
   /// The constructor.  Initializes the callback to NULL.
@@ -118,10 +118,10 @@ private:
  *
  * Maintains a free list, write queue, allocations of new
  * blocks, reads, and writes.  This class also manages a thread that performs
- * background updating of a Persistent_File.
+ * background updating of a Random_File.
  * @@todo this is too much for one class to do.  It should be refactored.
  */
-class TAO_Notify_Export Persistent_File_Allocator
+class TAO_Notify_Serv_Export Persistent_File_Allocator
 {
 public:
   /// The constructor.
@@ -164,7 +164,7 @@ public:
   /// \brief Write this block to the file,
   ///
   /// Add the Persistent_Storage_Block to our write queue and let the
-  /// worker thread handle writing this to the Persistent_File.
+  /// worker thread handle writing this to the Random_File.
   bool write(Persistent_Storage_Block* psb);
 
   /// for information (unit test) only.
@@ -186,7 +186,7 @@ private:
 
 private:
   ACE_Thread_Manager thread_manager_;
-  Persistent_File pstore_;
+  Random_File pstore_;
   Bit_Vector free_blocks_;
   ACE_Unbounded_Queue<Persistent_Storage_Block*> block_queue_;
   ACE_SYNCH_MUTEX lock_;

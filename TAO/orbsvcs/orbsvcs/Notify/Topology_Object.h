@@ -16,7 +16,6 @@
 
 #include "Object.h"
 #include "Name_Value_Pair.h"
-#include "Types.h"
 
 #include <tao/corba.h>
 
@@ -43,7 +42,7 @@ namespace TAO_NOTIFY
   class Topology_Parent;
 
   /// A vector of IDS.  Used as a path from the EventChannelFactory to a proxy.
-  typedef ACE_Vector <TAO_Notify_Object_Id> IdVec;
+  typedef ACE_Vector <TAO_Notify_Object::ID> IdVec;
 
   /// \brief Interface to be implemented by savable topology objects.
   class TAO_Notify_Serv_Export Topology_Savable
@@ -122,7 +121,7 @@ namespace TAO_NOTIFY
     /// A bit of a hack because id is unknown to Topology_Object
     /// the get_id returns the same thing as id -- we just need someone
     /// to find it for us.
-    virtual TAO_Notify_Object_Id get_id () const;
+    virtual TAO_Notify_Object::ID get_id () const;
 
     /// \brief Get the path of id's from the root to this object.
     void get_id_path (IdVec & id_path) const;

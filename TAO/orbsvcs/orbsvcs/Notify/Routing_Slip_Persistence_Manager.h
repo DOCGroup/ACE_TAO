@@ -23,19 +23,18 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "notify_export.h"
+#include "notify_serv_export.h"
 #include "ace/Message_Block.h"
 #include "ace/Synch_T.h"
 #include "ace/Containers_T.h"
 
 namespace TAO_NOTIFY
 {
-
 // Some forward declarations.
-class TAO_Notify_Export Standard_Event_Persistence_Factory;
-class TAO_Notify_Export Persistent_File_Allocator;
-class TAO_Notify_Export Persistent_Storage_Block;
-class TAO_Notify_Export Persistent_Callback;
+class Standard_Event_Persistence_Factory;
+class Persistent_File_Allocator;
+class Persistent_Storage_Block;
+class Persistent_Callback;
 
 /**
  * \brief Manage interaction between Routing_Slip and persistent storage.
@@ -44,7 +43,7 @@ class TAO_Notify_Export Persistent_Callback;
  * should become an interface that is implemented differently by different
  * strategies.  For now it interacts with Standard_Event_Persistence.
  */
-class TAO_Notify_Export Routing_Slip_Persistence_Manager
+class TAO_Notify_Serv_Export Routing_Slip_Persistence_Manager
 {
 public:
   /// A unique identifier for logical blocks in persistent storage.
@@ -57,8 +56,6 @@ public:
   typedef ACE_UINT16 Block_Type;
 
   /// The constructor.
-  /// We must have one allocator per Persistent_File, and it has to be
-  /// passed in here.
   Routing_Slip_Persistence_Manager(Standard_Event_Persistence_Factory* factory);
 
   /// The destructor.

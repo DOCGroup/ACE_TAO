@@ -37,7 +37,7 @@ namespace TAO_NOTIFY
    * through the queue immediately.  Setting it a good way to test how well
    * your storage device withstands continuous beating.
    */
-  class TAO_Notify_Export Routing_Slip_Queue
+  class TAO_Notify_Serv_Export Routing_Slip_Queue
   {
     typedef ACE_Unbounded_Queue <Routing_Slip_Ptr> Queue;
     typedef ACE_Guard< TAO_SYNCH_MUTEX > Guard;
