@@ -1,3 +1,10 @@
+Sun Jan 16 10:49:26 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/ARGV_Test.cpp (main): Fixed several warnings.
+
+	* ace/Process.i: Rearranged the order of the process_name() methods
+	  so they are defined before being used/inlined.
+
 Sat Jan 15 19:59:00 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace: Reran flex on Svc_Conf.y to generate the Svc_Conf_l.cpp file
