@@ -509,13 +509,12 @@ ACE_Data_Block::release_i (void)
 }
 
 ACE_Data_Block *
-ACE_Data_Block::release (ACE_Lock *lock)
+ACE_Data_Block::release_no_delete (ACE_Lock *lock)
 {
-  ACE_TRACE ("ACE_Data_Block::release");
+  ACE_TRACE ("ACE_Data_Block::release_no_delete");
 
   ACE_Data_Block *result = 0;
   ACE_Lock *lock_to_be_used = 0;
-  ACE_Allocator *allocator = this->data_block_allocator_;
 
   // Check if we were passed in a lock
   if (lock != 0)
@@ -546,6 +545,18 @@ ACE_Data_Block::release (ACE_Lock *lock)
   else
     result = this->release_i ();
 
+  return result;
+}
+
+ACE_Data_Block *
+ACE_Data_Block::release (ACE_Lock *lock)
+{
+  ACE_TRACE ("ACE_Data_Block::release");
+
+  ACE_Allocator *allocator = this->data_block_allocator_;
+
+  ACE_Data_Block *result = this->release_no_delete (lock);
+
   // We must delete this outside the scope of the locking_strategy_
   // since otherwise we'd be trying to "release" through a deleted
   // pointer!
@@ -560,7 +571,14 @@ ACE_Message_Block::release (void)
 {
   ACE_TRACE ("ACE_Message_Block::release");
 
-  ACE_Message_Block *result = 0;
+  // We want to hold the data block in a temporary variable because we
+  // invoked "delete this;" at some point, so using this->data_block_
+  // could be a bad idea.
+  ACE_Data_Block *tmp = this->data_block ();
+
+  // This flag is set to 1 when we have to destroy the data_block
+  int destroy_dblock = 0;
+
   ACE_Lock *lock = 0;
 
   // Do we have a valid data block
@@ -576,21 +594,24 @@ ACE_Message_Block::release (void)
           ACE_GUARD_RETURN (ACE_Lock, ace_mon, *lock, 0);
 
           // Call non-guarded release with <lock>
-          result = this->release_i (lock);
+          destroy_dblock = this->release_i (lock);
         }
       // This is the case when we have a valid data block but no lock
       else
         // Call non-guarded release with no lock
-        result = this->release_i (0);
+        destroy_dblock = this->release_i (0);
     }
   else
     // This is the case when we don't even have a valid data block
-    result = this->release_i (0);
+    destroy_dblock = this->release_i (0);
 
-  return result;
+  if (destroy_dblock != 0)
+    ACE_DES_FREE (tmp, tmp->data_block_allocator ()->free, ACE_Data_Block);
+
+  return 0;
 }
 
-ACE_Message_Block *
+int
 ACE_Message_Block::release_i (ACE_Lock *lock)
 {
   ACE_TRACE ("ACE_Message_Block::release_i");
@@ -607,23 +628,29 @@ ACE_Message_Block::release_i (ACE_Lock *lock)
           mb = mb->cont_;
           tmp->cont_ = 0;
 
-          tmp->release_i (lock);
+          ACE_Data_Block *db = tmp->data_block ();
+          if (tmp->release_i (lock) != 0)
+            ACE_DES_FREE (db, db->data_block_allocator ()->free, ACE_Data_Block);
         }
       while (mb);
 
       this->cont_ = 0;
     }
 
+  int result = 0;
+
   if (this->data_block ())
     {
-      this->data_block ()->release (lock);
+      if (this->data_block ()->release_no_delete (lock) == 0)
+        result = 1;
       this->data_block_ = 0;
     }
 
-  // We will now commit suicide: this object *must* have come from the heap
+  // We will now commit suicide: this object *must* have come from the
+  // heap
   delete this;
 
-  return 0;
+  return result;
 }
 
 /* static */ ACE_Message_Block *
