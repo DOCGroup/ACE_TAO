@@ -614,17 +614,17 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
   int reply_error = this->transport_->wait_for_reply ();
 
   // Do the wait loop till we receive the reply for this invocation.
-  while (reply_error != -1 && 
-         this->transport_->reply_received (this->request_id_) != 1)
-    {
-      // @@ Hack to init the Leader-Follower state, so that we can
-      //    wait again. (Alex).
-      // this->transport_->wait_strategy ()->sending_request (this->orb_core_,
-      //                                                  1);
-      
-      // Wait for reply.
-      reply_error = this->transport_->wait_for_reply ();
-    }
+  // while (reply_error != -1 && 
+  //        this->transport_->reply_received (this->request_id_) != 1)
+  //   {
+  //     // @@ Hack to init the Leader-Follower state, so that we can
+  //     //    wait again. (Alex).
+  //     // this->transport_->wait_strategy ()->sending_request (this->orb_core_,
+  //     //                                                  1);
+  //     
+  //     // Wait for reply.
+  //     reply_error = this->transport_->wait_for_reply ();
+  //   }
 
   // Check the reply error.
   if (reply_error == -1)
@@ -819,12 +819,12 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
 
   int reply_error = this->transport_->wait_for_reply ();
 
-  // Do the wait loop, till we receive the reply for this invocation. 
-  while (reply_error != -1 && 
-         this->transport_->reply_received (this->request_id_) != 1)
-    {
-      reply_error = this->transport_->wait_for_reply ();
-    }
+  //   // Do the wait loop, till we receive the reply for this invocation. 
+  //   while (reply_error != -1 && 
+  //          this->transport_->reply_received (this->request_id_) != 1)
+  //     {
+  //       reply_error = this->transport_->wait_for_reply ();
+  //     }
   
   // Check the reply error.
   if (reply_error == -1)
