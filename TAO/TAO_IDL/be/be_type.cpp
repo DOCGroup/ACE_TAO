@@ -91,9 +91,9 @@ be_type::tc_name (void)
   return this->tc_name_;
 }
 
-// return the type name using the ACE_NESTING macro
+// return the type name using the ACE_NESTED_CLASS macro
 char *
-be_type::nested_type_name (be_decl *d, char *suffix)
+be_type::nested_type_name (be_decl *use_scope, char *suffix)
 {
   // some compilers do not like generating a fully scoped name for a type that
   // was defined in the same enclosing scope in which it was defined. For such,
@@ -106,94 +106,110 @@ be_type::nested_type_name (be_decl *d, char *suffix)
   // scopes as well. If that is the case, then we can generate a fully
   // scoped name for that type, else we use the ACE_NESTED_CLASS macro
 
-  static char macro [NAMEBUFSIZE];
-  be_decl *t = 0;  // our enclosing scope
+  // thus we need some sort of relative name to be generated
 
-  // d : This is the node in whose scope we are generating a declaration
-  // t : This is our enclosing scope (if one exists)
-  //
+  static char macro [NAMEBUFSIZE];
+  be_decl *def_scope = 0;  // our defining scope
+  char // hold the fully scoped name
+    def_name [NAMEBUFSIZE],
+    use_name [NAMEBUFSIZE];
+  char // these point to the curr and next component in the scope
+    *def_curr = def_name,
+    *def_next,
+    *use_curr = use_name,
+    *use_next;
 
   ACE_OS::memset (macro, '\0', NAMEBUFSIZE);
-  if (this->is_nested ()) // if we are nested
-    {
-	  // get our enclosing scope
-	  t = be_scope::narrow_from_scope (this->defined_in ())->decl ();
+  ACE_OS::memset (def_name, '\0', NAMEBUFSIZE);
+  ACE_OS::memset (use_name, '\0', NAMEBUFSIZE);
 
-#if 0 // this may not work in all cases
-	  // now check if the scope in which we were defined is the same
-	  // as the current scope in which we are used or one of its ancestors
-	  while (d && d->node_type () != AST_Decl::NT_root) // keep moving up the
-                                                        // chain
-		{
-		  // now we need to make sure that "t" is not the same as "d" i.e., the
-		  // scope in which we are using ourselves.
-		  if (!ACE_OS::strcmp (t->fullname (), d->fullname ()))
-			{
-			  // we are the same, generate the ACE_NESTED_CLASS macro
-			  ACE_OS::sprintf (macro, "ACE_NESTED_CLASS (");
-			  ACE_OS::strcat (macro, t->fullname ());
-			  ACE_OS::strcat (macro, ",");
-			  ACE_OS::strcat (macro, this->local_name ()->get_string ());
-              if (suffix)
-                {
-                  ACE_OS::strcat (macro, suffix);
-                }
-			  ACE_OS::strcat (macro, ")");
-			  return macro;
-			}
-		  d = be_scope::narrow_from_scope (d->defined_in ())->decl ();
-		} // end of while
-#endif
-      // start with our local name
-      ACE_OS::sprintf (macro, this->local_name ()->get_string ());
-      if (suffix) // append the suffix (if any)
+  // traverse every component of the def_scope and use_scope beginning at the
+  // root and proceeding towards the leaf trying to see if the components
+  // match. Continue until there is a match and keep accumulating the path
+  // traversed. This forms the first argument to the ACE_NESTED_CLASS
+  // macro. Whenever there is no match, the remaining components of the
+  // def_scope form the second argument
+
+  def_scope = ((this->defined_in ())?
+               (be_scope::narrow_from_scope (this->defined_in ())->decl ()):
+               0);
+
+  if (def_scope && def_scope->node_type () != AST_Decl::NT_root && use_scope)
+    // if both scopes exist and that we are not in the root scope
+    {
+      ACE_OS::strcpy (def_name, def_scope->fullname ());
+      ACE_OS::strcpy (use_name, use_scope->fullname ());
+
+      // find the first occurrence of a :: and advance the next pointers accordingly
+      def_next = ACE_OS::strstr (def_curr, "::");
+      use_next = ACE_OS::strstr (use_curr, "::");
+
+      if (def_next)
+        *def_next = 0;
+
+      if (use_next)
+        *use_next = 0;
+
+      if (!ACE_OS::strcmp (def_curr, use_curr))
         {
-          ACE_OS::strcat (macro, suffix);
-        }
+          // initial prefix matches i.e., they have a common root
+          // start by initializing the macro
 
-	  while (d && t && d->node_type () != AST_Decl::NT_root) // keep moving up
-                                                             // the chain
-		{
-		  if (!ACE_OS::strcmp (t->fullname (), d->fullname ()))
-			{
-              // is my scope the same as d? If so, we are done
-			  ACE_OS::sprintf (macro, "ACE_NESTED_CLASS (%s, %s)",
-                               t->fullname (),
-                               ACE_OS::strdup (macro));
-              return macro;
-            }
-          else
+          ACE_OS::sprintf (macro, "ACE_NESTED_CLASS (");
+          ACE_OS::strcat (macro, def_curr); // initialize the first argument
+
+          def_curr = (def_next ? (def_next+2) : 0); // skip the ::
+          use_curr = (use_next ? (use_next+2) : 0); // skip the ::
+
+          while (def_curr && use_curr)
             {
-              // our scope is not the same as the one in which it is referred
-              // to. Try to see if the scope of our scope and the scope in
-              // which we are referred to are the same. At the same time, make
-              // a partial scoped name that includes our current scope and the
-              // scope dname generated so far
-              ACE_OS::sprintf (macro, "%s::%s",
-                               t->local_name ()->get_string (),
-                               ACE_OS::strdup (macro));
-              if (t->defined_in ())
-                t = be_scope::narrow_from_scope (t->defined_in ())->decl ();
+              // find the first occurrence of a :: and advance the next pointers accordingly
+              def_next = ACE_OS::strstr (def_curr, "::");
+              use_next = ACE_OS::strstr (use_curr, "::");
+
+              if (def_next)
+                *def_next = 0;
+
+              if (use_next)
+                *use_next = 0;
+
+              if (!ACE_OS::strcmp (def_curr, use_curr))
+                {
+                  // they have same prefix, append to arg1
+                  ACE_OS::strcat (macro, "::");
+                  ACE_OS::strcat (macro, def_curr);
+                  def_curr = (def_next ? (def_next+2) : 0); // skip the ::
+                  use_curr = (use_next ? (use_next+2) : 0); // skip the ::
+                }
               else
-                t = 0;
-              if (d->defined_in ())
-                d = be_scope::narrow_from_scope (d->defined_in ())->decl ();
-              else
-                d = 0;
+                {
+                  // no match. This is the end of the first argument. Get out
+                  // of the loop as no more comparisons are necessary
+                  break;
+                }
             }
-        }
 
-      // failure. reset the generated macro
-      ACE_OS::memset (macro, '\0', NAMEBUFSIZE); // no success, fall through
-	} // end of if is_nested
+          // start the 2nd argument of the macro
+          ACE_OS::strcat (macro, ", ");
 
-  // not nested OR not defined in the same scope as "d" or its
-  // ancestors or d does not exist
-  ACE_OS::sprintf (macro, "%s", this->fullname ());
-  if (suffix)
-    {
-      ACE_OS::strcat (macro, suffix);
+          // copy the remaining def_name (if any left)
+          if (def_curr)
+            ACE_OS::strcat (macro, def_curr);
+
+          // append our local name
+          ACE_OS::strcat (macro, this->local_name ()->get_string ());
+          if (suffix)
+            ACE_OS::strcat (macro, suffix);
+          ACE_OS::strcat (macro, ")");
+          return macro;
+        } // end of if the root prefixes match
     }
+
+  // otherwise just emit our fullname
+  ACE_OS::sprintf (macro, this->fullname ());
+  if (suffix)
+    ACE_OS::strcat (macro, suffix);
+
   return macro;
 }
 

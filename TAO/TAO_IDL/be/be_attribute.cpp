@@ -595,6 +595,11 @@ be_attribute::gen_server_skeletons (void)
   *ss << intf->full_skel_name () << "_ptr \t impl = (" << intf->full_skel_name
     () << "_ptr)_tao_object_reference;" << nl;
 
+  // declare an NVList and create one
+  ss->indent ();
+  *ss << "// create an NV list and populate it with typecodes" << nl;
+  *ss << "_tao_server_request.orb ()->create_list (1, nvlist); // initialize a list" << nl;
+
   // if we have any arguments, get each one of them and allocate an Any and
   // NamedValue for each. In addition, define a variable of that type
   cg->push (TAO_CodeGen::TAO_ATTRIBUTE_INPARAM_TYPE_SS);
@@ -607,17 +612,6 @@ be_attribute::gen_server_skeletons (void)
                         -1);
     }
   cg->pop ();
-
-  // declare an NVList and create one
-  ss->indent ();
-  *ss << "// create an NV list and populate it with typecodes" << nl;
-  *ss << "_tao_server_request.orb ()->create_list (0, nvlist); // initialize a list" << nl;
-
-  // add the "in" argument
-  // emit code that adds this argument to the NVList
-  *ss << "nv_" << this->local_name () << " = nvlist->add_value (\"" <<
-    this->local_name () << "\", any_" << this->local_name () <<
-    ", CORBA::ARG_IN, _tao_environment);" << nl;
 
   *ss << "// parse the arguments" << nl;
   *ss << "_tao_server_request.params (nvlist, _tao_environment);" << nl;

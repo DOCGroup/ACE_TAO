@@ -1,8 +1,8 @@
-// @(#)invoke.cpp	1.3 95/09/24
+// @(#)invoke.cpp       1.3 95/09/24
 // Copyright 1994-1995 by Sun Microsystems Inc.
 // All Rights Reserved
 //
-// IIOP		stub support for static and dynamic invocation
+// IIOP         stub support for static and dynamic invocation
 //
 // This file holds DII support, and an analagous interpreter that let
 // static stubs be very small.  It's specific to objrefs with
@@ -52,13 +52,17 @@ public:
   // inlined, so here they sit.
   ACE_Synchronous_Cancellation_Required (void)
     {
+#if !defined (VXWORKS)
       ACE_OS::thr_setcanceltype (THR_CANCEL_DEFERRED, &old_type_);
+#endif /* ! VXWORKS */
     }
 
   ~ACE_Synchronous_Cancellation_Required (void)
     {
+#if !defined (VXWORKS)
       int dont_care;
       ACE_OS::thr_setcanceltype(old_type_, &dont_care);
+#endif /* ! VXWORKS */
     }
 private:
   int old_type_;
@@ -73,8 +77,8 @@ private:
 // patent application is pending.
 
 void
-IIOP_Object::do_call (CORBA::Environment &env,	// exception reporting
-                      const TAO_Call_Data *info,	// call description
+IIOP_Object::do_call (CORBA::Environment &env,  // exception reporting
+                      const TAO_Call_Data *info,        // call description
                       ...)                       // ... any parameters
 
 {
@@ -160,7 +164,7 @@ IIOP_Object::do_call (CORBA::Environment &env,	// exception reporting
 
       status = call.invoke (exceptions, env);
 
-      exceptions.buffer = 0;		// don't free it
+      exceptions.buffer = 0;            // don't free it
 
       if (env.exception ())
         {
@@ -247,13 +251,13 @@ IIOP_Object::do_call (CORBA::Environment &env,	// exception reporting
 // with explicit typing.
 
 void
-IIOP_Object::do_dynamic_call (const char *opname,       	// operation name
-                              CORBA::Boolean is_roundtrip,	// results required?
-                              CORBA::NVList_ptr args,		// parameters
-                              CORBA::NamedValue_ptr result,	// result
-                              CORBA::Flags flags,		// per-call flag (one!)
-                              CORBA::ExceptionList &exceptions,	// possible user exceptions
-                              CORBA::Environment &env)		// exception reporting
+IIOP_Object::do_dynamic_call (const char *opname,               // operation name
+                              CORBA::Boolean is_roundtrip,      // results required?
+                              CORBA::NVList_ptr args,           // parameters
+                              CORBA::NamedValue_ptr result,     // result
+                              CORBA::Flags flags,               // per-call flag (one!)
+                              CORBA::ExceptionList &exceptions, // possible user exceptions
+                              CORBA::Environment &env)          // exception reporting
 {
   ACE_Synchronous_Cancellation_Required NOT_USED;
 
@@ -349,7 +353,7 @@ IIOP_Object::do_dynamic_call (const char *opname,       	// operation name
 
           for (i = 0; i < args->count (); i++)
             {
-              CORBA::NamedValue_ptr	value = args->item (i, env);
+              CORBA::NamedValue_ptr     value = args->item (i, env);
 
               if (value->flags () == CORBA::ARG_OUT
                   || value->flags () == CORBA::ARG_INOUT)

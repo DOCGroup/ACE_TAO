@@ -96,6 +96,9 @@ include $(TAO_ROOT)/taoconfig.mk
 ifdef CHORUS
   CPPFLAGS += -DTAO_PLATFORM_SVC_CONF_FILE_NOTSUP
 endif
+ifdef VXWORKS
+  CPPFLAGS += -DTAO_PLATFORM_SVC_CONF_FILE_NOTSUP
+endif
 
 ifeq ($(probe),1)
     CCFLAGS += -DACE_ENABLE_TIMEPROBES
