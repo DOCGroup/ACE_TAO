@@ -300,6 +300,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Adapter.i \
  $(TAO_ROOT)/tao/POAManager.h \
  $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/rtcorbafwd.h \
+ $(TAO_ROOT)/tao/rtcorbafwd.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
@@ -602,6 +604,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Adapter.i \
  $(TAO_ROOT)/tao/POAManager.h \
  $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/rtcorbafwd.h \
+ $(TAO_ROOT)/tao/rtcorbafwd.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
@@ -914,6 +918,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Adapter.i \
  $(TAO_ROOT)/tao/POAManager.h \
  $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/rtcorbafwd.h \
+ $(TAO_ROOT)/tao/rtcorbafwd.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
@@ -1014,10 +1020,12 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent_Utilities.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/sched_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/event_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.h \
@@ -1028,7 +1036,6 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/event_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.i \
@@ -1040,11 +1047,11 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.h \
@@ -1271,6 +1278,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Adapter.i \
  $(TAO_ROOT)/tao/POAManager.h \
  $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/rtcorbafwd.h \
+ $(TAO_ROOT)/tao/rtcorbafwd.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
@@ -1577,6 +1586,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Adapter.i \
  $(TAO_ROOT)/tao/POAManager.h \
  $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/rtcorbafwd.h \
+ $(TAO_ROOT)/tao/rtcorbafwd.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
@@ -1915,6 +1926,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Adapter.i \
  $(TAO_ROOT)/tao/POAManager.h \
  $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/rtcorbafwd.h \
+ $(TAO_ROOT)/tao/rtcorbafwd.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \

@@ -261,6 +261,8 @@ include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
  $(TAO_ROOT)/tao/Object_Adapter.i \
  $(TAO_ROOT)/tao/POAManager.h \
  $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/rtcorbafwd.h \
+ $(TAO_ROOT)/tao/rtcorbafwd.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
@@ -349,9 +351,8 @@ include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/sched_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Service_Constants.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
@@ -364,10 +365,18 @@ include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/sched_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/Scheduler_Generic.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/Scheduler.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/Scheduler.i \
@@ -412,6 +421,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
  $(ACE_ROOT)/ace/Module.cpp \
  $(ACE_ROOT)/ace/Stream_Modules.h \
  $(ACE_ROOT)/ace/Stream_Modules.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/old_event_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/RT_Task.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Timer_Module.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/ReactorTask.h \

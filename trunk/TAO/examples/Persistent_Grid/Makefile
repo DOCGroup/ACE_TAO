@@ -33,22 +33,22 @@ TEST_CLT_OBJS = \
 		GridC.o \
                 persistent_client.o \
                 Simple_util.o \
-                Persistent_Client_i.o 		
+                Persistent_Client_i.o
 SIMPLE_CLT_OBJS = \
                 GridC.o \
                 client.o \
                 Simple_util.o \
-                Grid_Client_i.o 
+                Grid_Client_i.o
 SIMPLE_SVR_OBJS = \
                 GridC.o \
                 GridS.o \
                 Grid_i.o \
                 server.o \
-                Simple_util.o 
+                Simple_util.o
 
 BIN2 = 	server \
 	client \
-	persistent_client 
+	persistent_client
 
 #### If the TAO orbsvcs library wasn't built with sufficient components,
 #### don't try to build here.
@@ -316,6 +316,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Adapter.i \
  $(TAO_ROOT)/tao/POAManager.h \
  $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/rtcorbafwd.h \
+ $(TAO_ROOT)/tao/rtcorbafwd.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
@@ -609,6 +611,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Adapter.i \
  $(TAO_ROOT)/tao/POAManager.h \
  $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/rtcorbafwd.h \
+ $(TAO_ROOT)/tao/rtcorbafwd.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
@@ -910,6 +914,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Adapter.i \
  $(TAO_ROOT)/tao/POAManager.h \
  $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/rtcorbafwd.h \
+ $(TAO_ROOT)/tao/rtcorbafwd.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
@@ -1210,6 +1216,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Adapter.i \
  $(TAO_ROOT)/tao/POAManager.h \
  $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/rtcorbafwd.h \
+ $(TAO_ROOT)/tao/rtcorbafwd.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
@@ -1502,6 +1510,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Adapter.i \
  $(TAO_ROOT)/tao/POAManager.h \
  $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/rtcorbafwd.h \
+ $(TAO_ROOT)/tao/rtcorbafwd.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
@@ -1803,6 +1813,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Adapter.i \
  $(TAO_ROOT)/tao/POAManager.h \
  $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/rtcorbafwd.h \
+ $(TAO_ROOT)/tao/rtcorbafwd.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
@@ -2255,6 +2267,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Adapter.i \
  $(TAO_ROOT)/tao/POAManager.h \
  $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/rtcorbafwd.h \
+ $(TAO_ROOT)/tao/rtcorbafwd.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
@@ -2556,6 +2570,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Adapter.i \
  $(TAO_ROOT)/tao/POAManager.h \
  $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/rtcorbafwd.h \
+ $(TAO_ROOT)/tao/rtcorbafwd.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \

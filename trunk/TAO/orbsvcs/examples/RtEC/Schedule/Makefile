@@ -290,6 +290,8 @@ Service: $(addprefix $(VDIR),$(Service_OBJS))
  $(TAO_ROOT)/tao/Object_Adapter.i \
  $(TAO_ROOT)/tao/POAManager.h \
  $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/rtcorbafwd.h \
+ $(TAO_ROOT)/tao/rtcorbafwd.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
@@ -373,11 +375,14 @@ Service: $(addprefix $(VDIR),$(Service_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/sched_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/event_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/sched_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Scheduler_Factory.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
@@ -385,6 +390,11 @@ Service: $(addprefix $(VDIR),$(Service_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.cpp \
@@ -408,7 +418,7 @@ Service: $(addprefix $(VDIR),$(Service_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/Runtime_Scheduler.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Runtime_Scheduler.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Module_Factory.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/event_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/old_event_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Event_Channel.h \
  $(TAO_ROOT)/tao/Timeprobe.h \
  $(ACE_ROOT)/ace/Timeprobe.h \
@@ -703,6 +713,8 @@ Service: $(addprefix $(VDIR),$(Service_OBJS))
  $(TAO_ROOT)/tao/Object_Adapter.i \
  $(TAO_ROOT)/tao/POAManager.h \
  $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/rtcorbafwd.h \
+ $(TAO_ROOT)/tao/rtcorbafwd.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
@@ -1018,6 +1030,8 @@ Service: $(addprefix $(VDIR),$(Service_OBJS))
  $(TAO_ROOT)/tao/Object_Adapter.i \
  $(TAO_ROOT)/tao/POAManager.h \
  $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/rtcorbafwd.h \
+ $(TAO_ROOT)/tao/rtcorbafwd.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \

@@ -110,8 +110,8 @@ Test_Complex_Any::reset_parameters (void)
 
           char *l5_str = gen->gen_string ();
 
-                if (TAO_debug_level > 0)
-                  ACE_DEBUG ((LM_DEBUG,
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_DEBUG,
                         "setting level 5 string = %s\n",
                         l5_str));
 
@@ -123,8 +123,8 @@ Test_Complex_Any::reset_parameters (void)
 
           char *l9_str = gen->gen_string ();
 
-                if (TAO_debug_level > 0)
-                  ACE_DEBUG ((LM_DEBUG,
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_DEBUG,
                         "setting level 9 string = %s\n",
                         l9_str));
 
@@ -132,8 +132,8 @@ Test_Complex_Any::reset_parameters (void)
 
           CORBA::Short l9_bool = ACE_OS::rand () % 2;
 
-                if (TAO_debug_level > 0)
-                  ACE_DEBUG ((LM_DEBUG,
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_DEBUG,
                         "setting level 9 boolean = %d\n",
                         l9_bool));
 
@@ -141,8 +141,8 @@ Test_Complex_Any::reset_parameters (void)
 
           CORBA::Short l9_short = gen->gen_short ();
 
-                if (TAO_debug_level > 0)
-                  ACE_DEBUG ((LM_DEBUG,
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_DEBUG,
                         "setting level 9 short = %d\n",
                         l9_short));
 

@@ -385,6 +385,8 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Object_Adapter.i \
  $(TAO_ROOT)/tao/POAManager.h \
  $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/rtcorbafwd.h \
+ $(TAO_ROOT)/tao/rtcorbafwd.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
@@ -488,11 +490,17 @@ AVSVC_COMPONENTS:
 .obj/FlowSpec_Entry.o .obj/FlowSpec_Entry.so .shobj/FlowSpec_Entry.o .shobj/FlowSpec_Entry.so: AV/FlowSpec_Entry.cpp AV/FlowSpec_Entry.h \
  $(ACE_ROOT)/ace/pre.h \
  AV/AV_export.h \
- $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ AV/AV_Core.h \
+ $(TAO_ROOT)/tao/TAO.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -503,12 +511,6 @@ AVSVC_COMPONENTS:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- AV/AV_Core.h \
- $(TAO_ROOT)/tao/TAO.h \
- $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -700,6 +702,8 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Object_Adapter.i \
  $(TAO_ROOT)/tao/POAManager.h \
  $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/rtcorbafwd.h \
+ $(TAO_ROOT)/tao/rtcorbafwd.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
@@ -784,6 +788,7 @@ AVSVC_COMPONENTS:
  Property/property_export.h \
  CosPropertyServiceC.i \
  AVStreamsC.i \
+ AV/AV_export.h \
  $(ACE_ROOT)/ace/Addr.h \
  $(ACE_ROOT)/ace/Addr.i \
  AV/Transport.h \
@@ -1108,6 +1113,8 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Object_Adapter.i \
  $(TAO_ROOT)/tao/POAManager.h \
  $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/rtcorbafwd.h \
+ $(TAO_ROOT)/tao/rtcorbafwd.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
@@ -1485,6 +1492,8 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Object_Adapter.i \
  $(TAO_ROOT)/tao/POAManager.h \
  $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/rtcorbafwd.h \
+ $(TAO_ROOT)/tao/rtcorbafwd.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
@@ -1861,6 +1870,8 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Object_Adapter.i \
  $(TAO_ROOT)/tao/POAManager.h \
  $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/rtcorbafwd.h \
+ $(TAO_ROOT)/tao/rtcorbafwd.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
@@ -2238,6 +2249,8 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Object_Adapter.i \
  $(TAO_ROOT)/tao/POAManager.h \
  $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/rtcorbafwd.h \
+ $(TAO_ROOT)/tao/rtcorbafwd.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
@@ -2556,6 +2569,8 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Object_Adapter.i \
  $(TAO_ROOT)/tao/POAManager.h \
  $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/rtcorbafwd.h \
+ $(TAO_ROOT)/tao/rtcorbafwd.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
@@ -2639,7 +2654,7 @@ AVSVC_COMPONENTS:
  Property/property_export.h \
  CosPropertyServiceC.i \
  AVStreamsC.i \
- AV/Transport.h \
+ AV/AV_export.h AV/Transport.h \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
@@ -2933,6 +2948,8 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Object_Adapter.i \
  $(TAO_ROOT)/tao/POAManager.h \
  $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/rtcorbafwd.h \
+ $(TAO_ROOT)/tao/rtcorbafwd.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
@@ -3016,7 +3033,7 @@ AVSVC_COMPONENTS:
  Property/property_export.h \
  CosPropertyServiceC.i \
  AVStreamsC.i \
- AV/Transport.h \
+ AV/AV_export.h AV/Transport.h \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
@@ -3308,6 +3325,8 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Object_Adapter.i \
  $(TAO_ROOT)/tao/POAManager.h \
  $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/rtcorbafwd.h \
+ $(TAO_ROOT)/tao/rtcorbafwd.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
@@ -3391,7 +3410,7 @@ AVSVC_COMPONENTS:
  Property/property_export.h \
  CosPropertyServiceC.i \
  AVStreamsC.i \
- AV/Transport.h \
+ AV/AV_export.h AV/Transport.h \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
@@ -3649,6 +3668,8 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Object_Adapter.i \
  $(TAO_ROOT)/tao/POAManager.h \
  $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/rtcorbafwd.h \
+ $(TAO_ROOT)/tao/rtcorbafwd.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
@@ -3732,7 +3753,7 @@ AVSVC_COMPONENTS:
  Property/property_export.h \
  CosPropertyServiceC.i \
  AVStreamsC.i \
- AV/Transport.h \
+ AV/AV_export.h AV/Transport.h \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
@@ -3775,11 +3796,17 @@ AVSVC_COMPONENTS:
  $(ACE_ROOT)/ace/pre.h \
  AV/FlowSpec_Entry.h \
  AV/AV_export.h \
- $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ AV/AV_Core.h \
+ $(TAO_ROOT)/tao/TAO.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -3790,12 +3817,6 @@ AVSVC_COMPONENTS:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- AV/AV_Core.h \
- $(TAO_ROOT)/tao/TAO.h \
- $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -3987,6 +4008,8 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Object_Adapter.i \
  $(TAO_ROOT)/tao/POAManager.h \
  $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/rtcorbafwd.h \
+ $(TAO_ROOT)/tao/rtcorbafwd.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
@@ -4071,6 +4094,7 @@ AVSVC_COMPONENTS:
  Property/property_export.h \
  CosPropertyServiceC.i \
  AVStreamsC.i \
+ AV/AV_export.h \
  $(ACE_ROOT)/ace/Addr.h \
  $(ACE_ROOT)/ace/Addr.i \
  AV/Transport.h \
@@ -4433,6 +4457,8 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Object_Adapter.i \
  $(TAO_ROOT)/tao/POAManager.h \
  $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/rtcorbafwd.h \
+ $(TAO_ROOT)/tao/rtcorbafwd.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
@@ -4831,6 +4857,8 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Object_Adapter.i \
  $(TAO_ROOT)/tao/POAManager.h \
  $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/rtcorbafwd.h \
+ $(TAO_ROOT)/tao/rtcorbafwd.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
@@ -5148,6 +5176,8 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Object_Adapter.i \
  $(TAO_ROOT)/tao/POAManager.h \
  $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/rtcorbafwd.h \
+ $(TAO_ROOT)/tao/rtcorbafwd.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
@@ -5231,7 +5261,7 @@ AVSVC_COMPONENTS:
  Property/property_export.h \
  CosPropertyServiceC.i \
  AVStreamsC.i \
- AV/Transport.h \
+ AV/AV_export.h AV/Transport.h \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
@@ -5310,11 +5340,13 @@ AVSVC_COMPONENTS:
 .obj/sfp.o .obj/sfp.so .shobj/sfp.o .shobj/sfp.so: AV/sfp.cpp AV/sfp.h \
  $(ACE_ROOT)/ace/pre.h \
  AV/AV_export.h \
- $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ sfpC.h \
+ $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -5325,8 +5357,6 @@ AVSVC_COMPONENTS:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- sfpC.h \
- $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -5520,6 +5550,8 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Object_Adapter.i \
  $(TAO_ROOT)/tao/POAManager.h \
  $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/rtcorbafwd.h \
+ $(TAO_ROOT)/tao/rtcorbafwd.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
@@ -5620,7 +5652,7 @@ AVSVC_COMPONENTS:
  Property/property_export.h \
  CosPropertyServiceC.i \
  AVStreamsC.i \
- AV/Transport.h \
+ AV/AV_export.h AV/Transport.h \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
@@ -5900,6 +5932,8 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Object_Adapter.i \
  $(TAO_ROOT)/tao/POAManager.h \
  $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/rtcorbafwd.h \
+ $(TAO_ROOT)/tao/rtcorbafwd.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
@@ -6198,6 +6232,8 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Object_Adapter.i \
  $(TAO_ROOT)/tao/POAManager.h \
  $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/rtcorbafwd.h \
+ $(TAO_ROOT)/tao/rtcorbafwd.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
@@ -6492,6 +6528,8 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Object_Adapter.i \
  $(TAO_ROOT)/tao/POAManager.h \
  $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/rtcorbafwd.h \
+ $(TAO_ROOT)/tao/rtcorbafwd.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
@@ -6785,6 +6823,8 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Object_Adapter.i \
  $(TAO_ROOT)/tao/POAManager.h \
  $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/rtcorbafwd.h \
+ $(TAO_ROOT)/tao/rtcorbafwd.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
@@ -7079,6 +7119,8 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Object_Adapter.i \
  $(TAO_ROOT)/tao/POAManager.h \
  $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/rtcorbafwd.h \
+ $(TAO_ROOT)/tao/rtcorbafwd.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
@@ -7372,6 +7414,8 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Object_Adapter.i \
  $(TAO_ROOT)/tao/POAManager.h \
  $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/rtcorbafwd.h \
+ $(TAO_ROOT)/tao/rtcorbafwd.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \

@@ -262,6 +262,8 @@ Dump_Schedule: $(addprefix $(VDIR),$(DUMP_OBJS))
  $(TAO_ROOT)/tao/Object_Adapter.i \
  $(TAO_ROOT)/tao/POAManager.h \
  $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/rtcorbafwd.h \
+ $(TAO_ROOT)/tao/rtcorbafwd.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
@@ -347,11 +349,14 @@ Dump_Schedule: $(addprefix $(VDIR),$(DUMP_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Scheduler_Factory.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/sched_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/event_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/sched_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Scheduler_Factory.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

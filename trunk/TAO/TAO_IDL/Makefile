@@ -10815,6 +10815,7 @@ tags:
  be_include/be_visitor_valuetype/valuetype.h \
  be_include/be_visitor_valuetype/valuetype_ch.h \
  be_include/be_visitor_valuetype/valuetype_obv_ch.h \
+ be_include/be_visitor_valuetype/valuetype_obv_ci.h \
  be_include/be_visitor_valuetype/valuetype_obv_cs.h \
  be_include/be_visitor_valuetype/valuetype_ci.h \
  be_include/be_visitor_valuetype/valuetype_cs.h \
@@ -10824,7 +10825,9 @@ tags:
  be_include/be_visitor_valuetype/marshal_cs.h \
  be_include/be_visitor_valuetype/arglist.h \
  be_include/be_visitor_valuetype/field_ch.h \
+ be_include/be_visitor_valuetype/field_ci.h \
  be_include/be_visitor_valuetype/field_cs.h \
+ be_include/be_visitor_valuetype/field_cdr_ch.h \
  be_include/be_visitor_valuetype/field_cdr_ci.h \
  be_include/be_visitor_valuetype/obv_module.h \
  be_include/be_visitor_valuetype/ami_exception_holder_ch.h \
@@ -12721,6 +12724,7 @@ tags:
  be_include/be_visitor_valuetype/valuetype.h \
  be_include/be_visitor_valuetype/valuetype_ch.h \
  be_include/be_visitor_valuetype/valuetype_obv_ch.h \
+ be_include/be_visitor_valuetype/valuetype_obv_ci.h \
  be_include/be_visitor_valuetype/valuetype_obv_cs.h \
  be_include/be_visitor_valuetype/valuetype_ci.h \
  be_include/be_visitor_valuetype/valuetype_cs.h \
@@ -12730,7 +12734,9 @@ tags:
  be_include/be_visitor_valuetype/marshal_cs.h \
  be_include/be_visitor_valuetype/arglist.h \
  be_include/be_visitor_valuetype/field_ch.h \
+ be_include/be_visitor_valuetype/field_ci.h \
  be_include/be_visitor_valuetype/field_cs.h \
+ be_include/be_visitor_valuetype/field_cdr_ch.h \
  be_include/be_visitor_valuetype/field_cdr_ci.h \
  be_include/be_visitor_valuetype/obv_module.h \
  be_include/be_visitor_valuetype/ami_exception_holder_ch.h \
@@ -12738,6 +12744,7 @@ tags:
  be/be_visitor_valuetype/valuetype.cpp \
  be/be_visitor_valuetype/valuetype_ch.cpp \
  be/be_visitor_valuetype/valuetype_obv_ch.cpp \
+ be/be_visitor_valuetype/valuetype_obv_ci.cpp \
  be/be_visitor_valuetype/valuetype_obv_cs.cpp \
  be/be_visitor_valuetype/valuetype_ci.cpp \
  be/be_visitor_valuetype/valuetype_cs.cpp \
@@ -12782,14 +12789,16 @@ tags:
  be_include/be_visitor_operation/smart_proxy_ch.h \
  be_include/be_visitor_operation/smart_proxy_cs.h \
  be/be_visitor_valuetype/field_ch.cpp \
+ be/be_visitor_valuetype/field_ci.cpp \
  be/be_visitor_valuetype/field_cs.cpp \
- be/be_visitor_valuetype/field_cdr_ci.cpp \
+ be/be_visitor_valuetype/field_cdr_ch.cpp \
  be_include/be_visitor_field.h be_include/be_visitor_field/field_ch.h \
  be_include/be_visitor_field/field_ci.h \
  be_include/be_visitor_field/field_cs.h \
  be_include/be_visitor_field/cdr_op_ch.h \
  be_include/be_visitor_field/cdr_op_ci.h \
  be_include/be_visitor_field/cdr_op_cs.h \
+ be/be_visitor_valuetype/field_cdr_ci.cpp \
  be/be_visitor_valuetype/obv_module.cpp \
  be/be_visitor_valuetype/ami_exception_holder_ch.cpp \
  be/be_visitor_valuetype/ami_exception_holder_cs.cpp

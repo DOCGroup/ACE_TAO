@@ -84,11 +84,23 @@ ifneq (,$(findstring  Sched, $(TAO_ORBSVCS)))
   MKLIST += Makefile.RTSched
 endif
 ifneq (,$(findstring  Event, $(TAO_ORBSVCS)))
+  ifeq (,$(findstring Makefile.RTEvent, $(MKLIST)))
+    MKLIST += Makefile.RTEvent
+  endif
+  ifeq (,$(findstring Makefile.RTSched, $(MKLIST)))
+    MKLIST += Makefile.RTSched
+  endif
   ifeq (,$(findstring Makefile.RTOLDEvent, $(MKLIST)))
     MKLIST += Makefile.RTOLDEvent
   endif
 endif
 ifneq (,$(findstring  Event, $(TAO_ORBSVCS)))
+  ifeq (,$(findstring Makefile.RTEvent, $(MKLIST)))
+    MKLIST += Makefile.RTEvent
+  endif
+  ifeq (,$(findstring Makefile.RTSched, $(MKLIST)))
+    MKLIST += Makefile.RTSched
+  endif
   ifeq (,$(findstring Makefile.RTOLDEvent, $(MKLIST)))
     MKLIST += Makefile.RTOLDEvent
   endif
