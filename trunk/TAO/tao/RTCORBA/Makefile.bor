@@ -15,6 +15,9 @@ OBJFILES = \
 	$(OBJDIR)\RT_Thread_Lane_Resources_Manager.obj \
 	$(OBJDIR)\Priority_Mapping.obj \
 	$(OBJDIR)\Priority_Mapping_Manager.obj \
+	$(OBJDIR)\Linear_Network_Priority_Mapping.obj \
+	$(OBJDIR)\Network_Priority_Mapping.obj \
+	$(OBJDIR)\Network_Priority_Mapping_Manager.obj \
 	$(OBJDIR)\Private_Transport_Descriptor.obj \
 	$(OBJDIR)\RTCORBA.obj \
 	$(OBJDIR)\RTCORBAC.obj \
