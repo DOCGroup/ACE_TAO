@@ -1,6 +1,6 @@
---- lex.yy.cpp.orig	Fri Jan 23 11:21:41 1998
-+++ lex.yy.cpp	Fri Jan 23 11:23:06 1998
-@@ -217,12 +217,14 @@
+--- lex.yy.cpp.orig	Mon Mar 23 15:30:42 1998
++++ lex.yy.cpp	Mon Mar 23 15:30:42 1998
+@@ -215,12 +215,14 @@
  void yy_delete_buffer YY_PROTO(( YY_BUFFER_STATE b ));
  void yy_init_buffer YY_PROTO(( YY_BUFFER_STATE b, FILE *file ));
  
@@ -15,7 +15,7 @@
  
  static void *yy_flex_alloc YY_PROTO(( unsigned int ));
  static void *yy_flex_realloc YY_PROTO(( void *, unsigned int ));
-@@ -1780,6 +1782,7 @@
+@@ -1777,6 +1779,7 @@
  	}
  
  
@@ -23,7 +23,7 @@
  #ifdef YY_USE_PROTOS
  static void yy_push_state( int new_state )
  #else
-@@ -1825,7 +1828,7 @@
+@@ -1822,7 +1825,7 @@
  	{
  	return yy_start_stack[yy_start_stack_ptr - 1];
  	}
