@@ -762,7 +762,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::enqueue_i (ACE_Message_Block *new_item
   ACE_Time_Value tv(0);
 
   // refresh dynamic priority of the new message
-  result = (*priority_eval_func_ptr_) (*new_item, tv);
+  result = this->message_strategy_.update_priority (*new_item, tv);
 
   // get the current time
   ACE_Time_Value current_time = ACE_OS::gettimeofday ();
@@ -839,7 +839,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::refresh_priorities (const ACE_Time_Val
   ACE_Message_Block *temp = ACE_Message_Queue<ACE_SYNCH_USE>::head_;
   while (temp)
   {
-    result = (*priority_eval_func_ptr_) (*temp, tv);
+    result = this->message_strategy_.update_priority (*temp, tv);
     if (result < 0)
     {
       break;
