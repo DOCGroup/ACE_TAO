@@ -1,3 +1,19 @@
+Wed Sep 13 15:05:42 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* ace/OS.h:
+	 
+	  ACE_HAS_PACE type redefinitions. L:3180.., L:2250
+
+	* ace/OS.i:
+
+	  ACE over NT implements two different kinds of mutex's.
+	  One is a lighter CRITICAL SECTION which has a distinct
+	  set of associated functions. In ACE_HAS_PACE code, these
+	  functions are calling each other (on POSIX compliant
+	  platforms, these are defined to be the same types) but
+	  NT needs to distinguish the two. This usually means
+	  rearranging the preprocessor code. This is just the beginning.
+
 Wed Sep 13 14:33:25 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Service_Config.h (ACE_Service_Config): Made parse_args()
