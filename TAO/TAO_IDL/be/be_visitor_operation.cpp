@@ -146,6 +146,8 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
 {
   TAO_OutStream *os; // output stream
   be_type *bt;       // type node
+  be_visitor_context ctx;  // visitor context
+  be_visitor *visitor; // visitor
 
   os = this->ctx_->stream ();
   this->ctx_->node (node); // save the node for future use
@@ -163,18 +165,75 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
                         -1);
     }
 
-  // STEP 1:
-  // generate the param_data and call_data tables. We generate these if and
+  // Generate the return type mapping (same as in the header file)
+  ctx = *this->ctx_;
+  ctx.state (TAO_CodeGen::TAO_OPERATION_RETTYPE_OTHERS);
+  visitor = tao_cg->make_visitor (&ctx);
+
+  if (!visitor)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_operation_cs::"
+                         "visit_operation - "
+                         "Bad visitor for return type\n"),
+                        -1);
+    }
+
+  if (bt->accept (visitor) == -1)
+    {
+      delete visitor;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_operation_cs::"
+                         "visit_operation - "
+                         "codegen for return type failed\n"),
+                        -1);
+    }
+  delete visitor;
+
+  // Generate the operation name
+  *os << " " << node->name ();
+
+  // Generate the argument list with the appropriate mapping (same as
+  // in the header file)
+  ctx = *this->ctx_;
+  ctx.state (TAO_CodeGen::TAO_OPERATION_ARGLIST_OTHERS);
+  visitor = tao_cg->make_visitor (&ctx);
+  if (!visitor)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_operation_cs::"
+                         "visit_operation - "
+                         "Bad visitor to return type\n"),
+                        -1);
+    }
+
+  if (node->accept (visitor) == -1)
+    {
+      delete visitor;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_operation_cs::"
+                         "visit_operation - "
+                         "codegen for argument list failed\n"),
+                        -1);
+    }
+  delete visitor;
+
+  // Generate the actual code for the stub. However, if any of the argument
+  // types is "native", we flag a MARSHAL exception.
+  // last argument - is always CORBA::Environment
+  *os << "{\n";
+  os->incr_indent (0);
+
+  // Generate the param_data and call_data tables. We generate these if and
   // only if none of our arguments is of "native" type. Native types cannot be
   // marshaled. Hence, stubs for such operations will generate MARSHAL
   // exceptions. As a result it is pointless generating these tables
-  be_visitor_context ctx;
-  be_visitor *visitor;
   if (!node->has_native ())
     {
       // native type does not exist. Generate the static tables
 
-      // STEP 1A: generate the TAO_Param_Data table
+      // Generate the TAO_Param_Data table
+      os->indent ();
       *os << "static const TAO_Param_Data ";
       // check if we are an attribute node in disguise
       if (this->ctx_->attribute ())
@@ -226,7 +285,7 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
             }
         }
 
-      // STEP 1B: now generate the calldata table
+      // now generate the calldata table
       os->indent ();
       *os << "static const TAO_Call_Data ";
       // check if we are an attribute node in disguise
@@ -293,67 +352,7 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
         }
     } // end of if !(native)
 
-  // STEP 2: generate the return type mapping (same as in the header file)
-  ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_OPERATION_RETTYPE_OTHERS);
-  visitor = tao_cg->make_visitor (&ctx);
-
-  if (!visitor)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_operation_cs::"
-                         "visit_operation - "
-                         "Bad visitor for return type\n"),
-                        -1);
-    }
-
-  if (bt->accept (visitor) == -1)
-    {
-      delete visitor;
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_cs::"
-                         "visit_operation - "
-                         "codegen for return type failed\n"),
-                        -1);
-    }
-  delete visitor;
-
-  // STEP 3: generate the operation name
-  *os << " " << node->name ();
-
-  // STEP 4: generate the argument list with the appropriate mapping (same as
-  // in the header file)
-  ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_OPERATION_ARGLIST_OTHERS);
-  visitor = tao_cg->make_visitor (&ctx);
-  if (!visitor)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_operation_cs::"
-                         "visit_operation - "
-                         "Bad visitor to return type\n"),
-                        -1);
-    }
-
-  if (node->accept (visitor) == -1)
-    {
-      delete visitor;
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_cs::"
-                         "visit_operation - "
-                         "codegen for argument list failed\n"),
-                        -1);
-    }
-  delete visitor;
-
-  // STEP 5:
-  // generate the actual code for the stub. However, if any of the argument
-  // types is "native", we flag a MARSHAL exception.
-  // last argument - is always CORBA::Environment
-  *os << "{\n";
-  os->incr_indent (0);
-
-  // STEP 5A: declare a return type
+  // Declare a return type
   ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_DECL_CS);
   visitor = tao_cg->make_visitor (&ctx);
@@ -376,15 +375,13 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
     }
   else
     {
-      // STEP 5B:
-      // generate code that retrieves the underlying stub object and then
+      // Generate code that retrieves the underlying stub object and then
       // invokes do_static_call on it.
       *os << "STUB_Object *istub = this->stubobj (_tao_environment);" << be_nl
           << "if (istub)" << be_nl
           << "{\n";
       os->incr_indent (0);
 
-      // STEP 5C:
       // do any pre do_static_call processing with return type. This includes
       // allocating memory, initialization.
       ctx = *this->ctx_;
@@ -401,7 +398,6 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
         }
 
 
-      // STEP 5D:
       // do any pre do_static_call stuff with arguments
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_PRE_DOCALL_CS);
@@ -416,7 +412,6 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
                             -1);
         }
 
-      // STEP 5E:
       // call do_static_call with appropriate number of arguments
       os->indent ();
       *os << "istub->do_static_call (" << be_idt_nl
@@ -470,7 +465,6 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
       *os << be_uidt_nl;
       *os << ");\n";
 
-      // STEP 5F:
       // do any post processing for the retval
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_POST_DOCALL_CS);
@@ -485,7 +479,7 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
                             -1);
         }
 
-      // STEP 5G: do any post processing for the arguments
+      // do any post processing for the arguments
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_POST_DOCALL_CS);
       visitor = tao_cg->make_visitor (&ctx);
@@ -503,7 +497,7 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
 
   os->decr_indent ();
   *os << "} // end of if (istub)\n";
-  // STEP 5H: return the appropriate return value
+  // return the appropriate return value
   ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_RETURN_CS);
   visitor = tao_cg->make_visitor (&ctx);
@@ -726,13 +720,54 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
                         -1);
     }
 
-  // STEP 1:
+  // We need the interface node in which this operation was defined. However,
+  // if this operation node was an attribute node in disguise, we get this
+  // information from the context
+  be_interface *intf;
+  intf = this->ctx_->attribute ()
+    ? be_interface::narrow_from_scope (this->ctx_->attribute ()->defined_in ())
+    : be_interface::narrow_from_scope (node->defined_in ());
+
+  if (!intf)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_operation_ss::"
+                         "visit_operation - "
+                         "bad interface scope\n"),
+                        -1);
+    }
+
+  // generate the signature of the static skeleton
+  os->indent ();
+  *os << "void " << intf->full_skel_name () << "::";
+  // check if we are an attribute node in disguise
+  if (this->ctx_->attribute ())
+    {
+      // now check if we are a "get" or "set" operation
+      if (node->nmembers () == 1) // set
+        *os << "_set_";
+      else
+        *os << "_get_";
+    }
+  *os << node->local_name ()
+      << "_skel (" << be_idt << be_idt_nl
+      << "CORBA::ServerRequest &_tao_server_request, " << be_nl
+      << "void *_tao_object_reference, " << be_nl
+      << "void * /* context */, " << be_nl
+      << "CORBA::Environment &_tao_environment" << be_uidt << be_uidt_nl
+      << ")" << be_nl;
+
+  // generate the actual code for the skeleton. However, if any of the argument
+  // types is "native", we do not generate any skeleton
+  // last argument - is always CORBA::Environment
+  *os << "{" << be_idt_nl;
+
   // generate the param_data and call_data tables. We generate these if and
   // only if none of our arguments is of "native" type. Native types cannot be
   // marshaled.
   // native type does not exist. Generate the static tables
 
-  // STEP 1A: generate the TAO_Param_Data_Skel table
+  // generate the TAO_Param_Data_Skel table
   *os << "static const TAO_Param_Data_Skel ";
   // check if we are an attribute node in disguise
   if (this->ctx_->attribute ())
@@ -766,7 +801,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   os->decr_indent ();
   *os << "}; // " << node->flatname () << "_paramdata\n\n";
 
-  // STEP 1B: now generate the calldata table
+  // now generate the calldata table
   os->indent ();
   *os << "static const TAO_Call_Data_Skel ";
   // check if we are an attribute node in disguise
@@ -818,54 +853,12 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
     }
   *os << node->flatname () << "_paramdata};\n\n";
 
-  // We need the interface node in which this operation was defined. However,
-  // if this operation node was an attribute node in disguise, we get this
-  // information from the context
-  be_interface *intf;
-  intf = this->ctx_->attribute ()
-    ? be_interface::narrow_from_scope (this->ctx_->attribute ()->defined_in ())
-    : be_interface::narrow_from_scope (node->defined_in ());
-
-  if (!intf)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_ss::"
-                         "visit_operation - "
-                         "bad interface scope\n"),
-                        -1);
-    }
-
-  // STEP 2: generate the signature of the static skeleton
-  os->indent ();
-  *os << "void " << intf->full_skel_name () << "::";
-  // check if we are an attribute node in disguise
-  if (this->ctx_->attribute ())
-    {
-      // now check if we are a "get" or "set" operation
-      if (node->nmembers () == 1) // set
-        *os << "_set_";
-      else
-        *os << "_get_";
-    }
-  *os << node->local_name ()
-      << "_skel (" << be_idt << be_idt_nl
-      << "CORBA::ServerRequest &_tao_server_request, " << be_nl
-      << "void *_tao_object_reference, " << be_nl
-      << "void * /* context */, " << be_nl
-      << "CORBA::Environment &_tao_environment" << be_uidt << be_uidt_nl
-      << ")" << be_nl;
-
-  // STEP 3:
-  // generate the actual code for the skeleton. However, if any of the argument
-  // types is "native", we do not generate any skeleton
-  // last argument - is always CORBA::Environment
-  *os << "{" << be_idt_nl;
-
   // get the right object implementation.
+  os->indent ();
   *os << intf->full_skel_name () << " *_tao_impl = ("
       << intf->full_skel_name () << " *)_tao_object_reference;\n";
 
-  // STEP 3A: declare a return type variable
+  // declare a return type variable
   be_visitor_context ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_DECL_SS);
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
@@ -879,7 +872,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
                         -1);
     }
 
-  // STEP 3B: declare variables for arguments
+  // declare variables for arguments
   ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_DECL_SS);
   visitor = tao_cg->make_visitor (&ctx);
@@ -894,7 +887,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
     }
 
 
-  // STEP 3C: setup parameters for demarshaling and demarshal them
+  // setup parameters for demarshaling and demarshal them
   os->indent ();
   *os << "_tao_server_request.demarshal (" << be_idt_nl
       << "_tao_environment, " << be_nl
@@ -945,7 +938,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   *os << be_uidt_nl;
   *os << ");\n";
 
-  // STEP 3D: check for exception
+  // check for exception
   os->indent ();
   *os << "if (_tao_environment.exception ()) return;\n";
 
@@ -962,7 +955,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
                          "codegen for making upcall failed\n"),
                         -1);
     }
-  // STEP 3E: make the upcall and assign to the return val
+  // make the upcall and assign to the return val
   ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_ASSIGN_SS);
   visitor = tao_cg->make_visitor (&ctx);
@@ -999,7 +992,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   *os << be_uidt_nl;
   *os << ");\n";
 
-  // STEP 3F: do any post processing for the arguments
+  // do any post processing for the arguments
   ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_POST_UPCALL_SS);
   visitor = tao_cg->make_visitor (&ctx);
@@ -1013,7 +1006,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
                         -1);
     }
 
-  // STEP 3G: check if we are oneway in which case, we are done
+  // check if we are oneway in which case, we are done
   if (node->flags () == AST_Operation::OP_oneway)
     {
       // we are done. Nothing else to do, except closing the funciton body.
@@ -1022,7 +1015,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
       return 0;
     }
 
-  // STEP 3H: setup parameters for marshaling and marshal them into the
+  // setup parameters for marshaling and marshal them into the
   // outgoing stream
   os->indent ();
   *os << "_tao_server_request.marshal (" << be_idt_nl
@@ -1075,7 +1068,6 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   *os << be_uidt_nl;
   *os << ");\n";
 
-  // STEP 3E:
   // do any post processing for the retval
   ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_POST_UPCALL_SS);
@@ -1090,7 +1082,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
                         -1);
     }
 
-  // STEP 3F: do any post processing for the arguments
+  // do any post processing for the arguments
   ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_POST_MARSHAL_SS);
   visitor = tao_cg->make_visitor (&ctx);

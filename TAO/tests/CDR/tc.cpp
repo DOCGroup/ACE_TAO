@@ -22,71 +22,71 @@
 // In this version of TAO typecodes are based on CDR, we have to
 // verify that CDR offers the services needed for Typecode...
 
-static CORBA::TypeCode_ptr tcs[]= 
-{
-  CORBA::_tc_null,
-  CORBA::_tc_void,
-  CORBA::_tc_short,
-  CORBA::_tc_long,
-  CORBA::_tc_ushort,
-  CORBA::_tc_ulong,
-  CORBA::_tc_float,
-  CORBA::_tc_double,
-  CORBA::_tc_boolean,
-  CORBA::_tc_char,
-  CORBA::_tc_octet,
-  CORBA::_tc_any,
-  CORBA::_tc_TypeCode,
-  CORBA::_tc_Principal,
-  CORBA::_tc_Object,
-  // CORBA::_tc_struct,
-  // CORBA::_tc_union,
-  // CORBA::_tc_enum,
-  CORBA::_tc_string,
-  // CORBA::_tc_sequence,
-  // CORBA::_tc_array,
-  // CORBA::_tc_alias,
-  // CORBA::_tc_except,
-  CORBA::_tc_longlong,
-  CORBA::_tc_ulonglong,
-  CORBA::_tc_longdouble,
-  CORBA::_tc_wchar,
-  CORBA::_tc_wstring,
-  CORBA::_tc_UNKNOWN,
-  CORBA::_tc_BAD_PARAM,
-  CORBA::_tc_NO_MEMORY,
-  CORBA::_tc_IMP_LIMIT,
-  CORBA::_tc_COMM_FAILURE,
-  CORBA::_tc_INV_OBJREF,
-  CORBA::_tc_OBJECT_NOT_EXIST,
-  CORBA::_tc_NO_PERMISSION,
-  CORBA::_tc_INTERNAL,
-  CORBA::_tc_MARSHAL,
-  CORBA::_tc_INITIALIZE,
-  CORBA::_tc_NO_IMPLEMENT,
-  CORBA::_tc_BAD_TYPECODE,
-  CORBA::_tc_BAD_OPERATION,
-  CORBA::_tc_NO_RESOURCES,
-  CORBA::_tc_NO_RESPONSE,
-  CORBA::_tc_PERSIST_STORE,
-  CORBA::_tc_BAD_INV_ORDER,
-  CORBA::_tc_TRANSIENT,
-  CORBA::_tc_FREE_MEM,
-  CORBA::_tc_INV_IDENT,
-  CORBA::_tc_INV_FLAG,
-  CORBA::_tc_INTF_REPOS,
-  CORBA::_tc_BAD_CONTEXT,
-  CORBA::_tc_OBJ_ADAPTER,
-  CORBA::_tc_DATA_CONVERSION,
-  CORBA::_tc_Bounds,
-  CORBA::_tc_BadKind
-};
-
-static int n = sizeof (tcs) / sizeof (tcs[0]);
-
 int
 main (int argc, char *argv[])
 {
+  static const CORBA::TypeCode_ptr tcs[]=
+  {
+    CORBA::_tc_null,
+    CORBA::_tc_void,
+    CORBA::_tc_short,
+    CORBA::_tc_long,
+    CORBA::_tc_ushort,
+    CORBA::_tc_ulong,
+    CORBA::_tc_float,
+    CORBA::_tc_double,
+    CORBA::_tc_boolean,
+    CORBA::_tc_char,
+    CORBA::_tc_octet,
+    CORBA::_tc_any,
+    CORBA::_tc_TypeCode,
+    CORBA::_tc_Principal,
+    CORBA::_tc_Object,
+    // CORBA::_tc_struct,
+    // CORBA::_tc_union,
+    // CORBA::_tc_enum,
+    CORBA::_tc_string,
+    // CORBA::_tc_sequence,
+    // CORBA::_tc_array,
+    // CORBA::_tc_alias,
+    // CORBA::_tc_except,
+    CORBA::_tc_longlong,
+    CORBA::_tc_ulonglong,
+    CORBA::_tc_longdouble,
+    CORBA::_tc_wchar,
+    CORBA::_tc_wstring,
+    CORBA::_tc_UNKNOWN,
+    CORBA::_tc_BAD_PARAM,
+    CORBA::_tc_NO_MEMORY,
+    CORBA::_tc_IMP_LIMIT,
+    CORBA::_tc_COMM_FAILURE,
+    CORBA::_tc_INV_OBJREF,
+    CORBA::_tc_OBJECT_NOT_EXIST,
+    CORBA::_tc_NO_PERMISSION,
+    CORBA::_tc_INTERNAL,
+    CORBA::_tc_MARSHAL,
+    CORBA::_tc_INITIALIZE,
+    CORBA::_tc_NO_IMPLEMENT,
+    CORBA::_tc_BAD_TYPECODE,
+    CORBA::_tc_BAD_OPERATION,
+    CORBA::_tc_NO_RESOURCES,
+    CORBA::_tc_NO_RESPONSE,
+    CORBA::_tc_PERSIST_STORE,
+    CORBA::_tc_BAD_INV_ORDER,
+    CORBA::_tc_TRANSIENT,
+    CORBA::_tc_FREE_MEM,
+    CORBA::_tc_INV_IDENT,
+    CORBA::_tc_INV_FLAG,
+    CORBA::_tc_INTF_REPOS,
+    CORBA::_tc_BAD_CONTEXT,
+    CORBA::_tc_OBJ_ADAPTER,
+    CORBA::_tc_DATA_CONVERSION,
+    CORBA::_tc_Bounds,
+    CORBA::_tc_BadKind
+  };
+
+  static int n = sizeof (tcs) / sizeof (tcs[0]);
+
   TAO_TRY
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
@@ -100,7 +100,7 @@ main (int argc, char *argv[])
            ++i)
 	{
 	  CORBA::TypeCode_ptr tc = *i;
-	  
+
 	  CORBA::TCKind k = tc->kind (TAO_TRY_ENV);
 	  TAO_CHECK_ENV;
 
@@ -118,8 +118,8 @@ main (int argc, char *argv[])
 
 		const char *name = tc->name (TAO_TRY_ENV);
 		TAO_CHECK_ENV;
-		
-		CORBA::ULong length = 0; 
+
+		CORBA::ULong length = 0;
                 // tc->length (TAO_TRY_ENV);
 		TAO_CHECK_ENV;
 
@@ -148,6 +148,6 @@ main (int argc, char *argv[])
       TAO_TRY_ENV.print_exception ("TC");
     }
   TAO_ENDTRY;
-  
+
   return 0;
 }

@@ -260,7 +260,7 @@ class TAO_Export TAO_Exceptions
   //   This class is a namespace for exception-related static data and
   //   methods.
 public:
-  static void make_standard_typecode (CORBA::TypeCode_ptr tcp,
+  static void make_standard_typecode (CORBA::TypeCode_ptr &tcp,
                                       const char *name,
                                       char *buffer,
                                       size_t buflen,
@@ -286,10 +286,10 @@ public:
   };
 
   static CORBA::TypeCode_ptr sys_exceptions [NUM_SYS_EXCEPTIONS];
-  // @@ Please document me.
+  // an array of system exception typecodes
 
   static CORBA::ExceptionList *system_exceptions;
-  // @@ Please document me.
+  // list of system exceptions
 };
 
 class CORBA_ExceptionList

@@ -78,7 +78,7 @@ public:
   // is FALSE the sequence returns a pointer to its buffer, allocating
   // one if it has not yet done so.  The number of elements in the
   // buffer can be determined from the sequence <length> accessor.
-  // 
+  //
   // If the <orphan> argument to <get_buffer> is FALSE, the sequence
   // maintains ownership of the underlying buffer.  Elements in the
   // returned buffer may be directly replaced by the caller.  For
@@ -159,9 +159,12 @@ public:
   static void freebuf (T *);
   // Free the sequence.
 
-  // @@ Please document me.
   virtual void _allocate_buffer (CORBA::ULong length);
+  // allocate a buffer of the requested length. The buffer is allocated for the
+  // right type
+
   virtual void _deallocate_buffer (void);
+  // deallocate the buffer
 
   // = orbos/98-01-11 proposed extensions.
   T *get_buffer (CORBA::Boolean orphan = CORBA::B_FALSE);
@@ -170,8 +173,8 @@ public:
   // one if it has not yet done so.  The size of the returned buffer
   // is equal to the sequence bound, which can be determined with the
   // <maximum> accessor.  The number of elements in the buffer can be
-  // determined from the sequence <length> accessor.  
-  // 
+  // determined from the sequence <length> accessor.
+  //
   // If the <orphan> argument to <get_buffer> is FALSE, the sequence
   // maintains ownership of the underlying buffer.  Elements in the
   // returned buffer may be directly replaced by the caller.  For
@@ -307,7 +310,7 @@ class TAO_Unbounded_Object_Sequence : public TAO_Unbounded_Base_Sequence
   //   pseudo objects, object references and strings.
 
   // = SPEC
-  // 16.8 Mapping for Structured Types 
+  // 16.8 Mapping for Structured Types
   // The mapping for struct, union, and sequence (but not array) is a
   // C++ struct or class with a default constructor, a copy
   // constructor, an assignment operator, and a destructor.
@@ -333,7 +336,7 @@ public:
   // constructor'' shown in the example above). This allows
   // applications to control how much buffer space is initially
   // allocated by the sequence. This constructor also sets the length
-  // to 0 and the release flag to TRUE. 
+  // to 0 and the release flag to TRUE.
 
   TAO_Unbounded_Object_Sequence (CORBA::ULong maximum,
 				 CORBA::ULong length,
@@ -345,10 +348,10 @@ public:
   // value of the maximum length to be set. For this constructor,
   // ownership of the contents vector is determined by the release
   // parameter---FALSE means the caller owns the storage, while TRUE
-  // means that the sequence assumes ownership of the storage. 
+  // means that the sequence assumes ownership of the storage.
   // If release is TRUE, the contents vector must have been allocated
   // using the sequence allocbuf function, and the sequence will pass
-  // it to freebuf when finished with it. 
+  // it to freebuf when finished with it.
 
   TAO_Unbounded_Object_Sequence(const TAO_Unbounded_Object_Sequence<T> &);
   // The copy constructor performs a deep copy from the existing
@@ -359,7 +362,7 @@ public:
   // The copy constructor creates a new sequence with the same maximum
   // and length as the given sequence, copies each of its current
   // elements (items zero through length-1), and sets the release
-  // flag to TRUE. 
+  // flag to TRUE.
 
   ~TAO_Unbounded_Object_Sequence (void);
   // The destructor releases all object reference memebrs and frees
@@ -484,7 +487,7 @@ public:
   // cannot be set or modified, while for unbounded  sequences, the
   // default constructor also sets the maximum length to 0. The
   // default constructor for a bounded sequence always allocates a
-  // contents vector, so it always sets the release flag to TRUE. 
+  // contents vector, so it always sets the release flag to TRUE.
 
   TAO_Bounded_String_Sequence (CORBA::ULong length,
 			       char* *value,
@@ -496,18 +499,18 @@ public:
   // value of the maximum length to be set. For this constructor,
   // ownership of the contents vector is determined by the release
   // parameter---FALSE means the caller owns the storage, while TRUE
-  // means that the sequence assumes ownership of the storage. 
+  // means that the sequence assumes ownership of the storage.
   //
   // If release is TRUE, the contents vector must have been allocated
   // using the sequence  allocbuf function, and the sequence will pass
-  // it to freebuf when finished with it. 
+  // it to freebuf when finished with it.
 
   TAO_Bounded_String_Sequence (const TAO_Bounded_String_Sequence<MAX> &);
   // {SPEC}
   // Management Functions'' on page 16. The copy constructor creates a
   // new sequence with the same maximum and length as the given
   // sequence, copies each of its current elements (items zero through
-  // length--1), and sets the release flag to TRUE. 
+  // length--1), and sets the release flag to TRUE.
 
   TAO_Bounded_String_Sequence &operator= (const TAO_Bounded_String_Sequence<MAX> &);
   // {SPEC}
@@ -534,7 +537,7 @@ public:
   // references, which are initialized to suitably typed nil object
   // references. A null pointer is returned if allocbuf for some
   // reason cannot allocate the requested vector. Vectors allocated by
-  // allocbuf should be freed using the freebuf function. 
+  // allocbuf should be freed using the freebuf function.
 
   static void freebuf (char **buffer);
   // {SPEC}

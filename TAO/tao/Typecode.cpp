@@ -25,12 +25,19 @@ CORBA_TypeCode::operator new (size_t s)
   return ::operator new (s);
 }
 
+// CORBA compliant duplicate
 CORBA::TypeCode_ptr
 CORBA_TypeCode::_duplicate (CORBA::TypeCode_ptr tc)
 {
   if (tc)
     tc->AddRef ();
   return tc;
+}
+
+CORBA::TypeCode_ptr
+CORBA::TypeCode::_nil (void)
+{
+  return (CORBA::TypeCode_ptr)0;
 }
 
 CORBA_TypeCode::Bounds::Bounds (void)
@@ -125,8 +132,6 @@ CORBA_TypeCode::CORBA_TypeCode (CORBA::TCKind kind,
       (void) ACE_OS::memcpy (start, buffer, this->length_);
 
       this->buffer_ = start;
-      // The ORB does not own this typecode.
-      this->orb_owns_ = CORBA::B_FALSE;
     }
   else
     {
@@ -156,15 +161,27 @@ CORBA_TypeCode::operator delete (void* p)
 CORBA_TypeCode::~CORBA_TypeCode (void)
 {
   if (this->orb_owns_)
-    // we are constants, don't do anything
-    return;
+    {
+      // we free up this typcode only when the ORB resources are freed
+      if (CORBA_ORB::orb_free_resources ())
+        {
+          this->delete_flag_ = CORBA::B_TRUE;
+
+          // Free up our private state (if any)
+          delete this->private_state_;
+
+          // Delete the original, possibly nonaligned, buffer.
+          delete [] this->non_aligned_buffer_;
+          this->buffer_ = 0;
+        }
+    }
   else if (this->parent_) // check if we have a parent
     {
       // We have a parent which means that we were not directly
       // created by IDL compiler generated code, but by the
       // precomputation logic. We should delete ourselves and the
       // subtree below us only if our parent was in the process of
-      // deleteing itself
+      // deleting itself
       if (parent_->delete_flag_)
         // Parent is deleting, so we have to go.
         {

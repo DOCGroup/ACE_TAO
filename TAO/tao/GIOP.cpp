@@ -525,97 +525,6 @@ TAO_GIOP_Invocation::~TAO_GIOP_Invocation (void)
     this->handler_->idle ();
 }
 
-// Octet codes for the parameters of the "Opaque" (sequence of octet)
-// data type used various places internally ... a CDR encapsulation
-// holding two parameters (like all sequence TypeCodes).
-//
-// NOTE: this **MUST** be longword aligned, which is why it's coded as
-// a longword array not an octet array.  Just sticking a long in for
-// padding won't work with compilers that optimize unused data out of
-// existence.
-
-// CDR typecode octets.
-
-static const CORBA::Long _oc_opaque [] =
-{
-
-  TAO_ENCAP_BYTE_ORDER,    // native endian + padding; "tricky"
-  10,                      // ... (sequence of) octets
-  0                        // ... unbounded
-};
-
-CORBA::TypeCode
-TC_opaque (CORBA::tk_sequence,
-           sizeof _oc_opaque,
-           (char *) &_oc_opaque,
-           CORBA::B_FALSE);
-
-// Octet codes for the parameters of the ServiceContextList TypeCode
-// ...  this is a CDR encapsulation holding two parameters (like all
-// sequences): a TypeCode, and the bounds of the sequence (zero in
-// this case).
-//
-// This is complicated since the Typecode for the data type for the
-// sequence members is complex, a structure that nests two further
-// typecodes (one is a sequence).
-//
-// NOTE:  this must be longword aligned!
-
-static const CORBA::Long _oc_svc_ctx_list [] =
-{
-  // START bytes of encapsulation 0
-  TAO_ENCAP_BYTE_ORDER, // native endian + padding; "tricky"
-
-  //
-  // FIRST sequence param:  typecode for struct is complex,
-  // and so uses a nested encapsulation.
-  //
-  CORBA::tk_struct,
-  72, // length of encapsulation 1
-
-  // START bytes of encapsulation 1 (struct params)
-  1, // native endian + padding; "tricky"
-  1, 0, // type ID omitted:  null string
-  1, 0, // name omitted "ServiceContext"
-
-  2, // two struct elements
-
-  // First structure element:  name, typecode for ULong
-  //
-  // NOTE:  to be more strictly correct this could be a CORBA::tk_alias
-  // typecode ...
-
-  1, 0, // name omitted:  "context_id"
-  CORBA::tk_long,
-
-  // Second structure element: name, typecode for sequence of octet;
-  // the typecode for sequence of octet is complex, there's a second
-  // level of nested encapuslation here.
-
-  1, 0, // name omitted:  "context_data"
-  CORBA::tk_sequence,   // sequence typecode
-  16, // length of encapsulation 2
-
-  // START bytes of encapsulation 2 (sequence params)
-  1, // native endian + padding; "tricky"
-  1, 0, // type ID omitted:  null string
-  CORBA::tk_octet, // (sequence of) octet
-  0, // ... unbounded length
-  // END bytes of encapsulation 2 (sequence params)
-
-  // END bytes of encapsulation 1 (struct params)
-
-  // SECOND sequence param:  bound of sequence (none)
-  0 // unbounded seq of ServiceContext
-  // END bytes of encapsulation 0 (sequence params)
-};
-
-CORBA::TypeCode
-TC_ServiceContextList (CORBA::tk_sequence,
-                       sizeof _oc_svc_ctx_list,
-                       (char *) &_oc_svc_ctx_list,
-                       CORBA::B_FALSE);
-
 // The public API involves creating an invocation, starting it, filling
 // in request parameters, actually performing the invocation, getting
 // response parameters, and then cleaning up.  Sometimes they must be
@@ -748,7 +657,7 @@ TAO_GIOP_Invocation::start (CORBA::Environment &env)
   static CORBA::Principal_ptr anybody = 0;
   static TAO_GIOP_ServiceContextList svc_ctx;   // all zeroes
 
-  if (this->out_stream_.encode (&TC_ServiceContextList, 0, &svc_ctx, env)
+  if (this->out_stream_.encode (TC_ServiceContextList, 0, &svc_ctx, env)
       != CORBA::TypeCode::TRAVERSE_CONTINUE)
     return;
 
@@ -759,7 +668,7 @@ TAO_GIOP_Invocation::start (CORBA::Environment &env)
       return;
     }
 
-  if (this->out_stream_.encode (&TC_opaque,
+  if (this->out_stream_.encode (TC_opaque,
 				key,
 				0,
 				env) != CORBA::TypeCode::TRAVERSE_CONTINUE
@@ -955,7 +864,7 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
   CORBA::ULong request_id;
   CORBA::ULong reply_status;            // TAO_GIOP_ReplyStatusType
 
-  if (this->inp_stream_.decode (&TC_ServiceContextList, &reply_ctx, 0, env)
+  if (this->inp_stream_.decode (TC_ServiceContextList, &reply_ctx, 0, env)
       != CORBA::TypeCode::TRAVERSE_CONTINUE)
     {
       TAO_GIOP::send_error (this->handler_);
@@ -1164,7 +1073,7 @@ TAO_GIOP_LocateRequestHeader::init (TAO_InputCDR &msg,
                                     CORBA::Environment &env)
 {
   return (msg.read_ulong (this->request_id)
-          && msg.decode (&TC_opaque,
+          && msg.decode (TC_opaque,
                          &this->object_key,
                          0,
                          env));
@@ -1187,7 +1096,7 @@ TAO_GIOP_RequestHeader::init (TAO_InputCDR &msg,
   // environment.  It may be required even when using IPSEC security
   // infrastructure.
 
-  hdr_status = msg.decode (&TC_ServiceContextList,
+  hdr_status = msg.decode (TC_ServiceContextList,
                            &this->service_info,
                            0,
                            env);
@@ -1196,7 +1105,7 @@ TAO_GIOP_RequestHeader::init (TAO_InputCDR &msg,
 
   hdr_status = hdr_status && msg.read_ulong (this->request_id);
   hdr_status = hdr_status && msg.read_boolean (this->response_expected);
-  hdr_status = hdr_status && msg.decode (&TC_opaque,
+  hdr_status = hdr_status && msg.decode (TC_opaque,
                                          &this->object_key,
                                          0,
                                          env);

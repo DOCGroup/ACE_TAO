@@ -82,7 +82,7 @@ public:
                         CORBA::Environment &env) const;
   // Compares two typecodes.
 
-  CORBA::TCKind  kind (CORBA::Environment &) const;
+  CORBA::TCKind kind (CORBA::Environment &) const;
   // For all TypeCode kinds, returns the "kind" of the typecode.
 
   const char *id (CORBA::Environment &) const;
@@ -461,6 +461,22 @@ public:
 
 private:
   CORBA_TypeCode_ptr &ptr_;
+};
+
+class TAO_Export TAO_TypeCodes
+{
+  // = TITLE
+  //   This class is a namespace for TypeCode-related static data that is owned
+  //   by the ORB.
+public:
+
+  static void init (void);
+  // Runtime initialization of all standard typecodes.
+  // Called from <CORBA::ORB_init>.
+
+  static void fini (void);
+  // Runtime finalization of all standard typecodes.
+
 };
 
 #if defined (__ACE_INLINE__)

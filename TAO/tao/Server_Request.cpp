@@ -378,7 +378,7 @@ IIOP_ServerRequest::init_reply (CORBA::Environment &env)
   TAO_GIOP::start_message (TAO_GIOP::Reply, *this->outgoing_);
   TAO_GIOP_ServiceContextList resp_ctx;
   resp_ctx.length (0);
-  this->outgoing_->encode (&TC_ServiceContextList,
+  this->outgoing_->encode (TC_ServiceContextList,
                            &resp_ctx,
                            0,
                            env);
