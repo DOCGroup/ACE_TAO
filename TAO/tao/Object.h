@@ -28,10 +28,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Pseudo_VarOut_T.h"
-//#include "ace/Synch.h"
-class ACE_Lock;
 #include "tao/IOP_IORC.h"
-
 
 class TAO_Stub;
 class TAO_Abstract_ServantBase;

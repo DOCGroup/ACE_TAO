@@ -24,7 +24,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Synch_T.h"
+#include "ace/Thread_Mutex.h"
 
 
 /**

@@ -16,7 +16,7 @@
 
 #include "tao/orbconf.h"
 #include "tao/TAO_Export.h"
-#include "ace/Synch.h"
+#include "ace/Condition_Thread_Mutex.h"
 #include "ace/Intrusive_List_Node.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
