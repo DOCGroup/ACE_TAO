@@ -1,3 +1,11 @@
+Tue Jan  4 19:42:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/BiDir_GIOP/BiDir_Policy_i.{h,cpp,inl}:
+          Removed empty .inl file and updated cpp/h file for this
+
+        * tao/Makefile.am
+          Updated for change above
+
 Tue Jan  4 16:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Acceptor_Filter.{h,cpp,i}:
