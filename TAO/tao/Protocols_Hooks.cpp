@@ -52,12 +52,11 @@ TAO_Protocols_Hooks::validate_policy_type (CORBA::ULong,
   return;
 }
 
-void
-TAO_Protocols_Hooks::add_rt_service_context_hook (TAO_GIOP_Invocation *,
-                                                  CORBA::Policy *,
-                                                  CORBA::Short &,
-                                                  CORBA::Environment
-                                                  &)
+void 
+TAO_Protocols_Hooks::add_rt_service_context_hook (TAO_Service_Context &,
+                                            CORBA::Policy *,
+                                            CORBA::Short &,
+                                            CORBA::Environment &)
 {
   return;
 }

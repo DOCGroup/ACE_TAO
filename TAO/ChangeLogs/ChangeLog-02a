@@ -1,3 +1,10 @@
+Tue Apr 15 17:31:16 2001  Frank Hunleth <fhunleth@cs.wustl.edu>
+
+        * tao/Protocols_Hooks.cpp:
+        * tao/Protocols_Hooks.h:
+          Fixed signature of add_rt_service_context_hook ().  Thanks to Kitty
+          and the Tru64 compiler for catching the typo.
+
 Tue May 15 14:16:39 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Transport.h:
