@@ -1,3 +1,14 @@
+Wed Apr 10 17:38:31 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/README: New config macros ACE_HAS_STRNLEN and ACE_HAS_WCSNLEN.
+
+        * ace/OS_String.{h inl}: New method ACE_OS_String::strnlen finds the
+          length of a string with a specified maximum length. Mimicks the
+          GNU strnlen(3) and wcsnlen(3) functions.
+
+        * ace/config-linux-common.h: Added ACE_HAS_STRNLEN and ACE_HAS_WCSNLEN
+          if _GNU_SOURCE is defined, else glibc headers doesn't declare them.
+
 Wed Apr 10 11:16:57 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Addr.h (hash):
