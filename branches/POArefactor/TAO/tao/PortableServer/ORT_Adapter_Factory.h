@@ -47,12 +47,9 @@ namespace TAO
     virtual ~ORT_Adapter_Factory (void);
 
     /// Create a new adapter, in case not possible to allocate, returns 0
-    virtual TAO::ORT_Adapter * create (
-        ACE_ENV_SINGLE_ARG_DECL) = 0;
+    virtual TAO::ORT_Adapter * create () = 0;
 
-    virtual void destroy (
-        TAO::ORT_Adapter * adapter
-        ACE_ENV_ARG_DECL) = 0;
+    virtual void destroy (TAO::ORT_Adapter * adapter) = 0;
   };
 }
 

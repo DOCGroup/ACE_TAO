@@ -15,7 +15,7 @@ namespace TAO
   }
 
   ORT_Adapter *
-  ORT_Adapter_Factory_Impl::create (ACE_ENV_SINGLE_ARG_DECL)
+  ORT_Adapter_Factory_Impl::create ()
   {
     ORT_Adapter_Impl * new_ort_adapter = 0;
 
@@ -27,8 +27,7 @@ namespace TAO
   }
 
   void
-  ORT_Adapter_Factory_Impl::destroy (ORT_Adapter * adapter
-                                     ACE_ENV_ARG_DECL_NOT_USED)
+  ORT_Adapter_Factory_Impl::destroy (ORT_Adapter * adapter)
   {
     delete adapter;
   }
