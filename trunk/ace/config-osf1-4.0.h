@@ -6,7 +6,7 @@
 // configured to use the IEEE Std 1003.1c-1995, POSIX System
 // Application Program Interface.  By 4.0a the version is meant that
 // is called "V4.0 464" by uname -a.
-     
+
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
 
@@ -31,6 +31,9 @@
 // Platform's implementation of setlrmit() has a non-const rlimit
 // parameter.
 #define ACE_HAS_BROKEN_SETRLIMIT
+
+// Platform supports POSIX 1.b clock_gettime ()
+#define ACE_HAS_CLOCK_GETTIME
 
 // Platform supports System V IPC (most versions of UNIX, but not
 // Win32)
