@@ -19,10 +19,10 @@ endif
 SUBDIRS += \
         apps \
         bin \
-        examples \
         netsvcs \
         performance-tests \
         protocols \
+        examples \
         tests \
         websvcs \
 	@KOKYU@ \
