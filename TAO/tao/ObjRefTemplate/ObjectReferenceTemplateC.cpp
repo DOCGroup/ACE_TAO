@@ -54,13 +54,13 @@
 // Arg traits specializations.
 namespace TAO
 {
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_arg_traits.cpp:263
 
 #if !defined (_CORBA_STRINGSEQ__ARG_TRAITS_CS_)
 #define _CORBA_STRINGSEQ__ARG_TRAITS_CS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_ORT_Export Arg_Traits<CORBA::StringSeq>
     : public
@@ -82,27 +82,27 @@ static const CORBA::Long _oc_PortableInterceptor_ObjectReferenceFactory[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   59,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x506f7274), 
-  ACE_NTOHL (0x61626c65), 
-  ACE_NTOHL (0x496e7465), 
-  ACE_NTOHL (0x72636570), 
-  ACE_NTOHL (0x746f722f), 
-  ACE_NTOHL (0x4f626a65), 
-  ACE_NTOHL (0x63745265), 
-  ACE_NTOHL (0x66657265), 
-  ACE_NTOHL (0x6e636546), 
-  ACE_NTOHL (0x6163746f), 
-  ACE_NTOHL (0x72793a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x496e7465),
+  ACE_NTOHL (0x72636570),
+  ACE_NTOHL (0x746f722f),
+  ACE_NTOHL (0x4f626a65),
+  ACE_NTOHL (0x63745265),
+  ACE_NTOHL (0x66657265),
+  ACE_NTOHL (0x6e636546),
+  ACE_NTOHL (0x6163746f),
+  ACE_NTOHL (0x72793a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/PortableInterceptor/ObjectReferenceFactory:1.0
     23,
-  ACE_NTOHL (0x4f626a65), 
-  ACE_NTOHL (0x63745265), 
-  ACE_NTOHL (0x66657265), 
-  ACE_NTOHL (0x6e636546), 
-  ACE_NTOHL (0x6163746f), 
+  ACE_NTOHL (0x4f626a65),
+  ACE_NTOHL (0x63745265),
+  ACE_NTOHL (0x66657265),
+  ACE_NTOHL (0x6e636546),
+  ACE_NTOHL (0x6163746f),
   ACE_NTOHL (0x72790000),  // name = ObjectReferenceFactory
     2, // value modifier
   CORBA::tk_null, // no stateful base valuetype
@@ -150,7 +150,7 @@ PortableInterceptor::ObjectReferenceFactory::_downcast (CORBA::ValueBase *v)
     {
       return 0;
     }
-  
+
   return dynamic_cast<PortableInterceptor::ObjectReferenceFactory *> (v);
 }
 
@@ -184,29 +184,29 @@ CORBA::Boolean PortableInterceptor::ObjectReferenceFactory::_tao_unmarshal (
         base,
         ObjectReferenceFactory::_tao_obv_static_repository_id ()
       );
-  
+
   if (retval == 0)
     {
       return 0;
     }
-  
+
   if (factory.in () != 0)
     {
       base = factory->create_for_unmarshal ();
-      
+
       if (base == 0)
         {
           return 0;  // %! except.?
         }
-      
+
       retval = base->_tao_unmarshal_v (strm);
-      
+
       if (retval == 0)
         {
           return 0;
         }
     }
-  
+
   // Now base must be null or point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = ObjectReferenceFactory::_downcast (base);
@@ -220,27 +220,27 @@ static const CORBA::Long _oc_PortableInterceptor_ObjectReferenceTemplate[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   60,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x506f7274), 
-  ACE_NTOHL (0x61626c65), 
-  ACE_NTOHL (0x496e7465), 
-  ACE_NTOHL (0x72636570), 
-  ACE_NTOHL (0x746f722f), 
-  ACE_NTOHL (0x4f626a65), 
-  ACE_NTOHL (0x63745265), 
-  ACE_NTOHL (0x66657265), 
-  ACE_NTOHL (0x6e636554), 
-  ACE_NTOHL (0x656d706c), 
-  ACE_NTOHL (0x6174653a), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x496e7465),
+  ACE_NTOHL (0x72636570),
+  ACE_NTOHL (0x746f722f),
+  ACE_NTOHL (0x4f626a65),
+  ACE_NTOHL (0x63745265),
+  ACE_NTOHL (0x66657265),
+  ACE_NTOHL (0x6e636554),
+  ACE_NTOHL (0x656d706c),
+  ACE_NTOHL (0x6174653a),
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/PortableInterceptor/ObjectReferenceTemplate:1.0
     24,
-  ACE_NTOHL (0x4f626a65), 
-  ACE_NTOHL (0x63745265), 
-  ACE_NTOHL (0x66657265), 
-  ACE_NTOHL (0x6e636554), 
-  ACE_NTOHL (0x656d706c), 
+  ACE_NTOHL (0x4f626a65),
+  ACE_NTOHL (0x63745265),
+  ACE_NTOHL (0x66657265),
+  ACE_NTOHL (0x6e636554),
+  ACE_NTOHL (0x656d706c),
   ACE_NTOHL (0x61746500),  // name = ObjectReferenceTemplate
     2, // value modifier
   CORBA::tk_null, // no stateful base valuetype
@@ -288,7 +288,7 @@ PortableInterceptor::ObjectReferenceTemplate::_downcast (CORBA::ValueBase *v)
     {
       return 0;
     }
-  
+
   return dynamic_cast<PortableInterceptor::ObjectReferenceTemplate *> (v);
 }
 
@@ -322,36 +322,36 @@ CORBA::Boolean PortableInterceptor::ObjectReferenceTemplate::_tao_unmarshal (
         base,
         ObjectReferenceTemplate::_tao_obv_static_repository_id ()
       );
-  
+
   if (retval == 0)
     {
       return 0;
     }
-  
+
   if (factory.in () != 0)
     {
       base = factory->create_for_unmarshal ();
-      
+
       if (base == 0)
         {
           return 0;  // %! except.?
         }
-      
+
       retval = base->_tao_unmarshal_v (strm);
-      
+
       if (retval == 0)
         {
           return 0;
         }
     }
-  
+
   // Now base must be null or point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = ObjectReferenceTemplate::_downcast (base);
   return retval;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_sequence/sequence_cs.cpp:66
 
 #if !defined (_PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATESEQ_CS_)
@@ -414,29 +414,29 @@ static const CORBA::Long _oc_PortableInterceptor_ObjectReferenceTemplateSeq[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   63,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x506f7274), 
-  ACE_NTOHL (0x61626c65), 
-  ACE_NTOHL (0x496e7465), 
-  ACE_NTOHL (0x72636570), 
-  ACE_NTOHL (0x746f722f), 
-  ACE_NTOHL (0x4f626a65), 
-  ACE_NTOHL (0x63745265), 
-  ACE_NTOHL (0x66657265), 
-  ACE_NTOHL (0x6e636554), 
-  ACE_NTOHL (0x656d706c), 
-  ACE_NTOHL (0x61746553), 
-  ACE_NTOHL (0x65713a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x496e7465),
+  ACE_NTOHL (0x72636570),
+  ACE_NTOHL (0x746f722f),
+  ACE_NTOHL (0x4f626a65),
+  ACE_NTOHL (0x63745265),
+  ACE_NTOHL (0x66657265),
+  ACE_NTOHL (0x6e636554),
+  ACE_NTOHL (0x656d706c),
+  ACE_NTOHL (0x61746553),
+  ACE_NTOHL (0x65713a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/PortableInterceptor/ObjectReferenceTemplateSeq:1.0
     27,
-  ACE_NTOHL (0x4f626a65), 
-  ACE_NTOHL (0x63745265), 
-  ACE_NTOHL (0x66657265), 
-  ACE_NTOHL (0x6e636554), 
-  ACE_NTOHL (0x656d706c), 
-  ACE_NTOHL (0x61746553), 
+  ACE_NTOHL (0x4f626a65),
+  ACE_NTOHL (0x63745265),
+  ACE_NTOHL (0x66657265),
+  ACE_NTOHL (0x6e636554),
+  ACE_NTOHL (0x656d706c),
+  ACE_NTOHL (0x61746553),
   ACE_NTOHL (0x65710000),  // name = ObjectReferenceTemplateSeq
     CORBA::tk_sequence, // typecode kind
   124, // encapsulation length
@@ -445,33 +445,33 @@ static const CORBA::Long _oc_PortableInterceptor_ObjectReferenceTemplateSeq[] =
     480, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
       60,
-      ACE_NTOHL (0x49444c3a), 
-      ACE_NTOHL (0x6f6d672e), 
-      ACE_NTOHL (0x6f72672f), 
-      ACE_NTOHL (0x506f7274), 
-      ACE_NTOHL (0x61626c65), 
-      ACE_NTOHL (0x496e7465), 
-      ACE_NTOHL (0x72636570), 
-      ACE_NTOHL (0x746f722f), 
-      ACE_NTOHL (0x4f626a65), 
-      ACE_NTOHL (0x63745265), 
-      ACE_NTOHL (0x66657265), 
-      ACE_NTOHL (0x6e636554), 
-      ACE_NTOHL (0x656d706c), 
-      ACE_NTOHL (0x6174653a), 
+      ACE_NTOHL (0x49444c3a),
+      ACE_NTOHL (0x6f6d672e),
+      ACE_NTOHL (0x6f72672f),
+      ACE_NTOHL (0x506f7274),
+      ACE_NTOHL (0x61626c65),
+      ACE_NTOHL (0x496e7465),
+      ACE_NTOHL (0x72636570),
+      ACE_NTOHL (0x746f722f),
+      ACE_NTOHL (0x4f626a65),
+      ACE_NTOHL (0x63745265),
+      ACE_NTOHL (0x66657265),
+      ACE_NTOHL (0x6e636554),
+      ACE_NTOHL (0x656d706c),
+      ACE_NTOHL (0x6174653a),
       ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/PortableInterceptor/ObjectReferenceTemplate:1.0
             24,
-      ACE_NTOHL (0x4f626a65), 
-      ACE_NTOHL (0x63745265), 
-      ACE_NTOHL (0x66657265), 
-      ACE_NTOHL (0x6e636554), 
-      ACE_NTOHL (0x656d706c), 
+      ACE_NTOHL (0x4f626a65),
+      ACE_NTOHL (0x63745265),
+      ACE_NTOHL (0x66657265),
+      ACE_NTOHL (0x6e636554),
+      ACE_NTOHL (0x656d706c),
       ACE_NTOHL (0x61746500),  // name = ObjectReferenceTemplate
             2, // value modifier
       CORBA::tk_null, // no stateful base valuetype
 
 3, // member count
-      
+
     0U,
 
 };
@@ -497,25 +497,25 @@ static const CORBA::Long _oc_PortableInterceptor_AdapterManagerId[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   53,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x506f7274), 
-  ACE_NTOHL (0x61626c65), 
-  ACE_NTOHL (0x496e7465), 
-  ACE_NTOHL (0x72636570), 
-  ACE_NTOHL (0x746f722f), 
-  ACE_NTOHL (0x41646170), 
-  ACE_NTOHL (0x7465724d), 
-  ACE_NTOHL (0x616e6167), 
-  ACE_NTOHL (0x65724964), 
-  ACE_NTOHL (0x3a312e30), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x496e7465),
+  ACE_NTOHL (0x72636570),
+  ACE_NTOHL (0x746f722f),
+  ACE_NTOHL (0x41646170),
+  ACE_NTOHL (0x7465724d),
+  ACE_NTOHL (0x616e6167),
+  ACE_NTOHL (0x65724964),
+  ACE_NTOHL (0x3a312e30),
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/PortableInterceptor/AdapterManagerId:1.0
     17,
-  ACE_NTOHL (0x41646170), 
-  ACE_NTOHL (0x7465724d), 
-  ACE_NTOHL (0x616e6167), 
-  ACE_NTOHL (0x65724964), 
+  ACE_NTOHL (0x41646170),
+  ACE_NTOHL (0x7465724d),
+  ACE_NTOHL (0x616e6167),
+  ACE_NTOHL (0x65724964),
   ACE_NTOHL (0x0),  // name = AdapterManagerId
     CORBA::tk_long,
 
@@ -542,23 +542,23 @@ static const CORBA::Long _oc_PortableInterceptor_AdapterState[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   49,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x506f7274), 
-  ACE_NTOHL (0x61626c65), 
-  ACE_NTOHL (0x496e7465), 
-  ACE_NTOHL (0x72636570), 
-  ACE_NTOHL (0x746f722f), 
-  ACE_NTOHL (0x41646170), 
-  ACE_NTOHL (0x74657253), 
-  ACE_NTOHL (0x74617465), 
-  ACE_NTOHL (0x3a312e30), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x496e7465),
+  ACE_NTOHL (0x72636570),
+  ACE_NTOHL (0x746f722f),
+  ACE_NTOHL (0x41646170),
+  ACE_NTOHL (0x74657253),
+  ACE_NTOHL (0x74617465),
+  ACE_NTOHL (0x3a312e30),
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/PortableInterceptor/AdapterState:1.0
     13,
-  ACE_NTOHL (0x41646170), 
-  ACE_NTOHL (0x74657253), 
-  ACE_NTOHL (0x74617465), 
+  ACE_NTOHL (0x41646170),
+  ACE_NTOHL (0x74657253),
+  ACE_NTOHL (0x74617465),
   ACE_NTOHL (0x0),  // name = AdapterState
     CORBA::tk_short,
 
@@ -582,9 +582,7 @@ namespace PortableInterceptor
 // be/be_visitor_valuetype/any_op_cs.cpp:57
 
 
-
 template<>
-ACE_INLINE
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::ObjectReferenceFactory>::to_value (
     CORBA::ValueBase *&_tao_elem
@@ -594,6 +592,7 @@ TAO::Any_Impl_T<PortableInterceptor::ObjectReferenceFactory>::to_value (
   _tao_elem = this->value_;
   return 1;
 }// Copying insertion.
+
 void
 operator<<= (
     CORBA::Any &_tao_any,
@@ -642,7 +641,6 @@ operator>>= (
 
 
 template<>
-ACE_INLINE
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::ObjectReferenceTemplate>::to_value (
     CORBA::ValueBase *&_tao_elem
@@ -694,7 +692,7 @@ operator>>= (
 
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_sequence/any_op_cs.cpp:54
 
 // Copying insertion.
@@ -868,20 +866,20 @@ CORBA::Boolean operator<< (
   )
 {
   CORBA::ULong _tao_seq_len = _tao_sequence.length ();
-  
+
   if (strm << _tao_seq_len)
     {
       // Encode all elements.
       CORBA::Boolean _tao_marshal_flag = 1;
-      
+
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
           _tao_marshal_flag = (strm << _tao_sequence[i].in ());
         }
-      
+
       return _tao_marshal_flag;
     }
-  
+
   return 0;
 }
 
@@ -891,7 +889,7 @@ CORBA::Boolean operator>> (
   )
 {
   CORBA::ULong _tao_seq_len;
-  
+
   if (strm >> _tao_seq_len)
     {
       // Add a check to the length of the sequence
@@ -901,28 +899,28 @@ CORBA::Boolean operator>> (
         {
           return 0;
         }
-      
+
       // Set the length of the sequence.
       _tao_sequence.length (_tao_seq_len);
-      
+
       // If length is 0 we return true.
-      if (0 >= _tao_seq_len) 
+      if (0 >= _tao_seq_len)
         {
           return 1;
         }
-      
+
       // Retrieve all the elements.
       CORBA::Boolean _tao_marshal_flag = 1;
-      
+
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
           _tao_marshal_flag = (strm >> _tao_sequence[i].out ());
         }
-      
+
       return _tao_marshal_flag;
-    
+
     }
-  
+
   return 0;
 }
 
@@ -952,13 +950,13 @@ CORBA::Boolean operator>> (
   template class
     TAO_Value_Var_T<
         PortableInterceptor::ObjectReferenceFactory
-        
+
       >;
-  
+
   template class
     TAO_Value_Out_T<
         PortableInterceptor::ObjectReferenceFactory
-        
+
       >;
 
   template class
@@ -971,13 +969,13 @@ CORBA::Boolean operator>> (
   template class
     TAO_Value_Var_T<
         PortableInterceptor::ObjectReferenceTemplate
-        
+
       >;
-  
+
   template class
     TAO_Value_Out_T<
         PortableInterceptor::ObjectReferenceTemplate
-        
+
       >;
 
   template class
@@ -1056,13 +1054,13 @@ CORBA::Boolean operator>> (
 # pragma instantiate \
     TAO_Value_Var_T< \
         PortableInterceptor::ObjectReferenceFactory \
-        
+
       >
-  
+
 # pragma instantiate \
     TAO_Value_Out_T< \
         PortableInterceptor::ObjectReferenceFactory \
-        
+
       >
 
 # pragma instantiate \
@@ -1075,13 +1073,13 @@ CORBA::Boolean operator>> (
 # pragma instantiate \
     TAO_Value_Var_T< \
         PortableInterceptor::ObjectReferenceTemplate \
-        
+
       >
-  
+
 # pragma instantiate \
     TAO_Value_Out_T< \
         PortableInterceptor::ObjectReferenceTemplate \
-        
+
       >
 
 # pragma instantiate \
@@ -1133,5 +1131,4 @@ CORBA::Boolean operator>> (
         PortableInterceptor::ObjectReferenceTemplateSeq \
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
-
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
