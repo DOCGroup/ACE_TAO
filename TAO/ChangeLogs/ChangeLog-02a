@@ -29,7 +29,7 @@ Thu Jan 17 17:04:25 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  validator to the POA policy validator. 
 	
 	* tao/BiDir_Adapter.h: Added a method load_policy_validators () to
-	  add teh policy validator.
+	  add the policy validator.
 	
 	* tao/Makefile: Added the new files.
 
