@@ -2,7 +2,7 @@
 # COS Naming Service Implementation
 #
 
-//include /home/cs/student/marina/CONFIG_MT/orb.mk
+#//include /home/cs/student/marina/CONFIG_MT/orb.mk
 #############################################################
 #
 # This is a standard file to be included in Makefiles used
@@ -24,7 +24,7 @@ X11LIBDIR       = $(X11BASE)/lib
 
 C++             = CC
 C++FLAGS        = -g -I$(ORBIX_INCDIR)  -D_REENTRANT
-C++SUFFIX       = C
+C++SUFFIX       = cpp
 
 # ------------------------------------------------------------
 # ITCLT, IRCLT and ITSRV can be either statically or dynamically linked
@@ -45,7 +45,7 @@ ITINI		= -Bdynamic -lITinimt
 SYSLIBS         = -Bdynamic -mt -lnsl -lsocket
 
 IDL             = $(ORBIX_BINDIR)/idl 
-IDLFLAGS        = -A -B -c C.C -s S.C
+IDLFLAGS        = -A -B -c C.cpp -s S.cpp
 #------------------------------------------------------------
 # The following section defines implicit rules for creating
 # *.{C,S}.C files, rules for compiling those
