@@ -1,3 +1,11 @@
+Mon Dec 30 08:49:31 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/util/utl_global.cpp:
+
+	  Fixed bug in #pragma prefix when the prefix directive is followed by
+	  an #include directive. Thanks to Adee Ran <adeeran@yahoo.com> for
+	  reporting the bug.
+
 Mon Dec 30 06:12:53 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* examples/AMH/Sink_Server/st_server.dsp (USERDEP__TEST_): 
