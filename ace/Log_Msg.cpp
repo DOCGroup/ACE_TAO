@@ -791,7 +791,7 @@ ACE_Log_Msg::open (const ACE_TCHAR *prog_name,
       else
         {
           status =
-            ACE_Log_Msg_Manager::log_backend_->open (logger_key);
+            ACE_Log_Msg_Manager::log_backend_->open (prog_name);
         }
 
       if (status == -1)
@@ -804,8 +804,8 @@ ACE_Log_Msg::open (const ACE_TCHAR *prog_name,
             ACE_SET_BITS (ACE_Log_Msg::flags_, ACE_Log_Msg::SYSLOG);
         }
     }
-  else if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::LOGGER) ||
-           ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::SYSLOG))
+  else if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::LOGGER) 
+           || ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::SYSLOG))
     {
       // If we are closing down logger, redirect logging to stderr.
       ACE_CLR_BITS (ACE_Log_Msg::flags_, ACE_Log_Msg::LOGGER);
