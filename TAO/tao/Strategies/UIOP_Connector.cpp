@@ -167,10 +167,12 @@ TAO_UIOP_Connector::connect (TAO_Transport_Descriptor_Interface *desc,
                     ACE_TEXT ("(%P|%t) UIOP_Connector::connect ")
                     ACE_TEXT ("got an existing connection \n")));
 
+#if 0
       // We have found a connection and a handler
       svc_handler =
         ACE_dynamic_cast (TAO_UIOP_Connection_Handler *,
                           base_transport->connection_handler ());
+#endif
     }
   else
     {
