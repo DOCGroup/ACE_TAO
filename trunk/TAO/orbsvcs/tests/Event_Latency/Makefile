@@ -4,7 +4,15 @@ EVENT_LATENCY_SRCS = Event_Latency.cpp
 LSRC = $(EVENT_LATENCY_SRCS)
 EVENT_LATENCY_OBJS = $(EVENT_LATENCY_SRCS:.cpp=.o)
 
-LDLIBS = -lTAO_RTEvent -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_PortableServer -lTAO
+LDLIBS = -lTAO_RTEvent -lTAO_Svc_Utils -lTAO_PortableServer -lTAO
+#
+# NOTE
+#
+# The following macro expands to a series of libraries
+# on QNX RTP. It has been introduced to solve a problem
+# with the current QNX RTP linker.
+#
+LDLIBS+=$(TAO_COS_NAMING_LIBS)
 
 BIN2 = Event_Latency
 

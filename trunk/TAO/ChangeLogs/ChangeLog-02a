@@ -1,3 +1,42 @@
+Fri Mar  2 20:28:27  Angelo Corsaro  <angelo@hermes.doc.wustl.edu>
+
+	* rules.tao.GNU:
+	* orbsvcs/CosEvent_Service/Makefile:
+	* orbsvcs/Dump_Schedule/Makefile:
+	* orbsvcs/Event_Service/Makefile:
+	* orbsvcs/LifeCycle_Service/Makefile:
+	* orbsvcs/Logging_Service/Makefile:
+	* orbsvcs/Notify_Service/Makefile:
+	* orbsvcs/Scheduling_Service/Makefile:
+	* orbsvcs/tests/AVStreams/benchmark/Makefile:
+	* orbsvcs/tests/CosEvent/Basic/Makefile:
+	* orbsvcs/tests/EC_Basic/Makefile:
+	* orbsvcs/tests/EC_Custom_Marshal/Makefile:
+	* orbsvcs/tests/EC_Multiple/Makefile:
+	* orbsvcs/tests/EC_Throughput/Makefile:
+	* orbsvcs/tests/Event/Basic/Makefile:
+	* orbsvcs/tests/Event/Performance/Makefile:
+	* orbsvcs/tests/Event_Latency/Makefile:
+	* orbsvcs/tests/FaultTolerance/IOGR/Makefile:
+	* orbsvcs/tests/FaultTolerance/IOGRManipulation/Makefile:
+	* orbsvcs/tests/Sched/Makefile:
+	* orbsvcs/tests/Trading/Makefile:
+	* orbsvcs/tests/ior_corbaname/Makefile:
+
+	  Added the new macros:
+	      - TAO_DYNAMIC_LIBS
+	      - TAO_COS_NOTIFICATION_LIBS
+	      - TAO_RT_SCHED_LIBS
+	      - TAO_FAULT_TOLERANCE_LIBS
+	      - TAO_COS_TRADING_LIBS
+	    
+	  this macros expand to  multiple libraries on QNX RTP,
+	  and this enable to work around a problem that is present
+	  currently in the QNX linker. For all othe platform these
+	  macro expand to the only library associated to the CORBA
+	  service. With this work aroun all the orbsvcs  and almost 
+	  all the orbsvcs test build.
+	  
 Fri Mar  2 16:16:45 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Object.cpp (operator>>):
