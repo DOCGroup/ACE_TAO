@@ -4,7 +4,7 @@ Tue Oct 24 11:18:01 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 	  Made the code a little bit cleaner by moving code that is
 	  similar for all the cases in the switch-case block of
 	  private_member_name outside the block.
-	
+
 Tue Oct 24 07:38:45 2000  Chad Elliott  <elliott_c@ociweb.com>
 
         * examples/Simulator/Event_Supplier/Event_Sup.cpp
@@ -188,26 +188,6 @@ Mon Oct 23 02:49:25 2000  Ossama Othman  <ossama@uci.edu>
 
           (create_policy):
 
-<<<<<<< ChangeLog
-	* tao/DomainC.h:
-	* tao/DomainC.cpp:
-	* tao/PortableServer/DomainS.h:
-	* tao/PortableServer/DomainS.cpp:
-
-	  Updated interceptor code to work with the updates in
-	  `tao/PortableInterceptor.{h,i}'.
-
-	* tao/PortableServer/ServerRequestInfo.h:
-	* tao/PortableServer/ServerRequestInfo.cpp:
-
-	  New files based on the server side request information class
-	  from Request_Info.*.
-
-	* tao/Interceptor.pidl:
-
-	  This PIDL source file has been superceded by
-	  Portable_Interceptor.pidl.  Removed.
-=======
           Attempt to obtain the policy of the given type from the policy
           factory registry rather than the now deprecated
           TAO_Service_Callbacks::service_create_policy() method.  The
@@ -288,183 +268,70 @@ Mon Oct 23 02:49:25 2000  Ossama Othman  <ossama@uci.edu>
 
           Updated interceptor code to work with the updates in
           `tao/PortableInterceptor.{h,i}'.
->>>>>>> 1.1758
 
-<<<<<<< ChangeLog
-	* tao/corba.h:
-=======
         * tao/PortableServer/ServerRequestInfo.h:
         * tao/PortableServer/ServerRequestInfo.cpp:
->>>>>>> 1.1758
 
-<<<<<<< ChangeLog
-	  Explicitly include the appropriate interceptor RequestInfo
-	  headers when interceptor support is enabled.  Previously they
-	  were pulled in indirectly.  This was necessary to due to an
-	  inter-header depencency improvement in PortableInterceptor.h.
-=======
           New files based on the server side request information class
           from Request_Info.*.
->>>>>>> 1.1758
 
-<<<<<<< ChangeLog
-	  Include "tao/OctetSeqC.h" to pull in the CORBA::OctetSeq
-	  declarations.
-=======
         * tao/Interceptor.pidl:
->>>>>>> 1.1758
 
-<<<<<<< ChangeLog
-	* tao/OctetSeq.pidl:
-=======
           This PIDL source file has been superceded by
           Portable_Interceptor.pidl.  Removed.
->>>>>>> 1.1758
 
-<<<<<<< ChangeLog
-	  Added instructions that describe the "proper" way to regenerate
-	  the corresponding stubs.
-=======
         * tao/corba.h:
->>>>>>> 1.1758
 
-<<<<<<< ChangeLog
-	* tao/OctetSeq.h:
-	* tao/OctetSeq.i:
-	* tao/OctetSeq.cpp:
-=======
           Explicitly include the appropriate interceptor RequestInfo
           headers when interceptor support is enabled.  Previously they
           were pulled in indirectly.  This was necessary to due to an
           inter-header depencency improvement in PortableInterceptor.h.
->>>>>>> 1.1758
 
-<<<<<<< ChangeLog
-	  Regenerated these files with the proper library export
-	  settings.
-=======
           Include "tao/OctetSeqC.h" to pull in the CORBA::OctetSeq
           declarations.
->>>>>>> 1.1758
 
-<<<<<<< ChangeLog
-	* tao/diffs/OcteqSeq.diff:
-=======
         * tao/OctetSeq.pidl:
->>>>>>> 1.1758
 
-<<<<<<< ChangeLog
-	  Generated this diff against the vanilla generate OctetSeq
-	  stubs.  It was missing for some reason.
-=======
           Added instructions that describe the "proper" way to regenerate
           the corresponding stubs.
->>>>>>> 1.1758
 
-<<<<<<< ChangeLog
-	* tao/StringSeq.pidl:
-=======
         * tao/OctetSeq.h:
         * tao/OctetSeq.i:
         * tao/OctetSeq.cpp:
->>>>>>> 1.1758
 
-<<<<<<< ChangeLog
-	  Newly added PIDL source for the CORBA::StringSeq sequence.
-=======
           Regenerated these files with the proper library export
           settings.
->>>>>>> 1.1758
 
-<<<<<<< ChangeLog
-	* tao/StringSeq.h:
-	* tao/StringSeq.inl:
-	* tao/StringSeq.cpp:
-=======
         * tao/diffs/OcteqSeq.diff:
->>>>>>> 1.1758
 
-<<<<<<< ChangeLog
-	  Removed these files in favor of the below newly regenerated
-	  files since these files do not follow TAO naming conventions,
-	  and since they didn't have the proper Win32 library export
-	  linkage.
-=======
           Generated this diff against the vanilla generate OctetSeq
           stubs.  It was missing for some reason.
->>>>>>> 1.1758
 
-<<<<<<< ChangeLog
-	* tao/StringSeqC.h:
-	* tao/StringSeqC.i:
-	* tao/StringSeqC.cpp:
-=======
         * tao/StringSeq.pidl:
->>>>>>> 1.1758
 
-<<<<<<< ChangeLog
-	  Regenerated these files with the proper library export
-	  settings.  They replace the above StringSeq.* sources.
-=======
           Newly added PIDL source for the CORBA::StringSeq sequence.
->>>>>>> 1.1758
 
-<<<<<<< ChangeLog
-	* tao/diffs/StringSeq.diff:
-=======
         * tao/StringSeq.h:
         * tao/StringSeq.inl:
         * tao/StringSeq.cpp:
->>>>>>> 1.1758
 
-<<<<<<< ChangeLog
-	  Generated this diff against the vanilla generated StringSeq
-	  stubs.
-=======
           Removed these files in favor of the below newly regenerated
           files since these files do not follow TAO naming conventions,
           and since they didn't have the proper Win32 library export
           linkage.
->>>>>>> 1.1758
 
-<<<<<<< ChangeLog
-	* tao/PortableInterceptorC.h:
-=======
         * tao/StringSeqC.h:
         * tao/StringSeqC.i:
         * tao/StringSeqC.cpp:
->>>>>>> 1.1758
 
-<<<<<<< ChangeLog
-	  Corrected signatures for some pure virtual methods.  We actually
-	  want the CORBA::Environment argument for interfaces that are not
-	  inherited by application code, e.g. code that is used internally
-	  by TAO.
-=======
           Regenerated these files with the proper library export
           settings.  They replace the above StringSeq.* sources.
->>>>>>> 1.1758
 
-<<<<<<< ChangeLog
-	* tao/diffs/PortableInterceptorC.h.diff:
-	* tao/diffs/PortableInterceptorC.i.diff:
-	* tao/diffs/PortableInterceptorC.cpp.diff:
-=======
         * tao/diffs/StringSeq.diff:
->>>>>>> 1.1758
 
-<<<<<<< ChangeLog
-	  Removed these diffs in favor of the consolidated
-	  PortableInterceptor.diff below.  These diffs were out of date
-	  anyway.
-=======
           Generated this diff against the vanilla generated StringSeq
           stubs.
->>>>>>> 1.1758
 
-<<<<<<< ChangeLog
-	* tao/diffs/PortableInterceptor.diff:
-=======
         * tao/PortableInterceptorC.h:
 
           Corrected signatures for some pure virtual methods.  We actually
@@ -479,72 +346,26 @@ Mon Oct 23 02:49:25 2000  Ossama Othman  <ossama@uci.edu>
           Removed these diffs in favor of the consolidated
           PortableInterceptor.diff below.  These diffs were out of date
           anyway.
->>>>>>> 1.1758
 
-<<<<<<< ChangeLog
-	  Newly generated diff against the updates made to
-	  PortableInterceptorC.* to correct erroneous earlier updates.
-=======
         * tao/diffs/PortableInterceptor.diff:
->>>>>>> 1.1758
 
-<<<<<<< ChangeLog
-	* tao/DynamicC.cpp:
-=======
           Newly generated diff against the updates made to
           PortableInterceptorC.* to correct erroneous earlier updates.
->>>>>>> 1.1758
 
-<<<<<<< ChangeLog
-	  Include `StrinqSeqC.h' instead of `StringSeq.h', in accordance
-	  with the filenames newly of the regenerated StringSeq stubs.
-=======
         * tao/DynamicC.cpp:
->>>>>>> 1.1758
 
-<<<<<<< ChangeLog
-	* tao/diffs/Dynamic.diff:
-=======
           Include `StrinqSeqC.h' instead of `StringSeq.h', in accordance
           with the filenames newly of the regenerated StringSeq stubs.
->>>>>>> 1.1758
 
-<<<<<<< ChangeLog
-	  `StringSeq.h' is now `StringSeqC.h'.  Updated the diff to
-	  reflect that.
-=======
         * tao/diffs/Dynamic.diff:
->>>>>>> 1.1758
 
-<<<<<<< ChangeLog
-	* tao/diffs/InterceptorC.h.diff:
-	* tao/diffs/InterceptorC.i.diff:
-	* tao/diffs/InterceptorC.cpp.diff:
-=======
           `StringSeq.h' is now `StringSeqC.h'.  Updated the diff to
           reflect that.
->>>>>>> 1.1758
 
-<<<<<<< ChangeLog
-	  Removed these diffs.  The files they were meant to patch are no
-	  longer exist in TAO.
-=======
         * tao/diffs/InterceptorC.h.diff:
         * tao/diffs/InterceptorC.i.diff:
         * tao/diffs/InterceptorC.cpp.diff:
->>>>>>> 1.1758
 
-<<<<<<< ChangeLog
-	* tao/Makefile:
-	* tao/Makefile.am:
-	* tao/Makefile.bor:
-	* tao/TAO.dsp:
-	* tao/TAO_Static.dsp:
-	* tao/PortableServer/Makefile:
-	* tao/PortableServer/Makefile.bor:
-	* tao/PortableServer/TAO_PortableServer.dsp:
-	* tao/PortableServer/TAO_PortableServer_Static.dsp:
-=======
           Removed these diffs.  The files they were meant to patch are no
           longer exist in TAO.
 
@@ -557,7 +378,6 @@ Mon Oct 23 02:49:25 2000  Ossama Othman  <ossama@uci.edu>
         * tao/PortableServer/Makefile.bor:
         * tao/PortableServer/TAO_PortableServer.dsp:
         * tao/PortableServer/TAO_PortableServer_Static.dsp:
->>>>>>> 1.1758
 
           Updated references of StringSeq to StringSeqC, corresponding to
           the newly regenerated CORBA::StringSeq stubs.
