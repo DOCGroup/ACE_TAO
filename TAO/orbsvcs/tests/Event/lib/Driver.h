@@ -17,6 +17,12 @@
 #ifndef EC_DRIVER_H
 #define EC_DRIVER_H
 
+#include "ectest_export.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "orbsvcs/RtecEventChannelAdminS.h"
 
 class TAO_EC_Event_Channel_Attributes;
@@ -35,7 +41,7 @@ class EC_Supplier;
 #include "orbsvcs/RtecSchedulerC.h"
 #endif
 
-class EC_Driver
+class EC_Test_Export EC_Driver
 {
   //
   // = TITLE
@@ -189,7 +195,7 @@ public:
   // Activate all the tasks, by default runs each supplier on its
   // own thread.
 
-  class Latency_Stats
+  class EC_Test_Export Latency_Stats
   {
     // = TITLE
     //   Maintains latency statistics.
@@ -221,7 +227,7 @@ public:
     ACE_hrtime_t max_;
   };
 
-  class Throughput_Stats
+  class EC_Test_Export Throughput_Stats
   {
     // = TITLE
     //   Maintains throughput statistics.
