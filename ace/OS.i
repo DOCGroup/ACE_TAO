@@ -636,8 +636,10 @@ ACE_OS::fstat (ACE_HANDLE handle, ACE_stat *stp)
     // for _fxstat() use of the macro.
     // causes compile and runtime problems.
     ACE_OSCALL_RETURN (::_fxstat (_STAT_VER, handle, stp), int, -1);
-# else  /* !ACE_HAS_X86_STAT_MACROS */
+# elif defined (ACE_WIN32)
     ACE_OSCALL_RETURN (::_fstat (handle, stp), int, -1);
+# else
+    ACE_OSCALL_RETURN (::fstat (handle, stp), int, -1);
 # endif /* !ACE_HAS_X86_STAT_MACROS */
 #endif /* defined (ACE_HAS_PACE) */
 }

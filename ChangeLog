@@ -1,3 +1,8 @@
+Wed Jan 24 18:15:59 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.i (fstat): Oops, wrong version of this function was
+	  modified.
+
 Wed Jan 24 14:44:12 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/FILE.cpp:
