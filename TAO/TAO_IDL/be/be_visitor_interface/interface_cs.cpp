@@ -111,7 +111,8 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "::_nil ();" << be_uidt_nl;
 
       *os << "TAO_Stub* stub = obj->_stubobj ();" << be_nl
-          << "stub->_incr_refcnt ();" << be_nl
+          << "if (stub)" << be_idt_nl
+          << "stub->_incr_refcnt ();" << be_uidt_nl
           // Declare the default proxy.
           << bt->nested_type_name (this->ctx_->scope ())
           << "_ptr default_proxy = "
