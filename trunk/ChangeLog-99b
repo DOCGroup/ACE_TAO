@@ -1,5 +1,9 @@
 Sun Jul  4 12:34:24 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/Timer_Hash_T.cpp (cancel): Reversed a comparison from
+	  <= to > to make the ACE_ASSERT replacement work properly.
+  	  Thanks to David Levine for reporting this.
+
 	* tests/Thread_Pool_Test.cpp (open): We need to define 'int i'
 	  outside of the for loop to keep EGCS from complaining for some
  	  reason.
