@@ -1897,8 +1897,9 @@ Tue Oct 12 08:53:52 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 Tue Oct 12 10:00:52 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-        * ace/Memory_Pool: Added a new memory pool that uses the Win32
-          page file.  Thanks to Dieter Quehl for contributing this.
+        * ace/Memory_Pool (ACE_Pagefile_Memory_Pool):Added a new memory
+	  pool that uses the Win32 page file.  Thanks to Dieter Quehl for
+	  contributing this.
 
 Mon Oct 11 17:07:46 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
