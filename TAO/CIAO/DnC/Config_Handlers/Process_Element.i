@@ -15,7 +15,7 @@
 template <typename VALUE, typename DATA>
 void process_element_attributes(DOMNamedNodeMap* named_node_map,
                                 DOMDocument* doc,
-                                DOMNodeIterator*& iter,
+                                DOMNodeIterator* iter,
                                 VALUE value,
                                 DATA& data,
                                 Process_Function <DATA>* func,
@@ -82,7 +82,7 @@ void process_element_attributes(DOMNamedNodeMap* named_node_map,
 template <typename DATA, typename VALUE>
 void process_element (DOMNode* node,
                       DOMDocument* doc,
-                      DOMNodeIterator*& iter,
+                      DOMNodeIterator* iter,
                       DATA& data,
                       VALUE val,
                       Process_Function <DATA>* func,
@@ -109,7 +109,7 @@ void process_element (DOMNode* node,
 template <typename SEQUENCE, typename DATA>
 void process_sequential_element (DOMNode* node,
                                  DOMDocument* doc,
-                                 DOMNodeIterator*& iter,
+                                 DOMNodeIterator* iter,
                                  SEQUENCE& seq,
                                  Process_Function <DATA>* func,
                                  REFMAP& id_map)

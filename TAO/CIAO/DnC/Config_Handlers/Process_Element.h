@@ -65,9 +65,9 @@ typedef ACE_Hash_Map_Manager<ACE_TString, int, ACE_Null_Mutex> REFMAP;
 template <typename DATA>
 class Process_Function {
 public:
-  virtual void call(DOMNodeIterator*&, DATA&)=0;
+  virtual void call(DOMNodeIterator*, DATA&)=0;
 
-  void operator() (DOMNodeIterator*& iter, DATA& data)
+  void operator() (DOMNodeIterator* iter, DATA& data)
   {
     call(iter, data);
   }
@@ -80,7 +80,7 @@ public:
 template <typename OBJ, typename DATA>
 class Process_Member_Function: public Process_Function<DATA> {
 public:
-  typedef void (OBJ::*func_type) (DOMNodeIterator*&, DATA&);
+  typedef void (OBJ::*func_type) (DOMNodeIterator*, DATA&);
   typedef DATA data_type;
 
   Process_Member_Function(OBJ& obj, func_type f)
@@ -93,7 +93,7 @@ public:
   {
   }
 
-  virtual void call(DOMNodeIterator*& iter, DATA& data)
+  virtual void call(DOMNodeIterator* iter, DATA& data)
   {
     (obj_->*f_) (iter, data);
   }
@@ -110,7 +110,7 @@ private:
 template <typename DATA>
 class Process_Static_Function: public Process_Function<DATA> {
 public:
-  typedef void (*func_type) (DOMNodeIterator*&, DATA&);
+  typedef void (*func_type) (DOMNodeIterator*, DATA&);
   typedef DATA data_type;
 
   Process_Static_Function(func_type f)
@@ -118,7 +118,7 @@ public:
   {
   }
 
-  virtual void call(DOMNodeIterator*& iter, DATA& data)
+  virtual void call(DOMNodeIterator* iter, DATA& data)
   {
     (*f_) (iter, data);
   }
@@ -132,7 +132,7 @@ DOMDocument* create_document (const char *url);
 template <typename DATA, typename VALUE>
 void process_element (DOMNode* node,
                       DOMDocument* doc,
-                      DOMNodeIterator*& iter,
+                      DOMNodeIterator* iter,
                       DATA& data,
                       VALUE val,
                       Process_Function <DATA>* func,
@@ -141,7 +141,7 @@ void process_element (DOMNode* node,
 template <typename SEQUENCE, typename DATA>
 void process_sequential_element (DOMNode* node,
                                  DOMDocument* doc,
-                                 DOMNodeIterator*& iter,
+                                 DOMNodeIterator* iter,
                                  SEQUENCE& seq,
                                  Process_Function <DATA>* func,
                                  REFMAP& id_map);
@@ -152,7 +152,7 @@ void process_sequential_element (DOMNode* node,
 
 template<typename DATA, typename OBJECT, typename SEQUENCE, typename FUNCTION>
 inline bool
-process_sequence(DOMDocument* doc, DOMNodeIterator*& iter, DOMNode* node,
+process_sequence(DOMDocument* doc, DOMNodeIterator* iter, DOMNode* node,
                  XStr& node_name, const char* name,
                  SEQUENCE& seq, OBJECT* obj, FUNCTION func,
                  REFMAP& id_map)
@@ -175,7 +175,7 @@ process_sequence(DOMDocument* doc, DOMNodeIterator*& iter, DOMNode* node,
 
 template<typename DATA, typename SEQUENCE, typename FUNCTION>
 inline bool
-process_sequence(DOMDocument* doc, DOMNodeIterator*& iter, DOMNode* node,
+process_sequence(DOMDocument* doc, DOMNodeIterator* iter, DOMNode* node,
                  XStr& node_name, const char* name,
                  SEQUENCE& seq, FUNCTION func,
                  REFMAP& id_map)
@@ -188,6 +188,8 @@ process_sequence(DOMDocument* doc, DOMNodeIterator*& iter, DOMNode* node,
         pf(func);
       process_sequential_element (node, doc, iter, seq, &pf, id_map);
     }
+
+  return result;
 }
 
 #include "Process_Element.i"
