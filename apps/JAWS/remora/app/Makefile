@@ -1,12 +1,14 @@
+#### $Id$
+
 include stdmk
 
-EXE = test 
+EXE = test
 
 all: $(EXE)
 
 clean:
-	-rm -f core *~ *.o *_c.hh *_c.cc *_s.hh *_s.cc $(EXE)
-	-rm -rf Templates.DB
+	-$(RM) core *~ *.o *_c.hh *_c.cc *_s.hh *_s.cc $(EXE)
+	-$(RM) -r Templates.DB
 
 remora_c.cc: remora.idl	
 	$(ORBCC) remora.idl
