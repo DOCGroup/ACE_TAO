@@ -54,7 +54,7 @@ namespace TAO
         ACE_ENV_ARG_DECL);
 
       virtual PortableServer::Servant system_id_to_servant (
-        PortableServer::ObjectId system_id
+        const PortableServer::ObjectId &system_id
         ACE_ENV_ARG_DECL);
 
       virtual PortableServer::ObjectId *servant_to_id (

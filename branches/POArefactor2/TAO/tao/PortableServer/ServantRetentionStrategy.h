@@ -83,12 +83,11 @@ namespace TAO
                                       ACE_ENV_ARG_DECL) = 0;
 
       virtual PortableServer::Servant find_servant (
-        PortableServer::ObjectId system_id
+        const PortableServer::ObjectId &system_id
         ACE_ENV_ARG_DECL) = 0;
 
-      virtual PortableServer::ObjectId *reference_to_id (
-        CORBA::Object_ptr reference,
-        PortableServer::ObjectId system_id
+      virtual PortableServer::ObjectId *system_id_to_object_id (
+        const PortableServer::ObjectId &system_id
         ACE_ENV_ARG_DECL)
           ACE_THROW_SPEC ((CORBA::SystemException,
                            PortableServer::POA::WrongAdapter,
@@ -101,13 +100,12 @@ namespace TAO
                            PortableServer::POA::ObjectNotActive,
                            PortableServer::POA::WrongPolicy)) = 0;
 
-      virtual
-      CORBA::Object_ptr
-      id_to_reference (const PortableServer::ObjectId &id
-                       ACE_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::ObjectNotActive,
-                         PortableServer::POA::WrongPolicy)) = 0;
+      virtual CORBA::Object_ptr id_to_reference (
+        const PortableServer::ObjectId &id
+        ACE_ENV_ARG_DECL)
+          ACE_THROW_SPEC ((CORBA::SystemException,
+                           PortableServer::POA::ObjectNotActive,
+                           PortableServer::POA::WrongPolicy)) = 0;
 
       virtual void deactivate_all_objects (ACE_ENV_SINGLE_ARG_DECL)
           ACE_THROW_SPEC ((CORBA::SystemException,

@@ -103,7 +103,7 @@ namespace TAO
 
     PortableServer::Servant
     RequestProcessingStrategyAOMOnly::system_id_to_servant (
-      PortableServer::ObjectId system_id
+      const PortableServer::ObjectId &system_id
       ACE_ENV_ARG_DECL)
     {
       return this->poa_->find_servant (system_id
@@ -113,7 +113,7 @@ namespace TAO
     void
     RequestProcessingStrategyAOMOnly::cleanup_servant (
       PortableServer::Servant servant,
-      PortableServer::ObjectId user_id
+      const PortableServer::ObjectId &user_id
       ACE_ENV_ARG_DECL)
     {
       if (servant)

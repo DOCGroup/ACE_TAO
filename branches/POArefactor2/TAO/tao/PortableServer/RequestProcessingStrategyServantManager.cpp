@@ -61,7 +61,7 @@ namespace TAO
 
     PortableServer::Servant
     RequestProcessingStrategyServantManager::system_id_to_servant (
-      PortableServer::ObjectId system_id
+      const PortableServer::ObjectId &system_id
       ACE_ENV_ARG_DECL)
     {
       return this->poa_->find_servant (system_id

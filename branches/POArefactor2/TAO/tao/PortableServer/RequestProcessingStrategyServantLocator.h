@@ -77,7 +77,7 @@ namespace TAO
 
       virtual void cleanup_servant (
         PortableServer::Servant servant,
-        PortableServer::ObjectId user_id
+        const PortableServer::ObjectId &user_id
         ACE_ENV_ARG_DECL);
 
       virtual void etherealize_objects (CORBA::Boolean etherealize_objects);

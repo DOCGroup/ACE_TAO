@@ -140,7 +140,7 @@ namespace TAO
 
     PortableServer::Servant
     ServantRetentionStrategyRetain::find_servant (
-      PortableServer::ObjectId system_id
+      const PortableServer::ObjectId &system_id
       ACE_ENV_ARG_DECL)
     {
       // Find user id from system id.
@@ -178,9 +178,8 @@ namespace TAO
     }
 
     PortableServer::ObjectId *
-    ServantRetentionStrategyRetain::reference_to_id (
-      CORBA::Object_ptr /*reference*/,
-      PortableServer::ObjectId system_id
+    ServantRetentionStrategyRetain::system_id_to_object_id (
+      const PortableServer::ObjectId &system_id
       ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::WrongAdapter,

@@ -501,7 +501,7 @@ public:
 
   bool has_system_id (void) const;
 
-  PortableServer::Servant find_servant (PortableServer::ObjectId system_id
+  PortableServer::Servant find_servant (const PortableServer::ObjectId &system_id
                                         ACE_ENV_ARG_DECL);
 
   TAO_SERVANT_LOCATION servant_present (
@@ -519,7 +519,7 @@ public:
 
   void cleanup_servant (
     PortableServer::Servant servant,
-    PortableServer::ObjectId user_id
+    const PortableServer::ObjectId &user_id
     ACE_ENV_ARG_DECL);
 
    bool validate_lifespan (

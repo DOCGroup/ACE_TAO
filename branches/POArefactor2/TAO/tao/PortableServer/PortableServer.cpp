@@ -53,9 +53,16 @@
 #include "tao/PortableServer/ImplicitActivationPolicyValueExplicit.h"
 #include "tao/PortableServer/ImplicitActivationPolicyValueImplicit.h"
 
+#include "tao/PortableServer/ImplicitActivationStrategyExplicit.h"
+#include "tao/PortableServer/ImplicitActivationStrategyImplicit.h"
+
 #include "tao/PortableServer/RequestProcessingPolicyValueAOMOnly.h"
 #include "tao/PortableServer/RequestProcessingPolicyValueDefaultServant.h"
 #include "tao/PortableServer/RequestProcessingPolicyValueServantManager.h"
+
+#include "tao/PortableServer/RequestProcessingStrategyAOMOnly.h"
+#include "tao/PortableServer/RequestProcessingStrategyDefaultServant.h"
+#include "tao/PortableServer/RequestProcessingStrategyServantManager.h"
 
 #include "tao/PortableServer/ServantRetentionPolicyValueRetain.h"
 #include "tao/PortableServer/ServantRetentionPolicyValueNonRetain.h"
@@ -110,6 +117,22 @@ TAO_POA_Initializer::init (void)
   ACE_Service_Config::process_directive (
       TAO::Portable_Server::ace_svc_desc_RequestProcessingPolicyValueAOMOnly
     );
+
+#if (TAO_HAS_MINIMUM_POA == 0)
+//  ACE_Service_Config::process_directive (
+//      TAO::Portable_Server::ace_svc_desc_RequestProcessingStrategyDefaultServant
+//    );
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
+
+#if (TAO_HAS_MINIMUM_POA == 0)
+//  ACE_Service_Config::process_directive (
+//      TAO::Portable_Server::ace_svc_desc_RequestProcessingStrategyServantManager
+//    );
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
+
+//  ACE_Service_Config::process_directive (
+//      TAO::Portable_Server::ace_svc_desc_RequestProcessingStrategyAOMOnly
+//    );
 
 #if (TAO_HAS_MINIMUM_POA == 0)
   ACE_Service_Config::process_directive (
@@ -181,6 +204,16 @@ TAO_POA_Initializer::init (void)
 
   ACE_Service_Config::process_directive (
       TAO::Portable_Server::ace_svc_desc_ImplicitActivationPolicyValueImplicit
+    );
+
+#if (TAO_HAS_MINIMUM_POA == 0)
+  ACE_Service_Config::process_directive (
+      TAO::Portable_Server::ace_svc_desc_ImplicitActivationStrategyExplicit
+    );
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
+
+  ACE_Service_Config::process_directive (
+      TAO::Portable_Server::ace_svc_desc_ImplicitActivationStrategyImplicit
     );
 
   // Strategy factories

@@ -68,20 +68,18 @@ namespace TAO
                                       ACE_ENV_ARG_DECL);
 
       virtual PortableServer::Servant find_servant (
-        PortableServer::ObjectId system_id
+        const PortableServer::ObjectId &system_id
         ACE_ENV_ARG_DECL);
 
       virtual int is_servant_in_map (PortableServer::Servant servant,
                                       int &wait_occurred_restart_call);
 
-      virtual
-      PortableServer::ObjectId *
-      reference_to_id (CORBA::Object_ptr reference,
-                       PortableServer::ObjectId system_id
-                       ACE_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::WrongAdapter,
-                         PortableServer::POA::WrongPolicy));
+      virtual PortableServer::ObjectId *system_id_to_object_id (
+        const PortableServer::ObjectId &system_id
+        ACE_ENV_ARG_DECL)
+          ACE_THROW_SPEC ((CORBA::SystemException,
+                           PortableServer::POA::WrongAdapter,
+                           PortableServer::POA::WrongPolicy));
 
       virtual
       PortableServer::Servant

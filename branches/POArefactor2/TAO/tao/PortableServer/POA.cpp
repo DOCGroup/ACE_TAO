@@ -1573,11 +1573,11 @@ TAO_POA::reference_to_id (CORBA::Object_ptr reference
   TAO_POA_GUARD_RETURN (0);
 
   return this->active_policy_strategies_.servant_retention_strategy()->
-    reference_to_id (reference, system_id ACE_ENV_ARG_PARAMETER);
+    system_id_to_object_id (system_id ACE_ENV_ARG_PARAMETER);
 }
 
 PortableServer::Servant
-TAO_POA::find_servant (PortableServer::ObjectId system_id
+TAO_POA::find_servant (const PortableServer::ObjectId &system_id
                        ACE_ENV_ARG_DECL)
 {
   return this->active_policy_strategies_.servant_retention_strategy()->
@@ -1594,7 +1594,7 @@ TAO_POA::unbind_using_user_id (const PortableServer::ObjectId &user_id)
 void
 TAO_POA::cleanup_servant (
   PortableServer::Servant servant,
-  PortableServer::ObjectId user_id
+  const PortableServer::ObjectId &user_id
   ACE_ENV_ARG_DECL)
 {
   return this->active_policy_strategies_.request_processing_strategy()->

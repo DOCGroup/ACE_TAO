@@ -61,7 +61,7 @@ namespace TAO
 
     PortableServer::Servant
     ServantRetentionStrategyNonRetain::find_servant (
-      PortableServer::ObjectId /*system_id*/
+      const PortableServer::ObjectId &/*system_id*/
       ACE_ENV_ARG_DECL)
     {
       ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
@@ -69,9 +69,8 @@ namespace TAO
     }
 
     PortableServer::ObjectId *
-    ServantRetentionStrategyNonRetain::reference_to_id (
-      CORBA::Object_ptr /*reference*/,
-      PortableServer::ObjectId system_id
+    ServantRetentionStrategyNonRetain::system_id_to_object_id (
+      const PortableServer::ObjectId &system_id
       ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::WrongAdapter,

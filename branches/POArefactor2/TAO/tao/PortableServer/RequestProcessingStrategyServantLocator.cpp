@@ -195,7 +195,7 @@ namespace TAO
     void
     RequestProcessingStrategyServantLocator::cleanup_servant (
       PortableServer::Servant servant,
-      PortableServer::ObjectId user_id
+      const PortableServer::ObjectId &user_id
       ACE_ENV_ARG_DECL)
     {
       if (servant)

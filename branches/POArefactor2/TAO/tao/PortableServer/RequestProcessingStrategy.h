@@ -86,20 +86,21 @@ namespace TAO
         PortableServer::Servant &servant
         ACE_ENV_ARG_DECL) = 0;
 
-      virtual PortableServer::Servant locate_servant (const char *operation,
-                      const PortableServer::ObjectId &system_id,
-                      TAO::Portable_Server::Servant_Upcall &servant_upcall,
-                      TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
-                      int &wait_occurred_restart_call
-                      ACE_ENV_ARG_DECL) = 0;
+      virtual PortableServer::Servant locate_servant (
+        const char *operation,
+        const PortableServer::ObjectId &system_id,
+        TAO::Portable_Server::Servant_Upcall &servant_upcall,
+        TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
+        int &wait_occurred_restart_call
+        ACE_ENV_ARG_DECL) = 0;
 
       virtual void cleanup_servant (
         PortableServer::Servant servant,
-        PortableServer::ObjectId user_id
+        const PortableServer::ObjectId &user_id
         ACE_ENV_ARG_DECL) = 0;
 
       virtual PortableServer::Servant system_id_to_servant (
-        PortableServer::ObjectId system_id
+        const PortableServer::ObjectId &system_id
         ACE_ENV_ARG_DECL) = 0;
 
       virtual void etherealize_objects (CORBA::Boolean etherealize_objects) = 0;

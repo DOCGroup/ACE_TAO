@@ -166,7 +166,7 @@ namespace TAO
 
     PortableServer::Servant
     RequestProcessingStrategyDefaultServant::system_id_to_servant (
-      PortableServer::ObjectId system_id
+      const PortableServer::ObjectId &system_id
       ACE_ENV_ARG_DECL)
     {
       PortableServer::Servant servant = this->default_servant_.in ();
@@ -199,7 +199,7 @@ namespace TAO
     void
     RequestProcessingStrategyDefaultServant::cleanup_servant (
       PortableServer::Servant servant,
-      PortableServer::ObjectId user_id
+      const PortableServer::ObjectId &user_id
       ACE_ENV_ARG_DECL)
     {
       if (servant)
