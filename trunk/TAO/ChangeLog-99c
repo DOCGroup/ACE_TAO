@@ -1,3 +1,14 @@
+Mon Jul 26 16:08:05 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/ast/ast_module.cpp:
+	* TAO_IDL/ast/ast_expression.cpp:
+	* TAO_IDL/be/be_codegen.cpp:
+	* TAO_IDL/be/bevisitor_scope.cpp:
+	* TAO_IDL/util/utl_string.cpp:
+	  Changes to avert MSVC level 4 warnings. There are still some
+	  left, but they are in generated files, and I will get those
+	  in another checkin.
+
 Mon Jul 26 15:30:41 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/tao/Any.cpp:
