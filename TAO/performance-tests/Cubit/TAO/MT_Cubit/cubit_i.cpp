@@ -25,16 +25,16 @@ Cubit_i::cube_octet (CORBA::Octet o,
       ts_->barrier_->wait ();
     }
   
-  if (ts_->run_server_utilization_test_ == 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-		  "(%t) )))))))) "
-		  "test STARTED at %D\n"));
+//   if (ts_->run_server_utilization_test_ == 0)
+//     {
+//       ACE_DEBUG ((LM_DEBUG,
+// 		  "(%t) )))))))) "
+// 		  "test STARTED at %D\n"));
       
-      ts_->run_server_utilization_test_ = 1;
-      this->util_started_ = 1;
-      this->ts_->timer_.start ();
-    }
+//       ts_->run_server_utilization_test_ = 1;
+//       this->util_started_ = 1;
+//       this->ts_->timer_.start ();
+//     }
   
   return (CORBA::Octet) (o * o * o);
 }
