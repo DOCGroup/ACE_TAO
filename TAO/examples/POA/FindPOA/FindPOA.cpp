@@ -16,7 +16,6 @@
 //
 //===========================================================================
 
-#include "ace/streams.h"
 #include "tao/corba.h"
 
 ACE_RCSID(FindPOA, FindPOA, "$Id$")
