@@ -20,7 +20,7 @@
 #endif	/* BC++ convention */
 
 /* Define if you have the <widec.h> header file.  */
-#if !defined (linux) && !defined (_WIN32) && !defined (VXWORKS) && !defined (ACE_NETBSD)
+#if !defined (linux) && !defined (_WIN32) && !defined (VXWORKS) && !defined (ACE_NETBSD) && !defined (__FreeBSD__)
 #  define HAVE_WIDEC_H 1
 #endif /* !defined (linux) && !defined (_WIN32) && !defined (VXWORKS) */
 
