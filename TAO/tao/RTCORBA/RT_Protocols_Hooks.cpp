@@ -596,8 +596,9 @@ TAO_RT_Protocols_Hooks::set_thread_native_priority (CORBA::Short native_priority
   ACE_hthread_t current;
   ACE_Thread::self (current);
 
-  if (ACE_Thread::setprio (current, native_priority) == -1)
-    return -1;
+  if (ACE_Thread::setprio (current, native_priority) == -1) {
+    ACE_ERROR_RETURN((LM_ERROR, ACE_LIB_TEXT("(%N,%l) Error setting thread priority to %d, errno %d %m\n"), native_priority, errno ), -1); 
+  }
 
   return 0;
 }

@@ -125,7 +125,6 @@ TAO_Linear_Priority_Mapping::to_CORBA (RTCORBA::NativePriority native_priority,
           && (native_priority < this->max_
               || native_priority > this->min_)))
     {
-      if (TAO_debug_level > 2)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO (%P|%t) - Linear_Priority_Mapping::to_CORBA: "
                     " priority %d out of range [%d,%d]\n",

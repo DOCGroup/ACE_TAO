@@ -313,8 +313,23 @@ TAO_MCAST_Parser::multicast_query (char *&buf,
                 }
             }
         }
+        if (result == -1)
+          {
+            ACE_ERROR ((LM_ERROR, 
+                        ACE_TEXT("\nmulticast discovery of %s failed.\n"),
+                        service_name));
+                       
+            if (ACE_OS::strcasecmp (service_name,
+                                    "NameService") == 0)
+             {
+               ACE_ERROR ((LM_ERROR,
+                           ACE_TEXT("Specify -m 1 when starting Naming_Service,\n")
+                           ACE_TEXT("or see http://www.theaceorb.com/faq/#115\n")
+                           ACE_TEXT("for using NameService without multicast.\n\n")));
+             }
+          }
     }
-
+        
   // Clean up.
   stream.close ();
   dgram.close ();
