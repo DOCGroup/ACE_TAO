@@ -193,6 +193,55 @@ TAO_ServantBase::_decrement_single_threaded_poa_lock_count (void)
     }
 }
 
+//BRT CHANGE
+void TAO_ServantBase::synchronous_upcall_dispatch(CORBA::ServerRequest &req,
+                                                  void *context,
+                                                  void *derived_this,
+                                                  CORBA::Environment &ACE_TRY_ENV)
+{
+  TAO_Skeleton skel;
+  const char *opname = req.operation();
+
+  // It seems that I might have missed s/g here.  What if
+  // it is a one way that is SYNC_WITH_SERVER.  
+  // Add the following line to handle this reply send as well.
+  
+  // Handle the one ways that are SYNC_WITH_SERVER
+  if (req.sync_with_server ())
+  { 
+     req.send_no_exception_reply ();
+  }
+
+  // Fetch the skeleton for this operation
+  if (this->_find(opname,skel,req.operation_length()) == -1)
+  {
+    ACE_THROW (CORBA_BAD_OPERATION());
+  }
+
+  ACE_TRY
+  {
+    // Invoke the skeleton, it will demarshal the arguments,
+    // invoke the right operation on the skeleton class (<derived_this>).
+    // and marshal any results
+    skel (req, derived_this, context, ACE_TRY_ENV);
+
+    // It is our job to send the already marshaled reply, but only
+    // send if it is expected and it has not already been sent
+    if ((!req.sync_with_server() && req.response_expected()))
+    {
+      req.tao_send_reply();
+    }
+  }
+  ACE_CATCH(CORBA::Exception,ex)
+  {
+    // If an exception was raised we should marshal it and send
+    // the appropriate reply to the client
+    req.tao_send_reply_exception(ex);
+  }
+  ACE_ENDTRY;
+}
+
+
 TAO_RefCountServantBase::~TAO_RefCountServantBase (void)
 {
 }
@@ -435,6 +484,19 @@ TAO_DynamicImplementation::_dispatch (CORBA::ServerRequest &request,
       request.dsi_marshal (ACE_TRY_ENV);
       ACE_CHECK;
     }
+//BRT
+   ACE_TRY
+   {
+     if ((!request.sync_with_server() && request.response_expected()))
+     {
+       request.tao_send_reply();
+     }
+   }
+   ACE_CATCH(CORBA::Exception,ex)
+   {
+     request.tao_send_reply_exception(ex);
+   }
+   ACE_ENDTRY;
 }
 
 #endif /* TAO_HAS_MINIMUM_CORBA */

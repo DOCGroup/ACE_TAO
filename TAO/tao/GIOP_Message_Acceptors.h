@@ -66,6 +66,15 @@ public:
   // messages from the client. The type of reply would be context
   // sensitive. Only the common stuff for all the replies to be
   // sent would be handled.
+
+//BRT
+    int send_reply_exception (TAO_Transport *transport,
+                            TAO_ORB_Core* orb_core,
+                            CORBA::ULong request_id,
+                            IOP::ServiceContextList *svc_info,
+                            CORBA::Exception *x);
+  // We must send a LocateReply through <transport>, this request
+  // resulted in some kind of exception.
 private:
 
   int process_client_request (TAO_Transport *transport,
@@ -98,14 +107,6 @@ private:
                               TAO_GIOP_Locate_Status_Msg &status);
   // As on date 1.1 & 1.2 seem to have similar headers. Til an
   // unmanageable difference comes let them be implemented here.
-
-  int send_reply_exception (TAO_Transport *transport,
-                            TAO_ORB_Core* orb_core,
-                            CORBA::ULong request_id,
-                            IOP::ServiceContextList *svc_info,
-                            CORBA::Exception *x);
-  // We must send a LocateReply through <transport>, this request
-  // resulted in some kind of exception.
 
   int validate_version (TAO_GIOP_Message_State *state);
 
