@@ -1,0 +1,12 @@
+project(Answerer) : aceexe {
+  exename = Answerer
+  Source_Files {
+    Answerer.cpp
+    CommandModule.cpp
+    CommandStream.cpp
+    CommandTask.cpp
+    CommandTasks.cpp
+    RecordingDeviceFactory.cpp
+    RecordingDevice_Text.cpp
+  }
+}

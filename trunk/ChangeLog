@@ -1,3 +1,8 @@
+Thu Jan  1 15:20:30 2004  Steve Huston  <shuston@riverace.com>
+
+	* examples/Makefile:
+	* examples/APG: Added all examples from "The ACE Programmer's Guide".
+
 Thu Jan  1 20:28:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* include/makeinclude/outputdir.bor:
