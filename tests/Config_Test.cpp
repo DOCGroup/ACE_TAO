@@ -480,7 +480,7 @@ Config_Test::get_section_integer (ACE_Configuration_Section_Key& SectionKey,
 void
 Config_Test::get_section_boolean (ACE_Configuration_Section_Key& SectionKey,
                                   const ACE_TCHAR* pszName,
-                                  bool* pVariable)
+                                  int* pVariable)
 {
   ACE_TString StringValue;
   char pszString[10];
@@ -507,10 +507,10 @@ Config_Test::get_section_boolean (ACE_Configuration_Section_Key& SectionKey,
 
       if (ACE_OS::strcmp (pszString,
                           "TRUE") == 0)
-        *pVariable = true;
+        *pVariable = 1;
       else if (ACE_OS::strcmp (pszString,
                                "FALSE") == 0)
-        *pVariable = false;
+        *pVariable = 0;
     }
 }
 

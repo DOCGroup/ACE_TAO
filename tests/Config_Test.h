@@ -29,7 +29,7 @@ class Config_Test
   ACE_Configuration_Heap m_ConfigurationHeap;
 
   int m_nTimeToLive;
-  bool m_bDelay;
+  int m_bDelay;
   char m_pszDestIPAddress[TEST_MAX_STRING];
   int m_nDestPort;
   int m_nReconnectInterval;
@@ -57,7 +57,7 @@ private:
                             int nMaxValue);
   void get_section_boolean (ACE_Configuration_Section_Key& SectionKey,
                             const ACE_TCHAR *pszName,
-                            bool *pVariable);
+                            int *pVariable);
 };
 
 #endif /* __CONFIG_TEST_H */
