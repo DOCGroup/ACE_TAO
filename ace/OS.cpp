@@ -466,13 +466,14 @@ ACE_OS::set_sched_params (const ACE_Scheduling_Params &scheduling_params)
   pcparms.pc_cid = scheduling_params.priority ().os_priority_class ();
 
   if (scheduling_params.priority ().priority_class () ==
-        ACE_Thread_Priority::ACE_HIGH_PRIORITY_CLASS  ||
-      scheduling_params.priority ().priority_class () ==
-        ACE_Thread_Priority::ACE_REALTIME_PRIORITY_CLASS)
+      ACE_Thread_Priority::ACE_HIGH_PRIORITY_CLASS  
+      || scheduling_params.priority ().priority_class () ==
+      ACE_Thread_Priority::ACE_REALTIME_PRIORITY_CLASS)
     {
       rtparms_t rtparms;
       rtparms.rt_pri =
         scheduling_params.priority ().os_default_thread_priority ();
+
       if (scheduling_params.quantum () == ACE_Time_Value::zero)
         {
           rtparms.rt_tqsecs = 0ul;
@@ -484,43 +485,38 @@ ACE_OS::set_sched_params (const ACE_Scheduling_Params &scheduling_params)
           rtparms.rt_tqnsecs = scheduling_params.quantum ().usec () * 1000;
         }
 
-      // Package up the RT class ID and parameters for the ::priocntl () call.
+      // Package up the RT class ID and parameters for the ::priocntl
+      // () call.
       ACE_OS::memcpy (pcparms.pc_clparms, &rtparms, sizeof rtparms);
     }
   else
     {
       tsparms_t tsparms;
-      // Don't bother changing ts_uprilim (user priority limit) from its
-      // default of 0.
+      // Don't bother changing ts_uprilim (user priority limit) from
+      // its default of 0.
       tsparms.ts_uprilim = 0;
-      tsparms.ts_upri =
-        scheduling_params.priority ().os_default_thread_priority ();
+      tsparms.ts_upri = scheduling_params.priority ().os_default_thread_priority ();
 
-      // Package up the TS class ID and parameters for the ::priocntl () call.
+      // Package up the TS class ID and parameters for the ::priocntl
+      // () call.
       ACE_OS::memcpy (pcparms.pc_clparms, &tsparms, sizeof tsparms);
     }
 
   if (::priocntl ((idtype_t) scheduling_params.scope (), P_MYID, PC_SETPARMS,
                   (char *) &pcparms) < 0)
-    {
-      return ACE_OS::last_error ();
-    }
+    return ACE_OS::last_error ();
 
 #elif defined (ACE_WIN32)
+
   // Set the priority class of this process to the real-time process class.
-  if (! ::SetPriorityClass (::GetCurrentProcess (),
-                            scheduling_params.priority ().os_priority_class ())
-    {
-      return -1;
-    }
+  if (!::SetPriorityClass (::GetCurrentProcess (),
+			   scheduling_params.priority ().os_priority_class ())
+    return -1;
 
   // Set the thread priority on the current thread.
-  if (! ::SetThreadPriority (
-          ::GetCurrentThread (),
-          scheduling_params.priority ().os_default_thread_priority ())
-    {
-      return -1;
-    }
+  if (!::SetThreadPriority (::GetCurrentThread (),
+			    scheduling_params.priority ().os_default_thread_priority ())
+    return -1;
 
 
 #elif defined (VXWORKS)
@@ -529,9 +525,8 @@ ACE_OS::set_sched_params (const ACE_Scheduling_Params &scheduling_params)
 
   ACE_htread_t my_thread_id;
   ACE_OS::thr_self (&my_thread_id);
-  ACE_OS::thr_setprio (
-                  my_thread_id,
-                  scheduling_params.priority ().os_default_thread_priority ());
+  ACE_OS::thr_setprio (my_thread_id,
+		       scheduling_params.priority ().os_default_thread_priority ());
 
 
 #else

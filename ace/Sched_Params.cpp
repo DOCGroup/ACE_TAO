@@ -17,18 +17,9 @@
 // ============================================================================
 
 #include "ace/ACE.h"
-
-#if defined (ACE_HAS_THREADS)
-
-
 #include "ace/Scheduling_Params.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Scheduling_Params.i"
 #endif /* __ACE_INLINE__ */
 
-
-#endif /* ACE_HAS_THREADS */
-
-
-// EOF
