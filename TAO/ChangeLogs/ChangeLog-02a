@@ -1,15 +1,23 @@
+Mon Jun 24 17:54:43 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * rules.tao.GNU (TAO_BETA_VERSION):
+
+          Grab the version information from Version.h rather than VERSION
+          as VERSION is not likely to installed when doing a make install.
+          Thanks to Bala for the suggestion.
+
 Mon Jun 24 22:37:58 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp: Remove unnecessary 
+	* orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp: Remove unnecessary
 	  ACE_TEMPLATE_METHOD_SPECIALIZATION macros.  Fixes build problems on
-	  Borland, Solaris, and gcc. 
+	  Borland, Solaris, and gcc.
 
 Mon Jun 24 18:47:41 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* tao/Sequence.i: Remove unnecessary ACE_TEMPLATE_METHOD_SPECIALIZATION
-	  macros, since the explicit specialization is already done in Sequence.h.  
+	  macros, since the explicit specialization is already done in Sequence.h.
 	  According to Section 14.7.3.5 (Explicit Specialization) of the
-	  C++ Standard, "Definitions of members of an explicitly specialized class 
+	  C++ Standard, "Definitions of members of an explicitly specialized class
 	  are defined in the same manner as members of normal classes, and not
 	  using the explicit specialization syntax."  Fixes build problems on
 	  Solaris and Borland compilers.
@@ -28,10 +36,10 @@ Wed Jun 19 14:34:09 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  Changed the use of the above #define to
 	  ACE_Event_Handler::ACE_APPLICATION_RESUMES_HANDLER in the method
 	  resume_handler ().
-	
+
 Wed Jun 19 12:16:32 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
-	* TAO_IDL/be/be_visitor_valuetype/arglist.cpp (visit_operation):  
+	* TAO_IDL/be/be_visitor_valuetype/arglist.cpp (visit_operation):
           ACE_ENV macros were generated immediately after the arguments
 	  like: (Float xACE_ENV).  Changed the generation so that there is
 	  now at least one space between the last argument and the macro.
@@ -83,7 +91,7 @@ Tue Jun 18 19:23:01 2002  Ossama Othman  <ossama@uci.edu>
 
 Tue Jun 18 15:16:32 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
-	* TAO_IDL/be/be_visitor_valuetype/arglist.cpp (visit_operation): 
+	* TAO_IDL/be/be_visitor_valuetype/arglist.cpp (visit_operation):
 	  No AMH ExceptionHolder valuetypes' raise operations need the
 	  CORBA Environment variable.  Changed code so that the generated
 	  method declarations for AMH ExceptionHolders reflect this.
@@ -93,7 +101,7 @@ Tue Jun 18 15:16:32 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 Tue Jun 18 13:54:25 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
-	* performance-tests/Latency/AMH/Single_Threaded/Roundtrip.cpp (test_method): 
+	* performance-tests/Latency/AMH/Single_Threaded/Roundtrip.cpp (test_method):
 	  Continuing saga in learning to use correct CORBA Environment
 	  macros.  Had declared environment variable in both the method
 	  argument list as well as inside the definition of the method.
@@ -126,7 +134,7 @@ Tue Jun 18 10:09:45 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
 	  In the gen_typecode (be_enum *node) method, removed an incorrect
 	  check for optimized typecode generation before inserting the enum
-	  into tc_queue_. Thanks to Shanliang Cheng <shanliang@huawei.com> 
+	  into tc_queue_. Thanks to Shanliang Cheng <shanliang@huawei.com>
 	  for pointing out the error.
 
 Mon Jun 17 21:19:50 2002  Jeff Parsons <parsons@cs.wustl.edu>
@@ -135,12 +143,12 @@ Mon Jun 17 21:19:50 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
 	  Fixed a bug in the valuetype case where, instead of checking
 	  tc_kind_holder for the 0xffffffff that indicates a recursive type,
-	  we were incorrectly checking encap_length. Thanks to Wanjia 
+	  we were incorrectly checking encap_length. Thanks to Wanjia
 	  <jiawan@huawei.com> for pointing out the mistake.
 
 Mon Jun 17 14:59:52 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
-	* TAO_IDL/be/be_visitor_operation/operation.cpp (gen_environment_decl): 
+	* TAO_IDL/be/be_visitor_operation/operation.cpp (gen_environment_decl):
 	  Changed IDL genration of macro for AMH 'no-arguments' method
 	  definitions from ACE_ENV_SINGLE_ARG_DECL_NOT_USED to
 	  ACE_ENV_SINGLE_ARG_DECL.  Thanks to Craig Rodrigues
