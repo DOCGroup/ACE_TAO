@@ -1,7 +1,3 @@
-// Timer_Heap.cpp
-// $Id$
-
-#define ACE_BUILD_DLL
 #include "ace/Timer_Heap.h"
 
 ACE_Timer_Heap_Iterator::ACE_Timer_Heap_Iterator (ACE_Timer_Heap &heap)
@@ -55,7 +51,11 @@ ACE_Timer_Heap::ACE_Timer_Heap (size_t size,
     {
       ACE_NEW (this->preallocated_nodes_,
 	       ACE_Timer_Node[size]);
-      
+
+      // Add allocated array to set of such arrays for deletion
+      // on cleanup.
+      this->preallocated_node_set_.insert (this->preallocated_nodes_);
+
       // Form the freelist by linking the next_ pointers together.
       for (size_t j = 1; j < size; j++)
 	this->preallocated_nodes_[j - 1].next_ = 
@@ -75,7 +75,18 @@ ACE_Timer_Heap::~ACE_Timer_Heap (void)
   ACE_TRACE ("ACE_Timer_Heap::~ACE_Timer_Heap");
   delete [] this->heap_;
   delete [] this->timer_ids_;
-  delete [] this->preallocated_nodes_;
+
+  // clean up any preallocated timer nodes
+  if (preallocated_nodes_ != 0)
+    {
+      ACE_Unbounded_Set_Iterator<ACE_Timer_Node *> 
+	set_iterator (this->preallocated_node_set_);
+
+      for (ACE_Timer_Node **entry = 0;
+	   set_iterator.next (entry) !=0;
+	   set_iterator.advance ())
+	delete [] *entry;
+    }
 }
 
 int
@@ -247,8 +258,79 @@ ACE_Timer_Heap::reheap_down (ACE_Timer_Node *moved_node,
 void
 ACE_Timer_Heap::insert (ACE_Timer_Node *new_node)
 {
+  if (this->cur_size_ + 1 >= max_size_)
+    this->grow_heap ();
+
   this->reheap_up (new_node);
   this->cur_size_++;
+}
+
+void
+ACE_Timer_Heap::grow_heap (void)
+{
+   // all the containers will double in size from max_size_
+   size_t new_size = max_size_ * 2;
+
+   // First grow the heap itself.
+
+   ACE_Timer_Node **new_heap = 0;
+   ACE_NEW (new_heap, ACE_Timer_Node *[new_size]);
+   ACE_OS::memcpy (new_heap, this->heap_, 
+		   max_size_ * sizeof (ACE_Timer_Node *));
+   delete [] this->heap_;
+   this->heap_ = new_heap;
+
+   // Grow the array of timer ids.
+
+   int *new_timer_ids = 0;
+
+   ACE_NEW (new_timer_ids, int[new_size]);
+
+   ACE_OS::memcpy (new_timer_ids, this->timer_ids_, max_size_ * sizeof (int));
+
+   delete [] timer_ids_;
+   this->timer_ids_ = new_timer_ids;
+
+   // and add the new elements to the end of the "freelist"
+   for (size_t i = this->max_size_; i < new_size; i++)
+     this->timer_ids_[i] = -(i + 1);
+
+   // Grow the preallocation array (if using preallocation)
+   if (this->preallocated_nodes_ != 0)
+   {
+      // Create a new array with max_size elements to link in
+      // to existing list.
+      ACE_NEW (this->preallocated_nodes_, 
+	       ACE_Timer_Node[this->max_size_]);
+
+      // add it to the set for later deletion
+      this->preallocated_node_set_.insert (this->preallocated_nodes_);      
+      
+      // link new nodes together (as for original list)
+      for (size_t k = 1; k < this->max_size_; k++)
+	this->preallocated_nodes_[k - 1].next_ = 
+	  &this->preallocated_nodes_[k];
+
+      // NULL-terminate the new list.
+      this->preallocated_nodes_[this->max_size_ - 1].next_ = 0;
+
+      // link new array to the end of the existling list
+      if (this->preallocated_nodes_freelist_ == 0)
+	this->preallocated_nodes_freelist_ = &preallocated_nodes_[0];
+      else
+	{
+	  ACE_Timer_Node* previous = this->preallocated_nodes_freelist_;
+	
+	  for (ACE_Timer_Node* current = this->preallocated_nodes_freelist_->next_;
+	       current != 0;
+	      current = current->next_)
+	    previous = current;
+
+	  previous->next_ = &this->preallocated_nodes_[0];
+	}
+   }
+
+   this->max_size_ = new_size;
 }
 
 void
@@ -310,6 +392,10 @@ ACE_Timer_Heap::alloc_node (void)
 		    0);
   else
     {
+      // check to see if the heap needs to grow
+      if (this->preallocated_nodes_freelist_ == 0)
+	this->grow_heap ();
+
       temp = this->preallocated_nodes_freelist_;
 
       // Remove the element from the freelist.
@@ -414,9 +500,7 @@ ACE_Timer_Heap::cancel (ACE_Event_Handler *handler)
 
   // Try to locate the ACE_Timer_Node that matches the timer_id.
 
-  for (size_t i = 0; 
-       i < this->cur_size_;
-       )
+  for (size_t i = 0; i < this->cur_size_; )
     {
       if (this->heap_[i]->handler_ == handler)
         {

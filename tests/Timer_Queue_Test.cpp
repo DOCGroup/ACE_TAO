@@ -26,7 +26,7 @@
 #include "test_config.h"
 
 // Number of iterations for the performance tests.
-static int max_iterations = ACE_DEFAULT_TIMERS;
+static int max_iterations =  ACE_DEFAULT_TIMERS * 100 ;
 
 // Keep track of the timer ids that were assigned to us.
 static int *timer_ids = 0;
@@ -106,7 +106,7 @@ test_performance (ACE_Timer_Queue *tq,
   ACE_DEBUG ((LM_DEBUG, "real time = %f secs, user time = %f secs, system time = %f secs\n",
 	    et.real_time, et.user_time, et.system_time));
   ACE_DEBUG ((LM_DEBUG, "time per call = %f usecs\n", 
-	      (et.real_time / double (max_iterations)) * 1000000));
+	      (et.user_time / double (max_iterations)) * 1000000));
 
   // Test the amount of time required to cancel all the timers.  We
   // start from the "back" in order to measure the worst case
@@ -128,7 +128,7 @@ test_performance (ACE_Timer_Queue *tq,
   ACE_DEBUG ((LM_DEBUG, "real time = %f secs, user time = %f secs, system time = %f secs\n",
 	    et.real_time, et.user_time, et.system_time));
   ACE_DEBUG ((LM_DEBUG, "time per call = %f usecs\n", 
-	      (et.real_time / double (max_iterations)) * 1000000));
+	      (et.user_time / double (max_iterations)) * 1000000));
 
   // Test the amount of time required to schedule and expire all the
   // timers.
@@ -152,7 +152,7 @@ test_performance (ACE_Timer_Queue *tq,
   ACE_DEBUG ((LM_DEBUG, "real time = %f secs, user time = %f secs, system time = %f secs\n",
 	    et.real_time, et.user_time, et.system_time));
   ACE_DEBUG ((LM_DEBUG, "time per call = %f usecs\n", 
-	      (et.real_time / double (max_iterations)) * 1000000));
+	      (et.user_time / double (max_iterations)) * 1000000));
 }
 
 struct Timer_Queues
@@ -182,12 +182,14 @@ main (int argc, char *argv[])
 
   // Preallocate memory.
   ACE_NEW_RETURN (timer_queues[0].queue_,
-		  ACE_Timer_Heap (max_iterations, 1),
+		  ACE_Timer_Heap (ACE_DEFAULT_TIMERS, 1),
+//		  ACE_Timer_Heap (max_iterations, 1),
 		  -1);
 
   // Don't preallocate memory.
   ACE_NEW_RETURN (timer_queues[1].queue_,
-		  ACE_Timer_Heap (max_iterations),
+		  ACE_Timer_Heap,
+//		  ACE_Timer_Heap (max_iterations),
 		  -1);
 
   ACE_NEW_RETURN (timer_ids,
