@@ -1,6 +1,18 @@
+Thu Apr 15 14:04:36 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/rules.lib.GNU: don't call $(RANLIB)
+          if it is null.
+
+        * include/makeinclude/platform_vxworks_5.x.GNU: removed
+          RANLIB definition, so that it will be null.  This prevents
+          calling "true" on NT hosts.
+
+        Thanks to Thomas Mehrkam <Thomas_Mehrkam@i-o.com> for reporting
+        that his NT host doesn't have "true".
+
 Thu Apr 15 14:00:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
-        * ace/OS.{h, i}: simplified the conditional compilation logic 
+        * ace/OS.{h, i}: simplified the conditional compilation logic
           for a couple of the pSOS-specific ACE_OS methods, removed a
           handful of marker comments, added a conditional compilation
           branch for pid_t declaration.
