@@ -17,7 +17,7 @@ SHLIBA      = $(SHLIB:lib%.so=lib%shr.a)
 ifdef SHLIB
 ACELIB      = -lACEshr
 endif
-LLIBS	    = -lC_r -lC -lpthreads -lbsd -ltli_r -ldl -lc_r -lm -lc $(ACELIB)
+LLIBS	    = -ltli_r -ldl  $(ACELIB)
 LIBS	    += $(filter-out $(SHLIBA:lib%.a=-l%), $(LLIBS))
 ARFLAGS	    = ruv
 AR	    = ar
