@@ -53,7 +53,7 @@ public:
   // Returns a pointer to a nil ORB, i.e., an non-existent ORB.  This
   // can be used for initialization or in comparisons.
 
-  virtual CORBA::Object_ptr string_to_object (const CORBA::String str,
+  virtual CORBA::Object_ptr string_to_object (CORBA::String str,
 					      CORBA::Environment &env) = 0;
   // Turn a string-ified object reference back into an object pointer.
   // Each type of ORB, e.g. an IIOP ORB, must implement this.

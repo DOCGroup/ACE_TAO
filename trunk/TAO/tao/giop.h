@@ -383,7 +383,7 @@ public:
                                        CDR &msg);
   // Build the header for a message of type <t> into stream <msg>.
   
-  static CORBA::Boolean send_request (TAO_SVC_HANDLER *&handler,
+  static CORBA::Boolean send_request (TAO_SVC_HANDLER *handler,
                                       CDR &stream);
   // Send message, returns TRUE if success, else FALSE.
 
