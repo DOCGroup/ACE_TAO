@@ -1636,19 +1636,6 @@ AC_CHECK_HEADER(iostream.h, dnl
   AC_CHECK_HEADER(fstream.h, , AC_DEFINE(ACE_LACKS_IOSTREAM_TOTALLY)),
   AC_DEFINE(ACE_LACKS_IOSTREAM_TOTALLY))
 
-dnl Check if platform needs to #include <sched.h> to get thread 
-dnl scheduling defs.
-ACE_CACHE_CHECK(sched.h for thread scheduling definitions,
-   ace_cv_needs_sched_h,[
-   AC_EGREP_HEADER(sched_yield, sched.h,
-     [
-      ace_cv_needs_sched_h=yes
-     ],
-     [
-      ace_cv_needs_sched_h=no
-     ])
-   ], AC_DEFINE(ACE_NEEDS_SCHED_H),)
-
 dnl Check if platform needs to #include <regexpr.h> for
 dnl regular expression support
 ACE_CACHE_CHECK(regexpr.h for regular expression support,
@@ -2243,18 +2230,39 @@ ACE_CACHE_CHECK(for sys_errlist,
          ace_cv_lib_posix_sys_errlist=yes
         ],
         [
-         ace_cv_lib_posix_sys_errlist=no
+         dnl Check if sys_errlist is a global variable in a library
+         AC_TRY_LINK(
+           [
+#include <stdio.h>
+#include <errno.h>
+
+#if !defined (_sys_errlist)
+# define _sys_errlist sys_errlist
+#endif
+
+extern const char * const _sys_errlist[];
+           ],
+           [
+            void* vp = (void*) &_sys_errlist;
+           ],
+           [
+            ace_cv_lib_posix_sys_errlist=yes
+           ],
+           [
+            ace_cv_lib_posix_sys_errlist=no
+           ])
         ])
-], AC_DEFINE(ACE_HAS_SYS_ERRLIST),)
+    ], AC_DEFINE(ACE_HAS_SYS_ERRLIST),)
 
 dnl Check for sys_nerr
 dnl TODO: Check whether this variable can be defined somewhere else.
-ACE_CACHE_CHECK(for sys_nerr in headers,
-  ace_cv_lib_posix_sys_nerr,[
+ACE_CACHE_CHECK([for sys_nerr],
+  [ace_cv_lib_posix_sys_nerr],[
   AC_TRY_COMPILE(
     [
 #include <stdio.h>
 #include <errno.h>
+
 #if !defined (_sys_nerr)
 # define _sys_nerr sys_nerr
 #endif
@@ -2266,15 +2274,34 @@ ACE_CACHE_CHECK(for sys_nerr in headers,
      ace_cv_lib_posix_sys_nerr=yes
     ],
     [
-     ace_cv_lib_posix_sys_nerr=no
+     dnl Check if sys_nerr is a global variable in a library
+     AC_TRY_LINK(
+       [
+#include <stdio.h>
+#include <errno.h>
+
+#if !defined (_sys_nerr)
+# define _sys_nerr sys_nerr
+#endif
+
+extern int _sys_nerr;
+       ],
+       [
+        void* vp = (void*) &_sys_nerr;
+       ],
+       [
+        ace_cv_lib_posix_sys_nerr=yes
+       ],
+       [
+        ace_cv_lib_posix_sys_nerr=no
+       ])
     ])
   ],
   [
    dnl Do nothing
   ],
   [
-   AC_CHECK_FUNC(sys_nerr,,
-     AC_DEFINE(ACE_LACKS_SYS_NERR))
+   AC_DEFINE(ACE_LACKS_SYS_NERR)
   ])
 
 dnl Save the cache for debugging purposes
@@ -7033,6 +7060,56 @@ main (int argc, char *argv[])
           ])
       ], , AC_DEFINE(ACE_LACKS_NULL_PTHREAD_STATUS))
 
+    dnl Check if platform needs to #include <sched.h> to get thread 
+    dnl scheduling defs.
+    ACE_CACHE_CHECK([if sched.h is needed for thread scheduling definitions],
+      [ace_cv_needs_sched_h],
+      [
+       AC_TRY_COMPILE(
+         [
+#ifdef ACE_HAS_STHREADS
+#include <thread.h>
+#endif
+
+#ifdef ACE_HAS_PTHREADS
+#include <pthread.h>
+#endif
+         ],
+         [
+int foo = SCHED_OTHER;
+         ],
+         [
+          ace_cv_needs_sched_h=no
+         ],
+         [
+          AC_TRY_COMPILE(
+            [
+#ifdef ACE_HAS_STHREADS
+#include <thread.h>
+#endif
+
+#ifdef ACE_HAS_PTHREADS
+#include <pthread.h>
+#endif
+
+#include <sched.h>
+            ],
+            [
+int foo = SCHED_OTHER;
+            ],
+            [
+             ace_cv_needs_sched_h=yes
+            ],
+            [
+             dnl We're hosed if we get here!
+             ace_cv_needs_sched_h=no
+            ])
+         ])
+      ],
+      [
+       AC_DEFINE(ACE_NEEDS_SCHED_H)
+      ],)
+
     dnl Check if platform only supports SCHED_OTHER scheduling policy
     dnl
     dnl This test must be performed after the POSIX threads implementation
@@ -7041,6 +7118,10 @@ main (int argc, char *argv[])
       ace_cv_feature_only_have_sched_other,[
         AC_EGREP_CPP(WE_ONLY_HAVE_SCHED_OTHER,
           [
+#ifdef ACE_HAS_STHREADS
+# include <thread.h>
+#endif
+
 #ifdef ACE_HAS_PTHREADS
 # include <pthread.h>
 #endif
