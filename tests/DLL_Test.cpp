@@ -6,7 +6,7 @@
 //    tests
 //
 // = FILENAME
- //    DLL_Test.cpp
+//    DLL_Test.cpp
 //
 // = DESCRIPTION
 //    This test illustrates the use of <ACE_DLL> wrapper class.
@@ -24,10 +24,6 @@
 #include "ace/Auto_Ptr.h"
 
 ACE_RCSID(tests, DLL_Test, "$Id$")
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // Considering UNIX OS to be default. On Win32 platforms, the symbols
 // are got form the .exe as one cant have .exe and .dll for the same
@@ -56,30 +52,12 @@ cdecl_decoration (ACE_TCHAR const *func_name)
 #endif /* __BORLANDC__ */
 }
 
-// This function returns the Hello object pointer.
-
-extern "C" ACE_Svc_Export Hello *get_hello (void);
-
-Hello *
-get_hello (void)
-{
-  Hello *hello = 0;
-
-  ACE_NEW_RETURN (hello,
-                  Hello,
-                  NULL);
-
-  return hello;
-}
-
-typedef Hello *(*TC) (void);
+// Declare the type of the symbol:
+typedef Hello *(*Hello_Factory)(void);
 
 int
-main (int argc, ACE_TCHAR *argv[])
+main (int, ACE_TCHAR *[])
 {
-  ACE_UNUSED_ARG (argc);
-  ACE_UNUSED_ARG (argv);
-
   ACE_START_TEST (ACE_TEXT ("DLL_Test"));
 
 // Protection against this test being run on platforms not supporting Dlls.
@@ -97,7 +75,7 @@ main (int argc, ACE_TCHAR *argv[])
 
   // Just because the ANSI C++ spec says you can no longer cast a
   // void* to a function pointer. Doesn't allow:
-  // TC f = (TC) dll.symbol ("get_hello");
+  // TC f = (Hello_Factory) dll.symbol ("get_hello");
   void *foo;
 
   ACE_TCHAR const *cdecl_str = cdecl_decoration (ACE_TEXT ("get_hello"));
@@ -105,14 +83,14 @@ main (int argc, ACE_TCHAR *argv[])
 
   // Cast the void* to long first.
   long tmp = ACE_reinterpret_cast (long, foo);
-  TC f = ACE_reinterpret_cast (Hello * (*)(void), tmp);
-  if (f == 0)
+  Hello_Factory factory = ACE_reinterpret_cast (Hello_Factory, tmp);
+  if (factory == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
 		       dll.error ()),
                       -1);
 
-  auto_ptr<Hello> my_hello (f ());
+  auto_ptr<Hello> my_hello (factory ());
 
   // Make the method calls, as the object pointer is available.
   my_hello->say_hello ();
