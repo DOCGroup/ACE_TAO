@@ -1,3 +1,11 @@
+Thu Jun 15 13:39:27 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_operation/rettype.cpp:
+	  
+	  Changed the generation of a native type as a
+	  return type in an operation to be a non-pointer.
+	  Thanks to Irfan for pointing this out.
+
 Thu Jun 15 13:33:24 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/tests/AVStreams/Latency/{Full_Profile,Latency,
