@@ -1,21 +1,29 @@
+Wed Dec 20 16:42:45 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+        * pace/socket.h:
+        * pace/posix/socket.inl:
+        * pace/posix/socket.c:
+
+          Beginning of PACE POSIX socket implementation.
+
 Wed Dec 20 15:19:50 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/config/config.h:
+        * pace/config/config.h:
 
-	  Added PACE_HAS_POSIX_SOCK_UOF for upcoming socket
-	  implementation.
+          Added PACE_HAS_POSIX_SOCK_UOF for upcoming socket
+          implementation.
 
 Thu Dec 19 11:40:00 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace\win32\unistd.c:
+        * pace\win32\unistd.c:
 
-	  Added pace_ prefix to emulation functions.
+          Added pace_ prefix to emulation functions.
 
 Thu Oct 26 04:00:00 2000  Luther J Baker  <luther@cs.wustl.edu>
 
         * pace/win32/schedtypes.h:
         * pace/win32/sched.h:
-          
+
           Compliance with ACE_HAS_PACE for ACE.
           sched_param now has a member sched_priority.
 
@@ -56,189 +64,189 @@ Fri Sep 22 11:32:25 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Wed Sep 13 13:52:00 2000  Luther J Baker  <luther@maxixe.doc.wustl.edu>
 
-	* pace/win32/types.h:
+        * pace/win32/types.h:
 
-	  Removed irrelevant base types and kept pace_* types.
+          Removed irrelevant base types and kept pace_* types.
 
-	  (ie:
-	      typedef DWORD nlink_t;
-	      typedef nlink_t pace_nlink_t;
-	  became
-	      typedef DWORD pace_nlink_t;
-	  )
+          (ie:
+              typedef DWORD nlink_t;
+              typedef nlink_t pace_nlink_t;
+          became
+              typedef DWORD pace_nlink_t;
+          )
 
 Wed Sep 13 13:42:15 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/sys/wait.h:
+        * pace/sys/wait.h:
 
-	  More types changed to pace_*.
+          More types changed to pace_*.
 
 Wed Sep 13 13:25:33 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/unistd.h: 
-	* pace/win32/unistd.inl:
+        * pace/unistd.h:
+        * pace/win32/unistd.inl:
 
-	  Even more type shifts to pace_*.
+          Even more type shifts to pace_*.
 
 Wed Sep 13 13:06:27 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/unistd.h: 
+        * pace/unistd.h:
 
-	  More of uid_t to pace_uid_t.
+          More of uid_t to pace_uid_t.
 
 Wed Sep 13 12:59:52 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/unistd.h: 
+        * pace/unistd.h:
 
-	  Change arguments from uid_t to pace_uid_t.
+          Change arguments from uid_t to pace_uid_t.
 
 Tue Aug 29 14:59:35 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/stat.inl (pace_fstat):
+        * pace/win32/stat.inl (pace_fstat):
 
-	  Typo.
+          Typo.
 
 Tue Aug 29 14:57:04 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/stat.h (pace_stat):
+        * pace/win32/stat.h (pace_stat):
 
-	  Atered pace_stat_h typedef.
+          Atered pace_stat_h typedef.
 
-	* pace/win32/stat.inl (pace_stat): 
+        * pace/win32/stat.inl (pace_stat):
 
-	  Implemented pace_fstat and pace_stat.
+          Implemented pace_fstat and pace_stat.
 
 Tue Aug 29 14:14:45 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/stat.h (pace_fstat):
-	* pace/stat.h (pace_fchmod):	
-	* pace/posix/stat.inl (pace_fchmod):
-	* pace/posix/stat.inl (pace_fstat):
-	* pace/win32/stat.inl (pace_fchmod):
-	* pace/win32/stat.inl (pace_fstat):
+        * pace/stat.h (pace_fstat):
+        * pace/stat.h (pace_fchmod):
+        * pace/posix/stat.inl (pace_fchmod):
+        * pace/posix/stat.inl (pace_fstat):
+        * pace/win32/stat.inl (pace_fchmod):
+        * pace/win32/stat.inl (pace_fstat):
 
-	  Changed argument 1 from an int to a PACE_HANDLE.
+          Changed argument 1 from an int to a PACE_HANDLE.
 
 Tue Aug 29 13:07:55 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/fcntl.inl (pace_creat):
+        * pace/win32/fcntl.inl (pace_creat):
 
-	  Fixed a typo.
+          Fixed a typo.
 
 Mon Aug 28 20:40:25 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/stat.h (pace_win32_mkdir):
-	* pace/win32/stat.inl (pace_win32_mkdir):
-	* pace/win32/stat.c (pace_win32_mkdir):
+        * pace/win32/stat.h (pace_win32_mkdir):
+        * pace/win32/stat.inl (pace_win32_mkdir):
+        * pace/win32/stat.c (pace_win32_mkdir):
 
-	  Altered naming convention of emulation function.
+          Altered naming convention of emulation function.
 
 Mon Aug 28 20:00:26 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* PACE/pace/fcntl.h:
-	* PACE/pace/win32/fcntl.inl:
+        * PACE/pace/fcntl.h:
+        * PACE/pace/win32/fcntl.inl:
 
-	  Added support of fcntl (...) for win32. No op.
+          Added support of fcntl (...) for win32. No op.
 
 Fri Aug 25 12:11:38 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* /pace/unistd.h:
+        * /pace/unistd.h:
 
-	  Change ssize_t to pace_ssize_t.
-	
-	* /pace/win32/unistd.h:
-	* /pace/win32/unistd.inl:
-	* /pace/win32/unistd.c:	
-	* /pace/win32/mqueue.inl:
+          Change ssize_t to pace_ssize_t.
 
-	  Changes related to type conflicts with ACE.
+        * /pace/win32/unistd.h:
+        * /pace/win32/unistd.inl:
+        * /pace/win32/unistd.c:
+        * /pace/win32/mqueue.inl:
+
+          Changes related to type conflicts with ACE.
 
 Tue Aug 22 18:59:41 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* PACE/ChangeLog:
+        * PACE/ChangeLog:
 
-	  Updated.
+          Updated.
 
 Tue Aug 22 18:51:34 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/dirent.h:
-	* pace/win32/signal.h:
-	* stdio.h:
-	* stdlib.h:
-	* time.h:
-	* types.h:
-	* unistd.h:
-	* utsname.h:
+        * pace/win32/dirent.h:
+        * pace/win32/signal.h:
+        * stdio.h:
+        * stdlib.h:
+        * time.h:
+        * types.h:
+        * unistd.h:
+        * utsname.h:
 
-	  Update to compile.
+          Update to compile.
 
 Tue Aug 22 17:58:38 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* PACE/ChangeLog:
+        * PACE/ChangeLog:
 
-	  Updated.
+          Updated.
 
 Tue Aug 22 17:52:02 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* PACE_POSIX_support.txt:
+        * PACE_POSIX_support.txt:
 
-	  Updated emulation records.
+          Updated emulation records.
 
-	* pace/fcntl.h:
-	* pace/win32/fcntl.h:
-	* pace/win32/fcntl.c:
+        * pace/fcntl.h:
+        * pace/win32/fcntl.h:
+        * pace/win32/fcntl.c:
 
-	  Updated creat func to pace_win32_create to eliminate compile probs.
+          Updated creat func to pace_win32_create to eliminate compile probs.
 
-	* TODO:
+        * TODO:
 
-	  Updated.
+          Updated.
 
-	* pace/config/utility.h:
+        * pace/config/utility.h:
 
-	  Updated to work with multithreaded errno correctly.
+          Updated to work with multithreaded errno correctly.
 
-	* pace/win32/pthread.h:
-	* pace/win32/pthread.inl:	
-	* pace/win32/pthread.c:	
+        * pace/win32/pthread.h:
+        * pace/win32/pthread.inl:
+        * pace/win32/pthread.c:
 
-	  Update emulations!
+          Update emulations!
 
-	* pace/win32/time.inl:
+        * pace/win32/time.inl:
 
-	  Updated/hacked to compile correctly!
+          Updated/hacked to compile correctly!
 
-	* pace/win32/pace_dll.dsp:
-	* pace/win32/pace_lib.dsp:
+        * pace/win32/pace_dll.dsp:
+        * pace/win32/pace_lib.dsp:
 
-	  Updated project settings to use proper multithreaded DLL / LIB.
+          Updated project settings to use proper multithreaded DLL / LIB.
 
 Tue Aug 22 12:44:09 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/config/features.h (_MT):
+        * pace/config/features.h (_MT):
 
-	  Added to support multithreading.
+          Added to support multithreading.
 
-	* pace/win32/pthread.c (pthread_create):
+        * pace/win32/pthread.c (pthread_create):
 
-	  Completed using basic _beginthreadex.
+          Completed using basic _beginthreadex.
 
-	* pace/win32/TODO:
+        * pace/win32/TODO:
 
-	  Updated.
+          Updated.
 
 Mon Aug 21 20:34:51 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/config/features.h:
+        * pace/config/features.h:
 
-	  Updated to reflect PACE_HAS_MFC and PACE_MT_SAFE.
-	  Following ace/config-win32-common.h.
+          Updated to reflect PACE_HAS_MFC and PACE_MT_SAFE.
+          Following ace/config-win32-common.h.
 
 Mon Aug 21 19:40:23 2000 Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/pthread.c (pthread_attr_init):
+        * pace/win32/pthread.c (pthread_attr_init):
 
-	  Updated attr initialization in pthread_attr_init.
+          Updated attr initialization in pthread_attr_init.
 
 Fri Aug 18 17:57:42 2000  Steve Huston  <shuston@riverace.com>
 
@@ -250,92 +258,92 @@ Fri Aug 18 12:30:51 2000  Steve Huston  <shuston@riverace.com>
 
 Wed Aug 16 17:31:43 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/pthread.h:
-	* pace/win32/pthread.inl:
-	* pace/win32/pthread.c:
-	* pace/win32/pthreadtypes.h:
-	* pace/win32/schedtypes.h:
-	* pace/win32/TODO
+        * pace/win32/pthread.h:
+        * pace/win32/pthread.inl:
+        * pace/win32/pthread.c:
+        * pace/win32/pthreadtypes.h:
+        * pace/win32/schedtypes.h:
+        * pace/win32/TODO
 
-	  More fabulous emulation updates!
+          More fabulous emulation updates!
 
 Wed Aug 16 16:26:32 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/pthread.h:
-	* pace/win32/pthread.inl:
-	* pace/win32/pthread.c:
+        * pace/win32/pthread.h:
+        * pace/win32/pthread.inl:
+        * pace/win32/pthread.c:
 
-	  The first commit in a long series of emulations.
+          The first commit in a long series of emulations.
 
 Mon Aug 14 22:24:50 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/sched.inl (pace_sched_get_priority_max):
+        * pace/win32/sched.inl (pace_sched_get_priority_max):
 
-	  Removed an extraneous '#include' left from the previous commit.
+          Removed an extraneous '#include' left from the previous commit.
 
-	* pace/win32/pace_dll.dsp:
-	* pace/win32/pace_lib.dsp:
+        * pace/win32/pace_dll.dsp:
+        * pace/win32/pace_lib.dsp:
 
-	  Added new files to the project files.
-	  (pthreadtypes.h schedtypes.h)
+          Added new files to the project files.
+          (pthreadtypes.h schedtypes.h)
 
 Mon Aug 14 21:41:24 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/pthreadtypes.h:
-	* pace/win32/schedtypes.h:
+        * pace/win32/pthreadtypes.h:
+        * pace/win32/schedtypes.h:
 
-	  Added to repository to break up the complexity
-	  of the code and avoid circular dependencies.
+          Added to repository to break up the complexity
+          of the code and avoid circular dependencies.
 
-	* pace/win32/types.h:
+        * pace/win32/types.h:
 
-	  Updated declarations to remove circular dependencies.
+          Updated declarations to remove circular dependencies.
 
-	* pace/win32/sched.h:
+        * pace/win32/sched.h:
 
-	  Updated to use schedtypes.h.
+          Updated to use schedtypes.h.
 
-	* pace/win32/pthread.h:
+        * pace/win32/pthread.h:
 
-	  Updated to use pthreadtypes.h.
+          Updated to use pthreadtypes.h.
 
-	* pace/pthread.h:
+        * pace/pthread.h:
 
-	  Updated signatures to use pace prefixed types.
+          Updated signatures to use pace prefixed types.
 
 Thu Aug 10 04:18:14 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
-	* tests/Stdio_Test.c:
-	  Changed a c++ style comment to a c style comment.
+        * tests/Stdio_Test.c:
+          Changed a c++ style comment to a c style comment.
 
-	* pace/fcntl.h
-	* pace/mqueue.h
-	* pace/semaphore.h
-	* pace/stdio.h
-	  Removed global scope modifier, since it should be
-	  supplied by the client.
+        * pace/fcntl.h
+        * pace/mqueue.h
+        * pace/semaphore.h
+        * pace/stdio.h
+          Removed global scope modifier, since it should be
+          supplied by the client.
 
 Wed Aug 09 19:30:39 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* tests/tests.dsw:
+        * tests/tests.dsw:
 
-	  Removed test projects files that use constants from
-	  POSIX specific platforms (Posix_SP_Test.c, mqueue_test.c).
+          Removed test projects files that use constants from
+          POSIX specific platforms (Posix_SP_Test.c, mqueue_test.c).
 
 Wed Aug 09 19:22:17 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* tests/tests.dsw:
-	* tests/test_stdio.dsp:
+        * tests/tests.dsw:
+        * tests/test_stdio.dsp:
 
-	  Added to the repository.
-	  Note that I also added the pace_lib and pace_dll projects
-	  to this workspace. Unlike, ACE, the library is pretty
-	  small and the tests are quite limited and so they all
-	  fit quite nicely in a project file!
+          Added to the repository.
+          Note that I also added the pace_lib and pace_dll projects
+          to this workspace. Unlike, ACE, the library is pretty
+          small and the tests are quite limited and so they all
+          fit quite nicely in a project file!
 
-	* tests/Stdio_Test.c:
+        * tests/Stdio_Test.c:
 
-	  Altered to sleep for 20 secs to test the exe size in memory.
+          Altered to sleep for 20 secs to test the exe size in memory.
 
 Tue Aug 08 17:09:38 2000  Joe Hoffert <joeh@cs.wustl.edu>
 
