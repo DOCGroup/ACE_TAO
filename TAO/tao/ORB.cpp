@@ -17,6 +17,9 @@
 # include "tao/ORB.i"
 #endif /* ! __ACE_INLINE__ */
 
+// Static initialization.
+int CORBA_ORB::orb_init_count_ = 0;
+
 // COM's IUnknown support
 
 // {A201E4C7-F258-11ce-9598-0000C07CA898}
