@@ -1,3 +1,12 @@
+Mon Feb 02 21:26:30 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Map_Manager_Test.cpp (test_map_manager): print out
+          item.int_id_ instead of local i so that item gets used (CXX
+          warned that it wasn't).
+
+        * include/makeinclude/platform_osf1_4.0.GNU: added suppression of
+          warning 610, nonoverriding_function_decl.
+
 Mon Feb 02 14:40:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
         * tests/OrdMultiSet_Test.cpp: added explicit template instantiation
