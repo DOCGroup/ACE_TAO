@@ -33,7 +33,7 @@ project(BMDisplay_DnC_svnt) : ciao_servant_dnc {
   libpaths += ..
 
   idlflags  +=  -Wb,export_macro=BMDISPLAY_SVNT_Export 
-  idlflagfs += -Wb,export_include=BMDisplay_svnt_export.h
+  idlflags += -Wb,export_include=BMDisplay_svnt_export.h
 
   dynamicflags = BMDISPLAY_SVNT_BUILD_DLL
 
