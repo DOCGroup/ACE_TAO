@@ -187,7 +187,7 @@ typedef void (*TAO_Skeleton)(
 #include "tao/ORB.h"
 
 typedef TAO_Unbounded_Sequence<CORBA::Octet> TAO_opaque;
-extern CORBA::TypeCode_ptr TC_opaque;
+extern TAO_Export CORBA::TypeCode_ptr TC_opaque;
 
 extern TAO_Export CORBA_Boolean
 operator<< (TAO_OutputCDR&, const TAO_opaque&);
