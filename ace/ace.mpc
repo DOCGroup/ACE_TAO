@@ -20,7 +20,7 @@ project(ACE) : acedefaults, aceversion, core, qt_reactor, other, codecs, token, 
   //Synch.cpp
 
   Source_Files(ACE_COMPONENTS) {
-    OS {
+    ACE_OS {
       Basic_Types.cpp
       Time_Value.cpp
       Cleanup.cpp
