@@ -30,7 +30,7 @@
  *
  * @brief Structure that contains all member-specific information.
  *
- * 
+ * Structure that contains all member-specific information.
  */
 struct TAO_PG_MemberInfo
 {
@@ -47,7 +47,7 @@ struct TAO_PG_MemberInfo
    * important.  In particular, if a member already resides at the
    * given location, this equality operator will return true.
    */
-  int operator== (const struct TAO_PG_MemberInfo & rhs);
+  int operator== (const TAO_PG_MemberInfo & rhs);
 
 };
 
