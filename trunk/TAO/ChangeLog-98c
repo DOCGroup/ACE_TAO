@@ -1,7 +1,18 @@
+Sat Dec  5 22:10:13 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Typecode.cpp (private_equal_struct,private_equal_except):
+	  (private_equal_sequence,private_equal_union,private_equal_union):
+	  Changed to the use of TAO_CHECK_CONDITION_ENV_RETURN to
+	  TAO_CHECK_ENV_RETURN and then check the condition explicitly.
+	  This avoids warnings on some compiler.
+	  (typecode_param): Fixed an error.
+
+	  Thanks to David for pointing these out.
+
 Fri Dec 04 19:35:56 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Typecode.cpp (typecode_param): Moved declaration of loop
-	  counter up to avoid skipping declaration warning from MSVC.
+	  counter up to avoid a skipping declaration warning from MSVC.
 
 	* tao/try_macros.h (TAO_TRY_THROW[_EX]): Removed extra spaces in
 	  definitions for native exceptions.

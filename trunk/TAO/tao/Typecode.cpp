@@ -812,7 +812,9 @@ CORBA_TypeCode::private_equal_struct (CORBA::TypeCode_ptr tc,
 
       CORBA::Boolean flag =
         my_member_tc->equal (tc_member_tc, env);
-      TAO_CHECK_CONDITION_ENV_RETURN (env, || !flag, 0);
+      TAO_CHECK_ENV_RETURN (env, 0);
+      if (!flag)
+        return 0;
     }
 
   return 1; // success (equal)
@@ -858,7 +860,9 @@ CORBA_TypeCode::private_equal_union (CORBA::TypeCode_ptr tc,
   TAO_CHECK_ENV_RETURN (env, 0);
 
   int status = my_discrim->equal (tc_discrim, env);
-  TAO_CHECK_CONDITION_ENV_RETURN (env, || !status, 0);
+  TAO_CHECK_ENV_RETURN (env, 0);
+  if (!status)
+    return 0;
 
   // check the default used
   CORBA::Long my_default = this->default_index (env);
@@ -905,7 +909,9 @@ CORBA_TypeCode::private_equal_union (CORBA::TypeCode_ptr tc,
       TAO_CHECK_ENV_RETURN (env, 0);
 
       CORBA::Boolean flag = my_member_tc->equal (tc_member_tc, env);
-      TAO_CHECK_CONDITION_ENV_RETURN (env, || !flag, 0);
+      TAO_CHECK_ENV_RETURN (env, 0);
+      if (!flag)
+        return 0;
     }
 
   return 1; // success (equal)
@@ -1011,7 +1017,9 @@ CORBA_TypeCode::private_equal_sequence (CORBA::TypeCode_ptr tc,
   TAO_CHECK_ENV_RETURN (env, 0);
 
   int status = my_elem->equal (tc_elem, env);
-  TAO_CHECK_CONDITION_ENV_RETURN (env, || !status, 0);
+  TAO_CHECK_ENV_RETURN (env, 0);
+  if (!status)
+    return 0;
 
   // now check if bounds are same
   CORBA::ULong my_len = this->length (env);
@@ -1131,7 +1139,9 @@ CORBA_TypeCode::private_equal_except (CORBA::TypeCode_ptr tc,
       TAO_CHECK_ENV_RETURN (env, 0);
 
       CORBA::Boolean flag = my_member_tc->equal (tc_member_tc, env);
-      TAO_CHECK_CONDITION_ENV_RETURN (env, || !flag, 0);
+      TAO_CHECK_ENV_RETURN (env, 0);
+      if (!flag)
+        return 0;
     }
 
   return 1; // success (equal)
@@ -2233,7 +2243,8 @@ CORBA_TypeCode::typecode_param (CORBA::ULong n,
       for (i = 0; i < temp; i++)
         {
           status = stream.decode (tc, &scratch, this,  env); // member label
-          TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), env, 0);
+          // if (env.exception ()) TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), env, 0);
+          TAO_CHECK_ENV_RETURN (env, 0);
 
           if (status != CORBA::TypeCode::TRAVERSE_CONTINUE
               || !stream.skip_string ()         // member name
