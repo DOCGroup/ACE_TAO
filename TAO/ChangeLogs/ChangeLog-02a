@@ -1,3 +1,10 @@
+Sat Nov 25 21:28:25 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
+
+	* orbsvcs/tests/Notify/Basic/Simple.{h,cpp}:
+	* orbsvcs/tests/Notify/Basic/Makefile:
+	
+	  Added simple test to show how to use Anys in Notify Service.
+
 Sat Nov 25 21:09:54 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Connection_Cache_Manager.cpp:
