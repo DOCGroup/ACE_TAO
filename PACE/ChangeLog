@@ -1,3 +1,17 @@
+Fri Jul 14 09:26:36 2000  David L. Levine <levine@cs.wustl.edu>
+
+        * include/makeinclude/rules.common.GNU: if debug is disabled,
+          add -DPACE_NDEBUG to CFLAGS or CCFLAGS.
+
+        * pace/{posix,win32}/assert.inl: neuter if PACE_NDEBUG is
+          defined.  Even though assert () won't do anything with
+          NDEBUG, data (__FILE__ and __LINE__, presumably) was stored
+          in the .o file without this change.
+
+          We might want to consider making pace_assert a macro.
+          As an inline function, __FILE__ and __LINE__ won't be
+          very helpful.
+
 Fri Jul 14 08:17:59 2000  David L. Levine <levine@cs.wustl.edu>
 
         * pace/{aio.h,assert.h,ctype.h,dirent.h,fcntl.h,grp.h,locale.h,
