@@ -2545,15 +2545,27 @@ idl_parse_line_and_file (char *buf)
   else if (is_main_filename)
     {
       if (seen != idl_global->last_seen_index ()
-          && idl_global->pragma_prefixes ().size () > 1)
+          && idl_global->pragma_prefixes ().size () > 2)
         {
-          // If it's not the same as the current filename, and there is more
-          // than one prefix in the stack, then we have
-          // just finished with an included IDL file, and its
-          // (possibly empty) prefix must be popped.
-          char *trash = 0;
-          idl_global->pragma_prefixes ().pop (trash);
-          delete [] trash;
+          // This flag guards against the case where the same IDL file is
+          // included in the main file more than once. In such a case, the
+          // preprocessor will generate the #line number and filename, but
+          // none of the contents, including a possible #pragma prefix, so
+          // we don't want to pop.
+          if (idl_global->repeat_include () == 0)
+            {
+              // If it's not the same as the current filename, and there is more
+              // than one prefix in the stack, then we have
+              // just finished with an included IDL file, and its
+              // (possibly empty) prefix must be popped.
+              char *trash = 0;
+              idl_global->pragma_prefixes ().pop (trash);
+              delete [] trash;
+            }
+          else
+            {
+              idl_global->repeat_include (0);
+            }
         }
 
       idl_global->last_seen_index (seen);
