@@ -18,8 +18,6 @@ ACE_ALLOC_HOOK_DEFINE(ACE_String_Base)
 
 template <class CHAR>
 CHAR ACE_String_Base<CHAR>::NULL_String_ = '\0';
-template <class CHAR>
-const int ACE_String_Base<CHAR>::npos = -1;
 
 // this method might benefit from a little restructuring.
 template <class CHAR> void

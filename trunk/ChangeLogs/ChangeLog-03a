@@ -1,3 +1,22 @@
+Mon Dec 17 00:13:47 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/String_Base_Const.h:
+	* ace/String_Base_Const.cpp: Added a new base class for
+	  ACE_String_Base extracting out the static member data to
+	  circumvent a SunCC compilation problem which only happen when
+	  debug=0 is defined.
+
+	* ace/String_Base.h:
+	* ace/String_Base.cpp: Removed the offending static member sata.
+
+	* ace/Makefile:
+	* ace/Makefile.bor:
+	* ace/ace_dll.dsp:
+	* ace/ace_lib.dsp:
+	* ace/ace.icc:
+	* ace/ace-lib.icc:
+	* ace/ace-dll.icc: Added String_Base_Const.* to various project files.
+
 Sun Dec 16 10:33:17 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/Select_Reactor_T.h: Improve the documentation of the
