@@ -1,3 +1,8 @@
+Sun Jan 13 18:23:11 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* tests/Two_Objects/Makefile: 
+	  Regenerated dependencies.
+
 Sun Jan 13 16:19:24 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/Security/Security_ORBInitializer.cpp (pre_init):
