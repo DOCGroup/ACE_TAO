@@ -167,3 +167,19 @@ TAO_ECG_Complex_Address_Server::dump_content (void)
            << endl;
     }
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class ACE_Hash_Map_Manager_Ex<CORBA::Long, ACE_INET_Addr, ACE_Hash<CORBA::Long>, ACE_Equal_To<CORBA::Long>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Entry<CORBA::Long, ACE_INET_Addr>;
+template class ACE_Hash_Map_Iterator_Base_Ex<CORBA::Long, ACE_INET_Addr, ACE_Hash<CORBA::Long>, ACE_Equal_To<CORBA::Long>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator<CORBA::Long,ACE_INET_Addr,ACE_Null_Mutex>;
+
+#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Hash_Map_Manager_Ex<CORBA::Long, ACE_INET_Addr, ACE_Hash<CORBA::Long>, ACE_Equal_To<CORBA::Long>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Entry<CORBA::Long, ACE_INET_Addr>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<CORBA::Long, ACE_INET_Addr, ACE_Hash<CORBA::Long>, ACE_Equal_To<CORBA::Long>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator<CORBA::Long,ACE_INET_Addr,ACE_Null_Mutex>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
