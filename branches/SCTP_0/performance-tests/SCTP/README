@@ -29,8 +29,7 @@ located in this directory.
                          performance tests and the run_spectrum.pl
                          script contained in this directory. 
                          Discussion of the baseline performance
-                         results contained in the sctp-perf
-                         sub-directory.
+                         results obtained by LM ATL. 
 
  THANKS - Documents all the people who contributed to the development
           of the ACE wrapper-facades for SCTP and the SCIOP (SCTP
