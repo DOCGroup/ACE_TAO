@@ -19,7 +19,7 @@ ACE_RCSID (FaultTolerance,
 
 CORBA::Boolean
 TAO_FT_IOGR_Property::set_property (
-    CORBA::Object_ptr ior
+    CORBA::Object_ptr &ior
     ACE_ENV_ARG_DECL_NOT_USED /*ACE_ENV_SINGLE_ARG_PARAMETER*/)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    TAO_IOP::Invalid_IOR))
@@ -155,7 +155,7 @@ TAO_FT_IOGR_Property::get_primary (
 
 CORBA::Boolean
 TAO_FT_IOGR_Property::set_primary (
-    CORBA::Object_ptr ior1,
+    CORBA::Object_ptr &ior1,
     CORBA::Object_ptr ior2
     ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((
@@ -327,7 +327,7 @@ TAO_FT_IOGR_Property::get_primary_profile (
 
 CORBA::Boolean
 TAO_FT_IOGR_Property::remove_primary_tag (
-    CORBA::Object_ptr iogr
+    CORBA::Object_ptr &iogr
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {

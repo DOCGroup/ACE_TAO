@@ -96,7 +96,7 @@ module TAO_IOP
 
     /// If any of the IOR's within the IOGR has a primary tag, just
     /// remove it. Returns zero if no primary was found.
-    boolean remove_primary_tag (in Object iogr)
+    boolean remove_primary_tag (inout Object iogr)
       raises (NotFound);
   };
 
