@@ -3,54 +3,11 @@
 // This will have all new definitions that will go in to CORBA from
 // now on.
 
-#pragma prefix "omg.org"
+#ifndef TAO_CORBA_IDL
+#define TAO_CORBA_IDL
 
-module CORBA
-{
-  typedef string  ORBid;
-  typedef string  Identifier;
-  typedef unsigned long Flags;
+#include <orb.idl>
 
-  struct NamedValue
-  {
-    Identifier name;
-    any value;
-    Flags flags;
-  };
+// This file is deprecated.
 
-  enum exception_type
-  {
-    NO_EXCEPTION,
-    USER_EXCEPTION,
-    SYSTEM_EXCEPTION
-  };
-
-  interface Object;
-  interface Request;
-  interface NVList;
-  interface Exception;
-
-  typedef sequence<Request> RequestSeq;
-
-  typedef string ObjectId;
-  typedef sequence <ObjectId> ObjectIdList;
-
-  typedef unsigned short ServiceType;
-  typedef unsigned long ServiceOption;
-  typedef unsigned long ServiceDetailType;
-
-  struct ServiceDetail
-  {
-    ServiceDetailType service_detail_type;
-    sequence <octet> service_detail;
-  };
-
-  struct ServiceInformation
-  {
-    sequence <ServiceOption> service_options;
-    sequence <ServiceDetail> service_details;
-  };
-
-};
-
-#pragma prefix ""
+#endif
