@@ -410,16 +410,18 @@ ACE_TSS<TYPE>::ACE_TSS (TYPE *ts_obj)
     {
       if (this->ts_init () == -1)
         {
-          int errnum = errno;
+          // Save/restore errno.
+          ACE_Errno_Guard error (errno);
           // What should we do if this call fails?!
 #if defined (ACE_HAS_WINCE)
-          ::MessageBox (NULL, L"ACE_Thread::keycreate() failed!",
-                        L"ACE_TSS::ACE_TSS", MB_OK);
+          ::MessageBox (NULL,
+                        L"ACE_Thread::keycreate() failed!",
+                        L"ACE_TSS::ACE_TSS",
+                        MB_OK);
 #else
           ACE_OS::fprintf (stderr,
                            "ACE_Thread::keycreate() failed!");
 #endif /* ACE_HAS_WINCE */
-          errno = errnum;
           return;
         }
 

@@ -95,10 +95,9 @@ ACE_SOCK_Connector::connect (ACE_SOCK_Stream &new_stream,
     new_stream.disable (ACE_NONBLOCK);
   else if (!(errno == EWOULDBLOCK || errno == ETIMEDOUT))
     {
-      // If things have gone wrong, close down and return an error.
-      int saved_errno = errno;
+      // Save/restore errno.
+      ACE_Errno_Guard error (errno);
       new_stream.close ();
-      errno = saved_errno;
     }
     
   return result;
@@ -123,10 +122,9 @@ ACE_SOCK_Connector::complete (ACE_SOCK_Stream &new_stream,
 
   if (h == ACE_INVALID_HANDLE)
     {
-      // Preserve the value of errno across the close() call.
-      int error = errno;
+      // Save/restore errno.
+      ACE_Errno_Guard error (errno);
       new_stream.close ();
-      errno = error;
       return -1;
     }
   else 	  // We've successfully connected!
@@ -140,10 +138,9 @@ ACE_SOCK_Connector::complete (ACE_SOCK_Stream &new_stream,
 
 	  if (ACE_OS::getpeername (h, addr, &len) == -1)
 	    {
-	      // Preserve the value of errno across the close() call.
-	      int error = errno;
+              // Save/restore errno.
+              ACE_Errno_Guard error (errno);
 	      new_stream.close ();
-	      errno = error;
 	      return -1;
 	    }
 	}

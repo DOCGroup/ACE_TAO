@@ -257,9 +257,10 @@ ACE_Remote_Token_Proxy::tryacquire (void (*sleep_hook)(void *))
     {
       if (debug_)
 	{
-	  int error = errno;
-	  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("shadow try acquire failed\n")));
-	  errno = error;
+          // Save/restore errno.
+          ACE_Errno_Guard error (errno);
+	  ACE_DEBUG ((LM_DEBUG,
+                      ASYS_TEXT ("shadow try acquire failed\n")));
 	}
 
       return -1;
@@ -307,11 +308,14 @@ ACE_Remote_Token_Proxy::renew (int requeue_position,
 
   if (result == -1)
     {
-      int error = errno;
-      ACE_Token_Proxy::release ();
-      errno = error;
-      ACE_ERROR_RETURN ((LM_ERROR, "%p error on remote renew, releasing shadow mutex.\n",
-				   "ACE_Remote_Token_Proxy"), -1);
+      {
+        // Save/restore errno.
+        ACE_Errno_Guard error (errno);
+        ACE_Token_Proxy::release ();
+      }
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p error on remote renew, releasing shadow mutex.\n",
+                         "ACE_Remote_Token_Proxy"), -1);
     }
   else
     {

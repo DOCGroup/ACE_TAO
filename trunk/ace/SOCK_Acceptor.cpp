@@ -159,15 +159,12 @@ ACE_SOCK_Acceptor::shared_accept (ACE_Addr *remote_addr,
 
 	  if (ACE_BIT_DISABLED (val, ACE_NONBLOCK))
 	    {
-	      // We need to stash errno here because <ACE::clr_flags>
-	      // may reset it.
-	      int error = errno;
-
+              // Save/restore errno.
+              ACE_Errno_Guard error (errno);
 	      // Only disable ACE_NONBLOCK if we weren't in
 	      // non-blocking mode originally.
 	      ACE::clr_flags (handle, ACE_NONBLOCK);
 	      ACE::clr_flags (new_handle, ACE_NONBLOCK);
-	      errno = error;
 	    }
 	}
     }

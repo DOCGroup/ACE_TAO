@@ -2588,9 +2588,11 @@ ACE_OS::recursive_mutex_lock (ACE_recursive_thread_mutex_t *m)
       m->nesting_level_++;
     }
 
-  int error = errno;
-  ACE_OS::thread_mutex_unlock (&m->nesting_mutex_);
-  errno = error;
+  {
+    // Save/restore errno.
+    ACE_Errno_Guard error (errno);
+    ACE_OS::thread_mutex_unlock (&m->nesting_mutex_);
+  }
   return result;
 #endif /* ACE_HAS_RECURSIVE_MUTEXES */
 #else
@@ -2631,9 +2633,11 @@ ACE_OS::recursive_mutex_trylock (ACE_recursive_thread_mutex_t *m)
         }
     }
 
-  int error = errno;
-  ACE_OS::thread_mutex_unlock (&m->nesting_mutex_);
-  errno = error;
+  {
+    // Save/restore errno.
+    ACE_Errno_Guard error (errno);
+    ACE_OS::thread_mutex_unlock (&m->nesting_mutex_);
+  }
   return result;
 #endif /* ACE_HAS_RECURSIVE_MUTEXES */
 #else
@@ -2682,9 +2686,12 @@ ACE_TRACE ("ACE_Recursive_Thread_Mutex::release");
             }
         }
     }
-  int error = errno;
-  ACE_OS::thread_mutex_unlock (&m->nesting_mutex_);
-  errno = error;
+
+  {
+    // Save/restore errno.
+    ACE_Errno_Guard error (errno);
+    ACE_OS::thread_mutex_unlock (&m->nesting_mutex_);
+  }
   return result;
 #endif /* ACE_HAS_RECURSIVE_MUTEXES */
 #else
@@ -3624,7 +3631,7 @@ ACE_OS::rw_unlock (ACE_rwlock_t *rw)
   int error = 0;
 
   if (rw->important_writer_ && rw->ref_count_ == 1)
-    // only the reader requesting to upgrade its lock is left over
+    // Only the reader requesting to upgrade its lock is left over.
     {
       result = ACE_OS::cond_signal (&rw->waiting_important_writer_);
       error = errno;

@@ -5244,12 +5244,12 @@ ACE_OS::rwlock_init (ACE_rwlock_t *rw,
 
   if (result == -1)
     {
-      int error = errno;
+      // Save/restore errno.
+      ACE_Errno_Guard error (errno);
       ACE_OS::mutex_destroy (&rw->lock_);
       ACE_OS::cond_destroy (&rw->waiting_readers_);
       ACE_OS::cond_destroy (&rw->waiting_writers_);
       ACE_OS::cond_destroy (&rw->waiting_important_writer_);
-      errno = error;
     }
   return result;
 #   else
