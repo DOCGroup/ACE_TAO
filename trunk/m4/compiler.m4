@@ -78,7 +78,7 @@ changequote([, ])dnl
     WERROR="-Werror"
  fi
 
- case "$target" in
+ case "$host" in
    *aix*)
      dnl In case anything here or in the config depends on OS
      dnl version number, grab it here and pass it all to the
@@ -116,7 +116,7 @@ changequote([, ])dnl
      ;;
  esac
 
- case "$target" in
+ case "$host" in
    *aix4.2* | *aix4.3*)
      case "$CXX" in
        xlC*)
