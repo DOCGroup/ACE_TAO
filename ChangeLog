@@ -1,3 +1,10 @@
+Mon Dec 29 18:28:54 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * etc/ace.doxygen:
+          Also remove the final '/' from STRIP_FROM_PATH, i.e.,
+          STRIP_FROM_PATH=$(ACE_ROOT)/, so that the file list will look
+          like this, ace/<file>, instead of /ace/<file>.
+
 Mon Dec 29 11:20:50 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/tao_orb_tests.lst:
