@@ -392,10 +392,9 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_malloc (size_t nbytes)
     {
       currp = prevp->next_block_;
     }
-#endif
+#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
 
   // Search the freelist to locate a block of the appropriate size.
-
 
   while (1)
 
