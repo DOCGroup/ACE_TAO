@@ -927,7 +927,7 @@ AST_Module::destroy (void)
 }
 
 int
-AST_Module::accept (ast_visitor *visitor)
+AST_Module::ast_accept (ast_visitor *visitor)
 {
   return visitor->visit_module (this);
 }

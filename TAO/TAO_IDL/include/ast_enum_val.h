@@ -94,7 +94,7 @@ public:
   virtual void dump (ostream &);
 
   // Visiting.
-  virtual int accept (ast_visitor *visitor);
+  virtual int ast_accept (ast_visitor *visitor);
 };
 
 #endif           // _AST_ENUM_VAL_AST_ENUM_VAL_HH

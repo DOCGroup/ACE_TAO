@@ -106,7 +106,7 @@ AST_PredefinedType::dump (ostream &o)
 }
 
 int
-AST_PredefinedType::accept (ast_visitor *visitor)
+AST_PredefinedType::ast_accept (ast_visitor *visitor)
 {
   return visitor->visit_predefined_type (this);
 }

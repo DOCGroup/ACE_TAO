@@ -100,7 +100,7 @@ AST_Type::in_recursion (AST_Type *)
 }
 
 int
-AST_Type::accept (ast_visitor *visitor)
+AST_Type::ast_accept (ast_visitor *visitor)
 {
   return visitor->visit_type (this);
 }

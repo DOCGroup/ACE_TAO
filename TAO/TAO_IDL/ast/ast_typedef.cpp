@@ -121,7 +121,7 @@ AST_Typedef::dump (ostream &o)
 }
 
 int
-AST_Typedef::accept (ast_visitor *visitor)
+AST_Typedef::ast_accept (ast_visitor *visitor)
 {
   return visitor->visit_typedef (this);
 }

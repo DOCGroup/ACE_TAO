@@ -1179,7 +1179,7 @@ AST_Interface::destroy (void)
 }
 
 int
-AST_Interface::accept (ast_visitor *visitor)
+AST_Interface::ast_accept (ast_visitor *visitor)
 {
   if (this->is_valuetype_)
     {

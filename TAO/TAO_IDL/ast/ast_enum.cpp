@@ -329,7 +329,7 @@ AST_Enum::dump (ostream &o)
 }
 
 int
-AST_Enum::accept (ast_visitor *visitor)
+AST_Enum::ast_accept (ast_visitor *visitor)
 {
   return visitor->visit_enum (this);
 }

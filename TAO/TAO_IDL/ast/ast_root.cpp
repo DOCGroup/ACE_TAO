@@ -188,7 +188,7 @@ AST_Root::dump (ostream &o)
 }
 
 int
-AST_Root::accept (ast_visitor *visitor)
+AST_Root::ast_accept (ast_visitor *visitor)
 {
   return visitor->visit_root (this);
 }

@@ -98,7 +98,7 @@ public:
   virtual void dump (ostream &o);
 
   // Visiting.
-  virtual int accept (ast_visitor *visitor);
+  virtual int ast_accept (ast_visitor *visitor);
 
 private:
   // Data.

@@ -116,7 +116,7 @@ AST_Attribute::dump (ostream &o)
 }
 
 int
-AST_Attribute::accept (ast_visitor *visitor)
+AST_Attribute::ast_accept (ast_visitor *visitor)
 {
   return visitor->visit_attribute (this);
 }

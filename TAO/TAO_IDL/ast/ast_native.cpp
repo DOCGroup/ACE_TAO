@@ -35,7 +35,7 @@ AST_Native::dump (ostream &o)
 }
 
 int
-AST_Native::accept (ast_visitor *visitor)
+AST_Native::ast_accept (ast_visitor *visitor)
 {
   return visitor->visit_native (this);
 }
