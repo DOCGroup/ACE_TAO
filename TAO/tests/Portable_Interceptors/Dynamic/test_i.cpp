@@ -39,7 +39,7 @@ Visual_i::the_structure (ACE_ENV_SINGLE_ARG_DECL)
   ACE_NEW_THROW_EX (s,
                     Test_Interceptors::Visual::VarLenStruct,
                     CORBA::NO_MEMORY ());
-  ACE_CHECK;
+  ACE_CHECK_RETURN (0);
 
   Test_Interceptors::Visual::VarLenStruct_var safe_s = s;
 
