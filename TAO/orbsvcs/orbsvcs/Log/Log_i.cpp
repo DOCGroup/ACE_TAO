@@ -1,4 +1,5 @@
 #include "orbsvcs/Log/Log_i.h"
+
 #include "orbsvcs/Log/Iterator_i.h"
 #include "orbsvcs/Log/Log_Constraint_Interpreter.h"
 #include "orbsvcs/Log/Log_Constraint_Visitors.h"
@@ -14,12 +15,12 @@ ACE_RCSID (Log,
 
 #define QUERY_LANG_SUPPORTED_BY_LOG "TCL"
 
-Log_i::Log_i (DsLogAdmin::LogMgr_ptr factory,
-              DsLogAdmin::LogId id,
-              LogNotification *log_notifier,
-              DsLogAdmin::LogFullActionType log_full_action,
-              CORBA::ULongLong max_size,
-              ACE_Reactor *reactor)
+TAO_Log_i::TAO_Log_i (DsLogAdmin::LogMgr_ptr factory,
+                      DsLogAdmin::LogId id,
+                      TAO_LogNotification *log_notifier,
+                      DsLogAdmin::LogFullActionType log_full_action,
+                      CORBA::ULongLong max_size,
+                      ACE_Reactor *reactor)
   : factory_ (DsLogAdmin::LogMgr::_duplicate (factory)),
     log_full_action_ (log_full_action),
     logid_ (id),
@@ -43,7 +44,7 @@ Log_i::Log_i (DsLogAdmin::LogMgr_ptr factory,
 }
 
 void
-Log_i::init (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Log_i::init (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (recordstore_.open () ==-1)
     ACE_THROW (CORBA::UNKNOWN ());
@@ -54,27 +55,27 @@ Log_i::init (ACE_ENV_SINGLE_ARG_DECL)
   this->op_state_ = DsLogAdmin::enabled;
 }
 
-Log_i::~Log_i (void)
+TAO_Log_i::~TAO_Log_i (void)
 {
   recordstore_.close ();
 }
 
 DsLogAdmin::LogMgr_ptr
-Log_i::my_factory (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Log_i::my_factory (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return DsLogAdmin::LogMgr::_duplicate (this->factory_.in ());
 }
 
 DsLogAdmin::LogId
-Log_i::id (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Log_i::id (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return logid_;
 }
 
 DsLogAdmin::QoSList*
-Log_i::get_log_qos (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Log_i::get_log_qos (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   DsLogAdmin::QoSList* ret_val;
@@ -87,8 +88,8 @@ Log_i::get_log_qos (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-Log_i::set_log_qos (const DsLogAdmin::QoSList &qos
-                    ACE_ENV_ARG_DECL)
+TAO_Log_i::set_log_qos (const DsLogAdmin::QoSList &qos
+                        ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    DsLogAdmin::UnsupportedQoS))
 {
@@ -138,15 +139,15 @@ Log_i::set_log_qos (const DsLogAdmin::QoSList &qos
 }
 
 CORBA::ULong
-Log_i::get_max_record_life (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Log_i::get_max_record_life (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return max_record_life_;
 }
 
 void
-Log_i::set_max_record_life (CORBA::ULong life
-                            ACE_ENV_ARG_DECL)
+TAO_Log_i::set_max_record_life (CORBA::ULong life
+                                ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ULong old_life;
@@ -177,15 +178,15 @@ Log_i::set_max_record_life (CORBA::ULong life
 }
 
 CORBA::ULongLong
-Log_i::get_max_size (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Log_i::get_max_size (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return recordstore_.get_max_size ();
 }
 
 void
-Log_i::set_max_size (CORBA::ULongLong size
-                     ACE_ENV_ARG_DECL)
+TAO_Log_i::set_max_size (CORBA::ULongLong size
+                         ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    DsLogAdmin::InvalidParam))
 {
@@ -218,7 +219,7 @@ Log_i::set_max_size (CORBA::ULongLong size
 }
 
 CORBA::ULongLong
-Log_i::get_current_size (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Log_i::get_current_size (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->remove_old_records (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -228,7 +229,7 @@ Log_i::get_current_size (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 CORBA::ULongLong
-Log_i::get_n_records (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Log_i::get_n_records (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->remove_old_records (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -238,15 +239,15 @@ Log_i::get_n_records (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 DsLogAdmin::LogFullActionType
-Log_i::get_log_full_action (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Log_i::get_log_full_action (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return log_full_action_;
 }
 
 void
-Log_i::set_log_full_action (DsLogAdmin::LogFullActionType action
-                            ACE_ENV_ARG_DECL)
+TAO_Log_i::set_log_full_action (DsLogAdmin::LogFullActionType action
+                                ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   DsLogAdmin::LogFullActionType old_action =
@@ -272,15 +273,15 @@ Log_i::set_log_full_action (DsLogAdmin::LogFullActionType action
 }
 
 DsLogAdmin::AdministrativeState
-Log_i::get_administrative_state (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Log_i::get_administrative_state (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return admin_state_;
 }
 
 void
-Log_i::set_administrative_state (DsLogAdmin::AdministrativeState state
-                                 ACE_ENV_ARG_DECL)
+TAO_Log_i::set_administrative_state (DsLogAdmin::AdministrativeState state
+                                     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->admin_state_ == state)
@@ -302,15 +303,15 @@ Log_i::set_administrative_state (DsLogAdmin::AdministrativeState state
 }
 
 DsLogAdmin::ForwardingState
-Log_i::get_forwarding_state (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Log_i::get_forwarding_state (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->forward_state_;
 }
 
 void
-Log_i::set_forwarding_state (DsLogAdmin::ForwardingState state
-                             ACE_ENV_ARG_DECL)
+TAO_Log_i::set_forwarding_state (DsLogAdmin::ForwardingState state
+                                 ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->forward_state_ == state)
@@ -332,22 +333,22 @@ Log_i::set_forwarding_state (DsLogAdmin::ForwardingState state
 }
 
 DsLogAdmin::OperationalState
-Log_i::get_operational_state (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Log_i::get_operational_state (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->op_state_;
 }
 
 DsLogAdmin::TimeInterval
-Log_i::get_interval (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Log_i::get_interval (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->interval_;
 }
 
 void
-Log_i::set_interval (const DsLogAdmin::TimeInterval &interval
-                     ACE_ENV_ARG_DECL)
+TAO_Log_i::set_interval (const DsLogAdmin::TimeInterval &interval
+                         ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    DsLogAdmin::InvalidTime,
                    DsLogAdmin::InvalidTimeInterval))
@@ -398,7 +399,7 @@ Log_i::set_interval (const DsLogAdmin::TimeInterval &interval
 }
 
 DsLogAdmin::AvailabilityStatus
-Log_i::get_availability_status (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Log_i::get_availability_status (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   const CORBA::Boolean s = this->scheduled (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -418,7 +419,7 @@ Log_i::get_availability_status (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 DsLogAdmin::CapacityAlarmThresholdList*
-Log_i::get_capacity_alarm_thresholds (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Log_i::get_capacity_alarm_thresholds (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   DsLogAdmin::CapacityAlarmThresholdList* ret_val;
@@ -431,16 +432,16 @@ Log_i::get_capacity_alarm_thresholds (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-Log_i::set_capacity_alarm_thresholds (const
-                                      DsLogAdmin::CapacityAlarmThresholdList
-                                      &threshs
-                                      ACE_ENV_ARG_DECL)
+TAO_Log_i::set_capacity_alarm_thresholds (const
+                                          DsLogAdmin::CapacityAlarmThresholdList
+                                          &threshs
+                                          ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    DsLogAdmin::InvalidThreshold))
 {
   const CORBA::Boolean validated =
-    Log_i::validate_capacity_alarm_thresholds (threshs
-                                               ACE_ENV_ARG_PARAMETER);
+    TAO_Log_i::validate_capacity_alarm_thresholds (threshs
+                                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (!validated)
@@ -467,7 +468,7 @@ Log_i::set_capacity_alarm_thresholds (const
 }
 
 DsLogAdmin::WeekMask*
-Log_i::get_week_mask (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Log_i::get_week_mask (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   DsLogAdmin::WeekMask* ret_val;
@@ -480,8 +481,8 @@ Log_i::get_week_mask (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-Log_i::set_week_mask (const DsLogAdmin::WeekMask &masks
-                      ACE_ENV_ARG_DECL)
+TAO_Log_i::set_week_mask (const DsLogAdmin::WeekMask &masks
+                          ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    DsLogAdmin::InvalidTime,
                    DsLogAdmin::InvalidTimeInterval,
@@ -574,10 +575,10 @@ Log_i::set_week_mask (const DsLogAdmin::WeekMask &masks
 }
 
 DsLogAdmin::RecordList*
-Log_i::query_i (const char *constraint,
-                DsLogAdmin::Iterator_out &iter_out,
-                CORBA::ULong how_many
-                ACE_ENV_ARG_DECL)
+TAO_Log_i::query_i (const char *constraint,
+                    DsLogAdmin::Iterator_out &iter_out,
+                    CORBA::ULong how_many
+                    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    DsLogAdmin::InvalidConstraint))
 {
@@ -594,18 +595,18 @@ Log_i::query_i (const char *constraint,
 
 
   // get the underlying storage.
-  LogRecordStore::LOG_RECORD_STORE &store =
+  TAO_LogRecordStore::LOG_RECORD_STORE &store =
     this->recordstore_.get_storage ();
 
   // Create an iterator
-  LogRecordStore::LOG_RECORD_HASH_MAP_ITER iter (store);
+  TAO_LogRecordStore::LOG_RECORD_HASH_MAP_ITER iter (store);
 
   CORBA::ULong len = store.current_size ();
 
   // How many entries?
 
   // Iterate over and populate the list.
-  LogRecordStore::LOG_RECORD_HASH_MAP_ENTRY *hash_entry;
+  TAO_LogRecordStore::LOG_RECORD_HASH_MAP_ENTRY *hash_entry;
 
   DsLogAdmin::RecordList* rec_list;
   // Figure out the length of the list.
@@ -658,13 +659,13 @@ Log_i::query_i (const char *constraint,
   if (i < len && done == 0) // There are more records to process.
     {
       // Create an iterator to pass out.
-      Iterator_i *iter_query = 0;
+      TAO_Iterator_i *iter_query = 0;
       ACE_NEW_THROW_EX (iter_query,
-                        Iterator_i (store,
-                                    i,
-                                    constraint,
-                                    len,
-                                    how_many),
+                        TAO_Iterator_i (store,
+                                        i,
+                                        constraint,
+                                        len,
+                                        how_many),
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (rec_list);
 
@@ -681,10 +682,10 @@ Log_i::query_i (const char *constraint,
 }
 
 DsLogAdmin::RecordList*
-Log_i::query (const char *grammar,
-              const char *constraint,
-              DsLogAdmin::Iterator_out iter_out
-              ACE_ENV_ARG_DECL)
+TAO_Log_i::query (const char *grammar,
+                  const char *constraint,
+                  DsLogAdmin::Iterator_out iter_out
+                  ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    DsLogAdmin::InvalidGrammar,
                    DsLogAdmin::InvalidConstraint))
@@ -699,10 +700,10 @@ Log_i::query (const char *grammar,
 }
 
 DsLogAdmin::RecordList*
-Log_i::retrieve (DsLogAdmin::TimeT from_time,
-                 CORBA::Long how_many,
-                 DsLogAdmin::Iterator_out iter_out
-                 ACE_ENV_ARG_DECL)
+TAO_Log_i::retrieve (DsLogAdmin::TimeT from_time,
+                     CORBA::Long how_many,
+                     DsLogAdmin::Iterator_out iter_out
+                     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Decide between forward vs backward retrieval.
@@ -734,9 +735,9 @@ Log_i::retrieve (DsLogAdmin::TimeT from_time,
 }
 
 CORBA::ULong
-Log_i::match_i (const char *constraint,
-                CORBA::Boolean delete_rec
-                ACE_ENV_ARG_DECL)
+TAO_Log_i::match_i (const char *constraint,
+                    CORBA::Boolean delete_rec
+                    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    DsLogAdmin::InvalidConstraint))
 {
@@ -749,17 +750,17 @@ Log_i::match_i (const char *constraint,
   ACE_CHECK_RETURN (0);
 
   // Get the underlying storage.
-  LogRecordStore::LOG_RECORD_STORE &store =
+  TAO_LogRecordStore::LOG_RECORD_STORE &store =
     this->recordstore_.get_storage ();
 
   // Create an iterator
-  LogRecordStore::LOG_RECORD_STORE_ITER iter (store);
+  TAO_LogRecordStore::LOG_RECORD_STORE_ITER iter (store);
 
   CORBA::ULong len = store.current_size ();
   // How many entries?
 
   // Iterate over and populate the list.
-  LogRecordStore::LOG_RECORD_HASH_MAP_ENTRY *hash_entry;
+  TAO_LogRecordStore::LOG_RECORD_HASH_MAP_ENTRY *hash_entry;
 
   CORBA::ULong count = 0; // count of matches found.
 
@@ -789,9 +790,9 @@ Log_i::match_i (const char *constraint,
 }
 
 CORBA::ULong
-Log_i::match (const char* grammar,
-              const char *constraint
-              ACE_ENV_ARG_DECL)
+TAO_Log_i::match (const char* grammar,
+                  const char *constraint
+                  ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    DsLogAdmin::InvalidGrammar,
                    DsLogAdmin::InvalidConstraint))
@@ -807,9 +808,9 @@ Log_i::match (const char* grammar,
 }
 
 CORBA::ULong
-Log_i::delete_records (const char *grammar,
-                       const char *constraint
-                       ACE_ENV_ARG_DECL)
+TAO_Log_i::delete_records (const char *grammar,
+                           const char *constraint
+                           ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      DsLogAdmin::InvalidGrammar,
                      DsLogAdmin::InvalidConstraint))
@@ -827,8 +828,8 @@ Log_i::delete_records (const char *grammar,
 }
 
 CORBA::ULong
-Log_i::delete_records_by_id (const DsLogAdmin::RecordIdList &ids
-                             ACE_ENV_ARG_DECL)
+TAO_Log_i::delete_records_by_id (const DsLogAdmin::RecordIdList &ids
+                                 ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->remove_old_records (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -867,8 +868,8 @@ Log_i::delete_records_by_id (const DsLogAdmin::RecordIdList &ids
 }
 
 void
-Log_i::write_records (const DsLogAdmin::Anys &records
-                      ACE_ENV_ARG_DECL)
+TAO_Log_i::write_records (const DsLogAdmin::Anys &records
+                          ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    DsLogAdmin::LogFull,
                    DsLogAdmin::LogLocked,
@@ -888,8 +889,8 @@ Log_i::write_records (const DsLogAdmin::Anys &records
 }
 
 void
-Log_i::write_recordlist (const DsLogAdmin::RecordList &reclist
-                         ACE_ENV_ARG_DECL)
+TAO_Log_i::write_recordlist (const DsLogAdmin::RecordList &reclist
+                             ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      DsLogAdmin::LogFull,
                      DsLogAdmin::LogLocked,
@@ -974,9 +975,9 @@ Log_i::write_recordlist (const DsLogAdmin::RecordList &reclist
 }
 
 void
-Log_i::set_record_attribute (DsLogAdmin::RecordId id,
-                             const DsLogAdmin::NVList &attr_list
-                             ACE_ENV_ARG_DECL)
+TAO_Log_i::set_record_attribute (DsLogAdmin::RecordId id,
+                                 const DsLogAdmin::NVList &attr_list
+                                 ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    DsLogAdmin::InvalidRecordId,
                    DsLogAdmin::InvalidAttribute))
@@ -1001,10 +1002,10 @@ Log_i::set_record_attribute (DsLogAdmin::RecordId id,
 }
 
 CORBA::ULong
-Log_i::set_records_attribute (const char *grammar,
-                              const char *constraint,
-                              const DsLogAdmin::NVList
-                              &attr_list ACE_ENV_ARG_DECL)
+TAO_Log_i::set_records_attribute (const char *grammar,
+                                  const char *constraint,
+                                  const DsLogAdmin::NVList
+                                  &attr_list ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      DsLogAdmin::InvalidGrammar,
                      DsLogAdmin::InvalidConstraint,
@@ -1033,7 +1034,7 @@ Log_i::set_records_attribute (const char *grammar,
 }
 
 DsLogAdmin::NVList*
-Log_i::get_record_attribute (DsLogAdmin::RecordId id
+TAO_Log_i::get_record_attribute (DsLogAdmin::RecordId id
                              ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    DsLogAdmin::InvalidRecordId))
@@ -1059,7 +1060,7 @@ Log_i::get_record_attribute (DsLogAdmin::RecordId id
 
 // @@ Should I just raise the exception?
 void
-Log_i::flush (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Log_i::flush (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                      DsLogAdmin::UnsupportedQoS))
 {
@@ -1070,7 +1071,7 @@ Log_i::flush (ACE_ENV_SINGLE_ARG_DECL)
 
 
 CORBA::Boolean
-Log_i::validate_capacity_alarm_thresholds (
+TAO_Log_i::validate_capacity_alarm_thresholds (
     const DsLogAdmin::CapacityAlarmThresholdList & threshs
     ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -1088,7 +1089,7 @@ Log_i::validate_capacity_alarm_thresholds (
 }
 
 CORBA::Boolean
-Log_i::scheduled (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Log_i::scheduled (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TimeBase::TimeT current_time;
@@ -1141,8 +1142,8 @@ Log_i::scheduled (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-Log_i::check_grammar (const char* grammar
-                      ACE_ENV_ARG_DECL)
+TAO_Log_i::check_grammar (const char* grammar
+                          ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    DsLogAdmin::InvalidGrammar))
 {
@@ -1153,8 +1154,8 @@ Log_i::check_grammar (const char* grammar
 }
 
 void
-Log_i::copy_attributes (DsLogAdmin::Log_ptr log
-                        ACE_ENV_ARG_DECL)
+TAO_Log_i::copy_attributes (DsLogAdmin::Log_ptr log
+                            ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->remove_old_records (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -1232,7 +1233,7 @@ Log_i::copy_attributes (DsLogAdmin::Log_ptr log
 }
 
 void
-Log_i::remove_old_records (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Log_i::remove_old_records (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
@@ -1260,17 +1261,17 @@ Log_i::remove_old_records (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK;
 
   // Get the underlying storage.
-  LogRecordStore::LOG_RECORD_STORE &store =
+  TAO_LogRecordStore::LOG_RECORD_STORE &store =
     this->recordstore_.get_storage ();
 
   // Create an iterator
-  LogRecordStore::LOG_RECORD_STORE_ITER iter (store);
+  TAO_LogRecordStore::LOG_RECORD_STORE_ITER iter (store);
 
   CORBA::ULong len = store.current_size ();
   // How many entries?
 
   // Iterate over and populate the list.
-  LogRecordStore::LOG_RECORD_HASH_MAP_ENTRY *hash_entry;
+  TAO_LogRecordStore::LOG_RECORD_HASH_MAP_ENTRY *hash_entry;
 
   CORBA::ULong count = 0; // count of matches found.
 
@@ -1295,7 +1296,7 @@ Log_i::remove_old_records (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-Log_i::check_capacity_alarm_threshold (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Log_i::check_capacity_alarm_threshold (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->remove_old_records (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -1349,7 +1350,7 @@ Log_i::check_capacity_alarm_threshold (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-Log_i::reset_capacity_alarm_threshold (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Log_i::reset_capacity_alarm_threshold (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::LongLong max_size = this->recordstore_.get_max_size ();

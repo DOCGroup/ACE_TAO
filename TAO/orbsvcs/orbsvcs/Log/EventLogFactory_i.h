@@ -15,20 +15,23 @@
  */
 //=============================================================================
 
-#ifndef TLS_EVENTLOGFACTORY_I_H
-#define TLS_EVENTLOGFACTORY_I_H
+#ifndef TAO_TLS_EVENTLOGFACTORY_I_H
+#define TAO_TLS_EVENTLOGFACTORY_I_H
+
+#include "ace/pre.h"
 
 #include "orbsvcs/DsEventLogAdminS.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "orbsvcs/DsLogAdminS.h"
 #include "orbsvcs/Log/LogMgr_i.h"
 #include "orbsvcs/CosEvent/CEC_ConsumerAdmin.h"
 #include "orbsvcs/CosEvent/CEC_EventChannel.h"
 #include "orbsvcs/CosEvent/CEC_Default_Factory.h"
 #include "EventLog_i.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -37,37 +40,41 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+class TAO_EventLog_i;
+class TAO_EventLogNotification;
 
-class EventLog_i;
-class EventLogNotification;
-
-class TAO_EventLog_Export EventLogFactory_i :
-public POA_DsEventLogAdmin::EventLogFactory,
-public LogMgr_i
+/**
+ * @class TAO_EventLogFactory_i
+ *
+ * @brief The EventLogFactory is a factory that is used to create EventLogs which are event-aware.
+ */
+class TAO_EventLog_Export TAO_EventLogFactory_i :
+  public POA_DsEventLogAdmin::EventLogFactory,
+  public TAO_LogMgr_i
 
 {
-  // = TITLE
-  //   EventLogFactory_i
-  // = DESCRIPTION
-  //   Implementation of the EventLogFactory interface.
-  //
 public:
+
   //= Initialization and termination code.
-  EventLogFactory_i (void);
-  // Ctor
 
-  ~EventLogFactory_i ();
-  // Dtor
+  /// Constructor.
+  TAO_EventLogFactory_i (void);
 
+  /// Destructor.
+  ~TAO_EventLogFactory_i ();
+
+  /// Initialise the EventChannel and obtain a 
+  /// pointer to it.
   CosEventChannelAdmin::EventChannel_ptr
     init (PortableServer::POA_ptr poa
               ACE_ENV_ARG_DECL);
 
+  /// Activate this servant with the POA passed in.
   DsEventLogAdmin::EventLogFactory_ptr
     activate (PortableServer::POA_ptr poa
               ACE_ENV_ARG_DECL);
-  // Activate this servant with the POA passed in.
 
+  /// Used to create an EventLog.
   DsEventLogAdmin::EventLog_ptr create (
         DsLogAdmin::LogFullActionType full_action,
         CORBA::ULongLong max_size,
@@ -81,8 +88,7 @@ public:
         DsLogAdmin::InvalidThreshold
       ));
 
-  // Allows clients to create new BasicLog objects. Raises
-  // DsLogAdmin::NoResources and DsLogAdmin::InvalidThreshold
+  /// Same as create (), but allows clients to specify the id.
   DsEventLogAdmin::EventLog_ptr create_with_id (
         DsLogAdmin::LogId id,
         DsLogAdmin::LogFullActionType full_action,
@@ -96,8 +102,8 @@ public:
         DsLogAdmin::InvalidLogFullAction,
         DsLogAdmin::InvalidThreshold
       ));
-  // Same as create (), but allows clients to specify the id.
 
+  // = Implementation of the CosEventChannelAdmin::ConsumerAdmin methods.
   CosEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier (
         ACE_ENV_SINGLE_ARG_DECL
       )
@@ -112,28 +118,30 @@ public:
         CORBA::SystemException
       ));
 
- protected:
+protected:
+
+  /// Our object ref. after <active>ation.
   DsLogAdmin::LogMgr_var log_mgr_;
-  // Our object ref. after <active>ation.
-
+ 
+  /// The event channel used for log generated events.
   TAO_CEC_EventChannel *impl;
-  // The event channel used for log generated events.
 
-  EventLogNotification* notifier_;
-  // The object used for log generated events.
+  /// The object used for log generated events.
+  TAO_EventLogNotification* notifier_;
 
+  /// EventChannel used to obtain the ConsumerAdmin.
   CosEventChannelAdmin::EventChannel_var event_channel_;
-  // EventChannel used to obtain the ConsumerAdmin.
-
+ 
+  /// The ConsumerAdmin that the EventLogFactory supports.
   CosEventChannelAdmin::ConsumerAdmin_var consumer_admin_;
-  // The ConsumerAdmin that the EventLogFactory supports.
 
+  /// POA.
   PortableServer::POA_var poa_;
-  // POA.
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
+#include "ace/post.h"
 #endif /* TLS_EVENTLOGFACTORY_I_H */

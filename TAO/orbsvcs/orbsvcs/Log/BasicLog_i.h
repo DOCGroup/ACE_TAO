@@ -22,13 +22,16 @@
 #include "ace/pre.h"
 
 #include "orbsvcs/DsLogAdminS.h"
-#include "orbsvcs/Log/Log_i.h"
-#include "log_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "orbsvcs/Log/Log_i.h"
+#include "log_export.h"
+
+// This is to remove "inherits via dominance" warnings from MSVC.
+// MSVC is being a little too paranoid.
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
 #pragma warning(push)
@@ -36,33 +39,29 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class LogMgr_i;
-
-// Bug in MSVC 5, See KB article Q167350
-#if defined (_MSC_VER) && (_MSC_VER == 1100)
-using DsLogAdmin::wrap;
-#endif /* (_MSC_VER) && (_MSC_VER == 1100) */
+class TAO_LogMgr_i;
 
 /**
- * @class BasicLog_i
+ * @class TAO_BasicLog_i
  *
- * @brief BasicLog_i
+ * @brief It allows clients to write, query and delete records from the log.
  *
  * The class supports the @c destroy> method to destroy the Log.
  */
-class TAO_Log_Export BasicLog_i
-  : public Log_i,
-    public POA_DsLogAdmin::BasicLog,
-    public virtual PortableServer::RefCountServantBase
+class TAO_Log_Export TAO_BasicLog_i :
+  public TAO_Log_i,
+  public POA_DsLogAdmin::BasicLog,
+  public virtual PortableServer::RefCountServantBase
 {
 public:
-  /// Constructor
-  BasicLog_i (LogMgr_i &logmgr_i,
-              DsLogAdmin::LogMgr_ptr factory,
-              DsLogAdmin::LogId id,
-              DsLogAdmin::LogFullActionType log_full_action = DsLogAdmin::wrap,
-              CORBA::ULongLong max_size = 0,
-              ACE_Reactor *reactor = ACE_Reactor::instance ());
+
+  /// Constructor.
+  TAO_BasicLog_i (TAO_LogMgr_i &logmgr_i,
+                  DsLogAdmin::LogMgr_ptr factory,
+                  DsLogAdmin::LogId id,
+                  DsLogAdmin::LogFullActionType log_full_action = DsLogAdmin::wrap,
+                  CORBA::ULongLong max_size = 0,
+                  ACE_Reactor *reactor = ACE_Reactor::instance ());
 
   /// Duplicate the log.
   virtual DsLogAdmin::Log_ptr copy (DsLogAdmin::LogId &id
@@ -85,12 +84,12 @@ protected:
    * Protected destructor to enforce proper memory management through
    * reference counting.
    */
-  ~BasicLog_i (void);
+  ~TAO_BasicLog_i (void);
 
 protected:
-
+	
   /// Used to access the hash map that holds all the Logs created.
-  LogMgr_i &logmgr_i_;
+  TAO_LogMgr_i &logmgr_i_;
 
 };
 

@@ -6,17 +6,17 @@ ACE_RCSID (Log,
            "$Id$")
 
 
-BasicLogFactory_i::BasicLogFactory_i (void)
+TAO_BasicLogFactory_i::TAO_BasicLogFactory_i (void)
 {
 }
 
-BasicLogFactory_i::~BasicLogFactory_i (void)
+TAO_BasicLogFactory_i::~TAO_BasicLogFactory_i (void)
 {
 }
 
 DsLogAdmin::BasicLogFactory_ptr
-BasicLogFactory_i::activate (PortableServer::POA_ptr poa
-                             ACE_ENV_ARG_DECL)
+TAO_BasicLogFactory_i::activate (PortableServer::POA_ptr poa
+                                 ACE_ENV_ARG_DECL)
 {
   PortableServer::ObjectId_var oid =
     poa->activate_object (this
@@ -39,10 +39,10 @@ BasicLogFactory_i::activate (PortableServer::POA_ptr poa
 }
 
 DsLogAdmin::BasicLog_ptr
-BasicLogFactory_i::create (DsLogAdmin::LogFullActionType full_action,
-                           CORBA::ULongLong max_rec_size,
-                           DsLogAdmin::LogId_out id
-                           ACE_ENV_ARG_DECL)
+TAO_BasicLogFactory_i::create (DsLogAdmin::LogFullActionType full_action,
+                               CORBA::ULongLong max_rec_size,
+                               DsLogAdmin::LogId_out id
+                               ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    DsLogAdmin::InvalidLogFullAction
                    ))
@@ -69,10 +69,10 @@ BasicLogFactory_i::create (DsLogAdmin::LogFullActionType full_action,
 }
 
 DsLogAdmin::BasicLog_ptr
-BasicLogFactory_i::create_with_id (DsLogAdmin::LogId id,
-                                   DsLogAdmin::LogFullActionType full_action,
-                                   CORBA::ULongLong max_size
-                                   ACE_ENV_ARG_DECL)
+TAO_BasicLogFactory_i::create_with_id (DsLogAdmin::LogId id,
+                                       DsLogAdmin::LogFullActionType full_action,
+                                       CORBA::ULongLong max_size
+                                       ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    DsLogAdmin::LogIdAlreadyExists,
@@ -87,14 +87,14 @@ BasicLogFactory_i::create_with_id (DsLogAdmin::LogId id,
   DsLogAdmin::BasicLog_var basic_log;
   // Object to return.
 
-  BasicLog_i* basic_log_i;
+  TAO_BasicLog_i* basic_log_i;
 
   ACE_NEW_THROW_EX (basic_log_i,
-                    BasicLog_i (*this,
-                                this->log_mgr_.in (),
-                                id,
-                                full_action,
-                                max_size),
+                    TAO_BasicLog_i (*this,
+                                    this->log_mgr_.in (),
+                                    id,
+                                    full_action,
+                                    max_size),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (DsLogAdmin::BasicLog::_nil ());
 

@@ -18,62 +18,15 @@ ACE_RCSID (Log,
            "$Id$")
 
 
-TAO_Rtec_LogConsumer::TAO_Rtec_LogConsumer (RTEventLog_i *log)
-: log_ (log)
-{
-  // No-Op.
-}
-
-TAO_Rtec_LogConsumer::~TAO_Rtec_LogConsumer (void)
-{
-  // No-Op.
-}
-
-void
-TAO_Rtec_LogConsumer::connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin)
-{
-  RtecEventComm::PushConsumer_var myself = this->_this ();
-  this->supplier_proxy_ = consumer_admin->obtain_push_supplier ();
-
-  ACE_ConsumerQOS_Factory qos;
-  qos.start_disjunction_group (1);
-  qos.insert_type (ACE_ES_EVENT_ANY,
-                   0);
-  this->supplier_proxy_->connect_push_consumer (myself.in(), qos.get_ConsumerQOS ());
-}
-
-void
-TAO_Rtec_LogConsumer::push (const RtecEventComm::EventSet& events ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // create a record list...
-  DsLogAdmin::RecordList recList (1);
-  recList.length (1);
-
-  recList [0].info <<= events;
-
-  this->log_->write_recordlist (recList ACE_ENV_ARG_PARAMETER);
-
-  ACE_CHECK;
-
-}
-
-void
-TAO_Rtec_LogConsumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  this->supplier_proxy_->disconnect_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-}
-
-RTEventLog_i::RTEventLog_i (LogMgr_i &logmgr_i,
-                        DsLogAdmin::LogMgr_ptr factory,
-                        RTEventLogFactory_i *event_log_factory,
-                        LogNotification *log_notifier,
-                        DsLogAdmin::LogId id,
-                        DsLogAdmin::LogFullActionType log_full_action,
-                        CORBA::ULongLong max_size,
-                        ACE_Reactor *reactor)
-  : Log_i (factory, id, log_notifier, log_full_action, max_size, reactor),
+TAO_RTEventLog_i::TAO_RTEventLog_i (TAO_LogMgr_i &logmgr_i,
+                                    DsLogAdmin::LogMgr_ptr factory,
+                                    TAO_RTEventLogFactory_i *event_log_factory,
+                                    TAO_LogNotification *log_notifier,
+                                    DsLogAdmin::LogId id,
+                                    DsLogAdmin::LogFullActionType log_full_action,
+                                    CORBA::ULongLong max_size,
+                                    ACE_Reactor *reactor)
+  : TAO_Log_i (factory, id, log_notifier, log_full_action, max_size, reactor),
     logmgr_i_(logmgr_i)
 {
   ACE_UNUSED_ARG (event_log_factory);
@@ -89,14 +42,14 @@ RTEventLog_i::RTEventLog_i (LogMgr_i &logmgr_i,
                     CORBA::NO_MEMORY ());
 }
 
-RTEventLog_i::~RTEventLog_i ()
+TAO_RTEventLog_i::~TAO_RTEventLog_i ()
 {
   // No-Op.
 }
 
 
 DsLogAdmin::Log_ptr
-RTEventLog_i::copy (DsLogAdmin::LogId &id ACE_ENV_ARG_DECL)
+TAO_RTEventLog_i::copy (DsLogAdmin::LogId &id ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   RTEventLogAdmin::EventLogFactory_var eventLogFactory =
@@ -116,7 +69,7 @@ RTEventLog_i::copy (DsLogAdmin::LogId &id ACE_ENV_ARG_DECL)
 }
 
 DsLogAdmin::Log_ptr
-RTEventLog_i::copy_with_id (DsLogAdmin::LogId id ACE_ENV_ARG_DECL)
+TAO_RTEventLog_i::copy_with_id (DsLogAdmin::LogId id ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((DsLogAdmin::LogIdAlreadyExists, CORBA::SystemException))
 {
   RTEventLogAdmin::EventLogFactory_var eventLogFactory =
@@ -135,7 +88,7 @@ RTEventLog_i::copy_with_id (DsLogAdmin::LogId id ACE_ENV_ARG_DECL)
 }
 
 void
-RTEventLog_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
+TAO_RTEventLog_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
@@ -160,7 +113,7 @@ RTEventLog_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-RTEventLog_i::activate (ACE_ENV_SINGLE_ARG_DECL)
+TAO_RTEventLog_i::activate (ACE_ENV_SINGLE_ARG_DECL)
 {
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
     this->event_channel_->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -170,14 +123,14 @@ RTEventLog_i::activate (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 RtecEventChannelAdmin::ConsumerAdmin_ptr
-RTEventLog_i::for_consumers (ACE_ENV_SINGLE_ARG_DECL)
+TAO_RTEventLog_i::for_consumers (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->event_channel_->for_consumers(ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 RtecEventChannelAdmin::SupplierAdmin_ptr
-RTEventLog_i::for_suppliers (
+TAO_RTEventLog_i::for_suppliers (
       ACE_ENV_SINGLE_ARG_DECL
     )
     ACE_THROW_SPEC ((
@@ -188,18 +141,18 @@ RTEventLog_i::for_suppliers (
 }
 
 void
-RTEventLog_i::write_recordlist (const DsLogAdmin::RecordList & list//,
+TAO_RTEventLog_i::write_recordlist (const DsLogAdmin::RecordList & list
                               ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    DsLogAdmin::LogFull,
                    DsLogAdmin::LogLocked
   ))
 {
-  Log_i::write_recordlist (list ACE_ENV_ARG_PARAMETER);
+  TAO_Log_i::write_recordlist (list ACE_ENV_ARG_PARAMETER);
 }
 
 RtecEventChannelAdmin::Observer_Handle
-RTEventLog_i::append_observer (
+TAO_RTEventLog_i::append_observer (
        RtecEventChannelAdmin::Observer_ptr observer
        ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
@@ -211,7 +164,7 @@ RTEventLog_i::append_observer (
 }
 
 void
-RTEventLog_i::remove_observer (
+TAO_RTEventLog_i::remove_observer (
        RtecEventChannelAdmin::Observer_Handle handle
        ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((

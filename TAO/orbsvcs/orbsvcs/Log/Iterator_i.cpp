@@ -1,4 +1,5 @@
 #include "Iterator_i.h"
+
 #include "orbsvcs/Log/Log_Constraint_Interpreter.h"
 #include "orbsvcs/Log/Log_Constraint_Visitors.h"
 #include "orbsvcs/DsLogAdminC.h"
@@ -8,12 +9,12 @@ ACE_RCSID (Log,
            "$Id$")
 
 
-Iterator_i::Iterator_i (LogRecordStore::LOG_RECORD_STORE &store,
-                        CORBA::ULong start,
-                        const char *constraint,
-                        CORBA::ULong max_store_size,
-                        CORBA::ULong max_rec_list_len
-                        )
+TAO_Iterator_i::TAO_Iterator_i (TAO_LogRecordStore::LOG_RECORD_STORE &store,
+                                CORBA::ULong start,
+                                const char *constraint,
+                                CORBA::ULong max_store_size,
+                                CORBA::ULong max_rec_list_len
+                                )
   :iter_ (store),
    constraint_ (constraint),
    max_store_size_ (max_store_size),
@@ -28,13 +29,13 @@ Iterator_i::Iterator_i (LogRecordStore::LOG_RECORD_STORE &store,
     }
 }
 
-Iterator_i::~Iterator_i (void)
+TAO_Iterator_i::~TAO_Iterator_i (void)
 {
   // Do nothing
 }
 
 void
-Iterator_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Iterator_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableServer::POA_ptr poa = this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -54,8 +55,8 @@ Iterator_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 DsLogAdmin::RecordList*
-Iterator_i::get (CORBA::ULong position,
-                 CORBA::ULong how_many//,
+TAO_Iterator_i::get (CORBA::ULong position,
+                 CORBA::ULong how_many
                  ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    DsLogAdmin::InvalidParam))
@@ -83,7 +84,7 @@ Iterator_i::get (CORBA::ULong position,
   // meet the constraints.
 
   // Iterate over and populate the list.
-  LogRecordStore::LOG_RECORD_HASH_MAP_ENTRY *hash_entry;
+  TAO_LogRecordStore::LOG_RECORD_HASH_MAP_ENTRY *hash_entry;
 
   DsLogAdmin::RecordList* rec_list;
   // Figure out the length of the list.

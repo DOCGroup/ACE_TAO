@@ -1,5 +1,6 @@
-#include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/Log/LogRecordStore.h"
+
+#include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/Log/Log_Constraint_Interpreter.h"
 #include "orbsvcs/Log/Log_Constraint_Visitors.h"
 
@@ -8,9 +9,9 @@ ACE_RCSID (Log,
            "$Id$")
 
 
-LogRecordStore::LogRecordStore (CORBA::ULongLong max_size,
-                                DsLogAdmin::LogId logid,
-                                CORBA::ULong max_rec_list_len)
+TAO_LogRecordStore::TAO_LogRecordStore (CORBA::ULongLong max_size,
+                                        DsLogAdmin::LogId logid,
+                                        CORBA::ULong max_rec_list_len)
   : maxid_ (0),
     max_size_ (max_size),
     logid_ (logid),
@@ -21,19 +22,19 @@ LogRecordStore::LogRecordStore (CORBA::ULongLong max_size,
   //No-Op.
 }
 
-LogRecordStore::~LogRecordStore (void)
+TAO_LogRecordStore::~TAO_LogRecordStore (void)
 {
   // No-Op.
 }
 
 int
-LogRecordStore::open (void)
+TAO_LogRecordStore::open (void)
 {
   return rec_hash_.open ();
 }
 
 int
-LogRecordStore::close (void)
+TAO_LogRecordStore::close (void)
 {
   // Close the hash
   return rec_hash_.close ();
@@ -41,25 +42,25 @@ LogRecordStore::close (void)
 
 // TODO: make these inline ..
 CORBA::ULongLong
-LogRecordStore::get_max_size (void)
+TAO_LogRecordStore::get_max_size (void)
 {
   return max_size_;
 }
 
 void
-LogRecordStore::set_max_size (CORBA::ULongLong size)
+TAO_LogRecordStore::set_max_size (CORBA::ULongLong size)
 {
   this->max_size_ = size;
 }
 
 CORBA::ULongLong
-LogRecordStore::get_current_size (void)
+TAO_LogRecordStore::get_current_size (void)
 {
   return this->current_size_;
 }
 
 CORBA::ULongLong
-LogRecordStore::get_n_records (void)
+TAO_LogRecordStore::get_n_records (void)
 {
   return this->num_records_;
 }
@@ -67,7 +68,7 @@ LogRecordStore::get_n_records (void)
 // inline ...
 
 int
-LogRecordStore::log (DsLogAdmin::LogRecord &rec)
+TAO_LogRecordStore::log (DsLogAdmin::LogRecord &rec)
 {
   // Check if we are allowed to write...
 
@@ -107,14 +108,14 @@ LogRecordStore::log (DsLogAdmin::LogRecord &rec)
 }
 
 int
-LogRecordStore::retrieve (DsLogAdmin::RecordId id, DsLogAdmin::LogRecord &rec)
+TAO_LogRecordStore::retrieve (DsLogAdmin::RecordId id, DsLogAdmin::LogRecord &rec)
 {
   int retval = rec_hash_.find (id, rec);
   return retval;
 }
 
 int
-LogRecordStore::update (DsLogAdmin::LogRecord &rec)
+TAO_LogRecordStore::update (DsLogAdmin::LogRecord &rec)
 {
   if (rec_hash_.unbind (rec.id, rec) != 0)
     {
@@ -125,7 +126,7 @@ LogRecordStore::update (DsLogAdmin::LogRecord &rec)
 }
 
 int
-LogRecordStore::remove (DsLogAdmin::RecordId id)
+TAO_LogRecordStore::remove (DsLogAdmin::RecordId id)
 {
   DsLogAdmin::LogRecord rec;
   if (rec_hash_.unbind (id, rec) != 0)
@@ -142,7 +143,7 @@ LogRecordStore::remove (DsLogAdmin::RecordId id)
 }
 
 int
-LogRecordStore::purge_old_records (void)
+TAO_LogRecordStore::purge_old_records (void)
 {
   CORBA::ULongLong num_records_to_purge =  (this->num_records_) * ( (CORBA::ULongLong) 5 / (CORBA::ULongLong)100 );
 
@@ -171,8 +172,8 @@ LogRecordStore::purge_old_records (void)
 
 
 
-LogRecordStore::LOG_RECORD_STORE&
-LogRecordStore::get_storage (void)
+TAO_LogRecordStore::LOG_RECORD_STORE&
+TAO_LogRecordStore::get_storage (void)
 {
   return rec_hash_;
 }

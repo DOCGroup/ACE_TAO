@@ -8,26 +8,26 @@ ACE_RCSID (Log,
            "$Id$")
 
 
-EventLogNotification::EventLogNotification (CosEventChannelAdmin::EventChannel_ptr ec)
-: LogNotification (), event_channel_ (CosEventChannelAdmin::EventChannel::_duplicate (ec))
+TAO_EventLogNotification::TAO_EventLogNotification (CosEventChannelAdmin::EventChannel_ptr ec)
+: TAO_LogNotification (), event_channel_ (CosEventChannelAdmin::EventChannel::_duplicate (ec))
 {
   obtain_proxy_consumer ();
 }
 
-EventLogNotification::~EventLogNotification (void)
+TAO_EventLogNotification::~TAO_EventLogNotification (void)
 {
   // No-Op.
 }
 
 void
-EventLogNotification::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
+TAO_EventLogNotification::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->consumer_->disconnect_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
-EventLogNotification::obtain_proxy_consumer()
+TAO_EventLogNotification::obtain_proxy_consumer()
 {  
   CosEventChannelAdmin::SupplierAdmin_var supplier_admin = 
     event_channel_->for_suppliers ();
@@ -41,8 +41,8 @@ EventLogNotification::obtain_proxy_consumer()
 }
 
 void
-EventLogNotification::send_notification (const CORBA::Any& any 
-                                         ACE_ENV_ARG_DECL)
+TAO_EventLogNotification::send_notification (const CORBA::Any& any 
+                                             ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   consumer_->push (any ACE_ENV_ARG_PARAMETER);
