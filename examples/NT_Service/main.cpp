@@ -100,7 +100,7 @@ Process::parse_args (int argc, ACE_TCHAR* argv[])
     {
     case 'i':
       opt_install = 1;
-      opt_startup = ACE_OS::atoi (get_opt.optarg);
+      opt_startup = ACE_OS::atoi (get_opt.opt_arg ());
       if (opt_startup <= 0)
          print_usage_and_die ();
       break;
@@ -115,7 +115,7 @@ Process::parse_args (int argc, ACE_TCHAR* argv[])
       break;
     case 't':
       opt_type = 1;
-      opt_startup = ACE_OS::atoi (get_opt.optarg);
+      opt_startup = ACE_OS::atoi (get_opt.opt_arg ());
       if (opt_startup <= 0)
          print_usage_and_die ();
       break;
@@ -125,7 +125,7 @@ Process::parse_args (int argc, ACE_TCHAR* argv[])
     default:
       // -i can also be given without a value - if so, it defaults
       // to defined value.
-      if (ACE_OS::strcmp (get_opt.argv_[get_opt.optind-1], ACE_TEXT ("-i")) == 0)
+      if (ACE_OS::strcmp (get_opt.argv ()[get_opt.opt_ind () - 1], ACE_TEXT ("-i")) == 0)
       {
         opt_install = 1;
         opt_startup = DEFAULT_SERVICE_INIT_STARTUP;

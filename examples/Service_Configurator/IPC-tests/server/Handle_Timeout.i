@@ -35,13 +35,13 @@ Handle_Timeout::init (int argc, char *argv[])
      switch (c)
        {
        case 'd':
-         delta.sec (ACE_OS::atoi (get_opt.optarg));
+         delta.sec (ACE_OS::atoi (get_opt.opt_arg ()));
          break;
        case 'i':
-         interval.sec (ACE_OS::atoi (get_opt.optarg));
+         interval.sec (ACE_OS::atoi (get_opt.opt_arg ()));
          break;
        case 'a':
-         arg = atoi (get_opt.optarg);
+         arg = atoi (get_opt.opt_arg ());
          break;
        default:
          break;

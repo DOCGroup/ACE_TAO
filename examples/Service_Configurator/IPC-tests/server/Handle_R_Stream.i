@@ -54,7 +54,7 @@ Handle_R_Stream::init (int argc, char *argv[])
      switch (c)
        {
        case 'p': 
-	 sis.set (ACE_OS::atoi (get_opt.optarg));
+	 sis.set (ACE_OS::atoi (get_opt.opt_arg ()));
 	 break;
        default:
 	 break;

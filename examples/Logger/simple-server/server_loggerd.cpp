@@ -46,7 +46,7 @@ main (int argc, char *argv[])
      switch (c)
        {
        case 'p':
-	 addr.set (ACE_OS::atoi (get_opt.optarg));
+	 addr.set (ACE_OS::atoi (get_opt.opt_arg ()));
 	 break;
        default:
 	 break;

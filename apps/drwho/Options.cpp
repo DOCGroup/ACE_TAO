@@ -88,7 +88,7 @@ Options::set_options (int argc, char *argv[])
           Options::print_usage_and_die (0);
           /* NOTREACHED */
         case 'A':
-          Multicast_Manager::add_host (getopt.optarg);
+          Multicast_Manager::add_host (getopt.opt_arg ());
           break;
         case 'a':
           Options::protocol_type = PROTO_ALL;
@@ -100,10 +100,10 @@ Options::set_options (int argc, char *argv[])
           Options::set_opt (Options::DEBUG);
           break;
         case 'f':
-          Options::friend_file = getopt.optarg;
+          Options::friend_file = getopt.opt_arg ();
           break;
         case 'F':
-          if (Multicast_Manager::insert_hosts_from_file (getopt.optarg) < 0)
+          if (Multicast_Manager::insert_hosts_from_file (getopt.opt_arg ()) < 0)
             ACE_DEBUG ((LM_DEBUG,
                         "%p%a\n",
                         Options::program_name,
@@ -111,7 +111,7 @@ Options::set_options (int argc, char *argv[])
           add_default_hosts = 0;
           break;
         case 'H':
-          Multicast_Manager::add_host (getopt.optarg);
+          Multicast_Manager::add_host (getopt.opt_arg ());
           add_default_hosts = 0;
           break;
         case 'h':
@@ -124,7 +124,7 @@ Options::set_options (int argc, char *argv[])
           Options::set_opt (Options::USE_VERBOSE_FORMAT);
           break;
         case 'p':
-          Options::port_number = atoi (getopt.optarg);
+          Options::port_number = atoi (getopt.opt_arg ());
           break;
         case 'R':
           Options::protocol_type = PROTO_RUSER;
@@ -139,10 +139,10 @@ Options::set_options (int argc, char *argv[])
           Options::set_opt (Options::SORT_BY_REAL_NAME);
           break;
         case 't':
-          Options::max_server_timeout = atoi (getopt.optarg);
+          Options::max_server_timeout = atoi (getopt.opt_arg ());
           break;
         case 'w':
-          Options::user_name = getopt.optarg;
+          Options::user_name = getopt.opt_arg ();
           Options::protocol_type = PROTO_USR;
           break;
         default:

@@ -33,10 +33,10 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'm':
-        max_message_size = ACE_OS::atoi (getopt.optarg) * BUFSIZ;
+        max_message_size = ACE_OS::atoi (getopt.opt_arg ()) * BUFSIZ;
         break;
       case 'i':
-        iterations = ACE_OS::atoi (getopt.optarg);
+        iterations = ACE_OS::atoi (getopt.opt_arg ());
         break;
       case 'u':
         // usage fallthrough

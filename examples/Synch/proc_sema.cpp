@@ -67,13 +67,13 @@ int main (int argc, ACE_TCHAR *argv[])
           delete_sema = 1;
           break;
         case 'n':               // Specify the name of the semaphore.
-          sema_name = getopt.optarg;
+          sema_name = getopt.opt_arg ();
           break;
         case 'i':               // Number of acquire/release we'll perform.
-          iteration = ACE_OS::atoi (getopt.optarg);
+          iteration = ACE_OS::atoi (getopt.opt_arg ());
           break;
         case 'd':
-          exit_delay = ACE_OS::atoi (getopt.optarg);
+          exit_delay = ACE_OS::atoi (getopt.opt_arg ());
           break;
         default:
           return -1;

@@ -47,7 +47,7 @@ Handle_R_Dgram::init (int argc, char *argv[])
      switch (c)
        {
        case 'p': 
-	 sidg.set (ACE_OS::atoi (get_opt.optarg));
+	 sidg.set (ACE_OS::atoi (get_opt.opt_arg ()));
 	 break;
        default:
 	 break;

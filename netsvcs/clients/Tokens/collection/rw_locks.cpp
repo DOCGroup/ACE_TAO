@@ -82,16 +82,16 @@ parse_args (int argc, char *argv[])
       switch (c)
 	{
 	case 'h':  // specify the host machine on which the server is running
-	  server_host = get_opt.optarg;
+	  server_host = get_opt.opt_arg ();
 	  break;
 	case 'p':  // specify the port on which the server is running
-	  server_port = ACE_OS::atoi (get_opt.optarg);
+	  server_port = ACE_OS::atoi (get_opt.opt_arg ());
 	  break;
 	case 't':
-	  threads = ACE_OS::atoi (get_opt.optarg);
+	  threads = ACE_OS::atoi (get_opt.opt_arg ());
 	  break;
 	case 'R':
-	  reads = ACE_OS::atoi (get_opt.optarg);
+	  reads = ACE_OS::atoi (get_opt.opt_arg ());
 	  break;
 	case 'd':
 	  debug = 1;
@@ -103,7 +103,7 @@ parse_args (int argc, char *argv[])
 	  write_sleep = 1;
 	  break;
 	case 'n':
-	  iterations = ACE_OS::atoi (get_opt.optarg);
+	  iterations = ACE_OS::atoi (get_opt.opt_arg ());
 	  break;
 	case 'i':
 	  ignore_deadlock = 1;

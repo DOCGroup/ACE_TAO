@@ -111,11 +111,11 @@ STDIN_Token::parse_args (int argc, char *argv[])
       switch (c)
 	{
 	case 'h':  // specify the host machine on which the server is running
-	  server_host_ = get_opt.optarg;
+	  server_host_ = get_opt.opt_arg ();
 	  remote_ = 1;
 	  break;
 	case 'p':  // specify the port on which the server is running
-	  server_port_ = ACE_OS::atoi (get_opt.optarg);
+	  server_port_ = ACE_OS::atoi (get_opt.opt_arg ());
 	  remote_ = 1;
 	  break;
 	case 'd':

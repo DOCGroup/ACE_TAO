@@ -79,13 +79,13 @@ parse_args (int argc, char **argv)
       }
     }
 
-  if (get_opt.optind >= argc)	// Do you forget to give me a filename to "more?"
+  if (get_opt.opt_ind () >= argc)	// Do you forget to give me a filename to "more?"
     {
       usage ();
       return -1;
     }
   else
-    fname = argv[get_opt.optind]; // Alright.
+    fname = argv[get_opt.opt_int ()]; // Alright.
 
   return 0;
 }

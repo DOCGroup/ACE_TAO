@@ -505,7 +505,7 @@ get_options (int argc, ACE_TCHAR *argv [])
         {
         case 'i':
           {
-            int temp = ACE_OS::atoi (get_opt.optarg);
+            int temp = ACE_OS::atoi (get_opt.opt_arg ());
             if (temp > 0)
               iterations = (u_int) temp;
             else
@@ -528,7 +528,7 @@ get_options (int argc, ACE_TCHAR *argv [])
         }
     }
 
-  switch (argc - get_opt.optind)
+  switch (argc - get_opt.opt_ind ())
     {
     case 0:
       // OK

@@ -114,7 +114,7 @@ Options::parse_args (int argc, char *argv[])
           {
             // Become an Acceptor.
 
-            for (char *flag = ACE_OS::strtok (get_opt.optarg, "|");
+            for (char *flag = ACE_OS::strtok (get_opt.opt_arg (), "|");
                  flag != 0;
                  flag = ACE_OS::strtok (0, "|"))
               if (ACE_OS::strncasecmp (flag, "C", 1) == 0)
@@ -140,7 +140,7 @@ Options::parse_args (int argc, char *argv[])
           {
             // Become a Connector.
 
-            for (char *flag = ACE_OS::strtok (get_opt.optarg, "|");
+            for (char *flag = ACE_OS::strtok (get_opt.opt_arg (), "|");
                  flag != 0;
                  flag = ACE_OS::strtok (0, "|"))
               if (ACE_OS::strncasecmp (flag, "C", 1) == 0)
@@ -163,22 +163,22 @@ Options::parse_args (int argc, char *argv[])
           break;
           /* NOTREACHED */
         case 'C':
-          this->connection_id_ = ACE_OS::atoi (get_opt.optarg);
+          this->connection_id_ = ACE_OS::atoi (get_opt.opt_arg ());
           break;
           /* NOTREACHED */
 	case 'h':
           // connector host
-	  this->connector_host_ = get_opt.optarg;
+	  this->connector_host_ = get_opt.opt_arg ();
 	  break;
           /* NOTREACHED */
 	case 'm':
           // max queue size.
-	  this->max_queue_size_ = ACE_OS::atoi (get_opt.optarg);
+	  this->max_queue_size_ = ACE_OS::atoi (get_opt.opt_arg ());
 	  break;
           /* NOTREACHED */
 	case 't':
           // Timeout
-	  this->timeout_ = ACE_OS::atoi (get_opt.optarg);
+	  this->timeout_ = ACE_OS::atoi (get_opt.opt_arg ());
 	  break;
           /* NOTREACHED */
 	case 'v':

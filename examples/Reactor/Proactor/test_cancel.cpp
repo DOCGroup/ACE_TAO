@@ -223,10 +223,10 @@ parse_args (int argc, char *argv[])
     switch (c)
       {
       case 'p':
-        port = ACE_OS::atoi (get_opt.optarg);
+        port = ACE_OS::atoi (get_opt.opt_arg ());
 	break;
       case 's':
-	read_size = ACE_OS::atoi (get_opt.optarg);
+	read_size = ACE_OS::atoi (get_opt.opt_arg ());
 	break;
       default:
 	ACE_ERROR ((LM_ERROR, "%p.\n",

@@ -40,10 +40,10 @@ parse_args (int argc, char *argv[])
     switch (c)
     {
     case 'f':
-      file_name = get_opt.optarg;
+      file_name = get_opt.opt_arg ();
       break;
     case 'r':
-      rendezvous = get_opt.optarg;
+      rendezvous = get_opt.opt_arg ();
       break;
     default:
       print_usage_and_die ();

@@ -38,10 +38,10 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'n':
-	n_iterations = ACE_OS::atoi (get_opt.optarg);
+	n_iterations = ACE_OS::atoi (get_opt.opt_arg ());
 	break;
       case 't':
-	n_threads = ACE_OS::atoi (get_opt.optarg);
+	n_threads = ACE_OS::atoi (get_opt.opt_arg ());
 	break;
       default:
 	print_usage_and_die ();

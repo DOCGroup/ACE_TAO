@@ -115,40 +115,40 @@ Options::parse_args (int argc, char *argv[])
 	this->t_flags (THR_BOUND);
 	break;
       case 'c':
-	this->consumer_port (ACE_OS::atoi (get_opt.optarg));
+	this->consumer_port (ACE_OS::atoi (get_opt.opt_arg ()));
 	break;
       case 'd':
 	this->debugging_ = 1;
 	break;
       case 'H':
-	this->high_water_mark (ACE_OS::atoi (get_opt.optarg));
+	this->high_water_mark (ACE_OS::atoi (get_opt.opt_arg ()));
 	break;
       case 'i':
-	this->iterations (ACE_OS::atoi (get_opt.optarg));
+	this->iterations (ACE_OS::atoi (get_opt.opt_arg ()));
 	break;
       case 'L':
-	this->low_water_mark (ACE_OS::atoi (get_opt.optarg));
+	this->low_water_mark (ACE_OS::atoi (get_opt.opt_arg ()));
 	break;
       case 'l':
-	this->initial_queue_length (ACE_OS::atoi (get_opt.optarg));
+	this->initial_queue_length (ACE_OS::atoi (get_opt.opt_arg ()));
 	break;
       case 'M':
-	this->message_size (ACE_OS::atoi (get_opt.optarg));
+	this->message_size (ACE_OS::atoi (get_opt.opt_arg ()));
 	break;
       case 'n':
 	this->t_flags (THR_NEW_LWP);
 	break;
       case 's':
-	this->supplier_port (ACE_OS::atoi (get_opt.optarg));
+	this->supplier_port (ACE_OS::atoi (get_opt.opt_arg ()));
 	break;
       case 'T':
-	if (ACE_OS::strcasecmp (get_opt.optarg, "ON") == 0)
+	if (ACE_OS::strcasecmp (get_opt.opt_arg (), "ON") == 0)
 	  ACE_Trace::start_tracing ();
-	else if (ACE_OS::strcasecmp (get_opt.optarg, "OFF") == 0)
+	else if (ACE_OS::strcasecmp (get_opt.opt_arg (), "OFF") == 0)
 	  ACE_Trace::stop_tracing ();
 	break;
       case 't':
-	this->thr_count (ACE_OS::atoi (get_opt.optarg));
+	this->thr_count (ACE_OS::atoi (get_opt.opt_arg ()));
 	break;
       case 'v':
 	this->verbosity_ = 1;

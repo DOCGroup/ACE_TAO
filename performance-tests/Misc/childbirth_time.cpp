@@ -346,11 +346,11 @@ main (int argc, ACE_TCHAR* argv[])
       switch (c)
         {
         case 'n':
-          iteration = ACE_OS::atoi (get_opt.optarg);
+          iteration = ACE_OS::atoi (get_opt.opt_arg ());
           break;
         case 'l':
           MULTIPLY_FACTOR = ACE_static_cast (size_t,
-                                             ACE_OS::atoi (get_opt.optarg));
+                                             ACE_OS::atoi (get_opt.opt_arg ()));
           break;
         case 'p':                       // test ACE_Process.spawn ()
           profiler = prof_ace_process;

@@ -402,16 +402,16 @@ parse_args (int argc, ACE_TCHAR *argv[])
       switch (c)
         {
         case 'm':
-          number_of_messages = ACE_OS::atoi (get_opt.optarg);
+          number_of_messages = ACE_OS::atoi (get_opt.opt_arg ());
           break;
         case 't':
-          number_of_workers = ACE_OS::atoi (get_opt.optarg);
+          number_of_workers = ACE_OS::atoi (get_opt.opt_arg ());
           break;
         case 'd':
-          debug = ACE_static_cast (DEBUGGING_RANGE, ACE_OS::atoi (get_opt.optarg));
+          debug = ACE_static_cast (DEBUGGING_RANGE, ACE_OS::atoi (get_opt.opt_arg ()));
           break;
         case 's':
-          message_size = ACE_OS::atoi (get_opt.optarg);
+          message_size = ACE_OS::atoi (get_opt.opt_arg ());
           break;
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
