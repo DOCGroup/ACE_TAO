@@ -153,7 +153,7 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
     {
       if (server_request.outgoing ())
-        { 
+        {
           this->post_upcall (*server_request.outgoing (),
                              args,
                              nargs
