@@ -26,6 +26,8 @@
 #include "ace/IOStream.h"
 #include "test_config.h"
 
+#if !defined (ACE_WIN32)
+
 typedef ACE_IOStream<ACE_SOCK_Stream> ACE_SOCK_IOStream;
 
 short PORT = ACE_DEFAULT_SERVER_PORT;
@@ -314,3 +316,5 @@ main( int argc, char *argv[] )
 	ACE_END_TEST;
 	return 0;
 }
+
+#endif /* ACE_WIN32 */

@@ -1,3 +1,15 @@
+Mon Feb 17 00:07:47 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests: Added a new test, Reactor_Notify_Test.cpp, which tests
+ 	  out the new max_notify_iterations() method on the Reactor.
+
+	* ace/Reactor: Finished rewriting and testing the new dispatching
+ 	  logic of the Reactor.  The new implementation guards against
+ 	  pathological cases where ACE_Event_Handler::handle_*() methods
+ 	  remove registered ACE_Event_Handler objects whose handles are
+ 	  pending in the dispatch_set.  Previously there was no good way
+ 	  to guard against this.  Now, it should be handled automatically.
+
 Mon Feb 17 03:15:48 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
 	* tests/SOCK_Test.cpp (server): Changed recv_n() to recv().
@@ -14,15 +26,6 @@ Mon Feb 17 03:15:48 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
  	  rather than just 1 on WIN32. This should speed up the Reactor on
  	  WIN32 platforms.
 	
-Mon Feb 17 00:07:47 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-	* ace/Reactor: Finished rewriting and testing the new dispatching
- 	  logic of the Reactor.  The new implementation guards against
- 	  pathological cases where ACE_Event_Handler::handle_*() methods
- 	  remove registered ACE_Event_Handler objects whose handles are
- 	  pending in the dispatch_set.  Previously there was no good way
- 	  to guard against this.  Now, it should be handled automatically.
-
 Sun Feb 16 12:23:23 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Reactor.cpp: Totally rewrote the ACE_Reactor's dispatching
