@@ -16,8 +16,6 @@
 //
 // ============================================================================
 
-#define ACE_BUILD_SVC_DLL
-
 #include "test_config.h"
 #include "DLL_Test.h"
 #include "ace/DLL.h"
@@ -25,18 +23,8 @@
 
 ACE_RCSID(tests, DLL_Test, "$Id$")
 
-// Considering UNIX OS to be default. On Win32 platforms, the symbols
-// are got form the .exe as one cant have .exe and .dll for the same
-// .cpp. Also, on Win32 platforms one cant use the .obj to obtain
-// symbols dynamically at runtime.
-
-#if defined (ACE_WIN32)
-#  define OBJ_SUFFIX ACE_TEXT (".exe")
-#  define OBJ_PREFIX ACE_TEXT ("")
-#else
-#  define OBJ_SUFFIX ACE_DLL_SUFFIX
-#  define OBJ_PREFIX "./" ACE_DLL_PREFIX
-#endif /*ACE_WIN32*/
+#define OBJ_SUFFIX ACE_DLL_SUFFIX
+#define OBJ_PREFIX "./" ACE_DLL_PREFIX
 
 ACE_TCHAR const *
 cdecl_decoration (ACE_TCHAR const *func_name)
@@ -66,7 +54,7 @@ main (int, ACE_TCHAR *[])
 
   ACE_DLL dll;
   int retval = dll.open (OBJ_PREFIX
-                         ACE_TEXT ("DLL_Test")
+                         ACE_TEXT ("DLL_Testd")
                          OBJ_SUFFIX);
   if (retval != 0)
     ACE_ERROR_RETURN ((LM_ERROR,

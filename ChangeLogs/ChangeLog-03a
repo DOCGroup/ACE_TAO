@@ -1,3 +1,14 @@
+Sat Feb 24 15:44:58 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/tests.dsw:
+        * tests/DLL_Test_Impl.dsp:
+          Add new project file for the shared library used in the test.
+
+        * tests/DLL_Test.cpp:
+        * tests/DLL_Test_Impl.cpp:
+          Change the Win32 version to load a shared library instead of the
+          exe.
+
 Sat Feb 24 14:07:11 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * tests/Thread_Pool_Reactor_Test.cpp:
@@ -18,23 +29,23 @@ Sat Feb 24 14:37:00 2001  Craig Rodrigues <crodrigu@bbn.com>
 Sat Feb 24 10:27:04 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/auto_run_tests.lst:
-	  Disable the interceptor tests when the ORB is compiled without
-	  interceptor support.
+          Disable the interceptor tests when the ORB is compiled without
+          interceptor support.
 
         * tests/run_test.lst:
-	  Disable the Reactor_Notify_Test on single threaded builds, it
-	  uses threads.
+          Disable the Reactor_Notify_Test on single threaded builds, it
+          uses threads.
 
         * bin/nightlybuilds/scoreboard_update.pl:
-	  Fixed usage message.
+          Fixed usage message.
 
 Sat Feb 24 09:45:18 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* tests/run_test.lst:
-	  Disable the DLL_Test on KCC/Linux builds.  The test runs
-	  normally, but crashes on shutdown(), it appears as if the
-	  run-time system is invoking the destructors after the library is
-	  unloaded. 
+        * tests/run_test.lst:
+          Disable the DLL_Test on KCC/Linux builds.  The test runs
+          normally, but crashes on shutdown(), it appears as if the
+          run-time system is invoking the destructors after the library is
+          unloaded.
 
         * tests/Makefile:
         * tests/Makefile.DLL_Test:
@@ -64,9 +75,9 @@ Sat Feb 24 08:21:48 2001  David L. Levine <levine@cs.wustl.edu>
 
 Thu Feb 22 15:59:04 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS.i: The ACE_TRACE call for ACE_OS::gmtime identified the
- 	  function as "localtime".  This is now fixed.  Thanks to Mason
- 	  Deaver <mason.deaver@tripointglobal.com> for reporting this.
+        * ace/OS.i: The ACE_TRACE call for ACE_OS::gmtime identified the
+          function as "localtime".  This is now fixed.  Thanks to Mason
+          Deaver <mason.deaver@tripointglobal.com> for reporting this.
 
 Fri Feb 23 19:44:36 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
