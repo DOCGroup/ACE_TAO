@@ -785,11 +785,16 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node,
       ACE_NEW_RETURN (id,
                       Identifier ("ami_handler"),
                       0);
+                      
+      UTL_ScopedName *tmp = 0;
 
-      ACE_NEW_RETURN (sn,
+      ACE_NEW_RETURN (tmp,
                       UTL_ScopedName (id,
                                       0),
                       0);
+                      
+      sn = (UTL_ScopedName *)op->name ()->copy ();
+      sn->nconc (tmp);
 
       be_argument *arg = 0;
       ACE_NEW_RETURN (arg,
@@ -798,7 +803,8 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node,
                                    sn),
                       0);
 
-      // Add the reply handler to the argument list
+      arg->set_defined_in (op);
+      arg->set_name (sn);
       op->be_add_argument (arg);
     }
 
@@ -824,7 +830,7 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node,
               );
 
             }
-            //be_decl *arg = be_decl::narrow_from_decl (d);
+
           AST_Argument *original_arg = AST_Argument::narrow_from_decl (d);
 
           if (original_arg->direction () == AST_Argument::dir_IN ||
@@ -832,14 +838,16 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node,
             {
               // Create the argument.
               be_argument *arg = 0;
-              UTL_ScopedName arg_name (original_arg->local_name (), 
-                                       0);
+              UTL_ScopedName *new_name = 
+                (UTL_ScopedName *)original_arg->name ()->copy ();
               ACE_NEW_RETURN (arg,
                               be_argument (AST_Argument::dir_IN,
                                            original_arg->field_type (),
-                                           &arg_name),
+                                           new_name),
                               0);
 
+              arg->set_defined_in (op);
+              arg->set_name (new_name);
               op->be_add_argument (arg);
             }
         } // end of while loop
@@ -922,11 +930,16 @@ be_visitor_ami_pre_proc::create_reply_handler_operation (
       ACE_NEW_RETURN (id,
                       Identifier ("ami_return_val"),
                       -1);
+                      
+      UTL_ScopedName *tmp = 0;
 
-      ACE_NEW_RETURN (sn,
+      ACE_NEW_RETURN (tmp,
                       UTL_ScopedName (id,
                                       0),
                       -1);
+                      
+      sn = (UTL_ScopedName *)operation->name ()->copy ();
+      sn->nconc (tmp);
 
       // Create the argument.
       be_argument *arg = 0;
@@ -935,7 +948,10 @@ be_visitor_ami_pre_proc::create_reply_handler_operation (
                                    node->return_type (),
                                    sn),
                       -1);
-
+                      
+      arg->set_defined_in (operation);
+      arg->set_name (sn);
+                      
       // Add the reply handler to the argument list.
       operation->be_add_argument (arg);
     }
@@ -968,12 +984,16 @@ be_visitor_ami_pre_proc::create_reply_handler_operation (
             {
               // Create the argument.
               be_argument *arg = 0;
+              UTL_ScopedName *new_name = 
+                (UTL_ScopedName *)original_arg->name ()->copy ();
               ACE_NEW_RETURN (arg,
                               be_argument (AST_Argument::dir_IN,
                                            original_arg->field_type (),
-                                           original_arg->name ()),
+                                           new_name),
                               -1);
 
+              arg->set_defined_in (operation);
+              arg->set_name (new_name);
               operation->be_add_argument (arg);
             }
         } // end of while loop
@@ -1056,6 +1076,8 @@ be_visitor_ami_pre_proc::create_excep_operation (be_operation *node,
                                excep_holder, // is also a valuetype
                                sn),
                   -1);
+                  
+  UTL_ScopedName *tmp = (UTL_ScopedName *)sn->copy ();
 
   // Create the new name
   // Append _execp to the name of the operation
@@ -1090,8 +1112,12 @@ be_visitor_ami_pre_proc::create_excep_operation (be_operation *node,
 
   operation->set_name (op_name);
   operation->be_add_argument (arg);
-
   operation->set_defined_in (reply_handler);
+  
+  UTL_ScopedName *arg_name = (UTL_ScopedName *)op_name->copy ();
+  arg_name->nconc (tmp);
+  arg->set_name (arg_name);
+  arg->set_defined_in (operation);
 
   // We do not copy the exceptions because the exceptions
   // are delivered by the excep methods.
