@@ -180,20 +180,22 @@ oneway		return IDL_ONEWAY;
 		  return IDL_SCOPE_DELIMITOR;
 		}
 
-[a-ij-rs-zA-IJ-RS-Z][a-ij-rs-zA-IJ-RS-Z0-9_]*	{
+[a-ij-rs-zA-IJ-RS-Z_][a-ij-rs-zA-IJ-RS-Z0-9_]*	{
   // Make sure that this identifier is not a C++ keyword. If it is,
   // prepend it with a _cxx_. Lookup in the perfect hash table for C++
   // keyword and grab the mapping.  BTW, the reason for the odd
   // regular expression is to handle EBCDIC, as well as ASCII.
 
+  char *tmp = (ace_yytext[0] == '_' ? ace_yytext + 1 : ace_yytext);
+
   TAO_IDL_CPP_Keyword_Table cpp_key_tbl;
   const TAO_IDL_CPP_Keyword_Entry *entry =
     cpp_key_tbl.lookup (ace_yytext,
-                        ACE_OS::strlen (ace_yytext));
+                        ACE_OS::strlen (tmp));
   if (entry)
     yylval.strval = ACE_OS::strdup (entry->mapping_);
   else
-    yylval.strval = ACE_OS::strdup (ace_yytext);
+    yylval.strval = ACE_OS::strdup (tmp);
 
   return IDENTIFIER;
 }
