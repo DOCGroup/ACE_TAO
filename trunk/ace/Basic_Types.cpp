@@ -14,14 +14,13 @@ ACE_RCSID(ace, Basic_Types, "$Id$")
 void
 ACE_U_LongLong::output (FILE *file) const
 {
-  if (hi_ > 0)
-    ACE_OS::fprintf (file, "0x%lx%0*lx", hi_, 2 * sizeof lo_, lo_);
+  if (h_ () > 0)
+    ACE_OS::fprintf (file, "0x%lx%0*lx", h_ (), 2 * sizeof l_ (), l_ ());
   else
-    ACE_OS::fprintf (file, "0x%lx", lo_);
+    ACE_OS::fprintf (file, "0x%lx", l_ ());
 }
 
 #endif /* ACE_LACKS_LONGLONG_T */
 
 // Explicit template instantiation file
 #include "ace/Template_Instantiations.cpp"
-
