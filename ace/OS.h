@@ -651,6 +651,22 @@ typedef int key_t;
 //                                       //
 ///////////////////////////////////////////
 
+#if defined (ACE_HAS_PACE)
+#include "pace/fcntl.h"
+#include "pace/sys/mman.h"
+#include "pace/pthread.h"
+#include "pace/stdio.h"
+#include "pace/stdlib.h"
+#include "pace/sched.h"
+#include "pace/semaphore.h"
+#include "pace/signal.h"
+#include "pace/sys/stat.h"
+#include "pace/stdio.h"
+#include "pace/time.h"
+#include "pace/unistd.h"
+#define ACE_HAS_POSIX_SEM
+#endif /* ACE_HAS_PACE */
+
 # if defined (ACE_PSOS)
 
     // remap missing error numbers for system functions
