@@ -271,7 +271,7 @@ TAO_Server_Connection_Handler::handle_message (TAO_InputCDR &input,
     {
       CORBA::String_var object_id;
 
-      object_id = (char *) request.object_key ().get_buffer ();
+      object_id = CORBA::string_dup ((char *) request.object_key ().get_buffer ());
       object_id [request.object_key ().length ()] = '\0';
 
       ACE_DEBUG ((LM_DEBUG,
