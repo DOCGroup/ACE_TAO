@@ -108,6 +108,10 @@ private:
   // critical path.
 };
 
+// Convenient ostream operator.
+ostream& operator<< (ostream &os, 
+                     const CORBA_Exception &e);
+
 class TAO_Export CORBA_UserException : public CORBA_Exception
 {
   // = TITLE
