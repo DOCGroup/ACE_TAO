@@ -1,3 +1,10 @@
+Wed Feb 14 11:49:17 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/CORBALOC_Parser.cpp (make_stub_from_mprofile):
+
+	  Fixed "better conversion sequence" warning issued by g++ by
+	  using the ".in()" accessor method.
+
 Wed Feb 14 11:34:55 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Pluggable.cpp (make_mprofile):
