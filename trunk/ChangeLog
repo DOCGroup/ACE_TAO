@@ -1,3 +1,13 @@
+Tue Mar 25 17:09:22 CET 2003  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
+
+	From Rudolf Weber <rfweber@tesionmail.de>
+	* ace/Unbounded_Set.cpp:
+	  Correction to the handling of the deleted_ flag in the iterators.
+
+	* tests/Unbounded_Set_Test.cpp:
+	  Extended towards making it a general test of the ACE_Unbounded_Set.
+	  Added test for the ACE_Unbounded_Set_Const_Iterator.
+
 Tue Mar 25 10:44:23 CET 2003  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
 
 	* ace/Unbounded_Set.{h,cpp}: Removed the `const' at the
