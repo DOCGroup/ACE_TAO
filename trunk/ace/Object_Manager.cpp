@@ -12,24 +12,77 @@
 #include "ace/Object_Manager.i"
 #endif /* __ACE_INLINE__ */
 
-// Singleton pointer.
+#if ! defined (ACE_APPLICATION_PREALLOCATED_OBJECT_DEFINITIONS)
+# define ACE_APPLICATION_PREALLOCATED_OBJECT_DEFINITIONS
+#endif /* ACE_APPLICATION_PREALLOCATED_OBJECT_DEFINITIONS */
+
+#if ! defined (ACE_APPLICATION_PREALLOCATED_ARRAY_DEFINITIONS)
+# define ACE_APPLICATION_PREALLOCATED_ARRAY_DEFINITIONS
+#endif /* ACE_APPLICATION_PREALLOCATED_ARRAY_DEFINITIONS */
+
+#if ! defined (ACE_APPLICATION_PREALLOCATED_OBJECT_DELETIONS)
+# define ACE_APPLICATION_PREALLOCATED_OBJECT_DELETIONS
+#endif /* ACE_APPLICATION_PREALLOCATED_OBJECT_DELETIONS */
+
+#if ! defined (ACE_APPLICATION_PREALLOCATED_ARRAY_DELETIONS)
+# define ACE_APPLICATION_PREALLOCATED_ARRAY_DELETIONS
+#endif /* ACE_APPLICATION_PREALLOCATED_ARRAY_DELETIONS */
+
+// Static data.
 ACE_Object_Manager *ACE_Object_Manager::instance_ = 0;
 
 void *ACE_Object_Manager::managed_object[ACE_MAX_MANAGED_OBJECTS] = { 0 };
 
 u_int ACE_Object_Manager::next_managed_object = 0;
 
-// Handy macro for use by ACE_Object_Manager constructor to preallocate
-// an object.
-#define ACE_PREALLOCATE_OBJECT(TYPE, ID) \
-  { \
-    ACE_Managed_Cleanup<TYPE> *obj_p; \
-    ACE_NEW (obj_p, ACE_Managed_Cleanup<TYPE>); \
-    managed_object[ID - 1] = obj_p; \
-  }
+void *ACE_Object_Manager::preallocated_object[
+  ACE_Object_Manager::ACE_PREALLOCATED_OBJECTS] = { 0 };
+
+void *ACE_Object_Manager::preallocated_array[
+  ACE_Object_Manager::ACE_PREALLOCATED_ARRAYS] = { 0 };
+
+// Handy macros for use by ACE_Object_Manager constructor to preallocate or
+// delete an object or array, either statically (in global data) or
+// dynamically (on the heap).
+#if defined (ACE_HAS_STATIC_PREALLOCATION)
+# define ACE_PREALLOCATE_OBJECT(TYPE, ID)\
+    {\
+      static ACE_Managed_Cleanup<TYPE> obj;\
+      preallocated_object[ID] = &obj;\
+    }
+# define ACE_PREALLOCATE_ARRAY(TYPE, ID, COUNT)\
+    {\
+      static ACE_Managed_Cleanup<TYPE> obj[COUNT];\
+      preallocated_array[ID] = &obj;\
+    }
+#else
+# define ACE_PREALLOCATE_OBJECT(TYPE, ID)\
+    {\
+      ACE_Managed_Cleanup<TYPE> *obj_p;\
+      ACE_NEW (obj_p, ACE_Managed_Cleanup<TYPE>);\
+      preallocated_object[ID] = obj_p;\
+    }
+# define ACE_PREALLOCATE_ARRAY(TYPE, ID, COUNT)\
+    {\
+      ACE_Managed_Cleanup<TYPE> *obj_p;\
+      ACE_NEW (obj_p, ACE_Managed_Cleanup<TYPE>[COUNT]);\
+      preallocated_array[ID] = obj_p;\
+    }
+# define ACE_DELETE_PREALLOCATED_OBJECT(TYPE, ID)\
+    ace_cleanup_destroyer (\
+      (ACE_Managed_Cleanup<TYPE> *) preallocated_object[ID], 0);\
+    preallocated_object[ID] = 0;
+# define ACE_DELETE_PREALLOCATED_ARRAY(TYPE, ID)\
+    delete [] (ACE_Managed_Cleanup<TYPE> *) preallocated_array[ID];\
+    preallocated_array[ID] = 0;
+#endif /* ACE_HAS_STATIC_PREALLOCATION */
+
 
 ACE_Object_Manager::ACE_Object_Manager (void)
   : shutting_down_(0)
+  // , lock_ is initialized in the function body.
+  // With ACE_HAS_TSS_EMULATION, ts_storage_ is initialized by the call
+  // to ACE_OS::tss_open () in the function body.
 {
   ACE_NEW (registered_objects_, ACE_Unbounded_Queue<ACE_Cleanup_Info>);
 
@@ -41,8 +94,7 @@ ACE_Object_Manager::ACE_Object_Manager (void)
   instance_ = this;
 #endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER */
 
-  // Allocate the preallocated (hard-coded) object instances, and
-  // register them for destruction.
+  // Allocate the preallocated (hard-coded) object instances.
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   ACE_PREALLOCATE_OBJECT (ACE_Thread_Mutex, ACE_LOG_MSG_INSTANCE_LOCK)
   ACE_PREALLOCATE_OBJECT (ACE_Thread_Mutex, ACE_MT_CORBA_HANDLER_LOCK)
@@ -50,7 +102,12 @@ ACE_Object_Manager::ACE_Object_Manager (void)
   ACE_PREALLOCATE_OBJECT (ACE_Thread_Mutex, ACE_TSS_CLEANUP_LOCK)
 # endif /* ACE_MT_SAFE */
 
-  next_managed_object = ACE_END_OF_PREALLOCATED_OBJECTS - 1;
+  // Allocate the preallocated (hard-coded) arrays.
+  // (None, yet.)
+
+  // Hooks for preallocated objects and arrays provided by application.
+  ACE_APPLICATION_PREALLOCATED_OBJECT_DEFINITIONS
+  ACE_APPLICATION_PREALLOCATED_ARRAY_DEFINITIONS
 
 #if defined (ACE_HAS_TSS_EMULATION)
   // Initialize the main thread's TS storage.
@@ -112,16 +169,23 @@ ACE_Object_Manager::~ACE_Object_Manager (void)
   ACE_TSS_Emulation::tss_close (ts_storage_);
 #endif /* ACE_HAS_TSS_EMULATION */
 
+#if ! defined (ACE_HAS_STATIC_PREALLOCATION)
+  // Hooks for deletion of preallocated objects and arrays provided by
+  // application.
+  ACE_APPLICATION_PREALLOCATED_ARRAY_DELETIONS
+  ACE_APPLICATION_PREALLOCATED_OBJECT_DELETIONS
+
+  // Cleanup the dynamically preallocated objects.
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  // Cleanup the preallocated objects.
-  for (u_int i = 0; i < ACE_END_OF_PREALLOCATED_OBJECTS - 1; ++i)
-    {
-      // The object is an ACE_Managed_Cleanup<ACE_Thread_Mutex).
-      ace_cleanup_destroyer (
-        (ACE_Managed_Cleanup<ACE_Thread_Mutex> *) managed_object[i], 0);
-      managed_object[i] = 0;
-    }
+  ACE_DELETE_PREALLOCATED_OBJECT (ACE_Thread_Mutex, ACE_LOG_MSG_INSTANCE_LOCK)
+  ACE_DELETE_PREALLOCATED_OBJECT (ACE_Thread_Mutex, ACE_MT_CORBA_HANDLER_LOCK)
+  ACE_DELETE_PREALLOCATED_OBJECT (ACE_Thread_Mutex, ACE_DUMP_LOCK)
+  ACE_DELETE_PREALLOCATED_OBJECT (ACE_Thread_Mutex, ACE_TSS_CLEANUP_LOCK)
 # endif /* ACE_MT_SAFE */
+
+  // Cleanup the dynamically preallocated arrays.
+  // (None, yet.)
+#endif /* ! ACE_HAS_STATIC_PREALLOCATION */
 }
 
 ACE_Object_Manager *

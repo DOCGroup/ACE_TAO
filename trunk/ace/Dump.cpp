@@ -6,11 +6,6 @@
 #include "ace/Dump.h"
 #include "ace/Object_Manager.h"
 
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-// Synchronize output operations.
-u_int ACE_ODB::ace_dump_lock_ = ACE_Object_Manager::ACE_DUMP_LOCK;
-#endif /* ACE_MT_SAFE */
-
 // Implementations (very simple for now...)
 
 ACE_Dumpable::~ACE_Dumpable (void)
@@ -61,14 +56,14 @@ ACE_ODB::instance (void)
   if (ACE_ODB::instance_ == 0)
     {
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-      ACE_Thread_Mutex *lock = ACE_Managed_Object<ACE_Thread_Mutex>::get_object
-        (ACE_ODB::ace_dump_lock_);
-      if (lock == 0) return 0;
+      ACE_Thread_Mutex *lock =
+        ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
+          (ACE_Object_Manager::ACE_DUMP_LOCK);
       ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, 0);
 #endif /* ACE_MT_SAFE */
 
       if (ACE_ODB::instance_ == 0)
-	ACE_NEW_RETURN (ACE_ODB::instance_, ACE_ODB, 0);
+        ACE_NEW_RETURN (ACE_ODB::instance_, ACE_ODB, 0);
     }
 
   return ACE_ODB::instance_;

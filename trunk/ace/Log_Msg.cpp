@@ -1,4 +1,3 @@
-// Log_Msg.cpp
 // $Id$
 
 #define ACE_BUILD_DLL
@@ -177,10 +176,9 @@ ACE_Log_Msg::instance (void)
 
   if (ACE_Log_Msg_key_created_ == 0)
     {
-      static ACE_Thread_Mutex *lock =
-        ACE_Managed_Object<ACE_Thread_Mutex>::get_object
+      ACE_Thread_Mutex *lock =
+        ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
           (ACE_Object_Manager::ACE_LOG_MSG_INSTANCE_LOCK);
-      if (lock == 0) return 0;
 
       ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, 0);
 

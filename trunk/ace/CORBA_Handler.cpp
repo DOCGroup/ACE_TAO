@@ -173,9 +173,9 @@ ACE_ST_CORBA_Handler::ACE_ST_CORBA_Handler (void)
   // Set up the callbacks so that we get informed when Orbix changes
   // its descriptors.
   ACE_CORBA_1 (Orbix.registerIOCallback) ((OrbixIOCallback) &ACE_ST_CORBA_Handler::insert_handle, 
-				   FD_OPEN_CALLBACK);
+                                   FD_OPEN_CALLBACK);
   ACE_CORBA_1 (Orbix.registerIOCallback) ((OrbixIOCallback) &ACE_ST_CORBA_Handler::remove_handle, 
-				   FD_CLOSE_CALLBACK);
+                                   FD_CLOSE_CALLBACK);
 }      
 
 void
@@ -199,8 +199,8 @@ ACE_ST_CORBA_Handler::get_orbix_descriptors (void)
 /* static */
 int
 ACE_CORBA_Handler::register_service (const char *service_name,
-				     const char *marker_name,
-				     const char *service_location)
+                                     const char *marker_name,
+                                     const char *service_location)
 {
   ACE_TRACE ("ACE_CORBA_Handler::register_service");
   char buf[BUFSIZ * 2]; // I hope this is enough space...
@@ -215,7 +215,7 @@ ACE_CORBA_Handler::register_service (const char *service_name,
     ACE_OS::sprintf (buf, "putit %s %s", service_name, service_location);
   else
     ACE_OS::sprintf (buf, "putit -marker %s %s %s", 
-	       marker_name, service_name, service_location);
+               marker_name, service_name, service_location);
 
   return ACE_OS::system (buf); // Use system(3S) to execute Orbix putit.
 }
@@ -226,7 +226,7 @@ ACE_CORBA_Handler::register_service (const char *service_name,
 /* static */
 int 
 ACE_CORBA_Handler::remove_service (const char *service_name,
-				   const char *marker_name)
+                                   const char *marker_name)
 {
   ACE_TRACE ("ACE_CORBA_Handler::remove_service");
   char buf[BUFSIZ * 2]; // I hope this is enough space!
@@ -268,7 +268,7 @@ ACE_ST_CORBA_Handler::~ACE_ST_CORBA_Handler (void)
 /* static */
 int 
 ACE_CORBA_Handler::deactivate_service (const char *service_name,
-				       const char *marker_name)
+                                       const char *marker_name)
 {
   ACE_TRACE ("ACE_CORBA_Handler::deactivate_service");
   if (service_name != 0
@@ -316,8 +316,8 @@ ACE_ST_CORBA_Handler::instance (void)
 
 int
 ACE_CORBA_Handler::activate_service (const char *service_name, 
-				     const char *marker_name, 
-				     const char *service_location)
+                                     const char *marker_name, 
+                                     const char *service_location)
 {
   ACE_TRACE ("ACE_CORBA_Handler::activate_service");
   // Since the ACE_CORBA_Handler is a singleton, make sure not to
@@ -328,7 +328,7 @@ ACE_CORBA_Handler::activate_service (const char *service_name,
 
   if (service_name != 0 && service_location != 0
       && this->register_service (service_name, marker_name, 
-				 service_location) == -1)
+                                 service_location) == -1)
     return -1;
 
   // Tell Orbix that we have completed the server's initialization.
@@ -347,12 +347,6 @@ ACE_CORBA_Handler::activate_service (const char *service_name,
 
 ACE_ALLOC_HOOK_DEFINE(ACE_MT_CORBA_Handler)
 
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-// Synchronize output operations.
-u_int ACE_MT_CORBA_Handler::ace_mt_corba_handler_lock_ =
-  ACE_Object_Manager::ACE_MT_CORBA_HANDLER_LOCK;
-#endif /* ACE_MT_SAFE */
-
 void
 ACE_MT_CORBA_Handler::dump (void) const
 {
@@ -363,9 +357,9 @@ ACE_MT_CORBA_Handler::dump (void) const
   ACE_DEBUG ((LM_DEBUG, "\nthr_mgr_ = %x", this->thr_mgr_));
   this->pipe_.dump ();
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  // Double-Check lock.
-  ACE_Thread_Mutex *lock = ACE_Managed_Object<ACE_Thread_Mutex>::get_object
-    (ace_mt_corba_handler_lock_);
+  ACE_Thread_Mutex *lock =
+    ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
+      (ACE_Object_Manager::ACE_MT_CORBA_HANDLER_LOCK);
   if (lock != 0) lock->dump ();
 #endif /* ACE_MT_SAFE */
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
@@ -384,15 +378,15 @@ ACE_MT_CORBA_Handler::instance (void)
   if (ACE_MT_CORBA_Handler::instance_ == 0)
     {
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-      ACE_Thread_Mutex *lock = ACE_Managed_Object<ACE_Thread_Mutex>::get_object
-        (ace_mt_corba_handler_lock_);
-      if (lock == 0) return 0;
+      ACE_Thread_Mutex *lock =
+        ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
+          (ACE_Object_Manager::ACE_MT_CORBA_HANDLER_LOCK);
       ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, 0);
 #endif /* ACE_MT_SAFE */
 
       if (ACE_MT_CORBA_Handler::instance_ == 0)
-	ACE_NEW_RETURN (ACE_MT_CORBA_Handler::instance_,
-			ACE_MT_CORBA_Handler, 0);
+        ACE_NEW_RETURN (ACE_MT_CORBA_Handler::instance_,
+                        ACE_MT_CORBA_Handler, 0);
     }
 
   return ACE_MT_CORBA_Handler::instance_;
@@ -438,7 +432,7 @@ ACE_MT_CORBA_Handler::ACE_MT_CORBA_Handler (void)
   // Create a new thread that processes events for the Orbix event
   // queue.
   else if (this->thr_mgr ()->spawn (ACE_THR_FUNC (ACE_MT_CORBA_Handler::process_events),
-				    0, THR_DETACHED | THR_NEW_LWP) == -1)
+                                    0, THR_DETACHED | THR_NEW_LWP) == -1)
     result = -1;
   
   if (result == -1)
@@ -460,10 +454,10 @@ ACE_MT_CORBA_Handler::process_events (void *)
   if (ACE_MT_CORBA_Handler::instance_ == 0)
     {
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-      ACE_Thread_Mutex *lock = ACE_Managed_Object<ACE_Thread_Mutex>::get_object
-        (ace_mt_corba_handler_lock_);
-      if (lock == 0) return 0;
-      ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, lock, 0);
+      ACE_Thread_Mutex *lock =
+        ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
+          (ACE_Object_Manager::ACE_MT_CORBA_HANDLER_LOCK);
+      ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, 0);
 #endif /* ACE_MT_SAFE */
 
       ACE_ASSERT (ACE_MT_CORBA_Handler::instance_ != 0);
@@ -486,7 +480,7 @@ ACE_MT_CORBA_Handler::process_events (void *)
 
 int
 ACE_MT_CORBA_Handler::inRequestPreMarshal (ACE_CORBA_1 (Request) &req,
-					   ACE_CORBA_1 (Environment) &IT_env)
+                                           ACE_CORBA_1 (Environment) &IT_env)
 {
   ACE_TRACE ("ACE_MT_CORBA_Handler::inRequestPreMarshal");
 
@@ -494,8 +488,8 @@ ACE_MT_CORBA_Handler::inRequestPreMarshal (ACE_CORBA_1 (Request) &req,
   u_long request_addr = (u_long) &req;
 
   ssize_t result = ACE::send (this->pipe_.write_handle (),
-			      (const char *) &request_addr, 
-			      sizeof request_addr);
+                              (const char *) &request_addr, 
+                              sizeof request_addr);
 
   if (result != sizeof request_addr)
     {
@@ -518,8 +512,8 @@ ACE_MT_CORBA_Handler::handle_input (ACE_HANDLE)
 
   //  Read the request from the pipe.
   ssize_t result = ACE::recv (this->pipe_.read_handle (),
-			      (char *) &request_addr, 
-			      sizeof request_addr);
+                              (char *) &request_addr, 
+                              sizeof request_addr);
 
   if (result != sizeof request_addr)
     // We are in trouble: bail out.
