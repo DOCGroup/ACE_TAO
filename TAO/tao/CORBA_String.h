@@ -21,6 +21,7 @@
 #include "ace/pre.h"
 
 #include "tao/corbafwd.h"
+#include "tao/Managed_Types.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -31,7 +32,6 @@
 #if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
 #include "ace/streams.h"
 #endif /* ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION */
-
 
 /**
  * @class CORBA_String_var
@@ -116,6 +116,9 @@ public:
 
   /// Construction from a var.
   CORBA_String_out (CORBA_String_var &p);
+
+  /// Construction from a var.
+  CORBA_String_out (TAO_String_Manager &p);
 
   /// Copy constructor.
   CORBA_String_out (const CORBA_String_out &s);
