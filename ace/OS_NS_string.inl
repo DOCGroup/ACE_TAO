@@ -170,11 +170,11 @@ ACE_INLINE char *
 ACE_OS::strerror (int errnum)
 {
 #if defined (WIN32)
-  if (error >= WSAEINTR && error <= WSASYSCALLFAILURE) 
+  if (errnum >= WSAEINTR && errnum <= WSASYSCALLFAILURE) 
     {
-      const char *errortext = ACE:sock_error (error);
+      const char *errortext = ACE::sock_error (errnum);
       if (ACE_OS::strstr (errortext, "unknown") != errortext)
-        return errortext;
+        return const_cast<char *> (errortext);
     }
 #endif /* WIN32 */
 #if defined (ACE_LACKS_STRERROR)
