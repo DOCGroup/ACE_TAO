@@ -48,7 +48,7 @@ public:
   Client_i (void);
   //constructor.
 
-  ~Client_i (void);
+  virtual ~Client_i (void);
   // destructor.
 
   int init (int argc, char *argv[]);
@@ -181,5 +181,3 @@ private:
   ACE_Profile_Timer::Rusage usage;
 #endif /* (defined (ACE_HAS_PRUSAGE_T) || defined (ACE_HAS_GETRUSAGE)) && !defined (ACE_WIN32) */
 };
-
-
