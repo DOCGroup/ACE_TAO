@@ -38,9 +38,8 @@ print STDERR "======== Running with no collocation \n";
 $SV->Arguments ("-o $iorfile -k file://$iorfile -ORBCollocation no");
 $sv = $SV->SpawnWaitKill (60);
 
-if ($sv == 0) {
+if ($sv != 0) {
     print STDERR "ERROR in Collocated_Test\n";
-    print STDERR "the test shold have crashed\n";
     $status = 1;
 }
 unlink $iorfile;
@@ -56,27 +55,22 @@ if ($sv != 0) {
 unlink $iorfile;
 
 print STDERR "======== Running in per-orb mode and two ORBS \n";
-print STDERR "======== Test should crash \n";
 $SV->Arguments ("-o $iorfile -k file://$iorfile -n -ORBCollocation per-orb");
 $sv = $SV->SpawnWaitKill (60);
 
-print STDERR "Retval is $sv \n";
-if ($sv == 0) {
+if ($sv != 0) {
     print STDERR "ERROR in Collocated_Test\n";
-    print STDERR "Collocated_Test should have crashed\n";
     $status = 1;
 }
 unlink $iorfile;
 
 print STDERR "======== Running in no collocation mode and two ORBS \n";
-print STDERR "======== Test should crash \n";
 $SV->Arguments ("-o $iorfile -k file://$iorfile -n -ORBCollocation per-orb");
 $sv = $SV->SpawnWaitKill (60);
 
 $SV->check_return_value (0);
-if ($sv != 255) {
+if ($sv != 0) {
     print STDERR "ERROR in Collocated_Test\n";
-    print STDERR "Collocated_Test should have crashed\n";
     $status = 1;
 }
 unlink $iorfile;
