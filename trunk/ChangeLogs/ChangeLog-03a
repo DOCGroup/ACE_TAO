@@ -1,5 +1,12 @@
 Mon Dec 24 08:08:40 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
+	* ace/Reactor.h: Changed the signature of
+	  ACE_Reactor::check_reconfiguration() to reflect the following
+ 	  change.
+	
+	* ace/Reactor.h: Changed the REACTOR_EVENT_HOOK typedef to take a pointer
+	  to the ACE_Reactor.  Thanks to Alex Libman for suggesting this.
+
 	* performance-tests/Synch-Benchmarks/Synch_Lib/Benchmark_Base.cpp: 
 	* performance-tests/Synch-Benchmarks/Perf_Test/Performance_Test_Options.cpp: 
 	* examples/Threads/tss2.cpp: 
@@ -29,8 +36,15 @@ Mon Dec 24 08:08:40 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 	* ace/Atomic_Op.i,
 	* ace/Synch_T.{h,cpp}: Factored out some of the structure/logic
 	  from ACE_Atomic_Op into a new base class called
- 	  ACE_Atomic_Op_Ex.  Thanks to Alex Libman <alibman@@ihug.com.au>
- 	  for contributing this.
+ 	  ACE_Atomic_Op_Ex.  ACE_Atomic_Op_Ex uses extra parameter -
+ 	  reference to ACE_LOCK to allow several ACE_Atomic_Op_Ex share
+ 	  the same lock.  ACE_Atomic_Op is derived from ACE_Atomic_Op_Ex
+ 	  and its interface is the same as it was. It has only
+ 	  constructors implementation and operators =.  All other methods
+ 	  are inherited from ACE_Atomic_Op_Ex.  Templates instantiation
+ 	  for ACE_Atomic_Op_Ex should be added to all files that have
+ 	  templates instantiation for ACE_Atomic_Op.  Thanks to Alex
+ 	  Libman <alibman@@ihug.com.au> for contributing this.
 
 	* ace/Service_Config.cpp (close_singletons): Add support to close
 	  the Proactor singleton, just like the Reactor singleton.  Thanks
@@ -43,8 +57,28 @@ Mon Dec 24 08:08:40 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/Proactor.{h,i,cpp}: Added Alex Libman's <alibman@@ihug.com.au> 
 	  enhancements that make the ACE_Proactor behave more like the
- 	  ACE_Reactor with respect to singletons etc.
- 
+ 	  ACE_Reactor with respect to singletons etc.  In particular:
+	  
+	  1. For each static ACE_Proactor method XXX_event_loop there is
+	     the non-static proactor_XXX_event_loop method.
+	  2. There is a new method proactor_post_wakeup_completions which
+	     is called from static post_wakeup_completions.
+	  3. The end_event_loop_ and event_loop_thread_count_ are now
+	     instance members, not globals!
+	  4. The proactor instance has its own mutex to protect work with
+	     end_event_loop_ and event_loop_thread_count_.
+	  5. Method ACE_Proactor::instance() now has a second parameter
+	     delete_proactor (default value 0 means don't delete).  It
+	     returns the pointer to the previous global instance of
+	     Proactor.  The caller now is responsible for deletion of this
+	     previous instance. 
+	  6. Method ACE_Proactor::cleanup() is removed since the behavior
+	     of singleton is simular to Reactor singleton. 
+          7. Methods ACE_Proactor::proactor_run_event_loop (....)
+	     have now an extra parameter: (PROACTOR_EVENT_HOOK = 0),
+	     where the PROACTOR event hook is defined as
+	     typedef int (*PROACTOR_EVENT_HOOK)(ACE_Proactor *);
+  
  	* ace/Logging_Strategy.cpp
  	* ace/Naming_Context.cpp
  	* ace/Service_Manager.cpp: Removed the explicit template instantiations 

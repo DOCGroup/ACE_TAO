@@ -66,11 +66,11 @@ public:
   /**
    * You can add a hook to various run_event methods and the hook will
    * be called after handling every reactor event.  If this function
-   * returns 0, run_reactor_event_loop will check for the return value of
-   * handle_event.  If it is -1, the the run_reactor_event_loop will return
-   * (pre-maturely.)
+   * returns 0, <run_reactor_event_loop> will check for the return
+   * value of <handle_event>.  If it is -1, the
+   * <run_reactor_event_loop> will return (pre-maturely.)
    */
-  typedef int (*REACTOR_EVENT_HOOK)(void*);
+  typedef int (*REACTOR_EVENT_HOOK)(ACE_Reactor *);
 
   /// Get pointer to a process-wide <ACE_Reactor>.
   static ACE_Reactor *instance (void);
@@ -143,7 +143,7 @@ public:
    * Therefore, we must check for the reconfiguration request and
    * handle it after handling an event.
    */
-  static int check_reconfiguration (void *);
+  static int check_reconfiguration (ACE_Reactor *);
 
   // = Reactor event loop management methods.
 
