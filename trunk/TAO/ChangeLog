@@ -1,3 +1,7 @@
+Sun May 11 11:37:17 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Makefile.bor: Added new files for the borland builds.
+
 Sun May 11 11:02:18 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* docs/Options.html: Added documentation for the new ORB option.
