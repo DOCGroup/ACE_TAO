@@ -32,6 +32,11 @@ Tue Nov  4 14:13:52 1997 Sumedh Mungee  <sumedh@lindy.cs.wustl.edu>
 	ACE_UNUSED_ARGs. Also removed the hand-crafted stubs, to make way
 	for the idl-compiler generated files.
 
+Tue Nov 04 10:45:07 1997    <nw1@CHA-CHA>
+
+	* TAO_IDL/fe/y.tab.cpp: Enclosed a #pragma ident with #if !defined
+ 	  ACE_WIN32.  Compilers other than SunCC might also need this.
+
 Tue Nov  4 13:47:26 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO/tests/Cubit/TAO/MT_Cubit: Modified the Makefiles in the
@@ -39,13 +44,6 @@ Tue Nov  4 13:47:26 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 	compiler. Also added the clean and realclean targets. Updated the
 	server side cubit.idl because it was different from what the
 	client was using.
-
-Tue Nov 04 10:45:07 1997    <nw1@CHA-CHA>
-
-	* TAO_IDL/fe/y.tab.cpp: Enclosed a #pragma ident with #if !defined
- 	  ACE_WIN32.  Compilers other than SunCC might also need this.
-
-Tue Nov  4 10:33:51 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL compiler: Fixed the following problems
 
