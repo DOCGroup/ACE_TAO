@@ -37,12 +37,17 @@
 
 TAO::PG_FactoryRegistry::PG_FactoryRegistry (const char * name)
   : identity_(name)
+  , orb_ (0)
+  , poa_ (0)
+  , object_id_ (0)
+  , this_obj_ (0)
   , ior_output_file_(0)
   , ns_name_(0)
+  , naming_context_(0)
+  , this_name_(1)
   , quit_on_idle_(0)
   , quit_state_(LIVE)
   , linger_(0)
-  , this_obj_(0)
 {
 }
 
@@ -166,7 +171,7 @@ int TAO::PG_FactoryRegistry::init (CORBA::ORB_var & orb  ACE_ENV_ARG_DECL)
 
   ACE_CHECK_RETURN (-1);
 
-  if (CORBA::is_nil(this->poa_))
+  if (CORBA::is_nil (this->poa_.in()))
   {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT (" (%P|%t) Unable to narrow the POA.\n")),
@@ -363,21 +368,13 @@ void TAO::PG_FactoryRegistry::unregister_factory (
           ));
         if (length > 1)
         {
-          while (nInfo + 1 < length)
+          // if this is not the last entry
+          if (nInfo + 1 < length)
           {
-            ACE_ERROR((LM_INFO,
-              "%s: Unregister_factory: Compress table: [%d] %s to [%d]\n",
-              this->identity_.c_str(),
-              (int)nInfo + 1, location, (int)nInfo
-              ));
-            infos[nInfo] = infos[nInfo + 1];
-            nInfo += 1;
+            // move last entry into newly-emptied slot
+            infos[nInfo] = infos[length - 1];
+            nInfo = length -1;
           }
-          ACE_ERROR((LM_INFO,
-            "%s: unregister_factory: New length [%d] %s\n",
-            this->identity_.c_str(),
-            (int)nInfo, role
-            ));
           infos.length(nInfo);
         }
         else
@@ -385,7 +382,7 @@ void TAO::PG_FactoryRegistry::unregister_factory (
           ACE_ASSERT ( length == 1 );
           if (this->registry_.unbind (role) == 0)
           {
-            ACE_DEBUG(( LM_DEBUG,
+            ACE_DEBUG(( LM_INFO,
               "%s: No more factories registered for %s\n",
               this->identity_.c_str(),
               role

@@ -1,3 +1,14 @@
+Fri Nov  7 15:36:37 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/PortableGroup.mpc:
+        * orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Decoder.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Decoder.cpp:
+          Resolve linux build problems revealed during merge.
+
+
 Thu Nov  6 13:03:17 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/orbsvcs/FT_CORBA.idl:

@@ -95,7 +95,7 @@ TAO_PG_GenericFactory::create_object (
                           the_criteria,
                           membership_style,
                           factory_infos,
-                          minimum_number_members,
+                          initial_number_members,
                           minimum_number_members
                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
@@ -145,9 +145,6 @@ TAO_PG_GenericFactory::create_object (
                                        ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-
-
-          CORBA::ULong fcid = 0;
 
           ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                             guard,
@@ -532,12 +529,13 @@ TAO_PG_GenericFactory::check_minimum_number_members (
   ACE_ENV_ARG_DECL)
 {
 
-  //TODO - Fix this code. The original implementation for the load balancer assumed
+  //@@ TODO - Fix this code. The original implementation for the load balancer assumed
   //       that the factory-creation-id was the same as the object-group-id. This
   //       is not longer true. The find below is supposed to be a factory-creation-id.
-{
-  int _todo_fix_temporarily_disabled_code_;
-}
+  ACE_UNUSED_ARG (object_group);
+  ACE_UNUSED_ARG (group_id);
+  ACE_UNUSED_ARG (type_id);
+
   return;
 
 #if 0

@@ -27,7 +27,7 @@ TAO_PG::Properties_Decoder::Properties_Decoder (const PortableGroup::Properties 
     // note assumption one level name with no kind
     // TODO: fix this
     const CosNaming::NameComponent & nc = nsName[0];
-    ACE_CString name = nc.id;
+    ACE_CString name = ACE_static_cast (const char *, nc.id);
     if (0 != values_.bind(name, & property.val))
     {
       ACE_ERROR ((LM_ERROR,
@@ -43,7 +43,7 @@ TAO_PG::Properties_Decoder::~Properties_Decoder ()
 
 int TAO_PG::Properties_Decoder::find (
   const ACE_CString & key,
-  PortableGroup::Value *& pValue)const
+  const PortableGroup::Value *& pValue) const
 {
   int found = 0;
   if (0 == values_.find(key, pValue))
