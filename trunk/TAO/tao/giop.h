@@ -298,9 +298,6 @@ private:
 
   TAO_Client_Connection_Handler* handler_;
   // The handler for the client's connection.
-#if 0
-  autorelease <client_endpoint> endpoint;
-#endif /* 0 */
 };
 
 // = Generic server side data dispatch methods

@@ -86,12 +86,6 @@ public:
   // @@ Please add a comment.  BTW, weren't we planning to rename this
   // typedef?
 
-  // @@ Weren't we planning to rename this method?
-  virtual int handle_message (TAO_Dispatch_Context &context,
-			      CORBA::Environment &env) = 0;
-  // Reads incoming GIOP messages, dispatches them, and sends back any
-  // required replies.  Returns 1 for success, 0==EOF, -1==error.
-
   virtual void register_dir (dsi_handler skeleton,
 			     void *context,
 			     CORBA::Environment &env) = 0;

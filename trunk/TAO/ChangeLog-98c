@@ -1,3 +1,23 @@
+Mon Oct  6 20:06:05 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tao/{boa.h,connect.cpp,giop.cpp,giop.h,roa.cpp,roa.h}:
+ 	Eliminated unused methods and code.
+
+	* tao/Orb_Core.*: Created new global function called
+ 	TAO_ORB_Core_instance() which will return the correct instance of
+ 	the ORB Core state.  This had previously been accessed using
+ 	TAO_ORB_CORE::instance(), but Win32s linking procedures made the
+ 	template for TAO_ORB_CORE expand in both the application and the
+ 	library/DLL, thus creating two singletons.  Bad scene.  The
+ 	function should force the expansion of the template to only be in
+ 	the DLL.
+
+	* tao/{connect,default_client,default_server,orbobj,roa}.cpp:
+ 	Changed references to TAO_ORB_CORE::instance() to
+ 	TAO_ORB_Core_instance().
+
+	* tao/singletons.h: Removed definition of TAO_ORB_CORE.
+
 Sat Oct  4 20:08:57 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* tao/TAO.{dsp,dsw}: Added tao_internals.cpp into project file

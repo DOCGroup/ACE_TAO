@@ -57,7 +57,7 @@ TAO_Default_Server_Strategy_Factory::create_object_table (void)
       // should be done is to create the User_Server_Strategy_Factory
       // and just link it in.  The default server would only encompass
       // the strategies that are "shipped", so to speak. --cjc
-      objtable = TAO_ORB_CORE::instance() -> oa_params() -> userdef_lookup_strategy();
+      objtable = TAO_ORB_Core_instance() -> oa_params() -> userdef_lookup_strategy();
       break;
     case TAO_ACTIVE_DEMUX:
       ACE_NEW_RETURN (objtable,
@@ -107,7 +107,7 @@ TAO_Default_Server_Strategy_Factory::tokenize (char *flag_string)
 int
 TAO_Default_Server_Strategy_Factory::init (int argc, char *argv[])
 {
-  TAO_ORB_Core *orb_core = TAO_ORB_CORE::instance();
+  TAO_ORB_Core *orb_core = TAO_ORB_Core_instance();
   
   if ((this->parse_args (argc, argv) == 0)
       && (reactive_strategy_.open (orb_core->reactor ()) == 0)

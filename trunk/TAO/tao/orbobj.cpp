@@ -84,7 +84,7 @@ CORBA_ORB::set_up_for_listening (void)
 
   // Initialize the endpoint ... or try!
   if (this->client_acceptor_.open (this->params()->addr (),
-                                   TAO_ORB_CORE::instance()->reactor(),
+                                   TAO_ORB_Core_instance()->reactor(),
                                    f->creation_strategy (),
                                    f->accept_strategy (),
                                    f->concurrency_strategy (),
@@ -376,7 +376,7 @@ CORBA::ORB_init (int &argc,
   IIOP_ORB_ptr the_orb = 0;
   ACE_NEW_RETURN (the_orb, IIOP_ORB, 0);
 
-  TAO_ORB_CORE::instance()->orb(the_orb);
+  TAO_ORB_Core_instance()->orb(the_orb);
   // @@ Seems like the following should happen inside the ORB Core,
   // not at this level.  Do we really need this stuff?  What is the
   // alternative format (other than IOR)?  --cjc
@@ -427,8 +427,8 @@ CORBA_ORB::BOA_init (int &argc,
   // processing these options, move all these to the end of the argv
   // list and decrement argc appropriately.
 
-  TAO_ORB_Core *oc = TAO_ORB_CORE::instance();
-  TAO_OA_Parameters *params = TAO_ORB_CORE::instance()->oa_params();
+  TAO_ORB_Core *oc = TAO_ORB_Core_instance();
+  TAO_OA_Parameters *params = TAO_ORB_Core_instance()->oa_params();
   CORBA::BOA_ptr rp;
   CORBA::String_var id = boa_identifier;
   CORBA::String_var demux = CORBA::string_dup ("dynamic_hash"); // default, at least for now
@@ -509,13 +509,13 @@ CORBA_ORB::BOA_init (int &argc,
 void
 CORBA_ORB::perform_work (void)
 {
-  TAO_ORB_CORE::instance ()->reactor ()->handle_events ();
+  TAO_ORB_Core_instance ()->reactor ()->handle_events ();
 }
 
 void
 CORBA_ORB::run (void)
 {
-  ACE_Reactor* r = TAO_ORB_CORE::instance ()->reactor ();
+  ACE_Reactor* r = TAO_ORB_Core_instance ()->reactor ();
 
   // This method should only be called by servers, so now we set up
   // for listening!
