@@ -30,6 +30,8 @@ TAO_Asynch_Reply_Dispatcher::version (void) const
 
 //*********************************************************************
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
 ACE_INLINE CORBA::ULong
 TAO_DII_Deferred_Reply_Dispatcher::reply_status (void) const
 {
@@ -41,4 +43,6 @@ TAO_DII_Deferred_Reply_Dispatcher::version (void) const
 {
   return this->version_;
 }
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
