@@ -65,6 +65,8 @@ ifeq ($(ami),0)
   CPPFLAGS += -DTAO_HAS_AMI=0
 else
   override ami = 1
+  # The following line is not needed,
+  # the $TAO_ROOT/tao/orbconf.h file defines it by default
   # CPPFLAGS += -DTAO_HAS_AMI=1
   ifndef ami_callback
     ami_callback = 1
@@ -78,6 +80,8 @@ ifeq ($(ami_poller),0)
   CPPFLAGS += -DTAO_HAS_AMI_POLLER=0
 else  # ami_poller
   override ami_poller = 1
+  # The following line is not needed,
+  # the $TAO_ROOT/tao/orbconf.h file defines it by default
   # CPPFLAGS += -DTAO_HAS_AMI_POLLER=1
 endif # ami_poller
 
@@ -85,6 +89,8 @@ ifeq ($(ami_callback),0)
   CPPFLAGS += -DTAO_HAS_AMI_CALLBACK=0
 else  # ami_callback
   override ami_callback = 1
+  # The following line is not needed,
+  # the $TAO_ROOT/tao/orbconf.h file defines it by default
   # CPPFLAGS += -DTAO_HAS_AMI_CALLBACK=1
 endif # ami_callback
 
@@ -92,6 +98,8 @@ ifeq ($(rt_corba),0)
   CPPFLAGS += -DTAO_HAS_RT_CORBA=0
 else  # rt_corba
   override rt_corba = 1
+  # The following line is not needed,
+  # the $TAO_ROOT/tao/orbconf.h file defines it by default
   # CPPFLAGS += -DTAO_HAS_RT_CORBA=1
 endif # rt_corba
 
@@ -99,6 +107,8 @@ ifeq ($(corba_messaging),0)
   CPPFLAGS += -DTAO_HAS_CORBA_MESSAGING=0
 else  # corba_messaging
   override corba_messaging = 1
+  # The following line is not needed,
+  # the $TAO_ROOT/tao/orbconf.h file defines it by default
   # CPPFLAGS += -DTAO_HAS_CORBA_MESSAGING=1
 endif # corba_messaging
 
@@ -106,6 +116,8 @@ ifeq ($(smart_proxies),1)
   CPPFLAGS += -DTAO_HAS_SMART_PROXIES=1
 else  # smart_proxies
   override smart_proxies = 0
+  # The following line is not needed,
+  # the $TAO_ROOT/tao/orbconf.h file defines it by default
   # CPPFLAGS += -DTAO_HAS_SMART_PROXIES=0
 endif # smart_proxies
 
