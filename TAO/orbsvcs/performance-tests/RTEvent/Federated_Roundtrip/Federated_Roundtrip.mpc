@@ -1,3 +1,4 @@
+// $Id$
 project(*server): orbsvcsexe, rtcorbaevent, strategies {    
   after    += RTEC_Perf
   libs     += TAO_RTEC_Perf

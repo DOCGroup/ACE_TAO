@@ -1,3 +1,4 @@
+// $Id$
 project: namingexe, dsnotifylogadmin {
   exename   = Notify_Logging_Service
   includes += $(TAO_ROOT)/orbsvcs

@@ -768,15 +768,20 @@ void TAO::PG_Object_Group::create_members (size_t count ACE_ENV_ARG_DECL)
   }
 }
 
-void TAO::PG_Object_Group::initial_populate (ACE_ENV_SINGLE_ARG_DECL)
+void
+TAO::PG_Object_Group::initial_populate (ACE_ENV_SINGLE_ARG_DECL)
 {
   InternalGuard guard(this->internals_);
   if ( this->get_membership_style() == PortableGroup::MEMB_INF_CTRL )
   {
-    PortableGroup::InitialNumberMembersValue initial_number_members = this->get_initial_number_members ();
-    if (members_.current_size () < initial_number_members)
+    PortableGroup::InitialNumberMembersValue initial_number_members =
+      this->get_initial_number_members ();
+
+    if (this->members_.current_size () < initial_number_members)
     {
-      this->create_members (initial_number_members ACE_ENV_ARG_PARAMETER);
+      this->create_members (initial_number_members
+                            ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
     }
   }
 }
