@@ -25,7 +25,7 @@ Quoter_Client::Quoter_Client (void)
   : quoter_factory_key_ (0),
     quoter_key_ (ACE_OS::strdup ("key0")),
     shutdown_ (0),
-    quoter_ (Stock::Quoter::_nil ()),
+    quoter_var_ (Stock::Quoter::_nil ()),
     quoter_factory_ior_file_ (0),
     f_handle_ (ACE_INVALID_HANDLE),
     use_naming_service_ (1)
@@ -109,7 +109,7 @@ Quoter_Client::parse_args (void)
 int
 Quoter_Client::run (void)
 {
-  CORBA::Long q = this->quoter_->get_quote ("ACE Hardware", this->env_);
+  CORBA::Long q = this->quoter_var_->get_quote ("ACE Hardware", this->env_);
   if (this->env_.exception () != 0)
   {
     this->env_.print_exception ("with get_quote.");
@@ -119,7 +119,7 @@ Quoter_Client::run (void)
   ACE_DEBUG ((LM_DEBUG, "ACE Hardware = %i\n", q));
 
   CosLifeCycle::Criteria criteria;
-  CORBA::Object_var quoterObj_var = this->quoter_->copy (factory_Finder_var_, 
+  CORBA::Object_var quoterObj_var = this->quoter_var_->copy (factory_Finder_var_, 
                                                          criteria,
                                                          this->env_);
   if (this->env_.exception () != 0)
@@ -140,7 +140,7 @@ Quoter_Client::run (void)
   }
   ACE_DEBUG ((LM_DEBUG, "Copied object\n"));
 
-  q = this->quoter_->get_quote ("ACE Hardware", this->env_);
+  q = this->quoter_var_->get_quote ("ACE Hardware", this->env_);
   if (this->env_.exception () != 0)
   {
     this->env_.print_exception ("with get_quote on copied object.");
@@ -160,9 +160,6 @@ Quoter_Client::~Quoter_Client (void)
     ACE_OS::fclose (this->quoter_factory_ior_file_);
   if (this->f_handle_ != ACE_INVALID_HANDLE)
     ACE_OS::close (this->f_handle_);
-
-  CORBA::release (this->quoter_);
-
   if (this->quoter_factory_key_ != 0)
     ACE_OS::free (this->quoter_factory_key_);
   if (this->quoter_key_ != 0)
@@ -212,7 +209,7 @@ Quoter_Client::init_naming_service (void)
                                       TAO_TRY_ENV);
     TAO_CHECK_ENV;
    
-    if (CORBA::is_nil (this->factory_var_->in ()))
+    if (CORBA::is_nil (this->factory_var_.in ()))
       ACE_ERROR_RETURN ((LM_ERROR,
       " could not resolve quoter factory in Naming service <%s>\n"),
       -1);*/
@@ -370,12 +367,12 @@ Quoter_Client::init (int argc, char **argv)
                                                      0, TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      this->quoter_ = Stock::Quoter::_narrow (quoterObject_var.in(), TAO_TRY_ENV);     
+      this->quoter_var_ = Stock::Quoter::_narrow (quoterObject_var.in(), TAO_TRY_ENV);     
       TAO_CHECK_ENV;
 
       ACE_DEBUG ((LM_DEBUG, "Quoter Created\n"));
     
-      if (CORBA::is_nil (this->quoter_))
+      if (CORBA::is_nil (this->quoter_var_))
       {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "null quoter objref returned by factory\n"),
