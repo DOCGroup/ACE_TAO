@@ -15,6 +15,9 @@
 
 #include "Hash_Naming_Context.h"
 #include "nsconf.h"
+
+//#include "tao/SystemException.h"
+
 #include "ace/Auto_Ptr.h"
 
 ACE_RCSID (Naming,
