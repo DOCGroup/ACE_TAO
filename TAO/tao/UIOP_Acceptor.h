@@ -78,8 +78,12 @@ public:
   typedef TAO_Acceptor_Impl<TAO_UIOP_Server_Connection_Handler,ACE_LSOCK_ACCEPTOR> TAO_UIOP_BASE_ACCEPTOR;
 
 private:
-  int open_i (TAO_ORB_Core *orb_core, const ACE_UNIX_Addr& addr);
+  int open_i (TAO_ORB_Core *orb_core, const char *rendezvous);
   // Implement the common part of the open*() methods
+
+  void rendezvous_point (ACE_UNIX_Addr &, const char *rendezvous);
+  // Set the rendezvous point and verify that it is 
+  // valid (e.g. wasn't truncated because it was too long).
 
 private:
   TAO_UIOP_BASE_ACCEPTOR base_acceptor_;
