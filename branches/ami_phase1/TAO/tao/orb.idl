@@ -1,0 +1,16 @@
+// $Id$
+
+// Included for compatibility with the CORBA 2 specification.
+
+#pragma prefix "omg.org"
+
+module CORBA
+{
+  interface Object {};
+
+  interface ORB {};
+
+  interface TypeCode {};
+};
+
+#pragma prefix ""
