@@ -39,7 +39,7 @@ WCE ARM {
 Release {
   use_debug_libraries   = 0
   optimize              = 1
-  compile_flags         = /W3 /Zi
+  compile_flags         = /W3
   defines               = NDEBUG
   compile_flags_removed = /YX
   output_dir            = Release
@@ -60,7 +60,7 @@ Debug {
 MFC Release {
   use_debug_libraries   = 0
   optimize              = 1
-  compile_flags         = /W3 /Zi
+  compile_flags         = /W3
   defines               = NDEBUG _AFXDLL
   compile_flags_removed = /YX
   output_dir            = MFC_Release
