@@ -1,3 +1,14 @@
+Sun May 12 09:45:37 2002   Edan Ayal <edanayal@yahoo.com>
+
+	* ace/WIN32_Asynch_IO.cpp (send): Fixed check for ACE_IOV_MAX
+	  limitation in the following methods:  
+	  - ACE_WIN32_Asynch_Read_Dgram::recv
+	  - ACE_WIN32_Asynch_Write_Dgram::send
+	  - ACE_WIN32_Asynch_Read_Stream::readv
+	  - ACE_WIN32_Asynch_Write_Stream::writev
+	  - ACE_WIN32_Asynch_Read_File::readv
+	  - ACE_WIN32_Asynch_Write_File::writev.
+
 Fri May 10 18:29:48 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ace/config-icc-common.h (ACE_HAS_ANSI_CASTS):
