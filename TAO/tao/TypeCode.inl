@@ -4,6 +4,7 @@
 
 
 #include "tao/CORBA_methods.h"
+#include "tao/Environment.h"
 
 
 ACE_INLINE CORBA::Boolean
@@ -160,4 +161,22 @@ ACE_INLINE CORBA::TypeCode_ptr
 CORBA::TypeCode::concrete_base_type (ACE_ENV_SINGLE_ARG_DECL) const
 {
   return this->concrete_base_type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+}
+
+ACE_INLINE void
+CORBA::TypeCode::_tao_any_destructor (void * x)
+{
+  CORBA::release (static_cast <CORBA::TypeCode_ptr> (x));
+}
+
+// --------------------------------------------------------------
+
+ACE_INLINE CORBA::TCKind
+TAO::unaliased_kind (CORBA::TypeCode_ptr tc
+                     ACE_ENV_ARG_DECL)
+{
+  CORBA::TypeCode_var unaliased_tc =
+    TAO::unaliased_typecode (tc
+                             ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CORBA::TAO_TC_KIND_COUNT);
 }

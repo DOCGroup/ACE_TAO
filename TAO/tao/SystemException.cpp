@@ -6,7 +6,7 @@
 #include "Any_Dual_Impl_T.h"
 #include "TypeCode.h"
 #include "ORB_Constants.h"
-#include "TC_Constants_Forward.h"
+#include "TypeCode_Constants.h"
 #include "CORBA_String.h"
 #include "CDR.h"
 #include "debug.h"
