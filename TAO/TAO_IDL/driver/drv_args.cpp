@@ -788,7 +788,7 @@ DRV_parse_args (long ac, char **av)
     {
       char tmpdir[MAXPATHLEN + 1];
       
-      if (ACE::get_temp_dir (tmpdir, MAXPATHLEN) == 0)
+      if (ACE::get_temp_dir (tmpdir, MAXPATHLEN) == -1)
         {
           cerr << GTDEVEL ("Error: Temporary path too long, ")
                << GTDEVEL ("defaulting to current directory\n");

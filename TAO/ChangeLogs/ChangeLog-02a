@@ -1,6 +1,15 @@
+Mon Feb 28 17:37:53 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * TAO_IDL/driver/drv_args.cpp:
+          
+          Wasn't checking for the correct error value for get_temp_dir (),
+          and this revealed a inconsistency in how it worked on Unix and 
+          Win32.
+
 Mon Feb 28 09:20:27 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * examples/POA/DSI/Database_i.cpp:
+
           Removed the use of ACE_DEFAULT_BACKING_STORE, and now it should
           default correctly.  This is related to the change to the temporary
           directory location changes in ACE.
