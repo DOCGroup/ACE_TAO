@@ -10,6 +10,10 @@ Mon Aug 17 10:06:01 1998  David L. Levine  <levine@cs.wustl.edu>
           ACE_Connector<Peer_Handler, ACE_SOCK_CONNECTOR>::open (ACE_Reactor *,
           int).
 
+        * tests/Dynamic_Priority_Test.cpp (run_performance_test):
+          added delete of time_offsets array.  The test Purifies
+          cleanly now.
+
 Mon Aug 17 00:05:02 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * examples/Reactor/ReactorEx/test_removals.cpp (main): Fixed
