@@ -86,7 +86,8 @@ for ($i = 0; $i <= $#ARGV; $i++)
   }
 }
 
-(-f 'server'  &&  -f 'client')  ||
+(-f $exepref."server".$Process::EXE_EXT  &&
+ -f $exepref."client".$Process::EXE_EXT)  ||
   die "$0: server and/or client need to be built!\n";
 
 $SV = Process::Create ($exepref."server".$Process::EXE_EXT,
