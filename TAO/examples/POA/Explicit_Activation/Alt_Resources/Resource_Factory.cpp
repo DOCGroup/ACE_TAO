@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Resource_Factory.h"
+#include "ace/WFMO_Reactor.h"
 
 ACE_Reactor_Impl *
 My_Resource_Factory::allocate_reactor_impl (void) const
