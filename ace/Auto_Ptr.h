@@ -23,6 +23,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Trace.h"
+
 #if defined (_MSC_VER)
 // Suppress warning e.g. "return type for
 // 'ACE_Auto_Array_Pointer<type>::operator ->' is 'type *' (i.e., not a UDT
@@ -92,6 +94,23 @@ public:
 
 #endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
 
+
+/**
+ * @brief Implements the draft C++ standard auto_ptr abstraction.
+ * This version can be used instead of auto_ptr<T>, and obviates
+ * the need for the ACE_AUTO_PTR_RESET macro on platforms like
+ * VC6 where the auto_ptr<T> is broken. 
+ */
+template <class X>
+class ACE_Auto_Ptr : public ACE_Auto_Basic_Ptr <X>
+{
+public:
+  // = Initialization and termination methods
+  ACE_EXPLICIT ACE_Auto_Ptr (X *p = 0) : ACE_Auto_Basic_Ptr<X> (p) {}
+
+  X *operator-> () const;
+};
+
 /**
  * @class ACE_Auto_Basic_Array_Ptr
  *
@@ -150,18 +169,18 @@ public:
 // easily.  Portability to these platforms requires
 // use of the following ACE_AUTO_PTR_RESET macro.
 # if defined (ACE_AUTO_PTR_LACKS_RESET)
-#   define ACE_AUTO_PTR_RESET(X,Y,Z) \
+#   define ACE_AUTO_PTR_RESET(AUTOPTR,NEWPTR,TYPE) \
       do { \
-        if (Y != X.get ()) \
+        if (NEWPTR != AUTOPTR.get ()) \
           { \
-            X.release (); \
-            X = auto_ptr<Z> (Y); \
+            AUTOPTR.release (); \
+            AUTOPTR = auto_ptr<TYPE> (NEWPTR); \
           } \
       } while (0)
 # else /* ! ACE_AUTO_PTR_LACKS_RESET */
-#   define ACE_AUTO_PTR_RESET(X,Y,Z) \
+#   define ACE_AUTO_PTR_RESET(AUTOPTR,NEWPTR,TYPE) \
       do { \
-         X.reset (Y); \
+         AUTOPTR.reset (NEWPTR); \
       } while (0)
 # endif /* ACE_AUTO_PTR_LACKS_RESET */
 

@@ -24,7 +24,7 @@
 #include "SSLIOP_X509.h"
 #include "SSLIOP_EVP_PKEY.h"
 #include "tao/LocalObject.h"
-#include "orbsvcs/SecurityLevel2C.h"
+#include "orbsvcs/orbsvcs/SecurityLevel2C.h"
 
 
 class TAO_SSLIOP_Credentials;

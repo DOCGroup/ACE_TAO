@@ -3,12 +3,14 @@
 #include "BCast.h"
 #include "Consumer.h"
 #include "Supplier.h"
-#include "orbsvcs/Event/ECG_Mcast_Gateway.h"
+#include "orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.h"
 #include "tao/ORB_Core.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/INET_Addr.h"
 
-ACE_RCSID(EC_Tests_Basic, BCast, "$Id$")
+ACE_RCSID (EC_Tests_Basic, 
+           BCast, 
+           "$Id$")
 
 int
 main (int argc, char *argv [])

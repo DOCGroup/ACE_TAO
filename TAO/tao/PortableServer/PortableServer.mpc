@@ -1,5 +1,5 @@
 // $Id$
-project : taolib, core, objreftemplate, valuetype, iorinterceptor {
+project : taolib, core, objreftemplate, iorinterceptor {
   sharedname   = TAO_PortableServer
   dynamicflags = TAO_PORTABLESERVER_BUILD_DLL
 
@@ -22,6 +22,7 @@ project : taolib, core, objreftemplate, valuetype, iorinterceptor {
     ObjectReferenceTemplate.cpp
     Operation_Table.cpp
     ORB_Manager.cpp
+    PICurrent_Guard.cpp
     POA.cpp
     POA_Cached_Policies.cpp
     POA_Policies.cpp

@@ -329,6 +329,13 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       *os << "CORBA::TypeCode_ptr " << node->name ()
           << "::_type (void) const" << be_nl;
       *os << "{" << be_idt_nl;
+      *os << "ACE_DEBUG ((LM_DEBUG," << be_nl
+          << "            ACE_LIB_TEXT (\"This TAO-specific method is now\")"
+          << be_nl
+          << "            ACE_LIB_TEXT (\" deprecated and will be removed\")"
+          << be_nl
+          << "            ACE_LIB_TEXT (\" in future versions.\\n\")));"
+          << be_nl << be_nl;
       *os << "return ::" << node->tc_name () << ";" << be_uidt_nl;
       *os << "}";
     }

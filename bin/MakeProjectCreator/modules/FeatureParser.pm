@@ -11,6 +11,7 @@ package FeatureParser;
 # ************************************************************
 
 use strict;
+use File::Basename;
 
 use Parser;
 
@@ -38,8 +39,7 @@ sub new {
         ## We only want to warn the user about problems
         ## with the feature file.
         my($lnumber) = $self->get_line_number();
-        $warn =~ s/ERROR/WARNING/;
-        print "$f: line $lnumber:\n$warn\n";
+        $self->warning(basename($f) . ": line $lnumber: $warn");
       }
     }
   }
@@ -53,7 +53,7 @@ sub parse_line {
   my($if)     = shift;
   my($line)   = shift;
   my($status) = 1;
-  my($error)  = '';
+  my($error)  = undef;
 
   if ($line eq '') {
   }
@@ -62,7 +62,7 @@ sub parse_line {
   }
   else {
     $status = 0;
-    $error  = "ERROR: Unrecognized line: $line";
+    $error  = "Unrecognized line: $line";
   }
 
   return $status, $error;

@@ -95,7 +95,7 @@ sub Build_Custom ()
     print STDERR "Building Custom\n";
     print "Building Custom directories specified\n";# if ($verbose == 1);
 
-    print "Build \n" if ($verbose);
+    print "Build " if ($verbose);
     print "Debug " if ($verbose) && ($Build_Debug);
     print "Release " if ($verbose) && ($Build_Release);
     print "\n" if ($verbose);
@@ -253,5 +253,5 @@ if (!$Build_Debug && !$Build_Release) {
 print "MPC version of msvc_mpc_auto_compile: Begin\n";
 Build_All if ($build_all && !$use_custom_dir);
 Build_Custom if $use_custom_dir;
-print "msvc_auto_compile: End\n";
+print "msvc_mpc_auto_compile: End\n";
 print STDERR "End\n" if ($print_status == 1);

@@ -21,8 +21,8 @@
 
 #include "ace/Singleton.h"
 #include "tao/PortableServer/PortableServer.h"
-#include "orbsvcs/CosNotifyChannelAdminC.h"
-#include "orbsvcs/CosNamingC.h"
+#include "orbsvcs/orbsvcs/CosNotifyChannelAdminC.h"
+#include "orbsvcs/orbsvcs/CosNamingC.h"
 #include "ace/Hash_Map_Manager.h"
 
 class TAO_Notify_Tests_Periodic_Supplier;

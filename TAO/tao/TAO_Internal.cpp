@@ -22,6 +22,7 @@
 #include "ace/Dynamic_Service.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/Argv_Type_Converter.h"
+#include "ace/Env_Value_T.h"
 
 ACE_RCSID (tao,
            TAO_Internal,
@@ -97,7 +98,7 @@ TAO_Internal::open_services (int &argc, ACE_TCHAR **argv)
           }
 
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO_debug_level == %d"), TAO_debug_level));
+                    ACE_TEXT ("TAO_debug_level == %d\n"), TAO_debug_level));
       }
   }
 #endif  /* TAO_DEBUG && !ACE_HAS_WINCE */

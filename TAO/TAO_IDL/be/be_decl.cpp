@@ -277,6 +277,12 @@ be_decl::destroy (void)
   this->AST_Decl::destroy ();
 }
 
+void
+be_decl::set_local (idl_bool val)
+{
+  this->is_local_ = val;
+}
+
 // Return the scope created by this node (if one exists, else NULL).
 be_scope *
 be_decl::scope (void)

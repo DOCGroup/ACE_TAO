@@ -32,9 +32,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ComponentServer_Impl.h"
-#include "Container_Impl.h"
-#include "Container_Base.h"
+#include "ciao/ComponentServer_Impl.h"
+#include "ciao/Container_Impl.h"
+#include "ciao/Container_Base.h"
 #include "RTConfig_Manager.h"
 
 namespace CIAO

@@ -239,7 +239,7 @@ sub airplane_ir_test
 
     my $imr_initref = "-ORBInitRef ImplRepoService=file://$imr_locator_ior";
 
-    $IMR_LOCATOR->Arguments ("-d 1 -o $imr_locator_ior");
+    $IMR_LOCATOR->Arguments ("-d 2 -o $imr_locator_ior");
     $IMR_LOCATOR->Spawn ();
 
     if (PerlACE::waitforfile_timed ($imr_locator_ior, 5) == -1) {
@@ -248,7 +248,7 @@ sub airplane_ir_test
         return 1;
     }
 
-    $IMR_ACTIVATOR->Arguments ("-d 1 -o $imr_activator_ior $imr_initref");
+    $IMR_ACTIVATOR->Arguments ("-d 2 -o $imr_activator_ior $imr_initref");
     $IMR_ACTIVATOR->Spawn ();
 
     if (PerlACE::waitforfile_timed ($imr_activator_ior, 5) == -1) {
@@ -335,9 +335,9 @@ sub nestea_ir_test
     my $status = 0;
     my $result = 0;
 
-    my $imr_initref = "-ORBInitRef ImplRepoService=file://$imr_locator_ior";
+    my $imr_initref = "-orbobjrefstyle URL -ORBInitRef ImplRepoService=file://$imr_locator_ior";
 
-    $IMR_LOCATOR->Arguments ("-d 1 -o $imr_locator_ior");
+    $IMR_LOCATOR->Arguments ("-m -d 2 -o $imr_locator_ior");
     $IMR_LOCATOR->Spawn ();
 
     if (PerlACE::waitforfile_timed ($imr_locator_ior, 10) == -1) {
@@ -346,7 +346,7 @@ sub nestea_ir_test
       return 1;
     }
 
-    $IMR_ACTIVATOR->Arguments ("-d 1 -o $imr_activator_ior $imr_initref");
+    $IMR_ACTIVATOR->Arguments ("-d 2 -o $imr_activator_ior $imr_initref");
     $IMR_ACTIVATOR->Spawn ();
 
     if (PerlACE::waitforfile_timed ($imr_activator_ior, 30) == -1) {
@@ -440,15 +440,15 @@ sub persistent_ir_test
 
     my $imr_initref = "-ORBInitRef ImplRepoService=file://$imr_locator_ior";
 
-    $IMR_LOCATOR->Arguments ("-d 1 -o $imr_locator_ior");
+    $IMR_LOCATOR->Arguments ("-d 2 -o $imr_locator_ior");
     $IMR_LOCATOR->Spawn ();
     if (PerlACE::waitforfile_timed ($imr_locator_ior, 10) == -1) {
-        print STDERR "ERROR: cannot find $implrepo_ior\n";
+      print STDERR "ERROR: cannot find $implrepo_ior\n";
       $IMR_LOCATOR->Kill ();
-        return 1;
+      return 1;
     }
 
-    $IMR_ACTIVATOR->Arguments ("-d 1 -o $imr_activator_ior -p $backing_store $imr_initref");
+    $IMR_ACTIVATOR->Arguments ("-d 2 -o $imr_activator_ior -p $backing_store $imr_initref");
     $IMR_ACTIVATOR->Spawn ();
 
     if (PerlACE::waitforfile_timed ($imr_activator_ior, 30) == -1) {
@@ -586,7 +586,7 @@ sub both_ir_test
 
     my $imr_initref = "-ORBInitRef ImplRepoService=file://$imr_locator_ior";
 
-    $IMR_LOCATOR->Arguments ("-d 1 -o $imr_locator_ior $refstyle");
+    $IMR_LOCATOR->Arguments ("-d 2 -o $imr_locator_ior $refstyle");
     $IMR_LOCATOR->Spawn ();
 
     if (PerlACE::waitforfile_timed ($imr_locator_ior, 10) == -1) {
@@ -595,7 +595,7 @@ sub both_ir_test
         return 1;
     }
 
-    $IMR_ACTIVATOR->Arguments ("-o $imr_activator_ior $imr_initref $refstyle -d 1");
+    $IMR_ACTIVATOR->Arguments ("-o $imr_activator_ior $imr_initref $refstyle -d 2");
     $IMR_ACTIVATOR->Spawn ();
 
     if (PerlACE::waitforfile_timed ($imr_activator_ior, 10) == -1) {
@@ -645,7 +645,7 @@ sub both_ir_test
     $A_CLI->Spawn ();
 
     $N_CLI->WaitKill (10);
-    $A_CLI->WaitKill (10);
+    $A_CLI->WaitKill (20);
 
     $TAO_IMR->Arguments ("$imr_initref shutdown nestea_server");
     $TAO_IMR->SpawnWaitKill (10);
@@ -677,42 +677,55 @@ sub both_ir_test
 
 # Parse the arguments
 
+$ret = 0;
+
+if ($#ARGV >= 0) {
 for ($i = 0; $i <= $#ARGV; $i++) {
     if ($ARGV[$i] eq "-h" || $ARGV[$i] eq "-?") {
         print "run_test test\n";
         print "\n";
         print "test               -- Runs a specific test:\n";
-        print "                         airplane, airplane_ir, nt_service, ",
+        print "                         airplane, airplane_ir, nt_service_ir, ",
                                        "nestea, nestea_ir,\n";
         print "                         both_ir, persistent_ir\n";
-        exit;
+        exit 1;
     }
     elsif ($ARGV[$i] eq "airplane") {
-        exit airplane_test ();
+        $ret = airplane_test ();
     }
     elsif ($ARGV[$i] eq "airplane_ir") {
-        exit airplane_ir_test ();
+        $ret = airplane_ir_test ();
     }
     elsif ($ARGV[$i] eq "nt_service_ir") {
-        exit nt_service_test ();
+        $ret = nt_service_test ();
     }
     elsif ($ARGV[$i] eq "nestea") {
-        exit nestea_test ();
+        $ret = nestea_test ();
     }
     elsif ($ARGV[$i] eq "nestea_ir") {
-        exit nestea_ir_test ();
+        $ret = nestea_ir_test ();
     }
     elsif ($ARGV[$i] eq "both_ir") {
-        exit both_ir_test ();
+        $ret = both_ir_test ();
     }
     elsif ($ARGV[$i] eq "persistent_ir") {
-        exit persistent_ir_test ();
+        $ret = persistent_ir_test ();
     }
     else {
         print "run_test: Unknown Option: ".$ARGV[$i]."\n";
     }
 }
+} else {
+  $ret = both_ir_test();
+}
 
-# if nothing else, run both_ir
 
-exit both_ir_test ();
+# Make sure the files are gone, so we can wait on them.
+unlink $airplane_ior;
+unlink $nestea_ior;
+unlink $imr_locator_ior;
+unlink $imr_activator_ior;
+unlink $backing_store;
+unlink $nestea.dat;
+
+exit $ret;

@@ -357,8 +357,8 @@ protected:
   /// Activation mode (0 = NORMAL, 1 = MANUAL, 2 = PER_CLIENT, 3 = AUTO_START)
   ImplementationRepository::ActivationMode activation_;
 
-  /// True if the location mode needs to be updated.
-  int set_location_;
+  /// True if the partial_ior mode needs to be updated.
+  int set_partial_ior_;
 
   /// Hostname where the activator is running.
   ACE_CString activator_;

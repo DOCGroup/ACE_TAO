@@ -92,6 +92,13 @@ auto_ptr<X>::operator-> () const
 #endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
 
 template<class X> ACE_INLINE X *
+ACE_Auto_Ptr<X>::operator-> () const
+{
+  ACE_TRACE ("ACE_Auto_Ptr<X>::operator->");
+  return this->get ();
+}
+
+template<class X> ACE_INLINE X *
 ACE_Auto_Basic_Array_Ptr<X>::get (void) const
 {
   ACE_TRACE ("ACE_Auto_Basic_Array_Ptr<X>::get");

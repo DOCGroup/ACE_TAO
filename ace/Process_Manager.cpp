@@ -898,7 +898,7 @@ ACE_Process_Manager::wait (pid_t pid,
 
       this->notify_proc_handler (idx,
                                  *status);
-      this->remove_proc (idx);
+      this->remove (pid);
     }
 
   return pid;
@@ -950,7 +950,7 @@ ACE_Process_Manager::notify_proc_handler (size_t i,
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("(%P:%t|%T) ACE_Process_Manager::notify_proc_handler:"),
+                  ACE_LIB_TEXT ("(%P:%t|%T) ACE_Process_Manager::notify_proc_handler:")
                   ACE_LIB_TEXT (" unknown/unmanaged process reaped\n")));
       return 0;
     }

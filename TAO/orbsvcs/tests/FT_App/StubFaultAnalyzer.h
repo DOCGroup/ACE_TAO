@@ -12,8 +12,8 @@
 
 #include "StubFaultConsumer.h"
 #include "StubBatchConsumer.h"
-#include <orbsvcs/FT_NotifierC.h>
-#include <orbsvcs/FT_FaultDetectorFactoryC.h>
+#include <orbsvcs/orbsvcs/FT_NotifierC.h>
+#include <orbsvcs/orbsvcs/FT_FaultDetectorFactoryC.h>
 
 #include "ace/Vector_T.h"
 

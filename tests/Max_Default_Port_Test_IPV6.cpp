@@ -22,12 +22,12 @@
  */
 // ============================================================================
 
+#include "test_config.h"
 #include "ace/Reactor.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/Thread_Manager.h"
 
 #include "Max_Default_Port_Test.h"
-#include "test_config.h"
 
 My_Accept_Handler::My_Accept_Handler (ACE_INET_Addr &addr)
   : addr_ (addr)
@@ -68,7 +68,7 @@ int
 My_Accept_Handler::handle_input (ACE_HANDLE)
 {
 
-  if (this->peer_acceptor_.accept(this->stream_, NULL) == -1) {
+  if (this->peer_acceptor_.accept(this->stream_, 0) == -1) {
     ACE_ERROR((LM_ERROR, ACE_TEXT ("%p\n"),
                ACE_TEXT ("peer_acceptor.accept")));
     ACE_OS::exit(1);

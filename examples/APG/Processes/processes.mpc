@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(Process Manager Death) : aceexe {
   exename = Process_Manager_Death
   Source_Files {

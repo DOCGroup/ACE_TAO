@@ -3,6 +3,7 @@
 // cvs-id    : $Id$
 
 #include "ExecutorMappingGenerator.hpp"
+#include "Literals.hpp"
 
 #include <set>
 #include <ostream>
@@ -686,9 +687,7 @@ namespace
     virtual void
     inherits_none (Type&)
     {
-      //@@ This should be ::Components::CCMContext when we start using
-      //   proper mapping.
-      //
+      //@@ should be os << " : ::Components::CCMContext";
       os << " : ::Components::SessionContext";
     }
 
@@ -910,19 +909,19 @@ namespace
     }
 
     virtual void
-    pre (InParameter&)
+    pre (InParameter& p)
     {
       os << "in ";
     }
 
     virtual void
-    pre (OutParameter&)
+    pre (OutParameter& p)
     {
       os << "out ";
     }
 
     virtual void
-    pre (InOutParameter&)
+    pre (InOutParameter& p)
     {
       os << "inout ";
     }
@@ -1038,7 +1037,7 @@ namespace
     }
 
     virtual void
-    names (Type&)
+    names (Type& h)
     {
       os<< "{"
         << "::Components::EnterpriseComponent "
@@ -1303,11 +1302,64 @@ namespace
   };
 
 
+  struct ComponentContextEmitter : Traversal::ComponentExecutor, Emitter
+  {
+    ComponentContextEmitter (Context& c, ostream& os)
+        : Emitter (c, os),
+          name_emitter_ (c, os, "CCM_", "_Context")
+    {
+      implements_traverser_.node_traverser (name_emitter_);
+    }
+
+    virtual void
+    pre (Type& i)
+    {
+      //@@ This code temporarily generates typedef. Should be changed
+      //   when we have proper C++ generated code.
+      //
+      // os << "local interface ";
+      os << "typedef ";
+      Traversal::ComponentExecutor::implements (i, implements_traverser_);
+    }
+
+    virtual void
+    name (Type& i)
+    {
+      //@@ need to check if spec prescribes this name.
+      //
+      os << " " << i.name () << "_Context;";
+    }
+
+    virtual void
+    implements (Type& i)
+    {
+      // os << " : ";
+
+      // Traversal::ComponentExecutor::implements (i, implements_traverser_);
+
+      // os << ", "
+      //    << "::Components::SessionContext";
+    }
+
+    virtual void
+    post (Type&)
+    {
+      // os << "{};";
+    }
+
+  private:
+    NameMangler name_emitter_;
+    Traversal::Implements implements_traverser_;
+  };
+
+
   struct ComponentExecutorEmitter : Traversal::ComponentExecutor, Emitter
   {
     ComponentExecutorEmitter (Context& c, ostream& os)
-        : Emitter (c, os)
+        : Emitter (c, os),
+          name_emitter_ (c, os, "CCM_")
     {
+      implements_traverser_.node_traverser (name_emitter_);
     }
 
     virtual void
@@ -1319,31 +1371,18 @@ namespace
     virtual void
     name (Type& i)
     {
-      //@@ need to check if spec prescribes this name.
-      //
-      os << i.name () << "Context";
+      os << i.name ();
     }
 
     virtual void
-    manages (Type&)
+    implements (Type& i)
     {
-      /*
-        os << "local interface " << name.simple () << "Context : "
-         << name.scope () << "::CCM_" << name.simple () << "_Context, ";
+      os << " : ";
 
-      switch (category)
-      {
-      case SyntaxTree::Composition::Category::ENTITY:
-        {
-          os << "::Components::EntityContext";
-          break;
-        }
-      default:
-        {
-          os << "::Components::SessionContext";
-          break;
-        }
-      */
+      Traversal::ComponentExecutor::implements (i, implements_traverser_);
+
+      os << ", "
+         << "::Components::SessionComponent";
     }
 
     virtual void
@@ -1351,8 +1390,52 @@ namespace
     {
       os << "{};";
     }
+
+  private:
+    NameMangler name_emitter_;
+    Traversal::Implements implements_traverser_;
   };
 
+
+  struct HomeExecutorEmitter : Traversal::HomeExecutor, Emitter
+  {
+    HomeExecutorEmitter (Context& c, ostream& os)
+        : Emitter (c, os),
+          name_emitter_ (c, os, "CCM_")
+    {
+      implements_traverser_.node_traverser (name_emitter_);
+    }
+
+    virtual void
+    pre (Type&)
+    {
+      os << "local interface ";
+    }
+
+    virtual void
+    name (Type& i)
+    {
+      os << i.name ();
+    }
+
+    virtual void
+    implements (Type& i)
+    {
+      os << " : ";
+
+      Traversal::HomeExecutor::implements (i, implements_traverser_);
+    }
+
+    virtual void
+    post (Type&)
+    {
+      os << "{};";
+    }
+
+  private:
+    NameMangler name_emitter_;
+    Traversal::Implements implements_traverser_;
+  };
 
   //
   //
@@ -1415,7 +1498,9 @@ generate (CommandLine const& cl,
 {
   fs::ofstream ofs;
 
-  if (!file_path.empty ())
+  string file_name (file_path.empty () ? "" : file_path.leaf ());
+
+  if (!file_name.empty ())
   {
     string file_name (file_path.leaf ());
 
@@ -1441,6 +1526,10 @@ generate (CommandLine const& cl,
   ostream& os = ofs.is_open ()
     ? static_cast<ostream&> (ofs)
     : static_cast<ostream&> (std::cout);
+
+  // Dump file header.
+  //
+  os << StringLiterals::COPYRIGHT;
 
   // Set auto-indentation for os.
   //
@@ -1633,6 +1722,12 @@ generate (CommandLine const& cl,
   }
 
   {
+    if (cl.get_value ("lem-force-all", false) && !file_name.empty ())
+    {
+      os << "#include \"" << file_name << '\"' << endl;
+    }
+
+
     Traversal::TranslationUnit unit;
 
     // Layer 1
@@ -1734,14 +1829,19 @@ generate (CommandLine const& cl,
 
     //--
     TypeNameEmitter type (ctx, os);
-    ComponentExecutorEmitter component_executor (ctx, os);
+
+    ComponentContextEmitter session_component_context (ctx, os);
+    ComponentExecutorEmitter session_component_executor (ctx, os);
+    HomeExecutorEmitter session_home_executor (ctx, os);
 
     ContextPortEmitter port_context (ctx, os);
     ExplicitPortEmitter port_explicit (ctx, os);
 
     supports.node_traverser (type);
 
-    composition_defines.node_traverser (component_executor);
+    composition_defines.node_traverser (session_component_context);
+    composition_defines.node_traverser (session_component_executor);
+    composition_defines.node_traverser (session_home_executor);
 
     component_context_defines.node_traverser (port_context);
 

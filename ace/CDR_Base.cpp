@@ -555,6 +555,7 @@ ACE_CDR::LongLong::operator!= (const ACE_CDR::LongLong &rhs) const
 {
   return this->l != rhs.l || this->h != rhs.h;
 }
+
 #endif /* NONNATIVE_LONGLONG */
 
 #if defined (NONNATIVE_LONGDOUBLE)
@@ -569,6 +570,7 @@ ACE_CDR::LongDouble::operator!= (const ACE_CDR::LongDouble &rhs) const
 {
   return ACE_OS::memcmp (this->ld, rhs.ld, 16) != 0;
 }
+
 #endif /* NONNATIVE_LONGDOUBLE */
 
 #if defined(_UNICOS) && !defined(_CRAYMPP)

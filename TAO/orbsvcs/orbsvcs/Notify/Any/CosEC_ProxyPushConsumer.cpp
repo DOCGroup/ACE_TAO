@@ -31,18 +31,6 @@ TAO_Notify_CosEC_ProxyPushConsumer::release (void)
 }
 
 void
-TAO_Notify_CosEC_ProxyPushConsumer::destroy (ACE_ENV_SINGLE_ARG_DECL)
-{
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "In TAO_Notify_CosEC_ProxyPushConsumer::destroy \n"));
-
-  if (this->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER) == 1)
-    return;
-
-  ACE_CHECK;
-}
-
-void
 TAO_Notify_CosEC_ProxyPushConsumer::push (TAO_Notify_Event_var &/*event*/)
 {
   // This should never be called.

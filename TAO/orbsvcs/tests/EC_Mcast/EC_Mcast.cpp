@@ -2,12 +2,12 @@
 
 #include "EC_Mcast.h"
 
-#include "orbsvcs/Event_Utilities.h"
-#include "orbsvcs/Event_Service_Constants.h"
-#include "orbsvcs/Time_Utilities.h"
+#include "orbsvcs/orbsvcs/Event_Utilities.h"
+#include "orbsvcs/orbsvcs/Event_Service_Constants.h"
+#include "orbsvcs/orbsvcs/Time_Utilities.h"
 
-#include "orbsvcs/Event/EC_Event_Channel.h"
-#include "orbsvcs/Event/EC_Default_Factory.h"
+#include "orbsvcs/orbsvcs/Event/EC_Event_Channel.h"
+#include "orbsvcs/orbsvcs/Event/EC_Default_Factory.h"
 
 #include "tao/ORB_Core.h"
 
@@ -21,7 +21,9 @@
 #include "EC_Mcast.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(EC_Mcast, EC_Mcast, "$Id$")
+ACE_RCSID (EC_Mcast, 
+           EC_Mcast, 
+           "$Id$")
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_PushConsumer_Adapter<ECM_Supplier>;

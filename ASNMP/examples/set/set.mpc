@@ -6,7 +6,7 @@ project (asnmp_example_set) : aceexe {
   libs  += asnmp
   includes += $(ACE_ROOT)/ASNMP
   source_files {
-    set
+    set.cpp
   }
 }
 

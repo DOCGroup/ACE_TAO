@@ -42,7 +42,8 @@ Sender::Sender (void)
     local_sec_addrs_ (0),
     peer_sec_addrs_ (0),    
     num_local_sec_addrs_ (0),
-    num_peer_sec_addrs_ (0)    
+    num_peer_sec_addrs_ (0),
+    max_frame_count_ (20)
 {
 }
 
@@ -59,7 +60,7 @@ Sender::parse_args (int argc,
                     char **argv)
 {
   // Parse command line arguments
-  ACE_Get_Opt opts (argc, argv, "f:p:r:dl:a:");
+  ACE_Get_Opt opts (argc, argv, "f:p:r:dl:a:s:b:");
 
   int c;
   while ((c= opts ()) != -1)
@@ -78,6 +79,18 @@ Sender::parse_args (int argc,
         case 'd':
           TAO_debug_level++;
           break;
+	case 'b':
+	  mb_.size (ACE_OS::atoi (opts.opt_arg ()));
+	  break;
+	case 's':
+	  {
+	    max_frame_count_ = (long) ACE_OS::atoi (opts.opt_arg ());
+	    if (max_frame_count_ > 1000000)
+	      ACE_ERROR_RETURN ((LM_ERROR,
+				 "Max Frame Count should be < 10^6 \n"),
+				-1);
+	    break;
+	  }
         case 'l':
 	  {
 	    TAO_Tokenizer addr_token (opts.opt_arg (), ',');
@@ -302,9 +315,10 @@ Sender::pace_data (ACE_ENV_SINGLE_ARG_DECL)
       // The time taken for sending a frame and preparing for the next frame
       ACE_High_Res_Timer elapsed_timer;
 
-      char buf [BUFSIZ];
+      int buffer_size = mb_.size ();
+
       // Continue to send data till the file is read to the end.
-      while (1)
+      while (frame_count_ < max_frame_count_)
         {
           // Read from the file into a message block.
           int n = ACE_OS::fread (this->mb_.wr_ptr (),
@@ -321,13 +335,14 @@ Sender::pace_data (ACE_ENV_SINGLE_ARG_DECL)
             {
               // At end of file break the loop and end the sender.
               if (TAO_debug_level > 0)
-                ACE_DEBUG ((LM_DEBUG,"Handle_Start:End of file\n"));
-              break;
-            }
+                ACE_DEBUG ((LM_DEBUG,"End of file - Rewinding\n"));
+	      
+	      ACE_OS::rewind (this->input_file_);
+	    }
 
           this->mb_.wr_ptr (n);
 
-          if (this->frame_count_ > 1)
+          if (this->frame_count_ > 0)
             {
               //
               // Second frame and beyond
@@ -371,8 +386,7 @@ Sender::pace_data (ACE_ENV_SINGLE_ARG_DECL)
 
           // Send frame.
           int result =
-            this->protocol_object_->send_frame (buf, 1000);
-	  //            this->protocol_object_->send_frame (&this->mb_);
+	    this->protocol_object_->send_frame (&this->mb_);
 
           if (result < 0)
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -380,9 +394,12 @@ Sender::pace_data (ACE_ENV_SINGLE_ARG_DECL)
                                "Sender::pace_data send\n"),
                               -1);
 
-          ACE_DEBUG ((LM_DEBUG,
-                      "Sender::pace_data frame %d was sent succesfully\n",
-                      ++this->frame_count_));
+	    ACE_DEBUG ((LM_DEBUG,
+			"Sender::pace_data frame %d was sent succesfully %d\n",
+			++this->frame_count_,
+			buffer_size));
+
+	  ++this->frame_count_;
 
           // Reset the message block.
           this->mb_.reset ();

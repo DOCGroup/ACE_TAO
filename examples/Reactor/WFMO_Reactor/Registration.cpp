@@ -74,6 +74,7 @@ int
 Simple_Handler::handle_signal (int, siginfo_t *s, ucontext_t *)
 {
   ACE_HANDLE handle = s->si_handle_;
+  ACE_UNUSED_ARG (handle);
 
   this->handle_signal_count_++;
 

@@ -594,7 +594,7 @@ TAO_Trader_Factory::TAO_Trader_Factory (int& argc, ACE_TCHAR** argv)
   this->parse_args (argc, argv);
 }
 
-TAO_Trader_Factory::TAO_TRADER*
+TAO_Trader_Factory::TAO_TRADER *
 TAO_Trader_Factory::manufacture_trader (void)
 {
   typedef TAO_Trader<ACE_Null_Mutex, ACE_Null_Mutex> TRADER;
@@ -618,23 +618,19 @@ TAO_Trader_Factory::manufacture_trader (void)
     components |= ACE_static_cast (int, TAO_Trader_Base::LINK);
 
   if (this->threadsafe_)
-    {
-      ACE_NEW_RETURN (return_value,
-                      MT_TRADER (ACE_static_cast (TAO_Trader_Base::Trader_Components,
-                                                  components)),
-                      0);
-    }
+    ACE_NEW_RETURN (return_value,
+                    MT_TRADER (ACE_static_cast (TAO_Trader_Base::Trader_Components,
+                                                components)),
+                    0);
   else
-    {
-      ACE_NEW_RETURN (return_value,
-                      TRADER (ACE_static_cast (TAO_Trader_Base::Trader_Components,
-                                               components)),
-                      0);
-    }
+    ACE_NEW_RETURN (return_value,
+                    TRADER (ACE_static_cast (TAO_Trader_Base::Trader_Components,
+                                             components)),
+                    0);
 
-  TAO_Import_Attributes_i import_attributes =
+  TAO_Import_Attributes_i &import_attributes =
     return_value->import_attributes ();
-  TAO_Support_Attributes_i support_attributes =
+  TAO_Support_Attributes_i &support_attributes =
     return_value->support_attributes ();
 
   import_attributes.def_search_card (this->def_search_card_);

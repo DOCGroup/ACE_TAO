@@ -102,7 +102,7 @@ void
 TAO::Unknown_IDL_Type::free_value (void)
 {
   CORBA::release (this->type_);
-  ACE_Message_Block::release (this->cdr_);
+  delete this->cdr_;
 }
 
 ACE_Message_Block *
@@ -166,6 +166,8 @@ TAO::Unknown_IDL_Type::_tao_decode (TAO_InputCDR &cdr
   ACE_OS::memcpy (this->cdr_->rd_ptr (),
                   begin,
                   size);
+
+  this->byte_order_ = cdr.byte_order ();
 
   // Get character translators.
   this->char_translator_ = cdr.char_translator();

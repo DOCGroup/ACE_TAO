@@ -59,15 +59,20 @@
 
 namespace POA_CORBA
 {
-
+  
 
 // TAO_IDL - Generated from
 // be/be_visitor_module/module_sh.cpp:80
 
 } // module CORBA
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be/be_codegen.cpp:1014
+
+
+#if defined (__ACE_INLINE__)
+#include "UShortSeqS.i"
+#endif /* defined INLINE */
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)

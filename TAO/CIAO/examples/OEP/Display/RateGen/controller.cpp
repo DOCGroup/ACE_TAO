@@ -69,19 +69,24 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       // Initialize orb
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv ACE_ENV_ARG_PARAMETER);
+      CORBA::ORB_var orb =
+        CORBA::ORB_init (argc,
+                         argv,
+                         ""
+                         ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return -1;
 
-      CORBA::Object_var obj
-        = orb->string_to_object (rategen_ior_
-                                 ACE_ENV_ARG_PARAMETER);
+      CORBA::Object_var obj =
+        orb->string_to_object (rategen_ior_
+                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      HUDisplay::RateGen_var pulser
-        = HUDisplay::RateGen::_narrow (obj.in ()
-                                       ACE_ENV_ARG_PARAMETER);
+      HUDisplay::RateGen_var pulser =
+        HUDisplay::RateGen::_narrow (obj.in ()
+                                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (pulser.in ()))

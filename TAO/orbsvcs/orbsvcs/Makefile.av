@@ -215,12 +215,6 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -236,6 +230,12 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -297,8 +297,8 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i \
-  AV/AV_export.h CosPropertyServiceC.h Property/property_export.h \
+  $(TAO_ROOT)/tao/ORB.i AV/AV_export.h \
+  CosPropertyServiceC.h Property/property_export.h \
   $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
@@ -341,6 +341,10 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(TAO_ROOT)/tao/TC_Constants_Forward.h \
   $(TAO_ROOT)/tao/Typecode.i \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
+  $(TAO_ROOT)/tao/ServicesC.h \
+  $(TAO_ROOT)/tao/ServicesC.i \
   CosPropertyServiceC.i AVStreamsC.i \
   $(TAO_ROOT)/tao/Exception_Data.h \
   $(TAO_ROOT)/tao/Invocation_Adapter.h \
@@ -420,8 +424,6 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
   $(TAO_ROOT)/tao/PI_ForwardC.h \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PI_ForwardC.i \
   $(TAO_ROOT)/tao/IOP_CodecC.h \
   $(TAO_ROOT)/tao/IOP_CodecC.i \
@@ -595,12 +597,6 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -616,6 +612,12 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -677,8 +679,8 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i \
-  AV/AV_export.h Null_MediaCtrlC.i \
+  $(TAO_ROOT)/tao/ORB.i AV/AV_export.h \
+  Null_MediaCtrlC.i \
   $(TAO_ROOT)/tao/Object_T.h \
   $(TAO_ROOT)/tao/Object_T.cpp \
   $(TAO_ROOT)/tao/Stub.h \
@@ -733,6 +735,7 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/Typecode.i \
   $(TAO_ROOT)/tao/Any_Impl_T.h \
   $(TAO_ROOT)/tao/Any_Impl.h \
+  $(ACE_ROOT)/ace/Null_Mutex.h \
   $(TAO_ROOT)/tao/Any_Impl_T.inl \
   $(TAO_ROOT)/tao/Any_Impl_T.cpp \
   $(TAO_ROOT)/tao/Marshal.h \
@@ -741,8 +744,7 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp
 
-.obj/sfpC.o .obj/sfpC.so .shobj/sfpC.o .shobj/sfpC.so: sfpC.cpp sfpC.h \
-  $(TAO_ROOT)/tao/ORB.h \
+.obj/sfpC.o .obj/sfpC.so .shobj/sfpC.o .shobj/sfpC.so: sfpC.cpp sfpC.h $(TAO_ROOT)/tao/ORB.h \
   $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/Exception.h \
   $(TAO_ROOT)/tao/orbconf.h \
@@ -834,12 +836,6 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -855,6 +851,12 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -916,8 +918,7 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i \
-  AV/AV_export.h sfpC.i \
+  $(TAO_ROOT)/tao/ORB.i AV/AV_export.h sfpC.i \
   $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/Resource_Factory.h \
   $(ACE_ROOT)/ace/Service_Object.h \
@@ -1094,11 +1095,10 @@ AVSVC_COMPONENTS:
 
 .obj/AVStreamsS.o .obj/AVStreamsS.so .shobj/AVStreamsS.o .shobj/AVStreamsS.so: AVStreamsS.cpp AVStreamsS.h CosPropertyServiceS.h \
   $(ACE_ROOT)/ace/pre.h \
-  CosPropertyServiceC.h \
-  $(TAO_ROOT)/tao/ORB.h \
-  $(TAO_ROOT)/tao/Exception.h \
-  $(TAO_ROOT)/tao/orbconf.h \
-  $(ACE_ROOT)/ace/Basic_Types.h \
+  $(TAO_ROOT)/tao/OctetSeqS.h \
+  $(TAO_ROOT)/tao/OctetSeqC.h \
+  $(TAO_ROOT)/tao/Sequence.h \
+  $(ACE_ROOT)/ace/CORBA_macros.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -1107,6 +1107,12 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
   $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/Exception_Macros.h \
+  $(TAO_ROOT)/tao/Managed_Types.h \
+  $(TAO_ROOT)/tao/TAO_Export.h \
+  $(TAO_ROOT)/tao/Basic_Types.h \
+  $(ACE_ROOT)/ace/CDR_Base.h \
+  $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/os_include/os_limits.h \
   $(ACE_ROOT)/ace/os_include/os_unistd.h \
   $(ACE_ROOT)/ace/os_include/sys/os_types.h \
@@ -1124,6 +1130,13 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
+  $(ACE_ROOT)/ace/Default_Constants.h \
+  $(ACE_ROOT)/ace/CDR_Base.inl \
+  $(TAO_ROOT)/tao/CORBA_String.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  $(TAO_ROOT)/tao/CORBA_String.inl \
+  $(TAO_ROOT)/tao/Managed_Types.i \
+  $(TAO_ROOT)/tao/orbconf.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
   $(ACE_ROOT)/ace/os_include/os_errno.h \
@@ -1131,27 +1144,6 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Synch_Traits.h \
   $(ACE_ROOT)/ace/Lock.h \
   $(ACE_ROOT)/ace/Lock.inl \
-  $(ACE_ROOT)/ace/SStringfwd.h \
-  $(ACE_ROOT)/ace/iosfwd.h \
-  $(ACE_ROOT)/ace/CORBA_macros.h \
-  $(ACE_ROOT)/ace/Exception_Macros.h \
-  $(TAO_ROOT)/tao/TAO_Export.h \
-  $(TAO_ROOT)/tao/Basic_Types.h \
-  $(ACE_ROOT)/ace/CDR_Base.h \
-  $(ACE_ROOT)/ace/Default_Constants.h \
-  $(ACE_ROOT)/ace/CDR_Base.inl \
-  $(TAO_ROOT)/tao/Exception.i \
-  $(TAO_ROOT)/tao/objectid.h \
-  $(TAO_ROOT)/tao/PolicyC.h \
-  $(TAO_ROOT)/tao/CurrentC.h \
-  $(TAO_ROOT)/tao/Object.h \
-  $(TAO_ROOT)/tao/IOP_IORC.h \
-  $(TAO_ROOT)/tao/OctetSeqC.h \
-  $(TAO_ROOT)/tao/Sequence.h \
-  $(TAO_ROOT)/tao/Managed_Types.h \
-  $(TAO_ROOT)/tao/CORBA_String.h \
-  $(TAO_ROOT)/tao/CORBA_String.inl \
-  $(TAO_ROOT)/tao/Managed_Types.i \
   $(TAO_ROOT)/tao/default_environment.h \
   $(TAO_ROOT)/tao/Sequence.i \
   $(TAO_ROOT)/tao/Sequence_T.h \
@@ -1186,14 +1178,9 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/Time_Value.h \
   $(ACE_ROOT)/ace/Time_Value.inl \
@@ -1207,7 +1194,24 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
+  $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
+  $(TAO_ROOT)/tao/Collocation_Strategy.h \
+  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
+  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
+  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
+  $(TAO_ROOT)/tao/Exception.h \
+  $(TAO_ROOT)/tao/Exception.i \
+  $(TAO_ROOT)/tao/PolicyC.h \
+  $(TAO_ROOT)/tao/CurrentC.h \
+  $(TAO_ROOT)/tao/Object.h \
+  $(TAO_ROOT)/tao/IOP_IORC.h \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
   $(TAO_ROOT)/tao/VarOut_T.cpp \
@@ -1227,7 +1231,10 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/Object.i \
   $(TAO_ROOT)/tao/CurrentC.i \
   $(TAO_ROOT)/tao/PolicyC.i \
-  $(TAO_ROOT)/tao/OBV_Constants.h \
+  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
+  $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
+  $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
   $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS_NS_Thread.h \
   $(ACE_ROOT)/ace/os_include/os_pthread.h \
@@ -1261,6 +1268,8 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/os_include/os_pwd.h \
   $(ACE_ROOT)/ace/OS_NS_pwd.inl \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
+  $(ACE_ROOT)/ace/Atomic_Op_T.h \
+  $(ACE_ROOT)/ace/Atomic_Op_T.i \
   $(ACE_ROOT)/ace/Guard_T.h \
   $(ACE_ROOT)/ace/Guard_T.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.h \
@@ -1268,6 +1277,27 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
+  $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
+  $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/Log_Priority.h \
+  $(ACE_ROOT)/ace/Atomic_Op.i \
+  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
+  $(TAO_ROOT)/tao/OctetSeqS_T.h \
+  $(TAO_ROOT)/tao/OctetSeqS_T.i \
+  $(TAO_ROOT)/tao/OctetSeqS_T.cpp \
+  $(TAO_ROOT)/tao/OctetSeqS.i \
+  $(TAO_ROOT)/tao/StringSeqS.h \
+  $(TAO_ROOT)/tao/PolicyS.h \
+  $(TAO_ROOT)/tao/ServicesS.h \
+  $(TAO_ROOT)/tao/ServicesC.h \
+  $(TAO_ROOT)/tao/ServicesC.i \
+  $(TAO_ROOT)/tao/ServicesS_T.h \
+  $(TAO_ROOT)/tao/ServicesS_T.i \
+  $(TAO_ROOT)/tao/ServicesS_T.cpp \
+  $(TAO_ROOT)/tao/ServicesS.i \
+  CosPropertyServiceC.h $(TAO_ROOT)/tao/ORB.h \
+  $(TAO_ROOT)/tao/objectid.h \
+  $(TAO_ROOT)/tao/OBV_Constants.h \
   $(TAO_ROOT)/tao/ORB.i \
   Property/property_export.h \
   $(TAO_ROOT)/tao/Typecode.h \
@@ -1301,8 +1331,6 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
-  $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -1312,22 +1340,9 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(TAO_ROOT)/tao/TC_Constants_Forward.h \
   $(TAO_ROOT)/tao/Typecode.i \
-  CosPropertyServiceC.i \
-  $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
-  $(TAO_ROOT)/tao/Collocation_Strategy.h \
-  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
-  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
-  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
-  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
-  $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
-  $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Atomic_Op_T.h \
-  $(ACE_ROOT)/ace/Atomic_Op_T.i \
-  $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
-  $(ACE_ROOT)/ace/Atomic_Op.i \
-  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
-  CosPropertyServiceS_T.h CosPropertyServiceS_T.i \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
+  CosPropertyServiceC.i CosPropertyServiceS_T.h CosPropertyServiceS_T.i \
   CosPropertyServiceS_T.cpp CosPropertyServiceS.i AVStreamsC.h \
   AV/AV_export.h AVStreamsC.i AVStreamsS_T.h AVStreamsS_T.i \
   AVStreamsS_T.cpp AVStreamsS.i \
@@ -1472,8 +1487,6 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
   $(TAO_ROOT)/tao/PI_ForwardC.h \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PI_ForwardC.i \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
@@ -1578,8 +1591,7 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Malloc_Allocator.i
 
 .obj/Null_MediaCtrlS.o .obj/Null_MediaCtrlS.so .shobj/Null_MediaCtrlS.o .shobj/Null_MediaCtrlS.so: Null_MediaCtrlS.cpp Null_MediaCtrlS.h \
-  Null_MediaCtrlC.h \
-  $(TAO_ROOT)/tao/ORB.h \
+  Null_MediaCtrlC.h $(TAO_ROOT)/tao/ORB.h \
   $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/Exception.h \
   $(TAO_ROOT)/tao/orbconf.h \
@@ -1671,12 +1683,6 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -1692,6 +1698,12 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -1753,8 +1765,8 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i \
-  AV/AV_export.h Null_MediaCtrlC.i \
+  $(TAO_ROOT)/tao/ORB.i AV/AV_export.h \
+  Null_MediaCtrlC.i \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -2134,12 +2146,6 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -2155,6 +2161,12 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -2216,8 +2228,7 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i \
-  AV/AV_export.h sfpC.i \
+  $(TAO_ROOT)/tao/ORB.i AV/AV_export.h sfpC.i \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -2548,9 +2559,9 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/os_include/os_wchar.h \
   $(ACE_ROOT)/ace/os_include/os_string.h \
   $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/OS_NS_errno.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_NS_errno.inl \
   $(ACE_ROOT)/ace/OS_NS_stdio.h \
   $(ACE_ROOT)/ace/os_include/os_fcntl.h \
@@ -2894,16 +2905,16 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
+  $(TAO_ROOT)/tao/CDR.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/CDR_Stream.i \
+  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/Seq_Var_T.h \
   $(TAO_ROOT)/tao/Seq_Var_T.inl \
   $(TAO_ROOT)/tao/Seq_Var_T.cpp \
   $(TAO_ROOT)/tao/Seq_Out_T.h \
   $(TAO_ROOT)/tao/Seq_Out_T.inl \
   $(TAO_ROOT)/tao/Seq_Out_T.cpp \
-  $(TAO_ROOT)/tao/CDR.h \
-  $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/CDR_Stream.i \
-  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -2931,17 +2942,33 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/ORB.i \
   AV/AV_export.h \
   CosPropertyServiceS.h \
-  CosPropertyServiceC.h \
-  Property/property_export.h \
-  $(TAO_ROOT)/tao/Typecode.h \
-  $(TAO_ROOT)/tao/TC_Constants_Forward.h \
-  $(TAO_ROOT)/tao/Typecode.i \
-  CosPropertyServiceC.i \
+  $(TAO_ROOT)/tao/OctetSeqS.h \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
   $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
+  $(TAO_ROOT)/tao/OctetSeqS_T.h \
+  $(TAO_ROOT)/tao/OctetSeqS_T.i \
+  $(TAO_ROOT)/tao/OctetSeqS_T.cpp \
+  $(TAO_ROOT)/tao/OctetSeqS.i \
+  $(TAO_ROOT)/tao/StringSeqS.h \
+  $(TAO_ROOT)/tao/PolicyS.h \
+  $(TAO_ROOT)/tao/ServicesS.h \
+  $(TAO_ROOT)/tao/ServicesC.h \
+  $(TAO_ROOT)/tao/ServicesC.i \
+  $(TAO_ROOT)/tao/ServicesS_T.h \
+  $(TAO_ROOT)/tao/ServicesS_T.i \
+  $(TAO_ROOT)/tao/ServicesS_T.cpp \
+  $(TAO_ROOT)/tao/ServicesS.i \
+  CosPropertyServiceC.h \
+  Property/property_export.h \
+  $(TAO_ROOT)/tao/Typecode.h \
+  $(TAO_ROOT)/tao/TC_Constants_Forward.h \
+  $(TAO_ROOT)/tao/Typecode.i \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
+  CosPropertyServiceC.i \
   CosPropertyServiceS_T.h \
   CosPropertyServiceS_T.i \
   CosPropertyServiceS_T.cpp \
@@ -3026,8 +3053,6 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
   $(TAO_ROOT)/tao/PI_ForwardC.h \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PI_ForwardC.i \
   $(TAO_ROOT)/tao/IOP_CodecC.h \
   $(TAO_ROOT)/tao/IOP_CodecC.i \
@@ -3137,12 +3162,6 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -3158,6 +3177,12 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -3269,6 +3294,10 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(TAO_ROOT)/tao/TC_Constants_Forward.h \
   $(TAO_ROOT)/tao/Typecode.i \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
+  $(TAO_ROOT)/tao/ServicesC.h \
+  $(TAO_ROOT)/tao/ServicesC.i \
   CosPropertyServiceC.i \
   AVStreamsC.i \
   $(ACE_ROOT)/ace/Singleton.h \
@@ -3368,6 +3397,8 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Service_Types.h \
   $(ACE_ROOT)/ace/Service_Types.i \
   $(ACE_ROOT)/ace/WFMO_Reactor.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.inl \
   $(ACE_ROOT)/ace/Synch_Options.h \
   $(ACE_ROOT)/ace/Synch_Options.i \
   $(ACE_ROOT)/ace/Acceptor.cpp \
@@ -3440,8 +3471,6 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/OS_NS_ctype.inl \
   $(ACE_ROOT)/ace/OS_NS_dirent.h \
   $(ACE_ROOT)/ace/OS_NS_dirent.inl \
-  $(ACE_ROOT)/ace/OS_NS_dlfcn.h \
-  $(ACE_ROOT)/ace/OS_NS_dlfcn.inl \
   $(ACE_ROOT)/ace/OS_NS_math.h \
   $(ACE_ROOT)/ace/OS_NS_math.inl \
   $(ACE_ROOT)/ace/OS_NS_netdb.h \
@@ -3495,11 +3524,23 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/SOCK_CODgram.h \
   $(ACE_ROOT)/ace/SOCK_CODgram.i \
   CosPropertyServiceS.h \
+  $(TAO_ROOT)/tao/OctetSeqS.h \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
   $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
+  $(TAO_ROOT)/tao/OctetSeqS_T.h \
+  $(TAO_ROOT)/tao/OctetSeqS_T.i \
+  $(TAO_ROOT)/tao/OctetSeqS_T.cpp \
+  $(TAO_ROOT)/tao/OctetSeqS.i \
+  $(TAO_ROOT)/tao/StringSeqS.h \
+  $(TAO_ROOT)/tao/PolicyS.h \
+  $(TAO_ROOT)/tao/ServicesS.h \
+  $(TAO_ROOT)/tao/ServicesS_T.h \
+  $(TAO_ROOT)/tao/ServicesS_T.i \
+  $(TAO_ROOT)/tao/ServicesS_T.cpp \
+  $(TAO_ROOT)/tao/ServicesS.i \
   CosPropertyServiceS_T.h \
   CosPropertyServiceS_T.i \
   CosPropertyServiceS_T.cpp \
@@ -3573,8 +3614,6 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
   $(TAO_ROOT)/tao/PI_ForwardC.h \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PI_ForwardC.i \
   $(TAO_ROOT)/tao/IOP_CodecC.h \
   $(TAO_ROOT)/tao/IOP_CodecC.i \
@@ -3603,8 +3642,7 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  AV/AV_Core.h \
+  $(ACE_ROOT)/ace/ACE_export.h AV/AV_Core.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/Objref_VarOut_T.h \
@@ -3689,12 +3727,6 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -3710,6 +3742,12 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -3820,6 +3858,10 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(TAO_ROOT)/tao/TC_Constants_Forward.h \
   $(TAO_ROOT)/tao/Typecode.i \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
+  $(TAO_ROOT)/tao/ServicesC.h \
+  $(TAO_ROOT)/tao/ServicesC.i \
   CosPropertyServiceC.i \
   AVStreamsC.i \
   $(ACE_ROOT)/ace/Singleton.h \
@@ -3868,8 +3910,7 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/SString.i \
-  AV/Transport.h \
+  $(ACE_ROOT)/ace/SString.i AV/Transport.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.i \
@@ -3918,6 +3959,8 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Service_Types.h \
   $(ACE_ROOT)/ace/Service_Types.i \
   $(ACE_ROOT)/ace/WFMO_Reactor.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.inl \
   $(ACE_ROOT)/ace/Synch_Options.h \
   $(ACE_ROOT)/ace/Synch_Options.i \
   $(ACE_ROOT)/ace/Acceptor.cpp \
@@ -3975,18 +4018,16 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Connector.h \
   $(ACE_ROOT)/ace/Connector.cpp \
   $(ACE_ROOT)/ace/SOCK_Dgram.h \
-  $(ACE_ROOT)/ace/SOCK_Dgram.i \
-  AV/Transport.i AV/FlowSpec_Entry.i \
+  $(ACE_ROOT)/ace/SOCK_Dgram.i AV/Transport.i \
+  AV/FlowSpec_Entry.i \
   $(ACE_ROOT)/ace/OS_NS_strings.h \
   $(ACE_ROOT)/ace/OS_NS_strings.inl \
   AV/Protocol_Factory.h AV/Policy.h \
   $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
-  AV/Policy.i \
-  $(TAO_ROOT)/tao/debug.h
+  AV/Policy.i $(TAO_ROOT)/tao/debug.h
 
 .obj/Flows_T.o .obj/Flows_T.so .shobj/Flows_T.o .shobj/Flows_T.so: AV/Flows_T.cpp AV/Flows_T.h \
-  $(ACE_ROOT)/ace/pre.h \
-  AV/AVStreams_i.h \
+  $(ACE_ROOT)/ace/pre.h AV/AVStreams_i.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
@@ -4030,9 +4071,9 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/os_include/os_wchar.h \
   $(ACE_ROOT)/ace/os_include/os_string.h \
   $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/OS_NS_errno.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_NS_errno.inl \
   $(ACE_ROOT)/ace/OS_NS_stdio.h \
   $(ACE_ROOT)/ace/os_include/os_fcntl.h \
@@ -4376,16 +4417,16 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
+  $(TAO_ROOT)/tao/CDR.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/CDR_Stream.i \
+  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/Seq_Var_T.h \
   $(TAO_ROOT)/tao/Seq_Var_T.inl \
   $(TAO_ROOT)/tao/Seq_Var_T.cpp \
   $(TAO_ROOT)/tao/Seq_Out_T.h \
   $(TAO_ROOT)/tao/Seq_Out_T.inl \
   $(TAO_ROOT)/tao/Seq_Out_T.cpp \
-  $(TAO_ROOT)/tao/CDR.h \
-  $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/CDR_Stream.i \
-  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -4413,17 +4454,33 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/ORB.i \
   AV/AV_export.h \
   CosPropertyServiceS.h \
-  CosPropertyServiceC.h \
-  Property/property_export.h \
-  $(TAO_ROOT)/tao/Typecode.h \
-  $(TAO_ROOT)/tao/TC_Constants_Forward.h \
-  $(TAO_ROOT)/tao/Typecode.i \
-  CosPropertyServiceC.i \
+  $(TAO_ROOT)/tao/OctetSeqS.h \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
   $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
+  $(TAO_ROOT)/tao/OctetSeqS_T.h \
+  $(TAO_ROOT)/tao/OctetSeqS_T.i \
+  $(TAO_ROOT)/tao/OctetSeqS_T.cpp \
+  $(TAO_ROOT)/tao/OctetSeqS.i \
+  $(TAO_ROOT)/tao/StringSeqS.h \
+  $(TAO_ROOT)/tao/PolicyS.h \
+  $(TAO_ROOT)/tao/ServicesS.h \
+  $(TAO_ROOT)/tao/ServicesC.h \
+  $(TAO_ROOT)/tao/ServicesC.i \
+  $(TAO_ROOT)/tao/ServicesS_T.h \
+  $(TAO_ROOT)/tao/ServicesS_T.i \
+  $(TAO_ROOT)/tao/ServicesS_T.cpp \
+  $(TAO_ROOT)/tao/ServicesS.i \
+  CosPropertyServiceC.h \
+  Property/property_export.h \
+  $(TAO_ROOT)/tao/Typecode.h \
+  $(TAO_ROOT)/tao/TC_Constants_Forward.h \
+  $(TAO_ROOT)/tao/Typecode.i \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
+  CosPropertyServiceC.i \
   CosPropertyServiceS_T.h \
   CosPropertyServiceS_T.i \
   CosPropertyServiceS_T.cpp \
@@ -4466,8 +4523,7 @@ AVSVC_COMPONENTS:
   AV/AV_Core.h AV/Transport.h AV/AVStreams_i.i AV/Flows_T.cpp
 
 .obj/Endpoint_Strategy.o .obj/Endpoint_Strategy.so .shobj/Endpoint_Strategy.o .shobj/Endpoint_Strategy.so: AV/Endpoint_Strategy.cpp AV/Endpoint_Strategy.h \
-  $(ACE_ROOT)/ace/pre.h \
-  AV/AVStreams_i.h \
+  $(ACE_ROOT)/ace/pre.h AV/AVStreams_i.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
@@ -4511,9 +4567,9 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/os_include/os_wchar.h \
   $(ACE_ROOT)/ace/os_include/os_string.h \
   $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/OS_NS_errno.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_NS_errno.inl \
   $(ACE_ROOT)/ace/OS_NS_stdio.h \
   $(ACE_ROOT)/ace/os_include/os_fcntl.h \
@@ -4857,16 +4913,16 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
+  $(TAO_ROOT)/tao/CDR.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/CDR_Stream.i \
+  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/Seq_Var_T.h \
   $(TAO_ROOT)/tao/Seq_Var_T.inl \
   $(TAO_ROOT)/tao/Seq_Var_T.cpp \
   $(TAO_ROOT)/tao/Seq_Out_T.h \
   $(TAO_ROOT)/tao/Seq_Out_T.inl \
   $(TAO_ROOT)/tao/Seq_Out_T.cpp \
-  $(TAO_ROOT)/tao/CDR.h \
-  $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/CDR_Stream.i \
-  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -4894,17 +4950,33 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/ORB.i \
   AV/AV_export.h \
   CosPropertyServiceS.h \
-  CosPropertyServiceC.h \
-  Property/property_export.h \
-  $(TAO_ROOT)/tao/Typecode.h \
-  $(TAO_ROOT)/tao/TC_Constants_Forward.h \
-  $(TAO_ROOT)/tao/Typecode.i \
-  CosPropertyServiceC.i \
+  $(TAO_ROOT)/tao/OctetSeqS.h \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
   $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
+  $(TAO_ROOT)/tao/OctetSeqS_T.h \
+  $(TAO_ROOT)/tao/OctetSeqS_T.i \
+  $(TAO_ROOT)/tao/OctetSeqS_T.cpp \
+  $(TAO_ROOT)/tao/OctetSeqS.i \
+  $(TAO_ROOT)/tao/StringSeqS.h \
+  $(TAO_ROOT)/tao/PolicyS.h \
+  $(TAO_ROOT)/tao/ServicesS.h \
+  $(TAO_ROOT)/tao/ServicesC.h \
+  $(TAO_ROOT)/tao/ServicesC.i \
+  $(TAO_ROOT)/tao/ServicesS_T.h \
+  $(TAO_ROOT)/tao/ServicesS_T.i \
+  $(TAO_ROOT)/tao/ServicesS_T.cpp \
+  $(TAO_ROOT)/tao/ServicesS.i \
+  CosPropertyServiceC.h \
+  Property/property_export.h \
+  $(TAO_ROOT)/tao/Typecode.h \
+  $(TAO_ROOT)/tao/TC_Constants_Forward.h \
+  $(TAO_ROOT)/tao/Typecode.i \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
+  CosPropertyServiceC.i \
   CosPropertyServiceS_T.h \
   CosPropertyServiceS_T.i \
   CosPropertyServiceS_T.cpp \
@@ -4935,8 +5007,8 @@ AVSVC_COMPONENTS:
   AV/Transport.i \
   AV/FlowSpec_Entry.i \
   AV/AV_Core.h AV/Transport.h \
-  $(TAO_ROOT)/tao/debug.h \
-  AV/AVStreams_i.i AV/Flows_T.h AV/Flows_T.cpp AV/Endpoint_Strategy_T.h \
+  $(TAO_ROOT)/tao/debug.h AV/AVStreams_i.i \
+  AV/Flows_T.h AV/Flows_T.cpp AV/Endpoint_Strategy_T.h \
   AV/Endpoint_Strategy_T.cpp \
   $(ACE_ROOT)/ace/Process_Semaphore.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -4977,8 +5049,6 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
   $(TAO_ROOT)/tao/PI_ForwardC.h \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PI_ForwardC.i \
   $(TAO_ROOT)/tao/IOP_CodecC.h \
   $(TAO_ROOT)/tao/IOP_CodecC.i \
@@ -4994,8 +5064,7 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/ORB_Core.i
 
 .obj/Endpoint_Strategy_T.o .obj/Endpoint_Strategy_T.so .shobj/Endpoint_Strategy_T.o .shobj/Endpoint_Strategy_T.so: AV/Endpoint_Strategy_T.cpp \
-  AV/Endpoint_Strategy_T.h \
-  $(ACE_ROOT)/ace/pre.h \
+  AV/Endpoint_Strategy_T.h $(ACE_ROOT)/ace/pre.h \
   AV/Endpoint_Strategy.h AV/AVStreams_i.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/config-all.h \
@@ -5040,9 +5109,9 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/os_include/os_wchar.h \
   $(ACE_ROOT)/ace/os_include/os_string.h \
   $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/OS_NS_errno.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_NS_errno.inl \
   $(ACE_ROOT)/ace/OS_NS_stdio.h \
   $(ACE_ROOT)/ace/os_include/os_fcntl.h \
@@ -5386,16 +5455,16 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
+  $(TAO_ROOT)/tao/CDR.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/CDR_Stream.i \
+  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/Seq_Var_T.h \
   $(TAO_ROOT)/tao/Seq_Var_T.inl \
   $(TAO_ROOT)/tao/Seq_Var_T.cpp \
   $(TAO_ROOT)/tao/Seq_Out_T.h \
   $(TAO_ROOT)/tao/Seq_Out_T.inl \
   $(TAO_ROOT)/tao/Seq_Out_T.cpp \
-  $(TAO_ROOT)/tao/CDR.h \
-  $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/CDR_Stream.i \
-  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -5423,17 +5492,33 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/ORB.i \
   AV/AV_export.h \
   CosPropertyServiceS.h \
-  CosPropertyServiceC.h \
-  Property/property_export.h \
-  $(TAO_ROOT)/tao/Typecode.h \
-  $(TAO_ROOT)/tao/TC_Constants_Forward.h \
-  $(TAO_ROOT)/tao/Typecode.i \
-  CosPropertyServiceC.i \
+  $(TAO_ROOT)/tao/OctetSeqS.h \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
   $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
+  $(TAO_ROOT)/tao/OctetSeqS_T.h \
+  $(TAO_ROOT)/tao/OctetSeqS_T.i \
+  $(TAO_ROOT)/tao/OctetSeqS_T.cpp \
+  $(TAO_ROOT)/tao/OctetSeqS.i \
+  $(TAO_ROOT)/tao/StringSeqS.h \
+  $(TAO_ROOT)/tao/PolicyS.h \
+  $(TAO_ROOT)/tao/ServicesS.h \
+  $(TAO_ROOT)/tao/ServicesC.h \
+  $(TAO_ROOT)/tao/ServicesC.i \
+  $(TAO_ROOT)/tao/ServicesS_T.h \
+  $(TAO_ROOT)/tao/ServicesS_T.i \
+  $(TAO_ROOT)/tao/ServicesS_T.cpp \
+  $(TAO_ROOT)/tao/ServicesS.i \
+  CosPropertyServiceC.h \
+  Property/property_export.h \
+  $(TAO_ROOT)/tao/Typecode.h \
+  $(TAO_ROOT)/tao/TC_Constants_Forward.h \
+  $(TAO_ROOT)/tao/Typecode.i \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
+  CosPropertyServiceC.i \
   CosPropertyServiceS_T.h \
   CosPropertyServiceS_T.i \
   CosPropertyServiceS_T.cpp \
@@ -5464,8 +5549,8 @@ AVSVC_COMPONENTS:
   AV/Transport.i \
   AV/FlowSpec_Entry.i \
   AV/AV_Core.h AV/Transport.h \
-  $(TAO_ROOT)/tao/debug.h \
-  AV/AVStreams_i.i AV/Flows_T.h AV/Flows_T.cpp AV/Endpoint_Strategy_T.cpp \
+  $(TAO_ROOT)/tao/debug.h AV/AVStreams_i.i \
+  AV/Flows_T.h AV/Flows_T.cpp AV/Endpoint_Strategy_T.cpp \
   $(ACE_ROOT)/ace/Process_Semaphore.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
@@ -5518,9 +5603,9 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/os_include/os_wchar.h \
   $(ACE_ROOT)/ace/os_include/os_string.h \
   $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/OS_NS_errno.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_NS_errno.inl \
   $(ACE_ROOT)/ace/OS_NS_stdio.h \
   $(ACE_ROOT)/ace/os_include/os_fcntl.h \
@@ -5864,16 +5949,16 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
+  $(TAO_ROOT)/tao/CDR.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/CDR_Stream.i \
+  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/Seq_Var_T.h \
   $(TAO_ROOT)/tao/Seq_Var_T.inl \
   $(TAO_ROOT)/tao/Seq_Var_T.cpp \
   $(TAO_ROOT)/tao/Seq_Out_T.h \
   $(TAO_ROOT)/tao/Seq_Out_T.inl \
   $(TAO_ROOT)/tao/Seq_Out_T.cpp \
-  $(TAO_ROOT)/tao/CDR.h \
-  $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/CDR_Stream.i \
-  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -5901,17 +5986,33 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/ORB.i \
   AV/AV_export.h \
   CosPropertyServiceS.h \
-  CosPropertyServiceC.h \
-  Property/property_export.h \
-  $(TAO_ROOT)/tao/Typecode.h \
-  $(TAO_ROOT)/tao/TC_Constants_Forward.h \
-  $(TAO_ROOT)/tao/Typecode.i \
-  CosPropertyServiceC.i \
+  $(TAO_ROOT)/tao/OctetSeqS.h \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
   $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
+  $(TAO_ROOT)/tao/OctetSeqS_T.h \
+  $(TAO_ROOT)/tao/OctetSeqS_T.i \
+  $(TAO_ROOT)/tao/OctetSeqS_T.cpp \
+  $(TAO_ROOT)/tao/OctetSeqS.i \
+  $(TAO_ROOT)/tao/StringSeqS.h \
+  $(TAO_ROOT)/tao/PolicyS.h \
+  $(TAO_ROOT)/tao/ServicesS.h \
+  $(TAO_ROOT)/tao/ServicesC.h \
+  $(TAO_ROOT)/tao/ServicesC.i \
+  $(TAO_ROOT)/tao/ServicesS_T.h \
+  $(TAO_ROOT)/tao/ServicesS_T.i \
+  $(TAO_ROOT)/tao/ServicesS_T.cpp \
+  $(TAO_ROOT)/tao/ServicesS.i \
+  CosPropertyServiceC.h \
+  Property/property_export.h \
+  $(TAO_ROOT)/tao/Typecode.h \
+  $(TAO_ROOT)/tao/TC_Constants_Forward.h \
+  $(TAO_ROOT)/tao/Typecode.i \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
+  CosPropertyServiceC.i \
   CosPropertyServiceS_T.h \
   CosPropertyServiceS_T.i \
   CosPropertyServiceS_T.cpp \
@@ -5968,8 +6069,7 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Dynamic_Service.i \
   $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
-.obj/TCP.o .obj/TCP.so .shobj/TCP.o .shobj/TCP.so: AV/TCP.cpp AV/TCP.h \
-  $(ACE_ROOT)/ace/pre.h \
+.obj/TCP.o .obj/TCP.so .shobj/TCP.o .shobj/TCP.so: AV/TCP.cpp AV/TCP.h $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
@@ -6013,9 +6113,9 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/os_include/os_wchar.h \
   $(ACE_ROOT)/ace/os_include/os_string.h \
   $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/OS_NS_errno.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_NS_errno.inl \
   $(ACE_ROOT)/ace/OS_NS_stdio.h \
   $(ACE_ROOT)/ace/os_include/os_fcntl.h \
@@ -6122,8 +6222,7 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/os_include/os_aio.h \
   $(ACE_ROOT)/ace/os_include/sys/os_un.h \
   $(ACE_ROOT)/ace/os_include/os_syslog.h \
-  $(ACE_ROOT)/ace/OS.i \
-  AV/Protocol_Factory.h \
+  $(ACE_ROOT)/ace/OS.i AV/Protocol_Factory.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.i \
@@ -6150,8 +6249,7 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Synch_Traits.h \
   $(ACE_ROOT)/ace/Event_Handler.i \
   $(ACE_ROOT)/ace/DLL.h \
-  $(ACE_ROOT)/ace/Service_Object.i \
-  AV/Policy.h \
+  $(ACE_ROOT)/ace/Service_Object.i AV/Policy.h \
   $(ACE_ROOT)/ace/Addr.h \
   $(ACE_ROOT)/ace/Addr.i \
   $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
@@ -6196,12 +6294,6 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -6212,6 +6304,12 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Malloc_Base.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -6270,6 +6368,10 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(TAO_ROOT)/tao/TC_Constants_Forward.h \
   $(TAO_ROOT)/tao/Typecode.i \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
+  $(TAO_ROOT)/tao/ServicesC.h \
+  $(TAO_ROOT)/tao/ServicesC.i \
   CosPropertyServiceC.i \
   AVStreamsC.i \
   $(ACE_ROOT)/ace/Singleton.h \
@@ -6315,8 +6417,7 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/SString.i \
-  AV/Transport.h \
+  $(ACE_ROOT)/ace/SString.i AV/Transport.h \
   $(ACE_ROOT)/ace/Acceptor.h \
   $(ACE_ROOT)/ace/Strategies_T.h \
   $(ACE_ROOT)/ace/Reactor.h \
@@ -6399,8 +6500,8 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Connector.h \
   $(ACE_ROOT)/ace/Connector.cpp \
   $(ACE_ROOT)/ace/SOCK_Dgram.h \
-  $(ACE_ROOT)/ace/SOCK_Dgram.i \
-  AV/Transport.i AV/FlowSpec_Entry.i AV/AVStreams_i.h \
+  $(ACE_ROOT)/ace/SOCK_Dgram.i AV/Transport.i \
+  AV/FlowSpec_Entry.i AV/AVStreams_i.h \
   $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
   $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
   $(ACE_ROOT)/ace/ATM_Addr.h \
@@ -6409,11 +6510,23 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/SOCK_CODgram.h \
   $(ACE_ROOT)/ace/SOCK_CODgram.i \
   CosPropertyServiceS.h \
+  $(TAO_ROOT)/tao/OctetSeqS.h \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
   $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
+  $(TAO_ROOT)/tao/OctetSeqS_T.h \
+  $(TAO_ROOT)/tao/OctetSeqS_T.i \
+  $(TAO_ROOT)/tao/OctetSeqS_T.cpp \
+  $(TAO_ROOT)/tao/OctetSeqS.i \
+  $(TAO_ROOT)/tao/StringSeqS.h \
+  $(TAO_ROOT)/tao/PolicyS.h \
+  $(TAO_ROOT)/tao/ServicesS.h \
+  $(TAO_ROOT)/tao/ServicesS_T.h \
+  $(TAO_ROOT)/tao/ServicesS_T.i \
+  $(TAO_ROOT)/tao/ServicesS_T.cpp \
+  $(TAO_ROOT)/tao/ServicesS.i \
   CosPropertyServiceS_T.h \
   CosPropertyServiceS_T.i \
   CosPropertyServiceS_T.cpp \
@@ -6450,8 +6563,7 @@ AVSVC_COMPONENTS:
   AV/FlowSpec_Entry.h \
   AV/AVStreams_i.i AV/Flows_T.h AV/Flows_T.cpp
 
-.obj/UDP.o .obj/UDP.so .shobj/UDP.o .shobj/UDP.so: AV/UDP.cpp AV/UDP.h \
-  $(ACE_ROOT)/ace/pre.h \
+.obj/UDP.o .obj/UDP.so .shobj/UDP.o .shobj/UDP.so: AV/UDP.cpp AV/UDP.h $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
@@ -6495,9 +6607,9 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/os_include/os_wchar.h \
   $(ACE_ROOT)/ace/os_include/os_string.h \
   $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/OS_NS_errno.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_NS_errno.inl \
   $(ACE_ROOT)/ace/OS_NS_stdio.h \
   $(ACE_ROOT)/ace/os_include/os_fcntl.h \
@@ -6604,8 +6716,7 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/os_include/os_aio.h \
   $(ACE_ROOT)/ace/os_include/sys/os_un.h \
   $(ACE_ROOT)/ace/os_include/os_syslog.h \
-  $(ACE_ROOT)/ace/OS.i \
-  AV/Protocol_Factory.h \
+  $(ACE_ROOT)/ace/OS.i AV/Protocol_Factory.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.i \
@@ -6632,8 +6743,7 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Synch_Traits.h \
   $(ACE_ROOT)/ace/Event_Handler.i \
   $(ACE_ROOT)/ace/DLL.h \
-  $(ACE_ROOT)/ace/Service_Object.i \
-  AV/Policy.h \
+  $(ACE_ROOT)/ace/Service_Object.i AV/Policy.h \
   $(ACE_ROOT)/ace/Addr.h \
   $(ACE_ROOT)/ace/Addr.i \
   $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
@@ -6678,12 +6788,6 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -6694,6 +6798,12 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Malloc_Base.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -6752,6 +6862,10 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(TAO_ROOT)/tao/TC_Constants_Forward.h \
   $(TAO_ROOT)/tao/Typecode.i \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
+  $(TAO_ROOT)/tao/ServicesC.h \
+  $(TAO_ROOT)/tao/ServicesC.i \
   CosPropertyServiceC.i \
   AVStreamsC.i \
   $(ACE_ROOT)/ace/Singleton.h \
@@ -6797,8 +6911,7 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/SString.i \
-  AV/Transport.h \
+  $(ACE_ROOT)/ace/SString.i AV/Transport.h \
   $(ACE_ROOT)/ace/Acceptor.h \
   $(ACE_ROOT)/ace/Strategies_T.h \
   $(ACE_ROOT)/ace/Reactor.h \
@@ -6881,8 +6994,8 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Connector.h \
   $(ACE_ROOT)/ace/Connector.cpp \
   $(ACE_ROOT)/ace/SOCK_Dgram.h \
-  $(ACE_ROOT)/ace/SOCK_Dgram.i \
-  AV/Transport.i AV/FlowSpec_Entry.i AV/UDP.i AV/AVStreams_i.h \
+  $(ACE_ROOT)/ace/SOCK_Dgram.i AV/Transport.i \
+  AV/FlowSpec_Entry.i AV/UDP.i AV/AVStreams_i.h \
   $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
   $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
   $(ACE_ROOT)/ace/ATM_Addr.h \
@@ -6891,11 +7004,23 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/SOCK_CODgram.h \
   $(ACE_ROOT)/ace/SOCK_CODgram.i \
   CosPropertyServiceS.h \
+  $(TAO_ROOT)/tao/OctetSeqS.h \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
   $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
+  $(TAO_ROOT)/tao/OctetSeqS_T.h \
+  $(TAO_ROOT)/tao/OctetSeqS_T.i \
+  $(TAO_ROOT)/tao/OctetSeqS_T.cpp \
+  $(TAO_ROOT)/tao/OctetSeqS.i \
+  $(TAO_ROOT)/tao/StringSeqS.h \
+  $(TAO_ROOT)/tao/PolicyS.h \
+  $(TAO_ROOT)/tao/ServicesS.h \
+  $(TAO_ROOT)/tao/ServicesS_T.h \
+  $(TAO_ROOT)/tao/ServicesS_T.i \
+  $(TAO_ROOT)/tao/ServicesS_T.cpp \
+  $(TAO_ROOT)/tao/ServicesS.i \
   CosPropertyServiceS_T.h \
   CosPropertyServiceS_T.i \
   CosPropertyServiceS_T.cpp \
@@ -7029,12 +7154,6 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -7050,6 +7169,12 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -7162,6 +7287,10 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(TAO_ROOT)/tao/TC_Constants_Forward.h \
   $(TAO_ROOT)/tao/Typecode.i \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
+  $(TAO_ROOT)/tao/ServicesC.h \
+  $(TAO_ROOT)/tao/ServicesC.i \
   CosPropertyServiceC.i \
   AVStreamsC.i \
   $(ACE_ROOT)/ace/Singleton.h \
@@ -7208,8 +7337,7 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/SString.i \
-  AV/Transport.h \
+  $(ACE_ROOT)/ace/SString.i AV/Transport.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.i \
@@ -7258,6 +7386,8 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Service_Types.h \
   $(ACE_ROOT)/ace/Service_Types.i \
   $(ACE_ROOT)/ace/WFMO_Reactor.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.inl \
   $(ACE_ROOT)/ace/Synch_Options.h \
   $(ACE_ROOT)/ace/Synch_Options.i \
   $(ACE_ROOT)/ace/Acceptor.cpp \
@@ -7315,8 +7445,8 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Connector.h \
   $(ACE_ROOT)/ace/Connector.cpp \
   $(ACE_ROOT)/ace/SOCK_Dgram.h \
-  $(ACE_ROOT)/ace/SOCK_Dgram.i \
-  AV/Transport.i AV/FlowSpec_Entry.i \
+  $(ACE_ROOT)/ace/SOCK_Dgram.i AV/Transport.i \
+  AV/FlowSpec_Entry.i \
   $(ACE_ROOT)/ace/OS_NS_strings.h \
   $(ACE_ROOT)/ace/OS_NS_strings.inl \
   $(TAO_ROOT)/tao/debug.h
@@ -7434,8 +7564,7 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Event_Handler.i \
   $(ACE_ROOT)/ace/DLL.h \
   $(ACE_ROOT)/ace/os_include/os_dlfcn.h \
-  $(ACE_ROOT)/ace/Service_Object.i \
-  AV/Policy.h \
+  $(ACE_ROOT)/ace/Service_Object.i AV/Policy.h \
   $(ACE_ROOT)/ace/Addr.h \
   $(ACE_ROOT)/ace/Addr.i \
   $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
@@ -7480,12 +7609,6 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -7496,6 +7619,12 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Malloc_Base.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -7566,6 +7695,10 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(TAO_ROOT)/tao/TC_Constants_Forward.h \
   $(TAO_ROOT)/tao/Typecode.i \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
+  $(TAO_ROOT)/tao/ServicesC.h \
+  $(TAO_ROOT)/tao/ServicesC.i \
   CosPropertyServiceC.i \
   AVStreamsC.i \
   $(ACE_ROOT)/ace/Singleton.h \
@@ -7612,8 +7745,7 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/SString.i \
-  AV/Transport.h \
+  $(ACE_ROOT)/ace/SString.i AV/Transport.h \
   $(ACE_ROOT)/ace/Acceptor.h \
   $(ACE_ROOT)/ace/Strategies_T.h \
   $(ACE_ROOT)/ace/Reactor.h \
@@ -7648,6 +7780,8 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Service_Types.h \
   $(ACE_ROOT)/ace/Service_Types.i \
   $(ACE_ROOT)/ace/WFMO_Reactor.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.inl \
   $(ACE_ROOT)/ace/Synch_Options.h \
   $(ACE_ROOT)/ace/Synch_Options.i \
   $(ACE_ROOT)/ace/Acceptor.cpp \
@@ -7705,8 +7839,8 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Connector.h \
   $(ACE_ROOT)/ace/Connector.cpp \
   $(ACE_ROOT)/ace/SOCK_Dgram.h \
-  $(ACE_ROOT)/ace/SOCK_Dgram.i \
-  AV/Transport.i AV/FlowSpec_Entry.i \
+  $(ACE_ROOT)/ace/SOCK_Dgram.i AV/Transport.i \
+  AV/FlowSpec_Entry.i \
   $(ACE_ROOT)/ace/OS_NS_strings.h \
   $(ACE_ROOT)/ace/OS_NS_strings.inl \
   $(TAO_ROOT)/tao/debug.h \
@@ -7716,8 +7850,7 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
 .obj/MCast.o .obj/MCast.so .shobj/MCast.o .shobj/MCast.so: AV/MCast.cpp AV/MCast.h \
-  $(ACE_ROOT)/ace/pre.h \
-  AV/FlowSpec_Entry.h \
+  $(ACE_ROOT)/ace/pre.h AV/FlowSpec_Entry.h \
   AV/AV_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
@@ -7726,8 +7859,7 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  AV/AV_Core.h \
+  $(ACE_ROOT)/ace/ACE_export.h AV/AV_Core.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/Objref_VarOut_T.h \
@@ -7812,12 +7944,6 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -7833,6 +7959,12 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -7943,6 +8075,10 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(TAO_ROOT)/tao/TC_Constants_Forward.h \
   $(TAO_ROOT)/tao/Typecode.i \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
+  $(TAO_ROOT)/tao/ServicesC.h \
+  $(TAO_ROOT)/tao/ServicesC.i \
   CosPropertyServiceC.i \
   AVStreamsC.i \
   $(ACE_ROOT)/ace/Singleton.h \
@@ -7991,8 +8127,7 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/SString.i \
-  AV/Transport.h \
+  $(ACE_ROOT)/ace/SString.i AV/Transport.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.i \
@@ -8041,6 +8176,8 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Service_Types.h \
   $(ACE_ROOT)/ace/Service_Types.i \
   $(ACE_ROOT)/ace/WFMO_Reactor.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.inl \
   $(ACE_ROOT)/ace/Synch_Options.h \
   $(ACE_ROOT)/ace/Synch_Options.i \
   $(ACE_ROOT)/ace/Acceptor.cpp \
@@ -8098,23 +8235,19 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Connector.h \
   $(ACE_ROOT)/ace/Connector.cpp \
   $(ACE_ROOT)/ace/SOCK_Dgram.h \
-  $(ACE_ROOT)/ace/SOCK_Dgram.i \
-  AV/Transport.i AV/FlowSpec_Entry.i \
+  $(ACE_ROOT)/ace/SOCK_Dgram.i AV/Transport.i \
+  AV/FlowSpec_Entry.i \
   $(ACE_ROOT)/ace/OS_NS_strings.h \
   $(ACE_ROOT)/ace/OS_NS_strings.inl \
   AV/Protocol_Factory.h AV/Policy.h \
   $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
-  AV/Policy.i \
-  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
-  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
-  AV/MCast.i AV/Nil.h AV/AVStreams_i.h \
-  $(ACE_ROOT)/ace/OS.h \
+  AV/Policy.i $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
+  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i AV/MCast.i \
+  AV/Nil.h AV/AVStreams_i.h $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_NS_ctype.h \
   $(ACE_ROOT)/ace/OS_NS_ctype.inl \
   $(ACE_ROOT)/ace/OS_NS_dirent.h \
   $(ACE_ROOT)/ace/OS_NS_dirent.inl \
-  $(ACE_ROOT)/ace/OS_NS_dlfcn.h \
-  $(ACE_ROOT)/ace/OS_NS_dlfcn.inl \
   $(ACE_ROOT)/ace/OS_NS_math.h \
   $(ACE_ROOT)/ace/OS_NS_math.inl \
   $(ACE_ROOT)/ace/OS_NS_netdb.h \
@@ -8158,11 +8291,23 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/SOCK_CODgram.h \
   $(ACE_ROOT)/ace/SOCK_CODgram.i \
   CosPropertyServiceS.h \
+  $(TAO_ROOT)/tao/OctetSeqS.h \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
   $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
+  $(TAO_ROOT)/tao/OctetSeqS_T.h \
+  $(TAO_ROOT)/tao/OctetSeqS_T.i \
+  $(TAO_ROOT)/tao/OctetSeqS_T.cpp \
+  $(TAO_ROOT)/tao/OctetSeqS.i \
+  $(TAO_ROOT)/tao/StringSeqS.h \
+  $(TAO_ROOT)/tao/PolicyS.h \
+  $(TAO_ROOT)/tao/ServicesS.h \
+  $(TAO_ROOT)/tao/ServicesS_T.h \
+  $(TAO_ROOT)/tao/ServicesS_T.i \
+  $(TAO_ROOT)/tao/ServicesS_T.cpp \
+  $(TAO_ROOT)/tao/ServicesS.i \
   CosPropertyServiceS_T.h \
   CosPropertyServiceS_T.i \
   CosPropertyServiceS_T.cpp \
@@ -8295,9 +8440,9 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/os_include/os_wchar.h \
   $(ACE_ROOT)/ace/os_include/os_string.h \
   $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/OS_NS_errno.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_NS_errno.inl \
   $(ACE_ROOT)/ace/OS_NS_stdio.h \
   $(ACE_ROOT)/ace/os_include/os_fcntl.h \
@@ -8404,8 +8549,7 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/os_include/os_aio.h \
   $(ACE_ROOT)/ace/os_include/sys/os_un.h \
   $(ACE_ROOT)/ace/os_include/os_syslog.h \
-  $(ACE_ROOT)/ace/OS.i \
-  AV/RTCP.h \
+  $(ACE_ROOT)/ace/OS.i AV/RTCP.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
@@ -8644,16 +8788,16 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
+  $(TAO_ROOT)/tao/CDR.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/CDR_Stream.i \
+  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/Seq_Var_T.h \
   $(TAO_ROOT)/tao/Seq_Var_T.inl \
   $(TAO_ROOT)/tao/Seq_Var_T.cpp \
   $(TAO_ROOT)/tao/Seq_Out_T.h \
   $(TAO_ROOT)/tao/Seq_Out_T.inl \
   $(TAO_ROOT)/tao/Seq_Out_T.cpp \
-  $(TAO_ROOT)/tao/CDR.h \
-  $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/CDR_Stream.i \
-  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -8681,17 +8825,33 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/ORB.i \
   AV/AV_export.h \
   CosPropertyServiceS.h \
-  CosPropertyServiceC.h \
-  Property/property_export.h \
-  $(TAO_ROOT)/tao/Typecode.h \
-  $(TAO_ROOT)/tao/TC_Constants_Forward.h \
-  $(TAO_ROOT)/tao/Typecode.i \
-  CosPropertyServiceC.i \
+  $(TAO_ROOT)/tao/OctetSeqS.h \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
   $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
+  $(TAO_ROOT)/tao/OctetSeqS_T.h \
+  $(TAO_ROOT)/tao/OctetSeqS_T.i \
+  $(TAO_ROOT)/tao/OctetSeqS_T.cpp \
+  $(TAO_ROOT)/tao/OctetSeqS.i \
+  $(TAO_ROOT)/tao/StringSeqS.h \
+  $(TAO_ROOT)/tao/PolicyS.h \
+  $(TAO_ROOT)/tao/ServicesS.h \
+  $(TAO_ROOT)/tao/ServicesC.h \
+  $(TAO_ROOT)/tao/ServicesC.i \
+  $(TAO_ROOT)/tao/ServicesS_T.h \
+  $(TAO_ROOT)/tao/ServicesS_T.i \
+  $(TAO_ROOT)/tao/ServicesS_T.cpp \
+  $(TAO_ROOT)/tao/ServicesS.i \
+  CosPropertyServiceC.h \
+  Property/property_export.h \
+  $(TAO_ROOT)/tao/Typecode.h \
+  $(TAO_ROOT)/tao/TC_Constants_Forward.h \
+  $(TAO_ROOT)/tao/Typecode.i \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
+  CosPropertyServiceC.i \
   CosPropertyServiceS_T.h \
   CosPropertyServiceS_T.i \
   CosPropertyServiceS_T.cpp \
@@ -8788,9 +8948,9 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/os_include/os_wchar.h \
   $(ACE_ROOT)/ace/os_include/os_string.h \
   $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/OS_NS_errno.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_NS_errno.inl \
   $(ACE_ROOT)/ace/OS_NS_stdio.h \
   $(ACE_ROOT)/ace/os_include/os_fcntl.h \
@@ -8928,8 +9088,7 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/SString.i \
-  AV/RTP.h \
+  $(ACE_ROOT)/ace/SString.i AV/RTP.h \
   AV/AV_export.h \
   AV/Protocol_Factory.h \
   $(ACE_ROOT)/ace/Service_Object.h \
@@ -9002,16 +9161,16 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
+  $(TAO_ROOT)/tao/CDR.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/CDR_Stream.i \
+  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/Seq_Var_T.h \
   $(TAO_ROOT)/tao/Seq_Var_T.inl \
   $(TAO_ROOT)/tao/Seq_Var_T.cpp \
   $(TAO_ROOT)/tao/Seq_Out_T.h \
   $(TAO_ROOT)/tao/Seq_Out_T.inl \
   $(TAO_ROOT)/tao/Seq_Out_T.cpp \
-  $(TAO_ROOT)/tao/CDR.h \
-  $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/CDR_Stream.i \
-  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -9059,6 +9218,10 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(TAO_ROOT)/tao/TC_Constants_Forward.h \
   $(TAO_ROOT)/tao/Typecode.i \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
+  $(TAO_ROOT)/tao/ServicesC.h \
+  $(TAO_ROOT)/tao/ServicesC.i \
   CosPropertyServiceC.i \
   AVStreamsC.i \
   $(ACE_ROOT)/ace/Singleton.h \
@@ -9184,8 +9347,8 @@ AVSVC_COMPONENTS:
   AV/FlowSpec_Entry.i \
   AV/Policy.h AV/FlowSpec_Entry.h AV/MCast.h AV/Protocol_Factory.h \
   $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
-  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
-  AV/MCast.i AV/RTCP_Packet.h
+  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i AV/MCast.i \
+  AV/RTCP_Packet.h
 
 .obj/RTCP_Packet.o .obj/RTCP_Packet.so .shobj/RTCP_Packet.o .shobj/RTCP_Packet.so: AV/RTCP_Packet.cpp AV/RTCP_Packet.h \
   $(ACE_ROOT)/ace/pre.h \
@@ -9214,8 +9377,7 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
-  $(ACE_ROOT)/ace/Basic_Types.i \
-  AV/RTP.h \
+  $(ACE_ROOT)/ace/Basic_Types.i AV/RTP.h \
   AV/AV_export.h \
   AV/Protocol_Factory.h \
   $(ACE_ROOT)/ace/Service_Object.h \
@@ -9349,12 +9511,6 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -9365,6 +9521,12 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Malloc_Base.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -9436,6 +9598,10 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(TAO_ROOT)/tao/TC_Constants_Forward.h \
   $(TAO_ROOT)/tao/Typecode.i \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
+  $(TAO_ROOT)/tao/ServicesC.h \
+  $(TAO_ROOT)/tao/ServicesC.i \
   CosPropertyServiceC.i \
   AVStreamsC.i \
   $(ACE_ROOT)/ace/Singleton.h \
@@ -9518,6 +9684,8 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Service_Types.h \
   $(ACE_ROOT)/ace/Service_Types.i \
   $(ACE_ROOT)/ace/WFMO_Reactor.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.inl \
   $(ACE_ROOT)/ace/Synch_Options.h \
   $(ACE_ROOT)/ace/Synch_Options.i \
   $(ACE_ROOT)/ace/Acceptor.cpp \
@@ -9579,14 +9747,12 @@ AVSVC_COMPONENTS:
   AV/Transport.i \
   AV/FlowSpec_Entry.i \
   $(ACE_ROOT)/ace/OS_NS_strings.h \
-  $(ACE_ROOT)/ace/OS_NS_strings.inl \
-  AV/Policy.h AV/FlowSpec_Entry.h AV/MCast.h AV/Protocol_Factory.h \
+  $(ACE_ROOT)/ace/OS_NS_strings.inl AV/Policy.h \
+  AV/FlowSpec_Entry.h AV/MCast.h AV/Protocol_Factory.h \
   $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
-  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
-  AV/MCast.i
+  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i AV/MCast.i
 
-.obj/RTP.o .obj/RTP.so .shobj/RTP.o .shobj/RTP.so: AV/RTP.cpp AV/RTP.h \
-  $(ACE_ROOT)/ace/pre.h \
+.obj/RTP.o .obj/RTP.so .shobj/RTP.o .shobj/RTP.so: AV/RTP.cpp AV/RTP.h $(ACE_ROOT)/ace/pre.h \
   AV/AV_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
@@ -9746,12 +9912,6 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -9762,6 +9922,12 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Malloc_Base.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -9833,6 +9999,10 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(TAO_ROOT)/tao/TC_Constants_Forward.h \
   $(TAO_ROOT)/tao/Typecode.i \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
+  $(TAO_ROOT)/tao/ServicesC.h \
+  $(TAO_ROOT)/tao/ServicesC.i \
   CosPropertyServiceC.i \
   AVStreamsC.i \
   $(ACE_ROOT)/ace/Singleton.h \
@@ -9915,6 +10085,8 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Service_Types.h \
   $(ACE_ROOT)/ace/Service_Types.i \
   $(ACE_ROOT)/ace/WFMO_Reactor.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.inl \
   $(ACE_ROOT)/ace/Synch_Options.h \
   $(ACE_ROOT)/ace/Synch_Options.i \
   $(ACE_ROOT)/ace/Acceptor.cpp \
@@ -9976,18 +10148,15 @@ AVSVC_COMPONENTS:
   AV/Transport.i \
   AV/FlowSpec_Entry.i \
   $(ACE_ROOT)/ace/OS_NS_strings.h \
-  $(ACE_ROOT)/ace/OS_NS_strings.inl \
-  AV/Policy.h AV/FlowSpec_Entry.h AV/MCast.h AV/Protocol_Factory.h \
+  $(ACE_ROOT)/ace/OS_NS_strings.inl AV/Policy.h \
+  AV/FlowSpec_Entry.h AV/MCast.h AV/Protocol_Factory.h \
   $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
-  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
-  AV/MCast.i AV/RTCP.h \
-  $(ACE_ROOT)/ace/OS.h \
+  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i AV/MCast.i \
+  AV/RTCP.h $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_NS_ctype.h \
   $(ACE_ROOT)/ace/OS_NS_ctype.inl \
   $(ACE_ROOT)/ace/OS_NS_dirent.h \
   $(ACE_ROOT)/ace/OS_NS_dirent.inl \
-  $(ACE_ROOT)/ace/OS_NS_dlfcn.h \
-  $(ACE_ROOT)/ace/OS_NS_dlfcn.inl \
   $(ACE_ROOT)/ace/OS_NS_math.h \
   $(ACE_ROOT)/ace/OS_NS_math.inl \
   $(ACE_ROOT)/ace/OS_NS_netdb.h \
@@ -10033,11 +10202,23 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/SOCK_CODgram.h \
   $(ACE_ROOT)/ace/SOCK_CODgram.i \
   CosPropertyServiceS.h \
+  $(TAO_ROOT)/tao/OctetSeqS.h \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
   $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
+  $(TAO_ROOT)/tao/OctetSeqS_T.h \
+  $(TAO_ROOT)/tao/OctetSeqS_T.i \
+  $(TAO_ROOT)/tao/OctetSeqS_T.cpp \
+  $(TAO_ROOT)/tao/OctetSeqS.i \
+  $(TAO_ROOT)/tao/StringSeqS.h \
+  $(TAO_ROOT)/tao/PolicyS.h \
+  $(TAO_ROOT)/tao/ServicesS.h \
+  $(TAO_ROOT)/tao/ServicesS_T.h \
+  $(TAO_ROOT)/tao/ServicesS_T.i \
+  $(TAO_ROOT)/tao/ServicesS_T.cpp \
+  $(TAO_ROOT)/tao/ServicesS.i \
   CosPropertyServiceS_T.h \
   CosPropertyServiceS_T.i \
   CosPropertyServiceS_T.cpp \
@@ -10076,8 +10257,7 @@ AVSVC_COMPONENTS:
   AV/RTP.h \
   AV/RTCP_Channel.h AV/RTCP_Packet.h AV/Nil.h
 
-.obj/sfp.o .obj/sfp.so .shobj/sfp.o .shobj/sfp.so: AV/sfp.cpp AV/sfp.h \
-  $(ACE_ROOT)/ace/pre.h \
+.obj/sfp.o .obj/sfp.so .shobj/sfp.o .shobj/sfp.so: AV/sfp.cpp AV/sfp.h $(ACE_ROOT)/ace/pre.h \
   AV/AV_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
@@ -10171,12 +10351,6 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -10192,6 +10366,12 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -10283,8 +10463,7 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/OS_NS_arpa_inet.h \
   $(ACE_ROOT)/ace/os_include/arpa/os_inet.h \
   $(ACE_ROOT)/ace/OS_NS_arpa_inet.inl \
-  $(ACE_ROOT)/ace/SOCK_Dgram.i \
-  AV/Policy.h \
+  $(ACE_ROOT)/ace/SOCK_Dgram.i AV/Policy.h \
   $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
@@ -10320,6 +10499,10 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(TAO_ROOT)/tao/TC_Constants_Forward.h \
   $(TAO_ROOT)/tao/Typecode.i \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
+  $(TAO_ROOT)/tao/ServicesC.h \
+  $(TAO_ROOT)/tao/ServicesC.i \
   CosPropertyServiceC.i \
   AVStreamsC.i \
   $(ACE_ROOT)/ace/Singleton.h \
@@ -10366,8 +10549,7 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/SString.i \
-  AV/Transport.h \
+  $(ACE_ROOT)/ace/SString.i AV/Transport.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.i \
@@ -10416,6 +10598,8 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Service_Types.h \
   $(ACE_ROOT)/ace/Service_Types.i \
   $(ACE_ROOT)/ace/WFMO_Reactor.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.inl \
   $(ACE_ROOT)/ace/Synch_Options.h \
   $(ACE_ROOT)/ace/Synch_Options.i \
   $(ACE_ROOT)/ace/Acceptor.cpp \
@@ -10462,21 +10646,18 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/SOCK_Connector.h \
   $(ACE_ROOT)/ace/SOCK_Connector.i \
   $(ACE_ROOT)/ace/Connector.h \
-  $(ACE_ROOT)/ace/Connector.cpp \
-  AV/Transport.i AV/FlowSpec_Entry.i \
+  $(ACE_ROOT)/ace/Connector.cpp AV/Transport.i \
+  AV/FlowSpec_Entry.i \
   $(ACE_ROOT)/ace/OS_NS_strings.h \
   $(ACE_ROOT)/ace/OS_NS_strings.inl \
   AV/Protocol_Factory.h \
   $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
-  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
-  AV/MCast.i AV/AVStreams_i.h \
-  $(ACE_ROOT)/ace/OS.h \
+  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i AV/MCast.i \
+  AV/AVStreams_i.h $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_NS_ctype.h \
   $(ACE_ROOT)/ace/OS_NS_ctype.inl \
   $(ACE_ROOT)/ace/OS_NS_dirent.h \
   $(ACE_ROOT)/ace/OS_NS_dirent.inl \
-  $(ACE_ROOT)/ace/OS_NS_dlfcn.h \
-  $(ACE_ROOT)/ace/OS_NS_dlfcn.inl \
   $(ACE_ROOT)/ace/OS_NS_math.h \
   $(ACE_ROOT)/ace/OS_NS_math.inl \
   $(ACE_ROOT)/ace/OS_NS_netdb.h \
@@ -10520,11 +10701,23 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/SOCK_CODgram.h \
   $(ACE_ROOT)/ace/SOCK_CODgram.i \
   CosPropertyServiceS.h \
+  $(TAO_ROOT)/tao/OctetSeqS.h \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
   $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
+  $(TAO_ROOT)/tao/OctetSeqS_T.h \
+  $(TAO_ROOT)/tao/OctetSeqS_T.i \
+  $(TAO_ROOT)/tao/OctetSeqS_T.cpp \
+  $(TAO_ROOT)/tao/OctetSeqS.i \
+  $(TAO_ROOT)/tao/StringSeqS.h \
+  $(TAO_ROOT)/tao/PolicyS.h \
+  $(TAO_ROOT)/tao/ServicesS.h \
+  $(TAO_ROOT)/tao/ServicesS_T.h \
+  $(TAO_ROOT)/tao/ServicesS_T.i \
+  $(TAO_ROOT)/tao/ServicesS_T.cpp \
+  $(TAO_ROOT)/tao/ServicesS.i \
   CosPropertyServiceS_T.h \
   CosPropertyServiceS_T.i \
   CosPropertyServiceS_T.cpp \
@@ -10610,9 +10803,9 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/os_include/os_wchar.h \
   $(ACE_ROOT)/ace/os_include/os_string.h \
   $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/OS_NS_errno.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_NS_errno.inl \
   $(ACE_ROOT)/ace/OS_NS_stdio.h \
   $(ACE_ROOT)/ace/os_include/os_fcntl.h \
@@ -10956,16 +11149,16 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
+  $(TAO_ROOT)/tao/CDR.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/CDR_Stream.i \
+  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/Seq_Var_T.h \
   $(TAO_ROOT)/tao/Seq_Var_T.inl \
   $(TAO_ROOT)/tao/Seq_Var_T.cpp \
   $(TAO_ROOT)/tao/Seq_Out_T.h \
   $(TAO_ROOT)/tao/Seq_Out_T.inl \
   $(TAO_ROOT)/tao/Seq_Out_T.cpp \
-  $(TAO_ROOT)/tao/CDR.h \
-  $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/CDR_Stream.i \
-  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -10993,17 +11186,33 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/ORB.i \
   AV/AV_export.h \
   CosPropertyServiceS.h \
-  CosPropertyServiceC.h \
-  Property/property_export.h \
-  $(TAO_ROOT)/tao/Typecode.h \
-  $(TAO_ROOT)/tao/TC_Constants_Forward.h \
-  $(TAO_ROOT)/tao/Typecode.i \
-  CosPropertyServiceC.i \
+  $(TAO_ROOT)/tao/OctetSeqS.h \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
   $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
+  $(TAO_ROOT)/tao/OctetSeqS_T.h \
+  $(TAO_ROOT)/tao/OctetSeqS_T.i \
+  $(TAO_ROOT)/tao/OctetSeqS_T.cpp \
+  $(TAO_ROOT)/tao/OctetSeqS.i \
+  $(TAO_ROOT)/tao/StringSeqS.h \
+  $(TAO_ROOT)/tao/PolicyS.h \
+  $(TAO_ROOT)/tao/ServicesS.h \
+  $(TAO_ROOT)/tao/ServicesC.h \
+  $(TAO_ROOT)/tao/ServicesC.i \
+  $(TAO_ROOT)/tao/ServicesS_T.h \
+  $(TAO_ROOT)/tao/ServicesS_T.i \
+  $(TAO_ROOT)/tao/ServicesS_T.cpp \
+  $(TAO_ROOT)/tao/ServicesS.i \
+  CosPropertyServiceC.h \
+  Property/property_export.h \
+  $(TAO_ROOT)/tao/Typecode.h \
+  $(TAO_ROOT)/tao/TC_Constants_Forward.h \
+  $(TAO_ROOT)/tao/Typecode.i \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
+  CosPropertyServiceC.i \
   CosPropertyServiceS_T.h \
   CosPropertyServiceS_T.i \
   CosPropertyServiceS_T.cpp \
@@ -11079,8 +11288,6 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
   $(TAO_ROOT)/tao/PI_ForwardC.h \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PI_ForwardC.i \
   $(TAO_ROOT)/tao/IOP_CodecC.h \
   $(TAO_ROOT)/tao/IOP_CodecC.i \

@@ -1,6 +1,19 @@
 // -*- MPC -*-
 // $Id$
 
-project : taoexe, portableserver, naming, mfc {
-  
+// This project must be processed with the following option
+// for vc6, em3 and nmake:
+//   -value_template subsystem=windows
+// Use this option for vc71
+//   -value_template subsystem=2
+project : namingexe, mfc {
+  exename    = NamingViewer
+  pch_header = StdAfx.h
+  pch_source = StdAfx.cpp
+
+  Resource_Files {
+    NamingViewer.rc
+    res/NamingViewer.ico
+    res/NamingViewer.rc2
+  }
 }

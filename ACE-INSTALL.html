@@ -1,7 +1,9 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <!-- $Id$ -->
 
 <HTML>
 <HEAD>
+  <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
   <TITLE>Building and Installing ACE and Its Auxiliary Libraries and Services</TITLE>
   <link rev=made href="mailto:schmidt@uci.edu">
 </HEAD>
@@ -150,7 +152,7 @@ similar services for TAO, allowing the DOC group's primary focus to
 shift back to their main goal: <EM>research</EM>. The DOC group is
 fundamentally focused on (and <A
 HREF="http://www.cs.wustl.edu/~schmidt/resume-grants.html">funded
-by</A>) advanced R&D projects. The group continues to be intimately
+by</A>) advanced R&amp;D projects. The group continues to be intimately
 involved in ACE+TAO development and maintenance, but with revised
 priorities for maintenance. The <A
 HREF="docs/ACE-bug-process.html">bug fixing policies</A> followed by
@@ -564,10 +566,13 @@ supported by the DOC group, Riverace, or OCI. <P>
 
   <LI><B><a name="LynxOS">LynxOS</a></B><P>
 
-      ACE builds and runs properly on LynxOS 3.0.0 for Intel and
-      PowerPC targets.
-      ACE's Naming_Test fails; it is disabled in <a
-      href="tests/run_tests.sh"><code>ACE_wrappers/tests/run_tests.sh</code></a>.<p>
+      ACE builds and runs properly on LynxOS 3.0.x, 3.1.x and 4.0.0 for Intel and
+      PowerPC targets. LynxOS 2.5.x is no longer supported.
+
+      To build ACE on LynxOS 3.0.x you need to update GCC to
+      version 2.9-gnupro-98r2, which can be obtained from
+      <A HREF="ftp://ftp.lynuxworks.com/compilers/98r2-preview/">
+      ftp://ftp.lynuxworks.com/compilers/98r2-preview/</A><p>
 
       If you run out of memory on LynxOS, these might help:<p>
 
@@ -592,20 +597,11 @@ supported by the DOC group, Riverace, or OCI. <P>
       platform_lynxos.GNU file</a> for information on, and an
       example of, tailoring for your particular platform.<p>
 
-      We actively maintain ACE on LynxOS 3.0.0.  It should build and
-      run on LynxOS 2.5, but we no longer test on that OS version.<p>
-
       NOTE: if you want to use IP multicast on LynxOS, be sure to add
       this line to your <code>/net/rc.network</code>, and reboot:<p>
       <pre><code>
         /bin/route add "224.0.0.0" "$my_name"
       </code></pre>
-
-      Dave Mayerhoefer &lt<A
-      HREF="mailto:davem@lynx.com">davem@lynx.com</A>&gt has ported
-      ACE to LynxOS 2.5 using GNU g++ 2.7.2.  However, you may need to
-      apply some <A HREF="os-patches/lynxos-patches.html">patches to
-      LynxOS</A> to get ACE working.<P>
 
   <LI><STRONG>VxWorks</STRONG><P>
 
@@ -783,7 +779,7 @@ supported by the DOC group, Riverace, or OCI. <P>
 
         <p>The work to port ACE to Mac OS X was done by several people,
         John Zorko
-        &lt;<Ahref="mailto:j.zorko@att.net">j.zorko@att.net</A>&gt; is
+        &lt;<A href="mailto:j.zorko@att.net">j.zorko@att.net</A>&gt; is
         only one of them.</p>
 
 </UL>
@@ -1576,7 +1572,7 @@ can run perl script <code>run_test.pl</code> in the
 
 You may want to run ACE on a non-networked machine. To do so, you must
 install TCP/IP and configure it to ignore the absence of a network
-card.  This is one method:<P>
+card.  This is one method:
 
 <OL>
   <LI>Run Control Panel

@@ -305,6 +305,12 @@ public:
   idl_bool gen_impl_files (void) const;
   // Check if we want to generate implementation files.
 
+  void gen_impl_debug_info (idl_bool);
+  // Set generation of source file and line number for implementation files.
+
+  idl_bool gen_impl_debug_info (void) const;
+  // Check generation of source file and line number implementation files.
+
   void gen_copy_ctor (idl_bool);
   // Set generation of copy constructor.
 
@@ -496,6 +502,9 @@ private:
 
   idl_bool gen_impl_files_;
   // are we generating implementation files?
+
+  idl_bool gen_impl_debug_info_;
+  // are we generating source file and line numbers for implementation files?
 
   idl_bool gen_copy_ctor_;
   // are we generating the copy constructor?

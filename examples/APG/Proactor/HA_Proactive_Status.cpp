@@ -162,7 +162,7 @@ int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_DEBUG ((LM_DEBUG,
-              "This example does not work on this platform.\n"));
+              ACE_TEXT ("This example requires asynchronous I/O support.\n")));
   return 1;
 }
 

@@ -18,13 +18,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/DsLogAdminS.h"
+#include "orbsvcs/orbsvcs/DsLogAdminS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/DsLogNotificationS.h"
+#include "orbsvcs/orbsvcs/DsLogNotificationS.h"
 
 #include "log_export.h"
 

@@ -17,7 +17,7 @@
 // ============================================================================
 
 #include "ace/Sched_Params.h"
-#include "orbsvcs/Time_Utilities.h"
+#include "orbsvcs/orbsvcs/Time_Utilities.h"
 #include "Scheduler.h"
 #include "ace/OS_NS_stdio.h"
 

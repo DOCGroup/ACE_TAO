@@ -13,7 +13,7 @@
 #ifndef REQUEST_CONTEXT_REPOSITORY_H
 #define REQUEST_CONTEXT_REPOSITORY_H
 
-#include "orbsvcs/FtRtecEventChannelAdminC.h"
+#include "orbsvcs/orbsvcs/FtRtecEventChannelAdminC.h"
 #include "tao/PortableInterceptorC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

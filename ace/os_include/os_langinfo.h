@@ -24,7 +24,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/os_include/so_nl_types.h"
+#include "ace/os_include/os_nl_types.h"
 
 #if !defined (ACE_LACKS_LANGINFO_H)
 # include /**/ <langinfo.h>

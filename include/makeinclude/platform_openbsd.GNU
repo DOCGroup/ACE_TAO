@@ -20,10 +20,12 @@ ifeq (,$(threads))
   threads = 1
 endif
 
+pipes ?= 1
+
 CC              = gcc
 CXX		= g++
 
-CFLAGS          += -W -Wall -Wpointer-arith -pipe
+CFLAGS          += -W -Wall -Wpointer-arith
 DCFLAGS         += -g
 LDFLAGS		+= -Wl,-rpath $(ACE_ROOT)/ace
 DLD             = $(CXX)

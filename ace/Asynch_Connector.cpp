@@ -15,6 +15,8 @@ ACE_RCSID(ace, Asynch_Connector, "$Id$")
 #if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
 // This only works on platforms that support async I/O.
 
+#include "ace/OS_NS_sys_socket.h"
+#include "ace/OS_Memory.h"
 #include "ace/Flag_Manip.h"
 #include "ace/Log_Msg.h"
 #include "ace/Message_Block.h"
@@ -233,20 +235,20 @@ ACE_Asynch_Connector<HANDLER>::parse_address (const ACE_Asynch_Connect::Result &
   if (local_address.addr_to_string (local_address_buf,
                                     sizeof local_address_buf) == -1)
     ACE_ERROR ((LM_ERROR,
-                "Error:%p:can't obtain local_address's address string"));
+                "Error:%m:can't obtain local_address's address string"));
 
   ACE_DEBUG ((LM_DEBUG,
-              "ACE_Asynch_Connector<HANDLER>::parse_address : "\
+              "ACE_Asynch_Connector<HANDLER>::parse_address : "
               "Local address %s\n",
               local_address_buf));
 
   if (remote_address.addr_to_string (remote_address_buf,
                                      sizeof remote_address_buf) == -1)
     ACE_ERROR ((LM_ERROR,
-                "Error:%p:can't obtain remote_address's address string"));
+                "Error:%m:can't obtain remote_address's address string"));
 
   ACE_DEBUG ((LM_DEBUG,
-              "ACE_Asynch_Connector<HANDLER>::parse_address : "\
+              "ACE_Asynch_Connector<HANDLER>::parse_address : "
               "Remote address %s\n",
               remote_address_buf));
 #endif /* 0 */

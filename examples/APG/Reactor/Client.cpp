@@ -6,6 +6,7 @@
 
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_errno.h"
+#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_time.h"
 #include "Client.h"
 
@@ -17,6 +18,7 @@ int Client::open (void *p)
     return -1;
   this->notifier_.reactor (this->reactor ());
   this->msg_queue ()->notification_strategy (&this->notifier_);
+  this->iterations_ = 0;
   return this->reactor ()->schedule_timer
     (this, 0, ACE_Time_Value::zero, iter_delay);
 }
@@ -47,7 +49,7 @@ int Client::handle_input (ACE_HANDLE)
 // Listing 4 code/ch07
 int Client::handle_timeout(const ACE_Time_Value &, const void *)
 {
-  if (this->iterations_ >= ITERATIONS)
+  if (++this->iterations_ >= ITERATIONS)
     {
       this->peer ().close_writer ();
       return 0;
@@ -56,7 +58,9 @@ int Client::handle_timeout(const ACE_Time_Value &, const void *)
   ACE_Message_Block *mb;
   char msg[128];
   ACE_OS::sprintf (msg, "Iteration %d\n", this->iterations_);
-  ACE_NEW_RETURN (mb, ACE_Message_Block (msg), -1);
+  ACE_NEW_RETURN
+    (mb, ACE_Message_Block (ACE_OS::strlen (msg) + 1), -1);
+  mb->copy (msg);
   this->putq (mb);
   return 0;
 }
@@ -113,10 +117,12 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 // Listing 7 code/ch07
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Connector<Client, ACE_SOCK_CONNECTOR>;
+template class ACE_Connector_Base<Client>;
 template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 template class ACE_NonBlocking_Connect_Handler<Client>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 # pragma instantiate ACE_Connector<Client, ACE_SOCK_CONNECTOR>
+# pragma instantiate ACE_Connector_Base<Client>
 # pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 # pragma instantiate ACE_NonBlocking_Connect_Handler<Client>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

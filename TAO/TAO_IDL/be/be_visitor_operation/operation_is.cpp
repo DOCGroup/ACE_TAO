@@ -53,8 +53,11 @@ be_visitor_operation_is::visit_operation (be_operation *node)
                         -1);
     }
 
-  *os << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  if (be_global->gen_impl_debug_info ())
+    {
+      *os << "// TAO_IDL - Generated from" << be_nl
+          << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+    }
 
   be_visitor_context ctx (*this->ctx_);
   be_visitor_operation_rettype oro_visitor (&ctx);

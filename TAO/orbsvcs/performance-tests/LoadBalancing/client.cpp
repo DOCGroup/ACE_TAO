@@ -1,12 +1,12 @@
 // $Id$
 
-#include "stdio.h"
 #include "TestC.h"
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Sched_Params.h"
 #include "ace/Stats.h"
 #include "ace/Sample_History.h"
+#include "ace/OS_NS_errno.h"
 
 #include "tao/Strategies/advanced_resource.h"
 
@@ -127,11 +127,11 @@ main (int argc, char *argv[])
 
       ACE_Sample_History history (niterations);
 
-      const float usecs = 1.0 / rate * 1e6;
+      // const float usecs = 1.0 / rate * 1e6;
 
-      ACE_Time_Value tv (0, ACE_static_cast (const long, usecs));
+      // ACE_Time_Value tv (0, ACE_static_cast (const long, usecs));
 
-      const timespec ts = tv;
+      // const timespec ts = tv;
 
       ACE_hrtime_t test_start = ACE_OS::gethrtime ();
       for (int i = 0; i < niterations; ++i)

@@ -23,7 +23,11 @@ else # !BIN
   endif # !BIN_UNCHECKED
 endif # BIN
 
-VOBJS = $(addsuffix .$(OBJEXT),$(addprefix $(VDIR),$(basename $(notdir $(SRC))))) 
+VOBJS = $(addsuffix .$(OBJEXT),$(addprefix $(VDIR),$(basename $(SRC))))
+
+ifneq ($(IDL_SRC),)
+  $(VBIN): $(IDL_SRC)
+endif
 
 # Needed for depend.
 PSRC += $(addsuffix .cpp, $(CLEANUP_BIN))
@@ -56,4 +60,3 @@ $(BIN): %: $(VDIR)%.$(OBJEXT) $(VOBJS)
     endif # kylix
   endif # using_aix_vacpp
 endif
-

@@ -12,7 +12,7 @@
 #ifndef CONSUMER_H
 #define CONSUMER_H
 
-#include "orbsvcs/RtecEventCommS.h"
+#include "orbsvcs/orbsvcs/RtecEventCommS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -9,6 +9,10 @@
 
 #include "ace/config-all.h"
 
+#if defined (ACE_AS_STATIC_LIBS) && !defined (SYNCHLIB_HAS_DLL)
+#  define SYNCHLIB_HAS_DLL 0
+#endif /* ACE_AS_STATIC_LIBS && ! TEST_HAS_DLL */
+
 #if !defined (SYNCHLIB_HAS_DLL)
 #define SYNCHLIB_HAS_DLL 1
 #endif /* !SYNCHLIB_HAS_DLL */
@@ -32,5 +36,5 @@
 #endif     /* SYNCHLIB_HAS_DLL */
 
 #endif     /* SYNCHLIB_EXPORT_H */
-
 // End of auto generated file.
+

@@ -18,9 +18,9 @@
 #include "CEC_Event_Loader.h"
 #include "ace/Dynamic_Service.h"
 
-#include "orbsvcs/CosNamingC.h"
-#include "orbsvcs/CosEvent/CEC_EventChannel.h"
-#include "orbsvcs/CosEvent/CEC_Default_Factory.h"
+#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.h"
+#include "orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.h"
 
 #include "ace/Get_Opt.h"
 #include "ace/Argv_Type_Converter.h"

@@ -38,14 +38,14 @@
 #define TAO_ECG_UDP_SENDER_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/RtecUDPAdminS.h"
+#include "orbsvcs/orbsvcs/RtecUDPAdminS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include /**/ "event_export.h"
-#include "orbsvcs/RtecEventChannelAdminS.h"
+#include "orbsvcs/orbsvcs/RtecEventChannelAdminS.h"
 
 #include "EC_Lifetime_Utils.h"
 #include "EC_Lifetime_Utils_T.h"

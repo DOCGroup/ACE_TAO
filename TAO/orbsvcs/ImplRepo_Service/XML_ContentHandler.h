@@ -5,8 +5,7 @@
  *
  *  $Id$
  *
- *  @brief  This is a content handler which helps update the existing
- *  xml file used for store server configuration.
+ *  @brief  Callback SAX XML Handler for parsing XML.
  *
  *  @author Priyanka Gontla <gontla_p@ociweb.com>
  */
@@ -22,176 +21,75 @@
  *
  * @brief Implementation Repository
  *
- * This provides the interface to update the Server Configuration
- * which is in an xml file.
+ * Callback SAX XML Handler for parsing XML.
  *
  */
 class XML_ContentHandler : public ACEXML_DefaultHandler
 {
 public:
-  // = Constructor and destructor
-  XML_ContentHandler (const char *server_name);
 
-  virtual ~XML_ContentHandler (void);
+  // XML ELEMENT names
+  static const char* ROOT_TAG;
+  static const char* SERVER_INFO_TAG;
+  static const char* SERVER_TAG;
+  static const char* STARTUP_OPTIONS_TAG;
+  static const char* COMMAND_LINE_TAG;
+  static const char* WORKING_DIR_TAG;
+  static const char* ACTIVATION_TAG;
+  static const char* ENVIRONMENT_TAG;
+  static const char* PARTIAL_IOR_TAG;
+  static const char* IOR_TAG;
 
-  // Methods inherit from ACEXML_ContentHandler.
+  struct Callback {
+    virtual ~Callback() {}
+    virtual void next_server (const ACE_CString& server_name, const ACE_CString& startup_cmd, 
+      const ACE_CString& env_vars, const ACE_CString& working_dir,
+      const ACE_CString& actmode, const ACE_CString& partial_ior, const ACE_CString& ior) = 0;
+  };
+
+  XML_ContentHandler (Callback& cb);
+
+  virtual void startElement (const ACEXML_Char* namespaceURI,
+                             const ACEXML_Char* localName,
+                             const ACEXML_Char* qName,
+                             ACEXML_Attributes* atts ACEXML_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((ACEXML_SAXException));
+
+  virtual void endElement (const ACEXML_Char* namespaceURI,
+                           const ACEXML_Char* localName,
+                           const ACEXML_Char* qName ACEXML_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((ACEXML_SAXException));
 
   /*
    * Receive notification of character data.
    */
-  virtual void characters (const ACEXML_Char *ch,
+  virtual void characters (const ACEXML_Char* ch,
                            int start,
                            int length ACEXML_ENV_ARG_DECL)
         ACE_THROW_SPEC ((ACEXML_SAXException));
 
-  /*
-   * Receive notification of the end of a document.
-   */
-  virtual void endDocument ( ACEXML_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((ACEXML_SAXException));
-
-  /*
-   * Receive notification of the end of an element.
-   */
-  virtual void endElement (const ACEXML_Char *namespaceURI,
-                           const ACEXML_Char *localName,
-                           const ACEXML_Char *qName ACEXML_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((ACEXML_SAXException));
-
-  /*
-   * End the scope of a prefix-URI mapping.
-   */
-  virtual void endPrefixMapping (const ACEXML_Char *prefix ACEXML_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((ACEXML_SAXException));
-
-  /*
-   * Receive notification of ignorable whitespace in element content.
-   */
-  virtual void ignorableWhitespace (const ACEXML_Char *ch,
-                                    int start,
-                                    int length ACEXML_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((ACEXML_SAXException));
-
-  /*
-   * Receive notification of a processing instruction.
-   */
-  virtual void processingInstruction (const ACEXML_Char *target,
-                                      const ACEXML_Char *data ACEXML_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((ACEXML_SAXException));
-
-  /*
-   * Receive an object for locating the origin of SAX document events.
-   */
-  virtual void setDocumentLocator (ACEXML_Locator *locator) ;
-
-  /*
-   * Receive notification of a skipped entity.
-   */
-  virtual void skippedEntity (const ACEXML_Char *name ACEXML_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((ACEXML_SAXException));
-
-  /*
-   * Receive notification of the beginning of a document.
-   */
-  virtual void startDocument ( ACEXML_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((ACEXML_SAXException));
-
-  /*
-   * Receive notification of the beginning of an element.
-   */
-  virtual void startElement (const ACEXML_Char *namespaceURI,
-                             const ACEXML_Char *localName,
-                             const ACEXML_Char *qName,
-                             ACEXML_Attributes *atts ACEXML_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((ACEXML_SAXException));
-
-  /*
-   * Begin the scope of a prefix-URI Namespace mapping.
-   */
-  virtual void startPrefixMapping (const ACEXML_Char *prefix,
-                                   const ACEXML_Char *uri ACEXML_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((ACEXML_SAXException));
-
-  // *** Methods inherit from ACEXML_DTDHandler.
-
-  /*
-   * Receive notification of a notation declaration event.
-   */
-  virtual void notationDecl (const ACEXML_Char *name,
-                             const ACEXML_Char *publicId,
-                             const ACEXML_Char *systemId ACEXML_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((ACEXML_SAXException));
-
-  /*
-   * Receive notification of an unparsed entity declaration event.
-   */
-  virtual void unparsedEntityDecl (const ACEXML_Char *name,
-                                   const ACEXML_Char *publicId,
-                                   const ACEXML_Char *systemId,
-                                   const ACEXML_Char *notationName ACEXML_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((ACEXML_SAXException));
-
-  // Methods inherit from ACEXML_EnitityResolver.
-
-  /*
-   * Allow the application to resolve external entities.
-   */
-  virtual ACEXML_InputSource *resolveEntity (const ACEXML_Char *publicId,
-                                             const ACEXML_Char *systemId ACEXML_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((ACEXML_SAXException));
-
-  // Methods inherit from ACEXML_ErrorHandler.
-
-  /*
-   * Receive notification of a recoverable error.
-   */
-  virtual void error (ACEXML_SAXParseException &exception ACEXML_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((ACEXML_SAXException));
-
-  /*
-   * Receive notification of a non-recoverable error.
-   */
-  virtual void fatalError (ACEXML_SAXParseException &exception ACEXML_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((ACEXML_SAXException));
-
-  /*
-   * Receive notification of a warning.
-   */
-  virtual void warning (ACEXML_SAXParseException &exception ACEXML_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((ACEXML_SAXException));
-
-  int get_startup_information (ACE_CString &logical_server_name,
-                               ACE_CString &startup_command,
-                               // ImplementationRepository::EnvironmentList
-                               //&environment_vars,
-                               ACE_CString &working_dir,
-                               //ImplementationRepository::ActivationMode
-                               ACE_CString &activation);
-
-  int get_running_information (ACE_CString POA_name,
-                               ACE_CString &location,
-                               ACE_CString &server_object_ior);
-
-  void update_running_information (ACE_CString POA_name,
-                                   ACE_CString location,
-                                   ACE_CString server_object_ior);
-
-  void set_startup_value (ACE_CString POA_name,
-                          int new_value);
-
-  void get_startup_value (ACE_CString POA_name,
-                          int &new_value);
-
+  virtual void ignorableWhitespace (const ACEXML_Char*,
+                                    int,
+                                    int ACEXML_ENV_ARG_DECL_NOT_USED)
+        ACE_THROW_SPEC ((ACEXML_SAXException))
+  {
+    tag_state_ = tsInvalid;
+  }
 
  private:
+  // reset all attributes
+  void reset_server_info (void);
+
+ private:
+
+  // callback on completion of an element
+  Callback& callback_;
 
   // Holds the server_name
   ACE_CString server_name_;
 
-  // Holds the command_line that is to be used to activate the
-  // server
+  // Holds the command_line that is to be used to activate the server
   ACE_CString command_line_;
-
 
   ACE_CString activation_;
 
@@ -199,23 +97,29 @@ public:
   ACE_CString working_dir_;
 
   // Environment variables if any
-  ACE_CString environment_vars_;
+  ACE_CString env_vars_;
 
   // IOR of the server
   ACE_CString server_object_ior_;
 
   // Hostname
-  ACE_CString location_;
+  ACE_CString partial_ior_;
 
-  // Checks to see if that particular entry exists.
-  bool found_server_entry_;
-  bool command_line_entry_;
-  bool working_dir_entry_;
-  bool environment_vars_entry_;
-  bool activation_entry_;
-  bool server_object_ior_entry_;
-  bool location_entry_;
-  bool startup_value_;
+  // current state
+  enum TagState {
+    tsInvalid,
+    tsServerInfo,
+    tsServer,
+    tsStartupOptions,
+    tsCommandLine,
+    tsWorkingDir,
+    tsActivation,
+    tsEnvironment,
+    tsLocation,
+    tsIOR
+  };
+
+  TagState tag_state_;
 };
 
 #endif /* XML_CONTENTHANDLER_H */

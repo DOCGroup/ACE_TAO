@@ -11,10 +11,12 @@
 #include "tao/debug.h"
 #include "tao/target_specification.h"
 
-#include "orbsvcs/miopC.h"
-#include "orbsvcs/PortableGroupC.h"
+#include "orbsvcs/orbsvcs/miopC.h"
+#include "orbsvcs/orbsvcs/PortableGroupC.h"
 
-ACE_RCSID(tao, UIPMC_Profile, "$Id$")
+ACE_RCSID (PortableGroup, 
+           UIPMC_Profile, 
+           "$Id$")
 
 #if !defined (__ACE_INLINE__)
 # include "UIPMC_Profile.i"

@@ -55,10 +55,12 @@ Diego Sevilla Ruiz <dsevilla@ditec.um.es>
 Marina Spivak <marina@cs.wustl.edu>
 Venkita Subramonian  <venkita@cs.wustl.edu>
 Nagarajan Surendran <naga@cs.wustl.edu>
+Gabriele Trombetti <gabtromb@isis.vanderbilt.edu>
 Emre Turkay <turkaye@dre.vanderbilt.edu>
 Nanbor Wang <nanbor@cs.wustl.edu>
 Seth Widoff <sbw1@cs.wustl.edu>
 Torben Worm <tworm@cs.wustl.edu>
+Gabriele Trombetti <gabtromb@isis.vanderbilt.edu>
 
 I would also like to thank all the following people who have also
 contributed to ACE and TAO over the years:
@@ -198,7 +200,7 @@ Padhu Ramalingam <padhu@magicnet.net>
 Jay Denkberg <jay_denkberg@comverse.com>
 Ayman Farahat <afarahat@CCGATE.HAC.COM>
 Tilo Christ <christ@swl.fh-heilbronn.de>
-Ari Erev <Ari_Erev@icomverse.com>
+rev <Ari_Erev@icomverse.com>
 Hamutal Yanay <Hamutal_Yanay@icomverse.com>
 Vital Aza <va3@cs.wustl.edu>
 Alex Villazon <villazon@cui.unige.ch>
@@ -252,7 +254,7 @@ Hakan Kallberg <hk@simulina.se>
 Eric Dean Russell <edrusse@somnet.sandia.gov>
 Daniel Montalibet <daniel_montalibet@stortek.com>
 Norbert Rapp <norbert.rapp@nexus-informatics.de>
-Ganesh Pai <gpai@voicetek.com>
+Ganesh Pai <GPai@sonusnet.com>
 Berni Merkle <merkle@io.freinet.de>
 Tom Wright <twright@gem-net.demon.co.uk>
 Torbjorn Lindgren <tl@funcom.no>
@@ -1252,7 +1254,7 @@ Wayne Erchak <wayne@stentor.com>
 Yew Khong See <seeyk@yahoo.com>
 Greg Thompson <gregt@ot.com.au>
 Mike Pyle <mike.pyle@burning-glass.com>
-Kobi Cohen-Arazi <kobi@mivzak.com>
+Kobi Cohen-Arazi <kobi-co@barak-online.net>
 Israel Illescas Gomez <illescas@dycsa.es>
 Brodie Thiesfield <brodie.thiesfield@activesky.com>
 Erik Toubro Nielsen <enielsen@mdsproteomics.dk>
@@ -1328,7 +1330,7 @@ Tino Schwarze <tino.schwarze@informatik.tu-chemnitz.de>
 Don Hinton <dhinton@ieee.org>
 Gergely Timar <timarok@elender.hu>
 Peter Phillips <pphillip@opentext.com>
-Kuznesov Yury <yury@newst.net>
+Yury Kuznesov <yury@newst.net>
 Daniel Manfis <dany_100@yahoo.com>
 Massimo Pichini <massimo@webbridges.it>
 Eyal Neuman <eyal@tradertools.com>
@@ -1645,7 +1647,6 @@ Ma Weida <weida@flyingdonkey.com>
 Terry Lao <terry@ec-tone.com>
 Volker Boerchers <vboerchers@tecon.de>
 Tim Pullen <tim@timpullen.co.uk>
-Dieter Knueppel <dknueppel@datus.com>
 Marc Tardif <marc@sitepak.com>
 Guan Joe <guan.zhaohui@datawire.net>
 Petr Ferschmann <pferschmann@kerio.com>
@@ -1797,6 +1798,7 @@ Christoph Liebig <xfrog2000@yahoo.com>
 Andre Kostur <Andre@incognito.com>
 Markus Stenberg <markus.stenberg@conformiq.com>
 Jonathan Pollack <pollack_j@ociweb.com>
+Si Mong Park <si.mong.park@lmco.com>
 Hakim Souami <hakim.souami@fr.thalesgroup.com>
 Paul Morrison <epm@prismtechnologies.com>
 John Poplett <John_Poplett@3com.com>
@@ -1809,11 +1811,55 @@ Brad Orner <bradley_p_orner@raytheon.com>
 Michelangelo Nottoli <m.nottoli@acsys.it>
 Peter Bekiesch <peter.bekiesch@dtmgmbh.de>
 Martin Kaul <mkaul@leuze.de>
-Grützmacher Lukas <gruetzmacher@ais-dresden.de>
+Gruetzmacher Lukas <gruetzmacher@ais-dresden.de>
 Robert Schiele <robert.schiele@t-online.de>
 Matthew Grosso <mgrosso@acm.org>
 Akim Boyko <akim@sitech.com.ua>
+Nils Sandoy <nils.sandoy@fast.no>
 Daniel Miranda <dmiranda@telecompersonal.com.ar>
+Hans-Peter Bock <Hans-Peter.Bock@isw.uni-stuttgart.de>
+Dmitri Hrapof <yavannadil@yahoo.com>
+Denny Kolb <kolb@g2ss.com>
+Daniel Buchs <acelib@dbux.ch>
+Matt Murphy <murphym@cs.uri.edu>
+Brian Nelson <pyro@debian.org>
+Avi Ouziel <ouziel_a@hotmail.com>
+Matthew Gillen <gillen@ohio.edu>
+Chris Reed <cr@apama.com>
+Andrew Reid <andrew.reid@eservglobal.com>
+Praveen Sharma <psharma@bbn.com>
+Yi Zuo <Yi.Zuo@alcatel-sbell.com.cn>
+Raphael Bossek <raphael.bossek@gmx.de>
+Richard G. Hash <richard.hash@openspirit.com>
+Karl Tredwell <KTredwell@tullib.com>
+Norm Whitehead <Norm_Whitehead@raytheon.com>
+Jiang Wei <sdjiangwei@sina.com>
+Kevin Bryan <bryank@cs.uri.edu>
+Zvika Ashani <zvika@aspectusvi.com>
+Thomas Costa <oohrah@mac.com>
+Dom Monteiro <d.monteiro@netia.net>
+Jean-Marc Prud'homme <JPrudhomme@interstarinc.com>
+Yury Osadchy <Yuryo@maxbill.com>
+Pavan Mandalkar <pm2@cs.wustl.edu>
+Scott Willey <scott@sanasecurity.com>
+David Calkins <dcalk@dejazzd.com>
+Wu Yongwei <adah@netstd.com>
+Karen L. Regner <karen.regner@swri.org>
+Michel Drapeau <michel.drapeau@asdfsadfh.com>
+Hans Bos <hans.bos@xelion.nl>
+Kevin Stacy <kevin_405@yahoo.com>
+Liat <vliat1@hotmail.com>
+Andreas Wagner <awagner@ls-wagner.de>
+Steven Xie <steven.xie@mpathix.com>
+Kris Dekeyser <Kris.Dekeyser@lms.be>
+Matthew Harris <mharris@hynomics.com>
+Abhijit Sachdev <abhi@qualcomm.com>
+Mikael Lundqvist <programmer_71@hotmail.com>
+Peter Hercek <peter@syncad.com>
+Jay Welch <jay.welch@transcore.com>
+Angel Roman <A_Roman1@msn.com>
+Jessica Pistole <Jessica.Pistole@jhuapl.edu>
+Paolo Carlini <pcarlini@suse.de>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile

@@ -17,8 +17,8 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/RtecEventCommC.h"
-#include "orbsvcs/ESF/ESF_Worker.h"
+#include "orbsvcs/orbsvcs/RtecEventCommC.h"
+#include "orbsvcs/orbsvcs/ESF/ESF_Worker.h"
 
 #include /**/ "event_export.h"
 

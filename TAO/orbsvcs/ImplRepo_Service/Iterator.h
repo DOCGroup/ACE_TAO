@@ -26,15 +26,10 @@
  */
 class ImR_Iterator
   : public POA_ImplementationRepository::ServerInformationIterator
+  , public PortableServer::RefCountServantBase
 {
 public:
-  /// Constructor
-  /// Ownership of iterator is transfered to this class (we'll delete it)
-  ImR_Iterator (Server_Repository::HASH_IMR_MAP::ITERATOR *iterator,
-                PortableServer::POA_ptr poa);
-
-  /// Destructor
-  ~ImR_Iterator ();
+  ImR_Iterator (CORBA::ULong n, Server_Repository& repo, PortableServer::POA_ptr poa);
 
   /// Returns the next list of up to <how_many> servers.  If empty, will return
   /// false.
@@ -50,10 +45,9 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
-  /// Our very own iterator for transversing the server repository.
-  Server_Repository::HASH_IMR_MAP::ITERATOR *iterator_;
-
-  PortableServer::POA_var poa_;
+  Server_Repository& repo_;
+  CORBA::ULong count_;
+  PortableServer::POA_ptr poa_;
 };
 
 #endif /* IMR_ITERATOR_H */

@@ -22,7 +22,7 @@
 
 #include "tao/PortableServer/Servant_Base.h"
 
-#include "orbsvcs/NotifyExtC.h"
+#include "orbsvcs/orbsvcs/NotifyExtC.h"
 
 #include "QoSProperties.h"
 #include "AdminProperties.h"

@@ -13,7 +13,7 @@
 #ifndef REPLCATION_SERVICE_H
 #define REPLCATION_SERVICE_H
 
-#include "orbsvcs/FtRtecEventChannelAdminC.h"
+#include "orbsvcs/orbsvcs/FtRtecEventChannelAdminC.h"
 #include "FTEC_Become_Primary_Listener.h"
 #include "tao/PortableInterceptorC.h"
 #include "ace/Service_Object.h"
@@ -25,8 +25,9 @@
 
 namespace FTRTEC
 {
-  class Replication_Service : public TAO_FTEC_Become_Primary_Listener,
-    public ACE_Service_Object
+  class TAO_FTRTEC_Export Replication_Service
+    : public TAO_FTEC_Become_Primary_Listener
+    , public ACE_Service_Object
   {
   public:
     static Replication_Service* instance();
@@ -39,18 +40,37 @@ namespace FTRTEC
 
     virtual void become_primary();
 
+    /**
+     * Used for checking if the incoming replication message is out of sequence.
+     */
     void check_validity(ACE_ENV_SINGLE_ARG_DECL);
 
     typedef void (FtRtecEventChannelAdmin::EventChannelFacade::*RollbackOperation)
       (const FtRtecEventChannelAdmin::ObjectId& ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
+   /**
+    * Replicate a request.
+    *
+    * @param state The request to be replicated.
+    * @param rollback The rollback operation when the replication failed.
+    */
     void replicate_request(const FtRtecEventChannelAdmin::Operation& update,
       RollbackOperation rollback
       ACE_ENV_ARG_DECL);
 
+   /**
+    * Inform the backup replicas that a new replica has joined the object
+    * group.
+    */
+    void add_member(const FTRT::ManagerInfo & info,
+                    CORBA::ULong object_group_ref_version
+                    ACE_ENV_ARG_DECL);
+
     int  acquire_read (void);
     int  acquire_write (void);
     int  release (void);
+
+    int threads() const;
   };
 
 

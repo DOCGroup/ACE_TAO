@@ -6,10 +6,8 @@
 #ifndef _SECURITY_IDL_
 #define _SECURITY_IDL_
 
-#include <tao/Services.pidl>
 #include <tao/TimeBase.pidl>
 #include <orb.idl>
-#include <tao/OctetSeq.pidl>
 
 #pragma prefix "omg.org"
 

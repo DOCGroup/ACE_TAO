@@ -1,11 +1,10 @@
-#include "orbsvcs/Log/NotifyLogFactory_i.h"
-#include "orbsvcs/Log/LogNotification.h"
-#include "orbsvcs/Log/NotifyLogNotification.h"
+#include "orbsvcs/orbsvcs/Log/NotifyLogFactory_i.h"
+#include "orbsvcs/orbsvcs/Log/LogNotification.h"
+#include "orbsvcs/orbsvcs/Log/NotifyLogNotification.h"
 
 ACE_RCSID (Log,
            NotifyLogFactory_i,
            "$Id$")
-
 
 TAO_NotifyLogFactory_i::TAO_NotifyLogFactory_i (void)
 {

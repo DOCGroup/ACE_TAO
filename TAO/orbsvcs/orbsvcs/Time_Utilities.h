@@ -18,8 +18,8 @@
 #define ORBSVCS_TIME_UTILITIES_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/TimeBaseC.h"
-#include "orbsvcs/svc_utils_export.h"
+#include "orbsvcs/orbsvcs/TimeBaseC.h"
+#include "orbsvcs/orbsvcs/svc_utils_export.h"
 #include "ace/OS_NS_time.h"
 
 class TAO_Svc_Utils_Export ORBSVCS_Time
@@ -69,7 +69,7 @@ public:
 };
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Time_Utilities.i"
+#include "orbsvcs/orbsvcs/Time_Utilities.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

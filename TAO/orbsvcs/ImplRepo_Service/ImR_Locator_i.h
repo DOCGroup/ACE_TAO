@@ -4,8 +4,15 @@
 #define IMR_LOCATOR_I_H
 #include /**/ "ace/pre.h"
 
+#include "Adapter_Activator.h"
+#include "Forwarder.h"
+#include "INS_Locator.h"
+#include "Locator_Options.h"
+#include "locator_export.h"
+
+#include "orbsvcs/orbsvcs/IOR_Multicast.h"
+
 #include "tao/PortableServer/ImR_LocatorS.h"
-#include "tao/IORTable/IORTable.h"
 
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Null_Mutex.h"
@@ -33,24 +40,24 @@ typedef ACE_Hash_Map_Manager_Ex <ACE_CString,
                                  ACE_Equal_To<ACE_CString>,
                                  ACE_Null_Mutex> ServerMap;
 
-class ImR_Adapter_Activator;
-class ImR_Forwarder;
-
 
 // Gets a request from a client and depending on the POA name,
 // requests an activator to take care of activating the
 // corresponding server and raises a forward exception to the
 // client pointing to the correct server.
-class ImR_Locator_i : public virtual POA_ImplementationRepository::Locator
+class Locator_Export ImR_Locator_i : public virtual POA_ImplementationRepository::Locator
 {
-
  public:
+  ImR_Locator_i();
 
-  ImR_Locator_i ();
-
-  // Initialize and gets the ImR_Locator running and ready to accept
-  // requests.
-  int init (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  /// Initialize the service, creating its own orb, poa, etc.
+  int init (Options& opts ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  /// Same as above, but use the given orb
+  int init_with_orb (CORBA::ORB_ptr orb, Options& opts ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  /// Cleans up any state created by init*.
+  int fini (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  /// Run using the orb reference created during init()
+  int run(ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
   // Register an activator with the locator. 
   // Returns a token that must be used when unregistering.
@@ -172,12 +179,23 @@ class ImR_Locator_i : public virtual POA_ImplementationRepository::Locator
 
   // Starts up the server <server> on one or more activators.
   // Returns a partial ior for the server that is missing only the ObjectKey.
-  char *activate_server_with_startup (const char *server,
+  char* activate_server_with_startup (const char *server,
                                       int check_startup
                                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      ImplementationRepository::NotFound,
                      ImplementationRepository::CannotActivate));
+
+  // The following methods are used internally by the locator to contact
+  // the activator for information. They are not IDL methods.
+  char* start_server(const char* server ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     ImplementationRepository::NotFound,
+                     ImplementationRepository::CannotActivate));
+
+  char* find_ior_i (const char* object_name ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException, ImplementationRepository::NotFound));
+
  private:
 
   // Set up the multicast related if 'm' is passed on the command
@@ -190,19 +208,30 @@ class ImR_Locator_i : public virtual POA_ImplementationRepository::Locator
     choose_activator(const char *activator ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((ImplementationRepository::NotFound, CORBA::SystemException));
 
+  void unregister_activator_i(const char* activator);
+
+private:
   // Table that maintains the activator to Object Reference of the
   // Activator running in that activator.
   ActivatorMap activator_map_;
   ServerMap server_map_;
 
   // The class that handles the forwarding.
-  ImR_Forwarder *forwarder_impl_;
+  ImR_Forwarder forwarder_;
 
   // Used for the forwarding of any type of POA.
-  ImR_Adapter_Activator *activator_;
+  ImR_Adapter_Activator activator_;
 
   /// The locator interface for the IORTable
-  IORTable::Locator_var ins_locator_;
+  INS_Locator ins_locator_;
+
+  CORBA::ORB_var orb_;
+  PortableServer::POA_var root_poa_;
+  PortableServer::POA_var imr_poa_;
+
+  int debug_;
+
+  TAO_IOR_Multicast ior_multicast_;
 };
 
 #include /**/ "ace/post.h"

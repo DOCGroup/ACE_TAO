@@ -139,7 +139,7 @@ InputPath=.\test.idl
 InputName=test
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-	..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
+	..\..\..\bin\tao_idl  -I..\..\ -Ge 1 $(InputName).idl
 
 # End Custom Build
 

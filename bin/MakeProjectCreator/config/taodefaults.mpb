@@ -3,6 +3,6 @@
 
 project {
   staticflags += TAO_AS_STATIC_LIBS
-  includes    += $(TAO_ROOT) $(TAO_ROOT)/tao
+  includes    += $(TAO_ROOT)
   libpaths    += $(ACE_ROOT)/lib
 }

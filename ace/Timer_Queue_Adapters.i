@@ -31,19 +31,18 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::thr_id (void) const
 
 template<class TQ> ACE_INLINE int
 ACE_Thread_Timer_Queue_Adapter<TQ>::activate (long flags,
-                                              int n_threads,
-                                              int force_active,
+                                              int ,
+                                              int ,
                                               long priority,
                                               int grp_id,
                                               ACE_Task_Base *task,
                                               ACE_hthread_t thread_handles[],
                                               void *stack[],
                                               size_t stack_size[],
-                                              ACE_thread_t thread_names[])
+                                              ACE_thread_t thread_names[],
+                                              bool )
 {
   // Macros to avoid "warning: unused parameter" type warning.
-  ACE_UNUSED_ARG (n_threads);
-  ACE_UNUSED_ARG (force_active);
   ACE_UNUSED_ARG (thread_handles);
 
   // Make sure that we only allow a single thread to be spawned for

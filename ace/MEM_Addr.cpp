@@ -74,9 +74,12 @@ ACE_MEM_Addr::same_host (const ACE_INET_Addr &sap)
 {
   ACE_TRACE ("ACE_MEM_Addr::same_host");
 
-  ACE_UINT32 me = this->external_.get_ip_address ();
-  ACE_UINT32 you = sap.get_ip_address ();
-
+  // ACE_INET_Addr::operator== takes port number into account, so get
+  // the addresses without a port number and compare.
+  ACE_INET_Addr me (this->external_);
+  ACE_INET_Addr you (sap);
+  me.set_port_number (0);
+  you.set_port_number (0);
   return me == you;
 }
 

@@ -5,7 +5,7 @@
 
 #include "ace/Get_Opt.h"
 
-// Since this is only included in the .h file, these should be 
+// Since this is only included in the .h file, these should be
 // remain inline, not ACE_INLINE.
 // FUZZ: disable check_for_inline
 
@@ -89,36 +89,36 @@ Performance_Test_Options::n_lwps (void)
 }
 
 inline void
-Performance_Test_Options::pipe_addr (char *pipe)
+Performance_Test_Options::pipe_addr (ACE_TCHAR *pipe)
 {
   this->_pipe_addr = pipe;
 }
 
-inline char *
+inline ACE_TCHAR *
 Performance_Test_Options::pipe_addr (void)
 {
   return this->_pipe_addr;
 }
 
 inline void
-Performance_Test_Options::service_entry (char *pipe)
+Performance_Test_Options::service_entry (ACE_TCHAR *pipe)
 {
   this->_service_entry = pipe;
 }
 
-inline char *
+inline ACE_TCHAR *
 Performance_Test_Options::service_entry (void)
 {
   return this->_service_entry;
 }
 
 inline void
-Performance_Test_Options::mapped_file (char *filename)
+Performance_Test_Options::mapped_file (ACE_TCHAR *filename)
 {
   this->_mapped_file = filename;
 }
 
-inline char *
+inline ACE_TCHAR *
 Performance_Test_Options::mapped_file (void)
 {
   return this->_mapped_file;

@@ -80,7 +80,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
         }
 
       // this should get mapped to an IPv6 address
-      addr.set (80, INADDR_ANY, 1, 1);
+      addr.set (80, ACE_UINT32 (INADDR_ANY), 1, 1);
 
       if (AF_INET6 != addr.get_type())
         {

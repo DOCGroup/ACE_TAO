@@ -13,12 +13,12 @@
 #include "CEC_Reactive_ConsumerControl.h"
 #include "CEC_Reactive_SupplierControl.h"
 
-#include "orbsvcs/ESF/ESF_Immediate_Changes.h"
-#include "orbsvcs/ESF/ESF_Delayed_Changes.h"
-#include "orbsvcs/ESF/ESF_Copy_On_Write.h"
-#include "orbsvcs/ESF/ESF_Copy_On_Read.h"
-#include "orbsvcs/ESF/ESF_Proxy_List.h"
-#include "orbsvcs/ESF/ESF_Proxy_RB_Tree.h"
+#include "orbsvcs/orbsvcs/ESF/ESF_Immediate_Changes.h"
+#include "orbsvcs/orbsvcs/ESF/ESF_Delayed_Changes.h"
+#include "orbsvcs/orbsvcs/ESF/ESF_Copy_On_Write.h"
+#include "orbsvcs/orbsvcs/ESF/ESF_Copy_On_Read.h"
+#include "orbsvcs/orbsvcs/ESF/ESF_Proxy_List.h"
+#include "orbsvcs/orbsvcs/ESF/ESF_Proxy_RB_Tree.h"
 
 #include "ace/Arg_Shifter.h"
 #include "ace/Sched_Params.h"

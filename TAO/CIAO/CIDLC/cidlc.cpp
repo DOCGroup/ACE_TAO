@@ -33,6 +33,39 @@
 using std::cerr;
 using std::endl;
 
+class ErrorDetector : public std::streambuf
+{
+public:
+  ErrorDetector (std::streambuf* prev)
+      : error_ (false),
+        prev_ (*prev)
+  {
+  }
+
+  virtual int_type
+  overflow (int_type c)
+  {
+    error_ = true;
+    return prev_.sputc (c);
+  }
+
+  virtual int
+  sync ()
+  {
+    return prev_.pubsync ();
+  }
+
+  bool
+  error () const throw ()
+  {
+    return error_;
+  }
+
+private:
+  bool error_;
+  std::streambuf& prev_;
+};
+
 using namespace CCF::CompilerElements;
 using namespace CCF::CIDL;
 using namespace CCF::CIDL::SemanticGraph;
@@ -79,7 +112,7 @@ main (int argc, char* argv[])
 
       d.add_option (CL::OptionDescription (
                       "trace-semantic-actions",
-                      "Turn on semnatic actions tracing facility.",
+                      "Turn on semantic actions tracing facility.",
                       true));
 
       d.add_option (CL::OptionDescription (
@@ -160,6 +193,8 @@ main (int argc, char* argv[])
     //}
 
     Diagnostic::Stream dout;
+    ErrorDetector detector (cerr.rdbuf ());
+    cerr.rdbuf (&detector);
 
     LexicalAnalyzer lexer (pp);
 
@@ -168,7 +203,7 @@ main (int argc, char* argv[])
     //@@ bad token comparison
     for (TokenPtr token = lexer.next ();; token = lexer.next ())
     {
-      // cerr << token << endl;
+      // cerr << typeid(*(token.in ())).name () << " : " << token << endl;
       token_stream.push_back (token);
       if (ReferenceCounting::strict_cast<EndOfStream> (token) != 0) break;
     }
@@ -225,6 +260,13 @@ main (int argc, char* argv[])
                                parser.start ());
 
     if (dout.error_count () != 0) return 1;
+
+    // This is a little hack to make CIDL compiler signal
+    // error conditions by return value. Once I redesign
+    // diagnostic in CCF this should be removed.
+
+    if (detector.error ()) return 1;
+
 
     // Generate executor mapping.
     {

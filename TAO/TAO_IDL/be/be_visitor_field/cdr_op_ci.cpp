@@ -282,10 +282,18 @@ be_visitor_field_cdr_op_ci::visit_interface (be_interface *node)
     case TAO_CodeGen::TAO_CDR_OUTPUT:
       if (node->is_defined ())
         {
-          *os << "CORBA::Object::marshal (" << be_idt << be_idt_nl
-              << "_tao_aggregate." << f->local_name () << ".in ()," << be_nl
-              << "strm" << be_uidt_nl
-              << ")" << be_uidt;
+          if (f->is_abstract ())
+            {
+              *os << "(strm << _tao_aggregate." 
+                  << f->local_name () << ".in ())";
+            }
+          else
+            {
+              *os << "CORBA::Object::marshal (" << be_idt << be_idt_nl
+                  << "_tao_aggregate." << f->local_name () << ".in ()," << be_nl
+                  << "strm" << be_uidt_nl
+                  << ")" << be_uidt;
+            }
         }
       else
         {
@@ -342,10 +350,18 @@ be_visitor_field_cdr_op_ci::visit_interface_fwd (be_interface_fwd *node)
     case TAO_CodeGen::TAO_CDR_OUTPUT:
       if (node->is_defined ())
         {
-          *os << "CORBA::Object::marshal (" << be_idt << be_idt_nl
-              << "_tao_aggregate." << f->local_name () << ".in ()," << be_nl
-              << "strm" << be_uidt_nl
-              << ")" << be_uidt;
+          if (f->is_abstract ())
+            {
+              *os << "(strm << _tao_aggregate." 
+                  << f->local_name () << ".in ())";
+            }
+          else
+            {
+              *os << "CORBA::Object::marshal (" << be_idt << be_idt_nl
+                  << "_tao_aggregate." << f->local_name () << ".in ()," << be_nl
+                  << "strm" << be_uidt_nl
+                  << ")" << be_uidt;
+            }
         }
       else
         {

@@ -1,6 +1,6 @@
 #include "Server_Repository.h"
 #include "XML_ContentHandler.h"
-#include "Activator_Options.h"
+#include "utils.h"
 
 #include "ACEXML/parser/parser/Parser.h"
 #include "ACEXML/common/FileCharStream.h"
@@ -9,717 +9,359 @@ ACE_RCSID (ImplRepo_Service,
            Server_Repository,
            "$Id$")
 
+static const char* STARTUP_COMMAND = "StartupCommand";
+static const char* WORKING_DIR = "WorkingDir";
+static const char* ENVIRONMENT = "Environment";
+static const char* ACTIVATION = "Activation";
+static const char* PARTIAL_IOR = "Location";
+static const char* IOR = "IOR";
 
-int
-Server_Repository::init (void)
+#if defined (ACE_WIN32)
+static const char* WIN32_REG_KEY = "Software\\TAO\\IR\\Servers";
+#endif
+
+static void loadAsBinary(ACE_Configuration& config, 
+                         Server_Repository::SIMap& server_infos) 
 {
-  int rmode = OPTIONS::instance ()->repository_mode ();
-  if (rmode != Options::REPO_XML_FILE)
-    {
-      Repository_Configuration *config = OPTIONS::instance ()->config ();
-      ACE_ASSERT(config != 0);
 
-      // iterate through the list of registered servers and register them
+  int index = 0;
+  ACE_CString name;
+  while (config.enumerate_sections (config.root_section(), index, name) == 0)
+  {
+    ACE_CString cmdline, dir, envstr, partial_ior, ior;
+    u_int amodeint = ImplementationRepository::MANUAL;
 
-      config->open_section (config->root_section (),
-                            ACE_LIB_TEXT ("Servers"),
-                            1,
-                            this->servers_);
-      int index = 0;
-      ACE_CString name;
+    ACE_Configuration_Section_Key server_key;
 
-      while (config->enumerate_sections (servers_, index, name) == 0)
-        {
-          ACE_CString logical, startup, working_dir;
-          u_int activation_val = 0;
-          ImplementationRepository::ActivationMode activation;
+    // Can't fail, because we're enumerating
+    config.open_section(config.root_section(), name.c_str(), 0, server_key);
 
-          ImplementationRepository::EnvironmentList environment_vars;
+    // Ignore any missing values. Server name is enough on its own.
+    config.get_string_value (server_key, STARTUP_COMMAND, cmdline);
+    config.get_string_value (server_key, WORKING_DIR, dir);
+    config.get_string_value (server_key, ENVIRONMENT, envstr);
+    config.get_integer_value(server_key, ACTIVATION, amodeint);
+    config.get_string_value (server_key, PARTIAL_IOR, partial_ior);
+    config.get_string_value (server_key, IOR, ior);
 
-          ACE_Configuration_Section_Key server_key;
-          int error = 0;
+    ImplementationRepository::ActivationMode amode = ACE_static_cast (
+      ImplementationRepository::ActivationMode, amodeint);
 
-          error += config->open_section (this->servers_,
-                                         name.c_str(),
-                                         0,
-                                         server_key);
+    ImplementationRepository::EnvironmentList env_vars =
+      ImR_Utils::parseEnvList(envstr);
 
-          error += config->get_string_value (server_key,
-                                             ACE_LIB_TEXT ("LogicalServer"),
-                                             logical);
+    Server_Info_Ptr si(
+      new Server_Info(name, cmdline, env_vars, dir, amode, partial_ior, ior));
+    server_infos.bind (name, si);
+    index++;
+  }
+}
 
-          error += config->get_string_value (server_key,
-                                             ACE_LIB_TEXT ("StartupCommand"),
-                                             startup);
+// Note : There is no saveAsBinary(), because the ACE_Configuration class
+// supports saving of individual entries.
 
-          error += config->get_string_value (server_key,
-                                             ACE_LIB_TEXT ("WorkingDir"),
-                                             working_dir);
+class XML_ServerInfo_Callback : public XML_ContentHandler::Callback {
+  Server_Repository::SIMap& server_infos_;
+public:
+  XML_ServerInfo_Callback(Server_Repository::SIMap& server_infos)
+    : server_infos_(server_infos)
+  {
+  }
+  virtual void next_server(const ACE_CString& name, const ACE_CString& cmdline, 
+    const ACE_CString& envstr, const ACE_CString& dir,
+    const ACE_CString& amodestr, const ACE_CString& partial_ior, const ACE_CString& ior)
+  {
+    ImplementationRepository::ActivationMode amode = ImR_Utils::parseActivationMode(amodestr);
+    ImplementationRepository::EnvironmentList env_vars = ImR_Utils::parseEnvList(envstr);
+    Server_Info_Ptr si(
+      new Server_Info(name, cmdline, env_vars, dir, amode, partial_ior, ior));
+    this->server_infos_.bind(name, si);
+  }
+};
 
-          error += config->get_integer_value (server_key,
-                                              ACE_LIB_TEXT ("Activation"),
-                                              activation_val);
+static int loadAsXML(const ACE_CString& fname, Server_Repository::SIMap& server_infos) {
 
-          activation =
-            ACE_static_cast (ImplementationRepository::ActivationMode,
-                             activation_val);
+  ACEXML_FileCharStream* fstm = new ACEXML_FileCharStream; // xml input source will take ownership
 
-          // Maybe environments variables?? need a straightforward
-          // way to store env vars.
+  if (fstm->open(fname.c_str()) != 0)
+  {
+    // This is not a real error. The xml file may not exist yet.
+    delete fstm;
+    return 0;
+  }
 
-          if (error != 0)
-            {              
-              ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("Error reading configuration data for ")
-                ACE_TEXT ("service '%s',skipping\n"),
-                name.c_str ()));
-            }
-          else
-            {
-              this->add (name,
-                         logical,
-                         startup,
-                         environment_vars,
-                         working_dir,
-                         activation);
-            }
+  XML_ServerInfo_Callback cb(server_infos);
 
-          index++;
-        }
-    }
-  else
-    {
-      /// @@ Not quite sure what I want to do here .. leave for
-      /// now. I guess similar stuff like check if that particular
-      /// server info exists etc.
-    }
+  XML_ContentHandler handler(cb);
 
+  ACEXML_Parser parser;
+
+  // InputSource takes ownership
+  ACEXML_InputSource input(fstm);
+
+  parser.setContentHandler (&handler);
+  parser.setDTDHandler (&handler);
+  parser.setErrorHandler (&handler);
+  parser.setEntityResolver (&handler);
+
+  ACEXML_TRY_NEW_ENV
+  {
+    parser.parse (&input ACEXML_ENV_ARG_PARAMETER);
+    ACEXML_TRY_CHECK;
+  }
+  ACEXML_CATCH (ACEXML_Exception, ex)
+  {
+    ACE_ERROR((LM_ERROR, "Error during load of ImR persistence xml file."));
+    ex.print();
+    return -1;
+  }
+  ACEXML_ENDTRY;
   return 0;
 }
 
+// Note : Would pass servers by const&, but ACE hash map const_iterator is broken.
+static void saveAsXML(const ACE_CString& fname, Server_Repository::SIMap& servers) {
+  FILE* fp = ACE_OS::fopen (fname.c_str(), "w");
+  if (fp == 0)
+  {
+    ACE_ERROR((LM_ERROR, "Couldn't write to file %s\n", fname.c_str()));
+    return;
+  }
+  ACE_OS::fprintf(fp,"<?xml version=\"1.0\"?>\n");
+  ACE_OS::fprintf(fp,"<!DOCTYPE %s/>\n", XML_ContentHandler::ROOT_TAG);
+  ACE_OS::fprintf(fp,"<%s>\n", XML_ContentHandler::ROOT_TAG);
 
-// Add a new server to the Repository
+  Server_Repository::SIMap::ENTRY* entry = 0;
+  Server_Repository::SIMap::ITERATOR it(servers);
+  for (; it.next(entry); it.advance()) {
+    Server_Info& info = * entry->int_id_;
+    ACE_CString amodestr = ImR_Utils::activationModeToString(info.activation_mode);
+    ACE_CString envstr = ImR_Utils::envListToString(info.env_vars);
+
+    ACE_OS::fprintf(fp,"<%s>\n", XML_ContentHandler::SERVER_INFO_TAG);
+
+    ACE_OS::fprintf(fp,"\t<%s>", XML_ContentHandler::SERVER_TAG);
+    ACE_OS::fprintf(fp,"%s", info.name.c_str());
+    ACE_OS::fprintf(fp,"</%s>\n", XML_ContentHandler::SERVER_TAG);
+
+    ACE_OS::fprintf(fp,"\t<%s>\n", XML_ContentHandler::STARTUP_OPTIONS_TAG);
+
+    ACE_OS::fprintf(fp,"\t\t<%s>", XML_ContentHandler::COMMAND_LINE_TAG);
+    ACE_OS::fprintf(fp,"%s", info.cmdline.c_str());
+    ACE_OS::fprintf(fp,"</%s>\n", XML_ContentHandler::COMMAND_LINE_TAG);
+    ACE_OS::fprintf(fp,"\t\t<%s>", XML_ContentHandler::WORKING_DIR_TAG);
+    ACE_OS::fprintf(fp,"%s", info.dir.c_str());
+    ACE_OS::fprintf(fp,"</%s>\n", XML_ContentHandler::WORKING_DIR_TAG);
+
+    for (CORBA::ULong i = 0; i < info.env_vars.length(); ++i)
+    {
+      ACE_OS::fprintf(fp,"\t\t<%s", XML_ContentHandler::ENVIRONMENT_TAG);
+      ACE_OS::fprintf(fp," name=\"%s\"", info.env_vars[i].name.in());
+      ACE_OS::fprintf(fp," value=\"%s\"", info.env_vars[i].value.in());
+      ACE_OS::fprintf(fp,"/>\n");
+    }
+
+    ACE_OS::fprintf(fp,"\t\t<%s>", XML_ContentHandler::ACTIVATION_TAG);
+    ACE_OS::fprintf(fp,"%s", amodestr.c_str());
+    ACE_OS::fprintf(fp,"</%s>\n", XML_ContentHandler::ACTIVATION_TAG);
+
+    ACE_OS::fprintf(fp,"\t</%s>\n", XML_ContentHandler::STARTUP_OPTIONS_TAG);
+
+    ACE_OS::fprintf(fp,"\t<%s>", XML_ContentHandler::PARTIAL_IOR_TAG);
+    ACE_OS::fprintf(fp,"%s", info.partial_ior.c_str());
+    ACE_OS::fprintf(fp,"</%s>\n", XML_ContentHandler::PARTIAL_IOR_TAG);
+
+    ACE_OS::fprintf(fp,"\t<%s>", XML_ContentHandler::IOR_TAG);
+    ACE_OS::fprintf(fp,"%s", info.ior.c_str());
+    ACE_OS::fprintf(fp,"</%s>\n", XML_ContentHandler::IOR_TAG);
+
+    ACE_OS::fprintf(fp,"</%s>\n", XML_ContentHandler::SERVER_INFO_TAG);
+  }
+  ACE_OS::fprintf(fp,"</%s>\n", XML_ContentHandler::ROOT_TAG);
+  ACE_OS::fclose(fp);
+}
+
+Server_Repository::Server_Repository(const ACE_CString& activator)
+: rmode_(Options::REPO_NONE)
+, config_(0)
+, activator_name_(activator)
+{
+}
+
+int
+Server_Repository::init(Options::RepoMode rmode, const ACE_CString& name) 
+{
+  this->rmode_ = rmode;
+  this->fname_ = name;
+
+  int err = 0;
+  switch (this->rmode_) {
+  case Options::REPO_NONE:
+    {
+      break;
+    }
+  case Options::REPO_HEAP_FILE:
+    {
+      ACE_Configuration_Heap* heap = new ACE_Configuration_Heap();
+      this->config_.reset(heap);
+      err = heap->open(this->fname_.c_str());
+      if (err == 0)
+      {
+        loadAsBinary(*this->config_, this->server_infos_);
+      }
+      break;
+    }
+#if defined (ACE_WIN32)
+  case Options::REPO_REGISTRY:
+    {
+      HKEY root = ACE_Configuration_Win32Registry::
+        resolve_key(HKEY_LOCAL_MACHINE, WIN32_REG_KEY);
+      this->config_.reset(new ACE_Configuration_Win32Registry(root));
+      loadAsBinary(*this->config_, this->server_infos_);
+      break;
+    }
+#endif
+  case Options::REPO_XML_FILE:
+    {
+      err = loadAsXML(this->fname_, this->server_infos_);  
+      break;
+    }
+  default:
+    {
+      bool invalid_rmode_specified = false;
+      ACE_ASSERT(invalid_rmode_specified);
+      ACE_UNUSED_ARG(invalid_rmode_specified);
+      err = -1;
+    }
+  }
+  return err;
+}
+
 
 int
 Server_Repository::add (
-    const ACE_CString& POA_name,
-    const ACE_CString& logical_server_name,
-    const ACE_CString& startup_command,
-    const ImplementationRepository::EnvironmentList& environment_vars,
-    const ACE_CString& working_dir,
-    const ImplementationRepository::ActivationMode& activation
-  )
+                        const ACE_CString& server_name,
+                        const ACE_CString& startup_command,
+                        const ImplementationRepository::EnvironmentList& env_vars,
+                        const ACE_CString& working_dir,
+                        ImplementationRepository::ActivationMode activation,
+                        const ACE_CString& partial_ior,
+                        const ACE_CString& ior
+                        )
 {
-  int rmode = OPTIONS::instance ()->repository_mode ();
-  if (rmode != Options::REPO_XML_FILE)
-    {
-      Repository_Configuration *config = OPTIONS::instance ()->config ();
-      ACE_ASSERT(config != 0);
-
-      // @@ Add this to the persistent configuration; environment_vars??
-      ACE_Configuration_Section_Key server;
-      config->open_section (this->servers_,
-                            POA_name.c_str(),
-                            1,
-                            server);
-
-      config->set_string_value (server,
-                                ACE_LIB_TEXT ("LogicalServer"),
-                                logical_server_name);
-
-      config->set_string_value (server,
-                                ACE_LIB_TEXT ("StartupCommand"),
-                                startup_command);
-
-      config->set_string_value (server,
-                                ACE_LIB_TEXT ("WorkingDir"),
-                                working_dir);
-
-      config->set_integer_value (server,
-                                 ACE_LIB_TEXT ("Activation"),
-                                 activation);
-
-      Server_Info *new_server = 0;
-      ACE_NEW_RETURN (new_server,
-                      Server_Info (POA_name,
-                                   logical_server_name,
-                                   startup_command,
-                                   environment_vars,
-                                   working_dir,
-                                   activation),
-                      -1);
-
-      return this->repository_.bind (POA_name, new_server);
-    }
-  else
-    {
-      ACE_CString filename = OPTIONS::instance ()->file_name ();
-
-      FILE *fp = ACE_OS::fopen (filename.c_str(), "r");
-      
-      if (fp != 0) 
-        {
-          ACE_TCHAR buffer[4096];
-          while (ACE_OS::fgets (buffer, sizeof (buffer), fp))
-            {
-              /// Obviously, we need to/can update only if we find an
-              /// entry for it in the xml file.
-              ACE_TCHAR* found = ACE_OS::strstr (buffer, POA_name.c_str ());
-
-              if (found != 0)
-                {
-                  /// An entry found for the POA_name. So, dont
-                  /// add it again.
-                  ACE_DEBUG ((LM_DEBUG,
-                              "ImR Activator: The %s is already added.\n", POA_name.c_str ()));
-
-                  ACE_OS::fclose (fp);
-
-                  return 0;
-                }
-            }
-        }
-
-      /// If control comes here, it means this server isnt added already.
-      fp = ACE_OS::fopen (filename.c_str(), "a");
-
-      if (fp == 0)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Coudnt open the file to append\n"),
-                            -1);
-        }
-
-      ACE_CString server_info = "<SERVER_INFORMATION>";
-      server_info += "<Server>";
-      server_info += POA_name.c_str ();
-      server_info += "</Server>\n<StartupOptions>\n<Command_Line>";
-      server_info += startup_command;
-      server_info += "</Command_Line>\n<WorkingDir>";
-      server_info += working_dir;
-      server_info += "</WorkingDir>\n<Activation>";
-      server_info += OPTIONS::instance ()->convert_str (activation);
-      server_info += "</Activation>\n</StartupOptions>\n</SERVER_INFORMATION>\n";
-
-      ACE_OS::fprintf(fp, server_info.c_str());
-      ACE_OS::fclose(fp);
-
-      return 0;
-    }
-}
-
-// Update the associated process information.
-
-int
-Server_Repository::update (const ACE_CString& POA_name,
-                           const ACE_CString& location,
-                           const ACE_CString& server_object_ior)
-{
-  int rmode = OPTIONS::instance ()->repository_mode ();
-  if (rmode != Options::REPO_XML_FILE)
-    {
-      Server_Info *server = 0;
-      int retval = this->repository_.find (POA_name, server);
-
-      // Only fill in data if it was found
-      if (retval == 0)
-        {
-          ACE_ASSERT(server != 0);
-          server->update_running_info (location, server_object_ior);
-        }
-
-      return retval;
-    }
-  else
-    {
-      ACE_CString filename = OPTIONS::instance ()->file_name ();
-
-      FILE *fp = ACE_OS::fopen (filename.c_str(), "r+");
-      ACE_ASSERT(fp != 0);
-
-      ACE_TCHAR buffer[4096];
-
-      while (ACE_OS::fgets (buffer, sizeof (buffer), fp))
-        {
-          /// Obviously, we need to/can update only if we find an
-          /// entry for it in the xml file.
-          ACE_TCHAR* found = ACE_OS::strstr (buffer, POA_name.c_str ());
-
-          if (found != 0)
-            {
-              /// found an entry. So, need to update the entry
-              /// information.
-              this->handler_->update_running_information (POA_name,
-                                                          location,
-                                                          server_object_ior);
-              return 0;
-            }
-        }
-      return -1;
-    }
-}
-
-// Returns information related to startup.
-
-int
-Server_Repository::get_startup_info (
-    const ACE_CString& POA_name,
-    ACE_CString& logical_server_name,
-    ACE_CString& startup_command,
-    ImplementationRepository::EnvironmentList& environment_vars,
-    ACE_CString& working_dir,
-    ImplementationRepository::ActivationMode& activation
-  )
-{
-  int rmode = OPTIONS::instance ()->repository_mode ();
-  if (rmode != Options::REPO_XML_FILE)
-    {
-      Server_Info* server = 0;
-      int retval = this->repository_.find (POA_name, server);
-
-      // Only fill in data if it was found
-      if (retval == 0)
-        {
-          ACE_ASSERT(server != 0);
-          server->get_startup_info (logical_server_name,
-                                    startup_command,
-                                    environment_vars,
-                                    working_dir,
-                                    activation);
-        }
-      return retval;
-    }
-  else
-    {
-      ACEXML_FileCharStream *fstm = 0;
-      ACE_NEW_RETURN (fstm,
-                      ACEXML_FileCharStream (),
-                      1);
-
-      const char* fname = OPTIONS::instance()->file_name().c_str();
-      if (fstm->open (fname) != 0)
-        {
-          ACE_ERROR((LM_ERROR, ACE_LIB_TEXT("Fail to open XML file: %s\n"), fname));
-          return 1;
-        }
-
-      this->handler_ = new XML_ContentHandler (POA_name.c_str ());
-
-      ACEXML_Parser parser;
-
-      ACEXML_InputSource input(fstm);
-
-      parser.setContentHandler (this->handler_);
-      parser.setDTDHandler (this->handler_);
-      parser.setErrorHandler (this->handler_);
-      parser.setEntityResolver (this->handler_);
-
-      ACEXML_TRY_NEW_ENV
-        {
-          parser.parse (&input ACEXML_ENV_ARG_PARAMETER);
-          ACEXML_TRY_CHECK;
-        }
-      ACEXML_CATCH (ACEXML_Exception, ex)
-        {
-          ex.print();
-          return -1;
-        }
-      ACEXML_ENDTRY;
-
-      ACE_CString activation_mode;
-
-      this->handler_->get_startup_information (logical_server_name,
-                                               startup_command,
-                                               working_dir,
-                                               activation_mode);
-
-      activation = OPTIONS::instance ()->convert_mode (activation_mode.c_str ());
-
-      return 0;
-    }
-}
-
-
-// Returns information related to a running copy.
-
-int
-Server_Repository::get_running_info (const ACE_CString& POA_name,
-                                     ACE_CString& location,
-                                     ACE_CString& server_object_ior)
-{
-  int rmode = OPTIONS::instance ()->repository_mode ();
-
-  if (rmode != Options::REPO_XML_FILE)
-    {
-      Server_Info *server;
-      int retval = this->repository_.find (POA_name, server);
-
-      // Only fill in data if it was found
-      if (retval == 0)
-        {
-          ACE_ASSERT(server != 0);
-          server->get_running_info (location, server_object_ior);
-        }
-      return retval;
-    }
-  else
-    {
-      ACE_CString filename = OPTIONS::instance ()->file_name ();
-
-      FILE *fp = ACE_OS::fopen (filename.c_str(), "r");
-      ACE_ASSERT(fp != 0);
-
-      ACE_TCHAR buffer[4096];
-
-      while (ACE_OS::fgets (buffer, sizeof (buffer), fp))
-        {
-          ACE_TCHAR* found = ACE_OS::strstr (buffer, POA_name.c_str ());
-
-          if (found != 0)
-            {
-              /// Found an entry for the POA_name. So, we can proceed.
-              this->handler_->get_running_information (POA_name,
-                                                       location,
-                                                       server_object_ior);
-              return 0;
-            }
-        }
-      /// If control comes here.. implies, there is no entry for the
-      /// POA_name.
-      return -1;
-    }
-}
-
-
-// Checks the starting_up_ variable in the Server_Info and
-// returns the previous value or -1 if the POA_name wasn't found
-
-int
-Server_Repository::starting_up (const ACE_CString& POA_name,
-                                int new_value)
-{
-  int rmode = OPTIONS::instance ()->repository_mode ();
-
-  if (rmode != Options::REPO_XML_FILE)
-    {
-      Server_Info *server;
-      int retval = this->repository_.find (POA_name, server);
-
-      // Only fill in data if it was found
-      if (retval == 0)
-        {
-          ACE_ASSERT(server != 0);
-          retval = server->starting_up_ ? 1 : 0;
-          server->starting_up_ = new_value != 0;
-        }
-      return retval;
-    }
-  else
-    {
-      ACE_CString filename = OPTIONS::instance ()->file_name ();
-
-      FILE *fp = ACE_OS::fopen (filename.c_str(), "r");
-      ACE_ASSERT(fp != 0);
-
-      ACE_TCHAR buffer[4096];
-
-      while (ACE_OS::fgets (buffer, sizeof (buffer), fp))
-        {
-          ACE_TCHAR* found = ACE_OS::strstr (buffer, POA_name.c_str ());
-
-          if (found != 0)
-            {
-              int retval;
-              /// Found an entry for the POA_name. So, we can proceed.
-              this->handler_->get_startup_value (POA_name, retval);
-              this->handler_->set_startup_value (POA_name, new_value);
-              return retval;
-            }
-        }
-      /// If control comes here.. implies, there is no entry for the
-      /// POA_name.
-      return -1;
-    }
-}
-
-// Same as above but does not alter the value
-
-int
-Server_Repository::starting_up (const ACE_CString& POA_name)
-{
-  int rmode = OPTIONS::instance ()->repository_mode ();
-
-  if (rmode != Options::REPO_XML_FILE)
-    {
-      Server_Info *server;
-
-      int retval = this->repository_.find (POA_name, server);
-
-      // Only fill in data if it was found
-      if (retval == 0)
-        {
-          ACE_ASSERT(server != 0);
-          retval = server->starting_up_ != 0;
-        }
-
-      return retval;
-    }
-  else
-    {
-      ACE_CString filename = OPTIONS::instance ()->file_name ();
-
-      FILE *fp = ACE_OS::fopen (filename.c_str(), "r");
-      ACE_ASSERT(fp != 0);
-
-      ACE_TCHAR buffer[4096];
-      
-      while (ACE_OS::fgets (buffer, sizeof (buffer), fp))
-        {
-          ACE_TCHAR* found = ACE_OS::strstr (buffer, POA_name.c_str ());
-
-          if (found != 0)
-            {
-              int retval;
-              /// Found an entry for the POA_name. So, we can proceed.
-              this->handler_->get_startup_value (POA_name, retval);
-              return retval;
-            }
-        }
-      /// If control comes here.. implies, there is no entry for the
-      /// POA_name.
-      return -1;
-    }
-}
-
-
-// Removes the server from the Repository.
-
-int
-Server_Repository::remove (const ACE_CString& POA_name)
-{
-  int rmode = OPTIONS::instance ()->repository_mode ();
-
-  if (rmode != Options::REPO_XML_FILE)
-    {
-      Repository_Configuration *config = OPTIONS::instance ()->config ();
-      ACE_ASSERT(config != 0);
-      // Remove the persistent configuration information
-      config->remove_section (this->servers_,
-                              POA_name.c_str(),
-                              1);
-      return this->repository_.unbind (POA_name);
-    }
-  else
-    {
-      ACE_CString filename = OPTIONS::instance ()->file_name ();
-
-      FILE *fp = ACE_OS::fopen (filename.c_str(), "r");
-      ACE_ASSERT(fp != 0);
-
-      /// Have a temporary file
-      CORBA::String_var temp_file = "temporary_file";
-
-      FILE *fp_temp = ACE_OS::fopen (temp_file.in (), "w");
-      ACE_ASSERT(fp_temp != 0);
-
-      ACE_TCHAR buffer[4096];
-
-      bool remove_section = false;
-      // int dtd_section = 0;
-
-      while (ACE_OS::fgets (buffer, sizeof (buffer), fp))
-        {
-          if (! remove_section)
-            {
-              ACE_TCHAR* found = ACE_OS::strstr (buffer, POA_name.c_str ());
-
-              if (found == 0)
-                {
-                  ACE_OS::fprintf (fp_temp, buffer);
-                }
-              else
-                {
-                  remove_section = true;
-                }
-            }
-          else
-            {
-              ACE_TCHAR* found = ACE_OS::strstr (buffer, "</SERVER_INFORMATION>");
-
-              if (found != 0)
-                remove_section = false;
-            }
-        }
-
-      ACE_OS::fclose (fp_temp);
-      ACE_OS::fclose (fp);
-
-      // Now copy the temporary file to the original file.
-      fp_temp = ACE_OS::fopen (temp_file.in (), "r");
-      ACE_ASSERT(fp_temp != 0);
-
-      fp = ACE_OS::fopen (filename.c_str(), "w");
-      ACE_ASSERT(fp != 0);
-
-      while (ACE_OS::fgets (buffer, sizeof (buffer), fp_temp))
-        {
-          ACE_OS::fprintf (fp, buffer);
-        }
-
-      ACE_OS::fclose (fp);
-      ACE_OS::fclose (fp_temp);
-      ACE_OS::unlink (temp_file.in ());
-      return 0;
-    }
-  /*
-            /// There is no support for DTD in the XML parser as of
-            /// now. Will uncomment this part when the support is
-            /// added.
-
-            if (dtd_section == 0)
-            {
-            found = ACE_OS::strstr (buffer, "]>");
-
-            if (found != 0)
-            {
-            dtd_section = 1;
-            remove_section = 0;
-            }
-
-            ACE_OS::fprintf (fp_temp,
-            buffer);
-            }
-            else
-            {
-            if (remove_section == 0)
-            {
-            found = ACE_OS::strstr (buffer, POA_name.c_str ());
-
-            if (found == 0)
-            {
-    ACE_OS::fprintf (fp_temp,
-            buffer);
-            }
-            else
-            {
-    remove_section = 1;
-            }
-            }
-            else
-            {
-    found = ACE_OS::strstr (buffer, "</SERVER_INFORMATION>");
-
-            if (found != 0)
-            remove_section = 0;
-            }
-            }
-
-            }
-            ACE_OS::fclose (fp_temp);
-            ACE_OS::fclose (fp);
-
-            // Now copy the temporary file to the original file.
-            fp_temp = ACE_OS::fopen (temp_file, "r");
-
-            fp = ACE_OS::fopen (filename, "w");
-
-            while (ACE_OS::fgets (buffer, 4096, fp_temp))
-            {
-            ACE_OS::fprintf (fp,
-            buffer);
-            }
-
-            ACE_OS::fclose (fp);
-            ACE_OS::fclose (fp_temp);
-            ACE_OS::unlink (temp_file);
-            }
-          */
-}
-
-int
-Server_Repository::write_to_xml (
-    const ACE_CString&,
-    const ACE_CString&,
-    const ACE_CString&,
-    const ImplementationRepository::EnvironmentList&,
-    const ACE_CString&,
-    const ImplementationRepository::ActivationMode&)
-{
-  /*
-    ACE_TCHAR *filename = "trial.xml";
-
-    ACE_Configuration_Heap *heap = 0;
-    ACE_NEW_RETURN (heap, ACE_Configuration_Heap, -1);
-
-    if (heap->open (filename) != 0)
-    {
-    ACE_ERROR ((LM_ERROR,
-    ACE_TEXT ("Error: Opening persistent heap file '%s'\n"),
-    filename));
-    }
-
-    heap->open_section (heap->root_section (),
-    "Trail_Servers",
-    1,
-
-  */
+  Server_Info_Ptr new_server(new Server_Info(server_name, 
+    startup_command, env_vars, working_dir, activation, partial_ior, ior));
+
+  int err = this->server_infos_.bind (server_name, new_server);
+  if (err != 0) 
+  {
+    return err;
+  }
+
+  this->update(* new_server);
   return 0;
 }
 
-
-// Returns a new iterator that travels over the repository.
-
-Server_Repository::HASH_IMR_MAP::ITERATOR *
-Server_Repository::new_iterator (void)
+int
+Server_Repository::update (const Server_Info& info)
 {
-  HASH_IMR_MAP::ITERATOR *hash_iter = 0;
-  ACE_NEW_RETURN (hash_iter,
-    Server_Repository::HASH_IMR_MAP::ITERATOR (this->repository_),
-                  0);
+  if (rmode_ == Options::REPO_HEAP_FILE || rmode_ == Options::REPO_REGISTRY)
+  {
+    ACE_ASSERT(this->config_.get() != 0);
 
-  return hash_iter;
+    ACE_Configuration& cfg = *this->config_;
+
+    ACE_Configuration_Section_Key key;
+    int err = cfg.open_section (cfg.root_section(), info.name.c_str(), 1, key);
+    if (err != 0)
+    {
+      ACE_ERROR((LM_ERROR, "Unable to open config section:%s\n", info.name.c_str()));
+      return err;
+    }
+
+    ACE_CString envstr = ImR_Utils::envListToString(info.env_vars);
+
+    cfg.set_string_value (key, STARTUP_COMMAND, info.cmdline.c_str());
+    cfg.set_string_value (key, WORKING_DIR, info.dir.c_str());
+    cfg.set_string_value (key, ENVIRONMENT, envstr);
+    cfg.set_integer_value (key, ACTIVATION, info.activation_mode);
+    cfg.set_string_value (key, PARTIAL_IOR, info.partial_ior.c_str());
+    cfg.set_string_value (key, IOR, info.ior.c_str());
+  }
+  else if (rmode_ == Options::REPO_XML_FILE)
+  {
+    saveAsXML(this->fname_, this->server_infos_);
+  }
+  return 0;
 }
 
-
-// Returns the number of entries in the repository.
-
-size_t
-Server_Repository::get_repository_size (void)
+Server_Info_Ptr
+Server_Repository::get_server_info (const ACE_CString& server_name)
 {
-  return this->repository_.current_size ();
+  Server_Info_Ptr server(0);
+  this->server_infos_.find (server_name, server);
+  return server;
 }
 
+int
+Server_Repository::remove (const ACE_CString& server_name)
+{
+  int ret = this->server_infos_.unbind (server_name);
+  if (ret != 0) 
+  {
+    return ret;
+  }
+
+  if (rmode_ == Options::REPO_HEAP_FILE || rmode_ == Options::REPO_REGISTRY)
+  {
+    ACE_ASSERT(this->config_.get() != 0);
+    ACE_Configuration& cfg = *this->config_;
+    ret = cfg.remove_section (cfg.root_section(), server_name.c_str(), 1);
+  }
+  else if (rmode_ == Options::REPO_XML_FILE)
+  {
+    saveAsXML(this->fname_, this->server_infos_);
+  }
+  return ret;
+}
+
+Server_Repository::SIMap&
+Server_Repository::servers(void)
+{
+  return this->server_infos_;
+}
+
+const char* 
+Server_Repository::activator_name(void) const
+{
+  return this->activator_name_.c_str();
+}
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Hash_Map_Entry<ACE_CString, Server_Info *>;
-template class ACE_Hash_Map_Manager_Ex<ACE_CString, Server_Info *,ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, Server_Info *,ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<ACE_CString, Server_Info *,ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, Server_Info *,ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Entry<ACE_CString, ACE_Refcounted_Auto_Ptr<Server_Info, ACE_Null_Mutex> >;
+template class ACE_Hash_Map_Manager_Ex<ACE_CString, ACE_Refcounted_Auto_Ptr<Server_Info, ACE_Null_Mutex>, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, ACE_Refcounted_Auto_Ptr<Server_Info, ACE_Null_Mutex>,ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<ACE_CString, ACE_Refcounted_Auto_Ptr<Server_Info, ACE_Null_Mutex>,ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, ACE_Refcounted_Auto_Ptr<Server_Info, ACE_Null_Mutex>,ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 
 #if defined(__SUNPRO_CC) && (__SUNPRO_CC == 0x500)
 // This template is already defined in TAO, but Sun/CC 5.0 is broken
 template class ACE_Equal_To<ACE_CString>;
 #endif /* __SUNPRO_CC */
-// Instantiate for ACE_WString because ACE_CString can be either
-// ACE_CString or ACE_WString.
-template class ACE_Equal_To<ACE_WString>;
+template class ACE_Auto_Ptr<ACE_Configuration>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Hash_Map_Entry<ACE_CString, Server_Info *>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, Server_Info *,ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, Server_Info *,ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, Server_Info *,ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, Server_Info *,ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Entry<ACE_CString, ACE_Refcounted_Auto_Ptr<Server_Info, ACE_Null_Mutex> >
+#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, ACE_Refcounted_Auto_Ptr<Server_Info, ACE_Null_Mutex> ,ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, ACE_Refcounted_Auto_Ptr<Server_Info, ACE_Null_Mutex> ,ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, ACE_Refcounted_Auto_Ptr<Server_Info, ACE_Null_Mutex> ,ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, ACE_Refcounted_Auto_Ptr<Server_Info, ACE_Null_Mutex> ,ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
 
 #if defined(__SUNPRO_CC) && (__SUNPRO_CC == 0x500)
 // This template is already defined in TAO, but Sun/CC 5.0 is broken
 #pragma instantiate ACE_Equal_To<ACE_CString>
 #endif /* __SUNPRO_CC */
-// Instantiate for ACE_WString because ACE_CString can be either
-// ACE_CString or ACE_WString.
-#pragma instantiate ACE_Equal_To<ACE_WString>
-
+#pragma instantiate  ACE_Auto_Ptr<ACE_Configuration>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -17,7 +17,7 @@
 #ifndef SUPPLIER_H
 #define SUPPLIER_H
 
-#include "orbsvcs/CosEventCommS.h"
+#include "orbsvcs/orbsvcs/CosEventCommS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

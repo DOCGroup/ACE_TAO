@@ -1076,21 +1076,26 @@ public:
   ACE_POSIX_Asynch_Read_Dgram (ACE_POSIX_Proactor *posix_proactor);
   virtual ~ACE_POSIX_Asynch_Read_Dgram (void);
 
-  /** This starts off an asynchronous read.  Upto
-   * <message_block->total_size()> will be read and stored in the
-   * <message_block>.  <message_block>'s <wr_ptr> will be updated to reflect
-   * the added bytes if the read operation is successful completed.
-   * Return code of 1 means immediate success and number_of_bytes_recvd
-   * will contain number of bytes read.  The <ACE_Handler::handle_read_dgram>
-   * method will still be called.  Return code of 0 means the IO will
-   * complete proactively.  Return code of -1 means there was an error, use
-   * errno to get the error code.
-   *
+  /** This method queues an asynchronous read.  Up to
+   * @a message_block->total_size() bytes will be read and stored in the
+   * @a message_block beginning at its write pointer. The @a message_block
+   * write pointer will be updated to reflect any added bytes if the read
+   * operation is successful completed.
    * Priority of the operation is specified by <priority>. On POSIX4-Unix,
    * this is supported. Works like <nice> in Unix. Negative values are not
    * allowed. 0 means priority of the operation same as the process
    * priority. 1 means priority of the operation is one less than
    * process.  <signal_number> argument is a no-op on non-POSIX4 systems.
+   *
+   * @note Unlike the Windows version of this facility, no indication of
+   * immediate success can be returned, and @a number_of_bytes_read is
+   * never used.
+   *
+   * @arg flags Not used.
+   * @arg protocol_family Not used.
+   * @retval 0  The IO will complete asynchronously.
+   * @retval -1 There was an error; see @c errno to get the error code.
+   *
    */
   virtual ssize_t recv (ACE_Message_Block *message_block,
                         size_t &number_of_bytes_recvd,
@@ -1175,13 +1180,15 @@ protected:
  * @class ACE_POSIX_Asynch_Write_Dgram
  *
  * @brief This class is a factory for starting off asynchronous writes
- *    on a UDP socket.
+ *    on a UDP socket. The UDP socket must be "connected", as there is
+ *    no facility for specifying the destination address on each send
+ *    operation.
  *
- *     Once <open> is called, multiple asynchronous <writes>s can
+ *     Once @c open() is called, multiple asynchronous writes can
  *     started using this class.  A ACE_Asynch_Write_Stream::Result
- *     will be passed back to the <handler> when the asynchronous
- *     write completes through the
- *     <ACE_Handler::handle_write_stream> callback.
+ *     will be passed back to the associated completion handler when the
+ *     asynchronous write completes through the
+ *     ACE_Handler::handle_write_stream() callback.
  */
 class ACE_Export ACE_POSIX_Asynch_Write_Dgram : public virtual ACE_Asynch_Write_Dgram_Impl,
                                                 public ACE_POSIX_Asynch_Operation
@@ -1193,21 +1200,26 @@ public:
   /// Destructor
   virtual ~ACE_POSIX_Asynch_Write_Dgram (void);
 
-  /** This starts off an asynchronous send.  Up to
-   * <message_block->total_length()> will be sent.  <message_block>'s
-   * <rd_ptr> will be updated to reflect the sent bytes if the send operation
-   * is successful completed.
-   * Return code of 1 means immediate success and number_of_bytes_sent
-   * is updated to number of bytes sent.  The <ACE_Handler::handle_write_dgram>
-   * method will still be called.  Return code of 0 means the IO will
-   * complete proactively.  Return code of -1 means there was an error, use
-   * errno to get the error code.
-   *
-   * Priority of the operation is specified by <priority>. On POSIX4-Unix,
-   * this is supported. Works like <nice> in Unix. Negative values are not
+  /** This method queues an asynchronous send.  Up to
+   * @a message_block->total_length bytes will be sent, beginning at the
+   * read pointer. The @a message_block read pointer will be updated to
+   * reflect the sent bytes if the send operation is successful completed.
+   * 
+   * Priority of the operation is specified by @a priority. On POSIX,
+   * this is supported. Works like @c nice in Unix. Negative values are not
    * allowed. 0 means priority of the operation same as the process
    * priority. 1 means priority of the operation is one less than
-   * process. And so forth.  <signal_number> is a no-op on non-POSIX4 systems.
+   * process, etc.
+   * @a signal_number is a no-op on non-POSIX4 systems.
+   *
+   * @note Unlike the Windows version of this facility, no indication of
+   * immediate success can be returned, and @a number_of_bytes_sent is
+   * never used.
+   *
+   * @arg flags Not used.
+   * @arg addr Not used.
+   * @retval 0  The IO will complete asynchronously.
+   * @retval -1 There was an error; see @c errno to get the error code.
    */
   virtual ssize_t send (ACE_Message_Block *message_block,
                         size_t &number_of_bytes_sent,

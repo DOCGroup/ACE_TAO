@@ -64,6 +64,7 @@ DIRS  = CDR \
 	DSI_Gateway \
 	AMI \
 	AMI_Timeouts \
+	Server_Port_Zero \
 	Timeout \
 	Timed_Buffered_Oneways \
 	Smart_Proxies \

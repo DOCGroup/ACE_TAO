@@ -23,9 +23,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "TAO_Export.h"
+#include "tao/TAO_Export.h"
 
 class TAO_Connection_Handler;
+class TAO_ORB_Core;
 
 typedef ACE_Task<ACE_NULL_SYNCH> TAO_TPC_BASE;
 
@@ -42,11 +43,15 @@ typedef ACE_Task<ACE_NULL_SYNCH> TAO_TPC_BASE;
 class TAO_Export TAO_Thread_Per_Connection_Handler : public TAO_TPC_BASE
 {
 public:
-  TAO_Thread_Per_Connection_Handler (TAO_Connection_Handler *ch);
+  TAO_Thread_Per_Connection_Handler (TAO_Connection_Handler *ch,
+                                     TAO_ORB_Core *oc);
 
   ~TAO_Thread_Per_Connection_Handler (void);
 
   /// = Active object activation method.
+  /**
+   * @todo: This probably needs to go after x.4.1
+   */
   virtual int activate (long flags = THR_NEW_LWP,
                         int n_threads = 1,
                         int force_active = 0,
@@ -56,7 +61,8 @@ public:
                         ACE_hthread_t thread_handles[] = 0,
                         void *stack[] = 0,
                         size_t stack_size[] = 0,
-                        ACE_thread_t  thread_names[] = 0);
+                        ACE_thread_t  thread_names[] = 0,
+                        bool inherit_priority = false);
 
   /// Template hook method that the thread uses...
   /**

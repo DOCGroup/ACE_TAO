@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/CosEventChannelAdminC.h"
+#include "orbsvcs/orbsvcs/CosEventChannelAdminC.h"
 
 #include "Refcountable_Guard_T.h"
 #include "Event.h"

@@ -16,13 +16,15 @@
 #define IMR_ACTIVATOR_I_H
 
 #include "Server_Repository.h"
+#include "activator_export.h"
 
-#include "orbsvcs/IOR_Multicast.h"
+#include "orbsvcs/orbsvcs/IOR_Multicast.h"
 
 #include "tao/PortableServer/ImplRepoS.h"
-#include "tao/IORTable/IORTable.h"
 
 #include "ace/Process_Manager.h"
+
+class Options;
 
 /**
  * @class ImR_Activator_i
@@ -33,15 +35,13 @@
  * that can be done by the ImR_Activator.
  *
  */
-class ImR_Activator_i : public POA_ImplementationRepository::Administration
+class Activator_Export ImR_Activator_i : public POA_ImplementationRepository::Administration
 {
 public:
-  // = Constructor and destructor
   ImR_Activator_i (void);
-  ~ImR_Activator_i (void);
 
   /// IOR_LookupTable_Callback method.  Will return an IOR
-  char *find_ior (const char* object_name  ACE_ENV_ARG_DECL)
+  virtual char *find_ior (const char* object_name  ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException, ImplementationRepository::NotFound));
 
   // = Interface methods
@@ -50,6 +50,17 @@ public:
   virtual void activate_server (
       const char *server
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    ) ACE_THROW_SPEC ((
+          CORBA::SystemException,
+          ImplementationRepository::NotFound,
+          ImplementationRepository::CannotActivate
+        ));
+
+  /// Implementation of activate_server.  <check_startup> is a flag to check
+  /// the activation mode before attempting to start it.
+  virtual char *activate_server_with_startup (const char *server,
+                                              int check_startup
+                                              ACE_ENV_ARG_DECL_WITH_DEFAULTS
     ) ACE_THROW_SPEC ((
           CORBA::SystemException,
           ImplementationRepository::NotFound,
@@ -93,7 +104,7 @@ public:
                        ImplementationRepository::NotFound));
 
   /// Called by the server to update transient information such as current
-  /// location of the <server> and its ServerObject.
+  /// partial_ior of the <server> and its ServerObject.
   virtual void server_is_running (
       const char *server,
       const char * partial_ior,
@@ -126,21 +137,10 @@ public:
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     ) ACE_THROW_SPEC ((CORBA::SystemException));
 
-  /// Implementation of activate_server.  <check_startup> is a flag to check
-  /// the activation mode before attempting to start it.
-  virtual char *activate_server_with_startup (const char *server,
-                                              int check_startup
-                                              ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    ) ACE_THROW_SPEC ((
-          CORBA::SystemException,
-          ImplementationRepository::NotFound,
-          ImplementationRepository::CannotActivate
-        ));
-
   /// Initialize the Server state - parsing arguments and waiting.
-  int init (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  int init (Options& opts ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-  /// Cleans up any state created by init ().
+  /// Cleans up any state created by init*.
   int fini (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
   /// Runs the orb.
@@ -148,30 +148,17 @@ public:
 
 private:
 
-  char* activate_server_i (const char *server,int check_startup 
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS) ACE_THROW_SPEC ((
-          CORBA::SystemException,
-          ImplementationRepository::NotFound,
-          ImplementationRepository::CannotActivate
-        ));
+  int init_with_orb (CORBA::ORB_ptr orb, const Options& opts ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /// This method starts the server process.
-  void start_server_i (
-      const char *server
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    ) ACE_THROW_SPEC ((
-          CORBA::SystemException,
-          ImplementationRepository::NotFound,
-          ImplementationRepository::CannotActivate
-        ));
-
-  /// This method will continuously ping a server and either return when it
-  /// responds to the ping or return -1 if it times out.
-  int ready_check (const char *server)
+  void start_server_i (Server_Info& info ACE_ENV_ARG_DECL_WITH_DEFAULTS) 
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     ImplementationRepository::NotFound));
+          ImplementationRepository::NotFound,
+    ImplementationRepository::CannotActivate));
 
-  /// The Process Manager.
+  void auto_start_servers(ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+
+private:
   ACE_Process_Manager process_mgr_;
 
   /// Repository containing information about each server.
@@ -187,7 +174,11 @@ private:
   /// we must use when unregistering.
   CORBA::Long registration_token_;
 
-  ACE_CString name_;
+  CORBA::ORB_var orb_;
+
+  unsigned int debug_;
+  bool read_only_;
+  ACE_Time_Value startup_timeout_;
 };
 
 #endif /* IMR_ACTIVATOR_I_H */

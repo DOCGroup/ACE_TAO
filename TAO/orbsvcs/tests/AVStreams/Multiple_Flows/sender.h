@@ -18,10 +18,10 @@
 //
 // ============================================================================
 
-#include "orbsvcs/Naming/Naming_Utils.h"
-#include "orbsvcs/AV/AVStreams_i.h"
-#include "orbsvcs/AV/Endpoint_Strategy.h"
-#include "orbsvcs/AV/Protocol_Factory.h"
+#include "orbsvcs/orbsvcs/Naming/Naming_Utils.h"
+#include "orbsvcs/orbsvcs/AV/AVStreams_i.h"
+#include "orbsvcs/orbsvcs/AV/Endpoint_Strategy.h"
+#include "orbsvcs/orbsvcs/AV/Protocol_Factory.h"
 
 typedef ACE_Unbounded_Set<TAO_AV_Protocol_Object*> ProtocolObject_Set;
 typedef ACE_Unbounded_Set_Iterator<TAO_AV_Protocol_Object*> ProtocolObject_SetItor;

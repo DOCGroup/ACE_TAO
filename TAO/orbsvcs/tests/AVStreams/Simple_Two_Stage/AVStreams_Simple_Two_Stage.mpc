@@ -13,7 +13,8 @@ project(*receiver): avstreamsexe {
   exename  = receiver
 
   Source_Files {
-    receiver.cpp
+    Receiver_Stats.cpp
+    receiver.cpp 
   }
 }
 

@@ -202,7 +202,8 @@ be_visitor_amh_operation_ss::visit_attribute (be_attribute *node)
       return -1;
     }
 
-  *os << "ACE_ENV_ARG_PARAMETER";
+  *os << be_nl
+      << "ACE_ENV_ARG_PARAMETER";
 
   if (this->generate_shared_epilogue (os) == -1)
     {
@@ -223,19 +224,19 @@ be_visitor_amh_operation_ss::visit_attribute (be_attribute *node)
                             node->field_type (),
                             node->name ());
 
-    be_visitor_context ctx (*this->ctx_);
-    be_visitor_args_vardecl_ss visitor (&ctx);
+  be_visitor_context ctx (*this->ctx_);
+  be_visitor_args_vardecl_ss visitor (&ctx);
 
-    if (visitor.visit_argument (&the_argument) == -1)
-      {
-        return -1;
-      }
+  if (visitor.visit_argument (&the_argument) == -1)
+    {
+      return -1;
+    }
 
   *os << be_nl
       << "TAO_InputCDR &_tao_in ="
       << " _tao_server_request.incoming ();"
       << be_nl << be_nl
-      << "if (!(" << be_idt_nl;
+      << "if (!(" << be_idt << be_idt;
 
   {
     be_visitor_context ctx (*this->ctx_);
@@ -249,7 +250,8 @@ be_visitor_amh_operation_ss::visit_attribute (be_attribute *node)
       }
   }
 
-  *os << be_uidt_nl << "))" << be_idt_nl;
+  *os << be_uidt_nl << "))" << be_nl
+      << "{" << be_idt_nl;
 
   // If marshaling fails, raise exception.
   if (this->gen_raise_exception (0,
@@ -261,15 +263,26 @@ be_visitor_amh_operation_ss::visit_attribute (be_attribute *node)
                         -1);
     }
 
-  *os << be_uidt_nl;
+  *os << be_uidt_nl
+      << "}" << be_uidt_nl;
 
   if (this->generate_shared_section (node, os) == -1)
     {
       return -1;
     }
 
-  *os << ", " << node->local_name ()
-      << be_nl << "ACE_ENV_ARG_PARAMETER";
+  *os << ",";
+  
+  {
+    be_visitor_args_upcall_ss visitor (this->ctx_);
+
+    if (visitor.visit_argument (&the_argument) == -1)
+      {
+        return -1;
+      }
+  }
+  
+  *os << be_nl << "ACE_ENV_ARG_PARAMETER";
 
   if (this->generate_shared_epilogue (os) == -1)
     {

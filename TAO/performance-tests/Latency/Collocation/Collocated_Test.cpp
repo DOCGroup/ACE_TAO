@@ -5,10 +5,11 @@
 #include "ace/Get_Opt.h"
 #include "ace/Argv_Type_Converter.h"
 #include "ace/Sched_Params.h"
+#include "ace/OS_NS_errno.h"
 
 #include "tao/Strategies/advanced_resource.h"
 
-char *ior_file  = "test.ior";
+const char *ior_file  = "test.ior";
 int niterations = 100;
 
 int
@@ -76,9 +77,9 @@ main (int argc, char *argv[])
       ACE_Argv_Type_Converter satc (argc, argv);
       CORBA::ORB_var sorb =
         CORBA::ORB_init (satc.get_argc (),
-                         satc.get_TCHAR_argv ()
+                         satc.get_TCHAR_argv (),
+                         ""
                          ACE_ENV_ARG_PARAMETER);
-                         //server_orb.c_str ()
 
       ACE_TRY_CHECK;
 
@@ -102,7 +103,8 @@ main (int argc, char *argv[])
       ACE_Argv_Type_Converter catc (argc, argv);
       CORBA::ORB_var corb =
         CORBA::ORB_init (catc.get_argc (),
-                         catc.get_TCHAR_argv ()
+                         catc.get_TCHAR_argv (),
+                         ""
                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

@@ -3,12 +3,14 @@
 #include "Inversion.h"
 #include "Consumer.h"
 #include "Supplier.h"
-#include "orbsvcs/Event/EC_Event_Channel.h"
-#include "orbsvcs/Event_Utilities.h"
+#include "orbsvcs/orbsvcs/Event/EC_Event_Channel.h"
+#include "orbsvcs/orbsvcs/Event_Utilities.h"
 #include "ace/Sched_Params.h"
 #include "ace/Arg_Shifter.h"
 
-ACE_RCSID(EC_Tests_Performance, Inversion, "$Id$")
+ACE_RCSID (EC_Tests_Performance, 
+           Inversion, 
+           "$Id$")
 
 int
 main (int argc, char *argv [])

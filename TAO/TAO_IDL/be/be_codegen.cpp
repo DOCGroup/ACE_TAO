@@ -1474,21 +1474,21 @@ TAO_CodeGen::gen_stub_src_includes (void)
                                   "tao/Exception_Data.h");
       this->gen_standard_include (this->client_stubs_,
                                   "tao/Invocation_Adapter.h");
+    }
 
-      // Any abstract interface present will probably have an operation.
-      if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
-                           idl_global->decls_seen_masks.abstract_iface_seen_))
-        {
-          this->gen_standard_include (
-              this->client_stubs_,
-              "tao/Valuetype/AbstractBase_Invocation_Adapter.h"
-            );
+  // Any abstract interface present will probably have an operation.
+  if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
+                        idl_global->decls_seen_masks.abstract_iface_seen_))
+    {
+      this->gen_standard_include (
+          this->client_stubs_,
+          "tao/Valuetype/AbstractBase_Invocation_Adapter.h"
+        );
 
-          this->gen_standard_include (
-              this->client_stubs_,
-              "tao/Valuetype/AbstractBase_T.h"
-            );
-        }
+      this->gen_standard_include (
+          this->client_stubs_,
+          "tao/Valuetype/AbstractBase_T.h"
+        );
     }
 
   if (be_global->ami_call_back () == I_TRUE)
@@ -1614,7 +1614,7 @@ TAO_CodeGen::gen_skel_src_includes (void)
   this->gen_standard_include (this->server_skeletons_,
                               "tao/RequestInfo_Util.h");
   this->gen_standard_include (this->server_skeletons_,
-                              "tao/PICurrent.h");
+                              "tao/PortableServer/PICurrent_Guard.h");
   this->gen_standard_include (this->server_skeletons_,
                               "tao/PortableServer/ServerRequestInfo.h");
   this->gen_standard_include (this->server_skeletons_,
@@ -1623,7 +1623,7 @@ TAO_CodeGen::gen_skel_src_includes (void)
 
   this->gen_standard_include (this->server_skeletons_,
                               "ace/Dynamic_Service.h");
-  
+
   // For Static_Allocator_Base
   this->gen_standard_include (this->server_skeletons_,
                               "ace/Malloc_Allocator.h");

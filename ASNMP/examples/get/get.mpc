@@ -6,7 +6,7 @@ project (asnmp_example_get) : aceexe {
   libs  += asnmp
   includes += $(ACE_ROOT)/ASNMP
   source_files {
-    get
+    get.cpp
   }
 }
 
@@ -16,6 +16,6 @@ project (asnmp_example_get_async) : aceexe {
   libs  += asnmp
   includes += $(ACE_ROOT)/ASNMP
   source_files {
-    get_async
+    get_async.cpp
   }
 }

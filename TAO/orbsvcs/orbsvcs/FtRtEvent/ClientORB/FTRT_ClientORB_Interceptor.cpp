@@ -57,33 +57,31 @@ FTRT_ClientORB_Interceptor::send_request (
   ACE_TRACE("FTRT_ClientORB_Interceptor::send_request");
   ACE_TRY
   {
-      IOP::ServiceContext_var sc =
-        ri->get_request_service_context (FTRT::FT_TRANSACTION_DEPTH
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+    // Add FT_REQUEST context
+    IOP::ServiceContext sc;
+    TAO_OutputCDR cdr;
+
+    if ((cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)) ==0)
+      return;
+
+    // Add Transaction Depth Context
+    if ((cdr << transaction_depth_) == 0)
+      return;
+    sc.context_id = FTRT::FT_TRANSACTION_DEPTH;
+
+    ACE_Message_Block mb;
+    ACE_CDR::consolidate(&mb, cdr.begin());
+    sc.context_data.replace(mb.length(), &mb);
+
+    ri->add_request_service_context (sc, 0 ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
   }
-  ACE_CATCH (CORBA::BAD_PARAM, ex)
+  ACE_CATCHANY
   {
-        // Add FT_REQUEST context
-        IOP::ServiceContext sc;
-        TAO_OutputCDR cdr;
-
-         if ((cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)) ==0)
-            ACE_THROW (CORBA::MARSHAL ());
-
-        // Add Transaction Depth Context
-        if ((cdr << transaction_depth_) == 0)
-            ACE_THROW (CORBA::MARSHAL ());
-        sc.context_id = FTRT::FT_TRANSACTION_DEPTH;
-
-        ACE_Message_Block mb;
-        ACE_CDR::consolidate(&mb, cdr.begin());
-        sc.context_data.replace(mb.length(), &mb);
-
-        ri->add_request_service_context (sc, 0 ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
+    // Not much can be done anyway. Just keep quiet
   }
   ACE_ENDTRY;
+  ACE_CHECK;
 }
 
 void

@@ -13,12 +13,15 @@
 
 #include "ace/Log_Msg.h"
 
-ImR_Adapter_Activator::ImR_Adapter_Activator (
-  PortableServer::ServantLocator_ptr servant
-)  
-  : servant_locator_ (servant)
+ImR_Adapter_Activator::ImR_Adapter_Activator(void)
+: servant_locator_(0)
 {
-  // Nothing
+}
+
+void 
+ImR_Adapter_Activator::init(PortableServer::ServantLocator_ptr servant)
+{
+  servant_locator_ = servant;
 }
 
 CORBA::Boolean
@@ -27,6 +30,8 @@ ImR_Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
                                         ACE_ENV_ARG_DECL) 
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_ASSERT(! CORBA::is_nil(parent));
+  ACE_ASSERT(name != 0);
   CORBA::PolicyList policies (2);
   policies.length (2);
 
@@ -37,8 +42,7 @@ ImR_Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
       // Servant Retention Policy
       exception_message = "While PortableServer::POA::create_servant_retention_policy";
       policies[0] =
-        parent->create_servant_retention_policy (PortableServer::NON_RETAIN
-                                                 ACE_ENV_ARG_PARAMETER);
+        parent->create_servant_retention_policy (PortableServer::NON_RETAIN ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Request Processing Policy

@@ -6,8 +6,6 @@ project(CosTime) : orbsvcslib, core, naming {
   idlflags    += -Wb,export_macro=TAO_Time_Export -Wb,export_include=Time/time_export.h
   dynamicflags = TAO_TIME_BUILD_DLL
   tagchecks   += Time
-  // Add this include path for precompiled headers
-  includes    += $(TAO_ROOT)/orbsvcs/orbsvcs
 
   IDL_Files {
     TimeService.idl

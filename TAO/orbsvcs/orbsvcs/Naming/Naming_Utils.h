@@ -21,8 +21,8 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/ORB.h"
-#include "orbsvcs/CosNamingC.h"
-#include "orbsvcs/IOR_Multicast.h"
+#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/orbsvcs/IOR_Multicast.h"
 #include "Naming_Context_Interface.h"
 #include "nsconf.h"
 

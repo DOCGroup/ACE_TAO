@@ -71,7 +71,7 @@ be_visitor_amh_operation_sh::visit_operation (be_operation *node)
           continue;
         }
 
-      *os << ",";
+      *os << "," << be_nl;
 
       if (arglist_visitor.visit_argument (argument) == -1)
         {
@@ -81,34 +81,34 @@ be_visitor_amh_operation_sh::visit_operation (be_operation *node)
                              "codegen for upcall args failed\n"),
                             -1);
         }
-
-      *os << be_nl;
     }
 
-  *os << "ACE_ENV_ARG_DECL"
-      << be_uidt_nl << ")" << be_uidt;
+  *os << be_nl
+      << "ACE_ENV_ARG_DECL"
+      << be_uidt_nl << ")" << be_uidt_nl;
 
   if (be_global->use_raw_throw ())
     {
-      *os << be_idt_nl << "throw (";
+      *os << "throw (";
     }
   else
     {
-      *os << be_idt_nl << "ACE_THROW_SPEC ((";
+      *os << "ACE_THROW_SPEC ((";
     }
 
-  *os << be_idt_nl << "CORBA::SystemException";
+  *os << "CORBA::SystemException";
 
   if (be_global->use_raw_throw ())
     {
-      *os << be_uidt_nl << ")" << be_uidt;
+      *os << ")";
     }
   else
     {
-      *os << be_uidt_nl << "))" << be_uidt;
+      *os << "))";
     }
 
   *os << " = 0;";
+  
   return 0;
 }
 
@@ -120,11 +120,13 @@ be_visitor_amh_operation_sh::visit_attribute (be_attribute *node)
 
   if (!be_global->exception_support ())
     {
-      *os << "ACE_ENV_SINGLE_ARG_DECL";
+      *os << be_nl
+          << "ACE_ENV_ARG_DECL";
     }
 
-  *os << be_uidt_nl << ")" << be_uidt_nl
-      << "ACE_THROW_SPEC ((CORBA::SystemException)) = 0;\n" << be_nl;
+  *os << be_uidt_nl 
+      << ")" << be_uidt_nl
+      << "ACE_THROW_SPEC ((CORBA::SystemException)) = 0;" << be_nl;
 
   if (node->readonly ())
     {
@@ -133,7 +135,7 @@ be_visitor_amh_operation_sh::visit_attribute (be_attribute *node)
 
   this->generate_shared_prologue (node, os, "_set_");
 
-  *os << ", ";
+  *os << "," << be_nl;
 
   be_argument the_argument (AST_Argument::dir_IN,
                             node->field_type (),
@@ -146,15 +148,13 @@ be_visitor_amh_operation_sh::visit_attribute (be_attribute *node)
       return -1;
     }
 
-  *os << the_argument.local_name ();
-
   if (!be_global->exception_support ())
     {
-      *os << be_nl << "ACE_ENV_SINGLE_ARG_DECL";
+      *os << be_nl << "ACE_ENV_ARG_DECL";
     }
 
   *os << be_uidt_nl << ")" << be_uidt_nl
-      << "ACE_THROW_SPEC ((CORBA::SystemException)) = 0;\n" << be_nl;
+      << "ACE_THROW_SPEC ((CORBA::SystemException)) = 0;" << be_nl;
 
   return 0;
 }
@@ -216,7 +216,7 @@ be_visitor_amh_operation_sh::generate_shared_prologue (
   //    be_visitor_interface/amh_sh.cpp
   intf->compute_full_name ("AMH_", "ResponseHandler_ptr", buf);
 
-  *os << buf << " _tao_rh" << be_nl;
+  *os << buf << " _tao_rh";
   delete [] buf;
   buf = 0;
 }

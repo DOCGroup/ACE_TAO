@@ -28,6 +28,12 @@ namespace CCF
           begin_seq (IdentifierPtr const& id);
 
           virtual void
+          begin_bounded_string ();
+
+          virtual void
+          begin_bounded_wstring ();
+
+          virtual void
           declarator (SimpleIdentifierPtr const& id);
 
           virtual void

@@ -2550,7 +2550,7 @@ ACEXML_Parser::parse_PE_reference (ACEXML_ENV_SINGLE_ARG_DECL)
       ACEXML_String str (entity);
       if (this->ref_state_ != ACEXML_ParserInt::IN_ENTITY_VALUE)
         {
-          const ACEXML_Char ch = '\x20';
+          const ACEXML_Char* ch = ACE_TEXT (" ");
           str = ch + str + ch;
         }
       //  ACE_DEBUG ((LM_DEBUG,

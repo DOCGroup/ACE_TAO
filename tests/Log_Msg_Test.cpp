@@ -20,6 +20,8 @@
 //
 // ============================================================================
 
+#include "test_config.h"
+
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
@@ -27,7 +29,6 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/Log_Msg_Callback.h"
 #include "ace/Log_Record.h"
-#include "test_config.h"
 
 ACE_RCSID(tests, Log_Msg_Test, "$Id$")
 

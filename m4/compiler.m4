@@ -111,7 +111,9 @@ dnl Temporarily change M4 quotes to prevent "regex []" from being eaten
             CXXFLAGS="$CXXFLAGS -qflag=w:w"
            ])
          if test "$ace_user_enable_rtti" = yes; then
-           CXXFLAGS="$CXXFLAGS -qrtti"
+           CXXFLAGS="$CXXFLAGS -qrtti=dynamiccast"
+         else
+           CXXFLAGS="$CXXFLAGS -DACE_LACKS_RTTI"
          fi
 
          ;;
@@ -183,6 +185,12 @@ dnl Temporarily change M4 quotes to prevent "regex []" from being eaten
      esac
      ;;
    *hpux*)
+     # In case anything here or in the config depends on OS
+     # version number, grab it here and pass it all to the
+     # compiler as well.
+     OSVERS=`uname -r | $AWK 'BEGIN{FS=".";OFS="";}{print [$][2],[$][3]}' -`
+     ACE_CPPFLAGS="$ACE_CPPFLAGS -DHPUX_VERS=$OSVERS"
+
      # HP-UX OS version specific settings.
      case "$host" in
        *hpux11*)

@@ -112,6 +112,8 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
   ACE_Reactor::run_alertable_event_loop ();
 
+  ACE_Reactor::instance ()->cancel_timer(&event_handler);
+
   return 0;
 }
 #else /* !ACE_WIN32 */

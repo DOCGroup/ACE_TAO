@@ -2,7 +2,7 @@
 
 #include "Softpkg_Commands.h"
 #include "ace/Get_Opt.h"
-#include "CCM_DeploymentC.h"
+#include "ciao/CCM_DeploymentC.h"
 #include "../XML_Helpers/XML_Utils.h"
 
 #if !defined (__ACE_INLINE__)

@@ -1,15 +1,17 @@
 // $Id$
 
 #include "Gateway.h"
-#include "orbsvcs/RtecEventChannelAdminC.h"
-#include "orbsvcs/Event_Service_Constants.h"
-#include "orbsvcs/CosNamingC.h"
-#include "orbsvcs/Event/EC_Gateway_IIOP.h"
-#include "orbsvcs/Event/EC_Gateway_IIOP_Factory.h"
+#include "orbsvcs/orbsvcs/RtecEventChannelAdminC.h"
+#include "orbsvcs/orbsvcs/Event_Service_Constants.h"
+#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/orbsvcs/Event/EC_Gateway_IIOP.h"
+#include "orbsvcs/orbsvcs/Event/EC_Gateway_IIOP_Factory.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/Dynamic_Service.h"
 
-ACE_RCSID(EC_Examples, Supplier, "$Id$")
+ACE_RCSID (EC_Examples, 
+           Supplier, 
+           "$Id$")
 
 static const char* supplierec = 0;
 static const char* consumerec = 0;

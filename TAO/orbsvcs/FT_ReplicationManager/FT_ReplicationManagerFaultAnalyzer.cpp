@@ -12,13 +12,13 @@
 //=============================================================================
 
 #include "FT_ReplicationManagerFaultAnalyzer.h"
-#include "orbsvcs/CosNotifyCommC.h"
-#include "orbsvcs/FT_NotifierC.h"
+#include "orbsvcs/orbsvcs/CosNotifyCommC.h"
+#include "orbsvcs/orbsvcs/FT_NotifierC.h"
 #include "orbsvcs/FT_ReplicationManager/FT_ReplicationManager.h"
 #include "orbsvcs/FT_ReplicationManager/FT_FaultEventDescriptor.h"
-#include "orbsvcs/PortableGroup/PG_Property_Utils.h"
-#include "orbsvcs/PortableGroup/PG_Operators.h"
-#include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
+#include "orbsvcs/orbsvcs/PortableGroup/PG_Property_Utils.h"
+#include "orbsvcs/orbsvcs/PortableGroup/PG_Operators.h"
+#include "orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.h"
 #include <tao/debug.h>
 #include <iostream>
 

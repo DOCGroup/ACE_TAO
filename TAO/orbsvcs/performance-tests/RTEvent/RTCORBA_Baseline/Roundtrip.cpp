@@ -4,7 +4,9 @@
 #include "Roundtrip.h"
 #include "ace/High_Res_Timer.h"
 
-ACE_RCSID(TAO_RTEC_Perf_RTCORBA_Baseline, Roundtrip, "$Id$")
+ACE_RCSID (TAO_RTEC_Perf_RTCORBA_Baseline, 
+           Roundtrip, 
+           "$Id$")
 
 Roundtrip::Roundtrip (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))

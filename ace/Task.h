@@ -168,7 +168,14 @@ public:
    * the base of the stacks to use for the threads being spawned.
    * Likewise, if <stack_size> != 0 it is assumed to be an array of
    * <n> values indicating how big each of the corresponding <stack>s
-   * are.  */
+   * are.
+   *
+   * The argument <inherit_priority> is used to assign the priority of
+   * the calling thread on the spawned thread. The spawned thread will
+   * inherit the priority and scheduling policy of the invoking thread,
+   * if the value of the <inherit_priority> is set to true.
+   *
+   */
   virtual int activate (long flags = THR_NEW_LWP | THR_JOINABLE,
                         int n_threads = 1,
                         int force_active = 0,
@@ -178,7 +185,8 @@ public:
                         ACE_hthread_t thread_handles[] = 0,
                         void *stack[] = 0,
                         size_t stack_size[] = 0,
-                        ACE_thread_t thread_ids[] = 0);
+                        ACE_thread_t thread_ids[] = 0,
+                        bool inherit_priority = false);
 
   /**
    * Block until there are no more threads running in this task.

@@ -22,6 +22,9 @@
 #include "tao/Basic_Types.h"
 #include "tao/TAO_Export.h"
 #include "tao/orbconf.h"
+#include "ace/Synch_Traits.h"
+#include "ace/Null_Mutex.h"
+#include "ace/Thread_Mutex.h"
 
 class TAO_OutputCDR;
 class TAO_InputCDR;
@@ -98,6 +101,9 @@ namespace TAO
     CORBA::TypeCode_ptr type_;
 
   private:
+    /// Lock for the refcount
+    ACE_SYNCH_MUTEX mutex_;
+
     /// Number of outstanding references to this object.
     CORBA::ULong refcount_;
   };

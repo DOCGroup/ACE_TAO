@@ -72,8 +72,7 @@ ACE_SHLIBS = -lTAO_CosNotification -lTAO_Svc_Utils -lTAO_ETCL -lTAO_DynamicAny -
 
 
 .obj/RT_Builder.o .obj/RT_Builder.so .shobj/RT_Builder.o .shobj/RT_Builder.so: Notify/RT_Builder.cpp Notify/RT_Builder.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/rt_notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/rt_notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -81,8 +80,8 @@ ACE_SHLIBS = -lTAO_CosNotification -lTAO_Svc_Utils -lTAO_ETCL -lTAO_DynamicAny -
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  Notify/Builder.h Notify/notify_export.h \
+  $(ACE_ROOT)/ace/ACE_export.h Notify/Builder.h \
+  Notify/notify_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/Objref_VarOut_T.h \
@@ -167,12 +166,6 @@ ACE_SHLIBS = -lTAO_CosNotification -lTAO_Svc_Utils -lTAO_ETCL -lTAO_DynamicAny -
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -188,6 +181,12 @@ ACE_SHLIBS = -lTAO_CosNotification -lTAO_Svc_Utils -lTAO_ETCL -lTAO_DynamicAny -
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -209,7 +208,7 @@ ACE_SHLIBS = -lTAO_CosNotification -lTAO_Svc_Utils -lTAO_ETCL -lTAO_DynamicAny -
   $(TAO_ROOT)/tao/CurrentC.i \
   $(TAO_ROOT)/tao/PolicyC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
-  ../../orbsvcs/orbsvcs/CosNotifyChannelAdminC.h \
+  CosNotifyChannelAdminC.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/objectid.h \
   $(TAO_ROOT)/tao/OBV_Constants.h \
@@ -254,10 +253,10 @@ ACE_SHLIBS = -lTAO_CosNotification -lTAO_Svc_Utils -lTAO_ETCL -lTAO_DynamicAny -
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
   $(TAO_ROOT)/tao/ORB.i \
-  ../../orbsvcs/orbsvcs/Notify/notify_export.h \
-  ../../orbsvcs/orbsvcs/CosNotificationC.h \
-  ../../orbsvcs/orbsvcs/CosNotificationC.i \
-  ../../orbsvcs/orbsvcs/CosNotifyFilterC.h \
+  Notify/notify_export.h \
+  CosNotificationC.h \
+  CosNotificationC.i \
+  CosNotifyFilterC.h \
   $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
@@ -300,16 +299,21 @@ ACE_SHLIBS = -lTAO_CosNotification -lTAO_Svc_Utils -lTAO_ETCL -lTAO_DynamicAny -
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(TAO_ROOT)/tao/TC_Constants_Forward.h \
   $(TAO_ROOT)/tao/Typecode.i \
-  ../../orbsvcs/orbsvcs/CosNotifyCommC.h \
-  ../../orbsvcs/orbsvcs/CosEventCommC.h \
-  ../../orbsvcs/orbsvcs/CosEvent/event_export.h \
-  ../../orbsvcs/orbsvcs/CosEventCommC.i \
-  ../../orbsvcs/orbsvcs/CosNotifyCommC.i \
-  ../../orbsvcs/orbsvcs/CosNotifyFilterC.i \
-  ../../orbsvcs/orbsvcs/CosEventChannelAdminC.h \
-  ../../orbsvcs/orbsvcs/CosEventChannelAdminC.i \
-  ../../orbsvcs/orbsvcs/CosNotifyChannelAdminC.i \
-  ../../orbsvcs/orbsvcs/NotifyExtC.h ../../orbsvcs/orbsvcs/NotifyExtC.i \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
+  $(TAO_ROOT)/tao/ServicesC.h \
+  $(TAO_ROOT)/tao/ServicesC.i \
+  CosNotifyCommC.h \
+  CosEventCommC.h \
+  CosEvent/event_export.h \
+  CosEventCommC.i \
+  CosNotifyCommC.i \
+  CosNotifyFilterC.i \
+  CosEventChannelAdminC.h \
+  CosEventChannelAdminC.i \
+  CosNotifyChannelAdminC.i \
+  NotifyExtC.h \
+  NotifyExtC.i \
   Notify/AdminProperties.h \
   $(ACE_ROOT)/ace/Atomic_Op.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
@@ -396,33 +400,46 @@ ACE_SHLIBS = -lTAO_CosNotification -lTAO_Svc_Utils -lTAO_ETCL -lTAO_DynamicAny -
   $(ACE_ROOT)/ace/DLL.h \
   $(ACE_ROOT)/ace/os_include/os_dlfcn.h \
   $(ACE_ROOT)/ace/Service_Object.i \
-  Notify/ETCL_FilterFactory.h ../../orbsvcs/orbsvcs/CosNotifyFilterS.h \
-  ../../orbsvcs/orbsvcs/CosNotifyCommS.h \
-  ../../orbsvcs/orbsvcs/CosNotificationS.h \
+  Notify/ETCL_FilterFactory.h \
+  CosNotifyFilterS.h \
+  $(TAO_ROOT)/tao/OctetSeqS.h \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
   $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
-  ../../orbsvcs/orbsvcs/CosNotificationS_T.h \
-  ../../orbsvcs/orbsvcs/CosNotificationS_T.i \
-  ../../orbsvcs/orbsvcs/CosNotificationS_T.cpp \
-  ../../orbsvcs/orbsvcs/CosNotificationS.i \
-  ../../orbsvcs/orbsvcs/CosEventCommS.h \
-  ../../orbsvcs/orbsvcs/CosEventCommS_T.h \
-  ../../orbsvcs/orbsvcs/CosEventCommS_T.i \
-  ../../orbsvcs/orbsvcs/CosEventCommS_T.cpp \
-  ../../orbsvcs/orbsvcs/CosEventCommS.i \
-  ../../orbsvcs/orbsvcs/CosNotifyCommS_T.h \
-  ../../orbsvcs/orbsvcs/CosNotifyCommS_T.i \
-  ../../orbsvcs/orbsvcs/CosNotifyCommS_T.cpp \
-  ../../orbsvcs/orbsvcs/CosNotifyCommS.i \
-  ../../orbsvcs/orbsvcs/CosNotifyFilterS_T.h \
-  ../../orbsvcs/orbsvcs/CosNotifyFilterS_T.i \
-  ../../orbsvcs/orbsvcs/CosNotifyFilterS_T.cpp \
-  ../../orbsvcs/orbsvcs/CosNotifyFilterS.i Notify/FilterFactory.h \
-  Notify/ETCL_FilterFactory.inl Notify/RT_POA_Helper.h \
-  Notify/POA_Helper.h \
+  $(TAO_ROOT)/tao/OctetSeqS_T.h \
+  $(TAO_ROOT)/tao/OctetSeqS_T.i \
+  $(TAO_ROOT)/tao/OctetSeqS_T.cpp \
+  $(TAO_ROOT)/tao/OctetSeqS.i \
+  $(TAO_ROOT)/tao/StringSeqS.h \
+  $(TAO_ROOT)/tao/PolicyS.h \
+  $(TAO_ROOT)/tao/ServicesS.h \
+  $(TAO_ROOT)/tao/ServicesS_T.h \
+  $(TAO_ROOT)/tao/ServicesS_T.i \
+  $(TAO_ROOT)/tao/ServicesS_T.cpp \
+  $(TAO_ROOT)/tao/ServicesS.i \
+  CosNotifyCommS.h \
+  CosNotificationS.h \
+  CosNotificationS_T.h \
+  CosNotificationS_T.i \
+  CosNotificationS_T.cpp \
+  CosNotificationS.i \
+  CosEventCommS.h \
+  CosEventCommS_T.h \
+  CosEventCommS_T.i \
+  CosEventCommS_T.cpp \
+  CosEventCommS.i \
+  CosNotifyCommS_T.h \
+  CosNotifyCommS_T.i \
+  CosNotifyCommS_T.cpp \
+  CosNotifyCommS.i \
+  CosNotifyFilterS_T.h \
+  CosNotifyFilterS_T.i \
+  CosNotifyFilterS_T.cpp \
+  CosNotifyFilterS.i \
+  Notify/FilterFactory.h Notify/ETCL_FilterFactory.inl \
+  Notify/RT_POA_Helper.h Notify/POA_Helper.h \
   $(ACE_ROOT)/ace/Copy_Disabled.h \
   Notify/POA_Helper.inl Notify/RT_POA_Helper.inl Notify/Properties.h \
   $(TAO_ROOT)/tao/TAO_Singleton.h \
@@ -441,8 +458,7 @@ ACE_SHLIBS = -lTAO_CosNotification -lTAO_Svc_Utils -lTAO_ETCL -lTAO_DynamicAny -
   Notify/Object.inl
 
 .obj/RT_Factory.o .obj/RT_Factory.so .shobj/RT_Factory.o .shobj/RT_Factory.so: Notify/RT_Factory.cpp Notify/RT_Factory.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/rt_notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/rt_notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -561,9 +577,9 @@ ACE_SHLIBS = -lTAO_CosNotification -lTAO_Svc_Utils -lTAO_ETCL -lTAO_DynamicAny -
   Notify/Default_Factory.inl Notify/RT_Factory.inl \
   Notify/Structured/RT_StructuredProxyPushSupplier.h \
   Notify/Structured/StructuredProxyPushSupplier.h \
-  ../../orbsvcs/orbsvcs/CosNotifyChannelAdminS.h \
-  ../../orbsvcs/orbsvcs/CosNotificationS.h \
-  ../../orbsvcs/orbsvcs/CosNotificationC.h \
+  CosNotifyChannelAdminS.h \
+  CosNotificationS.h \
+  CosNotificationC.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
   $(TAO_ROOT)/tao/orbconf.h \
@@ -602,12 +618,6 @@ ACE_SHLIBS = -lTAO_CosNotification -lTAO_Svc_Utils -lTAO_ETCL -lTAO_DynamicAny -
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -618,6 +628,12 @@ ACE_SHLIBS = -lTAO_CosNotification -lTAO_Svc_Utils -lTAO_ETCL -lTAO_DynamicAny -
   $(ACE_ROOT)/ace/Malloc_Base.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -640,8 +656,8 @@ ACE_SHLIBS = -lTAO_CosNotification -lTAO_Svc_Utils -lTAO_ETCL -lTAO_DynamicAny -
   $(TAO_ROOT)/tao/PolicyC.i \
   $(TAO_ROOT)/tao/OBV_Constants.h \
   $(TAO_ROOT)/tao/ORB.i \
-  ../../orbsvcs/orbsvcs/Notify/notify_export.h \
-  ../../orbsvcs/orbsvcs/CosNotificationC.i \
+  Notify/notify_export.h \
+  CosNotificationC.i \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -651,27 +667,41 @@ ACE_SHLIBS = -lTAO_CosNotification -lTAO_Svc_Utils -lTAO_ETCL -lTAO_DynamicAny -
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
   $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
-  ../../orbsvcs/orbsvcs/CosNotificationS_T.h \
-  ../../orbsvcs/orbsvcs/CosNotificationS_T.i \
-  ../../orbsvcs/orbsvcs/CosNotificationS_T.cpp \
-  ../../orbsvcs/orbsvcs/CosNotificationS.i \
-  ../../orbsvcs/orbsvcs/CosNotifyFilterS.h \
-  ../../orbsvcs/orbsvcs/CosNotifyCommS.h \
-  ../../orbsvcs/orbsvcs/CosEventCommS.h \
-  ../../orbsvcs/orbsvcs/CosEventCommC.h \
-  ../../orbsvcs/orbsvcs/CosEvent/event_export.h \
-  ../../orbsvcs/orbsvcs/CosEventCommC.i \
-  ../../orbsvcs/orbsvcs/CosEventCommS_T.h \
-  ../../orbsvcs/orbsvcs/CosEventCommS_T.i \
-  ../../orbsvcs/orbsvcs/CosEventCommS_T.cpp \
-  ../../orbsvcs/orbsvcs/CosEventCommS.i \
-  ../../orbsvcs/orbsvcs/CosNotifyCommC.h \
-  ../../orbsvcs/orbsvcs/CosNotifyCommC.i \
-  ../../orbsvcs/orbsvcs/CosNotifyCommS_T.h \
-  ../../orbsvcs/orbsvcs/CosNotifyCommS_T.i \
-  ../../orbsvcs/orbsvcs/CosNotifyCommS_T.cpp \
-  ../../orbsvcs/orbsvcs/CosNotifyCommS.i \
-  ../../orbsvcs/orbsvcs/CosNotifyFilterC.h \
+  CosNotificationS_T.h \
+  CosNotificationS_T.i \
+  CosNotificationS_T.cpp \
+  CosNotificationS.i \
+  CosNotifyFilterS.h \
+  $(TAO_ROOT)/tao/OctetSeqS.h \
+  $(TAO_ROOT)/tao/OctetSeqS_T.h \
+  $(TAO_ROOT)/tao/OctetSeqS_T.i \
+  $(TAO_ROOT)/tao/OctetSeqS_T.cpp \
+  $(TAO_ROOT)/tao/OctetSeqS.i \
+  $(TAO_ROOT)/tao/StringSeqS.h \
+  $(TAO_ROOT)/tao/PolicyS.h \
+  $(TAO_ROOT)/tao/ServicesS.h \
+  $(TAO_ROOT)/tao/ServicesC.h \
+  $(TAO_ROOT)/tao/ServicesC.i \
+  $(TAO_ROOT)/tao/ServicesS_T.h \
+  $(TAO_ROOT)/tao/ServicesS_T.i \
+  $(TAO_ROOT)/tao/ServicesS_T.cpp \
+  $(TAO_ROOT)/tao/ServicesS.i \
+  CosNotifyCommS.h \
+  CosEventCommS.h \
+  CosEventCommC.h \
+  CosEvent/event_export.h \
+  CosEventCommC.i \
+  CosEventCommS_T.h \
+  CosEventCommS_T.i \
+  CosEventCommS_T.cpp \
+  CosEventCommS.i \
+  CosNotifyCommC.h \
+  CosNotifyCommC.i \
+  CosNotifyCommS_T.h \
+  CosNotifyCommS_T.i \
+  CosNotifyCommS_T.cpp \
+  CosNotifyCommS.i \
+  CosNotifyFilterC.h \
   $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
@@ -712,33 +742,37 @@ ACE_SHLIBS = -lTAO_CosNotification -lTAO_Svc_Utils -lTAO_ETCL -lTAO_DynamicAny -
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(TAO_ROOT)/tao/TC_Constants_Forward.h \
   $(TAO_ROOT)/tao/Typecode.i \
-  ../../orbsvcs/orbsvcs/CosNotifyFilterC.i \
-  ../../orbsvcs/orbsvcs/CosNotifyFilterS_T.h \
-  ../../orbsvcs/orbsvcs/CosNotifyFilterS_T.i \
-  ../../orbsvcs/orbsvcs/CosNotifyFilterS_T.cpp \
-  ../../orbsvcs/orbsvcs/CosNotifyFilterS.i \
-  ../../orbsvcs/orbsvcs/CosEventChannelAdminS.h \
-  ../../orbsvcs/orbsvcs/CosEventChannelAdminC.h \
-  ../../orbsvcs/orbsvcs/CosEventChannelAdminC.i \
-  ../../orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
-  ../../orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
-  ../../orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
-  ../../orbsvcs/orbsvcs/CosEventChannelAdminS.i \
-  ../../orbsvcs/orbsvcs/CosNotifyChannelAdminC.h \
-  ../../orbsvcs/orbsvcs/CosNotifyChannelAdminC.i \
-  ../../orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.h \
-  ../../orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.i \
-  ../../orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.cpp \
-  ../../orbsvcs/orbsvcs/CosNotifyChannelAdminS.i \
-  ../../orbsvcs/orbsvcs/Event_ForwarderS.h \
-  ../../orbsvcs/orbsvcs/Event_ForwarderC.h \
-  ../../orbsvcs/orbsvcs/Event_ForwarderC.i \
-  ../../orbsvcs/orbsvcs/Event_ForwarderS_T.h \
-  ../../orbsvcs/orbsvcs/Event_ForwarderS_T.i \
-  ../../orbsvcs/orbsvcs/Event_ForwarderS_T.cpp \
-  ../../orbsvcs/orbsvcs/Event_ForwarderS.i Notify/ProxySupplier_T.h \
-  Notify/Proxy_T.h Notify/Proxy.h Notify/Object.h \
-  ../../orbsvcs/orbsvcs/NotifyExtC.h ../../orbsvcs/orbsvcs/NotifyExtC.i \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
+  CosNotifyFilterC.i \
+  CosNotifyFilterS_T.h \
+  CosNotifyFilterS_T.i \
+  CosNotifyFilterS_T.cpp \
+  CosNotifyFilterS.i \
+  CosEventChannelAdminS.h \
+  CosEventChannelAdminC.h \
+  CosEventChannelAdminC.i \
+  CosEventChannelAdminS_T.h \
+  CosEventChannelAdminS_T.i \
+  CosEventChannelAdminS_T.cpp \
+  CosEventChannelAdminS.i \
+  CosNotifyChannelAdminC.h \
+  CosNotifyChannelAdminC.i \
+  CosNotifyChannelAdminS_T.h \
+  CosNotifyChannelAdminS_T.i \
+  CosNotifyChannelAdminS_T.cpp \
+  CosNotifyChannelAdminS.i \
+  Event_ForwarderS.h \
+  Event_ForwarderC.h \
+  Event_ForwarderC.i \
+  Event_ForwarderS_T.h \
+  Event_ForwarderS_T.i \
+  Event_ForwarderS_T.cpp \
+  Event_ForwarderS.i \
+  Notify/ProxySupplier_T.h Notify/Proxy_T.h Notify/Proxy.h \
+  Notify/Object.h \
+  NotifyExtC.h \
+  NotifyExtC.i \
   Notify/QoSProperties.h Notify/PropertySeq.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   $(ACE_ROOT)/ace/SString.h \
@@ -829,16 +863,18 @@ ACE_SHLIBS = -lTAO_CosNotification -lTAO_Svc_Utils -lTAO_ETCL -lTAO_DynamicAny -
   $(TAO_ROOT)/tao/debug.h \
   Notify/Method_Request_Dispatch_T.cpp Notify/Method_Request_Dispatch.inl \
   Notify/Worker_Task.h Notify/Worker_Task.inl Notify/Event_Manager.h \
-  ../../orbsvcs/orbsvcs/ESF/ESF_Worker.h \
-  ../../orbsvcs/orbsvcs/ESF/ESF_Worker.i \
-  ../../orbsvcs/orbsvcs/ESF/ESF_Worker.cpp Notify/Event_Manager.inl \
-  Notify/ProxyConsumer.h Notify/ProxyConsumer.inl Notify/Event_Map_T.h \
+  ESF/ESF_Worker.h \
+  ESF/ESF_Worker.i \
+  ESF/ESF_Worker.cpp \
+  Notify/Event_Manager.inl Notify/ProxyConsumer.h \
+  Notify/ProxyConsumer.inl Notify/Event_Map_T.h \
   Notify/Event_Map_Entry_T.h \
   $(TAO_ROOT)/tao/ORB_Constants.h \
   Notify/Event_Map_Entry_T.inl Notify/Event_Map_Entry_T.cpp \
-  ../../orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.h \
-  ../../orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.i \
-  ../../orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.cpp Notify/Properties.h \
+  ESF/ESF_Proxy_Collection.h \
+  ESF/ESF_Proxy_Collection.i \
+  ESF/ESF_Proxy_Collection.cpp \
+  Notify/Properties.h \
   $(TAO_ROOT)/tao/TAO_Singleton.h \
   $(TAO_ROOT)/tao/TAO_Singleton.inl \
   $(TAO_ROOT)/tao/TAO_Singleton.cpp \
@@ -851,18 +887,19 @@ ACE_SHLIBS = -lTAO_CosNotification -lTAO_Svc_Utils -lTAO_ETCL -lTAO_DynamicAny -
   $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
   $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
   Notify/Properties.inl Notify/Event_Map_T.inl Notify/Event_Map_T.cpp \
-  Notify/ConsumerAdmin.h ../../orbsvcs/orbsvcs/NotifyExtS.h \
-  ../../orbsvcs/orbsvcs/NotifyExtS_T.h \
-  ../../orbsvcs/orbsvcs/NotifyExtS_T.i \
-  ../../orbsvcs/orbsvcs/NotifyExtS_T.cpp \
-  ../../orbsvcs/orbsvcs/NotifyExtS.i Notify/ConsumerAdmin.inl \
+  Notify/ConsumerAdmin.h \
+  NotifyExtS.h \
+  NotifyExtS_T.h \
+  NotifyExtS_T.i \
+  NotifyExtS_T.cpp \
+  NotifyExtS.i \
+  Notify/ConsumerAdmin.inl \
   Notify/Structured/StructuredProxyPushSupplier.inl \
   Notify/Structured/RT_StructuredProxyPushSupplier.inl
 
 .obj/RT_Notify_Service.o .obj/RT_Notify_Service.so .shobj/RT_Notify_Service.o .shobj/RT_Notify_Service.so: Notify/RT_Notify_Service.cpp \
   Notify/RT_Notify_Service.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/rt_notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/rt_notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -1028,9 +1065,9 @@ ACE_SHLIBS = -lTAO_CosNotification -lTAO_Svc_Utils -lTAO_ETCL -lTAO_DynamicAny -
   $(ACE_ROOT)/ace/Reactor_Timer_Interface.h \
   $(ACE_ROOT)/ace/Reactor.i \
   $(ACE_ROOT)/ace/Reactor_Impl.h \
-  ../../orbsvcs/orbsvcs/CosNotifyChannelAdminS.h \
-  ../../orbsvcs/orbsvcs/CosNotificationS.h \
-  ../../orbsvcs/orbsvcs/CosNotificationC.h \
+  CosNotifyChannelAdminS.h \
+  CosNotificationS.h \
+  CosNotificationC.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
   $(TAO_ROOT)/tao/orbconf.h \
@@ -1070,12 +1107,6 @@ ACE_SHLIBS = -lTAO_CosNotification -lTAO_Svc_Utils -lTAO_ETCL -lTAO_DynamicAny -
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -1085,6 +1116,12 @@ ACE_SHLIBS = -lTAO_CosNotification -lTAO_Svc_Utils -lTAO_ETCL -lTAO_DynamicAny -
   $(ACE_ROOT)/ace/Message_Block_T.cpp \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -1107,8 +1144,8 @@ ACE_SHLIBS = -lTAO_CosNotification -lTAO_Svc_Utils -lTAO_ETCL -lTAO_DynamicAny -
   $(TAO_ROOT)/tao/PolicyC.i \
   $(TAO_ROOT)/tao/OBV_Constants.h \
   $(TAO_ROOT)/tao/ORB.i \
-  ../../orbsvcs/orbsvcs/Notify/notify_export.h \
-  ../../orbsvcs/orbsvcs/CosNotificationC.i \
+  Notify/notify_export.h \
+  CosNotificationC.i \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -1118,27 +1155,41 @@ ACE_SHLIBS = -lTAO_CosNotification -lTAO_Svc_Utils -lTAO_ETCL -lTAO_DynamicAny -
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
   $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
-  ../../orbsvcs/orbsvcs/CosNotificationS_T.h \
-  ../../orbsvcs/orbsvcs/CosNotificationS_T.i \
-  ../../orbsvcs/orbsvcs/CosNotificationS_T.cpp \
-  ../../orbsvcs/orbsvcs/CosNotificationS.i \
-  ../../orbsvcs/orbsvcs/CosNotifyFilterS.h \
-  ../../orbsvcs/orbsvcs/CosNotifyCommS.h \
-  ../../orbsvcs/orbsvcs/CosEventCommS.h \
-  ../../orbsvcs/orbsvcs/CosEventCommC.h \
-  ../../orbsvcs/orbsvcs/CosEvent/event_export.h \
-  ../../orbsvcs/orbsvcs/CosEventCommC.i \
-  ../../orbsvcs/orbsvcs/CosEventCommS_T.h \
-  ../../orbsvcs/orbsvcs/CosEventCommS_T.i \
-  ../../orbsvcs/orbsvcs/CosEventCommS_T.cpp \
-  ../../orbsvcs/orbsvcs/CosEventCommS.i \
-  ../../orbsvcs/orbsvcs/CosNotifyCommC.h \
-  ../../orbsvcs/orbsvcs/CosNotifyCommC.i \
-  ../../orbsvcs/orbsvcs/CosNotifyCommS_T.h \
-  ../../orbsvcs/orbsvcs/CosNotifyCommS_T.i \
-  ../../orbsvcs/orbsvcs/CosNotifyCommS_T.cpp \
-  ../../orbsvcs/orbsvcs/CosNotifyCommS.i \
-  ../../orbsvcs/orbsvcs/CosNotifyFilterC.h \
+  CosNotificationS_T.h \
+  CosNotificationS_T.i \
+  CosNotificationS_T.cpp \
+  CosNotificationS.i \
+  CosNotifyFilterS.h \
+  $(TAO_ROOT)/tao/OctetSeqS.h \
+  $(TAO_ROOT)/tao/OctetSeqS_T.h \
+  $(TAO_ROOT)/tao/OctetSeqS_T.i \
+  $(TAO_ROOT)/tao/OctetSeqS_T.cpp \
+  $(TAO_ROOT)/tao/OctetSeqS.i \
+  $(TAO_ROOT)/tao/StringSeqS.h \
+  $(TAO_ROOT)/tao/PolicyS.h \
+  $(TAO_ROOT)/tao/ServicesS.h \
+  $(TAO_ROOT)/tao/ServicesC.h \
+  $(TAO_ROOT)/tao/ServicesC.i \
+  $(TAO_ROOT)/tao/ServicesS_T.h \
+  $(TAO_ROOT)/tao/ServicesS_T.i \
+  $(TAO_ROOT)/tao/ServicesS_T.cpp \
+  $(TAO_ROOT)/tao/ServicesS.i \
+  CosNotifyCommS.h \
+  CosEventCommS.h \
+  CosEventCommC.h \
+  CosEvent/event_export.h \
+  CosEventCommC.i \
+  CosEventCommS_T.h \
+  CosEventCommS_T.i \
+  CosEventCommS_T.cpp \
+  CosEventCommS.i \
+  CosNotifyCommC.h \
+  CosNotifyCommC.i \
+  CosNotifyCommS_T.h \
+  CosNotifyCommS_T.i \
+  CosNotifyCommS_T.cpp \
+  CosNotifyCommS.i \
+  CosNotifyFilterC.h \
   $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
@@ -1150,24 +1201,26 @@ ACE_SHLIBS = -lTAO_CosNotification -lTAO_Svc_Utils -lTAO_ETCL -lTAO_DynamicAny -
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
   $(TAO_ROOT)/tao/TC_Constants_Forward.h \
   $(TAO_ROOT)/tao/Typecode.i \
-  ../../orbsvcs/orbsvcs/CosNotifyFilterC.i \
-  ../../orbsvcs/orbsvcs/CosNotifyFilterS_T.h \
-  ../../orbsvcs/orbsvcs/CosNotifyFilterS_T.i \
-  ../../orbsvcs/orbsvcs/CosNotifyFilterS_T.cpp \
-  ../../orbsvcs/orbsvcs/CosNotifyFilterS.i \
-  ../../orbsvcs/orbsvcs/CosEventChannelAdminS.h \
-  ../../orbsvcs/orbsvcs/CosEventChannelAdminC.h \
-  ../../orbsvcs/orbsvcs/CosEventChannelAdminC.i \
-  ../../orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
-  ../../orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
-  ../../orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
-  ../../orbsvcs/orbsvcs/CosEventChannelAdminS.i \
-  ../../orbsvcs/orbsvcs/CosNotifyChannelAdminC.h \
-  ../../orbsvcs/orbsvcs/CosNotifyChannelAdminC.i \
-  ../../orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.h \
-  ../../orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.i \
-  ../../orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.cpp \
-  ../../orbsvcs/orbsvcs/CosNotifyChannelAdminS.i \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
+  CosNotifyFilterC.i \
+  CosNotifyFilterS_T.h \
+  CosNotifyFilterS_T.i \
+  CosNotifyFilterS_T.cpp \
+  CosNotifyFilterS.i \
+  CosEventChannelAdminS.h \
+  CosEventChannelAdminC.h \
+  CosEventChannelAdminC.i \
+  CosEventChannelAdminS_T.h \
+  CosEventChannelAdminS_T.i \
+  CosEventChannelAdminS_T.cpp \
+  CosEventChannelAdminS.i \
+  CosNotifyChannelAdminC.h \
+  CosNotifyChannelAdminC.i \
+  CosNotifyChannelAdminS_T.h \
+  CosNotifyChannelAdminS_T.i \
+  CosNotifyChannelAdminS_T.cpp \
+  CosNotifyChannelAdminS.i \
   Notify/CosNotify_Service.inl Notify/RT_Notify_Service.inl \
   $(ACE_ROOT)/ace/Dynamic_Service.h \
   $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
@@ -1243,8 +1296,10 @@ ACE_SHLIBS = -lTAO_CosNotification -lTAO_Svc_Utils -lTAO_ETCL -lTAO_DynamicAny -
   $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.i \
   Notify/RT_Properties.inl Notify/RT_Factory.h Notify/Default_Factory.h \
   Notify/Factory.h Notify/Default_Factory.inl Notify/RT_Factory.inl \
-  Notify/RT_Builder.h Notify/Builder.h ../../orbsvcs/orbsvcs/NotifyExtC.h \
-  ../../orbsvcs/orbsvcs/NotifyExtC.i Notify/AdminProperties.h \
+  Notify/RT_Builder.h Notify/Builder.h \
+  NotifyExtC.h \
+  NotifyExtC.i \
+  Notify/AdminProperties.h \
   $(ACE_ROOT)/ace/Refcounted_Auto_Ptr.h \
   $(ACE_ROOT)/ace/Refcounted_Auto_Ptr.i \
   Notify/PropertySeq.h \
@@ -1255,8 +1310,7 @@ ACE_SHLIBS = -lTAO_CosNotification -lTAO_Svc_Utils -lTAO_ETCL -lTAO_DynamicAny -
   Notify/Builder.inl Notify/RT_Builder.inl
 
 .obj/RT_POA_Helper.o .obj/RT_POA_Helper.so .shobj/RT_POA_Helper.o .shobj/RT_POA_Helper.so: Notify/RT_POA_Helper.cpp Notify/RT_POA_Helper.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/rt_notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/rt_notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -1351,12 +1405,6 @@ ACE_SHLIBS = -lTAO_CosNotification -lTAO_Svc_Utils -lTAO_ETCL -lTAO_DynamicAny -
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -1372,6 +1420,12 @@ ACE_SHLIBS = -lTAO_CosNotification -lTAO_Svc_Utils -lTAO_ETCL -lTAO_DynamicAny -
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -1393,7 +1447,8 @@ ACE_SHLIBS = -lTAO_CosNotification -lTAO_Svc_Utils -lTAO_ETCL -lTAO_DynamicAny -
   $(TAO_ROOT)/tao/CurrentC.i \
   $(TAO_ROOT)/tao/PolicyC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
-  Notify/POA_Helper.inl ../../orbsvcs/orbsvcs/NotifyExtC.h \
+  Notify/POA_Helper.inl \
+  NotifyExtC.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/objectid.h \
   $(TAO_ROOT)/tao/OBV_Constants.h \
@@ -1438,11 +1493,11 @@ ACE_SHLIBS = -lTAO_CosNotification -lTAO_Svc_Utils -lTAO_ETCL -lTAO_DynamicAny -
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
   $(TAO_ROOT)/tao/ORB.i \
-  ../../orbsvcs/orbsvcs/Notify/notify_export.h \
-  ../../orbsvcs/orbsvcs/CosNotifyChannelAdminC.h \
-  ../../orbsvcs/orbsvcs/CosNotificationC.h \
-  ../../orbsvcs/orbsvcs/CosNotificationC.i \
-  ../../orbsvcs/orbsvcs/CosNotifyFilterC.h \
+  Notify/notify_export.h \
+  CosNotifyChannelAdminC.h \
+  CosNotificationC.h \
+  CosNotificationC.i \
+  CosNotifyFilterC.h \
   $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
@@ -1485,16 +1540,21 @@ ACE_SHLIBS = -lTAO_CosNotification -lTAO_Svc_Utils -lTAO_ETCL -lTAO_DynamicAny -
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(TAO_ROOT)/tao/TC_Constants_Forward.h \
   $(TAO_ROOT)/tao/Typecode.i \
-  ../../orbsvcs/orbsvcs/CosNotifyCommC.h \
-  ../../orbsvcs/orbsvcs/CosEventCommC.h \
-  ../../orbsvcs/orbsvcs/CosEvent/event_export.h \
-  ../../orbsvcs/orbsvcs/CosEventCommC.i \
-  ../../orbsvcs/orbsvcs/CosNotifyCommC.i \
-  ../../orbsvcs/orbsvcs/CosNotifyFilterC.i \
-  ../../orbsvcs/orbsvcs/CosEventChannelAdminC.h \
-  ../../orbsvcs/orbsvcs/CosEventChannelAdminC.i \
-  ../../orbsvcs/orbsvcs/CosNotifyChannelAdminC.i \
-  ../../orbsvcs/orbsvcs/NotifyExtC.i Notify/RT_POA_Helper.inl \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
+  $(TAO_ROOT)/tao/ServicesC.h \
+  $(TAO_ROOT)/tao/ServicesC.i \
+  CosNotifyCommC.h \
+  CosEventCommC.h \
+  CosEvent/event_export.h \
+  CosEventCommC.i \
+  CosNotifyCommC.i \
+  CosNotifyFilterC.i \
+  CosEventChannelAdminC.h \
+  CosEventChannelAdminC.i \
+  CosNotifyChannelAdminC.i \
+  NotifyExtC.i \
+  Notify/RT_POA_Helper.inl \
   $(TAO_ROOT)/tao/RTCORBA/RTCORBA.h \
   $(TAO_ROOT)/tao/RTCORBA/rtcorba_export.h \
   $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.h \
@@ -1576,8 +1636,7 @@ ACE_SHLIBS = -lTAO_CosNotification -lTAO_Svc_Utils -lTAO_ETCL -lTAO_DynamicAny -
   $(ACE_ROOT)/ace/SString.i
 
 .obj/RT_Properties.o .obj/RT_Properties.so .shobj/RT_Properties.o .shobj/RT_Properties.so: Notify/RT_Properties.cpp Notify/RT_Properties.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/rt_notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/rt_notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -1777,12 +1836,6 @@ ACE_SHLIBS = -lTAO_CosNotification -lTAO_Svc_Utils -lTAO_ETCL -lTAO_DynamicAny -
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -1793,6 +1846,12 @@ ACE_SHLIBS = -lTAO_CosNotification -lTAO_Svc_Utils -lTAO_ETCL -lTAO_DynamicAny -
   $(ACE_ROOT)/ace/Malloc_Base.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -1825,8 +1884,7 @@ ACE_SHLIBS = -lTAO_CosNotification -lTAO_Svc_Utils -lTAO_ETCL -lTAO_DynamicAny -
 .obj/RT_StructuredProxyPushSupplier.o .obj/RT_StructuredProxyPushSupplier.so .shobj/RT_StructuredProxyPushSupplier.o .shobj/RT_StructuredProxyPushSupplier.so:  \
  Notify/Structured/RT_StructuredProxyPushSupplier.cpp \
   Notify/Structured/RT_StructuredProxyPushSupplier.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/rt_notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/rt_notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -1836,9 +1894,9 @@ ACE_SHLIBS = -lTAO_CosNotification -lTAO_Svc_Utils -lTAO_ETCL -lTAO_DynamicAny -
   $(ACE_ROOT)/ace/OS_main.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   Notify/Structured/StructuredProxyPushSupplier.h Notify/notify_export.h \
-  ../../orbsvcs/orbsvcs/CosNotifyChannelAdminS.h \
-  ../../orbsvcs/orbsvcs/CosNotificationS.h \
-  ../../orbsvcs/orbsvcs/CosNotificationC.h \
+  CosNotifyChannelAdminS.h \
+  CosNotificationS.h \
+  CosNotificationC.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
   $(TAO_ROOT)/tao/orbconf.h \
@@ -1922,12 +1980,6 @@ ACE_SHLIBS = -lTAO_CosNotification -lTAO_Svc_Utils -lTAO_ETCL -lTAO_DynamicAny -
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -1943,6 +1995,12 @@ ACE_SHLIBS = -lTAO_CosNotification -lTAO_Svc_Utils -lTAO_ETCL -lTAO_DynamicAny -
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -2005,8 +2063,8 @@ ACE_SHLIBS = -lTAO_CosNotification -lTAO_Svc_Utils -lTAO_ETCL -lTAO_DynamicAny -
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
   $(TAO_ROOT)/tao/ORB.i \
-  ../../orbsvcs/orbsvcs/Notify/notify_export.h \
-  ../../orbsvcs/orbsvcs/CosNotificationC.i \
+  Notify/notify_export.h \
+  CosNotificationC.i \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -2023,27 +2081,41 @@ ACE_SHLIBS = -lTAO_CosNotification -lTAO_Svc_Utils -lTAO_ETCL -lTAO_DynamicAny -
   $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/Atomic_Op.i \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
-  ../../orbsvcs/orbsvcs/CosNotificationS_T.h \
-  ../../orbsvcs/orbsvcs/CosNotificationS_T.i \
-  ../../orbsvcs/orbsvcs/CosNotificationS_T.cpp \
-  ../../orbsvcs/orbsvcs/CosNotificationS.i \
-  ../../orbsvcs/orbsvcs/CosNotifyFilterS.h \
-  ../../orbsvcs/orbsvcs/CosNotifyCommS.h \
-  ../../orbsvcs/orbsvcs/CosEventCommS.h \
-  ../../orbsvcs/orbsvcs/CosEventCommC.h \
-  ../../orbsvcs/orbsvcs/CosEvent/event_export.h \
-  ../../orbsvcs/orbsvcs/CosEventCommC.i \
-  ../../orbsvcs/orbsvcs/CosEventCommS_T.h \
-  ../../orbsvcs/orbsvcs/CosEventCommS_T.i \
-  ../../orbsvcs/orbsvcs/CosEventCommS_T.cpp \
-  ../../orbsvcs/orbsvcs/CosEventCommS.i \
-  ../../orbsvcs/orbsvcs/CosNotifyCommC.h \
-  ../../orbsvcs/orbsvcs/CosNotifyCommC.i \
-  ../../orbsvcs/orbsvcs/CosNotifyCommS_T.h \
-  ../../orbsvcs/orbsvcs/CosNotifyCommS_T.i \
-  ../../orbsvcs/orbsvcs/CosNotifyCommS_T.cpp \
-  ../../orbsvcs/orbsvcs/CosNotifyCommS.i \
-  ../../orbsvcs/orbsvcs/CosNotifyFilterC.h \
+  CosNotificationS_T.h \
+  CosNotificationS_T.i \
+  CosNotificationS_T.cpp \
+  CosNotificationS.i \
+  CosNotifyFilterS.h \
+  $(TAO_ROOT)/tao/OctetSeqS.h \
+  $(TAO_ROOT)/tao/OctetSeqS_T.h \
+  $(TAO_ROOT)/tao/OctetSeqS_T.i \
+  $(TAO_ROOT)/tao/OctetSeqS_T.cpp \
+  $(TAO_ROOT)/tao/OctetSeqS.i \
+  $(TAO_ROOT)/tao/StringSeqS.h \
+  $(TAO_ROOT)/tao/PolicyS.h \
+  $(TAO_ROOT)/tao/ServicesS.h \
+  $(TAO_ROOT)/tao/ServicesC.h \
+  $(TAO_ROOT)/tao/ServicesC.i \
+  $(TAO_ROOT)/tao/ServicesS_T.h \
+  $(TAO_ROOT)/tao/ServicesS_T.i \
+  $(TAO_ROOT)/tao/ServicesS_T.cpp \
+  $(TAO_ROOT)/tao/ServicesS.i \
+  CosNotifyCommS.h \
+  CosEventCommS.h \
+  CosEventCommC.h \
+  CosEvent/event_export.h \
+  CosEventCommC.i \
+  CosEventCommS_T.h \
+  CosEventCommS_T.i \
+  CosEventCommS_T.cpp \
+  CosEventCommS.i \
+  CosNotifyCommC.h \
+  CosNotifyCommC.i \
+  CosNotifyCommS_T.h \
+  CosNotifyCommS_T.i \
+  CosNotifyCommS_T.cpp \
+  CosNotifyCommS.i \
+  CosNotifyFilterC.h \
   $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
@@ -2084,33 +2156,37 @@ ACE_SHLIBS = -lTAO_CosNotification -lTAO_Svc_Utils -lTAO_ETCL -lTAO_DynamicAny -
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(TAO_ROOT)/tao/TC_Constants_Forward.h \
   $(TAO_ROOT)/tao/Typecode.i \
-  ../../orbsvcs/orbsvcs/CosNotifyFilterC.i \
-  ../../orbsvcs/orbsvcs/CosNotifyFilterS_T.h \
-  ../../orbsvcs/orbsvcs/CosNotifyFilterS_T.i \
-  ../../orbsvcs/orbsvcs/CosNotifyFilterS_T.cpp \
-  ../../orbsvcs/orbsvcs/CosNotifyFilterS.i \
-  ../../orbsvcs/orbsvcs/CosEventChannelAdminS.h \
-  ../../orbsvcs/orbsvcs/CosEventChannelAdminC.h \
-  ../../orbsvcs/orbsvcs/CosEventChannelAdminC.i \
-  ../../orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
-  ../../orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
-  ../../orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
-  ../../orbsvcs/orbsvcs/CosEventChannelAdminS.i \
-  ../../orbsvcs/orbsvcs/CosNotifyChannelAdminC.h \
-  ../../orbsvcs/orbsvcs/CosNotifyChannelAdminC.i \
-  ../../orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.h \
-  ../../orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.i \
-  ../../orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.cpp \
-  ../../orbsvcs/orbsvcs/CosNotifyChannelAdminS.i \
-  ../../orbsvcs/orbsvcs/Event_ForwarderS.h \
-  ../../orbsvcs/orbsvcs/Event_ForwarderC.h \
-  ../../orbsvcs/orbsvcs/Event_ForwarderC.i \
-  ../../orbsvcs/orbsvcs/Event_ForwarderS_T.h \
-  ../../orbsvcs/orbsvcs/Event_ForwarderS_T.i \
-  ../../orbsvcs/orbsvcs/Event_ForwarderS_T.cpp \
-  ../../orbsvcs/orbsvcs/Event_ForwarderS.i Notify/ProxySupplier_T.h \
-  Notify/Proxy_T.h Notify/Proxy.h Notify/Object.h \
-  ../../orbsvcs/orbsvcs/NotifyExtC.h ../../orbsvcs/orbsvcs/NotifyExtC.i \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
+  CosNotifyFilterC.i \
+  CosNotifyFilterS_T.h \
+  CosNotifyFilterS_T.i \
+  CosNotifyFilterS_T.cpp \
+  CosNotifyFilterS.i \
+  CosEventChannelAdminS.h \
+  CosEventChannelAdminC.h \
+  CosEventChannelAdminC.i \
+  CosEventChannelAdminS_T.h \
+  CosEventChannelAdminS_T.i \
+  CosEventChannelAdminS_T.cpp \
+  CosEventChannelAdminS.i \
+  CosNotifyChannelAdminC.h \
+  CosNotifyChannelAdminC.i \
+  CosNotifyChannelAdminS_T.h \
+  CosNotifyChannelAdminS_T.i \
+  CosNotifyChannelAdminS_T.cpp \
+  CosNotifyChannelAdminS.i \
+  Event_ForwarderS.h \
+  Event_ForwarderC.h \
+  Event_ForwarderC.i \
+  Event_ForwarderS_T.h \
+  Event_ForwarderS_T.i \
+  Event_ForwarderS_T.cpp \
+  Event_ForwarderS.i \
+  Notify/ProxySupplier_T.h Notify/Proxy_T.h Notify/Proxy.h \
+  Notify/Object.h \
+  NotifyExtC.h \
+  NotifyExtC.i \
   Notify/QoSProperties.h Notify/PropertySeq.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   $(ACE_ROOT)/ace/SString.h \
@@ -2201,16 +2277,18 @@ ACE_SHLIBS = -lTAO_CosNotification -lTAO_Svc_Utils -lTAO_ETCL -lTAO_DynamicAny -
   $(TAO_ROOT)/tao/debug.h \
   Notify/Method_Request_Dispatch_T.cpp Notify/Method_Request_Dispatch.inl \
   Notify/Worker_Task.h Notify/Worker_Task.inl Notify/Event_Manager.h \
-  ../../orbsvcs/orbsvcs/ESF/ESF_Worker.h \
-  ../../orbsvcs/orbsvcs/ESF/ESF_Worker.i \
-  ../../orbsvcs/orbsvcs/ESF/ESF_Worker.cpp Notify/Event_Manager.inl \
-  Notify/ProxyConsumer.h Notify/ProxyConsumer.inl Notify/Event_Map_T.h \
+  ESF/ESF_Worker.h \
+  ESF/ESF_Worker.i \
+  ESF/ESF_Worker.cpp \
+  Notify/Event_Manager.inl Notify/ProxyConsumer.h \
+  Notify/ProxyConsumer.inl Notify/Event_Map_T.h \
   Notify/Event_Map_Entry_T.h \
   $(TAO_ROOT)/tao/ORB_Constants.h \
   Notify/Event_Map_Entry_T.inl Notify/Event_Map_Entry_T.cpp \
-  ../../orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.h \
-  ../../orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.i \
-  ../../orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.cpp Notify/Properties.h \
+  ESF/ESF_Proxy_Collection.h \
+  ESF/ESF_Proxy_Collection.i \
+  ESF/ESF_Proxy_Collection.cpp \
+  Notify/Properties.h \
   $(TAO_ROOT)/tao/TAO_Singleton.h \
   $(TAO_ROOT)/tao/TAO_Singleton.inl \
   $(TAO_ROOT)/tao/TAO_Singleton.cpp \
@@ -2233,10 +2311,12 @@ ACE_SHLIBS = -lTAO_CosNotification -lTAO_Svc_Utils -lTAO_ETCL -lTAO_DynamicAny -
   $(ACE_ROOT)/ace/os_include/os_dlfcn.h \
   $(ACE_ROOT)/ace/Service_Object.i \
   Notify/Event_Map_T.inl Notify/Event_Map_T.cpp Notify/ConsumerAdmin.h \
-  ../../orbsvcs/orbsvcs/NotifyExtS.h ../../orbsvcs/orbsvcs/NotifyExtS_T.h \
-  ../../orbsvcs/orbsvcs/NotifyExtS_T.i \
-  ../../orbsvcs/orbsvcs/NotifyExtS_T.cpp \
-  ../../orbsvcs/orbsvcs/NotifyExtS.i Notify/ConsumerAdmin.inl \
+  NotifyExtS.h \
+  NotifyExtS_T.h \
+  NotifyExtS_T.i \
+  NotifyExtS_T.cpp \
+  NotifyExtS.i \
+  Notify/ConsumerAdmin.inl \
   Notify/Structured/StructuredProxyPushSupplier.inl \
   Notify/Structured/RT_StructuredProxyPushSupplier.inl
 

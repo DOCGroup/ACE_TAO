@@ -9,13 +9,15 @@
 #include "Peer_T.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_Notify_Tests_Peer_T, "$Id$")
+ACE_RCSID (Notify, 
+           TAO_Notify_Tests_Peer_T, 
+           "$Id$")
 
 #include "ace/Arg_Shifter.h"
 #include "Name.h"
 #include "LookupManager.h"
 #include "Options_Parser.h"
-#include "orbsvcs/NotifyExtC.h"
+#include "orbsvcs/orbsvcs/NotifyExtC.h"
 
 template <class Peer_Traits>
 TAO_Notify_Tests_Peer_T<Peer_Traits>::TAO_Notify_Tests_Peer_T (void)

@@ -24,7 +24,7 @@
 
 #include "PG_Operators.h"
 #include "portablegroup_export.h"
-#include "orbsvcs/PortableGroupC.h"
+#include "orbsvcs/orbsvcs/PortableGroupC.h"
 
 
 /**

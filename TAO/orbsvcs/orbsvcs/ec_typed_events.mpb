@@ -2,11 +2,11 @@
 // $Id$
 
 
-feature(ec_typed_events)  {
-  macros      += TAO_HAS_TYPED_EVENT_CHANNEL
-  
-  libs    += TAO_IFR_Client TAO_DynamicInterface
-  after   += IFR_Client DynamicInterface
+feature(ec_typed_events): taoidldefaults {
+  macros   += TAO_HAS_TYPED_EVENT_CHANNEL
+  libs     += TAO_IFR_Client TAO_DynamicInterface
+  after    += IFR_Client DynamicInterface
+  idlflags += -Wb,export_macro=TAO_Event_Export -Wb,export_include=CosEvent/event_export.h
 
   IDL_Files {
     CosTypedEventComm.idl

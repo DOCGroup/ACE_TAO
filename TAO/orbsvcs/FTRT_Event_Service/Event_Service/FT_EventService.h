@@ -12,10 +12,10 @@
 #ifndef FT_EVENTSERVICE_H
 #define FT_EVENTSERVICE_H
 
-#include "orbsvcs/CosNamingC.h"
-#include "orbsvcs/FtRtecEventChannelAdminC.h"
-#include "orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel.h"
-#include "orbsvcs/FtRtEvent/EventChannel/FTEC_Become_Primary_Listener.h"
+#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/orbsvcs/FtRtecEventChannelAdminC.h"
+#include "orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel.h"
+#include "orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Become_Primary_Listener.h"
 #include "TP_Task.h"
 
 namespace POA_RtecScheduler

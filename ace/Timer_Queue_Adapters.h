@@ -56,7 +56,7 @@ public:
   long schedule (ACE_Event_Handler *type,
                  const void *act,
                  const ACE_Time_Value &future_time,
-                 const ACE_Time_Value &interval = ACE_Time_Value::zero);
+                 const ACE_Time_Value &interval = ACE_Time_Value::zero_time_value());
 
   /// Cancel the @a timer_id and pass back the @a act if an address is
   /// passed in.
@@ -131,7 +131,7 @@ public:
   long schedule (ACE_Event_Handler *handler,
                  const void *act,
                  const ACE_Time_Value &future_time,
-                 const ACE_Time_Value &interval = ACE_Time_Value::zero);
+                 const ACE_Time_Value &interval = ACE_Time_Value::zero_time_value());
 
   /// Cancel the <timer_id> and return the <act> parameter if an
   /// address is passed in. Also wakes up the dispatching thread.
@@ -173,7 +173,8 @@ public:
                         ACE_hthread_t thread_handles[] = 0,
                         void *stack[] = 0,
                         size_t stack_size[] = 0,
-                        ACE_thread_t thread_names[] = 0);
+                        ACE_thread_t thread_names[] = 0,
+                        bool inherit_priority = false);
 
 # if defined (ACE_HAS_DEFERRED_TIMER_COMMANDS)
 

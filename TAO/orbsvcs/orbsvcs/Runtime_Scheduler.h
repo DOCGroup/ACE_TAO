@@ -18,9 +18,9 @@
 #define ACE_RUNTIME_SCHEDULER_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Scheduler_Factory.h"
-#include "orbsvcs/RtecSchedulerS.h"
-#include "orbsvcs/Sched/sched_export.h"
+#include "orbsvcs/orbsvcs/Scheduler_Factory.h"
+#include "orbsvcs/orbsvcs/RtecSchedulerS.h"
+#include "orbsvcs/orbsvcs/Sched/sched_export.h"
 
 class TAO_RTSched_Export ACE_Runtime_Scheduler : public POA_RtecScheduler::Scheduler
 {
@@ -157,7 +157,7 @@ public:
                      RtecScheduler::UNKNOWN_TASK));
   // In the reconfig scheduler, this method removes a dependency between
   // two RT_Infos.  In the run time scheduler, this is a no-op.
-  
+
   virtual void set_dependency_enable_state (RtecScheduler::handle_t handle,
                                             RtecScheduler::handle_t dependency,
                                             CORBA::Long number_of_calls,
@@ -168,7 +168,7 @@ public:
                      RtecScheduler::UNKNOWN_TASK));
   // In the reconfig scheduler, this method (re)enabes a dependency between
   // two RT_Infos.  In the run time scheduler, this is a no-op.
-  
+
   virtual void set_rt_info_enable_state (RtecScheduler::handle_t handle,
                                          RtecScheduler::RT_Info_Enabled_Type_t enabled
                                          ACE_ENV_ARG_DECL)
@@ -280,7 +280,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Runtime_Scheduler.i"
+#include "orbsvcs/orbsvcs/Runtime_Scheduler.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

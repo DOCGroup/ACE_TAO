@@ -1,7 +1,7 @@
 // $Id$
 
 #include "pong.h"
-#include "orbsvcs/AV/Protocol_Factory.h"
+#include "orbsvcs/orbsvcs/AV/Protocol_Factory.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/Strategies/advanced_resource.h"
 #include "tao/ORB.h"
@@ -10,7 +10,9 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/Stats.h"
 
-ACE_RCSID(Latency, ping, "$Id$")
+ACE_RCSID (Latency, 
+           ping, 
+           "$Id$")
 
 const char *ior_output_file = "pong.ior";
 const char *protocol = "RTP/UDP";

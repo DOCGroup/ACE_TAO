@@ -131,6 +131,12 @@ ReturnTypeNameEmitter::traverse (Any&)
 }
 
 void
+ReturnTypeNameEmitter::traverse (SemanticGraph::Enum& e)
+{
+  os << e.scoped_name ();
+}
+
+void
 ReturnTypeNameEmitter::traverse (SemanticGraph::Struct& s)
 {
   // This should always be in the context, since the SizeTypeCalculator
@@ -306,6 +312,12 @@ INArgTypeNameEmitter::traverse (Any&)
 }
 
 void
+INArgTypeNameEmitter::traverse (SemanticGraph::Enum& e)
+{
+  os << e.scoped_name ();
+}
+
+void
 INArgTypeNameEmitter::traverse (SemanticGraph::Struct& s)
 {
   os << "const " << s.scoped_name () << " &";;
@@ -463,6 +475,12 @@ INOUTArgTypeNameEmitter::traverse (Any&)
 }
 
 void
+INOUTArgTypeNameEmitter::traverse (SemanticGraph::Enum& e)
+{
+  os << e.scoped_name () << " &";
+}
+
+void
 INOUTArgTypeNameEmitter::traverse (SemanticGraph::Struct& s)
 {
   os << s.scoped_name () << " &";
@@ -617,6 +635,12 @@ void
 OUTArgTypeNameEmitter::traverse (Any&)
 {
   os << "::CORBA::Any_out";
+}
+
+void
+OUTArgTypeNameEmitter::traverse (SemanticGraph::Enum& e)
+{
+  os << e.scoped_name () << "_out";
 }
 
 void

@@ -25,7 +25,7 @@
 
 ACE_RCSID(tests, SString_Test, "$Id$")
 
-  int
+int
 run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("SString_Test"));
@@ -266,6 +266,23 @@ run_main (int, ACE_TCHAR *[])
     if(s11 == s12){ACE_ERROR((LM_ERROR,"Set #4: \n"));}
     if(!(s11 > s12)){ACE_ERROR((LM_ERROR,"Set #4: \n"));}
     if(s11 < s12){ACE_ERROR((LM_ERROR,"Set #4: \n"));}
+
+  }
+
+  {
+    // Set 1 for ACE_SString, which is not tested
+    ACE_SString sstr;
+
+    const char *str = "What_a_day_it_has_been";
+
+    sstr.rep (ACE_const_cast (char *, str));
+
+    ACE_SString tmp =
+      sstr.substring (2, 300);
+
+    if (tmp.length () == 300)
+      ACE_ERROR ((LM_ERROR,
+                  "SString substring \n"));
 
   }
   ACE_END_TEST;

@@ -20,7 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/NotifyExtS.h"
+#include "orbsvcs/orbsvcs/NotifyExtS.h"
 
 #include "Admin.h"
 

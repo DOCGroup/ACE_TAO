@@ -16,9 +16,10 @@
 #if defined (ACE_WIN32)
 
 #include "ImR_Locator_i.h"
+#include "Locator_Options.h"
 
 #include "tao/ORB_Core.h"
-//#include "tao/corba.h"
+#include "tao/corba.h"
 #include "ace/Reactor.h"
 
 /**
@@ -59,19 +60,39 @@ int
 Locator_NT_Service::svc (void)
 {
   ImR_Locator_i server;
+  Options opts;
+
+  if (opts.init_from_registry() != 0)
+  {
+    report_status (SERVICE_STOPPED);
+    return -1;
+  }
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      report_status (SERVICE_RUNNING);
-      int status = server.init (ACE_ENV_SINGLE_ARG_PARAMETER);
+      int status = server.init (opts ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      report_status (SERVICE_STOPPED);
 
-      if (status != -1)
+      if (status == -1)
         {
-          return 0;
+          report_status (SERVICE_STOPPED);
+          return -1;
         }
+      else
+        {
+          report_status (SERVICE_RUNNING);
+          server.run (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          status = server.fini (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          report_status (SERVICE_STOPPED);
+
+        }
+        if (status != -1)
+            return 0;
     }
   ACE_CATCH (CORBA::SystemException, sysex)
     {

@@ -25,6 +25,7 @@
 
 #include "tao/TAO_Export.h"
 #include "tao/Basic_Types.h"
+#include "tao/orbconf.h"
 
 class TAO_OutputCDR;
 

@@ -8,7 +8,7 @@
 
 ACE_RCSID (AV,
            SCTP_SEQ,
-           "$Id$")
+           "SCTP_SEQ.cpp,v 1.3 2003/11/05 21:06:53 yamuna Exp")
 
 //------------------------------------------------------------
 // TAO_AV_SCTP_SEQ_Transport
@@ -182,12 +182,23 @@ TAO_AV_SCTP_SEQ_Base_Acceptor::acceptor_open (TAO_AV_SCTP_SEQ_Acceptor *acceptor
       local_ip_addr [i] = ip_addr.get_ip_address ();
     }
 		
+  
   ACE_Multihomed_INET_Addr multi_addr;
   multi_addr.set (local_addr.get_port_number (),
 		  local_addr.get_ip_address (),
 		  1,
 		  local_ip_addr,
 		  entry->num_local_sec_addrs ());
+
+  char buf[BUFSIZ];
+  multi_addr.addr_to_string (buf,
+			     BUFSIZ);
+  
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG,
+                "TAO_AV_SCTP_SEQ_Base_Acceptor::open: %s",
+                buf
+                ));
   
   int result = this->open (multi_addr,reactor);
   if (result < 0)
@@ -204,7 +215,6 @@ TAO_AV_SCTP_SEQ_Base_Acceptor::make_svc_handler (TAO_AV_SCTP_SEQ_Flow_Handler *&
     return result;
   handler->reactor (this->reactor_);
   this->entry_->handler (handler);
-
 
   return 0;
 }
@@ -258,23 +268,18 @@ TAO_AV_SCTP_SEQ_Acceptor::open (TAO_Base_StreamEndPoint *endpoint,
 {
   this->flow_protocol_factory_ = factory;
 
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "TAO_AV_SCTP_SEQ_Acceptor::open "));
-
   this->av_core_ = av_core;
   this->endpoint_ = endpoint;
   this->entry_ = entry;
+
   if (flow_comp == TAO_AV_Core::TAO_AV_CONTROL)
     this->flowname_ = TAO_AV_Core::get_control_flowname (entry->flowname ());
   else
   this->flowname_ = entry->flowname ();
+
   ACE_Addr *address = entry->address ();
 
   ACE_INET_Addr *inet_addr = (ACE_INET_Addr *) address;
-
-  inet_addr->set (inet_addr->get_port_number (),
-                  inet_addr->get_host_name ());
 
   char buf[BUFSIZ];
   inet_addr->addr_to_string (buf,
@@ -299,8 +304,6 @@ TAO_AV_SCTP_SEQ_Acceptor::open (TAO_Base_StreamEndPoint *endpoint,
                       -1);
   
   entry->set_local_addr (address);
-
-
   return 0;
 }
 
@@ -418,7 +421,9 @@ TAO_AV_SCTP_SEQ_Connector::~TAO_AV_SCTP_SEQ_Connector (void)
 int
 TAO_AV_SCTP_SEQ_Connector::make_svc_handler (TAO_AV_SCTP_SEQ_Flow_Handler *&sctp_handler)
 {
-  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_SCTP_SEQ_Connector::make_svc_handler\n"));
+  if (TAO_debug_level > 0) 
+    ACE_DEBUG ((LM_DEBUG,"TAO_AV_SCTP_SEQ_Connector::make_svc_handler\n"));
+  
   //  TAO_AV_Callback *callback = 0;
   if (this->endpoint_ != 0)
     {
@@ -452,7 +457,8 @@ TAO_AV_SCTP_SEQ_Connector::open (TAO_Base_StreamEndPoint *endpoint,
 {
   this->endpoint_ = endpoint;
   this->flow_protocol_factory_ = factory;
-  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_SCTP_SEQ_Connector::open "));
+  if (TAO_debug_level > 0) 
+    ACE_DEBUG ((LM_DEBUG,"TAO_AV_SCTP_SEQ_Connector::open "));
   int result = this->connector_.connector_open(this,
                                                av_core->reactor ());
   return result;
@@ -515,6 +521,7 @@ TAO_AV_SCTP_SEQ_Connector::connect (TAO_FlowSpec_Entry *entry,
 		    1,
 		    0,
 		    entry->num_peer_sec_addrs ());
+
 
   int result = this->connector_.connector_connect (handler,
 						   remote_multi_addr,
@@ -595,7 +602,8 @@ TAO_AV_SCTP_SEQ_Factory::match_protocol (const char *protocol_string)
 TAO_AV_Acceptor*
 TAO_AV_SCTP_SEQ_Factory::make_acceptor (void)
 {
-  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_SCTP_SEQ_Factory::make_acceptor\n"));
+  if (TAO_debug_level > 0) 
+    ACE_DEBUG ((LM_DEBUG,"TAO_AV_SCTP_SEQ_Factory::make_acceptor\n"));
   TAO_AV_Acceptor *acceptor = 0;
   ACE_NEW_RETURN (acceptor,
                   TAO_AV_SCTP_SEQ_Acceptor,
@@ -606,7 +614,8 @@ TAO_AV_SCTP_SEQ_Factory::make_acceptor (void)
 TAO_AV_Connector*
 TAO_AV_SCTP_SEQ_Factory::make_connector (void)
 {
-  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_SCTP_SEQ_Factory::make_connector\n"));
+  if (TAO_debug_level > 0) 
+    ACE_DEBUG ((LM_DEBUG,"TAO_AV_SCTP_SEQ_Factory::make_connector\n"));
   TAO_AV_Connector *connector = 0;
   ACE_NEW_RETURN (connector,
                   TAO_AV_SCTP_SEQ_Connector,
@@ -811,11 +820,13 @@ TAO_AV_SCTP_SEQ_Flow_Handler::open (void * /*arg*/)
   (void) addr.addr_to_string (server, sizeof (server));
 
   if (TAO_debug_level > 0)
-    if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,
-                "(%P|%t) connection to server <%s> on %d\n",
-                server, this->peer ().get_handle ()));
-
+    if (TAO_debug_level > 0) 
+      ACE_DEBUG ((LM_DEBUG,
+		  "(%P|%t) connection to server <%s> on %d\n",
+		  server, this->peer ().get_handle ()));
+  
   this->peer ().disable (ACE_NONBLOCK);
+
   // Register the handler with the reactor.
   if (this->reactor ()
       && this->reactor ()->register_handler
@@ -888,6 +899,8 @@ TAO_AV_SCTP_SEQ_Flow_Factory::make_protocol_object (TAO_FlowSpec_Entry *entry,
                   handler);
   endpoint->set_protocol_object (entry->flowname (),
                                  object);
+
+  endpoint->protocol_object_set ();
   return object;
 }
 

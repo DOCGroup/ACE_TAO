@@ -27,6 +27,10 @@
 
 #include "ace/POSIX_Proactor.h"
 
+#ifdef AIX
+typedef union sigval sigval_t;
+#endif
+
 /**
  * @class ACE_POSIX_CB_Proactor
  *

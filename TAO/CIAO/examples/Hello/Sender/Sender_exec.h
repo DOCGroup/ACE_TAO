@@ -11,11 +11,12 @@
 #ifndef SENDER_EXEC_H
 #define SENDER_EXEC_H
 
-#include "SenderEIC.h"
+#include "SenderEC.h"
+#include "Sender_exec_export.h"
 
 #include "tao/LocalObject.h"
 
-namespace MyImpl
+namespace Sender_Impl
 {
   /**
    * @class Sender_exec_i
@@ -24,8 +25,7 @@ namespace MyImpl
    */
 
   class SENDER_EXEC_Export Sender_exec_i :
-      public virtual Hello::CCM_Sender,
-      public virtual Component::SessionComponent,
+      public virtual Sender_Exec,
       public virtual TAO_Local_RefCounted_Object
   {
 
@@ -89,23 +89,23 @@ namespace MyImpl
 
   protected:
     /// Copmponent specific context
-    Hello::CCM_Sender_Context_var context_;
+    Sender_Exec_Context_var context_;
 
   private:
     CORBA::String_var message_;
 
-    friend class message_impl;
+    friend class Message_Impl;
   };
 
 
   //
   //
   //
-  class message_impl : public virtual Hello::CCM_message,
+  class Message_Impl : public virtual Hello::CCM_message,
                        public virtual TAO_Local_RefCounted_Object
   {
   public:
-    message_impl (Sender_exec_i& component)
+    Message_Impl (Sender_exec_i& component)
         : component_ (component)
     {
     }
@@ -124,7 +124,7 @@ namespace MyImpl
    * Sender home executor implementation class.
    */
   class SENDER_EXEC_Export SenderHome_exec_i :
-    public virtual Hello::CCM_SenderHome,
+    public virtual SenderHome_Exec,
     public virtual TAO_Local_RefCounted_Object
   {
   public:

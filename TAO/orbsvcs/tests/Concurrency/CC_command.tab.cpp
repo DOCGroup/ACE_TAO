@@ -30,7 +30,7 @@
 
 #include "CC_command.h"
 #include "ace/ACE.h"
-#include "orbsvcs/CosConcurrencyControlC.h"
+#include "orbsvcs/orbsvcs/CosConcurrencyControlC.h"
 #include "ace/OS_NS_stdio.h"
 
 void ace_cc_yyerror (const char* s);

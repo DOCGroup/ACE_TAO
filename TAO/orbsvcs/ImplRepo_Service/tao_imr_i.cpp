@@ -210,16 +210,13 @@ TAO_IMR_Op::display_server_information (const ImplementationRepository::ServerIn
                 info.startup.environment[i].name.in (),
                 info.startup.environment[i].value.in ()));
 
-  // @@ add logical server once implemented
-
-
   if (info.startup.activation == ImplementationRepository::PER_CLIENT)
     ACE_DEBUG ((LM_DEBUG, "  No running info available for PER_CLIENT mode\n"));
-  else if (ACE_OS::strlen (info.location.in()) > 0)
+  else if (ACE_OS::strlen (info.partial_ior.in()) > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "  Running at endpoint: %s\n",
-                info.location.in ()));
-  else   // I am assuming that a blank location means currently not running.
+                info.partial_ior.in ()));
+  else   // I am assuming that a blank partial_ior means currently not running.
     ACE_DEBUG ((LM_DEBUG,
                 "  Not currently running\n"));
 }
@@ -317,7 +314,7 @@ TAO_IMR_Op_Add::print_usage (void)
                         "    -h            Displays this\n"
                         "    -c command    Startup command\n"
                         "    -w dir        Working directory\n"
-                        "    -e vars       Set environment variables\n"
+                        "    -e name=value Set environment variables\n"
                         "    -a mode       Set activate mode (NORMAL|MANUAL|PER_CLIENT|AUTO_START)\n"));
 }
 
@@ -335,10 +332,11 @@ TAO_IMR_Op_Add::parse (int argc, ACE_TCHAR **argv)
   ACE_Get_Opt get_opts (argc, argv, "hc:w:a:e:l:");
 
   this->server_name_ = argv[1];
-  if (this->server_name_.length() == 0)
+  if (this->server_name_.length() == 0 || this->server_name_[0] == '-')
   {
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Server name > must be at least one character long!\n"),-1);
+    ACE_ERROR((LM_ERROR, "Server name is required.\n"));
+    this->print_usage ();
+    return -1;
   }
     
   int c;
@@ -641,7 +639,7 @@ TAO_IMR_Op_Update::print_usage (void)
                         "    -h            Displays this\n"
                         "    -c command    Startup command\n"
                         "    -w dir        Working directory\n"
-                        "    -e vars       Set environment variables\n"
+                        "    -e name=value Set environment variables\n"
                         "    -a mode       Set activate mode (NORMAL|MANUAL|PER_CLIENT|AUTO_START)\n"));
 }
 
@@ -958,9 +956,7 @@ TAO_IMR_Op_IOR::run (void)
                                 -1);
             }
 
-          ACE_OS::fprintf (file,
-                           "%s",
-                           ior.c_str ());
+          ACE_OS::fprintf (file, "%s", ior.c_str ());
           ACE_OS::fclose (file);
         }
     }
@@ -1179,7 +1175,6 @@ TAO_IMR_Op_Update::run (void)
       if (this->set_activation_ == 1)
         server_information->startup.activation = this->activation_;
 
-      // @@ Add logical server support here also
       this->imr_locator_->reregister_server (this->server_name_.c_str (),
                                              server_information->startup
                                              ACE_ENV_ARG_PARAMETER);

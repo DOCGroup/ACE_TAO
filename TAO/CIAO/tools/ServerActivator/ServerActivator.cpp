@@ -11,7 +11,7 @@
  * the hosts that have ServerActivator install to function properly.
  */
 
-#include "ServerActivator_Impl.h"
+#include "ciao/ServerActivator_Impl.h"
 #include "tao/IORTable/IORTable.h"
 #include "ace/SString.h"
 #include "ace/Read_Buffer.h"

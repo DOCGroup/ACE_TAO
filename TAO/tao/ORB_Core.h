@@ -181,7 +181,7 @@ public:
 
 #if TAO_HAS_INTERCEPTORS == 1
   /// The thread-specific portion of the PICurrent object.
-  TAO_PICurrent_Impl pi_current_;
+  TAO::PICurrent_Impl pi_current_;
 
   /// The PortableInterceptor::ClientRequestInfo object for the
   /// current thread.
@@ -900,11 +900,11 @@ public:
   //@{
 #if TAO_HAS_INTERCEPTORS == 1
 
-  /// Return a pointer to the cached TAO_PICurrent object.
-  TAO_PICurrent *pi_current (void);
+  /// Return a pointer to the cached TAO::PICurrent object.
+  TAO::PICurrent *pi_current (void);
 
-  /// Set the pointer to the cached TAO_PICurrent object.
-  void pi_current (TAO_PICurrent *current);
+  /// Set the pointer to the cached TAO::PICurrent object.
+  void pi_current (TAO::PICurrent *current);
 
   /// Register a client request interceptor.
   void add_interceptor (
@@ -992,7 +992,13 @@ public:
   /// Return a pointer to the -ORBInitRef map.
   InitRefMap * init_ref_map (void);
 
+  /// Set the ORB related to the orb_id as the default ORB and not the
+  /// ORB that is first binded in the ORB Table
+  void set_default (const char *orb_id);
 
+  /// Set to choose to be not a default ORB when there are more than
+  /// one ORB.
+  void not_default (const char *orb_id);
 
 protected:
 
@@ -1283,7 +1289,7 @@ protected:
    * invocation path).  Caching it prevents additional overhead to due
    * object resolution from occurring.
    */
-  TAO_PICurrent *pi_current_;
+  TAO::PICurrent *pi_current_;
 
   /// Client request interceptor registry.
   TAO_ClientRequestInterceptor_List client_request_interceptors_;

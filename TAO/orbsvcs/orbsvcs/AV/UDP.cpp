@@ -557,7 +557,7 @@ TAO_AV_UDP_Acceptor::open_i (ACE_INET_Addr *inet_addr,
 }
 
 int
-	TAO_AV_UDP_Acceptor::close (void)
+TAO_AV_UDP_Acceptor::close (void)
 {
   return 0;
 }
@@ -577,7 +577,8 @@ TAO_AV_UDP_Connector::~TAO_AV_UDP_Connector (void)
       delete this->entry_->control_handler ();
     }
 
-  delete this->control_inet_address_;
+  if (this->control_inet_address_ != 0)
+    delete this->control_inet_address_;
 }
 
 int
@@ -1069,6 +1070,9 @@ TAO_AV_UDP_Flow_Factory::make_protocol_object (TAO_FlowSpec_Entry *entry,
                   handler);
   endpoint->set_protocol_object (entry->flowname (),
                                  object);
+
+  endpoint->protocol_object_set ();
+
   return object;
 }
 

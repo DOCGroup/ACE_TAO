@@ -22,27 +22,6 @@ use vars qw(@ISA);
 # Subroutine Section
 # ************************************************************
 
-sub fill_value {
-  my($self)  = shift;
-  my($name)  = shift;
-  my($value) = undef;
-
-  if ($name eq 'cppdir') {
-    my(%dirnames) = ();
-    foreach my $file ($self->get_component_list('source_files')) {
-      my($dirname) = dirname($file);
-      if ($dirname eq '') {
-        $dirname = '.';
-      }
-      $dirnames{$dirname} = 1;
-    }
-    $value = join(';', sort keys %dirnames);
-  }
-
-  return $value;
-}
-
-
 sub project_file_name {
   my($self) = shift;
   my($name) = shift;

@@ -1,8 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : taolib {
-  idlflags += -Gv
+project: taolib {
   after    += Valuetype
   libs     += TAO_Valuetype
 }

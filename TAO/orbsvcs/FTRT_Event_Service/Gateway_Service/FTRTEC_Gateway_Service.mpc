@@ -3,7 +3,7 @@
 
   project(FTRTEC_Gateway_Service): orbsvcsexe, ftrteventclient {
   exename   = ftrtec_gateway_service
-  includes += $(TAO_ROOT)/orbsvcs $(TAO_ROOT)/orbsvcs/FtRtEvent/Utils
+  includes += $(TAO_ROOT)/orbsvcs/FtRtEvent/Utils
 
   Source_Files {
     FTRTEC_Gateway_Service.cpp

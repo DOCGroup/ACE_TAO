@@ -165,8 +165,9 @@ int
 TAO_AV_Connector_Registry::close (TAO_AV_Connector *connector)
 {
   this->connectors_.remove (connector);
-  delete connector;
-
+  
+  if (connector != 0)
+    delete connector;
   return 0;
 }
 
@@ -177,12 +178,12 @@ TAO_AV_Connector_Registry::close_all (void)
        i != this->connectors_.end ();
        ++i)
     {
-      if (*i == 0)
+      if (*i != 0)
         continue;
 
       (*i)->close ();
 
-      delete *i;
+      this->close (*i);
     }
 
   this->connectors_.reset ();

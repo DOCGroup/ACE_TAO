@@ -14,7 +14,11 @@
 #ifndef TAO_LB_SERVER_REQUEST_INTERCEPTOR_H
 #define TAO_LB_SERVER_REQUEST_INTERCEPTOR_H
 
+#include /**/ "ace/pre.h"
+
 #include "ace/config-all.h"
+
+#include "orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -42,7 +46,7 @@ class TAO_LB_LoadAlert;
  * This ServerRequestInterceptor is responsible for redirecting
  * requests back to the LoadManager.
  */
-class TAO_LB_ServerRequestInterceptor
+class TAO_LoadBalancing_Export TAO_LB_ServerRequestInterceptor
   : public virtual PortableInterceptor::ServerRequestInterceptor,
     public virtual TAO_Local_RefCounted_Object
 {
@@ -114,5 +118,6 @@ private:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_LB_SERVER_REQUEST_INTERCEPTOR_H */

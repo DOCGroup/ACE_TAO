@@ -44,6 +44,7 @@
 #include "ace/Atomic_Op.h"
 #include "ace/SString.h"
 #include "ace/Signal.h"
+#include "ace/Min_Max.h"
 
 #if defined (ACE_HAS_IP_MULTICAST) && defined (ACE_HAS_THREADS)
 
@@ -915,7 +916,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   if (retval != 0)
     return 1;
 
-  const ACE_TCHAR *temp = ACE_TEXT ("Multicast_Test_IPv6");
+  const ACE_TCHAR *temp = ACE_TEXT ("Multicast_Test_IPV6");
   ACE_TString test = temp;
 
   u_long role = config.role ();
