@@ -1,3 +1,13 @@
+Tue Nov  7 21:46:57 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/ast/ast_type.cpp:
+	* TAO_IDL/include/ast_type.h:
+
+	  Added flag to indicate whether the node has been added
+	  to the Interface Repository. Used for types that can
+	  be forward declared, which right now is only interfaces,
+	  but will eventually include other types as well.
+
 Tue Nov 07 16:38:05 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/Portable_Interceptors/Benchmark/client.dsp:
