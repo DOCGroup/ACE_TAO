@@ -1,3 +1,12 @@
+Mon Feb  5 15:13:53 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/IFR_Service/Makefile:
+        * orbsvcs/tests/Makefile:
+
+          Added guards to keep the IFR_Service, tao_ifr and associated 
+          tests from being built with old g++. The TypeCodeFactory
+          will still be built on all build configurations.
+
 Mon Feb  5 12:33:44 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tests/Portable_Interceptors/Benchmark/interceptors.cpp
