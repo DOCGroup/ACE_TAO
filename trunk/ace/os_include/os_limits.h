@@ -85,6 +85,17 @@ extern "C"
 #  define MAXPATHLEN  PATH_MAX
 #endif /* !MAXPATHLEN */
 
+// This is defined by XOPEN to be a minimum of 16.  POSIX.1g
+// also defines this value.  platform-specific config.h can
+// override this if need be.
+#if !defined (IOV_MAX)
+#  define IOV_MAX 16
+#endif /* IOV_MAX */
+
+#if !defined (ACE_IOV_MAX)
+#  define ACE_IOV_MAX IOV_MAX
+#endif /* ACE_IOV_MAX */
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
