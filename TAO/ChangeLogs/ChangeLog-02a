@@ -1,3 +1,62 @@
+Mon Jan 28 14:25:04 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/tests/Notify/Structured_Filter/Structured_Consumer.dsp:
+	* orbsvcs/tests/Notify/Structured_Filter/Structured_Supplier.dsp:
+	* orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Consumer.dsp:
+	* orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Supplier.dsp:
+
+	  Removed these files and added them below, renamed uniquely so they
+	  could be inserted into the workspace containing all the Notify tests.
+
+	* orbsvcs/tests/Notify/Structured_Filter/Structured_Filter_Consumer.dsp:
+	* orbsvcs/tests/Notify/Structured_Filter/Structured_Filter_Supplier.dsp:
+	* orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Multi_Filter_Consumer.dsp:
+	* orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Multi_Filter_Supplier.dsp:
+
+	  Added these files as renamings of the ones removed above.
+
+	* orbsvcs/tests/Notify/Structured_Filter/Structured_Filter.dsw:
+	* orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Multi_Filter.dsw:
+
+	  Changed the names of the included projects to reflect the changes above.
+
+	* orbsvcs/tests/Notify/Structured_Filter/Notify_Push_Consumer.cpp:
+
+	  Changed the way a signed 64-bit integer is handled in a case statement.
+
+	* orbsvcs/tests/Notify/Basic/AdminProperties_Test.cpp:
+	* orbsvcs/tests/Notify/Basic/AdminProperties_Test.dsp:
+	* orbsvcs/tests/Notify/Basic/AdminProperties_Test.h:
+	* orbsvcs/tests/Notify/Basic/ConnectDisconnect.cpp:
+	* orbsvcs/tests/Notify/Basic/ConnectDisconnect.h:
+	* orbsvcs/tests/Notify/Basic/Events_Test.cpp:
+	* orbsvcs/tests/Notify/Basic/Events_Test.h:
+	* orbsvcs/tests/Notify/Basic/IdAssignment.cpp:
+	* orbsvcs/tests/Notify/Basic/IdAssignment.dsp:
+	* orbsvcs/tests/Notify/Basic/IdAssignment.h:
+	* orbsvcs/tests/Notify/Basic/LifeCycleTest.cpp:
+	* orbsvcs/tests/Notify/Basic/LifeCycleTest.dsp:
+	* orbsvcs/tests/Notify/Basic/LifeCycleTest.h:
+	* orbsvcs/tests/Notify/Basic/Simple.cpp:
+	* orbsvcs/tests/Notify/Basic/Simple.h:
+	* orbsvcs/tests/Notify/Basic/Updates.cpp:
+	* orbsvcs/tests/Notify/Basic/Updates.h:
+	* orbsvcs/tests/Notify/MT_Dispatching/Structured_Consumer.cpp:
+	* orbsvcs/tests/Notify/MT_Dispatching/Structured_Supplier.cpp:
+	* orbsvcs/tests/Notify/lib/Notify_PushConsumer.cpp:
+	* orbsvcs/tests/Notify/lib/Notify_PushSupplier.cpp:
+	* orbsvcs/tests/Notify/lib/Notify_SequencePushConsumer.cpp:
+	* orbsvcs/tests/Notify/lib/Notify_SequencePushSupplier.cpp:
+	* orbsvcs/tests/Notify/lib/Notify_StructuredPushConsumer.cpp:
+	* orbsvcs/tests/Notify/lib/Notify_StructuredPushSupplier.cpp:
+	* orbsvcs/tests/Notify/performance-tests/Filter/Sequence_Consumer.cpp:
+	* orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen_Test.cpp:
+	* orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen_Test.h:
+	* orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.cpp:
+	* orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.h:
+
+	  Cosmetic changes.
+
 Mon Jan 28 12:23:39 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* TAO_IDL/be_include/be_visitor_argument/argument.h:
