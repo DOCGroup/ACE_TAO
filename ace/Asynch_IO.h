@@ -5,12 +5,12 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Asynch_IO.h
 //
 // = DESCRIPTION
-//    This only works on Win32 platforms. 
+//    This only works on Win32 platforms.
 //
 //    The implementation of <ACE_Asynch_Transmit_File> and
 //    <ACE_Asynch_Accept> are only supported if ACE_HAS_WINSOCK2 is
@@ -19,7 +19,7 @@
 // = AUTHOR
 //    Irfan Pyarali (irfan@cs.wustl.edu)
 //    Tim Harrison (harrison@cs.wustl.edu)
-// 
+//
 // ============================================================================
 
 #if !defined (ACE_ASYNCH_IO_H)
@@ -40,7 +40,7 @@ class ACE_Export ACE_Asynch_Result : protected OVERLAPPED
   // = TITLE
   //     An abstract class which adds information to the OVERLAPPED
   //     structure to make it more useful.
-  // 
+  //
   // = DESCRIPTION
   //     An abstract base class from which you can obtain some basic
   //     information like the number of bytes transferred, the ACT
@@ -55,13 +55,13 @@ public:
 
   u_long bytes_transferred (void) const;
   // Number of bytes transferred by the operation.
-  
+
   const void *act (void) const;
   // ACT associated with the operation.
-  
+
   int success (void) const;
   // Did the operation succeed?
-  
+
   const void *completion_key (void) const;
   // This returns the ACT associated with the handle when it was
   // registered with the I/O completion port.  This ACT is not the
@@ -69,7 +69,7 @@ public:
 
   u_long error (void) const;
   // Error value if the operation fail.
-  
+
   ACE_HANDLE event (void) const;
   // Event associated with the OVERLAPPED structure
 
@@ -83,7 +83,7 @@ public:
 		     ACE_HANDLE event,
 		     u_long offset = 0,
 		     u_long offset_high = 0);
-  // Constructor. 
+  // Constructor.
 
   virtual ~ACE_Asynch_Result (void);
   // Destructor.
@@ -92,10 +92,10 @@ protected:
   virtual void complete (u_long bytes_transferred,
 			 int success,
 			 const void *completion_key,
-			 u_long error = 0) = 0;  
+			 u_long error = 0) = 0;
   // This is the key method.  Subclasses will override this method to
-  // call the correct callback on the handler.  
-  
+  // call the correct callback on the handler.
+
   ACE_Handler &handler_;
   // Handler that will be called back.
 
@@ -144,10 +144,10 @@ public:
 protected:
   ACE_Asynch_Operation (void);
   // A no-op constructor.
-  
+
   ACE_Proactor *proactor_;
   // Proactor that this Asynch IO will be registered with.
-  
+
   ACE_Handler *handler_;
   // Handler that will receive the callback.
 
@@ -173,7 +173,7 @@ public:
 
   ACE_Asynch_Read_Stream (void);
   // A do nothing constructor.
-  
+
   int read (ACE_Message_Block &message_block,
 	    u_long bytes_to_read,
 	    const void *act = 0);
@@ -190,16 +190,16 @@ public:
   {
     // = TITLE
     //     This is that class which will be passed back to the
-    //     <handler> when the asynchronous read completes.  
+    //     <handler> when the asynchronous read completes.
     //
     // = DESCRIPTION
     //     This class has all the information necessary for the
     //     <handler> to uniquiely identify the completion of the
-    //     asynchronous read. 
+    //     asynchronous read.
     friend class ACE_Asynch_Read_Stream;
     // The factory has special privileges.
-    
-  public:    
+
+  public:
     u_long bytes_to_read (void) const;
     // The number of bytes which were requested at the start of the
     // asynchronous read.
@@ -210,7 +210,7 @@ public:
     ACE_HANDLE handle (void) const;
     // I/O handle used for reading.
 
-    // protected:    
+    // protected:
     //
     // These two should really be protected.  But sometimes it
     // simplifies code to be able to "fake" a result.  Use carefully.
@@ -221,15 +221,15 @@ public:
 	    const void* act,
 	    ACE_HANDLE event);
     // Constructor is protected since creation is limited to
-    // ACE_Asynch_Read_Stream factory.  
+    // ACE_Asynch_Read_Stream factory.
 
     virtual void complete (u_long bytes_transferred,
 			   int success,
 			   const void *completion_key,
 			   u_long error = 0);
-    // ACE_Proactor will call this method when the read completes. 
+    // ACE_Proactor will call this method when the read completes.
 
-  protected:    
+  protected:
     u_long bytes_to_read_;
     // Bytes requested when the asynchronous read was initiated.
 
@@ -238,7 +238,7 @@ public:
 
     ACE_HANDLE handle_;
     // I/O handle used for reading.
-  };  
+  };
 };
 
 class ACE_Export ACE_Asynch_Write_Stream : public ACE_Asynch_Operation
@@ -256,10 +256,10 @@ class ACE_Export ACE_Asynch_Write_Stream : public ACE_Asynch_Operation
 public:
   class Result;
   // Forward declaration of the Result class.
-  
+
   ACE_Asynch_Write_Stream (void);
   // A do nothing constructor.
-  
+
   int write (ACE_Message_Block &message_block,
 	     u_long bytes_to_write,
 	     const void *act = 0);
@@ -276,12 +276,12 @@ public:
   {
     // = TITLE
     //     This is that class which will be passed back to the
-    //     <handler> when the asynchronous write completes.  
+    //     <handler> when the asynchronous write completes.
     //
     // = DESCRIPTION
     //     This class has all the information necessary for the
     //     <handler> to uniquiely identify the completion of the
-    //     asynchronous write. 
+    //     asynchronous write.
   public:
     friend class ACE_Asynch_Write_Stream;
     // The factory has special privileges.
@@ -296,7 +296,7 @@ public:
     ACE_HANDLE handle (void) const;
     // I/O handle used for writing.
 
-    // protected:    
+    // protected:
     //
     // These two should really be protected.  But sometimes it
     // simplifies code to be able to "fake" a result.  Use carefully.
@@ -307,15 +307,15 @@ public:
 	    const void* act,
 	    ACE_HANDLE event);
     // Constructor is protected since creation is limited to
-    // ACE_Asynch_Write_Stream factory.  
+    // ACE_Asynch_Write_Stream factory.
 
     virtual void complete (u_long bytes_transferred,
 			   int success,
 			   const void *completion_key,
 			   u_long error = 0);
-    // ACE_Proactor will call this method when the write completes. 
+    // ACE_Proactor will call this method when the write completes.
 
-  protected:    
+  protected:
     u_long bytes_to_write_;
     // The number of bytes which were requested at the start of the
     // asynchronous write.
@@ -325,7 +325,7 @@ public:
 
     ACE_HANDLE handle_;
     // I/O handle used for writing.
-  };  
+  };
 };
 
 class ACE_Export ACE_Asynch_Read_File : public ACE_Asynch_Read_Stream
@@ -340,9 +340,9 @@ class ACE_Export ACE_Asynch_Read_File : public ACE_Asynch_Read_Stream
   //     will be passed back to the <handler> when the asynchronous
   //     reads completes through the <ACE_Handler::handle_read_file>
   //     callback.
-  // 
+  //
   //     This class differs slightly from ACE_Asynch_Read_Stream as it
-  //     allows the user to specify an offset for the read. 
+  //     allows the user to specify an offset for the read.
 public:
   int read (ACE_Message_Block &message_block,
 	    u_long bytes_to_read,
@@ -358,24 +358,24 @@ public:
   {
     // = TITLE
     //     This is that class which will be passed back to the
-    //     <handler> when the asynchronous read completes.  
+    //     <handler> when the asynchronous read completes.
     //
     // = DESCRIPTION
     //     This class has all the information necessary for the
     //     <handler> to uniquiely identify the completion of the
-    //     asynchronous read. 
-    //     
+    //     asynchronous read.
+    //
     //     This class differs slightly from
     //     ACE_Asynch_Read_Stream::Result as it calls back
     //     <ACE_Handler::handle_read_file> on the <handler> instead of
     //     <ACE_Handler::handle_read_stream>.  No additional state is
     //     required by this class as ACE_Asynch_Result can store the
-    //     <offset>. 
+    //     <offset>.
 
     friend class ACE_Asynch_Read_File;
     // The factory has special privileges.
-    
-    // protected:    
+
+    // protected:
     //
     // These two should really be protected.  But sometimes it
     // simplifies code to be able to "fake" a result.  Use carefully.
@@ -388,14 +388,14 @@ public:
 	    u_long offset_high,
 	    ACE_HANDLE event);
     // Constructor is protected since creation is limited to
-    // ACE_Asynch_Read_File factory.  
+    // ACE_Asynch_Read_File factory.
 
     virtual void complete (u_long bytes_transferred,
 			   int success,
 			   const void *completion_key,
 			   u_long error = 0);
-    // ACE_Proactor will call this method when the read completes. 
-  };  
+    // ACE_Proactor will call this method when the read completes.
+  };
 };
 
 class ACE_Export ACE_Asynch_Write_File : public ACE_Asynch_Write_Stream
@@ -406,12 +406,12 @@ public:
   //     on a file.
   //
   // = DESCRIPTION
-  //     Once <open> is called, multiple asynchronous <write>s can
+  //     Once <open> is called, multiple asynchronous <write>s can be
   //     started using this class.  A ACE_Asynch_Write_File::Result
   //     will be passed back to the <handler> when the asynchronous
   //     writes completes through the <ACE_Handler::handle_write_file>
   //     callback.
-  // 
+  //
   //     This class differs slightly from ACE_Asynch_Write_Stream as
   //     it allows the user to specify an offset for the write.
   int write (ACE_Message_Block &message_block,
@@ -434,7 +434,7 @@ public:
     //     This class has all the information necessary for the
     //     <handler> to uniquiely identify the completion of the
     //     asynchronous write.
-    //     
+    //
     //     This class differs slightly from
     //     ACE_Asynch_Write_Stream::Result as it calls back
     //     <ACE_Handler::handle_write_file> on the <handler> instead
@@ -444,8 +444,8 @@ public:
 
     friend class ACE_Asynch_Write_File;
     // The factory has special privileges.
-    
-    // protected:    
+
+    // protected:
     //
     // These two should really be protected.  But sometimes it
     // simplifies code to be able to "fake" a result.  Use carefully.
@@ -458,14 +458,14 @@ public:
 	    u_long offset_high,
 	    ACE_HANDLE event);
     // Constructor is protected since creation is limited to
-    // ACE_Asynch_Write_File factory.  
+    // ACE_Asynch_Write_File factory.
 
     virtual void complete (u_long bytes_transferred,
 			   int success,
 			   const void *completion_key,
 			   u_long error = 0);
     // ACE_Proactor will call this method when the write completes.
-  };  
+  };
 };
 
 class ACE_Export ACE_Asynch_Accept : public ACE_Asynch_Operation
@@ -493,26 +493,26 @@ public:
   // <handler>.  Upto <bytes_to_read> will be read and stored in the
   // <message_block>.  The <accept_handle> will be used for the
   // <accept> call.  If (<accept_handle> == INVALID_HANDLE), a new
-  // handle will be created. 
+  // handle will be created.
   //
   // <message_block> must be specified. This is because the address of
   // the new connection is placed at the end of this buffer.
-  
+
 public:
   class ACE_Export Result : public ACE_Asynch_Result
   {
     // = TITLE
     //     This is that class which will be passed back to the
-    //     <handler> when the asynchronous accept completes.  
+    //     <handler> when the asynchronous accept completes.
     //
     // = DESCRIPTION
     //     This class has all the information necessary for the
     //     <handler> to uniquiely identify the completion of the
-    //     asynchronous accept. 
+    //     asynchronous accept.
   public:
     friend class ACE_Asynch_Accept;
     // The factory has special privileges.
-    
+
     u_long bytes_to_read (void) const;
     // The number of bytes which were requested at the start of the
     // asynchronous accept.
@@ -525,8 +525,8 @@ public:
 
     ACE_HANDLE accept_handle (void) const;
     // I/O handle for the new connection.
-    
-    // protected:    
+
+    // protected:
     //
     // These two should really be protected.  But sometimes it
     // simplifies code to be able to "fake" a result.  Use carefully.
@@ -538,14 +538,14 @@ public:
 	    const void* act,
 	    ACE_HANDLE event);
     // Constructor is protected since creation is limited to
-    // ACE_Asynch_Accept factory.  
-    
+    // ACE_Asynch_Accept factory.
+
     virtual void complete (u_long bytes_transferred,
 			   int success,
 			   const void *completion_key,
 			   u_long error = 0);
     // ACE_Proactor will call this method when the accept completes.
-    
+
   protected:
     u_long bytes_to_read_;
     // Bytes requested when the asynchronous read was initiated.
@@ -558,7 +558,7 @@ public:
 
     ACE_HANDLE accept_handle_;
     // I/O handle for the new connection.
-  };  
+  };
 };
 
 class ACE_Export ACE_Asynch_Transmit_File : public ACE_Asynch_Operation
@@ -573,7 +573,7 @@ class ACE_Export ACE_Asynch_Transmit_File : public ACE_Asynch_Operation
   //     ACE_Asynch_Transmit_File::Result will be passed back to the
   //     <handler> when the asynchronous transmit file completes
   //     through the <ACE_Handler::handle_transmit_file> callback.
-  //  
+  //
   //     The transmit_file function transmits file data over a
   //     connected network connection. The function uses the operating
   //     system's cache manager to retrieve the file data. This
@@ -588,13 +588,13 @@ public:
   // A do nothing constructor.
 
   int transmit_file (ACE_HANDLE file,
-		     Header_And_Trailer *header_and_trailer = 0,		     
+		     Header_And_Trailer *header_and_trailer = 0,
 		     u_long bytes_to_write = 0,
 		     u_long offset = 0,
 		     u_long offset_high = 0,
 		     u_long bytes_per_send = 0,
 		     u_long flags = 0,
-		     const void *act = 0);  
+		     const void *act = 0);
   // This starts off an asynchronous transmit file.  The <file> is a
   // handle to an open file.  <header_and_trailer> is a pointer to a
   // data structure that contains pointers to data to send before and
@@ -615,7 +615,7 @@ public:
     // = DESCRIPTION
     //     This class has all the information necessary for the
     //     <handler> to uniquiely identify the completion of the
-    //     asynchronous transmit file. 
+    //     asynchronous transmit file.
   public:
     friend class ACE_Asynch_Transmit_File;
     // The factory has special privileges.
@@ -640,7 +640,7 @@ public:
     u_long flags (void) const;
     // Flags which were passed into transmit file.
 
-    // protected:    
+    // protected:
     //
     // These two should really be protected.  But sometimes it
     // simplifies code to be able to "fake" a result.  Use carefully.
@@ -656,14 +656,14 @@ public:
 	    const void *act,
 	    ACE_HANDLE event);
     // Constructor is protected since creation is limited to
-    // ACE_Asynch_Transmit_File factory.  
+    // ACE_Asynch_Transmit_File factory.
 
     virtual void complete (u_long bytes_transferred,
 			   int success,
 			   const void *completion_key,
 			   u_long error = 0);
-    // ACE_Proactor will call this method when the write completes. 
-    
+    // ACE_Proactor will call this method when the write completes.
+
   protected:
     ACE_HANDLE socket_;
     // Network I/O handle.
@@ -685,7 +685,7 @@ public:
     u_long flags_;
     // Flags which were passed into transmit file.
   };
-  
+
   class ACE_Export Header_And_Trailer
   {
     // = TITLE
@@ -707,7 +707,7 @@ public:
 			     ACE_Message_Block *trailer = 0,
 			     u_long trailer_bytes = 0);
     // This method allows all the member to be set in one fell swoop.
-    
+
     ACE_Message_Block *header (void) const;
     void header (ACE_Message_Block *message_block);
     // Header which goes before the file data.
@@ -722,7 +722,7 @@ public:
 
     u_long trailer_bytes (void) const;
     void trailer_bytes (u_long bytes);
-    // Size of the trailer data. 
+    // Size of the trailer data.
 
     LPTRANSMIT_FILE_BUFFERS transmit_buffers (void);
     // Conversion routine.
@@ -749,7 +749,7 @@ class ACE_Export ACE_Handler
 {
   // = TITLE
   //     This base class defines the interface for receiving the
-  //     results of asynchronous operations. 
+  //     results of asynchronous operations.
   //
   // = DESCRIPTION
   //     Subclasses of this class will fill in appropriate methods.
@@ -855,4 +855,3 @@ public:
 
 #endif /* ACE_WIN32 */
 #endif /* ACE_ASYNCH_IO_H */
-
