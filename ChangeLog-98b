@@ -1,77 +1,85 @@
+Sun Sep 20 11:25:52 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.h: with ACE_HAS_TSS_EMULATION, use u_long instead of
+          u_int for ACE_thread_key_t.  This avoids overload ambiguity
+          on platforms that typedef pthread_key_t to u_int.  We'll be
+          in trouble if we try on one that uses u_long.  In that case,
+          we could try u_short, or added an ACE_HAS.
+
 Sat Sep 19 14:29:56 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS.i (fstat): Removed the "::" in front of the fstat() call
- 	  since it's implemented as a macro on some platforms.  Thanks to
- 	  Frank Adcock <frank@bushlife.com.au> for reporting this.
+        * ace/OS.i (fstat): Removed the "::" in front of the fstat() call
+          since it's implemented as a macro on some platforms.  Thanks to
+          Frank Adcock <frank@bushlife.com.au> for reporting this.
 
-	* examples/Bounded_Packet_Relay: Updated the coding style.
+        * examples/Bounded_Packet_Relay: Updated the coding style.
 
 Sat Sep 19 14:06:52 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* apps/JAWS/PROTOTYPE/JAWS/IO.cpp: Fixed typo.
+        * apps/JAWS/PROTOTYPE/JAWS/IO.cpp: Fixed typo.
 
-	* apps/JAWS/PROTOTYPE/JAWS/jaws.dsp: 
-	* apps/gperf/src/gperf.dsp:
-	* ace/ace_dll.dsp:
-	* netsvcs/clients/Naming/Client/Client_Test.dsp:
-	* netsvcs/lib/netsvcs.dsp:
-	  Changed behavior of all DLL projects and utilities (like
-	  gperf) to put the dll and executables in $ACE_ROOT/bin.
+        * apps/JAWS/PROTOTYPE/JAWS/jaws.dsp:
+        * apps/gperf/src/gperf.dsp:
+        * ace/ace_dll.dsp:
+        * netsvcs/clients/Naming/Client/Client_Test.dsp:
+        * netsvcs/lib/netsvcs.dsp:
+          Changed behavior of all DLL projects and utilities (like
+          gperf) to put the dll and executables in $ACE_ROOT/bin.
 
-	* ace/config-win32.h: ACE_HAS_GPERF is back.
+        * ace/config-win32.h: ACE_HAS_GPERF is back.
 
-	* ACE-INSTALL.html: On NT, $ACE_ROOT/bin should now be in 
-	  your path instead of $ACE_ROOT/ace.
+        * ACE-INSTALL.html: On NT, $ACE_ROOT/bin should now be in
+          your path instead of $ACE_ROOT/ace.
 
 Sat Sep 19 12:27:31 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Asynch_IO.cpp: thread_function() is only for UNIX.
+        * ace/Asynch_IO.cpp: thread_function() is only for UNIX.
 
 Sat Sep 19 10:43:41 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* ace/Asynch_IO.cpp (open): Fixed the build errors with WIN32.
+        * ace/Asynch_IO.cpp (open): Fixed the build errors with WIN32.
 
 Sat Sep 19 00:42:53 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* ace/Asynch_IO.cpp: Fixed NT warnings (hopefully :-)
+        * ace/Asynch_IO.cpp: Fixed NT warnings (hopefully :-)
 
 Fri Sep 18 22:50:21 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Thread_Manager.{h,i,cpp}: Added a join method to reclaim
-	  OS/ACE resources that are used to managed thread object.  I
-	  encourage all ACE programmers to use ACE_Thread_Manager::join to
-	  wait for threads spawned by ACE_Thread_Manager.  It is more
-	  portable than ACE_Thread (most significantly, wrt resource
-	  management.)  
-	  (wait_grp,wait_task):  Improved and corrected the
-	  implementations.  These two methods now also clean up resources
-	  used by threads that has already terminated when the calls get
-	  invoked.  
+        * ace/Thread_Manager.{h,i,cpp}: Added a join method to reclaim
+          OS/ACE resources that are used to managed thread object.  I
+          encourage all ACE programmers to use ACE_Thread_Manager::join to
+          wait for threads spawned by ACE_Thread_Manager.  It is more
+          portable than ACE_Thread (most significantly, wrt resource
+          management.)
+          (wait_grp,wait_task):  Improved and corrected the
+          implementations.  These two methods now also clean up resources
+          used by threads that has already terminated when the calls get
+          invoked.
 
-	  Changed the terminated_thr_queue_ to terminated_thr_list_ which
- 	  is now a double-linked list.  This change allows us to
- 	  gather/cleanup infomation of threads belong to same group/task
- 	  in one pass.
+          Changed the terminated_thr_queue_ to terminated_thr_list_ which
+          is now a double-linked list.  This change allows us to
+          gather/cleanup infomation of threads belong to same group/task
+          in one pass.
 
-	  ACE_Thread_Manager::exit now tests the thread status to see if
-	  ACE_THR_JOINING is set or not.  If set, it means the thread is
-	  being joined by join/wait_grp/wait_task and avoid double
-	  removing the thread resources from OS.
+          ACE_Thread_Manager::exit now tests the thread status to see if
+          ACE_THR_JOINING is set or not.  If set, it means the thread is
+          being joined by join/wait_grp/wait_task and avoid double
+          removing the thread resources from OS.
 
-	* ace/OS.h (ACE_Thread_State): Added ACE_THR_JOINING to identify
-	  threads that are being joined by the Thread Manager.  
+        * ace/OS.h (ACE_Thread_State): Added ACE_THR_JOINING to identify
+          threads that are being joined by the Thread Manager.
 
-	* ace/Container_T.{h,cpp} (ACE_Double_Linked_List): Added several
-	  dynamic_cast in several places so we can generate code for both
-	  base class and derived class.
-	  (ACE_Double_Linked_List_Iterator): Added a method
-	  "advance_and_delete" to allow removing double-linked list
-	  element while iterating thru the list.  The design is very
-	  intrusive and you should know what you are doing before using
-	  the method.  Notice that ACE_Double_Linked_List is _not_ a
-	  general purpose Container class.
+        * ace/Container_T.{h,cpp} (ACE_Double_Linked_List): Added several
+          dynamic_cast in several places so we can generate code for both
+          base class and derived class.
+          (ACE_Double_Linked_List_Iterator): Added a method
+          "advance_and_delete" to allow removing double-linked list
+          element while iterating thru the list.  The design is very
+          intrusive and you should know what you are doing before using
+          the method.  Notice that ACE_Double_Linked_List is _not_ a
+          general purpose Container class.
 
-	* tests/run_tests.bat: Added DLList_Test.
+        * tests/run_tests.bat: Added DLList_Test.
 
 Fri Sep 18 18:06:19 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
