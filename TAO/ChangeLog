@@ -1,3 +1,49 @@
+Tue Dec 23 21:24:56 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/IOP_Codec.pidl:
+	* tao/IOP_CodecA.cpp:
+	* tao/IOP_CodecA.h:
+	* tao/IOP_CodecC.cpp:
+	* tao/IOP_CodecC.h:
+	* tao/IOP_CodecC.i:
+	* tao/PolicyA.cpp:
+	* tao/PolicyA.h:
+	* tao/PolicyC.cpp:
+	* tao/PolicyC.h:
+	* tao/PolicyC.i:
+	* tao/Pollable.pidl:
+	* tao/PollableC.cpp:
+	* tao/PollableC.h:
+	* tao/PollableC.i:
+	* tao/PortableInterceptor.pidl:
+	* tao/PortableInterceptorA.cpp:
+	* tao/PortableInterceptorA.h:
+	* tao/PortableInterceptorC.cpp:
+	* tao/PortableInterceptorC.h:
+	* tao/PortableInterceptorC.i:
+
+	  Regenerated these files. By this we have completed almost all
+	  the files that *need* regeneration in $TAO_ROOT/tao. We go to
+	  the next from here. 
+	
+	* tao/TimeBase.pidl:
+	* tao/TimeBaseC.cpp:
+	* tao/TimeBaseC.h:
+	* tao/TimeBaseC.i:
+
+	  Regenerated the files with the documentation. 
+
+	* tao/TimeBaseA.cpp:
+	* tao/TimeBaseA.h:
+
+	  New files added with Any operators in it.
+	
+	* tao/tao.mpc:
+	* tao/Makefile.bor:
+	* tao/Makefile.tao:
+
+	  Added the new files into the various projects.
+
 Tue Dec 23 20:44:08 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/TAO.dsp:

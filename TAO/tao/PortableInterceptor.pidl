@@ -40,7 +40,7 @@
 #include <Current.pidl>
 #include <Dynamic.pidl>
 #include <Messaging_SyncScope.pidl>
-#include <IOP.pidl>
+#include <IOP_Codec.pidl>
 
 module PortableInterceptor {
 

@@ -26,11 +26,10 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:301
+// be/be_codegen.cpp:338
 
 
 #include "TimeBaseC.h"
-#include "tao/Any_Dual_Impl_T.h"
 #include "tao/Typecode.h"
 
 #if defined (__BORLANDC__)
@@ -42,30 +41,31 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_arg_traits.cpp:59
+// be/be_visitor_arg_traits.cpp:62
 
 // Arg traits specializations.
 namespace TAO
 {
 }
 
+
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_TimeBase_TimeT[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   31,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x54696d65),
-  ACE_NTOHL (0x42617365),
-  ACE_NTOHL (0x2f54696d),
-  ACE_NTOHL (0x65543a31),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x54696d65), 
+  ACE_NTOHL (0x42617365), 
+  ACE_NTOHL (0x2f54696d), 
+  ACE_NTOHL (0x65543a31), 
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/TimeBase/TimeT:1.0
     6,
-  ACE_NTOHL (0x54696d65),
+  ACE_NTOHL (0x54696d65), 
   ACE_NTOHL (0x54000000),  // name = TimeT
     CORBA::tk_ulonglong,
 
@@ -86,40 +86,40 @@ namespace TimeBase
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_TimeBase_InaccuracyT[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   37,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x54696d65),
-  ACE_NTOHL (0x42617365),
-  ACE_NTOHL (0x2f496e61),
-  ACE_NTOHL (0x63637572),
-  ACE_NTOHL (0x61637954),
-  ACE_NTOHL (0x3a312e30),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x54696d65), 
+  ACE_NTOHL (0x42617365), 
+  ACE_NTOHL (0x2f496e61), 
+  ACE_NTOHL (0x63637572), 
+  ACE_NTOHL (0x61637954), 
+  ACE_NTOHL (0x3a312e30), 
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/TimeBase/InaccuracyT:1.0
     12,
-  ACE_NTOHL (0x496e6163),
-  ACE_NTOHL (0x63757261),
+  ACE_NTOHL (0x496e6163), 
+  ACE_NTOHL (0x63757261), 
   ACE_NTOHL (0x63795400),  // name = InaccuracyT
     CORBA::tk_alias, // typecode kind for typedefs
   56, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     31,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x54696d65),
-    ACE_NTOHL (0x42617365),
-    ACE_NTOHL (0x2f54696d),
-    ACE_NTOHL (0x65543a31),
+    ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
+    ACE_NTOHL (0x54696d65), 
+    ACE_NTOHL (0x42617365), 
+    ACE_NTOHL (0x2f54696d), 
+    ACE_NTOHL (0x65543a31), 
     ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/TimeBase/TimeT:1.0
         6,
-    ACE_NTOHL (0x54696d65),
+    ACE_NTOHL (0x54696d65), 
     ACE_NTOHL (0x54000000),  // name = TimeT
         CORBA::tk_ulonglong,
 
@@ -141,22 +141,22 @@ namespace TimeBase
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_TimeBase_TdfT[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   30,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x54696d65),
-  ACE_NTOHL (0x42617365),
-  ACE_NTOHL (0x2f546466),
-  ACE_NTOHL (0x543a312e),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x54696d65), 
+  ACE_NTOHL (0x42617365), 
+  ACE_NTOHL (0x2f546466), 
+  ACE_NTOHL (0x543a312e), 
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/TimeBase/TdfT:1.0
     5,
-  ACE_NTOHL (0x54646654),
+  ACE_NTOHL (0x54646654), 
   ACE_NTOHL (0x0),  // name = TdfT
     CORBA::tk_short,
 
@@ -177,26 +177,26 @@ namespace TimeBase
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_TimeBase_UtcT[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   30,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x54696d65),
-  ACE_NTOHL (0x42617365),
-  ACE_NTOHL (0x2f557463),
-  ACE_NTOHL (0x543a312e),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x54696d65), 
+  ACE_NTOHL (0x42617365), 
+  ACE_NTOHL (0x2f557463), 
+  ACE_NTOHL (0x543a312e), 
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/TimeBase/UtcT:1.0
     5,
-  ACE_NTOHL (0x55746354),
+  ACE_NTOHL (0x55746354), 
   ACE_NTOHL (0x0),  // name = UtcT
   4, // member count
     5,
-  ACE_NTOHL (0x74696d65),
+  ACE_NTOHL (0x74696d65), 
   ACE_NTOHL (0x0),  // name = time
     CORBA::tk_alias, // typecode kind for typedefs
   56, // encapsulation length
@@ -263,7 +263,7 @@ namespace TimeBase
 }
 
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_cs.cpp:66
+// be/be_visitor_structure/structure_cs.cpp:66
 
 void 
 TimeBase::UtcT::_tao_any_destructor (
@@ -276,7 +276,7 @@ TimeBase::UtcT::_tao_any_destructor (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_TimeBase_IntervalT[] =
 {
@@ -357,7 +357,7 @@ namespace TimeBase
 }
 
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_cs.cpp:66
+// be/be_visitor_structure/structure_cs.cpp:66
 
 void 
 TimeBase::IntervalT::_tao_any_destructor (
@@ -369,124 +369,8 @@ TimeBase::IntervalT::_tao_any_destructor (
   delete _tao_tmp_pointer;
 }
 
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/any_op_cs.cpp:54
-
-// Copying insertion.
-void operator<<= (
-    CORBA::Any &_tao_any,
-    const TimeBase::UtcT &_tao_elem
-  )
-{
-  TAO::Any_Dual_Impl_T<TimeBase::UtcT>::insert_copy (
-      _tao_any,
-      TimeBase::UtcT::_tao_any_destructor,
-      TimeBase::_tc_UtcT,
-      _tao_elem
-    );
-}
-
-// Non-copying insertion.
-void operator<<= (
-    CORBA::Any &_tao_any,
-    TimeBase::UtcT *_tao_elem
-  )
-{
-  TAO::Any_Dual_Impl_T<TimeBase::UtcT>::insert (
-      _tao_any,
-      TimeBase::UtcT::_tao_any_destructor,
-      TimeBase::_tc_UtcT,
-      _tao_elem
-    );
-}
-
-// Extraction to non-const pointer (deprecated).
-CORBA::Boolean operator>>= (
-    const CORBA::Any &_tao_any,
-    TimeBase::UtcT *&_tao_elem
-  )
-{
-  return _tao_any >>= ACE_const_cast (
-      const TimeBase::UtcT *&,
-      _tao_elem
-    );
-}
-
-// Extraction to const pointer.
-CORBA::Boolean operator>>= (
-    const CORBA::Any &_tao_any,
-    const TimeBase::UtcT *&_tao_elem
-  )
-{
-  return
-    TAO::Any_Dual_Impl_T<TimeBase::UtcT>::extract (
-        _tao_any,
-        TimeBase::UtcT::_tao_any_destructor,
-        TimeBase::_tc_UtcT,
-        _tao_elem
-      );
-}
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/any_op_cs.cpp:54
-
-// Copying insertion.
-void operator<<= (
-    CORBA::Any &_tao_any,
-    const TimeBase::IntervalT &_tao_elem
-  )
-{
-  TAO::Any_Dual_Impl_T<TimeBase::IntervalT>::insert_copy (
-      _tao_any,
-      TimeBase::IntervalT::_tao_any_destructor,
-      TimeBase::_tc_IntervalT,
-      _tao_elem
-    );
-}
-
-// Non-copying insertion.
-void operator<<= (
-    CORBA::Any &_tao_any,
-    TimeBase::IntervalT *_tao_elem
-  )
-{
-  TAO::Any_Dual_Impl_T<TimeBase::IntervalT>::insert (
-      _tao_any,
-      TimeBase::IntervalT::_tao_any_destructor,
-      TimeBase::_tc_IntervalT,
-      _tao_elem
-    );
-}
-
-// Extraction to non-const pointer (deprecated).
-CORBA::Boolean operator>>= (
-    const CORBA::Any &_tao_any,
-    TimeBase::IntervalT *&_tao_elem
-  )
-{
-  return _tao_any >>= ACE_const_cast (
-      const TimeBase::IntervalT *&,
-      _tao_elem
-    );
-}
-
-// Extraction to const pointer.
-CORBA::Boolean operator>>= (
-    const CORBA::Any &_tao_any,
-    const TimeBase::IntervalT *&_tao_elem
-  )
-{
-  return
-    TAO::Any_Dual_Impl_T<TimeBase::IntervalT>::extract (
-        _tao_any,
-        TimeBase::IntervalT::_tao_any_destructor,
-        TimeBase::_tc_IntervalT,
-        _tao_elem
-      );
-}
-
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/root.cpp:1703
+// be/be_visitor_root/root.cpp:1725
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
@@ -501,22 +385,12 @@ CORBA::Boolean operator>>= (
       >;
 
   template class
-    TAO::Any_Dual_Impl_T<
-        TimeBase::UtcT
-      >;
-
-  template class
     TAO_Fixed_Var_T<
         TimeBase::IntervalT
       >;
 
   template class
     TAO_Var_Base_T<
-        TimeBase::IntervalT
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
         TimeBase::IntervalT
       >;
 
@@ -533,22 +407,12 @@ CORBA::Boolean operator>>= (
       >
 
 # pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        TimeBase::UtcT \
-      >
-
-# pragma instantiate \
     TAO_Fixed_Var_T< \
         TimeBase::IntervalT \
       >
 
 # pragma instantiate \
     TAO_Var_Base_T< \
-        TimeBase::IntervalT \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
         TimeBase::IntervalT \
       >
 
