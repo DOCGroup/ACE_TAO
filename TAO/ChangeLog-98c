@@ -1,3 +1,11 @@
+Tue Jul  8 20:52:06 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* tao/PC_Install.bat: Made it very quiet.
+
+	* tao/params.{cpp,h,i}: Changed TAO_OA_PARAMS from a 
+	  ACE_Singleton to a plain singleton by just integrating the
+	  ACE_Singleton code into the class.
+
 Tue Jul  8 14:27:47 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* tao/except.h: added ACE_Svc_Export to SYSEX macro
