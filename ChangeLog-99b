@@ -1,20 +1,26 @@
+Thu Sep 09 14:56:29 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ACE-INSTALL.html: we now fully support QNX Neutrino 2.0.
+
+        * ACE-INSTALL.html: expanded repo=1 discussion. [Bug 248]
+
 Thu Sep 09 13:21:03 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/ace_ce.dsw:
-	* ace/ace_ce_dll.dsp: Changed to use the project file format for
-	  CE Toolkit for VC 6.
+        * ace/ace_ce.dsw:
+        * ace/ace_ce_dll.dsp: Changed to use the project file format for
+          CE Toolkit for VC 6.
 
-	* ace/config-WinCE.h: Added some macros definitons for POSIX error
-	  codes.  They are removed for Palm-size CE v2.01.  This
-	  configuration is still not working because its compilers don't
-	  support placement new, which I don't know how to work around.
+        * ace/config-WinCE.h: Added some macros definitons for POSIX error
+          codes.  They are removed for Palm-size CE v2.01.  This
+          configuration is still not working because its compilers don't
+          support placement new, which I don't know how to work around.
 
-	* ace/Process_Manager.cpp (wait): Applied ASYS_TEXT macros.
+        * ace/Process_Manager.cpp (wait): Applied ASYS_TEXT macros.
 
-	* ace/OS.cpp (init,fini): Applied ACE_TEXT macros around error
-	  message print out.
-	  (print_error_message): Added a WinCE specialized
-	  implementation.
+        * ace/OS.cpp (init,fini): Applied ACE_TEXT macros around error
+          message print out.
+          (print_error_message): Added a WinCE specialized
+          implementation.
 
 Thu Sep 09 12:45:06 1999  David L. Levine  <levine@cs.wustl.edu>
 

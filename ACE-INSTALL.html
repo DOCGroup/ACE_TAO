@@ -59,13 +59,13 @@ an enhancement, then use our
     <td><b>Fully supported, i.e., continually tested and used daily</b></td>
     <td>Solaris 2.5, 2.6, and 7, Windows NT 4.0 (MSVC++ 5.0, and 6.0),
         Linux/Intel, Linux/Alpha, VxWorks, LynxOS, Digital UNIX 4.0 and 5.0,
-        HP/UX 10.x and 11.x, AIX 4.x, and IRIX 6.x
+        HP/UX 10.x and 11.x, AIX 4.x, IRIX 6.x, and QNX Neutrino 2.0
     </td>
   </tr>
   <tr valign=top bgcolor="#AFAFAF">
    <td><b>Nearly fully supported, i.e., periodically tested</b></td>
    <td>Windows 95, MVS, DEC Alpha Windows NT (MSVC++ 5.0, 6.0), Chorus,
-     QNX Neutrino 2.0, PharLap TNT Embedded ToolSuite 9.1
+     PharLap TNT Embedded ToolSuite 9.1
    </td>
   </tr>
   <tr valign=top>
@@ -169,7 +169,7 @@ try to help you fix the problems.
       that we test very often.  Hopefully as new patches for the
       compiler show up we will be able to make that our compiler of
       choice on Solaris.</p>
-      
+
   <LI><B>Sun OS 4.1.x using Centerline C++ 2.x, Sun CC 3.x, and Lucid
       Energize 3.2.</B><P>
 
@@ -738,16 +738,34 @@ If you use the GNU GCC g++ compiler please note the following:
       necessary, if the template instantiations themselves reference
       other templates.<P>
 
-  <LI>Alternatively, you could apply the
-      <a href="ftp://ftp.cygnus.com/pub/g++/">Cygnus template
-      repository patches</a> and use the -frepo option instead of
-      -fno-implicit-templates.  ACE readily this option for
+  <LI>Alternatively, you could use the -frepo option available with
+      recent egcs versions (2.90 and later, I think) instead of
+      -fno-implicit-templates.  (Patches for earlier g++ versions
+      might be available from
+      <a href="ftp://ftp.cygnus.com/pub/g++/">Cygnus</a>.)
+      ACE readily supports this option for
       application code: to enable it just add <code>repo=1</code> to
       your <code>make</code> invocation, or to your
-      <code>include/makeinclude/platform_macros.GNU</code>.  ACE still
-      uses explicit template instantiation for building its libraries
-      to help avoid link conflicts.  Please see the g++ FAQ and gcc
+      <code>include/makeinclude/platform_macros.GNU</code>.<p>
+
+      The size of the ACE library is typically reduced by about
+      25 percent with repo=1, compared to the default with
+      -fno-implicit-templates.  This savings results from not
+      instantiating unused classes, and from not instantiating
+      unused member functions of those template classes which are
+      instantiated.<p>
+
+      However, repo=1 requires care if your application creates libraries,
+      in order to avoid multiple instantiations.  We avoid the problem
+      in ACE (and TAO) by including all of the ACE object files into
+      other ACE (and TAO) libraries.  Please see the g++ FAQ and gcc
       manual for more information on the -frepo option.<p>
+
+      Furthermore, it appears that g++ may have problems instantiating
+      all templates properly with -frepo.  We have worked around these
+      problems (by using explicit instantiations even with ACE_HAS_GNU_REPO)
+      with egcs 1.1.2.  A quick try with g++ 2.95 showed more problems,
+      so we don't support repo=1 with that g++ version, yet.<p>
 
   <li>The implementation of templates for g++ version 2.8
       eliminates the restriction against static data members in
@@ -867,7 +885,7 @@ If you use the GNU GCC g++ compiler please note the following:
    <li>Compiling using the <code>-fsquangle</code> option helps to shorten long
        symbol names and is a boon to linkers and assemblers which cant
        grok long names.
-       
+
        Thanks to <a href="mailto:ssweeney@sanders.com">Skye Sweeney</a> for trying it
        out and <a href="mailto:othman@cs.wustl.edu">Ossama Othman</a> for discovering the
        option with egcs.<p>
@@ -885,7 +903,7 @@ If you use the GNU GCC g++ compiler please note the following:
 
        4) The "simple" solution is not to add the option to each makefile,
        but rather recompile the compiler to have the option on by default.
-       This is done by editing the file `gcc/cp/decl2.c', setting 
+       This is done by editing the file `gcc/cp/decl2.c', setting
        `flag_do_squangling = 1', then rebuilding the compiler and
        libraries.<p>
 
