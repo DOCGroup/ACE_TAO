@@ -1,13 +1,13 @@
 Thu Sep 03 19:15:52 1998 Fred Kuhns <fredk@arl.wustl.edu>
 
-	* docs/tutorial/006/client_acceptor.cpp: added 
-	  typedef ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH > inherited;
+        * docs/tutorial/006/client_acceptor.cpp: added
+          typedef ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH > inherited;
 
 Thu Sep 03 17:03:46 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Dynamic.cpp (instance): Removed the typedef in the header
- 	  file because some compiler was having problems with it.  Thanks
- 	  to baksoo@dbserver.kaist.ac.kr for reporting this.
+        * ace/Dynamic.cpp (instance): Removed the typedef in the header
+          file because some compiler was having problems with it.  Thanks
+          to baksoo@dbserver.kaist.ac.kr for reporting this.
 
 Thu Sep 03 16:43:34 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -17,6 +17,9 @@ Thu Sep 03 16:43:34 1998  David L. Levine  <levine@cs.wustl.edu>
           of 0 if _POSIX_C_SOURCE=199506L and _POSIX_PTHREAD_SEMANTICS
           are defined.  Thanks to Russ Noseworthy
           <rnosewor@objectsciences.com> for reporting this problem.
+
+        * examples/Threads/tss2.cpp: added explicit ACE_Guard <ACE_Token>
+          instantiation.
 
 Thu Sep 03 16:14:16 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
