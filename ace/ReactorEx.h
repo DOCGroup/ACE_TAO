@@ -58,20 +58,23 @@ private:
 // ************************************************************
 
 class ACE_Export ACE_ReactorEx_Notify : public ACE_Event_Handler
-// = TITLE
-//    ReactorEx Notify
-//
-// = DESCRIPTION
-//    A "do-nothing" class that is called when ReactorEx::notify is
-//    called.
+  // = TITLE
+  // Unblock the <ACE_ReactorEx> from its event loop, passing it an
+  // optional <ACE_Event_Handler> to dispatch.
+  //
+  // = DESCRIPTION
+  //
+  //     This implementation is necessary for cases where the
+  //     <ACE_ReactorEx> is run in a multi-threaded program.  In this
+  //     case, we need to be able to unblock WaitForMultipleObjects()
+  //     when updates occur other than in the main <ACE_ReactorEx>
+  //     thread.  To do this, we signal an auto-reset event the
+  //     <ACE_ReactorEx> is listening on.  If an <ACE_Event_Handler>
+  //     and <ACE_Reactor_Mask> is passed to <notify>, the appropriate
+  //     <handle_*> method is dispatched in the context of the
+  //     <ACE_ReactorEx> thread.
 {
 public:
-  ACE_ReactorEx_Notify (void);
-  // Creates a handle.
-
-  ~ACE_ReactorEx_Notify (void);
-  // Destroys a handle.
-
   int notify (ACE_Event_Handler *eh = 0,
 	      ACE_Reactor_Mask mask = ACE_Event_Handler::EXCEPT_MASK);
   // Special trick to unblock WaitForMultipleObjects() when updates
@@ -80,17 +83,13 @@ public:
   // and wakeup the ReactorEx by signaling its <ACE_Event> handle.
 
 private:
-  struct 
-  {
-    ACE_Event_Handler *eh_;
-    ACE_Reactor_Mask mask_;
-  };
+  virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
+  // Called when the notification event waited on by <ACE_ReactorEx>
+  // is signaled.  This dequeues all pending <ACE_Event_Handlers> and
+  // dispatches them.
 
   virtual ACE_HANDLE get_handle (void) const;
-  // Returns a handle.
-
-  virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
-  // Does with a handle.
+  // Returns a handle to the <ACE_Auto_Event>.
 
   ACE_Auto_Event notify_event_;
   // A handle.
@@ -123,7 +122,7 @@ public:
 
   // = Initialization and termination methods.
 
-  ACE_ReactorEx (void);
+  ACE_ReactorEx (ACE_Timer_Queue * = 0);
   // Initialize the new ACE_ReactorEx with the default size.
 
   virtual ~ACE_ReactorEx (void);
@@ -195,12 +194,12 @@ public:
   // Declare the dynamic allocation hooks.
 
 protected:
-  int handle_notification (void);
-  // Handle the case where some thread has awakened us via our
-  // notification event.
-
-  ACE_Timer_Queue timer_queue_; 
+  ACE_Timer_Queue *timer_queue_;
   // Defined as a pointer to allow overriding by derived classes...
+
+  int delete_timer_queue_;
+  // Keeps track of whether we should delete the timer queue (if we
+  // didn't create it, then we don't delete it).
 
   ACE_Time_Value timer_skew_;
   // Adjusts for timer skew in various clocks.

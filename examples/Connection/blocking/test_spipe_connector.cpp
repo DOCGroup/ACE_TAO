@@ -1,9 +1,7 @@
-// ACE_SPIPE Client.
 // $Id$
 
+// ACE_SPIPE Client.
 
-#include "ace/SPIPE_Connector.h"
-#include "ace/SPIPE_Addr.h"
 #include "SPIPE-connector.h"
 
 int 

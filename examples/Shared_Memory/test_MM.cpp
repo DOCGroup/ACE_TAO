@@ -51,6 +51,7 @@ main (int, char *[])
     case -1:
       ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "fork"), 1);
     case 0: 
+      // Make sure the server starts up first.
       ACE_OS::sleep (1); 
       client ();
       break;

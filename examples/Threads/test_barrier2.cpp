@@ -1,6 +1,6 @@
-// generic_worker_task.cpp
 // $Id$
 
+// generic_worker_task.cpp
 //
 // This test program illustrates how the ACE task workers/barrier
 // synchronization mechanisms work in conjunction with the ACE_Task
@@ -16,7 +16,6 @@
 #include <iostream.h>
 #include "ace/Task.h"
 #include "ace/Service_Config.h"
-
 
 #if defined (ACE_HAS_THREADS)
 
@@ -83,8 +82,6 @@ Worker_Task<BARRIER>::Worker_Task (ACE_Thread_Manager *thr_mgr,
     if (this->activate (THR_NEW_LWP, n_threads) == -1)
       ACE_ERROR ((LM_ERROR, "%p\n", "activate failed"));
 }
-  
-
 
 // Simply enqueue the Message_Block into the end of the queue.
 

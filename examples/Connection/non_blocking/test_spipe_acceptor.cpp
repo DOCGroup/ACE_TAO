@@ -15,11 +15,11 @@ main (int argc, char *argv[])
   // Perform Service_Config initializations
   ACE_Service_Config daemon (argv[0]);
 
-  IPC_SERVER acceptor;
+  IPC_SERVER peer_acceptor;
   
-  if (acceptor.init (argc, argv) == -1)
+  if (peer_acceptor.init (argc, argv) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "init"), -1);
 
-  return acceptor.svc ();
+  return peer_acceptor.svc ();
 }
 

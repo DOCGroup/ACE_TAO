@@ -1,6 +1,6 @@
-// ============================================================================
 // $Id$
 
+// ============================================================================
 //
 // = LIBRARY
 //    tests
@@ -227,7 +227,7 @@ Scheduler::svc (void)
 void 
 Scheduler::end (void)
 {
-  this->activation_queue_.enqueue (new Method_Object_end (this));
+  this->activation_queue_.enqueue_prio (new Method_Object_end (this));
 }
 
 
@@ -272,7 +272,7 @@ Scheduler::name (void)
       ACE_Future<const char*> new_future;
 
       // @@ What happens if new fails here?
-      this->activation_queue_.enqueue 
+      this->activation_queue_.enqueue_prio 
 	(new Method_Object_name (this, new_future));
 
       return new_future;
@@ -288,7 +288,7 @@ Scheduler::work (float newparam, int newcount)
   else {
     ACE_Future<float> new_future;
 
-    this->activation_queue_.enqueue 
+    this->activation_queue_.enqueue_prio 
       (new Method_Object_work (this, newparam, newcount, new_future));
     return new_future;
   }
