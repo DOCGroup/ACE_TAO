@@ -1,0 +1,10 @@
+//$Id$
+module Deployment
+{
+  struct Property {
+    string name;
+    any value;
+  };
+
+  typedef sequence < Property > Properties;
+};
