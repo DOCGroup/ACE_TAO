@@ -367,10 +367,27 @@ GENERATED_DIRTY +=<%foreach(custom_type->input_file->output_files)%> <%if(flag_o
 ifneq ($(GENERATED_DIRTY),)
 .PRECIOUS: $(GENERATED_DIRTY)
 <%if(source_files)%>
+## If the generated files are anything but source files, we need to
+## ensure that those files are generated before we attempt to build anything
+## else.
+ifneq ($(shell echo $(GENERATED_DIRTY) | tr ' ' '\012' | egrep -vi '\.c(c|pp|xx)?$$'),)
 $(addprefix $(VDIR), $(OBJS)): $(GENERATED_DIRTY)
 $(VSHOBJS): $(GENERATED_DIRTY)
+endif
 <%else%>
+<%foreach(requires)%>
+ifeq ($(<%require%>),1)
+<%endfor%>
+<%foreach(avoids)%>
+ifneq ($(<%avoid%>),1)
+<%endfor%>
 all: $(GENERATED_DIRTY)
+<%foreach(avoids)%>
+endif
+<%endfor%>
+<%foreach(requires)%>
+endif
+<%endfor%>
 <%endif%>
 endif
 
