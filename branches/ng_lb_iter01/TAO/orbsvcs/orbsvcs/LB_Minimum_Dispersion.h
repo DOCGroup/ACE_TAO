@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file Minimum_Dispersion_Strategy.h
+ *  @file LB_Minimum_Dispersion_Strategy.h
  *
  *  $Id$
  *
@@ -56,10 +56,9 @@ public:
   // = The TAO_LB_LoadBalancing_Strategy methods
   virtual CORBA::Object_ptr replica (CORBA_Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual int insert (TAO_LB_ReplicaProxy *);
-  virtual int remove (TAO_LB_ReplicaProxy *);
-  virtual void load_changed (TAO_LB_ReplicaProxy *,
-                             CORBA::Environment &ACE_TRY_ENV);
+
+//   virtual void load_changed (TAO_LB_ReplicaProxy *,
+//                              CORBA::Environment &ACE_TRY_ENV);
 
 private:
 

@@ -1,11 +1,12 @@
 // -*- C++ -*-
 
 #include "LB_Redirect_Table.h"
-#include "Object.h"
-#include "Exception.h"
-#include "Environment.h"
-#include "CORBA_String.h"
-#include "debug.h"
+
+#include "tao/Object.h"
+#include "tao/Exception.h"
+#include "tao/Environment.h"
+#include "tao/CORBA_String.h"
+#include "tao/debug.h"
 
 ACE_RCSID (LoadBalancing,
            LB_Redirect_Table,

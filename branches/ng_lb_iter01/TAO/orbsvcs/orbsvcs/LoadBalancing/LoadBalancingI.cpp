@@ -344,7 +344,7 @@ TAO_LoadBalancing_ReplicationManager_i::process_criteria (
     ACE_THROW (LoadBalancing::InvalidCriteria (invalid_criteria));
 
   if (found_factory == 0)
-    ACE_THROW_RETURN (LoadBalancing::NoFactory ());
+    ACE_THROW (LoadBalancing::NoFactory ());
 }
 
 void
@@ -365,10 +365,11 @@ TAO_LoadBalancing_ReplicationManager_i::replica (
   const PortableServer::ObjectId &oid,
   CORBA::Environment &ACE_TRY_ENV)
 {
-  // Convert the ObjectId to the hash map key.
-  CORBA::String_var stroid = PortableServer::ObjectId_to_string (oid);
+  TAO_LB_ObjectGroup_Map_Entry *entry = 0;
+  if (this->object_group_map_.find (oid, entry) != 0)
+    ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (), CORBA::Object::_nil ());
 
-  int tmp = ACE_OS::atoi (stroid.in ());
+  return this->balancing_strategy_->replica (entry);
 }
 
 int

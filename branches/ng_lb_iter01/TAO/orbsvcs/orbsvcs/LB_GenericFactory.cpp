@@ -2,6 +2,7 @@
 
 #include "LB_GenericFactory.h"
 #include "LB_ReplicaInfo.h"
+#include "LB_ObjectGroup_Map.h"
 
 
 ACE_RCSID (LoadBalancing,
@@ -48,13 +49,13 @@ TAO_LB_GenericFactory::create_object (
     ACE_THROW_RETURN (LoadBalancing::CannotMeetCriteria (),
                       CORBA::Object::_nil ());
 
-  TAO_LB_ObjectGroup_Map::Map_Entry *object_group_entry = 0;
+  TAO_LB_ObjectGroup_Map_Entry *object_group_entry = 0;
   ACE_NEW_THROW_EX (object_group_entry,
-                    TAO_LB_ObjectGroup_Map::Map_Entry,
+                    TAO_LB_ObjectGroup_Map_Entry,
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
-  auto_ptr<TAO_LB_ObjectGroup_Map::Map_Entry> safe_object_group_entry (
+  auto_ptr<TAO_LB_ObjectGroup_Map_Entry> safe_object_group_entry (
     object_group_entry);
 
   if (this->property_manager_.infrastructure_controlled_membership ())
@@ -110,7 +111,7 @@ TAO_LB_GenericFactory::create_object (
   // parameter we successfully created, and no exception was thrown.
   // Otherwise, an invalid object group entry would remain inside the
   // map.
-  if (this->object_group_map_.bind (fcid, object_group_entry) != 0)
+  if (this->object_group_map_.bind (oid, object_group_entry) != 0)
     ACE_THROW_RETURN (TAO_LoadBalancer::ObjectNotCreated (),
                       CORBA::Object::_nil ());
 

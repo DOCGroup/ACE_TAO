@@ -9,44 +9,24 @@ ACE_RCSID (LoadBalancing,
 
 
 TAO_LB_Round_Robin_Strategy::TAO_LB_Round_Robin_Strategy (void)
-  : proxies_ (),
-    next_replica_ (this->proxies_.begin ()),
-    lock_ ()
 {
 }
 
 TAO_LB_Round_Robin_Strategy::~TAO_LB_Round_Robin_Strategy (void)
 {
-  ACE_MT (ACE_GUARD (TAO_SYNCH_MUTEX,
-                     guard,
-                     this->lock_));
-
-  // @@ Are the objects deactivated from the POA?  And shouldn't this
-  // be done by the LoadBalancing strategy *before* the destructor is
-  // invoked?
-
-  TAO_LB_ReplicaProxySetIterator begin = this->proxies_.begin ();
-  TAO_LB_ReplicaProxySetIterator end = this->proxies_.end ();
-
-  for (TAO_LB_ReplicaProxySetIterator i = begin;
-       i != end;
-       ++i)
-    {
-      // Decrease reference count on each proxy servant in the set.
-      (*i)->_remove_ref ();
-    }
 }
 
 CORBA::Object_ptr
-TAO_LB_Round_Robin_Strategy::replica (CORBA::Environment &ACE_TRY_ENV)
+TAO_LB_Round_Robin_Strategy::replica (TAO_LB_ObjectGroup_Map_Entry *entry,
+                                      CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     guard,
-                    this->lock_,
+                    entry->lock,
                     CORBA::Object::_nil ());
 
-  if (this->proxies_.is_empty ())
+  if (entry->replica_infos.is_empty ())
     {
       // @@ What do we do if the set is empty?
       // @@ Ossama: i'm throwing the OBJECT_NOT_EXIST exception, but

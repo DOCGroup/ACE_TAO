@@ -9,8 +9,6 @@ ACE_RCSID (LoadBalancing,
 
 
 TAO_LB_Minimum_Dispersion_Strategy::TAO_LB_Minimum_Dispersion_Strategy (void)
-  : proxies_ (),
-    lock_ ()
 {
 }
 
@@ -35,44 +33,56 @@ TAO_LB_Minimum_Dispersion_Strategy::~TAO_LB_Minimum_Dispersion_Strategy (void)
 }
 
 CORBA::Object_ptr
-TAO_LB_Minimum_Dispersion_Strategy::replica (CORBA::Environment &ACE_TRY_ENV)
+TAO_LB_Minimum_Dispersion_Strategy::replica (
+    TAO_LB_ObjectGroup_Map_Entry *entry,
+    CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   for ( ; ; )
     {
       ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                         guard,
-                        this->lock_,
+                        entry->lock,
                         CORBA::Object::_nil ());
 
-      if (this->proxies_.is_empty ())
+      if (entry->replica_infos.is_empty ())
         // @@ What do we do if the set is empty?
         ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
                           CORBA::Object::_nil ());
 
-      TAO_LB_ReplicaProxySetIterator begin = this->proxies_.begin ();
-      TAO_LB_ReplicaProxySetIterator end = this->proxies_.end ();
+      TAO_LB_ReplicaInfoSetIterator begin = entry->replica_infos.begin ();
+      TAO_LB_ReplicaInfoSetIterator end = entry->replica_infos.end ();
 
-      TAO_LB_ReplicaProxySetIterator i = begin;
-      TAO_LB_ReplicaProxy * proxy = (*i);
-      float d = (*i)->current_load ();
+      TAO_LB_ReplicaInfoSetIterator i = begin;
+      TAO_LB_ReplicaInfo *replica_info = (*i);
+
+      LoadBalancing::Load_var d =
+        (*i)->load_monitor->current_load (ACE_TRY_ENV);
+
+      ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
       for (++i ; i != end; ++i)
         {
-          if (d > (*i)->current_load ())
+          LoadBalancing::Load_var load =
+            (*i)->load_monitor->current_load (ACE_TRY_ENV);
+          ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
+          // @@ Hardcode one load and don't bother checking the
+          // LoadId, for now.  (just to get things going)
+          if (d[0].value > load[0].value)
             {
-              proxy = *i;
-              d = (*i)->current_load ();
+              replica_info = *i;
+              d = (*i)->load_monitor->current_load (ACE_TRY_ENV);
+              ACE_CHECK_RETURN (CORBA::Object::_nil ());
             }
         }
 
       // Before returning an object reference to the client
       // validate it first.
-      CORBA::Object_var object =
-        proxy->replica ();
+      CORBA::Object_ptr object = replica_info->replica.in ();
 
       {
-        ACE_Reverse_Lock<TAO_SYNCH_MUTEX> reverse_lock (this->lock_);
+        ACE_Reverse_Lock<TAO_SYNCH_MUTEX> reverse_lock (entry->lock);
 
         ACE_GUARD_RETURN (ACE_Reverse_Lock<TAO_SYNCH_MUTEX>,
                           reverse_guard,
@@ -87,46 +97,20 @@ TAO_LB_Minimum_Dispersion_Strategy::replica (CORBA::Environment &ACE_TRY_ENV)
             ACE_TRY_CHECK;
             if (!non_existent)
               {
-                return object._retn ();
+                return CORBA::Object::_duplicate (object);
               }
           }
         ACE_CATCHANY
           {
+            // @@ HACK!  Do the right thing!
+            return CORBA::Object::_duplicate (object);
           }
         ACE_ENDTRY;
       }
-
-      // @@ Ossama: a bit melodramatic, we remove the object if *any*
-      // exception is thrown.  If the object really does not exist (we
-      // get non_existent==1) then this is exactly what we want to do,
-      // but if we get something like TRANSIENT we may want to do
-      // something less drastic, or at least strategize it ;-)
-      this->proxies_.remove (proxy);
     }
 }
 
-int
-TAO_LB_Minimum_Dispersion_Strategy::insert (TAO_LB_ReplicaProxy *proxy)
-{
-  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
-                            guard,
-                            this->lock_,
-                            -1));
-
-  return this->proxies_.insert (proxy);
-}
-
-int
-TAO_LB_Minimum_Dispersion_Strategy::remove (TAO_LB_ReplicaProxy *proxy)
-{
-  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
-                            guard,
-                            this->lock_,
-                            -1));
-
-  return this->proxies_.remove (proxy);
-}
-
+#if 0
 void
 TAO_LB_Minimum_Dispersion_Strategy::load_changed (TAO_LB_ReplicaProxy *proxy,
                                                CORBA::Environment &ACE_TRY_ENV)
@@ -202,3 +186,4 @@ TAO_LB_Minimum_Dispersion_Strategy::load_changed (TAO_LB_ReplicaProxy *proxy,
       ACE_CHECK;
     }
 }
+#endif  /* 0 */
