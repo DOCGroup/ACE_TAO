@@ -258,7 +258,8 @@ MyImpl::EC_exec_i::pulse (void)
       BasicSP::TimeOut_var ev = new OBV_BasicSP::TimeOut ();
 
       this->context_->push_timeout (ev.in ()
-                                  ACE_ENV_ARG_PARAMETER);
+                                    ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
