@@ -1,32 +1,39 @@
 // $Id$
+
 //=============================================================================
 //
-//
 // = FILENAME
-//     MyFooServant.h
+//     Reference_Counted_Foo.h
 //
 // = DESCRIPTION
-//     Defines MyFooServant class for the Foo interface
+//     Defines Reference_Counted_Foo class for the Foo interface
 //
 // = AUTHOR
 //     Irfan Pyarali
 //
 //=============================================================================
 
-#ifndef MYFOOSERVANT_H
-#define MYFOOSERVANT_H
+#ifndef REFERENCE_COUNTED_FOO_H
+#define REFERENCE_COUNTED_FOO_H
 
 #include "FooS.h"
 
-class GENERIC_SERVANT_Export MyFooServant : public POA_Foo
+// This is to remove "inherits via dominance" warnings from MSVC.
+// MSVC is being a little too paranoid.
+#if defined (_MSC_VER)
+# pragma warning (disable : 4250)
+#endif /* _MSC_VER */
+
+class Reference_Counted_Foo : public virtual PortableServer::RefCountServantBase,
+                              public virtual POA_Foo
 {
 public:
-  MyFooServant (CORBA::ORB_ptr orb,
+  Reference_Counted_Foo (CORBA::ORB_ptr orb,
                 PortableServer::POA_ptr poa,
                 CORBA::Long value);
   // Constructor - takes a POA and a value parameter
 
-  virtual ~MyFooServant (void);
+  virtual ~Reference_Counted_Foo (void);
   // Destructor
 
   virtual PortableServer::POA_ptr _default_POA (CORBA::Environment &env);
@@ -52,4 +59,4 @@ protected:
   // The current value.
 };
 
-#endif /* MYFOOSERVANT_H */
+#endif /* REFERENCE_COUNTED_FOO_H */

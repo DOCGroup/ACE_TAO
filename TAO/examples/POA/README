@@ -109,3 +109,9 @@ these applications further.
                 deleted once the object references have been
                 created. After this, an adapter activator is install
                 in the RootPOA to reactivate the POAs on demand.
+
+        . Reference_Counted_Servant
+
+                This example shows how to use reference counted
+                servants to automatically manage dynamic memory for
+                servants.
