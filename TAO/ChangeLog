@@ -1,3 +1,13 @@
+Sat Oct  2 13:09:00 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/PSS/PSDL.mpc:
+
+	  Added requires += dummy for the following reasons (1) PSS is
+	  completely broken and  requires lot of work and (2) the MPC file
+	  has an issue which we need to report it to Chad. In the meantime
+	  I am commenting the test out from the builds so that we could
+	  save some CPU cycles for an unusable thingy.
+
 Sat Oct  2 03:24:26 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/IIOP_Connection_Handler.cpp:
