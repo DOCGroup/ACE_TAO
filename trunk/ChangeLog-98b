@@ -1,5 +1,8 @@
 Mon Dec 14 10:49:29 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* Static_Performance.dsw: Quick and dirty workspace to build
+	  several static version's performance tests.
+
 	* ace/ace_lib.dsp: Removed "__ACE_INLINE__=0" from the default
 	  static release build settings.
 
