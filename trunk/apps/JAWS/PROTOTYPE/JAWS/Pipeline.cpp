@@ -25,5 +25,3 @@ JAWS_Pipeline::close (u_long)
 {
   return 0;
 }
-
-#include "JAWS/Pipeline_Handler.cpp"

@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef ACE_CACHE_MANAGER_T_CPP
-#define ACE_CACHE_MANAGER_T_CPP
+#ifndef JAWS_CACHE_MANAGER_T_CPP
+#define JAWS_CACHE_MANAGER_T_CPP
 
 #include "JAWS/Cache_Manager_T.h"
 #include "JAWS/Cache_Hash_T.h"
@@ -11,9 +11,9 @@ class Cache_Manager;
 #include <iostream.h>
 
 template <class KEY, class FACTORY, class HASH_FUNC, class EQ_FUNC>
-ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
-::ACE_Cache_Manager (ACE_Allocator *alloc,
-                     ACE_Cache_Object_Factory *cof,
+JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
+::JAWS_Cache_Manager (ACE_Allocator *alloc,
+                     JAWS_Cache_Object_Factory *cof,
                      size_t hashsize,
                      size_t maxsize,
                      size_t maxobjsize,
@@ -80,9 +80,9 @@ ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 
 
 template <class KEY, class FACTORY, class HASH_FUNC, class EQ_FUNC> int
-ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
+JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 ::open (ACE_Allocator *alloc,
-        ACE_Cache_Object_Factory *cof,
+        JAWS_Cache_Object_Factory *cof,
         size_t hashsize,
         size_t maxsize,
         size_t maxobjsize,
@@ -150,13 +150,13 @@ ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 }
 
 template <class KEY, class FACTORY, class HASH_FUNC, class EQ_FUNC>
-ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>::~ACE_Cache_Manager (void)
+JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>::~JAWS_Cache_Manager (void)
 {
   this->close ();
 }
 
 template <class KEY, class FACTORY, class HASH_FUNC, class EQ_FUNC> int
-ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>::close (void)
+JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>::close (void)
 {
   while (this->waterlevel_ > 0)
     this->FLUSH_i ();
@@ -177,8 +177,8 @@ ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>::close (void)
 }
 
 template <class KEY, class FACTORY, class HASH_FUNC, class EQ_FUNC> int
-ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
-::GET_i (const KEY &key, ACE_Cache_Object *&object)
+JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
+::GET_i (const KEY &key, JAWS_Cache_Object *&object)
 {
   int result = this->hash_->find (key, object);
 
@@ -191,8 +191,8 @@ ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 }
 
 template <class KEY, class FACTORY, class HASH_FUNC, class EQ_FUNC> int
-ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
-::PUT_i (const KEY &key, const void *data, size_t size, ACE_Cache_Object *&obj)
+JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
+::PUT_i (const KEY &key, const void *data, size_t size, JAWS_Cache_Object *&obj)
 {
   int result = 0;
 
@@ -216,7 +216,7 @@ ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
   obj->internal (new KEY (key));
 
   KEY old_key;
-  ACE_Cache_Object *old_obj;
+  JAWS_Cache_Object *old_obj;
 
   result = this->hash_->rebind (key, obj, old_key, old_obj);
   if (result == -1)
@@ -257,10 +257,10 @@ ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 }
 
 template <class KEY, class FACTORY, class HASH_FUNC, class EQ_FUNC> int
-ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
+JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 ::FLUSH_i (const KEY &key)
 {
-  ACE_Cache_Object *temp_object;
+  JAWS_Cache_Object *temp_object;
 
 #ifdef ENTERA_VERBOSE_TRACE
   cerr << "*** flush key unbinding: " << key << endl;
@@ -281,11 +281,11 @@ ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 }
 
 template <class KEY, class FACTORY, class HASH_FUNC, class EQ_FUNC> int
-ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
+JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 ::FLUSH_i (void)
 {
   KEY temp_key;
-  ACE_Cache_Object *temp_object;
+  JAWS_Cache_Object *temp_object;
 
   int result = this->heap_->remove (temp_key, temp_object);
   if (result == 0)
@@ -310,8 +310,8 @@ ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 }
 
 template <class KEY, class FACTORY, class HASH_FUNC, class EQ_FUNC> int
-ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
-::DROP_i (ACE_Cache_Object *&obj)
+JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
+::DROP_i (JAWS_Cache_Object *&obj)
 {
   int result = 0;
 
@@ -330,8 +330,8 @@ ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 }
 
 template <class KEY, class FACTORY, class HASH_FUNC, class EQ_FUNC> int
-ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
-::GET (const KEY &key, ACE_Cache_Object *&object)
+JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
+::GET (const KEY &key, JAWS_Cache_Object *&object)
 {
   ACE_Read_Guard<ACE_SYNCH_RW_MUTEX> g (this->lock_);
 
@@ -339,8 +339,8 @@ ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 }
 
 template <class KEY, class FACTORY, class HASH_FUNC, class EQ_FUNC> int
-ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
-::PUT (const KEY &key, const void *data, size_t size, ACE_Cache_Object *&obj)
+JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
+::PUT (const KEY &key, const void *data, size_t size, JAWS_Cache_Object *&obj)
 {
   ACE_Write_Guard<ACE_SYNCH_RW_MUTEX> g (this->lock_);
 
@@ -348,8 +348,8 @@ ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 }
 
 template <class KEY, class FACTORY, class HASH_FUNC, class EQ_FUNC> int
-ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
-::MAKE (const void *data, size_t size, ACE_Cache_Object *&obj)
+JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
+::MAKE (const void *data, size_t size, JAWS_Cache_Object *&obj)
 {
   // verify object is within cacheable range
   if (size/1024 > this->maxobjsize_)
@@ -415,8 +415,8 @@ ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 }
 
 template <class KEY, class FACTORY, class HASH_FUNC, class EQ_FUNC> int
-ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
-::TAKE (ACE_Cache_Object *const &obj)
+JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
+::TAKE (JAWS_Cache_Object *const &obj)
 {
   if (obj == 0)
     return -1;
@@ -425,8 +425,8 @@ ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 }
 
 template <class KEY, class FACTORY, class HASH_FUNC, class EQ_FUNC> int
-ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
-::DROP (ACE_Cache_Object *&obj)
+JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
+::DROP (JAWS_Cache_Object *&obj)
 {
   if (obj == 0)
     return -1;
@@ -489,7 +489,7 @@ ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 }
 
 template <class KEY, class FACTORY, class HASH_FUNC, class EQ_FUNC> int
-ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
+JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 ::FLUSH (void)
 {
   ACE_Write_Guard<ACE_SYNCH_RW_MUTEX> g (this->lock_);
@@ -499,8 +499,8 @@ ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 
 
 template <class KEY, class DATA, class CACHE_MANAGER>
-ACE_Cache_Proxy<KEY, DATA, CACHE_MANAGER>
-::ACE_Cache_Proxy (const KEY &key, Cache_Manager *manager)
+JAWS_Cache_Proxy<KEY, DATA, CACHE_MANAGER>
+::JAWS_Cache_Proxy (const KEY &key, Cache_Manager *manager)
   : object_ (0),
     manager_ (manager)
 {
@@ -513,8 +513,8 @@ ACE_Cache_Proxy<KEY, DATA, CACHE_MANAGER>
 }
 
 template <class KEY, class DATA, class CACHE_MANAGER>
-ACE_Cache_Proxy<KEY, DATA, CACHE_MANAGER>
-::ACE_Cache_Proxy (const KEY &key, DATA *data, size_t size,
+JAWS_Cache_Proxy<KEY, DATA, CACHE_MANAGER>
+::JAWS_Cache_Proxy (const KEY &key, DATA *data, size_t size,
                    Cache_Manager *manager)
   : object_ (0),
     manager_ (manager)
@@ -528,7 +528,7 @@ ACE_Cache_Proxy<KEY, DATA, CACHE_MANAGER>
 }
 
 template <class KEY, class DATA, class CACHE_MANAGER>
-ACE_Cache_Proxy<KEY, DATA, CACHE_MANAGER>::~ACE_Cache_Proxy (void)
+JAWS_Cache_Proxy<KEY, DATA, CACHE_MANAGER>::~JAWS_Cache_Proxy (void)
 {
   DATA *data = this->data ();
   this->manager_->DROP (this->object_);
@@ -537,22 +537,22 @@ ACE_Cache_Proxy<KEY, DATA, CACHE_MANAGER>::~ACE_Cache_Proxy (void)
 }
 
 template <class KEY, class DATA, class CACHE_MANAGER> DATA *
-ACE_Cache_Proxy<KEY, DATA, CACHE_MANAGER>::data (void) const
+JAWS_Cache_Proxy<KEY, DATA, CACHE_MANAGER>::data (void) const
 {
   return this->object_ ? (DATA *) this->object_->data () : 0;
 }
 
 template <class KEY, class DATA, class CACHE_MANAGER>
-ACE_Cache_Proxy<KEY, DATA, CACHE_MANAGER>::operator DATA * (void) const
+JAWS_Cache_Proxy<KEY, DATA, CACHE_MANAGER>::operator DATA * (void) const
 {
   return this->data ();
 }
 
 template <class KEY, class DATA, class CACHE_MANAGER> int
-ACE_Cache_Proxy<KEY, DATA, CACHE_MANAGER>::close (DATA *)
+JAWS_Cache_Proxy<KEY, DATA, CACHE_MANAGER>::close (DATA *)
 {
   return 0;
 }
 
 
-#endif /* ACE_CACHE_MANAGER_T_CPP */
+#endif /* JAWS_CACHE_MANAGER_T_CPP */

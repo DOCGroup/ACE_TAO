@@ -1,13 +1,13 @@
 // $Id$
 
-#ifndef ACE_CACHE_HEAP_T_CPP
-#define ACE_CACHE_HEAP_T_CPP
+#ifndef JAWS_CACHE_HEAP_T_CPP
+#define JAWS_CACHE_HEAP_T_CPP
 
 #include "JAWS/Cache_Heap_T.h"
 #include "JAWS/Cache_Manager_T.h"
 
 template <class EXT_ID, class FACT, class H_FN, class E_FN>
-ACE_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::ACE_Cache_Heap (ACE_Allocator *alloc,
+JAWS_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::JAWS_Cache_Heap (ACE_Allocator *alloc,
                                                        size_t maxsize)
   : allocator_ (alloc),
     maxsize_ (maxsize),
@@ -33,7 +33,7 @@ ACE_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::ACE_Cache_Heap (ACE_Allocator *alloc,
 }
 
 template <class EXT_ID, class FACT, class H_FN, class E_FN>
-ACE_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::~ACE_Cache_Heap (void)
+JAWS_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::~JAWS_Cache_Heap (void)
 {
   if (this->heap_ != 0)
     {
@@ -54,31 +54,31 @@ ACE_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::~ACE_Cache_Heap (void)
 }
 
 template <class EXT_ID, class FACT, class H_FN, class E_FN> int
-ACE_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::is_empty (void) const
+JAWS_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::is_empty (void) const
 {
   return (this->size_ == 0);
 }
 
 template <class EXT_ID, class FACT, class H_FN, class E_FN> int
-ACE_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::is_full (void) const
+JAWS_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::is_full (void) const
 {
   return (this->size_ == this->maxsize_);
 }
 
 template <class EXT_ID, class FACT, class H_FN, class E_FN> size_t
-ACE_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::size (void) const
+JAWS_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::size (void) const
 {
   return this->size_;
 }
 
 template <class EXT_ID, class FACT, class H_FN, class E_FN> size_t
-ACE_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::maxsize (void) const
+JAWS_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::maxsize (void) const
 {
   return this->maxsize_;
 }
 
 template <class EXT_ID, class FACT, class H_FN, class E_FN> int
-ACE_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::maxsize (Cache_Manager *cm,
+JAWS_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::maxsize (Cache_Manager *cm,
                                                 size_t new_maxsize)
 {
   int result = -1;
@@ -110,7 +110,7 @@ ACE_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::maxsize (Cache_Manager *cm,
 }
 
 template <class EXT_ID, class FACT, class H_FN, class E_FN> void
-ACE_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::insert_i (Cache_Heap_Item *item)
+JAWS_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::insert_i (Cache_Heap_Item *item)
 {
   /* ASSERT: this->size_ < this->maxsize_ */
 
@@ -131,8 +131,8 @@ ACE_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::insert_i (Cache_Heap_Item *item)
 }
 
 template <class EXT_ID, class FACT, class H_FN, class E_FN> int
-ACE_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::insert (const EXT_ID &ext_id,
-                                               ACE_Cache_Object *const &int_id)
+JAWS_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::insert (const EXT_ID &ext_id,
+                                               JAWS_Cache_Object *const &int_id)
 {
   if (this->is_full ())
     return -1;
@@ -149,7 +149,7 @@ ACE_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::insert (const EXT_ID &ext_id,
 }
 
 template <class EXT_ID, class FACT, class H_FN, class E_FN> void
-ACE_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::remove_i (void)
+JAWS_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::remove_i (void)
 {
   /* ASSERT: this->size_ > 0 */
   this->size_--;
@@ -181,7 +181,7 @@ ACE_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::remove_i (void)
 }
 
 template <class EXT_ID, class FACT, class H_FN, class E_FN> void
-ACE_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::remove_i (size_t pos)
+JAWS_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::remove_i (size_t pos)
 {
   Cache_Heap_Item *item = this->heap_[pos];
 
@@ -203,8 +203,8 @@ ACE_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::remove_i (size_t pos)
 }
 
 template <class EXT_ID, class FACT, class H_FN, class E_FN> int
-ACE_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::remove (EXT_ID &ext_id,
-                                               ACE_Cache_Object *&int_id)
+JAWS_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::remove (EXT_ID &ext_id,
+                                               JAWS_Cache_Object *&int_id)
 {
   if (this->is_empty ())
     return -1;
@@ -223,7 +223,7 @@ ACE_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::remove (EXT_ID &ext_id,
 }
 
 template <class EXT_ID, class FACT, class H_FN, class E_FN> int
-ACE_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::remove (void *item)
+JAWS_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::remove (void *item)
 {
   if (item == 0)
     return 0;
@@ -244,7 +244,7 @@ ACE_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::remove (void *item)
 }
 
 template <class EXT_ID, class FACT, class H_FN, class E_FN> int
-ACE_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::adjust (void *item)
+JAWS_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::adjust (void *item)
 {
   if (item == 0)
     return 0;
@@ -263,8 +263,8 @@ ACE_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::adjust (void *item)
 
 
 template <class EXT_ID, class FACT, class H_FN, class E_FN>
-ACE_Cache_Heap_Item<EXT_ID,FACT,H_FN,E_FN>::
-ACE_Cache_Heap_Item (const EXT_ID &ext_id, ACE_Cache_Object *const &int_id)
+JAWS_Cache_Heap_Item<EXT_ID,FACT,H_FN,E_FN>::
+JAWS_Cache_Heap_Item (const EXT_ID &ext_id, JAWS_Cache_Object *const &int_id)
   : ext_id_ (ext_id),
     int_id_ (int_id),
     heap_idx_ (0)
@@ -273,10 +273,10 @@ ACE_Cache_Heap_Item (const EXT_ID &ext_id, ACE_Cache_Object *const &int_id)
 }
 
 template <class EXT_ID, class FACT, class H_FN, class E_FN> unsigned int
-ACE_Cache_Heap_Item<EXT_ID,FACT,H_FN,E_FN>::priority (void)
+JAWS_Cache_Heap_Item<EXT_ID,FACT,H_FN,E_FN>::priority (void)
 {
   return this->int_id_->priority ();
 }
 
 
-#endif /* ACE_CACHE_HEAP_T_CPP */
+#endif /* JAWS_CACHE_HEAP_T_CPP */

@@ -334,14 +334,15 @@ JAWS_Asynch_Handler::open (ACE_HANDLE h,
   this->handler ()->message_block ()->copy (mb.rd_ptr (), mb.length ());
 #endif
 
-  ACE_Asynch_Accept::Result fake_result
-    (*this, JAWS_IO_Asynch_Acceptor_Singleton::instance ()->get_handle (),
-     h, mb, JAWS_Data_Block::JAWS_DATA_BLOCK_SIZE,
-     this->ioh_, ACE_INVALID_HANDLE);
+  ACE_Asynch_Accept_Result_Impl *fake_result
+    = ACE_Proactor::instance ()->create_asynch_accept_result
+      (*this, JAWS_IO_Asynch_Acceptor_Singleton::instance ()->get_handle (),
+       h, mb, JAWS_Data_Block::JAWS_DATA_BLOCK_SIZE,
+       this->ioh_, ACE_INVALID_HANDLE, 0);
 
   this->handler ()->handler_ = this;
 
-  fake_result.complete (0, 1, 0);
+  fake_result->complete (0, 1, 0);
 }
 
 void

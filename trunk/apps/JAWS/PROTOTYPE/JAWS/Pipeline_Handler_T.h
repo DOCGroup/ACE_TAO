@@ -1,8 +1,8 @@
 /* -*- c++ -*- */
 // $Id$
 
-#ifndef JAWS_PIPELINE_HANDLER_H
-#define JAWS_PIPELINE_HANDLER_H
+#ifndef JAWS_PIPELINE_HANDLER_T_H
+#define JAWS_PIPELINE_HANDLER_T_H
 
 #include "JAWS/Export.h"
 #include "JAWS/Pipeline.h"
@@ -26,7 +26,7 @@ public:
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "JAWS/Pipeline_Handler.cpp"
+#include "JAWS/Pipeline_Handler_T.cpp"
 #endif
 
-#endif /* !defined (JAWS_PIPELINE_HANDLER_H) */
+#endif /* !defined (JAWS_PIPELINE_HANDLER_T_H) */
