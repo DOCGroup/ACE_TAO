@@ -123,7 +123,7 @@ private:
   CORBA::ORB_var orb_;
   // ORB pointer.
 
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const Grid_Factory_i &));
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const Grid_Factory_i &))
   // Keeping g++2.7.2
 };
 

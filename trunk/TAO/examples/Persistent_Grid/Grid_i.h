@@ -71,7 +71,7 @@ private:
   pool_t *pool_t_;
   // Hold the pool of name pool_name_
 
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const Grid_Factory_i &));
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const Grid_Factory_i &))
   // Keeping g++2.7.2
 };
 

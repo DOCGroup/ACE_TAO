@@ -59,7 +59,7 @@ private:
   CORBA::ORB_var orb_;
   // ORB pointer.
 
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const Time_i &));
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const Time_i &))
   // Keeping g++2.7.2
 };
 

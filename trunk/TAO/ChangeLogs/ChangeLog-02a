@@ -1,3 +1,13 @@
+Mon Mar 12 12:39:37 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/Simple/time/Time_i.h:
+	* examples/Simple/echo/Echo_i.h:
+	* examples/Simple/echo/Echo_i.cpp:
+	* examples/Simple/grid/Grid_i.h:
+	* examples/Persistent_Grid/Grid_i.h:
+	* examples/Simple/bank/AccountManager_i.h: Fixed warnings and
+	  errors in KCC builds.
+
 Mon Mar 12 12:14:10 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO-INSTALL.html: Mentioned Windows 2000 explicitly in the
