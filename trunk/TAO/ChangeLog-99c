@@ -1,3 +1,10 @@
+Mon Feb  1 16:33:39 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/IIOP_Profile.cpp: 
+	* tao/params.cpp: 
+	* utils/catior/catior.cpp: 
+	  Fixed some egcs warnings.
+
 Mon Feb  1 15:33:59 1999  Fred Kuhns <fredk@cs.wuslt.edu>
 
         * Update Connect.{h,cpp}, removed two unused args

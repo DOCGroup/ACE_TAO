@@ -129,8 +129,8 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const TAO_IIOP_Profile *pfile)
   : host_(0),
     port_(pfile->port_),
     tag_(pfile->tag_),
-    version_(pfile->version_),
     body_(pfile->body_),
+    version_(pfile->version_),
     object_key_(pfile->object_key_),
     object_addr_(pfile->object_addr_),
     hint_(0)
@@ -146,8 +146,8 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const TAO_IIOP_Profile *pfile)
 TAO_IIOP_Profile::TAO_IIOP_Profile (const TAO_IIOP_Profile &pfile)
   : host_(0),
     port_(pfile.port_),
-    body_(pfile.body_),
     tag_(pfile.tag_),
+    body_(pfile.body_),
     version_(pfile.version_),
     object_key_(pfile.object_key_),
     object_addr_(pfile.object_addr_),
