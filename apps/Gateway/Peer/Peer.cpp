@@ -306,7 +306,7 @@ Peer_Handler::recv (ACE_Message_Block *&mb)
   Event *event = (Event *) this->msg_frag_->rd_ptr ();
   ssize_t header_received = 0;
 
-  const ssize_t HEADER_SIZE = sizeof (Event_Header);
+  const size_t HEADER_SIZE = sizeof (Event_Header);
   ssize_t header_bytes_left_to_read =
     HEADER_SIZE - this->msg_frag_->length ();
 
@@ -493,7 +493,7 @@ int
 Peer_Handler::subscribe (void)
 {
   ACE_Message_Block *mb;
-  
+
   ACE_NEW_RETURN (mb,
                   ACE_Message_Block (sizeof (Event)),
                   -1);
