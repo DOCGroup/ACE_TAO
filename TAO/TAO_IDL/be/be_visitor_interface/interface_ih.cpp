@@ -41,7 +41,6 @@ int
 be_visitor_interface_ih::visit_interface (be_interface *node)
 {
   TAO_OutStream *os; // output stream
-  long i; // loop index
   static char namebuf [NAMEBUFSIZE]; // holds the class name
 
 
@@ -62,35 +61,8 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
   // now generate the class definition
   *os << "class " << idl_global->stub_export_macro ()
       << " " <<idl_global->impl_class_prefix () << namebuf << idl_global->impl_class_suffix () << " : ";
-  /*
-  if (node->n_inherits () > 0)
-    {
-      // this interface inherits from other interfaces
-      be_interface *intf; // inherited interface
-
-
-      *os << "public virtual ";
-
-      intf = be_interface::narrow_from_decl (node->inherits ()[0]);
-      *os << idl_global->impl_class_prefix () << intf->flat_name () << idl_global->impl_class_suffix ();//intf->relative_skel_name (node->full_skel_name ());
-      for (i = 1; i < node->n_inherits (); i++)
-        {
-          *os << ", public virtual ";
-          intf = be_interface::narrow_from_decl (node->inherits ()[i]);
-          *os << idl_global->impl_class_prefix () <<intf->flat_name () << idl_global->impl_class_suffix ();//intf->relative_skel_name (node->full_skel_name ());
-        }  // end of for loop
-
-      //inherit from the base skeleton file
-      *os<<", public virtual "<<node->full_skel_name ();
-    }
-
-  else
-    {
-  */
-      //inherit from the base skeleton file
-      *os<<"public virtual "<<node->full_skel_name ();
-      //  }
-
+  //inherit from the base skeleton file
+  *os<<"public virtual "<<node->full_skel_name ();
 
   *os << be_nl
       << "{" << be_nl
