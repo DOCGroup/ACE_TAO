@@ -1,3 +1,8 @@
+Tue Sep 03 18:34:51 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
+
+	* tao/Messaging/TAO_Messaging_Static.dsp: Added the new files in
+	  to the workspace. 
+
 Tue Sep 03 19:26:44 2002  Irfan Pyarali  <irfan@oomworks.com>
 
 	* tao\ORB.cpp (_create_policy): Added proprietary
