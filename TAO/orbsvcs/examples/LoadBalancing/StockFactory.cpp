@@ -3,6 +3,7 @@
 //
 
 #include "StockFactory.h"
+#include "ace/streams.h"
 
 StockFactory::StockFactory (CORBA::ORB_ptr orb, int number)
   :  orb_ (CORBA::ORB::_duplicate (orb)),
