@@ -72,7 +72,7 @@ and activate another service dynamically, perform the following steps:
 
    and then uncomment the second line:
 
-   dynamic Remote_Brdcast Service_Object * ./Server:remote_broadcast "-p 10001"
+   dynamic Remote_Brdcast Service_Object * ./IPC_Tests_Server:remote_broadcast "-p 10001"
 
 2. If you're running on an OS platform that supports SIGHUP, send the
    SIGHUP signal to the process running the ./server_test program.

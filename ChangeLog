@@ -1,3 +1,19 @@
+Thu May 7 02:00:00 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
+
+        * examples/Service_Configurator/IPC-tests/:
+          * Service_Configurator_IPC_Client.mpc move to Svc_Cfg_IPC_Client.mpc
+          * _test postix appended to resulting executables to ensure conformance with
+            examples/Service_Configurator/IPC-tests/README
+        * examples/Service_Configurator/IPC-tests/README: modified to reflect saome name 
+          changes
+        * examples/Service_Configurator/IPC-tests/server/svc.conf repaired as for some time 
+          shared library is called IPC_Tests_Server, but not just Server
+        * examples/C++NPv2/C++NPv2.moc: project names with *Logging* changed to *Log*
+        * performance-tests/Server_Concurrency/Queue_Based_Workers/Server_Concurrency_Queue_Based_Workers.mpc:
+          moved to Svr_Conc_Queue_Based_Workers.mpc
+        * performance-tests/Server_Concurrency/Leader_Follower/Server_Concurrency_Leader_Follower.mpc:
+          moved to Svr_Conc_Leader_Follower.mpc
+
 Thu May  6 12:16:16 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * ACEXML/common/common.mpc:
@@ -1202,7 +1218,7 @@ Thu Apr 22 11:53:00 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
           Improved regular expressions to catch additional cases.
 
-Thu Apr 22 12:00:00 2004  Marek Brudka  <mbrudka@elka.pw.edy.pl>
+Thu Apr 22 12:00:00 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
         * ace/TMCast/Link_Listener.hpp: removed ACE_Addr bug which led to
         sigsegv in TMCast applications.
