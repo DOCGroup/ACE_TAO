@@ -676,13 +676,6 @@
    XPG4 Worldwide Portability Interface wide-character classification. */
 #undef ACE_HAS_XPG4_MULTIBYTE_CHAR
 
-/* Platform does not support ::atexit ().  Use ACE's at_exit ()
-   emulation instead.
-   NOTE: should be used with ACE_HAS_NONSTATIC_OBJECT_MANAGER for
-   proper semantics of _when_ exit hooks are destroyed, i.e., prior to
-   static object destruction. */
-#undef ACE_LACKS_ATEXIT
-
 /* No system support for replacing any previous mappings. */
 #undef ACE_LACKS_AUTO_MMAP_REPLACEMENT
 
@@ -773,6 +766,9 @@
 
 /* Automatically restart OS system calls when EINTR occurs */
 #undef ACE_HAS_SIGNAL_SAFE_OS_CALLS
+
+/* Platform has the sigsuspend() system call */
+#undef ACE_HAS_SIGSUSPEND
 
 /* Platform has the sigtimedwait() system call */
 #undef ACE_HAS_SIGTIMEDWAIT
