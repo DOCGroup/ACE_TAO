@@ -73,7 +73,7 @@ Handler::cancelled (void)
 
 Input_Task::Input_Task (Thread_Timer_Queue *queue, Thread_Timer_Queue_Test_Driver &timer_queue_driver)
   : queue_ (queue),
-    usecs_ (1000000), // @@ Make this an ACE #define constant?
+    usecs_ (ACE_ONE_SECOND_IN_USECS), 
     driver_ (timer_queue_driver)
 {
 }
@@ -138,7 +138,22 @@ Input_Task::cancel_timer (void *argument)
 int
 Input_Task::list_timer (void *argument)
 {
+  // Macro to avoid "warning: unused parameter" type warning.
+  ACE_UNUSED_ARG (argument);
+
+  // Thread cancellation point, if ACE supports it.
+#if !defined (ACE_LACKS_PTHREAD_CANCEL)
+  ACE_PTHREAD_CLEANUP_PUSH(&this->queue_->lock ());
+#endif
+
+  // dump the timer queue contents.
   this->dump ();
+
+  // Thread cancellation point (POP)
+#if !defined (ACE_LACKS_PTHREAD_CANCEL)
+  ACE_PTHREAD_CLEANUP_POP(1);
+#endif
+
   return 0;
 }
 
@@ -148,6 +163,10 @@ Input_Task::list_timer (void *argument)
 int
 Input_Task::shutdown_timer (void *argument)
 {
+  // Macro to avoid "warning: unused parameter" type warning.
+  ACE_UNUSED_ARG (argument);
+
+  // -1 indicates we are shutting down the application.
   return -1;
 }
 
@@ -169,7 +188,7 @@ Input_Task::dump (void)
 // constructor
 
 Thread_Timer_Queue_Test_Driver::Thread_Timer_Queue_Test_Driver (void)
-    : input_task (&timer_queue_, *this)
+    : input_task_ (&timer_queue_, *this)
     {}
 
 int 
@@ -202,22 +221,22 @@ Thread_Timer_Queue_Test_Driver::init (void)
   // initialize the <Command> objects with their corresponding 
   // methods from <Input_Task>
   ACE_NEW_RETURN (schedule_cmd_, 
-		  COMMAND (input_task, &Input_Task::add_timer),
+		  COMMAND (input_task_, &Input_Task::add_timer),
 		  -1);
   
   ACE_NEW_RETURN (cancel_cmd_,
-		  COMMAND (input_task, &Input_Task::cancel_timer),
+		  COMMAND (input_task_, &Input_Task::cancel_timer),
 		  -1);
 
   ACE_NEW_RETURN (list_cmd_,
-		  COMMAND (input_task, &Input_Task::list_timer),
+		  COMMAND (input_task_, &Input_Task::list_timer),
 		  -1);
 
   ACE_NEW_RETURN (shutdown_cmd_,
-		  COMMAND (input_task, &Input_Task::shutdown_timer),
+		  COMMAND (input_task_, &Input_Task::shutdown_timer),
 		  -1);
 
-  if (input_task.activate () == -1)
+  if (input_task_.activate () == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "cannot activate input task"), -1);
   
   if (timer_queue_.activate () == -1)

@@ -23,6 +23,7 @@
 
 #include "Async_Timer_Queue_Test.h"
 
+// Hook method that is called to handle the expiration of a timer.
 int 
 Async_Timer_Handler::handle_timeout (const ACE_Time_Value &tv,
 			       const void *arg)
@@ -63,6 +64,8 @@ Async_Timer_Queue::instance (void)
     }
   return Async_Timer_Queue::instance_;
 }
+
+// Sets the signal set to mask, for the timer queue.
 
 Async_Timer_Queue::Async_Timer_Queue (ACE_Sig_Set *ss)
   : tq_ (ss)
@@ -158,6 +161,9 @@ Async_Timer_Queue::cancel_timer (void *argument)
 int
 Async_Timer_Queue::list_timer (void *argument)
 {
+  // Macro to avoid "warning: unused parameter" type warning.
+  ACE_UNUSED_ARG (argument);
+
   // Display an error message.
   ACE_ERROR_RETURN ((LM_ERROR, "invalid input\n"), 0);
 }
@@ -168,6 +174,9 @@ Async_Timer_Queue::list_timer (void *argument)
 int
 Async_Timer_Queue::shutdown_timer (void *argument)
 {
+  // Macro to avoid "warning: unused parameter" type warning.
+  ACE_UNUSED_ARG (argument);
+
   // Display an error message.
   ACE_ERROR_RETURN ((LM_ERROR, "invalid input\n"), 0);
 }
