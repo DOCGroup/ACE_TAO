@@ -1679,14 +1679,10 @@ typedef tid_t ACE_hthread_t;
 // Make it easier to write portable thread code.
 typedef pthread_t ACE_thread_t;
 typedef pthread_key_t ACE_thread_key_t;
-#if defined (__Lynx_Native_Cond__)
-  // pthread_cond_{,timed}wait is broken in LynxOS 2.5.0, so use cv_t.
- typedef struct_synch ACE_mutex_t;
- typedef struct synch ACE_cond_t;
-#elif !defined (ACE_LACKS_COND_T)
+#if !defined (ACE_LACKS_COND_T)
  typedef pthread_mutex_t ACE_mutex_t;
  typedef pthread_cond_t ACE_cond_t;
-#endif /* __Lynx_Native_Cond__ && ! ACE_LACKS_COND_T */
+#endif /* ! ACE_LACKS_COND_T */
 typedef pthread_mutex_t ACE_thread_mutex_t;
 
 #    if !defined (PTHREAD_CANCEL_DISABLE)
