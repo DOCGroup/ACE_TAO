@@ -1,3 +1,10 @@
+Thu Jun 22 17:27:35 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/Log_Msg.cpp (ACE_Log_Msg_Attributes::inherit_hook): Use a
+          temporary void * to hold the reference - this keeps Sun C++ 4.2
+          from complaining you can't static_cast a void *& to a
+          ACE_Log_Msg_Attributes*.
+
 Thu Jun 22 17:58:21 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/Handle_Set.cpp: Added pSOS-specific changes to deal with pSOS's
