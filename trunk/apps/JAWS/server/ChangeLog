@@ -1,3 +1,9 @@
+Tue Jul  1 19:13:44 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
+
+	* JAWS_File.cpp (JAWS_File): Changes the creation method of a
+ 	  cached copy from using plain file copy to using mmap and memcpy.
+  	  This avoid the extra complexity caused by FILE_FLAG_OVERLAPPED.
+
 Sat Jun 28 11:55:38 1997  James C Hu <jxh@tango.cs.wustl.edu>
 
 	* HTTP_Handler.cpp (open): fixed a typo
