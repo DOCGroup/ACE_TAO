@@ -1,9 +1,31 @@
+Fri Oct 10 18:39:39 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/ACE,
+	  ace/Proactor,
+	  ace/SOCK_Connector,
+	  ace/SPIPE_Connector,
+	  ace/Acceptor,
+	  tests/Conn_Test: Changed ETIMEDOUT errno to ETIME errno to be
+	  consistent throughout ACE.  There should be no uses of
+	  ETIMEDOUT in ACE or the test apps and examples.
+
+	* ace/ACE.cpp (handle_timed_complete): Only assume that we've
+	  timed out if the return value from select() == 0 *and* the
+	  timeout value isn't NULL...
+
+	* ace/Object_Manager.h: Replaced the use of ACE_MT() in the header
+ 	  file with a #ifdef.  This solves problems that arise when ACE_MT
+ 	  is defined as "nothing" when MT_SAFE is not defined. As a code
+ 	  which has "ACE_MT();" becomes just ";" and fail to compile.
+  	  Thanks to Avraham Nash <ANash@Engagetech.com> for reporting
+ 	  this.
+
 Fri Oct 10 19:55:50 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* examples/ASX/CCM_App/Makefile: 
 	* include/makeinclude/rules.bin.GNU: 
-	  I have applied Steve Huston changes from Oct 01, the change was
-	  (IMHO) useful and made compilation cleaner.
+	  I have re-applied Steve Huston changes from Oct 01, the change
+ 	  was (IMHO) useful and made compilation cleaner.
 
 	* examples/ASX/Event_Server/Event_Server/Makefile: 
 	  Fixed problem that made compilation fail.
@@ -12,8 +34,8 @@ Fri Oct 10 19:52:44 1997    <nw1@CHA-CHA>
 
 	* ace/OS.h:
 	* ace/Connector.cpp:
-	* ace/SOCK_Connector.cpp: Added constant
-	  ACE_OS::NON_BLOCKING_BUG_DELAY and replace their uses from some
+	* ace/SOCK_Connector.cpp: Added new #define
+	  ACE_NON_BLOCKING_BUG_DELAY and replace their uses from some
 	  magic numbers to this constant. 
 
 Fri Oct 10 19:27:28 1997  Steve Huston  <shuston@riverace.com>
