@@ -121,7 +121,7 @@ main (int argc, ASYS_TCHAR *argv[])
         ACE_DEBUG ((LM_DEBUG,
                     ASYS_TEXT ("(%P|%t) about to exit with code %d\n"),
                     secs));
-      ACE_OS::exit (secs);
+      return secs;
     }
 
   if (args.optind != argc)      // incorrect usage
@@ -180,6 +180,10 @@ main (int argc, ASYS_TCHAR *argv[])
   pid_t result3 = mgr.wait (0,
                             &exitcode);
 
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("(%P|%t) expected to reap %d, got %d\n"),
+              child2,
+              result3));
   ACE_ASSERT (result3 == child2);
   // ACE_ASSERT (exitcode == 1);
 

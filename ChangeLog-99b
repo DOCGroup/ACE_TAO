@@ -1,3 +1,9 @@
+Fri Oct 15 00:36:35 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
+
+	* tests/Process_Manager_Test.cpp (main): Replaced
+	  ACE_OS::exit(secs) with return secs so that Purify will be
+ 	  happy.
+
 Thu Oct 14 14:30:06 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Process_Manager_Test.cpp: use u_int instead of
