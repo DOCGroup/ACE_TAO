@@ -79,7 +79,7 @@ ACE_LSOCK_Acceptor::ACE_LSOCK_Acceptor (const ACE_Addr &remote_sap,
 // General purpose routine for accepting new connections.
 
 int
-ACE_LSOCK_Acceptor::accept (ACE_LSOCK_Stream &new_local_ipc_sap, 
+ACE_LSOCK_Acceptor::accept (ACE_LSOCK_Stream &new_stream,
 			    ACE_Addr *remote_addr, 
 			    ACE_Time_Value *timeout,
 			    int restart,
