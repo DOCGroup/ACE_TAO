@@ -479,9 +479,6 @@ ACE_HAS_STRING_CLASS                    Platform/Compiler supports a
 ACE_HAS_STRUCT_NETDB_DATA               Compiler/platform has strange
                                         hostent API for socket *_r()
                                         calls
-ACE_HAS_STRUCT_PROTOENT_DATA            Compiler/platform has strange
-                                        protoent API for socket *_r()
-                                        calls
 ACE_HAS_SUNOS4_GETTIMEOFDAY             SunOS 4 style prototype.
 ACE_HAS_SUNOS4_SIGNAL_T                 Compiler has horrible SunOS
                                         4.x signal handlers...
@@ -635,7 +632,7 @@ ACE_LACKS_CONDATTR_PSHARED              Platform has no implementation
                                         pthreads!
 ACE_LACKS_DIFFTIME                      Platform lacks difftime() implementation
 ACE_LACKS_FCNTL                         Platform lacks POSIX-style fcntl ().
-ACE_LACKS_FSYNC				Platform lacks fsync().
+ACE_LACKS_FSYNC                         Platform lacks fsync().
 ACE_LACKS_INLINE_FUNCTIONS              Platform can't handle "inline"
                                         keyword correctly.
 ACE_LACKS_NETDB_REENTRANT_FUNCTIONS     Platform does not support
