@@ -166,14 +166,19 @@ sub parse_line {
 
         ## Set up some initial values
         if (defined $name) {
-          $name =~ s/^\(\s*//;
-          $name =~ s/\s*\)$//;
           if ($name =~ /[\/\\]/) {
             $status = 0;
             $errorString = 'ERROR: Workspaces can not have a slash ' .
                            'or a back slash in the name';
           }
           else {
+            $name =~ s/^\(\s*//;
+            $name =~ s/\s*\)$//;
+
+            ## Replace any *'s with the default name
+            my($def) = $self->get_default_workspace_name();
+            $name = $self->fill_type_name($name, $def);
+
             $self->{'workspace_name'} = $name;
           }
         }
@@ -417,24 +422,32 @@ sub generate_default_components {
 }
 
 
+sub get_default_workspace_name {
+  my($self) = shift;
+  my($name) = $self->get_current_input();
+
+  if ($name eq '') {
+    $name = $self->base_directory();
+  }
+  else {
+    ## Since files on UNIX can have back slashes, we transform them
+    ## into underscores.
+    $name =~ s/\\/_/g;
+
+    ## Take off the extension
+    $name =~ s/\.[^\.]+$//;
+  }
+
+  return $name;
+}
+
+
 sub generate_defaults {
   my($self) = shift;
 
   ## Generate default workspace name
   if (!defined $self->{'workspace_name'}) {
-    my($current) = $self->get_current_input();
-    if ($current eq '') {
-      $self->{'workspace_name'} = $self->base_directory();
-    }
-    else {
-      ## Since files on UNIX can have back slashes, we transform them
-      ## into underscores.
-      $current =~ s/\\/_/g;
-
-      ## Take off the extension
-      $current =~ s/\.[^\.]+$//;
-      $self->{'workspace_name'} = $current;
-    }
+    $self->{'workspace_name'} = $self->get_default_workspace_name();
   }
 
   my(@files) = $self->generate_default_file_list();

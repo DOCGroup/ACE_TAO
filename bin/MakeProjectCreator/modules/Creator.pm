@@ -534,6 +534,42 @@ sub process_assignment_sub {
 }
 
 
+sub fill_type_name {
+  my($self) = shift;
+  my($name) = shift;
+  my($def)  = shift;
+
+  if ($name =~ /\*/) {
+    my($pre)  = $def . '_';
+    my($mid)  = '_' . $def . '_';
+    my($post) = '_' . $def;
+
+    ## Replace the beginning and end first then the middle
+    $name =~ s/^\*/$pre/;
+    $name =~ s/\*$/$post/;
+    $name =~ s/\*/$mid/g;
+
+    ## If any one word is capitalized then capitalize each word
+    if ($name =~ /[A-Z][0-9a-z_]+/) {
+      ## Do the first word
+      if ($name =~ /^([a-z])([^_]+)/) {
+        my($first) = uc($1);
+        my($rest)  = $2;
+        $name =~ s/^[a-z][^_]+/$first$rest/;
+      }
+      ## Do subsequent words
+      while($name =~ /(_[a-z])([^_]+)/) {
+        my($first) = uc($1);
+        my($rest)  = $2;
+        $name =~ s/_[a-z][^_]+/$first$rest/;
+      }
+    }
+  }
+
+  return $name;
+}
+
+
 sub save_state {
   my($self)  = shift;
   my(%state) = ();

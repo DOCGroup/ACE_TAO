@@ -317,6 +317,11 @@ sub parse_line {
             $name =~ s/^\(\s*//;
             $name =~ s/\s*\)$//;
             $name = $self->transform_file_name($name);
+
+            ## Replace any *'s with the default name
+            my($def) = $self->get_default_project_name();
+            $name = $self->fill_type_name($name, $def);
+
             $self->process_assignment('project_name', $name);
           }
         }
@@ -1477,29 +1482,36 @@ sub add_corresponding_component_files {
 }
 
 
+sub get_default_project_name {
+  my($self) = shift;
+  my($name) = $self->get_current_input();
+
+  if ($name eq '') {
+    $name = $self->transform_file_name($self->base_directory());
+  }
+  else {
+    ## Since files on UNIX can have back slashes, we transform them
+    ## into underscores.
+    $name =~ s/\\/_/g;
+
+    ## Convert then name to a usable name
+    $name = $self->transform_file_name($name);
+
+    ## Take off the extension
+    $name =~ s/\.[^\.]+$//;
+  }
+
+  return $name;
+}
+
+
 sub generate_defaults {
   my($self) = shift;
 
   ## Generate default project name
   if (!defined $self->get_assignment('project_name')) {
-    my($current) = $self->get_current_input();
-    if ($current eq '') {
-      my($base) = $self->base_directory();
-      $base = $self->transform_file_name($base);
-      $self->process_assignment('project_name', $base);
-    }
-    else {
-      ## Since files on UNIX can have back slashes, we transform them
-      ## into underscores.
-      $current =~ s/\\/_/g;
-
-      ## Convert then name to a usable name
-      $current = $self->transform_file_name($current);
-
-      ## Take off the extension
-      $current =~ s/\.[^\.]+$//;
-      $self->process_assignment('project_name', $current);
-    }
+    $self->process_assignment('project_name',
+                              $self->get_default_project_name());
   }
 
   ## Generate the default pch file names (if needed)
