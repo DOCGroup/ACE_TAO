@@ -1,3 +1,37 @@
+Sat Feb 26 15:17:19 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/tests/Makefile.am:
+	* orbsvcs/tests/AVStreams/Makefile.am:
+	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/Makefile.am:
+	* orbsvcs/tests/AVStreams/Bidirectional_Flows/Makefile.am:
+	* orbsvcs/tests/AVStreams/Component_Switching/Makefile.am:
+	* orbsvcs/tests/AVStreams/Full_Profile/Makefile.am:
+	* orbsvcs/tests/AVStreams/Latency/Makefile.am:
+	* orbsvcs/tests/AVStreams/Modify_QoS/Makefile.am:
+	* orbsvcs/tests/AVStreams/Multicast/Makefile.am:
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/Makefile.am:
+	* orbsvcs/tests/AVStreams/Multiple_Flows/Makefile.am:
+	* orbsvcs/tests/AVStreams/Pluggable/Makefile.am:
+	* orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/Makefile.am:
+	* orbsvcs/tests/AVStreams/Simple_Three_Stage/Makefile.am:
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage/Makefile.am:
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/Makefile.am:
+
+	  Regenerated.
+
+	* orbsvcs/orbsvcs/Makefile.am:
+
+	  Regenerated without QoS support.
+
+	* configure.ac:
+
+	  Add orbsvcs/test/BiDir_CORBALOC/Makefile to AC_CONFIG_FILES
+	  list.
+
+	* orbsvcs/test/BiDir_CORBALOC/Makefile.am:
+
+	  New file.
+
 Fri Feb 25 21:58:39 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/Makefile.am:
