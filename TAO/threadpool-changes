@@ -1,4 +1,4 @@
-Thu Aug 16 17:55:14 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+Fri Aug 17 16:41:32 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/RTPortableServer/RT_POA.cpp: 
 
@@ -63,7 +63,16 @@ Thu Aug 16 17:55:14 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
           - (validate_priorities): Revised this function to do the
             following tests:
 
+	    Initialize <rt_priority_model> to NOT_SPECIFIED rather
+	    than CLIENT_PROPAGATED.
+	
+            If priority model was not specified, then we better not
+            have a thread pool with lanes since this configuration
+            does not make sense.
+
             If priority banded connections are set, make sure that:
+
+             0. A priority model was specified.
 
              1. There is at least one band.
 
@@ -486,6 +495,12 @@ Thu Aug 16 17:55:14 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
             relevant policies at the ORB level should be merged with
             the policies passed to create_POA() by the user.
 
+	* tao/PortableServer/POA_Cached_Policies.cpp
+	  (TAO_POA_Cached_Policies): Changed the default value of
+	  <priority_model_> from
+	  TAO_POA_Cached_Policies::CLIENT_PROPAGATED to
+	  TAO_POA_Cached_Policies::NOT_SPECIFIED.
+
 	* tao/PortableServer/Default_Policy_Validator.cpp: 
 	  
 	  - (merge_policies_impl): No-op method was added.
@@ -560,7 +575,8 @@ Thu Aug 16 17:55:14 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
           - server.cpp: Associated the thread pools with POAs.
             Produced three servants, one that uses the default thread
             pool, the second uses an RT thread pool without lanes, and
-            the third that uses an RT thread pool with lanes.
+            the third that uses an RT thread pool with lanes. Also
+            added the use of CLIENT_PROPAGATED priority model.
 
 	  - client.cpp: Changed the default ior file from <ior> to
 	    <ior_1>.
@@ -681,6 +697,9 @@ Thu Aug 16 17:55:14 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 	    directives in this file that were no longer needed.
 
 	  - README: Updated to reflect changes in the test.
+
+	* tests/RTCORBA/check_supported_priorities.cpp: New file for
+	  checking support for multiple priority levels.
 
 	* tests/RTCORBA/RTCORBA_tests.dsw: 
 	* tests/RTCORBA/Makefile: 
