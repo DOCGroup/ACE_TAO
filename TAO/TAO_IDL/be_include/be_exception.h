@@ -1,4 +1,4 @@
-#if !defined(BE_EXCEPTION_H)
+#if !defined (BE_EXCEPTION_H)
 #define BE_EXCEPTION_H
 
 /*
@@ -6,7 +6,7 @@
  */
 class be_exception : public virtual AST_Exception,
                      public virtual be_scope,
-                     public virtual be_decl
+                     public virtual be_type
                        
 {
 public:
@@ -40,14 +40,20 @@ public:
   virtual int gen_typecode (void);
   // generate the typecode
 
+  virtual int gen_encapsulation (void);
+  // encapsulation for parameters
+
+  virtual long tc_size (void);
+  // return typecode size
+
   virtual long tc_encap_len (void);
-  // return the total byte length of ourselves represented as an encapsulation
+  // return length of encapsulation
 
   virtual int member_count (void);
   // return the count of members
 
   // Narrowing
-  DEF_NARROW_METHODS3 (be_exception, AST_Exception, be_scope, be_decl);
+  DEF_NARROW_METHODS3 (be_exception, AST_Exception, be_scope, be_type);
   DEF_NARROW_FROM_DECL (be_exception);
   DEF_NARROW_FROM_SCOPE (be_exception);
 
@@ -61,4 +67,4 @@ private:
   // number of members
 };
 
-#endif
+#endif // end of if !defined (...)

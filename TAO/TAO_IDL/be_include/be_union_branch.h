@@ -53,8 +53,8 @@ public:
   virtual int gen_server_inline (void);
   // Generates the server-side inlines for the union branch
 
-  virtual int gen_typecode (void);
-  // generate the typecode
+  virtual int gen_encapsulation (void);
+  // generate the encapsulation
 
   virtual long tc_encap_len (void);
   // return the total byte length of ourselves represented as an encapsulation

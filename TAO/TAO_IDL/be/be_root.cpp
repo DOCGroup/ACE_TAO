@@ -39,9 +39,6 @@ be_root::be_root (UTL_ScopedName *n, UTL_StrList *p)
   // computes the fully scoped name
   compute_fullname ();
 
-  // computes the fully scoped typecode name
-  compute_tc_name ();
-
   // compute the flattened fully scoped name 
   compute_flatname ();
 }
@@ -111,7 +108,7 @@ int be_root::gen_client_header (void)
 {
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-  cg->push (TAO_CodeGen::TAO_ROOT); // set the code generation state
+  cg->push (TAO_CodeGen::TAO_ROOT_CH); // set the code generation state
 
   // open the client-side header file
   if (cg->client_header (idl_global->be_get_client_hdr_fname ()) == -1)
@@ -139,7 +136,7 @@ int be_root::gen_client_stubs (void)
 {
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-  cg->push (TAO_CodeGen::TAO_ROOT); // set the code generation state
+  cg->push (TAO_CodeGen::TAO_ROOT_CS); // set the code generation state
 
   // open the client-side stub file
   if (cg->client_stubs (idl_global->be_get_client_stub_fname ()) == -1)
@@ -148,8 +145,17 @@ int be_root::gen_client_stubs (void)
       return -1;
     }
   // delegate the task of code generation to the scope
-  return be_scope::gen_client_stubs ();
+  if (be_scope::gen_client_stubs () == -1)
+    {
+      ACE_ERROR ((LM_ERROR, "be_root: code generation for scope failed\n"));
+      return -1;
+    }
+  cg->pop ();
 
+  // at this point, we must be in the initial state
+  //  ACE_ASSERT (cg->state () == TAO_CodeGen::TAO_INITIAL);
+
+  return 0;
 }
 
 // Generates the client-side inlines for the root
@@ -157,7 +163,7 @@ int be_root::gen_client_inline (void)
 {
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-  cg->push (TAO_CodeGen::TAO_ROOT); // set the code generation state
+  cg->push (TAO_CodeGen::TAO_ROOT_CI); // set the code generation state
 
   // open the client-side inline file
   if (cg->client_inline (idl_global->be_get_client_inline_fname ()) == -1)
@@ -166,8 +172,17 @@ int be_root::gen_client_inline (void)
       return -1;
     }
   // delegate the task of code generation to the scope
-  return be_scope::gen_client_inline ();
+  if (be_scope::gen_client_inline () == -1)
+    {
+      ACE_ERROR ((LM_ERROR, "be_root: code generation for scope failed\n"));
+      return -1;
+    }
+  cg->pop ();
 
+  // at this point, we must be in the initial state
+  //  ACE_ASSERT (cg->state () == TAO_CodeGen::TAO_INITIAL);
+
+  return 0;
 }
 
 // Generates the server-side header information for the root
@@ -175,7 +190,7 @@ int be_root::gen_server_header (void)
 {
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-  cg->push (TAO_CodeGen::TAO_ROOT); // set the code generation state
+  cg->push (TAO_CodeGen::TAO_ROOT_SH); // set the code generation state
 
   // open the server-side header file
   if (cg->server_header (idl_global->be_get_server_hdr_fname ()) == -1)
@@ -191,6 +206,11 @@ int be_root::gen_server_header (void)
       return -1;
     }
 
+  cg->pop ();
+
+  // at this point, we must be in the initial state
+  //  ACE_ASSERT (cg->state () == TAO_CodeGen::TAO_INITIAL);
+
   (void) cg->end_server_header (); // generate the last #endif statement
   return 0;
 }
@@ -200,7 +220,7 @@ int be_root::gen_server_skeletons (void)
 {
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-  cg->push (TAO_CodeGen::TAO_ROOT); // set the code generation state
+  cg->push (TAO_CodeGen::TAO_ROOT_SS); // set the code generation state
 
   // open the server-side skeleton file
   if (cg->server_skeletons (idl_global->be_get_server_skeleton_fname ()) == -1)
@@ -209,7 +229,17 @@ int be_root::gen_server_skeletons (void)
       return -1;
     }
   // delegate the task of code generation to the scope
-  return be_scope::gen_server_skeletons ();
+  if (be_scope::gen_server_skeletons () == -1)
+    {
+      ACE_ERROR ((LM_ERROR, "be_root: code generation for scope failed\n"));
+      return -1;
+    }
+  cg->pop ();
+
+  // at this point, we must be in the initial state
+  //  ACE_ASSERT (cg->state () == TAO_CodeGen::TAO_INITIAL);
+
+  return 0;
 }
 
 // Generates the server-side inlines for the root
@@ -217,7 +247,7 @@ int be_root::gen_server_inline (void)
 {
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-  cg->push (TAO_CodeGen::TAO_ROOT); // set the code generation state
+  cg->push (TAO_CodeGen::TAO_ROOT_SI); // set the code generation state
 
   // open the server-side inline file
   if (cg->server_inline (idl_global->be_get_server_inline_fname ()) == -1)
@@ -226,8 +256,17 @@ int be_root::gen_server_inline (void)
       return -1;
     }
   // delegate the task of code generation to the scope
-  return be_scope::gen_server_inline ();
+  if (be_scope::gen_server_inline () == -1)
+    {
+      ACE_ERROR ((LM_ERROR, "be_root: code generation for scope failed\n"));
+      return -1;
+    }
+  cg->pop ();
 
+  // at this point, we must be in the initial state
+  //  ACE_ASSERT (cg->state () == TAO_CodeGen::TAO_INITIAL);
+
+  return 0;
 }
 
 // We had to provide these since the AST_Root::fe_* method was setting the

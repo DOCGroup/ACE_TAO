@@ -62,8 +62,8 @@ public:
   virtual int gen_typecode (void);
   // generate the typecode
 
-  const char *const gen_corba_mapping (void);
-  // helper for all the above virtual methods
+  virtual long tc_size (void);
+  // return typecode size
 
   // Narrowing
   DEF_NARROW_METHODS2 (be_predefined_type, AST_PredefinedType, be_type);

@@ -41,9 +41,6 @@ be_constant::be_constant (AST_Expression::ExprType et,
   // computes the fully scoped name
   compute_fullname ();
 
-  // computes the fully scoped typecode name
-  compute_tc_name ();
-
   // compute the flattened fully scoped name 
   compute_flatname ();
 }
@@ -62,7 +59,7 @@ be_constant::gen_client_header (void)
 
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-  cg->push (TAO_CodeGen::TAO_CONSTANT);
+  cg->push (TAO_CodeGen::TAO_CONSTANT_CH);
 
   ch = cg->client_header ();
 
@@ -95,7 +92,7 @@ be_constant::gen_client_stubs (void)
 
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-  cg->push (TAO_CodeGen::TAO_CONSTANT);
+  cg->push (TAO_CodeGen::TAO_CONSTANT_CS);
 
   cs = cg->client_stubs ();
 

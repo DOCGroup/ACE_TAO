@@ -121,6 +121,7 @@ be_sequence::gen_client_header (void)
   TAO_NL  nl;        // end line
   be_type *bt;       // type node
   be_decl *d;        // temporary
+  be_state *s;       // state based code gen object
 
   if (!this->cli_hdr_gen_)
     {
@@ -146,6 +147,7 @@ be_sequence::gen_client_header (void)
           d = be_decl::narrow_from_decl (ScopeAsDecl (this->defined_in ()));
         }
 
+      // see if we have already generated a defn for ourselves
       if (!d->lookup_seq_name (this->local_name ()))
         {
           d->add_seq_name (this->local_name ());
@@ -163,19 +165,27 @@ be_sequence::gen_client_header (void)
               return -1;
             }
 
-          cg->push (TAO_CodeGen::TAO_SEQUENCE_BASE); // set current code gen state
+          cg->push (TAO_CodeGen::TAO_SEQUENCE_BASE_CH); // set current code gen
+                                                        // state
+          cg->node (this);
+
           // if the base is itself a sequence, first generate its
           // definition. We will have to do this even for a sequence of
           // "strings".
-          if (bt->be_type::gen_client_header () == -1)
+          if (bt->node_type () == AST_Decl::NT_sequence)
             {
-              ACE_ERROR ((LM_ERROR, "be_sequence: seq base type client hdr gen failed\n"));
-              return -1;
+              if (bt->gen_client_header () == -1)
+                {
+                  ACE_ERROR ((LM_ERROR, "be_sequence: seq base type client hdr gen failed\n"));
+                  return -1;
+                }
             }
           cg->pop ();
 
           // now generate the sequence body
-          cg->push (TAO_CodeGen::TAO_SEQUENCE_BODY);
+          cg->push (TAO_CodeGen::TAO_SEQUENCE_BODY_CH);
+          s = cg->make_state ();
+
           // generate constructors
           ch->indent ();
           *ch << this->local_name () << " (void); // default constructor" << nl;
@@ -193,8 +203,9 @@ be_sequence::gen_client_header (void)
             }
 
           *ch << "\t";
-          bt->be_type::gen_client_header (); // get the type
-          *ch << " *value, CORBA::Boolean release=CORBA::B_FALSE);" << nl;
+          if (s->gen_code (bt, this) == -1)
+            return -1;
+          *ch << " value, CORBA::Boolean release=CORBA::B_FALSE);" << nl;
           *ch << local_name () << "(const " << local_name () << 
             " &); // copy constructor" << nl;
           *ch << "~" << this->local_name () << " (void);" << nl;
@@ -203,34 +214,30 @@ be_sequence::gen_client_header (void)
           *ch << "CORBA::ULong maximum (void) const;" << nl;
           *ch << "void length (CORBA::ULong);" << nl;
           *ch << "CORBA::ULong length (void) const;" << nl;
-          bt->be_type::gen_client_header ();
+          if (s->gen_code (bt, this) == -1)
+            return -1;
           *ch << " &operator[] (CORBA::ULong index);" << nl;
           *ch << "const ";
-          bt->be_type::gen_client_header ();
+          if (s->gen_code (bt, this) == -1)
+            return -1;
           *ch << " &operator[] (CORBA::ULong index) const;" << nl; 
 
           // generate the static allocbuf and freebuf methods
           *ch << "static ";
-          if (bt->node_type () == AST_Decl::NT_string)
-            *ch << "char *";
-          else
-            bt->be_type::gen_client_header ();
+          if (s->gen_code (bt, this) == -1)
+            return -1;
           *ch << " *allocbuf (CORBA::ULong nelems);" << nl;
           *ch << "static void freebuf (";
-          if (bt->node_type () == AST_Decl::NT_string)
-            *ch << "char *";
-          else
-            bt->be_type::gen_client_header ();
+          if (s->gen_code (bt, this) == -1)
+            return -1;
           *ch << " *);\n" ;
           ch->decr_indent ();
           *ch << "private:\n";
           ch->incr_indent ();
           *ch << "CORBA::ULong maximum_;" << nl;
           *ch << "CORBA::ULong length_;" << nl;
-          if (bt->node_type () == AST_Decl::NT_string)
-            *ch << "char *";
-          else
-            bt->be_type::gen_client_header ();
+          if (s->gen_code (bt, this) == -1)
+            return -1;
           *ch << " *buffer_;" << nl;
           *ch << "CORBA::Boolean release_;\n";
           ch->decr_indent ();
@@ -247,7 +254,7 @@ be_sequence::gen_client_header (void)
       // ourself). The children have length greater than 2. Thus, if our name
       // length is 2 or less, we are outermost and our typecode decl must be
       // extern, else we are defined static inside the enclosing scope.
-      if (this->name ()->length () > 2)
+      if (this->is_nested ())
         {
           // we have a scoped name
           ch->indent ();
@@ -269,6 +276,45 @@ be_sequence::gen_client_header (void)
 int
 be_sequence::gen_client_stubs (void)
 {
+  TAO_OutStream *cs; // output stream
+  TAO_NL  nl;        // end line
+
+
+  if (!this->cli_stub_gen_)
+    {
+      // retrieve a singleton instance of the code generator
+      TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+      cg->push (TAO_CodeGen::TAO_SEQUENCE_BODY_CS); // set current code gen state
+
+      cs = cg->client_stubs ();
+      // pass info
+      cg->outstream (cs);
+      cg->node (this);
+      // generate the typecode information here
+      cs->indent (); // start from current indentation level
+      *cs << "static const CORBA::Long _oc_" << this->flatname () << "[] =" <<
+        nl; 
+      *cs << "{\n";
+      cs->incr_indent (0);
+      if (this->gen_encapsulation () == -1)
+        {
+          ACE_ERROR ((LM_ERROR, "be_sequence:Error generating encapsulation\n\n"));
+          return -1;
+        }
+      cs->decr_indent ();
+      *cs << "};" << nl;
+
+      *cs << "static CORBA::TypeCode _tc__tc_" << this->flatname () << 
+        " (CORBA::tk_sequence, sizeof (_oc_" <<  this->flatname () << 
+        "), (unsigned char *) &_oc_" << this->flatname () << 
+        ", CORBA::B_FALSE);" << nl;
+      *cs << "CORBA::TypeCode_ptr " << this->tc_name () << " = &_tc__tc_" <<
+        this->flatname () << ";\n\n";
+
+      cg->pop ();
+      this->cli_stub_gen_ = 1;
+
+    }
   return 0;
 }
 
@@ -308,7 +354,7 @@ be_sequence::gen_client_inline (void)
       bt = be_type::narrow_from_decl (this->base_type ());
       if (bt->node_type () == AST_Decl::NT_sequence)
         {
-          if (bt->be_type::gen_client_inline () == -1)
+          if (bt->gen_client_inline () == -1)
             {
               ACE_ERROR ((LM_ERROR, 
                 "be_sequence: inline code gen for base type seq failed\n"));
@@ -327,18 +373,91 @@ be_sequence::gen_server_inline (void)
   // nothing to be done
   return 0;
 }
+// generate typecode.
+// Typecode for sequences comprises the enumerated value followed by the
+// encapsulation of the parameters
 
-// generates the typecode
 int
 be_sequence::gen_typecode (void)
 {
+  TAO_OutStream *cs; // output stream
+  TAO_NL  nl;        // end line
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+
+  cs = cg->client_stubs ();
+  cs->indent (); // start from whatever indentation level we were at
+
+  *cs << "CORBA::tk_sequence, // typecode kind" << nl;
+  *cs << this->tc_size () << ", // encapsulation length\n";
+  // now emit the encapsulation
+  return this->gen_encapsulation ();
+}
+
+// generate encapsulation
+// An encapsulation for ourselves will be necessary when we are part of some
+// other IDL type and a typecode for that other type is being generated. This
+// will comprise our typecode kind. IDL types with parameters will additionally
+// have the encapsulation length and the entire typecode description
+
+int
+be_sequence::gen_encapsulation (void)
+{
+  TAO_OutStream *os; // output stream
+  TAO_NL  nl;        // end line
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+  be_type *bt; // base type
+
+  os = cg->client_stubs ();
+  os->indent (); // start from the current indentation level
+  
+  // XXXASG - byte order must be based on what m/c we are generating code -
+  // TODO 
+  *os << "0, // byte order" << nl; 
+
+  // emit typecode of element type
+  bt = be_type::narrow_from_decl (this->base_type ());
+  if (!bt || (bt->gen_typecode () == -1))
+    {
+      ACE_ERROR ((LM_ERROR, "be_sequence::gen_typecode - bad base type\n"));
+      return -1;
+    }
+
+  //  emit the length
+  os->indent ();
+  *os << this->max_size () << ",\n";
   return 0;
+}
+
+// compute typecode size
+long
+be_sequence::tc_size (void)
+{
+  // 4 bytes for enumeration, 4 bytes for storing encap length val, followed by the
+  // actual encapsulation length
+  return 4 + 4 + this->tc_encap_len ();
 }
 
 long
 be_sequence::tc_encap_len (void)
 {
-  return 0;
+  if (this->encap_len_ == -1) // not computed yet
+    {
+      be_type *bt; // base type
+
+      this->encap_len_ = 4;  // holds the byte order flag
+      // add the encapsulation length of our base type
+      bt = be_type::narrow_from_decl (this->base_type ());
+      if (!bt)
+        {
+          ACE_ERROR ((LM_ERROR, 
+                      "be_sequence::tc_encap_len - bad base type\n")); 
+          return 0;
+        }
+      this->encap_len_ += bt->tc_encap_len ();
+      this->encap_len_ += 4; // to hold the max size 
+
+    }
+  return this->encap_len_;
 }
 
 // Narrowing

@@ -34,6 +34,50 @@ TAO_CodeGen::~TAO_CodeGen (void)
   delete [] state_;
 }
 
+// factory method
+be_state *
+TAO_CodeGen::make_state (void)
+{
+  switch (this->state ())
+    {
+    case TAO_STRUCT_CH:
+      return TAO_BE_STATE_STRUCT_CH::instance ();
+    case TAO_UNION_DISCTYPEDEFN_CH:
+      return TAO_BE_STATE_UNION_DISCTYPEDEFN_CH::instance ();
+    case TAO_UNION_DISCTYPEDEFN_CI:
+      return TAO_BE_STATE_UNION_DISCTYPEDEFN_CI::instance ();
+    case TAO_UNION_PUBLIC_CH:
+      return TAO_BE_STATE_UNION_PUBLIC_CH::instance ();
+    case TAO_UNION_PUBLIC_CI:
+      return TAO_BE_STATE_UNION_PUBLIC_CI::instance ();
+    case TAO_UNION_PRIVATE_CH:
+      return TAO_BE_STATE_UNION_PRIVATE_CH::instance ();
+    case TAO_OPERATION_CH:
+    case TAO_OPERATION_CS:
+    case TAO_OPERATION_SH:
+    case TAO_OPERATION_SS:
+      return TAO_BE_STATE_OPERATION::instance ();
+    case TAO_ARGUMENT_CH:
+    case TAO_ARGUMENT_CS:
+    case TAO_ARGUMENT_SH:
+    case TAO_ARGUMENT_SS:
+      return TAO_BE_STATE_ARGUMENT::instance ();
+    case TAO_TYPEDEF_CH:
+    case TAO_TYPEDEF_CS:
+      return TAO_BE_STATE_TYPEDEF::instance ();
+    case TAO_ARRAY_DEFN_CH:
+    case TAO_ARRAY_OTHER_CH:
+    case TAO_ARRAY_DEFN_CI:
+      return TAO_BE_STATE_ARRAY::instance ();
+    case TAO_SEQUENCE_BASE_CH:
+    case TAO_SEQUENCE_BASE_CI:
+    case TAO_SEQUENCE_BODY_CH:
+    case TAO_SEQUENCE_BODY_CI:
+      return TAO_BE_STATE_SEQUENCE::instance ();
+    }
+  return 0;
+}
+
 // set the client header stream
 int 
 TAO_CodeGen::client_header (const char *fname)
@@ -48,7 +92,7 @@ TAO_CodeGen::client_header (const char *fname)
       return -1;
     }
 
-  if (this->client_header_->open (fname) == -1)
+  if (this->client_header_->open (fname, TAO_OutStream::TAO_CLI_HDR) == -1)
     return -1;
   else
     {
@@ -102,7 +146,7 @@ TAO_CodeGen::client_stubs (const char *fname)
       return -1;
     }
 
-  if (this->client_stubs_->open (fname) == -1)
+  if (this->client_stubs_->open (fname, TAO_OutStream::TAO_CLI_IMPL) == -1)
     {
       return -1;
     }
@@ -140,7 +184,7 @@ TAO_CodeGen::client_inline (const char *fname)
       return -1;
     }
 
-  return this->client_inline_->open (fname);
+  return this->client_inline_->open (fname, TAO_OutStream::TAO_CLI_INL);
 }
 
 // get the client inline stream
@@ -164,7 +208,7 @@ TAO_CodeGen::server_header (const char *fname)
       return -1;
     }
 
-  if (this->server_header_->open (fname) == -1)
+  if (this->server_header_->open (fname, TAO_OutStream::TAO_SVR_HDR) == -1)
     return -1;
   else
     {
@@ -222,7 +266,7 @@ TAO_CodeGen::server_skeletons (const char *fname)
       return -1;
     }
 
-  if (this->server_skeletons_->open (fname) == -1)
+  if (this->server_skeletons_->open (fname, TAO_OutStream::TAO_SVR_IMPL) == -1)
     {
       return -1;
     }
@@ -261,7 +305,7 @@ TAO_CodeGen::server_inline (const char *fname)
       return -1;
     }
 
-  return this->server_inline_->open (fname);
+  return this->server_inline_->open (fname, TAO_OutStream::TAO_SVR_INL);
 }
 
 // get the server inline stream
@@ -351,12 +395,12 @@ TAO_CodeGen::reset (void)
 }
 
 void
-TAO_CodeGen::node (AST_Decl *n)
+TAO_CodeGen::node (be_decl *n)
 {
   this->node_ = n;
 }
 
-AST_Decl *
+be_decl *
 TAO_CodeGen::node (void)
 {
   return this->node_;

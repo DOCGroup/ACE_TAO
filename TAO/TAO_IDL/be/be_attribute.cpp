@@ -40,9 +40,6 @@ be_attribute::be_attribute (idl_bool ro, AST_Type *ft, UTL_ScopedName *n,
   // computes the fully scoped name
   compute_fullname ();
 
-  // computes the fully scoped typecode name
-  compute_tc_name ();
-
   // compute the flattened fully scoped name 
   compute_flatname ();
 }
@@ -54,17 +51,21 @@ be_attribute::gen_client_header (void)
 
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-  cg->push (TAO_CodeGen::TAO_ATTRIBUTE);
+  cg->push (TAO_CodeGen::TAO_ATTRIBUTE_CH);
 
   cg->node (this); // pass oursleves thru singleton
+  cg->outstream (cg->client_header ());
 
   bt = be_type::narrow_from_decl (this->field_type ());
+#if 0
+  // XXXASG
   if ((bt == NULL) ||
-      ((bt != NULL) && (bt->be_type::gen_client_header () == -1)))
+      ((bt != NULL) && (bt->gen_type () == -1)))
     {
       ACE_ERROR ((LM_ERROR, "be_attribute: error generating mapping\n"));
       return -1;
     }
+#endif
 
   cg->pop ();  // restore previous state
   return 0;

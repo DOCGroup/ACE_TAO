@@ -77,29 +77,29 @@ be_array::gen_client_header (void)
   TAO_NL  nl;        // end line
   be_type *bt;       // our base type
   be_decl *d;        // enclosing scope
+  be_state *s;       // state based code gen object
 
   if (!this->cli_hdr_gen_) // not already generated
     {
       // retrieve a singleton instance of the code generator
       TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-      cg->push (TAO_CodeGen::TAO_ARRAY_DEFN); // set current code gen state
+      cg->push (TAO_CodeGen::TAO_ARRAY_DEFN_CH); // set current code gen state
 
-      ch = cg->client_header ();
-      
+      ch = cg->client_header (); // retrieve client hdr stream
+      cg->outstream (ch); // set client hdr as the current stream
+      cg->node (this);    // pass ourselves for type gen
+
+      s = cg->make_state (); // get the state-based code generation object
+
       bt = be_type::narrow_from_decl (this->base_type ());
-      if (bt == NULL)
+
+      // generate our base type
+      if (!s || !bt || (s->gen_code (bt, this) == -1))
         {
-          ACE_ERROR ((LM_ERROR, "be_array: bad type node\n"));
+          ACE_ERROR ((LM_ERROR, "be_array: type generation failed\n"));
           return -1;
         }
 
-      // if our base type is VARIABLE length, then we are variable length too
-
-      if (bt->size_type () == be_decl::VARIABLE)
-        this->size_type (be_decl::VARIABLE);
-
-      // generate our base type
-      bt->be_type::gen_client_header ();
       // print our name
       *ch << " " <<  this->local_name ();
       // print our dimensions
@@ -123,12 +123,24 @@ be_array::gen_client_header (void)
             }
         }
       *ch << ";" << nl;
+
+      // if our base type is VARIABLE length, then we are variable length too
+      this->size_type (bt->size_type ());
+
       cg->pop ();
 
-      cg->push (TAO_CodeGen::TAO_ARRAY_OTHER); // rest of the array defn
-      // now generate the slice definition
+      cg->push (TAO_CodeGen::TAO_ARRAY_OTHER_CH); // rest of the array defn
+      s = cg->make_state ();
+
       *ch << "typedef ";
-      bt->be_type::gen_client_header ();
+
+      // now generate the slice definition
+      if (!s || !bt || (s->gen_code (bt, this) == -1))
+        {
+          ACE_ERROR ((LM_ERROR, "be_array: type generation failed\n"));
+          return -1;
+        }
+
       *ch << " " <<  this->local_name () << "_slice";
       // print dimensions except first one
       for (i = 1; i < this->n_dims (); i++)
@@ -143,27 +155,17 @@ be_array::gen_client_header (void)
 
       // memory management functions
       // first find if we are inside a scope
-      if (this->defined_in ())
-        {
-          d = be_decl::narrow_from_decl (ScopeAsDecl (this->defined_in ()));
-          if (d->node_type () == AST_Decl::NT_root)
-            d = 0; // we are in the root's scope
-        }
-      else
-        {
-          d = 0;
-        }
-
-      if (d) // we were defined inside a scope. Hence the memory management
-             // functions become static members of the enclosing class
+      if (this->is_nested ()) // we were defined inside a scope. Hence the
+        // memory management 
+        // functions become static members of the enclosing class
         *ch << "static ";
       *ch <<  this->local_name () << "_slice *" << this->local_name () <<
         "_alloc (void);" << nl;
-      if (d)
+      if (this->is_nested ())
         *ch << "static ";
       *ch <<  this->local_name () << "_slice *" << this->local_name () <<
         "_dup (const " << this->local_name () << "_slice *);" << nl;
-      if (d)
+      if (this->is_nested ())
         *ch << "static ";
       *ch << "void " << this->local_name () << "_free (" << this->local_name ()
           << "_slice *);\n\n";
@@ -178,7 +180,7 @@ be_array::gen_client_header (void)
       // ourself). The children have length greater than 2. Thus, if our name
       // length is 2 or less, we are outermost and our typecode decl must be
       // extern, else we are defined static inside the enclosing scope.
-      if (this->name ()->length () > 2)
+      if (this->is_nested ())
         {
           // we have a scoped name
           ch->indent ();
@@ -201,6 +203,45 @@ be_array::gen_client_header (void)
 int
 be_array::gen_client_stubs (void)
 {
+  TAO_OutStream *cs; // output stream
+  TAO_NL  nl;        // end line
+
+
+  if (!this->cli_stub_gen_)
+    {
+      // retrieve a singleton instance of the code generator
+      TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+      cg->push (TAO_CodeGen::TAO_SEQUENCE_BODY_CS); // set current code gen state
+
+      cs = cg->client_stubs ();
+      // pass info
+      cg->outstream (cs);
+      cg->node (this);
+      // generate the typecode information here
+      cs->indent (); // start from current indentation level
+      *cs << "static const CORBA::Long _oc_" << this->flatname () << "[] =" <<
+        nl; 
+      *cs << "{\n";
+      cs->incr_indent (0);
+      if (this->gen_encapsulation () == -1)
+        {
+          ACE_ERROR ((LM_ERROR, "be_array:Error generating encapsulation\n\n"));
+          return -1;
+        }
+      cs->decr_indent ();
+      *cs << "};" << nl;
+
+      *cs << "static CORBA::TypeCode _tc__tc_" << this->flatname () << 
+        " (CORBA::tk_sequence, sizeof (_oc_" <<  this->flatname () << 
+        "), (unsigned char *) &_oc_" << this->flatname () << 
+        ", CORBA::B_FALSE);" << nl;
+      *cs << "CORBA::TypeCode_ptr " << this->tc_name () << " = &_tc__tc_" <<
+        this->flatname () << ";\n\n";
+
+      cg->pop ();
+      this->cli_stub_gen_ = 1;
+
+    }
   return 0;
 }
 
@@ -227,71 +268,131 @@ be_array::gen_client_inline (void)
       TAO_NL  nl;        // end line
       be_type *bt;       // our base type
       be_decl *d;        // enclosing scope
+      be_state *s;       // state based code gen obj
 
       // retrieve a singleton instance of the code generator
       TAO_CodeGen *cg = TAO_CODEGEN::instance ();
   
       ci = cg->client_inline ();
       cg->outstream (ci);
+      cg->node (this);
+      cg->push (TAO_CodeGen::TAO_ARRAY_DEFN_CI);
+      s = cg->make_state ();
 
+      // retrieve our base type
       bt = be_type::narrow_from_decl (this->base_type ());
-      if (this->defined_in ())
-        {
-          d = be_decl::narrow_from_decl (ScopeAsDecl (this->defined_in ()));
-        }
-      else
-        {
-          d = 0;
-        }
 
       // first define the _alloc, _dup and _free methods
-      ci->indent ();
-      *ci << "ACE_INLINE " << this->fullname () << "_slice *" << nl;
-      if ((d) && (d->node_type () != AST_Decl::NT_root))
+      // If we are defined inside some scope, these methods become static
+      // members of the enclosing scope
+
+      ci->indent (); // start from current indentation
+
+      // alloc method
+      *ci << "ACE_INLINE " << this->name () << "_slice *" << nl;
+      *ci << this->name () << "_alloc (void)" << nl;
+      *ci << "{\n";
+      ci->incr_indent ();
+      *ci << "new ";
+      if (s->gen_code (bt, this) == -1)
+        return -1;
+      
+      ci->decr_indent ();
+      *ci << "}\n\n";
+      
+      // dup method
+      *ci << "ACE_INLINE " << this->name () << "_slice *" << nl;
+      *ci << this->name () << "_dup (" << this->name () << "_slice * s)" << nl;
+      *ci << "{\n";
+      ci->incr_indent ();
+      *ci << this->name () << "_slice *temp;" << nl;
+      *ci << "temp = " << this->name () << "_alloc ();" << nl;
+      *ci << "// copy each individual elements" << nl;
+      for (i = 0; i < this->n_dims (); i++)
         {
-          be_type *bt; // base type
-
-          bt = be_type::narrow_from_decl (this->base_type ());
-
-          // we are in a scope but not that of the ROOT, then these methods are
-          // static methods on the class that encloses it
-
-          // alloc method
-          *ci << "ACE_INLINE " << this->name () << "_slice *" << nl;
-          *ci << d->name () << "::" << this->local_name () << "_alloc (void)" <<
-            nl;
-          *ci << "{\n";
-          ci->incr_indent ();
-          *ci << "new ";
-          bt->be_type::gen_client_header ();
-      
-          ci->decr_indent ();
-          *ci << "}\n\n";
-      
-          // dup method
-          *ci << d->name () << "::" << this->local_name () << "_dup (void)" <<
-            nl;
-          *ci << "{\n";
-          ci->incr_indent ();
-          *ci << this->name () << "_slice *temp;" << nl;
-          *ci << "temp = " << this->name () << "_alloc ();" << nl;
-          *ci << "// copy each individual elements" << nl;
-          ci->decr_indent ();
-          *ci << "}\n\n";
-      
-          // free method
-          *ci << d->name () << "::" << this->local_name () << "_free (" <<
-            this->name () << "_slice *s)" << nl;
-          *ci << "{\n";
-          ci->incr_indent ();
-          *ci << "delete [] s;\n";
-          ci->decr_indent ();
-          *ci << "}\n\n";
+          AST_Expression *expr = this->dims ()[i]; // retrieve the ith
+                                                   // dimension value
+          if ((expr == NULL) || ((expr != NULL) && (expr->ev () == NULL)))
+            {
+              ACE_ERROR ((LM_ERROR, "be_array: bad dimensions\n\n"));
+              return -1;
+            }
+          if (expr->ev ()->et == AST_Expression::EV_ulong)
+            {
+              // generate a loop for each dimension
+              *ci << "for (CORBA::ULong i" << i << " = 0; i" << i << " < " <<
+                expr->ev ()->u.ulval << "; i" << i << "++)\n"; 
+              ci->incr_indent ();
+            }
+          else
+            {
+              ACE_ERROR ((LM_ERROR, "be_array: bad dimension value\n"));
+              return -1;
+            }
         }
-      else
+
+      // the code below looks terribly complex. However, all it is trying to do
+      // is to generate code of the form 
+      // temp [i0][i1].... = 
+      *ci << "temp ";
+      for (i = 0; i < this->n_dims (); i++)
         {
+          AST_Expression *expr = this->dims ()[i]; // retrieve the ith
+                                                   // dimension value
+          if ((expr == NULL) || ((expr != NULL) && (expr->ev () == NULL)))
+            {
+              ACE_ERROR ((LM_ERROR, "be_array: bad dimensions\n\n"));
+              return -1;
+            }
+          if (expr->ev ()->et == AST_Expression::EV_ulong)
+            {
+              *ci << "[" << ((int)expr->ev ()->u.ulval) << "]";
+            }
+          else
+            {
+              ACE_ERROR ((LM_ERROR, "be_array: bad dimension value\n"));
+              return -1;
+            }
+        }
+      *ci << " = s";
+      for (i = 0; i < this->n_dims (); i++)
+        {
+          AST_Expression *expr = this->dims ()[i]; // retrieve the ith
+                                                   // dimension value
+          if ((expr == NULL) || ((expr != NULL) && (expr->ev () == NULL)))
+            {
+              ACE_ERROR ((LM_ERROR, "be_array: bad dimensions\n\n"));
+              return -1;
+            }
+          if (expr->ev ()->et == AST_Expression::EV_ulong)
+            {
+              *ci << "[" << ((int)expr->ev ()->u.ulval) << "]";
+            }
+          else
+            {
+              ACE_ERROR ((LM_ERROR, "be_array: bad dimension value\n"));
+              return -1;
+            }
+        }
+      *ci << ";\n";
+      for (i = 0; i < this->n_dims (); i++)
+        {
+          // decrement indentation as many times as the number of dimensions
+          ci->decr_indent ();
         }
 
+      ci->decr_indent ();
+      *ci << "}\n\n";
+      
+      // free method
+      *ci << this->name () << "_free (" << this->name () << "_slice *s)" << nl;
+      *ci << "{\n";
+      ci->incr_indent ();
+      *ci << "delete [] s;\n";
+      ci->decr_indent ();
+      *ci << "}\n\n";
+
+      // emit implementations of methods of the _var, _out, and _forany classes
       if (this->gen_var_impl () == -1)
         {
           ACE_ERROR ((LM_ERROR, "be_array: _var impl code gen failed\n"));
@@ -309,11 +410,13 @@ be_array::gen_client_inline (void)
         }
 
       // generate client inline for base type
-      if (bt->be_type::gen_client_inline () == -1)
+      if (bt->gen_client_inline () == -1)
         {
           ACE_ERROR ((LM_ERROR, "be_array: base type inline code gen failed\n"));
           return -1;
         }
+
+      cg->pop ();
       this->cli_inline_gen_ = I_TRUE;
     }
   
@@ -591,19 +694,91 @@ be_array::gen_forany_impl (void)
   *ci << "return this->val;\n";
   ci->decr_indent ();
   *ci << "}\n\n";
+
   return 0;
 }
 
 int
 be_array::gen_typecode (void)
 {
+  TAO_OutStream *cs; // output stream
+  TAO_NL  nl;        // end line
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+
+  cs = cg->client_stubs ();
+  cs->indent (); // start from whatever indentation level we were at
+
+  *cs << "CORBA::tk_array, // typecode kind" << nl;
+  *cs << this->tc_size () << ", // encapsulation length\n";
+  // now emit the encapsulation
+  return this->gen_encapsulation ();
+}
+
+// generate encapsulation
+// An encapsulation for ourselves will be necessary when we are part of some
+// other IDL type and a typecode for that other type is being generated. This
+// will comprise our typecode kind. IDL types with parameters will additionally
+// have the encapsulation length and the entire typecode description
+
+int
+be_array::gen_encapsulation (void)
+{
+  TAO_OutStream *os; // output stream
+  TAO_NL  nl;        // end line
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+  be_type *bt; // base type
+
+  os = cg->client_stubs ();
+  os->indent (); // start from the current indentation level
+  
+  // XXXASG - byte order must be based on what m/c we are generating code -
+  // TODO 
+  *os << "0, // byte order" << nl; 
+
+  // emit typecode of element type
+  bt = be_type::narrow_from_decl (this->base_type ());
+  if (!bt || (bt->gen_typecode () == -1))
+    {
+      ACE_ERROR ((LM_ERROR, "be_sequence::gen_typecode - bad base type\n"));
+      return -1;
+    }
+
+  //  emit the length
+  os->indent ();
+  //  *os << this->max_size () << ",\n";
   return 0;
+}
+
+// compute typecode size
+long
+be_array::tc_size (void)
+{
+  // 4 bytes for enumeration, 4 bytes for storing encap length val, followed by the
+  // actual encapsulation length
+  return 4 + 4 + this->tc_encap_len ();
 }
 
 long
 be_array::tc_encap_len (void)
 {
-  return 0;
+  if (this->encap_len_ == -1) // not computed yet
+    {
+      be_type *bt; // base type
+
+      this->encap_len_ = 4;  // holds the byte order flag
+      // add the encapsulation length of our base type
+      bt = be_type::narrow_from_decl (this->base_type ());
+      if (!bt)
+        {
+          ACE_ERROR ((LM_ERROR, 
+                      "be_array::tc_encap_len - bad base type\n")); 
+          return 0;
+        }
+      this->encap_len_ += bt->tc_encap_len ();
+      this->encap_len_ += 4; // to hold the array size 
+
+    }
+  return this->encap_len_;
 }
 
 // Narrowing

@@ -35,6 +35,10 @@ public:
   be_typedef (AST_Type *bt, UTL_ScopedName *n, UTL_StrList *p);
   // constructor
 
+  be_type *primitive_base_type (void);
+  // return the most primitive base type by traversing the chain of typedefed
+  // base types
+
   virtual int gen_client_header (void);
   // Generates the client-side header information for the typedef 
 
@@ -55,6 +59,15 @@ public:
 
   virtual int gen_typecode (void);
   // generate the typecode
+
+  virtual int gen_encapsulation (void);
+  // encapsulation for parameters
+
+  virtual long tc_size (void);
+  // return typecode size
+
+  virtual long tc_encap_len (void);
+  // return length of encapsulation
 
   // Narrowing
   DEF_NARROW_METHODS2 (be_typedef, AST_Typedef, be_type);
