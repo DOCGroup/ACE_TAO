@@ -28,6 +28,7 @@
 #include "../XML_Helpers/Assembly_Spec.h"
 //#include "Deployment_Configuration.h"
 #include "Static_Assembly.h"
+#include "ace/Configuration.h"
 
 namespace CIAO
 {
@@ -42,6 +43,7 @@ namespace CIAO
   public:
     /// Constructor
     Static_Assembly_Builder_Visitor (ID_IMPL_MAP &idmap,
+                                     const char*,
                                      Static_Config::Static_Config_Info&);
 
     /// Destructor
@@ -67,6 +69,8 @@ namespace CIAO
     void dump_static_config_info ();
 
     void generate_static_header_file (const char* header_file_name);
+    void generate_static_app_driver (const char* app_driver_file_name);
+    int generate_static_app_mpc (const char* );
 
   protected:
     /// Context to build on.
@@ -90,6 +94,11 @@ namespace CIAO
     int& component_registrations_table_last_index_;
     int& connections_table_last_index_;
     int& resolvers_table_last_index_;
+
+    ACE_CString installation_file_;
+    ACE_Configuration* installation_;
+    ACE_CString section_name_;
+    ACE_Configuration_Section_Key section_;
 
   protected:
     int find_container (const ACE_CString& rtpolicy_name);

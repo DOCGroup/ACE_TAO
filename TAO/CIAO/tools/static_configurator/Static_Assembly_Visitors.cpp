@@ -3,6 +3,7 @@
 #include "Static_Assembly.h"
 #include "Static_Assembly_Visitors.h"
 #include "../XML_Helpers/XML_Utils.h"
+#include "ace/Configuration_Import_Export.h"
 
 const char* comp_reg_type_to_str (
               CIAO::Assembly_Placement::componentinstantiation::IF_Register_Type type)
@@ -76,7 +77,9 @@ resolution_method_to_str (CIAO::Assembly_Connection::IF_Resolution_Method method
   return "";
 }
 
-CIAO::Static_Assembly_Builder_Visitor::Static_Assembly_Builder_Visitor (CIAO::ID_IMPL_MAP &idmap,
+CIAO::Static_Assembly_Builder_Visitor::Static_Assembly_Builder_Visitor (
+                                   CIAO::ID_IMPL_MAP &idmap,
+                                   const char* installation_file,
                                    CIAO::Static_Config::Static_Config_Info& info)
   : impl_idref_map_ (idmap),
     static_config_info_ (info),
@@ -91,12 +94,36 @@ CIAO::Static_Assembly_Builder_Visitor::Static_Assembly_Builder_Visitor (CIAO::ID
     components_table_last_index_ (info.components_table_last_index_),
     component_registrations_table_last_index_ (info.component_registrations_table_last_index_),
     connections_table_last_index_ (info.connections_table_last_index_),
-    resolvers_table_last_index_ (info.resolvers_table_last_index_)
+    resolvers_table_last_index_ (info.resolvers_table_last_index_),
+    installation_file_ (installation_file)
 {
+  ACE_Configuration_Heap *tmp = 0;
+  tmp = new ACE_Configuration_Heap ();
+
+  auto_ptr<ACE_Configuration_Heap> config (tmp);
+
+  if (config->open () != 0)
+    {
+      ACE_DEBUG ((LM_ERROR, "Unable to initilize installation datafile\n"));
+    }
+
+  ACE_Ini_ImpExp import (*config);
+
+  if (import.import_config (installation_file_.c_str ()) != 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "Error encountered in Static Assembly reading installation file %s\n",
+                  installation_file_.c_str ()));
+    }
+  this->installation_ = config.release ();
 }
 
 CIAO::Static_Assembly_Builder_Visitor::~Static_Assembly_Builder_Visitor (void)
 {
+  if (this->installation_ != 0)
+    {
+      delete this->installation_;
+    }
 }
 
 int
@@ -521,10 +548,10 @@ generate_static_header_file (const char* header_file_name)
   for (i=0;i <= homes_table_last_index_; ++i)
     {
       ACE_OS::fprintf (header_file,
-                       "extern ::Components::HomeExecutorBase_ptr %s (void);\n",
+                       "extern \"C\" ::Components::HomeExecutorBase_ptr %s (void);\n",
                        homes_table_[i].executor_entrypt_.c_str());
       ACE_OS::fprintf (header_file,
-                       "extern ::PortableServer::Servant %s \n",
+                       "extern \"C\" ::PortableServer::Servant %s \n",
                        homes_table_[i].servant_entrypt_.c_str());
       ACE_OS::fprintf (header_file,
                        "\t\t(::Components::HomeExecutorBase_ptr p,\n");
@@ -624,4 +651,272 @@ generate_static_header_file (const char* header_file_name)
   ACE_OS::fprintf (header_file, "\n\n");
 
   ACE_OS::fclose (header_file);
+}
+
+int CIAO::Static_Assembly_Builder_Visitor::
+generate_static_app_mpc (const char* app_mpc_file_name)
+{
+  FILE* mpc_file =
+    ACE_OS::fopen (app_mpc_file_name, "w");
+
+  const ACE_Configuration_Section_Key &root_section
+    = this->installation_->root_section ();
+
+  ACE_Configuration_Section_Key section;
+  int rc = this->installation_->open_section (root_section,
+                                     "ComponentInstallation",
+                                     0,
+                                     section);
+  if (rc == -1)
+    printf ("error in open\n");
+
+  ACE_OS::fprintf (mpc_file, "%s\n\n",
+  "project(Static_CCM_App) : ciao_server, ciao_client, rtcorba, iortable {
+  includes += $(ACE_ROOT)/TAO/CIAO/tools/Assembly_Deployer
+  includes += $(ACE_ROOT)/TAO/CIAO/tools/static_configurator
+  libs += CIAO_XML_Helpers Static_Configurator
+  after += CIAO_XML_Helpers Static_Configurator");
+
+  for (int i=0; i<=homes_table_last_index_; ++i)
+    {
+      ACE_TString exec_uuid = homes_table_[i].executor_UUID_;
+      ACE_TString servant_uuid = homes_table_[i].servant_UUID_;
+      ACE_CString exec_lib, servant_lib;
+
+      // Check if uuids have already been installed.
+      if (this->installation_->get_string_value (section,
+                                                 exec_uuid.c_str (),
+                                                 exec_lib) != 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "installation info not available for impl %s: %s\n",
+                      homes_table_[i].id_.c_str (),  exec_uuid.c_str ()));
+        }
+
+      ACE_OS::fprintf (mpc_file, "libs += %s\n", exec_lib.c_str ());
+      ACE_OS::fprintf (mpc_file, "after += %s\n", exec_lib.c_str ());
+
+      if (this->installation_->get_string_value (section,
+                                                 servant_uuid.c_str (),
+                                                 servant_lib) != 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "installation info not available for impl %s: %s\n",
+                      homes_table_[i].id_.c_str (),  servant_uuid.c_str ()));
+        }
+
+      ACE_OS::fprintf (mpc_file, "libs += %s\n", servant_lib.c_str ());
+      ACE_OS::fprintf (mpc_file, "after += %s\n", servant_lib.c_str ());
+    }
+
+  ACE_OS::fprintf (mpc_file, "%s\n",
+  "   Source_Files {
+         Static_CCM_App.cpp
+      }
+
+      IDL_Files {
+      }
+   }");
+
+  ACE_OS::fclose (mpc_file);
+}
+
+void CIAO::Static_Assembly_Builder_Visitor::
+generate_static_app_driver (const char* app_driver_file_name)
+{
+  FILE* app_driver_file =
+    ACE_OS::fopen (app_driver_file_name, "w");
+
+  const char *text =
+"
+#include \"ComponentServer_Impl.h\"
+#include \"CIAO_ServersC.h\"
+#include \"Server_init.h\"
+#include \"Static_Configurator.h\"
+#include \"ace/SString.h\"
+#include \"ace/Get_Opt.h\"
+
+#include \"Static_Assembly_Config.h\"
+
+char *ior_file_name_ = 0;
+
+int
+parse_args (int argc, char *argv[])
+{
+  ACE_Get_Opt get_opts (argc, argv, \"k:o:\");
+  int c;
+
+  while ((c = get_opts ()) != -1)
+    switch (c)
+      {
+      case 'o':  // get the file name to write to
+       ior_file_name_ = get_opts.opt_arg ();
+      break;
+
+      case '?':  // display help for use of the server.
+      default:
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           \"usage:  %s\\n\"
+                           \"-o <ior_output_file>\\n\"
+                           \"\\n\",
+                           argv [0]),
+                          -1);
+      }
+
+  return 0;
+}
+
+
+int
+main (int argc, char *argv[])
+{
+  ACE_TRY_NEW_ENV
+    {
+      // Initialize orb
+      CORBA::ORB_var orb = CORBA::ORB_init (argc,
+                                            argv
+                                            ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      CIAO::Server_init (orb.in ());
+
+      if (parse_args (argc, argv) != 0)
+        return -1;
+
+      // Get reference to Root POA.
+      CORBA::Object_var obj
+        = orb->resolve_initial_references (\"RootPOA\"
+                                           ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      PortableServer::POA_var poa
+        = PortableServer::POA::_narrow (obj.in ()
+                                        ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      // Activate POA manager
+      PortableServer::POAManager_var mgr
+        = poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      mgr->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      CIAO::ComponentServer_Impl *comserv_servant;
+
+      CIAO::Static_Configurator configurator;
+      int containers_table_size =
+        sizeof (containers_table_)/sizeof(CIAO::Static_Config::ContainerAttributes);
+      int homes_table_size =
+        sizeof (homes_table_)/sizeof(CIAO::Static_Config::HomeAttributes);
+      int components_table_size =
+        sizeof (components_table_)/sizeof(CIAO::Static_Config::ComponentAttributes);
+      int component_registrations_table_size =
+        sizeof (component_registrations_table_)/sizeof(CIAO::Assembly_Placement::componentinstantiation::Register_Info);
+      int connections_table_size =
+        sizeof (connections_table_)/sizeof(CIAO::Static_Config::ConnectionAttributes);
+      int resolvers_table_size =
+        sizeof (resolvers_table_)/sizeof(CIAO::Static_Config::ResolveInfoAttributes);
+
+      CIAO::HOMECREATOR_FUNCPTR_MAP home_creator_fptr_map;
+      CIAO::HOMESERVANTCREATOR_FUNCPTR_MAP homesvnt_creator_fptr_map;
+      CIAO::Static_Config_EntryPoints_Maps maps;
+      maps.home_creator_funcptr_map_ = &home_creator_fptr_map;
+      maps.home_servant_creator_funcptr_map_ = &homesvnt_creator_fptr_map;
+
+      int i=0;
+      for (i=0; i<homes_table_size; ++i)
+        {
+          home_creator_fptr_map.bind (homes_table_[i].executor_entrypt_,
+                                      homes_table_[i].executor_fptr_);
+
+          homesvnt_creator_fptr_map.bind (homes_table_[i].servant_entrypt_,
+                                          homes_table_[i].servant_fptr_);
+        }
+
+      ACE_NEW_RETURN (comserv_servant,
+                      CIAO::ComponentServer_Impl (orb.in (),
+                                                  poa.in (),
+                                                  1,
+                                                  &maps),
+                      -1);
+
+      PortableServer::ServantBase_var safe_servant (comserv_servant);
+
+      Components::ConfigValues configs;
+
+      comserv_servant->init (configs
+                             ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      // Configuring ComponentServer.
+      PortableServer::ObjectId_var cs_oid
+        = poa->activate_object (comserv_servant
+                                ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      obj = poa->id_to_reference (cs_oid.in ()
+                                  ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      Components::Deployment::ComponentServer_var comserv_obj =
+        Components::Deployment::ComponentServer::_narrow (obj.in ()
+                                                          ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (CORBA::is_nil (comserv_obj.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR, \"Unable to activate ComponentServer object\\n\"), -1);
+
+
+      Components::Deployment::ServerActivator_var activator;
+      Components::ConfigValues_var config = new Components::ConfigValues;
+
+      comserv_servant->set_objref (activator.in (),
+                                   config,
+                                   comserv_obj.in ()
+                                   ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      configurator.configure (orb.in (),
+                              comserv_obj.in (),
+                              containers_table_,
+                              containers_table_size,
+                              homes_table_,
+                              homes_table_size,
+                              components_table_,
+                              components_table_size,
+                              component_registrations_table_,
+                              component_registrations_table_size,
+                              connections_table_,
+                              connections_table_size,
+                              resolvers_table_,
+                              resolvers_table_size);
+
+      CORBA::String_var str = orb->object_to_string (comserv_obj.in ()
+                                                     ACE_ENV_ARG_PARAMETER);
+
+      CIAO::Utility::write_IOR (ior_file_name_, str.in ());
+      ACE_DEBUG ((LM_INFO, \"ComponentServer IOR: %s\\n\", str.in ()));
+
+      ACE_DEBUG ((LM_DEBUG,
+                  \"Running ComponentServer...\\n\"));
+
+      // Run the main event loop for the ORB.
+      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           \"server::main\t\\n\");
+      return 1;
+    }
+  ACE_ENDTRY;
+
+  return 0;
+}";
+
+  ACE_OS::fprintf( app_driver_file, "%s\n", text);
+
+  ACE_OS::fclose (app_driver_file);
 }
