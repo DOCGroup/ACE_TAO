@@ -180,6 +180,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
     refcount_ (1),
     fwd_profiles_ (0)
 {
+  ACE_UNUSED_ARG (version);
 
   ACE_NEW (this->host_,
            char[ACE_OS::strlen (host) + 1]);
@@ -789,6 +790,7 @@ TAO_IIOP_Profile::get_fwd_profiles (void)
 CORBA::String
 TAO_IIOP_Profile::to_string (CORBA::Environment &env)
 {
+  ACE_UNUSED_ARG (env);
 
   CORBA::String_var key;
   TAO_POA::encode_sequence_to_string (key.inout(),

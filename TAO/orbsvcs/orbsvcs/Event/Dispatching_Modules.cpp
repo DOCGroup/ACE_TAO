@@ -510,6 +510,7 @@ ACE_ES_Priority_Dispatching::shutdown (void)
 void
 ACE_ES_Priority_Dispatching::dispatch_queue_closed (ACE_ES_Dispatch_Queue *queue)
 {
+  ACE_UNUSED_ARG (queue);
 }
 
 /*

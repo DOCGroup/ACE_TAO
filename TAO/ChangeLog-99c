@@ -1,3 +1,17 @@
+Mon Feb 22 09:38:29 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp:
+	* orbsvcs/orbsvcs/Event/Module_Factory.cpp:
+	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
+	* orbsvcs/orbsvcs/Sched/Scheduler_Generic.cpp:
+	* orbsvcs/orbsvcs/Trader/Trader_Utils.cpp:
+	* orbsvcs/tests/Trading/Service_Type_Exporter.cpp:
+	* performance-tests/Cubit/TAO/MT_Cubit/client.cpp:
+	* tao/IIOP_Profile.cpp:
+
+	Added some ACE_UNUSED_ARGs to prevent g++ 2.7.x from warning
+	about unused arguments.
+
 Sun Feb 21 21:48:12 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/POA/
