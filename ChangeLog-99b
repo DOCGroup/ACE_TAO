@@ -1,7 +1,11 @@
+Mon May 31 22:45:18 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-lynxos.h: added ACE_HAS_GPERF.
+
 Mon May 31 16:28:27 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* ace/CDR_Stream.h:
-	  Added and updated some comments.
+        * ace/CDR_Stream.h:
+          Added and updated some comments.
 
 Mon May 31 16:13:21 1999  David L. Levine  <levine@cs.wustl.edu>
 
