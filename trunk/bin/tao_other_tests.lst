@@ -107,4 +107,6 @@ TAO/orbsvcs/tests/Miop/McastHello/run_test.pl: !MINIMUM !STATIC !SUNCC5_1
 TAO/orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
 TAO/tests/Two_Objects/run_test.pl: !ST
 TAO/examples/RTCORBA/Activity/run_test.pl: !MINIMUM
+TAO/examples/RTScheduling/Fixed_Priority_Scheduler/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS 
+TAO/examples/RTScheduling/MIF_Scheduler/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
 
