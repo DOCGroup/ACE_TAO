@@ -163,9 +163,12 @@ ACE_TSS_Singleton<TYPE, LOCK>::instance (void)
 
       if (ACE_TSS_Singleton<TYPE, LOCK>::instance_ == 0)             
 	{
-          ACE_NEW_RETURN (ACE_TSS_Singleton<TYPE, LOCK>::instance_,
-                          ACE_TSS<TYPE>,
-                          0);
+          // Please don't fully qualify "instance_" in the following
+          // statement.  It confuses the Sun C++ 4.2 preprocessor:
+          //   do { ACE_TSS_Singleton < TYPE = new LOCK > :: instance_ ;
+          //   if ( ACE_TSS_Singleton < TYPE == 0 ) { ( * ( ___errno ( ) ) ) =
+
+          ACE_NEW_RETURN (instance_, ACE_TSS<TYPE>, 0);
 
 #if 0  /* ACE_Object_Manager::at_thread_exit () is not implemented yet. */
           // Register for destruction with ACE_Object_Manager.
