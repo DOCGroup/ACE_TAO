@@ -1,3 +1,7 @@
+Thu Jan 11 09:56:43 2001  Frank  <fhunleth@cs.wustl.edu>
+
+        * ACE version 5.1.12 released.
+
 Thu Jan 11 05:38:24 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/TP_Reactor.cpp: Reverted the change that was made for SPRO
