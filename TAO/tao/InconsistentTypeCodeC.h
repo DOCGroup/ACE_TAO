@@ -1,5 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
+
 // ============================================================================
 //
 // = LIBRARY
@@ -16,7 +17,6 @@
 //
 // Information on TAO is available at
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
-//
 //
 // Modified by Jeff Parsons <jp4@cs.wustl.edu>
 //
@@ -38,25 +38,31 @@
 #if !defined (_CORBA_ORB_INCONSISTENTTYPECODE_CH_)
 #define _CORBA_ORB_INCONSISTENTTYPECODE_CH_
 
-  class TAO_Export CORBA_ORB_InconsistentTypeCode : public CORBA::UserException
-    {
-    public:
-      CORBA_ORB_InconsistentTypeCode (void); // default ctor
-      CORBA_ORB_InconsistentTypeCode (const CORBA_ORB_InconsistentTypeCode &); // copy ctor
-      ~CORBA_ORB_InconsistentTypeCode (void); // dtor
+class TAO_Export CORBA_ORB_InconsistentTypeCode : public CORBA::UserException
+{
+  // = TITLE
+  //   @@ Jeff, please fill in here.
+  //
+  // = DESCRIPTION
+  //   @@ Jeff, please fill in here.
+public:
+  CORBA_ORB_InconsistentTypeCode (void); 
+  // default ctor
+  CORBA_ORB_InconsistentTypeCode (const CORBA_ORB_InconsistentTypeCode &); 
+  // copy ctor
+  ~CORBA_ORB_InconsistentTypeCode (void); 
+  // dtor
 
-      CORBA_ORB_InconsistentTypeCode &operator= (const CORBA_ORB_InconsistentTypeCode &);
+  CORBA_ORB_InconsistentTypeCode &operator= (const CORBA_ORB_InconsistentTypeCode &);
 
-      virtual void _raise (void);
+  virtual void _raise (void);
 
-      static CORBA_ORB_InconsistentTypeCode *_narrow (CORBA::Exception *);
+  static CORBA_ORB_InconsistentTypeCode *_narrow (CORBA::Exception *);
 
+  // = TAO extension
+  static CORBA::Exception *_alloc (void);
 
-      // = TAO extension
-      static CORBA::Exception *_alloc (void);
-
-    }; // exception CORBA::ORB::InconsistentTypeCode
-
+};
 
 #endif /* end #if !defined */
 
