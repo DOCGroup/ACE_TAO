@@ -1,3 +1,9 @@
+Mon Dec 13 11:22:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/PolicyS.{h,cpp,inl}:
+        * tao/PortableServer/PolicyS_T.{h,cpp,inl}:
+          Regenerated
+
 Mon Dec 13 08:42:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/BiDir_CORBALOC/TimeServer.cpp:
