@@ -1,4 +1,4 @@
-#! /bin/csh -f
+#! /bin/sh
 
 #
 # $Id$
@@ -68,8 +68,9 @@
 # are using the template instantiation provided in ACE for ACE_Hash
 # and ACE_Equal_To, don't instantiate those templates.
 
-foreach file ( `find . -type f \( -name "*.i" -o -name "*.h" -o -name "*.cpp" \) -print | xargs egrep -l "template[ \t]*class[ \t]*ACE_Hash_Map_Manager"` )
+for file in `find . -type f \( -name "*.i" -o -name "*.h" -o -name "*.cpp" \) -print | xargs egrep -l "template[ \t]*class[ \t]*ACE_Hash_Map_Manager"`
+do
     echo Fixing template instantiations in $file
     perl $ACE_ROOT/bin/Hash_Map_Manager.pl $file > $file.new
     mv $file.new $file
-end
+done
