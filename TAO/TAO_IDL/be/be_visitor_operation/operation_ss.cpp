@@ -125,7 +125,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   *os << node->local_name ()
       << "_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &_tao_server_request," << be_nl
-      << "void *_tao_object_reference," << be_nl
+      << "void *_tao_servant," << be_nl
       << "void *_tao_servant_upcall" << be_nl
       << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ")" << be_uidt_nl;
@@ -151,7 +151,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   *os << intf->full_skel_name () << " *_tao_impl =" << be_idt_nl
       << "ACE_static_cast (" << be_idt << be_idt_nl
       << intf->full_skel_name () << " *," << be_nl
-      << "_tao_object_reference" << be_uidt_nl
+      << "_tao_servant" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl;
 
   // Declare a return type variable.
@@ -298,6 +298,12 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   *os << "_tao_vfr.receive_request (&_tao_ri ACE_ENV_ARG_PARAMETER);" << be_nl
       << "ACE_TRY_CHECK;" << be_nl;
 
+  // Check if a PortableInterceptor::ForwardRequest was raised by
+  // ServerRequestInterceptor::receive_request().
+  *os << be_nl
+      << "if (!_tao_vfr.location_forwarded ())" << be_idt_nl
+      << "{" << be_idt_nl;
+
   *os << "\n#endif /* TAO_HAS_INTERCEPTORS */\n";
 
   // Make the upcall and assign to the return val.
@@ -356,8 +362,20 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   // check for exception.
   *os << "\n#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl;
 
-  *os << be_uidt
+  // Close scope for "if (!_tao_vfr.location_forwarded ()"
+  *os << be_uidt_nl
+      << "}" << be_uidt_nl;
+
+  // Close the TAO_PICurrent_Guard scope
+  *os << be_uidt_nl
       << "}" << be_nl << be_nl;
+
+  // Set reply status only if no PortableInterceptor::ForwardRequest
+  // was raised by ServerRequestInterceptor::receive_request().  We
+  // have to make this check a second time because the scope of the
+  // first check overlaps with the scope of TAO_PICurrent_Guard.
+  *os << "if (!_tao_vfr.location_forwarded ())" << be_idt_nl
+      << "{" << be_idt_nl;
 
   // Grab the right visitor to generate the return type accessor if
   // it's not void since we can't have a private member to be of void
@@ -406,6 +424,10 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   *os << "_tao_ri.reply_status (PortableInterceptor::SUCCESSFUL);" << be_nl
       << "_tao_vfr.send_reply (&_tao_ri ACE_ENV_ARG_PARAMETER);"<< be_nl
           << "ACE_TRY_CHECK;" << be_uidt_nl;
+
+  // Close scope of the "if (!_tao_vfr.location_forwarded()"
+  // conditional block.
+  *os << be_uidt << "}" << be_uidt_nl;
 
   *os << "}" << be_uidt_nl
       << "ACE_CATCHANY" << be_idt_nl
@@ -465,9 +487,9 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
 
   *os << "// In case _tao_servant_upcall is not used in this function"
       << be_nl
-      << "ACE_UNUSED_ARG (_tao_servant_upcall);" << be_nl << be_nl;
+      << "ACE_UNUSED_ARG (_tao_servant_upcall);" << be_nl;
 
-  *os << be_uidt << "}\n\n";
+  *os << be_uidt_nl << "}\n\n";
   return 0;
 }
 

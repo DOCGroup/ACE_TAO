@@ -136,7 +136,7 @@ be_visitor_operation_sh::visit_operation (be_operation *node)
       *os << node->local_name () <<
         "_skel (" << be_idt << be_idt_nl
           << "TAO_ServerRequest &_tao_req," << be_nl
-          << "void *_tao_obj," << be_nl
+          << "void *_tao_servant," << be_nl
           << "void *_tao_servant_upcall" << be_nl
           << "ACE_ENV_ARG_DECL" << be_uidt_nl
           << ");" << be_uidt << "\n\n";

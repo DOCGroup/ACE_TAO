@@ -1,3 +1,27 @@
+Wed May 15 15:44:54 2002  Ossama Othman  <ossama@uci.edu>
+
+	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp
+	  (visit_interface):
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp
+	  (visit_interface):
+	* TAO_IDL/be/be_visitor_operation/operation_sh.cpp
+	  (visit_operation):
+	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp
+	  (visit_operation):
+
+	  Clarified one of the "_skel" method parameter names.  A pointer
+	  to a servant is passed in, not an object reference.  Renamed
+	  "_tao_object_reference" to "_tao_servant."
+
+	From Eric Malenfant <EMalenfant@interstarinc.com>:
+	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp
+	  (visit_operation):
+
+	  Fixed generated skeleton code so that the upcall is not made if
+	  the ServerRequestInterceptor::receive_request() interception
+	  point caused a location forward to occur
+	  (i.e. PortableInterceptor::ForwardRequest was thrown).
+
 Wed May 15 15:20:15 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/IFRService/ConstantDef_i.cpp:
