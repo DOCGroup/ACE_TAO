@@ -1,3 +1,13 @@
+Sun Oct 26 01:05:36 1997    <nw1@COYOTE>
+
+	* tao/corba.h: Changed from using Strategies_T.h to Strategies.h.
+
+	* tao/connect.h: Removed a template argument form ACE_Hash_Addr.
+	  Removed explicit instantiation of compare_i.
+
+	* tao/connect.cpp:  Removed a template argument from explicit
+	  instantiation of ACE_Hash_Addr.
+	  
 Sun Oct 26 01:47:04 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
 
 	* TAO_IDL/be/be_decl.cpp (tc_name2long): 
