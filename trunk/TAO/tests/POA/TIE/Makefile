@@ -33,15 +33,25 @@ VBIN = $(BIN:%=%$(VAR))
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 
-#
-# Since g++ cannot handle nested classes properly, this test will not
-# build on g++.
-#
+# Since older g++ cannot handle nested classes properly, this test will not
+# build on g++ prior to 2.8.0.
 ifeq ($(findstring g++,$(CXX)),g++)
-  default:
-	@echo will not build with g++
+  ifeq ($(CXX),g++)
+    #### Determine if the g++ version is <= 2.7.x.
+    OLD_G++ := \
+      $(shell \
+        if $(CXX) --version | egrep '^(cygnus-)?2\.[0-7]' > /dev/null; \
+        then echo 1; fi)
+  # else, CXX is something like g++386.  Assume that it can't handle
+  # the build in this directory.  The shell command above won't
+  # work if CXX isn't on the users PATH.
+  endif # plain g++
 endif # g++
 
+ifeq ($(OLD_G++),1)
+  all clean realclean:
+	@echo POA/TIE is not built with older versions of g++
+else # ! old g++
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
@@ -60,6 +70,8 @@ client:	$(addprefix $(VDIR),$(FILE_CLT_OBJS))
 
 realclean: clean
 	-/bin/rm -rf FooC.* FooS.*
+
+endif # ! old g++
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
