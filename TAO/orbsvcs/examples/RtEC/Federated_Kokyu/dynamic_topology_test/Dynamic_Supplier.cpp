@@ -44,7 +44,7 @@ Dynamic_Supplier::timeout_occured (ACE_ENV_SINGLE_ARG_DECL)
       ACE_DEBUG((LM_DEBUG,"Dynamic_Supplier (%P|%t) handle_service_start() DONE\n"));
     }
 
-  PushConsumer_Vector *proxies = 0;
+  PushConsumer_Vector *proxies = &(this->consumer_proxy_);
 
   RtecEventComm::EventSet eventA (1);
   eventA.length (1);
@@ -63,7 +63,6 @@ Dynamic_Supplier::timeout_occured (ACE_ENV_SINGLE_ARG_DECL)
       eventB[0].header.type   = this->ft_type2_;
       //ACE_DEBUG((LM_DEBUG,"Dynamic_Supplier (%P|%t) setting header FT types: A = %d, B = %d\n",eventA[0].header.type,eventB[0].header.type));
       //ACE_DEBUG((LM_DEBUG,"        From ft_type = %d, ft_type2 = %d\n",this->ft_type_,this->ft_type2_));
-      proxies = &(this->ft_consumer_proxies_);
       break;
     }
   default: //NORMAL
@@ -72,7 +71,6 @@ Dynamic_Supplier::timeout_occured (ACE_ENV_SINGLE_ARG_DECL)
       eventB[0].header.type   = this->norm_type2_;
       //ACE_DEBUG((LM_DEBUG,"Dynamic_Supplier (%P|%t) setting header types: A = %d, B = %d\n",eventA[0].header.type,eventB[0].header.type));
       //ACE_DEBUG((LM_DEBUG,"        From norm_type = %d, norm_type2 = %d\n",this->norm_type_,this->norm_type2_));
-      proxies = &(this->normal_consumer_proxies_);
       break;
     }
   }
