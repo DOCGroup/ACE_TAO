@@ -278,16 +278,12 @@ template class ACE_Cached_Mem_Pool_Node<MEMORY_CHUNK>;
 template class ACE_Locked_Free_List<ACE_Cached_Mem_Pool_Node<MEMORY_CHUNK>, ACE_SYNCH_MUTEX>;
 template class ACE_Free_List<ACE_Cached_Mem_Pool_Node<MEMORY_CHUNK> >;
 template class ACE_Lock_Adapter<ACE_SYNCH_MUTEX>;
-template class ACE_Message_Queue_Iterator<ACE_NULL_SYNCH>;
-template class ACE_Message_Queue_Reverse_Iterator<ACE_NULL_SYNCH>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Cached_Allocator<MEMORY_CHUNK, ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_Cached_Mem_Pool_Node<MEMORY_CHUNK>
 #pragma instantiate ACE_Locked_Free_List<ACE_Cached_Mem_Pool_Node<MEMORY_CHUNK>, ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_Free_List<ACE_Cached_Mem_Pool_Node<MEMORY_CHUNK> >
 #pragma instantiate ACE_Lock_Adapter<ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Message_Queue_Iterator<ACE_NULL_SYNCH>
-#pragma instantiate ACE_Message_Queue_Reverse_Iterator<ACE_NULL_SYNCH>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 

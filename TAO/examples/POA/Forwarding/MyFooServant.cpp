@@ -140,7 +140,7 @@ MyFirstFooServant::handle_input (ACE_HANDLE)
   ACE_ENDTRY;
 
   return 0;
-};
+}
 
 // Second Foo
 
