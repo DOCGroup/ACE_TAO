@@ -220,7 +220,9 @@ private:
 
 #if defined (VXWORKS)
 # include /**/ <msgQLib.h>
-
+# include "ace/Null_Mutex.h"
+# include "ace/Null_Condition.h"
+ 
 /**
  * @class ACE_Message_Queue_Vx
  *

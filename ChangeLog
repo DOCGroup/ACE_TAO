@@ -1,3 +1,16 @@
+Thu Aug 14 18:31:14 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/Message_Queue.h:
+          Added #include Null_Mutex.h and Null_Condition.h to the VxWorks
+          specific branch needed due to recent subsetting.
+
+        * ace/config-irix5.3-sgic++.h:
+          Added #define ACE_LACKS_STDINT_H.  Thanks to Bruce Jones
+          <BRUCE.JONES@cubic.com> for reporting the problem.
+
+        * THANKS:
+          Added Bruce Jones <BRUCE.JONES@cubic.com> to hall of fame.
+
 Thu Aug 14 10:56:57 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/OS.h:
