@@ -9,7 +9,6 @@
 
 #define ACE_LACKS_SETSCHED
 #define ACE_LACKS_RWLOCK_T
-#define ACE_LACKS_GETPGID
 // DF: this platform uses Digital's CXX compiler
 #define DEC_CXX
 
