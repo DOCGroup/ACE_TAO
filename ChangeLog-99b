@@ -1,5 +1,7 @@
 Tue Jul  6 18:15:31 1999  Steve Huston  <shuston@riverace.com>
 
+        * ACE_INSTALL.html: Added a further note re PharLap ETS builds.
+
         * tests/Atomic_Op_Test.dsp:
         * tests/Barrier_Test.dsp:
         * tests/Cache_Map_Manager_Test.dsp:
