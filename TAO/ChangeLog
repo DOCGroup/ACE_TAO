@@ -1,3 +1,8 @@
+Sun Apr 13 08:03:36 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/tests/Notify/Destroy/main.cpp: Fixed a warning in our
+	  daily builds.
+
 Sun Apr 13 07:59:43 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp: Missed a
