@@ -853,8 +853,10 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
     }
   *os << node->flatname () << "_paramdata};\n\n";
 
-  // get the right object implementation.
   os->indent ();
+  // declare an environment variable for user raised exceptions
+  *os << "CORBA::Environment _tao_skel_environment;" << be_nl;
+  // get the right object implementation.
   *os << intf->full_skel_name () << " *_tao_impl = ("
       << intf->full_skel_name () << " *)_tao_object_reference;\n";
 
@@ -987,7 +989,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   if (node->argument_count () > 0)
     *os << ",\n";
   os->indent ();
-  *os << "_tao_environment";
+  *os << "_tao_skel_environment";
   // end the upcall
   *os << be_uidt_nl;
   *os << ");\n";
@@ -1020,6 +1022,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   os->indent ();
   *os << "_tao_server_request.marshal (" << be_idt_nl
       << "_tao_environment, " << be_nl
+      << "_tao_skel_environment, " << be_nl
       << "&";
   // check if we are an attribute node in disguise
   if (this->ctx_->attribute ())

@@ -1,3 +1,39 @@
+Thu May 14 16:39:15 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* tao/Server_Request.{h,cpp}: Added an extra environment parameter
+	to the marshal method. This change was required since we wanted to
+	keep the ORB related exceptions and the user supplied
+	operation-raised exceptions to be separate.
+
+	* tao/{POAS,PolicyS}.cpp: Made several changes to the IDL
+	compiler-generated code that were necessary due to the changes
+	made to the Server_Request's marshal interface explained above.
+
+	* tao/{encode,decode}.cpp: Made a minor change by passing the
+	address of the void pointer for the string and object cases. This
+	needs to be thoroughly tested.
+
+	* tao/orbconf.h: Added a conditional macro called TAO_NAMESPACE
+	that generates either "namespace" or "struct".
+
+	* TAO_IDL/be/be_visitor_module.cpp: The code for the module now
+	uses the TAO_NAMESPACE macro.
+
+	* TAO_IDL/be/be_visitor_constant.cpp: We were not checking of the
+	constant was imported or not. In addition, inside the stub
+	generation code, we were incorrectly checking if the header was
+	generated or not. Thanks to Andrew Harbick"
+	<aharbick@opentext.com> for providing the bug report that led to
+	this fix.
+
+	* TAO_IDL/be/be_visitor_operation.cpp: Modifications that were
+	necessary due to the changes in the Server_Request class and our
+	policy of distinguishing between ORB raised and user-raised
+	exceptions.
+
+	* TAO_IDL/be/be_visitor_interface.cpp: Similar changes as in
+	be_visitor_operation.cpp for the _is_a_skel skeletons.
+
 Thu May 14 15:20:28 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Quoter/Makefile: moved TAO_ROOT definition outside of

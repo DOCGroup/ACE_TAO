@@ -150,12 +150,13 @@ public:
   virtual CORBA::ORB_ptr  orb (void) = 0;
   // get the underlying ORB
 
-  virtual void demarshal (CORBA::Environment &env,
+  virtual void demarshal (CORBA::Environment &orb_env,
                           const TAO_Call_Data_Skel *info,
                           ...) = 0;
   // demarshal incoming parameters
 
-  virtual void marshal (CORBA::Environment &env,
+  virtual void marshal (CORBA::Environment &orb_env,
+                        CORBA::Environment &skel_env,
                         const TAO_Call_Data_Skel *info,
                         ...) = 0;
   // marshal outgoing parameters
@@ -223,13 +224,14 @@ public:
   // meant to be used internally.
   //
 
-  virtual void demarshal (CORBA::Environment &env,
+  virtual void demarshal (CORBA::Environment &orb_env,
                           const TAO_Call_Data_Skel *info,
                           ...);
   // demarshal incoming parameters. Used by the SSI skeleton (i.e., the IDL
   // compiler generated skeleton)
 
-  virtual void marshal (CORBA::Environment &env,
+  virtual void marshal (CORBA::Environment &orb_env,
+                        CORBA::Environment &skel_env,
                         const TAO_Call_Data_Skel *info,
                         ...);
   // marshal outgoing parameters and return value. This is used by the SSI
