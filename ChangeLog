@@ -1,3 +1,8 @@
+Fri Dec 10 23:06:24 UTC 2004  Don Hinton  <don.hinton@vanderbilt.edu>
+
+        * Kokyu/tests/DSRT_MIF/MIF.cpp:
+          Changed barrier to bar because barrier() is a macro.
+
 Fri Dec 10 12:13:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Logging_Strategy.cpp:
