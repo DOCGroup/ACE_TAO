@@ -1,4 +1,4 @@
-Tue Nov  3 21:02:30 1998  Kirthika Parameswaran  <naga@cs.wustl.edu>
+Tue Nov  3 21:02:30 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* examples/Callback_Quoter/Supplier_Timer_Handler.cpp
           Added a change to Consumer_Input_Handler::quit_consumer_process
