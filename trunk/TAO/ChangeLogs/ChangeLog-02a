@@ -1,3 +1,11 @@
+Sun Mar 19 16:46:36 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile: Updated dependencies. Thanks to 
+          JM Strauss <jms97@club-internet.fr> for reporting this. The last
+	  update was the dumbest thing I could have done. I made the
+	  update in my workspace which had a skewed $TAO_ROOT/tao. These
+	  went in to the Makefile.
+
 Sat Mar 18 17:51:13 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/examples/Quoter/client.cpp (init_naming_service):
