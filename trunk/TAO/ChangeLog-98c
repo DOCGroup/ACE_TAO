@@ -5,19 +5,19 @@ Wed May 20 08:40:51 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Tue May 19 12:19:42 1998  Carlos O'Ryan  <coryan@JIG>
 
-	* tao/Typecode.cpp: 
-	  Fixed crash at shutdown, TypeCode is a reference counted type,
-	  but in some points they were removed by a simple "delete".
+        * tao/Typecode.cpp:
+          Fixed crash at shutdown, TypeCode is a reference counted type,
+          but in some points they were removed by a simple "delete".
 
 Mon May 18 16:46:46 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/POA.cpp (parse_key): Changed the processing of IORs so that
- 	  POA names are not copied.  Only a pointer is kept to the correct
- 	  place in the IOR.
+        * tao/POA.cpp (parse_key): Changed the processing of IORs so that
+          POA names are not copied.  Only a pointer is kept to the correct
+          place in the IOR.
 
 Mon May 18 12:34:57 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-        * tao/Connect.cpp: Debug messages now check 
+        * tao/Connect.cpp: Debug messages now check
           Service_Configurator::debug() to see if -ORBdebug
           is specified.
 
