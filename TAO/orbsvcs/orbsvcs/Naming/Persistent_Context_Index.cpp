@@ -4,6 +4,10 @@
 #include "Persistent_Naming_Context.h"
 #include "ace/Auto_Ptr.h"
 
+TAO_Index::~TAO_Index (void)
+{
+}
+
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
 TAO_Persistent_Context_Index<ACE_MEM_POOL_2, ACE_LOCK>::unbind (const char *poa_id)
 {
