@@ -1,3 +1,27 @@
+Tue Jun 29 12:20:24 1999  Marina Spivak  <marina@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Naming/Bindings_Iterator_T.cpp
+	* orbsvcs/orbsvcs/Naming/Bindings_Iterator_T.h
+	* orbsvcs/orbsvcs/Naming/Hash_Naming_Context.h
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.h
+	* orbsvcs/orbsvcs/Naming/Persistent_Context_Index.cpp
+	* orbsvcs/orbsvcs/Naming/Persistent_Context_Index.h
+	* orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp
+	* orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.h
+	* orbsvcs/orbsvcs/Naming/README
+	* orbsvcs/orbsvcs/Naming/Transient_Naming_Context.cpp
+	* orbsvcs/orbsvcs/Naming/Transient_Naming_Context.h:
+
+	  Factored out code for creation of a Naming Context and
+	  registration with poa into static functions <make_new_context>
+	  in TAO_Transient_Naming_Context, and
+	  TAO_Persistent_Naming_Context.
+
+	  Added comments, cleaned up code, fixed a memory leak in
+	  Naming_Utils::init_new_naming, and improved handling of error
+	  conditions in a few places.
+
 Mon Jun 28 21:41:20 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/orbsvcs.dsp
