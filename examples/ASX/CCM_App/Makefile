@@ -9,7 +9,9 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-LIBS   += $(ACELIB) -lACEXML_Parser -lACEXML
+LIBS   += -lACEXML_Parser -lACEXML
+
+ACE_SHLIBS += $(ACELIB)
 
 BIN     = SC_Client \
 	  SC_Server
