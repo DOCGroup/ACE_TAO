@@ -25,8 +25,11 @@
 
 ACE_RCSID(ace, Cached_Connect_Strategy_T, "$Id$")
 
-  template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class ATTRIBUTES, class MUTEX>
-ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX>::ACE_Cached_Connect_Strategy_Ex
+#define ACE_T1 class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class ATTRIBUTES, class MUTEX
+#define ACE_T2 SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX
+
+template <ACE_T1>
+ACE_Cached_Connect_Strategy_Ex<ACE_T2>::ACE_Cached_Connect_Strategy_Ex
 (CACHING_STRATEGY &caching_s,
  ACE_Creation_Strategy<SVC_HANDLER> *cre_s,
  ACE_Concurrency_Strategy<SVC_HANDLER> *con_s,
@@ -39,11 +42,11 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
   if (this->open (cre_s, con_s, rec_s) == -1)
     ACE_ERROR ((LM_ERROR,
                 ASYS_TEXT ("%p\n"),
-                ASYS_TEXT ("ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX>\n")));
+                ASYS_TEXT ("ACE_Cached_Connect_Strategy_Ex<ACE_T2>\n")));
 }
 
-template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class ATTRIBUTES, class MUTEX>
-ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX>::~ACE_Cached_Connect_Strategy_Ex (void)
+template <ACE_T1>
+ACE_Cached_Connect_Strategy_Ex<ACE_T2>::~ACE_Cached_Connect_Strategy_Ex (void)
 {
 #if !defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
   // Close down all cached service handlers.
@@ -60,8 +63,8 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
 #endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
 }
 
-template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class ATTRIBUTES, class MUTEX> int
-ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX>::check_hint_i
+template <ACE_T1> int
+ACE_Cached_Connect_Strategy_Ex<ACE_T2>::check_hint_i
 (SVC_HANDLER *&sh,
  const ACE_PEER_CONNECTOR_ADDR &remote_addr,
  ACE_Time_Value *timeout,
@@ -85,7 +88,7 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
   CONNECTION_CACHE_ENTRY *possible_entry = (CONNECTION_CACHE_ENTRY *) sh->recycling_act ();
 
   // Check to see if the hint svc_handler has been closed down
-  if (possible_entry->ext_id_.state () == ACE_Recyclable::CLOSED)
+  if (possible_entry->ext_id_.state () == ACE_RECYCLABLE_CLOSED)
     {
       // If close, decrement refcount
       if (possible_entry->ext_id_.decrement () == 0)
@@ -105,7 +108,9 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
 
   // If hint is not closed, see if it is connected to the correct
   // address and is recyclable
-  else if (possible_entry->ext_id_ == remote_addr)
+  else if ((possible_entry->ext_id_.state () == ACE_RECYCLABLE_IDLE_AND_PURGABLE ||
+            possible_entry->ext_id_.state () == ACE_RECYCLABLE_IDLE_BUT_NOT_PURGABLE) &&
+           possible_entry->ext_id_.subject () == remote_addr)
     {
       // Hint successful
       found = 1;
@@ -133,8 +138,8 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
   return 0;
 }
 
-template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class ATTRIBUTES, class MUTEX> int
-ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX>::find_or_create_svc_handler_i
+template <ACE_T1> int
+ACE_Cached_Connect_Strategy_Ex<ACE_T2>::find_or_create_svc_handler_i
 (SVC_HANDLER *&sh,
  const ACE_PEER_CONNECTOR_ADDR &remote_addr,
  ACE_Time_Value *timeout,
@@ -149,7 +154,7 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
 
   // Try to find the address in the cache.  Only if we don't find it
   // do we create a new <SVC_HANDLER> and connect it with the server.
-  if (this->connection_cache_.find (search_addr, entry) == -1)
+  if (this->find (search_addr, entry) == -1)
     {
       // Set the flag
       found = 0;
@@ -198,14 +203,14 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
 
 }
 
-template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class ATTRIBUTES, class MUTEX> int
-ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX>::cached_connect (SVC_HANDLER *&sh,
-                                                                                                                        const ACE_PEER_CONNECTOR_ADDR &remote_addr,
-                                                                                                                        ACE_Time_Value *timeout,
-                                                                                                                        const ACE_PEER_CONNECTOR_ADDR &local_addr,
-                                                                                                                        int reuse_addr,
-                                                                                                                        int flags,
-                                                                                                                        int perms)
+template <ACE_T1> int
+ACE_Cached_Connect_Strategy_Ex<ACE_T2>::cached_connect (SVC_HANDLER *&sh,
+                                                        const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+                                                        ACE_Time_Value *timeout,
+                                                        const ACE_PEER_CONNECTOR_ADDR &local_addr,
+                                                        int reuse_addr,
+                                                        int flags,
+                                                        int perms)
 {
   // Actively establish the connection.  This is a timed blocking
   // connect.
@@ -260,8 +265,8 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
 }
 
 
-template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class ATTRIBUTES, class MUTEX> int
-ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX>::connect_svc_handler_i
+template <ACE_T1> int
+ACE_Cached_Connect_Strategy_Ex<ACE_T2>::connect_svc_handler_i
 (SVC_HANDLER *&sh,
  const ACE_PEER_CONNECTOR_ADDR &remote_addr,
  ACE_Time_Value *timeout,
@@ -310,7 +315,7 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
 
   // For all successful cases: mark the <svc_handler> in the cache
   // as being <in_use>.  Therefore recyclable is BUSY.
-  entry->ext_id_.state (ACE_Recyclable::BUSY);
+  entry->ext_id_.state (ACE_RECYCLABLE_BUSY);
 
   // And increment the refcount
   entry->ext_id_.increment ();
@@ -319,22 +324,22 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
 }
 
 
-template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class ATTRIBUTES, class MUTEX> int
-ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX>::cache_i (const void *recycling_act)
+template <ACE_T1> int
+ACE_Cached_Connect_Strategy_Ex<ACE_T2>::cache_i (const void *recycling_act)
 {
   // The wonders and perils of ACT
   CONNECTION_CACHE_ENTRY *entry = (CONNECTION_CACHE_ENTRY *) recycling_act;
 
   // Mark the <svc_handler> in the cache as not being <in_use>.
   // Therefore recyclable is IDLE.
-  entry->ext_id_.state (ACE_Recyclable::IDLE_AND_PURGABLE);
+  entry->ext_id_.state (ACE_RECYCLABLE_IDLE_AND_PURGABLE);
 
   return 0;
 }
 
 
-template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class ATTRIBUTES, class MUTEX> int
-ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX>::purge_i (const void *recycling_act)
+template <ACE_T1> int
+ACE_Cached_Connect_Strategy_Ex<ACE_T2>::purge_i (const void *recycling_act)
 {
   // The wonders and perils of ACT
   CONNECTION_CACHE_ENTRY *entry = (CONNECTION_CACHE_ENTRY *) recycling_act;
@@ -343,20 +348,20 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
 }
 
 
-template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class ATTRIBUTES, class MUTEX> int
-ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX>::mark_as_closed_i (const void *recycling_act)
+template <ACE_T1> int
+ACE_Cached_Connect_Strategy_Ex<ACE_T2>::mark_as_closed_i (const void *recycling_act)
 {
   // The wonders and perils of ACT
   CONNECTION_CACHE_ENTRY *entry = (CONNECTION_CACHE_ENTRY *) recycling_act;
 
   // Mark the <svc_handler> in the cache as CLOSED.
-  entry->ext_id_.state (ACE_Recyclable::CLOSED);
+  entry->ext_id_.state (ACE_RECYCLABLE_CLOSED);
 
   return 0;
 }
 
-template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class ATTRIBUTES, class MUTEX> int
-ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX>::cleanup_hint_i (const void *recycling_act)
+template <ACE_T1> int
+ACE_Cached_Connect_Strategy_Ex<ACE_T2>::cleanup_hint_i (const void *recycling_act)
 {
   // The wonders and perils of ACT
   CONNECTION_CACHE_ENTRY *entry = (CONNECTION_CACHE_ENTRY *) recycling_act;
@@ -366,7 +371,7 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
 
   // If the svc_handler state is closed and the refcount == 0, call
   // close() on svc_handler.
-  if (entry->ext_id_.state () == ACE_Recyclable::CLOSED &&
+  if (entry->ext_id_.state () == ACE_RECYCLABLE_CLOSED &&
       refcount == 0)
     {
       entry->int_id_.first ()->recycler (0, 0);
@@ -377,18 +382,59 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
   return 0;
 }
 
-template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class ATTRIBUTES, class MUTEX> int
-ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX>::purge_connections (void)
+template <ACE_T1> int
+ACE_Cached_Connect_Strategy_Ex<ACE_T2>::purge_connections (void)
 {
   return this->connection_cache_.purge ();
 }
 
-template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class ATTRIBUTES, class MUTEX> CACHING_STRATEGY &
-ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX>::caching_strategy (void)
+template <ACE_T1> CACHING_STRATEGY &
+ACE_Cached_Connect_Strategy_Ex<ACE_T2>::caching_strategy (void)
 {
   return this->connection_cache_.caching_strategy ();
 }
 
+template <ACE_T1> int
+ACE_Cached_Connect_Strategy_Ex<ACE_T2>::find (REFCOUNTED_HASH_RECYCLABLE_ADDRESS &search_addr,
+                                              ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>, ACE_Pair<SVC_HANDLER *, ATTRIBUTES> > *&entry)
+{
+  typedef ACE_Hash_Map_Bucket_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDRESS,
+                                       ACE_Pair<SVC_HANDLER *, ATTRIBUTES>,
+                                       ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>,
+                                       ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>,
+                                       ACE_Null_Mutex>
+    CONNECTION_CACHE_BUCKET_ITERATOR;
+
+  CONNECTION_CACHE_BUCKET_ITERATOR iterator (this->connection_cache_.map (),
+                                             search_addr);
+
+  CONNECTION_CACHE_BUCKET_ITERATOR end (this->connection_cache_.map (),
+                                        search_addr,
+                                        1);
+
+  for (;
+       iterator != end;
+       ++iterator)
+    {
+      REFCOUNTED_HASH_RECYCLABLE_ADDRESS &addr = (*iterator).ext_id_;
+
+      if (addr.state () != ACE_RECYCLABLE_IDLE_AND_PURGABLE &&
+          addr.state () != ACE_RECYCLABLE_IDLE_BUT_NOT_PURGABLE)
+        continue;
+
+      if (addr != search_addr)
+        continue;
+
+      entry = &(*iterator);
+      return 0;
+    }
+
+  return -1;
+}
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Cached_Connect_Strategy_Ex)
+
+#undef ACE_T1
+#undef ACE_T2
 
 #endif /* CACHED_CONNECT_STRATEGY_T_C */

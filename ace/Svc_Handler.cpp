@@ -300,6 +300,16 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::idle (u_long flags)
     return this->close (flags);
 }
 
+template <PR_ST_1, ACE_SYNCH_DECL> int
+ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::state (ACE_Recyclable_State new_state)
+{
+  if (this->recycler ())
+    return this->recycler ()->state (this->recycling_act_,
+                                     new_state);
+
+  return 0;
+}
+
 template <PR_ST_1, ACE_SYNCH_DECL> void
 ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::recycler (ACE_Connection_Recycling_Strategy *recycler,
                                                    const void *recycling_act)

@@ -77,8 +77,8 @@ ACE_Pair_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::clear_cac
         return 0;
 
       if (this->cleanup_strategy_->cleanup (container,
-                                           key_to_remove,
-                                           value_to_remove) == -1)
+                                            key_to_remove,
+                                            value_to_remove) == -1)
         return -1;
 
     }
@@ -115,6 +115,7 @@ ACE_Pair_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::minimum (
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 template <class KEY, class VALUE, class CONTAINER, class ITERATOR, class ATTRIBUTES>
 ACE_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::ACE_Recyclable_Handler_Caching_Utility (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy,
                                                                                                                              int delete_cleanup_strategy)
@@ -173,8 +174,8 @@ ACE_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUT
         return 0;
 
       if (this->cleanup_strategy_->cleanup (container,
-                                           key_to_remove,
-                                           value_to_remove) == -1)
+                                            key_to_remove,
+                                            value_to_remove) == -1)
         return -1;
     }
 
@@ -204,8 +205,8 @@ ACE_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUT
       // If the <min> entry isnt IDLE_AND_PURGABLE continue until you reach
       // the first entry which can be purged. This is the minimum with
       // which you will compare the rest of the purgable entries.
-      if ((*iter).ext_id_.state () ==
-          ACE_Recyclable::IDLE_AND_PURGABLE)
+      if ((*iter).ext_id_.state () == ACE_RECYCLABLE_IDLE_AND_PURGABLE ||
+          (*iter).ext_id_.state () == ACE_RECYCLABLE_PURGABLE_BUT_NOT_IDLE)
         {
           if (found == 0)
             {
@@ -229,6 +230,7 @@ ACE_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUT
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+
 template <class KEY, class VALUE, class CONTAINER, class ITERATOR, class ATTRIBUTES>
 ACE_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::ACE_Handler_Caching_Utility (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy,
                                                                                                        int delete_cleanup_strategy)
