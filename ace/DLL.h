@@ -31,8 +31,8 @@ class ACE_DLL_Handle;
  *
  * This class is an wrapper over the various methods for utilizing
  * a dynamically linked library (DLL), which is called a shared
- * library on some platforms.  Operations <open>, <close>, and
- * <symbol> have been implemented to help opening/closing and
+ * library on some platforms.  Operations open(), close(), and
+ * symbol() have been implemented to help opening/closing and
  * extracting symbol information from a DLL, respectively.
  */
 class ACE_Export ACE_DLL
@@ -40,16 +40,16 @@ class ACE_Export ACE_DLL
 public:
   // = Initialization and termination methods.
 
-  /// Default constructor.  By default, the <close> operation on the
+  /// Default constructor.  By default, the close() operation on the
   /// object will be invoked before it is destroyed.
   ACE_DLL (int close_on_destruction = 1);
 
   /**
-   * This constructor opens and dynamically links <dll_name>.  The
+   * This constructor opens and dynamically links @a dll_name.  The
    * default mode is <RTLD_LAZY>, which loads identifier symbols but
    * not the symbols for functions, which are loaded dynamically
    * on-demand.  Other supported modes include: <RTLD_NOW>, which
-   * performs all necessary relocations when <dll_name> is first
+   * performs all necessary relocations when @a dll_name is first
    * loaded and <RTLD_GLOBAL>, which makes symbols available for
    * relocation processing of any other DLLs.
    */
@@ -61,14 +61,15 @@ public:
   ACE_DLL (const ACE_DLL &);
 
   /**
-   * This method opens and dynamically links <dll_name>.  The default
+   * This method opens and dynamically links @a dll_name.  The default
    * mode is <RTLD_LAZY>, which loads identifier symbols but not the
    * symbols for functions, which are loaded dynamically on-demand.
    * Other supported modes include: <RTLD_NOW>, which performs all
-   * necessary relocations when <dll_name> is first loaded and
+   * necessary relocations when @a dll_name>is first loaded and
    * <RTLD_GLOBAL>, which makes symbols available for relocation
-   * processing of any other DLLs.  Returns -1 on failure and 0 on
-   * success.
+   * processing of any other DLLs.
+   * @retval -1 On failure
+   * @retval 0 On success.
    */
   int open (const ACE_TCHAR *dll_name,
             int open_mode = ACE_DEFAULT_SHLIB_MODE,
@@ -78,14 +79,14 @@ public:
   int close (void);
 
   /**
-   * Called when the DLL object is destroyed -- invokes <close> if the
-   * <close_on_destruction> flag is set in the constructor or <open>
+   * Called when the DLL object is destroyed -- invokes close() if the
+   * <close_on_destruction> flag is set in the constructor or open()
    * method.
    */
   ~ACE_DLL (void);
 
-  /// If <symbol_name> is in the symbol table of the DLL a pointer to
-  /// the <symbol_name> is returned.  Otherwise, returns 0.  Setting
+  /// If @a symbol_name is in the symbol table of the DLL a pointer to
+  /// the @a symbol_name is returned.  Otherwise, returns 0.  Setting
   /// ignore_errors = 1 allows you to probe a dll without generating
   /// error messages in the log.  Handy for determining the capabilities
   /// of a library.
@@ -97,15 +98,15 @@ public:
   ACE_TCHAR *error (void) const;
 
   /**
-   * Return the handle to the caller.  If <become_owner> is non-0 then
-   * caller assumes ownership of the handle and the <ACE_DLL> object
-   * won't call <close> when it goes out of scope, even if
-   * <close_on_destruction> is set.  
+   * Return the handle to the caller.  If @a become_owner is non-0 then
+   * caller assumes ownership of the handle and the ACE_DLL object
+   * won't call close() when it goes out of scope, even if
+   * <close_on_destruction> is set.
    */
   ACE_SHLIB_HANDLE get_handle (int become_owner = 0) const;
 
-  /// Set the handle for the DLL object. By default, the <close> operation on the
-  /// object will be invoked before it is destroyed.
+  /// Set the handle for the DLL object. By default, the close() operation on
+  /// the object will be invoked before it is destroyed.
   int set_handle (ACE_SHLIB_HANDLE handle, int close_on_destruction = 1);
 
 private:

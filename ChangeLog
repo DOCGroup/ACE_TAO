@@ -1,3 +1,9 @@
+Wed Nov 27 09:30:33 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/DLL.h:
+        * ace/Singleton.h:
+          Improved doxygen documentation.
+
 Tue Nov 26 20:04:38 2002  Steve Huston  <shuston@riverace.com>
 
         * tests/Proactor_Test.cpp: Added checks for condition where a read or
@@ -11,7 +17,7 @@ Tue Nov 26 20:04:38 2002  Steve Huston  <shuston@riverace.com>
 
 Tue Nov 26 16:08:22 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* bin/auto_run_tests.lst: Added two new tests to our daily builds. 
+	* bin/auto_run_tests.lst: Added two new tests to our daily builds.
 
 Tue Nov 26 15:10:57 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
@@ -22,12 +28,12 @@ Mon Nov 25 23:49:38 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* ace/config-macosx.h: Updates for pthread configuration, provided
 	  by John Zorko <j.zorko@att.net> and Rich Seibel
-	  <seibel_r@ociweb.com>. 
+	  <seibel_r@ociweb.com>.
 
         * ace/OS.i:
         * ace/Sock_Connect.cpp: Remove unnecessary __MACOSX__ macros.
 	  See: Thu Oct 17 19:18:02 UTC 2002  Craig Rodrigues
-	  <crodrigu@bbn.com> 
+	  <crodrigu@bbn.com>
 
 Mon Nov 25 18:20:41 2002  Steve Huston  <shuston@riverace.com>
 
