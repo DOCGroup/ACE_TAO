@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ace/SV_Shared_Memory.h"
+#include "ace/Log_Msg.h"
 #include "SV_Shared_Memory_Test.h"
 
 ACE_RCSID(SV_Shared_Memory, SV_Shared_Memory_Test, "$Id$")
@@ -70,5 +71,5 @@ int main (int, char *[])
               "SYSV IPC, or SYSV SHMEM is not supported on this platform\n"));
   return 0;
 }
-#endif /* ACE_HAS_SYSV_IPC && !ACE_LACKS_SYSV_SHMEM/
+#endif /* ACE_HAS_SYSV_IPC && !ACE_LACKS_SYSV_SHMEM */
 

@@ -1,3 +1,8 @@
+Thu Apr 10 07:47:12 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/System_V_IPC/SV_Shared_Memory/SV_Shared_Memory_Test.cpp:
+          Fixed compile error with GNU.
+
 Wed Apr  9 14:10:42 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/MakeWorkspaceCreator.pm:
