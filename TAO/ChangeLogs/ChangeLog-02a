@@ -1,3 +1,14 @@
+Wed Mar 21 08:11:15 2002  Boris Kolpackov  <bosk@ipmce.ru>
+
+	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+	  Fixed incorrect typecode genertaion for complex
+	  valuetype inheritance cases.
+	  Thanks to Frank Rybak <rybak@ll.mit.edu> for reporting
+	  this and helping to narrow it down.
+
+	* tests/OBV/Any/Any.idl:
+	  Modified inheritance tree to cover above case.
+
 Wed Mar 20 22:09:12 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* orbsvcs/orbsvcs/Trader/Interpreter_Utils_T.cpp:
@@ -11,7 +22,7 @@ Wed Mar 20 11:20:14 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 Wed Mar 20 06:59:58 2002  Douglas C. Schmidt  <schmidt@siesta.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Trader/Interpreter_Utils_T.cpp (TAO_find): 
+	* orbsvcs/orbsvcs/Trader/Interpreter_Utils_T.cpp (TAO_find):
 	  Fixed a bug where a sequence was not being accessed properly.
   	  Thansk to Laurent Sabourin <lsabourin@interstarinc.com> for
  	  reporting this.
@@ -26,7 +37,7 @@ Tue Mar 19 21:01:24 2002  Jeff Parsons <parsons@cs.wustl.edu>
         * TAO_IDL/be/be_visitor_valuetype/arglist.cpp:
 
           Fixed indentation disagreement when generating throw spec for
-          a valuetype operation, compared with generating a throw spec 
+          a valuetype operation, compared with generating a throw spec
           for an interface opertion.
 
 Tue Mar 19 09:46:09 2002  Ossama Othman  <ossama@uci.edu>
