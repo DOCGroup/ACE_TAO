@@ -1,8 +1,9 @@
-#$Id$
-# -*- perl -*-
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
+
+# $Id$
+# -*- perl -*-
 
 use lib "../../../../bin";
 
@@ -31,7 +32,7 @@ sub time_service_test_using_naming_service
     sleep 10;
 
     $status = system ($EXEPREFIX."client".$Process::EXE_EXT.
-		      "");
+                      "");
 
     $SV1->Kill ();
     $SV2->Kill ();
@@ -42,20 +43,20 @@ sub time_service_test_using_naming_service
 sub time_service_test_using_files
 {
     $SV1 = Process::Create ($time_dir."server".$Process::EXE_EXT,
-			    "-o $server_ior");
+                            "-o $server_ior");
 
     ACE::waitforfile ($server_ior);
     sleep 5;
 
     $SV2 = Process::Create ($time_dir."clerk".$Process::EXE_EXT,
-			    "-f $server_ior -o clerk_ior -t 2");
+                            "-f $server_ior -o clerk_ior -t 2");
 
     ACE::waitforfile ($clerk_ior);
 
     sleep 10;
 
     $status = system ($EXEPREFIX."client".$Process::EXE_EXT.
-		      " -f clerk_ior");
+                      " -f clerk_ior");
 
     $SV1->Kill ();
     $SV2->Kill ();
@@ -69,7 +70,7 @@ sub time_service_test_using_files
 sub time_service_test_using_ir
 {
   $ir_dir = "..".$DIR_SEPARATOR."..".$DIR_SEPARATOR."ImplRepo_Service".$DIR_SEPARATOR;
-  $IR = Process::Create ($ir_dir."ImplRepo_Service".$Process::EXE_EXT, 
+  $IR = Process::Create ($ir_dir."ImplRepo_Service".$Process::EXE_EXT,
                          "-ORBsvcconf implrepo.conf -ORBobjrefstyle url -d 1");
 
   ACE::waitforfile ($implrepo_ior);
@@ -82,7 +83,7 @@ sub time_service_test_using_ir
   sleep 10;
 
   $SV2 = Process::Create ($time_dir."clerk".$Process::EXE_EXT,
-			  "-f $server_ior -o clerk_ior -ORBobjrefstyle url");
+                          "-f $server_ior -o clerk_ior -ORBobjrefstyle url");
 
   sleep 10;
 

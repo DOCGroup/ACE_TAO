@@ -1,8 +1,9 @@
-#$Id$
-# -*- perl -*-
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
+
+# $Id$
+# -*- perl -*-
 
 use lib "../../../../bin";
 
@@ -35,7 +36,7 @@ sub airplane_test
 
 sub airplane_ir_test
 {
-  $IR = Process::Create ("..".$DIR_SEPARATOR."..".$DIR_SEPARATOR."ImplRepo_Service".$DIR_SEPARATOR."ImplRepo_Service".$Process::EXE_EXT, 
+  $IR = Process::Create ("..".$DIR_SEPARATOR."..".$DIR_SEPARATOR."ImplRepo_Service".$DIR_SEPARATOR."ImplRepo_Service".$Process::EXE_EXT,
                          "-ORBsvcconf implrepo.conf -ORBobjrefstyle url -d 0");
 
   ACE::waitforfile ($implrepo_ior);
@@ -67,7 +68,7 @@ sub nestea_test
 
 sub nestea_ir_test
 {
-  $IR = Process::Create ("..".$DIR_SEPARATOR."..".$DIR_SEPARATOR."ImplRepo_Service".$DIR_SEPARATOR."ImplRepo_Service".$Process::EXE_EXT, 
+  $IR = Process::Create ("..".$DIR_SEPARATOR."..".$DIR_SEPARATOR."ImplRepo_Service".$DIR_SEPARATOR."ImplRepo_Service".$Process::EXE_EXT,
                          "-ORBsvcconf implrepo.conf -ORBobjrefstyle url -d 0");
 
   ACE::waitforfile ($implrepo_ior);
@@ -84,7 +85,7 @@ sub nestea_ir_test
 
 sub both_ir_test
 {
-  $IR = Process::Create ("..".$DIR_SEPARATOR."..".$DIR_SEPARATOR."ImplRepo_Service".$DIR_SEPARATOR."ImplRepo_Service".$Process::EXE_EXT, 
+  $IR = Process::Create ("..".$DIR_SEPARATOR."..".$DIR_SEPARATOR."ImplRepo_Service".$DIR_SEPARATOR."ImplRepo_Service".$Process::EXE_EXT,
                          "-ORBsvcconf implrepo.conf -ORBobjrefstyle url -d 0");
 
   ACE::waitforfile ($implrepo_ior);
@@ -125,27 +126,27 @@ for ($i = 0; $i <= $#ARGV; $i++)
     }
     if ($ARGV[$i] eq "airplane")
     {
-      airplane_test ();    
+      airplane_test ();
       exit;
     }
     if ($ARGV[$i] eq "airplane_ir")
     {
-      airplane_ir_test ();    
+      airplane_ir_test ();
       exit;
     }
     if ($ARGV[$i] eq "nestea")
     {
-      nestea_test ();    
+      nestea_test ();
       exit;
     }
     if ($ARGV[$i] eq "nestea_ir")
     {
-      nestea_ir_test ();    
+      nestea_ir_test ();
       exit;
     }
     if ($ARGV[$i] eq "both_ir")
     {
-      both_ir_test ();    
+      both_ir_test ();
       exit;
     }
 

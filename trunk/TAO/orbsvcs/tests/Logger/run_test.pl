@@ -1,7 +1,9 @@
-# $Id$
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
+
+# $Id$
+# -*- perl -*-
 
 $tao_root = $ENV{TAO_ROOT};
 # This is a Perl script that runs the Logger client and server
@@ -17,7 +19,7 @@ sub service
 {
   my $args = "";
   my $prog = $EXEPREFIX."$tao_root/orbsvcs/Logging_Service/Logging_Service"
-      .$Process::EXE_EXT;    
+      .$Process::EXE_EXT;
   $SV = Process::Create ($prog, $args);
 }
 
@@ -26,7 +28,7 @@ sub test
 {
   my $args = "";
   my $prog = $EXEPREFIX."Logging_Test".$Process::EXE_EXT;
-    
+
   system ("$prog $args");
 }
 

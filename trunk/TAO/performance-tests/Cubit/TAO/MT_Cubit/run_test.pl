@@ -1,8 +1,9 @@
-# $Id$
-# -*- perl -*-
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
+
+# $Id$
+# -*- perl -*-
 
 $usage = "run_tests.pl [-l suppress -ORBgioplite] [-n iterations] [-r, for thread-per-rate] [-t low priority threads]\n";
 

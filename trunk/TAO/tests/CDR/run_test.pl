@@ -1,8 +1,9 @@
-# $Id$
-# -*- perl -*-
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
+
+# $Id$
+# -*- perl -*-
 
 use lib "../../../bin";
 require ACEutils;
@@ -16,19 +17,19 @@ $args = "";
 $| = 1;
 print STDERR "\n";
 
-sub run_test 
+sub run_test
 {
     #my $test = shift (@tests);
     my $args = shift (@argslist);
-    
+
     print STDERR "\n$brace $test $args test BEGUN\n";
     $TST = Process::Create  ($EXEPREFIX."$test".$Process::EXE_EXT,
-			     "$args");
+                             "$args");
     print STDERR "\t$test RUNNING\n";
-    $retval = ($TST->Wait ()) / 256; 
+    $retval = ($TST->Wait ()) / 256;
     if (retval != 0)
     {
-	print STDERR "$brace $test $args FAILED; exited with value $retval\n";
+        print STDERR "$brace $test $args FAILED; exited with value $retval\n";
     }
     print STDERR "$brace $test ENDED successfully\n";
 }
