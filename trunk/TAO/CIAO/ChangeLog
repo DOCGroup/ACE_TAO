@@ -1,3 +1,12 @@
+Fri Jan  2 15:36:07 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
+	* CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.hpp:
+	* CIDLC/ExecutorMappingGenerator.cpp:
+	* CIDLC/ExecutorMappingGenerator.hpp:
+
+	  Changed pass-by-value to pass-by-const-ref for fs::path argument. 
+
 Fri Jan  2 14:41:35 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CCF/CCF/IDL2/LexicalAnalyzer.cpp:
@@ -13,7 +22,7 @@ Fri Jan  2 14:41:35 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 	* CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
 
 	  Added support for readonly attribute.
-	
+
 	* CCF/Example/CIDL/LocalExecutorMapping/test-0_exec.idl.orig:
 	* CCF/Example/CIDL/LocalExecutorMapping/test-1.idl:
 	* CCF/Example/CIDL/LocalExecutorMapping/test-1_exec.idl.orig:
@@ -21,7 +30,7 @@ Fri Jan  2 14:41:35 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 	* CCF/Example/CIDL/LocalExecutorMapping/test-2_exec.idl.orig:
 
 	  Updated tests and results.
-	
+
 	* CIDLC/ExecutorMappingGenerator.cpp:
 
 	  Added support for readonly attribute.
