@@ -20,14 +20,10 @@
 #define __NO_INCLUDE_WARN__
 
 #define ACE_LACKS_GETOPT_PROTO
+#define ACE_HAS_SHM_OPEN
+// LynxOS 2.5.0 does not support MAP_PRIVATE, so map it to MAP_SHARED
+#define ACE_MAP_PRIVATE ACE_MAP_SHARED
 #define ACE_HAS_STDARG_THR_DEST
-
-// ACE_HAS_EXCEPTIONS requires -fhandle-exceptions, but that gives
-// g++ 2.7.2 fits:  it spits out all kinds of warnings that it doesn't
-// without that option (and that are just wrong), and runs out of
-// virtual memory when trying to compile ace/Log_Msg.cpp.
-// So until -fhandle-exceptions gets fixed, we can't use this with g++ . . .
-// #define ACE_HAS_EXCEPTIONS
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
 #define ACE_HAS_SYSV_IPC
@@ -41,11 +37,7 @@
 
 #define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
 
-// Platform supports reentrant functions (i.e., all the POSIX *_r functions).
-//#define ACE_HAS_REENTRANT_FUNCTIONS
-
-// Denotes that GNU has cstring.h as standard
-// which redefines memchr()
+// Denotes that GNU has cstring.h as standard, which redefines memchr()
 #define ACE_HAS_GNU_CSTRING_H
 
 // Compiler/platform correctly calls init()/fini() for shared libraries.
@@ -56,9 +48,6 @@
 
 // Compiler/platform has correctly prototyped header files.
 #define ACE_HAS_CPLUSPLUS_HEADERS
-
-// Compiler/platform supports SunOS high resolution timers.
-//#define ACE_HAS_HI_RES_TIMER
 
 // ACE_HAS_CLOCK_GETTIME requires linking with -lposix4.
 #define ACE_HAS_CLOCK_GETTIME
@@ -116,7 +105,6 @@
 //#define ACE_HAS_UCONTEXT_T
 //Platform has si_addr, but its not supported currently
 #define ACE_LACKS_SI_ADDR
-
 
 // Compiler/platform provides the sockio.h file.
 #define ACE_HAS_SOCKIO_H
