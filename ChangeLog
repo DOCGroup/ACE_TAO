@@ -1,3 +1,10 @@
+Tue Jun 17 21:50:13 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Synch.{h,i,cpp}: Changed the ACE_Recursive_Thread_Mutex's
+	  "recursive_mutex_" data member to "lock_" so that it would work
+ 	  with the ACE_Guard properly.  Thanks to Arturo Montes
+ 	  <mitosys@colomsat.net.co> for this fix.
+
 Wed Jun 18 02:14:16 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/config-cywin32.h:
