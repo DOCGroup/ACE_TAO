@@ -1,3 +1,20 @@
+Thu Apr 11 14:26:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * Timer_Hash_T.h:
+        * Timer_Heap_T.h:
+        * Timer_List_T.h:
+        * Timer_Wheel_T.cpp:
+        * Timer_Wheel_T.h:
+          The timer queue classes schedule timers using absolute time. The
+          describtion in the implementaton files correctly described this,
+          but the header file comment and the argument name where describing
+          that the queues work on delta timers, so corrected this.
+
+        * Timer_Queue_Adapters.cpp:
+        * Timer_Queue_Adapters.h:
+          Updated the describtion that the schedule method expects an absolute
+          time.
+
 Thu Apr 11 13:29:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/String_Base.h:
