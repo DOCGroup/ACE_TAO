@@ -18,10 +18,7 @@
 //
 // ============================================================================
 
-//#include      "idl.h"
-//#include      "idl_extern.h"
 #include        "be.h"
-
 #include "be_visitor_sequence.h"
 
 ACE_RCSID(be_visitor_sequence, gen_bounded_sequence_ci, "$Id$")
@@ -150,7 +147,7 @@ be_visitor_sequence_ci::gen_bounded_sequence (be_sequence *node)
       << full_class_name << "::" << class_name << " (void)" << be_nl
       << "// Default constructor." << be_nl
       << "  : TAO_Bounded_Base_Sequence (" << node->max_size ()
-      << ", 0, " << full_class_name << "::allocbuf (" << node->max_size ()
+      << ", 0, " << class_name << "::allocbuf (" << node->max_size ()
       << "), 0)" << be_nl
       << "{" << be_nl
       << "}" << be_nl
@@ -171,14 +168,14 @@ be_visitor_sequence_ci::gen_bounded_sequence (be_sequence *node)
   // constructor
   *os << "ACE_INLINE" << be_nl
       << full_class_name << "::" << class_name
-      << " (const " << full_class_name << " &rhs)" << be_nl
+      << " (const " << class_name << " &rhs)" << be_nl
       << "// Copy constructor." << be_idt_nl
       << ": TAO_Bounded_Base_Sequence (rhs)" << be_uidt_nl
       << "{" << be_idt_nl
       << "if (rhs.buffer_ != 0)" << be_nl
       << "{" << be_idt_nl;
   pt->accept(visitor);
-  *os <<" *tmp1 = " << full_class_name << "::allocbuf (" << node->max_size ()
+  *os <<" *tmp1 = " << class_name << "::allocbuf (" << node->max_size ()
       << ");" << be_nl
       << be_nl;
   pt->accept(visitor);
@@ -210,7 +207,7 @@ be_visitor_sequence_ci::gen_bounded_sequence (be_sequence *node)
 
   // operator=
   *os << "ACE_INLINE " << full_class_name << " &" << be_nl
-      << full_class_name << "::operator= (const " << full_class_name << " &rhs)" << be_nl
+      << full_class_name << "::operator= (const " << class_name << " &rhs)" << be_nl
       << "// Assignment operator.  " << be_nl
       << "{" << be_idt_nl
       << "if (this == &rhs)" << be_idt_nl
@@ -220,7 +217,7 @@ be_visitor_sequence_ci::gen_bounded_sequence (be_sequence *node)
       << "{" << be_nl
       << "}" << be_nl
       << "else" << be_idt_nl
-      << "this->buffer_ = " << full_class_name << "::allocbuf (rhs.maximum_);" << be_nl
+      << "this->buffer_ = " << class_name << "::allocbuf (rhs.maximum_);" << be_nl
       << be_nl
       <<"TAO_Bounded_Base_Sequence::operator= (rhs);" << be_nl
       << be_nl;
@@ -293,7 +290,7 @@ be_visitor_sequence_ci::gen_bounded_sequence (be_sequence *node)
       << "// We retain ownership." << be_nl
       << "if (this->buffer_ == 0)" << be_nl
       << "{" << be_idt_nl
-      << "result = " << full_class_name << "::allocbuf (this->maximum_);" << be_nl
+      << "result = " << class_name << "::allocbuf (this->maximum_);" << be_nl
       << "this->buffer_ = result;" << be_uidt_nl
       << "}" << be_nl
       << "else" << be_nl
@@ -350,7 +347,7 @@ be_visitor_sequence_ci::gen_bounded_sequence (be_sequence *node)
   *os <<"* tmp = ACE_reinterpret_cast(";
   pt->accept (visitor);
   *os << "* ACE_CAST_CONST, this->buffer_);" << be_nl
-      << full_class_name << "::freebuf (tmp);" << be_uidt_nl
+      << class_name << "::freebuf (tmp);" << be_uidt_nl
       << "}" << be_nl
       << "this->buffer_ = data;" << be_nl
       << "this->release_ = release;" << be_uidt_nl

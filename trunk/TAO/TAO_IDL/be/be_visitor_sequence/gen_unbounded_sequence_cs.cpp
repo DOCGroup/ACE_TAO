@@ -109,7 +109,7 @@ be_visitor_sequence_cs::gen_unbounded_sequence (be_sequence *node)
       << "{" << be_idt_nl;
   pt->accept (visitor);
   *os << "* tmp = 0;" << be_nl
-      << "tmp = " << full_class_name << "::allocbuf (length);" << be_nl
+      << "tmp = " << class_name << "::allocbuf (length);" << be_nl
       << be_nl
       << "if (this->buffer_ != 0)" << be_nl
       << "{" << be_idt_nl;
@@ -132,7 +132,7 @@ be_visitor_sequence_cs::gen_unbounded_sequence (be_sequence *node)
 
   *os << be_nl
       << "if (this->release_)" << be_idt_nl
-      << full_class_name << "::freebuf (old);" << be_uidt_nl << be_uidt_nl
+      << class_name << "::freebuf (old);" << be_uidt_nl << be_uidt_nl
       << "}" << be_nl
       << "this->buffer_ = tmp;" << be_uidt_nl
       << "}" << be_nl
@@ -150,7 +150,7 @@ be_visitor_sequence_cs::gen_unbounded_sequence (be_sequence *node)
   pt->accept (visitor);
   *os << " *,this->buffer_);" << be_nl
       << be_nl
-      << full_class_name << "::freebuf (tmp);" << be_nl
+      << class_name << "::freebuf (tmp);" << be_nl
       << "this->buffer_ = 0;" << be_uidt_nl
       << "} " << be_nl
       << be_nl;

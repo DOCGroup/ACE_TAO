@@ -107,7 +107,8 @@ be_visitor_sequence_ci::gen_bounded_wstr_sequence (be_sequence *node)
   *os << "ACE_INLINE" << be_nl
       << full_class_name << "::" << class_name << " (void)" << be_nl
       << "  : TAO_Bounded_Base_Sequence (" << node->max_size ()
-      << ", " << full_class_name << "::allocbuf(" << node->max_size () << "))" << be_nl
+      << ", " << class_name << "::allocbuf(" 
+      << node->max_size () << "))" << be_nl
       << "{" << be_nl
       << "}" << be_nl
       << be_nl;
@@ -117,20 +118,25 @@ be_visitor_sequence_ci::gen_bounded_wstr_sequence (be_sequence *node)
       << full_class_name << "::" << class_name << " (CORBA::ULong length," << be_idt_nl
       << "CORBA::WChar* *value," << be_nl
       << "CORBA::Boolean release)" << be_uidt_nl
-      << "  : TAO_Bounded_Base_Sequence (" << node->max_size () << ", length, value, release)" << be_nl
+      << "  : TAO_Bounded_Base_Sequence (" << node->max_size () 
+      << ", length, value, release)" << be_nl
       << "{" << be_nl
       << "}" << be_nl
       << be_nl;
 
   // constructor
   *os << "ACE_INLINE" << be_nl
-      << full_class_name << "::" << class_name << " (const " << full_class_name << " &rhs)" << be_idt_nl
+      << full_class_name << "::" << class_name << " (const " 
+      << class_name << " &rhs)" << be_idt_nl
       << ": TAO_Bounded_Base_Sequence (rhs)" << be_uidt_nl
       << "{" << be_idt_nl
       << "if (rhs.buffer_ != 0)" << be_nl
       << "{" << be_idt_nl
-      << "CORBA::WChar **tmp1 = " << full_class_name << "::allocbuf (this->maximum_);" << be_nl
-      << "CORBA::WChar ** const tmp2 = ACE_reinterpret_cast (CORBA::WChar ** ACE_CAST_CONST, rhs.buffer_);" << be_nl
+      << "CORBA::WChar **tmp1 = " << class_name 
+      << "::allocbuf (this->maximum_);" << be_nl
+      << "CORBA::WChar ** const tmp2 =" << be_idt_nl 
+      << "ACE_reinterpret_cast (CORBA::WChar ** ACE_CAST_CONST, rhs.buffer_);" 
+      << be_uidt_nl
       << be_nl
       << "for (CORBA::ULong i=0; i < rhs.length_; i++)" << be_idt_nl
       << "tmp1[i] = CORBA::wstring_dup (tmp2[i]);" << be_uidt_nl
@@ -146,14 +152,17 @@ be_visitor_sequence_ci::gen_bounded_wstr_sequence (be_sequence *node)
 
   // operator=
   *os << "ACE_INLINE " << full_class_name << "& " << be_nl
-      << full_class_name << "::operator= (const " << full_class_name << " &rhs)" << be_nl
+      << full_class_name << "::operator= (const " << class_name 
+      << " &rhs)" << be_nl
       << "{" << be_idt_nl
       << "if (this == &rhs)" << be_idt_nl
       << "return *this;" << be_uidt_nl
       << be_nl
       << "if (this->release_)" << be_nl
       << "{ " << be_idt_nl
-      << "CORBA::WChar **tmp = ACE_reinterpret_cast (CORBA::WChar **, this->buffer_);" << be_nl
+      << "CORBA::WChar **tmp =" << be_idt_nl 
+      << "ACE_reinterpret_cast (CORBA::WChar **, this->buffer_);" 
+      << be_uidt_nl
       << be_nl
       << "for (CORBA::ULong i = 0; i < this->length_; ++i)" << be_nl
       << "{" << be_idt_nl
@@ -162,12 +171,17 @@ be_visitor_sequence_ci::gen_bounded_wstr_sequence (be_sequence *node)
       << "}" << be_uidt_nl
       << "}" << be_nl
       << "else" << be_idt_nl
-      << "this->buffer_ = " << full_class_name << "::allocbuf (rhs.maximum_);" << be_uidt_nl
+      << "this->buffer_ = " << class_name 
+      << "::allocbuf (rhs.maximum_);" << be_uidt_nl
       << be_nl
       << "TAO_Bounded_Base_Sequence::operator= (rhs);" << be_nl
       << be_nl
-      << "CORBA::WChar **tmp1 = ACE_reinterpret_cast (CORBA::WChar **, this->buffer_);" << be_nl
-      << "CORBA::WChar ** const tmp2 = ACE_reinterpret_cast (CORBA::WChar ** ACE_CAST_CONST, rhs.buffer_);" << be_nl
+      << "CORBA::WChar **tmp1 =" << be_idt_nl 
+      << "ACE_reinterpret_cast (CORBA::WChar **, this->buffer_);" 
+      << be_uidt_nl
+      << "CORBA::WChar ** const tmp2 =" << be_idt_nl 
+      << "ACE_reinterpret_cast (CORBA::WChar ** ACE_CAST_CONST, rhs.buffer_);" 
+      << be_uidt_nl
       << be_nl
       << "for (CORBA::ULong i = 0; i < rhs.length_; i++)" << be_idt_nl
       << "tmp1[i] = CORBA::wstring_dup (tmp2[i]);" << be_uidt_nl
@@ -196,12 +210,14 @@ be_visitor_sequence_ci::gen_bounded_wstr_sequence (be_sequence *node)
       << "// We retain ownership. " << be_nl
       << "if (this->buffer_ == 0)" << be_nl
       << "{" << be_idt_nl
-      << "result = " << full_class_name << "::allocbuf (this->maximum_);" << be_nl
+      << "result = " << class_name << "::allocbuf (this->maximum_);" 
+      << be_nl
       << "this->buffer_ = result;" << be_uidt_nl
       << "}" << be_nl
       << "else" << be_nl
       << "{" << be_idt_nl
-      << "result = ACE_reinterpret_cast (CORBA::WChar **, this->buffer_);" << be_uidt_nl
+      << "result = ACE_reinterpret_cast (CORBA::WChar **, this->buffer_);" 
+      << be_uidt_nl
       << "}" << be_uidt_nl
       << "}" << be_nl
       << "else // if (orphan == 1)" << be_nl
@@ -210,7 +226,8 @@ be_visitor_sequence_ci::gen_bounded_wstr_sequence (be_sequence *node)
       << "{" << be_idt_nl
       << "// We set state back to default and relinquish" << be_nl
       << "// ownership." << be_nl
-      << "result = ACE_reinterpret_cast (CORBA::WChar **, this->buffer_);" << be_nl
+      << "result = ACE_reinterpret_cast (CORBA::WChar **, this->buffer_);" 
+      << be_nl
       << "this->maximum_ = 0;" << be_nl
       << "this->length_ = 0;" << be_nl
       << "this->buffer_ = 0;" << be_nl

@@ -146,7 +146,7 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
   *os << "ACE_INLINE" << be_nl
       << full_class_name << "::" << class_name << " (void)" << be_idt_nl
       << "  :  TAO_Bounded_Base_Sequence (" << node->max_size ()
-      << ", " << full_class_name << "::allocbuf (" << node->max_size () << "))" << be_uidt_nl
+      << ", " << class_name << "::allocbuf (" << node->max_size () << "))" << be_uidt_nl
       << "{" << be_nl
       << "}" << be_nl
       << be_nl;
@@ -167,7 +167,7 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
   // constructor
   *os << "ACE_INLINE" << be_nl
       << full_class_name << "::" << class_name << " (const "
-      << full_class_name << " &rhs)" << be_nl
+      << class_name << " &rhs)" << be_nl
       << "// Copy constructor." << be_idt_nl
       << ": TAO_Bounded_Base_Sequence (rhs)" << be_uidt_nl
       << "{" << be_idt_nl
@@ -193,7 +193,7 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
   // assignment operator
   *os << "ACE_INLINE " << full_class_name << " &" << be_nl
       << full_class_name << "::operator= (const "
-      << full_class_name << " &rhs)" << be_nl
+      << class_name << " &rhs)" << be_nl
       << "// Assignment from another Bounded sequence." << be_nl
       << "{" << be_idt_nl
       << "if (this == &rhs)" << be_idt_nl
@@ -213,18 +213,21 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
   pt->accept (visitor);
   *os << "::_nil ();" << be_uidt_nl
       << "}" << be_nl
-      << "// No need to reallocate the buffer since it is always of size" << be_nl
+      << "// No need to reallocate the buffer since it is always of size" 
+      << be_nl
       << "// " << node->max_size () << "" << be_nl
       << "#if 0" << be_idt_nl
       << "if (this->maximum_ < rhs.maximum_)" << be_nl
       << "{" << be_idt_nl
-      << full_class_name << "::freebuf (tmp);" << be_nl
-      << "this->buffer_ = " << full_class_name << "::allocbuf (rhs.maximum_);" << be_uidt_nl
+      << class_name << "::freebuf (tmp);" << be_nl
+      << "this->buffer_ = " << class_name 
+      << "::allocbuf (rhs.maximum_);" << be_uidt_nl
       << "}" << be_uidt_nl
       << "#endif /* 0 */" << be_uidt_nl
       << "}" << be_nl
       << "else" << be_idt_nl
-      << "this->buffer_ = " << full_class_name << "::allocbuf (rhs.maximum_);" << be_uidt_nl
+      << "this->buffer_ = " << class_name 
+      << "::allocbuf (rhs.maximum_);" << be_uidt_nl
       << be_nl
       << "TAO_Bounded_Base_Sequence::operator= (rhs);" << be_nl
       << be_nl;
@@ -302,7 +305,7 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
       << "// We retain ownership." << be_nl
       << "if (this->buffer_ == 0)" << be_nl
       << "{" << be_idt_nl
-      << "result = " << full_class_name << "::allocbuf (this->maximum_);" << be_nl
+      << "result = " << class_name << "::allocbuf (this->maximum_);" << be_nl
       << "this->buffer_ = result;" << be_uidt_nl
       << "}" << be_nl
       << "else" << be_nl

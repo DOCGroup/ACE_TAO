@@ -153,7 +153,7 @@ be_visitor_sequence_ci::gen_unbounded_sequence (be_sequence *node)
       << full_class_name << "::" << class_name << " (CORBA::ULong maximum) "
       << "// Constructor using a maximum length value." << be_idt_nl
       << ": TAO_Unbounded_Base_Sequence (maximum, "
-      << full_class_name << "::allocbuf (maximum))"
+      << class_name << "::allocbuf (maximum))"
       << be_uidt_nl
       << "{" << be_nl
       << "}" << be_nl
@@ -174,14 +174,14 @@ be_visitor_sequence_ci::gen_unbounded_sequence (be_sequence *node)
   // constructor
   *os << "ACE_INLINE" << be_nl
       << full_class_name << "::" << class_name << " (const " 
-      << full_class_name << " &rhs)" << be_nl
+      << class_name << " &rhs)" << be_nl
       << "// Copy constructor." << be_idt_nl;
   *os << ": TAO_Unbounded_Base_Sequence (rhs)" << be_uidt_nl
       << "{" << be_idt_nl
       << "if (rhs.buffer_ != 0)" << be_nl
       << "{" << be_idt_nl;
   pt->accept(visitor);
-  *os <<" *tmp1 = " << full_class_name << "::allocbuf (this->maximum_);" << be_nl;
+  *os <<" *tmp1 = " << class_name << "::allocbuf (this->maximum_);" << be_nl;
   pt->accept(visitor);
   *os << " * const tmp2 = ACE_reinterpret_cast (";
   pt->accept (visitor);
@@ -211,7 +211,7 @@ be_visitor_sequence_ci::gen_unbounded_sequence (be_sequence *node)
   
   // operator =
   *os << "ACE_INLINE " << full_class_name << " &" << be_nl
-      << full_class_name << "::operator= (const " << full_class_name << " &rhs)" << be_nl
+      << full_class_name << "::operator= (const " << class_name << " &rhs)" << be_nl
       << "// Assignment operator." << be_nl
       << "{" << be_idt_nl
       << "if (this == &rhs)" << be_idt_nl
@@ -226,13 +226,13 @@ be_visitor_sequence_ci::gen_unbounded_sequence (be_sequence *node)
   *os <<" *tmp = ACE_reinterpret_cast (";
   pt->accept (visitor); 
   *os << " *, this->buffer_);" << be_nl
-      << full_class_name << "::freebuf (tmp);" << be_nl
-      << "this->buffer_ = " << full_class_name 
+      << class_name << "::freebuf (tmp);" << be_nl
+      << "this->buffer_ = " << class_name 
       << "::allocbuf (rhs.maximum_);" << be_uidt_nl
       << "}" << be_uidt_nl
       << "}" << be_nl
       << "else" << be_idt_nl
-      << "this->buffer_ = " << full_class_name 
+      << "this->buffer_ = " << class_name 
       << "::allocbuf (rhs.maximum_);" << be_uidt_nl
       << be_nl
       << "TAO_Unbounded_Base_Sequence::operator= (rhs);" << be_nl
@@ -311,7 +311,7 @@ be_visitor_sequence_ci::gen_unbounded_sequence (be_sequence *node)
       << "// We retain ownership." << be_nl
       << "if (this->buffer_ == 0)" << be_nl
       << "{" << be_idt_nl
-      << "result = " << full_class_name << "::allocbuf (this->length_);" << be_nl
+      << "result = " << class_name << "::allocbuf (this->length_);" << be_nl
       << "this->buffer_ = result;" << be_uidt_nl
       << "}" << be_nl
       << "else" << be_nl
@@ -368,7 +368,7 @@ be_visitor_sequence_ci::gen_unbounded_sequence (be_sequence *node)
   *os <<" *tmp = ACE_reinterpret_cast("; 
   pt->accept (visitor); 
   *os << "*,this->buffer_);" << be_nl
-      << full_class_name << "::freebuf (tmp);" << be_uidt_nl
+      << class_name << "::freebuf (tmp);" << be_uidt_nl
       << "}" << be_nl
       << "this->buffer_ = data;" << be_nl
       << "this->release_ = release;" << be_uidt_nl
