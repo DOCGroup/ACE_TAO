@@ -75,7 +75,7 @@ Point of contact: <a href="mailto: irfan@cs.wustl.edu">Irfan Pyarali</a>
       realized, i.e., the connection to that new object may use a
       different interface from the original object. Currently the only
       way to change this is to use the <A
-      HREF="../Options.html#-ORBendpoint"><b>-ORBendpoint</b> option</a> to
+      HREF="../Options.html#-ORBEndpoint"><b>-ORBEndpoint</b> option</a> to
       manually specify that dynamically-created objects bind to a
       specific interface so that their IIOP Profile has the desired
       hostname. A more desirable fix is being investigated.</p>
@@ -258,7 +258,7 @@ Point of contact: <a href="mailto: irfan@cs.wustl.edu">Irfan Pyarali</a>
   </li>
 
   <li><p>There is no need to call ORB::open if the port is 0. It will
-      automagically be called when the first stub is created.</p>
+      automatically be called when the first stub is created.</p>
   </li>
 
   <li><p>The ORB now handles nested upcalls correctly. See <a
@@ -286,7 +286,7 @@ Point of contact: <a href="mailto: irfan@cs.wustl.edu">Irfan Pyarali</a>
       to specify the TCP port number on which the ORB will listen,
       i.e., let the OS decide.  While this works properly (by
       providing an argument such as
-      `<code>-ORBendpoint iiop://localhost:0</code>'), the actual port
+      `<code>-ORBEndpoint iiop://localhost:0</code>'), the actual port
       number used by the server won't be available after the server
       starts listening. TAO now tries to bind the address when a port
       set to zero is issued so it can get the actual address to publish
@@ -308,7 +308,7 @@ Point of contact: <a href="mailto: irfan@cs.wustl.edu">Irfan Pyarali</a>
       low nibble in hex.</p>
   </li>
 
-  <li><p><code>CORBA_ORB::run()</code> should be able to be called
+  <li><p><code>CORBA::ORB::run()</code> should be able to be called
       multiply in the same execution path now.</p>
   </li>
 
@@ -317,15 +317,15 @@ Point of contact: <a href="mailto: irfan@cs.wustl.edu">Irfan Pyarali</a>
   </li>
 
   <li><p>Support for <b><a
-      href="../Options.html#-ORBsndsock">-ORBsndsock</a></b> and <b><a
-      href="../Options.html#-ORBrcvsock">-ORBrcvsock</a></b> ORB
+      href="../Options.html#-ORBSndSock">-ORBSndSock</a></b> and <b><a
+      href="../Options.html#-ORBRcvSock">-ORBRcvSock</a></b> ORB
       options. See <a href="../Options.html">options documentation</a>
       for details.</p>
   </li>
 
   <li><p>Support for connections pre-establishment using the <b><a
-      href="../Options.html#-ORBpreconnect">-ORBpreconnect</a></b>
-      option. This allows connections to be esablished before any
+      href="../Options.html#-ORBPreconnect">-ORBPreconnect</a></b>
+      option. This allows connections to be established before any
       CORBA requests are made. See <a href="../Options.html">options
       documentation</a> for details.</p>
   </li>
@@ -362,8 +362,8 @@ Point of contact: <a href="mailto: irfan@cs.wustl.edu">Irfan Pyarali</a>
   </li>
 
   <li><p>Support for the -ORBInitRef option. This allows run-time
-      specification of an ObjectId:IOR mapping. It is used by
-      resolve_initial_references () and overrides the orb-install-time
+      specification of an ObjectId&lt;-&gt;IOR mapping. It is used by
+      resolve_initial_references() and overrides the ORB install-time
       defaults.</p>
   </li>
 
@@ -420,7 +420,13 @@ Point of contact: <a href="mailto: irfan@cs.wustl.edu">Irfan Pyarali</a>
       many potentially subtle problems.  The original collocation implementation
       is still supported using by specifying the -ORBCollocationStrategy direct
       command option (because the original scheme has slightly less method
-      invocation overhead.)
+      invocation overhead.)</p>
+  </li>
+
+  <li><p>
+      Implemented CORBA::ORB::destroy() method.  See the CORBA 2.3a
+      specification for details about this method.
+      </p>
   </li>
 
 </ul>
