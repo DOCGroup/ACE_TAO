@@ -27,6 +27,7 @@ use vars qw(@ISA);
 my($index)    = 0;
 my(@progress) = ('|', '/', '-', '\\');
 my($cmdenv)   = 'MPC_COMMANDLINE';
+my($minperl)  = 5.006;
 
 # ************************************************************
 # Subroutine Section
@@ -201,9 +202,9 @@ sub optionError {
 
 
 sub run {
-  my($self)       = shift;
-  my(@args)       = @_;
-  my($status)     = 0;
+  my($self)   = shift;
+  my(@args)   = @_;
+  my($status) = 0;
 
   ## Dynamically load in each perl module and set up
   ## the type tags and project creators
@@ -225,7 +226,17 @@ sub run {
                                 1,
                                 @args);
   if (!defined $options) {
+    ## If options are not defined, that means that calling options
+    ## took care of whatever functionality that was required and
+    ## we can now return with a good status.
     return $status;
+  }
+
+  ## Warn about the minimum version of perl that is required
+  if ($] < $minperl) {
+    $self->warning("Perl version $minperl is required. " .
+                   "Execution will continue, however you may see " .
+                   "unexpected results.");
   }
 
   ## Set up a hash that we can use to keep track of what
