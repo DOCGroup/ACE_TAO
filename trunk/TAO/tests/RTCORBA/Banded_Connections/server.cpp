@@ -302,7 +302,7 @@ object_activation_exception_test (RTPortableServer::POA_ptr poa,
                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      ACE_DEBUG ((LM_DEBUG, "Test failed: no exception caught\n"));
+      ACE_DEBUG ((LM_DEBUG, "ERROR: no exception caught\n"));
     }
   ACE_CATCH (CORBA::BAD_PARAM, ex)
     {
@@ -311,7 +311,7 @@ object_activation_exception_test (RTPortableServer::POA_ptr poa,
     }
   ACE_CATCHANY
     {
-      ACE_DEBUG ((LM_DEBUG, "Test failed: unexpected exception caught\n"));
+      ACE_DEBUG ((LM_DEBUG, "ERROR: unexpected exception caught\n"));
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
@@ -332,7 +332,7 @@ poa_creation_exception_test (PortableServer::POA_ptr root_poa,
                               policies,
                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      ACE_DEBUG ((LM_DEBUG, "Test failed: no exception caught\n"));
+      ACE_DEBUG ((LM_DEBUG, "ERROR: no exception caught\n"));
     }
   ACE_CATCH (PortableServer::POA::InvalidPolicy, ex)
     {
@@ -341,7 +341,7 @@ poa_creation_exception_test (PortableServer::POA_ptr root_poa,
     }
   ACE_CATCHANY
     {
-      ACE_DEBUG ((LM_DEBUG, "Test failed: unexpected exception\n"));
+      ACE_DEBUG ((LM_DEBUG, "ERROR: unexpected exception\n"));
       ACE_RE_THROW;
     }
   ACE_ENDTRY;

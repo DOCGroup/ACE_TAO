@@ -39,7 +39,7 @@ $client_args =
 if ($^O eq "MSWin32") {
     $server_args =
         "-n $iorfile1 -o $iorfile2 -b bands.nt -ORBSvcConf $server_conf "
-            ."-p 1 -w 3 "
+            ."-p 1 -w 7 "
             ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=2 "
                 ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=4 "
                     ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=6 ";

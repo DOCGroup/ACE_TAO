@@ -1,3 +1,20 @@
+Fri May 25 17:38:42 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* tests/RTCORBA/Banded_Connections/server.cpp:
+          Modified the error messages so that they would be highlighted by
+          the scoreboard error parser.  It turns out that this test has been
+          failing on Win32, but it wasn't noticed since the error messages didn't
+          print out one of the "error" words that the scoreboard script looks for.
+          Note: The failure was due to a wrong parameter being passed to the
+          server application and not due to a bug in RT CORBA.
+
+	* tests/RTCORBA/Banded_Connections/run_test.pl:
+          Fixed the wrong priority flag.  The flag is used to specify a bad
+          priority value that will cause the RT POA to throw an exception.  It
+          turns out that the value (3) was in one of the priority bands, so the
+          test wasn't throwing an exception.  Changed to priority 7 which wasn't
+          in a band.
+
 Fri May 25 15:56:17 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* examples/PluggableUDP/DIOP/DIOP_Acceptor.{cpp,h}:
