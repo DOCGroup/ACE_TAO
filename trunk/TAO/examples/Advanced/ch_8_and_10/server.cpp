@@ -378,7 +378,7 @@ throw(CORBA::SystemException)
                 search_str = slist[i].key.model_desc();
 
             // Find first matching device (if any).
-            where = find_if(
+            where = std::find_if(
                         m_assets.begin(), m_assets.end(),
                         StrFinder(sc, search_str)
                     );
@@ -400,14 +400,14 @@ throw(CORBA::SystemException)
                 num_found++;
 
                 // Find next matching device with this key.
-                where = find_if(
+                where = std::find_if(
                             ++where, m_assets.end(),
                             StrFinder(sc, search_str)
                         );
             }
         }
     }
-    cerr << "end" << endl;
+    std::cerr << "end" << std::endl;
 }
 
 //----------------------------------------------------------------
@@ -438,7 +438,7 @@ main(int argc, char * argv[])
         // Write controller stringified reference to stdout
         CCS::Controller_var ctrl = ctrl_servant._this();
         CORBA::String_var str = orb->object_to_string(ctrl.in());
-        cout << str.in() << endl << endl;
+        std::cout << str.in() << std::endl << std::endl;
 
         // Create a few devices. (Thermometers have odd asset
         // numbers, thermostats have even asset numbers.)
@@ -455,7 +455,9 @@ main(int argc, char * argv[])
         orb->run();
     }
     catch (const CORBA::Exception & e) {
-        cerr << "Uncaught CORBA exception: " << e << endl;
+        std::cerr << "Uncaught CORBA exception: " 
+                  //<< e 
+                  << std::endl;
         return 1;
     }
     catch (...) {
