@@ -146,6 +146,7 @@ be_visitor_operation_interceptors_cs::visit_operation (be_operation *node)
     }
   else
     {
+      *os << "CORBA::ULong length = 0;" << be_nl;
       // The insertion operator is different for different nodes.
       // We change our scope to go to the argument scope to
       // be able to decide this.
