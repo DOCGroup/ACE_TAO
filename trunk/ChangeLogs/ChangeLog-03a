@@ -1,3 +1,10 @@
+Thu Oct 19 12:12:00 2000  Darrell Brunsch <brunsch@uci.edu>
+
+	* ace/ACE_Lib_Find.h:
+
+	  Added missing static specifier for the wchar version of
+          strrepl.
+
 Thu Oct 19 12:03:41 2000  Darrell Brunsch <brunsch@uci.edu>
 
 	* apps/JAWS2/HTTPU/HTTPU.DSP:
