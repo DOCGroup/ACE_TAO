@@ -38,6 +38,7 @@ use Getopt::Std;
 @files_dsp = ();
 @files_idl = ();
 @files_pl = ();
+@files_changelog = ();
 
 # To keep track of errors and warnings
 $errors = 0;
@@ -101,6 +102,9 @@ sub store_file ($)
     }
     elsif ($name =~ /\.pl$/i) {
         push @files_pl, ($name);
+    }
+    elsif ($name =~ /ChangeLog/i) {
+        push @files_changelog, ($name);
     }
 }
 
@@ -807,6 +811,44 @@ sub check_for_ace_check ()
     }
 }
 
+# This test checks for broken ChangeLog entries.
+sub check_for_changelog_errors ()
+{
+    print "Running ChangeLog check\n";
+    foreach $file (@files_changelog) {
+        my $line = 0;
+        if (open (FILE, $file)) {
+            my $disable = 0;
+            my $found_backslash = 0;
+            my $found_cvs_conflict = 0;
+
+            print "Looking at file $file\n" if $opt_d;
+            while (<FILE>) {
+                ++$line;
+
+                next if m/^\s*\/\//;
+                next if m/^\s*$/;
+
+                if ($disable == 0) {
+		    # Check for backslashes in paths.
+                    if (m/\*.*\\[^ ]*:/) {
+                        print_error ("Backslashes in file path - $file ($line)");
+                    }
+
+                    # Check for CVS conflict tags
+                    if (m/^<<<<</ || m/^=====/ || m/^>>>>>/) {
+                        print_error ("CVS conflict markers in $file ($line)");
+                    }
+                }
+            }
+            close (FILE);
+        }
+        else {
+            print STDERR "Error: Could not open $file\n";
+        }
+    }
+}
+
 ##############################################################################
 
 use vars qw/$opt_c $opt_d $opt_h $opt_l $opt_m $opt_v/;
@@ -858,6 +900,7 @@ check_for_absolute_ace_wrappers () if ($opt_l >= 3);
 check_for_bad_ace_trace () if ($opt_l >= 4);
 check_for_missing_rir_env () if ($opt_l >= 5);
 check_for_ace_check () if ($opt_l >= 3);
+check_for_changelog_errors () if ($opt_l >= 1);
 
 print "\nFuzz.pl - $errors error(s), $warnings warning(s)\n";
 
