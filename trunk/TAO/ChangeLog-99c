@@ -1,3 +1,8 @@
+Thu Apr 22 07:53:07 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* examples/POA/Reference_Counted_Servant/Makefile:
+	  Fixed small compilation problems.
+
 Wed Apr 21 22:15:43 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/POA: Phase three of the POA rearchitecturing is now
