@@ -82,23 +82,18 @@ protected:
   virtual int handle_events (ACE_Time_Value &wait_time);
 
   /**
-   * Dispatch a single set of events.  If <milli_seconds> elapses
-   * before any events occur, return 0. Return 1 if a completion is
-   * dispatched. Return -1 on errors.
-   */
-  virtual int handle_events (u_long milli_seconds);
-
-  /**
    * Block indefinitely until at least one event is dispatched.
-   * Dispatch a single set of events.  If <wait_time> elapses before
-   * any events occur, return 0.  Return 1 on success i.e., when a
+   * Dispatch a single set of events. Return 1 on success i.e., when a
    * completion is dispatched, non-zero (-1) on errors and errno is
    * set accordingly.
    */
   virtual int handle_events (void);
 
-  /// From ACE_POSIX_AIOCB_Proactor.
-  virtual int start_aio (ACE_POSIX_Asynch_Result *result);
+  /// Internal completion detection and dispatching.
+  int handle_events_i (ACE_Time_Value *delta);
+
+  /// Initiate an aio operation.
+  virtual int start_aio_i (ACE_POSIX_Asynch_Result *result);
 
   /// Check AIO for completion, error and result status
   /// Return: 1 - AIO completed , 0 - not completed yet
@@ -114,7 +109,6 @@ protected:
   /// From ACE_POSIX_AIOCB_Proactor.
   /// Attempt to cancel running request
   virtual int cancel_aiocb (ACE_POSIX_Asynch_Result *result);
-  virtual int cancel_aio (ACE_HANDLE handle);
 
   /// Specific Sun aiowait
   int wait_for_start (ACE_Time_Value * abstime);

@@ -458,9 +458,6 @@ Acceptor::~Acceptor (void)
 void
 Acceptor::cancel_all (void)
 {
-  // This method can be called only after proactor event loop is done
-  // in all threads.
-
   ACE_GUARD (ACE_SYNCH_RECURSIVE_MUTEX, monitor, this->lock_);
 
   this->cancel ();
@@ -1003,8 +1000,6 @@ Connector::~Connector (void)
 void
 Connector::cancel_all(void)
 {
-  // This method can be called only after proactor event loop is done
-  // in all threads.
   ACE_GUARD (ACE_SYNCH_RECURSIVE_MUTEX, monitor, this->lock_);
 
   this->cancel ();
@@ -1846,14 +1841,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               ACE_TEXT ("(%t) Cancel Connector/Senders: sessions_=%d\n"),
               connector.get_number_sessions ()
             ));
-  //connector.cancel_all ();
+  connector.cancel_all ();
  
   //Cancel all pending AIO on Acceptor And Receivers
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Cancel Acceptor/Receivers:sessions_=%d\n"),
               acceptor.get_number_sessions ()
             ));
-  //acceptor.cancel_all ();
+  acceptor.cancel_all ();
    
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Stop Thread Pool Task\n")
