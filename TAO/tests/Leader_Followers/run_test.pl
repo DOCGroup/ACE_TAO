@@ -109,6 +109,7 @@ if ($server == -1) {
 unlink $iorfile;
 
 if ($server != 0 || $client != 0) {
+  print STDERR "ERROR: server exit value = $server and client exit value = $client\n";
   exit 1;
 }
 }
