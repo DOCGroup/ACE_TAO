@@ -474,6 +474,12 @@ public:
   // added to the <size> parameter which will store handles used for
   // internal management purposes.
 
+  virtual int set_sig_handler (ACE_Sig_Handler *signal_handler);
+  // Use a user specified signal handler instead.
+
+  virtual int set_timer_queue (ACE_Timer_Queue *timer_queue);
+  // Use a user specified timer queue instead.
+
   virtual int close (void);
   // Close down the WFMO_Reactor and release all of its resources.
 

@@ -48,6 +48,12 @@ public:
 		    ACE_Timer_Queue * = 0) = 0;
   // Initialization.  
 
+  virtual int set_sig_handler (ACE_Sig_Handler *signal_handler) = 0;
+  // Use a user specified signal handler instead.
+
+  virtual int set_timer_queue (ACE_Timer_Queue *timer_queue) = 0;
+  // Use a user specified timer queue instead.
+
   virtual int close (void) = 0;
   // Close down and release all resources.
 
