@@ -414,6 +414,7 @@ ACE_Log_Msg::ACE_Log_Msg (void)
     linenum_ (0),
     restart_ (1),  // Restart by default...
     ostream_ (0),
+    msg_callback_ (0),
     trace_depth_ (0),
     trace_active_ (0),
     tracing_enabled_ (1), // On by default?
@@ -557,6 +558,10 @@ ACE_Log_Msg::open (const ASYS_TCHAR *prog_name,
         this->msg_ostream (ACE_DEFAULT_LOG_STREAM);
 #endif /* ACE_LACKS_IOSTREAM_TOTALLY */
     }
+
+  if (ACE_BIT_ENABLED (flags, ACE_Log_Msg::MSG_CALLBACK))
+    ACE_SET_BITS (ACE_Log_Msg::flags_, ACE_Log_Msg::MSG_CALLBACK);
+
   if (ACE_BIT_ENABLED (flags, ACE_Log_Msg::SILENT))
     ACE_SET_BITS (ACE_Log_Msg::flags_, ACE_Log_Msg::SILENT);
 
@@ -1089,6 +1094,11 @@ ACE_Log_Msg::log (ACE_Log_Record &log_record,
                           this->msg_ostream ());
 #endif /* !ACE_HAS_WINCE */
 
+      if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_,
+                           ACE_Log_Msg::MSG_CALLBACK)
+          && this->msg_callback () != 0)
+        this->msg_callback ()->log (log_record);
+
       if (tracing)
         this->start_tracing ();
     }
@@ -1135,7 +1145,8 @@ ACE_Log_Msg::set (const ASYS_TCHAR *filename,
                   int status,
                   int err,
                   int rs,
-                  ostream *os)
+                  ostream *os,
+                  ACE_Log_Msg_Callback *c)
 {
   ACE_TRACE ("ACE_Log_Msg::set");
   this->file (filename);
@@ -1144,6 +1155,7 @@ ACE_Log_Msg::set (const ASYS_TCHAR *filename,
   this->errnum (err);
   this->restart (rs);
   this->msg_ostream (os);
+  this->msg_callback (c);
 }
 
 void
@@ -1159,6 +1171,7 @@ ACE_Log_Msg::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nmsg_ = %s\n"), this->msg_));
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nrestart_ = %d\n"), this->restart_));
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nostream_ = %x\n"), this->ostream_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nmsg_callback_ = %x\n"), this->msg_callback_));
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nprogram_name_ = %s\n"), this->program_name_ ? this->program_name_ : ASYS_TEXT ("<unknown>")));
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nlocal_host_ = %s\n"), this->local_host_ ? this->local_host_ : ASYS_TEXT ("<unknown>")));
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\npid_ = %d\n"), this->getpid ()));
@@ -1356,8 +1369,20 @@ ACE_Log_Msg::msg (const ASYS_TCHAR *m)
                    (sizeof this->msg_ / sizeof (ASYS_TCHAR)));
 }
 
+ACE_Log_Msg_Callback *
+ACE_Log_Msg::msg_callback (void) const
+{
+  return this->msg_callback_;
+}
+
+void 
+ACE_Log_Msg::msg_callback (ACE_Log_Msg_Callback *c)
+{
+  this->msg_callback_ = c;
+}
+
 ostream *
-ACE_Log_Msg::msg_ostream (void)
+ACE_Log_Msg::msg_ostream (void) const
 {
   return this->ostream_;
 }
@@ -1395,6 +1420,10 @@ ACE_Log_Msg::getpid (void) const
     ACE_Log_Msg::pid_ = ACE_OS::getpid ();
 
   return ACE_Log_Msg::pid_;
+}
+
+ACE_Log_Msg_Callback::~ACE_Log_Msg_Callback (void)
+{
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

@@ -29,7 +29,8 @@
   do { if(!(X)) { \
   int __ace_error = ACE_OS::last_error (); \
   ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
-  ace___->set (ASYS_TEXT (__FILE__), __LINE__, -1, __ace_error, ace___->restart (), ace___->msg_ostream ()); \
+  ace___->set (ASYS_TEXT (__FILE__), __LINE__, -1, __ace_error, ace___->restart (), \
+               ace___->msg_ostream (), ace___->msg_callback ()); \
   ace___->log (LM_ERROR, ASYS_TEXT ("ACE_ASSERT: file %N, line %l assertion failed for '%s'.%a\n"), ASYS_WIDE_STRING (#X), -1); \
   } } while (0)
 #endif  /* ACE_NDEBUG */
@@ -48,7 +49,7 @@
     int __ace_error = ACE_OS::last_error (); \
     ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
     ace___->set (ASYS_TEXT (__FILE__), __LINE__, 0, __ace_error, ace___->restart (), \
-    ace___->msg_ostream ()); \
+                ace___->msg_ostream (), ace___->msg_callback ()); \
     ace___->log_hexdump X; \
    } while (0)
 #define ACE_RETURN(Y) \
@@ -61,7 +62,8 @@
   do { \
     int __ace_error = ACE_OS::last_error (); \
     ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
-    ace___->set (ASYS_TEXT (__FILE__), __LINE__, Y, __ace_error, ace___->restart (), ace___->msg_ostream ()); \
+    ace___->set (ASYS_TEXT (__FILE__), __LINE__, Y, __ace_error, ace___->restart (), \
+                 ace___->msg_ostream (), ace___->msg_callback ()); \
     ace___->log X; \
     return Y; \
   } while (0)
@@ -69,14 +71,16 @@
   do { \
     int __ace_error = ACE_OS::last_error (); \
     ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
-    ace___->set (ASYS_TEXT (__FILE__), __LINE__, -1, __ace_error, ace___->restart (), ace___->msg_ostream ()); \
+    ace___->set (ASYS_TEXT (__FILE__), __LINE__, -1, __ace_error, ace___->restart (), \
+                 ace___->msg_ostream (), ace___->msg_callback ()); \
     ace___->log X; \
   } while (0)
 #define ACE_DEBUG(X) \
   do { \
     int __ace_error = ACE_OS::last_error (); \
     ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
-    ace___->set (ASYS_TEXT (__FILE__), __LINE__, 0, __ace_error, ace___->restart (), ace___->msg_ostream ()); \
+    ace___->set (ASYS_TEXT (__FILE__), __LINE__, 0, __ace_error, ace___->restart (), \
+                 ace___->msg_ostream (), ace___->msg_callback ()); \
     ace___->log X; \
   } while (0)
 #define ACE_ERROR_INIT(VALUE, FLAGS) \
@@ -97,10 +101,41 @@
 # undef STDERR
 #endif /* __Lynx__ */
 
+class ACE_Export ACE_Log_Msg_Callback
+{
+  // = TITLE
+  //     An interface class used for getting logging callbacks.
+  //
+  // = DESCRIPTION
+  //     Users who are interested in getting the logging messages
+  //     directly, can subclass this interface and override the log()
+  //     method. They must then register their subclass with the
+  //     Log_Msg class and make sure that they turn on the
+  //     ACE_Log_Msg::MSG_CALLBACK flag.
+  //
+  //     Your log() routine is called with an instance of
+  //     ACE_Log_Record.  From this class, you can get the log
+  //     message, the verbose log message, message type, message
+  //     priority, and so on. 
+  //
+  //     Remember that there is one Log_Msg object per thread.
+  //     Therefore, you may need to register your callback object with
+  //     many Log_Msg objects (and have the correct synchronization in
+  //     the log() method) or have a separate callback object per
+  //     Log_Msg object.
+public:
+  virtual ~ACE_Log_Msg_Callback (void);
+  // No-op virtual destructor.
+
+  virtual void log (ACE_Log_Record &log_record) = 0;
+  // Callback routine.  This is called when we want to log a message.
+  // Since this routine is pure virtual, it must be overwritten by the
+  // subclass.
+};
+
 #define ACE_LOG_MSG ACE_Log_Msg::instance ()
 
 // Forward declaration
-
 class ACE_Thread_Descriptor;
 
 class ACE_Export ACE_Log_Msg
@@ -119,19 +154,21 @@ public:
   // Logger Flags.
   enum
   {
-    STDERR = 01,
+    STDERR = 1,
     // Write messages to stderr.
-    LOGGER = 02,
+    LOGGER = 2,
     // Write messages to the local client logger deamon.
-    OSTREAM = 04,
+    OSTREAM = 4,
     // Write messages to the ostream * stored in thread-specific
     // storage.
-    VERBOSE = 010,
+    MSG_CALLBACK = 8,
+    // Write messages to the callback object.
+    VERBOSE = 16,
     // Display messages in a verbose manner.
-    VERBOSE_LITE = 020,
+    VERBOSE_LITE = 32,
     // Display messages in a less verbose manner (i.e., only print
     // information that can change between calls).
-    SILENT = 040
+    SILENT = 64
     // Do not print messages at all (just leave in thread-specific
     // storage for later inspection).
  };
@@ -242,10 +279,12 @@ public:
   //   on Windows CE.  There is no <iostream.h> support on CE.
 
   void msg_ostream (ostream *);
-  // Set the ostream that is used to print error messages.
+  ostream *msg_ostream (void) const;
+  // Set/Get the ostream that is used to print error messages.
 
-  ostream *msg_ostream (void);
-  // Get the ostream that is used to print error messages.
+  void msg_callback (ACE_Log_Msg_Callback *c);
+  ACE_Log_Msg_Callback *msg_callback (void) const;
+  // Set/Get the callback object.
 
   // = Nesting depth increment and decrement.
   int inc (void);
@@ -304,10 +343,11 @@ public:
             int op_status = -1,
             int errnum = 0,
             int restart = 1,
-            ostream *os = 0);
+            ostream *os = 0,
+            ACE_Log_Msg_Callback *c = 0);
   // Set the line number, file name, operational status, error number,
-  // restart flag, and ostream.  This combines all the other set
-  // methods into a single method.
+  // restart flag, ostream and the callback object.  This combines all
+  // the other set methods into a single method.
 
   ssize_t log (ACE_Log_Priority priority, const ASYS_TCHAR *format, ...);
   // Format a message to the thread-safe ACE logging mechanism.  Valid
@@ -384,6 +424,9 @@ private:
 
   ostream *ostream_;
   // The ostream where logging messages can be written.
+
+  ACE_Log_Msg_Callback *msg_callback_;
+  // The callback object.
 
   int trace_depth_;
   // Depth of the nesting for printing traces.

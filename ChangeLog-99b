@@ -1,3 +1,27 @@
+Fri Jan 15 21:28:04 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Log_Msg (ACE_Log_Msg_Callback): Added an interface class
+ 	  used for getting logging callbacks.  Users who are interested in
+ 	  getting the logging messages directly, can subclass this
+ 	  interface and override the log() method. They must then register
+ 	  their subclass with the Log_Msg class and make sure that they
+ 	  turn on the ACE_Log_Msg::MSG_CALLBACK flag.
+     
+          Your log() routine is called with an instance of
+          ACE_Log_Record.  From this class, you can get the log
+          message, the verbose log message, message type, message
+          priority, and so on. 
+     
+          Remember that there is one Log_Msg object per thread.
+          Therefore, you may need to register your callback object with
+          many Log_Msg objects (and have the correct synchronization in
+          the log() method) or have a separate callback object per
+          Log_Msg object.
+
+	* examples/Log_Msg/test_callback.cpp: Added new example for
+ 	  Log_Msg. This program tests the Log_Msg abstraction wrt writing
+ 	  to user defined callback objects.
+
 Fri Jan 15 21:10:25 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/CORBA_macros.h: Made sure ACE_CORBA_HAS_EXCEPTIONS always
