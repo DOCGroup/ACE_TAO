@@ -1,3 +1,11 @@
+Fri Sep 24 10:08:50 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/AV/RTP.cpp:
+        
+          Added statc_cast<> to the last argument passed to the
+          RTP_Packet constructor, to avoid loss-of-data warnings
+          on MSVC 7.1.
+
 Fri Sep 24 09:38:16 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/CORBALOC_Parser.cpp:

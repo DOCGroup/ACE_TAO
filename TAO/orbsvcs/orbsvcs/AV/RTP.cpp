@@ -517,7 +517,7 @@ TAO_AV_RTP_Object::send_frame (const iovec *iov,
       // set the ssrc on the control object so the RTCP traffic can be matched
       // to the RTP traffic
       rtcp_prot_obj->ssrc(this->ssrc_);
-
+      ACE_UINT16 data_size = static_cast<ACE_UINT16> (iov[0].iov_len);
 
       ACE_NEW_RETURN (rtp_packet,
                       RTP_Packet (0,                            // padding
@@ -528,8 +528,8 @@ TAO_AV_RTP_Object::send_frame (const iovec *iov,
                                   this->ssrc_,                  // ssrc
                                   csrc_count,                   // csrc count
                                   csrc_list,                    // csrc list
-                                  (char *)iov[0].iov_base,              // data
-                                  iov[0].iov_len),              // data size
+                                  (char *)iov[0].iov_base,      // data
+                                  data_size),                   // data size
                                   -1);
 
       frame_info->sequence_num ++;
@@ -575,6 +575,7 @@ TAO_AV_RTP_Object::send_frame (const iovec *iov,
                       (now.sec () * samples_per_sec +
                        ((double)now.usec () * samples_per_usec) +
                        this->timestamp_offset_);
+      ACE_UINT16 data_size = static_cast<ACE_UINT16> (iov[0].iov_len);
 
       ACE_NEW_RETURN (rtp_packet,
                       RTP_Packet (0,                            // padding
@@ -585,8 +586,8 @@ TAO_AV_RTP_Object::send_frame (const iovec *iov,
                                   this->ssrc_,                  // ssrc
                                   csrc_count,                   // csrc count
                                   csrc_list,                    // csrc list
-                                  (char *)iov[0].iov_base,              // data
-                                  iov[0].iov_len),              // data size
+                                  (char *)iov[0].iov_base,      // data
+                                  data_size),                   // data size
                                   -1);
 
       this->sequence_num_ ++;
