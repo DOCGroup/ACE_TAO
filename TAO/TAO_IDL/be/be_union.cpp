@@ -181,7 +181,10 @@ be_union::nlabels (void)
       AST_UnionBranch *ub =
         AST_UnionBranch::narrow_from_decl (d);
 
-     retval += ub->label_list_length ();
+      if (ub != 0)
+        {     
+          retval += ub->label_list_length ();
+        }
     }
     
   return retval;
