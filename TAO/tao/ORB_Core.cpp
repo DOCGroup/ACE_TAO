@@ -2233,7 +2233,10 @@ TAO_ORB_Core::resolve_ior_table_i (CORBA::Environment &ACE_TRY_ENV)
   // @@ Not exception safe
   TAO_Adapter *iortable_adapter = factory->create (this);
   this->adapter_registry_.insert (iortable_adapter, ACE_TRY_ENV);
+  ACE_CHECK;
+
   iortable_adapter->open (ACE_TRY_ENV);
+  ACE_CHECK;
 
   this->ior_table_ = iortable_adapter->root ();
 }
