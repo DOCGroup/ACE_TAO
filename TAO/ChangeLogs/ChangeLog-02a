@@ -1,3 +1,15 @@
+Mon Jan  8 13:36:18 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/RTCP.cpp: 
+	* orbsvcs/orbsvcs/AV/RTCP.h: 
+	* orbsvcs/orbsvcs/AV/RTP.cpp: 
+	* orbsvcs/orbsvcs/AV/RTP.h: 
+	* orbsvcs/orbsvcs/AV/UDP.cpp: 
+	* orbsvcs/orbsvcs/AV/UDP.h:
+	* orbsvcs/orbsvcs/AV/Protocol_Factory.h: 
+
+	  Added a method send_frame to send char* buffers.
+
 Mon Jan  8 10:59:25 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/tests/InterfaceRepo/Application_Test/Application_Test_server.dsp:
