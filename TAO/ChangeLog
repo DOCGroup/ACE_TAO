@@ -1,3 +1,8 @@
+Sun Jul  7 22:03:41 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Makefile:
+	* tao/Makefile.bor: Added the new files to the Makefiles. 
+
 Sun Jul 07 21:56:23 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Transport.h:
@@ -5,12 +10,14 @@ Sun Jul 07 21:56:23 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/Transport.inl: Did a few cosmetic changes. 
 
 	  - Removed the TAO_Synch_Refcountable class and moved that to a
-	  new file. 
+	    new file. 
+	
 	  - Rearranged the methods in cpp and inl files, so that the
-	  methods specific for the input path and output path are grouped
-	  together. Just did this to improve readability. 
+	    methods specific for the input path and output path are
+	    grouped together. Just did this to improve readability. 
+	
 	  - Added a new method by name transport_cache_manager () which
-	  returns the reference to transport cache manager from the ORB. 
+	    returns the reference to transport cache manager from the ORB.  
 
 	* tao/Synch_Refcountable.{h,cpp,inl}: Added this new file which
 	  contains the class TAO_Synch_Refcountable.
