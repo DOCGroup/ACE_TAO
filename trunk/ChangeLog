@@ -1,20 +1,32 @@
+Thu Aug 10 09:31:51 2000  David L. Levine <levine@cs.wustl.edu>
+
+        * ace/config-cxx-common.h: with __USE_STD_IOSTREAM, added
+          #define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1.  Now,
+          the ACE library builds with __USE_STD_IOSTREAM, thanks
+          to Michael Kramer <kramer@ave.ac.agit.de>.
+
+          Also, removed duplicate #define ACE_HAS_STANDARD_CPP_LIBRARY 1,
+          and move the remaining one to inside the if (__DECCXX_VER >=
+          60090010) check.  I don't know if it is supported on older
+          versions of cxx.
+
 Thu Aug 10 04:04:31 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
-	* ace/OS.cpp:
-	  Added pace version of thr_create and thr_exit.
+        * ace/OS.cpp:
+          Added pace version of thr_create and thr_exit.
 
-	* ace/OS.h:
-	  Added pace #define for pthread_cleanup_*
-	  Deleted all ansi cast defines since they were
-  	  also redundantly defined in config-all.h
+        * ace/OS.h:
+          Added pace #define for pthread_cleanup_*
+          Deleted all ansi cast defines since they were
+          also redundantly defined in config-all.h
 
-	* ace/OS.i:
-	  Put all pace functions in the global scope. Minor
-	  fixes.
+        * ace/OS.i:
+          Put all pace functions in the global scope. Minor
+          fixes.
 
-	* examples/Shared_Malloc/Malloc.cpp
-	  Removed template instantiations which are duplicated
-	  in ACE.cpp.
+        * examples/Shared_Malloc/Malloc.cpp
+          Removed template instantiations which are duplicated
+          in ACE.cpp.
 
 Wed Aug  9 18:16:26 2000  Carlos O'Ryan  <coryan@uci.edu>
 
