@@ -1,3 +1,12 @@
+Tue Dec 18 17:47:44 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/Caching_Utility_T.cpp: Added #include "ace/Recyclable.h"
+          to pick up def for ACE_RECYCLABLE_IDLE_AND_PURGABLE.
+
+        * tests/INET_Addr_Test.cpp: ACEified.
+
+        * tests/run_test.lst: Added INET_Addr_Test.
+
 Tue Dec 18 14:43:02 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* ace/Sock_Connect.cpp:
