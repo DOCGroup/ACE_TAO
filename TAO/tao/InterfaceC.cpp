@@ -189,6 +189,7 @@ IR::DefinitionKind CORBA::IRObject::def_kind (
       istub,
       "_get_def_kind",
       13,
+      0,
       istub->orb_core ()
     );
       for (;;)
@@ -245,6 +246,7 @@ void CORBA::IRObject::destroy (
       istub,
       "destroy",
       7,
+      0,
       istub->orb_core ()
     );
 
@@ -517,6 +519,7 @@ char * IR_Contained::id (
       istub,
       "_get_id",
       7,
+      0,
       istub->orb_core ()
     );
 
@@ -576,6 +579,7 @@ void IR_Contained::id (
       istub,
       "_set_id",
       7,
+      1,
       istub->orb_core ()
     );
 
@@ -633,6 +637,7 @@ char * IR_Contained::name (
       istub,
       "_get_name",
       9,
+      0,
       istub->orb_core ()
     );
 
@@ -692,6 +697,7 @@ void IR_Contained::name (
       istub,
       "_set_name",
       9,
+      1,
       istub->orb_core ()
     );
 
@@ -749,6 +755,7 @@ char * IR_Contained::version (
       istub,
       "_get_version",
       12,
+      0,
       istub->orb_core ()
     );
 
@@ -808,6 +815,7 @@ void IR_Contained::version (
       istub,
       "_set_version",
       12,
+      1,
       istub->orb_core ()
     );
 
@@ -864,6 +872,7 @@ IR_Container_ptr IR_Contained::defined_in (
       istub,
       "_get_defined_in",
       15,
+      0,
       istub->orb_core ()
     );
 
@@ -922,6 +931,7 @@ char * IR_Contained::absolute_name (
       istub,
       "_get_absolute_name",
       18,
+      0,
       istub->orb_core ()
     );
 
@@ -980,6 +990,7 @@ IR_Repository_ptr IR_Contained::containing_repository (
       istub,
       "_get_containing_repository",
       26,
+      0,
       istub->orb_core ()
     );
 
@@ -1099,6 +1110,7 @@ IR_Contained::Description * IR_Contained::describe (
       istub,
       "describe",
       8,
+      0,
       istub->orb_core ()
     );
 
@@ -1158,6 +1170,7 @@ void IR_Contained::move (
       istub,
       "move",
       4,
+      1,
       istub->orb_core ()
     );
 
@@ -4094,6 +4107,7 @@ IR_Contained_ptr IR_Container::lookup (
       istub,
       "lookup",
       6,
+      1,
       istub->orb_core ()
     );
 
@@ -4132,7 +4146,7 @@ IR_Contained_ptr IR_Container::lookup (
           ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         break;
-        
+
       }
   return _tao_safe_retval._retn ();
 }
@@ -4161,6 +4175,7 @@ IR_ContainedSeq * IR_Container::contents (
       istub,
       "contents",
       8,
+      1,
       istub->orb_core ()
     );
 
@@ -4231,6 +4246,7 @@ IR_ContainedSeq * IR_Container::lookup_name (
       istub,
       "lookup_name",
       11,
+      1,
       istub->orb_core ()
     );
 
@@ -4540,6 +4556,7 @@ IR_Container::DescriptionSeq * IR_Container::describe_contents (
       istub,
       "describe_contents",
       17,
+      1,
       istub->orb_core ()
     );
 
@@ -4610,6 +4627,7 @@ IR_ModuleDef_ptr IR_Container::create_module (
       istub,
       "create_module",
       13,
+      1,
       istub->orb_core ()
     );
 
@@ -4682,6 +4700,7 @@ IR_ConstantDef_ptr IR_Container::create_constant (
       istub,
       "create_constant",
       15,
+      1,
       istub->orb_core ()
     );
 
@@ -4755,6 +4774,7 @@ IR_StructDef_ptr IR_Container::create_struct (
       istub,
       "create_struct",
       13,
+      1,
       istub->orb_core ()
     );
 
@@ -4828,6 +4848,7 @@ IR_UnionDef_ptr IR_Container::create_union (
       istub,
       "create_union",
       12,
+      1,
       istub->orb_core ()
     );
 
@@ -4900,6 +4921,7 @@ IR_EnumDef_ptr IR_Container::create_enum (
       istub,
       "create_enum",
       11,
+      1,
       istub->orb_core ()
     );
 
@@ -4971,6 +4993,7 @@ IR_AliasDef_ptr IR_Container::create_alias (
       istub,
       "create_alias",
       12,
+      1,
       istub->orb_core ()
     );
 
@@ -5045,6 +5068,7 @@ IR_InterfaceDef_ptr IR_Container::create_interface (
       istub,
       "create_interface",
       16,
+      1,
       istub->orb_core ()
     );
 
@@ -5124,6 +5148,7 @@ IR_ValueDef_ptr IR_Container::create_value (
       istub,
       "create_value",
       12,
+      1,
       istub->orb_core ()
     );
 
@@ -5202,6 +5227,7 @@ IR_ValueBoxDef_ptr IR_Container::create_value_box (
       istub,
       "create_value_box",
       16,
+      1,
       istub->orb_core ()
     );
 
@@ -5272,6 +5298,7 @@ IR_ExceptionDef_ptr IR_Container::create_exception (
       istub,
       "create_exception",
       16,
+      1,
       istub->orb_core ()
     );
 
@@ -5343,6 +5370,7 @@ IR_NativeDef_ptr IR_Container::create_native (
       istub,
       "create_native",
       13,
+      1,
       istub->orb_core ()
     );
 
@@ -5912,6 +5940,7 @@ CORBA::TypeCode_ptr IR_IDLType::type (
       istub,
       "_get_type",
       9,
+      0,
       istub->orb_core ()
     );
 
@@ -6202,6 +6231,7 @@ IR_Contained_ptr IR_Repository::lookup_id (
       istub,
       "lookup_id",
       9,
+      1,
       istub->orb_core ()
     );
 
@@ -6268,6 +6298,7 @@ CORBA::TypeCode_ptr IR_Repository::get_canonical_typecode (
       istub,
       "get_canonical_typecode",
       22,
+      1,
       istub->orb_core ()
     );
 
@@ -6334,6 +6365,7 @@ IR_PrimitiveDef_ptr IR_Repository::get_primitive (
       istub,
       "get_primitive",
       13,
+      1,
       istub->orb_core ()
     );
 
@@ -6399,6 +6431,7 @@ IR_StringDef_ptr IR_Repository::create_string (
       istub,
       "create_string",
       13,
+      1,
       istub->orb_core ()
     );
 
@@ -6464,6 +6497,7 @@ IR_WstringDef_ptr IR_Repository::create_wstring (
       istub,
       "create_wstring",
       14,
+      1,
       istub->orb_core ()
     );
 
@@ -6531,6 +6565,7 @@ IR_SequenceDef_ptr IR_Repository::create_sequence (
       istub,
       "create_sequence",
       15,
+      1,
       istub->orb_core ()
     );
 
@@ -6599,6 +6634,7 @@ IR_ArrayDef_ptr IR_Repository::create_array (
       istub,
       "create_array",
       12,
+      1,
       istub->orb_core ()
     );
 
@@ -6667,6 +6703,7 @@ IR_FixedDef_ptr IR_Repository::create_fixed (
       istub,
       "create_fixed",
       12,
+      1,
       istub->orb_core ()
     );
 
@@ -7048,6 +7085,7 @@ IR_ComponentDef_ptr IR_ComponentRepository::create_component (
       istub,
       "create_component",
       16,
+      1,
       istub->orb_core ()
     );
 
@@ -7122,6 +7160,7 @@ IR_HomeDef_ptr IR_ComponentRepository::create_home (
       istub,
       "create_home",
       11,
+      1,
       istub->orb_core ()
     );
 
@@ -7681,6 +7720,7 @@ CORBA::TypeCode_ptr IR_ConstantDef::type (
       istub,
       "_get_type",
       9,
+      0,
       istub->orb_core ()
     );
 
@@ -7739,6 +7779,7 @@ IR_IDLType_ptr IR_ConstantDef::type_def (
       istub,
       "_get_type_def",
       13,
+      0,
       istub->orb_core ()
     );
 
@@ -7798,6 +7839,7 @@ void IR_ConstantDef::type_def (
       istub,
       "_set_type_def",
       13,
+      1,
       istub->orb_core ()
     );
 
@@ -7857,6 +7899,7 @@ CORBA::Any * IR_ConstantDef::value (
       istub,
       "_get_value",
       10,
+      0,
       istub->orb_core ()
     );
 
@@ -7916,6 +7959,7 @@ void IR_ConstantDef::value (
       istub,
       "_set_value",
       10,
+      1,
       istub->orb_core ()
     );
 
@@ -8566,6 +8610,7 @@ IR_StructMemberSeq * IR_StructDef::members (
       istub,
       "_get_members",
       12,
+      0,
       istub->orb_core ()
     );
 
@@ -8624,6 +8669,7 @@ void IR_StructDef::members (
       istub,
       "_set_members",
       12,
+      1,
       istub->orb_core ()
     );
 
@@ -8897,6 +8943,7 @@ CORBA::TypeCode_ptr IR_UnionDef::discriminator_type (
       istub,
       "_get_discriminator_type",
       23,
+      0,
       istub->orb_core ()
     );
 
@@ -8955,6 +9002,7 @@ IR_IDLType_ptr IR_UnionDef::discriminator_type_def (
       istub,
       "_get_discriminator_type_def",
       27,
+      0,
       istub->orb_core ()
     );
 
@@ -9014,6 +9062,7 @@ void IR_UnionDef::discriminator_type_def (
       istub,
       "_set_discriminator_type_def",
       27,
+      1,
       istub->orb_core ()
     );
 
@@ -9072,6 +9121,7 @@ IR_UnionMemberSeq * IR_UnionDef::members (
       istub,
       "_get_members",
       12,
+      0,
       istub->orb_core ()
     );
 
@@ -9131,6 +9181,7 @@ void IR_UnionDef::members (
       istub,
       "_set_members",
       12,
+      1,
       istub->orb_core ()
     );
 
@@ -9446,6 +9497,7 @@ IR_EnumMemberSeq * IR_EnumDef::members (
       istub,
       "_get_members",
       12,
+      0,
       istub->orb_core ()
     );
 
@@ -9504,6 +9556,7 @@ void IR_EnumDef::members (
       istub,
       "_set_members",
       12,
+      1,
       istub->orb_core ()
     );
 
@@ -9776,6 +9829,7 @@ IR_IDLType_ptr IR_AliasDef::original_type_def (
       istub,
       "_get_original_type_def",
       22,
+      0,
       istub->orb_core ()
     );
       for (;;)
@@ -9833,6 +9887,7 @@ void IR_AliasDef::original_type_def (
       istub,
       "_set_original_type_def",
       22,
+      1,
       istub->orb_core ()
     );
 
@@ -10290,6 +10345,7 @@ IR::PrimitiveKind IR_PrimitiveDef::kind (
       istub,
       "_get_kind",
       9,
+      0,
       istub->orb_core ()
     );
 
@@ -10544,6 +10600,7 @@ CORBA::ULong IR_StringDef::bound (
       istub,
       "_get_bound",
       10,
+      0,
       istub->orb_core ()
     );
 
@@ -10602,6 +10659,7 @@ void IR_StringDef::bound (
       istub,
       "_set_bound",
       10,
+      1,
       istub->orb_core ()
     );
 
@@ -10871,6 +10929,7 @@ CORBA::ULong IR_WstringDef::bound (
       istub,
       "_get_bound",
       10,
+      0,
       istub->orb_core ()
     );
 
@@ -10929,6 +10988,7 @@ void IR_WstringDef::bound (
       istub,
       "_set_bound",
       10,
+      1,
       istub->orb_core ()
     );
 
@@ -11198,6 +11258,7 @@ CORBA::UShort IR_FixedDef::digits (
       istub,
       "_get_digits",
       11,
+      0,
       istub->orb_core ()
     );
 
@@ -11256,6 +11317,7 @@ void IR_FixedDef::digits (
       istub,
       "_set_digits",
       11,
+      1,
       istub->orb_core ()
     );
 
@@ -11313,6 +11375,7 @@ CORBA::Short IR_FixedDef::scale (
       istub,
       "_get_scale",
       10,
+      0,
       istub->orb_core ()
     );
 
@@ -11372,6 +11435,7 @@ void IR_FixedDef::scale (
       istub,
       "_set_scale",
       10,
+      1,
       istub->orb_core ()
     );
 
@@ -11668,6 +11732,7 @@ CORBA::ULong IR_SequenceDef::bound (
       istub,
       "_get_bound",
       10,
+      0,
       istub->orb_core ()
     );
 
@@ -11726,6 +11791,7 @@ void IR_SequenceDef::bound (
       istub,
       "_set_bound",
       10,
+      1,
       istub->orb_core ()
     );
 
@@ -11784,6 +11850,7 @@ CORBA::TypeCode_ptr IR_SequenceDef::element_type (
       istub,
       "_get_element_type",
       17,
+      0,
       istub->orb_core ()
     );
 
@@ -11843,6 +11910,7 @@ IR_IDLType_ptr IR_SequenceDef::element_type_def (
       istub,
       "_get_element_type_def",
       21,
+      0,
       istub->orb_core ()
     );
 
@@ -11902,6 +11970,7 @@ void IR_SequenceDef::element_type_def (
       istub,
       "_set_element_type_def",
       21,
+      1,
       istub->orb_core ()
     );
 
@@ -12211,6 +12280,7 @@ CORBA::ULong IR_ArrayDef::length (
       istub,
       "_get_length",
       11,
+      0,
       istub->orb_core ()
     );
 
@@ -12269,6 +12339,7 @@ void IR_ArrayDef::length (
       istub,
       "_set_length",
       11,
+      1,
       istub->orb_core ()
     );
 
@@ -12327,6 +12398,7 @@ CORBA::TypeCode_ptr IR_ArrayDef::element_type (
       istub,
       "_get_element_type",
       17,
+      0,
       istub->orb_core ()
     );
 
@@ -12385,6 +12457,7 @@ IR_IDLType_ptr IR_ArrayDef::element_type_def (
       istub,
       "_get_element_type_def",
       21,
+      0,
       istub->orb_core ()
     );
 
@@ -12444,6 +12517,7 @@ void IR_ArrayDef::element_type_def (
       istub,
       "_set_element_type_def",
       21,
+      1,
       istub->orb_core ()
     );
 
@@ -12755,6 +12829,7 @@ CORBA::TypeCode_ptr IR_ExceptionDef::type (
       istub,
       "_get_type",
       9,
+      0,
       istub->orb_core ()
     );
 
@@ -12814,6 +12889,7 @@ IR_StructMemberSeq * IR_ExceptionDef::members (
       istub,
       "_get_members",
       12,
+      0,
       istub->orb_core ()
     );
 
@@ -12873,6 +12949,7 @@ void IR_ExceptionDef::members (
       istub,
       "_set_members",
       12,
+      1,
       istub->orb_core ()
     );
 
@@ -13573,6 +13650,7 @@ CORBA::TypeCode_ptr IR_AttributeDef::type (
       istub,
       "_get_type",
       9,
+      0,
       istub->orb_core ()
     );
 
@@ -13631,6 +13709,7 @@ IR_IDLType_ptr IR_AttributeDef::type_def (
       istub,
       "_get_type_def",
       13,
+      0,
       istub->orb_core ()
     );
 
@@ -13690,6 +13769,7 @@ void IR_AttributeDef::type_def (
       istub,
       "_set_type_def",
       13,
+      1,
       istub->orb_core ()
     );
 
@@ -13747,6 +13827,7 @@ IR::AttributeMode IR_AttributeDef::mode (
       istub,
       "_get_mode",
       9,
+      0,
       istub->orb_core ()
     );
 
@@ -13806,6 +13887,7 @@ void IR_AttributeDef::mode (
       istub,
       "_set_mode",
       9,
+      1,
       istub->orb_core ()
     );
 
@@ -14700,6 +14782,7 @@ CORBA::TypeCode_ptr IR_OperationDef::result (
       istub,
       "_get_result",
       11,
+      0,
       istub->orb_core ()
     );
 
@@ -14758,6 +14841,7 @@ IR_IDLType_ptr IR_OperationDef::result_def (
       istub,
       "_get_result_def",
       15,
+      0,
       istub->orb_core ()
     );
 
@@ -14816,6 +14900,7 @@ void IR_OperationDef::result_def (
       istub,
       "_set_result_def",
       15,
+      1,
       istub->orb_core ()
     );
 
@@ -14875,6 +14960,7 @@ IR_ParDescriptionSeq * IR_OperationDef::params (
       istub,
       "_get_params",
       11,
+      0,
       istub->orb_core ()
     );
 
@@ -14933,6 +15019,7 @@ void IR_OperationDef::params (
       istub,
       "_set_params",
       11,
+      1,
       istub->orb_core ()
     );
 
@@ -14990,6 +15077,7 @@ IR::OperationMode IR_OperationDef::mode (
       istub,
       "_get_mode",
       9,
+      0,
       istub->orb_core ()
     );
 
@@ -15049,6 +15137,7 @@ void IR_OperationDef::mode (
       istub,
       "_set_mode",
       9,
+      1,
       istub->orb_core ()
     );
 
@@ -15108,6 +15197,7 @@ IR_ContextIdSeq * IR_OperationDef::contexts (
       istub,
       "_get_contexts",
       13,
+      0,
       istub->orb_core ()
     );
 
@@ -15167,6 +15257,7 @@ void IR_OperationDef::contexts (
       istub,
       "_set_contexts",
       13,
+      1,
       istub->orb_core ()
     );
 
@@ -15226,6 +15317,7 @@ IR_ExceptionDefSeq * IR_OperationDef::exceptions (
       istub,
       "_get_exceptions",
       15,
+      0,
       istub->orb_core ()
     );
 
@@ -15284,6 +15376,7 @@ void IR_OperationDef::exceptions (
       istub,
       "_set_exceptions",
       15,
+      1,
       istub->orb_core ()
     );
 
@@ -16693,6 +16786,7 @@ IR_InterfaceDefSeq * IR_InterfaceDef::base_interfaces (
       istub,
       "_get_base_interfaces",
       20,
+      0,
       istub->orb_core ()
     );
       for (;;)
@@ -16750,6 +16844,7 @@ void IR_InterfaceDef::base_interfaces (
       istub,
       "_set_base_interfaces",
       20,
+      1,
       istub->orb_core ()
     );
 
@@ -16807,6 +16902,7 @@ CORBA::Boolean IR_InterfaceDef::is_abstract (
       istub,
       "_get_is_abstract",
       16,
+      0,
       istub->orb_core ()
     );
 
@@ -16866,6 +16962,7 @@ void IR_InterfaceDef::is_abstract (
       istub,
       "_set_is_abstract",
       16,
+      1,
       istub->orb_core ()
     );
 
@@ -16923,6 +17020,7 @@ CORBA::Boolean IR_InterfaceDef::is_local (
       istub,
       "_get_is_local",
       13,
+      0,
       istub->orb_core ()
     );
       for (;;)
@@ -16980,6 +17078,7 @@ void IR_InterfaceDef::is_local (
       istub,
       "_set_is_local",
       13,
+      1,
       istub->orb_core ()
     );
 
@@ -17038,6 +17137,7 @@ CORBA::Boolean IR_InterfaceDef::is_a (
       istub,
       "is_a",
       4,
+      1,
       istub->orb_core ()
     );
 
@@ -17109,6 +17209,7 @@ IR_AttributeDef_ptr IR_InterfaceDef::create_attribute (
       istub,
       "create_attribute",
       16,
+      1,
       istub->orb_core ()
     );
 
@@ -17188,6 +17289,7 @@ IR_OperationDef_ptr IR_InterfaceDef::create_operation (
       istub,
       "create_operation",
       16,
+      1,
       istub->orb_core ()
     );
 
@@ -18478,6 +18580,7 @@ CORBA::TypeCode_ptr IR_ValueMemberDef::type (
       istub,
       "_get_type",
       9,
+      0,
       istub->orb_core ()
     );
       for (;;)
@@ -18535,6 +18638,7 @@ IR_IDLType_ptr IR_ValueMemberDef::type_def (
       istub,
       "_get_type_def",
       13,
+      0,
       istub->orb_core ()
     );
 
@@ -18593,6 +18697,7 @@ void IR_ValueMemberDef::type_def (
       istub,
       "_set_type_def",
       13,
+      1,
       istub->orb_core ()
     );
 
@@ -18650,6 +18755,7 @@ CORBA::Visibility IR_ValueMemberDef::access (
       istub,
       "_get_access",
       11,
+      0,
       istub->orb_core ()
     );
 
@@ -18709,6 +18815,7 @@ void IR_ValueMemberDef::access (
       istub,
       "_set_access",
       11,
+      1,
       istub->orb_core ()
     );
 
@@ -19020,6 +19127,7 @@ IR_InterfaceDefSeq * IR_ValueDef::supported_interfaces (
       istub,
       "_get_supported_interfaces",
       25,
+      0,
       istub->orb_core ()
     );
 
@@ -19078,6 +19186,7 @@ void IR_ValueDef::supported_interfaces (
       istub,
       "_set_supported_interfaces",
       25,
+      1,
       istub->orb_core ()
     );
 
@@ -19136,6 +19245,7 @@ IR_InitializerSeq * IR_ValueDef::initializers (
       istub,
       "_get_initializers",
       17,
+      0,
       istub->orb_core ()
     );
 
@@ -19195,6 +19305,7 @@ void IR_ValueDef::initializers (
       istub,
       "_set_initializers",
       17,
+      1,
       istub->orb_core ()
     );
 
@@ -19253,6 +19364,7 @@ IR_ValueDef_ptr IR_ValueDef::base_value (
       istub,
       "_get_base_value",
       15,
+      0,
       istub->orb_core ()
     );
 
@@ -19311,6 +19423,7 @@ void IR_ValueDef::base_value (
       istub,
       "_set_base_value",
       15,
+      1,
       istub->orb_core ()
     );
 
@@ -19370,6 +19483,7 @@ IR_ValueDefSeq * IR_ValueDef::abstract_base_values (
       istub,
       "_get_abstract_base_values",
       25,
+      0,
       istub->orb_core ()
     );
 
@@ -19428,6 +19542,7 @@ void IR_ValueDef::abstract_base_values (
       istub,
       "_set_abstract_base_values",
       25,
+      1,
       istub->orb_core ()
     );
 
@@ -19484,6 +19599,7 @@ CORBA::Boolean IR_ValueDef::is_abstract (
       istub,
       "_get_is_abstract",
       16,
+      0,
       istub->orb_core ()
     );
 
@@ -19543,6 +19659,7 @@ void IR_ValueDef::is_abstract (
       istub,
       "_set_is_abstract",
       16,
+      1,
       istub->orb_core ()
     );
 
@@ -19599,6 +19716,7 @@ CORBA::Boolean IR_ValueDef::is_custom (
       istub,
       "_get_is_custom",
       14,
+      0,
       istub->orb_core ()
     );
 
@@ -19658,6 +19776,7 @@ void IR_ValueDef::is_custom (
       istub,
       "_set_is_custom",
       14,
+      1,
       istub->orb_core ()
     );
 
@@ -19714,6 +19833,7 @@ CORBA::Boolean IR_ValueDef::is_truncatable (
       istub,
       "_get_is_truncatable",
       19,
+      0,
       istub->orb_core ()
     );
 
@@ -19773,6 +19893,7 @@ void IR_ValueDef::is_truncatable (
       istub,
       "_set_is_truncatable",
       19,
+      1,
       istub->orb_core ()
     );
 
@@ -19830,6 +19951,7 @@ CORBA::Boolean IR_ValueDef::is_a (
       istub,
       "is_a",
       4,
+      1,
       istub->orb_core ()
     );
 
@@ -19900,6 +20022,7 @@ IR_ValueMemberDef_ptr IR_ValueDef::create_value_member (
       istub,
       "create_value_member",
       19,
+      1,
       istub->orb_core ()
     );
 
@@ -19976,6 +20099,7 @@ IR_AttributeDef_ptr IR_ValueDef::create_attribute (
       istub,
       "create_attribute",
       16,
+      1,
       istub->orb_core ()
     );
 
@@ -20054,6 +20178,7 @@ IR_OperationDef_ptr IR_ValueDef::create_operation (
       istub,
       "create_operation",
       16,
+      1,
       istub->orb_core ()
     );
 
@@ -21410,6 +21535,7 @@ IR_IDLType_ptr IR_ValueBoxDef::original_type_def (
       istub,
       "_get_original_type_def",
       22,
+      0,
       istub->orb_core ()
     );
 
@@ -21467,6 +21593,7 @@ void IR_ValueBoxDef::original_type_def (
       istub,
       "_set_original_type_def",
       22,
+      1,
       istub->orb_core ()
     );
 
@@ -21739,6 +21866,7 @@ IR_InterfaceDef_ptr IR_ProvidesDef::interface_type (
       istub,
       "_get_interface_type",
       19,
+      0,
       istub->orb_core ()
     );
 
@@ -22073,6 +22201,7 @@ IR_InterfaceDef_ptr IR_UsesDef::interface_type (
       istub,
       "_get_interface_type",
       19,
+      0,
       istub->orb_core ()
     );
 
@@ -22130,6 +22259,7 @@ CORBA::Boolean IR_UsesDef::is_multiple (
       istub,
       "_get_is_multiple",
       16,
+      0,
       istub->orb_core ()
     );
 
@@ -22842,6 +22972,7 @@ CORBA::Boolean IR_EventDef::is_a (
       istub,
       "is_a",
       4,
+      1,
       istub->orb_core ()
     );
       for (;;)
@@ -22905,6 +23036,7 @@ IR_ValueDef_ptr IR_EventDef::event (
       istub,
       "_get_event",
       10,
+      0,
       istub->orb_core ()
     );
 
@@ -23811,6 +23943,7 @@ IR_InterfaceDefSeq * IR_ComponentDef::supported_interfaces (
       istub,
       "_get_supported_interfaces",
       25,
+      0,
       istub->orb_core ()
     );
 
@@ -23869,6 +24002,7 @@ void IR_ComponentDef::supported_interfaces (
       istub,
       "_set_supported_interfaces",
       25,
+      1,
       istub->orb_core ()
     );
 
@@ -23927,6 +24061,7 @@ IR_ComponentDef_ptr IR_ComponentDef::base_component (
       istub,
       "_get_base_component",
       19,
+      0,
       istub->orb_core ()
     );
 
@@ -23987,6 +24122,7 @@ IR_ProvidesDefSeq * IR_ComponentDef::provides_interfaces (
       istub,
       "_get_provides_interfaces",
       24,
+      0,
       istub->orb_core ()
     );
 
@@ -24046,6 +24182,7 @@ IR_UsesDefSeq * IR_ComponentDef::uses_interfaces (
       istub,
       "_get_uses_interfaces",
       20,
+      0,
       istub->orb_core ()
     );
 
@@ -24106,6 +24243,7 @@ IR_EmitsDefSeq * IR_ComponentDef::emits_events (
       istub,
       "_get_emits_events",
       17,
+      0,
       istub->orb_core ()
     );
 
@@ -24165,6 +24303,7 @@ IR_PublishesDefSeq * IR_ComponentDef::publishes_events (
       istub,
       "_get_publishes_events",
       21,
+      0,
       istub->orb_core ()
     );
 
@@ -24225,6 +24364,7 @@ IR_ConsumesDefSeq * IR_ComponentDef::consumes_events (
       istub,
       "_get_consumes_events",
       20,
+      0,
       istub->orb_core ()
     );
 
@@ -24282,6 +24422,7 @@ CORBA::Boolean IR_ComponentDef::is_basic (
       istub,
       "_get_is_basic",
       13,
+      0,
       istub->orb_core ()
     );
 
@@ -24344,6 +24485,7 @@ IR_ProvidesDef_ptr IR_ComponentDef::create_provides (
       istub,
       "create_provides",
       15,
+      1,
       istub->orb_core ()
     );
 
@@ -24417,6 +24559,7 @@ IR_UsesDef_ptr IR_ComponentDef::create_uses (
       istub,
       "create_uses",
       11,
+      1,
       istub->orb_core ()
     );
 
@@ -24489,6 +24632,7 @@ IR_EmitsDef_ptr IR_ComponentDef::create_emits (
       istub,
       "create_emits",
       12,
+      1,
       istub->orb_core ()
     );
 
@@ -24560,6 +24704,7 @@ IR_PublishesDef_ptr IR_ComponentDef::create_publishes (
       istub,
       "create_publishes",
       16,
+      1,
       istub->orb_core ()
     );
 
@@ -24630,6 +24775,7 @@ IR_ConsumesDef_ptr IR_ComponentDef::create_consumes (
       istub,
       "create_consumes",
       15,
+      1,
       istub->orb_core ()
     );
 
@@ -25554,6 +25700,7 @@ CORBA::Boolean IR_PrimaryKeyDef::is_a (
       istub,
       "is_a",
       4,
+      1,
       istub->orb_core ()
     );
 
@@ -25617,6 +25764,7 @@ IR_ValueDef_ptr IR_PrimaryKeyDef::primary_key (
       istub,
       "_get_primary_key",
       16,
+      0,
       istub->orb_core ()
     );
 
@@ -26337,6 +26485,7 @@ IR_HomeDef_ptr IR_HomeDef::base_home (
       istub,
       "_get_base_home",
       14,
+      0,
       istub->orb_core ()
     );
 
@@ -26395,6 +26544,7 @@ IR_ComponentDef_ptr IR_HomeDef::managed_component (
       istub,
       "_get_managed_component",
       22,
+      0,
       istub->orb_core ()
     );
 
@@ -26454,6 +26604,7 @@ IR_PrimaryKeyDef_ptr IR_HomeDef::primary_key (
       istub,
       "_get_primary_key",
       16,
+      0,
       istub->orb_core ()
     );
 
@@ -26514,6 +26665,7 @@ IR_FactoryDefSeq * IR_HomeDef::factories (
       istub,
       "_get_factories",
       14,
+      0,
       istub->orb_core ()
     );
 
@@ -26573,6 +26725,7 @@ IR_FinderDefSeq * IR_HomeDef::finders (
       istub,
       "_get_finders",
       12,
+      0,
       istub->orb_core ()
     );
 
@@ -26631,6 +26784,7 @@ CORBA::Boolean IR_HomeDef::is_basic (
       istub,
       "_get_is_basic",
       13,
+      0,
       istub->orb_core ()
     );
 
@@ -26694,6 +26848,7 @@ IR_PrimaryKeyDef_ptr IR_HomeDef::create_primary_key (
       istub,
       "create_primary_key",
       18,
+      1,
       istub->orb_core ()
     );
 
@@ -26766,6 +26921,7 @@ IR_FactoryDef_ptr IR_HomeDef::create_factory (
       istub,
       "create_factory",
       14,
+      1,
       istub->orb_core ()
     );
 
@@ -26839,6 +26995,7 @@ IR_FinderDef_ptr IR_HomeDef::create_finder (
       istub,
       "create_finder",
       13,
+      1,
       istub->orb_core ()
     );
 

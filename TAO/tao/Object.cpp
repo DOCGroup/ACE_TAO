@@ -381,6 +381,7 @@ CORBA_Object::_get_interface (CORBA::Environment &ACE_TRY_ENV)
       istub,
       "_interface",
       10,
+      0,
       istub->orb_core ()
     );
 
