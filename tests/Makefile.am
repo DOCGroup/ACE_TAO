@@ -48,71 +48,78 @@ noinst_LTLIBRARIES = libDLL_Test.la
 libDLL_Test_la_LDFLAGS = -module
 libDLL_Test_la_SOURCES = $(DLL_Test_SOURCES)
 
-## Build the test programs
-noinst_PROGRAMS = \
-	Aio_Platform_Test \
-	Atomic_Op_Test \
-	Barrier_Test \
-	Basic_Types_Test \
-	Buffer_Stream_Test \
+## Build the following test programs when a `make check' is
+## issued by the user.
+check_PROGRAMS = \
+        Aio_Platform_Test \
+        Atomic_Op_Test \
+        Barrier_Test \
+        Basic_Types_Test \
+        Buffer_Stream_Test \
         CDR_Test \
-	Conn_Test \
+        Cache_Manager_Test \
+        Collection_Test \
+        Conn_Test \
         DLL_Test \
         DLList_Test \
-	Dynamic_Priority_Test \
-	Enum_Interfaces_Test \
-	Env_Value_Test \
-	Future_Test \
-	Handle_Set_Test \
-	Hash_Map_Manager_Test \
+        Dynamic_Priority_Test \
+        Enum_Interfaces_Test \
+        Env_Value_Test \
+        Future_Test \
+        Handle_Set_Test \
+        Hash_Map_Manager_Test \
         High_Res_Timer_Test \
-	IOStream_Test \
-	MM_Shared_Memory_Test \
-	MT_Reactor_Timer_Test \
-	MT_SOCK_Test \
-	Map_Manager_Test \
-	Mem_Map_Test \
-	Message_Block_Test \
-	Message_Queue_Notifications_Test \
-	Message_Queue_Test \
-	Naming_Test \
-	Notify_Performance_Test \
-	OrdMultiSet_Test \
-	Pipe_Test \
-	Priority_Buffer_Test \
-	Priority_Reactor_Test \
-	Priority_Task_Test \
-	Process_Mutex_Test \
-	Process_Strategy_Test \
-	RB_Tree_Test \
-	Reactor_Exceptions_Test \
-	Reactor_Notify_Test \
-	Reactor_Performance_Test \
-	Reactor_Timer_Test \
-	Reactors_Test \
-	Reader_Writer_Test \
-	Recursive_Mutex_Test \
-	SOCK_Connector_Test \
-	SOCK_Test \
-	SPIPE_Test \
-	SString_Test \
-	SV_Shared_Memory_Test \
-	Semaphore_Test \
-	Service_Config_Test \
-	Sigset_Ops_Test \
-	Simple_Message_Block_Test \
-	TSS_Test \
-	Task_Test \
-	Thread_Manager_Test \
-	Thread_Mutex_Test \
+        IOStream_Test \
+        MM_Shared_Memory_Test \
+        MT_Reactor_Timer_Test \
+        MT_SOCK_Test \
+        Map_Manager_Test \
+        Map_Test \
+        Mem_Map_Test \
+        Message_Block_Test \
+        Message_Queue_Notifications_Test \
+        Message_Queue_Test \
+        Naming_Test \
+        New_Fail_Test \
+        Notify_Performance_Test \
+        OrdMultiSet_Test \
+        Pipe_Test \
+        Priority_Buffer_Test \
+        Priority_Reactor_Test \
+        Priority_Task_Test \
+        Process_Mutex_Test \
+        Process_Strategy_Test \
+        Purgable_Map_Manager_Test \
+        RB_Tree_Test \
+        Reactor_Exceptions_Test \
+        Reactor_Notify_Test \
+        Reactor_Performance_Test \
+        Reactor_Timer_Test \
+        Reactors_Test \
+        Reader_Writer_Test \
+        Recursive_Mutex_Test \
+        Reverse_Lock_Test \
+        SOCK_Connector_Test \
+        SOCK_Test \
+        SPIPE_Test \
+        SString_Test \
+        SV_Shared_Memory_Test \
+        Semaphore_Test \
+        Service_Config_Test \
+        Sigset_Ops_Test \
+        Simple_Message_Block_Test \
+        TSS_Test \
+        Task_Test \
+        Thread_Manager_Test \
+        Thread_Mutex_Test \
         Thread_Pool_Reactor_Test \
-	Thread_Pool_Test \
-	Time_Service_Test \
-	Time_Value_Test \
-	Timeprobe_Test \
-	Timer_Queue_Test \
-	Tokens_Test \
-	UPIPE_SAP_Test \
+        Thread_Pool_Test \
+        Time_Service_Test \
+        Time_Value_Test \
+        Timeprobe_Test \
+        Timer_Queue_Test \
+        Tokens_Test \
+        UPIPE_SAP_Test \
         Upgradable_RW_Test $(XTREACTOR_TEST)
 
 Aio_Platform_Test_SOURCES = Aio_Platform_Test.cpp
@@ -126,6 +133,10 @@ Basic_Types_Test_SOURCES = Basic_Types_Test.cpp
 Buffer_Stream_Test_SOURCES = Buffer_Stream_Test.cpp
 
 CDR_Test_SOURCES = CDR_Test.cpp
+
+Cache_Manager_Test_SOURCES = Cache_Manager_Test.cpp
+
+Collection_Test = Collection_Test.cpp
 
 Conn_Test_SOURCES = Conn_Test.cpp Conn_Test.h
 
@@ -168,6 +179,8 @@ Message_Queue_Test_SOURCES = Message_Queue_Test.cpp
 
 Naming_Test_SOURCES = Naming_Test.cpp
 
+New_Fail_Test_SOURCES = New_Fail_Test.cpp
+
 Notify_Performance_Test_SOURCES = Notify_Performance_Test.cpp
 
 OrdMultiSet_Test_SOURCES = OrdMultiSet_Test.cpp
@@ -202,6 +215,8 @@ Reactors_Test_SOURCES = Reactors_Test.cpp
 Reader_Writer_Test_SOURCES = Reader_Writer_Test.cpp
 
 Recursive_Mutex_Test_SOURCES = Recursive_Mutex_Test.cpp
+
+Reverse_Lock_Test_SOURCES = Reverse_Lock_Test.cpp
 
 SOCK_Connector_Test_SOURCES = SOCK_Connector_Test.cpp
 
@@ -266,7 +281,7 @@ noinst_DATA = UNIXserver.conf \
               Win32tokens.conf
 
 
-## The tests we want to run are all of the test program we are going to build.
+## The tests we want to run are all of the test programs we are going to build.
 ## Do not run them if they are cross-compiled.
 if ACE_CROSS_COMPILED
 TESTS =
@@ -285,11 +300,11 @@ EXTRA_DIST = $(noinst_SCRIPTS) $(noinst_DATA)
 ##                 $(tmp)/Naming_Test*
 
 ## Run local targets
-all-local: log_dir
+## all-local: log_dir
 
 ## Create tests `log' directory
-log_dir:
-	if test -d log; then : else mkdir log; fi
+## log_dir:
+## 	if test -d log; then : else mkdir log; fi
 
 ## Clean up template repositories, etc.
 clean-local:
