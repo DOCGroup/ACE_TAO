@@ -1,3 +1,42 @@
+Mon Aug 30 11:20:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* TAO_IDL/be/be_operation.cpp
+	  TAO_IDL/be/be_visitor_factory.cpp	
+	  TAO_IDL/be/be_visitor_scope.cpp
+	  TAO_IDL/be/be_visitor_attribute/attribute.cpp
+	  TAO_IDL/be/be_visitor_interface/interface.cpp
+	  TAO_IDL/be/be_visitor_interface/interface_ch.cpp
+	  TAO_IDL/be/be_visitor_interface/interface_ci.cpp
+	  TAO_IDL/be/be_visitor_interface/interface_cs.cpp
+	  TAO_IDL/be/be_visitor_interface/interface_sh.cpp
+	  TAO_IDL/be/be_visitor_interface/interface_ss.cpp
+	  TAO_IDL/be/be_visitor_interface/tie_sh.cpp
+	  TAO_IDL/be/be_visitor_operation/ami_arglist.cpp
+	  TAO_IDL/be/be_visitor_operation/ami_ch.cpp
+	  TAO_IDL/be/be_visitor_operation/ami_cs.cpp
+	  TAO_IDL/be/be_visitor_operation/ami_handler_arglist.cpp
+	  TAO_IDL/be/be_visitor_operation/ami_handler_arglist_ch.cpp
+	  TAO_IDL/be/be_visitor_operation/ami_handler_operation.cpp
+	  TAO_IDL/be/be_visitor_operation/ami_handler_operation_ch.cpp
+	  TAO_IDL/be/be_visitor_operation/ami_handler_operation_cs.cpp
+	  TAO_IDL/be/be_visitor_operation/ami_handler_servant_operation_ss.cpp
+	  TAO_IDL/be/be_visitor_operation/ami_handler_skeleton_cs.cpp
+	  TAO_IDL/be/be_visitor_operation/ami_handler_thru_poa_collocated_ss.cpp
+	  TAO_IDL/be/be_visitor_operation/argument.cpp
+	  TAO_IDL/be/be_visitor_operation/compiled_marshal.cpp
+	  TAO_IDL/be/be_visitor_operation/thru_poa_collocated_ss.cpp
+	  TAO_IDL/be_include/be_codegen.h
+	  TAO_IDL/be_include/be_operation.h
+	  TAO_IDL/be_include/be_visitor_scope.h
+	  TAO_IDL/be_include/be_visitor_interface/tie_sh.h
+	  TAO_IDL/be_include/be_visitor_operation/ami_handler_thru_poa_collocated_ss.h:
+	  Renamed the Code Generation enums to make it more clear what
+	  is actually meant. I also added support for attributes, though still work needs 
+	  to be done in that area. Besides that I fixed bugs in the code generation. 
+
+	* tao/Transport_Mux_Strategy.cpp:
+	  Fixed a bug concerning an uninitialized message state.
+
 Mon Aug 30 10:21:16 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* PROBLEM-REPORT-FORM:

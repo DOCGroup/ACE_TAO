@@ -215,7 +215,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       be_visitor_context ctx (*this->ctx_);
 
       // Set the state.
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_STUB_CS);
+      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_CS);
 
       // Create the visitor.
       be_visitor *visitor = tao_cg->make_visitor (&ctx);

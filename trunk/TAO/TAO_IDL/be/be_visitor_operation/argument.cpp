@@ -48,38 +48,38 @@ be_visitor_operation_argument::post_process (be_decl *bd)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
+
   // if we are not the last parameter, we insert a comma. This is only
   // applicable for the upcalls or the call to (de)marshal that we use in the
   // interpreted marshaling.
-  if (!this->last_node (bd))
+  switch (this->ctx_->state ())
     {
-      switch (this->ctx_->state ())
-        {
-        case TAO_CodeGen::TAO_OPERATION_ARG_UPCALL_SS:
-        case TAO_CodeGen::TAO_OPERATION_COLLOCATED_ARG_UPCALL_SS:
-        case TAO_CodeGen::TAO_OPERATION_ARG_DEMARSHAL_SS:
-        case TAO_CodeGen::TAO_OPERATION_ARG_MARSHAL_SS:
+    case TAO_CodeGen::TAO_OPERATION_ARG_UPCALL_SS:
+    case TAO_CodeGen::TAO_OPERATION_COLLOCATED_ARG_UPCALL_SS:
+    case TAO_CodeGen::TAO_OPERATION_ARG_DEMARSHAL_SS:
+    case TAO_CodeGen::TAO_OPERATION_ARG_MARSHAL_SS:
+        if (!this->last_node (bd))
           *os << ",\n";
-          break;
-        case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_COLLOCATED_ARG_UPCALL_CS:          
-        case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARG_UPCALL_CS:          
-          {
-            // @@ Michael
-            // In the case of of AMI, we do not want to 
-            // print a comma for in arguments.
-            // This is due to the concept of post processing,
-            // which I was not able to prevent to be executed
-            // in the case of in arguments. Post processing
-            // does always write a comma, though.
-            be_argument *arg = this->ctx_->be_node_as_argument ();
-            ACE_ASSERT (arg != 0);
-            if (arg->direction () != AST_Argument::dir_IN)
-              *os << ",\n";
-          }
-          break;
-        default:
-          break;
+      break;
+    case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_COLLOCATED_ARG_UPCALL_CS:          
+    case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARG_UPCALL_CS:          
+      if (!this->last_inout_or_out_node (bd))
+        {
+          // @@ Michael
+          // In the case of of AMI, we do not want to 
+          // print a comma for in arguments.
+          // This is due to the concept of post processing,
+          // which I was not able to prevent to be executed
+          // in the case of in arguments. Post processing
+          // does always write a comma, though.
+          be_argument *arg = this->ctx_->be_node_as_argument ();
+          ACE_ASSERT (arg != 0);
+          if (arg->direction () != AST_Argument::dir_IN)
+            *os << ",\n";
         }
+      break;
+    default:
+      break;
     }
   return 0;
 }
@@ -109,18 +109,28 @@ be_visitor_operation_argument::visit_operation (be_operation *node)
         case TAO_CodeGen::TAO_OPERATION_COLLOCATED_ARG_UPCALL_SS:
           // applicable only to these cases where the actual upcall is made 
 
-          // last argument is the environment
           if (node->argument_count () > 0)
-            // insert a comma only if there were previous parameters
-            *os << ",\n";
+            {
+              // insert a comma only if there were previous parameters
+              *os << ",\n";
+            }
+
+          // last argument is the environment
           os->indent ();
           *os << "ACE_TRY_ENV";
           break;
         case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_COLLOCATED_ARG_UPCALL_CS:
         case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARG_UPCALL_CS:
+          // applicable only to these cases where the actual upcall is made 
+          if (this->ctx_->sub_state () == TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_HAS_ARGUMENTS)
+            {
+              // insert a comma only if there were previous parameters
+              *os << ",\n";
+            }
+          // last argument is the environment
           os->indent ();
           *os << "ACE_TRY_ENV";
-          break;          
+          break;
         default:
           break;
         }

@@ -97,17 +97,8 @@ be_visitor_operation_ami_handler_servant_operation_ss::visit_operation (be_opera
 
   // Default implementation
   os->indent ();
-  *os << "void " << intf->full_skel_name () << "::";
-  // check if we are an attribute node in disguise
-  if (this->ctx_->attribute ())
-    {
-      // now check if we are a "get" or "set" operation
-      if (node->nmembers () == 1) // set
-        *os << "_set_";
-      else
-        *os << "_get_";
-    }
-  *os << node->local_name () << " ";
+  *os << "void " << intf->full_skel_name () << "::"
+      << node->local_name () << " ";
   be_visitor_context ctx (*this->ctx_);
   ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARGLIST_CS);
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
@@ -229,6 +220,9 @@ be_visitor_operation_ami_handler_servant_operation_ss::visit_operation (be_opera
 
   ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARG_UPCALL_CS);
+  if (this->has_param_type (node, AST_Argument::dir_INOUT)
+      || this->has_param_type (node, AST_Argument::dir_OUT))
+    ctx.sub_state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_HAS_ARGUMENTS);
   visitor = tao_cg->make_visitor (&ctx);
   if (!visitor || (node->accept (visitor) == -1))
     {
@@ -622,26 +616,29 @@ be_compiled_visitor_operation_ami_handler_servant_operation_ss::gen_demarshal_pa
       // demarshal the inout and out arguments and return values
       *os << "if (!(\n" << be_idt;
 
-      // demarshal
-      ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_RETVAL_DEMARSHAL_CS);
-      ctx.sub_state (TAO_CodeGen::TAO_CDR_INPUT);
-      visitor = tao_cg->make_visitor (&ctx);
-      if (!visitor || (node->accept (visitor) == -1))
+      if (!this->void_return_type (bt))
         {
-          delete visitor;
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_compiled_visitor_operation_ami_handler_servant_operation_ss::"
-                             "gen_demarshal_params - "
-                             "codegen for demarshal failed\n"),
-                            -1);
-        }
+          // demarshal
+          ctx = *this->ctx_;
+          ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_RETVAL_DEMARSHAL_CS);
+          ctx.sub_state (TAO_CodeGen::TAO_CDR_INPUT);
+          visitor = tao_cg->make_visitor (&ctx);
+          if (!visitor || (node->accept (visitor) == -1))
+            {
+              delete visitor;
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_compiled_visitor_operation_ami_handler_servant_operation_ss::"
+                                 "gen_demarshal_params - "
+                                 "codegen for demarshal failed\n"),
+                                -1);
+            }
 
-      // Print the && if there are OUT or INOUT arguements in the
-      // signature.
-      if (this->has_param_type (node, AST_Argument::dir_OUT) ||
-          this->has_param_type (node, AST_Argument::dir_INOUT))
-        *os << " &&\n";
+          // Print the && if there are OUT or INOUT arguements in the
+          // signature.
+          if (this->has_param_type (node, AST_Argument::dir_OUT) ||
+              this->has_param_type (node, AST_Argument::dir_INOUT))
+             *os << " &&\n";
+        }
 
       // marshal each in and inout argument
       ctx = *this->ctx_;

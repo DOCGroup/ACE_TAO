@@ -58,23 +58,23 @@ be_operation::compute_argument_attr (void)
     {
       // instantiate a scope iterator.
       UTL_ScopeActiveIterator *si =
-	new UTL_ScopeActiveIterator (this, UTL_Scope::IK_decls);
+	      new UTL_ScopeActiveIterator (this, UTL_Scope::IK_decls);
 
       while (!(si->is_done ()))
         {
           // get the next AST decl node
-	  AST_Decl *d = si->item ();
+	        AST_Decl *d = si->item ();
 
           if (d->node_type () == AST_Decl::NT_argument)
-	    {
-	      this->argument_count_++;
-	      be_argument *arg = be_argument::narrow_from_decl (d);
-	      be_type* type =
-		be_type::narrow_from_decl (arg->field_type ());
+	          {
+              this->argument_count_++;
+              be_argument *arg = be_argument::narrow_from_decl (d);
+              be_type* type =
+                be_type::narrow_from_decl (arg->field_type ());
 
-	      if (type->base_node_type () == AST_Decl::NT_native)
-		this->has_native_ = 1;
-	    }
+              if (type->base_node_type () == AST_Decl::NT_native)
+                this->has_native_ = 1;
+            }
           si->next ();
         } // end of while
       delete si; // free the iterator object
@@ -87,6 +87,18 @@ be_operation::compute_argument_attr (void)
   return 0;
 }
 
+
+int 
+be_operation::void_return_type ()
+{
+  be_type* type = be_type::narrow_from_decl (this->return_type ());
+  if (type->node_type () == AST_Decl::NT_pre_defined
+      && (be_predefined_type::narrow_from_decl (type)->pt ()
+          == AST_PredefinedType::PT_void))
+    return 1;
+  else
+    return 0;
+}
 // return the member count
 int
 be_operation::argument_count (void)

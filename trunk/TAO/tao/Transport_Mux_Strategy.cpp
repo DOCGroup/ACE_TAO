@@ -106,8 +106,15 @@ TAO_GIOP_Message_State *
 TAO_Exclusive_TMS::get_message_state (void)
 {
   if (this->rd_ != 0)
-    return this->rd_->message_state ();
-
+    {
+      TAO_GIOP_Message_State* rd_message_state = this->rd_->message_state ();
+      if (rd_message_state == 0)
+        {
+          // The Reply Dispatcher does not have one (the Asynch guys
+          // don't) so go ahead and pass yours.
+          return &this->message_state_;
+        }
+    }
   return &this->message_state_;
 }
 

@@ -120,14 +120,29 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
       << be_uidt << be_uidt_nl
       << ");" << be_uidt << "\n";
 
-  if (node->traverse_inheritance_graph (be_visitor_interface_tie_sh::method_helper, os) == -1)
+  if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_TIE_SH)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_interface_tie_sh_ss::"
-                         "visit_interface - "
-                         "traversal of inhertance graph failed\n"),
-                        -1);
+      if (node->traverse_inheritance_graph (be_visitor_interface_tie_sh::ami_handler_method_helper, os) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_visitor_interface_tie_sh_ss::"
+                             "visit_interface - "
+                             "traversal of inhertance graph failed\n"),
+                            -1);
+        }
     }
+  else
+    {
+      if (node->traverse_inheritance_graph (be_visitor_interface_tie_sh::method_helper, os) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_visitor_interface_tie_sh_ss::"
+                             "visit_interface - "
+                             "traversal of inhertance graph failed\n"),
+                            -1);
+        }
+    }
+
 
   *os << be_uidt << "private:" << be_idt_nl
       << "T *ptr_;" << be_nl
@@ -153,6 +168,28 @@ be_visitor_interface_tie_sh::method_helper (be_interface *,
 {
   be_visitor_context ctx;
   ctx.state (TAO_CodeGen::TAO_INTERFACE_TIE_SH);
+
+  ctx.stream (os);
+  be_visitor* visitor = tao_cg->make_visitor (&ctx);
+  if (visitor == 0 || visitor->visit_scope (node) == -1)
+    {
+      delete visitor;
+      ACE_ERROR_RETURN ((LM_ERROR,
+			 "be_visitor_interface_tie_sh::"
+			 "method_helper\n"), -1);
+    }
+  delete visitor;
+  return 0;
+}
+
+int
+be_visitor_interface_tie_sh::ami_handler_method_helper (be_interface *,
+					    be_interface *node,
+					    TAO_OutStream *os)
+{
+  be_visitor_context ctx;
+  ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_TIE_SH);
+
   ctx.stream (os);
   be_visitor* visitor = tao_cg->make_visitor (&ctx);
   if (visitor == 0 || visitor->visit_scope (node) == -1)
