@@ -5798,6 +5798,7 @@ public:
   static int fattach (int handle,
                       const char *path);
   static long filesize (ACE_HANDLE handle);
+  static long filesize (LPCTSTR handle);
   static int getmsg (ACE_HANDLE handle,
                      struct strbuf *ctl,
                      struct strbuf

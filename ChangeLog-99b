@@ -1,15 +1,28 @@
+Wed Sep  1 15:51:41 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS: Added a new method called ACE_OS::filesize() that
+	  takes a LPCTSTR so that we can pass a file name to this.
+
+	* ace/config-win32-borland.h: Changed ACE_CC_COMPILER to
+	  CPP32.EXE on the recommendation of Christopher Kohlhoff
+ 	  <chris@kohlhoff.com>.
+
+	* ace/Synch.h: Updated the documentation of ACE_Semaphore::remove()
+	  to clarify that it should only be called by one thread to avoid
+ 	  race conditions.  Thanks to Clarence Bishop
+ 	  <clarence.bishop@na.marconicomms.com> for mentioning this.
+  
 1999-09-01  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	  Added a wrapper ACE_OS::enum_protocols () for WSAEnumProtocols
-	  ().Tested this function with the ACE QOS test.
 	* ACE_wrappers/ace/OS.h:
 	* ACE_wrappers/ace/OS.i:
+	  Added a wrapper ACE_OS::enum_protocols () for WSAEnumProtocols().
+	  Tested this function with the ACE QOS test.
 
-	  Replaced the occurences of WSAEnumProtocols with
-	  ACE_OS::enum_protocols () and successfully ran the QOS test.
-	
 	* examples/QOS/client.cpp: 
 	* examples/QOS/server.cpp: 
+	  Replaced the occurences of WSAEnumProtocols with
+ 	  ACE_OS::enum_protocols () and successfully ran the QOS test.	
 
 Wed Sep  1 15:51:41 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
