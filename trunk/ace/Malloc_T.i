@@ -62,7 +62,8 @@ ACE_Cached_Allocator<T, ACE_LOCK>::calloc (size_t,
 template <class T, class ACE_LOCK> ACE_INLINE void
 ACE_Cached_Allocator<T, ACE_LOCK>::free (void * ptr)
 {
-  this->free_list_.add ((ACE_Cached_Mem_Pool_Node<T> *) ptr) ;
+  if (ptr != 0)
+    this->free_list_.add ((ACE_Cached_Mem_Pool_Node<T> *) ptr) ;
 }
 
 template <class ACE_LOCK> ACE_INLINE void *
