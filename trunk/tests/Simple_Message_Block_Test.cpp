@@ -171,6 +171,29 @@ ACE_TMAIN (int, ACE_TCHAR *[])
     mb1->release ();
   }
 
+  {
+    // Checks failure of copy when "virtual" allocation (using mark)
+    // is too small
+    char message[]="abcdefghijklmnop";
+    ACE_Message_Block mb1 (ACE_OS::strlen (message) + 1);
+    ACE_Message_Block mb2 (ACE_OS::strlen (message) + 1);
+
+    // Resize mb2 so that we mark for use less than the allocated buffer
+    if (-1 == mb2.size (ACE_OS::strlen (message) + 1 - 10))
+      ACE_ASSERT (0);
+
+    // We expect this to succeed
+    if (-1 == mb1.copy (message, ACE_OS::strlen (message) + 1))
+      ACE_ASSERT (0);
+
+    // We expect this to fail
+    if (0 == mb2.copy (message, ACE_OS::strlen (message) + 1))
+      ACE_ASSERT (0);
+
+    // We also expect this to fail
+    if (0 == mb2.copy (message))
+      ACE_ASSERT (0);
+  }
   ACE_END_TEST;
   return 0;
 }
@@ -180,4 +203,3 @@ template class ACE_Lock_Adapter<ACE_SYNCH_MUTEX>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Lock_Adapter<ACE_SYNCH_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

@@ -1,3 +1,16 @@
+Sun Nov 10 19:38:45 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* ace/Message_Block.cpp(copy): The copy () methods were copying
+	  data till the end_ pointer. This is a wrong assumption,
+	  especially in places where the alloted bytes are less than the
+	  allocated bytes. Now we use the space () method to find out the
+	  amount of space available in the data block for copying. Thanks
+	  to Edan Ayal for finding this and providing a patch.
+
+	* ace/Simple_Message_Block_Test.cpp: Added a test which tests
+	  copying in a case where the alloted space is less than the
+	  allocated space. Thanks to Edan Ayal for this test case.
+
 Sat Nov  9 12:37:54 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* docs/ACE-guidelines.html: Updated the ACE guidelines to
