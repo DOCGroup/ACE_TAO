@@ -2,10 +2,14 @@
 
 #include "FT_Endpoint_Selector_Factory.h"
 #include "FT_Invocation_Endpoint_Selectors.h"
-#include "tao/Exception.h"
+#include "tao/SystemException.h"
 #include "tao/Environment.h"
 
-ACE_RCSID(FaultTolerance, FT_Endpoint_Selector_Factory, "$Id$")
+
+ACE_RCSID (FaultTolerance,
+           FT_Endpoint_Selector_Factory,
+           "$Id$")
+
 
 TAO_FT_Endpoint_Selector_Factory::TAO_FT_Endpoint_Selector_Factory (void)
   :ft_endpoint_selector_ (0)
@@ -36,6 +40,7 @@ TAO_FT_Endpoint_Selector_Factory::get_selector (
           ACE_NEW_THROW_EX (ft_endpoint_selector_,
                             TAO_FT_Invocation_Endpoint_Selector (),
                             CORBA::NO_MEMORY ());
+          ACE_CHECK_RETURN (0);
         }
     }
 
