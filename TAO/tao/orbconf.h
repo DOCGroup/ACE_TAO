@@ -281,6 +281,6 @@
 // TAO may define its own policies, they are defined in a range far
 // from the standard policies.
 #define TAO_MIN_PROPIETARY_POLICY 1024
-#define TAO_MAX_PROPIETARY_POLICY (TAO_MIN_PROPIETARY_POLICY+TAO_POLICIES_COUNT) 
+#define TAO_MAX_PROPIETARY_POLICY (TAO_MIN_PROPIETARY_POLICY+TAO_POLICIES_COUNT)
 
 #endif  /* TAO_ORB_CONFIG_H */

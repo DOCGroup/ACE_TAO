@@ -26,5 +26,3 @@ TAO_ORB_Parameters::~TAO_ORB_Parameters (void)
   // Delete the table.
   delete this->ior_lookup_table_;
 }
-
-

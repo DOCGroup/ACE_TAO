@@ -8,6 +8,7 @@
 #include "tao/ORB.h"
 #include "tao/MProfile.h"
 #include "tao/ORB_Core.h"
+#include "tao/POA.h"
 #include "tao/debug.h"
 
 ACE_RCSID(tao, IIOP_Profile, "$Id$")
@@ -422,7 +423,7 @@ TAO_IIOP_Profile::parse_string (const char *string,
   char *cp = ACE_OS::strchr (start, ':');
 
   if (cp == 0)
-    { 
+    {
       ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_NO), -1);
     }
 

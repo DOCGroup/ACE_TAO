@@ -1,7 +1,5 @@
 // $Id$
 
-#include "tao/ORB_Core.h"
-
 ACE_INLINE ACE_Lock &
 TAO_Object_Adapter::lock (void)
 {
@@ -111,4 +109,3 @@ TAO_Object_Adapter::unbind_persistent_poa (const poa_name &folded_name,
   return this->hint_strategy_->unbind_persistent_poa (folded_name,
                                                       system_name);
 }
-

@@ -31,7 +31,6 @@
 #  include "tao/corbafwd.h"
 
 // Forward Decls
-class TAO_OA_Parameters;
 class TAO_Transport;
 class TAO_IIOP_Transport;
 class TAO_IIOP_Client_Transport;

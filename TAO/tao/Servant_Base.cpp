@@ -4,6 +4,7 @@
 #include "tao/Timeprobe.h"
 #include "tao/Operation_Table.h"
 #include "tao/ORB_Core.h"
+#include "tao/POA.h"
 #include "tao/Stub.h"
 #include "tao/Environment.h"
 #include "tao/Server_Request.h"

@@ -30,6 +30,9 @@
 #include "tao/Marshal.h"
 #include "tao/IOR_LookupTable.h"
 #include "tao/GIOP.h"
+#include "tao/IIOP_Acceptor.h"
+#include "tao/Object_Adapter.h"
+#include "tao/POA.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/ORB.i"
@@ -182,6 +185,9 @@ CORBA_ORB::CORBA_ORB (TAO_ORB_Core* orb_core)
     ACE_OS::NULL_thread;
   ACE_NEW (this->cond_become_leader_,
            ACE_SYNCH_CONDITION (leader_follower_info_.leader_follower_lock_));
+
+  if (CORBA::instance_ == 0)
+    CORBA::instance_ = this;
 }
 
 CORBA_ORB::~CORBA_ORB (void)
@@ -527,7 +533,7 @@ CORBA_ORB::resolve_service (CORBA::String service_name,
                             CORBA::Environment& ACE_TRY_ENV)
 {
   CORBA_Object_ptr return_value = CORBA_Object::_nil ();
-  
+
   // First check to see if we've already initialized this.
   if (this->name_service_ != CORBA_Object::_nil ())
     {
@@ -544,13 +550,13 @@ CORBA_ORB::resolve_service (CORBA::String service_name,
       if (name_service_ior.length () == 0)
         // Third, check to see if the user has an environment variable.
         name_service_ior = ACE_OS::getenv ("NameServiceIOR");
-      
+
       if (name_service_ior.length () != 0)
         {
           this->name_service_ =
             this->string_to_object (name_service_ior.c_str (),
                                     ACE_TRY_ENV);
-          
+
           // check for errors
           if (ACE_TRY_ENV.exception () != 0)
             this->name_service_ = CORBA_Object::_nil ();
@@ -560,13 +566,13 @@ CORBA_ORB::resolve_service (CORBA::String service_name,
           // First, determine if the port was supplied on the command line
           u_short port =
             this->orb_core_->orb_params ()->name_service_port ();
-          
+
           if (port == 0)
             {
               // Look for the port among our environment variables.
               const char *port_number =
                 ACE_OS::getenv ("NameServicePort");
-              
+
               if (port_number != 0)
                 port = ACE_OS::atoi (port_number);
               else
@@ -580,7 +586,7 @@ CORBA_ORB::resolve_service (CORBA::String service_name,
                                         ACE_TRY_ENV);
         }
     }
-  
+
   // Return ior.
   return_value = this->name_service_;
   return CORBA_Object::_duplicate (return_value);
@@ -591,7 +597,7 @@ CORBA_ORB::resolve_trading_service (ACE_Time_Value *timeout,
                                     CORBA::Environment& ACE_TRY_ENV)
 {
   CORBA_Object_ptr return_value = CORBA_Object::_nil ();
-  
+
   // First check to see if we've already initialized this.
   if (this->trading_service_ != CORBA_Object::_nil ())
     {
@@ -608,12 +614,12 @@ CORBA_ORB::resolve_trading_service (ACE_Time_Value *timeout,
       if (trading_service_ior.length () == 0)
         // Third, check to see if the user has an environment variable.
         trading_service_ior = ACE_OS::getenv ("TradingServiceIOR");
-      
+
       if (trading_service_ior.length () != 0)
         {
           this->trading_service_ =
             this->string_to_object (trading_service_ior.c_str (), ACE_TRY_ENV);
-          
+
           // check for errors
           if (ACE_TRY_ENV.exception () != 0)
             this->trading_service_ = CORBA_Object::_nil ();
@@ -624,18 +630,18 @@ CORBA_ORB::resolve_trading_service (ACE_Time_Value *timeout,
           // @@ FRED: need a generic rep for this!
           u_short port =
             this->orb_core_->orb_params ()->trading_service_port ();
-          
+
           if (port == 0)
             {
               // Look for the port among our environment variables.
               const char *port_number = ACE_OS::getenv ("TradingServicePort");
-              
+
               if (port_number != 0)
                 port = ACE_OS::atoi (port_number);
               else
                 port = TAO_DEFAULT_TRADING_SERVER_REQUEST_PORT;
             }
-          
+
           this->trading_service_ =
             this->multicast_to_service ("TradingService",
                                         port,
@@ -643,7 +649,7 @@ CORBA_ORB::resolve_trading_service (ACE_Time_Value *timeout,
                                         ACE_TRY_ENV);
         }
     }
-  
+
   return_value = this->trading_service_;
   return CORBA_Object::_duplicate (return_value);
 }
@@ -792,28 +798,26 @@ CORBA_ORB::multicast_to_service (const char * service_name,
                                  CORBA::Environment& ACE_TRY_ENV)
 {
   char buf[BUFSIZ + 1];
-  
+
   // Use UDP multicast to locate the  service.
   CORBA_Object_ptr return_value =
     CORBA_Object::_nil ();
-  
+
   if (this->multicast_query (buf,
                              service_name,
                              port,
                              timeout) == 0)
     {
-      //CORBA::Environment env;
-      
       // Convert IOR to an object reference.
       CORBA_Object_ptr objectified_ior =
         this->string_to_object ((CORBA::String) buf,
                                 ACE_TRY_ENV);
-      
+
       // Check for errors.
       if (ACE_TRY_ENV.exception () == 0)
         return_value = objectified_ior;
     }
-  
+
   // Return ior.
   return return_value;
 }
@@ -836,10 +840,10 @@ CORBA_ORB::resolve_initial_references (CORBA::String name,
   // -ORBInitRef.
   TAO_IOR_LookupTable *table =
     this->orb_core_->orb_params ()->ior_lookup_table ();
-  
+
   ACE_CString ior;
   ACE_CString object_id ((const char *) name);
-  
+
   // Is the service name in the IOR Table.
   if (table->find_ior (object_id, ior) == 0)
     return this->string_to_object (ior.c_str (), ACE_TRY_ENV);
@@ -849,12 +853,12 @@ CORBA_ORB::resolve_initial_references (CORBA::String name,
       // -ORBDefaultInitRef.
       char * default_init_ref =
         this->orb_core_->orb_params ()->default_init_ref ();
-      
+
       // Check if a DefaultInitRef was specified.
       if (ACE_OS::strlen (default_init_ref) != 0)
         {
           ACE_CString list_of_profiles;
-          
+
           // Used by the strtok_r.
           char *lasts = 0;
 
@@ -873,7 +877,7 @@ CORBA_ORB::resolve_initial_references (CORBA::String name,
               list_of_profiles += object_id;
               list_of_profiles += ACE_CString (",");
             }
-          
+
           // Clean up.
           delete [] default_init_ref;
 
@@ -883,7 +887,7 @@ CORBA_ORB::resolve_initial_references (CORBA::String name,
           return this->string_to_object (list_of_profiles.c_str (),
                                          ACE_TRY_ENV);
         }
-      
+
       delete default_init_ref;
     }
 
@@ -1133,7 +1137,7 @@ CORBA::wstring_free (CORBA::WChar *const str)
 }
 
 void
-CORBA_ORB::init_orb_globals (CORBA::Environment &env)
+CORBA_ORB::init_orb_globals (CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex, tao_mon, *ACE_Static_Object_Lock::instance ()));
 
@@ -1144,23 +1148,55 @@ CORBA_ORB::init_orb_globals (CORBA::Environment &env)
     {
       // initialize the system TypeCodes
       TAO_TypeCodes::init ();
+
       // initialize the factory for marshaling
       TAO_Marshal::init ();
+
       // initialize the interpreter
       TAO_CDR_Interpreter::init ();
+
       // initialize the system exceptions
-      TAO_Exceptions::init (env);
+      TAO_Exceptions::init (ACE_TRY_ENV);
+      ACE_CHECK;
+
+      // Verify some of the basic implementation requirements.  This
+      // test gets optimized away by a decent compiler (or else the
+      // rest of the routine does).
+      //
+      // NOTE:  we still "just" assume that native floating point is
+      // IEEE.
+
+      if (sizeof (CORBA::Short) != 2
+          || sizeof (CORBA::Long) != 4
+          || sizeof (CORBA::LongLong) != 8
+          || sizeof (CORBA::Float) != 4
+          || sizeof (CORBA::Double) != 8
+          || sizeof (CORBA::LongDouble) != 16
+          || sizeof (CORBA::WChar) < 2
+          || sizeof (void *) != ACE_SIZEOF_VOID_P)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "%s; ERROR: unexpected basic type size; "
+                      "s:%d l:%d ll:%d f:%d d:%d ld:%d wc:%d v:%d\n"
+                      "please reconfigure TAO\n",
+                      __FILE__,
+                      sizeof (CORBA::Short),
+                      sizeof (CORBA::Long),
+                      sizeof (CORBA::LongLong),
+                      sizeof (CORBA::Float),
+                      sizeof (CORBA::Double),
+                      sizeof (CORBA::LongDouble),
+                      sizeof (CORBA::WChar),
+                      sizeof (void *)));
+
+          ACE_THROW (CORBA::INITIALIZE (CORBA::COMPLETED_NO));
+        }
     }
   CORBA_ORB::orb_init_count_++;
 }
 
 // ORB initialisation, per OMG document 94-9-46.
 //
-// XXX in addition to the "built in" Internet ORB, there will be ORBs
-// @@                                ^^^^^^^^ XXX
-// which are added separately, e.g. through a DLL listed in the
-// registry.  Registry will be used to assign orb names and to
-// establish which is the default.
 
 CORBA::ORB_ptr
 CORBA::ORB_init (int &argc,
@@ -1175,71 +1211,34 @@ CORBA::ORB_ptr
 CORBA::ORB_init (int &argc,
                  char *const *argv,
                  const char * /* orb_name */,
-                 CORBA::Environment &env)
+                 CORBA::Environment &ACE_TRY_ENV)
 {
   // Using ACE_Static_Object_Lock::instance() precludes <ORB_init>
   // from being called within a static object CTOR.
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard,
                             *ACE_Static_Object_Lock::instance (), 0));
 
-  // Verify some of the basic implementation requirements.  This test
-  // gets optimized away by a decent compiler (or else the rest of the
-  // routine does).
-  //
-  // NOTE:  we still "just" assume that native floating point is IEEE.
-
   // Get ORB Core
-  // @@ As part of the ORB re-architecture this may be the point where
+  // @@ As part of the ORB re-architecture this will the point where
   //    we locate the right ORB (from a table) and use that one
-  //    instead of using TAO_ORB_Core_instance ().
-  TAO_ORB_Core *oc = TAO_ORB_Core_instance ();
+  //    instead of just creating a new one every time.
+  TAO_ORB_Core *oc;
+
+  ACE_NEW_RETURN (oc, TAO_ORB_Core, CORBA::ORB::_nil ());
 
   // Initialize the ORB Core instance.
   int result = oc->init (argc, (char **) argv);
 
-  env.clear ();
-
-  // This (init_orb_globals) must come *after* ORB Core initialization.
-  // Make sure initialization of TAO globals only occurs once.
-  CORBA_ORB::init_orb_globals (env);
-
-  if (env.exception () != 0)
-    return 0;
-
-  // This must come *after* (init_orb_globals).
-  if (sizeof (CORBA::Short) != 2
-      || sizeof (CORBA::Long) != 4
-      || sizeof (CORBA::LongLong) != 8
-      || sizeof (CORBA::Float) != 4
-      || sizeof (CORBA::Double) != 8
-      || sizeof (CORBA::LongDouble) != 16
-      || sizeof (CORBA::WChar) < 2
-      || sizeof (void *) != ACE_SIZEOF_VOID_P)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "%s; ERROR: unexpected basic type size; "
-                  "s:%d l:%d ll:%d f:%d d:%d ld:%d wc:%d v:%d\n"
-                  "please reconfigure TAO\n",
-                  __FILE__,
-                  sizeof (CORBA::Short),
-                  sizeof (CORBA::Long),
-                  sizeof (CORBA::LongLong),
-                  sizeof (CORBA::Float),
-                  sizeof (CORBA::Double),
-                  sizeof (CORBA::LongDouble),
-                  sizeof (CORBA::WChar),
-                  sizeof (void *)));
-
-      env.exception (new CORBA::INITIALIZE (CORBA::COMPLETED_NO));
-      return 0;
-    }
-
   // Check for errors and return 0 if error.
   if (result == -1)
     {
-      env.exception (new CORBA::BAD_PARAM (CORBA::COMPLETED_NO));
-      return 0;
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::COMPLETED_NO), 0);
     }
+
+  // This (init_orb_globals) must come *after* ORB Core initialization.
+  // Make sure initialization of TAO globals only occurs once.
+  CORBA_ORB::init_orb_globals (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
 
   // @@ We may only want to set this if ORB_init() has 0 argc/argv
   // parameters.

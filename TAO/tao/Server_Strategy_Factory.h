@@ -24,6 +24,7 @@
 
 class TAO_Active_Object_Map_Impl;
 class TAO_Reverse_Active_Object_Map_Impl;
+class TAO_ORB_Core;
 
 class TAO_Server_Strategy_Factory : public ACE_Service_Object
 {
@@ -79,7 +80,7 @@ public:
   virtual ~TAO_Server_Strategy_Factory(void);
   // Destructor.
 
-  virtual int open (void);
+  virtual int open (TAO_ORB_Core* orb_core);
   // Call <open> on various strategies.  This is not performed in
   // <init> so that the other portions of the ORB have a chance to
   // "settle" in their initialization since the streategies herein
