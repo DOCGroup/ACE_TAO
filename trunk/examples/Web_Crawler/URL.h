@@ -18,12 +18,16 @@
 #define _URL_H
 
 #include "Mem_Map_Stream.h"
-#include "URL_Addr.h"
-#include "URL_Status.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "URL_Addr.h"
+#include "URL_Status.h"
+
+#include "ace/SString.h"
+
 
 // Forward declaration.
 class URL_Visitor;
@@ -32,7 +36,7 @@ class URL
 {
   // = TITLE
   //    Base class for a URL.
-  // 
+  //
   // = DESCRIPTION
   //    This class plays a role in the Visitor pattern.
 public:
@@ -47,7 +51,7 @@ public:
   virtual ssize_t send_request (void) = 0;
   // Send a <GET> command to fetch the contents in the URI from the
   // server.
-  
+
   virtual const ACE_URL_Addr &url_addr (void) const = 0;
   // Returns the URL that we represent.
 
@@ -62,7 +66,7 @@ public:
   virtual const ACE_CString &content_type (void);
   virtual void content_type (const ACE_CString &);
 
-  
+
 
 private:
   URL_Status reply_status_;

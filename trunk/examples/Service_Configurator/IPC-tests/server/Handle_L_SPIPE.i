@@ -1,13 +1,18 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
 
 #include "ace/SPIPE_Stream.h"
+
+#if defined (ACE_HAS_STREAM_PIPES)
+
+#include "ace/Reactor.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_string.h"
 
-#if defined (ACE_HAS_STREAM_PIPES)
 
 ACE_INLINE
 Handle_L_SPIPE::Handle_L_SPIPE (void)
