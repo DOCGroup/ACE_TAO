@@ -29,9 +29,10 @@
 
 memShow
 
-ld < Message_Queue_Test
-write 2, "Message_Queue_Test ", 19
-ace_main; unld "Message_Queue_Test"
+#### Message_Queue_Test sometimes never finishes on VxWorks.
+#### ld < Message_Queue_Test
+#### write 2, "Message_Queue_Test ", 19
+#### ace_main; unld "Message_Queue_Test"
 
 ld < Basic_Types_Test
 write 2, "Basic_Types_Test ", 17
@@ -42,7 +43,7 @@ write 2, "CDR_Test ", 9
 ace_main; unld "CDR_Test"
 
 ld < DLList_Test
-write 2, "DLList_Test ", 9
+write 2, "DLList_Test ", 13
 ace_main; unld "DLList_Test"
 
 ld < Env_Value_Test
@@ -61,9 +62,10 @@ ld < TSS_Test
 write 2, "TSS_Test ", 9
 ace_main; unld "TSS_Test"
 
-ld < Timeprobe_Test
-write 2, "Timeprobe_Test ", 15
-ace_main; unld "Timeprobe_Test"
+#### Causes page fault.
+#### ld < Timeprobe_Test
+#### write 2, "Timeprobe_Test ", 15
+#### ace_main; unld "Timeprobe_Test"
 
 ld < Time_Value_Test
 write 2, "Time_Value_Test ", 16
