@@ -10,10 +10,10 @@
 
 # Currently, IDL_Cubit *must* come before the IDL_Cubit tests.
 DIRS  = IDL_Cubit \
-        DII_Cubit \
 	MT_Cubit
 
 # These are disabled by default...
+# DII_Cubit \
 # Orbix \
 # VisiBroker
 
