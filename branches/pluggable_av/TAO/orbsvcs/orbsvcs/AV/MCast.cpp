@@ -187,7 +187,6 @@ TAO_AV_UDP_MCast_Flow_Handler::TAO_AV_UDP_MCast_Flow_Handler (TAO_AV_Callback *c
 {
   ACE_NEW (transport_,
            TAO_AV_UDP_MCast_Transport (this));
-
 }
 
 ACE_HANDLE

@@ -754,6 +754,7 @@ protected:
   TAO_AV_FlowSpecSet reverse_flow_spec_set;
   AVStreams::StreamEndPoint_var peer_sep_;
   AVStreams::SFPStatus *sfp_status_;
+  AVStreams::StreamCtrl_var streamctrl_;
 };
 
 
@@ -1141,11 +1142,15 @@ public:
                      AVStreams::notConnected));
   // drops a flow endpoint from the flow.
 
+  int set_mcast_addr (ACE_UINT32 addr,u_short port);
 protected:
-  AVStreams::FlowProducer_var flow_producer_;
-  // The producer of this flow.
-  AVStreams::FlowConsumer_var flow_consumer_;
-  // The consumer of this flow
+  typedef ACE_Unbounded_Set<AVStreams::FlowProducer_ptr> FlowProducer_Set;
+  typedef ACE_Unbounded_Set_Iterator<AVStreams::FlowProducer_ptr> FlowProducer_SetItor;
+  typedef ACE_Unbounded_Set<AVStreams::FlowConsumer_ptr> FlowConsumer_Set;
+  typedef ACE_Unbounded_Set_Iterator<AVStreams::FlowConsumer_ptr> FlowConsumer_SetItor;
+
+  FlowProducer_Set flow_producer_set_;
+  FlowConsumer_Set flow_consumer_set_;
   CORBA::String_var fp_name_;
   CORBA::Any fp_settings_;
   CORBA::String_var producer_address_;
@@ -1153,6 +1158,10 @@ protected:
 
   int ip_multicast_;
   // IP Multicasting is used.
+  TAO_MCastConfigIf *mcastconfigif_i_;
+  AVStreams::MCastConfigIf_var mcastconfigif_;
+  u_short mcast_port_;
+  ACE_UINT32 mcast_addr_;
 };
 
 class TAO_ORBSVCS_Export TAO_FlowEndPoint :
