@@ -1,3 +1,10 @@
+Wed Nov 15 00:04:30 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/PortableServer/POA.cpp (key_to_stub_i):
+
+	  Fixed Minimum CORBA compile problem by moving portion of the if
+	  test under TAO_HAS_RTCORBA protection.
+
 Tue Nov 14 19:15:04 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/Makefile.SSLIOP:
