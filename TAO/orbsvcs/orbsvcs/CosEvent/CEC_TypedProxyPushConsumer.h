@@ -23,6 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/ESF/ESF_Worker.h"
+#include "event_serv_export.h"
 
 class TAO_CEC_TypedEvent;
 class TAO_CEC_TypedEventChannel;
