@@ -73,6 +73,7 @@ option
                                               'Auto_Ptr.h',
                                               'Base_Thread_Adapter.h',
                                               'Based_Pointer_Repository.h',
+                                              'Basic_Stats.h',
                                               'Basic_Types.h',
                                               'Cached_Connect_Strategy_T.h',
                                               'Cache_Map_Manager_T.h',
@@ -321,6 +322,7 @@ option
                  source type(cpp) "Asynch_IO_Impl.cpp"
                  source type(cpp) "Base_Thread_Adapter.cpp"
                  source type(cpp) "Based_Pointer_Repository.cpp"
+                 source type(cpp) "Basic_Stats.cpp"
                  source type(cpp) "Basic_Types.cpp"
                  source type(cpp) "Capabilities.cpp"
                  source type(cpp) "CDR_Base.cpp"
