@@ -19,6 +19,7 @@ Event_impl::~Event_impl ()
 
 void
 Event_impl::do_print (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+	ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   ACE_DEBUG((LM_DEBUG, "(time %d origin %d)  ",
              (CORBA::ULong) this->time_(),
@@ -55,6 +56,7 @@ Temperature_impl::~Temperature_impl ()
 
 void
 Temperature_impl::do_print (ACE_ENV_SINGLE_ARG_DECL)
+	ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   // The timestamp
   Event_impl::do_print (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -92,6 +94,7 @@ Position_impl::~Position_impl ()
 
 void
 Position_impl::do_print (ACE_ENV_SINGLE_ARG_DECL)
+	ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   // The timestamp
   Event_impl::do_print (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -111,31 +114,37 @@ Position_impl::do_print (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 CORBA::Float Position_impl::x (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+	ACE_THROW_SPEC(( CORBA::SystemException ))
 {
   return this->xyz()[0];
 }
 
 void Position_impl::x (CORBA::Float x ACE_ENV_ARG_DECL_NOT_USED)
+	ACE_THROW_SPEC(( CORBA::SystemException ))
 {
   this->xyz()[0] = x;
 }
 
 CORBA::Float Position_impl::y (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+	ACE_THROW_SPEC(( CORBA::SystemException ))
 {
   return this->xyz()[1];
 }
 
 void Position_impl::y (CORBA::Float y ACE_ENV_ARG_DECL_NOT_USED)
+	ACE_THROW_SPEC(( CORBA::SystemException ))
 {
   this->xyz()[1] = y;
 }
 
 CORBA::Float Position_impl::z (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+	ACE_THROW_SPEC(( CORBA::SystemException ))
 {
   return this->xyz()[2];
 }
 
 void Position_impl::z (CORBA::Float z ACE_ENV_ARG_DECL_NOT_USED)
+	ACE_THROW_SPEC(( CORBA::SystemException ))
 {
   this->xyz()[2] = z;
 }
@@ -170,6 +179,7 @@ Log_Msg_impl::~Log_Msg_impl ()
 
 void
 Log_Msg_impl::do_print (ACE_ENV_SINGLE_ARG_DECL)
+	ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   // The timestamp
   Event_impl::do_print (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -222,12 +232,14 @@ Event_List_Link_impl::~Event_List_Link_impl ()
 
 Event*
 Event_List_Link_impl::get_event (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+	ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   return this->my_event ();
 }
 
 Event_List_Link*
 Event_List_Link_impl::get_next_link (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+	ACE_THROW_SPEC(( CORBA::SystemException ))
 {
   return this->next ();
 }
@@ -235,6 +247,7 @@ Event_List_Link_impl::get_next_link (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 void
 Event_List_Link_impl::attach_next_link (Event_List_Link *n
                                         ACE_ENV_ARG_DECL_NOT_USED)
+	ACE_THROW_SPEC(( CORBA::SystemException ))
 {
   this->next (n);
 }
@@ -265,6 +278,7 @@ Event_List_impl::~Event_List_impl ()
 
 void
 Event_List_impl::store_event (Event* e ACE_ENV_ARG_DECL_NOT_USED)
+	ACE_THROW_SPEC(( CORBA::SystemException ))
 {
   // This operation should perform atomically and should
   // guard against the access to the list from another thread.
@@ -407,6 +421,7 @@ Temperature_Criterion_impl::~Temperature_Criterion_impl ()
 CORBA::Boolean
 Temperature_Criterion_impl::is_critical (Event* e
                                          ACE_ENV_ARG_DECL_NOT_USED)
+	ACE_THROW_SPEC(( CORBA::SystemException ))
 {
   // Downcast to a temperature.
   Temperature* t = Temperature::_downcast (e);
@@ -424,6 +439,7 @@ Temperature_Criterion_impl::is_critical (Event* e
 
 void
 Temperature_Criterion_impl::do_print (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+	ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   ACE_DEBUG((LM_DEBUG, "Alarm boundary for events with origin id %d is\n",
              this->origin_id_ () ));
@@ -463,6 +479,7 @@ Position_Criterion_impl::~Position_Criterion_impl ()
 
 CORBA::Boolean
 Position_Criterion_impl::is_critical (Event* e ACE_ENV_ARG_DECL_NOT_USED)
+	ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   Position* p = Position::_downcast (e);
   // Is Event really a Position ?
@@ -484,6 +501,7 @@ Position_Criterion_impl::is_critical (Event* e ACE_ENV_ARG_DECL_NOT_USED)
 
 void
 Position_Criterion_impl::do_print (ACE_ENV_SINGLE_ARG_DECL)
+	ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   ACE_DEBUG((LM_DEBUG,
              "Alarm boundary for events with origin id %d is the box\n",
@@ -517,6 +535,7 @@ Log_Msg_Criterion_impl::~Log_Msg_Criterion_impl ()
 CORBA::Boolean
 Log_Msg_Criterion_impl::is_critical (Event* e
                                      ACE_ENV_ARG_DECL_NOT_USED)
+	ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   Log_Msg* lm = Log_Msg::_downcast (e);
 
@@ -531,6 +550,7 @@ Log_Msg_Criterion_impl::is_critical (Event* e
 
 void
 Log_Msg_Criterion_impl::do_print (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+	ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   ACE_DEBUG((LM_DEBUG,
              "All log messages with urgency greater zero are registered.\n" ));
@@ -566,6 +586,7 @@ Criterion_List_impl::~Criterion_List_impl ()
 void
 Criterion_List_impl::store_criterion (Criterion *c
                                       ACE_ENV_ARG_DECL_NOT_USED)
+	ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   if (!my_list ())
     {
@@ -579,6 +600,7 @@ Criterion_List_impl::store_criterion (Criterion *c
 
 CORBA::Boolean
 Criterion_List_impl::is_critical (Event *e ACE_ENV_ARG_DECL_NOT_USED)
+	ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   // Try all criterions. Walking the list is efficient enough for
   // demonstration.
