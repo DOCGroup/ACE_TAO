@@ -203,7 +203,7 @@ main (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 #else
-int main(int, char*[]) {
+int ACE_TMAIN (int, ACE_TCHAR*[]) {
   // not supported on win32
   return 0;
 }

@@ -9,7 +9,7 @@
 //    bpr_thread.cpp
 //
 // = DESCRIPTION
-//    Exercises drivers for a bounded packet relay, based on threaded timer queues.  
+//    Exercises drivers for a bounded packet relay, based on threaded timer queues.
 //
 // = AUTHORS
 //    Chris Gill           <cdgill@cs.wustl.edu>  and
@@ -52,7 +52,7 @@ static const char input_text [] =
 " Time's winged chariot hurrying near.";
 
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   // Construct a new thread manager for the input device task.  Auto
   // ptr ensures memory is freed when we exit this scope.
@@ -67,7 +67,7 @@ main (int, char *[])
   Text_Input_Device_Wrapper *input_device;
   ACE_NEW_RETURN (input_device,
                   Text_Input_Device_Wrapper (input_task_mgr,
-                                             sizeof (input_text), 
+                                             sizeof (input_text),
                                              input_text),
                   -1);
   auto_ptr <Text_Input_Device_Wrapper> input (input_device);
@@ -90,8 +90,8 @@ main (int, char *[])
                   -1);
   auto_ptr <Bounded_Packet_Relay> relay (packet_relay);
 
-  // Construct a receive input callback command for the relay, and register 
-  // it with the input device.  Auto ptr ensures memory is freed when we exit 
+  // Construct a receive input callback command for the relay, and register
+  // it with the input device.  Auto ptr ensures memory is freed when we exit
   // this scope.
   INPUT_CALLBACK *input_callback;
   ACE_NEW_RETURN (input_callback,
@@ -102,7 +102,7 @@ main (int, char *[])
   if (input_device->set_send_input_msg_cmd (input_callback) < 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "failed to register input callback"), 
+                         "failed to register input callback"),
                         -1);
     }
 
