@@ -1,3 +1,5 @@
+// $Id$
+
 // ============================================================================
 //
 // = LIBRARY
@@ -17,9 +19,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include "idl.h"
+#include "idl_extern.h"
+#include "be.h"
 
 // Default Constructor
 be_decl::be_decl (void)
@@ -133,9 +135,9 @@ be_decl::compute_fullname (void)
   else
     {
       long namelen;
-      UTL_IdListActiveIterator	*i;
-      long				first = I_TRUE;
-      long				second = I_FALSE;
+      UTL_IdListActiveIterator *i;
+      long first = I_TRUE;
+      long second = I_FALSE;
 
       // in the first loop compute the total length
       namelen = 0;
@@ -206,9 +208,9 @@ be_decl::compute_flatname (void)
   else
     {
       long namelen;
-      UTL_IdListActiveIterator	*i;
-      long				first = I_TRUE;
-      long				second = I_FALSE;
+      UTL_IdListActiveIterator *i;
+      long first = I_TRUE;
+      long second = I_FALSE;
 
       // in the first loop compute the total length
       namelen = 0;
@@ -279,9 +281,9 @@ be_decl::compute_repoID (void)
   else
     {
       long namelen;
-      UTL_IdListActiveIterator	*i;
-      long				first = I_TRUE;
-      long				second = I_FALSE;
+      UTL_IdListActiveIterator *i;
+      long first = I_TRUE;
+      long second = I_FALSE;
 
       // in the first loop compute the total length
       namelen = 8; // for the prefix "IDL:" and suffix ":1.0"
@@ -349,7 +351,7 @@ be_decl::repoID (void)
 int
 be_decl::tc_name2long (const char *name, long *&larr, long &arrlen)
 {
-  static char buf [NAMEBUFSIZE];
+  static long buf [NAMEBUFSIZE / sizeof (long)];
   long slen;
   unsigned int i;
 
@@ -360,7 +362,7 @@ be_decl::tc_name2long (const char *name, long *&larr, long &arrlen)
   arrlen = slen/4 + (slen%4 ? 1:0);
 
   ACE_OS::memset (buf, '\0', arrlen*4);
-  larr = (long *)buf;
+  larr = buf;
 
   for (i=0; i < ACE_OS::strlen (name); i++)
     {
@@ -369,6 +371,7 @@ be_decl::tc_name2long (const char *name, long *&larr, long &arrlen)
       shift = 3 - (i%4);
       // store the computed shifted quantity in the appropriate byte of the
       // array to be returned
+
       larr [i/4] |= ((name[i] & 0xff) << (shift*8));
     }
   return 0;
