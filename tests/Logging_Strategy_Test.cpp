@@ -378,6 +378,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         }
     }
 
+  ACE_UNUSED_ARG (wipeout_logfile);
   return 0;
 }
 
