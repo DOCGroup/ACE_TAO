@@ -1,5 +1,8 @@
 Fri May 16 12:25:32 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* netsvcs/lib: Reverted back to the original Server_Logging_Handler 
+	  behavior since the new version is breaking GCC's templates.
+
 	* ace/Log_Record.h: need to #include "ace/ACE.h" before
 	  "ace/Log_Priority.h" so that "Log_Priority.h" sees the
 	  configuration stuff (otherwise the following fix won't work).
