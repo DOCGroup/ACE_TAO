@@ -29,10 +29,9 @@
 
 memShow
 
-#### This test occasionally causes a page fault or a hang on VxWorks.
-#### ld < Message_Queue_Test
-#### write 2, "Message_Queue_Test ", 19
-#### ace_main; unld "Message_Queue_Test"
+ld < Message_Queue_Test
+write 2, "Message_Queue_Test ", 19
+ace_main; unld "Message_Queue_Test"
 
 ld < Basic_Types_Test
 write 2, "Basic_Types_Test ", 17
