@@ -199,15 +199,24 @@ IR_Helper::notify_shutdown (CORBA_Environment &TAO_IN_ENV)
   TAO_ENDTRY;
 }
 
-
 void
 IR_Helper::change_object (CORBA::Object_ptr obj, CORBA_Environment &TAO_IN_ENV)
 {
-  IIOP_Object *iiop_obj = ACE_dynamic_cast (IIOP_Object *, obj->_stubobj ());
-  IIOP_Object *implrepo_obj = ACE_dynamic_cast (IIOP_Object *, this->implrepo_->_stubobj ());
-  
-  // @@ Only same host for now
-
-  iiop_obj->profile.port = implrepo_obj->profile.port;
+  if ( obj 
+    && obj->_stubobj () 
+    && obj->_stubobj ()->profile_in_use ()
+    && this->implrepo_ 
+    && this->implrepo_->_stubobj () 
+    && this->implrepo_->_stubobj ()->profile_in_use ()  )
+    {
+      TAO_IIOP_Profile *implrepo_pfile =
+          ACE_dynamic_cast (TAO_IIOP_Profile *, 
+                            this->implrepo_->_stubobj ()->profile_in_use ());
+      TAO_IIOP_Profile *iiop_pfile =
+          ACE_dynamic_cast (TAO_IIOP_Profile *, 
+                            obj->_stubobj ()->profile_in_use ());
+    
+      // @@ Only same host for now
+      iiop_pfile->port (implrepo_pfile->port ());
+    }
 }
-
