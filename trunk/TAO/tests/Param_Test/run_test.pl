@@ -23,7 +23,7 @@ sub run_test
                          "$debug -ORBobjrefstyle url -ORBport $port -o ".
 			 $iorfile);
   
-  sleep (2);     # Give the server a chance to start up
+  sleep (5);     # Give the server a chance to start up
   
   system (".".$DIR_SEPARATOR."client $debug -f $iorfile  -i $invocation -t ".
           "$type -n $num");
@@ -95,7 +95,7 @@ for ($i = 0; $i <= $#ARGV; $i++)
 	  "bounded_struct_seq", "any", "objref", "objref_sequence", 
 	  "any_sequence", "short_sequence", "long_sequence", 
 	  "bounded_short_sequence", "bounded_long_sequence",
-	  "fixed_array", "var_array");
+	  "fixed_array", "var_array", "typecode");
 
 if ($type ne "")
 {
