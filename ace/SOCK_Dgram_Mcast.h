@@ -35,7 +35,7 @@
  * ACE_SOCK_Dgram_Mcast_Ex implements a multicast datagram interface.
  * See ACE_SOCK_Dgram_Mcast_Ex for the generic class interface definition.
  */
-class ACE_SOCK_Dgram_Mcast : 
+class ACE_Export ACE_SOCK_Dgram_Mcast : 
     public ACE_SOCK_Dgram_Mcast_Ex <ACE_SDM_DEFOPT_LOCK>
 {
 

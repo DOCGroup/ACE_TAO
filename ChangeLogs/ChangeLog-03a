@@ -1,3 +1,7 @@
+Sun Jun  9 19:31:04 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/SOCK_Dgram_Mcast.h: Added ACE_Export to ACE_SOCK_Dgram_Mcast.
+  
 Sun Jun  9 18:57:07 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* examples/Reactor/Ntalker/ntalker.cpp:
