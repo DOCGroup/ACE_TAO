@@ -1,6 +1,30 @@
+Sun Mar 18 12:22:08 2001  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Security/Security_ORBInitializer.cpp (pre_init):
+
+	  Corrected debugging message to display "pre_init()" instead of
+	  "post_init()."
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.cpp (TAO_SSLIOP_Current):
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.inl (tss_slot):
+
+	  Added method to set the TSS slot ID assigned to the
+	  "SSLIOPCurrent" object.  The constructor no longer accepts a TSS
+	  slot ID parameter.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ORBInitializer.cpp (post_init):
+
+	  Moved call to "this->get_tss_slot_id()" from the pre_init()
+	  method to the post_init() method.  This was necessary to get
+	  around "order of initialization" restrictions imposed by the
+	  PortableInterceptor::ORBInitInfo object,
+	  i.e. resolve_initial_references() cannot be called from within
+	  pre_init().
+
 Sun Mar 18 13:24:52 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Cache_Entries.inl: Fixed a warning with TRUE_64  builds. 
+	* tao/Cache_Entries.inl: Fixed a warning with Tru64 builds. 
 
 Sun Mar 18 10:40:32 2001  Ossama Othman  <ossama@uci.edu>
 

@@ -12,9 +12,8 @@ ACE_RCSID (TAO_SSLIOP,
 # include "SSLIOP_Current.inl"
 #endif /* __ACE_INLINE__ */
 
-TAO_SSLIOP_Current::TAO_SSLIOP_Current (size_t tss_slot,
-                                        const char *orb_id)
-  : tss_slot_ (tss_slot),
+TAO_SSLIOP_Current::TAO_SSLIOP_Current (const char *orb_id)
+  : tss_slot_ (0),
     orb_id_ (orb_id),
     orb_core_ (0),
     setup_done_ (0),
