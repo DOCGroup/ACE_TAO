@@ -46,7 +46,6 @@ namespace TAO
 
       ACE_TRY
         {
-          // @@ Johnny, there is a memory leak here..
           child->the_activator (this ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
@@ -55,6 +54,10 @@ namespace TAO
           (void) child->destroy (1,
                                  1
                                  ACE_ENV_ARG_PARAMETER);
+
+          // Delete the child
+          delete child;
+          child = 0;
 
           return false;
         }
