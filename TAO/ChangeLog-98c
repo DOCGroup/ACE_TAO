@@ -1,3 +1,11 @@
+Thu Sep 17 23:47:31 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp: 
+	  Added the correct template instantiations for IRIX 6.2
+
+	* tao/ORB_Core.cpp: 
+	  Minor fix in argument parsing.
+
 Thu Sep 17 22:52:48 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/be/be_sunsoft.cpp: 

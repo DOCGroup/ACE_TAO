@@ -353,7 +353,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
               arg_shifter.consume_arg ();
             }
         }
-      else if (ACE_OS::strcmp (current_arg, "-ORBCDRtradeoff") == 0)
+      else if (ACE_OS::strcmp (current_arg, "-ORBcdrtradeoff") == 0)
         {
           arg_shifter.consume_arg ();
           if (arg_shifter.is_parameter_next ())
