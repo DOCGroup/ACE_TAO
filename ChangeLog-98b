@@ -1,3 +1,10 @@
+Sun Jun  7 01:06:12 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/config-freebsd-pthread.h: Added the 
+	  ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS flag to work around problems
+	  with pthreads on FreeBSD.  Thanks to Amancio Hasty
+	  <hasty@rah.star-gate.com> for reporting this.
+
 Sat Jun  6 22:00:54 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/Message_Queue.cpp: Added code so that advance() is more
