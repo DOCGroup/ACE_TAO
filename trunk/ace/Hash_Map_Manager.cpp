@@ -116,9 +116,9 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::open (size_t size,
 template <class EXT_ID, class INT_ID, class LOCK>
 ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::ACE_Hash_Map_Manager (size_t size,
 								  ACE_Allocator *allocator)
-  : total_size_ (0),
-    cur_size_ (0),
-    allocator_ (allocator)
+  : allocator_ (allocator),
+    total_size_ (0),
+    cur_size_ (0)
 {
   if (this->open (size, allocator) == -1)
     ACE_ERROR ((LM_ERROR, "ACE_Hash_Map_Manager\n"));
