@@ -1,3 +1,9 @@
+Mon Apr 21 18:14:32 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
+
+	* ace/config-win32-common.h: Added checks around _AFXDLL before
+	  defining it. Thanks to Bruce Meyer <bmeyer1@gte.net> for
+	  pointing this out.
+
 Mon Apr 21 11:31:16 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* examples/Service_Configurator/IPC-tests/server/Handle_Thr_Stream.cpp:

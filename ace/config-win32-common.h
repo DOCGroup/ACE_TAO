@@ -191,15 +191,15 @@
 #endif /* _MSC_VER */
 
 #if defined (_UNICODE)
-#if !defined (UNICODE)
-#define UNICODE         /* UNICODE is used by Windows headers */
-#endif /* UNICODE */
+        #if !defined (UNICODE)
+                 #define UNICODE         /* UNICODE is used by Windows headers */
+        #endif /* UNICODE */
 #endif /* _UNICODE */
 
 #if defined (UNICODE)
-#if !defined (_UNICODE)
-#define _UNICODE        /* _UNICODE is used by C-runtime/MFC headers */
-#endif /* _UNICODE */
+        #if !defined (_UNICODE)
+                 #define _UNICODE        /* _UNICODE is used by C-runtime/MFC headers */
+        #endif /* _UNICODE */
 #endif /* UNICODE */
 
 #ifdef _DEBUG
@@ -208,8 +208,10 @@
 
 // We are build ACE and want to use MFC (multithreaded)
 #if defined(ACE_BUILD_DLL) && defined(ACE_HAS_MFC) && defined (_MT)
-	// force multithreaded MFC DLL
-	#define _AFXDLL
+        #if !defined (_AFXDLL)
+	        // force multithreaded MFC DLL
+	        #define _AFXDLL
+        #endif /* _AFXDLL */
 #endif
 
 // <windows.h> and MFC's <afxwin.h> are mutually
