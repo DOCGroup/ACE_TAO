@@ -1125,7 +1125,7 @@ TAO_Object_Adapter::Priority_Model_Processing::pre_invoke (
       //  ServiceContextList of the request.
       RTCORBA::Priority target_priority;
       int priority_found = 0;
-      for (int i = 0;
+      for (CORBA::ULong i = 0;
            i < service_context_list.length () && !priority_found;
            ++i)
         {
