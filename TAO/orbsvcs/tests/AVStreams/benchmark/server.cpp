@@ -150,6 +150,7 @@ main (int argc, char **argv)
       
       int result 
         = server.init (argc, argv, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       if (result == -1)
         return -1;
