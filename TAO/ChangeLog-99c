@@ -1,3 +1,11 @@
+Sat Nov 13 18:25:52 1999  Luther J Baker  <ljb1@cs.wustl.edu>
+
+	* tao/Exception.h (ostream& operator<<)
+	* tao/Exception.cpp (ostream& operator<<)
+	  Added #if !defined (ACE_LACKS_IOSTREAM_TOTALLY) to surround
+          ostream& operator<< (ostream&os, const CORBA_Exception& e)
+	  to facilitate building without streams.
+
 Sat Nov 13 17:17:17 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/DynArray_i.cpp:
@@ -10,7 +18,7 @@ Sat Nov 13 17:17:17 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	  In all Dyn*_i.cpp files, type () functions now returns a
 	  duplicate. In DynStruct_i.cpp, code was added to from_any (0
 	  and to_any () to facilitate the case where the struct is an
-	  exception. In Exception.cpp, UnknownUserException constructor 
+	  exception. In Exception.cpp, UnknownUserException constructor
 	  with Any argument now calls base class constructor explicitly,
 	  similarly to the default constructor.
 
