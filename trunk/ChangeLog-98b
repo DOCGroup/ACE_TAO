@@ -1,3 +1,11 @@
+Tue Nov 24 03:50:09 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* tests/DLL_Test.cpp: Renamed DLL_Wrapper_Test.cpp to
+	  DLL_Test.cpp. Also, added ACE_OBJ_SUFFIX which takes care of the
+	  object code convention on NT and UNIX platforms. Changed the
+	  messages in ACE_ERROR to come from ACE_DLL::error().
+	  This is a running version tested using CC compiler too.
+			
 Tue Nov 24 17:45:26 1998  Steve Huston  <shuston@riverace.com>
 
         * netsvcs/clients/Naming/Dump_Restore/Makefile: Added a LIBS +=
