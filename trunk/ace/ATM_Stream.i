@@ -23,13 +23,34 @@ ACE_ATM_Stream::open (ACE_ATM_Params params)
 #elif defined (ACE_HAS_FORE_ATM_WS2)
   params.set_flags( ACE_FLAG_MULTIPOINT_C_ROOT | ACE_FLAG_MULTIPOINT_D_ROOT );
 
-  return stream_.open (params.get_type(),
-                       params.get_protocol_family(),
-                       params.get_protocol(),
-                       params.get_protocol_info(),
-                       params.get_sock_group(),
-                       params.get_flags(),
-                       params.get_reuse_addr());
+  int retval = stream_.open (params.get_type(),
+                             params.get_protocol_family(),
+                             params.get_protocol(),
+                             params.get_protocol_info(),
+                             params.get_sock_group(),
+                             params.get_flags(),
+                             params.get_reuse_addr());
+  if (retval == -1)
+    return -1;
+
+  struct sockaddr_atm sock_addr;
+
+  ACE_OS::memset(&sock_addr, 0, sizeof(struct sockaddr_atm));
+  sock_addr.satm_family = AF_ATM;
+  sock_addr.satm_number.AddressType=ADDR_ANY;
+  sock_addr.satm_number.NumofDigits = ATM_ADDR_SIZE;
+  sock_addr.satm_blli.Layer2Protocol = SAP_FIELD_ABSENT;
+  sock_addr.satm_blli.Layer3Protocol = SAP_FIELD_ABSENT;
+  sock_addr.satm_bhli.HighLayerInfoType = SAP_FIELD_ABSENT;
+  if (ACE_OS::bind(get_handle(),
+                   (struct sockaddr FAR *)&sock_addr,
+                   sizeof(struct sockaddr_atm)) < 0)
+    {
+      ACE_OS::printf("Error binding local address: %d",WSAGetLastError());
+      return -1;
+    }
+
+  return 0;
 #else
   ACE_UNUSED_ARG(params);
   return 0;
@@ -47,18 +68,6 @@ ACE_ATM_Stream::close (void)
   return 0;
 #endif /* ACE_HAS_FORE_ATM_XTI || ACE_HAS_FORE_ATM_WS2 */
 }
-
-//ACE_INLINE
-//ACE_HANDLE
-//ACE_ATM_Stream::get_handle (void) const
-//{
-//  ACE_TRACE ("ACE_ATM_Stream::get_handle");
-//#if defined (ACE_HAS_FORE_ATM_XTI) || defined (ACE_HAS_FORE_ATM_WS2)
-//  return ((ACE_SOCK_Stream)stream_).get_handle ();
-//#else
-//  return 0;
-//#endif /* ACE_HAS_FORE_ATM_XTI || ACE_HAS_FORE_ATM_WS2 */
-//}
 
 ACE_INLINE
 ATM_Stream&

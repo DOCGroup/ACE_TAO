@@ -13,9 +13,9 @@ ACE_RCSID(ace, ATM_Connector, "$Id$")
 #include "ace/ATM_Connector.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_ALLOC_HOOK_DEFINE(ACE_ATM_Connector)
+  ACE_ALLOC_HOOK_DEFINE(ACE_ATM_Connector)
 
-void
+  void
 ACE_ATM_Connector::dump (void) const
 {
   ACE_TRACE ("ACE_ATM_Connector::dump");
@@ -32,14 +32,14 @@ ACE_ATM_Connector::ACE_ATM_Connector (void)
 
 int
 ACE_ATM_Connector::connect (ACE_ATM_Stream &new_stream, 
-												    const ACE_ATM_Addr &remote_sap, 
+                            const ACE_ATM_Addr &remote_sap, 
                             ACE_ATM_Params params,
                             ACE_ATM_QoS options,
-														ACE_Time_Value *timeout,
-														const ACE_ATM_Addr &local_sap, 
-														int reuse_addr,
-														int flags,
-														int perms)
+                            ACE_Time_Value *timeout,
+                            const ACE_ATM_Addr &local_sap, 
+                            int reuse_addr,
+                            int flags,
+                            int perms)
 {
   ACE_TRACE ("ACE_ATM_Connector::connect");
 #if defined (ACE_HAS_FORE_ATM_XTI)
@@ -57,19 +57,6 @@ ACE_ATM_Connector::connect (ACE_ATM_Stream &new_stream,
                             &options.get_qos());
 #elif defined (ACE_HAS_FORE_ATM_WS2)
   ACE_OS::printf( "ATM_Connector(connect): set QoS parameters\n" );
-
-//  return connector_.connect(new_stream.get_stream(),
-//                            remote_sap,
-//                            options.get_option_params(),
-//                            timeout,
-//                            local_sap,
-//                            0,
-//                            0,
-//                            flags,
-//                            reuse_addr,
-//                            perms,
-//                            params.get_protocol_family(),
-//                            params.get_protocol());
 
   ACE_HANDLE s = new_stream.get_handle();
   struct sockaddr_atm *saddr = ( struct sockaddr_atm *)remote_sap.get_addr();

@@ -14,9 +14,9 @@ ACE_RCSID(ace, ATM_Stream, "$Id$")
 #include "ace/ATM_Stream.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_ALLOC_HOOK_DEFINE(ACE_ATM_Stream)
+  ACE_ALLOC_HOOK_DEFINE(ACE_ATM_Stream)
 
-void
+  void
 ACE_ATM_Stream::dump (void) const
 {
   ACE_TRACE ("ACE_ATM_Stream::dump");
@@ -27,27 +27,27 @@ ACE_ATM_Stream::get_peer_name (void) const
 {
   ACE_TRACE ("ACE_ATM_Stream::get_peer_name");
 #if defined (ACE_HAS_FORE_ATM_XTI)
-//   // Use t_getprotaddr for XTI/ATM
-//   struct t_bind *localaddr 
-//     = (struct t_bind *) ACE_OS::t_alloc (get_handle (),
-//                                          T_BIND,
-//                                          T_ADDR);
-//   struct t_bind *peeraddr 
-//      = (struct t_bind *) ACE_OS::t_alloc (get_handle (),
-//                                           T_BIND,
-//                                           T_ADDR);
-//   ::t_getprotaddr(get_handle (),
-//                   localaddr,
-//                   peeraddr);
+  //   // Use t_getprotaddr for XTI/ATM
+  //   struct t_bind *localaddr 
+  //     = (struct t_bind *) ACE_OS::t_alloc (get_handle (),
+  //                                          T_BIND,
+  //                                          T_ADDR);
+  //   struct t_bind *peeraddr 
+  //      = (struct t_bind *) ACE_OS::t_alloc (get_handle (),
+  //                                           T_BIND,
+  //                                           T_ADDR);
+  //   ::t_getprotaddr(get_handle (),
+  //                   localaddr,
+  //                   peeraddr);
 
-//   char* connected_name = (char*) ACE_OS::malloc(peeraddr->addr.len + 1);
-//   ACE_OS::strcpy(connected_name,
-//                  peeraddr->addr.buf);
-//   ACE_OS::t_free ((char *) localaddr,
-//                   T_BIND);
-//   ACE_OS::t_free ((char *) peeraddr,
-//                   T_BIND);
-//   return (connected_name);
+  //   char* connected_name = (char*) ACE_OS::malloc(peeraddr->addr.len + 1);
+  //   ACE_OS::strcpy(connected_name,
+  //                  peeraddr->addr.buf);
+  //   ACE_OS::t_free ((char *) localaddr,
+  //                   T_BIND);
+  //   ACE_OS::t_free ((char *) peeraddr,
+  //                   T_BIND);
+  //   return (connected_name);
 
 #error "This doesn't seem to work. May need to jimmy-rig something with the"
 #error "/etc/xti_hosts file - Ugh!"
@@ -64,9 +64,9 @@ ACE_ATM_Stream::get_peer_name (void) const
 
 #elif defined (ACE_HAS_FORE_ATM_WS2)
   // Use getpeername for WinSock2.
-  struct sockaddr_in name;
+  struct sockaddr_atm name;
+  ACE_OS::memset(&name, 0, sizeof(name));
   int nameSize = sizeof(name);
-  struct hostent *peerhost;
 
   if (ACE_OS::getpeername(this->get_handle (),
                           (struct sockaddr *) &name,
@@ -74,11 +74,41 @@ ACE_ATM_Stream::get_peer_name (void) const
     {
       return 0;
     }
-  peerhost = ACE_OS::gethostbyaddr(( char *)name.sin_addr.S_un.S_addr, 
-                                   sizeof( unsigned long ), 
-                                   PF_INET );
 
-  return peerhost -> h_name;
+  char buffer[256];
+  for (unsigned int index = 0; index < ATM_ADDR_SIZE - 1; index++ ) {
+    buffer[ index * 3 ] = '\0';
+    sprintf(buffer, "%s%02x.", buffer, name.satm_number.Addr[ index ]);
+  }
+  buffer[ (ATM_ADDR_SIZE - 1) * 3 ] = '\0';
+  sprintf(buffer, "%s%02x.", buffer, 0);
+  buffer[ ATM_ADDR_SIZE * 3 - 1 ] = '\0';
+  for (index = 0; index < ACE_OS::strlen(buffer); ++index)
+    buffer[index] = tolower(buffer[index]);
+
+  ifstream atm_hosts("C:/WINNT/atmhosts");
+  assert(atm_hosts.is_open());
+
+  // Find the host address in the ATM hosts file and return the
+  //  host name
+  char line[256];
+  char *host_ptr, *host_name = new char[256];
+  while (!atm_hosts.eof()) {
+    atm_hosts.getline(line, 256);
+    // Convert the line to lower case to ease comparison
+    for (index = 0; index < ACE_OS::strlen(line); ++index)
+      line[index] = tolower(line[index]);
+    if (strstr(line, buffer) != 0)
+      {
+        // Grab the second token which is the host name
+        strtok(line, " \t");
+        host_ptr = strtok(0, " \t");
+        strcpy(host_name, host_ptr);
+        break;
+      }
+  }
+
+  return host_name;
 #else
   return 0;
 #endif /* ACE_HAS_FORE_ATM_XTI */
@@ -178,19 +208,19 @@ ACE_ATM_Stream::get_vpi_vci (ACE_UINT16 &vpi,
   DWORD bytes = 0;
   
   if ( ::WSAIoctl(( int )this -> get_handle(), 
-                   SIO_GET_ATM_CONNECTION_ID, 
-                   NULL, 
-                   0, 
-                   (LPVOID) &connID, 
-		               sizeof(ATM_CONNECTION_ID), 
-                   &bytes, 
-                   NULL, 
-                   NULL) 
-      == SOCKET_ERROR) {
+                  SIO_GET_ATM_CONNECTION_ID, 
+                  NULL, 
+                  0, 
+                  (LPVOID) &connID, 
+                  sizeof(ATM_CONNECTION_ID), 
+                  &bytes, 
+                  NULL, 
+                  NULL) 
+       == SOCKET_ERROR) {
     ACE_OS::printf("Error: WSAIoctl %d\n", WSAGetLastError());
-	}
+  }
 
-	vpi = ( ACE_UINT16 )connID.VPI;
+  vpi = ( ACE_UINT16 )connID.VPI;
   vci = ( ACE_UINT16 )connID.VCI;
 
   return 0;
@@ -200,4 +230,3 @@ ACE_ATM_Stream::get_vpi_vci (ACE_UINT16 &vpi,
 }
 
 #endif /* ACE_HAS_ATM */
-
