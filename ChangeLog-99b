@@ -6,7 +6,16 @@ Thu Mar 25 16:31:27 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  short or char, but in such a way that the first bytes of the
 	  long contain the required data.
 	  Nobody should need that, but the IDL compiler does.
+	
+Thu Mar 25 16:25:46 1999  Ossama Othman  <othman@cs.wustl.edu>
 
+	* configure.in: Added test for ACE_HAS_BROKEN_MAP_FAILED.
+
+	* ace/OS.h: Added __USLC__ to list of macros in the conditional that
+	  keeps the compiler from complaining about parameters which are not
+	  used.  This is needed for the C++ compiler on SCO UnixWare 7.
+	  Thanks to Roland for letting me know about this.
+	
 Thu Mar 25 14:55:37 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Basic_Types_Test.cpp: print out ACE version
