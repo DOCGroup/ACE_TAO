@@ -29,15 +29,14 @@
 /**
  * @class ACE_Cached_Mem_Pool_Node
  *
- * @brief <ACE_Cached_Mem_Pool_Node> keeps unused memory within a free
+ * @brief ACE_Cached_Mem_Pool_Node keeps unused memory within a free
  * list.
  *
  * The length of a piece of unused memory must be greater than
  * sizeof (void*).  This makes sense because we'll waste even
  * more memory if we keep them in a separate data structure.
- * This class should really be placed within the next class
- * <ACE_Cached_Allocator>.  But this can't be done due to C++
- * compiler portability problems.
+ * This class should really be placed within the ACE_Cached_Allocator
+ * class but this can't be done due to C++ compiler portability problems.
  */
 template <class T>
 class ACE_Cached_Mem_Pool_Node
@@ -66,21 +65,20 @@ private:
 /**
  * @class ACE_Cached_Allocator
  *
- * @brief Create a cached memory pool with <n_chunks> chunks each with
- * sizeof (TYPE) size.
+ * @brief A fixed-size allocator that caches items for quicker access.
  *
  * This class enables caching of dynamically allocated,
  * fixed-sized classes.  Notice that the <code>sizeof (TYPE)</code>
  * must be greater than or equal to <code> sizeof (void*) </code> for
  * this to work properly.
  *
- * @sa ACE_Cached_Mem_Pool_Node
+ * @sa ACE_Dynamic_Cached_Allocator
  */
 template <class T, class ACE_LOCK>
 class ACE_Cached_Allocator : public ACE_New_Allocator
 {
 public:
-  /// Create a cached memory pool with <n_chunks> chunks
+  /// Create a cached memory pool with @a n_chunks chunks
   /// each with sizeof (TYPE) size.
   ACE_Cached_Allocator (size_t n_chunks);
 
@@ -88,18 +86,18 @@ public:
   ~ACE_Cached_Allocator (void);
 
   /**
-   * Get a chunk of memory from free list cache.  Note that <nbytes> is
-   * only checked to make sure that it's <= to sizeof T, and is
-   * otherwise ignored since <malloc> always returns a pointer to an
+   * Get a chunk of memory from free list cache.  Note that @a nbytes is
+   * only checked to make sure that it's less or equal to sizeof T, and is
+   * otherwise ignored since @c malloc() always returns a pointer to an
    * item of sizeof (T).
    */
   void *malloc (size_t nbytes = sizeof (T));
 
   /**
    * Get a chunk of memory from free list cache, giving them
-   * <initial_value>.  Note that <nbytes> is only checked to make sure
-   * that it's <= to sizeof T, and is otherwise ignored since <malloc>
-   * always returns a pointer to an item of sizeof (T).
+   * @a initial_value.  Note that @a nbytes is only checked to make sure
+   * that it's less or equal to sizeof T, and is otherwise ignored since
+   * calloc() always returns a pointer to an item of sizeof (T).
    */
   virtual void *calloc (size_t nbytes,
                         char initial_value = '\0');
@@ -125,40 +123,39 @@ private:
 /**
  * @class ACE_Dynamic_Cached_Allocator
  *
- * @brief Create a cached memory pool with <n_chunks> chunks each with
- * requested size <chunk_size>.
+ * @brief A size-based allocator that caches blocks for quicker access.
  *
  * This class enables caching of dynamically allocated,
- * chunks with size <chunk_size>.  Notice that the <code>chunk_size</code>
+ * fixed-size chunks.  Notice that the <code>chunk_size</code>
  * must be greater than or equal to <code> sizeof (void*) </code> for
  * this to work properly.
  *
- * @sa ACE_Cached_Mem_Pool_Node
+ * @sa ACE_Cached_Allocator
  */
 template <class ACE_LOCK>
 class ACE_Dynamic_Cached_Allocator : public ACE_New_Allocator
 {
 public:
-  /// Create a cached memory pool with <n_chunks> chunks
-  /// each with <chunk_size> size.
+  /// Create a cached memory pool with @a n_chunks chunks
+  /// each with @a chunk_size size.
   ACE_Dynamic_Cached_Allocator (size_t n_chunks, size_t chunk_size);
 
   /// Clear things up.
   ~ACE_Dynamic_Cached_Allocator (void);
 
   /**
-   * Get a chunk of memory from free list cache.  Note that <nbytes> is
-   * only checked to make sure that it's <= to <chunk_size>, and is
-   * otherwise ignored since <malloc> always returns a pointer to an
-   * item of <chunk_size> size.
+   * Get a chunk of memory from free list cache.  Note that @a nbytes is
+   * only checked to make sure that it's less or equal to @a chunk_size,
+   * and is otherwise ignored since malloc() always returns a pointer to an
+   * item of @a chunk_size size.
    */
   void *malloc (size_t nbytes = 0);
 
   /**
    * Get a chunk of memory from free list cache, giving them
-   * <initial_value>.  Note that <nbytes> is only checked to make sure
-   * that it's <= to <chunk_size>, and is otherwise ignored since <malloc>
-   * always returns a pointer to an item of <chunk_size>.
+   * @a initial_value.  Note that @a nbytes is only checked to make sure
+   * that it's less or equal to @a chunk_size, and is otherwise ignored
+   * since calloc() always returns a pointer to an item of @a chunk_size.
    */
   virtual void *calloc (size_t nbytes,
                         char initial_value = '\0');
@@ -177,10 +174,10 @@ private:
   /// we can clear things up later.
   char *pool_;
 
-  /// Maintain a cached memory free list. We use <char> as template
+  /// Maintain a cached memory free list. We use @c char as template
   /// parameter, although sizeof(char) is usually less than
-  /// sizeof(void*). Really important is that <chunk_size>
-  /// must be >= sizeof(void*).
+  /// sizeof(void*). Really important is that @a chunk_size
+  /// must be greater or equal to sizeof(void*).
   ACE_Locked_Free_List<ACE_Cached_Mem_Pool_Node<char>, ACE_LOCK> free_list_;
 
   /// Remember the size of our chunks.
@@ -190,8 +187,8 @@ private:
 /**
  * @class ACE_Allocator_Adapter
  *
- * @brief This class is an Adapter that allows the <ACE_Allocator> to
- * use the <ACE_Malloc> class below.
+ * @brief This class is an Adapter that allows the ACE_Allocator to
+ * use the ACE_Malloc class below.
  */
 template <class MALLOC>
 class ACE_Allocator_Adapter : public ACE_Allocator
@@ -210,13 +207,13 @@ public:
 
   // = Initialization.
   /**
-   * Note that <pool_name> should be located in
+   * Note that @a pool_name should be located in
    * a directory with the appropriate visibility and protection so
    * that all processes that need to access it can do so. */
   ACE_Allocator_Adapter (const char *pool_name = 0);
 
   /**
-   * Note that <pool_name> should be located in
+   * Note that @a pool_name should be located in
    * a directory with the appropriate visibility and protection so
    * that all processes that need to access it can do so. 
    * This constructor must be inline to avoid bugs with some C++
@@ -233,13 +230,13 @@ public:
 
 #if defined (ACE_HAS_WCHAR)
   /**
-   * Note that <pool_name> should be located in
+   * Note that @a pool_name should be located in
    * a directory with the appropriate visibility and protection so
    * that all processes that need to access it can do so. */
   ACE_Allocator_Adapter (const wchar_t *pool_name);
 
   /**
-   * Note that <pool_name> should be located in
+   * Note that @a pool_name should be located in
    * a directory with the appropriate visibility and protection so
    * that all processes that need to access it can do so. 
    * This constructor must be inline to avoid bugs with some C++
@@ -260,19 +257,19 @@ public:
 
   // = Memory Management
 
-  /// Allocate <nbytes>, but don't give them any initial value.
+  /// Allocate @a nbytes, but don't give them any initial value.
   virtual void *malloc (size_t nbytes);
 
-  /// Allocate <nbytes>, giving them all an <initial_value>.
+  /// Allocate @a nbytes, giving them all an @a initial_value.
   virtual void *calloc (size_t nbytes, char initial_value = '\0');
 
-  /// Allocate <n_elem> each of size <elem_size>, giving them
-  /// <initial_value>.
+  /// Allocate @a n_elem each of size @a elem_size, giving them
+  /// @a initial_value.
   virtual void *calloc (size_t n_elem,
                         size_t elem_size,
                         char initial_value = '\0');
 
-  /// Free <ptr> (must have been allocated by <ACE_Allocator::malloc>).
+  /// Free @a ptr (must have been allocated by ACE_Allocator::malloc()).
   virtual void free (void *ptr);
 
   /// Remove any resources associated with this memory manager.
@@ -281,30 +278,30 @@ public:
   // = Map manager like functions
 
   /**
-   * Associate <name> with <pointer>.  If <duplicates> == 0 then do
-   * not allow duplicate <name>/<pointer> associations, else if
-   * <duplicates> != 0 then allow duplicate <name>/<pointer>
+   * Associate @a name with @a pointer.  If @a duplicates == 0 then do
+   * not allow duplicate @a name/pointer associations, else if
+   * @a duplicates> != 0 then allow duplicate @a name/pointer
    * assocations.  Returns 0 if successfully binds (1) a previously
-   * unbound <name> or (2) <duplicates> != 0, returns 1 if trying to
-   * bind a previously bound <name> and <duplicates> == 0, else
+   * unbound @a name or (2) @a duplicates != 0, returns 1 if trying to
+   * bind a previously bound @a name and @a duplicates == 0, else
    * returns -1 if a resource failure occurs.
    */
   virtual int bind (const char *name, void *pointer, int duplicates = 0);
 
   /**
-   * Associate <name> with <pointer>.  Does not allow duplicate
-   * <name>/<pointer> associations.  Returns 0 if successfully binds
-   * (1) a previously unbound <name>, 1 if trying to bind a previously
-   * bound <name>, or returns -1 if a resource failure occurs.  When
-   * this call returns <pointer>'s value will always reference the
-   * void * that <name> is associated with.  Thus, if the caller needs
-   * to use <pointer> (e.g., to free it) a copy must be maintained by
+   * Associate @a name with @a pointer.  Does not allow duplicate
+   * name/pointer associations.  Returns 0 if successfully binds
+   * (1) a previously unbound @a name, 1 if trying to bind a previously
+   * bound @a name, or returns -1 if a resource failure occurs.  When
+   * this call returns, @a pointer's value will always reference the
+   * void * that @a name is associated with.  Thus, if the caller needs
+   * to use @a pointer (e.g., to free it) a copy must be maintained by
    * the caller.
    */
   virtual int trybind (const char *name, void *&pointer);
 
-  /// Locate <name> and pass out parameter via pointer.  If found,
-  /// return 0, returns -1 if <name> isn't found.
+  /// Locate @a name and pass out parameter via pointer.  If found,
+  /// return 0, returns -1 if @a name isn't found.
   virtual int find (const char *name, void *&pointer);
 
   /// Returns 0 if the name is in the mapping and -1 if not.
@@ -321,25 +318,25 @@ public:
   // = Protection and "sync" (i.e., flushing data to backing store).
 
   /**
-   * Sync <len> bytes of the memory region to the backing store
-   * starting at <this->base_addr_>.  If <len> == -1 then sync the
+   * Sync @a len bytes of the memory region to the backing store
+   * starting at @c this->base_addr_.  If @a len == -1 then sync the
    * whole region.
    */
   virtual int sync (ssize_t len = -1, int flags = MS_SYNC);
 
-  /// Sync <len> bytes of the memory region to the backing store
-  /// starting at <addr_>.
+  /// Sync @a len bytes of the memory region to the backing store
+  /// starting at @c addr_.
   virtual int sync (void *addr, size_t len, int flags = MS_SYNC);
 
   /**
-   * Change the protection of the pages of the mapped region to <prot>
-   * starting at <this->base_addr_> up to <len> bytes.  If <len> == -1
+   * Change the protection of the pages of the mapped region to @a prot
+   * starting at @c this->base_addr_ up to @a len bytes.  If @a len == -1
    * then change protection of all pages in the mapped region.
    */
   virtual int protect (ssize_t len = -1, int prot = PROT_RDWR);
 
-  /// Change the protection of the pages of the mapped region to <prot>
-  /// starting at <addr> up to <len> bytes.
+  /// Change the protection of the pages of the mapped region to @a prot
+  /// starting at @a addr up to @a len bytes.
   virtual int protect (void *addr, size_t len, int prot = PROT_RDWR);
 
   /// Returns the underlying allocator.
@@ -364,9 +361,9 @@ private:
  * @brief Defines a class that provided a highly optimized memory
  * management scheme for allocating memory statically.
  *
- * This class allocates a fixed-size <POOL_SIZE> of memory and
- * uses the <ACE_Static_Allocator_Base> class implementations of
- * <malloc> and <calloc> to optimize memory allocation from this
+ * This class allocates a fixed-size @c POOL_SIZE of memory and
+ * uses the ACE_Static_Allocator_Base class implementations of
+ * malloc() and calloc() to optimize memory allocation from this
  * pool.
  */
 template <size_t POOL_SIZE>
@@ -419,31 +416,41 @@ public:
 
   // = Initialization and termination methods.
   /**
-   * Initialize ACE_Malloc.  This constructor passes <pool_name> to
-   * initialize the memory pool, and uses <ACE::basename> to
+   * Initialize ACE_Malloc.  This constructor passes @a pool_name to
+   * initialize the memory pool, and uses ACE::basename() to
    * automatically extract out the name used for the underlying lock
    * name (if necessary).
    *
-   * Note that <pool_name> should be located in
+   * Note that @a pool_name should be located in
    * a directory with the appropriate visibility and protection so
    * that all processes that need to access it can do so. 
    */
   ACE_Malloc_T (const ACE_TCHAR *pool_name = 0);
 
   /**
-   * Initialize ACE_Malloc.  This constructor passes <pool_name> to
-   * initialize the memory pool, and uses <lock_name> to automatically
+   * Initialize ACE_Malloc.  This constructor passes @a pool_name to
+   * initialize the memory pool, and uses @a lock_name to automatically
    * extract out the name used for the underlying lock name (if
-   * necessary).  In addition, <options> is passed through to
+   * necessary).  In addition, @a options is passed through to
    * initialize the underlying memory pool.
    *
-   * Note that <pool_name> should be located in
+   * Note that @a pool_name should be located in
    * a directory with the appropriate visibility and protection so
    * that all processes that need to access it can do so. 
    */
   ACE_Malloc_T (const ACE_TCHAR *pool_name,
                 const ACE_TCHAR *lock_name,
                 const ACE_MEM_POOL_OPTIONS *options = 0);
+
+  /**
+   * Initialize an ACE_Malloc with an external ACE_LOCK.
+   * This constructor passes @a pool_name and @a options to initialize
+   * the memory pool. @a lock is used as the pool lock, and must be
+   * properly set up and ready for use before being passed to this method.
+   */
+  ACE_Malloc_T (const ACE_TCHAR *pool_name,
+                const ACE_MEM_POOL_OPTIONS *options,
+                ACE_LOCK *lock);
 
 #if !defined (ACE_HAS_TEMPLATE_TYPEDEFS)
   /// This is necessary to work around template bugs with certain C++
@@ -462,25 +469,25 @@ public:
   /// Release ref counter.
   int release (int close = 0);
 
-  /// Releases resources allocated by <ACE_Malloc>.
+  /// Releases resources allocated by this object.
   int remove (void);
 
   // = Memory management
 
-  /// Allocate <nbytes>, but don't give them any initial value.
+  /// Allocate @a nbytes, but don't give them any initial value.
   void *malloc (size_t nbytes);
 
-  /// Allocate <nbytes>, giving them <initial_value>.
+  /// Allocate @a nbytes, giving them @a initial_value.
   void *calloc (size_t nbytes, char initial_value = '\0');
 
-  /// Allocate <n_elem> each of size <elem_size>, giving them
-  /// <initial_value>.
+  /// Allocate @a n_elem each of size @a elem_size, giving them
+  /// @a initial_value.
   void *calloc (size_t n_elem,
                 size_t elem_size,
                 char initial_value = '\0');
 
-  /// Deallocate memory pointed to by <ptr>, which must have been
-  /// allocated previously by <this->malloc>.
+  /// Deallocate memory pointed to by @a ptr, which must have been
+  /// allocated previously by malloc().
   void free (void *ptr);
 
   /// Returns a reference to the underlying memory pool.
@@ -489,46 +496,46 @@ public:
   // = Map manager like functions
 
   /**
-   * Associate <name> with <pointer>.  If <duplicates> == 0 then do
-   * not allow duplicate <name>/<pointer> associations, else if
-   * <duplicates> != 0 then allow duplicate <name>/<pointer>
+   * Associate @a name with @a pointer.  If @a duplicates == 0 then do
+   * not allow duplicate name/pointer associations, else if
+   * @a duplicates != 0 then allow duplicate name/pointer
    * assocations.  Returns 0 if successfully binds (1) a previously
-   * unbound <name> or (2) <duplicates> != 0, returns 1 if trying to
-   * bind a previously bound <name> and <duplicates> == 0, else
+   * unbound @a name or (2) @a duplicates != 0, returns 1 if trying to
+   * bind a previously bound @a name and @a duplicates == 0, else
    * returns -1 if a resource failure occurs.
    */
   int bind (const char *name, void *pointer, int duplicates = 0);
 
   /**
-   * Associate <name> with <pointer>.  Does not allow duplicate
-   * <name>/<pointer> associations.  Returns 0 if successfully binds
-   * (1) a previously unbound <name>, 1 if trying to bind a previously
-   * bound <name>, or returns -1 if a resource failure occurs.  When
-   * this call returns <pointer>'s value will always reference the
-   * void * that <name> is associated with.  Thus, if the caller needs
-   * to use <pointer> (e.g., to free it) a copy must be maintained by
+   * Associate @a name with @a pointer.  Does not allow duplicate
+   * name/pointer associations.  Returns 0 if successfully binds
+   * (1) a previously unbound @a name, 1 if trying to bind a previously
+   * bound @a name, or returns -1 if a resource failure occurs.  When
+   * this call returns @a pointer's value will always reference the
+   * void * that @a name is associated with.  Thus, if the caller needs
+   * to use @a pointer (e.g., to free it) a copy must be maintained by
    * the caller.
    */
   int trybind (const char *name, void *&pointer);
 
-  /// Locate <name> and pass out parameter via <pointer>.  If found,
+  /// Locate @a name and pass out parameter via @a pointer.  If found,
   /// return 0, returns -1 if failure occurs.
   int find (const char *name, void *&pointer);
 
-  /// Returns 0 if <name> is in the mapping. -1, otherwise.
+  /// Returns 0 if @a name is in the mapping. -1, otherwise.
   int find (const char *name);
 
   /**
    * Unbind (remove) the name from the map.  Don't return the pointer
-   * to the caller.  If you want to remove all occurrences of <name>
+   * to the caller.  If you want to remove all occurrences of @a name
    * you'll need to call this method multiple times until it fails...
    */
   int unbind (const char *name);
 
   /**
-   * Unbind (remove) one association of <name> to <pointer>.  Returns
+   * Unbind (remove) one association of @a name to @a pointer.  Returns
    * the value of pointer in case the caller needs to deallocate
-   * memory.  If you want to remove all occurrences of <name> you'll
+   * memory.  If you want to remove all occurrences of @a name you'll
    * need to call this method multiple times until it fails...
    */
   int unbind (const char *name, void *&pointer);
@@ -536,34 +543,34 @@ public:
   // = Protection and "sync" (i.e., flushing data to backing store).
 
   /**
-   * Sync <len> bytes of the memory region to the backing store
-   * starting at <this->base_addr_>.  If <len> == -1 then sync the
+   * Sync @a len bytes of the memory region to the backing store
+   * starting at @c this->base_addr_.  If @a len == -1 then sync the
    * whole region.
    */
   int sync (ssize_t len = -1, int flags = MS_SYNC);
 
-  /// Sync <len> bytes of the memory region to the backing store
-  /// starting at <addr_>.
+  /// Sync @a len bytes of the memory region to the backing store
+  /// starting at @c addr_.
   int sync (void *addr, size_t len, int flags = MS_SYNC);
 
   /**
-   * Change the protection of the pages of the mapped region to <prot>
-   * starting at <this->base_addr_> up to <len> bytes.  If <len> == -1
+   * Change the protection of the pages of the mapped region to @a prot
+   * starting at @c this->base_addr_ up to @a len bytes.  If @a len == -1
    * then change protection of all pages in the mapped region.
    */
   int protect (ssize_t len = -1, int prot = PROT_RDWR);
 
-  /// Change the protection of the pages of the mapped region to <prot>
-  /// starting at <addr> up to <len> bytes.
+  /// Change the protection of the pages of the mapped region to @a prot
+  /// starting at @a addr up to @a len bytes.
   int protect (void *addr, size_t len, int prot = PROT_RDWR);
 
   /**
    * Returns a count of the number of available chunks that can hold
-   * <size> byte allocations.  Function can be used to determine if you
+   * @a size byte allocations.  Function can be used to determine if you
    * have reached a water mark. This implies a fixed amount of allocated
    * memory.
    *
-   * @param size - The chunk size of that you would like a count of
+   * @param size  The chunk size of that you would like a count of
    * @return Function returns the number of chunks of the given size
    *          that would fit in the currently allocated memory.
    */
@@ -575,7 +582,7 @@ public:
 #endif /* ACE_HAS_MALLOC_STATS */
 
   /// Returns a pointer to the lock used to provide mutual exclusion to
-  /// an <ACE_Malloc> allocator.
+  /// an ACE_Malloc allocator.
   ACE_LOCK &mutex (void);
 
   /// Dump the state of an object.
@@ -591,14 +598,14 @@ private:
   /// Initialize the Malloc pool.
   int open (void);
 
-  /// Associate <name> with <pointer>.  Assumes that locks are held by
+  /// Associate @a name with @a pointer.  Assumes that locks are held by
   /// callers.
   int shared_bind (const char *name,
                    void *pointer);
 
   /**
-   * Try to locate <name>.  If found, return the associated
-   * <ACE_Name_Node>, else returns 0 if can't find the <name>.
+   * Try to locate @a name.  If found, return the associated
+   * ACE_Name_Node, else returns 0 if can't find the @a name.
    * Assumes that locks are held by callers.  Remember to cast the
    * return value to ACE_CB::ACE_Name_Node*.
    */
@@ -614,11 +621,12 @@ private:
   /// by <MEMORY_POOL>.
   ACE_CB *cb_ptr_;
 
-  /// Pool of memory used by <ACE_Malloc> to manage its freestore.
+  /// Pool of memory used by ACE_Malloc to manage its freestore.
   MEMORY_POOL memory_pool_;
 
-  /// Lock that ensures mutual exclusion for the <MEMORY_POOL>.
-  ACE_LOCK lock_;
+  /// Lock that ensures mutual exclusion for the memory pool.
+  ACE_LOCK *lock_;
+  int delete_lock_;       // True if destructor should delete the lock
 };
 
 /**
@@ -636,8 +644,8 @@ public:
   typedef ACE_TYPENAME ACE_CB::ACE_Malloc_Header MALLOC_HEADER;
 
   // = Initialization method.
-  /// If <name> = 0 it will iterate through everything else only
-  /// through those entries whose <name> match.
+  /// If @a name = 0 it will iterate through everything else only
+  /// through those entries whose @a name match.
   ACE_Malloc_LIFO_Iterator_T (ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB> &malloc,
                               const char *name = 0);
 
@@ -649,12 +657,12 @@ public:
   /// Returns 1 when all items have been seen, else 0.
   int done (void) const;
 
-  /// Pass back the next <entry> in the set that hasn't yet been
+  /// Pass back the next entry in the set that hasn't yet been
   /// visited.  Returns 0 when all items have been seen, else 1.
   int next (void *&next_entry);
 
   /**
-   * Pass back the next <entry> (and the <name> associated with it) in
+   * Pass back the next entry (and the name associated with it) in
    * the set that hasn't yet been visited.  Returns 0 when all items
    * have been seen, else 1.
    */
@@ -700,8 +708,8 @@ public:
   typedef ACE_TYPENAME ACE_CB::ACE_Malloc_Header MALLOC_HEADER;
 
   // = Initialization method.
-  /// If <name> = 0 it will iterate through everything else only
-  /// through those entries whose <name> match.
+  /// If @a name = 0 it will iterate through everything else only
+  /// through those entries whose @a name match.
   ACE_Malloc_FIFO_Iterator_T (ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB> &malloc,
                               const char *name = 0);
 
@@ -713,12 +721,12 @@ public:
   /// Returns 1 when all items have been seen, else 0.
   int done (void) const;
 
-  /// Pass back the next <entry> in the set that hasn't yet been
+  /// Pass back the next entry in the set that hasn't yet been
   /// visited.  Returns 0 when all items have been seen, else 1.
   int next (void *&next_entry);
 
   /**
-   * Pass back the next <entry> (and the <name> associated with it) in
+   * Pass back the next entry (and the name associated with it) in
    * the set that hasn't yet been visited.  Returns 0 when all items
    * have been seen, else 1.
    */
@@ -759,21 +767,21 @@ class ACE_Malloc : public ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_Control_Blo
 public:
   // = Initialization and termination methods.
   /**
-   * Initialize ACE_Malloc.  This constructor passes <pool_name> to
-   * initialize the memory pool, and uses <ACE::basename> to
+   * Initialize ACE_Malloc.  This constructor passes @a pool_name to
+   * initialize the memory pool, and uses ACE::basename() to
    * automatically extract out the name used for the underlying lock
-   * name (if necessary).  Note that <pool_name> should be located in
+   * name (if necessary).  Note that @a pool_name should be located in
    * a directory with the appropriate visibility and protection so
    * that all processes that need to access it can do so.
    */
   ACE_Malloc (const ACE_TCHAR *pool_name = 0);
 
   /**
-   * Initialize ACE_Malloc.  This constructor passes <pool_name> to
-   * initialize the memory pool, and uses <lock_name> to automatically
+   * Initialize ACE_Malloc.  This constructor passes @a pool_name to
+   * initialize the memory pool, and uses @a lock_name to automatically
    * extract out the name used for the underlying lock name (if
-   * necessary).  In addition, <options> is passed through to
-   * initialize the underlying memory pool.  Note that <pool_name>
+   * necessary).  In addition, @a options is passed through to
+   * initialize the underlying memory pool.  Note that @a pool_name
    * should be located in a directory with the appropriate visibility
    * and protection so that all processes that need to access it can
    * do so. 
@@ -796,8 +804,8 @@ class ACE_Malloc_LIFO_Iterator : public ACE_Malloc_LIFO_Iterator_T<ACE_MEM_POOL_
 {
 public:
   // = Initialization method.
-  /// If <name> = 0 it will iterate through everything else only
-  /// through those entries whose <name> match.
+  /// If @a name = 0 it will iterate through everything else only
+  /// through those entries whose @a name match.
   ACE_Malloc_LIFO_Iterator (ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK> &malloc,
                             const char *name = 0);
 };
@@ -807,8 +815,8 @@ class ACE_Malloc_FIFO_Iterator : public ACE_Malloc_FIFO_Iterator_T<ACE_MEM_POOL_
 {
 public:
   // = Initialization method.
-  /// If <name> = 0 it will iterate through everything else only
-  /// through those entries whose <name> match.
+  /// If @a name = 0 it will iterate through everything else only
+  /// through those entries whose @a name match.
   ACE_Malloc_FIFO_Iterator (ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK> &malloc,
                             const char *name = 0);
 };
