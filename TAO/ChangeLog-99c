@@ -1,3 +1,11 @@
+Sat Jul 10 18:54:50 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+	* orbsvcs/orbsvcs/Event/Event_Channel.cpp:
+	  Fixed warnings on HP-UX/aCC, thanks to Eric Mitchell for
+	  facilitating the resources to find these problems.
+
 Sat Jul 10 17:35:45 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_cs.cpp:
