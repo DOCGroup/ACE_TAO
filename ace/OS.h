@@ -5874,6 +5874,12 @@ public:
 # endif /* ACE_LACKS_NATIVE_STRPTIME */
 #endif /* ACE_HAS_STRPTIME */
 
+  /// Get the number of CPUs configured in the machine.
+  static long num_processors (void);
+
+  /// Get the number of CPUs currently online.
+  static long num_processors_online (void);
+
 private:
 
 #if defined (ACE_LACKS_WRITEV)

@@ -23,172 +23,135 @@
 #include "ace/Synch.h"
 
 
+// Include the templates here.
+#include "ace/Atomic_Op_T.h"
+
+// Determine whether builtin atomic op support is
+// available on this platform.
+#if defined (ACE_HAS_THREADS)
+# if defined (WIN32)
+#  if defined (ACE_HAS_INTERLOCKED_EXCHANGEADD)
+#   define ACE_HAS_BUILTIN_ATOMIC_OP
+#  else /* ACE_HAS_INTERLOCKED_EXCHANGEADD */
+    // Inline assembly emulation of InterlockedExchangeAdd
+    // is currently only implemented for MSVC and Borland.
+#   if defined (_MSC_VER) || defined (__BORLANDC__)
+#    define ACE_HAS_BUILTIN_ATOMIC_OP
+#   endif /* _MSC_VER || __BORLANDC__ */
+#  endif /* ACE_HAS_INTERLOCKED_EXCHANGEADD */
+# elif defined (__GNUC__) && defined (ACE_HAS_PENTIUM)
+#  define ACE_HAS_BUILTIN_ATOMIC_OP
+# endif /* WIN32 */
+#endif /* ACE_HAS_THREADS */
+
+#if defined (ACE_HAS_BUILTIN_ATOMIC_OP)
+ACE_TEMPLATE_SPECIALIZATION
 /**
- * @class ACE_Atomic_Op_Ex
+ * @class ACE_Atomic_Op<ACE_Thread_Mutex, long>
  *
- * @brief Transparently parameterizes synchronization into basic
- * arithmetic operations.
- *
- * This class is described in an article in the July/August 1994
- * issue of the C++ Report magazine.  It implements a
- * templatized version of the Decorator pattern from the GoF book.
+ * @brief Specialization of ACE_Atomic_Op for platforms that
+ * support atomic integer operations.
  */
-template <class ACE_LOCK, class TYPE>
-class ACE_Atomic_Op_Ex
-{
-public:
-  // = Initialization methods.
-
-  /// Initialize <value_> to 0.
-  ACE_Atomic_Op_Ex (ACE_LOCK &mtx);
-
-  /// Initialize <value_> to c.
-  ACE_Atomic_Op_Ex (ACE_LOCK &mtx, const TYPE &c);
-
-  // = Accessors.
-
-  /// Atomically pre-increment <value_>.
-  TYPE operator++ (void);
-
-  /// Atomically post-increment <value_>.
-  TYPE operator++ (int);
-
-  /// Atomically increment <value_> by i.
-  TYPE operator+= (const TYPE &i);
-
-  /// Atomically pre-decrement <value_>.
-  TYPE operator-- (void);
-
-  /// Atomically post-decrement <value_>.
-  TYPE operator-- (int);
-
-  /// Atomically decrement <value_> by i.
-  TYPE operator-= (const TYPE &i);
-
-  /// Atomically compare <value_> with i.
-  int operator== (const TYPE &i) const;
-
-  /// Atomically compare <value_> with i.
-  int operator!= (const TYPE &i) const;
-
-  /// Atomically check if <value_> greater than or equal to i.
-  int operator>= (const TYPE &i) const;
-
-  /// Atomically check if <value_> greater than i.
-  int operator> (const TYPE &rhs) const;
-
-  /// Atomically check if <value_> less than or equal to i.
-  int operator<= (const TYPE &rhs) const;
-
-  /// Atomically check if <value_> less than i.
-  int operator< (const TYPE &rhs) const;
-
-  /// Atomically assign i to <value_>.
-  void operator= (const TYPE &i);
-
-  /// Atomically assign <rhs> to <value_>.
-  void operator= (const ACE_Atomic_Op_Ex<ACE_LOCK, TYPE> &rhs);
-
-  /// Explicitly return <value_>.
-  TYPE value (void) const;
-
-  /// Dump the state of an object.
-  void dump (void) const;
-
-  // ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
-
-  /// Manage copying...
-  ACE_Atomic_Op_Ex (const ACE_Atomic_Op_Ex<ACE_LOCK, TYPE> &);
-
-  /**
-   * Returns a reference to the underlying <ACE_LOCK>.  This makes it
-   * possible to acquire the lock explicitly, which can be useful in
-   * some cases if you instantiate the <ACE_Atomic_Op> with an
-   * <ACE_Recursive_Mutex> or <ACE_Process_Mutex>.  NOTE: the right
-   * name would be lock_, but HP/C++ will choke on that!
-   */
-  ACE_LOCK &mutex (void);
-
-  /**
-   * Explicitly return <value_> (by reference).  This gives the user
-   * full, unrestricted access to the underlying value.  This method
-   * will usually be used in conjunction with explicit access to the
-   * lock.  Use with care ;-)
-   */
-  TYPE &value_i (void);
-
-private:
-  /// Type of synchronization mechanism.
-  ACE_LOCK &mutex_;
-
-  /// Current object decorated by the atomic op.
-  TYPE value_;
-};
-
-template <class ACE_LOCK, class TYPE>
-class ACE_Atomic_Op : public ACE_Atomic_Op_Ex <ACE_LOCK, TYPE>
+class ACE_Export ACE_Atomic_Op<ACE_Thread_Mutex, long>
 {
 public:
   /// Initialize <value_> to 0.
   ACE_Atomic_Op (void);
 
   /// Initialize <value_> to c.
-  ACE_Atomic_Op (const TYPE &c);
+  ACE_Atomic_Op (long c);
 
   /// Manage copying...
-  ACE_Atomic_Op (const ACE_Atomic_Op<ACE_LOCK, TYPE> &);
+  ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, long> &c);
 
-  /// Atomically assign i to <value_>.
-  void operator= (const TYPE &i);
+  /// Atomically pre-increment <value_>.
+  long operator++ (void);
+
+  /// Atomically post-increment <value_>.
+  long operator++ (int);
+
+  /// Atomically increment <value_> by rhs.
+  long operator+= (long rhs);
+
+  /// Atomically pre-decrement <value_>.
+  long operator-- (void);
+
+  /// Atomically post-decrement <value_>.
+  long operator-- (int);
+
+  /// Atomically decrement <value_> by rhs.
+  long operator-= (long rhs);
+
+  /// Atomically compare <value_> with rhs.
+  int operator== (long rhs) const;
+
+  /// Atomically compare <value_> with rhs.
+  int operator!= (long rhs) const;
+
+  /// Atomically check if <value_> greater than or equal to rhs.
+  int operator>= (long rhs) const;
+
+  /// Atomically check if <value_> greater than rhs.
+  int operator> (long rhs) const;
+
+  /// Atomically check if <value_> less than or equal to rhs.
+  int operator<= (long rhs) const;
+
+  /// Atomically check if <value_> less than rhs.
+  int operator< (long rhs) const;
+
+  /// Atomically assign rhs to <value_>.
+  void operator= (long rhs);
 
   /// Atomically assign <rhs> to <value_>.
-  void operator= (const ACE_Atomic_Op_Ex<ACE_LOCK, TYPE> &rhs);
+  void operator= (const ACE_Atomic_Op<ACE_Thread_Mutex, long> &rhs);
 
-  /// Atomically assign <rhs> to <value_>.
-  void operator= (const ACE_Atomic_Op<ACE_LOCK, TYPE> &rhs);
+  /// Explicitly return <value_>.
+  long value (void) const;
+
+  /// Dump the state of an object.
+  void dump (void) const;
+
+  /// Explicitly return <value_> (by reference).
+  volatile long &value_i (void);
+
+  // ACE_ALLOC_HOOK_DECLARE;
+  // Declare the dynamic allocation hooks.
+
+  /// Used during ACE object manager initialization to optimize the fast
+  /// atomic op implementation according to the number of CPUs.
+  static void init_functions (void);
 
 private:
-  /// Type of synchronization mechanism.
-  ACE_LOCK own_mutex_;
+  // This function cannot be supported by this template specialization.
+  // If you need access to an underlying lock, use the ACE_Atomic_Op_Ex
+  // template instead.
+  ACE_UNIMPLEMENTED_FUNC (ACE_Thread_Mutex &mutex (void))
+
+  /// Current object decorated by the atomic op.
+  volatile long value_;
+
+  // Single-cpu atomic op implementations.
+  static long single_cpu_increment (volatile long *value);
+  static long single_cpu_decrement (volatile long *value);
+  static long single_cpu_exchange_add (volatile long *value, long rhs);
+
+  // Multi-cpu atomic op implementations.
+  static long multi_cpu_increment (volatile long *value);
+  static long multi_cpu_decrement (volatile long *value);
+  static long multi_cpu_exchange_add (volatile long *value, long rhs);
+
+  // Pointers to selected atomic op implementations.
+  static long (*increment_fn_) (volatile long *);
+  static long (*decrement_fn_) (volatile long *);
+  static long (*exchange_add_fn_) (volatile long *, long);
 };
+#endif /* ACE_HAS_BUILTIN_ATOMIC_OP */
 
 
 #if defined (__ACE_INLINE__)
-// On non-Win32 platforms, this code will be inlined
-#if !defined (ACE_WIN32)
 #include "ace/Atomic_Op.i"
-#endif /* !ACE_WIN32 */
 #endif /* __ACE_INLINE__ */
-
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-
-#include "Atomic_Op.cpp"
-// On Win32 platforms, this code will be included as template source
-// code and will not be inlined. Therefore, we first turn off
-// ACE_INLINE, set it to be nothing, include the code, and then turn
-// ACE_INLINE back to its original setting. All this nonsense is
-// necessary, since the generic template code that needs to be
-// specialized cannot be inlined, else the compiler will ignore the
-// specialization code. Also, the specialization code *must* be
-// inlined or the compiler will ignore the specializations.
-#if defined (ACE_WIN32)
-#undef ACE_INLINE
-#define ACE_INLINE
-#include "ace/Atomic_Op.i"
-#undef ACE_INLINE
-#if defined (__ACE_INLINE__)
-#define ACE_INLINE inline
-#else
-#define ACE_INLINE
-#endif /* __ACE_INLINE__ */
-#endif /* ACE_WIN32 */
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Atomic_Op.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include "ace/post.h"
 #endif /*ACE_ATOMIC_OP_H*/
