@@ -35,7 +35,7 @@ CORBA_IRObject::CORBA_IRObject (
 // *************************************************************
 
 ACE_INLINE
-CORBA::IRObject_var::IRObject_var (void) // default constructor
+CORBA_IRObject_var::CORBA_IRObject_var (void) // default constructor
   : ptr_ (IRObject::_nil ())
 {}
 
@@ -46,13 +46,13 @@ CORBA::IRObject_var::ptr (void) const
 }
 
 ACE_INLINE
-CORBA::IRObject_var::IRObject_var (const ::CORBA::IRObject_var &p) // copy constructor
+CORBA::IRObject_var::CORBA_IRObject_var (const ::CORBA::IRObject_var &p) // copy constructor
   : TAO_Base_var (),
     ptr_ (IRObject::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
-CORBA::IRObject_var::~IRObject_var (void) // destructor
+CORBA::IRObject_var::~CORBA_IRObject_var (void) // destructor
 {
   CORBA::release (this->ptr_);
 }
@@ -66,7 +66,7 @@ CORBA::IRObject_var::operator= (IRObject_ptr p)
 }
 
 ACE_INLINE CORBA::IRObject_var &
-CORBA::IRObject_var::operator= (const ::CORBA::IRObject_var &p)
+CORBA::IRObject_var::operator= (const CORBA_IRObject_var &p)
 {
   if (this != &p)
   {
@@ -128,14 +128,14 @@ CORBA::IRObject_var::_retn (void)
 // *************************************************************
 
 ACE_INLINE
-CORBA::IRObject_out::IRObject_out (IRObject_ptr &p)
+CORBA_IRObject_out::CORBA_IRObject_out (IRObject_ptr &p)
   : ptr_ (p)
 {
   this->ptr_ = ::CORBA::IRObject::_nil ();
 }
 
 ACE_INLINE
-CORBA::IRObject_out::IRObject_out (IRObject_var &p) // constructor from _var
+CORBA_IRObject_out::CORBA_IRObject_out (IRObject_var &p) // constructor from _var
   : ptr_ (p.out ())
 {
   CORBA::release (this->ptr_);
@@ -143,19 +143,19 @@ CORBA::IRObject_out::IRObject_out (IRObject_var &p) // constructor from _var
 }
 
 ACE_INLINE
-CORBA::IRObject_out::IRObject_out (const ::CORBA::IRObject_out &p) // copy constructor
+CORBA_IRObject_out::CORBA_IRObject_out (const ::CORBA::IRObject_out &p) // copy constructor
   : ptr_ (ACE_const_cast (IRObject_out &, p).ptr_)
 {}
 
 ACE_INLINE ::CORBA::IRObject_out &
-CORBA::IRObject_out::operator= (const ::CORBA::IRObject_out &p)
+CORBA::IRObject_out::operator= (const CORBA_IRObject_out &p)
 {
   this->ptr_ = ACE_const_cast (CORBA_IRObject_out&, p).ptr_;
   return *this;
 }
 
 ACE_INLINE CORBA::IRObject_out &
-CORBA::IRObject_out::operator= (const ::CORBA::IRObject_var &p)
+CORBA::IRObject_out::operator= (const CORBA_IRObject_var &p)
 {
   this->ptr_ = ::CORBA::IRObject::_duplicate (p.ptr ());
   return *this;
