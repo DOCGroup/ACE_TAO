@@ -2664,7 +2664,6 @@ operator<< (TAO_OutputCDR& cdr, const CORBA::TypeCode *x)
         ACE_DEBUG ((LM_DEBUG,
                     "indirected typecode at top level!\n"));
       return 0;
-      break;
 
       // A few have "simple" parameter lists
     case CORBA::tk_string:
