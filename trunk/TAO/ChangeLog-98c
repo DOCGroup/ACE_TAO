@@ -1,3 +1,9 @@
+Tue May 12 15:22:53 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/Param_Test/driver.cpp: 
+	* tests/Param_Test/tmplinst.cpp: 
+	  Added missing template instantiations.
+
 1998-05-12  Torben Worm  <tworm@cumbia.cs.wustl.edu>
 
 	* Reordered initializers and added virtual destructors to
