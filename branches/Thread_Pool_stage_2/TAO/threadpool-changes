@@ -247,12 +247,11 @@ Fri Aug 24 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
             method is called by the leader followers class when it is
             out of threads to run the event loop.
             
-            If this lane has support for dynamic threads, we grab the
-            Thread Pool Manager lock, check if the current number of
-            threads in this lane does not exceed the <static> +
-            <dynamic> number of threads specified by the user.  If it
-            does not exceed <static> + <dynamic>, one dynamic thread
-            is created.
+            We grab the Thread Pool Manager lock, check if the current
+            number of threads in this lane does not exceed the
+            <static> + <dynamic> number of threads specified by the
+            user.  If it does not exceed <static> + <dynamic>, one
+            dynamic thread is created.
 
 	* tao/RTCORBA/RT_Protocols_Hooks.cpp
 	  (set_default_server_protocol_policy): Don't include all the
