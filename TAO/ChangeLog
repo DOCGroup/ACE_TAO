@@ -1,3 +1,10 @@
+Wed Dec 10 09:41:41 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Makefile:
+          Removed Bug_1393_Regrestion, Bug_1436_Regression and
+          Bug_1437_Regression from these makefile, there are no GNU makefiles
+          in those directories that work.
+
 Wed Dec 10 09:26:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.{h,cpp}:
