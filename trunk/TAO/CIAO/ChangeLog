@@ -6,7 +6,8 @@ Tue Aug 12 21:56:42 2003 Arvind S. Krishna <arvindk@dre.vanderbilt.edu>
   
 2003-08-12  Diego Sevilla  <dsevilla@ditec.um.es>
 
-	* CIAO.mwc: Removed CCF MPC files as they still not work.
+	* CIAO.mwc: Removed CCF MPC files as they still don't work the way
+	  I expected it to.
 
 2003-08-11  Diego Sevilla  <dsevilla@ditec.um.es>
 
