@@ -19,7 +19,6 @@ LFLAGS = \
   -L$(CORE_BINDIR)
 
 LIBFILES = \
-   TAO_FTORB$(LIB_DECORATOR).lib \
    TAO_PortableServer$(LIB_DECORATOR).lib \
    TAO_IORInterceptor$(LIB_DECORATOR).lib \
    TAO_Valuetype$(LIB_DECORATOR).lib \
@@ -27,6 +26,8 @@ LIBFILES = \
    TAO_IORManip$(LIB_DECORATOR).lib \
    TAO$(LIB_DECORATOR).lib \
    ACE$(LIB_DECORATOR).lib \
+   $(TAO_FT_CLIENTORB_LIB) \
+   $(TAO_FT_SERVERORB_LIB)
 
 
 IDLFILES = \
@@ -46,7 +47,9 @@ CFLAGS = \
    -I..\..\..\..\tao \
    -I..\..\..\..\.. \
    $(LIB_FLAGS) \
-   $(DLL_FLAGS)
+   $(DLL_FLAGS) \
+   $(TAO_FT_CLIENTORB_CFLAGS) \
+   $(TAO_FT_SERVERORB_CFLAGS)
 
 CPPDIR = .
 

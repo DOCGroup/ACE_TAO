@@ -1,9 +1,14 @@
+Wed Nov 26 17:41:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* include/makeinclude/ace_flags.bor:
+	  Changed TAO FT flags and libs
+
 Wed Nov 26 10:11:20 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/POSIX_Proactor.cpp: Changed sig_handler() to be extern "C".
 	  Thanks to Chris Cleeland for suggesting this fix.
 
-	* ace/Process.{h,cpp}: Fixed the ACE_Process_Options::command_line_argv() 
+	* ace/Process.{h,cpp}: Fixed the ACE_Process_Options::command_line_argv()
 	  method so that it doesn't modify the command_line_buf_ parameter
  	  directly since this messes things up when process_name() is
  	  used.  Thanks to Dror Tirosh <ace@dror.mailshell.com> for reporting
@@ -12,7 +17,7 @@ Wed Nov 26 10:11:20 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 Wed Nov 26 16:09:55 UTC 2003  Don Hinton  <dhinton@dresytems.com>
 
         * tests/IO_Stream_Test.cpp:
-          Added #include OS_NS_sys_wait.h: 
+          Added #include OS_NS_sys_wait.h:
 
 Wed Nov 26 15:58:07 UTC 2003  Don Hinton  <dhinton@dresytems.com>
 
