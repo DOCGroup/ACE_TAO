@@ -1,3 +1,9 @@
+Fri Nov 19 18:41:25 1999  Krishnakumar Elakkara Pathayapura  <krish@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Log/LogRecordStore.cpp (log):
+	  Fixed some problems for VxWorks regarding use
+	  of ULongLong.
+
 Fri Nov 19 18:26:06 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Invocation.h:
@@ -20,14 +26,14 @@ Fri Nov 19 18:26:06 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	   octet 'response_flags'. The TAO_GIOP_Oneway_Request
 	   now has new members holding the SyncScope value and a
 	   reply dispatcher. It will set the 'response_flags' field
-	   according to this SyncScope value. 
+	   according to this SyncScope value.
 	   Likewise, the server request will read the
 	   header field and store the SyncScope value.
 	   TAO_Object_Adapter has a new method which returns
 	   a reply after the servant has been located, but before it
-	   is dispatched (for SyncScope value SYNC_WITH_SERVER). 
+	   is dispatched (for SyncScope value SYNC_WITH_SERVER).
 	   Finally, since SyncScope values must be
-	   used (if only to set defaults) whether messaging is 
+	   used (if only to set defaults) whether messaging is
 	   enabled or not, a TAO:: duplicate set has been put
 	   into TAOC.*.
 

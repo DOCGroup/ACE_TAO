@@ -82,10 +82,17 @@ LogRecordStore::log (DsLogAdmin::LogRecord &rec)
   // First, bind the id to the LogRecord in the hash_map
   if (this->rec_hash_.bind (rec.id, rec) != 0)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "LogRecordStore (%P|%t):Failed to bind %d in the hash map\n",
+     #if defined (ACE_LACKS_LONGLONG_T)
+           ACE_ERROR_RETURN ((LM_ERROR,
+                         "LogRecordStore (%P|%t):Failed to bind %Q in the hash map\n",
+                         ACE_U64_TO_U32(rec.id)),
+                             -1);
+      #else
+           ACE_ERROR_RETURN ((LM_ERROR,
+                         "LogRecordStore (%P|%t):Failed to bind %Q in the hash map\n",
                          rec.id),
-                        -1);
+                       -1);
+      #endif
     }
 
   // Increment the number of records in the log
