@@ -41,7 +41,9 @@ public:
   ACE_INET_Addr (const sockaddr_in *, int len);
   // Creates an <ACE_INET_Addr> from a sockaddr_in structure.
 
-  ACE_INET_Addr (u_short port_number, const ASYS_TCHAR host_name[]);
+  ACE_INET_Addr (u_short port_number,
+                 const ASYS_TCHAR host_name[],
+                 const ASYS_TCHAR protocol[] = "tcp");
   // Creates an <ACE_INET_Addr> from a <port_number> and the remote
   // <host_name>.
 
@@ -59,12 +61,14 @@ public:
   // are in host byte order.
 
   ACE_INET_Addr (const ASYS_TCHAR port_name[],
-		 const ASYS_TCHAR host_name[]);
+		 const ASYS_TCHAR host_name[],
+                 const ASYS_TCHAR protocol[] = "tcp");
   // Uses <getservbyname> to create an <ACE_INET_Addr> from a
   // <port_name> and the remote <host_name>.
 
   ACE_INET_Addr (const ASYS_TCHAR port_name[],
-		 ACE_UINT32 ip_addr);
+		 ACE_UINT32 ip_addr,
+                 const ASYS_TCHAR protocol[] = "tcp");
   // Uses <getservbyname> to create an <ACE_INET_Addr> from a
   // <port_name> and an Internet <ip_addr>.  This method assumes that
   // <ip_addr> is in host byte order.
@@ -97,12 +101,14 @@ public:
   // passed straight through.
 
   int set (const ASYS_TCHAR port_name[],
-	   const ASYS_TCHAR host_name[]);
+	   const ASYS_TCHAR host_name[],
+           const ASYS_TCHAR protocol[] = "tcp");
   // Uses <getservbyname> to initialize an <ACE_INET_Addr> from a
   // <port_name> and the remote <host_name>.
 
   int set (const ASYS_TCHAR port_name[],
-	   ACE_UINT32 ip_addr);
+	   ACE_UINT32 ip_addr,
+           const ASYS_TCHAR protocol[] = "tcp");
   // Uses <getservbyname> to initialize an <ACE_INET_Addr> from a
   // <port_name> and an Internet address.  This assumes that <ip_addr>
   // is already in network byte order.
