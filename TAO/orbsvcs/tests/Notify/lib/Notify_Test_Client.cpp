@@ -8,7 +8,7 @@ ACE_RCSID(Notify_Tests, Notify_Test_Client, "$Id$")
 #define NAMING_SERVICE_NAME "NameService"
 
 int
-Notify_Test_Client::main (int argc, char *argv [], Notify_Test_Client& client)
+Notify_Test_Client::test_main (int argc, char *argv [], Notify_Test_Client& client)
 {
   ACE_TRY_NEW_ENV
     {
