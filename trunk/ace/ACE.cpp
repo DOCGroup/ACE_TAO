@@ -126,6 +126,45 @@ ACE::compiler_beta_version (void)
 }
 
 int
+ACE::select (int width,
+             ACE_Handle_Set *readfds,
+             ACE_Handle_Set *writefds,
+             ACE_Handle_Set *exceptfds,
+             const ACE_Time_Value *timeout)
+{
+  int result = ACE_OS::select (width,
+                               readfds ? readfds->fdset () : 0,
+                               writefds ? writefds->fdset () : 0,
+                               exceptfds ? exceptfds->fdset () : 0,
+                               timeout);
+  if (result > 0) 
+    {
+      if (readfds)
+        readfds->sync ((ACE_HANDLE) width);
+      if (writefds)
+        writefds->sync ((ACE_HANDLE) width);
+      if (exceptfds)
+        exceptfds->sync ((ACE_HANDLE) width);
+    }
+  return result;
+}
+
+int
+ACE::select (int width,
+             ACE_Handle_Set &readfds,
+             const ACE_Time_Value *timeout)
+{
+  int result = ACE_OS::select (width,
+                               readfds.fdset (),
+                               0,
+                               0,
+                               timeout);
+  if (result > 0) 
+    readfds.sync ((ACE_HANDLE) width);
+  return result;
+}
+
+int
 ACE::terminate_process (pid_t pid)
 {
 #if defined (ACE_HAS_PACE)
@@ -2217,7 +2256,6 @@ ACE::handle_ready (ACE_HANDLE handle,
 
   int result = ACE_OS::poll (&fds, 1, timeout);
 #else
-
   ACE_Handle_Set handle_set;
   handle_set.set_bit (handle);
 

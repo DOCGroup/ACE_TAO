@@ -94,12 +94,12 @@ ACE_OS_Dirent::readdir_emulation (ACE_DIR *d)
           while (*d->fdata_.cFileName == '.'
                  && retval
                  && d->fdata_.dwFileAttributes == FILE_ATTRIBUTE_DIRECTORY)
+            retval = ACE_TEXT_FindNextFile (d->current_handle_, &d->fdata_);
+          if (retval == 0) 
             {
-              retval = ACE_TEXT_FindNextFile (d->current_handle_,
-                                              &(d->fdata_));
+              ::FindClose (d->current_handle_);              
+              d->current_handle_ = INVALID_HANDLE_VALUE;
             }
-          if (retval == 0)
-            d->current_handle_ = INVALID_HANDLE_VALUE;
         }
 
       d->started_reading_ = 1;
@@ -147,16 +147,10 @@ ACE_OS_Dirent::scandir_emulation (const ACE_TCHAR *dirname,
   ACE_DIR *dirp = ACE_OS_Dirent::opendir (dirname);
 
   if (dirp == 0) 
-    ACE_ERROR_RETURN ((LM_ERROR, 
-                       ACE_LIB_TEXT ("scandir_emulation cannot open directory %s"),
-                       dirname), 
-                      -1); 
-       
+    return -1;
   // A sanity check here.  "namelist" had better not be zero. 
-  if (namelist == 0) 
-    ACE_ERROR_RETURN ((LM_ERROR, 
-                       ACE_LIB_TEXT ("scandir_emulation namelist == 0!")), 
-                      -1); 
+  else if (namelist == 0) 
+    return -1;
        
   dirent **vector = 0; 
   dirent *dp; 

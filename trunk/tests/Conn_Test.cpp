@@ -273,8 +273,7 @@ Svc_Handler::recv_data (void)
       // Since we're in non-blocking mode we need to use <select> to
       // avoid busy waiting.
       if (ACE_OS::select (int (new_stream.get_handle ()) + 1,
-                          handle_set,
-                          0, 0, 0) == -1)
+                          handle_set) == -1)
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) %p\n"),
                     ACE_TEXT ("select")));

@@ -75,9 +75,9 @@ ACE_OS_Dirent::readdir (ACE_DIR *d)
 #elif defined (ACE_HAS_DIRENT)
 #  if defined (ACE_PSOS)
 
-  u_long result = ::read_dir (&(d->xdir), &(d->dirent));
+  u_long result = ::read_dir (&d->xdir, &d->dirent);
   if (0 == result)
-    return &(d->dirent);
+    return &d->dirent;
   else
     {
       errno = result;
