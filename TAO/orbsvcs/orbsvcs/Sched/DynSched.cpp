@@ -364,6 +364,7 @@ int ACE_DynScheduler::add_dependency(RT_Info* rt_info,
       }
 
       d.rt_info = temp_info->handle;
+      break;
 
     default:
 
