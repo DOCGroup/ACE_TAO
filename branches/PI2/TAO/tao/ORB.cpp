@@ -45,9 +45,9 @@
 # else
 #  if defined (ACE_HAS_STANDARD_CPP_LIBRARY)
 #   include /**/ <exception>
-#   if !defined (ACE_WIN32)
+#   if !defined (_MSC_VER)
 using std::set_unexpected;
-#   endif /* ! ACE_WIN32 */
+#   endif /* !_MSC_VER */
 #  else
 #   include /**/ <exception.h>
 #  endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
@@ -324,19 +324,19 @@ CORBA_ORB::create_list (CORBA::Long count,
 // CORBA::NO_IMPLEMENT.
 
 void
-CORBA_ORB::create_exception_list (CORBA::ExceptionList_ptr &,
+CORBA_ORB::create_exception_list (CORBA::ExceptionList_ptr &list,
                                   CORBA_Environment &ACE_TRY_ENV)
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
-                                  CORBA::COMPLETED_NO));
+  ACE_NEW_THROW_EX (list, CORBA::ExceptionList (),
+                    CORBA::NO_MEMORY ());
 }
 
 void
-CORBA_ORB::create_environment (CORBA::Environment_ptr &,
+CORBA_ORB::create_environment (CORBA::Environment_ptr &environment,
                                CORBA_Environment &ACE_TRY_ENV)
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
-                                  CORBA::COMPLETED_NO));
+  ACE_NEW_THROW_EX (environment, CORBA::Environment (),
+                    CORBA::NO_MEMORY ());
 }
 
 CORBA::Boolean
@@ -921,6 +921,7 @@ CORBA_ORB::list_initial_services (CORBA::Environment &ACE_TRY_ENV)
 TAO_Stub *
 CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
                                const char *type_id,
+                               CORBA::PolicyList *policy_list,
                                CORBA::Environment &ACE_TRY_ENV)
 {
   this->check_shutdown (ACE_TRY_ENV);
@@ -928,6 +929,7 @@ CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
 
   return this->orb_core_->create_stub_object (key,
                                               type_id,
+                                              policy_list,
                                               ACE_TRY_ENV);
 }
 
@@ -936,6 +938,7 @@ CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
 CORBA::Object_ptr
 CORBA_ORB::key_to_object (const TAO_ObjectKey &key,
                           const char *type_id,
+                          CORBA::PolicyList *policy_list,
                           TAO_ServantBase *servant,
                           CORBA::Boolean collocated,
                           CORBA::Environment &ACE_TRY_ENV)
@@ -943,7 +946,10 @@ CORBA_ORB::key_to_object (const TAO_ObjectKey &key,
   this->check_shutdown (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
-  TAO_Stub *data = this->create_stub_object (key, type_id, ACE_TRY_ENV);
+  TAO_Stub *data = this->create_stub_object (key,
+                                             type_id,
+                                             policy_list,
+                                             ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   TAO_Stub_Auto_Ptr safe_data (data);
@@ -1366,9 +1372,6 @@ CORBA::ORB_init (int &argc,
                                        CORBA::COMPLETED_NO),
                       CORBA::ORB::_nil ());
 
-  // It is safe to release the ORB_Core from the auto_ptr now.
-  oc = safe_oc.release ();
-
   // Return a duplicate since the ORB_Core should release the last
   // reference to the ORB.
   return CORBA::ORB::_duplicate (oc->orb ());
@@ -1691,7 +1694,7 @@ CORBA_ORB::file_string_to_object (const char* filename,
   ACE_CATCHANY
     {
       reader.alloc ()->free (string);
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
 
@@ -1821,7 +1824,7 @@ CORBA_ORB::_get_collocated_servant (TAO_Stub *sobj,
   if (sobj == 0)
     return TAO_SERVANT_NOT_FOUND;
 
-  // @@ What about forwarding.  Whith this approach we are never forwarded
+  // @@ What about forwarding.  With this approach we are never forwarded
   //    when we use collocation!
   const TAO_MProfile &mprofile = sobj->base_profiles ();
 
