@@ -409,7 +409,12 @@ protected:
    */
 
   /**
+   * @var simple_parsing_name_
    *
+   * This constant string defines the name of "simple XML parsing"
+   * feature.  When this feature is enable, ACEXML parser is allowed
+   * to parse a simple XML stream without mandated XML prolog
+   * and no DTD defintion.
    */
   static const ACEXML_Char simple_parsing_name_[];
 
