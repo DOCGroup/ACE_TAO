@@ -68,6 +68,18 @@ namespace TAO
    */
   class ORBInitializer_Registry
   {
+#if defined (ACE_LYNXOS_MAJOR) && (ACE_LYNXOS_MAJOR < 4)
+    // Workaround for g++ (version 2.9-gnupro-98r2) on LynxOS 3.x which has
+    // problems with friend declarations in namespaces 
+    friend void register_orb_initializer (
+        PortableInterceptor::ORBInitializer_ptr init
+        ACE_ENV_ARG_DECL);
+
+    friend CORBA::ORB_ptr ORB_init (int &,
+                                    char *argv[],
+                                    const char *,
+                                    CORBA::Environment &);
+#else
     friend void PortableInterceptor::register_orb_initializer (
                   PortableInterceptor::ORBInitializer_ptr init
                   ACE_ENV_ARG_DECL);
@@ -76,6 +88,7 @@ namespace TAO
                                            char *argv[],
                                            const char *,
                                            CORBA::Environment &);
+#endif /* (ACE_LYNXOS_MAJOR) && (ACE_LYNXOS_MAJOR < 4) */
 
   public:
 
