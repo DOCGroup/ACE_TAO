@@ -1,3 +1,7 @@
+Sat Mar 17 09:55:51 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Client_Leaks/Makefile: Fixed dependencies
+
 Sat Mar 17 09:23:49 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/IIOP_Connection_Handler.cpp: 
