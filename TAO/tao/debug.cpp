@@ -207,7 +207,7 @@ _dmsg_x (CORBA::Environment _FAR        &env,
   setup ();
   flockfile (debug_stream);
   emit_prefix (debug_stream);
-  ACE_OS::fprintf (debug_stream, "exception '%s' at '%s'\n", ex->id (), info);
+  ACE_OS::fprintf (debug_stream, "exception '%s' at '%s'\n", ex->_id (), info);
   if (env.exception_type () == CORBA::SYSTEM_EXCEPTION)
     {
       CORBA::SystemException *sysex = (CORBA::SystemException *) ex;
