@@ -1,3 +1,9 @@
+Sun Jul 30 06:48:18 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/Endpoint_Strategy.cpp (get_vdev): Reverted
+	  the change that I made yesterday as it was complaining on
+	  Linux. 
+
 Sat Jul 29 22:01:12 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/Endpoint_Strategy.cpp:
