@@ -42,6 +42,7 @@ class ECConsumer;
 class Configurator_SyntaxHandler : public SyntaxVisitor
 {
 public:
+  typedef std::vector<RtecEventComm::EventType> EventTypeVector;
 
   /*
    * Default constructor.
