@@ -1,18 +1,27 @@
-<<<<<<< ChangeLog-96b
-Thu Nov 21 00:05:11 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+Thu Nov 21 08:12:51 1996  David L. Levine  <levine@cs.wustl.edu>
+	* include/makeinclude/platform_sunos5_sunc++_4.1.GNU:
+ 	  put back the LD definition
+	* include/makeinclude/platform_osf1_4.0_g++.GNU:
+ 	  added LD definition to work with latest wrapper_macros.GNU
+
+Thu Nov 21 00:12:42 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.cpp: Since we do not use the recursion count from the
+ 	  Recursive Mutex any more in ACE_TSS_Cleanup::exit() we can
+ 	  replace the Recursive Mutex by a regular ACE_Thread_Mutex that
+ 	  is recursive on NT natively and more efficient.  Thanks to
+	  Detlef for suggesting this.
 
 	* ace: Backed out all of Detlef's changes to ACE_OS and
  	  ACE_TSS::ts_get().  It turns out that this is unnecessary since
  	  he reimplemented ACE_TSS_Cleanup so that it no longer needs to
  	  hold the lock when callbacks are made.  Once again, Detlef
- 	  proves that he's a man, not a boy ;-)
+ 	  proves that he's a macho man, not a boy ;-)
 
-=======
 Wed Nov 20 21:35:28 1996  David L. Levine  <levine@cs.wustl.edu>
 	* ace/Svc_Conf_l.cpp:  added #include of ace/config.h so that
  	  conditions for include of ace/OS.h can be checked
 
->>>>>>> 4.32
 Wed Nov 20 02:38:40 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Service_Config.cpp: Moved the definition of logger_key_ to
