@@ -37,8 +37,8 @@ static const int DEFINTERVAL = 1000; // 1000 usecs.
 static const int DEFWINDOWSZ = 10; // 10 microsecond.
 static char SendBuf[MAXPKTSZ];
 static char RxBuf[MAXPKTSZ];
-static char **cmd;
-static char datafile[MAXHOSTNAMELEN];
+static ACE_TCHAR **cmd;
+static ACE_TCHAR datafile[MAXHOSTNAMELEN];
 
 static ACE_UINT32 nsamples = DEFITERATIONS;
 static int usdelay = DEFINTERVAL;
@@ -76,9 +76,9 @@ usage (void)
 
 static ACE_hrtime_t *Samples;
 static u_int *Dist;
-static char sumfile[30];
-static char distfile[30];
-static char sampfile[30];
+static ACE_TCHAR sumfile[30];
+static ACE_TCHAR distfile[30];
+static ACE_TCHAR sampfile[30];
 
 class Client : public ACE_Event_Handler
 {
@@ -336,11 +336,11 @@ Client::run (void)
 
   if (logfile)
     {
-      ACE_OS::sprintf (sumfile, "%s.sum", datafile);
-      ACE_OS::sprintf (distfile, "%s.dist", datafile);
-      ACE_OS::sprintf (sampfile, "%s.samp", datafile);
+      ACE_OS::sprintf (sumfile, ACE_TEXT("%s.sum"), datafile);
+      ACE_OS::sprintf (distfile, ACE_TEXT("%s.dist"), datafile);
+      ACE_OS::sprintf (sampfile, ACE_TEXT("%s.samp"), datafile);
 
-      distfp = ACE_OS::fopen(distfile, "w");
+      distfp = ACE_OS::fopen(distfile, ACE_TEXT("w"));
 
       if (distfp == NULL)
         {
@@ -348,14 +348,14 @@ Client::run (void)
                       "Unable to open dist file!\n\n"));
           logfile = 0;
         }
-      if (logfile && (sampfp = ACE_OS::fopen (sampfile, "w")) == NULL)
+      if (logfile && (sampfp = ACE_OS::fopen (sampfile, ACE_TEXT("w"))) == NULL)
         {
           ACE_OS::fclose (distfp);
           ACE_DEBUG ((LM_DEBUG,
                       "Unable to open sample file!\n\n"));
           logfile = 0;
         }
-      if (logfile && (sumfp = ACE_OS::fopen (sumfile, "w")) == NULL)
+      if (logfile && (sumfp = ACE_OS::fopen (sumfile, ACE_TEXT("w"))) == NULL)
         {
           ACE_OS::fclose (distfp);
           ACE_OS::fclose (sampfp);
@@ -594,14 +594,14 @@ Server::handle_close (ACE_HANDLE,
 }
 
 int
-main (int argc, char *argv[])
+main (int argc, ACE_TCHAR *argv[])
 {
   int c, dstport = DEFPORT;
   int so_bufsz = 0;
 
   cmd = argv;
 
-  ACE_Get_Opt getopt (argc, argv, "x:w:f:vs:I:p:rtn:b:a");
+  ACE_Get_Opt getopt (argc, argv, ACE_TEXT("x:w:f:vs:I:p:rtn:b:a"));
 
   while ((c = getopt ()) != -1)
     {
@@ -717,7 +717,7 @@ main (int argc, char *argv[])
         {
           if (remote_addr.set (dstport,
                                (ACE_UINT32) ACE_OS::inet_addr
-                                 (argv[getopt.opt_ind ()])) == -1)
+                                 (ACE_TEXT_ALWAYS_CHAR(argv[getopt.opt_ind ()]))) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "invalid IP address: %s\n",
                                argv[getopt.opt_ind ()]),
