@@ -118,8 +118,8 @@ TAO_FT_Service_Callbacks::is_profile_equivalent (const TAO_Profile *this_p,
       that_cdr >> that_group_component;
 
       // check if domain id and group id are the same
-      if ((ACE_OS::strcmp (this_group_component.ft_domain_id,
-                           that_group_component.ft_domain_id) == 0) &&
+      if ((ACE_OS::strcmp (this_group_component.group_domain_id,
+                           that_group_component.group_domain_id) == 0) &&
           (this_group_component.object_group_id ==
            that_group_component.object_group_id))
          {

@@ -1,6 +1,5 @@
 // $Id$
 
-
 #include "FT_ClientRequest_Interceptor.h"
 #include "orbsvcs/orbsvcs/FT_CORBA_ORBC.h"
 #include "tao/CORBA_String.h"
@@ -10,10 +9,8 @@
 #include "ace/Synch_Traits.h"
 
 ACE_RCSID (FaultTolerance,
-           FT_ClientRequest_Interceptor,
+           FT_ORBInitializer,
            "$Id$")
-
-
 
 namespace TAO
 {
@@ -51,7 +48,6 @@ namespace TAO
   {
     return CORBA::string_dup (this->name_);
   }
-
 
   void
   FT_ClientRequest_Interceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
@@ -323,12 +319,13 @@ namespace TAO
                             *this->lock_);
 
                 ftrsc.retention_id = ++this->retention_id_;
-                tss->retention_id_ = ftrsc.retention_id;
 
-                // Generated one already. We don't generate another
-                // till we get a rely for this.
-                tss->clean_flag_ = false;
-            }
+    ACE_DEBUG ((LM_DEBUG,
+          "(%P|%t) Retention id [%d]\n",
+          ftrsc.retention_id));
+                tss->retention_id_ = ftrsc.retention_id;
+    tss->clean_flag_ = false;
+              }
             else
               {
                 ftrsc.retention_id =
@@ -375,7 +372,6 @@ namespace TAO
     ACE_CHECK;
     return;
   }
-
 
   TimeBase::TimeT
   FT_ClientRequest_Interceptor::request_expiration_time (

@@ -1,3 +1,29 @@
+Fri Nov  7 17:01:12 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/FTORB.mpc:
+        * orbsvcs/orbsvcs/FT_CORBA.idl:
+        * orbsvcs/orbsvcs/FT_CORBA_ORB.idl:
+        * orbsvcs/orbsvcs/FaultTolerance.mpc:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientPolicy_i.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.i:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ORBInitializer.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ORBInitializer.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_PolicyFactory.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_PolicyFactory.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Policy_i.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Policy_i.i:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Policy_i.inl:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Policy_i.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Activate.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.i:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp:
+        * ../bin/MakeProjectCreator/config/fault_tolerance.mpb:
+        Step three of the oci_haft merge.  Add the FaultTolerance directory.
+        Also pick up the mpb file over in $ACE_ROOT/bin/MakeProjectCreator/Config
+
 Fri Nov  7 16:19:14 2003  Dale Wilson  <wilson_d@ociweb.com>
         * orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.cpp:
           Missed a spot.  Still fixing build warnings.
@@ -11,7 +37,6 @@ Fri Nov  7 15:36:37 2003  Dale Wilson  <wilson_d@ociweb.com>
         * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Decoder.h:
         * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Decoder.cpp:
           Resolve linux build problems revealed during merge.
-
 
 Thu Nov  6 13:03:17 2003  Dale Wilson  <wilson_d@ociweb.com>
 
