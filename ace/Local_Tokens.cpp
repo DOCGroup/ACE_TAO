@@ -90,11 +90,15 @@ ACE_TPQ_Entry::ACE_TPQ_Entry (const ACE_Token_Proxy *new_proxy,
       ACE_TCHAR name[(sizeof host_name / sizeof (ACE_TCHAR)) + 256];
       ACE_OS::hostname (host_name, sizeof host_name);
 
+      ACE_thread_t thread_id = ACE_Thread::self ();
+
+      // The cast is an attempt to get this to compile (and run,
+      // hopefully) regardless of the type of ACE_thread_t.
       ACE_OS::sprintf (name,
-                       ACE_TEXT ("/%s/%u/%u"),
+                       ACE_TEXT ("/%s/%u/%lu"),
                        host_name,
                        ACE_static_cast (u_int, ACE_OS::getpid ()),
-                       ACE_Thread::self ());
+                       *ACE_reinterpret_cast (u_long *, &thread_id));
 
       this->client_id (name);
     }
