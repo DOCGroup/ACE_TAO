@@ -1,3 +1,18 @@
+Mon Jun  7 21:57:29 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/append.cpp:
+	* tao/skip.cpp:
+	  The marshaling and demarshaling code for object references
+	  inside anys was broken, it only handled IIOP profiles and used
+	  chars where octets where needed.
+
+	* tao/UIOP_Profile.cpp:
+	  Improve debugging messages and handle errors more gracefully.
+
+	* tests/Param_Test/Makefile:
+	* tests/Param_Test/server.cpp:
+	  Minor cosmetic fixes
+
 Mon Jun  7 20:37:27 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/tests/Simple_Naming/client.h:
