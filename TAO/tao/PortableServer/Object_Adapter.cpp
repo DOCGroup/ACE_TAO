@@ -567,7 +567,12 @@ TAO_Object_Adapter::open (CORBA::Environment &ACE_TRY_ENV)
   // The Object_Adapter will keep a reference to the Root POA so that
   // on its destruction, it can check whether the Root POA has
   // been destroyed yet or not.
-  // this->root_->_add_ref ();
+  this->root_->_add_ref ();
+
+  // Release the POA_Manager_var since we got here without error.  The
+  // TAO_POA object takes ownership of the POA_Manager object
+  // (actually it shares the ownership with its peers).
+  (void) safe_poa_manager._retn ();
 }
 
 void
