@@ -7,7 +7,10 @@ template <typename StringType,
           CORBA::TCKind Kind,
           class RefCountPolicy>
 ACE_INLINE
-TAO::TypeCode::Struct<StringType, FieldArrayType, RefCountPolicy>::Struct (
+TAO::TypeCode::Struct<StringType,
+		      FieldArrayType,
+		      Kind,
+		      RefCountPolicy>::Struct (
   char const * id,
   char const * name,
   Field<StringType> const * fields,
@@ -24,7 +27,9 @@ template <typename StringType,
           class RefCountPolicy>
 ACE_INLINE TAO::TypeCode::Field<StringType> const *
 TAO::TypeCode::Struct<StringType,
-                      FieldArrayType>::fields (void) const
+                      FieldArrayType,
+		      Kind,
+		      RefCountPolicy>::fields (void) const
 {
   return this->fields_;
 }
@@ -35,7 +40,18 @@ TAO::TypeCode::Struct<StringType,
 
 ACE_INLINE TAO::TypeCode::Field<CORBA::String_var> const *
 TAO::TypeCode::Struct<CORBA::String_var,
-                      ACE_Auto_Ptr_Array<Field<CORBA::String_var> const> >::fields (void) const
+                      ACE_Auto_Ptr_Array<Field<CORBA::String_var> const>,
+		      CORBA::tk_struct,
+		      TAO::True_RefCount_Policy>::fields (void) const
+{
+  return this->fields_.get ();
+}
+
+ACE_INLINE TAO::TypeCode::Field<CORBA::String_var> const *
+TAO::TypeCode::Struct<CORBA::String_var,
+                      ACE_Auto_Ptr_Array<Field<CORBA::String_var> const>,
+		      CORBA::tk_except,
+		      TAO::True_RefCount_Policy>::fields (void) const
 {
   return this->fields_.get ();
 }

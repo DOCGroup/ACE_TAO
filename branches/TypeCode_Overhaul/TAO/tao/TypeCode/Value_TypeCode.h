@@ -10,7 +10,6 @@
  *  @c CORBA::TypeCodes.
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
- *  @author Carlos O'Ryan
  */
 //=============================================================================
 
@@ -72,7 +71,9 @@ namespace TAO
              CORBA::ValueModifer modifier,
              CORBA::TypeCode_ptr * concrete_base,
              Field<StringType> const * fields,
-             CORBA::ULong nfields);
+             CORBA::ULong nfields,
+	     CORBA::ValueModifier type_modifier,
+	     CORBA::TypeCode_ptr concrete_base_type);
 
       /**
        * @name TAO-specific @c CORBA::TypeCode Methods
@@ -146,7 +147,7 @@ namespace TAO
 
       /// The @c ValueModifier of the @c valuetype of @c eventtype
       /// represented by this @c TypeCode.
-      CORBA::ValueModifer const value_modifier_;
+      CORBA::ValueModifer const type_modifier_;
 
       /// The @c TypeCode corresponding to the concrete base
       /// @c valuetype or @c eventtype.
