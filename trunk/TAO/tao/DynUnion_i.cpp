@@ -2143,7 +2143,7 @@ TAO_DynUnion_i::set_from_any (const CORBA_Any& any,
   ACE_CHECK;
 
   // Move to the next field in the CDR stream.
-  (void) TAO_Marshal_Object::perform_skip (disc_tc,
+  (void) TAO_Marshal_Object::perform_skip (disc_tc.in (),
                                            &cdr,
                                            ACE_TRY_ENV);
   ACE_CHECK;
