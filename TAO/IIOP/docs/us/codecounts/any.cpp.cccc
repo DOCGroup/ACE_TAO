@@ -1,21 +1,4 @@
-
-CCCC - a code counter for C and C++
-===================================
-
-A program to analyse C and C++ source code and report on
-some simple software metrics
-Version  1.00 
-Copyright Tim Littlefair, 1995
-
-The development of this program was heavily dependent on
-the Purdue Compiler Construction Tool Set (PCCTS) 
-by Terence Parr, Will Cohen, Hank Dietz, Russel Quoung
-and others.
-
-This software is provided with NO WARRANTY
-
-
-Scope: ../../../lib/runtime/any.cpp
+Scope: any.cpp
 Canonical name                       From   To   COM   LOC   MVG   L/C   M/C
 --------------------                 ---- ---- ----- ----- ----- ----- -----
 static pthread_mutex_t any_lock=PTH  1    48      34     1     0   0.0   0.0

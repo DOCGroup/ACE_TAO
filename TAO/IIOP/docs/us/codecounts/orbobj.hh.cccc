@@ -1,21 +1,4 @@
-
-CCCC - a code counter for C and C++
-===================================
-
-A program to analyse C and C++ source code and report on
-some simple software metrics
-Version  1.00 
-Copyright Tim Littlefair, 1995
-
-The development of this program was heavily dependent on
-the Purdue Compiler Construction Tool Set (PCCTS) 
-by Terence Parr, Will Cohen, Hank Dietz, Russel Quoung
-and others.
-
-This software is provided with NO WARRANTY
-
-
-Scope: ../../../lib/corba/orbobj.hh
+Scope: orbobj.hh
 Canonical name                       From   To   COM   LOC   MVG   L/C   M/C
 --------------------                 ---- ---- ----- ----- ----- ----- -----
 typedef class CORBA_ORB*CORBA_ORB_p  1    8        7     0     0   0.0   0.0
