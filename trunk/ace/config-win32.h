@@ -17,7 +17,7 @@
 //  Setting applies to  : building ACE
 //  Runtime restrictions: System must be Windows NT => 4.0
 //  Additonal notes: Defining _WIN32_WINNT as 0x0400 implies ACE_HAS_WINSOCK2
-//  unless you uncomment ACE_HAS_WINSOCK2 definition in this file.
+//  unless you set ACE_HAS_WINSOCK2 to 0 in the config.h file.
 #if !defined (ACE_HAS_WINNT4)
 	#define ACE_HAS_WINNT4	1	// assuming Win NT 4.0 or greater
 
@@ -26,7 +26,7 @@
 	#endif
 #endif
 
-// Uncomment this, if you want ACE to use CWinThread. This should
+// Define ACE_HAS_MFC to 1, if you want ACE to use CWinThread. This should
 // be defined, if your application uses MFC. 
 //  Setting applies to  : building ACE
 //  Runtime restrictions: MFC DLLs must be installed
@@ -62,8 +62,9 @@
         #define ACE_HAS_BROKEN_NESTED_TEMPLATES
 #endif /* ACE_HAS_BROKEN_NESTED_TEMPLATES */
 
-// Uncomment this out if you want to use STRICT type checking.
-// It is disabled by default because it will break existing application code.
+// Define ACE_HAS_STRICT to 1 in your config.h file if you want to use
+// STRICT type checking.  It is disabled by default because it will
+// break existing application code.
 //  Setting applies to  : building ACE, linking with ACE 
 //  Runtime restrictions: -
 //  Additonal notes		: ACE_HAS_MFC implies ACE_HAS_STRICT
@@ -79,7 +80,7 @@
 	#define ACE_MT_SAFE 1
 #endif
 
-// Build as as a DLL.  Zap this line if you want to build a static
+// Build as as a DLL.  Define ACE_HAS_DLL to 0 if you want to build a static
 // lib.
 //  Setting applies to  : building ACE, linking with ACE
 //  Runtime restrictions: ACE DLL must be installed :-)
@@ -97,14 +98,16 @@
 	#define ACE_HAS_SVC_DLL 1
 #endif
 
-// Uncomment the following definition if you do *not* want to compile with WinSock 2.0.
+// Define ACE_HAS_WINSOCK2 to 1 in your config.h file if you do *not*
+// want to compile with WinSock 2.0.
 //  Setting applies to  : building ACE
 //  Runtime restrictions: winsock2 must be installed.
 #if !defined (ACE_HAS_WINSOCK2)
 //	#define ACE_HAS_WINSOCK2 0
 #endif
 
-// Uncomment these if you want to integrate ACE and Orbix in Win32.
+// Define ACE_HAS_ORBIX to 1 in your config.h file if you want to integrate
+// ACE and Orbix in Win32.
 //  Setting applies to  : building ACE, linking with ACE
 //  Runtime restrictions: system must have Orbix DLLs
 #if !defined (ACE_HAS_ORBIX)
