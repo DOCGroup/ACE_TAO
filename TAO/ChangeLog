@@ -1,3 +1,13 @@
+Wed Jun 25 17:00:00 2003  Justin Michel  <michel_j@ociweb.com>
+
+    * tao/IORInterceptor/IORInterceptor.mpc:
+    * tao/ObjRefTemplate/ObjRefTemplate.mpc:
+    * tao/PortableServer/PortableServer.mpc:
+    * tao/RTCORBA/Multi_Priority_Mapping.h:
+    * tao/Valuetype/Valuetype.mpc:
+
+      Fixes for various mpc generation problems. 
+
 Wed Jun 25 16:05:50 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* orbsvcs/ImplRepo_Service/ImR_Activator.dsp: Changed incorrect

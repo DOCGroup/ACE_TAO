@@ -28,7 +28,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_Export TAO_Multi_Priority_Mapping : public TAO_Priority_Mapping
+class TAO_RTCORBA_Export TAO_Multi_Priority_Mapping : public TAO_Priority_Mapping
 {
   //
   // = TITLE
