@@ -1,7 +1,11 @@
 // $Id$
 
+#if (TAO_HAS_SCIOP == 1)
+
 #include "FTEC_Fault_Listener.h"
 #include "SCTP_Fault_Detector.h"
+
+#include "ace/OS_NS_strings.h"
 
 ACE_RCSID (EventChannel,
            SCTP_Fault_Detector,
@@ -84,3 +88,6 @@ int STCP_Fault_Detector::parse_conf(int argc, char** argv)
     }
   return 0;
 }
+
+#endif /* ACE_HAS_SCTP == 1 */
+

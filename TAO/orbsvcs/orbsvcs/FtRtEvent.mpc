@@ -81,4 +81,8 @@ project (FTRT_EventChannel) :  orbsvcslib, ftrtevent {
       FtRtEvent/EventChannel/FT_ProxyAdmin_T.cpp
     }
   }
+  
+  Header_Files {
+    ftrtec_export.h
+  }
 }

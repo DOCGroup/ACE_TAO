@@ -1,6 +1,8 @@
 
 /// $Id$
 
+#include "ace/os_include/os_netdb.h"
+
 template <class ACCEPTOR, class CONNECTOR, class DETECTION_HANDLER>
 Fault_Detector_T<ACCEPTOR, CONNECTOR, DETECTION_HANDLER>::Fault_Detector_T()
 {

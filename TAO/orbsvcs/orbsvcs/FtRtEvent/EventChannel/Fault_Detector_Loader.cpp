@@ -1,11 +1,15 @@
 // $Id$
 
 #include "Fault_Detector_Loader.h"
+#include "Fault_Detector_T.h"
 #include "FTEC_Fault_Listener.h"
 #include "SCTP_Fault_Detector.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Connector.h"
 #include "ConnectionHandler_T.h"
+
+#include "ace/Acceptor.h"
+#include "ace/OS_NS_strings.h"
 
 ACE_RCSID (EventChannel,
            Fault_Detector_Loader,
@@ -40,7 +44,13 @@ namespace FTRTEC {
     // Parse any service configurator parameters.
     if (argc > 0 && ACE_OS::strcasecmp (argv[0], ACE_LIB_TEXT("sctp")) == 0)
     {
+#if (TAO_HAS_SCIOP == 1)
       detector_.reset(new STCP_Fault_Detector);
+#else
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P|%t) SCTP not enabled. ",
+                  " Enable SCTP and rebuild ACE+TAO \n"));
+#endif /* TAO_HAS_SCIOP */
       argc--; argv++;
     }
     else

@@ -4,6 +4,8 @@
 #include "../Utils/resolve_init.h"
 #include "../Utils/UUID.h"
 
+#include "tao/Typecode.h"
+
 ACE_RCSID (EventChannel,
            Request_Context_Repository,
            "$Id$")
