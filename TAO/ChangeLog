@@ -1,3 +1,8 @@
+Tue Feb 10 17:20:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* performance-tests/Anyop/Makefile.bor:
+	  Fixed this BCB makefile
+
 Tue Feb 10 11:11:19 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/CosLoadBalancing.mpc:
@@ -23,7 +28,7 @@ Tue Feb 10 11:11:19 2004  Chad Elliott  <elliott_c@ociweb.com>
 
           Removed redundant base projects from the inheritance lists.
 
-Tue Feb 10 17:06:13 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+Tue Feb 10 17:06:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/OBV/Forward/OBV_Forward.mpc:
           Add IDL_Files so that the order in which the IDL files are used
