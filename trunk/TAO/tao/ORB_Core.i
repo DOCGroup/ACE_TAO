@@ -197,13 +197,3 @@ TAO_Resource_Factory::init (int argc, char *argv[])
 
 // ****************************************************************
 
-ACE_INLINE
-TAO_Resource_Factory::App_Allocated::App_Allocated (void)
-  : orb_(0),
-    poa_(0),
-    alloc_(0),
-    input_cdr_dblock_allocator_ (0),
-    input_cdr_buffer_allocator_ (0)
-{
-}
-
