@@ -152,8 +152,8 @@ TAO_ServantBase::_create_stub (ACE_ENV_SINGLE_ARG_DECL)
   TAO_Stub *stub = 0;
 
   TAO_POA_Current_Impl *poa_current_impl =
-    ACE_static_cast(TAO_POA_Current_Impl *,
-                    TAO_TSS_RESOURCES::instance ()->poa_current_impl_);
+    static_cast<TAO_POA_Current_Impl *>
+                    (TAO_TSS_RESOURCES::instance ()->poa_current_impl_);
 
   CORBA::ORB_ptr servant_orb = 0;
 
@@ -161,7 +161,6 @@ TAO_ServantBase::_create_stub (ACE_ENV_SINGLE_ARG_DECL)
       && this == poa_current_impl->servant ())
     {
       servant_orb = poa_current_impl->orb_core ().orb () ;
-
 
       stub =
         poa_current_impl->poa ()->key_to_stub (
@@ -216,7 +215,7 @@ void TAO_ServantBase::synchronous_upcall_dispatch (TAO_ServerRequest &req,
 
   // Fetch the skeleton for this operation
   if (this->_find (opname, skel,
-         ACE_static_cast (unsigned int, req.operation_length())) == -1)
+         static_cast <unsigned int> (req.operation_length())) == -1)
     {
       ACE_THROW (CORBA::BAD_OPERATION ());
     }
@@ -282,7 +281,7 @@ void TAO_ServantBase::asynchronous_upcall_dispatch (TAO_ServerRequest &req,
 
   // Fetch the skeleton for this operation
   if (this->_find (opname, skel,
-         ACE_static_cast (unsigned int, req.operation_length())) == -1)
+         static_cast <unsigned int> (req.operation_length())) == -1)
     {
       ACE_THROW (CORBA::BAD_OPERATION ());
     }
