@@ -1,3 +1,8 @@
+Mon Oct 13 12:58:01 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/Sched_Params.i: reordered function definitions to prevent use
+	  before define.
+
 Mon Oct 13 09:58:11 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* ace/Priority_Reactor.cpp: 
