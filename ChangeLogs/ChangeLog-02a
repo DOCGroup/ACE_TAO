@@ -1,3 +1,12 @@
+Mon Aug 28 11:56:42 2000  Ossama Othman  <ossama@uci.edu>
+
+	* configure.in (ACE_HAS_PENTIUM):
+
+	  Only define this macro if the hardware is x86 *and* GNU C++ is
+	  being used since the code enabled by this macro contains
+	  assembler code specific to that compiler.
+	  Reported by Rich Seibel <seibel_r@ociweb.com>
+
 Mon Aug 28 11:18:27 2000  Ossama Othman  <ossama@uci.edu>
 
 	* ace/config-irix6.5.x-sgic++.h:
