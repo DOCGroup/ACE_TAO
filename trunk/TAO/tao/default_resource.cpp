@@ -330,6 +330,17 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
 
   if (factory == end)
     {
+      // If the user did not list any protocols in her svc.conf file
+      // then default to TAO's basic protocols.
+      // You do *NOT* need modify this code to add your own protocol,
+      // instead simply add the following to your svc.conf file:
+      //
+      // dynamic PN_Factory Service_Object * LIB:_make_PN_Protocol_Factory() ""
+      // static Resource_Factory "-ORBProtocolFactory PN_Factory"
+      //
+      // where PN is the name of your protocol and LIB is the base
+      // name of the shared library that implements the protocol.
+      //
       TAO_Protocol_Factory *protocol_factory = 0;
       TAO_Protocol_Item *item = 0;
 

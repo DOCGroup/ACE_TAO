@@ -51,7 +51,7 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_UIOP_Transport_Timeprobe_Description,
 
 TAO_UIOP_Transport::TAO_UIOP_Transport (TAO_UIOP_Handler_Base *handler,
                                         TAO_ORB_Core *orb_core)
-  : TAO_Transport (TAO_IOP_TAG_UNIX_IOP,
+  : TAO_Transport (TAO_TAG_UIOP_PROFILE,
                    orb_core),
     handler_ (handler)
 {

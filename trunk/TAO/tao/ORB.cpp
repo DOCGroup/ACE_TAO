@@ -179,7 +179,6 @@ CORBA_ORB::~CORBA_ORB (void)
 void
 CORBA_ORB::shutdown (CORBA::Boolean wait_for_completion,
                      CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->check_shutdown (ACE_TRY_ENV);
   ACE_CHECK;
@@ -191,7 +190,6 @@ CORBA_ORB::shutdown (CORBA::Boolean wait_for_completion,
 
 void
 CORBA_ORB::destroy (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->check_shutdown (ACE_TRY_ENV);
   ACE_CHECK;
@@ -214,7 +212,6 @@ CORBA_ORB::destroy (CORBA::Environment &ACE_TRY_ENV)
 int
 CORBA_ORB::perform_work (const ACE_Time_Value &tv,
                          CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // This method should not be called if the ORB has been shutdown.
   this->check_shutdown (ACE_TRY_ENV);
@@ -235,7 +232,6 @@ CORBA_ORB::perform_work (const ACE_Time_Value &tv,
 
 CORBA::Boolean
 CORBA_ORB::work_pending (CORBA_Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // This method should not be called if the ORB has been shutdown.
   this->check_shutdown (ACE_TRY_ENV);
@@ -368,7 +364,6 @@ int
 CORBA_ORB::run (ACE_Time_Value *tv,
                 int break_on_timeouts,
                 CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->check_shutdown (ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
@@ -378,21 +373,18 @@ CORBA_ORB::run (ACE_Time_Value *tv,
 
 int
 CORBA_ORB::run (ACE_Time_Value &tv, CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->run (&tv, 1, ACE_TRY_ENV);
 }
 
 int
 CORBA_ORB::run (ACE_Time_Value *tv, CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->run (tv, 1, ACE_TRY_ENV);
 }
 
 int
 CORBA_ORB::run (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->run (0, 0, ACE_TRY_ENV);
 }
@@ -453,14 +445,14 @@ CORBA_ORB::resolve_service (MCAST_SERVICEID mcast_service_id,
                             ACE_Time_Value *timeout,
                             CORBA::Environment& ACE_TRY_ENV)
 {
-  const char * env_service_ior [] = 
+  const char * env_service_ior [] =
   {
     "NameServiceIOR",
     "TradingServiceIOR",
     "ImplRepoServiceIOR"
   };
 
-  const char * env_service_port [] = 
+  const char * env_service_port [] =
   {
     "NameServicePort",
     "TradingServicePort",
@@ -473,23 +465,23 @@ CORBA_ORB::resolve_service (MCAST_SERVICEID mcast_service_id,
    TAO_DEFAULT_TRADING_SERVER_REQUEST_PORT,
    TAO_DEFAULT_IMPLREPO_SERVER_REQUEST_PORT
  };
-   
+
  const char * service_objid [] =
  {
    TAO_OBJID_NAMESERVICE,
    TAO_OBJID_TRADINGSERVICE,
    TAO_OBJID_IMPLREPOSERVICE
  };
- 
+
  CORBA_Object_var return_value = CORBA_Object::_nil ();
- 
+
  // By now, the table filled in with -ORBInitRef arguments has been
  // checked.  We only get here if the table didn't contain an initial
  // reference for the requested Service.
- 
+
  // Check to see if the user has an environment variable.
  ACE_CString service_ior = ACE_OS::getenv (env_service_ior[mcast_service_id]);
- 
+
  if (service_ior.length () != 0)
    {
      return_value =
@@ -502,19 +494,19 @@ CORBA_ORB::resolve_service (MCAST_SERVICEID mcast_service_id,
      // First, determine if the port was supplied on the command line
      u_short port =
        this->orb_core_->orb_params ()->service_port (mcast_service_id);
-     
+
      if (port == 0)
        {
          // Look for the port among our environment variables.
          const char *port_number =
            ACE_OS::getenv (env_service_port[mcast_service_id]);
-         
+
          if (port_number != 0)
            port = (u_short) ACE_OS::atoi (port_number);
          else
            port = default_service_port[mcast_service_id];
        }
-     
+
      return_value =
        this->multicast_to_service (service_objid[mcast_service_id],
                                    port,
@@ -522,7 +514,7 @@ CORBA_ORB::resolve_service (MCAST_SERVICEID mcast_service_id,
                                    ACE_TRY_ENV);
      ACE_CHECK_RETURN (CORBA_Object::_nil ());
    }
- 
+
  // Return ior.
  return return_value._retn ();
 }
@@ -848,10 +840,10 @@ CORBA_ORB::resolve_initial_references (const char *name,
 
   if (ACE_OS::strcmp (name, TAO_OBJID_NAMESERVICE) == 0)
     return this->resolve_service (NAMESERVICE, timeout, ACE_TRY_ENV);
-  
+
   else if (ACE_OS::strcmp (name, TAO_OBJID_TRADINGSERVICE) == 0)
     return this->resolve_service (TRADINGSERVICE, timeout, ACE_TRY_ENV);
-  
+
   else if (ACE_OS::strcmp (name, TAO_OBJID_IMPLREPOSERVICE) == 0)
     return this->resolve_service (IMPLREPOSERVICE, timeout, ACE_TRY_ENV);
 
@@ -924,7 +916,6 @@ CORBA_ORB::key_to_object (const TAO_ObjectKey &key,
 
 void
 CORBA_ORB::check_shutdown (CORBA_Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->orb_core () != 0)
     {
@@ -1667,7 +1658,6 @@ CORBA::Policy_ptr
 CORBA_ORB::create_policy (CORBA::PolicyType type,
                           const CORBA::Any& val,
                           CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException, CORBA::PolicyError))
 {
   this->check_shutdown (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
@@ -1829,9 +1819,9 @@ CORBA_ORB::url_ior_string_to_object (const char* str,
     this->orb_core_->connector_registry ()->make_mprofile (str,
                                                            mprofile,
                                                            ACE_TRY_ENV);
-  
+
   ACE_CHECK_RETURN (CORBA::Object::_nil ());   // Return nil.
-  
+
   if (retv != 0)
     {
       ACE_THROW_RETURN (CORBA::INV_OBJREF (
@@ -1841,14 +1831,14 @@ CORBA_ORB::url_ior_string_to_object (const char* str,
                                            CORBA::COMPLETED_NO),
                         CORBA::Object::_nil ());
     }
-  
+
   // Now make the TAO_Stub.
   TAO_Stub *data = 0;
   ACE_NEW_THROW_EX (data,
                     TAO_Stub ((char *) 0, mprofile, this->orb_core_),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
-  
+
   TAO_Stub_Auto_Ptr safe_data (data);
 
   // Figure out if the servant is collocated.

@@ -57,7 +57,7 @@ template class TAO_Accept_Strategy<TAO_UIOP_Server_Connection_Handler, ACE_LSOCK
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 TAO_UIOP_Acceptor::TAO_UIOP_Acceptor (void)
-  : TAO_Acceptor (TAO_IOP_TAG_UNIX_IOP),
+  : TAO_Acceptor (TAO_TAG_UIOP_PROFILE),
     base_acceptor_ (),
     creation_strategy_ (0),
     concurrency_strategy_ (0),

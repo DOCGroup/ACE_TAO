@@ -57,17 +57,6 @@ class TAO_ORB_Core;
 // Email to tag-request@omg.org to allocate tags.
 typedef CORBA::ULong TAO_IOP_Profile_ID;
 
-enum
-{
-  TAO_IOP_TAG_INVALID = -1,
-  TAO_IOP_TAG_INTERNET_IOP = 0,                // IIOP
-  TAO_IOP_TAG_MULTIPLE_COMPONENTS = 1,         // DCE-CIOP
-  TAO_IOP_TAG_UNIX_IOP = TAO_TAG_UIOP_PROFILE, // Read corbafwd.h
-
-  // = This is a subset of the list of other profile tags.
-  TAO_IOP_TAG_ONC_IOP = 0x4f4e4300     // ONC IOP
-};
-
 class TAO_IOP_Tagged_Profile
 {
   // = TITLE
@@ -107,6 +96,8 @@ enum
 {
   // = DESCRIPTION
   //   These are all defined by DCE-CIOP in OMG TC document 95-3-10.
+  //   We don't use them in TAO, it is a left over from the SunSoft
+  //   IIOP engine times!
 
   TAO_IOP_TAG_DCE_STRING_BINDING = 100,// string binding handle
   TAO_IOP_TAG_DCE_BINDING_NAME = 101, // CDS/GDS/... name
