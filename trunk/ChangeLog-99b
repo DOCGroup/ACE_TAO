@@ -1,6 +1,7 @@
 Tue Jun 29 07:07:30 1999  David L. Levine  <levine@cs.wustl.edu>
 
-        * bin/check_build_logs: allow _ in -l and -m options.
+        * bin/check_build_logs: allow _ with -l and -m options, and
+          @ and . with -m option.
 
 Mon Jun 28 21:31:58 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
