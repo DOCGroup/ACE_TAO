@@ -1,3 +1,11 @@
+Mon Feb 01 12:54:11 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/NT_Service.(h i): Some fixes provided by Martin Krumpolec
+          <krumpo@pobox.sk> - thanks to Martin for these!
+          - Supplied missing ctor for name/desc variant.
+          - svc() method is not pure virtual any longer to prevent SCP-type
+            applications from having to override it and never use it.
+
 Mon Feb  1 12:04:35 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * bin/make_release: Added zip and gif to the binary files in
