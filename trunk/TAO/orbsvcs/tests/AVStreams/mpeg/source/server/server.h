@@ -254,6 +254,16 @@ private:
 
   TAO_MMDevice *video_mmdevice_;
   // The video server multimedia device
+
+  ACE_Process_Options audio_process_options_;
+  // The process options for the process to be spawned by the process strategy
+
+  TAO_AV_Endpoint_Process_Strategy_B audio_process_strategy_;
+  // The proces strategy for the audio.
+
+  TAO_MMDevice *audio_mmdevice_;
+  // The audio server multimedia device
+
 };
 
 typedef ACE_Singleton<AV_Server,ACE_Null_Mutex> AV_SERVER;

@@ -140,8 +140,8 @@ Audio_Control_i::stop (CORBA::Long cmdsn,
   return this->state_->stop (cmdsn);
 }
  
-CORBA::UShort 
-Audio_Control_i::set_peer (const char * peer,
+CORBA::Boolean
+Audio_Control_i::set_peer (char *&peer,
                            CORBA::Environment &env)
 {
   ACE_INET_Addr client_data_addr (peer);
@@ -180,7 +180,16 @@ Audio_Control_i::set_peer (const char * peer,
                       -1);
 
   ACE_DEBUG ((LM_DEBUG,"(%P|%t) set_peer: server port = %d\n",server_data_addr.get_port_number ()));
-  return server_data_addr.get_port_number ();
+  ACE_NEW_RETURN (peer,
+                  char [BUFSIZ],
+                  CORBA::B_FALSE);
+  server_data_addr.set (server_data_addr.get_port_number (),
+                        server_data_addr.get_host_name ());
+  server_data_addr.addr_to_string (peer,
+                                   BUFSIZ);
+
+
+  return CORBA::B_TRUE;
 }
 
 void
@@ -195,8 +204,10 @@ Audio_Control_i::register_handlers (void)
 {
   int result;
 
-  // Register the event handlers with the Reactor
+  // change the state of audio control to be waiting state
+  this->change_state (AUDIO_CONTROL_WAITING_STATE::instance ());
 
+  // Register the event handlers with the Reactor
   // first the data handler, i.e. UDP
   result = this->reactor_->register_handler (this->data_handler_, 
                                              ACE_Event_Handler::READ_MASK);

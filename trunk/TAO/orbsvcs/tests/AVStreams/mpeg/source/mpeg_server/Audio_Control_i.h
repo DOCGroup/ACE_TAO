@@ -45,8 +45,8 @@ public:
       CORBA::Environment &_tao_environment
      ) ;
 
-  virtual CORBA::UShort set_peer (
-      const char * peer,
+  virtual CORBA::Boolean set_peer (
+                                   char *&peer,
       CORBA::Environment &_tao_environment
      ) ;
 

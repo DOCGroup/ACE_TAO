@@ -238,7 +238,7 @@ TAO_AV_Endpoint_Process_Strategy_B::create_B (AVStreams::StreamEndPoint_B_ptr &s
 {
   if (this->activate () == -1)
     ACE_ERROR_RETURN ((LM_ERROR, 
-                       "(%P|%t) TAO_AV_Endpoint_Strategy: Error in activate ()\n"),
+                       "(%P|%t) TAO_AV_Endpoint_Process_Strategy: Error in activate ()\n"),
                       -1);
 
   stream_endpoint = this->stream_endpoint_b_;
@@ -289,16 +289,19 @@ TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activ
     {
       this->activate_stream_endpoint (TAO_TRY_ENV);
       TAO_CHECK_ENV;
+      ACE_DEBUG ((LM_DEBUG,"TAO_AV_Endpoint_Reactive_Strategy::activated stream_endpoint\n"));
       
       this->activate_vdev (TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      
+      ACE_DEBUG ((LM_DEBUG,"TAO_AV_Endpoint_Reactive_Strategy::activated vdev\n"));      
+
       this->activate_mediactrl (TAO_TRY_ENV);
       TAO_CHECK_ENV;
+      ACE_DEBUG ((LM_DEBUG,"TAO_AV_Endpoint_Reactive_Strategy::activated mediactrl\n"));
     }
   TAO_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("TAO_Endpoint_Process_Strategy::activate");
+      TAO_TRY_ENV.print_exception ("TAO_Endpoint_Reactive_Strategy::activate");
       return -1;
     }
   TAO_ENDTRY;
@@ -313,14 +316,15 @@ TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activ
   T_VDev *vdev = 0;
   if (this->make_vdev (vdev) == -1)
     return -1;
+
+  this->orb_manager_->activate (vdev,
+                                env);
+  TAO_CHECK_ENV_RETURN (env, -1);
+
   this->vdev_ = vdev->_this (env);
   TAO_CHECK_ENV_RETURN (env, -1);
 
 
-  this->orb_manager_->activate_under_child_poa ("VDev",
-                                                vdev,
-                                                env);
-  TAO_CHECK_ENV_RETURN (env, -1);
   return 0;
 }
 
@@ -333,9 +337,8 @@ TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activ
   if (this->make_mediactrl (media_ctrl) == -1)
     return -1;
 
-  this->orb_manager_->activate_under_child_poa ("MediaCtrl",
-                                                media_ctrl,
-                                                env);
+  this->orb_manager_->activate (media_ctrl,
+                                env);
   TAO_CHECK_ENV_RETURN (env, -1);
   
   CORBA::Any anyval;
@@ -403,7 +406,7 @@ TAO_AV_Endpoint_Reactive_Strategy_A<T_StreamEndpoint, T_VDev, T_MediaCtrl>::crea
 {
   if (this->activate () == -1)
     ACE_ERROR_RETURN ((LM_ERROR, 
-                       "(%P|%t) TAO_AV_Endpoint_Process_Strategy_A: Error in activate ()\n"),
+                       "(%P|%t) TAO_AV_Endpoint_Reactive_Strategy_A: Error in activate ()\n"),
                       -1);
   
   stream_endpoint = this->stream_endpoint_a_;
@@ -421,13 +424,13 @@ TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::act
   if (this->make_stream_endpoint (stream_endpoint_a) == -1)
     return -1;
   
+  this->orb_manager_->activate (stream_endpoint_a,
+                                env);
+  TAO_CHECK_ENV_RETURN (env, -1);
+
   this->stream_endpoint_a_ = stream_endpoint_a->_this (env);
   TAO_CHECK_ENV_RETURN (env, -1);
 
-  this->orb_manager_->activate_under_child_poa ("Stream_Endpoint_A",
-                                                stream_endpoint_a,
-                                                env);
-  TAO_CHECK_ENV_RETURN (env, -1);
   return 0;
 }
 
@@ -449,14 +452,13 @@ TAO_AV_Endpoint_Reactive_Strategy_B <T_StreamEndpoint, T_VDev, T_MediaCtrl>::act
 
   if (this->make_stream_endpoint (stream_endpoint_b) == -1)
     return -1;
-  
+  this->orb_manager_->activate (this->stream_endpoint_b_,
+                                 env);
+  TAO_CHECK_ENV_RETURN (env, -1);
+
   this->stream_endpoint_b_ = stream_endpoint_b->_this (env);
   TAO_CHECK_ENV_RETURN (env, -1);
 
-  this->orb_manager_->activate_under_child_poa ("Stream_Endpoint_B",
-                                                this->stream_endpoint_b_,
-                                                env);
-  TAO_CHECK_ENV_RETURN (env, -1);
   return 0;
 }
 
@@ -468,7 +470,7 @@ TAO_AV_Endpoint_Reactive_Strategy_B<T_StreamEndpoint, T_VDev, T_MediaCtrl>::crea
 {
   if (this->activate () == -1)
     ACE_ERROR_RETURN ((LM_ERROR, 
-                       "(%P|%t) TAO_AV_Endpoint_Process_Strategy_B: Error in activate ()\n"),
+                       "(%P|%t) TAO_AV_Endpoint_Reactive_Strategy_B: Error in activate ()\n"),
                       -1);
   
   stream_endpoint = this->stream_endpoint_b_;
@@ -528,10 +530,9 @@ TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activate_objects 
                                                                                 char **argv,
                                                                                 CORBA::Environment &env)
 {
-  this->orb_manager_.init_child_poa (argc,
-                                     argv,
-                                     "child_poa",
-                                     env);
+  this->orb_manager_.init (argc,
+                           argv,
+                           env);
   TAO_CHECK_ENV_RETURN (env, -1);
 
   if (this->make_stream_endpoint (this->stream_endpoint_) == -1)
@@ -543,20 +544,17 @@ TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activate_objects 
   if (this->make_mediactrl (this->media_ctrl_) == -1)
     return -1;
   
-  this->orb_manager_.activate_under_child_poa ("Stream_Endpoint",
-                                               this->stream_endpoint_,
-                                               env);
+  this->orb_manager_.activate (this->stream_endpoint_,
+                               env);
   TAO_CHECK_ENV_RETURN (env, -1);
 
 
-  this->orb_manager_.activate_under_child_poa ("VDev",
-                                               this->vdev_,
-                                               env);
+  this->orb_manager_.activate (this->vdev_,
+                               env);
   TAO_CHECK_ENV_RETURN (env, -1);
 
-  this->orb_manager_.activate_under_child_poa ("MediaCtrl",
-                                               this->media_ctrl_,
-                                               env);
+  this->orb_manager_.activate (this->media_ctrl_,
+                               env);
   TAO_CHECK_ENV_RETURN (env, -1);
   return 0;
 

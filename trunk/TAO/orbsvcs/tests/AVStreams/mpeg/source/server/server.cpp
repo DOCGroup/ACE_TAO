@@ -554,9 +554,11 @@ Video_Server_MMDevice::create_B (AVStreams::StreamCtrl_ptr the_requester,
 
 // Default Constructor
 AV_Server::AV_Server (void)
-  :video_process_strategy_ (&video_process_options_)
+  :video_process_strategy_ (&video_process_options_),
+   audio_process_strategy_ (&audio_process_options_)
 {
   this->video_process_options_.command_line ("./vs -ORBport 0 -ORBobjrefstyle url");
+  this->audio_process_options_.command_line ("./as -ORBport 0 -ORBobjrefstyle url");
 }
 
 // %% move to the destructor or sig handler
@@ -695,6 +697,38 @@ AV_Server::init (int argc,
     }
   
 
+  // Register the audio mmdevice object with the ORB
+  ACE_NEW_RETURN (this->audio_mmdevice_,
+                  TAO_MMDevice (&this->audio_process_strategy_),
+                  -1);
+
+  // create the audio server mmdevice with the naming service pointer.
+  this->orb_manager_.activate_under_child_poa ("Audio_Server_MMDevice",
+                                               this->audio_mmdevice_,
+                                               env);
+  TAO_CHECK_ENV_RETURN (env,-1);
+
+  // Register the audio_mmdevice with the naming service.
+
+  CosNaming::Name audio_server_mmdevice_name (1);
+  audio_server_mmdevice_name.length (1);
+  audio_server_mmdevice_name [0].id = CORBA::string_dup ("Audio_Server_MMDevice");
+  
+  // Register the audio control object with the naming server.
+  this->naming_context_->bind (audio_server_mmdevice_name,
+                        this->audio_mmdevice_->_this (env),
+                        env);
+
+  if (env.exception () != 0)
+    {
+      env.clear ();
+      this->naming_context_->rebind (audio_server_mmdevice_name,
+                              this->audio_mmdevice_->_this (env),
+                              env);
+      TAO_CHECK_ENV_RETURN (env,-1);
+    }
+  
+
 
   // Register the various signal handlers with the reactor.
   result = this->signal_handler_.register_handler ();
@@ -752,6 +786,8 @@ AV_Server::~AV_Server (void)
 
   if (this->video_mmdevice_ != 0)
     delete this->video_mmdevice_;
+  if (this->audio_mmdevice_ != 0)
+    delete this->audio_mmdevice_;
 //   if (TAO_ORB_Core_instance ()->reactor ()->handler (this->acceptor_.get_handle (),
 //                                                      ACE_Event_Handler::ACCEPT_MASK) == 0)
 //     if (TAO_ORB_Core_instance ()->reactor ()->remove_handler 
