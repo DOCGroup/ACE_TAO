@@ -146,16 +146,31 @@ main (int argc, char *argv[])
       poa_manager->activate (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      Worker worker (orb.in ());
-      if (worker.activate (THR_NEW_LWP | THR_JOINABLE,
-                           nthreads) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot activate client threads\n"),
-                          1);
+      {
+        Worker worker (orb.in ());
+        if (worker.activate (THR_NEW_LWP | THR_JOINABLE,
+                             nthreads) != 0)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot activate client threads\n"),
+                            1);
 
-      worker.thr_mgr ()->wait ();
+        worker.thr_mgr ()->wait ();
+      }
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
+
+      PortableServer::ObjectId_var oid =
+        root_poa->servant_to_id (&server_impl, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      root_poa->deactivate_object (oid.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      root_poa->destroy (1, 1, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      orb->destroy (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

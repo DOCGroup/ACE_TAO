@@ -335,7 +335,7 @@ Reply_Handler_Task::svc (void)
 {
   ACE_Time_Value tv (0, 10000);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) - starting receiver thread\n"));
-  while (!done && this->orb_->work_pending ())
+  while (!done)
     this->orb_->perform_work (tv);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) - finished receiver thread\n"));
   return 0;

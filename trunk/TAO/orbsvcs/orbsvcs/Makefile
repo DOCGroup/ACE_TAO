@@ -9,6 +9,10 @@ endif # ! TAO_ROOT
 
 MAKEFILE = Makefile
 
+include $(TAO_ROOT)/rules.tao.GNU
+
+default: all
+
 #----------------------------------------------------------------------------
 #       Define local macros
 #----------------------------------------------------------------------------
@@ -68,11 +72,6 @@ endif
 ifneq (,$(findstring  Sched, $(TAO_ORBSVCS)))
   MKLIST += Makefile.RTSched
 endif
-ifneq (,$(findstring  NativeCosEvent, $(TAO_ORBSVCS)))
-  ifeq (,$(findstring Makefile.CosEvent, $(MKLIST)))
-    MKLIST += Makefile.CosEvent
-  endif
-endif
 ifneq (,$(findstring  Event, $(TAO_ORBSVCS)))
   MKLIST += Makefile.RTEvent
 endif
@@ -84,6 +83,11 @@ endif
 ifneq (,$(findstring  CosEvent, $(TAO_ORBSVCS)))
   MKLIST += Makefile.CosEvent
 endif
+ifneq (,$(findstring  NativeCosEvent, $(TAO_ORBSVCS)))
+  ifeq (,$(findstring Makefile.CosEvent, $(MKLIST)))
+    MKLIST += Makefile.CosEvent
+  endif
+endif
 ifneq (,$(findstring  Trader, $(TAO_ORBSVCS)))
   MKLIST += Makefile.CosTrading
 endif
@@ -93,10 +97,6 @@ endif
 ifneq (,$(findstring  Log, $(TAO_ORBSVCS)))
   MKLIST += Makefile.DsLogAdmin
 endif
-
-include $(TAO_ROOT)/rules.tao.GNU
-
-default: all
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
