@@ -1,9 +1,17 @@
+Tue Feb  3 13:09:22 2004  Gautam Thaker  <gthaker@atl.lmco.com>
+
+        * docs/releasenotes/index.html:
+
+          Reorganized the "releasenotes" table of content at the top
+          of the page. Removed some outdated entries per feedback from
+          Bala.
+
 Mon Feb  2 20:02:57 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/RTCORBA/RTCORBA_includeS.h:
 
 	  Needed for files that include RTCORBA_include.pidl. This is
-	  empty. 
+	  empty.
 
 Sun Feb  1 15:18:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
