@@ -1,3 +1,18 @@
+Sat Oct 14 16:46:48 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/Invocation_Endpoint_Selectors.i:
+
+	  Added missing #if RTCORBA protection.  This fixes minimum CORBA
+	  build problems.
+
+	* tao/ORB_Core.cpp (~TAO_ORB_Core):
+
+	  Fixed the scope of #if protection.
+
+	* tao/Invocation_Endpoint_Selectors.cpp (get_selector):
+
+	  Fixed unused arg warning.
+
 Sat Oct 14 00:09:48 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tests/Policies/Manipulation.cpp:

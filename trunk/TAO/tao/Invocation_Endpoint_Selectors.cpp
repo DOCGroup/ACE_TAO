@@ -110,6 +110,8 @@ TAO_Endpoint_Selector_Factory::get_selector (TAO_GIOP_Invocation
 
 #else /* TAO_HAS_RT_CORBA == 1 */
 
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
+
   invocation->endpoint_selector_ =
     invocation->orb_core_->default_endpoint_selector ();
 

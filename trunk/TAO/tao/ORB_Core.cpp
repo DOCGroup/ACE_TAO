@@ -169,7 +169,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
 
   ACE_NEW (this->endpoint_selector_factory_,
            TAO_Endpoint_Selector_Factory);
-  
+
   ACE_NEW (this->default_endpoint_selector_,
            TAO_Default_Endpoint_Selector);
 
@@ -178,7 +178,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
 
   ACE_NEW (this->protocol_endpoint_selector_,
            TAO_Protocol_Endpoint_Selector);
-  
+
   ACE_NEW (this->priority_protocol_selector_,
            TAO_Priority_Protocol_Selector);
 
@@ -230,13 +230,13 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
 
   delete this->endpoint_selector_factory_;
   delete this->default_endpoint_selector_;
+
+#if (TAO_HAS_RT_CORBA == 1)
+
   delete this->priority_endpoint_selector_;
   delete this->protocol_endpoint_selector_;
   delete this->priority_protocol_selector_;
   delete this->client_priority_policy_selector_;
-
-#if (TAO_HAS_RT_CORBA == 1)
-
   delete this->rt_orb_;
   delete this->rt_current_;
   delete this->priority_mapping_manager_;
