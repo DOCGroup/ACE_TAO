@@ -105,7 +105,8 @@ private:
 
   int decode_endpoints (void);
   // Helper for <decode>.  Decodes endpoints from a tagged component.
-  // Decode only if RTCORBA is enabled.
+  // Decode only if RTCORBA is enabled.  Return 0 on success and -1 on
+  // failure.
 
   TAO_SSLIOP_Endpoint ssl_endpoint_;
   // Head of this profile's list of endpoints.  This endpoint is not
