@@ -332,6 +332,23 @@ LDFLAGS += $(RLDFLAGS)
 TAO_COMPONENTS:
 	@sh $(ACE_ROOT)/bin/ace_components --tao --set ' $(TAO_COMPONENTS) '
 
+.PHONY: SIZES
+MODULES=POA_FILES PLUGGABLE_PROTOCOLS_FILES DEFAULT_RESOURCES_FILES INTERPRETIVE_MARSHALING_FILES IDL_COMPILER_FILES ORB_CORE_FILES DYNAMIC_ANY_FILES INTERFACE_REPO_FILES
+
+SIZES: $(addsuffix .size, $(MODULES))
+	@for i in $^; do \
+	  b=`cat $$i`; \
+	  echo $$i : $$b; \
+	done
+
+%.size:
+	@size $(addsuffix .o, $(addprefix .shobj/,$($*))) | \
+	  sort -n -k 4,4 >$@.details
+	@size $(addsuffix .o, $(addprefix .shobj/,$($*))) | \
+	grep -v ' text ' | \
+	awk '{s += $$4} END {print s}' > $@
+
+
 realclean:
 	@sh $(ACE_ROOT)/bin/ace_components --tao --remove
 

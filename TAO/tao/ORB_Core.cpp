@@ -915,7 +915,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
         }
       else
         {
-	  this->thread_per_connection_use_timeout_ = 1;
+          this->thread_per_connection_use_timeout_ = 1;
           int milliseconds =
             ACE_OS::atoi (TAO_DEFAULT_THREAD_PER_CONNECTION_TIMEOUT);
           // Use a temporary to obtain automatic normalization.
@@ -1109,6 +1109,7 @@ TAO_ORB_Core::fini (void)
   }
 
   delete this->reactor_registry_;
+  delete this->priority_mapping_;
 
   delete this;
 
