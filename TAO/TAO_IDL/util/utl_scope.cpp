@@ -1480,10 +1480,11 @@ UTL_Scope::add_to_local_types(AST_Decl *e)
 
 // Has this node been referenced here before?
 idl_bool
-UTL_Scope::referenced (AST_Decl *e, Identifier *id)
+UTL_Scope::referenced (AST_Decl *e, 
+                       Identifier *id)
 {
-  long          i = pd_referenced_used;
-  AST_Decl      **tmp = pd_referenced;
+  long i = pd_referenced_used;
+  AST_Decl **tmp = pd_referenced;
   Identifier *member = 0;
   Identifier *test = 0;
 
@@ -1533,8 +1534,20 @@ UTL_Scope::referenced (AST_Decl *e, Identifier *id)
             }
           else if (id->case_compare_quiet (*name_tmp) == I_TRUE)
             {
-              idl_global->err ()->name_case_error (id->get_string (),
-                                                   (*name_tmp)->get_string ());
+              if (idl_global->case_diff_error ())
+                {
+                  idl_global->err ()->name_case_error (
+                                          id->get_string (),
+                                          (*name_tmp)->get_string ()
+                                        );
+                }
+              else
+                {
+                  idl_global->err ()->name_case_warning (
+                                          id->get_string (),
+                                          (*name_tmp)->get_string ()
+                                        );
+                }
 
               return I_TRUE;
             }
