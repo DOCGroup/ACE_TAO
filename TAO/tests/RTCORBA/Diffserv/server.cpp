@@ -2,6 +2,7 @@
 
 #include "testS.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_stdio.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
 #include "tao/RTCORBA/Network_Priority_Mapping_Manager.h"

@@ -127,7 +127,7 @@ Fri Nov 21 14:57:06 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
           Changes related to the bug fix above. Thanks to Malcolm
           McRoberts <mmcroberts@ideorlando.org> for pointing out
-          the problem.
+          the problem. This closes {BUGID:1568]
 
 Fri Nov 21 11:16:50 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 

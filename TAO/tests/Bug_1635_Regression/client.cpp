@@ -1,7 +1,7 @@
 //
 // $Id$
 //
-#include "tao/corba.h"
+#include "tao/ORB.h"
 
 int
 main (int argc, char *argv[])

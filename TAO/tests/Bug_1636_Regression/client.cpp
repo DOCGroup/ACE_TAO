@@ -3,7 +3,6 @@
 //
 #include "tao/DynamicInterface/Request.h"
 #include "tao/DynamicAny/DynAnyFactory.h"
-#include "tao/corba.h"
 #include "testC.h"
 
 int main (int argc, char* argv[])
