@@ -1,3 +1,19 @@
+Tue Dec 30 13:46:44 1997  Nanbor Wang  <nw1@cs.wustl.edu>
+
+	* tests/Cubit/TAO/IDL_Cubit/clnt.h (portnum_): Changed its data
+ 	  type from CORBA::ULong to CORBA::UShort to kill warning
+ 	  messages.
+
+	* tao/orbobj.cpp (create_list): Changed data type of the loop
+ 	  counter to CORBA::Long.  This caused a warning message on VC.
+
+	* doc/releasenotes/index.html: Added documentation for adding IDL
+ 	  files into Visual C++'s projects.
+	
+	* tests/Param_Test/Param_Test.dsw:
+	* tests/Param_Test/client.dsp:
+	* tests/Param_Test/server.dsp: New workspace and projects were added.
+
 Tue Dec 30 10:15:11 1997  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* orbsvcs/Event_Service/Fast_Reactor.h (ACE_ES_Fast_Reactor):
