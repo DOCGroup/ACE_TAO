@@ -8,6 +8,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Local_Name_Space.h"
+#include "ace/Auto_Ptr.h"
 
 
 ACE_RCSID (ace,

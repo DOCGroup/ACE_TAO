@@ -1,3 +1,11 @@
+Fri Feb 21 10:05:23 2003  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Local_Name_Space_T.cpp:
+
+	  Include "ace/Auto_Ptr.h" once again to pull in the
+	  ACE_Auto_Basic_Array_Ptr class declaration.  Fixes compile-time
+	  problems on AIX about unknown template types.
+
 Fri Feb 21 13:32:43 2003  Edward Scott  <eas@prismtechnologies.com>
 
         * docs/bugzilla-build-setup.html:
