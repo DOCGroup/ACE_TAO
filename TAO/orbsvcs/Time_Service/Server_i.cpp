@@ -127,7 +127,7 @@ Server_i::init_IR (void)
 	  if (this->register_with_ir_ == 1)
 	    this->ir_helper_->register_server ("server -i -ORBobjrefstyle url");
 
-	  this->ir_helper_->change_object (this->time_service_server_,
+	  this->ir_helper_->change_object (this->time_service_server_.in (),
 					   TAO_TRY_ENV);
 	}
 
@@ -198,7 +198,7 @@ Server_i::create_server (void)
  	this->orb_manager_.child_poa ()->id_to_reference (id.in (),
  							  TAO_TRY_ENV);
 
-      this->time_service_server_ = CosTime::TimeService::_narrow (server_ref,
+      this->time_service_server_ = CosTime::TimeService::_narrow (server_ref.in (),
  								  TAO_TRY_ENV);
 
 
