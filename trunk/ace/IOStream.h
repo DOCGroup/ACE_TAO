@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
 // ============================================================================
@@ -26,8 +27,6 @@
 
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
 
-#include "ace/INET_Addr.h"
-#include "ace/Handle_Set.h"
 #include "ace/streams.h"
 
 #if defined (ACE_HAS_STRING_CLASS)
@@ -495,5 +494,6 @@ typedef ostream& (*__omanip_)(ostream&);
 // Include the templates here.
 #include "ace/IOStream_T.h"
 #endif /* !ACE_LACKS_ACE_IOSTREAM */
+
 #include "ace/post.h"
 #endif /* ACE_IOSTREAM_H */

@@ -31,6 +31,9 @@
 
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
 
+#include "ace/INET_Addr.h"
+#include "ace/Handle_Set.h"
+
 #if defined (ACE_HAS_STRING_CLASS)
 template <class STREAM> STREAM & operator>> (STREAM &stream, ACE_Quoted_String &str);
 template <class STREAM> STREAM & operator<< (STREAM &stream, ACE_Quoted_String &str);
@@ -178,7 +181,7 @@ public:
           if (good ())
               return 1;
         }
-#if !defined (ACE_WIN32) 
+#if !defined (ACE_WIN32)
       // MS VC++ 5.0 doesn't declare setstate.
       setstate (failbit);
 #endif /* !ACE_WIN32 */

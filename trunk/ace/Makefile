@@ -7922,6 +7922,7 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ IOStream_T.h \
  INET_Addr.h \
  ACE.h \
  ACE.i \
@@ -7930,7 +7931,6 @@ endif # GHS
  INET_Addr.i \
  Handle_Set.h \
  Handle_Set.i \
- IOStream_T.h \
  IOStream_T.i \
  IOStream_T.cpp
 
