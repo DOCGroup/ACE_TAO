@@ -18,5 +18,5 @@
 
 
 # if !defined (PACE_HAS_INLINE)
-# include "pace/grp.inl"
+# include "grp.inl"
 # endif /* !PACE_HAS_INLINE */

@@ -18,5 +18,5 @@
 
 
 # if !defined (PACE_HAS_INLINE)
-# include "pace/string.inl"
+# include "string.inl"
 # endif /* !PACE_HAS_INLINE */

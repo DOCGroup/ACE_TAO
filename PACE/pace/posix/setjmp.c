@@ -18,5 +18,5 @@
 
 
 # if !defined (PACE_HAS_INLINE)
-# include "pace/setjmp.inl"
+# include "setjmp.inl"
 # endif /* !PACE_HAS_INLINE */
