@@ -15,11 +15,13 @@
 
 #include "ace/pre.h"
 
-#include "orbsvcs/LB_ORTC.h"
+#include "orbsvcs/LoadBalancing/LoadBalancing_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "orbsvcs/LB_ORTC.h"
 
 
 /**
