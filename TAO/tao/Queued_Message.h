@@ -15,11 +15,12 @@
 #include "ace/pre.h"
 
 #include "corbafwd.h"
-#include "LF_Event.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "LF_Event.h"
 
 class ACE_Message_Block;
 

@@ -39,7 +39,8 @@ public:
    *       need to hear when the connection timeouts or closes, but
    *       cannot block waiting for the message to be delivered.
    */
-  TAO_Asynch_Queued_Message (const ACE_Message_Block *contents);
+  TAO_Asynch_Queued_Message (const ACE_Message_Block *contents,
+                             ACE_Allocator *alloc = 0);
 
   /// Destructor
   virtual ~TAO_Asynch_Queued_Message (void);
