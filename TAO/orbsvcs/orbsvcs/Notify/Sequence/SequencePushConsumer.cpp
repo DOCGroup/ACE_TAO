@@ -6,7 +6,7 @@
 #include "SequencePushConsumer.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_Notify_SequencePushConsumer, "$id$")
+ACE_RCSID (Notify, TAO_Notify_SequencePushConsumer, "$Id$")
 
 #include "ace/Reactor.h"
 #include "tao/debug.h"
