@@ -721,9 +721,11 @@ ACE_FACTORY_DEFINE (TAO_ORBSVCS, TAO_CEC_Default_Factory)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
+#if !defined(ACE_HAS_Event2)
 template class ACE_Node<ACE_Command_Base*>;
 template class ACE_Unbounded_Queue<ACE_Command_Base*>;
 template class ACE_Unbounded_Queue_Iterator<ACE_Command_Base*>;
+#endif /* ! ACE_HAS_Event2 */
 
 template class TAO_EC_Proxy_Collection<TAO_CEC_ProxyPushConsumer>;
 template class TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>;
@@ -1152,13 +1154,11 @@ template class TAO_EC_Shutdown_Command<
 
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
+#if !defined(ACE_HAS_Event2)
 #pragma instantiate ACE_Node<ACE_Command_Base*>
 #pragma instantiate ACE_Unbounded_Queue<ACE_Command_Base*>
 #pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_Command_Base*>
-#pragma instantiate TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>
-#pragma instantiate TAO_EC_RB_Tree_Proxy_Set<TAO_CEC_ProxyPushConsumer>
-#pragma instantiate TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>
-#pragma instantiate TAO_EC_RB_Tree_Proxy_Set<TAO_CEC_ProxyPushSupplier>
+#endif /* ! ACE_HAS_Event2 */
 
 #if defined (ACE_HAS_THREADS)
 #endif /* ACE_HAS_THREADS */

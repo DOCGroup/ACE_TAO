@@ -1,3 +1,13 @@
+Tue Feb 15 08:19:42 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:
+	  Fixed template instantiation, Event2 uses the same templates, so
+	  if it is enabled we should not instantiate the templates.
+
+	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.h:
+	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.h:
+	  Cosmetic fixes.
+
 Mon Feb 14 18:13:58 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/include/ast_module.h:

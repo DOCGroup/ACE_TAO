@@ -7,7 +7,7 @@
 //   ORBSVCS Cos Event Channel
 //
 // = FILENAME
-//   CEC_ProxyConsumer
+//   CEC_ProxyPushConsumer
 //
 // = AUTHOR
 //   Carlos O'Ryan (coryan@cs.wustl.edu)
