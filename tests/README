@@ -20,21 +20,20 @@ all work with the following exceptions:
    functionality of accepting connections from clients using named pipes.
 
 3. Proactor_Test (to be added) on Windows 95: this does not work on
-   Windows 95 also since Windows 95 does not support I/O completion
-   ports and overlapped I/O. 
+   Windows 95 since Windows 95 does not support I/O completion ports.
  
 Notes:
 
-1. Each test creates a log file and writes it to the log
+1. Each test creates a log file and writes it to the ./log/
    directory. The log directory can be changed in the test_config.h
    file.
 
 2. Each log file contains a time stamp of when the test began and also
    a time stamp indicating when the test ended. If the ending time stamp
-   is missing, it can be assumed that the test did not succeed.
+   is missing, you can assume that the test did not succeed.
 
 3. None of the tests require any command line parameters. This is in
-   accordance with the keeping the test-suite a one-button test. If
+   accordance with the keeping the test-suite a "one-button" test. If
    any of the tests require any variable parameters these are
    specified in test_config.h.
 
@@ -42,10 +41,8 @@ Notes:
    as two processes and so the executable "main" need to be present in the
    netsvcs/bin directory. These components rely on config files. Two
    sample config files are also present in the test-suite, namely
-   server.conf and clerk.conf (and for Win32, NTserver.conf and
-   NTclerk.conf). 
+   UNIXserver.conf and UNIXclerk.conf (and for Win32, Win32server.conf 
+   and Win32clerk.conf). 
 
-If you have any questions/suggestions, please let me know.
-
-Prashant Jain 
-(pjain@cs.wustl.edu)
+If you have any questions/suggestions, please send email to
+ace-users@cs.wustl.edu.
