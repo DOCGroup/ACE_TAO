@@ -5264,6 +5264,10 @@ SOURCE=.\Based_Pointer_Repository.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Based_Pointer_T.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Basic_Types.h
 # End Source File
 # Begin Source File
@@ -5296,11 +5300,11 @@ SOURCE=.\Cleanup_Strategies_T.h
 # End Source File
 # Begin Source File
 
-SOURCE=".\config-win32-borland.h"
+SOURCE=".\config-win32-common.h"
 # End Source File
 # Begin Source File
 
-SOURCE=".\config-win32-common.h"
+SOURCE=".\config-win32-msvc.h"
 # End Source File
 # Begin Source File
 
@@ -5625,6 +5629,10 @@ SOURCE=.\Message_Queue_T.h
 # Begin Source File
 
 SOURCE=.\Method_Request.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Min_Max.h
 # End Source File
 # Begin Source File
 
@@ -6201,6 +6209,10 @@ SOURCE=.\Atomic_Op.i
 # Begin Source File
 
 SOURCE=.\Auto_Ptr.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Based_Pointer_T.i
 # End Source File
 # Begin Source File
 
