@@ -108,8 +108,6 @@ protected:
 class AIO_CLD_Connector
   : public ACE_Asynch_Connector<AIO_Output_Handler> {
 public:
-  typedef ACE_Asynch_Connector<AIO_Output_Handler> PARENT;
-
   enum { INITIAL_RETRY_DELAY = 3, MAX_RETRY_DELAY = 60 };
 
   // Constructor.
@@ -125,18 +123,16 @@ public:
     proactor ()->cancel_timer (*this);
   }
 
-  // Hook method to validate peer before opening handler.
-  virtual int validate_new_connection
-    (const ACE_INET_Addr &remote_address);
+  // Hook method to detect failure and validate peer before
+  // opening handler.
+  virtual int validate_connection
+    (const ACE_Asynch_Connect::Result& result,
+     const ACE_INET_Addr &remote, const ACE_INET_Addr& local);
 
   // Re-establish a connection to the logging server.
   int reconnect (void) { return connect (remote_addr_); }
 
 protected:
-  // Hook method called on connect completion.
-  virtual void handle_connect
-    (const ACE_Asynch_Connect::Result &result);
-
   // Hook method called on timer expiration - retry connect
   virtual void handle_time_out
     (const ACE_Time_Value&, const void *);
@@ -144,9 +140,6 @@ protected:
   // Template method to create a new handler
   virtual AIO_Output_Handler *make_handler (void)
     { return OUTPUT_HANDLER::instance (); }
-
-  // Handle for new connection
-  ACE_HANDLE  new_handle_;
 
   // Address at which logging server listens for connections.
   ACE_INET_Addr remote_addr_;
@@ -208,7 +201,6 @@ void AIO_Output_Handler::open
   ACE_Message_Block *mb;
   ACE_NEW (mb, ACE_Message_Block (1));
   reader_.read (*mb, 1);
-  // ??? Is SIGPIPE blocking necessary/effective in async I/O?
   ACE_Sig_Action no_sigpipe ((ACE_SignalHandler) SIG_IGN);
   no_sigpipe.register_action (SIGPIPE, 0);
   can_write_ = 1;
@@ -231,25 +223,29 @@ void AIO_Output_Handler::start_write (ACE_Message_Block *mblk) {
 void AIO_Output_Handler::handle_read_stream
        (const ACE_Asynch_Read_Stream::Result &result) {
   result.message_block ().release ();
-  ACE_OS::closesocket (result.handle ());
   writer_.cancel ();
+  ACE_OS::closesocket (result.handle ());
+  handle (ACE_INVALID_HANDLE);
   can_write_ = 0;
   CLD_CONNECTOR::instance ()->reconnect ();
 }
 
-// ??? Are partial writes possible with async writes?
 void AIO_Output_Handler::handle_write_stream
        (const ACE_Asynch_Write_Stream::Result &result) {
   ACE_Message_Block &mblk = result.message_block ();
-  if (result.success ()) {
-    if (mblk.length () == 0) {
-      can_write_ = 1;
-      mblk.release ();
-      start_write ();
-    }
-    else start_write (&mblk);
+  if (!result.success ()) {
+    mblk.rd_ptr (mblk.base ());
+    ungetq (mblk);
   }
-  else ungetq (&mblk);
+  else {
+    can_write_ = handle () == result.handle ();
+    if (mblk.length () == 0) {
+      mblk.release ();
+      if (can_write_) start_write ();
+    }
+    else if (can_write_) start_write (&mblk);
+    else { mblk.rd_ptr (mblk.base ()); ungetq (mblk); }
+  }
 }
 
 /******************************************************/
@@ -331,8 +327,20 @@ AIO_Input_Handler * AIO_CLD_Acceptor::make_handler (void) {
 #endif /* !CLD_KEY_FILENAME */
 
 
-int AIO_CLD_Connector::validate_new_connection
-  (const ACE_INET_Addr &remote_address) {
+int AIO_CLD_Connector::validate_connection
+  (const ACE_Asynch_Connect::Result& result,
+   const ACE_INET_Addr &remote, const ACE_INET_Addr&) {
+
+  remote_addr_ = remote;
+  if (!result.success ()) {
+    ACE_Time_Value delay (retry_delay_);
+    retry_delay_ *= 2;
+    if (retry_delay_ > MAX_RETRY_DELAY)
+      retry_delay_ = MAX_RETRY_DELAY;
+    proactor ()->schedule_timer (*this, 0, delay);
+    return -1;
+  }
+  retry_delay_ = INITIAL_RETRY_DELAY;
 
   if (ssl_ctx_ == 0) {
     OpenSSL_add_ssl_algorithms ();
@@ -358,43 +366,13 @@ int AIO_CLD_Connector::validate_new_connection
   }
 
   SSL_clear (ssl_);
-  SSL_set_fd (ssl_, new_handle_);
+  SSL_set_fd (ssl_, result.connect_handle ());
 
   SSL_set_verify (ssl_, SSL_VERIFY_PEER, 0);
 
   if (SSL_connect (ssl_) == -1
       || SSL_shutdown (ssl_) == -1) return -1;
-  remote_addr_ = remote_address;
   return 0;
-}
-
-// Alex, Edan, anyone...
-// This is here for two reasons:
-// 1. There's no notification of failed connects anywhere in the
-//    application layer of the framework. Is this right?
-// 2. The validate_connection() method does not have access to the
-//    connection handle... was this intentional?  If so, why?
-// Further, if the first 'if' below is:
-//    if (result.success ())
-// it is true whether the connect was rejected or succeeded. This
-// doesn't seem right... am I missing something?
-void AIO_CLD_Connector::handle_connect
-  (const ACE_Asynch_Connect::Result &result) {
-
-  // If the connect succeeds, stash the handle for validate, above.
-  // If it fails, then wait and retry.
-  if (result.success () && result.error () == 0) {
-    new_handle_ = result.connect_handle ();
-    retry_delay_ = INITIAL_RETRY_DELAY;
-    PARENT::handle_connect (result);
-  }
-  else {
-    ACE_Time_Value delay (retry_delay_);
-    retry_delay_ *= 2;
-    if (retry_delay_ > MAX_RETRY_DELAY)
-      retry_delay_ = MAX_RETRY_DELAY;
-    proactor ()->schedule_timer (*this, 0, delay);
-  }
 }
 
 void AIO_CLD_Connector::handle_time_out
