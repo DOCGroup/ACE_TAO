@@ -1,3 +1,10 @@
+Fri Sep 17 13:19:05 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Dirent_Test.cpp:
+        * tests/Message_Queue_Test_Ex.cpp:
+
+          Corrected minor build problems for VxWorks.
+
 Fri Sep 17 11:53:10 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/ACE.cpp:
