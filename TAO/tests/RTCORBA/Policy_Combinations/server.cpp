@@ -100,8 +100,8 @@ test_i::_default_POA (CORBA_Environment &)
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
-static CORBA::Short server_priority = 15;
-static CORBA::Short client_priority = 2;
+static CORBA::Short server_priority;
+static CORBA::Short client_priority;
 static CORBA::ULong stacksize = 0;
 static CORBA::ULong static_threads = 2;
 static CORBA::ULong dynamic_threads = 2;
@@ -372,7 +372,7 @@ server::test_bands_poa (CORBA::PolicyList &policies,
   bands[0].high = default_thread_priority;
   bands[1].low = ::server_priority;
   bands[1].high = ::server_priority;
-  bands[2].low = ::client_priority - 1;
+  bands[2].low = ::client_priority;
   bands[2].high = ::client_priority;
 
   policies.length (policies.length () + 1);
@@ -604,7 +604,7 @@ void
 server::test_lanes_bands_client_propagated_poa (CORBA::Environment &ACE_TRY_ENV)
 {
   this->test_lanes_poa (::client_priority,
-                        ::client_priority - 1,
+                        ::client_priority,
                         &server::test_bands_client_propagated_poa,
                         "lanes_bands_client_propagated",
                         ACE_TRY_ENV);
@@ -788,6 +788,12 @@ main (int argc, char **argv)
       default_thread_priority =
         current->the_priority (ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+      client_priority =
+        default_thread_priority + 1;
+
+      server_priority =
+        default_thread_priority + 2;
 
       int result =
         parse_args (argc, argv);

@@ -1269,6 +1269,37 @@ TAO_Object_Adapter::Servant_Upcall::prepare_for_upcall (const TAO_ObjectKey &key
   return TAO_Adapter::DS_OK;
 }
 
+TAO_POA *
+TAO_Object_Adapter::Servant_Upcall::lookup_POA (const TAO_ObjectKey &key,
+                                                CORBA::Environment &ACE_TRY_ENV)
+{
+  // Acquire the object adapter lock first.
+  int result = this->object_adapter_->lock ().acquire ();
+  if (result == -1)
+    // Locking error.
+    ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
+                      0);
+
+  // We have acquired the object adapater lock.  Record this for later
+  // use.
+  this->state_ = OBJECT_ADAPTER_LOCK_ACQUIRED;
+
+  // Check if a non-servant upcall is in progress.  If a non-servant
+  // upcall is in progress, wait for it to complete.  Unless of
+  // course, the thread making the non-servant upcall is this thread.
+  this->object_adapter_->wait_for_non_servant_upcalls_to_complete (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (TAO_Adapter::DS_FAILED);
+
+  // Locate the POA.
+  this->object_adapter_->locate_poa (key,
+                                     this->system_id_,
+                                     this->poa_,
+                                     ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+
+  return this->poa_;
+}
+
 TAO_Object_Adapter::Servant_Upcall::~Servant_Upcall ()
 {
   switch (this->state_)

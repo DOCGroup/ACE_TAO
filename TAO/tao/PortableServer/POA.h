@@ -138,6 +138,7 @@ public:
   friend class TAO_Object_Adapter::Non_Servant_Upcall;
   friend class TAO_POA_Current_Impl;
   friend class TAO_POA_Manager;
+  friend class TAO_RT_Collocation_Resolver;
 
   typedef ACE_CString String;
 

@@ -5,6 +5,7 @@
 #include "tao/ORB_Core.h"
 #include "RT_Servant_Dispatcher.h"
 #include "RT_Policy_Validator.h"
+#include "RT_Collocation_Resolver.h"
 
 ACE_RCSID (TAO_RTPortableServer,
            RT_Object_Adapter_Factory,
@@ -13,6 +14,9 @@ ACE_RCSID (TAO_RTPortableServer,
 
 TAO_RT_Object_Adapter_Factory::TAO_RT_Object_Adapter_Factory (void)
 {
+  // Set the name of the collocation resolver to be RT_Collocation_Resolver.
+  TAO_ORB_Core::set_collocation_resolver ("RT_Collocation_Resolver");
+  ACE_Service_Config::process_directive (ace_svc_desc_TAO_RT_Collocation_Resolver);
 }
 
 TAO_Adapter*

@@ -28,7 +28,7 @@ class TAO_LF_Strategy;
 /**
  * @class TAO_Thread_Lane_Resources_Manager
  *
- * This class is a manager for thread resources.
+ * @brief This class is a manager for thread resources.
  *
  * \nosubgrouping
  *
@@ -74,7 +74,7 @@ protected:
 /**
  * @class TAO_Thread_Lane_Resources_Manager_Factory
  *
- * This class is a factory for managers of thread resources.
+ * @brief This class is a factory for managers of thread resources.
  *
  * \nosubgrouping
  *

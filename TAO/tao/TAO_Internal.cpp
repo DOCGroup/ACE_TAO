@@ -25,6 +25,7 @@
 #include "Default_Endpoint_Selector_Factory.h"
 #include "Default_Protocols_Hooks.h"
 #include "Default_Thread_Lane_Resources_Manager.h"
+#include "Default_Collocation_Resolver.h"
 
 ACE_RCSID (tao,
            TAO_Internal,
@@ -228,6 +229,8 @@ TAO_Internal::open_services_i (int &argc,
         insert (&ace_svc_desc_TAO_Default_Protocols_Hooks);
       ACE_Service_Config::static_svcs ()->
         insert (&ace_svc_desc_TAO_Default_Thread_Lane_Resources_Manager_Factory);
+      ACE_Service_Config::static_svcs ()->
+        insert (&ace_svc_desc_TAO_Default_Collocation_Resolver);
 
       int result = 0;
 
