@@ -7,7 +7,28 @@ static_libs = 1
 
 ifneq ($(shell uname -s),LynxOS)
   CROSS-COMPILE = 1
-endif # uname -s
+
+  #### The following may need to be customized for your host or target type.
+  #### Or, you can source the appropriate (for your shell) Lynx SETUP file
+  #### before running "make".
+
+  ifeq (,$(HOST_OS))
+    HOST_OS = sunos
+  endif # HOST_OS
+
+  ifeq (,$(LYNXTARGET))
+    LYNXTARGET = x86
+  endif # LYNXTARGET
+
+  ifeq (,$(VERSION))
+    VERSION=2.5.0
+  endif # VERSION
+
+  ifeq (,$(findstring /usr/lynx/$(VERSION)/$(LYNXTARGET),$(PATH)))
+    PATH:=\
+/usr/lynx/$(VERSION)/$(LYNXTARGET)/cdk/$(HOST_OS)-$(LYNXTARGET)/bin:/usr/lynx/$(VERSION)/$(LYNXTARGET)/cdk/$(HOST_OS)-$(LYNXTARGET)/usr/bin:$(PATH)
+  endif # PATH
+endif # ! LynxOS
 
 CC              = gcc
 CXX             = g++
