@@ -30,7 +30,7 @@ USELIB("..\ace\aced.lib");
 static int 
 load_config (void)
 {
-  const char *config = "captest.cfg";
+  const char *config = "Capabilities_Test.cfg";
 
   ACE_Capabilities caps;
   if (caps.getent (config,
