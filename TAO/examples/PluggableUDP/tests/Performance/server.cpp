@@ -23,6 +23,10 @@
 
 #include "UDP_i.h"
 
+// The following include file forces DIOP to be linked into the
+// executable and initialized for static builds.
+#include "examples/PluggableUDP/DIOP/DIOP.h"
+
 
 ACE_RCSID(Performance, server, "$Id$")
 
@@ -184,7 +188,7 @@ main (int argc, char *argv[])
         ACE_Thread_Manager::instance ()->spawn_n (orb_threads-1,
                                                   svc,
                                                   orb.in ());
-                                              
+
       orb->run (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -192,10 +196,10 @@ main (int argc, char *argv[])
 
       root_poa->destroy (1, // ethernalize objects
                          0, // wait for completion
-						             ACE_TRY_ENV);
+                                                             ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-	    orb->destroy (ACE_TRY_ENV);
+            orb->destroy (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       ACE_Thread_Manager::instance ()->wait ();

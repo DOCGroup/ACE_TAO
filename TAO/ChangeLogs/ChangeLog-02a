@@ -1,3 +1,29 @@
+Tue Apr 15 10:10:10 2001  Frank Hunleth <fhunleth@cs.wustl.edu>
+
+        * examples/PluggableUDP/DIOP/Makefile:
+        * examples/PluggableUDP/DIOP/TAO_DIOP.dsp:
+        * examples/PluggableUDP/DIOP/TAO_DIOP_Static.dsp:
+        * examples/PluggableUDP/DIOP/DIOP.cpp:
+        * examples/PluggableUDP/DIOP/DIOP.h:
+        * examples/PluggableUDP/tests/Basic/Makefile:
+        * examples/PluggableUDP/tests/Basic/client.cpp:
+        * examples/PluggableUDP/tests/Basic/server.cpp:
+        * examples/PluggableUDP/tests/Basic/svc.conf:
+        * examples/PluggableUDP/tests/Performance/Makefile:
+        * examples/PluggableUDP/tests/Performance/client.cpp:
+        * examples/PluggableUDP/tests/Performance/server.cpp:
+        * examples/PluggableUDP/tests/Performance/svc.conf:
+        * examples/PluggableUDP/tests/SimplePerformance/Makefile:
+        * examples/PluggableUDP/tests/SimplePerformance/client.cpp:
+        * examples/PluggableUDP/tests/SimplePerformance/server.cpp:
+        * examples/PluggableUDP/tests/SimplePerformance/svc.conf:
+          Added support for linking DIOP as a static library.  Reused the
+          trick from other libraries of using creating a static instance of a
+          dummy class in a common header file, and then using its
+          constructor to register the DIOP pluggable protocol factory with
+          the service configurator.  Added MSDEV projects to build static
+          libraries on Win32 platforms.
+
 Tue Apr 15 09:50:40 2001  Frank Hunleth <fhunleth@cs.wustl.edu>, Angelo Corsaro <corsaro@cs.wustl.edu>
 
         * tao/Stub.cpp:

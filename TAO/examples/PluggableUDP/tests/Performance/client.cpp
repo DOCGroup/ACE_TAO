@@ -25,6 +25,10 @@
 #include "UDP_i.h"
 #include "UDP_PerformanceClient.h"
 
+// The following include file forces DIOP to be linked into the
+// executable and initialized for static builds.
+#include "examples/PluggableUDP/DIOP/DIOP.h"
+
 ACE_RCSID(Performance, client, "$Id$")
 
 const char *ior = "file://test.ior";
@@ -97,7 +101,7 @@ main (int argc, char *argv[])
         }
 
       // Activate POA to handle the call back.
-      
+
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA", ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -106,7 +110,7 @@ main (int argc, char *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
                           1);
-      
+
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -137,7 +141,7 @@ main (int argc, char *argv[])
 
       // let the client run in a separate thread
       client->activate ();
-      
+
       // ORB loop, will be shut down by our client thread
       orb->run (ACE_TRY_ENV);  // Fetch responses
       ACE_TRY_CHECK;
@@ -146,16 +150,16 @@ main (int argc, char *argv[])
 
       root_poa->destroy (1, // ethernalize objects
                          0, // wait for completion
-						             ACE_TRY_ENV);
+                                                             ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-	    orb->destroy (ACE_TRY_ENV);
+            orb->destroy (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // it is save to delete the client, because the client was actually
       // the one calling orb->shutdown () triggering the end of the ORB
       // event loop.
-	    delete client;
+            delete client;
 
     }
   ACE_CATCHANY

@@ -91,6 +91,10 @@ LIB32=link.exe -lib
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
+SOURCE=.\DIOP.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\DIOP_Acceptor.cpp
 # End Source File
 # Begin Source File
@@ -121,6 +125,10 @@ SOURCE=.\DIOP_Transport.cpp
 # Begin Group "Header Files"
 
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
+# Begin Source File
+
+SOURCE=.\DIOP.h
+# End Source File
 # Begin Source File
 
 SOURCE=.\DIOP_Acceptor.h
