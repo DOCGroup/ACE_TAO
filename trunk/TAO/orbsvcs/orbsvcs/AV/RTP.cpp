@@ -143,10 +143,11 @@ TAO_AV_RTP_Object::send_frame (ACE_Message_Block *frame,
     }
   else
     {
+      ACE_Time_Value ts = ACE_OS::gettimeofday();
       result = TAO_AV_RTP::write_header (header,
                                          0,
                                          this->sequence_num_,
-                                         0,
+                                         (ACE_UINT32)ts.msec(),
                                          0,
                                          0);
     }

@@ -1,3 +1,12 @@
+Sun Jul 22 13:36:21 2001  Craig Rodrigues  <crodrigu@bbn.com>
+
+        * orbsvcs/orbsvcs/AV/RTP.cpp:
+          If a TAO_AV_frame_info is not specified in the
+          TAO_AV_RTP_Object::sendframe() method, insert a
+          timestamp into the RTP header based on the current system
+          time.  The timestamp will be in milliseconds.
+          Thanks to Rob Ruff <rruff@scires.com> for pointing this out.
+
 Sun Jul 20 12:30:00 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
 
 	* tao/Asynch_Invocation.cpp:
