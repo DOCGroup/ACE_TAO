@@ -3,7 +3,7 @@ Sun Nov 18 17:33:41 2001  Ossama Othman  <ossama@uci.edu>
 	* tao/ORB_Core.cpp (init):
 
 	  Fixed incorrect use of a CORBA::String_var in some
-	  -ORBDefaultInitRed related code.  It was being used as if it was
+	  -ORBDefaultInitRef related code.  It was being used as if it was
 	  a pointer to char, resulting in a subtle memory corruption
 	  problem due to consecutive assignments to the CORBA::String_var.
 
