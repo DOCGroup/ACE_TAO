@@ -16,7 +16,7 @@ ACE_Managed_Cleanup<TYPE>::ACE_Managed_Cleanup (void)
 
 template <class TYPE>
 TYPE &
-ACE_Managed_Cleanup::object (void)
+ACE_Managed_Cleanup<TYPE>::object (void)
 {
   return this->object_;
 }
