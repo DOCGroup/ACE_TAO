@@ -737,12 +737,19 @@ operator>> (TAO_InputCDR& cdr, CORBA_Object*& x)
         mp.give_profile (pfile);
     }
 
-  // make sure we got some profiles!
+  // Make sure we got some profiles!
   if (mp.profile_count () != profile_count)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) could not create all ")
-                  ACE_TEXT ("the profiles\n")));
+      // @@ This occurs when profile creation fails when decoding the
+      //    profile from the IOR.  Such a problem occurred when, for
+      //    example, hostname lookup failed when binding the
+      //    ACE_INET_Addr to the IIOP profile in being created.
+
+      ACE_DEBUG ((LM_ERROR,
+                  ACE_TEXT ("TAO (%P|%t) Could not create all ")
+                  ACE_TEXT ("profiles.\n")
+                  ACE_TEXT ("This may be due to an address ")
+                  ACE_TEXT ("resolution problem (e.g. DNS).\n")));
       return 0;
     }
 
