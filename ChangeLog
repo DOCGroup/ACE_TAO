@@ -1,3 +1,8 @@
+Thu Oct 30 14:24:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * netsvcs/clients/Naming/Dump_Restore/Dump_Restore.mpc:
+          Corrected dynamicflags
+
 Thu Oct 30 07:48:29 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/config/ciao_servant.mpb:
