@@ -681,14 +681,8 @@ TAO_GIOP_Twoway_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
                                    this->target_spec_,
                                    this->out_stream_,
                                    ACE_TRY_ENV);
+  this->rd_.reply_received () = 0;
 }
-
-void
-TAO_GIOP_Twoway_Invocation::reset_reply_received (void)
-{
-  this->rd_.reply_received() = 0;
-}
-
 
 int
 TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList_ptr exceptions,
@@ -1352,6 +1346,7 @@ TAO_GIOP_Locate_Request_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
                                   this->op_details_,
                                   this->out_stream_,
                                   ACE_TRY_ENV);
+  this->rd_.reply_received () = 0;
 }
 
 int

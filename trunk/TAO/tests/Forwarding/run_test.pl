@@ -15,6 +15,7 @@ $port = ACE::uniqueid () + 10001;  # This can't be 10000 for Chorus 4.0
 
 ACE::checkForTarget($cwd);
 
+unlink $iorfile;
 $SV = Process::Create ($EXEPREFIX."server$EXE_EXT ",
 		       "-ORBEndpoint iiop://localhost:".$port
 		       . " -o $iorfile");
