@@ -36,6 +36,9 @@ main (int argc, char* argv [])
       orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
+      // Wait until all threads are ready.
+      ACE_Thread_Manager::instance ()->wait ();
+
       orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
