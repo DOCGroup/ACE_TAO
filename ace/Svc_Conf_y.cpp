@@ -169,7 +169,7 @@ short ace_yycheck[] = {                                       8,
 #endif
 #define ACE_YYMAXTOKEN 276
 #if ACE_YYDEBUG
-char *ace_yyname[] = {
+const char *ace_yyname[] = {
 "end-of-file",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -182,7 +182,7 @@ char *ace_yyname[] = {
 "ACE_IDENT","ACE_STRING","ACE_LPAREN","ACE_RPAREN","ACE_LBRACE","ACE_RBRACE",
 "ACE_STAR","ACE_COLON",
 };
-char *ace_yyrule[] = {
+const char *ace_yyrule[] = {
 "$accept : svc_config_entries",
 "svc_config_entries : svc_config_entries svc_config_entry",
 "svc_config_entries : svc_config_entries error",
@@ -423,7 +423,7 @@ int ace_yyindent;
 #endif /* ACE_YYDEBUG_INDENT */
 #ifndef ACE_YYDEBUG_REDUCE
 #ifdef __cplusplus
-void ACE_YYDEBUG_REDUCE(int /* ace_yynew_state */, int /* ace_yyrule_num */, char *ace_yyrule_string, int ace_yynew_indent, int ace_yyrhs_count)
+void ACE_YYDEBUG_REDUCE(int /* ace_yynew_state */, int /* ace_yyrule_num */, const char *ace_yyrule_string, int ace_yynew_indent, int ace_yyrhs_count)
 #else
 ACE_YYDEBUG_REDUCE(ace_yynew_state, ace_yyrule_num, ace_yyrule_string, ace_yynew_indent, ace_yyrhs_count)
 int ace_yynew_state;
@@ -453,7 +453,7 @@ int ace_yyrhs_count;
 #endif /* ACE_YYDEBUG_REDUCE */
 #ifndef ACE_YYDEBUG_SHIFT_LEXEME
 #ifdef __cplusplus
-void ACE_YYDEBUG_SHIFT_LEXEME(int /* ace_yyold_state */, int /* ace_yynew_state*/, char *ace_yytoken_string, int ace_yynew_indent)
+void ACE_YYDEBUG_SHIFT_LEXEME(int /* ace_yyold_state */, int /* ace_yynew_state*/, const char *ace_yytoken_string, int ace_yynew_indent)
 #else
 ACE_YYDEBUG_SHIFT_LEXEME(ace_yyold_state, ace_yynew_state, ace_yytoken_string, ace_yynew_indent)
 int ace_yyold_state;
@@ -468,7 +468,7 @@ int ace_yynew_indent;
 #endif /*  ACE_YYDEBUG_SHIFT_LEXEME */
 #ifndef ACE_YYDEBUG_LOOK_AHEAD
 #ifdef __cplusplus
-void ACE_YYDEBUG_LOOK_AHEAD(int /* ace_yynew_state */, int ace_yytoken_num, char *ace_yytoken_string, int ace_yyindent)
+void ACE_YYDEBUG_LOOK_AHEAD(int /* ace_yynew_state */, int ace_yytoken_num, const char *ace_yytoken_string, int ace_yyindent)
 #else
 ACE_YYDEBUG_LOOK_AHEAD(ace_yynew_state, ace_yytoken_num, ace_yytoken_string, ace_yyindent)
 int ace_yynew_state;
@@ -513,7 +513,7 @@ int ace_yyindent;
 #endif /* ACE_YYDEBUG_DISCARD_STATE */
 #ifndef ACE_YYDEBUG_DISCARD_TOKEN
 #ifdef __cplusplus
-void ACE_YYDEBUG_DISCARD_TOKEN(int /* ace_yynew_state */, int /* ace_yytoken_num */, char *ace_yytoken_string, int ace_yyindent)
+void ACE_YYDEBUG_DISCARD_TOKEN(int /* ace_yynew_state */, int /* ace_yytoken_num */, const char *ace_yytoken_string, int ace_yyindent)
 #else
 ACE_YYDEBUG_DISCARD_TOKEN(ace_yynew_state, ace_yytoken_num, ace_yytoken_string, ace_yyindent)
 int ace_yynew_state;
@@ -549,7 +549,7 @@ ace_yyparse()
 {
     register int ace_yym, ace_yyn, ace_yystate;
 #if ACE_YYDEBUG
-    register char *ace_yys;
+    register const char *ace_yys;
 #ifndef __cplusplus
     extern char *ace_foo();
 #endif
