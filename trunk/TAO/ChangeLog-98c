@@ -1,3 +1,14 @@
+Tue Nov 18 04:00:46 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* tao/poa.cpp: 
+	  An operation lookup on the dispatching code will cause an error
+	  message and the CORBA::BAD_OPERATION exception to be raised.
+
+	* tao/orb_core.cpp: 
+	  Somehow the options for setting the Event Service and the
+	  Scheduling Service IOR were lost. Eventually they must be
+	  removed, but we are still testing the Naming Service.
+
 Tue Nov 18 02:17:24 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* TAO version 0.0.33, released Tue Nov 18 02:17:24 1997.
