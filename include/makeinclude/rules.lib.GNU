@@ -15,7 +15,7 @@ ifdef SHLIBA
 VSHLIBA = $(SHLIBA:%.$(LIBEXT)=%$(VAR).$(LIBEXT))
 endif
 
-VLOBJS   = $(subst .c,.$(OBJEXT), \
+VLOBJS   += $(subst .c,.$(OBJEXT), \
                 $(subst .cpp,.$(OBJEXT), \
                     $(foreach file,$(LSRC),$(VDIR)$(notdir $(file)))))
 
@@ -100,6 +100,9 @@ ifeq (1,$(ace_lib_prelink))
 	-$(LINK.cc) $(LINK_OUTPUT_FLAG) ace-templ_inst $? $(LDFLAGS) $(ACE_NUL_STDERR)
 endif # ace_lib_prelink
 	$(AR) $(ARFLAGS) $@ $?
+ifdef TMPINCDIR
+	  find $(TMPINCDIR) -name "*.o" -type f | xargs $(AR) $(ARFLAGS) $@;
+endif
 ifdef ibmcxx_build
 # This is required to get AIX IBM C/C++ to instantiate and compile the needed
 # templates.
@@ -126,7 +129,7 @@ $(VSHLIB): shr.o
 ifneq (,$(RANLIB))
 	-$(RANLIB) $@
 endif # RANLIB
-	$(RM) shr.o 
+	$(RM) shr.o
 
 shr.o: $(VSHOBJS1)
 else

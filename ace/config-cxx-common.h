@@ -21,6 +21,7 @@
 # define ACE_LACKS_LINEBUFFERED_STREAMBUF
 # define ACE_LACKS_SIGNED_CHAR
 # define ACE_HAS_CPLUSPLUS_HEADERS
+# define ACE_TEMPLATES_REQUIRE_SOURCE
 # if (__DECCXX_VER >= 60090010)
     // DEC CXX 6.0 supports exceptions, etc., by default.  Exceptions
     // are enabled by platform_osf1_4.x.GNU/wrapper_macros.GNU.

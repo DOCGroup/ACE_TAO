@@ -1,3 +1,25 @@
+Tue Apr  9 03:04:19 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * include/makeinclude/rules.lib.GNU (VLIB):
+
+          Ensure that templates in the repository get added to the static
+          library during creation. This build now uses a new variable
+          called TMPINCDIR which points to the template repository from
+          which the templates should be pulled in.
+
+        * include/makeinclude/platform_osf1_4.x_cxx.GNU:
+
+          Added support for different template instantiations.
+
+        * include/makeinclude/platform_tru64_cxx.GNU:
+
+          Removed some repeated flags from the command line.
+
+        * ace/config-cxx-common.h:
+
+          Added ACE_TEMPLATES_REQUIRE_SOURCE to pull in the template
+          definitions to ensure proper template instantiation.
+
 Tue Apr  9 00:52:42 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ace/config-sunos5.5.h (ACE_TEMPLATES_REQUIRE_SOURCE):
