@@ -1633,6 +1633,21 @@ AST_Module::be_add_interface (AST_Interface *i,
   return 0;
 }
 
+// Has this node been referenced here before?
+idl_bool
+AST_Module::referenced (AST_Decl *e,
+                        Identifier *id)
+{
+  idl_bool refd = this->UTL_Scope::referenced (e, id);
+  
+  if (refd)
+    {
+      return I_TRUE;
+    }
+    
+  return this->look_in_previous (e->local_name ()) != 0;
+}
+
 void
 AST_Module::add_to_previous (AST_Module *m)
 {
