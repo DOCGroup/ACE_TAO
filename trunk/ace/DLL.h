@@ -111,8 +111,8 @@ public:
    */
   ACE_SHLIB_HANDLE get_handle (int become_owner = 0) const;
 
-  /// Set the handle for the DLL object. By default, the close() operation on
-  /// the object will be invoked before it is destroyed.
+  /// Set the handle for the DLL object. By default, the close()
+  //operation on / the object will be invoked before it is destroyed.
   int set_handle (ACE_SHLIB_HANDLE handle, int close_on_destruction = 1);
 
 private:
