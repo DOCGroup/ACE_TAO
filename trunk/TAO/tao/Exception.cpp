@@ -370,7 +370,7 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr tcp,
 // Declare static storage for these ... the buffer is "naturally"
 // aligned and overwritten.
 //
-// XXXTAO this actually doesn't guarantee "natural" alignment, but
+// @@ this actually doesn't guarantee "natural" alignment, but
 // it works that way in most systems.
 
 #define TAO_SYSTEM_EXCEPTION(name) \
@@ -510,17 +510,17 @@ CORBA::Environment::print_exception (const char *info,
 
   ACE_DEBUG ((LM_ERROR, "(%P|%t) EXCEPTION, %s\n", info));
 
-  // XXXTAO get rid of this logic, and rely on some member function on
+  // @@ get rid of this logic, and rely on some member function on
   // Exception to say if it's user or system exception.
 
   if (ACE_OS::strncmp ((char *) id, "IDL:omg.org/CORBA/", 10) == 0
       && ACE_OS::strncmp ((char *) id, "IDL:omg.org/CORBA/TypeCode/", 19) != 0)
     {
-      // XXXTAO this should be a QueryInterface call instead.
+      // @@ this should be a QueryInterface call instead.
       CORBA::SystemException *x2 =
         (CORBA::SystemException *) this->exception_;
 
-      // XXXTAO there are a other few "user exceptions" in the CORBA
+      // @@ there are a other few "user exceptions" in the CORBA
       // scope, they're not all standard/system exceptions ... really
       // need to either compare exhaustively against all those IDs
       // (yeech) or (preferably) to represent the exception type
@@ -538,7 +538,7 @@ CORBA::Environment::print_exception (const char *info,
                   "garbage"));
     }
   else
-    // XXXTAO we can use the exception's typecode to dump all the data
+    // @@ we can use the exception's typecode to dump all the data
     // held within it ...
 
     ACE_DEBUG ((LM_ERROR,

@@ -70,7 +70,7 @@ TAO_ORB_Core::init (int& argc, char** argv)
   // as the ACE_Service_Config or the RootPOA.
 
   // Prepare a copy of the argument vector
-  char **svc_config_argv; // XXXTAO Should this be a data member?
+  char **svc_config_argv; // @@ Should this be a data member?
   // Probably, but there's no object in which to scope it.
 
   int svc_config_argc = 0;

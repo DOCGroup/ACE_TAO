@@ -34,7 +34,7 @@ IIOP_ORB::object_to_string (CORBA::Object_ptr obj,
       // ORB implementations ...
 
       char *bytes;
-      // XXXTAO Is BUFSIZ the right size here?
+      // @@ Is BUFSIZ the right size here?
       char buf [BUFSIZ];
       CDR cdr (buf, sizeof buf, TAO_ENCAP_BYTE_ORDER);
 

@@ -50,7 +50,7 @@ IIOP::Profile::set (const char *h,
     return -1;
 
   // Enough room as to print a <void *>.
-  // XXXTAO The following "32" should not be a magic #...
+  // @@ The following "32" should not be a magic #...
   const int bufs = 32;
   char buffer[bufs];
 
@@ -531,7 +531,7 @@ IIOP_Object::do_static_call (CORBA::Environment &env,   // exception reporting
               // first release the "in" memory
               if (pdp->mode == PARAM_INOUT)
                 {
-                  // XXXTAO - add others as we test each case
+                  // @@ - add others as we test each case
                   // (ASG) will do 03/22/98.
                   switch (pdp->tc->kind (env))
                     {
