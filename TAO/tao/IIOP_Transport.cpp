@@ -2,6 +2,7 @@
 // $Id$
 
 #include "tao/IIOP_Transport.h"
+#include "tao/IIOP_Connection_Handler.h"
 #include "tao/IIOP_Profile.h"
 #include "tao/Timeprobe.h"
 #include "tao/CDR.h"
@@ -59,7 +60,8 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Transport_Timeprobe_Description,
 TAO_IIOP_Transport::TAO_IIOP_Transport (TAO_IIOP_Connection_Handler *handler,
                                         TAO_ORB_Core *orb_core)
   : TAO_Transport (TAO_TAG_IIOP_PROFILE,
-                   orb_core)
+                   orb_core),
+    handler_ (handler)
 {
 }
 
