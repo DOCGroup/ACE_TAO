@@ -1,3 +1,12 @@
+Wed May  2 15:10:28 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/CDR_Stream.h (ACE_InputCDR): 
+	* ace/CDR_Stream.cpp: Added a new constructor for ACE_inputCDR
+	  class. This constructor would take the data block with a
+	  pre-determined read and write pointer positions. This is helpful
+	  when an application would like to create a CDR stream with a
+	  smei-processed data block. 
+
 Wed May  2 11:10:59 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* bin/auto_run_tests.lst: Added a colon to seperate the
