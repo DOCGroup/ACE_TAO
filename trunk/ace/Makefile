@@ -169,6 +169,7 @@ SVCCONF_FILES = \
   Svc_Conf_l \
   Svc_Conf_y
 STREAMS_FILES = \
+  CDR_Base \
   CDR_Stream \
   Codeset_IBM1047 \
   Message_Block \
@@ -556,7 +557,6 @@ endif # GHS
  pre.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -581,12 +581,10 @@ endif # GHS
  OS.i \
  Template_Instantiations.cpp
 
-.obj/OS.o .obj/OS.so .shobj/OS.o .shobj/OS.so: OS.cpp \
- OS.h \
+.obj/OS.o .obj/OS.so .shobj/OS.o .shobj/OS.so: OS.cpp OS.h \
  pre.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -621,7 +619,6 @@ endif # GHS
  pre.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -639,7 +636,6 @@ endif # GHS
  pre.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -655,7 +651,6 @@ endif # GHS
  pre.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -668,12 +663,10 @@ endif # GHS
  OS_Memory.h \
  OS_Memory.inl
 
-.obj/OS_TLI.o .obj/OS_TLI.so .shobj/OS_TLI.o .shobj/OS_TLI.so: OS_TLI.cpp \
- OS_TLI.h \
+.obj/OS_TLI.o .obj/OS_TLI.so .shobj/OS_TLI.o .shobj/OS_TLI.so: OS_TLI.cpp OS_TLI.h \
  pre.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -689,7 +682,6 @@ endif # GHS
  pre.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -721,7 +713,6 @@ endif # GHS
  Base_Thread_Adapter.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -754,7 +745,6 @@ endif # GHS
  pre.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -762,9 +752,9 @@ endif # GHS
  ACE_export.h \
  svc_export.h \
  ace_wchar.h \
+ OS_Export.h \
  OS.h \
  OS_Dirent.h \
- OS_Export.h \
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
@@ -785,7 +775,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -810,13 +799,11 @@ endif # GHS
  OS.i \
  Sched_Params.i
 
-.obj/ACE.o .obj/ACE.so .shobj/ACE.o .shobj/ACE.so: ACE.cpp \
- ACE.h \
+.obj/ACE.o .obj/ACE.so .shobj/ACE.o .shobj/ACE.so: ACE.cpp ACE.h \
  pre.h \
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -918,7 +905,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -1029,7 +1015,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -1053,14 +1038,12 @@ endif # GHS
  Trace.h \
  OS.i
 
-.obj/ARGV.o .obj/ARGV.so .shobj/ARGV.o .shobj/ARGV.so: ARGV.cpp \
- ARGV.h \
+.obj/ARGV.o .obj/ARGV.so .shobj/ARGV.o .shobj/ARGV.so: ARGV.cpp ARGV.h \
  pre.h \
  ACE.h \
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -1146,7 +1129,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -1262,7 +1244,6 @@ endif # GHS
  pre.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -1349,7 +1330,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -1458,13 +1438,11 @@ endif # GHS
  Hash_Map_With_Allocator_T.i \
  Hash_Map_With_Allocator_T.cpp
 
-.obj/Dirent.o .obj/Dirent.so .shobj/Dirent.o .shobj/Dirent.so: Dirent.cpp \
- Dirent.h \
+.obj/Dirent.o .obj/Dirent.so .shobj/Dirent.o .shobj/Dirent.so: Dirent.cpp Dirent.h \
  pre.h \
  OS_Dirent.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -1500,7 +1478,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -1564,7 +1541,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -1599,7 +1575,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -1635,7 +1610,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -1748,7 +1722,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -1836,7 +1809,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -1866,7 +1838,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -2003,7 +1974,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -2038,7 +2008,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -2069,7 +2038,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -2168,14 +2136,12 @@ endif # GHS
  Auto_Ptr.i \
  Auto_Ptr.cpp
 
-.obj/Stats.o .obj/Stats.so .shobj/Stats.o .shobj/Stats.so: Stats.cpp \
- Stats.h \
+.obj/Stats.o .obj/Stats.so .shobj/Stats.o .shobj/Stats.so: Stats.cpp Stats.h \
  pre.h \
  ACE.h \
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -2261,7 +2227,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -2348,7 +2313,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -2386,7 +2350,6 @@ endif # GHS
  pre.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -2419,7 +2382,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -2516,7 +2478,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -2607,7 +2568,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -2695,7 +2655,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -2787,7 +2746,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -2879,7 +2837,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -2984,15 +2941,13 @@ endif # GHS
  Reactor_Impl.h \
  Svc_Conf_Tokens.h
 
-.obj/Dump.o .obj/Dump.so .shobj/Dump.o .shobj/Dump.so: Dump.cpp \
- Synch_T.h \
+.obj/Dump.o .obj/Dump.so .shobj/Dump.o .shobj/Dump.so: Dump.cpp Synch_T.h \
  pre.h \
  Event_Handler.h \
  ACE.h \
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -3049,7 +3004,6 @@ endif # GHS
  config-all.h \
  pre.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -3154,7 +3108,6 @@ endif # GHS
  pre.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -3190,7 +3143,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -3288,7 +3240,6 @@ endif # GHS
  config-all.h \
  pre.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -3326,7 +3277,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -3458,12 +3408,10 @@ endif # GHS
  Method_Request.h \
  Activation_Queue.i
 
-.obj/Process.o .obj/Process.so .shobj/Process.o .shobj/Process.so: Process.cpp \
- OS.h \
+.obj/Process.o .obj/Process.so .shobj/Process.o .shobj/Process.so: Process.cpp OS.h \
  pre.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -3557,7 +3505,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -3649,14 +3596,12 @@ endif # GHS
  Reactor_Impl.h \
  Process_Manager.i
 
-.obj/Synch.o .obj/Synch.so .shobj/Synch.o .shobj/Synch.so: Synch.cpp \
- Thread.h \
+.obj/Synch.o .obj/Synch.so .shobj/Synch.o .shobj/Synch.so: Synch.cpp Thread.h \
  pre.h \
  ACE.h \
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -3709,7 +3654,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -3735,14 +3679,12 @@ endif # GHS
  ACE.i \
  Synch_Options.i
 
-.obj/Thread.o .obj/Thread.so .shobj/Thread.o .shobj/Thread.so: Thread.cpp \
- Thread.h \
+.obj/Thread.o .obj/Thread.so .shobj/Thread.o .shobj/Thread.so: Thread.cpp Thread.h \
  pre.h \
  ACE.h \
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -3780,7 +3722,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -3873,7 +3814,6 @@ endif # GHS
  Base_Thread_Adapter.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -3963,7 +3903,6 @@ endif # GHS
  pre.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -4023,7 +3962,6 @@ endif # GHS
  config-all.h \
  pre.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -4108,14 +4046,12 @@ endif # GHS
  Memory_Pool.i \
  Thread_Manager.i
 
-.obj/Token.o .obj/Token.so .shobj/Token.o .shobj/Token.so: Token.cpp \
- Thread.h \
+.obj/Token.o .obj/Token.so .shobj/Token.o .shobj/Token.so: Token.cpp Thread.h \
  pre.h \
  ACE.h \
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -4170,7 +4106,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -4276,7 +4211,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -4379,7 +4313,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -4419,7 +4352,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -4556,7 +4488,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -4587,7 +4518,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -4694,7 +4624,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -4846,7 +4775,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -5004,7 +4932,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -5109,7 +5036,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -5229,7 +5155,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -5265,7 +5190,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -5370,7 +5294,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -5497,7 +5420,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -5637,7 +5559,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -5767,7 +5688,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -5869,7 +5789,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -5898,7 +5817,6 @@ endif # GHS
  pre.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -5929,7 +5847,6 @@ endif # GHS
  pre.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -5961,7 +5878,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -6098,7 +6014,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -6128,15 +6043,13 @@ endif # GHS
  Log_Priority.h \
  Log_Record.i
 
-.obj/LSOCK.o .obj/LSOCK.so .shobj/LSOCK.o .shobj/LSOCK.so: LSOCK.cpp \
- LSOCK.h \
+.obj/LSOCK.o .obj/LSOCK.so .shobj/LSOCK.o .shobj/LSOCK.so: LSOCK.cpp LSOCK.h \
  pre.h \
  SOCK.h \
  ACE.h \
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -6185,7 +6098,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -6241,7 +6153,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -6295,7 +6206,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -6352,7 +6262,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -6403,7 +6312,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -6447,14 +6355,12 @@ endif # GHS
  LSOCK.i \
  LSOCK_Stream.i
 
-.obj/SOCK.o .obj/SOCK.so .shobj/SOCK.o .shobj/SOCK.so: SOCK.cpp \
- SOCK.h \
+.obj/SOCK.o .obj/SOCK.so .shobj/SOCK.o .shobj/SOCK.so: SOCK.cpp SOCK.h \
  pre.h \
  ACE.h \
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -6501,7 +6407,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -6569,7 +6474,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -6618,7 +6522,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -6667,7 +6570,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -6733,7 +6635,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -6782,7 +6683,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -6825,7 +6725,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -6870,7 +6769,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -6905,13 +6803,11 @@ endif # GHS
  SOCK_IO.i \
  SOCK_Stream.i
 
-.obj/Addr.o .obj/Addr.so .shobj/Addr.o .shobj/Addr.so: Addr.cpp \
- Addr.h \
+.obj/Addr.o .obj/Addr.so .shobj/Addr.o .shobj/Addr.so: Addr.cpp Addr.h \
  pre.h \
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -6947,7 +6843,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -6986,7 +6881,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -7026,7 +6920,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -7067,7 +6960,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -7099,7 +6991,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -7132,7 +7023,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -7172,7 +7062,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -7208,15 +7097,13 @@ endif # GHS
  ATM_Addr.h \
  ATM_Addr.i
 
-.obj/DEV.o .obj/DEV.so .shobj/DEV.o .shobj/DEV.so: DEV.cpp \
- DEV.h \
+.obj/DEV.o .obj/DEV.so .shobj/DEV.o .shobj/DEV.so: DEV.cpp DEV.h \
  pre.h \
  IO_SAP.h \
  ACE.h \
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -7257,7 +7144,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -7302,7 +7188,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -7342,8 +7227,7 @@ endif # GHS
  Log_Record.i \
  DEV_Connector.i
 
-.obj/DEV_IO.o .obj/DEV_IO.so .shobj/DEV_IO.o .shobj/DEV_IO.so: DEV_IO.cpp \
- DEV_IO.h \
+.obj/DEV_IO.o .obj/DEV_IO.so .shobj/DEV_IO.o .shobj/DEV_IO.so: DEV_IO.cpp DEV_IO.h \
  pre.h \
  DEV.h \
  IO_SAP.h \
@@ -7351,7 +7235,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -7390,15 +7273,13 @@ endif # GHS
  Log_Priority.h \
  Log_Record.i
 
-.obj/FIFO.o .obj/FIFO.so .shobj/FIFO.o .shobj/FIFO.so: FIFO.cpp \
- FIFO.h \
+.obj/FIFO.o .obj/FIFO.so .shobj/FIFO.o .shobj/FIFO.so: FIFO.cpp FIFO.h \
  pre.h \
  IPC_SAP.h \
  ACE.h \
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -7438,7 +7319,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -7480,7 +7360,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -7522,7 +7401,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -7564,7 +7442,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -7604,7 +7481,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -7639,15 +7515,13 @@ endif # GHS
  Log_Priority.h \
  Log_Record.i
 
-.obj/FILE.o .obj/FILE.so .shobj/FILE.o .shobj/FILE.so: FILE.cpp \
- FILE.h \
+.obj/FILE.o .obj/FILE.so .shobj/FILE.o .shobj/FILE.so: FILE.cpp FILE.h \
  pre.h \
  IO_SAP.h \
  ACE.h \
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -7691,7 +7565,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -7740,7 +7613,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -7786,7 +7658,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -7818,14 +7689,12 @@ endif # GHS
  Log_Priority.h \
  Log_Record.i
 
-.obj/IO_SAP.o .obj/IO_SAP.so .shobj/IO_SAP.o .shobj/IO_SAP.so: IO_SAP.cpp \
- IO_SAP.h \
+.obj/IO_SAP.o .obj/IO_SAP.so .shobj/IO_SAP.o .shobj/IO_SAP.so: IO_SAP.cpp IO_SAP.h \
  pre.h \
  ACE.h \
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -7861,7 +7730,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -7896,14 +7764,12 @@ endif # GHS
  IOStream_T.i \
  IOStream_T.cpp
 
-.obj/Pipe.o .obj/Pipe.so .shobj/Pipe.o .shobj/Pipe.so: Pipe.cpp \
- Pipe.h \
+.obj/Pipe.o .obj/Pipe.so .shobj/Pipe.o .shobj/Pipe.so: Pipe.cpp Pipe.h \
  pre.h \
  ACE.h \
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -7959,7 +7825,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -8043,7 +7908,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -8074,15 +7938,13 @@ endif # GHS
  SString.i \
  Malloc_Base.h
 
-.obj/SPIPE.o .obj/SPIPE.so .shobj/SPIPE.o .shobj/SPIPE.so: SPIPE.cpp \
- SPIPE.h \
+.obj/SPIPE.o .obj/SPIPE.so .shobj/SPIPE.o .shobj/SPIPE.so: SPIPE.cpp SPIPE.h \
  pre.h \
  IPC_SAP.h \
  ACE.h \
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -8126,7 +7988,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -8175,7 +8036,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -8224,7 +8084,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -8266,7 +8125,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -8299,7 +8157,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -8339,7 +8196,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -8377,7 +8233,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -8414,7 +8269,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -8444,15 +8298,13 @@ endif # GHS
  Log_Priority.h \
  Log_Record.i
 
-.obj/TLI.o .obj/TLI.so .shobj/TLI.o .shobj/TLI.so: TLI.cpp \
- TLI.h \
+.obj/TLI.o .obj/TLI.so .shobj/TLI.o .shobj/TLI.so: TLI.cpp TLI.h \
  pre.h \
  IPC_SAP.h \
  ACE.h \
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -8493,7 +8345,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -8536,7 +8387,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -8584,7 +8434,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -8614,13 +8463,11 @@ endif # GHS
  INET_Addr.h \
  INET_Addr.i
 
-.obj/TTY_IO.o .obj/TTY_IO.so .shobj/TTY_IO.o .shobj/TTY_IO.so: TTY_IO.cpp \
- TTY_IO.h \
+.obj/TTY_IO.o .obj/TTY_IO.so .shobj/TTY_IO.o .shobj/TTY_IO.so: TTY_IO.cpp TTY_IO.h \
  OS.h \
  pre.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -8672,7 +8519,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -8713,7 +8559,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -8881,7 +8726,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -9047,7 +8891,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -9213,7 +9056,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -9325,7 +9167,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -9370,7 +9211,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -9475,15 +9315,13 @@ endif # GHS
  MEM_Addr.i \
  MEM_Connector.i
 
-.obj/MEM_IO.o .obj/MEM_IO.so .shobj/MEM_IO.o .shobj/MEM_IO.so: MEM_IO.cpp \
- MEM_IO.h \
+.obj/MEM_IO.o .obj/MEM_IO.so .shobj/MEM_IO.o .shobj/MEM_IO.so: MEM_IO.cpp MEM_IO.h \
  pre.h \
  SOCK.h \
  ACE.h \
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -9588,7 +9426,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -9676,7 +9513,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -9772,13 +9608,11 @@ endif # GHS
  MEM_IO.i \
  MEM_Stream.i
 
-.obj/DLL.o .obj/DLL.so .shobj/DLL.o .shobj/DLL.so: DLL.cpp \
- DLL.h \
+.obj/DLL.o .obj/DLL.so .shobj/DLL.o .shobj/DLL.so: DLL.cpp DLL.h \
  pre.h \
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -9817,7 +9651,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -9967,7 +9800,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -10109,7 +9941,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -10269,7 +10100,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -10329,7 +10159,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -10394,7 +10223,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -10544,7 +10372,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -10575,7 +10402,6 @@ endif # GHS
  pre.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -10687,7 +10513,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -10839,15 +10664,11 @@ endif # GHS
  Stream.i \
  Stream.cpp
 
-.obj/CDR_Stream.o .obj/CDR_Stream.so .shobj/CDR_Stream.o .shobj/CDR_Stream.so: CDR_Stream.cpp \
- CDR_Stream.h \
+.obj/CDR_Base.o .obj/CDR_Base.so .shobj/CDR_Base.o .shobj/CDR_Base.so: CDR_Base.cpp \
+ CDR_Base.h \
  pre.h \
- Message_Block.h \
- ACE.h \
- OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -10855,6 +10676,11 @@ endif # GHS
  ACE_export.h \
  svc_export.h \
  ace_wchar.h \
+ Basic_Types.h \
+ Basic_Types.i \
+ Message_Block.h \
+ ACE.h \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Dirent.inl \
@@ -10866,8 +10692,6 @@ endif # GHS
  OS_TLI.inl \
  Min_Max.h \
  streams.h \
- Basic_Types.h \
- Basic_Types.i \
  Trace.h \
  OS.i \
  ACE.i \
@@ -10929,16 +10753,108 @@ endif # GHS
  Message_Block_T.h \
  Message_Block_T.i \
  Message_Block_T.cpp \
+ CDR_Base.inl
+
+.obj/CDR_Stream.o .obj/CDR_Stream.so .shobj/CDR_Stream.o .shobj/CDR_Stream.so: CDR_Stream.cpp \
+ CDR_Stream.h \
+ pre.h \
+ CDR_Base.h \
+ config-all.h \
+ config.h \
+ config-linux.h \
+ config-linux-common.h \
+ config-g++-common.h \
+ post.h \
+ ACE_export.h \
+ svc_export.h \
+ ace_wchar.h \
+ Basic_Types.h \
+ Basic_Types.i \
+ Message_Block.h \
+ ACE.h \
+ OS.h \
+ OS_Dirent.h \
+ OS_Export.h \
+ OS_Dirent.inl \
+ OS_String.h \
+ OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
+ Min_Max.h \
+ streams.h \
+ Trace.h \
+ OS.i \
+ ACE.i \
+ Malloc.h \
+ Malloc_Base.h \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
+ Based_Pointer_T.h \
+ Based_Pointer_T.i \
+ Based_Pointer_T.cpp \
+ Based_Pointer_Repository.h \
+ Singleton.h \
+ Synch.h \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
+ Synch.i \
+ Synch_T.h \
+ Event_Handler.h \
+ Event_Handler.i \
+ Synch_T.i \
+ Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
+ Thread.i \
+ Atomic_Op.i \
+ Synch_T.cpp \
+ Singleton.i \
+ Singleton.cpp \
+ Object_Manager.h \
+ Object_Manager.i \
+ Managed_Object.h \
+ Managed_Object.i \
+ Managed_Object.cpp \
+ Malloc.i \
+ Malloc_T.h \
+ Free_List.h \
+ Free_List.i \
+ Free_List.cpp \
+ Malloc_T.i \
+ Malloc_T.cpp \
+ Memory_Pool.h \
+ Signal.h \
+ Containers.h \
+ Containers.i \
+ Containers_T.h \
+ Containers_T.i \
+ Containers_T.cpp \
+ Signal.i \
+ Mem_Map.h \
+ Mem_Map.i \
+ Memory_Pool.i \
+ Message_Block.i \
+ Message_Block_T.h \
+ Message_Block_T.i \
+ Message_Block_T.cpp \
+ CDR_Base.inl \
+ CDR_Stream.i \
  SString.h \
- SString.i \
- CDR_Stream.i
+ SString.i
 
 .obj/Codeset_IBM1047.o .obj/Codeset_IBM1047.so .shobj/Codeset_IBM1047.o .shobj/Codeset_IBM1047.so: Codeset_IBM1047.cpp \
  Codeset_IBM1047.h \
  pre.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -10954,7 +10870,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -11046,7 +10961,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -11176,8 +11090,7 @@ endif # GHS
  Strategies.i \
  Message_Queue.i
 
-.obj/Task.o .obj/Task.so .shobj/Task.o .shobj/Task.so: Task.cpp \
- Task.h \
+.obj/Task.o .obj/Task.so .shobj/Task.o .shobj/Task.so: Task.cpp Task.h \
  pre.h \
  Service_Object.h \
  Shared_Object.h \
@@ -11185,7 +11098,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -11330,7 +11242,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -11430,14 +11341,12 @@ endif # GHS
  Reactor_Impl.h \
  Svc_Conf_Tokens.h
 
-.obj/Malloc.o .obj/Malloc.so .shobj/Malloc.o .shobj/Malloc.so: Malloc.cpp \
- Malloc.h \
+.obj/Malloc.o .obj/Malloc.so .shobj/Malloc.o .shobj/Malloc.so: Malloc.cpp Malloc.h \
  pre.h \
  ACE.h \
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -11522,7 +11431,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -11559,7 +11467,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -11648,7 +11555,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -11734,7 +11640,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -11839,7 +11744,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -11872,7 +11776,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -11908,7 +11811,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -11943,7 +11845,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -12056,7 +11957,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -12185,7 +12085,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -12298,7 +12197,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -12409,7 +12307,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -12523,7 +12420,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -12636,7 +12532,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -12741,7 +12636,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -12777,7 +12671,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -12919,7 +12812,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -13041,7 +12933,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -13081,7 +12972,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -13205,7 +13095,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -13348,7 +13237,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -13379,7 +13267,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -13510,7 +13397,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -13608,7 +13494,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -13707,7 +13592,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -13798,7 +13682,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
@@ -13890,7 +13773,6 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
- config-linux-lxpthreads.h \
  config-linux.h \
  config-linux-common.h \
  config-g++-common.h \

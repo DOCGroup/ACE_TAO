@@ -26,6 +26,7 @@ OBJFILES = \
 	$(OBJDIR)\Base_Thread_Adapter.obj \
 	$(OBJDIR)\Basic_Types.obj \
 	$(OBJDIR)\Capabilities.obj \
+	$(OBJDIR)\CDR_Base.obj \
 	$(OBJDIR)\CDR_Stream.obj \
 	$(OBJDIR)\Configuration.obj \
 	$(OBJDIR)\Containers.obj \
