@@ -14,56 +14,50 @@ ACE_ALLOC_HOOK_DEFINE(ACE_High_Res_Timer)
 // by zero errors.
 #if defined (ACE_WIN32)
 
-// This is used to find out the Mhz of the machine for the scale factor.  If
-// there are any problems getting it, we just return 1 (the default).
-static u_long get_registry_scale_factor (void)
+u_long 
+ACE_High_Res_Timer::get_registry_scale_factor (void)
 {
   HKEY hk; 
-  DWORD buf_type = REG_DWORD;
-  DWORD buf_len = 10;
-  TCHAR *buffer = new TCHAR[10];
+  unsigned long speed;  
+  unsigned long speed_size = sizeof speed;
+  unsigned long speed_type = REG_DWORD;
+
+  long rc = ::RegOpenKeyEx (HKEY_LOCAL_MACHINE, 
+			    __TEXT ("HARDWARE\\DESCRIPTION\\System\\CentralProcessor\\0"), 
+			    NULL, 
+			    KEY_READ, 
+			    &hk);
   
-  LONG rc = RegOpenKeyEx (HKEY_LOCAL_MACHINE, 
-                          TEXT("HARDWARE\\DESCRIPTION\\System\\CentralProcessor\\0"), 
-                          NULL, 
-                          KEY_READ, 
-                          &hk);
-
   if (rc != ERROR_SUCCESS) 
-  {
     // Couldn't find key
-    delete buffer;
     return 1; 
-  }
 
-
-  rc = RegQueryValueEx (hk, 
-                        TEXT("~MHz"), 
-                        0, 
-                        &buf_type, 
-		        (unsigned char *) buffer, 
-                        &buf_len);
-
-  RegCloseKey (hk);
+  rc = ::RegQueryValueEx (hk, 
+			  __TEXT ("~MHz"), 
+			  0, 
+			  &speed_type, 
+			  (LPBYTE) &speed, 
+			  &speed_size);
+  
+  ::RegCloseKey (hk);
 
   if (rc != ERROR_SUCCESS) 
-  {
     // Couldn't get the value
-    delete buffer;
     return 1;
-  }
 
-  u_long mhz = (DWORD (*buffer) & 0xFF);
-  delete buffer;
-  return mhz;
+  return speed;
 }
 
-u_long ACE_High_Res_Timer::global_scale_factor_ = get_registry_scale_factor ();
+/* static */
+u_long ACE_High_Res_Timer::global_scale_factor_ = ACE_High_Res_Timer::get_registry_scale_factor ();
 
 #else
+
 // A scale_factor of 1000 converts nanosecond ticks to microseconds.
 // That is, on these platforms, 1 tick == 1 nanosecond.
+/* static */
 u_long ACE_High_Res_Timer::global_scale_factor_ = 1000;
+
 #endif /* ACE_WIN32 */
 
 void
