@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-$Id$
-
 // ========================================================================
 // $Id$
 //
@@ -20,6 +18,7 @@ $Id$
 #define TAO_SERVICE_TYPE_REPOSITORY_H
 
 #include "Trader.h"
+#include "ace/Hash_Map_Manager.h"
 
 class TAO_ORBSVCS_Export TAO_Service_Type_Repository : public POA_CosTradingRepos::ServiceTypeRepository
 {
@@ -223,6 +222,13 @@ public:
                                    ACE_Null_Mutex>
                                    Service_Type_Map;
 
+  typedef ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key,
+                                   Type_Info *,
+                                   ACE_Hash<TAO_String_Hash_Key>,
+                                   ACE_Equal_To<TAO_String_Hash_Key>,
+                                   ACE_Null_Mutex>
+                                   Service_Type_Map_Iterator;
+  
   void fully_describe_type_i (const CosTradingRepos::ServiceTypeRepository::TypeStruct &type_struct,
                               CosTradingRepos::ServiceTypeRepository::PropStructSeq &props,
                               CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq &super_types);
