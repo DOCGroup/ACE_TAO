@@ -1,3 +1,8 @@
+Tue Nov 04 19:36:46 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* COPYING: Modified to include CIAO in the Copyright disclaimer.
+	  Thanks to Roland Schimmack <SC@ProCom.de> for motivating the change.
+
 Wed Nov  5 01:00:31 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * tao/Leader_Follower.cpp:
