@@ -16,7 +16,8 @@ JAWS_Dispatch_Policy::~JAWS_Dispatch_Policy (void)
 }
 
 JAWS_Default_Dispatch_Policy::JAWS_Default_Dispatch_Policy (void)
-  : concurrency_ (JAWS_Thread_Pool_Singleton::instance ()),
+  : ratio_ (1),
+    concurrency_ (JAWS_Thread_Pool_Singleton::instance ()),
     ioh_factory_ (JAWS_Synch_IO_Handler_Factory_Singleton::instance ()),
     acceptor_ (JAWS_IO_Synch_Acceptor_Singleton::instance ()),
     io_ (JAWS_Synch_IO_Singleton::instance ())
@@ -25,6 +26,12 @@ JAWS_Default_Dispatch_Policy::JAWS_Default_Dispatch_Policy (void)
 
 JAWS_Default_Dispatch_Policy::~JAWS_Default_Dispatch_Policy (void)
 {
+}
+
+int
+JAWS_Default_Dispatch_Policy::ratio (void)
+{
+  return this->ratio_;
 }
 
 JAWS_IO *
@@ -49,6 +56,12 @@ JAWS_Concurrency_Base *
 JAWS_Default_Dispatch_Policy::concurrency (void)
 {
   return this->concurrency_;
+}
+
+void
+JAWS_Default_Dispatch_Policy::ratio (int r)
+{
+  this->ratio_ = r;
 }
 
 void
