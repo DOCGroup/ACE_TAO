@@ -110,6 +110,8 @@ Fri Jan 02 07:06:44 1998  David L. Levine  <levine@cs.wustl.edu>
           instead of repeating all of the complex preprocessor tests
           in Basic_Types.h.  Thanks to Carlos for suggesting this.
 
+        * ace/Env_Value_T.cpp: added protection against multiple inclusion.
+
 Fri Jan 02 00:47:33 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.4.13, released Fri Jan 02 00:47:33 1998.
