@@ -1,6 +1,9 @@
 // Event_Handler_T.cpp
 // $Id$
 
+#if !defined (EVENT_HANDLER_T_C)
+#define EVENT_HANDLER_T_C
+
 #define ACE_BUILD_DLL
 #include "ace/Event_Handler_T.h"
 
@@ -37,18 +40,19 @@ ACE_Event_Handler_T<T>::ACE_Event_Handler_T (T *op_handler, int delete_handler,
 					     SET_HANDLE set_handle,
 					     IO_HANDLER except_h)
   : op_handler_ (op_handler),
-    delete_handler_ (delete_handler),
-    get_handle_ (get_handle),
     input_handler_ (input_h),
+    output_handler_ (output_h),
+    except_handler_ (except_h),
+    to_handler_ (timeout_h),
     cl_handler_ (close_h),
     sig_handler_ (sig_h),
-    to_handler_ (timeout_h),
-    output_handler_ (output_h),
+    delete_handler_ (delete_handler),
     set_handle_ (set_handle),
-    except_handler_ (except_h)
+    get_handle_ (get_handle)
 {
   ACE_TRACE ("ACE_Event_Handler_T<T>::ACE_Event_Handler_T");
 }
 
 #endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
 
+#endif /* EVENT_HANDLER_T_C */

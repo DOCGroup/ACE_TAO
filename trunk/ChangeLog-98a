@@ -1,3 +1,18 @@
+Wed Jan  7 16:28:16 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/Event_Handler_T.cpp: Reordered the initializers in the
+ 	  ACE_Event_Handler_T constructor so G++ doesn't complain.  Thanks
+ 	  to Oleg Krivosheev <kriol@fnal.gov> for reporting this.
+
+	* ace/Shared_Memory.h: Added a virtual destructor to the
+ 	  ACE_Shared_Memory abstract base class so that EGCS won't
+ 	  complain.  Thanks to Oleg Krivosheev <kriol@fnal.gov> for
+ 	  reporting this.
+
+	* ace/Event_Handler_T.h: Had to include the *.cpp file into .h
+ 	  when ACE_TEMPLATES_REQUIRE_SOURCE is defined.  Thanks to Oleg
+ 	  Krivosheev <kriol@fnal.gov> for reporting this.
+
 Wed Jan 07 14:31:34 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.4.16, released Wed Jan 07 14:31:34 1998.
