@@ -3,6 +3,9 @@ Mon Feb 16 10:51:28 1998  Oliver Kellogg <Oliver.Kellogg@vs.dasa.de>
         * include/makeinclude/platform_osf1_4.0_rcc.GNU: added this
           new platform file for Rational rcc (2.4.1) on DU 4.0.
 
+        * ace/config-osf1-4.0.h: added ACE_LACKS_SIGNED_CHAR to
+          RATIONAL section.
+
 Sun Feb 15 16:32:52 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* netsvcs/clients/Naming/Client/svc.conf: Removed "-s" flag, which
