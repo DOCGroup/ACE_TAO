@@ -52,7 +52,7 @@ be_visitor_args_pre_invoke_cs::void_return_type (void)
   be_type *bt = be_type::narrow_from_decl (op->return_type ());
 
   // Is the operation return type void?
-  if (bt->base_node_type () == AST_Decl::NT_pre_defined
+  if (bt->node_type () == AST_Decl::NT_pre_defined
       && (be_predefined_type::narrow_from_decl (bt)->pt ()
           == AST_PredefinedType::PT_void))
     {
