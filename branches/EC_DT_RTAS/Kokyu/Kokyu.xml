@@ -1,0 +1,43 @@
+<!-- $Id$ -->
+<?xml version = "1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE NAMESPACE SYSTEM "file:///usr/local/share/doc/kurt_filters/namespace.dtd">
+<NAMESPACE>
+  <FAMILY name="DSRT_DISPATCH" id="4">
+    <EVENT name="CREATE_DSRT_DISPATCH_SCHED_END" id="2"/>
+    <EVENT name="CREATE_DSRT_DISPATCH_SCHED_START" id="1"/>
+    <EVENT name="SCHEDULE" id="0"/>
+  </FAMILY>
+  <FAMILY name="DSRT_CV_DISPATCH" id="5">
+    <EVENT name="INIT" id="13"/>
+    <EVENT name="SHUTDOWN" id="12"/>
+    <EVENT name="CANCEL_SCHEDULE_END" id="11"/>
+    <EVENT name="CANCEL_SCHEDULE_START" id="10"/>
+    <EVENT name="UPDATE_SCHEDULE_END" id="9"/>
+    <EVENT name="UPDATE_SCHEDULE_START" id="8"/>
+    <EVENT name="RELEASE_GUARD_END" id="7"/>
+    <EVENT name="RELEASE_GUARD_START" id="6"/>
+    <EVENT name="INIT_I" id="5"/>
+    <EVENT name="NONRG_EVENT_RELEASED" id="4"/>
+    <EVENT name="RG_DELAYED_EVENT_RELEASED" id="3"/>
+    <EVENT name="RG_EVENT_RELEASED" id="2"/>
+    <EVENT name="SCHEDULE_EXIT" id="1"/>
+    <EVENT name="SCEHDULE_ENTER" id="0"/>
+  </FAMILY>
+  <FAMILY name="DSRT_DIRECT_DISPATCH" id="6">
+    <EVENT name="SCHEDULE_ENTER" id="1"/>
+    <EVENT name="SCHEDULE_EXIT" id="0"/>
+  </FAMILY>
+  <FAMILY name="DISP_DEFERRER" id="7">
+    <EVENT name="EVENT_DEFERRED_ENQUEUE" id="1"/>
+    <EVENT name="EVENT_DEFFERED_DEQUEUE" id="0"/>
+  </FAMILY>
+  <FAMILY name="DISP_TASK" id="8">
+    <EVENT name="EVENT_DEQUEUED" id="3"/>
+    <EVENT name="EVENT_START_DISPATCHING" id="2"/>
+    <EVENT name="EVENT_FINISHED_DISPATCHING" id="1"/>
+    <EVENT name="EVENT_DEFERRED" id="0"/>
+  </FAMILY>
+  <FAMILY name="DSRT_DISPATCH_IMPL" id="9">
+    <EVENT name="INIT2" id="0"/>
+  </FAMILY>
+</NAMESPACE>

@@ -9,6 +9,8 @@
 # this file will be lost the next time it is generated.
 #
 #----------------------------------------------------------------------------
+all : clean
+
 MAKEFILE         = Makefile.Kokyu
 DEPENDENCY_FILE  = .depend.Makefile.Kokyu
 
@@ -21,6 +23,7 @@ SHLIB_UNCHECKED  = libKokyu.$(SOEXT)
 SHLIB            = $(SHLIB_UNCHECKED)
 
 FILES = \
+  Counter \
   Dispatch_Deferrer \
   Dispatcher_Impl \
   Kokyu \

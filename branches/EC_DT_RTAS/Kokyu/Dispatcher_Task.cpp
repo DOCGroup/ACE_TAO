@@ -37,7 +37,10 @@ Dispatcher_Task::initialize ()
     case FIFO_DISPATCHING:
       ACE_NEW_RETURN (
           this->the_queue_,
-          ACE_Message_Queue<ACE_SYNCH>,
+          ACE_Message_Queue<ACE_SYNCH> (ACE_Message_Queue_Base::DEFAULT_HWM,
+                                        ACE_Message_Queue_Base::DEFAULT_LWM,
+                                        0,
+                                        1),
           -1);
       break;
 
@@ -112,23 +115,35 @@ Dispatcher_Task::svc (void)
   while (!done)
     {
       ACE_Message_Block *mb;
-      if (this->getq (mb) == -1)
-        if (ACE_OS::last_error () == ESHUTDOWN)
-          return 0;
-        else
-          ACE_ERROR ((LM_ERROR,
-                      "EC (%P|%t) getq error in Dispatching Queue\n"));
+
+#if defined (ACE_HAS_DSUI)
+      DSUI_EVENT_LOG (DISP_TASK_FAM, BEFORE_GETQ_CALL, 0, 0, NULL);
+#endif // ACE_HAS_DSUI
+
+      int result = this->getq (mb);
+
+#if defined (ACE_HAS_DSUI)
+      DSUI_EVENT_LOG (DISP_TASK_FAM, AFTER_GETQ_CALL, 0, 0, NULL);
+#endif // ACE_HAS_DSUI
+
+      if (result == -1)
+        {
+          if (ACE_OS::last_error () == ESHUTDOWN)
+            {
+              return 0;
+            }
+          else
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "EC (%P|%t) getq error in Dispatching Queue\n"));
+            }
+        }
 
       ACE_Time_Value tv = ACE_OS::gettimeofday();
       ACE_DEBUG ((LM_DEBUG, "Dispatcher_Task::svc() (%t) : next command got from queue at %u\n",tv.msec()));
 
       Dispatch_Queue_Item *qitem =
         ACE_dynamic_cast(Dispatch_Queue_Item*, mb);
-
-#if defined (ACE_HAS_DSUI)
-      Kokyu::Object_Counter::object_id oid = qitem->command()->getID();
-      DSUI_EVENT_LOG (DISP_TASK_FAM, ENQUEUE_QUEUE_LEVEL, this->msg_queue()->message_count(), sizeof(Kokyu::Object_Counter::object_id), (char*)&oid);
-#endif //ACE_HAS_DSUI
 
       if (qitem == 0)
         {
@@ -141,6 +156,7 @@ Dispatcher_Task::svc (void)
 #if defined (ACE_HAS_DSUI)
       //@BT INSTRUMENT with event ID: EVENT_DEQUEUED Measure time
       //between event released (enqueued) and dispatched
+      Kokyu::Object_Counter::object_id oid = command->getID();
       DSUI_EVENT_LOG (DISP_TASK_FAM, EVENT_DEQUEUED, 0, sizeof(Kokyu::Object_Counter::object_id), (char*)&oid);
       ACE_ASSERT(command != 0);
 
@@ -152,7 +168,7 @@ Dispatcher_Task::svc (void)
       ACE_DEBUG ((LM_DEBUG, "Dispatcher_Task::svc() (%t) : beginning event dispatch at %u\n",tv.msec()));
 #endif //ACE_HAS_DSUI
 
-      int result = command->execute ();
+      result = command->execute ();
 
 #if defined (ACE_HAS_DSUI)
       //@BT INSTRUMENT with event ID: EVENT_FINISHED_DISPATCHING

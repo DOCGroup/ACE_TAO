@@ -19,34 +19,52 @@ else
 endif
 
 
-all: all.Kokyu all.FIFO all.EDF all.DSRT_MIF
+all: all.RGKokyu all.Kokyu all.FIFO all.EDF all.DSRT_MIF
 
-debug: debug.Kokyu debug.FIFO debug.EDF debug.DSRT_MIF
+debug: debug.RGKokyu debug.Kokyu debug.FIFO debug.EDF debug.DSRT_MIF
 
-profile: profile.Kokyu profile.FIFO profile.EDF profile.DSRT_MIF
+profile: profile.RGKokyu profile.Kokyu profile.FIFO profile.EDF \
+         profile.DSRT_MIF
 
-optimize: optimize.Kokyu optimize.FIFO optimize.EDF optimize.DSRT_MIF
+optimize: optimize.RGKokyu optimize.Kokyu optimize.FIFO optimize.EDF \
+          optimize.DSRT_MIF
 
-install: install.Kokyu install.FIFO install.EDF install.DSRT_MIF
+install: install.RGKokyu install.Kokyu install.FIFO install.EDF \
+         install.DSRT_MIF
 
-deinstall: deinstall.Kokyu deinstall.FIFO deinstall.EDF deinstall.DSRT_MIF
+deinstall: deinstall.RGKokyu deinstall.Kokyu deinstall.FIFO deinstall.EDF \
+           deinstall.DSRT_MIF
 
-clean: clean.Kokyu clean.FIFO clean.EDF clean.DSRT_MIF
+clean: clean.RGKokyu clean.Kokyu clean.FIFO clean.EDF clean.DSRT_MIF
 
-realclean: realclean.Kokyu realclean.FIFO realclean.EDF realclean.DSRT_MIF
+realclean: realclean.RGKokyu realclean.Kokyu realclean.FIFO realclean.EDF \
+           realclean.DSRT_MIF
 
-clobber: clobber.Kokyu clobber.FIFO clobber.EDF clobber.DSRT_MIF
+clobber: clobber.RGKokyu clobber.Kokyu clobber.FIFO clobber.EDF \
+         clobber.DSRT_MIF
 
-depend: depend.Kokyu depend.FIFO depend.EDF depend.DSRT_MIF
+depend: depend.RGKokyu depend.Kokyu depend.FIFO depend.EDF depend.DSRT_MIF
 
-rcs_info: rcs_info.Kokyu rcs_info.FIFO rcs_info.EDF rcs_info.DSRT_MIF
+rcs_info: rcs_info.RGKokyu rcs_info.Kokyu rcs_info.FIFO rcs_info.EDF \
+          rcs_info.DSRT_MIF
 
-idl_stubs: idl_stubs.Kokyu idl_stubs.FIFO idl_stubs.EDF idl_stubs.DSRT_MIF
+idl_stubs: idl_stubs.RGKokyu idl_stubs.Kokyu idl_stubs.FIFO idl_stubs.EDF \
+           idl_stubs.DSRT_MIF
+
+RGKokyu: all.RGKokyu
+.PHONY: RGKokyu
+
+%.RGKokyu:
+ifeq ($(KEEP_GOING),1)
+	-@$(MAKE) -f Makefile.RGKokyu -C . $(*);
+else
+	@$(MAKE) -f Makefile.RGKokyu -C . $(*);
+endif
 
 Kokyu: all.Kokyu
 .PHONY: Kokyu
 
-%.Kokyu:
+%.Kokyu: %.RGKokyu
 ifeq ($(KEEP_GOING),1)
 	-@$(MAKE) -f Makefile.Kokyu -C . $(*);
 else
@@ -84,9 +102,11 @@ else
 endif
 
 
-reverseclean: realclean.DSRT_MIF realclean.EDF realclean.FIFO realclean.Kokyu
+reverseclean: realclean.DSRT_MIF realclean.EDF realclean.FIFO realclean.Kokyu \
+              realclean.RGKokyu
 
 project_name_list:
+	@echo RGKokyu
 	@echo Kokyu
 	@echo FIFO
 	@echo EDF
