@@ -14,8 +14,8 @@
 //=============================================================================
 
 
-#ifndef CIAO_SERVERACTIVATOR_IMPL_H
-#define CIAO_SERVERACTIVATOR_IMPL_H
+#ifndef CIAO_COMPONENTINSTALLATION_IMPL_H
+#define CIAO_COMPONENTINSTALLATION_IMPL_H
 #include "ace/pre.h"
 
 #include "CCM_DeploymentS.h"
@@ -55,7 +55,8 @@ namespace CIAO
     virtual PortableServer::POA_ptr _default_POA (void);
 
     /// Initialize the ComponentInstallation.
-    int init (const char *fname
+    int init (const char *fname,
+              const char *section
               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -97,8 +98,11 @@ namespace CIAO
     /// Keep a pointer to the managing POA.
     PortableServer::POA_var poa_;
 
-    /// Persistent store filename
+    /// Persistent store filename for storing the configuration info.
     CORBA::String_var filename_;
+
+    /// Section name in Configuration
+    CORBA::String_var section_name_;
 
     /// Mapping and persistent
     ACE_Configuration *installation_;
@@ -110,4 +114,4 @@ namespace CIAO
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
-#endif /* CIAO_SERVERACTIVATOR_IMPL_H */
+#endif /* CIAO_COMPONENTINSTALLATION_IMPL_H */
