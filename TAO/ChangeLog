@@ -1,3 +1,12 @@
+Mon Mar  3 15:42:35 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/DynamicAny/DynStruct_i.cpp (get_members):
+
+          Stripped alias (if any) from the type code that is used
+          to iterate over the member names. Calling member_name (i)
+          on an aliased type code will throw CORBA::BAD_TYPECODE.
+          Thanks to Chen Jian <jchen@huawei.com> for reporting the bug.
+
 Mon Mar  3 15:12:32 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/driver/drv_args.cpp:
