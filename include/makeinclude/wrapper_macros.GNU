@@ -23,6 +23,7 @@
 #                     default, others do not.
 #  optimize         Enable optimization; see OCFLAGS and OCCFLAGS.
 #  orbix            Enable use of Orbix.
+#  probe            Enable ACE_Timeprobes.
 #  profile          Enable profiling; see PCFLAGS and PCCFLAGS.
 #  purify           Purify all executables.
 #  quantify         Quantify all executables.
@@ -276,6 +277,13 @@ else
   VLDLIBS := $(LDLIBS) $(ACELIB) $(LIBS)
 endif # SHLIBA
 
+ifeq ($(probe),0)
+  override probe =
+endif # probe
+
+ifeq ($(probe),1)
+    CCFLAGS += -DACE_COMPILE_TIMEPROBES -DACE_ENABLE_TIMEPROBES
+endif # probe
 
 ifeq ($(purify),0)
   override purify =

@@ -30,10 +30,6 @@ include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 
 #### Local rules and variables...
 
-ifeq ($(probe),1)
-    CCFLAGS += -DACE_ENABLE_TIMEPROBES
-endif # probe
-
 #----------------------------------------------------------------------------
 #       Dependencies
 #----------------------------------------------------------------------------
