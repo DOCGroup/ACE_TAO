@@ -2343,7 +2343,7 @@ ACE_OS::sema_destroy (ACE_sema_t *s)
 # if defined (ACE_HAS_POSIX_SEM)
   int result;
 #   if defined (ACE_LACKS_NAMED_POSIX_SEM)
-  if (s->name_) 
+  if (s->name_)
     {
       // Only destroy the semaphore if we're the ones who
       // initialized it.
@@ -2417,7 +2417,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
 
 #   if defined (ACE_LACKS_NAMED_POSIX_SEM)
   s->name_ = 0;
-  if (type == USYNC_PROCESS) 
+  if (type == USYNC_PROCESS)
     {
       // Let's see if it already exists.
       ACE_HANDLE fd = ACE_OS::shm_open (name,
@@ -2425,14 +2425,14 @@ ACE_OS::sema_init (ACE_sema_t *s,
                                         ACE_DEFAULT_FILE_PERMS);
       if (fd == ACE_INVALID_HANDLE)
         {
-          if (errno == EEXIST) 
+          if (errno == EEXIST)
             fd = ACE_OS::shm_open (name,
                                    O_RDWR | O_CREAT,
                                    ACE_DEFAULT_FILE_PERMS);
-          else 
+          else
             return -1;
-        } 
-      else 
+        }
+      else
         {
           // We own this shared memory object!  Let's set its
           // size.
@@ -2443,20 +2443,20 @@ ACE_OS::sema_init (ACE_sema_t *s,
           if (s->name_ == 0)
             return -1;
         }
-      if (fd == -1) 
+      if (fd == -1)
         return -1;
 
       s->sema_ = (sem_t *)
-        ACE_OS::mmap (0, 
+        ACE_OS::mmap (0,
                       sizeof (ACE_sema_t),
                       PROT_RDWR,
                       MAP_SHARED,
                       fd,
                       0);
       ACE_OS::close (fd);
-      if (s->sema_ == MAP_FAILED) 
+      if (s->sema_ == MAP_FAILED)
         return -1;
-      if (s->name_ 
+      if (s->name_
           // Only initialize it if we're the one who created it
           && if (::sem_init (s->sema_, USYNC_THREAD, count) != 0))
         return -1;
@@ -5386,6 +5386,7 @@ ACE_OS::thr_equal (ACE_thread_t t1, ACE_thread_t t2)
   return ! ACE_OS::strcmp (t1, t2);
 #else /* For both STHREADS and WTHREADS... */
   // Hum, Do we need to treat WTHREAD differently?
+  // levine 13 oct 98 % I don't think so, ACE_thread_t is a DWORD.
   return t1 == t2;
 #endif /* Threads variety case */
 }
@@ -5394,9 +5395,7 @@ ACE_INLINE int
 ACE_OS::thr_cmp (ACE_hthread_t t1, ACE_hthread_t t2)
 {
 #if defined (ACE_HAS_PTHREADS)
-# if defined (ACE_HAS_TID_T) && !defined (ACE_HAS_PTHREAD_EQUAL)
-  return t1 == t2; // I hope these aren't structs!
-# elif defined (pthread_equal)
+# if defined (pthread_equal)
   // If it's a macro we can't say "::pthread_equal"...
   return pthread_equal (t1, t2);
 # else
@@ -5404,6 +5403,7 @@ ACE_OS::thr_cmp (ACE_hthread_t t1, ACE_hthread_t t2)
 # endif /* pthread_equal */
 #else /* For STHREADS, WTHREADS, and VXWORKS ... */
   // Hum, Do we need to treat WTHREAD differently?
+  // levine 13 oct 98 % Probably, ACE_hthread_t is a HANDLE.
   return t1 == t2;
 #endif /* Threads variety case */
 }
@@ -7587,7 +7587,7 @@ ACE_OS::mmap (void *addr,
           else
             // Finally, copy the file contents to the shared memory object.
             return ::read (file_handle, map, (int) filesize) == filesize
-              ? map 
+              ? map
               : MAP_FAILED;
         }
     }
@@ -8099,15 +8099,15 @@ ACE_OS::flock_init (ACE_OS::ace_flock_t *lock,
                                     perms);
   if (lock->handle_ == ACE_INVALID_HANDLE)
     {
-      if (errno == EEXIST) 
+      if (errno == EEXIST)
         // It's already there, so we'll just open it.
         lock->handle_ = ACE_OS::shm_open (name,
                                           flags | O_CREAT,
                                           ACE_DEFAULT_FILE_PERMS);
       else
         return -1;
-    } 
-  else 
+    }
+  else
     {
       // We own this shared memory object!  Let's set its size.
       if (ACE_OS::ftruncate (lock->handle_,
@@ -8118,7 +8118,7 @@ ACE_OS::flock_init (ACE_OS::ace_flock_t *lock,
                             ACE_OS::strdup (name),
                             -1);
     }
-  if (lock->handle_ == ACE_INVALID_HANDLE) 
+  if (lock->handle_ == ACE_INVALID_HANDLE)
     return -1;
 
   lock->process_lock_ =
@@ -8128,7 +8128,7 @@ ACE_OS::flock_init (ACE_OS::ace_flock_t *lock,
                                   MAP_SHARED,
                                   lock->handle_,
                                   0);
-  if (lock->process_lock_ == MAP_FAILED) 
+  if (lock->process_lock_ == MAP_FAILED)
     return -1;
 
   if (lock->lockname_
@@ -8452,7 +8452,7 @@ ACE_OS::flock_destroy (ACE_OS::ace_flock_t *lock)
                                          ACE_const_cast (LPTSTR,
                                                          lock->lockname_)));
         }
-      else if (lock->process_lock_) 
+      else if (lock->process_lock_)
         // Just unmap the memory.
         ACE_OS::munmap (lock->process_lock_,
                      sizeof (ACE_mutex_t));
