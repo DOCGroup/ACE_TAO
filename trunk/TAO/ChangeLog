@@ -1,8 +1,18 @@
+Fri Dec 26 17:35:56 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/PG_Property_Set.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/PG_Property_Set.h:
+
+	  Some fixes that were obvious when exceptions were turned
+	  off. But there are *lots* more that need attention. Dale is
+	  being sent an email. 
+
 Fri Dec 26 16:46:56 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Makefile.PortableGroup:
 
-	  New files never founds its way into the Makefile. 
+	  New files that never founds its way into the Makefile. 
 	
 	* orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.h:
 	* orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Manipulator.h:
