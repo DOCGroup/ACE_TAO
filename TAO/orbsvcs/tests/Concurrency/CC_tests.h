@@ -27,7 +27,7 @@
 #define _CC_TESTS_H_
 
 // Return codes for the tests
-enum 
+enum
 {
   CC_FAIL,
   CC_SUCCESS = 1
@@ -45,7 +45,7 @@ public:
   CC_Test (CC_naming_service *ns);
   // Default constructor
 
-  ~CC_Test (void);
+  virtual ~CC_Test (void);
   // Destructor
 
   virtual int run (int times_to_run = 1) = 0;
@@ -61,7 +61,10 @@ public:
 
 protected:
   int result;
+  // The result of the test being performed.
+
   CC_naming_service *naming_service_;
+  // The naming service beeing used to register and look up locks
 };
 
 class Test_Single_Lock_With_Mode : public CC_Test
@@ -70,15 +73,21 @@ class Test_Single_Lock_With_Mode : public CC_Test
   //   This is a simple test that checks that it is possible to set
   //   the lock in the desired mode, try it, and release it.
 public:
-  // @@ Torben, can you please document these methods?
   Test_Single_Lock_With_Mode (CC_naming_service *naming_service,
                               CosConcurrencyControl::lock_mode mode);
-  ~Test_Single_Lock_With_Mode (void);
+  // Default constructor. The naming service must be initialized
+  // before calling this method. The mode is the mode of the lock to
+  // be tested.
+
+  virtual ~Test_Single_Lock_With_Mode (void);
+  // Destructor
 
   virtual int run (int times_to_run = 1);
+  // Runs the test the specified number of times.
 
 private:
   CosConcurrencyControl::lock_mode mode_;
+  // The lock mode of the lock being tested
 };
 
 class Test_Setup_LockSet : public CC_Test
@@ -87,33 +96,44 @@ class Test_Setup_LockSet : public CC_Test
   //   This class creates a read lock, registeres it with the naming
   //   service and locks it.
 public:
-  // @@ Torben, can you please document these methods?
   Test_Setup_LockSet (CC_naming_service *naming_service_,
                       char *name);
-  
-  ~Test_Setup_LockSet (void);
+  // Default constructor. The naming service must be initialized
+  // before calling this method. The name is the name the lock will be
+  // registered under in the naming service.
+
+  virtual ~Test_Setup_LockSet (void);
+  // Destructor
 
   virtual int run (int times_to_run = 1);
+  // Runs the test the specified number of times.
 
 private:
   char *my_name_;
+  // The name of the lock
 };
 
 class Test_Use_Already_Created_LockSet : public CC_Test
 {
   // = TITLE
   //   This class looks up the lock in the naming service and locks
-  //   it.  
+  //   it.
 public:
-  // @@ Torben, can you please document these methods?
   Test_Use_Already_Created_LockSet (CC_naming_service *naming_service_,
                                    char *name);
-  
-  ~Test_Use_Already_Created_LockSet (void);
-  
+  // Default constructor. The naming service must be initialized
+  // before calling this method. The name is the name the lock will be
+  // looked up under in the naming service.
+
+  virtual ~Test_Use_Already_Created_LockSet (void);
+  // Destructor
+
   virtual int run (int times_to_run = 1);
+  // Runs the test the specified number of times.
+
 private:
   char *my_name_;
+  // The name of the lock
 };
 
 class Test_Unlock_Already_Created_LockSet : public CC_Test
@@ -122,16 +142,21 @@ class Test_Unlock_Already_Created_LockSet : public CC_Test
   //   This class looks up the lock in the naming service and unlocks
   //   it.
 public:
-  // @@ Torben, can you please document these methods?
   Test_Unlock_Already_Created_LockSet (CC_naming_service *naming_service_,
                                        char *name);
-  
-  ~Test_Unlock_Already_Created_LockSet (void);
-  
+  // Default constructor. The naming service must be initialized
+  // before calling this method. The name is the name the lock will be
+  // looked up under in the naming service.
+
+  virtual ~Test_Unlock_Already_Created_LockSet (void);
+  // Destructor
+
   virtual int run (int times_to_run = 1);
+  // Runs the test the specified number of times.
 
 private:
   char *my_name_;
+  // The name of the lock
 };
 
 #endif /* !defined (_CC_TESTS_H_) */

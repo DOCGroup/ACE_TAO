@@ -55,9 +55,6 @@ private:
   int init_naming_service (void);
   // Function to initialize the naming service.
 
-  CC_naming_service *naming_service_;
-  // A pointer to the naming service used for this test.
-
   int parse_args (void);
   // Function to parse the command line arguments.
 
@@ -71,6 +68,9 @@ private:
   int run_extended_tests (char *params);
   // Runs the extended tests (on more lock sets). Returns CC_SUCCESS
   // upon success CC_FAIL otherwise.
+
+  CC_naming_service *naming_service_;
+  // A pointer to the naming service used for this test.
 
   FILE *cc_factory_ior_file_;
   // File from which to obtain the IOR.
