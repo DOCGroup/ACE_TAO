@@ -1,6 +1,6 @@
 project : naming {
-  libs     += TAO_CosLifeCycle
-  after    += CosLifeCycle
-  comps    += LifeCycle
-  requires += LifeCycle
+  libs      += TAO_CosLifeCycle
+  after     += CosLifeCycle
+  comps     += LifeCycle
+  tagchecks += LifeCycle
 }
