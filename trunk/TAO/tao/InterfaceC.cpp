@@ -12,7 +12,7 @@
 #include "tao/Stub.h"
 #include "tao/Invocation.h"
 
-#ifdef TAO_HAS_INTERFACE_REPOSITORY
+#if defined TAO_HAS_INTERFACE_REPOSITORY
 
 #if !defined (__ACE_INLINE__)
 #include "InterfaceC.i"
@@ -16714,6 +16714,8 @@ template class TAO_Object_Manager<CORBA::ValueBoxDef,CORBA::ValueBoxDef_var>;
 #  pragma instantiate TAO_Object_Manager<CORBA::ValueBoxDef,CORBA::ValueBoxDef_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
+
+
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
     const CORBA::InterfaceDefSeq &_tao_sequence
@@ -17273,5 +17275,6 @@ CORBA::Boolean operator>> (
   }
   return 0; // error
 }
+
 
 #endif /*TAO_HAS_INTERFACE_REPOSITORY */
