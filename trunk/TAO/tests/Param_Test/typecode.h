@@ -62,6 +62,17 @@ public:
   // print all the values
 
 private:
+  CORBA::TypeCode_var tc_holder_;
+  // place for selected typecode to stay during time
+  // between init_parameters () and reset_parameters ().
+  
+  // called by the 2 public versions of check_validity
+  CORBA::Boolean
+  Test_TypeCode::check_validity_engine (CORBA::TypeCode *the_in,
+                                        CORBA::TypeCode *the_inout,
+                                        CORBA::TypeCode *the_out,
+                                        CORBA::TypeCode *the_ret);
+
   char *opname_;
   // operation name
 
@@ -76,6 +87,12 @@ private:
 
   CORBA::TypeCode_var ret_;
   // return value
+
+  CORBA::TypeCode dii_out_;
+  // DII out parameter
+
+  CORBA::TypeCode dii_ret_;
+  // DII return value
 };
 
 #endif /* PARAM_TEST_TYPECODE_H */
