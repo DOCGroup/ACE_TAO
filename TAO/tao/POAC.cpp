@@ -178,52 +178,10 @@ void operator<<= (CORBA::Any &_tao_any, PortableServer::ForwardRequest *_tao_ele
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::ForwardRequest *&_tao_elem)
 {
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (PortableServer::_tc_ForwardRequest, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (PortableServer::ForwardRequest *)_tao_any.value ();
-      return 1;
-    }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, PortableServer::ForwardRequest, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            PortableServer::_tc_ForwardRequest,
-            1,
-            ACE_reinterpret_cast (void *, _tao_elem),
-            PortableServer::ForwardRequest::_tao_any_destructor
-          );
-        return 1;
-      }
-      else
-      {
-        delete _tao_elem;
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-    return 0;
-  }
-  ACE_ENDTRY;
-  return 0;
+  return _tao_any >>= ACE_const_cast(
+      const PortableServer::ForwardRequest*&,
+      _tao_elem
+    );
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableServer::ForwardRequest *&_tao_elem)
@@ -249,6 +207,12 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableServer::Fo
           _tao_any._tao_get_cdr (),
           _tao_any._tao_byte_order ()
         );
+      CORBA::String_var interface_repository_id;
+      if (!(stream >> interface_repository_id.out ()))
+        return 0;
+      if (ACE_OS::strcmp (interface_repository_id.in (),
+                          "IDL:omg.org/PortableServer/ForwardRequest:1.0"))
+        return 0;
       if (stream >> *(PortableServer::ForwardRequest *)_tao_elem)
       {
         ((CORBA::Any *)&_tao_any)->_tao_replace (
