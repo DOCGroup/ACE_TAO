@@ -188,6 +188,7 @@ ORB_CORE_FILES = \
   Asynch_Invocation \
   operation_details \
   ClientRequestInfo \
+  ClientRequestInfo_i \
   RequestInfo_Util \
   ClientInterceptorAdapter \
   ObjectReferenceTemplateC \

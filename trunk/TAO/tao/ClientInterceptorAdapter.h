@@ -21,7 +21,7 @@
 
 #include "ace/pre.h"
 
-#include "corbafwd.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -30,19 +30,22 @@
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-#include "ClientRequestInfo.h"
 #include "Interceptor_List.h"
 
 // Forward declarations
+class TAO_GIOP_Invocation;
 class TAO_ClientRequestInfo;
+class TAO_ClientRequestInfo_i;
 
 /**
  * @class TAO_ClientRequestInterceptor_Adapter
  *
- * @brief TAO_ClientRequestInterceptor_Adapter
+ * @brief A convenient helper class to invoke registered client request
+ *        interceptors in client stubs.
  *
- * A convenient helper class to invoke registered client request
- * interceptor(s) in tao_idl generated code.
+ * This class invokes all registered interceptors at interception
+ * point, and enforces flow rules dictated by the Portable Interceptor
+ * specification/chapter.
  */
 class TAO_Export TAO_ClientRequestInterceptor_Adapter
 {
@@ -70,23 +73,23 @@ public:
   //@{
   /// This method implements one of the "starting" client side
   /// interception points.
-  void send_request (TAO_ClientRequestInfo *ri
-                     TAO_ENV_ARG_DECL_NOT_USED);
+  void send_request (TAO_ClientRequestInfo_i *ri
+                     TAO_ENV_ARG_DECL);
 
   /// This method implements one of the "ending" client side
   /// interception point.
-  void receive_reply (TAO_ClientRequestInfo *ri
-                      TAO_ENV_ARG_DECL_NOT_USED);
+  void receive_reply (TAO_ClientRequestInfo_i *ri
+                      TAO_ENV_ARG_DECL);
 
   /// This method implements one of the "ending" client side
   /// interception point.
-  void receive_exception (TAO_ClientRequestInfo *ri
-                          TAO_ENV_ARG_DECL_NOT_USED);
+  void receive_exception (TAO_ClientRequestInfo_i *ri
+                          TAO_ENV_ARG_DECL);
 
   /// This method implements one of the "ending" client side
   /// interception point.
-  void receive_other (TAO_ClientRequestInfo *ri
-                      TAO_ENV_ARG_DECL_NOT_USED);
+  void receive_other (TAO_ClientRequestInfo_i *ri
+                      TAO_ENV_ARG_DECL);
   //@}
 
 protected:
@@ -94,7 +97,7 @@ protected:
   /// Process the given PortableInterceptor::ForwardRequest exception,
   /// i.e. invoke the receive_other() interception point, in addition
   /// to notifying the Invocation object of the LOCATION_FORWARD.
-  void process_forward_request (TAO_ClientRequestInfo *ri,
+  void process_forward_request (TAO_ClientRequestInfo_i *ri,
                                 PortableInterceptor::ForwardRequest &exc
                                 TAO_ENV_ARG_DECL);
 
@@ -118,6 +121,18 @@ private:
   /// The number of interceptors "pushed" onto the logical flow
   /// stack.  This is used when unwinding the flow stack.
   size_t stack_size_;
+
+  /// Pointer to the PortableInterceptor::ClientRequestInfo
+  /// implementation.
+  /**
+   * @note The fact that a pointer to the
+   *       PortableInterceptor::ClientRequestInfo object in TSS is
+   *       cached here assumes that all client side interception
+   *       points are invoked in the same thread.  This may not be the
+   *       case for AMI!  In that case, we'll have to perform a TSS
+   *       access in each interception point.
+   */
+  TAO_ClientRequestInfo *info_;
 
 };
 

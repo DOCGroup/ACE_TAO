@@ -9,7 +9,6 @@
  * This is the implementation of the
  * PortableInterceptor::ClientRequestInfo interface.
  *
- * @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
  * @author Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================
@@ -36,26 +35,38 @@
 
 #include "PortableInterceptorC.h"
 #include "LocalObject.h"
-#include "StringSeqC.h"
-#include "Service_Context.h"
+//#include "StringSeqC.h"
 
-class TAO_GIOP_Invocation;
+class TAO_ClientRequestInfo_i;
 
 /**
  * @class TAO_ClientRequestInfo
  *
  * @brief Implementation of the PortableInterceptor::ClientRequestInfo
  *        interface.
+ *
+ * This class forwards all method calls to the underlying
+ * ClientRequestInfo implementation.
+ * @par
+ * An instance of this class is places in TSS, where as the underlying
+ * implementation is instantiated on the stack during each CORBA
+ * request.  During each request invocation, a pointer to the stack
+ * instantiated implementation is placed in the instance of this
+ * class.
+ * @par
+ * This may seem unnecessary.  However, it is necessary to avoid
+ * instantiating an object that inherits from CORBA::Object in the
+ * critical path.  Such an instantiation would cause a lock to be
+ * initialized (not acquired) in the critical path, which can degrade
+ * performance significantly.
  */
-class TAO_Export TAO_ClientRequestInfo
+class TAO_ClientRequestInfo
   : public virtual PortableInterceptor::ClientRequestInfo,
-    public virtual CORBA::LocalObject
+    public virtual TAO_Local_RefCounted_Object
 {
 public:
 
-  /// Constructor.
-  TAO_ClientRequestInfo (TAO_GIOP_Invocation *invocation,
-                         CORBA::Object_ptr target);
+  TAO_ClientRequestInfo (void);
 
   /// Return an ID unique to the current request.  This request ID may
   /// or may not be the same as the GIOP request ID.
@@ -168,15 +179,6 @@ public:
       TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  /**
-   * @note This is TAO specific and was done to combat the previous
-   *       problem to some extent.  Avoid this method whenever
-   *       possible.
-   */
-  virtual CORBA::Exception * _received_exception (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
   /// Return the repository ID for the received exception.
   virtual char * received_exception_id (
       TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
@@ -213,58 +215,66 @@ public:
       TAO_ENV_ARG_DECL_WITH_DEFAULTS)
      ACE_THROW_SPEC ((CORBA::SystemException));
 
-  /**
-   * @name Stub helper methods
-   *
-   * The following methods are used in the implementation of the
-   * Stubs, they are not part of the ClientRequestInfo interface, but
-   * an extension used internally by TAO.
-   */
-  //@{
+  /// Set the ClientRequestInfo implementation which this class
+  /// forwards all method call to.
+  void info (TAO_ClientRequestInfo_i *info);
 
-  /// Change the exception status.
-  void exception (CORBA::Exception *exception);
+  /// Get the ClientRequestInfo implementation which this class
+  /// forwards all method call to.
+  TAO_ClientRequestInfo_i * info (void) const;
 
-  /// Set the flag that states whether or not a response is expected.
-  /// For example, no response is expected in a one-way operation.
-  void response_expected (CORBA::Boolean flag);
+private:
 
-  /// Set the status of the received reply.
-  void reply_status (int invoke_status);
+  /// Check if this ClientRequestInfo object is called within the
+  /// context of a request.
+  void check_validity (TAO_ENV_ARG_DECL);
 
-  /// Extract the forward object reference from the
-  /// PortableInterceptor::ForwardRequest exception, and set the reply
-  /// status flag accordingly.
-  void forward_reference (PortableInterceptor::ForwardRequest &exc);
-  //@}
+private:
 
-protected:
-
-  /// Helper method to get the request and response service contexts.
-  IOP::ServiceContext *get_service_context_i (
-      TAO_Service_Context &service_context_list,
-      IOP::ServiceId id
-      TAO_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-protected:
-
-  /// Pointer to the GIOP invocation object.
-  TAO_GIOP_Invocation *invocation_;
-
-  /// Reference to the target object.
-  CORBA::Object_ptr target_;
-
-  /// Pointer to the caught exception.
-  CORBA::Exception *caught_exception_;
-
-  /// True if a two-way operation, false otherwise.
-  CORBA::Boolean response_expected_;
-
-  /// Reply status for the current request.
-  PortableInterceptor::ReplyStatus reply_status_;
+  /// Pointer to the object that actually implements the
+  /// ClientRequestInfo functionality.
+  TAO_ClientRequestInfo_i * info_;
 
 };
+
+
+// -------------------------------------------------------------------
+
+
+/**
+ * @class TAO_ClientRequestInfo_Guard
+ *
+ * @brief Guard for exception safe TAO_ClientRequestInfo_i pointer
+ *        swapping.
+ *
+ * This class is used to ensure the swapping of
+ * TAO_ClientRequestInfo_i pointers in a TAO_ClientRequestInfo object
+ * is performed in an exception-safe manner when interception points
+ * are being invoked.
+ */
+class TAO_ClientRequestInfo_Guard
+{
+public:
+
+  /// Constructor.
+  TAO_ClientRequestInfo_Guard (TAO_ClientRequestInfo *info,
+                               TAO_ClientRequestInfo_i *ri);
+
+  /// Destructor.
+  ~TAO_ClientRequestInfo_Guard (void);
+
+private:
+
+  /// Pointer to the TAO_ClientRequestInfo object upon which pointer
+  /// swaps will occur.
+  TAO_ClientRequestInfo * info_;
+
+  /// Pointer to the TAO_ClientRequestInfo_i object that was
+  /// previously stored in the TAO_ClientRequestInfo object.
+  TAO_ClientRequestInfo_i * previous_info_;
+
+};
+
 
 # if defined (__ACE_INLINE__)
 #  include "ClientRequestInfo.inl"

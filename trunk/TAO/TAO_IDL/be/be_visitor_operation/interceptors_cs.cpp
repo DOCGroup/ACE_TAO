@@ -109,7 +109,7 @@ be_visitor_operation_interceptors_cs::
         }
     }
 
-  *os << " : public TAO_ClientRequestInfo" << be_nl
+  *os << " : public TAO_ClientRequestInfo_i" << be_nl
       << "{" << be_nl
       << "public:" << be_idt_nl;
 
@@ -185,17 +185,17 @@ be_visitor_operation_interceptors_cs::
 
   // Here I still need to generate the other methods + private args.
   *os << "virtual Dynamic::ParameterList * arguments "
-      << "(TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)" << be_idt_nl
+      << "(TAO_ENV_SINGLE_ARG_DECL)" << be_idt_nl
       << "ACE_THROW_SPEC ((CORBA::SystemException));"
       << be_uidt_nl << be_nl;
 
   *os << "virtual Dynamic::ExceptionList * exceptions "
-      << "(TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)" << be_idt_nl
+      << "(TAO_ENV_SINGLE_ARG_DECL)" << be_idt_nl
       << "ACE_THROW_SPEC ((CORBA::SystemException));"
       << be_uidt_nl << be_nl;
 
   *os << "virtual CORBA::Any * result "
-      << "(TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)" << be_idt_nl
+      << "(TAO_ENV_SINGLE_ARG_DECL)" << be_idt_nl
       << "ACE_THROW_SPEC ((CORBA::SystemException));\n"
       << be_uidt;
 
@@ -515,7 +515,7 @@ be_visitor_operation_interceptors_cs::
   // Generate the member list and set each member but before that,
   // its necessary to pass on some args to the base class.
   os->indent ();
-  *os << "  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)";
+  *os << "  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target)";
 
   ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARG_INFO_CS);
