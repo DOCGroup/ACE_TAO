@@ -1,3 +1,142 @@
+Tue Mar  9 10:21:51 1999  Douglas C. Schmidt  <schmidt@lambada.cs.wustl.edu>
+
+	* ace/Message_Block.h: Changed the private section in both
+ 	  ACE_Message_Block and ACE_Data_Block to protected allowing
+ 	  derived classes to access data members of the parent class;
+ 	  Thanks to Alexander Davidovich <sasha@ms.com> for suggesting
+ 	  this.
+
+	* ace/Message_Block: Added new reference counting accessor methods
+ 	  to Message_Block and Data_Block.  Thanks to Alexander Davidovich
+ 	  <sasha@ms.com> for suggesting this.
+
+Tue Mar 09 01:06:44 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * ACE version 4.6.27 released.
+
+Tue Mar 09 00:39:23 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * ACE version 4.6.26 released.
+
+Mon Mar 08 23:23:35 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Thread_Manager.{h,cpp} (thread_within,hthread_within,
+	  thread_grp_list,hthread_grp_list): Added new functions to
+	  check if a thread is managed by the thread manager and collect
+	  the thread ids/handles in a thread group.  Thanks to XuYifeng
+	  <wj@puclic.hz.zj.cn> for motivating the addition.
+
+Mon Mar 08 22:23:33 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Makefile: added FOR_TAO short-cut to ACE_COMPONENTS.
+          If the ACE_COMPONENTS variable is set to FOR_TAO, then
+          only the components necessary to support TAO will be
+          built into libACE.
+
+        * netsvcs/clients/Makefile: suppress build if Other
+          ACE_COMPONENT isn't built.
+
+        * netsvcs/Makefile: suppress server build if Other and Token
+          ACE_COMPONENT aren't built.
+
+Mon Mar  8 17:35:04 1999  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
+
+        * ace/NT_Service.cpp:
+        * ace/NT_Service.h:
+          Now the handle_control method calls separate protected virtual
+          methods to do its work. That way, it is easier to override what
+          must be done on each case, just by overriding one of the new
+          methods.
+
+Mon Mar 08 15:41:08 1999  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/platform_hpux.GNU: Added -DACE_LACKS_PRAGMA_ONCE.
+          Thanks to Hao Ruan for reporting this.
+
+        * README: Added Hao Ruan to the list of contributors.
+
+Mon Mar 08 12:27:54 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Service_Config.cpp (handle_signal): added ACE_UNUSED_ARG (sig)
+          if ACE_NDEBUG is defined, to avoid compilation warning about
+          unused argument with debug=0.
+
+        * docs/ACE-subsets.html: added subset characterizations on
+          several platforms.
+
+        * include/makeinclude/platform_sunos5_ghs.GNU: fixed AR and
+          ARFLAGS to use CC to build static libs.  It looks like GreenHills
+          no longer supplies a separate archiver with 1.8.9.
+
+Mon Mar 08 11:58:03 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * ace/Task.cpp (activate): Made sure we don't mess with the passed
+          in grp_id if the task was not previously actived.  Thanks to
+          XuYifeng <wj@puclic.hz.zj.cn> for noticing this.
+
+Fri Mar 05 14:15:46 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.cpp (ACE_TSS_Cleanup (),free_all_keys_left ()):
+          with ACE_TSS_Emulation only, don't free the TSS key that
+          ACE_TSS_Cleanup uses internally for its in_use_ member.
+          The key doesn't get freed in ACE_OS::thr_key_detach (),
+          because that gets called during shutdown.  So,
+          free_all_keys_left () would attempt to free it.  But,
+          the dynamic memory associated with it had already been
+          deleted by ACE_TSS_Cleanup::exit ().  And, there
+          aren't any other resources associated with it.  So,
+          free_all_keys_left () can just skip over it.
+
+        * ace/OS.cpp (cleanup_tss): disabled call to
+          free_all_keys_left () with ACE_HAS_TSS_EMULATION, because
+          we can't safely access the TSS values that were created by
+          the main thread.  They were destroyed when the ACE_TSS_Cleanup
+          instance exit () function was called.  There don't seem to
+          be any leaks if free_all_keys_left () isn't called, anyways.
+
+Fri Mar  5 11:05:04 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * examples/Log_Msg/Log_Msg.dsw: Fixed the path to Callback.dsp.
+          Thanks to Zoran Ivanovic <zorani@pathcom.com> for reporting
+          this.
+
+        * performance-tests/Misc/Makefile: Removed test_guard from the
+          Makefile.  This test requires having
+          ACE_USES_OBSOLETE_GUARD_CLASSES defined in order to compare
+          ACE_Guard to ACE_Thread_Mutex_Guard (obsolete).
+
+        * ace/OS.h: Removed ACE_THREAD_GUARD*.
+
+        * ace/config-psos-{diab,tm}.h: Removed
+          ACE_LACKS_METHOD_DEFINITIONS_IN_CLASS_TEMPLATE.  It is no longer
+          needed.
+
+        * ace/Synch_T.{h,i}: One would assume compilers are smart enough
+          to treat _all_ in-class functions as inline.  Not for template
+          member functions.  This is true at least for SunCC, egcs, gcc,
+          and MSVC.  These functions seems to impose extra overhead.
+          After removing the in-class definitions for ACE_Guard, the cost
+          of using ACE_Guard is now as good as using
+          ACE_Thread_Mutex_Guard (which, by the way, is depricated.)  So,
+          there's no need for a ACE_THREAD_MUTEX_GUARD class.  Afterall,
+          the "ACE Way[TM]" of defining inline functions is the "Right
+          Way[TM]".  The motto of the change is, always put inline
+          functions in .i files (even for template specialization)
+          otherwise, they'll become regular functions.  If you really need
+          to put function definitions within class definitions, mark
+          inline function explicitly.
+
+          Thanks to Andy Marchewka <AndyM@who.net> for noticing the
+          performance differences between ACE_Thread_Mutex_Guard and (old)
+          ACE_Guard.
+
+Fri Mar  5 11:06:12 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * ace/Svc_Conf.y: Always print out an error message when we
+          increment yyerror.  Thanks to Ulf Jaehrig <jaehrig@desys.com>
+          for reporting this.
+
+=======
 Tue Mar 09 01:06:44 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.6.27 released.
