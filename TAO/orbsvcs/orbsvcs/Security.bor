@@ -28,7 +28,6 @@ OBJFILES = \
 	$(OBJDIR)\PrincipalAuthenticator.obj \
 	$(OBJDIR)\EstablishTrustPolicy.obj \
 	$(OBJDIR)\InvocationCredentialsPolicy.obj \
-	$(OBJDIR)\MechanismPolicy.obj \
         $(OBJDIR)\QOPPolicy.obj
 
 RESOURCE = $(OBJDIR)\orbsvcs.res
