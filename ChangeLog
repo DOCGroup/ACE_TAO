@@ -1,3 +1,9 @@
+Sat May 24 15:19:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-cygwin32.h:
+          Removed several ACE_LACKS defines, cygwin supports a lot more
+          than we think.
+
 Sat May 24 14:37:00 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/OS_Dirent.cpp:
