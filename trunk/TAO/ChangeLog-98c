@@ -1,6 +1,6 @@
 Wed Oct 21 07:22:12 1998  David L. Levine  <levine@cs.wustl.edu>
 
-        * TAO_IDL/driver/drv_args.cpp (DRV_parse_args): initialize
+        * TAO_IDL/driver/drv_args.cpp (DRV_parse_args): initialized
           local "s" to 0 to avoid g++ warning about possible
           unitialized use.
 
