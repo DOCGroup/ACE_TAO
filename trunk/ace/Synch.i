@@ -577,7 +577,12 @@ ACE_Recursive_Thread_Mutex::get_thread_id (void)
 ACE_INLINE int
 ACE_Recursive_Thread_Mutex::get_nesting_level (void)
 {
+#if defined (ACE_HAS_WINCE)
+  errno = ENOTSUP;
+  return -1;                    // @@ Is this the right value to return?
+#else
   return this->lock_.RecursionCount;
+#endif /* ! ACE_HAS_WINCE */
 }
 
 #endif /* ACE_WIN32 */
