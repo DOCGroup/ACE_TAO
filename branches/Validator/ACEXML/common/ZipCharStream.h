@@ -99,7 +99,7 @@ protected:
    * Peek @c offset bytes into the stream and return the character at @c
    * offset. If EOF is reached, return -1.
    */
-  virtual int peekchar_i (int offset = 0);
+  virtual int peekchar_i (off_t offset = 0);
 
 private:
 

@@ -1907,7 +1907,7 @@ int
 ACEXML_Parser::parse_children_definition (ACEXML_ENV_SINGLE_ARG_DECL)
 {
   this->get ();                 // consume the '('
-  int count = this->check_for_PE_reference (ACEXML_ENV_SINGLE_ARG_PARAMETER);
+  this->check_for_PE_reference (ACEXML_ENV_SINGLE_ARG_PARAMETER);
   ACEXML_CHECK_RETURN (-1);
   int subelement_number = 0;
   ACEXML_Char nextch = this->peek();
@@ -2531,7 +2531,6 @@ ACEXML_Parser::parse_entity_value (ACEXML_Char *&str
   if (quote != '\'' && quote != '"')  // Not a quoted string.
     return -1;
   ACEXML_Char ch = this->get ();
-  int nrelems = 0;
   while (1)
     {
       if (ch == quote)

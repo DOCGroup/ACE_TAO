@@ -38,7 +38,6 @@ int
 ACEXML_ZipCharStream::determine_encoding (void)
 {
   char input[4];
-  int retval = 0;
   int i = 0;
   for (; i < 4 && (input[i] = this->peekchar_i(i)); ++i)
     ;
@@ -112,9 +111,9 @@ ACEXML_ZipCharStream::getchar_i (char& ch)
 }
 
 int
-ACEXML_ZipCharStream::peekchar_i (int offset)
+ACEXML_ZipCharStream::peekchar_i (off_t offset)
 {
-  if (offset > sizeof (this->buf_))
+  if (offset > (off_t) sizeof (this->buf_))
     return -1;
   if (this->pos_ + offset < this->limit_)
     return this->buf_[this->pos_ + offset];
@@ -133,7 +132,8 @@ ACEXML_ZipCharStream::peekchar_i (int offset)
 int
 ACEXML_ZipCharStream::read (ACEXML_Char *str, size_t len)
 {
-  for (size_t i = 0; i < len && this->pos_ < this->limit_; ++i)
+  size_t i = 0;
+  for (; i < len && this->pos_ < this->limit_; ++i)
     str[i] = this->buf_[this->pos_++];
   if (i == len)
     return len;

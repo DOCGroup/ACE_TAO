@@ -1,0 +1,5 @@
+project (Validator) : acelib {
+   depends = XML_Parser
+   sharedname = ACEXML_Validator
+   libs = ACEXML_Parser ACEXML
+}
