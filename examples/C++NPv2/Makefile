@@ -20,6 +20,7 @@ EXAMPLES = Reactor_Logging_Server \
            TPCLS \
            SR_Configurable_Logging_Server \
            AC_CLD \
+           AIO_CLD \
            display_logfile
 
 all:
