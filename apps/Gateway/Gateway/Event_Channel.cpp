@@ -438,6 +438,7 @@ ACE_Event_Channel::open (void *)
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
 template class ACE_Lock_Adapter<ACE_SYNCH_MUTEX>;
+template class ACE_Map_Entry<ACE_INT32, Proxy_Handler *>;
 template class ACE_Map_Iterator<ACE_INT32, Proxy_Handler *, MAP_MUTEX>;
 template class ACE_Map_Manager<ACE_INT32, Proxy_Handler *, MAP_MUTEX>;
 template class ACE_Unbounded_Set_Iterator<Proxy_Handler *>;
