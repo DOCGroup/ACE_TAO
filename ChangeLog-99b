@@ -1,3 +1,12 @@
+Fri Jan 29 13:51:40 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.h: Removed definition of ACE_Thread_State.
+
+	* ace/Thread_Manager.*: Changed the ACE_Thread_State as a bunch of
+	  bit-masks so we don't overwe the thread states accidentally.
+	  Thanks to Tom Dobridge <dobridge@persimmon.com> for reporting
+	  the bug.
+
 1999-01-28  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Hash_Map_Manager_T.cpp (open): this->close_i() must be
@@ -9,7 +18,7 @@
 
 Thu Jan 28 19:08:25 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/Active_Map_Manager_T.h: 
+	* ace/Active_Map_Manager_T.h:
 	  Steve's change didn't make it, so I changed BASE to
 	  ACE_AMM_BASE, I don't know about the pragma.
 
@@ -21,7 +30,7 @@ Thu Jan 28 16:43:17 1999  Steve Huston  <shuston@riverace.com>
 
 Thu Jan 28 10:04:39 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/Hash_Map_Manager_T.cpp: 
+	* ace/Hash_Map_Manager_T.cpp:
 	  Reverted to version 4.2, thanks to Kirthika for helping find
 	  this one.
 
