@@ -1,3 +1,12 @@
+Thu Aug 20 18:24:04 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
+
+	* orbsvcs/tests/Property/client.{h,cpp} 
+	* orbsvcs/tests/Property/server.cpp}  
+	  Added Naming_Utils code to simplify Naming Service
+	  operations. Note that this code is shakey, and will not always
+	  execute properly. For better results, try executing the client
+	  and server with -ORBnameserviceport set
+
 Thu Aug 20 18:18:43 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_interface/any_op_ch.cpp:
