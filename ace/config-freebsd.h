@@ -242,6 +242,8 @@ extern "C" { char * cuserid (char *s); }
 #include <sys/signal.h>
 typedef union sigval sigval_t;
 
+#define ACE_LACKS_STROPTS_H
+
 #include "ace/post.h"
 
 #endif /* ACE_CONFIG_H */
