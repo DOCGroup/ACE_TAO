@@ -25,15 +25,16 @@ ACE_RCSID(On_Demand_Loading, Servant_Activator, "$Id$")
 // Initialization.
 
 ServantActivator_i::ServantActivator_i (CORBA::ORB_ptr orb)
-  :servant_manager_ (orb)
- {}
+  : servant_manager_ (orb)
+{
+}
 
 // This method associates an servant with the ObjectID.
 
 PortableServer::Servant
 ServantActivator_i::incarnate (const PortableServer::ObjectId &oid,
-                                  PortableServer::POA_ptr poa,
-                                  CORBA::Environment &env)
+                               PortableServer::POA_ptr poa,
+                               CORBA::Environment &env)
 {
   // Convert ObjectId to String.
 
@@ -41,9 +42,10 @@ ServantActivator_i::incarnate (const PortableServer::ObjectId &oid,
 
   // Activate and return the servant else exception.
 
-  PortableServer::Servant servant = this->servant_manager_.obtain_servant (s.in (),
-                                                                           poa,
-                                                                           27);
+  PortableServer::Servant servant =
+    this->servant_manager_.obtain_servant (s.in (),
+                                           poa,
+                                           27);
   if (servant != 0)
     return servant;
   else
@@ -54,13 +56,14 @@ ServantActivator_i::incarnate (const PortableServer::ObjectId &oid,
 
 // This is the method invoked when the object is deactivated or the
 // entire POA is is deactivated or destroyed.
+
 void
 ServantActivator_i::etherealize (const PortableServer::ObjectId &oid,
-                                    PortableServer::POA_ptr,
-                                    PortableServer::Servant servant,
-                                    CORBA::Boolean,
-                                    CORBA::Boolean remaining_activations,
-                                    CORBA::Environment &)
+                                 PortableServer::POA_ptr,
+                                 PortableServer::Servant servant,
+                                 CORBA::Boolean,
+                                 CORBA::Boolean remaining_activations,
+                                 CORBA::Environment &)
 {
   // If there are no remaining activations i.e ObjectIds associated
   // with MyFooServant object, deactivate it.  Etheralization happens
@@ -70,16 +73,16 @@ ServantActivator_i::etherealize (const PortableServer::ObjectId &oid,
     this->servant_manager_.destroy_servant (servant, oid);
 }
 
-
 // This method returns an ObjectId when given an dll name and the
 // factory function to be invoked in the dll.  The format of the
 // ObjectId is <dllname:factory_function>.
 
 PortableServer::ObjectId_var
 ServantActivator_i::create_dll_object_id (const char *dllname,
-                                             const char *factory_function)
+                                          const char *factory_function)
 {
-  return this->servant_manager_.create_dll_object_id (dllname,
-                                                      factory_function);
+  return this->servant_manager_.create_dll_object_id 
+    (dllname,
+     factory_function);
 }
 

@@ -24,11 +24,13 @@ ACE_RCSID(On_Demand_Activation, Servant_Manager, "$Id$")
 // Initialization.
 ServantManager_i::ServantManager_i (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
-  {}
+{
+}
 
-//Destruction.
+// Destruction.
 ServantManager_i::~ServantManager_i (void)
-  {}
+{
+}
 
 // This method loads the dynamically linked dll which is the servant
 // and returns the servant object which is then used for other
@@ -87,6 +89,7 @@ ServantManager_i::obtain_servant (const char *str,
                              poa,
                              value);
 }
+
 // The objectID is in a format of dll:factory_function which has to be
 // parsed and separated into tokens to be used.
 
@@ -97,20 +100,14 @@ ServantManager_i::parse_string (const char *s)
   // parsed to obtain the dll name and the function name which will
   // create trhe servant and return it to us.
 
-  char *str, *func; 
-  char at[2];
-
-  at[0]= ':';
-  at[1]= '\0';
-
-
-  str = ACE::strnew (s);
+  char *str = ACE::strnew (s);
   
-  func = ACE_OS::strchr (str, ':');
+  char *func = ACE_OS::strchr (str, ':');
 
-  ACE::strrepl (str, ':', '\0');
+  if (func != 0)
+    *func = '\0';
 
-  // Assign the value until \0 to dllname_.
+  // Assign the value until '\0' to dllname_.
   this->dllname_ = CORBA::string_dup (str);
    
   // Assign the value after ':' to create_symbol_.
@@ -120,7 +117,6 @@ ServantManager_i::parse_string (const char *s)
               "the servant dll:%s\n the factory_function:%s\n ",
               this->dllname_.in (),
               this->create_symbol_.in ()));
-
   delete [] str;
 }
 
@@ -130,30 +126,31 @@ ServantManager_i::parse_string (const char *s)
 
 PortableServer::ObjectId_var
 ServantManager_i::create_dll_object_id (const char *libname,
-                                           const char *factory_function)
+                                        const char *factory_function)
 {
-char *format_string; 
+  char *format_string; 
 
   ACE_DEBUG ((LM_DEBUG,
               "format-string is getting allocated\n"));
+
   ACE_NEW_RETURN (format_string,
                   char [ACE_OS::strlen (libname) + 
                        ACE_OS::strlen (factory_function) +
                        sizeof (':') +
                        1], // For the trailing 0.
-                 0);
+                  0);
 
-  char *end =  ACE::strecpy (format_string, libname);
+  char *end = ACE::strecpy (format_string, libname);
   end = ACE::strecpy (end - 1, ":");
-  ACE::strecpy(end - 1, factory_function);
+  ACE::strecpy (end - 1, factory_function);
 
-  
- ACE_DEBUG ((LM_DEBUG,
-             "format-string is %s\n", format_string));
+  ACE_DEBUG ((LM_DEBUG,
+              "format-string is %s\n",
+              format_string));
 
- // The object ID is created.
- PortableServer::ObjectId_var oid =
-   PortableServer::string_to_ObjectId (format_string);
+  // The object ID is created.
+  PortableServer::ObjectId_var oid =
+    PortableServer::string_to_ObjectId (format_string);
 
   delete [] format_string;
 
@@ -163,8 +160,8 @@ char *format_string;
 // This method destroys the servant and its caretaking dll object.
  
 void
- ServantManager_i::destroy_servant (PortableServer::Servant servant,
-                                const PortableServer::ObjectId &oid)
+ServantManager_i::destroy_servant (PortableServer::Servant servant,
+                                   const PortableServer::ObjectId &oid)
 {
   // The servant is destroyed.
   delete servant;
@@ -172,19 +169,16 @@ void
   // Since the servant is no more the dll object associated with it
   // has to be destroyed too.
 
-  ACE_DLL *dll;
+  ACE_DLL *dll = 0;
   
   // Since the servant is no more the dll object associated with it
   // has to be destroyed too.
 
-  // *done*@@ Kirthika, please make sure that you check the return value
-  // here.
-  // Unbind returns the value of the <int_id> which is the dll object
-  // so that it can be used for freeing memory.
   if (this->servant_map_.unbind (oid,
-                                 dll) < 0)
+                                 dll) == -1)
     ACE_ERROR ((LM_ERROR,
-                "%p\n","Unbind failed!\n"));
+                "%p\n",
+                "Unbind failed!\n"));
   delete dll;                          
 }
 

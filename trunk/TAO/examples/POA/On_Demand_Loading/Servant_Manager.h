@@ -32,8 +32,9 @@
 class ServantManager_i
 {
   // = TITLE
-  //   This class is the helper class for the ServantActivator_i and ServantLocator_i
-  //   classes.
+  //   This class is the helper class for the ServantActivator_i and
+  //   ServantLocator_i classes, both of which inherit from this class
+  //   and share its functions.
 public:
    typedef PortableServer::Servant (*SERVANT_FACTORY) (CORBA::ORB_ptr orb,
                                                       PortableServer::POA_ptr poa,
@@ -52,7 +53,7 @@ public:
   // Returns an ObjectId when given an dll name and the factory method
   // to be invoked in the dll.
   
-  void parse_string (const char* s);
+  void parse_string (const char *s);
   // Parse the string to obtain the dll name and the symbol which will
   // get us the servant pointer.
   
@@ -67,8 +68,8 @@ public:
  
   void destroy_servant (PortableServer::Servant servant,
                         const PortableServer::ObjectId &oid);
-  // The servant is killed and care is taken to close the dll that was
-  // dynamically linked.  
+  // The servant is destroyed and the dll that was dynamically linked
+  // is closed.
 
   CORBA::ORB_var orb_;
   // A reference to the ORB.

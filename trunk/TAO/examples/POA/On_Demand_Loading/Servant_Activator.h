@@ -56,11 +56,9 @@ public:
   // Returns an ObjectId when given a DLL name and the factory
   // function in the DLL that will create an appropriate Servant.
 
- private:
-   
+private:
   ServantManager_i servant_manager_;
   // An ServantManager object which provides utility methods.
-
 };
 
 #endif /* SERVANT_ACTIVATOR_H */
