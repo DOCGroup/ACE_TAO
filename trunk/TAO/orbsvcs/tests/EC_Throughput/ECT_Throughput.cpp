@@ -330,7 +330,7 @@ ECT_Throughput::run (int argc, char* argv[])
         ACE_TRY_CHECK;
         poa->deactivate_object (id.in (), ACE_TRY_ENV);
         ACE_TRY_CHECK;
-        
+
         ACE_DEBUG ((LM_DEBUG, "scheduler deactivated\n"));
       }
     }
@@ -350,7 +350,7 @@ ECT_Throughput::run (int argc, char* argv[])
 
 void
 ECT_Throughput::shutdown_consumer (void*,
-                                   CORBA::Environment &ACE_TRY_ENV)
+                                   CORBA::Environment &)
 {
   // int ID =
   //   (ACE_reinterpret_cast(Test_Consumer**,consumer_cookie)
@@ -364,7 +364,7 @@ ECT_Throughput::shutdown_consumer (void*,
     {
       ACE_DEBUG ((LM_DEBUG,
                   "(%t) shutting down the ORB\n"));
-      // Not needed: this->orb_->shutdown ();
+      // Not needed: this->orb_->shutdown (0, ACE_TRY_ENV);
     }
 }
 
