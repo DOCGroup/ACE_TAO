@@ -633,8 +633,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i arrayC.i \
- arrayS_T.h arrayS_T.i arrayS_T.cpp arrayS.i
+ $(TAO_ROOT)/tao/BoundsC.i \
+ arrayC.i arrayS_T.h arrayS_T.i arrayS_T.cpp arrayS.i
 
 .obj/constantsS.o .obj/constantsS.so .shobj/constantsS.o .shobj/constantsS.so: constantsS.cpp constantsS.h constantsC.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -4243,8 +4243,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i unionC.i \
- unionS_T.h unionS_T.i unionS_T.cpp unionS.i
+ $(TAO_ROOT)/tao/BoundsC.i \
+ unionC.i unionS_T.h unionS_T.i unionS_T.cpp unionS.i
 
 .obj/anonymousC.o .obj/anonymousC.so .shobj/anonymousC.o .shobj/anonymousC.so: anonymousC.cpp anonymousC.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -4797,7 +4797,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i arrayC.i
+ $(TAO_ROOT)/tao/BoundsC.i \
+ arrayC.i
 
 .obj/constantsC.o .obj/constantsC.so .shobj/constantsC.o .shobj/constantsC.so: constantsC.cpp constantsC.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -8397,7 +8398,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i unionC.i
+ $(TAO_ROOT)/tao/BoundsC.i \
+ unionC.i
 
 .obj/main.o .obj/main.so .shobj/main.o .shobj/main.so: main.cpp \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -8411,8 +8413,9 @@ realclean:	clean
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i pragmaS.h \
- pragmaC.h $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ pragmaS.h pragmaC.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
