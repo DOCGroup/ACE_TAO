@@ -147,8 +147,6 @@ CORBA::release (CORBA::ServerRequest_ptr req)
   dynamic_adapter->server_request_release (req);
 }
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class ACE_Dynamic_Service<TAO_Dynamic_Adapter>;
@@ -158,3 +156,6 @@ template class ACE_Dynamic_Service<TAO_Dynamic_Adapter>;
 #pragma instantiate ACE_Dynamic_Service<TAO_Dynamic_Adapter>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
