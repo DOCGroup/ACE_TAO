@@ -47,7 +47,7 @@ enum TAO_Connection_Role
 {
   TAO_UNSPECIFIED_ROLE = 0,
   TAO_SERVER_ROLE = 1,
-  TAO_CLIENT_ROLE = 2,
+  TAO_CLIENT_ROLE = 2
 };
 
 /**
