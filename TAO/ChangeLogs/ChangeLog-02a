@@ -1,3 +1,9 @@
+Thu May 11 17:02:21 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* docs/compiler.html:
+	* docs/releasenotes/index.html:
+	  Updated IDL compiler options info.
+
 Thu May 11 14:39:12 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/Notify/Notify_PushConsumer.cpp:
