@@ -1,3 +1,10 @@
+Thu Apr 15 14:00:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * ace/OS.{h, i}: simplified the conditional compilation logic 
+          for a couple of the pSOS-specific ACE_OS methods, removed a
+          handful of marker comments, added a conditional compilation
+          branch for pid_t declaration.
+
 Wed Apr 14 22:40:08 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/run_tests.sh: call run_tests.check via sh, to support

@@ -4112,16 +4112,15 @@ ACE_OS::accept (ACE_HANDLE handle, struct sockaddr *addr,
 {
   // ACE_TRACE ("ACE_OS::accept");
 #if defined (ACE_PSOS)
-#if !defined (ACE_PSOS_DIAB_PPC)
-// sandass was here
+#  if !defined (ACE_PSOS_DIAB_PPC)
 ACE_SOCKCALL_RETURN (::accept ((ACE_SOCKET) handle, (struct sockaddr_in *) addr,
                                 (ACE_SOCKET_LEN *) addrlen),
                       ACE_HANDLE, ACE_INVALID_HANDLE);
-#else
+#  else
 ACE_SOCKCALL_RETURN (::accept ((ACE_SOCKET) handle, (struct sockaddr *) addr,
                                 (ACE_SOCKET_LEN *) addrlen),
                       ACE_HANDLE, ACE_INVALID_HANDLE);
-#endif /* defined ACE_PSOS_DIAB_PPC */
+#  endif /* defined ACE_PSOS_DIAB_PPC */
 #else
   // On a non-blocking socket with no connections to accept, this system
   // call will return EWOULDBLOCK or EAGAIN, depending on the platform.
@@ -4152,42 +4151,26 @@ ACE_INLINE int
 ACE_OS::bind (ACE_HANDLE handle, struct sockaddr *addr, int addrlen)
 {
   // ACE_TRACE ("ACE_OS::bind");
-#if defined (ACE_PSOS)
-
-// sandass was here
-#if !defined (ACE_PSOS_DIAB_PPC)
+#if defined (ACE_PSOS) && !defined (ACE_PSOS_DIAB_PPC)
   ACE_SOCKCALL_RETURN (::bind ((ACE_SOCKET) handle,  (struct sockaddr_in *) addr,
                                (ACE_SOCKET_LEN) addrlen),
                        int, -1);
-#else
-  ACE_SOCKCALL_RETURN (::bind ((ACE_SOCKET) handle,  (struct sockaddr *) addr,
-                               (ACE_SOCKET_LEN) addrlen),
-                       int, -1);
-#endif /*defined DIAB_PPC */
-
-#else
+#else /* !defined (ACE_PSOS) || defined (ACE_PSOS_DIAB_PPC) */
   ACE_SOCKCALL_RETURN (::bind ((ACE_SOCKET) handle, addr, (ACE_SOCKET_LEN) addrlen), int, -1);
-#endif /* defined (ACE_PSOS) */
+#endif /* defined (ACE_PSOS) && !defined (ACE_PSOS_DIAB_PPC) */
 }
 
 ACE_INLINE int
 ACE_OS::connect (ACE_HANDLE handle, struct sockaddr *addr, int addrlen)
 {
   // ACE_TRACE ("ACE_OS::connect");
-#if defined (ACE_PSOS)
-// sandass was here
-#if !defined (ACE_PSOS_DIAB_PPC)
+#if defined (ACE_PSOS) && !defined (ACE_PSOS_DIAB_PPC)
   ACE_SOCKCALL_RETURN (::connect ((ACE_SOCKET) handle, (struct sockaddr_in *) addr,
                                   (ACE_SOCKET_LEN) addrlen),
                        int, -1);
-#else
-  ACE_SOCKCALL_RETURN (::connect ((ACE_SOCKET) handle, (struct sockaddr *) addr,
-                                  (ACE_SOCKET_LEN) addrlen),
-                       int, -1);
-#endif /*defined ACE_PSOS_DIAB_PPC */
-#else
+#else  /* !defined (ACE_PSOS) || defined (ACE_PSOS_DIAB_PPC) */
   ACE_SOCKCALL_RETURN (::connect ((ACE_SOCKET) handle, addr, (ACE_SOCKET_LEN) addrlen), int, -1);
-#endif /* defined (ACE_PSOS) */
+#endif /* defined (ACE_PSOS)  && !defined (ACE_PSOS_DIAB_PPC) */
 }
 
 #if !defined (VXWORKS)
@@ -4304,16 +4287,15 @@ ACE_OS::recvfrom (ACE_HANDLE handle, char *buf, int len,
 {
   // ACE_TRACE ("ACE_OS::recvfrom");
 #if defined (ACE_PSOS)
-// sandass was here
-#if !defined ACE_PSOS_DIAB_PPC
+#  if !defined ACE_PSOS_DIAB_PPC
   ACE_SOCKCALL_RETURN (::recvfrom ((ACE_SOCKET) handle, buf, (ACE_SOCKET_LEN) len, flags,
                                    (struct sockaddr_in *) addr, (ACE_SOCKET_LEN *) addrlen),
                        int, -1);
-#else
+#  else
   ACE_SOCKCALL_RETURN (::recvfrom ((ACE_SOCKET) handle, buf, (ACE_SOCKET_LEN) len, flags,
                                    (struct sockaddr *) addr, (ACE_SOCKET_LEN *) addrlen),
                        int, -1);
-#endif /* defined ACE_PSOS_DIAB_PPC */
+#  endif /* defined ACE_PSOS_DIAB_PPC */
 #elif defined (ACE_WIN32)
   int result = ::recvfrom ((ACE_SOCKET) handle,
                            buf,
@@ -4364,16 +4346,15 @@ ACE_OS::sendto (ACE_HANDLE handle,
                                  ACE_const_cast (struct sockaddr *, addr), addrlen),
                        int, -1);
 #elif defined (ACE_PSOS)
-//sandass was here
-#if !defined (ACE_PSOS_DIAB_PPC)
+#  if !defined (ACE_PSOS_DIAB_PPC)
   ACE_SOCKCALL_RETURN (::sendto ((ACE_SOCKET) handle, (char *) buf, len, flags,
                                  (struct sockaddr_in *) addr, addrlen),
                        int, -1);
-#else
+#  else
   ACE_SOCKCALL_RETURN (::sendto ((ACE_SOCKET) handle, (char *) buf, len, flags,
                                  (struct sockaddr *) addr, addrlen),
                        int, -1);
-#endif /*defined ACE_PSOS_DIAB_PPC */
+#  endif /*defined ACE_PSOS_DIAB_PPC */
 #else
   ACE_SOCKCALL_RETURN (::sendto ((ACE_SOCKET) handle, buf, len, flags,
                                  ACE_const_cast (struct sockaddr *, addr), addrlen),
@@ -4386,17 +4367,10 @@ ACE_OS::getpeername (ACE_HANDLE handle, struct sockaddr *addr,
                      int *addrlen)
 {
   // ACE_TRACE ("ACE_OS::getpeername");
-#if defined (ACE_PSOS)
-//sandass was here
-#if !defined ACE_PSOS_DIAB_PPC
+#if defined (ACE_PSOS) && !defined ACE_PSOS_DIAB_PPC
   ACE_SOCKCALL_RETURN (::getpeername ((ACE_SOCKET) handle, (struct sockaddr_in *) addr,
                                       (ACE_SOCKET_LEN *) addrlen),
                        int, -1);
-#else
-  ACE_SOCKCALL_RETURN (::getpeername ((ACE_SOCKET) handle, (struct sockaddr *) addr,
-                                      (ACE_SOCKET_LEN *) addrlen),
-                       int, -1);
-#endif /* defined ACE_PSOS_DIAB_PPC */
 #else
   ACE_SOCKCALL_RETURN (::getpeername ((ACE_SOCKET) handle, addr, (ACE_SOCKET_LEN *) addrlen),
                        int, -1);
@@ -4530,17 +4504,10 @@ ACE_OS::getsockname (ACE_HANDLE handle,
                      int *addrlen)
 {
   // ACE_TRACE ("ACE_OS::getsockname");
-#if defined (ACE_PSOS)
-//sandass was here
-#if !defined (ACE_PSOS_DIAB_PPC)
+#if defined (ACE_PSOS) && !defined (ACE_PSOS_DIAB_PPC)
   ACE_SOCKCALL_RETURN (::getsockname ((ACE_SOCKET) handle, (struct sockaddr_in *) addr,
                                       (ACE_SOCKET_LEN *) addrlen),
                        int, -1);
-#else
-  ACE_SOCKCALL_RETURN (::getsockname ((ACE_SOCKET) handle, (struct sockaddr *) addr,
-                                      (ACE_SOCKET_LEN *) addrlen),
-                       int, -1);
-#endif /* defined ACE_PSOS_DIAB_PPC */
 #else
   ACE_SOCKCALL_RETURN (::getsockname ((ACE_SOCKET) handle, addr, (ACE_SOCKET_LEN *) addrlen),
                        int, -1);
@@ -5204,11 +5171,8 @@ ACE_OS::signal (int signum, ACE_SignalHandler func)
     return 0;
   else
 #if defined (ACE_PSOS) && !defined (ACE_PSOS_TM) && !defined (ACE_PSOS_DIAB_MIPS) && !defined (ACE_PSOS_DIAB_PPC)
-//sandass was here
     return (ACE_SignalHandler) ::signal (signum, (void (*)(void)) func);
-#elif defined (ACE_PSOS_DIAB_MIPS)
-    return 0;
-#elif defined (ACE_PSOS_DIAB_PPC)
+#elif defined (ACE_PSOS_DIAB_MIPS) || defined (ACE_PSOS_DIAB_PPC)
     return 0;
 #elif defined (ACE_PSOS_TM)
     // @@ It would be good to rework this so the ACE_PSOS_TM specific
@@ -5216,11 +5180,11 @@ ACE_OS::signal (int signum, ACE_SignalHandler func)
     //    will take some extra work - deferred for now.
     return (ACE_SignalHandler) ::signal (signum, (void (*)(int)) func);
 #elif defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) || !defined (ACE_LACKS_UNIX_SIGNALS)
-# if !defined (ACE_HAS_TANDEM_SIGNALS) && !defined (ACE_HAS_LYNXOS_SIGNALS)
+#  if !defined (ACE_HAS_TANDEM_SIGNALS) && !defined (ACE_HAS_LYNXOS_SIGNALS)
     return ::signal (signum, func);
-# else
+#  else
     return (ACE_SignalHandler) ::signal (signum, (void (*)(int)) func);
-# endif /* !ACE_HAS_TANDEM_SIGNALS */
+#  endif /* !ACE_HAS_TANDEM_SIGNALS */
 #else
     // @@ Don't know how to implement signal on WinCE (yet.)
     ACE_UNUSED_ARG (signum);

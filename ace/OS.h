@@ -727,9 +727,14 @@ typedef int key_t;
       typedef unsigned int  uint_t;
       typedef unsigned long ulong_t;
       typedef char *caddr_t;
-      //typedef long pid_t;
 
+#       if defined (ACE_PSOS_DIAB_PPC)
       typedef unsigned long pid_t;
+#       else /* !defined (ACE_PSOS_DIAB_PPC) */
+      typedef long pid_t;
+#       endif /* defined (ACE_PSOS_DIAB_PPC) */
+
+
 //      typedef unsigned char wchar_t;
 #     endif
 
@@ -788,7 +793,7 @@ typedef u_long ACE_pri_t;
 // pHILE+ calls the DIR struct XDIR instead
 #    if !defined (ACE_PSOS_DIAB_PPC)
 typedef XDIR DIR;
-#    endif //PSOS_PPC
+#    endif /* !defined (ACE_PSOS_DIAB_PPC) */
 
 
 // Use pSOS semaphores, wrapped . . .
@@ -990,17 +995,17 @@ struct ACE_OVERLAPPED
   ACE_HANDLE hEvent;
 };
 
-#   if !defined(USER_INCLUDE_SYS_TIME_TM) && !defined (ACE_PSOS_DIAB_PPC) //sandass
+#   if !defined (USER_INCLUDE_SYS_TIME_TM)
+#     if defined (ACE_PSOS_DIAB_PPC)
+typedef struct timespec timespec_t;
+#     else /* ! defined (ACE_PSOS_DIAB_PPC) */
 typedef struct timespec
 {
   time_t tv_sec; // Seconds
   long tv_nsec; // Nanoseconds
 } timespec_t;
-#   endif
-
-#   if !defined(USER_INCLUDE_SYS_TIME_TM) && defined (ACE_PSOS_DIAB_PPC) //sandass
-typedef struct timespec timespec_t; //sandass
-#   endif //sandass
+#     endif /* defined (ACE_PSOS_DIAB_PPC) */
+#   endif /*  !defined (USER_INCLUDE_SYS_TIME_TM) */
 
 #if defined (ACE_PSOS_HAS_TIME)
 
