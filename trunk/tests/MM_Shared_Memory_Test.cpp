@@ -42,9 +42,12 @@ static ACE_Process_Semaphore *process_synchronizer = 0;
 static void *
 child (void * = 0)
 {
+  int result;
+#if !defined (ACE_LACKS_FORK)
   // Wait for the parent process to 
-  int result = process_synchronizer->acquire ();
+  result = process_synchronizer->acquire ();
   ACE_ASSERT (result != -1);
+#endif /* !defined (ACE_LACKS_FORK) */
 
   char *t = ACE_ALPHABET;
   ACE_Shared_Memory_MM shm_child;
@@ -88,9 +91,11 @@ parent (void * = 0)
 
   *s = '\0';
 
+#if !defined (ACE_LACKS_FORK)
   // Allow the child process to proceed.
   result = process_synchronizer->release ();
   ACE_ASSERT (result != -1);
+#endif /* !defined (ACE_LACKS_FORK) */
 
   // Perform a "busy wait" until the child sets the character to '*'.
   while (*shm != '*')
