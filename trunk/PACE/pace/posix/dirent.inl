@@ -35,6 +35,9 @@ pace_readdir_r (DIR * dirp, struct dirent * entry,
 # if defined (PACE_HAS_POSIX_PTHREAD_SEMANTICS)
   return readdir_r (dirp, entry, result);
 # else /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
+  PACE_UNUSED_ARG (dirp);
+  PACE_UNUSED_ARG (entry);
+  PACE_UNUSED_ARG (result);
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 # endif /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
 }

@@ -120,6 +120,9 @@ pace_strtok_r (char * s, const char * sep, char ** lasts)
 # if defined (PACE_HAS_REENTRANT)
   return strtok_r (s, sep, lasts);
 # else  /* ! PACE_HAS_REENTRANT */
+  PACE_UNUSED_ARG (s);
+  PACE_UNUSED_ARG (sep);
+  PACE_UNUSED_ARG (lasts);
   PACE_ERRNO_NO_SUPPORT ();
   return 0;
 # endif /* ! PACE_HAS_REENTRANT */
