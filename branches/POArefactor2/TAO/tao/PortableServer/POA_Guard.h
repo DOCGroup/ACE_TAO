@@ -15,6 +15,7 @@
 
 #include "portableserver_export.h"
 #include "ace/Guard_T.h"
+#include "ace/CORBA_macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -29,8 +29,6 @@
 #include "tao/PI_ForwardC.h"
 #include "ace/Unbounded_Set.h"
 
-#include "POAManagerC.h"
-
 // Forward decl.
 class TAO_POA;
 class TAO_Object_Adapter;

@@ -15,7 +15,6 @@
 #include /**/ "ace/pre.h"
 
 #include "portableserver_export.h"
-#include "PortableServerC.h"
 #include "Policy_Strategy.h"
 #include "ace/Service_Config.h"
 
@@ -24,6 +23,8 @@
 #include "ace/Thread_Mutex.h"
 #include "ace/Recursive_Thread_Mutex.h"
 #include "ace/Null_Mutex.h"
+
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

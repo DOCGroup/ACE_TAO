@@ -15,10 +15,13 @@
 #include /**/ "ace/pre.h"
 
 #include "Thread_Strategy.h"
+#include "ace/CORBA_macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+class TAO_POA;
 
 namespace TAO
 {

@@ -21,6 +21,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+class TAO_POA;
+
 namespace TAO
 {
   namespace Portable_Server
