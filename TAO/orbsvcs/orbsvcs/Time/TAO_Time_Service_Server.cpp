@@ -1,9 +1,12 @@
-// -*- C++ -*-
-// $Id$
-
 #include "TAO_UTO.h"
 #include "TAO_TIO.h"
 #include "TAO_Time_Service_Server.h"
+
+
+ACE_RCSID (Time,
+           TAO_Time_Service_Server,
+           "$Id$")
+
 
 // Constructor.
 TAO_Time_Service_Server::TAO_Time_Service_Server (void)
@@ -44,31 +47,31 @@ TAO_Time_Service_Server::universal_time (ACE_ENV_SINGLE_ARG_DECL)
   CORBA::ULongLong TAO_Time_Base_Offset (0xD8539C80, 2);
   // (Lower 32 bits of the offset in hex, Upper 32 bits of the offset in hex)
 #else
-  CORBA::ULongLong TAO_Time_Base_Offset = ACE_UINT64_LITERAL(0x2D8539C80);
+  CORBA::ULongLong TAO_Time_Base_Offset = ACE_UINT64_LITERAL (0x2D8539C80);
 #endif
 
-  ACE_Time_Value timeofday = ACE_OS::gettimeofday ();
+  const ACE_Time_Value timeofday = ACE_OS::gettimeofday ();
 
   // Return the local time of the system as a UTO.
   ACE_NEW_THROW_EX (uto,
                     TAO_UTO ((TAO_Time_Base_Offset +
-                              ACE_static_cast(CORBA::ULongLong,
-                                              timeofday.sec ())) *
-                             ACE_static_cast(ACE_UINT32,
-                                             10000000) +
-                             ACE_static_cast(CORBA::ULongLong,
-                                             timeofday ().usec () * 10),
+                              ACE_static_cast (CORBA::ULongLong,
+                                               timeofday.sec ())) *
+                             ACE_static_cast (ACE_UINT32,
+                                              10000000) +
+                             ACE_static_cast  (CORBA::ULongLong,
+                                               timeofday.usec () * 10),
                              0,
                              0),
                     CORBA::NO_MEMORY ());
 
   ACE_CHECK_RETURN (CosTime::UTO::_nil ());
 
-  ACE_DEBUG ((LM_DEBUG,
-              "Returning a UTO\n"));
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG,
+                "Returning a UTO\n"));
 
-  return uto->_this ();
-
+  return uto->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 // This method returns the current time in a UTO only if the time can
@@ -80,7 +83,8 @@ TAO_Time_Service_Server::secure_universal_time (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTime::TimeUnavailable))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
+                    CosTime::UTO::_nil ());
 }
 
 // This creates a new UTO based on the given parameters.
@@ -101,8 +105,7 @@ TAO_Time_Service_Server::new_universal_time (TimeBase::TimeT time,
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (CosTime::UTO::_nil ());
 
-  return uto->_this ();
-
+  return uto->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 // This creates a new UTO given a time in the UtcT form.
@@ -120,7 +123,8 @@ TAO_Time_Service_Server::uto_from_utc (const TimeBase::UtcT &utc
                              utc.tdf),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (CosTime::UTO::_nil ());
-  return uto->_this ();
+
+  return uto->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 // This creates a new TIO with the given parameters.
@@ -138,7 +142,8 @@ TAO_Time_Service_Server::new_interval (TimeBase::TimeT lower,
                              upper),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (CosTime::TIO::_nil ());
-  return tio->_this ();
+
+  return tio->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 
