@@ -1,3 +1,10 @@
+Sat Mar 27 14:20:09 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	*  examples/Event_Comm/Consumer_Input_Handler.cpp,
+	   Notifier_Handler.cpp, Supplier_Input_Handler.cpp,
+	   notifier.cpp:
+	   Fixed compile warnings.
+
 Sat Mar 27 11:57:11 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/ORB.h:
