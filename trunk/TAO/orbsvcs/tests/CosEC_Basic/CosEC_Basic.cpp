@@ -73,7 +73,7 @@ CosEC_Basic::init_ORB  (int argc, char *argv [])
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
 
-  return 0;
+  ACE_NOTREACHED (return 0;)
 }
 
 int
@@ -125,7 +125,7 @@ CosEC_Basic::init_RtEC (void)
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
 
-  return 0;
+  ACE_NOTREACHED (return 0;)
 }
 
 int
@@ -156,7 +156,7 @@ CosEC_Basic::init_CosEC (void)
 
       if (this->ec_i_.init (consumerqos,
                             supplierqos,
-                            this->rtec_,
+                            this->rtec_.in (),
                             ACE_TRY_ENV) != 0)
         return -1;
 
@@ -176,7 +176,7 @@ CosEC_Basic::init_CosEC (void)
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
 
-  return 0;
+  ACE_NOTREACHED (return 0;)
 }
 
 int

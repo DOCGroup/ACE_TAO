@@ -81,7 +81,7 @@ CosEC_Multiple::init_ORB  (int argc, char *argv [])
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
 
-  return 0;
+  ACE_NOTREACHED (return 0;)
 }
 
 int
@@ -126,7 +126,7 @@ CosEC_Multiple::init_CosEC (void)
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
 
-  return 0;
+  ACE_NOTREACHED (return 0;)
 }
 
 int
@@ -143,6 +143,4 @@ CosEC_Multiple::shutdown (void)
 {
   if (!this->orb_->_nil ())
     this->orb_->shutdown ();
-
-  //  this->orb_ (CORBA::ORB::_nil ());
 }

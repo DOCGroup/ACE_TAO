@@ -164,7 +164,7 @@ CosECConsumer::init_Consumer (void)
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
 
-  return 0;
+  ACE_NOTREACHED (return 0;)
 }
 
 int

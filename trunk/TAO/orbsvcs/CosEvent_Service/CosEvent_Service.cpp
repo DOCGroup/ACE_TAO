@@ -76,7 +76,7 @@ CosEvent_Service::init_ORB  (int argc, char *argv [])
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
 
-  return 0;
+  ACE_NOTREACHED (return 0;)
 }
 
 int
@@ -200,7 +200,7 @@ CosEvent_Service::get_Rtec_viaNamingService (void)
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
 
-  return 0;
+  ACE_NOTREACHED (return 0;)
 }
 
 int
@@ -261,7 +261,7 @@ CosEvent_Service::start_Scheduler (void)
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
 
-  return 0;
+  ACE_NOTREACHED (return 0;)
 }
 int
 CosEvent_Service::create_local_RtecService (void)
@@ -298,7 +298,7 @@ CosEvent_Service::create_local_RtecService (void)
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
 
-  return 0;
+  ACE_NOTREACHED (return 0;)
 }
 
 void
@@ -460,7 +460,7 @@ CosEvent_Service::create_CosEC (void)
 
       if (this->ec_i_.init (consumerqos,
                             supplierqos,
-                            this->rtec_,
+                            this->rtec_.in (),
                             ACE_TRY_ENV) != 0)
         return -1;
 
@@ -487,7 +487,7 @@ CosEvent_Service::create_CosEC (void)
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
 
-  return 0;
+  ACE_NOTREACHED (return 0;)
 }
 
 int
@@ -518,7 +518,7 @@ CosEvent_Service::register_CosEC (void)
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
 
-  return 0;
+  ACE_NOTREACHED (return 0;)
 }
 
 int
@@ -642,7 +642,7 @@ CosEvent_Service::shutdown (void)
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
 
-  return 0;
+  ACE_NOTREACHED (return 0;)
 }
 
 int
