@@ -1,3 +1,9 @@
+Tue Feb 24 19:46:41 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/examples/FaultTolerance/RolyPoly/ORB_Initializer.cpp:
+	* orbsvcs/examples/FaultTolerance/RolyPoly/ReplicaController.cpp:
+	  Fixed compile problem in msvc6 build.
+
 Tue Feb 24 19:41:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* performance-tests/Sequence_Latency/DSI/DSI.mpc:
