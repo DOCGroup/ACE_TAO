@@ -1,8 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-// ARGV.i
-
 // Return the number of args
 ACE_INLINE size_t
 ACE_ARGV::argc (void) const
@@ -32,35 +30,38 @@ ACE_ARGV::buf (void)
 }
 
 // Return the arguments in an entry-per-argument array
+
 ACE_INLINE ASYS_TCHAR **
 ACE_ARGV::argv (void)
 {
   ACE_TRACE ("ACE_ARGV::argv");
 
   // Try to create the argv_ if it isn't there
-  if (this->argv_ == 0) {
-    
-    if (this->state_ == ITERATIVE && this->buf_ == 0)
-      this->create_buf_from_queue();
+  if (this->argv_ == 0) 
+    {
+      if (this->state_ == ITERATIVE && this->buf_ == 0)
+        this->create_buf_from_queue ();
 
-    // Convert buf_ to argv_
-    this->string_to_array();
-  }
+      // Convert buf_ to argv_
+      if (this->string_to_argv () == -1)
+        return 0;
+    }
 
   return this->argv_;
 }
 
 // Subscript operator.  
+
 ACE_INLINE const ASYS_TCHAR *
 ACE_ARGV::operator[] (size_t i)
 {
   ACE_TRACE ("ACE_ARGV::operator[]");
 
-  // Don't go out of bounds
+  // Don't go out of bounds.
   if (i >= this->argc_)
     return 0;
 
-  return (const ASYS_TCHAR *)(this->argv()[i]);
+  return (const ASYS_TCHAR *) this->argv ()[i];
 }
 
 
