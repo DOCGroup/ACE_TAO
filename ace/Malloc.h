@@ -146,16 +146,19 @@ public:
 
   ACE_Based_Pointer_Basic<char> pointer_;
   // Pointer to the contents.
+
+  ACE_Based_Pointer<ACE_Name_Node> next_;
+  // Pointer to the next node in the chain.
 #else
   char *name_;
   // Name of the Node.
 
   char *pointer_;
   // Pointer to the contents.
-#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
 
-  ACE_Based_Pointer<ACE_Name_Node> next_;
+  ACE_Name_Node *next_;
   // Pointer to the next node in the chain.
+#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
 
   void dump (void) const;
   // Dump the state of the object.
