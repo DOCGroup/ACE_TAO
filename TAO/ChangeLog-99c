@@ -7,10 +7,32 @@ Mon Sep 20 12:53:08 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	  Thanks to Lothar Werzinger <werzinger.lothar@krones.de>
 	  for reporting this problem with recursive unions.
 
+Mon Sep 20 11:53:16 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/ORB.cpp:
+
+	  Minor code style updates.
+	
+	* tao/ORB_Core.h (TAO_ORB_Core):
+	* tao/ORB_Core.i (orb):
+	* tao/ORB_Core.cpp (TAO_ORB_Core, init, fini):
+
+	  Changed orb_ member from ORB_ptr to ORB_var to provide better
+	  memory management.
+
+	* orbsvcs/tests/Property/run_test.pl:
+
+	  Updated to use -ORBInitRef instead of obsolete
+	  -ORBNameServiceIOR.
+
+	* docs/compiler.html:
+
+	  Minor spelling corrections.
+
 Mon Sep 20 10:55:48 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* TAO-INSTALL.html,
-	  docs/minimumTAO.html: Clarified that you must build TAO with
+	* TAO-INSTALL.html:
+	* docs/minimumTAO.html: Clarified that you must build TAO with
  	  minimum_corba=1 in order to build the liborbsvcs with
  	  minimum_corba=1.  Thanks to Klaus Banzer
  	  <klaus.banzer@mchp.siemens.de> for reporting this.
