@@ -28,10 +28,18 @@ ifeq (,$(threads))
   threads = 1
 endif
 
+# Use of Standard C++ Library requires some flags to be added to the
+# compile line
+#
+ifeq (,$(stdcpplib))
+  stdcpplib = 1
+endif
+
 CC              = cxx
 CXX             = $(CC)
 
-# Note: Just get the version if it hasnt been defined so far.  
+# Note: Just get the version if it hasnt been defined so far.
+#
 ifndef CXX_VERSION
   CXX_VERSION := $(shell $(CXX) -V)
 endif # ! CXX_VERSION
@@ -67,7 +75,46 @@ ifneq ($(CXX_VER),CXX_5)
   endif
 endif # 6.0 or later
 
-CCFLAGS         += $(CFLAGS) $(WARNING_FLAGS)
+# Check for enabling automatic template instantiation
+#
+ifeq (6.,$(findstring 6.,$(CXX_VERSION)))
+    templates = automatic
+else
+    templates = explicit
+endif # 6.x
+
+# Turn on the appropriate flags
+#
+ifeq ($(templates),explicit)
+  ifeq ($(TEMPLATES_FLAG),) # Turn on flags if none is speficied.
+    TEMPLATES_FLAG = -nopt
+    # Needed to ensure explicit template instantiation of inline functions
+    inline = 0
+  endif
+  CPPFLAGS += -DACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
+else
+  ifeq ($(templates), automatic)
+    ifeq ($(TEMPLATES_FLAG),) # Turn on flags if none is speficied.
+      TEMPLATES_FLAG = -pt
+      SOFLAGS        = -tall
+    endif
+  else
+    ifeq ($(templates), used)
+      ifeq ($(TEMPLATES_FLAG),) # Turn on flags if none is speficied.
+        TEMPLATES_FLAG = -pt
+        SOFLAGS        = -tused
+      endif
+    endif # templates == used
+  endif # templates == automatic
+endif # templates == explicit
+
+# Add the extra definitions needed to use the Standard Template Library
+#
+ifeq ($(stdcpplib), 1)
+  CPPFLAGS += -D__USE_STD_IOSTREAM
+endif
+
+CCFLAGS         += $(CFLAGS) $(WARNING_FLAGS) $(TEMPLATES_FLAG)
 DCFLAGS         += -g -O0
 DLD             = $(CXX)
 LD              = $(CXX)
@@ -76,10 +123,17 @@ MATHLIB         = -lm
 OCFLAGS         += -O4
 PIC             =
 ARFLAGS         = cruvZ
+# This is needed to pull in all the template instantiations from the
+# repository into the library.
+#
+TMPINCDIR       = cxx_repository
+
 # When libraries are archived, a hash index is automatically created
 # so there is no need for ranlib
+#
 RANLIB          = @true
-SOFLAGS         = -shared -use_ld_input $(ACELIB)
+SOFLAGS         += -shared $(ACELIB)
+
 #### The -hidden [...] -non_hidden business avoids multiply defined
 #### symbols between the shared library and libcxxstd.a.  It's the
 #### workaround recommended in PTR 43-4-204.  It must appear at (or
@@ -101,4 +155,3 @@ ifeq (0,$(exceptions))
     CCFLAGS += -nocleanup
   endif # 6.x
 endif # ! exceptions
-
