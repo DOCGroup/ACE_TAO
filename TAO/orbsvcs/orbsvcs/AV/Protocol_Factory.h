@@ -49,9 +49,6 @@ public:
   virtual int open (TAO_AV_Callback *callback,
                     TAO_AV_Transport *transport);
 
-  void role (TAO_FlowSpec_Entry::Role role);
-  // 0 = Producer, 1 = consumer.
-
   virtual int handle_input (void) = 0;
 
   virtual int handle_control_input (ACE_Message_Block *control_frame,
@@ -98,20 +95,6 @@ public:
                                                         TAO_AV_Flow_Handler *handler,
                                                         TAO_AV_Transport *transport);
   virtual const char *control_flow_factory (void);
-};
-
-class TAO_ORBSVCS_Export TAO_AV_SFP_Factory : public TAO_AV_Flow_Protocol_Factory
-{
-public:
-  TAO_AV_SFP_Factory (void);
-  virtual ~TAO_AV_SFP_Factory (void);
-  virtual int init (int argc, char *argv[]);
-  // Initialization hook.
-  virtual int match_protocol (const char *flow_string);
-  virtual TAO_AV_Protocol_Object* make_protocol_object (TAO_FlowSpec_Entry *entry,
-                                                        TAO_Base_StreamEndPoint *endpoint,
-                                                        TAO_AV_Flow_Handler *handler,
-                                                        TAO_AV_Transport *transport);
 };
 
 #endif /* TAO_AV_PROTOCOL_FACTORY_T_H */

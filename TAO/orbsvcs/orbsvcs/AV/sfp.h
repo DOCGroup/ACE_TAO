@@ -196,7 +196,7 @@ class TAO_ORBSVCS_Export TAO_SFP_Object  : public TAO_AV_Protocol_Object
 {
 public:
   TAO_SFP_Object (TAO_AV_Callback *callback,
-                  TAO_AV_Transport *transport = 0);
+                  TAO_AV_Transport *transport);
 
   virtual ~TAO_SFP_Object (void);
   // Dtor
@@ -209,7 +209,7 @@ public:
                           int iovcnt,
                           TAO_AV_frame_info *frame_info = 0);
 
-  virtual int end_stream (void);
+  virtual int destroy (void);
 protected:
   ACE_Message_Block *get_fragment (ACE_Message_Block *&frame,
                                    size_t initial_len,
@@ -219,12 +219,14 @@ protected:
   CORBA::ULong source_id_;
   CORBA::ULong max_credit_;
   CORBA::ULong current_credit_;
+  TAO_SFP_Frame_State state_;
 };
 
 class TAO_ORBSVCS_Export TAO_SFP_Producer_Object : public TAO_SFP_Object
 {
 public:
-  TAO_SFP_Producer_Object (void);
+  TAO_SFP_Producer_Object (TAO_AV_Callback *callback,
+                           TAO_AV_Transport *transport);
   virtual int handle_input (void);
 protected:
   CORBA::ULong credit_sequence_num_;
@@ -233,8 +235,26 @@ protected:
 class TAO_ORBSVCS_Export TAO_SFP_Consumer_Object : public TAO_SFP_Object
 {
 public:
-  TAO_SFP_Consumer_Object (void);
+  TAO_SFP_Consumer_Object (TAO_AV_Callback *callback,
+                           TAO_AV_Transport *transport);
   virtual int handle_input (void);
 };
+
+class TAO_ORBSVCS_Export TAO_AV_SFP_Factory : public TAO_AV_Flow_Protocol_Factory
+{
+public:
+  TAO_AV_SFP_Factory (void);
+  virtual ~TAO_AV_SFP_Factory (void);
+  virtual int init (int argc, char *argv[]);
+  // Initialization hook.
+  virtual int match_protocol (const char *flow_string);
+  virtual TAO_AV_Protocol_Object* make_protocol_object (TAO_FlowSpec_Entry *entry,
+                                                        TAO_Base_StreamEndPoint *endpoint,
+                                                        TAO_AV_Flow_Handler *handler,
+                                                        TAO_AV_Transport *transport);
+};
+
+ACE_STATIC_SVC_DECLARE (TAO_AV_SFP_Flow_Factory)
+ACE_FACTORY_DECLARE (TAO_ORBSVCS, TAO_AV_SFP_Flow_Factory)
 
 #endif /* TAO_SFP_H */

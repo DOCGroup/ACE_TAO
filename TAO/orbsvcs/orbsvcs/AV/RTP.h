@@ -272,6 +272,7 @@ protected:
   int format_;
   CORBA::ULong ssrc_;
   TAO_AV_Protocol_Object *control_object_;
+  ACE_Message_Block *data_;
 };
 
 class TAO_ORBSVCS_Export TAO_AV_RTP_Flow_Factory : public TAO_AV_Flow_Protocol_Factory
