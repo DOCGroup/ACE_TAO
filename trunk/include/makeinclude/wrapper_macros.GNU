@@ -54,6 +54,10 @@
 #
 #  Variable     Description
 #  --------     -----------
+#  ACE_HAS_GNUG_PRE_2_8 CXX includes "g++", and the g++ version is
+#                       prior to 2.8.0.  This is automatically determined
+#                       below, but can be overridden in the user's
+#                       platform_macros.GNU or environment.
 #  ARFLAGS      Flags for the archive utility (ar)
 #  CC           C compiler command
 #  CXX          C++ compiler command
@@ -159,10 +163,10 @@ RM              = /bin/rm
 VAR             =
 VDIR            = .obj/
 ifndef ACELIB
-ACELIB = -lACE
+  ACELIB = -lACE
 endif
-ifndef  VSHDIR
-VSHDIR          = .shobj/
+ifndef VSHDIR
+  VSHDIR        = .shobj/
 endif # VSHDIR
 # NOTE: VLDLIBS is defined below, in case it is overridden for static-
 #       or shared-only builds.
@@ -175,6 +179,26 @@ ifeq ($(versioned_so),1)
 else
   ACE_LDSO_Version_Number =
 endif
+
+#----------------------------------------------------------------------------
+#      Platform-dependent macros that require platform_macros.GNU.
+#----------------------------------------------------------------------------
+
+ifeq ($(findstring g++,$(CXX)),g++)
+  ifndef ACE_HAS_GNUG_PRE_2_8
+    ifeq ($(CXX),g++)
+      ACE_HAS_GNUG_PRE_2_8 := \
+        $(shell \
+          if $(CXX) --version | egrep '^(cygnus-)?2\.[0-7]' > /dev/null; then \
+          echo 1; else echo 0; fi)
+    else  # ! plain g++
+      # CXX is something like g++386.  Assume, for now, that it's an old g++.
+      ACE_HAS_GNUG_PRE_2_8 = 1
+    endif # ! plain g++
+  endif # ! ACE_HAS_GNUG_PRE_2_8
+else
+  ACE_HAS_GNUG_PRE_2_8 =
+endif # g++
 
 #----------------------------------------------------------------------------
 #      make flags
@@ -217,23 +241,11 @@ endif # xt_reactor
 
 ifdef exceptions
   CPPFLAGS += -DACE_HAS_EXCEPTIONS
-else # ! exceptions
-  ifeq ($(findstring g++,$(CXX)),g++)
-    ifeq ($(CXX),g++)
-      #### Disable the default exception handling of g++ >= 2.8.0.
-      G++_HAS_EXCEPTIONS := \
-        $(shell \
-          if $(CXX) --version | egrep -v '^(cygnus-)?2\.[0-7]' > /dev/null; \
-          then echo 1; fi)
-      ifdef G++_HAS_EXCEPTIONS
-        CCFLAGS += -fno-exceptions
-      endif # G++_HAS_EXCEPTIONS
-    # else, CXX is something like g++386.  Assume that it doesn't
-    # support exception handling.  The shell command above won't
-    # work if CXX isn't on the users PATH.
-    endif # plain g++
-  else
-  endif # g++
+else  # ! exceptions
+  ifeq ($(ACE_HAS_GNUG_PRE_2_8),0)
+    #### Disable the default exception handling of g++ >= 2.8.0.
+    CCFLAGS += -fno-exceptions
+  endif # ! ACE_HAS_GNUG_PRE_2_8
 endif # ! exceptions
 
 ifeq ($(profile),0)
