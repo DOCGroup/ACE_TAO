@@ -913,7 +913,6 @@ main (int argc, char *argv [])
       delete [] consumer;
 
       ACE_TIMEPROBE_PRINT;
-      ACE_TIMEPROBE_FINI;
     }
   TAO_CATCHANY
     {

@@ -74,18 +74,3 @@ main (int, ASYS_TCHAR *[])
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Singleton<ACE_Timeprobe<ACE_SYNCH_NULL_MUTEX>,ACE_SYNCH_MUTEX>;
-template class ACE_Timeprobe<ACE_Null_Mutex>;
-template class ACE_Function_Timeprobe<ACE_Timeprobe<ACE_Null_Mutex> >;
-template class ACE_Unbounded_Set_Iterator<ACE_Timeprobe<ACE_Null_Mutex>::Event_Descriptions>;
-template class ACE_Unbounded_Set<ACE_Timeprobe<ACE_Null_Mutex>::Event_Descriptions>;
-template class ACE_Node<ACE_Timeprobe<ACE_Null_Mutex>::Event_Descriptions>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<ACE_Timeprobe<ACE_Null_Mutex>,ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Timeprobe<ACE_Null_Mutex>
-#pragma instantiate ACE_Function_Timeprobe<ACE_Timeprobe<ACE_Null_Mutex> >
-#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Timeprobe<ACE_Null_Mutex>::Event_Descriptions>
-#pragma instantiate ACE_Unbounded_Set<ACE_Timeprobe<ACE_Null_Mutex>::Event_Descriptions>
-#pragma instantiate ACE_Node<ACE_Timeprobe<ACE_Null_Mutex>::Event_Descriptions>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

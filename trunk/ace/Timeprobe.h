@@ -65,8 +65,8 @@ public:
   void timeprobe (const char *id);
   // Record a time. <id> is used to describe this time probe.
 
-  void event_descriptions (const char **descriptions,
-                           u_long minimum_id);
+  int event_descriptions (const char **descriptions,
+                          u_long minimum_id);
   // Record event descriptions.
 
   void print_times (void);
@@ -196,19 +196,51 @@ protected:
 // internal state of ACE_Timerprobe.  This allows multiple threads to
 // use the same ACE_Timerprobe.
 #  if defined (ACE_MT_TIMEPROBES)
-typedef ACE_Timeprobe<ACE_Thread_Mutex> ACE_TIMEPROBE_WITH_LOCKING;
+typedef ACE_SYNCH_MUTEX ACE_TIMEPROBE_MUTEX;
 #  else /* ACE_MT_TIMEPROBES */
-typedef ACE_Timeprobe<ACE_Null_Mutex> ACE_TIMEPROBE_WITH_LOCKING;
+typedef ACE_SYNCH_NULL_MUTEX ACE_TIMEPROBE_MUTEX;
 #  endif /* ACE_MT_TIMEPROBES */
+
+typedef ACE_Timeprobe<ACE_TIMEPROBE_MUTEX> ACE_TIMEPROBE_WITH_LOCKING;
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Timeprobe<ACE_TIMEPROBE_MUTEX>;
+template class ACE_Function_Timeprobe<ACE_Timeprobe<ACE_TIMEPROBE_MUTEX> >;
+template class ACE_Unbounded_Set_Iterator<ACE_Timeprobe<ACE_TIMEPROBE_MUTEX>::Event_Descriptions>;
+template class ACE_Unbounded_Set<ACE_Timeprobe<ACE_TIMEPROBE_MUTEX>::Event_Descriptions>;
+template class ACE_Node<ACE_Timeprobe<ACE_TIMEPROBE_MUTEX>::Event_Descriptions>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Timeprobe<ACE_TIMEPROBE_MUTEX>
+#pragma instantiate ACE_Function_Timeprobe<ACE_Timeprobe<ACE_TIMEPROBE_MUTEX> >
+#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Timeprobe<ACE_TIMEPROBE_MUTEX>::Event_Descriptions>
+#pragma instantiate ACE_Unbounded_Set<ACE_Timeprobe<ACE_TIMEPROBE_MUTEX>::Event_Descriptions>
+#pragma instantiate ACE_Node<ACE_Timeprobe<ACE_TIMEPROBE_MUTEX>::Event_Descriptions>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // If ACE_TSS_TIMEPROBES is defined, store the ACE_Timeprobe singleton
 // in thread specific storage.  This allows multiple threads to use
 // their own instance of ACE_Timerprobe, without interfering with each
 // other.
 #  if defined (ACE_TSS_TIMEPROBES)
-typedef ACE_TSS_Singleton<ACE_TIMEPROBE_WITH_LOCKING, ACE_Null_Mutex> ACE_TIMEPROBE_SINGLETON;
+
+typedef ACE_TSS_Singleton<ACE_TIMEPROBE_WITH_LOCKING, ACE_SYNCH_NULL_MUTEX> ACE_TIMEPROBE_SINGLETON;
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_TSS_Singleton<ACE_TIMEPROBE_WITH_LOCKING, ACE_SYNCH_NULL_MUTEX>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_TSS_Singleton<ACE_TIMEPROBE_WITH_LOCKING, ACE_SYNCH_NULL_MUTEX>;
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 #  else /* ACE_TSS_TIMEPROBES */
-typedef ACE_Singleton<ACE_TIMEPROBE_WITH_LOCKING, ACE_Thread_Mutex> ACE_TIMEPROBE_SINGLETON;
+
+typedef ACE_Singleton<ACE_TIMEPROBE_WITH_LOCKING, ACE_SYNCH_MUTEX> ACE_TIMEPROBE_SINGLETON;
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Singleton<ACE_TIMEPROBE_WITH_LOCKING, ACE_SYNCH_MUTEX>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Singleton<ACE_TIMEPROBE_WITH_LOCKING, ACE_SYNCH_MUTEX>;
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 #  endif /* ACE_TSS_TIMEPROBES */
 
 #endif /* ACE_COMPILE_TIMEPROBES */
@@ -221,7 +253,7 @@ typedef ACE_Singleton<ACE_TIMEPROBE_WITH_LOCKING, ACE_Thread_Mutex> ACE_TIMEPROB
 #  define ACE_TIMEPROBE_RESET ACE_TIMEPROBE_SINGLETON::instance ()->reset ()
 #  define ACE_TIMEPROBE(id) ACE_TIMEPROBE_SINGLETON::instance ()->timeprobe (id)
 #  define ACE_TIMEPROBE_PRINT ACE_TIMEPROBE_SINGLETON::instance ()->print_times ()
-#  define ACE_TIMEPROBE_EVENT_DESCRIPTIONS(descriptions, minimum_id) ACE_TIMEPROBE_SINGLETON::instance ()->event_descriptions (descriptions, minimum_id)
+#  define ACE_TIMEPROBE_EVENT_DESCRIPTIONS(descriptions, minimum_id) static int ace_timeprobe_##descriptions##_return = ACE_TIMEPROBE_SINGLETON::instance ()->event_descriptions (descriptions, minimum_id)
 #  define ACE_FUNCTION_TIMEPROBE(X) ACE_Function_Timeprobe<ACE_TIMEPROBE_WITH_LOCKING> function_timeprobe (*ACE_TIMEPROBE_SINGLETON::instance (), X)
 
 #else /* ACE_ENABLE_TIMEPROBES */
