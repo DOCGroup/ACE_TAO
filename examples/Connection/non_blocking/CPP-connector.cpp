@@ -195,7 +195,7 @@ IPC_Client<SH, PR_CO_2>::init (int argc, char *argv[])
 
   SH *sh;
   
-  ACE_NEW_RETURN (sh, SH (this->reactor ()), -1)
+  ACE_NEW_RETURN (sh, SH (this->reactor ()), -1);
 
   // Connect to the peer, reusing the local addr if necessary.
   if (this->connect (sh, remote_addr, this->options_, local_addr, 1) == -1

@@ -508,31 +508,29 @@ ACE_Recursive_Thread_Mutex::acquire (void)
 // ACE_TRACE ("ACE_Recursive_Thread_Mutex::acquire");
   ACE_thread_t t_id = ACE_Thread::self ();
 
+  // Acquire the guard.
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->nesting_mutex_, -1);
   
-  // If there's no contention, just grab the lock immediately.
+  // If there's no contention, just grab the lock immediately (since
+  // this is the common case we'll optimize for it).
   if (this->nesting_level_ == 0)
-    {
-      this->set_thread_id (t_id);  
-      this->nesting_level_ = 1;
-    }
+    this->set_thread_id (t_id);      
   // If we already own the lock, then increment the nesting level and
-  // proceed.
-  else if (ACE_OS::thr_equal (t_id, this->owner_id_))
-    this->nesting_level_++;
-  else
+  // return.
+  else if (ACE_OS::thr_equal (t_id, this->owner_id_) == 0)
     {
-      // Wait until the nesting level has dropped to zero,
-      // at which point we can acquire the lock.
+      // Wait until the nesting level has dropped to zero, at which
+      // point we can acquire the lock.
       while (this->nesting_level_ > 0)
 	this->lock_available_.wait ();
 
       // Note that at this point the nesting_mutex_ is held...
-
       this->set_thread_id (t_id);  
-      this->nesting_level_ = 1;
     }
 
+  // At this point, we can safely increment the nesting_level_ no
+  // matter how we got here!
+  this->nesting_level_++;
   return 0;
 }
 
