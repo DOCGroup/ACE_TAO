@@ -751,7 +751,6 @@ nobase_include_HEADERS += \
   Interceptor_List.inl \
   Invocation_Adapter.inl \
   Invocation_Base.inl \
-  Invocation_Endpoint_Selectors.i \
   LF_Event.inl \
   LF_Event_Binder.inl \
   LF_Event_Loop_Thread_Helper.inl \

@@ -1,3 +1,12 @@
+Tue Jan  4 09:42:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.{h,cpp,inl}:
+          The cpp file was including the wrong inline file, the inline file was empty,
+          so just zapped it
+
+        * orbsvcs/orbsvcs/Makefile.am:
+          Removed FaultTolerance/FT_Invocation_Endpoint_Selectors.inl
+
 Mon Jan  3 17:04:26 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* tao/Makefile.am:
