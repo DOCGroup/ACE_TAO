@@ -1,3 +1,15 @@
+Wed Jul 12 16:10:39 2000  John Heitmann  <jwh1@cs.wustl.edu>
+
+	* pace/fcntl.h
+	* pace/mqueue.h
+	* pace/semaphore.h
+	* pace/stdio.h
+	* pace/unistd.h
+	* pace/unistd.inl
+	* pace/tests/mqueue_test.c
+	  Updated all #define pace_func (X) macros to remove the need
+	  for double paranthesis.
+
 Wed Jul 12 17:01:47 2000  Ossama Othman  <ossama@uci.edu>
 
 	* Makefile.am:
@@ -11,7 +23,7 @@ Wed Jul 12 17:01:47 2000  Ossama Othman  <ossama@uci.edu>
 Wed Jul 12 15:27:27 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/posix/types.h (PACE_TCHAR):
-	* pace/win32/types.h (PACE_TCHAR):	
+	* pace/win32/types.h (PACE_TCHAR):
 
 	  Added typedef char PACE_TCHAR;
 	  Protected some of the typedefs.
@@ -25,8 +37,8 @@ Wed Jul 12 14:26:10 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 Wed Jul 12 14:15:10 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/signal.h: 
-	* pace/win32/time.h: 
+	* pace/win32/signal.h:
+	* pace/win32/time.h:
 
 	  Added types to help win32 along.
 
@@ -38,8 +50,8 @@ Wed Jul 12 11:51:52 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/win32/errno.h:
 
-	  Added to repository.	
-	
+	  Added to repository.
+
 	* pace/win32/pace_dll.dsp:
 	* pace/win32/pace_lib.dsp:
 

@@ -63,13 +63,8 @@ extern "C" {
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 11.2.3.
    */
-  # define pace_sem_open(X) sem_open X
-  /* int fprintf (FILE *stream, const char *format, (*//* args *//*) ... );
-   *
-   * PLEASE PAY SPECIAL ATTENTION HERE!
-   * This is a macro and requires an additional set of parenthesis
-   * surrounding the arguments.
-   */
+  # define pace_sem_open sem_open
+  /* int fprintf (FILE *stream, const char *format, (*//* args *//*) ... ); */
 
   /**
      PACE's implementation of the POSIX function sem_post.

@@ -42,26 +42,16 @@ extern "C" {
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 6.5.2.
    */
-  # define pace_fcntl(X) fcntl X
-  /* int fcntl (int fildes, int cmd, *//* arg *//* ... );
-   *
-   * PLEASE PAY SPECIAL ATTENTION HERE!
-   * This is a macro and requires an additional set of parenthesis
-   * surrounding the arguments.
-   */
+  # define pace_fcntl fcntl
+  /* int fcntl (int fildes, int cmd, *//* arg *//* ... ); */
 
   /**
      PACE's implementation of the POSIX function open.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 5.3.1.
    */
-  # define pace_open(X) open X
-  /* int open (const char *path, int oflag, *//* pace_mode_t mode *//* ... );
-   *
-   * PLEASE PAY SPECIAL ATTENTION HERE!
-   * This is a macro and requires an additional set of parenthesis
-   * surrounding the arguments.
-   */
+  # define pace_open open
+  /* int open (const char *path, int oflag, *//* pace_mode_t mode *//* ... );*/
 
 #if defined (PACE_HAS_CPLUSPLUS)
 }

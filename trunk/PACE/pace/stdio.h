@@ -166,13 +166,8 @@ extern "C" {
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
-  #define pace_fscanf (X) fscanf X
-  /* int pace_scanf (const char *format, ... );
-  *
-  * PLEASE PAY SPECIAL ATTENTION HERE!
-  * This is a macro and requires an additional set of parenthesis
-  * surrounding the arguments.
-  */
+  #define pace_fscanf fscanf
+  /* int pace_scanf (const char *format, ... ); */
 
   /**
      PACE's implementation of the POSIX function fseek.
@@ -338,13 +333,8 @@ extern "C" {
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
-  #define pace_scanf (X) scanf X
-  /* int pace_scanf (const char *format, ... );
-  *
-  * PLEASE PAY SPECIAL ATTENTION HERE!
-  * This is a macro and requires an additional set of parenthesis
-  * surrounding the arguments.
-  */
+  #define pace_scanf scanf
+  /* int pace_scanf (const char *format, ... ); */
 
   /**
      PACE's implementation of the POSIX function setbuf.
@@ -365,13 +355,8 @@ extern "C" {
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
-  #define pace_sscanf (X) sscanf X
-  /* int pace_sscanf (const char *s, const char *format, ... );
-  *
-  * PLEASE PAY SPECIAL ATTENTION HERE!
-  * This is a macro and requires an additional set of parenthesis
-  * surrounding the arguments.
-  */
+  #define pace_sscanf sscanf
+  /* int pace_sscanf (const char *s, const char *format, ... ); */
 
   /**
      PACE's implementation of the POSIX function tmpfile.

@@ -59,13 +59,8 @@ extern "C" {
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 15.2.1.
    */
-  # define pace_mq_open(X) mq_open X
-  /* mqd_t mq_open (const char *name, int oflag, (*//* args *//*) ... );
-   *
-   * PLEASE PAY SPECIAL ATTENTION HERE!
-   * This is a macro and requires an additional set of parenthesis
-   * surrounding the arguments.
-   */
+  # define pace_mq_open mq_open
+  /* mqd_t mq_open (const char *name, int oflag, (*//* args *//*) ... ); */
 
   /**
      PACE's implementation of the POSIX function mq_receive.

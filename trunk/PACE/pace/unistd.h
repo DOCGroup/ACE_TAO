@@ -92,21 +92,24 @@ extern "C" {
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 3.1.2.
      */
-  PACE_INLINE int pace_execl (const char* path, const char* arg, ...);
+# define pace_execl execl
+  /*  PACE_INLINE int pace_execl (const char* path, const char* arg, ...); */
 
   /**
      PACE's implementation of the POSIX function execle.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 3.1.2.
      */
-  PACE_INLINE int pace_execle (const char* path, const char* arg, ...);
+# define pace_execle execle
+  /*  PACE_INLINE int pace_execle (const char* path, const char* arg, ...);*/
 
   /**
      PACE's implementation of the POSIX function execlp.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 3.1.2.
      */
-  PACE_INLINE int pace_execlp (const char* file, const char* arg,  ...);
+# define pace_execlp execlp
+  /* PACE_INLINE int pace_execlp (const char* file, const char* arg,  ...);*/
 
   /**
      PACE's implementation of the POSIX function execv.
