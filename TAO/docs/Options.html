@@ -1294,7 +1294,7 @@ thread and the client threads are "pure" clients. </p>
         waiting thread.  Note that with this strategy it is possible
         to "run out of threads" in a thread pool, and that TAO doesn't
         grow thread pools.  Unlike RW, this does not require  <a
-        href="-ORBTransportMuxStrategy">-ORBTransportMuxStrategy&nbsp;<em>EXCLUSIVE</em></a>.
+        href="#ORBTransportMuxStrategy">-ORBTransportMuxStrategy&nbsp;<em>EXCLUSIVE</em></a>.
 <!--
 I'm not sure what the effect of AMI on this option is.
 -->
@@ -1304,7 +1304,7 @@ I'm not sure what the effect of AMI on this option is.
       </tr>
       <tr>
         <td><code>-ORBTransportMuxStrategy</code> <em>EXCLUSIVE | MUXED</em></td>
-        <td><a name="-ORBTransportMuxStrategy"></a><em>EXCLUSIVE</em>
+        <td><a name="ORBTransportMuxStrategy"></a><em>EXCLUSIVE</em>
 means that the Transport does not multiplex requests on a connection.
 At a time, there can be only one request pending on a connection.
         <p><em>MUXED</em> means that Transport multiplexes more than
