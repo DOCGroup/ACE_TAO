@@ -1,3 +1,53 @@
+Thu Jan 13 13:50:26 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_array/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_enum/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_cdr_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/marshal_cs.cpp:
+        
+          - Replaced calls to an interface's virtual marshal() method
+            with calls to TAO::Objref_Traits<>::marshal(), which
+            in turn calls the static methjod CORBA::Object::Marshal(),
+            which does a check for null reference. Most of these
+            replacements had been done some time ago, these were
+            evidently overlooked.
+            
+          - Made generated CORBA::Boolean values more consistent about
+            assigning or returniong 'true' or 'false' rather than
+            '1' or '0'.
+            
+        * tao/Valuetype/AbstractBase.cpp:
+        
+          Added a check to the CDR stream output operator for null
+          _ptr value. If a null is found, the operator marshals a
+          discriminator value of 1 (corresponding to an object reference)
+          and an empty type hint (this last is similar to the behavior
+          of CORBA::Object::marshal()).
+          
+        * tao/Valuetype/AbstractBase.h:
+        * tao/Valuetype/ValueBase.cpp:
+        
+          Made CORBA::Boolean values more consistent about assigning or
+          returning 'true' or 'false' rather than '1' or '0'. Also
+          changed evaluation of CDR stream operations to use '!' instead
+          of '== 0'.
+          
+        * tests/IDL_Test/IDL_Test.mpc:
+        
+          Shortened file to use wildcards instead of listing file names.
+
 Thu Jan 13 11:55:55 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp:

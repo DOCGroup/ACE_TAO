@@ -70,7 +70,7 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
           << node->name () << "_forany" << be_uidt_nl
           << ">::marshal_value (TAO_OutputCDR &)" << be_uidt_nl
           << "{" << be_idt_nl
-          << "return 0;" << be_uidt_nl
+          << "return false;" << be_uidt_nl
           << "}";
 
       *os << be_nl << be_nl
@@ -81,7 +81,7 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
           << node->name () << "_forany" << be_uidt_nl
           << ">::demarshal_value (TAO_OutputCDR &)" << be_uidt_nl
           << "{" << be_idt_nl
-          << "return 0;" << be_uidt_nl
+          << "return false;" << be_uidt_nl
           << "}";
     }
 

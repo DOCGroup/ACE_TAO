@@ -696,40 +696,16 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
       else if (nt == AST_Decl::NT_interface 
                || nt == AST_Decl::NT_interface_fwd)
         {
-          *os << "_tao_marshal_flag = " << be_idt_nl;
-
-          if (bt->is_defined ())
-            {    
-              *os << "_tao_array";
-
-              for (i = 0; i < ndims; ++i)
-                {
-                  *os << "[i" << i << "]";
-                }
-
-              *os << ".in ()->marshal (strm);" << be_uidt;
-            }
-          else
+          *os << "_tao_marshal_flag = " << be_idt_nl
+              << "TAO::Objref_Traits<" << bt->name () << ">::"
+              << "marshal (_tao_array";
+          
+          for (i = 0; i < ndims; ++i)
             {
-              
-              AST_Decl *parent = 
-                ScopeAsDecl (bt->defined_in ());
-
-              if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
-                {
-                  *os << parent->name () << "::";
-                }
-
-              *os << "TAO::Objref_Traits<" << bt->name () << ">::"
-                  << "tao_marshal (_tao_array";
-              
-              for (i = 0; i < ndims; ++i)
-                {
-                  *os << "[i" << i << "]";
-                }
-
-              *os << ".in (), strm);" << be_uidt;
+              *os << "[i" << i << "]";
             }
+
+          *os << ".in (), strm);" << be_uidt;
         }
       else
         {
