@@ -33,6 +33,9 @@ class ACE_Unbounded_Set_Iterator
 public:
   // = Initialization method.
   ACE_Unbounded_Set_Iterator (ACE_Unbounded_Set<T> &s, int end = 0);
+  ACE_Unbounded_Set_Iterator (const  ACE_Unbounded_Set_Iterator &o);
+  void operator= (const ACE_Unbounded_Set_Iterator &o);
+  ~ACE_Unbounded_Set_Iterator ();
 
   // = Iteration methods.
 
@@ -92,6 +95,9 @@ class ACE_Unbounded_Set_Const_Iterator
 public:
   // = Initialization method.
   ACE_Unbounded_Set_Const_Iterator (const ACE_Unbounded_Set<T> &s, int end = 0);
+  ACE_Unbounded_Set_Const_Iterator (const ACE_Unbounded_Set_Const_Iterator& o);
+  void operator= (const ACE_Unbounded_Set_Const_Iterator& o);
+  ~ACE_Unbounded_Set_Const_Iterator ();
 
   // = Iteration methods.
 
@@ -278,6 +284,11 @@ public:
   ACE_Unbounded_Set_Iterator<T> begin (void);
   ACE_Unbounded_Set_Iterator<T> end (void);
 
+  /// An Iterator has to register itself here.
+  void iterator_add ();
+  /// An Iterator has to unregister itself here.
+  void iterator_leave ();
+
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
@@ -288,6 +299,9 @@ private:
   /// Copy nodes into this set.
   void copy_nodes (const ACE_Unbounded_Set<T> &);
 
+  /// Really delete all nodes marked for deletion.
+  void cleanup ();
+
   /// Head of the linked list of Nodes.
   ACE_Node<T> *head_;
 
@@ -296,6 +310,9 @@ private:
 
   /// Allocation strategy of the set.
   ACE_Allocator *allocator_;
+  
+  /// Number of iterators working on this set.
+  int number_of_iterators_;
 };
 
 #if defined (__ACE_INLINE__)

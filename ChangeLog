@@ -1,3 +1,17 @@
+Mon Mar 24 13:16:29 CET 2003  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
+
+	* ace/Node.{h,cpp}:
+	* ace/Unbounded_Set.{h,inl,cpp}:
+
+	  Fix for Bugzilla bug 1460 supplied by Rudolf Weber
+	  <rfweber@tesionmail.de>, adds a `deleted' flag to ACE_Node, and
+	  adds corresponding management methods to ACE_Unbounded_Set.
+
+	* tests/Unbounded_Set_Test.{cpp,icc}: New.
+
+	* tests/Makefile, tests/Makefile.{am,bor}:
+	  Add Unbounded_Set_Test.cpp, a regression test for bug 1460.
+
 Sat Mar 22 11:58:12 2003  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/Configuration.cpp: When remove_section() was called the
