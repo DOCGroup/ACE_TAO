@@ -6653,10 +6653,19 @@ ACE_OS::dlerror (void)
 # elif defined (__hpux)
   ACE_OSCALL_RETURN (::strerror(errno), char *, 0);
 # elif defined (ACE_WIN32)
-  static char buf[128];
+#   if !defined (UNICODE)  
+  static TCHAR buf[128];
   FormatMessage (FORMAT_MESSAGE_FROM_SYSTEM, NULL, GetLastError(), 0, buf,
                  sizeof buf, NULL);
   return buf;
+#   else
+  static char cbuf[128];
+  TCHAR buf[128];
+  FormatMessage (FORMAT_MESSAGE_FROM_SYSTEM, NULL, GetLastError(), 0, buf,
+                 sizeof buf, NULL);
+  for (size_t i = 0; ((cbuf[i] = (char) buf[i]) != 0) && i < 128; i++) ;
+  return cbuf;    
+#   endif /* UNICODE */
 # else
   ACE_NOTSUP_RETURN (0);
 # endif /* ACE_HAS_SVR4_DYNAMIC_LINKING */
