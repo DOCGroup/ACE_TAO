@@ -1089,6 +1089,29 @@ namespace IOP
 
 // TAO_IDL - Generated from
 // be/be_visitor_interface/any_op_cs.cpp:50
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<IOP::Codec>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<IOP::Codec>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<IOP::Codec>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
 
 // Copying insertion.
 void
@@ -1130,30 +1153,6 @@ operator>>= (
         IOP::_tc_Codec,
         _tao_elem
       );
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<IOP::Codec>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<IOP::Codec>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<IOP::Codec>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
 }
 
 // TAO_IDL - Generated from
@@ -1216,6 +1215,30 @@ CORBA::Boolean operator>>= (
 
 // TAO_IDL - Generated from
 // be/be_visitor_interface/any_op_cs.cpp:50
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<IOP::CodecFactory>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<IOP::CodecFactory>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<IOP::CodecFactory>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
+
 
 // Copying insertion.
 void
@@ -1259,29 +1282,6 @@ operator>>= (
       );
 }
 
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<IOP::CodecFactory>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<IOP::CodecFactory>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<IOP::CodecFactory>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root.cpp:1703

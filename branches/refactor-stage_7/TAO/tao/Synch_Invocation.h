@@ -13,15 +13,15 @@
 
 #ifndef TAO_SYNCH_INVOCATION_H
 #define TAO_SYNCH_INVOCATION_H
-
-#include "ace/pre.h"
-#include "tao/Remote_Invocation.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/Remote_Invocation.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/Exception.h"
 
 class TAO_Operation_Details;
 class TAO_Synch_Reply_Dispatcher;

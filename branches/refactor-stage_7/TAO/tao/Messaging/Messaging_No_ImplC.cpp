@@ -54,13 +54,13 @@
 // Arg traits specializations.
 namespace TAO
 {
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_arg_traits.cpp:428
 
 #if !defined (_TIMEBASE_UTCT__ARG_TRAITS_CS_)
 #define _TIMEBASE_UTCT__ARG_TRAITS_CS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_Messaging_Export Arg_Traits<TimeBase::UtcT>
     : public
@@ -71,13 +71,13 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_arg_traits.cpp:428
 
 #if !defined (_MESSAGING_PRIORITYRANGE__ARG_TRAITS_CS_)
 #define _MESSAGING_PRIORITYRANGE__ARG_TRAITS_CS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_Messaging_Export Arg_Traits<Messaging::PriorityRange>
     : public
@@ -88,13 +88,13 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_arg_traits.cpp:428
 
 #if !defined (_MESSAGING_ROUTINGTYPERANGE__ARG_TRAITS_CS_)
 #define _MESSAGING_ROUTINGTYPERANGE__ARG_TRAITS_CS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_Messaging_Export Arg_Traits<Messaging::RoutingTypeRange>
     : public
@@ -114,18 +114,18 @@ static const CORBA::Long _oc_Messaging_Priority[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   35,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x4d657373), 
-  ACE_NTOHL (0x6167696e), 
-  ACE_NTOHL (0x672f5072), 
-  ACE_NTOHL (0x696f7269), 
-  ACE_NTOHL (0x74793a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x4d657373),
+  ACE_NTOHL (0x6167696e),
+  ACE_NTOHL (0x672f5072),
+  ACE_NTOHL (0x696f7269),
+  ACE_NTOHL (0x74793a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/Messaging/Priority:1.0
     9,
-  ACE_NTOHL (0x5072696f), 
-  ACE_NTOHL (0x72697479), 
+  ACE_NTOHL (0x5072696f),
+  ACE_NTOHL (0x72697479),
   ACE_NTOHL (0x0),  // name = Priority
     CORBA::tk_short,
 
@@ -152,19 +152,19 @@ static const CORBA::Long _oc_Messaging_RebindMode[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   37,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x4d657373), 
-  ACE_NTOHL (0x6167696e), 
-  ACE_NTOHL (0x672f5265), 
-  ACE_NTOHL (0x62696e64), 
-  ACE_NTOHL (0x4d6f6465), 
-  ACE_NTOHL (0x3a312e30), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x4d657373),
+  ACE_NTOHL (0x6167696e),
+  ACE_NTOHL (0x672f5265),
+  ACE_NTOHL (0x62696e64),
+  ACE_NTOHL (0x4d6f6465),
+  ACE_NTOHL (0x3a312e30),
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/Messaging/RebindMode:1.0
     11,
-  ACE_NTOHL (0x52656269), 
-  ACE_NTOHL (0x6e644d6f), 
+  ACE_NTOHL (0x52656269),
+  ACE_NTOHL (0x6e644d6f),
   ACE_NTOHL (0x64650000),  // name = RebindMode
     CORBA::tk_short,
 
@@ -191,19 +191,19 @@ static const CORBA::Long _oc_Messaging_RoutingType[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   38,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x4d657373), 
-  ACE_NTOHL (0x6167696e), 
-  ACE_NTOHL (0x672f526f), 
-  ACE_NTOHL (0x7574696e), 
-  ACE_NTOHL (0x67547970), 
-  ACE_NTOHL (0x653a312e), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x4d657373),
+  ACE_NTOHL (0x6167696e),
+  ACE_NTOHL (0x672f526f),
+  ACE_NTOHL (0x7574696e),
+  ACE_NTOHL (0x67547970),
+  ACE_NTOHL (0x653a312e),
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/Messaging/RoutingType:1.0
     12,
-  ACE_NTOHL (0x526f7574), 
-  ACE_NTOHL (0x696e6754), 
+  ACE_NTOHL (0x526f7574),
+  ACE_NTOHL (0x696e6754),
   ACE_NTOHL (0x79706500),  // name = RoutingType
     CORBA::tk_short,
 
@@ -230,18 +230,18 @@ static const CORBA::Long _oc_Messaging_Ordering[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   35,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x4d657373), 
-  ACE_NTOHL (0x6167696e), 
-  ACE_NTOHL (0x672f4f72), 
-  ACE_NTOHL (0x64657269), 
-  ACE_NTOHL (0x6e673a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x4d657373),
+  ACE_NTOHL (0x6167696e),
+  ACE_NTOHL (0x672f4f72),
+  ACE_NTOHL (0x64657269),
+  ACE_NTOHL (0x6e673a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/Messaging/Ordering:1.0
     9,
-  ACE_NTOHL (0x4f726465), 
-  ACE_NTOHL (0x72696e67), 
+  ACE_NTOHL (0x4f726465),
+  ACE_NTOHL (0x72696e67),
   ACE_NTOHL (0x0),  // name = Ordering
     CORBA::tk_ushort,
 
@@ -298,7 +298,7 @@ TAO::Objref_Traits<Messaging::RebindPolicy>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
+TAO::Collocation_Proxy_Broker *
 (*Messaging__TAO_RebindPolicy_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -309,7 +309,7 @@ Messaging::RebindPolicy::RebindPolicy (void)
 Messaging::RebindPolicy::~RebindPolicy (void)
 {}
 
-void 
+void
 Messaging::RebindPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   RebindPolicy *_tao_tmp_pointer =
@@ -336,7 +336,7 @@ Messaging::RebindPolicy::_duplicate (RebindPolicy_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -391,20 +391,20 @@ static const CORBA::Long _oc_Messaging_RebindPolicy[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   39,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x4d657373), 
-  ACE_NTOHL (0x6167696e), 
-  ACE_NTOHL (0x672f5265), 
-  ACE_NTOHL (0x62696e64), 
-  ACE_NTOHL (0x506f6c69), 
-  ACE_NTOHL (0x63793a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x4d657373),
+  ACE_NTOHL (0x6167696e),
+  ACE_NTOHL (0x672f5265),
+  ACE_NTOHL (0x62696e64),
+  ACE_NTOHL (0x506f6c69),
+  ACE_NTOHL (0x63793a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/Messaging/RebindPolicy:1.0
     13,
-  ACE_NTOHL (0x52656269), 
-  ACE_NTOHL (0x6e64506f), 
-  ACE_NTOHL (0x6c696379), 
+  ACE_NTOHL (0x52656269),
+  ACE_NTOHL (0x6e64506f),
+  ACE_NTOHL (0x6c696379),
   ACE_NTOHL (0x0),  // name = RebindPolicy
   };
 
@@ -429,20 +429,20 @@ static const CORBA::Long _oc_Messaging_PriorityRange[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   40,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x4d657373), 
-  ACE_NTOHL (0x6167696e), 
-  ACE_NTOHL (0x672f5072), 
-  ACE_NTOHL (0x696f7269), 
-  ACE_NTOHL (0x74795261), 
-  ACE_NTOHL (0x6e67653a), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x4d657373),
+  ACE_NTOHL (0x6167696e),
+  ACE_NTOHL (0x672f5072),
+  ACE_NTOHL (0x696f7269),
+  ACE_NTOHL (0x74795261),
+  ACE_NTOHL (0x6e67653a),
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/Messaging/PriorityRange:1.0
     14,
-  ACE_NTOHL (0x5072696f), 
-  ACE_NTOHL (0x72697479), 
-  ACE_NTOHL (0x52616e67), 
+  ACE_NTOHL (0x5072696f),
+  ACE_NTOHL (0x72697479),
+  ACE_NTOHL (0x52616e67),
   ACE_NTOHL (0x65000000),  // name = PriorityRange
   2, // member count
     4,
@@ -451,18 +451,18 @@ static const CORBA::Long _oc_Messaging_PriorityRange[] =
   64, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     35,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x4d657373), 
-    ACE_NTOHL (0x6167696e), 
-    ACE_NTOHL (0x672f5072), 
-    ACE_NTOHL (0x696f7269), 
-    ACE_NTOHL (0x74793a31), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x4d657373),
+    ACE_NTOHL (0x6167696e),
+    ACE_NTOHL (0x672f5072),
+    ACE_NTOHL (0x696f7269),
+    ACE_NTOHL (0x74793a31),
     ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/Messaging/Priority:1.0
         9,
-    ACE_NTOHL (0x5072696f), 
-    ACE_NTOHL (0x72697479), 
+    ACE_NTOHL (0x5072696f),
+    ACE_NTOHL (0x72697479),
     ACE_NTOHL (0x0),  // name = Priority
         CORBA::tk_short,
 
@@ -473,18 +473,18 @@ static const CORBA::Long _oc_Messaging_PriorityRange[] =
   64, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     35,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x4d657373), 
-    ACE_NTOHL (0x6167696e), 
-    ACE_NTOHL (0x672f5072), 
-    ACE_NTOHL (0x696f7269), 
-    ACE_NTOHL (0x74793a31), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x4d657373),
+    ACE_NTOHL (0x6167696e),
+    ACE_NTOHL (0x672f5072),
+    ACE_NTOHL (0x696f7269),
+    ACE_NTOHL (0x74793a31),
     ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/Messaging/Priority:1.0
         9,
-    ACE_NTOHL (0x5072696f), 
-    ACE_NTOHL (0x72697479), 
+    ACE_NTOHL (0x5072696f),
+    ACE_NTOHL (0x72697479),
     ACE_NTOHL (0x0),  // name = Priority
         CORBA::tk_short,
 
@@ -505,10 +505,10 @@ namespace Messaging
     &_tc_TAO_tc_Messaging_PriorityRange;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_structure/structure_cs.cpp:66
 
-void 
+void
 Messaging::PriorityRange::_tao_any_destructor (
     void *_tao_void_pointer
   )
@@ -555,7 +555,7 @@ TAO::Objref_Traits<Messaging::RequestPriorityPolicy>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
+TAO::Collocation_Proxy_Broker *
 (*Messaging__TAO_RequestPriorityPolicy_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -566,7 +566,7 @@ Messaging::RequestPriorityPolicy::RequestPriorityPolicy (void)
 Messaging::RequestPriorityPolicy::~RequestPriorityPolicy (void)
 {}
 
-void 
+void
 Messaging::RequestPriorityPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   RequestPriorityPolicy *_tao_tmp_pointer =
@@ -593,7 +593,7 @@ Messaging::RequestPriorityPolicy::_duplicate (RequestPriorityPolicy_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -648,24 +648,24 @@ static const CORBA::Long _oc_Messaging_RequestPriorityPolicy[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   48,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x4d657373), 
-  ACE_NTOHL (0x6167696e), 
-  ACE_NTOHL (0x672f5265), 
-  ACE_NTOHL (0x71756573), 
-  ACE_NTOHL (0x74507269), 
-  ACE_NTOHL (0x6f726974), 
-  ACE_NTOHL (0x79506f6c), 
-  ACE_NTOHL (0x6963793a), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x4d657373),
+  ACE_NTOHL (0x6167696e),
+  ACE_NTOHL (0x672f5265),
+  ACE_NTOHL (0x71756573),
+  ACE_NTOHL (0x74507269),
+  ACE_NTOHL (0x6f726974),
+  ACE_NTOHL (0x79506f6c),
+  ACE_NTOHL (0x6963793a),
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/Messaging/RequestPriorityPolicy:1.0
     22,
-  ACE_NTOHL (0x52657175), 
-  ACE_NTOHL (0x65737450), 
-  ACE_NTOHL (0x72696f72), 
-  ACE_NTOHL (0x69747950), 
-  ACE_NTOHL (0x6f6c6963), 
+  ACE_NTOHL (0x52657175),
+  ACE_NTOHL (0x65737450),
+  ACE_NTOHL (0x72696f72),
+  ACE_NTOHL (0x69747950),
+  ACE_NTOHL (0x6f6c6963),
   ACE_NTOHL (0x79000000),  // name = RequestPriorityPolicy
   };
 
@@ -720,7 +720,7 @@ TAO::Objref_Traits<Messaging::ReplyPriorityPolicy>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
+TAO::Collocation_Proxy_Broker *
 (*Messaging__TAO_ReplyPriorityPolicy_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -731,7 +731,7 @@ Messaging::ReplyPriorityPolicy::ReplyPriorityPolicy (void)
 Messaging::ReplyPriorityPolicy::~ReplyPriorityPolicy (void)
 {}
 
-void 
+void
 Messaging::ReplyPriorityPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   ReplyPriorityPolicy *_tao_tmp_pointer =
@@ -758,7 +758,7 @@ Messaging::ReplyPriorityPolicy::_duplicate (ReplyPriorityPolicy_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -813,23 +813,23 @@ static const CORBA::Long _oc_Messaging_ReplyPriorityPolicy[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   46,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x4d657373), 
-  ACE_NTOHL (0x6167696e), 
-  ACE_NTOHL (0x672f5265), 
-  ACE_NTOHL (0x706c7950), 
-  ACE_NTOHL (0x72696f72), 
-  ACE_NTOHL (0x69747950), 
-  ACE_NTOHL (0x6f6c6963), 
-  ACE_NTOHL (0x793a312e), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x4d657373),
+  ACE_NTOHL (0x6167696e),
+  ACE_NTOHL (0x672f5265),
+  ACE_NTOHL (0x706c7950),
+  ACE_NTOHL (0x72696f72),
+  ACE_NTOHL (0x69747950),
+  ACE_NTOHL (0x6f6c6963),
+  ACE_NTOHL (0x793a312e),
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/Messaging/ReplyPriorityPolicy:1.0
     20,
-  ACE_NTOHL (0x5265706c), 
-  ACE_NTOHL (0x79507269), 
-  ACE_NTOHL (0x6f726974), 
-  ACE_NTOHL (0x79506f6c), 
+  ACE_NTOHL (0x5265706c),
+  ACE_NTOHL (0x79507269),
+  ACE_NTOHL (0x6f726974),
+  ACE_NTOHL (0x79506f6c),
   ACE_NTOHL (0x69637900),  // name = ReplyPriorityPolicy
   };
 
@@ -884,7 +884,7 @@ TAO::Objref_Traits<Messaging::RequestStartTimePolicy>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
+TAO::Collocation_Proxy_Broker *
 (*Messaging__TAO_RequestStartTimePolicy_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -895,7 +895,7 @@ Messaging::RequestStartTimePolicy::RequestStartTimePolicy (void)
 Messaging::RequestStartTimePolicy::~RequestStartTimePolicy (void)
 {}
 
-void 
+void
 Messaging::RequestStartTimePolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   RequestStartTimePolicy *_tao_tmp_pointer =
@@ -922,7 +922,7 @@ Messaging::RequestStartTimePolicy::_duplicate (RequestStartTimePolicy_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -977,25 +977,25 @@ static const CORBA::Long _oc_Messaging_RequestStartTimePolicy[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   49,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x4d657373), 
-  ACE_NTOHL (0x6167696e), 
-  ACE_NTOHL (0x672f5265), 
-  ACE_NTOHL (0x71756573), 
-  ACE_NTOHL (0x74537461), 
-  ACE_NTOHL (0x72745469), 
-  ACE_NTOHL (0x6d65506f), 
-  ACE_NTOHL (0x6c696379), 
-  ACE_NTOHL (0x3a312e30), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x4d657373),
+  ACE_NTOHL (0x6167696e),
+  ACE_NTOHL (0x672f5265),
+  ACE_NTOHL (0x71756573),
+  ACE_NTOHL (0x74537461),
+  ACE_NTOHL (0x72745469),
+  ACE_NTOHL (0x6d65506f),
+  ACE_NTOHL (0x6c696379),
+  ACE_NTOHL (0x3a312e30),
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/Messaging/RequestStartTimePolicy:1.0
     23,
-  ACE_NTOHL (0x52657175), 
-  ACE_NTOHL (0x65737453), 
-  ACE_NTOHL (0x74617274), 
-  ACE_NTOHL (0x54696d65), 
-  ACE_NTOHL (0x506f6c69), 
+  ACE_NTOHL (0x52657175),
+  ACE_NTOHL (0x65737453),
+  ACE_NTOHL (0x74617274),
+  ACE_NTOHL (0x54696d65),
+  ACE_NTOHL (0x506f6c69),
   ACE_NTOHL (0x63790000),  // name = RequestStartTimePolicy
   };
 
@@ -1050,7 +1050,7 @@ TAO::Objref_Traits<Messaging::RequestEndTimePolicy>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
+TAO::Collocation_Proxy_Broker *
 (*Messaging__TAO_RequestEndTimePolicy_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -1061,7 +1061,7 @@ Messaging::RequestEndTimePolicy::RequestEndTimePolicy (void)
 Messaging::RequestEndTimePolicy::~RequestEndTimePolicy (void)
 {}
 
-void 
+void
 Messaging::RequestEndTimePolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   RequestEndTimePolicy *_tao_tmp_pointer =
@@ -1088,7 +1088,7 @@ Messaging::RequestEndTimePolicy::_duplicate (RequestEndTimePolicy_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -1143,24 +1143,24 @@ static const CORBA::Long _oc_Messaging_RequestEndTimePolicy[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   47,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x4d657373), 
-  ACE_NTOHL (0x6167696e), 
-  ACE_NTOHL (0x672f5265), 
-  ACE_NTOHL (0x71756573), 
-  ACE_NTOHL (0x74456e64), 
-  ACE_NTOHL (0x54696d65), 
-  ACE_NTOHL (0x506f6c69), 
-  ACE_NTOHL (0x63793a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x4d657373),
+  ACE_NTOHL (0x6167696e),
+  ACE_NTOHL (0x672f5265),
+  ACE_NTOHL (0x71756573),
+  ACE_NTOHL (0x74456e64),
+  ACE_NTOHL (0x54696d65),
+  ACE_NTOHL (0x506f6c69),
+  ACE_NTOHL (0x63793a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/Messaging/RequestEndTimePolicy:1.0
     21,
-  ACE_NTOHL (0x52657175), 
-  ACE_NTOHL (0x65737445), 
-  ACE_NTOHL (0x6e645469), 
-  ACE_NTOHL (0x6d65506f), 
-  ACE_NTOHL (0x6c696379), 
+  ACE_NTOHL (0x52657175),
+  ACE_NTOHL (0x65737445),
+  ACE_NTOHL (0x6e645469),
+  ACE_NTOHL (0x6d65506f),
+  ACE_NTOHL (0x6c696379),
   ACE_NTOHL (0x0),  // name = RequestEndTimePolicy
   };
 
@@ -1215,7 +1215,7 @@ TAO::Objref_Traits<Messaging::ReplyStartTimePolicy>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
+TAO::Collocation_Proxy_Broker *
 (*Messaging__TAO_ReplyStartTimePolicy_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -1226,7 +1226,7 @@ Messaging::ReplyStartTimePolicy::ReplyStartTimePolicy (void)
 Messaging::ReplyStartTimePolicy::~ReplyStartTimePolicy (void)
 {}
 
-void 
+void
 Messaging::ReplyStartTimePolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   ReplyStartTimePolicy *_tao_tmp_pointer =
@@ -1253,7 +1253,7 @@ Messaging::ReplyStartTimePolicy::_duplicate (ReplyStartTimePolicy_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -1308,24 +1308,24 @@ static const CORBA::Long _oc_Messaging_ReplyStartTimePolicy[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   47,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x4d657373), 
-  ACE_NTOHL (0x6167696e), 
-  ACE_NTOHL (0x672f5265), 
-  ACE_NTOHL (0x706c7953), 
-  ACE_NTOHL (0x74617274), 
-  ACE_NTOHL (0x54696d65), 
-  ACE_NTOHL (0x506f6c69), 
-  ACE_NTOHL (0x63793a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x4d657373),
+  ACE_NTOHL (0x6167696e),
+  ACE_NTOHL (0x672f5265),
+  ACE_NTOHL (0x706c7953),
+  ACE_NTOHL (0x74617274),
+  ACE_NTOHL (0x54696d65),
+  ACE_NTOHL (0x506f6c69),
+  ACE_NTOHL (0x63793a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/Messaging/ReplyStartTimePolicy:1.0
     21,
-  ACE_NTOHL (0x5265706c), 
-  ACE_NTOHL (0x79537461), 
-  ACE_NTOHL (0x72745469), 
-  ACE_NTOHL (0x6d65506f), 
-  ACE_NTOHL (0x6c696379), 
+  ACE_NTOHL (0x5265706c),
+  ACE_NTOHL (0x79537461),
+  ACE_NTOHL (0x72745469),
+  ACE_NTOHL (0x6d65506f),
+  ACE_NTOHL (0x6c696379),
   ACE_NTOHL (0x0),  // name = ReplyStartTimePolicy
   };
 
@@ -1380,7 +1380,7 @@ TAO::Objref_Traits<Messaging::ReplyEndTimePolicy>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
+TAO::Collocation_Proxy_Broker *
 (*Messaging__TAO_ReplyEndTimePolicy_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -1391,7 +1391,7 @@ Messaging::ReplyEndTimePolicy::ReplyEndTimePolicy (void)
 Messaging::ReplyEndTimePolicy::~ReplyEndTimePolicy (void)
 {}
 
-void 
+void
 Messaging::ReplyEndTimePolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   ReplyEndTimePolicy *_tao_tmp_pointer =
@@ -1418,7 +1418,7 @@ Messaging::ReplyEndTimePolicy::_duplicate (ReplyEndTimePolicy_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -1473,23 +1473,23 @@ static const CORBA::Long _oc_Messaging_ReplyEndTimePolicy[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   45,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x4d657373), 
-  ACE_NTOHL (0x6167696e), 
-  ACE_NTOHL (0x672f5265), 
-  ACE_NTOHL (0x706c7945), 
-  ACE_NTOHL (0x6e645469), 
-  ACE_NTOHL (0x6d65506f), 
-  ACE_NTOHL (0x6c696379), 
-  ACE_NTOHL (0x3a312e30), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x4d657373),
+  ACE_NTOHL (0x6167696e),
+  ACE_NTOHL (0x672f5265),
+  ACE_NTOHL (0x706c7945),
+  ACE_NTOHL (0x6e645469),
+  ACE_NTOHL (0x6d65506f),
+  ACE_NTOHL (0x6c696379),
+  ACE_NTOHL (0x3a312e30),
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/Messaging/ReplyEndTimePolicy:1.0
     19,
-  ACE_NTOHL (0x5265706c), 
-  ACE_NTOHL (0x79456e64), 
-  ACE_NTOHL (0x54696d65), 
-  ACE_NTOHL (0x506f6c69), 
+  ACE_NTOHL (0x5265706c),
+  ACE_NTOHL (0x79456e64),
+  ACE_NTOHL (0x54696d65),
+  ACE_NTOHL (0x506f6c69),
   ACE_NTOHL (0x63790000),  // name = ReplyEndTimePolicy
   };
 
@@ -1544,7 +1544,7 @@ TAO::Objref_Traits<Messaging::RelativeRequestTimeoutPolicy>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
+TAO::Collocation_Proxy_Broker *
 (*Messaging__TAO_RelativeRequestTimeoutPolicy_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -1555,7 +1555,7 @@ Messaging::RelativeRequestTimeoutPolicy::RelativeRequestTimeoutPolicy (void)
 Messaging::RelativeRequestTimeoutPolicy::~RelativeRequestTimeoutPolicy (void)
 {}
 
-void 
+void
 Messaging::RelativeRequestTimeoutPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   RelativeRequestTimeoutPolicy *_tao_tmp_pointer =
@@ -1582,7 +1582,7 @@ Messaging::RelativeRequestTimeoutPolicy::_duplicate (RelativeRequestTimeoutPolic
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -1637,28 +1637,28 @@ static const CORBA::Long _oc_Messaging_RelativeRequestTimeoutPolicy[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   55,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x4d657373), 
-  ACE_NTOHL (0x6167696e), 
-  ACE_NTOHL (0x672f5265), 
-  ACE_NTOHL (0x6c617469), 
-  ACE_NTOHL (0x76655265), 
-  ACE_NTOHL (0x71756573), 
-  ACE_NTOHL (0x7454696d), 
-  ACE_NTOHL (0x656f7574), 
-  ACE_NTOHL (0x506f6c69), 
-  ACE_NTOHL (0x63793a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x4d657373),
+  ACE_NTOHL (0x6167696e),
+  ACE_NTOHL (0x672f5265),
+  ACE_NTOHL (0x6c617469),
+  ACE_NTOHL (0x76655265),
+  ACE_NTOHL (0x71756573),
+  ACE_NTOHL (0x7454696d),
+  ACE_NTOHL (0x656f7574),
+  ACE_NTOHL (0x506f6c69),
+  ACE_NTOHL (0x63793a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/Messaging/RelativeRequestTimeoutPolicy:1.0
     29,
-  ACE_NTOHL (0x52656c61), 
-  ACE_NTOHL (0x74697665), 
-  ACE_NTOHL (0x52657175), 
-  ACE_NTOHL (0x65737454), 
-  ACE_NTOHL (0x696d656f), 
-  ACE_NTOHL (0x7574506f), 
-  ACE_NTOHL (0x6c696379), 
+  ACE_NTOHL (0x52656c61),
+  ACE_NTOHL (0x74697665),
+  ACE_NTOHL (0x52657175),
+  ACE_NTOHL (0x65737454),
+  ACE_NTOHL (0x696d656f),
+  ACE_NTOHL (0x7574506f),
+  ACE_NTOHL (0x6c696379),
   ACE_NTOHL (0x0),  // name = RelativeRequestTimeoutPolicy
   };
 
@@ -1683,22 +1683,22 @@ static const CORBA::Long _oc_Messaging_RoutingTypeRange[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   43,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x4d657373), 
-  ACE_NTOHL (0x6167696e), 
-  ACE_NTOHL (0x672f526f), 
-  ACE_NTOHL (0x7574696e), 
-  ACE_NTOHL (0x67547970), 
-  ACE_NTOHL (0x6552616e), 
-  ACE_NTOHL (0x67653a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x4d657373),
+  ACE_NTOHL (0x6167696e),
+  ACE_NTOHL (0x672f526f),
+  ACE_NTOHL (0x7574696e),
+  ACE_NTOHL (0x67547970),
+  ACE_NTOHL (0x6552616e),
+  ACE_NTOHL (0x67653a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/Messaging/RoutingTypeRange:1.0
     17,
-  ACE_NTOHL (0x526f7574), 
-  ACE_NTOHL (0x696e6754), 
-  ACE_NTOHL (0x79706552), 
-  ACE_NTOHL (0x616e6765), 
+  ACE_NTOHL (0x526f7574),
+  ACE_NTOHL (0x696e6754),
+  ACE_NTOHL (0x79706552),
+  ACE_NTOHL (0x616e6765),
   ACE_NTOHL (0x0),  // name = RoutingTypeRange
   2, // member count
     4,
@@ -1707,19 +1707,19 @@ static const CORBA::Long _oc_Messaging_RoutingTypeRange[] =
   68, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     38,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x4d657373), 
-    ACE_NTOHL (0x6167696e), 
-    ACE_NTOHL (0x672f526f), 
-    ACE_NTOHL (0x7574696e), 
-    ACE_NTOHL (0x67547970), 
-    ACE_NTOHL (0x653a312e), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x4d657373),
+    ACE_NTOHL (0x6167696e),
+    ACE_NTOHL (0x672f526f),
+    ACE_NTOHL (0x7574696e),
+    ACE_NTOHL (0x67547970),
+    ACE_NTOHL (0x653a312e),
     ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/Messaging/RoutingType:1.0
         12,
-    ACE_NTOHL (0x526f7574), 
-    ACE_NTOHL (0x696e6754), 
+    ACE_NTOHL (0x526f7574),
+    ACE_NTOHL (0x696e6754),
     ACE_NTOHL (0x79706500),  // name = RoutingType
         CORBA::tk_short,
 
@@ -1730,19 +1730,19 @@ static const CORBA::Long _oc_Messaging_RoutingTypeRange[] =
   68, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     38,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x4d657373), 
-    ACE_NTOHL (0x6167696e), 
-    ACE_NTOHL (0x672f526f), 
-    ACE_NTOHL (0x7574696e), 
-    ACE_NTOHL (0x67547970), 
-    ACE_NTOHL (0x653a312e), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x4d657373),
+    ACE_NTOHL (0x6167696e),
+    ACE_NTOHL (0x672f526f),
+    ACE_NTOHL (0x7574696e),
+    ACE_NTOHL (0x67547970),
+    ACE_NTOHL (0x653a312e),
     ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/Messaging/RoutingType:1.0
         12,
-    ACE_NTOHL (0x526f7574), 
-    ACE_NTOHL (0x696e6754), 
+    ACE_NTOHL (0x526f7574),
+    ACE_NTOHL (0x696e6754),
     ACE_NTOHL (0x79706500),  // name = RoutingType
         CORBA::tk_short,
 
@@ -1763,10 +1763,10 @@ namespace Messaging
     &_tc_TAO_tc_Messaging_RoutingTypeRange;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_structure/structure_cs.cpp:66
 
-void 
+void
 Messaging::RoutingTypeRange::_tao_any_destructor (
     void *_tao_void_pointer
   )
@@ -1813,7 +1813,7 @@ TAO::Objref_Traits<Messaging::RoutingPolicy>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
+TAO::Collocation_Proxy_Broker *
 (*Messaging__TAO_RoutingPolicy_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -1824,7 +1824,7 @@ Messaging::RoutingPolicy::RoutingPolicy (void)
 Messaging::RoutingPolicy::~RoutingPolicy (void)
 {}
 
-void 
+void
 Messaging::RoutingPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   RoutingPolicy *_tao_tmp_pointer =
@@ -1851,7 +1851,7 @@ Messaging::RoutingPolicy::_duplicate (RoutingPolicy_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -1906,20 +1906,20 @@ static const CORBA::Long _oc_Messaging_RoutingPolicy[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   40,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x4d657373), 
-  ACE_NTOHL (0x6167696e), 
-  ACE_NTOHL (0x672f526f), 
-  ACE_NTOHL (0x7574696e), 
-  ACE_NTOHL (0x67506f6c), 
-  ACE_NTOHL (0x6963793a), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x4d657373),
+  ACE_NTOHL (0x6167696e),
+  ACE_NTOHL (0x672f526f),
+  ACE_NTOHL (0x7574696e),
+  ACE_NTOHL (0x67506f6c),
+  ACE_NTOHL (0x6963793a),
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/Messaging/RoutingPolicy:1.0
     14,
-  ACE_NTOHL (0x526f7574), 
-  ACE_NTOHL (0x696e6750), 
-  ACE_NTOHL (0x6f6c6963), 
+  ACE_NTOHL (0x526f7574),
+  ACE_NTOHL (0x696e6750),
+  ACE_NTOHL (0x6f6c6963),
   ACE_NTOHL (0x79000000),  // name = RoutingPolicy
   };
 
@@ -1974,7 +1974,7 @@ TAO::Objref_Traits<Messaging::MaxHopsPolicy>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
+TAO::Collocation_Proxy_Broker *
 (*Messaging__TAO_MaxHopsPolicy_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -1985,7 +1985,7 @@ Messaging::MaxHopsPolicy::MaxHopsPolicy (void)
 Messaging::MaxHopsPolicy::~MaxHopsPolicy (void)
 {}
 
-void 
+void
 Messaging::MaxHopsPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   MaxHopsPolicy *_tao_tmp_pointer =
@@ -2012,7 +2012,7 @@ Messaging::MaxHopsPolicy::_duplicate (MaxHopsPolicy_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -2067,20 +2067,20 @@ static const CORBA::Long _oc_Messaging_MaxHopsPolicy[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   40,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x4d657373), 
-  ACE_NTOHL (0x6167696e), 
-  ACE_NTOHL (0x672f4d61), 
-  ACE_NTOHL (0x78486f70), 
-  ACE_NTOHL (0x73506f6c), 
-  ACE_NTOHL (0x6963793a), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x4d657373),
+  ACE_NTOHL (0x6167696e),
+  ACE_NTOHL (0x672f4d61),
+  ACE_NTOHL (0x78486f70),
+  ACE_NTOHL (0x73506f6c),
+  ACE_NTOHL (0x6963793a),
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/Messaging/MaxHopsPolicy:1.0
     14,
-  ACE_NTOHL (0x4d617848), 
-  ACE_NTOHL (0x6f707350), 
-  ACE_NTOHL (0x6f6c6963), 
+  ACE_NTOHL (0x4d617848),
+  ACE_NTOHL (0x6f707350),
+  ACE_NTOHL (0x6f6c6963),
   ACE_NTOHL (0x79000000),  // name = MaxHopsPolicy
   };
 
@@ -2135,7 +2135,7 @@ TAO::Objref_Traits<Messaging::QueueOrderPolicy>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
+TAO::Collocation_Proxy_Broker *
 (*Messaging__TAO_QueueOrderPolicy_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -2146,7 +2146,7 @@ Messaging::QueueOrderPolicy::QueueOrderPolicy (void)
 Messaging::QueueOrderPolicy::~QueueOrderPolicy (void)
 {}
 
-void 
+void
 Messaging::QueueOrderPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   QueueOrderPolicy *_tao_tmp_pointer =
@@ -2173,7 +2173,7 @@ Messaging::QueueOrderPolicy::_duplicate (QueueOrderPolicy_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -2228,22 +2228,22 @@ static const CORBA::Long _oc_Messaging_QueueOrderPolicy[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   43,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x4d657373), 
-  ACE_NTOHL (0x6167696e), 
-  ACE_NTOHL (0x672f5175), 
-  ACE_NTOHL (0x6575654f), 
-  ACE_NTOHL (0x72646572), 
-  ACE_NTOHL (0x506f6c69), 
-  ACE_NTOHL (0x63793a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x4d657373),
+  ACE_NTOHL (0x6167696e),
+  ACE_NTOHL (0x672f5175),
+  ACE_NTOHL (0x6575654f),
+  ACE_NTOHL (0x72646572),
+  ACE_NTOHL (0x506f6c69),
+  ACE_NTOHL (0x63793a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/Messaging/QueueOrderPolicy:1.0
     17,
-  ACE_NTOHL (0x51756575), 
-  ACE_NTOHL (0x654f7264), 
-  ACE_NTOHL (0x6572506f), 
-  ACE_NTOHL (0x6c696379), 
+  ACE_NTOHL (0x51756575),
+  ACE_NTOHL (0x654f7264),
+  ACE_NTOHL (0x6572506f),
+  ACE_NTOHL (0x6c696379),
   ACE_NTOHL (0x0),  // name = QueueOrderPolicy
   };
 
@@ -2263,6 +2263,29 @@ namespace Messaging
 
 // TAO_IDL - Generated from
 // be/be_visitor_interface/any_op_cs.cpp:50
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::RebindPolicy>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::RebindPolicy>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::RebindPolicy>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
 
 // Copying insertion.
 void
@@ -2306,31 +2329,7 @@ operator>>= (
       );
 }
 
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RebindPolicy>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RebindPolicy>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RebindPolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
@@ -2390,6 +2389,29 @@ CORBA::Boolean operator>>= (
 
 // TAO_IDL - Generated from
 // be/be_visitor_interface/any_op_cs.cpp:50
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::RequestPriorityPolicy>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::RequestPriorityPolicy>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::RequestPriorityPolicy>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
 
 // Copying insertion.
 void
@@ -2433,9 +2455,11 @@ operator>>= (
       );
 }
 
+// TAO_IDL - Generated from
+// be/be_visitor_interface/any_op_cs.cpp:50
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RequestPriorityPolicy>::to_object (
+TAO::Any_Impl_T<Messaging::ReplyPriorityPolicy>::to_object (
     CORBA::Object_ptr &_tao_elem
   ) const
 {
@@ -2445,20 +2469,18 @@ TAO::Any_Impl_T<Messaging::RequestPriorityPolicy>::to_object (
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RequestPriorityPolicy>::marshal_value (TAO_OutputCDR &)
+TAO::Any_Impl_T<Messaging::ReplyPriorityPolicy>::marshal_value (TAO_OutputCDR &)
 {
   return 0;
 }
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RequestPriorityPolicy>::demarshal_value (TAO_InputCDR &)
+TAO::Any_Impl_T<Messaging::ReplyPriorityPolicy>::demarshal_value (TAO_InputCDR &)
 {
   return 0;
 }
 
-// TAO_IDL - Generated from
-// be/be_visitor_interface/any_op_cs.cpp:50
 
 // Copying insertion.
 void
@@ -2502,9 +2524,11 @@ operator>>= (
       );
 }
 
+// TAO_IDL - Generated from
+// be/be_visitor_interface/any_op_cs.cpp:50
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
-TAO::Any_Impl_T<Messaging::ReplyPriorityPolicy>::to_object (
+TAO::Any_Impl_T<Messaging::RequestStartTimePolicy>::to_object (
     CORBA::Object_ptr &_tao_elem
   ) const
 {
@@ -2514,20 +2538,17 @@ TAO::Any_Impl_T<Messaging::ReplyPriorityPolicy>::to_object (
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
-TAO::Any_Impl_T<Messaging::ReplyPriorityPolicy>::marshal_value (TAO_OutputCDR &)
+TAO::Any_Impl_T<Messaging::RequestStartTimePolicy>::marshal_value (TAO_OutputCDR &)
 {
   return 0;
 }
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
-TAO::Any_Impl_T<Messaging::ReplyPriorityPolicy>::demarshal_value (TAO_InputCDR &)
+TAO::Any_Impl_T<Messaging::RequestStartTimePolicy>::demarshal_value (TAO_InputCDR &)
 {
   return 0;
 }
-
-// TAO_IDL - Generated from
-// be/be_visitor_interface/any_op_cs.cpp:50
 
 // Copying insertion.
 void
@@ -2571,9 +2592,11 @@ operator>>= (
       );
 }
 
+// TAO_IDL - Generated from
+// be/be_visitor_interface/any_op_cs.cpp:50
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RequestStartTimePolicy>::to_object (
+TAO::Any_Impl_T<Messaging::RequestEndTimePolicy>::to_object (
     CORBA::Object_ptr &_tao_elem
   ) const
 {
@@ -2583,20 +2606,18 @@ TAO::Any_Impl_T<Messaging::RequestStartTimePolicy>::to_object (
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RequestStartTimePolicy>::marshal_value (TAO_OutputCDR &)
+TAO::Any_Impl_T<Messaging::RequestEndTimePolicy>::marshal_value (TAO_OutputCDR &)
 {
   return 0;
 }
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RequestStartTimePolicy>::demarshal_value (TAO_InputCDR &)
+TAO::Any_Impl_T<Messaging::RequestEndTimePolicy>::demarshal_value (TAO_InputCDR &)
 {
   return 0;
 }
 
-// TAO_IDL - Generated from
-// be/be_visitor_interface/any_op_cs.cpp:50
 
 // Copying insertion.
 void
@@ -2640,9 +2661,11 @@ operator>>= (
       );
 }
 
+// TAO_IDL - Generated from
+// be/be_visitor_interface/any_op_cs.cpp:50
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RequestEndTimePolicy>::to_object (
+TAO::Any_Impl_T<Messaging::ReplyStartTimePolicy>::to_object (
     CORBA::Object_ptr &_tao_elem
   ) const
 {
@@ -2652,20 +2675,17 @@ TAO::Any_Impl_T<Messaging::RequestEndTimePolicy>::to_object (
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RequestEndTimePolicy>::marshal_value (TAO_OutputCDR &)
+TAO::Any_Impl_T<Messaging::ReplyStartTimePolicy>::marshal_value (TAO_OutputCDR &)
 {
   return 0;
 }
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RequestEndTimePolicy>::demarshal_value (TAO_InputCDR &)
+TAO::Any_Impl_T<Messaging::ReplyStartTimePolicy>::demarshal_value (TAO_InputCDR &)
 {
   return 0;
 }
-
-// TAO_IDL - Generated from
-// be/be_visitor_interface/any_op_cs.cpp:50
 
 // Copying insertion.
 void
@@ -2709,9 +2729,11 @@ operator>>= (
       );
 }
 
+// TAO_IDL - Generated from
+// be/be_visitor_interface/any_op_cs.cpp:50
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
-TAO::Any_Impl_T<Messaging::ReplyStartTimePolicy>::to_object (
+TAO::Any_Impl_T<Messaging::ReplyEndTimePolicy>::to_object (
     CORBA::Object_ptr &_tao_elem
   ) const
 {
@@ -2721,20 +2743,17 @@ TAO::Any_Impl_T<Messaging::ReplyStartTimePolicy>::to_object (
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
-TAO::Any_Impl_T<Messaging::ReplyStartTimePolicy>::marshal_value (TAO_OutputCDR &)
+TAO::Any_Impl_T<Messaging::ReplyEndTimePolicy>::marshal_value (TAO_OutputCDR &)
 {
   return 0;
 }
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
-TAO::Any_Impl_T<Messaging::ReplyStartTimePolicy>::demarshal_value (TAO_InputCDR &)
+TAO::Any_Impl_T<Messaging::ReplyEndTimePolicy>::demarshal_value (TAO_InputCDR &)
 {
   return 0;
 }
-
-// TAO_IDL - Generated from
-// be/be_visitor_interface/any_op_cs.cpp:50
 
 // Copying insertion.
 void
@@ -2778,9 +2797,11 @@ operator>>= (
       );
 }
 
+// TAO_IDL - Generated from
+// be/be_visitor_interface/any_op_cs.cpp:50
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
-TAO::Any_Impl_T<Messaging::ReplyEndTimePolicy>::to_object (
+TAO::Any_Impl_T<Messaging::RelativeRequestTimeoutPolicy>::to_object (
     CORBA::Object_ptr &_tao_elem
   ) const
 {
@@ -2790,20 +2811,18 @@ TAO::Any_Impl_T<Messaging::ReplyEndTimePolicy>::to_object (
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
-TAO::Any_Impl_T<Messaging::ReplyEndTimePolicy>::marshal_value (TAO_OutputCDR &)
+TAO::Any_Impl_T<Messaging::RelativeRequestTimeoutPolicy>::marshal_value (TAO_OutputCDR &)
 {
   return 0;
 }
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
-TAO::Any_Impl_T<Messaging::ReplyEndTimePolicy>::demarshal_value (TAO_InputCDR &)
+TAO::Any_Impl_T<Messaging::RelativeRequestTimeoutPolicy>::demarshal_value (TAO_InputCDR &)
 {
   return 0;
 }
 
-// TAO_IDL - Generated from
-// be/be_visitor_interface/any_op_cs.cpp:50
 
 // Copying insertion.
 void
@@ -2847,31 +2866,8 @@ operator>>= (
       );
 }
 
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RelativeRequestTimeoutPolicy>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
 
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RelativeRequestTimeoutPolicy>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RelativeRequestTimeoutPolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
@@ -2931,6 +2927,29 @@ CORBA::Boolean operator>>= (
 
 // TAO_IDL - Generated from
 // be/be_visitor_interface/any_op_cs.cpp:50
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::RoutingPolicy>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::RoutingPolicy>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::RoutingPolicy>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
 
 // Copying insertion.
 void
@@ -2974,9 +2993,11 @@ operator>>= (
       );
 }
 
+// TAO_IDL - Generated from
+// be/be_visitor_interface/any_op_cs.cpp:50
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RoutingPolicy>::to_object (
+TAO::Any_Impl_T<Messaging::MaxHopsPolicy>::to_object (
     CORBA::Object_ptr &_tao_elem
   ) const
 {
@@ -2986,20 +3007,18 @@ TAO::Any_Impl_T<Messaging::RoutingPolicy>::to_object (
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RoutingPolicy>::marshal_value (TAO_OutputCDR &)
+TAO::Any_Impl_T<Messaging::MaxHopsPolicy>::marshal_value (TAO_OutputCDR &)
 {
   return 0;
 }
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RoutingPolicy>::demarshal_value (TAO_InputCDR &)
+TAO::Any_Impl_T<Messaging::MaxHopsPolicy>::demarshal_value (TAO_InputCDR &)
 {
   return 0;
 }
 
-// TAO_IDL - Generated from
-// be/be_visitor_interface/any_op_cs.cpp:50
 
 // Copying insertion.
 void
@@ -3043,9 +3062,11 @@ operator>>= (
       );
 }
 
+// TAO_IDL - Generated from
+// be/be_visitor_interface/any_op_cs.cpp:50
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
-TAO::Any_Impl_T<Messaging::MaxHopsPolicy>::to_object (
+TAO::Any_Impl_T<Messaging::QueueOrderPolicy>::to_object (
     CORBA::Object_ptr &_tao_elem
   ) const
 {
@@ -3055,20 +3076,17 @@ TAO::Any_Impl_T<Messaging::MaxHopsPolicy>::to_object (
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
-TAO::Any_Impl_T<Messaging::MaxHopsPolicy>::marshal_value (TAO_OutputCDR &)
+TAO::Any_Impl_T<Messaging::QueueOrderPolicy>::marshal_value (TAO_OutputCDR &)
 {
   return 0;
 }
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
-TAO::Any_Impl_T<Messaging::MaxHopsPolicy>::demarshal_value (TAO_InputCDR &)
+TAO::Any_Impl_T<Messaging::QueueOrderPolicy>::demarshal_value (TAO_InputCDR &)
 {
   return 0;
 }
-
-// TAO_IDL - Generated from
-// be/be_visitor_interface/any_op_cs.cpp:50
 
 // Copying insertion.
 void
@@ -3110,30 +3128,6 @@ operator>>= (
         Messaging::_tc_QueueOrderPolicy,
         _tao_elem
       );
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::QueueOrderPolicy>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::QueueOrderPolicy>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::QueueOrderPolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
 }
 
 // TAO_IDL - Generated from
@@ -3183,7 +3177,7 @@ TAO::Any_Impl_T<Messaging::QueueOrderPolicy>::demarshal_value (TAO_InputCDR &)
         Messaging::RebindPolicy,
         TAO::Objref_Traits<Messaging::RebindPolicy>
       >;
-  
+
   template class
     TAO_Objref_Out_T<
         Messaging::RebindPolicy,
@@ -3227,7 +3221,7 @@ TAO::Any_Impl_T<Messaging::QueueOrderPolicy>::demarshal_value (TAO_InputCDR &)
         Messaging::RequestPriorityPolicy,
         TAO::Objref_Traits<Messaging::RequestPriorityPolicy>
       >;
-  
+
   template class
     TAO_Objref_Out_T<
         Messaging::RequestPriorityPolicy,
@@ -3244,7 +3238,7 @@ TAO::Any_Impl_T<Messaging::QueueOrderPolicy>::demarshal_value (TAO_InputCDR &)
         Messaging::ReplyPriorityPolicy,
         TAO::Objref_Traits<Messaging::ReplyPriorityPolicy>
       >;
-  
+
   template class
     TAO_Objref_Out_T<
         Messaging::ReplyPriorityPolicy,
@@ -3261,7 +3255,7 @@ TAO::Any_Impl_T<Messaging::QueueOrderPolicy>::demarshal_value (TAO_InputCDR &)
         Messaging::RequestStartTimePolicy,
         TAO::Objref_Traits<Messaging::RequestStartTimePolicy>
       >;
-  
+
   template class
     TAO_Objref_Out_T<
         Messaging::RequestStartTimePolicy,
@@ -3278,7 +3272,7 @@ TAO::Any_Impl_T<Messaging::QueueOrderPolicy>::demarshal_value (TAO_InputCDR &)
         Messaging::RequestEndTimePolicy,
         TAO::Objref_Traits<Messaging::RequestEndTimePolicy>
       >;
-  
+
   template class
     TAO_Objref_Out_T<
         Messaging::RequestEndTimePolicy,
@@ -3295,7 +3289,7 @@ TAO::Any_Impl_T<Messaging::QueueOrderPolicy>::demarshal_value (TAO_InputCDR &)
         Messaging::ReplyStartTimePolicy,
         TAO::Objref_Traits<Messaging::ReplyStartTimePolicy>
       >;
-  
+
   template class
     TAO_Objref_Out_T<
         Messaging::ReplyStartTimePolicy,
@@ -3312,7 +3306,7 @@ TAO::Any_Impl_T<Messaging::QueueOrderPolicy>::demarshal_value (TAO_InputCDR &)
         Messaging::ReplyEndTimePolicy,
         TAO::Objref_Traits<Messaging::ReplyEndTimePolicy>
       >;
-  
+
   template class
     TAO_Objref_Out_T<
         Messaging::ReplyEndTimePolicy,
@@ -3329,7 +3323,7 @@ TAO::Any_Impl_T<Messaging::QueueOrderPolicy>::demarshal_value (TAO_InputCDR &)
         Messaging::RelativeRequestTimeoutPolicy,
         TAO::Objref_Traits<Messaging::RelativeRequestTimeoutPolicy>
       >;
-  
+
   template class
     TAO_Objref_Out_T<
         Messaging::RelativeRequestTimeoutPolicy,
@@ -3373,7 +3367,7 @@ TAO::Any_Impl_T<Messaging::QueueOrderPolicy>::demarshal_value (TAO_InputCDR &)
         Messaging::RoutingPolicy,
         TAO::Objref_Traits<Messaging::RoutingPolicy>
       >;
-  
+
   template class
     TAO_Objref_Out_T<
         Messaging::RoutingPolicy,
@@ -3390,7 +3384,7 @@ TAO::Any_Impl_T<Messaging::QueueOrderPolicy>::demarshal_value (TAO_InputCDR &)
         Messaging::MaxHopsPolicy,
         TAO::Objref_Traits<Messaging::MaxHopsPolicy>
       >;
-  
+
   template class
     TAO_Objref_Out_T<
         Messaging::MaxHopsPolicy,
@@ -3407,7 +3401,7 @@ TAO::Any_Impl_T<Messaging::QueueOrderPolicy>::demarshal_value (TAO_InputCDR &)
         Messaging::QueueOrderPolicy,
         TAO::Objref_Traits<Messaging::QueueOrderPolicy>
       >;
-  
+
   template class
     TAO_Objref_Out_T<
         Messaging::QueueOrderPolicy,
@@ -3463,7 +3457,7 @@ TAO::Any_Impl_T<Messaging::QueueOrderPolicy>::demarshal_value (TAO_InputCDR &)
         Messaging::RebindPolicy, \
         TAO::Objref_Traits<Messaging::RebindPolicy> \
       >
-  
+
 # pragma instantiate \
     TAO_Objref_Out_T< \
         Messaging::RebindPolicy, \
@@ -3507,7 +3501,7 @@ TAO::Any_Impl_T<Messaging::QueueOrderPolicy>::demarshal_value (TAO_InputCDR &)
         Messaging::RequestPriorityPolicy, \
         TAO::Objref_Traits<Messaging::RequestPriorityPolicy> \
       >
-  
+
 # pragma instantiate \
     TAO_Objref_Out_T< \
         Messaging::RequestPriorityPolicy, \
@@ -3524,7 +3518,7 @@ TAO::Any_Impl_T<Messaging::QueueOrderPolicy>::demarshal_value (TAO_InputCDR &)
         Messaging::ReplyPriorityPolicy, \
         TAO::Objref_Traits<Messaging::ReplyPriorityPolicy> \
       >
-  
+
 # pragma instantiate \
     TAO_Objref_Out_T< \
         Messaging::ReplyPriorityPolicy, \
@@ -3541,7 +3535,7 @@ TAO::Any_Impl_T<Messaging::QueueOrderPolicy>::demarshal_value (TAO_InputCDR &)
         Messaging::RequestStartTimePolicy, \
         TAO::Objref_Traits<Messaging::RequestStartTimePolicy> \
       >
-  
+
 # pragma instantiate \
     TAO_Objref_Out_T< \
         Messaging::RequestStartTimePolicy, \
@@ -3558,7 +3552,7 @@ TAO::Any_Impl_T<Messaging::QueueOrderPolicy>::demarshal_value (TAO_InputCDR &)
         Messaging::RequestEndTimePolicy, \
         TAO::Objref_Traits<Messaging::RequestEndTimePolicy> \
       >
-  
+
 # pragma instantiate \
     TAO_Objref_Out_T< \
         Messaging::RequestEndTimePolicy, \
@@ -3575,7 +3569,7 @@ TAO::Any_Impl_T<Messaging::QueueOrderPolicy>::demarshal_value (TAO_InputCDR &)
         Messaging::ReplyStartTimePolicy, \
         TAO::Objref_Traits<Messaging::ReplyStartTimePolicy> \
       >
-  
+
 # pragma instantiate \
     TAO_Objref_Out_T< \
         Messaging::ReplyStartTimePolicy, \
@@ -3592,7 +3586,7 @@ TAO::Any_Impl_T<Messaging::QueueOrderPolicy>::demarshal_value (TAO_InputCDR &)
         Messaging::ReplyEndTimePolicy, \
         TAO::Objref_Traits<Messaging::ReplyEndTimePolicy> \
       >
-  
+
 # pragma instantiate \
     TAO_Objref_Out_T< \
         Messaging::ReplyEndTimePolicy, \
@@ -3609,7 +3603,7 @@ TAO::Any_Impl_T<Messaging::QueueOrderPolicy>::demarshal_value (TAO_InputCDR &)
         Messaging::RelativeRequestTimeoutPolicy, \
         TAO::Objref_Traits<Messaging::RelativeRequestTimeoutPolicy> \
       >
-  
+
 # pragma instantiate \
     TAO_Objref_Out_T< \
         Messaging::RelativeRequestTimeoutPolicy, \
@@ -3653,7 +3647,7 @@ TAO::Any_Impl_T<Messaging::QueueOrderPolicy>::demarshal_value (TAO_InputCDR &)
         Messaging::RoutingPolicy, \
         TAO::Objref_Traits<Messaging::RoutingPolicy> \
       >
-  
+
 # pragma instantiate \
     TAO_Objref_Out_T< \
         Messaging::RoutingPolicy, \
@@ -3670,7 +3664,7 @@ TAO::Any_Impl_T<Messaging::QueueOrderPolicy>::demarshal_value (TAO_InputCDR &)
         Messaging::MaxHopsPolicy, \
         TAO::Objref_Traits<Messaging::MaxHopsPolicy> \
       >
-  
+
 # pragma instantiate \
     TAO_Objref_Out_T< \
         Messaging::MaxHopsPolicy, \
@@ -3687,7 +3681,7 @@ TAO::Any_Impl_T<Messaging::QueueOrderPolicy>::demarshal_value (TAO_InputCDR &)
         Messaging::QueueOrderPolicy, \
         TAO::Objref_Traits<Messaging::QueueOrderPolicy> \
       >
-  
+
 # pragma instantiate \
     TAO_Objref_Out_T< \
         Messaging::QueueOrderPolicy, \
@@ -3699,5 +3693,4 @@ TAO::Any_Impl_T<Messaging::QueueOrderPolicy>::demarshal_value (TAO_InputCDR &)
         Messaging::QueueOrderPolicy \
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
-
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -19,16 +19,16 @@
 //
 // ============================================================================
 
-#include "tao/Marshal.h"
-#include "tao/debug.h"
-#include "tao/Valuetype_Adapter.h"
-#include "tao/ORB_Core.h"
-#include "tao/Typecode.h"
-
+#include "Marshal.h"
+#include "debug.h"
+#include "Valuetype_Adapter.h"
+#include "ORB_Core.h"
+#include "Typecode.h"
+#include "Any.h"
 #include "ace/Dynamic_Service.h"
 
-ACE_RCSID (tao, 
-           skip, 
+ACE_RCSID (tao,
+           skip,
            "$Id$")
 
 TAO::traverse_status
@@ -506,8 +506,8 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
                                   mb->rd_ptr () - mb->base (),
                                   mb->wr_ptr () - mb->base (),
                                   ACE_CDR_BYTE_ORDER,
-						                      TAO_DEF_GIOP_MAJOR,
-						                      TAO_DEF_GIOP_MINOR);
+                                                                      TAO_DEF_GIOP_MAJOR,
+                                                                      TAO_DEF_GIOP_MINOR);
 
                 cdr.read_ulong (d);
 
@@ -518,7 +518,7 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
               }
             else
               {
-                const CORBA::ULong *d = 
+                const CORBA::ULong *d =
                   ACE_reinterpret_cast (const CORBA::ULong *,
                                         any->value ());
 

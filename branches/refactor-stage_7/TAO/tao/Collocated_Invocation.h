@@ -16,12 +16,14 @@
 #include "ace/pre.h"
 
 #include "tao/TAO_Export.h"
-#include "tao/Collocation_Strategy.h"
-#include "tao/Invocation_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/Collocation_Strategy.h"
+#include "tao/Invocation_Base.h"
+#include "tao/Exception.h"
 
 class TAO_Operation_Details;
 class TAO_Stub;

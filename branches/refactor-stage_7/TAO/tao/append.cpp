@@ -19,17 +19,17 @@
 //
 // ============================================================================
 
-#include "tao/Environment.h"
-#include "tao/debug.h"
-#include "tao/Valuetype_Adapter.h"
-#include "tao/ORB_Core.h"
-#include "tao/Typecode.h"
-#include "tao/Marshal.h"
-
+#include "Environment.h"
+#include "debug.h"
+#include "Valuetype_Adapter.h"
+#include "ORB_Core.h"
+#include "Typecode.h"
+#include "Marshal.h"
+#include "Any.h"
 #include "ace/Dynamic_Service.h"
 
-ACE_RCSID (tao, 
-           append, 
+ACE_RCSID (tao,
+           append,
            "$Id$")
 
 // Encode instances of arbitrary data types based only on typecode.
@@ -563,8 +563,8 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
                                   mb->wr_ptr () - mb->base (),
                                   ACE_CDR_BYTE_ORDER,
                                   TAO_DEF_GIOP_MAJOR,
-                                  TAO_DEF_GIOP_MINOR); 
-                cdr.read_ulong (d); 
+                                  TAO_DEF_GIOP_MINOR);
+                cdr.read_ulong (d);
 
                 if (d == enum_v)
                   {

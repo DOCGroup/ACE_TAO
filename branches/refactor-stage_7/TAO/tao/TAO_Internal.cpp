@@ -17,6 +17,7 @@
 #include "Default_Thread_Lane_Resources_Manager.h"
 #include "Default_Collocation_Resolver.h"
 #include "debug.h"
+#include "StringSeqC.h"
 
 #include "ace/Dynamic_Service.h"
 #include "ace/Arg_Shifter.h"
@@ -293,7 +294,7 @@ TAO_Internal::open_services_i (int &argc,
             // Copy command line parameter not to use original.
             ACE_Argv_Type_Converter command_line(argc, argv);
 
-            result = 
+            result =
               ACE_Service_Config::open (command_line.get_argc(),
                                         command_line.get_TCHAR_argv(),
                                         ACE_DEFAULT_LOGGER_KEY,
@@ -328,9 +329,9 @@ TAO_Internal::open_services_i (int &argc,
 
       if (rtscheduler_loader != 0)
         {
-	        rtscheduler_loader->init (0, 0);
+                rtscheduler_loader->init (0, 0);
         }
-      
+
       // @@ What the heck do these things do and do we need to avoid
       // calling them if we're not invoking the svc.conf file?
       if (TAO_Internal::resource_factory_args_ != 0)

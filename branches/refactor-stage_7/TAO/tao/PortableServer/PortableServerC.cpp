@@ -5893,6 +5893,30 @@ CORBA::Boolean operator>>= (
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_cs.cpp:50
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<PortableServer::ThreadPolicy>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<PortableServer::ThreadPolicy>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<PortableServer::ThreadPolicy>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
+
 
 // Copying insertion.
 void
@@ -5936,29 +5960,6 @@ operator>>= (
       );
 }
 
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<PortableServer::ThreadPolicy>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<PortableServer::ThreadPolicy>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<PortableServer::ThreadPolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
@@ -5992,6 +5993,29 @@ CORBA::Boolean operator>>= (
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_cs.cpp:50
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<PortableServer::LifespanPolicy>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<PortableServer::LifespanPolicy>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<PortableServer::LifespanPolicy>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
 
 // Copying insertion.
 void
@@ -6035,30 +6059,6 @@ operator>>= (
       );
 }
 
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<PortableServer::LifespanPolicy>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<PortableServer::LifespanPolicy>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<PortableServer::LifespanPolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_enum/any_op_cs.cpp:52
 
@@ -6089,6 +6089,29 @@ CORBA::Boolean operator>>= (
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_cs.cpp:50
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<PortableServer::IdUniquenessPolicy>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<PortableServer::IdUniquenessPolicy>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<PortableServer::IdUniquenessPolicy>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
 
 // Copying insertion.
 void
@@ -6132,30 +6155,6 @@ operator>>= (
       );
 }
 
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<PortableServer::IdUniquenessPolicy>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<PortableServer::IdUniquenessPolicy>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<PortableServer::IdUniquenessPolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_enum/any_op_cs.cpp:52
 
@@ -6186,6 +6185,29 @@ CORBA::Boolean operator>>= (
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_cs.cpp:50
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<PortableServer::IdAssignmentPolicy>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<PortableServer::IdAssignmentPolicy>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<PortableServer::IdAssignmentPolicy>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
 
 // Copying insertion.
 void
@@ -6229,30 +6251,6 @@ operator>>= (
       );
 }
 
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<PortableServer::IdAssignmentPolicy>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<PortableServer::IdAssignmentPolicy>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<PortableServer::IdAssignmentPolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
 #if (TAO_HAS_MINIMUM_POA == 0)
 
 // TAO_IDL - Generated from
@@ -6285,6 +6283,29 @@ CORBA::Boolean operator>>= (
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_cs.cpp:50
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<PortableServer::ImplicitActivationPolicy>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<PortableServer::ImplicitActivationPolicy>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<PortableServer::ImplicitActivationPolicy>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
 
 // Copying insertion.
 void
@@ -6328,30 +6349,6 @@ operator>>= (
       );
 }
 
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<PortableServer::ImplicitActivationPolicy>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<PortableServer::ImplicitActivationPolicy>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<PortableServer::ImplicitActivationPolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_enum/any_op_cs.cpp:52
 
@@ -6382,6 +6379,31 @@ CORBA::Boolean operator>>= (
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_cs.cpp:50
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<PortableServer::ServantRetentionPolicy>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<PortableServer::ServantRetentionPolicy>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<PortableServer::ServantRetentionPolicy>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
+
 
 // Copying insertion.
 void
@@ -6425,30 +6447,6 @@ operator>>= (
       );
 }
 
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<PortableServer::ServantRetentionPolicy>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<PortableServer::ServantRetentionPolicy>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<PortableServer::ServantRetentionPolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_enum/any_op_cs.cpp:52
 
@@ -6479,6 +6477,30 @@ CORBA::Boolean operator>>= (
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_cs.cpp:50
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<PortableServer::RequestProcessingPolicy>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<PortableServer::RequestProcessingPolicy>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<PortableServer::RequestProcessingPolicy>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
+
 
 // Copying insertion.
 void
@@ -6522,9 +6544,14 @@ operator>>= (
       );
 }
 
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_cs.cpp:50
+
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
-TAO::Any_Impl_T<PortableServer::RequestProcessingPolicy>::to_object (
+TAO::Any_Impl_T<PortableServer::POAManager>::to_object (
     CORBA::Object_ptr &_tao_elem
   ) const
 {
@@ -6534,22 +6561,18 @@ TAO::Any_Impl_T<PortableServer::RequestProcessingPolicy>::to_object (
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
-TAO::Any_Impl_T<PortableServer::RequestProcessingPolicy>::marshal_value (TAO_OutputCDR &)
+TAO::Any_Impl_T<PortableServer::POAManager>::marshal_value (TAO_OutputCDR &)
 {
   return 0;
 }
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
-TAO::Any_Impl_T<PortableServer::RequestProcessingPolicy>::demarshal_value (TAO_InputCDR &)
+TAO::Any_Impl_T<PortableServer::POAManager>::demarshal_value (TAO_InputCDR &)
 {
   return 0;
 }
 
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_cs.cpp:50
 
 // Copying insertion.
 void
@@ -6593,9 +6616,13 @@ operator>>= (
       );
 }
 
+#if (TAO_HAS_MINIMUM_POA == 0)
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_cs.cpp:50
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
-TAO::Any_Impl_T<PortableServer::POAManager>::to_object (
+TAO::Any_Impl_T<PortableServer::AdapterActivator>::to_object (
     CORBA::Object_ptr &_tao_elem
   ) const
 {
@@ -6605,22 +6632,18 @@ TAO::Any_Impl_T<PortableServer::POAManager>::to_object (
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
-TAO::Any_Impl_T<PortableServer::POAManager>::marshal_value (TAO_OutputCDR &)
+TAO::Any_Impl_T<PortableServer::AdapterActivator>::marshal_value (TAO_OutputCDR &)
 {
   return 0;
 }
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
-TAO::Any_Impl_T<PortableServer::POAManager>::demarshal_value (TAO_InputCDR &)
+TAO::Any_Impl_T<PortableServer::AdapterActivator>::demarshal_value (TAO_InputCDR &)
 {
   return 0;
 }
 
-#if (TAO_HAS_MINIMUM_POA == 0)
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_cs.cpp:50
 
 // Copying insertion.
 void
@@ -6664,9 +6687,12 @@ operator>>= (
       );
 }
 
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_cs.cpp:50
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
-TAO::Any_Impl_T<PortableServer::AdapterActivator>::to_object (
+TAO::Any_Impl_T<PortableServer::ServantManager>::to_object (
     CORBA::Object_ptr &_tao_elem
   ) const
 {
@@ -6676,20 +6702,18 @@ TAO::Any_Impl_T<PortableServer::AdapterActivator>::to_object (
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
-TAO::Any_Impl_T<PortableServer::AdapterActivator>::marshal_value (TAO_OutputCDR &)
+TAO::Any_Impl_T<PortableServer::ServantManager>::marshal_value (TAO_OutputCDR &)
 {
   return 0;
 }
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
-TAO::Any_Impl_T<PortableServer::AdapterActivator>::demarshal_value (TAO_InputCDR &)
+TAO::Any_Impl_T<PortableServer::ServantManager>::demarshal_value (TAO_InputCDR &)
 {
   return 0;
 }
 
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_cs.cpp:50
 
 // Copying insertion.
 void
@@ -6733,9 +6757,10 @@ operator>>= (
       );
 }
 
+// TAO_IDL - Generated from
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
-TAO::Any_Impl_T<PortableServer::ServantManager>::to_object (
+TAO::Any_Impl_T<PortableServer::ServantActivator>::to_object (
     CORBA::Object_ptr &_tao_elem
   ) const
 {
@@ -6745,19 +6770,18 @@ TAO::Any_Impl_T<PortableServer::ServantManager>::to_object (
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
-TAO::Any_Impl_T<PortableServer::ServantManager>::marshal_value (TAO_OutputCDR &)
+TAO::Any_Impl_T<PortableServer::ServantActivator>::marshal_value (TAO_OutputCDR &)
 {
   return 0;
 }
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
-TAO::Any_Impl_T<PortableServer::ServantManager>::demarshal_value (TAO_InputCDR &)
+TAO::Any_Impl_T<PortableServer::ServantActivator>::demarshal_value (TAO_InputCDR &)
 {
   return 0;
 }
 
-// TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_cs.cpp:50
 
 // Copying insertion.
@@ -6802,9 +6826,12 @@ operator>>= (
       );
 }
 
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_cs.cpp:50
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
-TAO::Any_Impl_T<PortableServer::ServantActivator>::to_object (
+TAO::Any_Impl_T<PortableServer::ServantLocator>::to_object (
     CORBA::Object_ptr &_tao_elem
   ) const
 {
@@ -6814,20 +6841,17 @@ TAO::Any_Impl_T<PortableServer::ServantActivator>::to_object (
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
-TAO::Any_Impl_T<PortableServer::ServantActivator>::marshal_value (TAO_OutputCDR &)
+TAO::Any_Impl_T<PortableServer::ServantLocator>::marshal_value (TAO_OutputCDR &)
 {
   return 0;
 }
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
-TAO::Any_Impl_T<PortableServer::ServantActivator>::demarshal_value (TAO_InputCDR &)
+TAO::Any_Impl_T<PortableServer::ServantLocator>::demarshal_value (TAO_InputCDR &)
 {
   return 0;
 }
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_cs.cpp:50
 
 // Copying insertion.
 void
@@ -6871,9 +6895,13 @@ operator>>= (
       );
 }
 
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_cs.cpp:50
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
-TAO::Any_Impl_T<PortableServer::ServantLocator>::to_object (
+TAO::Any_Impl_T<PortableServer::POA>::to_object (
     CORBA::Object_ptr &_tao_elem
   ) const
 {
@@ -6883,22 +6911,18 @@ TAO::Any_Impl_T<PortableServer::ServantLocator>::to_object (
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
-TAO::Any_Impl_T<PortableServer::ServantLocator>::marshal_value (TAO_OutputCDR &)
+TAO::Any_Impl_T<PortableServer::POA>::marshal_value (TAO_OutputCDR &)
 {
   return 0;
 }
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
-TAO::Any_Impl_T<PortableServer::ServantLocator>::demarshal_value (TAO_InputCDR &)
+TAO::Any_Impl_T<PortableServer::POA>::demarshal_value (TAO_InputCDR &)
 {
   return 0;
 }
 
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_cs.cpp:50
 
 // Copying insertion.
 void
@@ -6942,9 +6966,13 @@ operator>>= (
       );
 }
 
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_cs.cpp:50
+
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
-TAO::Any_Impl_T<PortableServer::POA>::to_object (
+TAO::Any_Impl_T<PortableServer::Current>::to_object (
     CORBA::Object_ptr &_tao_elem
   ) const
 {
@@ -6954,20 +6982,18 @@ TAO::Any_Impl_T<PortableServer::POA>::to_object (
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
-TAO::Any_Impl_T<PortableServer::POA>::marshal_value (TAO_OutputCDR &)
+TAO::Any_Impl_T<PortableServer::Current>::marshal_value (TAO_OutputCDR &)
 {
   return 0;
 }
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
-TAO::Any_Impl_T<PortableServer::POA>::demarshal_value (TAO_InputCDR &)
+TAO::Any_Impl_T<PortableServer::Current>::demarshal_value (TAO_InputCDR &)
 {
   return 0;
 }
 
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_cs.cpp:50
 
 // Copying insertion.
 void
@@ -7009,30 +7035,6 @@ operator>>= (
         PortableServer::_tc_Current,
         _tao_elem
       );
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<PortableServer::Current>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<PortableServer::Current>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<PortableServer::Current>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
 }
 
 // TAO_IDL - Generated from

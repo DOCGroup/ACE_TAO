@@ -1,4 +1,5 @@
 //$Id$
+
 #include "Synch_Invocation.h"
 #include "Profile_Transport_Resolver.h"
 #include "Profile.h"
@@ -11,7 +12,7 @@
 #include "Wait_Strategy.h"
 #include "debug.h"
 #include "ORB_Constants.h"
-
+#include "Messaging_SyncScopeC.h"
 #include "ace/Auto_Ptr.h"
 
 ACE_RCSID (tao,

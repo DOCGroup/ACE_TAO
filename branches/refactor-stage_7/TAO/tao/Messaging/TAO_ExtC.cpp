@@ -92,7 +92,7 @@ TAO::Objref_Traits<TAO::ConnectionTimeoutPolicy>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
+TAO::Collocation_Proxy_Broker *
 (*TAO__TAO_ConnectionTimeoutPolicy_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -103,7 +103,7 @@ TAO::ConnectionTimeoutPolicy::ConnectionTimeoutPolicy (void)
 TAO::ConnectionTimeoutPolicy::~ConnectionTimeoutPolicy (void)
 {}
 
-void 
+void
 TAO::ConnectionTimeoutPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   ConnectionTimeoutPolicy *_tao_tmp_pointer =
@@ -130,7 +130,7 @@ TAO::ConnectionTimeoutPolicy::_duplicate (ConnectionTimeoutPolicy_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -185,22 +185,22 @@ static const CORBA::Long _oc_TAO_ConnectionTimeoutPolicy[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   40,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x74616f2f), 
-  ACE_NTOHL (0x54414f2f), 
-  ACE_NTOHL (0x436f6e6e), 
-  ACE_NTOHL (0x65637469), 
-  ACE_NTOHL (0x6f6e5469), 
-  ACE_NTOHL (0x6d656f75), 
-  ACE_NTOHL (0x74506f6c), 
-  ACE_NTOHL (0x6963793a), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x74616f2f),
+  ACE_NTOHL (0x54414f2f),
+  ACE_NTOHL (0x436f6e6e),
+  ACE_NTOHL (0x65637469),
+  ACE_NTOHL (0x6f6e5469),
+  ACE_NTOHL (0x6d656f75),
+  ACE_NTOHL (0x74506f6c),
+  ACE_NTOHL (0x6963793a),
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:tao/TAO/ConnectionTimeoutPolicy:1.0
     24,
-  ACE_NTOHL (0x436f6e6e), 
-  ACE_NTOHL (0x65637469), 
-  ACE_NTOHL (0x6f6e5469), 
-  ACE_NTOHL (0x6d656f75), 
-  ACE_NTOHL (0x74506f6c), 
+  ACE_NTOHL (0x436f6e6e),
+  ACE_NTOHL (0x65637469),
+  ACE_NTOHL (0x6f6e5469),
+  ACE_NTOHL (0x6d656f75),
+  ACE_NTOHL (0x74506f6c),
   ACE_NTOHL (0x69637900),  // name = ConnectionTimeoutPolicy
   };
 
@@ -220,6 +220,29 @@ namespace TAO
 
 // TAO_IDL - Generated from
 // be/be_visitor_interface/any_op_cs.cpp:50
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<TAO::ConnectionTimeoutPolicy>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<TAO::ConnectionTimeoutPolicy>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<TAO::ConnectionTimeoutPolicy>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
 
 // Copying insertion.
 void
@@ -263,30 +286,6 @@ operator>>= (
       );
 }
 
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<TAO::ConnectionTimeoutPolicy>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<TAO::ConnectionTimeoutPolicy>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<TAO::ConnectionTimeoutPolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
 // TAO_IDL - Generated from
 // be/be_visitor_root/root.cpp:1703
 
@@ -312,7 +311,7 @@ TAO::Any_Impl_T<TAO::ConnectionTimeoutPolicy>::demarshal_value (TAO_InputCDR &)
         TAO::ConnectionTimeoutPolicy,
         TAO::Objref_Traits<TAO::ConnectionTimeoutPolicy>
       >;
-  
+
   template class
     TAO_Objref_Out_T<
         TAO::ConnectionTimeoutPolicy,
@@ -346,7 +345,7 @@ TAO::Any_Impl_T<TAO::ConnectionTimeoutPolicy>::demarshal_value (TAO_InputCDR &)
         TAO::ConnectionTimeoutPolicy, \
         TAO::Objref_Traits<TAO::ConnectionTimeoutPolicy> \
       >
-  
+
 # pragma instantiate \
     TAO_Objref_Out_T< \
         TAO::ConnectionTimeoutPolicy, \
@@ -358,5 +357,4 @@ TAO::Any_Impl_T<TAO::ConnectionTimeoutPolicy>::demarshal_value (TAO_InputCDR &)
         TAO::ConnectionTimeoutPolicy \
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
-
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
