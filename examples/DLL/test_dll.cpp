@@ -17,6 +17,7 @@ main (void)
   ACE_DLL dll;
 
   int retval = dll.open ("./" ACE_DLL_PREFIX "Today" ACE_DLL_SUFFIX);
+
   if (retval != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%s",
@@ -25,22 +26,26 @@ main (void)
   Magazine_Creator mc;
 
   mc = (Magazine_Creator) dll.symbol ("create_magazine");
+
   if (mc == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                       dll.error ()),
                       -1);
- 
-  Magazine *magazine = mc ();
+  {
+    // Kirthika, can you please use an auto_ptr here.
+    Magazine *magazine = mc ();
   
-  magazine->title ();
+    magazine->title ();
   
-  delete magazine;
+    delete magazine;
+  }
 
   dll.close ();
   
   // The other library is now loaded on demand.
 
   retval = dll.open ("./" ACE_DLL_PREFIX "Newsweek" ACE_DLL_SUFFIX);
+
   if (retval != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%s",
@@ -52,7 +57,10 @@ main (void)
     ACE_ERROR_RETURN ((LM_ERROR,
                       dll.error ()),
                       -1);
- 
+
+  // Kirthika, can you please use the trick of putting this inside of
+  // a bracketed expression and using auto_ptr on it as I showed
+  // above?
   magazine = mc ();
 
   magazine->title ();
