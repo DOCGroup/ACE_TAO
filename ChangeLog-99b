@@ -1,3 +1,9 @@
+Tue Jan 26 18:23:25 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ACE-INSTALL.html: Fixed the dead link to CE-status.  Thanks to
+	  Mike Preradovic <michael_preradovic@epicdata.com> for reporting
+	  this.
+
 Tue Jan 26 14:38:11 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_vxworks5.x_g++.GNU: expanded
