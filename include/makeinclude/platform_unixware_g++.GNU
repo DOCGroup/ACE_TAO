@@ -2,14 +2,42 @@
 
 # UnixWare V2.2.1.2 with g++ version 2.7.2.2 *not* using Orbix
 
-debug = 1
+#ifndef debug
+debug = 0
+#endif
+
+#ifndef exceptions
+exceptions = 1
+#endif
+
+#ifndef threads
+threads = 1
+#endif
+
 
 CC              = gcc
 CXX             = g++
-CFLAGS          += -D__STDC__=0
+#CFLAGS          += #-frepo -fexternal-templates
+#CFLAGS          += -D__STDC__=0
+#CCFLAGS         += $(CFLAGS) -fno-implicit-templates
+#CCFLAGS         += $(CFLAGS) #-fexceptions #-fno-implicit-templates  or  -frepo
+
+
+CFLAGS          += -W -Wall -Wpointer-arith -pipe #### -Winline
 CCFLAGS         += $(CFLAGS) -fno-implicit-templates
+
+ACE_GNUG_ON_UNIXWARE = 1
+
+#ifeq ($(exceptions),1)
+  CCFLAGS += -fexceptions
+#endif
+
 DCFLAGS         += -g
-DLD             = $(CXX)
+#DCFLAGS         += -g
+
+OCCFLAGS         += -O2
+
+DLD             = $(CXX) -g
 LD              = $(CXX)
 LIBS            += -lsocket -lnsl -lgen -lthread
 PIC             = -fpic

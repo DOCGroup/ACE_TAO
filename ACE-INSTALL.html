@@ -59,7 +59,8 @@ an enhancement, then use our
     <td><b>Fully supported, i.e., continually tested and used daily</b></td>
     <td>Solaris 2.5, 2.6, and 7, Windows NT 4.0 (MSVC++ 5.0, and 6.0),
         Linux/Intel, Linux/Alpha, VxWorks, LynxOS, Digital UNIX 4.0 and 5.0,
-        HP/UX 10.x and 11.x, AIX 4.x, IRIX 6.x, and QNX Neutrino 2.0
+        HP/UX 10.x and 11.x, AIX 4.x, IRIX 6.x, UnixWare 7.1.0 and QNX
+        Neutrino 2.0
     </td>
   </tr>
   <tr valign=top bgcolor="#AFAFAF">
@@ -71,8 +72,7 @@ an enhancement, then use our
   <tr valign=top>
     <td><b>Partially supported, i.e., infrequently tested</b></td>
     <td> Windows NT (Borland C++ Builder 4.0 and IBM VisualAge C++),
-         Windows CE, Tandem, SCO, UnixWare, SunOS 4.x, FreeBSD, NetBSD,
-         Linux/PPC.
+         Windows CE, Tandem, SCO, SunOS 4.x, FreeBSD, NetBSD, Linux/PPC.
     </td>
   </tr>
   <tr valign=top bgcolor="#AFAFAF">
@@ -461,6 +461,43 @@ make: *** [libACE.so] Error 8
       Ganesh Pai &lt<A
       HREF="mailto:gpai@voicetek.com">gpai@voicetek.com</A>&gt
       subsequently did the port for version 2.1.2, also with g++.<P>
+
+      Phil Mesnier &lt<A HREF="mailto:mesnier_p@ociweb.com">
+      mesnier_p@ociweb.com</A>&gt updated the port to support
+      UnixWare 7.1.0, with help from Michael Meissnitzer
+      &lt<A HREF="mailto:michael.meissnitzer@siemens.at">
+      michael.meissnitzer@siemens.at</A>&gt, Christian Klepp &lt
+      <A HREF="mailto:christian.klepp@siemens.at">christian.klepp@siemens.at
+      </A>&gt and Engelbert Staller &lt<A HREF="engelbert.staller@siemens.at">
+      engelbert.staller@siemens.at</A>&gt
+      Building ACE (and TAO) on Unixware 7.1.0 requires a very specific
+      g++ build environment.  In particular, you must build and install
+      g++ 2.95.2, along with binutils 2.9.1. The order (and the declaration
+      of configuration) is extremely important. Using the gcc compiler
+      provided on the Skunkware CD on a pentium system, here is the recipe
+      I used to build a working environment (as root):<br>
+<pre>
+  mkdir /usr/local/newgnu
+&lt ftp and untar binutils-2.9.1 &gt
+&lt ftp and untar gcc-2.95.2 &gt
+  mkdir -p build/binutils build/gcc                               
+  cd build/binutils
+  ../../binutils-2.9.1/configure i386-sco-sysv4
+  gmake  # takes a long time
+  gmake install # this creates /usr/local/i386-sco-sysv4/...
+  mkdir /usr/local/i486-pc-sysv5/bin
+  cd /usr/local/i486-pc-sysv5/bin
+  for a in /usr/local/i386-sco-sysv4/bin/*; do ln -s $a .; done
+  #links all the newly installed utilities
+
+  cd /usr/local/newgnu/build/gcc
+  ../../gcc-2.95.2/configure --with-gnu-as --with-gnu-ld
+  gmake bootstrap # takes a long time
+  gmake install
+  mkdir /usr/local/i586-UnixWare7.1.0-sysv5/bin
+  for a in /usr/local/i386-sco-sysv4/bin/*; do ln -s $a .; done
+</pre>
+       Once done, ACE and TAO will successfully build and link.<p>
 
   <LI><B>Chorus</B> <P>
 

@@ -47,11 +47,16 @@ typedef ACE_Singleton<Options, ACE_SYNCH_RECURSIVE_MUTEX> OPTIONS;
 int
 Options::init (void)
 {
+
+  ACE_DEBUG((LM_DEBUG,"Options::init, len = %d\n",this->message_len_));
+
   // Check for default case.
   if (this->message_len_ == 0)
     this->message_len_ = ACE_OS::strlen ("TAO");
+  ACE_DEBUG((LM_DEBUG,"Options::init, len = %d\n",this->message_len_));
 
   this->message_len_ += sizeof (ACE_UINT32);
+  ACE_DEBUG((LM_DEBUG,"Options::init, len = %d\n",this->message_len_));
 
   ACE_NEW_RETURN (this->message_buf_,
                   char[this->message_len_],
@@ -203,8 +208,11 @@ Options::shared_client_test (u_short port,
 
   // Allocate the transmit buffer.
   char *buf;
+  ACE_DEBUG((LM_DEBUG,"(%P|%t) allocating buffer, len = %d msglen = %d\n",
+	     len, message_len_));
+
   ACE_NEW_RETURN (buf,
-                  char[len],
+                  char[this->message_len()],
                   0);
 
   ACE_DEBUG ((LM_DEBUG,
@@ -221,6 +229,8 @@ Options::oneway_client_test (void *)
 {
   Options *options = OPTIONS::instance ();
   ACE_SOCK_Stream cli_stream;
+
+  ACE_DEBUG((LM_DEBUG,"options = %d, len = %d\n",options,options->message_len()));
 
   // Add 1 to the port to trigger the oneway test!
   char *request = options->shared_client_test (options->port () + 1,
@@ -345,7 +355,7 @@ Options::twoway_client_test (void *)
   double messages_per_sec = iteration * double (ACE_ONE_SECOND_IN_USECS) / real_time;
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) messages = %d\n(%t) usec-per-message = %f\n(%t) messages-per-second = %0.00f\n"),
+              ASYS_TEXT ("(%t) messages = %d\n(%t) usec-per-message = %f\n(%t) messages-per-second = %0.00f\n"),
               iteration,
               real_time / double (iteration),
               messages_per_sec < 0 ? 0 : messages_per_sec));
@@ -360,6 +370,7 @@ Options::twoway_client_test (void *)
 ACE_THR_FUNC
 Options::thr_func (void)
 {
+  ACE_DEBUG((LM_DEBUG,"(%P|%t) in thread func, mesg len = %d\n",this->message_len()));
   if (this->oneway_ == 0)
     return ACE_THR_FUNC (&Options::twoway_client_test);
   else
@@ -373,6 +384,9 @@ run_client (void)
   ACE::set_handle_limit ();
 
 #if defined (ACE_HAS_THREADS)
+  ACE_DEBUG((LM_DEBUG,"(%P|%t) spawning client test thread options = %d\n",
+  OPTIONS::instance()));
+
   if (ACE_Thread_Manager::instance ()->spawn_n (OPTIONS::instance ()->threads (),
                                                 OPTIONS::instance ()->thr_func ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -407,3 +421,4 @@ template class ACE_Singleton<Options, ACE_SYNCH_RECURSIVE_MUTEX>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Singleton<Options, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
