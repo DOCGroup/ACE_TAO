@@ -174,6 +174,10 @@ public:
   static void close_singleton (void);
   // Delete the dynamically allocated singleton.
 
+  static void cleanup (void *instance, void *arg);
+  // Cleanup method, used by the <ACE_Object_Manager> to destroy the
+  // singleton.
+
   // = Process creation methods.
 
   pid_t spawn (ACE_Process *proc,
