@@ -27,7 +27,11 @@
 #if defined (ACE_HAS_THREADS)
 
 // Default number of iterations.
-static size_t n_iterations = 100;
+#if defined (ACE_HAS_WINCE)
+static size_t n_iterations = 50;
+#else
+static size_t n_iterations = 50;
+#endif /* ACE_HAS_WINCE */
 
 // Default number of loops.
 static size_t n_loops = 100;

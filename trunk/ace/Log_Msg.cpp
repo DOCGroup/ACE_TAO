@@ -921,7 +921,11 @@ ACE_Log_Msg::log (const ASYS_TCHAR *format_str,
       // don't use verbose, however, to avoid recursive aborts if
       // something is hosed.
       log_record.print (ACE_Log_Msg::local_host_, 0);
+#if defined (ACE_HAS_WINCE)
+      while (1) ;
+#else
       ACE_OS::exit (exit_value);
+#endif /* ACE_HAS_WINCE */
     }
 
    return result;
