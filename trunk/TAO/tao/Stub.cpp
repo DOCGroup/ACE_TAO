@@ -72,7 +72,8 @@ TAO_Stub::TAO_Stub (char *repository_id,
     refcount_ (1),
     use_locate_request_ (0),
     first_locate_request_ (0),
-    orb_core_ (orb_core)
+    orb_core_ (orb_core),
+    servant_orb_ ()
 #if defined (TAO_HAS_CORBA_MESSAGING)
     , policies_ (0)
 #endif /* TAO_HAS_CORBA_MESSAGING */

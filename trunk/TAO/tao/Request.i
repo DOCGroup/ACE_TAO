@@ -2,9 +2,20 @@
 
 // This may look like C, but it's really -*- C++ -*-
 
+ACE_INLINE CORBA::Boolean
+CORBA::is_nil (CORBA::Request_ptr req)
+{
+  return (CORBA::Boolean) (req == 0);
+}
+
+ACE_INLINE void
+CORBA::release (CORBA::Request_ptr req)
+{
+  if (req)
+    req->_decr_refcnt ();
+}
+
 // Return the target of this request.
-
-
 ACE_INLINE CORBA_Request*
 CORBA_Request::_duplicate (CORBA_Request* x)
 {

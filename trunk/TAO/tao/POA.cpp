@@ -953,7 +953,7 @@ TAO_POA::check_poa_manager_state (CORBA::Environment &ACE_TRY_ENV)
       // ORB may always reject a request for other reasons and raise
       // some other system exception.)
       ACE_THROW (CORBA::TRANSIENT (
-        CORBA_SystemException::minor_code_tao_ (
+        CORBA_SystemException::_tao_minor_code (
           TAO_POA_DISCARDING,
           0),
         CORBA::COMPLETED_NO));
@@ -973,7 +973,7 @@ TAO_POA::check_poa_manager_state (CORBA::Environment &ACE_TRY_ENV)
       // Since there is no queuing in TAO, we immediately raise a
       // TRANSIENT exception.
       ACE_THROW (CORBA::TRANSIENT (
-        CORBA_SystemException::minor_code_tao_ (
+        CORBA_SystemException::_tao_minor_code (
           TAO_POA_HOLDING,
           0),
         CORBA::COMPLETED_NO));

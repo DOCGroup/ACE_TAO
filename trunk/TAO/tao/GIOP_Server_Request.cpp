@@ -485,7 +485,7 @@ TAO_GIOP_ServerRequest::demarshal (CORBA::Environment &orb_env,
 // Extension
 
 void
-TAO_GIOP_ServerRequest::marshal (CORBA::Environment &orb_env,
+TAO_GIOP_ServerRequest::marshal (CORBA::Environment &ACE_TRY_ENV,
                                  // ORB related exception reporting
                                  //                             CORBA::Environment &skel_env,
                                  // skeleton related exception reporting
@@ -493,7 +493,7 @@ TAO_GIOP_ServerRequest::marshal (CORBA::Environment &orb_env,
                                  // call description
                                  ...)
 {
-  // what is "orb_env" and "skel_env"?
+  // what is "ACE_TRY_ENV" and "skel_env"?
   // "skel_env" holds the exception that got raised inside the operation
   // implementation (upcall)
   //
@@ -521,50 +521,59 @@ TAO_GIOP_ServerRequest::marshal (CORBA::Environment &orb_env,
   // Setup a Reply message so that we can marshal all the outgoing parameters
   // into it. If an exception was set, then that gets marshaled into the reply
   // message and we don't do anything after that
-  this->init_reply (orb_env);
+  this->init_reply (ACE_TRY_ENV);
+  ACE_CHECK;
 
 #if 0 /* ASG */
   // exception? nothing to do after this
   if (orb_env.exception () || skel_env.exception ())
     return;
+  ACE_CHECK;
 #endif
-  TAO_CHECK_ENV_RETURN_VOID (orb_env);
 
   CORBA::ULong i;
   const TAO_Param_Data_Skel *pdp;
   va_list param_vector;
   va_start (param_vector, info);
 
-  for (i = 0, pdp = info->params;
-       i < info->param_count;
-       i++, pdp++)
+  ACE_TRY
     {
-      void *ptr = va_arg (param_vector, void *);
-
-      if (pdp->mode == 0)
+      for (i = 0, pdp = info->params;
+           i < info->param_count;
+           i++, pdp++)
         {
-          // check if the return type is not void
-          if (pdp->tc->kind (orb_env) != CORBA::tk_void)
+          void *ptr = va_arg (param_vector, void *);
+
+          if (pdp->mode == 0)
+            {
+              // check if the return type is not void
+              CORBA::TCKind result = pdp->tc->kind (ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+              if (result != CORBA::tk_void)
+                {
+                  // Then just marshal the value.
+                  (void) this->outgoing_->encode (pdp->tc, ptr, 0, ACE_TRY_ENV);
+                  ACE_TRY_CHECK;
+                }
+            }
+          else if ((pdp->mode == CORBA::ARG_INOUT)
+                   || (pdp->mode == CORBA::ARG_OUT))
             {
               // Then just marshal the value.
-              (void) this->outgoing_->encode (pdp->tc, ptr, 0, orb_env);
+              (void) this->outgoing_->encode (pdp->tc, ptr, 0, ACE_TRY_ENV);
+              ACE_TRY_CHECK;
             }
         }
-      else if ((pdp->mode == CORBA::ARG_INOUT)
-          || (pdp->mode == CORBA::ARG_OUT))
-        {
-          // Then just marshal the value.
-          (void) this->outgoing_->encode (pdp->tc, ptr, 0, orb_env);
-        }
-
-      if (orb_env.exception ())
-        {
-          orb_env.print_exception ("TAO_GIOP_ServerRequest::marshal - parameter encode failed");
-          return;
-        }
     }
-  va_end (param_vector);
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "TAO_GIOP_ServerRequest::marshal - parameter encode failed");
+      return;
+    }
+  ACE_ENDTRY;
 
+  va_end (param_vector);
 }
 
 void

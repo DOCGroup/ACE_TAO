@@ -1,5 +1,19 @@
 // $Id$
 
+// returns true if the typecode is NULL
+ACE_INLINE CORBA::Boolean
+CORBA::is_nil (CORBA::TypeCode_ptr tc)
+{
+  return tc == 0;
+}
+
+ACE_INLINE void
+CORBA::release (CORBA::TypeCode_ptr tc)
+{
+  if (tc)
+    tc->_decr_refcnt ();
+}
+
 ACE_INLINE CORBA::ULong
 CORBA_TypeCode::_incr_refcnt (void)
 {
