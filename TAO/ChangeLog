@@ -1,3 +1,8 @@
+Wed Dec  3 08:33:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Security/Security_Current.h:
+          Added include of tao/LocalObject.h
+
 Wed Dec  3 08:23:11 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/FTRT_Event_Service/Factory_Service/EventChannelFactory_i.cpp:
