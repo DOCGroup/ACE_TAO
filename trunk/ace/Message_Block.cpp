@@ -227,9 +227,7 @@ ACE_Message_Block::total_size (void) const
   for (const ACE_Message_Block *i = this;
        i != 0;
        i = i->cont ())
-    {
-      size += i->size ();
-    }
+    size += i->size ();
 
   return size;
 }
@@ -243,9 +241,7 @@ ACE_Message_Block::total_length (void) const
   for (const ACE_Message_Block *i = this;
        i != 0;
        i = i->cont ())
-    {
-      length += i->length ();
-    }
+    length += i->length ();
 
   return length;
 }
@@ -260,9 +256,7 @@ ACE_Message_Block::total_capacity (void) const
   for (const ACE_Message_Block *i = this;
        i != 0;
        i = i->cont ())
-    {
-      size += i->capacity ();
-    }
+    size += i->capacity ();
 
   return size;
 }
