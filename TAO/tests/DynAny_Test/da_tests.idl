@@ -1,0 +1,30 @@
+/* -*- C++ -*- */
+//
+// $Id$
+//
+
+module DynAnyTests
+{
+  struct enclosed_struct {
+    long l;
+    string str;
+  };
+
+  struct test_struct {
+    short s;
+    double d;
+    enclosed_struct es;
+  };
+
+  typedef sequence<enclosed_struct> test_seq;
+
+  const unsigned long DIM = 3;
+  typedef long test_array [DIM];
+
+  enum test_enum {
+    ZERO,
+    ONE,
+    TWO,
+    THREE
+  };
+};
