@@ -1,11 +1,17 @@
+Sat Sep 18 17:15:26 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tao/Makefile.bor: Updated this file to include new files.
+	  Thanks to Mogens Hansen <mogens_h@dk-online.dk> for submitting
+ 	  this fix.
+
 Sat Sep 18 18:21:59 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Sequence_T.cpp:
-	  Chnaged the remaining ACE_reinterpret_cast instances
-	  in TAO_*_Array_Sequence to the bare C cast for 
-	  SunCC version < 5.0. This worked for other occurrences
-	  as documented in a previous ChangeLog entry, so now
-	  these errors showed up and were fixed the same way.
+	  Changed the remaining ACE_reinterpret_cast instances in
+ 	  TAO_*_Array_Sequence to the bare C cast for SunCC version <
+ 	  5.0. This worked for other occurrences as documented in a
+ 	  previous ChangeLog entry, so now these errors showed up and were
+ 	  fixed the same way.
 
 Sat Sep 18 17:57:24 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 

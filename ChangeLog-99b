@@ -1,3 +1,19 @@
+Sat Sep 18 17:31:52 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/QOS: Improved the conformance to ACE programming
+ 	  guidelines a bit.
+
+	* ace/Message_Block.cpp: Whenever a ACE_Message_Block accepts a
+	  ACE_Data_Block that was produced by someone else, it should
+ 	  verify that the allocator is non-NULL and if it is, then it
+ 	  should allocate the ACE_ALLOCATOR_RETURN on it.  Thanks to
+ 	  Pierre Grondin <pierre_grondin@srtelecom.com> for reporting
+ 	  this.
+
+	* docs/tutorials/006: Fixed the activate() method so that it uses
+	  THR_DETACHED.  Thanks to Shafiek Savahl
+ 	  <shafiek.savahl@ericsson.com.au> for reporting this.
+
 Sat Sep 18 16:17:34 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* bin/auto_compile:
