@@ -17,13 +17,11 @@
 #ifndef ACE_MEM_ACCEPTOR_H
 #define ACE_MEM_ACCEPTOR_H
 
-#include "ace/SOCK_Acceptor.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/UNIX_Addr.h"
+#include "ace/SOCK_Acceptor.h"
 #include "ace/MEM_Stream.h"
 
 // Forward decl.
@@ -33,7 +31,14 @@ class ACE_Export ACE_MEM_Acceptor : public ACE_SOCK_Acceptor
 {
   // = TITLE
   //     Defines the format and interface for the acceptor side of the
-  //     local ACE_SOCK ACE_Stream.
+  //     local mmap stream.  I should probably designed the class
+  //     to prevent user passing a non-localhost endpoint as the acceptor
+  //     listen point because it doesn't make any sense at all to make
+  //     the listening endpoint visible (or connectable) anywhere outside
+  //     of this machine.  However, I decided to leave the type of endpoint
+  //     as <ACE_Addr> so we can later changed to use UNIX sockets with
+  //     mmap stream if so desired.  (Currently, using UNIX socket with
+  //     this class will not work.)
 public:
   // = Initialization methods.
   ACE_MEM_Acceptor (void);
@@ -54,13 +59,13 @@ public:
   // Accept a new data transfer connection.
 
   int shared_accept_finish (ACE_MEM_Stream new_stream,
-			    int in_blocking_mode,
-			    int reset_new_handle) const;
+                            int in_blocking_mode,
+                            int reset_new_handle) const;
   // Perform operations that must occur after <ACE_OS::accept> is
   // called.
 
   // = Meta-type info
-  typedef ACE_INET_Addr PEER_ADDR;
+  typedef ACE_Addr PEER_ADDR;
   typedef ACE_MEM_Stream PEER_STREAM;
 
   void dump (void) const;
@@ -68,10 +73,6 @@ public:
 
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
-
-private:
-  ACE_INET_Addr local_addr_;
-  // Address of our rendezvous point.
 };
 
 #if defined (__ACE_INLINE__)

@@ -17,12 +17,11 @@
 #ifndef ACE_MEM_CONNECTOR_H
 #define ACE_MEM_CONNECTOR_H
 
-#include "ace/SOCK_Connector.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/SOCK_Connector.h"
 #include "ace/MEM_Stream.h"
 
 class ACE_Export ACE_MEM_Connector : public ACE_SOCK_Connector
@@ -82,7 +81,7 @@ public:
   // <local_addr> is reused, even if it hasn't been cleanedup yet.
 
   // = Meta-type info
-  typedef ACE_INET_Addr PEER_ADDR;
+  typedef ACE_Addr PEER_ADDR;
   typedef ACE_MEM_Stream PEER_STREAM;
 
   void dump (void) const;
