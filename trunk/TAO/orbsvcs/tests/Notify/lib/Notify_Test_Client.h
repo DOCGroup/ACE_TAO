@@ -42,8 +42,32 @@ class TAO_NOTIFY_TEST_Export Notify_Test_Client
   void shutdown (TAO_ENV_SINGLE_ARG_DECL);
   // Shutdown the ORB
 
+  CORBA::Boolean& done (void);
+  // Access the done boolean.
+
+  CORBA::ORB_ptr orb (void);
+  // Access the ORB.  This class retains ownership.
+
+  PortableServer::POA_ptr root_poa (void);
+  // Access the Root POA.  This class retains ownership.
+
+  CosNaming::NamingContext_ptr naming_context (void);
+  // Access the Naming Context.  This class retains ownership.
+
+  CosNotifyChannelAdmin::EventChannelFactory_ptr notify_factory (void);
+  // Access the Notify Factory.  This class retains ownership.
+
+  CosNotifyChannelAdmin::EventChannel_ptr create_event_channel (
+                                              const char* name,
+                                              int resolve    
+                                              TAO_ENV_ARG_DECL
+                                            );
+  // Create an Event Channel.  Ownership is passed to the caller.
+
  protected:
-  void init_ORB (int argc, char *argv [] TAO_ENV_ARG_DECL);
+  void init_ORB (int argc, 
+                 char *argv [] 
+                 TAO_ENV_ARG_DECL);
   // Initializes the ORB.
 
   void resolve_naming_service (TAO_ENV_SINGLE_ARG_DECL);
