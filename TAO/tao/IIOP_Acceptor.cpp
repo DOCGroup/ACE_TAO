@@ -123,18 +123,23 @@ int
 TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
                          int major,
                          int minor,
-                         ACE_CString &address,
-                         CORBA::Short corba_priority)
+                         const char *address,
+                         const char *options)
 {
-  this->priority_ = corba_priority;
+  if (address == 0)
+    return -1;
 
   if (major >=0 && minor >= 0)
     this->version_.set_version (ACE_static_cast (CORBA::Octet,major),
                                 ACE_static_cast (CORBA::Octet,minor));
 
+  // Parse options
+  if (this->parse_options (options) == -1)
+    return -1;
+
   ACE_INET_Addr addr;
 
-  if (ACE_OS::strchr (address.c_str(), ':') == 0)
+  if (ACE_OS::strchr (address, ':') == 0)
     {
       // Assume the address is a port number or port name and obtain
       // the fully qualified domain name.
@@ -144,7 +149,7 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
         return -1;
 
       // First convert the port into a usable form.
-      if (addr.set (address.c_str ()) != 0)
+      if (addr.set (address) != 0)
         return -1;
 
       // Now reset the port and set the host.
@@ -153,7 +158,7 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
                     1) != 0)
         return -1;
     }
-  else if (addr.set (address.c_str ()) != 0)
+  else if (addr.set (address) != 0)
     {
       return -1;
     }
@@ -162,8 +167,13 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
 }
 
 int
-TAO_IIOP_Acceptor::open_default (TAO_ORB_Core *orb_core)
+TAO_IIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
+                                 const char *options)
 {
+  // Parse options
+  if (this->parse_options (options) == -1)
+    return -1;
+
   // @@ Until we can support multihomed machines correctly we must
   //    pick the "default interface" and only listen on that IP
   //    address.
@@ -268,6 +278,122 @@ TAO_IIOP_Acceptor::endpoint_count (void)
   // we should take a look at the local address, if it is zero then
   // get the list of available IP interfaces and return this number.
   return 1;
+}
+
+int
+TAO_IIOP_Acceptor::parse_options (const char *str)
+{
+  if (str == 0)
+    return 0;  // No options to parse.  Not a problem.
+
+  // Use an option format similar to the one used for CGI scripts in
+  // HTTP URLs.
+  // e.g.:  option1=foo&option2=bar
+
+  ACE_CString options (str);
+
+  size_t len = options.length ();
+
+
+  const char option_delimiter = '&';
+
+  // Count the number of options.
+
+  CORBA::ULong option_count = 1;
+  // Number of endpoints in the string  (initialized to 1).
+
+  // Only check for endpoints after the protocol specification and
+  // before the object key.
+  for (size_t i = 0; i < len; ++i)
+    {
+      if (options[i] == option_delimiter)
+        option_count++;
+    }
+
+
+  // The idea behind the following loop is to split the options into
+  // (option, name) pairs.
+  // For example,
+  //    `option1=foo&option2=bar'
+  // will be parsed into:
+  //    `option1=foo'
+  //    `option2=bar'
+
+  int begin = 0;
+  int end = -1;
+
+  for (CORBA::ULong j = 0; j < option_count; ++j)
+    {
+      begin += end + 1;
+
+      if (j < option_count - 1)
+        end = options.find (option_delimiter, begin);
+      else
+        end = len - begin;  // Handle last endpoint differently
+
+      if (end == begin)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "TAO (%P|%t) Zero length IIOP option.\n"),
+                            -1);
+        }
+      else if (end != ACE_CString::npos)
+        {
+          ACE_CString opt = options.substring (begin, end);
+
+          int slot = opt.find ("=");
+
+          if (slot == ACE_static_cast (int, len - 1) ||
+              slot == ACE_CString::npos)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "TAO (%P|%t) IIOP option <%s> is "
+                                 "missing a value.\n",
+                                 opt.c_str ()),
+                                -1);
+            }
+
+          ACE_CString name = opt.substring (0, slot);
+          ACE_CString value = opt.substring (slot + 1);
+
+          if (name.length () == 0)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "TAO (%P|%t) Zero length IIOP "
+                                 "option name.\n"),
+                                -1);
+            }
+
+          if (name == "priority")
+            {
+              CORBA::Short corba_priority =
+                ACE_static_cast (CORBA::Short,
+                                 ACE_OS::atoi (value.c_str ()));
+
+              if (corba_priority > 0 && corba_priority < 32767)
+                {
+                  this->priority_ = corba_priority;
+                }
+              else
+                {
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                                     "TAO (%P|%t) Invalid IIOP endpoint "
+                                     "priority: <%s>\n",
+                                     value.c_str ()),
+                                    -1);
+                }
+            }
+          else
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "TAO (%P|%t) Invalid IIOP option: <%s>\n",
+                                 name.c_str ()),
+                                -1);
+            }
+        }
+    }
+
+  return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

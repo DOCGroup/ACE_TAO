@@ -63,9 +63,10 @@ public:
   virtual int open (TAO_ORB_Core *orb_core,
                     int version_major,
                     int version_minor,
-                    ACE_CString &address,
-                    CORBA::Short corba_priority = 0);
-  virtual int open_default (TAO_ORB_Core *orb_core);
+                    const char *address,
+                    const char *options = 0);
+  virtual int open_default (TAO_ORB_Core *orb_core,
+                            const char *options = 0);
   virtual int close (void);
   virtual int create_mprofile (const TAO_ObjectKey &object_key,
                                TAO_MProfile &mprofile);
@@ -76,7 +77,10 @@ public:
 private:
   int open_i (TAO_ORB_Core* orb_core,
               const ACE_INET_Addr& addr);
-  // Implement the common part of the open*() methods
+  // Implement the common part of the open*() methods.
+
+  int parse_options (const char *options);
+  // Parse protocol specific options.
 
 private:
   TAO_IIOP_BASE_ACCEPTOR base_acceptor_;

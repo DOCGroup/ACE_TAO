@@ -478,7 +478,8 @@ public:
   // is returned.
 
   void shutdown (CORBA::Boolean wait_for_completion = 0,
-                 CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+                 CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // This operation instructs the ORB to shut down. Shutting down the
   // ORB causes all Object Adapters to be shut down. If
   // <wait_for_completion> parameter is TRUE, this operation blocks
@@ -486,11 +487,20 @@ public:
   // deactivation or other operations associated with object adapters)
   // has completed.
 
-  CORBA::Boolean work_pending (void);
+  void destroy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+
+  CORBA::Boolean work_pending (CORBA_Environment &ACE_TRY_ENV =
+                               TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Returns an indication of whether the ORB needs to perform some
   // work.
 
-  int perform_work (const ACE_Time_Value & = ACE_Time_Value::zero);
+  int perform_work (const ACE_Time_Value & = ACE_Time_Value::zero,
+                    CORBA_Environment &ACE_TRY_ENV =
+                    TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // This operation performs an implementation-defined unit of
   // work. Note that the default behavior is not to block; this
   // behavior can be modified by passing an appropriate
@@ -690,6 +700,10 @@ private:
   CORBA::Object_ptr url_ior_string_to_object (const char* ior,
                                               CORBA::Environment &ACE_TRY_ENV);
   // Convert an URL style IOR into an object reference.
+
+  void check_shutdown (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // Check if ORB has shutdown.  If it has, throw an exception.
 
 private:
   ACE_SYNCH_MUTEX lock_;
