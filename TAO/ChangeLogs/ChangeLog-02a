@@ -1,3 +1,7 @@
+Wed Feb 28 15:43:54 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/orbconf.h: Fixed a small mistake for the default case.
+
 Wed Feb 28 15:23:46 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* docs/Options.html: Added documentation for the option

@@ -482,13 +482,6 @@ enum MCAST_SERVICEID
 #  endif  /* TAO_HAS_MINIMUM_CORBA */
 #endif  /* !TAO_HAS_RT_CORBA */
 
-// Additional settings for RT CORBA
-#  if (TAO_HAS_RT_CORBA == 1) && \
-      (TAO_HAS_CORBA_MESSAGING == 0)
-#  error "tao/orbconf.h: You need CORBA_MESSAGING for RT CORBA support"
-#  endif /* TAO_HAS_RT_CORBA == 1 &&
-            TAO_HAS_CORBA_MESSAGING == 0 */
-
 
 // NAMED_RT_MUTEX support is disabled by default.
 // To explicitly enable NAMED_RT_MUTEX support uncomment the following
@@ -555,6 +548,13 @@ enum MCAST_SERVICEID
 #    define TAO_HAS_CORBA_MESSAGING 1
 #  endif  /* TAO_HAS_MINIMUM_CORBA */
 #endif  /* !TAO_HAS_CORBA_MESSAGING */
+
+// Additional settings for RT CORBA
+#  if (TAO_HAS_RT_CORBA == 1) && \
+      (TAO_HAS_CORBA_MESSAGING == 0)
+#  error "tao/orbconf.h: You need CORBA_MESSAGING for RT CORBA support"
+#  endif /* TAO_HAS_RT_CORBA == 1 &&
+            TAO_HAS_CORBA_MESSAGING == 0 */
 
 // For all the policies, support is enabled by default if TAO is
 // configured for CORBA Messaging.  If TAO is not configured for CORBA
