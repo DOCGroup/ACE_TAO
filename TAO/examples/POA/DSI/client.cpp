@@ -91,103 +91,101 @@ read_IOR_from_file (void)
 int
 main (int argc, char **argv)
 {
-  CORBA::Environment env;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
+  char str [255];
   // Initialize the ORB
-  CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0, env);
-  if (env.exception () != 0)
+  ACE_TRY
     {
-      env.print_exception ("CORBA::ORB_init");
-      return -1;
-    }
-
-  // Parse the command-line arguments to get the location of the IOR 
-  if (parse_args (argc, argv) == -1)
-    return -1;
-
-  if (IOR == 0)
-    {
-      int result = read_IOR_from_file ();
-      if (result != 0)
-        ACE_ERROR_RETURN ((LM_ERROR, "Cannot read IOR from %s\n", IOR_file), -1);
-    }
-
-  // Get the object reference with the IOR
-  CORBA::Object_var object = orb->string_to_object (IOR, env);
-  if (env.exception () != 0)
-    {
-      env.print_exception ("CORBA::ORB::string_to_object");
-      return -1;
-    }
-  
-  // Narrow the object reference to a Database::Agent
-  Database::Agent_var database_agent = Database::Agent::_narrow (object.in (), env);
-  if (env.exception () != 0)
-    {
-      env.print_exception ("Database::Agent::_narrow");
-      return -1;
-    }
-
-  Database::NVPairSequence employee_attributes (2);
-  employee_attributes.length (2);
-
-  Database::NamedValue &first = employee_attributes[0];    
-  Database::NamedValue &second = employee_attributes[1];    
+      ACE_OS::strcpy (str,
+                      "CORBA::ORB_init");
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       
-  char *name = "irfan";
-  CORBA::Long id = 555;
-
-  first.name = CORBA::string_dup ("name");
-  first.value <<= name;
-  second.name = CORBA::string_dup ("id");
-  second.value <<= id;
+      // Parse the command-line arguments to get the location of the IOR
+      if (parse_args (argc, argv) == -1)
+        return -1;
+      
+      if (IOR == 0)
+        {
+          int result = read_IOR_from_file ();
+          if (result != 0)
+            ACE_ERROR_RETURN ((LM_ERROR, "Cannot read IOR from %s\n", IOR_file), -1);
+        }
+      
+      ACE_OS::strcpy (str, "CORBA::ORB::string_to_object");
   
-  // Create an employee
-  Database::Entry_var entry = database_agent->create_entry ("irfan",
-                                                            "Employee",
-                                                            employee_attributes,
-                                                            env);
-  if (env.exception () != 0)
-    {
-      env.print_exception ("Database::Agent::create_entry");
-      return -1;
-    }
+      // Get the object reference with the IOR
+      CORBA::Object_var object = orb->string_to_object (IOR, 
+                                                        ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      
+      ACE_OS::strcpy (str,"Database::Agent::_narrow");
+      
+      // Narrow the object reference to a Database::Agent
+      Database::Agent_var database_agent = Database::Agent::_narrow (object.in (), 
+                                                                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+ 
+      Database::NVPairSequence employee_attributes (2);
+      employee_attributes.length (2);
+      
+      Database::NamedValue &first = employee_attributes[0];    
+      Database::NamedValue &second = employee_attributes[1];    
+      
+      char *name = "irfan";
+      CORBA::Long id = 555;
+      
+      first.name = CORBA::string_dup ("name");
+      first.value <<= name;
+      second.name = CORBA::string_dup ("id");
+      second.value <<= id;
+      
+      ACE_OS::strcpy (str,"Database::Agent::create_entry");
+      
+      // Create an employee
+      Database::Entry_var entry = database_agent->create_entry ("irfan",
+                                                                "Employee",
+                                                                employee_attributes,
+                                                                ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-  Database::Employee_var employee = Database::Employee::_narrow (entry.in (), env);
-  if (env.exception () != 0)
-    {
-      env.print_exception ("Database::Employee::_narrow");
-      return -1;
-    }
-
-  /*
-   * 
-   *  NOT IMPLEMENTED YET 
-   * 
-   *
-   */
-   
+      ACE_OS::strcpy (str,"Database::Employee::_narrow");
+      
+      Database::Employee_var employee = Database::Employee::_narrow (entry.in (), 
+                                                                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      /*
+       * 
+       *  NOT IMPLEMENTED YET 
+       * 
+       *
+       */
+      
 #if 0
-  // Reset the id
-  employee->id (666, env);  
-  if (env.exception () != 0)
-    {
-      env.print_exception ("Database::Employee::id");
-      return -1;
-    }
+      // Reset the id
+      ACE_OS::strcpy (str, "Database::Employee::id");
+      employee->id (666, ACE_TRY_ENV);  
+      ACE_TRY_CHECK;
 #endif /* 0 */
-
-  // Destroy the employee
-  database_agent->destroy_entry ("irfan",
-                                 "Employee",
-                                 env);
-  if (env.exception () != 0)
+      
+      ACE_OS::strcpy (str, "Database::Entry::destroy");
+      // Destroy the employee
+      database_agent->destroy_entry ("irfan",
+                                     "Employee",
+                                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+           
+      ACE_OS::free (IOR);
+                 
+    }
+  ACE_CATCHANY
     {
-      env.print_exception ("Database::Entry::destroy");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, str);
       return -1;
     }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 
-  ACE_OS::free (IOR);
-  
   return 0;
 }
