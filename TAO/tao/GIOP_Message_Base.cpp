@@ -257,11 +257,9 @@ TAO_GIOP_Message_Base::message_type (
     case TAO_GIOP_FRAGMENT:
       return TAO_PLUGGABLE_MESSAGE_FRAGMENT;
 
-    case TAO_GIOP_CANCELREQUEST:
     case TAO_GIOP_MESSAGERROR:
-      // Never happens: why??
-
-
+    case TAO_GIOP_CANCELREQUEST:
+      // Does it happen?  why??
     default:
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) %N:%l        message_type : ")
@@ -509,7 +507,7 @@ TAO_GIOP_Message_Base::get_message_data (TAO_Queued_Data *qd)
     qd->more_fragments_ = 1;
   else
     qd->more_fragments_ = 0;
-  
+
   qd->msg_type_=
     this->message_type (this->message_state_);
 

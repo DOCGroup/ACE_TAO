@@ -1,3 +1,16 @@
+Wed Aug 15 11:35:18 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Transport.cpp: Added a debugging statement that is going to
+	  create noise if TAO receives a ERROR message on a connection. 
+
+	* tao/GIOP_Message_Base.cpp:
+	* tao/GIOP_Message_State.cpp: Added debugging statments to inform
+	  the user, that TAO got a GIOP_ERROR_MESSAGE on a
+	  connection. Looks like some ORB's send ERROR messages if the
+	  size of the data exceeded a limit. In such cases it is better
+	  that the user knows why the test fails or hangs instead of
+	  digging around the ORB code.
+
 Wed Aug 15 11:25:15 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/DynamicAny/DynCommon.cpp (insert_reference):

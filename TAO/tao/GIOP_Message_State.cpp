@@ -75,18 +75,24 @@ TAO_GIOP_Message_State::parse_message_header_i (ACE_Message_Block &incoming)
   // Get the size of the message..
   this->get_payload_size (buf);
 
-#if 0
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%P|%t) Message size is [%d] \n"),
-              this->message_size_));
-#endif
-
   if (this->message_size_ == 0)
     {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) Message with size 0 recd.. \n")));
-      return -1;
+      if (this->message_type_ == TAO_GIOP_MESSAGERROR)
+        {
+          if (TAO_debug_level > 0)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) Error Message recd. \n")));
+            }
+          return 0;
+        }
+      else
+        {
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("(%P|%t) Message with size 0 recd.. \n")));
+          return -1;
+        }
     }
 
   if (this->more_fragments_)

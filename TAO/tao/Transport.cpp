@@ -1413,7 +1413,11 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
     }
   else if (t == TAO_PLUGGABLE_MESSAGE_MESSAGERROR)
     {
-      return -1;
+      // Ys, we print out all levels that we are closing the
+      // connection.
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%P|%t) Closing down the connection \n"),
+                         -1);
     }
 
   // If not, just return back..
