@@ -174,6 +174,16 @@ TAO::be_visitor_value_typecode::gen_member_typecodes (be_valuetype * node)
           continue;
         }
 
+      be_interface * const intf =
+        be_interface::narrow_from_decl (field->field_type ());
+
+      if (intf && intf->is_defined ())
+        {
+          // Only generate TypeCodes for interfaces and valuetypes if
+          // they are forward declared.
+          continue;
+        }
+
       be_type * const member_type =
         be_type::narrow_from_decl (field->field_type ());
 

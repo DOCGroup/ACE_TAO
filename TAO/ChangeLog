@@ -1,3 +1,20 @@
+Sat Apr  2 09:09:40 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_typecode/struct_typecode.cpp
+	  (gen_member_typecodes):
+	* TAO_IDL/be/be_visitor_typecode/value_typecode.cpp
+	  (gen_member_typecodes):
+
+          Only generate TypeCodes for interfaces and valuetypes if they
+	  are forward declared.  Those that are defined will have already
+	  had their TypeCodes generated.
+
+	* TAO_IDL/be/be_visitor_typecode/union_typecode.cpp:
+	* TAO_IDL/be_include/be_visitor_typecode/union_typecode.h:
+
+	  Generate member TypeCodes, if necessary, such as when an
+	  anonymous type is a member.
+
 Sat Apr  2 08:35:03 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Union_TypeCode.cpp (equivalent_i, member_label_i):

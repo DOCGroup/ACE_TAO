@@ -95,6 +95,16 @@ TAO::be_visitor_struct_typecode::gen_member_typecodes (AST_Structure * node)
     {
       node->field (member_ptr, i);
 
+      be_interface * const intf =
+        be_interface::narrow_from_decl ((*member_ptr)->field_type ());
+
+      if (intf && intf->is_defined ())
+        {
+          // Only generate TypeCodes for interfaces and valuetypes if
+          // they are forward declared.
+          continue;
+        }
+
       be_type * const member_type =
         be_type::narrow_from_decl ((*member_ptr)->field_type ());
 
