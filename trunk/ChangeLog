@@ -1,3 +1,8 @@
+Sat Jul  3 06:46:06 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/config-openbsd.h:
+          #define ACE_HAS_UCONTEXT_T.  Addresses a compile-time error.
+
 Fri Jul  2 17:54:22 2004  Steve Huston  <shuston@riverace.com>
 
 	* examples/APG/ThreadPools/Task_ThreadPool.cpp: Break out of
