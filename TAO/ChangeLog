@@ -1,3 +1,19 @@
+Mon Jul 29 17:29:37 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/LoadBalancer/LoadManager.cpp:
+
+	  Stand-alone LoadManager service.  This is basically thin wrapper
+	  around the CosLoadBalancing library.
+	
+	* orbsvcs/LoadBalancer/LoadMonitor.cpp:
+
+	  Stand-alone LoadMonitor utility.  It provides a simple way for
+	  users to set up a LoadMonitor.
+
+	* orbsvcs/LoadBalancer/Makefile:
+
+	  Removed old LoadBalancer sources.
+
 Mon Jul 29 13:44:51 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* docs/releasenotes/PSS.html:
