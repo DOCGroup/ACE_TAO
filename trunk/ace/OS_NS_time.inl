@@ -477,7 +477,7 @@ ACE_OS::timezone (void)
 ACE_INLINE void
 ACE_OS::tzset (void)
 {
-#if !defined (ACE_HAS_WINCE) && !defined (VXWORKS) && !defined (ACE_PSOS) && ! defined(__rtems__)
+#if !defined (ACE_HAS_WINCE) && !defined (VXWORKS) && !defined (ACE_PSOS) && !defined(__rtems__) && !defined (ACE_HAS_DINKUM_STL)
 #   if defined (ACE_WIN32)
   ::_tzset ();  // For Win32.
 #   else
@@ -485,5 +485,5 @@ ACE_OS::tzset (void)
 #   endif /* ACE_WIN32 */
 # else
   errno = ENOTSUP;
-# endif /* ACE_HAS_WINCE && !VXWORKS && !ACE_PSOS && !__rtems__ */
+# endif /* ACE_HAS_WINCE && !VXWORKS && !ACE_PSOS && !__rtems__ && !ACE_HAS_DINKUM_STL */
 }
