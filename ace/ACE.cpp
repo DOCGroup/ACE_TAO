@@ -2209,7 +2209,7 @@ ACE::send_n_i (ACE_HANDLE handle,
       int rtn = ACE::handle_write_ready (handle,
                                          timeout);
 
-      if (result == -1)
+      if (rtn == -1)
         {
           error = 1;
           result = -1;
