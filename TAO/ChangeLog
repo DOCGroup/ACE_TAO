@@ -56,6 +56,8 @@ Sat Jul 12 17:31:20 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 	  Added a check to see if the service context received in a
 	  request is what was expected.
 
+  	* tao/RTScheduling/Current.h:	
+  	* tao/RTScheduling/RTSchedulerC.cpp:	
   	* tao/RTScheduling/RTScheduler_Initializer.cpp:
 	* tao/RTScheduling/Request_Interceptor.h:	 	  	
 	* tao/RTScheduling/RTScheduler_Manager.h:	 	  		
