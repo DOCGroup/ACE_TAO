@@ -18,6 +18,7 @@ project(BasicSP_EC_EC_stub): ciao_client {
 
 project(BasicSP_ECEC_svnt) : ciao_servant {
   after += BasicSP_EC_svnt EC_stub
+  requires += dummy
   sharedname  = EC_svnt
   libs    += EC_stub BasicSP_EC_stub BasicSP_EC_svnt
   libpaths += ..
