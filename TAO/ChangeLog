@@ -1,8 +1,17 @@
+Wed Nov 26 21:54:59 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_traits.cpp (visit_array):
+        
+          Added missing code to mark node as visited to prevent
+          repeated code generation, for example if the array is
+          typedef'd, we want to prevent the underlying type from
+          generating the same code when it is visited again.
+
 Wed Nov 26 19:15:11 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>	
 
 	* orbsvcs/orbsvcs/Fault_Tolerance.dsp:
 
-	  Added misisng libraries for linking.
+	  Added missing libraries for linking.
 
 Wed Nov 26 17:26:24 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
