@@ -146,6 +146,21 @@ ReturnTypeNameEmitter::traverse (SemanticGraph::Struct& s)
 }
 
 void
+ReturnTypeNameEmitter::traverse (SemanticGraph::Union& u)
+{
+  // This should always be in the context, since the SizeTypeCalculator
+  // is executed before the servant code generators.
+  bool var_size = u.context ().get<bool> (STRS[VAR_SIZE]);
+  
+  os << u.scoped_name ();
+  
+  if (var_size)
+  {
+    os << " *";
+  }
+}
+
+void
 ReturnTypeNameEmitter::traverse (SemanticGraph::UnboundedSequence& s)
 {
   os << s.scoped_name () << " *";
@@ -294,6 +309,12 @@ void
 INArgTypeNameEmitter::traverse (SemanticGraph::Struct& s)
 {
   os << "const " << s.scoped_name () << " &";;
+}
+
+void
+INArgTypeNameEmitter::traverse (SemanticGraph::Union& u)
+{
+  os << "const " << u.scoped_name () << " &";;
 }
 
 void
@@ -448,6 +469,12 @@ INOUTArgTypeNameEmitter::traverse (SemanticGraph::Struct& s)
 }
 
 void
+INOUTArgTypeNameEmitter::traverse (SemanticGraph::Union& u)
+{
+  os << u.scoped_name () << " &";
+}
+
+void
 INOUTArgTypeNameEmitter::traverse (SemanticGraph::UnboundedSequence& s)
 {
   os << s.scoped_name () << " &";
@@ -596,6 +623,12 @@ void
 OUTArgTypeNameEmitter::traverse (SemanticGraph::Struct& s)
 {
   os << s.scoped_name () << "_out";
+}
+
+void
+OUTArgTypeNameEmitter::traverse (SemanticGraph::Union& u)
+{
+  os << u.scoped_name () << "_out";
 }
 
 void

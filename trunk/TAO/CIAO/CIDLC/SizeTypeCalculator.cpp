@@ -18,6 +18,7 @@ namespace
 {
   class Calculator : public Traversal::String,
                      public Traversal::Struct,
+                     public Traversal::Union,
                      public Traversal::Wstring,
                      public Traversal::UnboundedSequence,
                      public Traversal::Interface,
@@ -61,6 +62,12 @@ namespace
     }
 
     virtual void
+    pre (SemanticGraph::Struct&)
+    {
+      push (false);
+    }
+
+    virtual void
     traverse (SemanticGraph::Struct& s)
     {
       if (s.context ().count (STRS[VAR_SIZE]))
@@ -74,17 +81,42 @@ namespace
     }
 
     virtual void
-    pre (SemanticGraph::Struct& s)
-    {
-      push (false);
-    }
-
-    virtual void
     post (SemanticGraph::Struct& s)
     {
       bool r (top ());
 
       s.context ().set (STRS[VAR_SIZE], r);
+
+      pop ();
+
+      if (r) top () = r;
+    }
+
+    virtual void
+    pre (SemanticGraph::Union&)
+    {
+      push (false);
+    }
+
+    virtual void
+    traverse (SemanticGraph::Union& u)
+    {
+      if (u.context ().count (STRS[VAR_SIZE]))
+      {
+        top () = u.context ().get<bool> (STRS[VAR_SIZE]);
+      }
+      else
+      {
+        Traversal::Union::traverse (u);
+      }
+    }
+
+    virtual void
+    post (SemanticGraph::Union& u)
+    {
+      bool r (top ());
+
+      u.context ().set (STRS[VAR_SIZE], r);
 
       pop ();
 
