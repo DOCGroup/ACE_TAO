@@ -24,15 +24,10 @@ $server_reverse_nt_conf = PerlACE::LocalFile ("server_reverse_nt.conf");
     ("-ORBendpoint iiop://",
 
      "-ORBsvcconf $server_reverse_conf "
-     ."-ORBEndpoint uiop:// -ORBendpoint shmiop:// -ORBendpoint iiop://",
-
-     "-ORBsvcconf $server_shmiop_conf -ORBendpoint shmiop://",
+     ."-ORBEndpoint uiop:// -ORBendpoint iiop://",
 
      "-ORBEndpoint uiop:// "
-     ." -ORBsvcconf $server_uiop_conf -p 1413566208",
-
-     " -ORBendpoint shmiop:// "
-     ." -ORBsvcconf $server_shmiop_conf -p 1413566210");
+     ." -ORBsvcconf $server_uiop_conf -p 1413566208");
 
 @comments = ("* ORB Default Server Protocol Policy Test\n          "
              ."(TAO's default behavior without config files): \n",
@@ -40,14 +35,8 @@ $server_reverse_nt_conf = PerlACE::LocalFile ("server_reverse_nt.conf");
              "* ORB Default Server Protocol Policy Test\n          "
              ."(All TAO protocols are loaded, but in reverse order): \n",
 
-             "* ORB Default Server Protocol Policy Test\n          "
-            ."(Only SHMIOP loaded): \n",
-
              "* Overriding ORB Default Server Protocol Policy in the POA\n"
-             ."          (POA Server Protocol set to UIOP only): \n",
-
-             "* Overriding ORB Default Server Protocol Policy in the POA\n"
-             ."          (POA Server Protocol set to SHMIOP only): \n");
+             ."          (POA Server Protocol set to UIOP only): \n");
 
 # UIOP only available on Unix.  Substitute with alternative tests on Windows.
 if ($^O eq "MSWin32") {
@@ -55,15 +44,10 @@ if ($^O eq "MSWin32") {
         ("-ORBendpoint iiop://",
 
          "-ORBsvcconf $server_reverse_nt_conf "
-         ."-ORBEndpoint shmiop:// -ORBendpoint iiop://",
-
-         "-ORBsvcconf $server_shmiop_conf -ORBendpoint shmiop://",
+         ."-ORBendpoint iiop://",
 
          "-ORBendpoint iiop://"
-         ." -ORBsvcconf $server_iiop_conf -p 0",
-
-         "-ORBendpoint shmiop:// "
-         ." -ORBsvcconf $server_shmiop_conf -p 1413566210");
+         ." -ORBsvcconf $server_iiop_conf -p 0");
 
     $comments[3] =
          "* Overriding ORB Default Server Protocol Policy in the POA\n"
