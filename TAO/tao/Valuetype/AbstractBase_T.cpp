@@ -4,7 +4,7 @@
 
 #include "AbstractBase_T.h"
 #include "AbstractBase.h"
-#include "Stub.h"
+#include "tao/Stub.h"
 
 ACE_RCSID (Valuetype,
            Abstractbase_T,
@@ -18,7 +18,7 @@ namespace TAO
       Proxy_Broker_Factory pbf
       ACE_ENV_ARG_DECL)
   {
-    if (CORBA::AbstractBase::is_nil (obj))
+    if (CORBA::is_nil (obj))
       {
         return T::_nil ();
       }
@@ -44,7 +44,7 @@ namespace TAO
       CORBA::AbstractBase_ptr obj,
       Proxy_Broker_Factory pbf)
   {
-    if (CORBA::AbstractBase::is_nil (obj))
+    if (CORBA::is_nil (obj))
       {
         return T::_nil ();
       }
@@ -57,7 +57,7 @@ namespace TAO
 
         bool collocated =
           !CORBA::is_nil (stub->servant_orb_var ().ptr ())
-          && stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ()
+          && stub->optimize_collocation_objects ()
           && obj->_is_collocated ()
           && pbf != 0;
 
@@ -76,3 +76,5 @@ namespace TAO
     return proxy;
   }
 }
+
+#endif /*TAO_ABSTRACT_BASE_T_C*/

@@ -286,11 +286,22 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "return " << node->local_name () << "::_duplicate (proxy);" << be_uidt_nl
           << "}" << be_nl << be_nl;
     }
-  else
+  else 
     {
-      *os << "return" << be_idt_nl
-          << "TAO::Narrow_Utils<" << node->local_name () << ">::narrow ("
-          << be_idt << be_idt_nl
+      *os << "return" << be_idt_nl;
+
+      if (!node->is_abstract ())
+	{
+          *os << "TAO::Narrow_Utils<" 
+	      << node->local_name () << ">::narrow (";
+        }
+      else
+        {
+          *os << "TAO::AbstractBase_Narrow_Utils<" 
+	      << node->local_name () << ">::narrow (";
+        }
+
+      *os << be_idt << be_idt_nl
           << "_tao_objref," << be_nl
           << "\"" << node->repoID () << "\"," << be_nl
           << node->flat_client_enclosing_scope ()

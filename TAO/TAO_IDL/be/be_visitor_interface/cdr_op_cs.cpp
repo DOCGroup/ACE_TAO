@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_interface, 
-           cdr_op_cs, 
+ACE_RCSID (be_visitor_interface,
+           cdr_op_cs,
            "$Id$")
 
 be_visitor_interface_cdr_op_cs::be_visitor_interface_cdr_op_cs (
@@ -115,16 +115,25 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
       << "{" << be_idt_nl
       << "return 0;" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
-      << "typedef ::" << node->name () << " RHS_SCOPED_NAME;" 
+      << "typedef ::" << node->name () << " RHS_SCOPED_NAME;"
       << be_nl << be_nl
       << "// Narrow to the right type." << be_nl;
 
-  *os << "_tao_objref =" << be_idt_nl
-      << "TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow ("
-      << be_idt << be_idt_nl
+  *os << "_tao_objref =" << be_idt_nl;
+
+  if (!node->is_abstract ())
+    {
+      *os << "TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (";
+    }
+  else
+    {
+      *os << "TAO::AbstractBase_Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (";
+    }
+
+  *os << be_idt << be_idt_nl
       << "obj.in ()," << be_nl
       << node->flat_client_enclosing_scope ()
-      << node->base_proxy_broker_name () 
+      << node->base_proxy_broker_name ()
       << "_Factory_function_pointer" << be_uidt_nl
       << ");" << be_uidt_nl << be_uidt_nl;
 

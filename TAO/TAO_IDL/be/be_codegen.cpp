@@ -1407,6 +1407,11 @@ TAO_CodeGen::gen_stub_src_includes (void)
               this->client_stubs_,
               "tao/Valuetype/AbstractBase_Invocation_Adapter.h"
             );
+
+          this->gen_standard_include (
+              this->client_stubs_,
+              "tao/Valuetype/AbstractBase_T.h"
+            );
         }
     }
 

@@ -10,8 +10,8 @@
 */
 //=============================================================================
 
-ACE_RCSID (be_visitor_interface, 
-           amh_ss, 
+ACE_RCSID (be_visitor_interface,
+           amh_ss,
            "$Id$")
 
 be_visitor_amh_interface_ss::be_visitor_amh_interface_ss (
@@ -66,7 +66,7 @@ be_visitor_amh_interface_ss::this_method (be_interface *node)
     this->generate_full_skel_name (node);
   const char *full_skel_name = full_skel_name_holder.c_str ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl 
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << non_amh_name.c_str() << "*" << be_nl
@@ -100,9 +100,17 @@ be_visitor_amh_interface_ss::this_method (be_interface *node)
       << "CORBA::Object_var obj = tmp;" << be_nl << be_nl;
 
   *os << "typedef ::" << node->name () << " STUB_SCOPED_NAME;" << be_nl
-      << "return" << be_idt_nl
-      << "TAO::Narrow_Utils<STUB_SCOPED_NAME>::unchecked_narrow ("
-      << be_idt << be_idt_nl
+      << "return" << be_idt_nl;
+
+  if (!node->is_abstract ())
+    {
+      *os << "TAO::Narrow_Utils<STUB_SCOPED_NAME>::unchecked_narrow (";
+    }
+  else
+    {
+      *os << "TAO::AbstractBase_Narrow_Utils<STUB_SCOPED_NAME>::unchecked_narrow (";
+    }
+  *os << be_idt << be_idt_nl
       << "obj.in ()," << be_nl
       << node->flat_client_enclosing_scope ()
       << node->base_proxy_broker_name ()
@@ -121,7 +129,7 @@ be_visitor_amh_interface_ss::dispatch_method (be_interface *node)
     this->generate_full_skel_name (node);
   const char *full_skel_name = full_skel_name_holder.c_str ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl 
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "void" << be_nl
