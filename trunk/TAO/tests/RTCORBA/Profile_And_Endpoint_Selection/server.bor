@@ -1,5 +1,5 @@
 #
-# Makefile for building the Faults test executable
+# Makefile for building the RTCorba Profile_And_Endpoint_Selection server executable
 #
 
 NAME = server
@@ -16,14 +16,16 @@ CFLAGS = \
 	$(TAO_CFLAGS) \
         $(TAO_PORTABLESERVER_CFLAGS) \
         $(TAO_RTCORBA_CFLAGS) \
-        $(TAO_RTPORTABLESERVER_CFLAGS)
+        $(TAO_RTPORTABLESERVER_CFLAGS) \
+        $(TAO_STRATEGIES_CFLAGS)
 
 LIBFILES = \
 	$(ACE_LIB) \
 	$(TAO_LIB) \
         $(TAO_PORTABLESERVER_LIB) \
         $(TAO_RTCORBA_LIB) \
-        $(TAO_RTPORTABLESERVER_LIB)
+        $(TAO_RTPORTABLESERVER_LIB) \
+        $(TAO_STRATEGIES_LIB)
 
 IDLFILES = \
         $(IDLDIR)\test.idl
