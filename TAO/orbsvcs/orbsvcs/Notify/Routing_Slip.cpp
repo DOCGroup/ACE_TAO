@@ -111,7 +111,8 @@ Routing_Slip::create (
   Routing_Slip_Ptr result;
   ACE_Message_Block * event_mb = 0;
   ACE_Message_Block * rs_mb = 0;
-  ACE_TRY_NEW_ENV
+  ACE_DECLARE_NEW_ENV;
+  ACE_TRY
     {
       if (rspm->reload (event_mb, rs_mb))
       {
@@ -843,7 +844,8 @@ Routing_Slip::unmarshal (TAO_Notify_EventChannelFactory &ecf, TAO_InputCDR & cdr
     ACE_CDR::Octet code = 0;
     while (cdr.read_octet(code))
     {
-      ACE_TRY_NEW_ENV
+      ACE_DECLARE_NEW_ENV;
+      ACE_TRY
       {
         if (code == TAO_Notify_Method_Request_Dispatch::persistence_code)
         {

@@ -77,7 +77,7 @@ TAO_Notify_Admin::subscribed_types (TAO_Notify_EventTypeSeq& subscribed_types AC
   // Adopt the Admin's subscription.
   TAO_Notify_EventTypeSeq added (this->subscribed_types_), removed;
 
-  added.init (subscribed_types, removed);
+  added.add_and_remove (subscribed_types, removed);
 
   subscribed_types = added;
 }

@@ -124,7 +124,7 @@ TAO_Notify_EventTypeSeq::remove_seq (const TAO_Notify_EventTypeSeq& event_type_s
 }
 
 void
-TAO_Notify_EventTypeSeq::init (TAO_Notify_EventTypeSeq& seq_added, TAO_Notify_EventTypeSeq& seq_remove)
+TAO_Notify_EventTypeSeq::add_and_remove (TAO_Notify_EventTypeSeq& seq_added, TAO_Notify_EventTypeSeq& seq_remove)
 {
   const TAO_Notify_EventType& special = TAO_Notify_EventType::special ();
 
