@@ -4,7 +4,7 @@
 #include "NamingViewer.h"
 #include "NamingViewerDlg.h"
 #include "ViewIORDialog.h"
-#include "ORBSvcs/Naming/Naming_Utils.h"
+#include "orbsvcs/orbsvcs/Naming/Naming_Utils.h"
 #include "SelectNSDialog.h"
 
 #ifdef _DEBUG
@@ -69,7 +69,7 @@ CNamingViewerDlg::CNamingViewerDlg(CORBA::ORB_ptr pORB, CWnd* pParent /*=NULL*/)
 	//}}AFX_DATA_INIT
 	// Note that LoadIcon does not require a subsequent DestroyIcon in Win32
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
-  
+
   m_pORB = pORB;
 
 }
@@ -123,10 +123,10 @@ BOOL CNamingViewerDlg::OnInitDialog()
 	//  when the application's main window is not a dialog
 	SetIcon(m_hIcon, TRUE);			// Set big icon
 	SetIcon(m_hIcon, FALSE);		// Set small icon
-	
+
 	// TODO: Add extra initialization here
 	m_Tree.SetpORB(m_pORB);
-  
+
   // Initialize the naming client and get the root context
   TAO_Naming_Client Client;
   ACE_Time_Value Timeout(0,500000);
@@ -169,7 +169,7 @@ void CNamingViewerDlg::OnSysCommand(UINT nID, LPARAM lParam)
 //  to draw the icon.  For MFC applications using the document/view model,
 //  this is automatically done for you by the framework.
 
-void CNamingViewerDlg::OnPaint() 
+void CNamingViewerDlg::OnPaint()
 {
 	if (IsIconic())
 	{
