@@ -1,3 +1,11 @@
+Sat Jun 16 18:23:43 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Strategies/GIOP_Message_NonReactive_Handler.cpp:
+	* orbsvcs/orbsvcs/AV/sfp.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Dispatching_Task.cpp:
+	* orbsvcs/orbsvcs/CosEvent/CEC_Dispatching_Task.cpp: Fixed compile
+	  errors. 
+
 Sat Jun 16 12:15:00 2001  Craig Rodrigues <crodrigu@bbn.com>
 
         * orbsvcs/tests/AVStreams/benchmark: (removed)
