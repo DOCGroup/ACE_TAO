@@ -1,3 +1,8 @@
+Sat Dec 11 17:38:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Atomic_Op_T.h:
+          Fixed incorrect method declarations and not needed ACE_INLINE
+
 Sat Dec 11 17:26:09 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* bin/tao_other_tests.lst:
@@ -6,7 +11,7 @@ Sat Dec 11 17:26:09 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 Sat Dec 11 10:39:38 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/{Atomic_Op.h,Atomic_Op_T.h,Atomic_Op_T.inl,Atomic_Op_T.inl} 
+	* ace/{Atomic_Op.h,Atomic_Op_T.h,Atomic_Op_T.inl,Atomic_Op_T.inl}
 	  (operator=): Updated the ACE_Atomic_Op so that it allows
  	  "chained assignments."  Thanks to Michael Altmann <michael dot
  	  altmann dot extern at mchh dot siemens dot de> for these fixes.
