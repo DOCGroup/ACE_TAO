@@ -1,3 +1,9 @@
+Sun Aug 23 13:40:11 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/Quoter/Makefile: 
+	* orbsvcs/LifeCycle_Service/Makefile: 
+	  Updated dependencies.
+
 Sun Aug 23 13:12:53 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* docs/compiler.html: Documented the recent options to the IDL
