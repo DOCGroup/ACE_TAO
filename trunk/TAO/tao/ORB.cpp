@@ -620,11 +620,11 @@ wscpy (CORBA::WChar *dest,
 CORBA::WString
 CORBA::wstring_copy (const CORBA::WChar *const str)
 {
-  if (*str)
+  if (!str)
     return 0;
 
-  CORBA::WString retval = CORBA::wstring_alloc (ACE_WString::wstrlen (str));
-  return wscpy (retval, str);
+  CORBA::WString retval = CORBA::wstring_alloc (ACE_OS::wslen (str));
+  return ACE_OS::wscpy (retval, str);
 }
 
 void

@@ -390,9 +390,7 @@ be_generator::create_string(AST_Expression *v)
 AST_String *
 be_generator::create_wstring(AST_Expression *v)
 {
-  typedef ACE_UINT16 WChar;
-
-  return (AST_String *) new be_string(v, sizeof(WChar));
+  return (AST_String *) new be_string(v, sizeof(ACE_OS::WChar));
 }
 
 /*
