@@ -1257,7 +1257,7 @@ TAO_DynCommon::get_ulonglong (ACE_ENV_SINGLE_ARG_DECL)
       DynamicAny::DynAny::InvalidValue
     ))
 {
-  CORBA::ULongLong retval;
+  CORBA::ULongLong retval = 0;
 
   if (this->destroyed_)
     {
@@ -1267,7 +1267,8 @@ TAO_DynCommon::get_ulonglong (ACE_ENV_SINGLE_ARG_DECL)
 
   if (this->has_components_)
     {
-      DynamicAny::DynAny_var cc = this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+      DynamicAny::DynAny_var cc = 
+        this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (retval);
 
       return cc->get_ulonglong (ACE_ENV_SINGLE_ARG_PARAMETER);
