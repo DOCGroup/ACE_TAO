@@ -231,12 +231,12 @@ int be_visitor_args_vardecl_ss::visit_interface_fwd (be_interface_fwd *node)
 
 #ifdef IDL_HAS_VALUETYPE
 
-int be_visitor_args_vardecl_ss::visit_valuetype (be_valuetype *node)
+int be_visitor_args_vardecl_ss::visit_valuetype (be_valuetype *)
 {
   return -1;
 }
 
-int be_visitor_args_vardecl_ss::visit_valuetype_fwd (be_valuetype_fwd *node)
+int be_visitor_args_vardecl_ss::visit_valuetype_fwd (be_valuetype_fwd *)
 {
   return -1;
 }

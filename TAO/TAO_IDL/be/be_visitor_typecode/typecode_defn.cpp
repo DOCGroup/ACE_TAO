@@ -378,7 +378,7 @@ be_visitor_typecode_defn::visit_interface (be_interface *node)
 }
 
 int
-be_visitor_typecode_defn::visit_interface_fwd (be_interface_fwd *node)
+be_visitor_typecode_defn::visit_interface_fwd (be_interface_fwd *)
 {
   // nothing to do
   return 0;
@@ -1090,14 +1090,14 @@ be_visitor_typecode_defn::gen_encapsulation (be_interface *node)
 }
 
 int
-be_visitor_typecode_defn::gen_typecode (be_interface_fwd *node)
+be_visitor_typecode_defn::gen_typecode (be_interface_fwd *)
 {
   // nothing to do here
   return 0;
 }
 
 int
-be_visitor_typecode_defn::gen_encapsulation (be_interface_fwd *node)
+be_visitor_typecode_defn::gen_encapsulation (be_interface_fwd *)
 {
   // nothing to be done
   return 0;
@@ -1370,7 +1370,7 @@ be_visitor_typecode_defn::gen_typecode (be_string *node)
 }
 
 int
-be_visitor_typecode_defn::gen_encapsulation (be_string *node)
+be_visitor_typecode_defn::gen_encapsulation (be_string *)
 {
   // nothing to be done here
   return 0;
@@ -2265,13 +2265,13 @@ be_visitor_typecode_defn::compute_encap_length (be_interface *node)
 
 
 ACE_CDR::Long 
-be_visitor_typecode_defn::compute_tc_size (be_interface_fwd *node)
+be_visitor_typecode_defn::compute_tc_size (be_interface_fwd *)
 {
   return 0;
 }
 
 ACE_CDR::Long 
-be_visitor_typecode_defn::compute_encap_length (be_interface_fwd *node)
+be_visitor_typecode_defn::compute_encap_length (be_interface_fwd *)
 {
   return 0;
 }
@@ -2398,7 +2398,7 @@ be_visitor_typecode_defn::compute_encap_length (be_sequence *node)
 
 
 ACE_CDR::Long 
-be_visitor_typecode_defn::compute_tc_size (be_string *node)
+be_visitor_typecode_defn::compute_tc_size (be_string *)
 {
   this->computed_tc_size_ = 4 + 4;
   return this->computed_tc_size_;
@@ -2406,7 +2406,7 @@ be_visitor_typecode_defn::compute_tc_size (be_string *node)
 
 
 ACE_CDR::Long 
-be_visitor_typecode_defn::compute_encap_length (be_string *node)
+be_visitor_typecode_defn::compute_encap_length (be_string *)
 {
   this->computed_encap_len_ = 0;
   return this->computed_encap_len_;
@@ -2938,7 +2938,7 @@ be_visitor_typecode_defn::tc_name2long (const char *name,
 
 // post processing
 int
-be_visitor_typecode_defn::post_process (be_decl *node)
+be_visitor_typecode_defn::post_process (be_decl *)
 {
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_TC_DEFN_SCOPE_LEN)
     {
