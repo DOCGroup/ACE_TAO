@@ -2,6 +2,7 @@ Wed Mar 13 14:48:12 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/performance-tests/EC_Scalability/*:
 	* orbsvcs/performance-tests/EC_Latency/*:
+	* orbsvcs/performance-tests/EC_Colocated_Latency/*:
 	* orbsvcs/performance-tests/EC_Federated_Latency/*:
 	* orbsvcs/performance-tests/EC_Federated_Scalability/*:
 	  Removed old versions of the tests, the new tests in RTEvent are
