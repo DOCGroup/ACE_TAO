@@ -82,7 +82,6 @@ Wed Aug 27 17:06:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
           platform on which these examples don't work. This fixes the link
           errors in the Cygwin build.
 
->>>>>>> 4.5512
 Wed Aug 27 10:32:03 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/USAGE:
