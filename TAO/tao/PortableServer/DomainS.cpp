@@ -1061,7 +1061,7 @@ POA_CORBA_ConstructionPolicy::TAO_ServerRequest_Info_CORBA_ConstructionPolicy_ma
     CORBA::Boolean &constr_policy,
     CORBA::Environment &
   )
-  : TAO_ServerRequestInfo (_tao_server_request),
+  : TAO_ServerRequestInfo (tao_server_request),
     _tao_impl (tao_impl),
     object_type_ (object_type),
     constr_policy_ (constr_policy)

@@ -428,7 +428,6 @@ public:
         const TAO_ServerRequest_Info_CORBA_ConstructionPolicy_make_domain_manager &
       );
 
-    TAO_ServerRequest &_tao_server_request;
     POA_CORBA_ConstructionPolicy *_tao_impl;
 
     IR_InterfaceDef *object_type_;
