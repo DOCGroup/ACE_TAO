@@ -59,11 +59,7 @@ class ACE_Export ACE_Sched_Params
   //    thanks to Thilo Kielmann <kielmann@informatik.uni-siegen.de> for his
   //    careful review of this class design, thoughtful comments, and
   //    assistance with implementation, especially for PTHREADS platforms.
-  //    Please don't blame him for anything about this class or
-  //    ACE_OS::sched_params () that you don't like or that isn't right;
-  //    the ACE Team, in particular David Levine <levine@cs.wustl.edu>
-  //    is fully responsible for that.  Please send any comments or
-  //    corrections to us.
+  //    Please send any comments or corrections to the ACE developers.
 {
 public:
   typedef int Policy;
@@ -97,16 +93,23 @@ public:
   void quantum (const ACE_Time_Value &);
 
   // = Accessors for OS-specific priorities.
-  static int priority_min (const Policy);
-  static int priority_max (const Policy);
+  // These return ACE_SCHED_OTHER if the Policy value is invalid.
+  static int priority_min (const Policy,
+                           const int scope = ACE_SCOPE_THREAD);
+  static int priority_max (const Policy,
+                           const int scope = ACE_SCOPE_THREAD);
 
-  static int next_priority (const Policy, const int priority);
+  static int next_priority (const Policy,
+                            const int priority,
+                            const int scope = ACE_SCOPE_THREAD);
   // The next higher priority.  "Higher" refers to scheduling priority,
   // not to the priority value itself.  (On some platforms, higher scheduling
   // priority is indicated by a lower priority value.)  If "priority" is
   // the highest priority (for the specified policy), then it is returned.
 
-  static int previous_priority (const Policy, const int priority);
+  static int previous_priority (const Policy,
+                                const int priority,
+                                const int scope = ACE_SCOPE_THREAD);
   // The previous, lower priority.  "Lower" refers to scheduling priority,
   // not to the priority value itself.  (On some platforms, lower scheduling
   // priority is indicated by a higher priority value.)  If "priority" is
