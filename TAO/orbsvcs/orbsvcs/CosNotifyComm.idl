@@ -19,8 +19,8 @@
 #define _COS_NOTIFY_COMM_IDL_
 #pragma prefix "omg.org"
 
-#include <CosNotification.idl>
-#include <CosEventComm.idl>
+#include "CosNotification.idl"
+#include "CosEventComm.idl"
 
 module CosNotifyComm {
 

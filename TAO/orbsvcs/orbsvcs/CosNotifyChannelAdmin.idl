@@ -19,10 +19,10 @@
 #define _COS_NOTIFY_CHANNEL_ADMIN_IDL_
 #pragma prefix "omg.org"
 
-#include <CosNotification.idl>
-#include <CosNotifyFilter.idl>
-#include <CosNotifyComm.idl>
-#include <CosEventChannelAdmin.idl>
+#include "CosNotification.idl"
+#include "CosNotifyFilter.idl"
+#include "CosNotifyComm.idl"
+#include "CosEventChannelAdmin.idl"
 
 module CosNotifyChannelAdmin {
 
