@@ -15,13 +15,12 @@
 #include "ace/Singleton.h"
 #include "orbsvcs/RtecSchedulerC.h"
 #include "orbsvcs/MetricsC.h"
-#include "orbsvcs/orbsvcs_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_ORBSVCS_Export TAO_Metrics_Utils
+class TAO_Metrics_Export TAO_Metrics_Utils
 {
   // = TITLE
   //   Defines a class for various metrics utility functions.
@@ -76,7 +75,7 @@ private:
 };
 
 
-struct TAO_ORBSVCS_Export WSOA_Metrics_Handles
+struct TAO_Metrics_Export WSOA_Metrics_Handles
 {
   // = TITLE
   //   Defines a helper class for WSOA METRICS INSTRUMENTATION.

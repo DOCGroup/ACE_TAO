@@ -37,7 +37,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_ORBSVCS_Export TAO_Metrics_Logger_Data
+class TAO_Metrics_Export TAO_Metrics_Logger_Data
 {
   // = TITLE
   //   Defines a class for logger data.
@@ -85,7 +85,7 @@ public:
 
 
 
-class TAO_ORBSVCS_Export TAO_Metrics_Logger
+class TAO_Metrics_Export TAO_Metrics_Logger
   : public ACE_Task<ACE_MT_SYNCH>, public POA_Metrics::QoSLogger
   // = TITLE
   //   This class implements a Metrics QoS logger.
@@ -115,7 +115,7 @@ public:
   // Active object loop for processing logged data.
 
   void send_banner (const char *banner,
-                    CORBA::Environment &ACE_TRY_ENV = 
+                    CORBA::Environment &ACE_TRY_ENV =
                         CORBA::Environment::default_environment ());
   // Sends a banner to be written to the log file and to the visualization browser.
 
@@ -124,7 +124,7 @@ public:
 
   void log_aggregate_QoS (const Metrics::QoSParameter_Set & qos_params,
                           Metrics::Time interval,
-                          CORBA::Environment &ACE_TRY_ENV = 
+                          CORBA::Environment &ACE_TRY_ENV =
                             CORBA::Environment::default_environment ());
   // Reports the aggregate QoS information for all operations
   // to the passed QoS logger.
@@ -135,20 +135,20 @@ public:
   // to the passed QoS logger.
 
   void set_identities (const Metrics::ProbeIdentity_Set & probe_identities,
-                       CORBA::Environment &ACE_TRY_ENV = 
+                       CORBA::Environment &ACE_TRY_ENV =
                          CORBA::Environment::default_environment ());
-  // Binds the names of various timeprobes to their identifiers so 
+  // Binds the names of various timeprobes to their identifiers so
   // that ids alone can be used (for efficiency) in passing data.
 
   void set_identity (const Metrics::ProbeIdentity_t & probe_identity,
-                     CORBA::Environment &ACE_TRY_ENV = 
+                     CORBA::Environment &ACE_TRY_ENV =
                        CORBA::Environment::default_environment ());
-  // Binds the names of various timeprobes to their identifiers so 
+  // Binds the names of various timeprobes to their identifiers so
   // that ids alone can be used (for efficiency) in passing data.
 
   void log_timeprobe_data (const Metrics::TimeprobeParameter_Set & timeprobe_params,
                            Metrics::Time interval,
-                           CORBA::Environment &ACE_TRY_ENV = 
+                           CORBA::Environment &ACE_TRY_ENV =
                              CORBA::Environment::default_environment ());
   // Reports timeprobe data collected since last run.
 
