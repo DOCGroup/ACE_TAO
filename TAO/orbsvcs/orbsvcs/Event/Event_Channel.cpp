@@ -426,12 +426,16 @@ ACE_Push_Supplier_Proxy::push (const RtecEventComm::EventSet &event,
 void
 ACE_Push_Supplier_Proxy::time_stamp (RtecEventComm::EventSet& event)
 {
+#if !defined(TAO_LACKS_EVENT_CHANNEL_TIMESTAMPS)
   ACE_hrtime_t ec_recv = ACE_OS::gethrtime ();
   for (CORBA::ULong i = 0; i < event.length (); ++i)
     {
       ORBSVCS_Time::hrtime_to_TimeT (event[i].header.ec_recv_time,
                                      ec_recv);
     }
+#else
+  ACE_UNUSED_ARG (event);
+#endif /* TAO_LACKS_EVENT_CHANNEL_TIMESTAMPS */
 }
 
 void
@@ -1464,12 +1468,14 @@ ACE_ES_Consumer_Module::push (const ACE_ES_Dispatch_Request *request,
   request->make_copy (event_set);
 
   // Forward the event set.
+#if !defined(TAO_LACKS_EVENT_CHANNEL_TIMESTAMPS)
   ACE_hrtime_t ec_send = ACE_OS::gethrtime ();
   for (CORBA::ULong i = 0; i < event_set.length (); ++i)
     {
       RtecEventComm::Event& ev = event_set[i];
       ORBSVCS_Time::hrtime_to_TimeT (ev.header.ec_send_time, ec_send);
     }
+#endif /* TAO_LACKS_EVENT_CHANNEL_TIMESTAMPS */
   request->consumer ()->push (event_set, ACE_TRY_ENV);
 }
 
