@@ -1,5 +1,9 @@
 // $Id$
 
+#include "ace/Countdown_Time.h"
+#include "ace/OS_NS_sys_time.h"
+#include "ace/Reactor.h"
+
 #include "tao/Leader_Follower.h"
 #include "tao/LF_Follower_Auto_Ptr.h"
 #include "tao/LF_Follower_Auto_Adder.h"
@@ -7,9 +11,6 @@
 #include "tao/debug.h"
 #include "tao/Transport.h"
 #include "tao/GUIResource_Factory.h"
-#include "ace/Countdown_Time.h"
-
-#include "ace/Reactor.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Leader_Follower.i"
