@@ -80,7 +80,7 @@ parse_string_dynamic_request_helper (CORBA::Object_ptr naming_context,
 	  ACE_UNUSED_ARG (ex);
 
 	  ACE_THROW_RETURN (
-	      CORBA::BAD_PARAM (TAO_OMG_VMCID |	TAO_OMG_MINOR_BAD_PARAM_10,
+	      CORBA::BAD_PARAM (TAO_OMG_VMCID |	10,
 				CORBA::COMPLETED_YES),
 	      CORBA::Object::_nil ()
 	    );
@@ -101,7 +101,7 @@ parse_string_dynamic_request_helper (CORBA::Object_ptr naming_context,
 	  //	be simply raised, and any RESTART is handled
 	  //	already...  leave this here "just in case".
 	  ACE_THROW_RETURN (
-	      CORBA::BAD_PARAM (TAO_OMG_VMCID |	TAO_OMG_MINOR_BAD_PARAM_10,
+	      CORBA::BAD_PARAM (TAO_OMG_VMCID |	10,
 				CORBA::COMPLETED_YES),
 	      CORBA::Object::_nil ()
 	    );
