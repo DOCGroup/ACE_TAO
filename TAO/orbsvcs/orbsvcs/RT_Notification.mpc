@@ -7,7 +7,6 @@ project(RT_Notification) : orbsvcslib, core, svc_utils, dynamicany, portableserv
   dynamicflags = TAO_RT_NOTIFY_BUILD_DLL
   tagchecks   += RT_Notify
   includes    += $(TAO_ROOT)/orbsvcs/orbsvcs
-  include_dir  = orbsvcs
 
   IDL_Files {
   }

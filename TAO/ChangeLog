@@ -1,15 +1,42 @@
+Thu Jan  8 07:44:14 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/RT_Notification.mpc:
+        * tao/BiDir_GIOP/BiDir_GIOP.mpc:
+        * tao/Domain/Domain.mpc:
+        * tao/DynamicAny/DynamicAny.mpc:
+        * tao/DynamicInterface/DynamicInterface.mpc:
+        * tao/IFR_Client/IFR_Client.mpc:
+        * tao/IORInterceptor/IORInterceptor.mpc:
+        * tao/IORManipulation/IORManipulation.mpc:
+        * tao/IORTable/IORTable.mpc:
+        * tao/Messaging/Messaging.mpc:
+        * tao/ObjRefTemplate/ObjRefTemplate.mpc:
+        * tao/PortableServer/PortableServer.mpc:
+        * tao/RTCORBA/RTCORBA.mpc:
+        * tao/RTPortableServer/RTPortableServer.mpc:
+        * tao/RTScheduling/RTScheduler.mpc:
+        * tao/SmartProxies/SmartProxies.mpc:
+        * tao/Strategies/Strategies.mpc:
+        * tao/TypeCodeFactory/TypeCodeFactory.mpc:
+        * tao/Utils/Utils.mpc:
+        * tao/Valuetype/Valuetype.mpc:
+        * tao/tao.mpc:
+
+          Removed the include_dir setting.  This is determined automatically
+          in the Borland template.
+
 Wed Jan  7 17:17:21 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* TAO_IDL/util/utl_global.cpp:
+        * TAO_IDL/util/utl_global.cpp:
 
-	  Fixed a const cast conversion warning.
+          Fixed a const cast conversion warning.
 
 Wed Jan  7 13:52:13 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/CosLifeCycle.idl:
-	* orbsvcs/orbsvcs/RtecEventChannelAdmin.idl:
+        * orbsvcs/orbsvcs/CosLifeCycle.idl:
+        * orbsvcs/orbsvcs/RtecEventChannelAdmin.idl:
 
-	  Fixed name redefinition bugs and recoded usage of deprecated
+          Fixed name redefinition bugs and recoded usage of deprecated
           anonymous sequences.
 
 Wed Jan  7 13:30:28 2004  Chad Elliott  <elliott_c@ociweb.com>

@@ -2,7 +2,6 @@
 project : taolib, core, portableserver {
   sharedname   = TAO_Messaging
   dynamicflags = TAO_MESSAGING_BUILD_DLL
-  include_dir  = tao/Messaging
 
     Source_Files {
       Asynch_Invocation_Adapter.cpp
