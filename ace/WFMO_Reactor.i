@@ -71,6 +71,44 @@ ACE_WFMO_Reactor_Handler_Repository::Common_Info::set (Common_Info &common_info)
   *this = common_info;
 }
 
+ACE_INLINE void 
+ACE_WFMO_Reactor_Handler_Repository::Common_Info::dump (void) const
+{
+  ACE_TRACE ("ACE_WFMO_Reactor_Handler_Repository::Common_Info::dump");
+
+  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+
+  ACE_DEBUG ((LM_DEBUG, 
+              ASYS_TEXT ("I/O Entry = %d\n"),
+              this->io_entry_));
+
+  ACE_DEBUG ((LM_DEBUG, 
+              ASYS_TEXT ("Event Handler = %d\n"),
+              this->event_handler_));
+
+  ACE_DEBUG ((LM_DEBUG, 
+              ASYS_TEXT ("I/O Handle = %d\n"),
+              this->io_handle_));
+
+  ACE_DEBUG ((LM_DEBUG, 
+              ASYS_TEXT ("Network Events = %d\n"),
+              this->network_events_));
+
+  ACE_DEBUG ((LM_DEBUG, 
+              ASYS_TEXT ("Delete Event = %d\n"),
+              this->delete_event_));
+
+  ACE_DEBUG ((LM_DEBUG, 
+              ASYS_TEXT ("Delete Entry = %d\n"),
+              this->delete_entry_));
+
+  ACE_DEBUG ((LM_DEBUG, 
+              ASYS_TEXT ("Close Masks = %d\n"),
+              this->close_masks_));
+
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));  
+}
+
 /************************************************************/
 
 ACE_INLINE
@@ -112,6 +150,26 @@ ACE_WFMO_Reactor_Handler_Repository::Current_Info::reset (void)
 {
   this->suspend_entry_ = 0;
   Common_Info::reset ();
+}
+
+ACE_INLINE void 
+ACE_WFMO_Reactor_Handler_Repository::Current_Info::dump (HANDLE event_handle) const
+{
+  ACE_TRACE ("ACE_WFMO_Reactor_Handler_Repository::Current_Info::dump");
+
+  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+
+  Common_Info::dump ();
+
+  ACE_DEBUG ((LM_DEBUG, 
+              ASYS_TEXT ("Event Handle = %d\n"),
+              event_handle));
+
+  ACE_DEBUG ((LM_DEBUG, 
+              ASYS_TEXT ("Suspend Entry = %d\n"),
+              this->suspend_entry_));  
+
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));  
 }
 
 /************************************************************/
@@ -163,6 +221,26 @@ ACE_WFMO_Reactor_Handler_Repository::To_Be_Added_Info::reset (void)
   Common_Info::reset ();
 }
 
+ACE_INLINE void 
+ACE_WFMO_Reactor_Handler_Repository::To_Be_Added_Info::dump (void) const
+{
+  ACE_TRACE ("ACE_WFMO_Reactor_Handler_Repository::To_Be_Added_Info::dump");
+
+  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+
+  Common_Info::dump ();
+
+  ACE_DEBUG ((LM_DEBUG, 
+              ASYS_TEXT ("Event Handle = %d\n"),
+              this->event_handle_));
+
+  ACE_DEBUG ((LM_DEBUG, 
+              ASYS_TEXT ("Suspend Entry = %d\n"),
+              this->suspend_entry_));  
+
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));  
+}
+
 /************************************************************/
 
 ACE_INLINE
@@ -210,6 +288,26 @@ ACE_WFMO_Reactor_Handler_Repository::Suspended_Info::set (ACE_HANDLE event_handl
   this->event_handle_ = event_handle;
   this->resume_entry_ = resume_entry;
   Common_Info::set (common_info);
+}
+
+ACE_INLINE void 
+ACE_WFMO_Reactor_Handler_Repository::Suspended_Info::dump (void) const
+{
+  ACE_TRACE ("ACE_WFMO_Reactor_Handler_Repository::Suspended_Info::dump");
+
+  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+
+  Common_Info::dump ();
+
+  ACE_DEBUG ((LM_DEBUG, 
+              ASYS_TEXT ("Event Handle = %d\n"),
+              this->event_handle_));
+
+  ACE_DEBUG ((LM_DEBUG, 
+              ASYS_TEXT ("Resume Entry = %d\n"),
+              this->resume_entry_));  
+
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));  
 }
 
 /************************************************************/
