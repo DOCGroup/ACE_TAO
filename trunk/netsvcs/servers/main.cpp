@@ -9,7 +9,7 @@
 #include "Server_Logging_Handler.h"
 #include "Logging_Strategy.h"
 
-int 
+int
 main (int argc, char *argv[])
 {
   // Create an adapter to end the event loop.
