@@ -27,7 +27,7 @@ LIBFILES = \
         $(TAO_BIDIRGIOP_LIB)
 
 IDLFILES = \
-        $(IDLDIR)\test.idl
+        $(IDLDIR)\Receiver.idl
 
 CPPDIR = .
 
@@ -38,6 +38,5 @@ IDLDIR = .
 #
 # IDL Build rules
 #
-
-$(IDLDIR)\testS.cpp $(IDLDIR)\testC.cpp: $(IDLDIR)\test.idl
+$(IDLDIR)\ReceiverS.cpp $(IDLDIR)\ReceiverC.cpp: $(IDLDIR)\Receiver.idl
 	$(TAO_IDL) $**
