@@ -1,3 +1,8 @@
+Tue Jan 13 10:49:48 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tao/current.{i,cpp}: Added a first cut at implementations for
+ 	the POA Current impl.
+
 Mon Jan 12 19:47:42 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/poa.h: 
