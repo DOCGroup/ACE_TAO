@@ -1,8 +1,18 @@
 // $Id$
 
-//ACE_RCSID(orbsvcs, Shutdown_Utilities, "$Id$")
-
 #include "Shutdown_Utilities.h"
+
+ACE_RCSID(orbsvcs,
+          Shutdown_Utilities,
+          "$Id$")
+
+Shutdown_Functor::Shutdown_Functor (void)
+{
+}
+
+Shutdown_Functor::~Shutdown_Functor (void)
+{
+}
 
 Service_Shutdown::Service_Shutdown (Shutdown_Functor& sf)
   : functor_(sf)
@@ -29,7 +39,7 @@ Service_Shutdown::Service_Shutdown (Shutdown_Functor& sf, ACE_Sig_Set& which_sig
 //
 // It would be even nicer if the register_handler() method just took
 // an ACE_Sig_Set as an argument and handled all this stuff itself.
-// 
+//
 void
 Service_Shutdown::set_signals (ACE_Sig_Set& which_signals)
 {

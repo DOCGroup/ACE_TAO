@@ -9,7 +9,6 @@
 
 #include "orbsvcs/svc_utils_export.h"
 
-class TAO_Svc_Utils_Export Shutdown_Functor
 /**
  * \brief Abstract definition for a Functor that shuts down a particular service.
  *
@@ -19,16 +18,16 @@ class TAO_Svc_Utils_Export Shutdown_Functor
  * implementation of operator()(int which_signal) that actually performs
  * the shutdown.
  */
+class TAO_Svc_Utils_Export Shutdown_Functor
 {
 public:
   virtual void operator() (int which_signal) = 0;
 
 protected:
-  Shutdown_Functor() { }
-  virtual ~Shutdown_Functor() { }
+  Shutdown_Functor (void);
+  virtual ~Shutdown_Functor (void);
 };
 
-class TAO_Svc_Utils_Export Service_Shutdown : public ACE_Event_Handler
 /**
  * \brief Class that permits graceful shutdown of a service.
  *
@@ -39,6 +38,7 @@ class TAO_Svc_Utils_Export Service_Shutdown : public ACE_Event_Handler
  * This class can be used to capture signals and gracefully shut down
  * the service.
  */
+class TAO_Svc_Utils_Export Service_Shutdown : public ACE_Event_Handler
 {
 public:
   Service_Shutdown (Shutdown_Functor& sf);
