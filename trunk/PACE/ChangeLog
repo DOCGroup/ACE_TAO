@@ -1,3 +1,21 @@
+Thu Jul 13 16:37:33 2000  John Heitmann  <jwh1@cs.wustl.edu>
+
+	* ../include/makeinclude/wrapper_macros.GNU
+
+	  Added 'pace' flag to support compilation with PACE.
+	  'make pace=1' and behold the power of pace!
+
+	* include/makeinclude/rules.common.GNU
+
+	  Removed netinet, arpa, and common form the VPATH
+
+	* pace/1/
+	* pace/arpa/
+	* pace/netinet/
+	* pace/common/
+
+	  Removed.
+
 Thu Jul 13 14:57:53 2000  David L. Levine <levine@cs.wustl.edu>
 
         * pace/{posix,win32}/assert.inl (pace_assert): removed unnecessary
