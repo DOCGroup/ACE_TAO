@@ -322,7 +322,7 @@ ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::reverse_i (void)
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE
-ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>&
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &
 ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::map (void)
 {
   return *this->map_man_;
@@ -331,7 +331,7 @@ ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::map (void)
 template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE int
 ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::operator== (const ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK> &rhs) const
 {
-  return (&this->map_man_ == &rhs.map_man_ &&
+  return (this->map_man_ == rhs.map_man_ &&
           this->next_ == rhs.next_);
 }
 
