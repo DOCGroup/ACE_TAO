@@ -14,7 +14,7 @@ include         $(CLASSIXDIR)/dtool/htgt-cf.rf
 #
 # Tool PATH
 #
-TOOLDIR		= $(XDIR)/bin
+TOOLDIR		= $(XDIR)/bin/
 INC_DIR         = $(CLASSIXDIR)/include
 BIN_DIR		=
 LIB_DIR		= $(CLASSIXDIR)/lib
@@ -42,8 +42,8 @@ LDFLAGS		+= -r -Ur -nostdlib			\
 OCFLAGS		+= -O2
 PIC		= -fPIC
 
-AR		= $(TOOLDIR)/ar
+AR		= $(TOOLDIR)ar
 ARFLAGS		= srv
 
-RANLIB		= $(TOOLDIR)/ranlib
+RANLIB		= $(TOOLDIR)ranlib
 PRELIB          = @true
