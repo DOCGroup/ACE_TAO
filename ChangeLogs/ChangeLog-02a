@@ -1,3 +1,8 @@
+Wed Apr 10 13:32:15 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Token.h:
+          Doxygen-ized some of the comments
+
 Wed Apr 10 07:44:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Timer_Queue_T.h:
@@ -12,7 +17,6 @@ Wed Apr 10 07:44:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
           compilation speedup of Don Hinton on April 5th.
 
         * ace/Name_Request_Reply.h:
-          Doxygen-ized some of the comments
 
 Tue Apr  9 22:59:20 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
