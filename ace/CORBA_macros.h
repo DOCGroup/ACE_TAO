@@ -80,21 +80,29 @@
 # define ACE_CHECK_RETURN(RETV)
 
 // ACE_THROW_INT should not be used by the user.
-# define ACE_THROW_INT(EXCEPTION) throw EXCEPTION
+# define ACE_THROW_INT(EXCEPTION) \
+    ACE_UNUSED_ARG(ACE_TRY_ENV); \
+    throw EXCEPTION
 
 // Throwing an exception is easy. These two macros should _NOT_ be
 // used within try blocks.
-# define ACE_THROW(EXCEPTION) throw EXCEPTION
+# define ACE_THROW(EXCEPTION) \
+    ACE_UNUSED_ARG(ACE_TRY_ENV); \
+    throw EXCEPTION
+
 // Throwing an exception when the function reqires a return value.
 # if defined (WIN32) || defined (__HP_aCC)
 #   define ACE_THROW_RETURN(EXCEPTION, RETV) \
       do \
         { \
+          ACE_UNUSED_ARG(ACE_TRY_ENV); \
           throw EXCEPTION; \
           return RETV; \
         } while (0)
 # else /* WIN32 */
-#   define ACE_THROW_RETURN(EXCEPTION,RETV) throw EXCEPTION
+#   define ACE_THROW_RETURN(EXCEPTION,RETV) \
+      ACE_UNUSED_ARG(ACE_TRY_ENV); \
+      throw EXCEPTION
 # endif /* WIN32 */
 
 // For compilers with native exceptions, we can simply use
