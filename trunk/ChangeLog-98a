@@ -1,8 +1,32 @@
+Sun Feb  8 01:45:59 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* include/makeinclude/wrapper_macros.GNU (versioned_so):  Added
+	  a new directive to allow automatic installing of so libraries
+	  with version number.  This flag is default to 0.  Put this line,
+
+		versioned_so = 1
+
+	  in your platform_*.GNU file to enable this feature.
+
+	  (ACE_LDSO_Major_Minor_Version_Number): Define the version number
+	  to be appended to versioned so libraries (Notice: it include a
+	  dot at the beginning.)  If versioned_so == 0, this macro expand
+	  to nothing.
+
+	* include/makeinclude/rules.lib.GNU (INSTALL):
+	* include/makeinclude/rules.local.GNU (INSTALL rules): Modified
+	  installation rules to allow installing so libraries with version
+	  numbers.
+
+	* include/makeinclude/platform_netbsd.GNU:
+	* include/makeinclude/platform_freebsd[_pthread].GNU: Enabled
+	  new versioned_so feature.
+
 Sat Feb 07 05:51:15 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Synch_T.cpp (ACE_TSS): Changed to use MessageBox on WinCE.
 	  Because there's no console in WinCE, we can't output warning
-	  messages to stderr. 
+	  messages to stderr.
 
 	* ace/README (ACE_HAS_UNICODE_ONLY): This new directive is used to
 	  removed some char version function definitions because it
@@ -10,7 +34,7 @@ Sat Feb 07 05:51:15 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 	  if not all, strings in the system are wchar strings.
 
 	* ace/OS.{h,i} (ACE_DEFAULT_LOGGER_KEY): Added wchar definition if
-	  we are using UNICODE. 
+	  we are using UNICODE.
 	  (ACE_SHE_{TRY,FINALLY,EXCEPT}): WinCE doesn't support Win32
 	  structual exception, so these macros should be defined as on
 	  UNIX platforms.
