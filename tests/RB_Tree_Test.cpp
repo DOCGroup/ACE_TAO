@@ -215,7 +215,10 @@ template class ACE_RB_Tree_Iterator<char *, int, ACE_Less_Than<char *>, ACE_Null
 template class ACE_RB_Tree<char *, char *, ACE_Less_Than<char *>, ACE_Null_Mutex>;
 template class ACE_RB_Tree_Node<char *, char *>;
 template class ACE_RB_Tree_Iterator<char *, char *, ACE_Less_Than<char *>, ACE_Null_Mutex>;
+template class ACE_Less_Than<int>;
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
 #pragma instantiate ACE_RB_Tree<int, int, ACE_Less_Than<int>, ACE_Null_Mutex>
 #pragma instantiate ACE_RB_Tree_Node<int, int>
 #pragma instantiate ACE_RB_Tree_Iterator<int, int, ACE_Less_Than<int>, ACE_Null_Mutex>
@@ -228,5 +231,7 @@ template class ACE_RB_Tree_Iterator<char *, char *, ACE_Less_Than<char *>, ACE_N
 #pragma instantiate ACE_RB_Tree<char *, char *, ACE_Less_Than<char *>, ACE_Null_Mutex>
 #pragma instantiate ACE_RB_Tree_Node<char *, char *>
 #pragma instantiate ACE_RB_Tree_Iterator<char *, char *, ACE_Less_Than<char *>, ACE_Null_Mutex>
+#pragma instantiate ACE_Less_Than<int>
+
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 

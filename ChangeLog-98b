@@ -1,3 +1,13 @@
+Thu Dec 31 12:10:46 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/RB_Tree_Test.cpp: 
+	  Added missing template instantiation, actually it seems that the
+	  IRIX MIPSPro compiler was not doing recursive instantiation.
+
+	* ace/ACE.cpp: 
+	  Use ACE_NOTREACHED in ACE::set_handle_limit(), the IRIX compiler
+	  was complaining again..
+
 Thu Dec 31 10:58:11 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Containers_T.cpp (ACE_Fixed_Set::insert): removed
