@@ -1,3 +1,23 @@
+Sat Feb 24 17:50:38 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * tests/DLL_Test.cpp:
+
+          OBJ_PREFIX was being created by attaching a char string to 
+          a ACE_TCHAR string.  Needed to add ACE_TEXT to the first 
+          string for compilation on ACE_USES_WCHAR.
+
+        * tests/DLL_Test_Impl.dsp:
+
+          Changed the internal name to "DLL_Test DLL" to make sure 
+          this gets compiled in the first pass by msvc_auto_compile.pl.
+
+        * tests/run_test.pl:
+
+          Added a check for LM_WARNINGs in log files.  Let's see if 
+          there have been any hidden (DLL_Test actually was producing
+          a warning on Windows, but Carlos's fix already got rid of it,
+          Yay!).
+
 Sat Feb 24 15:44:58 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/tests.dsw:
