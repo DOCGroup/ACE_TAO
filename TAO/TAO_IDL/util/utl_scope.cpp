@@ -1239,6 +1239,8 @@ UTL_Scope::lookup_pseudo (Identifier *e)
   AST_Decl *scope = ScopeAsDecl (this);
   char *scope_name = scope->local_name ()->get_string ();
 
+  ACE_UNUSED_ARG (scope_name);
+
   for (; !i->is_done (); i->next ())
     {
       d = i->item ();

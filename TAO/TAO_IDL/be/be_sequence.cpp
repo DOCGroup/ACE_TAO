@@ -528,7 +528,7 @@ be_sequence::instance_name ()
 
 int
 be_sequence::gen_base_class_name (TAO_OutStream *os,
-                                  char * linebreak,
+                                  const char * linebreak,
                                   AST_Decl *ctx_scope)
 {
   be_type *elem = be_type::narrow_from_decl (this->base_type ());
