@@ -156,7 +156,7 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
     }
 
   // Get the right object implementation.
-  *os << intf->full_skel_name () << " *tao_impl" << be_nl;
+  *os << intf->full_skel_name () << " *tao_impl";
 
   // Generate the argument list with the appropriate mapping. For these
   // we grab a visitor that generates the parameter listing.
