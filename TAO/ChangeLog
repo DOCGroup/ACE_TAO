@@ -1,3 +1,9 @@
+Mon May  5 13:09:45 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/RTPortableServer/Makefile.bor:
+
+          Added TAO_ORT_* to the list of CFLAGS and LIBs.
+
 Mon May  5 17:34:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Portable_Interceptors/ForwardRequest/Portable_Interceptors_ForwardRequest.mpc:
