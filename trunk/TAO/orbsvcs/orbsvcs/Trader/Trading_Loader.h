@@ -28,7 +28,7 @@
 #include "orbsvcs/Trader/Trader.h"
 #include "orbsvcs/Trader/Service_Type_Repository.h"
 
-class ACE_Svc_Export TAO_Trading_Loader : public TAO_Object_Loader
+class TAO_Trading_Export TAO_Trading_Loader : public TAO_Object_Loader
 {
 public:
 
@@ -98,8 +98,13 @@ public:
 
   CORBA::Boolean dumpior_;
   // Flag indication whether to dump the ior to standard output
+
+ private:
+   ACE_UNIMPLEMENTED_FUNC (TAO_Trading_Loader (const TAO_Trading_Loader &))
+   ACE_UNIMPLEMENTED_FUNC (TAO_Trading_Loader &operator= (const TAO_Trading_Loader &))
+
 };
 
-ACE_SVC_FACTORY_DECLARE (TAO_Trading_Loader)
+ACE_FACTORY_DECLARE (TAO_Trading, TAO_Trading_Loader)
 
 #endif /* TAO_TRADING_LOADER_H */
