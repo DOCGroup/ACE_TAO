@@ -147,26 +147,21 @@ ACE_Asynch_Pseudo_Task::register_io_handler (ACE_HANDLE handle,
                                              ACE_Reactor_Mask mask,
                                              int flg_suspend)
 {
-  //  Return codes : 
-  //   0  success
-  //  -1  reactor errors
-  //  -2  task not active 
-
   ACE_MT (ACE_GUARD_RETURN (ACE_Lock, ace_mon, this->token_, -1));
 
   if (this->flg_active_ == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("%N:%l:ACE_Asynch_Pseudo_Task::register_io_handler \n")
-                       ACE_LIB_TEXT ("task not active \n")),
-                      -2);
-    
+    {
+      ACE_OS::last_error (ESHUTDOWN);
+      return -1;
+    }
+
   // Register the handler with the reactor.
   int retval = this->reactor_.register_handler (handle, handler, mask);
                                                     
   if (retval == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("%N:%l:ACE_Asynch_Pseudo_Task::register_io_handler \n")
-                       ACE_LIB_TEXT ("register_handler failed \n")),
+                       ACE_LIB_TEXT ("%N:%l:%p\n"),
+                       ACE_LIB_TEXT ("ACE_Asynch_Pseudo_Task::register_io_handler")),
                       -1);
 
   if (flg_suspend == 0 )
@@ -178,14 +173,14 @@ ACE_Asynch_Pseudo_Task::register_io_handler (ACE_HANDLE handle,
 
   if (retval == -1)
     {
+      ACE_ERROR
+        ((LM_ERROR,
+          ACE_LIB_TEXT ("%N:%l:%p\n"),
+          ACE_LIB_TEXT ("ACE_Asynch_Pseudo_Task::register_io_handler (suspended)")));
       this->reactor_.remove_handler (handle,
                                      ACE_Event_Handler::ALL_EVENTS_MASK
                                      | ACE_Event_Handler::DONT_CALL); 
- 
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_LIB_TEXT ("%N:%l:ACE_Asynch_Pseudo_Task::register_io_handler \n")
-                         ACE_LIB_TEXT ("suspend_handler failed \n")),
-                        -1);
+      return -1;
     }
 
   return 0;
@@ -197,15 +192,14 @@ ACE_Asynch_Pseudo_Task::remove_io_handler (ACE_HANDLE handle)
   //  Return codes : 
   //   0  success
   //  -1  reactor errors
-  //  -2  task not active 
 
   ACE_MT (ACE_GUARD_RETURN (ACE_Lock, ace_mon, this->token_, -1));
 
   if (this->flg_active_ == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("%N:%l:ACE_Asynch_Pseudo_Task::remove_io_handler \n")
-                       ACE_LIB_TEXT ("task not active \n")),
-                      -2);
+    {
+      ACE_OS::last_error (ESHUTDOWN);
+      return -1;
+    }
     
   int retval =
     this->reactor_.remove_handler (handle ,
@@ -213,8 +207,8 @@ ACE_Asynch_Pseudo_Task::remove_io_handler (ACE_HANDLE handle)
                                    | ACE_Event_Handler::DONT_CALL); 
   if (retval == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("%N:%l:ACE_Asynch_Pseudo_Task::remove_io_handler \n")
-                       ACE_LIB_TEXT ("remove_handler failed \n")),
+                       ACE_LIB_TEXT ("%N:%l:%p\n")
+                       ACE_TEXT ("ACE_Asynch_Pseudo_Task::remove_io_handler")),
                       -1);
 
   return 0;
@@ -231,19 +225,19 @@ ACE_Asynch_Pseudo_Task::remove_io_handler (ACE_Handle_Set &set)
   ACE_MT (ACE_GUARD_RETURN (ACE_Lock, ace_mon, this->token_, -1));
 
   if (this->flg_active_ == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("%N:%l:ACE_Asynch_Pseudo_Task::remove_io_handler \n")
-                       ACE_LIB_TEXT ("task not active \n")),
-                      -2);
+    {
+      ACE_OS::last_error (ESHUTDOWN);
+      return -1;
+    }
     
   int retval =
-    this->reactor_.remove_handler (set ,
+    this->reactor_.remove_handler (set,
                                    ACE_Event_Handler::ALL_EVENTS_MASK
                                    | ACE_Event_Handler::DONT_CALL); 
   if (retval == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("%N:%l:ACE_Asynch_Pseudo_Task::remove_io_handler \n")
-                       ACE_LIB_TEXT ("remove_handler failed \n")),
+                       ACE_LIB_TEXT ("%N:%l:%p\n")
+                       ACE_TEXT ("ACE_Asynch_Pseudo_Task::remove_io_handler")),
                       -1);
 
   return 0;
@@ -260,17 +254,17 @@ ACE_Asynch_Pseudo_Task::suspend_io_handler (ACE_HANDLE handle)
   ACE_MT (ACE_GUARD_RETURN (ACE_Lock, ace_mon, this->token_, -1));
 
   if (this->flg_active_ == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("%N:%l:ACE_Asynch_Pseudo_Task::suspend_io_handler \n")
-                       ACE_LIB_TEXT ("task not active \n")),
-                      -2);
+    {
+      ACE_OS::last_error (ESHUTDOWN);
+      return -1;
+    }
     
   int retval = this->reactor_.suspend_handler (handle);
 
   if (retval == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("%N:%l:ACE_Asynch_Pseudo_Task::suspend_io_handler \n")
-                       ACE_LIB_TEXT ("suspend_handler failed \n")),
+                       ACE_LIB_TEXT ("%N:%l:%p\n")
+                       ACE_TEXT ("ACE_Asynch_Pseudo_Task::suspend_io_handler")),
                       -1);
 
   return 0;
