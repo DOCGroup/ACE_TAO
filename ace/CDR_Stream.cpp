@@ -351,12 +351,25 @@ ACE_CDR::Boolean
 ACE_OutputCDR::write_8 (const ACE_CDR::ULongLong *x)
 {
   char *buf;
+
   if (this->adjust (ACE_CDR::LONGLONG_SIZE, buf) == 0)
     {
-#if !defined (ACE_ENABLE_SWAP_ON_WRITE)
-      *ACE_reinterpret_cast(ACE_CDR::ULongLong*,buf) = *x;
+#if defined (__arm__)
+      // Convert to Intel format (12345678 => 56781234)
+      const char *orig = ACE_reinterpret_cast (const char *, x);
+      char *target = buf;
+      register ACE_UINT32 x = 
+        *ACE_reinterpret_cast (const ACE_UINT32 *, orig);
+      register ACE_UINT32 y =
+        *ACE_reinterpret_cast (const ACE_UINT32 *, orig + 4);
+      *ACE_reinterpret_cast (ACE_UINT32 *, target) = y;  
+      *ACE_reinterpret_cast (ACE_UINT32 *, target + 4) = x;
       return 1;
 #else
+#  if !defined (ACE_ENABLE_SWAP_ON_WRITE)
+      *ACE_reinterpret_cast (ACE_CDR::ULongLong *,buf) = *x;
+      return 1;
+#  else
       if (!this->do_byte_swap_)
         {
           *ACE_reinterpret_cast (ACE_CDR::ULongLong *, buf) = *x;
@@ -367,8 +380,9 @@ ACE_OutputCDR::write_8 (const ACE_CDR::ULongLong *x)
           ACE_CDR::swap_8 (ACE_reinterpret_cast (const char*, x), buf);
           return 1;
         }
-#endif /* ACE_ENABLE_SWAP_ON_WRITE */
-    }
+#  endif /* ACE_ENABLE_SWAP_ON_WRITE */
+#endif /* !__arm__ */
+     }
 
   return 0;
 }
@@ -819,22 +833,53 @@ ACE_CDR::Boolean
 ACE_InputCDR::read_8 (ACE_CDR::ULongLong *x)
 {
   char *buf;
+
   if (this->adjust (ACE_CDR::LONGLONG_SIZE, buf) == 0)
     {
 #if !defined (ACE_DISABLE_SWAP_ON_READ)
+#  if defined (__arm__)
+      if (!this->do_byte_swap_)
+        {
+          // Convert from Intel format (12345678 => 56781234)
+          const char *orig = buf;
+          char *target = ACE_reinterpret_cast (char *, x);
+          register ACE_UINT32 x =
+            *ACE_reinterpret_cast (const ACE_UINT32 *, orig);
+          register ACE_UINT32 y =
+            *ACE_reinterpret_cast (const ACE_UINT32 *, orig + 4);
+          *ACE_reinterpret_cast (ACE_UINT32 *, target) = y;
+          *ACE_reinterpret_cast (ACE_UINT32 *, target + 4) = x;
+        }
+      else
+        {
+          // Convert from Sparc format (12345678 => 43218765)
+          const char *orig = buf;
+          char *target = ACE_reinterpret_cast (char *, x);
+          register ACE_UINT32 x =
+            *ACE_reinterpret_cast (const ACE_UINT32 *, orig);
+          register ACE_UINT32 y =
+            *ACE_reinterpret_cast (const ACE_UINT32 *, orig + 4);
+          x = (x << 24) | ((x & 0xff00) << 8) | ((x & 0xff0000) >> 8) | (x >> 24);
+          y = (y << 24) | ((y & 0xff00) << 8) | ((y & 0xff0000) >> 8) | (y >> 24);
+          *ACE_reinterpret_cast (ACE_UINT32 *, target) = x;
+          *ACE_reinterpret_cast (ACE_UINT32 *, target + 4) = y;
+        }
+#  else
       if (!this->do_byte_swap_)
         {
           *x = *ACE_reinterpret_cast (ACE_CDR::ULongLong *, buf);
         }
       else
         {
-          ACE_CDR::swap_8 (buf, ACE_reinterpret_cast (char*, x));
+          ACE_CDR::swap_8 (buf, ACE_reinterpret_cast (char *, x));
         }
+#  endif /* !__arm__ */
 #else
-      *x = *ACE_reinterpret_cast(ACE_CDR::ULongLong*,buf);
+      *x = *ACE_reinterpret_cast (ACE_CDR::ULongLong *, buf);
 #endif /* ACE_DISABLE_SWAP_ON_READ */
       return 1;
     }
+
   return 0;
 }
 
