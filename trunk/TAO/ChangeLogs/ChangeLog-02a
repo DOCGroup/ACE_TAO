@@ -1,3 +1,9 @@
+Tue Dec 12  1:28:15 2000  Jeff Parsons   <parsons@cs.wustl.edu>
+
+		* tao/tests/DynAny_Test/test_dynunion.cpp:
+
+		  Commented out test of an unimplemented function.
+
 Tue Dec 12 11:03:15 2000  Jeff Parsons   <parsons@cs.wustl.edu>
 
 		* tao/Dynamic_Adapter.cpp:
