@@ -1,3 +1,17 @@
+Wed Jun 20 19:20:15 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/RTCORBA/Banded_Connections/run_test.pl: 
+	* tests/RTCORBA/Banded_Connections/bands.unix: 
+	
+	  There was a change in priority ranges between Solaris 5.7 and
+	  5.8. For the SCHED_OTHER policy, the ranges are:
+
+	  Sun 5.8 Minimum =   0 Maximum = 59
+	  Sun 5.7 Minimum = -60 Maximum = 60
+
+	  Therefore, the above scripts were updated to reflect the new
+	  range.  Similar changes may be needed for the other RT tests.
+
 Wed Jun 20 18:45:40 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* performance-tests/RTCorba/Multiple_Endpoints/Common/Makefile:
@@ -1484,6 +1498,11 @@ Tue Jun 12 13:30:02 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>, Angelo Corsaro
 Mon Jun 11 16:56:06 2001  Balachandran  <bala@cs.wustl.edu>
 
         * TAO version 1.1.17 released.
+
+Mon Jun 11 11:51:06 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/RTCORBA/Banded_Connections/run_test.pl: Fixed the scripts
+	  for execution on NT.
 
 Mon Jun 11 11:26:38 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
