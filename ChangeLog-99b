@@ -1,3 +1,7 @@
+Mon Jan 18 00:12:13 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * ACE version 4.6.16 released.
+
 Sun Jan 17 16:40:22 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/Reactor_Exceptions_Test.cpp (main): Changed the LM_INFO
