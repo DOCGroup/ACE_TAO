@@ -1,3 +1,10 @@
+Mon Aug  2 23:21:01 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* bin/auto_compile:
+	  Added several flags to: disable test execution, specify the list 
+	  of build directories on the command line, send email on
+	  successful compilation, keep a more detailed history, etc.
+
 Mon Aug 02 18:38:37 1999  Joe Hoffert  <joeh@cs.wustl.edu>
 
 	* ace/ATM_Acceptor.{h,i,cpp} :

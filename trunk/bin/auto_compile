@@ -41,9 +41,12 @@ $CMD = basename($0);
 $single_threaded = 0;
 $minimum_corba = 0;
 $dont_update = 0;
+$dont_run = 0;
 $pre_realclean = 0;
 $post_realclean = 0;
+$report_success = 0;
 $debug = 0;
+@BUILD_LIST= ();
 
 @ARGS = ();
 while ($#ARGV >= 0) {
@@ -56,7 +59,14 @@ while ($#ARGV >= 0) {
   } elsif ($ARGV[0] eq "-minimum_corba") {
     $minimum_corba = 1;
     shift;
+  } elsif ($ARGV[0] eq "-build_list") {
+    shift;
+    @BUILD_LIST = split (/,/, $ARGV[0]);
+    shift;
   } elsif ($ARGV[0] eq "-dont_update") {
+    $dont_update = 1;
+    shift;
+  } elsif ($ARGV[0] eq "-dont_run") {
     $dont_update = 1;
     shift;
   } elsif ($ARGV[0] eq "-pre_realclean") {
@@ -64,6 +74,9 @@ while ($#ARGV >= 0) {
     shift;
   } elsif ($ARGV[0] eq "-post_realclean") {
     $post_realclean = 1;
+    shift;
+  } elsif ($ARGV[0] eq "-report_success") {
+    $report_success = 1;
     shift;
   } elsif ($ARGV[0] eq "-debug") {
     $debug = 1;
@@ -98,6 +111,7 @@ $LOGFILE = $LOGDIR . '/' . $LOGBASE;
 $HOST = `hostname`;
 chop $HOST;
 $LOG_NAME =  $HOST . "_" . $BUILD . "_" . $LOGBASE;
+$STATUS = "OK";
 
 if ($debug) {
   print "CHECKOUT = $CHECKOUT\n";
@@ -112,6 +126,14 @@ if ($debug) {
 push @INC, $CHECKOUT . '/' . $MODULE . '/bin';
 require run_all_list;
 
+if ($#BUILD_LIST == -1) {
+  @BUILD_LIST=
+    ('ace',
+     'netsvcs',
+     'tests',
+     'apps/gperf',
+     'TAO');
+}
 if ($debug) {
 
   @BUILD_LIST = ('ace');
@@ -120,24 +142,10 @@ if ($debug) {
   @MINIMUM_CORBA_LIST = ('TAO/tests/OctetSeq , run_test.pl');
   $ADMIN = $ENV{'USER'};
 
-} else {
-
-  @BUILD_LIST=
-    ('ace',
-     'netsvcs',
-     'tests',
-     'apps/gperf',
-     'websvcs',
-#     'TAO/tao',
-#     'TAO/TAO_IDL',
-#     'TAO/orbsvcs',
-#     'TAO/tests',
-#     'TAO/examples/POA',
-#     'TAO/performance-tests');
-     'TAO');
 }
 
-sub mydie {
+
+sub report_errors {
   # First clear the lock, so the next execution works...
   unlink $disable_file; # Ignore errors!
 
@@ -145,7 +153,7 @@ sub mydie {
   local $to = $ADMIN;
 
   open (MAIL, "|".$MAIL.' -s [AUTO_COMPILE] '.$to)
-    || die ("Cannot open mail pipe for: $msg\n");
+    || die "Cannot open mail pipe for: $_\n";
 
   print MAIL 'The following message is brought to you by: ', "\n";
   print MAIL $CMD, ' [', $REVISION, "] for $BUILD on $CHECKOUT\n";
@@ -164,7 +172,7 @@ sub mydie {
   # Now send the complete log to bugzilla...
   local $bugs = 'bugzilla'.'@cs.wustl.edu';
   open (MAIL, "|".$MAIL.' -s AUTO_COMPILE_LOG='.$LOG_NAME.' '.$bugs)
-    || die ("Cannot open mail pipe for: $LOG_NAME\n");
+    || die "Cannot open mail pipe for: $LOG_NAME\n";
 
   print MAIL 'This is the log for: ', "\n";
   print MAIL $CMD, ' [', $REVISION, "] for $BUILD on $CHECKOUT\n";
@@ -179,9 +187,6 @@ sub mydie {
       close (THELOG);
     }
   close (MAIL); # Ignore errors....
-
-  print HIST 'FAILED', "\n";
-  exit 0;
 }
 
 ### MAIN FUNCTION
@@ -213,13 +218,13 @@ if (-f $disable_file) {
 }
 
 open (DISABLE, '>' . $disable_file)
-    || mydie "cannot open disable file";
+    || die "cannot open disable file";
 print DISABLE "auto_compile <$date> is running\n";
 close (DISABLE)
-    || mydie "cannot close disable file";
+    || die "cannot close disable file";
 
 open(LOG, '>' . $LOGFILE)
-    || mydie "cannot open log file";
+    || die "cannot open log file";
 
 LOG->autoflush ();
 
@@ -230,13 +235,13 @@ LOG->autoflush ();
 #}
 
 chdir($CHECKOUT)
-    || mydie "Cannot chdir to $CHECKOUT";
+    || die "Cannot chdir to $CHECKOUT";
 
 if ($dont_update == 0) {
   $date = localtime;
   print LOG "$CMD: starting checkout at ", $date, "\n";
   open(CVS, "cvs -q checkout -P $MODULE 2>&1 |")
-    || mydie "cannot start checkout of $MODULE";
+    || die "cannot start checkout of $MODULE";
 
   $conflicts = 0;
   while (<CVS>) {
@@ -246,32 +251,32 @@ if ($dont_update == 0) {
     print LOG $_;
   }
   close(CVS)
-    || mydie "error while checking out $MODULE";
+    || die "error while checking out $MODULE";
   $date = localtime;
   print LOG "$CMD: checkout finished at ", $date, "\n";
 
   if ($conflicts != 0) {
-    mydie "conflicts on checkout";
+    die "conflicts on checkout";
   }
 }
 
 chdir($MODULE)
-    || mydie "cannot chdir to $MODULE";
+    || die "cannot chdir to $MODULE";
 
 $date = localtime;
 print LOG "$CMD: starting clone at ", $date, "\n";
-open(MAKE, "perl bin/create_ace_build -a -v $BUILD 2>&1 |")
-    || mydie "cannot clone directory";
-while(<MAKE>) {
+open(CLONE, "perl bin/create_ace_build -a -v $BUILD 2>&1 |")
+    || die "cannot clone directory";
+while(<CLONE>) {
     print LOG $_;
 }
-close(MAKE)
-    || mydie "error while cloning ACE_ROOT";
+close(CLONE)
+    || die "error while cloning ACE_ROOT";
 $date = localtime;
 print LOG "$CMD: clone finished at ", $date, "\n";
 
 chdir('build/' . $BUILD)
-    || mydie "cannot chdir to $BUILD";
+    || die "cannot chdir to $BUILD";
 
 @failures = ();
 
@@ -280,7 +285,8 @@ if ($pre_realclean) {
     $date = localtime;
     print LOG "$CMD: =============================================\n";
     print LOG "$CMD: make realclean in $i started at ", $date, "\n";
-    open(MAKE, "make -k $MAKEFLAGS -C $i 2>&1 |");
+    open(MAKE, "make -k $MAKEFLAGS -C $i realclean 2>&1 |")
+      || die "cannot start make in $i";
 
     while (<MAKE>) {
       # Ignore errors....
@@ -300,7 +306,7 @@ foreach $i (@BUILD_LIST) {
     print LOG "$CMD: =============================================\n";
     print LOG "$CMD: make for $i started at ", $date, "\n";
     open(MAKE, "make -k $MAKEFLAGS -C $i 2>&1 |")
-	|| mydie "cannot start make for $i";
+	|| die "cannot start make for $i";
 
     local $current_dir = $i;
     local $last_error = "";
@@ -319,13 +325,18 @@ foreach $i (@BUILD_LIST) {
 	}
 	if (m/error:/i || m/error /i
 	    || m/^make(\[[0-9]+\])?: \*\*\*/) {
-	    if ($last_error ne $current_dir) {
-		push @failures, "Error while compiling in $current_dir \n";
-		$last_error = $current_dir;
+	    if ($last_error ne $current_dir
+		|| STATUS eq "COMPILATION WARNING") {
+	      $STATUS = "COMPILATION ERROR";
+	      push @failures, "Error while compiling in $current_dir \n";
+	      $last_error = $current_dir;
 	    }
 	}
 	if (m/warning:/i || m/warning /i) {
 	  if ($last_error ne $current_dir) {
+	    if ($STATUS eq "OK") {
+	      $STATUS = "COMPILATION WARNING";
+	    }
 	    push @failures, "Warning while compiling in $current_dir\n";
 	    $last_error = $current_dir;
 	  }
@@ -339,14 +350,15 @@ foreach $i (@BUILD_LIST) {
     print LOG "$CMD: =============================================\n\n";
 }
 
-@LIST = @RUN_LIST;
-if ($single_threaded) {
-  @LIST = @SINGLE_THREADED_LIST;
-} elsif ($minimum_corba) {
-  @LIST = @MINIMUM_CORBA_LIST;
-}
+if ($dont_run == 0) {
+  @LIST = @RUN_LIST;
+  if ($single_threaded) {
+    @LIST = @SINGLE_THREADED_LIST;
+  } elsif ($minimum_corba) {
+    @LIST = @MINIMUM_CORBA_LIST;
+  }
 
-foreach $i (@LIST) {
+  foreach $i (@LIST) {
     local @test_info = split (/\ \,\ /, $i);
     local $directory = $test_info[0];
     local $program = $test_info[1];
@@ -357,7 +369,7 @@ foreach $i (@LIST) {
     local $subdir =
 	$CHECKOUT .'/'. $MODULE .'/build/'. $BUILD .'/'. $directory;
     chdir ($subdir)
-	|| mydie "cannot chdir to $subdir";
+	|| die "cannot chdir to $subdir";
 
     $run_error = 0;
     if (open(RUN, "perl $program 2>&1 |") == 0) {
@@ -370,34 +382,64 @@ foreach $i (@LIST) {
 	    || m/FAILED/
 	    || m/EXCEPTION/
 	    || m/pure virtual /i) {
+	  if ($STATUS eq "OK") {
+	    $STATUS = "RUNTIME ERROR";
+	  }
 	  $run_error = 1;
 	}
     }
     if (close(RUN) == 0) {
-	push @failures, "Error when closing pipe for $program in $directory";
-	next;
+      if ($STATUS eq "OK") {
+	$STATUS = "RUNTIME ERROR";
+      }
+      push @failures, "Error when closing pipe for $program in $directory";
+      next;
     }
     $date = localtime;
     print LOG "$CMD: $program finished ", $date, "\n";
 
     if ($run_error != 0) {
-	push @failures,
-	    "errors detected while running $program in $directory";
+      push @failures,
+      "errors detected while running $program in $directory";
     }
+  }
+}
+
+if ($post_realclean) {
+  foreach $i (@BUILD_LIST) {
+    $date = localtime;
+    print LOG "$CMD: =============================================\n";
+    print LOG "$CMD: make realclean in $i started at ", $date, "\n";
+    open(MAKE, "make -k $MAKEFLAGS -C $i realclean 2>&1 |");
+
+    while (<MAKE>) {
+      # Ignore errors....
+    }
+    if (close(MAKE) == 0) {
+	push @failures, "errors while cleaning $i";
+    }
+    $date = localtime;
+    print LOG "$CMD: make realclean in $i finished at ", $date, "\n";
+    print LOG "$CMD: =============================================\n\n";
+  }
 }
 
 if ($#failures >= 0) {
-    mydie @failures;
+  report_errors @failures;
 }
 
 close(LOG)
-    || mydie "cannot close LOGFILE";
+    || die "cannot close LOGFILE";
 
-print HIST "OK\n";
+print HIST "$STATUS\n";
 close(HIST)
-    || mydie "cannot close history file";
+    || die "cannot close history file";
 
 unlink $disable_file
-    || mydie "cannot unlink disable file";
+    || die "cannot unlink disable file";
+
+if ($report_success) {
+  report_errors "Congratulations: No errors or warnings detected\n";
+}
 
 exit 0;
