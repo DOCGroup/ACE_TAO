@@ -213,9 +213,8 @@ void AIO_Output_Handler::start_write (ACE_Message_Block *mblk) {
     getq (mblk, &nonblock);
   }
   if (mblk != 0) {
-    if (writer_.write (*mblk, mblk->length ()) == 0)
-      can_write_ = 0;
-    else
+    can_write_ = 0;
+    if (writer_.write (*mblk, mblk->length ()) == -1)
       ungetq (mblk);
   }
 }
