@@ -6187,8 +6187,22 @@ ACE_OS::hostname (char name[], size_t maxnamelen)
 #if defined (ACE_WIN32)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::GetComputerNameA (name, LPDWORD (&maxnamelen)),
                                           ace_result_), int, -1);
-#elif defined (VXWORKS) || defined (CHORUS)
+#elif defined (VXWORKS)
   ACE_OSCALL_RETURN (::gethostname (name, maxnamelen), int, -1);
+#elif defined (CHORUS)
+  if (::gethostname (name, maxnamelen) == -1)
+    return -1;
+  else
+    {
+      if (ACE_OS::strlen (name) == 0)
+        {
+          // Try the HOST environment variable.
+          char *const hostenv = ::getenv ("HOST");
+          if (hostenv)
+            ACE_OS::strncpy (name, hostenv, maxnamelen);
+        }
+      return 0;
+    }
 #else /* !ACE_WIN32 */
   struct utsname host_info;
 
