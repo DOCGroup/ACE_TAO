@@ -68,13 +68,13 @@ ACE_URL_Property::dump (void) const
 
   if (this->name_.length () > 0)
     ACE_DEBUG ((LM_DEBUG, "\n    name_:  \"%s\"\n",
-                ACE_Auto_Basic_Array_Ptr<ASYS_TCHAR> (this->name_.char_rep ()).get ()));
+                ACE_Auto_Basic_Array_Ptr<char> (this->name_.char_rep ()).get ()));
   else
     ACE_DEBUG ((LM_DEBUG, "\n   name_:  \"\"\n"));
 
   if (this->value_.length () > 0)
     ACE_DEBUG ((LM_DEBUG, "   value_:  \"%s\"\n",
-                ACE_Auto_Basic_Array_Ptr<ASYS_TCHAR> (this->value_.char_rep ()).get ()));
+                ACE_Auto_Basic_Array_Ptr<char> (this->value_.char_rep ()).get ()));
   else
     ACE_DEBUG ((LM_DEBUG, "   value_:  \"\"\n"));
 
@@ -127,7 +127,7 @@ ACE_URL_Offer::dump (void) const
 
   if (this->url_.length () > 0)
     ACE_DEBUG ((LM_DEBUG, "\n url_:  \"%s\"\n",
-                ACE_Auto_Basic_Array_Ptr<ASYS_TCHAR> (this->url_.char_rep ()).get ()));
+                ACE_Auto_Basic_Array_Ptr<char> (this->url_.char_rep ()).get ()));
   else
     ACE_DEBUG ((LM_DEBUG, "\n url_:  \"\"\n"));
 
