@@ -36,6 +36,18 @@ $(VDIR)Server_Logging_Handler.o $(VSHDIR)Server_Logging_Handler.$(SOEXT):
 	$(COMPILE-NO_DASH_G.cc) -o $@ $<
 endif # SUPPRESS_DASH_G
 
+ifeq ($(shared_libs),1)
+ifneq ($(SHLIB),)
+CPPFLAGS     += -DACE_WEBSVCS_BUILD_DLL
+endif
+endif
+
+ifeq ($(static_libs),1)
+ifneq ($(LIB),)
+CPPFLAGS     += -DACE_AS_STATIC_LIBS
+endif
+endif
+
 #----------------------------------------------------------------------------
 #	Dependencies
 #----------------------------------------------------------------------------
