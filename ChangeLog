@@ -1,3 +1,8 @@
+Tue Nov  9 09:07:26 2004  Olli Savia  <ops@iki.fi>
+
+        * examples/Web_Crawler/Command_Processor.cpp:
+          Added explicit static template member instantiations.
+
 Mon Nov  8 13:30:47 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/OS_Test.cpp:
