@@ -648,6 +648,13 @@ sub generate_hierarchy {
       $self->{'projects'}       = \@saved;
       $self->{'project_info'}   = \%sinfo;
       $self->{'workspace_name'} = $self->base_directory();
+
+      ## Add implict project dependencies based on source files
+      ## that have been used by multiple projects
+      if ($self->generate_implicit_project_dependencies()) {
+        $self->add_implicit_project_dependencies($generator, $self->getcwd());
+      }
+
       my($status, $error) = $self->write_workspace($generator);
       if (!$status) {
         print STDERR "$error\n";
@@ -672,6 +679,13 @@ sub generate_hierarchy {
     $self->{'projects'}       = \@saved;
     $self->{'project_info'}   = \%sinfo;
     $self->{'workspace_name'} = $self->base_directory();
+
+    ## Add implict project dependencies based on source files
+    ## that have been used by multiple projects
+    if ($self->generate_implicit_project_dependencies()) {
+      $self->add_implicit_project_dependencies($generator, $self->getcwd());
+    }
+
     my($status, $error) = $self->write_workspace($generator);
     if (!$status) {
       print STDERR "$error\n";
@@ -881,6 +895,7 @@ sub add_implicit_project_dependencies {
   my($generator) = shift;
   my($cwd)       = shift;
   my(%bidir)     = ();
+  my(%save)      = ();
 
   ## Take the current working directory and regular expression'ize it.
   $cwd = $self->escape_regex_special($cwd);
@@ -903,6 +918,7 @@ sub add_implicit_project_dependencies {
                       $self->{'project_file_list'}->{$key}->[2],
                       $self->{'project_file_list'}->{$ikey}->[2],
                       \@over)) {
+          $save{$ikey} = $self->{'project_file_list'}->{$ikey}->[2];
           $self->{'project_file_list'}->{$ikey}->[2] = \@over;
           if (defined $bidir{$key}) {
             push(@{$bidir{$key}}, $ikey);
@@ -926,6 +942,12 @@ sub add_implicit_project_dependencies {
         }
       }
     }
+  }
+
+  ## Restore the modified values in case this method is called again
+  ## which is the case when using the -hierarchy option.
+  foreach my $skey (keys %save) {
+    $self->{'project_file_list'}->{$skey}->[2] = $save{$skey};
   }
 }
 
