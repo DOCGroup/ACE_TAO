@@ -1,3 +1,12 @@
+Fri Mar 02 13:17:36 2001  Steve Huston  <shuston@riverace.com>
+
+        * examples/IOStream/server/iostream_server.cpp (main): Removed the
+          call to register peer_acceptor with the reactor. The acceptor::open
+          call already registers for ACCEPT_MASK. Prevents leaving a hanging
+          READ_MASK registered after the acceptor is destroyed when main()
+          returns. This fixes Bugzilla # 801. Thanks to Pim Philipse
+          <pph@rogan-medical.com> for reporting this.
+         
 Fri Mar 02 12:24:27 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/config-hpux-10.x-hpc++.h: If compiling without exceptions
