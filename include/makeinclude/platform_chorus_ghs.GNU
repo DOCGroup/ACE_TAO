@@ -64,7 +64,7 @@ else
   CRTH = $(MVME_DIR)/lib/crt/crth_d.s.o
 endif # debug
 
-ifdef exceptions
+ifeq (1,$(exceptions))
   CCFLAGS += --exceptions
 endif # exceptions
 

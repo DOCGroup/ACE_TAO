@@ -25,7 +25,7 @@ ifndef optimize
   optimize = 1
 endif # ! optimize
 ifndef rtti
-  rtti =
+  rtti = 0
 endif # ! rtti
 
 shared_libs =
@@ -229,7 +229,7 @@ endif # egcs
 CFLAGS          += -D_REENTRANT -ansi -fno-builtin -fno-defer-pop \
                    -fvolatile -nostdinc -nostdlib $(PIPE_OPT) -W -Wall
 CCFLAGS         += $(CFLAGS)
-ifeq (,$(rtti))
+ifeq (0,$(rtti))
   #### Don't use RTTI even with egcs, because Tornado 1.0.x libraries
   #### don't support it.
   CCFLAGS += -fno-rtti -DACE_LACKS_RTTI

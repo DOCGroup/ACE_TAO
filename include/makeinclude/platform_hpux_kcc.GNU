@@ -39,7 +39,7 @@ else
   THR_DEFS   = -DACE_HAS_THREADS=0
   LDFLAGS    =
   ARFLAGS    =
-  ifndef exceptions
+  ifeq (0,$(exceptions))
     CCFLAGS += --no_exceptions
     LDFLAGS += --no_exceptions
   endif

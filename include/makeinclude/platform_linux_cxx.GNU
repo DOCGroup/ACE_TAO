@@ -18,7 +18,7 @@ CFLAGS          +=
   endif # VERBOSE_WARNING
 
 CCFLAGS         += $(CFLAGS) $(WARNING_FLAGS)
-ifeq ($(rtti),)
+ifeq ($(rtti),0)
   CCFLAGS += -nortti
 endif # rtti
 DCFLAGS         += -g -O0
@@ -37,7 +37,7 @@ SOFLAGS         = -shared $(ACELIB)
 SOBUILD         = $(RM) $@; $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $< && \
                   ln $(VSHDIR)$*.o $@
 
-ifndef exceptions
+ifeq (0,$(exceptions))
   #### Disable the default exception handling of cxx >= 6.0.
   #### This is untested.  exceptions=1 is the default, so it's not used
   #### by default.

@@ -6,7 +6,7 @@ CHORUS = 1
 CROSS-COMPILE = 1
 
 debug = 1
-exceptions =
+exceptions = 0
 optimize = 1
 shared_libs =
 static_libs = 1

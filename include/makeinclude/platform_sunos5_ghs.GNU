@@ -3,7 +3,7 @@
 # SunOS 5.x (Solaris 2.x) with GreenHills compiler.
 
 debug = 1
-exceptions =
+exceptions = 0
 optimize = 1
 threads = 1
 
@@ -31,7 +31,7 @@ else  # ! threads
   CFLAGS += -DACE_MT_SAFE=0
 endif # ! threads
 
-ifdef exceptions
+ifeq (1,$(exceptions))
   CCFLAGS += --exceptions
 else  # ! exceptions
   CCFLAGS += --no_exceptions
