@@ -202,6 +202,7 @@ extern "C" { char * cuserid (char *s); }
 #if (__FreeBSD_version > 400000)
 #undef ACE_LACKS_SETSCHED
 #undef ACE_LACKS_SIGSET
+#undef ACE_LACKS_UCONTEXT_H
 #define ACE_HAS_UCONTEXT_T
 #define ACE_HAS_SOCKLEN_T
 #endif

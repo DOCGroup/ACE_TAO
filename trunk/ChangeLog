@@ -1,3 +1,10 @@
+Sat Sep 14 10:34:34 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/config-freebsd-pthread.h: Added 
+	  #undef ACE_LACKS_UCONTEXT_H if we're compiling for FreeBSD
+ 	  version > 4.  Thanks to Christophe Juniet
+ 	  <cjuniet@entreview.com> for reporting this.
+
 Fri Sep 13 08:37:09 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Time_Value.h:
