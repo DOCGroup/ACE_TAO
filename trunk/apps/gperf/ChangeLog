@@ -1,24 +1,28 @@
+Tue Sep 22 21:30:59 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * corba.exp: added this file, it hadn't been checked in.
+
 Tue Sep 22 18:02:01 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/Makefile: Added a new test for CORBA keywords.
+        * tests/Makefile: Added a new test for CORBA keywords.
 
-	* tests: Added a new test for the type of input that is causing
- 	  problems with TAO's IDL compiler.
+        * tests: Added a new test for the type of input that is causing
+          problems with TAO's IDL compiler.
 
-	* src/Key_List.cpp (output_lookup_array): Changed the assertion
- 	  from assert (i != 0) to assert (i >= 0) since I think that's
- 	  correct... (ah, so THAT's why comments are important thinks the
- 	  '92 Doug... ;-)).
+        * src/Key_List.cpp (output_lookup_array): Changed the assertion
+          from assert (i != 0) to assert (i >= 0) since I think that's
+          correct... (ah, so THAT's why comments are important thinks the
+          '92 Doug... ;-)).
 
-	* src/Options: Improved the comments for the '-h' option to
- 	  reflect current reality...
+        * src/Options: Improved the comments for the '-h' option to
+          reflect current reality...
 
 Thu Sep 17 11:42:53 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* src/Key_List.cpp (output_lookup_array): Put 'signed' keyword
- 	  before 'char lookup' to avoid problems on platforms where char
- 	  is defined as unsigned.  Thanks to Margherita Vittone Wiersma
- 	  <vittone@fndaub.fnal.gov> for reporting this.
+        * src/Key_List.cpp (output_lookup_array): Put 'signed' keyword
+          before 'char lookup' to avoid problems on platforms where char
+          is defined as unsigned.  Thanks to Margherita Vittone Wiersma
+          <vittone@fndaub.fnal.gov> for reporting this.
 
 Wed Sep 16 19:08:13 1998  David L. Levine  <levine@cs.wustl.edu>
 
