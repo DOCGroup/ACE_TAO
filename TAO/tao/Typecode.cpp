@@ -150,7 +150,7 @@ CORBA::TypeCode::BadKind::_tao_decode (TAO_InputCDR &
 CORBA::TypeCode::TypeCode (CORBA::TCKind kind)
   : length_ (0),
     buffer_ (0),
-    byte_order_ (0),
+    byte_order_ (ACE_CDR_BYTE_ORDER),
     kind_ (kind),
     parent_ (0),
     tc_base_ (0),
@@ -3463,6 +3463,27 @@ CORBA::TypeCode::_tao_decode (const CORBA::TypeCode *parent,
 
 // ****************************************************************
 
+CORBA::TypeCode_ptr
+CORBA::TypeCode::unalias (ACE_ENV_SINGLE_ARG_DECL)
+{
+  CORBA::TCKind kind = this->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+
+  CORBA::TypeCode_var tmp = CORBA::TypeCode::_duplicate (this);
+
+  while (kind == CORBA::tk_alias)
+    {
+      tmp = tmp->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+
+      kind = tmp->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+    }
+
+  return tmp._retn ();
+}
+
+// ****************************************************************
 
 void
 CORBA::TypeCode::_tao_any_destructor (void *x)

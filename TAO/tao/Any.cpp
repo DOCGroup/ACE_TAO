@@ -144,7 +144,7 @@ CORBA::Any::Any (CORBA::TypeCode_ptr tc,
   ACE_NEW (this->impl_,
            TAO::Unknown_IDL_Type (tc,
                                   0,
-                                  tc->byte_order_,
+                                  ACE_CDR_BYTE_ORDER,
                                   release));
 }
 
@@ -691,7 +691,7 @@ CORBA::Any::operator<<= (CORBA::Any::from_string s)
       CORBA::Any::to_string
     >::insert (*this,
                TAO::Any_Impl::_tao_any_string_destructor,
-               CORBA::tk_string,
+               CORBA::_tc_string,
                s.nocopy_ ? s.val_ : CORBA::string_dup (s.val_),
                s.bound_);
 }
@@ -705,7 +705,7 @@ CORBA::Any::operator<<= (CORBA::Any::from_wstring ws)
       CORBA::Any::to_wstring
     >::insert (*this,
                TAO::Any_Impl::_tao_any_wstring_destructor,
-               CORBA::tk_wstring,
+               CORBA::_tc_wstring,
                ws.nocopy_ ? ws.val_ : CORBA::wstring_dup (ws.val_),
                ws.bound_);
 }
@@ -942,9 +942,9 @@ CORBA::Any::operator>>= (CORBA::Any::to_string s) const
         CORBA::Any::to_string
       >::extract (*this,
                   TAO::Any_Impl::_tao_any_string_destructor,
-                  CORBA::tk_string,
-                  s.bound_,
-                  s.val_);
+                  CORBA::_tc_string,
+                  s.val_,
+                  s.bound_);
 }
 
 CORBA::Boolean
@@ -957,9 +957,9 @@ CORBA::Any::operator>>= (CORBA::Any::to_wstring ws) const
         CORBA::Any::to_wstring
       >::extract (*this,
                   TAO::Any_Impl::_tao_any_wstring_destructor,
-                  CORBA::tk_wstring,
-                  ws.bound_,
-                  ws.val_);
+                  CORBA::_tc_wstring,
+                  ws.val_,
+                  ws.bound_);
 }
 
 CORBA::Boolean

@@ -300,9 +300,8 @@ namespace TAO
     static void _tao_any_string_destructor (void *);
     static void _tao_any_wstring_destructor (void *);
 
-    // Used only by Unknown_IDL_Type.
     virtual void _tao_decode (TAO_InputCDR &
-                              ACE_ENV_ARG_DECL_NOT_USED);
+                              ACE_ENV_ARG_DECL_NOT_USED) = 0;
     virtual void assign_translator (CORBA::TCKind,
                                     TAO_InputCDR *cdr);
 
