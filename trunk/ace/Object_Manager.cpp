@@ -6,6 +6,7 @@
 #include "ace/Containers.h"
 #include "ace/Array.h"
 #include "ace/Service_Config.h"
+#include "ace/Signal.h"
 #include "ace/Log_Msg.h"
 #include "ace/Token_Manager.h"
 #include "ace/Synch.h"
@@ -31,6 +32,7 @@
 # define ACE_APPLICATION_PREALLOCATED_ARRAY_DELETIONS
 #endif /* ACE_APPLICATION_PREALLOCATED_ARRAY_DELETIONS */
 
+
 // Static data.
 ACE_Object_Manager *ACE_Object_Manager::instance_ = 0;
 
@@ -46,6 +48,8 @@ void *ACE_Object_Manager::preallocated_object[
 
 void *ACE_Object_Manager::preallocated_array[
   ACE_Object_Manager::ACE_PREALLOCATED_ARRAYS] = { 0 };
+
+ACE_Sig_Adapter *ace_service_config_sig_handler = 0;
 
 // Handy macros for use by ACE_Object_Manager constructor to preallocate or
 // delete an object or array, either statically (in global data) or
@@ -125,6 +129,11 @@ ACE_Object_Manager::ACE_Object_Manager (void)
   // Hooks for preallocated objects and arrays provided by application.
   ACE_APPLICATION_PREALLOCATED_OBJECT_DEFINITIONS
   ACE_APPLICATION_PREALLOCATED_ARRAY_DEFINITIONS
+
+  // Construct the ACE_Service_Config's signal handler.
+  ACE_NEW (ace_service_config_sig_handler,
+           ACE_Sig_Adapter (&ACE_Service_Config::handle_signal));
+  ACE_Service_Config::signal_handler (ace_service_config_sig_handler);
 
 #if defined (ACE_HAS_TSS_EMULATION)
   // Initialize the main thread's TS storage.
@@ -500,6 +509,9 @@ ACE_Object_Manager::~ACE_Object_Manager (void)
 
   // Close down Winsock (no-op on other platforms).
   ACE_OS::socket_fini ();
+
+  delete ace_service_config_sig_handler;
+  ace_service_config_sig_handler = 0;
 
   ACE_MT (delete lock_;
           lock_ = 0);
