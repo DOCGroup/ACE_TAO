@@ -92,6 +92,11 @@ public:
     ) ACE_THROW_SPEC ((CORBA::SystemException,
                        ImplementationRepository::NotFound));
 
+  /// Shuts down the repository.
+  virtual void shutdown_repo (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    ) ACE_THROW_SPEC ((CORBA::SystemException));
+
   /// Called by the server to update transient information such as current
   /// location of the <server> and its ServerObject.
   virtual void server_is_running (
@@ -140,8 +145,11 @@ public:
   /// Initialize the Server state - parsing arguments and waiting.
   int init (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
-  /// Cleans up any state created by init ().
-  int fini (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  /// Cleans up any state created by init (), called before ORB shutdown.
+  int fini1 (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+ 	 
+  /// Cleans up any state created by init (), called after ORB shutdown.
+  int fini2 (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
   /// Runs the orb.
   int run (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);

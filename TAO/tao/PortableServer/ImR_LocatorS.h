@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:411
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:409
 
 #ifndef _TAO_IDL_IMR_LOCATORS_H_
 #define _TAO_IDL_IMR_LOCATORS_H_
@@ -56,14 +56,14 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_sh.cpp:49
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_sh.cpp:49
 
 namespace POA_ImplementationRepository
 {
   
   
   // TAO_IDL - Generated from
-  // be\be_visitor_interface/interface_sh.cpp:90
+  // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_sh.cpp:90
   
   class Locator;
   typedef Locator *Locator_ptr;
@@ -137,7 +137,7 @@ namespace POA_ImplementationRepository
     virtual const char* _interface_repository_id (void) const;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_operation/operation_sh.cpp:45
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:45
     
     virtual void activate_server_in_activator (
         const char * server,
@@ -145,9 +145,9 @@ namespace POA_ImplementationRepository
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , ImplementationRepository::NotFound
-        , ImplementationRepository::CannotActivate
+        CORBA::SystemException,
+        ::ImplementationRepository::NotFound,
+        ::ImplementationRepository::CannotActivate
       )) = 0;
     
     static void activate_server_in_activator_skel (
@@ -158,7 +158,7 @@ namespace POA_ImplementationRepository
       );
     
     // TAO_IDL - Generated from
-    // be\be_visitor_operation/operation_sh.cpp:45
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:45
     
     virtual void remove_server_in_activator (
         const char * server,
@@ -166,8 +166,8 @@ namespace POA_ImplementationRepository
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , ImplementationRepository::NotFound
+        CORBA::SystemException,
+        ::ImplementationRepository::NotFound
       )) = 0;
     
     static void remove_server_in_activator_skel (
@@ -178,7 +178,7 @@ namespace POA_ImplementationRepository
       );
     
     // TAO_IDL - Generated from
-    // be\be_visitor_operation/operation_sh.cpp:45
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:45
     
     virtual void shutdown_server_in_activator (
         const char * server,
@@ -186,8 +186,8 @@ namespace POA_ImplementationRepository
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , ImplementationRepository::NotFound
+        CORBA::SystemException,
+        ::ImplementationRepository::NotFound
       )) = 0;
     
     static void shutdown_server_in_activator_skel (
@@ -198,7 +198,7 @@ namespace POA_ImplementationRepository
       );
     
     // TAO_IDL - Generated from
-    // be\be_visitor_operation/operation_sh.cpp:45
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:45
     
     virtual void server_is_shutting_down_in_activator (
         const char * server,
@@ -206,8 +206,8 @@ namespace POA_ImplementationRepository
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , ImplementationRepository::NotFound
+        CORBA::SystemException,
+        ::ImplementationRepository::NotFound
       )) = 0;
     
     static void server_is_shutting_down_in_activator_skel (
@@ -218,12 +218,12 @@ namespace POA_ImplementationRepository
       );
     
     // TAO_IDL - Generated from
-    // be\be_visitor_operation/operation_sh.cpp:45
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:45
     
     virtual CORBA::Long register_activator (
         const char * activator,
-        ImplementationRepository::Administration_ptr admin,
-        const ImplementationRepository::Locator::ServerNameList & servers
+        ::ImplementationRepository::Administration_ptr admin,
+        const ::ImplementationRepository::Locator::ServerNameList & servers
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -238,11 +238,11 @@ namespace POA_ImplementationRepository
       );
     
     // TAO_IDL - Generated from
-    // be\be_visitor_operation/operation_sh.cpp:45
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:45
     
     virtual void unregister_activator (
         const char * activator,
-        CORBA::Long token
+        ::CORBA::Long token
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -257,18 +257,18 @@ namespace POA_ImplementationRepository
       );
     
     // TAO_IDL - Generated from
-    // be\be_visitor_operation/operation_sh.cpp:45
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:45
     
     virtual void server_is_running_in_activator (
         const char * server,
         const char * activator,
         const char * addr,
-        ImplementationRepository::ServerObject_ptr server_object
+        ::ImplementationRepository::ServerObject_ptr server_object
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , ImplementationRepository::NotFound
+        CORBA::SystemException,
+        ::ImplementationRepository::NotFound
       )) = 0;
     
     static void server_is_running_in_activator_skel (
@@ -279,17 +279,17 @@ namespace POA_ImplementationRepository
       );
     
     // TAO_IDL - Generated from
-    // be\be_visitor_operation/operation_sh.cpp:45
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:45
     
     virtual void find_in_activator (
         const char * server,
         const char * activator,
-        ImplementationRepository::ServerInformation_out info
+        ::ImplementationRepository::ServerInformation_out info
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , ImplementationRepository::NotFound
+        CORBA::SystemException,
+        ::ImplementationRepository::NotFound
       )) = 0;
     
     static void find_in_activator_skel (
@@ -300,7 +300,7 @@ namespace POA_ImplementationRepository
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2024
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2026
     
     static void
     activate_server_skel (
@@ -311,7 +311,7 @@ namespace POA_ImplementationRepository
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2024
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2026
     
     static void
     activate_server_with_startup_skel (
@@ -322,7 +322,7 @@ namespace POA_ImplementationRepository
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2024
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2026
     
     static void
     register_server_skel (
@@ -333,7 +333,7 @@ namespace POA_ImplementationRepository
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2024
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2026
     
     static void
     reregister_server_skel (
@@ -344,7 +344,7 @@ namespace POA_ImplementationRepository
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2024
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2026
     
     static void
     remove_server_skel (
@@ -355,7 +355,7 @@ namespace POA_ImplementationRepository
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2024
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2026
     
     static void
     shutdown_server_skel (
@@ -366,7 +366,7 @@ namespace POA_ImplementationRepository
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2024
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2026
     
     static void
     server_is_running_skel (
@@ -377,7 +377,7 @@ namespace POA_ImplementationRepository
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2024
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2026
     
     static void
     server_is_shutting_down_skel (
@@ -388,7 +388,7 @@ namespace POA_ImplementationRepository
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2024
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2026
     
     static void
     find_skel (
@@ -399,7 +399,7 @@ namespace POA_ImplementationRepository
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2024
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2026
     
     static void
     list_skel (
@@ -410,7 +410,18 @@ namespace POA_ImplementationRepository
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2024
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2026
+    
+    static void
+    shutdown_repo_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
+    
+    // TAO_IDL - Generated from
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2026
     
     static void
     find_ior_skel (
@@ -426,7 +437,7 @@ namespace POA_ImplementationRepository
   //
   
   // TAO_IDL - Generated from
-  // be\be_visitor_interface/strategized_proxy_broker_sh.cpp:36
+  // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_sh.cpp:36
   
   class TAO_PortableServer_Export _TAO_Locator_Strategized_Proxy_Broker
     : public virtual TAO::Collocation_Proxy_Broker
@@ -470,7 +481,7 @@ namespace POA_ImplementationRepository
   //
   
   // TAO_IDL - Generated from
-  // be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
+  // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
   
   class TAO_PortableServer_Export _TAO_Locator_ThruPOA_Proxy_Impl
     : public virtual ::POA_ImplementationRepository::_TAO_Administration_ThruPOA_Proxy_Impl
@@ -481,7 +492,7 @@ namespace POA_ImplementationRepository
     virtual ~_TAO_Locator_ThruPOA_Proxy_Impl (void) {}
     
     // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
     
     static void
     activate_server_in_activator (
@@ -491,13 +502,13 @@ namespace POA_ImplementationRepository
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , ImplementationRepository::NotFound
-        , ImplementationRepository::CannotActivate
+        CORBA::SystemException,
+        ::ImplementationRepository::NotFound,
+        ::ImplementationRepository::CannotActivate
       ));
     
     // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
     
     static void
     remove_server_in_activator (
@@ -507,12 +518,12 @@ namespace POA_ImplementationRepository
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , ImplementationRepository::NotFound
+        CORBA::SystemException,
+        ::ImplementationRepository::NotFound
       ));
     
     // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
     
     static void
     shutdown_server_in_activator (
@@ -522,12 +533,12 @@ namespace POA_ImplementationRepository
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , ImplementationRepository::NotFound
+        CORBA::SystemException,
+        ::ImplementationRepository::NotFound
       ));
     
     // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
     
     static void
     server_is_shutting_down_in_activator (
@@ -537,12 +548,12 @@ namespace POA_ImplementationRepository
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , ImplementationRepository::NotFound
+        CORBA::SystemException,
+        ::ImplementationRepository::NotFound
       ));
     
     // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
     
     static void
     register_activator (
@@ -556,7 +567,7 @@ namespace POA_ImplementationRepository
       ));
     
     // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
     
     static void
     unregister_activator (
@@ -570,7 +581,7 @@ namespace POA_ImplementationRepository
       ));
     
     // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
     
     static void
     server_is_running_in_activator (
@@ -580,12 +591,12 @@ namespace POA_ImplementationRepository
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , ImplementationRepository::NotFound
+        CORBA::SystemException,
+        ::ImplementationRepository::NotFound
       ));
     
     // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
     
     static void
     find_in_activator (
@@ -595,12 +606,12 @@ namespace POA_ImplementationRepository
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , ImplementationRepository::NotFound
+        CORBA::SystemException,
+        ::ImplementationRepository::NotFound
       ));
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2212
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2214
     
     static void
     activate_server (
@@ -611,12 +622,12 @@ namespace POA_ImplementationRepository
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
-        ImplementationRepository::NotFound,
-        ImplementationRepository::CannotActivate
+        ::ImplementationRepository::NotFound,
+        ::ImplementationRepository::CannotActivate
       ));
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2212
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2214
     
     static void
     activate_server_with_startup (
@@ -627,12 +638,12 @@ namespace POA_ImplementationRepository
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
-        ImplementationRepository::NotFound,
-        ImplementationRepository::CannotActivate
+        ::ImplementationRepository::NotFound,
+        ::ImplementationRepository::CannotActivate
       ));
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2212
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2214
     
     static void
     register_server (
@@ -643,12 +654,12 @@ namespace POA_ImplementationRepository
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
-        ImplementationRepository::AlreadyRegistered,
-        ImplementationRepository::NotFound
+        ::ImplementationRepository::AlreadyRegistered,
+        ::ImplementationRepository::NotFound
       ));
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2212
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2214
     
     static void
     reregister_server (
@@ -659,12 +670,12 @@ namespace POA_ImplementationRepository
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
-        ImplementationRepository::AlreadyRegistered,
-        ImplementationRepository::NotFound
+        ::ImplementationRepository::AlreadyRegistered,
+        ::ImplementationRepository::NotFound
       ));
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2212
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2214
     
     static void
     remove_server (
@@ -675,11 +686,11 @@ namespace POA_ImplementationRepository
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
-        ImplementationRepository::NotFound
+        ::ImplementationRepository::NotFound
       ));
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2212
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2214
     
     static void
     shutdown_server (
@@ -690,11 +701,11 @@ namespace POA_ImplementationRepository
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
-        ImplementationRepository::NotFound
+        ::ImplementationRepository::NotFound
       ));
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2212
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2214
     
     static void
     server_is_running (
@@ -705,11 +716,11 @@ namespace POA_ImplementationRepository
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
-        ImplementationRepository::NotFound
+        ::ImplementationRepository::NotFound
       ));
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2212
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2214
     
     static void
     server_is_shutting_down (
@@ -720,11 +731,11 @@ namespace POA_ImplementationRepository
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
-        ImplementationRepository::NotFound
+        ::ImplementationRepository::NotFound
       ));
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2212
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2214
     
     static void
     find (
@@ -735,11 +746,11 @@ namespace POA_ImplementationRepository
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
-        ImplementationRepository::NotFound
+        ::ImplementationRepository::NotFound
       ));
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2212
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2214
     
     static void
     list (
@@ -753,7 +764,21 @@ namespace POA_ImplementationRepository
       ));
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2212
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2214
+    
+    static void
+    shutdown_repo (
+        TAO_Abstract_ServantBase *servant, 
+        TAO::Argument ** args,
+        int num_args
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
+    
+    // TAO_IDL - Generated from
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2214
     
     static void
     find_ior (
@@ -764,7 +789,7 @@ namespace POA_ImplementationRepository
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
-        ImplementationRepository::NotFound
+        ::ImplementationRepository::NotFound
       ));
   };
   
@@ -773,7 +798,7 @@ namespace POA_ImplementationRepository
   ///////////////////////////////////////////////////////////////////////
   
   // TAO_IDL - Generated from 
-  // be\be_visitor_interface/direct_proxy_impl_sh.cpp:31
+  // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/direct_proxy_impl_sh.cpp:31
   
   ///////////////////////////////////////////////////////////////////////
   //                    Direct  Impl. Declaration
@@ -788,7 +813,7 @@ namespace POA_ImplementationRepository
     virtual ~_TAO_Locator_Direct_Proxy_Impl (void) {}
     
     // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
     
     static void
     activate_server_in_activator (
@@ -798,13 +823,13 @@ namespace POA_ImplementationRepository
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , ImplementationRepository::NotFound
-        , ImplementationRepository::CannotActivate
+        CORBA::SystemException,
+        ::ImplementationRepository::NotFound,
+        ::ImplementationRepository::CannotActivate
       ));
     
     // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
     
     static void
     remove_server_in_activator (
@@ -814,12 +839,12 @@ namespace POA_ImplementationRepository
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , ImplementationRepository::NotFound
+        CORBA::SystemException,
+        ::ImplementationRepository::NotFound
       ));
     
     // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
     
     static void
     shutdown_server_in_activator (
@@ -829,12 +854,12 @@ namespace POA_ImplementationRepository
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , ImplementationRepository::NotFound
+        CORBA::SystemException,
+        ::ImplementationRepository::NotFound
       ));
     
     // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
     
     static void
     server_is_shutting_down_in_activator (
@@ -844,12 +869,12 @@ namespace POA_ImplementationRepository
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , ImplementationRepository::NotFound
+        CORBA::SystemException,
+        ::ImplementationRepository::NotFound
       ));
     
     // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
     
     static void
     register_activator (
@@ -863,7 +888,7 @@ namespace POA_ImplementationRepository
       ));
     
     // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
     
     static void
     unregister_activator (
@@ -877,7 +902,7 @@ namespace POA_ImplementationRepository
       ));
     
     // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
     
     static void
     server_is_running_in_activator (
@@ -887,12 +912,12 @@ namespace POA_ImplementationRepository
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , ImplementationRepository::NotFound
+        CORBA::SystemException,
+        ::ImplementationRepository::NotFound
       ));
     
     // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
     
     static void
     find_in_activator (
@@ -902,12 +927,12 @@ namespace POA_ImplementationRepository
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , ImplementationRepository::NotFound
+        CORBA::SystemException,
+        ::ImplementationRepository::NotFound
       ));
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2212
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2214
     
     static void
     activate_server (
@@ -918,12 +943,12 @@ namespace POA_ImplementationRepository
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
-        ImplementationRepository::NotFound,
-        ImplementationRepository::CannotActivate
+        ::ImplementationRepository::NotFound,
+        ::ImplementationRepository::CannotActivate
       ));
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2212
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2214
     
     static void
     activate_server_with_startup (
@@ -934,12 +959,12 @@ namespace POA_ImplementationRepository
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
-        ImplementationRepository::NotFound,
-        ImplementationRepository::CannotActivate
+        ::ImplementationRepository::NotFound,
+        ::ImplementationRepository::CannotActivate
       ));
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2212
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2214
     
     static void
     register_server (
@@ -950,12 +975,12 @@ namespace POA_ImplementationRepository
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
-        ImplementationRepository::AlreadyRegistered,
-        ImplementationRepository::NotFound
+        ::ImplementationRepository::AlreadyRegistered,
+        ::ImplementationRepository::NotFound
       ));
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2212
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2214
     
     static void
     reregister_server (
@@ -966,12 +991,12 @@ namespace POA_ImplementationRepository
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
-        ImplementationRepository::AlreadyRegistered,
-        ImplementationRepository::NotFound
+        ::ImplementationRepository::AlreadyRegistered,
+        ::ImplementationRepository::NotFound
       ));
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2212
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2214
     
     static void
     remove_server (
@@ -982,11 +1007,11 @@ namespace POA_ImplementationRepository
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
-        ImplementationRepository::NotFound
+        ::ImplementationRepository::NotFound
       ));
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2212
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2214
     
     static void
     shutdown_server (
@@ -997,11 +1022,11 @@ namespace POA_ImplementationRepository
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
-        ImplementationRepository::NotFound
+        ::ImplementationRepository::NotFound
       ));
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2212
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2214
     
     static void
     server_is_running (
@@ -1012,11 +1037,11 @@ namespace POA_ImplementationRepository
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
-        ImplementationRepository::NotFound
+        ::ImplementationRepository::NotFound
       ));
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2212
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2214
     
     static void
     server_is_shutting_down (
@@ -1027,11 +1052,11 @@ namespace POA_ImplementationRepository
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
-        ImplementationRepository::NotFound
+        ::ImplementationRepository::NotFound
       ));
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2212
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2214
     
     static void
     find (
@@ -1042,11 +1067,11 @@ namespace POA_ImplementationRepository
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
-        ImplementationRepository::NotFound
+        ::ImplementationRepository::NotFound
       ));
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2212
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2214
     
     static void
     list (
@@ -1060,7 +1085,21 @@ namespace POA_ImplementationRepository
       ));
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2212
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2214
+    
+    static void
+    shutdown_repo (
+        TAO_Abstract_ServantBase *servant, 
+        TAO::Argument ** args,
+        int num_args
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
+    
+    // TAO_IDL - Generated from
+    // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2214
     
     static void
     find_ior (
@@ -1071,7 +1110,7 @@ namespace POA_ImplementationRepository
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
-        ImplementationRepository::NotFound
+        ::ImplementationRepository::NotFound
       ));
   };
   
@@ -1082,12 +1121,12 @@ namespace POA_ImplementationRepository
   
 
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_sh.cpp:80
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_sh.cpp:80
 
 } // module ImplementationRepository
 
 // TAO_IDL - Generated from 
-// be\be_codegen.cpp:1014
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1012
 
 
 #if defined (__ACE_INLINE__)

@@ -27,7 +27,7 @@
 
 
 // TAO_IDL - Generated from 
-// be\be_codegen.cpp:631
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:629
 
 #ifndef _TAO_IDL_IMR_LOCATORS_CPP_
 #define _TAO_IDL_IMR_LOCATORS_CPP_
@@ -51,10 +51,10 @@
 #include "tao/Var_Size_Argument_T.h"
 #include "tao/PortableInterceptor.h"
 #if TAO_HAS_INTERCEPTORS == 1
-#include "tao/RequestInfo_Util.h"
 #include "tao/PortableServer/PICurrent_Guard.h"
 #include "tao/PortableServer/ServerRequestInfo.h"
 #include "tao/PortableServer/ServerInterceptorAdapter.h"
+#include "tao/RequestInfo_Util.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 #include "ace/Dynamic_Service.h"
@@ -70,7 +70,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:64
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_arg_traits.cpp:64
 
 // Arg traits specializations.
 namespace TAO
@@ -94,7 +94,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:618
+  // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_arg_traits.cpp:618
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_STARTUPOPTIONS__ARG_TRAITS_SS_)
 #define _IMPLEMENTATIONREPOSITORY_STARTUPOPTIONS__ARG_TRAITS_SS_
@@ -113,7 +113,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:618
+  // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_arg_traits.cpp:618
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATION__ARG_TRAITS_SS_)
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATION__ARG_TRAITS_SS_
@@ -132,7 +132,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:379
+  // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_arg_traits.cpp:379
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONLIST__ARG_TRAITS_SS_)
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONLIST__ARG_TRAITS_SS_
@@ -185,7 +185,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:379
+  // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_arg_traits.cpp:379
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_LOCATOR_SERVERNAMELIST__ARG_TRAITS_SS_)
 #define _IMPLEMENTATIONREPOSITORY_LOCATOR_SERVERNAMELIST__ARG_TRAITS_SS_
@@ -206,7 +206,7 @@ namespace TAO
 
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1534
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1536
 
 class TAO_ImplementationRepository_Locator_Perfect_Hash_OpTable
   : public TAO_Perfect_Hash_OpTable
@@ -226,46 +226,46 @@ TAO_ImplementationRepository_Locator_Perfect_Hash_OpTable::hash (const char *str
   static const unsigned char asso_values[] =
     {
 #if defined (ACE_MVS)
-     51, 51, 51, 51, 51, 51, 51, 51, 51, 51,
-     51, 51, 51, 51, 51, 51, 51, 51, 51, 51,
-     51, 51, 51, 51, 51, 51, 51, 51, 51, 51,
-     51, 51, 51, 51, 51, 51, 51, 51, 51, 51,
-     51, 51, 51, 51, 51, 51, 51, 51, 51, 51,
-     51, 51, 51, 51, 51, 51, 51, 51, 51, 51,
-     51, 51, 51, 51, 51, 51, 51, 51, 51, 51,
-     51, 51, 51, 51, 51, 51, 51, 51, 51, 51,
-     51, 51, 51, 51, 51, 51, 51, 51, 51, 51,
-     51, 51, 51, 51, 51, 51, 51, 51, 51, 51,
-     51, 51, 51, 51, 51, 51, 51, 51, 51, 25,
-     51, 51, 51, 51, 51, 51, 51, 51, 51, 51,
-     51, 51, 51, 51, 51, 51, 51, 51, 51, 10,
-     51, 51,  0, 15, 15,  0, 51, 51, 51, 51,
-     51, 51, 51, 51, 51, 51, 51,  0, 51,  0,
-     51,  5, 51,  0, 51, 51, 51, 51, 51, 51,
-     51, 51,  5, 10, 10, 51, 51, 51, 51, 51,
-     51, 51, 51, 51, 51, 51, 51, 51, 51, 51,
-     51, 51, 51, 51, 51, 51, 51, 51, 51, 51,
-     51, 51, 51, 51, 51, 51, 51, 51, 51, 51,
-     51, 51, 51, 51, 51, 51, 51, 51, 51, 51,
-     51, 51, 51, 51, 51, 51, 51, 51, 51, 51,
-     51, 51, 51, 51, 51, 51, 51, 51, 51, 51,
-     51, 51, 51, 51, 51, 51, 51, 51, 51, 51,
-     51, 51, 51, 51, 51, 51, 51, 51, 51, 51,
-     51, 51, 51, 51, 51, 51,
+     54, 54, 54, 54, 54, 54, 54, 54, 54, 54,
+     54, 54, 54, 54, 54, 54, 54, 54, 54, 54,
+     54, 54, 54, 54, 54, 54, 54, 54, 54, 54,
+     54, 54, 54, 54, 54, 54, 54, 54, 54, 54,
+     54, 54, 54, 54, 54, 54, 54, 54, 54, 54,
+     54, 54, 54, 54, 54, 54, 54, 54, 54, 54,
+     54, 54, 54, 54, 54, 54, 54, 54, 54, 54,
+     54, 54, 54, 54, 54, 54, 54, 54, 54, 54,
+     54, 54, 54, 54, 54, 54, 54, 54, 54, 54,
+     54, 54, 54, 54, 54, 54, 54, 54, 54, 54,
+     54, 54, 54, 54, 54, 54, 54, 54, 54, 25,
+     54, 54, 54, 54, 54, 54, 54, 54, 54, 54,
+     54, 54, 54, 54, 54, 54, 54, 54, 54, 10,
+     54, 54,  0, 15, 15,  0, 54, 54, 54, 54,
+     54, 54, 54, 54, 54, 54, 54,  0, 54, 15,
+     10, 15, 54,  0, 54, 54, 54, 54, 54, 54,
+     54, 54,  5, 10, 10, 54, 54, 54, 54, 54,
+     54, 54, 54, 54, 54, 54, 54, 54, 54, 54,
+     54, 54, 54, 54, 54, 54, 54, 54, 54, 54,
+     54, 54, 54, 54, 54, 54, 54, 54, 54, 54,
+     54, 54, 54, 54, 54, 54, 54, 54, 54, 54,
+     54, 54, 54, 54, 54, 54, 54, 54, 54, 54,
+     54, 54, 54, 54, 54, 54, 54, 54, 54, 54,
+     54, 54, 54, 54, 54, 54, 54, 54, 54, 54,
+     54, 54, 54, 54, 54, 54, 54, 54, 54, 54,
+     54, 54, 54, 54, 54, 54,
 #else
-     51, 51, 51, 51, 51, 51, 51, 51, 51, 51,
-     51, 51, 51, 51, 51, 51, 51, 51, 51, 51,
-     51, 51, 51, 51, 51, 51, 51, 51, 51, 51,
-     51, 51, 51, 51, 51, 51, 51, 51, 51, 51,
-     51, 51, 51, 51, 51, 51, 51, 51, 51, 51,
-     51, 51, 51, 51, 51, 51, 51, 51, 51, 51,
-     51, 51, 51, 51, 51, 51, 51, 51, 51, 51,
-     51, 51, 51, 51, 51, 51, 51, 51, 51, 51,
-     51, 51, 51, 51, 51, 51, 51, 51, 51, 51,
-     51, 51, 51, 51, 51, 25, 51, 10, 51, 51,
-      0, 15, 15,  0, 51, 51, 51, 51,  0, 51,
-      0, 51,  5, 51,  0,  5, 10, 10, 51, 51,
-     51, 51, 51, 51, 51, 51, 51, 51,
+     54, 54, 54, 54, 54, 54, 54, 54, 54, 54,
+     54, 54, 54, 54, 54, 54, 54, 54, 54, 54,
+     54, 54, 54, 54, 54, 54, 54, 54, 54, 54,
+     54, 54, 54, 54, 54, 54, 54, 54, 54, 54,
+     54, 54, 54, 54, 54, 54, 54, 54, 54, 54,
+     54, 54, 54, 54, 54, 54, 54, 54, 54, 54,
+     54, 54, 54, 54, 54, 54, 54, 54, 54, 54,
+     54, 54, 54, 54, 54, 54, 54, 54, 54, 54,
+     54, 54, 54, 54, 54, 54, 54, 54, 54, 54,
+     54, 54, 54, 54, 54, 25, 54, 10, 54, 54,
+      0, 15, 15,  0, 54, 54, 54, 54,  0, 54,
+     15, 10, 15, 54,  0,  5, 10, 10, 54, 54,
+     54, 54, 54, 54, 54, 54, 54, 54,
 #endif /* ACE_MVS */
     };
   return len + asso_values[(int) str[len - 1]] + asso_values[(int) str[0]];
@@ -276,14 +276,14 @@ TAO_ImplementationRepository_Locator_Perfect_Hash_OpTable::lookup (const char *s
 {
   enum
     {
-      TOTAL_KEYWORDS = 23,
+      TOTAL_KEYWORDS = 24,
       MIN_WORD_LENGTH = 4,
       MAX_WORD_LENGTH = 36,
       MIN_HASH_VALUE = 13,
-      MAX_HASH_VALUE = 50,
-      HASH_VALUE_RANGE = 38,
+      MAX_HASH_VALUE = 53,
+      HASH_VALUE_RANGE = 41,
       DUPLICATES = 0,
-      WORDLIST_SIZE = 36
+      WORDLIST_SIZE = 37
     };
 
   static const class TAO_operation_db_entry  wordlist[] =
@@ -305,7 +305,7 @@ TAO_ImplementationRepository_Locator_Perfect_Hash_OpTable::lookup (const char *s
       {"activate_server", &POA_ImplementationRepository::Locator::activate_server_skel, &POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::activate_server, &POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::activate_server},
       {"remove_server_in_activator", &POA_ImplementationRepository::Locator::remove_server_in_activator_skel, &POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::remove_server_in_activator, &POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::remove_server_in_activator},
       {"",0,0,0},
-      {"server_is_shutting_down", &POA_ImplementationRepository::Locator::server_is_shutting_down_skel, &POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::server_is_shutting_down, &POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::server_is_shutting_down},
+      {"shutdown_repo", &POA_ImplementationRepository::Locator::shutdown_repo_skel, &POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::shutdown_repo, &POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::shutdown_repo},
       {"",0,0,0},
       {"unregister_activator", &POA_ImplementationRepository::Locator::unregister_activator_skel, &POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::unregister_activator, &POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::unregister_activator},
       {"",0,0,0},
@@ -319,13 +319,15 @@ TAO_ImplementationRepository_Locator_Perfect_Hash_OpTable::lookup (const char *s
       {"_is_a", &POA_ImplementationRepository::Locator::_is_a_skel, 0, 0},
       {"server_is_shutting_down_in_activator", &POA_ImplementationRepository::Locator::server_is_shutting_down_in_activator_skel, &POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::server_is_shutting_down_in_activator, &POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::server_is_shutting_down_in_activator},
       {"",0,0,0},
-      {"activate_server_with_startup", &POA_ImplementationRepository::Locator::activate_server_with_startup_skel, &POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::activate_server_with_startup, &POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::activate_server_with_startup},
+      {"server_is_shutting_down", &POA_ImplementationRepository::Locator::server_is_shutting_down_skel, &POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::server_is_shutting_down, &POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::server_is_shutting_down},
       {"",0,0,0},
       {"_component", &POA_ImplementationRepository::Locator::_component_skel, 0, 0},
       {"",0,0,0},{"",0,0,0},
       {"_non_existent", &POA_ImplementationRepository::Locator::_non_existent_skel, 0, 0},
       {"",0,0,0},
       {"_interface", &POA_ImplementationRepository::Locator::_interface_skel, 0, 0},
+      {"",0,0,0},{"",0,0,0},
+      {"activate_server_with_startup", &POA_ImplementationRepository::Locator::activate_server_with_startup_skel, &POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::activate_server_with_startup, &POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::activate_server_with_startup},
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -346,12 +348,12 @@ TAO_ImplementationRepository_Locator_Perfect_Hash_OpTable::lookup (const char *s
 static TAO_ImplementationRepository_Locator_Perfect_Hash_OpTable tao_ImplementationRepository_Locator_optable;
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interceptors_ss.cpp:53
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interceptors_ss.cpp:53
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 
 // TAO_IDL - Generated from
-// be\be_visitor_operation/interceptors_ss.cpp:74
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_ImplementationRepository_Locator_activate_server_in_activator : public TAO_ServerRequestInfo
 {
@@ -408,7 +410,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be\be_visitor_operation/interceptors_ss.cpp:438
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:438
 
 TAO_ServerRequestInfo_ImplementationRepository_Locator_activate_server_in_activator::TAO_ServerRequestInfo_ImplementationRepository_Locator_activate_server_in_activator (
     TAO_ServerRequest &_tao_server_request,
@@ -516,7 +518,7 @@ TAO_ServerRequestInfo_ImplementationRepository_Locator_activate_server_in_activa
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_operation/interceptors_ss.cpp:74
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_ImplementationRepository_Locator_remove_server_in_activator : public TAO_ServerRequestInfo
 {
@@ -573,7 +575,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be\be_visitor_operation/interceptors_ss.cpp:438
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:438
 
 TAO_ServerRequestInfo_ImplementationRepository_Locator_remove_server_in_activator::TAO_ServerRequestInfo_ImplementationRepository_Locator_remove_server_in_activator (
     TAO_ServerRequest &_tao_server_request,
@@ -680,7 +682,7 @@ TAO_ServerRequestInfo_ImplementationRepository_Locator_remove_server_in_activato
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_operation/interceptors_ss.cpp:74
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_ImplementationRepository_Locator_shutdown_server_in_activator : public TAO_ServerRequestInfo
 {
@@ -737,7 +739,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be\be_visitor_operation/interceptors_ss.cpp:438
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:438
 
 TAO_ServerRequestInfo_ImplementationRepository_Locator_shutdown_server_in_activator::TAO_ServerRequestInfo_ImplementationRepository_Locator_shutdown_server_in_activator (
     TAO_ServerRequest &_tao_server_request,
@@ -844,7 +846,7 @@ TAO_ServerRequestInfo_ImplementationRepository_Locator_shutdown_server_in_activa
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_operation/interceptors_ss.cpp:74
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_ImplementationRepository_Locator_server_is_shutting_down_in_activator : public TAO_ServerRequestInfo
 {
@@ -901,7 +903,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be\be_visitor_operation/interceptors_ss.cpp:438
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:438
 
 TAO_ServerRequestInfo_ImplementationRepository_Locator_server_is_shutting_down_in_activator::TAO_ServerRequestInfo_ImplementationRepository_Locator_server_is_shutting_down_in_activator (
     TAO_ServerRequest &_tao_server_request,
@@ -1008,7 +1010,7 @@ TAO_ServerRequestInfo_ImplementationRepository_Locator_server_is_shutting_down_i
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_operation/interceptors_ss.cpp:74
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_ImplementationRepository_Locator_register_activator : public TAO_ServerRequestInfo
 {
@@ -1018,8 +1020,8 @@ public:
       TAO_Object_Adapter::Servant_Upcall *tao_servant_upcall,
       POA_ImplementationRepository::Locator *tao_impl,
       const char * activator,
-      ImplementationRepository::Administration_ptr admin,
-      const ImplementationRepository::Locator::ServerNameList & servers
+      ::ImplementationRepository::Administration_ptr admin,
+      const ::ImplementationRepository::Locator::ServerNameList & servers
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     );
   
@@ -1064,21 +1066,21 @@ private:
   POA_ImplementationRepository::Locator *_tao_impl;
   
   const char * activator_;
-  ImplementationRepository::Administration_ptr admin_;
-  const ImplementationRepository::Locator::ServerNameList & servers_;
+  ::ImplementationRepository::Administration_ptr admin_;
+  const ::ImplementationRepository::Locator::ServerNameList & servers_;
   CORBA::Long _result;
 };
 
 // TAO_IDL - Generated from
-// be\be_visitor_operation/interceptors_ss.cpp:438
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:438
 
 TAO_ServerRequestInfo_ImplementationRepository_Locator_register_activator::TAO_ServerRequestInfo_ImplementationRepository_Locator_register_activator (
     TAO_ServerRequest &_tao_server_request,
     TAO_Object_Adapter::Servant_Upcall *_tao_servant_upcall,
     POA_ImplementationRepository::Locator *tao_impl,
     const char * activator,
-    ImplementationRepository::Administration_ptr admin,
-    const ImplementationRepository::Locator::ServerNameList & servers
+    ::ImplementationRepository::Administration_ptr admin,
+    const ::ImplementationRepository::Locator::ServerNameList & servers
     ACE_ENV_ARG_DECL_NOT_USED
   )
   : TAO_ServerRequestInfo (_tao_server_request, _tao_servant_upcall),
@@ -1179,7 +1181,7 @@ TAO_ServerRequestInfo_ImplementationRepository_Locator_register_activator::resul
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_operation/interceptors_ss.cpp:74
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_ImplementationRepository_Locator_unregister_activator : public TAO_ServerRequestInfo
 {
@@ -1189,7 +1191,7 @@ public:
       TAO_Object_Adapter::Servant_Upcall *tao_servant_upcall,
       POA_ImplementationRepository::Locator *tao_impl,
       const char * activator,
-      const CORBA::Long & token
+      const ::CORBA::Long & token
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     );
   
@@ -1232,18 +1234,18 @@ private:
   POA_ImplementationRepository::Locator *_tao_impl;
   
   const char * activator_;
-  const CORBA::Long & token_;
+  const ::CORBA::Long & token_;
 };
 
 // TAO_IDL - Generated from
-// be\be_visitor_operation/interceptors_ss.cpp:438
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:438
 
 TAO_ServerRequestInfo_ImplementationRepository_Locator_unregister_activator::TAO_ServerRequestInfo_ImplementationRepository_Locator_unregister_activator (
     TAO_ServerRequest &_tao_server_request,
     TAO_Object_Adapter::Servant_Upcall *_tao_servant_upcall,
     POA_ImplementationRepository::Locator *tao_impl,
     const char * activator,
-    const CORBA::Long & token
+    const ::CORBA::Long & token
     ACE_ENV_ARG_DECL_NOT_USED
   )
   : TAO_ServerRequestInfo (_tao_server_request, _tao_servant_upcall),
@@ -1328,7 +1330,7 @@ TAO_ServerRequestInfo_ImplementationRepository_Locator_unregister_activator::tar
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_operation/interceptors_ss.cpp:74
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_ImplementationRepository_Locator_server_is_running_in_activator : public TAO_ServerRequestInfo
 {
@@ -1340,7 +1342,7 @@ public:
       const char * server,
       const char * activator,
       const char * addr,
-      ImplementationRepository::ServerObject_ptr server_object
+      ::ImplementationRepository::ServerObject_ptr server_object
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     );
   
@@ -1385,11 +1387,11 @@ private:
   const char * server_;
   const char * activator_;
   const char * addr_;
-  ImplementationRepository::ServerObject_ptr server_object_;
+  ::ImplementationRepository::ServerObject_ptr server_object_;
 };
 
 // TAO_IDL - Generated from
-// be\be_visitor_operation/interceptors_ss.cpp:438
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:438
 
 TAO_ServerRequestInfo_ImplementationRepository_Locator_server_is_running_in_activator::TAO_ServerRequestInfo_ImplementationRepository_Locator_server_is_running_in_activator (
     TAO_ServerRequest &_tao_server_request,
@@ -1398,7 +1400,7 @@ TAO_ServerRequestInfo_ImplementationRepository_Locator_server_is_running_in_acti
     const char * server,
     const char * activator,
     const char * addr,
-    ImplementationRepository::ServerObject_ptr server_object
+    ::ImplementationRepository::ServerObject_ptr server_object
     ACE_ENV_ARG_DECL_NOT_USED
   )
   : TAO_ServerRequestInfo (_tao_server_request, _tao_servant_upcall),
@@ -1508,7 +1510,7 @@ TAO_ServerRequestInfo_ImplementationRepository_Locator_server_is_running_in_acti
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_operation/interceptors_ss.cpp:74
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_ImplementationRepository_Locator_find_in_activator : public TAO_ServerRequestInfo
 {
@@ -1565,7 +1567,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be\be_visitor_operation/interceptors_ss.cpp:438
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:438
 
 TAO_ServerRequestInfo_ImplementationRepository_Locator_find_in_activator::TAO_ServerRequestInfo_ImplementationRepository_Locator_find_in_activator (
     TAO_ServerRequest &_tao_server_request,
@@ -1678,7 +1680,7 @@ TAO_ServerRequestInfo_ImplementationRepository_Locator_find_in_activator::target
 //
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/strategized_proxy_broker_ss.cpp:40
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_ss.cpp:40
 
 // Factory function Implementation.
 POA_ImplementationRepository::_TAO_Locator_Strategized_Proxy_Broker *
@@ -1795,7 +1797,7 @@ POA_ImplementationRepository::_TAO_Locator_Strategized_Proxy_Broker::dispatch (
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:631
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:648
 
 TAO::Collocation_Proxy_Broker *
 ImplementationRepository__TAO_Locator_Proxy_Broker_Factory_function (CORBA::Object_ptr)
@@ -1816,8 +1818,8 @@ ImplementationRepository__TAO_Locator_Proxy_Broker_Factory_Initializer (size_t)
 static int
 ImplementationRepository__TAO_Locator_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
   ImplementationRepository__TAO_Locator_Proxy_Broker_Factory_Initializer (
-      ACE_reinterpret_cast (
-          size_t,
+      reinterpret_cast<
+          size_t> (
           ImplementationRepository__TAO_Locator_Proxy_Broker_Factory_Initializer
         )
     );
@@ -1828,7 +1830,7 @@ ImplementationRepository__TAO_Locator_Proxy_Broker_Stub_Factory_Initializer_Scar
 //
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/thru_poa_proxy_impl_ss.cpp:37
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/thru_poa_proxy_impl_ss.cpp:37
 
 POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::_TAO_Locator_ThruPOA_Proxy_Impl (void)
 {}
@@ -1836,7 +1838,7 @@ POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::_TAO_Locator_Thru
 // ThruPOA Implementation of the IDL interface methods
 
 // TAO_IDL - Generated from 
-// be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:52
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:52
 
 void
 POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::activate_server_in_activator (
@@ -1846,26 +1848,26 @@ POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::activate_server_i
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
-    , ImplementationRepository::NotFound
-    , ImplementationRepository::CannotActivate
+    CORBA::SystemException,
+    ::ImplementationRepository::NotFound,
+    ::ImplementationRepository::CannotActivate
   ))
 {
-  ACE_reinterpret_cast (
-      POA_ImplementationRepository::Locator_ptr,
+  reinterpret_cast<
+      POA_ImplementationRepository::Locator_ptr> (
       servant->_downcast (
           "IDL:ImplementationRepository/Locator:1.0"
         )
     )->activate_server_in_activator (
-        ((TAO::Arg_Traits<CORBA::Char *>::in_arg_val *) args[1])->arg (),
-        ((TAO::Arg_Traits<CORBA::Char *>::in_arg_val *) args[2])->arg ()
+        ((TAO::Arg_Traits< ::CORBA::Char *>::in_arg_val *) args[1])->arg (),
+        ((TAO::Arg_Traits< ::CORBA::Char *>::in_arg_val *) args[2])->arg ()
         ACE_ENV_ARG_PARAMETER
       );
   ACE_CHECK;
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:52
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:52
 
 void
 POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::remove_server_in_activator (
@@ -1875,25 +1877,25 @@ POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::remove_server_in_
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
-    , ImplementationRepository::NotFound
+    CORBA::SystemException,
+    ::ImplementationRepository::NotFound
   ))
 {
-  ACE_reinterpret_cast (
-      POA_ImplementationRepository::Locator_ptr,
+  reinterpret_cast<
+      POA_ImplementationRepository::Locator_ptr> (
       servant->_downcast (
           "IDL:ImplementationRepository/Locator:1.0"
         )
     )->remove_server_in_activator (
-        ((TAO::Arg_Traits<CORBA::Char *>::in_arg_val *) args[1])->arg (),
-        ((TAO::Arg_Traits<CORBA::Char *>::in_arg_val *) args[2])->arg ()
+        ((TAO::Arg_Traits< ::CORBA::Char *>::in_arg_val *) args[1])->arg (),
+        ((TAO::Arg_Traits< ::CORBA::Char *>::in_arg_val *) args[2])->arg ()
         ACE_ENV_ARG_PARAMETER
       );
   ACE_CHECK;
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:52
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:52
 
 void
 POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::shutdown_server_in_activator (
@@ -1903,25 +1905,25 @@ POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::shutdown_server_i
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
-    , ImplementationRepository::NotFound
+    CORBA::SystemException,
+    ::ImplementationRepository::NotFound
   ))
 {
-  ACE_reinterpret_cast (
-      POA_ImplementationRepository::Locator_ptr,
+  reinterpret_cast<
+      POA_ImplementationRepository::Locator_ptr> (
       servant->_downcast (
           "IDL:ImplementationRepository/Locator:1.0"
         )
     )->shutdown_server_in_activator (
-        ((TAO::Arg_Traits<CORBA::Char *>::in_arg_val *) args[1])->arg (),
-        ((TAO::Arg_Traits<CORBA::Char *>::in_arg_val *) args[2])->arg ()
+        ((TAO::Arg_Traits< ::CORBA::Char *>::in_arg_val *) args[1])->arg (),
+        ((TAO::Arg_Traits< ::CORBA::Char *>::in_arg_val *) args[2])->arg ()
         ACE_ENV_ARG_PARAMETER
       );
   ACE_CHECK;
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:52
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:52
 
 void
 POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::server_is_shutting_down_in_activator (
@@ -1931,25 +1933,25 @@ POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::server_is_shuttin
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
-    , ImplementationRepository::NotFound
+    CORBA::SystemException,
+    ::ImplementationRepository::NotFound
   ))
 {
-  ACE_reinterpret_cast (
-      POA_ImplementationRepository::Locator_ptr,
+  reinterpret_cast<
+      POA_ImplementationRepository::Locator_ptr> (
       servant->_downcast (
           "IDL:ImplementationRepository/Locator:1.0"
         )
     )->server_is_shutting_down_in_activator (
-        ((TAO::Arg_Traits<CORBA::Char *>::in_arg_val *) args[1])->arg (),
-        ((TAO::Arg_Traits<CORBA::Char *>::in_arg_val *) args[2])->arg ()
+        ((TAO::Arg_Traits< ::CORBA::Char *>::in_arg_val *) args[1])->arg (),
+        ((TAO::Arg_Traits< ::CORBA::Char *>::in_arg_val *) args[2])->arg ()
         ACE_ENV_ARG_PARAMETER
       );
   ACE_CHECK;
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:52
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:52
 
 void
 POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::register_activator (
@@ -1962,23 +1964,23 @@ POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::register_activato
     CORBA::SystemException
   ))
 {
-  ((TAO::Arg_Traits<CORBA::Long>::ret_val *) args[0])->arg () =
-    ACE_reinterpret_cast (
-        POA_ImplementationRepository::Locator_ptr,
+  ((TAO::Arg_Traits< CORBA::Long>::ret_val *) args[0])->arg () =
+    reinterpret_cast<
+        POA_ImplementationRepository::Locator_ptr> (
         servant->_downcast (
             "IDL:ImplementationRepository/Locator:1.0"
           )
       )->register_activator (
-          ((TAO::Arg_Traits<CORBA::Char *>::in_arg_val *) args[1])->arg (),
-          ((TAO::Arg_Traits<ImplementationRepository::Administration>::in_arg_val *) args[2])->arg (),
-          ((TAO::Arg_Traits<ImplementationRepository::Locator::ServerNameList>::in_arg_val *) args[3])->arg ()
+          ((TAO::Arg_Traits< ::CORBA::Char *>::in_arg_val *) args[1])->arg (),
+          ((TAO::Arg_Traits< ::ImplementationRepository::Administration>::in_arg_val *) args[2])->arg (),
+          ((TAO::Arg_Traits< ::ImplementationRepository::Locator::ServerNameList>::in_arg_val *) args[3])->arg ()
           ACE_ENV_ARG_PARAMETER
         );
   ACE_CHECK;
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:52
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:52
 
 void
 POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::unregister_activator (
@@ -1991,21 +1993,21 @@ POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::unregister_activa
     CORBA::SystemException
   ))
 {
-  ACE_reinterpret_cast (
-      POA_ImplementationRepository::Locator_ptr,
+  reinterpret_cast<
+      POA_ImplementationRepository::Locator_ptr> (
       servant->_downcast (
           "IDL:ImplementationRepository/Locator:1.0"
         )
     )->unregister_activator (
-        ((TAO::Arg_Traits<CORBA::Char *>::in_arg_val *) args[1])->arg (),
-        ((TAO::Arg_Traits<CORBA::Long>::in_arg_val *) args[2])->arg ()
+        ((TAO::Arg_Traits< ::CORBA::Char *>::in_arg_val *) args[1])->arg (),
+        ((TAO::Arg_Traits< CORBA::Long>::in_arg_val *) args[2])->arg ()
         ACE_ENV_ARG_PARAMETER
       );
   ACE_CHECK;
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:52
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:52
 
 void
 POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::server_is_running_in_activator (
@@ -2015,27 +2017,27 @@ POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::server_is_running
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
-    , ImplementationRepository::NotFound
+    CORBA::SystemException,
+    ::ImplementationRepository::NotFound
   ))
 {
-  ACE_reinterpret_cast (
-      POA_ImplementationRepository::Locator_ptr,
+  reinterpret_cast<
+      POA_ImplementationRepository::Locator_ptr> (
       servant->_downcast (
           "IDL:ImplementationRepository/Locator:1.0"
         )
     )->server_is_running_in_activator (
-        ((TAO::Arg_Traits<CORBA::Char *>::in_arg_val *) args[1])->arg (),
-        ((TAO::Arg_Traits<CORBA::Char *>::in_arg_val *) args[2])->arg (),
-        ((TAO::Arg_Traits<ImplementationRepository::Address>::in_arg_val *) args[3])->arg (),
-        ((TAO::Arg_Traits<ImplementationRepository::ServerObject>::in_arg_val *) args[4])->arg ()
+        ((TAO::Arg_Traits< ::CORBA::Char *>::in_arg_val *) args[1])->arg (),
+        ((TAO::Arg_Traits< ::CORBA::Char *>::in_arg_val *) args[2])->arg (),
+        ((TAO::Arg_Traits< ::ImplementationRepository::Address>::in_arg_val *) args[3])->arg (),
+        ((TAO::Arg_Traits< ::ImplementationRepository::ServerObject>::in_arg_val *) args[4])->arg ()
         ACE_ENV_ARG_PARAMETER
       );
   ACE_CHECK;
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:52
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:52
 
 void
 POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::find_in_activator (
@@ -2045,19 +2047,19 @@ POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::find_in_activator
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
-    , ImplementationRepository::NotFound
+    CORBA::SystemException,
+    ::ImplementationRepository::NotFound
   ))
 {
-  ACE_reinterpret_cast (
-      POA_ImplementationRepository::Locator_ptr,
+  reinterpret_cast<
+      POA_ImplementationRepository::Locator_ptr> (
       servant->_downcast (
           "IDL:ImplementationRepository/Locator:1.0"
         )
     )->find_in_activator (
-        ((TAO::Arg_Traits<CORBA::Char *>::in_arg_val *) args[1])->arg (),
-        ((TAO::Arg_Traits<CORBA::Char *>::in_arg_val *) args[2])->arg (),
-        ((TAO::Arg_Traits<ImplementationRepository::ServerInformation>::out_arg_val *) args[3])->arg ()
+        ((TAO::Arg_Traits< ::CORBA::Char *>::in_arg_val *) args[1])->arg (),
+        ((TAO::Arg_Traits< ::CORBA::Char *>::in_arg_val *) args[2])->arg (),
+        ((TAO::Arg_Traits< ::ImplementationRepository::ServerInformation>::out_arg_val *) args[3])->arg ()
         ACE_ENV_ARG_PARAMETER
       );
   ACE_CHECK;
@@ -2075,7 +2077,7 @@ POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::_TAO_Locator_Direc
 {}
 
 // TAO_IDL - Generated from 
-// be\be_visitor_operation/direct_proxy_impl_ss.cpp:42
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/direct_proxy_impl_ss.cpp:42
 
 void
 POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::activate_server_in_activator (
@@ -2085,24 +2087,24 @@ POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::activate_server_in
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
-    , ImplementationRepository::NotFound
-    , ImplementationRepository::CannotActivate
+    CORBA::SystemException,
+    ::ImplementationRepository::NotFound,
+    ::ImplementationRepository::CannotActivate
   ))
 {
-  ACE_reinterpret_cast (
-      POA_ImplementationRepository::Locator_ptr,
+  reinterpret_cast<
+      POA_ImplementationRepository::Locator_ptr> (
       servant->_downcast (
           "IDL:ImplementationRepository/Locator:1.0"
         )
     )->activate_server_in_activator (
-        ((TAO::Arg_Traits<CORBA::Char *>::in_arg_val *) args[1])->arg (),
-        ((TAO::Arg_Traits<CORBA::Char *>::in_arg_val *) args[2])->arg ()
+        ((TAO::Arg_Traits< ::CORBA::Char *>::in_arg_val *) args[1])->arg (),
+        ((TAO::Arg_Traits< ::CORBA::Char *>::in_arg_val *) args[2])->arg ()
         ACE_ENV_ARG_PARAMETER
       );
   ACE_CHECK;
 }// TAO_IDL - Generated from 
-// be\be_visitor_operation/direct_proxy_impl_ss.cpp:42
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/direct_proxy_impl_ss.cpp:42
 
 void
 POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::remove_server_in_activator (
@@ -2112,23 +2114,23 @@ POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::remove_server_in_a
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
-    , ImplementationRepository::NotFound
+    CORBA::SystemException,
+    ::ImplementationRepository::NotFound
   ))
 {
-  ACE_reinterpret_cast (
-      POA_ImplementationRepository::Locator_ptr,
+  reinterpret_cast<
+      POA_ImplementationRepository::Locator_ptr> (
       servant->_downcast (
           "IDL:ImplementationRepository/Locator:1.0"
         )
     )->remove_server_in_activator (
-        ((TAO::Arg_Traits<CORBA::Char *>::in_arg_val *) args[1])->arg (),
-        ((TAO::Arg_Traits<CORBA::Char *>::in_arg_val *) args[2])->arg ()
+        ((TAO::Arg_Traits< ::CORBA::Char *>::in_arg_val *) args[1])->arg (),
+        ((TAO::Arg_Traits< ::CORBA::Char *>::in_arg_val *) args[2])->arg ()
         ACE_ENV_ARG_PARAMETER
       );
   ACE_CHECK;
 }// TAO_IDL - Generated from 
-// be\be_visitor_operation/direct_proxy_impl_ss.cpp:42
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/direct_proxy_impl_ss.cpp:42
 
 void
 POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::shutdown_server_in_activator (
@@ -2138,23 +2140,23 @@ POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::shutdown_server_in
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
-    , ImplementationRepository::NotFound
+    CORBA::SystemException,
+    ::ImplementationRepository::NotFound
   ))
 {
-  ACE_reinterpret_cast (
-      POA_ImplementationRepository::Locator_ptr,
+  reinterpret_cast<
+      POA_ImplementationRepository::Locator_ptr> (
       servant->_downcast (
           "IDL:ImplementationRepository/Locator:1.0"
         )
     )->shutdown_server_in_activator (
-        ((TAO::Arg_Traits<CORBA::Char *>::in_arg_val *) args[1])->arg (),
-        ((TAO::Arg_Traits<CORBA::Char *>::in_arg_val *) args[2])->arg ()
+        ((TAO::Arg_Traits< ::CORBA::Char *>::in_arg_val *) args[1])->arg (),
+        ((TAO::Arg_Traits< ::CORBA::Char *>::in_arg_val *) args[2])->arg ()
         ACE_ENV_ARG_PARAMETER
       );
   ACE_CHECK;
 }// TAO_IDL - Generated from 
-// be\be_visitor_operation/direct_proxy_impl_ss.cpp:42
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/direct_proxy_impl_ss.cpp:42
 
 void
 POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::server_is_shutting_down_in_activator (
@@ -2164,23 +2166,23 @@ POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::server_is_shutting
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
-    , ImplementationRepository::NotFound
+    CORBA::SystemException,
+    ::ImplementationRepository::NotFound
   ))
 {
-  ACE_reinterpret_cast (
-      POA_ImplementationRepository::Locator_ptr,
+  reinterpret_cast<
+      POA_ImplementationRepository::Locator_ptr> (
       servant->_downcast (
           "IDL:ImplementationRepository/Locator:1.0"
         )
     )->server_is_shutting_down_in_activator (
-        ((TAO::Arg_Traits<CORBA::Char *>::in_arg_val *) args[1])->arg (),
-        ((TAO::Arg_Traits<CORBA::Char *>::in_arg_val *) args[2])->arg ()
+        ((TAO::Arg_Traits< ::CORBA::Char *>::in_arg_val *) args[1])->arg (),
+        ((TAO::Arg_Traits< ::CORBA::Char *>::in_arg_val *) args[2])->arg ()
         ACE_ENV_ARG_PARAMETER
       );
   ACE_CHECK;
 }// TAO_IDL - Generated from 
-// be\be_visitor_operation/direct_proxy_impl_ss.cpp:42
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/direct_proxy_impl_ss.cpp:42
 
 void
 POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::register_activator (
@@ -2193,21 +2195,21 @@ POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::register_activator
     CORBA::SystemException
   ))
 {
-  ((TAO::Arg_Traits<CORBA::Long>::ret_val *) args[0])->arg () =
-    ACE_reinterpret_cast (
-        POA_ImplementationRepository::Locator_ptr,
+  ((TAO::Arg_Traits< CORBA::Long>::ret_val *) args[0])->arg () =
+    reinterpret_cast<
+        POA_ImplementationRepository::Locator_ptr> (
         servant->_downcast (
             "IDL:ImplementationRepository/Locator:1.0"
           )
       )->register_activator (
-          ((TAO::Arg_Traits<CORBA::Char *>::in_arg_val *) args[1])->arg (),
-          ((TAO::Arg_Traits<ImplementationRepository::Administration>::in_arg_val *) args[2])->arg (),
-          ((TAO::Arg_Traits<ImplementationRepository::Locator::ServerNameList>::in_arg_val *) args[3])->arg ()
+          ((TAO::Arg_Traits< ::CORBA::Char *>::in_arg_val *) args[1])->arg (),
+          ((TAO::Arg_Traits< ::ImplementationRepository::Administration>::in_arg_val *) args[2])->arg (),
+          ((TAO::Arg_Traits< ::ImplementationRepository::Locator::ServerNameList>::in_arg_val *) args[3])->arg ()
           ACE_ENV_ARG_PARAMETER
         );
   ACE_CHECK;
 }// TAO_IDL - Generated from 
-// be\be_visitor_operation/direct_proxy_impl_ss.cpp:42
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/direct_proxy_impl_ss.cpp:42
 
 void
 POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::unregister_activator (
@@ -2220,19 +2222,19 @@ POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::unregister_activat
     CORBA::SystemException
   ))
 {
-  ACE_reinterpret_cast (
-      POA_ImplementationRepository::Locator_ptr,
+  reinterpret_cast<
+      POA_ImplementationRepository::Locator_ptr> (
       servant->_downcast (
           "IDL:ImplementationRepository/Locator:1.0"
         )
     )->unregister_activator (
-        ((TAO::Arg_Traits<CORBA::Char *>::in_arg_val *) args[1])->arg (),
-        ((TAO::Arg_Traits<CORBA::Long>::in_arg_val *) args[2])->arg ()
+        ((TAO::Arg_Traits< ::CORBA::Char *>::in_arg_val *) args[1])->arg (),
+        ((TAO::Arg_Traits< CORBA::Long>::in_arg_val *) args[2])->arg ()
         ACE_ENV_ARG_PARAMETER
       );
   ACE_CHECK;
 }// TAO_IDL - Generated from 
-// be\be_visitor_operation/direct_proxy_impl_ss.cpp:42
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/direct_proxy_impl_ss.cpp:42
 
 void
 POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::server_is_running_in_activator (
@@ -2242,25 +2244,25 @@ POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::server_is_running_
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
-    , ImplementationRepository::NotFound
+    CORBA::SystemException,
+    ::ImplementationRepository::NotFound
   ))
 {
-  ACE_reinterpret_cast (
-      POA_ImplementationRepository::Locator_ptr,
+  reinterpret_cast<
+      POA_ImplementationRepository::Locator_ptr> (
       servant->_downcast (
           "IDL:ImplementationRepository/Locator:1.0"
         )
     )->server_is_running_in_activator (
-        ((TAO::Arg_Traits<CORBA::Char *>::in_arg_val *) args[1])->arg (),
-        ((TAO::Arg_Traits<CORBA::Char *>::in_arg_val *) args[2])->arg (),
-        ((TAO::Arg_Traits<ImplementationRepository::Address>::in_arg_val *) args[3])->arg (),
-        ((TAO::Arg_Traits<ImplementationRepository::ServerObject>::in_arg_val *) args[4])->arg ()
+        ((TAO::Arg_Traits< ::CORBA::Char *>::in_arg_val *) args[1])->arg (),
+        ((TAO::Arg_Traits< ::CORBA::Char *>::in_arg_val *) args[2])->arg (),
+        ((TAO::Arg_Traits< ::ImplementationRepository::Address>::in_arg_val *) args[3])->arg (),
+        ((TAO::Arg_Traits< ::ImplementationRepository::ServerObject>::in_arg_val *) args[4])->arg ()
         ACE_ENV_ARG_PARAMETER
       );
   ACE_CHECK;
 }// TAO_IDL - Generated from 
-// be\be_visitor_operation/direct_proxy_impl_ss.cpp:42
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/direct_proxy_impl_ss.cpp:42
 
 void
 POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::find_in_activator (
@@ -2270,19 +2272,19 @@ POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::find_in_activator 
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
-    , ImplementationRepository::NotFound
+    CORBA::SystemException,
+    ::ImplementationRepository::NotFound
   ))
 {
-  ACE_reinterpret_cast (
-      POA_ImplementationRepository::Locator_ptr,
+  reinterpret_cast<
+      POA_ImplementationRepository::Locator_ptr> (
       servant->_downcast (
           "IDL:ImplementationRepository/Locator:1.0"
         )
     )->find_in_activator (
-        ((TAO::Arg_Traits<CORBA::Char *>::in_arg_val *) args[1])->arg (),
-        ((TAO::Arg_Traits<CORBA::Char *>::in_arg_val *) args[2])->arg (),
-        ((TAO::Arg_Traits<ImplementationRepository::ServerInformation>::out_arg_val *) args[3])->arg ()
+        ((TAO::Arg_Traits< ::CORBA::Char *>::in_arg_val *) args[1])->arg (),
+        ((TAO::Arg_Traits< ::CORBA::Char *>::in_arg_val *) args[2])->arg (),
+        ((TAO::Arg_Traits< ::ImplementationRepository::ServerInformation>::out_arg_val *) args[3])->arg ()
         ACE_ENV_ARG_PARAMETER
       );
   ACE_CHECK;
@@ -2293,7 +2295,7 @@ POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::find_in_activator 
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from 
-// be\be_visitor_interface/interface_ss.cpp:97
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:97
 
 POA_ImplementationRepository::Locator::Locator (void)
 {
@@ -2312,7 +2314,7 @@ POA_ImplementationRepository::Locator::~Locator (void)
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_operation/operation_ss.cpp:98
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:98
 
 void POA_ImplementationRepository::Locator::activate_server_in_activator_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -2323,14 +2325,14 @@ void POA_ImplementationRepository::Locator::activate_server_in_activator_skel (
 {
     TAO_InputCDR &_tao_in = _tao_server_request.incoming ();
 POA_ImplementationRepository::Locator *_tao_impl =
-    ACE_static_cast (
-        POA_ImplementationRepository::Locator *,
+    static_cast<
+        POA_ImplementationRepository::Locator *> (
         _tao_servant
       );
   _tao_server_request.argument_flag (0);
   
-  CORBA::String_var server;
-  CORBA::String_var activator;
+  ::CORBA::String_var server;
+  ::CORBA::String_var activator;
   
   if (!(
       (_tao_in >> server.out ()) &&
@@ -2343,8 +2345,8 @@ POA_ImplementationRepository::Locator *_tao_impl =
   
 #if (TAO_HAS_INTERCEPTORS == 1)
   TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (
-        TAO_Object_Adapter::Servant_Upcall *,
+    static_cast<
+        TAO_Object_Adapter::Servant_Upcall *> (
         _tao_servant_upcall
       );
     
@@ -2447,7 +2449,7 @@ POA_ImplementationRepository::Locator *_tao_impl =
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_operation/operation_ss.cpp:98
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:98
 
 void POA_ImplementationRepository::Locator::remove_server_in_activator_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -2458,14 +2460,14 @@ void POA_ImplementationRepository::Locator::remove_server_in_activator_skel (
 {
     TAO_InputCDR &_tao_in = _tao_server_request.incoming ();
 POA_ImplementationRepository::Locator *_tao_impl =
-    ACE_static_cast (
-        POA_ImplementationRepository::Locator *,
+    static_cast<
+        POA_ImplementationRepository::Locator *> (
         _tao_servant
       );
   _tao_server_request.argument_flag (0);
   
-  CORBA::String_var server;
-  CORBA::String_var activator;
+  ::CORBA::String_var server;
+  ::CORBA::String_var activator;
   
   if (!(
       (_tao_in >> server.out ()) &&
@@ -2478,8 +2480,8 @@ POA_ImplementationRepository::Locator *_tao_impl =
   
 #if (TAO_HAS_INTERCEPTORS == 1)
   TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (
-        TAO_Object_Adapter::Servant_Upcall *,
+    static_cast<
+        TAO_Object_Adapter::Servant_Upcall *> (
         _tao_servant_upcall
       );
     
@@ -2582,7 +2584,7 @@ POA_ImplementationRepository::Locator *_tao_impl =
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_operation/operation_ss.cpp:98
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:98
 
 void POA_ImplementationRepository::Locator::shutdown_server_in_activator_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -2593,14 +2595,14 @@ void POA_ImplementationRepository::Locator::shutdown_server_in_activator_skel (
 {
     TAO_InputCDR &_tao_in = _tao_server_request.incoming ();
 POA_ImplementationRepository::Locator *_tao_impl =
-    ACE_static_cast (
-        POA_ImplementationRepository::Locator *,
+    static_cast<
+        POA_ImplementationRepository::Locator *> (
         _tao_servant
       );
   _tao_server_request.argument_flag (0);
   
-  CORBA::String_var server;
-  CORBA::String_var activator;
+  ::CORBA::String_var server;
+  ::CORBA::String_var activator;
   
   if (!(
       (_tao_in >> server.out ()) &&
@@ -2613,8 +2615,8 @@ POA_ImplementationRepository::Locator *_tao_impl =
   
 #if (TAO_HAS_INTERCEPTORS == 1)
   TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (
-        TAO_Object_Adapter::Servant_Upcall *,
+    static_cast<
+        TAO_Object_Adapter::Servant_Upcall *> (
         _tao_servant_upcall
       );
     
@@ -2717,7 +2719,7 @@ POA_ImplementationRepository::Locator *_tao_impl =
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_operation/operation_ss.cpp:98
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:98
 
 void POA_ImplementationRepository::Locator::server_is_shutting_down_in_activator_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -2728,14 +2730,14 @@ void POA_ImplementationRepository::Locator::server_is_shutting_down_in_activator
 {
     TAO_InputCDR &_tao_in = _tao_server_request.incoming ();
 POA_ImplementationRepository::Locator *_tao_impl =
-    ACE_static_cast (
-        POA_ImplementationRepository::Locator *,
+    static_cast<
+        POA_ImplementationRepository::Locator *> (
         _tao_servant
       );
   _tao_server_request.argument_flag (0);
   
-  CORBA::String_var server;
-  CORBA::String_var activator;
+  ::CORBA::String_var server;
+  ::CORBA::String_var activator;
   
   if (!(
       (_tao_in >> server.out ()) &&
@@ -2748,8 +2750,8 @@ POA_ImplementationRepository::Locator *_tao_impl =
   
 #if (TAO_HAS_INTERCEPTORS == 1)
   TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (
-        TAO_Object_Adapter::Servant_Upcall *,
+    static_cast<
+        TAO_Object_Adapter::Servant_Upcall *> (
         _tao_servant_upcall
       );
     
@@ -2852,7 +2854,7 @@ POA_ImplementationRepository::Locator *_tao_impl =
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_operation/operation_ss.cpp:98
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:98
 
 void POA_ImplementationRepository::Locator::register_activator_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -2863,14 +2865,14 @@ void POA_ImplementationRepository::Locator::register_activator_skel (
 {
     TAO_InputCDR &_tao_in = _tao_server_request.incoming ();
 POA_ImplementationRepository::Locator *_tao_impl =
-    ACE_static_cast (
-        POA_ImplementationRepository::Locator *,
+    static_cast<
+        POA_ImplementationRepository::Locator *> (
         _tao_servant
       );
   CORBA::Long _tao_retval = 0;
-  CORBA::String_var activator;
-  ImplementationRepository::Administration_var admin;
-  ImplementationRepository::Locator::ServerNameList servers;
+  ::CORBA::String_var activator;
+  ::ImplementationRepository::Administration_var admin;
+  ::ImplementationRepository::Locator::ServerNameList servers;
   
   if (!(
       (_tao_in >> activator.out ()) &&
@@ -2884,8 +2886,8 @@ POA_ImplementationRepository::Locator *_tao_impl =
   
 #if (TAO_HAS_INTERCEPTORS == 1)
   TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (
-        TAO_Object_Adapter::Servant_Upcall *,
+    static_cast<
+        TAO_Object_Adapter::Servant_Upcall *> (
         _tao_servant_upcall
       );
     
@@ -3011,7 +3013,7 @@ POA_ImplementationRepository::Locator *_tao_impl =
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_operation/operation_ss.cpp:98
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:98
 
 void POA_ImplementationRepository::Locator::unregister_activator_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -3022,14 +3024,14 @@ void POA_ImplementationRepository::Locator::unregister_activator_skel (
 {
     TAO_InputCDR &_tao_in = _tao_server_request.incoming ();
 POA_ImplementationRepository::Locator *_tao_impl =
-    ACE_static_cast (
-        POA_ImplementationRepository::Locator *,
+    static_cast<
+        POA_ImplementationRepository::Locator *> (
         _tao_servant
       );
   _tao_server_request.argument_flag (0);
   
-  CORBA::String_var activator;
-  CORBA::Long token;
+  ::CORBA::String_var activator;
+  ::CORBA::Long token;
   
   if (!(
       (_tao_in >> activator.out ()) &&
@@ -3042,8 +3044,8 @@ POA_ImplementationRepository::Locator *_tao_impl =
   
 #if (TAO_HAS_INTERCEPTORS == 1)
   TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (
-        TAO_Object_Adapter::Servant_Upcall *,
+    static_cast<
+        TAO_Object_Adapter::Servant_Upcall *> (
         _tao_servant_upcall
       );
     
@@ -3146,7 +3148,7 @@ POA_ImplementationRepository::Locator *_tao_impl =
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_operation/operation_ss.cpp:98
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:98
 
 void POA_ImplementationRepository::Locator::server_is_running_in_activator_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -3157,16 +3159,16 @@ void POA_ImplementationRepository::Locator::server_is_running_in_activator_skel 
 {
     TAO_InputCDR &_tao_in = _tao_server_request.incoming ();
 POA_ImplementationRepository::Locator *_tao_impl =
-    ACE_static_cast (
-        POA_ImplementationRepository::Locator *,
+    static_cast<
+        POA_ImplementationRepository::Locator *> (
         _tao_servant
       );
   _tao_server_request.argument_flag (0);
   
-  CORBA::String_var server;
-  CORBA::String_var activator;
-  CORBA::String_var addr;
-  ImplementationRepository::ServerObject_var server_object;
+  ::CORBA::String_var server;
+  ::CORBA::String_var activator;
+  ::CORBA::String_var addr;
+  ::ImplementationRepository::ServerObject_var server_object;
   
   if (!(
       (_tao_in >> server.out ()) &&
@@ -3181,8 +3183,8 @@ POA_ImplementationRepository::Locator *_tao_impl =
   
 #if (TAO_HAS_INTERCEPTORS == 1)
   TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (
-        TAO_Object_Adapter::Servant_Upcall *,
+    static_cast<
+        TAO_Object_Adapter::Servant_Upcall *> (
         _tao_servant_upcall
       );
     
@@ -3293,7 +3295,7 @@ POA_ImplementationRepository::Locator *_tao_impl =
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_operation/operation_ss.cpp:98
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:98
 
 void POA_ImplementationRepository::Locator::find_in_activator_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -3304,14 +3306,14 @@ void POA_ImplementationRepository::Locator::find_in_activator_skel (
 {
     TAO_InputCDR &_tao_in = _tao_server_request.incoming ();
 POA_ImplementationRepository::Locator *_tao_impl =
-    ACE_static_cast (
-        POA_ImplementationRepository::Locator *,
+    static_cast<
+        POA_ImplementationRepository::Locator *> (
         _tao_servant
       );
   
-  CORBA::String_var server;
-  CORBA::String_var activator;
-  ImplementationRepository::ServerInformation_var info;
+  ::CORBA::String_var server;
+  ::CORBA::String_var activator;
+  ::ImplementationRepository::ServerInformation_var info;
   
   if (!(
       (_tao_in >> server.out ()) &&
@@ -3324,8 +3326,8 @@ POA_ImplementationRepository::Locator *_tao_impl =
   
 #if (TAO_HAS_INTERCEPTORS == 1)
   TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (
-        TAO_Object_Adapter::Servant_Upcall *,
+    static_cast<
+        TAO_Object_Adapter::Servant_Upcall *> (
         _tao_servant_upcall
       );
     
@@ -3447,7 +3449,7 @@ POA_ImplementationRepository::Locator *_tao_impl =
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_interface/interface_ss.cpp:162
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:162
 
 void POA_ImplementationRepository::Locator::_is_a_skel (
     TAO_ServerRequest &_tao_server_request, 
@@ -3603,19 +3605,19 @@ void* POA_ImplementationRepository::Locator::_downcast (
   if (ACE_OS::strcmp (logical_type_id,
                       "IDL:ImplementationRepository/Administration:1.0") == 0)
     {
-      return ACE_static_cast (POA_ImplementationRepository::Administration_ptr, this);
+      return static_cast<POA_ImplementationRepository::Administration_ptr> (this);
     }
   
   if (ACE_OS::strcmp (logical_type_id,
                       "IDL:ImplementationRepository/Locator:1.0") == 0)
     {
-      return ACE_static_cast (POA_ImplementationRepository::Locator_ptr, this);
+      return static_cast<POA_ImplementationRepository::Locator_ptr> (this);
     }
   
   if (ACE_OS::strcmp (logical_type_id,
                       "IDL:omg.org/CORBA/Object:1.0") == 0)
     {
-      return ACE_static_cast (PortableServer::Servant, this);
+      return static_cast<PortableServer::Servant> (this);
     }
   
   return 0;
@@ -3627,7 +3629,7 @@ const char* POA_ImplementationRepository::Locator::_interface_repository_id (voi
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:567
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:584
 
 void POA_ImplementationRepository::Locator::_dispatch (
     TAO_ServerRequest &req,
@@ -3642,7 +3644,7 @@ void POA_ImplementationRepository::Locator::_dispatch (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:509
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:526
 
 ImplementationRepository::Locator *
 POA_ImplementationRepository::Locator::_this (ACE_ENV_SINGLE_ARG_DECL)
@@ -3682,7 +3684,7 @@ POA_ImplementationRepository::Locator::_this (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1680
+// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/root.cpp:1680
 
 #if 0 
 /* Useful at a later date.
