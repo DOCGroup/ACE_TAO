@@ -688,7 +688,7 @@ ACE_Message_Queue<ACE_SYNCH_2>::dequeue_head (ACE_Message_Block *&first_item,
 template <ACE_SYNCH_1> int
 ACE_Message_Queue<ACE_SYNCH_2>::notify (void)
 {
-  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_2>::dequeue_head");
+  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_2>::notify");
 
   // By default, don't do anything.
   if (this->notification_strategy_ == 0)
