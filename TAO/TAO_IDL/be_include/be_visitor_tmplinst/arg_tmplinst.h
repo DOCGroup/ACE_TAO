@@ -1,9 +1,9 @@
 //=============================================================================
 /**
-*  @file   be_visitor_arg_tmplinst.h
+*  @file   arg_tmplinst.h
 *
 *  $Id$
-*
+*arg_tmplinst
 *  This visitor generates explicit template instantiations, guarded so they
 *  are seen only by compilers whose platforms require explicit template
 *  instantiation, for the individual argument template helper classes.
@@ -11,11 +11,8 @@
 *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
 */
 //=============================================================================
-#ifndef TAO_BE_VISITOR_ARG_TMPLINST_H
-#define TAO_BE_VISITOR_ARG_TMPLINST_H
-
-#include "be_visitor_tmplinst_cs.h"
-#include "ast_argument.h"
+#ifndef TAO_BE_VISITOR_TMPLINST_ARG_TMPLINST_H
+#define TAO_BE_VISITOR_TMPLINST_ARG_TMPLINST_H
 
 /**
  * @class be_visitor_arg_tmplinst
@@ -26,7 +23,7 @@ class be_visitor_arg_tmplinst : public be_visitor_decl
 {
 public:
   be_visitor_arg_tmplinst (be_visitor_context *ctx,
-                           be_visitor_tmplinst_cs::Mode mode,
+                           be_visitor_tmplinst::Mode mode,
                            char * prefix,
                            char * suffix,
                            char * linebreak,
@@ -92,7 +89,7 @@ private:
     };
 
   // Generating 'template class' or '#pragma instantiate'.
-  be_visitor_tmplinst_cs::Mode mode_;
+  be_visitor_tmplinst::Mode mode_;
 
   // Contains the prefix string itself.
   char * prefix_;
@@ -111,4 +108,4 @@ private:
 };
 
 
-#endif // TAO_BE_VISITOR_ARG_TMPLINST_H
+#endif // TAO_BE_VISITOR_TMPLINST_ARG_TMPLINST_H

@@ -253,40 +253,13 @@ int be_visitor_root::visit_root (be_root *node)
         break;
       }
     case TAO_CodeGen::TAO_ROOT_IH:
-      (void) tao_cg->end_implementation_header (
-          be_global->be_get_implementation_hdr_fname (0)
-        );
-      break;
     case TAO_CodeGen::TAO_ROOT_SH:
-      (void) tao_cg->end_server_header ();
-      return 0;
     case TAO_CodeGen::TAO_ROOT_CI:
     case TAO_CodeGen::TAO_ROOT_IS:
-      break;
     case TAO_CodeGen::TAO_ROOT_SI:
-      if (be_global->gen_tie_classes ())
-        {
-          (void) tao_cg->end_server_template_inline ();
-        }
-
-      *os << "\n\n";
-
-      return 0;
     case TAO_CodeGen::TAO_ROOT_SS:
-      if (be_global->gen_tie_classes ())
-        {
-          (void) tao_cg->end_server_template_skeletons ();
-        }
-
-      (void) tao_cg->end_server_skeletons ();
-      return 0;
     case TAO_CodeGen::TAO_ROOT_TIE_SH:
-      if (be_global->gen_tie_classes ())
-        {
-          (void) tao_cg->end_server_template_header ();
-        }
-
-      return 0;
+      break;
     default:
       {
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -336,10 +309,11 @@ int be_visitor_root::visit_root (be_root *node)
       }
     case TAO_CodeGen::TAO_ROOT_SH:
     case TAO_CodeGen::TAO_ROOT_IH:
+    case TAO_CodeGen::TAO_ROOT_SI:
     case TAO_CodeGen::TAO_ROOT_SS:
     case TAO_CodeGen::TAO_ROOT_IS:
     case TAO_CodeGen::TAO_ROOT_TIE_SH:
-      return 0; // nothing to be done
+      break; // nothing to be done
     default:
       {
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -359,42 +333,14 @@ int be_visitor_root::visit_root (be_root *node)
                         -1);
     }
 
-  if (this->ctx_->state () == TAO_CodeGen::TAO_ROOT_CS)
+  if (this->gen_explicit_tmplinst (node, os) != 0)
     {
-      // Make two more passes over the AST to generate the explicit
-      // template instantiations, one for 'template class ...' and
-      // one for '#pragma instantiate ...'.
-
-      *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-          << "// " << __FILE__ << ":" << __LINE__;
-
-      os->gen_ifdef_AHETI ();
-
-      be_visitor_tmplinst_cs visitor (this->ctx_);
-
-      if (node->accept (&visitor) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_root::"
-                             "visit_root - "
-                             "explicit template instantiation failed\n"),
-                            -1);
-        }
-
-      os->gen_elif_AHETI ();
-
-      visitor.switch_mode ();
-
-      if (node->accept (&visitor) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_root::"
-                             "visit_root - "
-                             "explicit template instantiation failed\n"),
-                            -1);
-        }
-
-      os->gen_endif_AHETI ();
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_root::"
+                         "visit_root - "
+                         "explicit template instantiation "
+                         "generation failed\n"),
+                        -1);
     }
 
   // Generate any final code such as #endifs and/or EOF newlines.
@@ -406,6 +352,38 @@ int be_visitor_root::visit_root (be_root *node)
     case TAO_CodeGen::TAO_ROOT_CI:
     case TAO_CodeGen::TAO_ROOT_CS:
       *os << "\n\n";
+      break;
+    case TAO_CodeGen::TAO_ROOT_SH:
+      (void) tao_cg->end_server_header ();
+      break;
+    case TAO_CodeGen::TAO_ROOT_IS:
+      break;
+    case TAO_CodeGen::TAO_ROOT_IH:
+      (void) tao_cg->end_implementation_header (
+          be_global->be_get_implementation_hdr_fname (0)
+        );
+      break;
+    case TAO_CodeGen::TAO_ROOT_SI:
+      if (be_global->gen_tie_classes ())
+        {
+          (void) tao_cg->end_server_template_inline ();
+        }
+
+      break;
+    case TAO_CodeGen::TAO_ROOT_SS:
+      if (be_global->gen_tie_classes ())
+        {
+          (void) tao_cg->end_server_template_skeletons ();
+        }
+
+      (void) tao_cg->end_server_skeletons ();
+      break;
+    case TAO_CodeGen::TAO_ROOT_TIE_SH:
+      if (be_global->gen_tie_classes ())
+        {
+          (void) tao_cg->end_server_template_header ();
+        }
+
       break;
     default:
       break;
@@ -1658,3 +1636,86 @@ be_visitor_root::visit_typedef (be_typedef *node)
 
   return 0;
 }
+
+int
+be_visitor_root::gen_explicit_tmplinst (be_root *node,
+                                        TAO_OutStream *os)
+{
+  if (this->ctx_->state () == TAO_CodeGen::TAO_ROOT_CS)
+    {
+      // Make two more passes over the AST to generate the explicit
+      // template instantiations, one for 'template class ...' and
+      // one for '#pragma instantiate ...' for the client side.
+
+      *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+          << "// " << __FILE__ << ":" << __LINE__;
+
+      os->gen_ifdef_AHETI ();
+
+      be_visitor_tmplinst_cs visitor (this->ctx_);
+
+      if (node->accept (&visitor) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_root::"
+                             "visit_root - "
+                             "stub explicit template instantiation failed\n"),
+                            -1);
+        }
+
+      os->gen_elif_AHETI ();
+
+      visitor.switch_mode ();
+
+      if (node->accept (&visitor) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_root::"
+                             "visit_root - "
+                             "stub explicit template instantiation failed\n"),
+                            -1);
+        }
+
+      os->gen_endif_AHETI ();
+    }
+  else if (this->ctx_->state () == TAO_CodeGen::TAO_ROOT_SS)
+    {
+      // Make two more passes over the AST to generate the explicit
+      // template instantiations, one for 'template class ...' and
+      // one for '#pragma instantiate ...' for the client side.
+
+      *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+          << "// " << __FILE__ << ":" << __LINE__;
+
+      os->gen_ifdef_AHETI ();
+
+      be_visitor_tmplinst_ss visitor (this->ctx_);
+
+      if (node->accept (&visitor) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_root::"
+                             "visit_root - "
+                             "skel explicit template instantiation failed\n"),
+                            -1);
+        }
+
+      os->gen_elif_AHETI ();
+
+      visitor.switch_mode ();
+
+      if (node->accept (&visitor) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_root::"
+                             "visit_root - "
+                             "skel explicit template instantiation failed\n"),
+                            -1);
+        }
+
+      os->gen_endif_AHETI ();
+    }
+
+  return 0;
+}
+

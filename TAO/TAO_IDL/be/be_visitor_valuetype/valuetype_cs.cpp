@@ -142,31 +142,6 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       << "CORBA::remove_ref (p);" << be_uidt_nl
       << "}";
 
-  *os << be_nl
-      << "\n#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)" << be_idt_nl
-      << "template class" << be_idt_nl
-      << "TAO_Value_Var_T<" << be_idt << be_idt_nl
-      << node->name () << "," << be_nl
-      << fhname << "_life" << be_uidt_nl
-      << ">;" << be_uidt << be_uidt_nl
-      << "template class" << be_idt_nl
-      << "TAO_Value_Out_T<" << be_idt << be_idt_nl
-      << node->name () << "," << be_nl
-      << fhname << "_life" << be_uidt_nl
-      << ">;" << be_uidt << be_uidt << be_uidt_nl
-      << "#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)" << be_nl
-      << "# pragma instantiate \\" << be_idt << be_idt_nl
-      << "TAO_Value_Var_T< \\" << be_idt << be_idt_nl
-      << node->name () << ", \\" << be_nl
-      << fhname << "_life \\" << be_uidt_nl
-      << ">" << be_uidt << be_uidt << be_uidt_nl
-      << "# pragma instantiate \\" << be_idt << be_idt_nl
-      << "TAO_Value_Out_T< \\" << be_idt << be_idt_nl
-      << node->name () << ", \\" << be_nl
-      << fhname << "_life \\" << be_uidt_nl
-      << ">" << be_uidt << be_uidt << be_uidt_nl
-      << "#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */";
-
   // The _downcast method    // %! use ACE_xxx_cast here ?
   *os << be_nl << be_nl
       << node->name () << " *" << be_nl << node->name ()

@@ -76,7 +76,17 @@ be_decl::be_decl (void)
     cli_outarg_tmpl_class_gen_ (I_FALSE),
     cli_outarg_pragma_inst_gen_ (I_FALSE),
     cli_retarg_tmpl_class_gen_ (I_FALSE),
-    cli_retarg_pragma_inst_gen_ (I_FALSE)
+    cli_retarg_pragma_inst_gen_ (I_FALSE),
+    srv_tmpl_class_gen_ (I_FALSE),
+    srv_pragma_inst_gen_ (I_FALSE),
+    srv_inarg_tmpl_class_gen_ (I_FALSE),
+    srv_inarg_pragma_inst_gen_ (I_FALSE),
+    srv_inoutarg_tmpl_class_gen_ (I_FALSE),
+    srv_inoutarg_pragma_inst_gen_ (I_FALSE),
+    srv_outarg_tmpl_class_gen_ (I_FALSE),
+    srv_outarg_pragma_inst_gen_ (I_FALSE),
+    srv_retarg_tmpl_class_gen_ (I_FALSE),
+    srv_retarg_pragma_inst_gen_ (I_FALSE)
 {
 }
 
@@ -110,7 +120,17 @@ be_decl::be_decl (AST_Decl::NodeType type,
     cli_outarg_tmpl_class_gen_ (I_FALSE),
     cli_outarg_pragma_inst_gen_ (I_FALSE),
     cli_retarg_tmpl_class_gen_ (I_FALSE),
-    cli_retarg_pragma_inst_gen_ (I_FALSE)
+    cli_retarg_pragma_inst_gen_ (I_FALSE),
+    srv_tmpl_class_gen_ (I_FALSE),
+    srv_pragma_inst_gen_ (I_FALSE),
+    srv_inarg_tmpl_class_gen_ (I_FALSE),
+    srv_inarg_pragma_inst_gen_ (I_FALSE),
+    srv_inoutarg_tmpl_class_gen_ (I_FALSE),
+    srv_inoutarg_pragma_inst_gen_ (I_FALSE),
+    srv_outarg_tmpl_class_gen_ (I_FALSE),
+    srv_outarg_pragma_inst_gen_ (I_FALSE),
+    srv_retarg_tmpl_class_gen_ (I_FALSE),
+    srv_retarg_pragma_inst_gen_ (I_FALSE)
 {
 }
 
@@ -407,6 +427,66 @@ be_decl::cli_retarg_tmpl_class_gen (void)
 idl_bool
 be_decl::cli_retarg_pragma_inst_gen (void)
 {
+  return this->cli_retarg_tmpl_class_gen_;
+}
+
+idl_bool
+be_decl::srv_tmpl_class_gen (void)
+{
+  return this->srv_tmpl_class_gen_;
+}
+
+idl_bool
+be_decl::srv_pragma_inst_gen (void)
+{
+  return this->srv_pragma_inst_gen_;
+}
+
+idl_bool
+be_decl::srv_inarg_tmpl_class_gen (void)
+{
+  return this->srv_inarg_tmpl_class_gen_;
+}
+
+idl_bool
+be_decl::srv_inarg_pragma_inst_gen (void)
+{
+  return this->srv_inarg_pragma_inst_gen_;
+}
+
+idl_bool
+be_decl::srv_inoutarg_tmpl_class_gen (void)
+{
+  return this->srv_inoutarg_tmpl_class_gen_;
+}
+
+idl_bool
+be_decl::srv_inoutarg_pragma_inst_gen (void)
+{
+  return this->srv_inoutarg_pragma_inst_gen_;
+}
+
+idl_bool
+be_decl::srv_outarg_tmpl_class_gen (void)
+{
+  return this->srv_outarg_tmpl_class_gen_;
+}
+
+idl_bool
+be_decl::srv_outarg_pragma_inst_gen (void)
+{
+  return this->srv_outarg_pragma_inst_gen_;
+}
+
+idl_bool
+be_decl::srv_retarg_tmpl_class_gen (void)
+{
+  return this->srv_retarg_tmpl_class_gen_;
+}
+
+idl_bool
+be_decl::srv_retarg_pragma_inst_gen (void)
+{
   return this->cli_retarg_pragma_inst_gen_;
 }
 
@@ -565,6 +645,66 @@ void
 be_decl::cli_retarg_pragma_inst_gen (idl_bool val)
 {
   this->cli_retarg_pragma_inst_gen_ = val;
+}
+
+void
+be_decl::srv_tmpl_class_gen (idl_bool val)
+{
+  this->srv_tmpl_class_gen_ = val;
+}
+
+void
+be_decl::srv_pragma_inst_gen (idl_bool val)
+{
+  this->srv_pragma_inst_gen_ = val;
+}
+
+void
+be_decl::srv_inarg_tmpl_class_gen (idl_bool val)
+{
+  this->srv_inarg_tmpl_class_gen_ = val;
+}
+
+void
+be_decl::srv_inarg_pragma_inst_gen (idl_bool val)
+{
+  this->srv_inarg_pragma_inst_gen_ = val;
+}
+
+void
+be_decl::srv_inoutarg_tmpl_class_gen (idl_bool val)
+{
+  this->srv_inoutarg_tmpl_class_gen_ = val;
+}
+
+void
+be_decl::srv_inoutarg_pragma_inst_gen (idl_bool val)
+{
+  this->srv_inoutarg_pragma_inst_gen_ = val;
+}
+
+void
+be_decl::srv_outarg_tmpl_class_gen (idl_bool val)
+{
+  this->srv_outarg_tmpl_class_gen_ = val;
+}
+
+void
+be_decl::srv_outarg_pragma_inst_gen (idl_bool val)
+{
+  this->srv_outarg_pragma_inst_gen_ = val;
+}
+
+void
+be_decl::srv_retarg_tmpl_class_gen (idl_bool val)
+{
+  this->srv_retarg_tmpl_class_gen_ = val;
+}
+
+void
+be_decl::srv_retarg_pragma_inst_gen (idl_bool val)
+{
+  this->srv_retarg_pragma_inst_gen_ = val;
 }
 
 void

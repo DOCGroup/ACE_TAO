@@ -291,10 +291,6 @@ SOURCE=.\be\be_visitor_ami_pre_proc.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\be\be_visitor_arg_tmplinst.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\be\be_visitor_argument.cpp
 # End Source File
 # Begin Source File
@@ -395,7 +391,7 @@ SOURCE=.\be\be_visitor_structure_fwd.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\be\be_visitor_tmplinst_cs.cpp
+SOURCE=.\be\be_visitor_tmplinst.cpp
 # End Source File
 # Begin Source File
 
@@ -623,10 +619,6 @@ SOURCE=.\be_include\be_visitor_ami_pre_proc.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\be_include\be_visitor_arg_tmplinst.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\be_include\be_visitor_argument.h
 # End Source File
 # Begin Source File
@@ -727,7 +719,7 @@ SOURCE=.\be_include\be_visitor_structure_fwd.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\be_include\be_visitor_tmplinst_cs.h
+SOURCE=.\be_include\be_visitor_tmplinst.h
 # End Source File
 # Begin Source File
 
