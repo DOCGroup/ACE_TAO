@@ -19,7 +19,7 @@ FILES  = \
 LSRC = $(addsuffix .cpp, $(FILES)) $(IDL_SRC)
 ACTIVITY_OBJS=$(LSRC:.cpp=.o)
 
-LDLIBS = -lTAO_CosNaming -lTAO_Svc_Utils -lTAO
+LDLIBS = -lTAO_CosNaming -lTAO_Svc_Utils
 
 BIN_UNCHECKED = activity
 
@@ -54,7 +54,7 @@ TAO_IDLFLAGS += -Ge 1
 .PRECIOUS: $(foreach ext, $(IDL_EXT), Job$(ext))
 
 activity: $(addprefix $(VDIR),$(ACTIVITY_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(RT_TAO_SRVR_LIBS) $(POSTLINK)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(LDLIBS) $(RT_TAO_SRVR_LIBS) $(POSTLINK)
 
 realclean: clean
 	-$(RM) $(foreach ext, $(IDL_EXT), Job$(ext))
