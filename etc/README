@@ -6,15 +6,27 @@ users don't ordinarily need to be concerned with them.
 
 To update Svc_Conf_l.cpp.diff:
 
-1) cd to ACE_wrappers/ace.
-2) Create the old version of the file in Svc_Conf_l.cpp.orig.
-   If you haven't created the new version (with make) after
-   update Svc_Conf.l, you can copy Svc_Conf_l.cpp to it.
-   Otherwise, you can retrieve it from the CVS repository.
-3) % make       #### to create the new version of Svc_Conf_l.cpp
-4) % diff -u Svc_Conf_l.cpp.orig Svc_Conf_l.cpp > ../etc/Svc_Conf_l.cpp.diff
-5) % rm Svc_Con_l.cpp.orig
-6) % cd ../etc
-7) % cvs commit -ko -m'updated diff file' Svc_Conf_l.cpp.diff
+1) % cd ACE_wrappers/ace.
 
-And similarly for Svc_Conf_y.cpp.
+2) Create the unpatched version of the file, in Svc_Conf_l.cpp.orig:
+   % /bin/rm Svc_Conf_l.cpp
+   % make Svc_Conf_l.cpp RM=echo
+   % cp -p Svc_Conf_l.cpp.orig Svc_Conf_l.cpp.save
+
+3) Create the new version of Svc_Conf_l.cpp.  If the old patch succeeds,
+   you can use it:
+   % /bin/rm Svc_Conf_l.cpp
+   % make
+   % mv Svc_Conf_l.cpp.save Svc_Conf_l.cpp.orig
+
+   Otherwise, the new version has to be created manually.
+
+4) % diff -u Svc_Conf_l.cpp.orig Svc_Conf_l.cpp > ../etc/Svc_Conf_l.cpp.diff
+
+5) % rm Svc_Conf_l.cpp.orig
+
+6) % cd ../etc
+   % cvs commit -ko -m'updated diff file' Svc_Conf_l.cpp.diff
+
+To update Svc_Conf_l.cpp.diff, follow the same procedure, above, as
+for updating Svc_Conf_l.cpp.diff, but replace "_l" with "_y".
