@@ -219,6 +219,7 @@ TAO/orbsvcs/tests/Property/run_test.pl
 TAO/orbsvcs/tests/Security/Big_Request/run_test.pl: SSL !STATIC
 TAO/orbsvcs/tests/Security/Callback/run_test.pl: SSL !STATIC
 TAO/orbsvcs/tests/Security/MT_SSLIOP/run_test.pl: !ST SSL !STATIC
+TAO/orbsvcs/tests/Security/MT_IIOP_SSL/run_test.pl: !ST SSL !STATIC
 TAO/orbsvcs/tests/Security/Secure_Invocation/run_test.pl: SSL !STATIC
 TAO/orbsvcs/tests/Security/SecurityLevel1/run_test.pl: SSL !STATIC
 TAO/orbsvcs/tests/Security/Crash_Test/run_test.pl: SSL !STATIC

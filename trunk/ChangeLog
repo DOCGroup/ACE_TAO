@@ -1,3 +1,7 @@
+Sat Jan 25 18:15:48 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* bin/auto_run_tests.lst: Added a new test to the daily builds.
+
 Sat Jan 25 13:39:23 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE-INSTALL.html:
