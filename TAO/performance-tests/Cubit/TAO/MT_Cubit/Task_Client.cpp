@@ -581,12 +581,12 @@ Client::init_orb (void)
   char **argv = tmp_args2.argv ();
 
 #if defined (ACE_WIN32) && (ACE_HAS_DLL == 0)
-  static char* rfactory[] =  { "-ORBresources", "tss", 
+  static char* rfactory[] =  { "-ORBresources", "tss",
                                "-ORBreactorlock", "null" };
-  
+
   static char* cli_args[] = { 0 };
-  static char* svr_args[] = { "-ORBconcurrency", "thread-per-connection", 
-                              "-ORBdemuxstrategy", "dynamic", 
+  static char* svr_args[] = { "-ORBconcurrency", "thread-per-connection",
+                              "-ORBdemuxstrategy", "dynamic",
                               "-ORBtablesize", "128" };
 
   TAO_Internal::open_services
@@ -761,7 +761,6 @@ Client::svc (void)
   // Delete dynamic memory
   CORBA::release (this->cubit_);
 
-#if defined (VXWORKS)
   // To avoid a memPartFree on VxWorks.  It will leak memory, though.
   int status = 0;
 
@@ -769,7 +768,6 @@ Client::svc (void)
     thr_mgr ()->exit (&status, 1);
   else
     ACE_OS::thr_exit (&status);
-#endif /* VXWORKS */
 
   return 0;
 }
