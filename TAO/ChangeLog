@@ -1,3 +1,20 @@
+Fri Jun 18 09:48:12 2004  UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Connection_Handler.cpp:
+        * tao/IIOP_Acceptor.cpp:
+        * tao/IIOP_Connection_Handler.cpp:
+          Improved output of debug messages.
+
+        * tao/IIOP_Endpoint.cpp (set):
+          In case we don't use dotted decimal addresses and the get_host_name()
+          calls fails, log a message at level 5 that the get_host_name() has
+          failed. This can be due to a misconfigured dns server and this
+          call could take a long time then causing the app to not respond to
+          other requests. This way the user can detect this a little bit easier
+          from the log. In case the get_host_name() and get_host_addr()
+          both fail we log an error instead of a debug message because we
+          return -1 in that case and don't set the host_ member.
+
 Fri Jun 18 09:13:12 2004  UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Notify/ETCL_FilterFactory.h:
