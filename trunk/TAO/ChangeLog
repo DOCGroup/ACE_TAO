@@ -1,3 +1,12 @@
+Thu Dec 19 08:25:04 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Transport_Cache_Manager.cpp: Call
+	  TAO_Transport::close_connection_no_purge () in
+	  TAO_Transport_Cache_Manager::purge () instead of
+	  close_connection_i (). Surprising that Chris Cleeland missed
+	  this after we agreed that this was the right things to do. Looks
+	  like Chris C has been caught in a different world altogether!
+
 Wed Dec 18 19:45:45 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/fe_declarator.cpp:
