@@ -688,10 +688,10 @@ ACE_TS_Clerk_Processor::initiate_connection (ACE_TS_Clerk_Handler *handler,
 					     ACE_Synch_Options &synch_options)
 {
   ACE_TRACE ("ACE_TS_Clerk_Processor::initiate_connection");
-  char buf[MAXHOSTNAMELEN];
+  char buf[MAXHOSTNAMELEN + 1];
 
-  // Mark ourselves as idle so that the various iterators 
-  // will ignore us until we are connected/reconnected.
+  // Mark ourselves as idle so that the various iterators will ignore
+  // us until we are connected/reconnected.
   handler->state (ACE_TS_Clerk_Handler::IDLE);
 
   if (handler->remote_addr ().addr_to_string (buf, sizeof buf) == -1)

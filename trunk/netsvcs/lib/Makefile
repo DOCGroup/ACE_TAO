@@ -444,8 +444,6 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/SString.h \
  Token_Handler.h
 .obj/Logging_Strategy.o .shobj/Logging_Strategy.so: Logging_Strategy.cpp \
- /pkg/gnu/lib/g++-include/iostream.h \
- /pkg/gnu/lib/g++-include/fstream.h \
  $(WRAPPER_ROOT)/ace/Get_Opt.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
