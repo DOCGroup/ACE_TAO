@@ -1,3 +1,16 @@
+Fri Dec 19 22:56:26 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/RMCast/RMCast.h:
+	* ace/RMCast/RMCast_IO_UDP.cpp:
+	* ace/RMCast/RMCast_UDP_Proxy.cpp:
+
+	  Enums are evil, more so with broken compilers that cannot scope
+	  enums within a class. LynxOS defines a bunch of #defines with
+	  MT_* which starts colliding with the MT_* declaration in the
+	  above files. Renamed the enums to be RMCAST_MT_*. Thanks to
+	  Thomas Lockhart <Thomas.Lockhart@jpl.nasa.gov> for providing
+	  patches to fix this. 
+
 Fri Dec 19 22:34:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/INET_Addr.i:
