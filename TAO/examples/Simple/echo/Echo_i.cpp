@@ -23,44 +23,45 @@ void Echo_i::orb (CORBA::ORB_ptr o)
   this->orb_ = CORBA::ORB::_duplicate (o);
 }
 
+// Return a list of object references.
+
+Echo::List *
+Echo_i::echo_list (const char *message,
+                   CORBA::Environment &env)
+{
+  Echo::List *list;
+  
+  ACE_NEW_RETURN (list,
+                  Echo::List (3),
+                  0);
+
+  list->length (3);
+
+  // Just do something to get a list of object references.
+  (*list)[0] = orb_->resolve_initial_references ("NameService");
+  (*list)[1] = orb_->resolve_initial_references ("NameService");;
+  (*list)[2] = orb_->resolve_initial_references ("NameService");;
+
+  return list;
+}
+
 // Return the mesg string from the server
 
 char *
-Echo_i::echo (const char *mesg,
-	      CORBA::Environment &env)
+Echo_i::echo_string (const char *mesg,
+                     CORBA::Environment &env)
 {
-  // @@ Once you're done with getting your program to compile and run,
-  // I want you to use Purify on your program to find out where the
-  // memory management problems are.
-
-  // @@ Please read the ACE-guidelines.html and follow the programming
-  // style.
-
+  // The pointer mesg was NULL, return.
   if (mesg == 0)
     return 0;
-    // The pointer mesg was NULL, return.
-
-  // @@ If you raise an exception for whatever reason, you need to
-  // return 0.
 
   CORBA::String_var str = CORBA::string_dup (mesg);
 
-  // if CORBA::string_dup() returns a 0 pointer, an exception is
+  // if <CORBA::string_dup> returns a 0 pointer, an exception is
   // raised.
 
-  if (str.in() == 0)
+  if (str.in () == 0)
     env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
-
-  // @@ Make sure that you test out an version of this test where you
-  // intentionally raise an exception to make sure that your client
-  // handles it properly.
-
-  // @@ You need to take a look at how to handle memory failures,
-  // i.e., when CORBA::string_dup() returns a 0 pointer.  In this
-  // case, you'll need to transform this into an exception and raise
-  // the exception.  I recommend that you check out
-  // $TAO_ROOT/orbsvcs/orbsvcs/Log/Logger_i.cpp and see how it is
-  // handled there.
 
   // Got thru! now, make a deep copy of the mesg string and send it
   // back to the client.

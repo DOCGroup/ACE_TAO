@@ -9,7 +9,7 @@ Server_i::Server_i (void)
   : ior_output_file_ (0),
     argc_ (0),
     argv_ (0),
-    using_naming_service_ (1)
+    using_naming_service_ (0)
 {
   // no-op.
 }
@@ -74,7 +74,7 @@ Server_i::init_naming_service (CORBA::Environment& env)
 int
 Server_i::parse_args (void)
 {
-  ACE_Get_Opt get_opts (this->argc_, this->argv_, "do: ");
+  ACE_Get_Opt get_opts (this->argc_, this->argv_, "do:s");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -92,7 +92,7 @@ Server_i::parse_args (void)
 			     -1);
         break;
       case 's': // don't use the naming service
-	this->using_naming_service_ = 0;
+	this->using_naming_service_ = 1;
         break;
       case '?':  // display help for use of the server.
       default:

@@ -40,8 +40,12 @@ public:
   ~Echo_i (void);
   // Destructor.
 
-  virtual char *echo (const char *mesg,
-                      CORBA::Environment &env);
+  virtual Echo::List *echo_list (const char *mesg,
+                                 CORBA::Environment &env);
+  // Return the mesg string back from the server.
+
+  virtual char *echo_string (const char *mesg,
+                             CORBA::Environment &env);
   // Return the mesg string back from the server.
 
  virtual void shutdown (CORBA::Environment &env);
