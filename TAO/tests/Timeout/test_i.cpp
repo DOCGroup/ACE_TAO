@@ -1,11 +1,6 @@
 // $Id$
 
 #include "test_i.h"
-
-#if !defined(__ACE_INLINE__)
-#include "test_i.i"
-#endif /* __ACE_INLINE__ */
-
 #include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(Timeout, test_i, "$Id$")
