@@ -1,3 +1,7 @@
+Mon Sep  3 20:08:25 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/TP_Reactor.cpp: Fixed a warning in TRU 64 builds.
+
 Mon Sep  3 09:58:32 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* */Makefile: Updated dependencies 

@@ -621,6 +621,7 @@ ACE_TP_Reactor::get_notify_handle (void)
         {
           return read_handle;
         }
+      ACE_UNUSED_ARG (handle);
     }
 
   // None found..
