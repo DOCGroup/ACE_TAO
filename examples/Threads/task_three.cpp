@@ -77,7 +77,7 @@ Test_Task::~Test_Task (void)
 int
 Test_Task::open (void *args)
 {
-  r_ = ACE_reinterpret_cast (ACE_Reactor *, args);
+  r_ = reinterpret_cast <ACE_Reactor *> (args);
   return ACE_Task<ACE_MT_SYNCH>::activate (THR_NEW_LWP);
 }
 
@@ -153,7 +153,7 @@ dispatch (void *arg)
 
   ACE_DEBUG ((LM_DEBUG,
               " (%t) Dispatcher Thread started!\n"));
-  ACE_Reactor *r = ACE_reinterpret_cast (ACE_Reactor *, arg);
+  ACE_Reactor *r = reinterpret_cast <ACE_Reactor *> (arg);
   int result;
 
   r->owner (ACE_OS::thr_self ());
