@@ -137,6 +137,9 @@ TAO_Unbounded_Sequence<T>::_deallocate_buffer (void)
 
   TAO_Unbounded_Sequence<T>::freebuf (tmp);
   this->buffer_ = 0;
+  this->maximum_ = 0;
+  this->length_  = 0;
+  this->release_ = 0;
 }
 
 template <typename T>
@@ -326,6 +329,8 @@ TAO_Bounded_Sequence<T, MAX>::_deallocate_buffer (void)
                                   this->buffer_);
   TAO_Bounded_Sequence<T, MAX>::freebuf (tmp);
   this->buffer_ = 0;
+  this->length_  = 0;
+  this->release_ = 0;
 }
 
 template <typename T, size_t MAX>
@@ -759,7 +764,10 @@ TAO_Unbounded_Object_Sequence<T,T_var>::_deallocate_buffer (
     }
 
   TAO_Unbounded_Object_Sequence<T,T_var>::freebuf (tmp);
-  this->buffer_ = 0;
+  this->buffer_  = 0;
+  this->maximum_ = 0;
+  this->length_  = 0;
+  this->release_ = 0;
 }
 
 template<typename T, typename T_var>
@@ -939,6 +947,8 @@ TAO_Bounded_Object_Sequence<T,T_var,MAX>::_deallocate_buffer (
                                    this->buffer_);
   TAO_Bounded_Object_Sequence<T,T_var,MAX>::freebuf (tmp);
   this->buffer_ = 0;
+  this->length_  = 0;
+  this->release_ = 0;
 }
 
 template<typename T, typename T_var, size_t MAX>
@@ -1158,7 +1168,10 @@ TAO_Unbounded_Pseudo_Sequence<T>::_deallocate_buffer (void)
     }
 
   TAO_Unbounded_Pseudo_Sequence<T>::freebuf (tmp);
-  this->buffer_ = 0;
+  this->buffer_  = 0;
+  this->length_  = 0;
+  this->release_ = 0;
+  this->maximum_ = 0;
 }
 
 template <typename T>
@@ -1328,6 +1341,8 @@ TAO_Bounded_Pseudo_Sequence<T,MAX>::_deallocate_buffer (void)
                                    this->buffer_);
   TAO_Bounded_Pseudo_Sequence<T,MAX>::freebuf (tmp);
   this->buffer_ = 0;
+  this->length_  = 0;
+  this->release_ = 0;
 }
 
 template <typename T, size_t MAX>
@@ -1547,6 +1562,9 @@ TAO_Unbounded_Array_Sequence<T,T_slice>::_deallocate_buffer (void)
   TAO_Unbounded_Array_Sequence<T,T_slice>::freebuf (tmp);
 
   this->buffer_ = 0;
+  this->length_  = 0;
+  this->release_ = 0;
+  this->maximum_ = 0;
 }
 
 template <typename T, typename T_slice>
@@ -1746,6 +1764,8 @@ TAO_Bounded_Array_Sequence<T,T_slice,MAX>::_deallocate_buffer (void)
   TAO_Bounded_Array_Sequence<T,T_slice,MAX>::freebuf (tmp);
 
   this->buffer_ = 0;
+  this->length_  = 0;
+  this->release_ = 0;
 }
 
 template <typename T, typename T_slice, size_t MAX>
@@ -1933,6 +1953,8 @@ TAO_Bounded_String_Sequence<MAX>::_deallocate_buffer (void)
                                       this->buffer_);
   TAO_Bounded_String_Sequence<MAX>::freebuf (tmp);
   this->buffer_ = 0;
+  this->length_  = 0;
+  this->release_ = 0;
 }
 
 template<size_t MAX>
@@ -2133,6 +2155,8 @@ TAO_Bounded_WString_Sequence<MAX>::_deallocate_buffer (void)
                                               this->buffer_);
   TAO_Bounded_WString_Sequence<MAX>::freebuf (tmp);
   this->buffer_ = 0;
+  this->length_ = 0;
+  this->release_ = 0;
 }
 
 template<size_t MAX>

@@ -1,3 +1,37 @@
+Sun Nov 16 12:32:02 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * tao/operation_details.h:
+	* tao/operation_details.i:
+
+	  Added two new methods reset_request_service_info () and
+	  reset_reply_service_info () which resets the buffer within the
+	  underlying service context list.
+	
+	* tao/Invocation_Adapter.cpp:
+
+	  If the call on a traget object returned a
+	  TAO::TAO_INVOKE_RESTART, reset the buffer of the service context
+	  list cached within the operation_details before restarting the
+	  invocation on a new target. This should fix [BUG1559].
+
+	* tao/Sequence.cpp:
+	* tao/Sequence.h:
+	* tao/Sequence_T.cpp:
+	  
+	  The _dellocate_buffer () implementations just released the
+	  buffer and set the buffer to be null. The length_, release_ and
+	  maximum_ (not for bounded sequences) need to be reset too. If
+	  not the following code fragment could crash 
+
+	  some_sequence._deallocate_buffer ();
+	  some_sequence[i].something ();
+
+	* tao/Synch_Invocation.cpp:
+	* tao/Synch_Invocation.h:
+
+	  Cosmetic fixes like adding more comments, adding preconditions
+	  and postconditions for a few calls etc. 
+
 Sun Nov 16 18:33:27 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * TAO_IDL/fe/lex.yy.cpp:

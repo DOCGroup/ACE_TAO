@@ -122,12 +122,19 @@ namespace TAO
               }
           }
 
-        if (TAO_debug_level > 2 &&
-            status == TAO_INVOKE_RESTART)
+        if (status == TAO_INVOKE_RESTART)
           {
-            ACE_DEBUG ((LM_DEBUG,
-                        "TAO (%P|%t) - Invocation_Adapter::invoke_collocated, ",
-                        "handling forwarded locations \n"));
+            details.reset_request_service_info ();
+            details.reset_reply_service_info ();
+
+            if (TAO_debug_level > 2)
+
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                "TAO (%P|%t) - Invocation_Adapter::invoke_collocated, ",
+                "handling forwarded locations \n"));
+            }
+
           }
       }
   }
@@ -155,12 +162,17 @@ namespace TAO
                                         ACE_ENV_ARG_PARAMETER);
         ACE_CHECK;
 
-        if (TAO_debug_level > 2 &&
-            status == TAO_INVOKE_RESTART)
+        if (status == TAO_INVOKE_RESTART)
           {
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("TAO (%P|%t) - Invocation_Adapter::invoke_collocated, ")
-                        ACE_TEXT ("handling forwarded locations \n")));
+            op.reset_request_service_info ();
+            op.reset_reply_service_info ();
+
+            if (TAO_debug_level > 2)
+              {
+                ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) - Invocation_Adapter::invoke_collocated, ")
+                  ACE_TEXT ("handling forwarded locations \n")));
+              }
           }
       }
   }
