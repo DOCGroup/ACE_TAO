@@ -41,7 +41,7 @@ void mes (CORBA::Char *s);
 CORBA::String outfmt (CORBA::Double b);
 void prep_timer (void);
 CORBA::Double read_timer (CORBA::Char *str, CORBA::Long len);
-void prusage (register struct rusage *r0, struct rusage *r1, struct timeval *e, struct timeval *b, CORBA::Char *outp);
+void prusage (CORBA::Char *outp);
 void tvadd (struct timeval *tsum, struct timeval *t0, struct timeval *t1);
 void tvsub (struct timeval *tdiff, struct timeval *t1, struct timeval *t0);
 void psecs (CORBA::Long l, register CORBA::Char *cp);
@@ -78,5 +78,7 @@ extern ACE_Svc_Export ttcp_sequence::OctetSeq           *oseq;
 extern ACE_Svc_Export ttcp_sequence::DoubleSeq          *dseq;
 extern ACE_Svc_Export ttcp_sequence::CharSeq            *cseq;
 extern ACE_Svc_Export ttcp_sequence::StructSeq          *Sseq;
+extern ACE_Svc_Export ttcp_sequence::RtiPacketSeq       *rtipacketSeq;
 
 #endif
+
