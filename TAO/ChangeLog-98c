@@ -1,9 +1,14 @@
+Wed Mar 18 20:36:46 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/CDR/basic_types.cpp: Rearranged this test file a bit to
+ 	  make it more structured.
+
 Wed Mar 18 18:52:12 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* tao/object.{h, cpp}: Changed the name of the method "key ()" to
-	"_key ()" since this was clashing with names used by users in
-	their IDl files. As such "key" is not a standard method defined by
-	OMG on the class Object. Hence we must use a _ before it.
+ 	"_key ()" since this was clashing with names used by users in
+ 	their IDl files. As such "key" is not a standard method defined by
+ 	OMG on the class Object. Hence we must use a _ before it.
 
 	* tao/{poa, servant_base}.cpp: Used _key instead of key as
 	explained above.
