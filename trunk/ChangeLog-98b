@@ -1,3 +1,7 @@
+Mon Dec 14 10:24:59 1998 Fred Kuhns <fredk@arl.wustl.edu>
+
+        * ace/OS.h: Added #define for IOV_MAX 16
+
 Mon Dec 14 08:35:11 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * BUG-REPORT-FORM: added a few FMMs.

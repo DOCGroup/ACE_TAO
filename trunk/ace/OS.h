@@ -26,6 +26,13 @@
 #   pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
+// This is defined by XOPEN to be a minimum of 16.  POSIX.1g
+// also defines this value.  platform-specific config.h can
+// override this if need be.
+# if !defined (IOV_MAX)
+#  define IOV_MAX 16
+# endif /* IOV_MAX */
+
 // Get OS.h to compile on some of the platforms without DIR info yet.
 # if !defined (ACE_HAS_DIRENT)
     typedef int DIR;
@@ -688,10 +695,8 @@ typedef int key_t;
 #     include /**/ <pna.h>      /* pNA+ TCP/IP Network Manager calls */
 #     include /**/ <phile.h>     /* pHILE+ file system calls */
 //    #include /**/ <prepccfg.h>     /* pREPC+ file system calls */
-
-// These are colliding with the pSOS libraries
-// # include /**/ <unistd.h>    /* Diab Data supplied file system calls */
-// # include /**/ <sys/wait.h>    /* Diab Data supplied header file */
+#     include /**/ <unistd.h>    /* Diab Data supplied file system calls */
+#     include /**/ <sys/wait.h>    /* Diab Data supplied header file */
 
 // This collides with phile.h
 //    #include /**/ <sys/stat.h>    /* Diab Data supplied header file */
@@ -856,7 +861,6 @@ typedef ACE_HANDLE ACE_SOCKET;
 #   define ACE_INVALID_HANDLE -1
 
 typedef ACE_HANDLE ACE_SHLIB_HANDLE;
-const ACE_SHLIB_HANDLE ACE_SHLIB_INVALID_HANDLE = ACE_INVALID_HANDLE;
 const int ACE_DEFAULT_SHLIB_MODE = 0;
 
 #   define ACE_INVALID_SEM_KEY -1
@@ -1094,19 +1098,6 @@ typedef int clockid_t;
 #     define CLOCK_REALTIME 0
 #   endif /* CLOCK_REALTIME */
 # endif /* ! ACE_HAS_CLOCK_GETTIME && ! _CLOCKID_T */
-
-// -------------------------------------------------------------------
-// These forward declarations are only used to circumvent a bug in
-// MSVC 6.0 compiler.  They shouldn't cause any problem for other
-// compilers and they can be removed once MS release a SP that contains
-// the fix.
-class ACE_Time_Value;
-ACE_Export ACE_Time_Value operator + (const ACE_Time_Value &tv1,
-                                      const ACE_Time_Value &tv2);
-
-ACE_Export ACE_Time_Value operator - (const ACE_Time_Value &tv1,
-                                      const ACE_Time_Value &tv2);
-// -------------------------------------------------------------------
 
 class ACE_Export ACE_Time_Value
 {
@@ -2488,8 +2479,6 @@ protected:
   // from compiler supplied stdlib.h
   extern int putenv(char *);
 
-  int isatty (ACE_HANDLE h);
-
 # endif /* ACE_PSOS_SNARFS_HEADER_INFO */
 
 # if defined (ACE_LACKS_SCHED_H)
@@ -3004,8 +2993,8 @@ typedef int ACE_pri_t;
 #     define RTLD_LAZY 1
 #   endif /* !RTLD_LAZY */
 typedef HINSTANCE ACE_SHLIB_HANDLE;
-const ACE_SHLIB_HANDLE ACE_SHLIB_INVALID_HANDLE = 0;
 const int ACE_DEFAULT_SHLIB_MODE = 0;
+
 
 # elif defined (ACE_PSOS)
 
@@ -3444,7 +3433,6 @@ extern "C" {
 }
 #     endif /* ACE_HAS_DLFCN_H_BROKEN_EXTERN_C */
   typedef void *ACE_SHLIB_HANDLE;
-  const ACE_SHLIB_HANDLE ACE_SHLIB_INVALID_HANDLE = 0;
 #     if !defined (RTLD_LAZY)
 #       define RTLD_LAZY 1
 #     endif /* !RTLD_LAZY */
@@ -3456,14 +3444,12 @@ extern "C" {
 #       include /**/ <cxxdl.h>
 #     endif /* (g++ || HP aC++) vs. HP C++ */
   typedef shl_t ACE_SHLIB_HANDLE;
-  const ACE_SHLIB_HANDLE ACE_SHLIB_INVALID_HANDLE = 0;
   const int ACE_DEFAULT_SHLIB_MODE = BIND_DEFERRED;
 #   else
 #     if !defined(RTLD_LAZY)
 #       define RTLD_LAZY 1
 #     endif /* !RTLD_LAZY */
   typedef void *ACE_SHLIB_HANDLE;
-  const ACE_SHLIB_HANDLE ACE_SHLIB_INVALID_HANDLE = 0;
   const int ACE_DEFAULT_SHLIB_MODE = RTLD_LAZY;
 #   endif /* ACE_HAS_SVR4_DYNAMIC_LINKING */
 
@@ -3753,7 +3739,6 @@ struct sigaction
 
 # if !defined (IP_ADD_MEMBERSHIP)
 #   define IP_ADD_MEMBERSHIP 0
-#   define ACE_LACKS_IP_ADD_MEMBERSHIP
 # endif /* IP_ADD_MEMBERSHIP */
 
 # if !defined (SIOCGIFBRDADDR)
@@ -3821,10 +3806,6 @@ struct sigaction
 #   define F_OK    0       /* Test for existence of File. */
 # endif /* F_OK */
 
-# if !defined (ESUCCESS)
-#   define ESUCCESS 0
-# endif /* !ESUCCESS */
-
 # if !defined (EIDRM)
 #   define EIDRM 0
 # endif /* !EIDRM */
@@ -3843,7 +3824,7 @@ struct sigaction
 
 # if !defined (EDEADLK)
 #   define EDEADLK 1000 /* Some large number.... */
-# endif /* !EDEADLK */
+# endif /* !ENOTSUP */
 
 # if !defined (MS_SYNC)
 #   define MS_SYNC 0x0
@@ -4088,7 +4069,7 @@ typedef int ACE_Sched_Priority;
 class ACE_Sched_Params;
 
 # if defined (ACE_LACKS_FILELOCKS)
-#   if ! defined (VXWORKS) && ! defined (ACE_PSOS)
+#   if ! defined (VXWORKS)
 // VxWorks defines struct flock in sys/fcntlcom.h.  But it doesn't
 // appear to support flock ().
 struct flock
@@ -4104,7 +4085,7 @@ struct flock
 #   endif /* ! VXWORKS */
 # endif /* ACE_LACKS_FILELOCKS */
 
-# if !defined (ACE_HAS_IP_MULTICAST)  &&  defined (ACE_LACKS_IP_ADD_MEMBERSHIP)
+# if !defined (ACE_HAS_IP_MULTICAST)  &&  !defined (IP_ADD_MEMBERSHIP)
   // Even if ACE_HAS_IP_MULTICAST is not defined, if IP_ADD_MEMBERSHIP
   // is defined, assume that the ip_mreq struct is also defined
   // (presumably in netinet/in.h).
@@ -4115,7 +4096,7 @@ struct flock
     struct in_addr imr_interface;
     // local IP address of interface
   };
-# endif /* ! ACE_HAS_IP_MULTICAST  &&  ACE_LACKS_IP_ADD_MEMBERSHIP */
+# endif /* ! ACE_HAS_IP_MULTICAST  &&  ! IP_ADD_MEMBERSHIP */
 
 # if !defined (ACE_HAS_STRBUF_T)
 struct strbuf
@@ -4483,8 +4464,6 @@ public:
                     int cmd,
                     int val = 0);
   static int fdetach (const char *file);
-
-  static int fsync(ACE_HANDLE handle);
 
 # if !defined (ACE_HAS_WINCE)
   // CE doesn't support these char version functions.
