@@ -577,4 +577,11 @@ ifneq ($(GENERATED_DIRTY),)
 	-$(RM) -r $(GENERATED_DIRTY)
 endif
 
+<%if(postbuild)%>
+all: __postbuild__
+
+__postbuild__:
+	@<%eval(postbuild)%>
+
+<%endif%>
 <%marker(bottom)%>

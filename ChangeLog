@@ -1,3 +1,9 @@
+Tue Mar 29 07:58:40 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Support the new postbuild keyword.
+
 Tue Mar 29 06:21:34 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
