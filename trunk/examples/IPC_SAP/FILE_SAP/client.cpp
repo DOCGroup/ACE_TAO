@@ -55,22 +55,22 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                     ACE_static_cast(u_long ,fileinfo.nlink_),
                     (u_long) fileinfo.size_);
 
-  off_t fpos = cli_file.position ();
+  off_t fpos = cli_file.tell ();
 
   if (fpos == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
-                       "position"),
+                       "tell"),
                       1);
   else
     ACE_OS::printf ("current filepointer is at %ld\n",
                     (long int) fpos);
 
-  if (cli_file.position (0,
-                         SEEK_SET) == -1)
+  if (cli_file.seek (0,
+                     SEEK_SET) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
-                       "position"),
+                       "seek"),
                       1);
   if (cli_file.recv (readback, len) != len)
     ACE_ERROR_RETURN ((LM_ERROR,
