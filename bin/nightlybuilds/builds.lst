@@ -195,10 +195,11 @@ TYPE = TIMEONLY
 LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/beguine.doc.wustl.edu_NO_AMI_MESSAGING/
 WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?beguine.doc.wustl.edu_NO_AMI_MESSAGING
 
-[RedHat_IA64_Linux]
-TYPE = TIMEONLY
-LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/yoda_Full
-WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?yoda_Full
+# Disabled showing of build on the scoreboard temporarily
+#[RedHat_IA64_Linux]
+#TYPE = TIMEONLY
+#LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/yoda_Full
+#WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?yoda_Full
 
 [Debian_NoInterceptors]
 TYPE = TIMEONLY
