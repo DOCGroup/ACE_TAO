@@ -1,3 +1,10 @@
+Mon Aug 09 19:11:12 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests\InterOp-Naming\{server,client}.dsp: Changed the executable
+	  names from server/client to INS_test_server/INS_test_client
+	  respectively.  Thanks to Mitsuhiko Hara
+	  <Mitsuhiko.Hara@gemsa.med.ge.com> for reporting this.
+
 Mon Aug 09 17:52:42 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_root/root_ih.cpp (init):
