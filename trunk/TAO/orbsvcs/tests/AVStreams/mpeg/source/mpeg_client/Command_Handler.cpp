@@ -258,7 +258,8 @@ Command_Handler::init_video (void)
           shared->totalSamples = 0;
         }
       else
-        {
+        {      
+          ACE_DEBUG ((LM_DEBUG,"(%P|%t) Initialized audio\n"));
           shared->nextSample = 0;
           if (shared->config.maxSPS < shared->audioPara.samplesPerSecond)
             shared->config.maxSPS < shared->audioPara.samplesPerSecond;
@@ -271,7 +272,7 @@ Command_Handler::init_video (void)
     }
   if (vf[0] != 0)
     {
-
+      ACE_DEBUG ((LM_DEBUG,"(%P|%t) Initializing video\n"));
       if (this->init_video_channel(vh, vf))
         {
           shared->totalFrames = 0;      /* disable video channel */
@@ -1271,7 +1272,7 @@ Command_Handler::connect_to_server (char *address,
                       -1);
   // Write the CmdINITvideo to tell the server that this is a video
   // client.
-  unsigned char tmp;
+  int tmp;
   tmp = CmdINITvideo;
   this->stream_.send_n (&tmp, sizeof (tmp));
   int ack;

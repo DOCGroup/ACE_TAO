@@ -194,6 +194,10 @@ int ComCloseConn(int fd)
 
 int ComOpenConnPair(char * address, int *ctr_fd, int *data_fd, int *max_pkt_size)
 {
+
+  // This is right now called only by the audio client.
+  // The protocol is slightly modified as after connecting we need to
+  // inform that we are a audio client so that it can fork a process.
   int i;
   int cfd, dfd, csocktype, dsocktype;
   int conn_tag = !(*max_pkt_size);
@@ -428,6 +432,18 @@ int ComOpenConnPair(char * address, int *ctr_fd, int *data_fd, int *max_pkt_size
       *max_pkt_size = 0;
     }
     else {  /* create a UDP socket for data */
+      // Write a byte saying that we are a audio client.
+      
+      if (time_write_int(cfd,CmdINITaudio) == -1) {
+	fprintf(stderr,
+		"Error ComOpenConnPair: pid %d failed to write -2 to TCP cfd:",
+		getpid());
+	perror("");
+	close(cfd);
+	close(dfd);
+	return -1;
+      }
+
       dfd = socket(AF_INET, SOCK_DGRAM, 0);
       if (dfd == -1) {
 	fprintf(stderr,
@@ -491,8 +507,8 @@ int ComOpenConnPair(char * address, int *ctr_fd, int *data_fd, int *max_pkt_size
 	return -1;
       }
       
-      fprintf(stderr, "ComOpenConnPair local UDP socket: addr - %s, port - %u.\n",
-	      inet_ntoa(addressIn.sin_addr), ntohs(addressIn.sin_port));
+      fprintf(stderr, "ComOpenConnPair local UDP socket: addr - %s,%d, port - %u.\n",
+	      inet_ntoa(addressIn.sin_addr), addressIn.sin_addr.s_addr,ntohs(addressIn.sin_port));
       
       
       fprintf(stderr, "ComOpenConnPair UDP port %d (should be > 0)\n",
@@ -726,6 +742,7 @@ int ComOpenConnPair(char * address, int *ctr_fd, int *data_fd, int *max_pkt_size
   }
   *ctr_fd = cfd;
   *data_fd = dfd;
+  ACE_DEBUG ((LM_DEBUG,"(%P|%t)Returning from ComOpenConnpair\n"));
   return 0;
 }
 

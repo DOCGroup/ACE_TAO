@@ -43,9 +43,9 @@ int
 AV_Svc_Handler::handle_connection (ACE_HANDLE)
 {
   // Client is sending us a command
-  u_char cmd;
+  int cmd;
   if (this->peer ().recv_n (&cmd,
-                            1) == -1)
+                            sizeof (cmd)) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) Command recieve failed: %p\n"),
                       -1);
@@ -121,22 +121,41 @@ AV_Svc_Handler::handle_connection (ACE_HANDLE)
       // close down the connected socket in the main process
       this->destroy ();
       break;
-    default:
+    case CmdINITaudio:
+      ACE_DEBUG ((LM_DEBUG,"(%P|%t)Received CmdINITaudio\n"));
       // %% need to fork here
-      if (Mpeg_Global::live_audio)
-        LeaveLiveAudio ();
-      int result = AudioServer (this->peer ().get_handle (), 
-                                this->dgram_.get_handle (), 
-                                Mpeg_Global::rttag, 
-                                -INET_SOCKET_BUFFER_SIZE);
-      //    ACE_Reactor::instance ()->end_event_loop ();
-      TAO_ORB_Core_instance ()->reactor ()->end_event_loop ();
-      if (result != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%P|%t)handle_connection : "),
-                          result);
-      return result;
-     
+      switch (ACE_OS::fork ("child"))
+        {
+        case 0:
+          ACE_DEBUG ((LM_DEBUG,"(%P|%t)New process forked \n"));
+          if (Mpeg_Global::live_audio)
+            LeaveLiveAudio ();
+          ACE_NEW_RETURN (this->as_,
+                          Audio_Server,
+                          -1);
+          ACE_DEBUG ((LM_DEBUG,"(%P|%t) AudioServer created\n"));
+          int result;
+          result = this->as_->init (this->peer (),
+                                    Mpeg_Global::rttag,
+                                    -INET_SOCKET_BUFFER_SIZE);
+          if (result < 0)
+          ACE_ERROR_RETURN ((LM_ERROR,"(%P|%t)Audio_Server init failed ()\n"),-1);
+          result = as_->run ();
+          //    ACE_Reactor::instance ()->end_event_loop ();
+          TAO_ORB_Core_instance ()->reactor ()->end_event_loop ();
+          if (result != 0)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "(%P|%t)handle_connection : "),
+                              result);
+          return result;
+          break;
+        default:
+          return 0;
+        }
+      break;
+    default:
+      ACE_ERROR_RETURN ((LM_ERROR,"(%P|%t)Unknown command received\n"),-1);
+      break;
     }
 
   return 0;
