@@ -1,3 +1,12 @@
+Fri Jul  6 13:33:35 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/Makefile.BE:
+        * TAO_IDL/Makefile.FE:
+
+          Added lines to force static lib compiliation for mingw. Thanks 
+          to Cristian Ferretti <cristian_ferretti@yahoo.com> for the
+          patches.
+
 Fri Jul  6 13:23:46 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Synch_Reply_Dispatcher.cpp:
