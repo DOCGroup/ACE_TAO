@@ -1,7 +1,12 @@
+Tue Oct 14 17:18:43 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* CIDLC/Makefile.alt: added alternative (to mpc) means of 
+	  building CIDL compiler.
+
 Tue Oct 14 16:57:54 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* ExecutorMappingGenerator.cpp:
-	* RepositoryIdGenerator.cpp: some minor clean-up's.
+	* CIDLC/ExecutorMappingGenerator.cpp:
+	* CIDLC/RepositoryIdGenerator.cpp: some minor clean-up's.
 
 Tue Oct 14 16:41:41 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
