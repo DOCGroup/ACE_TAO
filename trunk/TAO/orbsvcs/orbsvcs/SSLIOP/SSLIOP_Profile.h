@@ -72,24 +72,9 @@ public:
   ~TAO_SSLIOP_Profile (void);
 
   // = Please see Profile.h for the documentation of these methods.
-  /**
-   * Encodes this profile's endpoints into a tagged component.
-   * This is done only if RTCORBA is enabled, since currently this is
-   * the only case when we have more than one endpoint per profile.
-   * Return 0 on success, -1 on failure.
-   *@par
-   * SSL endpoints are transmitted using TAO-proprietary tagged component.
-   * Component tag is TAO_TAG_SSL_ENDPOINTS and component data is an
-   * encapsulation of a sequence of structs, each representing a
-   * single endpoint.  Data format is specified in ssl_endpoins.pidl.
-   */
   virtual int decode (TAO_InputCDR& cdr);
   virtual int encode_endpoints (void);
-
   virtual CORBA::Boolean is_equivalent (const TAO_Profile * other_profile);
-
-  /// Return pointer to the head of this profile's endpoints list,
-  /// i.e., <ssl_endpoint_> accessor.
   virtual TAO_Endpoint *endpoint (void);
 
   /**
@@ -114,11 +99,15 @@ public:
 private:
 
   /**
-   * Helper for <decode>.  Decodes endpoints from a tagged component.
-   * Decode only if RTCORBA is enabled.  Return 0 on success and -1 on
-   * failure.
+   * Helper for <decode>.  Decodes TAO_TAG_SSL_ENDPOINTS from a tagged
+   * component. Decode only if RTCORBA is enabled.  Return 0 on
+   * success and -1 on failure.
+   *
+   * @NOTE: This should be enabled only when RTCORBA is enabled, but
+   * sadly others pay the price (of footprint) under normal
+   * operations.
    */
-  int decode_endpoints (void);
+  int decode_tagged_endpoints (void);
 
   /**
    * Head of this profile's list of endpoints.  This endpoint is not

@@ -1,3 +1,13 @@
+Mon Apr 14 13:19:44 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.h: Renamed the method
+	  decode_endpoints () to decode_tagged_endpoints (). The method
+	  decode_endpoints () is virtual in the TAO_Profile hierarchy and
+	  seems to have a specific semantics in all protocols. The SSL
+	  specifics have to be wrapped up in a seperate method which is
+	  private and not mixed with other protcols! 
+
 Mon Apr 14 14:16:35 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/orbsvcs/Notify/RT_Factory.cpp:
