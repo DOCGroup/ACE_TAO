@@ -53,7 +53,7 @@ LINK32=link.exe
 # Name "Window_Messages - Win32 Debug"
 # Begin Source File
 
-SOURCE=.\test_window_messages.cpp
+SOURCE=.\Window_Messages.cpp
 # End Source File
 # End Target
 # End Project

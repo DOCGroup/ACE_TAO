@@ -53,7 +53,7 @@ LINK32=link.exe
 # Name "Multithreading - Win32 Debug"
 # Begin Source File
 
-SOURCE=.\test_multithreading.cpp
+SOURCE=.\Multithreading.cpp
 # End Source File
 # End Target
 # End Project

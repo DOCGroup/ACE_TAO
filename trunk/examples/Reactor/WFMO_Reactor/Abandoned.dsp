@@ -52,7 +52,7 @@ LINK32=link.exe
 # Name "Abandoned - Win32 Debug"
 # Begin Source File
 
-SOURCE=.\test_abandoned.cpp
+SOURCE=.\Abandoned.cpp
 # End Source File
 # End Target
 # End Project

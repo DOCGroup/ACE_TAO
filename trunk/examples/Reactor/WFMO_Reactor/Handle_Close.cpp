@@ -6,7 +6,7 @@
 //    examples
 //
 // = FILENAME
-//    test_handle_close.cpp
+//    Handle_Close.cpp
 //
 // = DESCRIPTION
 //
@@ -27,7 +27,7 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/Pipe.h"
 
-ACE_RCSID(WFMO_Reactor, test_handle_close, "$Id$")
+ACE_RCSID(WFMO_Reactor, Handle_Close, "$Id: ")
 
 // Use the WFMO_Reactor
 static int opt_wfmo_reactor = 0;

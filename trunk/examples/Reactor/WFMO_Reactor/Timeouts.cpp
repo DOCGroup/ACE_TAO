@@ -6,7 +6,7 @@
 //    examples
 //
 // = FILENAME
-//    test_timeouts.cpp
+//    Timeouts.cpp
 //
 // = DESCRIPTION
 //
@@ -28,7 +28,7 @@
 #include "ace/Service_Config.h"
 #include "ace/OS.h"
 
-ACE_RCSID(WFMO_Reactor, test_timeouts, "$Id$")
+ACE_RCSID(WFMO_Reactor, Timeouts, "$Id$")
 
 class Timeout_Handler : public ACE_Event_Handler
 // = TITLE

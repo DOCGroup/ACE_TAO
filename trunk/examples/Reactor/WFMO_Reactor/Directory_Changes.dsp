@@ -53,7 +53,7 @@ LINK32=link.exe
 # Name "Directory_Changes - Win32 Debug"
 # Begin Source File
 
-SOURCE=.\test_directory_changes.cpp
+SOURCE=.\Directory_Changes.cpp
 # End Source File
 # End Target
 # End Project

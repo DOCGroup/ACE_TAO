@@ -6,7 +6,7 @@
 //    examples
 //
 // = FILENAME
-//    test_removals.cpp
+//    Removals.cpp
 //
 // = DESCRIPTION
 //
@@ -24,7 +24,7 @@
 #include "ace/Service_Config.h"
 #include "ace/Synch.h"
 
-ACE_RCSID(WFMO_Reactor, test_removals, "$Id$")
+ACE_RCSID(WFMO_Reactor, Removals, "$Id$")
 
 class Event_Handler : public ACE_Event_Handler
 // = TITLE

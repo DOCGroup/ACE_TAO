@@ -6,7 +6,7 @@
 //    examples
 //
 // = FILENAME
-//    test_talker.cpp
+//    Talker.cpp
 //
 // = DESCRIPTION
 //
@@ -143,7 +143,7 @@
 #include "ace/Synch.h"
 #include "ace/Task.h"
 
-ACE_RCSID(WFMO_Reactor, test_talker, "$Id$")
+ACE_RCSID(WFMO_Reactor, Talker, "$Id$")
 
 typedef ACE_Task<ACE_MT_SYNCH> MT_TASK;
 

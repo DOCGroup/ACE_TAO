@@ -6,7 +6,7 @@
 //    examples
 //
 // = FILENAME
-//    test_console_input.cpp
+//    Console_Input.cpp
 //
 // = DESCRIPTION
 //
@@ -20,7 +20,7 @@
 
 #include "ace/Reactor.h"
 
-ACE_RCSID(WFMO_Reactor, test_console_input, "$Id$")
+ACE_RCSID(WFMO_Reactor, Console_Input, "$Id$")
 
 class Event_Handler : public ACE_Event_Handler
 {
