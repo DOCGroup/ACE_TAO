@@ -1,10 +1,32 @@
+Wed Dec 31 13:44:20 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_argument/marshal_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_marshal_ss.cpp:
+
+          Added check in generated code for a null value when marshaling an
+          out or return sequence argument into a reply. If such a
+          case is detected, the generated check will marshal an empty
+          sequence. This fix addresses one of the issues in [BUGID:1677].
+
+        * TAO_IDL/ast/ast_interface.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
+        * TAO_IDL/include/ast_interface.h:
+
+          Fixed bug that caused the generation of base class constructor
+          calls in AMH interface class copy constructors to get skipped.
+          The queue of parent interfaces that the IDL compiler uses
+          internally to facilitate the traversal of the inheritance
+          graph of a derived interface was not getting seeded with the
+          derived interface itself, preventing the further population
+          of the queue.
+
 Wed Dec 31 10:13:48 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* tao/IFR_Client/IFR_Base.pidl:
 
 	  Removed defenitions of CORBA::Identifier and 
-	  CORBA::RepositoryId since they are already defined in orb.idl.
-	
+	  CORBA::RepositoryId since they are already defined in orb.idl.	
 
 Wed Dec 31 09:54:05 2003  Chad Elliott  <elliott_c@ociweb.com>
 

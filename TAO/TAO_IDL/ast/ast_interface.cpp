@@ -1332,6 +1332,18 @@ AST_Interface::n_inherits_flat (void) const
   return pd_n_inherits_flat;
 }
 
+ACE_Unbounded_Queue<AST_Interface *> &
+AST_Interface::get_insert_queue (void)
+{
+  return this->insert_queue;
+}
+
+ACE_Unbounded_Queue<AST_Interface *> &
+AST_Interface::get_del_queue (void)
+{
+  return this->del_queue;
+}
+
 idl_bool
 AST_Interface::redef_clash (void)
 { 
