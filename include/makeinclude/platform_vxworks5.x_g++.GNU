@@ -96,7 +96,6 @@ endif # default GCC Version
 
 # These variables may be set on the command line if a different ACE_VXWORKS
 # flag is desired.
-
 ifeq ($(VXWORKS_VERSION_FLAG),)
    ifeq ($(GCC_VERSION),gcc-2.96)
        VXWORKS_VERSION_FLAG = -DACE_VXWORKS=0x542
@@ -106,61 +105,54 @@ ifeq ($(VXWORKS_VERSION_FLAG),)
    endif # GCC_VERSION
 endif # VXWORKS_VERSION_FLAG
 
-
-
 ifeq ($(CPU),SH7700)
   BINXSYM_NAME = xsym
   CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=SH7700 -m3
-  CCFLAGS += $(TEMPLATES_FLAG)
   GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/sh-wrs-vxworks/$(GCC_VERSION)
   TOOLENV = sh
 else
 ifeq ($(CPU),SH7700LE)
   BINXSYM_NAME = xsym
   CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=SH7700 -m3 -ml
-  CCFLAGS += $(TEMPLATES_FLAG)
   GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/sh-wrs-vxworks/$(GCC_VERSION)
   TOOLENV = sh
 else
 ifeq ($(CPU),SH7750)
   BINXSYM_NAME = xsym
   CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=SH7750 -m4
-  CCFLAGS += $(TEMPLATES_FLAG)
   GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/sh-wrs-vxworks/$(GCC_VERSION)
   TOOLENV = sh
 else
 ifeq ($(CPU),SH7750LE)
   BINXSYM_NAME = xsym
   CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=SH7750 -m4 -ml -mspace
-  CCFLAGS += $(TEMPLATES_FLAG)
   GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/sh-wrs-vxworks/$(GCC_VERSION)
   TOOLENV = sh
 else
 ifeq ($(CPU),PPC403)
   BINXSYM_NAME = xsym
   CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=PPC403 -mcpu=403
-  CCFLAGS += $(TEMPLATES_FLAG)
   GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/powerpc-wrs-vxworks/$(GCC_VERSION)
   TOOLENV = ppc
 else
 ifeq ($(CPU),PPC604)
   BINXSYM_NAME = xsym
   CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=PPC604 $(VXWORKS_VERSION_FLAG)
-  CCFLAGS += $(TEMPLATES_FLAG) -mlongcall
+  CCFLAGS += -mlongcall
   GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/powerpc-wrs-vxworks/$(GCC_VERSION)
   TOOLENV = ppc
 else
 ifeq ($(CPU),PPC603)
   BINXSYM_NAME = xsym
   CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=PPC603
-  CCFLAGS += $(TEMPLATES_FLAG) -mlongcall
+  CCFLAGS += -mlongcall
   GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/powerpc-wrs-vxworks/$(GCC_VERSION)
   TOOLENV = ppc
 else
 ifeq ($(CPU),PPC860)
   BINXSYM_NAME = xsym
   CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=PPC860 -mcpu=860
-  CCFLAGS += $(TEMPLATES_FLAG) -mlongcall
+  CCFLAGS += -mlongcall
   GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/powerpc-wrs-vxworks/$(GCC_VERSION)
   TOOLENV = ppc
 else
@@ -168,7 +160,6 @@ ifeq ($(CPU),SIMNT)
   BINXSYM_NAME = xsym
   CFLAGS += -U__WINNT -UWIN32 -U__WINNT__ -UWINNT -U__MINGW32__ -U_WIN32 \
             -U__WIN32 -U__WIN32__ -U__WIN32 -B$(GCCLIB_DIR) -DCPU=SIMNT
-  CCFLAGS += $(TEMPLATES_FLAG)
   GCCLIB_DIR = \
     $(HOST_DIR)/lib/gcc-lib/powerpc-wrs-vxworks/$(GCC_VERSION)
   TOOLENV = simpc
@@ -201,7 +192,6 @@ else
 ifeq ($(CPU),SIMSPARCSOLARIS)
   BINXSYM_NAME = xsym
   CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=SIMSPARCSOLARIS
-  CCFLAGS += $(TEMPLATES_FLAG)
   GCCLIB_DIR = \
     $(HOST_DIR)/lib/gcc-lib/sparc-sun-solaris2.5.1/$(GCC_VERSION)
   TOOLENV = simso
@@ -209,39 +199,37 @@ else
 ifeq ($(CPU),SPARC)
   BINXSYM_NAME = xsym
   CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=SPARC
-  CCFLAGS += $(TEMPLATES_FLAG)
   GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/sparc-wrs-vxworks/$(GCC_VERSION)
   TOOLENV = sparc
 else
 ifeq ($(CPU),MC68020)
   CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=MC68020 -m68020 -m68881
-  CCFLAGS += $(TEMPLATES_FLAG)  $(VXWORKS_VERSION_FLAG)
+  CCFLAGS += $(VXWORKS_VERSION_FLAG)
   GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/m68k-wrs-vxworks/$(GCC_VERSION)
   TOOLENV = 68k
 else
 ifeq ($(CPU),MC68030)
   BINXSYM_NAME = xsym
   CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=MC68030 -m68030 -m68881
-  CCFLAGS += $(TEMPLATES_FLAG)  $(VXWORKS_VERSION_FLAG)
+  CCFLAGS += $(VXWORKS_VERSION_FLAG)
   GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/m68k-wrs-vxworks/$(GCC_VERSION)
   TOOLENV = 68k
 else
 ifeq ($(CPU),MC68040)
   BINXSYM_NAME = xsym
   CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=MC68040 -m68040 -m68881
-  CCFLAGS += $(TEMPLATES_FLAG)  $(VXWORKS_VERSION_FLAG)
+  CCFLAGS += $(VXWORKS_VERSION_FLAG)
   GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/m68k-wrs-vxworks/$(GCC_VERSION)
   TOOLENV = 68k
 else
 ifeq ($(CPU),MC68060)
   BINXSYM_NAME = xsym
   CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=MC68060 -m68040 -m68881
-  CCFLAGS += $(TEMPLATES_FLAG)  $(VXWORKS_VERSION_FLAG)
+  CCFLAGS += $(VXWORKS_VERSION_FLAG)
   GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/m68k-wrs-vxworks/$(GCC_VERSION)
   TOOLENV = 68k
 else
   BINXSYM_NAME = xsym
-  CCFLAGS += $(TEMPLATES_FLAG)
 endif # MC68060
 endif # MC68040
 endif # MC68030
@@ -264,7 +252,6 @@ endif # SH7700
 
 #### END target CPU-specific settings
 
-
 #### Set up Win32 vs. Unix host specific macros.
 ifeq ($(WIND_HOST_TYPE),x86-win32)
   CXX      = cc$(TOOLENV)
@@ -281,6 +268,11 @@ endif # x86-win32
 # Test for template instantiation.
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
+
+# TEMPLATES_FLAG is set by platform_g++_common.GNU
+ifneq ($(TEMPLATES_FLAG),) # If specified, add it to the CCFLAGS
+  CCFLAGS += $(TEMPLATES_FLAG)
+endif
 
 ifeq ($(shared_libs),1)
   SHARED_LIBS = 1
@@ -352,6 +344,7 @@ endif # rtti
 DCFLAGS         += -g
 DLD             = $(LD)
 INCLDIRS        += -I$(WIND_BASE)/target/h
+  #### Don't use -traditional with VxWorks 5.5
 LD              = $(PERL_PATH) $(ACE_ROOT)/bin/ace_ld \
                   -o $(VDIR) -C $(COMPILE.c) -traditional -- \
                   -m munch -n nm$(TOOLENV) ld$(TOOLENV)
