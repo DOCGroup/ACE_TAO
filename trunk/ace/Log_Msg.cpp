@@ -721,6 +721,21 @@ ACE_Log_Msg::log (const char *format_str,
                   ACE_OS::sprintf (bp, "%d", this->op_status ());
                   break;
 
+                case '{': // Increment the trace_depth, then indent
+                  type = SKIP_NUL_LOCATE;
+                  (void) this->inc ();
+                  break;
+                  
+                case '}': // indent, then decrement trace_depth
+                  type = SKIP_NUL_LOCATE;
+                  (void) this->dec ();
+                  break;
+
+                case '$': // insert a newline, then indent the next line
+                          // according to %I
+                  *bp++ = '\n';
+                  /* fallthrough */
+                  
                 case 'I': // Indent with nesting_depth*width spaces
                   type = SKIP_SPRINTF;
                   if (!wpc) w[wpc++] = 1;

@@ -1,3 +1,10 @@
+Fri Feb 27 11:18:28 1998  Chris Cleeland  <cleeland@lambada.cs.wustl.edu>
+
+	* ace/Log_Msg.cpp: Added three new conversion operators: "%{"
+ 	calls inc() to increase the trace_depth, "%}" calls dec() to
+ 	decrease the trace_depth, and "%$" is used in place of "\n" to
+ 	insert a newline followed by appropriate current indentation.
+
 Thu Feb 26 21:36:27 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.4.31, released Thu Feb 26 21:36:27 1998.

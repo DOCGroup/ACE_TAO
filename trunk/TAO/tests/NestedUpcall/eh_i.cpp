@@ -32,15 +32,17 @@ EventHandler_i::decrement (Reactor_ptr eh,
                       CORBA::UShort num,
                       CORBA::Environment &env)
 {
+  ACE_DEBUG ((LM_DEBUG, "%{%I(%P|%t) EventHandler::decrement (%d)%$", num));
+  
   CORBA::UShort ret;
   if (--num <= 0)
     ret = 0;
   else
     {
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) EventHandler::decrement() invoking Reactor::decrement(%d)\n", num));
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) EventHandler::decrement() invoking Reactor::decrement(%d)%$", num));
       ret = eh->decrement (_this (env), num, env);
     }
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) EventHandler::decrement() returning %d\n", ret));
+  ACE_DEBUG ((LM_DEBUG, "%}(%P|%t) EventHandler::decrement() returning %d%$", ret));
   return ret;
 }
 
