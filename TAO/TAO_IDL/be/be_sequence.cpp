@@ -221,8 +221,11 @@ be_sequence::managed_type (void)
         case AST_Decl::NT_interface:
         case AST_Decl::NT_interface_fwd:
           {
+            int is_valuetype = 0;
             be_interface *bf = be_interface::narrow_from_decl (prim_type);
-            if (bf->is_valuetype ())
+            if (bf != 0)
+              is_valuetype = bf->is_valuetype ();
+            if (is_valuetype)
               {
                 this->mt_ = be_sequence::MNG_VALUE;
               }

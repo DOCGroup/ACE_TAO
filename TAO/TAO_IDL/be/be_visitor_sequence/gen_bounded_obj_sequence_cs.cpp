@@ -80,7 +80,12 @@ be_visitor_sequence_cs::gen_bounded_obj_sequence (be_sequence *node)
       bt_is_defined = ibt->is_defined ();
     }
 
-  int is_valuetype = be_interface::narrow_from_decl (pt)->is_valuetype ();
+  int is_valuetype = 0;
+  {
+    be_interface *bf = be_interface::narrow_from_decl (pt);
+    if (bf != 0)
+      is_valuetype = bf->is_valuetype ();
+  }
 
   const char * class_name = node->instance_name ();
 
