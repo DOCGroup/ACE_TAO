@@ -30,7 +30,4 @@ ACELIB_DLL    = $(ACE_ROOT)/ace/libACE.x
 ACELIB        = $(ACELIB_DLL)
  
 SOFLAGS       = -W l,dll
-SOBUILD       = @echo $(COMPILE.cc) -W c,exportall -o $(VSHDIR)$*.o $<; \
-                $(COMPILE.cc) -W c,exportall $<; \
-                test ! -s $*.o || mv $*.o $(VSHDIR)/$*.o; \
-                test -s $@ || ln -s $*.o $@
+PIC           = -W c,exportall
