@@ -1,9 +1,10 @@
-// -*- C++ -*-
-// $Id$
-
 #include "ace/OS_NS_Thread.h"
 
-ACE_RCSID(ace, OS_NS_Thread, "$Id$")
+
+ACE_RCSID (ace,
+           OS_NS_Thread,
+           "$Id$")
+
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # include "ace/OS_NS_Thread.inl"
@@ -2450,7 +2451,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #     elif defined (ACE_HAS_PTHREADS_DRAFT6)
           result = ::pthread_attr_setschedpolicy (&attr, spolicy);
 #     else  /* draft 7 or std */
-          ACE_ADAPT_RETVAL(::pthread_attr_setschedpolicy (&attr, spolicy),
+          (void) ACE_ADAPT_RETVAL(::pthread_attr_setschedpolicy (&attr, spolicy),
                            result);
 #     endif /* ACE_HAS_PTHREADS_DRAFT4 */
           if (result != 0)
@@ -2538,8 +2539,8 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
                 result = ::pthread_attr_setprio (&attr,
                                                  sparam.sched_priority);
 #       else /* this is draft 7 or std */
-                ACE_ADAPT_RETVAL(::pthread_attr_setschedparam (&attr, &sparam),
-                                 result);
+                (void) ACE_ADAPT_RETVAL(::pthread_attr_setschedparam (&attr, &sparam),
+                                        result);
 #       endif /* ACE_HAS_PTHREADS_DRAFT4, 6 */
                 if (result != 0)
                   {
@@ -3809,5 +3810,3 @@ extern "C" int __d10_sigwait (const sigset_t *set, int *sig)
   return 0;
 }
 #endif /* __DGUX && PTHREADS && _POSIX4A_DRAFT10_SOURCE */
-
-
