@@ -503,12 +503,7 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
               }
           }
         default:
-          // error
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_array_cdr_op_ci::"
-                             "visit_predefined_type - "
-                             "bad node type\n"),
-                            -1);
+          break;
         }
       if (bt->node_type () == AST_Decl::NT_array)
         {
@@ -555,13 +550,9 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
                 *os << ".in ()";
               }
           }
+          break;
         default:
-          // error
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_array_cdr_op_ci::"
-                             "visit_predefined_type - "
-                             "bad node type\n"),
-                            -1);
+          break;
         }
       if (bt->node_type () == AST_Decl::NT_array)
         {
