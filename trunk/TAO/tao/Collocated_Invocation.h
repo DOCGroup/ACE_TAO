@@ -57,7 +57,7 @@ namespace TAO
       ACE_THROW_SPEC ((CORBA::Exception));
 
   private:
-    ACE_UNIMPLEMENTED_FUNC (Collocated_Invocation (void));
+    ACE_UNIMPLEMENTED_FUNC (Collocated_Invocation (void))
 
   };
 }
