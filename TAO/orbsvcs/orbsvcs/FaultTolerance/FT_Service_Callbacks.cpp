@@ -168,7 +168,7 @@ TAO_FT_Service_Callbacks::hash_ft (TAO_Profile *p,
 
   cdr >> group_component;
 
-  return group_component.object_group_id % max;
+  return ((CORBA::ULong)group_component.object_group_id) % max;
 }
 
 int
