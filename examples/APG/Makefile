@@ -1,51 +1,38 @@
 #----------------------------------------------------------------------------
 #	$Id$
 #
-#	Makefile for the ACE examples directory
+#	Makefile for the ACE examples/APG directory
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
 #	Local macros
 #----------------------------------------------------------------------------
 
-INFO  = README
-
-DIRS  =	APG \
-	ASX \
-	C++NPv1 \
-	C++NPv2 \
-	Connection \
-	IPC_SAP \
-	IOStream \
-	Logger \
-	Log_Msg \
-	Map_Manager \
-	Mem_Map \
-	Misc \
+DIRS  =	Active_Objects \
+	Config \
+	Containers \
+	Logging \
+	Misc_IPC \
 	Naming \
-	Reactor	\
-	Service_Configurator \
-	Shared_Malloc \
+	Proactor \
+	Processes \
+	Reactor \
 	Shared_Memory \
-	System_V_IPC \
-	Synch \
+	Signals \
+	Sockets \
+	Streams \
+	Svc_Config \
 	Threads \
-	Timer_Queue
-
-# Makefiles TBD:
-#	ttcp
-#       CORBA
-
+	ThreadManagement \
+	ThreadPools \
+	ThreadSafety \
+	Timers
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
 #----------------------------------------------------------------------------
 
 include	$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-
-ifneq ($(rmcast),0)
-  DIRS += RMCast
-endif # rmcast
 
 include	$(ACE_ROOT)/include/makeinclude/macros.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU
