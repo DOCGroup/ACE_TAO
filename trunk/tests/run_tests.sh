@@ -25,7 +25,7 @@ run_command=
 chorus=
 if [ $# -eq 1 ]; then
   target=$1
-  if rsh $target help | head -1 | egrep Chorus > /dev/null; then
+  if rsh $target help | head -1 | egrep CHORUS > /dev/null; then
     run_command=arun
     chorus=1
   else
