@@ -82,19 +82,16 @@ CORBA_Any::CORBA_Any (CORBA::TypeCode_ptr tc,
 {
   // if the Any owns the data, we encode the "value" into a CDR stream and
   // store it. We also destroy the "value" since we own it.
-  if (this->any_owns_data_)
+  if (this->any_owns_data_ && this->value_ != 0)
     {
       CORBA::Environment env;
       TAO_OutputCDR stream;
 
-      if (this->value_)
-        {
-          // encode the value
-          stream.encode (this->type_, this->value_, 0, env);
+      // encode the value
+      stream.encode (this->type_, this->value_, 0, env);
 
-          // retrieve the start of the message block chain and save it
-          this->cdr_ = stream.begin ()->clone ();
-        }
+      // retrieve the start of the message block chain and save it
+      this->cdr_ = stream.begin ()->clone ();
     }
 }
 
@@ -148,19 +145,11 @@ CORBA_Any::operator= (const CORBA_Any &src)
   ACE_Message_Block::release ((ACE_Message_Block *) this->cdr_);
 
   // if we own any previous data, deallocate it
-  if (this->any_owns_data_)
+  if (this->any_owns_data_ && this->value_ != 0)
     {
-
-      if (this->value_)
-        {
-          DEEP_FREE (this->type_, this->value_, 0, env);
-	  // @@ TODO Sometimes the top-level shouldn't be deleted, it
-	  // seems to depend on the actual data type. Until we fix
-	  // this I'm afraid we will have to leave with a memory leak
-	  // (coryan).
-	  delete this->value_;
-	  this->value_ = 0;
-        }
+      DEEP_FREE (this->type_, this->value_, 0, env);
+      delete this->value_;
+      this->value_ = 0;
 
       if (this->type_ != 0)
 	CORBA::release (this->type_);
@@ -209,10 +198,6 @@ CORBA_Any::~CORBA_Any (void)
       if (this->value_)
         {
           DEEP_FREE (this->type_, this->value_, 0, env);
-	  // @@ TODO Sometimes the top-level shouldn't be deleted, it
-	  // seems to depend on the actual data type. Until we fix
-	  // this I'm afraid we will have to leave with a memory leak
-	  // (coryan).
 	  delete this->value_;
           this->value_ = 0;
         }
@@ -236,18 +221,11 @@ CORBA_Any::replace (CORBA::TypeCode_ptr tc,
   // message block (i.e. it is always cloned or duplicated.
   ACE_Message_Block::release (this->cdr_);
 
-  if (this->any_owns_data_)
+  if (this->any_owns_data_ && this->value_ != 0)
     {
-      if (this->value_)
-        {
-          DEEP_FREE (this->type_, this->value_, 0, env);
-	  // @@ TODO Sometimes the top-level shouldn't be deleted, it
-	  // seems to depend on the actual data type. Until we fix
-	  // this I'm afraid we will have to leave with a memory leak
-	  // (coryan).
-	  delete this->value_;
-	  this->value_ = 0;
-        }
+      DEEP_FREE (this->type_, this->value_, 0, env);
+      delete this->value_;
+      this->value_ = 0;
     }
 
   // Duplicate tc and then release this->type_, just in case tc and
