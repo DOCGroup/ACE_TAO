@@ -109,6 +109,7 @@ IDL_GlobalData::IDL_GlobalData (void)
       pd_idl_src_file (0),
       gperf_path_ (0),
       temp_dir_ (0),
+      ident_string_ (0),
       obv_support_ (I_FALSE),
       case_diff_error_ (I_TRUE)
 {
@@ -736,7 +737,7 @@ void IDL_GlobalData::idl_src_file(UTL_String *s)
 }
 
 void
-IDL_GlobalData::temp_dir (const char* s)
+IDL_GlobalData::temp_dir (const char *s)
 {
   // Delete the old pointer.
   delete [] this->temp_dir_;
@@ -754,23 +755,36 @@ IDL_GlobalData::temp_dir (const char* s)
                    ACE_DIRECTORY_SEPARATOR_STR);
 }
 
-const char*
+const char *
 IDL_GlobalData::temp_dir (void) const
 {
   return this->temp_dir_;
 }
 
 void
-IDL_GlobalData::gperf_path (const char* s)
+IDL_GlobalData::gperf_path (const char *s)
 {
   delete [] this->gperf_path_;
   this->gperf_path_ = ACE::strnew (s);
 }
 
-const char*
+const char *
 IDL_GlobalData::gperf_path (void) const
 {
   return this->gperf_path_;
+}
+
+void
+IDL_GlobalData::ident_string (const char *s)
+{
+  delete [] this->ident_string_;
+  this->ident_string_ = ACE::strnew (s);
+}
+
+const char *
+IDL_GlobalData::ident_string (void) const
+{
+  return this->ident_string_;
 }
 
 #ifdef IDL_HAS_VALUETYPE
@@ -829,6 +843,9 @@ IDL_GlobalData::destroy (void)
       delete this->pd_stripped_filename;
       this->pd_stripped_filename = 0;
     }
+
+  delete [] this->ident_string_;
+  this->ident_string_ = 0;
 
   // Should do pragmas here.
 }

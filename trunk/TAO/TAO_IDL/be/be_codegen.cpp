@@ -129,6 +129,9 @@ TAO_CodeGen::start_client_header (const char *fname)
     }
   else
     {
+      // Generate the #ident string, if any.
+      this->gen_ident_string (this->client_header_);
+
       // Now generate the #if !defined clause.
       static char macro_name [NAMEBUFSIZE];
 
@@ -156,19 +159,19 @@ TAO_CodeGen::start_client_header (const char *fname)
       ACE_OS::sprintf (macro_name, "_TAO_IDL_");
 
       // Convert letters in fname to upper case.
-      for (int i=0; i < (suffix - fname); i++)
+      for (int i = 0; i < (suffix - fname); i++)
         {
           if (isalpha (fname [i]))
             {
-              macro_name[i+9] = (char) toupper (fname [i]);
+              macro_name[i + 9] = (char) toupper (fname [i]);
             }
           else if (isdigit (fname [i]))
             {
-              macro_name[i+9] = fname[i];
+              macro_name[i + 9] = fname[i];
             }
           else
             {
-              macro_name[i+9] = '_';
+              macro_name[i + 9] = '_';
             }
         }
 
@@ -412,6 +415,9 @@ TAO_CodeGen::start_client_stubs (const char *fname)
       return -1;
     }
 
+  // Generate the ident string, if any.
+  this->gen_ident_string (this->client_stubs_);
+
   // Generate the include statement for the precompiled header file.
   if (be_global->pch_include ())
     {
@@ -490,7 +496,15 @@ TAO_CodeGen::start_client_inline (const char *fname)
       return -1;
     }
 
-  return this->client_inline_->open (fname, TAO_OutStream::TAO_CLI_INL);
+  if (this->client_inline_->open (fname, TAO_OutStream::TAO_CLI_INL) == -1)
+    {
+      return -1;
+    }
+
+  // Generate the ident string, if any.
+  this->gen_ident_string (this->client_inline_);
+
+  return 0;
 }
 
 // Get the client inline stream.
@@ -525,6 +539,9 @@ TAO_CodeGen::start_server_header (const char *fname)
     }
   else
     {
+      // Generate the ident string, if any.
+      this->gen_ident_string (this->server_header_);
+
       // Now generate the #if !defined clause.
       static char macro_name [NAMEBUFSIZE];
 
@@ -751,6 +768,9 @@ TAO_CodeGen::start_server_template_header (const char *fname)
     }
   else
     {
+      // Generate the ident string, if any.
+      this->gen_ident_string (this->server_template_header_);
+
       // Now generate the #if !defined clause.
       static char macro_name [NAMEBUFSIZE];
 
@@ -853,6 +873,9 @@ TAO_CodeGen::start_server_skeletons (const char *fname)
       return -1;
     }
 
+  // Generate the ident string, if any.
+  this->gen_ident_string (this->server_skeletons_);
+
   // Generate the include statement for the precompiled header file.
   if (be_global->pch_include ())
     {
@@ -943,6 +966,9 @@ TAO_CodeGen::start_server_template_skeletons (const char *fname)
     }
   else
     {
+      // Generate the ident string, if any.
+      this->gen_ident_string (this->server_template_skeletons_);
+
       // Now generate the #if !defined clause.
       static char macro_name [NAMEBUFSIZE];
 
@@ -1032,7 +1058,15 @@ TAO_CodeGen::start_server_inline (const char *fname)
       return -1;
     }
 
-  return this->server_inline_->open (fname, TAO_OutStream::TAO_SVR_INL);
+  if (this->server_inline_->open (fname, TAO_OutStream::TAO_SVR_INL) == -1)
+    {
+      return -1;
+    }
+
+  // Generate the ident string, if any.
+  this->gen_ident_string (this->server_inline_);
+
+  return 0;
 }
 
 // Get the server inline stream.
@@ -1057,8 +1091,17 @@ TAO_CodeGen::start_server_template_inline (const char *fname)
       return -1;
     }
 
-  return this->server_template_inline_->open (fname, 
-                                              TAO_OutStream::TAO_SVR_INL);
+  if (this->server_template_inline_->open (fname, 
+                                           TAO_OutStream::TAO_SVR_INL)
+       == -1)
+    {
+      return -1;
+    }
+
+  // Generate the ident string, if any.
+  this->gen_ident_string (this->server_template_inline_);
+
+  return 0;
 }
 
 // Get the server template inline stream.
@@ -1098,6 +1141,9 @@ TAO_CodeGen::start_implementation_header (const char *fname)
     }
   else
     {
+      // Generate the ident string, if any.
+      this->gen_ident_string (this->implementation_header_);
+
       // Now generate the #ifndef clause.
       static char macro_name [NAMEBUFSIZE];
 
@@ -1192,6 +1238,9 @@ TAO_CodeGen::start_implementation_skeleton (const char *fname)
     }
   else
     {
+      // Generate the ident string, if any.
+      this->gen_ident_string (this->implementation_skeleton_);
+
       static char macro_name [NAMEBUFSIZE];
 
       ACE_OS::memset (macro_name, 
@@ -1494,6 +1543,17 @@ TAO_CodeGen::config_visitor_factory (void)
   // We have removed interpreted marshaling from TAO, so
   // TAO_INTERPRETIVE_VISITOR_FACTORY is no more.
   this->visitor_factory_ = TAO_COMPILED_VISITOR_FACTORY::instance ();
+}
+
+void
+TAO_CodeGen::gen_ident_string (TAO_OutStream *stream) const
+{
+  const char *str = idl_global->ident_string ();
+
+  if (str != 0)
+    {
+      *stream << str << be_nl << be_nl;
+    }
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

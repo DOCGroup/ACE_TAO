@@ -675,12 +675,8 @@ public:
   const char *upcase (const char *str);
   // Convert input string to all upcase.
 
-  void lookup_strategy (LOOKUP_STRATEGY s);
-  // Set the lookup strategy.
-
-  TAO_CodeGen::LOOKUP_STRATEGY lookup_strategy (void) const;
-  // Return the enumerated value for the lookup strategy. Default is
-  // Dynamic Hashing.
+  void gen_ident_string (TAO_OutStream *stream) const;
+  // Pass along the #ident string, if any, from the IDL file.
 
 private:
   TAO_OutStream *client_header_;

@@ -311,27 +311,33 @@ public:
   virtual AST_Expression::ExprType
   PredefinedTypeToExprType (AST_PredefinedType::PredefinedType);
 
-  virtual UTL_String                *idl_src_file (void);
+  virtual UTL_String *idl_src_file (void);
   // Returns the IDL source file being compiled.
 
-  virtual void                  idl_src_file (UTL_String *);
+  virtual void idl_src_file (UTL_String *);
   // Set the source IDL file that is being parsed.
 
-  virtual void temp_dir (const char* s);
+  virtual void temp_dir (const char *s);
   // Set the directory where the IDL compiler can keep all its temp
   // files. By default, IDL compiler looks for TEMP env variable and
   // if it is not set,  "/tmp/" is assigned.
 
-  virtual const char* temp_dir (void) const;
+  virtual const char *temp_dir (void) const;
   // Get the directory where the IDL compiler can keep all its temp
   // files. By default, IDL compiler looks for TEMP env variable and
   // if it is not set,  "/tmp/" is assigned.
 
-  virtual void gperf_path (const char* s);
+  virtual void gperf_path (const char *s);
   // Set the path for the perfect hashing program (GPERF).
 
-  virtual const char* gperf_path (void) const;
+  virtual const char *gperf_path (void) const;
   // Get the path for the perfect hashing program (GPERF).
+
+  virtual void ident_string (const char *s);
+  // Set the value of the #ident string.
+
+  virtual const char *ident_string (void) const;
+  // Get the value of the #ident string.
 
 #ifdef IDL_HAS_VALUETYPE
   virtual void obv_support (idl_bool);
@@ -378,7 +384,7 @@ private:
   unsigned long              pd_n_include_file_names;// How many.
   unsigned long              pd_n_alloced_file_names;// How many alloced.
 
-  char** included_idl_files_;
+  char **included_idl_files_;
   // IDL files that are "#include'd.
 
   size_t n_included_idl_files_;
@@ -396,20 +402,23 @@ private:
 
   UTL_String                *pd_idl_src_file;       // IDL source file.
 
+  char *gperf_path_;
   // Path for the perfect hash generator(gperf) program. Default
   // is $ACE_ROOT/bin/gperf.
-  char* gperf_path_;
 
-
-  char* temp_dir_;
+  char *temp_dir_;
   // Temp directory where which we can rewsolve in drv_preproc.cpp by
   // checking for  TEMP env variable otherwise we assign to /tmp/.
 
+  char *ident_string_;
+  // Holds a string that begins with #ident, to be passed from the IDL
+  // file to the generated files.
+
   idl_bool obv_support_;
-  // do we support OBV (Valuetype)?
+  // Do we support OBV (Valuetype)?
 
   idl_bool case_diff_error_;
-  // do we report an error for indentifiers in the same scope that differ
+  // Do we report an error for indentifiers in the same scope that differ
   // only by case? or just a warning?
 };
 

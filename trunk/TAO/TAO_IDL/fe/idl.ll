@@ -304,7 +304,8 @@ L"'"\\u([0-9a-fA-F]{1,4})"'"	{
 	        }
 ^#[ \t]*ident.*{NL}	|
 ^\?\?=[ \t]*ident.*{NL}	{
-		  /* ignore cpp ident */
+		  /* store cpp ident */
+                  idl_global->ident_string (ace_yytext);
   		  idl_global->set_lineno(idl_global->lineno() + 1);
 		}
 \/\/.*{NL}	{

@@ -728,7 +728,7 @@ char *tao_yytext_ptr;
 #line 1 "fe/idl.ll"
 #define INITIAL 0
 #line 2 "fe/idl.ll"
-/*  $Id: idl.ll,v 1.48 2000/04/26 03:34:51 nanbor Exp $
+/*  $Id: idl.ll,v 1.49 2000/06/21 18:20:36 parsons Exp $
 
 COPYRIGHT
 
@@ -1554,13 +1554,14 @@ case 80:
 TAO_YY_RULE_SETUP
 #line 306 "fe/idl.ll"
 {
-		  /* ignore cpp ident */
+		  /* store cpp ident */
+                  idl_global->ident_string (ace_tao_yytext);
   		  idl_global->set_lineno(idl_global->lineno() + 1);
 		}
-	break;
+	TAO_YY_BREAK
 case 81:
 TAO_YY_RULE_SETUP
-#line 310 "fe/idl.ll"
+#line 311 "fe/idl.ll"
 {
 		  /* ignore comments */
   		  idl_global->set_lineno(idl_global->lineno() + 1);
@@ -1568,7 +1569,7 @@ TAO_YY_RULE_SETUP
 	break;
 case 82:
 TAO_YY_RULE_SETUP
-#line 314 "fe/idl.ll"
+#line 315 "fe/idl.ll"
 {
 		  for(;;) {
 		    char c = tao_yyinput();
@@ -1586,24 +1587,24 @@ TAO_YY_RULE_SETUP
 	break;
 case 83:
 TAO_YY_RULE_SETUP
-#line 328 "fe/idl.ll"
+#line 329 "fe/idl.ll"
 ;
 	break;
 case 84:
 TAO_YY_RULE_SETUP
-#line 329 "fe/idl.ll"
+#line 330 "fe/idl.ll"
 {
   		  idl_global->set_lineno(idl_global->lineno() + 1);
 		}
 	break;
 case 85:
 TAO_YY_RULE_SETUP
-#line 332 "fe/idl.ll"
+#line 333 "fe/idl.ll"
 return ace_tao_yytext [0];
 	TAO_YY_BREAK
 case 86:
 TAO_YY_RULE_SETUP
-#line 334 "fe/idl.ll"
+#line 335 "fe/idl.ll"
 TAO_YY_ECHO;
 	break;
 case TAO_YY_STATE_EOF(INITIAL):
@@ -2493,7 +2494,7 @@ int main()
 	return 0;
 	}
 #endif
-#line 334 "fe/idl.ll"
+#line 335 "fe/idl.ll"
 
 	/* subroutines */
 
