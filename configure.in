@@ -2912,6 +2912,66 @@ ACE_CACHE_CHECK(for C++ typename keyword,
                    ])
   ], AC_DEFINE(ACE_HAS_TYPENAME_KEYWORD),)
 
+dnl Check if platform supports placement new operator
+ACE_CACHE_CHECK(for C++ placement new operator,
+  ace_cv_feature_placement_new,[
+    AC_TRY_COMPILE([
+#if defined (ACE_HAS_NEW_NO_H)
+# include <new>
+#elif defined (ACE_HAS_NEW_H)
+# include <new.h>
+#endif
+
+class foo
+{
+public:
+  void *operator new (size_t, void *p) { return p; }
+};
+                   ],
+                   [
+int *x = 0;
+foo *f = new (x) foo;
+                   ],
+                   [
+                    ace_cv_feature_placement_new=yes
+                   ],
+                   [
+                    ace_cv_feature_placement_new=no
+                   ])
+  ], , AC_DEFINE(ACE_LACKS_PLACEMENT_OPERATOR_NEW))
+
+dnl Check if platform supports placement delete operator
+ACE_CACHE_CHECK(for C++ placement delete operator,
+  ace_cv_feature_placement_delete,[
+    AC_TRY_COMPILE([
+#if defined (ACE_HAS_NEW_NO_H)
+# include <new>
+#elif defined (ACE_HAS_NEW_H)
+# include <new.h>
+#endif
+
+class foo
+{
+public:
+  void *operator new (size_t, void *p) { return p; }
+  void operator delete (void *p, void *) {}
+};
+                   ],
+                   [
+int *x = 0;
+foo *f = new (x) foo;
+
+// delete f;  // Don't call delete for this test!
+                   ],
+                   [
+                    ace_cv_feature_placement_delete=yes
+                   ],
+                   [
+                    ace_cv_feature_placement_delete=no
+                   ])
+  ], , AC_DEFINE(ACE_LACKS_PLACEMENT_OPERATOR_DELETE))
+
+
 dnl Check if const char * can be rvalue in conditional operator
 ACE_CACHE_CHECK(if const char * can be rvalue in conditional operator,
   ace_cv_feature_conditional_str_cast,
@@ -3685,6 +3745,10 @@ AC_CHECK_FUNC(strdup, dnl
 AC_CHECK_FUNC(strrchr, dnl
   ,
   AC_DEFINE(ACE_LACKS_STRRCHR))
+
+AC_CHECK_FUNC(strptime, dnl
+  AC_DEFINE(ACE_HAS_STRPTIME),
+  AC_DEFINE(ACE_LACKS_NATIVE_STRPTIME))
 
 AC_CHECK_FUNC(memchr, dnl
   AC_DEFINE(ACE_HAS_MEMCHR),)
