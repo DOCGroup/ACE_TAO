@@ -1,3 +1,15 @@
+Sun Feb 25 12:19:59 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* tao/RT_ORB.cpp:
+	* tao/RT_ORB.h:
+	* tao/RT_Mutex.cpp:
+	* tao/RT_Mutex.h:
+	* tao/orbconf.h:
+	* tests/RTCORBA/RTMutex/server.cpp: Added TAO_HAS_NAMED_RT_MUTEXES
+	  option to enable support for named RT Mutexes.  They are now
+	  disabled by default to help reduce TAO's memory footprint.
+
+
 Sun Feb 25 10:13:58 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/default_resource.cpp: Changed the option
@@ -15,15 +27,15 @@ Sun Feb 25 10:13:58 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tests/Collocation/svc.conf:
 	* tests/Smart_Proxies/Collocation/svc.conf: Changed the option
 	  -ORBConnectorLock to the new option
-	  -ORBConnectionCacheLock. 
+	  -ORBConnectionCacheLock.
 
 
 Sun Feb 25 10:01:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Collocation/Coll_Tester.cpp (parse_args): 
+	* tests/Collocation/Coll_Tester.cpp (parse_args):
 	* tests/Collocation/Coll_Tester.h:
 	* tests/Collocation/Diamond_i.h: Fixed warnings with g++ on
-	  Linux. 
+	  Linux.
 
 Sat Feb 24 11:01:21 2001  Carlos O'Ryan  <coryan@uci.edu>
 

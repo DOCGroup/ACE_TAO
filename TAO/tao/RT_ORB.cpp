@@ -90,6 +90,10 @@ TAO_Named_RT_Mutex_Manager::destroy_mutex (RTCORBA::Mutex_ptr mutex,
                                            CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  // If Named RT_Mutexes aren't enabled, this function is a nop
+  // as indicated by the comment below.
+#if (TAO_HAS_NAMED_RT_MUTEXES == 1)
+
   TAO_RT_Mutex *tao_mutex =
     ACE_dynamic_cast (TAO_RT_Mutex *,
                       mutex);
@@ -112,6 +116,10 @@ TAO_Named_RT_Mutex_Manager::destroy_mutex (RTCORBA::Mutex_ptr mutex,
       if (result != 0)
         ACE_THROW (CORBA::INTERNAL ());
     }
+#else /* TAO_HAS_NAMED_RT_MUTEXES == 1 */
+  ACE_UNUSED_ARG (mutex);
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
+#endif /* TAO_HAS_NAMED_RT_MUTEXES == 1 */
 }
 
 RTCORBA::Mutex_ptr
@@ -120,6 +128,7 @@ TAO_Named_RT_Mutex_Manager::create_named_mutex (const char *name,
                                                 CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+#if (TAO_HAS_NAMED_RT_MUTEXES == 1)
   // The following should be atomic.
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
                       monitor,
@@ -164,6 +173,12 @@ TAO_Named_RT_Mutex_Manager::create_named_mutex (const char *name,
 
   // Return the one we found or created.
   return mutex._retn ();
+#else /* TAO_HAS_NAMED_RT_MUTEXES */
+  ACE_UNUSED_ARG (name);
+  ACE_UNUSED_ARG (created_flag);
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
+                    RTCORBA::Mutex::_nil ());
+#endif /* TAO_HAS_NAMED_RT_MUTEXES */
 }
 
 RTCORBA::Mutex_ptr
@@ -172,6 +187,7 @@ TAO_Named_RT_Mutex_Manager::open_named_mutex (const char *name,
   ACE_THROW_SPEC ((CORBA::SystemException,
                    RTCORBA::RTORB::MutexNotFound))
 {
+#if (TAO_HAS_NAMED_RT_MUTEXES == 1)
   // The following should be atomic.
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
                       monitor,
@@ -188,6 +204,11 @@ TAO_Named_RT_Mutex_Manager::open_named_mutex (const char *name,
 
   // Return the one we found.
   return mutex._retn ();
+#else /* TAO_HAS_NAMED_RT_MUTEXES */
+  ACE_UNUSED_ARG (name);
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
+                    RTCORBA::Mutex::_nil ());
+#endif /* TAO_HAS_NAMED_RT_MUTEXES */
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -325,19 +346,23 @@ TAO_RT_ORB::create_client_protocol_policy (const RTCORBA::ProtocolList & protoco
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
+#if (TAO_HAS_NAMED_RT_MUTEXES == 1)
 template class ACE_Hash_Map_Manager_Ex<ACE_CString, RTCORBA::Mutex_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, RTCORBA::Mutex_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Ex<ACE_CString, RTCORBA::Mutex_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, RTCORBA::Mutex_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Entry<ACE_CString, RTCORBA::Mutex_var>;
+#endif /* TAO_HAS_NAMED_RT_MUTEXES == 1 */
 
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
+#if (TAO_HAS_NAMED_RT_MUTEXES == 1)
 #pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, RTCORBA::Mutex_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, RTCORBA::Mutex_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 #pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, RTCORBA::Mutex_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, RTCORBA::Mutex_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 #pragma instantiate ACE_Hash_Map_Entry<ACE_CString, RTCORBA::Mutex_var>;
+#endif /* TAO_HAS_NAMED_RT_MUTEXES == 1 */
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 

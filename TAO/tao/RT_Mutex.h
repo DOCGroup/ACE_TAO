@@ -83,9 +83,7 @@ protected:
   TAO_SYNCH_MUTEX mu_;
 };
 
-// Forward reference for the TAO_Named_RT_Mutex class
-class TAO_Named_RT_Mutex_Manager;
-
+#if (TAO_HAS_NAMED_RT_MUTEXES == 1)
 /**
  * @class TAO_Named_RT_Mutex
  *
@@ -107,6 +105,7 @@ protected:
   /// My name.
   ACE_CString name_;
 };
+#endif /* TAO_HAS_NAMED_RT_MUTEXES == 1 */
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)
