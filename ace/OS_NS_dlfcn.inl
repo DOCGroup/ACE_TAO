@@ -3,6 +3,10 @@
 
 #include "ace/OS_NS_macros.h"
 #include "ace/OS_NS_errno.h"
+#include "ace/OS.h"
+#include "ace/Default_Constants.h"
+#include "ace/os_include/os_fcntl.h"
+#include "ace/os_include/os_string.h"
 
 #if defined (ACE_USES_ASM_SYMBOL_IN_DLSYM)
 #  include "ace/OS_Memory.h"

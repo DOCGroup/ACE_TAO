@@ -189,6 +189,11 @@
 #define ACE_LACKS_SYS_MSG_H
 #define ACE_LACKS_WCHAR_H
 #define ACE_LACKS_PWD_H
+#define ACE_LACKS_SEARCH_H
+#define ACE_LACKS_SYS_SHM_H
+#define ACE_LACKS_STRINGS_H
+#define ACE_LACKS_TERMIOS_H
+#define ACE_LACKS_POLL_H
 
 // Not sure if these should always be defined.
 #define ACE_LACKS_SYS_UN_H

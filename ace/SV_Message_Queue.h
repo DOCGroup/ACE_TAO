@@ -22,6 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/SV_Message.h"
+#include "ace/os_include/sys/os_stat.h"
 #include "ace/os_include/sys/os_ipc.h"
 #include "ace/Default_Constants.h"
 

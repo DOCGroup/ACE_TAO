@@ -2,6 +2,7 @@
 // $Id$
 
 #include "ace/OS_NS_string.h"
+#include "ace/OS_NS_stdlib.h"
 
 ACE_RCSID(ace, OS_NS_string, "$Id$")
 
