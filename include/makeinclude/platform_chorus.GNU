@@ -11,8 +11,8 @@ LIB_DIR		= $(CLASSIXDIR)/lib
 CC		= gcc
 CXX		= g++
 		
-CFLAGS		+= -w
-CCFLAGS		+= -w -fno-implicit-templates		\
+CFLAGS		+= -w -O2
+CCFLAGS		+= -w -O2 -fno-implicit-templates	\
 		   -fno-strict-prototypes     		\
 		   -D_POSIX_THREADS 			\
 		   -D_POSIX_THREAD_SAFE_FUNCTIONS

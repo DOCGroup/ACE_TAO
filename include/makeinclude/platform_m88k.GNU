@@ -2,8 +2,8 @@
 # *not* using Orbix
 CC		= gcc
 CXX             = g++
-CFLAGS		+= -w
-CCFLAGS		+= -w -D__m88k__ -fno-implicit-templates -fno-strict-prototypes
+CFLAGS		+= -w -O2
+CCFLAGS		+= -w -D__m88k__ -O2 -fno-implicit-templates -fno-strict-prototypes
 DLD		= $(CXX) 
 LD		= $(CXX) 
 INCLDIRS	+= -I$(WRAPPER_ROOT) -I.
