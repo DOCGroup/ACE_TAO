@@ -38,7 +38,8 @@ DIRS  = CDR \
 	Smart_Proxies \
 	Interceptors \
 	Endpoint_Per_Priority \
-	Explicit_Event_Loop
+	Explicit_Event_Loop \
+	DynAny_Test
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO

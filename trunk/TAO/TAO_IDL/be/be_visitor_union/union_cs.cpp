@@ -107,7 +107,6 @@ int be_visitor_union_cs::visit_union (be_union *node)
       os->indent ();
       *os << "// default constructor" << be_nl
           << node->name () << "::" << node->local_name () << " (void)" << be_nl
-          << "  : TAO_Base_Union ()" << be_nl
           << "{" << be_idt_nl
           << "ACE_OS::memset (&this->disc_, 0, sizeof (this->disc_));" << be_nl
           << "ACE_OS::memset (&this->u_, 0, sizeof (this->u_));" << be_nl
@@ -152,8 +151,8 @@ int be_visitor_union_cs::visit_union (be_union *node)
 
       *os << "// copy constructor" << be_nl;
       *os << node->name () << "::" << node->local_name ()
-          << " (const ::" << node->name () << " &u)" << be_nl
-          << "  : TAO_Base_Union ()" << be_nl;
+          << " (const ::" << node->name () << " &u)"
+          << be_nl;
       *os << "{" << be_idt_nl;
       *os << "this->disc_ = u.disc_;" << be_nl;
       // now switch based on the disc value
@@ -284,41 +283,6 @@ int be_visitor_union_cs::visit_union (be_union *node)
 
       *os << be_uidt_nl << "}" << be_uidt_nl
           << "}\n\n";
-
-      // the access method
-      os->indent ();
-      *os << "// the virtual overloaded access method" << be_nl;
-      *os << "void *" << node->name () << "::_access ("
-          << "CORBA::Boolean alloc_flag)" << be_nl;
-      *os << "{" << be_idt_nl;
-      *os << "switch (this->disc_)" << be_nl;
-      *os << "{" << be_idt_nl;
-      this->ctx_->state (TAO_CodeGen::TAO_UNION_PUBLIC_ACCESS_CS);
-      if (this->visit_scope (node) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_union_cs"
-                             "visit_union - "
-                             "codegen for access failed\n"), -1);
-        }
-
-      // If there is no explicit default case, but there
-      // is an implicit one, and the discriminant is an enum,
-      // we need this to avert warnings in some compilers that
-      // not all case values are included. If there is no
-      // implicit default case, or the discriminator is not
-      // an enum, this does no harm.
-      if (node->default_index () == -1)
-        {
-          os->decr_indent (0);
-          *os << "default:" << be_nl;
-          os->incr_indent ();
-          *os << "return 0;";
-        }
-
-      *os << be_uidt_nl << "}" << be_uidt_nl;
-      *os << "}\n\n";
-
 
       if (!node->is_local ())
         {
