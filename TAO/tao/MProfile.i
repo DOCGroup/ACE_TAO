@@ -54,10 +54,10 @@ ACE_INLINE TAO_Profile *
 TAO_MProfile::get_cnext (void)
 {
   if (last_ == 0)
-      return 0;
+    return 0;
 
   if (current_ == last_)
-      current_ = 0;
+    current_ = 0;
 
   return pfiles_[current_++];
 }
@@ -275,9 +275,12 @@ TAO_MProfile::policy_list (CORBA::PolicyList *policy_list)
 ACE_INLINE CORBA::PolicyList* 
 TAO_MProfile::policy_list (void) 
 {
-  if (policy_list_ == 0)
-    create_policy_list ();
-  return policy_list_;
-}
-
-
+  if (this->policy_list_ == 0)
+    {
+      this->create_policy_list ();
+      // Init Policy.
+      this->rewind ();
+      this->get_next ()->policies ();
+    }
+  return this->policy_list_;
+}  

@@ -95,6 +95,14 @@ TAO_Stub::TAO_Stub (char *repository_id,
     this->orb_core_->client_factory ()->create_profile_lock ();
 
   this->base_profiles (profiles);
+  this->base_profiles_.rewind ();
+  TAO_Profile *profile = 0;
+  for (CORBA::ULong i = 0; i < this->base_profiles_.profile_count (); ++i)
+    {
+      // Get the ith profile
+      profile = this->base_profiles_.get_next ();
+      profile->the_stub (this);
+    }
 }
 
 TAO_Stub::~TAO_Stub (void)
