@@ -63,7 +63,10 @@ public:
   CORBA::ORB_ptr orb (void) const;
 
   /// Will we listen for multicast location requests?
-   int multicast (void) const;
+  int multicast (void) const;
+
+  /// Do we allow modifications to the servers?
+  int readonly (void) const;
 
 private:
   /// Parses and pulls out arguments for the ImR
@@ -110,6 +113,9 @@ private:
 
   /// The amount of time to wait for a server to response after starting it.
   ACE_Time_Value startup_timeout_;
+
+  /// Can the server_repository be modified?
+  int readonly_;
 };
 
 typedef ACE_Singleton <Options, ACE_Null_Mutex> OPTIONS;
