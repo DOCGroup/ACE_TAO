@@ -1,3 +1,9 @@
+Mon Jun 14 19:34:12 2004  UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO-INSTALL.html:
+          The IDL compiler now generates .inl files instead of .i so updated
+          this file
+
 Mon Jun 14 19:32:12 2004  UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO-INSTALL.html:
