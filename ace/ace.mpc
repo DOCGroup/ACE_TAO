@@ -317,23 +317,21 @@ project(ACE) : acedefaults, aceversion, core, qt_reactor, other, codecs, token, 
       Acceptor.cpp
       Active_Map_Manager_T.cpp
       Array_Base.cpp
-      Auto_Functor.cpp
-      Atomic_Op_T.cpp
-      Node.cpp
-      Unbounded_Set.cpp
-      Unbounded_Queue.cpp
       Asynch_Acceptor.cpp
       Asynch_Connector.cpp
+      Atomic_Op_T.cpp
+      Auto_Functor.cpp
       Auto_IncDec_T.cpp
       Auto_Ptr.cpp
       Based_Pointer_T.cpp
-      Connector.cpp
-      Containers_T.cpp
       Cache_Map_Manager_T.cpp
       Cached_Connect_Strategy_T.cpp
       Caching_Strategies_T.cpp
       Caching_Utility_T.cpp
       Cleanup_Strategies_T.cpp
+      Condition_T.cpp
+      Connector.cpp
+      Containers_T.cpp
       Dump_T.cpp
       Dynamic_Service.cpp
       Env_Value_T.cpp
@@ -343,14 +341,15 @@ project(ACE) : acedefaults, aceversion, core, qt_reactor, other, codecs, token, 
       Functor_T.cpp
       Future.cpp
       Future_Set.cpp
+      Hash_Cache_Map_Manager_T.cpp
       Hash_Map_Manager_T.cpp
       Hash_Map_With_Allocator_T.cpp
-      Hash_Cache_Map_Manager_T.cpp
       IOStream_T.cpp
       Intrusive_List.cpp
       Intrusive_List_Node.cpp
       LOCK_SOCK_Acceptor.cpp
       Local_Name_Space_T.cpp
+      Lock_Adapter_T.cpp
       Malloc_T.cpp
       Managed_Object.cpp
       Map_Manager.cpp
@@ -358,9 +357,11 @@ project(ACE) : acedefaults, aceversion, core, qt_reactor, other, codecs, token, 
       Message_Block_T.cpp
       Message_Queue_T.cpp
       Module.cpp
+      Node.cpp
       Obstack_T.cpp
       Pair_T.cpp
       RB_Tree.cpp
+      Reverse_Lock_T.cpp
       Select_Reactor_T.cpp
       Singleton.cpp
       Strategies_T.cpp
@@ -369,8 +370,9 @@ project(ACE) : acedefaults, aceversion, core, qt_reactor, other, codecs, token, 
       String_Base.cpp
       Svc_Handler.cpp
       Synch_T.cpp
-      Task_T.cpp
+      TSS_T.cpp
       Task_Ex_T.cpp
+      Task_T.cpp
       Template_Instantiations.cpp
       Test_and_Set.cpp
       Timeprobe_T.cpp
@@ -382,48 +384,44 @@ project(ACE) : acedefaults, aceversion, core, qt_reactor, other, codecs, token, 
       Timer_Wheel_T.cpp
       Typed_SV_Message.cpp
       Typed_SV_Message_Queue.cpp
-      Vector_T.cpp
-      TSS_T.cpp
-      Condition_T.cpp
+      Unbounded_Queue.cpp
+      Unbounded_Set.cpp
       Unbounded_Set_Ex.cpp
-      Reverse_Lock_T.cpp
-      Lock_Adapter_T.cpp
+      Vector_T.cpp
   }
 
   Inline_Files {
     Bound_Ptr.inl
+    Condition_T.inl
     Handle_Gobbler.inl
-    Refcounted_Auto_Ptr.inl
-    ace_wchar.inl
+    Lock_Adapter_T.inl
     OS.inl
     OS_Dirent.inl
     OS_Memory.inl
     OS_String.inl
+    Refcounted_Auto_Ptr.inl
+    Reverse_Lock_T.inl
+    Swap.inl
     Synch.inl
     Synch_T.inl
     TSS_T.inl
-    Swap.inl
-    Condition_T.inl
     Test_and_Set.inl
     Unbounded_Set_Ex.inl
-    Reverse_Lock_T.inl
-    Lock_Adapter_T.inl
+    ace_wchar.inl
   }
 
   Header_Files {
-    os_include
-    os_include/arpa
-    os_include/net
-    os_include/netinet
-    os_include/sys
     ACE_export.h
     Array.h
     Bound_Ptr.h
     CORBA_macros.h
+    Condition_T.h
     Default_Constants.h
     Exception_Macros.h
     Global_Macros.h
     Handle_Gobbler.h
+    If_Then_Else.h
+    Lock_Adapter_T.h
     Log_Priority.h
     Malloc_Base.h
     Method_Object.h
@@ -435,20 +433,28 @@ project(ACE) : acedefaults, aceversion, core, qt_reactor, other, codecs, token, 
     OS.h
     OS_Dirent.h
     OS_Memory.h
-    OS_String.h
     OS_NS_macros.h
+    OS_String.h
+    OS_Thread_Adapter.h
+    Object_Manager_Base.h
+    Pair.h
     Proactor_Impl.h
     Reactor_Impl.h
     Reactor_Timer_Interface.h
     Refcounted_Auto_Ptr.h
+    Reverse_Lock_T.h
     SStringfwd.h
     Static_Object_Lock.h
     Strategies.h
     Svc_Conf.h
     Svc_Conf_Tokens.h
+    Swap.h
+    Synch.h
     Synch_Traits.h
+    TSS_T.h
     Timer_Queuefwd.h
     UPIPE_Addr.h
+    Unbounded_Set_Ex.h
     Version.h
     ace_wchar.h
     config-WinCE.h
@@ -466,21 +472,15 @@ project(ACE) : acedefaults, aceversion, core, qt_reactor, other, codecs, token, 
     config-win32.h
     config.h
     iosfwd.h
+    os_include
+    os_include/arpa
+    os_include/net
+    os_include/netinet
+    os_include/sys
     post.h
     pre.h
     streams.h
     svc_export.h
-    Synch.h
-    TSS_T.h
-    Swap.h
-    Pair.h
-    Condition_T.h
-    If_Then_Else.h
-    Object_Manager_Base.h
-    OS_Thread_Adapter.h
-    Unbounded_Set_Ex.h
-    Reverse_Lock_T.h
-    Lock_Adapter_T.h
   }
 
   Documentation_Files {
