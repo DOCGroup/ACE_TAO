@@ -1,3 +1,17 @@
+Tue Aug  3 08:55:37 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/Condition_Recursive_Thread_Mutex.cpp:
+	* ace/Functor.inl:
+	* ace/config-borland-common.h:
+	* ace/config-g++-common.h:
+	* ace/config-hpux-11.00.h:
+	* ace/config-lite.h:
+	* ace/config-lynxos.h:
+	* ace/config-sunos5.5.h:
+	* ace/config-tandem-nsk-mips-v2.h:
+	* ace/config-win32-ghs.h:
+	  Remove vestigial traces of ACE_TEMPLATE_METHOD_SPECIALIZATION.
+
 Tue Aug  3 14:42:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Containers_T.cpp:

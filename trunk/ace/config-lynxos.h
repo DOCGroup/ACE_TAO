@@ -180,7 +180,6 @@
    // config-g++-common.h defines these incorrectly for LynxOS 3.x
    // with G++ version 2.9-gnupro-98r2
 #  define ACE_HAS_STD_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-#  define ACE_HAS_STD_TEMPLATE_METHOD_SPECIALIZATION
 #  define ACE_HAS_STD_TEMPLATE_SPECIALIZATION
 #  define ACE_HAS_TEMPLATE_SPECIALIZATION
 #endif /* __GNUC__ == 2  &&  __GNUC_MINOR__ == 9 */

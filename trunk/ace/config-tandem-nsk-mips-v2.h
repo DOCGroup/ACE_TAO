@@ -347,7 +347,6 @@ extern int cma_sigwait  (sigset_t *);
 
 // Compiler uses the template<> syntax
 #define ACE_HAS_STD_TEMPLATE_SPECIALIZATION
-#define ACE_HAS_STD_TEMPLATE_METHOD_SPECIALIZATION
 #define ACE_HAS_STD_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 
 // Compiler's template mechanism must see source code (i.e.,
