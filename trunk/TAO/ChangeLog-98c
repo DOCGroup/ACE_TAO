@@ -1,3 +1,8 @@
+Mon Sep 21 22:24:45 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.h (TAO_Naming_Client): Added
+ 	  timeout to init().
+
 Mon Sep 21 21:44:39 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/CDR.i,tao/Connect.cpp,
