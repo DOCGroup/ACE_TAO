@@ -1,9 +1,13 @@
 ========================================
 
 This file contains the original README that came with the SunSoft IIOP
-release.  The information contained here is largely obsolete by the
-features added to TAO.  Please see the ./README file that comes with
-TAO for up-to-date information.
+release.  This information in this file is historical in nature and
+the much of the specific information probably is inaccurate with
+respect to the current state of TAO.  Please see the ./README file
+that comes with TAO for up-to-date information.
+
+Specifically, many of the file referred to in here may not appear in
+TAO.
 
 ========================================
 

@@ -24,7 +24,7 @@ following:
 * The real-time scheduling service.
 
 We're currently working on these features and we plan to release them
-throughout the summer of 1997.  Please note that no amount of proding
+throughout the Fall of 1997.  Please note that no amount of proding
 will get them out any faster, unless you are willing to contribute
 time and/or $$$ to the effort.
 
@@ -35,10 +35,15 @@ that TAO does not provide all the features of a commercial ORB at the
 moment.
 
 Key components in TAO (e.g., the Object Adapter) will change
-substantially over the summer.  Thus, any development performed in the
+substantially over the Fall.  Thus, any development performed in the
 interim will require additional effort (e.g., writing stubs and
 skeletons by hand), and applications may need to be re-written to work
 with new features in the forthcoming releases.
+
+A quick build note for users who have used ACE with other ORBs:
+linking TAO with a version of ACE that must also be linked against
+another ORB vendor's library, e.g., liborbix.so, will produce
+undefined and most likely unpredictable and erroneous results.
 
 If you have any questions, please post them to the ACE mailing list
 (ace-users@cs.wustl.edu) until we get a TAO mailing list established.

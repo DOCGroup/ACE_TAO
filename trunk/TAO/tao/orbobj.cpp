@@ -52,7 +52,8 @@ CORBA_ORB::CORBA_ORB (void)
     client_factory_ (0),
     client_factory_from_service_config_ (CORBA::B_FALSE),
     server_factory_ (0),
-    server_factory_from_service_config_ (CORBA::B_FALSE)
+    server_factory_from_service_config_ (CORBA::B_FALSE),
+    should_shutdown_(CORBA::B_FALSE)
 {
   this->refcount_ = 1;
 }
@@ -514,7 +515,7 @@ CORBA_ORB::run (ACE_Time_Value *tv)
   
   // Loop "forever" handling client requests.
 
-  for (;;)
+  while (this->should_shutdown_ == 0)
     switch (r->handle_events (tv))
       {
       case 0: // Timed out, so we return to caller.
@@ -525,12 +526,6 @@ CORBA_ORB::run (ACE_Time_Value *tv)
 	/* NOTREACHED */
       default: // Some handlers were dispatched, so keep on processing
 	       // requests until we're told to shutdown .
-#if 0
-	// @@ How can we figure out how to get the right POA pointer
-	// to shutdown the ORB here?
-	if (poa->shutting_down ())
-	  return 1;
-#endif /* 0 */
 	break;
 	/* NOTREACHED */
       }

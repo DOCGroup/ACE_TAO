@@ -27,6 +27,15 @@
       Recently Completed Work:
 
       <BLOCKQUOTE>
+	<li>Debate details of <code>Svc_Handler</code> modifications
+	with Irfan.</li>
+
+	<li>Test and commit <code>Connector::connect_n</code> changes
+	to ACE</code>.</li>
+
+	<li>ACE & TAO compiling cleanly using Sun's CC on Solaris and
+	G++ on Linux.  Also, the ACE tests run properly.</li>
+
 	<li>Use <code>truss</code> to verify for <a
 	href="mailto:PAUL.G.WEHLAGE@cdev.com">Paul Wehlage</a> that
 	TAO really uses <code>select</code> vs. <code>recv</code> for
@@ -87,6 +96,17 @@
       Critical Work:
 
       <BLOCKQUOTE>
+	<li>Create a section in <a
+	href="../../TAO-Install.html"><code>$TAO_ROOT/TAO-Install.html</code></a>
+	that documents installation on Unix platforms.  There should
+	also be a section documents issues that apply across ALL
+	platforms, such as the fact that TAO and its application will
+	likely not work well if your ACE is linked through Orbix,
+	VisiBroker, or another ORB.
+	<a href="../../ChangeLog">ChangeLog</a> discovery attribution for
+	this should go to <em>Steve Wohlever
+	&lt;wohlever@mitre.org&gt;</em>.</li>
+
 	<LI>Implement <code>CORBA_ORB::shutdown()</code> as a manner
 	in which a thread of control can request that
 	<code>CORBA_ORB::run()</code> should return and no longer
@@ -117,6 +137,9 @@
 
       Future work:
       <UL>
+
+	<li>Implement the <code>CORBA::ORB::shutdown()</code> method
+	so that it honors the <em>wait_for_completion</em> flag.
 
 	<li>Get rid of need to have compile in TSS ORB Core
 	(<code>-DTAO_HAS_TSS_ORBCORE</code>).</li>

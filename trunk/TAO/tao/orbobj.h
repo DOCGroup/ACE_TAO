@@ -159,6 +159,10 @@ private:
   TAO_ACCEPTOR peer_acceptor_;
   // The acceptor passively listening for connection requests.
 
+  CORBA::Boolean should_shutdown_;
+  // Flag which denotes that the ORB should shut down and <run> should
+  // return.
+
   // = NON-PROVIDED METHODS
   CORBA_ORB (const CORBA_ORB &);
   CORBA_ORB &operator= (const CORBA_ORB &);
