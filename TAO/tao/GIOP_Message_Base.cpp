@@ -1502,7 +1502,8 @@ TAO_GIOP_Message_Base::make_queued_data (size_t sz)
 {
   // Get a node for the queue..
   TAO_Queued_Data *qd =
-    TAO_Queued_Data::get_queued_data (this->orb_core_->input_cdr_buffer_allocator ());
+    TAO_Queued_Data::get_queued_data (
+      this->orb_core_->transport_message_buffer_allocator ());
 
   // @@todo: We have a similar method in Transport.cpp. Need to see how
   // we can factor them out..

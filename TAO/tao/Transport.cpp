@@ -764,7 +764,7 @@ TAO_Transport::handle_input_i (TAO_Resume_Handle &rh,
   // Make a node of the message block..
   // @@todo: Not teh right allocator......
   TAO_Queued_Data qd (&message_block,
-                      this->orb_core_->input_cdr_buffer_allocator ());
+                      this->orb_core_->transport_message_buffer_allocator ());
 
   // Extract the data for the node..
   this->messaging_object ()->get_message_data (&qd);
@@ -979,7 +979,8 @@ TAO_Transport::consolidate_message (ACE_Message_Block &incoming,
   // We dont have any missing data. Just make a queued_data node with
   // the existing message block and send it to the higher layers of
   // the ORB.
-  TAO_Queued_Data pqd (&incoming);
+  TAO_Queued_Data pqd (&incoming,
+                       this->orb_core_->transport_message_buffer_allocator ());
   pqd.missing_data_ = missing_data;
   this->messaging_object ()->get_message_data (&pqd);
 
@@ -1339,10 +1340,12 @@ TAO_Transport::make_queued_data (ACE_Message_Block &incoming)
   // @@ todo: Are we using the right allocator? May be not. We need to
   // see how to have a general purpose allocator.
   TAO_Queued_Data *qd =
-    TAO_Queued_Data::get_queued_data (this->orb_core_->input_cdr_buffer_allocator ());
+    TAO_Queued_Data::get_queued_data (
+      this->orb_core_->transport_message_buffer_allocator ());
 
   // Get the flag for the details of the data block...
-  ACE_Message_Block::Message_Flags flg = incoming.self_flags ();
+  ACE_Message_Block::Message_Flags flg =
+    incoming.self_flags ();
 
   if (ACE_BIT_DISABLED (flg,
                         ACE_Message_Block::DONT_DELETE))
