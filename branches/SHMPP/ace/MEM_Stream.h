@@ -25,6 +25,9 @@
 
 #include "ace/INET_Addr.h"
 
+class ACE_MEM_Acceptor;
+class ACE_MEM_Connector;
+
 class ACE_Export ACE_MEM_Stream : public ACE_MEM_IO
 {
   // = TITLE
@@ -34,6 +37,10 @@ class ACE_Export ACE_MEM_Stream : public ACE_MEM_IO
   //     This adds additional wrapper methods atop the <ACE_MEM_IO>
   //     class.
 public:
+
+  friend class ACE_MEM_Acceptor;
+  friend class ACE_MEM_Connector;
+
   // Initialization and termination methods.
   ACE_MEM_Stream (void);
   // Constructor.
