@@ -1,3 +1,9 @@
+Wed Jun 16 19:59:33 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp:
+	  Fixed reactor initialization problem, thanks to Jeff for
+	  reporting this problem.
+
 Wed Jun 16 19:24:30 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp
