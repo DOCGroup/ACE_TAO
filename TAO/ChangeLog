@@ -1,3 +1,11 @@
+Thu Mar 13 09:05:20 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.h:
+
+          Fixed the throw specs of several functions so the
+          declaration matches the definition.
+
 Thu Mar 13 000:14:10 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/Log/PersistStore.cpp (retrieve):
