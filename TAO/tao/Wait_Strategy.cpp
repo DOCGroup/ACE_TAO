@@ -28,21 +28,21 @@ TAO_Wait_On_Reactor::~TAO_Wait_On_Reactor (void)
 {
 }
 
+// Return value just like the return value of
+// <Reactor::handle_events>. 
 int
 TAO_Wait_On_Reactor::wait (void)
 {
   int result = 0;
 
+  // Do the event loop, till there are no events and no errors.
   while (result == 0)
     {
       // Do the event loop.
       result = this->transport_->orb_core ()->reactor ()->handle_events (/* timeout */);
     }
 
-  if (result == -1)
-    return -1;
-  else
-    return 0;
+  return result;
 }
 
 int
