@@ -46,10 +46,8 @@ public:
   RTScheduling::Scheduler_ptr rtscheduler (void);
 
 public:
-#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
   typedef TAO_RTScheduler_Manager_ptr _ptr_type;
   typedef TAO_RTScheduler_Manager_var _var_type;
-#endif /* ! __GNUC__ || g++ >= 2.8 */
 
   // the static operations
   static TAO_RTScheduler_Manager_ptr _duplicate (TAO_RTScheduler_Manager_ptr obj);

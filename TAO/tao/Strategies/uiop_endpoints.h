@@ -49,10 +49,7 @@ class TAO_UIOP_Endpoint_Info_var;
 
 struct TAO_Strategies_Export TAO_UIOP_Endpoint_Info
 {
-
-#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
   typedef TAO_UIOP_Endpoint_Info_var _var_type;
-#endif /* ! __GNUC__ || g++ >= 2.8 */
 
   static void _tao_any_destructor (void*);
 
@@ -135,10 +132,7 @@ public:
   ~TAO_UIOPEndpointSequence (void);
   static void _tao_any_destructor (void*);
 
-#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
   typedef TAO_UIOPEndpointSequence_var _var_type;
-#endif /* ! __GNUC__ || g++ >= 2.8 */
-
 };
 
 #endif /* end #if !defined */
