@@ -1,3 +1,9 @@
+Sat Dec 15 10:53:30 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/performance-tests/EC_Scalability/client.cpp:
+	  Fixed conversion from 64-bit to 32-bit int.  Nice of MSVC6 to
+	  detect that little buglet.
+
 Sat Dec 15 12:53:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Objref_Sequence_Test/client.cpp: Fixed a Win2000 warning. 
@@ -11,7 +17,7 @@ Sat Dec 15 09:53:59 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 Fri Dec 14 22:54:52 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Objref_Sequence_Test/server.cpp: Fixed a compile error. 
+	* tests/Objref_Sequence_Test/server.cpp: Fixed a compile error.
 
 Fri Dec 14 18:32:45 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
