@@ -93,7 +93,7 @@ BEGIN_MESSAGE_MAP(CWindozeCEDlg, CDialog)
                         TEXT ("Fill in the command line arguments you want to pass to the program below:"));
   CenterWindow(GetDesktopWindow());	// center to the hpc screen
 
-  this->ace.set_window (this, NC_ACE_NOTIFY, INC_ACE_LOGMSG);
+  this->ace.set_window (this->m_hWnd, NC_ACE_NOTIFY, INC_ACE_LOGMSG);
   this->ace.set_self_default ();
   host_window_ = this;
   return TRUE;  // return TRUE  unless you set the focus to a control
