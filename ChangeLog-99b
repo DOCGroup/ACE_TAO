@@ -1,5 +1,11 @@
 Mon Jul 12 18:24:34 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
+	* tests/Cached_Accept_Conn_Test.cpp:
+	  This tests explicit purging from the server's point of view.
+	  When the acceptor in either its accept_svc_handler () or open ()
+	  runs out of descriptors, purging of unused svc_handlers from the 
+	  connecton cache is requested.
+	
 	* tests/Cached_Conn_Test.cpp:
 	  Defined ACE_HAS_BROKEN_EXTENDED_TEMPLATES for the
 	  Caching_Strategy_Adapter. If this condition is true, then only
@@ -8,6 +14,9 @@ Mon Jul 12 18:24:34 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 	  for example GNUC version < 8.0. Total credit for this hack
 	  to get through the old GNUC compiler goes to Irfan
 	  <irfan@cs.wustl.edu> of the DOC group.	
+
+	* tests/Makefile:
+	  Added Cached_Accept_Conn_Test.cpp.
 
 	* tests/Makefile:
 	* tests/run_tests.sh:
