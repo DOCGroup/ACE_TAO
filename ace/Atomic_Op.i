@@ -149,22 +149,24 @@ ACE_Atomic_Op<ACE_LOCK, TYPE>::operator= (const TYPE &i)
 
 #if defined (ACE_WIN32)
 
+// FUZZ: disable check_for_inline
+
 ACE_TEMPLATE_SPECIALIZATION
-ACE_INLINE long
+inline long
 ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator++ (void)
 {
   return ::InterlockedIncrement (&this->value_);
 }
 
 ACE_TEMPLATE_SPECIALIZATION
-ACE_INLINE long
+inline long
 ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator-- (void)
 {
   return ::InterlockedDecrement (&this->value_);
 }
 
 ACE_TEMPLATE_SPECIALIZATION
-ACE_INLINE void
+inline void
 ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator= (const long &i)
 {
   ::InterlockedExchange (&this->value_,
@@ -172,7 +174,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator= (const long &i)
 }
 
 ACE_TEMPLATE_SPECIALIZATION
-ACE_INLINE void
+inline void
 ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator= (const ACE_Atomic_Op<ACE_Thread_Mutex, long> &rhs)
 {
   ::InterlockedExchange (&this->value_,
@@ -182,14 +184,14 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator= (const ACE_Atomic_Op<ACE_Thread
 #if defined (ACE_HAS_INTERLOCKED_EXCHANGEADD)
 
 ACE_TEMPLATE_SPECIALIZATION
-ACE_INLINE long
+inline long
 ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator+= (const long &i)
 {
   return ::InterlockedExchangeAdd (&this->value_, i);
 }
 
 ACE_TEMPLATE_SPECIALIZATION
-ACE_INLINE long
+inline long
 ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator-= (const long &i)
 {
   return ::InterlockedExchangeAdd (&this->value_, -i);

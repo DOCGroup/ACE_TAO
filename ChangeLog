@@ -1,3 +1,12 @@
+Fri Sep 22 15:13:46 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/Atomic_Op.i:
+
+          I was mistaken, inline was being used correctly here,
+          since on NT this is only included from Atomic_Op.h.  
+          So I reverted the previous change and added a disable
+          command for fuzz.
+
 Fri Sep 22 14:49:19 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/OS.h:
