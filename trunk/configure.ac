@@ -2105,7 +2105,7 @@ if test "$ac_cv_header_new" = yes &&
     ])
 fi
 
-if test $ace_cv_lib_auto_ptr_class=yes; then
+if test "$ace_cv_lib_auto_ptr_class" = yes; then
   dnl Check for auto_ptr reset method
   ACE_CACHE_CHECK([for C++ auto_ptr reset method],
     [ace_cv_lib_auto_ptr_reset],
@@ -2118,7 +2118,7 @@ if test $ace_cv_lib_auto_ptr_class=yes; then
 #ifdef ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB
         std::auto_ptr<int> safe (foo);
 #else
-        auto_ptr<Foo> safe (foo);
+        auto_ptr<int> safe (foo);
 #endif
         int *bar = new int;
 

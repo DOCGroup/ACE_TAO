@@ -84,7 +84,7 @@ CIAO_CORE_DIRS= \
         TAO/orbsvcs/orbsvcs \
         TAO/orbsvcs/Naming_Service \
         TAO/CIAO/ciao \
-        TAO/CIAO/tools 
+        TAO/CIAO/tools
 
 CIAO_MPC_DIRS= \
 	TAO/CIAO/ciao \
@@ -175,6 +175,7 @@ CONTROLLED_FILES = \
         aceConf.sh.in \
         apps \
         bin \
+	configure.ac \
         lib \
         docs \
         etc \
