@@ -1,3 +1,13 @@
+Wed Jul 22 12:41:22 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Trader/Constraint_Nodes.cpp:
+	* orbsvcs/orbsvcs/Trader/Offer_Database.h:
+	* orbsvcs/orbsvcs/Trader/Offer_Iterators.cpp:
+	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
+	* orbsvcs/orbsvcs/Trader/Trader_T.cpp:
+	* orbsvcs/orbsvcs/Trader/Trader_Utils.{h,cpp}:
+	  Used CORBA::is_nil consistently. Fixed purify warning.
+
 Wed Jul 22 11:55:35 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Any.cpp: 
