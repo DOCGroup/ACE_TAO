@@ -1,3 +1,10 @@
+Sat Mar 22 16:47:39 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/ORBEndpoint.html: Updated obsolete SHMIOP endpoint
+	  information, and added more information when using shmiop with
+	  interoperable naming service.  Thanks to Andreas Koehler
+	  <Andreas.Koehler@sysde.eads.net> for reporting the problem.
+
 Sat Mar 22 15:51:14 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/CurrentC.cpp:
@@ -25,7 +32,7 @@ Sat Mar 22 12:55:16 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
 
-	  Changed loading of constant into the repository to be aware 
+	  Changed loading of constant into the repository to be aware
 	  if the constant's type is a typedef.
 
 Sat Mar 22 07:41:59 2003  Phil Mesnier  <mesnier_p@ociweb.com>
