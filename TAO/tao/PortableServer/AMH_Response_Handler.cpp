@@ -40,6 +40,7 @@ TAO_AMH_Response_Handler::~TAO_AMH_Response_Handler (void)
       {
         // Is sending the exception to the client fails, then we just
         // give up, release the transport and return.
+        ACE_DECLARE_NEW_CORBA_ENV;
         ACE_TRY
           {
             CORBA::NO_RESPONSE exception (CORBA::SystemException::_tao_minor_code
