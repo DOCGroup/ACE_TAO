@@ -4,5 +4,5 @@
 # You must build TAO with TAO_USES_STATIC_SERVICE defined
 # to use this file.
 static Resource_Factory "-ORBresources tss"
-static Client_Strategy_Factory ""
-static Server_Strategy_Factory "-ORBconcurrency thread-per-connection -ORBsystemidpolicydemuxstrategy dynamic -ORBtablesize 128"
+static Client_Strategy_Factory "-ORBiiopprofilelock null -ORBclientconnectionhandler ST"
+static Server_Strategy_Factory "-ORBconcurrency thread-per-connection -ORBpoalock null -ORBconnectorlock null"
