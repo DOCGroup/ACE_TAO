@@ -27,7 +27,8 @@ DIRS  = Callback_Quoter \
         PluggableUDP \
 	TypeCode_Creation \
 	ior_corbaloc \
-	RTCORBA
+	RTCORBA \
+	RTScheduling
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
