@@ -187,3 +187,9 @@ TAO_Operation_Table_Factory::opname_lookup_strategy (void)
 
   return p->concrete_strategy ();
 }
+
+#if defined(ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class ACE_Hash_Map_Manager<ACE_CString, TAO_Skeleton, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Hash_Map_Entry<ACE_CString, TAO_Skeleton>;
+template class ACE_Singleton<TAO_Operation_Table_Parameters, ACE_SYNCH_RW_MUTEX>;
+#endif
