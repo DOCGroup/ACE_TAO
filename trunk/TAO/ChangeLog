@@ -1,3 +1,8 @@
+Mon Jul  8 17:44:47 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* tests/AMH_Exceptions/Makefile:
+	  Did a 'make depend'.  This should fix the no_inline build.
+
 Mon Jul  8 18:21:42 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/ValueFactory_Map.cp:
