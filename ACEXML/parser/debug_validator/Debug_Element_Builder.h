@@ -17,7 +17,7 @@
 #include "ACEXML/parser/debug_validator/Element_Tree.h"
 
 /**
- * @ class ACEXML_Debug_Element_Builder Debug_Element_Builder.h "parser/debug_validator/Debug_Element_Builder.h"
+ * @class ACEXML_Debug_Element_Builder Debug_Element_Builder.h "parser/debug_validator/Debug_Element_Builder.h"
  *
  * This class prints out the element definition for debugging purpose.
  *

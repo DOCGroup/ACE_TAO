@@ -1,3 +1,91 @@
+Mon May 27 08:18:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACEXML/common/Attributes_Def_Builder.h:
+        * ACEXML/common/DTD_Manager.h:
+        * ACEXML/common/Element_Def_Builder.h:
+        * ACEXML/common/Validator.h:
+        * ACEXML/parser/debug_validator/Debug_Attributes_Builder.h:
+        * ACEXML/parser/debug_validator/Debug_Element_Builder.h:
+        * ACEXML/parser/debug_validator/Element_Tree.h:
+          Corrected doxygen commands, no space between @ and the command is
+          allowed.
+
+        * ace/Active_Map_Manager.h:
+        * ace/Arg_Shifter.h:
+        * ace/Based_Pointer_Repository.cpp:
+        * ace/CDR_Stream.h:
+        * ace/Caching_Utility_T.h:
+        * ace/Configuration.h:
+        * ace/DEV_IO.h:
+        * ace/Dev_Poll_Reactor.h:
+        * ace/Dirent_Selector.h:
+        * ace/Env_Value_T.h:
+        * ace/FILE.h:
+        * ace/Get_Opt.h:
+        * ace/Hashable.h:
+        * ace/IO_Cntl_Msg.cpp:
+        * ace/Init_ACE.h:
+        * ace/Local_Tokens.h:
+        * ace/Log_Msg.cpp:
+        * ace/Log_Msg.h:
+        * ace/Memory_Pool.h:
+        * ace/Message_Block.h:
+        * ace/OS.cpp:
+        * ace/OS.h:
+        * ace/Object_Manager.cpp:
+        * ace/POSIX_Asynch_IO.cpp:
+        * ace/POSIX_Asynch_IO.h:
+        * ace/POSIX_Proactor.cpp:
+        * ace/POSIX_Proactor.h:
+        * ace/Pair_T.h:
+        * ace/Proactor.cpp:
+        * ace/Process.h:
+        * ace/Reactor_Impl.h:
+        * ace/Remote_Tokens.h:
+        * ace/SV_Message.h:
+        * ace/Select_Reactor_T.h:
+        * ace/Svc_Conf.h:
+        * ace/System_Time.h:
+        * ace/TLI_Stream.h:
+        * ace/TP_Reactor.cpp:
+        * ace/TP_Reactor.h:
+        * ace/Task.h:
+        * ace/Task_T.h:
+        * ace/Thread.h:
+        * ace/Timer_Wheel_T.cpp:
+        * ace/Token.h:
+        * ace/Token_Manager.h:
+        * ace/WIN32_Proactor.cpp:
+          Improved the doxygen documenation by converting old style documentation
+          to doxygen style. Also corrected small typing errors, start sentences with
+          capital letters and corrected incorrected doxygen commands.
+
+        * ace/POSIX_Proactor.cpp:
+          Corrected the signature of handle_events from unsigned long to u_long to
+          match the declaration of this method. This was found using the warning file
+          of the doxygen generation.
+
+        * ace/Future.h:
+          Corrected brief documentation. Brief documentation ends when a dot is found
+          followed by a space of a newline. We had "i.e. " in the brief documenation
+          and now this documentation ended after the second dot, changed it to
+          "i.e.,". This fixed [Bug 892].
+
+        * ace/config-doxygen.h:
+          Added ACE_HAS_TOKENS_LIBRARY to generate ACE token library documentation
+
+        * bin/generate_doxygen.pl:
+          Added tao_cosnaming to the list of doxygen files that must be run
+
+        * etc/tao_cosnaming.doxygen:
+          Created doxygen config file for this TAO service
+
+        * etc/tao_cosnotification.doxygen:
+          Corrected tagfile name and directory that is generated
+
+        * html/index.html:
+          Added link for the TAO Naming service doxygen documentation
+
 Sun May 26 21:48:49 2002  Steve Huston  <shuston@riverace.com>
 
         * examples/C++NPv2/Reactor_Logging_Server_Adapter.cpp: Added
