@@ -14,8 +14,8 @@ Account_i::Account_i (void)
 Account_i::Account_i (const char *name,
 		      CORBA::Float balance)
 
-  : name_ (CORBA::string_dup (name)),
-    balance_ (balance)
+  : balance_ (balance),
+    name_ (CORBA::string_dup (name))
 {
 }
 
@@ -56,7 +56,7 @@ Account_i::withdraw (CORBA::Float withdrawl,
   if (balance_ >= withdrawl)
     balance_ -= withdrawl;
   else
-    env.exception (new Bank::Account::Overdraft("Exception from server::Overdraft"));
+    env.exception (new Bank::Account::Overdraft("Exception::Overdraft\n"));
 }
 
 char *

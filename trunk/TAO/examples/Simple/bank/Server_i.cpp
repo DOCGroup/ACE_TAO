@@ -40,12 +40,13 @@ Server_i::parse_args (void)
 
         if (this->ior_output_file_ == 0)
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to open %s for writing: %p\n",
+                             "[SERVER] Process/Thread Id : (%P/%t)Unable to open %s for writing: %p\n",
                              get_opts.optarg), -1);
         break;
       case '?':  // display help for use of the server.
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
+                           "[SERVER] Process/Thread Id : (%P/%t)"
                            "usage:  %s"
                            " [-d]"
                            " [-o] <ior_output_file>"
@@ -76,9 +77,6 @@ Server_i::init_naming_service (CORBA::Environment& env)
 					   child_poa);
   if (result == -1)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "Result=%d",
-                  result));
       return result;
     }
 
@@ -111,7 +109,7 @@ Server_i::init_naming_service (CORBA::Environment& env)
 
   // Print the Account Manager IOR on the console.
   ACE_DEBUG ((LM_DEBUG,
-	      "The IOR is: <%s>\n",
+	      "[SERVER] Process/Thread Id : (%P/%t) The IOR is: <%s>\n",
 	      (const char *) objref));
 
   // Print the Account Manager IOR to a file.
@@ -177,7 +175,7 @@ Server_i::run (CORBA::Environment &env)
   // Run the main event loop for the ORB.
   if (this->orb_manager_.run (env) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Server_i::run"),
+                       "[SERVER] Process/Thread Id : (%P/%t) Server_i::run"),
                       -1);
   return 0;
 }

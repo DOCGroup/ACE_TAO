@@ -27,7 +27,7 @@ Client_i::read_ior (char *filename)
 
   if (f_handle == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to open %s for writing: %p\n",
+                       "[CLIENT] Process/Thread Id : (%P/%t) Unable to open %s for writing: %p\n",
                        filename),
                       -1);
 
@@ -36,7 +36,7 @@ Client_i::read_ior (char *filename)
 
   if (data == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to read ior: %p\n"),
+                       "[CLIENT] Process/Thread Id : (%P/%t) Unable to read ior: %p\n"),
                       -1);
 
   this->ior_ = ACE_OS::strdup (data);
@@ -69,8 +69,6 @@ Client_i::parse_args (void)
         break;
       case 'b':  // initial balance
 	this->initial_balance_ = (float) ACE_OS::atoi (get_opts.optarg);
-	ACE_DEBUG((LM_DEBUG,"bal = %f",
-			    initial_balance_));
       break;
       case 'y': // Name of one account holder.
 	this->account_holder_name1_ = ACE_OS::strdup (get_opts.optarg);
@@ -85,7 +83,7 @@ Client_i::parse_args (void)
         result = this->read_ior (get_opts.optarg);
         if (result < 0)
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to read ior from %s : %p\n",
+                             "[CLIENT] Process/Thread Id : (%P/%t) Unable to read ior from %s : %p\n",
                              get_opts.optarg),
                             -1);
         break;
@@ -139,7 +137,7 @@ Client_i::withdraw (Bank::Account_ptr server,
 	(TAO_TRY_ENV.exception ());
 
       ACE_DEBUG ((LM_DEBUG,
-		  "Exception : %s",
+		  "[CLIENT] Process/Thread Id : (%P/%t) %s",
 		  (char *) except->reason));
     }
   TAO_ENDTRY;
@@ -227,10 +225,18 @@ Client_i::check_accounts (void)
 {
   TAO_TRY
     {
+      ACE_DEBUG((LM_DEBUG,
+		 "\n[CLIENT] Process/Thread Id : (%P/%t):Test for Accounts with same name\n"));
       this->test_for_same_name (this->env_);
       TAO_CHECK_ENV;
+
+      ACE_DEBUG((LM_DEBUG,
+		 "\n[CLIENT] Process/Thread Id : (%P/%t):Test for Accounts with different name\n"));
       this->test_for_different_name (this->env_);
       TAO_CHECK_ENV;
+
+      ACE_DEBUG((LM_DEBUG,
+		 "\n[CLIENT] Process/Thread Id : (%P/%t):Test for Overdraft Exception\n"));
       this->test_for_overdraft (this->env_);
       TAO_CHECK_ENV;
     }
@@ -262,7 +268,7 @@ Client_i::run (void)
   TAO_CATCHANY
     {
       ACE_DEBUG ((LM_DEBUG,
-		  "Unable to shut down the server\n"));
+		  "[CLIENT] Process/Thread Id : (%P/%t) Unable to shut down the server\n"));
     }
   TAO_ENDTRY;
 
@@ -283,7 +289,7 @@ Client_i::obtain_initial_references (void)
       // Initialize the naming services.
       if (my_name_client_.init (orb_.in ()) != 0)
 	ACE_ERROR_RETURN ((LM_ERROR,
-			   " (%P|%t) Unable to initialize "
+			   "[CLIENT] Process/Thread Id : (%P/%t) Unable to initialize "
 			   "the TAO_Naming_Client. \n"),
 			  -1);
 
@@ -355,13 +361,13 @@ Client_i::init (int argc, char **argv)
 					   TAO_TRY_ENV);
 
 	  ACE_DEBUG ((LM_DEBUG,
-		      "Using the IOR provided\n"));
+		      "[CLIENT] Process/Thread Id : (%P/%t) Using the IOR provided\n"));
 	  TAO_CHECK_ENV;
 	}
       else
 	{ // No IOR specified. Use the Naming Service
 	  ACE_DEBUG((LM_DEBUG,
-		     "Using the Naming Service\n"));
+		     "[CLIENT] Process/Thread Id : (%P/%t) Using the Naming Service\n"));
 
 	  this->obtain_initial_references ();
 	  TAO_CHECK_ENV;
