@@ -49,7 +49,7 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
   // Only open a new endpoint if we don't already have a valid handle.
 
   if (new_stream.get_handle () == ACE_INVALID_HANDLE
-      && new_stream.open (device, flags, info) == ACE_INVALID HANDLE)
+      && new_stream.open (device, flags, info) == ACE_INVALID_HANDLE)
     return -1;
 
   if (local_sap != ACE_Addr::sap_any)
