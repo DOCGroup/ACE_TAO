@@ -36,6 +36,7 @@ DIRS = \
 	Policies \
         Portable_Interceptors \
 	RTCORBA \
+        Single_Read \
 	Timed_Buffered_Oneways \
 	Timeout
 
