@@ -14,6 +14,7 @@ BIN =   Aio_Platform_Test \
 	Barrier_Test \
 	Basic_Types_Test \
 	Buffer_Stream_Test \
+        CDR_Test \
 	Collection_Test \
 	Conn_Test \
 	DLList_Test \
