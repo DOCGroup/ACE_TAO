@@ -22,11 +22,19 @@ endif
 ifeq (,$(distrib))
   distrib = 0
 endif
+ifeq (,$(exceptions))
+  exceptions = 1
+endif
 ifeq (,$(optimize))
   optimize = 0
 endif
 ifeq (,$(threads))
   threads = 1
+endif
+
+# There's no way to turn off exceptions with IBM C/C++
+ifeq (0,$(exceptions))
+  exceptions = 1
 endif
 
 # In case anything here or in the config depends on OS version number,
