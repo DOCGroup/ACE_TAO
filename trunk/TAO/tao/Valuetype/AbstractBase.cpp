@@ -173,7 +173,7 @@ CORBA::Boolean
 operator<< (TAO_OutputCDR &strm, const CORBA::AbstractBase_ptr abs)
 {
   CORBA::Boolean discriminator = true;
-  
+
   // We marshal a null abstract interface ptr as a discriminator
   // plus null object reference (see CORBA::Object::marshal()
   // and operator << for CORBA::Object).
@@ -367,7 +367,7 @@ operator>> (TAO_InputCDR &strm, CORBA::AbstractBase_ptr &abs)
 }
 
 CORBA::Boolean
-CORBA::AbstractBase::_tao_marshal_v (TAO_OutputCDR &)
+CORBA::AbstractBase::_tao_marshal_v (TAO_OutputCDR &) const
 {
   return 0;
 }
