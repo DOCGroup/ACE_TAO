@@ -254,7 +254,7 @@ JAWS_Asynch_IO_Handler_Factory::destroy_io_handler (JAWS_IO_Handler *handler)
 
   if (handler != 0)
     {
-cerr << "(" << thr_self () << ") locking for destruction: " << handler << endl;
+      //cerr << "(" << thr_self () << ") locking for destruction: " << handler << endl;
       handler->lock ();
       delete handler->message_block ();
       handler->message_block (0);
@@ -285,21 +285,21 @@ JAWS_Asynch_IO_Handler::handler (void)
 void
 JAWS_Asynch_IO_Handler::acquire (void)
 {
-cerr << "(" << thr_self () << ") acquire handler: " << this << endl;
+  //cerr << "(" << thr_self () << ") acquire handler: " << this << endl;
   this->count_.acquire_read ();
 }
 
 void
 JAWS_Asynch_IO_Handler::lock (void)
 {
-cerr << "(" << thr_self () << ") locking handler: " << this << endl;
+  //cerr << "(" << thr_self () << ") locking handler: " << this << endl;
   this->count_.acquire_write ();
 }
 
 void
 JAWS_Asynch_IO_Handler::release (void)
 {
-cerr << "(" << thr_self () << ") release handler: " << this << endl;
+  //cerr << "(" << thr_self () << ") release handler: " << this << endl;
   this->count_.release ();
 }
 
