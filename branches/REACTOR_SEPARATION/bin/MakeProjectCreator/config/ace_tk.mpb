@@ -2,10 +2,10 @@
 // ace_tk.mpb,v
 
 project {
-  requires += ace_with_tk
+  requires += tk
   macros   += ACE_HAS_TK
-
   // Depends on configration from include/makeinclude/platform_*.GNU
+  
   verbatim(gnuace,local) {
     CPPFLAGS += $(PLATFORM_TCL_CPPFLAGS) $(PLATFORM_TK_CPPFLAGS)
     LIBS += $(PLATFORM_TCL_LIBS) $(PLATFORM_TK_LIBS)

@@ -936,18 +936,16 @@ project(XtAthenaReactor Test) : acetest, ace_xtreactor, ace_athena {
   }
 }
 
-project(FlReactor Test) : acetest {
+project(FlReactor Test) : acetest, ace_flreactor {
   exename   = FlReactor_Test
-  requires += ace_other
 
   Source_Files {
     FlReactor_Test.cpp
   }
 }
 
-project(TkReactor Test) : acetest {
+project(TkReactor Test) : acetest,ace_tkreactor {
   exename   = TkReactor_Test
-  requires += ace_other
 
   Source_Files {
     TkReactor_Test.cpp

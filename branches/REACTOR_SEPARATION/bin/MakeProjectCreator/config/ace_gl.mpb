@@ -2,7 +2,7 @@
 // ace_gl.mpb,v
 
 project : ace_x11 {
-  requires += ace_with_gl
+  requires += gl
 
   // Depends on configration from include/makeinclude/platform_*.GNU
   verbatim(gnuace,local) {

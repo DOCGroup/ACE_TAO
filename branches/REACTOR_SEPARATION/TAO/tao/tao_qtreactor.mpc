@@ -1,12 +1,13 @@
-project(TAO_QtReactor) : acelib, taolib, taoversion, core, tao_output, taodefaults, ace_qt {
+project(TAO_QtReactor) : acelib, taolib, taoversion, core, tao_output, taodefaults, ace_qtreactor {
+  requires     += tao_qtreactor
   sharedname   = TAO_QtReactor
   dynamicflags += TAO_QTREACTOR_BUILD_DLL
   Header_Files {
-    TAO_QtReactor_Export.h
     qt_resource.h
+    TAO_QtReactor_export.h
   }
   Inline_Files {
-    qt_resource.i.h
+    qt_resource.i
   }
   Source_Files(TAO_COMPONENTS) {
     Default_Resources {

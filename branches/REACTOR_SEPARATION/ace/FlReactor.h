@@ -26,7 +26,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (ACE_HAS_FL)
-
+#include "ace/ACE_FlReactor_export.h"
 #include "ace/Select_Reactor.h"
 
 /**
@@ -42,7 +42,7 @@
  * events.  This class adapts this simple mechanisms so they are
  * compatible with ACE's Reactor.
  */
-class ACE_Export ACE_FlReactor : public ACE_Select_Reactor
+class ACE_FlReactor_Export ACE_FlReactor : public ACE_Select_Reactor
 {
 
 public:

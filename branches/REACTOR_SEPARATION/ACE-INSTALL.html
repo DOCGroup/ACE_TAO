@@ -38,8 +38,7 @@ report process</a>.<p>
   </li><li><a href="#aceinstall">Building and Installing ACE</a>
   </li><li><a href="#svcsinstall">Building and Installing ACE Network Services</a>
   </li><li><a href="#sslinstall">Building and Installing The ACE_SSL Library</a>
-  </li><li><a href="#qtreactor_install">Building, Installing and Using The ACE_QtReactor Library</a>
-  </li><li><a href="#xtreactor_install">Building, Installing and Using The ACE_XtReactor Library</a>
+  </li><li><a href="#guireactor_install">Building and Using GUI Reactors Libraries</a>
   </li><li><a href="#minimum_build">What Do I Need to Build for TAO?</a>
   </li><li><a href="#resource_requirements">System Resource Requirements</a>
   </li><li><a href="#MPC">General MPC Information</a>
@@ -2415,77 +2414,80 @@ below.</p>
 </ol>
 </p>
 
-<h3><a name="qtreactor_install">Building, Installing and Using The ACE_QtReactor Library</a></h3>
-<p>The first step for all platforms is to build and install the
-<a href="http://www.trolltech.com/">Qt</a> library.  The
-<code>ACE_QtReactor</code> library must then be built according to the instructions
-below.</p>
-
-<ol>
-  <li>Make sure that the <code>QTDIR</code> environment variable points to Qt distribution
-  folder. Usually this variable is set by Qt distribution, hence one has nothing to do.</li>
-  <li> Add <code>qt_reactor=1</code> to your <code>$MPC_ROOT/config/default.features</code> and
-  generate build files using MPC. Alternatively, re-run MPC with <code>-features qt_reactor=1</code>
-  switch to obtain build files with Qt support.</li>
-  <li>Build ACE using MPC generated files. Add <code>qt_reactor=1</code> command line option to
-  <code>make</code> if necessary.After compilation <code>ACE_QtReactor</code> library should be
-  placed in libout directory.</li>
-</ol>
-
-To use <code>ACE_QtReactor</code> library in user application one has to ensure the library was built as
-described above. Then there are at least two options:
-<ol>
-  <li>For MPC based application one has to derive a project from <code>ace_qtreactor</code>
-      and generate build files using <code>-features qt_reactor=1</code> switch or by setting
-      <code>qt_reactor=1</code> in <code>default.features</code> file. The <code>ace_qtreactor</code> base project
-      ensures all path variables are set correctly and add links necessary libraries to the
-      project, as well as makes the project dependant on necessary features.</li>
-  <li>For application with custom build system one has to define path to Qt includes and
-      libraries and also link the application with <code>qt-mt</code> and
-      <code>ACE_QtReactor</code> library.</li>
-</ol>
-
-<h3><a name="xtreactor_install">Building, Installing and Using The ACE_XtReactor Library</a></h3>
-<p>The first step for all platforms is to build and install the
-X Toolkit library, which usually comes with X11 distribution.  The
-<code>ACE_XtReactor</code> library must then be built according to the instructions
-below.</p>
-
-<ol>
-  <li>Make sure that the <code>X11</code> and <code>XT</code> make variables are set correctly in
-  <code>include/makeinclude/platform_macros</code>. Usually this variables are set as needed in
-  ACE distribution.</li>
-  <li> Add <code>ace_with_xt=1</code> and <code>ace_with_xt=1</code> to your
-  <code>$MPC_ROOT/config/default.features</code> and generate build files using MPC.
-  Alternatively, re-run MPC with <code>-features ace_with_x11=1,ace_with_xt=1</code>
-  switch to obtain build files with Xt support.</li>
-  <li>Build ACE using MPC generated files. Add <code>ace_with_x11=1</code> and
-  <code>ace_with_xt=1</code> command line option to makefile if necessary.
-  After compilation <code>ACE_XtReactor</code> library should be
-  placed in libout directory.</li>
-</ol>
-
-To use <code>ACE_XtReactor</code> library in user application one has to ensure the library was built as
-described above. Then there are at least two options:
-<ol>
-  <li>For MPC based application one has to derive a project from <code>ace_xtreactor</code>
-      and generate build files using <code>-features ace_with_x11=1,ace_with_xt=1</code> switch
-      or by setting <code>ace_with_xt=1</code> and <code>ace_with_xt</code>
-      in <code>default.features</code> file. The <code>ace_xtreactor</code> base project
-      ensures all path variables are set correctly and add links necessary libraries to the
-      project, as well as makes the project dependant on necessary features.</li>
-  <li>For application with custom build system one has to define path to Xt includes and
-      libraries and also link the application with <code>X11</code>, <code>Xt</code> and
-      <code>ACE_XtReactor</code> library.</li>
-</ol>
-
-There are some examples of using <code>ACE_XtReactor</code> in <code>ACE</code> distribution.
-They depend additionally on either <code>Motif/Lestif</code> or <code>Athena</code>
-widgets. To build these examples one has to install <code>Motif/Lestif</code> or
-<code>Athena</code> libraries and generate <code>makefiles</code> from MPC additionally using either
-<code>ace_with_motif=1</code> or <code>ace_with_athena=1</code> switches. The examples are derived from
-either <code>ace_motif</code> or <code>ace_athena</code> MPC base project, which provides necessry
-build settings.
+<hr><p>
+</p><h3><a name="guireactor_install">Building and Using GUI Reactors Libraries</a></h3>
+There is a general method for building and using <code>ACE_Reactors</code> for various GUI
+libraries.
+    <h4> Building GUI Reactor Library </h4>
+    <ol>
+      <li>Try to generate build files using MPC. Inspect the output of MPC to find out which features are
+        necessary to build given reactor. Add these features to
+        <code>ACE_wrappers/bin/MakeProjectCreator/*.features</code> file, or pass them directly to MPC
+        using <code>-features</code> command line option. For example, for <code>FlReactor</code> the procedure
+        consists of five steps
+        <ol>
+          <li> In the first pass one gets that <code>x11</code> (X11 libraries) is missing.<br>
+            <code>$ mwc.pl
+              Skipping ACE_FlReactor (ace_flreactor.mpc), it requires x11.
+            </code></li>
+            Ensure that <code>X11</code> libraries are installed, then pass <code>x11=1</code> feature to MPC.
+          <li>In the second pass one gets that <code>gl</code> (OpenGL library) is missing.<br>
+            <code>$ mwc.pl -features x11=1 ace.mwc
+              Skipping ACE_FlReactor (ace_flreactor.mpc), it requires gl.
+            </code></li>
+            Ensure that <code>OpenGL</code> libraries are installed, then pass <code>gl=1</code> feature to MPC.
+          <li>In the third pass one gets that <code>fl</code> (Fast Light Toolkit) is missing.<br>
+            <code>$ mwc.pl -features x11=1,gl=1 ace.mwc
+              Skipping ACE_FlReactor (ace_flreactor.mpc), it requires fl.
+            </code></li>
+            Ensure that <code>Fast Light Toolkit</code> libraries are installed, then pass <code>fl=1</code>
+            feature to MPC.
+          <li>In the fourth pass one gets that <code>ace_flreactor</code> feature is missing<br>
+            <code>$ mwc.pl -features x11=1,gl=1,fl=1 ace.mwc
+              Skipping ACE_FlReactor (ace_flreactor.mpc), it requires ace_flreactor.
+            </code></li>
+          Allow MPC to generate makefiles for <code>FlReactor</code> by setting <code>ace_flreactor=1</code> feature.
+          <li>In the last pass one obtains files for building <code>FlReactor</code>.<br>
+            <code>$ mwc.pl -features x11=1,gl=1,fl=1,ace_flreactor=1 ace.mwc
+            </code></li>
+        </ol>
+      </li>
+      <li> Required build files are generated now, it is enough then to invoke build tool.
+      For example for under <code>MPC::gnuace</code> one has to call
+      <code>make x11=1 gl=1 fl=1 ace_flreactor=1</code>. For <code>MPC::vc7</code> target all features are
+      encoded in generated project files, thus it is enough to compile ACE using MSVC.</li>
+  </ol>
+    The build procedure leads to a specific GUI Reactor library. For example, for
+    <code>Qt</code> and <code>Linux </code> one gets <code>libQtReactor.so</code>, while for
+    <code>Windows</code> the results are shared <code>QtReactor.dll</code> and import
+    <code>QtReactor.lib</code> libraries or their variants depending on build options.
+  <h4> Using GUI Reactor Library </h4>
+    MPC-based application projects depending on specific [Gui]Reactor may inherit settings from
+    <code>ace_[gui]reactor.mpb</code> base projects. These base projects ensure that all necessary libraries
+    are linked to the aplpication, specifies features necessary to build a project and moreover impose a
+    build order consistant with ACE. For example, the application project using <code>XtReactor</code> should be
+    derived from <code>ace_xtreactor.mpb</code>.
+  <h4>Notes on specific GUI Reactors</h4>
+    <ul>
+      <li> <code>QtReactor</code></li>
+        The build is controlled by <code>ace_glreactor</code> feature.
+        To build this reactor one has to provide feature <code>qt</code> (Qt library). Moreover,
+        it is assumed that <code>Qt</code> was installed in a standard way
+        and <code>QTDIR</code> points to <code>Qt</code> installation folder.
+      <li> <code>XtReactor</code></li>
+        The build is controlled by <code>ace_xtreactor</code> feature.
+        To build this reactor one has to provide the following features: <code>x11</code> (X11 libraries) and
+        <code>xt</code> (X11 Toolkit). Moreover, some examples and tests related with <code>XtReactor</code>
+        needs additionall features namely either <code>motif</code> (Motif/Lesstif libraries) or
+        <code>athena</code> (Athena widgets).
+      <li> <code>TkReactor</code></li>
+        The is controlled by <code>ace_tkreactor</code> feature. To build this reactor one has to provide
+        <code>tk</code> (Tcl libraries) feature.
+      <li> <code>FlReactor</code></li>
+        The  build is controlled by <code>ace_flreactor</code> feature.
+        To build this reactor one has to provide the following features: <code>x11</code> (X11 libraries),
+        <code>gl</code> (OpenGl) and <code>fl</code> (Fast Light Toolkit).
+    </ul>
 
 <hr><p>
 </p><h3><a name="minimum_build">What Do I Need to Build for TAO?</a></h3>
@@ -2883,11 +2885,10 @@ shared_libs_only Only build shared libraries.  Ignored if no SHLIBs are
                    specified by the Makefile, as in performance-tests/Misc.
 static_libs_only Only build static libraries.
 threads          Build with thread support.
-xt_reactor       Build the XtReactor. Needs makefiles generated with  ace_with_xt=1, ace_with_x11=1.
+xt_reactor       Build the XtReactor.
 fl_reactor       Build the FlReactor.
 tk_reactor       Build the TkReactor.
-qt_reactor       Build the QtReactor. Needs makefiles generated with  qt=1.
-gtk_reactor      Build the GtkReactor.
+qt_reactor       Build the QtReactor.
 ssl              Build with OpenSSL support.
 rapi             Build with RAPI
 split            Build the library by first splitting up the ACE source
@@ -2961,7 +2962,7 @@ from
 <EM><br> -->
 
 <!-- hhmts start -->
-Last modified: Sat Dec 11 13:35:44 CET 2004
+Last modified: Sat Dec 11 17:34:25 CET 2004
 <!-- hhmts end -->
 
 

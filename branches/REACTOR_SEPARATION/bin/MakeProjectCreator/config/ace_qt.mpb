@@ -1,51 +1,12 @@
 // -*- MPC -*-
 // $Id$
-// This file is redundant with respect to MPC/config/qt.mpb, but this redundancy is
-// necessary for a build system to be simple and consistent with the remaining GUI
-// reactors. MPC/config/qt.mpb is good for making qt-based applications independent
-// on ACE. But when compiling ace one has to turn on qt feature and also qt_reactor,
-// which is incovienent. Obviously, we can use only one feature for build ace with
-// Qt, name MPC::qt, but then building and using QtReactor is inconsistent with
-// remaining reactor, which requires only ACE specific features. It
-project {
-  requires += qt_reactor
-  includes += $(QTDIR)/include
-  libpaths += $(QTDIR)/lib
-  macros   += QT_THREAD_SUPPORT
 
+
+project: qt {
   // Depends on configration from include/makeinclude/platform_*.GNU
   verbatim(gnuace,local) {
     CPPFLAGS += $(PLATFORM_QT_CPPFLAGS)
     LIBS += $(PLATFORM_QT_LIBS)
     LDFLAGS += $(PLATFORM_QT_LDFLAGS)
   }
-
-  // @@ Notice: If you are building with Cygwin, you may need to manually
-  //            change the following Qt library to qt-mt230nc.
-  specific(gnuace, make, sle, automake, ghs) {
-    lit_libs += qt-mt
-  } else {
-    lit_libs += qt-mt230nc
-  }
-
-  Define_Custom(UIC) {
-    automatic        = 1
-    command          = $(QTDIR)/bin/uic
-    postcommand      = $(QTDIR)/bin/uic -impl <%output_noext%>.h -o <%output_noext%>.cpp <%input%>
-    output_option    = -o
-    inputext         = .ui
-    header_outputext = .h
-  }
-
-  Define_Custom(MOC) {
-    automatic        = 0
-    command          = $(QTDIR)/bin/moc
-    output_option    = -o
-    pch_postrule     = 1
-    inputext         = .h
-    pre_extension    = _moc
-    source_outputext = .cpp
-  }
-
-
 }
