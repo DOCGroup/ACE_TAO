@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/CDR_Stream.h"
 #include "ace/SString.h"
 
@@ -7,8 +5,9 @@
 # include "ace/CDR_Stream.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(ace, CDR_Stream, "$Id$")
-
+ACE_RCSID (ace,
+           CDR_Stream,
+           "$Id$")
 
 
 // ****************************************************************
@@ -177,9 +176,16 @@ ACE_OutputCDR::write_wchar (ACE_CDR::WChar x)
                                          (const ACE_CDR::Octet*, &x),
                                          ACE_static_cast (ACE_CDR::ULong, len));
     }
-  else
-    if (this->wchar_translator_ == 0)
-      return this->write_2 (ACE_reinterpret_cast (const ACE_CDR::UShort*, &x));
+  else if (this->wchar_translator_ == 0)
+    {
+      if (sizeof (ACE_CDR::WChar) == 2)
+        return this->write_2 (ACE_reinterpret_cast (const ACE_CDR::UShort *,
+                                                    &x));
+      else
+        return this->write_4 (ACE_reinterpret_cast (const ACE_CDR::ULong *,
+                                                    &x));
+
+    }
   return this->wchar_translator_->write_wchar (*this, x);
 }
 
@@ -776,17 +782,20 @@ ACE_CDR::Boolean
 ACE_InputCDR::skip_wchar (void)
 {
   if (ACE_static_cast (ACE_CDR::Short, major_version_) == 1
-          && ACE_static_cast (ACE_CDR::Short, minor_version_) == 2)
-  {
-    ACE_CDR::Octet len;
-    if (this->read_1 (&len))
-      return this->skip_bytes (ACE_static_cast (size_t, len));
-  }
+      && ACE_static_cast (ACE_CDR::Short, minor_version_) == 2)
+    {
+      ACE_CDR::Octet len;
+      if (this->read_1 (&len))
+        return this->skip_bytes (ACE_static_cast (size_t, len));
+    }
   else
-  {
-    ACE_CDR::WChar x;
-      return this->read_2 (ACE_reinterpret_cast (ACE_CDR::UShort*,&x));
-  }
+    {
+      ACE_CDR::WChar x;
+      if (sizeof (ACE_CDR::WChar) == 2)
+        return this->read_2 (ACE_reinterpret_cast (ACE_CDR::UShort *,&x));
+      else
+        return this->read_4 (ACE_reinterpret_cast (ACE_CDR::ULong *,&x));
+    }
 
   return 0;
 }
@@ -811,8 +820,12 @@ ACE_InputCDR::read_wchar (ACE_CDR::WChar& x)
     }
   else if (this->wchar_translator_ == 0)
     {
-      return this->read_2 (ACE_reinterpret_cast (ACE_CDR::UShort*,
-                                                 &x));
+      if (sizeof (ACE_CDR::WChar) == 2)
+        return this->read_2 (ACE_reinterpret_cast (ACE_CDR::UShort *,
+                                                   &x));
+      else
+        return this->read_4 (ACE_reinterpret_cast (ACE_CDR::ULong *,
+                                                   &x));
     }
 
   return this->wchar_translator_->read_wchar (*this,

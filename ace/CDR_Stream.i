@@ -276,8 +276,10 @@ ACE_OutputCDR::write_wchar_array (const ACE_CDR::WChar* x,
 {
   if (this->wchar_translator_ == 0)
     return this->write_array (x,
-			      ACE_CDR::SHORT_SIZE,
-			      ACE_CDR::SHORT_ALIGN,
+                              sizeof (ACE_CDR::WChar),
+                              sizeof (ACE_CDR::WChar) == 2
+                              ? ACE_CDR::SHORT_ALIGN
+                              : ACE_CDR::LONG_ALIGN,
 			      length);
   return this->wchar_translator_->write_wchar_array (*this, x, length);
 }
@@ -630,14 +632,15 @@ ACE_InputCDR::read_wchar_array (ACE_CDR::WChar* x,
 {
   // Make sure the length of the array isn't greater than the length of
   // the stream.
-  // @@ This is goofy for wchars in GIOP 1.2. This may fail..
-  if (length * ACE_CDR::SHORT_SIZE > this->length())
+  if (length * sizeof (ACE_CDR::WChar) > this->length())
     return 0;
 
   if (this->wchar_translator_ == 0)
     return this->read_array (x,
-			     ACE_CDR::SHORT_SIZE,
-			     ACE_CDR::SHORT_ALIGN,
+			     sizeof (ACE_CDR::WChar),
+			     sizeof (ACE_CDR::WChar) == 2
+                             ? ACE_CDR::SHORT_ALIGN
+                             : ACE_CDR::LONG_ALIGN,
 			     length);
   return this->wchar_translator_->read_wchar_array (*this, x, length);
 }
