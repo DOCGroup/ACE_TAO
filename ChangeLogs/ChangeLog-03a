@@ -1,3 +1,11 @@
+Sat Aug 18 13:18:10 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+ 	* ace/ACE.{h,cpp}: Added a new write_n(...ACE_Message_Block *...)
+	  for file transfers that's the dual of
+ 	  send_n(...ACE_Message_Block *...).  This helps out the C++NPv1
+ 	  book symmetry.  Thanks to Alain Decamps <Alain.Decamps@PIDPA.be>
+ 	  for motivating this.
+
 Fri Aug 17 18:17:38 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* bin/clone.cpp: Only use extern char *sys_errlist[] if we're not

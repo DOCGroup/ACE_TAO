@@ -181,7 +181,7 @@ public:
   // Destructor
 
   ACE_INET_Addr get_inet_address (void) const;
-  // Build the INET_Address implicit in the URL, notice that we 
+  // Build the INET_Address implicit in the URL, notice that we
   // maintain the hostname in its string representation, because the
   // URL can be can be refering to an hostname that cannot be
   // validated at this point.

@@ -2067,6 +2067,94 @@ ACE::sendv_n_i (ACE_HANDLE handle,
     return bytes_transferred;
 }
 
+ASYS_INLINE ssize_t
+ACE::write_n (ACE_HANDLE handle,
+              const ACE_Message_Block *message_block,
+              size_t *bt)
+{
+  size_t temp;
+  size_t &bytes_transferred = bt == 0 ? temp : *bt;
+  bytes_transferred = 0;
+
+  iovec iov[ACE_IOV_MAX];
+  int iovcnt = 0;
+
+  while (message_block != 0)
+    {
+      // Our current message block chain.
+      const ACE_Message_Block *current_message_block = message_block;
+
+      while (current_message_block != 0)
+        {
+          size_t current_message_block_length =
+            current_message_block->length ();
+
+          // Check if this block has any data to be sent.
+          if (current_message_block_length > 0)
+            {
+              // Collect the data in the iovec.
+              iov[iovcnt].iov_base = current_message_block->rd_ptr ();
+              iov[iovcnt].iov_len  = current_message_block_length;
+
+              // Increment iovec counter.
+              iovcnt++;
+
+              // The buffer is full make a OS call.  @@ TODO find a way to
+              // find ACE_IOV_MAX for platforms that do not define it rather
+              // than simply setting ACE_IOV_MAX to some arbitrary value such
+              // as 16.
+              if (iovcnt == ACE_IOV_MAX)
+                {
+                  size_t current_transfer = 0;
+
+                  ssize_t result = ACE::writev_n (handle,
+                                                  iov,
+                                                  iovcnt,
+                                                  &current_transfer);
+
+                  // Add to total bytes transferred.
+                  bytes_transferred += current_transfer;
+
+                  // Errors.
+                  if (result == -1 || result == 0)
+                    return result;
+
+                  // Reset iovec counter.
+                  iovcnt = 0;
+                }
+            }
+
+          // Select the next message block in the chain.
+          current_message_block = current_message_block->cont ();
+        }
+
+      // Selection of the next message block chain.
+      message_block = message_block->next ();
+    }
+
+  // Check for remaining buffers to be sent.  This will happen when
+  // ACE_IOV_MAX is not a multiple of the number of message blocks.
+  if (iovcnt != 0)
+    {
+      size_t current_transfer = 0;
+
+      ssize_t result = ACE::writev_n (handle,
+                                      iov,
+                                      iovcnt,
+                                      &current_transfer);
+
+      // Add to total bytes transferred.
+      bytes_transferred += current_transfer;
+
+      // Errors.
+      if (result == -1 || result == 0)
+        return result;
+    }
+
+  // Return total bytes transferred.
+  return bytes_transferred;
+}
+
 ssize_t
 ACE::send_n (ACE_HANDLE handle,
              const ACE_Message_Block *message_block,
