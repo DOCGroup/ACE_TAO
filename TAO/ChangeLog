@@ -1,3 +1,9 @@
+Sun May 11 08:50:15 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* rules.tao.GNU: Added the list of new libraries to
+	  RT_TAO_SRVR_LIBS. This shoudl prevent link errors in static
+	  builds.
+
 Sun May 11 12:22:10 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* docs/tutorials/Quoter/*/Makefile: Updated dependencies.
