@@ -1,3 +1,10 @@
+Thu Apr 26 12:37:45 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/README: Updated the list of tests that do not work on
+	  windows 9x/ME for their limited shared memory support.  Thanks
+	  to Cristian Ferretti <cristian_ferretti@yahoo.com> for pointing
+	  them out.
+
 Thu Apr 26 12:30:19 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Containers_T.h Updated documentation for

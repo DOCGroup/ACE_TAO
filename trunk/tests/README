@@ -34,9 +34,10 @@ The tests have been run on a wide range of platforms (e.g., UNIX,
 pSOS, VxWorks, LynxOS, Windows NT/2000/95/98/etc.) and they all work
 with the following exceptions:
 
-1. Name_Server_Test on Windows 95: this does not work on Windows 95
-   since Windows 95 has a different model for shared memory and does
-   not support explicitly selecting shared memory addresses.
+1. Naming_Test, MEM_Stream_Test, Malloc_Test, and
+   MM_Shared_Memory_Test on Windows 98/95/ME: these do not work on
+   Windows 9x since Windows 9x has a different model for shared memory
+   and does not support explicitly selecting shared memory addresses.
 
 2. UPIPE_Test and SPIPE_Test on Windows 95: these do not work on
    Windows 95 since Windows 95 does not support the server side
