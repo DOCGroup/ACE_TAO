@@ -230,7 +230,8 @@ ORB_CORE_FILES = \
   Parser_Registry \
   IOR_Parser \
   DLL_Parser \
-  FILE_Parser
+  FILE_Parser \
+  Bind_Dispatcher_Guard
 
 DYNAMIC_ANY_FILES =
 
