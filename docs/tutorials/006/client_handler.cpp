@@ -176,6 +176,8 @@ int Client_Handler::open (void *_acceptor)
  */
 int Client_Handler::close(u_long flags)
 {
+    ACE_UNUSED_ARG(flags);
+
     /*
       We use the destroy() method to clean up after ourselves.
       That will take care of removing us from the reactor and then

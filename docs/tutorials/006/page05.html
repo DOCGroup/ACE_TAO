@@ -200,6 +200,8 @@ int <font color=#008888>Client_Handler::open</font> (void *_acceptor)
  */</font>
 int <font color=#008888>Client_Handler::close</font>(u_long flags)
 {
+    ACE_UNUSED_ARG(flags);
+
     <font color=red>/*
       We use the destroy() method to clean up after ourselves.
       That will take care of removing us from the reactor and then

@@ -22,53 +22,46 @@ of the timeout variable passed to recv().
 
 <P>
 <HR WIDTH="100%"><TT></TT>
+<PRE>
 
-<P><TT>#include "ace/SOCK_Dgram_Bcast.h"</TT>
-<BR><TT>#include "ace/INET_Addr.h"</TT><TT></TT>
+<font color=red>// $Id$</font>
 
-<P><TT>static const u_short PORT = ACE_DEFAULT_SERVER_PORT;</TT><TT></TT>
+<font color=blue>#include</font> "<font color=green>ace/SOCK_Dgram_Bcast.h</font>"
+<font color=blue>#include</font> "<font color=green>ace/INET_Addr.h</font>"
 
-<P><TT>int main (int argc, char *argv[])</TT>
-<BR><TT>{</TT>
-<BR><TT>&nbsp; ACE_INET_Addr local ((u_short) 0);</TT>
-<BR><TT>&nbsp; ACE_INET_Addr remote (PORT, INADDR_BROADCAST);</TT>
-<BR><TT>&nbsp; ACE_SOCK_Dgram_Bcast dgram;</TT><TT></TT>
+static const u_short PORT = ACE_DEFAULT_SERVER_PORT;
 
-<P><TT>&nbsp; if (dgram.open (local) == -1)</TT>
-<BR><TT>&nbsp; {</TT>
-<BR><TT>&nbsp;&nbsp;&nbsp; ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"),
--1);</TT>
-<BR><TT>&nbsp; }</TT><TT></TT>
+int main (int argc, char *argv[])
+{
+  ACE_INET_Addr local ((u_short) 0);
+  ACE_INET_Addr remote (PORT, INADDR_BROADCAST);
+  ACE_SOCK_Dgram_Bcast dgram;
 
-<P><TT>&nbsp; char buf[512];</TT><TT></TT>
+  if (dgram.open (local) == -1)
+  {
+    ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green>open</font>"), -1);
+  }
 
-<P><TT>&nbsp; sprintf (buf, argc > 1 ? argv[1] : "Hello World!");</TT><TT></TT>
+  char buf[512];
 
-<P><TT>&nbsp; if (dgram.send (buf, strlen (buf) + 1, remote) == -1)</TT>
-<BR><TT>&nbsp; {</TT>
-<BR><TT>&nbsp;&nbsp;&nbsp; ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send"),
--1);</TT>
-<BR><TT>&nbsp; }</TT><TT></TT>
+  sprintf (buf, argc > 1 ? argv[1] : "<font color=green>Hello World!</font>");
 
-<P><TT>&nbsp; ACE_Time_Value timeout (2, 0);</TT>
-<BR><TT>&nbsp; if (dgram.recv (buf, sizeof (buf), remote, 0, &amp;timeout)
-== -1)</TT>
-<BR><TT>&nbsp; {</TT>
-<BR><TT>&nbsp;&nbsp;&nbsp; ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "recv"),
--1);</TT>
-<BR><TT>&nbsp; }</TT><TT></TT>
+  if (dgram.send (buf, strlen (buf) + 1, remote) == -1)
+  {
+    ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green>send</font>"), -1);
+  }
 
-<P><TT>&nbsp; ACE_DEBUG ((LM_DEBUG, "(%P|%t) The server at (%s) said (%s)\n",</TT>
-<BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-remote.get_host_name (), buf));</TT><TT></TT>
+  ACE_Time_Value timeout (2, 0);
+  if (dgram.recv (buf, sizeof (buf), remote, 0, &timeout) == -1)
+  {
+    ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green>recv</font>"), -1);
+  }
 
-<P><TT>&nbsp; return (0);</TT>
-<BR><TT>}</TT>
+  ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) The server at (%s) said (%s)\n</font>",
+	      remote.get_host_name (), buf));
 
-<P>
-<HR WIDTH="100%">
-<CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page05.html">Continue
-This Tutorial</A>]</CENTER>
-
-</BODY>
-</HTML>
+  return (0);
+}
+</PRE>
+<P><HR WIDTH="100%">
+<CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page05.html">Continue This Tutorial</A>]</CENTER>
