@@ -1,3 +1,9 @@
+Sun Apr 11 16:02:49 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* performance-tests/Misc/preempt.cpp: 
+	* examples/Threads/task_five.cpp: 
+	Replaced ACE_MT_SYNCH by ACE_SYNCH to get it compile on Linux.
+
 Sun Apr 11 14:38:22 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* configure.in:
