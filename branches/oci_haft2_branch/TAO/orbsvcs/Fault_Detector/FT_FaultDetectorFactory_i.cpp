@@ -462,7 +462,7 @@ void TAO::FT_FaultDetectorFactory_i::change_properties (
 
   ::TAO_PG::Properties_Decoder decoder(property_set);
 
-#if 0 // PG_FIND
+#if 1 // PG_FIND
 
   TimeBase::TimeT value = 0;
   if( TAO_PG::find (decoder, FT::FT_FAULT_MONITORING_INTERVAL, value) )
@@ -566,7 +566,7 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
   int missingParameter = 0;
   const char * missingParameterName = 0;
 
-#if 0 // PG_FIND
+#if 1 // PG_FIND
   FT::FaultNotifier_ptr notifier;
   if (! ::TAO_PG::find (decoder, ::FT::FT_NOTIFIER, notifier) )
   {
