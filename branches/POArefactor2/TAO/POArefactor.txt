@@ -1,3 +1,12 @@
+Mon Jan 10 12:11:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/RequestProcessing*.*:
+          Added factories for Default Servant and AOMOnly so that we can
+          create instances per POA.
+
+        * tao/Active_Policy_Strategies.{h,cpp}:
+          Store request processing strategy factory
+
 Mon Jan 10 10:12:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/PortableServer.pidl:
