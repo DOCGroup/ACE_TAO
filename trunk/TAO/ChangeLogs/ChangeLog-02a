@@ -1,3 +1,35 @@
+Mon Feb 28 09:56:34 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Resource_Factory.h (TAO_Protocol_Item):
+	* tao/Resource_Factory.cpp (factory):
+
+	  Added flag that indicates whether or not the TAO_Protocol_Item
+	  retains ownership of the Protocol_Factory it contains.  Thanks
+	  to Christopher Kohlhoff <chris@kohlhoff.com> for suggesting this
+	  change.
+
+	* tao/default_resource.cpp (init_protocol_factories):
+
+	  Fixed potential memory leaks related to protocol factory pointer
+	  ownership.  Ownership of a factory pointer is transferred to the
+	  TAO_Protocol_Item only if a Protocol_Factory is allocated by the
+	  default resource factory, instead of obtaining it from the
+	  Service Configurator.  Thanks to Christopher Kohlhoff for
+	  reporting this bug, and suggesting a fix.
+
+	  Fixed potential problem where a TAO_Protocol_Item was used to
+	  obtain debugging output after it was deallocated.
+
+	  Improved exception safety by adding and using an
+	  auto_ptr<TAO_Protocol_Factory> instance.
+
+	  Wrapped some debugging text with the ASYS_TEXT() macro.  These
+	  were missed in a previous iteration.
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl:
+
+	  Added an IDL_Cubit run that uses a SHMIOP endpoint.
+
 Sat Feb 26 17:29:50 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/orbsvcs/orbsvcs.dsp: Added dependencies for tao_idl
