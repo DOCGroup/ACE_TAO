@@ -395,84 +395,87 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "return obj;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
-  // Generate the is_a method (not supported on local objects).
-  if (! node->is_local ())
+  *os << "CORBA::Boolean" << be_nl
+      << node->full_name () << "::_is_a (" << be_idt << be_idt_nl
+      << "const char *value" << be_nl
+      << "ACE_ENV_ARG_DECL";
+
+  if (node->is_abstract ())
     {
-      *os << "CORBA::Boolean" << be_nl
-          << node->full_name () << "::_is_a (" << be_idt << be_idt_nl
-          << "const char *value" << be_nl
-          << "ACE_ENV_ARG_DECL";
-
-      if (node->is_abstract ())
-        {
-          *os << "_NOT_USED";
-        }
-
-      *os << be_uidt_nl << ")" << be_uidt_nl
-          << "{" << be_idt_nl
-          << "if (" << be_idt << be_idt_nl;
-
-      int status =
-        node->traverse_inheritance_graph (be_interface::is_a_helper,
-                                          os);
-
-      if (status == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_interface_cs::"
-                             "visit_interface - "
-                             "_is_a method codegen failed\n"),
-                            -1);
-        }
-
-      if (node->is_abstract () || node->has_mixed_parentage ())
-        {
-          *os << "!ACE_OS::strcmp (" << be_idt << be_idt_nl
-              << "(char *)value," << be_nl
-              << "\"IDL:omg.org/CORBA/AbstractBase:1.0\"" << be_uidt_nl
-              << ")";
-        }
-
-      if (node->has_mixed_parentage ())
-        {
-          *os << " ||" << be_uidt_nl;
-        }
-      else if (node->is_abstract ())
-        {
-          *os << be_uidt << be_uidt_nl;
-        }
-
-      if (! node->is_abstract ())
-        {
-          *os << "!ACE_OS::strcmp (" << be_idt << be_idt_nl
-              << "(char *)value," << be_nl
-              << "\"IDL:omg.org/CORBA/Object:1.0\"" << be_uidt_nl
-              << ")" << be_uidt << be_uidt_nl;
-        }
-
-      *os << " )" << be_nl
-          << "{" << be_idt_nl
-          << "return 1; // success using local knowledge" << be_uidt_nl
-          << "}" << be_uidt_nl
-          << "else" << be_idt_nl
-          << "{" << be_idt_nl;
-
-      if (node->is_abstract ())
-        {
-          *os << "return 0;" << be_uidt_nl;
-        }
-      else
-        {
-          *os << "return this->ACE_NESTED_CLASS (CORBA, Object)::_is_a ("
-              << be_idt << be_idt_nl
-              << "value" << be_nl
-              << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
-              << ");" << be_uidt << be_uidt_nl;
-        }
-
-      *os << "}" << be_uidt << be_uidt_nl
-          << "}" << be_nl << be_nl;
+      *os << "_NOT_USED";
     }
+
+  *os << be_uidt_nl << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "if (" << be_idt << be_idt_nl;
+
+  int status =
+    node->traverse_inheritance_graph (be_interface::is_a_helper,
+                                      os);
+
+  if (status == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_interface_cs::"
+                         "visit_interface - "
+                         "_is_a method codegen failed\n"),
+                        -1);
+    }
+
+  if (node->is_abstract () || node->has_mixed_parentage ())
+    {
+      *os << "!ACE_OS::strcmp (" << be_idt << be_idt_nl
+          << "(char *)value," << be_nl
+          << "\"IDL:omg.org/CORBA/AbstractBase:1.0\"" << be_uidt_nl
+          << ")";
+    }
+  else if (node->is_local ())
+    {
+      *os << "!ACE_OS::strcmp (" << be_idt << be_idt_nl
+          << "(char *)value," << be_nl
+          << "\"IDL:omg.org/CORBA/LocalObject:1.0\"" << be_uidt_nl
+          << ")";
+    }
+
+  if (node->has_mixed_parentage () || node->is_local ())
+    {
+      *os << " ||" << be_uidt_nl;
+    }
+  else if (node->is_abstract ())
+    {
+      *os << be_uidt << be_uidt_nl;
+    }
+
+  if (! node->is_abstract ())
+    {
+      *os << "!ACE_OS::strcmp (" << be_idt << be_idt_nl
+          << "(char *)value," << be_nl
+          << "\"IDL:omg.org/CORBA/Object:1.0\"" << be_uidt_nl
+          << ")" << be_uidt << be_uidt_nl;
+    }
+
+  *os << " )" << be_nl
+      << "{" << be_idt_nl
+      << "return 1; // success using local knowledge" << be_uidt_nl
+      << "}" << be_uidt_nl
+      << "else" << be_idt_nl
+      << "{" << be_idt_nl;
+
+  if (node->is_abstract () || node->is_local ())
+    {
+      *os << "return 0;" << be_uidt_nl;
+    }
+  else
+    {
+      *os << "return this->ACE_NESTED_CLASS (CORBA, Object)::_is_a ("
+          << be_idt << be_idt_nl
+          << "value" << be_nl
+          << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
+          << ");" << be_uidt << be_uidt_nl;
+    }
+
+  *os << "}" << be_uidt << be_uidt_nl
+      << "}" << be_nl << be_nl;
 
   // Generating _tao_QueryInterface method.
   *os << "void *" << node->full_name ()

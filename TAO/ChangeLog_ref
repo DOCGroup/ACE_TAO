@@ -1,3 +1,14 @@
+Thu Aug 28 13:27:04 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+
+          Added generation of _is_a() for local interfaces, as per
+          CORBA 3.0.2.
+
+        * tao/Special_Basic_Argument_T (interceptor_result).cpp:
+
+          Added missing 'from_xxx' to the Any insertion.     
+
 Thu Aug 28 12:16:16 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
