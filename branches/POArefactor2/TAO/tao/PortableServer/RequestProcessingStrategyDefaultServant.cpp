@@ -13,16 +13,10 @@
 #include "tao/ORB_Core.h"
 #include "tao/TSS_Resources.h"
 
-#include "tao/PortableServer/ServantActivatorC.h"
-#include "tao/PortableServer/ServantLocatorC.h"
-
 #include "tao/PortableServer/RequestProcessingStrategyDefaultServant.h"
-#include "tao/PortableServer/ServantRetentionStrategy.h"
-#include "tao/PortableServer/LifespanStrategy.h"
 #include "tao/PortableServer/Non_Servant_Upcall.h"
 #include "tao/PortableServer/POA.h"
-#include "tao/PortableServer/POA_Current_Impl.h"
-#include "tao/PortableServer/Servant_Upcall.h"
+#include "tao/PortableServer/ServantManagerC.h"
 
 ACE_RCSID (PortableServer,
            Request_Processing,
@@ -40,19 +34,21 @@ namespace TAO
     }
 
     PortableServer::ServantManager_ptr
-    Default_Servant_Request_Processing_Strategy::get_servant_manager (ACE_ENV_SINGLE_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableServer::POA::WrongPolicy))
+    Default_Servant_Request_Processing_Strategy::get_servant_manager (
+      ACE_ENV_SINGLE_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableServer::POA::WrongPolicy))
     {
       ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
                         PortableServer::ServantManager::_nil ());
     }
 
     void
-    Default_Servant_Request_Processing_Strategy::set_servant_manager (PortableServer::ServantManager_ptr imgr
-                         ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableServer::POA::WrongPolicy))
+    Default_Servant_Request_Processing_Strategy::set_servant_manager (
+      PortableServer::ServantManager_ptr imgr
+      ACE_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableServer::POA::WrongPolicy))
     {
       ACE_UNUSED_ARG (imgr);
 
@@ -60,9 +56,10 @@ namespace TAO
     }
 
     PortableServer::Servant
-    Default_Servant_Request_Processing_Strategy::get_servant (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableServer::POA::WrongPolicy))
+    Default_Servant_Request_Processing_Strategy::get_servant (
+      ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableServer::POA::WrongPolicy))
     {
       // This operation returns the default servant associated with the
       // POA.
@@ -70,10 +67,11 @@ namespace TAO
     }
 
     void
-    Default_Servant_Request_Processing_Strategy::set_servant (PortableServer::Servant servant
-                 ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableServer::POA::WrongPolicy))
+    Default_Servant_Request_Processing_Strategy::set_servant (
+      PortableServer::Servant servant
+      ACE_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableServer::POA::WrongPolicy))
     {
       // This operation registers the specified servant with the POA as
       // the default servant. This servant will be used for all requests

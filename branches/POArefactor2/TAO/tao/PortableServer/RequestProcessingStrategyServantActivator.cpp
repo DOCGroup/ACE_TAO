@@ -14,7 +14,6 @@
 #include "tao/TSS_Resources.h"
 
 #include "tao/PortableServer/ServantActivatorC.h"
-#include "tao/PortableServer/ServantLocatorC.h"
 
 #include "tao/PortableServer/RequestProcessingStrategyServantActivator.h"
 #include "tao/PortableServer/ServantRetentionStrategy.h"
@@ -41,24 +40,27 @@ namespace TAO
     }
 
     void
-    Servant_Activator_Request_Processing_Strategy::strategy_init(TAO_POA *poa)
+    Servant_Activator_Request_Processing_Strategy::strategy_init(
+      TAO_POA *poa)
     {
       RequestProcessingStrategy::strategy_init (poa);
     }
 
     PortableServer::ServantManager_ptr
-    Servant_Activator_Request_Processing_Strategy::get_servant_manager (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableServer::POA::WrongPolicy))
+    Servant_Activator_Request_Processing_Strategy::get_servant_manager (
+      ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableServer::POA::WrongPolicy))
     {
       return PortableServer::ServantManager::_duplicate (this->servant_activator_.in ());
     }
 
     void
-    Servant_Activator_Request_Processing_Strategy::set_servant_manager (PortableServer::ServantManager_ptr imgr
-                         ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableServer::POA::WrongPolicy))
+    Servant_Activator_Request_Processing_Strategy::set_servant_manager (
+      PortableServer::ServantManager_ptr imgr
+      ACE_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableServer::POA::WrongPolicy))
     {
       // This operation sets the default servant manager associated with the
       // POA. This operation may only be invoked once after a POA has been

@@ -30,19 +30,21 @@ namespace TAO
     }
 
     PortableServer::Servant
-    Servant_Manager_Request_Processing_Strategy::get_servant (ACE_ENV_SINGLE_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableServer::POA::WrongPolicy))
+    Servant_Manager_Request_Processing_Strategy::get_servant (
+      ACE_ENV_SINGLE_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableServer::POA::WrongPolicy))
     {
       ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
                         0);
     }
 
     void
-    Servant_Manager_Request_Processing_Strategy::set_servant (PortableServer::Servant servant
-                 ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableServer::POA::WrongPolicy))
+    Servant_Manager_Request_Processing_Strategy::set_servant (
+      PortableServer::Servant servant
+      ACE_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableServer::POA::WrongPolicy))
     {
       ACE_UNUSED_ARG (servant);
 
