@@ -1,3 +1,16 @@
+Wed Jan  3 09:15:24 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * ace/ACE.cpp:
+
+          Replaced these lines
+
+            SYSTEMTIME local;
+            ::GetLocalTime (&local);
+
+          in the timestamp() method.
+          They were removed the last time this file was
+          modified, breaking the Win32 builds.
+
 Wed Jan 03 05:49:11 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/OS.h:
