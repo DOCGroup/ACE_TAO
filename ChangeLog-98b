@@ -1,3 +1,24 @@
+Fri Jul  3 14:24:59 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* apps/gperf/src/gperf.dsw:
+	* apps/gperf/src/gperf.dsp:
+	* apps/gperf/src/gperf_lib.dsp:
+	  Added MSVC5 Project files
+
+	* apps/gperf/src/Key_List.cpp:
+	* apps/gperf/src/Options.h:
+	* apps/gperf/src/Options.cpp:
+	  There was a enumeration CONST, and MSVC5 didn't like it.  I 
+	  renamed it to CONSTANT.
+
+	* apps/gperf/src/new.cpp
+	  Changed a variable from int to size_t to get rid of a MSVC 
+	  warning.
+
+	  NOTE:  I tried out some tests and even though gperf compiles
+	         on NT, it doesn't seem to work correctly yet.  That
+		 will come later.
+
 Fri Jul 03 13:47:19 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE version 4.5.20 released.
