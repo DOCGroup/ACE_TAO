@@ -1,3 +1,22 @@
+Mon Jan 29 17:29:31 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/Message_Queue_T.{h i cpp}: Corrected a bunch of references
+          to Message_Queue_Ex's queue_ member to use . rather than ->
+          and removed the ACE_NEW to allocate it (follow-ups from Doug's
+          Sun Jan 28 08:32:07 2001 change. Fixed other compile
+          errors to allow tests/Message_Queue_Test_Ex.cpp to build.
+          FYI... whomever added this, it probably should have been named
+          Message_Queue_Ex_Test to conform.
+
+Mon Jan 29 15:30:27 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/POSIX_Proactor.{h cpp} (ACE_POSIX_SIG_Proactor): Don't
+          mask/block all signals, just the one(s) being used for this
+          sig proactor instance. Blocking everything can break other
+          things, such as debuggers and the ability to kill a program.
+          Also, don't setup a handler for the signals being blocked/waited
+          as this is a combination whose behavior is undefined.
+
 Sun Jan 28 08:39:17 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* tests/Thread_Mutex_Test.cpp:
