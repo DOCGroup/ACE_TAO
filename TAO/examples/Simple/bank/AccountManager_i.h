@@ -47,9 +47,6 @@ public:
   AccountManager_i (void);
   // Constructor.
 
-  AccountManager_i (AccountManager_i&);
-  // Copy constructor for old g++.
-
   ~AccountManager_i (void);
   // Destructor.
 

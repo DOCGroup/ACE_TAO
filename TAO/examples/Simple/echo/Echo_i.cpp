@@ -10,12 +10,6 @@ Echo_i::Echo_i (void)
 {
 }
 
-// Old g++ fooler.
-Echo_i::Echo_i (Echo_i &foo)
-  : POA_Echo (foo)
-{
-}
-
 // Destructor.
 
 Echo_i::~Echo_i (void)

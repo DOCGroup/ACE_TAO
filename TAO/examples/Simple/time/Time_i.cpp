@@ -10,13 +10,6 @@ Time_i::Time_i (void)
   // no-op
 }
 
-// Copy  Constructor
-Time_i::Time_i (Time_i &t)
-  : POA_Time (t)
-{
-  // no-op
-}
-
 // Destructor
 
 Time_i::~Time_i (void)

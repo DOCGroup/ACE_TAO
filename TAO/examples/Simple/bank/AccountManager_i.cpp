@@ -13,12 +13,6 @@ AccountManager_i::AccountManager_i (void)
   // no-op
 }
 
-AccountManager_i::AccountManager_i (AccountManager_i &foo)
-  : POA_Bank::AccountManager (foo)
-{
-  // old g++ fooler.
-}
-
 // Destructor
 
 AccountManager_i::~AccountManager_i (void)
