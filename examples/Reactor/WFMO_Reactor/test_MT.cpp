@@ -9,7 +9,8 @@
 // = DESCRIPTION
 //    This application tests multiple threads simultaneously calling
 //    ReactorEx->handle_events(). It also shows how different threads
-//    can update the state of ReactorEx.
+//    can update the state of ReactorEx by registering and removing
+//    Event_Handlers. 
 //
 // = AUTHOR
 //    Irfan Pyarali
@@ -23,7 +24,6 @@ static int concurrent_threads = 1;
 static int number_of_handles = ACE_ReactorEx::DEFAULT_SIZE;
 static int number_of_handles_to_signal = 1;
 static int interval = 2;
-
 
 // Explain usage and exit.
 static void 
@@ -45,16 +45,16 @@ parse_args (int argc, char **argv)
     switch (c)
       {
       case 't':
-	::concurrent_threads = atoi (get_opt.optarg);
+	concurrent_threads = atoi (get_opt.optarg);
 	break;
       case 'h':
-	::number_of_handles = atoi (get_opt.optarg);
+	number_of_handles = atoi (get_opt.optarg);
 	break;
       case 'i':
-	::interval = atoi (get_opt.optarg);
+	interval = atoi (get_opt.optarg);
 	break;
       case 's':
-	::number_of_handles_to_signal = atoi (get_opt.optarg);
+	number_of_handles_to_signal = atoi (get_opt.optarg);
 	break;
       default:
 	print_usage_and_die ();
@@ -62,115 +62,97 @@ parse_args (int argc, char **argv)
       }
 }
 
-// All threads do reactorEx->handle_events ()
-static void*
-work (void *arg)
-{
-  ACE_Thread_Control tc (ACE_Service_Config::thr_mgr ()); 
-  // Insert thread into thread_manager
-  ACE_ReactorEx *reactorEx = (ACE_ReactorEx *) arg;
-  while (1)
-    {
-      int result = reactorEx->handle_events ();
-      if (result == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "handle_events"), 0);	
-    }	
-}
-
-
-class Event_Handler : public ACE_Event_Handler
+class Task_Handler : public ACE_Task<ACE_NULL_SYNCH>, public ACE_Auto_Event
 {
 public:
-  int open (int index,
-	    ACE_ReactorEx &reactorEx,
-	    ACE_Auto_Event *handles,
-	    int number_of_handles);
+  Task_Handler (void);
+  // Constructor.
+
   int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
-  ACE_HANDLE get_handle () const;
-private:
-  int index_;
-  ACE_Auto_Event *handles_;
-  int number_of_handles_;
-  ACE_HANDLE handle_;
+  // Handle events being signaled by the main thread.
+
+  int svc (void);
+  // Task event loop.
+
+  ACE_HANDLE get_handle (void) const;
+  // Our event handle.
 };
 
+// All threads do reactorEx->handle_events ()
+
 int
-Event_Handler::open (int index,
-		     ACE_ReactorEx &reactorEx,
-		     ACE_Auto_Event *handles,
-		     int number_of_handles)
+Task_Handler::svc (void)
 {
-  index_ = index;
-  handles_ = handles;
-  number_of_handles_ = number_of_handles;
-  this->handle_ = this->handles_[this->index_].handle ();
-  
-  // Register self with ReactorEx
-  if (reactorEx.register_handler (this) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\tevent handler %d cannot be registered with ReactorEx\n", 
-		       "Event_Handler::open", this->index_), -1);
-  
-  return 0;
+  // Run the event loop.
+  for (;;)
+    if (ACE_Service_Config::reactorEx ()->handle_events () == -1)
+      ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "handle_events"), 0);	
+}
+
+Task_Handler::Task_Handler (void)
+{
+  if (ACE_Service_Config::reactorEx ()->register_handler (this) == -1)
+    ACE_ERROR ((LM_ERROR, "%p\t cannot register with ReactorEx\n", 
+		"Task_Handler::Task_Handler"));
+  // Make us an active object.
+  else if (this->activate () == -1)
+    ACE_ERROR ((LM_ERROR, "%p\t cannot activate task\n", 
+		"activate"));
 }
 
 int
-Event_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
+Task_Handler::handle_signal (int signum, siginfo_t *siginfo, ucontext_t *)
 {
   // When signaled, print message, remove self, and add self
   // This will force ReactorEx to update its internal handle tables
-  ACE_DEBUG ((LM_DEBUG, "(%t) handle_signal() called in handler # %d\n", this->index_));
+  ACE_DEBUG ((LM_DEBUG, "(%t) handle_signal() called\n"));
 
-  if (this->reactorEx ()->remove_handler (this) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\tevent handler %d cannot be unregistered from ReactorEx\n", 
-		       "Event_Handler::open", this->index_), -1);
+  ACE_ASSERT (siginfo->si_handle_ == this->handle ());
+
+  if (ACE_Service_Config::reactorEx ()->remove_handler (this) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, 
+		       "(%t) %p\tTask cannot be unregistered from ReactorEx\n", 
+		       "Task_Handler::handle_signal"), -1);
   
-  if (this->reactorEx ()->register_handler (this) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\tevent handler %d cannot be registered with ReactorEx\n", 
-		       "Event_Handler::open", this->index_), -1);
-  
-  
+  if (ACE_Service_Config::reactorEx ()->register_handler (this) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, 
+		       "(%t) %p\tTask cannot be registered with ReactorEx\n", 
+		       "Task_Handler::handle_signal"), -1);
   return 0;
 }
 
 ACE_HANDLE
-Event_Handler::get_handle () const
+Task_Handler::get_handle (void) const
 {
-  return this->handle_;
+  return this->handle ();
 }
 
 int 
 main (int argc, char **argv)
 {
-  ::parse_args (argc, argv);
-  ACE_ReactorEx reactorEx;
-  ACE_Auto_Event *handles = 0;
-  Event_Handler *handlers = 0;
+  parse_args (argc, argv);
+  Task_Handler *handlers = 0;
   
-  // Create a bunch of Event_Handler and Auto_Events
-  ACE_NEW_RETURN (handles, ACE_Auto_Event [::number_of_handles], -1);
-  ACE_NEW_RETURN (handlers, Event_Handler [::number_of_handles], -1);
-  // Initialize Event_Handlers
-  for (int i = 0; i < ::number_of_handles; i++)
-    {
-      if (handlers[i].open (i, reactorEx, handles, ::number_of_handles) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, "%p\tevent handler %d cannot be opened\n", "main", i), -1);
-    }
-  // Creat worker threads
-  if (ACE_Thread::spawn_n (::concurrent_threads, work, &reactorEx) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\tThreads could not be spawned\n", "main"), -1);
+  // Create an array Task_Handlers.
+  ACE_NEW_RETURN (handlers, Task_Handler [number_of_handles], -1);
+
   ACE_OS::srand (ACE_OS::time (0L));
+
   for (;;)
     {
       // Sleep for a while
-      ACE_OS::sleep (::interval);
+      ACE_OS::sleep (interval);
+
       // Randomly generate events
       ACE_DEBUG ((LM_DEBUG, "***************************************\n"));		
-      ACE_DEBUG ((LM_DEBUG, "(%t -- main thread) signaling %d events\n", ::number_of_handles_to_signal));		
+      ACE_DEBUG ((LM_DEBUG, "(%t -- main thread) signaling %d events\n", 
+		  number_of_handles_to_signal));		
       ACE_DEBUG ((LM_DEBUG, "***************************************\n"));		
-      for (i = 0; i < ::number_of_handles_to_signal; i++)
-	{
-	  int index = ACE_OS::rand() % ::number_of_handles;
-	  handles[index].signal ();	  
-	}
+
+      for (i = 0; i < number_of_handles_to_signal; i++)
+	// Randomly select a handle to signal.
+	handlers[ACE_OS::rand() % number_of_handles].signal ();	  
     }
+
+  return 0;
 }
