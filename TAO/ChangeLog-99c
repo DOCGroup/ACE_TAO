@@ -1,3 +1,8 @@
+Sat Jun  5 18:04:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/PollableS_T.i:
+	  Removed more calls to TAO_ORB_Core_instance()
+
 Sat Jun  5 17:49:08 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.h:
