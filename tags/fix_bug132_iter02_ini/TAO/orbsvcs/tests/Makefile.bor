@@ -1,0 +1,10 @@
+
+#
+# Makefile for building the TAO obsvcs examples
+#
+
+DIRS = \
+        FaultTolerance \
+        Simple_Naming
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
