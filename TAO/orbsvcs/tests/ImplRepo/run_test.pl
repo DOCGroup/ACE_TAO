@@ -37,16 +37,16 @@ sub airplane_test
 sub airplane_ir_test
 {
   $IR = Process::Create ("..".$DIR_SEPARATOR."..".$DIR_SEPARATOR."ImplRepo_Service".$DIR_SEPARATOR."ImplRepo_Service".$Process::EXE_EXT,
-                         "-ORBsvcconf implrepo.conf -ORBobjrefstyle url -d 0");
+                         "-ORBsvcconf implrepo.conf -d 0");
 
   ACE::waitforfile ($implrepo_ior);
 
   $SV = Process::Create ($EXEPREFIX."airplane_server".$Process::EXE_EXT,
-                         "-o $airplane_ior -i -r -ORBobjrefstyle url");
+                         "-o $airplane_ior -i -r");
 
   ACE::waitforfile ($airplane_ior);
 
-  system($EXEPREFIX."airplane_client -k file://$airplane_ior -ORBobjrefstyle url");
+  system($EXEPREFIX."airplane_client -k file://$airplane_ior");
 
   $IR->Kill (); $IR->Wait ();
 }
@@ -69,16 +69,16 @@ sub nestea_test
 sub nestea_ir_test
 {
   $IR = Process::Create ("..".$DIR_SEPARATOR."..".$DIR_SEPARATOR."ImplRepo_Service".$DIR_SEPARATOR."ImplRepo_Service".$Process::EXE_EXT,
-                         "-ORBsvcconf implrepo.conf -ORBobjrefstyle url -d 0");
+                         "-ORBsvcconf implrepo.conf -d 0");
 
   ACE::waitforfile ($implrepo_ior);
 
   $SV = Process::Create ($EXEPREFIX."nestea_server".$Process::EXE_EXT,
-                         "-o $nestea_ior -i -r -ORBobjrefstyle url");
+                         "-o $nestea_ior -i -r");
 
   ACE::waitforfile ($nestea_ior);
 
-  system($EXEPREFIX."nestea_client -k file://$nestea_ior -ORBobjrefstyle url");
+  system($EXEPREFIX."nestea_client -k file://$nestea_ior");
 
   $IR->Kill (); $IR->Wait ();
 }
@@ -86,27 +86,29 @@ sub nestea_ir_test
 sub both_ir_test
 {
   $IR = Process::Create ("..".$DIR_SEPARATOR."..".$DIR_SEPARATOR."ImplRepo_Service".$DIR_SEPARATOR."ImplRepo_Service".$Process::EXE_EXT,
-                         "-ORBsvcconf implrepo.conf -ORBobjrefstyle url -d 0");
+                         "-ORBsvcconf implrepo.conf -d 0");
 
   ACE::waitforfile ($implrepo_ior);
 
-  $ASV = Process::Create ($EXEPREFIX."nestea_server".$Process::EXE_EXT,
-                         "-o $nestea_ior -i -r -ORBobjrefstyle url");
+  $NSV = Process::Create ($EXEPREFIX."nestea_server".$Process::EXE_EXT,
+                         "-o $nestea_ior -i -r");
 
-  $NSV = Process::Create ($EXEPREFIX."airplane_server".$Process::EXE_EXT,
-                         "-o $airplane_ior -i -r -ORBobjrefstyle url");
+  $ASV = Process::Create ($EXEPREFIX."airplane_server".$Process::EXE_EXT,
+                         "-o $airplane_ior -i -r");
 
   ACE::waitforfile ($nestea_ior);
 
   $NCL = Process::Create ($EXEPREFIX."nestea_client".$Process::EXE_EXT,
-                          "-k file://$nestea_ior -ORBobjrefstyle url");
+                          "-k file://$nestea_ior");
 
   ACE::waitforfile ($airplane_ior);
 
-  system($EXEPREFIX."airplane_client -k file://$airplane_ior -ORBobjrefstyle url");
+  system($EXEPREFIX."airplane_client -k file://$airplane_ior");
 
-  $NCL->Kill (); $NCL->Kill ();
+  $NCL->Kill (); $NCL->Wait ();
   $IR->Kill (); $IR->Wait ();
+  $NSV->Wait ();
+  $ASV->Wait ();
 }
 
 

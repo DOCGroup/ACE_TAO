@@ -68,4 +68,6 @@ $status  = system ("../Generic_Servant/client$Process::EXE_EXT $extra_args $onew
 unlink $iorfile_1;
 unlink $iorfile_2;
 
+$SV->Wait ();
+
 exit $status;

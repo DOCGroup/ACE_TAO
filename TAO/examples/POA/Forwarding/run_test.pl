@@ -15,19 +15,19 @@ $brace="\#\#\#\#\#";
 # arrays
 
 # Servers 1 and 2 are used in all tests
-@server1arglist = ("-o server1 -ORBport 10040 -ORBobjrefstyle url",
-                   "-p server1  -ORBport 10040 -ORBobjrefstyle url",
-                   "-o server1 -ORBport 10040 -ORBobjrefstyle url");
-@server2arglist = ("-f server1 -o server2 -ORBport 10041 -ORBobjrefstyle url",
-                   "-g server1 -p server2 -ORBport 10041 -ORBobjrefstyle url",
-                   "-g server1 -p server2 -ORBport 10041 -ORBobjrefstyle url");
+@server1arglist = ("-o server1",
+                   "-p server1",
+                   "-o server1");
+@server2arglist = ("-f server1 -o server2",
+                   "-g server1 -p server2",
+                   "-g server1 -p server2");
 
 # The third server is only needed for the last test, but I'm making it
 # a list in case anyone wants to run it in multiple tests, rather than
 # just one
 @server3arglist = ("",
                    "",
-                   "-f server2 -o server3 -ORBport 10043 -ORBobjrefstyle url");
+                   "-f server2 -o server3");
 
 # The client is run for all tests
 @clientarglist = ("-f server2 -i 5",
@@ -109,7 +109,7 @@ sub run_test
     if ($status != 0)
     {
         print STDERR ("\n$brace Test of $testtype FAILED\n");
-        $retval = -1;
+        $status = -1;
     }
     else
     {

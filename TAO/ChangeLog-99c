@@ -1,3 +1,35 @@
+Wed May 26 21:40:34 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* examples/POA/Adapter_Activator/run_test.pl:
+	* examples/POA/Explicit_Activation/run_test.pl:
+	* examples/POA/Forwarding/run_test.pl:
+	* examples/POA/Loader/run_test.pl:
+	* examples/POA/On_Demand_Activation/run_test.pl:
+	* examples/POA/On_Demand_Loading/run_test.pl:
+	* examples/POA/Reference_Counted_Servant/run_test.pl:
+	* examples/Quoter/run_test.pl:
+	* orbsvcs/tests/AVStreams/benchmark/run_test.pl:
+	* orbsvcs/tests/ImplRepo/run_test.pl:
+	* orbsvcs/tests/Time/run_test.pl:
+	* performance-tests/Cubit/TAO/DII_Cubit/run_test.pl:
+	* performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl:
+	* performance-tests/Cubit/TAO/MT_Cubit/run_test.pl:
+	* tests/CDR/run_test.pl:
+	* tests/NestedUpcall/MT_Client_Test/run_test.pl:
+	* tests/NestedUpcall/Reactor/run_test.pl:
+	* tests/NestedUpcall/Triangle_Test/run_test.pl:
+	* tests/Param_Test/run_test.pl:
+	  Removed all uses of -ORBobjrefstyle and -ORBport from the
+	  run_test.pl scripts.
+	 
+	* performance-tests/Cubit/TAO/MT_Cubit/client.cpp:
+	  Changed the deprecated -ORBport and -ORBhost options for a
+	  -ORBendpoint option.
+
+	* performance-tests/POA/Object_Creation_And_Registration/registration.cpp: 
+	  Added little methods to wrap around Quantify vs. Visual Quantify 
+	  calls.
+	
 Wed May 26 20:44:30 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Pluggable.h:

@@ -22,22 +22,11 @@ $num_threads = 4;
 
 $sleeptime = 2;
 
-# variables for parameters
-
-#$nsport = 20000 + uniqueid ();
-$nsport = 0;
-$clport = 0;
-$lcport = 0;
-$svport = 0;
-$ffport = 0;
-$gfport = 0;
-
 # other variables
 
 $n = 1;
 $leave = 1;
 $ior = 0;
-$done = "";
 $debug = "";
 $cm = "";
 $sm = "";
@@ -56,7 +45,7 @@ sub read_nsior
 
 sub name_server
 {
-  my $args = "$other -ORBport $nsport -ORBobjrefstyle url -o $nsiorfile";
+  my $args = "$other -o $nsiorfile";
   my $prog = "..$DIR_SEPARATOR..$DIR_SEPARATOR"."orbsvcs$DIR_SEPARATOR".
              "Naming_Service$DIR_SEPARATOR".
              "Naming_Service$Process::EXE_EXT";
@@ -66,7 +55,7 @@ sub name_server
 
 sub lifecycle_server
 {
-  my $args = "$other -ORBport $lcport -ORBobjrefstyle url -ORBnameserviceior ".
+  my $args = "$other -ORBnameserviceior ".
              "$ior -ORBsvcconf svc.conf";
   my $prog = "..$DIR_SEPARATOR..$DIR_SEPARATOR"."orbsvcs$DIR_SEPARATOR".
              "LifeCycle_Service$DIR_SEPARATOR".
@@ -77,7 +66,7 @@ sub lifecycle_server
 
 sub server
 {
-  my $args = "$other $debug $sm -ORBport $svport -ORBobjrefstyle url ".
+  my $args = "$other $debug $sm ".
              "-ORBnameserviceior $ior -ORBsvcconf $s_conf";
 
   $SV = Process::Create ("server$Process::EXE_EXT", $args);
@@ -85,7 +74,7 @@ sub server
 
 sub factory_finder
 {
-  my $args = "$other -ORBport $ffport -ORBobjrefstyle url -ORBnameserviceior ".
+  my $args = "$other -ORBnameserviceior ".
              "$ior -ORBsvcconf svc.conf";
 
   $FF = Process::Create ("Factory_Finder".$Process::EXE_EXT, $args);
@@ -93,7 +82,7 @@ sub factory_finder
 
 sub generic_factory
 {
-  my $args = "$other -l -ORBport $gfport -ORBobjrefstyle url -ORBnameserviceior ".
+  my $args = "$other -l -ORBnameserviceior ".
              "$ior -ORBsvcconf svc.conf";
 
   $GF = Process::Create ("Generic_Factory".$Process::EXE_EXT, $args);
@@ -101,8 +90,8 @@ sub generic_factory
 
 sub client
 {
-  my $exe = "client$Process::EXE_EXT $other -l $debug $cm -ORBobjrefstyle url ".
-            "-ORBport $clport -ORBnameserviceior $ior -ORBsvcconf $c_conf";
+  my $exe = "client$Process::EXE_EXT $other -l $debug $cm ".
+            "-ORBnameserviceior $ior -ORBsvcconf $c_conf";
 
   for ($j = 0; $j < $n; $j++)
   {

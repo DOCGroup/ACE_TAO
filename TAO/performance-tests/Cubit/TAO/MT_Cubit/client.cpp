@@ -580,12 +580,8 @@ Client_i::start_servant (void)
                        "hostname"),
                        -1);
   ACE_OS::sprintf (high_thread_args,
-                   "-ORBport %u "
-                   "-ORBhost %s "
                    "-ORBsndsock 32768 "
-                   "-ORBrcvsock 32768 ",
-                   ACE_DEFAULT_SERVER_PORT,
-                   hostname);
+                   "-ORBrcvsock 32768 ");
 
   Cubit_Task *high_priority_task;
 
