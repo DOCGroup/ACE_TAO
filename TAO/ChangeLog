@@ -1,3 +1,17 @@
+Fri Apr 11 09:33:41 2003  Dave Smith  <dts@prismtechnologies.com>
+
+	* orbsvcs/test/Notify/lib/Application_Commnad.h
+	* orbsvcs/test/Notify/lib/Command_Factory_T.h
+	* orbsvcs/test/Notify/lib/ConsumerAdmin_Command.h
+	* orbsvcs/test/Notify/lib/EventChannel_Command.h
+	* orbsvcs/test/Notify/lib/Filter_Command.h
+	* orbsvcs/test/Notify/lib/Periodic_Consumer_Command.h
+	* orbsvcs/test/Notify/lib/Periodic_Supplier_Command.h
+	* orbsvcs/test/Notify/lib/SupplierAdmin_Command.h
+	  Removed clash with symbol defined in
+	  /usr/include/machine/cpu.h on HPUX.
+
+
 Thu Apr 10 07:06:07 2003 Pradeep Gore <pradeep@oomworks.com>
 
 	* orbsvcs/tests/Notify/RT_lib/Makefile:
