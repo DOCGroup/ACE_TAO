@@ -1,3 +1,15 @@
+Fri Jan 21 13:19:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Strategies/SHMIOP_Acceptor.cpp:
+          When ORBDottedDecimalAddresses is set to 1, then also respect
+          this for SHMIOP. The endpoint created then also contains the
+          ip address instead of the hostname. This is the same behaviour
+          as for IIOP. On Windows we default to using ip addresses because
+          DNS is often broken on Windows systems, SHMIOP didn't respected
+          this behaviour which caused test failures on our Windows build
+          systems at the moment our DNS server was crashed. This fixes
+          bugzilla bug [2033].
+
 Fri Jan 21 12:17:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Strategies/SHMIOP_Connector.cpp:
