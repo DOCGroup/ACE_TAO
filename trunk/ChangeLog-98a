@@ -1,5 +1,15 @@
 Fri Jan  2 12:39:45 1998  Carlos O'Ryan  <coryan@swarm.cs.wustl.edu>
 
+	* ace/Map_Manager.h: 
+	  Another declaration removed from ACE_Map_Reverse_Iterator,
+	  operator* is defined in the base class.
+
+	* tests/Conn_Test.cpp: 
+	* tests/Priority_Reactor_Test.cpp: 
+	* tests/Reactor_Performance_Test.cpp: 
+	  The instantiation of ACE_Map_Manager *requires* instantiating
+	  ACE_Map_Reverse_Iterator.
+
 	* ace/OS.i: 
 	  Cannot use ACE_ASSERT in OS.i, at least it make SGI compiler
 	  unhappy.

@@ -393,9 +393,6 @@ public:
   ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>& operator-- (int);
   // Prefix advance.
 
-  ACE_Map_Entry<EXT_ID, INT_ID>& operator* (void);
-  // Returns a reference to the interal element <this> is pointing to.
-
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 };
