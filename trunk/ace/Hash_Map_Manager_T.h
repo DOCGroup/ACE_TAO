@@ -160,6 +160,37 @@ public:
   // newly created entry, or the existing one.
 
   int rebind (const EXT_ID &ext_id,
+              const INT_ID &int_id);
+  // Reassociate <ext_id> with <int_id>.  If <ext_id> is not in the
+  // map then behaves just like <bind>.  Returns 0 if a new entry is
+  // bound successfully, returns 1 if an existing entry was rebound,
+  // and returns -1 if failures occur.
+
+  int rebind (const EXT_ID &ext_id,
+              const INT_ID &int_id,
+              ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry);
+  // Same as a normal rebind, except the map entry is also passed back
+  // to the caller.  The entry in this case will either be the newly
+  // created entry, or the existing one.
+
+  int rebind (const EXT_ID &ext_id,
+              const INT_ID &int_id,
+              INT_ID &old_int_id);
+  // Associate <ext_id> with <int_id>.  If <ext_id> is not in the map
+  // then behaves just like <bind>.  Otherwise, store the old value of
+  // <int_id> into the "out" parameter and rebind the new parameters.
+  // Returns 0 if a new entry is bound successfully, returns 1 if an
+  // existing entry was rebound, and returns -1 if failures occur.
+
+  int rebind (const EXT_ID &ext_id,
+              const INT_ID &int_id,
+              INT_ID &old_int_id,
+              ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry);
+  // Same as a normal rebind, except the map entry is also passed back
+  // to the caller.  The entry in this case will either be the newly
+  // created entry, or the existing one.
+
+  int rebind (const EXT_ID &ext_id,
               const INT_ID &int_id,
               EXT_ID &old_ext_id,
               INT_ID &old_int_id);
@@ -167,8 +198,8 @@ public:
   // then behaves just like <bind>.  Otherwise, store the old values
   // of <ext_id> and <int_id> into the "out" parameters and rebind the
   // new parameters.  This is very useful if you need to have an
-  // atomic way of updating <ACE_Hash_Map_Entrys> and you also need full
-  // control over memory allocation.  Returns 0 if a new entry is
+  // atomic way of updating <ACE_Hash_Map_Entrys> and you also need
+  // full control over memory allocation.  Returns 0 if a new entry is
   // bound successfully, returns 1 if an existing entry was rebound,
   // and returns -1 if failures occur.
 
@@ -266,6 +297,26 @@ protected:
   // Performs trybind.  Must be called with locks held.
 
   int rebind_i (const EXT_ID &ext_id,
+                const INT_ID &int_id);
+  // Performs rebind.  Must be called with locks held.
+
+  int rebind_i (const EXT_ID &ext_id,
+                const INT_ID &int_id,
+                ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry);
+  // Performs rebind.  Must be called with locks held.
+
+  int rebind_i (const EXT_ID &ext_id,
+                const INT_ID &int_id,
+                INT_ID &old_int_id);
+  // Performs rebind.  Must be called with locks held.
+
+  int rebind_i (const EXT_ID &ext_id,
+                const INT_ID &int_id,
+                INT_ID &old_int_id,
+                ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry);
+  // Performs rebind.  Must be called with locks held.
+
+  int rebind_i (const EXT_ID &ext_id,
                 const INT_ID &int_id,
                 EXT_ID &old_ext_id,
                 INT_ID &old_int_id);
@@ -360,14 +411,14 @@ public:
 
   // = ITERATION methods.
 
-  int next (ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&next_entry);
+  int next (ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&next_entry) const;
   // Pass back the next <entry> that hasn't been seen in the Set.
   // Returns 0 when all items have been seen, else 1.
 
   int done (void) const;
   // Returns 1 when all items have been seen, else 0.
 
-  ACE_Hash_Map_Entry<EXT_ID, INT_ID>& operator* (void);
+  ACE_Hash_Map_Entry<EXT_ID, INT_ID>& operator* (void) const;
   // Returns a reference to the interal element <this> is pointing to.
 
   ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>& map (void);

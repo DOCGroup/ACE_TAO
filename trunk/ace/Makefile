@@ -59,6 +59,7 @@ FILES    = Log_Msg \
            LSOCK_Stream \
            Log_Record \
            Malloc \
+           Map \
            Mem_Map \
            Memory_Pool \
            Message_Block \
@@ -173,6 +174,7 @@ TEMPLATE_FILES = \
            Malloc_T \
            Managed_Object \
            Map_Manager \
+           Map_T \
            Message_Block_T \
            Message_Queue_T \
            Module \

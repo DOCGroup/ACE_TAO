@@ -159,6 +159,16 @@ public:
   // and returns -1 if failures occur.
 
   int rebind (const EXT_ID &ext_id,
+              const INT_ID &int_id,
+              INT_ID &old_int_id);
+  // Reassociate <ext_id> with <int_id>.  If <ext_id> is not in the
+  // map then behaves just like <bind>.  Otherwise, store the old
+  // values of <int_id> into the "out" parameter and rebind the new
+  // parameters.  Returns 0 if a new entry is bound successfully,
+  // returns 1 if an existing entry was rebound, and returns -1 if
+  // failures occur.
+
+  int rebind (const EXT_ID &ext_id,
               const INT_ID &int_id);
   // Reassociate <ext_id> with <int_id>.  Old values in the map are
   // ignored.
@@ -242,6 +252,12 @@ protected:
   int rebind_i (const EXT_ID &ext_id, 
                 const INT_ID &int_id,
                 EXT_ID &old_ext_id, 
+                INT_ID &old_int_id);
+  // Performs a rebinding of <ext_it> to <int_id>.  Also, recovers old
+  // values.  Must be called with locks held.
+
+  int rebind_i (const EXT_ID &ext_id, 
+                const INT_ID &int_id,
                 INT_ID &old_int_id);
   // Performs a rebinding of <ext_it> to <int_id>.  Also, recovers old
   // values.  Must be called with locks held.
@@ -375,14 +391,14 @@ public:
 
   // = Iteration methods.
 
-  int next (ACE_Map_Entry<EXT_ID, INT_ID> *&next_entry);
+  int next (ACE_Map_Entry<EXT_ID, INT_ID> *&next_entry) const;
   // Pass back the next <entry> that hasn't been seen in the Set.
   // Returns 0 when all items have been seen, else 1.
 
   int done (void) const;
   // Returns 1 when all items have been seen, else 0.
 
-  ACE_Map_Entry<EXT_ID, INT_ID>& operator* (void);
+  ACE_Map_Entry<EXT_ID, INT_ID>& operator* (void) const;
   // Returns a reference to the interal element <this> is pointing to.
 
   ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>& map (void);

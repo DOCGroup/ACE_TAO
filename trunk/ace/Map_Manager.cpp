@@ -245,6 +245,38 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::rebind_i (const EXT_ID &ext_id,
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> int
 ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::rebind_i (const EXT_ID &ext_id,
+                                                     const INT_ID &int_id,
+                                                     INT_ID &old_int_id)
+{
+  // First try to find the key.
+  size_t index = 0;
+  int result = this->find_and_return_index (ext_id, 
+                                            index);
+
+  if (result == 0)
+    {
+      // We found it, so make copies of the old entries and rebind
+      // current entries.
+      ENTRY &ss = this->search_structure_[index];
+      old_int_id = ss.int_id_;
+      ss.ext_id_ = ext_id;
+      ss.int_id_ = int_id;
+
+      // Sync changed entry.
+      this->allocator_->sync (&ss, sizeof ss);
+
+      return 1;
+    }
+  else
+    {
+      // We didn't find it, so let's add it.
+      return this->shared_bind (ext_id, 
+                                int_id);
+    }
+}
+
+template <class EXT_ID, class INT_ID, class ACE_LOCK> int
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::rebind_i (const EXT_ID &ext_id,
                                                      const INT_ID &int_id)
 {
 

@@ -43,23 +43,30 @@ public:
   // generation number from the client.
 
   u_long index (void) const;
-  // Get the index.
+  void index (u_long i);
+  // Get/Set the index.
   
   u_long generation (void) const;
-  // Get the generation number.
+  void generation (u_long g);
+  // Get/Set the generation number.
   
+  static size_t size (void);
+  // Size required to store information about active key.
+
+  void decode (const void *data);  
+  // Recover state of active key from <data>.  User must make sure
+  // that <data> encoded using the <encode> method.
+
+  void encode (void *data) const;
+  // Encode state of the active key into <data>.  <data> must be as
+  // big as the value returned from <size>.
+
   int operator== (const ACE_Active_Map_Manager_Key &rhs) const;
   int operator!= (const ACE_Active_Map_Manager_Key &rhs) const;
   // Compare keys.
 
-  // = These really should be protected but because of template
+  // = This really should be protected but because of template
   // friends, they are not.
-
-  void index (u_long i);
-  // Set the index.
-  
-  void generation (u_long g);
-  // Set the generation number.
 
   void increment_generation_count (void);
   // Increment the generation number.

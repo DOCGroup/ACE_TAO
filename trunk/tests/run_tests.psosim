@@ -131,6 +131,8 @@ run Recursive_Mutex_Test                # uses Service_Config, Recursive_Thread_
 
 run Map_Manager_Test                    # uses Map Manager and Hash Map Manager + Forward and Reverse Map Iterators.
 
+run Map_Test                            # uses Map + Forward and Reverse Map Iterators.
+
 #Message_Queue_Notifications_Test.cpp: threads not supported on this platform
 #run Message_Queue_Notifications_Test.cpp    # uses Message_Queue + Reactor.
 

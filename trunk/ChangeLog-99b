@@ -1,3 +1,104 @@
+Fri Feb 05 21:57:24 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Map_T: Added a new Map mini framework to ACE.  The classes
+	  in this mini framework allows the Map interface to be used
+	  without caring about the specific Map implementation being used.
+	  There is the class hierarchy of the framework:
+	  
+	                forwards
+	  ACE_Iterator  -------->  ACE_Iterator_Impl (abstract)
+	  
+	  ACE_Iterator_Impl is subclassed by:
+
+	  - ACE_Map_Impl_Iterator_Adapter<IMPLEMENTATION>
+	  - ACE_Active_Map_Manager_Iterator_Adapter
+	  - ACE_Hash_Map_Manager_Ex_Iterator_Adapter
+	  - ACE_Map_Manager_Iterator_Adapter
+
+	                        forwards
+	  ACE_Reverse_Iterator  -------->  ACE_Reverse_Iterator_Impl (abstract)
+	  
+	  ACE_Reverse_Iterator_Impl is subclassed by:
+
+	  - ACE_Map_Impl_Reverse_Iterator_Adapter<IMPLEMENTATION>
+	  - ACE_Active_Map_Manager_Reverse_Iterator_Adapter
+	  - ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter
+	  - ACE_Map_Manager_Reverse_Iterator_Adapter
+
+	  ACE_Map is subclassed by:
+
+	  - ACE_Map_Impl<IMPLEMENTATION>
+	  - ACE_Active_Map_Manager_Adapter
+	  - ACE_Hash_Map_Manager_Edapter
+	  - ACE_Map_Manager_Adapter
+
+	  Also included in the framework is a Key Generator class and a
+	  Key Adapter class.  The Key Generator class is used by some map
+	  adapters to generate keys since the maps they adapt do not
+	  generate keys. The Key Adapter class is used by the active map
+	  adapter to allow encoding and decoding of active keys into user
+	  keys.
+
+	  Note that the iterators use the bridge pattern while the map
+	  class uses an abstract base class based inheritance approach.
+	  The reason for this is that STL containers return the iterators
+	  by value.  An abstract base class cannot be returned by value.
+
+	  An alternative design would be to add an abstract base class
+	  that the ACE maps would derive fro Unfortunately, this would
+	  break many things including the ability to add these maps to
+	  shared memory and explicit template instantiations.
+	
+	  This mini framework would have been idle to apply the external
+	  polymorphism pattern.  However, the ACE map classes are
+	  different enough that adaption was necessary.  This turned out
+	  to be a blessing in disguise since I was able to add extra
+	  common functionality such as the key generator and key adapter
+	  to the map adapters.  I did add the external polymorphic
+	  subclasses to the framework for future use.
+	
+	  The classes in this framework are as close STL containers as I
+	  would dare to make them ;) Thanks to Carlos for helping design
+	  them.
+	  
+	* tests/Map_Test: New test to illustrate and test the workings of
+	  the new ACE Map classes. There are two aspect to this test:
+	  (a) functionality testing includes testing the iterators and
+	  various operations, and (b) performance testing to compare the
+	  relative performance of the maps. 
+
+	* ace/Pair: Added new Pair class to ACE that holds instances of
+	  the template arguments.  Also, added a Reference_Pair class that
+	  only hold references of the template arguments.
+
+	* ace/Hash_Map_Manager_T.* (ACE_Hash_Map_Manager_Ex):
+	* ace/Map_Manager.* (Map_Manager):
+	  Added new rebind() methods to make interface compatible with
+	  other maps.  Also, fixed the constness of some functions.
+
+	* ace/Hash_Map_Manager.h: Fixed order of inclusion of template
+	  code.
+
+	* ace/Active_Map_Manager_T.h (ACE_Active_Map_Manager): Added new
+	  versions of bind, find, and unbind to reduce the number of data
+	  copies.
+
+	* ace/Active_Map_Manager.h (ACE_Active_Map_Manager_Key): Added the
+	  ability for the active key to encode and decode into and out of
+	  a data stream.  This relieves the developer from concerning
+	  herself about the internal structure of the active key. 
+
+	* ace/config-win32-common.h: Define WIN32 if not already defined.
+
+	* tests/SString_Test.cpp: Added testing for substring creation and
+	  comparisons.
+
+	* ace/OS.h (ACE_dynamic_cast_*_ptr and ACE_dynamic_cast_*_ref):
+	  Added new macros to handle casting of template class.
+
+	* tests/test_config.h: Removed global KEY class that was not being
+	  used anymore anyway.
+
 Fri Feb 05 21:12:56 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.6.20 released.
