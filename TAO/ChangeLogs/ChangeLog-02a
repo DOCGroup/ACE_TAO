@@ -1,8 +1,8 @@
 Mon Apr 03 12:52:51 2000  David L. Levine  <levine@cs.wustl.edu>
 
-        * tao/IIOP_Connector.cpp: commented out some template
-          instantiations, temporarily to get it to build on LynxOS.
-          Kirthika, please fix ASAP.
+        * tao/IIOP_Connector.cpp,UIOP_Connector.cpp,SHMIOP_Connector.cpp:
+          commented out some template instantiations, temporarily to get
+          it to build on LynxOS.  Kirthika, please fix ASAP.
 
 Mon Apr  3 12:20:00 2000  Chris Gill  <cdgill@cs.wustl.edu>
 
