@@ -1,3 +1,11 @@
+Tue Apr 15 08:18:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-borland-common.h:
+        * ace/config-win32-borland.h:
+          Moved ACE_HAS_ITOA from config-borland-common to config-win32-
+          borland. It is only needed on Windows and not on Linux where
+          Kylix runs.
+
 Tue Apr 15 07:30:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Timer_Queue/Makefile:
