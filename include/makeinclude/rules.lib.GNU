@@ -124,7 +124,16 @@ endif
 ifdef SHLIBBUILD
 	$(SHLIBBUILD)
 else
-	$(SOLINK.cc) -o $@ $(VSHOBJS1) $(TMPL_OBJS) $(LDFLAGS) $(LIBS)
+ifdef TEMPINCDIR
+	if test -s ./$(TEMPINCDIR)/*.o; \
+        then \
+       	        $(SOLINK.cc) -o $@ $(VSHOBJS1) $(TEMPINCDIR)/*.o $(LDFLAGS) $(LIBS); \
+        else \
+		$(SOLINK.cc) -o $@ $(VSHOBJS1) $(LDFLAGS) $(LIBS); \
+	fi
+else
+	$(SOLINK.cc) -o $@ $(VSHOBJS1) $(LDFLAGS) $(LIBS)
+endif
 	-chmod a+rx $@
 endif
 
