@@ -55,14 +55,14 @@ if [ -s /tmp/pids$login ]; then
   kill $pids
 fi
 
-#### stop here if "ss clean" was called
+#### stop here if "start_services clean" was called
 if [ "$1"  -a  "$1" = 'clean' ]; then
   exit
 fi
 
 echo // Initializing the log file
 
-echo // Logfile for the script "ss" which startes Name, Scheduling and Event Service  > /tmp/logfile_$login
+echo // Logfile for the script which startes Name and Event Service  > /tmp/logfile_$login
 
 nameserviceport=0
 schedulerserviceport=0
@@ -84,13 +84,13 @@ echo // The IOR of the Naming Service: $IOR
 
 echo // Started Naming Service on port $nameserviceport
 
-cd $TAO_ROOT/orbsvcs/Scheduling_Service
-echo $ ./Scheduling_Service -ORBnameserviceior $IOR -ORBport $schedulerserviceport  >> /tmp/logfile_$login
-./Scheduling_Service -ORBnameserviceior $IOR -ORBport $schedulerserviceport  > /tmp/logfile_Scheduling_Service_$login  2>&1 &
+# cd $TAO_ROOT/orbsvcs/Scheduling_Service
+#echo $ ./Scheduling_Service -ORBnameserviceior $IOR -ORBport $schedulerserviceport  >> /tmp/logfile_$login
+#./Scheduling_Service -ORBnameserviceior $IOR -ORBport $schedulerserviceport  > /tmp/logfile_Scheduling_Service_$login  2>&1 &
 
-sleep 5
+# sleep 5
 
-echo // Started Scheduling Service on port $schedulerserviceport
+# echo // Started Scheduling Service on port $schedulerserviceport
 
 cd $TAO_ROOT/orbsvcs/Event_Service
 echo $ ./Event_Service -ORBnameserviceior $IOR -ORBport $eventserviceport >> /tmp/logfile_$login

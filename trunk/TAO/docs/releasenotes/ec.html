@@ -15,10 +15,25 @@
     <H3>New on this release</H3>
 
     <UL>
-      <LI>The <CODE>Gateway</CODE> to connect two event channels was
-	moved from a test to the library.
-	The corresponding test (<CODE>EC_Multiple</CODE>) has been
-	expanded and improved.</LI>
+	<LI>
+	  The user can register a set of <CODE>EC_Gateways</CODE> with
+	  the <CODE>EventChannel</CODE> implementation, the event
+	  channel will automatically update the subscription list as
+	  consumers subscribe to the EC.
+	</LI>
+	<LI>
+	  The code for consumer and supplier disconnection was
+	  improved and seems to work without problems now
+	</LI>
+	<LI>
+	  The <CODE>Event_Service</CODE> program creates a collocated
+	  <CODE>Scheduling Service</CODE> this works around a problem
+	  in the ORB when running on multiprocessor.
+	</LI>
+	<LI>
+	  Startup and shutdown were revised, the event channel
+	  shutdown cleanly now.
+	</LI>
     </UL>
 
     <H3>Known issues:</H3>
@@ -113,17 +128,26 @@
 $ cd Naming_Service ; ./Naming_Service -ORBport 10000 &
 	</P>
 	<P>
-$ cd Scheduling_Service ; ./Scheduling_Service -ORBport 10010 &
+$ cd Event_Service ; ./Event_Service -ORBport 0 &
 	</P>
 	<P>
-$ cd Event_Service ; ./Event_Service -ORBport 10020 &
-	</P>
-	<P>
-$ cd tests/Event_Latency ; ./Event_Latency -ORBport 10030 -m 20 &
+$ cd tests/Event_Latency ; ./Event_Latency -ORBport 0 -m 20 -j &
 	</P>
 	</CODE>
 
-	You may want to run each program in a separate window.
+	  <P>
+	    You may want to run each program in a separate window.
+	    Try using a fixed port number for the <CODE>Naming
+	      Service</CODE> so you can use the <CODE>NameService</CODE>
+	    environment variable.
+	  </P>
+	  
+	  <P>
+	    The script <CODE>start_services</CODE>
+	    in <CODE>$TAO_ROOT/orbsvcs/tests</CODE> can help with
+	    this.
+	  </P>
+	  
       </LI>
 
       <LI> If you want real-time behavior on Solaris you may need to run
@@ -176,6 +200,11 @@ $ cd tests/Event_Latency ; ./Event_Latency -ORBport 10030 -m 20 &
 	We use the COS Time Service types (not the services) to
 	specify time for the Event Service and Scheduling Service.</P>
       </LI>
+
+      <LI>The <CODE>Gateway</CODE> to connect two event channels was
+	moved from a test to the library.
+	The corresponding test (<CODE>EC_Multiple</CODE>) has been
+	expanded and improved.</LI>
     </UL>
 
   </BODY>

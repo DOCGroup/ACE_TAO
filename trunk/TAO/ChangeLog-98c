@@ -9,6 +9,13 @@ Tue Jun 23 17:30:14 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* orbsvcs/Event_Service/svc.conf: 
 	  The options are more realistic now.
 
+	* orbsvcs/tests/start_services: 
+	  No need to run the Scheduling Service now; the Event_Service
+	  program has a collocated one (by default).
+
+	* docs/releasenotes/ec.html: 
+	  Updated the release notes to reflect the latest changes.
+
 Tue Jun 23 16:47:43 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/ORB_Core.{h,cpp} (class TAO_Collocation_Table_Lock): Rename
