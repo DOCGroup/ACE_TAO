@@ -4,8 +4,10 @@ Fri May 09 16:37:48 1997  David L. Levine  <levine@cs.wustl.edu>
 	  don't return priority of 0 because ::pthread_attr_setschedparam ()
 	  will refuse to use it (with EINVAL).	So, bump priority of 0 up to 1.
 
-	* tests/Priority_Task_Test.cpp: on Linux only, don't set FIFO policy
-	  or non-zero policy if not superuser.
+	* tests/Priority_Task_Test.cpp: retry the task activation with
+	  priority 0 if it fails with non-zero priority.  This lets the
+	  test run on platforms such as Linux that only let the superuser
+	  set non-zero priority.
 
 	* ace/ACE_Process.cpp (ACE_Process_Options ctor): reordered
 	  initializers to match declaration order.
