@@ -190,7 +190,7 @@ declare_entry (CORBA::LongLong, tk_longlong);
 declare_entry (CORBA::ULongLong, tk_ulonglong);
 declare_entry (CORBA::LongDouble, tk_longdouble);
 declare_entry (CORBA::WChar, tk_wchar);
-declare_entry (CORBA::WChar*, tk_wstring);
+declare_entry (CORBA::WString, tk_wstring);
 
 void
 TAO_CDR_Interpreter::init (void)
@@ -231,7 +231,7 @@ TAO_CDR_Interpreter::init (void)
   setup_entry (CORBA::ULongLong, tk_ulonglong);
   setup_entry (CORBA::LongDouble, tk_longdouble);
   setup_entry (CORBA::WChar, tk_wchar);
-  setup_entry (CORBA::WChar*, tk_wstring);
+  setup_entry (CORBA::WString, tk_wstring);
 }
 
 #undef  setup
@@ -287,7 +287,7 @@ TAO_CDR_Interpreter::calc_nested_size_and_alignment_i (CORBA::TypeCode_ptr tc,
       || kind <= CORBA::tk_void
       || kind == CORBA::tk_except)
     {
-      env.exception (new CORBA::BAD_TYPECODE ());
+      env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
       return 0;
     }
 
@@ -303,7 +303,7 @@ TAO_CDR_Interpreter::calc_nested_size_and_alignment_i (CORBA::TypeCode_ptr tc,
       // Pull encapsulation length out of the stream.
       if (stream->read_ulong (temp) == 0)
         {
-          env.exception (new CORBA::BAD_TYPECODE ());
+          env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
           return 0;
         }
 
@@ -326,7 +326,7 @@ TAO_CDR_Interpreter::calc_nested_size_and_alignment_i (CORBA::TypeCode_ptr tc,
 
       if (nested.good_bit () == 0)
         {
-          env.exception (new CORBA::BAD_TYPECODE ());
+          env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
           return 0;
         }
 
@@ -345,7 +345,7 @@ TAO_CDR_Interpreter::calc_nested_size_and_alignment_i (CORBA::TypeCode_ptr tc,
 
       if (stream->rd_ptr () != nested.rd_ptr ())
         {
-          env.exception (new CORBA::BAD_TYPECODE ());
+          env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
           return 0;
         }
       return size;
@@ -373,7 +373,7 @@ TAO_CDR_Interpreter::calc_nested_size_and_alignment_i (CORBA::TypeCode_ptr tc,
         case CORBA::tk_wstring:
           if (stream->read_ulong (len) == 0)
             {
-              env.exception (new CORBA::BAD_TYPECODE ());
+              env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
               return 0;
             }
           tc->length_ = len;
@@ -384,7 +384,7 @@ TAO_CDR_Interpreter::calc_nested_size_and_alignment_i (CORBA::TypeCode_ptr tc,
         case CORBA::tk_sequence:
           if (stream->read_ulong (len) == 0)
             {
-              env.exception (new CORBA::BAD_TYPECODE ());
+              env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
               return 0;
             }
           tc->length_ = len;
@@ -401,7 +401,7 @@ TAO_CDR_Interpreter::calc_nested_size_and_alignment_i (CORBA::TypeCode_ptr tc,
   else if (TAO_CDR_Interpreter::table_[kind].skipper_ != 0
            && TAO_CDR_Interpreter::table_[kind].skipper_ (stream) == 0)
     {
-      env.exception (new CORBA::BAD_TYPECODE ());
+      env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
       return 0;
     }
 
@@ -421,7 +421,7 @@ TAO_CDR_Interpreter::calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,
   CORBA::ULong temp;
   if (stream->read_ulong (temp) == 0)
     {
-      env.exception (new CORBA::BAD_TYPECODE ());
+      env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
       return 0;
     }
 
@@ -453,28 +453,21 @@ TAO_CDR_Interpreter::calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,
 
   CORBA::Long offset;
   if (!stream->read_long (offset)
-      || offset >= -4
+      || offset >= -8
       || ((-offset) & 0x03) != 0)
     {
-      env.exception (new CORBA::BAD_TYPECODE ());
+      env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
       return 0;
     }
 
   // Notice how we change the sign of the offset to estimate the
   // maximum size.
-  // Also note that the offset is computed starting from the offset
-  // field. However, by this time, we have already read the offset field i.e.,
-  // we have already moved ahead by 4 bytes (size of CORBA::Long). So we should
-  // increase our offset bythis much amount.
-  //  TAO_InputCDR indirected_stream (*stream, -1*(offset-4), offset-4);
-  ACE_Message_Block *mb = (ACE_Message_Block *)stream->start ();
-  TAO_InputCDR indirected_stream (mb->rd_ptr () + offset - 4,
-                                  -1 * (offset - 4));
+  TAO_InputCDR indirected_stream (*stream, -offset, offset);
 
   // Fetch indirected-to TCKind.
   if (!indirected_stream.read_ulong (temp))
     {
-      env.exception (new CORBA::BAD_TYPECODE ());
+      env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
       return 0;
     }
   kind = (CORBA::TCKind) temp;
@@ -538,7 +531,7 @@ TAO_CDR_Interpreter::calc_struct_and_except_attributes (TAO_InputCDR *stream,
       || !stream->skip_string ()
       || !stream->read_ulong (members))
     {
-      env.exception (new CORBA::BAD_TYPECODE ());
+      env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
       return 0;
     }
 
@@ -552,7 +545,7 @@ TAO_CDR_Interpreter::calc_struct_and_except_attributes (TAO_InputCDR *stream,
     // Skip name of the member.
     if (!stream->skip_string ())
       {
-        env.exception (new CORBA::BAD_TYPECODE ());
+        env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
         return 0;
       }
 
@@ -638,7 +631,7 @@ TAO_CDR_Interpreter::calc_key_union_attributes (TAO_InputCDR *stream,
     void *two;
   };
   align_ptr ap;
-
+  
   // the first member of the union internal representation is the VPTR
   // since every union inherits from TAO_Base_Union
   overall_alignment = (char *) &ap.two - (char *) &ap.one
@@ -652,7 +645,7 @@ TAO_CDR_Interpreter::calc_key_union_attributes (TAO_InputCDR *stream,
   if (!stream->skip_string ()                   // type ID
       || !stream->skip_string ())
     {   // typedef name
-      env.exception (new CORBA::BAD_TYPECODE ());
+      env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
       return 0;
     }
 
@@ -663,7 +656,7 @@ TAO_CDR_Interpreter::calc_key_union_attributes (TAO_InputCDR *stream,
   CORBA::TypeCode discrim_tc (CORBA::tk_void);
 
   discrim_and_base_size = sizeof (TAO_Base_Union) +
-    calc_nested_size_and_alignment (&discrim_tc,
+    calc_nested_size_and_alignment (&discrim_tc, 
                                     stream,
                                     value_alignment,
                                     env);
@@ -673,13 +666,13 @@ TAO_CDR_Interpreter::calc_key_union_attributes (TAO_InputCDR *stream,
   if (value_alignment > overall_alignment)
     overall_alignment = value_alignment;
 
-
+  
   // skip "default used" indicator, and save "member count"
 
   if (!stream->read_ulong (temp)                 // default used
       || !stream->read_ulong (members))
     {   // member count
-      env.exception (new CORBA::BAD_TYPECODE ());
+      env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
       return 0;
     }
 
@@ -708,7 +701,7 @@ TAO_CDR_Interpreter::calc_key_union_attributes (TAO_InputCDR *stream,
 
           if (!stream->read_short (s))
             {
-              env.exception (new CORBA::BAD_TYPECODE ());
+              env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
               return 0;
             }
         }
@@ -722,7 +715,7 @@ TAO_CDR_Interpreter::calc_key_union_attributes (TAO_InputCDR *stream,
 
           if (!stream->read_long (l))
             {
-              env.exception (new CORBA::BAD_TYPECODE ());
+              env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
               return 0;
             }
         }
@@ -735,14 +728,14 @@ TAO_CDR_Interpreter::calc_key_union_attributes (TAO_InputCDR *stream,
 
           if (!stream->read_char (c))
             {
-              env.exception (new CORBA::BAD_TYPECODE ());
+              env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
               return 0;
             }
         }
       break;
 
       default:
-        env.exception (new CORBA::BAD_TYPECODE ());
+        env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
         return 0;
       }
 
@@ -750,7 +743,7 @@ TAO_CDR_Interpreter::calc_key_union_attributes (TAO_InputCDR *stream,
 
     if (!stream->skip_string ())
       {
-        env.exception (new CORBA::BAD_TYPECODE ());
+        env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
         return 0;
       }
 
@@ -763,7 +756,7 @@ TAO_CDR_Interpreter::calc_key_union_attributes (TAO_InputCDR *stream,
     TAO_InputCDR temp (*stream);
     if (calc_union_attr_is_var_sized_member (&temp, var_sized_member) == -1)
       {
-        env.exception (new CORBA::BAD_TYPECODE ());
+        env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
         return 0;
      }
 
@@ -797,9 +790,9 @@ TAO_CDR_Interpreter::calc_key_union_attributes (TAO_InputCDR *stream,
 
   // Round up the discriminator's size to include padding it needs in
   // order to be followed by the value.
-  discrim_and_base_size_with_pad =
+  discrim_and_base_size_with_pad = 
     (size_t) align_binary (discrim_and_base_size, value_alignment);
-  discrim_size_with_pad = discrim_and_base_size_with_pad -
+  discrim_size_with_pad = discrim_and_base_size_with_pad - 
     sizeof (TAO_Base_Union);
   // Now calculate the overall size of the structure, which is the
   // discriminator, inter-element padding, value, and tail padding.
@@ -844,7 +837,7 @@ TAO_CDR_Interpreter::calc_alias_attributes (TAO_InputCDR *stream,
   if (!stream->skip_string ()                   // type ID
       || !stream->skip_string ())               // typedef name
     {
-      env.exception (new CORBA::BAD_TYPECODE ());
+      env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
       return 0;
     }
 
@@ -876,7 +869,7 @@ TAO_CDR_Interpreter::calc_array_attributes (TAO_InputCDR *stream,
   if (stream->read_ulong (member_count) == 0
       || member_count > UINT_MAX)
     {
-      env.exception (new CORBA::BAD_TYPECODE ());
+      env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
       return 0;
     }
 
@@ -901,7 +894,7 @@ TAO_CDR_Interpreter::calc_seq_attributes (TAO_InputCDR *stream,
   CORBA::ULong temp;
   if (stream->read_ulong (temp) == 0)
     {
-      env.exception (new CORBA::BAD_TYPECODE ());
+      env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
       return 0;
     }
 
@@ -918,7 +911,7 @@ TAO_CDR_Interpreter::calc_seq_attributes (TAO_InputCDR *stream,
           || offset >= -8
           || ((-offset) & 0x03) != 0)
         {
-          env.exception (new CORBA::BAD_TYPECODE ());
+          env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
           return 0;
         }
       // Notice how we change the sign of the offset to estimate the
@@ -930,7 +923,7 @@ TAO_CDR_Interpreter::calc_seq_attributes (TAO_InputCDR *stream,
       if (indirected_stream.read_ulong (temp) == 0
           || temp == ~0u)
         {
-          env.exception (new CORBA::BAD_TYPECODE ());
+          env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
           return 0;
         }
     }
@@ -940,7 +933,7 @@ TAO_CDR_Interpreter::calc_seq_attributes (TAO_InputCDR *stream,
   // Skip the rest of the stream because we don't use it.
   if (stream->skip_bytes (stream->length ()) == 0)
     {
-      env.exception (new CORBA::BAD_TYPECODE ());
+      env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
       return 0;
     }
 
@@ -995,7 +988,7 @@ TAO_CDR_Interpreter::match_value (CORBA::TCKind kind,
         if (tc_stream->read_ushort (discrim) != 0)
           retval = (discrim == *(CORBA::UShort *)value);
         else
-          env.exception (new CORBA::BAD_TYPECODE ());
+          env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
       }
     break;
 
@@ -1007,7 +1000,7 @@ TAO_CDR_Interpreter::match_value (CORBA::TCKind kind,
         if (tc_stream->read_ulong (discrim) != 0)
           retval = (discrim == *(CORBA::ULong *)value);
         else
-          env.exception (new CORBA::BAD_TYPECODE ());
+          env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
       }
     break;
 
@@ -1018,7 +1011,7 @@ TAO_CDR_Interpreter::match_value (CORBA::TCKind kind,
         if (tc_stream->read_ulong (discrim) != 0)
           retval = (discrim == *(unsigned *)value);
         else
-          env.exception (new CORBA::BAD_TYPECODE ());
+          env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
       }
     break;
 
@@ -1029,7 +1022,7 @@ TAO_CDR_Interpreter::match_value (CORBA::TCKind kind,
         if (tc_stream->read_boolean (discrim) != 0)
           retval = (discrim == *(CORBA::Boolean *)value);
         else
-          env.exception (new CORBA::BAD_TYPECODE ());
+          env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
       }
     break;
 
@@ -1040,7 +1033,7 @@ TAO_CDR_Interpreter::match_value (CORBA::TCKind kind,
         if (tc_stream->read_char (discrim) != 0)
           retval = (discrim == *(CORBA::Char *)value);
         else
-          env.exception (new CORBA::BAD_TYPECODE ());
+          env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
       }
     break;
 
@@ -1051,12 +1044,12 @@ TAO_CDR_Interpreter::match_value (CORBA::TCKind kind,
         if (tc_stream->read_wchar (discrim) != 0)
           retval = (discrim == *(CORBA::WChar *)value);
         else
-          env.exception (new CORBA::BAD_TYPECODE ());
+          env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
       }
     break;
 
     default:
-      env.exception (new CORBA::BAD_TYPECODE ());
+      env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
     }
 
   return retval;

@@ -20,8 +20,7 @@ DIRS  =	orbsvcs \
 	Time_Service \
 	ImplRepo_Service \
 	CosEvent_Service \
-	tests \
-	examples
+	tests
 
 #----------------------------------------------------------------------------
 #	Include macros and targets

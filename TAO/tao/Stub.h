@@ -37,16 +37,11 @@
 
 class TAO_GIOP_Invocation;
 class TAO_ORB_Core;
-class TAO_Policy_Manager_Impl;
 
 // Descriptions of parameters.
 
 enum TAO_Param_Type
 {
-  // @@ Is there any use for this enum? I would assume that the
-  //    similar ones on corbfwd.h are enough!
-  // @@ Jeff: can you check into that?
-
   // = TITLE
   //   TAO_Param_Type
   // =DESCRIPTION
@@ -261,35 +256,6 @@ public:
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-#if defined (TAO_HAS_CORBA_MESSAGING)
-  CORBA::Policy_ptr get_policy (
-      CORBA::PolicyType type,
-      CORBA::Environment &ACE_TRY_ENV =
-        CORBA::default_environment ()
-    );
-  CORBA::Policy_ptr get_client_policy (
-      CORBA::PolicyType type,
-      CORBA::Environment &ACE_TRY_ENV =
-        CORBA::default_environment ()
-    );
-  TAO_Stub* set_policy_overrides (
-      const CORBA::PolicyList & policies,
-      CORBA::SetOverrideType set_add,
-      CORBA::Environment &ACE_TRY_ENV =
-        CORBA::default_environment ()
-    );
-  CORBA::PolicyList * get_policy_overrides (
-      const CORBA::PolicyTypeSeq & types,
-      CORBA::Environment &ACE_TRY_ENV =
-        CORBA::default_environment ()
-    );
-  CORBA::Boolean validate_connection (
-      CORBA::PolicyList_out inconsistent_policies,
-      CORBA::Environment &ACE_TRY_ENV =
-        CORBA::default_environment ()
-    );
-#endif /* TAO_HAS_CORBA_MESSAGING */
-
   CORBA::String_var type_id;
   // All objref representations carry around a type ID.
 
@@ -309,7 +275,13 @@ public:
   // Our Constructors ...
 
   TAO_Stub (char *repository_id,
-            const TAO_MProfile &profiles,
+            TAO_MProfile *profiles,
+            TAO_ORB_Core *orb_core);
+  // Construct from a repository ID and a pointer to list of
+  // profiles. Assumes ownership of the profiles.
+
+  TAO_Stub (char *repository_id,
+            TAO_MProfile &profiles,
             TAO_ORB_Core *orb_core);
   // Construct from a repository ID and a list of profiles.
 
@@ -366,11 +338,11 @@ public:
    // returns TRUE if a connection was successful with at least
    // one profile.
 
-   TAO_Profile *set_base_profiles (const TAO_MProfile& mprofiles);
+   TAO_Profile *set_base_profiles (TAO_MProfile *mprofiles);
    // Initialize the base_profiles_ and set profile_in_use_ to
    // reference the first profile.
 
-  void add_forward_profiles (const TAO_MProfile &mprofiles);
+  void add_forward_profiles (TAO_MProfile *mprofiles);
   // THREAD SAFE.
   // set the forward_profiles.  This object will assume ownership of
   // this TAO_MProfile object!!
@@ -430,6 +402,10 @@ private:
   // NON-THREAD-SAFE.  utility method for next_profile.
 
 private:
+    // @@ For now, we keep track of transport specific profiles here,
+  //    but in the next iteration this will go away ... only transport
+  //    neutral info is kept here => TAO_Stub should also go away!
+  //    fredk
   TAO_MProfile     base_profiles_;
   // ordered list of profiles for this object.
   TAO_MProfile     *forward_profiles_;
@@ -457,12 +433,6 @@ private:
 
   TAO_ORB_Core* orb_core_;
   // The ORB
-
-#if defined (TAO_HAS_CORBA_MESSAGING)
-  TAO_Policy_Manager_Impl* policies_;
-  // The policy overrides in this object, if nil then use the default
-  // policies.
-#endif /* TAO_HAS_CORBA_MESSAGING */
 
   // = Disallow copy constructor and assignment operator
   ACE_UNIMPLEMENTED_FUNC (TAO_Stub (const TAO_Stub &))

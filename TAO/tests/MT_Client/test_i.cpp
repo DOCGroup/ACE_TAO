@@ -11,6 +11,7 @@ ACE_RCSID(MT_Client, test_i, "$Id$")
 void
 Simple_Server_i::test_method (CORBA::Environment&)
 {
+  // nop
 }
 
 void
@@ -18,3 +19,5 @@ Simple_Server_i::shutdown (CORBA::Environment&)
 {
   this->orb_->shutdown (1);
 }
+
+

@@ -10,8 +10,6 @@ ACE_RCSID(IDL_Cubit, server, "$Id$")
 int
 main (int argc, char *argv[])
 {
-//  ACE_START_TEST (ASYS_TEXT ("Cubit_Server"));
-
   Cubit_Server cubit_server;
 
   ACE_DEBUG ((LM_DEBUG,
@@ -43,8 +41,5 @@ main (int argc, char *argv[])
     }
   ACE_ENDTRY;
   ACE_TIMEPROBE_PRINT;
-
-//  ACE_END_TEST;
-
   return 0;
 }

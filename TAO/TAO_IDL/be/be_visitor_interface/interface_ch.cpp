@@ -161,14 +161,14 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 	        << "_narrow (" << be_idt << be_idt_nl
           << "CORBA::Object_ptr obj," << be_nl
 	        << "CORBA::Environment &env = " << be_idt_nl
-	        << "CORBA::default_environment ()"
+	        << "CORBA::Environment::default_environment ()"
 	        << be_uidt << be_uidt_nl
 	        << ");" << be_uidt_nl
           << "static " << node->local_name () << "_ptr "
 	        << "_unchecked_narrow (" << be_idt << be_idt_nl
           << "CORBA::Object_ptr obj," << be_nl
 	        << "CORBA::Environment &env = " << be_idt_nl
-	        << "CORBA::default_environment ()"
+	        << "CORBA::Environment::default_environment ()"
 	        << be_uidt << be_uidt_nl
 	        << ");" << be_uidt_nl
           << "static " << node->local_name () << "_ptr " << "_nil (void);\n\n";
@@ -186,18 +186,18 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       // the _is_a method
       os->indent ();
       *os << "virtual CORBA::Boolean _is_a (" << be_idt << be_idt_nl
-          << "const CORBA::Char *type_id, " << be_nl
+	        << "const CORBA::Char *type_id, " << be_nl
           << "CORBA::Environment &env = " << be_idt_nl
-          << "CORBA::default_environment ()"
-          << be_uidt << be_uidt_nl
-          << ");" << be_uidt_nl
-          << "virtual const char* "
-          << "_interface_repository_id (void) const;\n" << be_uidt_nl;
+	        << "CORBA::Environment::default_environment ()"
+	        << be_uidt << be_uidt_nl
+	        << ");" << be_uidt_nl
+	        << "virtual const char* "
+	        << "_interface_repository_id (void) const;" << be_uidt_nl;
 
       // generate the "protected" constructor so that users cannot instantiate
       // us
       *os << "protected:" << be_idt_nl
-          << node->local_name () << " (void);" << be_nl
+	        << node->local_name () << " (void); // default constructor" << be_nl
           << node->local_name ()
 	        << " (TAO_Stub *objref, " << be_idt << be_idt_nl
           << "TAO_ServantBase *_tao_servant = 0, " << be_nl

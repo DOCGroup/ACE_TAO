@@ -55,8 +55,7 @@ server: $(addprefix $(VDIR),$(SVR_OBJS))
 	$(LINK.cc) -o server $(addprefix $(VDIR),$(SVR_OBJS)) $(LDFLAGS) $(ITIIOP) $(ITSRV) $(VLDLIBS) $(POSTLINK)
 
 realclean: clean
-	-$(RM) server cubitC.* cubitS.* cubit.hh
-
+	-/bin/rm -rf server cubitC.* cubitS.* cubit.hh
 #----------------------------------------------------------------------------
 #	Dependencies
 #----------------------------------------------------------------------------

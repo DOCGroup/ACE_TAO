@@ -25,13 +25,7 @@
 #include "orbsvcs/CosEventChannelAdminS.h"
 #include "orbsvcs/CosEvent/ProxyPushSupplier_i.h"
 
-#if defined(_MSC_VER)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
-class TAO_ORBSVCS_Export TAO_CosEC_ConsumerAdmin_i :
-  public virtual POA_CosEventChannelAdmin::ConsumerAdmin,
-  public virtual PortableServer::RefCountServantBase
+class TAO_ORBSVCS_Export TAO_CosEC_ConsumerAdmin_i : public POA_CosEventChannelAdmin::ConsumerAdmin
 {
   // = TITLE
   //   class TAO_CosEC_ConsumerAdmin_i implements the ConsumerAdmin interface.
@@ -51,11 +45,11 @@ public:
             RtecEventChannelAdmin::ConsumerAdmin_ptr rtec_consumeradmin);
 
   virtual CosEventChannelAdmin::ProxyPushSupplier_ptr
-    obtain_push_supplier(CORBA::Environment &ACE_TRY_ENV);
+    obtain_push_supplier(CORBA::Environment &TAO_TRY_ENV);
   // Returns a new ProxyPushSupplier_ptr.
 
   virtual CosEventChannelAdmin::ProxyPullSupplier_ptr
-    obtain_pull_supplier(CORBA::Environment &ACE_TRY_ENV);
+    obtain_pull_supplier(CORBA::Environment &TAO_TRY_ENV);
   // Returns a new ProxyPullSupplier_ptr.
 
 private:
@@ -66,9 +60,5 @@ private:
   // The RtecEventChannelAdmin::ConsumerAdmin specified by the user of
   // this class.
 };
-
-#if defined(_MSC_VER)
-#pragma warning(default:4250)
-#endif /* _MSC_VER */
 
 #endif /* CONSUMERADMIN_I_H */

@@ -1,7 +1,9 @@
 # $Id$
 
+BIN = DynSched_Test
+BUILD = $(BIN)
 SRC = $(BIN:%=%$(VAR).cpp)
-LDLIBS = -lorbsvcs -lTAO
+LDLIBS= -lorbsvcs -lTAO
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
@@ -10,15 +12,6 @@ endif
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs/orbsvcs/Sched \
             -I$(TAO_ROOT)/orbsvcs \
             -I$(TAO_ROOT)
-
-BIN2 = DynSched_Test
-
-#### If the TAO orbsvcs library wasn't built with sufficient components,
-#### don't try to build here.
-TAO_ORBSVCS := $(shell $(ACE_ROOT)/bin/ace_components --orbsvcs)
-ifeq (Sched,$(findstring Sched,$(TAO_ORBSVCS)))
-  BIN = $(BIN2)
-endif # Sched
 
 #----------------------------------------------------------------------------
 #       Include macros and targets

@@ -5,10 +5,6 @@
 class mySFP_Callback: public SFP_Callback
 {
   public:
-  mySFP_Callback (CORBA_ORB_ptr orb)
-    :orb_ (orb)
-    {
-    }
   // This is called for both active and passive start.
   virtual int start_failed (void) 
     {
@@ -22,28 +18,16 @@ class mySFP_Callback: public SFP_Callback
       return 0;
     }  
 
-  virtual void end_stream (void)
-    {
-      this->orb_->shutdown ();
-    }
-
   virtual int receive_frame (ACE_Message_Block *frame)
     {
       ACE_DEBUG ((LM_DEBUG,"mySFP_Callback:receive_frame\n"));
-      ACE_Message_Block *block = frame;
-      while (block != 0)
-        {
-          char *buf =block->rd_ptr ();
-          ACE_DEBUG ((LM_DEBUG,"length of buf = %d\n",block->length ()));
-          for (u_int i=0;i<block->length ();i++)
-            ACE_DEBUG ((LM_DEBUG,"%c ",buf[i]));
-          ACE_DEBUG ((LM_DEBUG,"\n"));
-          block = block->cont ();
-        }
+      char *buf =frame->rd_ptr ();
+      ACE_DEBUG ((LM_DEBUG,"length of buf = %d\n",frame->length ()));
+      for (int i=0;i<frame->length ();i++)
+        ACE_DEBUG ((LM_DEBUG,"%c ",buf[i]));
+      ACE_DEBUG ((LM_DEBUG,"\n"));
       return 0;
     }
-    private:
-      CORBA_ORB_ptr orb_;
 };
 
 int
@@ -55,12 +39,12 @@ main (int argc, char **argv)
 
   ACE_Time_Value timeout1 (5),timeout2 (50);
 
-  mySFP_Callback callback (orb_manager.orb ());
-  TAO_SFP sfp (orb_manager.orb (),
-               TAO_ORB_Core_instance ()->reactor (),
-               timeout1,
-               timeout2,
-               &callback);
+  mySFP_Callback callback;
+  SFP sfp (orb_manager.orb (),
+           TAO_ORB_Core_instance ()->reactor (),
+           timeout1,
+           timeout2,
+           &callback);
 
   int result;
   // passive start.

@@ -1,6 +1,6 @@
 
 %{
-/*  $Id$
+/*
 
 COPYRIGHT
 
@@ -93,23 +93,7 @@ inline char *__yytext()
 #else
 #define ace_yytext yytext
 #endif /* 0 */
-
-static int scan_obv_token (int token)
-{
-#ifdef IDL_HAS_VALUETYPE
-    if (idl_global->obv_support ())
-      {
-        return token;
-      }
-#endif /* IDL_HAS_VALUETYPE */
-    yylval.strval = ACE_OS::strdup (ace_yytext);
-    return IDENTIFIER;
-}
-
 %}
-
-/* SO we don't choke on files that use \r\n */
-NL [\r?\n]
 
 %array
 %option never-interactive
@@ -146,14 +130,6 @@ boolean		return IDL_BOOLEAN;
 octet		return IDL_OCTET;
 void		return IDL_VOID;
 native          return IDL_NATIVE;
-abstract        return scan_obv_token (IDL_ABSTRACT);
-custom          return scan_obv_token (IDL_CUSTOM);
-init            return scan_obv_token (IDL_INIT);
-private         return scan_obv_token (IDL_PRIVATE);
-public          return scan_obv_token (IDL_PUBLIC);
-supports        return scan_obv_token (IDL_SUPPORTS);
-truncatable     return scan_obv_token (IDL_TRUNCATABLE);
-valuetype       return scan_obv_token (IDL_VALUETYPE);
 
 TRUE		return IDL_TRUETOK;
 FALSE		return IDL_FALSETOK;
@@ -177,7 +153,7 @@ oneway		return IDL_ONEWAY;
 
     TAO_IDL_CPP_Keyword_Table cpp_key_tbl;
     const TAO_IDL_CPP_Keyword_Entry *entry =
-            cpp_key_tbl.lookup (ace_yytext,
+            cpp_key_tbl.lookup (ace_yytext, 
                                 ACE_OS::strlen (ace_yytext));
     if (entry)
       {
@@ -237,27 +213,27 @@ oneway		return IDL_ONEWAY;
 		  yylval.cval = idl_escape_reader(ace_yytext + 1);
 		  return IDL_CHARACTER_LITERAL;
 		}
-^#[ \t]*pragma[ \t].*{NL}	{/* remember pragma */
+^#[ \t]*pragma[ \t].*\n	{/* remember pragma */
   		  idl_global->set_lineno(idl_global->lineno() + 1);
 		  idl_store_pragma(ace_yytext);
 		}
-^#[ \t]*[0-9]*" ""\""[^\"]*"\""" "[0-9]*{NL}		{
+^#[ \t]*[0-9]*" ""\""[^\"]*"\""" "[0-9]*\n		{
 		  idl_parse_line_and_file(ace_yytext);
 		}
-^#[ \t]*[0-9]*" ""\""[^\"]*"\""{NL}		{
+^#[ \t]*[0-9]*" ""\""[^\"]*"\""\n		{
 		  idl_parse_line_and_file(ace_yytext);
 		}
-^#line[ \t]*[0-9]*" ""\""[^\"]*"\""{NL}		{
+^#line[ \t]*[0-9]*" ""\""[^\"]*"\""\n		{
 		  idl_parse_line_and_file(ace_yytext);
 		}
-^#[ \t]*[0-9]*{NL} {
+^#[ \t]*[0-9]*\n {
 		  idl_parse_line_and_file(ace_yytext);
 	        }
-^#[ \t]*ident.*{NL}	{
+^#[ \t]*ident.*\n	{
 		  /* ignore cpp ident */
   		  idl_global->set_lineno(idl_global->lineno() + 1);
 		}
-\/\/.*{NL}	{
+\/\/.*\n	{
 		  /* ignore comments */
   		  idl_global->set_lineno(idl_global->lineno() + 1);
 		}
@@ -276,7 +252,7 @@ oneway		return IDL_ONEWAY;
 	          }
 	        }
 [ \t]*		;
-{NL}		{
+\n		{
   		  idl_global->set_lineno(idl_global->lineno() + 1);
 		}
 .		return ace_yytext [0];
@@ -393,7 +369,7 @@ idl_store_pragma(char *buf)
 	  ++tp; ++sp;
         }
     }
-
+  
   if (ACE_OS::strstr(buf + 8, "import") != 0) {
     idl_global->set_import(I_TRUE);
     return;
@@ -555,7 +531,7 @@ idl_escape_reader(
 	    str[i] = save;
 	    return out;
 	}
-	ACE_NOTREACHED (break;)
+	break;
       default:
 	// check for octal value
 	if (str[1] >= '0' && str[1] <= '7') {
@@ -571,6 +547,6 @@ idl_escape_reader(
 	} else {
 	  return str[1] - 'a';
 	}
-	ACE_NOTREACHED  (break;)
+	break;
     }
 }

@@ -25,10 +25,7 @@ release</a> of <a href="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</a>:
 <a href="#pp">Pluggable Protocols</a></li>
 
 <li>
-<a href="#poa">Portable Object Adapter (POA)</a></li>
-
-<li>
-<a HREF="../poa_migration.html">POA Migration Notes</a></li>
+<a href="#poa">Portable Object Adapter</a></li>
 
 <li>
 <a href="../implrepo/status.html">Implementation Repository</a></li>
@@ -37,10 +34,7 @@ release</a> of <a href="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</a>:
 <a href="#interfrepo">Interface Repository</a></li>
 
 <li>
-<a href="OBV.html">Object-by-Value</a></li>
-
-<li>
-<a href="#nservices">CORBA Naming Service </a>and <a href="../INS.html">Interoperable Naming Service</a></li>
+<a href="#nservices">CORBA Naming Service and Interoperable Naming Service</a></li>
 
 <li>
 <a href="#tservices">CORBA Trading Service</a></li>
@@ -97,16 +91,11 @@ A complete list of all modifications to TAO is available in the <a href="http://
 <a NAME="idl"></a>IDL Compiler</h3>
 Point of contact: <a href="mailto:gokhale@research.bell-labs.com">Aniruddha
 Gokhale</a>
-<p>Current status: (As of May 15, 1999.)
+<p>Current status: (As of Jan 22, 1999.)
 <ul>
 <li>
 Generated code closely follows the C++ Mapping specified in the latest
 C++ mapping for CORBA 2.3 (Document ptc/98-09-03).</li>
-
-<li>
-We are now able to handle recursive types. We are also able to
-generate optimized typecodes.
-</li>
 
 <li>
 Struct members of type strings and arrays of strings now use the managed
@@ -446,122 +435,96 @@ requests to servants. <P>
 TAO supports the POA spec. This section will carry updates as available.</li>
 </ul>
 Known issues:
-
 <ul>
+<li>
+The synchronization in the POA is broken. For example, the locks are held
+across the invocation on the servant. The locks are also held across the
+invocation on the AdapterActivator. This forces the use of recursive locks
+inside the POA. However, the problem with recursive locks is that multiple
+threads cannot dispatch requests on the same POA simultaneous.</li><P>
 
-<li> ORB::shutdown needs to deactive the POA Managers. We need to fix
-this. </li><P>
+<li>
+Add the new RefCountServantBase class to TAO. This reference counted base
+class was added to the CORBA specification to avoid race conditions for
+servant deletion in threaded servers. <a href="ftp://ftp.omg.org/pub/docs/orbos/98-07-12.pdf">ftp://ftp.omg.org/pub/docs/orbos/98-07-12.pdf</a>
+contains the relevant text.</li><P>
 
+<li>
+Currently, the complete POA name is used as the POA identity. This scheme
+is inefficient in many ways including: (a) the complete POA name can be
+significantly large in size, and therefore, ineffient to pass with every
+method call from the client to the server; (b) it is varible in size, and
+therefore, does not lend itself to smart and effective parsing; (c) the
+searching based on the complete POA name is very ineffient.</li>
+
+<p>The correct solution here is to use an active demux table, and flatten
+the POA hierarchy. This will help in the searching since active demuxing
+is fast and predictable. This will also help in the parsing since the demux
+key will be fixed size.
+<p>Note that for persistent ids, we have to pass the complete POA name
+in addition to the demux key in order to handle POA creation on demand.<P>
+
+<li>
+Timestamps in persistent IORs are not required. They should be removed.</li> <P>
+
+<li>
+POA exceptions should be removed from the list of system
+    exceptions.</li> <P>
+
+<li>
+We need to separate out the POA functionality required to support the full
+CORBA spec from the POA functionality required to support the Minimal CORBA
+spec.</li> <P>
+
+<li>
+We need to investigate whether it feasible for us to provide active demuxing
+for the USER_ID policy. Currently, the best we do with the USER_ID policy
+is a hash table based demuxing.</li> <P>
+
+Note that we have to pass the user id in addition to the demux key in
+order to handle servant creation on demand. <P>
+<li>
+We can potentially add active demuxing for method name lookup. The benefit
+of this optimization is questionable since the current perfect hashing
+scheme provide very good and predictable behavior.</li> <P>
+
+Also, note that this optimization will require many changes. We would
+have to use the help of the IDL compiler to modify the object key that
+is passed for every method call differently. Note that this scheme doesn't
+work in the case of multiple inheritance or when the client stubs are not
+TAO.<P>
+
+<li>
+There are some POA objects in a typical server that are not freed up properly,
+resulting in a memory leak. This is not very significant since the leak
+does not grow. However, it still needs a fix.</li> <P>
 </UL>
 
 Future work:
 <ul>
+<li>
+Determine the degree to which we will support the full semantics of remote
+objects on a collocated object. The spec mandates that collocated object
+should behave <i>exactly</i> like remote objects, but that means that request
+will have to be queued rather than calling a method directly, and this
+could be hazardous to our quest for real-time ORB status.</li><P>
 
-<li> Determine the degree to which we will support the full semantics
-of remote objects on a collocated object. The spec mandates that
-collocated object should behave <i>exactly</i> like remote objects,
-but that means that request will have to be queued rather than calling
-a method directly, and this could be hazardous to our quest for
-real-time ORB status.</li><P>
+<li>
+Provide extensions of the specification to ensure real-time delivery of
+messages.</li> <P>
 
 </ul>
-
 Recently completed work:<P>
-
 <ul>
+<li>
+Support for collocation should be much better now because the POA can tell
+if we created the object reference.</li><P>
 
-<li> TAO's POA now properly supports both the threading policies:
-SINGLE_THREAD_MODEL and ORB_CTRL_MODEL. </li><P>
-
-<li>The synchronization in the POA is now very optimal. For example,
-the locks are not held across the invocation on the servant. The locks
-are also not held across the invocation on the AdapterActivator and
-ServantManagers. This allows us to use regular locks instead of
-recursive locks inside the POA. This also allows multiple threads to
-dispatch requests on the same POA simultaneous.</li><P>
-
-<li>TAO now supports reference counting between POA and servants,
-including the new RefCountServantBase and ServantBase_var
-classes. RefCountServantBase is a reference counted base class that
-was added to the CORBA specification to avoid race conditions for
-servant deletion in threaded servers. <a
-href="ftp://ftp.omg.org/pub/docs/orbos/98-07-12.pdf">ftp://ftp.omg.org/pub/docs/orbos/98-07-12.pdf</a>
-contains the relevant text. Check <a
-href="../poa_migration.html#Reference counting Servants">here</a> on
-some hints to avoid trouble.</li><P>
-
-<li> The POA now supports active demultiplexing of servants in the
-SYSTEM_ID and the USER_ID policy. This should make the POA faster and
-more predictable since there is no hashing involved and the index of
-the slot where the servant is registered is in the Object Key.</li>
-<P>
-
-<li> Previously, the complete POA name was used as the POA
-identity. This scheme was inefficient in many ways including: (a) the
-complete POA name can be significantly large in size, and therefore,
-ineffient to pass with every method call from the client to the
-server; (b) it is varible in size, and therefore, does not lend itself
-to smart and effective parsing; (c) the searching based on the
-complete POA name is very ineffient.</li>
-
-<p> The new solution is to use an active demux table, and flatten the
-POA hierarchy. This will help in the searching since active demuxing
-is fast and predictable. This will also help in the parsing since the
-demux key will be fixed size.
-
-<p> Note that for persistent ids, we have to pass the complete POA
-name in addition to the demux key in order to handle POA creation on
-demand.<P>
-
-<li> There were some POA objects in a typical server that are not
-freed up properly, resulting in a memory leak. This has now been
-fixed.</li> <P>
-
-<li> Timestamps in persistent IORs were not required and have been
-removed.</li> <P>
-
-<li> POA exceptions are not not system exceptions and have been
-removed from the list of system exceptions.</li> <P>
-
-<li> Vastly improved the ability of the POA to deal with user
-exceptions, memory allocation failures, and constructor failures.</li>
-<P>
-
-<li> We now support a minimal POA for the minimal CORBA
-specification.</li> <P>
-
-<li> We have decided not to support active demuxing for method name
-lookup. The benefit of this optimization was questionable since the
-current perfect hashing scheme provide very good and predictable
-behavior.</li> <P>
-
-Also, note that this optimization will require many changes. We would
-have to use the help of the IDL compiler to modify the object key that
-is passed for every method call differently. Note that this scheme
-doesn't work in the case of multiple inheritance or when the client
-stubs are not TAO.<P>
-
-<li> Improved the parsing of object keys belonging to the
-RootPOA. Since this is the default POA and is commonly used, we have
-given it a reserved byte in the object key in order to quickly
-identify it. With the reserved bit, the active demux key for the
-RootPOA is not used, and no map lookups are required.</li> <P>
-
-<li> POA name separator was changed from '/' to '\0'.  Since POA names
-are strings, this makes a better choice since there is no chance of a
-conflict with the string specified by the user. </li> <P>
-
-<li> We have support for reactivating servants with system generated
-ids.  </li> <P>
-
-<li> The TAO specific synchronization POA policy has been
-removed. </li> <P>
-
-<li> New examples have been added to show how servants can be
-dynamically loaded from DLLs on demand. </li> <P>
-
-<li> Support for collocation should be much better now because the POA
-can tell if we created the object reference.</li><P>
+<li>
+The POA now supports active demultiplexing of servants in the SYSTEM_ID
+policy. This should make the POA faster and more predictable since there
+is no hashing involved and the index of the slot where the servant is registered
+is in the Object Key.</li> <P>
 
 </UL>
 <hr>
@@ -580,19 +543,14 @@ object and make invocations on it using the DII.
 <p>Recent Work: TDB
 <p>Future Work: TDB
 <p>
-
 <hr>
-
-<br><!--#include virtual="OBV.html" -->
-<hr>
-
 <h3>
 <a NAME="nservices"></a>CORBA Naming Service and Interoperable Naming Service</h3>
 Points of contact: <a href="mailto:marina@cs.wustl.edu">Marina
 Spivak</a> and <a href="mailto:vishal@cs.wustl.edu">Vishal Kachroo</a>
 <p>
 
-The CORBA <a href="ftp://www.omg.org/pub/docs/formal/97-07-12.pdf">
+The CORBA <a href="ftp://www.omg.org/pub/docs/formal/97-07-12.pdf">The
 Naming Service</a> supports a hierarchical mapping between sequences
 of strings and object references.  The CORBA <A
 HREF="ftp://ftp.omg.org/pub/docs/orbos/98-10-11.pdf">Interoperable
@@ -601,11 +559,10 @@ locate the Naming Service. It allows the ORB to be administratively
 configured for bootstrapping to services not set up with the orb at
 install time. <P>
 
-<p>Current status (as of 7th Apr 1999):
+<p>Current status (as of 22nd Feb 1999):
 <ul>
 <li>
-Implementation of the CORBA Naming Service spec is complete.  TAO's
-Naming Service provides an optional persistence capability.</li>
+Implementation of the CORBA Naming Service spec is complete.</li>
 <li>
 Implementation of the CORBA InterOperable Naming Service is in
 progress. </li>
@@ -613,12 +570,13 @@ progress. </li>
 Recently completed work:
 <ul>
 <li>
-Added support for Persistence (using memory-mapped files).  Persistence
-feature is optional, and is controlled by the command line argument.</li>
-
+The implementation of the Naming Service has been upgraded to use TAO's
+exception macros, which allow it to work both with C++ exceptions and without.</li>
 <li>
-Updated the implementation of the Naming Service to use new ACE
-exception macros.</li>
+Destroy method has been updated.</li>
+<li>
+More test examples have been added to TAO/orbsvcs/tests/Simple_Naming.
+</li>
 <li>
 Added support for the InterOperable Naming Service, which enables the
 ORB to support IORs in user-friendly <CODE>iioploc</CODE> format.
@@ -629,13 +587,13 @@ for non-locality-constrained objects. Two options -ORBInitRef and
 arbitrary services.
 </li>
 
-<li>Added support for the Naming service to act like an agent: to understand IIOP
+<li>The Naming Service is being used as an agent to understand IIOP
 request messages from clients and respond with reply messages with a
 LOCATION_FORWARD/OBJECT_NOT_EXIST status. The Naming Service can be
 configured through ORB options to register arbitrary services given
 the URL-format IOR for the service. The resolve_initial_references ()
 resolves a service in the following order :
-<br>1. -ORBInitRef
+<br>1. -ORBInitRef 
 <br>2. -ORBDefaultInitRef
 <br>3. Multicast to service.
 </li>
@@ -643,37 +601,41 @@ resolves a service in the following order :
 <li>
 Added a test for the InterOperable Naming Service that works in
 conjunction with the current TAO examples.
-</li>
+</li> 
 
 </ul>
 
 Work in progress:
 <ul>
+<li>
+Currently the bindings are stored as a table in memory. Work is under way
+to provide persistance option for the Naming Service.</li>
+</li>
 
-<LI> Support for the iiopname format and conversions
+<LI> Currently adding support for the iiopname format and conversions
 to and from URL-style IORs.
 </LI>
 
 <LI>
-A detailed InterOperable Naming Service test.
+Adding a more detailed test for the InterOperable Naming Service.
 </LI>
 
 </ul>
 Future work:
 <ul>
 <li>
-Support for a load balancing feature similar to the one present in ORBIX.
+Support for a load balancing feature similar to the one provided in ORBIX.
 It will be possible to bind a group of objects under a single name, and when a client attempts to resolve the name in question, a preset policy (e.g., random, round robin, etc.) will determine which one of the object references from the group will be returned.
 </li>
 <li>
-Update to the 'destroy' method, once the POA restructuring effort is complete, to do the "Right Thing TM".
+Update destroy method, once the POA restructuring effort is complete, to do the "Right Thing TM".
 </li>
 <li>
 Replication of the bindings to other Naming Service's currently running.
 It will probably be modeled after the LDAP Multi-Master Replication
 Protocol.</li>
 <li>
-Support for the Naming Service to handle the IIOP
+Support will be added for the Naming Service to handle the IIOP
 LocateRequest messages and respond with LocateReply messages with a
 LOCATION_FORWARD/OBJECT_NOT_EXIST status.
 </ul>
