@@ -283,6 +283,9 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::remove (void)
 
 #if defined (ACE_HAS_MALLOC_STATS)
   this->print_stats ();
+
+  ACE_DES_NOFREE (this->cb_ptr_->malloc_stats_,
+                  ACE_Malloc_Stats);
 #endif /* ACE_HAS_MALLOC_STATS */
 
   // Remove the ACE_LOCK.

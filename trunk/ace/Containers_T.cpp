@@ -1115,7 +1115,7 @@ ACE_Double_Linked_List<T>::get (T *&item, size_t slot)
     iter.advance ();
 
   item = iter.next ();
-  return item ? 0 : 1;
+  return item ? 0 : -1;
 }
 
 template <class T> size_t
@@ -2460,7 +2460,7 @@ ACE_Ordered_MultiSet_Iterator<T>::next (T *&item) const
 
 ACE_ALLOC_HOOK_DEFINE (ACE_DLList_Node)
 
-  template <class T> T *
+template <class T> T *
 ACE_DLList<T>::insert_tail (T *new_item)
 {
   ACE_DLList_Node *temp1, *temp2;
