@@ -1133,7 +1133,6 @@ Tue Feb  6 23:43:49 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
           %s to be %*s since the string may not be nul terminated!  Thanks
           to Lu Yunhai <luyunhai@huawei.com> for reporting this.
 
->>>>>>> 4.1657
 Tue Feb  6 20:11:28 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * include/makeinclude/platform_sunos5_sunc++.GNU:
