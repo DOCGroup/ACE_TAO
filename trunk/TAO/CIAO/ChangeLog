@@ -1,3 +1,8 @@
+Wed Apr 21 13:08:50 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+        * DnC/Config_Handlers/APM_Handler.cpp
+          Fixed a typo.
+
 Wed Apr 21 10:53:50 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 	* DnC/Deployment.idl:
