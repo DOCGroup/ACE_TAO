@@ -267,7 +267,8 @@ void PortableServer::ForwardRequest::_raise ()
 
 void PortableServer::ForwardRequest::_tao_encode (
     TAO_OutputCDR &cdr,
-    CORBA::Environment &ACE_TRY_ENV) const
+    CORBA::Environment &ACE_TRY_ENV
+  ) const
 {
   if (cdr << *this)
     return;
@@ -277,7 +278,8 @@ void PortableServer::ForwardRequest::_tao_encode (
 
 void PortableServer::ForwardRequest::_tao_decode (
     TAO_InputCDR &cdr,
-    CORBA::Environment &ACE_TRY_ENV)
+    CORBA::Environment &ACE_TRY_ENV
+  )
 {
   if (cdr >> *this)
     return;
@@ -295,7 +297,7 @@ CORBA::Exception *PortableServer::ForwardRequest::_alloc (void)
 PortableServer::ForwardRequest::ForwardRequest (
   const CORBA::Object_ptr  _tao_forward_reference
 )
-  : CORBA_UserException  (CORBA::string_dup ("IDL:PortableServer/ForwardRequest:1.0"))
+  : CORBA_UserException  ("IDL:PortableServer/ForwardRequest:1.0")
 {
     this->forward_reference = CORBA::Object::_duplicate (_tao_forward_reference);
 }
@@ -320,10 +322,10 @@ TAO_NAMESPACE_BEGIN (PortableServer)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ForwardRequest, &_tc_TAO_tc_PortableServer_ForwardRequest)
 TAO_NAMESPACE_END
 
-CORBA::TypeCode_ptr
-PortableServer::ForwardRequest::_type (void) const
+// TAO extension - the virtual _type method
+CORBA::TypeCode_ptr PortableServer::ForwardRequest::_type (void) const
 {
-  return _tc_ForwardRequest;
+  return ::PortableServer::_tc_ForwardRequest;
 }
 
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
@@ -1092,6 +1094,8 @@ const char* PortableServer::POAManager::_interface_repository_id (void) const
   return "IDL:PortableServer/POAManager:1.0";
 }
 
+#if (TAO_HAS_MINIMUM_POA == 0)
+
 // default constructor
 PortableServer::POAManager::AdapterInactive::AdapterInactive (void)
 {
@@ -1101,29 +1105,6 @@ PortableServer::POAManager::AdapterInactive::AdapterInactive (void)
 PortableServer::POAManager::AdapterInactive::~AdapterInactive (void)
 {
 }
-
-void PortableServer::POAManager::AdapterInactive::_raise ()
-{
-  TAO_RAISE(*this);
-}
-
-
-void PortableServer::POAManager::AdapterInactive::_tao_encode (
-    TAO_OutputCDR &,
-    CORBA::Environment &ACE_TRY_ENV) const
-{
-  ACE_THROW (CORBA::MARSHAL ());
-}
-
-void PortableServer::POAManager::AdapterInactive::_tao_decode (
-    TAO_InputCDR &,
-    CORBA::Environment &ACE_TRY_ENV)
-{
-  ACE_THROW (CORBA::MARSHAL ());
-}
-
-
-#if (TAO_HAS_MINIMUM_POA == 0)
 
 // copy constructor
 PortableServer::POAManager::AdapterInactive::AdapterInactive (const ::PortableServer::POAManager::AdapterInactive &_tao_excp)
@@ -1150,6 +1131,27 @@ PortableServer::POAManager::AdapterInactive::_downcast (CORBA::Exception *exc)
     return 0;
 }
 
+
+void PortableServer::POAManager::AdapterInactive::_raise ()
+{
+  TAO_RAISE(*this);
+}
+
+
+void PortableServer::POAManager::AdapterInactive::_tao_encode (
+    TAO_OutputCDR &,
+    CORBA::Environment &ACE_TRY_ENV) const
+{
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
+
+void PortableServer::POAManager::AdapterInactive::_tao_decode (
+    TAO_InputCDR &,
+    CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_THROW (CORBA::MARSHAL ());
+}
 
 // TAO extension - the _alloc method
 CORBA::Exception *PortableServer::POAManager::AdapterInactive::_alloc (void)
