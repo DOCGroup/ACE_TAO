@@ -35,6 +35,7 @@ UTILS_FILES = \
   Capabilities \
   Containers \
   Configuration \
+  Configuration_Import_Export \
   Dirent \
   Dynamic \
   Dynamic_Service_Base \

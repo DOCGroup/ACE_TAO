@@ -13,12 +13,15 @@
 //      <ACE_Configuration> work correctly.
 //
 // = AUTHOR
-//    Michael Searles <msearles@base16.com> and Chris Hafey <chafey@stentor.com>
+//    Michael Searles <msearles@base16.com>,
+//    Chris Hafey <chafey@stentor.com>, and
+//    Jerry D. Odenwelder Jr. <jerry.o@mindspring.com>
 //
 // ============================================================================
 
-#include "tests/test_config.h"
+#include "test_config.h"
 #include "Config_Test.h"
+#include "ace/Configuration_Import_Export.h"
 
 ACE_RCSID(tests, Config_Test, "$Id$")
 
@@ -59,7 +62,7 @@ test (ACE_Configuration *config)
 
   u_char data[80];
 
-  for(int i = 0; i < 80; i++)
+  for (int i = 0; i < 80; i++)
     data[i] = i + 128;
 
   if (config->set_binary_value (testsection,
@@ -92,12 +95,12 @@ test (ACE_Configuration *config)
 
   if (config->get_binary_value (testsection,
                                 ACE_TEXT ("binvalue"),
-                                (void*&) data_out,
+ (void*&) data_out,
                                 length))
     return -10;
 
   // compare em
-  for(int j = 0; j < 80; j++)
+  for (int j = 0; j < 80; j++)
     if (data_out[j] != data[j])
       return -11;
 
@@ -231,7 +234,7 @@ test_io (ACE_Configuration *config)
     config->root_section ();
   ACE_Configuration_Section_Key test;
 
-  if (config->open_section(root,
+  if (config->open_section (root,
                            ACE_TEXT ("test"),
                            1,
                            test))
@@ -271,14 +274,6 @@ test_io (ACE_Configuration *config)
                                       ACE_TEXT ("2intvalue"),
                                       42))
     return -8;
-
-  // Export it to a file
-  if(config->export_config (ACE_TEXT ("config.ini")))
-    return -9;
-  // reimport
-
-  if (config->import_config (ACE_TEXT ("config.ini")))
-    return -10;
 
   return 0;
 }
@@ -334,107 +329,815 @@ run_tests (void)
                         -1);
   }
 
-  // Test file i/o using a transient heap
-  ACE_Configuration_Heap io_config;
-  if (io_config.open ())
-    return -2;
-
-  int result = test_io (&io_config);
-  if (result)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "IO Test Failed (%d)\n",
-                       result),
-                      -3);
-
-  ACE_DEBUG ((LM_DEBUG,
-              "Test passed\n"));
+  ACE_DEBUG ((LM_DEBUG, "Test passed\n"));
   return 0;
 }
 
-void
-Config_Test::read_config (void)
+static int 
+build_config_object (ACE_Configuration& cfg)
 {
-  if (m_ConfigurationHeap.open () == 0)
-    {
-      if (m_ConfigurationHeap.import_config_as_strings (ACE_TEXT ("Config_Test.ini")) == 0)
-        {
-          ACE_Configuration_Section_Key root = m_ConfigurationHeap.root_section ();
-          // Process [network] section
-          ACE_Configuration_Section_Key NetworkSection;
-          if (m_ConfigurationHeap.open_section (root, 
-                                                ACE_TEXT ("network"), 
-                                                1,
-                                                NetworkSection) == 0)
-            {
-              this->get_section_integer (NetworkSection,
-                                         ACE_TEXT ("TimeToLive"),
-                                         &m_nTimeToLive,
-                                         1,
-                                         20);
-              this->get_section_boolean (NetworkSection,
-                                         ACE_TEXT ("Delay"),
-                                         &m_bDelay);
-              this->get_section_string (NetworkSection,
-                                        ACE_TEXT ("DestIPAddress"),
-                                        m_pszDestIPAddress,
-                                        TEST_MAX_STRING);
-              this->get_section_integer (NetworkSection,
-                                         ACE_TEXT ("DestPort"),
-                                         &m_nDestPort,
-                                         0,
-                                         65535);
-              this->get_section_integer (NetworkSection,
-                                         ACE_TEXT ("ReconnectInterval"),
-                                         &m_nReconnectInterval,
-                                         0,
-                                         65535);
-            }
+  ACE_Configuration_Section_Key root = cfg.root_section ();
+  ACE_Configuration_Section_Key NetworkSection;
+  ACE_Configuration_Section_Key LoggerSection;
+  ACE_Configuration_Section_Key BinarySection;
 
-          // Process [logger] section
-          ACE_Configuration_Section_Key LoggerSection;
+  if (cfg.open_section (root,
+                      ACE_TEXT ("network"),
+                      1,
+                      NetworkSection))
+    return -1;
 
-          if (m_ConfigurationHeap.open_section (root,
-                                                ACE_TEXT ("logger"), 
-                                                1,
-                                                LoggerSection) == 0)
-            {
-              this->get_section_string (LoggerSection,
-                                        ACE_TEXT ("Heading"),
-                                        m_pszHeading,
-                                        TEST_MAX_STRING);
-              this->get_section_integer (LoggerSection,
-                                         ACE_TEXT ("TraceLevel"),
-                                         &m_nTraceLevel,
-                                         1,
-                                         20);
-              this->get_section_string (LoggerSection,
-                                        ACE_TEXT ("Justification"),
-                                        m_pszJustification,
-                                        TEST_MAX_STRING);
-              this->get_section_string (LoggerSection,
-                                        ACE_TEXT ("LogFilePath"),
-                                        m_pszLogFilePath,
-                                        TEST_MAX_STRING);
-              this->get_section_string (LoggerSection,
-                                        ACE_TEXT ("TransactionFilePath"),
-                                        m_pszTransactionFilePath,
-                                        TEST_MAX_STRING);
-            }
-        }
-    }
+  if (cfg.set_integer_value (NetworkSection,
+                           ACE_TEXT ("TimeToLive"),
+                           100))
+    return -2;
+  else if (cfg.set_string_value (NetworkSection,
+                               ACE_TEXT ("Delay"),
+                               ACE_TString ("FALSE")))
+    return -3;
+  else if (cfg.set_string_value (NetworkSection,
+                               ACE_TEXT ("DestIPAddress"),
+                               ACE_TString ("localhost")))
+    return -4;
+  else if (cfg.set_integer_value (NetworkSection,
+                                ACE_TEXT ("DestPort"),
+                                12670))
+    return -5;
+  else if (cfg.set_integer_value (NetworkSection,
+                                ACE_TEXT ("ReconnectInterval"),
+                                3))
+    return -6;
+
+  if (cfg.open_section (root,
+                      ACE_TEXT ("logger"),
+                      1,
+                      LoggerSection))
+    return -7;
+
+
+  if (cfg.set_string_value (LoggerSection,
+                          ACE_TEXT ("Heading"),
+                          ACE_TString ("ACE - Adaptive Communication Environment")))
+    return -8;
+  else if (cfg.set_integer_value (LoggerSection,
+                                ACE_TEXT ("SeekIndex"),
+                                14))
+    return -9;
+  else if (cfg.set_integer_value (LoggerSection,
+                                ACE_TEXT ("TraceLevel"),
+                                6))
+    return -10;
+  else if (cfg.set_string_value (LoggerSection,
+                               ACE_TEXT ("Justification"),
+                               ACE_TString ("left_justified")))
+    return -11;
+  else if (cfg.set_string_value (LoggerSection,
+                               ACE_TEXT ("LogFilePath"),
+                               ACE_TString ("log/")))
+    return -12;
+  else if (cfg.set_string_value (LoggerSection,
+                               ACE_TEXT ("TransactionFilePath"),
+                               ACE_TString ("data/")))
+    return -13;
+
+  if (cfg.open_section (root,
+                      ACE_TEXT ("binary"),
+                      1,
+                      BinarySection))
+    return -14;
+
+  u_char data[80];
+
+  for (int i = 0; i < 80; i++)
+    data[i] = i + 128;
+
+  if (cfg.set_binary_value (BinarySection,
+                          ACE_TEXT ("data"),
+                          data,
+                          80))
+    return -15;
+
+  return 0;
 }
 
+/*
+ * Test ACE_Configuration::operator==
+ */
+int 
+Config_Test::testEquality ()
+{
+  // create and open 2 ACE_Configuration objects.
+  ACE_Configuration_Heap  heap1;
+  ACE_Configuration_Heap  heap2;
+  if ((heap1.open ()) != 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Cannot open heap1\n"),
+                        -1);
+
+    }
+  else if ((heap2.open ()) != 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Cannot open heap2\n"),
+                        -1);
+    }
+
+  // populate them equally
+  build_config_object (heap1);
+  build_config_object (heap2);
+ 
+  // test equality
+  ACE_DEBUG ((LM_DEBUG, "The objects should equal...\n"));
+  if (heap1 == heap2)
+    {
+      ACE_DEBUG ((LM_DEBUG, "And they do ;-)\n"));
+    }
+  else
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "And they do not :- (\nThe Equality Operator Failed when objects equal\n"),
+                        -1);
+    }
+
+  // add a section and value to heap1
+  ACE_Configuration_Section_Key root1 = heap1.root_section ();
+  ACE_Configuration_Section_Key NewSection;
+  if (heap1.open_section (root1,
+                          ACE_TEXT ("NewSection"),
+                          1,
+                          NewSection))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Error adding section to heap1\n"),
+                        -1);
+    }
+  else if (heap1.set_integer_value (NewSection,
+                                    ACE_TEXT ("TestIntValue"),
+                                    100))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Error adding value to heap1\n"),
+                        -2);
+    }
+
+  // test equality
+  ACE_DEBUG ((LM_DEBUG, "The objects should NOT equal...\n"));
+  if (heap1 == heap2)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "They Do :- (\nThe Equality Operator Failed when lhs contains data not in rhs\n"),
+                        -1);
+    }
+  else
+    {
+      ACE_DEBUG ((LM_DEBUG, "And they do not ;-)\n"));
+    }
+
+  //
+  // add same section to heap2
+  //
+  ACE_Configuration_Section_Key root2 = heap2.root_section ();
+  ACE_Configuration_Section_Key NewSection2;
+  if (heap2.open_section (root2,
+                          ACE_TEXT ("NewSection"),
+                          1,
+                          NewSection2))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Error adding section to heap2\n"),
+                        -1);
+    }
+  else if (heap2.set_integer_value (NewSection2,
+                                    ACE_TEXT ("TestIntValue"),
+                                    100))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Error adding value to heap2\n"),
+                        -2);
+    }
+  else if (heap2.set_integer_value (NewSection2,
+                                    ACE_TEXT ("TestIntValue2"),
+                                    100))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Error adding second value to heap2\n"),
+                        -2);
+
+    }
+  // test equality
+  ACE_DEBUG ((LM_DEBUG, "The objects should NOT equal...\n"));
+  if (heap1 == heap2)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "And They Do :- (\nThe Equality Operator Failed when rhs contains value not in lhs\n"),
+                        -1);
+    }
+  else
+    {
+      ACE_DEBUG ((LM_DEBUG, "And they do not ;-)\n"));
+    }
+
+  // add new value in heap 1
+  if (heap1.set_integer_value (NewSection,
+                               ACE_TEXT ("TestIntValue2"), 
+                               100))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Error adding second value to heap1\n"),
+                        -2);
+    }
+
+  // test equality
+  ACE_DEBUG ((LM_DEBUG, "The objects should be equal...\n"));
+  if (heap1 == heap2)
+    {
+      ACE_DEBUG ((LM_DEBUG, "And they are ;-)\n"));
+    }
+  else
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "And they are not :- (\nThe Equality Operator Failed\n"),
+                        -1);
+    }
+
+  // Add a new section to heap2
+  ACE_Configuration_Section_Key AnotherNewSection2;
+  if (heap2.open_section (root2,
+                          ACE_TEXT ("AnotherNewSection"),
+                          1,
+                          AnotherNewSection2))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Error adding second section to heap2\n"),
+                        -1);
+    }
+  else if (heap2.set_integer_value (AnotherNewSection2,
+                                    ACE_TEXT ("TestIntValue"),
+                                    100))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Error adding value in second section to heap2\n"),
+                        -2);
+    }
+
+  // test equality
+  ACE_DEBUG ((LM_DEBUG, "The objects should NOT equal...\n"));
+  if (heap1 == heap2)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "And they do :- (\nThe Equality Operator Failed when rhs contains data not in lhs\n"),
+                        -1);
+    }
+  else
+    {
+      ACE_DEBUG ((LM_DEBUG, "And they do not :-)\n"));
+    }
+
+  // add section back to heap1
+  ACE_Configuration_Section_Key AnotherNewSection1;
+  if (heap1.open_section (root1,
+                          ACE_TEXT ("AnotherNewSection"),
+                          1,
+                          AnotherNewSection1))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Error adding second section to heap1\n"),
+                        -1);
+    }
+  else if (heap1.set_integer_value (AnotherNewSection1,
+                                    ACE_TEXT ("TestIntValue"),
+                                    100))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Error adding second value to second section in heap1\n"),
+                        -2);
+    }
+
+  // test equality
+  ACE_DEBUG ((LM_DEBUG, "The objects should be equal...\n"));
+  if (heap1 == heap2)
+    {
+      ACE_DEBUG ((LM_DEBUG, "And they are ;-)\n"));
+    }
+  else
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "And they are not :-)\nThe Equality Operator Failed\n"),
+                        -1);
+    }
+
+  this->equality_tested_ = 1;
+  return 0;
+}
+
+/*
+ * Compare INI import data in fromFile to origional data exported (in origional)
+ *
+ * This compare is destructive to the origional object.  
+ * I realize that normally you would not do such an obscene thing but
+ * this funciton has a special purpose and I know my origional is not needed
+ * after calling this routine.  
+ * This is done because configuration objects that are imported using the INI
+ * import store all data as strings. My origional has type information and I need to 
+ * know if the import worked.
+*/
+static int 
+iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
+{
+  int rc = 1; // start by guessing they are equal
+
+  int         sectionIndex = 0;
+  ACE_TString sectionName;
+
+  const ACE_Configuration_Section_Key& fromFileRoot  = fromFile.root_section ();
+  const ACE_Configuration_Section_Key& originalRoot = original.root_section ();
+  ACE_Configuration_Section_Key originalSection;
+  ACE_Configuration_Section_Key fromFileSection;
+
+  // loop through each section in the fromFile object
+  while ((rc) &&
+         (!fromFile.enumerate_sections (fromFileRoot, 
+                                        sectionIndex, 
+                                        sectionName)) )
+    {
+      // find that section in the original object
+      if (original.open_section (originalRoot,
+                                  sectionName.c_str (),
+                                  0,
+                                  originalSection) != 0)
+        {
+          // If the original object does not contain the section then we are not equal.
+          rc = 0;
+        }
+      else if (fromFile.open_section (fromFileRoot, 
+                                      sectionName.c_str (), 
+                                      0, 
+                                      fromFileSection) != 0)
+        {
+          // if there is some error opening the section in the fromFile
+          rc = 0;
+        }
+      else
+        {
+          // Well the sections match
+          int         valueIndex = 0;
+          ACE_TString valueName;
+          ACE_Configuration::VALUETYPE   valueType;
+          ACE_Configuration::VALUETYPE   originalType;
+
+          // Enumerate each value in the fromFile section
+          while ((rc) &&
+                 (!fromFile.enumerate_values (fromFileSection, 
+                                              valueIndex,
+                                              valueName,
+                                              valueType)))
+            {
+              // look for the same value in the original section
+              if (original.find_value (originalSection,
+                                        valueName.c_str (),
+                                        originalType) != 0)
+                {
+                  // We're not equal if the same value cannot 
+                  // be found in the original object.
+                  rc = 0;
+                }
+              else
+                {
+                  ACE_TString fromFileString, originalString;
+
+
+                  if (fromFile.get_string_value (fromFileSection,
+                                                 valueName.c_str (),
+                                                 fromFileString) != 0)
+                    {
+                      // we're not equal if we cannot get this string
+                      rc = 0;
+                    }
+                  else if (originalType != ACE_Configuration::STRING)  // If the original type is not a string
+                    {
+                      // convert original data to a string.
+
+                      if (originalType == ACE_Configuration::INTEGER)
+                        {
+                          u_int intValue;
+                          ACE_TCHAR int_value[32];
+
+                          if (original.get_integer_value (originalSection,
+                                                           valueName.c_str (),
+                                                           intValue) != 0)
+                            {
+                              // we're not equal if we cannot get rhs int
+                              rc = 0;
+                            }
+                          ACE_OS::sprintf (int_value, ACE_LIB_TEXT ("%08x"), intValue);
+                          originalString = int_value;
+                        }
+                      else if (originalType == ACE_Configuration::BINARY)
+                        {
+
+                          void* binary_data;
+                          u_int binary_length;
+
+                          if (original.get_binary_value (originalSection,
+                                                          valueName.c_str (),
+                                                          binary_data,
+                                                          binary_length))
+                            {
+                              // we're not equal if we cannot get this string
+                              rc = 0;
+                            }
+                          else
+                            {
+                              ACE_TCHAR bin_value[3];
+
+                              unsigned char* ptr = (unsigned char*)binary_data;
+                              while (binary_length)
+                                {
+                                  if (ptr != binary_data)
+                                    {
+                                      originalString += ACE_LIB_TEXT (",");
+                                    }
+                                  ACE_OS::sprintf (bin_value, ACE_LIB_TEXT ("%02x"), *ptr);
+                                  originalString += bin_value;
+                                  --binary_length;
+                                  ++ptr;
+                                }
+                              delete (char *)binary_data;
+                            }// end successful binary read
+                        }// end if originalType was binary
+                      else 
+                        {
+                          // if the type is invalid, then go ahead and fail it.
+                          rc = 0;
+                        }
+
+                    }// end if the original type was not a string.
+                  else
+                    {                        
+                      if (original.get_string_value (originalSection,
+                                                      valueName.c_str (),
+                                                      originalString) != 0)
+                        {
+                          // we're not equal if we cannot get rhs string
+                          rc = 0;
+                        }
+
+                    }
+
+                  rc &= fromFileString == originalString;
+
+                  if (rc)
+                    {
+                      // before we move on remove this value from the original.
+                      original.remove_value (originalSection,
+                                              valueName.c_str ());
+                    }
+
+                }// end else if values match.
+
+              valueIndex++;
+
+            }// end value while loop
+
+          // at this point the original should have no values.
+          // look for values in the original section
+          valueIndex = 0;
+          while ((rc) &&
+                 (!original.enumerate_values (originalSection,
+                                               valueIndex,
+                                               valueName,
+                                               originalType)))
+            {
+              valueIndex++;
+            }// end while for rhs values not in this.
+
+          // having a value indicates a mismatch
+          rc = valueIndex == 0;
+
+        }// end else if sections match.
+
+      if (rc)
+        {
+          // before we move on remove the section from the original.
+          original.remove_section (originalRoot,
+                                   sectionName.c_str (),
+                                   0); // do not remove subsections.
+        }
+
+      sectionIndex++;
+
+    }// end section while loop
+
+  // Finally, if the original has any sections, then we're not equal 
+  sectionIndex = 0;
+  while ((rc) &&
+         (!original.enumerate_sections (originalRoot, 
+                                         sectionIndex, 
+                                         sectionName)) )
+    {
+      sectionIndex++;
+    }
+
+  rc = sectionIndex == 0;
+
+  return rc;
+}
+
+// Used to test INI Import Export class
+
+int 
+Config_Test::testIniFormat ()
+{
+  int rc = 0;
+  if (!this->equality_tested_)
+    {
+      if ((rc = this->testEquality ()) != 0)
+        {
+          ACE_DEBUG ((LM_DEBUG, "Equality Test Failed\n"));
+          return rc;
+        }
+    }
+  ACE_DEBUG ((LM_DEBUG, "Testing INI Format Import/Export\n"));
+  ACE_Configuration_Heap  fromFile;
+
+  //  1. Creates an ACE_Configuration_Heap object
+  ACE_Configuration_Heap original;
+
+  if ((rc = original.open ()) == 0)
+    {
+      //  2. Calls build_config_object to populate
+      if ((rc = build_config_object (original)) != 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Error populating original config object (%d)\n",
+                             rc),
+                            -1);
+        }
+
+      //  3. Export
+      ACE_Ini_ImpExp importExport (original);
+
+      if ((rc = importExport.export_config ("testConfig.ini")) != 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Error Exporting (%d)\n",
+                             rc),
+                            -1);
+        }
+
+    }
+  else
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Could not open original object (%d)\n",
+                         rc),
+                        -1);
+    }
+
+
+  // At this point we've successfully created, populated and written
+  // the configuration object    
+  //  5. Creates a new ACE_Configuration_Heap object
+  if ((rc = fromFile.open ()) == 0)
+    {
+      //  6. Imports
+      ACE_Ini_ImpExp importExport (fromFile);
+
+      if ((rc = importExport.import_config ("testConfig.ini")) != 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Error Exporting (%d)\n",
+                             rc),
+                            -1);
+        }
+
+      //  7. Compares to original.
+      // This is a special compare since files imported using the 
+      // INI file import do not contain type information
+      //
+      // NOTE: After this call the original object will be invalid!!!
+      // 
+      if (!iniCompare (fromFile, original))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Object read from file does not equal original (%d)\n",
+                             rc),
+                            -1);
+
+        }
+    }// end if heap could not be opened.
+  else
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Could not open fromFile object (%d)\n",
+                         rc),
+                        -1);
+    }
+
+  //  8. Calls old "read_config" methods on the new object
+
+  int       nTimeToLive;
+  int       bDelay;
+  int       nDestPort;
+  int       nReconnectInterval;
+  int       nTraceLevel;
+
+  ACE_TCHAR pszDestIPAddress[TEST_MAX_STRING];
+  ACE_TCHAR pszLogFilePath[TEST_MAX_STRING];
+  ACE_TCHAR pszTransactionFilePath[TEST_MAX_STRING];
+  ACE_TCHAR pszHeading[TEST_MAX_STRING];
+  ACE_TCHAR pszJustification[TEST_MAX_STRING];
+
+  ACE_Configuration_Section_Key root = fromFile.root_section ();
+
+  // Process [network] section
+  ACE_Configuration_Section_Key NetworkSection;
+  if (fromFile.open_section (root, 
+                             ACE_TEXT ("network"), 
+                             1,
+                             NetworkSection) == 0)
+    {
+      this->get_section_integer (fromFile,
+                                 NetworkSection,
+                                 ACE_TEXT ("TimeToLive"),
+                                 &nTimeToLive,
+                                 1,
+                                 20);
+
+      this->get_section_boolean (fromFile,
+                                 NetworkSection,
+                                 ACE_TEXT ("Delay"),
+                                 &bDelay);
+
+      this->get_section_string (fromFile,
+                                NetworkSection,
+                                ACE_TEXT ("DestIPAddress"),
+                                pszDestIPAddress,
+                                TEST_MAX_STRING);
+
+      this->get_section_integer (fromFile,
+                                 NetworkSection,
+                                 ACE_TEXT ("DestPort"),
+                                 &nDestPort,
+                                 0,
+                                 65535);
+
+      this->get_section_integer (fromFile,
+                                 NetworkSection,
+                                 ACE_TEXT ("ReconnectInterval"),
+                                 &nReconnectInterval,
+                                 0,
+                                 65535);
+    }// end of "network" section
+
+  // Process [logger] section
+  ACE_Configuration_Section_Key LoggerSection;
+  if (fromFile.open_section (root,
+                             ACE_TEXT ("logger"), 
+                             1,
+                             LoggerSection) == 0)
+    {
+      this->get_section_string (fromFile,
+                                LoggerSection,
+                                ACE_TEXT ("Heading"),
+                                pszHeading,
+                                TEST_MAX_STRING);
+      this->get_section_integer (fromFile,
+                                 LoggerSection,
+                                 ACE_TEXT ("TraceLevel"),
+                                 &nTraceLevel,
+                                 1,
+                                 20);
+      this->get_section_string (fromFile,
+                                LoggerSection,
+                                ACE_TEXT ("Justification"),
+                                pszJustification,
+                                TEST_MAX_STRING);
+      this->get_section_string (fromFile,
+                                LoggerSection,
+                                ACE_TEXT ("LogFilePath"),
+                                pszLogFilePath,
+                                TEST_MAX_STRING);
+      this->get_section_string (fromFile,
+                                LoggerSection,
+                                ACE_TEXT ("TransactionFilePath"),
+                                pszTransactionFilePath,
+                                TEST_MAX_STRING);
+    }// end of "logger" section
+
+  if (!rc)
+    ACE_DEBUG ((LM_DEBUG, "INI Format Import/Export Works ;-)\n"));
+  return rc;
+}
+
+// Used to test registry Import Export class
+
+int 
+Config_Test::testRegFormat ()
+{
+  int rc = 0;
+  if (!this->equality_tested_)
+    {
+      if ((rc = this->testEquality ()) != 0)
+        {
+          ACE_DEBUG ((LM_DEBUG, "Equality Test Failed\n"));
+          return rc;
+        }
+
+    }
+  ACE_DEBUG ((LM_DEBUG, "Testing Registry Format Import/Export\n"));
+  ACE_Configuration_Heap  fromFile;
+
+  //  1. Creates an ACE_Configuration_Heap object
+  ACE_Configuration_Heap original;
+
+  if ((rc = original.open ()) == 0)
+    {
+      //  2. Calls build_config_object to populate
+      if ((rc = build_config_object (original)) != 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Error populating original config object (%d)\n",
+                             rc),
+                            -1);
+        }
+
+      //  3. Export
+      ACE_Registry_ImpExp importExport (original);
+
+      if ((rc = importExport.export_config ("testConfig.ini")) != 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Error Exporting (%d)\n",
+                             rc),
+                            -1);
+        }
+
+    }
+  else
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Could not open original object (%d)\n",
+                         rc),
+                        -1);
+    }
+
+
+  // At this point we've successfully created, populated and written
+  // the configuration object    
+  //  5. Creates a new ACE_Configuration_Heap object
+  if ((rc = fromFile.open ()) == 0)
+    {
+      //  6. Imports
+      ACE_Registry_ImpExp importExport (fromFile);
+
+      if ((rc = importExport.import_config ("testConfig.ini")) != 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Error Exporting (%d)\n",
+                             rc),
+                            -1);
+        }
+
+      //  7. Compares to original.
+      if (fromFile != original)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Object read from file does not equal original (%d)\n",
+                             rc),
+                            -1);
+
+        }
+    }// end if heap could not be opened.
+  else
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Could not open fromFile object (%d)\n",
+                         rc),
+                        -1);
+    }
+
+  if (!rc)
+    ACE_DEBUG ((LM_DEBUG, "Registry Format Import/Export Works ;-)\n"));
+  return rc;
+}
+
+
+// Reads a string value from a configuration object.
+
 void
-Config_Test::get_section_string (ACE_Configuration_Section_Key& SectionKey,
-                                 const ACE_TCHAR *pszName,
-                                 ACE_TCHAR *pszVariable,
-                                 int nMaxLength)
+Config_Test::get_section_string (ACE_Configuration&             config,
+                                 ACE_Configuration_Section_Key& SectionKey,
+                                 const ACE_TCHAR*               pszName,
+                                 ACE_TCHAR*                     pszVariable,
+                                 int                            nMaxLength)
 {
   ACE_TString StringValue;
 
-  if (m_ConfigurationHeap.get_string_value (SectionKey,
-                                            pszName,
-                                            StringValue) == 0)
+  if (config.get_string_value (SectionKey,
+                               pszName,
+                               StringValue) == 0)
     {
       ACE_OS::strncpy (pszVariable,
                        StringValue.c_str (),
@@ -446,21 +1149,23 @@ Config_Test::get_section_string (ACE_Configuration_Section_Key& SectionKey,
     }
 }
 
+// Reads an integer value from a congifuration object (when it's stored as a string)
 void
-Config_Test::get_section_integer (ACE_Configuration_Section_Key& SectionKey,
-                                  const ACE_TCHAR *pszName,
-                                  int *nVariable,
-                                  int nMinValue,
-                                  int nMaxValue)
+Config_Test::get_section_integer (ACE_Configuration&             config,
+                                  ACE_Configuration_Section_Key& SectionKey,
+                                  const ACE_TCHAR*               pszName,
+                                  int*                           nVariable,
+                                  int                            nMinValue,
+                                  int                            nMaxValue)
 {
   ACE_TString StringValue;
   ACE_TCHAR pszString[30];
-  ACE_OS::strcpy(pszString, ACE_TEXT ("0"));
+  ACE_OS::strcpy (pszString, ACE_TEXT ("0"));
   int IntegerValue = 0;
 
-  if (m_ConfigurationHeap.get_string_value (SectionKey,
-                                            pszName,
-                                            StringValue) == 0)
+  if (config.get_string_value (SectionKey,
+                               pszName,
+                               StringValue) == 0)
     {
       ACE_OS::strncpy (pszString,
                        StringValue.c_str (),
@@ -473,25 +1178,26 @@ Config_Test::get_section_integer (ACE_Configuration_Section_Key& SectionKey,
 
   // convert to integer
   IntegerValue = ACE_OS::atoi (pszString);
-
   IntegerValue = (IntegerValue < nMinValue) ? nMinValue : IntegerValue;
   IntegerValue = (IntegerValue > nMaxValue) ? nMaxValue : IntegerValue;
-
   *nVariable = IntegerValue;
 }
 
+// Reads a boolean value from a configuration object (when it's stored as a string).
+
 void
-Config_Test::get_section_boolean (ACE_Configuration_Section_Key& SectionKey,
-                                  const ACE_TCHAR* pszName,
-                                  int* pVariable)
+Config_Test::get_section_boolean (ACE_Configuration&             config,
+                                  ACE_Configuration_Section_Key& SectionKey,
+                                  const ACE_TCHAR*               pszName,
+                                  int*                           pVariable)
 {
   ACE_TString StringValue;
   ACE_TCHAR pszString[10];
   ACE_OS::strcpy (pszString, ACE_TEXT ("0"));
 
-  if (m_ConfigurationHeap.get_string_value (SectionKey,
-                                            pszName,
-                                            StringValue) == 0)
+  if (config.get_string_value (SectionKey,
+                               pszName,
+                               StringValue) == 0)
     {
       ACE_OS::strncpy (pszString,
                        StringValue.c_str (),
@@ -523,8 +1229,16 @@ main (int, ACE_TCHAR *[])
   ACE_START_TEST (ACE_TEXT ("Config_Test"));
 
   Config_Test manager;
-  manager.read_config ();
 
+  if (manager.testEquality () != 0)
+    ACE_DEBUG ((LM_DEBUG, "Failed the equality Test\n"));
+
+  if (manager.testRegFormat () != 0)
+    ACE_DEBUG ((LM_DEBUG, "Failed the REG Format Test\n"));
+
+  if (manager.testIniFormat () != 0)
+    ACE_DEBUG ((LM_DEBUG, "Failed the INI Format Test\n"));
+    
   run_tests ();
 
   ACE_END_TEST;
