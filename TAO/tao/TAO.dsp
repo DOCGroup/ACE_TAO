@@ -241,6 +241,10 @@ SOURCE=.\Blocked_Connect_Strategy.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\BoundsA.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\BoundsC.cpp
 # ADD CPP /GR
 # End Source File
@@ -322,6 +326,10 @@ SOURCE=.\Connector_Registry.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\CONV_FRAMEA.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\CONV_FRAMEC.cpp
 # ADD CPP /GR
 # End Source File
@@ -336,6 +344,10 @@ SOURCE=.\CORBALOC_Parser.cpp
 # Begin Source File
 
 SOURCE=.\CORBANAME_Parser.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\CurrentA.cpp
 # End Source File
 # Begin Source File
 
@@ -388,12 +400,20 @@ SOURCE=.\DLL_Parser.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\DomainA.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\DomainC.cpp
 # ADD CPP /GR
 # End Source File
 # Begin Source File
 
 SOURCE=.\Dynamic_Adapter.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Dynamic_ParameterA.cpp
 # End Source File
 # Begin Source File
 
@@ -491,6 +511,10 @@ SOURCE=.\GIOP_Utils.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\GIOPA.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\GIOPC.cpp
 # ADD CPP /GR
 # End Source File
@@ -513,6 +537,10 @@ SOURCE=.\IIOP_Connector.cpp
 # Begin Source File
 
 SOURCE=.\IIOP_Endpoint.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\IIOP_EndpointsA.cpp
 # End Source File
 # Begin Source File
 
@@ -1259,6 +1287,10 @@ SOURCE=.\Blocked_Connect_Strategy.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\BoundsA.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\BoundsC.h
 # End Source File
 # Begin Source File
@@ -1351,6 +1383,10 @@ SOURCE=.\Connector_Registry.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\CONV_FRAMEA.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\CONV_FRAMEC.h
 # End Source File
 # Begin Source File
@@ -1376,6 +1412,10 @@ SOURCE=.\CORBALOC_Parser.h
 # Begin Source File
 
 SOURCE=.\CORBANAME_Parser.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\CurrentA.h
 # End Source File
 # Begin Source File
 
@@ -1431,11 +1471,19 @@ SOURCE=.\DLL_Parser.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\DomainA.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\DomainC.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\Dynamic_Adapter.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Dynamic_ParameterA.h
 # End Source File
 # Begin Source File
 
@@ -1547,6 +1595,10 @@ SOURCE=.\GIOP_Utils.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\GIOPA.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\GIOPC.h
 # End Source File
 # Begin Source File
@@ -1571,6 +1623,10 @@ SOURCE=.\IIOP_Endpoint.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\IIOP_EndpointsA.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\IIOP_EndpointsC.h
 # End Source File
 # Begin Source File
@@ -1588,6 +1644,10 @@ SOURCE=.\IIOP_Profile.h
 # Begin Source File
 
 SOURCE=.\IIOP_Transport.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\IIOPA.h
 # End Source File
 # Begin Source File
 
@@ -2443,6 +2503,10 @@ SOURCE=.\DomainC.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Dynamic_ParameterC.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\Dynamic_ParameterC.inl
 # End Source File
 # Begin Source File
@@ -2548,6 +2612,10 @@ SOURCE=.\IIOP_Connection_Handler.i
 # Begin Source File
 
 SOURCE=.\IIOP_Endpoint.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\IIOP_EndpointsC.i
 # End Source File
 # Begin Source File
 
