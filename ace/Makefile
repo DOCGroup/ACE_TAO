@@ -339,6 +339,7 @@ ifndef ACE_COMPONENTS
     Svcconf \
     Streams \
     Memory \
+    Timer \
     Token \
     Other
 endif # ACE_COMPONENTS
@@ -356,7 +357,8 @@ ifeq (FOR_TAO,$(ACE_COMPONENTS))
     IPC \
     Svcconf \
     Streams \
-    Memory
+    Memory \
+    Timer
 else  # ! FOR_TAO
   #### TAO doesn't need Filecache.  It costs 14 Kb.
   UTILS_FILES += Filecache
