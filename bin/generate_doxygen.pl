@@ -39,8 +39,9 @@ $dot_path = '/usr/local/bin';
              ,'tao_strategies'
              ,'tao_smartproxies'
              ,'tao_av'
-	     ,'tao_security'
-	     ,'tao_ssliop'
+             ,'tao_security'
+             ,'tao_ssliop'
+             ,'tao_cosnaming'
             );
 
 # Modify defaults using the command line arguments
