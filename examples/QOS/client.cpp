@@ -199,7 +199,7 @@ main (int argc, char * argv[])
                       -1);
 
   ACE_DEBUG ((LM_DEBUG,
-		      "Sender\n"));
+              "Sender\n"));
 
   ACE_QoS qos;
          
@@ -394,19 +394,19 @@ FindServiceProvider(int iProtocol,
   else
     {
       if (buffer_length > 0)
-	  {
-		  void *ptr = 0;
-		  ACE_NEW_RETURN (ptr,
-						  char [buffer_length],
-						  0);
-		  protocol_buffer = (ACE_Protocol_Info *) ptr;
-	  }
+        {
+          void *ptr = 0;
+          ACE_NEW_RETURN (ptr,
+                          char [buffer_length],
+                          0);
+          protocol_buffer = (ACE_Protocol_Info *) ptr;
+        }
 
-	  else
-		  ACE_ERROR_RETURN ((LM_ERROR,
-							 "Buffer length returned by enum_protocols () is"
-							 "less than or equal to zero\n"),
-							 -1);
+      else
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Buffer length returned by enum_protocols () is"
+                           "less than or equal to zero\n"),
+                          -1);
 
       if (protocol_buffer)
         {
@@ -488,7 +488,7 @@ FindServiceProvider(int iProtocol,
           
             } // ACE_OS::enum_protocols ().
       
-		  ACE_OS::free (protocol_buffer);
+          ACE_OS::free (protocol_buffer);
       
         } // protocol_buffer
 
@@ -705,15 +705,15 @@ ValidOptions (char *argv[],
     }
 
   if (pOptions->nBufSize > 0)
-	  ACE_NEW_RETURN (pOptions->buf,
-					  char[pOptions->nBufSize],
-					  0);
+    ACE_NEW_RETURN (pOptions->buf,
+                    char[pOptions->nBufSize],
+                    0);
 
   else 
-	  ACE_ERROR_RETURN ((LM_ERROR,
-						 "Buffer size to be allocated is less than or"
-						 "equal to zero\n"),
-						 -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Buffer size to be allocated is less than or"
+                       "equal to zero\n"),
+                      -1);
 
   if (pOptions->buf == 0)
     return FALSE;
