@@ -94,8 +94,9 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ha
         length = ACE_NTOHL (length);
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
-        u_long count = ++this->request_count_;
+        ++this->request_count_;
 #  if 0
+        u_long count = this->request_count_;
         ACE_DEBUG ((LM_DEBUG,
                     "request count = %d, length = %d\n",
                     count,
