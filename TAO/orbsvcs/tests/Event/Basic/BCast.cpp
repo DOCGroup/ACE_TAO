@@ -35,7 +35,7 @@ EC_BCast::parse_args (int& argc, char* argv[])
 
   while (arg_shifter.is_anything_left ())
     {
-      char *arg = arg_shifter.get_current ();
+      const char *arg = arg_shifter.get_current ();
 
       if (ACE_OS::strcmp (arg, "-port") == 0)
         {

@@ -317,7 +317,7 @@ Options::print_usage (void) const
  * @retval -1 Failure
  */
 int 
-Options::initialize_file_persistence (ACE_TCHAR *filename)
+Options::initialize_file_persistence (const ACE_TCHAR *filename)
 {
   if (this->config_ != 0)
   {
@@ -424,7 +424,7 @@ Options::initialize_non_persistence (void)
  * @todo Update to unicode
  */
 int 
-Options::run_service_command (ACE_TCHAR *command)
+Options::run_service_command (const ACE_TCHAR *command)
 {
 #if defined (ACE_WIN32)
   SERVICE::instance ()->name (IMR_SERVICE_NAME, IMR_DISPLAY_NAME);

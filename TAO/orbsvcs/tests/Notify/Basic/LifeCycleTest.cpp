@@ -24,7 +24,7 @@ LifeCycleTest::parse_args(int argc, char *argv[])
 {
     ACE_Arg_Shifter arg_shifter (argc, argv);
 
-    char *current_arg = 0;
+    const char *current_arg = 0;
     while (arg_shifter.is_anything_left ())
     {
       if ((current_arg = arg_shifter.get_the_parameter ("-count")))

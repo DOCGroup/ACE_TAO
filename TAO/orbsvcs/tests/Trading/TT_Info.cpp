@@ -274,7 +274,7 @@ TT_Parse_Args::TT_Parse_Args (int& argc, char** argv)
 
   while (arg_shifter.is_anything_left ())
     {
-      char *current_arg = arg_shifter.get_current ();
+      const char *current_arg = arg_shifter.get_current ();
 
       if (ACE_OS::strcmp (current_arg, "-f") == 0 ||
           ACE_OS::strcmp (current_arg, "-federate") == 0)
@@ -296,7 +296,7 @@ TT_Parse_Args::TT_Parse_Args (int& argc, char** argv)
 
           if (arg_shifter.is_parameter_next ())
             {
-              char* file_name = arg_shifter.get_current ();
+              const char* file_name = arg_shifter.get_current ();
               ior_file = ACE_OS::fopen (file_name, "r");
 
               if (ior_file == 0)
