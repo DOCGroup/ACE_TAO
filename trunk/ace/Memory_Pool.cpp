@@ -110,6 +110,19 @@ ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (LPCTSTR backing_store_name,
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool");
 
+#if (defined (ACE_HAS_SIGINFO_T) && !defined (ACE_LACKS_SI_ADDR)) || defined (ACE_WIN32)
+      // For plaforms that give the faulting address.
+      guess_on_fault_ = 0;
+#else
+      // For plaforms that do NOT give the faulting address, let the
+      // options decide whether to guess or not.
+      if (options)
+	guess_on_fault_ = options->guess_on_fault ();
+      else
+	// If no options are specified, default to true.
+	guess_on_fault_ = 1;
+#endif
+
   // Only change the defaults if <options> != 0.
   if (options)
     {
@@ -277,9 +290,8 @@ ACE_MMAP_Memory_Pool::remap (void *addr)
   off_t current_file_offset = ACE_OS::filesize (this->mmap_.handle ()); 
   // ACE_OS::lseek (this->mmap_.handle (), 0, SEEK_END);
 
-  if (addr != 0
-      && !(addr < (void *) ((char *) this->mmap_.addr () + current_file_offset)
-	   && addr >= this->mmap_.addr ()))
+  if (!(addr < (void *) ((char *) this->mmap_.addr () + current_file_offset)
+	&& addr >= this->mmap_.addr ()))
     return -1;
   
   // Extend the mapping to cover the size of the backing store. 
@@ -290,12 +302,14 @@ ACE_MMAP_Memory_Pool_Options::ACE_MMAP_Memory_Pool_Options (void *base_addr,
 							    int use_fixed_addr,
 							    int write_each_page,
 							    int minimum_bytes,
-							    u_int flags)
+							    u_int flags,
+							    int guess_on_fault)
   : base_addr_ (base_addr),
     use_fixed_addr_ (use_fixed_addr),
     write_each_page_ (write_each_page),
     minimum_bytes_ (minimum_bytes),
-    flags_ (flags)
+    flags_ (flags),
+    guess_on_fault_ (guess_on_fault)
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool_Options::ACE_MMAP_Memory_Pool_Options");
 }
@@ -337,12 +351,16 @@ ACE_MMAP_Memory_Pool::handle_signal (int signum, siginfo_t *siginfo, ucontext_t 
       return 0;
     }
 #else
-	ACE_UNUSED_ARG(siginfo);
+  ACE_UNUSED_ARG(siginfo);
 #endif /* ACE_HAS_SIGINFO_T && !defined ACE_LACKS_SI_ADDR */
-  // This is total desperation since we don't know what the faulting
-  // address is in this case!  
-  this->remap (0);
-  return 0;
+  // If guess_on_fault_ is true, then we want to try to remap without
+  // knowing the faulting address.  guess_on_fault_ can only be true
+  // on platforms that do not provide the faulting address through
+  // signals or exceptions.
+  if (guess_on_fault_)
+    return this->remap (0);
+  else 
+    return -1;
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Lite_MMAP_Memory_Pool)

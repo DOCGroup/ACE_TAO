@@ -299,7 +299,8 @@ public:
 				int use_fixed_addr = 1,
 				int write_each_page = 1,
 				int minimum_bytes = 0,
-				u_int flags = 0);
+				u_int flags = 0,
+				int guess_on_fault = 1);
 
   void *base_addr_;
   // Base address of the memory-mapped backing store.
@@ -316,6 +317,11 @@ public:
 
   u_int flags_;
   // Any special flags that need to be used for <mmap>.
+
+  int guess_on_fault_;
+  // Try to remap without knowing the faulting address.  This
+  // parameter is ignored on platforms that know the faulting address
+  // (UNIX with SI_ADDR and Win32).
 };
 
 class ACE_Export ACE_MMAP_Memory_Pool : public ACE_Event_Handler
@@ -419,6 +425,11 @@ protected:
 
   TCHAR backing_store_name_[MAXPATHLEN];
   // Name of the backing store where the shared memory pool is kept.
+
+  int guess_on_fault_;
+  // Try to remap without knowing the faulting address.  This
+  // parameter is ignored on platforms that know the faulting address
+  // (UNIX with SI_ADDR and Win32).
 };
 
 class ACE_Export ACE_Lite_MMAP_Memory_Pool : public ACE_MMAP_Memory_Pool
