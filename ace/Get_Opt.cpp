@@ -122,8 +122,10 @@ ACE_Get_Opt::operator () (void)
 	++this->optind;
 
       if (this->opterr && *this->optstring_ != ':')
-	ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%s: illegal option -- %c\n"), 
-		    this->argv_[0], opt));
+	ACE_ERROR ((LM_ERROR,
+                    ASYS_TEXT ("%s: illegal option -- %c\n"), 
+		    this->argv_[0],
+                    opt));
       return '?';
     }
 
