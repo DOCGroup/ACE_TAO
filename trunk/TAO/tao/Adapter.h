@@ -69,8 +69,7 @@ public:
   virtual int dispatch (TAO::ObjectKey &key,
                         TAO_ServerRequest &request,
                         CORBA::Object_out forward_to
-                        ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+                        ACE_ENV_ARG_DECL) = 0;
 
   enum {
     /// The operation was successfully dispatched, an exception may

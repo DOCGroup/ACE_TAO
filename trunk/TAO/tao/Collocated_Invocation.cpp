@@ -31,7 +31,6 @@ namespace TAO
   Collocated_Invocation::invoke (Collocation_Proxy_Broker *cpb,
                                  Collocation_Strategy strat
                                  ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::Exception))
   {
     Invocation_Status s = TAO_INVOKE_FAILURE;
 

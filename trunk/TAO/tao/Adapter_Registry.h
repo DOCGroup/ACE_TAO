@@ -85,8 +85,7 @@ public:
   void dispatch (TAO::ObjectKey &key,
                  TAO_ServerRequest &request,
                  CORBA::Object_out forward_to
-                 ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                 ACE_ENV_ARG_DECL);
 
   /// Create a collocated object using the given profile and stub.
   CORBA::Object_ptr create_collocated_object (TAO_Stub *,

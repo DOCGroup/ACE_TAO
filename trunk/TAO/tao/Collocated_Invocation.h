@@ -82,8 +82,7 @@ namespace TAO
      */
     Invocation_Status invoke (Collocation_Proxy_Broker *cpb,
                               Collocation_Strategy strat
-                              ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::Exception));
+                              ACE_ENV_ARG_DECL);
 
   private:
     ACE_UNIMPLEMENTED_FUNC (Collocated_Invocation (void))

@@ -129,7 +129,6 @@ TAO_Adapter_Registry::dispatch (TAO::ObjectKey &key,
                                 TAO_ServerRequest &request,
                                 CORBA::Object_out forward_to
                                 ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   for (size_t i = 0; i != this->adapters_count_; ++i)
     {
