@@ -32,6 +32,8 @@ namespace TAO
 {
   namespace TypeCode
   {
+    template<typename StringType> struct Struct_Field;
+
     /**
      * @class Struct
      *

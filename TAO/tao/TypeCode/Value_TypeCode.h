@@ -31,20 +31,7 @@ namespace TAO
 {
   namespace TypeCode
   {
-    template <CORBA::TCKind KIND> struct Value_Traits;
-
-    template <>
-    struct Value_Traits<CORBA::tk_value>
-    {
-      enum { kind = CORBA::tk_value };
-    };
-
-    template <>
-    struct Value_Traits<CORBA::tk_event>
-    {
-      enum { kind = CORBA::tk_event };
-    };
-
+    template<typename StringType> struct Value_Field;
 
     /**
      * @class Value
@@ -70,7 +57,7 @@ namespace TAO
              char const * name,
              CORBA::ValueModifer modifier,
              CORBA::TypeCode_ptr * concrete_base,
-             Field<StringType> const * fields,
+             Value_Field<StringType> const * fields,
              CORBA::ULong nfields,
              CORBA::ValueModifier type_modifier,
              CORBA::TypeCode_ptr concrete_base_type);
@@ -124,8 +111,8 @@ namespace TAO
 
     private:
 
-      /// Get pointer to the underlying @c Field array.
-      Field<StringType> const * fields (void) const;
+      /// Get pointer to the underlying @c Value_Field array.
+      Value_Field<StringType> const * fields (void) const;
 
     private:
 

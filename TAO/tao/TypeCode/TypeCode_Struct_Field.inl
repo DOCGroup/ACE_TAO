@@ -4,7 +4,7 @@
 
 template <typename STRING_TYPE>
 ACE_INLINE char const *
-TAO::TypeCode::Field<STRING_TYPE>::get_name (void) const
+TAO::TypeCode::Struct_Field<STRING_TYPE>::get_name (void) const
 {
   return this->name;
 }
@@ -17,7 +17,7 @@ TAO::TypeCode::Field<STRING_TYPE>::get_name (void) const
 // -----------------------------------------------------------------
 
 ACE_INLINE char const *
-TAO::TypeCode::Field<CORBA::String_var>::get_name (void) const
+TAO::TypeCode::Struct_Field<CORBA::String_var>::get_name (void) const
 {
   return this->name.in ();
 }
