@@ -512,7 +512,10 @@ int
 main (int argc, char *argv[])
 {
   // Let the proactor know that it will be used with Reactor
-  ACE_Proactor proactor (0, 0, 1);
+  // Create specific proactor
+  ACE_WIN32_Proactor win32_proactor (0, 0, 1);
+  // Get the interface proactor
+  ACE_Proactor proactor (&win32_proactor);
   ACE_Proactor::instance (&proactor);
 
   // Open handler for remote peer communications this will run from
