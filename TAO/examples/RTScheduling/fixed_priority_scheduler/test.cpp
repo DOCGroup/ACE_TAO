@@ -67,7 +67,7 @@ main (int argc, char* argv [])
 	orb->orb_core ()->orb_params ()->scope_policy () |
 	orb->orb_core ()->orb_params ()->sched_policy ();
       
-      Thread_Task task (current.in ());
+
 		
       int min_priority = ACE_Sched_Params::priority_min (ACE_SCHED_RR);
       int max_priority = ACE_Sched_Params::priority_max (ACE_SCHED_RR);				
@@ -76,8 +76,8 @@ main (int argc, char* argv [])
       ACE_DEBUG ((LM_DEBUG, "max_priority = %d, min_priority = %d\n",
                   max_priority, min_priority));
       
-      // Set the main thread to min priority...
-      int priority = max_priority;
+      // Set the main thread to max priority...
+      int priority = 99;
       
       if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_RR,
 						  priority,
@@ -93,48 +93,31 @@ main (int argc, char* argv [])
 	    ACE_ERROR_RETURN ((LM_ERROR,
 			       "(%P|%t): sched_params failed\n"),-1);
 	}
+
+      ACE_Barrier barrier (3);
       
-      
-      /*
-      RTCORBA::Priority desired_priority = 99;
-      current->the_priority (desired_priority
-			     ACE_ENV_ARG_PARAMETER);
-      
-      CORBA::Short priority = 
-	current->the_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
-      
-      if (desired_priority != priority)
-	{
-	  ACE_ERROR ((LM_ERROR,
-		      "ERROR: Unable to set thread "
-		      "priority to %d\n", desired_priority));
-	  return 0;
-	}
-      
-      */
+      Thread_Task task1 (current.in ());
       
       FP_Scheduling::SegmentSchedulingParameterPolicy_ptr sched_param =
 	scheduler.create_segment_scheduling_parameter (20);
       
-      task.activate_task (sched_param,
-			  flags);
-
-      ACE_DEBUG ((LM_DEBUG,
-		  "After activate task\n"));
-
-      //ACE_OS::sleep (10);
+      task1.activate_task (sched_param,
+			   flags,
+			   &barrier);
+      
+      Thread_Task task2 (current.in ());
       
       sched_param =
 	scheduler.create_segment_scheduling_parameter (80);
       
-      task.activate_task (sched_param,
-			  flags);
+      task2.activate_task (sched_param,
+			   flags,
+			   &barrier);
       
-      //ACE_OS::sleep (10);
-
-      ACE_DEBUG ((LM_DEBUG,
-		  "Threads Activated\n"));
-
+      ACE_DEBUG ((LM_DEBUG, "Waiting for tasks to synch...\n"));
+      barrier.wait ();
+      ACE_DEBUG ((LM_DEBUG, "Tasks have synched...\n"));
+      
       orb->run ();
     }
   ACE_CATCHANY
