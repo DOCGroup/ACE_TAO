@@ -118,6 +118,8 @@ TAO_IIOP_Client_Transport::send_request (TAO_ORB_Core *orb_core,
 ssize_t
 TAO_IIOP_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *s)
 {
+  ACE_UNUSED_ARG (s);
+
   // For the most part this was copied from GIOP::send_request and
   // friends.
 
@@ -126,9 +128,8 @@ TAO_IIOP_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *s)
   const int TAO_WRITEV_MAX = 16;
   iovec iov[TAO_WRITEV_MAX];
   int iovcnt = 0;
-  ssize_t n=0;
+  ssize_t n = 0;
   ssize_t nbytes = 0;
-  ACE_UNUSED_ARG (s);
 
   for (const ACE_Message_Block *i = mblk;
        i != 0;
@@ -149,9 +150,8 @@ TAO_IIOP_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *s)
           // we should set TAO_WRITEV_MAX to that limit.
           if (iovcnt == TAO_WRITEV_MAX)
             {
-
-              n = this->handler_->peer ().sendv_n ((const iovec *) iov, iovcnt);
-
+              n = this->handler_->peer ().sendv_n ((const iovec *) iov,
+                                                   iovcnt);
               if (n < 1)
                 return n;
 
@@ -160,11 +160,11 @@ TAO_IIOP_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *s)
         }
     } 
 
-  // check for remaining buffers to be sent!
+  // Check for remaining buffers to be sent!
   if (iovcnt != 0)
     {
-      n = this->handler_->peer ().sendv_n ((const iovec *) iov, iovcnt);
-
+      n = this->handler_->peer ().sendv_n ((const iovec *) iov,
+                                           iovcnt);
       if (n < 0 )
         return 0;
 
@@ -175,35 +175,49 @@ TAO_IIOP_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *s)
 }
 
 ssize_t
-TAO_IIOP_Transport::send (const u_char *buf, size_t len, ACE_Time_Value *s)
+TAO_IIOP_Transport::send (const u_char *buf,
+                          size_t len,
+                          ACE_Time_Value *s)
 {
   ACE_UNUSED_ARG (s);
   return this->handler_->peer ().send_n (buf, len);
 }
 
 ssize_t
-TAO_IIOP_Transport::send (const iovec *iov, int iovcnt, ACE_Time_Value *s)
+TAO_IIOP_Transport::send (const iovec *iov,
+                          int iovcnt,
+                          ACE_Time_Value *s)
 {
   ACE_UNUSED_ARG (s);
-  return this->handler_->peer ().sendv_n ((const iovec *) iov, iovcnt);
+  return this->handler_->peer ().sendv_n ((const iovec *) iov,
+                                          iovcnt);
 }
 
 ssize_t
-TAO_IIOP_Transport::recv (char *buf, size_t len, ACE_Time_Value *s)
+TAO_IIOP_Transport::recv (char *buf,
+                          size_t len,
+                          ACE_Time_Value *s)
 {
   ACE_UNUSED_ARG (s);
   return this->handler_->peer ().recv_n (buf, len);
 }
 
 ssize_t
-TAO_IIOP_Transport::recv (char *buf, size_t len, int flags, ACE_Time_Value *s)
+TAO_IIOP_Transport::recv (char *buf,
+                          size_t len,
+                          int flags,
+                          ACE_Time_Value *s)
 {
   ACE_UNUSED_ARG (s);
-  return this->handler_->peer ().recv_n (buf, len, flags);
+  return this->handler_->peer ().recv_n (buf,
+                                         len,
+                                         flags);
 }
 
 ssize_t
-TAO_IIOP_Transport::recv (iovec *iov, int iovcnt, ACE_Time_Value *s)
+TAO_IIOP_Transport::recv (iovec *iov,
+                          int iovcnt,
+                          ACE_Time_Value *s)
 {
   ACE_UNUSED_ARG (s);
   return handler_->peer ().recvv_n (iov, iovcnt);

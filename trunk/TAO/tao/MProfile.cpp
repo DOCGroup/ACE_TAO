@@ -15,8 +15,11 @@ TAO_MProfile::set (CORBA::ULong sz)
 {
   if (sz == 0)
     {
-      // We do, so release all of our profiles.
-      for (TAO_PHandle h = 0; h < this->size_; h++ )
+      // Release all of our profiles.
+
+      for (TAO_PHandle h = 0;
+           h < this->size_;
+           h++)
         if (this->pfiles_[h])
           {
             this->pfiles_[h]->_decr_refcnt ();
@@ -26,13 +29,13 @@ TAO_MProfile::set (CORBA::ULong sz)
       if (this->size_)
         delete [] this->pfiles_;
   
-    if (forward_from_)
-      delete forward_from_;
+      if (forward_from_)
+        delete forward_from_;
   
-    pfiles_ = 0;
-    current_ = 0;
-    size_ = 0;
-    last_= 0;
+      pfiles_ = 0;
+      current_ = 0;
+      size_ = 0;
+      last_= 0;
 
       this->pfiles_ = 0;
       this->current_ = 0;
@@ -43,13 +46,15 @@ TAO_MProfile::set (CORBA::ULong sz)
     }
 
   // See if we already have an existing profile list or if we need to
-  // get ridof what we have.
-  // @@ Fred, please be consistent with your use of this-> as a prefix
-  // for data members.  
+  // get ridof what we have.  @@ Fred, please be consistent with your
+  // use of this-> as a prefix for data members.
   if (size_)
     {
-      // We do, so release all of our profiles.
-      for (TAO_PHandle h = 0; h < size_; h++)
+      // Release all of our profiles.
+
+      for (TAO_PHandle h = 0;
+           h < size_;
+           h++)
         if (this->pfiles_[h])
           {
             this->pfiles_[h]->_decr_refcnt ();
@@ -108,19 +113,18 @@ TAO_MProfile::set (TAO_MProfile *mprofile)
   // this->forward_from_ = 0;
 
   // Now reference all profiles.
-  for (TAO_PHandle h = 0 ; h < this->size_ ; h++ )
-    {
-      if (mprofile->pfiles_[h])
-        {
-          this->pfiles_[h] = mprofile->pfiles_[h];
-          this->pfiles_[h]->_incr_refcnt ();
-        }
-    } // for (TAO_PHandle ...)
+
+  for (TAO_PHandle h = 0;
+       h < this->size_;
+       h++)
+    if (mprofile->pfiles_[h])
+      {
+        this->pfiles_[h] = mprofile->pfiles_[h];
+        this->pfiles_[h]->_incr_refcnt ();
+      }
 
   if (mprofile->forward_from_)
-    {
-      this->forward_from_ = mprofile->forward_from_;
-    }
+    this->forward_from_ = mprofile->forward_from_;
 
   return 1;
 }

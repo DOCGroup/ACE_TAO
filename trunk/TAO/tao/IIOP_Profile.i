@@ -108,6 +108,7 @@ TAO_IIOP_Profile::_object_key_ (void)
 ACE_INLINE int
 TAO_IIOP_Profile::reset_object_addr (void)
 {
-  return this->object_addr_.set (this->port_, this->host_);
+  return this->object_addr_.set (this->port_,
+                                 this->host_);
 }
 #endif /* TAO_USES_FLICK */

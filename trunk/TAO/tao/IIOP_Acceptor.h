@@ -35,10 +35,10 @@ typedef ACE_Strategy_Acceptor<TAO_Server_Connection_Handler,
 class TAO_Export TAO_IIOP_Acceptor : public TAO_Acceptor
 {
   // = TITLE
-  //   TAO_IIOP_Acceptor
+  //   The IIOP-specific bridge class for the concrete acceptor.
   //
   // = DESCRIPTION
-  //   The IIOP specific bridge class for the concrete acceptor.
+  //   @@ Fred, please fill in here.
 public:
   // TAO_IIOP_Acceptor (ACE_INET_Addr &addr);
   // Create Acceptor object using addr.

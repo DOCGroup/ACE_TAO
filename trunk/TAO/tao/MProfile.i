@@ -39,7 +39,7 @@ TAO_MProfile::~TAO_MProfile (void)
 
 }
 
-// cyclic get next.  It will simply cycle through the complete list.
+// Cyclic get next.  It will simply cycle through the complete list.
 
 ACE_INLINE TAO_Profile *
 TAO_MProfile::get_cnext (void)
