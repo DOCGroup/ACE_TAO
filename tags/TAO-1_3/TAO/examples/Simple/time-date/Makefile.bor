@@ -1,0 +1,8 @@
+#
+# Makefile for building the Time-date example
+#
+
+MAKEFILES = time_date.bor client.bor server.bor
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
+

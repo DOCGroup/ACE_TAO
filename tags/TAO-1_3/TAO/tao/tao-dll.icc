@@ -1,0 +1,118 @@
+if $__TOS_WIN__ {
+	option PlatformOptions = define ("ACE_HAS_WINSOCK2","1"),
+	         define ("WIN32","1"),
+        	 define ("_WINDOWS","1"),
+        	 define("TAO_HAS_DLL","0"),
+	         define("TAO_BUILD_DLL","0")
+	TARG = "tao.dll"
+}
+if $__TOS_AIX__ {
+	option PlatformOptions = null
+	TARG = "tao.shr.a"
+}
+
+
+option
+      	 PlatformOptions,
+         define("ACE_HAS_DLL","0"),
+         define ("__ACE_INLINE__","0"),
+         incl(searchPath,'H:\ACE_wrappers'),
+         incl(searchPath,'H:\ACE_wrappers\TAO'),
+         link(exportAll),
+         link(linkwithsharedlib),
+         link(linkWithMultiThreadLib,yes),
+         link(libSearchPath,'H:\ACE_wrappers\ace'),
+         link(linkWithMultiThreadLib,yes)
+     {
+	target type(dll) TARG
+	{
+                  option macros(global)
+                  {
+                      source type(cpp) "ace/OS.h"
+                      source type(cpp) "ace/ACE.h"
+                      source type(cpp) "tao/TAO.h"
+                  }
+
+	   source type (cpp) "Active_Object_Map.cpp"
+	   source type (cpp) "Any.cpp"
+	   source type (cpp) "CDR.cpp"
+	   source type (cpp) "CORBA_String.cpp"
+	   source type (cpp) "Client_Strategy_Factory.cpp"
+	   source type (cpp) "Connect.cpp"
+	   source type (cpp) "CurrentC.cpp"
+	   source type (cpp) "Environment.cpp"
+	   source type (cpp) "Exception.cpp"
+	   source type (cpp) "Forwarding_Servant.cpp"
+	   source type (cpp) "GIOP.cpp"
+	   source type (cpp) "IIOP_Acceptor.cpp"
+	   source type (cpp) "IIOP_Connector.cpp"
+	   source type (cpp) "IIOP_Interpreter.cpp"
+	   source type (cpp) "IIOP_ORB.cpp"
+	   source type (cpp) "IIOP_Profile.cpp"
+	   source type (cpp) "IIOP_Transport.cpp"
+	   source type (cpp) "Invocation.cpp"
+	   source type (cpp) "MProfile.cpp"
+	   source type (cpp) "Managed_Types.cpp"
+	   source type (cpp) "Marshal.cpp"
+	   source type (cpp) "NVList.cpp"
+	   source type (cpp) "ORB.cpp"
+	   source type (cpp) "ORB_Core.cpp"
+	   source type (cpp) "ORB_Strategies_T.cpp"
+	   source type (cpp) "Object.cpp"
+	   source type (cpp) "Object_KeyC.cpp"
+	   source type (cpp) "Operation_Table.cpp"
+	   source type (cpp) "POA.cpp"
+	   source type (cpp) "PortableServerC.cpp"
+	   source type (cpp) "Pluggable.cpp"
+	   source type (cpp) "Transport.cpp"
+	   source type (cpp) "PolicyC.cpp"
+	   source type (cpp) "PolicyS.cpp"
+	   source type (cpp) "Principal.cpp"
+	   source type (cpp) "Request.cpp"
+	   source type (cpp) "Sequence.cpp"
+	   source type (cpp) "Sequence_T.cpp"
+	   source type (cpp) "Servant_Base.cpp"
+	   source type (cpp) "Server_Request.cpp"
+	   source type (cpp) "Server_Strategy_Factory.cpp"
+	   source type (cpp) "Stub.cpp"
+	   source type (cpp) "TAO.cpp"
+	   source type (cpp) "TAO_Internal.cpp"
+	   source type (cpp) "Typecode.cpp"
+	   source type (cpp) "Typecode_Constants.cpp"
+	   source type (cpp) "Union.cpp"
+	   source type (cpp) "append.cpp"
+	   source type (cpp) "debug.cpp"
+	   source type (cpp) "decode.cpp"
+	   source type (cpp) "deep_free.cpp"
+	   source type (cpp) "default_client.cpp"
+	   source type (cpp) "default_server.cpp"
+	   source type (cpp) "encode.cpp"
+	   source type (cpp) "params.cpp"
+	   source type (cpp) "poa_T.cpp"
+	   source type (cpp) "skip.cpp"
+	   source type (cpp) "t-sizes.cpp"
+	   source type (cpp) "varout.cpp"
+           // Template implementation files (#pragma implementation)
+           source type (cpp) "DynUnion_i_T.cpp"
+           source type (cpp) "ORB_Strategies_T.cpp"
+           source type (cpp) "Sequence_T.cpp"
+           source type (cpp) "poa_T.cpp"
+           source type (cpp) "varout.cpp"
+
+           // Libraries
+	   if $__TOS_WIN__ {
+		source type (lib) "aced.lib"
+		source type (lib) "advapi32.lib"
+		source type (lib) "user32.lib"
+		source type (lib) "ws2_32.lib"
+		source type (lib) "wsock32.lib"
+		source type (lib) "mswsock.lib"
+	   }
+	   if $__TOS_AIX__ {
+		source type (lib) "aced.shr.a"
+		source type (lib) "libtli_r.a"
+		source type (lib) "libpthreads.a"
+		source type (lib) "libc_r.a"
+	   }
+	}
+   }
