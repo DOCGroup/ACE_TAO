@@ -16,9 +16,11 @@
 // ============================================================================
 
 #include "param_testC.h"
-#include "tao/corba.h"
+
 #include "tao/debug.h"
-#include "tao/Stub.h"
+
+// Not normally needed, but we create an object reference in this test,
+// and we have to narrow it.
 #include "tao/Object_T.h"
 
 #include "ace/Get_Opt.h"

@@ -19,8 +19,10 @@
 #ifndef RESULTS_H
 #define RESULTS_H
 
-#include "tao/corba.h"
+#include "tao/Basic_Types.h"
+
 #include "ace/Profile_Timer.h"
+#include "ace/CORBA_macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
