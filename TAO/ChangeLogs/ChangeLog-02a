@@ -1,3 +1,16 @@
+Sat Mar 10 15:38:28 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * examples/Content_Server/SMI_Iterator/Makefile:
+          Add missing library for QNX
+
+        * examples/Simple/echo/Echo_i.cpp (Echo_i::echo_list):
+          The code was not exception safe, and was abusing ACE_UNUSED_ARG()
+
+        * tests/Crashed_Callback/client.cpp:
+        * tests/Crashed_Callback/server.cpp:
+          The test was using SYNC_WITH_TARGET and we wanted
+          SYNC_WITH_SERVER behavior
+
 Sat Mar 10 15:30:05 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/README:
