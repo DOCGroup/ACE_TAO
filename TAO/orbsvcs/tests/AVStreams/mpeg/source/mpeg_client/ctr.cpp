@@ -1824,6 +1824,7 @@ static void DisplayPicture(void)
 	  }
 	  else  /* this picture too late */
 	  {
+            // this line gets the buffer or dequeues from the shared memory queue
 	    buf = VDgetMsg();
 	    if (((next = VDpeekMsg()) == NULL || next->display > position) &&
 		buf->display > last_disp_fid) {
