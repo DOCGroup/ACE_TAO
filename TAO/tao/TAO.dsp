@@ -2285,6 +2285,44 @@ SOURCE=.\TAO_Internal.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\TAOC.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\TAOS.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\TimeBaseC.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Release"
@@ -3044,6 +3082,14 @@ SOURCE=.\TAO_Internal.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\TAOC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\TAOS.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Timeprobe.h
 # End Source File
 # Begin Source File
@@ -3369,6 +3415,14 @@ SOURCE=.\Tagged_Components.i
 # Begin Source File
 
 SOURCE=.\TAO_Internal.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\TAOC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\TAOS.i
 # End Source File
 # Begin Source File
 
