@@ -14,7 +14,7 @@ ACE_ROOT = $(top_srcdir)
 ACE_BUILDDIR = $(top_builddir)
 
 ## Makefile.ACEXML_XML_Svc_Conf_Parser.am 
-noinst_LTLIBRARIES = libACEXML_XML_Svc_Conf_Parser.la
+lib_LTLIBRARIES = libACEXML_XML_Svc_Conf_Parser.la
 
 libACEXML_XML_Svc_Conf_Parser_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -33,7 +33,7 @@ libACEXML_XML_Svc_Conf_Parser_la_LIBADD = \
  $(ACE_BUILDDIR)/ACEXML/common/libACEXML.la \
  $(ACE_BUILDDIR)/ace/libACE.la
 
-noinst_HEADERS = \
+nobase_include_HEADERS = \
   Svcconf.h \
   Svcconf_Handler.h \
   Svcconf_Handler.i

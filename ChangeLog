@@ -1,3 +1,11 @@
+Wed Sep 29 13:01:00 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ACEXML/apps/svcconf/Makefile.am:
+	* ACEXML/common/Makefile.am:
+	* ACEXML/parser/parser/Makefile.am:
+
+	  Update so that libraries and headers are installed.
+
 Wed Sep 29 12:29:44 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/TMCast/MTQueue.cpp: (new file)
