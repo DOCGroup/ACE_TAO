@@ -1,3 +1,8 @@
+Tue May 06 14:36:03 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* netsvcs/lib/*.cpp: removed break statements after ACE_RETURNs to avoid unreachable
+	  statement warnings from GHS.
+
 Tue May  6 12:43:27 1997  James C Hu  <jxh@polka.cs.wustl.edu>
 
 	* apps/JAWS/server/Parse_Headers.{h,cpp} (class Headers_Map):
