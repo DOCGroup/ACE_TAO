@@ -21,7 +21,6 @@ namespace CCF
 
           try
           {
-            ScopedName from (ctx.scope ().scoped_name ());
             Nameables nodes (Impl::resolve (ctx.tu (), from, name));
 
 

@@ -10,7 +10,7 @@ $(call include, $(root)/Config.rules)
 
 $(call include, $(UTILITY_BUILD_RULES)/Recursion.pre.rules)
 
-target_makefile_list  := Makefile.archive
+target_makefile_list  := Makefile.archive.alt
 target_directory_list := SemanticGraph SemanticAction Traversal
 default_makefile_name := Makefile.alt
 

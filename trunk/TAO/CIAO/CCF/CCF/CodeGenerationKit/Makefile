@@ -4,22 +4,19 @@
 #
 #----------------------------------------------------------------------------
 
-include ../../../Config.rules
+include ../../Config.rules
 
-MAKEFILE = Makefile.object
-LIBNAME  = libPhony
+LIBNAME  = libCodeGenerationKit
 LIB      = $(LIBNAME).a
 SHLIB    = $(LIBNAME).$(SOEXT)
 
-FILES = Operation
+FILES = CommandLine         \
+        CommandLineGrammar  \
+        CommandLineParser
 
 LSRC = $(addsuffix .cpp,$(FILES))
 
 override static_libs_only := true
-
-.PHONY: objects
-
-objects:
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -32,9 +29,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
-objects: $(VSHOBJS)
-
-CPPFLAGS += -I../../..
+CPPFLAGS += -I../..
 
 ifneq ($(MAKECMDGOALS),depend)
 CPPFLAGS += $(UTILITY_CPP_FLAGS) $(BOOST_CPP_FLAGS)
@@ -48,9 +43,16 @@ endif
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Operation.o .obj/Operation.o .obj/Operation.o .obj/Operation.o: Operation.cpp ../../../CCF/IDL2/SemanticAction/Operation.hpp \
-  ../../../CCF/IDL2/SemanticAction/Elements.hpp \
-  ../../../CCF/IDL2/Token.hpp \
-  ../../../CCF/CompilerElements/ReferenceCounting.hpp
+.obj/CommandLine.o .obj/CommandLine.o .obj/CommandLine.o .obj/CommandLine.o: CommandLine.cpp \
+  ../../CCF/CodeGenerationKit/CommandLine.hpp
+
+.obj/CommandLineGrammar.o .obj/CommandLineGrammar.o .obj/CommandLineGrammar.o .obj/CommandLineGrammar.o: CommandLineGrammar.cpp \
+  ../../CCF/CodeGenerationKit/CommandLineGrammar.hpp \
+  ../../CCF/CodeGenerationKit/CommandLine.hpp
+
+.obj/CommandLineParser.o .obj/CommandLineParser.o .obj/CommandLineParser.o .obj/CommandLineParser.o: CommandLineParser.cpp \
+  ../../CCF/CodeGenerationKit/CommandLineParser.hpp \
+  ../../CCF/CodeGenerationKit/CommandLine.hpp \
+  ../../CCF/CodeGenerationKit/CommandLineGrammar.hpp
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

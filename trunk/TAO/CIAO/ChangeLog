@@ -1,9 +1,73 @@
+Wed Jan 21 10:17:22 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* CCF/Makefile:
+	* CCF/CCF/Makefile:
+	* CCF/CCF/CIDL/Makefile:
+	* CCF/CCF/CIDL/Makefile.alt:
+	* CCF/CCF/CIDL/Makefile.archive:
+	* CCF/CCF/CIDL/Makefile.archive.alt:
+	* CCF/CCF/CIDL/SemanticAction/Makefile:
+	* CCF/CCF/CIDL/SemanticAction/Makefile.alt:
+	* CCF/CCF/CIDL/SemanticAction/Makefile.object:
+	* CCF/CCF/CIDL/SemanticAction/Makefile.object.alt:
+	* CCF/CCF/CIDL/SemanticAction/Impl/Makefile:
+	* CCF/CCF/CIDL/SemanticGraph/Makefile:
+	* CCF/CCF/CIDL/Traversal/Makefile:
+	* CCF/CCF/CodeGenerationKit/Makefile:
+	* CCF/CCF/CompilerElements/Makefile:
+	* CCF/CCF/IDL2/Makefile:
+	* CCF/CCF/IDL2/Makefile.alt:
+	* CCF/CCF/IDL2/Makefile.archive:
+	* CCF/CCF/IDL2/Makefile.archive.alt:
+	* CCF/CCF/IDL2/SemanticAction/Makefile:
+	* CCF/CCF/IDL2/SemanticAction/Makefile.alt:
+	* CCF/CCF/IDL2/SemanticAction/Makefile.object:
+	* CCF/CCF/IDL2/SemanticAction/Makefile.object.alt:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Makefile:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Makefile.alt:
+	* CCF/CCF/IDL2/SemanticGraph/Makefile:
+	* CCF/CCF/IDL2/Traversal/Makefile:
+	* CCF/CCF/IDL2/Traversal/Makefile.alt:
+	* CCF/CCF/IDL3/Makefile:
+	* CCF/CCF/IDL3/Makefile.alt:
+	* CCF/CCF/IDL3/Makefile.archive:
+	* CCF/CCF/IDL3/Makefile.archive.alt:
+	* CCF/CCF/IDL3/SemanticAction/Makefile:
+	* CCF/CCF/IDL3/SemanticAction/Impl/Makefile:
+	* CCF/CCF/IDL3/SemanticAction/Impl/Makefile.alt:
+	* CCF/CCF/IDL3/SemanticGraph/Makefile:
+	* CCF/CCF/IDL3/Traversal/Makefile:
+	* CIDLC/Makefile:
+
+	  Added ACE-style makefiles.
+
+	* CCF/CCF/CIDL/Parser.hpp:
+	* CCF/CCF/CodeGenerationKit/CommandLineGrammar.hpp:
+	* CCF/CCF/IDL2/Parser.hpp:
+	* CCF/CCF/IDL2/Token.hpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Elements.tpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Factory.cpp:
+	* CCF/CCF/IDL2/SemanticGraph/Elements.hpp:
+	* CCF/CCF/IDL2/SemanticGraph/Exception.hpp:
+	* CCF/CCF/IDL2/SemanticGraph/Interface.hpp:
+	* CCF/CCF/IDL2/SemanticGraph/Operation.hpp:
+	* CCF/CCF/IDL2/SemanticGraph/Translation.hpp:
+	* CCF/CCF/IDL3/SemanticAction/Impl/Include.cpp:
+	* CCF/CCF/IDL3/SemanticGraph/Component.hpp:
+	* CCF/CCF/IDL3/SemanticGraph/Home.hpp:
+
+	  Cosmetic changes.
+
+	* CCF/Documentation/Build.html:
+
+	  Fixed a typo.
+	
 Mon Jan 19 10:08:15 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CIDLC/Makefile.alt:
 	* CIDLC/cidlc.cpp:
 
-	  Added --version command line option to CIDL compiler. Thanks 
+	  Added --version command line option to CIDL compiler. Thanks
 	  to Craig Rodrigues for the suggestion.
 
 Thu Jan 15 20:17:17 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>

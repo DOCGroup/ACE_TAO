@@ -101,12 +101,12 @@ namespace CCF
         // in CIDL for example).
         //
         void
-        add_edge_left (Edge& e)
+        add_edge_left (Edge&)
         {
         }
 
         void
-        add_edge_right (Edge& e)
+        add_edge_right (Edge&)
         {
         }
 
@@ -510,7 +510,7 @@ namespace CCF
         }
 
         void
-        add_edge_right (Specialized& e)
+        add_edge_right (Specialized&)
         {
         }
 

@@ -39,7 +39,7 @@ namespace CCF
         using Scope::add_edge_left;
 
         void
-        add_edge_right (Raises& e)
+        add_edge_right (Raises&)
         {
         }
       };

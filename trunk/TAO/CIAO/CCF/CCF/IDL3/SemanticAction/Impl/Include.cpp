@@ -259,7 +259,7 @@ namespace CCF
 
         bool Include::
         handle_already_included (fs::path const& path,
-                                 StringLiteralPtr const& sl)
+                                 StringLiteralPtr const&)
         {
           if(!include_file_set_.insert (path).second)
           {

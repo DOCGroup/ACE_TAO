@@ -19,7 +19,7 @@ namespace CCF
 
         Factory::
         Factory (CompilerElements::Context& context,
-                 Diagnostic::Stream& dout,
+                 Diagnostic::Stream&,
                  SemanticGraph::TranslationUnit& tu)
             : ctx_ (context.get ("trace-semantic-action", false), tu),
 

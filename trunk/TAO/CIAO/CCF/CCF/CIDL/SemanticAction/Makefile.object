@@ -1,18 +1,60 @@
-# file      : CCF/CIDL/SemanticAction/Makefile.object
-# author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-# cvs-id    : $Id$
+#----------------------------------------------------------------------------
+#
+# $Id$
+#
+#----------------------------------------------------------------------------
 
-root = ../../..
+include ../../../Config.rules
 
-include $(root)/Bootstrap.rules
+MAKEFILE = Makefile.object
+LIBNAME  = libPhony
+LIB      = $(LIBNAME).a
+SHLIB    = $(LIBNAME).$(SOEXT)
 
-$(call include, $(root)/Config.rules)
+FILES = Composition
 
-$(call include, $(UTILITY_BUILD_RULES)/Object.pre.rules)
+LSRC = $(addsuffix .cpp,$(FILES))
 
-cxx_translation_units := Composition.cpp
+override static_libs_only := true
+
+.PHONY: objects
+
+objects:
+
+#----------------------------------------------------------------------------
+#       Include macros and targets
+#----------------------------------------------------------------------------
+
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include $(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
+
+objects: $(VSHOBJS)
+
+CPPFLAGS += -I../../..
+
+ifneq ($(MAKECMDGOALS),depend)
+CPPFLAGS += $(UTILITY_CPP_FLAGS) $(BOOST_CPP_FLAGS)
+endif
+
+#----------------------------------------------------------------------------
+#       Dependencies
+#----------------------------------------------------------------------------
+
+# DO NOT DELETE THIS LINE -- g++dep uses it.
+# DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-CXX_PREPROCESS_FLAGS  += -I$(root) $(UTILITY_CPP_FLAGS) $(BOOST_CPP_FLAGS)
+.obj/Composition.o .obj/Composition.o .obj/Composition.o .obj/Composition.o: Composition.cpp \
+  ../../../CCF/CIDL/SemanticAction/Composition.hpp \
+  ../../../CCF/CIDL/SemanticAction/Elements.hpp \
+  ../../../CCF/IDL3/SemanticAction/Elements.hpp \
+  ../../../CCF/IDL2/SemanticAction/Elements.hpp \
+  ../../../CCF/IDL2/Token.hpp \
+  ../../../CCF/CompilerElements/ReferenceCounting.hpp \
+  ../../../CCF/IDL3/Token.hpp ../../../CCF/CIDL/Token.hpp
 
-$(call include, $(UTILITY_BUILD_RULES)/Object.post.rules)
+# IF YOU PUT ANYTHING HERE IT WILL GO AWAY
