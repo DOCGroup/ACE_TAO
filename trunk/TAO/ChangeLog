@@ -1,3 +1,9 @@
+Sun Aug 22 10:04:33 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tao/DynamicAny.mpc:
+
+	  Changed to not inherit from valuetype.
+
 Sun Aug 22 10:19:00 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Wait_On_LF_No_Upcall.cpp:
