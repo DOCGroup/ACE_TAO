@@ -172,8 +172,16 @@ main (int argc, char **argv)
         // Invoke the area_code_info() method of the foo reference.
         my_dir_service->area_codes_info (env);
       else
-        // Invoke the tele_number() method of the foo reference.
-       result = my_dir_service->tele_number ("kirthika",env);
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Whats the contact number for the DOC group?\n"));
+          // Invoke the tele_number() method of the foo reference.
+          result = my_dir_service->tele_number ("DOC Group",env);
+           // Print the result of doit () method of the foo reference.
+          ACE_DEBUG ((LM_DEBUG, "The telephone number is %d\n", result));
+       }
+       
+      my_dir_service->end_note (env);
     }
 
   
@@ -186,9 +194,6 @@ main (int argc, char **argv)
       return 1;
     }
   
-  // Print the result of doit () method of the foo reference.
-  ACE_DEBUG ((LM_DEBUG, "The telephone number is %d\n", result));
-
   ACE_OS::free (IOR);
   
   return 0;

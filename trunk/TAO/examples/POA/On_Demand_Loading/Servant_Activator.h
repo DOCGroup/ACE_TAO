@@ -75,7 +75,7 @@ private:
   CORBA::String_var create_symbol_;
   // The symbol which on getting invoked will give us the servant pointer.
 
-  ACE_DLL *dll_;
+  ACE_DLL dll_;
   // the library object.
 
 };
