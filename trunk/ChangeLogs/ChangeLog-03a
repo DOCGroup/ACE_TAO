@@ -3,7 +3,8 @@ Tue Jun 20 12:04:24 2000  Ossama Othman  <ossama@uci.edu>
 	* ace/Makefile (ssl):
 
 	  Reverted change that causes the SSL wrappers to be built when
-	  SSL support isn't explicitly disabled.
+	  SSL support isn't explicitly disabled.  It caused SSL support to
+	  always be built, which was not the desired effect.
 
 Tue Jun 20 12:57:12 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
