@@ -1248,11 +1248,10 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_NS_sys_wait.inl \
   $(ACE_ROOT)/ace/Recursive_Thread_Mutex.h \
   $(ACE_ROOT)/ace/Recursive_Thread_Mutex.inl \
-  $(ACE_ROOT)/ace/Process_Manager.i \
-  INS_Locator.h \
+  $(ACE_ROOT)/ace/Process_Manager.i INS_Locator.h \
   $(TAO_ROOT)/tao/LocalObject.h \
-  $(TAO_ROOT)/tao/LocalObject.i \
-  Iterator.h Activator_Options.h Repository_Configuration.h \
+  $(TAO_ROOT)/tao/LocalObject.i Iterator.h \
+  Activator_Options.h Repository_Configuration.h \
   $(ACE_ROOT)/ace/Singleton.h \
   $(ACE_ROOT)/ace/TSS_T.h \
   $(ACE_ROOT)/ace/TSS_T.inl \

@@ -266,8 +266,7 @@ LifeCycle_Service: $(addprefix $(VDIR),$(LIFECYCLE_SERVICE_OBJS))
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i \
-  LifeCycle_Service_i.h \
+  $(TAO_ROOT)/tao/ORB.i LifeCycle_Service_i.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/LifeCycleServiceS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \

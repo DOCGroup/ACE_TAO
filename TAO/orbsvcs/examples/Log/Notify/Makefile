@@ -246,7 +246,7 @@ endif
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
   $(TAO_ROOT)/tao/ORB.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
@@ -307,6 +307,7 @@ endif
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.i \
@@ -618,6 +619,7 @@ endif
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
@@ -889,7 +891,7 @@ endif
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
   $(TAO_ROOT)/tao/ORB.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
@@ -950,6 +952,7 @@ endif
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.i \
@@ -1261,6 +1264,7 @@ endif
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \

@@ -457,6 +457,7 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
@@ -501,15 +502,14 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/NotifyExtC.i \
   ../lib/Supplier_T.h ../lib/Peer_T.h ../lib/Peer.h ../lib/Peer.inl \
   ../lib/Peer_T.inl ../lib/Peer_T.cpp \
-  $(ACE_ROOT)/ace/Arg_Shifter.h \
-  ../lib/Name.h ../lib/LookupManager.h \
+  $(ACE_ROOT)/ace/Arg_Shifter.h ../lib/Name.h \
+  ../lib/LookupManager.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   ../lib/Options_Parser.h ../lib/Supplier_T.inl ../lib/Supplier_T.cpp \
   ../lib/StructuredPushSupplier.inl goS.h goC.h goC.i goS_T.h goS_T.i \
   goS_T.cpp goS.i ../lib/Notify_Test_Client.h
 
-.obj/goC.o .obj/goC.so .shobj/goC.o .shobj/goC.so: goC.cpp goC.h \
-  $(TAO_ROOT)/tao/ORB.h \
+.obj/goC.o .obj/goC.so .shobj/goC.o .shobj/goC.so: goC.cpp goC.h $(TAO_ROOT)/tao/ORB.h \
   $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/Exception.h \
   $(TAO_ROOT)/tao/orbconf.h \
@@ -1439,6 +1439,7 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
@@ -1716,6 +1717,7 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
@@ -1839,8 +1841,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i ../lib/Peer.inl \
   ../lib/Peer_T.inl ../lib/Peer_T.cpp \
-  $(ACE_ROOT)/ace/Arg_Shifter.h \
-  ../lib/Name.h ../lib/LookupManager.h \
+  $(ACE_ROOT)/ace/Arg_Shifter.h ../lib/Name.h \
+  ../lib/LookupManager.h \
   $(ACE_ROOT)/ace/Singleton.h \
   $(ACE_ROOT)/ace/TSS_T.h \
   $(ACE_ROOT)/ace/TSS_T.inl \
@@ -2093,6 +2095,7 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
@@ -2179,8 +2182,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i ../lib/Peer.inl \
   ../lib/Peer_T.inl ../lib/Peer_T.cpp \
-  $(ACE_ROOT)/ace/Arg_Shifter.h \
-  ../lib/Name.h ../lib/LookupManager.h \
+  $(ACE_ROOT)/ace/Arg_Shifter.h ../lib/Name.h \
+  ../lib/LookupManager.h \
   $(ACE_ROOT)/ace/Singleton.h \
   $(ACE_ROOT)/ace/TSS_T.h \
   $(ACE_ROOT)/ace/TSS_T.inl \
@@ -2590,6 +2593,7 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
@@ -2634,8 +2638,8 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/NotifyExtC.i \
   ../lib/Supplier_T.h ../lib/Peer_T.h ../lib/Peer.h ../lib/Peer.inl \
   ../lib/Peer_T.inl ../lib/Peer_T.cpp \
-  $(ACE_ROOT)/ace/Arg_Shifter.h \
-  ../lib/Name.h ../lib/LookupManager.h \
+  $(ACE_ROOT)/ace/Arg_Shifter.h ../lib/Name.h \
+  ../lib/LookupManager.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   ../lib/Options_Parser.h ../lib/Supplier_T.inl ../lib/Supplier_T.cpp \
   ../lib/SequencePushSupplier.inl goS.h goC.h goC.i goS_T.h goS_T.i \
@@ -2842,6 +2846,7 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
@@ -2964,8 +2969,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i ../lib/Peer.inl \
   ../lib/Peer_T.inl ../lib/Peer_T.cpp \
-  $(ACE_ROOT)/ace/Arg_Shifter.h \
-  ../lib/Name.h ../lib/LookupManager.h \
+  $(ACE_ROOT)/ace/Arg_Shifter.h ../lib/Name.h \
+  ../lib/LookupManager.h \
   $(ACE_ROOT)/ace/Singleton.h \
   $(ACE_ROOT)/ace/TSS_T.h \
   $(ACE_ROOT)/ace/TSS_T.inl \
@@ -3216,6 +3221,7 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
@@ -3302,8 +3308,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i ../lib/Peer.inl \
   ../lib/Peer_T.inl ../lib/Peer_T.cpp \
-  $(ACE_ROOT)/ace/Arg_Shifter.h \
-  ../lib/Name.h ../lib/LookupManager.h \
+  $(ACE_ROOT)/ace/Arg_Shifter.h ../lib/Name.h \
+  ../lib/LookupManager.h \
   $(ACE_ROOT)/ace/Singleton.h \
   $(ACE_ROOT)/ace/TSS_T.h \
   $(ACE_ROOT)/ace/TSS_T.inl \

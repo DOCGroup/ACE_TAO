@@ -88,8 +88,8 @@ endif
 
 .obj/Constraint_Interpreter.o .obj/Constraint_Interpreter.so .shobj/Constraint_Interpreter.o .shobj/Constraint_Interpreter.so: Trader/Constraint_Interpreter.cpp \
   Trader/Constraint_Interpreter.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Trader/Constraint_Nodes.h Trader/Constraint_Tokens.h \
+  $(ACE_ROOT)/ace/pre.h Trader/Constraint_Nodes.h \
+  Trader/Constraint_Tokens.h \
   $(ACE_ROOT)/ace/post.h \
   $(TAO_ROOT)/tao/Basic_Types.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
@@ -1772,8 +1772,8 @@ endif
   Trader/Offer_Database.cpp
 
 .obj/Offer_Iterators.o .obj/Offer_Iterators.so .shobj/Offer_Iterators.o .shobj/Offer_Iterators.so: Trader/Offer_Iterators.cpp Trader/Offer_Iterators.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Trader/Trader_Utils.h Trader/Trader.h Trader/Interpreter_Utils.h \
+  $(ACE_ROOT)/ace/pre.h Trader/Trader_Utils.h \
+  Trader/Trader.h Trader/Interpreter_Utils.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
@@ -2058,9 +2058,8 @@ endif
 
 .obj/Offer_Iterators_T.o .obj/Offer_Iterators_T.so .shobj/Offer_Iterators_T.o .shobj/Offer_Iterators_T.so: Trader/Offer_Iterators_T.cpp \
   Trader/Offer_Iterators_T.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Trader/Offer_Iterators.h Trader/Trader_Utils.h Trader/Trader.h \
-  Trader/Interpreter_Utils.h \
+  $(ACE_ROOT)/ace/pre.h Trader/Offer_Iterators.h \
+  Trader/Trader_Utils.h Trader/Trader.h Trader/Interpreter_Utils.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
@@ -2948,8 +2947,8 @@ endif
 
 .obj/Trader_Interfaces.o .obj/Trader_Interfaces.so .shobj/Trader_Interfaces.o .shobj/Trader_Interfaces.so: Trader/Trader_Interfaces.cpp \
   Trader/Trader_Interfaces.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Trader/Trader_Utils.h Trader/Trader.h Trader/Interpreter_Utils.h \
+  $(ACE_ROOT)/ace/pre.h Trader/Trader_Utils.h \
+  Trader/Trader.h Trader/Interpreter_Utils.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
@@ -4138,8 +4137,8 @@ endif
   CosTradingDynamicS.i
 
 .obj/Interpreter.o .obj/Interpreter.so .shobj/Interpreter.o .shobj/Interpreter.so: Trader/Interpreter.cpp Trader/Interpreter.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Trader/Constraint_Nodes.h Trader/Constraint_Tokens.h \
+  $(ACE_ROOT)/ace/pre.h Trader/Constraint_Nodes.h \
+  Trader/Constraint_Tokens.h \
   $(ACE_ROOT)/ace/post.h \
   $(TAO_ROOT)/tao/Basic_Types.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
@@ -5822,8 +5821,8 @@ endif
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/ServicesC.h \
-  $(TAO_ROOT)/tao/ServicesC.i \
-  CosTradingC.h CosTradingC.i CosTradingReposC.i \
+  $(TAO_ROOT)/tao/ServicesC.i CosTradingC.h \
+  CosTradingC.i CosTradingReposC.i \
   $(TAO_ROOT)/tao/Exception_Data.h \
   $(TAO_ROOT)/tao/Invocation_Adapter.h \
   $(TAO_ROOT)/tao/Invocation_Utils.h \
@@ -6095,8 +6094,8 @@ endif
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/ServicesC.h \
-  $(TAO_ROOT)/tao/ServicesC.i \
-  CosTradingC.h CosTradingC.i CosTradingDynamicC.i \
+  $(TAO_ROOT)/tao/ServicesC.i CosTradingC.h \
+  CosTradingC.i CosTradingDynamicC.i \
   $(TAO_ROOT)/tao/Exception_Data.h \
   $(TAO_ROOT)/tao/Invocation_Adapter.h \
   $(TAO_ROOT)/tao/Invocation_Utils.h \
@@ -6818,9 +6817,8 @@ endif
   $(TAO_ROOT)/tao/ServicesS_T.h \
   $(TAO_ROOT)/tao/ServicesS_T.i \
   $(TAO_ROOT)/tao/ServicesS_T.cpp \
-  $(TAO_ROOT)/tao/ServicesS.i \
-  CosTradingS.h CosTradingC.h \
-  $(TAO_ROOT)/tao/ORB.h \
+  $(TAO_ROOT)/tao/ServicesS.i CosTradingS.h \
+  CosTradingC.h $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/objectid.h \
   $(TAO_ROOT)/tao/OBV_Constants.h \
   $(TAO_ROOT)/tao/ORB.i \
@@ -7315,9 +7313,8 @@ endif
   $(TAO_ROOT)/tao/ServicesS_T.h \
   $(TAO_ROOT)/tao/ServicesS_T.i \
   $(TAO_ROOT)/tao/ServicesS_T.cpp \
-  $(TAO_ROOT)/tao/ServicesS.i \
-  CosTradingS.h CosTradingC.h \
-  $(TAO_ROOT)/tao/ORB.h \
+  $(TAO_ROOT)/tao/ServicesS.i CosTradingS.h \
+  CosTradingC.h $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/objectid.h \
   $(TAO_ROOT)/tao/OBV_Constants.h \
   $(TAO_ROOT)/tao/ORB.i \

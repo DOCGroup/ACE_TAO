@@ -3156,8 +3156,7 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_NS_sys_uio.inl
 
 .obj/nestea_server_i.o .obj/nestea_server_i.so .shobj/nestea_server_i.o .shobj/nestea_server_i.so: nestea_server_i.cpp nestea_server_i.h nestea_i.h \
-  NesteaS.h NesteaC.h \
-  $(TAO_ROOT)/tao/ORB.h \
+  NesteaS.h NesteaC.h $(TAO_ROOT)/tao/ORB.h \
   $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/Exception.h \
   $(TAO_ROOT)/tao/orbconf.h \

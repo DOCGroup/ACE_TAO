@@ -1344,8 +1344,7 @@ CC_client: $(addprefix $(VDIR),$(CC_CLT_OBJS))
   $(ACE_ROOT)/ace/os_include/os_string.h \
   $(ACE_ROOT)/ace/os_include/os_ctype.h \
   $(ACE_ROOT)/ace/os_include/os_errno.h \
-  $(ACE_ROOT)/ace/OS_NS_wchar.inl \
-  CC_command.h \
+  $(ACE_ROOT)/ace/OS_NS_wchar.inl CC_command.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlC.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \

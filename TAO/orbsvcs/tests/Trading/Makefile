@@ -917,8 +917,7 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.cpp \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS.i \
-  Simple_Dynamic.cpp \
-  $(ACE_ROOT)/ace/INET_Addr.h \
+  Simple_Dynamic.cpp $(ACE_ROOT)/ace/INET_Addr.h \
   $(ACE_ROOT)/ace/Addr.h \
   $(ACE_ROOT)/ace/Addr.i \
   $(ACE_ROOT)/ace/INET_Addr.i \

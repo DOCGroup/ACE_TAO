@@ -616,7 +616,6 @@ receiver: $(addprefix $(VDIR),$(RECEIVER_OBJS))
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
-  Receiver_Stats.inl \
   $(ACE_ROOT)/ace/Log_Msg.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
@@ -1174,8 +1173,7 @@ receiver: $(addprefix $(VDIR),$(RECEIVER_OBJS))
   $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Flows_T.cpp \
   $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Policy.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Policy.i \
-  Receiver_Stats.h Receiver_Stats.inl \
-  $(ACE_ROOT)/ace/Get_Opt.h \
+  Receiver_Stats.h $(ACE_ROOT)/ace/Get_Opt.h \
   $(ACE_ROOT)/ace/Get_Opt.i \
   $(ACE_ROOT)/ace/High_Res_Timer.h \
   $(ACE_ROOT)/ace/High_Res_Timer.i

@@ -254,7 +254,6 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
@@ -547,7 +546,6 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \

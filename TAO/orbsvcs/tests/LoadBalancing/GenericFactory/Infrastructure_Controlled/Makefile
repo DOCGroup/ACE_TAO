@@ -1672,8 +1672,7 @@ realclean: clean
   $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
   TestS_T.h TestS_T.i TestS_T.cpp TestS.i Factory.h Factory_Map.h \
-  Factory_Struct.h \
-  $(ACE_ROOT)/ace/Array_Base.h \
+  Factory_Struct.h $(ACE_ROOT)/ace/Array_Base.h \
   $(ACE_ROOT)/ace/Array_Base.inl \
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupS.h \
@@ -1927,8 +1926,7 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  Factory_Struct.h \
+  $(ACE_ROOT)/ace/ACE_export.h Factory_Struct.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupC.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
@@ -2293,8 +2291,7 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  Factory_Struct.h \
+  $(ACE_ROOT)/ace/ACE_export.h Factory_Struct.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupC.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \

@@ -590,8 +590,8 @@ endif
   $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp
 
 .obj/CosLifeCycleS.o .obj/CosLifeCycleS.so .shobj/CosLifeCycleS.o .shobj/CosLifeCycleS.so: CosLifeCycleS.cpp CosLifeCycleS.h \
-  $(ACE_ROOT)/ace/pre.h CosNamingS.h \
-  CosNamingC.h $(TAO_ROOT)/tao/ORB.h \
+  $(ACE_ROOT)/ace/pre.h CosNamingS.h CosNamingC.h \
+  $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
   $(TAO_ROOT)/tao/orbconf.h \
   $(ACE_ROOT)/ace/Basic_Types.h \

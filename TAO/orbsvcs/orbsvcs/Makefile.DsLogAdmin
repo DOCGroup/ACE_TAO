@@ -2081,8 +2081,7 @@ endif
   $(ACE_ROOT)/ace/Event_Handler.h \
   $(ACE_ROOT)/ace/Event_Handler.i \
   $(ACE_ROOT)/ace/Reactor.i \
-  $(ACE_ROOT)/ace/Reactor_Impl.h \
-  Log/log_export.h
+  $(ACE_ROOT)/ace/Reactor_Impl.h Log/log_export.h
 
 .obj/Log_Constraint_Visitors.o .obj/Log_Constraint_Visitors.so .shobj/Log_Constraint_Visitors.o .shobj/Log_Constraint_Visitors.so: Log/Log_Constraint_Visitors.cpp \
   Log/Log_Constraint_Visitors.h \
@@ -2313,8 +2312,7 @@ endif
   $(ACE_ROOT)/ace/Unbounded_Queue.inl \
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(TAO_ROOT)/tao/TC_Constants_Forward.h \
-  $(TAO_ROOT)/tao/Typecode.i \
-  Log/log_export.h \
+  $(TAO_ROOT)/tao/Typecode.i Log/log_export.h \
   ETCL/ETCL_Constraint.h \
   $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/String_Base.h \
@@ -3032,8 +3030,8 @@ endif
   $(TAO_ROOT)/tao/ORB.i Log/log_export.h \
   DsLogAdminC.h TimeBaseC.h svc_utils_export.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  TimeBaseC.i DsLogAdminC.i DsLogNotificationC.i \
+  $(TAO_ROOT)/tao/TimeBaseC.i TimeBaseC.i \
+  DsLogAdminC.i DsLogNotificationC.i \
   $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
@@ -3279,8 +3277,8 @@ endif
   $(TAO_ROOT)/tao/ORB.i Log/log_export.h \
   TimeBaseC.h svc_utils_export.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  TimeBaseC.i DsLogAdminC.i \
+  $(TAO_ROOT)/tao/TimeBaseC.i TimeBaseC.i \
+  DsLogAdminC.i \
   $(TAO_ROOT)/tao/Exception_Data.h \
   $(TAO_ROOT)/tao/Invocation_Adapter.h \
   $(TAO_ROOT)/tao/Invocation_Utils.h \
@@ -3369,8 +3367,7 @@ endif
   $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp
 
 .obj/DsLogNotificationS.o .obj/DsLogNotificationS.so .shobj/DsLogNotificationS.o .shobj/DsLogNotificationS.so: DsLogNotificationS.cpp DsLogNotificationS.h \
-  $(ACE_ROOT)/ace/pre.h DsLogAdminS.h \
-  TimeBaseS.h \
+  $(ACE_ROOT)/ace/pre.h DsLogAdminS.h TimeBaseS.h \
   $(TAO_ROOT)/tao/TimeBaseS.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
   $(TAO_ROOT)/tao/ORB.h \
@@ -3551,8 +3548,8 @@ endif
   $(TAO_ROOT)/tao/TimeBaseS_T.h \
   $(TAO_ROOT)/tao/TimeBaseS_T.i \
   $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
-  $(TAO_ROOT)/tao/TimeBaseS.i \
-  TimeBaseC.h svc_utils_export.h TimeBaseC.i \
+  $(TAO_ROOT)/tao/TimeBaseS.i TimeBaseC.h \
+  svc_utils_export.h TimeBaseC.i \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -4038,8 +4035,8 @@ endif
   $(TAO_ROOT)/tao/TimeBaseS_T.h \
   $(TAO_ROOT)/tao/TimeBaseS_T.i \
   $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
-  $(TAO_ROOT)/tao/TimeBaseS.i \
-  TimeBaseC.h svc_utils_export.h TimeBaseC.i \
+  $(TAO_ROOT)/tao/TimeBaseS.i TimeBaseC.h \
+  svc_utils_export.h TimeBaseC.i \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \

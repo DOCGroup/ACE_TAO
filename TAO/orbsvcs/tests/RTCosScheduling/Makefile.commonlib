@@ -366,8 +366,8 @@ endif
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i \
-  testSched_export.h testSchedC.i \
+  $(TAO_ROOT)/tao/ORB.i testSched_export.h \
+  testSchedC.i \
   $(TAO_ROOT)/tao/Exception_Data.h \
   $(TAO_ROOT)/tao/Invocation_Adapter.h \
   $(TAO_ROOT)/tao/Invocation_Utils.h \
@@ -621,8 +621,8 @@ endif
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i \
-  testSched_export.h testSchedC.i \
+  $(TAO_ROOT)/tao/ORB.i testSched_export.h \
+  testSchedC.i \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \

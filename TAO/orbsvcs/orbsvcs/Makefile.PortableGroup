@@ -14005,8 +14005,7 @@ endif
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp
 
-.obj/miopC.o .obj/miopC.so .shobj/miopC.o .shobj/miopC.so: miopC.cpp miopC.h \
-  $(ACE_ROOT)/ace/pre.h \
+.obj/miopC.o .obj/miopC.so .shobj/miopC.o .shobj/miopC.so: miopC.cpp miopC.h $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
   $(TAO_ROOT)/tao/orbconf.h \
@@ -14842,8 +14841,7 @@ endif
   $(TAO_ROOT)/tao/Var_Size_Argument_T.inl \
   $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp
 
-.obj/miopS.o .obj/miopS.so .shobj/miopS.o .shobj/miopS.so: miopS.cpp miopS.h \
-  $(ACE_ROOT)/ace/pre.h \
+.obj/miopS.o .obj/miopS.so .shobj/miopS.o .shobj/miopS.so: miopS.cpp miopS.h $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/IOPS.h \
   $(TAO_ROOT)/tao/IOPC.h \
   $(TAO_ROOT)/tao/IOP_IORC.h \
@@ -15350,8 +15348,8 @@ endif
   $(ACE_ROOT)/ace/Malloc_Allocator.i
 
 .obj/PortableGroupS.o .obj/PortableGroupS.so .shobj/PortableGroupS.o .shobj/PortableGroupS.so: PortableGroupS.cpp PortableGroupS.h \
-  $(ACE_ROOT)/ace/pre.h CosNamingS.h \
-  CosNamingC.h $(TAO_ROOT)/tao/ORB.h \
+  $(ACE_ROOT)/ace/pre.h CosNamingS.h CosNamingC.h \
+  $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
   $(TAO_ROOT)/tao/orbconf.h \
   $(ACE_ROOT)/ace/Basic_Types.h \

@@ -429,8 +429,7 @@ Service: $(addprefix $(VDIR),$(Service_OBJS))
   $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Kokyu_Factory.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Event/rtkokyu_event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Kokyu_Factory.i \
-  Consumer.h Supplier.h \
-  $(ACE_ROOT)/ace/Get_Opt.h \
+  Consumer.h Supplier.h $(ACE_ROOT)/ace/Get_Opt.h \
   $(ACE_ROOT)/ace/Get_Opt.i \
   $(ACE_ROOT)/ace/OS_NS_strings.h \
   $(ACE_ROOT)/ace/os_include/os_strings.h \

@@ -182,8 +182,8 @@ endif
   $(ACE_ROOT)/ace/OS_QoS.h \
   $(ACE_ROOT)/ace/OS_NS_sys_socket.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_uio.h \
-  $(ACE_ROOT)/ace/OS_NS_sys_uio.inl \
-  Event/BCU.h Event/old_event_export.h
+  $(ACE_ROOT)/ace/OS_NS_sys_uio.inl Event/BCU.h \
+  Event/old_event_export.h
 
 .obj/Dispatching_Modules.o .obj/Dispatching_Modules.so .shobj/Dispatching_Modules.o .shobj/Dispatching_Modules.so: Event/Dispatching_Modules.cpp \
   $(ACE_ROOT)/ace/Sched_Params.h \
@@ -3373,11 +3373,6 @@ endif
   $(ACE_ROOT)/ace/Pipe.h \
   $(ACE_ROOT)/ace/Pipe.i \
   $(ACE_ROOT)/ace/Reactor_Impl.h \
-  $(ACE_ROOT)/ace/Unbounded_Queue.h \
-  $(ACE_ROOT)/ace/Node.h \
-  $(ACE_ROOT)/ace/Node.cpp \
-  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
-  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(ACE_ROOT)/ace/Select_Reactor_Base.i \
   $(ACE_ROOT)/ace/Reactor.h \
   $(ACE_ROOT)/ace/Reactor_Timer_Interface.h \
@@ -3425,6 +3420,8 @@ endif
   $(ACE_ROOT)/ace/Timer_Queue_T.i \
   $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
   $(ACE_ROOT)/ace/Unbounded_Set.h \
+  $(ACE_ROOT)/ace/Node.h \
+  $(ACE_ROOT)/ace/Node.cpp \
   $(ACE_ROOT)/ace/Unbounded_Set.inl \
   $(ACE_ROOT)/ace/Unbounded_Set.cpp \
   $(ACE_ROOT)/ace/Timer_Heap_T.cpp \
@@ -3600,6 +3597,9 @@ endif
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
   $(ACE_ROOT)/ace/Thread_Control.inl \
+  $(ACE_ROOT)/ace/Unbounded_Queue.h \
+  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
+  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(ACE_ROOT)/ace/Containers.h \
   $(ACE_ROOT)/ace/Containers.i \
   $(ACE_ROOT)/ace/Containers_T.h \

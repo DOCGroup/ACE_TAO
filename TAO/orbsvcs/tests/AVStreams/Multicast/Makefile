@@ -61,8 +61,7 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV \
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/ftp.o .obj/ftp.so .shobj/ftp.o .shobj/ftp.so: ftp.cpp ftp.h \
-  $(ACE_ROOT)/ace/Get_Opt.h \
+.obj/ftp.o .obj/ftp.so .shobj/ftp.o .shobj/ftp.so: ftp.cpp ftp.h $(ACE_ROOT)/ace/Get_Opt.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1774,8 +1773,7 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV \
   $(TAO_ROOT)/orbsvcs/orbsvcs/AV/UDP.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/AV/UDP.i
 
-.obj/ftp.o .obj/ftp.so .shobj/ftp.o .shobj/ftp.so: ftp.cpp ftp.h \
-  $(ACE_ROOT)/ace/Get_Opt.h \
+.obj/ftp.o .obj/ftp.so .shobj/ftp.o .shobj/ftp.so: ftp.cpp ftp.h $(ACE_ROOT)/ace/Get_Opt.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Basic_Types.h \

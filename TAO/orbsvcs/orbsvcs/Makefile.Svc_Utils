@@ -684,11 +684,10 @@ endif
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i \
-  svc_utils_export.h \
+  $(TAO_ROOT)/tao/ORB.i svc_utils_export.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  TimeBaseC.i $(TAO_ROOT)/tao/Typecode.h \
+  $(TAO_ROOT)/tao/TimeBaseC.i TimeBaseC.i \
+  $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
@@ -906,9 +905,8 @@ endif
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i \
-  svc_utils_export.h RtecBaseC.i \
-  $(TAO_ROOT)/tao/Typecode.h \
+  $(TAO_ROOT)/tao/ORB.i svc_utils_export.h \
+  RtecBaseC.i $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
@@ -1146,8 +1144,8 @@ endif
   $(TAO_ROOT)/tao/TimeBaseS_T.h \
   $(TAO_ROOT)/tao/TimeBaseS_T.i \
   $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
-  $(TAO_ROOT)/tao/TimeBaseS.i \
-  TimeBaseC.h svc_utils_export.h TimeBaseC.i \
+  $(TAO_ROOT)/tao/TimeBaseS.i TimeBaseC.h \
+  svc_utils_export.h TimeBaseC.i \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -1608,8 +1606,8 @@ endif
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i \
-  svc_utils_export.h RtecBaseC.i \
+  $(TAO_ROOT)/tao/ORB.i svc_utils_export.h \
+  RtecBaseC.i \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \

@@ -791,8 +791,7 @@ $(foreach ext, $(IDL_EXT), RtecEventChannelAdmin$(ext)): RtecEventComm.idl
   $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
 .obj/EC_ConsumerAdmin.o .obj/EC_ConsumerAdmin.so .shobj/EC_ConsumerAdmin.o .shobj/EC_ConsumerAdmin.so: Event/EC_ConsumerAdmin.cpp Event/EC_ConsumerAdmin.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Event/EC_ProxySupplier.h \
+  $(ACE_ROOT)/ace/pre.h Event/EC_ProxySupplier.h \
   RtecEventChannelAdminS.h \
   RtecEventCommS.h \
   TimeBaseS.h \
@@ -1062,8 +1061,8 @@ $(foreach ext, $(IDL_EXT), RtecEventChannelAdmin$(ext)): RtecEventComm.idl
   Event/EC_Factory.i Event/EC_Defaults.h Event/EC_Event_Channel_Base.i
 
 .obj/EC_SupplierAdmin.o .obj/EC_SupplierAdmin.so .shobj/EC_SupplierAdmin.o .shobj/EC_SupplierAdmin.so: Event/EC_SupplierAdmin.cpp Event/EC_SupplierAdmin.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Event/EC_ProxyConsumer.h Event/event_export.h \
+  $(ACE_ROOT)/ace/pre.h Event/EC_ProxyConsumer.h \
+  Event/event_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -3340,8 +3339,7 @@ $(foreach ext, $(IDL_EXT), RtecEventChannelAdmin$(ext)): RtecEventComm.idl
   $(TAO_ROOT)/tao/ORB_Constants.h
 
 .obj/EC_Filter_Builder.o .obj/EC_Filter_Builder.so .shobj/EC_Filter_Builder.o .shobj/EC_Filter_Builder.so: Event/EC_Filter_Builder.cpp \
-  Event/EC_Filter_Builder.h \
-  $(ACE_ROOT)/ace/pre.h \
+  Event/EC_Filter_Builder.h $(ACE_ROOT)/ace/pre.h \
   RtecEventChannelAdminC.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
@@ -3774,8 +3772,7 @@ $(foreach ext, $(IDL_EXT), RtecEventChannelAdmin$(ext)): RtecEventComm.idl
 
 .obj/EC_Reactive_Dispatching.o .obj/EC_Reactive_Dispatching.so .shobj/EC_Reactive_Dispatching.o .shobj/EC_Reactive_Dispatching.so: Event/EC_Reactive_Dispatching.cpp \
   Event/EC_Reactive_Dispatching.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Event/EC_Dispatching.h \
+  $(ACE_ROOT)/ace/pre.h Event/EC_Dispatching.h \
   RtecEventCommC.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
@@ -7270,8 +7267,8 @@ $(foreach ext, $(IDL_EXT), RtecEventChannelAdmin$(ext)): RtecEventComm.idl
   Time_Utilities.i
 
 .obj/EC_Timeout_Filter.o .obj/EC_Timeout_Filter.so .shobj/EC_Timeout_Filter.o .shobj/EC_Timeout_Filter.so: Event/EC_Timeout_Filter.cpp \
-  Event/EC_Timeout_Filter.h \
-  $(ACE_ROOT)/ace/pre.h Event/EC_Filter.h \
+  Event/EC_Timeout_Filter.h $(ACE_ROOT)/ace/pre.h \
+  Event/EC_Filter.h \
   RtecEventCommC.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
@@ -7947,8 +7944,7 @@ $(foreach ext, $(IDL_EXT), RtecEventChannelAdmin$(ext)): RtecEventComm.idl
   $(ACE_ROOT)/ace/Reactor_Impl.h
 
 .obj/EC_MT_Dispatching.o .obj/EC_MT_Dispatching.so .shobj/EC_MT_Dispatching.o .shobj/EC_MT_Dispatching.so: Event/EC_MT_Dispatching.cpp \
-  Event/EC_MT_Dispatching.h \
-  $(ACE_ROOT)/ace/pre.h \
+  Event/EC_MT_Dispatching.h $(ACE_ROOT)/ace/pre.h \
   Event/EC_Dispatching.h \
   RtecEventCommC.h \
   $(TAO_ROOT)/tao/ORB.h \
@@ -8298,8 +8294,7 @@ $(foreach ext, $(IDL_EXT), RtecEventChannelAdmin$(ext)): RtecEventComm.idl
 
 .obj/EC_Dispatching_Task.o .obj/EC_Dispatching_Task.so .shobj/EC_Dispatching_Task.o .shobj/EC_Dispatching_Task.so: Event/EC_Dispatching_Task.cpp \
   Event/EC_Dispatching_Task.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Event/EC_ProxySupplier.h \
+  $(ACE_ROOT)/ace/pre.h Event/EC_ProxySupplier.h \
   RtecEventChannelAdminS.h \
   RtecEventCommS.h \
   TimeBaseS.h \
@@ -8535,8 +8530,7 @@ $(foreach ext, $(IDL_EXT), RtecEventChannelAdmin$(ext)): RtecEventComm.idl
   RtecEventChannelAdminS_T.cpp \
   RtecEventChannelAdminS.i \
   Event/EC_Filter.h Event/event_export.h Event/EC_Filter.i \
-  Event/EC_ProxySupplier.i \
-  $(ACE_ROOT)/ace/Task.h \
+  Event/EC_ProxySupplier.i $(ACE_ROOT)/ace/Task.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.i \
@@ -10165,8 +10159,8 @@ $(foreach ext, $(IDL_EXT), RtecEventChannelAdmin$(ext)): RtecEventComm.idl
   $(TAO_ROOT)/tao/ORB_Core.i
 
 .obj/EC_Bitmask_Filter.o .obj/EC_Bitmask_Filter.so .shobj/EC_Bitmask_Filter.o .shobj/EC_Bitmask_Filter.so: Event/EC_Bitmask_Filter.cpp \
-  Event/EC_Bitmask_Filter.h \
-  $(ACE_ROOT)/ace/pre.h Event/EC_Filter.h \
+  Event/EC_Bitmask_Filter.h $(ACE_ROOT)/ace/pre.h \
+  Event/EC_Filter.h \
   RtecEventCommC.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
@@ -11191,8 +11185,8 @@ $(foreach ext, $(IDL_EXT), RtecEventChannelAdmin$(ext)): RtecEventComm.idl
   $(TAO_ROOT)/tao/Auto_Functor.cpp
 
 .obj/EC_Lifetime_Utils.o .obj/EC_Lifetime_Utils.so .shobj/EC_Lifetime_Utils.o .shobj/EC_Lifetime_Utils.so: Event/EC_Lifetime_Utils.cpp \
-  Event/EC_Lifetime_Utils.h \
-  $(ACE_ROOT)/ace/pre.h Event/event_export.h \
+  Event/EC_Lifetime_Utils.h $(ACE_ROOT)/ace/pre.h \
+  Event/event_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -15342,8 +15336,7 @@ $(foreach ext, $(IDL_EXT), RtecEventChannelAdmin$(ext)): RtecEventComm.idl
   $(ACE_ROOT)/ace/streams.h
 
 .obj/ECG_Mcast_Gateway.o .obj/ECG_Mcast_Gateway.so .shobj/ECG_Mcast_Gateway.o .shobj/ECG_Mcast_Gateway.so: Event/ECG_Mcast_Gateway.cpp \
-  Event/ECG_Mcast_Gateway.h \
-  $(ACE_ROOT)/ace/pre.h \
+  Event/ECG_Mcast_Gateway.h $(ACE_ROOT)/ace/pre.h \
   Event/ECG_UDP_Sender.h \
   RtecUDPAdminS.h \
   RtecEventCommS.h \
@@ -16645,8 +16638,7 @@ $(foreach ext, $(IDL_EXT), RtecEventChannelAdmin$(ext)): RtecEventComm.idl
   $(ACE_ROOT)/ace/OS_NS_arpa_inet.h \
   $(ACE_ROOT)/ace/os_include/arpa/os_inet.h \
   $(ACE_ROOT)/ace/OS_NS_arpa_inet.inl \
-  $(ACE_ROOT)/ace/SOCK_Dgram.i \
-  Event/ECG_UDP_EH.i \
+  $(ACE_ROOT)/ace/SOCK_Dgram.i Event/ECG_UDP_EH.i \
   $(ACE_ROOT)/ace/Reactor.h \
   $(ACE_ROOT)/ace/Timer_Queuefwd.h \
   $(ACE_ROOT)/ace/Reactor_Timer_Interface.h \
@@ -17626,8 +17618,7 @@ $(foreach ext, $(IDL_EXT), RtecEventChannelAdmin$(ext)): RtecEventComm.idl
   $(ACE_ROOT)/ace/ACE.i
 
 .obj/RtecDefaultEventDataC.o .obj/RtecDefaultEventDataC.so .shobj/RtecDefaultEventDataC.o .shobj/RtecDefaultEventDataC.so: RtecDefaultEventDataC.cpp \
-  RtecDefaultEventDataC.h \
-  $(ACE_ROOT)/ace/pre.h \
+  RtecDefaultEventDataC.h $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
   $(TAO_ROOT)/tao/orbconf.h \
@@ -17801,8 +17792,8 @@ $(foreach ext, $(IDL_EXT), RtecEventChannelAdmin$(ext)): RtecEventComm.idl
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i \
-  Event/event_export.h RtecDefaultEventDataC.i \
+  $(TAO_ROOT)/tao/ORB.i Event/event_export.h \
+  RtecDefaultEventDataC.i \
   $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/Resource_Factory.h \
   $(ACE_ROOT)/ace/Service_Object.h \
@@ -18145,12 +18136,11 @@ $(foreach ext, $(IDL_EXT), RtecEventChannelAdmin$(ext)): RtecEventComm.idl
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i \
-  Event/event_export.h TimeBaseC.h svc_utils_export.h \
+  $(TAO_ROOT)/tao/ORB.i Event/event_export.h \
+  TimeBaseC.h svc_utils_export.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  TimeBaseC.i RtecDefaultEventDataC.h RtecDefaultEventDataC.i \
-  RtecEventCommC.i \
+  $(TAO_ROOT)/tao/TimeBaseC.i TimeBaseC.i \
+  RtecDefaultEventDataC.h RtecDefaultEventDataC.i RtecEventCommC.i \
   $(TAO_ROOT)/tao/Exception_Data.h \
   $(TAO_ROOT)/tao/Invocation_Adapter.h \
   $(TAO_ROOT)/tao/Invocation_Utils.h \
@@ -18229,8 +18219,7 @@ $(foreach ext, $(IDL_EXT), RtecEventChannelAdmin$(ext)): RtecEventComm.idl
   $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp
 
 .obj/RtecEventChannelAdminC.o .obj/RtecEventChannelAdminC.so .shobj/RtecEventChannelAdminC.o .shobj/RtecEventChannelAdminC.so: RtecEventChannelAdminC.cpp \
-  RtecEventChannelAdminC.h \
-  $(ACE_ROOT)/ace/pre.h \
+  RtecEventChannelAdminC.h $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
   $(TAO_ROOT)/tao/orbconf.h \
@@ -18404,12 +18393,12 @@ $(foreach ext, $(IDL_EXT), RtecEventChannelAdmin$(ext)): RtecEventComm.idl
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i \
-  Event/event_export.h RtecEventCommC.h TimeBaseC.h svc_utils_export.h \
+  $(TAO_ROOT)/tao/ORB.i Event/event_export.h \
+  RtecEventCommC.h TimeBaseC.h svc_utils_export.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  TimeBaseC.i RtecDefaultEventDataC.h RtecDefaultEventDataC.i \
-  RtecEventCommC.i RtecBaseC.h RtecBaseC.i RtecEventChannelAdminC.i \
+  $(TAO_ROOT)/tao/TimeBaseC.i TimeBaseC.i \
+  RtecDefaultEventDataC.h RtecDefaultEventDataC.i RtecEventCommC.i \
+  RtecBaseC.h RtecBaseC.i RtecEventChannelAdminC.i \
   $(TAO_ROOT)/tao/Exception_Data.h \
   $(TAO_ROOT)/tao/Invocation_Adapter.h \
   $(TAO_ROOT)/tao/Invocation_Utils.h \
@@ -18662,12 +18651,12 @@ $(foreach ext, $(IDL_EXT), RtecEventChannelAdmin$(ext)): RtecEventComm.idl
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i \
-  Event/event_export.h RtecEventCommC.h TimeBaseC.h svc_utils_export.h \
+  $(TAO_ROOT)/tao/ORB.i Event/event_export.h \
+  RtecEventCommC.h TimeBaseC.h svc_utils_export.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  TimeBaseC.i RtecDefaultEventDataC.h RtecDefaultEventDataC.i \
-  RtecEventCommC.i RtecUDPAdminC.i \
+  $(TAO_ROOT)/tao/TimeBaseC.i TimeBaseC.i \
+  RtecDefaultEventDataC.h RtecDefaultEventDataC.i RtecEventCommC.i \
+  RtecUDPAdminC.i \
   $(TAO_ROOT)/tao/Exception_Data.h \
   $(TAO_ROOT)/tao/Invocation_Adapter.h \
   $(TAO_ROOT)/tao/Invocation_Utils.h \
@@ -18749,8 +18738,7 @@ $(foreach ext, $(IDL_EXT), RtecEventChannelAdmin$(ext)): RtecEventComm.idl
   $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp
 
 .obj/RtecDefaultEventDataS.o .obj/RtecDefaultEventDataS.so .shobj/RtecDefaultEventDataS.o .shobj/RtecDefaultEventDataS.so: RtecDefaultEventDataS.cpp \
-  RtecDefaultEventDataS.h \
-  $(ACE_ROOT)/ace/pre.h \
+  RtecDefaultEventDataS.h $(ACE_ROOT)/ace/pre.h \
   RtecDefaultEventDataC.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
@@ -18925,8 +18913,8 @@ $(foreach ext, $(IDL_EXT), RtecEventChannelAdmin$(ext)): RtecEventComm.idl
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i \
-  Event/event_export.h RtecDefaultEventDataC.i \
+  $(TAO_ROOT)/tao/ORB.i Event/event_export.h \
+  RtecDefaultEventDataC.i \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -19395,8 +19383,8 @@ $(foreach ext, $(IDL_EXT), RtecEventChannelAdmin$(ext)): RtecEventComm.idl
   $(TAO_ROOT)/tao/TimeBaseS_T.h \
   $(TAO_ROOT)/tao/TimeBaseS_T.i \
   $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
-  $(TAO_ROOT)/tao/TimeBaseS.i \
-  TimeBaseC.h svc_utils_export.h TimeBaseC.i \
+  $(TAO_ROOT)/tao/TimeBaseS.i TimeBaseC.h \
+  svc_utils_export.h TimeBaseC.i \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -19696,9 +19684,8 @@ $(foreach ext, $(IDL_EXT), RtecEventChannelAdmin$(ext)): RtecEventComm.idl
   $(ACE_ROOT)/ace/Malloc_Allocator.i
 
 .obj/RtecEventChannelAdminS.o .obj/RtecEventChannelAdminS.so .shobj/RtecEventChannelAdminS.o .shobj/RtecEventChannelAdminS.so: RtecEventChannelAdminS.cpp \
-  RtecEventChannelAdminS.h \
-  $(ACE_ROOT)/ace/pre.h RtecEventCommS.h \
-  TimeBaseS.h \
+  RtecEventChannelAdminS.h $(ACE_ROOT)/ace/pre.h \
+  RtecEventCommS.h TimeBaseS.h \
   $(TAO_ROOT)/tao/TimeBaseS.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
   $(TAO_ROOT)/tao/ORB.h \
@@ -19879,8 +19866,8 @@ $(foreach ext, $(IDL_EXT), RtecEventChannelAdmin$(ext)): RtecEventComm.idl
   $(TAO_ROOT)/tao/TimeBaseS_T.h \
   $(TAO_ROOT)/tao/TimeBaseS_T.i \
   $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
-  $(TAO_ROOT)/tao/TimeBaseS.i \
-  TimeBaseC.h svc_utils_export.h TimeBaseC.i \
+  $(TAO_ROOT)/tao/TimeBaseS.i TimeBaseC.h \
+  svc_utils_export.h TimeBaseC.i \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -20185,8 +20172,7 @@ $(foreach ext, $(IDL_EXT), RtecEventChannelAdmin$(ext)): RtecEventComm.idl
 
 .obj/RtecUDPAdminS.o .obj/RtecUDPAdminS.so .shobj/RtecUDPAdminS.o .shobj/RtecUDPAdminS.so: RtecUDPAdminS.cpp RtecUDPAdminS.h \
   $(ACE_ROOT)/ace/pre.h RtecEventCommS.h \
-  TimeBaseS.h \
-  $(TAO_ROOT)/tao/TimeBaseS.h \
+  TimeBaseS.h $(TAO_ROOT)/tao/TimeBaseS.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
@@ -20366,8 +20352,8 @@ $(foreach ext, $(IDL_EXT), RtecEventChannelAdmin$(ext)): RtecEventComm.idl
   $(TAO_ROOT)/tao/TimeBaseS_T.h \
   $(TAO_ROOT)/tao/TimeBaseS_T.i \
   $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
-  $(TAO_ROOT)/tao/TimeBaseS.i \
-  TimeBaseC.h svc_utils_export.h TimeBaseC.i \
+  $(TAO_ROOT)/tao/TimeBaseS.i TimeBaseC.h \
+  svc_utils_export.h TimeBaseC.i \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \

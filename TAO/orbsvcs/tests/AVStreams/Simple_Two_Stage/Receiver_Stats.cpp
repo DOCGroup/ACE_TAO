@@ -4,10 +4,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
 
-#if !defined (__ACE_INLINE__)
-#include "Receiver_Stats.inl"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(ace, Receiver_Stats, "$Id$")
 
 void

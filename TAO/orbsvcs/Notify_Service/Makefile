@@ -364,6 +364,7 @@ Notify_Service: $(addprefix $(VDIR),$(NOTIFY_OBJS))
   $(TAO_ROOT)/tao/ServicesC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
@@ -699,6 +700,7 @@ Notify_Service: $(addprefix $(VDIR),$(NOTIFY_OBJS))
   $(TAO_ROOT)/tao/ServicesC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \

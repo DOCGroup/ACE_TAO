@@ -410,8 +410,7 @@ ECM_Consumer: $(addprefix $(VDIR),$(ECM_Consumer_OBJS))
   $(TAO_ROOT)/orbsvcs/orbsvcs/Channel_Clients_T.cpp \
   ECM_Data.h $(ACE_ROOT)/ace/Map_Manager.h \
   $(ACE_ROOT)/ace/Map_Manager.i \
-  $(ACE_ROOT)/ace/Map_Manager.cpp dataC.h \
-  dataC.i
+  $(ACE_ROOT)/ace/Map_Manager.cpp dataC.h dataC.i
 
 .obj/ECM_Consumer.o .obj/ECM_Consumer.so .shobj/ECM_Consumer.o .shobj/ECM_Consumer.so: ECM_Consumer.cpp ECM_Consumer.h \
   $(ACE_ROOT)/ace/Task.h \
@@ -750,8 +749,7 @@ ECM_Consumer: $(addprefix $(VDIR),$(ECM_Consumer_OBJS))
   $(ACE_ROOT)/ace/OS_NS_time.inl ECM_Data.h \
   $(ACE_ROOT)/ace/Map_Manager.h \
   $(ACE_ROOT)/ace/Map_Manager.i \
-  $(ACE_ROOT)/ace/Map_Manager.cpp dataC.h \
-  dataC.i \
+  $(ACE_ROOT)/ace/Map_Manager.cpp dataC.h dataC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Utilities.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Service_Constants.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \

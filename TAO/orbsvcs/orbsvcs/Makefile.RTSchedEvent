@@ -309,8 +309,8 @@ endif
   $(ACE_ROOT)/ace/Log_Priority.h
 
 .obj/EC_Sched_Filter_Builder.o .obj/EC_Sched_Filter_Builder.so .shobj/EC_Sched_Filter_Builder.o .shobj/EC_Sched_Filter_Builder.so: Event/EC_Sched_Filter_Builder.cpp \
-  Event/EC_Sched_Filter.h \
-  $(ACE_ROOT)/ace/pre.h Event/EC_Filter.h \
+  Event/EC_Sched_Filter.h $(ACE_ROOT)/ace/pre.h \
+  Event/EC_Filter.h \
   RtecEventCommC.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
@@ -863,8 +863,7 @@ endif
 
 .obj/EC_Priority_Dispatching.o .obj/EC_Priority_Dispatching.so .shobj/EC_Priority_Dispatching.o .shobj/EC_Priority_Dispatching.so: Event/EC_Priority_Dispatching.cpp \
   Event/EC_Priority_Dispatching.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Event/EC_Dispatching.h \
+  $(ACE_ROOT)/ace/pre.h Event/EC_Dispatching.h \
   RtecEventCommC.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
@@ -1585,8 +1584,8 @@ endif
   $(ACE_ROOT)/ace/OS_NS_strings.inl
 
 .obj/EC_Gateway_Sched.o .obj/EC_Gateway_Sched.so .shobj/EC_Gateway_Sched.o .shobj/EC_Gateway_Sched.so: Event/EC_Gateway_Sched.cpp Event/EC_Gateway_Sched.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Event/EC_Gateway_IIOP.h Event/event_export.h \
+  $(ACE_ROOT)/ace/pre.h Event/EC_Gateway_IIOP.h \
+  Event/event_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -1594,8 +1593,7 @@ endif
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  Event/EC_Gateway.h \
+  $(ACE_ROOT)/ace/ACE_export.h Event/EC_Gateway.h \
   RtecEventChannelAdminS.h \
   RtecEventCommS.h \
   TimeBaseS.h \
