@@ -1,5 +1,13 @@
 Thu Sep  2 12:51:00 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
+        * tests/Process_Manager_Test.cpp:
+
+          Changed commandline buildup of childprocesses to start with './'
+          for non-WIN32 platforms as with other tests.
+          By default test did not run on OpenVMS without this.
+
+Thu Sep  2 12:51:00 UTC 2004  Martin Corino  <mcorino@remedy.nl>
+
         * ace/config-openvms.h:
 
           Added ACE_LACKS_UNIX_SIGNALS since OpenVMS cannot use signals
