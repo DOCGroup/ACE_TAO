@@ -40,6 +40,8 @@ CORBA_Environment::clear (void)
 {
   if (this->exception_)
     this->exception_->Release ();
+
+  this->exception_ = 0;
 }
 
 void
