@@ -119,28 +119,30 @@ TAO_ORB_Core::init (int& argc, char** argv)
 
       if (ACE_OS::strcmp (current_arg, "-ORBsvcconf") == 0)
         {
-          // Specify the name of the svc.conf file to be used
-          svc_config_argv[svc_config_argc++] = "-f";
+          // Specify the name of the svc.conf file to be used.
+          svc_config_argv[svc_config_argc++] = 
+            CORBA::string_dup ("-f");
           arg_shifter.consume_arg ();
 
           if (arg_shifter.is_parameter_next ())
             {
-              char *file_name = arg_shifter.get_current ();
-              // Should we dup the string before assigning?
-              svc_config_argv[svc_config_argc++] = file_name;
+              svc_config_argv[svc_config_argc++] =
+                CORBA::string_dup (arg_shifter.get_current ());
               arg_shifter.consume_arg();
             }
         }
       else if (ACE_OS::strcmp (current_arg, "-ORBdaemon") == 0)
         {
           // Be a daemon
-          svc_config_argv[svc_config_argc++] = "-b";
+          svc_config_argv[svc_config_argc++] =
+            CORBA::string_dup ("-b");
           arg_shifter.consume_arg ();
         }
       else if (ACE_OS::strcmp (current_arg, "-ORBdebug") == 0)
         {
           // Turn on debugging
-          svc_config_argv[svc_config_argc++] = "-d";
+          svc_config_argv[svc_config_argc++] =
+            CORBA::string_dup ("-d");
           arg_shifter.consume_arg ();
         }
       else if (ACE_OS::strcmp (current_arg, "-ORBhost") == 0)
@@ -151,8 +153,8 @@ TAO_ORB_Core::init (int& argc, char** argv)
 
           if (arg_shifter.is_parameter_next())
             {
-              char* host_name = arg_shifter.get_current ();
-              host = CORBA::string_dup (host_name);
+              host =
+                CORBA::string_dup (arg_shifter.get_current ());
               arg_shifter.consume_arg ();
             }
         }
@@ -237,20 +239,22 @@ TAO_ORB_Core::init (int& argc, char** argv)
         {
           // Specifies the style of printed objrefs: URL or IOR
           //
-          // BEGIN COMMENTS FROM IIOP-1.4
-          // On Win32, we should be collecting information from the Registry
-          // such as what ORBs are configured, specific configuration details
-          // like whether they generate IOR or URL style stringified objrefs
-          // and which addresses they listen to (e.g. allowing multihomed
-          // hosts to implement firewalls), user-meaningful orb names (they
-          // will normally indicate domains), and more.
+          // BEGIN COMMENTS FROM IIOP-1.4 On Win32, we should be
+          // collecting information from the Registry such as what
+          // ORBs are configured, specific configuration details like
+          // whether they generate IOR or URL style stringified
+          // objrefs and which addresses they listen to (e.g. allowing
+          // multihomed hosts to implement firewalls), user-meaningful
+          // orb names (they will normally indicate domains), and
+          // more.
           //
-          // On UNIX, we should collect that from some private config file.
+          // On UNIX, we should collect that from some private config
+          // file.
           //
-          // Instead, this just treats the "internet" ORB name specially and
-          // makes it always use URL-style stringified objrefs, where the
-          // hostname and TCP port number are explicit (and the whole objref
-          // is readable by mortals).
+          // Instead, this just treats the "internet" ORB name
+          // specially and makes it always use URL-style stringified
+          // objrefs, where the hostname and TCP port number are
+          // explicit (and the whole objref is readable by mortals).
           // BEGIN COMMENTS FROM IIOP-1.4
           arg_shifter.consume_arg ();
           if (arg_shifter.is_parameter_next ())
@@ -263,8 +267,9 @@ TAO_ORB_Core::init (int& argc, char** argv)
             }
         }
       else if (ACE_OS::strcmp (current_arg, "-ORBcollocation") == 0)
-        // Specify whether we want to optimize against collocation objects.
-        // Valid arguments are: "yes" and "no".  Default is yes.
+        // Specify whether we want to optimize against collocation
+        // objects.  Valid arguments are: "yes" and "no".  Default is
+        // yes.
         {
           arg_shifter.consume_arg ();
           if (arg_shifter.is_parameter_next ())
@@ -281,12 +286,13 @@ TAO_ORB_Core::init (int& argc, char** argv)
       else if (ACE_OS::strcmp (current_arg, "-ORBpreconnect") == 0)
         {
           arg_shifter.consume_arg ();
-          // Get a string which describes the host/port of connections we
-          // want to cache up-front, thus reducing the latency of the first call.
-          // It is specified as a comma-separated list of host:port specifications, and
-          // if multiple connections to the same port are desired, they must be
-          // specified multiple times.  For example, the following connects to
-          // tango:10015 twice, and  watusi:10016 once:
+          // Get a string which describes the host/port of connections
+          // we want to cache up-front, thus reducing the latency of
+          // the first call.  It is specified as a comma-separated
+          // list of host:port specifications, and if multiple
+          // connections to the same port are desired, they must be
+          // specified multiple times.  For example, the following
+          // connects to tango:10015 twice, and watusi:10016 once:
           //
           //    -ORBpreconnect tango:10015,tango:10015,watusi:10016
           if (arg_shifter.is_parameter_next ())
@@ -304,9 +310,27 @@ TAO_ORB_Core::init (int& argc, char** argv)
               arg_shifter.consume_arg ();
             }
         }
-      else
-        arg_shifter.ignore_arg ();
-    }
+       else if (ACE_OS::strcmp (current_arg, "-ORBsvcconfdirective") == 0)
+         {
+           // This is used to pass arguments to the Service
+           // Configurator using the "command line" to provide
+           // configuration information rather than using a svc.conf
+           // file.  Pass the "-S" to the service configurator.
+           svc_config_argv[svc_config_argc++] =
+             CORBA::string_dup ("-S");
+           arg_shifter.consume_arg ();
+
+           if (arg_shifter.is_parameter_next ())
+             {
+               // Pass the next argument.
+               svc_config_argv[svc_config_argc++] =
+                 CORBA::string_dup (arg_shifter.get_current ());
+               arg_shifter.consume_arg ();
+             }
+         }
+     else
+       arg_shifter.ignore_arg ();
+   }
 
 #if defined (DEBUG)
   // Make it a little easier to debug programs using this code.
@@ -342,7 +366,9 @@ TAO_ORB_Core::init (int& argc, char** argv)
   if (rendezvous.set (port, (char *) host) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) TAO_ORB_Core::init failed to resolve host %s, %p.\n",
-                       (char*)host, "reason"), -1);
+                       (char*) host,
+                       "reason"),
+                      -1);
 
 #if defined (SIGPIPE) && !defined (ACE_LACKS_UNIX_SIGNALS)
   // There's really no way to deal with this in a portable manner, so
@@ -356,12 +382,18 @@ TAO_ORB_Core::init (int& argc, char** argv)
   (void) ACE_OS::signal (SIGPIPE, SIG_IGN);
 #endif /* SIGPIPE */
 
-  // Initialize the Service Configurator
-  //  -check for return values.
-  int result = TAO_Internal::open_services (svc_config_argc, svc_config_argv);
+  // Initialize the Service Configurator -check for return values.
+  int result = TAO_Internal::open_services (svc_config_argc,
+                                            svc_config_argv);
+  // Make sure to free up all the dynamically allocated memory.  If we
+  // decide we don't need to allocate this stuff dynamically then we
+  // can remove this.
+  for (int i = 0; i < svc_config_argc; i++)
+    CORBA::string_free (svc_config_argv[i]);
+
   delete [] svc_config_argv;
 
-  // check for errors returned from TAO_Internal::open_services()
+  // Check for errors returned from <TAO_Internal::open_services>.
   if (result != 0 && errno != ENOENT)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) %p\n",
