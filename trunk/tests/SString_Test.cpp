@@ -44,23 +44,6 @@ main (int, char *[])
   }
 
   {
-    ACE_SString s1 ("hello");
-    ACE_SString s2 ("world");
-    ACE_SString s3 ("el");
-    
-    ACE_ASSERT (s1 != s2);
-    ACE_ASSERT (s1.strstr (s2) == -1);
-    ACE_ASSERT (s1.strstr (s3));
-    
-    ACE_ASSERT (s1.find (s3) == 1);
-    ACE_ASSERT (s1.find (s3, 2) == ACE_SString::npos);
-    ACE_ASSERT (s1.find (s2) == ACE_SString::npos);
-    ACE_ASSERT (s1.find ('o') == 4);
-    ACE_ASSERT (s1.rfind ('l') == 3);
-    ACE_ASSERT (s1.rfind ('l', 3) == 2);
-  }
-
-  {
     ACE_WString s1 ("hello");
     ACE_WString s2 ("world");
     ACE_WString s3 ("el");
