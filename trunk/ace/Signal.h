@@ -133,6 +133,13 @@ public:
   void handler (ACE_SignalHandler);
   ACE_SignalHandler handler (void);
 
+#if 0
+  // = Set/get current sa_sigaction, which is needed for POSIX
+  // real-time signals.
+  void sigaction (ACE_SignalHandler);
+  ACE_SignalHandler sigaction (void);
+#endif /* 0 */
+
   void dump (void) const;
   // Dump the state of an object.
 
