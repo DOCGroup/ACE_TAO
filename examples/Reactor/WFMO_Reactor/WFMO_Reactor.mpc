@@ -1,5 +1,18 @@
 project(*Abandoned): aceexe {
   exename = abandoned
+
+  verbatim(gnuace, top) {
+    ifneq ($(MAKE),)
+    include $(ACE_ROOT)/include/makeinclude/macros.GNU
+    TARGETS_NESTED := $(TARGETS_NESTED:.nested=)
+    $(TARGETS_NESTED):
+    "	@echo abandoned will only build on Windows"
+    else
+  }
+  verbatim(gnuace, bottom) {
+    endif
+  }
+
   Source_Files {
     Abandoned.cpp
   }
@@ -7,6 +20,19 @@ project(*Abandoned): aceexe {
 
 project(*APC): aceexe {                                
   exename = apc
+
+  verbatim(gnuace, top) {
+    ifneq ($(MAKE),)
+    include $(ACE_ROOT)/include/makeinclude/macros.GNU
+    TARGETS_NESTED := $(TARGETS_NESTED:.nested=)
+    $(TARGETS_NESTED):
+    "	@echo apc will only build on Windows"
+    else
+  }
+  verbatim(gnuace, bottom) {
+    endif
+  }
+
   Source_Files {
     APC.cpp
   }
@@ -14,6 +40,19 @@ project(*APC): aceexe {
 
 project(*Console_Input): aceexe {                                
   exename = console_input
+
+  verbatim(gnuace, top) {
+    ifneq ($(MAKE),)
+    include $(ACE_ROOT)/include/makeinclude/macros.GNU
+    TARGETS_NESTED := $(TARGETS_NESTED:.nested=)
+    $(TARGETS_NESTED):
+    "	@echo console_input will only build on Windows"
+    else
+  }
+  verbatim(gnuace, bottom) {
+    endif
+  }
+
   Source_Files {
     Console_Input.cpp
   }
@@ -21,6 +60,19 @@ project(*Console_Input): aceexe {
 
 project(*Directory_Changes): aceexe {                                
   exename = directory_changes
+
+  verbatim(gnuace, top) {
+    ifneq ($(MAKE),)
+    include $(ACE_ROOT)/include/makeinclude/macros.GNU
+    TARGETS_NESTED := $(TARGETS_NESTED:.nested=)
+    $(TARGETS_NESTED):
+    "	@echo directory_changes will only build on Windows"
+    else
+  }
+  verbatim(gnuace, bottom) {
+    endif
+  }
+
   Source_Files {
     Directory_Changes.cpp
   }
@@ -28,6 +80,19 @@ project(*Directory_Changes): aceexe {
 
 project(*Exceptions): aceexe {                                
   exename = exceptions
+
+  verbatim(gnuace, top) {
+    ifneq ($(MAKE),)
+    include $(ACE_ROOT)/include/makeinclude/macros.GNU
+    TARGETS_NESTED := $(TARGETS_NESTED:.nested=)
+    $(TARGETS_NESTED):
+    "	@echo exceptions will only build on Windows"
+    else
+  }
+  verbatim(gnuace, bottom) {
+    endif
+  }
+
   Source_Files {
     Exceptions.cpp
   }
@@ -35,6 +100,19 @@ project(*Exceptions): aceexe {
 
 project(*Handle_Close): aceexe {                                
   exename = handle_close
+
+  verbatim(gnuace, top) {
+    ifneq ($(MAKE),)
+    include $(ACE_ROOT)/include/makeinclude/macros.GNU
+    TARGETS_NESTED := $(TARGETS_NESTED:.nested=)
+    $(TARGETS_NESTED):
+    "	@echo handle_close will only build on Windows"
+    else
+  }
+  verbatim(gnuace, bottom) {
+    endif
+  }
+
   Source_Files {
     Handle_Close.cpp
   }
@@ -42,6 +120,19 @@ project(*Handle_Close): aceexe {
 
 project(*Multithreading): aceexe {                                
   exename = multithreading
+
+  verbatim(gnuace, top) {
+    ifneq ($(MAKE),)
+    include $(ACE_ROOT)/include/makeinclude/macros.GNU
+    TARGETS_NESTED := $(TARGETS_NESTED:.nested=)
+    $(TARGETS_NESTED):
+    "	@echo multithreading will only build on Windows"
+    else
+  }
+  verbatim(gnuace, bottom) {
+    endif
+  }
+
   Source_Files {
     Multithreading.cpp
   }
@@ -49,6 +140,19 @@ project(*Multithreading): aceexe {
 
 project(*Network_Events): aceexe {                                
   exename = network_events
+
+  verbatim(gnuace, top) {
+    ifneq ($(MAKE),)
+    include $(ACE_ROOT)/include/makeinclude/macros.GNU
+    TARGETS_NESTED := $(TARGETS_NESTED:.nested=)
+    $(TARGETS_NESTED):
+    "	@echo network_events will only build on Windows"
+    else
+  }
+  verbatim(gnuace, bottom) {
+    endif
+  }
+
   Source_Files {
     Network_Events.cpp
   }
@@ -56,6 +160,19 @@ project(*Network_Events): aceexe {
 
 project(*Prerun_State_Changes): aceexe {                                
   exename = prerun_state_changes
+
+  verbatim(gnuace, top) {
+    ifneq ($(MAKE),)
+    include $(ACE_ROOT)/include/makeinclude/macros.GNU
+    TARGETS_NESTED := $(TARGETS_NESTED:.nested=)
+    $(TARGETS_NESTED):
+    "	@echo prerun_state_changes will only build on Windows"
+    else
+  }
+  verbatim(gnuace, bottom) {
+    endif
+  }
+
   Source_Files {
     Prerun_State_Changes.cpp
   }
@@ -63,6 +180,19 @@ project(*Prerun_State_Changes): aceexe {
 
 project(*Registration): aceexe {
   exename = registration                                
+
+  verbatim(gnuace, top) {
+    ifneq ($(MAKE),)
+    include $(ACE_ROOT)/include/makeinclude/macros.GNU
+    TARGETS_NESTED := $(TARGETS_NESTED:.nested=)
+    $(TARGETS_NESTED):
+    "	@echo registration will only build on Windows"
+    else
+  }
+  verbatim(gnuace, bottom) {
+    endif
+  }
+
   Source_Files {
     Registration.cpp
   }
@@ -70,6 +200,19 @@ project(*Registration): aceexe {
 
 project(*Registry_Changes): aceexe {                                
   exename = registry_changes
+
+  verbatim(gnuace, top) {
+    ifneq ($(MAKE),)
+    include $(ACE_ROOT)/include/makeinclude/macros.GNU
+    TARGETS_NESTED := $(TARGETS_NESTED:.nested=)
+    $(TARGETS_NESTED):
+    "	@echo registry_changes will only build on Windows"
+    else
+  }
+  verbatim(gnuace, bottom) {
+    endif
+  }
+
   Source_Files {
     Registry_Changes.cpp
   }
@@ -77,6 +220,19 @@ project(*Registry_Changes): aceexe {
 
 project(*Removals): aceexe {
   exename = removals                                
+
+  verbatim(gnuace, top) {
+    ifneq ($(MAKE),)
+    include $(ACE_ROOT)/include/makeinclude/macros.GNU
+    TARGETS_NESTED := $(TARGETS_NESTED:.nested=)
+    $(TARGETS_NESTED):
+    "	@echo removals will only build on Windows"
+    else
+  }
+  verbatim(gnuace, bottom) {
+    endif
+  }
+
   Source_Files {
     Removals.cpp
   }
@@ -84,6 +240,19 @@ project(*Removals): aceexe {
 
 project(*Suspended_Removals): aceexe {                                
   exename = suspended_removals
+
+  verbatim(gnuace, top) {
+    ifneq ($(MAKE),)
+    include $(ACE_ROOT)/include/makeinclude/macros.GNU
+    TARGETS_NESTED := $(TARGETS_NESTED:.nested=)
+    $(TARGETS_NESTED):
+    "	@echo suspended_removals will only build on Windows"
+    else
+  }
+  verbatim(gnuace, bottom) {
+    endif
+  }
+
   Source_Files {
     Suspended_Removals.cpp
   }
@@ -91,6 +260,19 @@ project(*Suspended_Removals): aceexe {
 
 project(*Talker): aceexe {    
   exename = talker                            
+
+  verbatim(gnuace, top) {
+    ifneq ($(MAKE),)
+    include $(ACE_ROOT)/include/makeinclude/macros.GNU
+    TARGETS_NESTED := $(TARGETS_NESTED:.nested=)
+    $(TARGETS_NESTED):
+    "	@echo talker will only build on Windows"
+    else
+  }
+  verbatim(gnuace, bottom) {
+    endif
+  }
+
   Source_Files {
     Talker.cpp
   }
@@ -98,6 +280,19 @@ project(*Talker): aceexe {
 
 project(*Timeouts): aceexe {                                
   exename = timeouts
+
+  verbatim(gnuace, top) {
+    ifneq ($(MAKE),)
+    include $(ACE_ROOT)/include/makeinclude/macros.GNU
+    TARGETS_NESTED := $(TARGETS_NESTED:.nested=)
+    $(TARGETS_NESTED):
+    "	@echo timeouts will only build on Windows"
+    else
+  }
+  verbatim(gnuace, bottom) {
+    endif
+  }
+
   Source_Files {
     Timeouts.cpp
   }
@@ -105,6 +300,19 @@ project(*Timeouts): aceexe {
 
 project(*Window_Messages): aceexe {                                
   exename = window_messages
+
+  verbatim(gnuace, top) {
+    ifneq ($(MAKE),)
+    include $(ACE_ROOT)/include/makeinclude/macros.GNU
+    TARGETS_NESTED := $(TARGETS_NESTED:.nested=)
+    $(TARGETS_NESTED):
+    "	@echo window_messages will only build on Windows"
+    else
+  }
+  verbatim(gnuace, bottom) {
+    endif
+  }
+
   Source_Files {
     Window_Messages.cpp
   }

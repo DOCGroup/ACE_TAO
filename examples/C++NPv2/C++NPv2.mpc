@@ -128,6 +128,19 @@ project(*TPLS) : acelib {
 
 project(*WFMO_Reactor_Logging_Server) : aceexe {
   exename = wfmo_reactor_logging_server
+
+  verbatim(gnuace, top) {
+    ifneq ($(MAKE),)
+    include $(ACE_ROOT)/include/makeinclude/macros.GNU
+    TARGETS_NESTED := $(TARGETS_NESTED:.nested=)
+    $(TARGETS_NESTED):
+    "	@echo wfmo_reactor_logging_server will only build on Windows"
+    else
+  }
+  verbatim(gnuace, bottom) {
+    endif
+  }
+
   Source_Files {
     Logging_Acceptor.cpp
     Logging_Event_Handler.cpp
