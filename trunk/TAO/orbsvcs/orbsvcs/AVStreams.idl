@@ -1,3 +1,5 @@
+// -*-c++-*-
+
 // $Id$
 
 // IDL for Control and Management of Audio/Video Streams
@@ -9,7 +11,7 @@ module AVStreams{
 
   struct QoS{
     string QoSType;
-    PropertyService::Properties QoSParams;
+    CosPropertyService::Properties QoSParams;
   };
 
   typedef sequence<QoS> streamQoS;
@@ -46,7 +48,7 @@ module AVStreams{
     QoS theQoS;
   };
 
-  typedef PropertyService::Property streamEvent;
+  typedef CosPropertyService::Property streamEvent;
 
   exception notSupported {};
   exception PropertyException {};
@@ -61,7 +63,7 @@ module AVStreams{
   exception QoSRequestFailed{
     string reason;};
 
-  interface Basic_StreamCtrl : PropertyService::PropertySet {
+  interface Basic_StreamCtrl : CosPropertyService::PropertySet {
 
     // Empty flowSpec => apply operation to all flows
     void stop(in flowSpec the_spec) raises (noSuchFlow);
@@ -124,7 +126,7 @@ module AVStreams{
       raises (streamOpFailed);
   };
 
-  interface MCastConfigIf : PropertyService::PropertySet{
+  interface MCastConfigIf : CosPropertyService::PropertySet{
 
     boolean set_peer(
                      in Object peer,
@@ -132,10 +134,9 @@ module AVStreams{
                      in flowSpec the_spec)
       raises (QoSRequestFailed, streamOpFailed);
 
-    void configure(in PropertyService::Property a_configuration);
+    void configure(in CosPropertyService::Property a_configuration);
 
-    void set_initial_configuration(
-                                   in PropertyService::Properties initial);
+    void set_initial_configuration(in CosPropertyService::Properties initial);
 
     // Uses <format_name> standardised by OMG and IETF
     void set_format(in string flowName, in string format_name)
@@ -143,13 +144,13 @@ module AVStreams{
 
     // Note, some of these device params are standardised by OMG
     void set_dev_params(in string flowName,
-                        in PropertyService::Properties new_params)
-      raises(PropertyService::PropertyException,
+                        in CosPropertyService::Properties new_params)
+      raises(CosPropertyService::PropertyException,
              streamOpFailed);
 
   };
 
-  interface StreamEndPoint : PropertyService::PropertySet{
+  interface StreamEndPoint : CosPropertyService::PropertySet{
 
     void stop(in flowSpec the_spec) raises (noSuchFlow);
     void start(in flowSpec the_spec) raises (noSuchFlow);
@@ -222,7 +223,7 @@ module AVStreams{
               QoSRequestFailed, FPError);
   };
 
-  interface VDev : PropertyService::PropertySet{
+  interface VDev : CosPropertyService::PropertySet{
 
     boolean set_peer(
                      in StreamCtrl the_ctrl,
@@ -237,7 +238,7 @@ module AVStreams{
                            in flowSpec the_spec)
       raises (noSuchFlow, QoSRequestFailed, streamOpFailed);
 
-    void configure(in PropertyService::Property the_config_mesg)
+    void configure(in CosPropertyService::Property the_config_mesg)
       raises(PropertyException, streamOpFailed);
 
     // Uses <formatName> standardised by OMG and IETF
@@ -246,7 +247,7 @@ module AVStreams{
 
     // Note, some of these device params are standardised by OMG
     void set_dev_params(in string flowName,
-                        in PropertyService::Properties new_params)
+                        in CosPropertyService::Properties new_params)
       raises(PropertyException, streamOpFailed);
 
     boolean modify_QoS(inout streamQoS the_qos,
@@ -255,7 +256,7 @@ module AVStreams{
 
   };
 
-  interface MMDevice : PropertyService::PropertySet {
+  interface MMDevice : CosPropertyService::PropertySet {
     StreamEndPoint_A create_A(
                               in StreamCtrl the_requester,
                               out VDev the_vdev,
