@@ -1,3 +1,8 @@
+Sat Aug  2 13:55:40 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/Cubit/TAO: Cleaned up some of the formatting so that
+	it is easier to read.
+
 Thu Jul 31 16:19:43 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tao/corba.h: Removed incorrect #include "tao/corba.h" in this
