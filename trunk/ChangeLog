@@ -1,3 +1,11 @@
+Sun Jan 23 18:14:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Reactor/Proactor/test_multiple_loops.cpp:
+        * examples/Shared_Memory/test_SV.cpp:
+        * examples/Smart_Pointers/gadget_test.cpp:
+        * examples/Smart_Pointers/widget_test.cpp:
+        * examples/System_V_IPC/SV_Message_Queues/TMQ_Server.cpp:
+
 Sun Jan 23 15:47:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/OS/Process/process.cpp:
