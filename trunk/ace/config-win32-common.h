@@ -29,10 +29,10 @@
 #define ACE_LACKS_RLIMIT
 
 // Only MSVC 5.0 definitions
-#if (_MSC_VER >= 1100)
+#if (_MSC_VER >= 1100 || __BORLANDC__ >= 0x500)
 #define ACE_HAS_SIG_ATOMIC_T
 #define ACE_HAS_TYPENAME_KEYWORD
-#endif /* _MSC_VER >= 1100 */
+#endif /* _MSC_VER >= 1100 || __BORLANDC__ >= 0x500 */
 
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
@@ -53,7 +53,9 @@
 // Platform supports POSIX O_NONBLOCK semantics.
 //define ACE_HAS_POSIX_NONBLOCK
 
+#if !defined (__BORLANDC__)
 #define ACE_LACKS_MODE_MASKS
+#endif /* __BORLANDC__ */
 #define ACE_LACKS_STRRECVFD
 
 // Compiler/platform has correctly prototyped header files.

@@ -96,7 +96,7 @@ ACE_Log_Record::ACE_Log_Record (void)
 // format.
 
 int
-ACE_Log_Record::print (const char host_name[],
+ACE_Log_Record::print (const char *host_name,
 		       int verbose, 
 		       FILE *fp)
 {

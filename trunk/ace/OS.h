@@ -1905,8 +1905,13 @@ struct utsname
 
 #define ACE_INVALID_SEM_KEY 0
 
+#if defined(__BORLANDC__)
+#define ACE_SEH_TRY try
+#define ACE_SEH_FINALLY catch(...)
+#else
 #define ACE_SEH_TRY __try
 #define ACE_SEH_EXCEPT(X) __except(X)
+#endif /* __BORLANDC__ */
 #define ACE_SEH_FINALLY __finally
 
 // The "null" device on Win32.
@@ -2010,34 +2015,44 @@ PAGE_NOCACHE  */
 #include /**/ <process.h>
 #include /**/ <io.h>
 
+#if defined (__BORLANDC__)
+#define _chdir chdir
+#define _ftime ftime
+#define _access access
+#define _getcwd getcwd
+
+#define _timeb timeb
+
+#define _O_CREAT 			O_CREAT
+#define _O_EXCL 			O_EXCL
+#define _O_TRUNC 			O_TRUNC
+#define _O_TEMPORARY 	0x0800 // see fcntl.h
+#endif /* __BORLANDC__ */
+
 typedef OVERLAPPED ACE_OVERLAPPED;
 typedef DWORD ACE_thread_t;
 typedef HANDLE ACE_hthread_t;
 typedef long pid_t;
 typedef DWORD ACE_thread_key_t;
+#if !defined (__BORLANDC__)
 typedef DWORD nlink_t;
+#endif /* __BORLANDC__ */
 
-// 64-bit quad-word definitions
-#if !defined (_MSC_VER) /* Borland? */
-typedef uint64 ACE_QWORD;
-typedef ACE_QWORD ACE_hrtime_t;
-inline ACE_QWORD ACE_MAKE_QWORD (DWORD lo, DWORD hi) { return uint64 (lo, hi); }
-inline DWORD ACE_LOW_DWORD  (ACE_QWORD q) { return q.LowPart; }
-inline DWORD ACE_HIGH_DWORD (ACE_QWORD q) { return q.HighPart; }
-#else
+// 64-bit quad-word definitions.
 typedef unsigned __int64 ACE_QWORD;
-typedef signed __int64 ACE_hrtime_t;  /* VC++ won't convert unsigned __int64 to double */
-// typedef unsigned __int64 ACE_hrtime_t; /* Why do we need this? */
+// VC++ won't convert unsigned __int64 to double.
+typedef signed __int64 ACE_hrtime_t;  
 inline ACE_QWORD ACE_MAKE_QWORD (DWORD lo, DWORD hi) { return ACE_QWORD (lo) | (ACE_QWORD (hi) << 32); }
 inline DWORD ACE_LOW_DWORD  (ACE_QWORD q) { return (DWORD) q; }
 inline DWORD ACE_HIGH_DWORD (ACE_QWORD q) { return (DWORD) (q >> 32); }
-#endif /* !defined (_MSC_VER) */
 
 // Win32 dummies to help compilation.
 
+#if !defined (__BORLANDC__)
 typedef int mode_t;
 typedef int uid_t;
 typedef int gid_t;
+#endif /* __BORLANDC__ */
 typedef char *caddr_t;
 struct rlimit { };
 struct t_call { };
@@ -2834,8 +2849,12 @@ struct sigaction
 #define EIDRM 0
 #endif /* !EIDRM */
 
+#if !defined (ENOSYS)
+#define ENOSYS EFAULT /* Operation not supported or unknown error. */
+#endif /* !ENOSYS */
+
 #if !defined (ENOTSUP)
-#define ENOTSUP ENOSYS  /* Operation not supported      . */
+#define ENOTSUP ENOSYS  /* Operation not supported. */
 #endif /* !ENOTSUP */
 
 #if !defined (WNOHANG)
@@ -3163,7 +3182,7 @@ struct ACE_Cleanup_Info
   // = TITLE
   //     Hold cleanup information for thread/process
 {
-  ACE_Cleanup_Info (void) : object_ (0), cleanup_hook_ (0), param_ (0) {}
+  ACE_Cleanup_Info (void);
   // Default constructor.
 
   void *object_;
@@ -3932,10 +3951,14 @@ public:
                           size_t len);
   static char *strcat (char *s,
                        const char *t);
-  static char *strchr (const char *s,
+  static char *strchr (char *s,
                        int c);
-  static char *strrchr (const char *s,
+  static char *strrchr (char *s,
                         int c);
+  static const char *strchr (const char *s,
+                             int c);
+  static const char *strrchr (const char *s,
+                              int c);
   static int strcmp (const char *s,
                      const char *t);
   static int strncmp (const char *s,
@@ -3947,8 +3970,10 @@ public:
                         const char *s2);
   static size_t strspn(const char *s1,
                        const char *s2);
-  static char *strstr (const char *s,
+  static char *strstr (char *s,
                        const char *t);
+  static const char *strstr (const char *s,
+                             const char *t);
   static char *strdup (const char *s);
   static size_t strlen (const char *s);
   static char *strncpy (char *s,

@@ -864,7 +864,6 @@ ACE_OS::unlink (const char *path)
 #endif /* VXWORKS */
 }
 
-
 ACE_INLINE char *
 ACE_OS::tempnam (const char *dir, const char *pfx)
 {
@@ -993,13 +992,6 @@ ACE_OS::strcat (char *s, const char *t)
   return ::strcat (s, t);
 }
 
-ACE_INLINE char *
-ACE_OS::strstr (const char *s, const char *t)
-{
-  // ACE_TRACE ("ACE_OS::strstr");
-  return ::strstr (s, t);
-}
-
 ACE_INLINE size_t
 ACE_OS::strspn (const char *s, const char *t)
 {
@@ -1008,17 +1000,45 @@ ACE_OS::strspn (const char *s, const char *t)
 }
 
 ACE_INLINE char *
-ACE_OS::strchr (const char *s, int c)
+ACE_OS::strchr (char *s, int c)
 {
   // ACE_TRACE ("ACE_OS::strchr");
   return ::strchr (s, c);
 }
 
+ACE_INLINE const char *
+ACE_OS::strchr (const char *s, int c)
+{
+  // ACE_TRACE ("ACE_OS::strchr");
+  return (const char *) ::strchr (s, c);
+}
+
+ACE_INLINE const char *
+ACE_OS::strstr (const char *s, const char *t)
+{
+  // ACE_TRACE ("ACE_OS::strstr");
+  return (const char *) ::strstr (s, t);
+}
+
 ACE_INLINE char *
-ACE_OS::strrchr (const char *s, int c)
+ACE_OS::strstr (char *s, const char *t)
+{
+  // ACE_TRACE ("ACE_OS::strstr");
+  return ::strstr (s, t);
+}
+
+ACE_INLINE char *
+ACE_OS::strrchr (char *s, int c)
 {
   // ACE_TRACE ("ACE_OS::strrchr");
   return ::strrchr (s, c);
+}
+
+ACE_INLINE const char *
+ACE_OS::strrchr (const char *s, int c)
+{
+  // ACE_TRACE ("ACE_OS::strrchr");
+  return (const char *) ::strrchr (s, c);
 }
 
 ACE_INLINE int
@@ -1950,10 +1970,11 @@ ACE_OS::sema_init (ACE_sema_t *s, u_int count, int type,
 #if !defined (ACE_LACKS_NAMED_POSIX_SEM)
   if (name)
     {
-      s->name_ = ACE_OS::strdup (name);
-
-      s->sema_ = ::sem_open (s->name_, O_CREAT,
-                             ACE_DEFAULT_FILE_PERMS, count);
+      ACE_ALLOCATOR_RETURN (s->name_, ACE_OS::strdup (name), -1);
+      s->sema_ = ::sem_open (s->name_,
+                             O_CREAT,
+                             ACE_DEFAULT_FILE_PERMS,
+                             count);
       return (int) s->sema_ == -1 ? -1 : 0;
     }
   else
@@ -7575,7 +7596,12 @@ ACE_INLINE wchar_t *
 ACE_OS::strdup (const wchar_t *s)
 {
   // ACE_TRACE ("ACE_OS::strdup");
+#if defined (__BORLANDC__)
+  wchar_t *buffer = (wchar_t *) malloc (strlen (s) * sizeof (wchar_t) + 1);
+  return ::wcscpy (buffer, s);
+#else
   return ::wcsdup (s);
+#endif /* __BORLANDC__ */
 }
 
 ACE_INLINE int
@@ -7692,7 +7718,11 @@ ACE_INLINE int
 ACE_OS::stat (const wchar_t *file, struct stat *stp)
 {
   // ACE_TRACE ("ACE_OS::stat");
+#if defined (__BORLANDC__)
+  ACE_OSCALL_RETURN (::_wstat (file, stp), int, -1);
+#else
   ACE_OSCALL_RETURN (::_wstat (file, (struct _stat *) stp), int, -1);
+#endif /* __BORLANDC__ */
 }
 
 ACE_INLINE int

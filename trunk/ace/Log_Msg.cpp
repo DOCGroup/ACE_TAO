@@ -451,7 +451,9 @@ ACE_Log_Msg::open (const char *prog_name,
       {
         ACE_NO_HEAP_CHECK;
 
-        ACE_Log_Msg::program_name_ = ACE_OS::strdup (prog_name);
+        ACE_ALLOCATOR_RETURN (ACE_Log_Msg::program_name_,
+                              ACE_OS::strdup (prog_name),
+                              -1);
       }
     }
 
@@ -566,7 +568,8 @@ ACE_Log_Msg::log (const char *format_str,
   int abort_prog = 0;
   int exit_value = 0;
   int result = 0;
-  char *format = ACE_OS::strdup (format_str);
+  char *format;
+  ACE_ALLOCATOR_RETURN (format, ACE_OS::strdup (format_str), -1);
   char *save_p = format; // Remember pointer for ACE_OS::free()
 
   if (format == 0)
@@ -1163,11 +1166,11 @@ ACE_Log_Msg::local_host (const char *s)
   if (s)
     {
       ACE_OS::free ((void *) ACE_Log_Msg::local_host_);
-          {
-                  ACE_NO_HEAP_CHECK;
+      {
+        ACE_NO_HEAP_CHECK;
 
-              ACE_Log_Msg::local_host_ = ACE_OS::strdup (s);
-          }
+        ACE_ALLOCATOR (ACE_Log_Msg::local_host_, ACE_OS::strdup (s));
+      }
     }
 }
 

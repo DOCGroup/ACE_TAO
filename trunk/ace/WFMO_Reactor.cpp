@@ -1394,7 +1394,7 @@ ACE_WFMO_Reactor_Notify::notify (ACE_Event_Handler *eh,
   if (eh != 0)
     {
       ACE_Message_Block *mb = 0;
-      ACE_NEW_RETURN (mb, ACE_Message_Block (sizeof ACE_Notification_Buffer), -1);
+      ACE_NEW_RETURN (mb, ACE_Message_Block (sizeof (ACE_Notification_Buffer)), -1);
 
       ACE_Notification_Buffer *buffer = 
 	(ACE_Notification_Buffer *) mb->base ();

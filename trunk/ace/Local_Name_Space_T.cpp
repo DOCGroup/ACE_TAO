@@ -556,12 +556,17 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_types_i (ACE_PWSTRING_SET &
   
   // Check for wildcard case first.
   if (ACE_OS::strcmp ("", pattern_rep) == 0)
-    compiled_regexp = ACE_OS::strdup ("");
+    ACE_ALLOCATOR_RETURN (compiled_regexp,
+                          ACE_OS::strdup (""),
+                          -1);
   else 
-    // Compile the regular expression (the 0's cause ACE_OS::compile to allocate space).
+    // Compile the regular expression (the 0's cause ACE_OS::compile
+    // to allocate space).
 #if defined (ACE_HAS_REGEX)
     compiled_regexp = ACE_OS::compile (pattern_rep, 0, 0);
-#else /* If we don't have regular expressions just use the pattern directly. */
+#else 
+  // If we don't have regular expressions just use the pattern
+  // directly.
   compiled_regexp = pattern_rep;
 #endif /* ACE_HAS_REGEX */
   
@@ -574,10 +579,13 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_types_i (ACE_PWSTRING_SET &
       // Get the type
       const char *type = map_entry->int_id_.type ();
       
-      if (ACE_OS::strcmp ("", pattern_rep) == 0 // Everything matches the wildcard.
+      // Everything matches the wildcard.
+      if (ACE_OS::strcmp ("", pattern_rep) == 0 
 #if defined (ACE_HAS_REGEX)
 	  || ACE_OS::step (type, compiled_regexp) != 0)
-#else /* If we don't have regular expressions just use strstr() for substring matching. */
+#else
+        // If we don't have regular expressions just use strstr() for
+        // substring matching.
 	|| ACE_OS::strstr (type, compiled_regexp) != 0)
 #endif /* ACE_HAS_REGEX */
 
@@ -603,7 +611,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_types_i (ACE_PWSTRING_SET &
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int 
 ACE_Local_Name_Space <ACE_MEM_POOL_2, ACE_LOCK>::list_name_entries_i (ACE_BINDING_SET &set,
-                                                                  const ACE_WString &pattern)
+                                                                      const ACE_WString &pattern)
 {
   ACE_TRACE ("ACE_Local_Name_Space::list_name_entries");
   ACE_READ_GUARD_RETURN (ACE_RW_Process_Mutex, ace_mon, *this->lock_, -1);
