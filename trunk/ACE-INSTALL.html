@@ -684,7 +684,7 @@ the STL fixes.
   <LI> Create a directory, e.g., C:\ACE, and copy all of the ACE
       distribution into it.  This directory will be referred to as
       ACE_ROOT in the rest of this discussion.<BR><BR>
-  <LI> Create a file called config.h in the ACE_ROOT\ace directory
+  <LI> Create a file called config.h in the ACE_ROOT\ace directory 
       that contains: <BR>
       <BR>
       <CODE>#include "ace/config-win32.h"</CODE><BR>
@@ -713,6 +713,13 @@ the STL fixes.
       <CODE>#define ACE_HAS_STANDARD_CPP_LIBRARY 1</CODE><BR>
       <BR>
       before the #include statement in ACE_ROOT\ace\config.h.<BR>
+      <br>
+      If ACE will be used with MFC programs, also add the following to
+      your <code>config.h</code> file.  Notice that ACE will use
+      CWinThread to spawn new threads if this is defined.<br>
+      <br>
+      <code>#define ACE_HAS_MFC 1</code><br>
+      <br>
       If you are building for Windows CE, you need to add the line <BR>
       <br>
       <code>#define ACE_HAS_WINCE</code>
