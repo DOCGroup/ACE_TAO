@@ -158,6 +158,12 @@ ACE_InputCDR::to_wstring::to_wstring (ACE_CDR::WChar *&ws,
 {
 }
 
+ACE_INLINE
+ACE_InputCDR::Transfer_Contents::Transfer_Contents (ACE_InputCDR &rhs)
+  :  rhs_ (rhs)
+{
+}
+
 // ****************************************************************
 
 ACE_INLINE

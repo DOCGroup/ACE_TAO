@@ -585,6 +585,18 @@ public:
                 ACE_Allocator* data_block_allocator = 0);
   // Create an input CDR from an output CDR.
 
+  struct ACE_Export Transfer_Contents
+  {
+    // Helper class to transfer the contents from one input CDR to
+    // another without requiring any extra memory allocations, data
+    // copies or too many temporaries.
+    Transfer_Contents (ACE_InputCDR &rhs);
+    
+    ACE_InputCDR &rhs_;
+  };
+  ACE_InputCDR (Transfer_Contents rhs);
+  // Transfer the contents from <rhs> to a new CDR
+
   ~ACE_InputCDR (void);
   // Destructor
 
@@ -617,7 +629,7 @@ public:
 
   struct ACE_Export to_string
   {
-    to_string (ACE_CDR::Char *&s, 
+    to_string (ACE_CDR::Char *&s,
                ACE_CDR::ULong b);
     ACE_CDR::Char *&val_;
     ACE_CDR::ULong bound_;

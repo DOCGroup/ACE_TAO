@@ -349,6 +349,8 @@ public:
   // Get the data block.
   void data_block (ACE_Data_Block *);
   // Set the data block (releasing the original one).
+  ACE_Data_Block *replace_data_block (ACE_Data_Block*);
+  // Set the data block (returning the original one).
 
   // = The continuation field chains together composite messages.
   ACE_Message_Block *cont (void) const;
