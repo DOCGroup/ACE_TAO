@@ -14,7 +14,7 @@ IDLFILES = \
 	$(IDLDIR)\Security.idl \
 	$(IDLDIR)\SecurityLevel1.idl \
 	$(IDLDIR)\SecurityLevel2.idl \
-	$(IDLDIR)\SecurityReplaceable.idl
+        $(IDLDIR)\SecurityReplaceable.idl
 
 OBJFILES = \
 	$(OBJDIR)\SecurityC.obj	\
@@ -75,4 +75,7 @@ $(IDLDIR)\SecurityLevel2C.cpp: $(IDLDIR)\SecurityLevel2.idl
 	$(TAO_IDL) $**
 
 $(IDLDIR)\SecurityLevel2S.cpp: $(IDLDIR)\SecurityLevel2.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\SecurityReplaceableC.cpp: $(IDLDIR)\SecurityReplaceable.idl
 	$(TAO_IDL) $**
