@@ -31,8 +31,15 @@
 
 #include "ace/Service_Config.h"
 
+
 class TAO_Acceptor;
 class TAO_Connector;
+
+namespace CSIIOP
+{
+  struct TLS_SEC_TRANS;
+}
+
 
 /**
  * @class TAO_SSLIOP_Protocol_Factory
@@ -53,13 +60,10 @@ public:
   virtual int init (int argc, char* argv[]);
   // Dynamic linking hook
 
-  /// Create and register the SSLIOP ORB initializer.
-  int register_orb_initializer (void);
-
-  virtual int match_prefix (const ACE_CString &prefix);
+  virtual int match_prefix (const ACE_CString & prefix);
   // Verify prefix is a match
 
-  virtual const char *prefix (void) const;
+  virtual const char * prefix (void) const;
   // Returns the prefix used by the protocol.
 
   virtual char options_delimiter (void) const;
@@ -67,16 +71,18 @@ public:
   // where its options begin.
 
   // = Check Protocol_Factory.h for a description of these methods.
-  virtual TAO_Acceptor  *make_acceptor (void);
-  virtual TAO_Connector *make_connector  (void);
+  virtual TAO_Acceptor  * make_acceptor (void);
+  virtual TAO_Connector * make_connector  (void);
   virtual int requires_explicit_endpoint (void) const;
 
 private:
 
-  /// Changing the version number can be used to provide backwards
-  /// compatibility with old clients.
-  int major_;
-  int minor_;
+  /// Create and register the SSLIOP ORB initializer.
+  int register_orb_initializer (
+    CSIIOP::AssociationOptions csiv2_target_supports,
+    CSIIOP::AssociationOptions csiv2_target_requires);
+
+private:
 
   /// Default quality-of-protection settings for the SSLIOP pluggable
   /// protocol.
@@ -89,6 +95,14 @@ private:
    * handshake.
    */
   ACE_Time_Value timeout_;
+
+  /// The SSLIOP-specific CSIv2 transport mechanism component.
+  /**
+   * This SSLIOP-specific structure is embedded in the CSIv2 transport
+   * mechanism list of the @c CSIIOP::CompoundSecMechList IOR tagged
+   * component.
+   */
+  CSIIOP::TLS_SEC_TRANS * csiv2_component_;
 
 };
 

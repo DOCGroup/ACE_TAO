@@ -31,8 +31,8 @@
 #include "SSLIOP_Accept_Strategy.h"
 
 
-#include "orbsvcs/SSLIOPC.h"
-
+#include "orbsvcs/SSLIOPC.h"  /* CSIv1 */
+#include "orbsvcs/CSIIOPC.h"  /* CSIv2 */
 
 
 /**
@@ -82,8 +82,12 @@ public:
   virtual int is_collocated (const TAO_Endpoint* endpoint);
   //@}
 
-  /// Retrieve the SSLIOP::SSL component associated with the endpoints
-  /// set up by this acceptor.
+  /// Retrieve the CSIv1 SSLIOP::SSL component associated with the
+  /// endpoints set up by this acceptor.
+  const SSLIOP::SSL &ssl_component (void) const;
+
+  /// Retrieve the CSIv2 CSIIOP::TLS_SEC_TRANS component associated with
+  /// the endpoints set up by this acceptor.
   const SSLIOP::SSL &ssl_component (void) const;
 
 private:
@@ -129,12 +133,18 @@ private:
   TAO_SSLIOP_CONCURRENCY_STRATEGY *concurrency_strategy_;
   TAO_SSLIOP_ACCEPT_STRATEGY *accept_strategy_;
 
-  /// The SSL component.
+  /// The CSIv1 SSL component.
   /**
    * This is the SSLIOP endpoint-specific tagged component that is
    * embedded in a given IOR.
    */
   SSLIOP::SSL ssl_component_;
+
+  /// The SSLIOP CSIv2 tagged component.
+  /**
+   *
+   */
+  CSIIOP::TLS_SEC_TRANS csiv2_component_;
 
   /// State that will be passed to each SSLIOP connection handler upon
   /// creation.

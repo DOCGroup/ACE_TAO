@@ -1,26 +1,34 @@
-// -*- C++ -*-
-
 #include "SSLIOP_ORBInitializer.h"
-#include "SSLIOP_Vault.h"
 
-#include "tao/debug.h"
 
 ACE_RCSID (TAO_SSLIOP,
            SSLIOP_ORBInitializer,
            "$Id$")
 
+
+#include "SSLIOP_Vault.h"
+
 #include "SSLIOP_Current.h"
 #include "SSLIOP_Invocation_Interceptor.h"
-#include "orbsvcs/SSLIOPC.h"
+#include "SSLIOP_IORInterceptor.h"
 
 #include "orbsvcs/Security/Security_Current.h"
 #include "orbsvcs/Security/PrincipalAuthenticator.h"
 
+#include "orbsvcs/SSLIOPC.h"
+#include "orbsvcs/CSIIOPC.h"
+
 #include "tao/Exception.h"
 #include "tao/ORBInitInfo.h"
+#include "tao/debug.h"
 
-TAO_SSLIOP_ORBInitializer::TAO_SSLIOP_ORBInitializer (Security::QOP qop)
-  : qop_ (qop)
+TAO_SSLIOP_ORBInitializer::TAO_SSLIOP_ORBInitializer (
+  Security::QOP qop,
+  CSIIOP::AssociationOptions csiv2_target_supports,
+  CSIIOP::AssociationOptions csiv2_target_requires)
+  : qop_ (qop),
+    csiv2_target_supports_ (csiv2_target_supports),
+    csiv2_target_requires_ (csiv2_target_requires)
 {
 }
 
@@ -129,6 +137,38 @@ TAO_SSLIOP_ORBInitializer::post_init (
   // with the ORB.
   info->add_server_request_interceptor (si_interceptor.in ()
                                         ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  TAO_ORBInitInfo_var tao_info =
+    TAO_ORBInitInfo::_narrow (info
+                              ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  if (CORBA::is_nil (tao_info.in ()))
+    ACE_THROW (CORBA::INV_OBJREF ());
+
+  TAO_ORB_Core * orb_core = tao_info->orb_core ();
+
+  // Create the SSLIOP IOR interceptor.
+  PortableInterceptor::IORInterceptor_ptr ii =
+    PortableInterceptor::IORInterceptor::_nil ();
+  ACE_NEW_THROW_EX (ii,
+                    TAO::SSLIOP::IORInterceptor (orb_core,
+                                                 this->csiv2_target_supports_,
+                                                 this->csiv2_target_requires_),
+                    CORBA::NO_MEMORY (
+                      CORBA::SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        ENOMEM),
+                      CORBA::COMPLETED_NO));
+  ACE_CHECK;
+
+  PortableInterceptor::IORInterceptor_var ior_interceptor =
+    ii;
+
+  // Register the SSLIOP IORInterceptor.
+  info->add_ior_interceptor (ior_interceptor.in ()
+                             ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Register the SSLIOP-specific vault with the
