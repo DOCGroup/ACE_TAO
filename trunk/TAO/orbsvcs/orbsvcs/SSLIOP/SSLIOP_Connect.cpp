@@ -375,7 +375,8 @@ TAO_SSLIOP_Client_Connection_Handler (ACE_Thread_Manager *t)
 TAO_SSLIOP_Client_Connection_Handler::
 TAO_SSLIOP_Client_Connection_Handler (ACE_Thread_Manager *t,
                                       TAO_ORB_Core* orb_core,
-                                      CORBA::Boolean /* flag */)
+                                      CORBA::Boolean /* flag */,
+                                      void *arg)
   : TAO_SSLIOP_Handler_Base (t),
     transport_ (this, orb_core),
     orb_core_ (orb_core),

@@ -335,6 +335,7 @@ TAO_SSLIOP_Connect_Creation_Strategy::make_svc_handler
                     TAO_SSLIOP_Client_Connection_Handler
                     (this->orb_core_->thr_mgr (),
                      this->orb_core_,
+                     0,
                      this->arg_),
                     -1);
   return 0;
