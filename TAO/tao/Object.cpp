@@ -165,7 +165,7 @@ CORBA_Object::_hash (CORBA::ULong maximum,
 CORBA::Boolean
 CORBA_Object::_is_equivalent (CORBA_Object_ptr other_obj,
                               CORBA::Environment &)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+    ACE_THROW_SPEC (())
 {
   if (other_obj == this)
     {
