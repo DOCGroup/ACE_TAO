@@ -1447,23 +1447,27 @@ ACE_OS::cleanup_tss (const u_int main_thread)
   ACE_TSS_Cleanup::instance ()->exit (0);
 #endif /* ACE_HAS_TSS_EMULATION */
 
-if (main_thread)
- {
+  if (main_thread)
+    {
 #if !defined (ACE_HAS_TSS_EMULATION)
   // Just close the ACE_Log_Msg for the current (which should be main) thread.
   // We don't have TSS emulation; if there's native TSS, it should call its
   // destructors when the main thread exits.
-  ACE_Log_Msg::close ();
+      ACE_Log_Msg::close ();
 #endif /* ! ACE_HAS_TSS_EMULATION */
 
 #if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION)
-  // Remove all TSS_Info table entries.
-  ACE_TSS_Cleanup::instance ()->free_all_key_left ();
-  // Finally, free up the ACE_TSS_Cleanup instance.  This method gets
-  // called by the ACE_Object_Manager.
-  delete ACE_TSS_Cleanup::instance ();
+      // Remove all TSS_Info table entries.
+      ACE_TSS_Cleanup::instance ()->free_all_key_left ();
+      // Finally, free up the ACE_TSS_Cleanup instance.  This method gets
+      // called by the ACE_Object_Manager.
+      delete ACE_TSS_Cleanup::instance ();
 #endif /* WIN32 || ACE_HAS_TSS_EMULATION */
- }
+    }
+#if defined (ACE_WIN32)
+  else
+    ACE_TSS_Cleanup::instance ()->exit (0);
+#endif /* ACE_WIN32 */
 }
 
 void
