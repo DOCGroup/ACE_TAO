@@ -541,6 +541,11 @@ public:
   void fini (void);
   // Do final cleanup just before process exits.
 
+  void create_uses_multiple_stuff (AST_Component *c,
+                                   AST_Component::port_description &pd);
+  // We must do this in the front end since the executor
+  // mapping IDL will have these data types.
+
 private:
   // Data
   UTL_ScopeStack             pd_scopes;              // Store scopes stack

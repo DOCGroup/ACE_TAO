@@ -1,3 +1,23 @@
+Wed Nov 17 17:33:23 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+        * TAO_IDL/be_include/be_visitor_ccm_pre_proc.h:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_global.cpp:
+        
+          Reinstated changes of
+          
+          Tue May 11 22:28:45 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+ 
+          that were reverted in
+          
+          Sun Aug 15 18:16:00 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+          due to a misunderstanding about the appearance of IDL3
+          "equivalent IDL" in spec-defined executor IDL.
+
 Wed Nov 17 12:54:01 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* docs/index.html:

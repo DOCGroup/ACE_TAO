@@ -4517,6 +4517,14 @@ uses_decl :
                   ud.impl = interface_type;
                   ud.is_multiple = $2;
                   c->uses ().enqueue_tail (ud);
+                  
+                  if (ud.is_multiple == I_TRUE)
+                    {
+                      // These datatypes must be created in the
+                      // front end so they can be looked up
+                      // when compiling the generated executor IDL.
+                      idl_global->create_uses_multiple_stuff (c, ud);
+                    }
                 }
             }
         }
