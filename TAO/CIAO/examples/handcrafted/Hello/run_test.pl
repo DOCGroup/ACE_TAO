@@ -24,15 +24,15 @@ $cs_args = "-ORBInitRef NameService=file://$nsior -i config -o $hfior";
 # Client program command line arguments
 $cl_args = "-ORBInitRef HomeFinder=file://$hfior";
 
-# Naming_Service process
+# Naming_Service process definition
 $NS = new PerlACE::Process ("../../../../orbsvcs/Naming_Service/Naming_Service",
                             "$ns_args");
 
-# Component Server process
+# Component Server process definition
 $CS = new PerlACE::Process ("../../../../../bin/Simple_Component_Server",
                             "$cs_args");
 
-# Client process
+# Client process definition
 $CL = new PerlACE::Process ("client",
                             "$cl_args");
 
