@@ -22,7 +22,9 @@ sub name_server
 {
     my $args = " -o $nsior";
     my $prog = 
-    print ("\nNaming_Service: $args\n");
+      print ("\nNaming_Service: $args\n");
+
+    unlink $nsior;
     $NS = Process::Create ("..".$DIR_SEPARATOR
 			   ."..".$DIR_SEPARATOR
 			   ."Naming_Service".$DIR_SEPARATOR
@@ -77,4 +79,3 @@ $NS->Terminate (); if ($NS->TimedWait (5) == -1) {
 }
 
 exit $status;
-

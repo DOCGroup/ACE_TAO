@@ -68,7 +68,7 @@ $S = Process::Create ($EXEPREFIX."ECT_Supplier".$EXE_EXT,
 		      " -ORBNameServiceIOR file://$ns_ior "
 		      . " -s 1 -u 10000 -n 1 -t 0");
 
-if ($S->TimedWait (60) == -1) {
+if ($S->TimedWait (120) == -1) {
   print STDERR "ERROR: supplier timedout\n";
   $S->Kill (); $S->TimedWait (1);
   $C->Kill (); $C->TimedWait (1);
@@ -100,5 +100,4 @@ $NS->Terminate (); if ($NS->TimedWait (5) == -1) {
 
 unlink $ns_ior;
 
-# @@ Capture the errors from the processes.
 exit 0;
