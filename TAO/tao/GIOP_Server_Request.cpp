@@ -301,7 +301,6 @@ GIOP_ServerRequest::arguments (CORBA::NVList_ptr &list,
       // Stick it into the Any. It gets duplicated there.
       any->_tao_replace (tc.in (),
                          cdr,
-                         0,
                          env);
 
       // Now we can release the original.
