@@ -1,72 +1,77 @@
+Wed May 27 12:53:01 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/tests/EC_Multiple/Makefile: ran make depend to
+          remove dependency on tao/Timeprobe.i.
+
 Tue May 26 22:25:23 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/ORB.cpp (CORBA_ORB): Never assume a pointer will be
- 	  initialized to null.
+        * tao/ORB.cpp (CORBA_ORB): Never assume a pointer will be
+          initialized to null.
 
 Tue May 26 21:32:03 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* tao/GIOP.cpp (recv_request): Changed CDR::grow() to take an
- 	  ACE_Message_Block * rather than an ACE_Message_Block *& since we
- 	  don't seem to change the message block pointer in the method.
-  	  Thanks to Nanbor for reporting this.
+        * tao/GIOP.cpp (recv_request): Changed CDR::grow() to take an
+          ACE_Message_Block * rather than an ACE_Message_Block *& since we
+          don't seem to change the message block pointer in the method.
+          Thanks to Nanbor for reporting this.
 
-	* orbsvcs/orbsvcs/Naming/CosNaming_i.cpp (new_context): Add a
- 	  couple of calls to the new init() method in the appropriate
- 	  places.
+        * orbsvcs/orbsvcs/Naming/CosNaming_i.cpp (new_context): Add a
+          couple of calls to the new init() method in the appropriate
+          places.
 
-	* orbsvcs/orbsvcs/Naming/CosNaming_i: Changed the implementation
- 	  so there's now an init() method that must be called before using
- 	  the NamingContext.  This is necessary to make sure we don't try
- 	  to initialize the lock_ until the ORB has been initialized.
+        * orbsvcs/orbsvcs/Naming/CosNaming_i: Changed the implementation
+          so there's now an init() method that must be called before using
+          the NamingContext.  This is necessary to make sure we don't try
+          to initialize the lock_ until the ORB has been initialized.
 
-	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp: Changed the
- 	  implementation to call init() on the NamingContext
- 	  implementation.
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp: Changed the
+          implementation to call init() on the NamingContext
+          implementation.
 
 Tue May 26 20:22:12 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/CDR.h: 
-	* tao/CDR.i: 
-	* tao/CDR.cpp: 
-	* tao/GIOP.cpp: 
-	  I was able to remove a memory allocation on the client side by
-	  playing some tricks with the underlying Data_Block.
+        * tao/CDR.h:
+        * tao/CDR.i:
+        * tao/CDR.cpp:
+        * tao/GIOP.cpp:
+          I was able to remove a memory allocation on the client side by
+          playing some tricks with the underlying Data_Block.
 
-	* tests/CDR/basic_types.cpp: 
-	  The ORB was destroyed before the test was run, hence all the
-	  Typecodes were invalid.
+        * tests/CDR/basic_types.cpp:
+          The ORB was destroyed before the test was run, hence all the
+          Typecodes were invalid.
 
-	* tests/Param_Test/tests.cpp: 
-	  Disabled several DII tests because they will not compile.
+        * tests/Param_Test/tests.cpp:
+          Disabled several DII tests because they will not compile.
 
 Tue May 26 18:39:11 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/ORB.h: 
-	* tao/ORB.cpp: 
-	* tao/Server_Strategy_Factory.h: 
-	* tao/Server_Strategy_Factory.cpp: 
-	* tao/default_server.h: 
-	* tao/default_server.cpp: 
-	  Added options to control the kind of locking in the ORB event
-	  loop (i.e. ORB::run), by default it acquires no locks.
+        * tao/ORB.h:
+        * tao/ORB.cpp:
+        * tao/Server_Strategy_Factory.h:
+        * tao/Server_Strategy_Factory.cpp:
+        * tao/default_server.h:
+        * tao/default_server.cpp:
+          Added options to control the kind of locking in the ORB event
+          loop (i.e. ORB::run), by default it acquires no locks.
 
-	* tao/Object.h: 
-	* tao/Object.i: 
-	  All the objects in the ORB that are reference counted do *not*
-	  have locks to protect the count.
+        * tao/Object.h:
+        * tao/Object.i:
+          All the objects in the ORB that are reference counted do *not*
+          have locks to protect the count.
 
 Tue May 26 16:24:41 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Server_Request.h: 
-	* tao/Server_Request.cpp: 
-	  The Server Request does not need to copy the operation name from
-	  the CDR stream. In TAO there is no translation for strings and
-	  the underlying stream survives during all the invocation.
-	  Fortunately the strings in CDR are zero terminated.
+        * tao/Server_Request.h:
+        * tao/Server_Request.cpp:
+          The Server Request does not need to copy the operation name from
+          the CDR stream. In TAO there is no translation for strings and
+          the underlying stream survives during all the invocation.
+          Fortunately the strings in CDR are zero terminated.
 
 Tue May 26 12:40:30 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* tao/ORB.cpp: We seem to have an extra comma here...
+        * tao/ORB.cpp: We seem to have an extra comma here...
 
 Tue May 26 10:32:12 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
