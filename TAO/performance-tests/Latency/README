@@ -10,7 +10,7 @@ READMEs on how to run the following performance tests:
 
           A latency test for AMI requests
 
-	. AMH
+        . AMH_Single_Threaded
 
 	  Latency tests for AMH-enabled applications
 
