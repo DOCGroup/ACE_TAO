@@ -3,7 +3,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//     TAO/tests/POA/On_Demand_Loading
+//     TAO/examples/POA/On_Demand_Loading
 //
 // = FILENAME
 //     Servant_Activator.cpp
