@@ -21,7 +21,8 @@ $dot_path = '/usr/local/bin';
              'ace_man',
              'ace_rmcast',
              'ace_ssl',
-             'ace_qos');
+             'ace_qos',
+             'acexml');
 @TAO_DOCS = ('tao'
              ,'tao_portableserver'
              ,'tao_rtportableserver'
