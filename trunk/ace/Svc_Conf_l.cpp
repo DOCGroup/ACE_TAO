@@ -793,7 +793,7 @@ case YY_STATE_EOF(PARAMETERS):
 case YY_STATE_EOF(NORMAL):
 # line 68 "Svc_Conf.l"
 { YY_NEW_FILE; ace_yyterminate(); }
-	YY_BREAK
+	/* YY_BREAK */
 case 25:
 YY_USER_ACTION
 # line 69 "Svc_Conf.l"
