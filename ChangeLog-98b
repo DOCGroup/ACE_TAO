@@ -4,6 +4,11 @@ Fri Dec 11 08:51:07 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * VERSION: added ace-users/comp.soft-sys.ace info.
 
+        * include/makeinclude/platform_osf1_4.0.GNU: added suppression
+          of warning 1136, conversion to integral type of smaller size
+          could lose data.  cxx V6.1-029 spews out a bunch of them,
+          otherwise.
+
 1998-12-11  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/Message_Queue.{h,i,cpp} (ACE_Message_Queue_Base): Added a
