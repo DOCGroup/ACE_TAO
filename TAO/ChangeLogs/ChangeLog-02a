@@ -1,9 +1,24 @@
+Mon May 15 11:08:52 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * docs/tutorials/Quoter/RT_Event_Service/Makefile:
+        * orbsvcs/CosEvent_Service/Makefile:
+        * orbsvcs/Event_Service/Makefile:
+        * orbsvcs/examples/RtEC/MCast/Makefile:
+        * orbsvcs/examples/RtEC/Simple/Makefile:
+        * orbsvcs/tests/CosEvent/Basic/Makefile:
+        * orbsvcs/tests/CosEvent/lib/Makefile:
+        * orbsvcs/tests/EC_Throughput/Makefile:
+        * orbsvcs/tests/Event/Basic/Makefile:
+        * orbsvcs/tests/Event/lib/Makefile:
+          I fixed the compilation guards for these Makefiles.   I forgot
+          to do so when I changed RTEvent for Event2.
+
 Sun May 14 12:43:35 2000  Darrell Brunsch <brunsch@uci.edu>
 
         (On behalf of Christopher Kohlhoff <chris@kohlhoff.com>)
 
         * tao/Makefile.bor:
-          
+
           Updated to reflect latest files. Thanks to Mogens Hansen
           <mogens_h@dk-online.dk>.
 
@@ -11,7 +26,7 @@ Sun May 14 12:43:35 2000  Darrell Brunsch <brunsch@uci.edu>
         * orbsvcs/orbsvcs/DsLogAdmin.bor:
         * orbsvcs/orbsvcs/RTEvent.bor:
         * orbsvcs/orbsvcs/RTSched.bor:
-        
+
           Added TAO_Svc_Utils library for linking.
 
 Sat May 13 23:27:31 2000  Darrell Brunsch <brunsch@uci.edu>
@@ -52,24 +67,24 @@ Sat May 13 23:27:31 2000  Darrell Brunsch <brunsch@uci.edu>
           Release configurations.
 
         * examples/AMI/FL_Callback/FL_Callback.dsw: (added)
-         
+
           There wasn't a dsw file already in this directory.
 
         * tests/AMI/simple_client.dsp: (removed)
-          
+
           Didn't look used anymore, so removed.
 
 Sat May 13 22:30:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* tests/Connection_Purging/run_test.pl: Removed -d debug option by
-	  default.
-	* tests/Connection_Purging/Connection_Purging.cpp: Tweaked the
-	  test to produce a "succees/failure" output and also the
-	  exception which is expected when the handles limit is surpassed 
+        * tests/Connection_Purging/run_test.pl: Removed -d debug option by
+          default.
+        * tests/Connection_Purging/Connection_Purging.cpp: Tweaked the
+          test to produce a "succees/failure" output and also the
+          exception which is expected when the handles limit is surpassed
           is only displayed in the debug mode.
-	* tests/Connection_Purging/README: Added a couple of lines
-	  explaining about the excepted exception.
-		
+        * tests/Connection_Purging/README: Added a couple of lines
+          explaining about the excepted exception.
+
 Sat May 13 12:19:10 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/Policies/Makefile:
@@ -84,43 +99,43 @@ Sat May 13 12:19:10 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 Fri May 12 20:35:25 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* examples/Buffered_Oneways/client.cpp:
-	* examples/Buffered_Oneways/test_i.cpp:
-	* examples/POA/On_Demand_Loading/Servant_Manager.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
-	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
-	* orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.cpp:
-	* orbsvcs/tests/EC_Throughput/ECT_Supplier_Driver.cpp:
-	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
-	* orbsvcs/tests/Event/Basic/Observer.cpp:
-	* orbsvcs/tests/Event/Basic/Random.cpp:
-	* orbsvcs/tests/Event/Basic/Random.h:
-	* orbsvcs/tests/Event/Basic/Shutdown.cpp:
-	* orbsvcs/tests/Event/Basic/Shutdown.h:
-	* orbsvcs/tests/Event/Basic/run_test.pl:
-	* orbsvcs/tests/Trading/TT_Info.cpp:
-	* orbsvcs/tests/Trading/run_test.pl:
-	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp:
-	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.h:
-	* performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl:
-	* tests/CDR/alignment.cpp:
-	* tests/CDR/allocator.cpp:
-	* tests/CDR/basic_types.cpp:
-	* tests/CDR/growth.cpp:
-	* tests/CDR/run_test.pl:
-	* tests/CDR/tc.cpp:
-	* tests/DSI_Gateway/client.cpp:
-	* tests/DSI_Gateway/test_i.cpp:
-	* tests/Faults/ping_i.cpp:
-	* tests/Faults/pong.cpp:
-	* tests/MT_Server/test_i.cpp:
-	* tests/POA/Identity/Identity.cpp:
-	* tests/Timed_Buffered_Oneways/client.cpp:
-	* tests/Timed_Buffered_Oneways/test_i.cpp:
-	  Many tests were too noisy for the auto_compile builds, making it
-	  hard to find real errors.
-	  Cleaned up their output and limited to just enough information
-	  to know what failed when something actually does.
+        * examples/Buffered_Oneways/client.cpp:
+        * examples/Buffered_Oneways/test_i.cpp:
+        * examples/POA/On_Demand_Loading/Servant_Manager.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier_Driver.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
+        * orbsvcs/tests/Event/Basic/Observer.cpp:
+        * orbsvcs/tests/Event/Basic/Random.cpp:
+        * orbsvcs/tests/Event/Basic/Random.h:
+        * orbsvcs/tests/Event/Basic/Shutdown.cpp:
+        * orbsvcs/tests/Event/Basic/Shutdown.h:
+        * orbsvcs/tests/Event/Basic/run_test.pl:
+        * orbsvcs/tests/Trading/TT_Info.cpp:
+        * orbsvcs/tests/Trading/run_test.pl:
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp:
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.h:
+        * performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl:
+        * tests/CDR/alignment.cpp:
+        * tests/CDR/allocator.cpp:
+        * tests/CDR/basic_types.cpp:
+        * tests/CDR/growth.cpp:
+        * tests/CDR/run_test.pl:
+        * tests/CDR/tc.cpp:
+        * tests/DSI_Gateway/client.cpp:
+        * tests/DSI_Gateway/test_i.cpp:
+        * tests/Faults/ping_i.cpp:
+        * tests/Faults/pong.cpp:
+        * tests/MT_Server/test_i.cpp:
+        * tests/POA/Identity/Identity.cpp:
+        * tests/Timed_Buffered_Oneways/client.cpp:
+        * tests/Timed_Buffered_Oneways/test_i.cpp:
+          Many tests were too noisy for the auto_compile builds, making it
+          hard to find real errors.
+          Cleaned up their output and limited to just enough information
+          to know what failed when something actually does.
 
 Fri May 12 16:33:42 2000  Carlos O'Ryan  <coryan@uci.edu>
 

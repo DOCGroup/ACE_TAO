@@ -25,7 +25,7 @@ BIN2 =  \
 TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
 ifeq (NativeCosEvent,$(findstring NativeCosEvent,$(TAO_ORBSVCS)))
   BIN = $(BIN2)
-endif # Event2
+endif # NativeCosEvent
 
 PSRC=$(addsuffix .cpp,$(BIN))
 LDLIBS = -lCECTests -lTAO_CosEvent -lTAO_RTEvent -lTAO_RTSched -lTAO_CosNaming -lTAO_Svc_Utils -lTAO

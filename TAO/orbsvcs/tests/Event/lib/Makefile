@@ -17,7 +17,7 @@ TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
 ifeq (RTEvent,$(findstring RTEvent,$(TAO_ORBSVCS)))
   LIB = $(LIB2)
   SHLIB = $(SHLIB2)
-endif # Event2
+endif # RTEvent
 
 ACE_SHLIBS = -lTAO_RTEvent -lTAO -lACE
 LDLIBS  = -lTAO_RTEvent -lTAO

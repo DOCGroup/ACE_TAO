@@ -33,7 +33,7 @@ BIN2 =   Reconnect \
 TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
 ifeq (RTEvent,$(findstring RTEvent,$(TAO_ORBSVCS)))
   BIN = $(BIN2)
-endif # Event2
+endif # RTEvent
 
 PSRC=$(addsuffix .cpp,$(BIN)) Schedule.cpp
 LDLIBS = -lECTests -lTAO_RTEvent -lTAO_Svc_Utils -lTAO
