@@ -1,3 +1,27 @@
+Fri Aug 24 12:44:45 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/File_IO/: New test to our test suite. This test actually
+	  brought the problem mentioned in bug #1002 to the surface. The
+	  problem was burried in other tests and this test actually
+	  could reproduce the bug every time consistently.
+
+	* tests/File_IO/File_IO.dsw:
+	* tests/File_IO/File_i.h:
+	* tests/File_IO/server.bor:   
+	* tests/File_IO/Makefile:
+	* tests/File_IO/Makefile.bor:
+	* tests/File_IO/client.dsp: 
+	* tests/File_IO/server.cpp:  
+	* tests/File_IO/File.idl:             
+	* tests/File_IO/client.bor:
+	* tests/File_IO/File_i.cpp:
+        * tests/File_IO/README:        
+	* tests/File_IO/client.cpp:  
+	* tests/File_IO/run_test.pl:
+	* tests/File_IO/big.txt:
+	* tests/File_IO/server.dsp: Files for the new test. Thanks to
+	  Jonathan Reis <reis@stentor.com> for providing this test.
+
 Fri Aug 24 08:24:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * examples/simple/time-date/time-date.bor:
