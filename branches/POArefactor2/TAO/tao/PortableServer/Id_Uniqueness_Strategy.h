@@ -61,7 +61,7 @@ namespace TAO
 
       virtual ~Unique_Id_Uniqueness_Strategy (void);
 
-      void strategy_init(TAO_POA *poa);
+      void strategy_init (TAO_POA *poa);
 
       virtual bool validate (PortableServer::Servant servant,
                              int &wait_occurred_restart_call

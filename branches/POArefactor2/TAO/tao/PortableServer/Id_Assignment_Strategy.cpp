@@ -12,12 +12,12 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    Id_Assignment_Strategy::~Id_Assignment_Strategy()
+    Id_Assignment_Strategy::~Id_Assignment_Strategy (void)
     {
     }
 
     void
-    Id_Assignment_Strategy::strategy_init(TAO_POA *poa)
+    Id_Assignment_Strategy::strategy_init (TAO_POA *)
     {
       // dependent on type create the correct strategy.
     }
@@ -27,6 +27,8 @@ namespace TAO
     {
       return sizeof (char);
     }
+
+    //============================================================
 
     User_Id_Assignment_Strategy::~User_Id_Assignment_Strategy()
     {
@@ -52,4 +54,3 @@ namespace TAO
 }
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
-

@@ -40,7 +40,7 @@ namespace TAO
     public:
       virtual ~Activation_Strategy (void) {};
 
-      void strategy_init (TAO_POA *poa)
+      void strategy_init (TAO_POA *)
       {
         // dependent on type create the correct strategy.
       }

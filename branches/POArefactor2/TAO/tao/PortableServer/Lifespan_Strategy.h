@@ -100,6 +100,8 @@ namespace TAO
       virtual
       void notify_shutdown ();
 
+      // @@ Johnny, why can;t use the enum's defined within
+      // PortableServer IDL? Wouldn't they make life much simpler?
       virtual char lifespan_key_type (void)
       {
         return 'T';
@@ -142,6 +144,10 @@ namespace TAO
       /// @name Implementation repository related methods
       //@{
 
+      // @@ Johnny, for the timebeing could you please comment out the
+      //all the ImR related code? I am not sure whether this is the
+      //right place foir these. May be they are. We can get to them
+      //later.
       /// ImplRepo helper method, notify the ImplRepo on startup
       void imr_notify_startup (ACE_ENV_SINGLE_ARG_DECL);
 
@@ -153,6 +159,7 @@ namespace TAO
       ServerObject_i *server_object_;
 
       /// Flag for whether the ImR should be used or not.
+      // @@ Johnny, Can't this be bool?
       int use_imr_;
     };
   } /* namespace Portable_Server */

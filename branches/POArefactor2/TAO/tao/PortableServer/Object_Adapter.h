@@ -21,10 +21,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Key_Adapters.h"
-
-// Active Object Table
-#include "Active_Object_Map.h"
+#include "tao/PortableServer/Key_Adapters.h"
+#include "tao/PortableServer/Active_Object_Map.h"
+#include "tao/PortableServer/poa_macros.h"
 
 #include "tao/Adapter.h"
 #include "tao/Server_Strategy_Factory.h"

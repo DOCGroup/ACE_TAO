@@ -18,7 +18,7 @@ namespace TAO
     }
 
     void
-    Id_Uniqueness_Strategy::strategy_init(TAO_POA *poa)
+    Id_Uniqueness_Strategy::strategy_init (TAO_POA *)
     {
       // dependent on type create the correct strategy.
     }
@@ -37,7 +37,7 @@ namespace TAO
     }
 
     void
-    Unique_Id_Uniqueness_Strategy::strategy_init(TAO_POA *poa)
+    Unique_Id_Uniqueness_Strategy::strategy_init (TAO_POA *poa)
     {
       poa_ = poa;
     }
@@ -88,4 +88,3 @@ namespace TAO
 }
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
-
