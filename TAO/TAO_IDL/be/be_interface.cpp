@@ -36,7 +36,8 @@ ACE_RCSID(be, be_interface, "$Id$")
 be_interface::be_interface (void)
   : skel_count_ (0),
     in_mult_inheritance_ (-1),
-    strategy_ (new be_interface_default_strategy (this))
+    strategy_ (new be_interface_default_strategy (this)),
+    original_interface_ (0)
 {
   this->size_type (be_decl::VARIABLE); // always the case
   this->has_constructor (I_TRUE);      // always the case
@@ -52,7 +53,8 @@ be_interface::be_interface (UTL_ScopedName *n,
     UTL_Scope (AST_Decl::NT_interface),
     skel_count_ (0),
     in_mult_inheritance_ (-1),
-    strategy_ (new be_interface_default_strategy (this))
+    strategy_ (new be_interface_default_strategy (this)),
+    original_interface_ (0)
 {
   this->size_type (be_decl::VARIABLE); // always the case
   this->has_constructor (I_TRUE);      // always the case
@@ -1994,9 +1996,28 @@ be_interface::accept (be_visitor *visitor)
 
 
 TAO_CodeGen::CG_STATE
-be_interface::next_state (TAO_CodeGen::CG_STATE current_state)
+be_interface::next_state (TAO_CodeGen::CG_STATE current_state,
+                          int is_extra_state)
 {
-  return this->strategy_->next_state (current_state); 
+  return this->strategy_->next_state (current_state, is_extra_state); 
+}
+
+int
+be_interface::has_extra_code_generation (TAO_CodeGen::CG_STATE current_state)
+{
+  return this->strategy_->has_extra_code_generation (current_state);
+}
+
+void
+be_interface::original_interface (be_interface *original_interface)
+{
+  this->original_interface_ = original_interface;
+}
+
+be_interface *
+be_interface::original_interface ()
+{
+  return this->original_interface_;
 }
 
 // Narrowing

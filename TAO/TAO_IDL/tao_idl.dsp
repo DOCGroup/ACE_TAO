@@ -2219,6 +2219,10 @@ SOURCE=.\be_include\be_interface_fwd.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\be_include\be_interface_strategy.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\be_include\be_module.h
 # End Source File
 # Begin Source File

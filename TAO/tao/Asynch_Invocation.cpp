@@ -65,25 +65,14 @@ TAO_GIOP_Twoway_Asynch_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
 }
 
 int
-TAO_GIOP_Twoway_Asynch_Invocation::invoke (CORBA::ExceptionList & /*exceptions*/,
-                                           CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException,CORBA::UnknownUserException))
+TAO_GIOP_Twoway_Asynch_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_GIOP_ASYNCH_INVOCATION_INVOKE_START);
 
   return this->invoke_i (ACE_TRY_ENV);
 }
 
-int
-TAO_GIOP_Twoway_Asynch_Invocation::invoke (TAO_Exception_Data * /*excepts*/,
-                                           CORBA::ULong /*except_count*/,
-                                           CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::Exception))
-{
-  TAO_FUNCTION_PP_TIMEPROBE (TAO_GIOP_ASYNCH_INVOCATION_INVOKE_START);
-
-  return this->invoke_i (ACE_TRY_ENV);
-}
 
 int
 TAO_GIOP_Twoway_Asynch_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)

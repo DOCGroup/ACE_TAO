@@ -131,10 +131,7 @@ be_visitor_typecode_defn::visit_type (be_type *node)
   *os << "static const CORBA::Long _oc_";
     
   // Flat name generation.
-  if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_TYPECODE_DEFN)
-    *os << flat_name;
-  else
-    *os << node->flat_name ();
+  *os << node->flat_name ();
 
   *os << "[] =" << be_nl;
   *os << "{" << be_idt << "\n";

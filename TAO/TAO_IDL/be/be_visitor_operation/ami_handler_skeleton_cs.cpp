@@ -82,12 +82,12 @@ be_visitor_operation_ami_handler_skeleton_cs::visit_operation (be_operation *nod
 
   // Get the scope name.
   be_decl *parent = be_scope::narrow_from_scope (node->defined_in ())->decl ();
-  if (parent == 0)
+  if (!parent)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_operation_ami_handler_skeleton_cs::"
                          "visit_operation - "
-                         "scopeless operation :-<\n"),
+                         "node information not sufficient :-<\n"),
                         -1);
     }
 
@@ -153,8 +153,6 @@ be_visitor_operation_ami_handler_skeleton_cs::visit_operation (be_operation *nod
   *os << parent->full_name ();
   *os << "::_narrow(_tao_reply_handler, ACE_TRY_ENV);" << be_uidt_nl;
 
-  // @@ Michael: We do not activate this right now,
-  //             as long as we do the major changes.
 #if 0
   *os << "ACE_CHECK;" << be_nl << be_nl
       << "// Exception handling" << be_nl
@@ -162,7 +160,7 @@ be_visitor_operation_ami_handler_skeleton_cs::visit_operation (be_operation *nod
       << "{" << be_idt_nl
       << "case TAO_AMI_REPLY_OK:" << be_idt_nl
       << "{\n";
-#endif
+#endif /* 0 */
 
   // declare variables for arguments
   ctx = *this->ctx_;
@@ -189,8 +187,7 @@ be_visitor_operation_ami_handler_skeleton_cs::visit_operation (be_operation *nod
                          "gen_demarshal_params failed\n"),
                         -1);
     }
-  // @@ Michael:
-  // We do not activate this right now.
+
 #if 0
   os->indent ();
   *os << be_uidt_nl
@@ -200,9 +197,35 @@ be_visitor_operation_ami_handler_skeleton_cs::visit_operation (be_operation *nod
       << "{" << be_idt_nl
       << "const ACE_Message_Block* cdr = _tao_in.start ();" << be_nl << be_nl;
 
-  *os << parent->compute_name ("AMI_", "ExceptionHolder") << "* exception_holder_var;" << be_nl
-      << "ACE_NEW (exception_holder_var," << be_idt_nl
-      << parent->compute_name ("AMI_", "ExceptionHolder") << " ());" << be_uidt_nl
+  be_interface *original = (be_interface::narrow_from_decl (parent))->original_interface ();
+
+  if (!original)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%1) ami_handler_skeleton_cs::"
+                         "visit_operation - "
+                         "original interface is not set\n"),
+                        -1);
+    }
+
+
+  *os << original->compute_local_name ("AMI_", "ExceptionHolder") << "* exception_holder_var;" << be_nl
+      << "ACE_NEW (exception_holder_var," << be_idt_nl;
+
+// @@ Michael: Verify if we really need that.
+#if 0
+  if (original->defined_in ()->defined_in ()->scope_node_type () == AST_Decl::NT_module)
+    {
+      be_decl *scope = be_scope::narrow_from_scope (original->->defined_in ())->decl ();
+      *os << "ACE_NESTED_CLASS ("
+          << scope->name() << ","
+          << "_tao_" << original->compute_local_name ("AMI_", "ExceptionHolder") << ")";
+    }
+  else
+#endif /* 0 */
+    *os << "_tao_" << original->compute_local_name ("AMI_", "ExceptionHolder");
+
+  *os << " ());" << be_uidt_nl
       << "exception_holder_var->marshaled_exception.replace" << be_idt_nl 
       << "(cdr->length (), // max" << be_nl
       << " cdr->length (), // length" << be_nl
@@ -212,7 +235,7 @@ be_visitor_operation_ami_handler_skeleton_cs::visit_operation (be_operation *nod
   *os << "if (reply_status == TAO_AMI_REPLY_SYSTEM_EXCEPTION)" << be_idt_nl
       << " exception_holder_var->is_system_exception = 1;" << be_uidt_nl << be_nl
       << "_tao_reply_handler_object->foo_excep (" << be_idt_nl
-      << parent->compute_name ("AMI_", "ExceptionHolder") << "::_duplicate (exception_holder_var)," << be_nl
+      << original->compute_name ("AMI_", "ExceptionHolder") << "::_duplicate (exception_holder_var)," << be_nl
       << " ACE_TRY_ENV);" << be_uidt_nl
       << "}" << be_uidt_nl
       << "return;" << be_uidt_nl;
@@ -224,8 +247,7 @@ be_visitor_operation_ami_handler_skeleton_cs::visit_operation (be_operation *nod
       << "// request!" << be_nl
       << "break;" << be_uidt_nl
       << "}" << be_uidt_nl;
-#endif
-
+#endif /* 0 */
   *os << be_uidt_nl << "};" << be_nl << be_nl;
 
   return 0;

@@ -209,9 +209,15 @@ be_operation::has_extra_code_generation (TAO_CodeGen::CG_STATE current_state)
 }
 
 be_operation*
-be_operation::hidden_operation ()
+be_operation::marshaling ()
 {
-  return this->strategy_->hidden_operation ();
+  return this->strategy_->marshaling ();
+}
+
+be_operation*
+be_operation::arguments ()
+{
+  return this->strategy_->arguments ();
 }
 
 
