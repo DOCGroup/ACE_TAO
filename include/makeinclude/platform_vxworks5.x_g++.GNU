@@ -2,12 +2,16 @@
 # VxWorks 5.2-5.3.1 with GNU g++ 2.7.2
 
 #### Notes:
-#### 1) This file assumes that the WIND_BASE environment variable is set.
+#### 1) This file assumes that the WIND_BASE and WIND_HOST_TYPE environment
+####    variables are set.
 ####
 #### 2) If you have problems with munch output not being compilable
 ####    because it contains identifiers with ".", e.g., ".cpp", in them:
 ####    add a global variable or function to that .cpp file.  See
 ####    ace/IOStream_T.cpp for an explanation and example.
+
+VXWORKS = 1
+CROSS-COMPILE = 1
 
 debug = 1
 optimize = 1
@@ -22,8 +26,14 @@ static_libs = 1
 #### using one of these methods (unless your CPU is a PowerPC 604):
 #### 1) create a $ACE_ROOT/include/makeinclude/platform_macros.GNU
 ####    that contains something like:
+####
+####  WIND_BASE = /project/doc/wind
+####  WIND_HOST_TYPE = sun4-solaris2
+####  PATH += :$(WIND_BASE)/host/$(WIND_HOST_TYPE)/bin
+####
 ####  CPU = I80486
-####  include $(ACE_ROOT)/include/makeinclude/platform_vxworks5.2_g++.GNU
+####  include $(ACE_ROOT)/include/makeinclude/platform_vxworks5.x_g++.GNU
+####
 #### 2) modify the code below to set CPU, or
 #### 3) set CPU on the command line, e.g., "make CPU=I80486"
 ifeq ($(CPU),)
@@ -68,7 +78,6 @@ PIC             =
 AR              = ar$(TOOLENV)
 ARFLAGS         = rv
 RANLIB          = /bin/true
-VXWORKS         = 1
 
 #### ld can't handle INCLDIRS, so override LINK definitions.
 LINK.c           = override
