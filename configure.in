@@ -1,7 +1,7 @@
 dnl
 dnl $Id$
 
-AC_REVISION($Revision 0.58 $)dnl
+AC_REVISION($Revision 0.59 $)dnl
 
 dnl
 dnl An autoconf script to automatically configure ACE.
@@ -40,6 +40,13 @@ AC_INIT(ace/ACE.cpp)
 
 dnl Require GNU Autoconf 2.13 or better.
 AC_PREREQ(2.13)
+
+dnl If we are configuring in a CVS controlled directory then don't
+dnl continue any further.  The idea is to prevent automatically
+dnl generated files from being checked into the repository.  This
+dnl will prevent accidental overwrites of ACE's current Makefiles by
+dnl the automatically generated ones, for example.
+ACE_CHECK_FOR_CVS_DIR
 
 dnl Check what platform we are running on.
 AC_CANONICAL_SYSTEM
@@ -129,7 +136,7 @@ AC_SUBST(ACE_AGE)
 AC_SUBST(ACE_REVISION)
 
 dnl Do the usual install settings; don't forget to include a
-dnl install-sh script, in case the is no BDS compatible install
+dnl `install-sh' script, in case there is no BSD compatible `install'
 dnl installed (no pun intended) in your machine.
 dnl 
 dnl We don't need this anymore since AM_INIT_AUTOMAKE calls AC_PROG_INSTALL.
