@@ -62,11 +62,11 @@ public:
     // and WAS_INACTIVE are defined to match previous semantics for
     // applications that don't use the PULSED state.
 
-    WAS_ACTIVE = 1, /* DEPRECATED */
+    WAS_ACTIVE = 1, /* @deprecated Use ACTIVATED instead. */
     /// Message queue is active and processing normally
     ACTIVATED = 1,
 
-    WAS_INACTIVE = 2, /* DEPRECATED */
+    WAS_INACTIVE = 2, /* @deprecated Use DEACTIVATED instead. */
     /// Queue is deactivated; no enqueue or dequeue operations allowed.
     DEACTIVATED = 2,
 
@@ -222,7 +222,7 @@ private:
 # include /**/ <msgQLib.h>
 # include "ace/Null_Mutex.h"
 # include "ace/Null_Condition.h"
- 
+
 /**
  * @class ACE_Message_Queue_Vx
  *
