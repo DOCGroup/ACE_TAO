@@ -200,10 +200,11 @@ Test_ObjRef_Sequence::check_validity (void)
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught");
-      return 0;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
+
+ return 1; 
 }
 
 CORBA::Boolean
@@ -259,15 +260,13 @@ Test_ObjRef_Sequence::compare (const Param_Test::Coffee_Mix &s1,
       if (ACE_TRY_ENV.exception ())
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "retrieving description for vs1"), -1);
-          return 0;
+                             "retrieving description for vs1"), 0);
         }
       CORBA::String_var n2 = vs2->description (ACE_TRY_ENV)->name.in ();
       if (ACE_TRY_ENV.exception ())
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "retrieving description for vs2"), -1);
-          return 0;
+                             "retrieving description for vs2"), 0);
         }
       if (ACE_OS::strcmp(n1.in (), n2.in ()) != 0)
         return 0;
