@@ -1,5 +1,7 @@
 Wed Jul  7 18:13:40 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
-  
+
+	* tao/Invocation.cpp: Removed the loop around the wait_for_reply. 
+
 	* TAO/TAO_IDL/be/be_visitor_typecode/typecode_decl.cpp: Fixed CC5
 	  warnings.  
   
