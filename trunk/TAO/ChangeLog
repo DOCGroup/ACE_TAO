@@ -1,3 +1,16 @@
+Wed Oct 16 11:49:21 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.ll:
+	* TAO_IDL/fe/lex.yy.cpp:
+	* TAO_IDL/ast/ast_decl.cpp:
+	* TAO_IDL/util/utl_scope.cpp:
+	* TAO_IDL/include/ast_decl.h:
+	* TAO_IDL/include/utl_scope.h:
+
+	  Fixed a bug in typeprefix propagation by moving a class member
+	  and accessors from UTL_Scope to AST_Decl, and changing code
+	  where the accessors are called.
+
 Tue Oct 15 20:05:48 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/tests/LoadBalancing/GenericFactory/run_test.pl:
