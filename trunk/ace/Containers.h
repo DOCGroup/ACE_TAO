@@ -638,7 +638,7 @@ class ACE_Unbounded_Set_Iterator
   //     Implement an iterator over an unbounded set.
 public:
   // = Initialization method.
-  ACE_Unbounded_Set_Iterator (ACE_Unbounded_Set<T> &s);
+  ACE_Unbounded_Set_Iterator (ACE_Unbounded_Set<T> &s, int end = 0);
 
   // = Iteration methods.
 
@@ -656,6 +656,21 @@ public:
   void dump (void) const;
   // Dump the state of an object.
 
+  // = STL styled iteration, compare, and reference functions.
+
+  ACE_Unbounded_Set_Iterator<T> operator++ (void);
+  // Postfix advance.
+
+  ACE_Unbounded_Set_Iterator<T>& operator++ (int);
+  // Prefix advance.
+
+  T& operator* (void);
+  // Returns a reference to the interal element <this> is pointing to.
+
+  int operator== (const ACE_Unbounded_Set_Iterator<T> &) const;
+  int operator!= (const ACE_Unbounded_Set_Iterator<T> &) const;
+  // Check if two iterators point to the same position
+
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
@@ -663,7 +678,7 @@ private:
   ACE_Node<T> *current_;
   // Pointer to the current node in the iteration.
 
-  ACE_Unbounded_Set<T> &set_;
+  ACE_Unbounded_Set<T> *set_;
   // Pointer to the set we're iterating over.
 };
 
@@ -682,6 +697,7 @@ public:
 
   // Trait definition.
   typedef ACE_Unbounded_Set_Iterator<T> ITERATOR;
+  typedef ACE_Unbounded_Set_Iterator<T> iterator;
 
   // = Initialization and termination methods.
   ACE_Unbounded_Set (ACE_Allocator *alloc = 0);
@@ -729,6 +745,10 @@ public:
 
   void reset (void);
   // Reset the <ACE_Unbounded_Set> to be empty.
+
+  // = STL-styled unidirectional iterator factory.
+  ACE_Unbounded_Set_Iterator<T> begin (void);
+  ACE_Unbounded_Set_Iterator<T> end (void);
 
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
