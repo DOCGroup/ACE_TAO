@@ -43,6 +43,6 @@ template class ACE_Dynamic_Service<TAO_Protocol_Factory>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Dynamic_Service<TAO_Protocol_Factory>;
+#pragma instantiate ACE_Dynamic_Service<TAO_Protocol_Factory>
 
 #endif
