@@ -1,42 +1,52 @@
+Thu Jan 21 14:10:20 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Time/Timer_Helper.cpp (handle_timeout):
+	Added the macro ACE_U64_TO_U32 to the ULongLong parameters and
+	added a #ifdef as
+	   #if defined ACE_LACKS_LONGLONG_T
+		< apply the conversion macros >
+	   #else
+		< dont use the macros >
+
 Thu Jan 21 14:10:33 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/Time_Service/Makefile: 
+	* orbsvcs/Time_Service/Makefile:
 	  The server program was not compiling on IRIX, some object files
-	  were placed after the libraries in the link line. 
+	  were placed after the libraries in the link line.
 
 Thu Jan 21 10:57:25 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/CDR.cpp: 
+	* tao/CDR.cpp:
 	  Fixed a problem with TAO_OutputCDR::write_octet_array_mb, thanks
 	  to Dave Meyer <dmeyer@std.saic.com> for reporting and isolating
 	  this bug.
 
-	* tests/CDR/Makefile: 
-	* tests/CDR/octet_sequence.cpp: 
+	* tests/CDR/Makefile:
+	* tests/CDR/octet_sequence.cpp:
 	  Added a new test to verify that the fix above worked, thanks to
 	  Dave for this test also.
 
- 	* tests/CDR/CDR.dsw: 
-	* tests/CDR/octet_sequence.dsp: 
+ 	* tests/CDR/CDR.dsw:
+	* tests/CDR/octet_sequence.dsp:
 	  Added a new project for the octet_sequence test.
 
-	* EC_ConsumerAdmin.cpp: 
-	* EC_ConsumerAdmin.h: 
-	* EC_ConsumerAdmin.i: 
-	* EC_Event_Channel.cpp: 
-	* EC_Event_Channel.h: 
-	* EC_Event_Channel.i: 
-	* EC_Factory.h: 
-	* EC_Factory.i: 
-	* EC_Filter.h: 
-	* EC_Filter.i: 
-	* EC_ProxyConsumer.h: 
-	* EC_ProxySupplier.cpp: 
-	* EC_ProxySupplier.h: 
-	* EC_ProxySupplier.i: 
-	* EC_SupplierAdmin.cpp: 
-	* EC_SupplierAdmin.h: 
-	* EC_SupplierAdmin.i: 
+	* EC_ConsumerAdmin.cpp:
+	* EC_ConsumerAdmin.h:
+	* EC_ConsumerAdmin.i:
+	* EC_Event_Channel.cpp:
+	* EC_Event_Channel.h:
+	* EC_Event_Channel.i:
+	* EC_Factory.h:
+	* EC_Factory.i:
+	* EC_Filter.h:
+	* EC_Filter.i:
+	* EC_ProxyConsumer.h:
+	* EC_ProxySupplier.cpp:
+	* EC_ProxySupplier.h:
+	* EC_ProxySupplier.i:
+	* EC_SupplierAdmin.cpp:
+	* EC_SupplierAdmin.h:
+	* EC_SupplierAdmin.i:
 	  Continue the implementation of the new event channel.
 
 Wed Jan 20 23:32:47 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
