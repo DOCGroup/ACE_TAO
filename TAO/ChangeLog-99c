@@ -1,3 +1,9 @@
+Mon Feb  8 14:26:29 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/DynAnyC.cpp: 
+	* tao/Object.cpp: 
+	  Added missing #include for template instantiations.
+
 Mon Feb  8 13:43:10 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/corbafwd.h: 
