@@ -6966,10 +6966,6 @@ ACE_OS_CString (ASCII_STRING).wchar_rep ()
   // some other name. If yes, use that instead of 8.
 #     define ACE_RTSIG_MAX 8
 #   endif /* _POSIX_RTSIG_MAX */
-
-  // The signal used for all the Asynch_Operations.
-#   define ACE_SIG_AIO SIGRTMIN
-
 # endif /* ACE_HAS_AIO_CALLS */
 
   // Wrapping around wait status <wstat> macros for platforms that
@@ -7124,5 +7120,14 @@ typedef u_long long ptr_arith_t;
 //
 #define ptr_align_binary(ptr, alignment) \
         ((char *) align_binary (((ptr_arith_t) (ptr)), (alignment)))
+
+// Defining POSIX4 real-time signal range.
+#if defined ACE_HAS_AIO_CALLS
+#define ACE_SIGRTMIN SIGRTMIN
+#define ACE_SIGRTMAX SIGRTMAX
+#else /* !ACE_HAS_AIO_CALLS */
+#define ACE_SIGRTMIN 0
+#define ACE_SIGRTMAX 0
+#endif /* ACE_HAS_AIO_CALLS */
 
 #endif  /* ACE_OS_H */

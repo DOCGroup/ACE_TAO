@@ -79,6 +79,12 @@ public:
   virtual int priority (void) const = 0;
   // Priority of the operation.
 
+  virtual int signal_number (void) const = 0;
+  // POSIX4 real-time signal number to be used for the
+  // operation. <signal_number> ranges from SIGRTMIN to SIGRTMAX. By 
+  // default, SIGRTMIN is used to issue <aio_> calls. This is a no-op
+  // on non-POSIX4 systems and returns 0.
+
   // protected:
   //
   // These two should really be protected.  But sometimes it
@@ -150,7 +156,8 @@ public:
   virtual int read (ACE_Message_Block &message_block,
                     u_long bytes_to_read,
                     const void *act,
-                    int priority) = 0;
+                    int priority,
+                    int signal_number) = 0;
   // This starts off an asynchronous read. Upto <bytes_to_read> will
   // be read and stored in the <message_block>.
 
@@ -203,7 +210,8 @@ public:
   virtual int write (ACE_Message_Block &message_block,
                      u_long bytes_to_write,
                      const void *act,
-                     int priority) = 0;
+                     int priority,
+                     int signal_number) = 0;
   // This starts off an asynchronous write.  Upto <bytes_to_write>
   // will be written from the <message_block>.
 
@@ -258,7 +266,8 @@ public:
                     u_long offset,
                     u_long offset_high,
                     const void *act,
-                    int priority) = 0;
+                    int priority,
+                    int signal_number) = 0;
   // This starts off an asynchronous read.  Upto <bytes_to_read> will
   // be read and stored in the <message_block>.  The read will start
   // at <offset> from the beginning of the file.
@@ -303,7 +312,8 @@ public:
                      u_long offset,
                      u_long offset_high,
                      const void *act,
-                     int priority) = 0;
+                     int priority,
+                    int signal_number) = 0;
   // This starts off an asynchronous write.  Upto <bytes_to_write>
   // will be write and stored in the <message_block>.  The write will
   // start at <offset> from the beginning of the file.
@@ -348,7 +358,8 @@ public:
                       u_long bytes_to_read,
                       ACE_HANDLE accept_handle,
                       const void *act,
-                      int priority) = 0;
+                      int priority,
+                    int signal_number) = 0;
   // This starts off an asynchronous accept.  The asynchronous accept
   // call also allows any initial data to be returned to the
   // <handler>.  Upto <bytes_to_read> will be read and stored in the
@@ -416,7 +427,8 @@ public:
                              u_long bytes_per_send,
                              u_long flags,
                              const void *act,
-                             int priority) = 0;
+                             int priority,
+                             int signal_number) = 0;
   // This starts off an asynchronous transmit file.
 
 protected:

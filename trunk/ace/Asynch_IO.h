@@ -112,6 +112,13 @@ public:
   //
   // On Win32, this is a no-op.
   
+  int signal_number (void) const;
+  // POSIX4 real-time signal number to be used for the
+  // operation. <signal_number> ranges from ACE_SIGRTMIN to ACE_SIGRTMAX. By 
+  // default, ACE_SIGRTMIN is used to issue <aio_> calls. This is a no-op
+  // on non-POSIX4 systems and returns 0.
+
+
   virtual ~ACE_Asynch_Result (void);
   // Destructor.
 
@@ -227,7 +234,8 @@ public:
   int read (ACE_Message_Block &message_block,
             u_long bytes_to_read,
             const void *act = 0,
-            int priority = 0);
+            int priority = 0,
+            int signal_number = ACE_SIGRTMIN);
   // This starts off an asynchronous read.  Upto <bytes_to_read> will
   // be read and stored in the <message_block>. Priority of the
   // operation is specified by <priority>. On POSIX4-Unix, this is
@@ -235,6 +243,9 @@ public:
   // allowed. 0 means priority of the operation same as the process
   // priority. 1 means priority of the operation is one less than
   // process. And so forth. On Win32, this is a no-op.
+  // <signal_number> is the POSIX4 real-time signal number to be used 
+  // for the operation. <signal_number> ranges from ACE_SIGRTMIN to
+  // ACE_SIGRTMAX. This argument is a no-op on non-POSIX4 systems. 
 
   ACE_Asynch_Read_Stream_Impl *implementation (void) const;
   // Return the underlying implementation class.
@@ -331,7 +342,8 @@ public:
   int write (ACE_Message_Block &message_block,
              u_long bytes_to_write,
              const void *act = 0,
-             int priority = 0);
+             int priority = 0,
+             int signal_number = ACE_SIGRTMIN);
   // This starts off an asynchronous write.  Upto <bytes_to_write>
   // will be written from the <message_block>. Priority of the
   // operation is specified by <priority>. On POSIX4-Unix, this is
@@ -339,6 +351,9 @@ public:
   // allowed. 0 means priority of the operation same as the process
   // priority. 1 means priority of the operation is one less than
   // process. And so forth. On Win32, this is a no-op.
+  // <signal_number> is the POSIX4 real-time signal number to be used 
+  // for the operation. <signal_number> ranges from ACE_SIGRTMIN to
+  // ACE_SIGRTMAX. This argument is a no-op on non-POSIX4 systems. 
 
   ACE_Asynch_Write_Stream_Impl *implementation (void) const;
   // Return the underlying implementation class.
@@ -440,7 +455,8 @@ public:
             u_long offset = 0,
             u_long offset_high = 0,
             const void *act = 0,
-            int priority = 0);
+            int priority = 0,
+            int signal_number = ACE_SIGRTMIN);
   // This starts off an asynchronous read.  Upto <bytes_to_read> will
   // be read and stored in the <message_block>.  The read will start
   // at <offset> from the beginning of the file. Priority of the
@@ -449,6 +465,9 @@ public:
   // allowed. 0 means priority of the operation same as the process
   // priority. 1 means priority of the operation is one less than
   // process. And so forth. On Win32, this is a no-op.
+  // <signal_number> is the POSIX4 real-time signal number to be used 
+  // for the operation. <signal_number> ranges from ACE_SIGRTMIN to
+  // ACE_SIGRTMAX. This argument is a no-op on non-POSIX4 systems. 
 
   ACE_Asynch_Read_File_Impl *implementation (void) const;
   // Return the underlying implementation class.
@@ -548,7 +567,8 @@ public:
              u_long offset = 0,
              u_long offset_high = 0,
              const void *act = 0,
-             int priority = 0);
+             int priority = 0,
+             int signal_number = ACE_SIGRTMIN);
   // This starts off an asynchronous write.  Upto <bytes_to_write>
   // will be write and stored in the <message_block>.  The write will
   // start at <offset> from the beginning of the file. Priority of the
@@ -557,6 +577,9 @@ public:
   // allowed. 0 means priority of the operation same as the process
   // priority. 1 means priority of the operation is one less than
   // process. And so forth. On Win32, this is a no-op.
+  // <signal_number> is the POSIX4 real-time signal number to be used 
+  // for the operation. <signal_number> ranges from ACE_SIGRTMIN to
+  // ACE_SIGRTMAX. This argument is a no-op on non-POSIX4 systems. 
 
   ACE_Asynch_Write_File_Impl *implementation (void) const;
   // Return the underlying implementation class.
@@ -651,7 +674,8 @@ public:
               u_long bytes_to_read,
               ACE_HANDLE accept_handle = ACE_INVALID_HANDLE,
               const void *act = 0,
-              int priority = 0);
+              int priority = 0,
+              int signal_number = ACE_SIGRTMIN);
   // This starts off an asynchronous accept.  The asynchronous accept
   // call also allows any initial data to be returned to the
   // <handler>.  Upto <bytes_to_read> will be read and stored in the
@@ -666,6 +690,9 @@ public:
   //
   // <message_block> must be specified. This is because the address of
   // the new connection is placed at the end of this buffer.
+  // <signal_number> is the POSIX4 real-time signal number to be used 
+  // for the operation. <signal_number> ranges from ACE_SIGRTMIN to
+  // ACE_SIGRTMAX. This argument is a no-op on non-POSIX4 systems. 
 
   ACE_Asynch_Accept_Impl *implementation (void) const;
   // Return the underlying implementation class.
@@ -779,7 +806,8 @@ public:
                      u_long bytes_per_send = 0,
                      u_long flags = 0,
                      const void *act = 0,
-                     int priority = 0);
+                     int priority = 0,
+                     int signal_number = ACE_SIGRTMIN);
   // This starts off an asynchronous transmit file.  The <file> is a
   // handle to an open file.  <header_and_trailer> is a pointer to a
   // data structure that contains pointers to data to send before and
@@ -794,6 +822,9 @@ public:
   // allowed. 0 means priority of the operation same as the process
   // priority. 1 means priority of the operation is one less than
   // process. And so forth. On Win32, this is a no-op.
+  // <signal_number> is the POSIX4 real-time signal number to be used 
+  // for the operation. <signal_number> ranges from ACE_SIGRTMIN to
+  // ACE_SIGRTMAX. This argument is a no-op on non-POSIX4 systems. 
 
   ACE_Asynch_Transmit_File_Impl *implementation (void) const;
   // Return the underlying implementation class.
