@@ -181,7 +181,7 @@ private:
   TAO_ORB_Manager *orb_manager_;
   // the TAO ORB manager.
 
-  TAO_Naming_Server *naming_server_;
+  TAO_Naming_Server naming_server_;
   // the TAO naming server
 
   Video_Control_i *video_control_;

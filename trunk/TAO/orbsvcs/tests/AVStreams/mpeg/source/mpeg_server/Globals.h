@@ -124,6 +124,7 @@
 #include "mpeg_shared/sendpt.h"
 #include "mpeg_server/server_proto.h"
 #include "mpeg_server/Video_Server.h"
+#include "mpeg_shared/Video_ControlS.h"
 
 class Mpeg_Global
 {
@@ -251,7 +252,7 @@ public:
 
   // fast video play locals
   FFpara fast_para;
-  PLAYpara play_para;
+  Video_Control::PLAYpara play_para;
   int fast_preGroup;
   int fast_preHeader;
 
@@ -278,12 +279,12 @@ public:
   int fast_backward (void);
   int stat_stream (void);
   int stat_sent (void);
-  int init_play (void);
+  int init_play (Video_Control::PLAYpara para);
   int init_fast_play (void);
   int init_video (void);
 };
 
-typedef ACE_TSS_Singleton <Video_Global, ACE_SYNCH_MUTEX> VIDEO_SINGLETON;
+typedef ACE_Singleton <Video_Global, ACE_SYNCH_MUTEX> VIDEO_SINGLETON;
 
 class Video_Timer_Global
 // A class that holds the static timer variables defined in the middle

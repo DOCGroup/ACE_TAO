@@ -144,12 +144,12 @@ Video_Control_Waiting_State::handle_input (ACE_HANDLE h)
       this->vch_->change_state (VIDEO_CONTROL_FAST_BACKWARD_STATE::instance ());
       break;
     case CmdPLAY:
-      VIDEO_SINGLETON::instance ()->init_play ();
+      //      VIDEO_SINGLETON::instance ()->init_play ();
       this->vch_->change_state (VIDEO_CONTROL_PLAY_STATE::instance ());
       break;
     case CmdCLOSE:
       VIDEO_SINGLETON::instance ()->normalExit = 1;
-      ACE_Reactor::instance ()->end_event_loop ();
+      TAO_ORB_Core_instance ()->reactor ()->end_event_loop ();
       break;
     case CmdSTATstream:
       VIDEO_SINGLETON::instance ()->stat_stream ();
@@ -166,8 +166,8 @@ Video_Control_Waiting_State::handle_input (ACE_HANDLE h)
     }
   // one command was handled successfully
   return 0;
-  
-}
+}  
+
 
 CORBA::Boolean 
 Video_Control_Waiting_State::init_video (const Video_Control::INITvideoPara &para)
@@ -195,6 +195,8 @@ Video_Control_Waiting_State::close (void)
 CORBA::Boolean 
 Video_Control_Waiting_State::stat_sent (void)
 {
+  ACE_DEBUG ((LM_DEBUG,
+              "Video_Control_Waiting_State::stat_sent \n"));
   return 0;
 }
 
@@ -228,8 +230,12 @@ Video_Control_Waiting_State::play (const Video_Control::PLAYpara &para,
                        CORBA::Long_out vts)
                        
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t)Video_Control_Waiting_State::play () called \n"));
+  // Many guys in legacy code depend on this variable.
+  VIDEO_SINGLETON::instance ()-> cmd =CmdPLAY;
+  //ACE_DEBUG ((LM_DEBUG,
+  //            "(%P|%t)Video_Control_Waiting_State::play () called \n"));
+  VIDEO_SINGLETON::instance ()->init_play (para);
+  this->vch_->change_state (VIDEO_CONTROL_PLAY_STATE::instance ());
   return 0;
 }
 
@@ -276,7 +282,7 @@ Video_Control_Play_State::handle_input (ACE_HANDLE h)
     return result;
   
   if (tmp == CmdCLOSE) {
-    ACE_Reactor::instance ()->end_event_loop ();
+    TAO_ORB_Core_instance ()->reactor ()->end_event_loop ();
     return 0;
   }
   else if (tmp == CmdSTOP) {
@@ -326,7 +332,7 @@ Video_Control_Play_State::handle_input (ACE_HANDLE h)
     {
       fprintf(stderr, "VS error: VIDEO_SINGLETON::instance ()->cmd=%d while expect STOP/SPEED.\n", tmp);
       VIDEO_SINGLETON::instance ()->normalExit = 0;
-      ACE_Reactor::instance ()->end_event_loop ();
+      TAO_ORB_Core_instance ()->reactor ()->end_event_loop ();
       return 1;
     }
   VIDEO_SINGLETON::instance ()->play_send ();// simulating the for loop in vs.cpp
@@ -345,14 +351,14 @@ Video_Control_Fast_Forward_State::handle_input (ACE_HANDLE h)
   if (result != 0)
     return result;
   if (VIDEO_SINGLETON::instance ()->cmd == CmdCLOSE) {
-    ACE_Reactor::instance ()->end_event_loop ();
+    TAO_ORB_Core_instance ()->reactor ()->end_event_loop ();
     return 0;
     //	exit(0);
   }
   else if (VIDEO_SINGLETON::instance ()->cmd != CmdSTOP) {
     fprintf(stderr, "VS error: VIDEO_SINGLETON::instance ()->cmd=%d while STOP is expected.\n", VIDEO_SINGLETON::instance ()->cmd);
     VIDEO_SINGLETON::instance ()->normalExit = 0;
-    ACE_Reactor::instance ()->end_event_loop ();
+    TAO_ORB_Core_instance ()->reactor ()->end_event_loop ();
     return 1;
     //	exit(1);
   }
@@ -383,14 +389,14 @@ Video_Control_Fast_Backward_State::handle_input (ACE_HANDLE h)
   if (result != 0)
     return result;
   if (VIDEO_SINGLETON::instance ()->cmd == CmdCLOSE) {
-    ACE_Reactor::instance ()->end_event_loop ();
+    TAO_ORB_Core_instance ()->reactor ()->end_event_loop ();
     return 0;
     //	exit(0);
   }
   else if (VIDEO_SINGLETON::instance ()->cmd != CmdSTOP) {
     fprintf(stderr, "VS error: VIDEO_SINGLETON::instance ()->cmd=%d while STOP is expected.\n", VIDEO_SINGLETON::instance ()->cmd);
     VIDEO_SINGLETON::instance ()->normalExit = 0;
-    ACE_Reactor::instance ()->end_event_loop ();
+    TAO_ORB_Core_instance ()->reactor ()->end_event_loop ();
     return 1;
     //	exit(1);
   }

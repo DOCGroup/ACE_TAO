@@ -12,6 +12,7 @@ Video_Control_i::init_video (const Video_Control::INITvideoPara &para,
                              CORBA::Environment&)
 {
   return 0;
+
 }
 
 
@@ -67,12 +68,31 @@ Video_Control_i::play (const Video_Control::PLAYpara &para,
                        CORBA::Long_out vts,
                        CORBA::Environment& env)
 {
+  Video_Control_Handler_Instance *vchi;
   ACE_DEBUG ((LM_DEBUG,
-              "Video_Control_i::play () called \n"));
-  VIDEO_CONTROL_HANDLER_INSTANCE::instance ()->get_video_control_handler ()->play (para,
-                                                                                   vts,
-                                                                                   env);
+              "(%P|%t)Video_Control_i::play () called \n"));
+  Video_Control_Handler *vch ;
+  
+  if ((vchi = VIDEO_CONTROL_HANDLER_INSTANCE::instance () )!= 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Video_Control_Handler_instance address %x",
+                  vchi));
+    vch = VIDEO_CONTROL_HANDLER_INSTANCE::instance ()->get_video_control_handler () ;
+    }
+  else
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "(%P|%t)Video_control_Handler_instance is null \n"),
+                      -1);
 
+  if (vch == 0)
+    ACE_ERROR_RETURN ((LM_DEBUG,
+                       "(%P|%t)Video_Control_Handler_Instance::get_video_Control_handler returned null \n"),
+                      -1);
+  
+  else
+    //    vch->play (para,vts,env);
+    vch->play (para,vts,env);
   return 0;
 }
 

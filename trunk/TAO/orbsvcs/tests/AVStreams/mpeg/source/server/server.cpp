@@ -56,9 +56,8 @@ AV_Svc_Handler::open (void *)
       this->svc ();
 
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) Child returning from AV_Svc_handler::open\n"));
+                  "(%P|%t) child returning from AV_Svc_handler::open\n"));
       return 0;
-      
     default:
       // i am the parent. i should go back and listen for more
       // connections
@@ -73,9 +72,15 @@ AV_Svc_Handler::open (void *)
       // connection would remain open forever because the parent still
       // has a connected socket.
       this->destroy ();
+
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Parent Returning from AV_Svc_Handler::open\n"));
+      TAO_ORB_Core_instance ()->orb ()->shutdown ();
+      //shutdown the ORB
+      TAO_ORB_Core_instance ()->reactor ()->run_event_loop ();
+      // run the event loop again.
       return 0;
+      
     }
   return 0;
 }
@@ -194,7 +199,7 @@ AV_Svc_Handler::handle_connection (ACE_HANDLE)
 
         if (result != 0)
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%P|%t) handle_connection: "),
+                             "(%P|%t) handle_connection:%p"),
                              result);
         return result;
                  
@@ -410,7 +415,6 @@ AV_Server::AV_Server ()
   this->signal_handler_ = new AV_Server_Sig_Handler ;
   this->orb_manager_ = new TAO_ORB_Manager ;
   this->video_control_ = new Video_Control_i;
-  this->naming_server_ = new TAO_Naming_Server;
 }
 
 // %% move to the destructor or sig handler
@@ -494,9 +498,24 @@ AV_Server::init (int argc,
                                                 this->video_control_,
                                                 env);
   TAO_CHECK_ENV_RETURN (env,-1);
-  
+
+  CORBA::ORB_var orb = 
+    this->orb_manager_->orb ();
+  PortableServer::POA_var child_poa = 
+    this->orb_manager_->child_poa ();
   // Initialize the Naming Server
-  
+  this->naming_server_.init (orb,child_poa);
+
+  // Create a name for the video control object
+  CosNaming::Name video_control_name (1);
+  video_control_name.length (1);
+  video_control_name[0].id = CORBA::string_dup ("Video_Control");
+  // Register the video control object with the naming server.
+  this->naming_server_->bind (video_control_name,
+                              this->video_control_->_this (env),
+                              env);
+  TAO_CHECK_ENV_RETURN (env, -1);
+
   result = this->parse_args (argc, argv);
   if (result < 0)
     return result;

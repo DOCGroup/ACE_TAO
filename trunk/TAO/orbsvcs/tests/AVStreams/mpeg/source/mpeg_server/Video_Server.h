@@ -134,7 +134,7 @@ private:
 
 // Video_Control_Handler instance singleton.
 //@@ Does this really need to be a thread-specific singleton?
-typedef ACE_TSS_Singleton <Video_Control_Handler_Instance,
+typedef ACE_Singleton <Video_Control_Handler_Instance,
                            ACE_SYNCH_MUTEX>
         VIDEO_CONTROL_HANDLER_INSTANCE; 
 
@@ -242,13 +242,13 @@ public:
 
 private:
 
-  ACE_Reactor* reactor_;
+  ACE_Reactor *reactor_;
   // alias Reactor ,points to ACE_Reactor::instance ()
 
-  Video_Data_Handler* data_handler_;
+  Video_Data_Handler *data_handler_;
   // Data Socket Event Handler
 
-  Video_Control_Handler* control_handler_;
+  Video_Control_Handler *control_handler_;
   // Control Socket Event Handler
 
   Video_Sig_Handler *sig_handler_;

@@ -32,7 +32,8 @@
 #include "ace/Event_Handler.h"
 #include "ace/ARGV.h"
 #include "tao/TAO.h"
-
+#include "mpeg_shared/Video_ControlC.h"
+#include "orbsvcs/CosNamingC.h"
 
 class Command_Handler 
   : public virtual ACE_Event_Handler
@@ -51,6 +52,9 @@ public:
 
   int init (void);
   // initialize the ORB
+
+  int resolve_server_reference (void);
+  // Resolve the video control reference
 
   virtual int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE);
   // Called when input events occur (e.g., connection or data).
@@ -74,7 +78,8 @@ private:
   
   CORBA::Boolean step (void);
   
-  CORBA::Boolean play (int flag);
+  CORBA::Boolean play (int flag,
+                       CORBA::Environment& env);
                       
   
   CORBA::Boolean position (void);
@@ -94,6 +99,9 @@ private:
 
   TAO_ORB_Manager *orb_manager_;
   // the ORB manager
+
+  Video_Control_var video_control_;
+  // Video Control CORBA object
 };
 
 

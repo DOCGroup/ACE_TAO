@@ -136,6 +136,7 @@ Video_Sig_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
                   signum));
       break;
     }
+  //  ACE_DEBUG ((LM_DEBUG,"returning from handle_signal"));
   return 0;
 }
 
@@ -238,6 +239,8 @@ Video_Control_Handler::close (CORBA::Environment&)
 CORBA::Boolean 
 Video_Control_Handler::stat_sent (CORBA::Environment&)
 {
+  ACE_DEBUG ((LM_DEBUG,
+              "Video_Control_Handler::stat_sent ()\n"));
   this->state_->stat_sent ();
   return 0;
 }
@@ -325,6 +328,7 @@ Video_Control_Handler::change_state (Video_Control_State *state)
 
 // Default constructor
 Video_Control_Handler_Instance::Video_Control_Handler_Instance (void)
+  :video_control_handler_ (0)
 {
 }
 
@@ -332,6 +336,10 @@ Video_Control_Handler_Instance::Video_Control_Handler_Instance (void)
 void
 Video_Control_Handler_Instance::set_video_control_handler (Video_Control_Handler *h)
 {
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t)video_control-handler_instance ():set video_control_handler %x,%x",
+              this,
+              h));
   this->video_control_handler_ = h;
 }
 
@@ -452,6 +460,7 @@ Video_Server::register_handlers (void)
               this->data_handler_->get_handle ()));
 
 
+  
   // next, the control handler, i.e. TCP
   result = this->reactor_->register_handler (this->control_handler_,
                                              ACE_Event_Handler::READ_MASK);
@@ -464,6 +473,8 @@ Video_Server::register_handlers (void)
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) registered fd for control handler = (%d)\n",
               this->control_handler_->get_handle ()));
+
+  
 
   // finally, the signal handler, for periodic transmission
   // of packets
