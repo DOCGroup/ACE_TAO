@@ -1,3 +1,11 @@
+Fri Jun 16 15:01:02 2000  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/LoadBalancing.dsp:
+	* orbsvcs/orbsvcs/LoadBalancing_Static.dsp:
+
+	  Updated MSVC++ project files to use new ReplicaLocator files
+	  instead of the now non-existestent DSI_ForwardingProxy files.
+
 Fri Jun 16 14:37:39 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/tests/Event/Performance/Makefile:
