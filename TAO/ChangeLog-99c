@@ -1,3 +1,8 @@
+Tue Aug 24 14:44:12 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/MessagingC.i:
+	  Fixed typo
+
 Tue Aug 24 12:06:31 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tests/IDL_Test/included.idl:
