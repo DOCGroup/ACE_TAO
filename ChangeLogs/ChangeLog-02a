@@ -1,3 +1,11 @@
+Wed May 23 8:23:20 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+	
+	* ace/QoS/QoS_Session.h: 
+	* ace/QoS/QoS_Session_Impl.h: 	
+	* ace/QoS/QoS_Session_Impl.cpp: 	
+
+	  Added a method to propagate the rsvp event type to the application.
+	
 Wed May 23 06:52:44 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* bin/nightlybuilds/builds.lst: Moved the FORTE builds to ace.
