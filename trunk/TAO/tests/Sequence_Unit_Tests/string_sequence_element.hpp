@@ -16,15 +16,15 @@ namespace TAO
 namespace details
 {
 
-template<typename string_traits>
+template<typename traits>
 class string_sequence_element
 {
 public:
-  typedef typename string_traits::char_type character_type;
+  typedef typename traits::char_type character_type;
   typedef character_type * value_type;
   typedef character_type const * const_value_type;
-  typedef typename string_traits::string_var string_var;
-  typedef typename string_traits::string_mgr string_mgr;
+  typedef typename traits::string_var string_var;
+  typedef typename traits::string_mgr string_mgr;
 
   string_sequence_element(
       value_type & e, CORBA::Boolean release)
@@ -48,12 +48,12 @@ public:
   {
     if (release())
     {
-      value_type tmp = string_traits::duplicate(rhs);
-      string_traits::release(*element_);
+      value_type tmp = traits::duplicate(rhs);
+      traits::release(*element_);
       *element_ = tmp;
       return *this;
     }
-    string_traits::not_released_from_const(*element_, rhs);
+    traits::not_released_from_const(*element_, rhs);
     return *this;
   }
 
@@ -61,7 +61,7 @@ public:
   {
     if (release())
     {
-      string_traits::release(*element_);
+      traits::release(*element_);
     }
     *element_ = rhs;
     return *this;
