@@ -79,5 +79,6 @@ namespace Utility
 #include "Utility/ReferenceCounting/Interface.tpp"
 #include "Utility/ReferenceCounting/Interface.ipp"
 
+
 #endif  // UTILITY_REFERENCE_COUNTING_INTERFACE_HPP
 
