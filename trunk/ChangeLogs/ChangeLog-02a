@@ -1,3 +1,10 @@
+Fri May 26 18:14:47 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/OS_String.inl:
+
+          Moved the ACE_OS_String::to_lower () methods up in the file, since 
+          they are used in other inlined functions. 
+
 Fri May 26 16:13:08 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/OS.cpp:
