@@ -27,6 +27,17 @@ TAO_ServantBase::_default_POA (CORBA::Environment &env)
   return PortableServer::POA::_narrow (root_poa, env);
 }
 
+CORBA::Boolean 
+TAO_ServantBase::_is_a (const char* logical_type_id,
+			CORBA::Environment &)
+{
+  if (ACE_OS::strcmp (logical_type_id, CORBA::_tc_Object->id ()) == 0)
+    {
+      return CORBA::B_TRUE;
+    }
+  return CORBA::B_FALSE;
+}
+
 void
 TAO_ServantBase::set_parent (TAO_IUnknown *p)
 {
