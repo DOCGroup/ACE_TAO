@@ -108,69 +108,62 @@ is_global_name(Identifier *i)
 // Helper function for lookup_by_name. Iterates doing local lookups of
 // subsequent components of a scoped name.
 static AST_Decl *
-iter_lookup_by_name_local (AST_Decl *d, 
-                           UTL_ScopedName *e)
+iter_lookup_by_name_local (AST_Decl *d,
+                           UTL_ScopedName *e,
+                           long index)
 {
-  Identifier *s;
-  AST_Typedef *td;
-  UTL_IdListActiveIterator *i;
-  UTL_Scope *sc;
+  AST_Typedef *td = 0;
 
-  i = new UTL_IdListActiveIterator (e);
-
-  for (i->next (); !(i->is_done ());)
+  // Remove all the layers of typedefs
+  while (d != NULL && d->node_type () == AST_Decl::NT_typedef) 
     {
-      s = i->item ();
+      td = AST_Typedef::narrow_from_decl (d);
 
-      // Update iterator before loop. This is needed for the check for
-      // typedef, since we only want to look at the base type if there
-      // actually are more components of the name to resolve.
-      i->next ();
+      if (td == NULL) 
+        return NULL;
 
-      // Next component in name was not found
-      if (d == NULL) 
-        {
-          delete i;
-          return NULL;
-        }
-
-      // If this is a typedef and we're not done, we should get the
-      // base type to get the scope it defines (if any)
-      if (!i->is_done ()) 
-        {
-          while (d != NULL && d->node_type () == AST_Decl::NT_typedef) 
-            {
-              td = AST_Typedef::narrow_from_decl (d);
-
-              if (td == NULL) 
-                {
-                  delete i;
-                  return NULL;
-                }
-
-              d = td->base_type ();
-            }
-
-          if (d == NULL) 
-            {
-              delete i;
-              return NULL;
-            }
-        }
-
-      // Try to convert the AST_Decl to a UTL_Scope
-      sc = DeclAsScope (d);
-      if (sc == NULL) 
-        {
-          delete i;
-          return NULL;
-        }
-
-      d = sc->lookup_by_name_local (s, 0);
+      d = td->base_type ();
     }
 
-  delete i;
-  return d;
+  if (d == NULL) 
+    return NULL;
+
+  // Try to convert the AST_Decl to a UTL_Scope
+  UTL_Scope *sc = DeclAsScope (d);
+
+  if (sc == NULL) 
+    return NULL;
+
+  // Look up the first component of the scoped name.
+  AST_Decl *result = sc->lookup_by_name_local (e->head (), 
+                                               index);
+ 
+  if (result == NULL)
+    return NULL;
+  else
+    {
+      UTL_ScopedName *sn = (UTL_ScopedName *) e->tail ();
+
+      if (sn == NULL)
+        // We're done.
+        return result;
+      else
+        // Look up the next component of the scoped name.
+        result = iter_lookup_by_name_local (result, 
+                                            sn,
+                                            0);
+
+      if (result != NULL)
+        // We're done.
+        return result;
+      else
+        // Maybe we're on the wrong branch of reopened
+        // and/or nested modules, so let's see if there's
+        // another branch.
+        return iter_lookup_by_name_local (d,
+                                          e,
+                                          index + 1);
+    }
 }
 
 /*
@@ -908,7 +901,6 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
 {
   AST_Decl *d;
   UTL_Scope *t = NULL;
-  long index = 0;
 
   // Empty name? error
   if (e == NULL) 
@@ -961,10 +953,11 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
 
   // The name does not start with "::"
   // Is name defined here?
+  long index = 0;
 
   while (1) 
     {
-      d = lookup_by_name_local (e->head (), 0);
+      d = lookup_by_name_local (e->head (), index);
 
       if (d == NULL) 
         {
@@ -1059,34 +1052,13 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
         }
 
       // OK, start of name is defined. Now loop doing local lookups
-      // of subsequent elements of the name.
-      AST_Decl::NodeType nt = d->node_type ();
+      // of subsequent elements of the name, if any.
+      UTL_ScopedName *sn = (UTL_ScopedName *) e->tail ();
 
-      d = iter_lookup_by_name_local (d, 
-                                     e);
-
-      if (nt == AST_Decl::NT_module)
-        {
-          // If local lookup matched identifier, but the rest
-          // of the scoped name failed to match, maybe the
-          // module is reopened later in the scope and we'll
-          // get another chance.
-          while (d == NULL)
-            {
-              // Incrementing index will skip the previous
-              // identifier matches.
-              d = this->lookup_by_name_local (e->head (),
-                                              ++index);
-
-              // Entire local scope was searched - no match.
-              if (d == NULL)
-                break;
-
-              // Try again to match the whole scoped name.
-              d = iter_lookup_by_name_local (d,
-                                             e);
-            }
-        }
+      if (sn != NULL)
+        d = iter_lookup_by_name_local (d, 
+                                       sn,
+                                       0);
 
       // If treat_as_ref is true and d is not NULL, add d to
       // set of nodes referenced here
@@ -1098,7 +1070,10 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
         }
 
       // All OK, name fully resolved
-      return d;
+      if (d != NULL)
+        return d;
+      else
+        index++;
     }
 }
 
