@@ -57,23 +57,22 @@ public:
     int i;
     float f;
 
-#if defined (__GNUC__)
+#if defined (__GNUC__) 
     String s;
 		
     if (!(this -> peer () >> i >> f >> s))
       {
-	cerr << "Server: Error getting data" << endl ;
-        return - 1 ;
+	cerr << "Error getting data" << endl ;
+	return - 1 ;
       }
 
-    cerr << "Server Received: (" << i << ") (" << f << ") (" << s << ")" << endl ;
+    cerr << "Received (" << i << ") (" << f << ") (" << s << ")" << endl ;
 
     if (!(this -> peer () << "Received: " << i << " " << f << " " << s << endl))
       {
 	cerr << __LINE__ << "Error sending data" << endl ;
 	return - 1 ;
       }
-
 #else
     if (!(this -> peer () >> i >> f))
       {
