@@ -43,24 +43,30 @@ public:
   TAO_Concurrency_Server (void);
   //Default constructor.
 
-  TAO_Concurrency_Server (CORBA::ORB_var &orb,
-                          PortableServer::POA_var &poa);
+  TAO_Concurrency_Server (CORBA::ORB_ptr orb,
+                          PortableServer::POA_ptr poa);
   // Takes the POA under which to register the Concurrency Service
   // implementation object.
 
   ~TAO_Concurrency_Server (void);
   // Destructor.
 
-  int init (CORBA::ORB_var &orb,
-            PortableServer::POA_var &poa);
+  CORBA::Object_ptr init (CORBA::ORB_ptr orb,
+                          PortableServer::POA_ptr poa);
   // Initialize the concurrency server under the given ORB and POA.
 
-  CC_LockSetFactory *GetLockSetFactory(void);
+  /// Cleanup resources.
+  int fini (void);
+
+  CC_LockSetFactory *GetLockSetFactory (void);
   // Get the lock set factory.
 
 private:
   CC_LockSetFactory lock_set_factory_;
   // This is the lock set factory activated under the POA.
+
+  /// The POA which the lock set factory servant was registered.
+  PortableServer::POA_var poa_;
 };
 
 #include "ace/post.h"

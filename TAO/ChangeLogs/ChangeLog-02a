@@ -1,3 +1,16 @@
+Mon Apr  1 18:05:22 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
+
+	* orbsvcs/orbsvcs/Concurrency/Concurrency_Utils.cpp:
+	* orbsvcs/orbsvcs/Concurrency/Concurrency_Utils.h:
+	* orbsvcs/orbsvcs/Concurrency/Concurrency_Loader.cpp:
+	* orbsvcs/orbsvcs/Concurrency/Concurrency_Loader.h:
+	* orbsvcs/orbsvcs/Makefile.CosConcurrency:
+	* orbsvcs/Concurrency_Service/Makefile:
+	* orbsvcs/tests/Concurrency/Makefile:
+	  Made changes to dynamically load or unload the Concurrency
+	  service. Added the new files in the Makefile and updated 
+	  the dependencies.
+
 Mon Apr 01 07:38:45 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Resource_Factory.h:
