@@ -171,12 +171,20 @@ be_visitor_union_branch_public_access_cs::visit_enum (be_enum *)
 }
 
 int
-be_visitor_union_branch_public_access_cs::visit_interface (be_interface *)
+be_visitor_union_branch_public_access_cs::visit_interface (be_interface *node)
 {
   be_union_branch *ub =
     this->ctx_->be_node_as_union_branch (); // get union branch
   be_union *bu =
     this->ctx_->be_scope_as_union ();  // get the enclosing union backend
+  be_type *bt;
+
+  // check if we are visiting this node via a visit to a typedef node
+  if (this->ctx_->alias ())
+    bt = this->ctx_->alias ();
+  else
+    bt = node;
+
 
   if (!ub || !bu)
     {
@@ -187,8 +195,10 @@ be_visitor_union_branch_public_access_cs::visit_interface (be_interface *)
                          ), -1);
     }
   TAO_OutStream *os = this->ctx_->stream ();
-  *os << "return (CORBA::Object_ptr *) &this->u_." << ub->local_name ()
-      << "_->inout ();" << be_uidt_nl;
+  *os << "if (alloc_flag)" << be_idt_nl;
+  *os << "ACE_NEW_RETURN (this->u_." << ub->local_name () << "_, "
+      << "TAO_Object_Field_T<" << bt->name () << ">, 0);" << be_uidt_nl;
+  *os << "return this->u_." << ub->local_name () << "_;" << be_uidt_nl;
 
   return 0;
 }

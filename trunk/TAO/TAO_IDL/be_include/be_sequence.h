@@ -59,18 +59,6 @@ public:
   // create a name for ourselves. If we are typedefed, then we get the name of
   // the typedef node, else we generate a name for ourselves
 
-  virtual int gen_typecode (void);
-  // generate the typecode
-
-  virtual int gen_encapsulation (void);
-  // encapsulation for parameters
-
-  virtual long tc_size (void);
-  // return typecode size
-
-  virtual long tc_encap_len (void);
-  // return length of encapsulation
-
   virtual MANAGED_TYPE managed_type (void);
   // return the managed type
 
@@ -82,6 +70,9 @@ public:
 
   virtual be_decl *decl (void);
   // overridden method on the be_scope class
+
+  virtual idl_bool in_recursion (be_type *node = 0);
+  // are we or the node represented by node involved in recursion
 
   // Visiting
   virtual int accept (be_visitor *visitor);

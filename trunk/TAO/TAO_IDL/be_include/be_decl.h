@@ -79,12 +79,6 @@ public:
   virtual idl_bool is_nested (void);
   // determines if we are inside of a nested scope or not
 
-  virtual int gen_encapsulation (void);
-  // encapsulation of parameters
-
-  virtual long tc_encap_len (void);
-  // return length of encapsulation
-
   virtual be_scope *scope (void);
   // return the scope created by this node (if one exists)
 
@@ -147,15 +141,6 @@ protected:
   virtual void compute_prefix (void);
   // computes the prefix for the repoID
 
-  virtual int tc_name2long (const char *name, ACE_UINT32 *&, long &);
-  // name represented as a padded array of longs
-
-  virtual long repoID_encap_len (void);
-  // return encapsulation length required to hold repository ID
-
-  virtual long name_encap_len (void);
-  // return encapsulation length required to hold IDL name
-
   // variables that indicate if the code generation for that node is already
   // been done. This way we avoid regenerating same code.
   idl_bool cli_hdr_gen_;
@@ -187,9 +172,6 @@ protected:
 
   SIZE_TYPE size_type_;
   // whether we are fixed or variable size (by default fixed)
-
-  long encap_len_;
-  // encapsulation length - required for typecodes
 
 };
 

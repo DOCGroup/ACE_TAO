@@ -279,6 +279,13 @@ AST_Decl::NodeType be_type::base_node_type (void) const
   return ACE_const_cast(be_type*, this)->node_type ();
 }
 
+idl_bool
+be_type::in_recursion (be_type *)
+{
+  // be default we are not involved in recursion
+  return 0;
+}
+
 int
 be_type::accept (be_visitor *visitor)
 {

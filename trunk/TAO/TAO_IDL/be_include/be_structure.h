@@ -51,20 +51,11 @@ public:
   virtual int gen_out_impl (void);
   // generate the _out implementation
 
-  virtual int gen_typecode (void);
-  // generate the typecode
-
-  virtual int gen_encapsulation (void);
-  // encapsulation for parameters
-
-  virtual long tc_size (void);
-  // return typecode size
-
-  virtual long tc_encap_len (void);
-  // return length of encapsulation
-
   virtual int member_count (void);
   // return the count of members
+
+  virtual idl_bool in_recursion (be_type *node = 0);
+  // are we or the node represented by node involved in recursion
 
   // Visiting
   virtual int accept (be_visitor *visitor);
@@ -86,6 +77,7 @@ private:
 
   int member_count_;
   // number of members
+
 };
 
 #endif

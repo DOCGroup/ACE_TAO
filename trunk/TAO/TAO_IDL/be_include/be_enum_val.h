@@ -38,12 +38,6 @@ public:
   be_enum_val (unsigned long v, UTL_ScopedName *n, UTL_StrList *p);
   // constructor
 
-  virtual int gen_encapsulation (void);
-  // generate the typecode
-
-  virtual long tc_encap_len (void);
-  // return length of encapsulation
-
   // Visiting
   virtual int accept (be_visitor *visitor);
 

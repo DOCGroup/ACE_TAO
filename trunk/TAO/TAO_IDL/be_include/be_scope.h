@@ -46,12 +46,6 @@ public:
   virtual ~be_scope (void);
   // destructor
 
-  virtual int gen_encapsulation (void);
-  // encapsulation for parameters
-
-  virtual long tc_encap_len (void);
-  // return length of encapsulation
-
   virtual void comma (unsigned short set);
   // set the comma producing state
 

@@ -618,123 +618,6 @@ be_union::gen_out_impl (void)
   return 0;
 }
 
-int
-be_union::gen_typecode (void)
-{
-  TAO_OutStream *cs; // output stream
-  TAO_NL  nl;        // end line
-  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-
-  cs = cg->client_stubs ();
-  cs->indent (); // start from whatever indentation level we were at
-
-  *cs << "CORBA::tk_union, // typecode kind" << nl;
-  *cs << this->tc_encap_len () << ", // encapsulation length\n";
-  // now emit the encapsulation
-  return this->gen_encapsulation ();
-}
-
-// generate encapsulation.
-// An encapsulation for ourselves will be necessary when we are part of some
-// other IDL type and a typecode for that other type is being generated. This
-// will comprise our typecode kind. IDL types with parameters will additionally
-// have the encapsulation length and the entire typecode description
-
-int
-be_union::gen_encapsulation (void)
-{
-  TAO_OutStream *cs; // output stream
-  TAO_NL  nl;        // end line
-  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-  long i, arrlen;
-  ACE_UINT32 *arr;
-  be_type *discrim;
-
-  cs = cg->client_stubs ();
-  cs->indent (); // start from whatever indentation level we were at
-
-  *cs << "TAO_ENCAP_BYTE_ORDER, // byte order" << nl;
-  // generate repoID
-  *cs << (ACE_OS::strlen (this->repoID ())+1) << ", ";
-  (void)this->tc_name2long (this->repoID (), arr, arrlen);
-  for (i=0; i < arrlen; i++)
-    {
-      cs->print ("ACE_NTOHL (0x%x), ", arr[i]);
-    }
-  *cs << " // repository ID = " << this->repoID () << nl;
-  // generate name
-  *cs << (ACE_OS::strlen (this->local_name ()->get_string ())+1) << ", ";
-  (void)this->tc_name2long(this->local_name ()->get_string (), arr, arrlen);
-  for (i=0; i < arrlen; i++)
-    {
-      cs->print ("ACE_NTOHL (0x%x), ", arr[i]);
-    }
-  *cs << " // name = " << this->local_name () << ",\n";
-
-  // generate typecode for discriminant
-  discrim = be_type::narrow_from_decl (this->disc_type ());
-  if (discrim->gen_typecode () == -1)
-    {
-      ACE_ERROR ((LM_ERROR, "be_union: cannot generate typecode for discriminant\n"));
-      return -1;
-    }
-
-  // generate the default used flag
-  cs->indent ();
-  *cs << this->default_index () << ", // default used index" << nl;
-  // generate the member count
-  *cs << this->member_count () << ", // member count\n";
-  cs->incr_indent (0);
-  // hand over to the scope to generate the typecode for elements
-  if (be_scope::gen_encapsulation () == -1)
-    {
-      ACE_ERROR ((LM_ERROR, "be_union: cannot generate code for members\n"));
-      return -1;
-    }
-  cs->decr_indent (0);
-  return 0;
-}
-
-// compute typecode size
-long
-be_union::tc_size (void)
-{
-  // 4 bytes for enumeration, 4 bytes for storing encap length val, followed by the
-  // actual encapsulation length
-  return 4 + 4 + this->tc_encap_len ();
-}
-
-long
-be_union::tc_encap_len (void)
-{
-  if (this->encap_len_ == -1) // not computed yet
-    {
-      long slen;
-      be_type *discrim;
-
-      // Macro to avoid "warning: unused parameter" type warning.
-      ACE_UNUSED_ARG (slen);
-
-      this->encap_len_ = 4;  // holds the byte order flag
-
-      this->encap_len_ += this->repoID_encap_len (); // for repoID
-
-      // do the same thing for the local name
-      this->encap_len_ += this->name_encap_len (); // for name
-
-      // add encapsulation size of discriminant typecode
-      discrim = be_type::narrow_from_decl (this->disc_type ());
-      this->encap_len_ += discrim->tc_size ();
-
-      this->encap_len_ += 4; // to hold the "default used" flag
-      this->encap_len_ += 4; // to hold the member count
-
-      // compute encap length for members
-      this->encap_len_ += be_scope::tc_encap_len ();
-    }
-  return this->encap_len_;
-}
-
 // compute the size type of the node in question
 int
 be_union::compute_size_type (void)
@@ -773,6 +656,62 @@ be_union::compute_size_type (void)
         } // end of while
       delete si; // free the iterator object
     }
+  return 0;
+}
+
+// Are we or the parameter node involved in any recursion
+idl_bool
+be_union::in_recursion (be_type *node)
+{
+  if (!node)
+    {
+      // we are determining the recursive status for ourselves
+      node = this;
+    }
+
+  // proceed if the number of members in our scope is greater than 0
+  if (this->nmembers () > 0)
+    {
+      // initialize an iterator to iterate thru our scope
+      UTL_ScopeActiveIterator *si;
+      ACE_NEW_RETURN (si,
+                      UTL_ScopeActiveIterator (this,
+                                               UTL_Scope::IK_decls),
+                      -1);
+      // continue until each element is visited
+      while (!si->is_done ())
+        {
+          be_union_branch *field = be_union_branch::narrow_from_decl (si->item ());
+          if (!field)
+            {
+              delete si;
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ASYS_TEXT ("(%N:%l) be_union::")
+                                 ASYS_TEXT ("in_recursion - ")
+                                 ASYS_TEXT ("bad field node\n")),
+                                0);
+            }
+          be_type *type = be_type::narrow_from_decl (field->field_type ());
+          if (!type)
+            {
+              delete si;
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ASYS_TEXT ("(%N:%l) be_union::")
+                                 ASYS_TEXT ("in_recursion - ")
+                                 ASYS_TEXT ("bad field type\n")),
+                                0);
+            }
+          if (type->in_recursion (node))
+            {
+              delete si;
+              return 1;
+            }
+          si->next ();
+        } // end of while loop
+      delete si;
+    } // end of if
+
+  // not in recursion
   return 0;
 }
 

@@ -363,6 +363,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
   *os << "typedef " << node->local_name () << " *"
       << node->local_name () << "_ptr;\n";
 
+#if 0
   if (!this->ctx_->tdef ())
     {
       // by using a visitor to declare and define the TypeCode, we have the
@@ -380,6 +381,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
                              ), -1);
         }
     }
+#endif
 
   os->gen_endif (); // endif macro
 

@@ -271,6 +271,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
       << " (void) // dtor" << be_nl
       << "{}\n\n";
 
+#if 0
   if (!this->ctx_->tdef ())
     {
       // by using a visitor to declare and define the TypeCode, we have the
@@ -278,6 +279,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
       // based on the command line options. This is still TO-DO
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_TYPECODE_DEFN);
+      ctx.sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE);
       visitor = tao_cg->make_visitor (&ctx);
       if (!visitor || (node->accept (visitor) == -1))
         {
@@ -288,6 +290,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
                              ), -1);
         }
     }
+#endif
 
   os->gen_endif ();
   node->cli_stub_gen (1);

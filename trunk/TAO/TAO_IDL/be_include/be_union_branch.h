@@ -37,12 +37,6 @@ public:
                    UTL_StrList *p);
   // constructor
 
-  virtual int gen_encapsulation (void);
-  // generate the encapsulation
-
-  virtual long tc_encap_len (void);
-  // return the total byte length of ourselves represented as an encapsulation
-
   int gen_label_value (TAO_OutStream *os);
   // Generate the label value (as in a switch/case statement).
 
