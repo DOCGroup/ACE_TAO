@@ -1,3 +1,9 @@
+Wed Nov 21 12:52:37 2001  Jaiganesh Balasubramanian  <jai@balar.ece.uci.edu>
+
+	* /orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp
+	  Had a wrong spelling for the file "ECG_Mcast_EH.i" in the
+	  include statement corrected.
+
 Wed Nov 21 12:42:36 2001  Jaiganesh Balasubramanian  <jai@balar.ece.uci.edu>
 
 	* /orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp
