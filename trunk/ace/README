@@ -169,6 +169,9 @@ ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
                                         Compiler handles explicit calling of
                                         template destructor correctly. See
                                         "ace/OS.h" for details.
+ACE_HAS_BROKEN_ACCEPT_ADDR              Platform can't correctly deal
+                                        with a NULL addr to accept()
+                                        (e.g, VxWorks).
 ACE_HAS_BROKEN_NAMESPACES               Compiler/platform doesn't
                                         support namespaces (or the
                                         support is not fully
