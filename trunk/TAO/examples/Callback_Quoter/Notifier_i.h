@@ -61,7 +61,11 @@ public:
   virtual void shutdown (CORBA::Environment &);
   // Shutdown the Notifier.
 
-private:
+  // CONSUMER_MAP* get_consumer_map_ptr ();
+  // Returns the consumer map ptr.
+
+  //private:
+public:
   CORBA::ORB_var orb_;
   // The ORB manager.
 

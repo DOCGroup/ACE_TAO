@@ -35,7 +35,15 @@ Notifier_Input_Handler::Notifier_Input_Handler (void)
 
 Notifier_Input_Handler::~Notifier_Input_Handler (void)
 {
-  // no-op.
+   // Make sure to cleanup the STDIN handler.
+
+  if (ACE_Event_Handler::remove_stdin_handler
+      (TAO_ORB_Core_instance ()->reactor (),
+       TAO_ORB_Core_instance ()->thr_mgr ()) == -1)
+     ACE_ERROR ((LM_ERROR,
+       	       "%p\n",
+       	       "remove_stdin_handler"));
+
 }
 
 // The naming service is initialized and the naming context as well as
@@ -136,6 +144,19 @@ Notifier_Input_Handler::init (int argc,
 		char *argv[],
 		CORBA::Environment &TAO_TRY_ENV)
 {
+
+  // Register our <Input_Handler> to handle STDIN events, which will
+  // trigger the <handle_input> method to process these events.
+
+  if (ACE_Event_Handler::register_stdin_handler
+      (this,
+       TAO_ORB_Core_instance ()->reactor (),
+       TAO_ORB_Core_instance ()->thr_mgr ()) == -1)
+       ACE_ERROR_RETURN ((LM_ERROR,
+		       "%p\n",
+		       "register_stdin_handler"),
+		      -1);
+
   // Call the init of <TAO_ORB_Manager> to initialize the ORB and
   // create the child poa under the root POA.
 
@@ -190,9 +211,50 @@ Notifier_Input_Handler::run (CORBA::Environment &TAO_TRY_ENV)
 {
   // Run the main event loop for the ORB.
 
+
+  ACE_DEBUG ((LM_DEBUG,
+	      " Type \"q\" to quit \n "));
+
   if (this->orb_manager_.run (TAO_TRY_ENV) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Notifier_Input_Handler::run"),
                       -1);
   return 0;
+}
+
+int
+Notifier_Input_Handler::handle_input (ACE_HANDLE)
+{
+  char buf[BUFSIZ];
+
+  TAO_TRY
+    {
+      // The string could read contains \n\0 hence using ACE_OS::read
+      // which returns the no of bytes read and hence i can manipulate
+      // and remove the devil from the picture i.e '\n' ! ;)
+
+      ssize_t strlen = ACE_OS::read (ACE_STDIN,
+				     buf,
+				     sizeof buf);
+      if (buf[strlen -1] == '\n')
+	buf[strlen -1] = '\0';
+
+      ACE_DEBUG ((LM_DEBUG,
+		  "%s",
+         	  buf));
+
+      if (tolower(buf[0]) == 'q')
+	{
+
+	  // (this->notifier_i_.consumer_map_).close();
+	  this->notifier_i_.shutdown(TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+	}
+    }
+   TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("Input_Handler::init");
+      return -1;
+    }
+  TAO_ENDTRY;
 }

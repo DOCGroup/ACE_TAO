@@ -118,7 +118,7 @@ Notifier_i::unregister_callback (Callback_Quoter::Consumer_ptr consumer,
        // will be removed from the set.
 
        // @@ Make sure to check the return value.
-       (*iter).int_id_->remove (consumer_to_remove);
+        (*iter).int_id_->remove (consumer_to_remove);
 
         ACE_DEBUG ((LM_DEBUG,
 		    "unregister_callback:consumer removed\n"));
@@ -182,12 +182,45 @@ Notifier_i::market_status (const char *stock_name,
 void
 Notifier_i::shutdown (CORBA::Environment &)
 {
+  if (this->consumer_map_.current_size () > 0)
+    {
+        this->consumer_map_.close ();
 
-  ACE_DEBUG ((LM_DEBUG,
-              "The Callback Quoter server is shutting down"));
+    }
 
-  // Instruct the ORB to shutdown.
-  this->orb_->shutdown ();
+      /* for (CONSUMER_MAP::ITERATOR iter = this->consumer_map_.begin ();
+	   iter!= this->consumer_map_.end ();
+	   iter ++)
+	{
+	  (*iter).int_id_->reset ();
+	  size_t no= this->consumer_map_.unbind ((*iter).ext_id_,
+			             (*iter).int_id_);
+
+
+          if (no == -1)
+	    {
+	    ACE_ERROR ((LM_ERROR,
+			"error! ACE_Hash_Map_Manager: unbind ()\n" );
+
+    		}
+
+
+
+          this->consumer_map_.close ();
+
+        	}
+        }
+
+        this->consumer_map_.close ();
+
+	}*/
+
+     ACE_DEBUG ((LM_DEBUG,
+		 "The Callback Quoter server is shutting down"));
+
+     // Instruct the ORB to shutdown.
+     this->orb_->shutdown ();
+
 }
 
 int
@@ -200,6 +233,14 @@ Notifier_i::Consumer_Data::operator== (const Consumer_Data &rhs)
 
   return this->consumer_->_is_equivalent (rhs.consumer_.in ());
 }
+
+/*CONSUMER_MAP*
+Notifier_i::get_consumer_map_ptr ()
+{
+return (&consumer_map_);
+}
+*/
+
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
