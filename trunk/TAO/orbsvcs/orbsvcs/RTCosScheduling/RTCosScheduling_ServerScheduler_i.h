@@ -62,7 +62,7 @@ typedef CORBA::Object_var COS_SCHEDULING_OBJECT_NAME_KEY;
 typedef ACE_CString COS_SCHEDULING_OBJECT_NAME_VALUE;
 
 ACE_TEMPLATE_SPECIALIZATION
-class ACE_Equal_To< COS_SCHEDULING_OBJECT_NAME_KEY >
+class TAO_RTCosScheduling_Export ACE_Equal_To< COS_SCHEDULING_OBJECT_NAME_KEY >
 {
   public:
   int operator () (const COS_SCHEDULING_OBJECT_NAME_KEY lhs,
@@ -72,7 +72,7 @@ class ACE_Equal_To< COS_SCHEDULING_OBJECT_NAME_KEY >
 
 namespace TAO {
 
-class CosSchedulingObjectMap_Hash_Key
+class TAO_RTCosScheduling_Export CosSchedulingObjectMap_Hash_Key
 {
 public:
   u_long operator () (const COS_SCHEDULING_OBJECT_NAME_KEY &key) const;
