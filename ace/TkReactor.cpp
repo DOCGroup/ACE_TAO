@@ -362,7 +362,7 @@ ACE_TkReactor::reset_timer_interval
    const ACE_Time_Value &interval)
 {
   ACE_TRACE ("ACE_TkReactor::reset_timer_interval");
-  ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Select_Reactor_Token, ace_mon, this->token_, -1));
 
   int result = ACE_Select_Reactor::timer_queue_->reset_interval
     (timer_id,
