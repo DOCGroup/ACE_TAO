@@ -1,3 +1,18 @@
+Sat Oct 03 09:24:45 1998  Susan Liebeskind <shl@cc.gatech.edu>
+
+        * ace/Task.h,Thread.h,Thread_Manager.h,Timer_Queue_Adapters.h
+          (activate,spawn,spawn_n): added THR_JOINABLE to THR_NEW_LWP
+          default flags.
+
+          On the boxes which implement POSIX 1003.1.b (Solaris, Digital Unix)
+          threads spawned using default flags provided by those methods are
+          created *joinable*.
+
+          On the box which implements Draft 7 (AIX), the spawned threads are
+          *detached*.
+
+          This change ensures consistent behavior across all platforms.
+
 Sat Oct 03 09:04:44 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/ACE.cpp (set_handle_limit): wrapped the final
