@@ -110,7 +110,7 @@ Protocol_Stream::open (void)
                        "%p\n",
                        "stream().push(crypt)"),
                       -1);
-#endif // ENABLE_ENCRYPTION
+#endif /* ENABLE_ENCRYPTION */
   return 0;
 }
 
