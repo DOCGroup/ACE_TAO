@@ -2373,7 +2373,7 @@ void
 TAO_ORB_Core::resolve_typecodefactory_i (CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_Object_Loader *loader =
-    ACE_Dynamic_Service<TAO_Object_Loader>::instance ("TypeCodeFactory");
+    ACE_Dynamic_Service<TAO_Object_Loader>::instance ("TypeCodeFactory_Loader");
   if (loader == 0)
     {
       ACE_Service_Config::process_directive (
@@ -2381,7 +2381,7 @@ TAO_ORB_Core::resolve_typecodefactory_i (CORBA::Environment &ACE_TRY_ENV)
           "TAO_TypeCodeFactory:_make_TAO_TypeCodeFactory_Loader()"
         );
       loader =
-        ACE_Dynamic_Service<TAO_Object_Loader>::instance ("TypeCodeFactory");
+        ACE_Dynamic_Service<TAO_Object_Loader>::instance ("TypeCodeFactory_Loader");
       if (loader == 0)
         ACE_THROW (CORBA::ORB::InvalidName ());
     }
