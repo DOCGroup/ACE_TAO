@@ -37,9 +37,7 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
   // Output stream.
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << "\n// \t *** AMH-RH operation definition starts here ***\n";
-
-  be_interface *intf;
+   be_interface *intf;
   intf = this->ctx_->attribute ()
     ? be_interface::narrow_from_scope (this->ctx_->attribute()->defined_in ())
     : be_interface::narrow_from_scope (node->defined_in ());

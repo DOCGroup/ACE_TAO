@@ -26,12 +26,11 @@
 
 ACE_RCSID(be_visitor_interface, interface, "$Id$")
 
+// ******************************************************
+// Generic Interface visitor
+// ******************************************************
 
-  // ******************************************************
-  // Generic Interface visitor
-  // ******************************************************
-
-  be_visitor_interface::be_visitor_interface (be_visitor_context *ctx)
+be_visitor_interface::be_visitor_interface (be_visitor_context *ctx)
     : be_visitor_scope (ctx)
 {
 }
@@ -45,6 +44,19 @@ int
 be_visitor_interface::visit_interface (be_interface *)
 {
   return -1;
+}
+
+int
+be_visitor_interface::is_amh_rh_node (be_interface *node)
+{
+  //If, is implied-IDL
+  if (node->original_interface () != 0) 
+    // and the name starts with AMH
+    if (ACE_OS::strncmp (node->local_name (), "AMH", 3) == 0)
+      // then it is an AMH node
+      return 1;
+  
+  return 0;
 }
 
 // =all common visit methods for interface visitor

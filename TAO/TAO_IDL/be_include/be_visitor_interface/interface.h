@@ -86,6 +86,8 @@ public:
   virtual int visit_typedef (be_typedef *node);
   // visit the typedef node
 
+ protected:
+    int is_amh_rh_node (be_interface *node);
 };
 
 #endif /*  _BE_INTERFACE_INTERFACE_H_ */
