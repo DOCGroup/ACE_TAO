@@ -78,10 +78,12 @@ installation
 
 Before compiling <CODE>TAO_IDL</CODE> on NT, you may need to set the
 environment variable <CODE>CPP_PATH</CODE> to where CL.exe is
-installed on your machine.  By default, we set this variable to to
+installed on your machine.  By default, we set this variable to
 "C:/Program Files/DevStudio/VC/bin".  Your location may vary, however.
-Notice that if you forget to set this variable, you must rebuild
-<CODE>TAO_IDL</CODE> after setting it. <P>
+Notice that if you forget to set this variable before compiling
+<CODE>TAO_IDL</CODE>, you can use <CODE>CPP_LOCATION</CODE> to specify
+the absolute pathname to CL.exe. We set if to "C:/Program
+Files/DevStudio/VC/bin/CL.exe" when we do use it.<P>
 
 <H4>Visual C++ 5.0</H4>
 
