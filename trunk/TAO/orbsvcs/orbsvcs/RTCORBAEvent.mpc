@@ -17,6 +17,12 @@ project(RTCORBAEvent) : orbsvcslib, core, rtevent, naming, rtportableserver {
     }
   }
 
+  Header_Files {
+  }
+
+  Inline_Files {
+  }
+
   Template_Files {
   }
 }

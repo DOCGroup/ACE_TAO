@@ -2259,14 +2259,9 @@ libTAO_CosNotification_Persist_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 nobase_include_HEADERS += \
-  Channel_Clients_T.i \
-  Event_Utilities.i \
   Notify/XML_Loader.h \
   Notify/XML_Saver.h \
-  Notify/XML_Topology_Factory.h \
-  Scheduler_Factory.i \
-  Scheduler_Utilities.i \
-  Time_Utilities.i
+  Notify/XML_Topology_Factory.h
 
 endif !BUILD_MINIMUM_CORBA
 endif BUILD_ACEXML
@@ -4604,13 +4599,8 @@ libTAO_RTCORBAEvent_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 nobase_include_HEADERS += \
-  Channel_Clients_T.i \
   Event/EC_RTCORBA_Dispatching.h \
-  Event/EC_RTCORBA_Factory.h \
-  Event_Utilities.i \
-  Scheduler_Factory.i \
-  Scheduler_Utilities.i \
-  Time_Utilities.i
+  Event/EC_RTCORBA_Factory.h
 
 endif BUILD_RT_CORBA
 endif BUILD_CORBA_MESSAGING
