@@ -1,5 +1,5 @@
 // $Id$
-project(*notify perf Structured Supplier): notifytest {
+project(*Ntf Perf Struct Supp): notifytest {
   avoids += minimum_corba
   exename = Structured_Supplier
   Source_Files {
@@ -7,7 +7,7 @@ project(*notify perf Structured Supplier): notifytest {
   }
 }
 
-project(*notify perf Structured Consumer): notifytest {
+project(*Ntf Perf Struct Cons): notifytest {
   avoids += minimum_corba
   exename = Structured_Consumer
   Source_Files {
@@ -18,7 +18,7 @@ project(*notify perf Structured Consumer): notifytest {
   }
 }
 
-project(*notify perf Sequence Supplier): notifytest {
+project(*Ntf Perf Seq Supp): notifytest {
   avoids += minimum_corba
   exename = Sequence_Supplier
   Source_Files {
