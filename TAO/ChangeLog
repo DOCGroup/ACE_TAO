@@ -1,3 +1,17 @@
+Thu Feb 20 10:20:51 2003  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Exception.h (TAO_SYSTEM_EXCEPTION):
+
+	  Removed "##" preprocessor concatenation token for the
+	  "CORBA::name" case.  It isn't needed in this case.  Fixes a g++
+	  warning regarding invalid token pasting.
+
+	* tao/Services.i:
+
+	  Fixed variables containing "CORBA_" in the middle of their names
+	  that were inadvertently changed to "CORBA::".  Fixes syntax
+	  errors.
+
 Thu Feb 20 09:07:56 2003  Ossama Othman  <ossama@uci.edu>
 
 	* TAO_IDL/be/be_interface.cpp (gen_stub_ctor):
