@@ -114,27 +114,6 @@ public:
 
       // Emitting code for array defn.
       TAO_ARRAY_CH,
-      TAO_ARRAY_CI,
-      TAO_ARRAY_CS,
-      TAO_ARRAY_ANY_OP_CH,
-      TAO_ARRAY_ANY_OP_CS,
-      TAO_ARRAY_CDR_OP_CH,
-      TAO_ARRAY_CDR_OP_CI,
-      TAO_ARRAY_CDR_OP_CS,
-
-      // Emitting code for the constants.
-      TAO_CONSTANT_CH,                          // in client header
-      TAO_CONSTANT_CI,                          // XXXASG rm?
-      TAO_CONSTANT_CS,                          // in client stub
-
-      // Emitting code for enums.
-      TAO_ENUM_CH,                              // in client header
-      TAO_ENUM_CS,                              // in client stubs
-      TAO_ENUM_ANY_OP_CH,
-      TAO_ENUM_ANY_OP_CS,
-      TAO_ENUM_CDR_OP_CH,
-      TAO_ENUM_CDR_OP_CI,
-      TAO_ENUM_CDR_OP_CS,
 
       // Emitting code for exceptions.
       TAO_EXCEPTION_CH,
@@ -148,15 +127,6 @@ public:
       TAO_EXCEPTION_CDR_OP_CH,
       TAO_EXCEPTION_CDR_OP_CI,
       TAO_EXCEPTION_CDR_OP_CS,
-
-      // Emitting fields i.e., struct members.
-      TAO_FIELD_CH,
-      TAO_FIELD_CI,
-      TAO_FIELD_CS,
-      TAO_FIELD_CDR_OP_CH,
-      TAO_FIELD_CDR_OP_CI,
-      TAO_FIELD_CDR_OP_CS,
-      TAO_FIELD_OBV_CH,
 
       // Emitting code for the interface.
       TAO_INTERFACE_CH,
@@ -269,29 +239,8 @@ public:
       TAO_COMPONENT_FWD_CDR_OP_CI,
       TAO_COMPONENT_FWD_ANY_OP_CH,
 
-      // Emitting code for the eventtype.
-      TAO_EVENTTYPE_CH,
-      TAO_EVENTTYPE_CI,
-      TAO_EVENTTYPE_CS,
-      TAO_EVENTTYPE_IS,
-      TAO_EVENTTYPE_IH,
-      TAO_EVENTTYPE_SH,
-      TAO_EVENTTYPE_SI,
-      TAO_EVENTTYPE_SS,
-      TAO_EVENTTYPE_OBV_CH,                 // OBV_ class
-      TAO_EVENTTYPE_OBV_CI,
+      TAO_EVENTTYPE_OBV_CH,
       TAO_EVENTTYPE_OBV_CS,
-      TAO_EVENTTYPE_ANY_OP_CH,
-      TAO_EVENTTYPE_ANY_OP_CS,
-      TAO_EVENTTYPE_CDR_OP_CH,
-      TAO_EVENTTYPE_CDR_OP_CI,
-      TAO_EVENTTYPE_CDR_OP_CS,
-
-      // Emitting code for the eventtype forward declaration.
-      TAO_EVENTTYPE_FWD_CH,
-      TAO_EVENTTYPE_FWD_CDR_OP_CH,
-      TAO_EVENTTYPE_FWD_CDR_OP_CI,
-      TAO_EVENTTYPE_FWD_ANY_OP_CH,
 
       // Emitting code for the component home.
       TAO_HOME_CH,
@@ -309,19 +258,6 @@ public:
       TAO_HOME_CDR_OP_CS,
 
       // Emitting code for the module,
-      TAO_MODULE_CH,
-      TAO_MODULE_CI,
-      TAO_MODULE_CS,
-      TAO_MODULE_SH,
-      TAO_MODULE_SI,
-      TAO_MODULE_IH,
-      TAO_MODULE_SS,
-      TAO_MODULE_IS,
-      TAO_MODULE_ANY_OP_CH,
-      TAO_MODULE_ANY_OP_CS,
-      TAO_MODULE_CDR_OP_CH,
-      TAO_MODULE_CDR_OP_CI,
-      TAO_MODULE_CDR_OP_CS,
       TAO_MODULE_OBV_CH,                    // for OBV_ (cmp. POA_ namespace)
       TAO_MODULE_OBV_CI,
       TAO_MODULE_OBV_CS,

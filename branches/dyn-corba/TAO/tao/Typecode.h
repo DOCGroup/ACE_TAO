@@ -17,7 +17,7 @@
 #define TAO_TYPECODE_H
 #include "ace/pre.h"
 
-#include "ace/Synch.h"
+#include "ace/Hash_Map_Manager_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -290,10 +290,28 @@ public:
   /// helper function.
   static CORBA::Boolean skip_typecode (TAO_InputCDR &stream);
 
-#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+  typedef ACE_Unbounded_Queue<CORBA::Long> OFFSET_LIST;
+  typedef ACE_Unbounded_Queue_Iterator<CORBA::Long> OFFSET_LIST_ITERATOR;
+  typedef ACE_Hash_Map_Entry<const char *, OFFSET_LIST *> OFFSET_MAP_ENTRY;
+  typedef ACE_Hash_Map_Manager_Ex<const char *, 
+                                  OFFSET_LIST *, 
+                                  ACE_Hash<const char *>, 
+                                  ACE_Equal_To<const char *>, 
+                                  ACE_Null_Mutex>
+    OFFSET_MAP;
+
+  typedef ACE_Hash_Map_Iterator_Ex<const char *, 
+                                   OFFSET_LIST *, 
+                                   ACE_Hash<const char *>, 
+                                   ACE_Equal_To<const char *>, 
+                                   ACE_Null_Mutex>
+    OFFSET_MAP_ITERATOR;
+
+  OFFSET_MAP *offset_map (void) const;
+  void offset_map (OFFSET_MAP *map);
+
   typedef CORBA_TypeCode_ptr _ptr_type;
   typedef CORBA_TypeCode_var _var_type;
-#endif /* __GNUC__ */
   // Useful for template programming.
 
 private:
@@ -481,6 +499,8 @@ private:
    * the destructor.
    */
   char *non_aligned_buffer_;
+
+  OFFSET_MAP *offset_map_;
 };
 
 /**

@@ -63,22 +63,8 @@ be_visitor_component::visit_attribute (be_attribute *node)
     case TAO_CodeGen::TAO_COMPONENT_IS:
       ctx.state (TAO_CodeGen::TAO_ATTRIBUTE_IS);
       break;
-    case TAO_CodeGen::TAO_COMPONENT_ANY_OP_CH:
-    case TAO_CodeGen::TAO_COMPONENT_ANY_OP_CS:
-    case TAO_CodeGen::TAO_COMPONENT_CDR_OP_CH:
-    case TAO_CodeGen::TAO_COMPONENT_CDR_OP_CI:
-    case TAO_CodeGen::TAO_COMPONENT_CDR_OP_CS:
-    case TAO_CodeGen::TAO_COMPONENT_CI:
-    case TAO_CodeGen::TAO_COMPONENT_SI:
-      return 0; // nothing to be done
     default:
-      {
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%N:%l) be_visitor_component::"
-                           "visit_attribute - "
-                           "Bad context state\n: "),
-                          -1);
-      }
+      return 0; // nothing to be done
     }
 
   // Same visitor for all the above cases where an action is taken.

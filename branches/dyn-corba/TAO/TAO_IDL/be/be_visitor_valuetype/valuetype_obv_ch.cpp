@@ -212,7 +212,6 @@ be_visitor_valuetype_obv_ch::visit_field (be_field *node)
   if (!vt->opt_accessor ())
     {
       be_visitor_context ctx (*this->ctx_);
-      ctx.state (TAO_CodeGen::TAO_FIELD_OBV_CH);
       be_visitor_valuetype_field_ch visitor (&ctx);
 
       visitor.setenclosings ("virtual ",";");

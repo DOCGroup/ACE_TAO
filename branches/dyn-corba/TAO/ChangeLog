@@ -1,3 +1,82 @@
+Mon Jan 27 000:31:33 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_interface_strategy.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ch.cpp:
+        * TAO_IDL/be/be_visitor_array/array_cs.cpp:
+        * TAO_IDL/be/be_visitor_array/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_array/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_component/component.cpp:
+        * TAO_IDL/be/be_visitor_eventtype/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_eventtype/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_eventtype/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_eventtype/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_eventtype/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_eventtype/eventtype_ch.cpp:
+        * TAO_IDL/be/be_visitor_eventtype/eventtype_ci.cpp:
+        * TAO_IDL/be/be_visitor_eventtype/eventtype_cs.cpp:
+        * TAO_IDL/be/be_visitor_eventtype/eventtype_obv_ch.cpp:
+        * TAO_IDL/be/be_visitor_eventtype/eventtype_obv_ci.cpp:
+        * TAO_IDL/be/be_visitor_eventtype/eventtype_obv_cs.cpp:
+        * TAO_IDL/be/be_visitor_eventtype/eventtype_sh.cpp:
+        * TAO_IDL/be/be_visitor_eventtype/eventtype_si.cpp:
+        * TAO_IDL/be/be_visitor_eventtype/eventtype_ss.cpp:
+        * TAO_IDL/be/be_visitor_eventtype_fwd/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_eventtype_fwd/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_eventtype_fwd/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_eventtype_fwd/eventtype_fwd_ch.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception.cpp:
+        * TAO_IDL/be/be_visitor_field/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_field/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_field/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_field/field_ch.cpp:
+        * TAO_IDL/be/be_visitor_field/field_ci.cpp:
+        * TAO_IDL/be/be_visitor_field/field_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface.cpp:
+        * TAO_IDL/be/be_visitor_module/module.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_structure/structure.cpp:
+        * TAO_IDL/be/be_visitor_typedef/typedef.cpp:
+        * TAO_IDL/be/be_visitor_union/discriminant_ch.cpp:
+        * TAO_IDL/be/be_visitor_union/discriminant_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_ch.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_cdr_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_cdr_ci.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_ci.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/obv_module.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_obv_ch.cpp:
+        * TAO_IDL/be_include/be_codegen.h:
+
+	  Removed some of the context state enum values. This is
+	  just a start - most of these can be removed and replaced
+	  with the corresponding TAO_ROOT_* value. Also a change
+	  to the creation of union typecodes (specifically the
+	  insertion of label values into the typecode) required
+	  by the new Any implementation.
+
+        * orbsvcs/IFR_Service/ifr_adding_visitor_union.cpp:
+        * orbsvcs/orbsvcs/IFRService/IRObject_i.cpp:
+
+	  Minor changes related to the new Any implementation.
+
+        * tao/Typecode.cpp:
+        * tao/Typecode.h:
+        * tao/Typecode.i:
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactory_i.h:
+
+	  Added recursive typecode support to TypeCodeFactory.
+	  This involved fixing the TAO Typecode class to
+	  handle recursive valuetype typecodes.
+
 Sun Jan 12 02:08:58 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/CosEvent.dsp:

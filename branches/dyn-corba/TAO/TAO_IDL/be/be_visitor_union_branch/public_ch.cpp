@@ -182,7 +182,6 @@ be_visitor_union_branch_public_ch::visit_enum (be_enum *node)
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
-      ctx.state (TAO_CodeGen::TAO_ENUM_CH);
       be_visitor_enum_ch visitor (&ctx);
 
      if (node->accept (&visitor) == -1)

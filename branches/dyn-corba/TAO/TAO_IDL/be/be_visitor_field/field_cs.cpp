@@ -78,7 +78,6 @@ be_visitor_field_cs::visit_array (be_array *node)
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
-      ctx.state (TAO_CodeGen::TAO_ARRAY_CS);
       be_visitor_array_cs visitor (&ctx);
 
       if (node->accept (&visitor) == -1)
@@ -102,7 +101,6 @@ be_visitor_field_cs::visit_enum (be_enum *node)
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
-      ctx.state (TAO_CodeGen::TAO_ENUM_CS);
       be_visitor_enum_cs visitor (&ctx);
 
       if (node->accept (&visitor) == -1)

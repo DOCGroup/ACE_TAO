@@ -98,6 +98,18 @@ CORBA_TypeCode::member_count (ACE_ENV_SINGLE_ARG_DECL) const
     return this->private_member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
+ACE_INLINE CORBA::TypeCode::OFFSET_MAP *
+CORBA_TypeCode::offset_map (void) const
+{
+  return this->offset_map_;
+}
+
+ACE_INLINE void
+CORBA_TypeCode::offset_map (CORBA::TypeCode::OFFSET_MAP *map)
+{
+  this->offset_map_ = map;
+}
+
 // ************************************************************
 // These are in CORBA namespace
 

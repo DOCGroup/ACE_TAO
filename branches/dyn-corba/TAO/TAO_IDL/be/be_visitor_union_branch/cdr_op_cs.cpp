@@ -75,7 +75,6 @@ be_visitor_union_branch_cdr_op_cs::visit_array (be_array *node)
       // This is the case for anonymous arrays.
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
-      ctx.state (TAO_CodeGen::TAO_ARRAY_CDR_OP_CS);
       be_visitor_array_cdr_op_cs visitor (&ctx);
 
       if (node->accept (&visitor) == -1)

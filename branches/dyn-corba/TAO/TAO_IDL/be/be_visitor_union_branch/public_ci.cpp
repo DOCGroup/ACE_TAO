@@ -110,7 +110,6 @@ be_visitor_union_branch_public_ci::visit_array (be_array *node)
       ctx.node (node);
 
       // First generate the inline operations for this anonymous array type.
-      ctx.state (TAO_CodeGen::TAO_ARRAY_CI);
       be_visitor_array_ci visitor (&ctx);
 
       if (node->accept (&visitor) == -1)

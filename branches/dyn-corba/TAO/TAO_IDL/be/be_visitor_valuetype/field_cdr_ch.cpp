@@ -79,7 +79,6 @@ be_visitor_valuetype_field_cdr_ch::visit_array (be_array *node)
       // This is the case for anonymous arrays.
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
-      ctx.state (TAO_CodeGen::TAO_ARRAY_CDR_OP_CH);
       be_visitor_array_cdr_op_ch visitor (&ctx);
 
       if (node->accept (&visitor) == -1)
@@ -104,7 +103,6 @@ be_visitor_valuetype_field_cdr_ch::visit_enum (be_enum *node)
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
-      ctx.state (TAO_CodeGen::TAO_ENUM_CDR_OP_CH);
       be_visitor_enum_cdr_op_ch visitor (&ctx);
 
       if (node->accept (&visitor) == -1)

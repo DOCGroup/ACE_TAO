@@ -76,7 +76,6 @@ be_visitor_union_branch_public_cs::visit_array (be_array *node)
       // Anonymous array case.
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
-      ctx.state (TAO_CodeGen::TAO_ARRAY_CS);
       be_visitor_array_cs visitor (&ctx);
 
       if (node->accept (&visitor) == -1)
@@ -97,7 +96,6 @@ be_visitor_union_branch_public_cs::visit_enum (be_enum *node)
 {
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  ctx.state (TAO_CodeGen::TAO_ENUM_CS);
   be_visitor_enum_cs visitor (&ctx);
 
   if (node->accept (&visitor) == -1)

@@ -96,7 +96,6 @@ int be_visitor_array_ch::visit_array (be_array *node)
       {
         case AST_Decl::NT_enum:
           {
-            ctx.state (TAO_CodeGen::TAO_ENUM_CH);
             be_visitor_enum_ch ec_visitor (&ctx);
             status = bt->accept (&ec_visitor);
             break;
