@@ -199,8 +199,9 @@ Grid_Factory_i::make_grid (CORBA::Short width,
 
   // This attempts to create a new Grid_i and throws an exception and
   // returns a null value if it fails
+  CORBA::Environment &env =  ACE_TRY_ENV;
   ACE_NEW_THROW_EX (grid_ptr,
-                    Grid_i (width, height, ACE_TRY_ENV),
+                    Grid_i (width, height, env),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (Grid::_nil ());
 

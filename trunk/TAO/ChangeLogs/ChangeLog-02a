@@ -1,3 +1,13 @@
+Mon Apr  2 13:07:52 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+	* examples/Logging/Logging_Service_i.cpp:
+	* examples/Logging/Logging_Test_i.cpp:
+	* examples/Simple/grid/Grid_i.cpp:
+	* orbsvcs/tests/Property/client.cpp:
+	* orbsvcs/tests/Property/main.cpp:
+
+	Fuzz..Fuzz...Fuzzzz
+
 Mon Apr  2 10:46:45 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/TimeBase.pidl:

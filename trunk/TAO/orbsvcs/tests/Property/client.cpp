@@ -250,17 +250,18 @@ Client::test_get_all_property_names (CORBA::Environment &ACE_TRY_ENV)
 
           // Call the function.
           CORBA::Boolean next_one_result = iterator_var->next_one (name_out, ACE_TRY_ENV);
+          ACE_CHECK_RETURN (-1);
 
           // Get the values back on a _var variable.
           CosPropertyService::PropertyName_var name_var = name_out.ptr ();
 
           while (next_one_result == 1)
             {
-              ACE_CHECK_RETURN (-1);
               ACE_DEBUG ((LM_DEBUG, "%s\n", name_var.in ()));
 
               // Call the function to iterate again.
               next_one_result = iterator_var->next_one (name_out, ACE_TRY_ENV);
+              ACE_CHECK_RETURN (-1);
 
               // Get the values back on a _var variable.
               name_var = name_out.ptr ();
@@ -388,8 +389,6 @@ int
 Client::test_delete_property (const char *property_name,
                               CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
-
   ACE_TRY
     {
       CORBA::String_var property_name_var (property_name);
@@ -409,6 +408,7 @@ Client::test_delete_property (const char *property_name,
       return -1;
     }
   ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
@@ -490,8 +490,8 @@ Client::test_get_all_properties (CORBA::Environment &ACE_TRY_ENV)
   // Get the number of current properties.
   CORBA::ULong num_of_properties =
     this->propsetdef_->get_number_of_properties (ACE_TRY_ENV);
-  ACE_UNUSED_ARG (num_of_properties);
   ACE_CHECK_RETURN ( -1);
+  ACE_UNUSED_ARG (num_of_properties);
 
   // Get half on the properties and half of on the iterator.
   CORBA::ULong how_many = 1;
@@ -695,8 +695,6 @@ Client::test_define_property_with_mode (CORBA::Environment &ACE_TRY_ENV)
 int
 Client::test_get_property_value (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
-
   ACE_TRY
     {
       // Get the ior property.
@@ -725,7 +723,7 @@ Client::test_get_property_value (CORBA::Environment &ACE_TRY_ENV)
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (1);
+  ACE_CHECK_RETURN (-1);
   return 0;
 }
 
@@ -745,11 +743,12 @@ main (int argc, char **argv)
       ACE_TRY_CHECK;
 
       //  client.run (ACE_TRY_ENV);
-      if (client.property_tester (ACE_TRY_ENV) != 0)
+      int ret = client.property_tester (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      if (ret != 0)
         ACE_DEBUG ((LM_DEBUG, "Test failed\n"));
       else
         ACE_DEBUG ((LM_DEBUG, "Test succeeded\n"));
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -758,6 +757,7 @@ main (int argc, char **argv)
       return -1;
     }
  ACE_ENDTRY;
+ ACE_CHECK_RETURN (-1);
 
   return 0;
 }
