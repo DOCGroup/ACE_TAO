@@ -197,7 +197,7 @@
 #if defined (ACE_HAS_STREAM_PIPES)
 #define ACE_DEFAULT_LOGGER_KEY "/tmp/server_daemon"
 #else
-#define ACE_DEFAULT_LOGGER_KEY "localhost:10010"
+#define ACE_DEFAULT_LOGGER_KEY "localhost:10012"
 #endif /* ACE_HAS_STREAM_PIPES */
 #endif /* ACE_DEFAULT_LOGGER_KEY */
 
@@ -2340,11 +2340,11 @@ typedef void (*ACE_SignalHandlerV)(...);
 #define _SYS_NMLN 257
 struct utsname
 {
-  char sysname[_SYS_NMLN];
-  char nodename[_SYS_NMLN];
-  char release[_SYS_NMLN];
-  char version[_SYS_NMLN];
-  char machine[_SYS_NMLN];
+  TCHAR sysname[_SYS_NMLN];
+  TCHAR nodename[_SYS_NMLN];
+  TCHAR release[_SYS_NMLN];
+  TCHAR version[_SYS_NMLN];
+  TCHAR machine[_SYS_NMLN];
 };
 #else
 #include /**/ <sys/utsname.h>
