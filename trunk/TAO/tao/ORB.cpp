@@ -956,6 +956,15 @@ CORBA_ORB::resolve_initial_references (const CORBA::String name,
     return this->resolve_service (name, timeout, ACE_TRY_ENV);
 }
 
+// Unimplemented at this time.
+CORBA_ORB_ObjectIdList_ptr
+CORBA_ORB::list_initial_services (void)
+{
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
+                                         CORBA::COMPLETED_NO),
+                    0);
+}
+
 TAO_Stub *
 CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
                                const char *type_id,

@@ -428,6 +428,9 @@ public:
   // will remains compliant with the CORBA
   // <resolve_initial_references> specification.
 
+  // Unimplemented function - throws CORBA::NO_IMPLEMENT.
+  CORBA_ORB_ObjectIdList_ptr list_initial_services (void);
+
   // = TAO-specific extensions to the CORBA specification.
 
   virtual TAO_ServantBase *_get_collocated_servant (TAO_Stub *p);
