@@ -12,6 +12,16 @@ MyImpl::Controller_exec_i::~Controller_exec_i ()
 {
 }
 
+// Operations from Priority_Test::Controller
+void
+MyImpl::Controller_exec_i::perform_test (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // This simply performs some measurements and print out the result.
+
+
+}
+
 // Operations from Components::SessionComponent
 void
 MyImpl::Controller_exec_i::set_session_context (Components::SessionContext_ptr ctx

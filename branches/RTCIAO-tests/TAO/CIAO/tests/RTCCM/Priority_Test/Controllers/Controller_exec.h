@@ -42,6 +42,10 @@ namespace MyImpl
 
     // Operations from Priority_Test::Controller
 
+    virtual void
+    perform_test (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
     // Operations from Components::SessionComponent
 
     virtual void

@@ -20,11 +20,7 @@ module Priority_Test
    */
   interface Op_Mode
   {
-    void start ();
-
-    void stop ();
-
-    boolean active ();
+    void perform_test ();
   };
 
   /**
