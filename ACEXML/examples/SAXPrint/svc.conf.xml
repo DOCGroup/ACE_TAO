@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
+<!-- This is a test XML file.  Most of the stuff here don't make any sense at all -->
 <!DOCTYPE ACE_Svc_Conf PUBLIC 'GOODSAM' 'http://ace.cs.wustl.edu/dtd/ACE_SVCCONF.DTD'
   [
     <!NOTATION goody PUBLIC 'NBC' 'http://hardcoreace.com/'>
@@ -9,6 +10,9 @@
     <!ENTITY sam PUBLIC 'SHIRE' 'http://taozen.com/'>
     <!ENTITY gandolf SYSTEM 'D:/RINGS.DOT'>
     <!ELEMENT GOOBEGONE EMPTY>
+    <!ELEMENT POOPOO ANY>
+    <!ELEMENT HOHOHO ((BOOBOO, GOOBEGONE)?, (GOOBEGONE|POOPOO)*)+>
+    <!ELEMENT BOOBOO (#PCDATA | BOOBOO)*>
     <!ATTLIST GOOBEGONE
               ohmy CDATA #REQUIRED
               testing IDREF #IMPLIED>
