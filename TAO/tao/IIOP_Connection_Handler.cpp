@@ -119,9 +119,9 @@ TAO_IIOP_Connection_Handler::open (void*)
           (void) local_addr.addr_to_string (local_as_string,
                                             sizeof(local_as_string));
           ACE_ERROR ((LM_ERROR,
-                      ACE_LIB_TEXT("TAO(%P|%t) - TAO_IIOP_Connection_Handler::open, ")
-                      ACE_LIB_TEXT("Holy Cow! The remote addr and ")
-                      ACE_LIB_TEXT("local addr are identical (%s == %s)\n"),
+                      ACE_TEXT("TAO(%P|%t) - IIOP_Connection_Handler::open, ")
+                      ACE_TEXT("Holy Cow! The remote addr and ")
+                      ACE_TEXT("local addr are identical (%s == %s)\n"),
                       remote_as_string, local_as_string));
         }
       return -1;
@@ -136,8 +136,8 @@ TAO_IIOP_Connection_Handler::open (void*)
         return -1;
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("TAO (%P|%t) - Connection_Handler::open, IIOP ")
-                  ACE_LIB_TEXT ("connection to peer <%s> on %d\n"),
+                  ACE_TEXT ("TAO (%P|%t) - IIOP_Connection_Handler::open, IIOP ")
+                  ACE_TEXT ("connection to peer <%s> on %d\n"),
                   client, this->peer ().get_handle ()));
     }
 
@@ -265,7 +265,9 @@ TAO_IIOP_Connection_Handler::process_listen_point_list (
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_LIB_TEXT("(%P|%t) Listening port [%d] on [%s]\n"),
+                      ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler::")
+                      ACE_TEXT("process_listen_point_list, ")
+                      ACE_TEXT("Listening port [%d] on [%s]\n"),
                       listen_point.port,
                       ACE_TEXT_CHAR_TO_TCHAR(listen_point.host.in ())));
         }
@@ -302,8 +304,9 @@ TAO_IIOP_Connection_Handler::update_protocol_properties (
 {
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG,
-                "TAO_IIOP_Connection_Handler::update_protocol_properties\n"
-                "enable_network_priority = %d\n",
+                ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler::")
+                ACE_TEXT("update_protocol_properties, ")
+                ACE_TEXT("enable_network_priority = %d\n"),
                 enable_network_priority));
 
   if (this->tcp_properties_.send_buffer_size != send_buffer_size)
