@@ -1,3 +1,10 @@
+Tue Nov 21 10:10:07 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* TAO_IDL/be_include/be_interface.h:
+
+	  Removed typo (i.e.  ",") from the last element of the enum that defines
+	  the collocation strategy.
+
 Tue Nov 21 07:32:28 2000  Chris Kohlhoff  <chris@kohlhoff.com>
 
         * tao/IORManipulation/Makefile.bor:
@@ -25,7 +32,7 @@ Tue Nov 21 03:03:00 2000  Marina Spivak  <marina@cs.wustl.edu>
 	* tests/RTCORBA/Private_Connection/run_test.pl:
 
 	  Output formatting.
-	
+
 	* tests/RTCORBA/README
 	* tests/RTCORBA/Private_Connection/README:
 
@@ -55,13 +62,13 @@ Mon Nov 20 21:22:09 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Mon Nov 20 20:25:39 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp: 
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h: Replicated the
-	  changes to SSLIOP too.  
+	  changes to SSLIOP too.
 
 Mon Nov 20 20:06:38 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Strategies/SHMIOP_Transport.h (TAO_SHMIOP_Server_Transport): 
+	* tao/Strategies/SHMIOP_Transport.h (TAO_SHMIOP_Server_Transport):
 	* tao/Strategies/SHMIOP_Transport.cpp:
 	* tao/Strategies/SHMIOP_Connect.h:
 	* tao/Strategies/UIOP_Transport.h:
@@ -71,23 +78,23 @@ Mon Nov 20 20:06:38 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Mon Nov 20 19:54:03 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tests/RTCORBA/Banded_Connections/Makefile: 
+	* tests/RTCORBA/Banded_Connections/Makefile:
 	  Updated to link TAO_Strategies.
-	
-	* tests/RTCORBA/Banded_Connections/client.conf: 
-	* tests/RTCORBA/Banded_Connections/server.conf: 
+
+	* tests/RTCORBA/Banded_Connections/client.conf:
+	* tests/RTCORBA/Banded_Connections/server.conf:
 	  Updated to statically load the Advanced_Resource_Factory
-	
-	* tests/RTCORBA/Banded_Connections/server.cpp: 
-	* tests/RTCORBA/Banded_Connections/client.cpp: 
+
+	* tests/RTCORBA/Banded_Connections/server.cpp:
+	* tests/RTCORBA/Banded_Connections/client.cpp:
 	  Included "tao/Strategies/advanced_resource.h"
-	
+
 Mon Nov 20 19:51:06 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Connection_Handler.cpp:
 	* tao/Connection_Handler.h: Added a method purge_entry ().
-	
-	* tao/IIOP_Connect.h (TAO_IIOP_Server_Connection_Handler): 
+
+	* tao/IIOP_Connect.h (TAO_IIOP_Server_Connection_Handler):
 	* tao/IIOP_Transport.cpp:
 	* tao/IIOP_Transport.h: Removed the method close_connection ()
 	  from the base class and moved it to the server & client

@@ -47,7 +47,7 @@ public:
   enum
   {
     THRU_POA = 0,
-    DIRECT = 1,
+    DIRECT = 1
   };
 
   // Used to pass functions to the template method.
@@ -150,7 +150,7 @@ public:
   // Return the client scope that encloses the interface.
 
   virtual const char *flat_client_enclosing_scope (void);
-  // Return the "flattened" scope that encloses 
+  // Return the "flattened" scope that encloses
   // the interface.
 
   virtual const char *server_enclosing_scope (void);
