@@ -179,7 +179,13 @@ sub relative {
         my($name)   = $2;
         my($val) = $$rel{$name};
         if (defined $val) {
+          ## Fix up the value for Windows (capitalize the drive and
+          ## switch the \\'s to /
           $val =~ s/\\/\//g;
+          if ($val =~ /[a-z]:\//) {
+            substr($val, 0, 1) = uc(substr($val, 0, 1));
+          }
+
           if (index($cwd, $val) == 0) {
             my($count) = 0;
             substr($cwd, 0, length($val)) = "";
