@@ -453,6 +453,23 @@ TAO_SHMIOP_Connector::connect (TAO_Profile *profile,
   const ACE_INET_Addr &remote_address =
     shmiop_profile->object_addr ();
 
+  // Verify that the remote ACE_INET_Addr was initialized properly.
+  // Failure can occur if hostname lookup failed when initializing the
+  // remote ACE_INET_Addr.
+  if (remote_address.get_type () != AF_INET)
+    {
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO (%P|%t) SHMIOP connection failed.\n")
+                      ACE_TEXT ("TAO (%P|%t) This is most likely ")
+                      ACE_TEXT ("due to a hostname lookup ")
+                      ACE_TEXT ("failure.\n")));
+        }
+
+      return -1;
+    }
+
   TAO_SHMIOP_Client_Connection_Handler* svc_handler = 0;
   int result = 0;
 

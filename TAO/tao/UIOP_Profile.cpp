@@ -306,13 +306,18 @@ TAO_UIOP_Profile::decode (TAO_InputCDR& cdr)
 
   if (this->object_addr_.set (rendezvous) == -1)
     {
+      // In the case of an ACE_UNIX_Addr, this should call should
+      // never fail!
+      //
+      // If the call fails, allow the profile to be created, and rely
+      // on TAO's connection handling to throw the appropriate
+      // exception.
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) UIOP_Profile::decode - ")
                       ACE_TEXT ("ACE_UNIX_Addr::set() failed\n")));
         }
-      return -1;
     }
 
   // Clean up

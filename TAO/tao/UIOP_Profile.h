@@ -139,12 +139,6 @@ public:
 
 private:
 
-  ACE_UNIMPLEMENTED_FUNC (TAO_UIOP_Profile (const TAO_UIOP_Profile &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_UIOP_Profile & operator= (const TAO_UIOP_Profile &))
-  // Profiles should not be copied.
-
-private:
-
   void create_profile_body (TAO_OutputCDR &cdr) const;
   // Create an encapsulation of the struct ProfileBody in <cdr>
   

@@ -153,10 +153,6 @@ private:
   int set (const ACE_INET_Addr &addr);
   // helper method to set the INET_Addr.
 
-  ACE_UNIMPLEMENTED_FUNC (TAO_IIOP_Profile (const TAO_IIOP_Profile &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_IIOP_Profile & operator= (const TAO_IIOP_Profile &))
-  // Profiles should not be copied.
-
 private:
 
   void create_profile_body (TAO_OutputCDR &cdr) const;
