@@ -1,3 +1,52 @@
+Mon Mar 24 17:36:44 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
+
+        * tao/IFR_Client/IFR_BaseC.cpp:
+        * tao/IFR_Client/IFR_BaseC.i:
+        * tao/IFR_Client/IFR_BasicC.cpp:
+        * tao/IFR_Client/IFR_BasicC.i:
+        * tao/IFR_Client/IFR_ComponentsC.cpp:
+        * tao/IFR_Client/IFR_ComponentsC.i:
+        * tao/IFR_Client/IFR_ExtendedC.cpp:
+        * tao/IFR_Client/IFR_ExtendedC.i:
+        * tao/IORManipulation/IORC.cpp:
+        * tao/IORManipulation/IORC.i:
+        * tao/Messaging/TAO_ExtC.cpp:
+        * tao/Messaging/TAO_ExtC.i:
+        * tao/PortableServer/Default_ORTC.i:
+        * tao/PortableServer/ImR_LocatorC.cpp:
+        * tao/PortableServer/ImR_LocatorC.i:
+        * tao/PortableServer/ImplRepoC.i:
+        * tao/RTCORBA/RTCORBAC.cpp:
+        * tao/RTCORBA/RTCORBAC.i:
+        * tao/RTPortableServer/RTPortableServerC.cpp:
+        * tao/RTPortableServer/RTPortableServerC.i:
+        * tao/TypeCodeFactory/TypeCodeFactoryC.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactoryC.inl:
+
+	  Moved generation of Any template specializations for
+	  to_object, to_value, to_abstract_base, marshal_value,
+	  and demarshal_value to the inline file, to enable
+	  BCB to pick them up before they're used in the .cpp file.
+
+        * tao/IFR_Client/IFR_BaseC.h:
+        * tao/PortableServer/ImplRepoC.h:
+
+	  Added Any_T.h to the included files so the above
+	  changes can be recognized when aggressively inlining.
+
+        * tao/PortableServer/POA.cpp:
+
+	  Added missing .in() to an ObjectReferenceTemplate_var
+	  argument. Thanks to Johnny Willemsen 
+	  <jwillemsen@remedy.nl> for tracking this down.
+
+        * tests/Smart_Proxies/Collocation/Coll_Test_Stubs.dsp:
+
+	  Turned on RTTI for the generated stub file.
+
 Mon Mar 24 13:12:16 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/Connection_Handler.cpp (close_connection_eh): Call the

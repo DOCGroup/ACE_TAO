@@ -35,7 +35,7 @@
 
 #include "tao/Remote_Object_Proxy_Impl.h"
 #include "tao/Object.h"
-#include "tao/Any.h"
+#include "tao/Any_T.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
