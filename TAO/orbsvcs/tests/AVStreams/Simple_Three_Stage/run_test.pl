@@ -7,6 +7,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 use lib '../../../../../bin';
 use PerlACE::Run_Test;
+use File::stat;
 
 # amount of delay between running the servers
 
@@ -15,12 +16,33 @@ $status = 0;
 
 $nsior = PerlACE::LocalFile ("ns.ior");
 $testfile = PerlACE::LocalFile ("test");
-$makefile = PerlACE::LocalFile ("input");
+
+# generate test stream data
+$input = "test_input";
+while ( -e $input ) {
+    $input = $input."X";
+}
+open( INPUT, "> $input" ) || die( "can't create input file: $input" );
+for($i =0; $i < 1000 ; $i++ ) {
+    print INPUT <<EOFINPUT;
+0123456789
+0123456789
+0123456789
+0123456789
+0123456789
+0123456789
+0123456789
+0123456789
+0123456789
+0123456789
+EOFINPUT
+}
+close(INPUT);
 
 unlink $nsior;
 
 $NS = new PerlACE::Process ("../../../Naming_Service/Naming_Service", "-o $nsior");
-$SV = new PerlACE::Process ("sender", "-ORBInitRef NameService=file://$nsior -f $makefile");
+$SV = new PerlACE::Process ("sender", "-ORBInitRef NameService=file://$nsior -f $input");
 $RE = new PerlACE::Process ("receiver", "-ORBInitRef NameService=file://$nsior -f $testfile");
 $DI = new PerlACE::Process ("distributer", "-ORBInitRef NameService=file://$nsior");
 
@@ -78,6 +100,6 @@ if ($nserver != 0) {
 }
 
 unlink $nsior;
-unlink $testfile;
+unlink $testfile, $input;
 
 exit $status;

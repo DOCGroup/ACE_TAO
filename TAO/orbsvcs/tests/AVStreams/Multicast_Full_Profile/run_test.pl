@@ -7,6 +7,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 use lib '../../../../../bin';
 use PerlACE::Run_Test;
+use File::stat;
 
 # amount of delay between running the servers
 
@@ -16,14 +17,35 @@ $status = 0;
 $nsior = PerlACE::LocalFile ("ns.ior");
 $test1 = PerlACE::LocalFile ("test1");
 $test2 = PerlACE::LocalFile ("test2");
-$makefile = PerlACE::LocalFile ("Makefile");
+
+# generate test stream data
+$input = "test_input";
+while ( -e $input ) {
+    $input = $input."X";
+}
+open( INPUT, "> $input" ) || die( "can't create input file: $input" );
+for($i =0; $i < 1000 ; $i++ ) {
+    print INPUT <<EOFINPUT;
+0123456789
+0123456789
+0123456789
+0123456789
+0123456789
+0123456789
+0123456789
+0123456789
+0123456789
+0123456789
+EOFINPUT
+}
+close(INPUT);
 
 unlink $nsior, $test1, $test2;
 
 $NS  = new PerlACE::Process ("../../../Naming_Service/Naming_Service", "-o $nsior");
 $SV1 = new PerlACE::Process ("server", "-ORBInitRef NameService=file://$nsior -f $test1");
 $SV2 = new PerlACE::Process ("server", "-ORBInitRef NameService=file://$nsior -f $test2");
-$CL  = new PerlACE::Process ("ftp", "-ORBInitRef NameService=file://$nsior -f $makefile");
+$CL  = new PerlACE::Process ("ftp", "-ORBInitRef NameService=file://$nsior -f $input");
 
 print STDERR "Starting Naming Service\n";
 
@@ -77,6 +99,6 @@ if ($nserver != 0) {
     $status = 1;
 }
 
-unlink $nsior, $test1, $test2;
+unlink $nsior, $test1, $test2, $input;
 
 exit $status;

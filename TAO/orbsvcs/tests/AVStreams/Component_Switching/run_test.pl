@@ -7,6 +7,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 use lib $ENV{'ACE_ROOT'}."/bin";
 use PerlACE::Run_Test;
+use File::stat;
 
 # amount of delay between running the servers
 
@@ -17,14 +18,35 @@ $status = 0;
 
 $nsior = PerlACE::LocalFile ("ns.ior");
 $testfile = PerlACE::LocalFile ("output");
-$makefile = PerlACE::LocalFile ("input");
+
+# generate test stream data
+$input = "test_input";
+while ( -e $input ) {
+    $input = $input."X";
+}
+open( INPUT, "> $input" ) || die( "can't create input file: $input" );
+for($i =0; $i < 1000 ; $i++ ) {
+    print INPUT <<EOFINPUT;
+0123456789
+0123456789
+0123456789
+0123456789
+0123456789
+0123456789
+0123456789
+0123456789
+0123456789
+0123456789
+EOFINPUT
+}
+close(INPUT);
 
 unlink $nsior;
 
 $NS  = new PerlACE::Process ("../../../Naming_Service/Naming_Service", "-ORBDottedDecimalAddresses 1 -o $nsior");
-$SV1  = new PerlACE::Process ("sender", "-ORBDottedDecimalAddresses 1 ORBSvcConf components_svc$PerlACE::svcconf_ext -ORBInitRef NameService=file://$nsior -s sender -r 30");
-$SV2  = new PerlACE::Process ("sender", " -ORBDottedDecimalAddresses 1 -ORBSvcConf components_svc$PerlACE::svcconf_ext -ORBInitRef NameService=file://$nsior -s sender -r 30");
-$SV3  = new PerlACE::Process ("sender", " -ORBDottedDecimalAddresses 1 -ORBSvcConf components_svc$PerlACE::svcconf_ext -ORBInitRef NameService=file://$nsior -s sender -r 30");
+$SV1  = new PerlACE::Process ("sender", "-ORBDottedDecimalAddresses 1 ORBSvcConf components_svc$PerlACE::svcconf_ext -ORBInitRef NameService=file://$nsior -s sender -r 30 -f $input");
+$SV2  = new PerlACE::Process ("sender", " -ORBDottedDecimalAddresses 1 -ORBSvcConf components_svc$PerlACE::svcconf_ext -ORBInitRef NameService=file://$nsior -s sender -r 30 -f $input");
+$SV3  = new PerlACE::Process ("sender", " -ORBDottedDecimalAddresses 1 -ORBSvcConf components_svc$PerlACE::svcconf_ext -ORBInitRef NameService=file://$nsior -s sender -r 30 -f $input");
 $RE1 = new PerlACE::Process ("receiver", " -ORBDottedDecimalAddresses 1 -ORBSvcConf components_svc$PerlACE::svcconf_ext -ORBInitRef NameService=file://$nsior -s distributer -r receiver1 -f output1");
 $RE2 = new PerlACE::Process ("receiver", " -ORBDottedDecimalAddresses 1 -ORBSvcConf components_svc$PerlACE::svcconf_ext -ORBInitRef NameService=file://$nsior -s distributer -r receiver2 -f output2");
 $DI1 = new PerlACE::Process ("distributer", " -ORBDottedDecimalAddresses 1 -ORBSvcConf components_svc$PerlACE::svcconf_ext -ORBInitRef NameService=file://$nsior -s sender -r distributer");
@@ -151,7 +173,7 @@ if ($nserver != 0) {
 }
 
 unlink $nsior;
-unlink $testfile;
+unlink $testfile, $input;
 
 exit $status;
 
