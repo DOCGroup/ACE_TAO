@@ -1,6 +1,15 @@
 // $Id$
 
 ACE_INLINE 
+TAO_Object_Table_Entry::TAO_Object_Table_Entry (void)
+  : id_ (),
+    generation_ (0),
+    servant_ (0),
+    is_free_ (1)
+{
+}
+
+ACE_INLINE 
 TAO_Object_Table_Iterator_Impl::~TAO_Object_Table_Iterator_Impl (void)
 {
 }
@@ -241,8 +250,8 @@ TAO_Dynamic_Hash_ObjTable_Iterator::item (void) const
   ACE_Hash_Map_Entry<PortableServer::ObjectId,PortableServer::Servant> *tmp;
   if (ACE_const_cast(TAO_Dynamic_Hash_ObjTable_Iterator*,this)->impl_.next (tmp) == 1)
     {
-      entry.int_id_ = tmp->int_id_;
-      entry.ext_id_ = tmp->ext_id_;
+      entry.servant_ = tmp->int_id_;
+      entry.id_ = tmp->ext_id_;
     }
   return entry;
 }
