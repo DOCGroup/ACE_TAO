@@ -440,9 +440,9 @@ set (RtecScheduler::handle_t handle,
   // stored magic cookie are the same (see the definition of
   // ptr_arith_t in ACE to grok how this works portably).
   TAO_Reconfig_Scheduler_Entry *sched_entry_ptr =
-    ACE_reinterpret_cast (TAO_Reconfig_Scheduler_Entry *,
-                          ACE_static_cast (ptr_arith_t,
-                                           rt_info_ptr->volatile_token));
+    ACE_LONGLONG_TO_PTR (TAO_Reconfig_Scheduler_Entry *,
+                         rt_info_ptr->volatile_token);
+
   if (0 == sched_entry_ptr)
     {
       ACE_THROW (RtecScheduler::INTERNAL ());
