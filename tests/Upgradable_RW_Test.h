@@ -35,11 +35,13 @@ class Element;
 
 class Element
 // =TITEL
-//   The members fo the double linked list
+//   The members for the double linked list
 //
 {
   friend class ACE_Double_Linked_List<Element>;
+  friend class ACE_Double_Linked_List_Iterator_Base<Element>;
   friend class ACE_Double_Linked_List_Iterator<Element>;
+  friend class ACE_Double_Linked_List_Reverse_Iterator<Element>;
 
 public:
   Element (ACE_CString* item = 0, Element* p = 0, Element* n = 0)

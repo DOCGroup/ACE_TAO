@@ -2360,14 +2360,18 @@ ACE_Thread_Control::exit (void *exit_status, int do_thr_exit)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class ACE_Double_Linked_List<ACE_Thread_Descriptor_Base>;
+  template class ACE_Double_Linked_List_Iterator_Base<ACE_Thread_Descriptor_Base>;
   template class ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor_Base>;
   template class ACE_Double_Linked_List<ACE_Thread_Descriptor>;
+  template class ACE_Double_Linked_List_Iterator_Base<ACE_Thread_Descriptor>;
   template class ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>;
   template class ACE_Node<ACE_Thread_Descriptor*>;
   template class ACE_Unbounded_Queue<ACE_Thread_Descriptor*>;
   template class ACE_Unbounded_Queue_Iterator<ACE_Thread_Descriptor*>;
   template class ACE_Free_List<ACE_Thread_Descriptor>;
   template class ACE_Locked_Free_List<ACE_Thread_Descriptor, ACE_DEFAULT_THREAD_MANAGER_LOCK>;
+  template class ACE_Read_Guard <ACE_Thread_Mutex>;
+  // This last one is a test. It may help eliminate totally wacky errors
 # if (defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)))
     // These don't necessarily belong here, but it's a convenient place for them.
     template class ACE_TSS<ACE_Dynamic>;
@@ -2375,14 +2379,18 @@ ACE_Thread_Control::exit (void *exit_status, int do_thr_exit)
 # endif /* ACE_HAS_THREADS && (ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION) */
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
   #pragma instantiate ACE_Double_Linked_List<ACE_Thread_Descriptor_Base>
+  #pragma instantiate ACE_Double_Linked_List_Iterator_Base<ACE_Thread_Descriptor_Base>
   #pragma instantiate ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor_Base>
   #pragma instantiate ACE_Double_Linked_List<ACE_Thread_Descriptor>
+  #pragma instantiate ACE_Double_Linked_List_Iterator_Base<ACE_Thread_Descriptor>
   #pragma instantiate ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>
   #pragma instantiate ACE_Node<ACE_Thread_Descriptor*>
   #pragma instantiate ACE_Unbounded_Queue<ACE_Thread_Descriptor*>
   #pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_Thread_Descriptor*>
   #pragma instantiate ACE_Free_List<ACE_Thread_Descriptor>
   #pragma instantiate ACE_Locked_Free_List<ACE_Thread_Descriptor, ACE_DEFAULT_THREAD_MANAGER_LOCK>
+  #pragma instantiate ACE_Read_Guard <ACE_Thread_Mutex>
+  // This last one is a test. It may help eliminate totally wacky errors
 # if (defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)))
     // These don't necessarily belong here, but it's a convenient place for them.
     #pragma instantiate ACE_TSS<ACE_Dynamic>

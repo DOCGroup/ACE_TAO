@@ -42,7 +42,6 @@ public:
 
   ACE_Bounded_Stack (size_t size);
   // Initialize a new stack so that it is empty.
-
   ACE_Bounded_Stack (const ACE_Bounded_Stack<T> &s);
   // The copy constructor (performs initialization).
 
@@ -50,7 +49,7 @@ public:
   // Assignment operator (performs assignment).
 
   ~ACE_Bounded_Stack (void);
- // Perform actions needed when stack goes out of scope.
+  // Perform actions needed when stack goes out of scope.
 
   // = Classic Stack operations.
 
@@ -329,7 +328,7 @@ private:
   // Copy all nodes from <s> to <this>.
 
   ACE_Node<T> *head_;
-   // Head of the linked list of Nodes.
+  // Head of the linked list of Nodes.
 
   size_t cur_size_;
   // Current size of the stack.
@@ -437,7 +436,7 @@ public:
   // Trait definition.
   typedef ACE_Unbounded_Queue_Iterator<T> ITERATOR;
 
- // = Initialization and termination methods.
+  // = Initialization and termination methods.
   ACE_Unbounded_Queue (ACE_Allocator *alloc = 0);
   // construction.  Use user specified allocation strategy
   // if specified.
@@ -522,28 +521,108 @@ template <class T>
 class ACE_Double_Linked_List;
 
 template <class T>
-class ACE_Double_Linked_List_Iterator
+class ACE_Double_Linked_List_Iterator_Base
 {
   // = TITLE
-  //     Implement an iterator over a container double-linked list
+  //     Implements a common base class for iterators for a double
+  //     linked list ADT
+public:
+  // = Iteration methods.
+
+  int next (T *&) const;
+  // Passes back the <entry> under the iterator. Returns 0 if the
+  // iteration has completed, otherwise 1
+
+  T *next (void) const;
+  // Return the address of next (current) unvisited item in the list.
+  // 0 if there is no more element available.
+  // DEPRECATED
+
+
+  int done (void) const;
+  // Returns 1 when all items have been seen, else 0.
+
+  T & operator* (void) const ;
+  // STL-like iterator dereference operator: returns a reference
+  // to the node underneath the iterator.
+
+  void reset (ACE_Double_Linked_List<T> &);
+  // Retasks the iterator to iterate over a new
+  // Double_Linked_List. This allows clients to reuse an iterator
+  // without incurring the constructor overhead. If you do use this,
+  // be aware that if there are more than one reference to this
+  // iterator, the other "clients" may be very bothered when their
+  // iterator changes.
+  // @@ Here be dragons. Comments?
+
+  ACE_ALLOC_HOOK_DECLARE;
+  // Declare the dynamic allocation hooks.
+
+protected:
+  // = Initialization methods.
+
+  ACE_Double_Linked_List_Iterator_Base (ACE_Double_Linked_List<T> &);
+  // Constructor
+
+  ACE_Double_Linked_List_Iterator_Base (const
+                                        ACE_Double_Linked_List_Iterator_Base<T> 
+                                        &iter);
+  // Copy constructor.
+
+  // = Iteration methods.
+  int go_head (void);
+  // Move to the first element of the list. Returns 0 if the list is
+  // empty, else 1. Note: the head of the ACE_DLList is actually a
+  // null entry, so the first element is actually the 2n'd entry
+
+  int go_tail (void);
+  // Move to the last element of the list. Returns 0 if the list is
+  // empty, else 1. 
+
+  T *not_done (void) const ;
+  // Check if we reach the end of the list.  Can also be used to get
+  // the *current* element in the list.  Return the address of the
+  // current item if there are still elements left , 0 if we run out
+  // of element.
+    
+  T *do_advance (void);
+  // Advance to the next element in the list.  Return the address of the
+  // next element if there are more, 0 otherwise.
+
+  T *do_retreat (void);
+  // Retreat to the previous element in the list.  Return the address
+  // of the previous element if there are more, 0 otherwise.
+
+  void dump_i (void) const;
+  // Dump the state of an object.
+
+  T *current_;
+  // Remember where we are.
+
+  ACE_Double_Linked_List<T> *dllist_;
+};
+
+template <class T>
+class ACE_Double_Linked_List_Iterator : public ACE_Double_Linked_List_Iterator_Base <T>
+{
+  // = TITLE
+  //     Implements an iterator for a double linked list ADT
   //
   // = DESCRIPTION
-  //     Iterate thru the double-linked list.  This class provide
+  //     Iterate thru the double-linked list.  This class provides
   //     an interface that let users access the internal element
-  //     addresses directly, which (IMHO) seems to break the
-  //     encasulation.  Notice <class T> must delcare
-  //     ACE_Double_Linked_List<T> and
+  //     addresses directly. Notice <class T> must delcare
+  //     ACE_Double_Linked_List<T>,
+  //     ACE_Double_Linked_List_Iterator_Base <T> and
   //     ACE_Double_Linked_List_Iterator as friend classes and class T
   //     should also have data members T* next_ and T* prev_.
 public:
   // = Initialization method.
   ACE_Double_Linked_List_Iterator (ACE_Double_Linked_List<T> &);
 
-  // = Iteration methods.
-
-  T *next (void) const;
-  // Return the address of next (current) unvisited item in the list.
-  // 0 if there is no more element available.
+  int first (void);
+  // Move to the first element in the list.  Returns 0 if the
+  // list is empty, else 1.
 
   int advance (void);
   // Move forward by one element in the list.  Returns 0 when all the
@@ -555,34 +634,79 @@ public:
   // <dont_remove> equals 0, this function behaves like advance() but
   // return 0 (NULL) instead.
 
-  int first (void);
-  // Move to the first element in the list.  Returns 0 if the
-  // list is empty, else 1.
+  // = STL-style iteration methods 
 
-  int done (void) const;
-  // Returns 1 when all items have been seen, else 0.
+  ACE_Double_Linked_List_Iterator<T> & operator++ (void);
+  // Prefix advance.
+  
+  ACE_Double_Linked_List_Iterator<T> operator++ (int);
+  // Postfix advance.
+  
+  ACE_Double_Linked_List_Iterator<T> & operator-- (void);
+  // Prefix reverse.
+  
+  ACE_Double_Linked_List_Iterator<T> operator-- (int);
+  // Postfix reverse.
 
   void dump (void) const;
   // Dump the state of an object.
 
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
+};
 
-protected:
-  T *not_done (void) const ;
-  // Check if we reach the end of the list.  Can also be used to get
-  // the *current* element in the list.  Return the address of the
-  // current item if there are still elements left , 0 if we run out
-  // of element.
+template <class T>
+class ACE_Double_Linked_List_Reverse_Iterator : public ACE_Double_Linked_List_Iterator_Base <T>
+{
+  // = TITLE
+  //     Implements a reverse iterator for a double linked list ADT
+  //
+  // = DESCRIPTION
+  //     Iterate backwards over the double-linked list.  This class
+  //     provide an interface that let users access the internal
+  //     element addresses directly, which seems to break the
+  //     encapsulation.  Notice <class T> must delcare 
+  //     ACE_Double_Linked_List<T>,
+  //     ACE_Double_Linked_List_Iterator_Base <T> and
+  //     ACE_Double_Linked_List_Iterator as friend classes and class T
+  //     should also have data members T* next_ and T* prev_.
+public:
+  // = Initialization method.
+  ACE_Double_Linked_List_Reverse_Iterator (ACE_Double_Linked_List<T> &);
 
-  T *do_advance (void);
-  // Advance to the next element in the list.  Return the address of the
-  // next element if there are more, 0 otherwise.
+  int first (void);
+  // Move to the first element in the list.  Returns 0 if the
+  // list is empty, else 1.
 
-  T *current_;
-  // Remember where we are.
+  int advance (void);
+  // Move forward by one element in the list.  Returns 0 when all the
+  // items in the list have been seen, else 1.
+  
+  T* advance_and_remove (int dont_remove);
+  // Advance the iterator while removing the original item from the list.
+  // Return a pointer points to the original (removed) item.  If
+  // <dont_remove> equals 0, this function behaves like advance() but
+  // return 0 (NULL) instead.
 
-  ACE_Double_Linked_List<T> &dllist_;
+  // = STL-style iteration methods 
+
+  ACE_Double_Linked_List_Reverse_Iterator<T> & operator++ (void);
+  // Prefix advance.
+  
+  ACE_Double_Linked_List_Reverse_Iterator<T> operator++ (int);
+  // Postfix advance.
+
+  ACE_Double_Linked_List_Reverse_Iterator<T> & operator-- (void);
+  // Prefix reverse.
+  
+  ACE_Double_Linked_List_Reverse_Iterator<T> operator-- (int);
+  // Postfix reverse.
+
+  void dump (void) const;
+  // Dump the state of an object.
+
+  ACE_ALLOC_HOOK_DECLARE;
+  // Declare the dynamic allocation hooks.
 };
 
 template <class T>
@@ -597,10 +721,13 @@ class ACE_Double_Linked_List
   //     like the ACE_Unbounded_Queue except that it allows removing
   //     of a specific element from a specific location.
 public:
+  friend class ACE_Double_Linked_List_Iterator_Base<T>;
   friend class ACE_Double_Linked_List_Iterator<T>;
+  friend class ACE_Double_Linked_List_Reverse_Iterator<T>;
 
   // Trait definition.
   typedef ACE_Double_Linked_List_Iterator<T> ITERATOR;
+  typedef ACE_Double_Linked_List_Reverse_Iterator<T> REVERSE_ITERATOR;
 
   // = Initialization and termination methods.
   ACE_Double_Linked_List (ACE_Allocator *alloc = 0);
@@ -704,11 +831,21 @@ protected:
 
 template <class T> class ACE_DLList;
 template <class T> class ACE_DLList_Iterator;
+template <class T> class ACE_DLList_Reverse_Iterator;
 
-typedef ACE_Double_Linked_List<ACE_DLList_Node>
-        ACE_DLList_Base;
-typedef ACE_Double_Linked_List_Iterator<ACE_DLList_Node>
-        ACE_DLList_Iterator_Base;
+typedef ACE_Double_Linked_List<ACE_DLList_Node> ACE_DLList_Base;
+
+//typedef ACE_Double_Linked_List_Iterator <ACE_DLList_Node>
+//        ACE_DLList_Iterator_Base;
+//typedef ACE_Double_Linked_List_Reverse_Iterator <ACE_DLList_Node>
+//        ACE_DLList_Reverse_Iterator_Base;
+//@@ These two typedefs (inherited from James Hu's original design)
+// have been removed because Sun CC 4.2 had problems with it. I guess
+// having the DLList_Iterators inheriting from a class which is
+// actually a typedef leads to problems. #define'ing rather than
+// typedef'ing worked, but as per Carlos's reccomendation, I'm just
+// replacing all references to the base classes with their actual
+// type.  Matt Braun (6/15/99)
 
 template <class T>
 class ACE_DLList : public ACE_DLList_Base
@@ -722,7 +859,9 @@ class ACE_DLList : public ACE_DLList_Base
   //     calls to ACE_Double_Linked_List.
 
   friend class ACE_DLList_Node;
+  friend class ACE_Double_Linked_List_Iterator<T>;
   friend class ACE_DLList_Iterator<T>;
+  friend class ACE_DLList_Reverse_Iterator<T>;
 
 public:
   void operator= (ACE_DLList<T> &l);
@@ -745,7 +884,9 @@ public:
   // = Additional utility methods.
 
   int get (T *&item, size_t slot = 0);
-  // Delegates to ACE_Double_Linked_List.
+  // Delegates to ACE_Double_Linked_List, but where
+  // ACE_Double_Linked_List returns the node as the item, this get
+  // returns the contents of the node in item.
 
   void dump (void) const;
   // Delegates to ACE_Double_Linked_List.
@@ -767,7 +908,7 @@ public:
 };
 
 template <class T>
-class ACE_DLList_Iterator : public ACE_DLList_Iterator_Base
+class ACE_DLList_Iterator : public ACE_Double_Linked_List_Iterator <ACE_DLList_Node>
 {
   // = TITLE
   //     A double-linked list container class iterator.
@@ -786,6 +927,48 @@ public:
   ACE_DLList_Iterator (ACE_DLList<T> &l);
 
   // = Iteration methods.
+  int advance (void);
+  // Move forward by one element in the set.  Returns 0 when all the
+  // items in the set have been seen, else 1.
+
+  T *next (void) const;
+  // Delegates to ACE_Double_Linked_List_Iterator, except that whereas 
+  // the Double_Linked_List version of next returns the node, this next
+  // returns the contents of the node
+  
+  int remove (void);
+  // Removes the current item (i.e., this->next()) from the list.
+  
+  void dump (void) const;
+  // Delegates to ACE_Double_Linked_List_Iterator.
+
+private:
+  ACE_DLList<T> &list_;
+};
+
+template <class T>
+class ACE_DLList_Reverse_Iterator : public ACE_Double_Linked_List_Reverse_Iterator <ACE_DLList_Node>
+{
+  // = TITLE
+  //     A double-linked list container class iterator.
+  //
+  // = DESCRIPTION
+  //     This implementation uses ACE_Double_Linked_List_Iterator to
+  //     perform the logic behind this container class.  It delegates
+  //     all of its calls to ACE_Double_Linked_List_Iterator.
+
+  friend class ACE_DLList<T>;
+  friend class ACE_DLList_Node;
+
+public:
+
+  // = Initialization method.
+  ACE_DLList_Reverse_Iterator (ACE_DLList<T> &l);
+
+  // = Iteration methods.
+  int advance (void);
+  // Move forward by one element in the set.  Returns 0 when all the
+  // items in the set have been seen, else 1.
 
   T *next (void) const;
   // Delegates to ACE_Double_Linked_List_Iterator.
@@ -939,7 +1122,7 @@ private:
   // Copy nodes into this set.
 
   ACE_Node<T> *head_;
-   // Head of the linked list of Nodes.
+  // Head of the linked list of Nodes.
 
   size_t cur_size_;
   // Current size of the set.
@@ -1365,10 +1548,10 @@ private:
   // Copy nodes into this set.
 
   ACE_DNode<T> *head_;
-   // Head of the bilinked list of Nodes.
+  // Head of the bilinked list of Nodes.
 
   ACE_DNode<T> *tail_;
-   // Head of the bilinked list of Nodes.
+  // Head of the bilinked list of Nodes.
 
   size_t cur_size_;
   // Current size of the set.
