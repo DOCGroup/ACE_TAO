@@ -62,6 +62,7 @@ ACE_HAS_LIMITED_RUSAGE_T		The rusage_t structure has only two fields.
 ACE_HAS_LONGLONG_T			Compiler/platform supports the "long long" datatype.
 ACE_HAS_LONG_FDMASK			Compiler/platform has typedef u_long fdmask (e.g., Linux).
 ACE_HAS_LONG_MAP_FAILED                 Platform defines MAP_FAILED as a long constant.
+ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION	Avoid #including iostream.h except where needed.  Some platforms, such as g++/VxWorks, have trouble with it.  See config-vxworks5.x-g++.h for gory details.
 ACE_HAS_MFC				Platform supports Microsoft Foundation Classes
 ACE_HAS_MSG				Platform supports recvmsg and sendmsg
 ACE_HAS_MT_SAFE_MKTIME			Platform supports MT safe mktime() call (do any of them?)
