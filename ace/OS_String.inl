@@ -675,7 +675,13 @@ ACE_INLINE wchar_t*
 ACE_OS_String::strtok_r (ACE_WCHAR_T *s, const ACE_WCHAR_T *tokens, ACE_WCHAR_T **lasts)
 {
 #if defined (ACE_HAS_REENTRANT_FUNCTIONS)
-    return ::wcstok (s, tokens, lasts);
+#  if defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
+    // The XPG4 spec says this is thread-safe. wcstok_r is obsolete.
+    *lasts = ::wcstok (s, tokens);
+    return *lasts;
+#  else
+    return ::wcstok_r (s, tokens, lasts);
+#  endif /* ACE_HAS_XPG4_MULTIBYTE_CHAR */
 #else
     return ACE_OS_String::strtok_r_emulation (s, tokens, lasts);
 #endif  // ACE_HAS_REENTRANT_FUNCTIONS
