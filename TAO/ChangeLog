@@ -1,3 +1,20 @@
+Tue Aug 26 16:19:30 2003  George Edwards <g.edwards@vanderbilt.edu>
+
+        * tests/OBV/Collocated/Forward/Client_Task.cpp 
+        * tests/OBV/Collocated/Forward/Client_Task.h 
+        * tests/OBV/Collocated/Forward/Collocated_Test.cpp 
+        * tests/OBV/Collocated/Forward/OBV_Forward.mpc 
+        * tests/OBV/Collocated/Forward/Server_Task.cpp 
+        * tests/OBV/Collocated/Forward/Server_Task.h 
+        * tests/OBV/Collocated/Forward/Test_impl.cpp 
+        * tests/OBV/Collocated/Forward/Test_impl.h 
+        * tests/OBV/Collocated/Forward/TreeBase.idl 
+        * tests/OBV/Collocated/Forward/TreeController.idl 
+        * tests/OBV/Collocated/Forward/TreeNode.idl 
+        * tests/OBV/Collocated/Forward/run_test.pl 
+
+          Added new test for Bugzilla 1390.
+
 Tue Aug 26 15:16:30 2003  Yamuna Krishnamurthy <yamuna@oomworks.com>
 
 	* orbsvcs/orbsvcs/AV/UDP.cpp: 
