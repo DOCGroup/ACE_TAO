@@ -1,3 +1,9 @@
+Wed Oct  1 12:51:48 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
+
+	* tao/corbacom.h: Removed CORBA:: name resolution from class
+	  String_out which is itself defined in class CORBA.  MSVC doen't
+	  like that.
+
 Wed Oct  1 10:44:55 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* tao/varout.h: Fixed some template errors in class
