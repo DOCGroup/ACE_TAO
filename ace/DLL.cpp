@@ -171,7 +171,7 @@ ACE_DLL::close (void)
   // Guard against multiple calls to close(), e.g., one explicitly and
   // one from the destructor.
   if (dll_handle_ == 0)
-    return;
+    return 0;
 
   int retval = 0;
 
