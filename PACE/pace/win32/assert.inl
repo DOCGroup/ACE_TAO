@@ -20,5 +20,4 @@ void
 pace_assert (int expression)
 {
   assert (expression);
-  return;
 }
