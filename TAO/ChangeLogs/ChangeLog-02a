@@ -1,6 +1,6 @@
 Tue May  8 08:56:32 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/Object_Ref_Table.cpp (TAO_Object_Ref_Table, destroy):
+	* tao/Object_Ref_Table.cpp (TAO_Object_Ref_Table):
 
 	  Reverted the change "Tue May  8 09:01:13 2001  Balachandran
 	  Natarajan  <bala@cs.wustl.edu>".  The call to destroy() was
@@ -8,6 +8,8 @@ Tue May  8 08:56:32 2001  Ossama Othman  <ossama@uci.edu>
 	  ORB::destroy()).  In such cases, memory leaks will occur since
 	  the object reference table destroy() method is not explicitly
 	  called.
+
+	  (destroy):
 
 	  The correct fix for the problem was to call unbind_all() on the
 	  underlying hash table in the destroy() method.  Doing so makes
