@@ -102,7 +102,34 @@ module TAO
   // Object is not persistent
 
   exception Not_Found {};
-  // Object not found in the Reactivator
+  // Object not found in the Reactivator  
+  
+  interface Process_Options
+    {
+      struct Environment_Variable
+      {
+        string name_;
+        string value_;
+      };
+      // One environment variable
+      
+      typedef sequence<Environment_Variable> Environment;
+      attribute Environment environment_; 
+      // Complete environment
+      
+      typedef sequence<string> Command_Line_Options;
+      attribute Command_Line_Options command_line_options_; 
+      // Command line options
+
+      attribute string executable_name_;
+      // Executable name
+
+      attribute string working_directory_;  
+      // Working directory
+
+      attribute unsigned long creation_flags_;
+      // Creation flags
+    };
 
   interface Reactivator
     {
@@ -114,29 +141,16 @@ module TAO
       // in the Reactivation Service.
 
       void register_object (in Object obj,
-                            in string executable_name)
+                            in Process_Options options)
 	raises (Already_Registered,
                 Object_Not_Persistent);
-      // Restart server process <executable_name> when client is
-      // looking for <obj>.
+      // Restart server process when client is looking for <obj>.
       //
       // The <Already_Registered> exception is raised when <obj> has
       // already been registered with the Reactivation Service.
-      //
+      // 
       // The <Object_Not_Persistent> exception is raised when <obj> is
       // not a Persistent Object Reference.
-
-      typedef sequence<string> Command_Line_Options;
-      // Command line options
-
-      void register_object_with_options (in Object obj,
-                                         in string executable_name,
-                                         in Command_Line_Options executable_options)
-	raises (Already_Registered,
-                Object_Not_Persistent);
-      // Restart server process <executable_name> when client is
-      // looking for <obj>. Use <executable_options> as command line
-      // options to the server.
 
       enum Host_Port_Options
       {
@@ -157,7 +171,7 @@ module TAO
       //  the Object Reference (-ORBport) and (-ORBhost)
 
       void register_object_using_info_in_ior (in Object obj,
-                                              in string executable_name,
+                                              in Process_Options options,
                                               in Host_Port_Options host_port_options)
 	raises (Already_Registered,
                 Object_Not_Persistent);
@@ -165,20 +179,21 @@ module TAO
       // looking for <obj>. Depending on the <host_port_options>,
       // information from the <obj> object reference is used to
       // specify (-ORBport) and (-ORBhost) options for the server.
-
-      void register_object_using_info_in_ior_with_options (in Object obj,
-                                                           in string executable_name,
-                                                           in Command_Line_Options executable_options,
-                                                           in Host_Port_Options host_port_options)
-	raises (Already_Registered,
+      
+      void reregister_object (in Object obj,
+                              in Process_Options options)
+	raises (Not_Found,
                 Object_Not_Persistent);
-      // Restart server process <executable_name> when client is
-      // looking for <obj>. Use <executable_options> as command line
-      // options to the server. Depending on the <host_port_options>,
-      // information from the <obj> object reference is used to
-      // specify (-ORBport) and (-ORBhost) options for the server.
 
-      void remove (in Object obj)
+      void reregister_object_using_info_in_ior (in Object obj,
+                                                in Process_Options options,
+                                                in Host_Port_Options host_port_options)
+	raises (Not_Found,
+                Object_Not_Persistent);
+      // The above reregister methods are similar to the register
+      // methods except they are used for rebinding.
+
+      void remove_object (in Object obj)
 	raises (Not_Found);
       // Remove <obj> from the Reactivation Service.
       //
