@@ -1,3 +1,10 @@
+Thu Dec 23 14:44:36 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Notify/EventTypeSeq.cpp:
+
+	  A more portable fix for warnings, errors and other compiler
+	  oddities.
+
 Wed Dec 22 11:38:23 2004  Trevor Fields  <fields_t@ociweb.com>
 
         * orbsvcs/tests/AVStreams/Full_Profile/run_test.pl:
