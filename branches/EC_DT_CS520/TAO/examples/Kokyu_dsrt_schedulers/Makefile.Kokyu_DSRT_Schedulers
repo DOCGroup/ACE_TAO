@@ -9,10 +9,10 @@
 # this file will be lost the next time it is generated.
 #
 #----------------------------------------------------------------------------
-MAKEFILE        = Makefile.Kokyu_DSRT_Schedulers
-DEPENDENCY_FILE = .depend.Makefile.Kokyu_DSRT_Schedulers
-LIB             = libKokyu_DSRT_Schedulers.a
-SHLIB           = libKokyu_DSRT_Schedulers.$(SOEXT)
+MAKEFILE         = Makefile.Kokyu_DSRT_Schedulers
+DEPENDENCY_FILE  = .depend.Makefile.Kokyu_DSRT_Schedulers
+LIB              = libKokyu_DSRT_Schedulers.a
+SHLIB            = libKokyu_DSRT_Schedulers.$(SOEXT)
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
@@ -24,12 +24,14 @@ endif
 FILES = \
   FP_Scheduler \
   MUF_Scheduler \
+  EDF_Scheduler \
   MIF_Scheduler \
   Task_Stats \
   utils \
   Kokyu_qosC \
   FP_SchedulingC \
   MUF_SchedulingC \
+  EDF_SchedulingC \
   MIF_SchedulingC
 
 #----------------------------------------------------------------------------
@@ -53,6 +55,11 @@ $(TEMPINCDIR):
 	@-test -d $(TEMPINCDIR) || mkdir -p $(TEMPINCDIR) $(ACE_NUL_STDERR)
 
 endif
+OUTPUT_DIRECTORY = ../../../lib
+all: $(OUTPUT_DIRECTORY)
+
+$(OUTPUT_DIRECTORY):
+	-@mkdir -p "$(OUTPUT_DIRECTORY)"
 
 CURRENT_COMPONENTS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
 ifeq ($(rt_corba),1)
@@ -76,6 +83,10 @@ else
   SHLIB =
   all: require_warning
 endif
+endif
+
+ifneq (,$(RC))
+  FILES += $(RESOURCES)
 endif
 
 LSRC   = $(addsuffix .cpp, $(FILES))
@@ -119,9 +130,6 @@ LDFLAGS      += -L../../../lib
 require_warning:
 	@echo This project will not be built due to one of the following missing features:
 	@echo rt_corba
-
-../../../lib:
-	-@mkdir -p "../../../lib"
 
 
 realclean: clean 
