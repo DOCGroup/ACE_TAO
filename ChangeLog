@@ -1,3 +1,10 @@
+Tue Aug 10 11:08:31 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/config-linux-common.h: Removed ACE_LACKS_TOWLOWER and
+	  ACE_LACKS_TOWUPPER. These functions are present but, I suspect,
+	  marked "lacks" because of type conflicts, which J.T. Conklin fixed:
+	  Mon Aug  9 23:13:48 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
 Tue Aug 10 06:52:47 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* configure.ac:
@@ -7,20 +14,24 @@ Tue Aug 10 06:52:47 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 Tue Aug 10 14:00:00 UTC 2004  Simon Massey  <simon.massey@prismtechnologies.com>
 
-        I shouldn't have been rushed into these guarded #includes. The following
-        two files now need these guarded #includes to be moved after the rest.
+        I shouldn't have been rushed into these guarded #includes. The
+	following two files now need these guarded #includes to be moved
+	after the rest.
 
         * ace/FILE_IO.h
         * ace/FIFO_Send_Msg.h
-          Moved guarded  #include "ace/OS_NS_stropts.h"  to end of other #includes
+          Moved guarded  #include "ace/OS_NS_stropts.h"  to end of other
+	  #includes
 
 Tue Aug 10 11:20:00 UTC 2004  Simon Massey  <simon.massey@prismtechnologies.com>
 
         * examples/IOStream/server/iostream_server.cpp
-          Added missing  #include "ace/OS_NS_unistd.h"  inside the guard of #if defined (ACE_HAS_STRING_CLASS)
+          Added missing  #include "ace/OS_NS_unistd.h"  inside the guard of
+	  #if defined (ACE_HAS_STRING_CLASS)
 
         * tests/IOStream_Test.cpp
-          Added missing  #include "ace/OS_NS_unistd.h"  inside the guard of #if !defined (ACE_LACKS_ACE_IOSTREAM)
+          Added missing  #include "ace/OS_NS_unistd.h"  inside the guard of
+	  #if !defined (ACE_LACKS_ACE_IOSTREAM)
 
 Tue Aug 10 12:01:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
