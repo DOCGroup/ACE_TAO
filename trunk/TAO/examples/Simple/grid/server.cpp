@@ -10,7 +10,7 @@ main (int argc, char *argv[])
   Server_i server;
 
   ACE_DEBUG ((LM_DEBUG,
-              "\nGrid server\n"));
+              "(%P|%t) Grid server\n"));
 
   TAO_TRY
     {

@@ -29,7 +29,7 @@ Client_i::read_ior (char *filename)
 
   if (f_handle == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to open %s for writing: %p\n",
+                       "(%P|%t) Unable to open %s for writing: %p\n",
                        filename),
                       -1);
 
@@ -38,7 +38,7 @@ Client_i::read_ior (char *filename)
 
   if (data == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to read ior: %p\n"),
+                       "(%P|%t) Unable to read ior: %p\n"),
                       -1);
 
   this->ior_ = ACE_OS::strdup (data);
@@ -74,7 +74,7 @@ Client_i::parse_args (void)
         result = this->read_ior (get_opts.optarg);
         if (result < 0)
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to read ior from %s : %p\n",
+                             "(%P|%t) Unable to read ior from %s : %p\n",
                              get_opts.optarg),
                             -1);
         break;
@@ -139,7 +139,7 @@ Client_i::test_grid (void)
                                               this->env_);
       TAO_CHECK_ENV;
       ACE_DEBUG ((LM_DEBUG,
-                  "\nMade the grid succesfully\n"));
+                  "(%P|%t) Made the grid succesfully\n"));
       // Set a value for a grid.
       this->grid_->set (setx_, 
                         sety_, 
@@ -147,7 +147,7 @@ Client_i::test_grid (void)
                         TAO_TRY_ENV);
       TAO_CHECK_ENV;
       ACE_DEBUG ((LM_DEBUG,
-                  "\n\t Setting a value for the grid"));
+                  "(%P|%t) Setting a value for the grid\n"));
        
       // Get the value of the grid
       CORBA::Long ret_val = this->grid_->get (setx_, 
@@ -159,7 +159,7 @@ Client_i::test_grid (void)
   TAO_CATCH (CORBA::UserException, range_ex)
     {
       ACE_UNUSED_ARG (range_ex);
-      TAO_TRY_ENV.print_exception (" From set  and get grid ");
+      TAO_TRY_ENV.print_exception (" From set and get grid ");
     }
   TAO_CATCH (CORBA::SystemException, memex)
     {
@@ -213,7 +213,7 @@ Client_i::init (int argc, char **argv)
 
       if (this->ior_ == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "%s: no ior specified\n",
+                           "(%P|%t) %s: no ior specified\n",
                            this->argv_[0]),
                           -1);
 
@@ -224,7 +224,7 @@ Client_i::init (int argc, char **argv)
 
       if (CORBA::is_nil (server_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "invalid ior <%s>\n",
+                           "(%P|%t) invalid ior <%s>\n",
                            this->ior_),
                           -1);
       this->server_ = Grid_Factory::_narrow (server_object.in (),

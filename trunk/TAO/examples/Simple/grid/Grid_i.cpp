@@ -115,7 +115,7 @@ Grid_i::destroy (CORBA::Environment &_env)
   delete [] array_;
 
   ACE_DEBUG ((LM_DEBUG,
-              "%s\n",
+              "(%P|%t) %s\n",
               "Grid has been destroyed"));
 }
 
@@ -133,8 +133,8 @@ void
 Grid_Factory_i::shutdown (CORBA::Environment &)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "%s\n",
-              "Grid Factory  is shutting down"));
+              "(%P|%t) %s\n",
+              "Grid Factory is shutting down"));
 
   // Instruct the ORB to shutdown.
   this->orb_->shutdown ();
@@ -162,7 +162,7 @@ Grid_Factory_i::make_grid (CORBA::Short width,
   Grid_i *grid_ptr = 0;
  
   ACE_DEBUG ((LM_DEBUG,
-              "\n\tMaking a new Grid"));
+              "(%P|%t) Making a new Grid\n"));
 
   // Set a default value for width.
   if (width <= 0)

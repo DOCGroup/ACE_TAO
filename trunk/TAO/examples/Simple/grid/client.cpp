@@ -10,7 +10,7 @@ main (int argc, char **argv)
   Client_i client;
 
   ACE_DEBUG ((LM_DEBUG,
-              "\n\tGrid client\n\n"));
+              "(%P|%t) Grid client\n"));
 
   if (client.init (argc, argv) == -1)
     return -1;

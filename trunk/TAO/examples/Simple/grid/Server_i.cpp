@@ -33,7 +33,7 @@ Server_i::parse_args (void)
         this->ior_output_file_ = ACE_OS::fopen (get_opts.optarg, "w");
         if (this->ior_output_file_ == 0)
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to open %s for writing: %p\n",
+                             "(%P|%t) Unable to open %s for writing: %p\n",
                              get_opts.optarg), -1);
         break;
       case '?':  // display help for use of the server.
@@ -63,7 +63,7 @@ Server_i::init (int argc, char *argv[], CORBA::Environment &env)
                                          "child_poa",
                                          env) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
+                       "(%P|%t) %p\n",
                        "init_child_poa"),
                       -1);
   TAO_CHECK_ENV_RETURN (env, -1);
@@ -87,7 +87,7 @@ Server_i::init (int argc, char *argv[], CORBA::Environment &env)
                                                  &this->servant_,
                                                  env);
   ACE_DEBUG ((LM_DEBUG,
-              "The IOR is: <%s>\n",
+              "(%P|%t) The IOR is: <%s>\n",
               str.in ()));
 
   if (this->ior_output_file_)
@@ -107,7 +107,7 @@ Server_i::run (CORBA::Environment &env)
   // Run the main event loop for the ORB.
   if (this->orb_manager_.run (env) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Server_i::run"),
+                       "(%P|%t) Server_i::run"),
                       -1);
   return 0;
 }
