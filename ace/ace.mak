@@ -172,6 +172,7 @@ CLEAN :
 	-@erase ".\Release\Synch_Options.obj"
 	-@erase ".\Release\Name_Proxy.obj"
 	-@erase ".\Release\TTY_IO.obj"
+	-@erase ".\Release\Task.obj"
 	-@erase ".\ace.lib"
 	-@erase ".\ace.exp"
 
@@ -320,7 +321,8 @@ LINK32_OBJS= \
 	"$(INTDIR)/OS.obj" \
 	"$(INTDIR)/Synch_Options.obj" \
 	"$(INTDIR)/Name_Proxy.obj" \
-	"$(INTDIR)/TTY_IO.obj"
+	"$(INTDIR)/TTY_IO.obj" \
+	"$(INTDIR)/Task.obj"
 
 "$(OUTDIR)\ace.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -466,6 +468,7 @@ CLEAN :
 	-@erase ".\Debug\Pipe.obj"
 	-@erase ".\Debug\SOCK_Dgram.obj"
 	-@erase ".\Debug\TLI.obj"
+	-@erase ".\Debug\Task.obj"
 	-@erase ".\ace.ilk"
 	-@erase ".\ace.lib"
 	-@erase ".\ace.exp"
@@ -616,7 +619,8 @@ LINK32_OBJS= \
 	"$(INTDIR)/Thread_Manager.obj" \
 	"$(INTDIR)/Pipe.obj" \
 	"$(INTDIR)/SOCK_Dgram.obj" \
-	"$(INTDIR)/TLI.obj"
+	"$(INTDIR)/TLI.obj" \
+	"$(INTDIR)/Task.obj"
 
 "$(OUTDIR)\ace.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -665,6 +669,74 @@ SOURCE=.\UPIPE_Stream.cpp
 DEP_CPP_UPIPE=\
 	{$(INCLUDE)}"\.\UPIPE_Stream.h"\
 	{$(INCLUDE)}"\.\UPIPE_Stream.i"\
+	{$(INCLUDE)}"\.\Stream.h"\
+	{$(INCLUDE)}"\.\ACE.h"\
+	{$(INCLUDE)}"\.\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\.\Message_Block.h"\
+	{$(INCLUDE)}"\.\Time_Value.h"\
+	{$(INCLUDE)}"\.\Module.h"\
+	{$(INCLUDE)}"\.\OS.h"\
+	{$(INCLUDE)}"\.\ACE.i"\
+	{$(INCLUDE)}"\sys\TYPES.H"\
+	{$(INCLUDE)}"\sys\STAT.H"\
+	{$(INCLUDE)}"\SIGNAL.H"\
+	{$(INCLUDE)}"\sys\TIMEB.H"\
+	{$(INCLUDE)}"\PROCESS.H"\
+	".\..\STL\bstring.h"\
+	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\OS.i"\
+	{$(INCLUDE)}"\MALLOC.H"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
+	{$(INCLUDE)}"\.\Malloc.h"\
+	{$(INCLUDE)}"\.\Message_Block.i"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Simple.h"\
+	{$(INCLUDE)}"\.\Malloc.i"\
+	{$(INCLUDE)}"\.\Malloc_T.h"\
+	{$(INCLUDE)}"\.\Memory_Pool.h"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Simple.i"\
+	{$(INCLUDE)}"\.\Synch.h"\
+	{$(INCLUDE)}"\.\Malloc_T.i"\
+	{$(INCLUDE)}"\.\Malloc_T.cpp"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Complex.h"\
+	{$(INCLUDE)}"\.\Synch.i"\
+	{$(INCLUDE)}"\.\Synch_T.h"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Complex.i"\
+	{$(INCLUDE)}"\.\Event_Handler.h"\
+	{$(INCLUDE)}"\.\Synch_T.i"\
+	{$(INCLUDE)}"\.\Synch_T.cpp"\
+	{$(INCLUDE)}"\.\Event_Handler.i"\
+	{$(INCLUDE)}"\.\Thread.h"\
+	{$(INCLUDE)}"\.\Thread.i"\
+	{$(INCLUDE)}"\.\Signal.h"\
+	{$(INCLUDE)}"\.\Mem_Map.h"\
+	{$(INCLUDE)}"\.\Memory_Pool.i"\
+	{$(INCLUDE)}"\.\Set.h"\
+	{$(INCLUDE)}"\.\Signal.i"\
+	{$(INCLUDE)}"\.\Set.i"\
+	{$(INCLUDE)}"\.\Set.cpp"\
+	{$(INCLUDE)}"\.\Mem_Map.i"\
+	{$(INCLUDE)}"\.\config.h"\
+	{$(INCLUDE)}"\.\Time_Value.i"\
+	{$(INCLUDE)}"\.\Task.h"\
+	{$(INCLUDE)}"\.\Service_Object.h"\
+	{$(INCLUDE)}"\.\Thread_Manager.h"\
+	{$(INCLUDE)}"\.\Task.i"\
+	{$(INCLUDE)}"\.\Task_T.h"\
+	{$(INCLUDE)}"\.\Shared_Object.h"\
+	{$(INCLUDE)}"\.\Service_Object.i"\
+	{$(INCLUDE)}"\.\Shared_Object.i"\
+	{$(INCLUDE)}"\.\Thread_Manager.i"\
+	{$(INCLUDE)}"\.\Message_Queue.h"\
+	{$(INCLUDE)}"\.\Task_T.i"\
+	{$(INCLUDE)}"\.\Message_Queue.i"\
+	{$(INCLUDE)}"\.\Message_Queue.cpp"\
+	
+NODEP_CPP_UPIPE=\
+	".\..\STL\mutex.h"\
+	".\ace\Sync_T.h"\
 	
 
 "$(INTDIR)\UPIPE_Stream.obj" : $(SOURCE) $(DEP_CPP_UPIPE) "$(INTDIR)"
@@ -730,15 +802,17 @@ DEP_CPP_UPIPE=\
 	{$(INCLUDE)}"\.\Module.cpp"\
 	{$(INCLUDE)}"\.\Service_Object.h"\
 	{$(INCLUDE)}"\.\Thread_Manager.h"\
-	{$(INCLUDE)}"\.\Synch_T.h"\
 	{$(INCLUDE)}"\.\Task.i"\
-	{$(INCLUDE)}"\.\Task.cpp"\
+	{$(INCLUDE)}"\.\Task_T.h"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
 	{$(INCLUDE)}"\.\Thread.h"\
 	{$(INCLUDE)}"\.\Thread_Manager.i"\
 	{$(INCLUDE)}"\.\Thread.i"\
+	{$(INCLUDE)}"\.\Synch_T.h"\
+	{$(INCLUDE)}"\.\Task_T.i"\
+	{$(INCLUDE)}"\.\Task_T.cpp"\
 	{$(INCLUDE)}"\.\Synch_T.i"\
 	{$(INCLUDE)}"\.\Synch_T.cpp"\
 	{$(INCLUDE)}"\.\Service_Config.h"\
@@ -813,13 +887,14 @@ DEP_CPP_UPIPE_=\
 	{$(INCLUDE)}"\.\Synch.h"\
 	{$(INCLUDE)}"\.\SPIPE_Stream.h"\
 	{$(INCLUDE)}"\.\UPIPE_Connector.i"\
+	{$(INCLUDE)}"\.\Stream.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
-	{$(INCLUDE)}"\.\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\.\Synch.i"\
-	{$(INCLUDE)}"\.\Synch_T.h"\
+	{$(INCLUDE)}"\.\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\.\Message_Block.h"\
+	{$(INCLUDE)}"\.\Time_Value.h"\
+	{$(INCLUDE)}"\.\Module.h"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
-	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\sys\TYPES.H"\
 	{$(INCLUDE)}"\sys\STAT.H"\
 	{$(INCLUDE)}"\SIGNAL.H"\
@@ -828,22 +903,53 @@ DEP_CPP_UPIPE_=\
 	".\..\STL\bstring.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\OS.i"\
-	{$(INCLUDE)}"\.\config.h"\
-	{$(INCLUDE)}"\.\Time_Value.i"\
 	{$(INCLUDE)}"\MALLOC.H"\
 	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
+	{$(INCLUDE)}"\.\Malloc.h"\
+	{$(INCLUDE)}"\.\Message_Block.i"\
 	{$(INCLUDE)}"\.\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\.\SV_Semaphore_Complex.i"\
+	{$(INCLUDE)}"\.\Malloc.i"\
+	{$(INCLUDE)}"\.\Malloc_T.h"\
+	{$(INCLUDE)}"\.\Memory_Pool.h"\
 	{$(INCLUDE)}"\.\SV_Semaphore_Simple.i"\
+	{$(INCLUDE)}"\.\Malloc_T.i"\
+	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Event_Handler.h"\
+	{$(INCLUDE)}"\.\Signal.h"\
+	{$(INCLUDE)}"\.\Mem_Map.h"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Complex.h"\
+	{$(INCLUDE)}"\.\Memory_Pool.i"\
+	{$(INCLUDE)}"\.\Event_Handler.i"\
+	{$(INCLUDE)}"\.\Set.h"\
+	{$(INCLUDE)}"\.\Signal.i"\
+	{$(INCLUDE)}"\.\Set.i"\
+	{$(INCLUDE)}"\.\Set.cpp"\
+	{$(INCLUDE)}"\.\Mem_Map.i"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Complex.i"\
+	{$(INCLUDE)}"\.\config.h"\
+	{$(INCLUDE)}"\.\Time_Value.i"\
+	{$(INCLUDE)}"\.\Task.h"\
+	{$(INCLUDE)}"\.\Service_Object.h"\
+	{$(INCLUDE)}"\.\Thread_Manager.h"\
+	{$(INCLUDE)}"\.\Task.i"\
+	{$(INCLUDE)}"\.\Task_T.h"\
+	{$(INCLUDE)}"\.\Shared_Object.h"\
+	{$(INCLUDE)}"\.\Service_Object.i"\
+	{$(INCLUDE)}"\.\Shared_Object.i"\
+	{$(INCLUDE)}"\.\Thread.h"\
+	{$(INCLUDE)}"\.\Thread_Manager.i"\
+	{$(INCLUDE)}"\.\Thread.i"\
+	{$(INCLUDE)}"\.\Message_Queue.h"\
+	{$(INCLUDE)}"\.\Synch_T.h"\
+	{$(INCLUDE)}"\.\Task_T.i"\
+	{$(INCLUDE)}"\.\Message_Queue.i"\
+	{$(INCLUDE)}"\.\Message_Queue.cpp"\
 	{$(INCLUDE)}"\.\Synch_T.i"\
 	{$(INCLUDE)}"\.\Synch_T.cpp"\
-	{$(INCLUDE)}"\.\Event_Handler.i"\
-	{$(INCLUDE)}"\.\Thread.h"\
-	{$(INCLUDE)}"\.\Thread.i"\
+	{$(INCLUDE)}"\.\Synch.i"\
 	{$(INCLUDE)}"\.\SPIPE.h"\
 	{$(INCLUDE)}"\.\SPIPE_Addr.h"\
 	{$(INCLUDE)}"\.\SPIPE_Stream.i"\
@@ -856,6 +962,7 @@ DEP_CPP_UPIPE_=\
 	
 NODEP_CPP_UPIPE_=\
 	".\..\STL\mutex.h"\
+	".\ace\Sync_T.h"\
 	
 
 "$(INTDIR)\UPIPE_Connector.obj" : $(SOURCE) $(DEP_CPP_UPIPE_) "$(INTDIR)"
@@ -924,15 +1031,17 @@ DEP_CPP_UPIPE_=\
 	{$(INCLUDE)}"\.\Module.cpp"\
 	{$(INCLUDE)}"\.\Service_Object.h"\
 	{$(INCLUDE)}"\.\Thread_Manager.h"\
-	{$(INCLUDE)}"\.\Synch_T.h"\
 	{$(INCLUDE)}"\.\Task.i"\
-	{$(INCLUDE)}"\.\Task.cpp"\
+	{$(INCLUDE)}"\.\Task_T.h"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
 	{$(INCLUDE)}"\.\Thread.h"\
 	{$(INCLUDE)}"\.\Thread_Manager.i"\
 	{$(INCLUDE)}"\.\Thread.i"\
+	{$(INCLUDE)}"\.\Synch_T.h"\
+	{$(INCLUDE)}"\.\Task_T.i"\
+	{$(INCLUDE)}"\.\Task_T.cpp"\
 	{$(INCLUDE)}"\.\Synch_T.i"\
 	{$(INCLUDE)}"\.\Synch_T.cpp"\
 	{$(INCLUDE)}"\.\Service_Config.h"\
@@ -1010,13 +1119,14 @@ DEP_CPP_UPIPE_A=\
 	{$(INCLUDE)}"\.\SPIPE_Acceptor.h"\
 	{$(INCLUDE)}"\.\Thread_Manager.h"\
 	{$(INCLUDE)}"\.\UPIPE_Acceptor.i"\
+	{$(INCLUDE)}"\.\Stream.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
-	{$(INCLUDE)}"\.\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\.\Synch.i"\
-	{$(INCLUDE)}"\.\Synch_T.h"\
+	{$(INCLUDE)}"\.\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\.\Message_Block.h"\
+	{$(INCLUDE)}"\.\Time_Value.h"\
+	{$(INCLUDE)}"\.\Module.h"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
-	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\sys\TYPES.H"\
 	{$(INCLUDE)}"\sys\STAT.H"\
 	{$(INCLUDE)}"\SIGNAL.H"\
@@ -1025,18 +1135,47 @@ DEP_CPP_UPIPE_A=\
 	".\..\STL\bstring.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\OS.i"\
+	{$(INCLUDE)}"\MALLOC.H"\
+	{$(INCLUDE)}"\.\Malloc.h"\
+	{$(INCLUDE)}"\.\Message_Block.i"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Simple.h"\
+	{$(INCLUDE)}"\.\Malloc.i"\
+	{$(INCLUDE)}"\.\Malloc_T.h"\
+	{$(INCLUDE)}"\.\Memory_Pool.h"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Simple.i"\
+	{$(INCLUDE)}"\.\Malloc_T.i"\
+	{$(INCLUDE)}"\.\Malloc_T.cpp"\
+	{$(INCLUDE)}"\.\Event_Handler.h"\
+	{$(INCLUDE)}"\.\Signal.h"\
+	{$(INCLUDE)}"\.\Mem_Map.h"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Complex.h"\
+	{$(INCLUDE)}"\.\Memory_Pool.i"\
+	{$(INCLUDE)}"\.\Event_Handler.i"\
+	{$(INCLUDE)}"\.\Set.h"\
+	{$(INCLUDE)}"\.\Signal.i"\
+	{$(INCLUDE)}"\.\Set.i"\
+	{$(INCLUDE)}"\.\Set.cpp"\
+	{$(INCLUDE)}"\.\Mem_Map.i"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\MALLOC.H"\
-	{$(INCLUDE)}"\.\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\.\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\.\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\.\Event_Handler.h"\
+	{$(INCLUDE)}"\.\Task.h"\
+	{$(INCLUDE)}"\.\Service_Object.h"\
+	{$(INCLUDE)}"\.\Task.i"\
+	{$(INCLUDE)}"\.\Task_T.h"\
+	{$(INCLUDE)}"\.\Shared_Object.h"\
+	{$(INCLUDE)}"\.\Service_Object.i"\
+	{$(INCLUDE)}"\.\Shared_Object.i"\
+	{$(INCLUDE)}"\.\Message_Queue.h"\
+	{$(INCLUDE)}"\.\Synch_T.h"\
+	{$(INCLUDE)}"\.\Task_T.i"\
+	{$(INCLUDE)}"\.\Message_Queue.i"\
+	{$(INCLUDE)}"\.\Message_Queue.cpp"\
 	{$(INCLUDE)}"\.\Synch_T.i"\
 	{$(INCLUDE)}"\.\Synch_T.cpp"\
-	{$(INCLUDE)}"\.\Event_Handler.i"\
 	{$(INCLUDE)}"\.\Thread.h"\
 	{$(INCLUDE)}"\.\Thread.i"\
+	{$(INCLUDE)}"\.\Synch.i"\
 	{$(INCLUDE)}"\.\SPIPE_Stream.h"\
 	{$(INCLUDE)}"\.\SPIPE.h"\
 	{$(INCLUDE)}"\.\SPIPE_Addr.h"\
@@ -1054,6 +1193,7 @@ DEP_CPP_UPIPE_A=\
 	
 NODEP_CPP_UPIPE_A=\
 	".\..\STL\mutex.h"\
+	".\ace\Sync_T.h"\
 	
 
 "$(INTDIR)\UPIPE_Acceptor.obj" : $(SOURCE) $(DEP_CPP_UPIPE_A) "$(INTDIR)"
@@ -1119,12 +1259,14 @@ DEP_CPP_UPIPE_A=\
 	{$(INCLUDE)}"\.\Module.i"\
 	{$(INCLUDE)}"\.\Module.cpp"\
 	{$(INCLUDE)}"\.\Service_Object.h"\
-	{$(INCLUDE)}"\.\Synch_T.h"\
 	{$(INCLUDE)}"\.\Task.i"\
-	{$(INCLUDE)}"\.\Task.cpp"\
+	{$(INCLUDE)}"\.\Task_T.h"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
+	{$(INCLUDE)}"\.\Synch_T.h"\
+	{$(INCLUDE)}"\.\Task_T.i"\
+	{$(INCLUDE)}"\.\Task_T.cpp"\
 	{$(INCLUDE)}"\.\Synch_T.i"\
 	{$(INCLUDE)}"\.\Synch_T.cpp"\
 	{$(INCLUDE)}"\.\Thread.h"\
@@ -2162,6 +2304,131 @@ NODEP_CPP_SYNCH_=\
 # Begin Source File
 
 SOURCE=.\Svc_Conf_y.cpp
+
+!IF  "$(CFG)" == "ace - Win32 Release"
+
+DEP_CPP_SVC_C=\
+	{$(INCLUDE)}"\.\ARGV.h"\
+	{$(INCLUDE)}"\.\Svc_Conf.h"\
+	{$(INCLUDE)}"\.\Module.h"\
+	{$(INCLUDE)}"\.\Stream.h"\
+	{$(INCLUDE)}"\.\ACE.h"\
+	{$(INCLUDE)}"\.\ARGV.i"\
+	{$(INCLUDE)}"\.\OS.h"\
+	{$(INCLUDE)}"\.\ACE.i"\
+	{$(INCLUDE)}"\.\Time_Value.h"\
+	{$(INCLUDE)}"\sys\TYPES.H"\
+	{$(INCLUDE)}"\sys\STAT.H"\
+	{$(INCLUDE)}"\SIGNAL.H"\
+	{$(INCLUDE)}"\sys\TIMEB.H"\
+	{$(INCLUDE)}"\PROCESS.H"\
+	".\..\STL\bstring.h"\
+	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\OS.i"\
+	{$(INCLUDE)}"\.\config.h"\
+	{$(INCLUDE)}"\.\Time_Value.i"\
+	{$(INCLUDE)}"\MALLOC.H"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
+	{$(INCLUDE)}"\.\Obstack.h"\
+	{$(INCLUDE)}"\.\Service_Config.h"\
+	{$(INCLUDE)}"\.\Parse_Node.h"\
+	{$(INCLUDE)}"\.\Service_Object.h"\
+	{$(INCLUDE)}"\.\Thread_Manager.h"\
+	{$(INCLUDE)}"\.\Set.h"\
+	{$(INCLUDE)}"\.\Proactor.h"\
+	{$(INCLUDE)}"\.\ReactorEx.h"\
+	{$(INCLUDE)}"\.\Service_Config.i"\
+	{$(INCLUDE)}"\.\Reactor.h"\
+	{$(INCLUDE)}"\.\Svc_Conf_Tokens.h"\
+	{$(INCLUDE)}"\.\Shared_Object.h"\
+	{$(INCLUDE)}"\.\Event_Handler.h"\
+	{$(INCLUDE)}"\.\Service_Object.i"\
+	{$(INCLUDE)}"\.\Shared_Object.i"\
+	{$(INCLUDE)}"\.\Event_Handler.i"\
+	{$(INCLUDE)}"\.\Thread.h"\
+	{$(INCLUDE)}"\.\Synch.h"\
+	{$(INCLUDE)}"\.\Thread_Manager.i"\
+	{$(INCLUDE)}"\.\Thread.i"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Complex.h"\
+	{$(INCLUDE)}"\.\Synch.i"\
+	{$(INCLUDE)}"\.\Synch_T.h"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Simple.h"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Complex.i"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Simple.i"\
+	{$(INCLUDE)}"\.\Synch_T.i"\
+	{$(INCLUDE)}"\.\Synch_T.cpp"\
+	{$(INCLUDE)}"\.\Set.i"\
+	{$(INCLUDE)}"\.\Set.cpp"\
+	{$(INCLUDE)}"\.\Message_Block.h"\
+	{$(INCLUDE)}"\.\Timer_Queue.h"\
+	{$(INCLUDE)}"\.\Proactor.i"\
+	{$(INCLUDE)}"\.\Malloc.h"\
+	{$(INCLUDE)}"\.\Message_Block.i"\
+	{$(INCLUDE)}"\.\Malloc.i"\
+	{$(INCLUDE)}"\.\Malloc_T.h"\
+	{$(INCLUDE)}"\.\Memory_Pool.h"\
+	{$(INCLUDE)}"\.\Malloc_T.i"\
+	{$(INCLUDE)}"\.\Malloc_T.cpp"\
+	{$(INCLUDE)}"\.\Signal.h"\
+	{$(INCLUDE)}"\.\Mem_Map.h"\
+	{$(INCLUDE)}"\.\Memory_Pool.i"\
+	{$(INCLUDE)}"\.\Signal.i"\
+	{$(INCLUDE)}"\.\Mem_Map.i"\
+	{$(INCLUDE)}"\.\Timer_Queue.i"\
+	{$(INCLUDE)}"\.\Token.h"\
+	{$(INCLUDE)}"\.\Local_Tokens.h"\
+	{$(INCLUDE)}"\.\ReactorEx.i"\
+	{$(INCLUDE)}"\.\Token.i"\
+	{$(INCLUDE)}"\.\Stack.h"\
+	{$(INCLUDE)}"\.\Synch_Options.h"\
+	{$(INCLUDE)}"\.\Map_Manager.h"\
+	{$(INCLUDE)}"\.\Local_Tokens.i"\
+	{$(INCLUDE)}"\.\Stack.i"\
+	{$(INCLUDE)}"\.\Stack.cpp"\
+	{$(INCLUDE)}"\.\Map_Manager.i"\
+	{$(INCLUDE)}"\.\Map_Manager.cpp"\
+	{$(INCLUDE)}"\.\Handle_Set.h"\
+	{$(INCLUDE)}"\.\Pipe.h"\
+	{$(INCLUDE)}"\.\SOCK_Stream.h"\
+	{$(INCLUDE)}"\.\Reactor.i"\
+	{$(INCLUDE)}"\.\Handle_Set.i"\
+	{$(INCLUDE)}"\.\Pipe.i"\
+	{$(INCLUDE)}"\.\SOCK_IO.h"\
+	{$(INCLUDE)}"\.\INET_Addr.h"\
+	{$(INCLUDE)}"\.\SOCK_Stream.i"\
+	{$(INCLUDE)}"\.\SOCK.h"\
+	{$(INCLUDE)}"\.\SOCK_IO.i"\
+	{$(INCLUDE)}"\.\Addr.h"\
+	{$(INCLUDE)}"\.\IPC_SAP.h"\
+	{$(INCLUDE)}"\.\SOCK.i"\
+	{$(INCLUDE)}"\.\Addr.i"\
+	{$(INCLUDE)}"\.\IPC_SAP.i"\
+	{$(INCLUDE)}"\.\INET_Addr.i"\
+	{$(INCLUDE)}"\.\Service_Record.h"\
+	{$(INCLUDE)}"\.\Parse_Node.i"\
+	{$(INCLUDE)}"\.\Service_Record.i"\
+	{$(INCLUDE)}"\.\Task.h"\
+	{$(INCLUDE)}"\.\Task.i"\
+	{$(INCLUDE)}"\.\Task_T.h"\
+	{$(INCLUDE)}"\.\Message_Queue.h"\
+	{$(INCLUDE)}"\.\Task_T.i"\
+	{$(INCLUDE)}"\.\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\.\Message_Queue.i"\
+	{$(INCLUDE)}"\.\Message_Queue.cpp"\
+	
+NODEP_CPP_SVC_C=\
+	".\..\STL\mutex.h"\
+	".\ace\Sync_T.h"\
+	
+
+"$(INTDIR)\Svc_Conf_y.obj" : $(SOURCE) $(DEP_CPP_SVC_C) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ace - Win32 Debug"
+
 DEP_CPP_SVC_C=\
 	{$(INCLUDE)}"\.\ARGV.h"\
 	{$(INCLUDE)}"\.\Svc_Conf.h"\
@@ -2268,9 +2535,11 @@ DEP_CPP_SVC_C=\
 	{$(INCLUDE)}"\.\Task.h"\
 	{$(INCLUDE)}"\.\Module.i"\
 	{$(INCLUDE)}"\.\Module.cpp"\
-	{$(INCLUDE)}"\.\Message_Queue.h"\
 	{$(INCLUDE)}"\.\Task.i"\
-	{$(INCLUDE)}"\.\Task.cpp"\
+	{$(INCLUDE)}"\.\Task_T.h"\
+	{$(INCLUDE)}"\.\Message_Queue.h"\
+	{$(INCLUDE)}"\.\Task_T.i"\
+	{$(INCLUDE)}"\.\Task_T.cpp"\
 	{$(INCLUDE)}"\.\IO_Cntl_Msg.h"\
 	{$(INCLUDE)}"\.\Message_Queue.i"\
 	{$(INCLUDE)}"\.\Message_Queue.cpp"\
@@ -2288,11 +2557,136 @@ NODEP_CPP_SVC_C=\
 "$(INTDIR)\Svc_Conf_y.obj" : $(SOURCE) $(DEP_CPP_SVC_C) "$(INTDIR)"
 
 
+!ENDIF 
+
 # End Source File
 ################################################################################
 # Begin Source File
 
 SOURCE=.\Svc_Conf_l.cpp
+
+!IF  "$(CFG)" == "ace - Win32 Release"
+
+DEP_CPP_SVC_CO=\
+	{$(INCLUDE)}"\.\Svc_Conf.h"\
+	{$(INCLUDE)}"\.\Svc_Conf_Tokens.h"\
+	{$(INCLUDE)}"\.\Obstack.h"\
+	{$(INCLUDE)}"\.\Service_Config.h"\
+	{$(INCLUDE)}"\.\Parse_Node.h"\
+	{$(INCLUDE)}"\.\ACE.h"\
+	{$(INCLUDE)}"\.\OS.h"\
+	{$(INCLUDE)}"\.\ACE.i"\
+	{$(INCLUDE)}"\.\Time_Value.h"\
+	{$(INCLUDE)}"\sys\TYPES.H"\
+	{$(INCLUDE)}"\sys\STAT.H"\
+	{$(INCLUDE)}"\SIGNAL.H"\
+	{$(INCLUDE)}"\sys\TIMEB.H"\
+	{$(INCLUDE)}"\PROCESS.H"\
+	".\..\STL\bstring.h"\
+	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\OS.i"\
+	{$(INCLUDE)}"\.\config.h"\
+	{$(INCLUDE)}"\.\Time_Value.i"\
+	{$(INCLUDE)}"\MALLOC.H"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
+	{$(INCLUDE)}"\.\Service_Object.h"\
+	{$(INCLUDE)}"\.\Thread_Manager.h"\
+	{$(INCLUDE)}"\.\Set.h"\
+	{$(INCLUDE)}"\.\Proactor.h"\
+	{$(INCLUDE)}"\.\ReactorEx.h"\
+	{$(INCLUDE)}"\.\Service_Config.i"\
+	{$(INCLUDE)}"\.\Reactor.h"\
+	{$(INCLUDE)}"\.\Shared_Object.h"\
+	{$(INCLUDE)}"\.\Event_Handler.h"\
+	{$(INCLUDE)}"\.\Service_Object.i"\
+	{$(INCLUDE)}"\.\Shared_Object.i"\
+	{$(INCLUDE)}"\.\Event_Handler.i"\
+	{$(INCLUDE)}"\.\Thread.h"\
+	{$(INCLUDE)}"\.\Synch.h"\
+	{$(INCLUDE)}"\.\Thread_Manager.i"\
+	{$(INCLUDE)}"\.\Thread.i"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Complex.h"\
+	{$(INCLUDE)}"\.\Synch.i"\
+	{$(INCLUDE)}"\.\Synch_T.h"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Simple.h"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Complex.i"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Simple.i"\
+	{$(INCLUDE)}"\.\Synch_T.i"\
+	{$(INCLUDE)}"\.\Synch_T.cpp"\
+	{$(INCLUDE)}"\.\Set.i"\
+	{$(INCLUDE)}"\.\Set.cpp"\
+	{$(INCLUDE)}"\.\Message_Block.h"\
+	{$(INCLUDE)}"\.\Timer_Queue.h"\
+	{$(INCLUDE)}"\.\Proactor.i"\
+	{$(INCLUDE)}"\.\Malloc.h"\
+	{$(INCLUDE)}"\.\Message_Block.i"\
+	{$(INCLUDE)}"\.\Malloc.i"\
+	{$(INCLUDE)}"\.\Malloc_T.h"\
+	{$(INCLUDE)}"\.\Memory_Pool.h"\
+	{$(INCLUDE)}"\.\Malloc_T.i"\
+	{$(INCLUDE)}"\.\Malloc_T.cpp"\
+	{$(INCLUDE)}"\.\Signal.h"\
+	{$(INCLUDE)}"\.\Mem_Map.h"\
+	{$(INCLUDE)}"\.\Memory_Pool.i"\
+	{$(INCLUDE)}"\.\Signal.i"\
+	{$(INCLUDE)}"\.\Mem_Map.i"\
+	{$(INCLUDE)}"\.\Timer_Queue.i"\
+	{$(INCLUDE)}"\.\Token.h"\
+	{$(INCLUDE)}"\.\Local_Tokens.h"\
+	{$(INCLUDE)}"\.\ReactorEx.i"\
+	{$(INCLUDE)}"\.\Token.i"\
+	{$(INCLUDE)}"\.\Stack.h"\
+	{$(INCLUDE)}"\.\Synch_Options.h"\
+	{$(INCLUDE)}"\.\Map_Manager.h"\
+	{$(INCLUDE)}"\.\Local_Tokens.i"\
+	{$(INCLUDE)}"\.\Stack.i"\
+	{$(INCLUDE)}"\.\Stack.cpp"\
+	{$(INCLUDE)}"\.\Map_Manager.i"\
+	{$(INCLUDE)}"\.\Map_Manager.cpp"\
+	{$(INCLUDE)}"\.\Handle_Set.h"\
+	{$(INCLUDE)}"\.\Pipe.h"\
+	{$(INCLUDE)}"\.\SOCK_Stream.h"\
+	{$(INCLUDE)}"\.\Reactor.i"\
+	{$(INCLUDE)}"\.\Handle_Set.i"\
+	{$(INCLUDE)}"\.\Pipe.i"\
+	{$(INCLUDE)}"\.\SOCK_IO.h"\
+	{$(INCLUDE)}"\.\INET_Addr.h"\
+	{$(INCLUDE)}"\.\SOCK_Stream.i"\
+	{$(INCLUDE)}"\.\SOCK.h"\
+	{$(INCLUDE)}"\.\SOCK_IO.i"\
+	{$(INCLUDE)}"\.\Addr.h"\
+	{$(INCLUDE)}"\.\IPC_SAP.h"\
+	{$(INCLUDE)}"\.\SOCK.i"\
+	{$(INCLUDE)}"\.\Addr.i"\
+	{$(INCLUDE)}"\.\IPC_SAP.i"\
+	{$(INCLUDE)}"\.\INET_Addr.i"\
+	{$(INCLUDE)}"\.\Service_Record.h"\
+	{$(INCLUDE)}"\.\Parse_Node.i"\
+	{$(INCLUDE)}"\.\Stream.h"\
+	{$(INCLUDE)}"\.\Service_Record.i"\
+	{$(INCLUDE)}"\.\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\.\Module.h"\
+	{$(INCLUDE)}"\.\Task.h"\
+	{$(INCLUDE)}"\.\Task.i"\
+	{$(INCLUDE)}"\.\Task_T.h"\
+	{$(INCLUDE)}"\.\Message_Queue.h"\
+	{$(INCLUDE)}"\.\Task_T.i"\
+	{$(INCLUDE)}"\.\Message_Queue.i"\
+	{$(INCLUDE)}"\.\Message_Queue.cpp"\
+	
+NODEP_CPP_SVC_CO=\
+	".\..\STL\mutex.h"\
+	".\ace\Sync_T.h"\
+	
+
+"$(INTDIR)\Svc_Conf_l.obj" : $(SOURCE) $(DEP_CPP_SVC_CO) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ace - Win32 Debug"
+
 DEP_CPP_SVC_CO=\
 	{$(INCLUDE)}"\.\Svc_Conf.h"\
 	{$(INCLUDE)}"\.\Svc_Conf_Tokens.h"\
@@ -2400,9 +2794,11 @@ DEP_CPP_SVC_CO=\
 	{$(INCLUDE)}"\.\Task.h"\
 	{$(INCLUDE)}"\.\Module.i"\
 	{$(INCLUDE)}"\.\Module.cpp"\
-	{$(INCLUDE)}"\.\Message_Queue.h"\
 	{$(INCLUDE)}"\.\Task.i"\
-	{$(INCLUDE)}"\.\Task.cpp"\
+	{$(INCLUDE)}"\.\Task_T.h"\
+	{$(INCLUDE)}"\.\Message_Queue.h"\
+	{$(INCLUDE)}"\.\Task_T.i"\
+	{$(INCLUDE)}"\.\Task_T.cpp"\
 	{$(INCLUDE)}"\.\Message_Queue.i"\
 	{$(INCLUDE)}"\.\Message_Queue.cpp"\
 	{$(INCLUDE)}"\.\Stream_Modules.h"\
@@ -2416,6 +2812,8 @@ NODEP_CPP_SVC_CO=\
 
 "$(INTDIR)\Svc_Conf_l.obj" : $(SOURCE) $(DEP_CPP_SVC_CO) "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 ################################################################################
@@ -3438,6 +3836,89 @@ NODEP_CPP_SHARED_=\
 # Begin Source File
 
 SOURCE=.\Service_Repository.cpp
+
+!IF  "$(CFG)" == "ace - Win32 Release"
+
+DEP_CPP_SERVI=\
+	{$(INCLUDE)}"\.\Service_Repository.h"\
+	{$(INCLUDE)}"\.\Service_Repository.i"\
+	{$(INCLUDE)}"\.\Service_Record.h"\
+	{$(INCLUDE)}"\.\Service_Object.h"\
+	{$(INCLUDE)}"\.\Synch.h"\
+	{$(INCLUDE)}"\.\Stream.h"\
+	{$(INCLUDE)}"\.\Service_Record.i"\
+	{$(INCLUDE)}"\.\Shared_Object.h"\
+	{$(INCLUDE)}"\.\Event_Handler.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
+	{$(INCLUDE)}"\.\Service_Object.i"\
+	{$(INCLUDE)}"\.\ACE.h"\
+	{$(INCLUDE)}"\.\Shared_Object.i"\
+	{$(INCLUDE)}"\.\OS.h"\
+	{$(INCLUDE)}"\.\ACE.i"\
+	{$(INCLUDE)}"\.\Time_Value.h"\
+	{$(INCLUDE)}"\sys\TYPES.H"\
+	{$(INCLUDE)}"\sys\STAT.H"\
+	{$(INCLUDE)}"\SIGNAL.H"\
+	{$(INCLUDE)}"\sys\TIMEB.H"\
+	{$(INCLUDE)}"\PROCESS.H"\
+	".\..\STL\bstring.h"\
+	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\OS.i"\
+	{$(INCLUDE)}"\.\config.h"\
+	{$(INCLUDE)}"\.\Time_Value.i"\
+	{$(INCLUDE)}"\MALLOC.H"\
+	{$(INCLUDE)}"\.\Event_Handler.i"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Complex.h"\
+	{$(INCLUDE)}"\.\Synch.i"\
+	{$(INCLUDE)}"\.\Synch_T.h"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Simple.h"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Complex.i"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Simple.i"\
+	{$(INCLUDE)}"\.\Synch_T.i"\
+	{$(INCLUDE)}"\.\Synch_T.cpp"\
+	{$(INCLUDE)}"\.\Thread.h"\
+	{$(INCLUDE)}"\.\Thread.i"\
+	{$(INCLUDE)}"\.\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\.\Message_Block.h"\
+	{$(INCLUDE)}"\.\Module.h"\
+	{$(INCLUDE)}"\.\Malloc.h"\
+	{$(INCLUDE)}"\.\Message_Block.i"\
+	{$(INCLUDE)}"\.\Malloc.i"\
+	{$(INCLUDE)}"\.\Malloc_T.h"\
+	{$(INCLUDE)}"\.\Memory_Pool.h"\
+	{$(INCLUDE)}"\.\Malloc_T.i"\
+	{$(INCLUDE)}"\.\Malloc_T.cpp"\
+	{$(INCLUDE)}"\.\Signal.h"\
+	{$(INCLUDE)}"\.\Mem_Map.h"\
+	{$(INCLUDE)}"\.\Memory_Pool.i"\
+	{$(INCLUDE)}"\.\Set.h"\
+	{$(INCLUDE)}"\.\Signal.i"\
+	{$(INCLUDE)}"\.\Set.i"\
+	{$(INCLUDE)}"\.\Set.cpp"\
+	{$(INCLUDE)}"\.\Mem_Map.i"\
+	{$(INCLUDE)}"\.\Task.h"\
+	{$(INCLUDE)}"\.\Thread_Manager.h"\
+	{$(INCLUDE)}"\.\Task.i"\
+	{$(INCLUDE)}"\.\Task_T.h"\
+	{$(INCLUDE)}"\.\Thread_Manager.i"\
+	{$(INCLUDE)}"\.\Message_Queue.h"\
+	{$(INCLUDE)}"\.\Task_T.i"\
+	{$(INCLUDE)}"\.\Message_Queue.i"\
+	{$(INCLUDE)}"\.\Message_Queue.cpp"\
+	
+NODEP_CPP_SERVI=\
+	".\..\STL\mutex.h"\
+	".\ace\Sync_T.h"\
+	
+
+"$(INTDIR)\Service_Repository.obj" : $(SOURCE) $(DEP_CPP_SERVI) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ace - Win32 Debug"
+
 DEP_CPP_SERVI=\
 	{$(INCLUDE)}"\.\Service_Repository.h"\
 	{$(INCLUDE)}"\.\Service_Repository.i"\
@@ -3503,13 +3984,15 @@ DEP_CPP_SERVI=\
 	{$(INCLUDE)}"\.\Task.h"\
 	{$(INCLUDE)}"\.\Module.i"\
 	{$(INCLUDE)}"\.\Module.cpp"\
-	{$(INCLUDE)}"\.\Message_Queue.h"\
 	{$(INCLUDE)}"\.\Thread_Manager.h"\
 	{$(INCLUDE)}"\.\Task.i"\
-	{$(INCLUDE)}"\.\Task.cpp"\
+	{$(INCLUDE)}"\.\Task_T.h"\
+	{$(INCLUDE)}"\.\Thread_Manager.i"\
+	{$(INCLUDE)}"\.\Message_Queue.h"\
+	{$(INCLUDE)}"\.\Task_T.i"\
+	{$(INCLUDE)}"\.\Task_T.cpp"\
 	{$(INCLUDE)}"\.\Message_Queue.i"\
 	{$(INCLUDE)}"\.\Message_Queue.cpp"\
-	{$(INCLUDE)}"\.\Thread_Manager.i"\
 	{$(INCLUDE)}"\.\Service_Config.h"\
 	{$(INCLUDE)}"\.\Proactor.h"\
 	{$(INCLUDE)}"\.\ReactorEx.h"\
@@ -3560,11 +4043,94 @@ NODEP_CPP_SERVI=\
 "$(INTDIR)\Service_Repository.obj" : $(SOURCE) $(DEP_CPP_SERVI) "$(INTDIR)"
 
 
+!ENDIF 
+
 # End Source File
 ################################################################################
 # Begin Source File
 
 SOURCE=.\Service_Record.cpp
+
+!IF  "$(CFG)" == "ace - Win32 Release"
+
+DEP_CPP_SERVIC=\
+	{$(INCLUDE)}"\.\Service_Record.h"\
+	{$(INCLUDE)}"\.\Service_Record.i"\
+	{$(INCLUDE)}"\.\Service_Object.h"\
+	{$(INCLUDE)}"\.\Synch.h"\
+	{$(INCLUDE)}"\.\Stream.h"\
+	{$(INCLUDE)}"\.\Shared_Object.h"\
+	{$(INCLUDE)}"\.\Event_Handler.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
+	{$(INCLUDE)}"\.\Service_Object.i"\
+	{$(INCLUDE)}"\.\ACE.h"\
+	{$(INCLUDE)}"\.\Shared_Object.i"\
+	{$(INCLUDE)}"\.\OS.h"\
+	{$(INCLUDE)}"\.\ACE.i"\
+	{$(INCLUDE)}"\.\Time_Value.h"\
+	{$(INCLUDE)}"\sys\TYPES.H"\
+	{$(INCLUDE)}"\sys\STAT.H"\
+	{$(INCLUDE)}"\SIGNAL.H"\
+	{$(INCLUDE)}"\sys\TIMEB.H"\
+	{$(INCLUDE)}"\PROCESS.H"\
+	".\..\STL\bstring.h"\
+	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\OS.i"\
+	{$(INCLUDE)}"\.\config.h"\
+	{$(INCLUDE)}"\.\Time_Value.i"\
+	{$(INCLUDE)}"\MALLOC.H"\
+	{$(INCLUDE)}"\.\Event_Handler.i"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Complex.h"\
+	{$(INCLUDE)}"\.\Synch.i"\
+	{$(INCLUDE)}"\.\Synch_T.h"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Simple.h"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Complex.i"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Simple.i"\
+	{$(INCLUDE)}"\.\Synch_T.i"\
+	{$(INCLUDE)}"\.\Synch_T.cpp"\
+	{$(INCLUDE)}"\.\Thread.h"\
+	{$(INCLUDE)}"\.\Thread.i"\
+	{$(INCLUDE)}"\.\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\.\Message_Block.h"\
+	{$(INCLUDE)}"\.\Module.h"\
+	{$(INCLUDE)}"\.\Malloc.h"\
+	{$(INCLUDE)}"\.\Message_Block.i"\
+	{$(INCLUDE)}"\.\Malloc.i"\
+	{$(INCLUDE)}"\.\Malloc_T.h"\
+	{$(INCLUDE)}"\.\Memory_Pool.h"\
+	{$(INCLUDE)}"\.\Malloc_T.i"\
+	{$(INCLUDE)}"\.\Malloc_T.cpp"\
+	{$(INCLUDE)}"\.\Signal.h"\
+	{$(INCLUDE)}"\.\Mem_Map.h"\
+	{$(INCLUDE)}"\.\Memory_Pool.i"\
+	{$(INCLUDE)}"\.\Set.h"\
+	{$(INCLUDE)}"\.\Signal.i"\
+	{$(INCLUDE)}"\.\Set.i"\
+	{$(INCLUDE)}"\.\Set.cpp"\
+	{$(INCLUDE)}"\.\Mem_Map.i"\
+	{$(INCLUDE)}"\.\Task.h"\
+	{$(INCLUDE)}"\.\Thread_Manager.h"\
+	{$(INCLUDE)}"\.\Task.i"\
+	{$(INCLUDE)}"\.\Task_T.h"\
+	{$(INCLUDE)}"\.\Thread_Manager.i"\
+	{$(INCLUDE)}"\.\Message_Queue.h"\
+	{$(INCLUDE)}"\.\Task_T.i"\
+	{$(INCLUDE)}"\.\Message_Queue.i"\
+	{$(INCLUDE)}"\.\Message_Queue.cpp"\
+	
+NODEP_CPP_SERVIC=\
+	".\..\STL\mutex.h"\
+	".\ace\Sync_T.h"\
+	
+
+"$(INTDIR)\Service_Record.obj" : $(SOURCE) $(DEP_CPP_SERVIC) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ace - Win32 Debug"
+
 DEP_CPP_SERVIC=\
 	{$(INCLUDE)}"\.\Service_Record.h"\
 	{$(INCLUDE)}"\.\Service_Record.i"\
@@ -3628,13 +4194,15 @@ DEP_CPP_SERVIC=\
 	{$(INCLUDE)}"\.\Task.h"\
 	{$(INCLUDE)}"\.\Module.i"\
 	{$(INCLUDE)}"\.\Module.cpp"\
-	{$(INCLUDE)}"\.\Message_Queue.h"\
 	{$(INCLUDE)}"\.\Thread_Manager.h"\
 	{$(INCLUDE)}"\.\Task.i"\
-	{$(INCLUDE)}"\.\Task.cpp"\
+	{$(INCLUDE)}"\.\Task_T.h"\
+	{$(INCLUDE)}"\.\Thread_Manager.i"\
+	{$(INCLUDE)}"\.\Message_Queue.h"\
+	{$(INCLUDE)}"\.\Task_T.i"\
+	{$(INCLUDE)}"\.\Task_T.cpp"\
 	{$(INCLUDE)}"\.\Message_Queue.i"\
 	{$(INCLUDE)}"\.\Message_Queue.cpp"\
-	{$(INCLUDE)}"\.\Thread_Manager.i"\
 	{$(INCLUDE)}"\.\Service_Config.h"\
 	{$(INCLUDE)}"\.\Proactor.h"\
 	{$(INCLUDE)}"\.\ReactorEx.h"\
@@ -3685,6 +4253,8 @@ NODEP_CPP_SERVIC=\
 "$(INTDIR)\Service_Record.obj" : $(SOURCE) $(DEP_CPP_SERVIC) "$(INTDIR)"
 
 
+!ENDIF 
+
 # End Source File
 ################################################################################
 # Begin Source File
@@ -3729,6 +4299,133 @@ NODEP_CPP_SERVICE=\
 # Begin Source File
 
 SOURCE=.\Service_Manager.cpp
+
+!IF  "$(CFG)" == "ace - Win32 Release"
+
+DEP_CPP_SERVICE_=\
+	{$(INCLUDE)}"\.\Get_Opt.h"\
+	{$(INCLUDE)}"\.\Service_Repository.h"\
+	{$(INCLUDE)}"\.\Service_Config.h"\
+	{$(INCLUDE)}"\.\Service_Manager.h"\
+	{$(INCLUDE)}"\.\Reactor.h"\
+	{$(INCLUDE)}"\.\Service_Manager.i"\
+	{$(INCLUDE)}"\.\ACE.h"\
+	{$(INCLUDE)}"\.\Get_Opt.i"\
+	{$(INCLUDE)}"\.\OS.h"\
+	{$(INCLUDE)}"\.\ACE.i"\
+	{$(INCLUDE)}"\.\Time_Value.h"\
+	{$(INCLUDE)}"\sys\TYPES.H"\
+	{$(INCLUDE)}"\sys\STAT.H"\
+	{$(INCLUDE)}"\SIGNAL.H"\
+	{$(INCLUDE)}"\sys\TIMEB.H"\
+	{$(INCLUDE)}"\PROCESS.H"\
+	".\..\STL\bstring.h"\
+	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\OS.i"\
+	{$(INCLUDE)}"\.\config.h"\
+	{$(INCLUDE)}"\.\Time_Value.i"\
+	{$(INCLUDE)}"\MALLOC.H"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
+	{$(INCLUDE)}"\.\Service_Record.h"\
+	{$(INCLUDE)}"\.\Service_Repository.i"\
+	{$(INCLUDE)}"\.\Service_Object.h"\
+	{$(INCLUDE)}"\.\Synch.h"\
+	{$(INCLUDE)}"\.\Stream.h"\
+	{$(INCLUDE)}"\.\Service_Record.i"\
+	{$(INCLUDE)}"\.\Shared_Object.h"\
+	{$(INCLUDE)}"\.\Event_Handler.h"\
+	{$(INCLUDE)}"\.\Service_Object.i"\
+	{$(INCLUDE)}"\.\Shared_Object.i"\
+	{$(INCLUDE)}"\.\Event_Handler.i"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Complex.h"\
+	{$(INCLUDE)}"\.\Synch.i"\
+	{$(INCLUDE)}"\.\Synch_T.h"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Simple.h"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Complex.i"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Simple.i"\
+	{$(INCLUDE)}"\.\Synch_T.i"\
+	{$(INCLUDE)}"\.\Synch_T.cpp"\
+	{$(INCLUDE)}"\.\Thread.h"\
+	{$(INCLUDE)}"\.\Thread.i"\
+	{$(INCLUDE)}"\.\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\.\Message_Block.h"\
+	{$(INCLUDE)}"\.\Module.h"\
+	{$(INCLUDE)}"\.\Malloc.h"\
+	{$(INCLUDE)}"\.\Message_Block.i"\
+	{$(INCLUDE)}"\.\Malloc.i"\
+	{$(INCLUDE)}"\.\Malloc_T.h"\
+	{$(INCLUDE)}"\.\Memory_Pool.h"\
+	{$(INCLUDE)}"\.\Malloc_T.i"\
+	{$(INCLUDE)}"\.\Malloc_T.cpp"\
+	{$(INCLUDE)}"\.\Signal.h"\
+	{$(INCLUDE)}"\.\Mem_Map.h"\
+	{$(INCLUDE)}"\.\Memory_Pool.i"\
+	{$(INCLUDE)}"\.\Set.h"\
+	{$(INCLUDE)}"\.\Signal.i"\
+	{$(INCLUDE)}"\.\Set.i"\
+	{$(INCLUDE)}"\.\Set.cpp"\
+	{$(INCLUDE)}"\.\Mem_Map.i"\
+	{$(INCLUDE)}"\.\Task.h"\
+	{$(INCLUDE)}"\.\Thread_Manager.h"\
+	{$(INCLUDE)}"\.\Task.i"\
+	{$(INCLUDE)}"\.\Task_T.h"\
+	{$(INCLUDE)}"\.\Thread_Manager.i"\
+	{$(INCLUDE)}"\.\Message_Queue.h"\
+	{$(INCLUDE)}"\.\Task_T.i"\
+	{$(INCLUDE)}"\.\Message_Queue.i"\
+	{$(INCLUDE)}"\.\Message_Queue.cpp"\
+	{$(INCLUDE)}"\.\Proactor.h"\
+	{$(INCLUDE)}"\.\ReactorEx.h"\
+	{$(INCLUDE)}"\.\Service_Config.i"\
+	{$(INCLUDE)}"\.\Svc_Conf_Tokens.h"\
+	{$(INCLUDE)}"\.\Timer_Queue.h"\
+	{$(INCLUDE)}"\.\Proactor.i"\
+	{$(INCLUDE)}"\.\Timer_Queue.i"\
+	{$(INCLUDE)}"\.\Token.h"\
+	{$(INCLUDE)}"\.\Local_Tokens.h"\
+	{$(INCLUDE)}"\.\ReactorEx.i"\
+	{$(INCLUDE)}"\.\Token.i"\
+	{$(INCLUDE)}"\.\Stack.h"\
+	{$(INCLUDE)}"\.\Synch_Options.h"\
+	{$(INCLUDE)}"\.\Map_Manager.h"\
+	{$(INCLUDE)}"\.\Local_Tokens.i"\
+	{$(INCLUDE)}"\.\Stack.i"\
+	{$(INCLUDE)}"\.\Stack.cpp"\
+	{$(INCLUDE)}"\.\Map_Manager.i"\
+	{$(INCLUDE)}"\.\Map_Manager.cpp"\
+	{$(INCLUDE)}"\.\SOCK_Stream.h"\
+	{$(INCLUDE)}"\.\SOCK_Acceptor.h"\
+	{$(INCLUDE)}"\.\INET_Addr.h"\
+	{$(INCLUDE)}"\.\SOCK_IO.h"\
+	{$(INCLUDE)}"\.\SOCK_Stream.i"\
+	{$(INCLUDE)}"\.\SOCK.h"\
+	{$(INCLUDE)}"\.\SOCK_IO.i"\
+	{$(INCLUDE)}"\.\Addr.h"\
+	{$(INCLUDE)}"\.\IPC_SAP.h"\
+	{$(INCLUDE)}"\.\SOCK.i"\
+	{$(INCLUDE)}"\.\Addr.i"\
+	{$(INCLUDE)}"\.\IPC_SAP.i"\
+	{$(INCLUDE)}"\.\SOCK_Acceptor.i"\
+	{$(INCLUDE)}"\.\INET_Addr.i"\
+	{$(INCLUDE)}"\.\Handle_Set.h"\
+	{$(INCLUDE)}"\.\Pipe.h"\
+	{$(INCLUDE)}"\.\Reactor.i"\
+	{$(INCLUDE)}"\.\Handle_Set.i"\
+	{$(INCLUDE)}"\.\Pipe.i"\
+	
+NODEP_CPP_SERVICE_=\
+	".\..\STL\mutex.h"\
+	".\ace\Sync_T.h"\
+	
+
+"$(INTDIR)\Service_Manager.obj" : $(SOURCE) $(DEP_CPP_SERVICE_) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ace - Win32 Debug"
+
 DEP_CPP_SERVICE_=\
 	{$(INCLUDE)}"\.\Get_Opt.h"\
 	{$(INCLUDE)}"\.\Service_Repository.h"\
@@ -3800,13 +4497,15 @@ DEP_CPP_SERVICE_=\
 	{$(INCLUDE)}"\.\Task.h"\
 	{$(INCLUDE)}"\.\Module.i"\
 	{$(INCLUDE)}"\.\Module.cpp"\
-	{$(INCLUDE)}"\.\Message_Queue.h"\
 	{$(INCLUDE)}"\.\Thread_Manager.h"\
 	{$(INCLUDE)}"\.\Task.i"\
-	{$(INCLUDE)}"\.\Task.cpp"\
+	{$(INCLUDE)}"\.\Task_T.h"\
+	{$(INCLUDE)}"\.\Thread_Manager.i"\
+	{$(INCLUDE)}"\.\Message_Queue.h"\
+	{$(INCLUDE)}"\.\Task_T.i"\
+	{$(INCLUDE)}"\.\Task_T.cpp"\
 	{$(INCLUDE)}"\.\Message_Queue.i"\
 	{$(INCLUDE)}"\.\Message_Queue.cpp"\
-	{$(INCLUDE)}"\.\Thread_Manager.i"\
 	{$(INCLUDE)}"\.\Stream_Modules.h"\
 	{$(INCLUDE)}"\.\Stream_Modules.i"\
 	{$(INCLUDE)}"\.\Stream_Modules.cpp"\
@@ -3856,6 +4555,8 @@ NODEP_CPP_SERVICE_=\
 
 "$(INTDIR)\Service_Manager.obj" : $(SOURCE) $(DEP_CPP_SERVICE_) "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 ################################################################################
@@ -3969,6 +4670,142 @@ NODEP_CPP_SERVICE_M=\
 # Begin Source File
 
 SOURCE=.\Service_Config.cpp
+
+!IF  "$(CFG)" == "ace - Win32 Release"
+
+DEP_CPP_SERVICE_C=\
+	{$(INCLUDE)}"\.\Svc_Conf.h"\
+	{$(INCLUDE)}"\.\Get_Opt.h"\
+	{$(INCLUDE)}"\.\ARGV.h"\
+	{$(INCLUDE)}"\.\Malloc.h"\
+	{$(INCLUDE)}"\.\Service_Manager.h"\
+	{$(INCLUDE)}"\.\Service_Repository.h"\
+	{$(INCLUDE)}"\.\Service_Record.h"\
+	{$(INCLUDE)}"\.\Set.h"\
+	{$(INCLUDE)}"\.\Auto_Ptr.h"\
+	{$(INCLUDE)}"\.\Service_Config.h"\
+	{$(INCLUDE)}"\.\Service_Config.i"\
+	{$(INCLUDE)}"\.\Obstack.h"\
+	{$(INCLUDE)}"\.\Parse_Node.h"\
+	{$(INCLUDE)}"\.\ACE.h"\
+	{$(INCLUDE)}"\.\OS.h"\
+	{$(INCLUDE)}"\.\ACE.i"\
+	{$(INCLUDE)}"\.\Time_Value.h"\
+	{$(INCLUDE)}"\sys\TYPES.H"\
+	{$(INCLUDE)}"\sys\STAT.H"\
+	{$(INCLUDE)}"\SIGNAL.H"\
+	{$(INCLUDE)}"\sys\TIMEB.H"\
+	{$(INCLUDE)}"\PROCESS.H"\
+	".\..\STL\bstring.h"\
+	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\OS.i"\
+	{$(INCLUDE)}"\.\config.h"\
+	{$(INCLUDE)}"\.\Time_Value.i"\
+	{$(INCLUDE)}"\MALLOC.H"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
+	{$(INCLUDE)}"\.\Parse_Node.i"\
+	{$(INCLUDE)}"\.\Get_Opt.i"\
+	{$(INCLUDE)}"\.\ARGV.i"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Simple.h"\
+	{$(INCLUDE)}"\.\Malloc.i"\
+	{$(INCLUDE)}"\.\Malloc_T.h"\
+	{$(INCLUDE)}"\.\Memory_Pool.h"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Simple.i"\
+	{$(INCLUDE)}"\.\Synch.h"\
+	{$(INCLUDE)}"\.\Malloc_T.i"\
+	{$(INCLUDE)}"\.\Malloc_T.cpp"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Complex.h"\
+	{$(INCLUDE)}"\.\Synch.i"\
+	{$(INCLUDE)}"\.\Synch_T.h"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Complex.i"\
+	{$(INCLUDE)}"\.\Event_Handler.h"\
+	{$(INCLUDE)}"\.\Synch_T.i"\
+	{$(INCLUDE)}"\.\Synch_T.cpp"\
+	{$(INCLUDE)}"\.\Event_Handler.i"\
+	{$(INCLUDE)}"\.\Thread.h"\
+	{$(INCLUDE)}"\.\Thread.i"\
+	{$(INCLUDE)}"\.\Signal.h"\
+	{$(INCLUDE)}"\.\Mem_Map.h"\
+	{$(INCLUDE)}"\.\Memory_Pool.i"\
+	{$(INCLUDE)}"\.\Signal.i"\
+	{$(INCLUDE)}"\.\Mem_Map.i"\
+	{$(INCLUDE)}"\.\SOCK_Stream.h"\
+	{$(INCLUDE)}"\.\SOCK_Acceptor.h"\
+	{$(INCLUDE)}"\.\INET_Addr.h"\
+	{$(INCLUDE)}"\.\Service_Object.h"\
+	{$(INCLUDE)}"\.\Service_Manager.i"\
+	{$(INCLUDE)}"\.\SOCK_IO.h"\
+	{$(INCLUDE)}"\.\SOCK_Stream.i"\
+	{$(INCLUDE)}"\.\SOCK.h"\
+	{$(INCLUDE)}"\.\SOCK_IO.i"\
+	{$(INCLUDE)}"\.\Addr.h"\
+	{$(INCLUDE)}"\.\IPC_SAP.h"\
+	{$(INCLUDE)}"\.\SOCK.i"\
+	{$(INCLUDE)}"\.\Addr.i"\
+	{$(INCLUDE)}"\.\IPC_SAP.i"\
+	{$(INCLUDE)}"\.\SOCK_Acceptor.i"\
+	{$(INCLUDE)}"\.\INET_Addr.i"\
+	{$(INCLUDE)}"\.\Shared_Object.h"\
+	{$(INCLUDE)}"\.\Service_Object.i"\
+	{$(INCLUDE)}"\.\Shared_Object.i"\
+	{$(INCLUDE)}"\.\Service_Repository.i"\
+	{$(INCLUDE)}"\.\Stream.h"\
+	{$(INCLUDE)}"\.\Service_Record.i"\
+	{$(INCLUDE)}"\.\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\.\Message_Block.h"\
+	{$(INCLUDE)}"\.\Module.h"\
+	{$(INCLUDE)}"\.\Message_Block.i"\
+	{$(INCLUDE)}"\.\Task.h"\
+	{$(INCLUDE)}"\.\Thread_Manager.h"\
+	{$(INCLUDE)}"\.\Task.i"\
+	{$(INCLUDE)}"\.\Task_T.h"\
+	{$(INCLUDE)}"\.\Thread_Manager.i"\
+	{$(INCLUDE)}"\.\Message_Queue.h"\
+	{$(INCLUDE)}"\.\Task_T.i"\
+	{$(INCLUDE)}"\.\Message_Queue.i"\
+	{$(INCLUDE)}"\.\Message_Queue.cpp"\
+	{$(INCLUDE)}"\.\Set.i"\
+	{$(INCLUDE)}"\.\Set.cpp"\
+	{$(INCLUDE)}"\.\Auto_Ptr.i"\
+	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
+	{$(INCLUDE)}"\.\Proactor.h"\
+	{$(INCLUDE)}"\.\ReactorEx.h"\
+	{$(INCLUDE)}"\.\Reactor.h"\
+	{$(INCLUDE)}"\.\Svc_Conf_Tokens.h"\
+	{$(INCLUDE)}"\.\Timer_Queue.h"\
+	{$(INCLUDE)}"\.\Proactor.i"\
+	{$(INCLUDE)}"\.\Timer_Queue.i"\
+	{$(INCLUDE)}"\.\Token.h"\
+	{$(INCLUDE)}"\.\Local_Tokens.h"\
+	{$(INCLUDE)}"\.\ReactorEx.i"\
+	{$(INCLUDE)}"\.\Token.i"\
+	{$(INCLUDE)}"\.\Stack.h"\
+	{$(INCLUDE)}"\.\Synch_Options.h"\
+	{$(INCLUDE)}"\.\Map_Manager.h"\
+	{$(INCLUDE)}"\.\Local_Tokens.i"\
+	{$(INCLUDE)}"\.\Stack.i"\
+	{$(INCLUDE)}"\.\Stack.cpp"\
+	{$(INCLUDE)}"\.\Map_Manager.i"\
+	{$(INCLUDE)}"\.\Map_Manager.cpp"\
+	{$(INCLUDE)}"\.\Handle_Set.h"\
+	{$(INCLUDE)}"\.\Pipe.h"\
+	{$(INCLUDE)}"\.\Reactor.i"\
+	{$(INCLUDE)}"\.\Handle_Set.i"\
+	{$(INCLUDE)}"\.\Pipe.i"\
+	
+NODEP_CPP_SERVICE_C=\
+	".\..\STL\mutex.h"\
+	".\ace\Sync_T.h"\
+	
+
+"$(INTDIR)\Service_Config.obj" : $(SOURCE) $(DEP_CPP_SERVICE_C) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ace - Win32 Debug"
+
 DEP_CPP_SERVICE_C=\
 	{$(INCLUDE)}"\.\Svc_Conf.h"\
 	{$(INCLUDE)}"\.\Get_Opt.h"\
@@ -4059,13 +4896,15 @@ DEP_CPP_SERVICE_C=\
 	{$(INCLUDE)}"\.\Task.h"\
 	{$(INCLUDE)}"\.\Module.i"\
 	{$(INCLUDE)}"\.\Module.cpp"\
-	{$(INCLUDE)}"\.\Message_Queue.h"\
 	{$(INCLUDE)}"\.\Thread_Manager.h"\
 	{$(INCLUDE)}"\.\Task.i"\
-	{$(INCLUDE)}"\.\Task.cpp"\
+	{$(INCLUDE)}"\.\Task_T.h"\
+	{$(INCLUDE)}"\.\Thread_Manager.i"\
+	{$(INCLUDE)}"\.\Message_Queue.h"\
+	{$(INCLUDE)}"\.\Task_T.i"\
+	{$(INCLUDE)}"\.\Task_T.cpp"\
 	{$(INCLUDE)}"\.\Message_Queue.i"\
 	{$(INCLUDE)}"\.\Message_Queue.cpp"\
-	{$(INCLUDE)}"\.\Thread_Manager.i"\
 	{$(INCLUDE)}"\.\Stream_Modules.h"\
 	{$(INCLUDE)}"\.\Stream_Modules.i"\
 	{$(INCLUDE)}"\.\Stream_Modules.cpp"\
@@ -4105,6 +4944,8 @@ NODEP_CPP_SERVICE_C=\
 
 "$(INTDIR)\Service_Config.obj" : $(SOURCE) $(DEP_CPP_SERVICE_C) "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 ################################################################################
@@ -4696,6 +5537,129 @@ NODEP_CPP_PIPE_=\
 # Begin Source File
 
 SOURCE=.\Parse_Node.cpp
+
+!IF  "$(CFG)" == "ace - Win32 Release"
+
+DEP_CPP_PARSE=\
+	{$(INCLUDE)}"\.\Service_Config.h"\
+	{$(INCLUDE)}"\.\Service_Repository.h"\
+	{$(INCLUDE)}"\.\Task.h"\
+	{$(INCLUDE)}"\.\Parse_Node.h"\
+	{$(INCLUDE)}"\.\Parse_Node.i"\
+	{$(INCLUDE)}"\.\Service_Object.h"\
+	{$(INCLUDE)}"\.\Thread_Manager.h"\
+	{$(INCLUDE)}"\.\Set.h"\
+	{$(INCLUDE)}"\.\Proactor.h"\
+	{$(INCLUDE)}"\.\ReactorEx.h"\
+	{$(INCLUDE)}"\.\Service_Config.i"\
+	{$(INCLUDE)}"\.\Reactor.h"\
+	{$(INCLUDE)}"\.\Svc_Conf_Tokens.h"\
+	{$(INCLUDE)}"\.\Shared_Object.h"\
+	{$(INCLUDE)}"\.\Event_Handler.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
+	{$(INCLUDE)}"\.\Service_Object.i"\
+	{$(INCLUDE)}"\.\ACE.h"\
+	{$(INCLUDE)}"\.\Shared_Object.i"\
+	{$(INCLUDE)}"\.\OS.h"\
+	{$(INCLUDE)}"\.\ACE.i"\
+	{$(INCLUDE)}"\.\Time_Value.h"\
+	{$(INCLUDE)}"\sys\TYPES.H"\
+	{$(INCLUDE)}"\sys\STAT.H"\
+	{$(INCLUDE)}"\SIGNAL.H"\
+	{$(INCLUDE)}"\sys\TIMEB.H"\
+	{$(INCLUDE)}"\PROCESS.H"\
+	".\..\STL\bstring.h"\
+	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\OS.i"\
+	{$(INCLUDE)}"\.\config.h"\
+	{$(INCLUDE)}"\.\Time_Value.i"\
+	{$(INCLUDE)}"\MALLOC.H"\
+	{$(INCLUDE)}"\.\Event_Handler.i"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
+	{$(INCLUDE)}"\.\Thread.h"\
+	{$(INCLUDE)}"\.\Synch.h"\
+	{$(INCLUDE)}"\.\Thread_Manager.i"\
+	{$(INCLUDE)}"\.\Thread.i"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Complex.h"\
+	{$(INCLUDE)}"\.\Synch.i"\
+	{$(INCLUDE)}"\.\Synch_T.h"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Simple.h"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Complex.i"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Simple.i"\
+	{$(INCLUDE)}"\.\Synch_T.i"\
+	{$(INCLUDE)}"\.\Synch_T.cpp"\
+	{$(INCLUDE)}"\.\Set.i"\
+	{$(INCLUDE)}"\.\Set.cpp"\
+	{$(INCLUDE)}"\.\Message_Block.h"\
+	{$(INCLUDE)}"\.\Timer_Queue.h"\
+	{$(INCLUDE)}"\.\Proactor.i"\
+	{$(INCLUDE)}"\.\Malloc.h"\
+	{$(INCLUDE)}"\.\Message_Block.i"\
+	{$(INCLUDE)}"\.\Malloc.i"\
+	{$(INCLUDE)}"\.\Malloc_T.h"\
+	{$(INCLUDE)}"\.\Memory_Pool.h"\
+	{$(INCLUDE)}"\.\Malloc_T.i"\
+	{$(INCLUDE)}"\.\Malloc_T.cpp"\
+	{$(INCLUDE)}"\.\Signal.h"\
+	{$(INCLUDE)}"\.\Mem_Map.h"\
+	{$(INCLUDE)}"\.\Memory_Pool.i"\
+	{$(INCLUDE)}"\.\Signal.i"\
+	{$(INCLUDE)}"\.\Mem_Map.i"\
+	{$(INCLUDE)}"\.\Timer_Queue.i"\
+	{$(INCLUDE)}"\.\Token.h"\
+	{$(INCLUDE)}"\.\Local_Tokens.h"\
+	{$(INCLUDE)}"\.\ReactorEx.i"\
+	{$(INCLUDE)}"\.\Token.i"\
+	{$(INCLUDE)}"\.\Stack.h"\
+	{$(INCLUDE)}"\.\Synch_Options.h"\
+	{$(INCLUDE)}"\.\Map_Manager.h"\
+	{$(INCLUDE)}"\.\Local_Tokens.i"\
+	{$(INCLUDE)}"\.\Stack.i"\
+	{$(INCLUDE)}"\.\Stack.cpp"\
+	{$(INCLUDE)}"\.\Map_Manager.i"\
+	{$(INCLUDE)}"\.\Map_Manager.cpp"\
+	{$(INCLUDE)}"\.\Handle_Set.h"\
+	{$(INCLUDE)}"\.\Pipe.h"\
+	{$(INCLUDE)}"\.\SOCK_Stream.h"\
+	{$(INCLUDE)}"\.\Reactor.i"\
+	{$(INCLUDE)}"\.\Handle_Set.i"\
+	{$(INCLUDE)}"\.\Pipe.i"\
+	{$(INCLUDE)}"\.\SOCK_IO.h"\
+	{$(INCLUDE)}"\.\INET_Addr.h"\
+	{$(INCLUDE)}"\.\SOCK_Stream.i"\
+	{$(INCLUDE)}"\.\SOCK.h"\
+	{$(INCLUDE)}"\.\SOCK_IO.i"\
+	{$(INCLUDE)}"\.\Addr.h"\
+	{$(INCLUDE)}"\.\IPC_SAP.h"\
+	{$(INCLUDE)}"\.\SOCK.i"\
+	{$(INCLUDE)}"\.\Addr.i"\
+	{$(INCLUDE)}"\.\IPC_SAP.i"\
+	{$(INCLUDE)}"\.\INET_Addr.i"\
+	{$(INCLUDE)}"\.\Service_Record.h"\
+	{$(INCLUDE)}"\.\Service_Repository.i"\
+	{$(INCLUDE)}"\.\Stream.h"\
+	{$(INCLUDE)}"\.\Service_Record.i"\
+	{$(INCLUDE)}"\.\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\.\Module.h"\
+	{$(INCLUDE)}"\.\Task.i"\
+	{$(INCLUDE)}"\.\Task_T.h"\
+	{$(INCLUDE)}"\.\Message_Queue.h"\
+	{$(INCLUDE)}"\.\Task_T.i"\
+	{$(INCLUDE)}"\.\Message_Queue.i"\
+	{$(INCLUDE)}"\.\Message_Queue.cpp"\
+	
+NODEP_CPP_PARSE=\
+	".\..\STL\mutex.h"\
+	".\ace\Sync_T.h"\
+	
+
+"$(INTDIR)\Parse_Node.obj" : $(SOURCE) $(DEP_CPP_PARSE) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ace - Win32 Debug"
+
 DEP_CPP_PARSE=\
 	{$(INCLUDE)}"\.\Service_Config.h"\
 	{$(INCLUDE)}"\.\Service_Repository.h"\
@@ -4806,9 +5770,11 @@ DEP_CPP_PARSE=\
 	{$(INCLUDE)}"\.\Stream_Modules.h"\
 	{$(INCLUDE)}"\.\Stream_Modules.i"\
 	{$(INCLUDE)}"\.\Stream_Modules.cpp"\
-	{$(INCLUDE)}"\.\Message_Queue.h"\
 	{$(INCLUDE)}"\.\Task.i"\
-	{$(INCLUDE)}"\.\Task.cpp"\
+	{$(INCLUDE)}"\.\Task_T.h"\
+	{$(INCLUDE)}"\.\Message_Queue.h"\
+	{$(INCLUDE)}"\.\Task_T.i"\
+	{$(INCLUDE)}"\.\Task_T.cpp"\
 	{$(INCLUDE)}"\.\Message_Queue.i"\
 	{$(INCLUDE)}"\.\Message_Queue.cpp"\
 	
@@ -4819,6 +5785,8 @@ NODEP_CPP_PARSE=\
 
 "$(INTDIR)\Parse_Node.obj" : $(SOURCE) $(DEP_CPP_PARSE) "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 ################################################################################
@@ -5294,6 +6262,124 @@ NODEP_CPP_NAME_P=\
 # Begin Source File
 
 SOURCE=.\Multiplexor.cpp
+
+!IF  "$(CFG)" == "ace - Win32 Release"
+
+DEP_CPP_MULTI=\
+	{$(INCLUDE)}"\.\Multiplexor.h"\
+	{$(INCLUDE)}"\.\Multiplexor.i"\
+	{$(INCLUDE)}"\.\Module.h"\
+	{$(INCLUDE)}"\.\Map_Manager.h"\
+	{$(INCLUDE)}"\.\ACE.h"\
+	{$(INCLUDE)}"\.\Task.h"\
+	{$(INCLUDE)}"\.\OS.h"\
+	{$(INCLUDE)}"\.\ACE.i"\
+	{$(INCLUDE)}"\.\Time_Value.h"\
+	{$(INCLUDE)}"\sys\TYPES.H"\
+	{$(INCLUDE)}"\sys\STAT.H"\
+	{$(INCLUDE)}"\SIGNAL.H"\
+	{$(INCLUDE)}"\sys\TIMEB.H"\
+	{$(INCLUDE)}"\PROCESS.H"\
+	".\..\STL\bstring.h"\
+	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\OS.i"\
+	{$(INCLUDE)}"\.\config.h"\
+	{$(INCLUDE)}"\.\Time_Value.i"\
+	{$(INCLUDE)}"\MALLOC.H"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
+	{$(INCLUDE)}"\.\Service_Object.h"\
+	{$(INCLUDE)}"\.\Thread_Manager.h"\
+	{$(INCLUDE)}"\.\Task.i"\
+	{$(INCLUDE)}"\.\Task_T.h"\
+	{$(INCLUDE)}"\.\Shared_Object.h"\
+	{$(INCLUDE)}"\.\Event_Handler.h"\
+	{$(INCLUDE)}"\.\Service_Object.i"\
+	{$(INCLUDE)}"\.\Shared_Object.i"\
+	{$(INCLUDE)}"\.\Event_Handler.i"\
+	{$(INCLUDE)}"\.\Thread.h"\
+	{$(INCLUDE)}"\.\Synch.h"\
+	{$(INCLUDE)}"\.\Thread_Manager.i"\
+	{$(INCLUDE)}"\.\Thread.i"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Complex.h"\
+	{$(INCLUDE)}"\.\Synch.i"\
+	{$(INCLUDE)}"\.\Synch_T.h"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Simple.h"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Complex.i"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Simple.i"\
+	{$(INCLUDE)}"\.\Synch_T.i"\
+	{$(INCLUDE)}"\.\Synch_T.cpp"\
+	{$(INCLUDE)}"\.\Message_Queue.h"\
+	{$(INCLUDE)}"\.\Task_T.i"\
+	{$(INCLUDE)}"\.\Message_Block.h"\
+	{$(INCLUDE)}"\.\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\.\Message_Queue.i"\
+	{$(INCLUDE)}"\.\Message_Queue.cpp"\
+	{$(INCLUDE)}"\.\Malloc.h"\
+	{$(INCLUDE)}"\.\Message_Block.i"\
+	{$(INCLUDE)}"\.\Malloc.i"\
+	{$(INCLUDE)}"\.\Malloc_T.h"\
+	{$(INCLUDE)}"\.\Memory_Pool.h"\
+	{$(INCLUDE)}"\.\Malloc_T.i"\
+	{$(INCLUDE)}"\.\Malloc_T.cpp"\
+	{$(INCLUDE)}"\.\Signal.h"\
+	{$(INCLUDE)}"\.\Mem_Map.h"\
+	{$(INCLUDE)}"\.\Memory_Pool.i"\
+	{$(INCLUDE)}"\.\Set.h"\
+	{$(INCLUDE)}"\.\Signal.i"\
+	{$(INCLUDE)}"\.\Set.i"\
+	{$(INCLUDE)}"\.\Set.cpp"\
+	{$(INCLUDE)}"\.\Mem_Map.i"\
+	{$(INCLUDE)}"\.\Map_Manager.i"\
+	{$(INCLUDE)}"\.\Map_Manager.cpp"\
+	{$(INCLUDE)}"\.\Service_Config.h"\
+	{$(INCLUDE)}"\.\Proactor.h"\
+	{$(INCLUDE)}"\.\ReactorEx.h"\
+	{$(INCLUDE)}"\.\Service_Config.i"\
+	{$(INCLUDE)}"\.\Reactor.h"\
+	{$(INCLUDE)}"\.\Svc_Conf_Tokens.h"\
+	{$(INCLUDE)}"\.\Timer_Queue.h"\
+	{$(INCLUDE)}"\.\Proactor.i"\
+	{$(INCLUDE)}"\.\Timer_Queue.i"\
+	{$(INCLUDE)}"\.\Token.h"\
+	{$(INCLUDE)}"\.\Local_Tokens.h"\
+	{$(INCLUDE)}"\.\ReactorEx.i"\
+	{$(INCLUDE)}"\.\Token.i"\
+	{$(INCLUDE)}"\.\Stack.h"\
+	{$(INCLUDE)}"\.\Synch_Options.h"\
+	{$(INCLUDE)}"\.\Local_Tokens.i"\
+	{$(INCLUDE)}"\.\Stack.i"\
+	{$(INCLUDE)}"\.\Stack.cpp"\
+	{$(INCLUDE)}"\.\Handle_Set.h"\
+	{$(INCLUDE)}"\.\Pipe.h"\
+	{$(INCLUDE)}"\.\SOCK_Stream.h"\
+	{$(INCLUDE)}"\.\Reactor.i"\
+	{$(INCLUDE)}"\.\Handle_Set.i"\
+	{$(INCLUDE)}"\.\Pipe.i"\
+	{$(INCLUDE)}"\.\SOCK_IO.h"\
+	{$(INCLUDE)}"\.\INET_Addr.h"\
+	{$(INCLUDE)}"\.\SOCK_Stream.i"\
+	{$(INCLUDE)}"\.\SOCK.h"\
+	{$(INCLUDE)}"\.\SOCK_IO.i"\
+	{$(INCLUDE)}"\.\Addr.h"\
+	{$(INCLUDE)}"\.\IPC_SAP.h"\
+	{$(INCLUDE)}"\.\SOCK.i"\
+	{$(INCLUDE)}"\.\Addr.i"\
+	{$(INCLUDE)}"\.\IPC_SAP.i"\
+	{$(INCLUDE)}"\.\INET_Addr.i"\
+	
+NODEP_CPP_MULTI=\
+	".\..\STL\mutex.h"\
+	".\ace\Sync_T.h"\
+	
+
+"$(INTDIR)\Multiplexor.obj" : $(SOURCE) $(DEP_CPP_MULTI) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ace - Win32 Debug"
+
 DEP_CPP_MULTI=\
 	{$(INCLUDE)}"\.\Multiplexor.h"\
 	{$(INCLUDE)}"\.\Multiplexor.i"\
@@ -5322,33 +6408,40 @@ DEP_CPP_MULTI=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
 	{$(INCLUDE)}"\.\Service_Object.h"\
-	{$(INCLUDE)}"\.\Message_Queue.h"\
 	{$(INCLUDE)}"\.\Thread_Manager.h"\
-	{$(INCLUDE)}"\.\Synch_T.h"\
 	{$(INCLUDE)}"\.\Task.i"\
-	{$(INCLUDE)}"\.\Task.cpp"\
+	{$(INCLUDE)}"\.\Task_T.h"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Event_Handler.h"\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
 	{$(INCLUDE)}"\.\Event_Handler.i"\
+	{$(INCLUDE)}"\.\Thread.h"\
+	{$(INCLUDE)}"\.\Synch.h"\
+	{$(INCLUDE)}"\.\Thread_Manager.i"\
+	{$(INCLUDE)}"\.\Thread.i"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Complex.h"\
+	{$(INCLUDE)}"\.\Synch.i"\
+	{$(INCLUDE)}"\.\Synch_T.h"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Simple.h"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Complex.i"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Simple.i"\
+	{$(INCLUDE)}"\.\Synch_T.i"\
+	{$(INCLUDE)}"\.\Synch_T.cpp"\
+	{$(INCLUDE)}"\.\Message_Queue.h"\
+	{$(INCLUDE)}"\.\Task_T.i"\
+	{$(INCLUDE)}"\.\Task_T.cpp"\
 	{$(INCLUDE)}"\.\Message_Block.h"\
 	{$(INCLUDE)}"\.\IO_Cntl_Msg.h"\
 	{$(INCLUDE)}"\.\Message_Queue.i"\
 	{$(INCLUDE)}"\.\Message_Queue.cpp"\
 	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Message_Block.i"\
-	{$(INCLUDE)}"\.\SV_Semaphore_Simple.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
 	{$(INCLUDE)}"\.\Memory_Pool.h"\
-	{$(INCLUDE)}"\.\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\.\Synch.h"\
 	{$(INCLUDE)}"\.\Malloc_T.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
-	{$(INCLUDE)}"\.\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\.\Synch.i"\
-	{$(INCLUDE)}"\.\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Mem_Map.h"\
 	{$(INCLUDE)}"\.\Memory_Pool.i"\
@@ -5357,11 +6450,6 @@ DEP_CPP_MULTI=\
 	{$(INCLUDE)}"\.\Set.i"\
 	{$(INCLUDE)}"\.\Set.cpp"\
 	{$(INCLUDE)}"\.\Mem_Map.i"\
-	{$(INCLUDE)}"\.\Thread.h"\
-	{$(INCLUDE)}"\.\Thread_Manager.i"\
-	{$(INCLUDE)}"\.\Thread.i"\
-	{$(INCLUDE)}"\.\Synch_T.i"\
-	{$(INCLUDE)}"\.\Synch_T.cpp"\
 	{$(INCLUDE)}"\.\Service_Config.h"\
 	{$(INCLUDE)}"\.\Proactor.h"\
 	{$(INCLUDE)}"\.\ReactorEx.h"\
@@ -5410,6 +6498,8 @@ NODEP_CPP_MULTI=\
 
 "$(INTDIR)\Multiplexor.obj" : $(SOURCE) $(DEP_CPP_MULTI) "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 ################################################################################
@@ -8000,6 +9090,252 @@ NODEP_CPP_REGIS=\
 
 "$(INTDIR)\Registry.obj" : $(SOURCE) $(DEP_CPP_REGIS) "$(INTDIR)"
 
+
+# End Source File
+################################################################################
+# Begin Source File
+
+SOURCE=.\Task.cpp
+
+!IF  "$(CFG)" == "ace - Win32 Release"
+
+DEP_CPP_TASK_=\
+	{$(INCLUDE)}"\.\Task.h"\
+	{$(INCLUDE)}"\.\Module.h"\
+	{$(INCLUDE)}"\.\Service_Config.h"\
+	{$(INCLUDE)}"\.\Task.i"\
+	{$(INCLUDE)}"\.\Service_Object.h"\
+	{$(INCLUDE)}"\.\Thread_Manager.h"\
+	{$(INCLUDE)}"\.\Task_T.h"\
+	{$(INCLUDE)}"\.\ACE.h"\
+	{$(INCLUDE)}"\.\Module.i"\
+	{$(INCLUDE)}"\.\Module.cpp"\
+	{$(INCLUDE)}"\.\Set.h"\
+	{$(INCLUDE)}"\.\Proactor.h"\
+	{$(INCLUDE)}"\.\ReactorEx.h"\
+	{$(INCLUDE)}"\.\Service_Config.i"\
+	{$(INCLUDE)}"\.\Reactor.h"\
+	{$(INCLUDE)}"\.\Svc_Conf_Tokens.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
+	{$(INCLUDE)}"\.\Shared_Object.h"\
+	{$(INCLUDE)}"\.\Event_Handler.h"\
+	{$(INCLUDE)}"\.\Service_Object.i"\
+	{$(INCLUDE)}"\.\Thread.h"\
+	{$(INCLUDE)}"\.\Synch.h"\
+	{$(INCLUDE)}"\.\Thread_Manager.i"\
+	{$(INCLUDE)}"\.\Message_Queue.h"\
+	{$(INCLUDE)}"\.\Synch_T.h"\
+	{$(INCLUDE)}"\.\Task_T.i"\
+	{$(INCLUDE)}"\.\Task_T.cpp"\
+	{$(INCLUDE)}"\.\OS.h"\
+	{$(INCLUDE)}"\.\ACE.i"\
+	{$(INCLUDE)}"\.\Stream_Modules.h"\
+	{$(INCLUDE)}"\.\Set.i"\
+	{$(INCLUDE)}"\.\Set.cpp"\
+	{$(INCLUDE)}"\.\Message_Block.h"\
+	{$(INCLUDE)}"\.\Timer_Queue.h"\
+	{$(INCLUDE)}"\.\Proactor.i"\
+	{$(INCLUDE)}"\.\Time_Value.h"\
+	{$(INCLUDE)}"\.\Token.h"\
+	{$(INCLUDE)}"\.\Local_Tokens.h"\
+	{$(INCLUDE)}"\.\ReactorEx.i"\
+	{$(INCLUDE)}"\.\Handle_Set.h"\
+	{$(INCLUDE)}"\.\Signal.h"\
+	{$(INCLUDE)}"\.\Pipe.h"\
+	{$(INCLUDE)}"\.\SOCK_Stream.h"\
+	{$(INCLUDE)}"\.\Reactor.i"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Shared_Object.i"\
+	{$(INCLUDE)}"\.\Event_Handler.i"\
+	{$(INCLUDE)}"\.\Thread.i"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Complex.h"\
+	{$(INCLUDE)}"\.\Synch.i"\
+	{$(INCLUDE)}"\.\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\.\Message_Queue.i"\
+	{$(INCLUDE)}"\.\Message_Queue.cpp"\
+	{$(INCLUDE)}"\.\Synch_T.i"\
+	{$(INCLUDE)}"\.\Synch_T.cpp"\
+	{$(INCLUDE)}"\sys\TYPES.H"\
+	{$(INCLUDE)}"\sys\STAT.H"\
+	{$(INCLUDE)}"\SIGNAL.H"\
+	{$(INCLUDE)}"\sys\TIMEB.H"\
+	{$(INCLUDE)}"\PROCESS.H"\
+	".\..\STL\bstring.h"\
+	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\OS.i"\
+	{$(INCLUDE)}"\.\Stream_Modules.i"\
+	{$(INCLUDE)}"\.\Stream_Modules.cpp"\
+	{$(INCLUDE)}"\.\Malloc.h"\
+	{$(INCLUDE)}"\.\Message_Block.i"\
+	{$(INCLUDE)}"\.\Timer_Queue.i"\
+	{$(INCLUDE)}"\.\config.h"\
+	{$(INCLUDE)}"\.\Time_Value.i"\
+	{$(INCLUDE)}"\.\Token.i"\
+	{$(INCLUDE)}"\.\Stack.h"\
+	{$(INCLUDE)}"\.\Synch_Options.h"\
+	{$(INCLUDE)}"\.\Map_Manager.h"\
+	{$(INCLUDE)}"\.\Local_Tokens.i"\
+	{$(INCLUDE)}"\.\Handle_Set.i"\
+	{$(INCLUDE)}"\.\Signal.i"\
+	{$(INCLUDE)}"\.\Pipe.i"\
+	{$(INCLUDE)}"\.\SOCK_IO.h"\
+	{$(INCLUDE)}"\.\INET_Addr.h"\
+	{$(INCLUDE)}"\.\SOCK_Stream.i"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Simple.h"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Complex.i"\
+	{$(INCLUDE)}"\MALLOC.H"\
+	{$(INCLUDE)}"\.\Malloc.i"\
+	{$(INCLUDE)}"\.\Malloc_T.h"\
+	{$(INCLUDE)}"\.\Memory_Pool.h"\
+	{$(INCLUDE)}"\.\Stack.i"\
+	{$(INCLUDE)}"\.\Stack.cpp"\
+	{$(INCLUDE)}"\.\Map_Manager.i"\
+	{$(INCLUDE)}"\.\Map_Manager.cpp"\
+	{$(INCLUDE)}"\.\SOCK.h"\
+	{$(INCLUDE)}"\.\SOCK_IO.i"\
+	{$(INCLUDE)}"\.\Addr.h"\
+	{$(INCLUDE)}"\.\INET_Addr.i"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Simple.i"\
+	{$(INCLUDE)}"\.\Malloc_T.i"\
+	{$(INCLUDE)}"\.\Malloc_T.cpp"\
+	{$(INCLUDE)}"\.\Mem_Map.h"\
+	{$(INCLUDE)}"\.\Memory_Pool.i"\
+	{$(INCLUDE)}"\.\IPC_SAP.h"\
+	{$(INCLUDE)}"\.\SOCK.i"\
+	{$(INCLUDE)}"\.\Addr.i"\
+	{$(INCLUDE)}"\.\Mem_Map.i"\
+	{$(INCLUDE)}"\.\IPC_SAP.i"\
+	
+NODEP_CPP_TASK_=\
+	".\..\STL\mutex.h"\
+	".\ace\Sync_T.h"\
+	
+
+"$(INTDIR)\Task.obj" : $(SOURCE) $(DEP_CPP_TASK_) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ace - Win32 Debug"
+
+DEP_CPP_TASK_=\
+	{$(INCLUDE)}"\.\Task.h"\
+	{$(INCLUDE)}"\.\Module.h"\
+	{$(INCLUDE)}"\.\Service_Config.h"\
+	{$(INCLUDE)}"\.\Task.i"\
+	{$(INCLUDE)}"\.\Service_Object.h"\
+	{$(INCLUDE)}"\.\Thread_Manager.h"\
+	{$(INCLUDE)}"\.\Task_T.h"\
+	{$(INCLUDE)}"\.\Shared_Object.h"\
+	{$(INCLUDE)}"\.\Event_Handler.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
+	{$(INCLUDE)}"\.\Service_Object.i"\
+	{$(INCLUDE)}"\.\ACE.h"\
+	{$(INCLUDE)}"\.\Shared_Object.i"\
+	{$(INCLUDE)}"\.\OS.h"\
+	{$(INCLUDE)}"\.\ACE.i"\
+	{$(INCLUDE)}"\.\Time_Value.h"\
+	{$(INCLUDE)}"\sys\TYPES.H"\
+	{$(INCLUDE)}"\sys\STAT.H"\
+	{$(INCLUDE)}"\SIGNAL.H"\
+	{$(INCLUDE)}"\sys\TIMEB.H"\
+	{$(INCLUDE)}"\PROCESS.H"\
+	".\..\STL\bstring.h"\
+	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\OS.i"\
+	{$(INCLUDE)}"\.\config.h"\
+	{$(INCLUDE)}"\.\Time_Value.i"\
+	{$(INCLUDE)}"\MALLOC.H"\
+	{$(INCLUDE)}"\.\Event_Handler.i"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
+	{$(INCLUDE)}"\.\Thread.h"\
+	{$(INCLUDE)}"\.\Synch.h"\
+	{$(INCLUDE)}"\.\Thread_Manager.i"\
+	{$(INCLUDE)}"\.\Thread.i"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Complex.h"\
+	{$(INCLUDE)}"\.\Synch.i"\
+	{$(INCLUDE)}"\.\Synch_T.h"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Simple.h"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Complex.i"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Simple.i"\
+	{$(INCLUDE)}"\.\Synch_T.i"\
+	{$(INCLUDE)}"\.\Synch_T.cpp"\
+	{$(INCLUDE)}"\.\Message_Queue.h"\
+	{$(INCLUDE)}"\.\Task_T.i"\
+	{$(INCLUDE)}"\.\Task_T.cpp"\
+	{$(INCLUDE)}"\.\Message_Block.h"\
+	{$(INCLUDE)}"\.\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\.\Message_Queue.i"\
+	{$(INCLUDE)}"\.\Message_Queue.cpp"\
+	{$(INCLUDE)}"\.\Malloc.h"\
+	{$(INCLUDE)}"\.\Message_Block.i"\
+	{$(INCLUDE)}"\.\Malloc.i"\
+	{$(INCLUDE)}"\.\Malloc_T.h"\
+	{$(INCLUDE)}"\.\Memory_Pool.h"\
+	{$(INCLUDE)}"\.\Malloc_T.i"\
+	{$(INCLUDE)}"\.\Malloc_T.cpp"\
+	{$(INCLUDE)}"\.\Signal.h"\
+	{$(INCLUDE)}"\.\Mem_Map.h"\
+	{$(INCLUDE)}"\.\Memory_Pool.i"\
+	{$(INCLUDE)}"\.\Set.h"\
+	{$(INCLUDE)}"\.\Signal.i"\
+	{$(INCLUDE)}"\.\Set.i"\
+	{$(INCLUDE)}"\.\Set.cpp"\
+	{$(INCLUDE)}"\.\Mem_Map.i"\
+	{$(INCLUDE)}"\.\Module.i"\
+	{$(INCLUDE)}"\.\Module.cpp"\
+	{$(INCLUDE)}"\.\Stream_Modules.h"\
+	{$(INCLUDE)}"\.\Stream_Modules.i"\
+	{$(INCLUDE)}"\.\Stream_Modules.cpp"\
+	{$(INCLUDE)}"\.\Proactor.h"\
+	{$(INCLUDE)}"\.\ReactorEx.h"\
+	{$(INCLUDE)}"\.\Service_Config.i"\
+	{$(INCLUDE)}"\.\Reactor.h"\
+	{$(INCLUDE)}"\.\Svc_Conf_Tokens.h"\
+	{$(INCLUDE)}"\.\Timer_Queue.h"\
+	{$(INCLUDE)}"\.\Proactor.i"\
+	{$(INCLUDE)}"\.\Timer_Queue.i"\
+	{$(INCLUDE)}"\.\Token.h"\
+	{$(INCLUDE)}"\.\Local_Tokens.h"\
+	{$(INCLUDE)}"\.\ReactorEx.i"\
+	{$(INCLUDE)}"\.\Token.i"\
+	{$(INCLUDE)}"\.\Stack.h"\
+	{$(INCLUDE)}"\.\Synch_Options.h"\
+	{$(INCLUDE)}"\.\Map_Manager.h"\
+	{$(INCLUDE)}"\.\Local_Tokens.i"\
+	{$(INCLUDE)}"\.\Stack.i"\
+	{$(INCLUDE)}"\.\Stack.cpp"\
+	{$(INCLUDE)}"\.\Map_Manager.i"\
+	{$(INCLUDE)}"\.\Map_Manager.cpp"\
+	{$(INCLUDE)}"\.\Handle_Set.h"\
+	{$(INCLUDE)}"\.\Pipe.h"\
+	{$(INCLUDE)}"\.\SOCK_Stream.h"\
+	{$(INCLUDE)}"\.\Reactor.i"\
+	{$(INCLUDE)}"\.\Handle_Set.i"\
+	{$(INCLUDE)}"\.\Pipe.i"\
+	{$(INCLUDE)}"\.\SOCK_IO.h"\
+	{$(INCLUDE)}"\.\INET_Addr.h"\
+	{$(INCLUDE)}"\.\SOCK_Stream.i"\
+	{$(INCLUDE)}"\.\SOCK.h"\
+	{$(INCLUDE)}"\.\SOCK_IO.i"\
+	{$(INCLUDE)}"\.\Addr.h"\
+	{$(INCLUDE)}"\.\IPC_SAP.h"\
+	{$(INCLUDE)}"\.\SOCK.i"\
+	{$(INCLUDE)}"\.\Addr.i"\
+	{$(INCLUDE)}"\.\IPC_SAP.i"\
+	{$(INCLUDE)}"\.\INET_Addr.i"\
+	
+NODEP_CPP_TASK_=\
+	".\..\STL\mutex.h"\
+	".\ace\Sync_T.h"\
+	
+
+"$(INTDIR)\Task.obj" : $(SOURCE) $(DEP_CPP_TASK_) "$(INTDIR)"
+
+
+!ENDIF 
 
 # End Source File
 # End Target
