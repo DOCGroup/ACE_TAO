@@ -1,6 +1,6 @@
 // $Id$
 
-project(RTComponentServer): ciao_server,rt_server {
+project(RTComponentServer): ciao_server,rt_server,acexml {
 
   exename = RTComponentServer
 
