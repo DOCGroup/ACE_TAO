@@ -1,0 +1,8 @@
+#
+# Configuration of the ACE distribution
+#
+
+ACE_COMPILER="@CXX@"
+ACE_LIBDIR="@ACE_LIBDIR@"
+ACE_INCLUDEDIR="@ACE_INCLUDEDIR@ @CXXFLAGS@"
+ACE_LIBS="@ACE_LIBS@"
