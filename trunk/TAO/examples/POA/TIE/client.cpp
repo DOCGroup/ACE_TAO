@@ -34,22 +34,22 @@ parse_args (int argc, char **argv)
     switch (c)
       {
       case 'a':
-        IOR[1] = get_opts.optarg;
+        IOR[1] = ACE_OS::strdup (get_opts.optarg);
         break;
       case 'b':
-        IOR[2] = get_opts.optarg;
+        IOR[2] = ACE_OS::strdup (get_opts.optarg);
         break;
       case 'c':
-        IOR[3] = get_opts.optarg;
+        IOR[3] = ACE_OS::strdup (get_opts.optarg);
         break;
       case 'd':
-        IOR[4] = get_opts.optarg;
+        IOR[4] = ACE_OS::strdup (get_opts.optarg);
         break;
       case 'e':
-        IOR[5] = get_opts.optarg;
+        IOR[5] = ACE_OS::strdup (get_opts.optarg);
         break;
       case 'f':
-        IOR[6] = get_opts.optarg;
+        IOR[6] = ACE_OS::strdup (get_opts.optarg);
         break;
       case 'i':
         iterations = ::atoi (get_opts.optarg);
