@@ -1,0 +1,1863 @@
+# Microsoft eMbedded Visual Tools Project File - Name="ace_os" - Package Owner=<4>
+# Microsoft eMbedded Visual Tools Generated Build File, Format Version 6.02
+# ** DO NOT EDIT **
+
+# TARGTYPE "Win32 (WCE x86) Dynamic-Link Library" 0x8302
+# TARGTYPE "Win32 (WCE ARM) Dynamic-Link Library" 0x8502
+
+CFG=ace_os - Win32 (WCE ARM) Release
+!MESSAGE This is not a valid makefile. To build this project using NMAKE,
+!MESSAGE use the Export Makefile command and run
+!MESSAGE 
+!MESSAGE NMAKE /f "ace_os_dll.vcn".
+!MESSAGE 
+!MESSAGE You can specify a configuration when running NMAKE
+!MESSAGE by defining the macro CFG on the command line. For example:
+!MESSAGE 
+!MESSAGE NMAKE /f "ace_os_dll.vcn" CFG="ace_os - Win32 (WCE ARM) Release"
+!MESSAGE 
+!MESSAGE Possible choices for configuration are:
+!MESSAGE 
+!MESSAGE "ace_os - Win32 (WCE ARM) Release" (based on "Win32 (WCE ARM) Dynamic-Link Library")
+!MESSAGE "ace_os - Win32 (WCE ARM) Debug" (based on "Win32 (WCE ARM) Dynamic-Link Library")
+!MESSAGE "ace_os - Win32 (WCE x86) Debug" (based on "Win32 (WCE x86) Dynamic-Link Library")
+!MESSAGE 
+
+# Begin Project
+# PROP AllowPerConfigDependencies 0
+# PROP Scc_ProjName ""
+# PROP Scc_LocalPath ""
+# PROP ATL_Project 2
+
+!IF  "$(CFG)" == "ace_os - Win32 (WCE ARM) Release"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 0
+# PROP BASE Output_Dir "ARMRel"
+# PROP BASE Intermediate_Dir "ARMRel"
+# PROP BASE CPU_ID "{D6518FFC-710F-11D3-99F2-00105A0DF099}"
+# PROP BASE Platform_ID "{8A9A2F80-6887-11D3-842E-005004848CBA}"
+# PROP BASE Target_Dir ""
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 0
+# PROP Output_Dir "../LIB/Release/ARM"
+# PROP Intermediate_Dir "Release/ARM"
+# PROP CPU_ID "{D6518FFC-710F-11D3-99F2-00105A0DF099}"
+# PROP Platform_ID "{8A9A2F80-6887-11D3-842E-005004848CBA}"
+# PROP Ignore_Export_Lib 0
+# PROP Target_Dir ""
+RSC=rc.exe
+# ADD BASE RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "UNICODE" /d "_UNICODE" /d "NDEBUG" /d "$(CePlatform)" /d "ARM" /d "_ARM_" /r
+# ADD RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "UNICODE" /d "_UNICODE" /d "NDEBUG" /d "$(CePlatform)" /d "ARM" /d "_ARM_" /r
+CPP=clarm.exe
+# ADD BASE CPP /nologo /W3 /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "ARM" /D "_ARM_" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "NDEBUG" /D "_USRDLL" /D "ACE_OS_EXPORTS" /YX /Oxs /M$(CECrtMT) /c
+# ADD CPP /nologo /W3 /I "$(ACE_ROOT)" /D "ARM" /D "_ARM_" /D "NDEBUG" /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "ACE_OS_BUILD_DLL" /FR /Oxs /M$(CECrtMT) /c
+# SUBTRACT CPP /YX
+MTL=midl.exe
+# ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
+# ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+LINK32=link.exe
+# ADD BASE LINK32 commctrl.lib coredll.lib /nologo /base:"0x00100000" /stack:0x10000,0x1000 /entry:"_DllMainCRTStartup" /dll /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /align:"4096" /MACHINE:ARM
+# ADD LINK32 commctrl.lib coredll.lib winsock.lib aygshell.lib /nologo /base:"0x00100000" /stack:0x10000,0x1000 /entry:"_DllMainCRTStartup" /dll /debug /nodefaultlib:"$(CENoDefaultLib)" /out:"../bin/Release/ARM/ace_os.dll" /libpath:"../LIB/Release/ARM" /subsystem:$(CESubsystem) /align:"4096" /MACHINE:ARM
+
+!ELSEIF  "$(CFG)" == "ace_os - Win32 (WCE ARM) Debug"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 1
+# PROP BASE Output_Dir "ARMDbg"
+# PROP BASE Intermediate_Dir "ARMDbg"
+# PROP BASE CPU_ID "{D6518FFC-710F-11D3-99F2-00105A0DF099}"
+# PROP BASE Platform_ID "{8A9A2F80-6887-11D3-842E-005004848CBA}"
+# PROP BASE Target_Dir ""
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 1
+# PROP Output_Dir "../LIB/Debug/ARM"
+# PROP Intermediate_Dir "Debug/ARM"
+# PROP CPU_ID "{D6518FFC-710F-11D3-99F2-00105A0DF099}"
+# PROP Platform_ID "{8A9A2F80-6887-11D3-842E-005004848CBA}"
+# PROP Ignore_Export_Lib 0
+# PROP Target_Dir ""
+RSC=rc.exe
+# ADD BASE RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "UNICODE" /d "_UNICODE" /d "DEBUG" /d "$(CePlatform)" /d "ARM" /d "_ARM_" /r
+# ADD RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "UNICODE" /d "_UNICODE" /d "DEBUG" /d "$(CePlatform)" /d "ARM" /d "_ARM_" /r
+CPP=clarm.exe
+# ADD BASE CPP /nologo /W3 /Zi /Od /D "DEBUG" /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "ARM" /D "_ARM_" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "_USRDLL" /D "ACE_OS_EXPORTS" /YX /M$(CECrtMTDebug) /c
+# ADD CPP /nologo /W3 /Zi /Od /I "$(ACE_ROOT)" /D "DEBUG" /D "ARM" /D "_ARM_" /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "ACE_OS_BUILD_DLL" /Fr /M$(CECrtMTDebug) /c
+# SUBTRACT CPP /YX
+MTL=midl.exe
+# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
+# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+LINK32=link.exe
+# ADD BASE LINK32 commctrl.lib coredll.lib /nologo /base:"0x00100000" /stack:0x10000,0x1000 /entry:"_DllMainCRTStartup" /dll /debug /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /align:"4096" /MACHINE:ARM
+# ADD LINK32 winsock.lib commctrl.lib coredll.lib aygshell.lib /nologo /base:"0x00100000" /stack:0x10000,0x1000 /entry:"_DllMainCRTStartup" /dll /debug /nodefaultlib:"$(CENoDefaultLib)" /out:"../bin/Debug/ARM/ace_osd.dll" /libpath:"../LIB/Debug/ARM" /subsystem:$(CESubsystem) /align:"4096" /MACHINE:ARM
+
+!ELSEIF  "$(CFG)" == "ace_os - Win32 (WCE x86) Debug"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 1
+# PROP BASE Output_Dir "X86Dbg"
+# PROP BASE Intermediate_Dir "X86Dbg"
+# PROP BASE CPU_ID "{D6518FFC-710F-11D3-99F2-00105A0DF099}"
+# PROP BASE Platform_ID "{8A9A2F80-6887-11D3-842E-005004848CBA}"
+# PROP BASE Ignore_Export_Lib 0
+# PROP BASE Target_Dir ""
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 1
+# PROP Output_Dir "../LIB/Debug/X86EM"
+# PROP Intermediate_Dir "Debug/X86EM"
+# PROP CPU_ID "{D6518FFC-710F-11D3-99F2-00105A0DF099}"
+# PROP Platform_ID "{8A9A2F80-6887-11D3-842E-005004848CBA}"
+# PROP Ignore_Export_Lib 0
+# PROP Target_Dir ""
+RSC=rc.exe
+# ADD BASE RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "UNICODE" /d "_UNICODE" /d "DEBUG" /d "$(CePlatform)" /d "_X86_" /d "x86" /d "_i386_" /r
+# ADD RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "UNICODE" /d "_UNICODE" /d "DEBUG" /d "$(CePlatform)" /d "_X86_" /d "x86" /d "_i386_" /r
+CPP=cl.exe
+# ADD BASE CPP /nologo /W3 /Zi /Od /D "DEBUG" /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "_i386_" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "_X86_" /D "x86" /D "ACE_OS_BUILD_DLL" /FR /Gs8192 /M$(CECrtMTDebug) /c
+# SUBTRACT BASE CPP /YX
+# ADD CPP /nologo /W3 /Zi /Od /I "$(ACE_ROOT)" /D "DEBUG" /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "_i386_" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "_X86_" /D "x86" /D "ACE_OS_BUILD_DLL" /FR /Gs8192 /c
+MTL=midl.exe
+# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
+# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+LINK32=link.exe
+# ADD BASE LINK32 winsock.lib commctrl.lib coredll.lib /nologo /base:"0x00100000" /stack:0x10000,0x1000 /entry:"_DllMainCRTStartup" /dll /debug /nodefaultlib:"OLDNAMES.lib" /nodefaultlib:$(CENoDefaultLib) /out:"$(ACE_ROOT)/bin/ace_osd.dll" /subsystem:$(CESubsystem) /align:"4096" /MACHINE:ARM
+# SUBTRACT BASE LINK32 /incremental:no
+# ADD LINK32 winsock.lib commctrl.lib coredll.lib $(CEx86Corelibc) aygshell.lib /nologo /base:"0x00100000" /stack:0x10000,0x1000 /entry:"_DllMainCRTStartup" /dll /debug /nodefaultlib:"OLDNAMES.lib" /nodefaultlib:$(CENoDefaultLib) /out:"../bin/Debug/X86EM/ace_osd.dll" /libpath:"../LIB/Debug/X86EM" /subsystem:$(CESubsystem) /align:"4096" /MACHINE:IX86
+# SUBTRACT LINK32 /pdb:none
+
+!ENDIF 
+
+# Begin Target
+
+# Name "ace_os - Win32 (WCE ARM) Release"
+# Name "ace_os - Win32 (WCE ARM) Debug"
+# Name "ace_os - Win32 (WCE x86) Debug"
+# Begin Group "Source Files"
+
+# PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
+# Begin Source File
+
+SOURCE=.\Base_Thread_Adapter.cpp
+
+!IF  "$(CFG)" == "ace_os - Win32 (WCE ARM) Release"
+
+DEP_CPP_BASE_=\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\Base_Thread_Adapter.h"\
+	".\Base_Thread_Adapter.inl"\
+	".\Basic_Types.h"\
+	".\Basic_Types.i"\
+	".\config-all.h"\
+	".\config-cygwin32-common.h"\
+	".\config-cygwin32.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\iosfwd.h"\
+	".\Log_Msg.h"\
+	".\Log_Msg_Callback.h"\
+	".\Log_Priority.h"\
+	".\Log_Record.h"\
+	".\Log_Record.i"\
+	".\Managed_Object.cpp"\
+	".\Managed_Object.h"\
+	".\Managed_Object.i"\
+	".\Min_Max.h"\
+	".\Object_Manager.h"\
+	".\Object_Manager.i"\
+	".\OS.h"\
+	".\OS.i"\
+	".\OS_Dirent.h"\
+	".\OS_Dirent.inl"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\OS_Log_Msg_Attributes.h"\
+	".\OS_Log_Msg_Attributes.inl"\
+	".\OS_Memory.h"\
+	".\OS_Memory.inl"\
+	".\OS_String.h"\
+	".\OS_String.inl"\
+	".\OS_TLI.h"\
+	".\OS_TLI.inl"\
+	".\post.h"\
+	".\pre.h"\
+	".\streams.h"\
+	".\svc_export.h"\
+	".\Thread_Adapter.h"\
+	".\Thread_Adapter.inl"\
+	".\Thread_Control.h"\
+	".\Thread_Control.inl"\
+	".\Thread_Exit.h"\
+	".\Thread_Hook.h"\
+	".\Trace.h"\
+	
+
+!ELSEIF  "$(CFG)" == "ace_os - Win32 (WCE ARM) Debug"
+
+DEP_CPP_BASE_=\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\Base_Thread_Adapter.h"\
+	".\Base_Thread_Adapter.inl"\
+	".\Basic_Types.h"\
+	".\Basic_Types.i"\
+	".\config-all.h"\
+	".\config-cygwin32-common.h"\
+	".\config-cygwin32.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\iosfwd.h"\
+	".\Log_Msg.h"\
+	".\Log_Msg_Callback.h"\
+	".\Log_Priority.h"\
+	".\Log_Record.h"\
+	".\Log_Record.i"\
+	".\Managed_Object.cpp"\
+	".\Managed_Object.h"\
+	".\Managed_Object.i"\
+	".\Min_Max.h"\
+	".\Object_Manager.h"\
+	".\Object_Manager.i"\
+	".\OS.h"\
+	".\OS.i"\
+	".\OS_Dirent.h"\
+	".\OS_Dirent.inl"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\OS_Log_Msg_Attributes.h"\
+	".\OS_Log_Msg_Attributes.inl"\
+	".\OS_Memory.h"\
+	".\OS_Memory.inl"\
+	".\OS_String.h"\
+	".\OS_String.inl"\
+	".\OS_TLI.h"\
+	".\OS_TLI.inl"\
+	".\post.h"\
+	".\pre.h"\
+	".\streams.h"\
+	".\svc_export.h"\
+	".\Thread_Adapter.h"\
+	".\Thread_Adapter.inl"\
+	".\Thread_Control.h"\
+	".\Thread_Control.inl"\
+	".\Thread_Exit.h"\
+	".\Thread_Hook.h"\
+	".\Trace.h"\
+	
+
+!ELSEIF  "$(CFG)" == "ace_os - Win32 (WCE x86) Debug"
+
+DEP_CPP_BASE_=\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\Base_Thread_Adapter.h"\
+	".\Base_Thread_Adapter.inl"\
+	".\Basic_Types.h"\
+	".\Basic_Types.i"\
+	".\config-all.h"\
+	".\config-cygwin32-common.h"\
+	".\config-cygwin32.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\Default_Constants.h"\
+	".\Global_Macros.h"\
+	".\iosfwd.h"\
+	".\Log_Msg.h"\
+	".\Log_Msg_Callback.h"\
+	".\Log_Priority.h"\
+	".\Log_Record.h"\
+	".\Log_Record.i"\
+	".\Managed_Object.cpp"\
+	".\Managed_Object.h"\
+	".\Managed_Object.i"\
+	".\Min_Max.h"\
+	".\Object_Manager.h"\
+	".\Object_Manager.i"\
+	".\OS.h"\
+	".\OS.i"\
+	".\OS_Dirent.h"\
+	".\OS_Dirent.inl"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\OS_Log_Msg_Attributes.h"\
+	".\OS_Log_Msg_Attributes.inl"\
+	".\OS_Memory.h"\
+	".\OS_Memory.inl"\
+	".\OS_String.h"\
+	".\OS_String.inl"\
+	".\OS_TLI.h"\
+	".\OS_TLI.inl"\
+	".\post.h"\
+	".\pre.h"\
+	".\streams.h"\
+	".\svc_export.h"\
+	".\Thread_Adapter.h"\
+	".\Thread_Adapter.inl"\
+	".\Thread_Control.h"\
+	".\Thread_Control.inl"\
+	".\Thread_Exit.h"\
+	".\Thread_Hook.h"\
+	".\Trace.h"\
+	
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\OS.cpp
+
+!IF  "$(CFG)" == "ace_os - Win32 (WCE ARM) Release"
+
+DEP_CPP_OS_CP=\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\Base_Thread_Adapter.h"\
+	".\Base_Thread_Adapter.inl"\
+	".\Basic_Types.h"\
+	".\Basic_Types.i"\
+	".\config-all.h"\
+	".\config-cygwin32-common.h"\
+	".\config-cygwin32.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\iosfwd.h"\
+	".\Log_Msg.h"\
+	".\Log_Msg_Callback.h"\
+	".\Log_Priority.h"\
+	".\Log_Record.h"\
+	".\Log_Record.i"\
+	".\Managed_Object.cpp"\
+	".\Managed_Object.h"\
+	".\Managed_Object.i"\
+	".\Min_Max.h"\
+	".\Object_Manager.h"\
+	".\Object_Manager.i"\
+	".\OS.h"\
+	".\OS.i"\
+	".\OS_Dirent.h"\
+	".\OS_Dirent.inl"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\OS_Log_Msg_Attributes.h"\
+	".\OS_Log_Msg_Attributes.inl"\
+	".\OS_Memory.h"\
+	".\OS_Memory.inl"\
+	".\OS_String.h"\
+	".\OS_String.inl"\
+	".\OS_Thread_Adapter.h"\
+	".\OS_Thread_Adapter.inl"\
+	".\OS_TLI.h"\
+	".\OS_TLI.inl"\
+	".\post.h"\
+	".\pre.h"\
+	".\Sched_Params.h"\
+	".\Sched_Params.i"\
+	".\streams.h"\
+	".\svc_export.h"\
+	".\Thread_Adapter.h"\
+	".\Thread_Adapter.inl"\
+	".\Thread_Control.h"\
+	".\Thread_Control.inl"\
+	".\Thread_Exit.h"\
+	".\Thread_Hook.h"\
+	".\Trace.h"\
+	
+
+!ELSEIF  "$(CFG)" == "ace_os - Win32 (WCE ARM) Debug"
+
+DEP_CPP_OS_CP=\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\Base_Thread_Adapter.h"\
+	".\Base_Thread_Adapter.inl"\
+	".\Basic_Types.h"\
+	".\Basic_Types.i"\
+	".\config-all.h"\
+	".\config-cygwin32-common.h"\
+	".\config-cygwin32.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\iosfwd.h"\
+	".\Log_Msg.h"\
+	".\Log_Msg_Callback.h"\
+	".\Log_Priority.h"\
+	".\Log_Record.h"\
+	".\Log_Record.i"\
+	".\Managed_Object.cpp"\
+	".\Managed_Object.h"\
+	".\Managed_Object.i"\
+	".\Min_Max.h"\
+	".\Object_Manager.h"\
+	".\Object_Manager.i"\
+	".\OS.h"\
+	".\OS.i"\
+	".\OS_Dirent.h"\
+	".\OS_Dirent.inl"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\OS_Log_Msg_Attributes.h"\
+	".\OS_Log_Msg_Attributes.inl"\
+	".\OS_Memory.h"\
+	".\OS_Memory.inl"\
+	".\OS_String.h"\
+	".\OS_String.inl"\
+	".\OS_Thread_Adapter.h"\
+	".\OS_Thread_Adapter.inl"\
+	".\OS_TLI.h"\
+	".\OS_TLI.inl"\
+	".\post.h"\
+	".\pre.h"\
+	".\Sched_Params.h"\
+	".\Sched_Params.i"\
+	".\streams.h"\
+	".\svc_export.h"\
+	".\Thread_Adapter.h"\
+	".\Thread_Adapter.inl"\
+	".\Thread_Control.h"\
+	".\Thread_Control.inl"\
+	".\Thread_Exit.h"\
+	".\Thread_Hook.h"\
+	".\Trace.h"\
+	
+
+!ELSEIF  "$(CFG)" == "ace_os - Win32 (WCE x86) Debug"
+
+DEP_CPP_OS_CP=\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\Base_Thread_Adapter.h"\
+	".\Base_Thread_Adapter.inl"\
+	".\Basic_Types.h"\
+	".\Basic_Types.i"\
+	".\config-all.h"\
+	".\config-cygwin32-common.h"\
+	".\config-cygwin32.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\Default_Constants.h"\
+	".\Global_Macros.h"\
+	".\iosfwd.h"\
+	".\Log_Msg.h"\
+	".\Log_Msg_Callback.h"\
+	".\Log_Priority.h"\
+	".\Log_Record.h"\
+	".\Log_Record.i"\
+	".\Managed_Object.cpp"\
+	".\Managed_Object.h"\
+	".\Managed_Object.i"\
+	".\Min_Max.h"\
+	".\Object_Manager.h"\
+	".\Object_Manager.i"\
+	".\OS.h"\
+	".\OS.i"\
+	".\OS_Dirent.h"\
+	".\OS_Dirent.inl"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\OS_Log_Msg_Attributes.h"\
+	".\OS_Log_Msg_Attributes.inl"\
+	".\OS_Memory.h"\
+	".\OS_Memory.inl"\
+	".\OS_QoS.h"\
+	".\OS_String.h"\
+	".\OS_String.inl"\
+	".\OS_Thread_Adapter.h"\
+	".\OS_Thread_Adapter.inl"\
+	".\OS_TLI.h"\
+	".\OS_TLI.inl"\
+	".\post.h"\
+	".\pre.h"\
+	".\Sched_Params.h"\
+	".\Sched_Params.i"\
+	".\streams.h"\
+	".\svc_export.h"\
+	".\Thread_Adapter.h"\
+	".\Thread_Adapter.inl"\
+	".\Thread_Control.h"\
+	".\Thread_Control.inl"\
+	".\Thread_Exit.h"\
+	".\Thread_Hook.h"\
+	".\Trace.h"\
+	
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\OS_Dirent.cpp
+
+!IF  "$(CFG)" == "ace_os - Win32 (WCE ARM) Release"
+
+DEP_CPP_OS_DI=\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\Base_Thread_Adapter.h"\
+	".\Base_Thread_Adapter.inl"\
+	".\Basic_Types.h"\
+	".\Basic_Types.i"\
+	".\config-all.h"\
+	".\config-cygwin32-common.h"\
+	".\config-cygwin32.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\iosfwd.h"\
+	".\Log_Msg.h"\
+	".\Log_Msg_Callback.h"\
+	".\Log_Priority.h"\
+	".\Log_Record.h"\
+	".\Log_Record.i"\
+	".\Managed_Object.cpp"\
+	".\Managed_Object.h"\
+	".\Managed_Object.i"\
+	".\Min_Max.h"\
+	".\Object_Manager.h"\
+	".\Object_Manager.i"\
+	".\OS.h"\
+	".\OS.i"\
+	".\OS_Dirent.h"\
+	".\OS_Dirent.inl"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\OS_Log_Msg_Attributes.h"\
+	".\OS_Log_Msg_Attributes.inl"\
+	".\OS_Memory.h"\
+	".\OS_Memory.inl"\
+	".\OS_String.h"\
+	".\OS_String.inl"\
+	".\OS_TLI.h"\
+	".\OS_TLI.inl"\
+	".\post.h"\
+	".\pre.h"\
+	".\streams.h"\
+	".\svc_export.h"\
+	".\Thread_Adapter.h"\
+	".\Thread_Adapter.inl"\
+	".\Thread_Control.h"\
+	".\Thread_Control.inl"\
+	".\Thread_Exit.h"\
+	".\Thread_Hook.h"\
+	".\Trace.h"\
+	
+
+!ELSEIF  "$(CFG)" == "ace_os - Win32 (WCE ARM) Debug"
+
+DEP_CPP_OS_DI=\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\Base_Thread_Adapter.h"\
+	".\Base_Thread_Adapter.inl"\
+	".\Basic_Types.h"\
+	".\Basic_Types.i"\
+	".\config-all.h"\
+	".\config-cygwin32-common.h"\
+	".\config-cygwin32.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\iosfwd.h"\
+	".\Log_Msg.h"\
+	".\Log_Msg_Callback.h"\
+	".\Log_Priority.h"\
+	".\Log_Record.h"\
+	".\Log_Record.i"\
+	".\Managed_Object.cpp"\
+	".\Managed_Object.h"\
+	".\Managed_Object.i"\
+	".\Min_Max.h"\
+	".\Object_Manager.h"\
+	".\Object_Manager.i"\
+	".\OS.h"\
+	".\OS.i"\
+	".\OS_Dirent.h"\
+	".\OS_Dirent.inl"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\OS_Log_Msg_Attributes.h"\
+	".\OS_Log_Msg_Attributes.inl"\
+	".\OS_Memory.h"\
+	".\OS_Memory.inl"\
+	".\OS_String.h"\
+	".\OS_String.inl"\
+	".\OS_TLI.h"\
+	".\OS_TLI.inl"\
+	".\post.h"\
+	".\pre.h"\
+	".\streams.h"\
+	".\svc_export.h"\
+	".\Thread_Adapter.h"\
+	".\Thread_Adapter.inl"\
+	".\Thread_Control.h"\
+	".\Thread_Control.inl"\
+	".\Thread_Exit.h"\
+	".\Thread_Hook.h"\
+	".\Trace.h"\
+	
+
+!ELSEIF  "$(CFG)" == "ace_os - Win32 (WCE x86) Debug"
+
+DEP_CPP_OS_DI=\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\Base_Thread_Adapter.h"\
+	".\Base_Thread_Adapter.inl"\
+	".\Basic_Types.h"\
+	".\Basic_Types.i"\
+	".\config-all.h"\
+	".\config-cygwin32-common.h"\
+	".\config-cygwin32.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\Default_Constants.h"\
+	".\Global_Macros.h"\
+	".\iosfwd.h"\
+	".\Log_Msg.h"\
+	".\Log_Msg_Callback.h"\
+	".\Log_Priority.h"\
+	".\Log_Record.h"\
+	".\Log_Record.i"\
+	".\Managed_Object.cpp"\
+	".\Managed_Object.h"\
+	".\Managed_Object.i"\
+	".\Min_Max.h"\
+	".\Object_Manager.h"\
+	".\Object_Manager.i"\
+	".\OS.h"\
+	".\OS.i"\
+	".\OS_Dirent.h"\
+	".\OS_Dirent.inl"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\OS_Log_Msg_Attributes.h"\
+	".\OS_Log_Msg_Attributes.inl"\
+	".\OS_Memory.h"\
+	".\OS_Memory.inl"\
+	".\OS_String.h"\
+	".\OS_String.inl"\
+	".\OS_TLI.h"\
+	".\OS_TLI.inl"\
+	".\post.h"\
+	".\pre.h"\
+	".\streams.h"\
+	".\svc_export.h"\
+	".\Thread_Adapter.h"\
+	".\Thread_Adapter.inl"\
+	".\Thread_Control.h"\
+	".\Thread_Control.inl"\
+	".\Thread_Exit.h"\
+	".\Thread_Hook.h"\
+	".\Trace.h"\
+	
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\OS_Errno.cpp
+
+!IF  "$(CFG)" == "ace_os - Win32 (WCE ARM) Release"
+
+DEP_CPP_OS_ER=\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\config-all.h"\
+	".\config-cygwin32-common.h"\
+	".\config-cygwin32.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\post.h"\
+	".\pre.h"\
+	".\svc_export.h"\
+	
+
+!ELSEIF  "$(CFG)" == "ace_os - Win32 (WCE ARM) Debug"
+
+DEP_CPP_OS_ER=\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\config-all.h"\
+	".\config-cygwin32-common.h"\
+	".\config-cygwin32.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\post.h"\
+	".\pre.h"\
+	".\svc_export.h"\
+	
+
+!ELSEIF  "$(CFG)" == "ace_os - Win32 (WCE x86) Debug"
+
+DEP_CPP_OS_ER=\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\config-all.h"\
+	".\config-cygwin32-common.h"\
+	".\config-cygwin32.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\post.h"\
+	".\pre.h"\
+	".\svc_export.h"\
+	
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\OS_Log_Msg_Attributes.cpp
+
+!IF  "$(CFG)" == "ace_os - Win32 (WCE ARM) Release"
+
+DEP_CPP_OS_LO=\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\config-all.h"\
+	".\config-cygwin32-common.h"\
+	".\config-cygwin32.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\OS_Log_Msg_Attributes.h"\
+	".\OS_Log_Msg_Attributes.inl"\
+	".\post.h"\
+	".\pre.h"\
+	".\streams.h"\
+	".\svc_export.h"\
+	
+
+!ELSEIF  "$(CFG)" == "ace_os - Win32 (WCE ARM) Debug"
+
+DEP_CPP_OS_LO=\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\config-all.h"\
+	".\config-cygwin32-common.h"\
+	".\config-cygwin32.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\OS_Log_Msg_Attributes.h"\
+	".\OS_Log_Msg_Attributes.inl"\
+	".\post.h"\
+	".\pre.h"\
+	".\streams.h"\
+	".\svc_export.h"\
+	
+
+!ELSEIF  "$(CFG)" == "ace_os - Win32 (WCE x86) Debug"
+
+DEP_CPP_OS_LO=\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\config-all.h"\
+	".\config-cygwin32-common.h"\
+	".\config-cygwin32.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\OS_Log_Msg_Attributes.h"\
+	".\OS_Log_Msg_Attributes.inl"\
+	".\post.h"\
+	".\pre.h"\
+	".\streams.h"\
+	".\svc_export.h"\
+	
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\OS_Memory.cpp
+
+!IF  "$(CFG)" == "ace_os - Win32 (WCE ARM) Release"
+
+DEP_CPP_OS_ME=\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\config-all.h"\
+	".\config-cygwin32-common.h"\
+	".\config-cygwin32.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\OS_Memory.h"\
+	".\OS_Memory.inl"\
+	".\post.h"\
+	".\pre.h"\
+	".\svc_export.h"\
+	
+
+!ELSEIF  "$(CFG)" == "ace_os - Win32 (WCE ARM) Debug"
+
+DEP_CPP_OS_ME=\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\config-all.h"\
+	".\config-cygwin32-common.h"\
+	".\config-cygwin32.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\OS_Memory.h"\
+	".\OS_Memory.inl"\
+	".\post.h"\
+	".\pre.h"\
+	".\svc_export.h"\
+	
+
+!ELSEIF  "$(CFG)" == "ace_os - Win32 (WCE x86) Debug"
+
+DEP_CPP_OS_ME=\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\config-all.h"\
+	".\config-cygwin32-common.h"\
+	".\config-cygwin32.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\OS_Memory.h"\
+	".\OS_Memory.inl"\
+	".\post.h"\
+	".\pre.h"\
+	".\svc_export.h"\
+	
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\OS_String.cpp
+
+!IF  "$(CFG)" == "ace_os - Win32 (WCE ARM) Release"
+
+DEP_CPP_OS_ST=\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\config-all.h"\
+	".\config-cygwin32-common.h"\
+	".\config-cygwin32.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\OS_Memory.h"\
+	".\OS_Memory.inl"\
+	".\OS_String.h"\
+	".\OS_String.inl"\
+	".\post.h"\
+	".\pre.h"\
+	".\svc_export.h"\
+	
+
+!ELSEIF  "$(CFG)" == "ace_os - Win32 (WCE ARM) Debug"
+
+DEP_CPP_OS_ST=\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\config-all.h"\
+	".\config-cygwin32-common.h"\
+	".\config-cygwin32.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\OS_Memory.h"\
+	".\OS_Memory.inl"\
+	".\OS_String.h"\
+	".\OS_String.inl"\
+	".\post.h"\
+	".\pre.h"\
+	".\svc_export.h"\
+	
+
+!ELSEIF  "$(CFG)" == "ace_os - Win32 (WCE x86) Debug"
+
+DEP_CPP_OS_ST=\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\Basic_Types.h"\
+	".\Basic_Types.i"\
+	".\config-all.h"\
+	".\config-cygwin32-common.h"\
+	".\config-cygwin32.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\iosfwd.h"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\OS_Memory.h"\
+	".\OS_Memory.inl"\
+	".\OS_String.h"\
+	".\OS_String.inl"\
+	".\post.h"\
+	".\pre.h"\
+	".\streams.h"\
+	".\svc_export.h"\
+	
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\OS_Thread_Adapter.cpp
+
+!IF  "$(CFG)" == "ace_os - Win32 (WCE ARM) Release"
+
+DEP_CPP_OS_TH=\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\Base_Thread_Adapter.h"\
+	".\Base_Thread_Adapter.inl"\
+	".\Basic_Types.h"\
+	".\Basic_Types.i"\
+	".\config-all.h"\
+	".\config-cygwin32-common.h"\
+	".\config-cygwin32.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\iosfwd.h"\
+	".\Log_Msg.h"\
+	".\Log_Msg_Callback.h"\
+	".\Log_Priority.h"\
+	".\Log_Record.h"\
+	".\Log_Record.i"\
+	".\Managed_Object.cpp"\
+	".\Managed_Object.h"\
+	".\Managed_Object.i"\
+	".\Min_Max.h"\
+	".\Object_Manager.h"\
+	".\Object_Manager.i"\
+	".\OS.h"\
+	".\OS.i"\
+	".\OS_Dirent.h"\
+	".\OS_Dirent.inl"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\OS_Log_Msg_Attributes.h"\
+	".\OS_Log_Msg_Attributes.inl"\
+	".\OS_Memory.h"\
+	".\OS_Memory.inl"\
+	".\OS_String.h"\
+	".\OS_String.inl"\
+	".\OS_Thread_Adapter.h"\
+	".\OS_Thread_Adapter.inl"\
+	".\OS_TLI.h"\
+	".\OS_TLI.inl"\
+	".\post.h"\
+	".\pre.h"\
+	".\streams.h"\
+	".\svc_export.h"\
+	".\Thread_Adapter.h"\
+	".\Thread_Adapter.inl"\
+	".\Thread_Control.h"\
+	".\Thread_Control.inl"\
+	".\Thread_Exit.h"\
+	".\Thread_Hook.h"\
+	".\Trace.h"\
+	
+
+!ELSEIF  "$(CFG)" == "ace_os - Win32 (WCE ARM) Debug"
+
+DEP_CPP_OS_TH=\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\Base_Thread_Adapter.h"\
+	".\Base_Thread_Adapter.inl"\
+	".\Basic_Types.h"\
+	".\Basic_Types.i"\
+	".\config-all.h"\
+	".\config-cygwin32-common.h"\
+	".\config-cygwin32.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\iosfwd.h"\
+	".\Log_Msg.h"\
+	".\Log_Msg_Callback.h"\
+	".\Log_Priority.h"\
+	".\Log_Record.h"\
+	".\Log_Record.i"\
+	".\Managed_Object.cpp"\
+	".\Managed_Object.h"\
+	".\Managed_Object.i"\
+	".\Min_Max.h"\
+	".\Object_Manager.h"\
+	".\Object_Manager.i"\
+	".\OS.h"\
+	".\OS.i"\
+	".\OS_Dirent.h"\
+	".\OS_Dirent.inl"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\OS_Log_Msg_Attributes.h"\
+	".\OS_Log_Msg_Attributes.inl"\
+	".\OS_Memory.h"\
+	".\OS_Memory.inl"\
+	".\OS_String.h"\
+	".\OS_String.inl"\
+	".\OS_Thread_Adapter.h"\
+	".\OS_Thread_Adapter.inl"\
+	".\OS_TLI.h"\
+	".\OS_TLI.inl"\
+	".\post.h"\
+	".\pre.h"\
+	".\streams.h"\
+	".\svc_export.h"\
+	".\Thread_Adapter.h"\
+	".\Thread_Adapter.inl"\
+	".\Thread_Control.h"\
+	".\Thread_Control.inl"\
+	".\Thread_Exit.h"\
+	".\Thread_Hook.h"\
+	".\Trace.h"\
+	
+
+!ELSEIF  "$(CFG)" == "ace_os - Win32 (WCE x86) Debug"
+
+DEP_CPP_OS_TH=\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\Base_Thread_Adapter.h"\
+	".\Base_Thread_Adapter.inl"\
+	".\Basic_Types.h"\
+	".\Basic_Types.i"\
+	".\config-all.h"\
+	".\config-cygwin32-common.h"\
+	".\config-cygwin32.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\Default_Constants.h"\
+	".\Global_Macros.h"\
+	".\iosfwd.h"\
+	".\Log_Msg.h"\
+	".\Log_Msg_Callback.h"\
+	".\Log_Priority.h"\
+	".\Log_Record.h"\
+	".\Log_Record.i"\
+	".\Managed_Object.cpp"\
+	".\Managed_Object.h"\
+	".\Managed_Object.i"\
+	".\Min_Max.h"\
+	".\Object_Manager.h"\
+	".\Object_Manager.i"\
+	".\OS.h"\
+	".\OS.i"\
+	".\OS_Dirent.h"\
+	".\OS_Dirent.inl"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\OS_Log_Msg_Attributes.h"\
+	".\OS_Log_Msg_Attributes.inl"\
+	".\OS_Memory.h"\
+	".\OS_Memory.inl"\
+	".\OS_String.h"\
+	".\OS_String.inl"\
+	".\OS_Thread_Adapter.h"\
+	".\OS_Thread_Adapter.inl"\
+	".\OS_TLI.h"\
+	".\OS_TLI.inl"\
+	".\post.h"\
+	".\pre.h"\
+	".\streams.h"\
+	".\svc_export.h"\
+	".\Thread_Adapter.h"\
+	".\Thread_Adapter.inl"\
+	".\Thread_Control.h"\
+	".\Thread_Control.inl"\
+	".\Thread_Exit.h"\
+	".\Thread_Hook.h"\
+	".\Trace.h"\
+	
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\OS_TLI.cpp
+
+!IF  "$(CFG)" == "ace_os - Win32 (WCE ARM) Release"
+
+DEP_CPP_OS_TL=\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\config-all.h"\
+	".\config-cygwin32-common.h"\
+	".\config-cygwin32.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\OS_TLI.h"\
+	".\OS_TLI.inl"\
+	".\post.h"\
+	".\pre.h"\
+	".\svc_export.h"\
+	
+
+!ELSEIF  "$(CFG)" == "ace_os - Win32 (WCE ARM) Debug"
+
+DEP_CPP_OS_TL=\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\config-all.h"\
+	".\config-cygwin32-common.h"\
+	".\config-cygwin32.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\OS_TLI.h"\
+	".\OS_TLI.inl"\
+	".\post.h"\
+	".\pre.h"\
+	".\svc_export.h"\
+	
+
+!ELSEIF  "$(CFG)" == "ace_os - Win32 (WCE x86) Debug"
+
+DEP_CPP_OS_TL=\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\config-all.h"\
+	".\config-cygwin32-common.h"\
+	".\config-cygwin32.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\OS_TLI.h"\
+	".\OS_TLI.inl"\
+	".\post.h"\
+	".\pre.h"\
+	".\svc_export.h"\
+	
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Thread_Hook.cpp
+
+!IF  "$(CFG)" == "ace_os - Win32 (WCE ARM) Release"
+
+DEP_CPP_THREA=\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\Base_Thread_Adapter.h"\
+	".\Base_Thread_Adapter.inl"\
+	".\Basic_Types.h"\
+	".\Basic_Types.i"\
+	".\config-all.h"\
+	".\config-cygwin32-common.h"\
+	".\config-cygwin32.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\iosfwd.h"\
+	".\Log_Msg.h"\
+	".\Log_Msg_Callback.h"\
+	".\Log_Priority.h"\
+	".\Log_Record.h"\
+	".\Log_Record.i"\
+	".\Managed_Object.cpp"\
+	".\Managed_Object.h"\
+	".\Managed_Object.i"\
+	".\Min_Max.h"\
+	".\Object_Manager.h"\
+	".\Object_Manager.i"\
+	".\OS.h"\
+	".\OS.i"\
+	".\OS_Dirent.h"\
+	".\OS_Dirent.inl"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\OS_Log_Msg_Attributes.h"\
+	".\OS_Log_Msg_Attributes.inl"\
+	".\OS_Memory.h"\
+	".\OS_Memory.inl"\
+	".\OS_String.h"\
+	".\OS_String.inl"\
+	".\OS_TLI.h"\
+	".\OS_TLI.inl"\
+	".\post.h"\
+	".\pre.h"\
+	".\streams.h"\
+	".\svc_export.h"\
+	".\Thread_Adapter.h"\
+	".\Thread_Adapter.inl"\
+	".\Thread_Control.h"\
+	".\Thread_Control.inl"\
+	".\Thread_Exit.h"\
+	".\Thread_Hook.h"\
+	".\Trace.h"\
+	
+
+!ELSEIF  "$(CFG)" == "ace_os - Win32 (WCE ARM) Debug"
+
+DEP_CPP_THREA=\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\Base_Thread_Adapter.h"\
+	".\Base_Thread_Adapter.inl"\
+	".\Basic_Types.h"\
+	".\Basic_Types.i"\
+	".\config-all.h"\
+	".\config-cygwin32-common.h"\
+	".\config-cygwin32.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\iosfwd.h"\
+	".\Log_Msg.h"\
+	".\Log_Msg_Callback.h"\
+	".\Log_Priority.h"\
+	".\Log_Record.h"\
+	".\Log_Record.i"\
+	".\Managed_Object.cpp"\
+	".\Managed_Object.h"\
+	".\Managed_Object.i"\
+	".\Min_Max.h"\
+	".\Object_Manager.h"\
+	".\Object_Manager.i"\
+	".\OS.h"\
+	".\OS.i"\
+	".\OS_Dirent.h"\
+	".\OS_Dirent.inl"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\OS_Log_Msg_Attributes.h"\
+	".\OS_Log_Msg_Attributes.inl"\
+	".\OS_Memory.h"\
+	".\OS_Memory.inl"\
+	".\OS_String.h"\
+	".\OS_String.inl"\
+	".\OS_TLI.h"\
+	".\OS_TLI.inl"\
+	".\post.h"\
+	".\pre.h"\
+	".\streams.h"\
+	".\svc_export.h"\
+	".\Thread_Adapter.h"\
+	".\Thread_Adapter.inl"\
+	".\Thread_Control.h"\
+	".\Thread_Control.inl"\
+	".\Thread_Exit.h"\
+	".\Thread_Hook.h"\
+	".\Trace.h"\
+	
+
+!ELSEIF  "$(CFG)" == "ace_os - Win32 (WCE x86) Debug"
+
+DEP_CPP_THREA=\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\Base_Thread_Adapter.h"\
+	".\Base_Thread_Adapter.inl"\
+	".\Basic_Types.h"\
+	".\Basic_Types.i"\
+	".\config-all.h"\
+	".\config-cygwin32-common.h"\
+	".\config-cygwin32.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\Default_Constants.h"\
+	".\Global_Macros.h"\
+	".\iosfwd.h"\
+	".\Log_Msg.h"\
+	".\Log_Msg_Callback.h"\
+	".\Log_Priority.h"\
+	".\Log_Record.h"\
+	".\Log_Record.i"\
+	".\Managed_Object.cpp"\
+	".\Managed_Object.h"\
+	".\Managed_Object.i"\
+	".\Min_Max.h"\
+	".\Object_Manager.h"\
+	".\Object_Manager.i"\
+	".\OS.h"\
+	".\OS.i"\
+	".\OS_Dirent.h"\
+	".\OS_Dirent.inl"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\OS_Log_Msg_Attributes.h"\
+	".\OS_Log_Msg_Attributes.inl"\
+	".\OS_Memory.h"\
+	".\OS_Memory.inl"\
+	".\OS_String.h"\
+	".\OS_String.inl"\
+	".\OS_TLI.h"\
+	".\OS_TLI.inl"\
+	".\post.h"\
+	".\pre.h"\
+	".\streams.h"\
+	".\svc_export.h"\
+	".\Thread_Adapter.h"\
+	".\Thread_Adapter.inl"\
+	".\Thread_Control.h"\
+	".\Thread_Control.inl"\
+	".\Thread_Exit.h"\
+	".\Thread_Hook.h"\
+	".\Trace.h"\
+	
+
+!ENDIF 
+
+# End Source File
+# End Group
+# Begin Group "Header Files"
+
+# PROP Default_Filter "h;hpp;hxx;hm"
+# Begin Source File
+
+SOURCE=.\ace_wchar.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Base_Thread_Adapter.h
+# End Source File
+# Begin Source File
+
+SOURCE=".\config-all.h"
+# End Source File
+# Begin Source File
+
+SOURCE=.\OS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\OS_Dirent.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\OS_Errno.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\OS_Export.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\OS_Log_Msg_Attributes.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\OS_Memory.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\OS_String.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\OS_Thread_Adapter.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\OS_TLI.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Thread_Hook.h
+# End Source File
+# End Group
+# Begin Group "Inline Files"
+
+# PROP Default_Filter "inl;i"
+# Begin Source File
+
+SOURCE=.\ace_wchar.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Base_Thread_Adapter.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Basic_Types.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\OS.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\OS_Dirent.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\OS_Errno.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\OS_Log_Msg_Attributes.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\OS_Memory.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\OS_String.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\OS_Thread_Adapter.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\OS_TLI.inl
+# End Source File
+# End Group
+# Begin Group "Resource Files"
+
+# PROP Default_Filter ""
+# End Group
+# End Target
+# End Project

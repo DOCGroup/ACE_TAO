@@ -1,0 +1,16 @@
+
+NAMES = \
+	direct_logging \
+	indirect_logging
+
+OBJFILES=$(OBJDIR)\$(NAME).obj
+
+CFLAGS = $(ACE_CFLAGS)
+
+CPPDIR = .
+
+LIBFILES = $(ACE_LIB)
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
+

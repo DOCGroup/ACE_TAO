@@ -1,0 +1,7 @@
+#
+# Makefile for building	the IOGR tests
+#
+
+MAKEFILES = Manager.bor	server.bor
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

@@ -1,0 +1,41 @@
+#
+# Makefile for building the tao_ifr executable
+#
+
+!ifndef MINIMUM_CORBA
+NAME = tao_ifr
+!else
+!undef NAME
+!endif
+
+OBJFILES = \
+	$(OBJDIR)\tao_ifr.obj \
+	$(OBJDIR)\drv_init_ifr.obj \
+	$(OBJDIR)\drv_private_ifr.obj \
+	$(OBJDIR)\drv_args_ifr.obj \
+	$(OBJDIR)\drv_preproc_ifr.obj
+
+!ifdef STATIC
+TAO_IFR_BE_DLLFLAG=0
+!else
+TAO_IFR_BE_DLLFLAG=1
+!endif
+
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS) \
+	$(TAO_IFR_CLIENT_CFLAGS) \
+	$(TAO_IDL_FE_CFLAGS) \
+	-DTAO_IFR_BE_HAS_DLL=$(TAO_IFR_BE_DLLFLAG)
+
+LIBFILES = \
+	$(ACE_LIB) \
+	$(TAO_LIB) \
+	$(TAO_IFR_CLIENT_LIB) \
+	$(TAO_IDL_FE_LIB) \
+	$(CORE_BINDIR)\TAO_IFR_BE_DLL$(LIB_DECORATOR).lib
+
+CPPDIR = .
+
+!include <$(ACE_ROOT)\include\makeinclude\build_core_exe.bor>
+

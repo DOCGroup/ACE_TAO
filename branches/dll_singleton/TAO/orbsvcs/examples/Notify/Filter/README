@@ -1,0 +1,23 @@
+Filter example:
+
+This example shows how to filter structured events in the Notification Service.
+
+The Notification service must be up and running before launching this example.
+(See the README under $TAO_ROOT/orbsvcs/Notify_Service for more details.)
+
+The example connects to the Notification Service's factory object and creates
+an event channel. It then hooks up 2 suppliers and consumers with the EC.
+The consumers and suppliers use the <TAO_Notify_StructuredPushConsumer> and
+<TAO_Notify_StructuredPushSupplier> classes which are utility classes included
+with the Notification Service to help developers write consumers and suppliers.
+
+Both the suppliers send 30 events to the EC and contain the event property
+"threshold".
+Only events in the "threshold" range 10 to 20 are delivered to the consumers
+because of the filters setup at the ConsumerAdmin and SupplierAdmin.
+
+Similar filters can be setup in the ConsumerProxy and SupplierProxy classes.
+
+thanks,
+Pradeep
+<pradeep@cs.wustl.edu>

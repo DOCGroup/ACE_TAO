@@ -1,0 +1,82 @@
+#
+# Rules	for linking a dll
+#
+# Inputs:
+# ~~~~~~~
+# NAME - undecorated name of target
+# CFLAGS - extra compiler flags	for building target
+# CPPDIR - list	of directories containing source files
+# OBJFILES - list of (non-system) object files
+# LIBFILES - list of (non-system) libraries
+# PASCAL - if defined means link dll against pascal run-time library
+# DEBUG	- if defined means building with debug information
+# UNICODE - if defined when building a unicode dll
+#
+
+# All DLLs are copied into the common bin directory so that they always
+# available on the path for the tests.
+BINDIR = $(CORE_BINDIR)
+
+!include <$(ACE_ROOT)\include\makeinclude\decorator.bor>
+!include <$(ACE_ROOT)\include\makeinclude\outputdir.bor>
+!include <$(ACE_ROOT)\include\makeinclude\compiler.bor>
+
+!ifdef NAME
+!ifndef TARGET
+TARGET = $(BINDIR)\$(NAME)$(LIB_DECORATOR).dll
+!endif
+!endif
+
+all: $(TARGET)
+	@echo Do nothing >NUL
+
+!ifdef TARGET
+$(TARGET): $(OBJFILES) $(RESOURCE)
+	@$(MAKE_BINDIR)
+	$(LD) @&&!
+	$(COMMON_LFLAGS) $(DLL_LFLAGS) $(LFLAGS) +
+	$(DLL_STARTUP_OBJ) $(OBJFILES),	+
+	$(TARGET),, +
+	$(COMMON_LIBS) $(LIBFILES),, +
+	$(RESOURCE)
+!
+!ifndef	DEBUG
+	@del $(TARGET:.dll=.tds)
+!endif
+!endif
+
+!include <$(ACE_ROOT)\include\makeinclude\clean.bor>
+
+INSTALL_TYPES =	dll lib	includes
+
+!include <$(ACE_ROOT)\include\makeinclude\install.bor>
+
+!ifdef CPPDIR
+.path.cpp = $(CPPDIR)
+!endif
+
+!ifdef CDIR
+.path.c	= $(CDIR)
+!endif
+
+!ifdef RESDIR
+.path.rc = $(RESDIR)
+!else
+.path.rc = .
+!endif
+
+.path.obj = $(OBJDIR)
+
+.cpp.obj:
+	@$(MAKE_OBJDIR)
+	$(CC) $(COMMON_CFLAGS) $(DLL_CFLAGS) $(CFLAGS) -c -n$(@D) $<
+
+.c.obj:
+	@$(MAKE_OBJDIR)
+	$(CC) $(COMMON_CFLAGS) $(DLL_CFLAGS) $(CFLAGS) -c -n$(@D) $<
+
+.rc.res:
+	@$(MAKE_OBJDIR)
+	$(RC) -fo$@ $<
+
+.autodepend

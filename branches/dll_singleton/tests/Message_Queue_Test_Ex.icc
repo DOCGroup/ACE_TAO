@@ -1,0 +1,15 @@
+// $Id$
+
+include "vacpp_setup.icc"
+option
+    link(libSearchPath, platformLibSearchPath),
+    incl(searchPath, ".."),
+    link(linkWithMultiThreadLib,yes),
+    link(debug)
+    {
+	target type (exe) "Message_Queue_Test_Ex"
+	{
+	   source type (cpp) "Message_Queue_Test_Ex.cpp"
+	   source platformLinkLibs
+	}
+    }
