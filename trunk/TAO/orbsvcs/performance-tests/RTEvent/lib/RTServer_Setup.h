@@ -33,7 +33,8 @@ public:
   /// Constructor
   RTServer_Setup (int use_rt_corba,
                   CORBA::ORB_ptr orb,
-                  const RT_Class &rt_class
+                  const RT_Class &rt_class,
+                  int nthreads
                   ACE_ENV_ARG_DECL);
 
   /// Return the POA configured by the RTPOA_Setup

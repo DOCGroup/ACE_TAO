@@ -20,6 +20,7 @@
 template<class Task>
 Task_Activator<Task>::Task_Activator (int priority,
                                       int scheduling_class,
+                                      int nthreads,
                                       Task *task)
   : task_ (task)
 {
@@ -30,7 +31,7 @@ Task_Activator<Task>::Task_Activator (int priority,
   // test anyway.  In a generic class we would need to throw an
   // exception.
   if (this->task_->activate (scheduling_class | THR_NEW_LWP | THR_JOINABLE,
-                             1, // 1 task
+                             nthreads,
                              1, // force_activation
                              priority) == -1)
     {

@@ -73,6 +73,9 @@ private:
 
   /// The default poa
   PortableServer::POA_var default_POA_;
+
+  /// Count the number of events processed
+  CORBA::ULong counter_;
 };
 
 #endif /* TAO_RTEC_LOOPBACK_SUPPLIER_H */

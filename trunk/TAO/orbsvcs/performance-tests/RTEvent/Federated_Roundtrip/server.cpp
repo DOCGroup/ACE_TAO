@@ -25,11 +25,12 @@ ACE_RCSID(TAO_PERF_RTEC_Federated_Roundtrip, server, "$Id$")
 
 const char *ior_output_file = "test.ior";
 int use_rt_corba = 0;
+int nthreads = 1;
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:r");
+  ACE_Get_Opt get_opts (argc, argv, "o:n:r");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -37,6 +38,10 @@ parse_args (int argc, char *argv[])
       {
       case 'o':
         ior_output_file = get_opts.opt_arg ();
+        break;
+
+      case 'n':
+        nthreads = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'r':
@@ -48,6 +53,7 @@ parse_args (int argc, char *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
                            "-o <iorfile> "
+                           "-n nthreads "
                            "-r (use RT-CORBA) "
                            "\n",
                            argv [0]),
@@ -76,7 +82,8 @@ int main (int argc, char *argv[])
 
       RTServer_Setup rtserver_setup (use_rt_corba,
                                      orb,
-                                     rt_class
+                                     rt_class,
+                                     nthreads
                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
