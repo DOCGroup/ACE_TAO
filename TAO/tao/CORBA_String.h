@@ -42,7 +42,7 @@ namespace CORBA
   class TAO_Export String_var
   {
   public:
-  /// Default constructor.
+    /// Default constructor.
     String_var (void);
 
     /// Constructor, owns p.
