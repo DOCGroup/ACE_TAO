@@ -35,8 +35,9 @@ TAO_Interceptor_List::add_interceptor_i (
     {
       /// If the Interceptor is not anonymous, make sure an
       /// Interceptor with the same isn't already registered.
-      CORBA::String_var name = interceptor->name (TAO_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      CORBA::String_var name = interceptor->name (
+        TAO_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
 
       size_t old_len = this->length ();
 
@@ -63,8 +64,9 @@ TAO_Interceptor_List::add_interceptor_i (
                 this->interceptor (i)->name ();
               if (ACE_OS_String::strcmp (existing_name.in (),
                                          name.in ()) == 0)
-                ACE_THROW
-                  (PortableInterceptor::ORBInitInfo::DuplicateName ());
+                ACE_THROW_RETURN
+                  (PortableInterceptor::ORBInitInfo::DuplicateName (),
+                   0);
             }
         }
 
@@ -74,11 +76,12 @@ TAO_Interceptor_List::add_interceptor_i (
 	  return old_len;
     }
   else
-    ACE_THROW (CORBA::INV_OBJREF (
-                 CORBA_SystemException::_tao_minor_code (
-                   TAO_DEFAULT_MINOR_CODE,
-                   EINVAL),
-                 CORBA::COMPLETED_NO));
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (
+                        CORBA_SystemException::_tao_minor_code (
+                          TAO_DEFAULT_MINOR_CODE,
+                          EINVAL),
+                        CORBA::COMPLETED_NO),
+                      0);
 }
 
 
