@@ -712,7 +712,7 @@ char *tao_yytext_ptr;
 #line 1 "fe/idl.ll"
 #define INITIAL 0
 #line 2 "fe/idl.ll"
-/*  $Id: idl.ll,v 1.45 2000/02/01 02:27:49 parsons Exp $
+/*  $Id: idl.ll,v 1.46 2000/03/26 20:43:15 parsons Exp $
 
 COPYRIGHT
 
@@ -1324,7 +1324,7 @@ TAO_YY_RULE_SETUP
 
   TAO_IDL_CPP_Keyword_Table cpp_key_tbl;
   const TAO_IDL_CPP_Keyword_Entry *entry =
-    cpp_key_tbl.lookup (ace_tao_yytext,
+    cpp_key_tbl.lookup (tmp,
                         ACE_OS::strlen (tmp));
   if (entry)
     tao_yylval.strval = ACE_OS::strdup (entry->mapping_);

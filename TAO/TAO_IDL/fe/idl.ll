@@ -190,7 +190,7 @@ oneway		return IDL_ONEWAY;
 
   TAO_IDL_CPP_Keyword_Table cpp_key_tbl;
   const TAO_IDL_CPP_Keyword_Entry *entry =
-    cpp_key_tbl.lookup (ace_yytext,
+    cpp_key_tbl.lookup (tmp,
                         ACE_OS::strlen (tmp));
   if (entry)
     yylval.strval = ACE_OS::strdup (entry->mapping_);
