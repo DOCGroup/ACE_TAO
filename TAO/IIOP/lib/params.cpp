@@ -38,7 +38,10 @@ ROA_Factory::concurrency_strategy()
       concurrency_strategy_ = &threaded_strategy_;
     }
   else
-    concurrency_strategy_ = 0;
+    {
+      reactive_strategy_.open(ACE_Service_Config::reactor());
+      concurrency_strategy_ = &reactive_strategy_;
+    }
 
   return concurrency_strategy_;
 }
