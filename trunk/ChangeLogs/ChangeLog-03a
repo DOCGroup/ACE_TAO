@@ -1,3 +1,9 @@
+Mon Dec 18 19:07:31 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/Asynch_IO.h, ace/POSIX_Asynch_IO.h: Clarified/corrected some
+          comments regarding the write() operation getting its data from
+          the message block's rd_ptr.
+
 Mon Dec 18 11:44:11 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/MEM_Stream_Test.cpp (connect_client): Fixed an unused
