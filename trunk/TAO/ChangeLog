@@ -1,3 +1,8 @@
+Thu Oct 16 07:23:17 UTC  2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Interceptor.h:
+          Fixed fuzz push/pop warning
+
 Thu Oct 16 06:18:12 UTC  2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/FtRtEvent/Utils/UUID.h:
