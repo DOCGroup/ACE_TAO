@@ -223,7 +223,7 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc (LPCTSTR pool_name)
   ACE_TRACE ("ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc");
   if (this->open () == -1)
     ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("%p"),
+                ASYS_TEXT ("%p\n"),
                 ASYS_TEXT ("ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc")));
 }
 
