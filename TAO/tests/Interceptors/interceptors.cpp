@@ -47,7 +47,6 @@ Echo_Client_Request_Interceptor::send_request (PortableInterceptor::ClientReques
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest))
 {
-  cout << "Echo_Client_Request_Interceptor::send_request"<<endl;
 
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Client_Request_Interceptor::send_request from \"%s\" on object: %s\n",
@@ -86,7 +85,6 @@ Echo_Client_Request_Interceptor::receive_reply (PortableInterceptor::ClientReque
                                                 CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  cout << "Echo_Client_Request_Interceptor::receive_reply"<<endl;
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Client_Request_Interceptor::receive_reply from \"%s\" on object: %s\n",
               ri->operation (ACE_TRY_ENV),
@@ -117,10 +115,17 @@ Echo_Client_Request_Interceptor::receive_reply (PortableInterceptor::ClientReque
 
 void 
 Echo_Client_Request_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri,
-                                                    CORBA::Environment &)
+                                                    CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException, 
                      PortableInterceptor::ForwardRequest))
 {
+
+  ACE_DEBUG ((LM_DEBUG,
+              "Echo_Client_Request_Interceptor::received_exception from \"%s\" on object: %s\n",
+              ri->operation (ACE_TRY_ENV),
+              this->orb_->object_to_string (ri->target ())));
+  ACE_CHECK;
+
 }
 
 
@@ -161,7 +166,6 @@ Echo_Server_Request_Interceptor::receive_request (PortableInterceptor::ServerReq
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  cout <<"Echo_Server_Request_Interceptor::receive_request"<<endl;
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Server_Request_Interceptor::receive_request from \"%s\"",
               ri->operation ()));
@@ -214,7 +218,6 @@ Echo_Server_Request_Interceptor::send_reply (PortableInterceptor::ServerRequestI
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  cout <<"Echo_Server_Request_Interceptor::send_reply"<<endl;
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Server_Request_Interceptor::send_reply from \"%s\"",
               ri->operation ()));
@@ -249,4 +252,8 @@ Echo_Server_Request_Interceptor::send_exception (PortableInterceptor::ServerRequ
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
+  ACE_DEBUG ((LM_DEBUG,
+              "Echo_Server_Request_Interceptor::send_exception from \"%s\"",
+              ri->operation ()));
+
 }
