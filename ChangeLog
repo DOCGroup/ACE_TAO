@@ -1,3 +1,18 @@
+Tue Oct  7 21:10:22 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* Kokyu/DSRT_CV_Dispatcher_Impl_T.{h,cpp}: 
+	* Kokyu/DSRT_Dispatcher_Impl_T.{h,cpp}: 
+	* Kokyu/DSRT_Direct_Dispatcher_Impl_T.{h,cpp}: 
+	* Kokyu/DSRT_Dispatch_Item_T.h: 
+	* Kokyu/DSRT_Sched_Queue_T.{h,cpp}:
+	* Kokyu/Kokyu_dsrt.cpp:
+	  Added condition variable based implementation of DSRTCORBA
+	  scheduler mechanisms.
+	
+	* Kokyu/tests/DSRT_MIF/MIF.cpp:
+	* Kokyu/tests/DSRT_MIF/Makefile:
+	  Added explicit template instantiations.
+
 Tue Oct  7 14:54:47 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/Reactor.h: Renamed a variable name, signals to sigset. The

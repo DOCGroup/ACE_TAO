@@ -102,56 +102,83 @@ template <class DSRT_Scheduler_Traits,
 int Sched_Ready_Queue<DSRT_Scheduler_Traits,
                       More_Eligible_Comparator,
                       ACE_LOCK>::
-insert(Guid_t guid, const DSRT_QoSDescriptor_t& qos)
+insert (DSRT_Dispatch_Item<DSRT_Scheduler_Traits>* item)
 {
-  DSRT_Dispatch_Item<DSRT_Scheduler_Traits>* item;
-  ACE_hthread_t thr_handle;
-  ACE_Thread::self (thr_handle);
-
-  ACE_NEW_RETURN (item,
-                  DSRT_Dispatch_Item<DSRT_Scheduler_Traits> (guid, qos),
-                  -1);
-  item->thread_handle (thr_handle);
   item->insertion_time (ACE_OS::gettimeofday ());
   DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits> item_var(item);
 
   ACE_GUARD_RETURN (ACE_LOCK, mon, lock_, -1);
 
   RB_Tree_Dispatch_Item_Node* rb_tree_node;
-  if (dispatch_items_hash_map_.find(guid, rb_tree_node) == -1)
+  Guid_t guid = item->guid ();
+
+#ifdef KOKYU_DSRT_LOGGING
+  ACE_hthread_t thr_handle = item->thread_handle ();
+
+  ACE_DEBUG ((LM_DEBUG, 
+              "(%t|%T) about to insert %d in sched queue\n", 
+              thr_handle));
+#endif
+
+  if (dispatch_items_hash_map_.find (guid, rb_tree_node) == -1)
     {
+#ifdef KOKYU_DSRT_LOGGING
+      ACE_DEBUG ((LM_DEBUG, 
+                  "(%t|%T) %d not found in hashmap\n", thr_handle));
+#endif
       if (dispatch_items_prio_queue_.bind (item_var,
                                            item_var,
                                            rb_tree_node) == 0)
         {
+#ifdef KOKYU_DSRT_LOGGING
+          ACE_DEBUG ((LM_DEBUG, "(%t|%T): item bound in rbtree\n"));
+#endif
           if (dispatch_items_hash_map_.bind (guid, rb_tree_node) == 0)
             {
-              ACE_DEBUG ((LM_DEBUG, "(%t) insert item done\n"));
+#ifdef KOKYU_DSRT_LOGGING
+              ACE_DEBUG ((LM_DEBUG, "(%t|%T): item bound in hashmap\n"));
               ACE_DEBUG ((LM_DEBUG,
                           "<===Hash Table contents Begin===>\n"));
               dispatch_items_hash_map_.dump ();
               ACE_DEBUG ((LM_DEBUG,
                           "<===Hash Table contents End=====>\n"));
+#endif              
               return 0;
             }
         }
     }
   else
     {
+#ifdef KOKYU_DSRT_LOGGING
+      ACE_DEBUG ((LM_DEBUG, 
+                  "(%t|%T) %d found in hashmap\n", thr_handle));
+#endif
       dispatch_items_hash_map_.unbind (guid);
       dispatch_items_prio_queue_.unbind (rb_tree_node);
+
+#ifdef KOKYU_DSRT_LOGGING
+      ACE_DEBUG ((LM_DEBUG, 
+                  "(%t|%T) %d removed from hashmap and rbtree\n", thr_handle));      
+#endif
       if (dispatch_items_prio_queue_.bind (item_var,
                                            item_var,
                                            rb_tree_node) == 0)
         {
+#ifdef KOKYU_DSRT_LOGGING
+          ACE_DEBUG ((LM_DEBUG, 
+                      "(%t|%T) %d bound to rbtree\n", thr_handle));      
+#endif
           if (dispatch_items_hash_map_.bind (guid, rb_tree_node) == 0)
             {
-              ACE_DEBUG ((LM_DEBUG, "(%t) insert item done\n"));
+#ifdef KOKYU_DSRT_LOGGING
+              ACE_DEBUG ((LM_DEBUG, 
+                          "(%t|%T) %d bound to hashmap\n", thr_handle));      
               ACE_DEBUG ((LM_DEBUG,
                           "<===Hash Table contents Begin===>\n"));
               dispatch_items_hash_map_.dump ();
               ACE_DEBUG ((LM_DEBUG,
                           "<===Hash Table contents End===>\n"));
+#endif              
               return 0;
             }
         }
@@ -164,7 +191,7 @@ template <class DSRT_Scheduler_Traits,
           class More_Eligible_Comparator, class ACE_LOCK>
 int Sched_Ready_Queue<DSRT_Scheduler_Traits,
                       More_Eligible_Comparator, ACE_LOCK>::
-remove(Guid_t guid)
+remove (Guid_t guid)
 {
   ACE_GUARD_RETURN (ACE_LOCK, mon, lock_, -1);
   RB_Tree_Dispatch_Item_Node* rb_tree_node;
@@ -173,11 +200,14 @@ remove(Guid_t guid)
     {
       dispatch_items_hash_map_.unbind (guid);
       dispatch_items_prio_queue_.unbind (rb_tree_node);
+#ifdef KOKYU_DSRT_LOGGING
       ACE_DEBUG ((LM_DEBUG,
                   "<===Hash Table contents Begin===>\n"));
       dispatch_items_hash_map_.dump ();
       ACE_DEBUG ((LM_DEBUG,
                   "<===Hash Table contents End===>\n"));
+#endif
+      
       return 0;
     }
 
@@ -190,31 +220,34 @@ template <class DSRT_Scheduler_Traits,
 void Sched_Ready_Queue<DSRT_Scheduler_Traits,
                        More_Eligible_Comparator,
                        ACE_LOCK>::
-dump()
+dump ()
 {
   ACE_GUARD (ACE_LOCK, mon, lock_);
+  ACE_DEBUG ((LM_DEBUG, "(%t|%T):##########################\n"));
   if (dispatch_items_prio_queue_.current_size ())
     {
       PRIO_QUEUE_ITERATOR end_iter = dispatch_items_prio_queue_.end ();
-      PRIO_QUEUE_ITERATOR start;
+      PRIO_QUEUE_ITERATOR iter;
 
-      start = dispatch_items_prio_queue_.begin ();
-      while( start != end_iter )
+      iter = dispatch_items_prio_queue_.begin ();
+      while( iter != end_iter )
         {
-          PRIO_QUEUE_ENTRY &ent = (*start);
+          PRIO_QUEUE_ENTRY &ent = (*iter);
           DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits>
             item_var = ent.item ();
-          /*
+          /*          
           int guid;
           ACE_OS::memcpy (&guid,
-                  item_var->guid ()->get_buffer (),
-                  item_var->guid ()->length ());
+                  item_var->guid ().get_buffer (),
+                  item_var->guid ().length ());
 
-          ACE_DEBUG ((LM_DEBUG, "guid %d\n", guid));
+          ACE_DEBUG ((LM_DEBUG, "(%t|%T):guid %d, thr_handle = %d\n", 
+                      guid, item_var->thread_handle ()));
           */
-          ++start;
+          ++iter;
         }
     }
+  ACE_DEBUG ((LM_DEBUG, "(%t|%T):##########################\n"));
 }
 
 }
