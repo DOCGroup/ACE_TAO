@@ -308,16 +308,16 @@ Client_i::activate_high_client (void)
   ACE_DEBUG ((LM_DEBUG,
               "Creating 1 client with high priority of %d\n",
               this->high_priority_));
-  if (this->high_priority_client_->activate 
-      (THR_BOUND | ACE_SCHED_FIFO,
-       1,
-       0,
-       this->high_priority_,
-       -1,
-       0,
-       0,
-       0,
-       (ACE_thread_t *) &this->task_id_) == -1)
+  if (this->high_priority_client_->activate (THR_BOUND | ACE_SCHED_FIFO,
+                                             1,
+                                             0,
+                                             this->high_priority_,
+                                             -1,
+                                             0,
+                                             0,
+                                             0,
+					     0,           //  size_t stack_size[] = 0,
+					     (ACE_thread_t *) &this->task_id_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p; priority is %d\n",
                        "activate failed",
