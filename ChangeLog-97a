@@ -1,3 +1,8 @@
+Wed Mar 12 16:07:07 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/OS.i (gethrtime): Added support for VxWorks and
+	  other platforms that support ACE_HAS_CLOCK_GETTIME.
+
 Tue Mar 11 21:38:42 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
 	* ace/OS.i (open): Improved support for passing flags through to
