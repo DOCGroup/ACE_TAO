@@ -84,6 +84,7 @@
 
 // OS-specific configuration
 
+#define ACE_LACKS_UNIX_SYSLOG
 #define ACE_HAS_MUTEX_TIMEOUTS
 #define ACE_DEFAULT_MAX_SOCKET_BUFSIZ 32768
 #define ACE_DEFAULT_THREAD_KEYS 16
