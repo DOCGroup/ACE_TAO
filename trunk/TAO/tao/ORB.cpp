@@ -887,6 +887,7 @@ CORBA_ORB::resolve_initial_references (const char *name,
 
   else if (ACE_OS::strcmp (name, TAO_OBJID_POLICYCURRENT) == 0)
     return this->resolve_policy_current (ACE_TRY_ENV);
+
   else if (ACE_OS::strcmp (name, TAO_OBJID_IORMANIPULATION) == 0)
     return this->resolve_ior_manipulation (ACE_TRY_ENV);
 
@@ -960,13 +961,13 @@ CORBA_ORB::resolve_initial_references (const char *name,
 
 }
 
-// Unimplemented at this time.
 CORBA_ORB_ObjectIdList_ptr
 CORBA_ORB::list_initial_services (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
-                                         CORBA::COMPLETED_NO),
-                    0);
+  TAO_IOR_LookupTable *table =
+    this->orb_core_->orb_params ()->ior_lookup_table ();
+
+  return table->list_initial_services (ACE_TRY_ENV);
 }
 
 TAO_Stub *

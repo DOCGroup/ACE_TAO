@@ -516,9 +516,10 @@ public:
   // will remains compliant with the CORBA
   // <resolve_initial_references> specification.
 
-  // Unimplemented function - throws CORBA::NO_IMPLEMENT.
-  CORBA_ORB_ObjectIdList_ptr list_initial_services (CORBA_Environment &ACE_TRY_ENV =
-                                                    TAO_default_environment ());
+  CORBA_ORB_ObjectIdList_ptr list_initial_services (
+              CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+  // Returns a sequence of ObjectIds that lists which objects have
+  // references available via the initial references mechanism.
 
 #if defined(TAO_HAS_CORBA_MESSAGING)
   CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
