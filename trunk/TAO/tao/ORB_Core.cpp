@@ -149,13 +149,13 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     use_tss_resources_ (0),
     tss_resources_ (),
     orb_resources_ (),
-    has_shutdown_ (1),
+    has_shutdown_ (1),  // Start the ORB in a  "shutdown" state.  Only
+                        // after CORBA::ORB_init() is called will the
+                        // ORB no longer be shutdown.  This does not
+                        // mean that the ORB can be reinitialized.  It
+                        // can only be initialized once.
     thread_per_connection_use_timeout_ (1),
     endpoint_selector_factory_ (0),
-    // Start the ORB in a  "shutdown" state.  Only after
-    // CORBA::ORB_init() is called will the ORB no longer be shutdown.
-    // This does not mean that the ORB can be reinitialized.  It can
-    // only be initialized once.
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
     eager_buffering_sync_strategy_ (0),
     delayed_buffering_sync_strategy_ (0),
@@ -373,6 +373,8 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
 
           this->set_endpoint_helper (current_arg
                                      ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK_RETURN (-1);
+
           arg_shifter.consume_arg ();
         }
       else if ((current_arg = arg_shifter.get_the_parameter
@@ -762,7 +764,9 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
           // used.
 
           this->set_endpoint_helper (current_arg
-                               ACE_ENV_ARG_PARAMETER);
+                                     ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK_RETURN (-1);
+
           arg_shifter.consume_arg ();
         }
       else if ((current_arg = arg_shifter.get_the_parameter
@@ -775,6 +779,8 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
           // set.
           // Fill in later
           // @@ To do later: Priyanka.
+
+          ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), -1);
         }
       ////////////////////////////////////////////////////////////////
       // catch any unknown -ORB args                                //
@@ -1748,6 +1754,8 @@ void
 TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion
                         ACE_ENV_ARG_DECL)
 {
+  ACE_GUARD (TAO_SYNCH_MUTEX, monitor, this->lock_);
+
   if (this->has_shutdown () == 0)
     {
       this->adapter_registry_.check_close (wait_for_completion
