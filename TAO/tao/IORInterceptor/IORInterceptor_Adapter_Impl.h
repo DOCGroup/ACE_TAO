@@ -47,7 +47,7 @@ public:
                                 ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void destroy_interceptors (ACE_ENV_ARG_DECL)
+  virtual void destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual TAO_IORInterceptor_List *interceptor_list (void)
