@@ -1,3 +1,9 @@
+Wed Apr 16 08:27:21 2003  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Exception.h:
+
+	  Include <stdio.h> to pull in "FILE" typedef.
+
 Wed Apr 16 13:57:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
