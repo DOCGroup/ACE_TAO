@@ -1,3 +1,19 @@
+Wed Aug 13 17:42:39 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tests/Cubit/TAO/*: Converted to the CORBA:: namespace.
+
+	* tao/default_server.h: Eliminated a few strategy accessors since
+ 	they aren't provided by this implementation.
+
+	* tao/default_server.cpp: Made this compile.
+
+	* tao/corbacom.h: Slight reformatting of code.  More importantly,
+ 	added 'static' to the decl of ORB_init().
+
+	* tao/corba.h: Added fake comment to trigger C++ mode.
+
+	* tao/any.h: Added #endif comments.
+
 Tue Aug 12 22:37:06 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * tao/{any,typecode,cdr}.h: Finished appeasing the compiler gods

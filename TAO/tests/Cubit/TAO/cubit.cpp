@@ -38,27 +38,27 @@
 
 static const TAO_Param_Data Cubit_cube_octet_params [] = 
 {
-  { _tc_CORBA_Octet, PARAM_RETURN, 0 },
-  { _tc_CORBA_Octet, PARAM_IN, 0 }
+  { CORBA::_tc_octet, PARAM_RETURN, 0 },
+  { CORBA::_tc_octet, PARAM_IN, 0 }
 };
 
 static const TAO_Call_Data Cubit_cube_octet_calldata = 
 {
-  "cube_octet", CORBA_B_TRUE,
+  "cube_octet", CORBA::B_TRUE,
   2, &Cubit_cube_octet_params [0],
   0, 0
 };
 
-CORBA_Octet
+CORBA::Octet
 Cubit_cube_octet (Cubit_ptr target,
-		  CORBA_Octet o,
-		  CORBA_Environment &env)
+		  CORBA::Octet o,
+		  CORBA::Environment &env)
 {
-  CORBA_Octet retval = 0;
+  CORBA::Octet retval = 0;
   STUB_Object *data;
 
   if (target->QueryInterface (IID_STUB_Object, (void **) &data) != NOERROR)
-    env.exception (new CORBA_INV_OBJREF (COMPLETED_NO));
+    env.exception (new CORBA::INV_OBJREF (COMPLETED_NO));
   else 
     {
       data->do_call (env, &Cubit_cube_octet_calldata,
@@ -70,31 +70,31 @@ Cubit_cube_octet (Cubit_ptr target,
 }
 
 static void
-_cube_octet_skel (CORBA_ServerRequest &req,    
-		  CORBA_Object_ptr obj,
-		  CORBA_Environment &env)
+_cube_octet_skel (CORBA::ServerRequest &req,    
+		  CORBA::Object_ptr obj,
+		  CORBA::Environment &env)
 {
-  CORBA_NVList_ptr nvlist;
-  CORBA_NamedValue_ptr nv;
-  CORBA_Any temp_value (_tc_CORBA_Octet);
+  CORBA::NVList_ptr nvlist;
+  CORBA::NamedValue_ptr nv;
+  CORBA::Any temp_value (CORBA::_tc_octet);
 
   req.orb ()->create_list (0, nvlist);
-  nv = nvlist->add_value (0, temp_value, CORBA_ARG_IN, env);
+  nv = nvlist->add_value (0, temp_value, CORBA::ARG_IN, env);
   dexc (env, "cube_octet, add value");
 
   req.params (nvlist, env);
   dexc (env, "cube_octet, get params");
 
-  CORBA_Octet* value = new CORBA_Octet;
+  CORBA::Octet* value = new CORBA::Octet;
 
-  *value = *(CORBA_Octet *)nv->value ()->value ();
+  *value = *(CORBA::Octet *)nv->value ()->value ();
   // dmsg1 ("cube octet, parameter '%d'", *value);
 
-  *value = (CORBA_Octet) ((*value) * (*value) * (*value));
+  *value = (CORBA::Octet) ((*value) * (*value) * (*value));
   // dmsg1 ("cube octet, result '%d'", *value);
 
-  CORBA_Any* any =
-    new CORBA_Any (_tc_CORBA_Octet, value, CORBA_B_TRUE);
+  CORBA::Any* any =
+    new CORBA::Any (CORBA::_tc_octet, value, CORBA::B_TRUE);
 
   req.result (any, env);
   dexc (env, "cube_octet, result");
@@ -104,27 +104,27 @@ _cube_octet_skel (CORBA_ServerRequest &req,
 
 static const TAO_Param_Data Cubit_cube_short_params [] = 
 {
-  { _tc_CORBA_Short, PARAM_RETURN, 0 },
-  { _tc_CORBA_Short, PARAM_IN, 0 }
+  { CORBA::_tc_short, PARAM_RETURN, 0 },
+  { CORBA::_tc_short, PARAM_IN, 0 }
 };
 
 static const TAO_Call_Data Cubit_cube_short_calldata = 
 {
-  "cube_short", CORBA_B_TRUE,
+  "cube_short", CORBA::B_TRUE,
   2, &Cubit_cube_short_params [0],
   0, 0
 };
 
-CORBA_Short
+CORBA::Short
 Cubit_cube_short (Cubit_ptr target,
-		  CORBA_Short s,
-		  CORBA_Environment &env)
+		  CORBA::Short s,
+		  CORBA::Environment &env)
 {
-  CORBA_Short retval;
+  CORBA::Short retval;
   STUB_Object *data;
 
   if (target->QueryInterface (IID_STUB_Object, (void **) &data) != NOERROR)
-    env.exception (new CORBA_INV_OBJREF (COMPLETED_NO));
+    env.exception (new CORBA::INV_OBJREF (COMPLETED_NO));
   else 
     {
       data->do_call (env, &Cubit_cube_short_calldata,
@@ -135,31 +135,31 @@ Cubit_cube_short (Cubit_ptr target,
 }
 
 static void
-_cube_short_skel (CORBA_ServerRequest &req,
-		  CORBA_Object_ptr obj,
-		  CORBA_Environment &env)
+_cube_short_skel (CORBA::ServerRequest &req,
+		  CORBA::Object_ptr obj,
+		  CORBA::Environment &env)
 {
-  CORBA_NVList_ptr nvlist;
-  CORBA_NamedValue_ptr nv;
-  CORBA_Any temp_value (_tc_CORBA_Short);
+  CORBA::NVList_ptr nvlist;
+  CORBA::NamedValue_ptr nv;
+  CORBA::Any temp_value (CORBA::_tc_short);
 
   req.orb ()->create_list (0, nvlist);
-  nv = nvlist->add_value (0, temp_value, CORBA_ARG_IN, env);
+  nv = nvlist->add_value (0, temp_value, CORBA::ARG_IN, env);
   dexc (env, "cube_short, add_value");
 
   req.params (nvlist, env);
   dexc (env, "cube_short, get params");
 
-  CORBA_Short* value = new CORBA_Short;
+  CORBA::Short* value = new CORBA::Short;
 
-  *value = *(CORBA_Short *)nv->value ()->value ();
+  *value = *(CORBA::Short *)nv->value ()->value ();
   // dmsg1 ("cube short, parameter '%d'", *value);
 
-  *value =(CORBA_Short) ((*value) * (*value) * (*value));
+  *value =(CORBA::Short) ((*value) * (*value) * (*value));
   // dmsg1 ("cube short, result '%d'", *value);
 
-  CORBA_Any* any =
-    new CORBA_Any (_tc_CORBA_Short, value, CORBA_B_TRUE);
+  CORBA::Any* any =
+    new CORBA::Any (CORBA::_tc_short, value, CORBA::B_TRUE);
 
   req.result (any, env);
   dexc (env, "cube_short, result");
@@ -169,27 +169,27 @@ _cube_short_skel (CORBA_ServerRequest &req,
 
 static const TAO_Param_Data Cubit_cube_long_params [] = 
 {
-  { _tc_CORBA_Long, PARAM_RETURN, 0 },
-  { _tc_CORBA_Long, PARAM_IN, 0 }
+  { CORBA::_tc_long, PARAM_RETURN, 0 },
+  { CORBA::_tc_long, PARAM_IN, 0 }
 };
 
 static const TAO_Call_Data Cubit_cube_long_calldata = 
 {
-  "cube_long", CORBA_B_TRUE,
+  "cube_long", CORBA::B_TRUE,
   2, &Cubit_cube_long_params [0],
   0, 0
 };
 
-CORBA_Long
+CORBA::Long
 Cubit_cube_long (Cubit_ptr target,
-		 CORBA_Long l,
-		 CORBA_Environment &env)
+		 CORBA::Long l,
+		 CORBA::Environment &env)
 {
-  CORBA_Long retval;
+  CORBA::Long retval;
   STUB_Object *data;
 
   if (target->QueryInterface (IID_STUB_Object, (void **)&data) != NOERROR)
-    env.exception (new CORBA_INV_OBJREF (COMPLETED_NO));
+    env.exception (new CORBA::INV_OBJREF (COMPLETED_NO));
   else
     {
       data->do_call (env, &Cubit_cube_long_calldata,
@@ -200,31 +200,31 @@ Cubit_cube_long (Cubit_ptr target,
 }
 
 static void
-_cube_long_skel (CORBA_ServerRequest &req,
-		 CORBA_Object_ptr obj,
-		 CORBA_Environment &env)
+_cube_long_skel (CORBA::ServerRequest &req,
+		 CORBA::Object_ptr obj,
+		 CORBA::Environment &env)
 {
-  CORBA_NVList_ptr nvlist;
-  CORBA_NamedValue_ptr	nv;
-  CORBA_Any temp_value (_tc_CORBA_Long);
+  CORBA::NVList_ptr nvlist;
+  CORBA::NamedValue_ptr	nv;
+  CORBA::Any temp_value (CORBA::_tc_long);
 
   req.orb ()->create_list (0, nvlist);
-  nv = nvlist->add_value (0, temp_value, CORBA_ARG_IN, env);
+  nv = nvlist->add_value (0, temp_value, CORBA::ARG_IN, env);
   dexc (env, "cube_long, add_value");
 
   req.params (nvlist, env);
   dexc (env, "cube_long, get params");
 
-  CORBA_Long* value = new CORBA_Long;
+  CORBA::Long* value = new CORBA::Long;
 
-  *value = *(CORBA_Long *)nv->value ()->value ();
+  *value = *(CORBA::Long *)nv->value ()->value ();
   // dmsg1 ("cube long, parameter '%d'", *value);
 
   *value = (*value) * (*value) * (*value);
   // dmsg1 ("cube long, result '%d'", *value);
 
-  CORBA_Any* any =
-    new CORBA_Any (_tc_CORBA_Long, value, CORBA_B_TRUE);
+  CORBA::Any* any =
+    new CORBA::Any (CORBA::_tc_long, value, CORBA::B_TRUE);
 
   req.result (any, env);
   dexc (env, "cube_long, result");
@@ -236,7 +236,7 @@ _cube_long_skel (CORBA_ServerRequest &req,
 //
 // NOTE:  it's important that this be longword aligned!!
 
-static const CORBA_Long _oc_Cubit_Many [] = 
+static const CORBA::Long _oc_Cubit_Many [] = 
 { 
   1,				// byte order flag (TRICKY!)
 
@@ -258,12 +258,12 @@ static const CORBA_Long _oc_Cubit_Many [] =
   tk_short,
 };
 
-static CORBA_TypeCode _tc_Cubit_Many (tk_struct,
+static CORBA::TypeCode _tc_Cubit_Many (tk_struct,
 				      sizeof _oc_Cubit_Many,
 				      (u_char *) &_oc_Cubit_Many,
-				      CORBA_B_FALSE);
+				      CORBA::B_FALSE);
 
-CORBA_TypeCode_ptr TC_Cubit_Many = &_tc_Cubit_Many;
+CORBA::TypeCode_ptr TC_Cubit_Many = &_tc_Cubit_Many;
 
 // CUBE STRUCT
 
@@ -275,7 +275,7 @@ static const TAO_Param_Data Cubit_cube_struct_params [] =
 
 static const TAO_Call_Data Cubit_cube_struct_calldata = 
 {
-  "cube_struct", CORBA_B_TRUE,
+  "cube_struct", CORBA::B_TRUE,
   2, &Cubit_cube_struct_params [0],
   0, 0
 };
@@ -283,13 +283,13 @@ static const TAO_Call_Data Cubit_cube_struct_calldata =
 Cubit_Many *
 Cubit_cube_struct (Cubit_ptr target,
 		   Cubit_Many &values,
-		   CORBA_Environment &env)
+		   CORBA::Environment &env)
 {
   Cubit_Many *retval;
   STUB_Object *data;
 
   if (target->QueryInterface (IID_STUB_Object, (void **) &data) != NOERROR)
-    env.exception (new CORBA_INV_OBJREF (COMPLETED_NO));
+    env.exception (new CORBA::INV_OBJREF (COMPLETED_NO));
   else
     {
       data->do_call (env, &Cubit_cube_struct_calldata,
@@ -300,16 +300,16 @@ Cubit_cube_struct (Cubit_ptr target,
 }
 
 static void
-_cube_struct_skel (CORBA_ServerRequest &req,
-		   CORBA_Object_ptr obj,
-		   CORBA_Environment &env)
+_cube_struct_skel (CORBA::ServerRequest &req,
+		   CORBA::Object_ptr obj,
+		   CORBA::Environment &env)
 {
-  CORBA_NVList_ptr nvlist;
-  CORBA_NamedValue_ptr	nv;
-  CORBA_Any temp_value (TC_Cubit_Many);
+  CORBA::NVList_ptr nvlist;
+  CORBA::NamedValue_ptr	nv;
+  CORBA::Any temp_value (TC_Cubit_Many);
 
   req.orb ()->create_list (0, nvlist);
-  nv = nvlist->add_value (0, temp_value, CORBA_ARG_IN, env);
+  nv = nvlist->add_value (0, temp_value, CORBA::ARG_IN, env);
   dexc (env, "cube_struct, add_value");
 
   req.params (nvlist, env);
@@ -320,16 +320,16 @@ _cube_struct_skel (CORBA_ServerRequest &req,
 
   value = (Cubit_Many *)nv->value ()->value ();
 
-  retval->o = (CORBA_Octet) (value->o * value->o * value->o);
-  retval->s = (CORBA_Short) (value->s * value->s * value->s);
+  retval->o = (CORBA::Octet) (value->o * value->o * value->o);
+  retval->s = (CORBA::Short) (value->s * value->s * value->s);
   retval->l = value->l * value->l * value->l;
 
   // dmsg2 ("cube struct.o, %d -> %d", value->o, retval->o);
   // dmsg2 ("cube struct.s, %d -> %d", value->s, retval->s);
   // dmsg2 ("cube struct.l, %d -> %d", value->l, retval->l);
 
-  CORBA_Any *any =
-    new CORBA_Any (TC_Cubit_Many, retval, CORBA_B_TRUE);
+  CORBA::Any *any =
+    new CORBA::Any (TC_Cubit_Many, retval, CORBA::B_TRUE);
 
   req.result (any, env);
   dexc (env, "cube_struct, result");
@@ -346,7 +346,7 @@ _cube_struct_skel (CORBA_ServerRequest &req,
 // aligned for the typecode interpreter to use, so no additional
 // runtime copy needs to be made.
 
-static const CORBA_Long _oc_Cubit_oneof [] = 
+static const CORBA::Long _oc_Cubit_oneof [] = 
 {
   1,				// byte order flag (TRICKY)
   1, 0,			// omitted repository/type ID
@@ -418,12 +418,12 @@ static const CORBA_Long _oc_Cubit_oneof [] =
   -84			// offset to struct "Many" typecode
 };
 
-static CORBA_TypeCode _tc_Cubit_oneof (tk_union,
+static CORBA::TypeCode _tc_Cubit_oneof (tk_union,
 				       (sizeof _oc_Cubit_oneof),
 				       (u_char *) &_oc_Cubit_oneof,
-				       CORBA_B_FALSE);
+				       CORBA::B_FALSE);
 
-CORBA_TypeCode_ptr TC_Cubit_oneof = &_tc_Cubit_oneof;
+CORBA::TypeCode_ptr TC_Cubit_oneof = &_tc_Cubit_oneof;
 
 static const TAO_Param_Data Cubit_cube_union_params [] = 
 {
@@ -433,7 +433,7 @@ static const TAO_Param_Data Cubit_cube_union_params [] =
 
 static const TAO_Call_Data Cubit_cube_union_calldata = 
 {
-  "cube_union", CORBA_B_TRUE,
+  "cube_union", CORBA::B_TRUE,
   2, &Cubit_cube_union_params [0],
   0, 0
 };
@@ -441,13 +441,13 @@ static const TAO_Call_Data Cubit_cube_union_calldata =
 Cubit_oneof *
 Cubit_cube_union (Cubit_ptr target,
 		  Cubit_oneof &values,
-		  CORBA_Environment &env)
+		  CORBA::Environment &env)
 {
   Cubit_oneof *retval;
   STUB_Object *data;
 
   if (target->QueryInterface (IID_STUB_Object, (void **) &data) != NOERROR)
-    env.exception (new CORBA_INV_OBJREF (COMPLETED_NO));
+    env.exception (new CORBA::INV_OBJREF (COMPLETED_NO));
   else
     {
       data->do_call (env, &Cubit_cube_union_calldata,
@@ -458,16 +458,16 @@ Cubit_cube_union (Cubit_ptr target,
 }
 
 static void
-cube_union_skel (CORBA_ServerRequest &req,
-		 CORBA_Object_ptr obj,
-		 CORBA_Environment &env)
+cube_union_skel (CORBA::ServerRequest &req,
+		 CORBA::Object_ptr obj,
+		 CORBA::Environment &env)
 {
-  CORBA_NVList_ptr nvlist;
-  CORBA_NamedValue_ptr nv;
-  CORBA_Any temp_value (TC_Cubit_oneof);
+  CORBA::NVList_ptr nvlist;
+  CORBA::NamedValue_ptr nv;
+  CORBA::Any temp_value (TC_Cubit_oneof);
 
   req.orb ()->create_list (0, nvlist);
-  nv = nvlist->add_value (0, temp_value, CORBA_ARG_IN, env);
+  nv = nvlist->add_value (0, temp_value, CORBA::ARG_IN, env);
   dexc (env, "cube_union_3rd, add_value");
 
   req.params (nvlist, env);
@@ -482,11 +482,11 @@ cube_union_skel (CORBA_ServerRequest &req,
   switch (v->_disc) 
     {
     case e_0th:
-      r->o = (CORBA_Octet) (v->o * v->o * v->o);
+      r->o = (CORBA::Octet) (v->o * v->o * v->o);
       break;
 
     case e_1st:
-      r->s = (CORBA_Short) (v->s * v->s * v->s);
+      r->s = (CORBA::Short) (v->s * v->s * v->s);
       break;
 
     case e_2nd:
@@ -495,13 +495,13 @@ cube_union_skel (CORBA_ServerRequest &req,
 
     case e_3rd:
     default:
-      r->cm.o = (CORBA_Octet) (v->cm.o * v->cm.o * v->cm.o);
-      r->cm.s = (CORBA_Short) (v->cm.s * v->cm.s * v->cm.s);
+      r->cm.o = (CORBA::Octet) (v->cm.o * v->cm.o * v->cm.o);
+      r->cm.s = (CORBA::Short) (v->cm.s * v->cm.s * v->cm.s);
       r->cm.l = v->cm.l * v->cm.l * v->cm.l;
       break;
     }
 
-  CORBA_Any *any = new CORBA_Any (TC_Cubit_oneof, r, CORBA_B_TRUE);
+  CORBA::Any *any = new CORBA::Any (TC_Cubit_oneof, r, CORBA::B_TRUE);
 
   req.result (any, env);
   dexc (env, "cube_struct, result");
@@ -511,19 +511,19 @@ cube_union_skel (CORBA_ServerRequest &req,
 
 static const TAO_Call_Data Cubit_please_exit_calldata = 
 {
-  "please_exit", CORBA_B_FALSE,
+  "please_exit", CORBA::B_FALSE,
   0, 0,
   0, 0
 };
 
 void
 Cubit_please_exit (Cubit_ptr target,
-		   CORBA_Environment &env)
+		   CORBA::Environment &env)
 {
   STUB_Object *data;
 
   if (target->QueryInterface (IID_STUB_Object, (void **) &data) != NOERROR)
-    env.exception (new CORBA_INV_OBJREF (COMPLETED_NO));
+    env.exception (new CORBA::INV_OBJREF (COMPLETED_NO));
   else 
     {
       data->do_call (env, &Cubit_please_exit_calldata);
@@ -532,16 +532,16 @@ Cubit_please_exit (Cubit_ptr target,
 }
 
 static void
-_please_exit_skel (CORBA_ServerRequest &req,
-		   CORBA_Object_ptr obj,
-		   CORBA_Environment &env)
+_please_exit_skel (CORBA::ServerRequest &req,
+		   CORBA::Object_ptr obj,
+		   CORBA::Environment &env)
 {
   dmsg ("I've been asked to shut down...");
   req.oa ()->please_shutdown (env);
   dexc (env, "please_exit, please_shutdown");
 }
 
-const CORBA_Char *Cubit__id = (CORBA_Char *) "IDL:Eng.SUN.COM/Cubit:1.1";
+const CORBA::Char *Cubit__id = (CORBA::Char *) "IDL:Eng.SUN.COM/Cubit:1.1";
 
 // table of all operations, used by operation dispatch to get to the
 // right skeleton ... could be sorted by the IDL compiler so bsearch

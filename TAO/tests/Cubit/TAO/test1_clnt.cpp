@@ -28,7 +28,7 @@ extern char 	*optarg;	// missing on some platforms
 #endif
 
 extern void
-print_exception (const CORBA_Exception *, const char *, FILE *f=stdout);
+print_exception (const CORBA::Exception *, const char *, FILE *f=stdout);
 
 
 //
@@ -56,20 +56,20 @@ print_exception (const CORBA_Exception *, const char *, FILE *f=stdout);
 #define	RELEASE(X)		// NOP by default
 #define	PERFORM_TEST(name,type,value1,value2) \
     { \
-	CORBA_ ## type	v1, v2, v3; \
+	CORBA:: ## type	v1, v2, v3; \
  	\
-	v1 = (CORBA_ ## type)(value1); \
+	v1 = (CORBA:: ## type)(value1); \
 	v2 = 0; \
-	v3 = (CORBA_ ## type)(value2); \
+	v3 = (CORBA:: ## type)(value2); \
  	\
 	test_count++; \
 	v1 = test1_test_ ## name (target, v1, v2, v3, env); \
 	if (env.exception () != 0) { \
 	    print_exception (env.exception (), "perform test_" #name); \
 	    error_count++; \
-	} else if (!COMPARE (CORBA_ ## type, v1, value1) \
-		|| !COMPARE (CORBA_ ## type, v2, value1) \
-		|| !COMPARE (CORBA_ ## type, v3, value2) ) { \
+	} else if (!COMPARE (CORBA:: ## type, v1, value1) \
+		|| !COMPARE (CORBA:: ## type, v2, value1) \
+		|| !COMPARE (CORBA:: ## type, v3, value2) ) { \
 	    ACE_OS::fprintf (stderr, "bad comparison, test_" #name "\n"); \
 	    BAD_COMPARE_VALUES(type,v1,v2,v3,value1,value2) \
 	    error_count++; \
@@ -88,11 +88,11 @@ print_exception (const CORBA_Exception *, const char *, FILE *f=stdout);
 #endif
 #define BAD_COMPARE_VALUE_OUT(type,v1,v2,v3,value1,value2) \
 	    DO_IO( cerr << " v1=" << v1; \
-            cerr << " expecting " << EXPVAL(CORBA_ ## type, value1) << "\n"; \
+            cerr << " expecting " << EXPVAL(CORBA:: ## type, value1) << "\n"; \
 	    cerr << " v2=" << v2; \
-            cerr << " expecting " << EXPVAL(CORBA_ ## type, value1) << "\n"; \
+            cerr << " expecting " << EXPVAL(CORBA:: ## type, value1) << "\n"; \
 	    cerr << " v3=" << v3; \
-	    cerr << " expecting " << EXPVAL(CORBA_ ## type, value2) << "\n");
+	    cerr << " expecting " << EXPVAL(CORBA:: ## type, value2) << "\n");
 #define BAD_COMPARE_VALUES(type,v1,v2,v3,value1,value2) \
     BAD_COMPARE_VALUE_OUT(type,v1,v2,v3,value1,value2)
 
@@ -102,25 +102,25 @@ print_exception (const CORBA_Exception *, const char *, FILE *f=stdout);
 // but this implementation uses null pointers for nil, so this must
 // check for nulls first.  (May be noncompliant with C++ mapping!)
 //
-static CORBA_Boolean
+static CORBA::Boolean
 compare_objrefs (
-    CORBA_Object_ptr	v1,
-    CORBA_Object_ptr	v2
+    CORBA::Object_ptr	v1,
+    CORBA::Object_ptr	v2
 )
 {
-    CORBA_Boolean	temp;
-    CORBA_Environment	env;
+    CORBA::Boolean	temp;
+    CORBA::Environment	env;
 
     if (v1 == v2)
-	return CORBA_B_TRUE;
+	return CORBA::B_TRUE;
 
-    if (CORBA_is_nil (v1))
-	return CORBA_is_nil (v2);
+    if (CORBA::is_nil (v1))
+	return CORBA::is_nil (v2);
 
     temp = v1->_is_equivalent (v2, env);
     if (env.exception () != 0) {
 	print_exception (env.exception (), "compare objref");
-	return CORBA_B_FALSE;
+	return CORBA::B_FALSE;
     }
     return temp;
 }
@@ -157,8 +157,8 @@ do_tests (
     int		count;
 
     for (count = 0; count < loop_count; count++) {
-	CORBA_Environment	env;
-	CORBA_Environment	env2;	// XXX
+	CORBA::Environment	env;
+	CORBA::Environment	env2;	// XXX
 
 	//
 	// test_void
@@ -256,12 +256,12 @@ do_tests (
 	//
 #define EXPVAL(type,original_value) ((type)(original_value))
 #define COMPARE(type,retval,original_value) \
-	    (compare_objrefs (retval, original_value) == CORBA_B_TRUE)
+	    (compare_objrefs (retval, original_value) == CORBA::B_TRUE)
 #undef	RELEASE
 #define	RELEASE(obj) \
-	    { CORBA_release (obj); }
+	    { CORBA::release (obj); }
 
-	PERFORM_TEST (Object, Object_ptr, target, CORBA_Object::_nil ());
+	PERFORM_TEST (Object, Object_ptr, target, CORBA::Object::_nil ());
 #undef	COMPARE
 #undef	EXPVAL
 
@@ -286,77 +286,77 @@ do_tests (
 
 #undef	RELEASE
 #define	RELEASE(tc) \
-	    { CORBA_release (tc); }
+	    { CORBA::release (tc); }
 
 #undef	BAD_COMPARE_VALUES
 #define BAD_COMPARE_VALUES(type,v1,v2,v3,value1,value2) // NOP
 
 	{
 	    PERFORM_TEST (TypeCode, TypeCode_ptr,
-		    _tc_CORBA_Null, _tc_CORBA_Void);
+		    CORBA::_tc_null, _tc_CORBA_Void);
 
 	    PERFORM_TEST (TypeCode, TypeCode_ptr,
-		    _tc_CORBA_Short, _tc_CORBA_UShort);
+		    CORBA::_tc_short, _tc_CORBA_UShort);
 	    PERFORM_TEST (TypeCode, TypeCode_ptr,
-		    _tc_CORBA_Long, _tc_CORBA_ULong);
+		    CORBA::_tc_long, _tc_CORBA_ULong);
 	    PERFORM_TEST (TypeCode, TypeCode_ptr,
-		    _tc_CORBA_LongLong, _tc_CORBA_ULongLong);
+		    CORBA::_tc_longLong, _tc_CORBA_ULongLong);
 
 	    PERFORM_TEST (TypeCode, TypeCode_ptr,
-		    _tc_CORBA_Float, _tc_CORBA_Double);
+		    CORBA::_tc_float, _tc_CORBA_Double);
 
 	    PERFORM_TEST (TypeCode, TypeCode_ptr,
-		    _tc_CORBA_Boolean, _tc_CORBA_Octet);
+		    CORBA::_tc_boolean, _tc_CORBA_Octet);
 
 	    PERFORM_TEST (TypeCode, TypeCode_ptr,
-		    _tc_CORBA_Any, _tc_CORBA_TypeCode);
+		    CORBA::_tc_any, _tc_CORBA_TypeCode);
 
 	    PERFORM_TEST (TypeCode, TypeCode_ptr,
-		    _tc_CORBA_LongDouble, _tc_CORBA_Principal);
+		    CORBA::_tc_longDouble, _tc_CORBA_Principal);
 
 	    PERFORM_TEST (TypeCode, TypeCode_ptr,
-		    _tc_CORBA_Char, _tc_CORBA_String);
+		    CORBA::_tc_char, _tc_CORBA_String);
 	    PERFORM_TEST (TypeCode, TypeCode_ptr,
-		    _tc_CORBA_WChar, _tc_CORBA_WString);
+		    CORBA::_tc_wChar, _tc_CORBA_WString);
 
 	    PERFORM_TEST (TypeCode, TypeCode_ptr,
-		    _tc_CORBA_LongDouble, _tc_CORBA_Octet);
+		    CORBA::_tc_longDouble, _tc_CORBA_Octet);
 
 	    //
 	    // Try all of the standard exception typecodes.
 	    //
 	    PERFORM_TEST (TypeCode, TypeCode_ptr,
-		    _tc_CORBA_UNKNOWN, _tc_CORBA_BAD_PARAM);
+		    CORBA::_tc_uNKNOWN, _tc_CORBA_BAD_PARAM);
 	    PERFORM_TEST (TypeCode, TypeCode_ptr,
-		    _tc_CORBA_NO_MEMORY, _tc_CORBA_IMP_LIMIT);
+		    CORBA::_tc_nO_MEMORY, _tc_CORBA_IMP_LIMIT);
 	    PERFORM_TEST (TypeCode, TypeCode_ptr,
-		    _tc_CORBA_COMM_FAILURE, _tc_CORBA_INV_OBJREF);
+		    CORBA::_tc_cOMM_FAILURE, _tc_CORBA_INV_OBJREF);
 	    PERFORM_TEST (TypeCode, TypeCode_ptr,
-		    _tc_CORBA_OBJECT_NOT_EXIST, _tc_CORBA_NO_PERMISSION);
+		    CORBA::_tc_oBJECT_NOT_EXIST, _tc_CORBA_NO_PERMISSION);
 	    PERFORM_TEST (TypeCode, TypeCode_ptr,
-		    _tc_CORBA_INTERNAL, _tc_CORBA_MARSHAL);
+		    CORBA::_tc_iNTERNAL, _tc_CORBA_MARSHAL);
 	    PERFORM_TEST (TypeCode, TypeCode_ptr,
-		    _tc_CORBA_INITIALIZE, _tc_CORBA_NO_IMPLEMENT);
+		    CORBA::_tc_iNITIALIZE, _tc_CORBA_NO_IMPLEMENT);
 	    PERFORM_TEST (TypeCode, TypeCode_ptr,
-		    _tc_CORBA_BAD_TYPECODE, _tc_CORBA_BAD_OPERATION);
+		    CORBA::_tc_bAD_TYPECODE, _tc_CORBA_BAD_OPERATION);
 	    PERFORM_TEST (TypeCode, TypeCode_ptr,
-		    _tc_CORBA_NO_RESOURCES, _tc_CORBA_NO_RESPONSE);
+		    CORBA::_tc_nO_RESOURCES, _tc_CORBA_NO_RESPONSE);
 	    PERFORM_TEST (TypeCode, TypeCode_ptr,
-		    _tc_CORBA_PERSIST_STORE, _tc_CORBA_BAD_INV_ORDER);
+		    CORBA::_tc_pERSIST_STORE, _tc_CORBA_BAD_INV_ORDER);
 	    PERFORM_TEST (TypeCode, TypeCode_ptr,
-		    _tc_CORBA_TRANSIENT, _tc_CORBA_FREE_MEM);
+		    CORBA::_tc_tRANSIENT, _tc_CORBA_FREE_MEM);
 	    PERFORM_TEST (TypeCode, TypeCode_ptr,
-		    _tc_CORBA_INV_IDENT, _tc_CORBA_INV_FLAG);
+		    CORBA::_tc_iNV_IDENT, _tc_CORBA_INV_FLAG);
 	    PERFORM_TEST (TypeCode, TypeCode_ptr,
-		    _tc_CORBA_INTF_REPOS, _tc_CORBA_BAD_CONTEXT);
+		    CORBA::_tc_iNTF_REPOS, _tc_CORBA_BAD_CONTEXT);
 	    PERFORM_TEST (TypeCode, TypeCode_ptr,
-		    _tc_CORBA_OBJ_ADAPTER, _tc_CORBA_DATA_CONVERSION);
+		    CORBA::_tc_oBJ_ADAPTER, _tc_CORBA_DATA_CONVERSION);
 
 	    //
 	    // All the built-in "user defined" system exceptions.
 	    //
 	    PERFORM_TEST (TypeCode, TypeCode_ptr,
-		    _tc_CORBA_BadKind, _tc_CORBA_Bounds);
+		    CORBA::_tc_badKind, _tc_CORBA_Bounds);
 	}
 #undef	COMPARE
 #undef	RELEASE
@@ -367,9 +367,9 @@ do_tests (
 #define COMPARE(type,retval,original_value) \
 	    (strcmp ((char *)(retval), (char*)(original_value)) == 0)
 #undef	RELEASE
-#define	RELEASE(obj) CORBA_string_free(obj)
-	static const CORBA_Char str1 [] = "small";
-	static const CORBA_Char str2 [] =
+#define	RELEASE(obj) CORBA::string_free(obj)
+	static const CORBA::Char str1 [] = "small";
+	static const CORBA::Char str2 [] =
 			"relatively long string, constructed"
 			" with the aid of C++ implicit string"
 			" catenation, which simplifies much stuff";
@@ -385,7 +385,7 @@ do_tests (
 	// Three test cases involve throwing user-defined exceptions.
 	//
 	{
-	    CORBA_Exception	*xp;
+	    CORBA::Exception	*xp;
 
 	    //
 	    // Case one:  with parameter <= zero, must throw
@@ -449,7 +449,7 @@ do_tests (
 				xp2->case_num);
 		    }
 
-		    if (!CORBA_is_nil (xp2->obj)) {
+		    if (!CORBA::is_nil (xp2->obj)) {
 			error_count++;
 			ACE_OS::fprintf (stderr, "test_throw case 2, "
 				"non-null objref thrown\n");
@@ -497,7 +497,7 @@ do_tests (
 				xp2->case_num);
 		    }
 
-		    CORBA_Boolean	status;
+		    CORBA::Boolean	status;
 
 		    status = target->_is_equivalent (xp2->obj, env);
 
@@ -505,7 +505,7 @@ do_tests (
 			error_count++;
 			print_exception (env.exception (),
 				"test_throw/3 call to is_equivalent");
-		    } else if (status != CORBA_B_TRUE) {
+		    } else if (status != CORBA::B_TRUE) {
 			error_count++;
 			ACE_OS::fprintf (stderr, "test_throw case 3, "
 				"non-equivalent objref thrown\n");
@@ -532,7 +532,7 @@ do_tests (
 	test_illegal (target, env);
 	if (env.exception () == 0
 		|| ACE_OS::strcmp ((char *) env.exception()->id(),
-			(char *) _tc_CORBA_BAD_OPERATION->id (env2)) != 0) { 
+			(char *) CORBA::_tc_bAD_OPERATION->id (env2)) != 0) { 
 	    ACE_OS::fprintf (stderr, "couldn't generate BAD_OPERATION exception\n");
 	    error_count++;
 	}
@@ -543,9 +543,9 @@ do_tests (
 int
 main (int    argc, char   *argv[])
 {
-    CORBA_ORB_ptr	orb_ptr;
-    CORBA_Environment	env;
-    CORBA_Object_ptr	objref = CORBA_Object::_nil();
+    CORBA::ORB_ptr	orb_ptr;
+    CORBA::Environment	env;
+    CORBA::Object_ptr	objref = CORBA::Object::_nil();
     unsigned		loop_count = 1;
     unsigned		tests = 0, errors = 0;
     int			exit_later = 0;
@@ -579,7 +579,7 @@ main (int    argc, char   *argv[])
 	  case 'O':			// stringified objref
 	    {
 		objref = orb_ptr->string_to_object (
-			(CORBA_String)get_opt.optarg, env);
+			(CORBA::String)get_opt.optarg, env);
 		if (env.exception () != 0) {
 		    dexc (env, "string2object");
 		    return 1;
@@ -604,7 +604,7 @@ main (int    argc, char   *argv[])
 	    return 1;
         }
     
-    if (CORBA_is_nil (objref) == CORBA_B_TRUE) {
+    if (CORBA::is_nil (objref) == CORBA::B_TRUE) {
 	ACE_OS::fprintf (stderr, "%s:  must identify non-null target objref\n",
 		argv [0]);
 	return 1;
@@ -629,7 +629,7 @@ main (int    argc, char   *argv[])
 	    print_exception (env.exception (), "test1_please_exit");
     }
 
-    CORBA_release (objref);
+    CORBA::release (objref);
 
     return errors != 0;
 }

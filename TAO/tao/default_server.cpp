@@ -10,7 +10,6 @@
 //     $Id$
 // ============================================================================
 
-#if 0 // XXXASG - commenting out temporarily as it doesn't compile
 #define ACE_BUILD_SVC_DLL
 #if 0
 #include "tao/default_server.h"
@@ -37,7 +36,7 @@ TAO_Default_Server_Strategy_Factory::concurrency_strategy (void)
   return this->concurrency_strategy_;
 }
 
-TAO_Default_Server_Strategy_Factory::TAO_Object_Table *
+TAO_Object_Table *
 TAO_Default_Server_Strategy_Factory::object_lookup_strategy (void)
 {
   return this->objtable_;
@@ -101,7 +100,7 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
           break;
 
         case 's':
-          this->object_table_size_ = ACE_OS::strtoul (get_opt.optarg);
+          this->object_table_size_ = ACE_OS::strtoul (get_opt.optarg, NULL, 10);
           break;
 
         case 'R':
@@ -116,7 +115,7 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
 
         case 'L':
           {
-            char *name = getopt.opt_arg;
+            char *name = get_opt.optarg;
 
 	    // @@ Chris, why do we use "L" for "Demuxing strategy?"
 	    // Also, please make sure that you document all of these
@@ -127,7 +126,7 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
             else if (ACE_OS::strcasecmp (name, "linear") == 0)
               strat = TAO_LINEAR;
             else if (ACE_OS::strcasecmp (name, "active") == 0)
-              strat = TAO_ACTIVE_HASH;
+              strat = TAO_ACTIVE_DEMUX;
             else if (ACE_OS::strcasecmp (name, "user") == 0)
               strat = TAO_USER_DEFINED;
           }
@@ -149,7 +148,7 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
     case TAO_USER_DEFINED:
       // it is assumed that the user would have used the hooks to supply a
       // user-defined instance of the object table
-      this->objtable_ = p->userdef_lookup_strategy ();
+      this->objtable_ = TAO_OA_PARAMS::instance ()->userdef_lookup_strategy ();
       break;
     case TAO_ACTIVE_DEMUX:
       ACE_NEW_RETURN (this->objtable_,
@@ -164,14 +163,16 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
 		      -1);
       break;
     }
+  return 0;
 }
- 
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-//template class ...
+template class ACE_Reactive_Strategy<TAO_OA_Connection_Handler>;
+template class ACE_Thread_Strategy<TAO_OA_Connection_Handler>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ...
+#pragma instantiate ACE_Reactive_Strategy<TAO_OA_Connection_Handler>
+#pragma instantiate ACE_Thread_Strategy<TAO_OA_Connection_Handler>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 ACE_SVC_FACTORY_DEFINE (TAO_Default_Server_Strategy_Factory)
 
-#endif /* 0 */

@@ -13,7 +13,7 @@
 inline int func (unsigned i) { return i - 117; }
 
 extern void
-print_exception (const CORBA_Exception *, const char *, FILE *f=stdout);
+print_exception (const CORBA::Exception *, const char *, FILE *f=stdout);
 
 // Global variables
 static const char *TAO_arg_ior = 0;
@@ -62,8 +62,8 @@ static void
 cube_union_stub (u_int i,
 		 u_int &call_count,
 		 u_int &error_count,
-		 CORBA_Object_ptr objref,
-		 CORBA_Environment &env)
+		 CORBA::Object_ptr objref,
+		 CORBA::Environment &env)
 {
   Cubit_ptr cubit = Cubit::_narrow (objref);
 
@@ -137,15 +137,15 @@ cube_union_stub (u_int i,
 static void
 cube_union_dii (u_int &call_count,
                 u_int &error_count,
-                CORBA_Object_ptr objref,
-                CORBA_Environment &env)
+                CORBA::Object_ptr objref,
+                CORBA::Environment &env)
 {
   // Create the request ...
-  CORBA_Request_ptr req;
+  CORBA::Request_ptr req;
    
   call_count++;
 
-  req = objref->_request ((const CORBA_String) "cube_union", env);
+  req = objref->_request ((const CORBA::String) "cube_union", env);
 
   if (env.exception () != 0) 
     {
@@ -163,25 +163,25 @@ cube_union_dii (u_int &call_count,
   u.cm.s = -7;
   u.cm.o = 3;
 
-  CORBA_Any tmp_arg (TC_Cubit_oneof, &u, CORBA_B_FALSE);
+  CORBA::Any tmp_arg (TC_Cubit_oneof, &u, CORBA::B_FALSE);
    
-  req->arguments ()->add_value (0, tmp_arg, CORBA_ARG_IN, env);
+  req->arguments ()->add_value (0, tmp_arg, CORBA::ARG_IN, env);
 
   if (env.exception () != 0) 
     {
       error_count++;
       print_exception (env.exception (), "cube_union_dii request arg add");
-      CORBA_release (req);
+      CORBA::release (req);
       return;
     }
 	
-  req->result ()->value ()->replace (TC_Cubit_oneof, 0, CORBA_B_TRUE, env);
+  req->result ()->value ()->replace (TC_Cubit_oneof, 0, CORBA::B_TRUE, env);
 
   if (env.exception () != 0) 
     {
       error_count++;
       print_exception (env.exception (), "cube_union_dii result type");
-      CORBA_release (req);
+      CORBA::release (req);
       return;
     }
 
@@ -193,7 +193,7 @@ cube_union_dii (u_int &call_count,
     {
       error_count++;
       print_exception (req->env ()->exception (),"cube_union_dii invoke");
-      CORBA_release (req);
+      CORBA::release (req);
       return;
     }
 
@@ -207,16 +207,16 @@ cube_union_dii (u_int &call_count,
   else
     dmsg ("cube_union_dii ... success!!");
    
-  CORBA_release (req);
+  CORBA::release (req);
 }
 
 int
 main (int argc, char *argv[])
 {
-  CORBA_Object_ptr objref = CORBA_Object::_nil ();
-  CORBA_Environment env;
+  CORBA::Object_ptr objref = CORBA::Object::_nil ();
+  CORBA::Environment env;
 
-  CORBA_ORB_ptr orb_ptr = CORBA_ORB_init (argc, argv, "internet", env);
+  CORBA::ORB_ptr orb_ptr = CORBA::ORB_init (argc, argv, "internet", env);
 
   if (env.exception () != 0)
     {
@@ -233,7 +233,7 @@ main (int argc, char *argv[])
 		       argv[0]), 
 		      1);
 
-  objref = orb_ptr->string_to_object ((CORBA_String) TAO_arg_ior, env);
+  objref = orb_ptr->string_to_object ((CORBA::String) TAO_arg_ior, env);
 
   ACE_OS::free ((void *) TAO_arg_ior);
   TAO_arg_ior = 0;
@@ -244,13 +244,13 @@ main (int argc, char *argv[])
       return 1;
     }
 
-  if (CORBA_is_nil (objref) == CORBA_B_TRUE)
+  if (CORBA::is_nil (objref) == CORBA::B_TRUE)
     ACE_ERROR_RETURN ((LM_ERROR,
 		       "%s:  must identify non-null target objref\n",
 		       argv [0]),
 		      1);
 
-  // Narrow the CORBA_Object reference to the stub object, checking
+  // Narrow the CORBA::Object reference to the stub object, checking
   // the type along the way using _is_a.
   Cubit_ptr cubit = Cubit::_narrow (objref);
 
@@ -274,8 +274,8 @@ main (int argc, char *argv[])
 
   for (i = 0; i < loop_count; i++)
     {
-      CORBA_Octet arg_octet;
-      CORBA_Octet ret_octet;
+      CORBA::Octet arg_octet;
+      CORBA::Octet ret_octet;
        
       call_count++;
 
@@ -294,13 +294,13 @@ main (int argc, char *argv[])
           if (arg_octet != ret_octet) {
             ACE_DEBUG ((LM_DEBUG,
 			"** cube_octet (%d) ERROR (--> %d)\n",
-			(CORBA_Octet) func (i),
+			(CORBA::Octet) func (i),
 			ret_octet));
             error_count++;
           }
         }
 
-      CORBA_Short arg_short, ret_short;
+      CORBA::Short arg_short, ret_short;
        
       call_count++;
 
@@ -323,13 +323,13 @@ main (int argc, char *argv[])
           if (arg_short != ret_short)
             {
               ACE_ERROR ((LM_ERROR, "** cube_short (%d) ERROR (--> %d)\n",
-			  (CORBA_Short) func (i),
+			  (CORBA::Short) func (i),
 			  ret_short));
               error_count++;
             }
         }
 
-      CORBA_Long arg_long, ret_long;
+      CORBA::Long arg_long, ret_long;
        
       call_count++;
 
@@ -348,7 +348,7 @@ main (int argc, char *argv[])
           if (arg_long != ret_long) {
             ACE_ERROR ((LM_ERROR,
 			"** cube_long (%ld) ERROR (--> %ld)\n",
-			(CORBA_Long) func (i),
+			(CORBA::Long) func (i),
 			ret_long));
             error_count++;
           }
@@ -419,8 +419,8 @@ main (int argc, char *argv[])
     {
       // Create the request ...
 
-      CORBA_Request_ptr	req = 
-	objref->_request ((const CORBA_String) "cube_struct", env);
+      CORBA::Request_ptr	req = 
+	objref->_request ((const CORBA::String) "cube_struct", env);
 
       if (env.exception () != 0) 
 	{
@@ -435,23 +435,23 @@ main (int argc, char *argv[])
       arg.l = 5;
       arg.s = -7;
        
-      CORBA_Any	tmp_arg (TC_Cubit_Many, &arg, CORBA_B_FALSE);
+      CORBA::Any	tmp_arg (TC_Cubit_Many, &arg, CORBA::B_FALSE);
        
-      req->arguments ()->add_value (0, tmp_arg, CORBA_ARG_IN, env);
+      req->arguments ()->add_value (0, tmp_arg, CORBA::ARG_IN, env);
 
       if (env.exception () != 0) 
 	{
 	  print_exception (env.exception (), "DII request arg add");
-	  CORBA_release (req);
+	  CORBA::release (req);
 	  break;
 	}
        
-      req->result ()->value ()->replace (TC_Cubit_Many, 0, CORBA_B_TRUE, env);
+      req->result ()->value ()->replace (TC_Cubit_Many, 0, CORBA::B_TRUE, env);
 
       if (env.exception () != 0) 
 	{
 	  print_exception (env.exception (), "DII request result type");
-	  CORBA_release (req);
+	  CORBA::release (req);
 	  break;
 	}
 
@@ -462,7 +462,7 @@ main (int argc, char *argv[])
       if (req->env ()->exception () != 0) 
 	{
 	  print_exception (req->env ()->exception (), "DII invoke");
-	  CORBA_release (req);
+	  CORBA::release (req);
 	  break;
 	}
        
@@ -473,7 +473,7 @@ main (int argc, char *argv[])
       else
 	dmsg ("DII cube_struct ... success!!");
        
-      CORBA_release (req);
+      CORBA::release (req);
        
     } while (0);
 
@@ -495,20 +495,19 @@ main (int argc, char *argv[])
       dexc (env, "server, please ACE_OS::exit");
     }
     
-  CORBA_release (objref);
+  CORBA::release (objref);
     
-<<<<<<< clnt.cpp
   return (error_count == 0) ? 0 : 1;
 }
 
-<<<<<<< clnt.cpp
 
+#if 0
 static void
 cube_union_stub(unsigned          i,
                 unsigned          &call_count,
                 unsigned          &error_count,
-                CORBA_Object_ptr  objref,
-                CORBA_Environment &env)
+                CORBA::Object_ptr  objref,
+                CORBA::Environment &env)
 {
    Cubit_ptr aCubit = Cubit::_narrow(objref);
    //
@@ -570,26 +569,26 @@ cube_union_stub(unsigned          i,
       
       delete r;
    }
-=======
+
   return error_count == 0 ? 0 : 1;
->>>>>>> 1.5
 }
+
 
 
 static void
 cube_union_dii (unsigned          &call_count,
                 unsigned          &error_count,
-                CORBA_Object_ptr  objref,
-                CORBA_Environment &env)
+                CORBA::Object_ptr  objref,
+                CORBA::Environment &env)
 {
    //
    // Create the request ...
    //
-   CORBA_Request_ptr	req;
+   CORBA::Request_ptr	req;
    
    call_count++;
 
-   req = objref->_request ((const CORBA_String) "cube_union", env);
+   req = objref->_request ((const CORBA::String) "cube_union", env);
    if (env.exception () != 0) {
       error_count++;
       
@@ -607,21 +606,21 @@ cube_union_dii (unsigned          &call_count,
    u.cm.s = -7;
    u.cm.o = 3;
 
-   CORBA_Any	tmp_arg (TC_Cubit_oneof, &u, CORBA_B_FALSE);
+   CORBA::Any	tmp_arg (TC_Cubit_oneof, &u, CORBA::B_FALSE);
    
-   req->arguments ()->add_value (0, tmp_arg, CORBA_ARG_IN, env);
+   req->arguments ()->add_value (0, tmp_arg, CORBA::ARG_IN, env);
    if (env.exception () != 0) {
       error_count++;
       print_exception (env.exception (), "cube_union_dii request arg add");
-      CORBA_release (req);
+      CORBA::release (req);
       return;
    }
 	
-   req->result ()->value ()->replace (TC_Cubit_oneof, 0, CORBA_B_TRUE, env);
+   req->result ()->value ()->replace (TC_Cubit_oneof, 0, CORBA::B_TRUE, env);
    if (env.exception () != 0) {
       error_count++;
       print_exception (env.exception (), "cube_union_dii result type");
-      CORBA_release (req);
+      CORBA::release (req);
       return;
    }
 
@@ -632,7 +631,7 @@ cube_union_dii (unsigned          &call_count,
    if (req->env ()->exception () != 0) {
       error_count++;
       print_exception (req->env ()->exception (),"cube_union_dii invoke");
-      CORBA_release (req);
+      CORBA::release (req);
       return;
    }
 
@@ -645,10 +644,9 @@ cube_union_dii (unsigned          &call_count,
    else
       dmsg ("cube_union_dii ... success!!");
    
-   CORBA_release (req);
+   CORBA::release (req);
 }
-=======
->>>>>>> 1.4
+#endif
 
 
 
