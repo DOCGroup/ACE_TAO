@@ -1,0 +1,14 @@
+// $Id$
+
+This directory contains a handcrafted plain vanilla component
+implementation.
+
+File            Notes
+---------       ---------------------------------------
+Hello.idl       Component and Home IDL definitions.
+HelloC.idl      Client-side equivalent IDL definitions.
+HelloS.idl      Server-side equivalent IDL definitions.
+
+???
+--------
+HelloSkel       Server-side implementation skeletons?
