@@ -83,10 +83,11 @@ parse_args (int argc, char *argv[])
       }
 
   // Perform some minimum test of the validity of the arguments here.
-  ACE_stat csstat;
-  if (ACE_OS::stat (comserv_path_, &csstat) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Invalid pathname for ComponentServer\n"), -1);
+  // @@ This didn't work well because of win32 file extension name.
+//   ACE_stat csstat;
+//   if (ACE_OS::stat (comserv_path_, &csstat) != 0)
+//     ACE_DEBUG ((LM_ERROR,
+//                 "Invalid pathname for ComponentServer\n"), -1);
 
   return 0;
 }
