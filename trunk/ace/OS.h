@@ -666,7 +666,7 @@ typedef int key_t;
 #include "pace/stdio.h"
 #include "pace/time.h"
 #include "pace/unistd.h"
-#include "pace/wait.h"
+#include "pace/sys/wait.h"
 #define ACE_HAS_POSIX_SEM
 #endif /* ACE_HAS_PACE */
 
