@@ -10364,7 +10364,10 @@ ACE_OS::pthread_sigmask (int how, const sigset_t *nsp, sigset_t *osp)
                      int,
                      -1);
 #else /* !ACE_HAS_PTHREADS_STD */
-  ACE_NOTSUP_RETURN (-1);                
+  ACE_UNUSED_ARG (how);
+  ACE_UNUSED_ARG (nsp);
+  ACE_UNUSED_ARG (osp);
+  ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_PTHREADS_STD */
 }
 
