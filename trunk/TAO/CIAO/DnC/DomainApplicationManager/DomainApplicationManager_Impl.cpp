@@ -40,17 +40,14 @@ init (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 {
   ACE_TRY
     {
-      // Call get_plan_info() method to get the total number
-      // of child plans and list of NodeManager names.
-      if ( ! this->get_plan_info () )
-        ACE_THROW (Deployment::PlanError ());
-
-      // Check the validity of the global deployment plan.
-      if ( ! this->check_validity () )
+      // (1) Call get_plan_info() method to get the total number
+      //     of child plans and list of NodeManager names, and
+      // (2) Check the validity of the global deployment plan.
+      if (! this->get_plan_info ())
         ACE_THROW (Deployment::PlanError ());
 
       // Call split_plan()
-      if ( ! this->split_plan () )
+      if (! this->split_plan ())
         ACE_THROW (Deployment::PlanError ());
 
       // Invoke preparePlan for each child deployment plan.
@@ -102,7 +99,7 @@ init (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
   ACE_CHECK_RETURN (0);
 }
 
-bool
+int
 CIAO::DomainApplicationManager_Impl::
 get_plan_info (void)
 {
@@ -118,7 +115,7 @@ get_plan_info (void)
   int num_plans = 0;
   for (CORBA::ULong index = 0; index < length; index ++)
     {
-      bool matched = 0;
+      int matched = 0;
       for (size_t i = 0; i < this->node_manager_names_.size (); i++)
         // If a match is found do not add it to the list of unique
         // node names
@@ -136,6 +133,14 @@ get_plan_info (void)
           this->node_manager_names_.push_back
             (CORBA::string_dup
              (this->plan_.instance [index].node));
+
+          // Check if there is a corresponding NodeManager instance existing
+          // If not present return false to indicate failure
+          if (this->deployment_config_.get_node_manager
+              (this->plan_.instance [index].node) == 0)
+            return 0; /* Failure */
+
+          // Increment the number of plans
           ++ num_plans;
         }
     }
@@ -145,30 +150,6 @@ get_plan_info (void)
 
   // Indicate success
   return 1;
-}
-
-
-bool
-CIAO::DomainApplicationManager_Impl::
-check_validity (void)
-{
-  // (1) Read the deployment information data file through the
-  //     Deployment_Configuration helper class,  which builds the hash
-  //     table.
-  // (1) For each NodeManager name, check whether the name is contained
-  //     in the hash table, if not, then return <false>.
-  if ( this->deployment_config_.init (this->deployment_file_) == -1 )
-    return false;
-
-  for (size_t i = 0; i < this->num_child_plans_; i++)
-    {
-      if (this->deployment_config_.get_node_manager (this->node_manager_names_[i].c_str ())
-            == 0) // invalid name
-        {
-          return false;
-        }
-    }
-  return true;
 }
 
 
