@@ -1,3 +1,11 @@
+Thu Feb 24 10:49:32 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORB_Core.cpp (init):
+
+	  Fixed the reason why the seg fault when printing a warning about
+	  an unknown "-ORB" option was occuring in the first place.
+	  "current_arg" was not being set to the current argument.
+
 Thu Feb 24 09:29:19 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ORB_Core.cpp (init):
