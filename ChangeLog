@@ -1,3 +1,21 @@
+Wed Mar 31 18:08:48 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* bin/MakeProjectCreator/config/bison.mpb:
+	* bin/MakeProjectCreator/config/flex.mpb:
+	* bin/MakeProjectCreator/config/lex.mpb:
+	* examples/APG/Naming/Makefile.netlocal:
+	* examples/APG/Naming/Makefile.netlocal_reader:
+	* examples/APG/Naming/Makefile.nodelocal:
+	* examples/APG/Naming/Makefile.nodelocal_shared:
+	* examples/APG/Naming/Makefile.nodelocal_shared_reader:
+	* examples/APG/Svc_Config/Makefile.dynamic:
+	* examples/APG/Svc_Config/Makefile.static:
+	* examples/APG/Timers/Makefile.singles:
+	* examples/APG/Timers/Makefile.timers:
+	* examples/APG/Timers/Makefile.upcall:
+
+	  More fuzz warnings.
+
 Wed Mar 31 18:11:18 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ace/Functor_String.h:
