@@ -1,3 +1,8 @@
+Tue Mar 17 23:53:56 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/Threads/task_five.cpp (main): Reformatted Detlef's new
+ 	  torture test so that it conforms to ACE programming conventions.
+
 Tue Mar 17 23:22:20 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Reactor.cpp (ACE_Reactor): If
