@@ -166,7 +166,7 @@ namespace TAO
       result =
         active_object_map_->
           find_servant_using_system_id_and_user_id (system_id,
-                                                    user_id,
+                                                    user_id.in(),
                                                     servant,
                                                     entry);
 
@@ -288,7 +288,7 @@ namespace TAO
       TAO_Active_Object_Map_Entry *entry = 0;
       int result = this->active_object_map_->
         find_servant_using_system_id_and_user_id (system_id,
-                                                  user_id,
+                                                  user_id.in(),
                                                   servant,
                                                   entry);
       if (result == 0)
