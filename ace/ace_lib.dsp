@@ -40,7 +40,6 @@ CFG=ACE static library - Win32 Alpha Unicode Debug
 # Begin Project
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
-# PROP WCE_Configuration "H/PC Ver. 2.00"
 
 !IF  "$(CFG)" == "ACE static library - Win32 Debug"
 
@@ -2099,6 +2098,29 @@ SOURCE=.\Select_Reactor.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Select_Reactor_Base.cpp
+
+!IF  "$(CFG)" == "ACE static library - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Unicode Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Service_Config.cpp
 
 !IF  "$(CFG)" == "ACE static library - Win32 Debug"
@@ -4039,6 +4061,14 @@ SOURCE=.\Sched_Params.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Select_Reactor_Base.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Select_Reactor_T.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Service_Config.h
 # End Source File
 # Begin Source File
@@ -4631,6 +4661,14 @@ SOURCE=.\Sched_Params.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Select_Reactor_Base.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Select_Reactor_T.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\Service_Config.i
 # End Source File
 # Begin Source File
@@ -4921,6 +4959,11 @@ SOURCE=.\Message_Queue_T.cpp
 
 SOURCE=.\Module.cpp
 # PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Select_Reactor_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
