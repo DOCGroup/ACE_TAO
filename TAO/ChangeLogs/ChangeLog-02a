@@ -1,3 +1,11 @@
+Sun Sep  3 15:35:11 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * TAO_IDL/Makefile.BE:
+        * orbsvcs/orbsvcs/Makefile.Svc_Utils:
+          DU/CXX is more strict about inter-library dependencies than
+          other compiles, add the libraries reported missing in the last
+          build. 
+
 Sun Sep  3 12:16:00 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
