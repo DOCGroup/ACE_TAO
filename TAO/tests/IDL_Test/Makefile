@@ -12,7 +12,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LDLIBS  += -lTAO_PortableServer -lTAO
+LDLIBS  += -lTAO_PortableServer -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO_IORInterceptor -lTAO
 LDFLAGS += -L$(ACE_ROOT)/bin
 
 IDL_ALWAYS =	anonymous		\

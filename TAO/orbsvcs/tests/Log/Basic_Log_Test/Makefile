@@ -12,7 +12,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
-LDLIBS = -lTAO -lTAO_PortableServer -lTAO_DsLogAdmin -lTAO_CosNaming -lTAO_DynamicAny
+LDLIBS = -lTAO -lTAO_PortableServer -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO_IORInterceptor -lTAO_DsLogAdmin -lTAO_CosNaming -lTAO_DynamicAny
 
 PROG_SRCS = \
 	Basic_Log_Test.cpp \

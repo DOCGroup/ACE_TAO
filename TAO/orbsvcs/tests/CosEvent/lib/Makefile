@@ -19,8 +19,8 @@ ifeq (NativeCosEvent,$(findstring NativeCosEvent,$(TAO_ORBSVCS)))
   SHLIB = $(SHLIB2)
 endif # NativeCosEvent
 
-ACE_SHLIBS = -lTAO_CosEvent -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_PortableServer -lTAO -lACE
-LDLIBS  = -lTAO_CosEvent -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_PortableServer -lTAO
+ACE_SHLIBS = -lTAO_CosEvent -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_PortableServer -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO_IORInterceptor -lTAO -lACE
+LDLIBS  = -lTAO_CosEvent -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_PortableServer -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO_IORInterceptor -lTAO
 
 SRCS = Counting_Consumer Counting_Supplier
 FILES = $(SRCS)

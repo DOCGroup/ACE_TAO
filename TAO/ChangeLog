@@ -1,3 +1,102 @@
+Thu May 15 14:07:33 2003  Simon McQueen  <sm@prismtechnologies.com>
+
+        * CIAO/tools/Simple_Component_Server/Makefile:
+        * docs/tutorials/Quoter/AMI/Makefile:
+        * docs/tutorials/Quoter/Event_Service/Makefile:
+        * docs/tutorials/Quoter/idl/Makefile:
+        * docs/tutorials/Quoter/Naming_Service/Makefile:
+        * docs/tutorials/Quoter/On_Demand_Activation/Makefile:
+        * docs/tutorials/Quoter/RT_Event_Service/Makefile:
+        * docs/tutorials/Quoter/Simple/Client/Makefile:
+        * docs/tutorials/Quoter/Simple/Impl-Repo/Makefile:
+        * docs/tutorials/Quoter/Simple/ImprovedServer/Makefile:
+        * docs/tutorials/Quoter/Simple/Persistent/Makefile:
+        * docs/tutorials/Quoter/Simple/Server/Makefile:
+        * examples/Advanced/ch_18/Makefile:
+        * examples/Advanced/ch_21/Makefile:
+        * examples/Advanced/ch_3/Makefile:
+        * examples/Advanced/ch_8_and_10/Makefile:
+        * examples/AMI/FL_Callback/Makefile:
+        * examples/Buffered_AMI/Makefile:
+        * examples/Content_Server/AMI_Iterator/Makefile:
+        * examples/Content_Server/AMI_Observer/Makefile:
+        * examples/Content_Server/SMI_Iterator/Makefile:
+        * examples/Event_Comm/Makefile:
+        * examples/ior_corbaloc/Makefile:
+        * examples/Load_Balancing/Makefile:
+        * examples/Load_Balancing_persistent/Makefile:
+        * examples/Logging/Makefile:
+        * examples/OBV/Typed_Events/Makefile:
+        * examples/Persistent_Grid/Makefile:
+        * examples/PluggableUDP/tests/Basic/Makefile:
+        * examples/PluggableUDP/tests/Performance/Makefile:
+        * examples/PluggableUDP/tests/SimplePerformance/Makefile:
+        * examples/POA/Adapter_Activator/Makefile:
+        * examples/POA/Explicit_Activation/Makefile:
+        * examples/POA/FindPOA/Makefile:
+        * examples/POA/Loader/Makefile:
+        * examples/POA/NewPOA/Makefile:
+        * examples/POA/On_Demand_Activation/Makefile:
+        * examples/POA/On_Demand_Loading/Makefile:
+        * examples/POA/POA_BiDir/Makefile:
+        * examples/POA/RootPOA/Makefile:
+        * examples/Quoter/Makefile:
+        * examples/Simple/bank/Makefile:
+        * examples/Simple/echo/Makefile:
+        * examples/Simple/grid/Makefile:
+        * examples/Simple/time/Makefile:
+        * examples/Simple/time-date/Makefile:
+        * examples/Simulator/Event_Supplier/Makefile:
+        * orbsvcs/examples/CosEC/RtEC_Based/lib/Makefile:
+        * orbsvcs/examples/Log/Basic/Makefile:
+        * orbsvcs/examples/PSS/Makefile:
+        * orbsvcs/examples/Security/SecurityLevel1/Makefile:
+        * orbsvcs/examples/Security/Send_File/Makefile:
+        * orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/Makefile:
+        * orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/Makefile:
+        * orbsvcs/performance-tests/RTEvent/lib/Makefile:
+        * orbsvcs/performance-tests/RTEvent/Roundtrip/Makefile:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/Makefile:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/Makefile:
+        * orbsvcs/performance-tests/RTEvent/TCP_Baseline/Makefile:
+        * orbsvcs/PSS/Makefile:
+        * orbsvcs/tests/AVStreams/Modify_QoS/Makefile:
+        * orbsvcs/tests/AVStreams/Multiple_Flows/Makefile:
+        * orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/Makefile:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/Makefile:
+        * orbsvcs/tests/CosEvent/lib/Makefile:
+        * orbsvcs/tests/Event/lib/Makefile:
+        * orbsvcs/tests/FaultTolerance/IOGRManipulation/Makefile:
+        * orbsvcs/tests/IOR_MCast/Makefile:
+        * orbsvcs/tests/Log/Basic_Log_Test/Makefile:
+        * orbsvcs/tests/Notify/lib/Makefile:
+        * orbsvcs/tests/Sched/Makefile:
+        * orbsvcs/tests/Security/Crash_Test/Makefile:
+        * orbsvcs/tests/Security/SecurityLevel1/Makefile:
+        * performance-tests/Cubit/TAO/IDL_Cubit/Makefile:
+        * performance-tests/Cubit/TAO/MT_Cubit/Makefile:
+        * performance-tests/POA/Demux/Makefile:
+        * performance-tests/POA/Object_Creation_And_Registration/Makefile:
+        * performance-tests/RTCorba/Multiple_Endpoints/Common/Makefile:
+        * tao/Domain/Makefile:
+        * tao/DynamicInterface/Makefile:
+        * tao/Messaging/Makefile:
+        * tao/RTPortableServer/Makefile:
+        * tao/Utils/Makefile:
+        * tests/Client_Leaks/Makefile:
+        * tests/Crashed_Callback/Makefile:
+        * tests/IDL_Test/Makefile:
+        * tests/Object_Loader/Makefile:
+        * tests/Smart_Proxies/Makefile:
+        * tests/Smart_Proxies/On_Demand/Makefile:
+        * utils/nslist/Makefile:
+        * utils/wxNamingViewer/Makefile:
+
+          Replaced "-lTAO_PortableServer" with "-lTAO_PortableServer
+          -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO_IORInterceptor" wherever
+          it occured. Should just about clear up the last of the static build
+          errors caused by the TAO sub setting.
+
 Wed May 14 12:46:34 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/ObjectKey_Table.cpp (destroy): Iterating conditions while
@@ -599,7 +698,7 @@ Tue May  6 17:52:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         * tests/Faults/test_i.h: Fixed servant memory management
           problems. Thanks to Ira Burton <imburton@micron.com> for motivating to
           take a look.
-  
+
 Tue May  6 15:52:42 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/Makefile.CosLoadBalancing (ACE_SHLIBS):

@@ -12,7 +12,7 @@ LIBNAME  = libTAO_PSDL
 LIB      = $(LIBNAME).a
 SHLIB    = $(LIBNAME).$(SOEXT)
 
-ACE_SHLIBS = -lTAO_PortableServer -lTAO -lACE
+ACE_SHLIBS = -lTAO_PortableServer -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO_IORInterceptor -lTAO -lACE
 
 #----------------------------------------------------------------------------
 #       Include macros and targets

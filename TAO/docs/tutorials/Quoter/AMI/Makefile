@@ -16,7 +16,7 @@ IDL_FILES = Quoter
 IDL_SRC = QuoterC QuoterS
 BIN = client server
 
-LDLIBS = -lTAO_Messaging -lTAO_Valuetype -lTAO_PortableServer -lTAO 
+LDLIBS = -lTAO_Messaging -lTAO_PortableServer -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO_IORInterceptor -lTAO 
 
 SRC = $(addsuffix .cpp, $(BIN) $(IDL_SRC) Handler_i Stock_i Stock_Factory_i)
 

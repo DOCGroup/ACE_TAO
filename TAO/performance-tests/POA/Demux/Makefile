@@ -15,7 +15,7 @@ endif # ! TAO_ROOT
 #override TAO_IDLFLAGS += \
 #               -H linear_search \
 
-LDLIBS   = -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_PortableServer -lTAO
+LDLIBS   = -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_PortableServer -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO_IORInterceptor -lTAO
 LDFLAGS += -L$(TAO_ROOT)/tao
 
 IDL_FILES = demux_test

@@ -19,8 +19,8 @@ SHLIB   = $(LIBNAME).$(SOEXT)
 FILES   = Time_Date Time_Date_i Time_DateS Time_DateC
 LSRC    = $(addsuffix .cpp,$(FILES))
 
-LDLIBS  = -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_PortableServer -lTAO
-ACE_SHLIBS = -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_PortableServer -lTAO -lACE
+LDLIBS  = -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_PortableServer -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO_IORInterceptor -lTAO
+ACE_SHLIBS = -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_PortableServer -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO_IORInterceptor -lTAO -lACE
 
 IDL_FILES = Time_Date
 IDL_SRC = Time_DateC.cpp Time_DateS.cpp
