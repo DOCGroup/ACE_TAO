@@ -1,3 +1,8 @@
+Mon Sep 22 11:01:28 1997  Steve Huston  <shuston@riverace.com>
+
+	* tests/SOCK_Connector_Test.cpp, Makefile, run_tests.sh - added new
+	  test to exercise ACE_SOCK_Connector focusing on fail conditions.
+
 Mon Sep 22 07:11:21 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Message_Block.cpp (clone): check this block's cont ()
