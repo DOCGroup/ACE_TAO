@@ -775,7 +775,7 @@ namespace CCF
         token = TokenPtr (new CharacterLiteral (r.first, lexeme, c.line ()));
         return true;
       }
-      catch (Format const& e)
+      catch (Format const&)
       {
         cerr << "error: invalid character literal format" << endl;
         return false;

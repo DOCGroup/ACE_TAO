@@ -242,7 +242,7 @@ namespace CCF
       struct RootErrorHandler
       {
         RecoveryStatus
-        operator() (Parsing::Scanner const& s, Parsing::Error& e) const
+        operator() (Parsing::Scanner const& s, Parsing::Error&) const
         {
           return RecoveryStatus (RecoveryStatus::fail);
         }

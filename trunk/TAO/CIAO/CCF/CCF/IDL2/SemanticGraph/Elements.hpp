@@ -24,7 +24,6 @@ namespace CCF
       //
       //
       //
-      using Element::Graph;
 
       class Node;
       class Edge;
