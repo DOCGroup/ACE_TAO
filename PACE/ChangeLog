@@ -1,3 +1,14 @@
+Tue Jul 18 14:15:11 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/win32/stdio.inl:
+
+	  Eliminated support for cterm.
+	  Created support for v...print.. family of funcs.
+
+	* docs/PACE_POSIX_support.txt:
+
+	  Updated.
+
 Tue Jul 18 13:52:13 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/win32/stat.h:
