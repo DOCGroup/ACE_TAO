@@ -1,3 +1,9 @@
+Tue Oct 28 11:26:39 1997  Nanbor Wang  <nw1@CHA-CHA>
+
+	* ace/ace_{dll,lib}.dsp:  Moved Acceptor.cpp from Source file
+	  folders to Template file folders.  Thanks to Satheesh Kumar
+	  <satheesh@aspectdv.com> for pointing this out.
+
 Tue Oct 28 05:44:56 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.cpp (thr_create): use pthread_attr_setprio instead of
