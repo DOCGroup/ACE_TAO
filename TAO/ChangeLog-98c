@@ -1,3 +1,13 @@
+Tue May 20 13:04:00 1997  Brian Mendel <bmendel@mdc.com>
+
+	* IIOP/lib/debug.cpp: Deleted spaces between flockfile (f) and 
+	funlockfile (f).  Changed instances of debug_filter to 
+	TAO_debug_filter.  Deleted space between emit_prefix (stream).
+
+	* IIOP/lib/cdr.cpp Added undef(s) for ACE_INLINE and 
+          do_undef_on_ACE_INLINE to eliminate redefinition problems.
+
+
 Tue May 20 10:55:09 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* IIOP/lib/cdr.h: Fixed the automatic inclusion of cdr.i into
