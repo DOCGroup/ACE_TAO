@@ -6,6 +6,9 @@
 # debug = 1
 # optimize = 1
 
+ifndef exceptions
+  exceptions = 0
+endif
 ifeq (,$(debug))
   debug = 1
 endif
