@@ -177,6 +177,8 @@ STDIN_Token::open (int argc, char *argv[])
 int 
 STDIN_Token::handle_input (ACE_HANDLE fd)
 {
+  ACE_UNUSED_ARG (fd);
+
   char tid[BUFSIZ];
   char token[BUFSIZ];
   char type[16];
@@ -256,6 +258,8 @@ STDIN_Token::display_menu (void)
 int 
 STDIN_Token::handle_exception (ACE_HANDLE fd)
 {
+  ACE_UNUSED_ARG (fd);
+
   ACE_Service_Config::run_reactor_event_loop ();
   return -1;
 }
@@ -336,6 +340,9 @@ STDIN_Token::create_proxy (const char *token, char type)
       else
 	return new ACE_Local_WLock (token, ignore_deadlock_, debug_);
     }
+
+  // should never get here, but this avoids a compiler warning . . .
+  return 0;
 }
 
 
