@@ -685,7 +685,7 @@ AST_Module::be_add_interface (AST_Interface *i, AST_Interface *ix)
   /*
    * Add it to set of locally referenced symbols
    */
-  add_to_referenced(i, I_FALSE, ix->local_name (), ix);
+  add_to_referenced(i, I_FALSE, i->local_name (), ix);
 
   return 0;
 }

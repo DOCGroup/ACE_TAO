@@ -208,12 +208,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   // generate the collocated class
   if (idl_global->gen_thru_poa_collocation ())
     {
-#if 0
-      if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_SH)
-        ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_THRU_POA_COLLOCATED_SH);
-      else
-#endif /* 0 */
-        ctx.state (TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SH);
+      ctx.state (TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SH);
       visitor = tao_cg->make_visitor (&ctx);
       if (!visitor || (node->accept (visitor) == -1))
         {
@@ -231,12 +226,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   if (idl_global->gen_direct_collocation ())
     {
       ctx = *this->ctx_;
-#if 0
-      if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_SH)
-        ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_DIRECT_COLLOCATED_SH);
-      else
-#endif /* 0 */
-        ctx.state (TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SH);
+      ctx.state (TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SH);
       visitor = tao_cg->make_visitor (&ctx);
       if (!visitor || (node->accept (visitor) == -1))
         {
@@ -269,46 +259,6 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
         }
       delete visitor;
     }
-
-#if 0
-  // Only if AMI code generation is activated and we 
-  // are not calling ourselves already
-  if (idl_global->ami_call_back () == I_TRUE
-      && this->ctx_->state () == TAO_CodeGen::TAO_INTERFACE_SH)
-    {
-      // Set the AMI Strategy for code generation
-      be_interface_strategy *old_strategy =
-        node->set_strategy (new be_interface_ami_handler_strategy (node));
-
-      //  = Generate the Servant Skeleton code.
-      ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_SH);
-      visitor = tao_cg->make_visitor (&ctx);
-      if (!visitor)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_interface_sh::"
-                             "visit_interface - "
-                             "Bad visitor\n"),
-                            -1);
-        }
-
-      // call the visitor on this interface.
-      if (node->accept (visitor) == -1)
-        {
-          delete visitor;
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_interface_sh::"
-                             "visit_interface - "
-                             "code gen for ami handler failed\n"),
-                            -1);
-        }
-      delete visitor;
-
-      delete node->set_strategy (old_strategy);
-    }
-
-#endif /* 0 */
 
   *os << "\n";
   ctx.stream (tao_cg->server_template_header ());
