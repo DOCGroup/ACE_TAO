@@ -1,3 +1,10 @@
+Mon May 24 15:35:57 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_union.cpp:
+	  Fixed a couple of MSVC warnings - a signed/unsigned
+	  mismatch and a 32-bit overflow caused by adding 1 to
+	  ACE_UINT32_MAX.
+
 Mon May 24 15:13:14 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Policy_Current: Made changes to this class such that the
