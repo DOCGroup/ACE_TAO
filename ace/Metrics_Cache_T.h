@@ -60,7 +60,7 @@ public:
                          u_long size = METRICS_DEFAULT_TIMEPROBE_TABLE_SIZE);
   // Constructor with allocator: plugs in the above event descriptions.
 
-  ~ACE_Metrics_Timeprobe ();
+  virtual ~ACE_Metrics_Timeprobe ();
   // Destructor.
 
   int is_event (const ACE_METRICS_TIMEPROBE_DATA_TYPE &t,

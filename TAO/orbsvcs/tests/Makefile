@@ -52,7 +52,8 @@ DIRS += Concurrency \
   Security \
   Miop \
   LoadBalancing \
-  Log
+  Log \
+  Metrics
 
 #----------------------------------------------------------------------------
 #       Include macros and targets

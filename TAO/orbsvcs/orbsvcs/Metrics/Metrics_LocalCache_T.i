@@ -1342,9 +1342,10 @@ TAO_Metrics_ReportingLocalCache<ACE_LOCK, ALLOCATOR>::output_statistics (Metrics
 
     // Iterate over registered upcall data and harvest those probes, and
     // the aggregate QoS data too.
-   TAO_Metrics_Cache_Data_Base::TAO_Metrics_Cache_Data * data = 0;
-   typename TAO_Metrics_ReportingLocalCache<ACE_LOCK, ALLOCATOR>::METRICS_MONITOR_MAP_ITERATOR
-     data_iter (this->monitor_maps_ [this->consumer_index_]);
+    typename TAO_Metrics_ReportingLocalCache<ACE_LOCK,ALLOCATOR>::TAO_Metrics_Cache_Data * data = 0;
+      
+    typename TAO_Metrics_ReportingLocalCache<ACE_LOCK, ALLOCATOR>::METRICS_MONITOR_MAP_ITERATOR
+      data_iter (this->monitor_maps_ [this->consumer_index_]);
 
     for (u_long qos_length = 1;
          data_iter.done () == 0;

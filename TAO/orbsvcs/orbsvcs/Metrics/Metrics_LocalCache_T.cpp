@@ -39,8 +39,10 @@ TAO_Metrics_LocalTimeprobe<ACE_LOCK, ALLOCATOR>::report_intervals (int report_fu
    //  Metrics::TimeprobeParameter_Set * data_set = data_set_.addr ();
    Metrics::TimeprobeParameter_Set * data_set = data_set_;
 
-   ACE_Time_Value full_start_time (ACE_Time_Value::zero);
-   ACE_Time_Value full_stop_time (ACE_Time_Value::zero);
+   //ACE_Time_Value full_start_time (ACE_Time_Value::zero);
+   ACE_hrtime_t full_start_time = 0;
+   //ACE_Time_Value full_stop_time (ACE_Time_Value::zero);
+   ACE_hrtime_t full_stop_time = 0;
 
    if (!data_set)
    {
@@ -99,17 +101,15 @@ TAO_Metrics_LocalTimeprobe<ACE_LOCK, ALLOCATOR>::report_intervals (int report_fu
 
          // Check if this start time is less than the full interval for worse
          // case time.
-         if (full_start_time == ACE_Time_Value::zero ||
+         if (full_start_time == 0 ||
              this->timeprobes ()[start_evt_ndx].time_ < full_start_time)
          {
-            full_start_time.set (this->timeprobes ()[start_evt_ndx].time_.sec (),
-                                 this->timeprobes ()[start_evt_ndx].time_.usec ());
+            full_start_time = this->timeprobes ()[start_evt_ndx].time_;
          }
-         if (full_stop_time == ACE_Time_Value::zero ||
+         if (full_stop_time == 0 ||
              this->timeprobes ()[start_evt_ndx].time_ > full_stop_time)
          {
-            full_stop_time.set (this->timeprobes ()[start_evt_ndx].time_.sec (),
-               this->timeprobes ()[start_evt_ndx].time_.usec ());
+            full_stop_time = this->timeprobes ()[start_evt_ndx].time_;
          }
 
          good_interval = 1;
@@ -159,11 +159,10 @@ TAO_Metrics_LocalTimeprobe<ACE_LOCK, ALLOCATOR>::report_intervals (int report_fu
 //                     this->timeprobes()[j].time_.usec());
 //               }
 
-              if (full_stop_time == ACE_Time_Value::zero ||
+              if (full_stop_time == 0 ||
                   this->timeprobes ()[stop_or_suspend_evt_ndx].time_ > full_stop_time)
               {
-                 full_stop_time.set (this->timeprobes()[stop_or_suspend_evt_ndx].time_.sec (),
-                                      this->timeprobes()[stop_or_suspend_evt_ndx].time_.usec());
+                 full_stop_time = this->timeprobes()[stop_or_suspend_evt_ndx].time_;
               }
 
               stop_evt_ndx = stop_or_suspend_evt_ndx;

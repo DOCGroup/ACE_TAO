@@ -151,6 +151,7 @@ ifneq (,$(findstring  Event, $(TAO_ORBSVCS)))
   ifeq (,$(findstring Makefile.RTSched, $(MKLIST)))
     MKLIST += Makefile.RTSched
   endif
+  # Add Rate_Group_Info Makefile here or whichever one contains it
   ifeq (,$(findstring Makefile.RTOLDEvent, $(MKLIST)))
     MKLIST += Makefile.RTOLDEvent
   endif
