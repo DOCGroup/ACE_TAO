@@ -96,6 +96,7 @@ IDL_GlobalData::dsf::dsf (void)
     string_seen_ (0),
     array_seen_ (0),
     aggregate_seen_ (0),
+    non_local_op_seen_ (0),
 
     seq_seen_ (0),
     iface_seq_seen_ (0),
@@ -231,6 +232,7 @@ IDL_GlobalData::IDL_GlobalData (void)
   ACE_SET_BITS (this->decls_seen_masks.string_seen_,            cursor << 9);
   ACE_SET_BITS (this->decls_seen_masks.array_seen_,             cursor << 10);
   ACE_SET_BITS (this->decls_seen_masks.aggregate_seen_,         cursor << 11);
+  ACE_SET_BITS (this->decls_seen_masks.non_local_op_seen_,      cursor << 12);
 
   ACE_SET_BITS (this->decls_seen_masks.seq_seen_,               cursor << 21);
   ACE_SET_BITS (this->decls_seen_masks.iface_seq_seen_,         cursor << 22);

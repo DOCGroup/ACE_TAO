@@ -1339,8 +1339,14 @@ TAO_CodeGen::gen_stub_src_includes (void)
                        << be_global->be_get_client_hdr_fname (1)
                        << "\"";
 
-  this->gen_standard_include (this->client_stubs_, "tao/Stub.h");
-  this->gen_standard_include (this->client_stubs_, "tao/Invocation_Adapter.h");
+  if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
+                       idl_global->decls_seen_masks.non_local_op_seen_))
+    {
+      this->gen_standard_include (this->client_stubs_, 
+                                  "tao/Stub.h");
+      this->gen_standard_include (this->client_stubs_, 
+                                  "tao/Invocation_Adapter.h");
+    }
 
   if (be_global->ami_call_back () == I_TRUE)
     {
@@ -1349,7 +1355,7 @@ TAO_CodeGen::gen_stub_src_includes (void)
 
       // If a valuetype has been seen, this will be in the header file.
       if (!ACE_BIT_ENABLED (idl_global->decls_seen_info_,
-                           idl_global->decls_seen_masks.valuetype_seen_))
+                            idl_global->decls_seen_masks.valuetype_seen_))
         {
           // Include files from the Valuetype library.
           this->gen_standard_include (this->client_stubs_,
@@ -1358,9 +1364,9 @@ TAO_CodeGen::gen_stub_src_includes (void)
     }
 
   if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
-                       idl_global->decls_seen_masks.interface_seen_))
+                       idl_global->decls_seen_masks.non_local_iface_seen_))
     {
-      // Include the AbstractBase file from the Valuetype library.
+      // Include this for _narrow().
       this->gen_standard_include (this->client_stubs_,
                                   "tao/Object_T.h");
     }

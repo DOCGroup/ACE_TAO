@@ -52,7 +52,9 @@ be_argument::be_argument (AST_Argument::Direction d,
     be_decl (AST_Decl::NT_argument,
              n)
 {
-  if (!ScopeAsDecl (this->defined_in ())->imported ())
+  AST_Decl *dcl = ScopeAsDecl (this->defined_in ());
+
+  if (!dcl->imported () && !dcl->is_local ())
     {
       be_type *bt = be_type::narrow_from_decl (ft);
       bt->seen_in_operation (I_TRUE);

@@ -1,3 +1,23 @@
+Tue Sep  9 19:41:04 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_argument.cpp:
+        * TAO_IDL/be/be_attribute.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_operation.cpp:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_global.cpp:
+
+          Tightened up the IDL compiler's bookkeeping of the
+          argument types it will generate, and it's checking
+          for generation of related include files and template
+          specializations.
+
+        * tao/PortableInterceptorC.cpp:
+
+          Applied the above changes to this hand-crafted file,
+          which is large but contains exclusively local interfaces.
+
 Tue Sep  9 14:10:50 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Any_Basic_Impl.cpp:
