@@ -62,7 +62,7 @@ LIB32=link.exe -lib
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir ""
-# PROP Intermediate_Dir "Static\Debug\RTSched"
+# PROP Intermediate_Dir "LIB\Debug\RTSched"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D TAO_RTSCHED_HAS_DLL=0 /D "_DEBUG" /D "WIN32" /D "_MBCS" /D "_LIB" /D TAO_HAS_DLL=0 /D ACE_HAS_DLL=0 /FD /c
