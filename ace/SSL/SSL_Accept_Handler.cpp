@@ -60,48 +60,36 @@ ACE_SSL_Accept_Handler::ssl_accept (void)
   if (SSL_is_init_finished (ssl))
     return 0;
 
-  // The SSL_accept() call is wrapped in a do/while(SSL_pending())
-  // loop to force the internal SSL buffer to be flushed prior to
-  // returning to the Reactor.  This is necessary to avoid some subtle
-  // problems where data from another record is potentially handled
-  // before the current record is fully handled.
-  do
+  int status = ::SSL_accept (ssl);
+
+  switch (::SSL_get_error (ssl, status))
     {
-      int status = ::SSL_accept (ssl);
+    case SSL_ERROR_NONE:
+      break;
 
-      switch (::SSL_get_error (ssl, status))
-        {
-        case SSL_ERROR_NONE:
-          return 0;
+    case SSL_ERROR_WANT_WRITE:
+    case SSL_ERROR_WANT_READ:
+      break;
 
-        case SSL_ERROR_WANT_WRITE:
-        case SSL_ERROR_WANT_READ:
-          break;
+    case SSL_ERROR_ZERO_RETURN:
+      // The peer has notified us that it is shutting down via
+      // the SSL "close_notify" message so we need to
+      // shutdown, too.
+      //
+      // Removing this event handler causes the SSL stream to be
+      // shutdown.
+      return -1;
 
-        case SSL_ERROR_ZERO_RETURN:
-          // The peer has notified us that it is shutting down via
-          // the SSL "close_notify" message so we need to
-          // shutdown, too.
-          //
-          // Removing this event handler causes the SSL stream to be
-          // shutdown.
-          return -1;
+    case SSL_ERROR_SYSCALL:
+      // On some platforms (e.g. MS Windows) OpenSSL does not
+      // store the last error in errno so explicitly do so.
+      ACE_OS::set_errno_to_last_error ();
 
-        case SSL_ERROR_SYSCALL:
-          // On some platforms (e.g. MS Windows) OpenSSL does not
-          // store the last error in errno so explicitly do so.
-          ACE_OS::set_errno_to_last_error ();
+    default:
+      ACE_SSL_Context::report_error ();
 
-        default:
-          ACE_SSL_Context::report_error ();
-
-          return -1;
-        }
+      return -1;
     }
-  while (::SSL_pending (ssl));
-
-  // Completed flushing the SSL buffer, but SSL passive connection is
-  // still pending completion.
 
   return 0;
 }

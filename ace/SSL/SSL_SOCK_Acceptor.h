@@ -32,12 +32,25 @@
 /**
  * @class ACE_SSL_SOCK_Acceptor
  *
- * @brief Defines a factory that creates new <ACE_SSL_SOCK_Stream>s
+ * @brief Defines a factory that creates new ACE_SSL_SOCK_Stream>s
  * passively.
  *
  * The ACE_SSL_SOCK_Acceptor has its own ACE_SOCK_Acceptor
- * which handles virtually all of the socket acceptance. This
+ * which handles virtually all of the socket acceptance.  This
  * class is a wrapper which only adds the SSL acceptance.
+ * @par
+ * Since SSL is record-oriented, some additional steps must be taken
+ * to make the ACE_SSL_SOCK_Acceptor interact properly with the
+ * Reactor (if one is used) when performing non-blocking accept()
+ * calls.  In particular, the ACE_SSL_SOCK_Acceptor registers an event
+ * handler with the Reactor set in the constructor or in the
+ * ACE_SSL_SOCK_Acceptor::reactor() method.  If no Reactor is
+ * explicitly set, the singleton Reactor instance will be used.
+ *
+ * @note The user must currently ensure that only one thread services
+ *       a given SSL session at any given time since some underlying
+ *       SSL implementations, such as OpenSSL, are not entirely
+ *       thread-safe or reentrant.
  */
 class ACE_SSL_Export ACE_SSL_SOCK_Acceptor : public ACE_SSL_SOCK
 {
@@ -52,8 +65,8 @@ public:
 
   /**
    * Initiate a passive mode SSL/BSD-style acceptor socket.
-   * "local_sap" is the address that we're going to listen for
-   * connections on.
+   * @param local_sap  The address that we're going to listen for
+   *                   connections on.
    */
   ACE_SSL_SOCK_Acceptor (const ACE_Addr &local_sap,
 			 int reuse_addr = 0,
@@ -64,8 +77,7 @@ public:
                            ACE_Reactor::instance ()
 );
 
-  /// Initialize a passive-mode QoS-enabled acceptor socket.  Returns 0
-  /// on success and -1 on failure.
+  /// Initiate a passive-mode QoS-enabled acceptor socket.
   ACE_SSL_SOCK_Acceptor (const ACE_Addr &local_sap,
 			 ACE_Protocol_Info *protocolinfo,
 			 ACE_SOCK_GROUP g,
@@ -79,8 +91,8 @@ public:
 
   /**
    * Initiate a passive mode SSL/BSD-style acceptor socket.
-   * "local_sap" is the address that we're going to listen for
-   * connections on.
+   * @param local_sap  The address that we're going to listen for
+   *                   connections on.
    */
   int open (const ACE_Addr &local_sap,
             int reuse_addr = 0,
@@ -93,11 +105,13 @@ public:
 
   /**
    * @name Passive Connection "accept" Methods
+   *
+   * These are the canonical methods exposed by the Acceptor pattern.
    */
   //@{
   /**
-   * Accept a new <ACE_SSL_SOCK_Stream> connection.  A <timeout> of 0
-   * means block forever, a <timeout> of {0, 0} means poll.  <restart>
+   * Accept a new ACE_SSL_SOCK_Stream connection.  A timeout of 0
+   * means block forever, a timeout of {0, 0} means poll.  restart
    * == 1 means "restart if interrupted," i.e., if errno == EINTR.
    */
   int accept (ACE_SSL_SOCK_Stream &new_stream,
@@ -107,9 +121,9 @@ public:
               int reset_new_handle = 0) const;
 
   /**
-   * Accept a new <ACE_SSL_SOCK_Stream> connection using the RVSP QoS
-   * information in <qos_params>.  A <timeout> of 0 means block
-   * forever, a <timeout> of {0, 0} means poll.  <restart> == 1 means
+   * Accept a new ACE_SSL_SOCK_Stream connection using the RVSP QoS
+   * information in qos_params.  A timeout of 0 means block
+   * forever, a timeout of {0, 0} means poll.  restart == 1 means
    * "restart if interrupted," i.e., if errno == EINTR.
    */
   int accept (ACE_SSL_SOCK_Stream &new_stream,
@@ -139,13 +153,13 @@ public:
 
 protected:
 
-  /// Perform operations that must occur before <ACE_OS::accept> is
+  /// Perform operations that must occur before ACE_OS::accept() is
   /// called.
   int shared_accept_start (ACE_Time_Value *timeout,
 			   int restart,
 			   int &in_blocking_mode) const;
 
-  /// Perform operations that must occur after <ACE_OS::accept> is
+  /// Perform operations that must occur after ACE_OS::accept() is
   /// called.
   int shared_accept_finish (ACE_SSL_SOCK_Stream &new_stream,
 			    int in_blocking_mode,

@@ -42,6 +42,19 @@
  * underlying socket API doesn't use a "factory" socket to connect
  * "data-mode" sockets.  Therefore, there's no need to inherit
  * ACE_SSL_SOCK_Connector from ACE_SSL_SOCK.
+ *
+ * Since SSL is record-oriented, some additional steps must be taken
+ * to make the ACE_SSL_SOCK_Connector interact properly with the
+ * Reactor (if one is used) when performing non-blocking connect()
+ * calls.  In particular, the ACE_SSL_SOCK_Connector registers an
+ * event handler with the Reactor set in the constructor or in the
+ * ACE_SSL_SOCK_Connector::reactor() method.  If no Reactor is
+ * explicitly set, the singleton Reactor instance will be used.
+ *
+ * @note The user must currently ensure that only one thread services
+ *       a given SSL session at any given time since some underlying
+ *       SSL implementations, such as OpenSSL, are not entirely
+ *       thread-safe or reentrant.
  */
 class ACE_SSL_Export ACE_SSL_SOCK_Connector
 {

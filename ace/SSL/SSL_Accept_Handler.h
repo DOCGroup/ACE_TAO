@@ -32,7 +32,8 @@ class ACE_SSL_SOCK_Stream;
  * @brief Event handler designed to complete non-blocking passive
  *        connections.
  *
- *
+ * This event handler is used internally by the ACE_SSL
+ * implementation.  It is not meant for external use.
  */
 class ACE_SSL_Accept_Handler : public ACE_Event_Handler
 {

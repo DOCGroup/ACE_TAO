@@ -18,18 +18,19 @@ ACE_SSL_SOCK_Stream::set_handle (ACE_HANDLE fd)
     }
 }
 
-ASYS_INLINE
-ACE_SSL_SOCK_Stream::~ACE_SSL_SOCK_Stream (void)
+ASYS_INLINE int
+ACE_SSL_SOCK_Stream::notify (ACE_Reactor_Mask mask) const
 {
-  ACE_TRACE ("ACE_SSL_SOCK_Stream::~ACE_SSL_SOCK_Stream");
+  if (this->reactor_ != 0
+      && this->handler_ != 0
+      && ::SSL_pending (this->ssl_))
+    {
+      return this->reactor_->notify (this->handler_,
+                                     mask);
+    }
 
-  ::SSL_free (this->ssl_);
-  this->ssl_ = 0;
-
-  // @@ Question: should we reference count the Context object or
-  // leave that to the application developer? We do not reference
-  // count reactors (for example) and following some simple rules
-  // seems to work fine!
+  // No need for notification.
+  return 0;
 }
 
 ASYS_INLINE ssize_t
@@ -45,77 +46,56 @@ ACE_SSL_SOCK_Stream::send_i (const void *buf,
   if (flags != 0)
     ACE_NOTSUP_RETURN (-1);
 
-  int bytes_sent = 0;
-  int ssl_write = 0;
-
-  // The SSL_write() call is wrapped in a do/while(SSL_pending())
-  // loop to force a full SSL record (SSL is a record-oriented
-  // protocol, not a stream-oriented one) to be read prior to
-  // returning to the Reactor.  This is necessary to avoid some subtle
-  // problems where data from another record is potentially handled
-  // before the current record is fully handled.
-  do
-    {
-      ssl_write = 0;
-
-      bytes_sent = ::SSL_write (this->ssl_,
-                                ACE_static_cast (const char*, buf),
+  int bytes_sent = ::SSL_write (this->ssl_,
+                                ACE_static_cast (const char *, buf),
                                 n);
 
-      switch (::SSL_get_error (this->ssl_, bytes_sent))
-        {
-        case SSL_ERROR_NONE:
-          return bytes_sent;
+  if (this->notify (ACE_Event_Handler::WRITE_MASK) != 0)
+    return -1;
 
-        case SSL_ERROR_WANT_READ:
-        case SSL_ERROR_WANT_WRITE:
-          ssl_write = 1;
-          break;
+  switch (::SSL_get_error (this->ssl_, bytes_sent))
+    {
+    case SSL_ERROR_NONE:
+      return bytes_sent;
 
-        case SSL_ERROR_ZERO_RETURN:
-          // The peer has notified us that it is shutting down via
-          // the SSL "close_notify" message so we need to
-          // shutdown, too.
-          (void) ::SSL_shutdown (this->ssl_);
+    case SSL_ERROR_WANT_READ:
+    case SSL_ERROR_WANT_WRITE:
+      errno = EWOULDBLOCK;
 
-          return bytes_sent;
+      return -1;
 
-        case SSL_ERROR_SYSCALL:
-          if (bytes_sent == 0)
-            // An EOF occured but the SSL "close_notify" message was
-            // not sent.  This is a protocol error, but we ignore it.
-            return 0;
+    case SSL_ERROR_ZERO_RETURN:
+      // The peer has notified us that it is shutting down via the SSL
+      // "close_notify" message so we need to shutdown, too.
+      (void) ::SSL_shutdown (this->ssl_);
 
-          // If not an EOF, then fall through to "default" case.
+      return bytes_sent;
 
-          // On some platforms (e.g. MS Windows) OpenSSL does not
-          // store the last error in errno so explicitly do so.
-          ACE_OS::set_errno_to_last_error ();
+    case SSL_ERROR_SYSCALL:
+      if (bytes_sent == 0)
+        // An EOF occured but the SSL "close_notify" message was not
+        // sent.  This is a protocol error, but we ignore it.
+        return 0;
 
-          break;
+      // If not an EOF, then fall through to "default" case.
 
-        default:
-          // Reset errno to prevent previous values (e.g. EWOULDBLOCK)
-          // from being associated with fatal SSL errors.
-          errno = 0;
+      // On some platforms (e.g. MS Windows) OpenSSL does not store
+      // the last error in errno so explicitly do so.
+      ACE_OS::set_errno_to_last_error ();
 
-          break;
-        }
+      break;
 
-      if (!ssl_write && bytes_sent <= 0)
-        {
-          ACE_SSL_Context::report_error ();
+    default:
+      // Reset errno to prevent previous values (e.g. EWOULDBLOCK)
+      // from being associated with fatal SSL errors.
+      errno = 0;
 
-          return -1;
-        }
+      ACE_SSL_Context::report_error ();
+
+      break;
     }
-  while (::SSL_pending (this->ssl_));
 
-  // Completed flushing the SSL buffer, but send() is still pending
-  // completion.
-  errno = EWOULDBLOCK;
-
-  return bytes_sent;
+  return -1;
 }
 
 ASYS_INLINE ssize_t
@@ -139,9 +119,6 @@ ACE_SSL_SOCK_Stream::recv_i (void *buf,
   int bytes_read = 0;
   const ACE_HANDLE handle = this->get_handle ();
 
-  // Flag that forces another iteration of the read loop.
-  int ssl_read = 0;
-
   // Value for current I/O mode (blocking/non-blocking)
   int val = 0;
 
@@ -149,105 +126,88 @@ ACE_SSL_SOCK_Stream::recv_i (void *buf,
     ACE::record_and_set_non_blocking_mode (handle,
                                            val);
 
-  // The SSL_read() and SSL_peek() calls are wrapped in a
-  // do/while(SSL_pending()) loop to force the internal OpenSSL buffer
-  // to be flushed prior to returning to the Reactor.  This is
-  // necessary to avoid some subtle problems where data from another
-  // record is potentially handled before the current record is fully
-  // handled.
-  do
+  // Only block on select() with a timeout if no data in the
+  // internal OpenSSL buffer is pending read completion for
+  // the same reasons stated above, i.e. all data must be read
+  // before blocking on select().
+  if (timeout != 0
+      && !::SSL_pending (this->ssl_))
     {
-      ssl_read = 0;
+      if (ACE::enter_recv_timedwait (handle,
+                                     timeout,
+                                     val) == -1)
+        return -1;
+    }
 
-      if (flags)
-        {
-          if (ACE_BIT_ENABLED (flags, MSG_PEEK))
-            bytes_read = ::SSL_peek (this->ssl_,
-                                     ACE_static_cast (char *, buf),
-                                     n);
-          else
-            ACE_NOTSUP_RETURN (-1);
-        }
-      else
-        bytes_read = ::SSL_read (this->ssl_,
+  if (flags)
+    {
+      if (ACE_BIT_ENABLED (flags, MSG_PEEK))
+        bytes_read = ::SSL_peek (this->ssl_,
                                  ACE_static_cast (char *, buf),
                                  n);
-
-      int status = ::SSL_get_error (this->ssl_, bytes_read);
-      switch (status)
-        {
-        case SSL_ERROR_NONE:
-          if (timeout != 0)
-            ACE::restore_non_blocking_mode (handle, val);
-
-          return bytes_read;
-
-        case SSL_ERROR_WANT_READ:
-        case SSL_ERROR_WANT_WRITE:
-          // Only block on select() with a timeout if no data in the
-          // internal OpenSSL buffer is pending read completion for
-          // the same reasons stated above, i.e. all data must be read
-          // before blocking on select().
-          if (timeout != 0
-              && !SSL_pending (this->ssl_))
-            {
-              if (ACE::enter_recv_timedwait (handle,
-                                             timeout,
-                                             val) == -1)
-                return -1;
-              else
-                ssl_read = 1;
-            }
-
-          break;
-
-        case SSL_ERROR_ZERO_RETURN:
-          if (timeout != 0)
-            ACE::restore_non_blocking_mode (handle, val);
-
-          // The peer has notified us that it is shutting down via
-          // the SSL "close_notify" message so we need to
-          // shutdown, too.
-          (void) ::SSL_shutdown (this->ssl_);
-
-          return bytes_read;
-
-        case SSL_ERROR_SYSCALL:
-          if (bytes_read == 0)
-            // An EOF occured but the SSL "close_notify" message was
-            // not sent.  This is a protocol error, but we ignore it.
-            return 0;
-
-          // If not an EOF, then fall through to "default" case.
-
-          // On some platforms (e.g. MS Windows) OpenSSL does not
-          // store the last error in errno so explicitly do so.
-          ACE_OS::set_errno_to_last_error ();
-
-          break;
-
-        default:
-          // Reset errno to prevent previous values (e.g. EWOULDBLOCK)
-          // from being associated with a fatal SSL error.
-          errno = 0;
-
-          break;
-        }
-
-      if (!ssl_read && bytes_read <= 0)
-        {
-          ACE_SSL_Context::report_error ();
-
-          return -1;
-        }
+      else
+        ACE_NOTSUP_RETURN (-1);
     }
-  while (::SSL_pending (this->ssl_) || ssl_read);
+  else
+    {
+      bytes_read = ::SSL_read (this->ssl_,
+                               ACE_static_cast (char *, buf),
+                               n);
+    }
 
-  // Completed flushing the SSL buffer, but recv() is still pending
-  // completion.
-  errno = EWOULDBLOCK;
+  if (this->notify (ACE_Event_Handler::READ_MASK) != 0)
+    return -1;
 
-  return bytes_read;
+  int status = ::SSL_get_error (this->ssl_, bytes_read);
+  switch (status)
+    {
+    case SSL_ERROR_NONE:
+      if (timeout != 0)
+        ACE::restore_non_blocking_mode (handle, val);
+
+      return bytes_read;
+
+    case SSL_ERROR_WANT_READ:
+    case SSL_ERROR_WANT_WRITE:
+      errno = EWOULDBLOCK;
+
+      return -1;
+
+    case SSL_ERROR_ZERO_RETURN:
+      if (timeout != 0)
+        ACE::restore_non_blocking_mode (handle, val);
+
+      // The peer has notified us that it is shutting down via the SSL
+      // "close_notify" message so we need to shutdown, too.
+      (void) ::SSL_shutdown (this->ssl_);
+
+      return bytes_read;
+
+    case SSL_ERROR_SYSCALL:
+      if (bytes_read == 0)
+        // An EOF occured but the SSL "close_notify" message was not
+        // sent.  This is a protocol error, but we ignore it.
+        return 0;
+
+      // If not an EOF, then fall through to "default" case.
+
+      // On some platforms (e.g. MS Windows) OpenSSL does not store
+      // the last error in errno so explicitly do so.
+      ACE_OS::set_errno_to_last_error ();
+
+      break;
+
+    default:
+      // Reset errno to prevent previous values (e.g. EWOULDBLOCK)
+      // from being associated with a fatal SSL error.
+      errno = 0;
+
+      ACE_SSL_Context::report_error ();
+
+      break;
+    }
+
+  return -1;
 }
 
 ASYS_INLINE ssize_t
@@ -330,55 +290,42 @@ ACE_SSL_SOCK_Stream::close (void)
   if (this->ssl_ == 0 || this->get_handle () == ACE_INVALID_HANDLE)
     return 0;  // SSL_SOCK_Stream was never opened.
 
-  int status = 0;
+  // SSL_shutdown() returns 1 on successful shutdown of the SSL
+  // connection, not 0.
+  int status = ::SSL_shutdown (this->ssl_);
 
-  // The SSL_close() call is wrapped in a do/while(SSL_pending())
-  // loop to force the SSL buffer to be flushed prior to returning to
-  // the Reactor.  This is necessary to avoid some subtle problems
-  // where data from another record is potentially handled before the
-  // current record is fully handled.
-  do
+  switch (::SSL_get_error (this->ssl_, status))
     {
-      // SSL_shutdown() returns 1 on successful shutdown of the SSL
-      // connection, not 0.
-      status = ::SSL_shutdown (this->ssl_);
+    case SSL_ERROR_NONE:
+    case SSL_ERROR_SYSCALL:  // Ignore this error condition.
 
-      switch (::SSL_get_error (this->ssl_, status))
-        {
-        case SSL_ERROR_NONE:
-        case SSL_ERROR_SYSCALL:  // Ignore this error condition.
+      // Don't set the handle in OpenSSL; only in the SSL_SOCK_Stream.
+      // We do this to avoid any potential side effects.  Invoking
+      // ACE_SSL_SOCK::set_handle() bypasses the OpenSSL SSL_set_fd()
+      // call ACE_SSL_SOCK_Stream::set_handle() does.
+      this->ACE_SSL_SOCK::set_handle (ACE_INVALID_HANDLE);
 
-          // Don't set the handle in OpenSSL; only in the
-          // SSL_SOCK_Stream.  We do this to avoid any potential side
-          // effects.  Invoking ACE_SSL_SOCK::set_handle() bypasses
-          // the OpenSSL SSL_set_fd() call
-          // ACE_SSL_SOCK_Stream::set_handle() does.
-          this->ACE_SSL_SOCK::set_handle (ACE_INVALID_HANDLE);
+      // Reset the SSL object to allow another connection to be made
+      // using this ACE_SSL_SOCK_Stream instance.  This prevents the
+      // previous SSL session state from being associated with the new
+      // SSL session/connection.
+      (void) ::SSL_clear (this->ssl_);
 
-          // Reset the SSL object to allow another connection to be
-          // made using this ACE_SSL_SOCK_Stream instance.  This
-          // prevents the previous SSL session state from being
-          // associated with the new SSL session/connection.
-          (void) ::SSL_clear (this->ssl_);
+      return this->stream_.close ();
 
-          return this->stream_.close ();
+    case SSL_ERROR_WANT_READ:
+    case SSL_ERROR_WANT_WRITE:
+      errno = EWOULDBLOCK;
+      break;
 
-        case SSL_ERROR_WANT_READ:
-        case SSL_ERROR_WANT_WRITE:
-          break;
+    default:
+      ACE_SSL_Context::report_error ();
 
-        default:
-          ACE_Errno_Guard error (errno);   // Save/restore errno
-          (void) this->stream_.close ();
+      ACE_Errno_Guard error (errno);   // Save/restore errno
+      (void) this->stream_.close ();
 
-          return -1;
-        }
+      return -1;
     }
-  while (::SSL_pending (this->ssl_));
-
-  // Completed flushing the SSL buffer, but connection is not closed
-  // yet.
-  errno = EWOULDBLOCK;
 
   return -1;
 }
@@ -395,3 +342,4 @@ ACE_SSL_SOCK_Stream::ssl (void) const
 {
   return this->ssl_;
 }
+
