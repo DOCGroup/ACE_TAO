@@ -1,3 +1,21 @@
+Thu May 24 09:47:30 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_predefined_type.cpp:
+        * TAO_IDL/be/be_string.cpp:
+        * TAO_IDL/be/be_type.cpp:
+        * TAO_IDL/be/be_visitor_typecode/typecode_decl.cpp:
+        * TAO_IDL/be_include/be_predefined_type.h:
+        * TAO_IDL/be_include/be_string.h:
+        * TAO_IDL/be_include/be_type.h:
+        * TAO_IDL/util/utl_identifier.cpp:
+
+          Fixed a problem, with the changes below, that was
+          causing an incorrent typecode name to be generated
+          in the client header file. Also removed unused
+          default arguments from be_visitor_typecode_defn::tc_name(),
+          and unused functions from be_visitor_typecode_defn,
+          be_type, be_predefined_type, and be_string.
+
 Wed May 23 21:27:28 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/ast/ast_decl.cpp:
