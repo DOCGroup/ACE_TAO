@@ -409,9 +409,9 @@ Tue Feb 22 07:31:33 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
         * TAO_IDL/be/be_visitor_root/root.cpp (visit_root):
 
           Do not generate argument selection function templates if
-          unconstrained were not seen in the IDL.  Addresses build
-          problems for skeletons corresponding such IDL files.  Thanks to
-          Johnny for pointing out the problem.
+          unconstrained interfaces were not seen in the IDL.  Addresses
+	  build problems for skeletons corresponding such IDL files.
+	  Thanks to Johnny for pointing out the problem.
 
 Tue Feb 22 15:21:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
