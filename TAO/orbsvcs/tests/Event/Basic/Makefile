@@ -29,7 +29,7 @@ BIN2 =   Reconnect \
 	Random
 
 PSRC=$(addsuffix .cpp,$(BIN2)) Schedule.cpp
-LDLIBS = -lECTests -lTAO_RTEvent -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_PortableServer
+LDLIBS = -lECTests -lTAO_RTEvent -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_PortableServer -lTAO
 
 CPPFLAGS += -I../lib -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs \
         $(foreach svc, $(TAO_ORBSVCS), -DTAO_ORBSVCS_HAS_$(svc))
@@ -73,7 +73,7 @@ ifeq (RTEvent,$(findstring RTEvent,$(TAO_ORBSVCS)))
 all: Schedule
 
 Schedule: $(addprefix $(VDIR),Schedule.o)
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ -lTAO_RTSched -lTAO_CosNaming $(VLDLIBS) $(POSTLINK)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ -lTAO_RTSched $(VLDLIBS) $(POSTLINK)
   endif # ACE_HAS_GNUG_PRE_2_8
 endif # RTEvent
 

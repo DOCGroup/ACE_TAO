@@ -39,11 +39,11 @@ endif # COMSPEC
 ####
 TAO_BASE_LIBS=-lTAO $(ACELIB) $(LIBS)
 TAO_SRVR_LIBS=-lTAO_PortableServer $(TAO_BASE_LIBS)
-TAO_CLNT_LIBS=-lTAO $(TAO_BASE_LIBS)
+TAO_CLNT_LIBS= $(TAO_BASE_LIBS)
 #
-# The following simbols has been defined to overcome a 
-# problem with the current QNX RTP linker. In fact for 
-# that platform the relative platform macro file takes 
+# The following simbols has been defined to overcome a
+# problem with the current QNX RTP linker. In fact for
+# that platform the relative platform macro file takes
 # care of adding a number of additional library that are
 # not usually needed on other platforms.
 #
