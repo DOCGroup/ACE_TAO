@@ -103,6 +103,28 @@ AST_Root::~AST_Root (void)
 {
 }
 
+// Overrides the one in UTL_Scope - this one doesn't
+// count the predefined types.
+unsigned long
+AST_Root::nmembers (void)
+{
+  unsigned long retval = 0;
+
+  for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
+        !si.is_done ();
+        si.next ())
+    {
+      if (si.item ()->node_type () == AST_Decl::NT_pre_defined)
+        {
+          continue;
+        }
+        
+      ++retval;
+    }
+    
+  return retval;
+}
+
 // Add this AST_Sequence to the locally defined types in this scope.
 AST_Sequence *
 AST_Root::fe_add_sequence (AST_Sequence *t)
