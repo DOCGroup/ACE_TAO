@@ -1,13 +1,13 @@
 <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
 <html>
   <head>
-    <title>Real-time Event Channel Configuration</title>
+    <title>Real-Time Event Channel Configuration</title>
     <!-- $Id$ -->
   </head>
 
   <body>
     <CENTER>
-    <h1>Real-time Event Channel Configuration</h1>
+    <h1>Real-Time Event Channel Configuration</h1>
     </CENTER>
 
     <H3>Configuring the Event Channel at Compilation Time</H3>
@@ -118,7 +118,7 @@ static EC_Factory "-ECFiltering basic ....."
           <TD><CODE>-ECDispatchingThreads</CODE>
             <EM>number_of_threads</EM>
           </TD>
-          <TD>Select the number of threads used bythe <EM>mt</EM>
+          <TD>Select the number of threads used by the <EM>mt</EM>
             dispatching strategy.
           </TD>
         </TR>
@@ -235,9 +235,9 @@ static EC_Factory "-ECFiltering basic ....."
           </TD>
         </TR>
 
-        <!-- <TR NAME="ECORBId"> -->
+        <!-- <TR NAME="ECUseORBId"> -->
         <TR>
-          <TD><CODE>-ECORBId</CODE>
+          <TD><CODE>-ECUseORBId</CODE>
             <EM>orbid</EM>
           </TD>
           <TD>Set the name of the ORB used by the event service, only
@@ -301,7 +301,7 @@ static EC_Factory "-ECFiltering basic ....."
               The argument is a colon separated list of flags, with
               the following semantics:
               <TABLE>
-              <TR><TH>Flag</TH><TH>Description</TH><
+              <TR><TH>Flag</TH><TH>Description</TH>
               </TR>
               <TR>
                 <TD>MT</TD>
@@ -439,24 +439,24 @@ static EC_Factory "-ECFiltering basic ....."
         </TR>
 
         <TR><TD><CODE>busy_hwm</CODE></TD>
-          <TD>When using the delayed strategy to update
-            ProxyPushSupplier sets this flag controls the maximum
-            number of thread that can simultaneously iterate over the
-            set before blocking.
+          <TD>When the delayed flag is set on proxy collections,
+            this flag controls the maximum
+            number of threads that can simultaneously iterate over the
+            collection before blocking.
             It can be used to avoid starvation in delayed updates on
-            the set.
+            the collection.
           </TD>
         </TR>
 
         <TR><TD><CODE>max_write_delay</CODE></TD>
-          <TD>When using the delayed strategy to update
-            ProxyPushSupplier sets this flag controls the maximum
+          <TD>When the delayed flag is set on proxy collections,
+            this flag controls the maximum
             number of threads that will initiate dispatching
             <B>after</B> a change has been posted.
             Any thread after that is blocked until the operations are
             performed.
             It can be used to completely stop starvation of delayed
-            updates on the set.
+            updates on the collection.
           </TD>
         </TR>
 

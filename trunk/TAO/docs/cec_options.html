@@ -317,24 +317,24 @@ static CEC_Factory "-CECDispatching reactive ....."
         </TR>
 
         <TR><TD><CODE>busy_hwm</CODE></TD>
-          <TD>When using the delayed strategy to update
-            ProxyPushSupplier sets, this flag controls the maximum
-            number of thread that can simultaneously iterate over the
-            set before blocking.
+          <TD>When the delayed flag is set on proxy collections,
+            this flag controls the maximum
+            number of threads that can simultaneously iterate over the
+            collection before blocking.
             It can be used to avoid starvation in delayed updates on
-            the set.
+            the collection.
           </TD>
         </TR>
 
         <TR><TD><CODE>max_write_delay</CODE></TD>
-          <TD>When using the delayed strategy to update
-            ProxyPushSupplier sets, this flag controls the maximum
+          <TD>When the delayed flag is set on proxy collections,
+            this flag controls the maximum
             number of threads that will initiate dispatching
             <B>after</B> a change has been posted.
             Any thread after that is blocked until the operations are
             performed.
             It can be used to completely stop starvation of delayed
-            updates on the set.
+            updates on the collection.
           </TD>
         </TR>
       </TABLE>
