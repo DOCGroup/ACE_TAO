@@ -26,14 +26,12 @@
 #include "ace/INET_Addr.h"
 
 #include "tao/ORB.h"
-#include "tao/Endpoint.h"
+#include "tao/IIOP_Endpoint.h"
 #include "orbsvcs/SSLIOPC.h"
 
 // Tag for storing multiple ssl endpoints within a single profile.
 #define TAO_TAG_SSL_ENDPOINTS 0x54414f01U
 
-class TAO_SSLIOP_Client_Connection_Handler;
-class TAO_IIOP_Endpoint;
 
 class TAO_SSLIOP_Export TAO_SSLIOP_Endpoint : public TAO_Endpoint
 {
@@ -67,9 +65,6 @@ public:
 
   const SSLIOP::SSL &ssl_component (void) const;
   // Return SSL component corresponding to this endpoint.
-
-  // TAO_SSLIOP_Client_Connection_Handler *&ssl_hint (void);
-  // Access to our <hint_>.
 
   CORBA::Boolean is_equivalent (const TAO_Endpoint *other_endpoint);
   // Return true if this endpoint is equivalent to <other_endpoint>.  Two
