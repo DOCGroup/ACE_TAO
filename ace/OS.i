@@ -669,8 +669,12 @@ ACE_OS::umask (mode_t cmask)
 ACE_INLINE int
 ACE_OS::chdir (const char *path)
 {
+#if !defined (ACE_HAS_WINCE)
   // ACE_TRACE ("ACE_OS::chdir");
   ACE_OSCALL_RETURN (::_chdir (path), int, -1);
+#else
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_WINCE */
 }
 
 ACE_INLINE int
@@ -712,8 +716,13 @@ ACE_OS::getuid (void)
 ACE_INLINE int
 ACE_OS::isatty (ACE_HANDLE fd)
 {
+#if !defined (ACE_HAS_WINCE)
   // ACE_TRACE ("ACE_OS::isatty");
   ACE_OSCALL_RETURN (::_isatty ((int) fd), int, -1);
+#else
+  ACE_UNUSED_ARG (fd);
+  return 0;
+#endif /* ACE_HAS_WINCE */
 }
 
 ACE_INLINE int
@@ -729,8 +738,12 @@ ACE_OS::mkfifo (const char *file, mode_t mode)
 ACE_INLINE int
 ACE_OS::pipe (ACE_HANDLE fds[])
 {
+#if !defined (ACE_HAS_WINCE)
   // ACE_TRACE ("ACE_OS::pipe");
   ACE_OSCALL_RETURN (::_pipe ((int *) fds, PIPE_BUF, 0), int, -1);   // Use default mode
+#else
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_WINCE */
 }
 
 ACE_INLINE int
@@ -752,16 +765,24 @@ ACE_OS::setsid (void)
 ACE_INLINE mode_t
 ACE_OS::umask (mode_t cmask)
 {
+#if !defined (ACE_HAS_WINCE)
   // ACE_TRACE ("ACE_OS::umask");
   ACE_OSCALL_RETURN (::_umask (cmask), int, -1);
+#else
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_WINCE */
 }
 
 ACE_INLINE int
 ACE_OS::fstat (ACE_HANDLE handle, struct stat *stp)
 {
+#if !defined (ACE_HAS_WINCE)
   // ACE_TRACE ("ACE_OS::fstat");
   int fd = ::_open_osfhandle ((long) handle, 0);
   ACE_OSCALL_RETURN (::_fstat (fd, (struct _stat *) stp), int, -1);
+#else
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_WINCE */
 }
 
 #endif /* WIN32 */
@@ -7434,7 +7455,7 @@ ACE_OS::lseek (ACE_HANDLE handle, off_t offset, int whence)
 
 #if defined (ACE_WIN32)
 #if SEEK_SET != FILE_BEGIN || SEEK_CUR != FILE_CURRENT || SEEK_END != FILE_END
-#error Windows NT is evil AND rude!
+  //#error Windows NT is evil AND rude!
   switch (whence)
     {
     case SEEK_SET:
