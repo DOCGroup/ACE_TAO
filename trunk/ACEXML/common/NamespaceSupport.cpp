@@ -13,10 +13,10 @@ static const ACEXML_Char ACEXML_DEFAULT_NS_PREFIX[] = {0};
 static const ACEXML_Char ACEXML_TABOO_NS_PREFIX[] = {'x', 'm', 'l', 0};
 
 static const ACEXML_Char ACEXML_XMLNS_URI_name[] = {
-    'h', 't', 't', 'p', ':', '/', '/',
-    'w', 'w', 'w', '.', 'w', '3', '.', 'o', 'r', 'g', '/',
-    'X', 'M', 'L', '/', '1', '9', '9', '8', '/',
-    'n', 'a', 'm', 'e', 's', 'p', 'a', 'c', 'e', 0};
+  'h', 't', 't', 'p', ':', '/', '/',
+  'w', 'w', 'w', '.', 'w', '3', '.', 'o', 'r', 'g', '/',
+  'X', 'M', 'L', '/', '1', '9', '9', '8', '/',
+  'n', 'a', 'm', 'e', 's', 'p', 'a', 'c', 'e', 0};
 const ACEXML_Char *ACEXML_NamespaceSupport::XMLNS = ACEXML_XMLNS_URI_name;
 
 #if !defined (__ACEXML_INLINE__)
@@ -90,7 +90,6 @@ ACEXML_NamespaceSupport::declarePrefix (const ACEXML_Char *prefix,
   if (ACE_OS_String::strcmp (ACEXML_TABOO_NS_PREFIX, prefix) == 0)
     return -1;
 
-  // @@ No way to check new failure.
   ACEXML_String ns_prefix (prefix, 0, 0);
   ACEXML_String ns_uri (uri, 0, 0);
 
@@ -148,7 +147,7 @@ ACEXML_NamespaceSupport::getPrefixes (ACEXML_STR_LIST &prefixes) const
 
 int
 ACEXML_NamespaceSupport::getPrefixes (const ACEXML_Char *uri,
-                                       ACEXML_STR_LIST &prefixes) const
+                                      ACEXML_STR_LIST &prefixes) const
 {
   ACEXML_NS_CONTEXT_ENTRY *entry;
 
@@ -189,12 +188,11 @@ int
 ACEXML_NamespaceSupport::pushContext (void)
 {
   ACEXML_NS_CONTEXT *temp = this->effective_context_;
-  this->ns_stack_.push (temp);
   ACE_NEW_RETURN (this->effective_context_,
                   ACEXML_NS_CONTEXT (),
                   -1);
 
-  // @@ Copy everything from the old context the the new one.
+  // @@ Copy everything from the old context to the new one.
   ACEXML_NS_CONTEXT_ENTRY *entry;
 
   for (ACEXML_NS_CONTEXT_ITER iter (*temp);
@@ -202,28 +200,25 @@ ACEXML_NamespaceSupport::pushContext (void)
        iter.advance ())
     this->effective_context_->bind (entry->ext_id_,
                                     entry->int_id_);
-
+  this->ns_stack_.push (temp);
   return 0;
 }
 
 
 int
 ACEXML_NamespaceSupport::processName (const ACEXML_Char *qName,
-                                       const ACEXML_Char *&uri,
-                                       const ACEXML_Char *&name,
-                                       int is_attribute) const
+                                      const ACEXML_Char *&uri,
+                                      const ACEXML_Char *&name,
+                                      int is_attribute) const
 {
-  // @@ Need to use different rules to resolve attributes.
-  ACE_UNUSED_ARG (is_attribute);
-
   int qlen = ACE_OS_String::strlen (qName);
   int len = -1;
   for (int i = 0; i < qlen; ++i)
-      if (qName [i] == ':')
-        {
-          len = i;
-          break;
-        }
+    if (qName [i] == ':')
+      {
+        len = i;
+        break;
+      }
 
   ACEXML_String prefix;
 
@@ -236,6 +231,12 @@ ACEXML_NamespaceSupport::processName (const ACEXML_Char *qName,
       prefix.set (qName, len, 1);
       name = qName + len + 1;
     }
+
+  if (is_attribute && len == -1) {
+    uri = ACEXML_DEFAULT_NS_PREFIX;
+    return 0;
+  }
+
   ACEXML_NS_CONTEXT_ENTRY *entry;
 
   if (this->effective_context_->find (prefix, entry) == 0)

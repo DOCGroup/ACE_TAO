@@ -1,3 +1,50 @@
+Mon Jun 24 03:26:10 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ACEXML/common/AttributesImpl.cpp(isDuplicate):
+
+          New function isDuplicate() to check duplicate attributes. Merged
+          support for duplicate attribute checking in setAttribute().
+
+        * ACEXML/common/AttributesImpl.h:
+
+          Fixed documentation for a bunch of functions which had set/get
+          roles reversed.
+
+        * ACEXML/common/AttributesImpl.i:
+
+          Fixed more memory leaks.
+
+        * ACEXML/common/NamespaceSupport.cpp(processName):
+
+          Added support for processing attributes.
+
+        * ACEXML/parser/parser/Parser.cpp:
+        * ACEXML/parser/parser/Parser.h:
+
+          Implement XML Namespace (http://www.w3.org/TR/REC-xml-names)
+          support. ACEXML parser supports the SAX 2.0 XML API. Parser has
+          two user tunable features available: namespaces (defaults to
+          true) and namespace_prefixes (defaults to false).
+
+        * ACEXML/examples/SAXPrint/Print_Handler.cpp:
+        * ACEXML/examples/SAXPrint/SAXPrint_Handler.cpp:
+
+          Changed to reflect more event callbacks available now due to
+          above added support.
+
+        * ACEXML/examples/SAXPrint/ns.svc.conf.xml:
+
+          Changed to include a default namespace to test more code paths.
+          Found a bug in the process :-) Will fix tomorrow.
+
+          The only remaining feature in ACEXML parser needed for CCM is
+          validator. Next target....
+
+        * ace/Message_Block.h:
+
+          Fixed typo in documentation (ceases to exist and not seizes to
+          exist).
+
 Sun Jun 23 21:06:28 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
                               Bill Fulton <Bill_A_Fulton@raytheon.com>
 
@@ -11,7 +58,7 @@ Sun Jun 23 21:06:28 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 	  - Remove proprietary typedefs for ACE mutex classes
 	  - Make default mutex strategy for SOCK_Dgram_Mcast ACE_SYNCH_MUTEX
 	  - (subscribe_ifs) fix check when determining if subscribed address
-	    is the same as the bound address 
+	    is the same as the bound address
 
 Sun Jun 23 14:51:48 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 

@@ -58,34 +58,34 @@ public:
                      const ACEXML_Char *type,
                      const ACEXML_Char *value);
 
-  /// Set \a uri_.
+  /// Get \a uri_.
   const ACEXML_Char *uri (void) const;
 
-  /// Get \a uri_.
+  /// Set \a uri_.
   void uri (const ACEXML_Char *uri);
 
-  /// Set \a localName_.
+  /// Get \a localName_.
   const ACEXML_Char *localName (void) const;
 
-  /// Get \a localName_.
+  /// Set \a localName_.
   void localName (const ACEXML_Char *localName);
 
-  /// Set \a qName_.
+  /// Get \a qName_.
   const ACEXML_Char *qName (void) const;
 
-  /// Get \a qName_.
+  /// Set \a qName_.
   void qName (const ACEXML_Char *qName);
 
-  /// Set \a type_.
+  /// Get \a type_.
   const ACEXML_Char *type (void) const;
 
-  /// Get \a type_.
+  /// Set \a type_.
   void type (const ACEXML_Char *type);
 
-  /// Set \a value_.
+  /// Get \a value_.
   const ACEXML_Char *value (void) const;
 
-  /// Get \a value_.
+  /// Set \a value_.
   void value (const ACEXML_Char *value);
 
   /// Assignment operator.
@@ -122,7 +122,8 @@ typedef ACE_Array<ACEXML_Attribute> ACEXML_Attribute_Array;
  *
  * There are two typical uses of this class:
  *
- * - to take a persistent snapshot of an Attributes object in a startElement event; or
+ * - to take a persistent snapshot of an Attributes object in a
+ *   startElement event; or
  * - to construct or modify an Attributes object in a SAX2 driver or filter.
  *
  * This class replaces the now-deprecated SAX1 AttributeListImpl
@@ -155,6 +156,12 @@ public:
                             const ACEXML_Char *value);
   virtual int addAttribute (const ACEXML_Attribute &att);
 
+  /**
+   *  Check for duplicate attributes.
+   */
+  virtual int isDuplicate (const ACEXML_Char *uri,
+                              const ACEXML_Char *localName,
+                              const ACEXML_Char *qName);
   /**
    * Remove an attribute from the array.  Notice that this
    * operation can invalidate previously acquired <index>

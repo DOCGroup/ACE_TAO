@@ -8,7 +8,13 @@ static const ACEXML_Char default_attribute_type[] = {'C', 'D', 'A', 'T', 'A', 0}
 static const ACEXML_Char empty_string[] = { 0 };
 
 const ACEXML_Char
-ACEXML_Parser::simple_parsing_name_[] = { 'S', 'i', 'm', 'p', 'l', 'e', 0 };
+ACEXML_Parser::simple_parsing_feature_[] = { 'S', 'i', 'm', 'p', 'l', 'e', 0 };
+
+const ACEXML_Char
+ACEXML_Parser::namespaces_feature_[] = {'h', 't', 't', 'p', ':', '/', '/', 'x', 'm', 'l', '.', 'o', 'r', 'g', '/', 's', 'a', 'x', '/', 'f', 'e', 'a', 't', 'u', 'r', 'e', 's', '/', 'n', 'a', 'm', 'e', 's', 'p', 'a', 'c', 'e', 's', 0 };
+
+const ACEXML_Char
+ACEXML_Parser::namespace_prefixes_feature_[] = {'h', 't', 't', 'p', ':', '/', '/', 'x', 'm', 'l', '.', 'o', 'r', 'g', '/', 's', 'a', 'x', '/', 'f', 'e', 'a', 't', 'u', 'r', 'e', 's', '/', 'n', 'a', 'm', 'e', 's', 'p', 'a', 'c', 'e', '-', 'p', 'r', 'e', 'f', 'i', 'x', 'e', 's', 0 };
 
 #if !defined (__ACEXML_INLINE__)
 # include "ACEXML/parser/parser/Parser.i"
@@ -21,9 +27,6 @@ ACEXML_Parser::simple_parsing_name_[] = { 'S', 'i', 'm', 'p', 'l', 'e', 0 };
     ignore whitespace
     processing instruction
     x element contents
-
-    Figure out how to handle namespace here:
-    and when to invoke start/endPrefixMapping?
 
     Make sure we are freezing the obstack in all cases.
 
@@ -39,7 +42,9 @@ ACEXML_Parser::ACEXML_Parser (void)
       dtd_system_ (0),
       dtd_public_ (0),
       locator_(),
-      simple_parsing_ (0)
+      simple_parsing_ (0),
+      namespaces_(1),
+      namespace_prefixes_ (0)
 {
 }
 
@@ -53,8 +58,21 @@ ACEXML_Parser::getFeature (const ACEXML_Char *name,
   // ACE_THROW_SPEC ((ACEXML_SAXNotRecognizedException,
   //                       ACEXML_SAXNotSupportedException))
 {
-  if (ACE_OS_String::strcmp (name, ACEXML_Parser::simple_parsing_name_) == 0)
-    return this->simple_parsing_;
+  if (ACE_OS_String::strcmp (name,
+                             ACEXML_Parser::simple_parsing_feature_) == 0)
+    {
+      return this->simple_parsing_;
+    }
+  else if (ACE_OS_String::strcmp (name,
+                                  ACEXML_Parser::namespaces_feature_) == 0)
+    {
+      return this->namespaces_;
+    }
+  else if (ACE_OS_String::strcmp (name,
+                                  ACEXML_Parser::namespace_prefixes_feature_) == 0)
+    {
+      return this->namespace_prefixes_;
+    }
 
   xmlenv.exception (new ACEXML_SAXNotRecognizedException ());
   return -1;
@@ -80,10 +98,25 @@ ACEXML_Parser::setFeature (const ACEXML_Char *name,
   //      ACE_THROW_SPEC ((ACEXML_SAXNotRecognizedException,
   //                       ACEXML_SAXNotSupportedException))
 {
-  if (ACE_OS_String::strcmp (name, ACEXML_Parser::simple_parsing_name_) == 0) {
-    this->simple_parsing_ = (boolean_value == 0 ? 0 : 1);
-    return;
-  }
+  if (ACE_OS_String::strcmp (name,
+                             ACEXML_Parser::simple_parsing_feature_) == 0)
+    {
+      this->simple_parsing_ = (boolean_value == 0 ? 0 : 1);
+      return;
+    }
+  else if (ACE_OS_String::strcmp (name,
+                                  ACEXML_Parser::namespaces_feature_) == 0)
+    {
+      this->namespaces_ = (boolean_value == 0 ? 0 : 1);
+      return;
+    }
+  else if (ACE_OS_String::strcmp (name,
+                                  ACEXML_Parser::namespace_prefixes_feature_) == 0)
+    {
+      this->namespace_prefixes_ = (boolean_value == 0 ? 0 : 1);
+      return;
+    }
+
   xmlenv.exception (new ACEXML_SAXNotRecognizedException ());
   return;
 }
@@ -230,6 +263,7 @@ ACEXML_Parser::parse (ACEXML_InputSource *input,
                             (ACE_LIB_TEXT ("Unexpected EOF")));
           xmlenv.exception (exception);
           this->report_fatal_error(*exception, xmlenv);
+          return;
           break;
         default:                // Root element begins
           prolog_done = 1;
@@ -722,6 +756,14 @@ ACEXML_Parser::parse_element (int is_root, ACEXML_Env &xmlenv)
           else
             {
               this->xml_namespace_.processName(startname, ns_uri, ns_lname, 0);
+              const ACEXML_Char* prefix = this->xml_namespace_.getPrefix (ns_uri);
+              if (this->namespaces_)
+                {
+                  this->content_handler_->startPrefixMapping (prefix,
+                                                              ns_uri,
+                                                              xmlenv);
+                  ACEXML_CHECK;
+                }
               this->content_handler_->startElement (ns_uri,
                                                     ns_lname,
                                                     startname,
@@ -733,21 +775,36 @@ ACEXML_Parser::parse_element (int is_root, ACEXML_Env &xmlenv)
                                                   startname,
                                                   xmlenv);
               ACEXML_CHECK;
+              if (this->namespaces_)
+                {
+                  this->content_handler_->endPrefixMapping (prefix, xmlenv);
+                  ACEXML_CHECK;
+                }
             }
           if (new_namespace != 0)
             this->xml_namespace_.popContext ();
           return;
 
         case '>':
-          this->xml_namespace_.processName (startname, ns_uri, ns_lname, 0);
-          this->content_handler_->startElement (ns_uri,
-                                                ns_lname,
-                                                startname,
-                                                &attributes,
-                                                xmlenv);
-          ACEXML_CHECK;
-          start_element_done = 1;
-          break;
+          {
+            this->xml_namespace_.processName (startname, ns_uri, ns_lname, 0);
+            const ACEXML_Char* prefix = this->xml_namespace_.getPrefix (ns_uri);
+            if (this->namespaces_)
+              {
+                this->content_handler_->startPrefixMapping (prefix,
+                                                            ns_uri,
+                                                            xmlenv);
+                ACEXML_CHECK;
+              }
+            this->content_handler_->startElement (ns_uri,
+                                                  ns_lname,
+                                                  startname,
+                                                  &attributes,
+                                                  xmlenv);
+            ACEXML_CHECK;
+            start_element_done = 1;
+            break;
+          }
         default:
           ACEXML_Char *attvalue = 0;
           ACEXML_Char *attname = this->read_name (ch);
@@ -772,49 +829,96 @@ ACEXML_Parser::parse_element (int is_root, ACEXML_Env &xmlenv)
               attname[3] == 'n' &&
               attname[4] == 's')
             {
-              if (new_namespace == 0)
+              if (this->namespaces_)
                 {
-                  this->xml_namespace_.pushContext ();
-                  new_namespace = 1;
+                  if (new_namespace == 0)
+                    {
+                      this->xml_namespace_.pushContext ();
+                      new_namespace = 1;
+                    }
+
+                  ACE_Tokenizer ns_att (attname);
+                  ns_att.delimiter_replace (':', 0);
+
+                  ACEXML_Char *xmlns_prefix, *ns_name;
+                  xmlns_prefix = ns_att.next ();
+                  ns_name = ns_att.next ();
+                  if (ns_name == 0)
+                    {
+                      if (this->xml_namespace_.declarePrefix (empty_string,
+                                                              attvalue) == -1)
+                        {
+                          ACE_NEW_NORETURN (exception,
+                                            ACEXML_SAXParseException
+                                            (ACE_LIB_TEXT ("Invalid namespace p ref ix")));
+                          xmlenv.exception (exception);
+                          this->report_fatal_error(*exception, xmlenv);
+                          return;
+                        }
+                    }
+                  else
+                    {
+                      if (this->xml_namespace_.declarePrefix (ns_name,
+                                                              attvalue) == -1)
+                        {
+                          ACE_NEW_NORETURN (exception,
+                                            ACEXML_SAXParseException
+                                            (ACE_LIB_TEXT ("Duplicate namespace  pr efix")));
+                          xmlenv.exception (exception);
+                          this->report_fatal_error(*exception, xmlenv);
+                          return;
+                        }
+                    }
                 }
-
-              ACE_Tokenizer ns_att (attname);
-              ns_att.delimiter_replace (':', 0);
-              ACEXML_Char *xmlns_prefix, *ns_name;
-
-              xmlns_prefix = ns_att.next ();
-              ns_name = ns_att.next ();
-
-              // @@ xmlns_prefix is not used now.
-              ACE_UNUSED_ARG (xmlns_prefix);
-              if (ns_name == 0)
+              if (this->namespace_prefixes_)
                 {
-                  // @@ Check return value?
-                  this->xml_namespace_.declarePrefix (empty_string,
-                                                      attvalue);
+                  // Namespace_prefixes_feature_ is required. So add the
+                  // xmlns:foo to the list of attributes.
+                  if (attributes.addAttribute (0,
+                                               0,
+                                               attname,
+                                               default_attribute_type,
+                                               attvalue) == -1)
+                    {
+                      ACE_NEW_NORETURN (exception,
+                                        ACEXML_SAXParseException
+                                        (ACE_LIB_TEXT ("Duplicate attribute found")));
+                      xmlenv.exception (exception);
+                      this->report_fatal_error(*exception, xmlenv);
+                      return;
+                    }
                 }
-              else
+              if (!this->namespaces_ && !this->namespace_prefixes_)
                 {
-                  // @@ Check return value?
-                  this->xml_namespace_.declarePrefix (ns_name,
-                                                      attvalue);
+                  ACE_NEW_NORETURN (exception,
+                                    ACEXML_SAXParseException
+                                    (ACE_LIB_TEXT ("Both namespaces feature and namespace_prefixes feature are false. Illegal Mode")));
+                  xmlenv.exception (exception);
+                  this->report_fatal_error(*exception, xmlenv);
+                  return;
                 }
             }
           else
             {
               const ACEXML_Char *uri, *lName;
               this->xml_namespace_.processName (attname, uri, lName, 1);
-
-              attributes.addAttribute (uri,
-                                       lName,
-                                       attname,
-                                       default_attribute_type,
-                                       attvalue);
+              if (attributes.addAttribute (uri,
+                                           lName,
+                                           attname,
+                                           default_attribute_type,
+                                           attvalue) == -1)
+                {
+                  ACE_NEW_NORETURN (exception,
+                                    ACEXML_SAXParseException
+                                    (ACE_LIB_TEXT ("Duplicate attribute found")));
+                  xmlenv.exception (exception);
+                  this->report_fatal_error(*exception, xmlenv);
+                  return;
+                }
             }
           break;
         }
     }
-
   ACEXML_Char *cdata;
   size_t cdata_length = 0;
 
@@ -911,7 +1015,12 @@ ACEXML_Parser::parse_element (int is_root, ACEXML_Env &xmlenv)
                                                   endname,
                                                   xmlenv);
               ACEXML_CHECK;
-
+              if (this->namespaces_)
+                {
+                  const ACEXML_Char* prefix = this->xml_namespace_.getPrefix (ns_uri);
+                  this->content_handler_->endPrefixMapping (prefix, xmlenv);
+                  ACEXML_CHECK;
+                }
               if (new_namespace != 0)
                 this->xml_namespace_.popContext ();
               return;
@@ -983,7 +1092,6 @@ ACEXML_Parser::parse_element (int is_root, ACEXML_Env &xmlenv)
             }
         }
     }
-
 }
 
 int
@@ -1088,7 +1196,7 @@ const ACEXML_String *
 ACEXML_Parser::parse_reference (void)
 {
   // @@ We'll use a temporary buffer here as the Obstack is most likely in
-  // use when we are here. This put a limit on the max length of a
+  // use when we are here. This puts a limit on the max length of a
   // reference.
   ACEXML_Char ref[MAXPATHLEN];
 

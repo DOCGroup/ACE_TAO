@@ -32,11 +32,9 @@ ACEXML_AttributesImpl::addAttribute (const ACEXML_Char *uri,
                                      const ACEXML_Char *type,
                                      const ACEXML_Char *value)
 {
-  // @@ How do I check for the name here?  Which name should
-  //    I use to check for duplication?
-
+  if (this->isDuplicate (uri, localName, qName))
+    return -1;
   int length = this->attrs_.size ();
-
   this->attrs_.size (length+1);
   this->setAttribute (length,
                       uri,
@@ -50,14 +48,33 @@ ACEXML_AttributesImpl::addAttribute (const ACEXML_Char *uri,
 int
 ACEXML_AttributesImpl::addAttribute (const ACEXML_Attribute &att)
 {
-  // @@ How do I check for the name here?  Which name should
-  //    I use to check for duplication?
-
+  if (this->isDuplicate (att.uri(), att.localName(), att.qName()))
+    return -1;
   int length = this->attrs_.size ();
-
   this->attrs_.size (length+1);
   this->attrs_[length] = att;
   return length;
+}
+
+int
+ACEXML_AttributesImpl::isDuplicate (const ACEXML_Char *uri,
+                                    const ACEXML_Char *localName,
+                                    const ACEXML_Char *qName)
+{
+  for (size_t i = 0; i < this->attrs_.size(); ++i)
+    {
+      if (ACE_OS::strcmp (this->attrs_[i].localName(), localName) == 0)
+        {
+          if (qName != 0 && this->attrs_[i].qName() != 0
+              && ACE_OS::strcmp (this->attrs_[i].qName(), qName) == 0)
+            {
+              if (uri != 0 && this->attrs_[i].uri() != 0
+                  && ACE_OS::strcmp (this->attrs_[i].uri(), uri) == 0)
+                return 1;
+            }
+        }
+    }
+  return 0;
 }
 
 int

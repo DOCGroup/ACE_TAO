@@ -153,7 +153,7 @@ public:
    * the <Message_Block>.  If <data> == 0 then we create and own the
    * <data>, using <allocator> to get the data if it's non-0.  If
    * <data> != 0 we assume that we have ownership of the <data> till
-   * this object seizes to exist  (and don't delete it during
+   * this object ceases to exist  (and don't delete it during
    * destruction).  If  <locking_strategy> is non-0 then this is used
    * to protect regions  of code that access shared state (e.g.,
    * reference counting) from  race conditions.  Note that the <size>
@@ -211,7 +211,7 @@ public:
    * the <Message_Block>.  If <data> == 0 then we create and own the
    * <data>, using <allocator> to get the data if it's non-0.  If
    * <data> != 0 we assume that we have ownership of the <data> till
-   * this object seizes to exist  (and don't delete it during
+   * this object ceases to exist  (and don't delete it during
    * destruction).  If <locking_strategy> is non-0 then this is used
    * to protect regions of code that access shared state (e.g.,
    * reference counting) from race conditions.  Note that the <size>

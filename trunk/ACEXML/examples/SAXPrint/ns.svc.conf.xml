@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<ace:ACE_Svc_Conf xmlns:ace="http://ace.doc.wustl.edu/svcconf">
+<ace:ACE_Svc_Conf xmlns="http://ace.doc.wustl.edu/svcconf" xmlns:ace="http://ace.doc.wustl.edu/svcconf">
 <static id="ACE_Service_Manager">
   <params>-d</params>
   <params>-p 4911</params>
