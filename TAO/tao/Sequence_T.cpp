@@ -2179,7 +2179,7 @@ TAO_Bounded_String_Sequence<MAX>::replace (CORBA::ULong length,
   this->_deallocate_buffer ();
   this->length_ = length;
 
-  // If 'release' is 1, caller is responsible for allocating new buffer\
+  // If 'release' is 1, caller is responsible for allocating new buffer
   // with CORBA::string_alloc.
   this->buffer_ = data;
   this->release_ = release;
