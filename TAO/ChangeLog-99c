@@ -1,3 +1,8 @@
+Wed Jun 23 14:22:04 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* examples/Simple/echo/Echo_i.cpp (echo_list): Added
+  	  ACE_UNUSED_ARG for <message> to ward off warnings.
+
 Wed Jun 23 13:56:52 1999  John Heitmann  <jwh1@cs.wustl.edu>
 
 	* tests/Multiple_Inheritance/run_test.pl:
