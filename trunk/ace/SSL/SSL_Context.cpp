@@ -459,13 +459,17 @@ ACE_SSL_Context::dh_params (const char *file_name,
 
     // Swiped from Rescorla's examples and the OpenSSL s_server.c app
     DH *ret=0;
-    FILE *dhfp = 0;
+    BIO *bio = 0;
 
-    if ((dhfp = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(this->dh_params_.file_name ()), ACE_TEXT ("r"))) == NULL)
+    if ((bio = ::BIO_new_file (this->dh_params_.file_name (), "r")) == NULL)
       return -1;
 
-    ret = PEM_read_DHparams (dhfp, NULL, NULL, NULL);
-    ACE_OS::fclose (dhfp);
+    ret = PEM_read_bio_DHparams (bio, NULL, NULL, NULL);
+    BIO_free (bio);
+
+    if (ret == 0)
+      return -1;
+
     if(::SSL_CTX_set_tmp_dh (this->context_, ret) < 0)
       return -1;
     DH_free (ret);
