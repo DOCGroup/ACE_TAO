@@ -62,93 +62,9 @@ namespace CIAO
      }
  
     /*
-     * Class Req_Handler
-     */
-
-    Req_Handler::Req_Handler (DOMDocument* doc, unsigned long filter)
-      : doc_ (doc),
-        root_ (doc->getDocumentElement()),
-        filter_ (filter),
-        iter_ (doc_->createNodeIterator (this->root_,
-                                              this->filter_,
-                                              0,
-                                              true)),
-        release_ (true)
-    {}
-
-    Req_Handler::Req_Handler (DOMNodeIterator* iter, bool release)
-      : doc_ (0), root_ (0), filter_ (0), iter_ (iter), release_ (release)
-    {}
-
-
-    Req_Handler::~Req_Handler()
-    {
-      if (this->release_)
-        this->iter_->release();
-    }
-
-    /// handle the package configuration and populate it
-    void Req_Handler::process_Requirement
-      (::Deployment::Requirement &req)
-    {
-      // This is bogus and should be replaced later.
-      ACE_DECLARE_NEW_CORBA_ENV;
-
-      for (DOMNode* node = this->iter_->nextNode();
-           node != 0;
-           node = this->iter_->nextNode())
-        {
-          XStr node_name (node->getNodeName());
-	  /*
-	   *  CAUTION: This class is the base class of ImplementationRequirement.
-	   *  The parser implementation duplicated there.
-	   */
-          if (node_name == XStr (ACE_TEXT ("name")))
-            {
-              // Fetch the text node which contains the "label"
-	      node = this->iter_->nextNode();
-	      DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-              this->process_name (text->getNodeValue(), req);
-	    }
-	  else if (node_name == XStr (ACE_TEXT ("resourceType")))
-            {
-	      // Fetch the text node which containst the "resourceType"
-	      node = this->iter_->nextNode();
-	      DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-	      this->process_resourceType (text->getNodeValue(), req);
-            }
-          else
-            {
-              // ??? How did we get here ???
-              ACE_THROW (CORBA::INTERNAL());
-            }
-        }
-      return;
-    }
-
-    /// handle name attribute
-    void Req_Handler::process_name
-      (const XMLCh* name, ::Deployment::Requirement &req)
-    {
-      if (name)
-        {
-          req.name = XMLString::transcode (name);
-        }
-    }
-
-    /// handle resourceType attribute
-    void Req_Handler::process_resourceType
-      (const XMLCh* name, ::Deployment::Requirement &req)
-    {
-      if (name)
-        {
-          req.resourceType = XMLString::transcode (name);
-        }
-    }
-
-    /*
      * Class IR_Handler
      */
+
     IR_Handler::IR_Handler (DOMDocument* doc, unsigned long filter)
       : doc_ (doc),
         root_ (doc->getDocumentElement()),
@@ -209,7 +125,7 @@ namespace CIAO
 	      ir.resourceUsage.length (i + 1);
 
 	      // delegate the populating process
-	      ResourceUsageKind_Handler::process_ResourceUsageKind (this->iter,
+	      ResourceUsageKind_Handler::process_ResourceUsageKind (this->iter_,
 								    ir.resourceUsage[i]);
             }
 	  else if (node_name == XStr (ACE_TEXT ("resourcePort")))
@@ -246,7 +162,7 @@ namespace CIAO
 	  CORBA::ULong i (ir.resourcePort.length ());
 	  ir.resourcePort.length (i + 1);
 
-          ir.resurcePort[i] = XMLString::transcode (resourcePort);
+          ir.resourcePort[i] = XMLString::transcode (resourcePort);
         }
     }
 
@@ -279,7 +195,7 @@ namespace CIAO
     }
 
     /// handle resourceType attribute
-    void Req_Handler::process_resourceType
+    void IR_Handler::process_resourceType
       (const XMLCh* name, ::Deployment::ImplementationRequirement &ir)
     {
       if (name)

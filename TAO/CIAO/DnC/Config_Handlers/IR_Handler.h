@@ -56,42 +56,6 @@ namespace CIAO
 					     ::Deployment::ResourceUsageKind &kind);
     };
 
-    class Req_Handler
-    {
-    public:
-
-      /// constructor
-      Req_Handler (DOMDocument* doc, unsigned long filter_);
-
-      /// constructor
-      Req_Handler (DOMNodeIterator* iter, bool release = false);
-
-      /// destructor
-      ~Req_Handler();
-
-      /// Process the package configuration
-      void process_Requirement (::Deployment::Requirement &req);
-
-      /// Process the label attribute
-      void process_name (const XMLCh* name, ::Deployment::Requirement &req);
-
-      /// Process the label attribute
-      void process_resourceType (const XMLCh* name, ::Deployment::Requirement &req);
-
-    private:
-
-      DOMDocument* doc_;
-
-      DOMNode* root_;
-
-      unsigned long filter_;
-
-      DOMNodeIterator* iter_;
-
-      bool release_;
-
-    };
-
     class IR_Handler
     {
     public:
@@ -122,10 +86,10 @@ namespace CIAO
        */
 
       /// Process the label attribute
-      void process_name (const XMLCh* name, ::Deployment::Requirement &req);
+      void process_name (const XMLCh* name, ::Deployment::ImplementationRequirement &ir);
 
       /// Process the label attribute
-      void process_resourceType (const XMLCh* name, ::Deployment::Requirement &req);
+      void process_resourceType (const XMLCh* name, ::Deployment::ImplementationRequirement &ir);
 
     private:
 
