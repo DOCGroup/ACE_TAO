@@ -242,5 +242,9 @@ namespace TAO
 } // End namespace TAO
 
 
+#if defined (__ACE_INLINE__)
+# include "tao/Invocation_Adapter.inl"
+#endif /* __ACE_INLINE__ */
+
 #include /**/ "ace/post.h"
 #endif /*TAO_INVOCATION_ADAPTER_H*/

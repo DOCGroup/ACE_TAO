@@ -1,3 +1,18 @@
+Thu Oct 16 17:38:24 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Invocation_Adapter.inl: New file added to hold the
+	  constructor.  
+
+	* tao/Invocation_Adapter.cpp:
+	* tao/Invocation_Adapter.h: Moved the constructor into the inlined
+	  file. 
+
+	* tao/Profile_Transport_Resolver.cpp:
+	* tao/Profile_Transport_Resolver.inl: Moved the constructor into
+	  the inlined file. 
+
+	* tao/Synch_Invocation.h: Cosmetic fix.
+
 Fri Oct 17 04:32:27 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Invocation_Base.cpp:

@@ -11,34 +11,17 @@
 #include "Transport_Mux_Strategy.h"
 #include "Collocation_Proxy_Broker.h"
 
+#if !defined (__ACE_INLINE__)
+# include "tao/Invocation_Adapter.inl"
+#endif /* __ACE_INLINE__ */
+
+
 ACE_RCSID (tao,
            Invocation_Adapter,
            "$Id$")
 
 namespace TAO
 {
-  Invocation_Adapter::Invocation_Adapter (CORBA::Object *target,
-                                          Argument **args,
-                                          int arg_number,
-                                          char *operation,
-                                          int op_len,
-                                          Collocation_Proxy_Broker *p,
-                                          Invocation_Type type,
-                                          Invocation_Mode mode)
-    : target_ (target)
-    , args_ (args)
-    , number_args_  (arg_number)
-    , operation_ (operation)
-    , op_len_ (op_len)
-    , cpb_ (p)
-    , type_ (type)
-    , mode_ (mode)
-  {
-  }
-
-  // @@ CHECK to see whther we can throw any other exception other
-  // than CORBA exception since we are not having a throw spec.
-
   void
   Invocation_Adapter::invoke (TAO::Exception_Data *ex_data,
                               unsigned long ex_count
