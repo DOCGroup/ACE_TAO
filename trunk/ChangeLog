@@ -1,3 +1,8 @@
+Sun Apr 27 18:38:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Timer_Queue/TQTDDLL.dsp:
+          Set correct DLL name in the Release configuration
+
 Sat Apr 26 21:20:37 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/MEM_Acceptor.cpp (accept): Fixed how the accept acquite the
