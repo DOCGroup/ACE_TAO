@@ -24,7 +24,7 @@ Wed Jul 31 16:04:33 2002  Ossama Othman  <ossama@uci.edu>
 
 Wed Jul 31 17:53:40 2002  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tests\RTCORBA\Thread_Pool\run_test.pl (run_clients): Fixed an
+	* tests/RTCORBA/Thread_Pool/run_test.pl (run_clients): Fixed an
 	  error in the script which was causing unnecessary test failures.
 
 Wed Jul 31 16:40:52 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
@@ -38,7 +38,7 @@ Wed Jul 31 16:40:52 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 Wed Jul 31 16:22:59 2002  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tests\RTCORBA\Profile_And_Endpoint_Selection\run_test.pl: Made
+	* tests/RTCORBA/Profile_And_Endpoint_Selection/run_test.pl: Made
 	  it easier to run just IIOP or SHMIOP tests without having to run
 	  both.
 
@@ -635,8 +635,8 @@ Thu Jul 25 13:13:34 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 Thu Jul 25 14:35:36 2002  Irfan Pyarali  <irfan@oomworks.com>
 
-	* performance-tests\RTCorba\Thread_Pool\server.cpp:
-	* performance-tests\RTCorba\Thread_Pool\client.cpp:
+	* performance-tests/RTCorba/Thread_Pool/server.cpp:
+	* performance-tests/RTCorba/Thread_Pool/client.cpp:
 
 	  Removed old reference to
 	  tests/RTCORBA/Linear_Priority/readers.cpp and replaced it with
