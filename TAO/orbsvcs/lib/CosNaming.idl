@@ -50,7 +50,7 @@ module CosNaming
     BindingType	binding_type;                                  
   };
 
-  typedef sequence <Binding> BindingList;                                         
+  typedef sequence <Binding> BindingList;
 
   interface BindingIterator;
   // Forward declaration.
@@ -78,7 +78,7 @@ module CosNaming
       exception CannotProceed 
 	{
 	  //Commented out due to the bug in Orbix compiler               
-	  //NamingContext cxt;
+	  NamingContext cxt;
 	  Name rest_of_name;
 	};
       // Implementation has given up for some reason.  The client,
@@ -185,9 +185,6 @@ module CosNaming
       // they are returned with a BindingIterator.  In the naming
       // context does not contain any additional bindings <bi>
       // returned as null.
-
-      // void ref (in Object obj);
-      // temporary for debugging purposes.
     };
 
   interface BindingIterator 
