@@ -80,7 +80,7 @@ public:
   // CosTradingDynamic::DPEvalFailure exception on failure. If the
   // property index is undefined, the method returns a null pointer.
   
-  CORBA::TypeCode* property_type (int index);
+  CORBA::TypeCode_ptr property_type (int index);
   // Returns the type of the property whose index is <index>. If the
   // property is dynamic and the trader supports dynamic properties,
   // then the method returns the <returned_type> field of the
@@ -157,7 +157,7 @@ public:
   // TAO_Property_Evaluator, except property_value first discovers the 
   // index through a string matching lookup.
   
-  CORBA::TypeCode* property_type(const char* property_name);
+  CORBA::TypeCode_ptr property_type(const char* property_name);
   // This method is identical to its counterpart in
   // TAO_Property_Evaluator, exception property_type first discovers
   // the index through a string matching lookup.
