@@ -156,7 +156,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   // Add a skeleton for our _is_a method.
   *os << "static void _is_a_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &req," << be_nl
-      << "void *obj," << be_nl
+      << "void *servant," << be_nl
       << "void *servant_upcall" << be_nl
       << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ");\n" << be_uidt_nl;
@@ -164,7 +164,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   // Add a skeleton for our _non_existent method.
   *os << "static void _non_existent_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &req," << be_nl
-      << "void *obj," << be_nl
+      << "void *servant," << be_nl
       << "void *servant_upcall" << be_nl
       << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ");\n" << be_uidt_nl;
@@ -172,7 +172,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   // Add a skeleton for our _interface method.
   *os << "static void _interface_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &req," << be_nl
-      << "void *obj," << be_nl
+      << "void *servant," << be_nl
       << "void *servant_upcall" << be_nl
       << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ");\n" << be_uidt_nl;
