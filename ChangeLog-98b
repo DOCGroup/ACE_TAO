@@ -1,3 +1,10 @@
+Wed Aug 26 08:32:18 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Reactor_Performance_Test.cpp (create_reactor):
+          wrapped block in "if" statement with {} to prevent syntax
+          error.  Yet another example of why we should always use
+          {} in "if" statements :-)
+
 Wed Aug 26 07:54:49 1998  J. Russell Noseworthy <rnosewor@objectsciences.com>
 
         * ace/OS.{i,cpp} (rwlock_init): use native ::rwlock_init on Solaris,
