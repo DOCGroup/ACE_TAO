@@ -141,6 +141,45 @@ ACE_OS::flock_init (ACE_OS::ace_flock_t *lock,
 }
 
 ACE_INLINE int
+ACE_OS::flock_unlock (ACE_OS::ace_flock_t *lock,
+                      short whence,
+                      off_t start,
+                      off_t len)
+{
+  ACE_OS_TRACE ("ACE_OS::flock_unlock");
+#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+  ACE_OS::flock_adjust_params (lock, whence, start, len);
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::UnlockFile (lock->handle_,
+                                                        lock->overlapped_.Offset,
+                                                        0,
+                                                        len,
+                                                        0),
+                                          ace_result_), int, -1);
+#elif defined (CHORUS)
+  ACE_UNUSED_ARG (whence);
+  ACE_UNUSED_ARG (start);
+  ACE_UNUSED_ARG (len);
+  return ACE_OS::mutex_unlock (lock->process_lock_);
+#elif defined (ACE_LACKS_FILELOCKS)
+  ACE_UNUSED_ARG (lock);
+  ACE_UNUSED_ARG (whence);
+  ACE_UNUSED_ARG (start);
+  ACE_UNUSED_ARG (len);
+  ACE_NOTSUP_RETURN (-1);
+#else
+  lock->lock_.l_whence = whence;
+  lock->lock_.l_start = start;
+  lock->lock_.l_len = len;
+  lock->lock_.l_type = F_UNLCK;   // Unlock file.
+
+  // release lock
+  ACE_OSCALL_RETURN (ACE_OS::fcntl (lock->handle_, F_SETLK,
+                                    ACE_reinterpret_cast (long, &lock->lock_)),
+                     int, -1);
+#endif /* ACE_WIN32 */
+}
+
+ACE_INLINE int
 ACE_OS::flock_destroy (ACE_OS::ace_flock_t *lock,
                        int unlink_file)
 {
@@ -342,45 +381,6 @@ ACE_OS::flock_trywrlock (ACE_OS::ace_flock_t *lock,
 # endif /* ! defined (ACE_PSOS) */
 
   return result;
-#endif /* ACE_WIN32 */
-}
-
-ACE_INLINE int
-ACE_OS::flock_unlock (ACE_OS::ace_flock_t *lock,
-                      short whence,
-                      off_t start,
-                      off_t len)
-{
-  ACE_OS_TRACE ("ACE_OS::flock_unlock");
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
-  ACE_OS::flock_adjust_params (lock, whence, start, len);
-  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::UnlockFile (lock->handle_,
-                                                        lock->overlapped_.Offset,
-                                                        0,
-                                                        len,
-                                                        0),
-                                          ace_result_), int, -1);
-#elif defined (CHORUS)
-  ACE_UNUSED_ARG (whence);
-  ACE_UNUSED_ARG (start);
-  ACE_UNUSED_ARG (len);
-  return ACE_OS::mutex_unlock (lock->process_lock_);
-#elif defined (ACE_LACKS_FILELOCKS)
-  ACE_UNUSED_ARG (lock);
-  ACE_UNUSED_ARG (whence);
-  ACE_UNUSED_ARG (start);
-  ACE_UNUSED_ARG (len);
-  ACE_NOTSUP_RETURN (-1);
-#else
-  lock->lock_.l_whence = whence;
-  lock->lock_.l_start = start;
-  lock->lock_.l_len = len;
-  lock->lock_.l_type = F_UNLCK;   // Unlock file.
-
-  // release lock
-  ACE_OSCALL_RETURN (ACE_OS::fcntl (lock->handle_, F_SETLK,
-                                    ACE_reinterpret_cast (long, &lock->lock_)),
-                     int, -1);
 #endif /* ACE_WIN32 */
 }
 
