@@ -18,16 +18,16 @@ Dispatcher_Task::init ()
     {
     case FIFO_DISPATCHING:
       ACE_NEW_RETURN (
-           this->the_queue_,
-           ACE_Message_Queue<ACE_SYNCH>,
-           -1);
+          this->the_queue_,
+          ACE_Message_Queue<ACE_SYNCH>,
+          -1);
       break;
 
     case DEADLINE_DISPATCHING:
       ACE_NEW_RETURN (
-           this->the_queue_,
-           ACE_Dynamic_Message_Queue<ACE_SYNCH> (deadline_msg_strategy_),
-           -1);
+          this->the_queue_,
+          ACE_Dynamic_Message_Queue<ACE_SYNCH> (deadline_msg_strategy_),
+          -1);
       break;
 
     case LAXITY_DISPATCHING:
@@ -78,7 +78,6 @@ Dispatcher_Task::svc (void)
       int result = command->execute ();
 
       if (command->can_be_deleted ())
-        //@@what if it was allocated thru an allocator?
         command->destroy ();
 
       ACE_Message_Block::release (mb);
