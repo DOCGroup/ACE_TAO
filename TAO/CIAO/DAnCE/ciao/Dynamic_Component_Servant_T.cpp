@@ -16,10 +16,11 @@ namespace CIAO
   Dynamic_Component_Servant<COMP_SVNT, COMP_EXEC, COMP_EXEC_VAR, 
                             EXEC, EXEC_VAR, COMP>
     ::Dynamic_Component_Servant 
-        (EXEC *exe, Components::CCMHome_ptr home,
+        (Components::EnterpriseComponent_ptr ec,
+         Components::CCMHome_ptr home,
          Swapping_Container *c)
       :Dynamic_Component_Servant_Base (c),
-       executor_ (EXEC::_duplicate (exe)),
+       executor_ (Components::EnterpriseComponent::_duplicate (ec)),
        home_ (Components::CCMHome::_duplicate (home))
   {
   }
@@ -45,8 +46,12 @@ namespace CIAO
     <COMP_SVNT, COMP_EXEC, COMP_EXEC_VAR, 
      EXEC, EXEC_VAR, COMP>::create (void)
   {
+    CIAO::Swap_Exec_var swap_exec = CIAO::Swap_Exec::_narrow
+       (this->executor_.in ()
+        ACE_ENV_ARG_PARAMETER);
+
     ::Components::EnterpriseComponent_var ciao_ec =
-      this->executor_->create (ACE_ENV_SINGLE_ARG_PARAMETER);
+      swap_exec->incarnate (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK_RETURN (COMP::_nil ());
 
     COMP_EXEC_VAR ciao_comp = COMP_EXEC::_narrow (ciao_ec.in ()

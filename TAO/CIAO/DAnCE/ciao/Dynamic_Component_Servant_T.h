@@ -19,6 +19,7 @@
 #include /**/ "ace/pre.h"
 
 #include "Dynamic_Component_Servant_Base.h"
+#include "SwapExecC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -36,7 +37,8 @@ namespace CIAO
     : public virtual Dynamic_Component_Servant_Base
   {
   public:
-    Dynamic_Component_Servant (EXEC *exe, Components::CCMHome_ptr home,
+    Dynamic_Component_Servant (Components::EnterpriseComponent_ptr ec,
+                               Components::CCMHome_ptr home,
                                Swapping_Container *c);
 
     virtual ~Dynamic_Component_Servant (void);
@@ -44,8 +46,7 @@ namespace CIAO
     virtual PortableServer::Servant create (void);
 
   protected:
-    EXEC_VAR executor_;
-
+    Components::EnterpriseComponent_var executor_;
     Components::CCMHome_var home_;
   };
 }
