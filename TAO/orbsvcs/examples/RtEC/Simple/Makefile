@@ -58,11 +58,13 @@ endif
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Service.o .obj/Service.so .shobj/Service.o .shobj/Service.so: Service.cpp \
+.obj/Service.o .obj/Service.o .obj/Service.o .obj/Service.o: Service.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Event_Channel.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Factory.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/event_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -328,6 +330,14 @@ endif
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
+ $(TAO_ROOT)/tao/Cache_Entries.h \
+ $(TAO_ROOT)/tao/Base_Connection_Property.h \
+ $(TAO_ROOT)/tao/Endpoint.h \
+ $(TAO_ROOT)/tao/Endpoint.i \
+ $(TAO_ROOT)/tao/Base_Connection_Property.inl \
+ $(TAO_ROOT)/tao/Cache_Entries.inl \
+ $(TAO_ROOT)/tao/Connection_Cache_Manager.inl \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/debug.h \
@@ -429,7 +439,7 @@ endif
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i
 
-.obj/Consumer.o .obj/Consumer.so .shobj/Consumer.o .shobj/Consumer.so: Consumer.cpp Consumer.h \
+.obj/Consumer.o .obj/Consumer.o .obj/Consumer.o .obj/Consumer.o: Consumer.cpp Consumer.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
@@ -439,6 +449,8 @@ endif
  $(TAO_ROOT)/tao/CDR.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -704,6 +716,14 @@ endif
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
+ $(TAO_ROOT)/tao/Cache_Entries.h \
+ $(TAO_ROOT)/tao/Base_Connection_Property.h \
+ $(TAO_ROOT)/tao/Endpoint.h \
+ $(TAO_ROOT)/tao/Endpoint.i \
+ $(TAO_ROOT)/tao/Base_Connection_Property.inl \
+ $(TAO_ROOT)/tao/Cache_Entries.inl \
+ $(TAO_ROOT)/tao/Connection_Cache_Manager.inl \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/debug.h \
@@ -784,7 +804,7 @@ endif
  $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.i
 
-.obj/Supplier.o .obj/Supplier.so .shobj/Supplier.o .shobj/Supplier.so: Supplier.cpp Supplier.h \
+.obj/Supplier.o .obj/Supplier.o .obj/Supplier.o .obj/Supplier.o: Supplier.cpp Supplier.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
@@ -794,6 +814,8 @@ endif
  $(TAO_ROOT)/tao/CDR.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1059,6 +1081,14 @@ endif
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
+ $(TAO_ROOT)/tao/Cache_Entries.h \
+ $(TAO_ROOT)/tao/Base_Connection_Property.h \
+ $(TAO_ROOT)/tao/Endpoint.h \
+ $(TAO_ROOT)/tao/Endpoint.i \
+ $(TAO_ROOT)/tao/Base_Connection_Property.inl \
+ $(TAO_ROOT)/tao/Cache_Entries.inl \
+ $(TAO_ROOT)/tao/Connection_Cache_Manager.inl \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/debug.h \
