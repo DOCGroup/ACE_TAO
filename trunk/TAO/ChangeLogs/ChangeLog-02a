@@ -1,3 +1,10 @@
+Sun Dec 31 13:59:35 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Portable_Interceptors/ForwardRequest/server.cpp (main):
+
+	  Fixed warnings about passing "CORBA::String_var" through a "..."
+	  vararg that g++ was exhibiting.
+
 Sun Dec 31 13:45:15 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Pluggable_Messaging_Utils.cpp (TAO_Pluggable_Reply_Params):
