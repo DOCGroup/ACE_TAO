@@ -148,9 +148,6 @@ private:
   TAO_ObjectKey object_key_;
   // object_key associated with this profile.
 
-  TAO_MProfile *forward_to_;
-  // list of profiles which we should try forwarding on.
-
   IOP::TaggedProfile tagged_profile_;
   // Our tagged profile info
 };

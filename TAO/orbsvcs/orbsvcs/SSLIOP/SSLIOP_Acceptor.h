@@ -72,7 +72,7 @@ public:
   virtual int close (void);
   virtual int create_mprofile (const TAO_ObjectKey &object_key,
                                TAO_MProfile &mprofile);
-  virtual int is_collocated (const TAO_Profile* profile);
+  virtual int is_collocated (const TAO_Endpoint* endpoint);
 
 private:
   int open_i (TAO_ORB_Core* orb_core,
@@ -85,6 +85,11 @@ private:
   int init_tcp_properties (void);
   // Obtain TCP properties that must be used by this acceptor, i.e.,
   // initialize <tcp_properties_>.
+
+  int create_rt_mprofile (const TAO_ObjectKey &object_key,
+                          TAO_MProfile &mprofile);
+  // Rather than creating a profile for each endpoint, this version of
+  // <create_mprofile> adds all endpoints to a single SSLIOP profile.
 
 private:
   TAO_SSLIOP_BASE_ACCEPTOR ssl_acceptor_;

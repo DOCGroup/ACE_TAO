@@ -14,7 +14,7 @@ ACE_RCSID(tao, IIOP_Endpoint, "$Id$")
 
 TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const ACE_INET_Addr &addr,
                                       int use_dotted_decimal_addresses)
-  : TAO_Endpoint (TAO_TAG_IIOP_PROFILE), 
+  : TAO_Endpoint (TAO_TAG_IIOP_PROFILE),
     host_ (),
     port_ (0),
     object_addr_ (addr),
@@ -27,7 +27,7 @@ TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const ACE_INET_Addr &addr,
 TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const char *host,
                                       CORBA::UShort port,
                                       const ACE_INET_Addr &addr)
-  : TAO_Endpoint (TAO_TAG_IIOP_PROFILE), 
+  : TAO_Endpoint (TAO_TAG_IIOP_PROFILE),
     host_ (),
     port_ (port),
     object_addr_ (addr),
@@ -39,7 +39,7 @@ TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const char *host,
 }
 
 TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (void)
-  : TAO_Endpoint (TAO_TAG_IIOP_PROFILE), 
+  : TAO_Endpoint (TAO_TAG_IIOP_PROFILE),
     host_ (),
     port_ (0),
     object_addr_ (),
@@ -51,7 +51,7 @@ TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (void)
 TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const char *host,
                                       CORBA::UShort port,
                                       CORBA::Short priority)
-  : TAO_Endpoint (TAO_TAG_IIOP_PROFILE), 
+  : TAO_Endpoint (TAO_TAG_IIOP_PROFILE),
     host_ (),
     port_ (port),
     object_addr_ (),
@@ -133,3 +133,8 @@ TAO_IIOP_Endpoint::reset_hint (void)
     this->hint_->cleanup_hint ((void **) &this->hint_);
 }
 
+TAO_Endpoint *
+TAO_IIOP_Endpoint::next (void)
+{
+  return this->next_;
+}

@@ -557,6 +557,7 @@ TAO_UIOP_Profile::decode_endpoints (void)
 
       // Extract endpoints sequence.
       TAO_UIOPEndpointSequence endpoints;
+
       if ((in_cdr >> endpoints) == 0)
         return 0;
 
@@ -564,9 +565,13 @@ TAO_UIOP_Profile::decode_endpoints (void)
       // extracted as part of the standard iiop decoding.
       this->endpoint_.priority (endpoints[0].priority);
 
-      // Start with the second endpoint, because the first endpoint is
-      // always extracted through standard iiop profile body.
-      for (CORBA::ULong i = 1; i < endpoints.length (); ++i)
+      // The first endpoint is always extracted through standard
+      // profile body, so skip it.  Also, start from the end of
+      // the sequence to preserve endpoint order, since "add_endpoint"
+      // reverses the order of endpoints.
+      for (CORBA::ULong i = endpoints.length () - 1;
+           i > 0;
+           --i)
         {
           TAO_UIOP_Endpoint *endpoint = 0;
           ACE_NEW_RETURN (endpoint,

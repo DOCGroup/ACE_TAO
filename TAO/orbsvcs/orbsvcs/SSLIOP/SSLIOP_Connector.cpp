@@ -446,32 +446,29 @@ TAO_SSLIOP_Connector::close (void)
 }
 
 int
-TAO_SSLIOP_Connector::connect (TAO_Profile *pfile,
+TAO_SSLIOP_Connector::connect (TAO_Endpoint *endpoint,
                                TAO_Transport *&transport,
                                ACE_Time_Value *max_wait_time)
 {
+  if (endpoint->tag () != TAO_TAG_IIOP_PROFILE)
+    return -1;
+
+  TAO_SSLIOP_Endpoint *ssl_endpoint =
+    ACE_dynamic_cast (TAO_SSLIOP_Endpoint *,
+                      endpoint);
+  if (endpoint == 0)
+    return -1;
+
   // @@ Use the policies to decide if SSL is the right protocol...
-  if (!this->default_is_ssl_)
-    return this->TAO_IIOP_Connector::connect (pfile,
-					      transport,
-					      max_wait_time);
-
-  if (pfile->tag () != TAO_TAG_IIOP_PROFILE)
-    return -1;
-
-  TAO_SSLIOP_Profile *profile =
-    ACE_dynamic_cast (TAO_SSLIOP_Profile *,
-                      pfile);
-  if (profile == 0)
-    return -1;
-
-  if (profile->ssl_port () == 0)
-    return this->TAO_IIOP_Connector::connect (pfile,
-					      transport,
-					      max_wait_time);
+  if (!this->default_is_ssl_
+      || ssl_endpoint->ssl_port () == 0)
+    return this->TAO_IIOP_Connector::connect
+      (ssl_endpoint->iiop_endpoint (),
+       transport,
+       max_wait_time);
 
   ACE_INET_Addr remote_address =
-    profile->object_addr ();
+    ssl_endpoint->iiop_endpoint ()->object_addr ();
 
   // Verify that the remote ACE_INET_Addr was initialized properly.
   // Failure can occur if hostname lookup failed when initializing the
@@ -490,7 +487,7 @@ TAO_SSLIOP_Connector::connect (TAO_Profile *pfile,
       return -1;
     }
 
-  remote_address.set_port_number (profile->ssl_port ());
+  remote_address.set_port_number (ssl_endpoint->ssl_port ());
 
   TAO_SSLIOP_Client_Connection_Handler *svc_handler = 0;
   int result = 0;
@@ -504,7 +501,7 @@ TAO_SSLIOP_Connector::connect (TAO_Profile *pfile,
       // object; but we obtain the transport in the <svc_handler>
       // variable. Other threads may modify the hint, but we are not
       // affected.
-      result = this->base_connector_.connect (profile->ssl_hint (),
+      result = this->base_connector_.connect (ssl_endpoint->ssl_hint (),
                                               svc_handler,
                                               remote_address,
                                               synch_options);
@@ -515,7 +512,7 @@ TAO_SSLIOP_Connector::connect (TAO_Profile *pfile,
       // object; but we obtain the transport in the <svc_handler>
       // variable. Other threads may modify the hint, but we are not
       // affected.
-      result = this->base_connector_.connect (profile->ssl_hint (),
+      result = this->base_connector_.connect (ssl_endpoint->ssl_hint (),
                                               svc_handler,
                                               remote_address);
     }
@@ -526,8 +523,8 @@ TAO_SSLIOP_Connector::connect (TAO_Profile *pfile,
       if (TAO_orbdebug)
         {
           char buffer [MAXHOSTNAMELEN + 6 + 1];
-          profile->addr_to_string (buffer,
-                                   sizeof(buffer) - 1);
+          endpoint->addr_to_string (buffer,
+                                    sizeof (buffer) - 1);
           ACE_DEBUG ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) %s:%u, connection to ")
                       ACE_TEXT ("%s failed (%p)\n"),
@@ -540,22 +537,6 @@ TAO_SSLIOP_Connector::connect (TAO_Profile *pfile,
     }
 
   transport = svc_handler->transport ();
-
-  // Now that we have the client connection handler object we need to
-  // set the right messaging protocol for in the client side transport.
-  const TAO_GIOP_Version& version = profile->version ();
-  int ret_val = transport->messaging_init (version.major,
-                                           version.minor);
-  if (ret_val == -1)
-    {
-      if (TAO_debug_level > 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%N|%l|%p|%t) messaging_init() ")
-                      ACE_TEXT ("failed\n")));
-        }
-      return -1;
-    }
 
   return 0;
 }

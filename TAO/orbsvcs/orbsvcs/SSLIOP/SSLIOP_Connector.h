@@ -93,7 +93,7 @@ public:
   // Pluggable.h
   virtual int open (TAO_ORB_Core *orb_core);
   virtual int close (void);
-  virtual int connect (TAO_Profile *profile,
+  virtual int connect (TAO_Endpoint *endpoint,
 		       TAO_Transport *&transport,
 		       ACE_Time_Value *max_wait_time);
   virtual TAO_Profile *create_profile (TAO_InputCDR& cdr);
