@@ -1,3 +1,11 @@
+Thu Dec  4 18:37:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/tests/AVStreams/Component_Switching/receiver.cpp:
+	  Fixed incorrect method name in ACE_PRINT_EXCEPTION
+
+	* orbsvcs/tests/AVStreams/Component_Switching/receiver.{h,cpp}:
+	  Fixed emulated exception build
+
 Thu Dec  4 16:45:34 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* orbsvcs/tests/Bug_1630_Regression/testclient.cpp:
