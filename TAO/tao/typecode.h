@@ -69,6 +69,9 @@ class ACE_Svc_Export CORBA_TypeCode : public IUnknown
   // Implements the CORBA::TypeCode interface specified by CORBA 2.0 spec
 public:
 
+  // Help debug free-non-heap-memory problems
+  void operator delete (void*);
+
   typedef CORBA_Bounds        Bounds;
   typedef CORBA_BadKind       BadKind;
   // As per the spec, these two exception classes are supposed to be nested

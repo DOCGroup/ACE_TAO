@@ -1,3 +1,19 @@
+Thu Aug 28 14:04:44 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tao/typecode.cpp (TC_Private_State): Relocated the delete of
+ 	tc_discriminator_type_ to be after the deletion of the label list.
+  	This is because the discriminator will be inside each of the
+ 	CORBA::Any instances within the label list, and deleting it before
+ 	deleting the label list results in extreme badness.
+
+	* tao/typecode.* (operator delete): Added CORBA_TypeCode::operator
+ 	delete() to simplify deletion of both automatically and
+ 	dynamically allocated instances of CORBA_TypeCode.  This fixes the
+ 	problem of freeing non-heap memory.
+
+	* tao/nvlist.h (CORBA_NamedValue): Initialized refcount_ in the
+ 	CTOR.
+
 Mon Aug 18 16:39:29 1997  Carlos O'Ryan  <coryan@mambo.cs.wustl.edu>
 
 	* tao/Makefile: 
