@@ -1,3 +1,11 @@
+Fri Sep  5 16:13:59 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/IFR_Client/IFR_Client_Adapter_Impl.cpp: Fixed a simple error
+	  with usage of ACE exception macros.
+
+	* tao/Messaging/Makefile: Removed a file from the list of files
+	  used for this library.
+
 Fri Sep  5 13:48:46 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Valuetype/TAO_Valuetype.dsp:
@@ -94,8 +102,8 @@ Fri Sep  5 09:46:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/ORB_Core.cpp:
 	* tao/ORB_Core.h:
 	* tao/Stub.cpp: Removed dependency on TAO_GIOP_Invocation
-	  class. In the process we have broken a few things thwt will be
-	  fixed in the next round. 
+	  class. In the process we have broken a few things that will be
+	  fixed in the next rounds. 
 	
 	* tao/Default_Endpoint_Selector_Factory.cpp:
 	* tao/Default_Endpoint_Selector_Factory.h:
