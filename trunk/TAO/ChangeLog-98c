@@ -1,5 +1,10 @@
 Mon Nov 02 12:34:20 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* performance-tests/Demux/Demux.dsw:
+	* performance-tests/Demux/{server,client}.dsp:
+	* performance-tests/Demux/CodeGen/CodeGen.dsp: New
+	  project/workspace files.
+
 	* performance-tests/Demux/demux_test_client.cpp (run_random_test):
 	  Replaced srand48 () and lrand48 () with ACE_OS::srand () and
 	  ACE_OS::rand ().
