@@ -65,9 +65,5 @@ TAO_Requires_PortableGroup_Initializer = TAO_PortableGroup_Loader::Initializer (
 
 #endif /* ACE_HAS_BROKEN_STATIC_CONSTRUCTORS */
 
-//#define TAO_PORTABLEGROUP_SAFE_INCLUDE
-//#include "IORC.h"
-//#undef TAO_IORMANIP_SAFE_INCLUDE
-
 #include "ace/post.h"
 #endif /* TAO_PORTABLEGROUP_LOADER_H */
