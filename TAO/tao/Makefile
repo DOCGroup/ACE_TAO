@@ -180,6 +180,7 @@ ORB_CORE_FILES = \
   MProfile \
   Stub \
   Typecode \
+  AbstractBase \
   ValueBase \
   ValueFactory \
   ValueFactory_Map \

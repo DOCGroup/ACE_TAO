@@ -21,6 +21,7 @@ DIRS = \
 	RTPortableServer
 
 OBJFILES = \
+	$(OBJDIR)\AbstractBase.obj \
 	$(OBJDIR)\Abstract_Servant_Base.obj \
 	$(OBJDIR)\Acceptor_Filter.obj \
 	$(OBJDIR)\Acceptor_Registry.obj \

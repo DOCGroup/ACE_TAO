@@ -10,8 +10,6 @@ NAME = tao_ifr
 
 OBJFILES = \
 	$(OBJDIR)\tao_ifr.obj \
-	$(OBJDIR)\drv_init_ifr.obj \
-	$(OBJDIR)\drv_private_ifr.obj \
 	$(OBJDIR)\drv_args_ifr.obj \
 	$(OBJDIR)\drv_preproc_ifr.obj
 
