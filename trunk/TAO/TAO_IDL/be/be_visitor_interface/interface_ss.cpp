@@ -164,14 +164,14 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << "void " << full_skel_name
       << "::_is_a_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &_tao_server_request, " << be_nl
-      << "void * _tao_object_reference," << be_nl
+      << "void * _tao_servant," << be_nl
       << "void * /* Servant_Upcall */" << be_nl
       << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ")" << be_uidt_nl;
   *os << "{" << be_idt_nl;
   *os << "TAO_InputCDR &_tao_in = _tao_server_request.incoming ();" << be_nl;
   *os << full_skel_name << " *_tao_impl = ("
-      << full_skel_name << " *) _tao_object_reference;" << be_nl;
+      << full_skel_name << " *) _tao_servant;" << be_nl;
   *os << "CORBA::Boolean _tao_retval = 0;" << be_nl;
   *os << "CORBA::String_var value;" << be_nl;
   *os << "if (!(_tao_in >> value.out ()))" << be_idt_nl;
@@ -210,13 +210,13 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << "void " << full_skel_name
       << "::_non_existent_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &_tao_server_request, " << be_nl
-      << "void * _tao_object_reference," << be_nl
+      << "void * _tao_servant," << be_nl
       << "void * /* Servant_Upcall */" << be_nl
       << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ")" << be_uidt_nl;
   *os << "{" << be_idt_nl;
   *os << full_skel_name << " *_tao_impl = ("
-      << full_skel_name << " *) _tao_object_reference;" << be_nl;
+      << full_skel_name << " *) _tao_servant;" << be_nl;
   *os << "CORBA::Boolean _tao_retval =" << be_idt_nl
       << "_tao_impl->_non_existent (ACE_ENV_SINGLE_ARG_PARAMETER);"
       << be_uidt_nl;
@@ -237,13 +237,13 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << "void " << full_skel_name
       << "::_interface_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &_tao_server_request, " << be_nl
-      << "void * _tao_object_reference," << be_nl
+      << "void * _tao_servant," << be_nl
       << "void * /* Servant_Upcall */" << be_nl
       << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ")" << be_uidt_nl;
   *os << "{" << be_idt_nl;
   *os << full_skel_name << " *_tao_impl = ("
-      << full_skel_name << " *) _tao_object_reference;" << be_nl
+      << full_skel_name << " *) _tao_servant;" << be_nl
       << "CORBA_InterfaceDef_ptr _tao_retval = 0;" << be_nl
       << "CORBA::Boolean _tao_result = 0;" << be_nl << be_nl;
   *os << "TAO_IFR_Client_Adapter *_tao_adapter =" << be_idt_nl
