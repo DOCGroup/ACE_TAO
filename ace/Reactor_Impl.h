@@ -76,6 +76,9 @@ public:
   // will iterate and dispatch the <ACE_Event_Handlers> that are
   // passed in via the notify queue before breaking out of its event
   // loop.
+
+  virtual void dump (void) const = 0;
+  // Dump the state of an object.
 };
 
 class ACE_Export ACE_Reactor_Impl

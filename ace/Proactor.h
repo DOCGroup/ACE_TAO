@@ -44,7 +44,7 @@ class ACE_Proactor;
 class ACE_Export ACE_Proactor_Handle_Timeout_Upcall
 {
   // = TITLE
-  //      Functor for Timer_Queues.
+  //      Functor for <ACE_Timer_Queue>.
   //
   // = DESCRIPTION
   //      This class implements the functor required by the Timer
@@ -59,7 +59,7 @@ public:
           TIMER_QUEUE;
 
   ACE_Proactor_Handle_Timeout_Upcall (void);
-  // Constructor
+  // Constructor.
 
   int timeout (TIMER_QUEUE &timer_queue,
 	       ACE_Handler *handler,
@@ -88,14 +88,16 @@ protected:
 class ACE_Export ACE_Proactor : public ACE_Event_Handler
 {
   // = TITLE
-  //     A Proactor for asynchronous I/O events.
+  //     A manager for asynchronous event demultiplexing.
   //
   // = DESCRIPTION
-  //     A manager for the I/O completion port.
+  //     See the Proactor pattern description at
+  //     http://www.cs.wustl.edu/~schmidt/proactor.ps.gz for more
+  //     details.
 public:
   friend class ACE_Proactor_Timer_Handler;
-  // Timer Handler has special privileges because
-  // Access needed to: thr_mgr_
+  // Timer Handler has special privileges because Access needed to:
+  // thr_mgr_
 
   friend class ACE_Proactor_Handle_Timeout_Upcall;
   // Access needed to: Asynch_Timer, and completion_port_.
@@ -265,6 +267,8 @@ public:
 
 protected:
 #if defined (ACE_HAS_AIO_CALLS)
+  // @@ Alex, you can probably just give "friendship" for the whole
+  // class, not just the one method.
   friend int ACE_Asynch_Operation::register_aio_with_proactor (aiocb *aiocb_ptr);
   // This call is for POSIX <aio_> calls.  This method is used by
   // <ACE_Asynch_Operation> to store some information with the
@@ -292,6 +296,9 @@ protected:
   // Dispatch a single set of events.  If <milli_seconds> elapses
   // before any events occur, return.
 
+  // @@ Alex, many C++ compilers don't like nested classes.  Can you
+  // please bring this into the "outer scope" and add an "ACE_" prefix
+  // to it?
   class ACE_Export Asynch_Timer : protected ACE_Asynch_Result
     {
       // = TITLE
@@ -321,13 +328,16 @@ protected:
   };
 
 #if defined (ACE_HAS_AIO_CALLS)
-  // Let us have an array to keep track of the all the aio's issued
-  // currently. My intuition is to limit the array size to Maximum RT
-  // signals that can be queued in a process. That should be the upper
-  // limit how many aio can be pending at a time.
+  // Use an array to keep track of the all the aio's issued
+  // currently. We'll limit the array size to Maximum RT signals that
+  // can be queued in a process.  This is the upper limit how many aio
+  // operations can be pending at a time.
 #if defined (_POSIX_RTSIG_MAX)
   aiocb *aiocb_list_ [_POSIX_RTSIG_MAX];
 #else /* _POSIX_RTSIG_MAX */
+  // @@ Alex, please don't use "magic numbers" like 8.  Make sure to
+  // put this kind of value in the OS.h file somewhere and make it a
+  // symbolic constant.
   // Minimum is 8.
   struct aiocb *aiocb_list_ [8];
 #endif /* AIO_LIST_AIO_MAX */
@@ -344,8 +354,11 @@ protected:
 #endif /* ACE_HAS_AIO_CALLS */
 
   size_t number_of_threads_;
-  // This number is passed to the <CreatIOCompletionPort> system
-  // call.
+  // This number is passed to the <CreatIOCompletionPort> system call.
+  // @@ Alex, is this WinNT specific?  If so, can you please move it
+  // into the ACE_WIN32 section?  Better yet is to use the Bridge
+  // pattern and make separate subclasses for the implementation to
+  // remove the need for #ifdefs.
 
   Timer_Queue *timer_queue_;
   // Timer Queue.

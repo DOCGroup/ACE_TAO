@@ -639,7 +639,7 @@ ACE_Select_Reactor_Notify::max_notify_iterations (int iterations)
 }
 
 int
-ACE_Select_Reactor_Notify::max_notify_iterations (int iterations)
+ACE_Select_Reactor_Notify::max_notify_iterations (void)
 {
   return this->max_notify_iterations_;
 }
@@ -1081,7 +1081,7 @@ ACE_Select_Reactor::set_timer_queue (ACE_Timer_Queue *timer_queue)
 ACE_Select_Reactor::ACE_Select_Reactor (ACE_Sig_Handler *sh,
                                         ACE_Timer_Queue *tq,
                                         int disable_notify_pipe,
-                                        ACE_Select_Reactor_Notify *notify)
+                                        ACE_Reactor_Notify *notify)
   : handler_rep_ (*this),
     timer_queue_ (0),
     delete_timer_queue_ (0),
@@ -1116,7 +1116,7 @@ ACE_Select_Reactor::ACE_Select_Reactor (size_t size,
                                         ACE_Sig_Handler *sh,
                                         ACE_Timer_Queue *tq,
                                         int disable_notify_pipe,
-                                        ACE_Select_Reactor_Notify *notify)
+                                        ACE_Reactor_Notify *notify)
   : handler_rep_ (*this),
     timer_queue_ (0),
     delete_timer_queue_ (0),
@@ -1128,7 +1128,7 @@ ACE_Select_Reactor::ACE_Select_Reactor (size_t size,
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
     token_ (*this),
 #endif /* ACE_MT_SAFE */
-    lock_adapter_ (token_),
+    lock_adapter_ (token_)
 {
   ACE_TRACE ("ACE_Select_Reactor::ACE_Select_Reactor");
 
