@@ -1748,3 +1748,12 @@ ACE_Log_Msg::getpid (void) const
 ACE_Log_Msg_Callback::~ACE_Log_Msg_Callback (void)
 {
 }
+
+ACE_Log_Msg::log_priority_enabled (ACE_Log_Priority log_priority,
+                                   const ASYS_TCHAR *, 
+                                   ...)
+{
+  return ACE_BIT_ENABLED (this->priority_mask_ |
+                          ACE_Log_Msg::process_priority_mask_,
+                          log_priority);
+}
