@@ -1,5 +1,14 @@
 Fri Jul 28 00:23:37 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
+	* ace/OS.h
+	  Slightly modified semaphore code for pace.
+
+	* ace/OS.i
+	  Updated cond_timedwait in ACE_HAS_PACE to
+	  initialize name_ to null.
+
+	  Linux uses native gettimeofday.
+
 	* docs/ACE-SSL.html
 	  Updated with new information about obtaining ACE+SSL.
 

@@ -1774,9 +1774,27 @@ typedef const struct rlimit ACE_SETRLIMIT_TYPE;
   ACE_Read_Guard< MUTEX > OBJ (LOCK); \
     if (OBJ.locked () == 0) return RETURN;
 
-# if defined (ACE_HAS_POSIX_SEM)
-#   include /**/ <semaphore.h>
+#if defined (ACE_HAS_PACE)
+# include "pace/semaphore.h"
+#   if !defined (SEM_FAILED)
+#     define SEM_FAILED ((pace_sem_t *) -1)
+#   endif  /* !SEM_FAILED */
 
+
+typedef struct
+{
+  pace_sem_t *sema_;
+  // Pointer to semaphore handle.  This is allocated by ACE if we are
+  // working with an unnamed POSIX semaphore or by the OS if we are
+  // working with a named POSIX semaphore.
+
+  char *name_;
+  // Name of the semaphore (if this is non-NULL then this is a named
+  // POSIX semaphore, else its an unnamed POSIX semaphore).
+} ACE_sema_t;
+
+# elif defined (ACE_HAS_POSIX_SEM)
+#   include /**/ <semaphore.h>
 #   if !defined (SEM_FAILED) && !defined (ACE_LACKS_NAMED_POSIX_SEM)
 #     define SEM_FAILED ((sem_t *) -1)
 #   endif  /* !SEM_FAILED */
@@ -1792,7 +1810,7 @@ typedef struct
   // Name of the semaphore (if this is non-NULL then this is a named
   // POSIX semaphore, else its an unnamed POSIX semaphore).
 } ACE_sema_t;
-# endif /* ACE_HAS_POSIX_SEM */
+# endif /* ACE_HAS_PACE */
 
 struct cancel_state
 {
