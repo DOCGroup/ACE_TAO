@@ -2,6 +2,11 @@ Fri Aug 06 06:55:49 1999  Jody Hagins <jody@atdesk.com>
 
         * include/makeinclude/rules.local.GNU (depend.local): added
           ACE_DEPEND_SED_CMD hook, so that users can add sed scripts.
+          An example is to use relative instead of absolute paths
+          in dependencies.  I put this into it to get the desired
+          (site-specific) functionality:
+
+          USER_DEPEND_SED_CMD=-e "s;$(PRISM_ROOT);\$$(PRISM_ROOT);g"
 
 Thu Aug  5 22:26:18 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
 
