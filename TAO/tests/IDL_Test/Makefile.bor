@@ -25,6 +25,8 @@ OBJFILES = \
 	$(OBJDIR)\interfaceS.obj \
 	$(OBJDIR)\keywordsC.obj \
 	$(OBJDIR)\keywordsS.obj \
+        $(OBJDIR)\paramsC.obj \
+        $(OBJDIR)\paramsS.obj \
 	$(OBJDIR)\pragmaC.obj \
 	$(OBJDIR)\pragmaS.obj \
 	$(OBJDIR)\reopen_include1C.obj \
@@ -64,6 +66,7 @@ IDLFILES = \
         $(IDLDIR)\including.idl \
         $(IDLDIR)\interface.idl \
         $(IDLDIR)\keywords.idl \
+        $(IDLDIR)\params.idl \
         $(IDLDIR)\pragma.idl \
         $(IDLDIR)\sequence.idl \
         $(IDLDIR)\typedef.idl \
@@ -107,6 +110,9 @@ $(IDLDIR)\interfaceC.cpp $(IDLDIR)\interfaceS.cpp: $(IDLDIR)\interface.idl
 	$(TAO_IDL) $**
 
 $(IDLDIR)\keywordsC.cpp $(IDLDIR)\keywordsS.cpp: $(IDLDIR)\keywords.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\paramsC.cpp $(IDLDIR)\paramsS.cpp: $(IDLDIR)\params.idl
 	$(TAO_IDL) $**
 
 $(IDLDIR)\pragmaC.cpp $(IDLDIR)\pragmaS.cpp: $(IDLDIR)\pragma.idl
