@@ -116,7 +116,7 @@ sub store_file ($)
     elsif ($name =~ /ChangeLog/i && -f $name) {
         push @files_changelog, ($name);
     }
-    elsif ($name =~ /\/Makefile.*.[^~]$/) {
+    elsif ($name =~ /\/GNUMakefile.*.[^~]$/) {
         push @files_makefile, ($name);
     }
     elsif ($name =~ /\.(mpc|mwc|mpb|mpt)/i) {
@@ -530,7 +530,7 @@ sub check_for_dependency_file ()
                 if (/^DEPENDENCY_FILE\s* =\s*(.*)/) {
                     my $depend = $1;
                     my $path = $file;
-                    $path =~ s/\/Makefile.*/\//;
+                    $path =~ s/\/GNUMakefile.*/\//;
                     $depend = $path . $depend;
                     unless (open (DFILE, $depend)) {
                         print_error ("DEPENDENCY_FILE \"$depend\" not found");
@@ -549,8 +549,8 @@ sub check_for_dependency_file ()
     }
 }
 
-# This checks to see if Makefiles define a MAKEFILE, and if it matches the
-# name of the Makefile
+# This checks to see if GNUMakefiles define a MAKEFILE, and if it matches the
+# name of the GNUMakefile
 sub check_for_makefile_variable ()
 {
     print "Running MAKEFILE variable test\n";
@@ -573,7 +573,7 @@ sub check_for_makefile_variable ()
                         }
                     }
                 }
-                if ($makevarfound == 0 and !($filename eq "Makefile")) {
+                if ($makevarfound == 0 and !($filename eq "GNUMakefile")) {
                     print_error ("MAKEFILE variable missing in $file");
                     print " Add MAKEFILE = $filename to the top of $file.\n\n";
                 }
