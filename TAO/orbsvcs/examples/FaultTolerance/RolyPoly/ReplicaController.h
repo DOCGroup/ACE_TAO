@@ -47,6 +47,7 @@ public:
   destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+#if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
   virtual void
   tao_ft_interception_point (
     PortableInterceptor::ServerRequestInfo_ptr ri,
@@ -54,6 +55,7 @@ public:
     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
+#endif /*TAO_HAS_EXTENDED_FT_INTERCEPTORS*/
 
   virtual void
   receive_request_service_contexts (
