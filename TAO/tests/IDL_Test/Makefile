@@ -24,6 +24,7 @@ IDL_ALWAYS =	anonymous		\
 		including		\
 		interface		\
 		keywords		\
+		params			\
 		pragma			\
 		sequence		\
 		typedef			\

@@ -162,6 +162,14 @@ SOURCE=.\main.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\paramsC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\paramsS.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\pragmaC.cpp
 # End Source File
 # Begin Source File
@@ -278,6 +286,14 @@ SOURCE=.\keywordsS.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\paramsC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\paramsS.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\pragmaC.h
 # End Source File
 # Begin Source File
@@ -355,6 +371,10 @@ SOURCE=.\interfaceC.i
 # Begin Source File
 
 SOURCE=.\keywordsC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\paramsC.i
 # End Source File
 # Begin Source File
 
@@ -1140,6 +1160,27 @@ BuildCmds= \
 
 "$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
+# End Custom Build
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\params.idl
+
+!IF  "$(CFG)" == "idl_test - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "idl_test - Win32 Debug"
+
+USERDEP__PARAM="..\..\..\bin\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO IDL Compiler
+InputPath=.\params.idl
+InputName=params
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+	tao_idl $(InputName).idl
+
 # End Custom Build
 
 !ENDIF 
