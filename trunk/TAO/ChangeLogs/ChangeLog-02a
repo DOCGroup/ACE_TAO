@@ -1,3 +1,47 @@
+Sun Aug 20 16:15:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_argument/paramlist.cpp:
+	  Resolved some generation errors.
+
+	* tests/Makefile:
+	* tests/AMI/Makefile:
+        * tests/Leader_Followers/Makefile:
+	* tests/Policies/Makefile:
+	* tests/CDR/Makefile:
+        * tests/LongUpcalls/Makefile:           
+	* tests/Portable_Interceptors/Makefile:
+        * tests/MProfile/Makefile:              
+	* tests/QtTests/Makefile:
+        * tests/MProfile_Forwarding/Makefile: 
+	* tests/Connection_Purging/Makefile:     
+	* tests/MT_Client/Makefile: 
+        * tests/MT_Server/Makefile: 
+	* tests/DSI_Gateway/Makefile:                          
+	* tests/Smart_Proxies/Makefile:
+	* tests/DynAny_Test/Makefile:            
+	* tests/Multiple_Inheritance/Makefile:  
+	* tests/Endpoint_Per_Priority/Makefile:  
+	* tests/Explicit_Event_Loop/Makefile:    
+	* tests/Native_Exceptions/Makefile:     
+	* tests/Timed_Buffered_Oneways/Makefile:
+        * tests/Timeout/Makefile:
+	* tests/Exposed_Policies/Makefile:       
+	* tests/Nested_Event_Loop/Makefile:     
+	* tests/Xt_Stopwatch/Makefile:
+	* tests/FL_Cube/Makefile:                
+	* tests/ORB_destroy/Makefile:           
+	* tests/Faults/Makefile:                 
+	* tests/ORB_init/Makefile:              
+	* tests/IDL_Test/Makefile:               
+	* tests/Object_Loader/Makefile:         
+	* tests/IORManipulation/Makefile:        
+	* tests/OctetSeq/Makefile:              
+	* tests/InterOp-Naming/Makefile:         
+	* tests/Portable_Interceptors/Makefile:           
+	* tests/Param_Test/Makefile:
+	  
+	  Updated dependencies.
+	
 Sun Aug 20 14:27:30 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* orbsvcs/IFR_Service/TypeCodeFactory_skel.cpp:
