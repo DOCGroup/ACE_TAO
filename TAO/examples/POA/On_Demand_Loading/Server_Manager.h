@@ -26,10 +26,13 @@
 class Server_i
 {
   // = TITLE
-  //   This class provides the server application with helper methods 
-
- public:
-
+  //   This class provides the server application with helper methods
+  //
+  // = DESCRIPTION
+  //   @@ Kirthika, can you please give a very concise synopsis
+  //   of what this class does?
+public:
+  // = Initialization and termination methods.
   Server_i (void);
   // Initialisation.
 
@@ -40,11 +43,12 @@ class Server_i
   // Initialisation of the ORB and poa.
   
   PortableServer::POA_ptr create_poa (const char* name, 
-                                        int servant_retention_policy);
-  // This method creates an poa from the root_poa with emphasis
-  // being on the servant_retention_policy which decides the use of the
-  // ServantActivator or ServantLocator interfaces. The servent_retention_policy 
-  // value is 1 for the RETAIN policy and 0 for the NONRETAIN policy.
+                                      int servant_retention_policy);
+  // This method creates a POA from the root_poa with emphasis being
+  // on the servant_retention_policy which decides the use of the
+  // ServantActivator or ServantLocator interfaces. The
+  // servent_retention_policy value is 1 for the RETAIN policy and 0
+  // for the NONRETAIN policy.
   
   int create_activator (PortableServer::POA_var first_poa);
   // A ServantActivator object is created and initialised.
@@ -55,8 +59,7 @@ class Server_i
   int run (void);
   // The server is executed.
   
- private:
-
+private:
   int parse_args (int argc, char **argv);
   // Parses the input arguments.
 
@@ -90,7 +93,6 @@ class Server_i
 
   ServantLocator_i *servant_locator_impl_;
   // The servant locator object.
-  
 };
 
 #endif /* SERVER_MANAGER_H */
