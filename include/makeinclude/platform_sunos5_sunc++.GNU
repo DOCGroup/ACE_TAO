@@ -12,13 +12,15 @@
 #    This warning appears to be fixed by Sun C++ 4.2 jumbo patch 104631-02.
 # 2) "Warning: <foo> hides the function " or "hides the same name in an
 #    outer scope".  A useful warning, perhaps, but not really a problem.
+#    Again, this appears much more often with +w.  The jumbo patch did not
+#    remove it.
 # There should be no other warnings from Sun C++ when building ACE.
 
 debug = 1
 
 CC              = cc
 CXX             = CC
-CFLAGS          += -mt +w
+CFLAGS          += -mt
 #### -pta instantiates all template members, which makes libraries bigger.
 #### But, it's supposed to put each member into it's own .o, so executable
 #### size should not be penalized.
@@ -44,7 +46,7 @@ LD              = $(CXX)
 ifdef orbix
   LDFLAGS       += $(PIC) -L$(ORBIX_ROOT)/corba2/lib -R $(ACE_ROOT)/ace -R $(ORBIX_ROOT)/corba2/lib
   LIBS          += -lITinimt -liiopmt -lorbixmt -lsocket -ldl -lnsl -lthread -lgen -lposix4
-  CPPFLAGS	+= -I$(ORBIX_ROOT)/corba2/include
+  CPPFLAGS      += -I$(ORBIX_ROOT)/corba2/include
 else
   LDFLAGS       += -R $(ACE_ROOT)/ace
   LIBS          += -lsocket -ldl -lnsl -lgen
