@@ -648,16 +648,14 @@ get_outgoing_connections_i (const char * instname,
   {
     CORBA::ULong len = retv.length ();
 
-    // Current connection that we are looking at.
+    // Current plan connection description that we are looking at.
     const Deployment::PlanConnectionDescription & curr_conn =
       this->plan_.connection[i];
 
     //The modeling tool should make sure there are always 2 endpoints
     //in a connection.
     const CORBA::ULong curr_conn_len = curr_conn.internalEndpoint.length ();
-    for (CORBA::ULong p_index = 0;
-         p_index < curr_conn_len;
-         ++p_index)
+    for (CORBA::ULong p_index = 0; p_index < curr_conn_len; ++p_index)
     {
       const Deployment::PlanSubcomponentPortEndpoint & endpoint =
         curr_conn.internalEndpoint[p_index];
@@ -708,16 +706,14 @@ get_outgoing_connections_i (const char * instname,
                     retv[len].kind = endpoint.kind; // either emitter/publisher or receptacle.
                     retv[len].endpoint = CORBA::Object::_duplicate(curr_rev_conn.endpoint.in ());
 
-                    // CIAO-specific fields below
-                    // If the component port type needs to use CIAO specific publish/subscribe
+                    // CIAO-specific extension fields below
+                    // If the component port type needs to use CIAO specific publisher/subscriber
                     // service, then we also need to set up the "consumer side component name"
-                    // and "consumer side port name".
+                    // and "consumer side port name" and "consumer side end point".
                     if (retv[len].kind == Deployment::rtecEventPublisher ||
                         retv[len].kind == Deployment::rtecEventEmitter ||
                         retv[len].kind == Deployment::EventPublisher ||
-                        retv[len].kind == Deployment::EventEmitter ||
-                        retv[len].kind == Deployment::nsEventPublisher ||
-                        retv[len].kind == Deployment::nsEventEmitter)
+                        retv[len].kind == Deployment::EventEmitter)
                       {
                         retv[len].consumerCompName = name.c_str ();
                         retv[len].consumerPortName = port_name.c_str ();

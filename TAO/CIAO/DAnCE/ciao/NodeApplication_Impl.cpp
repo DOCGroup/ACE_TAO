@@ -642,14 +642,15 @@ CIAO::NodeApplication_Impl::build_event_connection (const Deployment::Connection
 
     // Get the consumer component object reference.
     ACE_CString consumer_comp_name = connection.consumerCompName.in ();
-    Components::CCMObject_ptr sink_objref;
+//    Components::CCMObject_ptr sink_objref;
 
-    ACE_DEBUG ((LM_DEBUG, "sink component name is: %s\n", consumer_comp_name.c_str ()));
-    if (this->component_map_.find (consumer_comp_name, sink_objref) != 0)
+    ACE_DEBUG ((LM_DEBUG, "consumer component name is: %s\n", consumer_comp_name.c_str ()));
+/*    if (this->component_map_.find (consumer_comp_name, sink_objref) != 0)
       {
         ACE_DEBUG ((LM_DEBUG, "Nil sink component object reference\n"));
         ACE_THROW (Deployment::InvalidConnection ());
       }
+      */
 
     // Get the container event service
     CIAO::ContainerEventService_var event_service =
