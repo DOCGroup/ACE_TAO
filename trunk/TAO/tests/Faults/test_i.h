@@ -20,7 +20,7 @@
 
 class Callback_i
   : public virtual POA_Callback,
-  , public virtual PortableServer::RefCountServantBase
+    public virtual PortableServer::RefCountServantBase
 {
   // = TITLE
   //   A callback object to shutdown the "client"
