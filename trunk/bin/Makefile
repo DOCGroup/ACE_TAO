@@ -81,7 +81,6 @@ endif  # envinfo
 
 .obj/clone.o .obj/clone.so .shobj/clone.o .shobj/clone.so: clone.cpp \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -97,7 +96,6 @@ endif  # envinfo
 .obj/envinfo.o .obj/envinfo.so .shobj/envinfo.o .shobj/envinfo.so: envinfo.cpp \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \

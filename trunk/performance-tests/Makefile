@@ -12,7 +12,8 @@ INFO  = README
 
 DIRS  = Misc \
 	UDP \
-	TCP
+	TCP \
+	Server_Concurrency
 
 # @@ This directory is currently under restructuring.  It should be
 #    added back to the makefile once this is done.
