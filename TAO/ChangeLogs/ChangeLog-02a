@@ -1,3 +1,10 @@
+Mon Jun  5 17:39:16 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/tests/Notify/lib/Notify_Test_Client.{h, cpp}:
+	* orbsvcs/tests/Notify/Basic/Updates.cpp:
+	  Renamed Notify_Test_Client::main to Notify_Test_Client::test_main
+	  to fix compile errors.
+
 Mon Jun  5 15:08:27 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * utils/nslist/nsadd.cpp:
