@@ -1175,8 +1175,8 @@ Shameek Basu <sbasu@ivast.com>
 Dipti Jain <dijain@hss.hns.com>
 Eric Zuur <Eric.Zuur@meco.nl>
 Jeffrey J. Persch <hyperslug@yahoo.com>
-Rahul Shukla <rshukla@ggn.aithent.com> 
-Pierre Fayolle <fayolle@enseirb.fr> 
+Rahul Shukla <rshukla@ggn.aithent.com>
+Pierre Fayolle <fayolle@enseirb.fr>
 Greg McCain <greg.mccain@veritas.com>
 Matt Cheers <matt.cheers@boeing.com>
 Benjamin Fry <ben@thrownet.com>
@@ -1184,6 +1184,7 @@ Ram Ben-Yakir <Ram@bandwiz.com>
 Eric Desamore <Eric.Desamore@idtv.bull.net>
 John Ashmun <John.ASHMUN@esca.com>
 Przemyslaw Marciniak <pmarciniak@lucent.com>
+Alain Decamps <Alain.Decamps@PIDPA.be>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile

@@ -1,3 +1,9 @@
+Wed Mar 28 22:07:03 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/tests.dsw: Fixed project dependencies between DLL_Test and
+	  DLL_Test_Impl.  Thanks to Alain Decamps <Alain.Decamps@PIDPA.be>
+	  for reporting this.
+
 Wed Mar 28 20:33:28 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/ACE.cpp: Further improved the implementation of
@@ -25,12 +31,12 @@ Wed Mar 28 16:40:24 2001  Luther Baker  <luther@cs.wustl.edu>
 	* ace/OS.cpp
 
 	  PACE updates.
-	
+
 Wed Mar 28 11:37:09 2001  Fuzz Master D <brunsch@uci.edu>
 
         * bin/fuzz.pl:
 
-          There are several instances where fuzz gives false 
+          There are several instances where fuzz gives false
           positives, and the code is impossible to fix without
           creating compiler warnings.  Example:
 
