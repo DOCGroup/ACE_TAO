@@ -41,7 +41,7 @@ RSC=rc.exe
 # PROP Intermediate_Dir "LIB\Release\Strategies"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "../" /I "../../" /I "../../../" /D "NDEBUG" /D "WIN32" /D "_MBCS" /D "_LIB" /D "TAO_AS_STATIC_LIBS" /D "ACE_AS_STATIC_LIBS" /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "../" /I "../../" /I "../../../" /D "NDEBUG" /D "WIN32" /D "_MBCS" /D "TAO_AS_STATIC_LIBS" /D "ACE_AS_STATIC_LIBS" /D "TAO_STRATEGIES_BUILD_DLL" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
@@ -64,9 +64,9 @@ LIB32=link.exe -lib
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Debug\Strategies"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD  /c
-# ADD CPP /nologo /MDd /W3 /GX /Od /I "../" /I "../../" /I "../../../" /D "_DEBUG" /D "WIN32" /D "_MBCS" /D "_LIB" /D "TAO_AS_STATIC_LIBS" /D "ACE_AS_STATIC_LIBS" /D TAO_HAS_DLL=0 /D "TAO_STRATEGIES_BUILD_DLL" /FD  /c
-# SUBTRACT CPP /Z<none> /YX
+# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
+# ADD CPP /nologo /MDd /W3 /GX /Od /I "../" /I "../../" /I "../../../" /D "_DEBUG" /D "WIN32" /D "_MBCS" /D "_LIB" /D "TAO_AS_STATIC_LIBS" /D "ACE_AS_STATIC_LIBS" /D "TAO_STRATEGIES_BUILD_DLL" /FD /c
+# SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
