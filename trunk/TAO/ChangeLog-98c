@@ -1,3 +1,7 @@
+Fri Sep 04 02:17:43 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * TAO version 0.2.9 released.
+
 Thu Sep 03 23:06:35 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Param_Test/driver.{h,cpp}: Stop instantiating Driver class
