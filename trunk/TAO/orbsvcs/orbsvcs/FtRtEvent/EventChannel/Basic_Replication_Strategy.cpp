@@ -88,7 +88,8 @@ Basic_Replication_Strategy::replicate_request(
         }
         ACE_CATCH(CORBA::COMM_FAILURE, ex) {
           if (ex.minor() == 6)   finished = false;
-          else  ACE_RE_THROW;
+          else  
+            ACE_TRY_THROW_EX(ex, SET_UPDATE);
         }
         ACE_ENDTRY;
         ACE_CHECK;
@@ -113,7 +114,7 @@ Basic_Replication_Strategy::replicate_request(
 void
 Basic_Replication_Strategy::add_member(const FTRT::ManagerInfo & info,
                                        CORBA::ULong object_group_ref_version
-                                       ACE_ENV_ARG_DECL_NOT_USED)
+                                       ACE_ENV_ARG_DECL)
 {
   FtRtecEventChannelAdmin::EventChannel_var successor = GroupInfoPublisher::instance()->successor();
   bool finished = true;
