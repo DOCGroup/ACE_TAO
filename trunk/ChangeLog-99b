@@ -1,3 +1,18 @@
+Tue Nov  9 14:57:51 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* configure.in:
+
+	  Minor comment updates.
+
+	* m4/features.m4:
+
+	  Fixed asynchronous IO tests.  The tests now properly detect
+	  working asynchronous IO on Linux, for example.
+
+	  Force asynchronous IO tests to be performed after the thread
+	  detection tests in case the real time functions depend on the
+	  thread library.
+
 Tue Nov  9 10:11:22 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/config-g++-common.h: Added ACE_LACKS_PLACEMENT_OPERATOR_DELETE
