@@ -6,8 +6,9 @@ Fri Jun 13 03:13:51 1997  Nanbor Wang  <nw1@dingo.wolfpack.cs.wustl.edu>
  	  (didn't help much, did it?)  Reassigning the linked library
  	  solved the problem.
 
-	* examples/OS/Process/process.cpp: Updated to adopt the changes in
- 	  the latest ACE_Process.
+	* examples/OS/Process/process.cpp: Updated class name
+ 	  ACE_ProcessEX to ACE_Process because ACE_ProcessEX no longer
+ 	  exists.
 
 Thu Jun 12 15:48:16 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
