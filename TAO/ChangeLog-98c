@@ -1,3 +1,10 @@
+Tue Jun 23 11:59:12 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Cubit/TAO/IDL_Cubit/Makefile,tests/Thruput/TAO/Makefile,
+          tests/NestedUpcall/Makefile,tests/Quoter/Makefile,
+          tests/OctetSeq/Makefile:
+          added S_T.* files to realclean target.
+
 Mon Jun 22 21:30:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
         * TAO_IDL/be/be_sequence.cpp
