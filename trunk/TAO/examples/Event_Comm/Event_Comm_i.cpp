@@ -235,7 +235,7 @@ Notifier_i::unsubscribe (Event_Comm::Consumer_ptr consumer_ref,
        mi.next (me) != 0;
        mi.advance ())
     {
-       Consumer_Entry *nr_entry = me->int_id_;
+      nr_entry = me->int_id_;
 
       // The <_is_equivalent> function checks if objects are the same.
       // NOTE: this call might not behave well on other ORBs since
