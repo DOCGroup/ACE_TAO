@@ -282,6 +282,12 @@ be_predefined_type::compute_tc_name (void)
     }
 }
 
+UTL_ScopedName *
+be_predefined_type::compute_tc_name (const char *prefix, const char *suffix)
+{
+  return be_type::compute_tc_name (prefix, suffix);
+}
+
 // compute the size type of the node in question
 int
 be_predefined_type::compute_size_type (void)
