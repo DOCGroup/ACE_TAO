@@ -77,7 +77,6 @@ static size_t cli_req_no = ACE_MAX_THREADS ACE_LOAD_FACTOR;
 // Delay before a thread sending the next request (in msec.)
 static int req_delay = 50;
 
-
 static void
 parse_arg (int argc, ACE_TCHAR *argv[])
 {
@@ -120,20 +119,36 @@ parse_arg (int argc, ACE_TCHAR *argv[])
 
 Request_Handler::Request_Handler (ACE_Thread_Manager *thr_mgr)
   : ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_MT_SYNCH> (thr_mgr),
-    nr_msgs_rcvd_(0)
+    nr_msgs_rcvd_(0),
+    ref_count_ (1)
 {
   // Make sure we use TP_Reactor with this class (that's the whole
   // point, right?)
   this->reactor (ACE_Reactor::instance ());
+
+  // Create the lock
+  ACE_NEW (refcount_lock_,
+           ACE_Lock_Adapter<ACE_SYNCH_MUTEX>);
 }
+
+Request_Handler::~Request_Handler (void)
+{
+  delete this->refcount_lock_;
+}
+
 
 int
 Request_Handler::resume_handler (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) resume_handler () called \n")));
+  this->_decr_ref_count ();
+
+  if (this->ref_count_ == 0)
+    this->destroy ();
   return 1;
 }
+
 
 int
 Request_Handler::handle_input (ACE_HANDLE fd)
@@ -160,6 +175,7 @@ Request_Handler::handle_input (ACE_HANDLE fd)
       if (ACE_OS::strcmp (buffer, ACE_TEXT ("shutdown")) == 0)
           ACE_Reactor::end_event_loop ();
 
+      this->_incr_ref_count ();
       this->reactor ()->resume_handler (fd);
       return 0;
     }
@@ -189,9 +205,28 @@ Request_Handler::handle_close (ACE_HANDLE fd, ACE_Reactor_Mask)
                this,
                cli_req_no,
                this->nr_msgs_rcvd_));
-  this->destroy ();
+  this->_decr_ref_count ();
+
+  if (this->ref_count_ == 0)
+    this->destroy ();
   return 0;
 }
+
+void
+Request_Handler::_incr_ref_count (void)
+{
+  ACE_MT (ACE_GUARD (ACE_Lock, guard, *this->refcount_lock_));
+  ++this->ref_count_;
+}
+
+void
+Request_Handler::_decr_ref_count (void)
+{
+  ACE_MT (ACE_GUARD (ACE_Lock, guard, *this->refcount_lock_));
+  --this->ref_count_;
+}
+
+
 
 static int
 reactor_event_hook (void *)
@@ -357,6 +392,7 @@ template class ACE_Scheduling_Strategy<Request_Handler>;
 template class ACE_Acceptor<Request_Handler, ACE_SOCK_ACCEPTOR>;
 template class ACE_Strategy_Acceptor<Request_Handler, ACE_SOCK_ACCEPTOR>;
 template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_MT_SYNCH>;
+template class ACE_Lock_Adapter<ACE_SYNCH_MUTEX>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate  ACE_Accept_Strategy<Request_Handler, ACE_SOCK_ACCEPTOR>
 #pragma instantiate  ACE_Concurrency_Strategy<Request_Handler>
@@ -365,6 +401,7 @@ template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_MT_SYNCH>;
 #pragma instantiate  ACE_Acceptor<Request_Handler, ACE_SOCK_ACCEPTOR>
 #pragma instantiate  ACE_Strategy_Acceptor<Request_Handler, ACE_SOCK_ACCEPTOR>
 #pragma instantiate  ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_MT_SYNCH>
+#pragma instantiate ACE_Lock_Adapter<ACE_SYNCH_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #else
