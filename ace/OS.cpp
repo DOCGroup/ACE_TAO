@@ -933,7 +933,7 @@ ACE_TSS_Cleanup::exit (void *status)
 
     // Prevent recursive deletions
 
-    if (this->check_cleanup_i ()) // Are we already performing cleanup?
+    if (this->check_cleanup_i () == 0) // Are we already performing cleanup?
       return;
 
     // If we can't insert our thread_id into the list, we will not be
