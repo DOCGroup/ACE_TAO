@@ -23,7 +23,11 @@ OBJFILES = \
 	$(OBJDIR)\Persistent_Context_Index.obj \
 	$(OBJDIR)\Persistent_Entries.obj \
 	$(OBJDIR)\Persistent_Naming_Context.obj \
-	$(OBJDIR)\Transient_Naming_Context.obj
+        $(OBJDIR)\Transient_Naming_Context.obj \
+        $(OBJDIR)\Flat_File_Persistence.obj \
+        $(OBJDIR)\Naming_Service_Container.obj \
+        $(OBJDIR)\Storable.obj \
+        $(OBJDIR)\Storable_Naming_Context.obj
 
 RESOURCE = $(OBJDIR)\CosNaming.res
 
