@@ -129,10 +129,11 @@ test_map_manager (size_t table_size, size_t iterations)
   for (i = 0; i < iterations; i++)
     ACE_ASSERT (map.bind (i, i) != -1);
 
-#if defined (ACE_TEST_STL_ITERATOR_FUNCTIONS)
+#if 1
   {
     ENTRY item;
-    for (MAP_MANAGER::iterator iter = map.begin ();
+	i = 0;
+    for (ITERATOR iter = map.begin ();
          iter != map.end (); i++, iter ++)
       {
         item = *iter;
@@ -150,8 +151,21 @@ test_map_manager (size_t table_size, size_t iterations)
       ACE_DEBUG ((LM_DEBUG, "%d ", i));
     ACE_DEBUG ((LM_DEBUG, "\n"));
   }
-#endif /* ACE_TEST_STL_ITERATOR_FUNCTIONS */
+#endif /* 1 */
 
+#if 1
+  {
+    ENTRY item;
+	i = iterations - 1;
+    for (REVERSE_ITERATOR iter = map.rbegin ();
+         iter != map.rend (); i--, iter ++)
+      {
+        item = *iter;
+        ACE_DEBUG ((LM_DEBUG, "%d ", i));
+      }
+    ACE_DEBUG ((LM_DEBUG, "\n"));
+  }
+#else
   {
     REVERSE_ITERATOR iterator (map);
 
@@ -162,7 +176,21 @@ test_map_manager (size_t table_size, size_t iterations)
       ACE_DEBUG ((LM_DEBUG, "%d ", i));
     ACE_DEBUG ((LM_DEBUG, "\n"));
   }
+#endif /* 1 */
 
+#if 1
+  {
+    MAP_MANAGER::ENTRY item;
+	i = 0;
+    for (MAP_MANAGER::iterator iter = map.begin ();
+         iter != map.end (); i++, iter ++)
+      {
+        item = *iter;
+        ACE_DEBUG ((LM_DEBUG, "%d ", i));
+      }
+    ACE_DEBUG ((LM_DEBUG, "\n"));
+  }
+#else
   {
     MAP_MANAGER::ITERATOR iterator (map);
 
@@ -173,7 +201,21 @@ test_map_manager (size_t table_size, size_t iterations)
       ACE_DEBUG ((LM_DEBUG, "%d ", i));
     ACE_DEBUG ((LM_DEBUG, "\n"));
   }
+#endif /* 1 */
 
+#if 1
+  {
+    ENTRY item;
+	i = iterations - 1;
+    for (MAP_MANAGER::reverse_iterator iter = map.rbegin ();
+         iter != map.rend (); i--, iter ++)
+      {
+        item = *iter;
+        ACE_DEBUG ((LM_DEBUG, "%d ", i));
+      }
+    ACE_DEBUG ((LM_DEBUG, "\n"));
+  }
+#else
   {
     MAP_MANAGER::REVERSE_ITERATOR iterator (map);
 
@@ -184,6 +226,7 @@ test_map_manager (size_t table_size, size_t iterations)
       ACE_DEBUG ((LM_DEBUG, "%d ", i));
     ACE_DEBUG ((LM_DEBUG, "\n"));
   }
+#endif /* 1 */
 
   for (i = 0; i < iterations; i++)
     {
@@ -214,7 +257,8 @@ run_test (void (*ptf) (size_t, size_t),
 
   timer.elapsed_time (et);
 
-  ACE_DEBUG ((LM_DEBUG, "time to test a %d item map for %d iterations using %s\n",
+  ACE_DEBUG ((LM_DEBUG, "time to test a %d item map for %d iterations using %s\
+n",
 	      table_size, iterations, test_name));
   ACE_DEBUG ((LM_DEBUG, "real time = %f secs, user time = %f secs, system time = %f secs\n",
 	    et.real_time, et.user_time, et.system_time));
