@@ -1744,7 +1744,8 @@ if test "$cross_compiling" != yes; then
     AC_DEFINE_UNQUOTED([ACE_SIZEOF_LONG_DOUBLE],[$ac_cv_sizeof_long_double])
   fi
 
-  dnl Set the 64 bit unsigned int typedef
+  dnl Set the 64 bit typedefs
+  ACE_INT64=""
   ACE_UINT64=""
   dnl if test "$ace_cv_type_u_longlong_t" = yes; then
   dnl This doesn't work:  AC_CHECK_SIZEOF([u_longlong_t],[8])
@@ -1754,9 +1755,11 @@ if test "$cross_compiling" != yes; then
   dnl   fi
   dnl elif test $ac_cv_sizeof_long = 8; then
   if test $ac_cv_sizeof_long = 8; then
+    ACE_INT64="signed long"
     ACE_UINT64="unsigned long"
     ace_u_long_long_typedef_set=yes
   elif test $ac_cv_sizeof_long_long = 8; then
+    ACE_INT64="signed long long"
     ACE_UINT64="unsigned long long"
     ace_u_long_long_typedef_set=yes
   else
@@ -6978,6 +6981,7 @@ dnl
 
 dnl Make final substitutions and defines
 if test "$ace_u_long_long_typedef_set" = yes; then
+  AC_DEFINE_UNQUOTED([ACE_INT64_TYPEDEF], [$ACE_INT64])
   AC_DEFINE_UNQUOTED([ACE_UINT64_TYPEDEF], [$ACE_UINT64])
 fi
 
@@ -7016,6 +7020,9 @@ ACE_CACHE_CHECK([if generated ACE configuration is usable],
       dnl Now run the compilation test
       ACE_TRY_COMPILE([-I. -I${srcdir}],
         [
+#if defined(ACE_INT64_TYPEDEF)
+  typedef ACE_INT64_TYPEDEF ACE_INT64;
+#endif /* ACE_INT64_TYPEDEF */
 #if defined(ACE_UINT64_TYPEDEF)
   typedef ACE_UINT64_TYPEDEF ACE_UINT64;
 #endif /* ACE_UINT64_TYPEDEF */
@@ -7089,6 +7096,9 @@ ACE_CACHE_CHECK([for ACE_IOStream support],
       dnl Now run the compilation test
       ACE_TRY_COMPILE([-I. -I${srcdir}],
         [
+#if defined(ACE_INT64_TYPEDEF)
+  typedef ACE_INT64_TYPEDEF ACE_INT64;
+#endif /* ACE_INT64_TYPEDEF */
 #if defined(ACE_UINT64_TYPEDEF)
   typedef ACE_UINT64_TYPEDEF ACE_UINT64;
 #endif /* ACE_UINT64_TYPEDEF */
@@ -7122,6 +7132,9 @@ ACE_CACHE_CHECK([for ACE_addr::sap_any support],
       dnl Now run the compilation test
       ACE_TRY_COMPILE([-I. -I${srcdir}],
         [
+#if defined(ACE_INT64_TYPEDEF)
+  typedef ACE_INT64_TYPEDEF ACE_INT64;
+#endif /* ACE_INT64_TYPEDEF */
 #if defined(ACE_UINT64_TYPEDEF)
   typedef ACE_UINT64_TYPEDEF ACE_UINT64;
 #endif /* ACE_UINT64_TYPEDEF */
@@ -7139,6 +7152,9 @@ ACE_CACHE_CHECK([for ACE_addr::sap_any support],
          dnl compilation work!
          ACE_TRY_COMPILE([-I. -I${srcdir}],
            [
+#if defined(ACE_INT64_TYPEDEF)
+  typedef ACE_INT64_TYPEDEF ACE_INT64;
+#endif /* ACE_INT64_TYPEDEF */
 #if defined(ACE_UINT64_TYPEDEF)
   typedef ACE_UINT64_TYPEDEF ACE_UINT64;
 #endif /* ACE_UINT64_TYPEDEF */
@@ -7171,6 +7187,9 @@ ACE_CACHE_CHECK([if ACE needs conversion to pass ACE_TTY_IO to DEV_Connector],
       dnl Now run the compilation test
       ACE_TRY_COMPILE([-I. -I${srcdir}],
         [
+#if defined(ACE_INT64_TYPEDEF)
+  typedef ACE_INT64_TYPEDEF ACE_INT64;
+#endif /* ACE_INT64_TYPEDEF */
 #if defined(ACE_UINT64_TYPEDEF)
   typedef ACE_UINT64_TYPEDEF ACE_UINT64;
 #endif /* ACE_UINT64_TYPEDEF */
@@ -7188,6 +7207,9 @@ ACE_CACHE_CHECK([if ACE needs conversion to pass ACE_TTY_IO to DEV_Connector],
          dnl compilation work!
          ACE_TRY_COMPILE([-I. -I${srcdir}],
            [
+#if defined(ACE_INT64_TYPEDEF)
+  typedef ACE_INT64_TYPEDEF ACE_INT64;
+#endif /* ACE_INT64_TYPEDEF */
 #if defined(ACE_UINT64_TYPEDEF)
   typedef ACE_UINT64_TYPEDEF ACE_UINT64;
 #endif /* ACE_UINT64_TYPEDEF */
