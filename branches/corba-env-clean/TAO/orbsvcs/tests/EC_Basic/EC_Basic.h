@@ -46,7 +46,7 @@ public:
   // Run the test.
 
 private:
-  int shutdown (CORBA::Environment&);
+  int shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED);
   // Called when the main thread is about to shutdown.
 
   int parse_args (int argc, char* argv[]);
@@ -84,8 +84,8 @@ public:
   // Destructor
 
   virtual void push (int consumer_number,
-                     const RtecEventComm::EventSet& events,
-                     CORBA::Environment &_env) = 0;
+                     const RtecEventComm::EventSet& events
+                     TAO_ENV_ARG_DECL) = 0;
   // The callback from the Consumer....
 };
 
@@ -105,27 +105,27 @@ public:
 
   void open (const char* name,
              RtecEventChannelAdmin::EventChannel_ptr event_channel,
-             RtecScheduler::Scheduler_ptr scheduler,
-             CORBA::Environment& _env);
+             RtecScheduler::Scheduler_ptr scheduler
+             TAO_ENV_ARG_DECL);
   // This method connects the consumer to the EC.
 
-  void close (CORBA::Environment &_env);
+  void close (TAO_ENV_SINGLE_ARG_DECL);
   // Disconnect from the EC.
 
   RtecScheduler::handle_t rt_info (void) const;
   // The RT_Info for this object
 
-  void connect (const RtecEventChannelAdmin::ConsumerQOS& qos,
-                CORBA::Environment &_env);
-  void disconnect (CORBA::Environment &_env);
+  void connect (const RtecEventChannelAdmin::ConsumerQOS& qos
+                TAO_ENV_ARG_DECL);
+  void disconnect (TAO_ENV_SINGLE_ARG_DECL);
   // Disconnect from the supplier, but do not forget about it or close
   // it.
 
   // = The POA_RtecEventComm::PushComsumer methods.
-  virtual void push (const RtecEventComm::EventSet& events,
-                     CORBA::Environment &_env)
+  virtual void push (const RtecEventComm::EventSet& events
+                     TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void disconnect_push_consumer (CORBA::Environment &)
+  virtual void disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
@@ -157,28 +157,28 @@ public:
 
   void open (const char* name,
              RtecEventChannelAdmin::EventChannel_ptr event_channel,
-             RtecScheduler::Scheduler_ptr scheduler,
-             CORBA::Environment& _env);
+             RtecScheduler::Scheduler_ptr scheduler
+             TAO_ENV_ARG_DECL);
   // This method connects the supplier to the EC.
 
-  void close (CORBA::Environment &_env);
+  void close (TAO_ENV_SINGLE_ARG_DECL);
   // Disconnect from the EC.
 
   RtecScheduler::handle_t rt_info (void) const;
   // The RT_Info for this object
 
-  void connect (const RtecEventChannelAdmin::SupplierQOS& qos,
-                CORBA::Environment &_env);
-  void disconnect (CORBA::Environment &_env);
+  void connect (const RtecEventChannelAdmin::SupplierQOS& qos
+                TAO_ENV_ARG_DECL);
+  void disconnect (TAO_ENV_SINGLE_ARG_DECL);
   // Disconnect from the EC, but do not forget about it or close
   // it.
 
-  void send_event (RtecEventComm::EventSet& events,
-                   CORBA::Environment &_env);
+  void send_event (RtecEventComm::EventSet& events
+                   TAO_ENV_ARG_DECL);
   // Send one event, the supplier provides the SourceID
 
   // = The POA_RtecEventComm::PushSupplier methods.
-  virtual void disconnect_push_supplier (CORBA::Environment &)
+  virtual void disconnect_push_supplier (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
@@ -244,16 +244,16 @@ public:
 
   void run (CORBA::ORB_ptr orb,
             RtecEventChannelAdmin::EventChannel_ptr event_channel,
-            RtecScheduler::Scheduler_ptr scheduler,
-            CORBA::Environment& _env);
+            RtecScheduler::Scheduler_ptr scheduler
+            TAO_ENV_ARG_DECL);
   // Start the test.
 
   int dump_results (void);
   // Print out the results, returns -1 if an error was detected.
 
   virtual void push (int consumer_id,
-                     const RtecEventComm::EventSet& events,
-                     CORBA::Environment &_env);
+                     const RtecEventComm::EventSet& events
+                     TAO_ENV_ARG_DECL);
   // The callback from the Consumer....
 
 
@@ -318,16 +318,16 @@ public:
 
   void run (CORBA::ORB_ptr orb,
             RtecEventChannelAdmin::EventChannel_ptr event_channel,
-            RtecScheduler::Scheduler_ptr scheduler,
-            CORBA::Environment& _env);
+            RtecScheduler::Scheduler_ptr scheduler
+            TAO_ENV_ARG_DECL);
   // Start the test.
 
   int dump_results (void);
   // Print out the results, returns -1 if an error was detected.
 
   virtual void push (int consumer_id,
-                     const RtecEventComm::EventSet& events,
-                     CORBA::Environment &_env);
+                     const RtecEventComm::EventSet& events
+                     TAO_ENV_ARG_DECL);
   // The callback from the Consumer....
 
 private:

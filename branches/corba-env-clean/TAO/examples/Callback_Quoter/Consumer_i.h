@@ -39,12 +39,12 @@ public:
   ~Consumer_i (void);
   // Destructor.
 
-  void push (const Callback_Quoter::Info & data,
-             CORBA_Environment& TAO_TRY_ENV)
+  void push (const Callback_Quoter::Info & data
+             TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Gets the stock information from the Notifier.
 
-  virtual void shutdown (CORBA::Environment &TAO_TRY_ENV)
+  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Used to get the consumer to shut down.
 
@@ -57,7 +57,7 @@ private:
 
   int quit_;
   // If 1 denotes that the consumer is dead else alive.
- 
+
   // @@ Please rename to Notifier.
   Notifier_var server_;
   // Smart pointer to the Notifier object.

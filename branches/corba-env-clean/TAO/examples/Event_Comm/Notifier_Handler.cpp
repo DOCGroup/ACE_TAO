@@ -79,8 +79,8 @@ Notifier_Handler::notifier (Event_Comm::Notifier *notifier)
 
 int
 Notifier_Handler::init (int argc,
-			char *argv[],
-			ShutdownCallback* _shutdowncallback)
+                        char *argv[],
+                        ShutdownCallback* _shutdowncallback)
 {
   // set the callback
  shutdowncallback = _shutdowncallback;
@@ -90,25 +90,25 @@ Notifier_Handler::init (int argc,
       // Retrieve the ORB.
       this->orb_ = CORBA::ORB_init (argc,
                                     argv,
-                                    0,
-                                    ACE_TRY_ENV);
+                                    0
+                                    TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object  =
-        this->orb_->resolve_initial_references("RootPOA",
-                                           ACE_TRY_ENV);
+        this->orb_->resolve_initial_references("RootPOA"
+                                           TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (poa_object.in (),
-                                      ACE_TRY_ENV);
+        PortableServer::POA::_narrow (poa_object.in ()
+                                      TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        poa->the_POAManager (ACE_TRY_ENV);
+        poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      poa_manager->activate (ACE_TRY_ENV);
+      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Initialization of the naming service.
@@ -124,16 +124,16 @@ Notifier_Handler::init (int argc,
       CORBA::string_dup (NOTIFIER_BIND_NAME);
 
       CORBA::Object_var notifier_obj =
-       this->naming_client_->resolve (notifier_ref_name,
-				      ACE_TRY_ENV);
+       this->naming_client_->resolve (notifier_ref_name
+                                      TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
 
       // The CORBA::Object_var object is downcast to Notifier_var
       // using the <_narrow> method.
       this->notifier_ =
-         Event_Comm::Notifier::_narrow (notifier_obj.in (),
-					ACE_TRY_ENV);
+         Event_Comm::Notifier::_narrow (notifier_obj.in ()
+                                        TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
   }
  ACE_CATCHANY

@@ -47,8 +47,8 @@ public:
              RtecScheduler::Scheduler_ptr rmt_sched,
              RtecScheduler::Scheduler_ptr lcl_sched,
              const char* lcl_name,
-             const char* rmt_name,
-             CORBA::Environment &env = TAO_default_environment ());
+             const char* rmt_name
+             TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 };
 
 #include "ace/post.h"

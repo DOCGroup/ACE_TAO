@@ -61,11 +61,11 @@ public:
   // Destructor
 
   int init (int argc,
-            char *argv[],
-            CORBA::Environment &ACE_TRY_ENV);
+            char *argv[]
+            TAO_ENV_ARG_DECL);
   // Initialize the Trading Service with arguments.
 
-  int run (CORBA::Environment &ACE_TRY_ENV);
+  int run (TAO_ENV_SINGLE_ARG_DECL);
   // Run the Trading Service.
 
   int shutdown (void);

@@ -34,7 +34,7 @@ TAO_Notify_SupplierAdmin_i::~TAO_Notify_SupplierAdmin_i ()
     ACE_DEBUG ((LM_DEBUG,"in SA dtor\n"));
   // Cleanup all resources..
 
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
 
   delete this->lock_;
 
@@ -51,8 +51,8 @@ TAO_Notify_SupplierAdmin_i::proxy_pushconsumer_destroyed (CosNotifyChannelAdmin:
 void
 TAO_Notify_SupplierAdmin_i::init (CosNotifyChannelAdmin::AdminID my_id,
                                   CosNotifyChannelAdmin::InterFilterGroupOperator filter_operator,
-                                  PortableServer::POA_ptr my_POA,
-                                  CORBA::Environment &ACE_TRY_ENV)
+                                  PortableServer::POA_ptr my_POA
+                                  TAO_ENV_ARG_DECL)
 {
   this->my_POA_ = PortableServer::POA::_duplicate (my_POA);
 
@@ -62,12 +62,12 @@ TAO_Notify_SupplierAdmin_i::init (CosNotifyChannelAdmin::AdminID my_id,
   this->poa_factory_ = TAO_Notify_Factory::get_poa_factory ();
 
   this->lock_ = this->channel_objects_factory_->
-    create_supplier_admin_lock (ACE_TRY_ENV);
+    create_supplier_admin_lock (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   this->proxy_pushconsumer_POA_ = this->poa_factory_->
-    create_proxy_pushconsumer_POA (this->my_POA_.in (), my_id,
-                                   ACE_TRY_ENV);
+    create_proxy_pushconsumer_POA (this->my_POA_.in (), my_id
+                                   TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   my_id_ = my_id;
@@ -75,14 +75,14 @@ TAO_Notify_SupplierAdmin_i::init (CosNotifyChannelAdmin::AdminID my_id,
 }
 
 CosNotifyChannelAdmin::SupplierAdmin_ptr
-TAO_Notify_SupplierAdmin_i::get_ref (CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_SupplierAdmin_i::get_ref (TAO_ENV_SINGLE_ARG_DECL)
 {
   // @@ Pradeep: if you get a chance to quantify this stuff you will
   // notice that this is a very expensive operation, you may want to
   // cache the result if it is invoked very often...
 
   CORBA::Object_var obj = this->poa_factory_->
-    servant_to_reference (this->my_POA_.in (), this, ACE_TRY_ENV);
+    servant_to_reference (this->my_POA_.in (), this TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CosNotifyChannelAdmin::SupplierAdmin::_nil ());
 
   return CosNotifyChannelAdmin::SupplierAdmin::_narrow (obj.in ());
@@ -104,15 +104,15 @@ TAO_Notify_SupplierAdmin_i::get_filter_admin (void)
 }
 
 void
-TAO_Notify_SupplierAdmin_i::deactivate_proxy_pushconsumer (PortableServer::Servant servant, CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_SupplierAdmin_i::deactivate_proxy_pushconsumer (PortableServer::Servant servant TAO_ENV_ARG_DECL)
 {
   this->poa_factory_->
-    deactivate_object (servant, this->proxy_pushconsumer_POA_.in (),
-                       ACE_TRY_ENV);
+    deactivate_object (servant, this->proxy_pushconsumer_POA_.in ()
+                       TAO_ENV_ARG_PARAMETER);
 }
 
 CosNotifyChannelAdmin::AdminID
-TAO_Notify_SupplierAdmin_i::MyID (CORBA::Environment &/*ACE_TRY_ENV*/)
+TAO_Notify_SupplierAdmin_i::MyID (TAO_ENV_SINGLE_ARG_DECL_NOT_USED/*TAO_ENV_SINGLE_ARG_PARAMETER*/)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
@@ -121,16 +121,16 @@ TAO_Notify_SupplierAdmin_i::MyID (CORBA::Environment &/*ACE_TRY_ENV*/)
 }
 
 CosNotifyChannelAdmin::EventChannel_ptr
-TAO_Notify_SupplierAdmin_i::MyChannel (CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_SupplierAdmin_i::MyChannel (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
 {
-  return event_channel_->get_ref (ACE_TRY_ENV);
+  return event_channel_->get_ref (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 CosNotifyChannelAdmin::InterFilterGroupOperator
-TAO_Notify_SupplierAdmin_i::MyOperator (CORBA::Environment &/*ACE_TRY_ENV*/)
+TAO_Notify_SupplierAdmin_i::MyOperator (TAO_ENV_SINGLE_ARG_DECL_NOT_USED/*TAO_ENV_SINGLE_ARG_PARAMETER*/)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
@@ -139,7 +139,7 @@ TAO_Notify_SupplierAdmin_i::MyOperator (CORBA::Environment &/*ACE_TRY_ENV*/)
 }
 
 CosNotifyChannelAdmin::ProxyIDSeq*
-TAO_Notify_SupplierAdmin_i::push_consumers (CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_SupplierAdmin_i::push_consumers (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
@@ -148,11 +148,11 @@ TAO_Notify_SupplierAdmin_i::push_consumers (CORBA::Environment &ACE_TRY_ENV)
                       CORBA::INTERNAL ());
   ACE_CHECK_RETURN (0);
 
-  return this->proxy_pushconsumer_ids_.get_sequence (ACE_TRY_ENV);
+  return this->proxy_pushconsumer_ids_.get_sequence (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 CosNotifyChannelAdmin::ProxyConsumer_ptr
-TAO_Notify_SupplierAdmin_i::get_proxy_consumer (CosNotifyChannelAdmin::ProxyID proxy_id, CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_SupplierAdmin_i::get_proxy_consumer (CosNotifyChannelAdmin::ProxyID proxy_id TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosNotifyChannelAdmin::ProxyNotFound
@@ -160,75 +160,75 @@ TAO_Notify_SupplierAdmin_i::get_proxy_consumer (CosNotifyChannelAdmin::ProxyID p
 {
   CORBA::Object_var obj =
     this->poa_factory_->id_to_reference (proxy_id,
-                                         proxy_pushconsumer_POA_.in (),
-                                         ACE_TRY_ENV);
+                                         proxy_pushconsumer_POA_.in ()
+                                         TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CosNotifyChannelAdmin::ProxyConsumer::_nil ());
 
   return CosNotifyChannelAdmin::ProxyConsumer::_narrow (obj.in ());
 }
 
 CORBA::Object_ptr
-TAO_Notify_SupplierAdmin_i::obtain_sequence_proxy_pushconsumer_i (CosNotifyChannelAdmin::ProxyID proxy_id, CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_SupplierAdmin_i::obtain_sequence_proxy_pushconsumer_i (CosNotifyChannelAdmin::ProxyID proxy_id TAO_ENV_ARG_DECL)
 {
   TAO_Notify_SequenceProxyPushConsumer_i* seq_proxy_pushconsumer =
-    this->channel_objects_factory_->create_seq_proxy_pushconsumer (this,
-                                                                   ACE_TRY_ENV);
+    this->channel_objects_factory_->create_seq_proxy_pushconsumer (this
+                                                                   TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   PortableServer::ServantBase_var proxy_pushconsumer_var (seq_proxy_pushconsumer);
 
-  seq_proxy_pushconsumer->init (proxy_id, ACE_TRY_ENV);
+  seq_proxy_pushconsumer->init (proxy_id TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   return this->poa_factory_->
     activate_object_with_id (proxy_id,
                              this->proxy_pushconsumer_POA_.in (),
-                             seq_proxy_pushconsumer,
-                             ACE_TRY_ENV);
+                             seq_proxy_pushconsumer
+                             TAO_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object_ptr
-TAO_Notify_SupplierAdmin_i::obtain_struct_proxy_pushconsumer_i (CosNotifyChannelAdmin::ProxyID proxy_id, CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_SupplierAdmin_i::obtain_struct_proxy_pushconsumer_i (CosNotifyChannelAdmin::ProxyID proxy_id TAO_ENV_ARG_DECL)
 {
   TAO_Notify_StructuredProxyPushConsumer_i* struct_proxy_pushconsumer =
-    this->channel_objects_factory_->create_struct_proxy_pushconsumer (this,
-                                                                      ACE_TRY_ENV);
+    this->channel_objects_factory_->create_struct_proxy_pushconsumer (this
+                                                                      TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   PortableServer::ServantBase_var proxy_pushconsumer_var (struct_proxy_pushconsumer);
 
-  struct_proxy_pushconsumer->init (proxy_id, ACE_TRY_ENV);
+  struct_proxy_pushconsumer->init (proxy_id TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   return this->poa_factory_->
     activate_object_with_id (proxy_id,
                              this->proxy_pushconsumer_POA_.in (),
-                             struct_proxy_pushconsumer,
-                             ACE_TRY_ENV);
+                             struct_proxy_pushconsumer
+                             TAO_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object_ptr
-TAO_Notify_SupplierAdmin_i::obtain_proxy_pushconsumer_i (CosNotifyChannelAdmin::ProxyID proxy_id, CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_SupplierAdmin_i::obtain_proxy_pushconsumer_i (CosNotifyChannelAdmin::ProxyID proxy_id TAO_ENV_ARG_DECL)
 {
   TAO_Notify_ProxyPushConsumer_i* proxy_pushconsumer =
-    this->channel_objects_factory_->create_proxy_pushconsumer (this,
-                                                               ACE_TRY_ENV);
+    this->channel_objects_factory_->create_proxy_pushconsumer (this
+                                                               TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   PortableServer::ServantBase_var proxy_pushconsumer_var (proxy_pushconsumer);
 
-  proxy_pushconsumer->init (proxy_id, ACE_TRY_ENV);
+  proxy_pushconsumer->init (proxy_id TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   return this->poa_factory_->
     activate_object_with_id (proxy_id,
                              this->proxy_pushconsumer_POA_.in (),
-                             proxy_pushconsumer,
-                             ACE_TRY_ENV);
+                             proxy_pushconsumer
+                             TAO_ENV_ARG_PARAMETER);
 }
 
 CosNotifyChannelAdmin::ProxyConsumer_ptr
-TAO_Notify_SupplierAdmin_i::obtain_notification_push_consumer (CosNotifyChannelAdmin::ClientType ctype, CosNotifyChannelAdmin::ProxyID_out proxy_id, CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_SupplierAdmin_i::obtain_notification_push_consumer (CosNotifyChannelAdmin::ClientType ctype, CosNotifyChannelAdmin::ProxyID_out proxy_id TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosNotifyChannelAdmin::AdminLimitExceeded
@@ -248,23 +248,23 @@ TAO_Notify_SupplierAdmin_i::obtain_notification_push_consumer (CosNotifyChannelA
     {
     case CosNotifyChannelAdmin::ANY_EVENT:
       {
-        obj = this->obtain_proxy_pushconsumer_i (proxy_id, ACE_TRY_ENV);
+        obj = this->obtain_proxy_pushconsumer_i (proxy_id TAO_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (CosNotifyChannelAdmin::ProxyConsumer::_nil ());
       }
       break;
 
     case CosNotifyChannelAdmin::STRUCTURED_EVENT:
       {
-        obj = this->obtain_struct_proxy_pushconsumer_i (proxy_id,
-                                                        ACE_TRY_ENV);
+        obj = this->obtain_struct_proxy_pushconsumer_i (proxy_id
+                                                        TAO_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (CosNotifyChannelAdmin::ProxyConsumer::_nil ());
       }
       break;
 
     case CosNotifyChannelAdmin::SEQUENCE_EVENT:
       {
-        obj = this->obtain_sequence_proxy_pushconsumer_i (proxy_id,
-                                                          ACE_TRY_ENV);
+        obj = this->obtain_sequence_proxy_pushconsumer_i (proxy_id
+                                                          TAO_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (CosNotifyChannelAdmin::ProxyConsumer::_nil ());
       }
       break;
@@ -275,114 +275,114 @@ TAO_Notify_SupplierAdmin_i::obtain_notification_push_consumer (CosNotifyChannelA
     }
 
   this->proxy_pushconsumer_ids_.next (); // commit the current id.
-  return CosNotifyChannelAdmin::ProxyConsumer::_narrow (obj.in (),
-                                                        ACE_TRY_ENV);
+  return CosNotifyChannelAdmin::ProxyConsumer::_narrow (obj.in ()
+                                                        TAO_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_Notify_SupplierAdmin_i::destroy (CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_SupplierAdmin_i::destroy (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->destory_child_POAs_ = 1;
   if (this->destory_child_POAs_ == 1)
-    this->poa_factory_->destroy_POA (this->proxy_pushconsumer_POA_.in (),
-                                     ACE_TRY_ENV);
+    this->poa_factory_->destroy_POA (this->proxy_pushconsumer_POA_.in ()
+                                     TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // deactivate ourselves
-  this->poa_factory_->deactivate_object (this, this->my_POA_.in (),
-                                         ACE_TRY_ENV);
+  this->poa_factory_->deactivate_object (this, this->my_POA_.in ()
+                                         TAO_ENV_ARG_PARAMETER);
 }
 
 CosNotification::QoSProperties*
-TAO_Notify_SupplierAdmin_i::get_qos (CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_SupplierAdmin_i::get_qos (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
 {
-  return this->qos_admin_.get_qos (ACE_TRY_ENV);
+  return this->qos_admin_.get_qos (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
-TAO_Notify_SupplierAdmin_i::set_qos (const CosNotification::QoSProperties & qos, CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_SupplierAdmin_i::set_qos (const CosNotification::QoSProperties & qos TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosNotification::UnsupportedQoS
                    ))
 {
-  this->qos_admin_.set_qos (qos, ACE_TRY_ENV);
+  this->qos_admin_.set_qos (qos TAO_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_Notify_SupplierAdmin_i::validate_qos (const CosNotification::QoSProperties & required_qos, CosNotification::NamedPropertyRangeSeq_out available_qos, CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_SupplierAdmin_i::validate_qos (const CosNotification::QoSProperties & required_qos, CosNotification::NamedPropertyRangeSeq_out available_qos TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosNotification::UnsupportedQoS
                    ))
 {
-  this->qos_admin_.validate_qos (required_qos, available_qos, ACE_TRY_ENV);
+  this->qos_admin_.validate_qos (required_qos, available_qos TAO_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_Notify_SupplierAdmin_i::offer_change (const CosNotification::EventTypeSeq & added, const CosNotification::EventTypeSeq & removed, CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_SupplierAdmin_i::offer_change (const CosNotification::EventTypeSeq & added, const CosNotification::EventTypeSeq & removed TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosNotifyComm::InvalidEventType
                    ))
 {
   this->get_event_manager ()->update_publication_list (added,
-                                                       removed, ACE_TRY_ENV);
+                                                       removed TAO_ENV_ARG_PARAMETER);
 }
 
 CosNotifyFilter::FilterID
-TAO_Notify_SupplierAdmin_i::add_filter (CosNotifyFilter::Filter_ptr new_filter, CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_SupplierAdmin_i::add_filter (CosNotifyFilter::Filter_ptr new_filter TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
 {
-  return this->filter_admin_.add_filter (new_filter, ACE_TRY_ENV);
+  return this->filter_admin_.add_filter (new_filter TAO_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_Notify_SupplierAdmin_i::remove_filter (CosNotifyFilter::FilterID filter, CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_SupplierAdmin_i::remove_filter (CosNotifyFilter::FilterID filter TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosNotifyFilter::FilterNotFound
                    ))
 {
-  this->filter_admin_.remove_filter (filter, ACE_TRY_ENV);
+  this->filter_admin_.remove_filter (filter TAO_ENV_ARG_PARAMETER);
 }
 
 CosNotifyFilter::Filter_ptr
-TAO_Notify_SupplierAdmin_i::get_filter (CosNotifyFilter::FilterID filter, CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_SupplierAdmin_i::get_filter (CosNotifyFilter::FilterID filter TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosNotifyFilter::FilterNotFound
                    ))
 {
-  return this->filter_admin_.get_filter (filter, ACE_TRY_ENV);
+  return this->filter_admin_.get_filter (filter TAO_ENV_ARG_PARAMETER);
 }
 
 CosNotifyFilter::FilterIDSeq*
-TAO_Notify_SupplierAdmin_i::get_all_filters (CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_SupplierAdmin_i::get_all_filters (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
 {
-  return this->filter_admin_.get_all_filters (ACE_TRY_ENV);
+  return this->filter_admin_.get_all_filters (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
-TAO_Notify_SupplierAdmin_i::remove_all_filters (CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_SupplierAdmin_i::remove_all_filters (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
 {
-  this->filter_admin_.remove_all_filters (ACE_TRY_ENV);
+  this->filter_admin_.remove_all_filters (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 CosEventChannelAdmin::ProxyPushConsumer_ptr
-TAO_Notify_SupplierAdmin_i::obtain_push_consumer (CORBA::Environment& ACE_TRY_ENV)
+TAO_Notify_SupplierAdmin_i::obtain_push_consumer (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
@@ -395,14 +395,14 @@ TAO_Notify_SupplierAdmin_i::obtain_push_consumer (CORBA::Environment& ACE_TRY_EN
 
   PortableServer::ServantBase_var proxy_var (cosec_proxy);
 
-  cosec_proxy->init (ACE_TRY_ENV);
+  cosec_proxy->init (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CosEventChannelAdmin::ProxyPushConsumer::_nil ());
 
   PortableServer::POA_var def_poa =
     this->event_channel_->get_default_POA ();
 
   CORBA::Object_var obj = this->poa_factory_->
-    activate_object (def_poa.in (), cosec_proxy, ACE_TRY_ENV);
+    activate_object (def_poa.in (), cosec_proxy TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CosEventChannelAdmin::ProxyPushConsumer::_nil ());
 
   return CosEventChannelAdmin::ProxyPushConsumer::_narrow (obj.in ());
@@ -410,7 +410,7 @@ TAO_Notify_SupplierAdmin_i::obtain_push_consumer (CORBA::Environment& ACE_TRY_EN
 
 // = Pull Methods.
 CosNotifyChannelAdmin::ProxyIDSeq*
-TAO_Notify_SupplierAdmin_i::pull_consumers (CORBA::Environment& ACE_TRY_ENV)
+TAO_Notify_SupplierAdmin_i::pull_consumers (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
@@ -423,7 +423,7 @@ TAO_Notify_SupplierAdmin_i::pull_consumers (CORBA::Environment& ACE_TRY_ENV)
 }
 
 CosNotifyChannelAdmin::ProxyConsumer_ptr
-TAO_Notify_SupplierAdmin_i::obtain_notification_pull_consumer (CosNotifyChannelAdmin::ClientType /*ctype*/, CosNotifyChannelAdmin::ProxyID_out /*proxy_id*/, CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_SupplierAdmin_i::obtain_notification_pull_consumer (CosNotifyChannelAdmin::ClientType /*ctype*/, CosNotifyChannelAdmin::ProxyID_out /*proxy_id*/ TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosNotifyChannelAdmin::AdminLimitExceeded
@@ -434,7 +434,7 @@ TAO_Notify_SupplierAdmin_i::obtain_notification_pull_consumer (CosNotifyChannelA
 }
 
 CosEventChannelAdmin::ProxyPullConsumer_ptr
-TAO_Notify_SupplierAdmin_i::obtain_pull_consumer (CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_SupplierAdmin_i::obtain_pull_consumer (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))

@@ -43,8 +43,8 @@ public:
 
   /// Dispatch the request to the servant.
   virtual void dispatch (TAO_Object_Adapter::Servant_Upcall &servant_upcall,
-                         TAO_ServerRequest &req,
-                         CORBA::Environment &ACE_TRY_ENV) = 0;
+                         TAO_ServerRequest &req
+                         TAO_ENV_ARG_DECL) = 0;
 
   /// Factory method for creating new POA's.
   virtual TAO_POA *create_POA (const ACE_CString &name,
@@ -54,8 +54,8 @@ public:
                                ACE_Lock &lock,
                                TAO_SYNCH_MUTEX &thread_lock,
                                TAO_ORB_Core &orb_core,
-                               TAO_Object_Adapter *object_adapter,
-                               CORBA_Environment &ACE_TRY_ENV) = 0;
+                               TAO_Object_Adapter *object_adapter
+                               TAO_ENV_ARG_DECL) = 0;
 
 };
 

@@ -21,23 +21,23 @@ TAO_EnumDef_i::~TAO_EnumDef_i (void)
 }
 
 CORBA::DefinitionKind
-TAO_EnumDef_i::def_kind (CORBA::Environment &)
+TAO_EnumDef_i::def_kind (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::dk_Enum;
 }
 
-CORBA::TypeCode_ptr 
-TAO_EnumDef_i::type (CORBA::Environment &ACE_TRY_ENV)
+CORBA::TypeCode_ptr
+TAO_EnumDef_i::type (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
 
-  return this->type_i (ACE_TRY_ENV);
+  return this->type_i (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
-CORBA::TypeCode_ptr 
-TAO_EnumDef_i::type_i (CORBA::Environment &ACE_TRY_ENV)
+CORBA::TypeCode_ptr
+TAO_EnumDef_i::type_i (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString id;
@@ -50,26 +50,26 @@ TAO_EnumDef_i::type_i (CORBA::Environment &ACE_TRY_ENV)
                                             "name",
                                             name);
 
-  CORBA_EnumMemberSeq_var members = this->members_i (ACE_TRY_ENV);
+  CORBA_EnumMemberSeq_var members = this->members_i (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
   return this->repo_->tc_factory ()->create_enum_tc (id.c_str (),
                                                      name.c_str (),
-                                                     members.in (),
-                                                     ACE_TRY_ENV);
+                                                     members.in ()
+                                                     TAO_ENV_ARG_PARAMETER);
 }
 
 CORBA_EnumMemberSeq *
-TAO_EnumDef_i::members (CORBA::Environment &ACE_TRY_ENV)
+TAO_EnumDef_i::members (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
-  return this->members_i (ACE_TRY_ENV);
+  return this->members_i (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 CORBA_EnumMemberSeq *
-TAO_EnumDef_i::members_i (CORBA::Environment &ACE_TRY_ENV)
+TAO_EnumDef_i::members_i (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   u_int count = 0;
@@ -105,20 +105,20 @@ TAO_EnumDef_i::members_i (CORBA::Environment &ACE_TRY_ENV)
   return retval;
 }
 
-void 
-TAO_EnumDef_i::members (const CORBA_EnumMemberSeq &members,
-                        CORBA::Environment &ACE_TRY_ENV)
+void
+TAO_EnumDef_i::members (const CORBA_EnumMemberSeq &members
+                        TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
-  this->members_i (members,
-                   ACE_TRY_ENV);
+  this->members_i (members
+                   TAO_ENV_ARG_PARAMETER);
 }
 
-void 
-TAO_EnumDef_i::members_i (const CORBA_EnumMemberSeq &members,
-                          CORBA::Environment &)
+void
+TAO_EnumDef_i::members_i (const CORBA_EnumMemberSeq &members
+                          TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->repo_->config ()->remove_section (this->section_key_,

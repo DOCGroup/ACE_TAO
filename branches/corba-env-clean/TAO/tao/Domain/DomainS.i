@@ -22,45 +22,45 @@
 ACE_INLINE void POA_CORBA_ConstructionPolicy::_get_policy_type_skel (
     TAO_ServerRequest &req,
     void *obj,
-    void *context,
-    CORBA::Environment &ACE_TRY_ENV
+    void *context
+    TAO_ENV_ARG_DECL
   )
 {
   POA_CORBA_Policy_ptr impl = (POA_CORBA_ConstructionPolicy_ptr) obj;
   POA_CORBA_Policy::_get_policy_type_skel (
       req,
       (POA_CORBA_Policy_ptr) impl,
-      context,
-      ACE_TRY_ENV
+      context
+      TAO_ENV_ARG_PARAMETER
     );
 }
 ACE_INLINE void POA_CORBA_ConstructionPolicy::copy_skel (
     TAO_ServerRequest &req,
     void *obj,
-    void *context,
-    CORBA::Environment &ACE_TRY_ENV
+    void *context
+    TAO_ENV_ARG_DECL
   )
 {
   POA_CORBA_Policy_ptr impl = (POA_CORBA_ConstructionPolicy_ptr) obj;
   POA_CORBA_Policy::copy_skel (
       req,
       (POA_CORBA_Policy_ptr) impl,
-      context,
-       ACE_TRY_ENV
+      context
+       TAO_ENV_ARG_PARAMETER
     );
 }
 ACE_INLINE void POA_CORBA_ConstructionPolicy::destroy_skel (
     TAO_ServerRequest &req,
     void *obj,
-    void *context,
-    CORBA::Environment &ACE_TRY_ENV
+    void *context
+    TAO_ENV_ARG_DECL
   )
 {
   POA_CORBA_Policy_ptr impl = (POA_CORBA_ConstructionPolicy_ptr) obj;
   POA_CORBA_Policy::destroy_skel (
       req,
       (POA_CORBA_Policy_ptr) impl,
-      context,
-       ACE_TRY_ENV
+      context
+       TAO_ENV_ARG_PARAMETER
     );
 }

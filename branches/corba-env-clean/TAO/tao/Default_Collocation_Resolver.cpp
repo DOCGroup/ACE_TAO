@@ -11,8 +11,8 @@ ACE_RCSID(tao, Default_Collocation_Resolver, "$Id$")
 #endif /* ! __ACE_INLINE__ */
 
 CORBA::Boolean
-TAO_Default_Collocation_Resolver::is_collocated (CORBA::Object_ptr object,
-                                                 CORBA::Environment &) const
+TAO_Default_Collocation_Resolver::is_collocated (CORBA::Object_ptr object
+                                                 TAO_ENV_ARG_DECL_NOT_USED) const
 {
   return object->_is_collocated ();
 }

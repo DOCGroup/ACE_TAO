@@ -22,18 +22,18 @@ EC_Shutdown::EC_Shutdown (void)
 }
 
 void
-EC_Shutdown::execute_test (CORBA::Environment& ACE_TRY_ENV)
+EC_Shutdown::execute_test (TAO_ENV_SINGLE_ARG_DECL)
 {
   if (this->verbose ())
     ACE_DEBUG ((LM_DEBUG, "EC_Shutdown (%P|%t) destroying EC\n"));
 
-  this->destroy_ec (ACE_TRY_ENV);
+  this->destroy_ec (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (this->verbose ())
     ACE_DEBUG ((LM_DEBUG, "EC_Shutdown (%P|%t) ec destroyed\n"));
 
-  this->deactivate_ec (ACE_TRY_ENV);
+  this->deactivate_ec (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (this->verbose ())
@@ -44,16 +44,16 @@ EC_Shutdown::execute_test (CORBA::Environment& ACE_TRY_ENV)
   if (this->verbose ())
     ACE_DEBUG ((LM_DEBUG, "EC_Shutdown (%P|%t) ec cleanup\n"));
 
-  this->initialize_ec_impl (ACE_TRY_ENV);
+  this->initialize_ec_impl (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
-  this->connect_consumers (ACE_TRY_ENV);
+  this->connect_consumers (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
-  this->connect_suppliers (ACE_TRY_ENV);
+  this->connect_suppliers (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
   if (this->verbose ())
     ACE_DEBUG ((LM_DEBUG, "EC_Shutdown (%P|%t) status reset\n"));
 
-  // this->EC_Driver::execute_test (ACE_TRY_ENV);
+  // this->EC_Driver::execute_test (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
@@ -71,8 +71,8 @@ EC_Shutdown::dump_results (void)
 }
 
 void
-EC_Shutdown::consumer_disconnect (void* cookie,
-                                  CORBA::Environment&)
+EC_Shutdown::consumer_disconnect (void* cookie
+                                  TAO_ENV_ARG_DECL_NOT_USED)
 {
   this->consumer_disconnects_++;
   if (this->verbose ())
@@ -80,8 +80,8 @@ EC_Shutdown::consumer_disconnect (void* cookie,
 }
 
 void
-EC_Shutdown::supplier_disconnect (void* cookie,
-                                  CORBA::Environment&)
+EC_Shutdown::supplier_disconnect (void* cookie
+                                  TAO_ENV_ARG_DECL_NOT_USED)
 {
   this->supplier_disconnects_++;
   if (this->verbose ())

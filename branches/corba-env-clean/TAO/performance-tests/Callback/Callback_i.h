@@ -22,8 +22,8 @@ public:
   /// Implement the CORBA methods
   //@{
   void response (Test::TimeStamp,
-                 const Test::Payload &,
-                 CORBA::Environment &)
+                 const Test::Payload &
+                 TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
   //@}
 

@@ -42,7 +42,7 @@ public:
 
   virtual void send_poll (
         PortableInterceptor::ClientRequestInfo_ptr
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS        
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -65,7 +65,7 @@ public:
   virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri
                               TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual void receive_exception (
       PortableInterceptor::ClientRequestInfo_ptr ri
       TAO_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -123,10 +123,10 @@ public:
                                TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
-  
+
   virtual void send_other (
         PortableInterceptor::ServerRequestInfo_ptr
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS        
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS
         )
     ACE_THROW_SPEC ((
       CORBA::SystemException,

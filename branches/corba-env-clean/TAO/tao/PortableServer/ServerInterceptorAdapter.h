@@ -70,27 +70,27 @@ public:
   /// This method implements the "starting" server side interception
   /// point.
   void receive_request_service_contexts (
-    TAO_ServerRequestInfo *ri,
-    CORBA::Environment &);
+    TAO_ServerRequestInfo *ri
+    TAO_ENV_ARG_DECL);
 
   /// This method an "intermediate" server side interception point.
-  void receive_request (TAO_ServerRequestInfo *ri,
-                        CORBA::Environment &);
+  void receive_request (TAO_ServerRequestInfo *ri
+                        TAO_ENV_ARG_DECL);
 
   /// This method implements one of the "ending" server side
   /// interception points.
-  void send_reply (TAO_ServerRequestInfo *ri,
-                   CORBA::Environment &);
+  void send_reply (TAO_ServerRequestInfo *ri
+                   TAO_ENV_ARG_DECL);
 
   /// This method implements one of the "ending" server side
   /// interception points.
-  void send_exception (TAO_ServerRequestInfo *ri,
-                       CORBA::Environment &);
+  void send_exception (TAO_ServerRequestInfo *ri
+                       TAO_ENV_ARG_DECL);
 
   /// This method implements one of the "ending" server side
   /// interception points.
-  void send_other (TAO_ServerRequestInfo *ri,
-                   CORBA::Environment &);
+  void send_other (TAO_ServerRequestInfo *ri
+                   TAO_ENV_ARG_DECL);
   //@}
 
   /// Returns true if a LOCATION_FORWARD was generated, and false

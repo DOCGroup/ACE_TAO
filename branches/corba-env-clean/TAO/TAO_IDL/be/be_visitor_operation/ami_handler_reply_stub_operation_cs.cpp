@@ -112,8 +112,8 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (be_op
       << "Messaging::ReplyHandler_ptr _tao_reply_handler," << be_nl
       << "CORBA::ULong reply_status";
 
-  *os << "," << be_nl
-      << "CORBA::Environment &ACE_TRY_ENV";
+  *os << be_nl
+      << "TAO_ENV_ARG_DECL";
 
   *os << ")" << be_uidt << be_uidt_nl;
 
@@ -148,7 +148,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (be_op
       << "_tao_reply_handler_object =" << be_idt_nl;
 
   *os << parent->full_name ();
-  *os << "::_narrow(_tao_reply_handler, ACE_TRY_ENV);" << be_uidt_nl;
+  *os << "::_narrow(_tao_reply_handler TAO_ENV_ARG_PARAMETER);" << be_uidt_nl;
 
   *os << "ACE_CHECK;" << be_nl << be_nl
       << "// Exception handling" << be_nl
@@ -249,7 +249,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (be_op
 
   if (!be_global->exception_support ())
     {
-      *os << "," << be_nl << "ACE_TRY_ENV";
+      *os << " TAO_ENV_ARG_PARAMETER";
     }
 
   *os << be_uidt_nl << ");" << be_uidt_nl;

@@ -44,11 +44,11 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references ("RootPOA", ACE_TRY_ENV);
+        orb->resolve_initial_references ("RootPOA" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (poa_object.in ()))
@@ -57,11 +57,11 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in (), ACE_TRY_ENV);
+        PortableServer::POA::_narrow (poa_object.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_TRY_ENV);
+        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Policies for the childPOA to be created.
@@ -72,8 +72,8 @@ main (int argc, char *argv[])
       pol <<= BiDirPolicy::BOTH;
       policies[0] =
         orb->create_policy (BiDirPolicy::BIDIRECTIONAL_POLICY_TYPE,
-                            pol,
-                            ACE_TRY_ENV);
+                            pol
+                            TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Create POA as child of RootPOA with the above policies.  This POA
@@ -82,8 +82,8 @@ main (int argc, char *argv[])
       PortableServer::POA_var child_poa =
         root_poa->create_POA ("childPOA",
                               poa_manager.in (),
-                              policies,
-                              ACE_TRY_ENV);
+                              policies
+                              TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Creation of childPOA is over. Destroy the Policy objects.
@@ -91,39 +91,39 @@ main (int argc, char *argv[])
            i < policies.length ();
            ++i)
         {
-          policies[i]->destroy (ACE_TRY_ENV);
+          policies[i]->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
-      poa_manager->activate (ACE_TRY_ENV);
+      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
-      
+
       Simple_Server_i *server_impl = 0;
-      
+
       ACE_NEW_THROW_EX (server_impl,
-			Simple_Server_i (orb.in (),
-					 no_iterations), 
-			CORBA::NO_MEMORY ());
+                        Simple_Server_i (orb.in (),
+                                         no_iterations),
+                        CORBA::NO_MEMORY ());
 
       PortableServer::ServantBase_var owner_transfer (server_impl);
       PortableServer::ObjectId_var id =
         PortableServer::string_to_ObjectId ("simple_server");
 
       child_poa->activate_object_with_id (id.in (),
-                                          server_impl,
-                                          ACE_TRY_ENV);
+                                          server_impl
+                                          TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var obj =
-        child_poa->id_to_reference (id.in (),
-                                    ACE_TRY_ENV);
+        child_poa->id_to_reference (id.in ()
+                                    TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::String_var ior =
-        orb->object_to_string (obj.in (), ACE_TRY_ENV);
+        orb->object_to_string (obj.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in ()));
@@ -142,18 +142,18 @@ main (int argc, char *argv[])
         }
 
       // Run the event loop
-      orb->run (ACE_TRY_ENV);
+      orb->run (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
-      root_poa->destroy (1, 1, ACE_TRY_ENV);
+      root_poa->destroy (1, 1 TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Catched exception:");
+                           "Caught exception:");
       return 1;
     }
   ACE_ENDTRY;

@@ -77,8 +77,8 @@ Distributer_Receiver_Callback::handle_destroy (void)
 
       // Destroy the receiver stream
       AVStreams::flowSpec stop_spec;
-      DISTRIBUTER::instance ()->receiver_streamctrl ()->destroy (stop_spec,
-                                                                 ACE_TRY_ENV);
+      DISTRIBUTER::instance ()->receiver_streamctrl ()->destroy (stop_spec
+                                                                 TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // We can close down now.
@@ -126,8 +126,8 @@ Distributer::~Distributer (void)
 
 void
 Distributer::bind_to_mmdevice (AVStreams::MMDevice_ptr &mmdevice,
-                               const ACE_CString &mmdevice_name,
-                               CORBA::Environment &ACE_TRY_ENV)
+                               const ACE_CString &mmdevice_name
+                               TAO_ENV_ARG_DECL)
 {
   CosNaming::Name name (1);
   name.length (1);
@@ -136,20 +136,20 @@ Distributer::bind_to_mmdevice (AVStreams::MMDevice_ptr &mmdevice,
 
   // Resolve the mmdevice object reference from the Naming Service
   CORBA::Object_var mmdevice_obj =
-    this->naming_client_->resolve (name,
-                                   ACE_TRY_ENV);
+    this->naming_client_->resolve (name
+                                   TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   mmdevice =
-    AVStreams::MMDevice::_narrow (mmdevice_obj.in (),
-                                  ACE_TRY_ENV);
+    AVStreams::MMDevice::_narrow (mmdevice_obj.in ()
+                                  TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 int
 Distributer::init (int /*argc*/,
-                   char *[] /*argv*/,
-                   CORBA::Environment &ACE_TRY_ENV)
+                   char *[] /*argv*/
+                   TAO_ENV_ARG_DECL)
 {
   // Initialize the naming services
   int result =
@@ -173,15 +173,15 @@ Distributer::init (int /*argc*/,
   // Bind to the receiver mmdevice
   ACE_CString mmdevice_name ("Receiver");
   this->bind_to_mmdevice (this->receiver_mmdevice_.out (),
-                          mmdevice_name,
-                          ACE_TRY_ENV);
+                          mmdevice_name
+                          TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Bind to the sender mmdevice
   mmdevice_name = "Sender";
   this->bind_to_mmdevice (this->sender_mmdevice_.out (),
-                          mmdevice_name,
-                          ACE_TRY_ENV);
+                          mmdevice_name
+                          TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Initialize the  QoS
@@ -210,7 +210,7 @@ Distributer::init (int /*argc*/,
     this->distributer_sender_mmdevice_;
 
   AVStreams::MMDevice_var distributer_sender_mmdevice =
-    this->distributer_sender_mmdevice_->_this (ACE_TRY_ENV);
+    this->distributer_sender_mmdevice_->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   ACE_NEW_RETURN (this->distributer_receiver_mmdevice_,
@@ -222,7 +222,7 @@ Distributer::init (int /*argc*/,
     this->distributer_receiver_mmdevice_;
 
   AVStreams::MMDevice_var distributer_receiver_mmdevice =
-    this->distributer_receiver_mmdevice_->_this (ACE_TRY_ENV);
+    this->distributer_receiver_mmdevice_->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   ACE_NEW_RETURN (this->receiver_streamctrl_,
@@ -238,8 +238,8 @@ Distributer::init (int /*argc*/,
     this->receiver_streamctrl_->bind_devs (distributer_sender_mmdevice.in (),
                                            this->receiver_mmdevice_.in (),
                                            the_qos.inout (),
-                                           flow_spec,
-                                           ACE_TRY_ENV);
+                                           flow_spec
+                                           TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Create the forward flow specification to describe the flow.
@@ -269,8 +269,8 @@ Distributer::init (int /*argc*/,
     sender_streamctrl->bind_devs (sender_mmdevice_.in (),
                                   distributer_receiver_mmdevice.in (),
                                   the_qos.inout (),
-                                  flow_spec,
-                                  ACE_TRY_ENV);
+                                  flow_spec
+                                  TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (res == 0)
@@ -301,46 +301,46 @@ int
 main (int argc,
       char **argv)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       // Initialize the ORB first.
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,
-                         0,
-                         ACE_TRY_ENV);
+                         0
+                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var obj
-        = orb->resolve_initial_references ("RootPOA",
-                                           ACE_TRY_ENV);
+        = orb->resolve_initial_references ("RootPOA"
+                                           TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Get the POA_var object from Object_var.
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in (),
-                                      ACE_TRY_ENV);
+        PortableServer::POA::_narrow (obj.in ()
+                                      TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var mgr
-        = root_poa->the_POAManager (ACE_TRY_ENV);
+        = root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      mgr->activate (ACE_TRY_ENV);
+      mgr->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Initialize the AVStreams components.
       TAO_AV_CORE::instance ()->init (orb.in (),
-                                      root_poa.in (),
-                                      ACE_TRY_ENV);
+                                      root_poa.in ()
+                                      TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Initialize the Distributer
       int result =
         DISTRIBUTER::instance ()->init (argc,
-                                        argv,
-                                        ACE_TRY_ENV);
+                                        argv
+                                        TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (result != 0)
@@ -348,7 +348,7 @@ main (int argc,
 
       while (!DISTRIBUTER::instance ()->done ())
         {
-          orb->perform_work (ACE_TRY_ENV);
+          orb->perform_work (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 

@@ -15,8 +15,8 @@ ior_mcast_Client_i::~ior_mcast_Client_i (void)
 
 int
 ior_mcast_Client_i::init (int& argc,
-                          char *argv[],
-                          CORBA::Environment &ACE_TRY_ENV)
+                          char *argv[]
+                          TAO_ENV_ARG_DECL)
 {
 
   ACE_TRY
@@ -25,21 +25,21 @@ ior_mcast_Client_i::init (int& argc,
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,
-                         "" /* the ORB name, it can be anything! */,
-                         ACE_TRY_ENV);
+                         "" /* the ORB name, it can be anything! */
+                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var mcast_server_object =
-        orb->resolve_initial_references ("MCASTServer", ACE_TRY_ENV);
+        orb->resolve_initial_references ("MCASTServer" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
+
       if (CORBA::is_nil (mcast_server_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot resolve MCast Server\n : client"),
                           -1);
 
       MCast::Server_var mcast_srvr =
-        MCast::Server::_narrow (mcast_server_object.in (), ACE_TRY_ENV);
+        MCast::Server::_narrow (mcast_server_object.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (mcast_srvr.in ()))
@@ -49,7 +49,7 @@ ior_mcast_Client_i::init (int& argc,
 
       // Invoke a request on the server
       CORBA::Boolean ret_value =
-        mcast_srvr->connect_server (ACE_TRY_ENV);
+        mcast_srvr->connect_server (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (ret_value != 0)
@@ -57,7 +57,7 @@ ior_mcast_Client_i::init (int& argc,
           ACE_DEBUG ((LM_DEBUG,
                       "The server has not been contacted. Error!!\n",
                       0));
-	}
+        }
     }
   ACE_CATCH (CORBA::SystemException, ex)
     {

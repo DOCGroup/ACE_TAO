@@ -52,11 +52,10 @@ public:
   TAO_CodecFactory (void);
 
   /// Create a Coder/Decoder for the given type of encoding.
-  virtual IOP::Codec_ptr create_codec (const IOP::Encoding & enc,
-				       CORBA::Environment &ACE_TRY_ENV =
-				         TAO_default_environment ())
+  virtual IOP::Codec_ptr create_codec (const IOP::Encoding & enc
+                                       TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
-		     IOP::CodecFactory::UnknownEncoding));
+                     IOP::CodecFactory::UnknownEncoding));
 
 private:
 

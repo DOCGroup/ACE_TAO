@@ -49,11 +49,11 @@ tao_CORBA_Pollable_nil (
 
 ACE_INLINE CORBA_Pollable_ptr
 tao_CORBA_Pollable_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return CORBA_Pollable::_narrow (p, ACE_TRY_ENV);
+  return CORBA_Pollable::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -99,11 +99,11 @@ tao_CORBA_DIIPollable_nil (
 
 ACE_INLINE CORBA_DIIPollable_ptr
 tao_CORBA_DIIPollable_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return CORBA_DIIPollable::_narrow (p, ACE_TRY_ENV);
+  return CORBA_DIIPollable::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -156,11 +156,11 @@ tao_CORBA_PollableSet_nil (
 
 ACE_INLINE CORBA_PollableSet_ptr
 tao_CORBA_PollableSet_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return CORBA_PollableSet::_narrow (p, ACE_TRY_ENV);
+  return CORBA_PollableSet::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *

@@ -12,7 +12,7 @@ class Consumer_Entry
 public:
   // = Initialization and termination methods.
   Consumer_Entry (Event_Comm::Consumer *consumer,
-		  const char *filtering_criteria);
+                  const char *filtering_criteria);
   // Constructor.
 
   ~Consumer_Entry (void);
@@ -49,7 +49,7 @@ Consumer_Entry::criteria (const char *criteria)
 {
   ACE_OS::free ((void *) this->filtering_criteria_);
   ACE_ALLOCATOR (this->filtering_criteria_,
-		 ACE_OS::strdup (criteria));
+                 ACE_OS::strdup (criteria));
 }
 
 const char *
@@ -86,7 +86,7 @@ Consumer_Entry::regexp (char *regexp)
 }
 
 Consumer_Entry::Consumer_Entry (Event_Comm::Consumer *consumer,
-				const char *filtering_criteria)
+                                const char *filtering_criteria)
   : filtering_criteria_ (0),
     compiled_regexp_ (0),
     consumer_ (consumer)
@@ -99,7 +99,7 @@ Consumer_Entry::Consumer_Entry (Event_Comm::Consumer *consumer,
   // Check for wildcard case first.
   if (ACE_OS::strcmp (filtering_criteria, "") == 0)
     ACE_ALLOCATOR (compile_buffer,
-		   ACE_OS::strdup (""));
+                   ACE_OS::strdup (""));
   else
   {
 #if defined (ACE_HAS_REGEX)
@@ -109,7 +109,7 @@ Consumer_Entry::Consumer_Entry (Event_Comm::Consumer *consumer,
 #else
     // Win32 does not support regular expression functions such as compile.
     ACE_ALLOCATOR (compile_buffer,
-		   ACE_OS::strdup (""));
+                   ACE_OS::strdup (""));
 #endif // #if defined (ACE_HAS_REGEX)
   }
 
@@ -156,16 +156,16 @@ The filtering criteria will not work.\n"));
 
 void
 Notifier_i::subscribe (Event_Comm::Consumer_ptr consumer_ref,
-		       const char *filtering_criteria,
-		       CORBA::Environment &ACE_TRY_ENV)
+                       const char *filtering_criteria
+                       TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    Event_Comm::Notifier::CannotSubscribe
                    ))
 {
   ACE_DEBUG ((LM_DEBUG,
-	      "in Notifier_i::subscribe for %x with filtering criteria \"%s\"\n",
-	      consumer_ref,
+              "in Notifier_i::subscribe for %x with filtering criteria \"%s\"\n",
+              consumer_ref,
               filtering_criteria));
 
   MAP_ITERATOR mi (this->map_);
@@ -186,16 +186,16 @@ Notifier_i::subscribe (Event_Comm::Consumer_ptr consumer_ref,
 
       // Check for a duplicate entry.
       if (consumer_ref->_is_equivalent (me->ext_id_)
-	  && (ACE_OS::strcmp (filtering_criteria,
-			      "") == 0
-	      || ACE_OS::strcmp (filtering_criteria,
-				 nr_entry->criteria ()) == 0))
-	{
-	  // Inform the caller that the <Event_Comm::Consumer> * is
-	  // already being used.
+          && (ACE_OS::strcmp (filtering_criteria,
+                              "") == 0
+              || ACE_OS::strcmp (filtering_criteria,
+                                 nr_entry->criteria ()) == 0))
+        {
+          // Inform the caller that the <Event_Comm::Consumer> * is
+          // already being used.
 
-	  ACE_THROW (Event_Comm::Notifier::CannotSubscribe ("Duplicate consumer and filtering criteria found.\n"));
-	}
+          ACE_THROW (Event_Comm::Notifier::CannotSubscribe ("Duplicate consumer and filtering criteria found.\n"));
+        }
     }
 
   // If we get this far then we didn't find a duplicate, so add the
@@ -203,7 +203,7 @@ Notifier_i::subscribe (Event_Comm::Consumer_ptr consumer_ref,
   Consumer_Entry *nr_entry;
   ACE_NEW (nr_entry,
            Consumer_Entry (consumer_ref,
-			   filtering_criteria));
+                           filtering_criteria));
 
   // Try to add new <Consumer_Entry> to the map.
   if (this->map_.bind (nr_entry->consumer(), nr_entry) == -1)
@@ -218,8 +218,8 @@ Notifier_i::subscribe (Event_Comm::Consumer_ptr consumer_ref,
 
 void
 Notifier_i::unsubscribe (Event_Comm::Consumer_ptr consumer_ref,
-			 const char *filtering_criteria,
-			 CORBA::Environment &ACE_TRY_ENV)
+                         const char *filtering_criteria
+                         TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    Event_Comm::Notifier::CannotUnsubscribe
@@ -227,7 +227,7 @@ Notifier_i::unsubscribe (Event_Comm::Consumer_ptr consumer_ref,
 {
   ACE_DEBUG ((LM_DEBUG,
               "in Notifier_i::unsubscribe for %x\n",
-	      consumer_ref));
+              consumer_ref));
 
   Consumer_Entry *nr_entry = 0;
   MAP_ITERATOR mi (this->map_);
@@ -249,22 +249,22 @@ Notifier_i::unsubscribe (Event_Comm::Consumer_ptr consumer_ref,
 
       // Look for a match ..
       if (consumer_ref->_is_equivalent (me->ext_id_)
-	  && (ACE_OS::strcmp (filtering_criteria, "") == 0
-	      || ACE_OS::strcmp (filtering_criteria,
-				 nr_entry->criteria ()) == 0))
-	{
-	  ACE_DEBUG ((LM_DEBUG,
+          && (ACE_OS::strcmp (filtering_criteria, "") == 0
+              || ACE_OS::strcmp (filtering_criteria,
+                                 nr_entry->criteria ()) == 0))
+        {
+          ACE_DEBUG ((LM_DEBUG,
                       "removed entry %x with criteria \"%s\"\n",
                       consumer_ref,
                       filtering_criteria));
-	  found = 1;
-	  // @@ This is a hack, we need a better approach!
-	  if (this->map_.unbind (me->ext_id_,
-				 nr_entry) == -1)
-	    ACE_THROW (Event_Comm::Notifier::CannotUnsubscribe ("Internal map unbind failed."));
-	  else
-	    delete nr_entry;
-	}
+          found = 1;
+          // @@ This is a hack, we need a better approach!
+          if (this->map_.unbind (me->ext_id_,
+                                 nr_entry) == -1)
+            ACE_THROW (Event_Comm::Notifier::CannotUnsubscribe ("Internal map unbind failed."));
+          else
+            delete nr_entry;
+        }
     }
 
   if (found == 0)
@@ -274,8 +274,8 @@ Notifier_i::unsubscribe (Event_Comm::Consumer_ptr consumer_ref,
 // Disconnect all the consumers, giving them the <reason>.
 
 void
-Notifier_i::disconnect (const char *reason,
-			CORBA::Environment &ACE_TRY_ENV)
+Notifier_i::disconnect (const char *reason
+                        TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -301,13 +301,13 @@ Notifier_i::disconnect (const char *reason,
                   consumer_ref));
       ACE_TRY
         {
-          consumer_ref->disconnect (reason,
-                                    ACE_TRY_ENV);
+          consumer_ref->disconnect (reason
+                                    TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       ACE_CATCHANY
         {
-	  ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Unexpected exception\n");
+          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Unexpected exception\n");
         }
       ACE_ENDTRY;
 
@@ -329,13 +329,13 @@ Notifier_i::disconnect (const char *reason,
 // Notify all consumers whose filtering criteria match the event.
 
 void
-Notifier_i::push (const Event_Comm::Event &event,
-		  CORBA::Environment &ACE_TRY_ENV)
+Notifier_i::push (const Event_Comm::Event &event
+                  TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "in Notifier_i::send_notification = %s\n",
-	      (const char *) event.tag_));
+              (const char *) event.tag_));
   MAP_ITERATOR mi (this->map_);
   int count = 0;
 
@@ -355,31 +355,31 @@ Notifier_i::push (const Event_Comm::Event &event,
 
       // Do a regular expression comparison to determine matching.
       if (ACE_OS::strcmp ("", criteria) == 0 // Everything matches the wildcard.
-	  || ACE_OS::step (event.tag_, regexp) != 0)
+          || ACE_OS::step (event.tag_, regexp) != 0)
 #endif // #if defined (ACE_HAS_REGEX)
         // if ACE_HAS_REGEX has not been defined,
         // let everything through.
-	{
-	  ACE_DEBUG ((LM_DEBUG,
+        {
+          ACE_DEBUG ((LM_DEBUG,
                       "string %s matched regexp \"%s\" for client %x\n",
-		      (const char *) event.tag_,
-		      me->int_id_->criteria (),
-		      consumer_ref));
-	  ACE_TRY
+                      (const char *) event.tag_,
+                      me->int_id_->criteria (),
+                      consumer_ref));
+          ACE_TRY
             {
-              consumer_ref->push (event,
-				  ACE_TRY_ENV);
-	      ACE_TRY_CHECK;
+              consumer_ref->push (event
+                                  TAO_ENV_ARG_PARAMETER);
+              ACE_TRY_CHECK;
             }
-	  ACE_CATCHANY
+          ACE_CATCHANY
             {
-	      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+              ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                                    "Unexpected exception\n");
               continue;
             }
-	  ACE_ENDTRY;
-	  count++;
-	}
+          ACE_ENDTRY;
+          count++;
+        }
     }
 
   if (count == 1)
@@ -404,8 +404,8 @@ Consumer_i::~Consumer_i (void)
 // occurred.
 
 void
-Consumer_i::push (const Event_Comm::Event &event,
-		  CORBA::Environment &)
+Consumer_i::push (const Event_Comm::Event &event
+                  TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   const char *tmpstr = event.tag_;
@@ -419,8 +419,8 @@ Consumer_i::push (const Event_Comm::Event &event,
 // <Event_Comm::Notifier>.
 
 void
-Consumer_i::disconnect (const char *reason,
-			CORBA::Environment &)
+Consumer_i::disconnect (const char *reason
+                        TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,

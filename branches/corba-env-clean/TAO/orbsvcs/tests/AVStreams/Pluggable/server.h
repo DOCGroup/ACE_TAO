@@ -28,9 +28,9 @@ class FTP_Server_Callback : public TAO_AV_Callback
   //    Defines a class for the server application callback.
   //
   // = DESCRIPTION
-  //    This class overides the methods of the TAO_AV_Callback so the 
+  //    This class overides the methods of the TAO_AV_Callback so the
   //    AVStreams can make upcalls to the application.
-  
+
 public:
 
   // Method that is called when there is data to be received from the ftp client.
@@ -65,7 +65,7 @@ class Server
 {
   // = TITLE
   //    Defines the server application class.
-  // 
+  //
   // = DESCRIPOTION
   //    The actual server progarm that acts as the ftp server that receives data
   //    sent by the ftp client.
@@ -77,10 +77,10 @@ public:
   // Deestructor.
 
   int init (int argc,
-            char **argv,
-            CORBA::Environment &);
+            char **argv
+            TAO_ENV_ARG_DECL_NOT_USED);
   // Initialize data components.
-  
+
 protected:
   TAO_Naming_Client my_naming_client_;
   // The Naming Service Client.
@@ -88,7 +88,7 @@ protected:
   TAO_AV_Endpoint_Reactive_Strategy_B
   <FTP_Server_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl> reactive_strategy_;
   // The endpoint reacxtive strategy.
-  
+
   TAO_MMDevice *mmdevice_;
   // The server MMDevice.
 };

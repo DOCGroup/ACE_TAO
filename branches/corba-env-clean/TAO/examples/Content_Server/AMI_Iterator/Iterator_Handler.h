@@ -63,27 +63,27 @@ public:
   // name of the file being retrieved from the web server.
 
   virtual void next_chunk (CORBA::Boolean pending_data,
-                   const Web_Server::Chunk_Type & chunk,
-                   CORBA::Environment &ACE_TRY_ENV)
+                   const Web_Server::Chunk_Type & chunk
+                   TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void next_chunk_excep (
-      Web_Server::AMI_Content_IteratorExceptionHolder *,
-      CORBA::Environment &)
+      Web_Server::AMI_Content_IteratorExceptionHolder *
+      TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException)) {}
 
-  virtual void destroy (CORBA::Environment &)
+  virtual void destroy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void destroy_excep (
-      Web_Server::AMI_Content_IteratorExceptionHolder *,
-      CORBA::Environment &)
+      Web_Server::AMI_Content_IteratorExceptionHolder *
+      TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException)) {}
 
   void run (int *request_count,
             const char *pathname,
-            Web_Server::Iterator_Factory_ptr factory,
-            CORBA::Environment &ACE_TRY_ENV)
+            Web_Server::Iterator_Factory_ptr factory
+            TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Web_Server::Error_Result));
   // Activate and run this Reply Handler.  The contents (not the
@@ -97,13 +97,13 @@ private:
   // on the heap).
 
   void initialize_content_iterator (const char *pathname,
-                                    Web_Server::Iterator_Factory_ptr factory,
-                                    CORBA::Environment &ACE_TRY_ENV)
+                                    Web_Server::Iterator_Factory_ptr factory
+                                    TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Web_Server::Error_Result));
   // Initialize the Content Iterator used to retrieve the file.
 
-  void deactivate (CORBA::Environment &ACE_TRY_ENV)
+  void deactivate (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Deactivate this reply handler.
 

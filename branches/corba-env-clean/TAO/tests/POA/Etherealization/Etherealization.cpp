@@ -22,7 +22,7 @@
 class test_i : public POA_test
 {
 public:
-  void method (CORBA::Environment & /*ACE_TRY_ENV*/)
+  void method (TAO_ENV_SINGLE_ARG_DECL_NOT_USED /*TAO_ENV_SINGLE_ARG_PARAMETER*/)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
   }
@@ -37,7 +37,7 @@ class test_i_with_reference_counting : public virtual PortableServer::RefCountSe
                                        public virtual POA_test
 {
 public:
-  void method (CORBA::Environment &)
+  void method (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
   }
@@ -114,32 +114,32 @@ Servant_Activator::etherealize (const PortableServer::ObjectId &id,
 int
 main (int argc, char **argv)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
 
   ACE_TRY
     {
       // Initialize the ORB first.
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            0,
-                                            ACE_TRY_ENV);
+                                            0
+                                            TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Obtain the RootPOA.
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RootPOA",
-                                         ACE_TRY_ENV);
+        orb->resolve_initial_references ("RootPOA"
+                                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Get the POA_var object from Object_var.
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (object.in (),
-                                      ACE_TRY_ENV);
+        PortableServer::POA::_narrow (object.in ()
+                                      TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Get the POAManager of the RootPOA.
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_TRY_ENV);
+        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::PolicyList policies (3);
@@ -147,30 +147,30 @@ main (int argc, char **argv)
 
       // ID Assignment Policy
       policies[0] =
-        root_poa->create_id_assignment_policy (PortableServer::USER_ID,
-                                               ACE_TRY_ENV);
+        root_poa->create_id_assignment_policy (PortableServer::USER_ID
+                                               TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Lifespan Policy
       policies[1] =
-        root_poa->create_lifespan_policy (PortableServer::PERSISTENT,
-                                          ACE_TRY_ENV);
+        root_poa->create_lifespan_policy (PortableServer::PERSISTENT
+                                          TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Request Processing Policy
       policies[2] =
-        root_poa->create_request_processing_policy (PortableServer::USE_SERVANT_MANAGER,
-                                                    ACE_TRY_ENV);
+        root_poa->create_request_processing_policy (PortableServer::USE_SERVANT_MANAGER
+                                                    TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var child_poa =
         root_poa->create_POA ("child",
                               poa_manager.in (),
-                              policies,
-                              ACE_TRY_ENV);
+                              policies
+                              TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      poa_manager->activate (ACE_TRY_ENV);
+      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Create servant activator.
@@ -178,8 +178,8 @@ main (int argc, char **argv)
         new Servant_Activator;
 
       // Set servant_activator as the servant_manager of child POA.
-      child_poa->set_servant_manager (servant_manager.in (),
-                                      ACE_TRY_ENV);
+      child_poa->set_servant_manager (servant_manager.in ()
+                                      TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       {
@@ -190,20 +190,20 @@ main (int argc, char **argv)
 
         object =
           child_poa->create_reference_with_id (id.in (),
-                                               "IDL:test:1.0",
-                                               ACE_TRY_ENV);
+                                               "IDL:test:1.0"
+                                               TAO_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
         test_var test =
-          test::_narrow (object.in (),
-                         ACE_TRY_ENV);
+          test::_narrow (object.in ()
+                         TAO_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
-        test->method (ACE_TRY_ENV);
+        test->method (TAO_ENV_SINGLE_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
-        child_poa->deactivate_object (id.in (),
-                                      ACE_TRY_ENV);
+        child_poa->deactivate_object (id.in ()
+                                      TAO_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
       }
 
@@ -215,20 +215,20 @@ main (int argc, char **argv)
 
         object =
           child_poa->create_reference_with_id (id.in (),
-                                               "IDL:test:1.0",
-                                               ACE_TRY_ENV);
+                                               "IDL:test:1.0"
+                                               TAO_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
         test_var test =
-          test::_narrow (object.in (),
-                         ACE_TRY_ENV);
+          test::_narrow (object.in ()
+                         TAO_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
-        test->method (ACE_TRY_ENV);
+        test->method (TAO_ENV_SINGLE_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
-        child_poa->deactivate_object (id.in (),
-                                      ACE_TRY_ENV);
+        child_poa->deactivate_object (id.in ()
+                                      TAO_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
       }
 

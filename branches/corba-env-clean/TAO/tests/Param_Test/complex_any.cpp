@@ -51,8 +51,8 @@ Test_Complex_Any::opname (void) const
 }
 
 void
-Test_Complex_Any::dii_req_invoke (CORBA::Request *req,
-                                  CORBA::Environment &ACE_TRY_ENV)
+Test_Complex_Any::dii_req_invoke (CORBA::Request *req
+                                  TAO_ENV_ARG_DECL)
 {
   req->add_in_arg ("s1") <<= this->in_;
   req->add_inout_arg ("s2") <<= this->inout_;
@@ -60,7 +60,7 @@ Test_Complex_Any::dii_req_invoke (CORBA::Request *req,
 
   req->set_return_type (CORBA::_tc_any);
 
-  req->invoke (ACE_TRY_ENV);
+  req->invoke (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   const CORBA::Any *tmp;
@@ -68,21 +68,21 @@ Test_Complex_Any::dii_req_invoke (CORBA::Request *req,
   this->ret_ = new CORBA::Any (*tmp);
 
   CORBA::NamedValue_ptr o2 =
-    req->arguments ()->item (1, ACE_TRY_ENV);
+    req->arguments ()->item (1 TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
   *o2->value () >>= tmp;
   this->inout_ = CORBA::Any (*tmp);
 
   CORBA::NamedValue_ptr o3 =
-    req->arguments ()->item (2, ACE_TRY_ENV);
+    req->arguments ()->item (2 TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
   *o3->value () >>= tmp;
   this->out_ = new CORBA::Any (*tmp);
 }
 
 int
-Test_Complex_Any::init_parameters (Param_Test_ptr,
-                                   CORBA::Environment &)
+Test_Complex_Any::init_parameters (Param_Test_ptr
+                                   TAO_ENV_ARG_DECL_NOT_USED)
 {
   return this->reset_parameters ();
 }
@@ -167,15 +167,15 @@ Test_Complex_Any::reset_parameters (void)
 }
 
 int
-Test_Complex_Any::run_sii_test (Param_Test_ptr objref,
-                                CORBA::Environment &ACE_TRY_ENV)
+Test_Complex_Any::run_sii_test (Param_Test_ptr objref
+                                TAO_ENV_ARG_DECL)
 {
   ACE_TRY
     {
       this->ret_ = objref->test_complex_any (this->in_,
                                              this->inout_,
-                                             this->out_.out (),
-                                             ACE_TRY_ENV);
+                                             this->out_.out ()
+                                             TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

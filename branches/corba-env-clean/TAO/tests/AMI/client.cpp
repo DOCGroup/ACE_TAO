@@ -9,7 +9,7 @@
 //    server.cpp
 //
 // = DESCRIPTION
-//    A client, which uses the AMI callback model.
+//    A client which uses the AMI callback model.
 //
 // = AUTHOR
 //    Alexander Babu Arulanthu <alex@cs.wustl.edu>,
@@ -99,8 +99,8 @@ public:
   Handler (void) {};
 
   void foo (CORBA::Long result,
-            CORBA::Long out_l,
-            CORBA::Environment&)
+            CORBA::Long out_l
+            TAO_ENV_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
       if (debug)
@@ -114,8 +114,8 @@ public:
       number_of_replies--;
     };
 
-   void foo_excep (A::AMI_AMI_TestExceptionHolder * excep_holder,
-                  CORBA::Environment &ACE_TRY_ENV)
+   void foo_excep (A::AMI_AMI_TestExceptionHolder * excep_holder
+                  TAO_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
 
@@ -123,20 +123,20 @@ public:
                   "Callback method <foo_excep> called: \n"));
       ACE_TRY
         {
-          excep_holder->raise_foo (ACE_TRY_ENV);
+          excep_holder->raise_foo (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       ACE_CATCHANY
         {
           ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "Catched exception:");
+                               "Caught exception:");
         }
       ACE_ENDTRY;
       ACE_CHECK;
     };
 
-  void get_yadda (CORBA::Long result,
-                  CORBA::Environment &)
+  void get_yadda (CORBA::Long result
+                  TAO_ENV_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -144,23 +144,23 @@ public:
                   result));
     };
 
-  void get_yadda_excep (A::AMI_AMI_TestExceptionHolder *,
-                        CORBA::Environment &)
+  void get_yadda_excep (A::AMI_AMI_TestExceptionHolder *
+                        TAO_ENV_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <get_yadda_excep> called: \n"));
     };
 
-  void set_yadda (CORBA::Environment &)
+  void set_yadda (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <set_yadda> called: \n"));
     };
 
-  void set_yadda_excep (A::AMI_AMI_TestExceptionHolder *,
-                        CORBA::Environment &)
+  void set_yadda_excep (A::AMI_AMI_TestExceptionHolder *
+                        TAO_ENV_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -175,22 +175,22 @@ Handler handler;
 int
 main (int argc, char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior, ACE_TRY_ENV);
+        orb->string_to_object (ior TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       A::AMI_Test_var server =
-        A::AMI_Test::_narrow (object.in (), ACE_TRY_ENV);
+        A::AMI_Test::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
@@ -204,7 +204,7 @@ main (int argc, char *argv[])
       // Activate POA to handle the call back.
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA", ACE_TRY_ENV);
+        orb->resolve_initial_references("RootPOA" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (poa_object.in ()))
@@ -213,16 +213,16 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in (), ACE_TRY_ENV);
+        PortableServer::POA::_narrow (poa_object.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_TRY_ENV);
+        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      poa_manager->activate (ACE_TRY_ENV);
+      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-  
+
       // Let the client perform the test in a separate thread
 
       Client client (server.in (), niterations);
@@ -248,12 +248,12 @@ main (int argc, char *argv[])
       while (number_of_replies > 0)
         {
           CORBA::Boolean pending =
-            orb->work_pending(ACE_TRY_ENV);
+            orb->work_pending(TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           if (pending)
             {
-              orb->perform_work(ACE_TRY_ENV);
+              orb->perform_work(TAO_ENV_SINGLE_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
         }
@@ -273,17 +273,17 @@ main (int argc, char *argv[])
       //client.ami_test_var_->shutdown ();
 
       root_poa->destroy (1,  // ethernalize objects
-                         0, // wait for completion
-                         ACE_TRY_ENV);
+                         0  // wait for completion
+                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->destroy (ACE_TRY_ENV);
+      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Catched exception:");
+                           "Caught exception:");
       return 1;
     }
   ACE_ENDTRY;
@@ -298,7 +298,7 @@ Client::Client (A::AMI_Test_ptr server,
                 :  ami_test_var_ (A::AMI_Test::_duplicate (server)),
      niterations_ (niterations)
 {
-  the_handler_var_ = handler._this (/* ACE_TRY_ENV */);
+  the_handler_var_ = handler._this (/* TAO_ENV_SINGLE_ARG_PARAMETER */);
 }
 
 int
@@ -312,8 +312,8 @@ Client::svc (void)
         {
           ami_test_var_->sendc_foo (the_handler_var_.in (),
                                     number,
-                                    "Let's talk AMI.",
-                                    ACE_TRY_ENV);
+                                    "Let's talk AMI."
+                                    TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       if (debug)

@@ -28,12 +28,12 @@ class Test_i : public POA_Test
 public:
   Test_i (CORBA::ORB_ptr orb);
 
-  CORBA::Short method  (CORBA::Short boo,
-                        CORBA::Environment &ACE_TRY_ENV)
+  CORBA::Short method  (CORBA::Short boo
+                        TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Test::Oops));
 
-  void shutdown  (CORBA::Environment &ACE_TRY_ENV)
+  void shutdown  (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
@@ -47,8 +47,8 @@ Test_i::Test_i (CORBA::ORB_ptr orb)
 }
 
 CORBA::Short
-Test_i :: method (CORBA::Short boo,
-                  CORBA::Environment &ACE_TRY_ENV)
+Test_i :: method (CORBA::Short boo
+                  TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Test::Oops))
 {
@@ -62,7 +62,7 @@ Test_i :: method (CORBA::Short boo,
 }
 
 void
-Test_i::shutdown (CORBA::Environment &)
+Test_i::shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown ();
@@ -98,7 +98,7 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
 
   ACE_TRY
     {
@@ -107,34 +107,34 @@ main (int argc, char *argv[])
 
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            "",
-                                            ACE_TRY_ENV);
+                                            ""
+                                            TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Test_i servant (orb.in ());
       // Obtain RootPOA.
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RootPOA",
-                                         ACE_TRY_ENV);
+        orb->resolve_initial_references ("RootPOA"
+                                         TAO_ENV_ARG_PARAMETER);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (object.in (),
-                                      ACE_TRY_ENV);
+        PortableServer::POA::_narrow (object.in ()
+                                      TAO_ENV_ARG_PARAMETER);
 
       ACE_TRY_CHECK;
 
       // Get the POAManager of the RootPOA.
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_TRY_ENV);
+        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Test_var Test_object =
-        servant._this (ACE_TRY_ENV);
+        servant._this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::String_var ior =
-        orb->object_to_string (Test_object.in (),
-                               ACE_TRY_ENV);
+        orb->object_to_string (Test_object.in ()
+                               TAO_ENV_ARG_PARAMETER);
 
       // If the ior_output_file exists, output the ior to it
       if (ior_output_file != 0)
@@ -154,17 +154,17 @@ main (int argc, char *argv[])
           ACE_OS::fclose (output_file);
         }
 
-      poa_manager->activate (ACE_TRY_ENV);
+      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->run (ACE_TRY_ENV);
+      orb->run (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
       root_poa->destroy (1,
-                         1,
-                         ACE_TRY_ENV);
+                         1
+                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

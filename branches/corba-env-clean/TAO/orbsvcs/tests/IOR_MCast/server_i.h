@@ -18,13 +18,13 @@ class Server_i
   Server_i (void);
   ~Server_i (void);
 
-  int init (int &argc, char **&argv, CORBA::Environment &);
+  int init (int &argc, char **&argv TAO_ENV_ARG_DECL_NOT_USED);
   // Initialize the server multicast.
 
  private:
 
-  int enable_multicast (const char *ior,
-                        CORBA::Environment &ACE_TRY_ENV);
+  int enable_multicast (const char *ior
+                        TAO_ENV_ARG_DECL);
   // Sets the IOR_Multicast class to listen for multicast requests
   // for this server.
 
@@ -49,7 +49,7 @@ class Server_i
   CORBA::String_var mcast_address_;
   // Address of the multicast address where to listen for requests for */
   // the server. */
-  
+
 
 };
 

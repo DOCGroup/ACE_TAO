@@ -49,8 +49,8 @@ TAO_IOR_Manipulation_impl::_remove_ref (void)
 
 CORBA::Object_ptr
 TAO_IOR_Manipulation_impl::merge_iors (
-    const TAO_IOP::TAO_IOR_Manipulation::IORList & iors,
-    CORBA::Environment &ACE_TRY_ENV)
+    const TAO_IOP::TAO_IOR_Manipulation::IORList & iors
+    TAO_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        TAO_IOP::EmptyProfileList,
                        TAO_IOP::Duplicate,
@@ -120,8 +120,8 @@ TAO_IOR_Manipulation_impl::merge_iors (
   TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
 
   TAO_Stub *stub = orb_core->create_stub (id._retn (), // give the id string
-                                          Merged_Profiles,
-                                          ACE_TRY_ENV);
+                                          Merged_Profiles
+                                          TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   // Make the stub memory allocation exception safe for the duration
@@ -155,8 +155,8 @@ TAO_IOR_Manipulation_impl::merge_iors (
 CORBA::Object_ptr
 TAO_IOR_Manipulation_impl::add_profiles (
     CORBA::Object_ptr ior1,
-    CORBA::Object_ptr ior2,
-    CORBA::Environment &ACE_TRY_ENV)
+    CORBA::Object_ptr ior2
+    TAO_ENV_ARG_DECL)
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         TAO_IOP::EmptyProfileList,
@@ -170,14 +170,14 @@ TAO_IOR_Manipulation_impl::add_profiles (
   buffer [0] = ior1;
   buffer [1] = ior2;
   TAO_IOP::TAO_IOR_Manipulation::IORList iors (2, 2, buffer, 0);
-  return this->merge_iors (iors, ACE_TRY_ENV);
+  return this->merge_iors (iors TAO_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object_ptr
 TAO_IOR_Manipulation_impl::remove_profiles (
     CORBA::Object_ptr ior1,
-    CORBA::Object_ptr ior2,
-    CORBA::Environment &ACE_TRY_ENV)
+    CORBA::Object_ptr ior2
+    TAO_ENV_ARG_DECL)
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         TAO_IOP::Invalid_IOR,
@@ -224,8 +224,8 @@ TAO_IOR_Manipulation_impl::remove_profiles (
   TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
 
   TAO_Stub *stub = orb_core->create_stub (id._retn (), // give the id string
-                                          Diff_Profiles,
-                                          ACE_TRY_ENV);
+                                          Diff_Profiles
+                                          TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   // Make the stub memory allocation exception safe for the duration
@@ -259,8 +259,8 @@ TAO_IOR_Manipulation_impl::remove_profiles (
 CORBA::Boolean
 TAO_IOR_Manipulation_impl::set_property (
       TAO_IOP::TAO_IOR_Property_ptr prop,
-      CORBA::Object_ptr ior,
-      CORBA::Environment &ACE_TRY_ENV
+      CORBA::Object_ptr ior
+      TAO_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -274,16 +274,16 @@ TAO_IOR_Manipulation_impl::set_property (
                       0);
 
   // Call the implementation object to
-  return prop->set_property (ior,
-                             ACE_TRY_ENV);
+  return prop->set_property (ior
+                             TAO_ENV_ARG_PARAMETER);
 }
 
 CORBA::Boolean
 TAO_IOR_Manipulation_impl::set_primary (
       TAO_IOP::TAO_IOR_Property_ptr prop,
       CORBA::Object_ptr ior1,
-      CORBA::Object_ptr ior2,
-      CORBA::Environment &ACE_TRY_ENV
+      CORBA::Object_ptr ior2
+      TAO_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -305,15 +305,15 @@ TAO_IOR_Manipulation_impl::set_primary (
 
   // Call the callback object to do the rest of the processing.
   return prop->set_primary (ior1,
-                            ior2,
-                            ACE_TRY_ENV);
+                            ior2
+                            TAO_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object_ptr
 TAO_IOR_Manipulation_impl::get_primary (
       TAO_IOP::TAO_IOR_Property_ptr prop,
-      CORBA::Object_ptr ior,
-      CORBA::Environment &ACE_TRY_ENV
+      CORBA::Object_ptr ior
+      TAO_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -328,28 +328,28 @@ TAO_IOR_Manipulation_impl::get_primary (
   // run-time (if it does not crash).  Any idea about what is going on
   // here?
 
-  return prop->get_primary (ior,
-                            ACE_TRY_ENV);
+  return prop->get_primary (ior
+                            TAO_ENV_ARG_PARAMETER);
 }
 
 CORBA::Boolean
 TAO_IOR_Manipulation_impl::is_primary_set (
       TAO_IOP::TAO_IOR_Property_ptr prop,
-      CORBA::Object_ptr ior,
-      CORBA::Environment &ACE_TRY_ENV
+      CORBA::Object_ptr ior
+      TAO_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ))
 {
-  return prop->is_primary_set (ior, ACE_TRY_ENV);
+  return prop->is_primary_set (ior TAO_ENV_ARG_PARAMETER);
 }
 
 CORBA::ULong
 TAO_IOR_Manipulation_impl::is_in_ior (
     CORBA::Object_ptr ior1,
-    CORBA::Object_ptr ior2,
-    CORBA::Environment &ACE_TRY_ENV)
+    CORBA::Object_ptr ior2
+    TAO_ENV_ARG_DECL)
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         TAO_IOP::NotFound
@@ -380,8 +380,8 @@ TAO_IOR_Manipulation_impl::is_in_ior (
 
 CORBA::ULong
 TAO_IOR_Manipulation_impl::get_profile_count (
-    CORBA::Object_ptr ior,
-    CORBA::Environment &ACE_TRY_ENV)
+    CORBA::Object_ptr ior
+    TAO_ENV_ARG_DECL)
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         TAO_IOP::EmptyProfileList

@@ -35,8 +35,8 @@ find_non_existant_POA (PortableServer::POA_ptr parent,
       // Try to find child poa.
       PortableServer::POA_var child_poa =
         parent->find_POA (child_poa_name,
-                          activate,
-                          ACE_TRY_ENV);
+                          activate
+                          TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (PortableServer::POA::AdapterNonExistent, foo)
@@ -54,32 +54,31 @@ find_non_existant_POA (PortableServer::POA_ptr parent,
 int
 main (int argc, char **argv)
 {
-  //  CORBA::Environment env;
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
 
   // Initialize the ORB
   ACE_TRY
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0, ACE_TRY_ENV);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0 TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Obtain the RootPOA.
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("RootPOA",
-                                         ACE_TRY_ENV);
+        orb->resolve_initial_references ("RootPOA"
+                                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Narrow Object reference to RootPOA to a POA reference.
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in(), ACE_TRY_ENV);
+        PortableServer::POA::_narrow (obj.in() TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Get the POAManager of the RootPOA.
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_TRY_ENV);
+        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      poa_manager->activate (ACE_TRY_ENV);
+      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Try to find a non-existant POA.  Since the Adapter Activator
@@ -94,23 +93,23 @@ main (int argc, char **argv)
 
       // Register the TAO_Adapter_Activator reference to be the RootPOA's
       // Adapter Activator.
-      root_poa->the_activator (activator.in (),
-                               ACE_TRY_ENV);
+      root_poa->the_activator (activator.in ()
+                               TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Try to find a childPOA of RootPOA named firstPOA
       ACE_CString name = "firstPOA";
       PortableServer::POA_var first_poa =
         root_poa->find_POA (name.c_str (),
-                            1,
-                            ACE_TRY_ENV);
+                            1
+                            TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       name = "secondPOA";
       PortableServer::POA_var second_poa =
         first_poa->find_POA (name.c_str (),
-                             1,
-                             ACE_TRY_ENV);
+                             1
+                             TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Try to find a non-existant POA.  Even though the Adapter
@@ -122,15 +121,15 @@ main (int argc, char **argv)
 
       // Get the names of all the POAs
       CORBA::String_var root_poa_name =
-        root_poa->the_name (ACE_TRY_ENV);
+        root_poa->the_name (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::String_var first_poa_name =
-        first_poa->the_name (ACE_TRY_ENV);
+        first_poa->the_name (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::String_var second_poa_name =
-        second_poa->the_name (ACE_TRY_ENV);
+        second_poa->the_name (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,

@@ -50,28 +50,25 @@ public:
   // = Some functions common to all Dynamic Any types.
 
   virtual CORBA::TypeCode_ptr type (
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
   virtual void assign (
-      DynamicAny::DynAny_ptr dyn_any,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      DynamicAny::DynAny_ptr dyn_any
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch
       ));
 
   virtual void insert_boolean (
-      CORBA::Boolean value,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      CORBA::Boolean value
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -79,10 +76,9 @@ public:
       ));
 
   virtual void insert_octet (
-      CORBA::Octet value,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      CORBA::Octet value
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -90,10 +86,9 @@ public:
       ));
 
   virtual void insert_char (
-      CORBA::Char value,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      CORBA::Char value
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -101,10 +96,9 @@ public:
       ));
 
   virtual void insert_short (
-      CORBA::Short value,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      CORBA::Short value
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -112,10 +106,9 @@ public:
       ));
 
   virtual void insert_ushort (
-      CORBA::UShort value,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      CORBA::UShort value
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -123,10 +116,9 @@ public:
       ));
 
   virtual void insert_long (
-      CORBA::Long value,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      CORBA::Long value
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -134,10 +126,9 @@ public:
       ));
 
   virtual void insert_ulong (
-      CORBA::ULong value,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      CORBA::ULong value
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -145,10 +136,9 @@ public:
       ));
 
   virtual void insert_float (
-      CORBA::Float value,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      CORBA::Float value
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -156,10 +146,9 @@ public:
       ));
 
   virtual void insert_double (
-      CORBA::Double value,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      CORBA::Double value
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -167,10 +156,9 @@ public:
       ));
 
   virtual void insert_string (
-      const char * value,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      const char * value
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -178,10 +166,9 @@ public:
       ));
 
   virtual void insert_reference (
-      CORBA::Object_ptr value,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      CORBA::Object_ptr value
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -189,10 +176,9 @@ public:
       ));
 
   virtual void insert_typecode (
-      CORBA::TypeCode_ptr value,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      CORBA::TypeCode_ptr value
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -200,10 +186,9 @@ public:
       ));
 
   virtual void insert_longlong (
-      CORBA::LongLong value,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      CORBA::LongLong value
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -211,10 +196,9 @@ public:
       ));
 
   virtual void insert_ulonglong (
-      CORBA::ULongLong value,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      CORBA::ULongLong value
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -222,10 +206,9 @@ public:
       ));
 
   virtual void insert_longdouble (
-      CORBA::LongDouble value,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      CORBA::LongDouble value
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -233,10 +216,9 @@ public:
       ));
 
   virtual void insert_wchar (
-      CORBA::WChar value,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      CORBA::WChar value
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -244,10 +226,9 @@ public:
       ));
 
   virtual void insert_wstring (
-      const CORBA::WChar * value,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      const CORBA::WChar * value
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -255,10 +236,9 @@ public:
       ));
 
   virtual void insert_any (
-      const CORBA::Any & value,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      const CORBA::Any & value
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -266,10 +246,9 @@ public:
       ));
 
   virtual void insert_dyn_any (
-      DynamicAny::DynAny_ptr value,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      DynamicAny::DynAny_ptr value
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -278,10 +257,9 @@ public:
 
 #ifdef TAO_HAS_VALUETYPE
   virtual void insert_val (
-      CORBA::ValueBase_ptr value,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      CORBA::ValueBase_ptr value
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -290,9 +268,8 @@ public:
 #endif /* TAO_HAS_VALUETYPE */
 
   virtual CORBA::Boolean get_boolean (
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -300,9 +277,8 @@ public:
       ));
 
   virtual CORBA::Octet get_octet (
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -310,9 +286,8 @@ public:
       ));
 
   virtual CORBA::Char get_char (
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -320,9 +295,8 @@ public:
       ));
 
   virtual CORBA::Short get_short (
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -330,9 +304,8 @@ public:
       ));
 
   virtual CORBA::UShort get_ushort (
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -340,9 +313,8 @@ public:
       ));
 
   virtual CORBA::Long get_long (
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -350,9 +322,8 @@ public:
       ));
 
   virtual CORBA::ULong get_ulong (
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -360,9 +331,8 @@ public:
       ));
 
   virtual CORBA::Float get_float (
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -370,9 +340,8 @@ public:
       ));
 
   virtual CORBA::Double get_double (
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -380,9 +349,8 @@ public:
       ));
 
   virtual char * get_string (
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -390,9 +358,8 @@ public:
       ));
 
   virtual CORBA::Object_ptr get_reference (
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -400,9 +367,8 @@ public:
       ));
 
   virtual CORBA::TypeCode_ptr get_typecode (
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -410,9 +376,8 @@ public:
       ));
 
   virtual CORBA::LongLong get_longlong (
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -420,9 +385,8 @@ public:
       ));
 
   virtual CORBA::ULongLong get_ulonglong (
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -430,9 +394,8 @@ public:
       ));
 
   virtual CORBA::LongDouble get_longdouble (
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -440,9 +403,8 @@ public:
       ));
 
   virtual CORBA::WChar get_wchar (
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -450,9 +412,8 @@ public:
       ));
 
   virtual CORBA::WChar * get_wstring (
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -460,9 +421,8 @@ public:
       ));
 
   virtual CORBA::Any * get_any (
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -470,9 +430,8 @@ public:
       ));
 
   virtual DynamicAny::DynAny_ptr get_dyn_any (
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -481,9 +440,8 @@ public:
 
 #ifdef TAO_HAS_VALUETYPE
   virtual CORBA::ValueBase_ptr get_val (
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -492,42 +450,37 @@ public:
 #endif /* TAO_HAS_VALUETYPE */
 
   virtual CORBA::Boolean seek (
-      CORBA::Long index,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      CORBA::Long index
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
   virtual void rewind (
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
   virtual CORBA::Boolean next (
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
   virtual DynamicAny::DynAny_ptr copy (
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
   virtual CORBA::ULong component_count (
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
@@ -544,8 +497,8 @@ protected:
   // destroy() method.
   void set_flag (
       DynamicAny::DynAny_ptr component,
-      CORBA::Boolean destroying,
-      CORBA::Environment &ACE_TRY_ENV
+      CORBA::Boolean destroying
+      TAO_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -580,22 +533,22 @@ protected:
 private:
   // Utility functions used by insert_* and get_*.
 
-  DynamicAny::DynAny_ptr check_component (CORBA::Environment &ACE_TRY_ENV)
+  DynamicAny::DynAny_ptr check_component (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
         DynamicAny::DynAny::InvalidValue
       ));
 
-  void check_type (CORBA::TypeCode_ptr tc,
-                   CORBA::Environment &ACE_TRY_ENV)
+  void check_type (CORBA::TypeCode_ptr tc
+                   TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch
       ));
 
-  CORBA::TypeCode_ptr check_type_and_unalias (CORBA::TypeCode_ptr tc,
-                                              CORBA::Environment &ACE_TRY_ENV)
+  CORBA::TypeCode_ptr check_type_and_unalias (CORBA::TypeCode_ptr tc
+                                              TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch

@@ -54,10 +54,10 @@ public:
   virtual ~TAO_CEC_ProxyPushSupplier (void);
 
   /// Activate in the POA
-  virtual CosEventChannelAdmin::ProxyPushSupplier_ptr activate (CORBA::Environment &ACE_TRY_ENV) ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CosEventChannelAdmin::ProxyPushSupplier_ptr activate (TAO_ENV_SINGLE_ARG_DECL) ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Deactivate from the POA
-  virtual void deactivate (CORBA::Environment &ACE_TRY_ENV)
+  virtual void deactivate (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return 0 if no consumer is connected...
@@ -72,36 +72,36 @@ public:
   CosEventComm::PushConsumer_ptr consumer (void) const;
 
   /// The event channel is shutting down
-  virtual void shutdown (CORBA::Environment &env);
+  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL);
 
   /// Internal methods to push an event to each consumer.
-  virtual void push (const CORBA::Any &event,
-                     CORBA::Environment &ACE_TRY_ENV);
-  virtual void push_nocopy (CORBA::Any &event,
-                            CORBA::Environment &ACE_TRY_ENV);
+  virtual void push (const CORBA::Any &event
+                     TAO_ENV_ARG_DECL);
+  virtual void push_nocopy (CORBA::Any &event
+                            TAO_ENV_ARG_DECL);
 
   /// Pushes to the consumer, verifies that it is connected.
-  void push_to_consumer (const CORBA::Any &event,
-                         CORBA::Environment &env);
-  void reactive_push_to_consumer (const CORBA::Any &event,
-                                  CORBA::Environment &env);
+  void push_to_consumer (const CORBA::Any &event
+                         TAO_ENV_ARG_DECL);
+  void reactive_push_to_consumer (const CORBA::Any &event
+                                  TAO_ENV_ARG_DECL);
 
   /**
    * Invoke the _non_existent() pseudo-operation on the consumer. If
    * it is disconnected then it returns true and sets the
    * <disconnected> flag.
    */
-  CORBA::Boolean consumer_non_existent (CORBA::Boolean_out disconnected,
-                                        CORBA::Environment &ACE_TRY_ENV);
+  CORBA::Boolean consumer_non_existent (CORBA::Boolean_out disconnected
+                                        TAO_ENV_ARG_DECL);
 
   // = The CosEventChannelAdmin::ProxyPushSupplier methods...
   virtual void connect_push_consumer (
-                CosEventComm::PushConsumer_ptr push_consumer,
-                CORBA::Environment &)
+                CosEventComm::PushConsumer_ptr push_consumer
+                TAO_ENV_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosEventChannelAdmin::AlreadyConnected,
                        CosEventChannelAdmin::TypeError));
-  virtual void disconnect_push_supplier (CORBA::Environment &)
+  virtual void disconnect_push_supplier (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Increment and decrement the reference count.
@@ -109,9 +109,9 @@ public:
   CORBA::ULong _decr_refcnt (void);
 
   // = The Servant methods
-  virtual PortableServer::POA_ptr _default_POA (CORBA::Environment &env);
-  virtual void _add_ref (CORBA_Environment &ACE_TRY_ENV);
-  virtual void _remove_ref (CORBA_Environment &ACE_TRY_ENV);
+  virtual PortableServer::POA_ptr _default_POA (TAO_ENV_SINGLE_ARG_DECL);
+  virtual void _add_ref (TAO_ENV_SINGLE_ARG_DECL);
+  virtual void _remove_ref (TAO_ENV_SINGLE_ARG_DECL);
 
 protected:
   /// Set the consumer, used by some implementations to change the

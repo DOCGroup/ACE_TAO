@@ -89,7 +89,7 @@ Quoter_Client::run (void)
   ACE_TRY_NEW_ENV
     {
       exception_message = "While using get_quote ()";
-      CORBA::Long q = this->quoter_var_->get_quote ("ACE Hardware", ACE_TRY_ENV);
+      CORBA::Long q = this->quoter_var_->get_quote ("ACE Hardware" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (this->debug_level_ >= 1)
@@ -101,8 +101,8 @@ Quoter_Client::run (void)
       exception_message = "While copying the quoter";
       CORBA::Object_var quoterObj_var =
         this->quoter_var_->copy (factory_Finder_var_.in (),
-                                 criteria,
-                                 ACE_TRY_ENV);
+                                 criteria
+                                 TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (quoterObj_var.in()))
@@ -113,8 +113,8 @@ Quoter_Client::run (void)
       // Narrow it to the actual Quoter interface
       exception_message = "While narrowing the quoter";
       Stock::Quoter_var copied_quoter_var =
-        Stock::Quoter::_narrow (quoterObj_var.in (),
-                                ACE_TRY_ENV);
+        Stock::Quoter::_narrow (quoterObj_var.in ()
+                                TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (copied_quoter_var.in()))
@@ -126,7 +126,7 @@ Quoter_Client::run (void)
         ACE_DEBUG ((LM_DEBUG, "Quoter Client: Copied object.\n"));
 
       exception_message = "While using get_quote () on copied object";
-      q = copied_quoter_var->get_quote ("ACE Hardware", ACE_TRY_ENV);
+      q = copied_quoter_var->get_quote ("ACE Hardware" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (this->debug_level_ >= 1)
@@ -163,7 +163,7 @@ Quoter_Client::init_naming_service (void)
     {
       // Resolve the Naming Service
       CORBA::Object_var naming_obj =
-        orb_->resolve_initial_references ("NameService", ACE_TRY_ENV);
+        orb_->resolve_initial_references ("NameService" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (naming_obj.in ()))
@@ -173,7 +173,7 @@ Quoter_Client::init_naming_service (void)
 
       exception_message = "While narrowing the naming context";
       CosNaming::NamingContext_var naming_context =
-        CosNaming::NamingContext::_narrow (naming_obj.in (), ACE_TRY_ENV);
+        CosNaming::NamingContext::_narrow (naming_obj.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (this->debug_level_ >= 2)
@@ -189,8 +189,8 @@ Quoter_Client::init_naming_service (void)
 
       exception_message = "While resolving the factory finder";
       CORBA::Object_var factory_obj =
-        naming_context->resolve (quoterFactoryFinderName,
-                                 ACE_TRY_ENV);
+        naming_context->resolve (quoterFactoryFinderName
+                                 TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (this->debug_level_ >= 2)
@@ -198,8 +198,8 @@ Quoter_Client::init_naming_service (void)
 
       exception_message = "While narrowing the factory finder";
       factory_Finder_var_ =
-        Stock::Quoter_Factory_Finder::_narrow (factory_obj.in (),
-                                               ACE_TRY_ENV);
+        Stock::Quoter_Factory_Finder::_narrow (factory_obj.in ()
+                                               TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (factory_Finder_var_.in ()))
@@ -233,7 +233,7 @@ Quoter_Client::init_naming_service (void)
       // Find an appropriate factory over there.
       exception_message = "While finding factories";
       CosLifeCycle::Factories *factories_ptr =
-          factory_Finder_var_->find_factories (factoryName, ACE_TRY_ENV);
+          factory_Finder_var_->find_factories (factoryName TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (factories_ptr == 0)
@@ -251,8 +251,8 @@ Quoter_Client::init_naming_service (void)
       if (factories_ptr->length () >= 1)
         {
           // everything is ok, at least one factory is there
-          CosLifeCycle::Factory_ptr factory = (*factories_ptr)[0]; 
-          quoter_FactoryObj_var = factory; 
+          CosLifeCycle::Factory_ptr factory = (*factories_ptr)[0];
+          quoter_FactoryObj_var = factory;
         }
       else
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -262,8 +262,8 @@ Quoter_Client::init_naming_service (void)
       // Narrow it to a Quoter Generic Factory
       exception_message = "While narrowing the factory";
       generic_Factory_var_ =
-        CosLifeCycle::GenericFactory::_narrow (quoter_FactoryObj_var.in (),
-                                               ACE_TRY_ENV);
+        CosLifeCycle::GenericFactory::_narrow (quoter_FactoryObj_var.in ()
+                                               TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (this->generic_Factory_var_.in ()))
@@ -307,8 +307,8 @@ Quoter_Client::init (int argc, char **argv)
       // Retrieve the ORB.
       this->orb_ = CORBA::ORB_init (this->argc_,
                                     this->argv_,
-                                    "internet",
-                                    ACE_TRY_ENV);
+                                    "internet"
+                                    TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Parse command line and verify parameters.
@@ -337,11 +337,11 @@ Quoter_Client::init (int argc, char **argv)
 
       CORBA::Object_var quoterObject_var =
         this->generic_Factory_var_->create_object (genericFactoryName,
-                                                   criteria,
-                                                   ACE_TRY_ENV);
+                                                   criteria
+                                                   TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      this->quoter_var_ = Stock::Quoter::_narrow (quoterObject_var.in(), ACE_TRY_ENV);
+      this->quoter_var_ = Stock::Quoter::_narrow (quoterObject_var.in() TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (this->debug_level_ >= 2)

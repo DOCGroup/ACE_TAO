@@ -87,26 +87,26 @@ parse_args (int argc, char *argv[])
 int
 run_message_count (CORBA::ORB_ptr orb,
                    Test::Oneway_Buffering_ptr oneway_buffering,
-                   Test::Oneway_Buffering_Admin_ptr oneway_buffering_admin,
-                   CORBA::Environment &ACE_TRY_ENV);
+                   Test::Oneway_Buffering_Admin_ptr oneway_buffering_admin
+                   TAO_ENV_ARG_DECL);
 
 int
 run_timeout (CORBA::ORB_ptr orb,
              Test::Oneway_Buffering_ptr oneway_buffering,
-             Test::Oneway_Buffering_Admin_ptr oneway_buffering_admin,
-             CORBA::Environment &ACE_TRY_ENV);
+             Test::Oneway_Buffering_Admin_ptr oneway_buffering_admin
+             TAO_ENV_ARG_DECL);
 
 int
 run_timeout_reactive (CORBA::ORB_ptr orb,
                       Test::Oneway_Buffering_ptr oneway_buffering,
-                      Test::Oneway_Buffering_Admin_ptr oneway_buffering_admin,
-                      CORBA::Environment &ACE_TRY_ENV);
+                      Test::Oneway_Buffering_Admin_ptr oneway_buffering_admin
+                      TAO_ENV_ARG_DECL);
 
 int
 run_buffer_size (CORBA::ORB_ptr orb,
                  Test::Oneway_Buffering_ptr oneway_buffering,
-                 Test::Oneway_Buffering_Admin_ptr oneway_buffering_admin,
-                 CORBA::Environment &ACE_TRY_ENV);
+                 Test::Oneway_Buffering_Admin_ptr oneway_buffering_admin
+                 TAO_ENV_ARG_DECL);
 
 int
 main (int argc, char *argv[])
@@ -115,18 +115,18 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var tmp =
-        orb->string_to_object(server_ior, ACE_TRY_ENV);
+        orb->string_to_object(server_ior TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Test::Oneway_Buffering_var oneway_buffering =
-        Test::Oneway_Buffering::_narrow(tmp.in (), ACE_TRY_ENV);
+        Test::Oneway_Buffering::_narrow(tmp.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (oneway_buffering.in ()))
@@ -138,11 +138,11 @@ main (int argc, char *argv[])
         }
 
       tmp =
-        orb->string_to_object(admin_ior, ACE_TRY_ENV);
+        orb->string_to_object(admin_ior TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Test::Oneway_Buffering_Admin_var oneway_buffering_admin =
-        Test::Oneway_Buffering_Admin::_narrow(tmp.in (), ACE_TRY_ENV);
+        Test::Oneway_Buffering_Admin::_narrow(tmp.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (oneway_buffering_admin.in ()))
@@ -160,8 +160,8 @@ main (int argc, char *argv[])
           test_failed =
             run_message_count (orb.in (),
                                oneway_buffering.in (),
-                               oneway_buffering_admin.in (),
-                               ACE_TRY_ENV);
+                               oneway_buffering_admin.in ()
+                               TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       else if (run_timeout_test)
@@ -171,8 +171,8 @@ main (int argc, char *argv[])
           test_failed =
             run_timeout (orb.in (),
                          oneway_buffering.in (),
-                         oneway_buffering_admin.in (),
-                         ACE_TRY_ENV);
+                         oneway_buffering_admin.in ()
+                         TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       else if (run_timeout_reactive_test)
@@ -182,8 +182,8 @@ main (int argc, char *argv[])
           test_failed =
             run_timeout_reactive (orb.in (),
                                   oneway_buffering.in (),
-                                  oneway_buffering_admin.in (),
-                                  ACE_TRY_ENV);
+                                  oneway_buffering_admin.in ()
+                                  TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       else if (run_buffer_size_test)
@@ -193,8 +193,8 @@ main (int argc, char *argv[])
           test_failed =
             run_buffer_size (orb.in (),
                              oneway_buffering.in (),
-                             oneway_buffering_admin.in (),
-                             ACE_TRY_ENV);
+                             oneway_buffering_admin.in ()
+                             TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       else
@@ -203,13 +203,13 @@ main (int argc, char *argv[])
                       "ERROR: No test was configured\n"));
         }
 
-      oneway_buffering->shutdown (ACE_TRY_ENV);
+      oneway_buffering->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      oneway_buffering_admin->shutdown (ACE_TRY_ENV);
+      oneway_buffering_admin->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->destroy (ACE_TRY_ENV);
+      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -227,15 +227,15 @@ int
 configure_policies (CORBA::ORB_ptr orb,
                     const TAO::BufferingConstraint &buffering_constraint,
                     Test::Oneway_Buffering_ptr oneway_buffering,
-                    Test::Oneway_Buffering_out flusher,
-                    CORBA::Environment &ACE_TRY_ENV)
+                    Test::Oneway_Buffering_out flusher
+                    TAO_ENV_ARG_DECL)
 {
   CORBA::Object_var object =
-    orb->resolve_initial_references ("PolicyCurrent", ACE_TRY_ENV);
+    orb->resolve_initial_references ("PolicyCurrent" TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   CORBA::PolicyCurrent_var policy_current =
-    CORBA::PolicyCurrent::_narrow (object.in (), ACE_TRY_ENV);
+    CORBA::PolicyCurrent::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (CORBA::is_nil (policy_current.in ()))
@@ -252,22 +252,22 @@ configure_policies (CORBA::ORB_ptr orb,
   CORBA::PolicyList policies (2); policies.length (2);
   policies[0] =
     orb->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
-                        scope_as_any,
-                        ACE_TRY_ENV);
+                        scope_as_any
+                        TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
   policies[1] =
     orb->create_policy (TAO::BUFFERING_CONSTRAINT_POLICY_TYPE,
-                        buffering_as_any,
-                        ACE_TRY_ENV);
+                        buffering_as_any
+                        TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-  policy_current->set_policy_overrides (policies, CORBA::ADD_OVERRIDE,
-                                        ACE_TRY_ENV);
+  policy_current->set_policy_overrides (policies, CORBA::ADD_OVERRIDE
+                                        TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-  policies[0]->destroy (ACE_TRY_ENV);
+  policies[0]->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
-  policies[1]->destroy (ACE_TRY_ENV);
+  policies[1]->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   TAO::BufferingConstraint flush_constraint;
@@ -280,51 +280,51 @@ configure_policies (CORBA::ORB_ptr orb,
   policies.length (1);
   policies[0] =
     orb->create_policy (TAO::BUFFERING_CONSTRAINT_POLICY_TYPE,
-                        buffering_as_any,
-                        ACE_TRY_ENV);
+                        buffering_as_any
+                        TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   object =
     oneway_buffering->_set_policy_overrides (policies,
-                                             CORBA::ADD_OVERRIDE,
-                                             ACE_TRY_ENV);
+                                             CORBA::ADD_OVERRIDE
+                                             TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-  policies[0]->destroy (ACE_TRY_ENV);
+  policies[0]->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   flusher =
-    Test::Oneway_Buffering::_narrow (object.in (), ACE_TRY_ENV);
+    Test::Oneway_Buffering::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   return 0;
 }
 
 void
-sync_server (Test::Oneway_Buffering_ptr flusher,
-             CORBA::Environment &ACE_TRY_ENV)
+sync_server (Test::Oneway_Buffering_ptr flusher
+             TAO_ENV_ARG_DECL)
 {
   // Get back in sync with the server...
-  flusher->flush (ACE_TRY_ENV);
+  flusher->flush (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
-  flusher->sync (ACE_TRY_ENV);
+  flusher->sync (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 int
 run_liveness_test (Test::Oneway_Buffering_ptr oneway_buffering,
                    Test::Oneway_Buffering_ptr flusher,
-                   Test::Oneway_Buffering_Admin_ptr oneway_buffering_admin,
-                   CORBA::Environment &ACE_TRY_ENV)
+                   Test::Oneway_Buffering_Admin_ptr oneway_buffering_admin
+                   TAO_ENV_ARG_DECL)
 {
   ACE_DEBUG ((LM_DEBUG, ".... checking for liveness\n"));
   int test_failed = 0;
 
-  sync_server (flusher, ACE_TRY_ENV);
+  sync_server (flusher TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   CORBA::ULong send_count =
-    oneway_buffering_admin->request_count (ACE_TRY_ENV);
+    oneway_buffering_admin->request_count (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   int liveness_test_iterations = int(send_count);
@@ -337,12 +337,12 @@ run_liveness_test (Test::Oneway_Buffering_ptr oneway_buffering,
   int depth = 0;
   for (int i = 0; i != liveness_test_iterations; ++i)
     {
-      oneway_buffering->receive_data (payload, ACE_TRY_ENV);
+      oneway_buffering->receive_data (payload TAO_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
       send_count++;
 
       CORBA::ULong receive_count =
-        oneway_buffering_admin->request_count (ACE_TRY_ENV);
+        oneway_buffering_admin->request_count (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
       // Once the system has sent enough messages we don't
@@ -360,13 +360,13 @@ run_liveness_test (Test::Oneway_Buffering_ptr oneway_buffering,
                       "expected %u\n",
                       i, receive_count, expected));
 
-          sync_server (flusher, ACE_TRY_ENV);
+          sync_server (flusher TAO_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
         }
 
       if (depth++ == LIVENESS_MAX_DEPTH)
         {
-          sync_server (flusher, ACE_TRY_ENV);
+          sync_server (flusher TAO_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
 
           depth = 0;
@@ -380,8 +380,8 @@ run_liveness_test (Test::Oneway_Buffering_ptr oneway_buffering,
 int
 run_message_count (CORBA::ORB_ptr orb,
                    Test::Oneway_Buffering_ptr oneway_buffering,
-                   Test::Oneway_Buffering_Admin_ptr oneway_buffering_admin,
-                   CORBA::Environment &ACE_TRY_ENV)
+                   Test::Oneway_Buffering_Admin_ptr oneway_buffering_admin
+                   TAO_ENV_ARG_DECL)
 {
   TAO::BufferingConstraint buffering_constraint;
   buffering_constraint.mode = TAO::BUFFER_MESSAGE_COUNT;
@@ -392,8 +392,8 @@ run_message_count (CORBA::ORB_ptr orb,
   Test::Oneway_Buffering_var flusher;
   int test_failed =
     configure_policies (orb, buffering_constraint,
-                        oneway_buffering, flusher.out (),
-                        ACE_TRY_ENV);
+                        oneway_buffering, flusher.out ()
+                        TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (test_failed != 0)
@@ -407,11 +407,11 @@ run_message_count (CORBA::ORB_ptr orb,
   CORBA::ULong send_count = 0;
   for (int i = 0; i != iterations; ++i)
     {
-      sync_server (flusher.in (), ACE_TRY_ENV);
+      sync_server (flusher.in () TAO_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
       CORBA::ULong initial_receive_count =
-        oneway_buffering_admin->request_count (ACE_TRY_ENV);
+        oneway_buffering_admin->request_count (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
       if (initial_receive_count != send_count)
@@ -424,12 +424,12 @@ run_message_count (CORBA::ORB_ptr orb,
 
       while (1)
         {
-          oneway_buffering->receive_data (payload, ACE_TRY_ENV);
+          oneway_buffering->receive_data (payload TAO_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
           send_count++;
 
           CORBA::ULong receive_count =
-            oneway_buffering_admin->request_count (ACE_TRY_ENV);
+            oneway_buffering_admin->request_count (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
 
           CORBA::ULong iteration_count =
@@ -466,8 +466,8 @@ run_message_count (CORBA::ORB_ptr orb,
   int liveness_test_failed =
     run_liveness_test (oneway_buffering,
                        flusher.in (),
-                       oneway_buffering_admin,
-                       ACE_TRY_ENV);
+                       oneway_buffering_admin
+                       TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (liveness_test_failed)
@@ -479,8 +479,8 @@ run_message_count (CORBA::ORB_ptr orb,
 int
 run_timeout (CORBA::ORB_ptr orb,
               Test::Oneway_Buffering_ptr oneway_buffering,
-              Test::Oneway_Buffering_Admin_ptr oneway_buffering_admin,
-              CORBA::Environment &ACE_TRY_ENV)
+              Test::Oneway_Buffering_Admin_ptr oneway_buffering_admin
+              TAO_ENV_ARG_DECL)
 {
   TAO::BufferingConstraint buffering_constraint;
   buffering_constraint.mode = TAO::BUFFER_TIMEOUT;
@@ -491,8 +491,8 @@ run_timeout (CORBA::ORB_ptr orb,
   Test::Oneway_Buffering_var flusher;
   int test_failed =
     configure_policies (orb, buffering_constraint,
-                        oneway_buffering, flusher.out (),
-                        ACE_TRY_ENV);
+                        oneway_buffering, flusher.out ()
+                        TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (test_failed != 0)
@@ -506,11 +506,11 @@ run_timeout (CORBA::ORB_ptr orb,
   CORBA::ULong send_count = 0;
   for (int i = 0; i != iterations; ++i)
     {
-      sync_server (flusher.in (), ACE_TRY_ENV);
+      sync_server (flusher.in () TAO_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
       CORBA::ULong initial_receive_count =
-        oneway_buffering_admin->request_count (ACE_TRY_ENV);
+        oneway_buffering_admin->request_count (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
       if (initial_receive_count != send_count)
@@ -524,12 +524,12 @@ run_timeout (CORBA::ORB_ptr orb,
       ACE_Time_Value start = ACE_OS::gettimeofday ();
       while (1)
         {
-          oneway_buffering->receive_data (payload, ACE_TRY_ENV);
+          oneway_buffering->receive_data (payload TAO_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
           send_count++;
 
           CORBA::ULong receive_count =
-            oneway_buffering_admin->request_count (ACE_TRY_ENV);
+            oneway_buffering_admin->request_count (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
 
           ACE_Time_Value elapsed = ACE_OS::gettimeofday () - start;
@@ -566,8 +566,8 @@ run_timeout (CORBA::ORB_ptr orb,
   int liveness_test_failed =
     run_liveness_test (oneway_buffering,
                        flusher.in (),
-                       oneway_buffering_admin,
-                       ACE_TRY_ENV);
+                       oneway_buffering_admin
+                       TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (liveness_test_failed)
@@ -580,8 +580,8 @@ run_timeout (CORBA::ORB_ptr orb,
 int
 run_timeout_reactive (CORBA::ORB_ptr orb,
                       Test::Oneway_Buffering_ptr oneway_buffering,
-                      Test::Oneway_Buffering_Admin_ptr oneway_buffering_admin,
-                      CORBA::Environment &ACE_TRY_ENV)
+                      Test::Oneway_Buffering_Admin_ptr oneway_buffering_admin
+                      TAO_ENV_ARG_DECL)
 {
   TAO::BufferingConstraint buffering_constraint;
   buffering_constraint.mode = TAO::BUFFER_TIMEOUT;
@@ -592,8 +592,8 @@ run_timeout_reactive (CORBA::ORB_ptr orb,
   Test::Oneway_Buffering_var flusher;
   int test_failed =
     configure_policies (orb, buffering_constraint,
-                        oneway_buffering, flusher.out (),
-                        ACE_TRY_ENV);
+                        oneway_buffering, flusher.out ()
+                        TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (test_failed != 0)
@@ -607,11 +607,11 @@ run_timeout_reactive (CORBA::ORB_ptr orb,
   CORBA::ULong send_count = 0;
   for (int i = 0; i != iterations; ++i)
     {
-      sync_server (flusher.in (), ACE_TRY_ENV);
+      sync_server (flusher.in () TAO_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
       CORBA::ULong initial_receive_count =
-        oneway_buffering_admin->request_count (ACE_TRY_ENV);
+        oneway_buffering_admin->request_count (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
       if (initial_receive_count != send_count)
@@ -625,18 +625,18 @@ run_timeout_reactive (CORBA::ORB_ptr orb,
       ACE_Time_Value start = ACE_OS::gettimeofday ();
       for (int j = 0; j != 20; ++j)
         {
-          oneway_buffering->receive_data (payload, ACE_TRY_ENV);
+          oneway_buffering->receive_data (payload TAO_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
           send_count++;
         }
       while (1)
         {
           CORBA::ULong receive_count =
-            oneway_buffering_admin->request_count (ACE_TRY_ENV);
+            oneway_buffering_admin->request_count (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
 
           ACE_Time_Value sleep (0, 10000);
-          orb->run (sleep, ACE_TRY_ENV);
+          orb->run (sleep TAO_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
 
           ACE_Time_Value elapsed = ACE_OS::gettimeofday () - start;
@@ -673,8 +673,8 @@ run_timeout_reactive (CORBA::ORB_ptr orb,
   int liveness_test_failed =
     run_liveness_test (oneway_buffering,
                        flusher.in (),
-                       oneway_buffering_admin,
-                       ACE_TRY_ENV);
+                       oneway_buffering_admin
+                       TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (liveness_test_failed)
@@ -687,8 +687,8 @@ run_timeout_reactive (CORBA::ORB_ptr orb,
 int
 run_buffer_size (CORBA::ORB_ptr orb,
                  Test::Oneway_Buffering_ptr oneway_buffering,
-                 Test::Oneway_Buffering_Admin_ptr oneway_buffering_admin,
-                 CORBA::Environment &ACE_TRY_ENV)
+                 Test::Oneway_Buffering_Admin_ptr oneway_buffering_admin
+                 TAO_ENV_ARG_DECL)
 {
   TAO::BufferingConstraint buffering_constraint;
   buffering_constraint.mode = TAO::BUFFER_MESSAGE_BYTES;
@@ -699,8 +699,8 @@ run_buffer_size (CORBA::ORB_ptr orb,
   Test::Oneway_Buffering_var flusher;
   int test_failed =
     configure_policies (orb, buffering_constraint,
-                        oneway_buffering, flusher.out (),
-                        ACE_TRY_ENV);
+                        oneway_buffering, flusher.out ()
+                        TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (test_failed != 0)
@@ -714,11 +714,11 @@ run_buffer_size (CORBA::ORB_ptr orb,
   CORBA::ULong bytes_sent = 0;
   for (int i = 0; i != iterations; ++i)
     {
-      sync_server (flusher.in (), ACE_TRY_ENV);
+      sync_server (flusher.in () TAO_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
       CORBA::ULong initial_bytes_received =
-        oneway_buffering_admin->bytes_received_count (ACE_TRY_ENV);
+        oneway_buffering_admin->bytes_received_count (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
       if (initial_bytes_received != bytes_sent)
@@ -731,12 +731,12 @@ run_buffer_size (CORBA::ORB_ptr orb,
 
       while (1)
         {
-          oneway_buffering->receive_data (payload, ACE_TRY_ENV);
+          oneway_buffering->receive_data (payload TAO_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
           bytes_sent += PAYLOAD_LENGTH;
 
           CORBA::ULong bytes_received =
-            oneway_buffering_admin->bytes_received_count (ACE_TRY_ENV);
+            oneway_buffering_admin->bytes_received_count (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
 
           CORBA::ULong payload_delta =
@@ -778,8 +778,8 @@ run_buffer_size (CORBA::ORB_ptr orb,
   int liveness_test_failed =
     run_liveness_test (oneway_buffering,
                        flusher.in (),
-                       oneway_buffering_admin,
-                       ACE_TRY_ENV);
+                       oneway_buffering_admin
+                       TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (liveness_test_failed)

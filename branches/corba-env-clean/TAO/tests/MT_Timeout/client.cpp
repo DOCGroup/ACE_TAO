@@ -51,18 +51,18 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior, ACE_TRY_ENV);
+        orb->string_to_object(ior TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Test::Sleep_Service_var sleep_service =
-        Test::Sleep_Service::_narrow(tmp.in (), ACE_TRY_ENV);
+        Test::Sleep_Service::_narrow(tmp.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (sleep_service.in ()))
@@ -95,13 +95,13 @@ main (int argc, char *argv[])
       ACE_Thread_Manager::instance ()->wait ();
 
       // Get back in sync with the server..
-      sleep_service->go_to_sleep (0, ACE_TRY_ENV);
+      sleep_service->go_to_sleep (0 TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      sleep_service->shutdown (ACE_TRY_ENV);
+      sleep_service->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->destroy (ACE_TRY_ENV);
+      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
@@ -117,24 +117,24 @@ main (int argc, char *argv[])
       // No more than 5 % of the calls are allowed to have a too big
       // difference
       if (task0.too_big_difference_calls () > iterations/20
-	  || task1.too_big_difference_calls () > iterations/20)
-	{
-	  ACE_DEBUG ((LM_DEBUG,
-		      "ERROR: Too many calls have a too big difference between "
-		      "timeout and elapsed time (task0: %d, task1: %d)\n",
-		      task0.too_big_difference_calls (),
-		      task1.too_big_difference_calls ()));
-	}
+          || task1.too_big_difference_calls () > iterations/20)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "ERROR: Too many calls have a too big difference between "
+                      "timeout and elapsed time (task0: %d, task1: %d)\n",
+                      task0.too_big_difference_calls (),
+                      task1.too_big_difference_calls ()));
+        }
       else  if (task0.too_big_difference_calls () != 0
-		|| task1.too_big_difference_calls () != 0)
-	{
-	  ACE_DEBUG ((LM_DEBUG,
-		      "Warning: some calls (task0: %d, task1: %d) "
-		      "exceeded their expected elapsed times\n",
-		      task0.too_big_difference_calls (),
-		      task1.too_big_difference_calls ()));
-	}
-	  
+                || task1.too_big_difference_calls () != 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Warning: some calls (task0: %d, task1: %d) "
+                      "exceeded their expected elapsed times\n",
+                      task0.too_big_difference_calls (),
+                      task1.too_big_difference_calls ()));
+        }
+
       if (task0.timed_out_calls () == 0)
         {
           ACE_ERROR ((LM_ERROR,

@@ -52,17 +52,17 @@ public:
   ~Quoter_Server (void);
   // Destructor
 
-  int init (int argc, char *argv[], CORBA::Environment& env);
+  int init (int argc, char *argv[] TAO_ENV_ARG_DECL);
   // Initialize the Quoter_Server state - parsing arguments and ...
 
-  int run (CORBA::Environment &ACE_TRY_ENV);
+  int run (TAO_ENV_SINGLE_ARG_DECL);
   // Run the server.
 
 private:
   int parse_args (void);
   // Parses the commandline arguments.
 
-  int init_naming_service (CORBA::Environment &env);
+  int init_naming_service (TAO_ENV_SINGLE_ARG_DECL);
   // Initializes the name server and registers cubit factory with the
   // name server.
 

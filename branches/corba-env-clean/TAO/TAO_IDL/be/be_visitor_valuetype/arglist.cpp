@@ -51,7 +51,7 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << " (";
-  
+
   if (node->argument_count () > 0)
     {
       *os << be_idt << be_idt_nl;
@@ -70,15 +70,10 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
   // Generate the CORBA::Environment parameter for the alternative mapping.
   if (!be_global->exception_support ())
     {
-      // If the operation node has parameters, then we need to insert a comma.
-      if (node->argument_count () > 0)
-        {
-          *os << "," << be_nl;
-        }
-      else
-        {
-          *os << be_idt << be_idt_nl;
-        }
+      // Use TAO_ENV_SINGLE_ARG_DECL or TAO_ENV_ARG_DECL depending on
+      // whether the operation node has parameters.
+      const char *env_decl = (node->argument_count () > 0 ?
+                              " TAO_ENV_ARG_DECL" : "TAO_ENV_SINGLE_ARG_DECL");
 
       switch (this->ctx_->state ())
         {
@@ -86,17 +81,15 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
         case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_OBV_CH:
         case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IMPL_CH:
           // Last argument - is always CORBA::Environment.
-          *os << "CORBA::Environment &ACE_TRY_ENV";
-          *os << " = " << be_idt_nl
-              << "TAO_default_environment ()" << be_uidt
+          *os << env_decl << "_WITH_DEFAULTS" << be_nl
               << be_uidt_nl << ")";
           break;
         case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IMPL_CS:
           // Last argument - is always CORBA::Environment.
-          *os << "CORBA::Environment &ACE_TRY_ENV)";
+          *os << env_decl << ")";
           break;
         default:
-          *os << "CORBA::Environment &ACE_TRY_ENV)";
+          *os << env_decl << ")";
           break;
         }
     }

@@ -53,10 +53,9 @@
 
     virtual void _raise (void);
 
-    virtual void _tao_encode (TAO_OutputCDR &cdr,
-                              CORBA::Environment &) const;
-    virtual void _tao_decode (TAO_InputCDR &cdr,
-                              CORBA::Environment &);
+    virtual void _tao_encode (TAO_OutputCDR &cdr
+                              TAO_ENV_ARG_DECL_NOT_USED) const;
+    virtual void _tao_decode (TAO_InputCDR &cdr TAO_ENV_ARG_DECL_NOT_USED);
 
     static CORBA_Bounds *_downcast (CORBA::Exception *);
     static void _tao_any_destructor (void*);

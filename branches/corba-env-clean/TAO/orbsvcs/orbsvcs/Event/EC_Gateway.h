@@ -49,7 +49,7 @@ public:
 
   /// The gateway must disconnect from all the relevant event channels,
   /// or any other communication media (such as multicast groups).
-  virtual void close (CORBA::Environment &env = TAO_default_environment ()) = 0;
+  virtual void close (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) = 0;
 
   /// Obtain and modify the observer handle.
   void observer_handle (RtecEventChannelAdmin::Observer_Handle h);
@@ -99,43 +99,43 @@ public:
   /// To do its job this class requires to know the local and remote
   /// ECs it will connect to,
   void init (RtecEventChannelAdmin::EventChannel_ptr rmt_ec,
-             RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
-             CORBA::Environment &ACE_TRY_ENV);
+             RtecEventChannelAdmin::EventChannel_ptr lcl_ec
+             TAO_ENV_ARG_DECL);
 
   /// The channel is disconnecting.
-  void disconnect_push_supplier (CORBA::Environment & = TAO_default_environment ());
+  void disconnect_push_supplier (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
   /// The channel is disconnecting.
-  void disconnect_push_consumer (CORBA::Environment & = TAO_default_environment ());
+  void disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
   /// This is the Consumer side behavior, it pushes the events to the
   /// local event channel.
-  void push (const RtecEventComm::EventSet &events,
-             CORBA::Environment & = TAO_default_environment ());
+  void push (const RtecEventComm::EventSet &events
+             TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /// Disconnect and shutdown the gateway
-  int shutdown (CORBA::Environment & = TAO_default_environment ());
+  int shutdown (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
   // The following methods are documented in the base class.
-  virtual void close (CORBA::Environment &env = TAO_default_environment ());
-  virtual void update_consumer (const RtecEventChannelAdmin::ConsumerQOS& sub,
-                                CORBA::Environment &env = TAO_default_environment ())
+  virtual void close (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  virtual void update_consumer (const RtecEventChannelAdmin::ConsumerQOS& sub
+                                TAO_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void update_supplier (const RtecEventChannelAdmin::SupplierQOS& pub,
-                                CORBA::Environment &env = TAO_default_environment ())
+  virtual void update_supplier (const RtecEventChannelAdmin::SupplierQOS& pub
+                                TAO_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
-  void close_i (CORBA::Environment &);
+  void close_i (TAO_ENV_SINGLE_ARG_DECL_NOT_USED);
 
-  void update_consumer_i (const RtecEventChannelAdmin::ConsumerQOS& sub,
-                          CORBA::Environment& env);
+  void update_consumer_i (const RtecEventChannelAdmin::ConsumerQOS& sub
+                          TAO_ENV_ARG_DECL);
 
 protected:
   /// Do the real work in init()
   void init_i (RtecEventChannelAdmin::EventChannel_ptr rmt_ec,
-               RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
-               CORBA::Environment &ACE_TRY_ENV);
+               RtecEventChannelAdmin::EventChannel_ptr lcl_ec
+               TAO_ENV_ARG_DECL);
 
 protected:
   /// Lock to synchronize internal changes

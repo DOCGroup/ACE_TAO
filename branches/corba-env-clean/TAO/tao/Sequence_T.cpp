@@ -542,12 +542,12 @@ TAO_Unbounded_Object_Sequence<T,T_var>::_shrink_buffer (CORBA::ULong nl,
 
 template <class T, class T_var> void
 TAO_Unbounded_Object_Sequence<T,T_var>::_downcast (void* target,
-                                                   CORBA_Object* src,
-                                                   CORBA_Environment &ACE_TRY_ENV)
+                                                   CORBA_Object* src
+                                                   TAO_ENV_ARG_DECL)
 {
   T **tmp = ACE_static_cast (T**, target);
 
-  *tmp = T_var::tao_narrow (src, ACE_TRY_ENV);
+  *tmp = T_var::tao_narrow (src TAO_ENV_ARG_PARAMETER);
 
   ACE_CHECK;
 }
@@ -711,12 +711,12 @@ TAO_Bounded_Object_Sequence<T,T_var, MAX>::_shrink_buffer (CORBA::ULong nl,
 
 template <class T, class T_var, size_t MAX> void
 TAO_Bounded_Object_Sequence<T, T_var,MAX>::_downcast (void* target,
-                                                      CORBA_Object* src,
-                                                      CORBA_Environment &ACE_TRY_ENV)
+                                                      CORBA_Object* src
+                                                      TAO_ENV_ARG_DECL)
 {
   T **tmp = ACE_static_cast (T**, target);
 
-  *tmp = T_var::tao_narrow (src, ACE_TRY_ENV);
+  *tmp = T_var::tao_narrow (src TAO_ENV_ARG_PARAMETER);
 
   ACE_CHECK;
 }
@@ -1057,8 +1057,8 @@ TAO_Unbounded_Array_Sequence<T, T_var>::allocbuf (CORBA::ULong nelems)
 {
   T *buf = 0;
 
-  ACE_NEW_RETURN (buf, 
-                  T[nelems], 
+  ACE_NEW_RETURN (buf,
+                  T[nelems],
                   0);
 
   return buf;
@@ -1223,8 +1223,8 @@ TAO_Bounded_Array_Sequence<T, T_var, MAX>::allocbuf (CORBA::ULong)
 {
   T *buf = 0;
 
-  ACE_NEW_RETURN (buf, 
-                  T[MAX], 
+  ACE_NEW_RETURN (buf,
+                  T[MAX],
                   0);
 
   return buf;

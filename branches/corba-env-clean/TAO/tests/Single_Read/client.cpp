@@ -71,7 +71,7 @@ parse_args (int argc, char **argv)
 int
 main (int argc, char **argv)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
 
   ACE_TRY
     {
@@ -79,8 +79,8 @@ main (int argc, char **argv)
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,
-                         0,
-                         ACE_TRY_ENV);
+                         0
+                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Initialize options based on command-line arguments.
@@ -90,13 +90,13 @@ main (int argc, char **argv)
 
       // Get an object reference from the argument string.
       CORBA::Object_var object =
-        orb->string_to_object (IOR,
-                               ACE_TRY_ENV);
+        orb->string_to_object (IOR
+                               TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Try to narrow the object reference to a <test> reference.
-      test_var test_object = test::_narrow (object.in (),
-                                            ACE_TRY_ENV);
+      test_var test_object = test::_narrow (object.in ()
+                                            TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       test::data the_data0 (data_bytes);
@@ -118,20 +118,20 @@ main (int argc, char **argv)
 
           // Invoke the oneway method.
           test_object->method (i,
-                               the_data0,
-                               ACE_TRY_ENV);
+                               the_data0
+                               TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           // Invoke the oneway method.
           test_object->method (i,
-                               the_data1,
-                               ACE_TRY_ENV);
+                               the_data1
+                               TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           // Invoke the oneway method.
           test_object->method (i,
-                               the_data2,
-                               ACE_TRY_ENV);
+                               the_data2
+                               TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
@@ -140,7 +140,7 @@ main (int argc, char **argv)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "(%P|%t) Sending a shutdown call..\n"));
-          test_object->shutdown (ACE_TRY_ENV);
+          test_object->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
@@ -150,7 +150,7 @@ main (int argc, char **argv)
       // static destructors to flush the queues, it will be too late.
       // Therefore, we use explicit destruction here and flush the
       // queues before main() ends.
-      orb->destroy (ACE_TRY_ENV);
+      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

@@ -24,16 +24,16 @@ static char THIS_FILE[] = __FILE__;
 // CServerApp
 
 BEGIN_MESSAGE_MAP(CServerApp, CWinApp)
-	//{{AFX_MSG_MAP(CServerApp)
-	ON_COMMAND(ID_APP_ABOUT, OnAppAbout)
-		// NOTE - the ClassWizard will add and remove mapping macros here.
-		//    DO NOT EDIT what you see in these blocks of generated code!
-	//}}AFX_MSG_MAP
-	// Standard file based document commands
-	ON_COMMAND(ID_FILE_NEW, CWinApp::OnFileNew)
-	ON_COMMAND(ID_FILE_OPEN, CWinApp::OnFileOpen)
-	// Standard print setup command
-	ON_COMMAND(ID_FILE_PRINT_SETUP, CWinApp::OnFilePrintSetup)
+        //{{AFX_MSG_MAP(CServerApp)
+        ON_COMMAND(ID_APP_ABOUT, OnAppAbout)
+                // NOTE - the ClassWizard will add and remove mapping macros here.
+                //    DO NOT EDIT what you see in these blocks of generated code!
+        //}}AFX_MSG_MAP
+        // Standard file based document commands
+        ON_COMMAND(ID_FILE_NEW, CWinApp::OnFileNew)
+        ON_COMMAND(ID_FILE_OPEN, CWinApp::OnFileOpen)
+        // Standard print setup command
+        ON_COMMAND(ID_FILE_PRINT_SETUP, CWinApp::OnFilePrintSetup)
 END_MESSAGE_MAP()
 
 
@@ -49,23 +49,23 @@ spawn_my_orb_thread (void *)
       CORBA::ORB_var the_orb =
         CORBA::ORB_init (__argc,
                          __argv,
-                         orb_name,
-                         ACE_TRY_ENV);
+                         orb_name
+                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-	    
+
       CORBA::Object_var orb_obj =
-        the_orb->resolve_initial_references ("RootPOA", ACE_TRY_ENV);
+        the_orb->resolve_initial_references ("RootPOA" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var the_root_poa =
-        PortableServer::POA::_narrow (orb_obj.in (), ACE_TRY_ENV);
+        PortableServer::POA::_narrow (orb_obj.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var the_poa_manager =
-        the_root_poa->the_POAManager (ACE_TRY_ENV);
+        the_root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      the_poa_manager->activate (ACE_TRY_ENV);
+      the_poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Initializing the NamingService
@@ -75,7 +75,7 @@ spawn_my_orb_thread (void *)
       ACE_TRY_CHECK;
 
       CORBA::String_var ior =
-        the_orb->object_to_string (orb_servant.in (), ACE_TRY_ENV);
+        the_orb->object_to_string (orb_servant.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       FILE *output_file = ACE_OS::fopen ("ior.txt",
@@ -85,13 +85,13 @@ spawn_my_orb_thread (void *)
                        ior.in ());
       ACE_OS::fclose (output_file);
 
-      the_orb->run (ACE_TRY_ENV);
+      the_orb->run (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Catched exception:");
+                           "Caught exception:");
       return 0;
     }
   ACE_ENDTRY;
@@ -124,20 +124,20 @@ CServerApp::~CServerApp()
       the_shutdown_orb =
         CORBA::ORB_init (argc,
                          argv,
-                         orb_name,
-                         ACE_TRY_ENV);	
+                         orb_name
+                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       the_shutdown_orb->shutdown (0, // wait_for_completion
-                                  ACE_TRY_ENV);
+                                  TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-	    
+
       ACE_Thread_Manager::instance ()->wait ();
     }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Catched exception:");
+                           "Caught exception:");
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -157,7 +157,7 @@ CServerApp theApp;
 BOOL CServerApp::InitInstance()
 {
   ACE::init();
-	
+
   AfxEnableControlContainer();
 
   // Standard initialization
@@ -166,9 +166,9 @@ BOOL CServerApp::InitInstance()
   //  the specific initialization routines you do not need.
 
 #ifdef _AFXDLL
-  Enable3dControls();			// Call this when using MFC in a shared DLL
+  Enable3dControls();                   // Call this when using MFC in a shared DLL
 #else
-  Enable3dControlsStatic();	// Call this when linking to MFC statically
+  Enable3dControlsStatic();     // Call this when linking to MFC statically
 #endif
 
   // Change the registry key under which our settings are stored.
@@ -213,51 +213,51 @@ BOOL CServerApp::InitInstance()
 class CAboutDlg : public CDialog
 {
 public:
-	CAboutDlg();
+        CAboutDlg();
 
 // Dialog Data
-	//{{AFX_DATA(CAboutDlg)
-	enum { IDD = IDD_ABOUTBOX };
-	//}}AFX_DATA
+        //{{AFX_DATA(CAboutDlg)
+        enum { IDD = IDD_ABOUTBOX };
+        //}}AFX_DATA
 
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CAboutDlg)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
+        // ClassWizard generated virtual function overrides
+        //{{AFX_VIRTUAL(CAboutDlg)
+        protected:
+        virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+        //}}AFX_VIRTUAL
 
 // Implementation
 protected:
-	//{{AFX_MSG(CAboutDlg)
-		// No message handlers
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+        //{{AFX_MSG(CAboutDlg)
+                // No message handlers
+        //}}AFX_MSG
+        DECLARE_MESSAGE_MAP()
 };
 
 CAboutDlg::CAboutDlg() : CDialog(CAboutDlg::IDD)
 {
-	//{{AFX_DATA_INIT(CAboutDlg)
-	//}}AFX_DATA_INIT
+        //{{AFX_DATA_INIT(CAboutDlg)
+        //}}AFX_DATA_INIT
 }
 
 void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CAboutDlg)
-	//}}AFX_DATA_MAP
+        CDialog::DoDataExchange(pDX);
+        //{{AFX_DATA_MAP(CAboutDlg)
+        //}}AFX_DATA_MAP
 }
 
 BEGIN_MESSAGE_MAP(CAboutDlg, CDialog)
-	//{{AFX_MSG_MAP(CAboutDlg)
-		// No message handlers
-	//}}AFX_MSG_MAP
+        //{{AFX_MSG_MAP(CAboutDlg)
+                // No message handlers
+        //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 // App command to run the dialog
 void CServerApp::OnAppAbout()
 {
-	CAboutDlg aboutDlg;
-	aboutDlg.DoModal();
+        CAboutDlg aboutDlg;
+        aboutDlg.DoModal();
 }
 
 /////////////////////////////////////////////////////////////////////////////

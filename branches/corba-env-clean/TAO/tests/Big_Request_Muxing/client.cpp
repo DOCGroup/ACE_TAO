@@ -18,13 +18,13 @@ parse_args (int argc, char *argv[])
     switch (c)
       {
       case 'k':
-	ior = get_opts.optarg;
-	break;
+        ior = get_opts.optarg;
+        break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
-			   "-k <ior>"
+                           "-k <ior>"
                            "\n",
                            argv [0]),
                           -1);
@@ -39,18 +39,18 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior, ACE_TRY_ENV);
+        orb->string_to_object(ior TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Test::Payload_Receiver_var payload_receiver =
-        Test::Payload_Receiver::_narrow(tmp.in (), ACE_TRY_ENV);
+        Test::Payload_Receiver::_narrow(tmp.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (payload_receiver.in ()))
@@ -96,20 +96,20 @@ main (int argc, char *argv[])
         }
 
       ACE_Time_Value tv (120, 0);
-      orb->run (tv, ACE_TRY_ENV);
+      orb->run (tv TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_Thread_Manager::instance ()->wait ();
       ACE_DEBUG ((LM_DEBUG, "(%P) Threads finished\n"));
 
       CORBA::Long count =
-        payload_receiver->get_message_count (ACE_TRY_ENV);
+        payload_receiver->get_message_count (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "(%P) - Payload_Receiver got %d messages\n",
                   count));
 
-      orb->destroy (ACE_TRY_ENV);
+      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

@@ -30,34 +30,34 @@ TAO_POA_Cached_Policies::~TAO_POA_Cached_Policies (void)
 }
 
 void
-TAO_POA_Cached_Policies::update (TAO_POA_Policy_Set &policy_set,
-                                 CORBA::Environment &ACE_TRY_ENV)
+TAO_POA_Cached_Policies::update (TAO_POA_Policy_Set &policy_set
+                                 TAO_ENV_ARG_DECL)
 {
   for (CORBA::ULong i = 0; i < policy_set.num_policies (); i++)
     {
       CORBA::Policy_var policy = policy_set.get_policy_by_index (i);
 
-      this->update_policy (policy.in (),
-                           ACE_TRY_ENV);
+      this->update_policy (policy.in ()
+                           TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
 
 void
-TAO_POA_Cached_Policies::update_policy (const CORBA::Policy_ptr policy,
-                                        CORBA::Environment &ACE_TRY_ENV)
+TAO_POA_Cached_Policies::update_policy (const CORBA::Policy_ptr policy
+                                        TAO_ENV_ARG_DECL)
 {
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
   PortableServer::ThreadPolicy_var thread
-    = PortableServer::ThreadPolicy::_narrow (policy,
-                                             ACE_TRY_ENV);
+    = PortableServer::ThreadPolicy::_narrow (policy
+                                             TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (!CORBA::is_nil (thread.in ()))
     {
-      this->thread_ = thread->value (ACE_TRY_ENV);
+      this->thread_ = thread->value (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       return;
@@ -66,39 +66,39 @@ TAO_POA_Cached_Policies::update_policy (const CORBA::Policy_ptr policy,
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   PortableServer::LifespanPolicy_var lifespan
-    = PortableServer::LifespanPolicy::_narrow (policy,
-                                               ACE_TRY_ENV);
+    = PortableServer::LifespanPolicy::_narrow (policy
+                                               TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (!CORBA::is_nil (lifespan.in ()))
     {
-      this->lifespan_ = lifespan->value (ACE_TRY_ENV);
+      this->lifespan_ = lifespan->value (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       return;
     }
 
   PortableServer::IdUniquenessPolicy_var id_uniqueness
-    = PortableServer::IdUniquenessPolicy::_narrow (policy,
-                                                   ACE_TRY_ENV);
+    = PortableServer::IdUniquenessPolicy::_narrow (policy
+                                                   TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (!CORBA::is_nil (id_uniqueness.in ()))
     {
-      this->id_uniqueness_ = id_uniqueness->value (ACE_TRY_ENV);
+      this->id_uniqueness_ = id_uniqueness->value (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       return;
     }
 
   PortableServer::IdAssignmentPolicy_var id_assignment
-    = PortableServer::IdAssignmentPolicy::_narrow (policy,
-                                                   ACE_TRY_ENV);
+    = PortableServer::IdAssignmentPolicy::_narrow (policy
+                                                   TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (!CORBA::is_nil (id_assignment.in ()))
     {
-      this->id_assignment_ = id_assignment->value (ACE_TRY_ENV);
+      this->id_assignment_ = id_assignment->value (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       return;
@@ -107,39 +107,39 @@ TAO_POA_Cached_Policies::update_policy (const CORBA::Policy_ptr policy,
 #if (TAO_HAS_MINIMUM_POA == 0)
 
   PortableServer::ImplicitActivationPolicy_var implicit_activation
-    = PortableServer::ImplicitActivationPolicy::_narrow (policy,
-                                                         ACE_TRY_ENV);
+    = PortableServer::ImplicitActivationPolicy::_narrow (policy
+                                                         TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (!CORBA::is_nil (implicit_activation.in ()))
     {
-      this->implicit_activation_ = implicit_activation->value (ACE_TRY_ENV);
+      this->implicit_activation_ = implicit_activation->value (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       return;
     }
 
   PortableServer::ServantRetentionPolicy_var servant_retention
-    = PortableServer::ServantRetentionPolicy::_narrow (policy,
-                                                       ACE_TRY_ENV);
+    = PortableServer::ServantRetentionPolicy::_narrow (policy
+                                                       TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (!CORBA::is_nil (servant_retention.in ()))
     {
-      this->servant_retention_ = servant_retention->value (ACE_TRY_ENV);
+      this->servant_retention_ = servant_retention->value (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       return;
     }
 
   PortableServer::RequestProcessingPolicy_var request_processing
-    = PortableServer::RequestProcessingPolicy::_narrow (policy,
-                                                        ACE_TRY_ENV);
+    = PortableServer::RequestProcessingPolicy::_narrow (policy
+                                                        TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (!CORBA::is_nil (request_processing.in ()))
     {
-      this->request_processing_ = request_processing->value (ACE_TRY_ENV);
+      this->request_processing_ = request_processing->value (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       return;

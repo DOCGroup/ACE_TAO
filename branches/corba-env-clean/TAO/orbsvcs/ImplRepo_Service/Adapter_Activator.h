@@ -35,8 +35,8 @@ public:
   /// Called when a POA needs to be created.
   virtual CORBA::Boolean unknown_adapter (
     PortableServer::POA_ptr parent,
-    const char *name,
-    CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+    const char *name
+    TAO_ENV_ARG_DECL_WITH_DEFAULTS
   )
     ACE_THROW_SPEC ((CORBA::SystemException));
 

@@ -75,23 +75,23 @@ public:
 
   virtual void service_context_list (TAO_Stub *&stub,
                                      IOP::ServiceContextList &service_list,
-                                     CORBA::Boolean restart,
-                                     CORBA::Environment &ACE_TRY_ENV)
+                                     CORBA::Boolean restart
+                                     TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // Add relevant stuff to the service context list
 
   virtual int raise_comm_failure (
       TAO_GIOP_Invocation *invoke,
-      TAO_Profile *profile,
-      CORBA::Environment &ACE_TRY_ENV);
+      TAO_Profile *profile
+      TAO_ENV_ARG_DECL);
   // Check whether we need to raise an exception or go for a
   // reinvocaton.
 
   virtual int raise_transient_failure (
       TAO_GIOP_Invocation *invoke,
-      TAO_Profile *profile,
-      CORBA::Environment &ACE_TRY_ENV);
+      TAO_Profile *profile
+      TAO_ENV_ARG_DECL);
   // Check whether we need to raise an exception or go for a
   // reinvocaton.
 
@@ -109,14 +109,14 @@ public:
 private:
 
   void request_service_context (TAO_Stub *&stub,
-                                IOP::ServiceContextList &service_list,
-                                CORBA::Environment &ACE_TRY_ENV)
+                                IOP::ServiceContextList &service_list
+                                TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Makes  the  request service_context list
 
   void group_version_service_context (TAO_Stub *&stub,
-                                      IOP::ServiceContextList &service_list,
-                                      CORBA::Environment &ACE_TRY_ENV)
+                                      IOP::ServiceContextList &service_list
+                                      TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Make the group version service context list
 

@@ -46,26 +46,26 @@ public:
   // Default Constructor.
 
   Concurrency_Service (int argc,
-                       char **argv,
-                       CORBA::Environment &env);
+                       char **argv
+                       TAO_ENV_ARG_DECL);
   // Constructor taking the command-line arguments.
 
   ~Concurrency_Service (void);
   // Destructor.
 
   int init (int argc,
-            char **argv,
-            CORBA::Environment &env);
+            char **argv
+            TAO_ENV_ARG_DECL);
   // Initialize the Concurrency Service with the arguments.
 
-  int run (CORBA_Environment &env);
+  int run (TAO_ENV_SINGLE_ARG_DECL);
   // Run the Concurrency_Service.
 
 private:
   int parse_args (void);
   // Parses the commandline arguments.
 
-  int init_naming_service (CORBA::Environment &env);
+  int init_naming_service (TAO_ENV_SINGLE_ARG_DECL);
   // Initialize the name server and register the concurency server
   // factory with it. Maybe later it will be convinient to register
   // the individual lock sets with the naming service. At present the

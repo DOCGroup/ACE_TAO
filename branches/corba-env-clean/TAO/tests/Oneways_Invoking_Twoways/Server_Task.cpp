@@ -17,12 +17,12 @@ int
 Server_Task::svc (void)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Starting server task\n"));
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       // run the test for at most 60 seconds...
       ACE_Time_Value tv (60, 0);
-      this->orb_->run (tv, ACE_TRY_ENV);
+      this->orb_->run (tv TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

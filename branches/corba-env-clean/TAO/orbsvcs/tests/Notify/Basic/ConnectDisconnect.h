@@ -73,20 +73,20 @@ public:
 
   int parse_args(int argc, char *argv[]) ;
 
-  void init (int argc, char *argv [], CORBA::Environment &ACE_TRY_ENV);
+  void init (int argc, char *argv [] TAO_ENV_ARG_DECL);
   // initialization.
 
-  void run_test (CORBA::Environment &ACE_TRY_ENV);
+  void run_test (TAO_ENV_SINGLE_ARG_DECL);
   // Run the test.
 
-  void end_test (CORBA::Environment &ACE_TRY_ENV);
+  void end_test (TAO_ENV_SINGLE_ARG_DECL);
   // End the test.
 
   int check_results (void);
   // check if we got the expected results.
 
 protected:
-  void create_EC (CORBA::Environment &ACE_TRY_ENV);
+  void create_EC (TAO_ENV_SINGLE_ARG_DECL);
   // Create EC
 
   CosNotifyChannelAdmin::EventChannel_var ec_;

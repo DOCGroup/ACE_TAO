@@ -35,25 +35,25 @@ TAO_Strategized_Object_Proxy_Broker::~TAO_Strategized_Object_Proxy_Broker (void)
 }
 
 TAO_Object_Proxy_Impl &
-TAO_Strategized_Object_Proxy_Broker::select_proxy (CORBA::Object_ptr object,
-                                                   CORBA::Environment &ACE_TRY_ENV)
+TAO_Strategized_Object_Proxy_Broker::select_proxy (CORBA::Object_ptr object
+                                                   TAO_ENV_ARG_DECL)
 {
   int strategy =
-    TAO_ORB_Core::collocation_strategy (object, ACE_TRY_ENV);
+    TAO_ORB_Core::collocation_strategy (object TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
 
   if (this->proxy_cache_[strategy] != 0)
     return *this->proxy_cache_[strategy];
 
-  this->create_proxy (strategy, ACE_TRY_ENV);
+  this->create_proxy (strategy TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
 
   return *this->proxy_cache_[strategy];
 }
 
 void
-TAO_Strategized_Object_Proxy_Broker::create_proxy (int strategy,
-                                                   CORBA::Environment &ACE_TRY_ENV)
+TAO_Strategized_Object_Proxy_Broker::create_proxy (int strategy
+                                                   TAO_ENV_ARG_DECL)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX,
              guard,

@@ -13,29 +13,29 @@ Oneway_Buffering::Oneway_Buffering (CORBA::ORB_ptr orb,
 }
 
 void
-Oneway_Buffering::receive_data (const Test::Payload &the_payload,
-                                CORBA::Environment &ACE_TRY_ENV)
+Oneway_Buffering::receive_data (const Test::Payload &the_payload
+                                TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->admin_->request_received (the_payload.length (), ACE_TRY_ENV);
+  this->admin_->request_received (the_payload.length () TAO_ENV_ARG_PARAMETER);
 }
 
 void
-Oneway_Buffering::flush (CORBA::Environment &)
+Oneway_Buffering::flush (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
-Oneway_Buffering::sync (CORBA::Environment &ACE_TRY_ENV)
+Oneway_Buffering::sync (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->admin_->flush (ACE_TRY_ENV);
+  this->admin_->flush (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
-Oneway_Buffering::shutdown (CORBA::Environment &ACE_TRY_ENV)
+Oneway_Buffering::shutdown (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0, ACE_TRY_ENV);
+  this->orb_->shutdown (0 TAO_ENV_ARG_PARAMETER);
 }

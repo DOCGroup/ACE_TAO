@@ -32,7 +32,7 @@ TAO_ServerRequestInfo::TAO_ServerRequestInfo (
 }
 
 CORBA::ULong
-TAO_ServerRequestInfo::request_id (CORBA::Environment &)
+TAO_ServerRequestInfo::request_id (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // The request ID returned by this method need not correspond to the
@@ -75,14 +75,14 @@ TAO_ServerRequestInfo::request_id (CORBA::Environment &)
 }
 
 char *
-TAO_ServerRequestInfo::operation (CORBA::Environment &)
+TAO_ServerRequestInfo::operation (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->server_request_.operation ());
 }
 
 Dynamic::ParameterList *
-TAO_ServerRequestInfo::arguments (CORBA::Environment &ACE_TRY_ENV)
+TAO_ServerRequestInfo::arguments (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
@@ -91,7 +91,7 @@ TAO_ServerRequestInfo::arguments (CORBA::Environment &ACE_TRY_ENV)
 }
 
 Dynamic::ExceptionList *
-TAO_ServerRequestInfo::exceptions (CORBA::Environment &ACE_TRY_ENV)
+TAO_ServerRequestInfo::exceptions (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
@@ -100,7 +100,7 @@ TAO_ServerRequestInfo::exceptions (CORBA::Environment &ACE_TRY_ENV)
 }
 
 Dynamic::ContextList *
-TAO_ServerRequestInfo::contexts (CORBA::Environment &ACE_TRY_ENV)
+TAO_ServerRequestInfo::contexts (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
@@ -109,7 +109,7 @@ TAO_ServerRequestInfo::contexts (CORBA::Environment &ACE_TRY_ENV)
 }
 
 Dynamic::RequestContext *
-TAO_ServerRequestInfo::operation_context (CORBA::Environment &ACE_TRY_ENV)
+TAO_ServerRequestInfo::operation_context (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
@@ -118,7 +118,7 @@ TAO_ServerRequestInfo::operation_context (CORBA::Environment &ACE_TRY_ENV)
 }
 
 CORBA::Any *
-TAO_ServerRequestInfo::result (CORBA::Environment &ACE_TRY_ENV)
+TAO_ServerRequestInfo::result (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
@@ -127,7 +127,7 @@ TAO_ServerRequestInfo::result (CORBA::Environment &ACE_TRY_ENV)
 }
 
 CORBA::Boolean
-TAO_ServerRequestInfo::response_expected (CORBA::Environment &)
+TAO_ServerRequestInfo::response_expected (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->server_request_.response_expected ();
@@ -135,7 +135,7 @@ TAO_ServerRequestInfo::response_expected (CORBA::Environment &)
 
 # if TAO_HAS_CORBA_MESSAGING == 1
 Messaging::SyncScope
-TAO_ServerRequestInfo::sync_scope (CORBA::Environment &ACE_TRY_ENV)
+TAO_ServerRequestInfo::sync_scope (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->server_request_.sync_with_server ())
@@ -148,7 +148,7 @@ TAO_ServerRequestInfo::sync_scope (CORBA::Environment &ACE_TRY_ENV)
 #endif  /* TAO_HAS_CORBA_MESSAGING */
 
 PortableInterceptor::ReplyStatus
-TAO_ServerRequestInfo::reply_status (CORBA::Environment &ACE_TRY_ENV)
+TAO_ServerRequestInfo::reply_status (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->reply_status_ == -1)
@@ -161,7 +161,7 @@ TAO_ServerRequestInfo::reply_status (CORBA::Environment &ACE_TRY_ENV)
 }
 
 CORBA::Object_ptr
-TAO_ServerRequestInfo::forward_reference (CORBA::Environment &ACE_TRY_ENV)
+TAO_ServerRequestInfo::forward_reference (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->reply_status_ != PortableInterceptor::LOCATION_FORWARD)
@@ -175,8 +175,8 @@ TAO_ServerRequestInfo::forward_reference (CORBA::Environment &ACE_TRY_ENV)
 }
 
 CORBA::Any *
-TAO_ServerRequestInfo::get_slot (PortableInterceptor::SlotId id,
-                                 CORBA::Environment &ACE_TRY_ENV)
+TAO_ServerRequestInfo::get_slot (PortableInterceptor::SlotId id
+                                 TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::InvalidSlot))
 {
@@ -188,49 +188,49 @@ TAO_ServerRequestInfo::get_slot (PortableInterceptor::SlotId id,
   if (pi_current == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  pi_current->check_validity (id, ACE_TRY_ENV);
+  pi_current->check_validity (id TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   // Retrieve the request scope PICurrent object.
   TAO_PICurrent_Impl &rsc = this->server_request_.rs_pi_current ();
 
-  return rsc.get_slot (id, ACE_TRY_ENV);
+  return rsc.get_slot (id TAO_ENV_ARG_PARAMETER);
 
 }
 
 IOP::ServiceContext *
 TAO_ServerRequestInfo::get_request_service_context (
-    IOP::ServiceId id,
-    CORBA::Environment &ACE_TRY_ENV)
+    IOP::ServiceId id
+    TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_Service_Context &service_context_list =
     this->server_request_.request_service_context ();
 
   return this->get_service_context_i (service_context_list,
-                                      id,
-                                      ACE_TRY_ENV);
+                                      id
+                                      TAO_ENV_ARG_PARAMETER);
 }
 
 IOP::ServiceContext *
 TAO_ServerRequestInfo::get_reply_service_context (
-    IOP::ServiceId id,
-    CORBA::Environment &ACE_TRY_ENV)
+    IOP::ServiceId id
+    TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_Service_Context &service_context_list =
     this->server_request_.reply_service_context ();
 
   return this->get_service_context_i (service_context_list,
-                                      id,
-                                      ACE_TRY_ENV);
+                                      id
+                                      TAO_ENV_ARG_PARAMETER);
 }
 
 IOP::ServiceContext *
 TAO_ServerRequestInfo::get_service_context_i (
     TAO_Service_Context &service_context_list,
-    IOP::ServiceId id,
-    CORBA::Environment &ACE_TRY_ENV)
+    IOP::ServiceId id
+    TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Create a new service context to be returned.  Assume
@@ -266,7 +266,7 @@ TAO_ServerRequestInfo::get_service_context_i (
 // exception from an Any. This method is in place just to be compliant
 // with the spec.
 CORBA::Any *
-TAO_ServerRequestInfo::sending_exception (CORBA::Environment &ACE_TRY_ENV)
+TAO_ServerRequestInfo::sending_exception (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->reply_status_ != PortableInterceptor::SYSTEM_EXCEPTION
@@ -303,14 +303,14 @@ TAO_ServerRequestInfo::sending_exception (CORBA::Environment &ACE_TRY_ENV)
 // = TAO specific method done since there currently is no simple way
 // to extract exceptions from an Any
 CORBA::Exception *
-TAO_ServerRequestInfo::_sending_exception (CORBA::Environment &)
+TAO_ServerRequestInfo::_sending_exception (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->caught_exception_;
 }
 
 CORBA::OctetSeq *
-TAO_ServerRequestInfo::object_id (CORBA::Environment &ACE_TRY_ENV)
+TAO_ServerRequestInfo::object_id (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->servant_upcall_ != 0)
@@ -353,11 +353,11 @@ TAO_ServerRequestInfo::object_id (CORBA::Environment &ACE_TRY_ENV)
 }
 
 CORBA::OctetSeq *
-TAO_ServerRequestInfo::adapter_id (CORBA::Environment &ACE_TRY_ENV)
+TAO_ServerRequestInfo::adapter_id (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->servant_upcall_ != 0)
-    return this->servant_upcall_->poa ().id (ACE_TRY_ENV);
+    return this->servant_upcall_->poa ().id (TAO_ENV_SINGLE_ARG_PARAMETER);
 
   ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
                                           CORBA::COMPLETED_NO),
@@ -366,7 +366,7 @@ TAO_ServerRequestInfo::adapter_id (CORBA::Environment &ACE_TRY_ENV)
 
 char *
 TAO_ServerRequestInfo::target_most_derived_interface (
-    CORBA::Environment &ACE_TRY_ENV)
+    TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Implemented in the generated skeleton.
@@ -377,8 +377,8 @@ TAO_ServerRequestInfo::target_most_derived_interface (
 }
 
 CORBA::Policy_ptr
-TAO_ServerRequestInfo::get_server_policy (CORBA::PolicyType type,
-                                          CORBA::Environment &ACE_TRY_ENV)
+TAO_ServerRequestInfo::get_server_policy (CORBA::PolicyType type
+                                          TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // @@ Currently, it is only possible to retrieve the server policy
@@ -402,7 +402,7 @@ TAO_ServerRequestInfo::get_server_policy (CORBA::PolicyType type,
           //    object reference!!!
           CORBA::Policy_var policy = policies.get_policy_by_index (i);
 
-          CORBA::PolicyType ptype = policy->policy_type (ACE_TRY_ENV);
+          CORBA::PolicyType ptype = policy->policy_type (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
           if (ptype == type)
@@ -425,8 +425,8 @@ TAO_ServerRequestInfo::get_server_policy (CORBA::PolicyType type,
 
 void
 TAO_ServerRequestInfo::set_slot (PortableInterceptor::SlotId id,
-                                 const CORBA::Any &data,
-                                 CORBA::Environment &ACE_TRY_ENV)
+                                 const CORBA::Any &data
+                                 TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::InvalidSlot))
 {
@@ -438,7 +438,7 @@ TAO_ServerRequestInfo::set_slot (PortableInterceptor::SlotId id,
   if (pi_current == 0)
     ACE_THROW (CORBA::INTERNAL ());
 
-  pi_current->check_validity (id, ACE_TRY_ENV);
+  pi_current->check_validity (id TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Retrieve the "request scope current" (RSC).
@@ -450,14 +450,14 @@ TAO_ServerRequestInfo::set_slot (PortableInterceptor::SlotId id,
   TAO_PICurrent_Impl *tsc = rsc.pi_peer ();
   if (tsc != 0)
     tsc->copy (rsc, 1);  // Deep copy
-    
-  rsc.set_slot (id, data, ACE_TRY_ENV);
+
+  rsc.set_slot (id, data TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 CORBA::Boolean
-TAO_ServerRequestInfo::target_is_a (const char * /* id */,
-                                    CORBA::Environment &ACE_TRY_ENV)
+TAO_ServerRequestInfo::target_is_a (const char * /* id */
+                                    TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Implemented in the generated skeleton.
@@ -469,8 +469,8 @@ TAO_ServerRequestInfo::target_is_a (const char * /* id */,
 void
 TAO_ServerRequestInfo::add_reply_service_context (
     const IOP::ServiceContext & service_context,
-    CORBA::Boolean replace,
-    CORBA::Environment &ACE_TRY_ENV)
+    CORBA::Boolean replace
+    TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Get the service context from the list

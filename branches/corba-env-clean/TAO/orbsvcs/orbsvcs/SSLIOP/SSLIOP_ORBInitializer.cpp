@@ -30,11 +30,9 @@ TAO_SSLIOP_ORBInitializer::pre_init (
     TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_ENV_ARG_DEFN;
-
   TAO_ORBInitInfo_var tao_info =
-    TAO_ORBInitInfo::_narrow (info,
-                              ACE_TRY_ENV);
+    TAO_ORBInitInfo::_narrow (info
+                              TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (CORBA::is_nil (tao_info.in ()))
@@ -64,8 +62,8 @@ TAO_SSLIOP_ORBInitializer::pre_init (
 
   // Register the SSLIOP::Current object reference with the ORB.
   info->register_initial_reference ("SSLIOPCurrent",
-                                    ssliop_current.in (),
-                                    ACE_TRY_ENV);
+                                    ssliop_current.in ()
+                                    TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -75,8 +73,6 @@ TAO_SSLIOP_ORBInitializer::post_init (
     TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_ENV_ARG_DEFN;
-
   // Note we do not store the SSLIOP::Current as a class member since
   // we need to avoid potential problems where the same
   // SSLIOP::Current object is shared between ORBs.  Each ORB should
@@ -88,11 +84,11 @@ TAO_SSLIOP_ORBInitializer::post_init (
   // pre_init() method.
 
   CORBA::Object_var obj =
-    info->resolve_initial_references ("SSLIOPCurrent", ACE_TRY_ENV);
+    info->resolve_initial_references ("SSLIOPCurrent" TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   SSLIOP::Current_var ssliop_current =
-    SSLIOP::Current::_narrow (obj.in (), ACE_TRY_ENV);
+    SSLIOP::Current::_narrow (obj.in () TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (!CORBA::is_nil (ssliop_current.in ()))
@@ -103,7 +99,7 @@ TAO_SSLIOP_ORBInitializer::post_init (
 
       if (tao_current != 0)
         {
-          size_t slot = this->get_tss_slot_id (info, ACE_TRY_ENV);
+          size_t slot = this->get_tss_slot_id (info TAO_ENV_ARG_PARAMETER);
           ACE_CHECK;
 
           tao_current->tss_slot (slot);
@@ -131,26 +127,26 @@ TAO_SSLIOP_ORBInitializer::post_init (
 
   // Register the SSLIOP secure invocation server request interceptor
   // with the ORB.
-  info->add_server_request_interceptor (si_interceptor.in (),
-                                        ACE_TRY_ENV);
+  info->add_server_request_interceptor (si_interceptor.in ()
+                                        TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 size_t
 TAO_SSLIOP_ORBInitializer::get_tss_slot_id (
-  PortableInterceptor::ORBInitInfo_ptr info,
-  CORBA::Environment &ACE_TRY_ENV)
+  PortableInterceptor::ORBInitInfo_ptr info
+  TAO_ENV_ARG_DECL)
 {
   // Obtain the Security Service TSS slot ID from the SecurityCurrent
   // object.
   CORBA::Object_var obj =
-    info->resolve_initial_references ("SecurityCurrent",
-                                      ACE_TRY_ENV);
+    info->resolve_initial_references ("SecurityCurrent"
+                                      TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   SecurityLevel2::Current_var current =
-    SecurityLevel2::Current::_narrow (obj.in (),
-                                      ACE_TRY_ENV);
+    SecurityLevel2::Current::_narrow (obj.in ()
+                                      TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   TAO_Security_Current *security_current =

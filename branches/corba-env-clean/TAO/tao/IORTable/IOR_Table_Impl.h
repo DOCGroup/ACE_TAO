@@ -39,8 +39,8 @@ public:
 
   /// Find the object, using the locator if it is not on the table.
   char *find (
-      const char *object_key,
-      CORBA::Environment &ACE_TRY_ENV
+      const char *object_key
+      TAO_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -51,10 +51,9 @@ public:
   // details.
     virtual void bind (
         const char * object_key,
-        const char * IOR,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        const char * IOR
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         IORTable::AlreadyBound
@@ -62,29 +61,26 @@ public:
 
     virtual void rebind (
         const char * object_key,
-        const char * IOR,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        const char * IOR
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
     virtual void unbind (
-        const char * object_key,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        const char * object_key
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         IORTable::NotFound
       ));
 
     virtual void set_locator (
-        IORTable::Locator_ptr the_locator,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        IORTable::Locator_ptr the_locator
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));

@@ -106,11 +106,14 @@ be_visitor_operation_remote_proxy_impl_cs::visit_operation (be_operation *node)
   // last argument - is always CORBA::Environment
   *os << "{" << be_idt_nl;
 
+/* This shall go away as soon as we drop the suppress_env transition
+   (2001-10-29 oliver.kellogg@t-online.de)                           =======*/
   // Deal with differences between IDL mapping for true C++ exceptions and
   // alternate mapping. Since our code uses the ACE_TRY_ENV variable in a
   // number of places, for the true exception case, we will have to explicitly
   // declare the ACE_TRY_ENV variable.
   *os << this->gen_environment_var () << "\n";
+//============================================================================
 
   // Generate any pre stub info if and only if none of our parameters is of the
   // native type.
@@ -478,8 +481,8 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (
   // connection can be avoided if send_request() throws an exception,
   // i.e. this is an optimization.
   *os << "_tao_vfr.send_request (" << be_idt_nl
-      << "&_tao_ri," << be_nl
-      << "ACE_TRY_ENV" << be_uidt_nl
+      << "&_tao_ri" << be_nl
+      << "TAO_ENV_ARG_PARAMETER" << be_uidt_nl
       << ");" << be_nl
       << "ACE_TRY_CHECK;" << be_nl;
 
@@ -505,7 +508,7 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (
 
 
   *os << be_nl
-      << "_tao_call.start (ACE_TRY_ENV);" << be_nl;
+      << "_tao_call.start (TAO_ENV_SINGLE_ARG_PARAMETER);" << be_nl;
   // check if there is an exception
   if (this->gen_check_interceptor_exception (bt) == -1)
     {
@@ -518,8 +521,8 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (
 
  *os << be_nl
       << "_tao_call.prepare_header (" << be_idt << be_idt_nl
-      << "ACE_static_cast (CORBA::Octet, _tao_response_flag)," << be_nl
-      << "ACE_TRY_ENV" << be_uidt_nl
+      << "ACE_static_cast (CORBA::Octet, _tao_response_flag)" << be_nl
+      << "TAO_ENV_ARG_PARAMETER" << be_uidt_nl
       << ");" << be_uidt_nl;
   // check if there is an exception
 
@@ -581,7 +584,7 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (
   if (node->flags () == AST_Operation::OP_oneway)
     {
       // Oneway operation.
-      *os << "_tao_call.invoke (ACE_TRY_ENV);";
+      *os << "_tao_call.invoke (TAO_ENV_SINGLE_ARG_PARAMETER);";
     }
   else
     {
@@ -590,11 +593,11 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (
           *os << "_tao_call.invoke (_tao_" << node->flat_name ()
               << "_exceptiondata, "
               << node->exceptions ()->length ()
-              << ", ACE_TRY_ENV);";
+              << " TAO_ENV_ARG_PARAMETER);";
         }
       else
         {
-          *os << "_tao_call.invoke (0, 0, ACE_TRY_ENV);";
+          *os << "_tao_call.invoke (0, 0 TAO_ENV_ARG_PARAMETER);";
         }
     }
 
@@ -637,8 +640,8 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (
       << "TAO_INTERCEPTOR (" << be_idt_nl
       << "_tao_ri.reply_status (_invoke_status);" << be_nl
       << "_tao_vfr.receive_other (" << be_idt_nl
-      << "&_tao_ri," << be_nl
-      << "ACE_TRY_ENV" << be_uidt_nl
+      << "&_tao_ri" << be_nl
+      << "TAO_ENV_ARG_PARAMETER" << be_uidt_nl
       << ");" << be_nl
       << "ACE_TRY_CHECK;" << be_uidt_nl
       << ")" << be_nl
@@ -822,8 +825,8 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (
       *os << be_nl
           << "_tao_ri.reply_status (_invoke_status);" << be_nl
           << "_tao_vfr.receive_reply (" << be_idt_nl
-          << "&_tao_ri," << be_nl
-          << "ACE_TRY_ENV" << be_uidt_nl
+          << "&_tao_ri" << be_nl
+          << "TAO_ENV_ARG_PARAMETER" << be_uidt_nl
           << ");" << be_nl;
     }
   else if (node->flags () == AST_Operation::OP_oneway)
@@ -832,8 +835,8 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (
       *os << be_nl
           << "_tao_ri.reply_status (_invoke_status);" << be_nl
           << "_tao_vfr.receive_other (" << be_idt_nl
-          << "&_tao_ri," << be_nl
-          << "ACE_TRY_ENV" << be_uidt_nl
+          << "&_tao_ri" << be_nl
+          << "TAO_ENV_ARG_PARAMETER" << be_uidt_nl
           << ");" << be_nl;
     }
 
@@ -855,8 +858,8 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (
   *os << "_tao_ri.exception (&ACE_ANY_EXCEPTION);"<< be_nl;
 
   *os << "_tao_vfr.receive_exception (" << be_idt_nl
-      << "&_tao_ri," << be_nl
-      << "ACE_TRY_ENV" << be_uidt_nl
+      << "&_tao_ri" << be_nl
+      << "TAO_ENV_ARG_PARAMETER" << be_uidt_nl
       << ");" << be_nl
       << "ACE_TRY_CHECK;" << be_nl;
 
@@ -866,7 +869,7 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (
   // caught exception.
   *os << be_nl
       << "PortableInterceptor::ReplyStatus _tao_status =" << be_idt_nl
-      << "_tao_ri.reply_status (ACE_TRY_ENV);" << be_uidt_nl
+      << "_tao_ri.reply_status (TAO_ENV_SINGLE_ARG_PARAMETER);" << be_uidt_nl
       << "ACE_TRY_CHECK;" << be_nl;
 
   *os << be_nl
@@ -899,7 +902,7 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (
   // ClientRequestInfo object.
   *os << be_nl
       << "PortableInterceptor::ReplyStatus _tao_status =" << be_idt_nl
-      << "_tao_ri.reply_status (ACE_TRY_ENV);" << be_uidt_nl;
+      << "_tao_ri.reply_status (TAO_ENV_SINGLE_ARG_PARAMETER);" << be_uidt_nl;
 
   if (this->gen_check_exception (bt) == -1)
     {

@@ -26,8 +26,8 @@ TAO_TypeCodeFactory_Loader::TAO_TypeCodeFactory_Loader (void)
 CORBA::Object_ptr
 TAO_TypeCodeFactory_Loader::create_object (CORBA::ORB_ptr,
                                            int,
-                                           char * [],
-                                           CORBA::Environment &)
+                                           char * []
+                                           TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Object_ptr obj;

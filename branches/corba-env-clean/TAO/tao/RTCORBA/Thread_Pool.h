@@ -105,14 +105,14 @@ public:
                    CORBA::ULong id,
                    CORBA::Short lane_priority,
                    CORBA::ULong static_threads,
-                   CORBA::ULong dynamic_threads,
-                   CORBA::Environment &ACE_TRY_ENV);
+                   CORBA::ULong dynamic_threads
+                   TAO_ENV_ARG_DECL);
 
   /// Destructor.
   ~TAO_Thread_Lane (void);
 
   /// Open the lane.
-  void open (CORBA::Environment &ACE_TRY_ENV);
+  void open (TAO_ENV_SINGLE_ARG_DECL);
 
   /// Finalize the resources.
   void finalize (void);
@@ -157,7 +157,7 @@ public:
 private:
 
   /// Validate lane's priority and map it to a native value.
-  void validate_and_map_priority (CORBA::Environment &ACE_TRY_ENV);
+  void validate_and_map_priority (TAO_ENV_SINGLE_ARG_DECL);
 
   TAO_Thread_Pool &pool_;
   CORBA::ULong id_;
@@ -203,8 +203,8 @@ public:
                    CORBA::Short default_priority,
                    CORBA::Boolean allow_request_buffering,
                    CORBA::ULong max_buffered_requests,
-                   CORBA::ULong max_request_buffer_size,
-                   CORBA::Environment &ACE_TRY_ENV);
+                   CORBA::ULong max_request_buffer_size
+                   TAO_ENV_ARG_DECL);
 
   /// Constructor (for pools with lanes).
   TAO_Thread_Pool (TAO_Thread_Pool_Manager &manager,
@@ -214,14 +214,14 @@ public:
                    CORBA::Boolean allow_borrowing,
                    CORBA::Boolean allow_request_buffering,
                    CORBA::ULong max_buffered_requests,
-                   CORBA::ULong max_request_buffer_size,
-                   CORBA::Environment &ACE_TRY_ENV);
+                   CORBA::ULong max_request_buffer_size
+                   TAO_ENV_ARG_DECL);
 
   /// Destructor.
   ~TAO_Thread_Pool (void);
 
   /// Open the pool.
-  void open (CORBA::Environment &ACE_TRY_ENV);
+  void open (TAO_ENV_SINGLE_ARG_DECL);
 
   /// Finalize the resources.
   void finalize (void);
@@ -314,8 +314,8 @@ public:
                      RTCORBA::Priority default_priority,
                      CORBA::Boolean allow_request_buffering,
                      CORBA::ULong max_buffered_requests,
-                     CORBA::ULong max_request_buffer_size,
-                     CORBA::Environment &ACE_TRY_ENV)
+                     CORBA::ULong max_request_buffer_size
+                     TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Create a threadpool with lanes.
@@ -325,13 +325,13 @@ public:
                                 CORBA::Boolean allow_borrowing,
                                 CORBA::Boolean allow_request_buffering,
                                 CORBA::ULong max_buffered_requests,
-                                CORBA::ULong max_request_buffer_size,
-                                CORBA::Environment &ACE_TRY_ENV)
+                                CORBA::ULong max_request_buffer_size
+                                TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Destroy a threadpool.
-  void destroy_threadpool (RTCORBA::ThreadpoolId threadpool,
-                           CORBA::Environment &ACE_TRY_ENV)
+  void destroy_threadpool (RTCORBA::ThreadpoolId threadpool
+                           TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RTCORBA::RTORB::InvalidThreadpool));
 
@@ -361,8 +361,8 @@ private:
                        RTCORBA::Priority default_priority,
                        CORBA::Boolean allow_request_buffering,
                        CORBA::ULong max_buffered_requests,
-                       CORBA::ULong max_request_buffer_size,
-                       CORBA::Environment &ACE_TRY_ENV)
+                       CORBA::ULong max_request_buffer_size
+                       TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   RTCORBA::ThreadpoolId
@@ -371,18 +371,18 @@ private:
                                   CORBA::Boolean allow_borrowing,
                                   CORBA::Boolean allow_request_buffering,
                                   CORBA::ULong max_buffered_requests,
-                                  CORBA::ULong max_request_buffer_size,
-                                  CORBA::Environment &ACE_TRY_ENV)
+                                  CORBA::ULong max_request_buffer_size
+                                  TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void destroy_threadpool_i (RTCORBA::ThreadpoolId threadpool,
-                             CORBA::Environment &ACE_TRY_ENV)
+  void destroy_threadpool_i (RTCORBA::ThreadpoolId threadpool
+                             TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RTCORBA::RTORB::InvalidThreadpool));
 
   RTCORBA::ThreadpoolId
-  create_threadpool_helper (TAO_Thread_Pool *thread_pool,
-                            CORBA::Environment &ACE_TRY_ENV)
+  create_threadpool_helper (TAO_Thread_Pool *thread_pool
+                            TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // @}

@@ -28,8 +28,8 @@ Consumer_i::~Consumer_i (void)
 }
 
 void
-Consumer_i::push (const Callback_Quoter::Info &data,
-                  CORBA::Environment &)
+Consumer_i::push (const Callback_Quoter::Info &data
+                  TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // On getting the needed information you now proceed to the next
@@ -42,7 +42,7 @@ Consumer_i::push (const Callback_Quoter::Info &data,
 }
 
 void
-Consumer_i::shutdown (CORBA::Environment &)
+Consumer_i::shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
 

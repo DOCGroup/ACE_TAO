@@ -201,7 +201,7 @@ public:
   virtual ~ACE_EventChannel (void);
   // Calls destroy.
 
-  RtecEventChannelAdmin::EventChannel_ptr get_ref (CORBA::Environment &);
+  RtecEventChannelAdmin::EventChannel_ptr get_ref (TAO_ENV_SINGLE_ARG_DECL_NOT_USED);
   // Allow transformations to RtecEventChannelAdmin::EventChannel.
 
   ACE_RTU_Manager *rtu_manager (void);
@@ -232,12 +232,12 @@ public:
   void report_disconnect_i (u_long);
   // Consumer or supplier disconnected.
 
-  void add_gateway (TAO_EC_Gateway* gw, CORBA::Environment& _env);
-  void del_gateway (TAO_EC_Gateway* gw, CORBA::Environment& _env);
+  void add_gateway (TAO_EC_Gateway* gw TAO_ENV_ARG_DECL);
+  void del_gateway (TAO_EC_Gateway* gw TAO_ENV_ARG_DECL);
   // Add and remove gateways from the EC.
 
-  void update_consumer_gwys (CORBA::Environment& _env);
-  void update_supplier_gwys (CORBA::Environment& _env);
+  void update_consumer_gwys (TAO_ENV_SINGLE_ARG_DECL);
+  void update_supplier_gwys (TAO_ENV_SINGLE_ARG_DECL);
   // The consumer (or supplier) list has changed, thus the EC has to
   // inform any gateways it has.
 
@@ -247,30 +247,30 @@ public:
   // = The RtecEventChannelAdmin::EventChannel methods.
 
   virtual RtecEventChannelAdmin::ConsumerAdmin_ptr
-    for_consumers (CORBA::Environment &)
+    for_consumers (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException));
   // In this implementation of the EC this returns the interface for
   // the Consumer_Module.
 
   virtual RtecEventChannelAdmin::SupplierAdmin_ptr
-    for_suppliers (CORBA::Environment &)
+    for_suppliers (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException));
   // Return an interface to the Supplier_Module.
 
-  virtual void destroy (CORBA::Environment &)
+  virtual void destroy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Shutdown the EC, free all resources, stop all threads and then
   // shutdown the server where the Servant is running.
 
   virtual RtecEventChannelAdmin::Observer_Handle
-    append_observer (RtecEventChannelAdmin::Observer_ptr observer,
-                     CORBA::Environment &env)
+    append_observer (RtecEventChannelAdmin::Observer_ptr observer
+                     TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
         RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER));
-  virtual void remove_observer (RtecEventChannelAdmin::Observer_Handle,
-                                CORBA::Environment &env)
+  virtual void remove_observer (RtecEventChannelAdmin::Observer_Handle
+                                TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
@@ -840,7 +840,7 @@ public:
   // that ACE_ES_Consumer_Rep_Timeout::execute can access it.
 
 private:
-  virtual void disconnect_push_supplier (CORBA::Environment &)
+  virtual void disconnect_push_supplier (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException));
   // Called when the channel disconnects us.
 
@@ -943,23 +943,23 @@ public:
   // Link to the next module.
 
   virtual RtecEventChannelAdmin::ProxyPushSupplier_ptr
-      obtain_push_supplier (CORBA::Environment &)
+      obtain_push_supplier (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
         ACE_THROW_SPEC ((CORBA::SystemException));
   // Factory method for push consumer proxies.
 
-  void connected (ACE_Push_Consumer_Proxy *consumer,
-                  CORBA::Environment &);
+  void connected (ACE_Push_Consumer_Proxy *consumer
+                  TAO_ENV_ARG_DECL_NOT_USED);
   // Register the consumer with the Event Service.  This handles all
   // the details regarding Correlation_Module and Subscription_Module.
 
-  void disconnecting (ACE_Push_Consumer_Proxy *consumer,
-                      CORBA::Environment &);
+  void disconnecting (ACE_Push_Consumer_Proxy *consumer
+                      TAO_ENV_ARG_DECL_NOT_USED);
   // Unregister the consumer from the Event Service.
 
-  virtual void push (const ACE_ES_Dispatch_Request *request,
-                     CORBA::Environment &);
+  virtual void push (const ACE_ES_Dispatch_Request *request
+                     TAO_ENV_ARG_DECL_NOT_USED);
 
-  RtecEventChannelAdmin::ConsumerAdmin_ptr get_ref (CORBA::Environment &);
+  RtecEventChannelAdmin::ConsumerAdmin_ptr get_ref (TAO_ENV_SINGLE_ARG_DECL_NOT_USED);
   // Allow transformations to RtecEventChannelAdmin::ConsumerAdmin.
 
   void shutdown_request (ACE_ES_Dispatch_Request *request);
@@ -1010,17 +1010,17 @@ public:
              ACE_ES_Subscription_Module *down);
   // Link to adjacent modules.
 
-  void connected (ACE_Push_Consumer_Proxy *consumer,
-                  CORBA::Environment &);
+  void connected (ACE_Push_Consumer_Proxy *consumer
+                  TAO_ENV_ARG_DECL_NOT_USED);
   // Create the consumers filter object.
 
-  void disconnecting (ACE_Push_Consumer_Proxy *consumer,
-                      CORBA::Environment &);
+  void disconnecting (ACE_Push_Consumer_Proxy *consumer
+                      TAO_ENV_ARG_DECL_NOT_USED);
   // Release the consumers filter object.
 
   void push (ACE_ES_Consumer_Rep *consumer,
-             const TAO_EC_Event &event,
-             CORBA::Environment &);
+             const TAO_EC_Event &event
+             TAO_ENV_ARG_DECL_NOT_USED);
   // Take in an event and its subscriber.  Apply consumer-specific
   // filters to each event and forward any dispatch requests to the
   // Dispatching Module.
@@ -1098,14 +1098,14 @@ public:
   int unsubscribe (ACE_ES_Consumer_Rep *consumer);
   // Removes the -consumer- from any subscription lists.
 
-  void connected (ACE_Push_Supplier_Proxy *supplier,
-                  CORBA::Environment &);
-  void disconnecting (ACE_Push_Supplier_Proxy *supplier,
-                      CORBA::Environment &);
+  void connected (ACE_Push_Supplier_Proxy *supplier
+                  TAO_ENV_ARG_DECL_NOT_USED);
+  void disconnecting (ACE_Push_Supplier_Proxy *supplier
+                      TAO_ENV_ARG_DECL_NOT_USED);
 
   void push (ACE_Push_Supplier_Proxy *source,
-             const TAO_EC_Event &event,
-             CORBA::Environment &);
+             const TAO_EC_Event &event
+             TAO_ENV_ARG_DECL_NOT_USED);
   // Takes in an event and pushes subscriber sets to the
   // Correlation Module.
 
@@ -1159,19 +1159,19 @@ private:
   // = Push helper methods.
 
   int push_source (ACE_Push_Supplier_Proxy *source,
-                   const TAO_EC_Event &event,
-                   CORBA::Environment &_env);
+                   const TAO_EC_Event &event
+                   TAO_ENV_ARG_DECL);
   // Push <event> to all consumers subscribed to all events from
   // <source>.  Returns 0 on success, -1 on failure.
 
   int push_source_type (ACE_Push_Supplier_Proxy *source,
-                        const TAO_EC_Event &event,
-                        CORBA::Environment &_env);
+                        const TAO_EC_Event &event
+                        TAO_ENV_ARG_DECL);
   // Push <event> to all consumers subscribed to <event>.type_ from
   // <source>.  Returns 0 on success, -1 on failure.
 
-  void push_all (const TAO_EC_Event &event,
-                 CORBA::Environment &);
+  void push_all (const TAO_EC_Event &event
+                 TAO_ENV_ARG_DECL_NOT_USED);
   // Push <event> to all_suppliers_.
 
   ACE_ES_Correlation_Module *up_;
@@ -1216,26 +1216,26 @@ public:
   // Associate the module to a channel.
 
   virtual RtecEventChannelAdmin::ProxyPushConsumer_ptr
-      obtain_push_consumer (CORBA::Environment &)
+      obtain_push_consumer (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
         ACE_THROW_SPEC ((CORBA::SystemException));
   // Factory method for push supplier proxies.
 
   virtual void push (ACE_Push_Supplier_Proxy *proxy,
-                     RtecEventComm::EventSet &event,
-                     CORBA::Environment &);
+                     RtecEventComm::EventSet &event
+                     TAO_ENV_ARG_DECL_NOT_USED);
   // The supplier module acts on behalf of the supplier proxy to
   // forward events through the channel.
 
-  void connected (ACE_Push_Supplier_Proxy *supplier,
-                  CORBA::Environment &);
+  void connected (ACE_Push_Supplier_Proxy *supplier
+                  TAO_ENV_ARG_DECL_NOT_USED);
   // Register the consumer with the Event Service.  This handles all
   // the details regarding Correlation_Module and Subscription_Module.
 
-  void disconnecting (ACE_Push_Supplier_Proxy *supplier,
-                      CORBA::Environment &);
+  void disconnecting (ACE_Push_Supplier_Proxy *supplier
+                      TAO_ENV_ARG_DECL_NOT_USED);
   // Unregister the consumer from the Event Service.
 
-  RtecEventChannelAdmin::SupplierAdmin_ptr get_ref (CORBA::Environment &);
+  RtecEventChannelAdmin::SupplierAdmin_ptr get_ref (TAO_ENV_SINGLE_ARG_DECL_NOT_USED);
   // Allow transformations to RtecEventComm::PushConsumer.
 
   void shutdown (void);
@@ -1289,21 +1289,21 @@ public:
 
   virtual void connect_push_supplier (
       RtecEventComm::PushSupplier_ptr push_supplier,
-      const RtecEventChannelAdmin::SupplierQOS& qos,
-      CORBA::Environment &)
+      const RtecEventChannelAdmin::SupplierQOS& qos
+      TAO_ENV_ARG_DECL_NOT_USED)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          RtecEventChannelAdmin::AlreadyConnected));
   // Suppliers connect via this interface.  <push_supplier> is a
   // reference to the supplier.  <qos> represents the publish types of
   // the supplier.
 
-  virtual void push (const RtecEventComm::EventSet &event,
-                     CORBA::Environment &)
+  virtual void push (const RtecEventComm::EventSet &event
+                     TAO_ENV_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException));
   // Data arriving from a PushSupplier that must be sent to
   // consumers.  This is the entry point of all events.
 
-  virtual void disconnect_push_consumer (CORBA::Environment &)
+  virtual void disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException));
   // Disconnect the supplier from the channel.
 
@@ -1373,30 +1373,30 @@ public:
 
   virtual void connect_push_consumer (
        RtecEventComm::PushConsumer_ptr push_consumer,
-       const RtecEventChannelAdmin::ConsumerQOS& qos,
-       CORBA::Environment &)
+       const RtecEventChannelAdmin::ConsumerQOS& qos
+       TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecEventChannelAdmin::AlreadyConnected,
                      RtecEventChannelAdmin::TypeError));
   // A push consumer is connecting.  <push_consumer> is a reference to
   // the consumer.  <qos> is the subscription types for the consumer.
 
-  virtual void disconnect_push_supplier (CORBA::Environment &)
+  virtual void disconnect_push_supplier (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException));
   // The consumer is disconnecting.
 
-  virtual void suspend_connection (CORBA::Environment &)
+  virtual void suspend_connection (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException));
   // Stop forwarding events to the calling consumer.
 
-  virtual void resume_connection (CORBA::Environment &)
+  virtual void resume_connection (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException));
   // Resume forwarding events to the calling consumer.
 
   // = Event Channel operations.
 
-  void push (const RtecEventComm::EventSet &events,
-             CORBA::Environment &);
+  void push (const RtecEventComm::EventSet &events
+             TAO_ENV_ARG_DECL_NOT_USED);
   // Push <events> to push_consumer_.
 
   int connected (void);

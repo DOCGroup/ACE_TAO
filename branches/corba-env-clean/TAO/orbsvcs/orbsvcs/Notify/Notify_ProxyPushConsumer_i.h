@@ -55,15 +55,15 @@ public:
   // Destructor
 
   // = Interface methods
-  void push (const CORBA::Any & data, CORBA::Environment &ACE_TRY_ENV)
+  void push (const CORBA::Any & data TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosEventComm::Disconnected
                    ));
 
   virtual void connect_any_push_supplier (
-    CosEventComm::PushSupplier_ptr push_supplier,
-    CORBA::Environment &ACE_TRY_ENV
+    CosEventComm::PushSupplier_ptr push_supplier
+    TAO_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -71,7 +71,7 @@ public:
   ));
 
 virtual void disconnect_push_consumer (
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -79,7 +79,7 @@ virtual void disconnect_push_consumer (
 
  protected:
 // = Helper methods
- virtual void dispatch_update_i (CosNotification::EventTypeSeq added, CosNotification::EventTypeSeq removed, CORBA::Environment &ACE_TRY_ENV);
+ virtual void dispatch_update_i (CosNotification::EventTypeSeq added, CosNotification::EventTypeSeq removed TAO_ENV_ARG_DECL);
 
  // = Data members
  CORBA::Boolean notify_style_supplier_;
@@ -113,20 +113,20 @@ public:
   virtual ~TAO_Notify_CosEC_ProxyPushConsumer_i (void);
   // Destructor.
 
-  void init (CORBA::Environment &ACE_TRY_ENV);
+  void init (TAO_ENV_SINGLE_ARG_DECL);
     // init.
 
-  virtual void push (const CORBA::Any &data,
-                     CORBA::Environment &ACE_TRY_ENV)
+  virtual void push (const CORBA::Any &data
+                     TAO_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
   // Suppliers call this method to pass data to connected consumers.
 
-  virtual void disconnect_push_consumer (CORBA::Environment &ACE_TRY_ENV)
+  virtual void disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
   // Disconnects the supplier from the event communication.
 
-  virtual void connect_push_supplier(CosEventComm::PushSupplier_ptr push_supplier,
-                                     CORBA::Environment &ACE_TRY_ENV)
+  virtual void connect_push_supplier(CosEventComm::PushSupplier_ptr push_supplier
+                                     TAO_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosEventChannelAdmin::AlreadyConnected));
   // Connects a push supplier.

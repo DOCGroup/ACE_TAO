@@ -86,10 +86,10 @@ static_server (void)
                        ACE_Null_Mutex>::instance ()) == 0)
         return 0;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
-      server_ = ace_scheduler_factory_data->scheduler_._this (ACE_TRY_ENV);
+      server_ = ace_scheduler_factory_data->scheduler_._this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
@@ -122,20 +122,20 @@ ACE_Scheduler_Factory::use_config (CosNaming::NamingContext_ptr naming,
     // config runs.
     return 0;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       CosNaming::Name schedule_name (1);
       schedule_name.length (1);
       schedule_name[0].id = CORBA::string_dup (name);
       CORBA::Object_var objref =
-        naming->resolve (schedule_name,
-                         ACE_TRY_ENV);
+        naming->resolve (schedule_name
+                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       server_ =
-        RtecScheduler::Scheduler::_narrow(objref.in (),
-                                          ACE_TRY_ENV);
+        RtecScheduler::Scheduler::_narrow(objref.in ()
+                                          TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

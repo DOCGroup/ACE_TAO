@@ -41,8 +41,6 @@ TAO_BiDir_ORBInitializer::register_policy_factories (
     PortableInterceptor::PolicyFactory::_nil ();
   PortableInterceptor::PolicyFactory_var policy_factory;
 
-  TAO_ENV_ARG_DEFN;
-
   /// This policy factory is used for all BiDir related policies.
   ACE_NEW_THROW_EX (temp_factory,
                     TAO_BiDir_PolicyFactory,

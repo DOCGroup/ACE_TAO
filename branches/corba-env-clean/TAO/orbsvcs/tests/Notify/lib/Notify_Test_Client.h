@@ -33,23 +33,23 @@ class TAO_NOTIFY_TEST_Export Notify_Test_Client
   Notify_Test_Client (void);
   virtual ~Notify_Test_Client ();
 
-  virtual void init (int argc, char *argv [], CORBA::Environment &ACE_TRY_ENV);
+  virtual void init (int argc, char *argv [] TAO_ENV_ARG_DECL);
   // starts the orb and resolves the notify factory via a naming service.
 
   int ORB_run (void);
   // Call ORB::run to accept requests.
 
-  void shutdown (CORBA::Environment &ACE_TRY_ENV);
+  void shutdown (TAO_ENV_SINGLE_ARG_DECL);
   // Shutdown the ORB
 
  protected:
-  void init_ORB (int argc, char *argv [], CORBA::Environment &ACE_TRY_ENV);
+  void init_ORB (int argc, char *argv [] TAO_ENV_ARG_DECL);
   // Initializes the ORB.
 
-  void resolve_naming_service (CORBA::Environment &ACE_TRY_ENV);
+  void resolve_naming_service (TAO_ENV_SINGLE_ARG_DECL);
   // Try to get hold of a running naming service.
 
-  void resolve_Notify_factory (CORBA::Environment &ACE_TRY_ENV);
+  void resolve_Notify_factory (TAO_ENV_SINGLE_ARG_DECL);
   // Try to resolve the Notify factory from the Naming service.
 
   // = Data Members

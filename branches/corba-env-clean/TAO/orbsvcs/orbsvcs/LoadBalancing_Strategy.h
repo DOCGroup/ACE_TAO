@@ -47,7 +47,7 @@ public:
   // @@ The name of the method should be more meaningful, what about:
   //    select_replica(), select_unloaded_replica() or something like
   //    that?
-  virtual CORBA::Object_ptr replica (CORBA::Environment &ACE_TRY_ENV)
+  virtual CORBA::Object_ptr replica (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
   // Return the object reference to the Replica to which requests should
   // be redirected.
@@ -59,8 +59,8 @@ public:
   virtual int remove (TAO_LB_ReplicaProxy *) = 0;
   // Remove ReplicaProxy servant from the set of replica proxies.
 
-  virtual void load_changed (TAO_LB_ReplicaProxy *proxy,
-                             CORBA::Environment &ACE_TRY_ENV);
+  virtual void load_changed (TAO_LB_ReplicaProxy *proxy
+                             TAO_ENV_ARG_DECL);
   // The load on one proxy has changed.
   // @@ Ossama: see my comments on LoadBalancing_i about changing the
   // signature of this method.

@@ -24,8 +24,8 @@ TAO_IORInfo::~TAO_IORInfo (void)
 }
 
 CORBA::Policy_ptr
-TAO_IORInfo::get_effective_policy (CORBA::PolicyType type,
-                                   CORBA::Environment &ACE_TRY_ENV)
+TAO_IORInfo::get_effective_policy (CORBA::PolicyType type
+                                   TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Check the policy list supplied by the POA.
@@ -51,8 +51,8 @@ TAO_IORInfo::get_effective_policy (CORBA::PolicyType type,
 }
 
 void
-TAO_IORInfo::add_ior_component (const IOP::TaggedComponent &component,
-                                CORBA::Environment &ACE_TRY_ENV)
+TAO_IORInfo::add_ior_component (const IOP::TaggedComponent &component
+                                TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Add the given tagged component to all profiles.
@@ -62,7 +62,7 @@ TAO_IORInfo::add_ior_component (const IOP::TaggedComponent &component,
     {
       TAO_Profile *profile = this->mp_.get_profile (i);
 
-      profile->add_tagged_component (component, ACE_TRY_ENV);
+      profile->add_tagged_component (component TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
@@ -70,8 +70,8 @@ TAO_IORInfo::add_ior_component (const IOP::TaggedComponent &component,
 void
 TAO_IORInfo::add_ior_component_to_profile (
     const IOP::TaggedComponent &component,
-    IOP::ProfileId profile_id,
-    CORBA::Environment &ACE_TRY_ENV)
+    IOP::ProfileId profile_id
+    TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Add the given tagged component to all profiles matching the given
@@ -86,7 +86,7 @@ TAO_IORInfo::add_ior_component_to_profile (
 
       if (profile->tag () == profile_id)
         {
-          profile->add_tagged_component (component, ACE_TRY_ENV);
+          profile->add_tagged_component (component TAO_ENV_ARG_PARAMETER);
           ACE_CHECK;
 
           found_profile = 1;

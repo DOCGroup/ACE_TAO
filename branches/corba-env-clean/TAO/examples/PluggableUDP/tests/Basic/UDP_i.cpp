@@ -29,8 +29,8 @@ UDP_i::orb (CORBA::ORB_ptr o)
 void
 UDP_i::invoke (const char * client_name,
                UDP_ptr udpHandler,
-               CORBA::Long request_id,
-               CORBA::Environment &ACE_TRY_ENV)
+               CORBA::Long request_id
+               TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TRY
@@ -61,8 +61,8 @@ UDP_i::invoke (const char * client_name,
         {
           udpHandler->invoke (client_name,
                               UDP::_nil (),
-                              request_id,
-                              ACE_TRY_ENV);
+                              request_id
+                              TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
@@ -78,7 +78,7 @@ UDP_i::invoke (const char * client_name,
 // Shutdown.
 
 void
-UDP_i::shutdown (CORBA::Environment & )
+UDP_i::shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,

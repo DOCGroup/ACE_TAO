@@ -74,14 +74,12 @@ public:
   void add_consume (CORBA::TypeCode_ptr tc);
   // Add and consume a TypeCode to the list.
 
-  CORBA::TypeCode_ptr item (CORBA::ULong slot,
-                            CORBA_Environment &ACE_TRY_ENV =
-                              TAO_default_environment ());
+  CORBA::TypeCode_ptr item (CORBA::ULong slot
+                            TAO_ENV_ARG_DECL_WITH_DEFAULTS);
   // Return the typecode at slot i. Raises the "Bounds" exception.
 
-  void remove (CORBA::ULong slot,
-               CORBA_Environment &ACE_TRY_ENV =
-                 TAO_default_environment ());
+  void remove (CORBA::ULong slot
+               TAO_ENV_ARG_DECL_WITH_DEFAULTS);
   // Remove the typecode at slot i. Raises the "Bounds" exception.
 
   void  _incr_refcnt (void);

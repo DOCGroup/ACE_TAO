@@ -43,21 +43,18 @@ public:
   // return the associated servant (if one exists)
 */
 
-  static TAO_Collocated_Object *_narrow (CORBA::Object_ptr object,
-                                         CORBA_Environment &ACE_TRY_ENV =
-                                             TAO_default_environment ());
+  static TAO_Collocated_Object *_narrow (CORBA::Object_ptr object
+                                         TAO_ENV_ARG_DECL_WITH_DEFAULTS);
   // Downcast operation
 
   // = The CORBA_Object methods, check the tao/Object.h file for details
-  virtual CORBA::Boolean _is_a (const CORBA::Char *logical_type_id,
-                                CORBA_Environment &ACE_TRY_ENV =
-                                  TAO_default_environment ());
-  virtual CORBA::Boolean _is_equivalent (CORBA_Object_ptr other_obj,
-                                         CORBA::Environment &)
+  virtual CORBA::Boolean _is_a (const CORBA::Char *logical_type_id
+                                TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+  virtual CORBA::Boolean _is_equivalent (CORBA_Object_ptr other_obj
+                                         TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC (());
 #if (TAO_HAS_MINIMUM_CORBA == 0)
-  virtual CORBA::Boolean _non_existent (CORBA_Environment &ACE_TRY_ENV =
-                                          TAO_default_environment ());
+  virtual CORBA::Boolean _non_existent (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 #endif /* TAO_HAS_MINIMUM_CORBA */
   virtual void *_tao_QueryInterface(ptr_arith_t type);
 

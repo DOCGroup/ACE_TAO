@@ -46,7 +46,6 @@ Servant_Locator::preinvoke (const PortableServer::ObjectId &oid,
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::ForwardRequest))
 {
-  TAO_ENV_ARG_DEFN;
 
   CORBA::String_var s = PortableServer::ObjectId_to_string (oid);
 
@@ -59,8 +58,8 @@ Servant_Locator::preinvoke (const PortableServer::ObjectId &oid,
 
   // Combined IOR stuff
   Simple_Server_var server =
-    Simple_Server::_narrow (this->objref_.in (),
-                            ACE_TRY_ENV);
+    Simple_Server::_narrow (this->objref_.in ()
+                            TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   ACE_DEBUG ((LM_DEBUG,

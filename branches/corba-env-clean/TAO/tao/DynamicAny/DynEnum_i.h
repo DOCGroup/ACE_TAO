@@ -34,7 +34,7 @@
 # pragma warning (disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_DynamicAny_Export TAO_DynEnum_i 
+class TAO_DynamicAny_Export TAO_DynEnum_i
   : public virtual DynamicAny::DynEnum,
     public virtual TAO_DynCommon,
     public virtual TAO_Local_RefCounted_Object
@@ -52,55 +52,50 @@ public:
   ~TAO_DynEnum_i (void);
   // Destructor.
 
-  void init (CORBA_TypeCode_ptr tc,
-             CORBA::Environment &ACE_TRY_ENV);
+  void init (CORBA_TypeCode_ptr tc
+             TAO_ENV_ARG_DECL);
   // Initialize using just a TypeCode.
 
-  void init (const CORBA_Any& any,
-             CORBA::Environment &ACE_TRY_ENV);
+  void init (const CORBA_Any& any
+             TAO_ENV_ARG_DECL);
   // Initialize using an Any.
 
   // = LocalObject methods.
   static TAO_DynEnum_i *_narrow (
-      CORBA::Object_ptr obj,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
+      CORBA::Object_ptr obj
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
   virtual void *_tao_QueryInterface (ptr_arith_t type);
 
   // = Functions specific to DynEnum.
 
   virtual char * get_as_string (
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
   virtual void set_as_string (
-      const char * value,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      const char * value
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::InvalidValue
       ));
 
   virtual CORBA::ULong get_as_ulong (
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
   virtual void set_as_ulong (
-      CORBA::ULong value,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      CORBA::ULong value
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::InvalidValue
@@ -109,10 +104,9 @@ public:
   // = DynAny common functions not implemented in class TAO_DynCommon.
 
   virtual void from_any (
-      const CORBA::Any & value,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      const CORBA::Any & value
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -120,34 +114,30 @@ public:
       ));
 
   virtual CORBA::Any * to_any (
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
   virtual CORBA::Boolean equal (
-      DynamicAny::DynAny_ptr dyn_any,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      DynamicAny::DynAny_ptr dyn_any
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
   virtual void destroy (
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
   virtual DynamicAny::DynAny_ptr current_component (
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch

@@ -22,20 +22,20 @@ main (int, char *[])
 
               int argc = 0;
               CORBA::ORB_var orb =
-                CORBA::ORB_init (argc, 0, buf, ACE_TRY_ENV);
+                CORBA::ORB_init (argc, 0, buf TAO_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               CORBA::Object_var object =
-                orb->string_to_object ("DLL:Test_Object",
-                                       ACE_TRY_ENV);
+                orb->string_to_object ("DLL:Test_Object"
+                                       TAO_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               Test_var test =
-                Test::_narrow (object.in (), ACE_TRY_ENV);
+                Test::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               CORBA::Long count =
-                test->instance_count (ACE_TRY_ENV);
+                test->instance_count (TAO_ENV_SINGLE_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               if (count != norbs*i + j + 1)
@@ -45,7 +45,7 @@ main (int, char *[])
                               "(%d != %d)\n",
                               count, norbs * i + j + 1));
                 }
-              test->destroy (ACE_TRY_ENV);
+              test->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
         }
@@ -57,22 +57,22 @@ main (int, char *[])
 
           int argc = 0;
           CORBA::ORB_var orb =
-            CORBA::ORB_init (argc, 0, buf, ACE_TRY_ENV);
+            CORBA::ORB_init (argc, 0, buf TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           CORBA::Object_var obj =
-            orb->resolve_initial_references ("RootPOA",
-                                             ACE_TRY_ENV);
+            orb->resolve_initial_references ("RootPOA"
+                                             TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           PortableServer::POA_var poa =
-            PortableServer::POA::_narrow (obj.in (), ACE_TRY_ENV);
+            PortableServer::POA::_narrow (obj.in () TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          poa->destroy (1, 1, ACE_TRY_ENV);
+          poa->destroy (1, 1 TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          orb->destroy (ACE_TRY_ENV);
+          orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }

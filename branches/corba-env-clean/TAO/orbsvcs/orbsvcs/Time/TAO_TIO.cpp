@@ -19,7 +19,7 @@ TAO_TIO::~TAO_TIO (void)
 // This is the get method for the attribute time interval.
 
 TimeBase::IntervalT
-TAO_TIO::time_interval (CORBA::Environment &)
+TAO_TIO::time_interval (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return attr_time_interval;
@@ -33,8 +33,8 @@ TAO_TIO::time_interval (CORBA::Environment &)
 
 CosTime::OverlapType
 TAO_TIO::spans (CosTime::UTO_ptr uto,
-                CosTime::TIO_out overlap,
-                CORBA::Environment &ACE_TRY_ENV)
+                CosTime::TIO_out overlap
+                TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_TIO *tio = 0;
@@ -47,19 +47,19 @@ TAO_TIO::spans (CosTime::UTO_ptr uto,
       TimeBase::TimeT up1 =
         this->time_interval ().upper_bound;
 
-      TimeBase::TimeT tmp1 = uto->time (ACE_TRY_ENV);
+      TimeBase::TimeT tmp1 = uto->time (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      TimeBase::TimeT tmp2 = uto->inaccuracy (ACE_TRY_ENV);
+      TimeBase::TimeT tmp2 = uto->inaccuracy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       TimeBase::TimeT lb2 = tmp1 - tmp2;
 
 
-      tmp1 = uto->time (ACE_TRY_ENV);
+      tmp1 = uto->time (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      tmp2 = uto->inaccuracy (ACE_TRY_ENV);
+      tmp2 = uto->inaccuracy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       TimeBase::TimeT up2 = tmp1 + tmp2;
@@ -154,8 +154,8 @@ TAO_TIO::spans (CosTime::UTO_ptr uto,
 
 CosTime::OverlapType
 TAO_TIO::overlaps (CosTime::TIO_ptr tio,
-                   CosTime::TIO_out overlap,
-                   CORBA::Environment & ACE_TRY_ENV)
+                   CosTime::TIO_out overlap
+                   TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_TIO *tio_i = 0;
@@ -254,7 +254,7 @@ TAO_TIO::overlaps (CosTime::TIO_ptr tio,
 }
 
 CosTime::UTO_ptr
-TAO_TIO::time (CORBA::Environment &ACE_TRY_ENV)
+TAO_TIO::time (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_UTO *uto = 0;

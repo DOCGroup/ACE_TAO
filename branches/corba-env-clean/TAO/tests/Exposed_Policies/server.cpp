@@ -21,19 +21,19 @@ ACE_RCSID(tao, server, "$Id$")
 int
 main (int argc, char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
 
   ACE_TRY
     {
       Policy_Tester policy_tester;
 
-      int result = policy_tester.init (argc, argv, ACE_TRY_ENV);
+      int result = policy_tester.init (argc, argv TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (result != 0)
         return result;
 
-      policy_tester.run (ACE_TRY_ENV);
+      policy_tester.run (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
 

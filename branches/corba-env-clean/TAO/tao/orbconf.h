@@ -225,7 +225,7 @@
 # error "tao/orbconf.h: You can only use exceptions in TAO if ACE supports them"
 #endif /* TAO_HAS_EXCEPTIONS */
 
-#if !defined (TAO_HAS_EXCEPTIONS)
+#if !defined (TAO_HAS_EXCEPTIONS) || defined (TAO_LACKS_SUPPRESS_ENV)
 #define TAO_ENV_ARG_DECL , CORBA::Environment &ACE_TRY_ENV
 #define TAO_ENV_ARG_DECL_WITH_DEFAULTS , CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ()
 #define TAO_ENV_ARG_DECL_NOT_USED , CORBA::Environment &
@@ -234,7 +234,9 @@
 #define TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ()
 #define TAO_ENV_SINGLE_ARG_DECL_NOT_USED CORBA::Environment &
 #define TAO_ENV_SINGLE_ARG_PARAMETER ACE_TRY_ENV
-#define TAO_ENV_ARG_DEFN
+#define TAO_ENV_ARG_NOT_USED ACE_UNUSED_ARG (ACE_TRY_ENV)
+#define TAO_ENV_ARG_DEFN /* Please do not use, obsolescent. Instead: */
+#define TAO_ENV_DECLARE_NEW_ENV ACE_DECLARE_NEW_CORBA_ENV
 #else
 #define TAO_ENV_ARG_DECL
 #define TAO_ENV_ARG_DECL_WITH_DEFAULTS
@@ -244,7 +246,15 @@
 #define TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
 #define TAO_ENV_SINGLE_ARG_DECL_NOT_USED
 #define TAO_ENV_SINGLE_ARG_PARAMETER
+#define TAO_ENV_ARG_NOT_USED
 #define TAO_ENV_ARG_DEFN CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ()
+#define TAO_ENV_DECLARE_NEW_ENV
+#endif /* TAO_HAS_EXCEPTIONS */
+#if !defined (TAO_HAS_EXCEPTIONS)
+// This thing can be moved into the above when we drop TAO_LACKS_SUPPRESS_ENV.
+#define TAO_ENV_RAISE(ex) ACE_TRY_ENV.exception (ex)
+#else
+#define TAO_ENV_RAISE(ex) (ex)->_raise ()
 #endif /* TAO_HAS_EXCEPTIONS */
 
 // BC++ seems to have a different convention for detecting Win32 than

@@ -104,11 +104,12 @@ int be_visitor_interface_direct_collocated_ss::visit_interface (be_interface *no
   *os << "CORBA::Boolean " << node->full_coll_name (be_interface::DIRECT) << "::"
       << "_is_a"  << be_idt
       << "(" << be_idt_nl
-      << "const CORBA::Char *logical_type_id," << be_nl
-      << "CORBA_Environment &ACE_TRY_ENV" << be_uidt_nl
+      << "const CORBA::Char *logical_type_id" << be_nl
+      << "TAO_ENV_ARG_DECL" << be_uidt_nl
       << ")" << be_uidt_nl << be_nl;
   *os << "{" << be_idt_nl
-      << "return this->servant_->_is_a (logical_type_id, ACE_TRY_ENV);" << be_uidt_nl
+      << "return this->servant_->_is_a (logical_type_id TAO_ENV_ARG_PARAMETER);"
+      << be_uidt_nl
       << "}\n\n" << be_uidt_nl;
 
   // Generate _tao_QueryInterface implementation
@@ -154,10 +155,11 @@ int be_visitor_interface_direct_collocated_ss::visit_interface (be_interface *no
   *os << "CORBA::Boolean " << node->full_coll_name (be_interface::DIRECT) << "::"
       << "_non_existent"  << be_idt
       << "(" << be_idt_nl
-      << "CORBA_Environment &ACE_TRY_ENV" << be_uidt_nl
+      << "TAO_ENV_SINGLE_ARG_DECL" << be_uidt_nl
       << ")" << be_uidt_nl << be_nl;
   *os << "{" << be_idt_nl
-      << "return this->servant_->_non_existent (ACE_TRY_ENV);" << be_uidt_nl
+      << "return this->servant_->_non_existent (TAO_ENV_SINGLE_ARG_PARAMETER);"
+      << be_uidt_nl
       << "}\n\n" << be_uidt_nl;
 
   if (this->visit_scope (node) == -1)

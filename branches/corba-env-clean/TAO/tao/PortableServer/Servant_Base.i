@@ -7,7 +7,7 @@ TAO_Servant_Hash::operator () (PortableServer::Servant servant) const
 }
 
 ACE_INLINE TAO_Stub *
-TAO_Local_ServantBase::_create_stub (CORBA_Environment & /*ACE_TRY_ENV*/)
+TAO_Local_ServantBase::_create_stub (TAO_ENV_SINGLE_ARG_DECL)
 {
 #if 0
   PortableServer::ObjectId_var invalid_oid =
@@ -26,10 +26,12 @@ TAO_Local_ServantBase::_create_stub (CORBA_Environment & /*ACE_TRY_ENV*/)
   // POA. The unfortunate part is that calling default_POA() requires
   // the creation of a local stub, hence causing a infinite loop.
   return TAO_ORB_Core_instance ()->orb ()->create_stub_object (tmp_key,
-                                                               this->_interface_repository_id (),
-                                                               ACE_TRY_ENV);
+                                                               this->_interface_repository_id ()
+                                                               TAO_ENV_ARG_PARAMETER);
 #else
-  //  ACE_UNUSED_ARG (ACE_TRY_ENV);
+# if !defined (ACE_HAS_EXCEPTIONS)
+  ACE_UNUSED_ARG (TAO_ENV_SINGLE_ARG_PARAMETER);
+#endif
   return 0;
 #endif
 }

@@ -36,8 +36,8 @@ ImR_Iterator::~ImR_Iterator ()
 
 CORBA::Boolean
 ImR_Iterator::next_n (CORBA::ULong how_many,
-                      ImplementationRepository::ServerInformationList_out server_list,
-                      CORBA::Environment &ACE_TRY_ENV)
+                      ImplementationRepository::ServerInformationList_out server_list
+                      TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_NEW_THROW_EX (server_list,
@@ -62,7 +62,7 @@ ImR_Iterator::next_n (CORBA::ULong how_many,
 
       ACE_TString logical, server, command_line, working_directory, location, server_ior;
       ImplementationRepository::EnvironmentList environment_vars;
-      ImplementationRepository::ActivationMode activation = 
+      ImplementationRepository::ActivationMode activation =
         ImplementationRepository::NORMAL;
 
       server_entry->int_id_->get_running_info (location, server_ior);
@@ -94,8 +94,8 @@ ImR_Iterator::next_n (CORBA::ULong how_many,
 
 // Destroys the iterator.
 
-void 
-ImR_Iterator::destroy (CORBA::Environment &)
+void
+ImR_Iterator::destroy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
    ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }

@@ -70,23 +70,23 @@ public:
   //@{
   /// This method implements one of the "starting" client side
   /// interception points.
-  void send_request (TAO_ClientRequestInfo *ri,
-                     CORBA::Environment &);
+  void send_request (TAO_ClientRequestInfo *ri
+                     TAO_ENV_ARG_DECL_NOT_USED);
 
   /// This method implements one of the "ending" client side
   /// interception point.
-  void receive_reply (TAO_ClientRequestInfo *ri,
-                      CORBA::Environment &);
+  void receive_reply (TAO_ClientRequestInfo *ri
+                      TAO_ENV_ARG_DECL_NOT_USED);
 
   /// This method implements one of the "ending" client side
   /// interception point.
-  void receive_exception (TAO_ClientRequestInfo *ri,
-                          CORBA::Environment &);
+  void receive_exception (TAO_ClientRequestInfo *ri
+                          TAO_ENV_ARG_DECL_NOT_USED);
 
   /// This method implements one of the "ending" client side
   /// interception point.
-  void receive_other (TAO_ClientRequestInfo *ri,
-                      CORBA::Environment &);
+  void receive_other (TAO_ClientRequestInfo *ri
+                      TAO_ENV_ARG_DECL_NOT_USED);
   //@}
 
 protected:
@@ -95,8 +95,8 @@ protected:
   /// i.e. invoke the receive_other() interception point, in addition
   /// to notifying the Invocation object of the LOCATION_FORWARD.
   void process_forward_request (TAO_ClientRequestInfo *ri,
-                                PortableInterceptor::ForwardRequest &exc,
-                                CORBA::Environment &ACE_TRY_ENV);
+                                PortableInterceptor::ForwardRequest &exc
+                                TAO_ENV_ARG_DECL);
 
 private:
 

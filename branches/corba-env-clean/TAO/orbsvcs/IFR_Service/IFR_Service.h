@@ -45,30 +45,30 @@ public:
   // Destructor
 
   int init (int argc,
-            char *argv[],
-            CORBA::Environment &ACE_TRY_ENV);
+            char *argv[]
+            TAO_ENV_ARG_DECL);
   // Initialize the IFR service.
 
-  int run (CORBA::Environment &ACE_TRY_ENV);
+  int run (TAO_ENV_SINGLE_ARG_DECL);
   // Run the IFR service.
 
-  int fini (CORBA::Environment &ACE_TRY_ENV);
+  int fini (TAO_ENV_SINGLE_ARG_DECL);
   // Shut down the IFR service.
 
 protected:
-  int create_poas (CORBA::Environment &ACE_TRY_ENV);
+  int create_poas (TAO_ENV_SINGLE_ARG_DECL);
   // Two persistent POAs, one using a servant locator.
 
-  int create_locator (CORBA::Environment &ACE_TRY_ENV);
+  int create_locator (TAO_ENV_SINGLE_ARG_DECL);
   // Create a servant locator and register it with its POA.
 
-  int open_config (CORBA::Environment &ACE_TRY_ENV);
+  int open_config (TAO_ENV_SINGLE_ARG_DECL);
   // Open an ACE_Configuration of the appropriate type.
 
-  int create_repository (CORBA::Environment &ACE_TRY_ENV);
+  int create_repository (TAO_ENV_SINGLE_ARG_DECL);
   // Create and initialize the repository.
 
-  int init_multicast_server (CORBA::Environment &ACE_TRY_ENV);
+  int init_multicast_server (TAO_ENV_SINGLE_ARG_DECL);
   // Enable the Interface Repository to answer multicast requests
   // for its IOR.
 

@@ -54,8 +54,8 @@ public:
 
   // = Interface methods
   virtual void connect_any_push_consumer (
-    CosEventComm::PushConsumer_ptr push_consumer,
-    CORBA::Environment &ACE_TRY_ENV
+    CosEventComm::PushConsumer_ptr push_consumer
+    TAO_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -64,23 +64,23 @@ public:
   ));
 
 virtual void disconnect_push_supplier (
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
-  virtual void shutdown (CORBA::Environment &ACE_TRY_ENV);
+  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL);
   // Shutdown.
 
  protected:
-  void shutdown_i (CORBA::Environment &ACE_TRY_ENV);
+  void shutdown_i (TAO_ENV_SINGLE_ARG_DECL);
   // Shutdown
 
- virtual void dispatch_event_i (TAO_Notify_Event &event, CORBA::Environment &ACE_TRY_ENV);
+ virtual void dispatch_event_i (TAO_Notify_Event &event TAO_ENV_ARG_DECL);
   // Deliver the event to the consumer.
 
- virtual void dispatch_update_i (CosNotification::EventTypeSeq added, CosNotification::EventTypeSeq removed, CORBA::Environment &ACE_TRY_ENV);
+ virtual void dispatch_update_i (CosNotification::EventTypeSeq added, CosNotification::EventTypeSeq removed TAO_ENV_ARG_DECL);
   // Deliver the update to the consumer.
 
   // = Data Members.
@@ -114,14 +114,14 @@ public:
   ~TAO_Notify_CosEC_ProxyPushSupplier_i (void);
   // Destructor.
 
-  void init (CORBA::Environment &ACE_TRY_ENV);
+  void init (TAO_ENV_SINGLE_ARG_DECL);
   // Init.
 
-  virtual void disconnect_push_supplier (CORBA::Environment &ACE_TRY_ENV)
+  virtual void disconnect_push_supplier (TAO_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
   // Ends the event communication and disposes this object.
 
-  virtual void connect_push_consumer(CosEventComm::PushConsumer_ptr push_consumer, CORBA::Environment &ACE_TRY_ENV)
+  virtual void connect_push_consumer(CosEventComm::PushConsumer_ptr push_consumer TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosEventChannelAdmin::AlreadyConnected,
                      CosEventChannelAdmin::TypeError));

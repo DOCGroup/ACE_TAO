@@ -49,15 +49,13 @@ public:
                                CORBA::NamedValue_ptr result,
                                CORBA::ExceptionList_ptr exceptions,
                                CORBA::Request_ptr &request,
-                               CORBA::Flags req_flags,
-                               CORBA_Environment &ACE_TRY_ENV =
-                                 TAO_default_environment ());
+                               CORBA::Flags req_flags
+                               TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
   virtual CORBA::Request_ptr request (CORBA::Object_ptr obj,
                                       CORBA::ORB_ptr orb,
-                                      const char *op,
-                                      CORBA::Environment &ACE_TRY_ENV =
-                                        TAO_default_environment ());
+                                      const char *op
+                                      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
   // CORBA::is_nil and CORBA::release for Context, Request, and ServerRequest.
 
@@ -74,8 +72,8 @@ public:
   virtual void server_request_release (CORBA::ServerRequest_ptr req);
 
   // CORBA::ORB::create_exception_list.
-  virtual void create_exception_list (CORBA::ExceptionList_ptr &,
-                                      CORBA_Environment &);
+  virtual void create_exception_list (CORBA::ExceptionList_ptr &
+                                      TAO_ENV_ARG_DECL_NOT_USED);
 };
 
 #include "ace/post.h"

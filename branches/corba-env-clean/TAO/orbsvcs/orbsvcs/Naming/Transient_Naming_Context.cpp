@@ -141,8 +141,8 @@ TAO_Transient_Naming_Context::~TAO_Transient_Naming_Context (void)
 CosNaming::NamingContext_ptr
 TAO_Transient_Naming_Context::make_new_context (PortableServer::POA_ptr poa,
                                                 const char *poa_id,
-                                                size_t context_size,
-                                                CORBA::Environment &ACE_TRY_ENV)
+                                                size_t context_size
+                                                TAO_ENV_ARG_DECL)
 {
   // Store the stub we will return here.
   CosNaming::NamingContext_var result;
@@ -180,18 +180,18 @@ TAO_Transient_Naming_Context::make_new_context (PortableServer::POA_ptr poa,
     PortableServer::string_to_ObjectId (poa_id);
 
   poa->activate_object_with_id (id.in (),
-                                context,
-                                ACE_TRY_ENV);
+                                context
+                                TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (result._retn ());
 
-  result = context->_this (ACE_TRY_ENV);
+  result = context->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CosNaming::NamingContext::_nil ());
 
   return result._retn ();
 }
 
 CosNaming::NamingContext_ptr
-TAO_Transient_Naming_Context::new_context (CORBA::Environment &ACE_TRY_ENV)
+TAO_Transient_Naming_Context::new_context (TAO_ENV_SINGLE_ARG_DECL)
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX,
                       ace_mon,
@@ -216,8 +216,8 @@ TAO_Transient_Naming_Context::new_context (CORBA::Environment &ACE_TRY_ENV)
   CosNaming::NamingContext_var result =
     make_new_context (this->poa_.in (),
                       poa_id,
-                      this->transient_context_->total_size (),
-                      ACE_TRY_ENV);
+                      this->transient_context_->total_size ()
+                      TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CosNaming::NamingContext::_nil ());
 
   return result._retn ();
@@ -226,8 +226,8 @@ TAO_Transient_Naming_Context::new_context (CORBA::Environment &ACE_TRY_ENV)
 void
 TAO_Transient_Naming_Context::list (CORBA::ULong how_many,
                                     CosNaming::BindingList_out &bl,
-                                    CosNaming::BindingIterator_out &bi,
-                                    CORBA::Environment &ACE_TRY_ENV)
+                                    CosNaming::BindingIterator_out &bi
+                                    TAO_ENV_ARG_DECL)
 {
   // Allocate nil out parameters in case we won't be able to complete
   // the operation.
@@ -316,7 +316,7 @@ TAO_Transient_Naming_Context::list (CORBA::ULong how_many,
 
       // Increment reference count on this Naming Context, so it doesn't get
       // deleted before the BindingIterator servant gets deleted.
-      interface_->_add_ref (ACE_TRY_ENV);
+      interface_->_add_ref (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       // Register with the POA.
@@ -329,11 +329,11 @@ TAO_Transient_Naming_Context::list (CORBA::ULong how_many,
         PortableServer::string_to_ObjectId (poa_id);
 
       this->poa_->activate_object_with_id (id.in (),
-                                           bind_iter,
-                                           ACE_TRY_ENV);
+                                           bind_iter
+                                           TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      bi = bind_iter->_this (ACE_TRY_ENV);
+      bi = bind_iter->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
 }

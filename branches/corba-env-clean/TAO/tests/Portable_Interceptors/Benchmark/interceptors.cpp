@@ -61,9 +61,8 @@ Vault_Client_Request_Interceptor::send_request (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  TAO_ENV_ARG_DEFN;
 
-  CORBA::String_var op = ri->operation (ACE_TRY_ENV);
+  CORBA::String_var op = ri->operation (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (ACE_OS::strcmp (op.in (), "authenticate") == 0)
@@ -82,14 +81,14 @@ Vault_Client_Request_Interceptor::send_request (
       sc.context_data.replace (string_len, string_len, buf, 1);
 
       // Add this context to the service context list.
-      ri->add_request_service_context (sc, 0, ACE_TRY_ENV);
+      ri->add_request_service_context (sc, 0 TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 
   if (ACE_OS::strcmp (op.in (), "update_records") == 0)
     {
       Dynamic::ParameterList_var paramlist =
-        ri->arguments (ACE_TRY_ENV);
+        ri->arguments (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       Test_Interceptors::Secure_Vault::Record *record;
@@ -107,15 +106,14 @@ Vault_Client_Request_Interceptor::receive_reply (
     TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_ENV_ARG_DEFN;
 
-  CORBA::String_var op = ri->operation (ACE_TRY_ENV);
+  CORBA::String_var op = ri->operation (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (ACE_OS::strcmp (op.in (), "update_records") == 0)
     {
       CORBA::Long result;
-      CORBA::Any_var result_any = ri->result (ACE_TRY_ENV);
+      CORBA::Any_var result_any = ri->result (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       (result_any.in ()) >>= result;
@@ -139,18 +137,17 @@ Vault_Client_Request_Interceptor::receive_exception (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  TAO_ENV_ARG_DEFN;
 
-  CORBA::Any_var any = ri->received_exception (ACE_TRY_ENV);
+  CORBA::Any_var any = ri->received_exception (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::TypeCode_var tc = any->type ();
 
-  const char *id = tc->id (ACE_TRY_ENV);
+  const char *id = tc->id (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::String_var exception_id =
-    ri->received_exception_id (ACE_TRY_ENV);
+    ri->received_exception_id (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (ACE_OS::strcmp (id, exception_id.in ()) != 0)
@@ -214,16 +211,15 @@ Vault_Server_Request_Interceptor::receive_request (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  TAO_ENV_ARG_DEFN;
 
-  CORBA::String_var op = ri->operation (ACE_TRY_ENV);
+  CORBA::String_var op = ri->operation (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (ACE_OS::strcmp (op.in (), "authenticate") == 0)
     {
       IOP::ServiceId id = request_ctx_id;
       IOP::ServiceContext_var sc =
-        ri->get_request_service_context (id, ACE_TRY_ENV);
+        ri->get_request_service_context (id TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       const char *buf =
@@ -237,7 +233,7 @@ Vault_Server_Request_Interceptor::receive_request (
   if (ACE_OS::strcmp (op.in (), "update_records") == 0)
     {
       Dynamic::ParameterList_var paramlist =
-        ri->arguments (ACE_TRY_ENV);
+        ri->arguments (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       Test_Interceptors::Secure_Vault::Record *record;
@@ -255,15 +251,14 @@ Vault_Server_Request_Interceptor::send_reply (
     TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_ENV_ARG_DEFN;
 
-  CORBA::String_var op = ri->operation (ACE_TRY_ENV);
+  CORBA::String_var op = ri->operation (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (ACE_OS::strcmp (op.in (), "update_records") == 0)
     {
       CORBA::Long result;
-      CORBA::Any_var result_any = ri->result (ACE_TRY_ENV);
+      CORBA::Any_var result_any = ri->result (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       (result_any.in ()) >>= result;
@@ -347,7 +342,6 @@ Vault_Client_Request_Context_Interceptor::send_request (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  TAO_ENV_ARG_DEFN;
 
   // MAke the context to send the context to the target
   IOP::ServiceContext sc;
@@ -366,7 +360,7 @@ Vault_Client_Request_Context_Interceptor::send_request (
   sc.context_data.replace (string_len, string_len, buf, 1);
 
   // Add this context to the service context list.
-  ri->add_request_service_context (sc, 0, ACE_TRY_ENV);
+  ri->add_request_service_context (sc, 0 TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -396,18 +390,17 @@ Vault_Client_Request_Context_Interceptor::receive_exception (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  TAO_ENV_ARG_DEFN;
 
-  CORBA::Any_var any = ri->received_exception (ACE_TRY_ENV);
+  CORBA::Any_var any = ri->received_exception (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::TypeCode_var tc = any->type ();
 
-  const char *id = tc->id (ACE_TRY_ENV);
+  const char *id = tc->id (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::String_var exception_id =
-    ri->received_exception_id (ACE_TRY_ENV);
+    ri->received_exception_id (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (ACE_OS::strcmp (id, exception_id.in ()) != 0)
@@ -473,11 +466,10 @@ Vault_Server_Request_Context_Interceptor::receive_request (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  TAO_ENV_ARG_DEFN;
 
   IOP::ServiceId id = request_ctx_id;
   IOP::ServiceContext_var sc =
-    ri->get_request_service_context (id, ACE_TRY_ENV);
+    ri->get_request_service_context (id TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   const char *buf = ACE_reinterpret_cast (const char *,
@@ -571,15 +563,14 @@ Vault_Client_Request_Dynamic_Interceptor::send_request (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  TAO_ENV_ARG_DEFN;
 
-  CORBA::String_var op = ri->operation (ACE_TRY_ENV);
+  CORBA::String_var op = ri->operation (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
  if (ACE_OS::strcmp (op.in (), "authenticate") == 0)
     {
       Dynamic::ParameterList_var paramlist =
-        ri->arguments (ACE_TRY_ENV);
+        ri->arguments (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       const char *user;
@@ -591,7 +582,7 @@ Vault_Client_Request_Dynamic_Interceptor::send_request (
  if (ACE_OS::strcmp (op.in (), "update_records") == 0)
     {
       Dynamic::ParameterList_var paramlist =
-        ri->arguments (ACE_TRY_ENV);
+        ri->arguments (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       Test_Interceptors::Secure_Vault::Record *record;
@@ -609,16 +600,15 @@ Vault_Client_Request_Dynamic_Interceptor::receive_reply (
     TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_ENV_ARG_DEFN;
 
-  CORBA::String_var op = ri->operation (ACE_TRY_ENV);
+  CORBA::String_var op = ri->operation (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (ACE_OS::strcmp (op.in (), "ready") == 0)
     {
       CORBA::Short result;
 
-      CORBA::Any_var result_any = ri->result (ACE_TRY_ENV);
+      CORBA::Any_var result_any = ri->result (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       (result_any.in ()) >>= result;
@@ -628,7 +618,7 @@ Vault_Client_Request_Dynamic_Interceptor::receive_reply (
     {
       CORBA::Long result;
 
-      CORBA::Any_var result_any = ri->result (ACE_TRY_ENV);
+      CORBA::Any_var result_any = ri->result (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       (result_any.in ()) >>= result;
@@ -652,18 +642,17 @@ Vault_Client_Request_Dynamic_Interceptor::receive_exception (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  TAO_ENV_ARG_DEFN;
 
-  CORBA::Any_var any = ri->received_exception (ACE_TRY_ENV);
+  CORBA::Any_var any = ri->received_exception (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::TypeCode_var tc = any->type ();
 
-  const char *id = tc->id (ACE_TRY_ENV);
+  const char *id = tc->id (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::String_var exception_id =
-    ri->received_exception_id (ACE_TRY_ENV);
+    ri->received_exception_id (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (ACE_OS::strcmp (id, exception_id.in ()) != 0)
@@ -719,15 +708,14 @@ Vault_Server_Request_Dynamic_Interceptor::receive_request (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  TAO_ENV_ARG_DEFN;
 
-  CORBA::String_var op = ri->operation (ACE_TRY_ENV);
+  CORBA::String_var op = ri->operation (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (ACE_OS::strcmp (op.in (), "authenticate") == 0)
     {
       Dynamic::ParameterList_var paramlist =
-        ri->arguments (ACE_TRY_ENV);
+        ri->arguments (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       const char *user;
@@ -739,7 +727,7 @@ Vault_Server_Request_Dynamic_Interceptor::receive_request (
   if (ACE_OS::strcmp (op.in (), "update_records") == 0)
     {
       Dynamic::ParameterList_var paramlist =
-        ri->arguments (ACE_TRY_ENV);
+        ri->arguments (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       Test_Interceptors::Secure_Vault::Record *record;
@@ -767,15 +755,14 @@ Vault_Server_Request_Dynamic_Interceptor::send_reply (
     TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_ENV_ARG_DEFN;
 
-  CORBA::String_var op = ri->operation (ACE_TRY_ENV);
+  CORBA::String_var op = ri->operation (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (ACE_OS::strcmp (op.in (), "ready") == 0)
     {
       CORBA::Short result;
-      CORBA::Any_var result_any = ri->result (ACE_TRY_ENV);
+      CORBA::Any_var result_any = ri->result (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       (result_any.in ()) >>= result;
@@ -784,7 +771,7 @@ Vault_Server_Request_Dynamic_Interceptor::send_reply (
   if (ACE_OS::strcmp (op.in (), "update_records") == 0)
     {
       CORBA::Long result;
-      CORBA::Any_var result_any = ri->result (ACE_TRY_ENV);
+      CORBA::Any_var result_any = ri->result (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       (result_any.in ()) >>= result;
@@ -894,18 +881,17 @@ Vault_Client_Request_NOOP_Interceptor::receive_exception (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  TAO_ENV_ARG_DEFN;
 
-  CORBA::Any_var any = ri->received_exception (ACE_TRY_ENV);
+  CORBA::Any_var any = ri->received_exception (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::TypeCode_var tc = any->type ();
 
-  const char *id = tc->id (ACE_TRY_ENV);
+  const char *id = tc->id (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::String_var exception_id =
-    ri->received_exception_id (ACE_TRY_ENV);
+    ri->received_exception_id (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (ACE_OS::strcmp (id, exception_id.in ()) != 0)

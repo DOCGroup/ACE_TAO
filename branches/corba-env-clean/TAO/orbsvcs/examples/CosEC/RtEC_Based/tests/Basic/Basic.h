@@ -36,23 +36,23 @@ public:
   ~Basic (void);
   // Destructor.
 
-  void init (int argc, char *argv[],CORBA::Environment &ACE_TRY_ENV);
+  void init (int argc, char *argv[] TAO_ENV_ARG_DECL);
   // Starts up an ORB and the CosEC.
   // Returns 0 on success, -1 on error.
 
-  void run (CORBA::Environment &ACE_TRY_ENV);
+  void run (TAO_ENV_SINGLE_ARG_DECL);
   // Connects a consumer and a supplier to the CosEC and sends 1 event
   // across.
 
-  void shutdown (CORBA::Environment &ACE_TRY_ENV);
+  void shutdown (TAO_ENV_SINGLE_ARG_DECL);
   // Closes down the CosEC.
 
 private:
-  void init_ORB (int argc, char *argv[], CORBA::Environment &ACE_TRY_ENV);
+  void init_ORB (int argc, char *argv[] TAO_ENV_ARG_DECL);
   // initializes the ORB.
   // Returns 0 on success, -1 on error.
 
-  void init_CosEC (CORBA::Environment &ACE_TRY_ENV);
+  void init_CosEC (TAO_ENV_SINGLE_ARG_DECL);
   // initializes the COS EC.
   // Returns 0 on success, -1 on error.
 

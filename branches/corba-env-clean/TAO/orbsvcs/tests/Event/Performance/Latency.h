@@ -38,11 +38,11 @@ public:
 
   /// Return 1 when all the messages have been received
   int done (void);
-  
-  virtual void push (const RtecEventComm::EventSet& events,
-                     CORBA::Environment &)
+
+  virtual void push (const RtecEventComm::EventSet& events
+                     TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void disconnect_push_consumer (CORBA::Environment &)
+  virtual void disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
@@ -64,7 +64,7 @@ public:
   /// Constructor
   EC_Latency_Supplier (void);
 
-  virtual void disconnect_push_supplier (CORBA::Environment &)
+  virtual void disconnect_push_supplier (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 

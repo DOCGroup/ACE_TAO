@@ -27,10 +27,10 @@ class test_i : public virtual POA_test
 public:
   test_i (PortableServer::POA_ptr poa);
 
-  void method (CORBA::Environment &ACE_TRY_ENV)
+  void method (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  PortableServer::POA_ptr _default_POA (CORBA_Environment &ACE_TRY_ENV);
+  PortableServer::POA_ptr _default_POA (TAO_ENV_SINGLE_ARG_DECL);
 
 private:
   PortableServer::POA_var poa_;
@@ -44,7 +44,7 @@ test_i::test_i (PortableServer::POA_ptr poa)
 }
 
 void
-test_i::method (CORBA::Environment &ACE_TRY_ENV)
+test_i::method (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -62,16 +62,16 @@ test_i::method (CORBA::Environment &ACE_TRY_ENV)
       ACE_DEBUG ((LM_DEBUG,
                   "Calling self from %t\n"));
 
-      test_var self = this->_this (ACE_TRY_ENV);
+      test_var self = this->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
-      self->method (ACE_TRY_ENV);
+      self->method (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
 
 PortableServer::POA_ptr
-test_i::_default_POA (CORBA_Environment &)
+test_i::_default_POA (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
@@ -96,7 +96,7 @@ Worker::svc (void)
 {
   ACE_TRY_NEW_ENV
     {
-      this->test_->method (ACE_TRY_ENV);
+      this->test_->method (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -117,23 +117,23 @@ main (int argc, char **argv)
       // Initialize the ORB first.
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            0,
-                                            ACE_TRY_ENV);
+                                            0
+                                            TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Obtain the RootPOA.
-      CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA",
-                                                               ACE_TRY_ENV);
+      CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA"
+                                                               TAO_ENV_ARG_PARAMETER);
 
       // Get the POA_var object from Object_var.
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in (),
-                                      ACE_TRY_ENV);
+        PortableServer::POA::_narrow (obj.in ()
+                                      TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Get the POAManager of the RootPOA.
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_TRY_ENV);
+        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Policies for the new POA.
@@ -141,21 +141,21 @@ main (int argc, char **argv)
       policies.length (2);
 
       policies[0] =
-        root_poa->create_implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION,
-                                                     ACE_TRY_ENV);
+        root_poa->create_implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION
+                                                     TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       policies[1] =
-        root_poa->create_thread_policy (PortableServer::SINGLE_THREAD_MODEL,
-                                        ACE_TRY_ENV);
+        root_poa->create_thread_policy (PortableServer::SINGLE_THREAD_MODEL
+                                        TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Creation of the child POA.
       PortableServer::POA_var child_poa =
         root_poa->create_POA ("child",
                               poa_manager.in (),
-                              policies,
-                              ACE_TRY_ENV);
+                              policies
+                              TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Destroy the policies
@@ -163,20 +163,20 @@ main (int argc, char **argv)
            i < policies.length ();
            ++i)
         {
-          policies[i]->destroy (ACE_TRY_ENV);
+          policies[i]->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
-      poa_manager->activate (ACE_TRY_ENV);
+      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       test_i servant1 (child_poa.in ());
       test_i servant2 (child_poa.in ());
 
-      test_var object1 = servant1._this (ACE_TRY_ENV);
+      test_var object1 = servant1._this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      test_var object2 = servant2._this (ACE_TRY_ENV);
+      test_var object2 = servant2._this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Worker worker1 (object1.in ());
@@ -194,8 +194,8 @@ main (int argc, char **argv)
       ACE_UNUSED_ARG (result);
 
       root_poa->destroy (1,
-                         1,
-                         ACE_TRY_ENV);
+                         1
+                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

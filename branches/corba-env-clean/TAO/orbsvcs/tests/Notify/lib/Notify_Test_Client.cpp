@@ -19,30 +19,30 @@ Notify_Test_Client::~Notify_Test_Client ()
 }
 
 void
-Notify_Test_Client::init (int argc, char *argv [], CORBA::Environment &ACE_TRY_ENV)
+Notify_Test_Client::init (int argc, char *argv [] TAO_ENV_ARG_DECL)
 {
-  this->init_ORB (argc, argv, ACE_TRY_ENV);
+  this->init_ORB (argc, argv TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
-  this->resolve_naming_service (ACE_TRY_ENV);
+  this->resolve_naming_service (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
-  this->resolve_Notify_factory (ACE_TRY_ENV);
+  this->resolve_Notify_factory (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
 Notify_Test_Client::init_ORB (int argc,
-                      char *argv [],
-                      CORBA::Environment &ACE_TRY_ENV)
+                      char *argv []
+                      TAO_ENV_ARG_DECL)
 {
   this->orb_ = CORBA::ORB_init (argc,
                                 argv,
-                                "",
-                                ACE_TRY_ENV);
+                                ""
+                                TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::Object_ptr poa_object  =
-    this->orb_->resolve_initial_references("RootPOA",
-                                           ACE_TRY_ENV);
+    this->orb_->resolve_initial_references("RootPOA"
+                                           TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (CORBA::is_nil (poa_object))
@@ -52,23 +52,23 @@ Notify_Test_Client::init_ORB (int argc,
       return;
     }
   this->root_poa_ =
-    PortableServer::POA::_narrow (poa_object, ACE_TRY_ENV);
+    PortableServer::POA::_narrow (poa_object TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   PortableServer::POAManager_var poa_manager =
-    root_poa_->the_POAManager (ACE_TRY_ENV);
+    root_poa_->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  poa_manager->activate (ACE_TRY_ENV);
+  poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-Notify_Test_Client::resolve_naming_service (CORBA::Environment &ACE_TRY_ENV)
+Notify_Test_Client::resolve_naming_service (TAO_ENV_SINGLE_ARG_DECL)
 {
   CORBA::Object_var naming_obj =
-    this->orb_->resolve_initial_references (NAMING_SERVICE_NAME,
-                                            ACE_TRY_ENV);
+    this->orb_->resolve_initial_references (NAMING_SERVICE_NAME
+                                            TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Need to check return value for errors.
@@ -76,25 +76,25 @@ Notify_Test_Client::resolve_naming_service (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW (CORBA::UNKNOWN ());
 
   this->naming_context_ =
-    CosNaming::NamingContext::_narrow (naming_obj.in (), ACE_TRY_ENV);
+    CosNaming::NamingContext::_narrow (naming_obj.in () TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-Notify_Test_Client::resolve_Notify_factory (CORBA::Environment &ACE_TRY_ENV)
+Notify_Test_Client::resolve_Notify_factory (TAO_ENV_SINGLE_ARG_DECL)
 {
   CosNaming::Name name (1);
   name.length (1);
   name[0].id = CORBA::string_dup (NOTIFY_FACTORY_NAME);
 
   CORBA::Object_var obj =
-    this->naming_context_->resolve (name,
-                                   ACE_TRY_ENV);
+    this->naming_context_->resolve (name
+                                   TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->notify_factory_ =
-    CosNotifyChannelAdmin::EventChannelFactory::_narrow (obj.in (),
-                                                         ACE_TRY_ENV);
+    CosNotifyChannelAdmin::EventChannelFactory::_narrow (obj.in ()
+                                                         TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -109,7 +109,7 @@ Notify_Test_Client::ORB_run (void)
 }
 
 void
-Notify_Test_Client::shutdown (CORBA::Environment &/*ACE_TRY_ENV*/)
+Notify_Test_Client::shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   this->done_ = 1;
 }

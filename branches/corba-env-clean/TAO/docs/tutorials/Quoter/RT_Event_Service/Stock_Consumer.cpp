@@ -32,8 +32,8 @@ Stock_Consumer::disconnect ()
 }
 
 void
-Stock_Consumer::push (const RtecEventComm::EventSet &data,
-                      CORBA::Environment &)
+Stock_Consumer::push (const RtecEventComm::EventSet &data
+                      TAO_ENV_ARG_DECL_NOT_USED)
   throw (CORBA::SystemException)
 {
   for (CORBA::ULong i = 0; i != data.length (); ++i) {
@@ -51,7 +51,7 @@ Stock_Consumer::push (const RtecEventComm::EventSet &data,
 }
 
 void
-Stock_Consumer::disconnect_push_consumer (CORBA::Environment &)
+Stock_Consumer::disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     throw (CORBA::SystemException)
 {
   this->supplier_proxy_ =

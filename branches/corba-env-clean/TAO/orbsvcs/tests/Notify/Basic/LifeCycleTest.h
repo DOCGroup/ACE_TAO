@@ -22,17 +22,17 @@ public:
   LifeCycleTest (void);
   ~LifeCycleTest ();
 
-  void init(int argc, char *argv[], CORBA::Environment &ACE_TRY_ENV);
-  void run_test(CORBA::Environment &ACE_TRY_ENV);
+  void init(int argc, char *argv[] TAO_ENV_ARG_DECL);
+  void run_test(TAO_ENV_SINGLE_ARG_DECL);
   int parse_args(int argc, char *argv[]);
 
 private:
-   void create_ec(CORBA::Environment &ACE_TRY_ENV);
-   void create_supplier_admin(CORBA::Environment &ACE_TRY_ENV);
-   void create_consumer_admin(CORBA::Environment &ACE_TRY_ENV);
-   void destroy_ec(CORBA::Environment &ACE_TRY_ENV);
-   void destroy_supplier_admin(CORBA::Environment &ACE_TRY_ENV);
-   void destroy_consumer_admin(CORBA::Environment &ACE_TRY_ENV);
+   void create_ec(TAO_ENV_SINGLE_ARG_DECL);
+   void create_supplier_admin(TAO_ENV_SINGLE_ARG_DECL);
+   void create_consumer_admin(TAO_ENV_SINGLE_ARG_DECL);
+   void destroy_ec(TAO_ENV_SINGLE_ARG_DECL);
+   void destroy_supplier_admin(TAO_ENV_SINGLE_ARG_DECL);
+   void destroy_consumer_admin(TAO_ENV_SINGLE_ARG_DECL);
 
    CosNotifyChannelAdmin::EventChannelFactory_var notify_factory_;
    CosNotifyChannelAdmin::EventChannel_var ec_;

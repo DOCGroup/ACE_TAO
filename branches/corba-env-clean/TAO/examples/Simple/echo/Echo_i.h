@@ -43,17 +43,17 @@ public:
   ~Echo_i (void);
   // Destructor.
 
-  virtual Echo::List *echo_list (const char *mesg,
-                                 CORBA::Environment &env)
+  virtual Echo::List *echo_list (const char *mesg
+                                 TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Return the mesg string back from the server.
 
-  virtual char *echo_string (const char *mesg,
-                             CORBA::Environment &env)
+  virtual char *echo_string (const char *mesg
+                             TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Return the mesg string back from the server.
 
- virtual void shutdown (CORBA::Environment &env)
+ virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL)
    ACE_THROW_SPEC ((CORBA::SystemException));
   // Shutdown the server.
 

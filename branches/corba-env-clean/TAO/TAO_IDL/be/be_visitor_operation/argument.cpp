@@ -94,14 +94,12 @@ be_visitor_operation_argument::visit_operation (be_operation *node)
         case TAO_CodeGen::TAO_OPERATION_COLLOCATED_ARG_UPCALL_SS:
           // applicable only to these cases where the actual upcall is made
 
+          // Use TAO_ENV_SINGLE_ARG_DECL or TAO_ENV_ARG_DECL depending on
+          // whether the operation node has parameters.
           if (node->argument_count () > 0)
-            {
-              // insert a comma only if there were previous parameters
-              *os << "," << be_nl;
-            }
-
-          // last argument is the environment
-          *os << "ACE_TRY_ENV";
+            *os << " TAO_ENV_ARG_PARAMETER";
+          else
+            *os << "TAO_ENV_SINGLE_ARG_PARAMETER";
           break;
         default:
           break;

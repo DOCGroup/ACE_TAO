@@ -4,8 +4,8 @@
 #include "Log_Constraint_Visitors.h"
 
 TAO_Log_Constraint_Interpreter::
-TAO_Log_Constraint_Interpreter(const char* constraints,
-                               CORBA::Environment& ACE_TRY_ENV)
+TAO_Log_Constraint_Interpreter(const char* constraints
+                               TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((DsLogAdmin::InvalidConstraint,
                    CORBA::NO_MEMORY))
 {

@@ -51,11 +51,11 @@ tao_Messaging_RebindPolicy_nil (
 
 ACE_INLINE Messaging::RebindPolicy_ptr
 tao_Messaging_RebindPolicy_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return Messaging::RebindPolicy::_narrow (p, ACE_TRY_ENV);
+  return Messaging::RebindPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -105,11 +105,11 @@ tao_Messaging_SyncScopePolicy_nil (
 
 ACE_INLINE Messaging::SyncScopePolicy_ptr
 tao_Messaging_SyncScopePolicy_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return Messaging::SyncScopePolicy::_narrow (p, ACE_TRY_ENV);
+  return Messaging::SyncScopePolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -304,11 +304,11 @@ tao_Messaging_RequestPriorityPolicy_nil (
 
 ACE_INLINE Messaging::RequestPriorityPolicy_ptr
 tao_Messaging_RequestPriorityPolicy_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return Messaging::RequestPriorityPolicy::_narrow (p, ACE_TRY_ENV);
+  return Messaging::RequestPriorityPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -354,11 +354,11 @@ tao_Messaging_ReplyPriorityPolicy_nil (
 
 ACE_INLINE Messaging::ReplyPriorityPolicy_ptr
 tao_Messaging_ReplyPriorityPolicy_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return Messaging::ReplyPriorityPolicy::_narrow (p, ACE_TRY_ENV);
+  return Messaging::ReplyPriorityPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -408,11 +408,11 @@ tao_Messaging_RequestStartTimePolicy_nil (
 
 ACE_INLINE Messaging::RequestStartTimePolicy_ptr
 tao_Messaging_RequestStartTimePolicy_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return Messaging::RequestStartTimePolicy::_narrow (p, ACE_TRY_ENV);
+  return Messaging::RequestStartTimePolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -462,11 +462,11 @@ tao_Messaging_RequestEndTimePolicy_nil (
 
 ACE_INLINE Messaging::RequestEndTimePolicy_ptr
 tao_Messaging_RequestEndTimePolicy_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return Messaging::RequestEndTimePolicy::_narrow (p, ACE_TRY_ENV);
+  return Messaging::RequestEndTimePolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -516,11 +516,11 @@ tao_Messaging_ReplyStartTimePolicy_nil (
 
 ACE_INLINE Messaging::ReplyStartTimePolicy_ptr
 tao_Messaging_ReplyStartTimePolicy_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return Messaging::ReplyStartTimePolicy::_narrow (p, ACE_TRY_ENV);
+  return Messaging::ReplyStartTimePolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -570,11 +570,11 @@ tao_Messaging_ReplyEndTimePolicy_nil (
 
 ACE_INLINE Messaging::ReplyEndTimePolicy_ptr
 tao_Messaging_ReplyEndTimePolicy_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return Messaging::ReplyEndTimePolicy::_narrow (p, ACE_TRY_ENV);
+  return Messaging::ReplyEndTimePolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -624,11 +624,11 @@ tao_Messaging_RelativeRequestTimeoutPolicy_nil (
 
 ACE_INLINE Messaging::RelativeRequestTimeoutPolicy_ptr
 tao_Messaging_RelativeRequestTimeoutPolicy_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return Messaging::RelativeRequestTimeoutPolicy::_narrow (p, ACE_TRY_ENV);
+  return Messaging::RelativeRequestTimeoutPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -678,11 +678,11 @@ tao_Messaging_RelativeRoundtripTimeoutPolicy_nil (
 
 ACE_INLINE Messaging::RelativeRoundtripTimeoutPolicy_ptr
 tao_Messaging_RelativeRoundtripTimeoutPolicy_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return Messaging::RelativeRoundtripTimeoutPolicy::_narrow (p, ACE_TRY_ENV);
+  return Messaging::RelativeRoundtripTimeoutPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -877,11 +877,11 @@ tao_Messaging_RoutingPolicy_nil (
 
 ACE_INLINE Messaging::RoutingPolicy_ptr
 tao_Messaging_RoutingPolicy_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return Messaging::RoutingPolicy::_narrow (p, ACE_TRY_ENV);
+  return Messaging::RoutingPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -931,11 +931,11 @@ tao_Messaging_MaxHopsPolicy_nil (
 
 ACE_INLINE Messaging::MaxHopsPolicy_ptr
 tao_Messaging_MaxHopsPolicy_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return Messaging::MaxHopsPolicy::_narrow (p, ACE_TRY_ENV);
+  return Messaging::MaxHopsPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -985,11 +985,11 @@ tao_Messaging_QueueOrderPolicy_nil (
 
 ACE_INLINE Messaging::QueueOrderPolicy_ptr
 tao_Messaging_QueueOrderPolicy_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return Messaging::QueueOrderPolicy::_narrow (p, ACE_TRY_ENV);
+  return Messaging::QueueOrderPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -1825,11 +1825,11 @@ tao_Messaging_ReplyHandler_nil (
 
 ACE_INLINE Messaging::ReplyHandler_ptr
 tao_Messaging_ReplyHandler_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return Messaging::ReplyHandler::_narrow (p, ACE_TRY_ENV);
+  return Messaging::ReplyHandler::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *

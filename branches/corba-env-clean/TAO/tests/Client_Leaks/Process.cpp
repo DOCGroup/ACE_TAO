@@ -11,16 +11,16 @@ Process::Process (CORBA::ORB_ptr orb)
 }
 
 CORBA::Long
-Process::get_process_id (CORBA::Environment &)
+Process::get_process_id (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return ACE_OS::getpid ();
 }
 
 void
-Process::shutdown (CORBA::Environment &ACE_TRY_ENV)
+Process::shutdown (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0, ACE_TRY_ENV);
+  this->orb_->shutdown (0 TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }

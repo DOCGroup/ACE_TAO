@@ -13,51 +13,51 @@ EC_Counting_Consumer::EC_Counting_Consumer (const char* name)
 
 void
 EC_Counting_Consumer::connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
-                   const RtecEventChannelAdmin::ConsumerQOS &qos,
-                   CORBA::Environment &ACE_TRY_ENV)
+                   const RtecEventChannelAdmin::ConsumerQOS &qos
+                   TAO_ENV_ARG_DECL)
 {
   // The canonical protocol to connect to the EC
 
   RtecEventComm::PushConsumer_var consumer =
-    this->_this (ACE_TRY_ENV);
+    this->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (CORBA::is_nil (this->supplier_proxy_.in ()))
     {
       this->supplier_proxy_ =
-        consumer_admin->obtain_push_supplier (ACE_TRY_ENV);
+        consumer_admin->obtain_push_supplier (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
 
   this->supplier_proxy_->connect_push_consumer (consumer.in (),
-                                                qos,
-                                                ACE_TRY_ENV);
+                                                qos
+                                                TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-EC_Counting_Consumer::disconnect (CORBA::Environment &ACE_TRY_ENV)
+EC_Counting_Consumer::disconnect (TAO_ENV_SINGLE_ARG_DECL)
 {
   if (!CORBA::is_nil (this->supplier_proxy_.in ()))
     {
-      this->supplier_proxy_->disconnect_push_supplier (ACE_TRY_ENV);
+      this->supplier_proxy_->disconnect_push_supplier (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
       this->supplier_proxy_ =
         RtecEventChannelAdmin::ProxyPushSupplier::_nil ();
     }
-  this->deactivate (ACE_TRY_ENV);
+  this->deactivate (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
-EC_Counting_Consumer::deactivate (CORBA::Environment &ACE_TRY_ENV)
+EC_Counting_Consumer::deactivate (TAO_ENV_SINGLE_ARG_DECL)
 {
   PortableServer::POA_var consumer_poa =
-    this->_default_POA (ACE_TRY_ENV);
+    this->_default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
   PortableServer::ObjectId_var consumer_id =
-    consumer_poa->servant_to_id (this, ACE_TRY_ENV);
+    consumer_poa->servant_to_id (this TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
-  consumer_poa->deactivate_object (consumer_id.in (), ACE_TRY_ENV);
+  consumer_poa->deactivate_object (consumer_id.in () TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
 }
@@ -83,8 +83,8 @@ EC_Counting_Consumer::dump_results (int expected_count, int tolerance)
 }
 
 void
-EC_Counting_Consumer::push (const RtecEventComm::EventSet& events,
-                CORBA::Environment &)
+EC_Counting_Consumer::push (const RtecEventComm::EventSet& events
+                TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (events.length () == 0)
@@ -107,7 +107,7 @@ EC_Counting_Consumer::push (const RtecEventComm::EventSet& events,
 }
 
 void
-EC_Counting_Consumer::disconnect_push_consumer (CORBA::Environment &)
+EC_Counting_Consumer::disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->disconnect_count++;

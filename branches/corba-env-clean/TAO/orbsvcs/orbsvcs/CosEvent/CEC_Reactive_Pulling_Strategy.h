@@ -111,8 +111,8 @@ public:
   TAO_CEC_Pull_Event (TAO_CEC_ConsumerAdmin *consumer_admin,
                       TAO_CEC_SupplierControl *control);
 
-  virtual void work (TAO_CEC_ProxyPullConsumer *consumer,
-                     CORBA::Environment &ACE_TRY_ENV);
+  virtual void work (TAO_CEC_ProxyPullConsumer *consumer
+                     TAO_ENV_ARG_DECL);
 
 private:
   /// Used to propagate the events.

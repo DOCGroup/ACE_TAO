@@ -13,7 +13,7 @@ LogMgr_i::~LogMgr_i ()
 }
 
 DsLogAdmin::LogList*
-LogMgr_i::list_logs (CORBA::Environment &ACE_TRY_ENV)
+LogMgr_i::list_logs (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
@@ -50,8 +50,8 @@ LogMgr_i::list_logs (CORBA::Environment &ACE_TRY_ENV)
 }
 
 DsLogAdmin::Log_ptr
-LogMgr_i::find_log (DsLogAdmin::LogId id,
-                    CORBA::Environment &/*ACE_TRY_ENV*/)
+LogMgr_i::find_log (DsLogAdmin::LogId id
+                    TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
@@ -82,7 +82,7 @@ LogMgr_i::find_log (DsLogAdmin::LogId id,
 }
 
 DsLogAdmin::LogIdList*
-LogMgr_i::list_logs_by_id (CORBA::Environment &ACE_TRY_ENV)
+LogMgr_i::list_logs_by_id (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))

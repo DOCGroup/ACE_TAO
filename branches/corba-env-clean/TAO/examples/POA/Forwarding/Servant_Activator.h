@@ -47,7 +47,7 @@ public:
                             TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void forward_requests (CORBA::Environment &env);
+  void forward_requests (TAO_ENV_SINGLE_ARG_DECL);
   // Object should be forwarded from now on.
 
 private:

@@ -50,14 +50,11 @@ public:
   /// Default constructor.
   TAO_RT_Current (TAO_ORB_Core *orb_core);
 
-  virtual RTCORBA::Priority the_priority (CORBA::Environment
-                                          &ACE_TRY_ENV =
-                                          TAO_default_environment ())
+  virtual RTCORBA::Priority the_priority (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void the_priority (RTCORBA::Priority the_priority,
-                             CORBA::Environment &ACE_TRY_ENV =
-                             TAO_default_environment ())
+  virtual void the_priority (RTCORBA::Priority the_priority
+                             TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:

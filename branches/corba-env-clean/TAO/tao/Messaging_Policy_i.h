@@ -54,23 +54,23 @@ public:
 
   /// Helper method for the implementation of
   /// CORBA::ORB::create_policy.
-  static CORBA::Policy_ptr create (const CORBA::Any& val,
-                                   CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+  static CORBA::Policy_ptr create (const CORBA::Any& val
+                                   TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /// Returns a copy of <this>.
   virtual TAO_RelativeRoundtripTimeoutPolicy *clone (void) const;
 
   // = The Messaging::RelativeRoundtripTimeoutPolicy methods
-  virtual TimeBase::TimeT relative_expiry (CORBA::Environment &ACE_TRY_ENV)
+  virtual TimeBase::TimeT relative_expiry (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::PolicyType policy_type (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
+  virtual CORBA::PolicyType policy_type (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::Policy_ptr copy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
+  virtual CORBA::Policy_ptr copy (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void destroy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
+  virtual void destroy (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Change the CORBA representation to the ACE representation.
@@ -117,26 +117,26 @@ public:
 
   /// Helper method for the implementation of
   /// CORBA::ORB::create_policy.
-  static CORBA::Policy_ptr create (const CORBA::Any& val,
-                                   CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+  static CORBA::Policy_ptr create (const CORBA::Any& val
+                                   TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /// Returns a copy of <this>.
   virtual TAO_Sync_Scope_Policy *clone (void) const;
 
   // = The Messaging::SyncScopePolicy methods.
 
-  virtual Messaging::SyncScope synchronization (CORBA::Environment &ACE_TRY_ENV)
+  virtual Messaging::SyncScope synchronization (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void get_synchronization (Messaging::SyncScope &synchronization) const;
 
-  virtual CORBA::PolicyType policy_type (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
+  virtual CORBA::PolicyType policy_type (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::Policy_ptr copy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
+  virtual CORBA::Policy_ptr copy (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void destroy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
+  virtual void destroy (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // Return the cached policy type for this policy.

@@ -49,7 +49,7 @@ parse_args (int argc, char *argv[])
                            "\n",
                            argv [0]),
                           -1);
-      }                       
+      }
   // Indicates sucessful parsing of the command line
   return 0;
 }
@@ -57,7 +57,7 @@ parse_args (int argc, char *argv[])
 
 TimeOfDay
 Time_impl::
-get_gmt ( CORBA_Environment &)
+get_gmt ( TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   time_t time_now = time (0);
@@ -83,14 +83,14 @@ void do_something_else()
 int
 main (int argc, char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       // Initialize orb
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            "",
-                                            ACE_TRY_ENV);
+                                            ""
+                                            TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
@@ -100,32 +100,32 @@ main (int argc, char *argv[])
 
       // Get reference to Root POA.
       CORBA::Object_var obj
-        = orb->resolve_initial_references ("RootPOA",
-                                           ACE_TRY_ENV);
+        = orb->resolve_initial_references ("RootPOA"
+                                           TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var poa
-        = PortableServer::POA::_narrow (obj.in (),
-                                        ACE_TRY_ENV);
+        = PortableServer::POA::_narrow (obj.in ()
+                                        TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Activate POA manager.
       PortableServer::POAManager_var mgr
-        = poa->the_POAManager (ACE_TRY_ENV);
+        = poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      mgr->activate (ACE_TRY_ENV);
+      mgr->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Create an object.
       Time_impl time_servant;
 
       // Write its stringified reference to stdout.
-      Time_var tm = time_servant._this (ACE_TRY_ENV);
+      Time_var tm = time_servant._this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      CORBA::String_var str = orb->object_to_string (tm.in (),
-                                                     ACE_TRY_ENV);
+      CORBA::String_var str = orb->object_to_string (tm.in ()
+                                                     TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
@@ -147,8 +147,8 @@ main (int argc, char *argv[])
               );
             }
 
-          ACE_OS::fprintf (output_file, 
-                           "%s", 
+          ACE_OS::fprintf (output_file,
+                           "%s",
                            str.in ());
           ACE_OS::fclose (output_file);
         }
@@ -157,12 +157,12 @@ main (int argc, char *argv[])
       while (!done)
         {
           CORBA::Boolean pending =
-            orb->work_pending (ACE_TRY_ENV);
+            orb->work_pending (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           if (pending)
             {
-              orb->perform_work (ACE_TRY_ENV);
+              orb->perform_work (TAO_ENV_SINGLE_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
           do_something_else ();
@@ -174,7 +174,7 @@ main (int argc, char *argv[])
 
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, 
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "server: a CORBA exception occured");
       return 1;
     }

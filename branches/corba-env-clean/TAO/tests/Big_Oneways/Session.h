@@ -36,27 +36,27 @@ public:
   int svc (void);
 
   // = The skeleton methods
-  virtual void start (const Test::Session_List &other_sessions,
-                      CORBA::Environment &ACE_TRY_ENV)
+  virtual void start (const Test::Session_List &other_sessions
+                      TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Test::Already_Running,
                      Test::No_Peers));
 
-  virtual void ping (CORBA::Environment &)
+  virtual void ping (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void receive_payload (const Test::Payload &the_payload,
-                                CORBA::Environment &ACE_TRY_ENV)
+  virtual void receive_payload (const Test::Payload &the_payload
+                                TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void destroy (CORBA::Environment &ACE_TRY_ENV)
+  virtual void destroy (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   /// Helper function used to report any problems and destroy local
   /// resources
-  void terminate (CORBA::Boolean success,
-                  CORBA::Environment &ACE_TRY_ENV)
+  void terminate (CORBA::Boolean success
+                  TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC (());
 
   /// Return 1 if all the work in this session has been completed
@@ -64,7 +64,7 @@ private:
 
   /// Make sure that all threads have connections avaiable to the
   /// other sessions.
-  void validate_connections (CORBA::Environment &ACE_TRY_ENV);
+  void validate_connections (TAO_ENV_SINGLE_ARG_DECL);
 
 private:
   /// Synchronize the internal state

@@ -91,7 +91,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   if (be_global->gen_thru_poa_collocation ()
       || be_global->gen_direct_collocation ())
     {
-      *os << "class " << node->strategized_proxy_broker_name () 
+      *os << "class " << node->strategized_proxy_broker_name ()
           << ";" << be_nl;
     }
 
@@ -107,7 +107,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
     {
       for (i = 0; i < n_parents; ++i)
         {
-          *os << "public virtual " << "POA_" 
+          *os << "public virtual " << "POA_"
               << node->inherits ()[i]->name ();
 
           if (i < n_parents - 1)
@@ -134,10 +134,8 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
       << "virtual ~" << namebuf << " (void);\n\n"
       << be_nl
       << "virtual CORBA::Boolean _is_a (" << be_idt << be_idt_nl
-      << "const char* logical_type_id," << be_nl
-      << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
-      << "TAO_default_environment ()"
-      << be_uidt << be_uidt_nl
+      << "const char* logical_type_id" << be_nl
+      << "TAO_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
       << ");\n" << be_uidt_nl;
 
   *os << "virtual void* _downcast (" << be_idt << be_idt_nl
@@ -148,32 +146,31 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   *os << "static void _is_a_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &req," << be_nl
       << "void *obj," << be_nl
-      << "void *servant_upcall," << be_nl
-      << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
+      << "void *servant_upcall" << be_nl
+      << "TAO_ENV_ARG_DECL" << be_uidt_nl
       << ");\n" << be_uidt_nl;
 
   // Add a skeleton for our _non_existent method.
   *os << "static void _non_existent_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &req," << be_nl
       << "void *obj," << be_nl
-      << "void *servant_upcall," << be_nl
-      << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
+      << "void *servant_upcall" << be_nl
+      << "TAO_ENV_ARG_DECL" << be_uidt_nl
       << ");\n" << be_uidt_nl;
 
   // Add a skeleton for our _interface method.
   *os << "static void _interface_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &req," << be_nl
       << "void *obj," << be_nl
-      << "void *servant_upcall," << be_nl
-      << "CORBA::Environment &ACE_TRY_ENV"
-      << be_uidt_nl
+      << "void *servant_upcall" << be_nl
+      << "TAO_ENV_ARG_DECL" << be_uidt_nl
       << ");\n" << be_uidt_nl;
 
   // Add the dispatch method.
   *os << "virtual void _dispatch (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &req," << be_nl
-      << "void *_servant_upcall," << be_nl
-      << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
+      << "void *_servant_upcall" << be_nl
+      << "TAO_ENV_ARG_DECL" << be_uidt_nl
       << ");\n" << be_uidt_nl;
 
   this->this_method (node);
@@ -235,14 +232,14 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
       ctx.state (TAO_CodeGen::TAO_INTERFACE_STRATEGIZED_PROXY_BROKER_SH);
       visitor = tao_cg->make_visitor (&ctx);
       if (node->accept (visitor) == -1)
-	      {
-	        delete visitor;
-	        ACE_ERROR_RETURN ((LM_ERROR,
-			           "be_visitor_interface_sh::"
-			           "visit_interface - "
-			           "codegen for thru_poa_collocated class failed\n"),
-			          -1);
-	      }
+              {
+                delete visitor;
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   "be_visitor_interface_sh::"
+                                   "visit_interface - "
+                                   "codegen for thru_poa_collocated class failed\n"),
+                                  -1);
+              }
 
       delete visitor;
     }
@@ -304,8 +301,6 @@ be_visitor_interface_sh::this_method (be_interface *node)
 
   // Print out the _this() method.
   *os << "::" << node->full_name () << " *_this (" << be_idt << be_idt_nl
-      << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
-      << "TAO_default_environment ()"
-      << be_uidt << be_uidt_nl
+      << "TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
       << ");\n" << be_uidt_nl;
 }

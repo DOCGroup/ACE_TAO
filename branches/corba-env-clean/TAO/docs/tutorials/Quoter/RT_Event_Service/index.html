@@ -14,7 +14,7 @@
 
     <P>We have already explored how to use
       <A HREF="../Event_Service/index.html">
-	TAO's COS Event Service
+        TAO's COS Event Service
       </A>
       to receive updated stock prices,
       but what if we are not interested in all the stocks?
@@ -37,7 +37,7 @@
     <P>For this example we will use the same data structures that we
       used in the previous example,
       i.e., the events will be identical.
-      TAO's RT Event Service can be configured to carry your events in 
+      TAO's RT Event Service can be configured to carry your events in
       a type-safe manner,
       or you can use custom marshaling to send non-IDL structures in
       the event,
@@ -48,7 +48,7 @@
 
     <P>Connecting as a consumer is very similar.  Some of the base
       classes and signatures change, but it is basically the same
-      idea: 
+      idea:
       First let us define the consumer object:
     </P>
 <PRE>
@@ -56,8 +56,8 @@ class Stock_Consumer : public POA_RtecEventComm::PushConsumer {
 public:
   Stock_Consumer ();
 
-  void push (const RtecEventComm::EventSet& data, CORBA::Environment &);
-  void disconnect_push_consumer (CORBA::Environment &);
+  void push (const RtecEventComm::EventSet& data TAO_ENV_ARG_DECL_NOT_USED);
+  void disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL_NOT_USED);
 
   // details omitted
 };
@@ -69,8 +69,8 @@ public:
     </P>
 <PRE>
 void
-Stock_Consumer::push (const RtecEventComm::EventSet &data,
-                      CORBA::Environment &)
+Stock_Consumer::push (const RtecEventComm::EventSet &data
+                      TAO_ENV_ARG_DECL_NOT_USED)
 {
   for (CORBA::ULong i = 0; i != data.length (); ++i) {
     RtecEventComm::Event &e = data[i];
@@ -99,7 +99,7 @@ Stock_Consumer::push (const RtecEventComm::EventSet &data,
     </P>
 <PRE>
 void
-Stock_Consumer::disconnect_push_consumer (CORBA::Environment &)
+Stock_Consumer::disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   this->supplier_proxy_ = CosEventChannelAdmin::ProxyPushSupplier::_nil ();
 }
@@ -190,7 +190,7 @@ public:
   void set_price (CORBA::Double new_price)
     throw (CORBA::SystemException);
 
-  void disconnect_push_supplier (CORBA::Environment&);
+  void disconnect_push_supplier (TAO_ENV_SINGLE_ARG_DECL_NOT_USED);
 
 private:
   Quoter::Event data_;
@@ -224,7 +224,7 @@ Quoter_Stock_i::set_price (CORBA::Double new_price)
 <PRE>
    RtecEventComm::Event &e = event[0];
    const char *symbol = this->data_.symbol;
-   e.header.type = 
+   e.header.type =
       ((int(symbol[0]) << 24)
        | (int(symbol[1]) << 16)
        | (int(symbol[2]) << 8)
@@ -246,7 +246,7 @@ Quoter_Stock_i::set_price (CORBA::Double new_price)
 
     <H3>Connecting to the Event Service as a Supplier</H3>
 
-    <P>As in the COS Event Channel case we need a supplier personality 
+    <P>As in the COS Event Channel case we need a supplier personality
       to connect to it.
       We gain access to the Event Service, for example using the
       naming service:
@@ -274,12 +274,12 @@ Quoter_Stock_i::set_price (CORBA::Double new_price)
     </P>
 <PRE>
    const char *symbol = this->data_.symbol;
-   CORBA::ULong type =   
+   CORBA::ULong type =
       ((int(symbol[0]) << 24)
        | (int(symbol[1]) << 16)
        | (int(symbol[2]) << 8)
        | int(symbol[3]));
-   CORBA::ULong source = 1; 
+   CORBA::ULong source = 1;
    ACE_SupplierQOS_Factory publications;
    publications.insert_type (type, source, 0, 1);
 </PRE>
@@ -295,7 +295,7 @@ Quoter_Stock_i::set_price (CORBA::Double new_price)
     </P>
 <PRE>
 void
-Quoter_Stock_i::disconnect_push_supplier (CORBA::Environment &)
+Quoter_Stock_i::disconnect_push_supplier (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   throw (CORBA::SystemException)
 {
   // Forget about the consumer it is not there anymore

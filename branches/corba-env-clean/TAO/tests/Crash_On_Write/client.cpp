@@ -18,18 +18,18 @@ parse_args (int argc, char *argv[])
     switch (c)
       {
       case 'k':
-	ior = get_opts.optarg;
-	break;
+        ior = get_opts.optarg;
+        break;
 
       case 'i':
-	iterations = ACE_OS::atoi (get_opts.optarg);
-	break;
+        iterations = ACE_OS::atoi (get_opts.optarg);
+        break;
 
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
-			   "-k <ior> "
+                           "-k <ior> "
                            "-i iterations "
                            "\n",
                            argv [0]),
@@ -40,12 +40,12 @@ parse_args (int argc, char *argv[])
 }
 
 int
-single_iteration (Test::Oneway_Receiver_ptr oneway_receiver,
-                  CORBA::Environment &ACE_TRY_ENV)
+single_iteration (Test::Oneway_Receiver_ptr oneway_receiver
+                  TAO_ENV_ARG_DECL)
 {
   ACE_TRY
     {
-      oneway_receiver->receive_oneway (ACE_TRY_ENV);
+      oneway_receiver->receive_oneway (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       ACE_Time_Value tv (0, 40000);
       ACE_OS::sleep (tv);
@@ -64,18 +64,18 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior, ACE_TRY_ENV);
+        orb->string_to_object(ior TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Test::Oneway_Receiver_var oneway_receiver =
-        Test::Oneway_Receiver::_narrow(tmp.in (), ACE_TRY_ENV);
+        Test::Oneway_Receiver::_narrow(tmp.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (oneway_receiver.in ()))
@@ -90,8 +90,8 @@ main (int argc, char *argv[])
       int exception_count = 0;
       for (int i = 0; i != iterations; ++i)
         {
-          int result = single_iteration (oneway_receiver.in (),
-                                         ACE_TRY_ENV);
+          int result = single_iteration (oneway_receiver.in ()
+                                         TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
           if (result)
             exception_count++;
@@ -108,7 +108,7 @@ main (int argc, char *argv[])
       if (normal_count == 0)
         ACE_ERROR ((LM_ERROR, "ERROR: no request was succesful\n"));
 
-      orb->destroy (ACE_TRY_ENV);
+      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

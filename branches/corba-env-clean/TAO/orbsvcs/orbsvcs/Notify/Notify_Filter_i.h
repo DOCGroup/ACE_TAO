@@ -53,19 +53,19 @@ public:
   virtual ~TAO_Notify_Filter_i (void);
 
   CosNotifyFilter::Filter_ptr
-  get_ref (CORBA::Environment &ACE_TRY_ENV);
+  get_ref (TAO_ENV_SINGLE_ARG_DECL);
   // Activate with the default POA
 
 virtual char * constraint_grammar (
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
 virtual CosNotifyFilter::ConstraintInfoSeq * add_constraints (
-    const CosNotifyFilter::ConstraintExpSeq & constraint_list,
-    CORBA::Environment &ACE_TRY_ENV
+    const CosNotifyFilter::ConstraintExpSeq & constraint_list
+    TAO_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -74,8 +74,8 @@ virtual CosNotifyFilter::ConstraintInfoSeq * add_constraints (
 
 virtual void modify_constraints (
     const CosNotifyFilter::ConstraintIDSeq & del_list,
-    const CosNotifyFilter::ConstraintInfoSeq & modify_list,
-    CORBA::Environment &ACE_TRY_ENV
+    const CosNotifyFilter::ConstraintInfoSeq & modify_list
+    TAO_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -84,8 +84,8 @@ virtual void modify_constraints (
   ));
 
 virtual CosNotifyFilter::ConstraintInfoSeq * get_constraints (
-    const CosNotifyFilter::ConstraintIDSeq & id_list,
-    CORBA::Environment &ACE_TRY_ENV
+    const CosNotifyFilter::ConstraintIDSeq & id_list
+    TAO_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -93,29 +93,29 @@ virtual CosNotifyFilter::ConstraintInfoSeq * get_constraints (
   ));
 
 virtual CosNotifyFilter::ConstraintInfoSeq * get_all_constraints (
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
 virtual void remove_all_constraints (
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
 virtual void destroy (
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
 virtual CORBA::Boolean match (
-    const CORBA::Any & filterable_data,
-    CORBA::Environment &ACE_TRY_ENV
+    const CORBA::Any & filterable_data
+    TAO_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -123,8 +123,8 @@ virtual CORBA::Boolean match (
   ));
 
 virtual CORBA::Boolean match_structured (
-    const CosNotification::StructuredEvent & filterable_data,
-    CORBA::Environment &ACE_TRY_ENV
+    const CosNotification::StructuredEvent & filterable_data
+    TAO_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -132,8 +132,8 @@ virtual CORBA::Boolean match_structured (
   ));
 
 virtual CORBA::Boolean match_typed (
-    const CosNotification::PropertySeq & filterable_data,
-    CORBA::Environment &ACE_TRY_ENV
+    const CosNotification::PropertySeq & filterable_data
+    TAO_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -141,16 +141,16 @@ virtual CORBA::Boolean match_typed (
   ));
 
 virtual CosNotifyFilter::CallbackID attach_callback (
-    CosNotifyComm::NotifySubscribe_ptr callback,
-    CORBA::Environment &ACE_TRY_ENV
+    CosNotifyComm::NotifySubscribe_ptr callback
+    TAO_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
 virtual void detach_callback (
-    CosNotifyFilter::CallbackID callback,
-    CORBA::Environment &ACE_TRY_ENV
+    CosNotifyFilter::CallbackID callback
+    TAO_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -158,7 +158,7 @@ virtual void detach_callback (
   ));
 
 virtual CosNotifyFilter::CallbackIDSeq * get_callbacks (
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -167,8 +167,8 @@ virtual CosNotifyFilter::CallbackIDSeq * get_callbacks (
 
 private:
   void add_constraints_i (
-    const CosNotifyFilter::ConstraintInfoSeq& constraint_info_seq,
-    CORBA::Environment &ACE_TRY_ENV
+    const CosNotifyFilter::ConstraintInfoSeq& constraint_info_seq
+    TAO_ENV_ARG_DECL
   )
     ACE_THROW_SPEC ((
                      CORBA::SystemException,

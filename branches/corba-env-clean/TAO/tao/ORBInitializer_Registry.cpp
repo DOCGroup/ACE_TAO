@@ -16,8 +16,8 @@ ACE_RCSID(tao, ORBInitializer_Registry, "$Id$")
 
 void
 PortableInterceptor::register_orb_initializer (
-  PortableInterceptor::ORBInitializer_ptr init,
-  CORBA::Environment &ACE_TRY_ENV)
+  PortableInterceptor::ORBInitializer_ptr init
+  TAO_ENV_ARG_DECL)
 {
   // Using ACE_Static_Object_Lock::instance() precludes
   // <register_orb_initializer> from being called within a static
@@ -33,15 +33,15 @@ PortableInterceptor::register_orb_initializer (
                   ACE_TEXT ("Unable to pre-initialize TAO\n")));
     }
 
-  CORBA_ORB::init_orb_globals (ACE_TRY_ENV);
+  CORBA_ORB::init_orb_globals (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // Make sure the following is done after the global ORB
   // initialization since we need to have exceptions initialized.
 
   TAO_ORBInitializer_Registry::instance ()->register_orb_initializer (
-    init,
-    ACE_TRY_ENV);
+    init
+     TAO_ENV_ARG_PARAMETER);
 }
 
 // ------------------------------------------------------------------
@@ -60,8 +60,8 @@ TAO_ORBInitializer_Registry::~TAO_ORBInitializer_Registry (void)
 
 void
 TAO_ORBInitializer_Registry::register_orb_initializer (
-  PortableInterceptor::ORBInitializer_ptr init,
-  CORBA::Environment &ACE_TRY_ENV)
+  PortableInterceptor::ORBInitializer_ptr init
+  TAO_ENV_ARG_DECL)
 {
   if (!CORBA::is_nil (init))
     {
@@ -88,10 +88,9 @@ TAO_ORBInitializer_Registry::register_orb_initializer (
 
 void
 TAO_ORBInitializer_Registry::pre_init (
-  PortableInterceptor::ORBInitInfo_ptr info,
-  CORBA::Environment &ACE_TRY_ENV)
+  PortableInterceptor::ORBInitInfo_ptr info
+  TAO_ENV_ARG_DECL)
 {
-  ACE_UNUSED_ARG(ACE_TRY_ENV); // FUZZ: ignore check_for_ace_check
   size_t initializer_count = this->initializers_.size ();
   for (size_t i = 0; i < initializer_count; ++i)
     {
@@ -103,10 +102,9 @@ TAO_ORBInitializer_Registry::pre_init (
 
 void
 TAO_ORBInitializer_Registry::post_init (
-  PortableInterceptor::ORBInitInfo_ptr info,
-  CORBA::Environment &ACE_TRY_ENV)
+  PortableInterceptor::ORBInitInfo_ptr info
+  TAO_ENV_ARG_DECL)
 {
-  ACE_UNUSED_ARG(ACE_TRY_ENV); // FUZZ: ignore check_for_ace_check
   size_t initializer_count = this->initializers_.size ();
   for (size_t i = 0; i < initializer_count; ++i)
     {

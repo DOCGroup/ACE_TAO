@@ -56,19 +56,19 @@ TAO_GIOP_Asynch_Invocation::TAO_GIOP_Asynch_Invocation (void)
 }
 
 int
-TAO_GIOP_Asynch_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
+TAO_GIOP_Asynch_Invocation::invoke (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_GIOP_ASYNCH_INVOCATION_INVOKE_START);
 
-  return this->invoke_i (ACE_TRY_ENV);
+  return this->invoke_i (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
-TAO_GIOP_Asynch_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
+TAO_GIOP_Asynch_Invocation::start (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->TAO_GIOP_Invocation::start (ACE_TRY_ENV);
+  this->TAO_GIOP_Invocation::start (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   this->target_spec_.target_specifier (this->profile_->object_key ());
@@ -79,7 +79,7 @@ TAO_GIOP_Asynch_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
 #if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
 
 int
-TAO_GIOP_Twoway_Asynch_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
+TAO_GIOP_Twoway_Asynch_Invocation::invoke_i (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   int retval = 0;
@@ -126,8 +126,8 @@ TAO_GIOP_Twoway_Asynch_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
     } // if (this->rd_)
 
   // Just send the request, without trying to wait for the reply.
-  retval = TAO_GIOP_Invocation::invoke (0,
-                                        ACE_TRY_ENV);
+  retval = TAO_GIOP_Invocation::invoke (0
+                                         TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (retval);
 
   if (retval != TAO_INVOKE_OK)

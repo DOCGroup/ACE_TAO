@@ -15,8 +15,6 @@ TAO_CodecFactory_ORBInitializer::pre_init (
     TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_ENV_ARG_DEFN;
-
   // The CodecFactory is stateless and reentrant, so share a single
   // instance between all ORBs.
   if (CORBA::is_nil (this->codec_factory_.in ()))
@@ -35,8 +33,8 @@ TAO_CodecFactory_ORBInitializer::pre_init (
     }
 
   info->register_initial_reference ("CodecFactory",
-                                    this->codec_factory_.in (),
-                                    ACE_TRY_ENV);
+                                    this->codec_factory_.in ()
+                                     TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 

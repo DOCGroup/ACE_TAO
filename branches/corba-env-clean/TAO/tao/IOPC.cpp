@@ -1596,11 +1596,11 @@ tao_IOP_Codec_nil (
 
 IOP::Codec_ptr
 tao_IOP_Codec_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return IOP::Codec::_narrow (p, ACE_TRY_ENV);
+  return IOP::Codec::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -1720,11 +1720,11 @@ IOP::Codec_var::tao_nil (void)
 
 ::IOP::Codec_ptr
 IOP::Codec_var::tao_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return ::IOP::Codec::_narrow (p, ACE_TRY_ENV);
+  return ::IOP::Codec::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -1805,16 +1805,16 @@ IOP::Codec::~Codec (void)
 {}
 
 IOP::Codec_ptr IOP::Codec::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL
   )
 {
-  return Codec::_unchecked_narrow (obj, ACE_TRY_ENV);
+  return Codec::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
 }
 
 IOP::Codec_ptr IOP::Codec::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -1908,16 +1908,16 @@ void IOP::Codec::InvalidTypeForEncoding::_raise ()
 }
 
 void IOP::Codec::InvalidTypeForEncoding::_tao_encode (
-    TAO_OutputCDR &,
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_OutputCDR &
+    TAO_ENV_ARG_DECL
   ) const
 {
   ACE_THROW (CORBA::MARSHAL ());
 }
 
 void IOP::Codec::InvalidTypeForEncoding::_tao_decode (
-    TAO_InputCDR &,
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_InputCDR &
+    TAO_ENV_ARG_DECL
   )
 {
   ACE_THROW (CORBA::MARSHAL ());
@@ -1976,16 +1976,16 @@ void IOP::Codec::FormatMismatch::_raise ()
 }
 
 void IOP::Codec::FormatMismatch::_tao_encode (
-    TAO_OutputCDR &,
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_OutputCDR &
+    TAO_ENV_ARG_DECL
   ) const
 {
   ACE_THROW (CORBA::MARSHAL ());
 }
 
 void IOP::Codec::FormatMismatch::_tao_decode (
-    TAO_InputCDR &,
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_InputCDR &
+    TAO_ENV_ARG_DECL
   )
 {
   ACE_THROW (CORBA::MARSHAL ());
@@ -2044,16 +2044,16 @@ void IOP::Codec::TypeMismatch::_raise ()
 }
 
 void IOP::Codec::TypeMismatch::_tao_encode (
-    TAO_OutputCDR &,
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_OutputCDR &
+    TAO_ENV_ARG_DECL
   ) const
 {
   ACE_THROW (CORBA::MARSHAL ());
 }
 
 void IOP::Codec::TypeMismatch::_tao_decode (
-    TAO_InputCDR &,
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_InputCDR &
+    TAO_ENV_ARG_DECL
   )
 {
   ACE_THROW (CORBA::MARSHAL ());
@@ -2210,11 +2210,11 @@ tao_IOP_CodecFactory_nil (
 
 IOP::CodecFactory_ptr
 tao_IOP_CodecFactory_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return IOP::CodecFactory::_narrow (p, ACE_TRY_ENV);
+  return IOP::CodecFactory::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -2336,11 +2336,11 @@ IOP::CodecFactory_var::tao_nil (void)
 
 ::IOP::CodecFactory_ptr
 IOP::CodecFactory_var::tao_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return ::IOP::CodecFactory::_narrow (p, ACE_TRY_ENV);
+  return ::IOP::CodecFactory::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -2421,16 +2421,16 @@ IOP::CodecFactory::~CodecFactory (void)
 {}
 
 IOP::CodecFactory_ptr IOP::CodecFactory::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL
   )
 {
-  return CodecFactory::_unchecked_narrow (obj, ACE_TRY_ENV);
+  return CodecFactory::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
 }
 
 IOP::CodecFactory_ptr IOP::CodecFactory::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -2524,16 +2524,16 @@ void IOP::CodecFactory::UnknownEncoding::_raise ()
 }
 
 void IOP::CodecFactory::UnknownEncoding::_tao_encode (
-    TAO_OutputCDR &,
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_OutputCDR &
+    TAO_ENV_ARG_DECL
   ) const
 {
   ACE_THROW (CORBA::MARSHAL ());
 }
 
 void IOP::CodecFactory::UnknownEncoding::_tao_decode (
-    TAO_InputCDR &,
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_InputCDR &
+    TAO_ENV_ARG_DECL
   )
 {
   ACE_THROW (CORBA::MARSHAL ());
@@ -2584,7 +2584,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IOP::TaggedProfile
   {
     CORBA::TypeCode_var type = _tao_any.type ();
 
-    CORBA::Boolean result = type->equivalent (IOP::_tc_TaggedProfile, ACE_TRY_ENV);
+    CORBA::Boolean result = type->equivalent (IOP::_tc_TaggedProfile TAO_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)
@@ -2667,7 +2667,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IOP::IOR *&_tao_el
   {
     CORBA::TypeCode_var type = _tao_any.type ();
 
-    CORBA::Boolean result = type->equivalent (IOP::_tc_IOR, ACE_TRY_ENV);
+    CORBA::Boolean result = type->equivalent (IOP::_tc_IOR TAO_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)
@@ -2750,7 +2750,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IOP::TaggedCompone
   {
     CORBA::TypeCode_var type = _tao_any.type ();
 
-    CORBA::Boolean result = type->equivalent (IOP::_tc_TaggedComponent, ACE_TRY_ENV);
+    CORBA::Boolean result = type->equivalent (IOP::_tc_TaggedComponent TAO_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)
@@ -2841,7 +2841,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IOP::MultipleCompo
   {
     CORBA::TypeCode_var type = _tao_any.type ();
 
-    CORBA::Boolean result = type->equivalent (IOP::_tc_MultipleComponentProfile, ACE_TRY_ENV);
+    CORBA::Boolean result = type->equivalent (IOP::_tc_MultipleComponentProfile TAO_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)
@@ -2932,7 +2932,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IOP::TaggedCompone
   {
     CORBA::TypeCode_var type = _tao_any.type ();
 
-    CORBA::Boolean result = type->equivalent (IOP::_tc_TaggedComponentList, ACE_TRY_ENV);
+    CORBA::Boolean result = type->equivalent (IOP::_tc_TaggedComponentList TAO_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)
@@ -3023,7 +3023,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IOP::TaggedCompone
   {
     CORBA::TypeCode_var type = _tao_any.type ();
 
-    CORBA::Boolean result = type->equivalent (IOP::_tc_TaggedComponentSeq, ACE_TRY_ENV);
+    CORBA::Boolean result = type->equivalent (IOP::_tc_TaggedComponentSeq TAO_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)
@@ -3106,7 +3106,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IOP::ServiceContex
   {
     CORBA::TypeCode_var type = _tao_any.type ();
 
-    CORBA::Boolean result = type->equivalent (IOP::_tc_ServiceContext, ACE_TRY_ENV);
+    CORBA::Boolean result = type->equivalent (IOP::_tc_ServiceContext TAO_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)
@@ -3197,7 +3197,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IOP::ServiceContex
   {
     CORBA::TypeCode_var type = _tao_any.type ();
 
-    CORBA::Boolean result = type->equivalent (IOP::_tc_ServiceContextList, ACE_TRY_ENV);
+    CORBA::Boolean result = type->equivalent (IOP::_tc_ServiceContextList TAO_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)
@@ -3287,7 +3287,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IOP::Encoding *&_t
   {
     CORBA::TypeCode_var type = _tao_any.type ();
 
-    CORBA::Boolean result = type->equivalent (IOP::_tc_Encoding, ACE_TRY_ENV);
+    CORBA::Boolean result = type->equivalent (IOP::_tc_Encoding TAO_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)

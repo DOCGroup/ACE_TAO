@@ -57,12 +57,12 @@ parse_args (int argc, char *argv[])
 
 int
 write_ior_to_file (CORBA::ORB_ptr orb,
-                   test_ptr test,
-                   CORBA_Environment &ACE_TRY_ENV)
+                   test_ptr test
+                   TAO_ENV_ARG_DECL)
 {
   CORBA::String_var ior =
-    orb->object_to_string (test,
-                           ACE_TRY_ENV);
+    orb->object_to_string (test
+                           TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   char filename[BUFSIZ];
@@ -96,8 +96,8 @@ create_POA_and_register_servant (CORBA::Policy_ptr threadpool_policy,
                                  PortableServer::POAManager_ptr poa_manager,
                                  PortableServer::POA_ptr root_poa,
                                  CORBA::ORB_ptr orb,
-                                 RTCORBA::RTORB_ptr rt_orb,
-                                 CORBA_Environment &ACE_TRY_ENV)
+                                 RTCORBA::RTORB_ptr rt_orb
+                                 TAO_ENV_ARG_DECL)
 {
   // Policies for the firstPOA to be created.
   CORBA::PolicyList policies (3); policies.length (3);
@@ -105,8 +105,8 @@ create_POA_and_register_servant (CORBA::Policy_ptr threadpool_policy,
   // Implicit_activation policy.
   policies[0] =
     root_poa->create_implicit_activation_policy
-      (PortableServer::IMPLICIT_ACTIVATION,
-       ACE_TRY_ENV);
+      (PortableServer::IMPLICIT_ACTIVATION
+       TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Thread pool policy.
@@ -116,16 +116,16 @@ create_POA_and_register_servant (CORBA::Policy_ptr threadpool_policy,
   // Priority Model policy.
   policies[2] =
     rt_orb->create_priority_model_policy (RTCORBA::CLIENT_PROPAGATED,
-                                          0,
-                                          ACE_TRY_ENV);
+                                          0
+                                          TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Create the POA under the RootPOA.
   PortableServer::POA_var poa =
     root_poa->create_POA (poa_name,
                           poa_manager,
-                          policies,
-                          ACE_TRY_ENV);
+                          policies
+                          TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Creation of POAs is over. Destroy the Policy objects.
@@ -133,7 +133,7 @@ create_POA_and_register_servant (CORBA::Policy_ptr threadpool_policy,
        i < policies.length ();
        ++i)
     {
-      policies[i]->destroy (ACE_TRY_ENV);
+      policies[i]->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
     }
 
@@ -146,13 +146,13 @@ create_POA_and_register_servant (CORBA::Policy_ptr threadpool_policy,
   ACE_UNUSED_ARG (safe_servant);
 
   test_var test =
-    servant->_this (ACE_TRY_ENV);
+    servant->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   int result =
     write_ior_to_file (orb,
-                       test.in (),
-                       ACE_TRY_ENV);
+                       test.in ()
+                       TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   return result;
@@ -170,46 +170,46 @@ main (int argc, char *argv[])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,
-                         "",
-                         ACE_TRY_ENV);
+                         ""
+                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RootPOA",
-                                         ACE_TRY_ENV);
+        orb->resolve_initial_references ("RootPOA"
+                                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (object.in (),
-                                      ACE_TRY_ENV);
+        PortableServer::POA::_narrow (object.in ()
+                                      TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_TRY_ENV);
+        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       object =
-        orb->resolve_initial_references ("RTORB",
-                                         ACE_TRY_ENV);
+        orb->resolve_initial_references ("RTORB"
+                                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       RTCORBA::RTORB_var rt_orb =
-        RTCORBA::RTORB::_narrow (object.in (),
-                                 ACE_TRY_ENV);
+        RTCORBA::RTORB::_narrow (object.in ()
+                                 TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       object =
-        orb->resolve_initial_references ("RTCurrent",
-                                         ACE_TRY_ENV);
+        orb->resolve_initial_references ("RTCurrent"
+                                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       RTCORBA::Current_var current =
-        RTCORBA::Current::_narrow (object.in (),
-                                   ACE_TRY_ENV);
+        RTCORBA::Current::_narrow (object.in ()
+                                   TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       RTCORBA::Priority default_thread_priority =
-        current->the_priority (ACE_TRY_ENV);
+        current->the_priority (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       int result =
@@ -221,19 +221,19 @@ main (int argc, char *argv[])
                       root_poa.in (),
                       nap_time);
       test_var test =
-        servant._this (ACE_TRY_ENV);
+        servant._this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       result =
         write_ior_to_file (orb.in (),
-                           test.in (),
-                           ACE_TRY_ENV);
+                           test.in ()
+                           TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (result != 0)
         return result;
 
-      poa_manager->activate (ACE_TRY_ENV);
+      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::ULong stacksize = 0;
@@ -248,13 +248,13 @@ main (int argc, char *argv[])
                                    default_thread_priority,
                                    allow_request_buffering,
                                    max_buffered_requests,
-                                   max_request_buffer_size,
-                                   ACE_TRY_ENV);
+                                   max_request_buffer_size
+                                   TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Policy_var threadpool_policy_1 =
-        rt_orb->create_threadpool_policy (threadpool_id_1,
-                                          ACE_TRY_ENV);
+        rt_orb->create_threadpool_policy (threadpool_id_1
+                                          TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Boolean allow_borrowing = 0;
@@ -275,13 +275,13 @@ main (int argc, char *argv[])
                                               allow_borrowing,
                                               allow_request_buffering,
                                               max_buffered_requests,
-                                              max_request_buffer_size,
-                                              ACE_TRY_ENV);
+                                              max_request_buffer_size
+                                              TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Policy_var threadpool_policy_2 =
-        rt_orb->create_threadpool_policy (threadpool_id_2,
-                                          ACE_TRY_ENV);
+        rt_orb->create_threadpool_policy (threadpool_id_2
+                                          TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       result =
@@ -290,8 +290,8 @@ main (int argc, char *argv[])
                                          poa_manager.in (),
                                          root_poa.in (),
                                          orb.in (),
-                                         rt_orb.in (),
-                                         ACE_TRY_ENV);
+                                         rt_orb.in ()
+                                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (result != 0)
         return result;
@@ -302,16 +302,16 @@ main (int argc, char *argv[])
                                          poa_manager.in (),
                                          root_poa.in (),
                                          orb.in (),
-                                         rt_orb.in (),
-                                         ACE_TRY_ENV);
+                                         rt_orb.in ()
+                                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (result != 0)
         return result;
 
-      orb->run (ACE_TRY_ENV);
+      orb->run (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->destroy (ACE_TRY_ENV);
+      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

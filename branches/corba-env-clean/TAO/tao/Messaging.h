@@ -44,8 +44,8 @@ enum TAO_AMI_Reply_Status
 typedef void (*TAO_Reply_Handler_Skeleton)(
     TAO_InputCDR &,
     Messaging::ReplyHandler *,
-    CORBA::ULong reply_status,
-    CORBA::Environment &
+    CORBA::ULong reply_status
+    TAO_ENV_ARG_DECL_NOT_USED
     );
 
 #endif /* TAO_HAS_AMI_CALLBACK */

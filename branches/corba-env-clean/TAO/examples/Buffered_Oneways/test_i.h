@@ -28,11 +28,11 @@ public:
   // ctor.
 
   // = The test interface methods.
-  void method (CORBA::ULong request_number,
-               CORBA::Environment &)
+  void method (CORBA::ULong request_number
+               TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (CORBA::Environment &)
+  void shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

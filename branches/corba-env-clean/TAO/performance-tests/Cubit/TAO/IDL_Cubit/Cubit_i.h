@@ -37,77 +37,77 @@ public:
   ~Cubit_i (void);
   // Destructor
 
-  virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+  virtual PortableServer::POA_ptr _default_POA (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   // Returns the default POA for this servant.
 
-  virtual void cube_oneway (CORBA::Environment &env)
+  virtual void cube_oneway (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Test a oneway call.
 
-  virtual void cube_void (CORBA::Environment &env)
+  virtual void cube_void (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Test a twoway call.
 
-  virtual CORBA::Octet cube_octet (CORBA::Octet o,
-                                   CORBA::Environment &env)
+  virtual CORBA::Octet cube_octet (CORBA::Octet o
+                                   TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Cube an octet
 
-  virtual CORBA::Short cube_short (CORBA::Short s,
-                                   CORBA::Environment &env)
+  virtual CORBA::Short cube_short (CORBA::Short s
+                                   TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Cube a short
 
-  virtual CORBA::Long cube_long (CORBA::Long l,
-                                 CORBA::Environment &env)
+  virtual CORBA::Long cube_long (CORBA::Long l
+                                 TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Cube a long
 
-  virtual Cubit::Many cube_struct (const Cubit::Many &values,
-                                   CORBA::Environment &env)
+  virtual Cubit::Many cube_struct (const Cubit::Many &values
+                                   TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Cube a struct.
 
-  virtual Cubit::oneof cube_union (const Cubit::oneof &values,
-                                   CORBA::Environment &env)
+  virtual Cubit::oneof cube_union (const Cubit::oneof &values
+                                   TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Cube a union.
 
   virtual void cube_long_sequence (const Cubit::long_seq &input,
-                                   Cubit::long_seq_out output,
-                                   CORBA::Environment &env)
+                                   Cubit::long_seq_out output
+                                   TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Cube a sequence.
 
   virtual void cube_octet_sequence (const Cubit::octet_seq &input,
-                                    Cubit::octet_seq_out output,
-                                    CORBA::Environment &_env)
+                                    Cubit::octet_seq_out output
+                                    TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Cube an octet sequence.
 
   virtual void cube_many_sequence (const Cubit::many_seq & input,
-                                   Cubit::many_seq_out output,
-                                   CORBA::Environment &_tao_environment)
+                                   Cubit::many_seq_out output
+                                   TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Cube an Many sequence.
 
   virtual void cube_rti_data (const Cubit::RtiPacket &input,
-                              Cubit::RtiPacket_out output,
-                              CORBA::Environment &env)
+                              Cubit::RtiPacket_out output
+                              TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Cube a sequence.
 
-  virtual CORBA::Any * cube_any (const CORBA::Any & any,
-                                CORBA::Environment &env)
+  virtual CORBA::Any * cube_any (const CORBA::Any & any
+                                TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Cube a long in an any
 
-  virtual CORBA::Any * cube_any_struct (const CORBA::Any & any,
-                                       CORBA::Environment &env)
+  virtual CORBA::Any * cube_any_struct (const CORBA::Any & any
+                                       TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Cube a struct in an any
 
-  virtual void shutdown (CORBA::Environment &env)
+  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Shutdown routine.
 
@@ -135,7 +135,7 @@ public:
   ~Cubit_Factory_i (void);
   // Destructor.
 
-  virtual Cubit_ptr make_cubit (CORBA::Environment &env)
+  virtual Cubit_ptr make_cubit (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Make a cubit object.
 

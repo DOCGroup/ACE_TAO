@@ -54,26 +54,20 @@ public:
   /// Destructor.
   ~TAO_Named_RT_Mutex_Manager (void);
 
-  RTCORBA::Mutex_ptr create_mutex (CORBA::Environment
-                                   &ACE_TRY_ENV =
-                                   TAO_default_environment ())
+  RTCORBA::Mutex_ptr create_mutex (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void destroy_mutex (RTCORBA::Mutex_ptr the_mutex,
-                      CORBA::Environment &ACE_TRY_ENV =
-                      TAO_default_environment ())
+  void destroy_mutex (RTCORBA::Mutex_ptr the_mutex
+                      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   RTCORBA::Mutex_ptr create_named_mutex (const char *name,
-                                         CORBA::Boolean_out created_flag,
-                                         CORBA::Environment
-                                         &ACE_TRY_ENV =
-                                         TAO_default_environment ())
+                                         CORBA::Boolean_out created_flag
+                                         TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  RTCORBA::Mutex_ptr open_named_mutex (const char * name,
-                                       CORBA::Environment &ACE_TRY_ENV =
-                                       TAO_default_environment () )
+  RTCORBA::Mutex_ptr open_named_mutex (const char * name
+                                       TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RTCORBA::RTORB::MutexNotFound
                      ));
@@ -116,9 +110,7 @@ public:
    * consistant priority inheritance/piority ceiling semantics
    * can be guaranteed.
    */
-  virtual RTCORBA::Mutex_ptr create_mutex (CORBA::Environment
-                                           &ACE_TRY_ENV =
-                                           TAO_default_environment ())
+  virtual RTCORBA::Mutex_ptr create_mutex (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -126,9 +118,8 @@ public:
    * instances are destroyed as soon as their reference counts go to
    * 0.
    */
-  virtual void destroy_mutex (RTCORBA::Mutex_ptr the_mutex,
-                              CORBA::Environment &ACE_TRY_ENV =
-                              TAO_default_environment ())
+  virtual void destroy_mutex (RTCORBA::Mutex_ptr the_mutex
+                              TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -137,16 +128,13 @@ public:
    * is set to 0.
    */
   virtual RTCORBA::Mutex_ptr create_named_mutex (const char *name,
-                                                 CORBA::Boolean_out created_flag,
-                                                 CORBA::Environment
-                                                 &ACE_TRY_ENV =
-                                                 TAO_default_environment ())
+                                                 CORBA::Boolean_out created_flag
+                                                 TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Retrieve a previously created mutex.
-  virtual RTCORBA::Mutex_ptr open_named_mutex (const char * name,
-                                                CORBA::Environment &ACE_TRY_ENV =
-                                                TAO_default_environment () )
+  virtual RTCORBA::Mutex_ptr open_named_mutex (const char * name
+                                                TAO_ENV_ARG_DECL_WITH_DEFAULTS )
      ACE_THROW_SPEC ((CORBA::SystemException,
                       RTCORBA::RTORB::MutexNotFound
                       ));
@@ -161,9 +149,8 @@ public:
                                   CORBA::Long recv_buffer_size,
                                   CORBA::Boolean keep_alive,
                                   CORBA::Boolean dont_route,
-                                  CORBA::Boolean no_delay,
-                                  CORBA::Environment
-                                  &ACE_TRY_ENV = TAO_default_environment ())
+                                  CORBA::Boolean no_delay
+                                  TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException ));
 
   /// Create a RTCORBA threadpool to manage a set of threads without lanes.
@@ -174,9 +161,8 @@ public:
                      RTCORBA::Priority default_priority,
                      CORBA::Boolean allow_request_buffering,
                      CORBA::ULong max_buffered_requests,
-                     CORBA::ULong max_request_buffer_size,
-                     CORBA::Environment
-                     &ACE_TRY_ENV = TAO_default_environment ())
+                     CORBA::ULong max_request_buffer_size
+                     TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -189,15 +175,13 @@ public:
                                 CORBA::Boolean allow_borrowing,
                                 CORBA::Boolean allow_request_buffering,
                                 CORBA::ULong max_buffered_requests,
-                                CORBA::ULong max_request_buffer_size,
-                                CORBA::Environment &ACE_TRY_ENV =
-                                TAO_default_environment ())
+                                CORBA::ULong max_request_buffer_size
+                                TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Free the resources associated with the specified threadpool.
-  virtual void destroy_threadpool (RTCORBA::ThreadpoolId threadpool,
-                                   CORBA::Environment &ACE_TRY_ENV =
-                                   TAO_default_environment ())
+  virtual void destroy_threadpool (RTCORBA::ThreadpoolId threadpool
+                                   TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RTCORBA::RTORB::InvalidThreadpool));
 
@@ -205,16 +189,14 @@ public:
   virtual RTCORBA::PriorityModelPolicy_ptr
   create_priority_model_policy (
                                 RTCORBA::PriorityModel priority_model,
-                                RTCORBA::Priority server_priority,
-                                CORBA::Environment &ACE_TRY_ENV =
-                                TAO_default_environment ())
+                                RTCORBA::Priority server_priority
+                                TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Create a ThreadpoolPolicy instance for POA creation
   virtual RTCORBA::ThreadpoolPolicy_ptr
-  create_threadpool_policy (RTCORBA::ThreadpoolId threadpool,
-                            CORBA::Environment &ACE_TRY_ENV =
-                            TAO_default_environment ())
+  create_threadpool_policy (RTCORBA::ThreadpoolId threadpool
+                            TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -223,9 +205,8 @@ public:
    */
   virtual RTCORBA::PriorityBandedConnectionPolicy_ptr
   create_priority_banded_connection_policy (const RTCORBA::PriorityBands &
-                                            priority_bands,
-                                            CORBA::Environment &ACE_TRY_ENV =
-                                            TAO_default_environment ())
+                                            priority_bands
+                                            TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -234,8 +215,7 @@ public:
    * to the server.
    */
   virtual RTCORBA::PrivateConnectionPolicy_ptr
-  create_private_connection_policy (CORBA::Environment &ACE_TRY_ENV =
-                                    TAO_default_environment ())
+  create_private_connection_policy (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -243,9 +223,8 @@ public:
    * communication protocols on the server side.
    */
   virtual RTCORBA::ServerProtocolPolicy_ptr
-  create_server_protocol_policy (const RTCORBA::ProtocolList & protocols,
-                                 CORBA::Environment &ACE_TRY_ENV =
-                                 TAO_default_environment ())
+  create_server_protocol_policy (const RTCORBA::ProtocolList & protocols
+                                 TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -253,9 +232,8 @@ public:
    * communication protocols on the client side.
    */
   virtual RTCORBA::ClientProtocolPolicy_ptr
-  create_client_protocol_policy (const RTCORBA::ProtocolList & protocols,
-                                 CORBA::Environment &ACE_TRY_ENV =
-                                 TAO_default_environment ())
+  create_client_protocol_policy (const RTCORBA::ProtocolList & protocols
+                                 TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Get the Thread Pool Manager.

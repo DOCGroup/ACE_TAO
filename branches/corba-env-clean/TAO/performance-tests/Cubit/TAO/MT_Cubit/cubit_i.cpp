@@ -18,32 +18,32 @@ Cubit_i::~Cubit_i (void)
 }
 
 CORBA::Octet
-Cubit_i::cube_octet (CORBA::Octet o,
-                     CORBA::Environment &)
+Cubit_i::cube_octet (CORBA::Octet o
+                     TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return (CORBA::Octet) (o * o * o);
 }
 
 CORBA::Short
-Cubit_i::cube_short (CORBA::Short s,
-                     CORBA::Environment &)
+Cubit_i::cube_short (CORBA::Short s
+                     TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return (CORBA::Short) (s * s * s);
 }
 
 CORBA::Long
-Cubit_i::cube_long (CORBA::Long l,
-                    CORBA::Environment &)
+Cubit_i::cube_long (CORBA::Long l
+                    TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return (CORBA::Long) (l * l * l);
 }
 
 Cubit::Many
-Cubit_i::cube_struct (const Cubit::Many &values,
-                      CORBA::Environment &)
+Cubit_i::cube_struct (const Cubit::Many &values
+                      TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Cubit::Many out_values;
@@ -56,13 +56,13 @@ Cubit_i::cube_struct (const Cubit::Many &values,
 }
 
 void
-Cubit_i::noop (CORBA::Environment &)
+Cubit_i::noop (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // does nothing.
 }
 
-void Cubit_i::shutdown (CORBA::Environment &)
+void Cubit_i::shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -71,7 +71,7 @@ void Cubit_i::shutdown (CORBA::Environment &)
 }
 
 PortableServer::POA_ptr
-Cubit_i::_default_POA (CORBA::Environment &)
+Cubit_i::_default_POA (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }

@@ -79,18 +79,18 @@ public:
   /// Return the argument vector for the ORB currently being
   /// initialized as a string sequence.
   virtual CORBA::StringSeq * arguments (
-      CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return the ORBid for the ORB currently being initialized.
   virtual char * orb_id (
-      CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return the CodecFactory for the ORB currently being
   /// initialized.
   virtual IOP::CodecFactory_ptr codec_factory (
-      CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Register a mapping between a string and a corresponding object
@@ -105,8 +105,8 @@ public:
    */
   virtual void register_initial_reference (
       const char * id,
-      CORBA::Object_ptr obj,
-      CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+      CORBA::Object_ptr obj
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ORBInitInfo::InvalidName));
 
@@ -114,47 +114,47 @@ public:
   /// via the usual CORBA::ORB::resolve_initial_references() mechanism
   /// since the ORB may not be fully initialized yet.
   virtual CORBA::Object_ptr resolve_initial_references (
-      const char * id,
-      CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+      const char * id
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ORBInitInfo::InvalidName));
 
   /// Register a client request interceptor with the ORB currently
   /// being initialized.
   virtual void add_client_request_interceptor (
-      PortableInterceptor::ClientRequestInterceptor_ptr interceptor,
-      CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+      PortableInterceptor::ClientRequestInterceptor_ptr interceptor
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ORBInitInfo::DuplicateName));
 
   /// Register a server request interceptor with the ORB currently
   /// being initialized.
   virtual void add_server_request_interceptor (
-      PortableInterceptor::ServerRequestInterceptor_ptr interceptor,
-      CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+      PortableInterceptor::ServerRequestInterceptor_ptr interceptor
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ORBInitInfo::DuplicateName));
 
   /// Register an IOR interceptor with the ORB currently being
   /// initialized.
   virtual void add_ior_interceptor (
-      PortableInterceptor::IORInterceptor_ptr interceptor,
-      CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+      PortableInterceptor::IORInterceptor_ptr interceptor
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ORBInitInfo::DuplicateName));
 
   /// Reserve a slot in table found within the
   /// PortableInterceptor::Current object.
   virtual PortableInterceptor::SlotId allocate_slot_id (
-      CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Register a policy factory of the given policy type with the ORB
   /// currently being initialized.
   virtual void register_policy_factory (
       CORBA::PolicyType type,
-      PortableInterceptor::PolicyFactory_ptr policy_factory,
-      CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+      PortableInterceptor::PolicyFactory_ptr policy_factory
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
   //@}
 
@@ -177,8 +177,8 @@ public:
    * be registered.
    */
   size_t allocate_tss_slot_id (
-      ACE_CLEANUP_FUNC cleanup,
-      CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+      ACE_CLEANUP_FUNC cleanup
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return a pointer to the ORB Core associated with the ORB being
@@ -205,16 +205,14 @@ public:
   static TAO_ORBInitInfo_ptr _duplicate (TAO_ORBInitInfo_ptr obj);
 
   static TAO_ORBInitInfo_ptr _narrow (
-      CORBA::Object_ptr obj,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
+      CORBA::Object_ptr obj
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
   static TAO_ORBInitInfo_ptr _unchecked_narrow (
-      CORBA::Object_ptr obj,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
+      CORBA::Object_ptr obj
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
   static TAO_ORBInitInfo_ptr _nil (void)
     {
@@ -235,7 +233,7 @@ protected:
   /// Check if this ORBInitInfo instance is valid.  Once post_init()
   /// has been called on each of the ORBInitializers, this ORBInitInfo
   /// is no longer valid.  Throw an exception in that case.
-  void check_validity (CORBA::Environment &ACE_TRY_ENV);
+  void check_validity (TAO_ENV_SINGLE_ARG_DECL);
 
 private:
 
@@ -294,8 +292,8 @@ public:
   static void release (TAO_ORBInitInfo_ptr);
   static TAO_ORBInitInfo_ptr nil (void);
   static TAO_ORBInitInfo_ptr narrow (
-      CORBA::Object *,
-      CORBA::Environment &
+      CORBA::Object *
+      TAO_ENV_ARG_DECL_NOT_USED
     );
   static CORBA::Object * upcast (void *);
 

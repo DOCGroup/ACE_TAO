@@ -20,23 +20,23 @@ TAO_NativeDef_i::~TAO_NativeDef_i (void)
 }
 
 CORBA::DefinitionKind
-TAO_NativeDef_i::def_kind (CORBA::Environment &)
+TAO_NativeDef_i::def_kind (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::dk_Native;
 }
 
-CORBA::TypeCode_ptr 
-TAO_NativeDef_i::type (CORBA::Environment &ACE_TRY_ENV)
+CORBA::TypeCode_ptr
+TAO_NativeDef_i::type (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
 
-  return this->type_i (ACE_TRY_ENV);
+  return this->type_i (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
-CORBA::TypeCode_ptr 
-TAO_NativeDef_i::type_i (CORBA::Environment &ACE_TRY_ENV)
+CORBA::TypeCode_ptr
+TAO_NativeDef_i::type_i (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString id;
@@ -50,7 +50,7 @@ TAO_NativeDef_i::type_i (CORBA::Environment &ACE_TRY_ENV)
                                             name);
 
   return this->repo_->tc_factory ()->create_native_tc (id.c_str (),
-                                                       name.c_str (),
-                                                       ACE_TRY_ENV);
+                                                       name.c_str ()
+                                                       TAO_ENV_ARG_PARAMETER);
 }
 

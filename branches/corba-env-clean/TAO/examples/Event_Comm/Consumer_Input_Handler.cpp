@@ -35,7 +35,7 @@ int
 Consumer_Input_Handler::close (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-	      "closing down Consumer::Input_Handler\n"));
+              "closing down Consumer::Input_Handler\n"));
 
   Event_Comm::Consumer *receiver =
     this->receiver_handler_->receiver ();
@@ -52,11 +52,11 @@ Consumer_Input_Handler::close (void)
           // Gracefully shutdown the Receiver by removing it from the
           // Notifier's internal map.
 
-	  if (notifier != 0)
-	    notifier->unsubscribe (receiver,
-				   "",
-				   ACE_TRY_ENV);
-	  ACE_TRY_CHECK;
+          if (notifier != 0)
+            notifier->unsubscribe (receiver,
+                                   ""
+                                   TAO_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
         }
       ACE_CATCHANY
         {
@@ -86,9 +86,9 @@ int Consumer_Input_Handler::initialize (Consumer_Handler *ch)
        TAO_ORB_Core_instance ()->reactor (),
        TAO_ORB_Core_instance ()->thr_mgr ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "%p\n",
-		       "register_stdin_handler"),
-		      -1);
+                       "%p\n",
+                       "register_stdin_handler"),
+                      -1);
   return 0;
 }
 
@@ -104,9 +104,9 @@ Consumer_Input_Handler::handle_input (ACE_HANDLE h)
     {
       // Null terminate the buffer, replacing the '\n' with '\0'.
       if (buf[n - 1] == '\n')
-	buf[n - 1] = '\0';
+        buf[n - 1] = '\0';
       else
-	buf[n] = '\0';
+        buf[n] = '\0';
       ACE_DEBUG ((LM_DEBUG,
                   "notifying for event %s\n",
                   buf));
@@ -138,9 +138,9 @@ Consumer_Input_Handler::handle_input (ACE_HANDLE h)
 
           event.tag_ = ACE_OS::strdup (buf);
 
-          notifier->push (event, ACE_TRY_ENV);
-	  ACE_TRY_CHECK;
-	}
+          notifier->push (event TAO_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
       ACE_CATCHANY
         {
           ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Unexpected exception\n");

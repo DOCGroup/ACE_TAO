@@ -62,12 +62,12 @@ public:
                      ACE_ES_Correlation_Module *down);
   // Link to adjacent modules.
 
-  virtual void connected (ACE_Push_Consumer_Proxy *consumer,
-                          CORBA::Environment &);
+  virtual void connected (ACE_Push_Consumer_Proxy *consumer
+                          TAO_ENV_ARG_DECL_NOT_USED);
   // Forward down_.
 
-  virtual void disconnecting (ACE_Push_Consumer_Proxy *consumer,
-                              CORBA::Environment &);
+  virtual void disconnecting (ACE_Push_Consumer_Proxy *consumer
+                              TAO_ENV_ARG_DECL_NOT_USED);
   // Forward down_.
 
   virtual void disconnected (ACE_Push_Consumer_Proxy *consumer);
@@ -77,8 +77,8 @@ public:
   // void connected (ACE_Push_Supplier_Proxy *supplier);
   // void disconnecting (ACE_Push_Supplier_Proxy *supplier);
 
-  virtual void push (ACE_ES_Dispatch_Request *request,
-                     CORBA::Environment &) = 0;
+  virtual void push (ACE_ES_Dispatch_Request *request
+                     TAO_ENV_ARG_DECL_NOT_USED) = 0;
   // Forward up_.
 
   virtual int dispatch_event (ACE_ES_Dispatch_Request *request,
@@ -384,8 +384,8 @@ public:
   ~ACE_ES_Priority_Dispatching (void);
   // Delete queues.
 
-  void connected (ACE_Push_Consumer_Proxy *consumer,
-                  CORBA::Environment &);
+  void connected (ACE_Push_Consumer_Proxy *consumer
+                  TAO_ENV_ARG_DECL_NOT_USED);
   // Allocate any needed dispatching resources for this consumers
   // priority.
 
@@ -396,8 +396,8 @@ public:
   // void connected (ACE_Push_Supplier_Proxy *supplier);
   // void disconnecting (ACE_Push_Supplier_Proxy *supplier);
 
-  virtual void push (ACE_ES_Dispatch_Request *request,
-                     CORBA::Environment &);
+  virtual void push (ACE_ES_Dispatch_Request *request
+                     TAO_ENV_ARG_DECL_NOT_USED);
   // Enqueues the request on the appropriate Dispatch Queue.
 
   virtual void activate (int threads_per_queue);
@@ -469,8 +469,8 @@ public:
   // Acquires the proper qos structure and passes <channel> onto to
   // the dispatching base constructor.
 
-  virtual void push (ACE_ES_Dispatch_Request *request,
-                     CORBA::Environment &);
+  virtual void push (ACE_ES_Dispatch_Request *request
+                     TAO_ENV_ARG_DECL_NOT_USED);
   // Forward up_.
 };
 
@@ -493,8 +493,8 @@ public:
   // needs to be dequeued.  Implements an RTU-like delayed preemption
   // policy.
 
-  virtual void push (ACE_ES_Dispatch_Request *request,
-                     CORBA::Environment &);
+  virtual void push (ACE_ES_Dispatch_Request *request
+                     TAO_ENV_ARG_DECL_NOT_USED);
   // Calls ACE_ES_Priority_Dispatching::push and then checks if
   // preemption is necessary.
 };

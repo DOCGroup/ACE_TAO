@@ -52,8 +52,8 @@ public:
   /// Get an Invocation's endpoint selection strategy and
   /// initialize the endpoint selection state instance.
   virtual TAO_Invocation_Endpoint_Selector *get_selector (
-      TAO_GIOP_Invocation *,
-      CORBA::Environment &ACE_TRY_ENV);
+      TAO_GIOP_Invocation *
+      TAO_ENV_ARG_DECL);
 
 private:
 

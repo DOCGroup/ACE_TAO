@@ -46,12 +46,12 @@ public:
   // Destructor
 
   CosNotifyFilter::FilterFactory_ptr
-  get_ref (CORBA::Environment &ACE_TRY_ENV);
+  get_ref (TAO_ENV_SINGLE_ARG_DECL);
   // Activate with the default POA
 
   virtual CosNotifyFilter::Filter_ptr create_filter (
-    const char * constraint_grammar,
-    CORBA::Environment &ACE_TRY_ENV
+    const char * constraint_grammar
+    TAO_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -60,8 +60,8 @@ public:
 
   virtual CosNotifyFilter::MappingFilter_ptr create_mapping_filter (
     const char * constraint_grammar,
-    const CORBA::Any & default_value,
-    CORBA::Environment &ACE_TRY_ENV
+    const CORBA::Any & default_value
+    TAO_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,

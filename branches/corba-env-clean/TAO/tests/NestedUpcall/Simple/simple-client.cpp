@@ -52,8 +52,8 @@ Client_Task::svc (void)
 
       // Now, we can invoke an operation on the remote side.
       this->server_->start (this->client_.in (),
-                            call_count,
-                            ACE_TRY_ENV);
+                            call_count
+                            TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       return 0;
@@ -129,8 +129,8 @@ main (int argc,
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            0,
-                                            ACE_TRY_ENV);
+                                            0
+                                            TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       int result = parse_args (argc,
@@ -138,35 +138,35 @@ main (int argc,
       if (result != 0)
         return result;
 
-      CORBA::Object_var object = orb->resolve_initial_references ("RootPOA",
-                                                                  ACE_TRY_ENV);
+      CORBA::Object_var object = orb->resolve_initial_references ("RootPOA"
+                                                                  TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (object.in (),
-                                      ACE_TRY_ENV);
+        PortableServer::POA::_narrow (object.in ()
+                                      TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_TRY_ENV);
+        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      poa_manager->activate (ACE_TRY_ENV);
+      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      object = orb->string_to_object (ior,
-                                      ACE_TRY_ENV);
+      object = orb->string_to_object (ior
+                                      TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      server_var server = server::_narrow (object.in (),
-                                           ACE_TRY_ENV);
+      server_var server = server::_narrow (object.in ()
+                                           TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Create an client object to hand to the other side...
       client_i client_servant (quiet,
                                server.in ());
 
-      client_var client_object = client_servant._this (ACE_TRY_ENV);
+      client_var client_object = client_servant._this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Client_Task client_tasks (client_object.in (),
@@ -177,13 +177,13 @@ main (int argc,
 
       if (shutdown_server)
         {
-          server->shutdown (ACE_TRY_ENV);
+          server->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
       root_poa->destroy (1,
-                         1,
-                         ACE_TRY_ENV);
+                         1
+                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

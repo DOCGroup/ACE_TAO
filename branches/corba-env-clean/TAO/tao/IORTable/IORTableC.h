@@ -57,7 +57,7 @@
 TAO_NAMESPACE  IORTable
 {
   class Locator;
-  
+
 #if !defined (_IORTABLE_LOCATOR___PTR_CH_)
 #define _IORTABLE_LOCATOR___PTR_CH_
 
@@ -73,31 +73,31 @@ TAO_NAMESPACE  IORTable
   {
   public:
     Locator_var (void); // default constructor
-    Locator_var (Locator_ptr p) : ptr_ (p) {} 
+    Locator_var (Locator_ptr p) : ptr_ (p) {}
     Locator_var (const Locator_var &); // copy constructor
     ~Locator_var (void); // destructor
-    
+
     Locator_var &operator= (Locator_ptr);
     Locator_var &operator= (const Locator_var &);
     Locator_ptr operator-> (void) const;
-    
+
     operator const Locator_ptr &() const;
     operator Locator_ptr &();
-    // in, inout, out, _retn 
+    // in, inout, out, _retn
     Locator_ptr in (void) const;
     Locator_ptr &inout (void);
     Locator_ptr &out (void);
     Locator_ptr _retn (void);
     Locator_ptr ptr (void) const;
-    
+
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
     static Locator_ptr tao_duplicate (Locator_ptr);
     static void tao_release (Locator_ptr);
     static Locator_ptr tao_nil (void);
-    static Locator_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static Locator_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
     static CORBA::Object * tao_upcast (void *);
-  
+
   private:
     Locator_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -124,7 +124,7 @@ TAO_NAMESPACE  IORTable
     operator Locator_ptr &();
     Locator_ptr &ptr (void);
     Locator_ptr operator-> (void);
-  
+
   private:
     Locator_ptr &ptr_;
   };
@@ -142,29 +142,29 @@ TAO_NAMESPACE  IORTable
 
     AlreadyBound (void);
     // Default constructor.
-    
+
     AlreadyBound (const AlreadyBound &);
     // Copy constructor.
-    
+
     ~AlreadyBound (void);
     // Destructor.
-    
+
     static void _tao_any_destructor (void*);
-    
+
     AlreadyBound &operator= (const AlreadyBound &);
-    
+
     virtual void _raise (void);
 
     virtual void _tao_encode (
-        TAO_OutputCDR &,
-        CORBA::Environment &
+        TAO_OutputCDR &
+        TAO_ENV_ARG_DECL_NOT_USED
       ) const;
-    
+
     virtual void _tao_decode (
-        TAO_InputCDR &,
-        CORBA::Environment &
+        TAO_InputCDR &
+        TAO_ENV_ARG_DECL_NOT_USED
       );
-    
+
     static AlreadyBound *_downcast (CORBA::Exception *);
 
 
@@ -185,29 +185,29 @@ TAO_NAMESPACE  IORTable
 
     NotFound (void);
     // Default constructor.
-    
+
     NotFound (const NotFound &);
     // Copy constructor.
-    
+
     ~NotFound (void);
     // Destructor.
-    
+
     static void _tao_any_destructor (void*);
-    
+
     NotFound &operator= (const NotFound &);
-    
+
     virtual void _raise (void);
 
     virtual void _tao_encode (
-        TAO_OutputCDR &,
-        CORBA::Environment &
+        TAO_OutputCDR &
+        TAO_ENV_ARG_DECL_NOT_USED
       ) const;
-    
+
     virtual void _tao_decode (
-        TAO_InputCDR &,
-        CORBA::Environment &
+        TAO_InputCDR &
+        TAO_ENV_ARG_DECL_NOT_USED
       );
-    
+
     static NotFound *_downcast (CORBA::Exception *);
 
 
@@ -224,7 +224,7 @@ TAO_NAMESPACE  IORTable
 
   class Table;
   typedef Table *Table_ptr;
-  
+
 #endif /* end #if !defined */
 
 
@@ -235,31 +235,31 @@ TAO_NAMESPACE  IORTable
   {
   public:
     Table_var (void); // default constructor
-    Table_var (Table_ptr p) : ptr_ (p) {} 
+    Table_var (Table_ptr p) : ptr_ (p) {}
     Table_var (const Table_var &); // copy constructor
     ~Table_var (void); // destructor
-    
+
     Table_var &operator= (Table_ptr);
     Table_var &operator= (const Table_var &);
     Table_ptr operator-> (void) const;
-    
+
     operator const Table_ptr &() const;
     operator Table_ptr &();
-    // in, inout, out, _retn 
+    // in, inout, out, _retn
     Table_ptr in (void) const;
     Table_ptr &inout (void);
     Table_ptr &out (void);
     Table_ptr _retn (void);
     Table_ptr ptr (void) const;
-    
+
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
     static Table_ptr tao_duplicate (Table_ptr);
     static void tao_release (Table_ptr);
     static Table_ptr tao_nil (void);
-    static Table_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static Table_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
     static CORBA::Object * tao_upcast (void *);
-  
+
   private:
     Table_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -286,7 +286,7 @@ TAO_NAMESPACE  IORTable
     operator Table_ptr &();
     Table_ptr &ptr (void);
     Table_ptr operator-> (void);
-  
+
   private:
     Table_ptr &ptr_;
   };
@@ -311,15 +311,13 @@ class TAO_IORTable_Export Table : public virtual CORBA_Object
     // the static operations
     static Table_ptr _duplicate (Table_ptr obj);
     static Table_ptr _narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
+        CORBA::Object_ptr obj
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
     static Table_ptr _unchecked_narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
+        CORBA::Object_ptr obj
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
     static Table_ptr _nil (void)
       {
         return (Table_ptr)0;
@@ -327,10 +325,9 @@ class TAO_IORTable_Export Table : public virtual CORBA_Object
 
     virtual void bind (
         const char * object_key,
-        const char * IOR,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
+        const char * IOR
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         IORTable::AlreadyBound
@@ -338,40 +335,37 @@ class TAO_IORTable_Export Table : public virtual CORBA_Object
 
     virtual void rebind (
         const char * object_key,
-        const char * IOR,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
+        const char * IOR
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual void unbind (
-        const char * object_key,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
+        const char * object_key
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         IORTable::NotFound
       )) = 0;
 
     virtual void set_locator (
-        IORTable::Locator_ptr the_locator,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
+        IORTable::Locator_ptr the_locator
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
   protected:
     Table ();
-    
+
     virtual ~Table (void);
   private:
     Table (const Table &);
@@ -398,37 +392,34 @@ class TAO_IORTable_Export Locator : public virtual CORBA_Object
     // the static operations
     static Locator_ptr _duplicate (Locator_ptr obj);
     static Locator_ptr _narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
+        CORBA::Object_ptr obj
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
     static Locator_ptr _unchecked_narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
+        CORBA::Object_ptr obj
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
     static Locator_ptr _nil (void)
       {
         return (Locator_ptr)0;
       }
 
     virtual char * locate (
-        const char * object_key,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
+        const char * object_key
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         IORTable::NotFound
       )) = 0;
 
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
   protected:
     Locator ();
-    
+
     virtual ~Locator (void);
   private:
     Locator (const Locator &);
