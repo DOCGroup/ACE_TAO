@@ -1,6 +1,4 @@
-// This project must be named TAO_IDL_EXE instead of TAO_IDL
-// because otherwise mpc won't work correctly. 
-project(TAO_IDL_EXE) : aceexe, taoversion, core, tao_output {
+project(TAO_IDL_EXE) : aceexe, core, tao_output {
   exename   = tao_idl
   libs     += TAO_IDL_BE TAO_IDL_FE
   includes += include be_include fe 
@@ -21,7 +19,7 @@ project(TAO_IDL_EXE) : aceexe, taoversion, core, tao_output {
 }
 
 
-project(TAO_IDL_BE) : acelib, taoversion, core, tao_output {
+project(TAO_IDL_BE) : acelib, core, tao_output {
   sharedname   = TAO_IDL_BE
   libs        += TAO_IDL_FE
   includes    += include be_include fe
@@ -39,7 +37,7 @@ project(TAO_IDL_BE) : acelib, taoversion, core, tao_output {
 }
 
 
-project(TAO_IDL_FE) : acelib, taoversion, core, tao_output {
+project(TAO_IDL_FE) : acelib, core, tao_output {
   sharedname   = TAO_IDL_FE
   includes    += include fe
   dynamicflags = TAO_IDL_FE_BUILD_DLL
