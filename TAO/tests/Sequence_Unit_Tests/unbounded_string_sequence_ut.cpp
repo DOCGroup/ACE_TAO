@@ -18,7 +18,7 @@
 
 #include <boost/test/unit_test.hpp>
 #include <boost/shared_ptr.hpp>
-#include <boost/enable_shared_from_this.hpp>
+#include <boost/weak_ptr.hpp>
 
 #include <sstream>
 
@@ -26,7 +26,6 @@ using namespace boost::unit_test_framework;
 using namespace TAO;
 
 struct Tester
-  : public boost::enable_shared_from_this<Tester>
 {
   typedef char char_type;
   typedef char * value_type;
@@ -293,6 +292,23 @@ struct Tester
                 shared_from_this()));
   }
 
+  static boost::shared_ptr<Tester> allocate()
+  {
+    boost::shared_ptr<Tester> ptr(new Tester);
+    ptr->self_ = ptr;
+
+    return ptr;
+  }
+
+private:
+  Tester() {}
+
+  boost::shared_ptr<Tester> shared_from_this()
+  {
+    return boost::shared_ptr<Tester>(self_);
+  }
+
+  boost::weak_ptr<Tester> self_;
 };
 
 test_suite *
@@ -301,7 +317,7 @@ init_unit_test_suite(int, char*[])
   std::auto_ptr<test_suite> ts(
       BOOST_TEST_SUITE("unbounded string sequence unit test"));
 
-  boost::shared_ptr<Tester> tester(new Tester);
+  boost::shared_ptr<Tester> tester(Tester::allocate());
   tester->add_all(ts.get());
 
   return ts.release();

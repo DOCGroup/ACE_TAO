@@ -19,7 +19,7 @@
 
 #include <boost/test/unit_test.hpp>
 #include <boost/shared_ptr.hpp>
-#include <boost/enable_shared_from_this.hpp>
+#include <boost/weak_ptr.hpp>
 
 using namespace TAO::details;
 
@@ -63,7 +63,7 @@ struct helper<CORBA::WChar>
 };
 
 template<class charT>
-struct Tester : public boost::enable_shared_from_this<Tester<charT> >
+struct Tester
 {
   typedef string_traits<charT,true> tested_element_traits;
   typedef string_sequence_element<charT> tested_element;
@@ -358,6 +358,24 @@ struct Tester : public boost::enable_shared_from_this<Tester<charT> >
                 &Tester::test_assignment_from_mgr,
                 shared_from_this()));
   }
+
+  static boost::shared_ptr<Tester> allocate()
+  {
+    boost::shared_ptr<Tester> ptr(new Tester);
+    ptr->self_ = ptr;
+
+    return ptr;
+  }
+
+private:
+  Tester() {}
+
+  boost::shared_ptr<Tester> shared_from_this()
+  {
+    return boost::shared_ptr<Tester>(self_);
+  }
+
+  boost::weak_ptr<Tester> self_;
 }; 
 
 test_suite *
@@ -367,11 +385,11 @@ init_unit_test_suite(int, char*[])
       BOOST_TEST_SUITE("string sequence element unit test"));
 
   boost::shared_ptr<Tester<char> > char_tester(
-      new Tester<char>);
+      Tester<char>::allocate());
   char_tester->add_all(ts.get());
 
   boost::shared_ptr<Tester<CORBA::WChar> > wchar_tester(
-      new Tester<CORBA::WChar>);
+      Tester<CORBA::WChar>::allocate());
   wchar_tester->add_all(ts.get());
 
   return ts.release();

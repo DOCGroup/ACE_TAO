@@ -11,7 +11,7 @@
 
 #include <boost/test/unit_test.hpp>
 #include <boost/shared_ptr.hpp>
-#include <boost/enable_shared_from_this.hpp>
+#include <boost/weak_ptr.hpp>
 
 using namespace TAO::details;
 
@@ -20,7 +20,7 @@ using namespace boost::unit_test_framework;
 CORBA::ULong const MAXIMUM = 32;
 
 template<class value_type>
-struct Tester : public boost::enable_shared_from_this<Tester<value_type> >
+struct Tester
 {
   typedef unbounded_allocation_traits<value_type,true> unbounded;
   typedef bounded_allocation_traits<value_type,MAXIMUM,true> bounded;
@@ -150,6 +150,23 @@ struct Tester : public boost::enable_shared_from_this<Tester<value_type> >
                 shared_from_this()));
   }
 
+  static boost::shared_ptr<Tester> allocate()
+  {
+    boost::shared_ptr<Tester> ptr(new Tester);
+    ptr->self_ = ptr;
+
+    return ptr;
+  }
+
+private:
+  Tester() {}
+
+  boost::shared_ptr<Tester> shared_from_this()
+  {
+    return boost::shared_ptr<Tester>(self_);
+  }
+
+  boost::weak_ptr<Tester> self_;
 };
 
 struct Foo { int y; };
@@ -161,17 +178,20 @@ init_unit_test_suite(int, char*[])
       BOOST_TEST_SUITE("testing allocation traits unit test"));
 
   {
-    boost::shared_ptr<Tester<int> > tester(new Tester<int>);
+    boost::shared_ptr<Tester<int> > tester(
+        Tester<int>::allocate());
     tester->add_all(ts.get());
   }
 
   {
-    boost::shared_ptr<Tester<Foo> > tester(new Tester<Foo>);
+    boost::shared_ptr<Tester<Foo> > tester(
+        Tester<Foo>::allocate());
     tester->add_all(ts.get());
   }
 
   {
-    boost::shared_ptr<Tester<char*> > tester(new Tester<char*>);
+    boost::shared_ptr<Tester<char*> > tester(
+        Tester<char*>::allocate());
     tester->add_all(ts.get());
   }
 
