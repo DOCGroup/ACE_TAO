@@ -1,3 +1,22 @@
+Wed Jun 16 07:18:44 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* configure.ac:
+	* m4/config_h.m4:
+	* ace/OS_NS_Thread.inl:
+	* ace/README:
+	  Added new config knob ACE_LACKS_RWLOCKATTR_PSHARED for those
+	  systems which support thread but not processes scope rwlocks. 
+	  This fixes bugzilla bug 1841.
+	
+	* configure.ac:
+	* m4/config_h.m4:
+	* ace/README:
+	  Removed check for pthread_suspend() and pthread_continue() in
+	  ACE_HAS_PTHREADS_UNIX98_EXT test as these interfaces were not
+	  part of the Version 2 of the Single Unix Specification
+	  (aka UNIX98).
+	  This fixes bugzilla bug 1840.
+
 Wed Jun 16 06:58:33 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/Makefile.am:
