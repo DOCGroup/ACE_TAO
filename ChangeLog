@@ -1,3 +1,8 @@
+Mon Jul 24 14:03:59 2000  Chad Elliott  <elliott_c@ociweb.com>
+        * include/makeinclude/platform_vxworks5.x_g++.GNU
+
+          Added the PENTIUM and PENTIUMPRO CPU's for x86 VxWorks.
+
 Mon Jul 24 10:30:35 2000  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* OS_Dirent.inl: Added the deletion of the DIR.directory_name_
