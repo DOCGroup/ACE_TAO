@@ -164,7 +164,6 @@ CORBA_ORB::CORBA_ORB (TAO_ORB_Core *orb_core)
     server_interceptor_ (),
 # endif /* TAO_HAS_INTERCEPTORS */
     lookup_table_ (),
-    ior_manipulation_ (),
     use_omg_ior_format_ (1)
 {
 }
@@ -560,11 +559,6 @@ CORBA_ORB::resolve_policy_current (CORBA::Environment &)
 
 }
 
-CORBA_Object_ptr
-CORBA_ORB::resolve_ior_manipulation (CORBA::Environment&)
-{
-  return TAO_IOP::TAO_IOR_Manipulation::_duplicate (&this->ior_manipulation_);
-}
 
 CORBA_Object_ptr
 CORBA_ORB::resolve_service (MCAST_SERVICEID mcast_service_id,
@@ -908,7 +902,7 @@ CORBA_ORB::resolve_initial_references (const char *name,
     return this->resolve_policy_current (ACE_TRY_ENV);
 
   else if (ACE_OS::strcmp (name, TAO_OBJID_IORMANIPULATION) == 0)
-    return this->resolve_ior_manipulation (ACE_TRY_ENV);
+    return this->orb_core ()->resolve_ior_manipulation (ACE_TRY_ENV);
 
   else if (ACE_OS::strcmp (name, TAO_OBJID_DYNANYFACTORY) == 0)
     return this->orb_core ()->resolve_dynanyfactory (ACE_TRY_ENV);

@@ -348,6 +348,19 @@ TAO_ORB_Core::resolve_dynanyfactory (CORBA::Environment &ACE_TRY_ENV)
   return CORBA::Object::_duplicate (this->dynany_factory_);
 }
 
+ACE_INLINE CORBA::Object_ptr
+TAO_ORB_Core::resolve_ior_manipulation (CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->lock_,
+                    CORBA::Object::_nil ());
+  if (CORBA::is_nil (this->ior_manip_factory_))
+    {
+      this->resolve_iormanipulation_i (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+    }
+  return CORBA::Object::_duplicate (this->ior_manip_factory_);
+}
+
 // ****************************************************************
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
