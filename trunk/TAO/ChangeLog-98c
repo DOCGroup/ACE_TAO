@@ -3,6 +3,10 @@ Thu Oct 29 07:49:51 1998  David L. Levine  <levine@cs.wustl.edu>
         * tao/DynUnion_i.cpp: added a bunch of .in () dereferences
           so that it will compile with g++.
 
+        * TAO_IDL/Makefile: strip $(CXX) to avoid odd behavior if had
+          trailing whitespace.  Thanks to Steve Kay <slk1@icore.ih.lucent.com>
+          for providing the test case :-)
+
 Wed Oct 28 22:22:44 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Naming/CosNaming_i.cpp (new_context):
