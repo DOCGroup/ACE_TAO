@@ -421,7 +421,6 @@ TAO_Service_Type_Repository
 			CORBA::Environment& _env)
   TAO_THROW_SPEC ((CosTradingRepos::ServiceTypeRepository::ValueTypeRedefinition))
 {
-  CosTradingRepos::ServiceTypeRepository::PropertyMode mode;
   // for each super_type
   for (SUPER_TYPE_MAP::iterator super_map_iterator = super_map.begin ();
        super_map_iterator != super_map.end ();

@@ -18,16 +18,7 @@
 #ifndef TAO_LOCKING_H
 #define TAO_LOCKING_H
 
-#if defined (OS_NO_NAMESPACE)
-#define queue booga
-#endif /* OS_NO_NAMESPACE */
-
 #include "tao/corba.h"
-
-#if defined (OS_NO_NAMESPACE)
-#undef queue
-#endif /* OS_NO_NAMESPACE */
-
 
 // Macros for obtaining read/write locks that are
 // automatically released at the end of scope.
