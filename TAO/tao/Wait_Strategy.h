@@ -60,6 +60,11 @@ public:
   // Register the handler with the Reactor if it makes sense for the
   // strategy.
 
+  virtual ACE_SYNCH_CONDITION *leader_follower_condition_variable (void);
+  // Return the TSS leader follower condition variable used in the
+  // Wait Strategy. Muxed Leader Follower implementation returns a
+  // valid condition variable, others return 0.
+
 protected:
   TAO_Transport *transport_;
   // Transport object.
@@ -67,7 +72,7 @@ protected:
 
 // @@ Alex: we should consider moving these classes to separate files,
 //    that can minimize the footprint of systems that use only one of
-//    the strategies....
+//    the strategies....(coryan).
 
 // *********************************************************************
 
@@ -223,10 +228,16 @@ public:
   
   virtual int sending_request (TAO_ORB_Core *orb_core,
                                int two_way);
+
   virtual int wait (ACE_Time_Value *max_wait_time,
                     int &reply_received);
+
   virtual int handle_input (void);
+
   // virtual int register_handler (void);
+
+  virtual ACE_SYNCH_CONDITION *leader_follower_condition_variable (void);
+  // TSS Leader follower condition variable.
 };
 
 // *********************************************************************

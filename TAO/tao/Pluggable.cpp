@@ -258,6 +258,12 @@ TAO_Transport::reply_received (const CORBA::ULong request_id)
   return this->tms ()->reply_received (request_id);
 }
 
+ACE_SYNCH_CONDITION *
+TAO_Transport::leader_follower_condition_variable (void)
+{
+  return this->wait_strategy ()->leader_follower_condition_variable ();
+}
+
 void
 TAO_Transport::start_request (TAO_ORB_Core *,
                               const TAO_Profile *,

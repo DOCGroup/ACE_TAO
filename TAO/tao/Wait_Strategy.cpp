@@ -20,7 +20,13 @@ TAO_Wait_Strategy::~TAO_Wait_Strategy (void)
 
 int
 TAO_Wait_Strategy::sending_request (TAO_ORB_Core * /* orb_core */,
-                                    int /* two_way */)
+                                    int            /* two_way */)
+{
+  return 0;
+}
+
+ACE_SYNCH_CONDITION *
+TAO_Wait_Strategy::leader_follower_condition_variable (void)
 {
   return 0;
 }
@@ -193,7 +199,7 @@ TAO_Exclusive_Wait_On_Leader_Follower::sending_request (TAO_ORB_Core *orb_core,
 
 int
 TAO_Exclusive_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
-                                   int &)
+                                             int &)
 {
   // Cache the ORB core, it won't change and is used multiple times
   // below:
@@ -490,13 +496,20 @@ TAO_Muxed_Wait_On_Leader_Follower::~TAO_Muxed_Wait_On_Leader_Follower (void)
 {
 }
 
-// @@ Why do we need <orb_core> and the <two_way> flag? <orb_core> is
-//    with the <Transport> object and <two_way> flag wont make sense
-//    at this level since this is common for AMI also. (Alex).
 int
 TAO_Muxed_Wait_On_Leader_Follower::sending_request (TAO_ORB_Core *orb_core,
                                                     int two_way)
 {
+  // Register the handler. 
+  // @@ We could probably move this somewhere else, and remove this
+  //    function totally. (Alex).
+  this->transport_->register_handler ();
+
+  // Send the request.
+  int result =
+    this->TAO_Wait_Strategy::sending_request (orb_core,
+                                              two_way);
+  
   return 0;
 }
 
@@ -504,14 +517,214 @@ int
 TAO_Muxed_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
                                          int &reply_received)
 {
-  return 0;
+  // Cache the ORB core, it won't change and is used multiple times
+  // below:
+  TAO_ORB_Core* orb_core =
+    this->transport_->orb_core ();
+
+  TAO_Leader_Follower& leader_follower =
+    orb_core->leader_follower ();
+
+  // Obtain the lock.
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon,
+                    leader_follower.lock (), -1);
+
+  leader_follower.set_client_thread ();
+
+  ACE_Countdown_Time countdown (max_wait_time);
+
+  // Check if there is a leader, but the leader is not us
+  if (leader_follower.leader_available ()
+      && !leader_follower.is_leader_thread ())
+    {
+      // = Wait as a follower.
+      
+      // ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - wait (follower) on <%x>\n",
+      // this->transport_));
+
+      // Grab the condtion variable.
+      ACE_SYNCH_CONDITION* cond =
+        orb_core->leader_follower_condition_variable ();
+
+      // Add ourselves to the list, do it only once because we can
+      // wake up multiple times from the CV loop.
+      if (leader_follower.add_follower (cond) == -1)
+        ACE_ERROR ((LM_ERROR,
+                    "TAO (%P|%t) TAO_Muxex_Wait_On_Leader_Follower::wait - "
+                    "add_follower failed for <%x>\n",
+                    cond));
+
+      while (!reply_received &&
+             leader_follower.leader_available ())
+        {
+          if (max_wait_time == 0)
+            {
+              if (cond == 0 || cond->wait () == -1)
+                return -1;
+            }
+          else
+            {
+              countdown.update ();
+              ACE_Time_Value tv = ACE_OS::gettimeofday ();
+              tv += *max_wait_time;
+              if (cond == 0 || cond->wait (&tv) == -1)
+                return -1;
+            }
+        }
+
+      countdown.update ();
+      if (leader_follower.remove_follower (cond) == -1)
+        ACE_ERROR ((LM_ERROR,
+                    "TAO (%P|%t) TAO_Muxed_Wait_On_Leader_Follower::wait - "
+                    "remove_follower failed for <%x>\n", cond));
+
+      // ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - done (follower:%d) on <%x>\n",
+      // this->reply_received_, this->transport_));
+
+      // Now somebody woke us up to become a leader or to handle
+      // our input. We are already removed from the follower queue.
+      
+      if (reply_received == 1)
+        return 0;
+      
+      // FALLTHROUGH
+      // We only get here if we woke up but the reply is not complete
+      // yet, time to assume the leader role....
+      // i.e. ACE_ASSERT (this->reply_received_ == 0);
+    }
+  
+  // = Leader Code.
+
+  // The only way to reach this point is if we must become the leader,
+  // because there is no leader or we have to update to a leader or we
+  // are doing nested upcalls in this case we do increase the refcount
+  // on the leader in TAO_ORB_Core.
+
+  // This might increase the refcount of the leader.
+  leader_follower.set_leader_thread ();
+
+  int result = 1;
+
+  {
+    ACE_GUARD_RETURN (ACE_Reverse_Lock<ACE_SYNCH_MUTEX>, rev_mon,
+                      leader_follower.reverse_lock (), -1);
+
+    // @@ Do we need to do this?
+    // Become owner of the reactor.
+    orb_core->reactor ()->owner (ACE_Thread::self ());
+
+    // Run the reactor event loop.
+
+    // ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - wait (leader) on <%x>\n",
+    // this->transport_));
+
+    while (result > 0 && reply_received == 0)
+      result = orb_core->reactor ()->handle_events (max_wait_time);
+
+    // ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - done (leader) on <%x>\n",
+    // this->transport_));
+  }
+
+  // Wake up the next leader, we cannot do that in handle_input,
+  // because the woken up thread would try to get into
+  // handle_events, which is at the time in handle_input still
+  // occupied. But do it before checking the error in <result>, even
+  // if there is an error in our input we should continue running the
+  // loop in another thread.
+
+  leader_follower.reset_leader_thread ();
+  leader_follower.reset_client_thread ();
+
+  if (leader_follower.elect_new_leader () == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "TAO:%N:%l:(%P|%t):TAO_Muxed_Wait_On_Leader_Follower::send_request: "
+                       "Failed to unset the leader and wake up a new follower.\n"),
+                      -1);
+
+  if (result == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "TAO:%N:%l:(%P|%t):TAO_Muxed_Wait_On_Leader_Follower::wait: "
+                       "handle_events failed.\n"),
+                      -1);
+
+  // Return an error if there was a problem receiving the reply...
+  if (max_wait_time != 0)
+    {
+      if (reply_received != 1
+          && *max_wait_time == ACE_Time_Value::zero)
+        {
+          result = -1;
+          errno = ETIME;
+        }
+    }
+  else
+    {
+      result = 0;
+      if (reply_received == -1)
+        {
+          result = -1;
+        }
+    }
+
+  return result;
 }
 
 // Handle the input. Return -1 on error, 0 on success.
 int
 TAO_Muxed_Wait_On_Leader_Follower::handle_input (void)
 {
-  return 0;
+  // Cache the ORB core, it won't change and is used multiple times
+  // below:
+  TAO_ORB_Core* orb_core =
+    this->transport_->orb_core ();
+
+  // Obtain the lock.
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon,
+                    orb_core->leader_follower ().lock (),
+                    -1);
+
+  //  ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - reading reply <%x>\n",
+  //              this->transport_));
+  
+  // Receive any data that is available, without blocking...
+  int result = this->transport_->handle_client_input (0);
+
+  // Data was read, but there the reply has not been completely
+  // received...
+  if (result == 0)
+    return 0;
+
+  if (result == -1)
+    {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO (%P|%t) - Wait_On_LF::handle_input, "
+                    "handle_client_input == -1\n"));
+      // this->reply_received_ = -1;
+    }
+
+  if (result == 1)
+    {
+      // Change the result value to something that the Reactor can
+      // understand
+      result = 0;
+      
+      // reply_received_ = 1;
+      // This would have been done by the dispatch already. 
+    }
+
+  // Wake up any threads waiting for this message, either because the
+  // message failed or because we really received it.
+  // this->wake_up ();
+  // <wake_up> will be done in the <dispatch_reply>
+
+  return result;
+}
+
+ACE_SYNCH_CONDITION *
+TAO_Muxed_Wait_On_Leader_Follower::leader_follower_condition_variable (void)
+{
+  return this->transport_->orb_core ()->leader_follower_condition_variable ();
 }
 
 // *********************************************************************

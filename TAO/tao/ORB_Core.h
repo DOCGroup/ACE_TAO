@@ -96,6 +96,9 @@ public:
 
   int is_leader_thread_;
   // Is this thread a leader for this ORB?
+
+  ACE_SYNCH_CONDITION* leader_follower_condition_variable_;
+  // Condition variable for the leader follower model.
 };
 
 // ****************************************************************
@@ -404,10 +407,14 @@ public:
   // Obtain the TSS resources of this orb.
 
   TAO_Leader_Follower &leader_follower (void);
-  // Get access to the leader_follower class
+  // Get access to the leader_follower class.
 
   int run (ACE_Time_Value *tv, int break_on_timeouts);
-  // Run the event loop
+  // Run the event loop.
+
+  ACE_SYNCH_CONDITION* leader_follower_condition_variable (void);
+  // Condition variable used in the Leader Follower Wait Strategy, on
+  // which the follower thread blocks. 
 
 protected:
   int set_iiop_endpoint (int dotted_decimal_addresses,

@@ -25,6 +25,12 @@ TAO_Reply_Dispatcher::message_state (void) const
   return 0;
 }
 
+void
+TAO_Reply_Dispatcher::leader_follower_condition_variable (TAO_Transport *)
+{
+  // no-op.
+}
+
 // *********************************************************************
 
 // Constructor.
@@ -33,7 +39,8 @@ TAO_Synch_Reply_Dispatcher::TAO_Synch_Reply_Dispatcher (TAO_ORB_Core *orb_core)
     reply_cdr_ (orb_core->create_input_cdr_data_block (ACE_CDR::DEFAULT_BUFSIZE),
                 TAO_ENCAP_BYTE_ORDER,
                 orb_core),
-    reply_received_ (0)
+    reply_received_ (0),
+    leader_follower_condition_variable_ (0)
 {
 }
 
@@ -65,6 +72,15 @@ TAO_Synch_Reply_Dispatcher::dispatch_reply (CORBA::ULong reply_status,
   // Steal the buffer so that no copying is done.
   this->reply_cdr_.reset (message_state->cdr.steal_contents (),
                           message_state->cdr.byte_order ());
+
+  
+  // If condition variable is present, signal it.
+  if (this->leader_follower_condition_variable_ != 0)
+    {
+      // @@ Carlos: Should we apply lock here? (Alex).
+      (void) this->leader_follower_condition_variable_->signal ();
+    }
+  
   return 1;
 }
 
@@ -84,6 +100,13 @@ int &
 TAO_Synch_Reply_Dispatcher::reply_received (void)
 {
   return reply_received_;
+}
+
+void
+TAO_Synch_Reply_Dispatcher::leader_follower_condition_variable (TAO_Transport *transport)
+{
+  this->leader_follower_condition_variable_ =
+    transport->leader_follower_condition_variable ();
 }
 
 // *********************************************************************

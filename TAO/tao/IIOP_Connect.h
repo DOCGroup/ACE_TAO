@@ -149,13 +149,6 @@ protected:
 
   TAO_ORB_Core_TSS_Resources *tss_resources_;
   // Cached tss resources of the ORB that activated this object.
-
-  TAO_InputCDR input_cdr_;
-  // CDR used to steal the input cdr contents from the message
-  // state. This is done so that we can reset the message state
-  // before making the upcall. This makes the transport to handle the
-  // Nestedupcall requests coming on the same socket. 
-
 };
 
 #if defined (__ACE_INLINE__)
