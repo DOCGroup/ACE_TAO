@@ -383,7 +383,7 @@ if (!getopts ('dhtvo:') || $opt_h) {
     print "\n";
     print "Pass in configs using \"-Config XXXXX\"\n";
     print "\n";
-    print "Possible Configs: CHECK_RESOURCES Purify Codeguard",
+    print "Possible Configs: CHECK_RESOURCES Purify Codeguard Valgrind ",
            $config_list->list_configs (), "\n";
     exit (1);
 }
