@@ -13,6 +13,8 @@ Wed Nov 26 16:29:13 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
           is apparently required by BCB6 when inlining is turned off,
           since the memory management methods in the traits class are
           needed by the *S.cpp file, and *C.i is not included in *C.h.
+          Thanks to Johnny Willemsen <jwillemsen@remedy.nl> for
+          reporting the problem.
 
 Wed Nov 26 14:15:20 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
