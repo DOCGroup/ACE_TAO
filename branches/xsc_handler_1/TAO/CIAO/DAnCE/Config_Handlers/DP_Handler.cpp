@@ -79,8 +79,6 @@ namespace CIAO
 	}
 
 
-      DP_PCD_Handler::plan_connection_descrs (this->dp_, this->idl_dp_->connection);
-
       // Similar thing for dependsOn
       for (DeploymentPlan::dependsOn_const_iterator dstart = this->dp_.begin_dependsOn ();
 	   dstart != this->dp_.end_dependsOn ();
@@ -170,6 +168,8 @@ namespace CIAO
                       "Error parting Instance Deployment Decriptions."));
           return false;
         }
+
+      DP_PCD_Handler::plan_connection_descrs (this->dp_, this->idl_dp_->connection);
 
       return this->retval_;
     }
