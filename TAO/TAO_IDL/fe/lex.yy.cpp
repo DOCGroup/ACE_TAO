@@ -777,7 +777,14 @@ static int scan_obv_token (int token)
         return token;
       }
 #endif /* IDL_HAS_VALUETYPE */
-    tao_yylval.strval = ACE_OS::strdup (ace_tao_yytext);
+    TAO_IDL_CPP_Keyword_Table cpp_key_tbl;
+    const TAO_IDL_CPP_Keyword_Entry *entry =
+      cpp_key_tbl.lookup (ace_tao_yytext,
+                          ACE_OS::strlen (ace_tao_yytext));
+    if (entry)
+      tao_yylval.strval = ACE_OS::strdup (entry->mapping_);
+    else
+      tao_yylval.strval = ACE_OS::strdup (ace_tao_yytext);
     return IDENTIFIER;
 }
 
@@ -935,7 +942,7 @@ TAO_YY_DECL
 	register char *tao_yy_cp, *tao_yy_bp;
 	register int tao_yy_act;
 
-#line 117 "fe/idl.ll"
+#line 124 "fe/idl.ll"
 
 
 
@@ -1023,237 +1030,237 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 TAO_YY_RULE_SETUP
-#line 119 "fe/idl.ll"
+#line 126 "fe/idl.ll"
 return IDL_ANY;
 	TAO_YY_BREAK
 case 2:
 TAO_YY_RULE_SETUP
-#line 120 "fe/idl.ll"
+#line 127 "fe/idl.ll"
 return IDL_MODULE;
 	TAO_YY_BREAK
 case 3:
 TAO_YY_RULE_SETUP
-#line 121 "fe/idl.ll"
+#line 128 "fe/idl.ll"
 return IDL_RAISES;
 	TAO_YY_BREAK
 case 4:
 TAO_YY_RULE_SETUP
-#line 122 "fe/idl.ll"
+#line 129 "fe/idl.ll"
 return IDL_READONLY;
 	TAO_YY_BREAK
 case 5:
 TAO_YY_RULE_SETUP
-#line 123 "fe/idl.ll"
+#line 130 "fe/idl.ll"
 return IDL_ATTRIBUTE;
 	TAO_YY_BREAK
 case 6:
 TAO_YY_RULE_SETUP
-#line 124 "fe/idl.ll"
+#line 131 "fe/idl.ll"
 return IDL_EXCEPTION;
 	TAO_YY_BREAK
 case 7:
 TAO_YY_RULE_SETUP
-#line 125 "fe/idl.ll"
+#line 132 "fe/idl.ll"
 return IDL_CONTEXT;
 	TAO_YY_BREAK
 case 8:
 TAO_YY_RULE_SETUP
-#line 126 "fe/idl.ll"
+#line 133 "fe/idl.ll"
 return IDL_INTERFACE;
 	TAO_YY_BREAK
 case 9:
 TAO_YY_RULE_SETUP
-#line 127 "fe/idl.ll"
+#line 134 "fe/idl.ll"
 return IDL_CONST;
 	TAO_YY_BREAK
 case 10:
 TAO_YY_RULE_SETUP
-#line 128 "fe/idl.ll"
+#line 135 "fe/idl.ll"
 return IDL_TYPEDEF;
 	TAO_YY_BREAK
 case 11:
 TAO_YY_RULE_SETUP
-#line 129 "fe/idl.ll"
+#line 136 "fe/idl.ll"
 return IDL_STRUCT;
 	TAO_YY_BREAK
 case 12:
 TAO_YY_RULE_SETUP
-#line 130 "fe/idl.ll"
+#line 137 "fe/idl.ll"
 return IDL_ENUM;
 	TAO_YY_BREAK
 case 13:
 TAO_YY_RULE_SETUP
-#line 131 "fe/idl.ll"
+#line 138 "fe/idl.ll"
 return IDL_STRING;
 	TAO_YY_BREAK
 case 14:
 TAO_YY_RULE_SETUP
-#line 132 "fe/idl.ll"
+#line 139 "fe/idl.ll"
 return IDL_WSTRING;
 	TAO_YY_BREAK
 case 15:
 TAO_YY_RULE_SETUP
-#line 133 "fe/idl.ll"
+#line 140 "fe/idl.ll"
 return IDL_SEQUENCE;
 	TAO_YY_BREAK
 case 16:
 TAO_YY_RULE_SETUP
-#line 134 "fe/idl.ll"
+#line 141 "fe/idl.ll"
 return IDL_UNION;
 	TAO_YY_BREAK
 case 17:
 TAO_YY_RULE_SETUP
-#line 135 "fe/idl.ll"
+#line 142 "fe/idl.ll"
 return IDL_SWITCH;
 	TAO_YY_BREAK
 case 18:
 TAO_YY_RULE_SETUP
-#line 136 "fe/idl.ll"
+#line 143 "fe/idl.ll"
 return IDL_CASE;
 	TAO_YY_BREAK
 case 19:
 TAO_YY_RULE_SETUP
-#line 137 "fe/idl.ll"
+#line 144 "fe/idl.ll"
 return IDL_DEFAULT;
 	TAO_YY_BREAK
 case 20:
 TAO_YY_RULE_SETUP
-#line 138 "fe/idl.ll"
+#line 145 "fe/idl.ll"
 return IDL_FLOAT;
 	TAO_YY_BREAK
 case 21:
 TAO_YY_RULE_SETUP
-#line 139 "fe/idl.ll"
+#line 146 "fe/idl.ll"
 return IDL_DOUBLE;
 	TAO_YY_BREAK
 case 22:
 TAO_YY_RULE_SETUP
-#line 140 "fe/idl.ll"
+#line 147 "fe/idl.ll"
 return IDL_LONG;
 	TAO_YY_BREAK
 case 23:
 TAO_YY_RULE_SETUP
-#line 141 "fe/idl.ll"
+#line 148 "fe/idl.ll"
 return IDL_SHORT;
 	TAO_YY_BREAK
 case 24:
 TAO_YY_RULE_SETUP
-#line 142 "fe/idl.ll"
+#line 149 "fe/idl.ll"
 return IDL_UNSIGNED;
 	TAO_YY_BREAK
 case 25:
 TAO_YY_RULE_SETUP
-#line 143 "fe/idl.ll"
+#line 150 "fe/idl.ll"
 return IDL_CHAR;
 	TAO_YY_BREAK
 case 26:
 TAO_YY_RULE_SETUP
-#line 144 "fe/idl.ll"
+#line 151 "fe/idl.ll"
 return IDL_WCHAR;
 	TAO_YY_BREAK
 case 27:
 TAO_YY_RULE_SETUP
-#line 145 "fe/idl.ll"
+#line 152 "fe/idl.ll"
 return IDL_BOOLEAN;
 	TAO_YY_BREAK
 case 28:
 TAO_YY_RULE_SETUP
-#line 146 "fe/idl.ll"
+#line 153 "fe/idl.ll"
 return IDL_OCTET;
 	TAO_YY_BREAK
 case 29:
 TAO_YY_RULE_SETUP
-#line 147 "fe/idl.ll"
+#line 154 "fe/idl.ll"
 return IDL_VOID;
 	TAO_YY_BREAK
 case 30:
 TAO_YY_RULE_SETUP
-#line 148 "fe/idl.ll"
+#line 155 "fe/idl.ll"
 return IDL_NATIVE;
 	TAO_YY_BREAK
 case 31:
 TAO_YY_RULE_SETUP
-#line 149 "fe/idl.ll"
+#line 156 "fe/idl.ll"
 return scan_obv_token (IDL_ABSTRACT);
 	TAO_YY_BREAK
 case 32:
 TAO_YY_RULE_SETUP
-#line 150 "fe/idl.ll"
+#line 157 "fe/idl.ll"
 return scan_obv_token (IDL_CUSTOM);
 	TAO_YY_BREAK
 case 33:
 TAO_YY_RULE_SETUP
-#line 151 "fe/idl.ll"
+#line 158 "fe/idl.ll"
 return scan_obv_token (IDL_INIT);
 	TAO_YY_BREAK
 case 34:
 TAO_YY_RULE_SETUP
-#line 152 "fe/idl.ll"
+#line 159 "fe/idl.ll"
 return scan_obv_token (IDL_PRIVATE);
 	TAO_YY_BREAK
 case 35:
 TAO_YY_RULE_SETUP
-#line 153 "fe/idl.ll"
+#line 160 "fe/idl.ll"
 return scan_obv_token (IDL_PUBLIC);
 	TAO_YY_BREAK
 case 36:
 TAO_YY_RULE_SETUP
-#line 154 "fe/idl.ll"
+#line 161 "fe/idl.ll"
 return scan_obv_token (IDL_SUPPORTS);
 	TAO_YY_BREAK
 case 37:
 TAO_YY_RULE_SETUP
-#line 155 "fe/idl.ll"
+#line 162 "fe/idl.ll"
 return scan_obv_token (IDL_TRUNCATABLE);
 	TAO_YY_BREAK
 case 38:
 TAO_YY_RULE_SETUP
-#line 156 "fe/idl.ll"
+#line 163 "fe/idl.ll"
 return scan_obv_token (IDL_VALUETYPE);
 	TAO_YY_BREAK
 case 39:
 TAO_YY_RULE_SETUP
-#line 158 "fe/idl.ll"
+#line 165 "fe/idl.ll"
 return IDL_TRUETOK;
 	TAO_YY_BREAK
 case 40:
 TAO_YY_RULE_SETUP
-#line 159 "fe/idl.ll"
+#line 166 "fe/idl.ll"
 return IDL_FALSETOK;
 	TAO_YY_BREAK
 case 41:
 TAO_YY_RULE_SETUP
-#line 161 "fe/idl.ll"
+#line 168 "fe/idl.ll"
 return IDL_INOUT;
 	TAO_YY_BREAK
 case 42:
 TAO_YY_RULE_SETUP
-#line 162 "fe/idl.ll"
+#line 169 "fe/idl.ll"
 return IDL_IN;
 	TAO_YY_BREAK
 case 43:
 TAO_YY_RULE_SETUP
-#line 163 "fe/idl.ll"
+#line 170 "fe/idl.ll"
 return IDL_OUT;
 	TAO_YY_BREAK
 case 44:
 TAO_YY_RULE_SETUP
-#line 164 "fe/idl.ll"
+#line 171 "fe/idl.ll"
 return IDL_ONEWAY;
 	TAO_YY_BREAK
 case 45:
 TAO_YY_RULE_SETUP
-#line 166 "fe/idl.ll"
+#line 173 "fe/idl.ll"
 return IDL_LEFT_SHIFT;
 	TAO_YY_BREAK
 case 46:
 TAO_YY_RULE_SETUP
-#line 167 "fe/idl.ll"
+#line 174 "fe/idl.ll"
 return IDL_RIGHT_SHIFT;
 	TAO_YY_BREAK
 case 47:
 TAO_YY_RULE_SETUP
-#line 168 "fe/idl.ll"
+#line 175 "fe/idl.ll"
 {
 		  tao_yylval.strval = (char *) "::";
 		  return IDL_SCOPE_DELIMITOR;
@@ -1261,7 +1268,7 @@ TAO_YY_RULE_SETUP
 	TAO_YY_BREAK
 case 48:
 TAO_YY_RULE_SETUP
-#line 173 "fe/idl.ll"
+#line 180 "fe/idl.ll"
 {
   // Make sure that this identifier is not a C++ keyword. If it is,
   // prepend it with a _cxx_. Lookup in the perfect hash table for C++
@@ -1282,7 +1289,7 @@ TAO_YY_RULE_SETUP
 	TAO_YY_BREAK
 case 49:
 TAO_YY_RULE_SETUP
-#line 191 "fe/idl.ll"
+#line 198 "fe/idl.ll"
 {
                   tao_yylval.dval = idl_atof(ace_tao_yytext);
                   return IDL_FLOATING_PT_LITERAL;
@@ -1290,7 +1297,7 @@ TAO_YY_RULE_SETUP
 	TAO_YY_BREAK
 case 50:
 TAO_YY_RULE_SETUP
-#line 195 "fe/idl.ll"
+#line 202 "fe/idl.ll"
 {
                   tao_yylval.dval = idl_atof(ace_tao_yytext);
                   return IDL_FLOATING_PT_LITERAL;
@@ -1298,7 +1305,7 @@ TAO_YY_RULE_SETUP
 	TAO_YY_BREAK
 case 51:
 TAO_YY_RULE_SETUP
-#line 200 "fe/idl.ll"
+#line 207 "fe/idl.ll"
 {
 		  tao_yylval.ival = idl_atoi(ace_tao_yytext, 10);
 		  return IDL_INTEGER_LITERAL;
@@ -1306,7 +1313,7 @@ TAO_YY_RULE_SETUP
 	TAO_YY_BREAK
 case 52:
 TAO_YY_RULE_SETUP
-#line 204 "fe/idl.ll"
+#line 211 "fe/idl.ll"
 {
 		  tao_yylval.uival = idl_atoui(ace_tao_yytext, 10);
 		  return IDL_UINTEGER_LITERAL;
@@ -1314,7 +1321,7 @@ TAO_YY_RULE_SETUP
 	TAO_YY_BREAK
 case 53:
 TAO_YY_RULE_SETUP
-#line 208 "fe/idl.ll"
+#line 215 "fe/idl.ll"
 {
 		  tao_yylval.ival = idl_atoi(ace_tao_yytext, 16);
 		  return IDL_INTEGER_LITERAL;
@@ -1322,7 +1329,7 @@ TAO_YY_RULE_SETUP
 	TAO_YY_BREAK
 case 54:
 TAO_YY_RULE_SETUP
-#line 212 "fe/idl.ll"
+#line 219 "fe/idl.ll"
 {
                   tao_yylval.uival = idl_atoui(ace_tao_yytext, 16);
 		  return IDL_UINTEGER_LITERAL;
@@ -1330,7 +1337,7 @@ TAO_YY_RULE_SETUP
 	TAO_YY_BREAK
 case 55:
 TAO_YY_RULE_SETUP
-#line 216 "fe/idl.ll"
+#line 223 "fe/idl.ll"
 {
 		  tao_yylval.ival = idl_atoi(ace_tao_yytext, 8);
 		  return IDL_INTEGER_LITERAL;
@@ -1338,7 +1345,7 @@ TAO_YY_RULE_SETUP
 	TAO_YY_BREAK
 case 56:
 TAO_YY_RULE_SETUP
-#line 220 "fe/idl.ll"
+#line 227 "fe/idl.ll"
 {
 		  tao_yylval.uival = idl_atoui(ace_tao_yytext, 8);
 		  return IDL_UINTEGER_LITERAL;
@@ -1346,7 +1353,7 @@ TAO_YY_RULE_SETUP
 	TAO_YY_BREAK
 case 57:
 TAO_YY_RULE_SETUP
-#line 225 "fe/idl.ll"
+#line 232 "fe/idl.ll"
 {
 		  /* Skip the quotes */
 		  char *tmp = ace_tao_yytext;
@@ -1357,7 +1364,7 @@ TAO_YY_RULE_SETUP
 	TAO_YY_BREAK
 case 58:
 TAO_YY_RULE_SETUP
-#line 232 "fe/idl.ll"
+#line 239 "fe/idl.ll"
 {
 		  tao_yylval.cval = ace_tao_yytext [1];
 		  return IDL_CHARACTER_LITERAL;
@@ -1365,7 +1372,7 @@ TAO_YY_RULE_SETUP
 	TAO_YY_BREAK
 case 59:
 TAO_YY_RULE_SETUP
-#line 236 "fe/idl.ll"
+#line 243 "fe/idl.ll"
 {
 		  // octal character constant
 		  tao_yylval.cval = idl_escape_reader(ace_tao_yytext + 1);
@@ -1374,7 +1381,7 @@ TAO_YY_RULE_SETUP
 	TAO_YY_BREAK
 case 60:
 TAO_YY_RULE_SETUP
-#line 241 "fe/idl.ll"
+#line 248 "fe/idl.ll"
 {
 		  // hexadecimal character constant
 		  tao_yylval.cval = idl_escape_reader(ace_tao_yytext + 1);
@@ -1383,63 +1390,63 @@ TAO_YY_RULE_SETUP
 	TAO_YY_BREAK
 case 61:
 TAO_YY_RULE_SETUP
-#line 246 "fe/idl.ll"
+#line 253 "fe/idl.ll"
 {
 		  tao_yylval.cval = idl_escape_reader(ace_tao_yytext + 1);
 		  return IDL_CHARACTER_LITERAL;
 		}
 	TAO_YY_BREAK
 case 62:
-#line 251 "fe/idl.ll"
+#line 258 "fe/idl.ll"
 case 63:
 TAO_YY_RULE_SETUP
-#line 251 "fe/idl.ll"
+#line 258 "fe/idl.ll"
 {/* remember pragma */
   		  idl_global->set_lineno(idl_global->lineno() + 1);
 		  idl_store_pragma(ace_tao_yytext);
 		}
 	break;
 case 64:
-#line 256 "fe/idl.ll"
+#line 263 "fe/idl.ll"
 case 65:
 TAO_YY_RULE_SETUP
-#line 256 "fe/idl.ll"
+#line 263 "fe/idl.ll"
 {
 		  idl_parse_line_and_file(ace_tao_yytext);
 		}
 	break;
 case 66:
-#line 260 "fe/idl.ll"
+#line 267 "fe/idl.ll"
 case 67:
 TAO_YY_RULE_SETUP
-#line 260 "fe/idl.ll"
+#line 267 "fe/idl.ll"
 {
 		  idl_parse_line_and_file(ace_tao_yytext);
 		}
 	break;
 case 68:
-#line 264 "fe/idl.ll"
+#line 271 "fe/idl.ll"
 case 69:
 TAO_YY_RULE_SETUP
-#line 264 "fe/idl.ll"
+#line 271 "fe/idl.ll"
 {
 		  idl_parse_line_and_file(ace_tao_yytext);
 		}
 	break;
 case 70:
-#line 268 "fe/idl.ll"
+#line 275 "fe/idl.ll"
 case 71:
 TAO_YY_RULE_SETUP
-#line 268 "fe/idl.ll"
+#line 275 "fe/idl.ll"
 {
 		  idl_parse_line_and_file(ace_tao_yytext);
 	        }
 	break;
 case 72:
-#line 272 "fe/idl.ll"
+#line 279 "fe/idl.ll"
 case 73:
 TAO_YY_RULE_SETUP
-#line 272 "fe/idl.ll"
+#line 279 "fe/idl.ll"
 {
 		  /* ignore cpp ident */
   		  idl_global->set_lineno(idl_global->lineno() + 1);
@@ -1447,7 +1454,7 @@ TAO_YY_RULE_SETUP
 	break;
 case 74:
 TAO_YY_RULE_SETUP
-#line 276 "fe/idl.ll"
+#line 283 "fe/idl.ll"
 {
 		  /* ignore comments */
   		  idl_global->set_lineno(idl_global->lineno() + 1);
@@ -1455,7 +1462,7 @@ TAO_YY_RULE_SETUP
 	break;
 case 75:
 TAO_YY_RULE_SETUP
-#line 280 "fe/idl.ll"
+#line 287 "fe/idl.ll"
 {
 		  for(;;) {
 		    char c = tao_yyinput();
@@ -1473,24 +1480,24 @@ TAO_YY_RULE_SETUP
 	break;
 case 76:
 TAO_YY_RULE_SETUP
-#line 294 "fe/idl.ll"
+#line 301 "fe/idl.ll"
 ;
 	TAO_YY_BREAK
 case 77:
 TAO_YY_RULE_SETUP
-#line 295 "fe/idl.ll"
+#line 302 "fe/idl.ll"
 {
   		  idl_global->set_lineno(idl_global->lineno() + 1);
 		}
 	break;
 case 78:
 TAO_YY_RULE_SETUP
-#line 298 "fe/idl.ll"
+#line 305 "fe/idl.ll"
 return ace_tao_yytext [0];
 	TAO_YY_BREAK
 case 79:
 TAO_YY_RULE_SETUP
-#line 300 "fe/idl.ll"
+#line 307 "fe/idl.ll"
 TAO_YY_ECHO;
 	TAO_YY_BREAK
 case TAO_YY_STATE_EOF(INITIAL):
@@ -2380,7 +2387,7 @@ int main()
 	return 0;
 	}
 #endif
-#line 300 "fe/idl.ll"
+#line 307 "fe/idl.ll"
 
 	/* subroutines */
 

@@ -102,7 +102,14 @@ static int scan_obv_token (int token)
         return token;
       }
 #endif /* IDL_HAS_VALUETYPE */
-    yylval.strval = ACE_OS::strdup (ace_yytext);
+    TAO_IDL_CPP_Keyword_Table cpp_key_tbl;
+    const TAO_IDL_CPP_Keyword_Entry *entry =
+      cpp_key_tbl.lookup (ace_yytext,
+                          ACE_OS::strlen (ace_yytext));
+    if (entry)
+      yylval.strval = ACE_OS::strdup (entry->mapping_);
+    else
+      yylval.strval = ACE_OS::strdup (ace_yytext);
     return IDENTIFIER;
 }
 
