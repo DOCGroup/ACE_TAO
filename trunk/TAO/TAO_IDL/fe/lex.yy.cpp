@@ -674,7 +674,7 @@ char *tao_yytext_ptr;
 #line 1 "fe/idl.ll"
 #define INITIAL 0
 #line 2 "fe/idl.ll"
-/*  $Id: idl.ll,v 1.37 1999/07/02 20:30:43 parsons Exp $
+/*  $Id: idl.ll,v 1.39 1999/07/03 22:45:51 parsons Exp $
 
 COPYRIGHT
 
@@ -939,7 +939,7 @@ TAO_YY_MALLOC_DECL
 TAO_YY_DECL
 	{
 	register tao_yy_state_type tao_yy_current_state;
-	register char *tao_yy_cp, *tao_yy_bp;
+	register char *tao_yy_cp = 0, *tao_yy_bp = 0;
 	register int tao_yy_act;
 
 #line 124 "fe/idl.ll"

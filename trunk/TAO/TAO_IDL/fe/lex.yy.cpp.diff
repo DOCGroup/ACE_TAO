@@ -1,5 +1,5 @@
---- lex.yy.cpp	Fri Jun 18 18:36:24 1999
-+++ lex.yy.cpp.new	Fri Jun 18 18:34:12 1999
+--- lex.yy.cpp	Sat Jul  3 18:55:03 1999
++++ lex.yy.cpp.new	Sat Jul  3 18:52:58 1999
 @@ -927,7 +927,7 @@
  
  /* Code executed at the end of each rule. */
@@ -9,6 +9,15 @@
  #endif
  
  #define TAO_YY_RULE_SETUP \
+@@ -939,7 +939,7 @@
+ TAO_YY_DECL
+ 	{
+ 	register tao_yy_state_type tao_yy_current_state;
+-	register char *tao_yy_cp, *tao_yy_bp;
++	register char *tao_yy_cp = 0, *tao_yy_bp = 0;
+ 	register int tao_yy_act;
+ 
+ #line 124 "fe/idl.ll"
 @@ -1405,7 +1405,7 @@
    		  idl_global->set_lineno(idl_global->lineno() + 1);
  		  idl_store_pragma(ace_tao_yytext);
