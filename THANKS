@@ -882,6 +882,7 @@ Defang Zhou <dzhou@zoo.uvm.edu>
 Dave Zumbro <zumbro_d@ociweb.com>
 Ted Nolan <ted@ags.ga.erg.sri.com>
 Jianfei Xu <jxu@yahoo.com>
+Alvin C. Shih <acs@ml.com> 
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson.  Paul devised the recursive Makefile scheme that

@@ -1,5 +1,7 @@
 Mon Jan 31 00:09:11 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/OS.i: Minor reformatting.
+
 	* ace/SOCK_Dgram_Mcast: Updated the implementation comments related to
 	  the subscribe_ifs() return value of 1 to indicate why this is
  	  needed.  Also, updated the documentation to indicate to check
