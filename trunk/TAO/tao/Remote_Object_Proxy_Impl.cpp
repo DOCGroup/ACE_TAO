@@ -180,17 +180,17 @@ TAO_Remote_Object_Proxy_Impl::_get_component (const CORBA::Object_ptr target
   for (;;)
     {
       _tao_call.start (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
       CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
 
       _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag)
                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
       int _invoke_status =
         _tao_call.invoke (0, 0 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
       if (_invoke_status == TAO_INVOKE_RESTART)
         continue;

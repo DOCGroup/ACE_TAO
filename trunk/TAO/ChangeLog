@@ -1,3 +1,25 @@
+Thu Feb 20 10:52:10 2003  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORBInitializer_Registry.h (TAO_ORBInitializer_Registry):
+
+	  Removed default value in second argument of
+	  PortableInterceptor::register_orb_initializer() friend
+	  declaration since it is already defined in actual function
+	  declaration in PortableInterceptorC.h.  Fixes a compile-time
+	  problem.
+
+	* tao/Remote_Object_Proxy_Impl.cpp (_get_component):
+
+	  Corrected emulated exception macro usage.
+
+	* tao/Typecode.cpp (private_member_label):
+
+	  Added missing emulated exception macro parameter to the call to
+	  TypeCode::private_default_index_i().  Fixes a compile-time
+	  error in emulated exception builds.  This also removes a TSS
+	  access, and fixes a potentially missed exception in emulated
+	  exception builds.
+
 Thu Feb 20 10:20:51 2003  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Exception.h (TAO_SYSTEM_EXCEPTION):
