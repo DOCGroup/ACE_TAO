@@ -47,6 +47,32 @@ TAO_SSLIOP_Acceptor::TAO_SSLIOP_Acceptor (void)
     concurrency_strategy_ (0),
     accept_strategy_ (0)
 {
+  this->ssl_component_.target_supports = 0;
+  this->ssl_component_.target_requires = 0;
+
+  // @@ Verify that these initial settings are correct.
+
+  // @@ Security::NoDelegation is part of the Security Service 1.7
+  //    spec.  Enable bit below once the Security.pidl file is
+  //    updated.
+
+  // SSLIOP requires these Security::AssociationOptions by default.
+  ACE_SET_BITS (this->ssl_component_.target_requires,
+                Security::Integrity
+                | Security::Confidentiality
+                | Security::DetectReplay
+                | Security::DetectMisordering
+                /* | Security::NoDelegation */);
+
+  // SSLIOP supports these Security::AssociationOptions by default.
+  ACE_SET_BITS (this->ssl_component_.target_supports,
+                Security::NoProtection   // @@ Yeah?
+                | Security::Integrity
+                | Security::Confidentiality
+                | Security::DetectReplay
+                | Security::DetectMisordering
+                /* | Security::NoDelegation */);
+
   // Initialize the default SSL port to zero.
   this->ssl_component_.port = 0;
 }
