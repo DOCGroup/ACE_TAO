@@ -132,13 +132,14 @@ public:
    * @a ip_addr.  If @a encode is non-zero then the port number and IP address
    * are converted into network byte order, otherwise they are assumed to be
    * in network byte order already and are passed straight through.
-   * If <map> is non-zero, IPv6 support has been compiled in, and 
-   * <ip_addr> is an IPv4 address, then this address is set to the IPv4-mapped
+   *
+   * If <map> is non-zero and IPv6 support has been compiled in,
+   * then this address will be set to the IPv4-mapped IPv6 address of it.
    * IPv6 address of it.
    */
   int set (u_short port_number,
            ACE_UINT32 ip_addr = INADDR_ANY,
-           int encode = 1, 
+           int encode = 1,
            int map = 0);
 
   /// Uses <getservbyname> to initialize an <ACE_INET_Addr> from a
@@ -240,7 +241,7 @@ public:
    * byte order, otherwise it is assumed to be in network byte order
    * already and are passed straight through.  The size of the address
    * is specified in the <len> parameter.
-   * If <map> is non-zero, IPv6 support has been compiled in, and 
+   * If <map> is non-zero, IPv6 support has been compiled in, and
    * <ip_addr> is an IPv4 address, then this address is set to the IPv4-mapped
    * IPv6 address of it.
    */
