@@ -13,7 +13,8 @@
 //    Checks ACE_InputCDR::read_XX_array.
 //    Checks operator<< and operator>> for CDR Streams in
 //    each of the basic CDR types.
-//    Gives a measure of the speed of the ACE CDR streams wrt those operations.
+//    Gives a measure of the speed of the ACE CDR streams wrt those
+//    operations.
 //
 // = AUTHORS
 //    Cristian Ferretti <cristian_ferretti@yahoo.com>
@@ -623,7 +624,7 @@ struct DoubleHelper
     {
       return ACE_TEXT ("CDR::Double");
     }
-  static const int integral ()
+  static int integral ()
     {
       return 0;
     }
@@ -655,7 +656,7 @@ struct FloatHelper
     {
       return ACE_TEXT ("CDR::Float");
     }
-  static const int integral ()
+  static int integral ()
     {
       return 0;
     }
@@ -687,7 +688,7 @@ struct ShortHelper
     {
       return ACE_TEXT ("CDR::Short");
     }
-  static const int integral ()
+  static int integral ()
     {
       return 1;
     }
@@ -719,7 +720,7 @@ struct LongHelper
     {
       return ACE_TEXT ("CDR::Long");
     }
-  static const int integral ()
+  static int integral ()
     {
       return 1;
     }
@@ -751,7 +752,7 @@ struct LongLongHelper
     {
       return ACE_TEXT ("CDR::LongLong");
     }
-  static const int integral ()
+  static int integral ()
     {
       return 1;
     }
@@ -784,7 +785,7 @@ struct CharHelper
     {
       return ACE_TEXT ("CDR::Char");
     }
-  static const int integral ()
+  static int integral ()
     {
       return 1;
     }

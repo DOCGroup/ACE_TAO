@@ -1,3 +1,9 @@
+Wed May 17 14:32:50 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tests/CDR_Array_Test.cpp:
+	  Fixed warnings in KAI-3.4 (and other EDG based compilers), it
+	  makes no sense to return 'const int'
+
 Wed May 17 12:03:41 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * Msg_WFMO_Reactor.cpp:
