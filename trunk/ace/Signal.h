@@ -17,15 +17,16 @@
 #ifndef ACE_SIGNAL_HANDLER_H
 #define ACE_SIGNAL_HANDLER_H
 
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
 #if defined (ACE_DONT_INCLUDE_ACE_SIGNAL_H)
 # error ace/Signal.h was #included instead of signal.h by ace/OS.h:  fix!!!!
 #endif /* ACE_DONT_INCLUDE_ACE_SIGNAL_H */
 
 #include "ace/Synch.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Event_Handler.h"
 
 // This worksaround a horrible bug with HP/UX C++...
