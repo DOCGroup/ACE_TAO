@@ -1,3 +1,8 @@
+Wed Jun 25 12:59:00 1997    <irfan@TWOSTEP>
+
+	* ace/Synch_T.h (ACE_SYNCH_PROCESS_MUTEX): Added new template
+ 	  typedef to the list.
+
 Wed Jun 25 10:47:34 1997  Steve Huston  <shuston@riverace.com>
 
 	* ace/OS.h: Added a new type, ACE_SHLIB_HANDLE to allow dynamic
