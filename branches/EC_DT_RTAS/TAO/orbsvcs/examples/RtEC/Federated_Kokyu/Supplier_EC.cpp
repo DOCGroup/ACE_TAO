@@ -234,7 +234,7 @@ main (int argc, char* argv[])
   TAO_EC_Gateway_IIOP_Factory::init_svcs ();
 
   //@BT
-  DSUI_EVENT_LOG(MAIN_GROUP_FAM, START,1,0,NULL);
+  DSUI_EVENT_LOG(MAIN_GROUP_FAM, START,0,0,NULL);
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
@@ -296,13 +296,12 @@ main (int argc, char* argv[])
       ACE_TRY_CHECK;
 
       //@BT: Timeouts start when orb starts, similar to starting the DT worker thread
-      DSUI_EVENT_LOG (MAIN_GROUP_FAM, WORKER_ACTIVATED, 1, 0, NULL);
-      DSUI_EVENT_LOG (WORKER_GROUP_FAM, WORKER_STARTED, 1, 0, NULL);
+      DSUI_EVENT_LOG (MAIN_GROUP_FAM, WORKER_ACTIVATED, 0, 0, NULL);
+      DSUI_EVENT_LOG (WORKER_GROUP_FAM, WORKER_STARTED, 0, 0, NULL);
 
       EC_Event_Limit* e_limit = new EC_Event_Limit (TAO_ORB_Core_instance(), ds_cntl);
       ACE_Time_Value ticker (20);
       orb->orb_core()->reactor()->schedule_timer(e_limit,0, ticker);
-      //ACE_Reactor::instance()->run_event_loop();
 
       orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -310,17 +309,17 @@ main (int argc, char* argv[])
       // ****************************************************************
 
       //@BT: ORB shutting down; currently, this isn't expected to happen
-      DSUI_EVENT_LOG (MAIN_GROUP_FAM, CALL_SERVER_SHUTDOWN, 1, 0, NULL);
+      DSUI_EVENT_LOG (MAIN_GROUP_FAM, CALL_SERVER_SHUTDOWN, 0, 0, NULL);
 
       //@BT: Scheduler shuts down with the EC and ORB
-      DSUI_EVENT_LOG (MAIN_GROUP_FAM, SCHEDULER_SHUTDOWN, 1, 0, NULL);
+      DSUI_EVENT_LOG (MAIN_GROUP_FAM, SCHEDULER_SHUTDOWN, 0, 0, NULL);
 
       // We should do a lot of cleanup (disconnect from the EC,
       // deactivate all the objects with the POA, etc.) but this is
       // just a simple demo so we are going to be lazy.
 
       //@BT: Done clean up
-      DSUI_EVENT_LOG (MAIN_GROUP_FAM, AFTER_SERVER_SHUTDOWN, 1, 0, NULL);
+      DSUI_EVENT_LOG (MAIN_GROUP_FAM, AFTER_SERVER_SHUTDOWN, 0, 0, NULL);
 
     }
   ACE_CATCHANY
