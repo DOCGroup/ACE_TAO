@@ -1026,69 +1026,104 @@ be_interface::gen_out_impl (char *interface_local_name,
   return 0;
 }
 
+// ****************************************************************
+
+class TAO_IDL_Gen_OpTable_Worker : public TAO_IDL_Inheritance_Hierarchy_Worker
+{
+public:
+  TAO_IDL_Gen_OpTable_Worker (const char *skeleton_name);
+
+  virtual int emit (be_interface *derived_interface,
+                    TAO_OutStream *os,
+                    be_interface *base_interface);
+
+private:
+  const char *skeleton_name_;
+};
+
+TAO_IDL_Gen_OpTable_Worker::
+TAO_IDL_Gen_OpTable_Worker (const char *skeleton_name)
+  : skeleton_name_ (skeleton_name)
+{
+}
+
+int
+TAO_IDL_Gen_OpTable_Worker::emit (be_interface *derived_interface,
+                                  TAO_OutStream *os,
+                                  be_interface *base_interface)
+{
+  // Generate entries for the derived class using the properties of its
+  // ancestors.
+  return base_interface->gen_optable_entries (this->skeleton_name_, os);
+};
+
 int
 be_interface::gen_operation_table (const char *flat_name,
                                    const char *skeleton_class_name)
 {
-  TAO_OutStream *os; // output stream.
-  TAO_NL  nl;        // end line.
-
   // Check out the op_lookup_strategy.
   switch (be_global->lookup_strategy ())
   {
     case BE_GlobalData::TAO_DYNAMIC_HASH:
+      {
+        // Init the outstream appropriately.
+        TAO_OutStream *os =
+          this->strategy_->get_out_stream ();
 
-      // Init the outstream appropriately.
+        // Start from current indentation level.
+        os->indent ();
 
-      os = this->strategy_->get_out_stream ();
+        // Start the table generation.
+        *os << "static const TAO_operation_db_entry " << flat_name <<
+          "_operations [] = {\n";
+        os->incr_indent (0);
 
-      // Start from current indentation level.
-      os->indent ();
+        // Traverse the graph.
+        TAO_IDL_Gen_OpTable_Worker worker (skeleton_class_name);
+        if (this->traverse_inheritance_graph (worker, os) == -1)
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "(%N:%l) be_interface::gen_operation_table - "
+                               "inheritance graph traversal failed\n"), -1);
+          }
 
-      // Start the table generation.
-      *os << "static const TAO_operation_db_entry " << flat_name <<
-        "_operations [] = {\n";
-      os->incr_indent (0);
+        // Generate the skeleton for the is_a method.
+        os->indent ();
+        *os << "{\"_is_a\", &" << skeleton_class_name
+            << "::_is_a_skel},\n";
+        this->skel_count_++;
 
-      // Traverse the graph.
-      if (this->traverse_inheritance_graph (be_interface::gen_optable_helper, os) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_interface::gen_operation_table - "
-                             "inheritance graph traversal failed\n"), -1);
-        }
+        os->indent ();
+        *os << "{\"_non_existent\", &" << skeleton_class_name
+            << "::_non_existent_skel}\n";
+        this->skel_count_++;
 
-      // Generate the skeleton for the is_a method.
-      os->indent ();
-      *os << "{\"_is_a\", &" << skeleton_class_name
-          << "::_is_a_skel},\n";
-      this->skel_count_++;
+        os->indent ();
+        *os << "_interface, &"
+            << skeleton_class_name
+            << "::_interface_skel\n";
+        this->skel_count_++;
 
-      os->indent ();
-      *os << "{\"_non_existent\", &" << skeleton_class_name
-          << "::_non_existent_skel}\n";
-      this->skel_count_++;
+        os->decr_indent ();
+        *os << "};\n" << be_nl;
 
-      os->decr_indent ();
-      *os << "};" << nl << nl;
-
-      *os << "static const CORBA::Long _tao_" << flat_name
-          << "_optable_size = sizeof (ACE_Hash_Map_Entry<const char *,"
-          << " TAO_Skeleton>) * (" << (3*this->skel_count_)
-          << ");" << be_nl;
-      *os << "static char _tao_" << flat_name << "_optable_pool "
-          << "[_tao_" << flat_name << "_optable_size];" << be_nl;
-      *os << "static ACE_Static_Allocator_Base _tao_" << flat_name
-          << "_allocator (_tao_" << flat_name << "_optable_pool, "
-          << "_tao_" << flat_name << "_optable_size);" << be_nl;
-      *os << "static TAO_Dynamic_Hash_OpTable tao_"
-          << flat_name << "_optable " << "(" << be_idt << be_idt_nl
-          << flat_name << "_operations," << be_nl
-          << this->skel_count_ << "," << be_nl
-          << 2*this->skel_count_ << "," << be_nl
-          << "&_tao_" << flat_name << "_allocator" << be_uidt_nl
-          << ");" << be_uidt_nl;
-
+        *os << "static const CORBA::Long _tao_" << flat_name
+            << "_optable_size = sizeof (ACE_Hash_Map_Entry<const char *,"
+            << " TAO_Skeleton>) * (" << (3 * this->skel_count_)
+            << ");" << be_nl;
+        *os << "static char _tao_" << flat_name << "_optable_pool "
+            << "[_tao_" << flat_name << "_optable_size];" << be_nl;
+        *os << "static ACE_Static_Allocator_Base _tao_" << flat_name
+            << "_allocator (_tao_" << flat_name << "_optable_pool, "
+            << "_tao_" << flat_name << "_optable_size);" << be_nl;
+        *os << "static TAO_Dynamic_Hash_OpTable tao_"
+            << flat_name << "_optable " << "(" << be_idt << be_idt_nl
+            << flat_name << "_operations," << be_nl
+            << this->skel_count_ << "," << be_nl
+            << 2 * this->skel_count_ << "," << be_nl
+            << "&_tao_" << flat_name << "_allocator" << be_uidt_nl
+            << ");" << be_uidt_nl;
+      }
       break;
 
     case BE_GlobalData::TAO_LINEAR_SEARCH:
@@ -1136,7 +1171,7 @@ be_interface::gen_operation_table (const char *flat_name,
           TAO_OUTSTREAM_FACTORY::instance ();
 
         // Get a new instance for the temp file.
-        os = factory->make_outstream ();
+        TAO_OutStream *os = factory->make_outstream ();
 
         if (os == 0)
           {
@@ -1153,8 +1188,7 @@ be_interface::gen_operation_table (const char *flat_name,
 
         // Open the temp file.
         if (os->open (temp_file,
-                      TAO_OutStream::TAO_GPERF_INPUT)
-              == -1)
+                      TAO_OutStream::TAO_GPERF_INPUT) == -1)
           {
             ACE_ERROR_RETURN ((LM_ERROR,
                                "be_visitor_interface_ss",
@@ -1168,10 +1202,8 @@ be_interface::gen_operation_table (const char *flat_name,
         this->gen_gperf_input_header (os);
 
         // Traverse the graph.
-        if (this->traverse_inheritance_graph (
-                be_interface::gen_optable_helper,
-                os
-              ) == -1)
+        TAO_IDL_Gen_OpTable_Worker worker (skeleton_class_name);
+        if (this->traverse_inheritance_graph (worker, os) == -1)
           {
             ACE_ERROR_RETURN ((LM_ERROR,
                                "(%N:%l) be_interface::gen_operation_table - "
@@ -1203,7 +1235,6 @@ be_interface::gen_operation_table (const char *flat_name,
         // for the gperf.
         this->gen_gperf_things (flat_name);
       }
-
       break;
 
     default:
@@ -1252,182 +1283,138 @@ be_interface::gen_gperf_input_header (TAO_OutStream *os)
 // code. The parameter "derived" is the one for which the entire operation
 // table is being built.
 int
-be_interface::gen_optable_entries (be_interface *derived)
+be_interface::gen_optable_entries (const char *full_skeleton_name,
+                                   TAO_OutStream *os)
 {
-  UTL_ScopeActiveIterator *si = 0;
-  AST_Decl *d = 0;
-  TAO_OutStream *os = 0;
-
-  switch (be_global->lookup_strategy ())
-  {
-    case BE_GlobalData::TAO_DYNAMIC_HASH:
-      // Init the outstream.
-
-      os = this->strategy_->get_out_stream ();
-
-      // The major stuff.
-      if (this->nmembers () > 0)
+  int lookup_strategy =
+    be_global->lookup_strategy ();
+  if (lookup_strategy == BE_GlobalData::TAO_DYNAMIC_HASH)
+    {
+      for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
+           !si.is_done ();
+           si.next ())
         {
-          // if there are elements in this scope i.e., any operations and
-          // attributes defined by "this" which happens to be the same as "derived"
-          // or one of its ancestors.
+          // get the next AST decl node
+          AST_Decl *d = si.item ();
 
-          ACE_NEW_RETURN (si,
-                          UTL_ScopeActiveIterator (this,
-                                                   UTL_Scope::IK_decls),
-                          -1);
-          // Instantiate a scope iterator.
-
-          while (!si->is_done ())
+          if (d->node_type () == AST_Decl::NT_op)
             {
-              // get the next AST decl node
-              d = si->item ();
+              // Start from current indentation level.
+              os->indent ();
+              
+              // We are an operation node.
+              *os << "{\"" << d->original_local_name () << "\", &"
+                  << full_skeleton_name << "::"
+                  << d->local_name () << "_skel},\n";
 
-              if (d->node_type () == AST_Decl::NT_op)
-                {
-                  // Start from current indentation level.
-                  os->indent ();
-
-                  // We are an operation node.
-                  *os << "{\"" << d->original_local_name () << "\", &"
-                      << derived->full_skel_name () << "::"
-                      << d->local_name () << "_skel},\n";
-
-                  derived->skel_count_++;
-                }
-              else if (d->node_type () == AST_Decl::NT_attr)
-                {
-                  AST_Attribute *attr = 0;
-
-                  // Start from current indentation level.
-                  os->indent ();
-
-                  // Generate only the "get" entry if we are
-                  // readonly.
-                  *os << "{\"_get_" << d->original_local_name ()
-                      << "\", &" << derived->full_skel_name ()
-                      << "::_get_" << d->local_name () << "_skel},\n";
-
-                  derived->skel_count_++;
-
-                  attr = AST_Attribute::narrow_from_decl (d);
-
-                  if (attr == 0)
-                    {
-                      return -1;
-                    }
-
-                  if (!attr->readonly ())
-                    {
-                      // The set method
-                      os->indent (); // Start from current indentation level.
-                      *os << "{\"_set_" << d->original_local_name ()
-                          << "\", &" << derived->full_skel_name ()
-                          << "::_set_" << d->local_name () << "_skel},\n";
-
-                      derived->skel_count_++;
-                    }
-                }
-
-              si->next ();
+              this->skel_count_++;
             }
+          else if (d->node_type () == AST_Decl::NT_attr)
+            {
+              AST_Attribute *attr =
+                AST_Attribute::narrow_from_decl (d);
 
-          delete si;
+              if (attr == 0)
+                return -1;
+
+              // Start from current indentation level.
+              os->indent ();
+
+              // Generate only the "get" entry if we are
+              // readonly.
+              *os << "{\"_get_" << d->original_local_name ()
+                  << "\", &" << full_skeleton_name
+                  << "::_get_" << d->local_name () << "_skel},\n";
+
+              this->skel_count_++;
+
+              if (!attr->readonly ())
+                {
+                  // The set method
+                  os->indent (); // Start from current indentation level.
+                  *os << "{\"_set_" << d->original_local_name ()
+                      << "\", &" << full_skeleton_name
+                      << "::_set_" << d->local_name () << "_skel},\n";
+
+                  this->skel_count_++;
+                }
+            }
         }
-
-      break;
-
-    case BE_GlobalData::TAO_LINEAR_SEARCH:
-    case BE_GlobalData::TAO_BINARY_SEARCH:
-    case BE_GlobalData::TAO_PERFECT_HASH:
+    }
+  else if (lookup_strategy == BE_GlobalData::TAO_LINEAR_SEARCH
+           || lookup_strategy == BE_GlobalData::TAO_BINARY_SEARCH
+           || lookup_strategy == BE_GlobalData::TAO_PERFECT_HASH)
+    {
       // We call GPERF for all these three strategies.
       // Init the outstream.
+      // @@ We probably do no need to do this, the "right" <os>
+      //    argument is passed down!!
       os = tao_cg->gperf_input_stream ();
 
-      if (this->nmembers () > 0)
+      for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
+           !si.is_done ();
+           si.next ())
         {
-          // if there are elements in this scope i.e., any operations and
-          // attributes defined by "this" which happens to be the same as "derived"
-          // or one of its ancestors.
+          // get the next AST decl node
+          AST_Decl *d = si.item ();
 
-          ACE_NEW_RETURN (si,
-                          UTL_ScopeActiveIterator (this,
-                                                   UTL_Scope::IK_decls),
-                          -1);
-          // Instantiate a scope iterator.
-
-          while (!si->is_done ())
+          if (d->node_type () == AST_Decl::NT_op)
             {
-              // Get the next AST decl node.
-              d = si->item ();
+              // Generate operation name.
 
-              if (d->node_type () == AST_Decl::NT_op)
+              // Start from current indentation level
+              os->indent ();
+
+              // We are an operation node. We use the original
+              // operation name, not the one with _cxx_ in it.
+              *os << d->original_local_name () << ",\t&"
+                  << full_skeleton_name << "::"
+                  << d->local_name () << "_skel" << "\n";
+
+              this->skel_count_++;
+            }
+          else if (d->node_type () == AST_Decl::NT_attr)
+            {
+              AST_Attribute *attr =
+                AST_Attribute::narrow_from_decl (d);
+
+              if (attr == 0)
+                return -1;
+
+              os->indent ();
+
+              // Generate only the "get" entry if we are readonly.
+              *os << "_get_" << d->original_local_name () << ",\t&"
+                  << full_skeleton_name << "::_get_"
+                  << d->local_name () << "_skel\n";
+
+              this->skel_count_++;
+
+              if (!attr->readonly ())
                 {
-                  // Generate operation name.
-
-                  // Start from current indentation level
+                  // The set method
                   os->indent ();
-
-                  // We are an operation node. We use the original
-                  // operation name, not the one with _cxx_ in it.
-                  *os << d->original_local_name () << ",\t&"
-                      << derived->full_skel_name () << "::"
-                      << d->local_name () << "_skel" << "\n";
-
-                  derived->skel_count_++;
-               }
-              else if (d->node_type () == AST_Decl::NT_attr)
-                {
-                  AST_Attribute *attr = 0;
-
-                  // Start from current indentation level.
-                  os->indent ();
-
-                  // Generate only the "get" entry if we are readonly.
-                  *os << "_get_" << d->original_local_name () << ",\t&"
-                      << derived->full_skel_name () << "::_get_"
+                  *os << "_set_" << d->original_local_name () << ",\t&"
+                      << full_skeleton_name << "::_set_"
                       << d->local_name () << "_skel\n";
 
-                  derived->skel_count_++;
-
-                  attr = AST_Attribute::narrow_from_decl (d);
-
-                  if (attr == 0)
-                    {
-                      return -1;
-                    }
-
-                  if (!attr->readonly ())
-                    {
-                      // The set method
-                      os->indent (); // Start from current indentation level.
-                      *os << "_set_" << d->original_local_name () << ",\t&"
-                          << derived->full_skel_name () << "::_set_"
-                          << d->local_name () << "_skel\n";
-
-                      derived->skel_count_++;
-                    }
+                  this->skel_count_++;
                 }
-
-              si->next ();
             }
-
-          delete si;
         }
-
-      break;
-
-    default:
+    }
+  else
+    {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_interface",
-                         "::",
-                         "gen_optable_entries",
+                         "be_interface::gen_optable_entries - "
                          "unknown op_lookup_strategy\n"),
                         -1);
-  }
+    }
 
   return 0;
 }
+
+// ****************************************************************
 
 class be_code_emitter_wrapper : public TAO_IDL_Inheritance_Hierarchy_Worker
 {
@@ -1622,30 +1609,6 @@ be_interface::traverse_inheritance_graph (TAO_IDL_Inheritance_Hierarchy_Worker &
 
   return 0;
 }
-
-
-// Helpers passed to the template method
-
-int
-be_interface::gen_optable_helper (be_interface *derived,
-                                  be_interface *ancestor,
-                                  TAO_OutStream *)
-{
-  // Generate entries for the derived class using the properties of its
-  // ancestors.
-  if (ancestor->gen_optable_entries (derived) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_interface::gen_operation_table - "
-                         "error generating entries for inherited"
-                         "interfaces\n"),
-                        -1);
-    }
-
-  return 0;
-}
-
-
 
 // Run GPERF and get the correct lookup and other operations
 // depending on which strategy we are using. Returns 0 on sucess, -1
@@ -2124,16 +2087,12 @@ be_interface::gen_skel_helper (be_interface *derived,
       // which call the corresponding method of the base class by doing the
       // proper casting.
 
-      ACE_NEW_RETURN (si,
-                      UTL_ScopeActiveIterator (ancestor,
-                                               UTL_Scope::IK_decls),
-                      -1);
-      // Instantiate a scope iterator.
-
-      while (!si->is_done ())
+      for (UTL_ScopeActiveIterator si (ancestor, UTL_Scope::IK_decls);
+           !si.is_done ();
+           si.next ())
         {
           // Get the next AST decl node
-          d = si->item ();
+          d = si.item ();
           if (d->node_type () == AST_Decl::NT_op)
             {
               // Start from current indentation level.
@@ -2279,11 +2238,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                     }
                 }
             }
-
-          si->next ();
         } // End of while.
-
-      delete si;
     }
 
   return 0;
