@@ -67,7 +67,7 @@ Wed Nov  6 11:43:01 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 
 	* orbsvcs/examples/CosEC/RtEC_Based/lib/Makefile: Fixed an error
 	  which occurs when the right libraries havent been built. Thanks
-	  to Gautham Thaker for pointing this out.
+	  to Gautam Thaker for pointing this out.
 
 Wed Nov  6 11:35:01 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
