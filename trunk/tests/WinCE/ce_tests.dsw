@@ -171,7 +171,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "MsgQueue_Notifications_Test"=.\MsgQueue_Notifications_Test.dsp - Package Owner=<4>
+Project: "Message_Queue_Notifications_Test"=.\Message_Queue_Notifications_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -470,4 +470,3 @@ Package=<3>
 }}}
 
 ###############################################################################
-
