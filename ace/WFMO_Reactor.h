@@ -981,7 +981,7 @@ protected:
   int delete_handler_rep_;
   // Keeps track of whether we should delete the handler repository
 
-  ACE_WFMO_Reactor_Notify *notify_handler_;
+  ACE_Reactor_Notify *notify_handler_;
   // Used when <notify> is called.
 
   int delete_notify_handler_;

@@ -61,6 +61,21 @@ public:
                                       const ACE_Handle_Set &rd_mask) = 0;
   // Handles pending threads (if any) that are waiting to unblock the
   // <Reactor_Impl>.
+
+  virtual void max_notify_iterations (int) = 0;
+  // Set the maximum number of times that the <handle_input> method
+  // will iterate and dispatch the <ACE_Event_Handlers> that are
+  // passed in via the notify queue before breaking out of the event
+  // loop.  By default, this is set to -1, which means "iterate until
+  // the queue is empty."  Setting this to a value like "1 or 2" will
+  // increase "fairness" (and thus prevent starvation) at the expense
+  // of slightly higher dispatching overhead.
+
+  virtual int max_notify_iterations (void) = 0;
+  // Get the maximum number of times that the <handle_input> method
+  // will iterate and dispatch the <ACE_Event_Handlers> that are
+  // passed in via the notify queue before breaking out of its event
+  // loop.
 };
 
 class ACE_Export ACE_Reactor_Impl
