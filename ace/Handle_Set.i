@@ -24,9 +24,9 @@ ACE_Handle_Set::reset (void)
     NUM_WORDS * WORDSIZE;
 #endif /* ACE_HAS_BIG_FD_SET */
   this->size_ = 0;
-#if !defined (ACE_HAS_BIG_FD_SET)
+  // #if !defined (ACE_HAS_BIG_FD_SET)      Why is this here?  -Steve Huston
   FD_ZERO (&this->mask_);
-#endif /* ACE_HAS_BIG_FD_SET */
+  // #endif /* ACE_HAS_BIG_FD_SET */
 }
 
 #if defined (ACE_HAS_BIG_FD_SET)
