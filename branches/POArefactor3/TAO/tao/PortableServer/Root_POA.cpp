@@ -953,9 +953,7 @@ TAO_Root_POA::destroy_i (CORBA::Boolean etherealize_objects,
           TAO::ORT_Adapter_Factory *ort_factory =
             this->ORT_adapter_factory ();
 
-          ort_factory->destroy (ort_adapter
-                                ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+          ort_factory->destroy (ort_adapter);
 
           this->ort_adapter_ = 0;
         }

@@ -22,6 +22,7 @@
 #include "ORB_Constants.h"
 #include "SystemException.h"
 #include "orb_typesC.h"
+#include "ValueModifierC.h"
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) \
     || defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
@@ -55,12 +56,7 @@ CORBA::TypeCode::Bounds::Bounds (void)
 CORBA::TypeCode::Bounds*
 CORBA::TypeCode::Bounds::_downcast (CORBA::Exception *ex)
 {
-  if (ex->_is_a ("IDL:omg.org/CORBA/TypeCode/Bounds:1.0"))
-    {
-      return ACE_dynamic_cast (CORBA::TypeCode::Bounds*, ex);
-    }
-
-  return 0;
+   return dynamic_cast <CORBA::TypeCode::Bounds*> (ex);
 }
 
 CORBA::Exception *
@@ -116,9 +112,7 @@ CORBA::TypeCode::BadKind::BadKind (void)
 CORBA::TypeCode::BadKind*
 CORBA::TypeCode::BadKind::_downcast (CORBA::Exception *ex)
 {
-  if (ex->_is_a ("IDL:omg.org/CORBA/TypeCode/BadKind:1.0"))
-    return ACE_dynamic_cast (CORBA::TypeCode::BadKind*, ex);
-  return 0;
+  return dynamic_cast <CORBA::TypeCode::BadKind*> (ex);
 }
 
 CORBA::Exception *
@@ -236,8 +230,7 @@ CORBA::TypeCode::TypeCode (CORBA::TCKind kind,
       // @@ The typecode buffer contain the encapsulation byte order
       // in the first byte...
       const CORBA::Octet *ptr =
-        ACE_reinterpret_cast (const CORBA::Octet *,
-                              buffer);
+        reinterpret_cast <const CORBA::Octet *> (buffer);
       this->byte_order_ = *ptr;
 
       // allocate a buffer which will accomodate our entire encapsulation
@@ -255,7 +248,7 @@ CORBA::TypeCode::TypeCode (CORBA::TCKind kind,
       // length_ is of size_t which, on 64-bit platforms, is 64 bits.
       // The value to be copied is expected to be 32-bit.  We will cast
       // the value down to a CORBA::ULong and copy that.
-      CORBA::ULong length = ACE_static_cast (CORBA::ULong, this->length_);
+      CORBA::ULong length = static_cast <CORBA::ULong> (this->length_);
 
       (void) ACE_OS::memcpy (start, &this->kind_, lsize);
       (void) ACE_OS::memcpy (start + lsize, &length, lsize);
@@ -274,7 +267,7 @@ CORBA::TypeCode::TypeCode (CORBA::TCKind kind,
       // with our parent. We know that our parent's buffer was
       // properly aligned.
       const CORBA::Octet *ptr =
-        ACE_reinterpret_cast (const CORBA::Octet *, buffer);
+        reinterpret_cast <const CORBA::Octet *> (buffer);
       this->byte_order_ = *ptr;
 
       this->buffer_ = buffer;
@@ -853,8 +846,7 @@ CORBA::TypeCode::equ_common (CORBA::TypeCode_ptr tc,
   if (equiv_only)
     {
       CORBA::TypeCode_var rcvr =
-        CORBA::TypeCode::_duplicate (ACE_const_cast (CORBA::TypeCode *,
-                                                     this));
+        CORBA::TypeCode::_duplicate (const_cast <CORBA::TypeCode *> (this));
 
       CORBA::Boolean status = (this->kind_ == CORBA::tk_alias);
 
@@ -875,8 +867,7 @@ CORBA::TypeCode::equ_common (CORBA::TypeCode_ptr tc,
       // Added by Bala to check for leaks as content_type duplicates the
       // pointers
       CORBA::TypeCode_var tcvar =
-        CORBA::TypeCode::_duplicate (ACE_const_cast (CORBA::TypeCode *,
-                                                     tc));
+        CORBA::TypeCode::_duplicate (const_cast <CORBA::TypeCode *> (tc));
 
       while (status)
         {
@@ -1899,7 +1890,7 @@ CORBA::TypeCode::private_id (ACE_ENV_SINGLE_ARG_DECL) const
           }
 
         this->private_state_->tc_id_known_ = 1;
-        this->private_state_->tc_id_ = (ACE_const_cast (char *, buffer_)
+        this->private_state_->tc_id_ = (const_cast <char *> (buffer_)
                                         + 4    // skip byte order
                                         // flag and padding
                                         + 4);  // skip (strlen + 1)
@@ -2068,8 +2059,7 @@ CORBA::TypeCode::private_member_count (ACE_ENV_SINGLE_ARG_DECL) const
                               0);
           }
 
-        tc_kind = ACE_static_cast (CORBA::TCKind,
-                                   tc_kind_holder);
+        tc_kind = static_cast <CORBA::TCKind> (tc_kind_holder);
 
         // The tc_kind can be either tk_null or tk_value.
         // In the latter case we should skip encapsulation or
@@ -2320,7 +2310,7 @@ CORBA::TypeCode::private_member_type (CORBA::ULong slot
                             CORBA::TypeCode::_nil ());
         }
 
-      tc_kind = ACE_static_cast (CORBA::TCKind, tc_kind_holder);
+      tc_kind = static_cast <CORBA::TCKind> (tc_kind_holder);
 
       // The tc_kind can be either tk_null or tk_value.
       // In the latter case we should skip encapsulation or
@@ -2590,7 +2580,7 @@ CORBA::TypeCode::private_member_name (CORBA::ULong slot
                               0);
           }
 
-        tc_kind = ACE_static_cast (CORBA::TCKind, tc_kind_holder);
+        tc_kind = static_cast <CORBA::TCKind> (tc_kind_holder);
 
         // The tc_kind can be either tk_null or tk_value.
         // In the latter case we should skip encapsulation or
@@ -2768,9 +2758,8 @@ CORBA::TypeCode::private_member_label (CORBA::ULong n
       CORBA::TypeCode_ptr label_tc;
 
       const CORBA::ULong slot =
-        ACE_static_cast (
-          CORBA::ULong,
-          this->private_default_index_i (ACE_ENV_SINGLE_ARG_PARAMETER));
+        static_cast <CORBA::ULong>
+          (this->private_default_index_i (ACE_ENV_SINGLE_ARG_PARAMETER));
       ACE_CHECK_RETURN (0);
 
       // If we are computing the label for the default index,
@@ -2779,7 +2768,7 @@ CORBA::TypeCode::private_member_label (CORBA::ULong n
         {
           label_tc = CORBA::_tc_octet;
 
-          if (out.write_octet (ACE_static_cast (CORBA::Octet, 0)) == 0)
+          if (out.write_octet (static_cast <CORBA::Octet> (0)) == 0)
             {
               return 0;
             }
@@ -3407,7 +3396,7 @@ CORBA::TypeCode::_tao_decode (const CORBA::TypeCode *parent,
                                 // @@ TODO
                                 // Here we lose the parent
                                 // typecode...
-                                ACE_const_cast(CORBA::TypeCode*,parent)));
+                                const_cast <CORBA::TypeCode*> (parent)));
       return;
     }
 
@@ -3455,12 +3444,12 @@ CORBA::TypeCode::_tao_decode (const CORBA::TypeCode *parent,
             CORBA::Long _oc_bounded_string [] =
             {TAO_ENCAP_BYTE_ORDER, 0};
             // Bounded string. Save the bounds
-            _oc_bounded_string [1] = (CORBA::Long) bound;
+            _oc_bounded_string [1] = static_cast <CORBA::Long> (bound);
             ACE_NEW (x,
                      CORBA::TypeCode (
-                        ACE_static_cast(CORBA::TCKind, kind),
+                        static_cast <CORBA::TCKind> (kind),
                         8,
-                        ACE_reinterpret_cast(char*,_oc_bounded_string),
+                        reinterpret_cast <char*> (_oc_bounded_string),
                         0,
                         sizeof (CORBA::String_var),
                         0
@@ -3510,7 +3499,7 @@ CORBA::TypeCode::_tao_decode (const CORBA::TypeCode *parent,
                                   cdr.rd_ptr (),
                                   0,
                                   0,
-                                  ACE_const_cast (CORBA::TypeCode*,parent)));
+                                  const_cast <CORBA::TypeCode*> (parent)));
         // skip length number of bytes in the stream, otherwise we may
         // leave the stream in an undefined state
         (void) cdr.skip_bytes (length);
@@ -3546,7 +3535,7 @@ CORBA::TypeCode::unalias (ACE_ENV_SINGLE_ARG_DECL)
 void
 CORBA::TypeCode::_tao_any_destructor (void *x)
 {
-  CORBA::TypeCode_ptr tmp = ACE_static_cast (CORBA::TypeCode_ptr, x);
+  CORBA::TypeCode_ptr tmp = static_cast <CORBA::TypeCode_ptr> (x);
   CORBA::release (tmp);
 }
 
@@ -3764,9 +3753,9 @@ operator<< (TAO_OutputCDR& cdr, const CORBA::TypeCode *x)
     case CORBA::tk_home:
     case CORBA::tk_event:
       {
-        CORBA::ULong xlen = ACE_static_cast (CORBA::ULong, x->length_);
+        CORBA::ULong xlen = static_cast <CORBA::ULong> (x->length_);
         if (!cdr.write_ulong (xlen)
-            || !cdr.write_octet_array ((CORBA::Octet*)x->buffer_,
+            || !cdr.write_octet_array ((CORBA::Octet*) x->buffer_,
                                        xlen))
           {
             return 0;
