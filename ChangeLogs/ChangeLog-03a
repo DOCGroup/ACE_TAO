@@ -1,3 +1,17 @@
+Tue Jul  9 07:31:48 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/ace.mpc:
+        * ace/QoS/qos.mpc:
+        * ace/RMCast/rmcast.mpc:
+        * ace/SSL/ssl.mpc:
+        * apps/gperf/src/gperf.mpc:
+        * tests/tests.mpc:
+        * tests/RMCast/tests.mpc:
+        * tests/SSL/tests.mpc:
+
+          Input files for the Make Project Creator for just the basic
+          libraries, exe's and tests.
+
 Tue Jul  9 07:24:06 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/mpc.pl:
