@@ -1,7 +1,9 @@
+// -*- C++ -*-
+//
 //$Id$
 
-#ifndef REQUEST_INTERCEPTOR_H
-#define REQUEST_INTERCEPTOR_H
+#ifndef TAO_RTSCHEDULING_REQUEST_INTERCEPTOR_H
+#define TAO_RTSCHEDULING_REQUEST_INTERCEPTOR_H
 
 #include "rtscheduler_export.h"
 #include "tao/PortableInterceptorC.h"
@@ -20,27 +22,27 @@ public:
 
   //  Client_Interceptor (RTScheduling::Current_ptr current);
   virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri
-			     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
-		     PortableInterceptor::ForwardRequest));
+                     PortableInterceptor::ForwardRequest));
 
   virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr ri
-			  ACE_ENV_ARG_DECL_NOT_USED)
+                          ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri
-			      ACE_ENV_ARG_DECL_NOT_USED)
+                              ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri
-				  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
-		     PortableInterceptor::ForwardRequest));
+                     PortableInterceptor::ForwardRequest));
 
   virtual void receive_other (PortableInterceptor::ClientRequestInfo_ptr ri
-			      ACE_ENV_ARG_DECL_NOT_USED)
+                              ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException,
-		     PortableInterceptor::ForwardRequest));
+                     PortableInterceptor::ForwardRequest));
 
   virtual char* name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -60,28 +62,28 @@ public:
   Server_Interceptor (TAO_RTScheduler_Current_ptr current);
 
   virtual void receive_request_service_contexts (PortableInterceptor::ServerRequestInfo_ptr ri
-						 ACE_ENV_ARG_DECL_NOT_USED)
+                                                 ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException,
-		     PortableInterceptor::ForwardRequest));
+                     PortableInterceptor::ForwardRequest));
 
   virtual void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri
-				ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
-		     PortableInterceptor::ForwardRequest));
+                     PortableInterceptor::ForwardRequest));
 
   virtual void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri
-			   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri
-			       ACE_ENV_ARG_DECL_NOT_USED)
+                               ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException,
-		     PortableInterceptor::ForwardRequest));
+                     PortableInterceptor::ForwardRequest));
 
   virtual void send_other (PortableInterceptor::ServerRequestInfo_ptr ri
-			   ACE_ENV_ARG_DECL_NOT_USED)
+                           ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException,
-		     PortableInterceptor::ForwardRequest));
+                     PortableInterceptor::ForwardRequest));
 
   virtual char* name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -96,4 +98,4 @@ public:
 
 };
 
-#endif /*REQUEST_INTERCEPTOR_H*/
+#endif  /* TAO_RTSCHEDULING_REQUEST_INTERCEPTOR_H */

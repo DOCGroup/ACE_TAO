@@ -1020,14 +1020,14 @@ TAO_Object_Adapter::Active_Hint_Strategy::find_persistent_poa (
           || folded_name != poa->folded_name ())
         {
           result =
-	    this->object_adapter_->persistent_poa_name_map_->find (folded_name,
-								   poa);
+            this->object_adapter_->persistent_poa_name_map_->find (folded_name,
+                                                                   poa);
           if (result != 0)
             {
               result =
-		this->object_adapter_->activate_poa (folded_name,
-						     poa
-						     ACE_ENV_ARG_PARAMETER);
+                this->object_adapter_->activate_poa (folded_name,
+                                                     poa
+                                                     ACE_ENV_ARG_PARAMETER);
               ACE_CHECK_RETURN (-1);
             }
         }
@@ -1089,7 +1089,7 @@ TAO_Object_Adapter::No_Hint_Strategy::find_persistent_poa (
 {
   int result =
     this->object_adapter_->persistent_poa_name_map_->find (system_name,
-							   poa);
+                                                           poa);
   if (result != 0)
     {
       result =
@@ -1273,7 +1273,7 @@ TAO_Object_Adapter::Non_Servant_Upcall::~Non_Servant_Upcall (void)
             {
               // Ignore exceptions
               ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-				   "TAO_POA::complete_destruction_i");
+                                   "TAO_POA::complete_destruction_i");
             }
           ACE_ENDTRY;
         }
