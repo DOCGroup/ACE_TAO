@@ -351,7 +351,7 @@ Kokyu_EC::add_timeout_consumer(
   ACE_CHECK;
   //don't need to save supplier_timeout_consumer_rt_info because only used to set dependency here:
 
-  for(Supplier::RT_Info_Vector::Iterator iter(supplier_impl->rt_info());
+  for(Supplier::RT_Info_Vector::Iterator iter(supplier_impl->all_rt_infos());
       !iter.done(); iter.advance())
     {
       Supplier::RT_Info_Vector::TYPE *info; //would rather const to ensure we don't change it, but not supported!
@@ -419,12 +419,15 @@ Kokyu_EC::add_supplier(
                                 ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
+      ACE_DEBUG((LM_DEBUG,"Kokyu_EC add_supplier() consumer_proxy: %@ with RT_Info %s [%d]\n",consumer_proxy.in(),entry.str().c_str(),supplier_rt_info));
+
       rt_infos.push_back(supplier_rt_info);
       proxies.push_back(consumer_proxy); //proxies has a _var ref to  Consumer_Proxy so won't be deleted on return
+
+      supplier_impl->set_consumer_proxies(*type,rt_infos,proxies);
     }
 
-  supplier_impl->set_consumer_proxy(proxies);
-  supplier_impl->rt_info(rt_infos);
+  //supplier_impl->rt_info(rt_infos);
 
   this->suppliers_.push_back(supplier_impl);
 } //add_supplier()
@@ -456,21 +459,26 @@ Kokyu_EC::add_consumer_with_supplier(
   add_supplier(supplier_impl,supp_entry_point,supp_types ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  //only add dependencies from one consumer RT_Info; else get dependency loops (presumable because of TWO_WAY_CALL)
-  for(Supplier::RT_Info_Vector::Iterator iter(supplier_impl->rt_info());
-      !iter.done(); iter.advance())
+  for(Consumer::RT_Info_Vector::Iterator citer(consumer_impl->rt_info());
+      !citer.done(); citer.advance())
     {
-      Supplier::RT_Info_Vector::TYPE *supp_info;
-      iter.next(supp_info);
+      Consumer::RT_Info_Vector::TYPE *cons_info;
+      citer.next(cons_info);
 
-      //ACE_DEBUG((LM_DEBUG,"Kokyu_EC (%P|%t) add_consumer_with_supplier() adding dependency %d\n",*cons_info));
+      for(Supplier::RT_Info_Vector::Iterator iter(supplier_impl->all_rt_infos());
+          !iter.done(); iter.advance())
+        {
+          Supplier::RT_Info_Vector::TYPE *supp_info;
+          iter.next(supp_info);
 
-      this->add_dependency (consumer_impl->rt_info()[0],//*cons_info,
-                            *supp_info,
-                            1,
-                            RtecBase::TWO_WAY_CALL
-                            ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+          //ACE_DEBUG((LM_DEBUG,"Kokyu_EC (%P|%t) add_consumer_with_supplier() adding dependency %d\n",*cons_info));
+          this->add_dependency (*supp_info,
+                                *cons_info,
+                                1,
+                                RtecBase::ONE_WAY_CALL
+                                ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK;
+        }
     }
 } //add_consumer_with_supplier()
 
@@ -530,7 +538,7 @@ Kokyu_EC::add_consumer(
                                 ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      //ACE_DEBUG((LM_DEBUG,"Kokyu_EC add_consumer() registered consumer\n"));
+      ACE_DEBUG((LM_DEBUG,"Kokyu_EC add_consumer() registered consumer with RT_Info %s [%d]\n",entry.str().c_str(),consumer_rt_info));
 
       rt_infos.push_back(consumer_rt_info);
     }

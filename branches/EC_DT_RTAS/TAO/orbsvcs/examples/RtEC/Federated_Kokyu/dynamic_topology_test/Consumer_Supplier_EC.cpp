@@ -24,6 +24,8 @@
 #include "federated_dsui_families.h"
 #endif //ACE_HAS_DSUI
 
+#include <sstream>
+
 namespace
 {
   int supp_id = 3;
@@ -74,11 +76,21 @@ public:
         consumer_ec->scheduler(ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
+      std::stringstream cons_gateway;
+      cons_gateway << consumer_ec_ior << " from " << supp_id;
+
+      ACE_DEBUG((LM_DEBUG,"Consumer_Supplier (%P|%t) init_gateway(): remote RT_Info entry_point is \"%s\"\n",cons_gateway.str().c_str()));
+
+      std::stringstream supp_gateway;
+      supp_gateway << "Gateway for " << supp_id;
+
+      ACE_DEBUG((LM_DEBUG,"Consumer_Supplier (%P|%t) init_gateway(): local RT_Info entry_point is \"%s\"\n",supp_gateway.str().c_str()));
+
       gateway.init(supplier_event_channel.in(),
                    consumer_event_channel.in(),
                    supplier_scheduler.in(),
                    consumer_scheduler.in(),
-                   "gateway2b", "gateway3"
+                   supp_gateway.str().c_str(), cons_gateway.str().c_str()
                    ACE_ENV_ARG_PARAMETER);
 
       ACE_CHECK;
@@ -115,25 +127,46 @@ public:
   {
     ACE_Time_Value tv;
 
-    RtecEventComm::EventType supp_normal_type = ACE_ES_EVENT_UNDEFINED+supp_id+3;
-    RtecEventComm::EventType supp_ft_type = ACE_ES_EVENT_UNDEFINED+supp_id+5;
-    //RtecEventComm::EventType supp_normal_type = ACE_ES_EVENT_UNDEFINED+7;
-    //RtecEventComm::EventType supp_ft_type = ACE_ES_EVENT_UNDEFINED+9;
+    //Supplier types
+    RtecEventComm::EventType supp_normal_type;
+    RtecEventComm::EventType supp_ft_type;
+    //We need to register these since the scheduler is local; it doesn't know about the other Consumer_Supplier_EC
+    RtecEventComm::EventType supp_normal_type_hack;
+    RtecEventComm::EventType supp_ft_type_hack;
+    //Consumer types
+    RtecEventComm::EventType cons_normal_type;
+    RtecEventComm::EventType cons_ft_type;
+    if (supp_id == 3)
+      {
+        supp_normal_type = ACE_ES_EVENT_UNDEFINED+6;
+        supp_ft_type = ACE_ES_EVENT_UNDEFINED+8;
+        supp_normal_type_hack = ACE_ES_EVENT_UNDEFINED+7;
+        supp_ft_type_hack = ACE_ES_EVENT_UNDEFINED+9;
+        cons_normal_type = ACE_ES_EVENT_UNDEFINED+2;
+        cons_ft_type = ACE_ES_EVENT_UNDEFINED+4;
+      }
+    else //supp_id == 4
+      {
+        supp_normal_type = ACE_ES_EVENT_UNDEFINED+7;
+        supp_ft_type = ACE_ES_EVENT_UNDEFINED+9;
+        supp_normal_type_hack = ACE_ES_EVENT_UNDEFINED+6;
+        supp_ft_type_hack = ACE_ES_EVENT_UNDEFINED+8;
+        cons_normal_type = ACE_ES_EVENT_UNDEFINED+3;
+        cons_ft_type = ACE_ES_EVENT_UNDEFINED+5;
+      }
     Kokyu_EC::EventType_Vector supp1_3_types;
     supp1_3_types.push_back(supp_normal_type);
     supp1_3_types.push_back(supp_ft_type);
+    supp1_3_types.push_back(supp_normal_type_hack);
+    supp1_3_types.push_back(supp_ft_type_hack);
+
+    Kokyu_EC::EventType_Vector cons1_2_types(2);
+    cons1_2_types.push_back(cons_ft_type);
+    cons1_2_types.push_back(cons_normal_type);
 
     Supplier *supplier_impl1_3;
     ACE_NEW(supplier_impl1_3,
             Supplier(supp_id,supp_normal_type,supp_ft_type));
-
-    RtecEventComm::EventType cons_normal_type = ACE_ES_EVENT_UNDEFINED+supp_id-1;
-    RtecEventComm::EventType cons_ft_type = ACE_ES_EVENT_UNDEFINED+supp_id+1;
-    //RtecEventComm::EventType cons_normal_type = ACE_ES_EVENT_UNDEFINED+2;
-    //RtecEventComm::EventType cons_ft_type = ACE_ES_EVENT_UNDEFINED+4;
-    Kokyu_EC::EventType_Vector cons1_2_types(2);
-    cons1_2_types.push_back(cons_normal_type);
-    cons1_2_types.push_back(cons_ft_type);
 
     Consumer * consumer_impl1_2;
     ACE_NEW(consumer_impl1_2,
@@ -174,8 +207,8 @@ main (int argc, char* argv[])
   TAO_EC_Gateway_IIOP_Factory::init_svcs ();
 
   //@BT
-  //DSTRM_EVENT(MAIN_GROUP_FAM, START,1,0,NULL);
-  ACE_DEBUG((LM_DEBUG,"Consumer_Supplier_EC thread %t START at %u\n",ACE_OS::gettimeofday().msec()));
+  ACE_Time_Value now(ACE_OS::gettimeofday());
+  ACE_OS::printf("Consumer_Supplier_EC START at %isec %iusec\n",now.sec(),now.usec());
   DSTRM_EVENT(MAIN_GROUP_FAM, START,0,0,NULL);
 
   ACE_DECLARE_NEW_CORBA_ENV;

@@ -52,6 +52,7 @@ public:
   };
 
   typedef ACE_Vector<RtecEventChannelAdmin::ProxyPushConsumer_var> PushConsumer_Vector;
+  typedef ACE_Vector<RtecScheduler::handle_t> RT_Info_Vector;
 
   Supplier (RtecEventComm::EventSourceID id, RtecEventComm::EventType norm_type, RtecEventComm::EventType ft_type,
             Service_Handler * handler = 0);
@@ -67,12 +68,15 @@ public:
 
   virtual void timeout_occured (ACE_ENV_SINGLE_ARG_DECL);
 
-  void set_consumer_proxy(PushConsumer_Vector consumer_proxies);
+  void set_consumer_proxies(RtecEventComm::EventType type, RT_Info_Vector& rt_infos,
+                            PushConsumer_Vector& consumer_proxies);
+  //void set_consumer_proxies(RtecScheduler::handle_t rt_info, PushConsumer_Vector consumer_proxies);
 
-  typedef ACE_Vector<RtecScheduler::handle_t> RT_Info_Vector;
-
-  void rt_info(RT_Info_Vector& supplier_rt_info);
-  RT_Info_Vector& rt_info(void);
+  //void normal_rt_info(RT_Info_Vector& supplier_rt_info);
+  //void ft_rt_info(RT_Info_Vector& supplier_rt_info);
+  RT_Info_Vector& normal_rt_infos(void);
+  RT_Info_Vector& ft_rt_infos(void);
+  RT_Info_Vector& all_rt_infos(void);
 
   RtecEventComm::EventSourceID get_id(void) const;
 
@@ -86,11 +90,14 @@ protected:
   RtecEventComm::EventType norm_type_;
   RtecEventComm::EventType ft_type_;
 
-  PushConsumer_Vector consumer_proxy_;
+  PushConsumer_Vector normal_consumer_proxies_;
+  PushConsumer_Vector ft_consumer_proxies_;
 
   mode_t mode_;
 
-  RT_Info_Vector rt_info_;
+  RT_Info_Vector all_rt_infos_;
+  RT_Info_Vector normal_rt_infos_;
+  RT_Info_Vector ft_rt_infos_;
 
   Service_Handler *handler_;
 }; //class Supplier

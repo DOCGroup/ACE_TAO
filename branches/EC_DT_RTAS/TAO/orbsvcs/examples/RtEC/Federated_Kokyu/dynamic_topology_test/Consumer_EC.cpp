@@ -206,11 +206,11 @@ main (int argc, char* argv[])
   TAO_EC_Kokyu_Factory::init_svcs ();
 
   //@BT
-  //DSTRM_EVENT(MAIN_GROUP_FAM, START,1,0,NULL);
-  ACE_DEBUG((LM_DEBUG,"Consumer_EC thread %t START at %u\n",ACE_OS::gettimeofday().msec()));
 #ifdef ACE_HAS_DSUI
   //  ACE_Object_Counter::object_id oid = ACE_OBJECT_COUNTER->increment();
   //  DSTRM_EVENT(MAIN_GROUP_FAM, START, 1, sizeof(EC_Event_Counter::event_id), (char*)&eid);
+  ACE_Time_Value now(ACE_OS::gettimeofday());
+  ACE_OS::printf("Consumer_EC START at %isec %iusec\n",now.sec(),now.usec());
   DSTRM_EVENT(MAIN_GROUP_FAM, START, 0, 0, NULL);
 #endif //ACE_HAS_DSUI
 
