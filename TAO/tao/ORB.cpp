@@ -637,13 +637,8 @@ CORBA::ORB_init (int &argc,
 
   env.clear ();
 
-  // @@ We need to make sure it's ok for the following 3
-  // initialization routines to be called multiple times.  Or better
-  // yet, ensure that we just call them the first time, e.g., by
-  // putting them in some type of TAO_Object_Manager, along with the
-  // Typecode_Constants...
-
-  CORBA_ORB::init_orb_globals ();
+  // Make sure initialization of TAO globals only occurs once.
+  CORBA_ORB::init_orb_globals (env);
 
   if (env.exception () != 0)
     return 0;

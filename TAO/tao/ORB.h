@@ -872,6 +872,10 @@ public:
   // previously-specified port for requests.  Returns -1 on failure,
   // else 0.
 
+  static void init_orb_globals (CORBA::Environment &env);
+  // Initialize the ORB globals correctly, i.e., only when they
+  // haven't been initialized yet.
+
 protected:
   // We must be created via the <ORB_init> call.
   CORBA_ORB (void);
@@ -920,10 +924,6 @@ private:
   CORBA_Object_ptr trading_service_;
   // If this is non-_nil(), then this is the object reference to our
   // configured Trading.
-
-  static void init_orb_globals (CORBA::Environment &env);
-  // Initialize the ORB globals correctly, i.e., only when they
-  // haven't been initialized yet.
 
   static int orb_init_count_;
   // Count of the number of times that <ORB_init> has been called.
