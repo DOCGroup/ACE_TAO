@@ -1,0 +1,19 @@
+#
+# Makefile for building the IPC_SAP UPIPE_SAP example
+#
+
+NAMES = \
+        ex1 \
+        ex2 \
+        ex3
+
+OBJFILES = $(OBJDIR)\$(NAME).obj
+
+CFLAGS = $(ACE_CFLAGS)
+
+CPPDIR = .
+
+LIBFILES = $(ACE_LIB)
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
