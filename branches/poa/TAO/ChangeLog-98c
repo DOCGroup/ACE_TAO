@@ -1,3 +1,8 @@
+Mon Dec 29 16:26:24 1997  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
+
+	* tao/orb_core.{h,cpp}: Added methods for the orb core allocator
+ 	to the resource factory.
+
 Mon Dec 29 13:18:49 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* TAO_IDL/be/Makefile: 
