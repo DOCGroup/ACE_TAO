@@ -2369,40 +2369,72 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
     ACE_FAIL_RETURN (-1);
   /* NOTREACHED */
 #  elif defined (VXWORKS)
-  // The call below to ::taskSpawn () causes VxWorks to assign a
-  // unique task name of the form: "t" + an integer, because the
-  // first argument is 0.
-
-  // args must be an array of _exactly_ 10 ints.
-
-  // The stack arg is ignored:  if there's a need for it, we'd have to
-  // use ::taskInit ()/::taskActivate () instead of ::taskSpawn ().
-  ACE_UNUSED_ARG (stack);
-
-  // The hard-coded arguments are what ::sp () would use.  ::taskInit ()
-  // is used instead of ::sp () so that we can set the priority, flags,
-  // and stacksize.  (::sp () also hardcodes priority to 100, flags
-  // to VX_FP_TASK, and stacksize to 20,000.)  stacksize should be
-  // an even integer.
+  // The hard-coded values below are what ::sp () would use.  (::sp ()
+  // hardcodes priority to 100, flags to VX_FP_TASK, and stacksize to
+  // 20,000.)  stacksize should be an even integer.  If a stack is not
+  // specified, ::taskSpawn () is used so that we can set the
+  // priority, flags, and stacksize.  If a stack is specified,
+  // ::taskInit ()/::taskActivate() are used.
 
   // If called with thr_create() defaults, use same default values as ::sp ():
   if (priority == ACE_DEFAULT_THREAD_PRIORITY) priority = 100;
-  if (flags == 0) flags = VX_FP_TASK; // Assumes that there is a
-  // floating point coprocessor.
-  // As noted above, ::sp () hardcodes
-  // this, so we should be safe with it.
-
+  // Assumes that there is a floating point coprocessor.  As noted
+  // above, ::sp () hardcodes this, so we should be safe with it.
+  if (flags == 0) flags = VX_FP_TASK;
   if (stacksize == 0) stacksize = 20000;
 
-  const u_int thr_id_provided = thr_id && ACE_OS::strcmp (*thr_id, "ace_t");
+  const u_int thr_id_provided = thr_id && ACE_OS::strcmp (*thr_id,
+                                                          "==ace_t==");
 
-  ACE_hthread_t tid = ::taskSpawn (thr_id_provided ? *thr_id : 0,
-                                   priority,
-                                   (int) flags,
-                                   (int) stacksize,
-                                   ACE_THREAD_FUNCTION,
-                                   (int) ACE_THREAD_ARGUMENT,
-                                   0, 0, 0, 0, 0, 0, 0, 0, 0);
+  ACE_hthread_t tid;
+#if 0 /* Don't support setting of stack, because it doesn't seem to work. */
+  if (stack == 0)
+    {
+#else
+  ACE_UNUSED_ARG (stack);
+#endif /* 0 */
+      // The call below to ::taskSpawn () causes VxWorks to assign a
+      // unique task name of the form: "t" + an integer, because the
+      // first argument is 0.
+      tid = ::taskSpawn (thr_id_provided ? *thr_id : 0,
+                         priority,
+                         (int) flags,
+                         (int) stacksize,
+                         ACE_THREAD_FUNCTION,
+                         (int) ACE_THREAD_ARGUMENT,
+                         0, 0, 0, 0, 0, 0, 0, 0, 0);
+#if 0 /* Don't support setting of stack, because it doesn't seem to work. */
+    }
+  else
+    {
+      // If a task name (thr_id) was not supplied, then the task will
+      // not have a unique name.  That's VxWorks' behavior.
+
+      // Carve out a TCB at the beginning of the stack space.  The TCB
+      // occupies 400 bytes with VxWorks 5.3.1/I386.
+      WIND_TCB *tcb = (WIND_TCB *) stack;
+
+      // The TID is defined to be the address of the TCB.
+      int status = ::taskInit (tcb,
+                               thr_id_provided ? *thr_id : 0,
+                               priority,
+                               (int) flags,
+                               (char *) stack + sizeof (WIND_TCB),
+                               (int) (stacksize - sizeof (WIND_TCB)),
+                               ACE_THREAD_FUNCTION,
+                               (int) ACE_THREAD_ARGUMENT,
+                               0, 0, 0, 0, 0, 0, 0, 0, 0);
+
+      if (status == OK)
+        {
+          // The task was successfully initialized, now activate it.
+          status = ::taskActivate ((ACE_hthread_t) tcb);
+        }
+
+      tid = status == OK  ?  (ACE_hthread_t) tcb  :  ERROR;
+    }
+#endif /* 0 */
+
   if (tid == ERROR)
     return -1;
   else
@@ -2414,7 +2446,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
           // documentation, the name of the new task is stored at
           // pStackBase, but is that of the current task?  If so, it
           // might be a bit quicker than this extraction of the tcb . . .
-          ACE_OS::strncpy (*thr_id + 5, ::taskTcb (tid)->name, 10);
+          ACE_OS::strncpy (*thr_id + 9, ::taskTcb (tid)->name, 10);
         }
       // else if the thr_id was provided, there's no need to overwrite
       // it with the same value (string).
