@@ -1,3 +1,10 @@
+Fri May  7 11:40:25 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* pdu.cpp (agent_error_reason):
+
+	  Really fixed mismatched sprintf() format specifiers this time
+	  around.
+
 Thu May  6 11:13:25 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* oid.cpp (operator+=, OidToStr):

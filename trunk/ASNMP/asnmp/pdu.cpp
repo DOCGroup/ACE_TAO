@@ -316,8 +316,8 @@ const char *Pdu::agent_error_reason()
     }
 
     ACE_OS::sprintf(output_,
-                    "FAIL PDU REPORT: pdu id: %d vb cnt: %d vb idx: %ld \n"
-                    "                 msg: %s vb oid: %s value: %s",
+                    "FAIL PDU REPORT: pdu id: %lu vb cnt: %d vb idx: %d\n"
+                    "                 msg: %s vb oid: %s value: %s\n",
                     get_request_id(), n_vbs, get_error_index(),
                     pmsg, id, val);
 
