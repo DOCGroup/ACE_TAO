@@ -17,9 +17,7 @@ ACE_ROOT = $(top_srcdir)
 SUBDIRS = \
         . \
         QoS \
-        RMCast \
-        SSL \
-        TMCast
+        SSL
 
 CLEANFILES =
 BUILT_SOURCES =
