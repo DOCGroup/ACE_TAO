@@ -2,7 +2,7 @@
 #
 # $Id$
 #
-#	GNUMakefile for all the ACE binaries
+#	GNUmakefile for all the ACE binaries
 #
 # This Makefile can build clone and envinfo, but not both at the same
 # time.  clone must not use any ACE pieces, since it's building a

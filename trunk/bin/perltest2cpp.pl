@@ -218,7 +218,7 @@ my(@mainList) = ();
 sub getMainList {
   if (!defined $mainList[0]) {
     my($fh) = new FileHandle();
-    if (open($fh, "GNUMakefile")) {
+    if (open($fh, "GNUmakefile")) {
       my($line) = "";
       while(<$fh>) {
         $line .= $_;
