@@ -102,45 +102,18 @@ CFLAGS = $(WARNINGS_CFLAGS) -q -VP -Vx -a8 -b- -k $(DCFLAGS) \
 CPPFLAGS += #$(CFLAGS)
 CCFLAGS += $(CFLAGS)
 BORLDFLAGS = -c -L$(LIBPATH):$(ACELIBPATH) -x -Gn -v
-BORINITOBJ = borinitso.o borinit.o  
-BORSHAREDOBJ += libborcrtl.so libborstl.so libborunwind.so libc.so libm.so libdl.so
+BORINITEXEOBJ = borinit.o
+BORINITSHAREDOBJ = borinitso.o
+BORSHAREDOBJ += libborcrtl.so libborstl.so libborunwind.so libc.so libm.so libdl.so 
 BOREXELIBS += crt1.o
-LIBS += $(BORINITOBJ) $(BORSHAREDOBJ)
+LIBS += $(BORSHAREDOBJ) 
 
 PRELINK=
 SOFLAGS= -Tpd $(BORLDFLAGS)
 
 LINK.cc = override
-LINK.cc.override = $(LD) $(LDFLAGS) $(LIBS) $(BOREXELIBS) $(BORLDFLAGS) $(POSTLINK)
+LINK.cc.override = $(LD) $(LDFLAGS) $(BOREXELIBS) $(BORLDFLAGS) $(POSTLINK)
 SOLINK.cc = $(LD) -Tpd
 
 SONAME=
 SOVERSION=
-#  ARFLAGS      Flags for the archive utility (ar)
-#  CC           C compiler command
-#  CXX          C++ compiler command
-#  COMPILE.c    Flags for compiling with C
-#  COMPILE.cc   Flags for compiling with C++
-#  CPPFLAGS     C pre-processor flags
-#  CFLAGS       C compilation flags
-#  CCFLAGS      C++ compilation flags
-#  DCFLAGS      C compilation flags for debugging
-#  DCCFLAGS     C++ compilation flags for debugging
-#  DEFFLAGS     C++ preprocessor flag for defining symbols
-#  DLD          Name of dynamic linker
-#  LD           Name of linker
-#  IDL          Name of the CORBA IDL compiler
-#  TEMPLATES_FLAG Flag to pass to the compiler to control the instantiation of
-# 		  templates.
-#  INSBIN       Binary (executable) installation directory
-#  INSINC       Include file installation directory
-#  INSMAN       Manpage installation directory
-#  INSLIB       Library installation directory
-#  LDFLAGS      ld linker flags
-#  LINK.c       Flags for linking with C
-#  LINK.cc      Flags for linking with C++
-#  MAKEFLAGS    Flags that are passed into the compilation from the commandline
-#  OCFLAGS      Optimizing C compilation flags
-#  OCCFLAGS     Optimizing C++ compilation flags
-#  PCFLAGS      C compilation flags for profiling
-#  PCCFLAGS     C++ compilation flags for profiling
