@@ -4,6 +4,13 @@
 // MEM_IO.i
 
 ASYS_INLINE
+ACE_MT_MEM_IO::Simple_Queue::Simple_Queue (void)
+  : mq_ (0),
+    malloc_ (0)
+{
+}
+
+ASYS_INLINE
 ACE_Reactive_MEM_IO::ACE_Reactive_MEM_IO ()
 {
 }
@@ -15,13 +22,6 @@ ACE_MT_MEM_IO::ACE_MT_MEM_IO ()
   this->recv_channel_.lock_ = 0;
   this->send_channel_.sema_ = 0;
   this->send_channel_.lock_ = 0;
-}
-
-ASYS_INLINE
-ACE_MT_MEM_IO::Simple_Queue::Simple_Queue (void)
-  : mq_ (0),
-    malloc_ (0)
-{
 }
 
 ASYS_INLINE
