@@ -1,0 +1,50 @@
+project(ft_server): orbsvcslib, kokyu, svc_utils, kokyu_dsrt_scheduler_server {
+  exename = ft_server
+  libs += wrappers
+
+  Source_Files {
+    work_i.cpp
+    threeway_server.cpp
+    ft_dsui_vars.cpp
+  }
+}
+
+project(ft_client_and_server): orbsvcslib, kokyu, svc_utils, kokyu_dsrt_scheduler_server, kokyu_dsrt_scheduler_client {
+  exename = ft_client_and_server
+  libs += TAO_Svc_Utils wrappers
+
+  Source_Files {
+    workC.cpp
+    testC.cpp
+    testS.cpp
+    test_i.cpp
+    threeway_client_and_server.cpp
+    ft_dsui_vars.cpp
+  }
+}
+
+project(ft_client_and_server2): orbsvcslib, kokyu, svc_utils, kokyu_dsrt_scheduler_server, kokyu_dsrt_scheduler_client {
+  exename = ft_client_and_server2
+  libs += TAO_Svc_Utils wrappers
+
+  Source_Files {
+    workC.cpp
+    testC.cpp
+    testS.cpp
+    test_i.cpp
+    threeway_client_and_server2.cpp
+    ft_dsui_vars.cpp
+  }
+}
+
+project(ft_client): orbsvcslib, kokyu, svc_utils, kokyu_dsrt_scheduler_client {
+  exename = ft_client
+  libs += TAO_Svc_Utils wrappers
+  
+  Source_Files {
+    testC.cpp
+    cpuload.cpp
+    threeway_client.cpp
+    ft_dsui_vars.cpp
+  }
+}

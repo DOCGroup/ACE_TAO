@@ -7,6 +7,7 @@ project(Kokyu_DSRT_EDF_Scheduler) : orbsvcslib, kokyu, rtscheduling, rtcorba {
   idlflags += -Wb,export_macro=Kokyu_DSRT_Schedulers_Export -Wb,export_include=Kokyu_dsrt_schedulers_export.h
 
   Source_Files {
+        ip.cpp
         EDF_Scheduler.cpp
         Task_Stats.cpp
         utils.cpp
