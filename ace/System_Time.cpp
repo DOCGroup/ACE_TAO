@@ -1,7 +1,6 @@
 // System_Time.cpp
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/System_Time.h"
 
 ACE_RCSID(ace, System_Time, "$Id$")

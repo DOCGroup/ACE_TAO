@@ -4,7 +4,6 @@
 /* Defines the member functions for the base class of the ACE_IO_SAP
    ACE_FILE abstraction. */ 
 
-#define ACE_BUILD_DLL
 #include "ace/FILE.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)

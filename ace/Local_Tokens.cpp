@@ -1,7 +1,6 @@
 // Local_Tokens.cpp
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/Thread.h"
 #include "ace/Local_Tokens.h"
 #include "ace/Token_Manager.h"

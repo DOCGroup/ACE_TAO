@@ -3,7 +3,6 @@
 #ifndef ACE_SELECT_REACTOR_T_C
 #define ACE_SELECT_REACTOR_T_C
 
-#define ACE_BUILD_DLL
 #include "ace/Select_Reactor_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

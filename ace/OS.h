@@ -19,13 +19,11 @@
 # define ACE_OS_H
 #include "ace/pre.h"
 
-// This file should be a link to the platform/compiler-specific
-// configuration file (e.g., config-sunos5-sunc++-4.x.h).
-# include "ace/inc_user_config.h"
-
 # if !defined (ACE_LACKS_PRAGMA_ONCE)
 #   pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/config-all.h"
 
 # if !defined (ACE_MALLOC_ALIGN)
 #   define ACE_MALLOC_ALIGN ((int) sizeof (long))
@@ -138,140 +136,6 @@ typedef long      id_t;
 #   error UNICODE must be defined when using ACE_HAS_MOSTLY_UNICODE_APIS, check your compiler document on how to enable UNICODE.
 # endif /* ACE_HAS_MOSTLY_UNICODE_APIS && !UNICODE */
 
-# if defined (ACE_LACKS_INLINE_FUNCTIONS) && !defined (ACE_NO_INLINE)
-#   define ACE_NO_INLINE
-# endif /* defined (ACE_LACKS_INLINE_FUNCTIONS) && !defined (ACE_NO_INLINE) */
-
-# if defined (ACE_HAS_ANSI_CASTS)
-
-#   define ACE_sap_any_cast(TYPE)                                      reinterpret_cast<TYPE> (const_cast<ACE_Addr &> (ACE_Addr::sap_any))
-
-#   define ACE_static_cast(TYPE, EXPR)                                 static_cast<TYPE> (EXPR)
-#   define ACE_static_cast_1_ptr(TYPE, T1, EXPR)                       static_cast<TYPE<T1> *> (EXPR)
-#   define ACE_static_cast_2_ptr(TYPE, T1, T2, EXPR)                   static_cast<TYPE<T1, T2> *> (EXPR)
-#   define ACE_static_cast_3_ptr(TYPE, T1, T2, T3, EXPR)               static_cast<TYPE<T1, T2, T3> *> (EXPR)
-#   define ACE_static_cast_4_ptr(TYPE, T1, T2, T3, T4, EXPR)           static_cast<TYPE<T1, T2, T3, T4> *> (EXPR)
-#   define ACE_static_cast_5_ptr(TYPE, T1, T2, T3, T4, T5, EXPR)       static_cast<TYPE<T1, T2, T3, T4, T5> *> (EXPR)
-#   define ACE_static_cast_1_ref(TYPE, T1, EXPR)                       static_cast<TYPE<T1> &> (EXPR)
-#   define ACE_static_cast_2_ref(TYPE, T1, T2, EXPR)                   static_cast<TYPE<T1, T2> &> (EXPR)
-#   define ACE_static_cast_3_ref(TYPE, T1, T2, T3, EXPR)               static_cast<TYPE<T1, T2, T3> &> (EXPR)
-#   define ACE_static_cast_4_ref(TYPE, T1, T2, T3, T4, EXPR)           static_cast<TYPE<T1, T2, T3, T4> &> (EXPR)
-#   define ACE_static_cast_5_ref(TYPE, T1, T2, T3, T4, T5, EXPR)       static_cast<TYPE<T1, T2, T3, T4, T5> &> (EXPR)
-
-#   define ACE_const_cast(TYPE, EXPR)                                  const_cast<TYPE> (EXPR)
-#   define ACE_const_cast_1_ptr(TYPE, T1, EXPR)                        const_cast<TYPE<T1> *> (EXPR)
-#   define ACE_const_cast_2_ptr(TYPE, T1, T2, EXPR)                    const_cast<TYPE<T1, T2> *> (EXPR)
-#   define ACE_const_cast_3_ptr(TYPE, T1, T2, T3, EXPR)                const_cast<TYPE<T1, T2, T3> *> (EXPR)
-#   define ACE_const_cast_4_ptr(TYPE, T1, T2, T3, T4, EXPR)            const_cast<TYPE<T1, T2, T3, T4> *> (EXPR)
-#   define ACE_const_cast_5_ptr(TYPE, T1, T2, T3, T4, T5, EXPR)        const_cast<TYPE<T1, T2, T3, T4, T5> *> (EXPR)
-#   define ACE_const_cast_1_ref(TYPE, T1, EXPR)                        const_cast<TYPE<T1> &> (EXPR)
-#   define ACE_const_cast_2_ref(TYPE, T1, T2, EXPR)                    const_cast<TYPE<T1, T2> &> (EXPR)
-#   define ACE_const_cast_3_ref(TYPE, T1, T2, T3, EXPR)                const_cast<TYPE<T1, T2, T3> &> (EXPR)
-#   define ACE_const_cast_4_ref(TYPE, T1, T2, T3, T4, EXPR)            const_cast<TYPE<T1, T2, T3, T4> &> (EXPR)
-#   define ACE_const_cast_5_ref(TYPE, T1, T2, T3, T4, T5, EXPR)        const_cast<TYPE<T1, T2, T3, T4, T5> &> (EXPR)
-
-#   define ACE_reinterpret_cast(TYPE, EXPR)                            reinterpret_cast<TYPE> (EXPR)
-#   define ACE_reinterpret_cast_1_ptr(TYPE, T1, EXPR)                  reinterpret_cast<TYPE<T1> *> (EXPR)
-#   define ACE_reinterpret_cast_2_ptr(TYPE, T1, T2, EXPR)              reinterpret_cast<TYPE<T1, T2> *> (EXPR)
-#   define ACE_reinterpret_cast_3_ptr(TYPE, T1, T2, T3, EXPR)          reinterpret_cast<TYPE<T1, T2, T3> *> (EXPR)
-#   define ACE_reinterpret_cast_4_ptr(TYPE, T1, T2, T3, T4, EXPR)      reinterpret_cast<TYPE<T1, T2, T3, T4> *> (EXPR)
-#   define ACE_reinterpret_cast_5_ptr(TYPE, T1, T2, T3, T4, T5, EXPR)  reinterpret_cast<TYPE<T1, T2, T3, T4, T5> *> (EXPR)
-#   define ACE_reinterpret_cast_1_ref(TYPE, T1, EXPR)                  reinterpret_cast<TYPE<T1> &> (EXPR)
-#   define ACE_reinterpret_cast_2_ref(TYPE, T1, T2, EXPR)              reinterpret_cast<TYPE<T1, T2> &> (EXPR)
-#   define ACE_reinterpret_cast_3_ref(TYPE, T1, T2, T3, EXPR)          reinterpret_cast<TYPE<T1, T2, T3> &> (EXPR)
-#   define ACE_reinterpret_cast_4_ref(TYPE, T1, T2, T3, T4, EXPR)      reinterpret_cast<TYPE<T1, T2, T3, T4> &> (EXPR)
-#   define ACE_reinterpret_cast_5_ref(TYPE, T1, T2, T3, T4, T5, EXPR)  reinterpret_cast<TYPE<T1, T2, T3, T4, T5> &> (EXPR)
-
-#   if defined (ACE_LACKS_RTTI)
-#     define ACE_dynamic_cast(TYPE, EXPR)                              static_cast<TYPE> (EXPR)
-#     define ACE_dynamic_cast_1_ptr(TYPE, T1, EXPR)                    static_cast<TYPE<T1> *> (EXPR)
-#     define ACE_dynamic_cast_2_ptr(TYPE, T1, T2, EXPR)                static_cast<TYPE<T1, T2> *> (EXPR)
-#     define ACE_dynamic_cast_3_ptr(TYPE, T1, T2, T3, EXPR)            static_cast<TYPE<T1, T2, T3> *> (EXPR)
-#     define ACE_dynamic_cast_4_ptr(TYPE, T1, T2, T3, T4, EXPR)        static_cast<TYPE<T1, T2, T3, T4> *> (EXPR)
-#     define ACE_dynamic_cast_5_ptr(TYPE, T1, T2, T3, T4, T5, EXPR)    static_cast<TYPE<T1, T2, T3, T4, T5> *> (EXPR)
-#     define ACE_dynamic_cast_1_ref(TYPE, T1, EXPR)                    static_cast<TYPE<T1> &> (EXPR)
-#     define ACE_dynamic_cast_2_ref(TYPE, T1, T2, EXPR)                static_cast<TYPE<T1, T2> &> (EXPR)
-#     define ACE_dynamic_cast_3_ref(TYPE, T1, T2, T3, EXPR)            static_cast<TYPE<T1, T2, T3> &> (EXPR)
-#     define ACE_dynamic_cast_4_ref(TYPE, T1, T2, T3, T4, EXPR)        static_cast<TYPE<T1, T2, T3, T4> &> (EXPR)
-#     define ACE_dynamic_cast_5_ref(TYPE, T1, T2, T3, T4, T5, EXPR)    static_cast<TYPE<T1, T2, T3, T4, T5> &> (EXPR)
-#   else  /* ! ACE_LACKS_RTTI */
-#     define ACE_dynamic_cast(TYPE, EXPR)                              dynamic_cast<TYPE> (EXPR)
-#     define ACE_dynamic_cast_1_ptr(TYPE, T1, EXPR)                    dynamic_cast<TYPE<T1> *> (EXPR)
-#     define ACE_dynamic_cast_2_ptr(TYPE, T1, T2, EXPR)                dynamic_cast<TYPE<T1, T2> *> (EXPR)
-#     define ACE_dynamic_cast_3_ptr(TYPE, T1, T2, T3, EXPR)            dynamic_cast<TYPE<T1, T2, T3> *> (EXPR)
-#     define ACE_dynamic_cast_4_ptr(TYPE, T1, T2, T3, T4, EXPR)        dynamic_cast<TYPE<T1, T2, T3, T4> *> (EXPR)
-#     define ACE_dynamic_cast_5_ptr(TYPE, T1, T2, T3, T4, T5, EXPR)    dynamic_cast<TYPE<T1, T2, T3, T4, T5> *> (EXPR)
-#     define ACE_dynamic_cast_1_ref(TYPE, T1, EXPR)                    dynamic_cast<TYPE<T1> &> (EXPR)
-#     define ACE_dynamic_cast_2_ref(TYPE, T1, T2, EXPR)                dynamic_cast<TYPE<T1, T2> &> (EXPR)
-#     define ACE_dynamic_cast_3_ref(TYPE, T1, T2, T3, EXPR)            dynamic_cast<TYPE<T1, T2, T3> &> (EXPR)
-#     define ACE_dynamic_cast_4_ref(TYPE, T1, T2, T3, T4, EXPR)        dynamic_cast<TYPE<T1, T2, T3, T4> &> (EXPR)
-#     define ACE_dynamic_cast_5_ref(TYPE, T1, T2, T3, T4, T5, EXPR)    dynamic_cast<TYPE<T1, T2, T3, T4, T5> &> (EXPR)
-#   endif /* ! ACE_LACKS_RTTI */
-
-# else
-
-#   define ACE_sap_any_cast(TYPE)                                      ((TYPE) (ACE_Addr::sap_any))
-
-#   define ACE_static_cast(TYPE, EXPR)                                 ((TYPE) (EXPR))
-#   define ACE_static_cast_1_ptr(TYPE, T1, EXPR)                       ((TYPE<T1> *) (EXPR))
-#   define ACE_static_cast_2_ptr(TYPE, T1, T2, EXPR)                   ((TYPE<T1, T2> *) (EXPR))
-#   define ACE_static_cast_3_ptr(TYPE, T1, T2, T3, EXPR)               ((TYPE<T1, T2, T3> *) (EXPR))
-#   define ACE_static_cast_4_ptr(TYPE, T1, T2, T3, T4, EXPR)           ((TYPE<T1, T2, T3, T4> *) (EXPR))
-#   define ACE_static_cast_5_ptr(TYPE, T1, T2, T3, T4, T5, EXPR)       ((TYPE<T1, T2, T3, T4, T5> *) (EXPR))
-#   define ACE_static_cast_1_ref(TYPE, T1, EXPR)                       ((TYPE<T1> &) (EXPR))
-#   define ACE_static_cast_2_ref(TYPE, T1, T2, EXPR)                   ((TYPE<T1, T2> &) (EXPR))
-#   define ACE_static_cast_3_ref(TYPE, T1, T2, T3, EXPR)               ((TYPE<T1, T2, T3> &) (EXPR))
-#   define ACE_static_cast_4_ref(TYPE, T1, T2, T3, T4, EXPR)           ((TYPE<T1, T2, T3, T4> &) (EXPR))
-#   define ACE_static_cast_5_ref(TYPE, T1, T2, T3, T4, T5, EXPR)       ((TYPE<T1, T2, T3, T4, T5> &) (EXPR))
-
-#   define ACE_const_cast(TYPE, EXPR)                                  ((TYPE) (EXPR))
-#   define ACE_const_cast_1_ptr(TYPE, T1, EXPR)                        ((TYPE<T1> *) (EXPR))
-#   define ACE_const_cast_2_ptr(TYPE, T1, T2, EXPR)                    ((TYPE<T1, T2> *) (EXPR))
-#   define ACE_const_cast_3_ptr(TYPE, T1, T2, T3, EXPR)                ((TYPE<T1, T2, T3> *) (EXPR))
-#   define ACE_const_cast_4_ptr(TYPE, T1, T2, T3, T4, EXPR)            ((TYPE<T1, T2, T3, T4> *) (EXPR))
-#   define ACE_const_cast_5_ptr(TYPE, T1, T2, T3, T4, T5, EXPR)        ((TYPE<T1, T2, T3, T4, T5> *) (EXPR))
-#   define ACE_const_cast_1_ref(TYPE, T1, EXPR)                        ((TYPE<T1> &) (EXPR))
-#   define ACE_const_cast_2_ref(TYPE, T1, T2, EXPR)                    ((TYPE<T1, T2> &) (EXPR))
-#   define ACE_const_cast_3_ref(TYPE, T1, T2, T3, EXPR)                ((TYPE<T1, T2, T3> &) (EXPR))
-#   define ACE_const_cast_4_ref(TYPE, T1, T2, T3, T4, EXPR)            ((TYPE<T1, T2, T3, T4> &) (EXPR))
-#   define ACE_const_cast_5_ref(TYPE, T1, T2, T3, T4, T5, EXPR)        ((TYPE<T1, T2, T3, T4, T5> &) (EXPR))
-
-#   define ACE_reinterpret_cast(TYPE, EXPR)                            ((TYPE) (EXPR))
-#   define ACE_reinterpret_cast_1_ptr(TYPE, T1, EXPR)                  ((TYPE<T1> *) (EXPR))
-#   define ACE_reinterpret_cast_2_ptr(TYPE, T1, T2, EXPR)              ((TYPE<T1, T2> *) (EXPR))
-#   define ACE_reinterpret_cast_3_ptr(TYPE, T1, T2, T3, EXPR)          ((TYPE<T1, T2, T3> *) (EXPR))
-#   define ACE_reinterpret_cast_4_ptr(TYPE, T1, T2, T3, T4, EXPR)      ((TYPE<T1, T2, T3, T4> *) (EXPR))
-#   define ACE_reinterpret_cast_5_ptr(TYPE, T1, T2, T3, T4, T5, EXPR)  ((TYPE<T1, T2, T3, T4, T5> *) (EXPR))
-#   define ACE_reinterpret_cast_1_ref(TYPE, T1, EXPR)                  ((TYPE<T1> &) (EXPR))
-#   define ACE_reinterpret_cast_2_ref(TYPE, T1, T2, EXPR)              ((TYPE<T1, T2> &) (EXPR))
-#   define ACE_reinterpret_cast_3_ref(TYPE, T1, T2, T3, EXPR)          ((TYPE<T1, T2, T3> &) (EXPR))
-#   define ACE_reinterpret_cast_4_ref(TYPE, T1, T2, T3, T4, EXPR)      ((TYPE<T1, T2, T3, T4> &) (EXPR))
-#   define ACE_reinterpret_cast_5_ref(TYPE, T1, T2, T3, T4, T5, EXPR)  ((TYPE<T1, T2, T3, T4, T5> &) (EXPR))
-
-#   define ACE_dynamic_cast(TYPE, EXPR)                                ((TYPE) (EXPR))
-#   define ACE_dynamic_cast_1_ptr(TYPE, T1, EXPR)                      ((TYPE<T1> *) (EXPR))
-#   define ACE_dynamic_cast_2_ptr(TYPE, T1, T2, EXPR)                  ((TYPE<T1, T2> *) (EXPR))
-#   define ACE_dynamic_cast_3_ptr(TYPE, T1, T2, T3, EXPR)              ((TYPE<T1, T2, T3> *) (EXPR))
-#   define ACE_dynamic_cast_4_ptr(TYPE, T1, T2, T3, T4, EXPR)          ((TYPE<T1, T2, T3, T4> *) (EXPR))
-#   define ACE_dynamic_cast_5_ptr(TYPE, T1, T2, T3, T4, T5, EXPR)      ((TYPE<T1, T2, T3, T4, T5> *) (EXPR))
-#   define ACE_dynamic_cast_1_ref(TYPE, T1, EXPR)                      ((TYPE<T1> &) (EXPR))
-#   define ACE_dynamic_cast_2_ref(TYPE, T1, T2, EXPR)                  ((TYPE<T1, T2> &) (EXPR))
-#   define ACE_dynamic_cast_3_ref(TYPE, T1, T2, T3, EXPR)              ((TYPE<T1, T2, T3> &) (EXPR))
-#   define ACE_dynamic_cast_4_ref(TYPE, T1, T2, T3, T4, EXPR)          ((TYPE<T1, T2, T3, T4> &) (EXPR))
-#   define ACE_dynamic_cast_5_ref(TYPE, T1, T2, T3, T4, T5, EXPR)      ((TYPE<T1, T2, T3, T4, T5> &) (EXPR))
-# endif /* ACE_HAS_ANSI_CASTS */
-
-# if !defined (ACE_CAST_CONST)
-    // Sun CC 4.2, for example, requires const in reinterpret casts of
-    // data members in const member functions.  But, other compilers
-    // complain about the useless const.  This keeps everyone happy.
-#   if defined (__SUNPRO_CC)
-#     define ACE_CAST_CONST const
-#   else  /* ! __SUNPRO_CC */
-#     define ACE_CAST_CONST
-#   endif /* ! __SUNPRO_CC */
-# endif /* ! ACE_CAST_CONST */
-
 // Deal with MSVC++ insanity for CORBA...
 # if defined (ACE_HAS_BROKEN_NAMESPACES)
 #   define ACE_CORBA_1(NAME) CORBA_##NAME
@@ -285,11 +149,6 @@ typedef long      id_t;
 #   define ACE_NESTED_CLASS(TYPE, NAME) TYPE::NAME
 # endif /* ! ACE_HAS_BROKEN_NAMESPACES */
 
-# if defined (ACE_NO_INLINE)
-  // ACE inlining has been explicitly disabled.  Implement
-  // internally within ACE by undefining __ACE_INLINE__.
-#   undef __ACE_INLINE__
-# endif /* ! ACE_NO_INLINE */
 
 # if !defined (ACE_DEFAULT_CLOSE_ALL_HANDLES)
 #   define ACE_DEFAULT_CLOSE_ALL_HANDLES 1
@@ -606,73 +465,6 @@ typedef long      id_t;
 # else
 #   define ACE_DB(X) X
 # endif /* ACE_NDEBUG */
-
-// Nasty macro stuff to account for Microsoft Win32 DLL nonsense.  We
-// use these macros so that we don't end up with ACE software
-// hard-coded to Microsoft proprietary extensions to C++.
-
-// First, we define how to properly export/import objects.
-# if defined (ACE_WIN32) /* Only Win32 needs special treatment. */
-#   if defined(_MSC_VER) || defined(__BORLANDC__) || defined (__IBMCPP__)
-/*  Microsoft, Borland: */
-#     define ACE_Proper_Export_Flag __declspec (dllexport)
-#     define ACE_Proper_Import_Flag __declspec (dllimport)
-#     define ACE_EXPORT_SINGLETON_DECLARATION(T)  template class __declspec (dllexport) T
-#     define ACE_IMPORT_SINGLETON_DECLARATION(T)  extern template class T
-#   else /* defined (_MSC_VER) || defined (__BORLANDC__) || defined (__IBMCPP__) */
-/* Non-Microsoft, non-Borland: */
-#     define ACE_Proper_Export_Flag _export
-#     define ACE_Proper_Import_Flag _import
-#     define ACE_EXPORT_SINGLETON_DECLARATION(T)
-#     define ACE_IMPORT_SINGLETON_DECLARATION(T)
-#   endif /* defined(_MSC_VER) || defined(__BORLANDC__) */
-# else  /* ! ACE_WIN32 */
-#   define ACE_Proper_Export_Flag
-#   define ACE_Proper_Import_Flag
-#   define ACE_EXPORT_SINGLETON_DECLARATION(T)
-#   define ACE_IMPORT_SINGLETON_DECLARATION(T)
-# endif /* ACE_WIN32 */
-
-// Here are definition for ACE library.
-# if defined (ACE_HAS_DLL) && (ACE_HAS_DLL == 1)
-#   if defined (ACE_BUILD_DLL)
-#     define ACE_Export ACE_Proper_Export_Flag
-#     define ACE_SINGLETON_DECLARATION(T) ACE_EXPORT_SINGLETON_DECLARATION (T)
-#   else
-#     define ACE_Export ACE_Proper_Import_Flag
-#     define ACE_SINGLETON_DECLARATION(T) ACE_IMPORT_SINGLETON_DECLARATION (T)
-#   endif /* ACE_BUILD_DLL */
-# else /* ! ACE_HAS_DLL */
-#   define ACE_Export
-#   define ACE_SINGLETON_DECLARATION(T)
-# endif /* ACE_HAS_DLL */
-
-// Here are definition for ACE_Svc library.
-# if defined (ACE_HAS_SVC_DLL) && (ACE_HAS_SVC_DLL == 1)
-#   if defined (ACE_BUILD_SVC_DLL)
-#     define ACE_Svc_Export ACE_Proper_Export_Flag
-#     define ACE_SVC_SINGLETON_DECLARATION(T) ACE_EXPORT_SINGLETON_DECLARATION (T)
-#   else
-#     define ACE_Svc_Export ACE_Proper_Import_Flag
-#     define ACE_SVC_SINGLETON_DECLARATION(T) ACE_IMPORT_SINGLETON_DECLARATION (T)
-#   endif /* ACE_BUILD_SVC_DLL */
-# else /* ACE_HAS_SVC_DLL */
-#   define ACE_Svc_Export
-#   define ACE_SVC_SINGLETON_DECLARATION(T)
-# endif /* ACE_HAS_SVC_DLL */
-
-// This is a whim of mine -- that instead of annotating a class with
-// ACE_Export in its declaration, we make the declaration near the TOP
-// of the file with ACE_DECLARE_EXPORT.
-# define ACE_DECLARE_EXPORT(TS,ID) TS ACE_Export ID
-// TS = type specifier (e.g., class, struct, int, etc.)
-// ID = identifier
-// So, how do you use it?  Most of the time, just use ...
-// ACE_DECLARE_EXPORT(class, someobject);
-// If there are global functions to be exported, then use ...
-// ACE_DECLARE_EXPORT(void, globalfunction) (int, ...);
-// Someday, when template libraries are supported, we made need ...
-// ACE_DECLARE_EXPORT(template class, sometemplate) <class TYPE, class LOCK>;
 
 // ACE_NO_HEAP_CHECK macro can be used to suppress false report of
 // memory leaks. It turns off the built-in heap checking until the
@@ -1227,15 +1019,6 @@ private:
 # else
 #   define ACE_SPRINTF_ADAPTER(X) X
 # endif /* ACE_HAS_CHARPTR_SPRINTF */
-
-# if defined (__ACE_INLINE__)
-#   define ACE_INLINE inline
-#   if !defined (ACE_HAS_INLINED_OSCALLS)
-#     define ACE_HAS_INLINED_OSCALLS
-#   endif /* !ACE_HAS_INLINED_OSCALLS */
-# else
-#   define ACE_INLINE
-# endif /* __ACE_INLINE__ */
 
 // Default address for shared memory mapped files and SYSV shared memory
 // (defaults to 64 M).
@@ -5647,7 +5430,7 @@ public:
                     long arg = 0);
   static int fdetach (const char *file);
 
-  static int fsync(ACE_HANDLE handle);
+  static int fsync (ACE_HANDLE handle);
 
 # if !defined (ACE_HAS_WINCE)
   // CE doesn't support these char version functions.
@@ -8207,12 +7990,6 @@ private:
 #   define ACE_NOTSUP do { errno = ENOTSUP; return; } while (0)
 # endif /* ! ACE_HAS_VERBOSE_NOTSUP */
 
-# if defined (ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS)
-#   define ACE_INLINE_FOR_GNUC ACE_INLINE
-# else
-#   define ACE_INLINE_FOR_GNUC
-# endif /* ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS */
-
 # if defined (ACE_WIN32) && ! defined (ACE_HAS_WINCE) \
                          && ! defined (ACE_HAS_PHARLAP)
 typedef TRANSMIT_FILE_BUFFERS ACE_TRANSMIT_FILE_BUFFERS;
@@ -8296,21 +8073,6 @@ typedef ACE_TRANSMIT_FILE_BUFFERS* ACE_LPTRANSMIT_FILE_BUFFERS;
 #     define ACE_DEFAULT_MUTEX ACE_DEFAULT_MUTEX_A
 #   endif /* ACE_DEFAULT_MUTEX */
 # endif /* UNICODE */
-
-// Some ACE classes always use inline functions to maintain high
-// performance, but some platforms have buggy inline function support.
-// In this case, we don't use inline with them.
-# if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#   if defined (ASYS_INLINE)
-#     undef ASYS_INLINE
-#   endif /* ASYS_INLINE */
-#   define ASYS_INLINE
-#   if defined (ACE_HAS_INLINED_OSCALLS)
-#     undef ACE_HAS_INLINED_OSCALLS
-#   endif /* ACE_HAS_INLINED_OSCALLS */
-# else
-#   define ASYS_INLINE inline
-# endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 # if !defined (ACE_HAS_MINIMAL_ACE_OS)
 #   include "ace/Trace.h"

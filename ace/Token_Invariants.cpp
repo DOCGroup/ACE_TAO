@@ -1,7 +1,6 @@
 // Token_Invariants.cpp
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/Token_Invariants.h"
 #include "ace/Object_Manager.h"
 

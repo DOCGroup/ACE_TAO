@@ -1,6 +1,5 @@
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/Service_Types.h"
 #include "ace/Stream_Modules.h"
 #include "ace/Stream.h"

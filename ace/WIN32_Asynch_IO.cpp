@@ -1,7 +1,5 @@
 // $Id$
 
-#define ACE_BUILD_DLL
-
 #include "ace/WIN32_Asynch_IO.h"
 
 // ACE_RCSID(ace, Asynch_IO, "$Id$")

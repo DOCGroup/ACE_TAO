@@ -1,7 +1,6 @@
 // Activation_Queue.cpp
 // $Id$
 
-#define ACE_BUILD_DLL
 
 #include "ace/Activation_Queue.h"
 

@@ -1,7 +1,6 @@
 // SOCK_Connector.cpp
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/SOCK_Connector.h"
 #include "ace/INET_Addr.h"
 

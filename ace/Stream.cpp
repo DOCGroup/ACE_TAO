@@ -4,7 +4,6 @@
 #ifndef ACE_STREAM_C
 #define ACE_STREAM_C
 
-#define ACE_BUILD_DLL
 //#include "ace/Module.h"
 #include "ace/Stream.h"
 

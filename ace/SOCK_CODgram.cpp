@@ -1,7 +1,6 @@
 // SOCK_CODgram.cpp
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/SOCK_CODgram.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)

@@ -1,7 +1,6 @@
 // LSOCK_Acceptor.cpp
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/LSOCK_Acceptor.h"
 
 #if !defined (__ACE_INLINE__)

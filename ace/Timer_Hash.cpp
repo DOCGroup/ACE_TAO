@@ -5,8 +5,6 @@
 #if !defined (ACE_TIMER_HASH_C)
 #define ACE_TIMER_HASH_C
 
-#define ACE_BUILD_DLL
-
 #include "ace/Timer_Hash.h"
 
 #if defined (ACE_HAS_BROKEN_HPUX_TEMPLATES)

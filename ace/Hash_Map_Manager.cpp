@@ -13,8 +13,6 @@
 //
 // ============================================================================
 
-#define ACE_BUILD_DLL
-
 #include "ace/Hash_Map_Manager.h"
 
 ACE_RCSID(ace, Hash_Map_Manager, "$Id$")

@@ -3,8 +3,6 @@
 #if !defined (ACE_TIMER_HEAP_C)
 #define ACE_TIMER_HEAP_C
 
-#define ACE_BUILD_DLL
-
 #include "ace/Timer_Heap.h"
 
 ACE_RCSID(ace, Timer_Heap, "$Id$")

@@ -3,7 +3,6 @@
 
 #ifndef ACE_TYPED_SV_MESSAGE_C
 #define ACE_TYPED_SV_MESSAGE_C
-#define ACE_BUILD_DLL
 #include "ace/Typed_SV_Message.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

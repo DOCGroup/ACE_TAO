@@ -1,7 +1,5 @@
 // $Id$
 
-#define ACE_BUILD_DLL
-
 #include "ace/Msg_WFMO_Reactor.h"
 
 ACE_RCSID(ace, Msg_WFMO_Reactor, "$Id$")

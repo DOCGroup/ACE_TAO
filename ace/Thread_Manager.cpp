@@ -1,6 +1,5 @@
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/Synch_T.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Dynamic.h"

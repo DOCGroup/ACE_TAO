@@ -1,6 +1,5 @@
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/SOCK_Dgram_Bcast.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)

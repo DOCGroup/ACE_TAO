@@ -4,7 +4,6 @@
 #if !defined (ACE_CORBA_REF_C)
 #define ACE_CORBA_REF_C
 
-#define ACE_BUILD_DLL
 #include "ace/CORBA_Ref.h"
 #include "ace/Log_Msg.h"
 

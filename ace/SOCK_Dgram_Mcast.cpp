@@ -1,6 +1,5 @@
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/SOCK_Dgram_Mcast.h"
 #include "ace/INET_Addr.h"
 

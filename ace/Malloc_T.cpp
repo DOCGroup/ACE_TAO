@@ -4,7 +4,6 @@
 #ifndef ACE_MALLOC_T_C
 #define ACE_MALLOC_T_C
 
-#define ACE_BUILD_DLL
 #include "ace/Malloc_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

@@ -1,7 +1,6 @@
 // XTI_ATM_Mcast.cpp
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/XTI_ATM_Mcast.h"
 
 ACE_RCSID(ace, XTI_ATM_Mcast, "$Id$")

@@ -1,6 +1,5 @@
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/Synch_Options.h"
 
 #if !defined (__ACE_INLINE__)

@@ -1,6 +1,5 @@
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/Timer_Queue_Adapters.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

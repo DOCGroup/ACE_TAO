@@ -1,7 +1,6 @@
 // UPIPE_Stream.cpp
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/UPIPE_Stream.h"
 
 ACE_RCSID(ace, UPIPE_Stream, "$Id$")

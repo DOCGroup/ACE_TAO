@@ -1,7 +1,6 @@
 // Handle_Set.cpp
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/Handle_Set.h"
 
 #if !defined (__ACE_INLINE__)

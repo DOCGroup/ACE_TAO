@@ -3,8 +3,6 @@
 #ifndef CLEANUP_STRATEGIES_T_C
 #define CLEANUP_STRATEGIES_T_C
 
-#define ACE_BUILD_DLL
-
 #include "ace/Cleanup_Strategies_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

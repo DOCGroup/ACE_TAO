@@ -1,7 +1,6 @@
 // FILE_Connector.cpp
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/FILE_Connector.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)

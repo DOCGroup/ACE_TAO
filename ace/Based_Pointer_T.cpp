@@ -3,7 +3,6 @@
 #ifndef ACE_BASED_POINTER_T_CPP
 #define ACE_BASED_POINTER_T_CPP
 
-#define ACE_BUILD_DLL
 #include "ace/Based_Pointer_T.h"
 #include "ace/Based_Pointer_Repository.h"
 

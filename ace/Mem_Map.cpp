@@ -2,7 +2,6 @@
 
 // Defines the member functions for the memory mapping facility.
 
-#define ACE_BUILD_DLL
 #include "ace/Mem_Map.h"
 
 #if !defined (__ACE_INLINE__)

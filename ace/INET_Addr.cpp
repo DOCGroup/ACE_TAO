@@ -2,7 +2,6 @@
 
 // Defines the Internet domain address family address format.
 
-#define ACE_BUILD_DLL
 #include "ace/INET_Addr.h"
 
 #if !defined (__ACE_INLINE__)

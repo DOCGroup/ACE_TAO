@@ -1,7 +1,5 @@
 // $Id$
 
-#define ACE_BUILD_DLL
-
 #include "ace/WFMO_Reactor.h"
 
 #include "ace/Handle_Set.h"

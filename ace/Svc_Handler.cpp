@@ -3,7 +3,6 @@
 #ifndef ACE_SVC_HANDLER_C
 #define ACE_SVC_HANDLER_C
 
-#define ACE_BUILD_DLL
 #include "ace/Svc_Handler.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

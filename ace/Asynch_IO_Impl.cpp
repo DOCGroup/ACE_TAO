@@ -1,5 +1,4 @@
 // $Id$
-#define ACE_BUILD_DLL
 #include "ace/OS.h"
 #include "ace/Asynch_IO_Impl.h"
 

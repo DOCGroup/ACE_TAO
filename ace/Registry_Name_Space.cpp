@@ -1,7 +1,5 @@
 // $Id$
 
-#define ACE_BUILD_DLL
-
 #include "ace/Registry_Name_Space.h"
 
 ACE_RCSID(ace, Registry_Name_Space, "$Id$")

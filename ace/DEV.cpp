@@ -2,7 +2,6 @@
 // $Id$
 
 
-#define ACE_BUILD_DLL
 #include "ace/DEV.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)

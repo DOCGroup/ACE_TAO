@@ -3,7 +3,6 @@
 #if !defined (ACE_MESSAGE_BLOCK_T_C)
 #define ACE_MESSAGE_BLOCK_T_C
 
-#define ACE_BUILD_DLL
 #include "ace/Message_Block_T.h"
 
 ACE_RCSID(ace, Message_Block_T, "$Id$")

@@ -4,7 +4,7 @@
 #define TAO_TIMEPROBE_H
 #include "ace/pre.h"
 
-#include "ace/inc_user_config.h"
+#include "ace/config-all.h"
 
 // Please see ace/Timeprobe.h for details on these #defines.
 

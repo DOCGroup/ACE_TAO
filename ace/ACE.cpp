@@ -1,6 +1,5 @@
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/ACE.h"
 #include "ace/Handle_Set.h"
 #include "ace/Auto_Ptr.h"

@@ -1,7 +1,5 @@
 // $Id$
 
-#define ACE_BUILD_DLL
-
 #include "ace/OS.h"
 #if !defined (__ACE_INLINE__)
 # include "ace/Basic_Types.i"

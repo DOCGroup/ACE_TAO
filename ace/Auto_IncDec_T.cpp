@@ -3,8 +3,6 @@
 #ifndef ACE_AUTO_INCDEC_T_C
 #define ACE_AUTO_INCDEC_T_C
 
-#define ACE_BUILD_DLL
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */

@@ -1,7 +1,5 @@
 // $Id$
 
-#define ACE_BUILD_DLL
-
 #include "ace/Select_Reactor_Base.h"
 #include "ace/Reactor.h"
 #include "ace/Thread.h"

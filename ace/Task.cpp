@@ -1,6 +1,5 @@
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/Task.h"
 #include "ace/Module.h"
 #if !defined (ACE_HAS_WINCE)

@@ -1,7 +1,6 @@
 // IO_SAP.cpp
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/IO_SAP.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)

@@ -4,7 +4,6 @@
 #ifndef ACE_DYNAMIC_SERVICE_C
 #define ACE_DYNAMIC_SERVICE_C
 
-#define ACE_BUILD_DLL
 #include "ace/Service_Config.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

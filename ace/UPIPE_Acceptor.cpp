@@ -1,7 +1,6 @@
 // UPIPE_Acceptor.cpp
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/UPIPE_Acceptor.h"
 
 ACE_RCSID(ace, UPIPE_Acceptor, "$Id$")

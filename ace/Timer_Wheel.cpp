@@ -3,8 +3,6 @@
 #if !defined (ACE_TIMER_WHEEL_C)
 #define ACE_TIMER_WHEEL_C
 
-#define ACE_BUILD_DLL
-
 #include "ace/Timer_Wheel.h"
 
 #if defined (ACE_HAS_BROKEN_HPUX_TEMPLATES)

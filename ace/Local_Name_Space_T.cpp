@@ -3,7 +3,6 @@
 #ifndef ACE_LOCAL_NAME_SPACE_T_C
 #define ACE_LOCAL_NAME_SPACE_T_C
 
-#define ACE_BUILD_DLL
 #include "ace/ACE.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

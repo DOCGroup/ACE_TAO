@@ -3,7 +3,6 @@
 #ifndef ACE_MAP_MANAGER_C
 #define ACE_MAP_MANAGER_C
 
-#define ACE_BUILD_DLL
 #include "ace/Malloc.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

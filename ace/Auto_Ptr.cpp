@@ -4,7 +4,6 @@
 #if !defined (ACE_AUTO_PTR_C)
 #define ACE_AUTO_PTR_C
 
-#define ACE_BUILD_DLL
 #include "ace/Auto_Ptr.h"
 
 #if !defined (__ACE_INLINE__)

@@ -1,7 +1,6 @@
 // LSOCK_Connector.cpp
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/LSOCK_Connector.h"
 
 ACE_RCSID(ace, LSOCK_Connector, "$Id$")

@@ -1,7 +1,6 @@
 // Event_Handler.cpp
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/Event_Handler.h"
 #include "ace/Message_Block.h"
 #include "ace/Reactor.h"

@@ -1,7 +1,6 @@
 // SPIPE_Addr.cpp
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/SPIPE_Addr.h"
 
 #if !defined (__ACE_INLINE__)
