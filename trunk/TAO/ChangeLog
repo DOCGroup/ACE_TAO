@@ -1,3 +1,12 @@
+Fri Oct 10 23:04:17 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils_T.cpp: 
+	* orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils.h: 
+	* orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_Kokyu_Dispatching.cpp: 
+
+	  Guarded debugging statements with logging macros.
+	
 Fri Oct 10 11:58:25 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* examples/RTScheduling/Common_IDL_Gen.dsp: 

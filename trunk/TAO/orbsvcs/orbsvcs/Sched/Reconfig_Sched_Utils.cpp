@@ -145,7 +145,7 @@ TAO_RT_Info_Ex::reset (u_long reset_flags)
       ACE_LONGLONG_TO_PTR (TAO_Reconfig_Scheduler_Entry *,
                            volatile_token);
 
-  ACE_DEBUG((LM_DEBUG, "Removing Entries for RT_Info: %d, entry_ptr: %x\n", handle, entry_ptr));
+  //ACE_DEBUG((LM_DEBUG, "Removing Entries for RT_Info: %d, entry_ptr: %x\n", handle, entry_ptr));
   if (entry_ptr)
     {
       entry_ptr->remove_tuples (reset_flags);
