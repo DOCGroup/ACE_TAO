@@ -52,7 +52,7 @@ extern "C" int writev (ACE_HANDLE handle, ACE_WRITEV_TYPE *iov, int iovcnt);
 #endif /* ACE_NEEDS_WRITEV */
 
 #if defined (ACE_NEEDS_READV)
-extern "C" ssize_t readv (ACE_HANDLE handle, struct iovec *iov, int iovcnt);
+extern "C" ssize_t readv (ACE_HANDLE handle, ACE_READV_TYPE *iov, int iovcnt);
 #endif /* ACE_NEEDS_READV */
 
 #if defined (ACE_HAS_VOIDPTR_MMAP)
@@ -4713,7 +4713,7 @@ ACE_OS::writev (ACE_HANDLE handle,
 
 ACE_INLINE ssize_t
 ACE_OS::readv (ACE_HANDLE handle, 
-	       struct iovec *iov, 
+	       ACE_READV_TYPE *iov, 
 	       int iovlen)
 {
   // ACE_TRACE ("ACE_OS::readv");
