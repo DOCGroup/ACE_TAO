@@ -32,7 +32,9 @@ optimize = 1
 shared_libs =
 static_libs = 1
 
-CC      = $(GHS_DIR)/cxch68
+PATH +=:$(GHS_DIR)
+
+CC      = cxch68
 CXX     = $(CC)
 CFLAGS  = -groot=$(MVME_DIR) -alttools=$(GHS_DIR) -68040 -fprecise \
           -I$(MVME_INCL)/posix \
@@ -62,4 +64,4 @@ POSTLINK = ; $(CC) -groot=$(MVME_DIR) -alttools=$(GHS_DIR) -68040 \
            $(MVME_DIR)/lib/crt/crti.o $@ \
            $(MVME_DIR)/lib/crt/crtn.o \
            -locatedprogram -r; \
-           mv -f $@.final $@; chmod +x $@
+           mv -f $@.final $@; chmod +x $@; /bin/rm -f /tmp/gh_*.[os]
