@@ -3,6 +3,9 @@ Tue Apr 10 11:05:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
         * examples/POA/Adapter_Activator/makefile.bor
         * examples/POA/Generic_Servant/makefile.bor
         * examples/POA/Explicit_Activation/makefile.bor
+        * examples/POA/On_Demand_Activation/makefile.bor
+        * examples/POA/On_Demand_Loading/makefile.bor
+        * examples/POA/Reference_Counted_Servant/makefile.bor
         * examples/POA/makefile.bor
           Created BCB makefiles
 
