@@ -22,7 +22,7 @@
 
 #include "Scheduler.h"
 
-class Scheduler_Generic : public ACE_Scheduler
+class TAO_ORBSVCS_Export Scheduler_Generic : public ACE_Scheduler
   // = TITLE
   //    Implementation of an off-line scheduler.
   //

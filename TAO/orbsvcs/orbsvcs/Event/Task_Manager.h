@@ -13,7 +13,7 @@
 
 class ACE_ES_Reactor_Task;
 
-class ACE_Task_Manager 
+class TAO_ORBSVCS_Export ACE_Task_Manager 
 // = TITLE
 //   Singleton class for the pool of ACE_ReactorTask.
 //

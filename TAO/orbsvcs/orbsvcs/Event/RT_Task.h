@@ -25,7 +25,7 @@
 
 #include "orbsvcs/RtecSchedulerC.h"
 
-class ACE_RT_Thread_Manager : public ACE_Thread_Manager
+class TAO_ORBSVCS_Export ACE_RT_Thread_Manager : public ACE_Thread_Manager
 // = TITLE
 //   
 // = DESCRIPTION
@@ -58,7 +58,7 @@ protected:
 
 // ************************************************************
 
-class ACE_RT_Task_Command : public ACE_Message_Block
+class TAO_ORBSVCS_Export ACE_RT_Task_Command : public ACE_Message_Block
 // = TITLE
 //   
 // = DESCRIPTION
@@ -85,7 +85,7 @@ public:
 typedef ACE_Task<ACE_MT_SYNCH> ACE_ES_TASK;
 typedef ACE_Message_Queue<ACE_MT_SYNCH> ACE_ES_QUEUE;
 
-class ACE_RT_Task : public ACE_ES_TASK
+class TAO_ORBSVCS_Export ACE_RT_Task : public ACE_ES_TASK
 // = TITLE
 //   ACE Real-Time Task
 //   

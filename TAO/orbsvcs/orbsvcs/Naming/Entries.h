@@ -23,7 +23,7 @@
 #include "tao/corba.h"
 #include "orbsvcs/CosNamingC.h"
 
-class NS_IntId 
+class TAO_ORBSVCS_Export NS_IntId 
   // = TITLE
   //     Stores information a context keeps for each bound name
   //     (object reference and the type of binding).
@@ -60,7 +60,7 @@ public:
   // participate in name resolution when compound names are used.
 };
 
-class NS_ExtId 
+class TAO_ORBSVCS_Export NS_ExtId 
   // = TITLE
   //    Stores the name to which an object is bound.
   //

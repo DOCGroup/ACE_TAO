@@ -22,14 +22,15 @@
 #define ACE_BCU_H
 
 #include "ace/OS.h"
+#include "orbsvcs/orbsvcs_export.h"
 
 
-u_long ACE_BCU (u_long n);
+TAO_ORBSVCS_Export u_long ACE_BCU (u_long n);
 // Check if a specific, hardcoded number is prime (via ACE::is_prime) <n>
 // times.
 
 
-u_long ACE_BCU (u_long number, u_long n);
+TAO_ORBSVCS_Export u_long ACE_BCU (u_long number, u_long n);
 // Check if <number> is prime (via ACE::is_prime ()) <n> times.
 
 #endif /* ACE_BCU_H */
