@@ -1,3 +1,11 @@
+Tue Jan 29 11:20:36 2002  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Notify/performance-tests/Makefile.bor:
+          Added Throughput directory
+
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Makefile.bor:
+          Added new BCB makefile to build this test
+
 Tue Jan 29 09:10:17 2002  Johnny Willemsen <jwillemsen@remedy.nl>
 
 	* tao/Messaging.h:
