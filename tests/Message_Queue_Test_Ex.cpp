@@ -84,10 +84,9 @@ single_thread_performance_test (int queue_type = 0)
     ACE_NEW_RETURN (msgq,
                     QUEUE,
                     -1);
-    }
 
-  // Create the messages.  Allocate off the heap in case messages
-  // is large relative to the amount of stack space available.
+  // Create the messages.  Allocate off the heap in case messages is
+  // large relative to the amount of stack space available.
   ACE_Message_Block **send_block = 0;
   ACE_NEW_RETURN (send_block,
                   ACE_Message_Block *[max_messages],
