@@ -93,19 +93,7 @@ SOURCE=.\client.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Hash_Replica_i.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Hash_ReplicaC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Hash_ReplicaControl.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Hash_ReplicaS.cpp
+SOURCE=.\HasherC.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -113,19 +101,7 @@ SOURCE=.\Hash_ReplicaS.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
-SOURCE=.\Hash_Replica_i.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Hash_ReplicaC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Hash_ReplicaControl.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Hash_ReplicaS.h
+SOURCE=.\HasherC.h
 # End Source File
 # End Group
 # Begin Group "IDL Files"
@@ -133,18 +109,18 @@ SOURCE=.\Hash_ReplicaS.h
 # PROP Default_Filter "idl"
 # Begin Source File
 
-SOURCE=.\Hash_Replica.idl
+SOURCE=.\Hasher.idl
 
 !IF  "$(CFG)" == "LoadBalancing client - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
 USERDEP__HASH_="..\..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build
-InputPath=.\Hash_Replica.idl
-InputName=Hash_Replica
+InputPath=.\Hasher.idl
+InputName=Hasher
 
 BuildCmds= \
-	..\..\..\..\bin\Release\tao_idl -Ge 1 Hash_Replica.idl
+	..\..\..\..\bin\Release\tao_idl -Ge 1 Hasher.idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -179,11 +155,11 @@ BuildCmds= \
 # PROP Ignore_Default_Tool 1
 USERDEP__HASH_="..\..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build
-InputPath=.\Hash_Replica.idl
-InputName=Hash_Replica
+InputPath=.\Hasher.idl
+InputName=Hasher
 
 BuildCmds= \
-	..\..\..\..\bin\tao_idl.exe -Ge 1 Hash_Replica.idl
+	..\..\..\..\bin\tao_idl.exe -Ge 1 Hasher.idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -222,11 +198,7 @@ BuildCmds= \
 # PROP Default_Filter "i"
 # Begin Source File
 
-SOURCE=.\Hash_ReplicaC.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Hash_ReplicaS.i
+SOURCE=.\HasherC.i
 # End Source File
 # End Group
 # End Target

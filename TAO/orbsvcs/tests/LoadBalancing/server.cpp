@@ -69,29 +69,29 @@ setup_criteria (HasherFactory &hasher_factory)
 
       // Default initial number of replicas
       LoadBalancing::Property &initial_number_replicas =
-        criteria[0];
+        criteria[CORBA::ULong (0)];
 
       initial_number_replicas.nam.length (1);
-      initial_number_replicas.nam[0].id =
+      initial_number_replicas.nam[CORBA::ULong (0)].id =
         CORBA::string_dup ("InitialNumberReplicas");
       initial_number_replicas.val <<= INIT_NUM_REPLICAS;
 
       // Default minimum number of replicas
       LoadBalancing::Property &minimum_number_replicas =
-        criteria[1] = minimum_number_replicas;
+        criteria[CORBA::ULong (1)];
 
       minimum_number_replicas.nam.length (1);
-      minimum_number_replicas.nam[0].id =
+      minimum_number_replicas.nam[CORBA::ULong (0)].id =
         CORBA::string_dup ("MinimumNumberReplicas");
       minimum_number_replicas.val <<= MIN_NUM_REPLICAS;
 
 
       // Default factories (simulated locations)
       LoadBalancing::Property &factories =
-        criteria[2];
+        criteria[CORBA::ULong (2)];
 
       factories.nam.length (1);
-      factories.nam[0].id = CORBA::string_dup ("Factories");
+      factories.nam[CORBA::ULong (0)].id = CORBA::string_dup ("Factories");
 
       // Implicitly activate the HasherFactory.
       CORBA::Object_var obj =
@@ -124,9 +124,9 @@ setup_criteria (HasherFactory &hasher_factory)
           // Create a logical location for each factory.
           char location[BUFSIZ] = { 0 };
           ACE_OS::sprintf (location, "%u", i);
-          factory_info.the_location[0].id =
+          factory_info.the_location[CORBA::ULong (0)].id =
             CORBA::string_dup (location);
-          factory_info.the_location[0].kind =
+          factory_info.the_location[CORBA::ULong (0)].kind =
             CORBA::string_dup ("location number");
         }
 

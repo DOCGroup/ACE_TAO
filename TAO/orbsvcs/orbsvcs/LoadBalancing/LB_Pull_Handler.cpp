@@ -2,6 +2,8 @@
 
 #include "LB_Pull_Handler.h"
 
+#include "tao/debug.h"
+
 ACE_RCSID (LoadBalancing,
            LB_Pull_Handler,
            "$Id$")
@@ -20,7 +22,7 @@ TAO_LB_Pull_Handler::handle_timeout (
   TAO_LB_Location_Map::iterator begin =
     this->location_map_.begin ();
 
-  TAO_LB_Location_Map::iterator begin =
+  TAO_LB_Location_Map::iterator end =
     this->location_map_.end ();
 
   // Iterate over all registered load monitors.
@@ -31,7 +33,7 @@ TAO_LB_Pull_Handler::handle_timeout (
        i != end;
        ++i)
     {
-      TAO_LB_Location_Map_Entry *location = i->ext_id_;
+      TAO_LB_Location_Map_Entry *location = (*i).int_id_;
 
       ACE_DECLARE_NEW_CORBA_ENV;
       ACE_TRY

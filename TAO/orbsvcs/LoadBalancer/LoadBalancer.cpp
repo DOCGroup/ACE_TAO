@@ -98,7 +98,9 @@ TAO_LoadBalancer::init (int argc,
   ACE_NEW (this->balancer_,
            TAO_LoadBalancing_ReplicationManager_i);
 
-  this->balancer_->init (this->root_poa_.in (), ACE_TRY_ENV);
+  this->balancer_->init (this->orb_.in (),
+                         this->root_poa_.in (),
+                         ACE_TRY_ENV);
   ACE_CHECK;
 
   CORBA::Object_var obj =
