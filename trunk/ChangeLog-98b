@@ -1,3 +1,8 @@
+Mon Aug 17 12:10:54 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/ace_ce_dll.dsp:  Changed the DLL output directories for some
+	  configurations. 
+
 Mon Aug 17 11:25:18 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/Strategies_T.h: 
