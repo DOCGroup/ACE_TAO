@@ -35,7 +35,8 @@ Quoter_Factory_Finder_Server::~Quoter_Factory_Finder_Server (void)
       factory_Finder_Name.length (2);
       factory_Finder_Name[0].id = CORBA::string_dup ("IDL_Quoter");
       factory_Finder_Name[1].id = CORBA::string_dup ("Quoter_Factory_Finder");
-      this->quoterNamingContext_var_->unbind (factory_Finder_Name, ACE_TRY_ENV);
+      if (this->quoterNamingContext_var_.ptr () != 0)
+        this->quoterNamingContext_var_->unbind (factory_Finder_Name, ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
