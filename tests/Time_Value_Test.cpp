@@ -39,6 +39,9 @@
   // Force inlining, in case ACE_U_LongLong member function
   // definitions are not in libACE.
 # define __ACE_INLINE__
+# if defined (ACE_NO_INLINE)
+#   undef ACE_NO_INLINE
+# endif /* ACE_NO_INLINE */
 #endif /* ACE_HAS_HI_RES_TIMER || (ACE_HAS_LONGLONG_T && !ACE_HAS_64BIT_LONG) */
 
 #include "test_config.h"
