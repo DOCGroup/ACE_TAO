@@ -868,7 +868,7 @@ ACE_Log_Msg::log (const ASYS_TCHAR *format_str,
      // PharLap can't do FormatMessage, so try for socket
      // error.
 # if !defined (ACE_HAS_PHARLAP)
-                        ::FormatMessage (FORMAT_MESSAGE_ALLOCATE_BUFFER 
+                        ::FormatMessage (FORMAT_MESSAGE_ALLOCATE_BUFFER
                                          | FORMAT_MESSAGE_MAX_WIDTH_MASK
                                          | FORMAT_MESSAGE_FROM_SYSTEM,
                                          NULL,
@@ -932,7 +932,7 @@ ACE_Log_Msg::log (const ASYS_TCHAR *format_str,
      // PharLap can't do FormatMessage, so try for socket
      // error.
 # if !defined (ACE_HAS_PHARLAP)
-                        ::FormatMessage (FORMAT_MESSAGE_ALLOCATE_BUFFER 
+                        ::FormatMessage (FORMAT_MESSAGE_ALLOCATE_BUFFER
                                          | FORMAT_MESSAGE_MAX_WIDTH_MASK
                                          | FORMAT_MESSAGE_FROM_SYSTEM,
                                          NULL,

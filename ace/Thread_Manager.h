@@ -26,6 +26,7 @@
 #include "ace/Synch.h"
 #include "ace/Containers.h"
 #include "ace/Free_List.h"
+#include "ace/Singleton.h"
 
 // The following macros control how a Thread Manager manages a pool of
 // Thread_Descriptor.  Currently, the default behavior is not to
@@ -402,6 +403,7 @@ public:
                       size_t hwm = ACE_DEFAULT_THREAD_MANAGER_HWM);
   virtual ~ACE_Thread_Manager (void);
 
+#if ! defined (ACE_THREAD_MANAGER_LACKS_STATICS)
   static ACE_Thread_Manager *instance (void);
   // Get pointer to a process-wide <ACE_Thread_Manager>.
 
@@ -411,6 +413,7 @@ public:
 
   static void close_singleton (void);
   // Delete the dynamically allocated Singleton
+#endif /* ! defined (ACE_THREAD_MANAGER_LACKS_STATICS) */
 
   int open (size_t size = 0);
   // No-op.  Currently unused.
@@ -871,12 +874,20 @@ protected:
 private:
   ACE_Locked_Free_List<ACE_Thread_Descriptor, ACE_SYNCH_MUTEX> thread_desc_freelist_;
 
+#if ! defined (ACE_THREAD_MANAGER_LACKS_STATICS)
   static ACE_Thread_Manager *thr_mgr_;
   // Pointer to a process-wide <ACE_Thread_Manager>.
 
   static int delete_thr_mgr_;
   // Must delete the <thr_mgr_> if non-0.
+#endif /* ! defined (ACE_THREAD_MANAGER_LACKS_STATICS) */
 };
+
+#if defined (ACE_THREAD_MANAGER_LACKS_STATICS)
+#define ACE_THREAD_MANAGER_SINGLETON_DEFINE \
+        ACE_Singleton<ACE_Thread_Manager, ACE_SYNCH_MUTEX>;
+typedef ACE_Singleton<ACE_Thread_Manager, ACE_SYNCH_MUTEX> ACE_THREAD_MANAGER_SINGLETON;
+#endif /* defined (ACE_THREAD_MANAGER_LACKS_STATICS) */
 
 #if defined (__ACE_INLINE__)
 #include "ace/Thread_Manager.i"

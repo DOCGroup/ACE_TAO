@@ -102,7 +102,7 @@ class ACE_Export ACE_Service_Config
   //     not eliminated, by _not_ #defining
   //     ACE_HAS_NONSTATIC_OBJECT_MANAGER.
 public:
-  enum 
+  enum
   {
     MAX_SERVICES = ACE_DEFAULT_SERVICE_REPOSITORY_SIZE
   };
@@ -261,11 +261,13 @@ public:
   // DO NOT USE THIS METHOD. It may be unsupported in future releases.
   // Use <ACE_Thread_Manager::instance> instead.
 
+#if ! defined (ACE_THREAD_MANAGER_LACKS_STATICS)
   static ACE_Thread_Manager *thr_mgr (ACE_Thread_Manager *);
   // Set pointer to a process-wide <ACE_Thread_Manager> and return
   // existing pointer.
   // DO NOT USE THIS METHOD. It may be unsupported in future releases.
-  // Use <ACE_Thread_Manager::instance> instead.
+  // Use ACE_Thread_Manager::instance() instead.
+#endif /* ! defined (ACE_THREAD_MANAGER_LACKS_STATICS) */
 
   static ACE_Allocator *alloc (void);
   // Get pointer to a default <ACE_Allocator>.
@@ -349,6 +351,18 @@ protected:
   // Handle the command-line options intended for the
   // <ACE_Service_Config>.  Note that <argv[0]> is assumed to be the
   // program name.
+  // The arguments that are valid in a call to this method are
+  // '-b' - Option to indicate that we should be a daemon
+  // '-d' - Turn on debugging mode
+  // '-f' - Option to read in the list of svc.conf file names
+  // '-k' - Option to read a wide string where in the logger output can
+  //        be written
+  // '-y' - Turn on the flag for a  repository of statically
+  //        linked services
+  // '-n' - Need not have a repository of statically linked services
+  // '-S' - Option to read in the list of services on the command-line
+  //        Please observe the difference between options '-f' that looks
+  //        for a list of files and here a list of services.
 
   static int start_daemon (void);
   // Become a daemon.

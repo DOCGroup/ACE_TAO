@@ -17,12 +17,14 @@ ACE_RCSID(ace, Thread_Manager, "$Id$")
 ACE_ALLOC_HOOK_DEFINE(ACE_Thread_Control)
 ACE_ALLOC_HOOK_DEFINE(ACE_Thread_Manager)
 
+#if ! defined (ACE_THREAD_MANAGER_LACKS_STATICS)
 // Process-wide Thread Manager.
 ACE_Thread_Manager *ACE_Thread_Manager::thr_mgr_ = 0;
 
 // Controls whether the Thread_Manager is deleted when we shut down
 // (we can only delete it safely if we created it!)
 int ACE_Thread_Manager::delete_thr_mgr_ = 0;
+#endif /* ! defined (ACE_THREAD_MANAGER_LACKS_STATICS) */
 
 void
 ACE_Thread_Manager::dump (void)
@@ -326,6 +328,7 @@ ACE_Thread_Manager::ACE_Thread_Manager (size_t prealloc,
   ACE_TRACE ("ACE_Thread_Manager::ACE_Thread_Manager");
 }
 
+#if ! defined (ACE_THREAD_MANAGER_LACKS_STATICS)
 ACE_Thread_Manager *
 ACE_Thread_Manager::instance (void)
 {
@@ -381,6 +384,7 @@ ACE_Thread_Manager::close_singleton (void)
       ACE_Thread_Manager::delete_thr_mgr_ = 0;
     }
 }
+#endif /* ! defined (ACE_THREAD_MANAGER_LACKS_STATICS) */
 
 // Close up and release all resources.
 
@@ -742,6 +746,7 @@ ACE_Thread_Manager::spawn (ACE_THR_FUNC func,
                            size_t stack_size)
 {
   ACE_TRACE ("ACE_Thread_Manager::spawn");
+
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   if (grp_id == -1)
@@ -2379,6 +2384,9 @@ ACE_Thread_Control::exit (void *exit_status, int do_thr_exit)
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+# if defined (ACE_THREAD_MANAGER_LACKS_STATICS)
+  template class ACE_Singleton<ACE_Thread_Manager, ACE_SYNCH_MUTEX>;
+# endif /* defined (ACE_THREAD_MANAGER_LACKS_STATICS) */
   template class ACE_Auto_Basic_Ptr<ACE_Thread_Descriptor>;
   template class auto_ptr<ACE_Thread_Descriptor>;
   template class ACE_Double_Linked_List<ACE_Thread_Descriptor_Base>;
@@ -2398,6 +2406,9 @@ ACE_Thread_Control::exit (void *exit_status, int do_thr_exit)
     template class ACE_TSS<ACE_Thread_Exit>;
 # endif /* ACE_HAS_THREADS && (ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION) */
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# if defined (ACE_THREAD_MANAGER_LACKS_STATICS)
+  #pragma instantiate ACE_Singleton<ACE_Thread_Manager, ACE_SYNCH_MUTEX>
+# endif /* defined (ACE_THREAD_MANAGER_LACKS_STATICS) */
   #pragma instantiate ACE_Auto_Basic_Ptr<ACE_Thread_Descriptor>
   #pragma instantiate auto_ptr<ACE_Thread_Descriptor>
   #pragma instantiate ACE_Double_Linked_List<ACE_Thread_Descriptor_Base>

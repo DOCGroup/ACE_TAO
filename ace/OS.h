@@ -2836,12 +2836,12 @@ typedef unsigned int size_t;
 # if defined (ACE_PSOS_SNARFS_HEADER_INFO)
   // Header information snarfed from compiler provided header files
   // that are not included because there is already an identically
-  // named file provided with pSOS, which does not have this info from
-  // compiler supplied stdio.h.
-  extern FILE *fdopen (int, const char *);
-  extern int getopt (int, char *const *, const char *);
-  extern char *tempnam (const char *, const char *);
-  extern "C" int fileno (FILE *);
+  // named file provided with pSOS, which does not have this info
+  // from compiler supplied stdio.h
+  extern FILE *fdopen(int, const char *);
+  extern int getopt(int, char *const *, const char *);
+  extern char *tempnam(const char *, const char *);
+  extern "C" int fileno(FILE *);
 
 //  #define fileno(stream) ((stream)->_file)
 
@@ -4545,6 +4545,7 @@ typedef const char **SYS_SIGLIST;
 typedef void *(*ACE_THR_FUNC)(void *);
 // This is for C++ static methods.
 # if defined (VXWORKS)
+typedef int ACE_THR_FUNC_INTERNAL_RETURN_TYPE;
 typedef FUNCPTR ACE_THR_FUNC_INTERNAL;  // where typedef int (*FUNCPTR) (...)
 # elif defined (ACE_PSOS)
 typedef void (*ACE_THR_FUNC_INTERNAL)(void *);
@@ -4862,7 +4863,11 @@ private:
 
 // Run the thread entry point for the <ACE_Thread_Adapter>.  This must
 // be an extern "C" to make certain compilers happy...
+#if defined (ACE_PSOS)
+extern "C" void ace_thread_adapter (unsigned long args);
+#else /* ! defined (ACE_PSOS) */
 extern "C" ACE_Export void *ace_thread_adapter (void *args);
+#endif /* ACE_PSOS */
 
 class ACE_OS_Thread_Descriptor
 {
@@ -6401,6 +6406,7 @@ public:
   static ACE_HANDLE socket (int protocol_family,
                             int type,
                             int proto);
+
   // Create a BSD-style socket (no QoS).
   static ACE_HANDLE socket (int protocol_family,
                             int type,

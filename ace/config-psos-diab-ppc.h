@@ -67,11 +67,11 @@
 
 // IO Streams stuff
 // #define ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION
-#define ACE_LACKS_IOSTREAM_TOTALLY
-#define ACE_LACKS_ACE_IOSTREAM
-#define ACE_LACKS_IOSTREAM_FX
-#define ACE_DEFAULT_LOG_STREAM 0
-#define ostream FILE
+//#define ACE_LACKS_IOSTREAM_TOTALLY
+//#define ACE_LACKS_ACE_IOSTREAM
+//#define ACE_LACKS_IOSTREAM_FX
+//#define ACE_DEFAULT_LOG_STREAM 0
+//#define ostream FILE
 
 #define ACE_LACKS_HRTIME_T
 
@@ -211,6 +211,9 @@
 
 #define ACE_LACKS_UNIX_SIGNALS
 
+#defined ACE_THREADS_LACK_SHARED_SOCKETS
+
+// #define ACE_MALLOC_ALIGN 8
 // #define ACE_LACKS_SYSTIME_H
 
 #define ACE_PAGE_SIZE 4096
@@ -242,5 +245,25 @@
 #define ACE_PSOS_DIAB
 
 #define ACE_PSOS_DIAB_PPC
-#define ACE_MALLOC_ALIGN 8
+
+/* Defining PNANOREDEF will avoid the redefinition of close to pna_close in
+ * pna.h  In OS.i we make sure that pna_close is called in place of close
+ * when a socket is closed.
+ */
+#define _PNANOREDEF_
+
+/* needed for portability, due to non-standard ip_mreq
+   structure definition for pSOS Diab PPC */
+#define IMR_MULTIADDR imr_mcastaddr
+
+#define ACE_THREADS_DONT_INHERIT_LOG_MSG  /* Stream sharing problem for tasks */
+
+#define ACE_THREADS_MUST_EXPLICITLY_SHARE_SOCKETS /* Can't just share sockets */
+
+#define ACE_PSOS_DEFAULT_STACK_SIZE 30720  /* Default task stack size to 30K */
+
+#define ACE_DEFAULT_THREAD_PRIORITY 239
+
+#define ACE_THREAD_MANAGER_LACKS_STATICS
+
 #endif /* ACE_CONFIG_H */

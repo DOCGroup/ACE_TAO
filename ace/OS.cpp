@@ -4,6 +4,14 @@
 #include "ace/OS.h"
 #include "ace/Sched_Params.h"
 
+#if defined (ACE_THREADS_DONT_INHERIT_LOG_MSG)  || \
+    defined (ACE_HAS_MINIMAL_ACE_OS)
+# if defined (ACE_PSOS)
+// Unique file identifier
+int unique_file_id=0;
+# endif /* ACE_PSOS */
+#endif /* ACE_THREADS_DONT_INHERIT_LOG_MSG) || ACE_HAS_MINIMAL_ACE_OS */
+
 // Perhaps we should *always* include ace/OS.i in order to make sure
 // we can always link against the OS symbols?
 #if !defined (ACE_HAS_INLINED_OSCALLS)
@@ -2395,6 +2403,19 @@ ACE_Thread_Adapter::inherit_log_msg (void)
   // Block the thread from proceeding until
   // thread manager has thread descriptor ready.
 
+# else  /* Don't inherit Log Msg */
+#  if defined (ACE_PSOS)
+  //Create a special name for each thread...
+  char new_name[MAXPATHLEN]={"Ace_thread-"};
+  char new_id[2]={0,0};  //Now it's pre-terminated!
+
+  new_id[0] = '0' + (unique_file_id++);  //Unique identifier
+  ACE_OS::strcat(new_name, new_id);
+
+  //Initialize the task specific logger
+  ACE_LOG_MSG->open(new_name);
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) starting %s thread at %D\n"),new_name));
+#  endif /* ACE_PSOS */
 #endif /* ! ACE_THREADS_DONT_INHERIT_LOG_MSG  &&  ! ACE_HAS_MINIMAL_ACE_OS */
 }
 
@@ -2473,6 +2494,7 @@ ACE_Thread_Adapter::invoke (void)
   ACE_THR_FUNC_INTERNAL func = ACE_reinterpret_cast (ACE_THR_FUNC_INTERNAL,
                                                      this->user_func_);
   void *arg = this->arg_;
+
 #if defined (ACE_WIN32) && defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
   ACE_OS_Thread_Descriptor *thr_desc = this->thr_desc_;
 #endif /* ACE_WIN32 && ACE_HAS_MFC && (ACE_HAS_MFC != 0) */
@@ -2514,11 +2536,16 @@ ACE_Thread_Adapter::invoke (void)
             status = hook->start (ACE_reinterpret_cast (ACE_THR_FUNC, func),
                                   arg);
           else
-            // Call thread entry point.
-            status = ACE_reinterpret_cast (void *, (*func) (arg));
-
+            {
+              // Call thread entry point.
 #if defined (ACE_PSOS)
-          // pSOS thread functions do not return a value.
+              (*func) (arg);
+#else /* ! ACE_PSOS */
+              status = ACE_reinterpret_cast (void *, (*func) (arg));
+#endif /* ACE_PSOS */
+            }
+#if defined (ACE_PSOS)
+          // pSOS task functions do not return a value.
           status = 0;
 #endif /* ACE_PSOS */
         }
@@ -2624,8 +2651,12 @@ ace_cleanup_destroyer (ACE_Cleanup *object, void *param)
 // Run the thread entry point for the <ACE_Thread_Adapter>.  This must
 // be an extern "C" to make certain compilers happy...
 
+#if defined (ACE_PSOS)
+extern "C" void ace_thread_adapter (unsigned long args)
+#else /* ! defined (ACE_PSOS) */
 extern "C" void *
 ace_thread_adapter (void *args)
+#endif /* ACE_PSOS */
 {
   ACE_TRACE ("ace_thread_adapter");
 
@@ -2642,8 +2673,11 @@ ace_thread_adapter (void *args)
   // Invoke the user-supplied function with the args.
   void *status = thread_args->invoke ();
 
+#if ! defined (ACE_PSOS)
   return status;
+#endif /* ACE_PSOS */
 }
+
 
 ACE_Thread_Adapter::ACE_Thread_Adapter (ACE_THR_FUNC user_func,
                                         void *arg,
@@ -3388,6 +3422,10 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
     priority = PSOS_TASK_MAX_PRIORITY;
   }
 
+  // set the stacksize to a default value if no size is specified
+  if (stacksize == 0)
+    stacksize = ACE_PSOS_DEFAULT_STACK_SIZE;
+
   ACE_hthread_t tid;
   *thr_handle = 0;
 
@@ -3399,9 +3437,9 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
                 T_LOCAL,         // local to the pSOS+ node (does not support pSOS+m)
                 &tid)            // receives task id
       != 0)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   // pSOS tasks are passed an array of 4 u_longs
   u_long targs[4];
@@ -3413,7 +3451,8 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
   // start the thread
   if (t_start (tid,
                T_PREEMPT |            // Task can be preempted
-               T_NOTSLICE |           // Task is not timesliced with other tasks at same priority
+//             T_NOTSLICE |           // Task is not timesliced with other tasks at same priority
+               T_TSLICE |             // Task is timesliced with other tasks at same priority
                T_NOASR |              // Task level signals disabled
                T_SUPV |               // Task runs strictly in supervisor mode
                T_ISR,                 // Hardware interrupts are enabled
@@ -4276,6 +4315,9 @@ ACE_OS::read_n (ACE_HANDLE handle,
   return bytes_transferred;
 }
 
+// Write <len> bytes from <buf> to <handle> (uses the <write>
+// system call on UNIX and the <WriteFile> call on Win32).
+
 ssize_t
 ACE_OS::write_n (ACE_HANDLE handle,
                  const void *buf,
@@ -5094,7 +5136,6 @@ ACE_OS::open (const char *filename,
   else
     return h;
 #elif defined (ACE_PSOS)
-  ACE_UNUSED_ARG (mode);
   ACE_UNUSED_ARG (perms);
   ACE_UNUSED_ARG (sa);
 # if defined (ACE_PSOS_LACKS_PHILE)
@@ -5105,8 +5146,32 @@ ACE_OS::open (const char *filename,
   result = ::open_f (&handle, ACE_const_cast(char *, filename), 0);
   if (result != 0)
     {
-      errno = result;
-      return ACE_static_cast (ACE_HANDLE, -1);
+      // We need to clean this up...not 100% correct!
+      // To correct we should handle all the cases of TRUNC and CREAT
+      if ((result == 0x200B) && (ACE_BIT_ENABLED (mode, O_CREAT)))
+        {
+          result = ::create_f(ACE_const_cast(char *, filename),1,0);
+          if (result != 0)
+            {
+              errno = result;
+              return ACE_static_cast (ACE_HANDLE, -1);
+            }
+          else  //File created...try to open it again
+            {
+              result = ::open_f (&handle, ACE_const_cast(char *, filename), 0);
+              if (result != 0)
+                {
+                  errno = result;
+                  return ACE_static_cast (ACE_HANDLE, -1);
+                }
+
+            }
+        }
+      else
+        {
+          errno = result;
+          return ACE_static_cast (ACE_HANDLE, -1);
+        }
     }
   return ACE_static_cast (ACE_HANDLE, handle);
 # endif /* defined (ACE_PSOS_LACKS_PHILE) */
@@ -5805,7 +5870,11 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
       // Inline the call to ACE_OS::sema_wait () because it takes an
       // ACE_Time_Value argument.  Avoid the cost of that conversion . . .
       u_long ticks = (KC_TICKS2SEC * msec_timeout) / ACE_ONE_SECOND_IN_MSECS;
-      result = ::sm_p (cv->sema_.sema_, SM_WAIT, ticks);
+      //Tick set to 0 tells pSOS to wait forever is SM_WAIT is set.
+      if(ticks == 0)
+        result = ::sm_p (cv->sema_.sema_, SM_NOWAIT, ticks); //no timeout
+      else
+        result = ::sm_p (cv->sema_.sema_, SM_WAIT, ticks);
 #     elif defined (VXWORKS)
       // Inline the call to ACE_OS::sema_wait () because it takes an
       // ACE_Time_Value argument.  Avoid the cost of that conversion . . .
@@ -5842,7 +5911,8 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
     {
       switch (result)
         {
-        case ERR_TIMEOUT:
+        case ERR_TIMEOUT:  // Timeout occured with SM_WAIT
+        case ERR_NOMSG:    // Didn't acquire semaphore w/ SM_NOWAIT (ticks=0)
           error = ETIME;
           break;
         default:
