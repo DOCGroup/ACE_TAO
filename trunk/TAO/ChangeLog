@@ -1,3 +1,9 @@
+Wed Apr 30 15:25:35 2003  Simon McQueen  <sm@prismtechnologies.com>
+
+        * tao/TAO_Static.dsp:
+          Added IOP_IORC.* and IOP_CodecC.* to project to fix errors
+          in static builds.
+
 Wed Apr 30 07:26:37 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * TAO_IDL/ast/ast_decl.cpp:
