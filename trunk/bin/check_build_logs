@@ -8,7 +8,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 use strict;
 
-my $usage="$0 [-l log directory] [-m mail recipient(s)]\n";
+my $usage="$0 [-l log directory] [-m mail recipient(s)] [-p purify output]\n";
 
 ####
 #### Configuration parameters.
@@ -29,6 +29,7 @@ $ENV{'USER'} = $ENV{'LOGNAME'};
 
 my $log_directory = '/project/danzontmp/levine/build-logs';
 my $mail_recipients = '';
+my $purify = '';
 
 ####
 #### Process command line args.
@@ -48,6 +49,14 @@ while ($#ARGV >= $[) {
       shift;
     } else {
       print STDERR "$0:  must provide argument for -m option\n";
+      die $usage;
+    }
+  } elsif ($ARGV[0] eq '-p') {
+    if ($ARGV[1] !~ /^-/) {
+      $purify = $ARGV[1];
+      shift;
+    } else {
+      print STDERR "$0:  must provide argument for -p option\n";
       die $usage;
     }
   } elsif ($ARGV[0] eq '-?') {
@@ -84,6 +93,30 @@ while (<EGREP>) {
                           /Purify engine: Error: .* Ignoring it\.$/;
 }
 close EGREP;
+
+
+####
+#### Check a Purify output file for bad things.
+####
+if ("$purify") {
+  my $found_anomaly = 0;
+
+  open (PURIFY, "$purify")  ||
+    die "$0: unable to open $purify\n";
+  while (<PURIFY>) {
+    if (/^[A-Z][A-Z][A-Z]:/) {
+      unless ($found_anomaly) {
+        push @output, "\n";
+        push @output, "Purify detected anomalies!!!!\n";
+        push @output, "See $purify:\n";
+        $found_anomaly = 1;
+      }
+
+      push @output, $_;
+    }
+  }
+  close PURIFY;
+}
 
 
 ####
