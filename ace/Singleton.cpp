@@ -96,55 +96,76 @@ template <class TYPE, class LOCK> LOCK
 ACE_Singleton<TYPE, LOCK>::ace_singleton_lock_;
 #endif /* !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES) */
 
-template <class TYPE> void
-ACE_TSS_Singleton<TYPE>::dump (void)
+template <class TYPE, class LOCK> void
+ACE_TSS_Singleton<TYPE, LOCK>::dump (void)
 {
-  ACE_TRACE ("ACE_TSS_Singleton<TYPE>::dump");
+  ACE_TRACE ("ACE_TSS_Singleton<TYPE, LOCK>::dump");
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
-  ACE_DEBUG ((LM_DEBUG, "instance_ = %x", tss_instance_));
+  ACE_DEBUG ((LM_DEBUG, "instance_ = %x", instance_));
+  ace_singleton_lock_.dump();                                                  
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 }
 
-template <class TYPE> TYPE *
-ACE_TSS_Singleton<TYPE>::instance (void)
+template <class TYPE, class LOCK> TYPE *
+ACE_TSS_Singleton<TYPE, LOCK>::instance (void)
 {
-  ACE_TRACE ("ACE_TSS_Singleton::instance");
+  ACE_TRACE ("ACE_TSS_Singleton<TYPE, LOCK>::instance");
 
 #if defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
   // Pointer to the Singleton instance.  This works around a bug with
   // G++...
   static ACE_TSS<TYPE> *instance_ = 0;
 
+  // Lock the creation of the singleton.  This works around a
+  // "feature" of G++... ;-)
+  static LOCK ace_singleton_lock_;
+
+  // Perform the Double-Check pattern...                                        
   if (instance_ == 0)
     {
-      instance_ = new ACE_TSS<TYPE>;
+      ACE_GUARD_RETURN (LOCK, ace_mon, ace_singleton_lock_, 0);
 
       if (instance_ == 0)
-	return 0;
+	{
+	  instance_ = new ACE_TSS<TYPE>;
+
+	  if (instance_ == 0)
+   	    return 0;
+	}
     }
 
   return ACE_TSS_GET (instance_, TYPE);
 #else
 
-  if (ACE_TSS_Singleton<TYPE>::tss_instance_ == 0)
+  // Perform the Double-Check pattern...
+  if (ACE_TSS_Singleton<TYPE, LOCK>::instance_ == 0)
     {
-      ACE_TSS_Singleton<TYPE>::tss_instance_ = new ACE_TSS<TYPE>;
+      ACE_GUARD_RETURN (LOCK, ace_mon, (ACE_TSS_Singleton<TYPE, LOCK>::ace_singleton_lock_), 0);
 
-      if (ACE_TSS_Singleton<TYPE>::tss_instance_ == 0)
-	return 0;
+      if (ACE_TSS_Singleton<TYPE, LOCK>::instance_ == 0)             
+	{
+          ACE_TSS_Singleton<TYPE, LOCK>::instance_ = new ACE_TSS<TYPE>;
+
+          if (ACE_TSS_Singleton<TYPE, LOCK>::instance_ == 0)
+	    return 0;
+	}
     }
 
-  return ACE_TSS_GET (ACE_TSS_Singleton<TYPE>::tss_instance_, TYPE);
+  return ACE_TSS_GET ((ACE_TSS_Singleton<TYPE, LOCK>::instance_), TYPE);
 
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 }
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
 // Pointer to the Singleton instance.
-template <class TYPE> ACE_TSS<TYPE> *
-ACE_TSS_Singleton<TYPE>::tss_instance_ = 0;
+template <class TYPE, class LOCK> ACE_TSS<TYPE> *
+ACE_TSS_Singleton<TYPE, LOCK>::instance_ = 0;
+
+// Lock the creation of the singleton.
+template <class TYPE, class LOCK> LOCK
+ACE_TSS_Singleton<TYPE, LOCK>::ace_singleton_lock_;                
 #endif /* !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES) */
 
 #endif /* ACE_SINGLETON_C */
