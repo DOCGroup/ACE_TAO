@@ -1,3 +1,11 @@
+Thu Nov 11 10:50:45 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/ExecImplSourceGenerator.cpp:
+        
+          Fixed incorrect generation of environment arg macro.
+          Thanks to Chad Elliott <elliott_c@ociweb.com> for
+          pointing out the mistake.
+
 Thu Nov 11 09:46:58 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * performance-tests/Protocols/Receiver/Receiver.mpc:

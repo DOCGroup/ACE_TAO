@@ -1216,7 +1216,7 @@ namespace
       os << "// Implicit operations." << endl << endl
          << STRS[COMP_EC] << "_ptr" << endl
          << t.name () << "_exec_i::create (" << endl
-         << STRS[ENV_SNGL_HDR] << ")" << endl
+         << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_CE] << "))" << endl
