@@ -19,7 +19,8 @@ Tue Nov 25 15:52:03 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  application could lead to race conditions. This checkin prevents
 	  this race condition by adding a lock. We have also added a
 	  method servant_to_reference_i () which does the bulk of the
-	  work. 
+	  work. Thanks to Milan Cvetkovic <mcvetkovic@mpathix.com> for
+	  proposing this fix.
 	  
 	* tests/Servant_To_Reference_Test:
 
