@@ -204,7 +204,7 @@ class DTTask : public ACE_Task <ACE_SYNCH>
 {
 public:
   DTTask (//ACE_Thread_Manager manager,
-	  TAO_RTScheduler_Current_i* current,
+	  TAO_ORB_Core* orb,
 	  RTScheduling::ThreadAction_ptr start,
 	  CORBA::VoidData data,
 	  RTScheduling::Current::IdType guid,
@@ -213,11 +213,14 @@ public:
 	  CORBA::Policy_ptr implicit_sched_param,
 	  RTScheduling::DistributableThread_ptr dt);
   
+  int activate_task (RTCORBA::Priority base_priority,
+		     CORBA::ULong stack_size);
+
   virtual int svc (void);
 
  private:
   //ACE_Thread_Manager* manager_;
-  TAO_RTScheduler_Current_i* parent_;
+  TAO_ORB_Core* orb_;
   RTScheduling::ThreadAction_var start_;
   CORBA::VoidData data_;
   RTScheduling::Current::IdType guid_;
