@@ -1,3 +1,20 @@
+Fri Apr 11 21:50:43 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_array/array_ch.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ci.cpp:
+
+          Added generated code to make the array's *_alloc function 
+          generically callable outside the IDL compiler, where its full
+          name is not known.
+
+        * tao/Array_VarOut_T.h:
+        * tao/Array_VarOut_T.inl:
+
+          Added a static method to TAO_Array_Forany_T<> to make the 
+          *_alloc method (which was made visible to TAO_Array_Forany_T<>
+          by the changes above) visible to the Any impl class
+          TAO_Any_Array_Impl_T<>, where it is used in extraction.
+
 Fri Apr 11 14:41:11 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* Merged with the main trunk and compiled the core ORB and the IDL
@@ -28,7 +45,9 @@ Fri Apr 11 14:41:11 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/Value_VarOut_T.inl:
 	* tao/VarOut_T.cpp:
 	* tao/VarOut_T.h:
-	* tao/VarOut_T.inl: New files in to this new branch.
+	* tao/VarOut_T.inl: 
+        
+          New files in to this new branch.
 
 Tue Apr  1 000:37:21 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
