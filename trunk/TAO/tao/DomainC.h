@@ -268,6 +268,11 @@ public:
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
+  static CORBA_ConstructionPolicy_ptr _unchecked_narrow (
+      CORBA::Object_ptr obj,
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    );
   static CORBA_ConstructionPolicy_ptr _nil (void);
   static void _tao_any_destructor (void*);
 
@@ -297,6 +302,9 @@ private:
   void operator= (const CORBA_ConstructionPolicy &);
 };
 
+extern  CORBA_ConstructionPolicy_ptr (*_TAO_collocation_CORBA_ConstructionPolicy_Stub_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  );
 // Any operators for interface CORBA_ConstructionPolicy
 TAO_Export void operator<<= (CORBA::Any &,
                              CORBA_ConstructionPolicy_ptr);

@@ -40024,12 +40024,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_Contained_ptr &_tao_e
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
       );
-    CORBA::Object_var _tao_obj_var;
-    if (stream >> _tao_obj_var.out ())
+    if (stream >> _tao_elem)
     {
-      _tao_elem = IR_Contained::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           IR::_tc_Contained,
           1,
@@ -41838,12 +41834,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_Container_ptr &_tao_e
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
       );
-    CORBA::Object_var _tao_obj_var;
-    if (stream >> _tao_obj_var.out ())
+    if (stream >> _tao_elem)
     {
-      _tao_elem = IR_Container::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           IR::_tc_Container,
           1,
@@ -42074,12 +42066,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_IDLType_ptr &_tao_ele
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
       );
-    CORBA::Object_var _tao_obj_var;
-    if (stream >> _tao_obj_var.out ())
+    if (stream >> _tao_elem)
     {
-      _tao_elem = IR_IDLType::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           IR::_tc_IDLType,
           1,
@@ -42178,12 +42166,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_Repository_ptr &_tao_
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
       );
-    CORBA::Object_var _tao_obj_var;
-    if (stream >> _tao_obj_var.out ())
+    if (stream >> _tao_elem)
     {
-      _tao_elem = IR_Repository::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           IR::_tc_Repository,
           1,
@@ -42244,12 +42228,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_ComponentRepository_p
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
       );
-    CORBA::Object_var _tao_obj_var;
-    if (stream >> _tao_obj_var.out ())
+    if (stream >> _tao_elem)
     {
-      _tao_elem = IR_ComponentRepository::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           IR::_tc_ComponentRepository,
           1,
@@ -42310,12 +42290,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_ModuleDef_ptr &_tao_e
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
       );
-    CORBA::Object_var _tao_obj_var;
-    if (stream >> _tao_obj_var.out ())
+    if (stream >> _tao_elem)
     {
-      _tao_elem = IR_ModuleDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           IR::_tc_ModuleDef,
           1,
@@ -42457,12 +42433,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_ConstantDef_ptr &_tao
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
       );
-    CORBA::Object_var _tao_obj_var;
-    if (stream >> _tao_obj_var.out ())
+    if (stream >> _tao_elem)
     {
-      _tao_elem = IR_ConstantDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           IR::_tc_ConstantDef,
           1,
@@ -42604,12 +42576,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_TypedefDef_ptr &_tao_
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
       );
-    CORBA::Object_var _tao_obj_var;
-    if (stream >> _tao_obj_var.out ())
+    if (stream >> _tao_elem)
     {
-      _tao_elem = IR_TypedefDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           IR::_tc_TypedefDef,
           1,
@@ -42751,12 +42719,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_StructDef_ptr &_tao_e
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
       );
-    CORBA::Object_var _tao_obj_var;
-    if (stream >> _tao_obj_var.out ())
+    if (stream >> _tao_elem)
     {
-      _tao_elem = IR_StructDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           IR::_tc_StructDef,
           1,
@@ -42817,12 +42781,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_UnionDef_ptr &_tao_el
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
       );
-    CORBA::Object_var _tao_obj_var;
-    if (stream >> _tao_obj_var.out ())
+    if (stream >> _tao_elem)
     {
-      _tao_elem = IR_UnionDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           IR::_tc_UnionDef,
           1,
@@ -42883,12 +42843,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_EnumDef_ptr &_tao_ele
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
       );
-    CORBA::Object_var _tao_obj_var;
-    if (stream >> _tao_obj_var.out ())
+    if (stream >> _tao_elem)
     {
-      _tao_elem = IR_EnumDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           IR::_tc_EnumDef,
           1,
@@ -42949,12 +42905,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_AliasDef_ptr &_tao_el
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
       );
-    CORBA::Object_var _tao_obj_var;
-    if (stream >> _tao_obj_var.out ())
+    if (stream >> _tao_elem)
     {
-      _tao_elem = IR_AliasDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           IR::_tc_AliasDef,
           1,
@@ -43015,12 +42967,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_NativeDef_ptr &_tao_e
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
       );
-    CORBA::Object_var _tao_obj_var;
-    if (stream >> _tao_obj_var.out ())
+    if (stream >> _tao_elem)
     {
-      _tao_elem = IR_NativeDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           IR::_tc_NativeDef,
           1,
@@ -43081,12 +43029,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_PrimitiveDef_ptr &_ta
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
       );
-    CORBA::Object_var _tao_obj_var;
-    if (stream >> _tao_obj_var.out ())
+    if (stream >> _tao_elem)
     {
-      _tao_elem = IR_PrimitiveDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           IR::_tc_PrimitiveDef,
           1,
@@ -43147,12 +43091,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_StringDef_ptr &_tao_e
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
       );
-    CORBA::Object_var _tao_obj_var;
-    if (stream >> _tao_obj_var.out ())
+    if (stream >> _tao_elem)
     {
-      _tao_elem = IR_StringDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           IR::_tc_StringDef,
           1,
@@ -43213,12 +43153,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_WstringDef_ptr &_tao_
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
       );
-    CORBA::Object_var _tao_obj_var;
-    if (stream >> _tao_obj_var.out ())
+    if (stream >> _tao_elem)
     {
-      _tao_elem = IR_WstringDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           IR::_tc_WstringDef,
           1,
@@ -43279,12 +43215,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_FixedDef_ptr &_tao_el
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
       );
-    CORBA::Object_var _tao_obj_var;
-    if (stream >> _tao_obj_var.out ())
+    if (stream >> _tao_elem)
     {
-      _tao_elem = IR_FixedDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           IR::_tc_FixedDef,
           1,
@@ -43345,12 +43277,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_SequenceDef_ptr &_tao
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
       );
-    CORBA::Object_var _tao_obj_var;
-    if (stream >> _tao_obj_var.out ())
+    if (stream >> _tao_elem)
     {
-      _tao_elem = IR_SequenceDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           IR::_tc_SequenceDef,
           1,
@@ -43411,12 +43339,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_ArrayDef_ptr &_tao_el
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
       );
-    CORBA::Object_var _tao_obj_var;
-    if (stream >> _tao_obj_var.out ())
+    if (stream >> _tao_elem)
     {
-      _tao_elem = IR_ArrayDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           IR::_tc_ArrayDef,
           1,
@@ -43477,12 +43401,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_ExceptionDef_ptr &_ta
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
       );
-    CORBA::Object_var _tao_obj_var;
-    if (stream >> _tao_obj_var.out ())
+    if (stream >> _tao_elem)
     {
-      _tao_elem = IR_ExceptionDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           IR::_tc_ExceptionDef,
           1,
@@ -43840,12 +43760,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_AttributeDef_ptr &_ta
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
       );
-    CORBA::Object_var _tao_obj_var;
-    if (stream >> _tao_obj_var.out ())
+    if (stream >> _tao_elem)
     {
-      _tao_elem = IR_AttributeDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           IR::_tc_AttributeDef,
           1,
@@ -44322,12 +44238,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_OperationDef_ptr &_ta
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
       );
-    CORBA::Object_var _tao_obj_var;
-    if (stream >> _tao_obj_var.out ())
+    if (stream >> _tao_elem)
     {
-      _tao_elem = IR_OperationDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           IR::_tc_OperationDef,
           1,
@@ -44736,12 +44648,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_InterfaceDef_ptr &_ta
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
       );
-    CORBA::Object_var _tao_obj_var;
-    if (stream >> _tao_obj_var.out ())
+    if (stream >> _tao_elem)
     {
-      _tao_elem = IR_InterfaceDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           IR::_tc_InterfaceDef,
           1,
@@ -45053,12 +44961,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_ValueMemberDef_ptr &_
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
       );
-    CORBA::Object_var _tao_obj_var;
-    if (stream >> _tao_obj_var.out ())
+    if (stream >> _tao_elem)
     {
-      _tao_elem = IR_ValueMemberDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           IR::_tc_ValueMemberDef,
           1,
@@ -45119,12 +45023,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_ValueDef_ptr &_tao_el
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
       );
-    CORBA::Object_var _tao_obj_var;
-    if (stream >> _tao_obj_var.out ())
+    if (stream >> _tao_elem)
     {
-      _tao_elem = IR_ValueDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           IR::_tc_ValueDef,
           1,
@@ -45266,12 +45166,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_ValueBoxDef_ptr &_tao
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
       );
-    CORBA::Object_var _tao_obj_var;
-    if (stream >> _tao_obj_var.out ())
+    if (stream >> _tao_elem)
     {
-      _tao_elem = IR_ValueBoxDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           IR::_tc_ValueBoxDef,
           1,
@@ -45332,12 +45228,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_ProvidesDef_ptr &_tao
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
       );
-    CORBA::Object_var _tao_obj_var;
-    if (stream >> _tao_obj_var.out ())
+    if (stream >> _tao_elem)
     {
-      _tao_elem = IR_ProvidesDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           IR::_tc_ProvidesDef,
           1,
@@ -45479,12 +45371,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_UsesDef_ptr &_tao_ele
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
       );
-    CORBA::Object_var _tao_obj_var;
-    if (stream >> _tao_obj_var.out ())
+    if (stream >> _tao_elem)
     {
-      _tao_elem = IR_UsesDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           IR::_tc_UsesDef,
           1,
@@ -45804,12 +45692,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_EventDef_ptr &_tao_el
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
       );
-    CORBA::Object_var _tao_obj_var;
-    if (stream >> _tao_obj_var.out ())
+    if (stream >> _tao_elem)
     {
-      _tao_elem = IR_EventDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           IR::_tc_EventDef,
           1,
@@ -45951,12 +45835,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_EmitsDef_ptr &_tao_el
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
       );
-    CORBA::Object_var _tao_obj_var;
-    if (stream >> _tao_obj_var.out ())
+    if (stream >> _tao_elem)
     {
-      _tao_elem = IR_EmitsDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           IR::_tc_EmitsDef,
           1,
@@ -46017,12 +45897,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_PublishesDef_ptr &_ta
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
       );
-    CORBA::Object_var _tao_obj_var;
-    if (stream >> _tao_obj_var.out ())
+    if (stream >> _tao_elem)
     {
-      _tao_elem = IR_PublishesDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           IR::_tc_PublishesDef,
           1,
@@ -46083,12 +45959,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_ConsumesDef_ptr &_tao
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
       );
-    CORBA::Object_var _tao_obj_var;
-    if (stream >> _tao_obj_var.out ())
+    if (stream >> _tao_elem)
     {
-      _tao_elem = IR_ConsumesDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           IR::_tc_ConsumesDef,
           1,
@@ -46149,12 +46021,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_ComponentDef_ptr &_ta
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
       );
-    CORBA::Object_var _tao_obj_var;
-    if (stream >> _tao_obj_var.out ())
+    if (stream >> _tao_elem)
     {
-      _tao_elem = IR_ComponentDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           IR::_tc_ComponentDef,
           1,
@@ -46296,12 +46164,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_PrimaryKeyDef_ptr &_t
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
       );
-    CORBA::Object_var _tao_obj_var;
-    if (stream >> _tao_obj_var.out ())
+    if (stream >> _tao_elem)
     {
-      _tao_elem = IR_PrimaryKeyDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           IR::_tc_PrimaryKeyDef,
           1,
@@ -46443,12 +46307,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_FactoryDef_ptr &_tao_
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
       );
-    CORBA::Object_var _tao_obj_var;
-    if (stream >> _tao_obj_var.out ())
+    if (stream >> _tao_elem)
     {
-      _tao_elem = IR_FactoryDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           IR::_tc_FactoryDef,
           1,
@@ -46509,12 +46369,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_FinderDef_ptr &_tao_e
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
       );
-    CORBA::Object_var _tao_obj_var;
-    if (stream >> _tao_obj_var.out ())
+    if (stream >> _tao_elem)
     {
-      _tao_elem = IR_FinderDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           IR::_tc_FinderDef,
           1,
@@ -46575,12 +46431,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_HomeDef_ptr &_tao_ele
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
       );
-    CORBA::Object_var _tao_obj_var;
-    if (stream >> _tao_obj_var.out ())
+    if (stream >> _tao_elem)
     {
-      _tao_elem = IR_HomeDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           IR::_tc_HomeDef,
           1,
@@ -46722,12 +46574,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::IRObject_ptr &_ta
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
       );
-    CORBA::Object_var _tao_obj_var;
-    if (stream >> _tao_obj_var.out ())
+    if (stream >> _tao_elem)
     {
-      _tao_elem = CORBA::IRObject::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           CORBA::_tc_IRObject,
           1,
@@ -46788,12 +46636,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::TypeCodeFactory_p
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
       );
-    CORBA::Object_var _tao_obj_var;
-    if (stream >> _tao_obj_var.out ())
+    if (stream >> _tao_elem)
     {
-      _tao_elem = CORBA::TypeCodeFactory::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           CORBA::_tc_TypeCodeFactory,
           1,
