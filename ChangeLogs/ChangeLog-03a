@@ -1,3 +1,10 @@
+Mon Oct  9 10:34:18 2000  Ossama Othman  <ossama@uci.edu>
+
+	* configure.in:
+
+	  Corrected comments regarding the ACE_HAS_STREAM_PIPES run-time
+	  test.
+
 Fri Oct 13 11:41:29 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* ace/Makefile.bor (OBJFILES): 
