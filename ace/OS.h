@@ -3822,7 +3822,7 @@ struct sigaction
 
 # if !defined (EDEADLK)
 #   define EDEADLK 1000 /* Some large number.... */
-# endif /* !ENOTSUP */
+# endif /* !EDEADLK */
 
 # if !defined (MS_SYNC)
 #   define MS_SYNC 0x0
