@@ -1,7 +1,12 @@
+Thu Dec 11 19:30:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* tao/RTScheduling/Makefile.bor:
+	  Don't install idl files
+
 Thu Dec 11 13:50:41 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp
-	  (handle_input): 
+	  (handle_input):
 
 	  Corrected the class name on handle_input definition.  That'll
 	  teach me to blindly use merge tools.
