@@ -61,11 +61,11 @@ TAO_OBV_GIOP_Flags::is_indirection (CORBA::ULong value)
 ACE_INLINE CORBA::Boolean
 TAO_OBV_GIOP_Flags::is_block_size (CORBA::ULong value)
 {
-  return ( 0 < value && value < 0x7fffff00L);
+  return (0 < value && value < 0x7FFFFF00L);
 }
 
 ACE_INLINE CORBA::Boolean
 TAO_OBV_GIOP_Flags::is_end_tag (CORBA::ULong tag)
 {
-  return (0x80000000L < tag  && tag <= 0xFFFFFFFFL);
+  return (0x80000000L < tag);
 }
