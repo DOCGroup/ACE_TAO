@@ -1,10 +1,11 @@
+// -*- C++ -*-
+//
 // $Id$
 
 #ifndef ACE_LINUX_ICC_COMMON_H
 #define ACE_LINUX_ICC_COMMON_H
 #include /**/ "ace/pre.h"
 
-# define ACE_HAS_ANSI_CASTS
 # define ACE_HAS_CPLUSPLUS_HEADERS
 # define ACE_HAS_EXPLICIT_KEYWORD
 # define ACE_HAS_MUTABLE_KEYWORD

@@ -41,13 +41,6 @@
 #define ACE_HAS_BROKEN_NESTED_TEMPLATES
 #endif
 
-// By default, we disable the C++ casting because
-// it requires the RTTI support to be turned on which
-// is not something we usually do.
-#if !defined (ACE_HAS_ANSI_CASTS)
-#define ACE_HAS_ANSI_CASTS 0
-#endif
-
 #define ACE_HAS_EXPLICIT_KEYWORD
 #define ACE_HAS_MUTABLE_KEYWORD
 #define ACE_HAS_TYPENAME_KEYWORD
@@ -66,10 +59,6 @@
 #if !defined (ACE_HAS_WINCE)
 #define ACE_HAS_EXCEPTIONS
 #endif /* ACE_HAS_WINCE */
-
-#if defined (ACE_HAS_ANSI_CASTS) && (ACE_HAS_ANSI_CASTS == 0)
-#undef  ACE_HAS_ANSI_CASTS
-#endif /* ACE_HAS_ANSI_CASTS && ACE_HAS_ANSI_CASTS == 0 */
 
 #define ACE_HAS_STRERROR
 #define ACE_HAS_STRPTIME

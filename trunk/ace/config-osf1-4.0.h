@@ -66,7 +66,6 @@
 # define ACE_LACKS_SIGNED_CHAR
 
     // Exceptions are enabled by platform_osf1_4.0_rcc.GNU.
-# define ACE_HAS_ANSI_CASTS
 # define ACE_HAS_STDCPP_STL_INCLUDES
 # define ACE_HAS_TEMPLATE_SPECIALIZATION
 # define ACE_HAS_TYPENAME_KEYWORD

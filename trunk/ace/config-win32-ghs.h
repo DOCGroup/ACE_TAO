@@ -54,7 +54,6 @@
 //  This section above was extracted from config-win32-msvc
 
 # define ACE_EXPORT_NESTED_CLASSES 1
-# define ACE_HAS_ANSI_CASTS 1
 # define ACE_HAS_CPLUSPLUS_HEADERS 1
 //# define ACE_HAS_EXCEPTIONS 1
 # define ACE_HAS_EXPLICIT_KEYWORD 1

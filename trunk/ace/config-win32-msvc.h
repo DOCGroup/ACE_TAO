@@ -50,8 +50,6 @@
 # include "ace/config-win32-msvc-7.h"
 #elif (_MSC_VER >= 1200)
 # include "ace/config-win32-msvc-6.h"
-#elif (_MSC_VER >= 1100)
-# include "ace/config-win32-msvc-5.h"
 #else
 # error This version of Microsoft Visual C++ not supported.
 #endif
