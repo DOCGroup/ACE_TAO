@@ -1,3 +1,14 @@
+Thu Jul 24 13:56:54 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * include/makeinclude/platform_g++_common.GNU:
+        * include/makeinclude/platform_linux.GNU:
+          Rolled back the part of Wed Jul 23 23:47:52 UTC 2003  Don Hinton
+          <dhinton@dresystems.com> that changed LDFLAGS in
+          platform_linux.GNU, and instead added the same code to SOFLAGS
+          in platform_g++_common.GNU for shared libs only.  This should
+          fix the spike in footprint that showed up this morning due to
+          yesterday's change.
+
 Thu Jul 24 01:19:59 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * tests/DLL_Test.dsp:
