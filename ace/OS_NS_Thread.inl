@@ -4557,7 +4557,7 @@ ACE_OS::thread_mutex_init (ACE_thread_mutex_t *m,
 
 # elif defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS)
   // Force the use of USYNC_THREAD!
-  return ACE_OS::mutex_init (m, USYNC_THREAD, name, arg, lock_type);
+  return ACE_OS::mutex_init (m, USYNC_THREAD, name, arg, 0, lock_type);
 
 # elif defined (VXWORKS) || defined (ACE_PSOS)
   return mutex_init (m, type, name, arg);
