@@ -1,6 +1,12 @@
+Mon Jan 26 13:20:58 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * performance-tests/Misc/childbirth_time.cpp (prof_native_thread,
+          prof_ace_os_thread): changed type of local j to int to avoid
+          signed/unsigned comparison.
+
 Mon Jan 26 11:35:54 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* bin/auto_compile: 
+	* bin/auto_compile:
 	  Added TAO_ROOT to the environment.
 
 Mon Jan 26 10:28:57 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
