@@ -1,3 +1,8 @@
+Sun Oct 26 10:01:01 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
+
+	* ace/Connector.cpp (open):  The original fix failed to replace
+	  strategies under some circumstances.
+
 Sun Oct 26 00:23:20 1997    <nw1@COYOTE>
 
 	* ace/OS.{h,cpp} (sprintf): Removed ACE_OS::sprintf (wchat_t, char).
@@ -8,7 +13,7 @@ Sun Oct 26 00:23:20 1997    <nw1@COYOTE>
 	  allocating new objects.  The original codes caused memory leaks
 	  and possible segmentation faults if it got called twice.  We
 	  probably need a do-nothing constructor (the current constructor
-	  calls open.)  However, this may break other codes.  
+	  calls open.)  However, this may break other codes.
 
 Sun Oct 26 01:00:07 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -50,8 +55,8 @@ Sun Oct 26 00:06:17 1997    <irfan@TWOSTEP>
 	- ACE_Hash_Map_Entry: Added a prev pointer to the entry.  Thus
  	  changing the bucket chains into doubly linked lists.  Because of
  	  this, it was necessary to change the way the list was being
- 	  managed.  Sentinels were created for each bucket.  
-	  
+ 	  managed.  Sentinels were created for each bucket.
+
 	  This also changed (a) the way the iterators worked, (b) made it
  	  easy to delete entries when you have one (this scheme allows the
  	  entries to be easily used as ACTs).
@@ -65,11 +70,11 @@ Sun Oct 26 00:06:17 1997    <irfan@TWOSTEP>
  	  are never copied.  These methods cannot be added to Map_Manager
  	  since it uses an array of nodes, where the your data may get
  	  copied to another node when the size of the Map_Manager changes.
-	
+
 	* ace/Strategies (ACE_Connection_Recycling_Strategy): Added a new
  	  abstract strategy for recycling connections.
 
-	* ace/Strategies_T: 
+	* ace/Strategies_T:
 
  	- ACE_Cached_Connect_Strategy: ACE_Cached_Connect_Strategy now
  	  implements the ACE_Connection_Recycling_Strategy interface.
@@ -87,11 +92,11 @@ Sun Oct 26 00:06:17 1997    <irfan@TWOSTEP>
   	  Now the <in_use> flag has been moved from the Svc_Handler into
  	  the key.  The also saves the Hash_Addr from requiring
  	  Svc_Handler as a template parameter.
-	  
+
 	  Also updated ACE_Hash_Addr::operator== such that if the
  	  Svc_Handler is busy, it does not bother to check compare the
  	  addresses but simply returns false.
-	
+
 	* ace/Svc_Handler.cpp: Added the ability for a Svc_Handler to
  	  recycle itself.  idle() can be called when the Svc_Handler is
  	  done serving a particular connection and can how be recycled.
@@ -106,7 +111,7 @@ Sun Oct 26 00:06:17 1997    <irfan@TWOSTEP>
 	* tests/Hash_Map_Manager_Test.cpp (ACE_Hash_Map_Entry): Added a
  	  new constructor specialization as the ACE_Hash_Map_Entry now has
  	  two constructors.
-	
+
 	* tests/Reactor_Exceptions_Test.cpp (class My_Reactor): Added the
  	  other handle_events method.  Thanks to Stephen Coy
  	  (coys@mail.ns.wsa.com.au) for pointing this out.
@@ -143,13 +148,13 @@ Sun Oct 26 00:06:17 1997    <irfan@TWOSTEP>
 
 Sat Oct 25 17:41:57 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
 
-        * examples/Timer_Queue/Thread_Timer_Queue_Test.cpp: 
-        * examples/Timer_Queue/Async_Timer_Queue_Test.cpp: 
-        * examples/Timer_Queue/Reactor_Timer_Queue_Test.cpp: 
-        * examples/Timer_Queue/main_async.cpp: 
-        * examples/Timer_Queue/main_reactor.cpp: 
-        * examples/Timer_Queue/main_thread.cpp: 
-          Added "#pragma instantiate" for template instantiations on 
+        * examples/Timer_Queue/Thread_Timer_Queue_Test.cpp:
+        * examples/Timer_Queue/Async_Timer_Queue_Test.cpp:
+        * examples/Timer_Queue/Reactor_Timer_Queue_Test.cpp:
+        * examples/Timer_Queue/main_async.cpp:
+        * examples/Timer_Queue/main_reactor.cpp:
+        * examples/Timer_Queue/main_thread.cpp:
+          Added "#pragma instantiate" for template instantiations on
           platforms that use pragmas instead, like SGI.
 
 Sat Oct 25 4:44:00 1997  Carlos O'Ryan <coryan@cs.wustl.edu>
