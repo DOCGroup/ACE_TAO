@@ -50,7 +50,7 @@ include $(TAO_ROOT)/taoconfig.mk
 #----------------------------------------------------------------------------
 
 .PRECIOUS: $(foreach ext, $(IDL_EXT), Test$(ext))
-
+.NOTPARALLEL:
 server: $(addprefix $(VDIR),$(SERVER_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ -lTAO_Messaging $(TAO_SRVR_LIBS) $(POSTLINK)
 

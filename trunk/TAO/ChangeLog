@@ -1,3 +1,11 @@
+Tue May 20 13:56:43 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Bug_1482_Regression/Makefile:
+	* orbsvcs/examples/ORT/Makefile: Fixed a problem with parallel
+	  builds by not allowing the builds to run in parallel. Not sure
+	  why the dependencies are getting screwed. We now prevent
+	  parallel builds in these to directories.
+
 Tue May 20 12:43:58 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Codeset_Manager.cpp: Use the old codeset default macros from
