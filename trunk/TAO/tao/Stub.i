@@ -27,17 +27,17 @@ TAO_Stub::set_profile_in_use_i (TAO_Profile *pfile)
 ACE_INLINE void
 TAO_Stub::reset_first_locate_request (void)
 {
-  first_locate_request_ = 1;
+  this->first_locate_request_ = 1;
 }
 
 ACE_INLINE void
 TAO_Stub::reset_base (void)
 {
   this->base_profiles_.rewind ();
-  reset_first_locate_request ();
-  profile_success_ = 0;
+  this->reset_first_locate_request ();
+  this->profile_success_ = 0;
 
-  set_profile_in_use_i (base_profiles_.get_next ());
+  this->set_profile_in_use_i (base_profiles_.get_next ());
 }
 
 ACE_INLINE void
@@ -45,19 +45,19 @@ TAO_Stub::forward_back_one (void)
 {
   TAO_MProfile *from = forward_profiles_->forward_from ();
 
-  delete forward_profiles_;
+  delete this->forward_profiles_;
 
   // the current profile in this profile list is no
   // longer being forwarded, so set the reference to zero.
-  if (from == &base_profiles_)
+  if (from == &this->base_profiles_)
     {
-      base_profiles_.get_current_profile ()->forward_to (0);
-      forward_profiles_ = 0;
+      this->base_profiles_.get_current_profile ()->forward_to (0);
+      this->forward_profiles_ = 0;
     }
   else
     {
       from->get_current_profile ()->forward_to (0);
-      forward_profiles_ = from;
+      this->forward_profiles_ = from;
     }
 
 }
@@ -66,14 +66,14 @@ ACE_INLINE void
 TAO_Stub::reset_forward (void)
 {
   while (this->forward_profiles_ != 0)
-    forward_back_one ();
+    this->forward_back_one ();
 }
 
 ACE_INLINE void
 TAO_Stub::reset_profiles_i (void)
 {
-  reset_forward ();
-  reset_base ();
+  this->reset_forward ();
+  this->reset_base ();
 }
 
 ACE_INLINE void
@@ -82,7 +82,7 @@ TAO_Stub::reset_profiles (void)
   ACE_MT (ACE_GUARD (ACE_Lock,
                      guard,
                      *this->profile_lock_ptr_));
-  reset_profiles_i ();
+  this->reset_profiles_i ();
 }
 
 ACE_INLINE TAO_Profile *
@@ -125,10 +125,10 @@ TAO_Stub::next_forward_profile (void)
   TAO_Profile *pfile_next = 0;
 
   while (this->forward_profiles_
-         && (pfile_next = forward_profiles_->get_next ()) == 0)
+         && (pfile_next = this->forward_profiles_->get_next ()) == 0)
     // that was the last profile.  Now we clean up our forward profiles.
     // since we own the forward MProfiles, we must delete them when done.
-    forward_back_one ();
+    this->forward_back_one ();
 
   return pfile_next;
 }
@@ -138,19 +138,19 @@ TAO_Stub::next_profile_i (void)
 {
 
   TAO_Profile *pfile_next = 0;
-  if (forward_profiles_)
+  if (this->forward_profiles_)
     {
-      pfile_next = next_forward_profile ();
+      pfile_next = this->next_forward_profile ();
       if (pfile_next == 0)
-        pfile_next = base_profiles_.get_next ();
+        pfile_next = this->base_profiles_.get_next ();
     }
   else
-    pfile_next = base_profiles_.get_next ();
+    pfile_next = this->base_profiles_.get_next ();
 
   if (pfile_next == 0)
-    reset_base ();
+    this->reset_base ();
   else
-    set_profile_in_use_i (pfile_next);
+    this->set_profile_in_use_i (pfile_next);
 
   return pfile_next;
 }
@@ -163,25 +163,25 @@ TAO_Stub::next_profile (void)
                             guard,
                             *this->profile_lock_ptr_,
                             0));
-  return next_profile_i ();
+  return this->next_profile_i ();
 }
 
 ACE_INLINE CORBA::Boolean
 TAO_Stub::valid_forward_profile (void)
 {
-  return (profile_success_ && forward_profiles_);
+  return (this->profile_success_ && this->forward_profiles_);
 }
 
 ACE_INLINE void
 TAO_Stub::set_valid_profile (void)
 {
-  profile_success_ = 1;
+  this->profile_success_ = 1;
 }
 
 ACE_INLINE CORBA::Boolean
 TAO_Stub::valid_profile (void)
 {
-  return (CORBA::Boolean) profile_success_;
+  return (CORBA::Boolean) this->profile_success_;
 }
 
 ACE_INLINE TAO_Profile *
@@ -193,10 +193,10 @@ TAO_Stub::base_profiles (const TAO_MProfile &mprofiles)
                             0));
 
   // first reset things so we start from scratch!
-  reset_forward ();
-  base_profiles_.set (mprofiles);
-  reset_base ();
-  return profile_in_use_;
+  this->reset_forward ();
+  this->base_profiles_.set (mprofiles);
+  this->reset_base ();
+  return this->profile_in_use_;
 
 }
 
@@ -208,18 +208,18 @@ TAO_Stub::next_profile_retry (void)
                             *this->profile_lock_ptr_,
                             0));
 
-  if (profile_success_ && forward_profiles_)
+  if (this->profile_success_ && this->forward_profiles_)
     {
-      reset_profiles_i ();
+      this->reset_profiles_i ();
       return 1;
     }
-  else if (next_profile_i ())
+  else if (this->next_profile_i ())
     {
       return 1;
     }
   else
     {
-      reset_profiles_i ();
+      this->reset_profiles_i ();
       return 0;
     }
 }
