@@ -25,7 +25,7 @@
  * @brief  Reactive strategy base class
  */
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
-class TAO_AV_Export TAO_AV_Endpoint_Reactive_Strategy
+class TAO_AV_Endpoint_Reactive_Strategy
 : public TAO_AV_Endpoint_Strategy
 {
 
@@ -46,8 +46,6 @@ protected:
 
   /// activates the vdev with the POA
   virtual int activate_vdev (ACE_ENV_SINGLE_ARG_DECL);
-
-
 
   /// activates the media controller with the POA
   virtual int activate_mediactrl (ACE_ENV_SINGLE_ARG_DECL);
@@ -88,7 +86,7 @@ protected:
  * @brief Reactive strategy
  */
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
-class TAO_AV_Export TAO_AV_Endpoint_Reactive_Strategy_A
+class TAO_AV_Endpoint_Reactive_Strategy_A
   : public TAO_AV_Endpoint_Reactive_Strategy<T_StreamEndpoint, T_VDev , T_MediaCtrl>
 {
 
@@ -119,7 +117,7 @@ public:
  * @brief Reactive strategy
  */
 template <class T_StreamEndpoint, class T_Vdev , class T_MediaCtrl>
-class TAO_AV_Export TAO_AV_Endpoint_Reactive_Strategy_B
+class TAO_AV_Endpoint_Reactive_Strategy_B
   : public TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_Vdev, T_MediaCtrl>
 {
 
@@ -152,7 +150,7 @@ public:
  *        TAO_AV_Endpoint_Process_Strategy
  */
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
-class TAO_AV_Export TAO_AV_Child_Process
+class TAO_AV_Child_Process
 {
 
 public:
@@ -251,7 +249,7 @@ protected:
  * @brief Helper class for the child process created in TAO_AV_Child_Process
  */
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
-class TAO_AV_Export TAO_AV_Child_Process_A
+class TAO_AV_Child_Process_A
   : public TAO_AV_Child_Process <T_StreamEndpoint, T_VDev, T_MediaCtrl>
 {
 
@@ -270,7 +268,7 @@ public:
  * @brief Helper class for the child process created in TAO_AV_Child_Process
  */
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
-class TAO_AV_Export TAO_AV_Child_Process_B
+class TAO_AV_Child_Process_B
   : public TAO_AV_Child_Process <T_StreamEndpoint, T_VDev, T_MediaCtrl>
 {
 
