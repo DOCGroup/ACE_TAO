@@ -1555,7 +1555,7 @@ ACE_DynScheduler::identify_threads (ACE_CString & unresolved_locals,
              (LM_DEBUG,
               ACE_LIB_TEXT("Warning: an operation identified by ")
               ACE_LIB_TEXT("\"%s\" has unresolved remote dependencies.\n"),
-              ACE_TEXT_CHAR_TO_TCHAR(task_entries_ [i].rt_info ()->entry_point)));
+              ACE_TEXT_CHAR_TO_TCHAR((const char*)task_entries_ [i].rt_info ()->entry_point)));
 
           // Record entry point in list of unresolved remote dependencies
           ACE_OS::sprintf (string_buffer, "// %s\n",
@@ -1572,7 +1572,7 @@ ACE_DynScheduler::identify_threads (ACE_CString & unresolved_locals,
               ACE_LIB_TEXT("Error: operation \"%s\" does not specify a period or\n")
               ACE_LIB_TEXT("visible threads, and is not called by any other operation.\n")
               ACE_LIB_TEXT("Are there backwards dependencies.\n"),
-              ACE_TEXT_CHAR_TO_TCHAR(task_entries_ [i].rt_info ()->entry_point)));
+              ACE_TEXT_CHAR_TO_TCHAR((const char*)task_entries_ [i].rt_info ()->entry_point)));
 
           result = ST_UNRESOLVED_LOCAL_DEPENDENCIES;
 
