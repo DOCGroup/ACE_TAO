@@ -531,10 +531,11 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
     }
 
   AST_Decl::NodeType nt = bt->node_type ();
+  be_typedef *td = 0;
 
   if (nt == AST_Decl::NT_typedef)
     {
-      be_typedef *td = be_typedef::narrow_from_decl (bt);
+      td = be_typedef::narrow_from_decl (bt);
       nt = td->base_node_type ();
     }
 
@@ -641,7 +642,9 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
             // We need to separately handle this case of pseudo objects
             // because they have a _var type.
             be_predefined_type *pt =
-              be_predefined_type::narrow_from_decl (bt);
+              be_predefined_type::narrow_from_decl (
+                  td == 0 ? bt : td->primitive_base_type ()
+                );
 
             if (!pt)
               {
@@ -792,7 +795,9 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
         case AST_Decl::NT_pre_defined:
           {
             be_predefined_type *pt =
-              be_predefined_type::narrow_from_decl (bt);
+              be_predefined_type::narrow_from_decl (
+                  td == 0 ? bt : td->primitive_base_type ()
+                );
 
             if (!pt)
               {
