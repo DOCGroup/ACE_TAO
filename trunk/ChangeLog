@@ -1,3 +1,21 @@
+Fri May 23 08:10:23 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/DependencyGenerator/DependencyEditor.pm:
+        * bin/DependencyGenerator/DependencyGenerator.pm:
+        * bin/DependencyGenerator/DependencyWriter.pm:
+        * bin/DependencyGenerator/DependencyWriterFactory.pm:
+        * bin/DependencyGenerator/GNUDependencyWriter.pm:
+        * bin/DependencyGenerator/GNUObjectGenerator.pm:
+        * bin/DependencyGenerator/NMakeDependencyWriter.pm:
+        * bin/DependencyGenerator/NMakeObjectGenerator.pm:
+        * bin/DependencyGenerator/ObjectGenerator.pm:
+        * bin/DependencyGenerator/ObjectGeneratorFactory.pm:
+        * bin/DependencyGenerator/Preprocessor.pm:
+        * bin/depgen.pl:
+
+          Added my generic dependency generator that will work with both GNU
+         Makefiles and NMakefiles.
+
 Fri May 23 11:41:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Sock_Connect.cpp:
