@@ -1,28 +1,33 @@
+Thu Nov 19 10:28:11 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * performance-tests/Misc/context_switch_time.cpp: fixed 64-to-32
+          bit casts to work with unsigned 64 bit ACE_hrtime_t on NT.
+
 Thu Nov 19 00:18:26 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/OS.i (strnstr): Added a check to see if the substring is
- 	  longer than the string being searched. Fixed both the char and
- 	  wchar_t versions in OS.i and the ACE_USHORT16 version in
- 	  SString.cpp. Thanks to Knut Johannessen <knutj@funcom.com> for
- 	  pointing out the bug and providing a fix.
+        * ace/OS.i (strnstr): Added a check to see if the substring is
+          longer than the string being searched. Fixed both the char and
+          wchar_t versions in OS.i and the ACE_USHORT16 version in
+          SString.cpp. Thanks to Knut Johannessen <knutj@funcom.com> for
+          pointing out the bug and providing a fix.
 
-	* ace/SString.i (find): The argument to strnstr() should be the
- 	  length of <s> instead of <this->len_ - pos>.
+        * ace/SString.i (find): The argument to strnstr() should be the
+          length of <s> instead of <this->len_ - pos>.
 
-	* tests/SString_Test.cpp (main): Added tests to make sure that
- 	  find() and strstr() work even when the substring is longer that
- 	  the original string.
+        * tests/SString_Test.cpp (main): Added tests to make sure that
+          find() and strstr() work even when the substring is longer that
+          the original string.
 
-	* ace/Timeprobe_T.h (ACE_Timeprobe): Added accessors to the class
- 	  so that the user can get to the internals.  This allows the
- 	  users to format the output of collecting the timeprobes
- 	  according to their liking.
+        * ace/Timeprobe_T.h (ACE_Timeprobe): Added accessors to the class
+          so that the user can get to the internals.  This allows the
+          users to format the output of collecting the timeprobes
+          according to their liking.
 
 Wed Nov 18 20:56:38 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* ace/DLL.{cpp,h} ACE_DLL::ACE_DLL (int close_on_destruction):
-	added the close-on-destruction featurei in the constructor of
-	the ACE_DLL class.
+        * ace/DLL.{cpp,h} ACE_DLL::ACE_DLL (int close_on_destruction):
+        added the close-on-destruction featurei in the constructor of
+        the ACE_DLL class.
 
 Wed Nov 18 15:51:42 1998  David L. Levine  <levine@cs.wustl.edu>
 
