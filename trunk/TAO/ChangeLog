@@ -76,7 +76,7 @@ Wed Feb 11 12:57:23 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
             reporting the problem. Any number of such parameters and/or
             return types, with identical bounds, may occur in the same
             or multiple scopes, leading to the Arg_Traits<> specialization
-            problem addressed below.
+            problem addressed below. This closes [BUGID:1739].
 
           - Added a mechanism to generate unique type names for template
             parameters in the specializations of Arg_Traits<>
