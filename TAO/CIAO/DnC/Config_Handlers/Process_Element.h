@@ -81,6 +81,7 @@ template <typename OBJ, typename DATA>
 class Process_Member_Function: public Process_Function<OBJ, DATA> {
 public:
   typedef void (OBJ::*func_type) (DOMDocument*, DOMNodeIterator*, DATA&);
+  typedef DATA data_type;
 
   Process_Member_Function(OBJ& obj, func_type f, DOMDocument* doc)
     : obj_(&obj), f_(f), doc_(doc)
@@ -116,6 +117,7 @@ template <typename OBJ, typename DATA>
 class Process_Static_Function: public Process_Function<OBJ, DATA> {
 public:
   typedef void (*func_type) (DOMNodeIterator*, DATA&);
+  typedef DATA data_type;
 
   Process_Static_Function(func_type f)
     : f_(f)
@@ -138,14 +140,6 @@ private:
 
 DOMDocument* create_document (const char *url);
 
-/*
- *  For non-static process functions.  The function prototype should be:
- *
- *  void OBJECT::process_function (DOMDocument*, DOMNodeIterator*, DATA&);
- *
- */
-
-// This function only works for calling static process_ methods
 template <typename DATA, typename VALUE, typename OBJECT>
 void process_element (DOMNode* node,
                       DOMDocument* doc,
@@ -155,7 +149,6 @@ void process_element (DOMNode* node,
                       Process_Function <OBJECT, DATA>* func,
                       REFMAP& id_map);
 
-// This function only works for calling static process_ methods
 template <typename SEQUENCE, typename DATA, typename OBJECT>
 void process_sequential_element (DOMNode* node,
                                  DOMDocument* doc,
@@ -163,6 +156,22 @@ void process_sequential_element (DOMNode* node,
                                  SEQUENCE& seq,
                                  Process_Function <OBJECT, DATA>* func,
                                  REFMAP& id_map);
+
+template <typename T>
+class Null_Class {
+public:
+};
+
+template<typename DATA, typename OBJECT, typename SEQUENCE, typename FUNCTION>
+inline void process_function(OBJECT* obj, SEQUENCE& data, FUNCTION func,
+                             DOMNode* node,
+                             DOMDocument* doc,
+                             DOMNodeIterator *iter,
+                             REFMAP& id_map)
+{
+  Process_Member_Function<OBJECT, DATA> pf(obj, func, doc);
+  process_sequential_element (node, doc, iter, data, &pf, id_map);
+}
 
 #include "Process_Element.i"
 
