@@ -1,3 +1,9 @@
+Mon Nov 29 15:10:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+	  Fixed the usage of the be_interface constructor due
+	  to changes Jeff was putting in two changelog entries ago.
+
 Mon Nov 29 14:15:04 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* performance-tests/RTCorba/Oneways/Reliable/Reliable.dsw:
