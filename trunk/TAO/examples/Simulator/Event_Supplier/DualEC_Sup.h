@@ -89,7 +89,7 @@ private:
       ACE_THROW_SPEC ((CORBA::SystemException));
   };
 
-  static void * run_orb (void *);
+  static ACE_THR_FUNC_RETURN run_orb (void *);
   // Run the orb event loop.
 
   static void * run_nav_thread (void *arg);
