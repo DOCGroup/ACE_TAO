@@ -386,6 +386,10 @@ SOURCE=.\CosEvent\EventChannel_i.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\AV\FlowSpec_Entry.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Naming\Hash_Naming_Context.cpp
 # End Source File
 # Begin Source File
@@ -415,6 +419,14 @@ SOURCE=.\LifeCycleServiceS.cpp
 # Begin Source File
 
 SOURCE=.\Event\Local_ESTypes.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\AV\MCast.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=".\AV\media-timer.cpp"
 # End Source File
 # Begin Source File
 
@@ -458,6 +470,14 @@ SOURCE=.\Naming\Persistent_Naming_Context.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\AV\Policy.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\AV\Protocol_Factory.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\CosEvent\ProxyPushConsumer_i.cpp
 # End Source File
 # Begin Source File
@@ -479,6 +499,10 @@ SOURCE=.\Sched\Reconfig_Scheduler.cpp
 # Begin Source File
 
 SOURCE=.\Event\RT_Task.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\AV\RTCP.cpp
 # End Source File
 # Begin Source File
 
@@ -511,6 +535,10 @@ SOURCE=.\RtecUDPAdminC.cpp
 # Begin Source File
 
 SOURCE=.\RtecUDPAdminS.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\AV\RTP.cpp
 # End Source File
 # Begin Source File
 
@@ -554,6 +582,10 @@ SOURCE=.\sfpS.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\AV\source.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Sched\Strategy_Scheduler.cpp
 # End Source File
 # Begin Source File
@@ -575,6 +607,10 @@ SOURCE=.\Time\TAO_TIO.cpp
 # Begin Source File
 
 SOURCE=.\Time\TAO_UTO.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\AV\TCP.cpp
 # End Source File
 # Begin Source File
 
@@ -615,6 +651,14 @@ SOURCE=.\Trader\Trader_Utils.cpp
 # Begin Source File
 
 SOURCE=.\Naming\Transient_Naming_Context.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\AV\Transport.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\AV\UDP.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -914,6 +958,14 @@ SOURCE=.\Event\Fast_Reactor.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\AV\Flows_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\AV\FlowSpec_Entry.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Event\GPlot_File.h
 # End Source File
 # Begin Source File
@@ -958,6 +1010,14 @@ SOURCE=.\Trader\Locking.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\AV\MCast.h
+# End Source File
+# Begin Source File
+
+SOURCE=".\AV\media-timer.h"
+# End Source File
+# Begin Source File
+
 SOURCE=.\Event\Memory_Pools.h
 # End Source File
 # Begin Source File
@@ -998,6 +1058,14 @@ SOURCE=.\Naming\Persistent_Naming_Context.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\AV\Policy.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\AV\Protocol_Factory.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Event\ReactorTask.h
 # End Source File
 # Begin Source File
@@ -1011,6 +1079,10 @@ SOURCE=.\Sched\Reconfig_Scheduler.h
 # Begin Source File
 
 SOURCE=.\Event\RT_Task.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\AV\RTCP.h
 # End Source File
 # Begin Source File
 
@@ -1035,6 +1107,10 @@ SOURCE=.\RtecSchedulerC.h
 # Begin Source File
 
 SOURCE=.\RtecSchedulerS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\AV\RTP.h
 # End Source File
 # Begin Source File
 
@@ -1066,6 +1142,10 @@ SOURCE=.\Trader\Service_Type_Repository.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\AV\source.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Sched\Strategy_Scheduler.h
 # End Source File
 # Begin Source File
@@ -1087,6 +1167,10 @@ SOURCE=.\Time\TAO_UTO.h
 # Begin Source File
 
 SOURCE=.\Event\Task_Manager.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\AV\TCP.h
 # End Source File
 # Begin Source File
 
@@ -1131,6 +1215,14 @@ SOURCE=.\Trader\Trader_Utils.h
 # Begin Source File
 
 SOURCE=.\Naming\Transient_Naming_Context.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\AV\Transport.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\AV\UDP.h
 # End Source File
 # End Group
 # Begin Group "Inline Files"
@@ -2932,6 +3024,11 @@ SOURCE=.\CosTradingS_T.cpp
 # Begin Source File
 
 SOURCE=.\Event\EC_ProxyPushSupplier_Set_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\AV\Flows_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
