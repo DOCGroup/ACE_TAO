@@ -103,9 +103,9 @@ include $(TAO_ROOT)/taoconfig.mk
 #	Local targets (and local hacks)
 #----------------------------------------------------------------------------
 
-ifdef CROSS-COMPILE
+ifeq ($(shared_libs),)
   override fakesvcconf = 1
-endif # CROSS-COMPILE
+endif # ($(shared_libs),)
 
 ifeq ($(fakesvcconf),1)
   CPPFLAGS += -DTAO_PLATFORM_SVC_CONF_FILE_NOTSUP
