@@ -117,7 +117,8 @@ int be_visitor_union_cs::visit_union (be_union *node)
 
       *os << "// copy constructor" << be_nl;
       *os << node->name () << "::" << node->local_name ()
-          << " (const " << node->name () << " &u)" << be_nl;
+          << " (const " << node->name () << " &u)" << be_nl
+          << "  : TAO_Base_Union ()" << be_nl;
       *os << "{" << be_idt_nl;
       *os << "this->disc_ = u.disc_;" << be_nl;
       // now switch based on the disc value
@@ -173,7 +174,7 @@ int be_visitor_union_cs::visit_union (be_union *node)
       os->indent ();
       *os << "// reset method to reset old values of a union" << be_nl;
       *os << "void " << node->name () << "::_reset (" << bt->name ()
-          << " new_disc_val, CORBA::Boolean finalize)" << be_nl;
+          << ", CORBA::Boolean finalize)" << be_nl;
       *os << "{" << be_idt_nl;
       *os << "switch (this->disc_)" << be_nl;
       *os << "{" << be_idt_nl;
