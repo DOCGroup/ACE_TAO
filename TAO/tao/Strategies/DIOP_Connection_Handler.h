@@ -170,6 +170,11 @@ protected:
   // DIOP Additions - End
 
 private:
+
+  /// Perform appropriate closing
+  void handle_close_i (void);
+
+private:
   /// TCP configuration for this connection.
   TAO_DIOP_Properties *tcp_properties_;
 

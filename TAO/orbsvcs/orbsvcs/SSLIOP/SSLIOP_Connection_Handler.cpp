@@ -216,40 +216,51 @@ TAO_SSLIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
                  handle,
                  rm));
 
-  long pending = this->decr_pending_upcalls ();
-  if (pending <= 0)
+  long upcalls = this->decr_pending_upcalls ();
+
+  ACE_ASSERT (upcalls >= 0);
+
+  // Try to clean up things if the upcall count has reached 0
+  if (upcalls == 0)
     {
-      if (this->transport ()->wait_strategy ()->is_registered ())
-        {
-          // Make sure there are no timers.
-          this->reactor ()->cancel_timer (this);
+      this->handle_close_i ();
 
-          // Set the flag to indicate that it is no longer registered with
-          // the reactor, so that it isn't included in the set that is
-          // passed to the reactor on ORB destruction.
-          this->transport ()->wait_strategy ()->is_registered (0);
-        }
-
-      // Close the handle..
-      if (this->get_handle () != ACE_INVALID_HANDLE)
-        {
-          // Remove the entry as it is invalid
-          this->transport ()->purge_entry ();
-
-          // Signal the transport that we will no longer have
-          // a reference to it.  This will eventually call
-          // TAO_Transport::release ().
-          this->transport (0);
-        }
-
-      // Follow usual Reactor-style lifecycle semantics and commit
-      // suicide.
-      this->destroy ();
+      retval = -1;
     }
 
   return 0;
 }
 
+void
+TAO_SSLIOP_Connection_Handler::handle_close_i (void)
+{
+  if (this->transport ()->wait_strategy ()->is_registered ())
+    {
+      // Make sure there are no timers.
+      this->reactor ()->cancel_timer (this);
+
+      // Set the flag to indicate that it is no longer registered with
+      // the reactor, so that it isn't included in the set that is
+      // passed to the reactor on ORB destruction.
+      this->transport ()->wait_strategy ()->is_registered (0);
+    }
+
+  // Close the handle..
+  if (this->get_handle () != ACE_INVALID_HANDLE)
+    {
+      // Remove the entry as it is invalid
+      this->transport ()->purge_entry ();
+
+      // Signal the transport that we will no longer have
+      // a reference to it.  This will eventually call
+      // TAO_Transport::release ().
+      this->transport (0);
+    }
+
+  // Follow usual Reactor-style lifecycle semantics and commit
+  // suicide.
+  this->destroy ();
+}
 
 int
 TAO_SSLIOP_Connection_Handler::resume_handler (void)
@@ -347,8 +358,17 @@ TAO_SSLIOP_Connection_Handler::handle_input (ACE_HANDLE)
   int retval = this->transport ()->handle_input_i (resume_handle);
 
   // The upcall is done. Bump down the reference count
-  if (this->decr_pending_upcalls () <= 0)
-    retval = -1;
+  long upcalls = this->decr_pending_upcalls ();
+
+  ACE_ASSERT (upcalls >= 0);
+
+  // Try to clean up things if the upcall count has reached 0
+  if (upcalls == 0)
+    {
+      this->handle_close_i ();
+
+      retval = -1;
+    }
 
   if (retval == -1)
     {

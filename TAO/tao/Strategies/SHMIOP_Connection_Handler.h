@@ -107,6 +107,11 @@ protected:
   virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
 
 private:
+
+  /// Perform handle close
+  void handle_close_i (void);
+
+private:
   /// Flag that we will be passing to the event handler to indicate
   /// whether the handle will be resumed by the method or not.
   int resume_flag_;

@@ -108,6 +108,7 @@ public:
   virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
                             ACE_Reactor_Mask = ACE_Event_Handler::NULL_MASK);
 
+
   /// Send a TRUE value to the reactor, so that the reactor does not
   /// resume the handler
   virtual int resume_handler (void);
@@ -130,11 +131,14 @@ protected:
   /// handle_input() just delegates on handle_input_i() which timeouts
   /// after <max_wait_time>, this is used in thread-per-connection to
   /// ensure that server threads eventually exit.
-
   virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
 
 private:
 
+  /// Perform appropriate closing.
+  void handle_close_i (void);
+
+private:
   /// TCP configuration for this connection.
   TAO_IIOP_Properties *tcp_properties_;
 };

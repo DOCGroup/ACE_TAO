@@ -226,7 +226,7 @@ Worker::svc (void)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      // Run the ORB for atmost 60 seconds
+      // Run the ORB for atmost 75 seconds
       ACE_Time_Value tv (75, 0);
       this->orb_->run (tv, ACE_TRY_ENV);
       ACE_TRY_CHECK;
