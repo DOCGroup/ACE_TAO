@@ -183,9 +183,9 @@ private:
 };
 
 ACE_Export ACE_INLINE ACE_CString operator + (const ACE_CString &, const ACE_CString &);
-#if !defined (ACE_HAS_WINCE)
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 ACE_Export ostream &operator << (ostream &, const ACE_CString &);
-#endif /* ! ACE_HAS_WINCE */
+#endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
 class ACE_Export ACE_SString
 {
@@ -195,7 +195,7 @@ class ACE_Export ACE_SString
   //   using <ACE_CString> is you don't understand why this class
   //   exists...
   //
-  // = DESCRIPTION 
+  // = DESCRIPTION
   //   This class is only intended for use with applications that
   //   understand how it works.  In particular, its destructor does
   //   not deallocate its memory when it is destroyed...  We need this
@@ -317,9 +317,9 @@ private:
   // Pointer to data.
 };
 
-#if !defined (ACE_HAS_WINCE)
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 ACE_Export ostream &operator << (ostream &, const ACE_SString &);
-#endif /* ! ACE_HAS_WINCE */
+#endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
 class ACE_Export ACE_WString
 {
@@ -477,9 +477,9 @@ private:
 };
 
 ACE_Export ACE_INLINE ACE_WString operator + (const ACE_WString &, const ACE_WString &);
-#if !defined (ACE_HAS_WINCE)
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 ACE_Export ostream &operator << (ostream &, const ACE_WString &);
-#endif /* ! ACE_HAS_WINCE */
+#endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
 // ************************************************************
 
