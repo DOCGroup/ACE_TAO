@@ -635,7 +635,6 @@ sub generate_hierarchy {
   foreach my $prj (@projects) {
     my($top, $rest) = $self->topname($prj);
 
-
     if (!defined $current) {
       $current = $top;
       push(@saved, $rest);
@@ -949,21 +948,26 @@ sub generate_circular_tree {
   my($prepend)  = shift;
   my($into)     = shift;
   my($current)  = shift;
- 
-  if (!defined $$circular{$into}) {
-    $$circular{$into} = {};
-  }
-  my($deps) = $self->get_validated_ordering($current);
+  my($aref)     = $self->{'project_info'}->{$current};
 
-  if ($deps ne '') {
-    my($darr) = $self->create_array($deps);
-    foreach my $dep (@$darr) {
-      my($base) = basename($dep);
-      my($full) = (defined $$prepend{$base} ?
-                     "$$prepend{$base}/" : '') . $base;
-      if (!defined $$circular{$into}->{$full}) {
-        $$circular{$into}->{$full} = 1;
-        $self->generate_circular_tree($circular, $prepend, $current, $full);
+  if (defined $aref) {
+    my($name, $deps) = @$aref;
+
+    if (defined $deps && $deps ne '') {
+      my($darr) = $self->create_array($deps);
+
+      if (!defined $$circular{$into}) {
+        $$circular{$into} = {};
+      }
+
+      foreach my $dep (@$darr) {
+        my($base) = basename($dep);
+        my($full) = (defined $$prepend{$base} ?
+                       "$$prepend{$base}/" : '') . $base;
+        if (!defined $$circular{$into}->{$full}) {
+          $$circular{$into}->{$full} = 1;
+          $self->generate_circular_tree($circular, $prepend, $into, $full);
+        }
       }
     }
   }
@@ -1064,32 +1068,35 @@ sub number_target_deps {
   ## has been sorted in order to get the correct project numbers.
   for(my $i = 0; $i <= $#list; ++$i) {
     my($project) = $list[$i];
-    my($deps) = $self->get_validated_ordering($project);
+    if (defined $$pjs{$project}) {
+      my($name, $deps) = @{$$pjs{$project}};
+      if (defined $deps && $deps ne '') {
+        my(%targetnumbers) = ();
+        my($darr) = $self->create_array($deps);
 
-    if ($deps ne '') {
-      my(%targetnumbers) = ();
-      my($darr) = $self->create_array($deps);
-
-      ## For each dependency, search in the sorted list
-      ## up to the point of this project for the projects
-      ## that this one depends on.  When the project is
-      ## found, we put the target number in a hash map (to avoid
-      ## duplicates).
-      foreach my $dep (@$darr) {
-        my($base) = basename($dep);
-        my($full) = (defined $prepend{$base} ?
-                       "$prepend{$base}/" : '') . $base;
-        for(my $j = 0; $j < $i; ++$j) {
-          if ($list[$j] eq $full) {
-            $targetnumbers{$j} = 1;
+        ## For each dependency, search in the sorted list
+        ## up to the point of this project for the projects
+        ## that this one depends on.  When the project is
+        ## found, we put the target number in a hash map (to avoid
+        ## duplicates).
+        foreach my $dep (@$darr) {
+          my($base) = basename($dep);
+          my($full) = (defined $prepend{$base} ?
+                         "$prepend{$base}/" : '') . $base;
+          for(my $j = 0; $j < $i; ++$j) {
+            if ($list[$j] eq $full) {
+              $targetnumbers{$j} = 1;
+            }
           }
         }
-      }
 
-      ## Get the keys of the hash map and store the
-      ## array in the hash keyed on the project file.
-      my(@numbers) = sort { $a <=> $b } keys %targetnumbers;
-      $$targets{$project} = \@numbers;
+        ## Get the keys of the hash map and store the
+        ## array in the hash keyed on the project file.
+        my(@numbers) = sort { $a <=> $b } keys %targetnumbers;
+        if (defined $numbers[0]) {
+          $$targets{$project} = \@numbers;
+        }
+      }
     }
   }
 
@@ -1302,7 +1309,7 @@ sub get_validated_ordering {
   my($self)     = shift;
   my($project)  = shift;
   my($warn)     = shift;
-  my($pjs)      = $self->get_project_info();
+  my($pjs)      = $self->{'project_info'};
   my($name)     = undef;
   my($deps)     = '';
 
