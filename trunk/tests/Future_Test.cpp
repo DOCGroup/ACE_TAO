@@ -36,15 +36,12 @@ static ATOMIC_INT task_count (0);
 
 // a counter for the futures..
 static ATOMIC_INT future_count (0);
-static ATOMIC_INT future_no (0);
 
 // a counter for the capsules..
 static ATOMIC_INT capsule_count (0);
-static ATOMIC_INT capsule_no (0);
 
 // a counter for the method objects...
 static ATOMIC_INT methodobject_count (0);
-static ATOMIC_INT methodobject_no (0);
 
 class Scheduler : public ACE_Task<ACE_MT_SYNCH>
   // = TITLE

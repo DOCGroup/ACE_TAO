@@ -182,19 +182,19 @@ ACE_Future_Rep<T>::operator T ()
 
 template <class T> 
 ACE_Future<T>::ACE_Future (void)
-  : future_rep_ (Future_Rep::create ())
+  : future_rep_ (FUTURE_REP::create ())
 {
 }
 
 template <class T>
 ACE_Future<T>::ACE_Future (const ACE_Future<T> &r)
-  : future_rep_ (Future_Rep::attach (r.future_rep_))
+  : future_rep_ (FUTURE_REP::attach (r.future_rep_))
 {
 }
 
 template <class T>
 ACE_Future<T>::ACE_Future (const T &r)
-  : future_rep_ (Future_Rep::create ())
+  : future_rep_ (FUTURE_REP::create ())
 {
   ACE_DEBUG ((LM_DEBUG," (%t) funny constructor\n"));
   this->future_rep_->set (r);
