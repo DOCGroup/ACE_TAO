@@ -24,6 +24,7 @@
 #include "ace/Name_Space.h"
 #include "ace/Naming_Context.h"
 #include "ace/SString.h"
+#include "Local_Name_Space.h"
 
 // A short-hand name for our set of name/value/type tuples passed back
 // to callers.
@@ -243,8 +244,5 @@ private:
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Local_Name_Space_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
-// Put this here to avoid circular include problems.
-#include "Local_Name_Space.h"
 
 #endif /* ACE_LOCAL_NAME_SPACE_T_H */
