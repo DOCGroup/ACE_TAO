@@ -41,7 +41,7 @@ namespace  CORBA
 namespace TAO
 {
   class Argument;
-  class Exception_Data;
+  struct Exception_Data;
   class Collocation_Proxy_Broker;
   class Profile_Transport_Resolver;
 
