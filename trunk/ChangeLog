@@ -1,3 +1,9 @@
+Sun Jan  9 12:45:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/IOStream/client/iostream_client.cpp:
+        * examples/IOStream/server/iostream_server.cpp:
+          Fixed unicode link errors
+
 Sun Jan  9 12:37:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Connection/non_blocking/test_lsock_connector.cpp:
