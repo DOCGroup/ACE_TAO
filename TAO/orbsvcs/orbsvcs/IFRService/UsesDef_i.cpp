@@ -134,10 +134,24 @@ TAO_UsesDef_i::interface_type_i (
       return;
     }
 
+  const char *tmp = 
+    TAO_IFR_Service_Utils::reference_to_path (interface_type);
+
+  ACE_Configuration_Section_Key new_key;
+  this->repo_->config ()->expand_path (this->repo_->root_key (),
+                                       tmp,
+                                       new_key,
+                                       0);
+
+  ACE_TString holder;
+  this->repo_->config ()->get_string_value (new_key,
+                                            "id",
+                                            holder);
+
   this->repo_->config ()->set_string_value (
                               this->section_key_,
                               "base_type",
-                              interface_type->_interface_repository_id ()
+                              holder
                             );
 }
 

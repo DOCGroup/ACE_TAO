@@ -4013,8 +4013,8 @@ ifr_adding_visitor::visit_all_provides (AST_Component *node,
       ACE_CString str (node->repoID ());
       local_name = tmp->id->get_string ();
       this->expand_id (str, local_name);
-      new_def = c->create_provides (local_name,
-                                    str.fast_rep (),
+      new_def = c->create_provides (str.fast_rep (),
+                                    local_name,
                                     tmp->impl->version (),
                                     interface_type.in ()
                                     ACE_ENV_ARG_PARAMETER);
@@ -4051,8 +4051,8 @@ ifr_adding_visitor::visit_all_uses (AST_Component *node,
       ACE_CString str (node->repoID ());
       local_name = tmp->id->get_string ();
       this->expand_id (str, local_name);
-      new_def = c->create_uses (local_name,
-                                str.fast_rep (),
+      new_def = c->create_uses (str.fast_rep (),
+                                local_name,
                                 tmp->impl->version (),
                                 interface_type.in (),
                                 ACE_static_cast (CORBA::Boolean,
