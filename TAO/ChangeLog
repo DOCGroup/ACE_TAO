@@ -8,12 +8,6 @@ Fri Feb 21 06:22:36 2003  Ossama Othman  <ossama@uci.edu>
 	  symbol link-time errors in explicit template instantiation
 	  builds.
 
-Fri Feb 21 13:32:43 2003  Edward Scott  <eas@prismtechnologies.com>
-
-        * docs/bugzilla-build-setup.html
-
-	  Removed obsolete documentation file.
-
 Thu Feb 20 17:31:58 2003  Ossama Othman  <ossama@uci.edu>
 
 	* examples/Load_Balancing/Load_Balancer_i.cpp:
