@@ -109,10 +109,10 @@ yy_push_buffer (FILE *file)
   if (yy_stack_index >= ACE_SERVICE_DIRECTIVE_STACK_DEPTH)
     {
       ACE_ERROR ((LM_ERROR,
-                  "(%P|%t) Service Configurator directive nesting "
-                  "is too deep.\n"
-                  "(%P|%t) Consider increasing value of "
-                  "ACE_SERVICE_DIRECTIVE_STACK_DEPTH.\n"));
+                  ACE_LIB_TEXT ("(%P|%t) Service Configurator directive ")
+                  ACE_LIB_TEXT ("nesting is too deep.\n")
+                  ACE_LIB_TEXT ("(%P|%t) Consider increasing value of ")
+                  ACE_LIB_TEXT ("ACE_SERVICE_DIRECTIVE_STACK_DEPTH.\n")));
 
       // Not much we can do, so resort to flushing the current buffer
       // and switch to the supplied stream.
@@ -133,10 +133,10 @@ yy_push_buffer (const ACE_TCHAR *directive)
   if (yy_stack_index >= ACE_SERVICE_DIRECTIVE_STACK_DEPTH)
     {
       ACE_ERROR ((LM_ERROR,
-                  "(%P|%t) Service Configurator directive nesting "
-                  "is too deep.\n"
-                  "(%P|%t) Consider increasing value of "
-                  "ACE_SERVICE_DIRECTIVE_STACK_DEPTH.\n"));
+                  ACE_LIB_TEXT ("(%P|%t) Service Configurator directive ")
+                  ACE_LIB_TEXT ("nesting is too deep.\n")
+                  ACE_LIB_TEXT ("(%P|%t) Consider increasing value of ")
+                  ACE_LIB_TEXT ("ACE_SERVICE_DIRECTIVE_STACK_DEPTH.\n")));
 
       // Not much we can do.
     }
