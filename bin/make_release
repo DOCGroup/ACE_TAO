@@ -261,8 +261,6 @@ if ($update_versions  &&  "$kit" ne 'ace+tao') {
     &ex ("cd ACE_wrappers/TAO  &&  $make INSTALL orbsvcs/README")  &&
       die "$0: failed make INSTALL TAO/orbsvcs/README in " .
           "$stage_dir/ACE_wrappers/TAO\n";
-
-    $release_files .= ' ACE_wrappers/TAO';
   }
 
   $status = &create_kit ();
@@ -550,6 +548,7 @@ sub diff () {
 ######## Create the tar file(s) and move to their proper location.
 ########
 sub create_kit () {
+
   my $dest = $install  ?  "$export_dir"  :  'created';
   my $dispose = $install  ?  "$mv"  :  'echo';
 
@@ -591,6 +590,8 @@ sub create_kit () {
   }
   
   if ($kit eq 'ace+tao') {
+    $release_files .= ' ACE_wrappers/TAO';
+
     if ($create_zips) {
       $build_command .=
         "$rm ACE+TAO.zip; " .
