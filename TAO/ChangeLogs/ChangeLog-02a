@@ -1,3 +1,20 @@
+Tue Feb 27 11:34:00 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Invocation.cpp:
+	* tao/Invocation.h: Removed the instance of IOP::IOR that was
+	  created on the stack in every call. This structure had a
+	  TAO_String_Manager which allocates memory in the constructor and
+	  destroys memory in the destructor. This allocation and
+	  deallocation comes into play for every call even when it is not
+	  used. 
+	
+	* tao/Stub.cpp:
+	* tao/Stub.h:
+	* tao/Stub.i: Added a pointer to the IOP::IOR in this class. When
+	  the client receives an exception LOC_NEEDS_ADDRESSING_MODE, the
+	  actual information is prepared only once and passed on to the
+	  invocation classes for every subsequent call.
+
 Tue Feb 27 06:35:36 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Trader/Constraint_Nodes.h (operands.): Fixed a
