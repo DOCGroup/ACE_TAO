@@ -15,10 +15,6 @@ Mon Oct 26 08:22:18 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * docs/ACE-guidelines.html: recommend avoiding g++ 2.8.1.
 
-        * ace/config-lynxos.h: added ACE_LACKS_FORK, on PowerPC only.
-          For unknown reasons, all of the ACE tests that fork fail on
-          our PowerPC platform.
-
         * tests/SV_Shared_Memory_Test.cpp: don't try to run this
           test if ACE_LACKS_FORK, because it uses ACE_OS::fork ().
           It allocates the shared memory segment before the fork,
