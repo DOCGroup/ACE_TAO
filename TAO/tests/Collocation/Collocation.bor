@@ -12,16 +12,17 @@ CFLAGS = \
 	$(ACE_CFLAGS) \
 	$(TAO_CFLAGS) \
 	$(TAO_PORTABLESERVER_CFLAGS) \
-	-DDIAMOND_HAS_DLL=1 \
-	-DMY_STUB_HAS_DLL=1
+        $(TAO_STRATEGIES_CFLAGS) \
+        -DDIAMOND_HAS_DLL=$(DLL_FLAG) \
+        -DMY_STUB_HAS_DLL=$(DLL_FLAG)
 
 LIBFILES = \
 	$(ACE_LIB) \
 	$(TAO_LIB) \
 	$(TAO_PORTABLESERVER_LIB) \
 	$(TAO_STRATEGIES_LIB) \
-	$(BINDIR)\Diamond$(LIB_DECORATOR).lib \
-	$(BINDIR)\Coll_Test_Stubs$(LIB_DECORATOR).lib
+        $(BINDIR)\Diamond$(LIB_DECORATOR).lib \
+        $(BINDIR)\Coll_Test_Stubs$(LIB_DECORATOR).lib
 
 CPPDIR = .
 
