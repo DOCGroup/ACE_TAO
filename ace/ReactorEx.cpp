@@ -822,7 +822,7 @@ ACE_ReactorEx::register_handler_i (ACE_HANDLE event_handle,
   
   long new_network_events = 0;
   int delete_event = 0;
-  auto_ptr <ACE_Auto_Event> event = 0;
+  auto_ptr <ACE_Auto_Event> event (0);
 
   // Look up the repository to see if the <Event_Handler> is already
   // there.
@@ -836,7 +836,7 @@ ACE_ReactorEx::register_handler_i (ACE_HANDLE event_handle,
   // need to create one
   if (event_handle == ACE_INVALID_HANDLE)
     {
-      event.reset (new ACE_Auto_Event);
+      event = auto_ptr <ACE_Auto_Event> (new ACE_Auto_Event);
       event_handle = event->handle ();
       delete_event = 1;
     }  
