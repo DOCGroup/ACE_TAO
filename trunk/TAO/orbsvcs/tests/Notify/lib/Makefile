@@ -7,6 +7,9 @@ DEPENDENCY_FILE = .depend.Makefile
 LIB_UNCHECKED   = libTAO_NotifyTests.a
 SHLIB_UNCHECKED = libTAO_NotifyTests.$(SOEXT)
 
+LSRC   = $(addsuffix .cpp, $(FILES))
+ACELIB = -lACE
+
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif
@@ -49,6 +52,12 @@ FILES = \
   SupplierAdmin_Command \
   Task_Stats
 
+
+#----------------------------------------------------------------------------
+#       Include macros and targets
+#----------------------------------------------------------------------------
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include $(TAO_ROOT)/rules.tao.GNU
 CURRENT_COMPONENTS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
 ifeq (Notify, $(findstring Notify, $(CURRENT_COMPONENTS)))
 ifeq (Naming, $(findstring Naming, $(CURRENT_COMPONENTS)))
@@ -56,15 +65,6 @@ LIB   = $(LIB_UNCHECKED)
 SHLIB = $(SHLIB_UNCHECKED)
 endif
 endif
-
-#----------------------------------------------------------------------------
-#       Include macros and targets
-#----------------------------------------------------------------------------
-include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-include $(TAO_ROOT)/rules.tao.GNU
-LSRC   = $(addsuffix .cpp, $(FILES))
-ACELIB = -lACE
-
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
