@@ -183,7 +183,7 @@ be_visitor_operation_thru_poa_proxy_impl_ss::visit_operation (
 
 int
 be_visitor_operation_thru_poa_proxy_impl_ss::gen_invoke (
-    be_visitor_context &ctx,
+    be_visitor_context &,
     be_operation *node
   )
 {
