@@ -1,9 +1,8 @@
 // -*- MPC -*-
 // $Id$
 
-project(RTCORBAEvent) : orbsvcslib, core, rtevent, naming, rtportableserver {
+project(RTCORBAEvent) : orbsvcslib, core, rtevent, rtportableserver {
   sharedname   = TAO_RTCORBAEvent
-  idlflags    += -Wb,export_macro=TAO_Naming_Export -Wb,export_include=orbsvcs/naming_export.h
   dynamicflags = TAO_RTCORBAEVENT_BUILD_DLL
   tagchecks   += RTCORBAEvent
 
