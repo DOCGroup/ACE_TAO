@@ -161,13 +161,6 @@ ACE_Tokenizer::next (void)
       // Advance pointer.
       index_++;
 
-      // Check for end of string.
-      if (buffer_[index_] == '\0')
-	{
-	  index_ = -1;
-	  goto EXIT_LABEL;
-	}
-
       // Check for delimiter.
       if (this->is_delimiter (buffer_[index_], replace, replacement))
 	{
@@ -183,6 +176,13 @@ ACE_Tokenizer::next (void)
       // A preserve designator signifies the end of this token.
       if (this->is_preserve_designator (buffer_[index_], stop, strip))
 	goto EXIT_LABEL;
+
+      // Check for end of string.
+      if (buffer_[index_] == '\0')
+	{
+	  index_ = -1;
+	  goto EXIT_LABEL;
+	}
     }
 
 EXIT_LABEL:
