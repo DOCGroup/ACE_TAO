@@ -1,3 +1,19 @@
+Sun Jan 18 15:17:52 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/StringSeqA.h:
+        * tao/StringSeqC.h:
+        
+          Move declaration of Any operators from *A.h file to *C.h file.
+          This move will enable the compiler to find the Any operators
+          if the (w)string sequence is used as an operation parameter
+          (in which case interceptors require the Any insertion operator).
+          In the future, subsetting of interceptors will eliminate this
+          problem.
+          
+        * tao/tao.mpc:
+        
+          Added StringSeqA.cpp to the source file list.
+
 Sun Jan 18 10:11:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* orbsvcs/tests/FtRtEvent/consumer.cpp:
