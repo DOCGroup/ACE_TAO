@@ -1,5 +1,9 @@
 Fri Jul 24 00:39:47 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* ace/ace_dll.dsp (Message_Queue_T.cpp): This file contains
+	  template definitions and should not be included while building
+	  ACE library. 
+
 	* ace/config-win32.h (ACE_HAS_NONSTATIC_OBJECT_MANAGER): Use
  	  non-static object manager by default on Win32 (except CE.)  This
  	  at least fixed the problem of WSACleanup getting called too late. 
