@@ -395,6 +395,18 @@ arrived higher priority request since Reactor notifications are given
 preferences over normal I/O, thereby causing priority inversion.</p>
         </td>
       </tr>
+      <tr>        
+       <td><code>-ORBDisableRTCollocation</code> <em>boolean
+       (0|1)</em></td> <td><a name="-ORBDisableRTCollocation"></a>This
+       option controls whether the application wants to use or discard
+       RT collocation decisions made by the RT ORB. A value of true
+       disables RT collocation decisions and falls back on the default
+       collocation decisions implemented in the default ORB. This is
+       very useful for applications using the RT ORB and doesn't want
+       to use the RT collocation decisions but fallback on the default
+       decisions for better performance. The default value is
+       <code>0</code>. </td>      
+       </tr>
     </tbody>
   </table>
   </p>
