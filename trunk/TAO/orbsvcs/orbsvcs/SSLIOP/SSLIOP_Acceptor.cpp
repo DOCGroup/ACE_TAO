@@ -108,9 +108,8 @@ TAO_SSLIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
                                      mprofile);
 }
 
-#if 0
 int
-TAO_SSLIOP_Acceptor::create_new_mprofile (const TAO_ObjectKey &object_key,
+TAO_SSLIOP_Acceptor::create_new_profiles (const TAO_ObjectKey &object_key,
                                           TAO_MProfile &mprofile)
 {
   // Adding this->endpoint_count_ to the TAO_MProfile.
@@ -194,7 +193,7 @@ TAO_SSLIOP_Acceptor::create_new_mprofile (const TAO_ObjectKey &object_key,
 
   return 0;
 }
-#endif
+
 
 int
 TAO_SSLIOP_Acceptor::create_shared_profile (const TAO_ObjectKey &object_key,

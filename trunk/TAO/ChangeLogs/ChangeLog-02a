@@ -1,3 +1,9 @@
+Sun May 27 21:11:49 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp: Uncommented the
+	  method create_new_mprofile (). Looks like the method should be
+	  create_new_profiles (). Hence changed the name of the method.   
+	  
 Sun May 27 21:01:05 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
  	* performance-tests/POA/Create_Reference/create_reference.cpp:
