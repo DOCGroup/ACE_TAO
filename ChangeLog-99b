@@ -1,3 +1,8 @@
+Sat Nov 13 11:29:20 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/run_tests.lst: Re-enabled the Process_Manager_Test
+	  to see if it Dave Madden's fixes worked.
+
 Fri Nov 12 21:26:58 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.h: without threads, added #ifndef protection for
