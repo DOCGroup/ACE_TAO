@@ -1,3 +1,15 @@
+Sun Nov 16 18:18:50 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* tao/encode.cpp: 
+	  Object references *must* be passed a pointer to Object_ptr in
+	  the marshalling code.
+
+	* TAO_IDL/be/be_operation.cpp: 
+	* TAO_IDL/be/be_state_operation.cpp: 
+	  Fixed generated code for Object references as return values. It
+	  allocates the Object_ptr in the heap, stores the result there
+	  and creates an Any for it.
+
 Sun Nov 16 16:52:47 1997  Sergio Flores  <sergio@tango.cs.wustl.edu>
 
 	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp: Fixed some formatting

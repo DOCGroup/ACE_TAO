@@ -305,7 +305,7 @@ TAO_Marshal_ObjRef::encode (CORBA::TypeCode_ptr,
   //
   // XXX this doesn't actually verify that the stuff got written
   // OK to the "wire" ...
-  CORBA::Object_ptr obj = (CORBA::Object_ptr) data;
+  CORBA::Object_ptr obj = *(CORBA::Object_ptr*) data;
 
   // NIL objrefs ... marshal as empty type hint, no elements.
 
