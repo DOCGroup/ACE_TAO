@@ -15,7 +15,10 @@ else {
 @directories = ();
 
 @ace_dirs = ("$ACE_ROOT\\ace",
-             "$ACE_ROOT\\XML",
+             "$ACE_ROOT\\XML\\common",
+             "$ACE_ROOT\\XML\\parser",
+             "$ACE_ROOT\\XML\\tests",
+             "$ACE_ROOT\\XML\\examples",
              "$ACE_ROOT\\apps",
              "$ACE_ROOT\\ASNMP",
              "$ACE_ROOT\\examples",

@@ -1,3 +1,9 @@
+Sun Jan 27 22:18:50 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* bin/msvc_auto_compile.pl: Projects in XML subdirectory are
+	  interdependent.  List out the order they should be built
+	  explicitly.
+
 Sun Jan 27 12:48:48 2002  Ossama Othman  <ossama@uci.edu>
 
 	* bin/auto_run_tests.lst
