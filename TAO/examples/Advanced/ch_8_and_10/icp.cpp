@@ -255,7 +255,7 @@ ICP_get(
             return -1;                      // Must be thermostat
         memcpy(
             value, &pos->second.nominal_temp,
-            min(len, sizeof(pos->second.nominal_temp))
+            std::min(len, sizeof(pos->second.nominal_temp))
         );
     } else if (strcmp(attr, "temperature") == 0) {
         short temp = actual_temp(pos);
