@@ -10,12 +10,12 @@
 // = DESCRIPTION
 //    This program demonstrates creation of new POAs, as children of the root POA or the
 //    existing POA.
-//    There are five new POA created in this example.
+//    There are three new POA created in this example.
 //    The hierarchy of POAs looks like this.
 //
 //             /-->first_poa-->first_poa/second_poa
 //    RootPOA--
-//             \-->third_poa-->third_poa/fourth_poa-->third_poa/fourth_poa/fifth_poa
+//             \-->third_poa
 //
 // = AUTHOR
 //    Irfan Pyarali
@@ -90,28 +90,22 @@ main (int argc, char **argv)
     }
 
   // Creation of the new POA, i.e. firstPOA/secondPOA
-  name += TAO_POA::name_separator ();
-  name += "secondPOA";
+  name = "secondPOA";
   PortableServer::POA_var second_poa =
-    root_poa->create_POA (name.c_str (),
-                          PortableServer::POAManager::_nil (),
-                          policies,
-                          env);
+    first_poa->create_POA (name.c_str (),
+                           PortableServer::POAManager::_nil (),
+                           policies,
+                           env);
   if (env.exception () != 0)
     {
       env.print_exception ("PortableServer::POA::create_POA");
       return -1;
     }
 
-  // Creating thirdPOA/fourthPOA/fifthPOA. The non-existing thirdPOA
-  // and thirdPOA/fourthPOA are created automatically.
+  // Creating thirdPOA.
   name = "thirdPOA";
-  name += TAO_POA::name_separator ();
-  name += "forthPOA";
-  name += TAO_POA::name_separator ();
-  name += "fifthPOA";
 
-  PortableServer::POA_var fifth_poa =
+  PortableServer::POA_var third_poa =
     root_poa->create_POA (name.c_str (),
                           PortableServer::POAManager::_nil (),
                           policies,
@@ -163,8 +157,8 @@ main (int argc, char **argv)
       return -1;
     }
 
-  CORBA::String_var fifth_poa_name =
-    fifth_poa->the_name (env);
+  CORBA::String_var third_poa_name =
+    third_poa->the_name (env);
   if (env.exception () != 0)
     {
       env.print_exception ("PortableServer::POA::_narrow");
@@ -176,8 +170,8 @@ main (int argc, char **argv)
               root_poa_name.in (),
               first_poa_name.in (),
               second_poa_name.in (),
-              fifth_poa_name.in ()));
-  
+              third_poa_name.in ()));
+
   // This should destroy all its children
   root_poa->destroy (1,
                      1,

@@ -30,6 +30,8 @@ PUB_HDRS = \
   ORB_Core
 
 POA_FILES = \
+  Object_Adapter \
+  Key_Adapters \
   POA \
   POAC \
   POAS \

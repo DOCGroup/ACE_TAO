@@ -27,6 +27,7 @@
 #include "tao/POAC.h"
 #include "tao/POA.h"
 #include "tao/POAManager.h"
+#include "tao/Object_Adapter.h"
 
 #include "tao/params.h"
 
@@ -56,7 +57,7 @@ public:
 };
 
 // @@ Will this work, changing ACE_INET_Addr to ACE_Addr??
-typedef ACE_Hash_Map_Manager<ACE_INET_Addr, TAO_POA *, TAO_Collocation_Table_Lock>
+typedef ACE_Hash_Map_Manager<ACE_INET_Addr, TAO_Object_Adapter *, TAO_Collocation_Table_Lock>
         TAO_GLOBAL_Collocation_Table;
 
 class TAO_Cached_Connector_Lock : public ACE_Adaptive_Lock
@@ -162,7 +163,7 @@ public:
   ACE_Thread_Manager *thr_mgr (ACE_Thread_Manager *tm);
   ACE_Thread_Manager *thr_mgr (void);
 
-  // = Set/get <Acceptor> for the POA.
+  // = Set/get <rootPOA>.
   TAO_POA *root_poa (TAO_POA *np);
   TAO_POA *root_poa (const char *adapter_name = TAO_DEFAULT_ROOTPOA_NAME,
                      TAO_POA_Manager *poa_manager = 0,
@@ -171,6 +172,9 @@ public:
                                               const char *adapter_name = TAO_DEFAULT_ROOTPOA_NAME,
                                               TAO_POA_Manager *poa_manager = 0,
                                               const TAO_POA_Policies *policies = 0);
+
+  TAO_Object_Adapter *object_adapter (void);
+  // Get <Object Adapter>.
 
   int inherit_from_parent_thread (TAO_ORB_Core *p);
   // A spawned thread needs to inherit some properties/objects from
@@ -202,7 +206,7 @@ public:
   int add_to_collocation_table (void);
   // Added this ORB into collocation table.
 
-  TAO_POA *get_collocated_poa (const ACE_INET_Addr &addr);
+  TAO_Object_Adapter *get_collocated_object_adapter (const ACE_INET_Addr &addr);
   // See if we have a collocated address, if yes, return the POA
   // associated with the address.
 
@@ -524,6 +528,9 @@ public:
   virtual TAO_POA *get_root_poa (void);
   // Return a root poa to be utilized.
 
+  virtual TAO_Object_Adapter *object_adapter (void);
+  // Return a object adapter to be utilized.
+
   virtual ACE_Allocator *get_allocator (void);
   // Return a pointer to an ACE_Allocator used for allocating memory
   // within the ORB.
@@ -586,6 +593,9 @@ public:
 
     TAO_Default_Reactor r_;
     // The Reactor.
+
+    TAO_Object_Adapter object_adapter_;
+    // Object Adapter.
 
     ACE_Thread_Manager tm_;
     // The Thread Manager

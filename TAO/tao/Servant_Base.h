@@ -32,6 +32,7 @@ class TAO_Export TAO_ServantBase
   //   class.
 public:
   friend class TAO_POA;
+  friend class TAO_Object_Adapter;
   friend class CORBA_Object;
 
   virtual ~TAO_ServantBase (void);

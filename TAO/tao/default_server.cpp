@@ -66,31 +66,6 @@ TAO_Default_Server_Strategy_Factory::create_poa_lock (void)
       break;
     }
 
-  return the_lock;// Just to make sure we return something
-}
-
-ACE_Lock *
-TAO_Default_Server_Strategy_Factory::create_poa_mgr_lock (void)
-{
-  ACE_Lock *the_lock = 0;
-
-  switch (this->poa_mgr_lock_type_)
-    {
-    case TAO_THREAD_LOCK:
-#if defined (ACE_HAS_THREADS)
-      ACE_NEW_RETURN (the_lock,
-                      ACE_Lock_Adapter<ACE_Thread_Mutex> (),
-                      0);
-      break;
-#endif /* ACE_HAS_THREADS */
-    default:
-      ACE_NEW_RETURN (the_lock,
-                      ACE_Lock_Adapter<ACE_Null_Mutex> (),
-                      0);
-      break;
-    }
-
-  // Just to make sure we return something.
   return the_lock;
 }
 
@@ -231,11 +206,18 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
               this->concurrency_strategy_ = &threaded_strategy_;
           }
       }
-    else if (ACE_OS::strcmp (argv[curarg], "-ORBtablesize") == 0)
+    else if (ACE_OS::strcmp (argv[curarg], "-ORBtablesize") == 0 ||
+             ACE_OS::strcmp (argv[curarg], "-ORBactiveobjectmapsize") == 0)
       {
         curarg++;
         if (curarg < argc)
           this->active_object_map_creation_parameters_.active_object_map_size_ = ACE_OS::strtoul (argv[curarg], 0, 10);
+      }
+    else if (ACE_OS::strcmp (argv[curarg], "-ORBpoamapsize") == 0)
+      {
+        curarg++;
+        if (curarg < argc)
+          this->active_object_map_creation_parameters_.poa_map_size_ = ACE_OS::strtoul (argv[curarg], 0, 10);
       }
     else if (ACE_OS::strcmp (argv[curarg], "-ORBactivehintinids") == 0)
       {
@@ -245,6 +227,16 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
             char *value = argv[curarg];
 
             this->active_object_map_creation_parameters_.use_active_hint_in_ids_ = ACE_OS::atoi (value);
+          }
+      }
+    else if (ACE_OS::strcmp (argv[curarg], "-ORBactivehintinpoanames") == 0)
+      {
+        curarg++;
+        if (curarg < argc)
+          {
+            char *value = argv[curarg];
+
+            this->active_object_map_creation_parameters_.use_active_hint_in_poa_names_ = ACE_OS::atoi (value);
           }
       }
     else if (ACE_OS::strcmp (argv[curarg], "-ORBallowreactivationofsystemids") == 0)
@@ -284,6 +276,35 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
               this->active_object_map_creation_parameters_.object_lookup_strategy_for_system_id_policy_ = TAO_LINEAR;
             else if (ACE_OS::strcasecmp (name, "active") == 0)
               this->active_object_map_creation_parameters_.object_lookup_strategy_for_system_id_policy_ = TAO_ACTIVE_DEMUX;
+          }
+      }
+    else if (ACE_OS::strcmp (argv[curarg], "-ORBpersistentidpolicydemuxstrategy") == 0)
+      {
+        curarg++;
+        if (curarg < argc)
+          {
+            char *name = argv[curarg];
+
+            // Active demux not supported with user id policy
+            if (ACE_OS::strcasecmp (name, "dynamic") == 0)
+              this->active_object_map_creation_parameters_.poa_lookup_strategy_for_persistent_id_policy_ = TAO_DYNAMIC_HASH;
+            else if (ACE_OS::strcasecmp (name, "linear") == 0)
+              this->active_object_map_creation_parameters_.poa_lookup_strategy_for_persistent_id_policy_ = TAO_LINEAR;
+          }
+      }
+    else if (ACE_OS::strcmp (argv[curarg], "-ORBtransientidpolicydemuxstrategy") == 0)
+      {
+        curarg++;
+        if (curarg < argc)
+          {
+            char *name = argv[curarg];
+
+            if (ACE_OS::strcasecmp (name, "dynamic") == 0)
+              this->active_object_map_creation_parameters_.poa_lookup_strategy_for_transient_id_policy_ = TAO_DYNAMIC_HASH;
+            else if (ACE_OS::strcasecmp (name, "linear") == 0)
+              this->active_object_map_creation_parameters_.poa_lookup_strategy_for_transient_id_policy_ = TAO_LINEAR;
+            else if (ACE_OS::strcasecmp (name, "active") == 0)
+              this->active_object_map_creation_parameters_.poa_lookup_strategy_for_transient_id_policy_ = TAO_ACTIVE_DEMUX;
           }
       }
     else if (ACE_OS::strcmp (argv[curarg], "-ORBuniqueidpolicyreversedemuxstrategy") == 0)
