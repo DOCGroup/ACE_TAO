@@ -1,3 +1,9 @@
+Mon Jun 14 14:33:29 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Reactor_Performance_Test.cpp (handle_input): removed
+          printout when result == 0.  It happens when the client finishes
+          first, which I think is OK.
+
 Mon Jun 14 11:55:31 1999  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/platform_aix4_g++.GNU: New platform file for AIX
@@ -28,15 +34,15 @@ Mon Jun 14 11:55:31 1999  Steve Huston  <shuston@riverace.com>
 
 Mon Jun 14 09:58:02 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS.i: Added ACE_UNUSED_ARG() macros for all the non-WINSOCK2
- 	  cases in the ACE_Flow_Spec and ACE_QoS methods.  Thanks to David
- 	  for reporting this.
+        * ace/OS.i: Added ACE_UNUSED_ARG() macros for all the non-WINSOCK2
+          cases in the ACE_Flow_Spec and ACE_QoS methods.  Thanks to David
+          for reporting this.
 
-	* ace/OS.i: Moved the definition of ACE_Errno_Guard's methods to
- 	  earlier in the file to avoid problems with inline ordering.
-  	  Thanks to David for reporting this.
+        * ace/OS.i: Moved the definition of ACE_Errno_Guard's methods to
+          earlier in the file to avoid problems with inline ordering.
+          Thanks to David for reporting this.
 
-	* ACE-INSTALL.html: Updated Barry Hoggard's CORBA page URL.
+        * ACE-INSTALL.html: Updated Barry Hoggard's CORBA page URL.
 
 Mon Jun 14 07:17:23 1999  David L. Levine  <levine@cs.wustl.edu>
 
