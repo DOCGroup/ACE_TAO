@@ -1,3 +1,12 @@
+Mon Apr 15 16:58:40 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp (init_new_naming):
+
+	  Cast the port extracted from the "NameServicePort" environment
+	  variable via atoi() to a "u_short" before assigning it another
+	  "u_short."  Silences a warning about loss of data when
+	  converting from an "int" to a "u_short."
+
 Mon Apr 15 12:06:47 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp
