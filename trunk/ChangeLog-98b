@@ -1,35 +1,40 @@
+Wed Jul 22 11:32:33 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Dynamic_Priority_Test.cpp: VxWorks only, fixed a few
+          minor things so that it builds now.
+
 Tue Jul 21 23:09:31 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* performance-tests/Synch-Benchmarks/{Synch_Tests,synch_driver}.dsp:
-	  Updated proejct source files and renamed debug version dll.
-	
-	* performance-tests/Synch-Benchmarks/Performance_Test.cpp: Added
-	  ACE_Svc_Export directive.
+        * performance-tests/Synch-Benchmarks/{Synch_Tests,synch_driver}.dsp:
+          Updated proejct source files and renamed debug version dll.
+
+        * performance-tests/Synch-Benchmarks/Performance_Test.cpp: Added
+          ACE_Svc_Export directive.
 
 Tue Jul 21 20:17:31 1998  Steve Huston  <shuston@riverace.com>
 
-	* ace/ACE_Library.{mdp mak}: Removed ..\STL from include directories.
+        * ace/ACE_Library.{mdp mak}: Removed ..\STL from include directories.
 
 Tue Jul 21 12:34:11 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* ace/config-lynxos.h: Defined ACE_HAS_AIO_CALLS.
+        * ace/config-lynxos.h: Defined ACE_HAS_AIO_CALLS.
 
 Mon Jul 20 19:35:21 1998  Steve Huston  <shuston@riverace.com>
 
         * ace/config-aix-4.1.x.h: Added ACE_LACKS_RLIMIT.  Thanks to Zheng
           Han <zhan@glenvan.glenayre.com> for finding this problem.
 
-	* ace/ACE_Library.{mdp mak}: Set up ".." as an include file directory
-	  so that $ACE_ROOT doesn't have to be added to MSVC's global options.
-	  Allows working on more than one ACE version.
+        * ace/ACE_Library.{mdp mak}: Set up ".." as an include file directory
+          so that $ACE_ROOT doesn't have to be added to MSVC's global options.
+          Allows working on more than one ACE version.
 
-	* netsvcs/lib/netsvcs4.{mdp mak}: Made paths to ACE components relative
-	  and made Debug build netsvcsd.dll - this will work with Nanbor's new
-	  DLL search method (from 19-July).
+        * netsvcs/lib/netsvcs4.{mdp mak}: Made paths to ACE components relative
+          and made Debug build netsvcsd.dll - this will work with Nanbor's new
+          DLL search method (from 19-July).
 
-	* netsvcs/servers/servers4.{mdp mak}:
- 	* netsvcs/clients/Logger/Logger.{mdp mak}:
-	  Made paths to ACE components relative.
+        * netsvcs/servers/servers4.{mdp mak}:
+        * netsvcs/clients/Logger/Logger.{mdp mak}:
+          Made paths to ACE components relative.
 
 Mon Jul 20 11:12:44 1998  David L. Levine  <levine@cs.wustl.edu>
 
