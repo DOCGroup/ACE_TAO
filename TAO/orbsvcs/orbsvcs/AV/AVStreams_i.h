@@ -45,7 +45,7 @@ class TAO_ORBSVCS_Export AV_Null_MediaCtrl : public virtual POA_Null_MediaCtrl
 
 class TAO_ORBSVCS_Export TAO_Basic_StreamCtrl 
   : public virtual POA_AVStreams::Basic_StreamCtrl,
-           public virtual TAO_PropertySet
+    public virtual TAO_PropertySet<POA_AVStreams::Basic_StreamCtrl>
   // = DESCRIPTION
   //    Base class for StreamCtrl, implements basic stream start
   //    and stop functionality
@@ -216,112 +216,12 @@ public:
   // Application needs to define this
 };
 
-class TAO_ORBSVCS_Export TAO_StreamEndPoint
-  : public virtual POA_AVStreams::StreamEndPoint, // The POA class
-           public virtual TAO_Base_StreamEndPoint,
-    public virtual TAO_PropertySet
-{
-  // = DESCRIPTION
-  //    The Stream EndPoint. Used to implement one endpoint of a stream
-  //    that implements the transport layer.
-public:
-  TAO_StreamEndPoint (void);
-  // Constructor
 
-  virtual void stop (const AVStreams::flowSpec &the_spec,
-                     CORBA::Environment &env = CORBA::Environment::default_environment ());
-   // Stop the stream. Empty the_spec means, for all the flows
-
-  virtual void start (const AVStreams::flowSpec &the_spec,
-                      CORBA::Environment &env = CORBA::Environment::default_environment ());
-  // Start the stream, Empty the_spec means, for all the flows
-
-  virtual void destroy (const AVStreams::flowSpec &the_spec,
-                        CORBA::Environment &env = CORBA::Environment::default_environment ());
-  // Destroy the stream, Empty the_spec means, for all the flows
-
-
-  virtual CORBA::Boolean connect (AVStreams::StreamEndPoint_ptr responder,
-                                  AVStreams::streamQoS &qos_spec,
-                                  const AVStreams::flowSpec &the_spec,
-                                  CORBA::Environment &env = CORBA::Environment::default_environment ()) = 0;
-  // Called by StreamCtrl. responder is the peer to connect to
-
-  virtual CORBA::Boolean request_connection (AVStreams::StreamEndPoint_ptr initiator,
-                                             CORBA::Boolean is_mcast,
-                                             AVStreams::streamQoS &qos,
-                                             AVStreams::flowSpec &the_spec,
-                                             CORBA::Environment &env = CORBA::Environment::default_environment ());
-  // Called by the peer StreamEndPoint. The flow_spec indicates the
-  // flows (which contain transport addresses etc.)
-
-  virtual CORBA::Boolean modify_QoS (AVStreams::streamQoS &new_qos,
-                                     const AVStreams::flowSpec &the_flows,
-                                     CORBA::Environment &env = CORBA::Environment::default_environment ());
-  // Change the transport qos on a stream
-
-  virtual CORBA::Boolean set_protocol_restriction (const AVStreams::protocolSpec &the_pspec,
-                                                   CORBA::Environment &env = CORBA::Environment::default_environment ());
-  // Used to restrict the set of protocols
-
-  virtual void disconnect (const AVStreams::flowSpec &the_spec,
-                           CORBA::Environment &env = CORBA::Environment::default_environment ());
-  // disconnect the flows
-
-  virtual void set_FPStatus (const AVStreams::flowSpec &the_spec,
-                             const char *fp_name,
-                             const CORBA::Any &fp_settings,
-                             CORBA::Environment &env = CORBA::Environment::default_environment ());
-  // Used to control the flow
-
-  virtual CORBA::Object_ptr get_fep (const char *flow_name,
-                                     CORBA::Environment &env = CORBA::Environment::default_environment ());
-  // Not implemented in the light profile, throws notsupported
-
-  virtual char * add_fep (CORBA::Object_ptr the_fep,
-                          CORBA::Environment &env = CORBA::Environment::default_environment ());
-  // Not implemented in the light profile, throws notsupported
-
-  virtual void remove_fep (const char *fep_name,
-                           CORBA::Environment &env = CORBA::Environment::default_environment ());
-  // Not implemented in the light profile, throws notsupported
-
-  virtual void set_negotiator (AVStreams::Negotiator_ptr new_negotiator,
-                               CORBA::Environment &env = CORBA::Environment::default_environment ());
-  // Used to "attach" a negotiator to the endpoint
-
-  virtual void set_key (const char *flow_name,
-                        const AVStreams::key & the_key,
-                        CORBA::Environment &env = CORBA::Environment::default_environment ());
-  // Used for public key encryption.
-
-  virtual void set_source_id (CORBA::Long source_id,
-                              CORBA::Environment &env = CORBA::Environment::default_environment ());
-  // Used to set a unique id for packets sent by this streamendpoint
-
-  virtual ~TAO_StreamEndPoint (void);
-  // Destructor
-
-private:
-  u_int flow_count_;
-  // Count of the number of flows in this streamendpoint, used to
-  // generate unique names for the flows.
-  u_int flow_num_;
-  // current flow number used for system generation of flow names.
-  typedef ACE_Hash_Map_Manager <TAO_String_Hash_Key,CORBA::Object_ptr,ACE_Null_Mutex>
-  FlowEndPoint_Map;
-  FlowEndPoint_Map fep_map_;
-  // hash table for the flownames and its corresponding flowEndpoint
-  // reference.
-  AVStreams::flowSpec flows_;
-  // sequence of supported flow names.
-  CORBA::Long source_id_;
-  // source id used for multicast.
-};
+// Include the templates here.
+#include "AVStreams_i_T.h"
 
 class TAO_ORBSVCS_Export TAO_Client_StreamEndPoint :
-  public virtual POA_AVStreams::StreamEndPoint_A,
-  public virtual TAO_StreamEndPoint,
+  public virtual TAO_StreamEndPoint<POA_AVStreams::StreamEndPoint_A>,
   public virtual TAO_Client_Base_StreamEndPoint
 {
   // = DESCRIPTION
@@ -359,7 +259,7 @@ public:
 
 class TAO_ORBSVCS_Export TAO_Server_StreamEndPoint :
   public virtual POA_AVStreams::StreamEndPoint_B,
-  public virtual TAO_StreamEndPoint,
+  public virtual TAO_StreamEndPoint<POA_AVStreams::StreamEndPoint_B>,
   public virtual TAO_Server_Base_StreamEndPoint // Abstract interface
 {
   // = DESCRIPTION
@@ -391,7 +291,7 @@ public:
 };
 
 class TAO_ORBSVCS_Export TAO_VDev
-  :public virtual TAO_PropertySet,
+  :public virtual TAO_PropertySet<POA_AVStreams::VDev>,
    public virtual POA_AVStreams::VDev
 // = DESCRIPTION
 //    Implements the VDev interface. One of these is created per connection,
@@ -452,8 +352,9 @@ class TAO_ORBSVCS_Export TAO_VDev
 class TAO_AV_Endpoint_Strategy;
 
 class TAO_ORBSVCS_Export TAO_MMDevice
-  : public  TAO_PropertySet,
-            public  POA_AVStreams::MMDevice
+  :public virtual POA_AVStreams::MMDevice,
+   public TAO_PropertySet<POA_AVStreams::MMDevice>
+
 // = DESCRIPTION
 //     Implements a factory to create Endpoints and VDevs
 {
@@ -537,8 +438,10 @@ private:
 class TAO_FlowConsumer;
 class TAO_FlowProducer;
 
-class TAO_ORBSVCS_Export TAO_FlowConnection : public TAO_PropertySet,
-                                                      public POA_AVStreams::FlowConnection
+class TAO_ORBSVCS_Export TAO_FlowConnection
+ : public virtual POA_AVStreams::FlowConnection,
+   public TAO_PropertySet<POA_AVStreams::FlowConnection>
+					   
 {
   //  =TITLE
   //     Class to manage a flow connection.
@@ -613,7 +516,7 @@ private:
 
 class TAO_ORBSVCS_Export TAO_FlowEndPoint :
   public virtual POA_AVStreams::FlowEndPoint,
-         public virtual TAO_PropertySet
+  public virtual TAO_PropertySet<POA_AVStreams::FlowEndPoint>
 {
   // = DESCRIPTION
   //     This class is used per flow e.g video flow and an audio flow
@@ -794,7 +697,7 @@ class TAO_ORBSVCS_Export TAO_FlowConsumer :
 
 class TAO_ORBSVCS_Export TAO_FDev :
   public virtual POA_AVStreams::FDev,
-         public virtual TAO_PropertySet
+  public virtual TAO_PropertySet<POA_AVStreams::FDev>
 {
   public:
   TAO_FDev (void);
