@@ -610,7 +610,7 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
   // get a profile container to store all profiles in the IOR.
   TAO_MProfile *mp = new TAO_MProfile (profiles);
 
-  while (profiles-- != 0 )  
+  while (profiles-- != 0 )
   {
     // @@ For now we just take IIOP_Profiles,  FRED
     // We keep decoding until we find a valid IIOP profile.
@@ -673,7 +673,6 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
       case -1:
         pfile->_decr_refcnt ();
         return CORBA::TypeCode::TRAVERSE_STOP;
-        break;
       case 0:
         break;
       case 1:
@@ -695,7 +694,7 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
                 TAO_IIOP_Profile::DEF_IIOP_MAJOR, TAO_IIOP_Profile::DEF_IIOP_MINOR));
       // get rid of the original MProfile!
       delete mp;
-  
+
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 
