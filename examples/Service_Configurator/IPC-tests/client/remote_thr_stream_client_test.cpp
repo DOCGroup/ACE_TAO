@@ -12,16 +12,16 @@ ACE_RCSID(client, remote_thr_stream_client_test, "$Id$")
 
 #if defined (ACE_HAS_TLI)
 
-// Name of the program. 
+// Name of the program.
 static const char *program_name;
 
-// Port number to use. 
+// Port number to use.
 static u_short port_number = ACE_DEFAULT_THR_PORT;
 
-// Name of remote host. 
+// Name of remote host.
 static const char *host_name = ACE_DEFAULT_SERVER_HOST;
 
-// Name of file to send. 
+// Name of file to send.
 static const char *file_name = "./remote_data";
 
 static void print_usage_and_die (void)
@@ -56,9 +56,9 @@ parse_args (int argc, char *argv[])
       }
 }
 
-int 
-main (int argc, char *argv[]) 
-{ 
+int
+main (int argc, ACE_TCHAR *argv[])
+{
   parse_args (argc, argv);
   void *cp;
   char buf[BUFSIZ];
@@ -81,7 +81,7 @@ main (int argc, char *argv[])
 
                        "mmap"), -1);
 
-  // Next, send the file's contents. 
+  // Next, send the file's contents.
 
   if (sc.send_n (cp, mmap.size ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -94,7 +94,7 @@ main (int argc, char *argv[])
                        "%p\n",
                        "close_writer"),
                       -1);
-	 
+
   for (int n; (n = sc.recv (buf, sizeof buf)) > 0; )
     if (ACE_OS::write (ACE_STDOUT, buf, n) != n)
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -110,8 +110,8 @@ main (int argc, char *argv[])
   return 0;
 }
 #else
-int 
-main (int, char *[])
+int
+main (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
                      "you must have TLI to run this test\n"),
