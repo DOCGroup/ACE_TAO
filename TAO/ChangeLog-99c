@@ -3,6 +3,10 @@ Wed Apr 21 09:37:27 1999  David L. Levine  <levine@cs.wustl.edu>
         * performance-tests/Cubit/TAO/MT_Cubit/summarize:
           added 0 low-priority thread case to example usage.
 
+        * performance-tests/Cubit/TAO/MT_Cubit/MT_Cubit_Test:
+          added exit at end of trap statement, so that the script
+          will die after catching a signal and cleaning up.
+
 Wed Apr 21 09:25:16 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/NestedUpcall/MT_Client_Test/client.cpp (main),
