@@ -1,3 +1,88 @@
+Mon Dec  6 11:03:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Servant_Dispatcher.{h,cpp}:
+          Updated for RootPOA change
+
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/AMI_Replication_Strategy.h:
+        * orbsvcs/LoadBalancer/Signal_Handler.h:
+        * orbsvcs/IFR_Service/IFR_Service.h:
+          Include PortableServer.h instead of PortableServerC.h
+
+Fri Dec  3 14:56:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Root_POA.cpp
+        * tao/PortableServer/Root_POA.h
+        * tao/PortableServer/Root_POA.inl
+        * tao/PortableServer/POA.cpp
+        * tao/PortableServer/POA.h
+        * tao/PortableServer/POA.i
+          The TAO_POA has been changed to TAO_Root_POA. TAO_POA is now derived
+          from TAO_Root_POA. The RootPOA will be stripped the next week and
+          the TAO_POA will be extended. The RootPOA doesn't have the ability
+          to set user defined policies, so doesn't need the policy set, that
+          is only needed in the TAO_POA. An application using only the RootPOA
+          will use much less than a full blown POA.
+
+        * tao/PortableServer/Active_Policy_Strategies.cpp
+        * tao/PortableServer/Active_Policy_Strategies.h
+        * tao/PortableServer/Default_Servant_Dispatcher.cpp
+        * tao/PortableServer/Default_Servant_Dispatcher.h
+        * tao/PortableServer/IdAssignmentStrategy.cpp
+        * tao/PortableServer/IdAssignmentStrategy.h
+        * tao/PortableServer/IdUniquenessStrategyMultiple.cpp
+        * tao/PortableServer/IdUniquenessStrategyMultiple.h
+        * tao/PortableServer/IdUniquenessStrategyUnique.cpp
+        * tao/PortableServer/IdUniquenessStrategyUnique.h
+        * tao/PortableServer/ImplicitActivationStrategy.cpp
+        * tao/PortableServer/ImplicitActivationStrategy.h
+        * tao/PortableServer/LifespanStrategy.cpp
+        * tao/PortableServer/LifespanStrategy.h
+        * tao/PortableServer/LifespanStrategyPersistent.cpp
+        * tao/PortableServer/Non_Servant_Upcall.cpp
+        * tao/PortableServer/Non_Servant_Upcall.h
+        * tao/PortableServer/Non_Servant_Upcall.inl
+        * tao/PortableServer/Object_Adapter.cpp
+        * tao/PortableServer/Object_Adapter.h
+        * tao/PortableServer/Object_Adapter.i
+        * tao/PortableServer/POA_Current_Impl.cpp
+        * tao/PortableServer/POA_Current_Impl.h
+        * tao/PortableServer/POA_Current_Impl.inl
+        * tao/PortableServer/POA_Guard.cpp
+        * tao/PortableServer/POA_Guard.h
+        * tao/PortableServer/POAManager.cpp
+        * tao/PortableServer/POAManager.h
+        * tao/PortableServer/POAManager.i
+        * tao/PortableServer/Policy_Strategy.h
+        * tao/PortableServer/PS_ForwardC.h
+        * tao/PortableServer/RequestProcessingStrategy.cpp
+        * tao/PortableServer/RequestProcessingStrategy.h
+        * tao/PortableServer/RequestProcessingStrategyDefaultServant.h
+        * tao/PortableServer/Servant_Dispatcher.h
+        * tao/PortableServer/Servant_Upcall.cpp
+        * tao/PortableServer/Servant_Upcall.h
+        * tao/PortableServer/Servant_Upcall.inl
+        * tao/PortableServer/ServantRetentionStrategy.h
+        * tao/PortableServer/ServantRetentionStrategyNonRetain.cpp
+        * tao/PortableServer/ServantRetentionStrategyNonRetain.h
+        * tao/PortableServer/ServantRetentionStrategyRetain.cpp
+        * tao/PortableServer/ServantRetentionStrategyRetain.h
+        * tao/PortableServer/ThreadStrategy.cpp
+        * tao/PortableServer/ThreadStrategy.h
+        * tao/IIOP_Acceptor.cpp
+        * tao/IORInterceptor_Adapter.h
+        * tao/Profile.cpp
+        * tao/IORInterceptor/IORInfo.cpp
+        * tao/IORInterceptor/IORInfo.h
+        * tao/IORInterceptor/IORInterceptor_Adapter_Impl.cpp
+        * tao/IORInterceptor/IORInterceptor_Adapter_Impl.h
+        * tao/RTPortableServer/RT_Collocation_Resolver.cpp
+        * tao/RTPortableServer/RT_POA.cpp
+        * tao/RTPortableServer/RT_POA.h
+        * tao/RTPortableServer/RT_Policy_Validator.cpp
+        * tao/RTPortableServer/RT_Servant_Dispatcher.cpp
+        * tao/RTPortableServer/RT_Servant_Dispatcher.h
+          Use TAO_Root_POA instead of TAO_POA
+
 Fri Dec  3 14:11:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/GroupInfoPublisher.h:
