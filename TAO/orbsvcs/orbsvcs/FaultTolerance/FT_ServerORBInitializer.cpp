@@ -43,13 +43,10 @@ TAO_FT_ServerORBInitializer::register_policy_factories (
   ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-#if 0 // @@ client registers this.  Is the client's policy factory ok in a server?
   // Register the FTCORBA policy factories.
 
   PortableInterceptor::PolicyFactory_ptr temp_factory =
     PortableInterceptor::PolicyFactory::_nil ();
-
-
   PortableInterceptor::PolicyFactory_var policy_factory;
 
   // This policy factory is used for all FTCORBA related policies.
@@ -65,7 +62,6 @@ TAO_FT_ServerORBInitializer::register_policy_factories (
 
   policy_factory = temp_factory;
 
-
   // Bind the same policy factory to all FTCORBA related policy
   // types since a single policy factory is used to create each of
   // the different types of FTCORBA policies.
@@ -78,7 +74,6 @@ TAO_FT_ServerORBInitializer::register_policy_factories (
   ACE_CHECK;
   // Transfer ownership of the policy factory to the registry.
   (void) policy_factory._retn ();
-#endif
 }
 
 
