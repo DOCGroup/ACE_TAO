@@ -1,0 +1,8 @@
+This directory contains program(s) that demonstrate how to use ACE's
+Log_Msg class to record various information.  
+
+	* test_log_msg.cpp: This program basically tests various
+	  feature of the Log_Msg facility.  It opens a log file and
+	  writes some messages using different log priorities and
+	  output stream.  
+
