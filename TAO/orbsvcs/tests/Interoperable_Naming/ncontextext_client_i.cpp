@@ -147,7 +147,7 @@ int
 NContextExt_Client_i::run (CORBA::Environment &ACE_TRY_ENV)
 {
 
-  ACE_TRY
+  ACE_TRY_EX (OuterBlock)
     {
       CosNaming::Name name;
 
@@ -161,16 +161,28 @@ NContextExt_Client_i::run (CORBA::Environment &ACE_TRY_ENV)
        CORBA::String_var str_name =
         this->naming_context_->to_string (name,
                                           ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      ACE_TRY_CHECK_EX (OuterBlock);
 
-      // Resolve the name using the stringified form of the name
-      CORBA::Object_var factory_object =
-        this->naming_context_->resolve_str (str_name.in ());
+      CORBA::Object_var factory_object;
+
+      ACE_TRY_EX (InnerBlock)
+        {
+          // Resolve the name using the stringified form of the name
+          factory_object =
+            this->naming_context_->resolve_str (str_name.in (), 
+                                                ACE_TRY_ENV);
+          ACE_TRY_CHECK_EX (InnerBlock);
+        }
+      ACE_CATCH (CosNaming::NamingContext::NotFound, ex)
+        {
+        }
+      ACE_ENDTRY;
 
       // Narrow
       Web_Server::Iterator_Factory_var factory =
         Web_Server::Iterator_Factory::_narrow (factory_object.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+
+      ACE_TRY_CHECK_EX (OuterBlock);
 
       // Create bindings
       CosNaming::BindingIterator_var iter;
@@ -180,14 +192,14 @@ NContextExt_Client_i::run (CORBA::Environment &ACE_TRY_ENV)
                                    bindings_list.out (),
                                    iter.out (),
                                    ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      ACE_TRY_CHECK_EX (OuterBlock);
 
       // Convert the stringified name back as CosNaming::Name and print
       // them out.
       CosNaming::Name *nam =
         this->naming_context_->to_name (str_name.in (),
                                         ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      ACE_TRY_CHECK_EX (OuterBlock);
 
       // Declare a CosNaming::Name variable and assign length to it.
       CosNaming::Name nm;
@@ -212,7 +224,7 @@ NContextExt_Client_i::run (CORBA::Environment &ACE_TRY_ENV)
       CORBA::String_var url_string = this->naming_context_->to_url (address.in (),
                                                                     obj_name.in(),
                                                                     ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      ACE_TRY_CHECK_EX (OuterBlock);
 
       if (this->view_ == 0)
         {
@@ -236,7 +248,7 @@ NContextExt_Client_i::run (CORBA::Environment &ACE_TRY_ENV)
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "client");
-      ACE_RE_THROW;
+      return -1;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
