@@ -21,6 +21,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+// Needed on Windows for streambuf
+// FUZZ: disable check_for_streams_include
+#include "ace/streams.h"
+
 // This is a temporary restriction - ACE_IOStream is only enabled if the
 // compiler does not supply the standard C++ library (and standard iostreams)
 // or, if it does, the platform is explicitly set to use old iostreams
