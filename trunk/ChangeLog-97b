@@ -1,3 +1,8 @@
+Sun Nov 23 13:32:02 1997  David L. Levine  <levine@cs.wustl.edu>
+
+        * netsvcs/lib/Server_Logging_Handler.cpp: updated template
+          instantiations to match recent change to Server_Logging_Handler_T.h.
+
 Sat Nov 22 19:16:35 1997    <irfan@TWOSTEP>
 
 	* tests/Process_Strategy_Test.cpp:
@@ -8,10 +13,10 @@ Sat Nov 22 19:16:35 1997    <irfan@TWOSTEP>
 	  Process_Strategy: This subclass of ACE_Process_Strategy
  	  overwrites the process creation method to include connection
  	  counting.
-	
+
 	  connection_completed: Made sure that the Reactor is woken up
  	  after all the connections have completed.
-	
+
 	* ace/Priority_Reactor.cpp (init_bucket): Removed extra code.
 
 	* ace/Acceptor.cpp (activate_svc_handler): open svc_handler only
@@ -32,7 +37,7 @@ Sat Nov 22 19:16:35 1997    <irfan@TWOSTEP>
 
 Sat Nov 22 16:04:07 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
-	* ace/Message_Queue.cpp: 
+	* ace/Message_Queue.cpp:
 	  Fixed some formating problems in the ACE_Message_Queue::dump
 	  method, thanks to Arturo Montes <mitosys@colomsat.net.co> for
 	  finding this one.
@@ -132,7 +137,7 @@ Fri Nov 21 12:18:28 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 Fri Nov 21 02:23:47 1997    <irfan@TWOSTEP>
 
-	* tests/Process_Strategy_Test.cpp: 
+	* tests/Process_Strategy_Test.cpp:
 
 	  - The event loop execution was based on a fragile timeout
  	    mechanism.  This was changed to a more robust mechanism that
@@ -142,7 +147,7 @@ Fri Nov 21 02:23:47 1997    <irfan@TWOSTEP>
  	    client.  This is necessary since there maybe multiple server
  	    processes that cannot really coordinate when the file should
  	    be removed.
-	
+
 	* ace/Strategies_T.cpp (ACE_Concurrency_Strategy):
  	  ACE_Concurrency_Strategy and all three of the subclasses
  	  (ACE_Reactive_Strategy, ACE_Process_Strategy, and
