@@ -143,12 +143,15 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       return new be_visitor_module_cdr_op (new_ctx);
 
     case TAO_CodeGen::TAO_INTERFACE_CH:
+    case TAO_CodeGen::TAO_LOCAL_INTERFACE_H:
       return new be_visitor_interface_ch (new_ctx);
 
     case TAO_CodeGen::TAO_INTERFACE_CI:
+    case TAO_CodeGen::TAO_LOCAL_INTERFACE_I:
       return new be_visitor_interface_ci (new_ctx);
 
     case TAO_CodeGen::TAO_INTERFACE_CS:
+    case TAO_CodeGen::TAO_LOCAL_INTERFACE_S:
       return new be_visitor_interface_cs (new_ctx);
 
     case TAO_CodeGen::TAO_INTERFACE_SH:
@@ -496,8 +499,10 @@ TAO_Compiled_Visitor_Factory::make_visitor (be_visitor_context *ctx)
     case TAO_CodeGen::TAO_UNION_ANY_OP_CS:
       return new be_visitor_union_any_op_cs (new_ctx);
     case TAO_CodeGen::TAO_OPERATION_CH:
+    case TAO_CodeGen::TAO_LOCAL_OPERATION_H:
       return new be_visitor_operation_ch (new_ctx);
     case TAO_CodeGen::TAO_OPERATION_CS:
+    case TAO_CodeGen::TAO_LOCAL_OPERATION_S:
       return new be_visitor_operation_cs (new_ctx);
     case TAO_CodeGen::TAO_OPERATION_SH:
       return new be_visitor_operation_sh (new_ctx);
@@ -549,6 +554,7 @@ TAO_Compiled_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       return new be_visitor_operation_rettype_assign_ss (new_ctx);
 
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_CH:
+    case TAO_CodeGen::TAO_LOCAL_OPERATION_ARGLIST_H:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_SH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_IH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_IS:

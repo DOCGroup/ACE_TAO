@@ -1,17 +1,33 @@
 	TO-DO
 
-	* Supress AMI code generation for local interfaces.
-
 	* Need to add syntax/semantic check for local/abstract interfaces
 	  as defined in CCM.  (E.g., a local interface can not be an
 	  argument in an operation of a remote interface.)
 
-	* Remove gen_locality_constraint stuff.
-
 	* Rename TAO/TAO_IDL/util/utl_error.cpp to utl_err.cpp.
 
-	* Need to figure out how to do _narrow if a local interface
-	  inherits from a remote interface.
+Thu Apr 20 00:40:19 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/be_include/be_codegen.h: Added several new compiler
+	  states to propagate local interface information down the chain.
+
+	* TAO_IDL/be/be_visitor_factory.cpp:
+	* TAO_IDL/be/be_visitor_root/root.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface.cpp: Changed to
+	  propagate local interface states down the chain.
+
+	* TAO_IDL/be/be_visitor_ami_pre_proc.cpp: No need to preprocess
+	  local interfaces for AMI.
+
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp: Do not
+	  generate typecode information for local interfaces.
+
+	* TAO_IDL/be/be_visitor_operation/arglist.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation_ch.cpp: Operations of
+	  local interfaces should be declared as pure virtual functions.
+
+	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp: Do not
+	  generate code local interface's operations.
 
 Wed Apr 19 04:05:39 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
