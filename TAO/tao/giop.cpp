@@ -639,7 +639,9 @@ TAO_GIOP_Invocation::start (CORBA::Environment &env)
   {
     // Begin a new scope so we keep this lock only as long as
     // necessary
+#if 0 /* @@ don't delete this, chris */
     ACE_MT (ACE_GUARD (ACE_Thread_Mutex, guard, data_->fwd_profile_lock ()));
+#endif
     if (data_->fwd_profile_i () != 0)
       {
         key = &data_->fwd_profile_i ()->object_key;
@@ -821,7 +823,9 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
       // not just the connection.  Without reinitializing, we'd give
       // false error reports to applications.
       {
+#if 0 /* @@ don't delete this, chris */
 	ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, data_->fwd_profile_lock (), TAO_GIOP_SYSTEM_EXCEPTION));
+#endif        
 
         IIOP::ProfileBody *old = data_->fwd_profile_i (0);
 	delete old;
@@ -1060,8 +1064,10 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
 	// be recorded here. (This is just an optimization, and is not
 	// related to correctness.)
 
+#if 0 /* @@ don't delete this, chris */
 	ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, data_->fwd_profile_lock (), TAO_GIOP_SYSTEM_EXCEPTION);
-
+#endif
+        
         IIOP::ProfileBody *old = data_->fwd_profile_i (new IIOP::ProfileBody (obj2->profile));
         delete old;
 

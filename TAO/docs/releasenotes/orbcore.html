@@ -64,6 +64,15 @@
 	special code in that area which was not tested until Boeing
 	got hold of the code.</li>
 
+	<LI>The lock used in <code>giop.cpp:626</code> originally
+	appeared in the IIOP-1.4 code base.  Its purpose was to
+	protect access to the <code>fwd_profile</code> data member.
+	The original features are available, but they are currently
+	not used because none of our concurrency models present a
+	thread-unsafe condition.  The <a
+	href="../../ChangeLog">ChangeLog</a> presents more details on
+	the subject.</li>
+
       </BLOCKQUOTE>
 
       Ongoing Work:
@@ -78,40 +87,6 @@
       Critical Work:
 
       <BLOCKQUOTE>
-	<LI>Add pre-cached connection on client side.  Clients will
-	pass in a comma-separated list of <em>host:port</em>
-	destinations using the <code>CORBA::ORB_init()</code>
-	interface.</LI>
-
-	<LI>Validate movement of Strategy Connector into ORB&nbsp;Core.</LI>
-
-	<LI>The lock used in <code>giop.cpp:626</code> originally
-	appeared in the IIOP-1.4 code base.  Its purpose was to
-	protect access to the <code>fwd_profile</code> data member.
-	We're not using the forward feature right now, so we could
-	eliminate it entirely.  The smarter move is probably to fold
-	the lock into <code>IIOP_Object</code> and only make it
-	available through an accessor method.  This translates into
-	the following TODO:</LI>
-
-	<BLOCKQUOTE>
-	  <ul>
-	    <LI>Move <code>lock_</code> member from
-	    <code>TAO_GIOP_Invocation</code> into
-	    <code>IIOP_Object</code>.</li>
-
-	    <li>Make <code>IIOP_Object::fwd_profile</code>
-	    private.</li>
-
-	    <li>Create accessors for
-	    <code>IIOP_Object::fwd_profile</code>.</li>
-
-	    <li>Make all references to
-	    <code>IIOP_Object::fwd_profile</code> through the
-	    accessors.</li>
-	  </ul>
-	</BLOCKQUOTE>
-
 	<LI>
 	  Verify that, in the ORB-per-thread concurrency model, it's
 	  possible to have a factory in each thread that creates a
@@ -134,6 +109,13 @@
 	<LI>Rename following files:&nbsp;Orb_Core.*&nbsp;->orb_core.*
 	&amp;&nbsp;orbobj.* -> corba_orb.*.</LI>
 
+	<LI>Add pre-cached connection on client side.  Clients will
+	pass in a comma-separated list of <em>host:port</em>
+	destinations using the <code>CORBA::ORB_init()</code>
+	interface.</LI>
+
+	<LI>Validate movement of Strategy Connector into ORB&nbsp;Core.</LI>
+
       </BLOCKQUOTE>
 
       Future work:
@@ -141,6 +123,9 @@
 
 	<li>Get rid of need to have compile in TSS ORB Core
 	(<code>-DTAO_HAS_TSS_ORBCORE</code>).</li>
+
+	<li>Improve the <code>Service Configurator</code> service
+	entry faking on VxWorks.</li>
 
 	<LI>There is a bug in the ORB-per-thread concurrency model
 	caused by its use of the ACE Service Configurator. The bug is
@@ -179,7 +164,7 @@
     <address><a href="mailto:cleeland@cs.wustl.edu">Chris Cleeland</a></address>
 <!-- Created: Mon Oct 20 09:53:33 CDT 1997 -->
 <!-- hhmts start -->
-Last modified: Mon Oct 20 16:54:34 CDT 1997
+Last modified: Mon Oct 20 17:28:27 CDT 1997
 <!-- hhmts end -->
   </body>
 </html>
