@@ -53,6 +53,10 @@ Wed Sep 23 12:15:21 1998  David L. Levine  <levine@cs.wustl.edu>
         * include/makeinclude/wrapper_macros.GNU: removed -DACE_QUANTIFY
           and -Dquantify, with quantify=1, because they're no longer used.
 
+        * ace/OS.h,README: added ACE_LACKS_CMSG_DATA_{MACRO/MEMBER} support.
+          It will be used by autoconf, for Linux libc5 (pre-libc).  Thanks
+          to Ossama for supplying it.
+
 Wed Sep 23 11:30:00 CDT 1998  Chris Gill <cdgill@cs.wustl.edu>
 
         * examples/Bounded_Packet_Relay/Thread_Bounded_Packet_Relay.{h,cpp}
