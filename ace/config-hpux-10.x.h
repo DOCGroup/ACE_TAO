@@ -228,7 +228,9 @@ extern int h_errno;     /* This isn't declared in a header file on HP-UX */
 
 #else
 // If threading is disabled, then timespec_t does not get defined.
-#  define ACE_LACKS_TIMESPEC_T
+#  ifndef ACE_LACKS_TIMESPEC_T
+#    define ACE_LACKS_TIMESPEC_T
+#  endif
 #endif /* ACE_HAS_THREADS */
 
 // Turns off the tracing feature.
