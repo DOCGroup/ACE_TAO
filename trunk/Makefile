@@ -50,35 +50,35 @@ clone:
                 (clone -s $(ACE_ROOT)/$$dir $$dir) \
         done
 
-CONTROLLED_FILES = ACE_wrappers/ACE-INSTALL.html \
-                ACE_wrappers/ACE-categories \
-                ACE_wrappers/ACE-install.sh \
-                ACE_wrappers/ACE-lessons.html \
-                ACE_wrappers/ASNMP \
-                ACE_wrappers/BIBLIOGRAPHY \
-                ACE_wrappers/ChangeLog \
-                ACE_wrappers/ChangeLog-97a \
-                ACE_wrappers/ChangeLog-96b \
-                ACE_wrappers/ChangeLog-96a \
-                ACE_wrappers/ChangeLog-95 \
-                ACE_wrappers/ChangeLog-94 \
-                ACE_wrappers/ChangeLog-93 \
-                ACE_wrappers/FAQ \
-                ACE_wrappers/Makefile \
-                ACE_wrappers/README \
-                ACE_wrappers/STL \
-                ACE_wrappers/VERSION \
-                ACE_wrappers/ace \
-                ACE_wrappers/apps \
-                ACE_wrappers/bin \
-                ACE_wrappers/etc \
-                ACE_wrappers/examples \
-                ACE_wrappers/include \
-                ACE_wrappers/netsvcs \
-                ACE_wrappers/performance-tests \
-                ACE_wrappers/tests
+CONTROLLED_FILES = ACE-INSTALL.html \
+                ACE-categories \
+                ACE-install.sh \
+                ACE-lessons.html \
+                ASNMP \
+                BIBLIOGRAPHY \
+                ChangeLog \
+                ChangeLog-97a \
+                ChangeLog-96b \
+                ChangeLog-96a \
+                ChangeLog-95 \
+                ChangeLog-94 \
+                ChangeLog-93 \
+                FAQ \
+                Makefile \
+                README \
+                STL \
+                VERSION \
+                ace \
+                apps \
+                bin \
+                etc \
+                examples \
+                include \
+                netsvcs \
+                performance-tests \
+                tests
 
-RELEASE_FILES = $(CONTROLLED_FILES) \
+RELEASE_FILES = $(addprefix ACE_wrappers/,$(CONTROLLED_FILES)) \
                 ACE_wrappers/man
 
 RELEASE_LIB_FILES = \
@@ -107,9 +107,9 @@ ifeq ($(shell pwd),/project/adaptive/ACE_wrappers)
               if [ -z "$$CHANGELOG" ]; then \
                 echo unable to find latest ChangeLog file; exit 1; fi; \
               DATE=`/usr/bin/date +"%a %b %d %T %Y"`; export DATE; \
-              cd ..; UPTODATE=`cvs -nq update $(CONTROLLED_FILES) | \
+              UPTODATE=`cvs -nq update $(CONTROLLED_FILES) | \
                 egrep -v '/tests/log/' | perl -pi -e 's%/ACE_wrappers%%g; \
-                s/$$/\\\n  /g'`; cd ACE_wrappers; \
+                s/$$/\\\n  /g'`; \
               if [ "$$UPTODATE" ]; then /pkg/gnu/bin/echo -e ERROR: workspace must be updated, and/or non-controlled files must be removed or added/committed: $$UPTODATE; exit 1; fi; \
               ACE_VERSION=`perl -pi -e \
                 'BEGIN { $$date=$$ENV{"DATE"} } \
@@ -143,11 +143,9 @@ ifeq ($(shell pwd),/project/adaptive/ACE_wrappers)
               cvs commit -m"$$ACE_VERSION" VERSION $$CHANGELOG ace/Version.h; \
               chmod 644 VERSION $$CHANGELOG ace/Version.h; \
               VERSION_TAG=ACE_`perl -ne  'if (/ACE version/) \
-                { s/[^0-9]+(\d+)\.(\d+)\.(\d+).+/\1_\2_\3/ ; print }' VERSION`;\
+                { s/[^0-9]+(\d+)\.(\d+)\.(\d+).+/\1_\2_\3/; print }' VERSION`;\
               export VERSION_TAG; \
-              CURRENT_TAG=Current; export CURRENT_TAG; \
-              cd ..; cvs -nq tag $$VERSION_TAG $(CONTROLLED_FILES); \
-              cd ACE_wrappers) &&
+              cvs -q tag $$VERSION_TAG $(CONTROLLED_FILES) > /dev/null) &&
 else
   TIMESTAMP =
 endif
