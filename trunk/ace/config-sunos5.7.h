@@ -6,8 +6,6 @@
 
 #ifndef ACE_CONFIG_H
 
-#define ACE_ONLY_LATEST_AND_GREATEST
-
 // ACE_CONFIG_H is defined by one of the following #included headers.
 
 // #include the SunOS 5.6 config file, then add SunOS 5.7 updates below.

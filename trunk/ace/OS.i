@@ -3438,7 +3438,7 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
   ACE_NOTSUP_RETURN (-1);
 #   elif defined (ACE_HAS_PTHREADS)
   int result = 0;
-  ACE_Errno_Guard error (errno, 0);
+  ACE_Errno_Guard error (errno);
 
   ACE_PTHREAD_CLEANUP_PUSH (&s->lock_);
 
@@ -3637,7 +3637,7 @@ ACE_OS::rw_tryrdlock (ACE_rwlock_t *rw)
 
   if (ACE_OS::mutex_lock (&rw->lock_) != -1)
     {
-      ACE_Errno_Guard error (errno, 0);
+      ACE_Errno_Guard error (errno);
 
       if (rw->ref_count_ == -1 || rw->num_waiting_writers_ > 0)
         {
@@ -3678,7 +3678,7 @@ ACE_OS::rw_trywrlock (ACE_rwlock_t *rw)
 
   if (ACE_OS::mutex_lock (&rw->lock_) != -1)
     {
-      ACE_Errno_Guard error (errno, 0);
+      ACE_Errno_Guard error (errno);
 
       if (rw->ref_count_ != 0)
         {
@@ -3827,7 +3827,7 @@ ACE_OS::rw_unlock (ACE_rwlock_t *rw)
 
 
   int result = 0;
-  ACE_Errno_Guard error (errno, 0);
+  ACE_Errno_Guard error (errno);
 
   if (rw->important_writer_ && rw->ref_count_ == 1)
     // only the reader requesting to upgrade its lock is left over.
@@ -3861,7 +3861,6 @@ ACE_OS::rw_unlock (ACE_rwlock_t *rw)
 // return {-1 and no errno set means: error,
 //         -1 and errno==EBUSY set means: could not upgrade,
 //         0 means: upgraded successfully}
-
 
 ACE_INLINE int
 ACE_OS::rw_trywrlock_upgrade (ACE_rwlock_t *rw)

@@ -30,6 +30,7 @@ what we're doing and how to leverage our efforts. <P>
   <li><a href="#Building ACE Subsets">Building ACE Subsets</a>
   <li><a href="#ACE_OS Adaptation Layer">ACE_OS Adaptation Layer</a>
   <li><a href="#minimumTAO">Minimum TAO</a>
+  <li><a href="#PACE">POSIX ACE (PACE)</a>
 </ol><p>
 
 
@@ -833,6 +834,28 @@ the <code>ACE_OS</code> member functions, ACE's
 for an example of usage.<p>
 
 <a name="minimumTAO"><!--#include virtual="../TAO/docs/minimumTAO.html" --></a>
+
+<P><HR><P>
+<a name="PACE">
+The <A
+HREF="http://www.cs.wustl.edu/~luther/PACE/">POSIX ACE</A> (PACE)
+project is an OS abstraction layer designed for lightweight and/or
+verified systems.  When complete, it will offer these benefits: <P>
+    
+<OL>
+<LI> A strict POSIX.1-like, low-level interface. Its interface is
+    ``POSIX compatible'' by that we mean as close to POSIX.1
+    as it can be, given that PACE is not an operating system. And,
+    to avoid name conflicts with OS APIs, all low-level
+    PACE function names have the <CODE>pace_</CODE> prefix.
+        
+<LI> The low-level interface is a C file, so that it can be used in
+    both C and C++ programs. 
+    
+<LI> The low-level interface is partitioned into multiple files, one
+    per POSIX.1 section, which will help linkers reduce the footprint for
+    statically linked applications.
+</OL><P>
 
 <P><HR><P>
 Back to the <A HREF="http://www.cs.wustl.edu/~schmidt/ACE.html">ACE</A>

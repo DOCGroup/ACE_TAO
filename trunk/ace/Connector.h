@@ -115,6 +115,9 @@ public:
   typedef ACE_PEER_CONNECTOR_ADDR ACE_PEER_ADDR_TYPEDEF;
 #endif /* ACE_HAS_TYPENAME_KEYWORD */
 
+  typedef ACE_TYPENAME _ACE_PEER_CONNECTOR::PEER_ADDR 
+          ACE_TYPENAME_ACE_PEER_CONNECTOR_PEER_ADDR;
+
   ACE_Connector (ACE_Reactor *r = ACE_Reactor::instance (),
                  int flags = 0);
   // Initialize a connector.  <flags> indicates how <SVC_HANDLER>'s
@@ -139,7 +142,7 @@ public:
                        const ACE_PEER_CONNECTOR_ADDR &remote_addr,
                        const ACE_Synch_Options &synch_options = ACE_Synch_Options::defaults,
                        const ACE_PEER_CONNECTOR_ADDR &local_addr
-                         = (ACE_PEER_CONNECTOR_ADDR &) ACE_PEER_CONNECTOR_ADDR_ANY,
+                         = (ACE_TYPENAME_ACE_PEER_CONNECTOR_PEER_ADDR &) ACE_PEER_CONNECTOR_ADDR_ANY,
                        int reuse_addr = 0,
                        int flags = O_RDWR,
                        int perms = 0);
@@ -158,7 +161,7 @@ public:
                        const ACE_PEER_CONNECTOR_ADDR &remote_addr,
                        const ACE_Synch_Options &synch_options = ACE_Synch_Options::defaults,
                        const ACE_PEER_CONNECTOR_ADDR &local_addr
-                         = (ACE_PEER_CONNECTOR_ADDR &) ACE_PEER_CONNECTOR_ADDR_ANY,
+                         = (ACE_TYPENAME_ACE_PEER_CONNECTOR_PEER_ADDR &) ACE_PEER_CONNECTOR_ADDR_ANY,
                        int reuse_addr = 0,
                        int flags = O_RDWR,
                        int perms = 0);
