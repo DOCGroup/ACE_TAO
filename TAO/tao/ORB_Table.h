@@ -23,8 +23,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/orbconf.h"
-#include "tao/TAO_Singleton.h"
 #include "ace/Synch.h"
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Functor.h"
@@ -43,12 +41,26 @@ class TAO_ORB_Core;
  * This class is used to implement that feature.
  * It is also useful when trying to determine if an object
  * reference is collocated or not.
+ *
+ * @note This class should be instantiated via its instance() method.
+ *       Normally this would be enforced by making the constructor
+ *       protected but that forces a friend declaration containing a
+ *       template type (TAO_Singleton) with a static member to be
+ *       introduced.  In turn, this potentially introduces problems in
+ *       MS Windows DLL environments due to the occurance of multiple
+ *       singleton instances.  There should only be one!
  */
 class TAO_Export TAO_ORB_Table
 {
-  friend class TAO_Export TAO_Singleton<TAO_ORB_Table, TAO_SYNCH_MUTEX>;
-
 public:
+
+  /// Constructor
+  /**
+   * @note See the note in the class description for an explanation of
+   *       why this constructor is not protected.
+   */
+  TAO_ORB_Table (void);
+
   /// destructor
   ~TAO_ORB_Table (void);
 
@@ -69,11 +81,6 @@ public:
 
   /// Return a unique instance
   static TAO_ORB_Table *instance (void);
-
-protected:
-
-  /// Constructor
-  TAO_ORB_Table (void);
 
 private:
 
