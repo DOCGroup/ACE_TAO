@@ -1,14 +1,23 @@
+Tue Oct 12 06:44:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Local_Memory_Pool.h:
+        * ace/MMAP_Memory_Pool.h:
+        * ace/Pagefile_Memory_Pool.h:
+        * ace/Sbrk_Memory_Pool.h:
+        * ace/Shared_Memory_Pool.h:
+          Fixed incorrect doxygen file tag
+
 Mon Oct 11 19:43:22 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* ace/Local_Memory_Pool.cpp (acquire): 
+	* ace/Local_Memory_Pool.cpp (acquire):
 
 	  Added ace/OS_Memory.h.
 
-	* ace/MMAP_Memory_Pool.cpp: 
+	* ace/MMAP_Memory_Pool.cpp:
 
 	  Added ace/OS_NS_string.h and ace/OS_NS_sys_stat.h.
 
-	* ace/Pagefile_Memory_Pool.h: 
+	* ace/Pagefile_Memory_Pool.h:
 
 	  Added ace/os_include/sys/os_mman.h.
 
