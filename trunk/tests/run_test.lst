@@ -139,7 +139,7 @@ Timer_Queue_Test
 Token_Strategy_Test: !ST
 Tokens_Test: MSVC !DISABLED TOKEN !chorus !Unicos
 UPIPE_SAP_Test: !VxWorks
-Unbounded_Set_Test_Ex
+Unbounded_Set_Test
 Upgradable_RW_Test: !chorus
 Vector_Test
 WFMO_Reactor_Test
