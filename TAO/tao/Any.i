@@ -192,18 +192,6 @@ CORBA_Any::operator<<= (from_wchar wc)
                  1, env);
 }
 
-ACE_INLINE void
-CORBA_Any::free_value (CORBA::Environment &env)
-{
-  if (this->any_owns_data_ && this->value_ != 0)
-    {
-      // This is not exception safe.
-      DEEP_FREE (this->type_, this->value_, 0, env);
-      ::operator delete (this->value_);
-    }
-  this->value_ = 0;
-}
-
 // ----------------------------------------------------------------------
 // CORBA_Any_var type
 // ----------------------------------------------------------------------
