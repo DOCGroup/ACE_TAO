@@ -1783,13 +1783,15 @@ If disk space is a problem, disabling debugging should greatly
 reduce object code, and therefore, library size.  This is especially
 true with g++.<p>
 
-Toshio Hori &lttoshi@etl.go.jp&gt provided these tips for reducing
+Toshio Hori &lt;toshi@etl.go.jp&gt; provided these tips for reducing
 disk space usage:<p>
 
 To save space on a Unix machine, I usually run
-    find . -name \*.dsw -o -name \*.dsp -o -name \*.bor | xargs rm -f
-in $ACE_ROOT at first after untar the distribution.  They are
-meaningless in my environment.<p>
+    'find . -name \*.dsw -o -name \*.dsp -o -name \*.bor | xargs rm -f'
+in $ACE_ROOT at first after I untar the distribution.  They are
+meaningless in my environment (Files named '*.dsw' and '*.dsp' are
+used for MSVC++ and files named '*.bor' are for Borland C++
+Builder.)<p>
 
 Finally, to save space, may want to run 'make clean' after 'make'.  It
 removes generated object files and leaves libraries/exectables
