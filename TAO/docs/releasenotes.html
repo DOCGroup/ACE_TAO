@@ -60,122 +60,150 @@ Supports several concurrency models out of the box: Reactive, Thread-per-Connect
 and ORB-per-thread. The ORB-per-thread design is optimized for real-time
 I/O subsystems.</LI>
 </UL>
-Critical Work:
-<BLOCKQUOTE>
-<LI>
-Add pre-cached connection on client side.&nbsp; We need an API for this
-right now.</LI>
+      Ongoing Work:
+      <BLOCKQUOTE>
+	<LI>Verify ACE_ & TAO on Linux.</LI>
+	<LI>Use Purify to eliminate straggling problems.</LI>
+      </BLOCKQUOTE>
 
-<LI>
-Validate movement of Strategy Connector into ORB&nbsp;Core.</LI>
+      Critical Work:
+      <BLOCKQUOTE>
+	<LI>Use Purify to track down problems Brian has found.
+	<em>Brian is checking out some suggestions, so this will be
+	deferred pending his results.</em></LI>
 
-<LI>
-Validate use of ACE_GUARD in giop.cpp:626.</LI>
+	<LI>Add pre-cached connection on client side.  Clients will
+	pass in a comma-separated list of <em>host:port</em>
+	destinations using the <code>CORBA::ORB_init()</code>
+	interface.</LI>
 
-<LI>
-Make it possible for each RT&nbsp;thread on the server to have its own
-"factory"&nbsp;that generates an IOR&nbsp;for its associated clients at
-that rate.</LI>
+	<LI>Validate movement of Strategy Connector into ORB&nbsp;Core.</LI>
 
-<LI>
-CORBA_ORB::run() needs to be able to be terminated when a shut down flag
-is set.&nbsp; CORBA_ORB::shutdown()&nbsp;(currently unimplemented)&nbsp;might
-be the way to do this; eliminate it if it's not.</LI>
+	<LI>The lock used in <code>giop.cpp:626</code> originally
+	appeared in the IIOP-1.4 code base.  Its purpose was to
+	protect access to the <code>fwd_profile</code> data member.
+	We're not using the forward feature right now, so we could
+	eliminate it entirely.  The smarter move is probably to fold
+	the lock into <code>IIOP_Object</code> and only make it
+	available through an accessor method.  This translates into
+	the following TODO:</LI>
+	<BLOCKQUOTE>
+	  <ul>
+	    <LI>Move <code>lock_</code> member from <code>TAO_GIOP_Invocation</code> into <code>IIOP_Object</code>.</li>
+	    <li>Make <code>IIOP_Object::fwd_profile</code> private.</li>
+	    <li>Create accessors for <code>IIOP_Object::fwd_profile</code>.</li>
+	    <li>Make all references to <code>IIOP_Object::fwd_profile</code> through the accessors.</li>
+	  </ul>
+	</BLOCKQUOTE>
 
-<LI>
-Remove BOA and ROA&nbsp;names from the ORB.</LI>
+	<LI>
+	  Verify that, in the ORB-per-thread concurrency model, it's
+	  possible to have a factory in each thread that creates a
+	  client and returns an object reference to that client within
+	  that thread.  This is different from the model that Sumedh
+	  originally had where the factory was trying to turn out a
+	  client in a separate thread/ORB combination.
+	  <p>
+	  There is no application which attempts this at the moment,
+	  so both a client and a server will need to be manufactured.
+	  Using existing Cubit-like examples (that poor app is so
+	  weary) should reduce development time to a couple of hours.
+	</LI>
 
-<LI>
-Rename following files:&nbsp;Orb_Core.*&nbsp;->orb_core.* &amp;&nbsp;orbobj.*
--> corba_orb.*.</LI>
+	<LI>Implement <code>CORBA_ORB::shutdown()</code> as a manner
+	in which a thread of control can request that
+	<code>CORBA_ORB::run()</code> should return and no longer
+	service requests.</li>
 
-<LI>
-Change set_up_for_listening() to return an error status (first cut at this
-already there--needs to be checked out).</LI>
-</BLOCKQUOTE>
-Future work:
-<UL>
-<LI>
-There is a bug in the ORB-per-thread concurrency model caused by its use
-of the ACE Service Configurator. The bug is understood, and a patch is
-being readied and should be released no later than October 3rd.</LI>
+	<LI>Remove BOA and ROA&nbsp;names from the ORB.</LI>
 
-<LI>
-The ORB-per-thread model is not yet integrated with the other concurrency
-models; it must be selected at <I>compile time</I> rather than run time.
-In order to use it, one must add <TT>-DTAO_HAS_TSS_ORBCORE</TT> to the
-compile line in both the library (<TT>$(TAO_ROOT)/tao</TT>) and the application
-(<I>e.g.</I>, <TT>$(TAO_ROOT)/tests/multiCubit</TT>). Future releases of
-TAO will fix this restriction so that all threading models are available
-at run-time.</LI>
+	<LI>Rename following files:&nbsp;Orb_Core.*&nbsp;->orb_core.*
+	&amp;&nbsp;orbobj.* -> corba_orb.*.</LI>
 
-<LI>
-</LI>
+	<LI>Change set_up_for_listening() to return an error status
+	(first cut at this already there--needs to be checked
+	out).</LI>
+      </BLOCKQUOTE>
 
-<LI>
-Support new concurrency models, e.g., Thread-per-Request.</LI>
+      Future work:
+      <UL>
 
-<LI>
-Clean up the internals and analyze for performance bottlenecks using Quantify.</LI>
+	<LI>There is a bug in the ORB-per-thread concurrency model
+	caused by its use of the ACE Service Configurator. The bug is
+	understood, and a patch is being readied and should be
+	released no later than October 3rd.</LI>
 
-<LI>
-Integrate the <A HREF="#poa">POA</A> implementation.</LI>
+	<LI>The ORB-per-thread model is not yet integrated with the
+	other concurrency models; it must be selected at <I>compile
+	time</I> rather than run time.  In order to use it, one must
+	add <TT>-DTAO_HAS_TSS_ORBCORE</TT> to the compile line in both
+	the library (<TT>$(TAO_ROOT)/tao</TT>) and the application
+	(<I>e.g.</I>, <TT>$(TAO_ROOT)/tests/multiCubit</TT>). Future
+	releases of TAO will fix this restriction so that all
+	threading models are available at run-time.</LI>
 
-<LI>
-Add support for <TT>resolve_initial_references</TT> using ACE support for
-UDP broadcast.</LI>
+	<LI>Support new concurrency models, e.g.,
+	Thread-per-Request.</LI>
 
-<LI>
-Assist in porting higher level services (e.g., <A HREF="#eventchannel">Event
-Channel</A>) to TAO.</LI>
-</UL>
-</BLOCKQUOTE>
+	<LI>Clean up the internals and analyze for performance bottlenecks using Quantify.</LI>
 
-<HR>
-<H3>
-<A NAME="idl"></A>IDL Compiler</H3>
-Point of contact: <A HREF="mailto:gokhale@cs.wustl.edu">Andy Gokhale</A>
-<BLOCKQUOTE>Current status
-<UL>
-<LI>
-Generates C++ stubs and skeletons that use TAO's <A HREF="HICSS-97.ps.gz">interpretive
-IIOP protocol engine</A>.</LI>
+	<LI>Integrate the <A HREF="#poa">POA</A> implementation.</LI>
 
-<LI>
-Works for <I>most</I> IDL constructs. Although code is generated for everything,
-support for unions, sequences whose element types are anonymous sequences
-or strings, arrays of strings, and other very complicated types may result
-in C++ compilation errors.</LI>
-</UL>
-Future work:
-<UL>
-<LI>
-Add Orbix-like <TT>_bind</TT> calls in lieu of always needing a Naming
-Service.</LI>
+	<LI>Add support for <TT>resolve_initial_references</TT> using
+	ACE support for UDP broadcast.</LI>
 
-<LI>
-Improve IDL compiler to support complete IDL-to-C++ mapping.</LI>
+	<LI>Assist in porting higher level services (e.g., <A
+	HREF="#eventchannel">Event Channel</A>) to TAO.</LI>
+      </UL>
+    </BLOCKQUOTE>
 
-<LI>
-Fix bugs in the SunSoft IDL front-end we've uncovered.</LI>
+    <HR>
 
-<LI>
-Use <A HREF="http://www.cs.utah.edu/projects/flux/flick/">Flick</A> (from
-the University of Utah) to generate compiled stubs.</LI>
+    <H3><A NAME="idl"></A>IDL Compiler</H3>
+    Point of contact: <A HREF="mailto:gokhale@cs.wustl.edu">Andy Gokhale</A>
 
-<LI>
-Goal is to measure the code size of the interpretive stubs generated by
-TAO IDL compiler <I>vs</I> code size of compiled stubs. Then compare the
-performance of each. We want to prove the thesis that TAO IDL compiler
-generated interpretive stubs have a small code size, yet are comparable
-in performance (or slightly less) than compiled stubs. Hence, it will be
-useful for small distributed equipment such as handsets, PDAs, etc.</LI>
+    <BLOCKQUOTE>
+      Current status
 
-<LI>
-In doing the above, improvements to the IIOP protocol engine in terms of
-size/performance/determinism will be made.</LI>
-</UL>
-</BLOCKQUOTE>
+      <UL>
+	<LI> Generates C++ stubs and skeletons that use TAO's <A
+	HREF="HICSS-97.ps.gz">interpretive IIOP protocol
+	engine</A>.</LI>
+
+	<LI>Works for <I>most</I> IDL constructs. Although code is
+	generated for everything, support for unions, sequences whose
+	element types are anonymous sequences or strings, arrays of
+	strings, and other very complicated types may result in C++
+	compilation errors.</LI>
+      </UL>
+
+      Future work:
+      <UL>
+	<LI>Add Orbix-like <TT>_bind</TT> calls in lieu of always
+	needing a Naming Service.</LI>
+
+	<LI>Improve IDL compiler to support complete IDL-to-C++ mapping.</LI>
+
+	<LI>Fix bugs in the SunSoft IDL front-end we've uncovered.</LI>
+
+	<LI>Use <A
+	HREF="http://www.cs.utah.edu/projects/flux/flick/">Flick</A>
+	(from the University of Utah) to generate compiled stubs.</LI>
+
+	<LI>Goal is to measure the code size of the interpretive stubs
+	generated by TAO IDL compiler <I>vs</I> code size of compiled
+	stubs. Then compare the performance of each. We want to prove
+	the thesis that TAO IDL compiler generated interpretive stubs
+	have a small code size, yet are comparable in performance (or
+	slightly less) than compiled stubs. Hence, it will be useful
+	for small distributed equipment such as handsets, PDAs,
+	etc.</LI>
+
+	<LI>In doing the above, improvements to the IIOP protocol
+	engine in terms of size/performance/determinism will be
+	made.</LI>
+      </UL>
+    </BLOCKQUOTE>
 
 <HR>
 <H3>
