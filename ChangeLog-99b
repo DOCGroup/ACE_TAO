@@ -6,7 +6,8 @@ Tue Apr 20 13:55:34 1999  Joe Hoffert <joeh@cs.wustl.edu>
 	* ace/TLI.h: Added default ACE_XTI_ATM_DEVICE.
 
         * ace/TLI_Connector.cpp: Disabled non-blocking connects for XTI/ATM
-          since FORE's drivers have problems with this.
+          since FORE's drivers have problems with this. Also, fixed t_alloc
+          memory leaks.
 
         * ace/ATM_Addr.cpp: Added code formatting change.
 
