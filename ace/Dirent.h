@@ -8,11 +8,9 @@
  *
  *  Define a portable directory-entry manipulation interface.
  *
- *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef ACE_DIRENT_H
 #define ACE_DIRENT_H
