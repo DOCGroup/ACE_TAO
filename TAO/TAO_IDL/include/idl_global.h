@@ -67,7 +67,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _IDL_IDL_GLOBAL_HH
 #define _IDL_IDL_GLOBAL_HH
 
-// May of them could be forward declared.. 
+// May of them could be forward declared..
 #include "ace/SString.h"
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Containers_T.h"
@@ -285,6 +285,7 @@ public:
     ACE_UINT64 string_seen_;
     ACE_UINT64 array_seen_;
     ACE_UINT64 aggregate_seen_;
+    ACE_UINT64 union_seen_;
     ACE_UINT64 exception_seen_;
     ACE_UINT64 operation_seen_;
     ACE_UINT64 non_local_op_seen_;
@@ -504,16 +505,16 @@ public:
   // strips off any command line -I prefix that may have been
   // prepended.
 
-  virtual idl_bool preserve_cpp_keywords (void);                           
-  // Whether we should not mung idl element names that are                 
-  // C++ keywords e.g. delete, operator etc. with _cxx_ prefix.            
-  // Should be true when being used by the IFR Service                     
-                                                                         
-  virtual void preserve_cpp_keywords (idl_bool);                           
-  // Set whether we should not mung idl element names that are C++         
-  // keywords e.g. delete, operator etc. with _cxx_ prefix.                
+  virtual idl_bool preserve_cpp_keywords (void);
+  // Whether we should not mung idl element names that are
+  // C++ keywords e.g. delete, operator etc. with _cxx_ prefix.
+  // Should be true when being used by the IFR Service
+
+  virtual void preserve_cpp_keywords (idl_bool);
+  // Set whether we should not mung idl element names that are C++
+  // keywords e.g. delete, operator etc. with _cxx_ prefix.
   // Is set by the IFR Service.
- 
+
   void add_include_path (const char *s);
   // Add another path to 'include_paths_'.
 

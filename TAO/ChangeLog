@@ -1,3 +1,18 @@
+Tue Nov  4 22:14:18 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/include/idl_global.h:
+	* TAO_IDL/util/utl_global.cpp:
+
+	  Added a new bit union_seen_ to keep track of unions.
+	
+	* TAO_IDL/be/be_codegen.cpp:
+
+	  Generate OS_NS_string.h even when you see a union.
+	
+	* TAO_IDL/be/be_union.cpp:
+
+	  Set the union_seen_ bit within the visitor's constructor. 
+
 Wed Nov  5 04:08:36 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * examples/Event_Comm/Event_Comm_i.h:
