@@ -11,15 +11,19 @@ Tue Jul  6 22:10:00 1999  Michael Kircher  <mk1@cs.wustl.edu>
   	* TAO_IDL/be/be_visitor_argument/compiled_marshal_cs.cpp
   	* TAO_IDL/be/be_visitor_argument/upcall_ss.cpp
   	* TAO_IDL/be/be_visitor_argument/vardecl_ss.cpp
-  	* TAO_IDL/be/be_visitor_argument/ami_handler_result_arg.cpp
-  	* TAO_IDL/be/be_visitor_argument/ami_handler_vardecl_cs.cpp:
+  	* TAO_IDL/be/be_visitor_argument/ami_handler_result_arg.cpp:
 	  Added code to generate ami_handler_ names. The generated names
 	  are held in the corresponding classes, which is then also
 	  responsible for deleting it.
 
   	* TAO_IDL/be/be_visitor_operation/ami_handler_argument_marshal.cpp
+  	* TAO_IDL/be_include/be_visitor_operation/ami_handler_argument_marshal.h
   	* TAO_IDL/be/be_visitor_argument/ami_handler_upcall_cs.cpp
+  	* TAO_IDL/be_include/be_visitor_argument/ami_handler_upcall_cs.h
+  	* TAO_IDL/be/be_visitor_argument/ami_handler_vardecl_cs.cpp
+  	* TAO_IDL/be_include/be_visitor_argument/ami_handler_vardecl_cs.h
   	* TAO_IDL/be/be_visitor_argument/ami_handler_compiled_marshal_cs.cpp
+  	* TAO_IDL/be_include/be_visitor_argument/ami_handler_compiled_marshal_cs.h:
           Added these files for code generation of the AMI Handler
 	  skeleton. 
 
