@@ -1,23 +1,21 @@
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-   <META NAME="GENERATOR" CONTENT="Mozilla/4.03 [en] (X11; I; Linux 2.0.30_SMP i686) [Netscape]">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (X11; I; SunOS 5.5.1 sun4u) [Netscape]">
    <TITLE>TAO Release Information and TODO List</TITLE>
 </HEAD>
 <BODY TEXT="#000000" BGCOLOR="#FFFFFF">
 <!-- $Id$ -->
 <CENTER>
-<HR>
+<HR></CENTER>
+
+<CENTER>
 <H3>
 Release Information for The ACE ORB (TAO)</H3></CENTER>
-
-Information is available on the following topics related to the <A
-HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/VERSION">current release</A> of
-<A HREF="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</A>:
-
+Information is available on the following topics related to the <A HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/VERSION">current
+release</A> of <A HREF="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</A>:
 <UL>
 <LI>
-
 <A HREF="orbcore.html">ORB &amp; ORB Core</A></LI>
 
 <LI>
@@ -34,196 +32,191 @@ HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/VERSION">current release
 
 <LI>
 <A HREF="#nservices">CORBA Naming Service</A></LI>
+
 <LI>
 <A HREF="#tservices">CORBA Trader Service</A></LI>
+
+<LI>
+<A HREF="#pservices">CORBA Property Service</A></LI>
 
 <LI>
 <A HREF="#ace">ORB-related ACE Changes</A></LI>
 
 <LI>
-<a href="#vc">How to add IDL files into your Visual C++ projects</a>
+<A HREF="#vc">How to add IDL files into your Visual C++ projects</A></LI>
+</UL>
+<!--#include virtual="orbcore.html" -->
+<HR>
+<H3>
+<A NAME="idl"></A>IDL Compiler</H3>
+Point of contact: <A HREF="mailto:gokhale@cs.wustl.edu">Aniruddha Gokhale</A>
+
+<P>Current status: (As of January 7th, 1998.)
+<UL>
+<LI>
+Support for the "native" keyword added.</LI>
+
+<LI>
+Introduced tests for object references to TAO. Still incomplete.</LI>
+
+<LI>
+Param_Test example is able to test string sequences, fixed structs, variable
+sized structs and nested structs</LI>
+
+<LI>
+Param_Test test suite can now test fixed structs and string sequences.This
+needed bug fixes to TAO ORB core.</LI>
+
+<LI>
+A new test to test all the parameter passing modes for a number of data
+types has been added. At this point in time, it tests primitive types and
+strings. Other tests will be added. Bugs discovered thru these tests have
+been fixed.</LI>
+
+<LI>
+Very preliminary support for arrays. Not working yet.</LI>
+
+<LI>
+Many bugs associated with stub generation fixed. This included support
+for return values that are variable sized IDL types. Unions improved.</LI>
+
+<LI>
+Support for sequences of strings and object references added. However,
+it is not tested yet so there may be some bugs. We should have these fixed
+in a day or so.</LI>
+
+<LI>
+Support for handling exceptions added. TAO does not use direct C++ exceptions.
+Instead it uses the CORBA::Environment based approach.</LI>
+
+<LI>
+Sequences as out parameters have been tested in the IDL_Cubit example.
+A test suite is currently being built to test all the parameter passing
+modes on a variety of IDL data types.</LI>
+
+<LI>
+Support for attributes completed. Not tested yet.</LI>
+
+<LI>
+The problem of incorrect code generation for typedefs defined in an imported
+file is resolved.</LI>
+
+<LI>
+Problems when interfaces use single or multiple inheritance solved. The
+problem was with the demultiplexing code, the generated operation tables,
+and the dispatching mechanism. We are currently testing this with the Event
+Channel code.</LI>
+
+<LI>
+The problems arising due to public virtual inheritance when casting from
+an interface class to CORBA::Object_ptr has been solved. We do this casting
+inside the stubs/skeletons rather than first converting an interface class
+pointer to a void*, storing it in an Any, and casting it to CORBA::Object_ptr
+in the encode/decode methods. The casting inside the stubs/skeletons work
+because the compiler has knowledge of both types.</LI>
+
+<LI>
+The compiler generates correct code for COSS Naming service and it runs
+properly. Correct code also gets generated for the Event Channel program</LI>
+
+<LI>
+Include files are handled properly. So are the definitions used inside
+the include files that are used in the currently parsed files.</LI>
+
+<LI>
+IN, INOUT, and OUT object reference parameters are now supported properly.
+We think the same approach should work for sequences, structs, and unions.</LI>
+
+<LI>
+Many IDL constructs supported including primitive types, typedefs, sequences,
+structures, and unions.</LI>
+
+<LI>
+Generates C++ stubs and skeletons that use TAO's <A HREF="http://www.cs.wustl.edu/~schmidt/HICSS-97.ps.gz">interpretive
+IIOP protocol engine</A>.</LI>
+
+<LI>
+Generated code closely follows the C++ Mapping specified in the POA Specification
+(ORBOS/97-05-15).</LI>
+
+<LI>
+Support dynamic libraries on NT, i.e., marking classes for DLL export was
+added. Two backend options control the name of the export macro, and the
+name of an extra include file were the macro is defined; the options are
+<TT>-Wp,export_macro=MACRO_NAME</TT> <TT>-Wp,export_include=INCLUDE_NAME</TT>.</LI>
+</UL>
+Known bugs/unimplemented constructs:
+<UL>
+<LI>
+Generation of Managed types must somehow be moved to the ORB Core</LI>
+
+<LI>
+We need support for ``TIEs'' (i.e., the object form of the Adapter pattern).</LI>
+
+<LI>
+TypeCode generation for multidimensional arrays and indirected typecodes
+is still a problem.</LI>
+
+<LI>
+Unions with default cases yet to be handled</LI>
+
+<LI>
+The &lt;&lt;= and >>= operators for user-defined types are not generated
+yet.</LI>
+
+<LI>
+Deal with names in the IDL definition that are C++ keywords.</LI>
+
+<LI>
+IDL is case-insensitive. However, it looks like our front-end is case-sensitive.
+Thanks to Anil Gopinath (anil@ittc.ukans.edu) for pointing this out.</LI>
+
+<LI>
+tao_idl generates code for a *.idl file only inside the directory where
+the *.idl resides. However, it may be required to generate code elsewhere
+i.e., in the directory where the compiler was invoked. Thanks to Tom Richards
+(tomr@MCMEnterprise.com) for this suggestion.</LI>
+</UL>
+Future work:
+<UL>
+<LI>
+Need to relocate the various libraries used by the IDL compiler out of
+the ACE directory. Having them here can cause problems when working with
+multiple versions of TAO and a single version of ACE.</LI>
+
+<LI>
+Improve IDL compiler to generate compiled form of stubs/skeletons.</LI>
+
+<LI>
+Fix bugs in the SunSoft IDL front-end we've uncovered. These primarily
+include support for Unions.</LI>
+
+<LI>
+Add command line options to TAO IDL. These options will decide what strategy
+to use for operation name demultiplexing. Another option may decide whether
+to use the interpretive IIOP engine or generate compiled stubs/skeletons.</LI>
+
+<LI>
+Use <A HREF="http://www.cs.utah.edu/projects/flux/flick/">Flick</A> (from
+the University of Utah) to generate compiled stubs.</LI>
+
+
+<P>Goal is to measure the code size of the interpretive stubs generated
+by TAO IDL compiler <I>vs</I> code size of compiled stubs. Then compare
+the performance of each. We want to prove the thesis that TAO IDL compiler
+generated interpretive stubs have a small code size, yet are comparable
+in performance (or slightly less) than compiled stubs. Hence, it will be
+useful for small distributed equipment such as handsets, PDAs, etc.
+
+<P>In doing the above, improvements to the IIOP protocol engine in terms
+of size/performance/determinism will be made.
+<LI>
+Tweak the IDL compiler to generate code that's more easily integrated back
+into the ORB Core, e.g., POA, etc. This will depend largely on our ability
+to generalize the changes necessary to generated code.</LI>
 </UL>
 
-<!--#include virtual="orbcore.html" -->
-
-    <HR>
-
-    <H3><A NAME="idl"></A>IDL Compiler</H3>
-    Point of contact: <A HREF="mailto:gokhale@cs.wustl.edu">Aniruddha Gokhale</A>
-
-    <P> Current status: (As of January 7th, 1998.)
-    <UL>
-      <LI> Support for the "native" keyword added. </LI>
-
-      <LI> Introduced tests for object references to TAO. Still
-          incomplete. </LI>
-
-      <LI> Param_Test example is able to test string sequences, fixed
-          structs, variable sized structs and nested structs </LI>
-
-      <LI> Param_Test test suite can now test fixed structs and string
-          sequences.This needed bug fixes to TAO ORB core. </LI>
-      <LI> A new test to test all the parameter passing modes for a
-          number of data types has been added. At this point in time,
-          it tests primitive types and strings. Other tests will be
-          added. Bugs discovered thru these tests have been
-          fixed. </LI>
-
-      <LI> Very preliminary support for arrays. Not working yet. </LI>
-
-      <LI> Many bugs associated with stub generation fixed. This
-          included support for return values that are variable sized
-          IDL types. Unions improved. </LI>
-
-      <LI> Support for sequences of strings and object references
-          added. However, it is not tested yet so there may be some
-          bugs.  We should have these fixed in a day or so. </LI>
-
-      <LI> Support for handling exceptions added. TAO does not use
-          direct C++ exceptions. Instead it uses the
-          CORBA::Environment based approach. </LI>
-
-      <LI> Sequences as out parameters have been
-          tested in the IDL_Cubit example. A test suite is currently
-          being built to test all the parameter passing modes on a
-          variety of IDL data types. </LI>
-
-      <LI> Support for attributes completed. Not tested yet. </LI>
-
-      <LI> The problem of incorrect code generation for typedefs
-          defined in an imported file is resolved.
-
-      <LI>
-          Problems when interfaces use single
-          or multiple inheritance solved. The problem was with the
-	  demultiplexing
-          code, the generated operation tables, and the dispatching
-          mechanism. We are currently testing this with the Event
-          Channel code. </LI>
-
-      <LI> The problems arising due to public virtual inheritance when
-          casting from an interface class to CORBA::Object_ptr has
-          been solved. We do this casting inside the stubs/skeletons
-          rather than first converting an interface class pointer to a
-          void*, storing it in an Any, and casting it to
-          CORBA::Object_ptr in the encode/decode methods. The casting
-          inside the stubs/skeletons work because the compiler has
-          knowledge of both types. </LI>
-
-      <LI> The compiler
-          generates correct code for COSS Naming service and it
-          runs properly. Correct code also gets generated for the
-          Event Channel program </LI>
-
-      <LI> Include files are handled properly. So are the definitions
-          used inside the include files that are used in the currently
-          parsed files. </LI>
-
-      <LI> IN, INOUT, and OUT object reference parameters are now
-          supported properly. We think the same approach should work
-          for sequences, structs, and unions. </LI>
-
-      <LI> Many IDL constructs supported including primitive types,
-          typedefs, sequences, structures, and unions. </LI>
-
-      <LI> Generates C++ stubs and skeletons that use TAO's <A
-          HREF="http://www.cs.wustl.edu/~schmidt/HICSS-97.ps.gz">interpretive IIOP protocol
-          engine</A>.  </LI>
-
-      <LI> Generated code closely follows the C++ Mapping specified in
-          the POA Specification (ORBOS/97-05-15). </LI>
-
-      <LI>Support dynamic libraries on NT, i.e., marking classes for
-	DLL export was added.
-	Two backend options control the name of the export macro,
-	and the name of an extra include file were the macro is
-	defined;
-	the options are <CODE>-Wp,export_macro=MACRO_NAME</CODE>
-	<CODE>-Wp,export_include=INCLUDE_NAME</CODE>.
-      </LI>
-    </UL>
-
-  <P> Known bugs/unimplemented constructs:
-  <UL>
-
-      <LI> Generation of Managed types must somehow be moved
-	to the ORB Core </LI>
-
-              <LI>
-                  We need support for ``TIEs'' (i.e., the object form
-                  of the Adapter pattern). </LI>
-              <LI>
-                  TypeCode generation for multidimensional arrays and
-                  indirected typecodes is still a problem. </LI>
-
-              <LI> Unions with default cases yet to be handled  </LI>
-
-              <LI> The <<= and >>= operators for user-defined types
-                  are not generated yet. </LI>
-
-              <LI> Deal with names in the IDL definition that are C++
-                  keywords. </LI>
-
-              <LI> IDL is case-insensitive. However, it looks like our
-                  front-end is case-sensitive. Thanks to Anil Gopinath
-                  (anil@ittc.ukans.edu) for pointing this out. </LI>
-
-              <LI> tao_idl generates code for a *.idl file only inside
-                  the directory where the *.idl resides. However, it
-                  may be required to generate code elsewhere i.e., in
-                  the directory where the compiler was invoked. Thanks
-                  to Tom Richards (tomr@MCMEnterprise.com) for this
-                  suggestion. </LI>
-            </UL>
-        </LI>
-      </UL>
-
-      Future work:
-      <UL>
-
-      <LI>Need to relocate the various libraries used by the IDL
-      compiler out of the ACE directory.  Having them here can cause
-      problems when working with multiple versions of TAO and a single
-      version of ACE.</li>
-
-	<LI>Improve IDL compiler to generate compiled form of stubs/skeletons.</LI>
-
-	<LI>Fix bugs in the SunSoft IDL front-end we've
-            uncovered. These primarily include support for Unions.</LI>
-
-        <LI>Add command line options to TAO IDL. These options will
-            decide what strategy to use for operation name
-            demultiplexing. Another option may decide whether to use
-            the interpretive IIOP engine or generate compiled
-            stubs/skeletons. </LI>
-
-	<LI>Use <A
-	HREF="http://www.cs.utah.edu/projects/flux/flick/">Flick</A>
-	(from the University of Utah) to generate compiled stubs.
-
-	<P>Goal is to measure the code size of the interpretive stubs
-	generated by TAO IDL compiler <I>vs</I> code size of compiled
-	stubs. Then compare the performance of each. We want to prove
-	the thesis that TAO IDL compiler generated interpretive stubs
-	have a small code size, yet are comparable in performance (or
-	slightly less) than compiled stubs. Hence, it will be useful
-	for small distributed equipment such as handsets, PDAs,
-	etc.
-
-	<P>In doing the above, improvements to the IIOP protocol
-	engine in terms of size/performance/determinism will be
-	made.</LI>
-
-      <li>Tweak the IDL compiler to generate code that's more easily
-      integrated back into the ORB Core, e.g., POA, etc.  This will
-      depend largely on our ability to generalize the changes
-      necessary to generated code.</li>
-      </UL>
-
-<HR>
-
-<!--#include virtual="ec.html" -->
-
+<HR><!--#include virtual="ec.html" -->
 <HR>
 <H3>
 <A NAME="apps"></A>Test &amp; Example Applications</H3>
@@ -235,13 +228,12 @@ Point of contact: <A HREF="mailto:sumedh@cs.wustl.edu">Sumedh Mungee</A>
 tests on the TAO system. It comprises the following parts:
 <UL>
 <LI>
-
-<I>Server.</I> The server creates multiple CORBA objects (servants),
-each with different real-time priorities. This priority is implemented
-by using real-time thread support provided by the operating
-system. Thus, requests sent to a high-priority servant are handled by
-a high-priority real-time thread, and those sent to a lower priority
-servant are handled by correspondingly lower priority threads. <P>
+<I>Server.</I> The server creates multiple CORBA objects (servants), each
+with different real-time priorities. This priority is implemented by using
+real-time thread support provided by the operating system. Thus, requests
+sent to a high-priority servant are handled by a high-priority real-time
+thread, and those sent to a lower priority servant are handled by correspondingly
+lower priority threads.</LI>
 
 <LI>
 <I>Client.</I> The client component binds to the servants, and sends a
@@ -275,178 +267,189 @@ Point of contact: <A HREF="mailto:irfan@cs.wustl.edu">Irfan Pyarali</A>
 <P>Current Status:
 <UL>
 <LI>
-The POA mostly complete.  There are remaining pieces to be
-implemented, but much of the POA framework exists.  This section will
-carry updates as available.
+The POA mostly complete. There are remaining pieces to be implemented,
+but much of the POA framework exists. This section will carry updates as
+available.</LI>
 </UL>
+Known issues:
+<DL>
+<DT>
+<I>Support for collocation is not complete.</I></DT>
 
-    <p>Known issues:
-    <dl>
-      <dt><em>Support for collocation is not complete.</em></dt>
-      <dd>If an object which should be collocated is created via
-      <code>string_to_object</code>, it is created as a remote object
-      rather than collocated.</dd>
-      
-      <dt><em>The stubs and skeletons are not needed.</em></dt>
-      <dd>The library includes stubs and skeletons for the Portable
-	Server interfaces,
-	since all this interfaces have locality constraints the stubs
-	and skeletons are effectively dead code and should be removed.
-      </dd>
-	
-    </dl>
+<DD>
+If an object which should be collocated is created via <TT>string_to_object</TT>,
+it is created as a remote object rather than collocated.</DD>
 
-    Critical work:
-    <UL>
-      <LI>None.</li>
-    </UL>
+<DT>
+<I>The stubs and skeletons are not needed.</I></DT>
 
-    Future work:
-    <UL>
-      <LI>Determine the degree to which we will support the full
-      semantics of remote objects on a collocated object.  The spec
-      mandates that collocated object should behave <em>exactly</em>
-      like remote objects, but that means that request will have to be
-      queued rather than calling a method directly, and this could be
-      hazardous to our quest for real-time ORB status.</li>
+<DD>
+The library includes stubs and skeletons for the Portable Server interfaces,
+since all this interfaces have locality constraints the stubs and skeletons
+are effectively dead code and should be removed.</DD>
+</DL>
+Critical work:
+<UL>
+<LI>
+None.</LI>
+</UL>
+Future work:
+<UL>
+<LI>
+Determine the degree to which we will support the full semantics of remote
+objects on a collocated object. The spec mandates that collocated object
+should behave <I>exactly</I> like remote objects, but that means that request
+will have to be queued rather than calling a method directly, and this
+could be hazardous to our quest for real-time ORB status.</LI>
 
-      <LI>
-	Provide extensions of the specification to ensure real-time
-	delivery of messages.
-      </LI>
-    </UL>
+<LI>
+Provide extensions of the specification to ensure real-time delivery of
+messages.</LI>
+</UL>
 
 <HR>
 <H3>
 <A NAME="nservices"></A>CORBA Naming Service</H3>
-Point of contact: <A HREF="mailto:sergio@cs.wustl.edu">Sergio
-Flores-Gaitan</A> and <A HREF="mailto:marina@cs.wustl.edu">Marina
-Spivak</A><P>
+Point of contact: <A HREF="mailto:sergio@cs.wustl.edu">Sergio Flores-Gaitan</A>
+and <A HREF="mailto:marina@cs.wustl.edu">Marina Spivak</A>
+
+<P>&nbsp;
 
 <P>Current status (as of Dec 10th):
 <UL>
 <LI>
 The Naming Service implementation is complete.</LI>
 </UL>
-
-<P>Known problems:
+Known problems:
 <UL>
 <LI>
-The bind_new_context() call is not working correctly.  This is getting looked at and will be resolved soon.
-</LI>
+The bind_new_context() call is not working correctly. This is getting looked
+at and will be resolved soon.</LI>
 </UL>
-
-<P>Future work:
+Future work:
 <UL>
 <LI>
-Currently the bindings are stored as a table in memory.  Future work will include a persistent database to store the bindings.</LI>
+Currently the bindings are stored as a table in memory. Future work will
+include a persistent database to store the bindings.</LI>
 </UL>
+For general documentation on the Naming Service please read <A HREF="ftp://www.omg.org/pub/docs/formal/97-07-12.pdf">The
+Naming Service Specification</A>.
 
-<P>For general documentation on the Naming Service please read
-<A HREF="ftp://www.omg.org/pub/docs/formal/97-07-12.pdf">
-The Naming Service Specification</A>.<P>
+<P>&nbsp;
+<HR>
+<H3>
+<A NAME="pservices"></A>CORBA Property Service</H3>
+Point of contact:&nbsp;<A HREF="mailto:alex@cs.wustl.edu">Alexander Babu
+Arulanthu</A><A HREF="mailto:alex@cs.wustl.edu"></A>
 
-<!--#include virtual="/~schmidt/ACE_wrappers/TAO/docs/releasenotes/trader.html" -->
+<P>Current status :
+<BR>&nbsp;
+<BR>&nbsp;&nbsp;&nbsp; It is under development and testing. It is about
+to be integrated on to the TAO's&nbsp; AVStreams.
+
+<P>For general documentation of the Property Service, please read <A HREF="http://www.omg.org/corba/sectrans.htm#prop">The
+Property Service Specification.</A>
+
+<P>
 <HR>
 <H3>
 <A NAME="ace"></A>ORB-related ACE Changes</H3>
-Points of contact: <A HREF="mailto:cleeland@cs.wustl.edu">Chris Cleeland</A> and <A HREF="mailto:irfan@cs.wustl.edu">Irfan Pyrarli</A>
+Points of contact: <A HREF="mailto:cleeland@cs.wustl.edu">Chris Cleeland</A>
+and <A HREF="mailto:irfan@cs.wustl.edu">Irfan Pyrarli</A>
 
-    <P>Recently Completed Work:
-    <UL>
-      <li>Added special declaration to OS.h for <code>inet_ntoa</code>
-      and other functions because VxWorks doesn't provide full
-      argument prototypes for these library functions.</li>
+<P>Recently Completed Work:
+<UL>
+<LI>
+Added special declaration to OS.h for <TT>inet_ntoa</TT> and other functions
+because VxWorks doesn't provide full argument prototypes for these library
+functions.</LI>
 
-      <li>The current caching connector behaves properly in the face
-      of a non-blocking connect request.  The "fix" is simply to not
-      support non-blocking connects through the cache.  When the
-      <code>connect()</code> fails with <code>EWOULDBLOCK</code>,
-      morph the error to -1 and clean up the request.</li>
+<LI>
+The current caching connector behaves properly in the face of a non-blocking
+connect request. The "fix" is simply to not support non-blocking connects
+through the cache. When the <TT>connect()</TT> fails with <TT>EWOULDBLOCK</TT>,
+morph the error to -1 and clean up the request.</LI>
 
-      <li> Service handlers obtained from the caching connector are
-      now cleaned up.  The application needs to be able to signal that
-      it's not using it any longer, and, when the application encounters
-      an error, needs to effectively close down that connection for good
-      so that a new connection can be initiated. <br>
+<LI>
+Service handlers obtained from the caching connector are now cleaned up.
+The application needs to be able to signal that it's not using it any longer,
+and, when the application encounters an error, needs to effectively close
+down that connection for good so that a new connection can be initiated.</LI>
 
-      Added the ability for a Svc_Handler to
-      recycle itself.  idle() can be called when the Svc_Handler is
-      done serving a particular connection and can how be recycled.
-      The Svc_Handler now also has a pointer to a recycler that is
-      responsible for managing the connections.  The recycler is
-      usually a Cached_Connector. <br>
-
-      Added new class ACE_Recycling_Strategy.
-      It defines the interface (and default implementation) for
-      specifying a recycling strategy for a Svc_Handler.  This
-      strategy acts as a consular to the Svc_Handler, preparing it for
-      the tough times ahead when the Svc_Handler will be recycled. <br>
-
-      Added new class ACE_NOOP_Concurrency_Strategy.  It implements
-      a no-op activation strategy in order to avoid calling open on
-      a recycled svc_handler multiple times. <br>
-
-      ACE_Cached_Connect_Strategy now
-      implements the ACE_Connection_Recycling_Strategy interface.
-      This allows Svc_Handlers to cache themselves with
-      ACE_Cached_Connect_Strategy when they become idle.  It also
-      allows them to purge themselves from the connection cache when
-      the Svc_Handlers close down. <br>
-
-      Also added ~ACE_Cached_Connect_Strategy that will cleanup up the
-      connection cache.  </li>
-
-
-    </UL>
-
-    <P>Future work:
-
-      <blockquote>
-      <em>None currently scheduled.</em>
-      </blockquote>
+<BR>Added the ability for a Svc_Handler to recycle itself. idle() can be
+called when the Svc_Handler is done serving a particular connection and
+can how be recycled. The Svc_Handler now also has a pointer to a recycler
+that is responsible for managing the connections. The recycler is usually
+a Cached_Connector.
+<BR>Added new class ACE_Recycling_Strategy. It defines the interface (and
+default implementation) for specifying a recycling strategy for a Svc_Handler.
+This strategy acts as a consular to the Svc_Handler, preparing it for the
+tough times ahead when the Svc_Handler will be recycled.
+<BR>Added new class ACE_NOOP_Concurrency_Strategy. It implements a no-op
+activation strategy in order to avoid calling open on a recycled svc_handler
+multiple times.
+<BR>ACE_Cached_Connect_Strategy now implements the ACE_Connection_Recycling_Strategy
+interface. This allows Svc_Handlers to cache themselves with ACE_Cached_Connect_Strategy
+when they become idle. It also allows them to purge themselves from the
+connection cache when the Svc_Handlers close down.
+<BR>Also added ~ACE_Cached_Connect_Strategy that will cleanup up the connection
+cache.</UL>
+Future work:
+<BLOCKQUOTE><I>None currently scheduled.</I></BLOCKQUOTE>
 
 <H3>
 <A NAME="#VC"></A>How to add IDL files into your Visual C++ projects</H3>
-Point of contact: <a href="mailto:nw1@cs.wustl.edu">Nanbor Wang</a>.
-    <p>Each IDL file generates .h, .i and .cpp files.  Here is an
-    example of adding an IDL file named foobar.idl into a VC project.
-    <ol>
-      <li>Create/open the workspace.  Create server project and client
-	  project if you haven't had them ready.  Add the IDL file
-	  &lt;foobar.idl&gt; and other non-IDL generated files into
-	  both client and server projects.
-      <li>Added foobarC.h, foobarC.i, foobarC.cpp, foobarS.h, foobarS.i,
-	  and foobarS.cpp into the server project and foobarC.h,
-	  foobarC.i, and foobarC.cpp into the client project.
-      <li>Now open the project setting window (Project -&gt;
-	  Setting... or just press Alt-F7.)  Select the IDL files in
-	  both client and server projects.  Choose to set the setting
-	  for "All Configuration."  Make sure the "Exclude from build"
-	  under the "General" tab is unchecked.
-      <li>Click on the "Custom Build" tab.  Add this entry as the
-	  build command for IDL files:
-	  <pre>..\..\..\TAO_IDL\tao_idl $(InputName).idl</pre> Notice
-	  that your absolute path to TAO_IDL may vary.
-      <li>Now add the following entries as "Output file(s)." <pre>
-	  $(InputName)S.h
-	  $(InputName)S.i
-	  $(InputName)S.cpp
-	  $(InputName)C.h
-	  $(InputName)C.i
-	  $(InputName)C.cpp</pre>
-	  Add only one entry in each line.
-      <li>We are all set.  Click OK.
-      <li>Add foobarC.cpp to client project and foobarC.cpp and
-	  foobarS.cpp to server project.
-    </ol>
-    Notice that these procedures only setup the IDL compiler to
-    perform correctly.<p>
-    p.s. If anyone knows how to set a default setting in VC so we
-    don't need to perform these procedures every time a new project
-    gets set up, please let us know.  Thanks.
+Point of contact: <A HREF="mailto:nw1@cs.wustl.edu">Nanbor Wang</A>.
+
+<P>Each IDL file generates .h, .i and .cpp files. Here is an example of
+adding an IDL file named foobar.idl into a VC project.
+<OL>
+<LI>
+Create/open the workspace. Create server project and client project if
+you haven't had them ready. Add the IDL file &lt;foobar.idl> and other
+non-IDL generated files into both client and server projects.</LI>
+
+<LI>
+Added foobarC.h, foobarC.i, foobarC.cpp, foobarS.h, foobarS.i, and foobarS.cpp
+into the server project and foobarC.h, foobarC.i, and foobarC.cpp into
+the client project.</LI>
+
+<LI>
+Now open the project setting window (Project -> Setting... or just press
+Alt-F7.) Select the IDL files in both client and server projects. Choose
+to set the setting for "All Configuration." Make sure the "Exclude from
+build" under the "General" tab is unchecked.</LI>
+
+<LI>
+Click on the "Custom Build" tab. Add this entry as the build command for
+IDL files:</LI>
+
+<PRE>..\..\..\TAO_IDL\tao_idl $(InputName).idl</PRE>
+Notice that your absolute path to TAO_IDL may vary.
+<LI>
+Now add the following entries as "Output file(s)."</LI>
+
+<PRE>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $(InputName)S.h
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $(InputName)S.i
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $(InputName)S.cpp
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $(InputName)C.h
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $(InputName)C.i
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $(InputName)C.cpp</PRE>
+Add only one entry in each line.
+<LI>
+We are all set. Click OK.</LI>
+
+<LI>
+Add foobarC.cpp to client project and foobarC.cpp and foobarS.cpp to server
+project.</LI>
+</OL>
+Notice that these procedures only setup the IDL compiler to perform correctly.
+
+<P>&nbsp;p.s. If anyone knows how to set a default setting in VC so we
+don't need to perform these procedures every time a new project gets set
+up, please let us know. Thanks.&nbsp;
+<HR>
+
+<P>Back to the TAO <A HREF="../index.html">documentation index</A>.&nbsp;<!--#include virtual="/~schmidt/cgi-sig.html" -->
 </BODY>
-<hr><P>
-Back to the TAO <A HREF="../index.html">documentation index</A>.
-<!--#include virtual="/~schmidt/cgi-sig.html" -->
 </HTML>
