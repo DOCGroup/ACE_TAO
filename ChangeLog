@@ -1,6 +1,6 @@
 Thu Aug 22 01:32:46 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
-        * ACEXML\common\StreamFactory.cpp:
+        * ACEXML/common/StreamFactory.cpp:
 
           Use ACE_TEXT for literals. Add destructor to avoid linker
           problems.
@@ -15,7 +15,7 @@ Thu Aug 22 01:32:46 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
 Thu Aug 22 01:16:16 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
-        * ace\OS.h:
+        * ace/OS.h:
 
           Fixed compilation error under Windows by undefining the macros.
 
