@@ -1,3 +1,85 @@
+Tue Nov  4 01:03:56 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* configure.ac (AC_PREREQ):
+
+	  Fixed typo in copyright statement.
+
+	  Bumped autoconf prerequisite to version 2.57g.  Function tests
+	  in versions prior to that did not function properly on HP-UX.
+
+	  (AC_CONFIG_AUX_DIR):
+
+	  Call this Autoconf macro with an "aux" argument.  This causes
+	  all autotool related scripts to be placed in to the `aux'
+	  directory.  Addresses a problem with some versions of libtoolize
+	  where an empty auxiliary directory name is assumed instead of
+	  the well defined defaults.  This change also happens to remove
+	  some of the clutter in the top-level directory.
+
+	  (AC_CONFIG_MACRO_DIR):
+
+	  Call this Autoconf macro with a "m4" argument to inform
+	  autotools that recognize this macro where the ACE Autconf/M4
+	  macros are located.
+
+	* bin/bootstrap:
+
+	  Replaced manual calls to aclocal, autoheader, autoconf, automake
+	  and libtoolize with a single call to `autoreconf'.  The latter
+	  is a bit smarter about bootstrapping autoconfiscated
+	  workspaces, and also allows us to simplify this bootstrap
+	  script.
+
+	* m4/ace.m4:
+
+	  Started converting all Bourne shell "if" blocks to Autoconf
+	  "AS_IF" blocks.  The latter provides improved portability.
+
+	* m4/acinclude.m4:
+	* m4/compiler.m4:
+	* m4/features.m4:
+	* m4/subsets.m4:
+
+	  Nuked trailing whitespace.
+
+	* m4/config_h.m4 (AH_TOP):
+
+	  Removed "-*- C++ -*-" Emacs mode comment.  It had no effect
+	  since it wasn't in the first few lines of the generated
+	  `config.h' file.
+
+	  (AH_BOTTOM):
+
+	  Define Emacs mode at the bottom of the generated `config.h' file
+	  using the canonical Emacs "Local Variables" block.  The
+	  generated `config.h' file is now correctly interpreted as a C++
+	  header when opened in Emacs.
+
+
+	* m4/threads.m4:
+
+	  Started converting all Bourne shell "if" blocks to Autoconf
+	  "AS_IF" blocks.  The latter provides improved portability.
+
+	  Refactored common POSIX threads detection code to an autoconf
+	  macro.
+
+	  Replaced brittle POSIX thread code that checked for backward
+	  compatibility macros.  Use a run/link-time test instead.  This
+	  allows us to avoid determining what the real pthread_create()
+	  function is called.  This should fix a Pthread detection problem
+	  that occurred on HP-UX.
+
+	* ace/Makefile.am:
+
+	  Updated source lists with latest set of source filenames.
+
+	* apps/gperf/mdate-sh:
+	* apps/gperf/texinfo.tex:
+
+	  Removed these files.  They are automatically added when
+	  bootstrapping an "autoconfiscated" workspace.
+
 Wed Nov  4 08:34:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_netdb.cpp: (getmacaddress)
@@ -1255,7 +1337,7 @@ Sat Nov  1 05:40:21 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           ACE_OS; changes u_long, etc., to unsigned long to reduce
           dependencies; reordered includes in *.cpp's to come after the
           inline file include, reducing the difference between inlined and
-          non-inlined builds. 
+          non-inlined builds.
 
         * ace/CLASSIX/CLASSIX_OS.h:
         * ace/CLASSIX/CLASSIX_Port_Core.h:

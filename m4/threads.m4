@@ -35,7 +35,7 @@ dnl  AC_LANG([C++])
 dnl  AC_REQUIRE([AC_LANG])
 
  dnl Check if compiler accepts specific flag to enable threads
- ACE_CACHE_CHECK([if compiler may need a thread flag],
+ ACE_CACHE_CHECK([if compiler may need a command line thread flag],
    [ace_cv_feature_may_need_thread_flag],
    [
     ace_save_CXXFLAGS="$CXXFLAGS"
@@ -85,114 +85,46 @@ dnl  AC_REQUIRE([AC_LANG])
  ACE_CHECK_THREAD_CPPFLAGS
 
  dnl Check for POSIX threads
- dnl
- dnl Check if platform provides pthreads backward compatibility macros
- dnl (Some platforms may define some pthread functions such as
- dnl  pthread_create() as macros when using a later implementation of
- dnl  pthreads.  For example, Digital Unix 4.0 #defines a pthread_create
- dnl  macro as "__pthread_create" to allow the new implemenation of
- dnl  pthread_create() to co-exist with the old implementation of
- dnl  of pthread_create().)
+ ace_has_pthreads=no
 
- ACE_CACHE_CHECK([for pthreads backward compatibility macros],
-   [ace_cv_lib_pthread_compat_macros],
+ AC_MSG_CHECKING([for POSIX threads library])
+
+ ACE_CHECK_POSIX_THREADS(
    [
-    dnl Add thread preprocessor flags, if any.
-    ace_save_CPPFLAGS="$CPPFLAGS"
-    CPPFLAGS="$ACE_THR_CPPFLAGS $CPPFLAGS" dnl User's CPPFLAGS go last
-
-    AC_EGREP_CPP([ACE_PTHREAD_MACROS],
-      [
-#include <pthread.h>
-
-#if defined (pthread_create)
-  ACE_PTHREAD_MACROS
-#endif
-      ],
-      [
-       ace_cv_lib_pthread_compat_macros=yes
-      ],
-      [
-       ace_cv_lib_pthread_compat_macros=no
-      ])
-
-    dnl Reset the preprocessor flags
-    CPPFLAGS="$ace_save_CPPFLAGS"
+    ace_has_pthreads=yes
+    AC_DEFINE([ACE_HAS_PTHREADS])
+    AC_MSG_RESULT([none required])
    ],
+   [])
+
+ AS_IF([test "$ace_has_pthreads" != yes],
    [
-    dnl Check if pthread function names are mangled (e.g. DU 4.0)
-    dnl to maintain older Pthread Draft compatibility.
-    ACE_CHECK_FUNC([pthread_create], [pthread.h],
+    ace_posix_threads_search_LIBS="$LIBS"
+    for ace_p in pthread pthreads c_r gthreads; do
+      LIBS="-l$ace_p $ace_posix_threads_search_LIBS"
+      ACE_CHECK_POSIX_THREADS(
+        [
+         ace_has_pthreads=yes
+         AC_DEFINE([ACE_HAS_PTHREADS])
+         AC_MSG_RESULT([-l$ace_p])
+         break
+        ],
+        [])
+    done
+
+    AS_IF([test "$ace_has_pthreads" != yes],
       [
-       ace_has_pthreads=yes
-       AC_DEFINE([ACE_HAS_PTHREADS])
-      ],
-      [
-       ACE_CHECK_LIB([pthread], [pthread_create], [pthread.h],
-         [
-          ace_has_pthreads=yes
-          dnl Since we AC_DEFINE(ACE_HAS_PTHREADS), the default behavior
-          dnl of adding "-lpthread" to the "LIBS" variable no longer
-          dnl works, so we have to add it manually.
-          LIBS="$LIBS -lpthread"
-          AC_DEFINE([ACE_HAS_PTHREADS])
-         ],
-         [
-          ace_has_pthreads=yes
-         ])
-      ])
+       AC_MSG_RESULT([no])
+       LIBS="$ace_posix_threads_search_LIBS"
+      ],[])
    ],
-   [
-    AC_SEARCH_LIBS([pthread_create], [pthread pthreads c_r gthreads],
-      [
-       ace_has_pthreads=yes
-       AC_DEFINE([ACE_HAS_PTHREADS])
-
-       dnl This is ugly but some platforms appear to implement stubs
-       dnl in the C library, so it is possible that a no-op function
-       dnl may be found.  Here we check for a few more functions in
-       dnl case this is so.  This may not be fool proof since the
-       dnl additional functions themselves may be implemented as
-       dnl stubs, in which case the same problem will occur!
-       dnl Another solution is to check for the function using
-       dnl AC_CHECK_LIB but that will force the library to be added
-       dnl to the LIBS variable, which may not even be necessary.  In
-       dnl any case, it may be the better solution.  If problems arise
-       dnl in the future regarding this issue, then we should probably
-       dnl switch to doing an AC_CHECK_LIB before each AC_SEARCH_LIBS
-       dnl below.
-
-       dnl Search for functions in more recent standards first.
-
-       dnl Note that the functions were chosen since they appear to be
-       dnl more "exotic" than the less "interesting" functions such as
-       dnl pthread_mutexattr_init.
-
-       dnl Draft 7 and Standard
-       AC_SEARCH_LIBS([pthread_setschedparam],
-                      [pthread pthreads c_r gthreads],,
-          [
-           dnl Draft 6
-           AC_SEARCH_LIBS([pthread_attr_setprio],
-                          [pthread pthreads c_r gthreads],,
-              [
-               dnl Draft 4
-               AC_SEARCH_LIBS([pthread_setprio],
-                              [pthread pthreads c_r gthreads],,)
-              ])
-          ])
-      ],
-      [
-       ace_has_pthreads=no
-      ])
-   ])
-
+   [])
 
  dnl If we don't have any thread library, then disable threading altogether!
- if test "$ace_has_pthreads" != yes &&
-    test "$ace_has_sthreads" != yes; then
+ AS_IF([test "$ace_has_pthreads" != yes && test "$ace_has_sthreads" != yes],
+  [
    ace_user_enable_threads=no
- fi
+  ])
 ])
 
 dnl This macro will check that the current compiler flags do something
@@ -200,8 +132,6 @@ dnl useful in terms of thread libraries and/or functions.
 dnl Usage: ACE_CHECK_THREAD_FLAGS(ACTION-IF-USABLE [, ACTION-IF-NOT-USABLE]])
 AC_DEFUN([ACE_CHECK_THREAD_FLAGS],
 [
- AC_REQUIRE([AC_PROG_AWK])
-
  ACE_CONVERT_WARNINGS_TO_ERRORS([
  dnl Check for UI thread support first.
 
@@ -232,52 +162,8 @@ main ()
    [$1],
    [
  dnl Now check for POSIX thread support.
+    ACE_CHECK_POSIX_THREADS([$1],[$2])
 
- dnl Because some platforms are brain damaged enough to provide
- dnl useless thread function stubs, link tests may succeed despite the
- dnl fact the stubs are no-ops.  This forces us to use a run-time test
- dnl to get around this nuisance by checking the return value of
- dnl pthread_create().  The cross-compiled case will use a link-time
- dnl test, instead.
- AC_RUN_IFELSE([AC_LANG_SOURCE([[
-#include <pthread.h>
-
-extern "C" void *
-ace_start_func (void *)
-{
- return 0;
-}
-
-int
-main ()
-{
- pthread_t tid = 0;
-
- return pthread_create (&tid, 0, ace_start_func, 0);
-}
-      ]])],
-      [$1],
-      [$2],
-      [
-       dnl POSIX threads cross-compiled case
-
-       AC_LINK_IFELSE([AC_LANG_PROGRAM([[
-#include <pthread.h>
-
-extern "C" void *
-ace_start_func (void *)
-{
- return 0;
-}
-         ]],
-         [[
- pthread_t tid = 0;
-
- (void) pthread_create (&tid, 0, ace_start_func, 0);
-         ]])],
-         [$1],
-         [$2])
-      ])
    ],
    [
     dnl UI threads cross-compiled case
@@ -371,4 +257,55 @@ THROW ME AN ERROR!
    ],[
     ACE_THR_CPPFLAGS="-D_REENTRANT -D_THREAD_SAFE"
    ])
+])
+
+dnl Check for POSIX threads support.
+dnl Usage: ACE_CHECK_POSIX_THREADS([ACTION-IF-FOUND], [ACTION-IF-NOT-FOUND])
+AC_DEFUN([ACE_CHECK_POSIX_THREADS],
+[
+ dnl Because some platforms are brain damaged enough to provide
+ dnl useless thread function stubs, link tests may succeed despite the
+ dnl fact the stubs are no-ops.  This forces us to use a run-time test
+ dnl to get around this nuisance by checking the return value of
+ dnl pthread_create().  The cross-compiled case will use a link-time
+ dnl test, instead.
+ AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#include <pthread.h>
+
+extern "C" void *
+ace_start_func (void *)
+{
+ return 0;
+}
+
+int
+main ()
+{
+ pthread_t tid = 0;
+
+ return pthread_create (&tid, 0, ace_start_func, 0);
+}
+      ]])],
+      [$1],
+      [$2],
+      [
+       dnl POSIX threads check -- cross-compiled case
+
+       AC_LINK_IFELSE([AC_LANG_PROGRAM([[
+#include <pthread.h>
+
+extern "C" void *
+ace_start_func (void *)
+{
+ return 0;
+}
+         ]],
+         [[
+ pthread_t tid = 0;
+
+ (void) pthread_create (&tid, 0, ace_start_func, 0);
+         ]])],
+         [$1],
+         [$2])
+      ])
 ])

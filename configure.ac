@@ -13,7 +13,7 @@ AC_REVISION([$Id$])
 
 AC_COPYRIGHT([ACE(TM) and TAO(TM) are copyrighted by Douglas C. Schmidt and
 his research group at Washington University, University of California,
-Irvine, andVanderbilt University Copyright (c) 1993-2003, all rights
+Irvine, and Vanderbilt University Copyright (c) 1993-2003, all rights
 reserved.  Since ACE and TAO are open-source, free software, you are
 free to use, modify, and distribute the ACE and TAO source code and
 object code produced from the source, as long as you include this
@@ -23,10 +23,13 @@ Please see the file `COPYING' in the top level ACE directory for
 additional details.])
 
 
-dnl Require GNU Autoconf 2.57 or better.
-AC_PREREQ([2.57])
+dnl Require GNU Autoconf 2.57g or better.
+AC_PREREQ([2.57g])
 
 AC_CONFIG_SRCDIR([ace/ACE.cpp])
+
+AC_CONFIG_AUX_DIR([aux])
+AC_CONFIG_MACRO_DIR([m4])
 
 dnl Check what platform we are running on.
 AC_CANONICAL_TARGET([])
@@ -129,7 +132,8 @@ ACE_CURRENT=0
 ACE_AGE=0
 ACE_REVISION=0
 
-if test -n "$AWK"; then
+AS_IF([test -n "$AWK"],
+ [
   ACE_MAJOR=`echo "$ACE_VERSION" | sed 's/\./ /g' | $AWK '{ print \[$]1 }'`
   ACE_MINOR=`echo "$ACE_VERSION" | sed 's/\./ /g' | $AWK '{ print \[$]2 }'`
   ACE_BETA=`echo "$ACE_VERSION" | sed 's/\./ /g' | $AWK '{ print \[$]3 }'`
@@ -145,11 +149,10 @@ dnl library with the "right" version information.
 dnl We really should switch to a version scheme that is compatible with
 dnl libtool.
 dnl               -Ossama
-ACE_CURRENT=`expr $ACE_MAJOR + $ACE_MINOR`
-ACE_AGE=$ACE_MINOR
-ACE_REVISION=$ACE_BETA
-
-fi
+  ACE_CURRENT=`expr $ACE_MAJOR + $ACE_MINOR`
+  ACE_AGE=$ACE_MINOR
+  ACE_REVISION=$ACE_BETA
+ ],[])
 
 AC_SUBST([ACE_CURRENT])
 AC_SUBST([ACE_AGE])
@@ -347,9 +350,10 @@ AC_SEARCH_LIBS([t_accept],[xti tli_r tli nsl],
 
 dnl Check for all of the things we need to compile and link threads
 dnl properly.
-if test "$ace_user_enable_threads" = yes; then
+AS_IF([test "$ace_user_enable_threads" = yes],
+ [
   ACE_CHECK_THREADS
-fi dnl test "$ace_user_enable_threads" = yes
+ ],[])
 
 dnl Setup Libtool
 
@@ -362,6 +366,9 @@ AC_DISABLE_STATIC
 
 dnl Enable Libtool module support
 AC_LIBTOOL_DLOPEN
+
+dnl Enable support for "clean" DLLs.
+AC_LIBTOOL_WIN32_DLL
 
 dnl FIXME: Temporary hack to make libtool work with g++.
 dnl        Shared library support will only work with GNU g++ and GNU ld
@@ -404,20 +411,22 @@ ACE_SET_PLATFORM_MACROS
 dnl Check for dirent headers
 AC_HEADER_DIRENT
 
-if test "$ac_cv_header_dirent_dirent_h" = yes ||
-   test "$ac_cv_header_dirent_sys_ndir_h" = yes ||
-   test "$ac_cv_header_dirent_sys_dir_h" = yes ||
-   test "$ac_cv_header_dirent_ndir_h" = yes; then
+AS_IF([test "$ac_cv_header_dirent_dirent_h" = yes ||
+       test "$ac_cv_header_dirent_sys_ndir_h" = yes ||
+       test "$ac_cv_header_dirent_sys_dir_h" = yes ||
+       test "$ac_cv_header_dirent_ndir_h" = yes],
+ [
   AC_DEFINE([ACE_HAS_DIRENT])
-fi
+ ],[])
 
 dnl Check for sys/wait.h Posix.1 compliance
 AC_HEADER_SYS_WAIT
 
-if test "$ac_cv_cygwin" = yes; then
-  AC_CHECK_HEADER([cygwin32/socket.h],
-     [AC_DEFINE([ACE_HAS_CYGWIN32_SOCKET_H])],)
-fi
+AS_IF([test "$ac_cv_cygwin" = yes],
+  [
+   AC_CHECK_HEADER([cygwin32/socket.h],
+                   [AC_DEFINE([ACE_HAS_CYGWIN32_SOCKET_H])],)
+  ],[])
 
 AC_CHECK_HEADER([dlfcn.h],
   [
@@ -427,9 +436,10 @@ AC_CHECK_HEADER([dlfcn.h],
    dnl the previously cached value may prevent ACE_HAS_SVR4_DYNAMIC_LINKING
    dnl from being defined.
    dnl                          -Ossama
-   if test "$ace_has_svr4_dynamic_linking" = yes; then
+   AS_IF([test "$ace_has_svr4_dynamic_linking" = yes],
+    [
      AC_DEFINE([ACE_HAS_SVR4_DYNAMIC_LINKING])
-   fi
+    ],[])
   ],)
 
 AC_CHECK_HEADER([malloc.h],
@@ -587,21 +597,23 @@ AC_CHECK_HEADER([sys/termios.h],
       ],)
   ],)
 
-if test "$ace_has_tli_funcs" = yes; then
-AC_CHECK_HEADER([xti.h],
+AS_IF([test "$ace_has_tli_funcs" = yes],
   [
-   ace_has_tli=yes
-   AC_DEFINE([ACE_HAS_XTI])
-   AC_DEFINE([ACE_HAS_TLI])
-  ],)
-
-AC_CHECK_HEADER([sys/xti.h],
+   AC_CHECK_HEADER([xti.h],
+     [
+      ace_has_tli=yes
+      AC_DEFINE([ACE_HAS_XTI])
+      AC_DEFINE([ACE_HAS_TLI])
+     ],)
+  ],
   [
-   ace_has_tli=yes
-   AC_DEFINE([ACE_HAS_SYS_XTI_H])
-   AC_DEFINE([ACE_HAS_XTI])
-   AC_DEFINE([ACE_HAS_TLI])
-  ],)
+   AC_CHECK_HEADER([sys/xti.h],
+     [
+      ace_has_tli=yes
+      AC_DEFINE([ACE_HAS_SYS_XTI_H])
+      AC_DEFINE([ACE_HAS_XTI])
+      AC_DEFINE([ACE_HAS_TLI])
+     ],)
 
 AC_CHECK_HEADER([sys/timod.h],
   [
@@ -827,7 +839,7 @@ dnl Check if t_error incorrectly accepts char *
   ],)
 
 fi dnl test "$ace_has_tli" = yes
-fi dnl test "$ace_has_tli_funcs" = yes
+],[])
 
 AC_CHECK_HEADER([sys/time.h],
   [
@@ -1454,7 +1466,6 @@ semun us;
 
 dnl SECTION 8: checks for variables
 
-
 dnl Check for broken struct timespec members
 ACE_CACHE_CHECK([for broken struct timespec members],
   [ace_cv_lib_broken_timespec],
@@ -1468,13 +1479,14 @@ ACE_CACHE_CHECK([for broken struct timespec members],
         ]],[[
          timespec sr;
          sr.ts_sec  = 0;
-         sr.ts_nsec = 0;
+        sr.ts_nsec = 0;
         ]])],[
          ace_cv_lib_broken_timespec=yes
         ],[
          ace_cv_lib_broken_timespec=no
         ])
   ],[AC_DEFINE([ACE_HAS_BROKEN_TIMESPEC_MEMBERS])],)
+
 
 dnl Check for more than two fields in struct rusage
 ACE_CACHE_CHECK([for limited struct rusage],
@@ -1700,9 +1712,10 @@ dnl Check to see if we are running on a big endian platform
 dnl "ace/Basic_Types.h" should perhaps be modified to take advantage
 dnl of the results of this test.
 dnl Do not run this test if we are using a cross-compiler.
-if test "$cross_compiling" != yes; then
+AS_IF([test "$cross_compiling" != yes],
+ [
   AC_C_BIGENDIAN
-fi
+ ],[])
 
 dnl Check type sizes
 dnl If we get a size of zero, then the type is unknown to the compiler.
@@ -1926,8 +1939,8 @@ ACE_CACHE_CHECK([for C++ namespace support],
                   ])
   ],,[AC_DEFINE([ACE_HAS_BROKEN_NAMESPACES])])
 
-dnl Check for C++ standard namespace
-ACE_CACHE_CHECK([for C++ standard namespace],
+dnl Check for C++ "std" namespace
+ACE_CACHE_CHECK([for C++ \"std\" namespace],
   [ace_cv_feature_posix_uses_std_namespace],[
     AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 #include <iostream.h>
@@ -6636,10 +6649,6 @@ dnl        the UNIX International threads library was detected.
   AC_DEFINE([ACE_HAS_THREADS])
   AC_DEFINE([ACE_MT_SAFE])
   ACE_CPPFLAGS="$ACE_CPPFLAGS $ACE_THR_CPPFLAGS"
-  if test "$ace_has_pthreads" = yes &&
-     test "$ace_has_sthreads" != yes; then
-    ACE_CPPFLAGS="$ACE_CPPFLAGS -D_POSIX_PTHREAD_SEMANTICS"
-  fi dnl test "$ace_has_pthreads" = yes
 
   if test "$ace_has_pthreads" = yes; then
 
