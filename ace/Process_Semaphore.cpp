@@ -35,6 +35,20 @@ ACE_Process_Semaphore::ACE_Process_Semaphore (u_int count,
 // ACE_TRACE ("ACE_Process_Semaphore::ACE_Process_Semaphore");
 }
 
+ACE_Process_Semaphore::ACE_Process_Semaphore (const ACE_TCHAR *name,
+                                              void *arg,
+                                              int max)
+#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS)
+  : lock_ (1, USYNC_PROCESS, name, arg, max)
+#else
+  : lock_ (name, ACE_SV_Semaphore_Complex::ACE_CREATE, 1)
+#endif /* ACE_WIN32 || ACE_HAS_POSIX_SEM || ACE_PSOS */
+{
+  arg = arg;
+  max = max;
+// ACE_TRACE ("ACE_Process_Semaphore::ACE_Process_Semaphore");
+}
+
 ACE_Process_Semaphore::~ACE_Process_Semaphore (void)
 {
   // ACE_TRACE ("ACE_Process_Semaphore::~ACE_Process_Semaphore");

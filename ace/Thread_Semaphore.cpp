@@ -38,4 +38,12 @@ ACE_Thread_Semaphore::ACE_Thread_Semaphore (u_int count,
 {
 // ACE_TRACE ("ACE_Thread_Semaphore::ACE_Thread_Semaphore");
 }
+
+ACE_Thread_Semaphore::ACE_Thread_Semaphore (const ACE_TCHAR *name,
+                                            void *arg,
+                                            int max)
+  : ACE_Semaphore (1, USYNC_THREAD, name, arg, max)
+{
+// ACE_TRACE ("ACE_Thread_Semaphore::ACE_Thread_Semaphore");
+}
 #endif /* ACE_HAS_THREADS */
