@@ -34,6 +34,20 @@
 
 <b>Known issues:</b>
 <UL>
+  <li>The acceptor on the server side doesn't get opened until calling
+      CORBA_ORB::run ().  And that's when we check whether the port
+      the server wants to listen on is available or not.  (Unless we
+      specify ORBport to be 0, which implicitly ask the ORB to open
+      the connection in ORB_init so we know how to export object
+      IORs.)  The problem of this approach is that the port the server
+      is listen on may not be available.  Since we export object IORs
+      based on the port specified (or the default port,) without
+      checking the availability of the port, we may announce a bad IOR
+      end-point which the server will never be able to listen on.
+
+      A possible solution might be opening the server acceptor
+      whenever it is trying to export an IOR.<p>
+
   <li>The ORB doesn't handle the nested upcalls correctly.  This seems
       to be stemmed from the incorrect suspension/resumption of file
       descriptor in connection management.  It appears to work fine
