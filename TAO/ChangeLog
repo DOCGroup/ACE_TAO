@@ -1,3 +1,8 @@
+Fri Aug 15 09:40:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/examples/RtEC/Simple/README:
+          Fixed typo
+
 Fri Aug 15 00:37:22 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/server.cpp:
@@ -79,12 +84,12 @@ Thu Aug 14 15:09:52 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tao/Any_Impl_T.cpp:
         * tao/Any_Special_Basic_Impl_T.cpp:
         * tao/Any_Special_Impl_T.cpp:
-        
+
           Changed the overridden free_value() methods to reflect the changed
           semantics of the type code member described above. Also modified
           the extract() methods to do a better memory cleanup in the event
           of a failed extraction.
-             
+
         * tao/NVList.cpp:
         * tao/RequestInfo_Util.cpp:
         * tao/Typecode.cpp:
@@ -110,9 +115,9 @@ Thu Aug 14 17:55:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Aug 14 16:09:55 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* tests/RTScheduling/Thread_Cancel/Thread_Task.cpp: 
-	* tests/RTScheduling/DT_Spawn/test.cpp: 
-	* tests/RTScheduling/Current/Thread_Task.cpp: 
+	* tests/RTScheduling/Thread_Cancel/Thread_Task.cpp:
+	* tests/RTScheduling/DT_Spawn/test.cpp:
+	* tests/RTScheduling/Current/Thread_Task.cpp:
 
 	  Replaced ACE_PRINT_EXCEPTION with ACE_DEBUG messages so the
 	  builds will not report errors for expected exceptions.
