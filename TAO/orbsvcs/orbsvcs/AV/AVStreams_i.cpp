@@ -2079,6 +2079,66 @@ TAO_StreamEndPoint::get_fep (const char *flow_name,
   return 0;
 }
 
+char*
+TAO_StreamEndPoint::add_fep_i_add_property (AVStreams::FlowEndPoint_ptr fep,
+                                            CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     AVStreams::notSupported,
+                     AVStreams::streamOpFailed))
+{
+  char* tmp;
+  ACE_NEW_RETURN (tmp,
+                  char[64],
+                  0);
+  CORBA::String_var flow_name = tmp;
+
+  ACE_TRY
+    {
+      // exception implies the flow name is not defined and is system
+      // generated.
+      ACE_OS::sprintf (tmp,
+                       "flow%d",
+                       this->flow_num_++);
+      CORBA::Any flowname_any;
+      flowname_any <<= flow_name.in ();
+      fep->define_property ("Flow",
+                            flowname_any,
+                            ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "TAO_StreamEndPoint::add_fep");
+      return 0;
+    }
+  ACE_ENDTRY;
+  return flow_name._retn ();
+}
+
+char*
+TAO_StreamEndPoint::add_fep_i (AVStreams::FlowEndPoint_ptr fep,
+                               CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     AVStreams::notSupported,
+                     AVStreams::streamOpFailed))
+{
+  CORBA::String_var flow_name;
+  ACE_TRY
+    {
+      CORBA::Any_var flow_name_any =
+        fep->get_property_value ("FlowName", ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      *flow_name_any >>= flow_name.out ();
+    }
+  ACE_CATCHANY
+    {
+      flow_name =
+        this->add_fep_i_add_property (fep, ACE_TRY_ENV);
+    }
+  ACE_ENDTRY;
+  return flow_name._retn ();
+}
 
 char *
 TAO_StreamEndPoint::add_fep (CORBA::Object_ptr fep_obj,
@@ -2087,50 +2147,14 @@ TAO_StreamEndPoint::add_fep (CORBA::Object_ptr fep_obj,
                      AVStreams::notSupported,
                      AVStreams::streamOpFailed))
 {
-  char *flow_name = 0;
-
-  AVStreams::FlowEndPoint_ptr fep = AVStreams::FlowEndPoint::_nil ();
-
-  ACE_TRY_EX (flow_name)
-    {
-      ACE_NEW_RETURN (flow_name, char [BUFSIZ], 0);
-      CORBA::Any_ptr flow_name_any;
-      fep = AVStreams::FlowEndPoint::_narrow (fep_obj, ACE_TRY_ENV);
-      ACE_TRY_CHECK_EX (flow_name);
-      flow_name_any = fep->get_property_value ("FlowName", ACE_TRY_ENV);
-      ACE_TRY_CHECK_EX (flow_name);
-      *flow_name_any >>= flow_name;
-    }
-  ACE_CATCHANY
-    {
-      // exception implies the flow name is not defined and is system generated.
-      ACE_OS::sprintf (flow_name,
-                       "flow%d",
-                       flow_num_++);
-      ACE_TRY_EX (flow)
-        {
-          // exception implies the flow name is not defined and is system generated.
-          ACE_OS::sprintf (flow_name,
-                           "flow%d",
-                           flow_num_++);
-          CORBA::Any flowname_any;
-          flowname_any <<= flow_name;
-          fep->define_property ("Flow",
-                                flowname_any,
-                                ACE_TRY_ENV);
-          ACE_TRY_CHECK_EX (flow);
-        }
-      ACE_CATCHANY
-        {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "TAO_StreamEndPoint::add_fep");
-          return 0;
-        }
-      ACE_ENDTRY;
-      ACE_CHECK_RETURN (0);
-    }
-  ACE_ENDTRY;
+  AVStreams::FlowEndPoint_var fep =
+    AVStreams::FlowEndPoint::_narrow (fep_obj, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
+
+  CORBA::String_var flow_name =
+    this->add_fep_i (fep.in (), ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+
   ACE_TRY
     {
       fep->lock (ACE_TRY_ENV);
@@ -2145,7 +2169,7 @@ TAO_StreamEndPoint::add_fep (CORBA::Object_ptr fep_obj,
       // increment the flow count.
       this->flow_count_++;
       this->flows_.length (this->flow_count_);
-      this->flows_ [this->flow_count_-1] = flow_name;
+      this->flows_[this->flow_count_-1] = flow_name;
       // define/modify the "Flows" property.
       CORBA::Any flows_any;
       flows_any <<= this->flows_;
@@ -2160,8 +2184,7 @@ TAO_StreamEndPoint::add_fep (CORBA::Object_ptr fep_obj,
       return 0;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
-  return flow_name;
+  return flow_name._retn ();
 }
 
 
@@ -3222,6 +3245,38 @@ TAO_MMDevice::destroy (AVStreams::StreamEndPoint_ptr /* the_ep */,
     if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG, "TAO_MMDevice::destroy failed\n"));
 }
 
+char *
+TAO_MMDevice::add_fdev_i (AVStreams::FDev_ptr fdev,
+                          CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   AVStreams::notSupported,
+                   AVStreams::streamOpFailed))
+{
+  char* tmp;
+  ACE_NEW_RETURN (tmp,
+                  char[64],
+                  0);
+  CORBA::String_var flow_name = tmp;
+
+  ACE_TRY
+    {
+      // exception implies the flow name is not defined and is system
+      // generated.
+      ACE_OS::sprintf (tmp, "flow%d", flow_num_++);
+      CORBA::Any flowname_any;
+      flowname_any <<= flow_name.in ();
+      fdev->define_property ("Flow", flowname_any, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_MMDevice::add_fdev");
+      return 0;
+    }
+  ACE_ENDTRY;
+  return flow_name._retn ();
+}
+
 // Adds the fdev object to the MMDevice.
 char *
 TAO_MMDevice::add_fdev (CORBA::Object_ptr fdev_obj,
@@ -3230,35 +3285,21 @@ TAO_MMDevice::add_fdev (CORBA::Object_ptr fdev_obj,
                    AVStreams::notSupported,
                    AVStreams::streamOpFailed))
 {
-  char *flow_name = 0;
-  AVStreams::FDev_ptr fdev = AVStreams::FDev::_nil ();
+  CORBA::String_var flow_name;
+  AVStreams::FDev_var fdev;
   ACE_TRY_EX (flow_name)
     {
-      ACE_NEW_RETURN (flow_name, char [BUFSIZ], 0);
       CORBA::Any_ptr flow_name_any;
       fdev = AVStreams::FDev::_narrow (fdev_obj, ACE_TRY_ENV);
       ACE_TRY_CHECK_EX (flow_name);
       flow_name_any = fdev->get_property_value ("Flow", ACE_TRY_ENV);
       ACE_TRY_CHECK_EX (flow_name);
-      *flow_name_any >>= flow_name;
+      *flow_name_any >>= flow_name.out ();
     }
   ACE_CATCHANY
     {
-      ACE_TRY_EX (flow)
-        {
-          // exception implies the flow name is not defined and is system generated.
-          ACE_OS::sprintf (flow_name, "flow%d", flow_num_++);
-          CORBA::Any flowname_any;
-          flowname_any <<= flow_name;
-          fdev->define_property ("Flow", flowname_any, ACE_TRY_ENV);
-          ACE_TRY_CHECK_EX (flow);
-        }
-      ACE_CATCHANY
-        {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_MMDevice::add_fdev");
-          return 0;
-        }
-      ACE_ENDTRY;
+      flow_name =
+          this->add_fdev_i (fdev.in (), ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
     }
   ACE_ENDTRY;
@@ -3294,7 +3335,7 @@ TAO_MMDevice::add_fdev (CORBA::Object_ptr fdev_obj,
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
-  return flow_name;
+  return flow_name._retn ();
 }
 
 // Gets the FDev object associated with this flow.
@@ -3318,7 +3359,6 @@ TAO_MMDevice::get_fdev (const char *flow_name,
 void
 TAO_MMDevice::remove_fdev (const char *flow_name,
                            CORBA::Environment &ACE_TRY_ENV)
-
   ACE_THROW_SPEC ((CORBA::SystemException,
                    AVStreams::notSupported,
                    AVStreams::noSuchFlow,
