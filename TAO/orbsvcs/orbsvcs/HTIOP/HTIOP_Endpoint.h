@@ -149,8 +149,8 @@ namespace TAO
       /// endpoint in the list, if any.
       Endpoint *next_;
     };
-  };
-};
+  }
+}
 
 #if defined (__ACE_INLINE__)
 # include "HTIOP_Endpoint.i"

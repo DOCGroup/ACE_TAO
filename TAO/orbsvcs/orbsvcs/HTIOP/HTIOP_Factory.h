@@ -78,8 +78,8 @@ namespace TAO
       /// if -1. The default is -1.
       int inside_;
     };
-  };
-};
+  }
+}
 
 // Note that these declarations are placed outside of the scope of the
 // namespace. The generated functions use a C style signature which does

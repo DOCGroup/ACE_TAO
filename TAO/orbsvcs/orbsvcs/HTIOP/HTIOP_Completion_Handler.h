@@ -88,8 +88,8 @@ namespace TAO
 
       CONCURRENCY_STRATEGY2 *concurrency_strategy_;
     };
-  };
-};
+  }
+}
 
 #if defined (__ACE_INLINE__)
 #include "HTIOP_Completion_Handler.i"

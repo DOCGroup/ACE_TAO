@@ -1,3 +1,19 @@
+Wed Oct 27 08:00:33 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Acceptor.h:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Acceptor_Impl.h:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Completion_Handler.h:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Connection_Handler.h:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Connector.h:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Connector_Impl.h:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Endpoint.h:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Factory.h:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Profile.h:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Transport.h:
+
+          Semi-colons are not required on the closing brace of a namespace
+          and cause errors on a few compilers.
+
 Wed Oct 27 07:15:25 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/tests/HTIOP/AMI/client.cpp:

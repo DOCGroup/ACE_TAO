@@ -158,8 +158,8 @@ namespace TAO
       /// Our messaging object.
       TAO_Pluggable_Messaging *messaging_object_;
     };
-  };
-};
+  }
+}
 
 #if defined (__ACE_INLINE__)
 #include "HTIOP_Transport.i"
