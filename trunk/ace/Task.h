@@ -94,7 +94,7 @@ public:
   // Run by a daemon thread to handle deferred processing.
 
   // = Active object activation method.
-  virtual int activate (long flags = THR_NEW_LWP,
+  virtual int activate (long flags = THR_NEW_LWP | THR_JOINABLE,
                         int n_threads = 1,
                         int force_active = 0,
                         long priority = ACE_DEFAULT_THREAD_PRIORITY,
