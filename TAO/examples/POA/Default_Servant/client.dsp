@@ -17,13 +17,12 @@ CFG=POA Default Servant Client - Win32 Debug
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "POA Default Servant Client - Win32 Release" (based on\
- "Win32 (x86) Console Application")
-!MESSAGE "POA Default Servant Client - Win32 Debug" (based on\
- "Win32 (x86) Console Application")
+!MESSAGE "POA Default Servant Client - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "POA Default Servant Client - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
+# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 CPP=cl.exe
@@ -129,50 +128,50 @@ SOURCE=.\File.idl
 !IF  "$(CFG)" == "POA Default Servant Client - Win32 Release"
 
 USERDEP__FILE_="..\..\..\..\bin\Release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL compiler
+# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
 InputPath=.\File.idl
 InputName=File
 
 BuildCmds= \
-	tao_idl $(InputName).idl
+	..\..\..\..\bin\release\tao_idl $(InputName).idl
 
-"$(InputPath)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputPath)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputPath)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputPath)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputPath)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputPath)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputPath)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputPath)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputPath)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 # End Custom Build
 
 !ELSEIF  "$(CFG)" == "POA Default Servant Client - Win32 Debug"
 
 USERDEP__FILE_="..\..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL compiler
+# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
 InputPath=.\File.idl
 InputName=File
 
 BuildCmds= \
-	tao_idl $(InputName).idl
+	..\..\..\..\bin\tao_idl $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)

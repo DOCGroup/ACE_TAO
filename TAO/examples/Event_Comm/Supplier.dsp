@@ -1,10 +1,10 @@
-# Microsoft Developer Studio Project File - Name="Supplier" - Package Owner=<4>
-# Microsoft Developer Studio Generated Build File, Format Version 5.00
+# Microsoft Developer Studio Project File - Name="Event_Comm Supplier" - Package Owner=<4>
+# Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=Supplier - Win32 Debug
+CFG=Event_Comm Supplier - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
@@ -13,22 +13,22 @@ CFG=Supplier - Win32 Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "Supplier.mak" CFG="Supplier - Win32 Debug"
+!MESSAGE NMAKE /f "Supplier.mak" CFG="Event_Comm Supplier - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Supplier - Win32 Release" (based on\
- "Win32 (x86) Console Application")
-!MESSAGE "Supplier - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "Event_Comm Supplier - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "Event_Comm Supplier - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
+# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "Supplier - Win32 Release"
+!IF  "$(CFG)" == "Event_Comm Supplier - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -53,7 +53,7 @@ LINK32=link.exe
 # ADD LINK32 ace.lib TAO.lib orbsvcs.lib /nologo /subsystem:console /pdb:"Release/client.pdb" /machine:I386 /out:"Release/Supplier.exe" /libpath:"..\..\tao" /libpath:"..\..\..\ace" /libpath:"..\..\orbsvcs\orbsvcs"
 # SUBTRACT LINK32 /pdb:none
 
-!ELSEIF  "$(CFG)" == "Supplier - Win32 Debug"
+!ELSEIF  "$(CFG)" == "Event_Comm Supplier - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -82,8 +82,8 @@ LINK32=link.exe
 
 # Begin Target
 
-# Name "Supplier - Win32 Release"
-# Name "Supplier - Win32 Debug"
+# Name "Event_Comm Supplier - Win32 Release"
+# Name "Event_Comm Supplier - Win32 Debug"
 # Begin Group "Source"
 
 # PROP Default_Filter ""
@@ -143,9 +143,45 @@ SOURCE=.\Supplier_Input_Handler.h
 
 SOURCE=.\Event_Comm.idl
 
-!IF  "$(CFG)" == "Supplier - Win32 Release"
+!IF  "$(CFG)" == "Event_Comm Supplier - Win32 Release"
 
-!ELSEIF  "$(CFG)" == "Supplier - Win32 Debug"
+USERDEP__EVENT="..\..\..\bin\Release\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
+InputPath=.\Event_Comm.idl
+InputName=Event_Comm
+
+BuildCmds= \
+	..\..\..\bin\Release\tao_idl $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "Event_Comm Supplier - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
 # Begin Custom Build - Invoking TAO_IDL Compiler

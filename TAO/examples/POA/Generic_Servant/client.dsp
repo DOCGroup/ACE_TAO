@@ -128,12 +128,12 @@ SOURCE=.\Foo.idl
 
 # PROP Ignore_Default_Tool 1
 USERDEP__FOO_I="..\..\..\..\bin\Release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compiler
+# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
 InputPath=.\Foo.idl
 InputName=Foo
 
 BuildCmds= \
-	tao_idl -Wb,export_macro=GENERIC_SERVANT_Export     -Wb,export_include=generic_servant_export.h $(InputName).idl
+	..\..\..\..\bin\Release\tao_idl -Wb,export_macro=GENERIC_SERVANT_Export -Wb,export_include=generic_servant_export.h $(InputName).idl
 
 "$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -158,12 +158,12 @@ BuildCmds= \
 
 # PROP Ignore_Default_Tool 1
 USERDEP__FOO_I="..\..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compiler
+# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
 InputPath=.\Foo.idl
 InputName=Foo
 
 BuildCmds= \
-	tao_idl -Wb,export_macro=GENERIC_SERVANT_Export     -Wb,export_include=generic_servant_export.h $(InputName).idl
+	..\..\..\..\bin\tao_idl -Wb,export_macro=GENERIC_SERVANT_Export -Wb,export_include=generic_servant_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
