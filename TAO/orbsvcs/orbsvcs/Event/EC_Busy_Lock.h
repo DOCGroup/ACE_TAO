@@ -1,6 +1,6 @@
 /* -*- C++ -*- */
 /**
- *  @file   EC_ConsumerAdmin.h
+ *  @file   EC_Busy_Lock.h
  *
  *  $Id$
  *

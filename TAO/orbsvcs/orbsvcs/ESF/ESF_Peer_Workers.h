@@ -1,6 +1,6 @@
 /* -*- C++ -*- */
 /**
- *  @file   ESF_Peer_Connected.h
+ *  @file   ESF_Peer_Workers.h
  *
  *  $Id$
  *
