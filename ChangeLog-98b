@@ -1,0 +1,307 @@
+Wed May  6 02:57:40 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Thread_Manager.{h,i,cpp}: A bug was found by Arturo Montes
+	  <mitosys@colomsat.net.co> who noticed that when a thread was
+	  spawned and then exited immediately, its thread descriptor might
+	  get freed before even get registered into the thread table kept
+	  by the Thread_Manager.  Although it doesn't make any sense to
+	  spawn a thread just to let it return immediately, a middleware
+	  shouldn't restrict the way how users want to use it.
+
+	  I got around this problem by adding a lock into
+	  Thread_Descriptor.  Before spawning a thread, the Thread Manager
+	  will first grab the lock.  It won't release the lock until
+	  calling append thread, at which point, the Thread_Descriptor of
+	  the thread has been stashed into the table.  Removing the
+	  Thread_Descriptor also requires to hold this lock and release
+	  the lock before the Thread_Descriptor is "freed."  Therefore,
+	  if a thread exit before its Thread_Manager ever gets a chance to
+	  register it, it will block and waiting.
+
+	  The type of the lock is defined by ACE_DEFAULT_THREAD_MANAGER_LOCK
+	  which, by default, is ACE_Thread_Mutex.  User can change the
+	  definition by defining in their config.h file.  For example, if
+	  you can be sure that all your threads will run for an extended
+	  long time (which, in most case, should be true,) you can disable
+	  this feature by defining this as a ACE_Null_Mutex to speed up
+	  spawning and termination of threads.
+
+	  (thread_desc_freelist_): Added a free list to Thread_Manager to
+	  recycle Thread_Descriptor.  By default, this free list
+	  pre-allocate 0 Thread_Descriptor and has low-water-mark of 1,
+	  increment count 1 and a huge (25000) high water mark.  That is,
+	  if you use a Thread_Manager for an extended period of time, you
+	  won't have to dynamically allocate memory for Thread_Descriptor
+	  for every thread after your system is stable (the thread count
+	  fluctuates between some certain values.)
+
+	  There are two ways to change the settings.  First, by defining
+	  ACE_DEFAULT_THREAD_MANAGER_LWM, ACE_DEFAULT_THREAD_MANAGER_HWM,
+	  ACE_DEFAULT_THREAD_MANAGER_INC, and
+	  ACE_DEFAULT_THREAD_MANAGER_PREALLOC in your <config.h> file.
+	  This changes the default setting of your ACE.  (The global
+	  Thread_Manager use this setting.)  Or, you can specify these
+	  values when creating a Thread_Manager.
+
+	* ace/Free_List.cpp (alloc,dealloc): Don't grab the lock in these
+	  two functions.  They only get called from add() and remove()
+	  which hold the lock before making the call.  Actually, they also
+	  gets called from the constructor and destructor.  But that
+	  shouldn't be a problem.
+
+	* tests/Reactor_Notify_Test.cpp (run_test): Moved the #endif of
+	  ACE_HAS_THREADS down to avoid compilation error on non-threaded
+	  platforms.
+
+Wed May  6 00:15:39 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* performance-tests/Misc/context_switch_time.cpp (svc): An 'i'
+	  was being defined twice, gorp!  It's fixed now!
+
+Tue May  5 14:12:08 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* include/makeinclude/platform_sco5.0.0-fsu-pthread.GNU: Added a
+ 	  platform config file courtesy of Arturo Montes
+ 	  <mitosys@colomsat.net.co>.
+
+Tue May 05 08:35:18 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-irix6.x-sgic++-nothreads.h: updated the determination
+          of ACE_SIZEOF_LONG_DOUBLE.  Thanks to Bob Laferriere
+          <laferrie@gsao.med.ge.com> for providing the fix.
+
+        * include/makeinclude/platform_sunos5_g++.GNU: use -gstabs+ instead
+          of -g on Solaris86.
+
+        * etc/Svc_Conf_l.cpp.diff: updated.  It's magic, Nanbor :-)
+          The problem seems to be due to an old version left in
+          /tmp/Svc_Conf_l.cpp, which confuses flex.
+
+        * ace/config-linux-common.h,config-g++-common.h: moved
+          ACE_HAS_PENTIUM (with i386) from config-linux-common.h
+          to config-g++-common.h.
+
+        * ace/config-linux-common.h: added ACE_HAS_POLL, so we
+          don't use ::select () in ACE_OS::sleep ().  Linux's
+          ::select () modifies its timeout argument!
+
+        * ace/OS.i (gethrtime): added RDTSC support for all g++
+          _and_ ACE_HAS_PENTIUM platforms.
+
+        * ace/config-vxworks5.x.h: added ACE_HAS_PENTIUM with GHS
+          on Intel platforms.
+
+        * ace/Makefile: for GHS on Intel 8086, build gethrtime.cpp.
+          It's used to provide a high-resolution time using the
+          Pentium RDTSC instruction.  I don't know how to get
+          GHS' asm to do it, so it uses g++.
+
+        * ACE-INSTALL.html: added note about carefully installing
+          egcs on Linux.  Thanks to Kurt Sussman <kls@best.com> for
+          tracking down the cause of mysterious link failures.
+
+Tue May 05 02:15:49 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * ace/Svc_Conf_l.cpp: I know, I know.  I shouldn't mess with this
+          file directly.  But I couldn't manufacture this file even with
+          the stock Svc_Conf.l using Doug's flex.  So, I reckon I'll just
+          check this in now and fix the Svc_Conf_l.diff later.
+
+        * ace/Service_Config.{h,cpp} (process_directive): Standard CE
+          stuff.
+
+        * WindozeCE/WinAdapter*.*:
+        * WindozeCE/WindozeCE*.*: Replaced the old adapter for CE with a
+          new one.  The new version allows uses to scroll thru the
+          "console" output.
+
+Mon May 04 17:09:39 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * performance-tests/Misc/context_switch_time.cpp: lots of
+          cleanup.  The main changes were the use of ACE_THR_PRI_FIFO_DEF
+          for the default therad priority, and removal of some
+          unnecessary thr_yield () calls.
+
+        * tests/Aio_Platform_Test.cpp: added arguments to main (),
+          removed #includes that are already in ace/OS.h, and added
+          ACE_START_TEST/ACE_END_TEST calls.
+
+Mon May  4 13:08:18 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+        * ace/config-sunos5.6.h: Removed a mysterious "30" at the end of
+          an #undef.  Thanks to J. Russell Noseworthy
+          <rnosewor@objectsciences.com> for reporting this problem.
+
+Mon May 04 08:49:09 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.cpp (ACE_Thread_Adapter::invoke): with ACE_NEEDS_LWP_PRIO_SET,
+          added the call to ACE_OS::thr_setprio () so that the LWP priority
+          will be set if running in the RT class.  Applications no longer
+          have to be concerned with this.
+
+        * performance-tests/Misc/preempt.cpp (svc): removed
+          ACE_OS::thr_setprio () calls to set LWP priority, now that ACE
+          handles that internally.
+
+        * include/makeinclude/platform_*linux.GNU: added "s" to
+          ARFLAGS, so that ranlib is no longer necessary.
+
+Sun May 03 22:37:38 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * ace/Parse_Node.cpp (open_handle): WinCE doesn't support
+          ExpandEnvironmentStringA.
+
+        * ace/config-win32-common.h: Only define ACE_HAS_GETRUSAGE when
+          ACE_HAS_WINNT4 != 0.  Thanks to Paul Motuzenko
+          <p_motuzenko@hotmail.com> for reporting this.
+
+Sun May 03 01:58:47 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * ACE version 4.5.1 released.
+
+Sat May  2 14:35:04 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+        * tests/Reactor_Notify_Test.cpp: Factored out some common code to
+          make the test more concise.
+
+        * tests/Reactor_Notify_Test.cpp: Modified the test to check
+          whether our new mechanism for disabling the notify pipe works
+          correctly.
+
+        * ace/{WFMO,Select}_Reactor[_Impl]: Added the
+          "disable_notify_pipe" flag in the constructor in order to
+          disable this feature and save on descriptors if they aren't
+          required.  Thanks to Tom Venturella <tventurell@mdc.com> for
+          motivating this.
+
+Sat May 02  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
+
+        * tests/Aio_Platform_Test.cpp: Included this test program for
+        testing a platform for Asynchronous I/O options.
+        * tests/Makefile (BIN): Added Aio_Platform_Test.
+
+Fri May 01 17:52:32 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * ace/Arg_Shifter.{h,cpp}: Added macros ACE_Export and
+          ACE_BUILD_DLL respectively.
+
+        * ace/ACE_Library.mak:
+        * ace/ace_{dll,lib}.dsp: Added Arg_Shifter.cpp into project.
+
+Fri May  1 13:52:32 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+        * ace/Addr: Made the destructor for ACE_Addr virtual so that
+          subclasses can be deleted correctly.  Thanks to Wei Chiang
+          <chiang@horizon.ntc.nokia.com> for reporting this.
+
+        * ace: Added Arg_Shifter from TAO and renamed it to
+          ACE_Arg_Shifter.
+
+        * ace/IOStream_T.i (recv_n): ACE_IOStream<STREAM>::eof (void) had
+          a subtle bug if it is called when a get operation (>>) has not
+          failed.  Thanks to James CE Johnson <ace-users@lads.com> for
+          reporting this bug.
+
+        * examples/Connection/misc/Connection_Handler.cpp: Make sure to
+          activate() each active object using THR_DETACHED so we don't run
+          out of threading resources.  Thanks to Brad Walton
+          <brad.walton@transnexus.com> for reporting this.
+
+        * ace/Timer_Queue_Adapters.cpp: Rather than returning the result
+          of schedule_ualarm(), the
+          ACE_Async_Timer_Queue_Adapter<TQ>::schedule() method should
+          return the timer id.  Thanks to James Garrison
+          <jhg@austx.tandem.com> for reporting this.
+
+        * examples/System_V_IPC/SV_Message_Queues: Renamed the so-called
+          "ACE_Message_Block" to "Message_Block" so it wouldn't be as
+          confusing.  Thanks to Ganapathi <guns@fs.IConNet.NET> for this
+          suggestion.
+
+Fri May 01 17:52:32 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * ace/ACE_Library.mak:
+        * ace/ace_{dll,lib}.dsp: Added Arg_Shifter.cpp into project.
+
+Fri May 01 14:09:21 1998  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS.h: Changed ACE_hrtime_t from signed to unsigned on Win32
+          to insure correct results from ACE_High_Res_Timer::elapsed_time
+          calculations.  Fixes bug P87.
+
+Fri May 01 11:52:47 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * ace/OS.h: Forgot to redefine ASYS_INLINE after #undef it.
+
+        * ace/OS.i (last_error): On Win32, this should also update errno
+          after calling SetLastError ().  Thanks to Steve for pointing
+          this out.  Fixes bug P88.
+
+Fri May 01 10:01:09 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-sunos5.6.h: replaced config-sunos5.6-sunc++-4.x.h
+          with this config file, which supports both Sun C++ and g++.
+
+        * ace/OS.i (gethrtime): for the default (::gettimeofday) case,
+          use 64-bit instead of 32-bit arithmetic by casting to ACE_hrtime_t.
+
+        * ace/Basic_Types.{h,i}: added ACE_U_LongLong::operator *.
+
+        * ace/Env_Value_T.cpp: added #include of Env_Value_T.h.
+
+Fri May  1 00:35:40 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * include/makeinclude/wrapper_macros.GNU
+          (ACE_LDSO_Version_Number): Fixed the problem of not able to
+          parse a formal release number from ace/VERSION.
+
+Thu Apr 30 15:53:58 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * ACE.{h,i,cpp}:
+        * DEV.{h,i,cpp}:
+        * DEV_Connector.{h,i,cpp}:
+        * DEV_IO.{h,i,cpp}:
+        * Date_Time.{h,i,cpp}:
+        * FIFO_Recv.{h,i,cpp}:
+        * FIFO_Recv_Msg.{h,i,cpp}:
+        * FIFO_Send.{h,i,cpp}:
+        * FIFO_Send_Msg.{h,i,cpp}:
+        * FILE.{h,i,cpp}:
+        * FILE_Connector.{h,i,cpp}:
+        * FILE_IO.{h,i,cpp}:
+        * IO_SAP.{h,i,cpp}:
+        * IPC_SAP.{h,i,cpp}:
+        * LSOCK.{h,i,cpp}:
+        * LSOCK_CODgram.{h,i,cpp}:
+        * LSOCK_Connector.{h,i,cpp}:
+        * LSOCK_Dgram.{h,i,cpp}:
+        * LSOCK_Stream.{h,i,cpp}:
+        * Log_Record.{h,i,cpp}:
+        * Pipe.{h,i,cpp}:
+        * SOCK.{h,i,cpp}:
+        * SOCK_CODgram.{h,i,cpp}:
+        * SOCK_Connector.{h,i,cpp}:
+        * SOCK_Dgram.{h,i,cpp}:
+        * SOCK_Dgram_Bcast.{h,i,cpp}:
+        * SOCK_Dgram_Mcast.{h,i,cpp}:
+        * SOCK_IO.{h,i,cpp}:
+        * SOCK_Stream.{h,i,cpp}:
+        * SPIPE.{h,i,cpp}:
+        * SPIPE_Connector.{h,i,cpp}:
+        * SPIPE_Stream.{h,i,cpp}:
+        * SV_Message_Queue.{h,i,cpp}:
+        * SV_Semaphore_Complex.{h,i,cpp}:
+        * SV_Semaphore_Simple.{h,i,cpp}:
+        * UPIPE_Acceptor.{h,i,cpp}:
+        * UPIPE_Connector.{h,i,cpp}: Added inline control for these
+          supposedly default inline functions.
+
+        * ace/config-WinCE.h: Added ACE_LACKS_INLINE_FUNCTIONS.
+
+        * ace/OS.h: Added a new macro ASYS_INLINE for platforms that don't
+          support inline properly.  This is controlled by the macro
+          ACE_LACKS_INLINE_FUNCTIONS.
+
+          Walked thru all macros and indented them properly.
+
+        * ace/README: Added documentation for ACE_LACKS_INLINE_FUNCTIONS.
