@@ -25,6 +25,7 @@
 #                     default, others do not.
 #  optimize         Enable optimization; see OCFLAGS and OCCFLAGS.
 #  orbix            Enable use of Orbix.
+#  pace             Enable PACE as the underpinnings of ACE_OS.
 #  probe            Enable ACE_Timeprobes.
 #  profile          Enable profiling; see PCFLAGS and PCCFLAGS.
 #  purify           Purify all executables.  purify must be in user's PATH!
@@ -414,6 +415,15 @@ else  # exceptions
   endif # g++ > 2.8.0
   endif # ! ACE_HAS_GNUG_PRE_2_8
 endif # exceptions
+
+ifeq ($(pace),0)
+  override pace=
+endif # pace
+
+ifneq ($(pace),)
+  CFLAGS+= -DACE_HAS_PACE -DPACE_HAS_INLINE -I$(ACE_ROOT)/PACE
+  include $(ACE_ROOT)/PACE/include/makeinclude/rules.common.GNU
+endif # pace
 
 ifeq ($(profile),0)
   override profile =
