@@ -13,6 +13,8 @@
 #include "debug.h"
 #include "ORB_Constants.h"
 #include "Messaging_SyncScopeC.h"
+#include "ORB_Core.h"
+#include "Service_Context.h"
 #include "ace/Auto_Ptr.h"
 
 #if !defined (__ACE_INLINE__)
@@ -294,12 +296,11 @@ namespace TAO
             this->resolver_.transport ()->close_connection ();
             this->resolver_.stub ()->reset_profiles ();
 
-            ACE_THROW_RETURN (CORBA::COMM_FAILURE (
-              CORBA::SystemException::_tao_minor_code (
-                TAO_INVOCATION_RECV_REQUEST_MINOR_CODE,
-                errno),
-              CORBA::COMPLETED_MAYBE),
-                              TAO_INVOKE_FAILURE);
+            return this->orb_core ()->service_raise_comm_failure (
+                this->details_.request_service_context ().service_info (),
+                this->resolver_.profile ()
+                ACE_ENV_ARG_PARAMETER);
+
           }
       }
 
