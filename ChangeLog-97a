@@ -1,3 +1,76 @@
+Wed Feb 12 00:08:42 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
+
+	* ace/ReactorEx: Finished a complete rewrite of
+	  ReactorEx.  The new version allows multiple threads of
+	  control to wait simultaneously in
+	  ::WaitForMultipleObjects(). This was difficult because the 
+ 	  set of ACE_HANDLEs used in ReactorEx->handle_events() is 
+	  shared between all threads.  We devised a clever protocol
+	  that ensures all changes to the handle set are
+	  serialized. This serialization was achieved by using
+	  multiple (auto and manual) events and mutexes and by taking
+	  advantage of the "waitAll" semantics of
+	  WaitForMultipleObjects().
+
+	  Concept of "owner" thread is introduced in ReactorEx.  We
+	  need to keep track of the "owner" because we don't want
+	  multiple threads to try to expire timers. Therefore the
+	  "owner" thread is the only one allowed to expire
+	  timers. Also, the owner thread is the only thread which
+	  waits on the internal notify handle (which is used to
+	  dispatch explicit calls to
+	  ACE_ReactorEx::notify(). Initially, the creator thread of
+	  ReactorEx becomes the "owner" thread. Ownership can later be
+	  transferred among threads, just as with the standard
+	  ACE_Reactor.
+
+	  We also updated the Handler Repository since it now
+ 	  keeps track of <handle, event_handler> tuples to be added
+	  and deleted from the current handle set at the appropriate
+	  time (i.e., when all threads are out of
+	  WaitForMultipleObjects() and have completed all necessary
+	  dispatching).  The Handler_Repository implements the update
+	  protocol that is used to serialize changes to its internal
+	  state.
+	
+	  Two slots were added to the <size> parameter in the
+ 	  constructor and open methods of ReactorEx that will store
+ 	  handles used for internal management. Therefore, users can add
+ 	  upto MAXIMUM_WAIT_OBJECTS - 2 handles into ReactorEx.  On
+	  current WinNT platforms (e.g., 3.51 and 4.0)
+	  MAXIMUM_WAIT_OBJECTS is 64.
+
+	  Note that the interface to ReactorEx did not change in this
+ 	  process. Your existing code should work without changes.
+	  Moreover, we've optimized the implementation so that if only
+	  1 thread calls ACE_ReactorEx::handle_events() the code is
+	  very efficient.  Moreover, you can dynamically add or remove
+	  threads without having to register them with the ReactorEx.
+
+	* examples/Reactor/ReactorEx/test_MT.cpp: This application tests
+ 	  multiple threads simultaneously calling
+ 	  ReactorEx->handle_events(). It also shows how different threads
+ 	  can update the state of ReactorEx.
+
+Wed Feb 12 00:08:42 1997  Douglas C. Schmidt  <schmidt@polka.cs.wustl.edu>
+
+	* ace/Synch: Added a remove() call to ~ACE_Thread_Mutex so that it
+ 	  will be removed (and resources cleaned up) automatically when an
+ 	  ACE_Thread_Mutex object goes out of scope.  Thanks to Jay
+ 	  Denkberg <jay_denkberg@mail.icomverse.com> for reporting this.
+
+	* ace: Added a new config file (config-irix6.2-sgic++-nothreads.h)
+ 	  that works for non-Pthread versions of SGI 6.2.  Thanks to Fred
+ 	  LaBar <flabar@fallschurch.esys.com> for this.
+
+	* ace/XtReactor: Fixed a bunch of minor bugs that crept into the
+ 	  ACE_XtReactor.  Thanks to Fred LaBar
+ 	  <flabar@fallschurch.esys.com> for reporting this.
+
+	* ace/OS.i (thr_getprio): Fixed a typo in the #ifdefs so that we
+ 	  return ACE_NOTSUP_RETURN(-1) if threading isn't enabled.  Thanks
+ 	  to Fred LaBar <flabar@fallschurch.esys.com> for reporting this.
+
 Tue Feb 11 11:26:03 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/OS.{h,i},config-vxworks*.h,README: added ACE_HAS_CLOCK_GETTIME,
@@ -157,41 +230,6 @@ Fri Feb 07 13:56:24 1997  David L. Levine  <levine@cs.wustl.edu>
 	  reordered initializers to match declaration order.
 
 Fri Feb 07 05:08:51 1997    <irfan@cha-cha.cs.wustl.edu>
-
-	* ace/ReactorEx: Complete rewrite of ReactorEx. This was done to
- 	  allow multiple threads of control to wait simultaneously in
- 	  ::WaitForMultipleObjects(). This was difficult because the
- 	  handle set used in ReactorEx->handle_events() is shared between
- 	  all threads. Care was necessary to make sure that changes to the
- 	  handle set are serialized. This serialization was achieved by
- 	  using multiple (auto and manual) events and mutexes.
-
-	  Concept of "owner" thread is introduced in ReactorEx. The owner
- 	  concept is used because we don't want multiple threads to try to
- 	  expire timers. Therefore the "owner" thread is the only one
- 	  allowed to expire timers. Also, the owner thread is the only
- 	  thread which waits on the notify handle. Initially, the creator
- 	  thread of ReactorEx becomes the "owner" thread. Ownership can
- 	  later be transferred among threads.
-
-	  The Handler Repository also went through major changes as it now
- 	  keeps track of <handle, event_handler> tuples to be added and
- 	  deleted from the current handle set at the appropriate time
-	  (i.e., when all threads are out of WaitForMultipleObjects() and
-	  have completed all necessary dispatching).
-	
-	  Two slots will be added to the <size> parameter in the
- 	  constructor and open methods of ReactorEx which will store
- 	  handles used for internal management. Therefore, users can add
- 	  upto MAXIMUM_WAIT_OBJECTS - 2 handles into ReactorEx.
-
-	  Note that the interface to ReactorEx did not change in this
- 	  process. Your existing code should work without changes.
-
-	* examples/Reactor/ReactorEx/test_MT.cpp: This application tests
- 	  multiple threads simultaneously calling
- 	  ReactorEx->handle_events(). It also shows how different threads
- 	  can update the state of ReactorEx.	
 
 	* ace/Synch.cpp (dump): Fixed access error.
 
