@@ -11,8 +11,9 @@
 #----------------------------------------------------------------------------
 
 DIRS  = Client_Propagated \
-        Server_Protocol \
-	Client_Protocol
+	Client_Protocol \
+	Server_Declared \
+        Server_Protocol
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
