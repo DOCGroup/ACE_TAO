@@ -1,3 +1,20 @@
+Sun Nov 28 19:00:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/AV/AVStreams_i.h:
+        * orbsvcs/orbsvcs/AV/Endpoint_Strategy.h:
+        * orbsvcs/orbsvcs/AV/Policy.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
+        * orbsvcs/orbsvcs/Time/TAO_TIO.h:
+          Removed include of ORB_Manager, was not used at all
+
+        * orbsvcs/orbsvcs/CosTrading.mpc:
+        * orbsvcs/Scheduling_Service/Scheduling_Service.mpc
+          Add utils as base project because TAO_ORB_Manager is now there
+
+        * orbsvcs/orbsvcs/Trader/Trading_Loader.h:
+        * orbsvcs/Scheduling_Service/Scheduling_Service.h:
+          Use TAO_ORB_Manager from tao/Utils now.
+
 Sun Nov 28 11:27:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/ORB_Manager.{h,cpp}:
