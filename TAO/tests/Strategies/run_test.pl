@@ -53,7 +53,7 @@ unlink $iorfile;
 # This will fail for builds lacking dynamic libraries.
 
 $SV2 = new PerlACE::Process ("server",
-                             "-o $iorfile -ORBSvcConf $advsvcconf");
+                             "-o $iorfile -ORBSvcConf $advsvcconf -ORBendpoint shmiop:// -ORBdebuglevel 10");
 $CL2 = new PerlACE::Process ("client",
                              "-k file://$iorfile -x -ORBSvcConf $advsvcconf");
 

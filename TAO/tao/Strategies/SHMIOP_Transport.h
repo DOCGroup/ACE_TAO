@@ -82,10 +82,14 @@ protected:
                           size_t len,
                           const ACE_Time_Value *s = 0);
 
+#if 0
+  // This no longer exists with the PMB-change flow.  Not sure how to deal with that,
+  // so for now we ditch the method and see if things work.
   virtual int consolidate_message (ACE_Message_Block &incoming,
                                    ssize_t missing_data,
                                    TAO_Resume_Handle &rh,
                                    ACE_Time_Value *max_wait_time);
+#endif
 
   virtual int register_handler_i (void);
 
