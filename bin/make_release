@@ -98,8 +98,8 @@ my $gnu2 = '/usr/bin';
 ####### Add the path to /usr/bin unconditionally..
 $ENV{'PATH'} = "$gnu2" . ':' . $ENV{'PATH'};
 
-my $export_dir = '/project/deuce/ftp/pub/dummy_dir';
-my $old_versions_dir = '/project/deuce/ftp/pub/dummy_dir';
+my $export_dir = '/project/deuce/ftp/pub/ACE+TAO-distribution';
+my $old_versions_dir = '/project/deuce/ftp/pub/previous_versions';
 my $diffs_dir = "$export_dir/diffs";
 my $exec_prefix = '';
 my $generate_man_pages = 0;
@@ -123,7 +123,7 @@ while ($#ARGV >= $[  &&  $ARGV[0] =~ /^-/) {
   if ($ARGV[0] eq '-i') {
     $install = 1;
   } elsif ($ARGV[0] eq '-g') {
-    $generate_man_pages = 0;
+    $generate_man_pages = 1;
   } elsif ($ARGV[0] eq '-k') {
     if ($ARGV[1] =~ /^[^-]+/  &&
         ($ARGV[1] eq 'ace' || $ARGV[1] eq 'tao' || $ARGV[1] eq 'ace+tao')) {
