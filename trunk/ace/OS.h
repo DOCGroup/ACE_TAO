@@ -4176,10 +4176,6 @@ struct sigaction
 #   define EIDRM 0
 # endif /* !EIDRM */
 
-# if !defined (ENOSYS)
-#   define ENOSYS EFAULT /* Operation not supported or unknown error. */
-# endif /* !ENOSYS */
-
 # if !defined (ENFILE)
 #   define ENFILE EMFILE /* No more socket descriptors are available. */
 # endif /* !ENOSYS */
