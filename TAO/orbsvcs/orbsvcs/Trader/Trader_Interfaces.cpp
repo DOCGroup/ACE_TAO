@@ -40,7 +40,7 @@ template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::~TAO_Lookup (void)
 {
   ACE_GUARD (TRADER_LOCK_TYPE, trader_mon, this->lock_);
-  for (ACE_TYPENAME Request_Ids::ITERATOR riter (this->request_ids_);
+  for (Request_Ids::ITERATOR riter (this->request_ids_);
        ! riter.done ();
        riter.advance ())
     {
@@ -855,7 +855,7 @@ seen_request_id (TAO_Policies& policies,
     TAO_THROW_RETURN (CORBA::NO_MEMORY (CORBA::COMPLETED_NO), CORBA::B_TRUE);
 
   ACE_GUARD_RETURN (TRADER_LOCK_TYPE, trader_mon, this->lock_, CORBA::B_TRUE);
-  for (ACE_TYPENAME Request_Ids::ITERATOR riter (this->request_ids_);
+  for (Request_Ids::ITERATOR riter (this->request_ids_);
        ! riter.done ();
        riter.advance ())
     {
