@@ -56,7 +56,16 @@ POA_PortableInterceptor::Cookie::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  return new POA_PortableInterceptor::_tao_direct_collocated_Cookie (this, stub);
+
+  PortableInterceptor::Cookie *retval =
+    PortableInterceptor::Cookie::_nil ();
+
+  ACE_NEW_RETURN (retval,
+                  POA_PortableInterceptor::_tao_direct_collocated_Cookie (this, 
+                                                                          stub),
+                  PortableInterceptor::Cookie::_nil ());
+
+  return retval;
 }
 
 POA_PortableInterceptor::_tao_direct_collocated_Cookie::_tao_direct_collocated_Cookie (
@@ -150,7 +159,18 @@ POA_PortableInterceptor::Interceptor::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  return new POA_PortableInterceptor::_tao_direct_collocated_Interceptor (this, stub);
+
+  PortableInterceptor::Interceptor *retval =
+    PortableInterceptor::Interceptor::_nil ();
+
+  ACE_NEW_RETURN (
+      retval,
+      POA_PortableInterceptor::_tao_direct_collocated_Interceptor (this, 
+                                                                   stub),
+      PortableInterceptor::Interceptor::_nil ()
+    );
+
+  return retval;
 }
 
 POA_PortableInterceptor::_tao_direct_collocated_Interceptor::_tao_direct_collocated_Interceptor (
@@ -247,7 +267,18 @@ POA_PortableInterceptor::ServerRequestInterceptor::_this (CORBA_Environment &ACE
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  return new POA_PortableInterceptor::_tao_direct_collocated_ServerRequestInterceptor (this, stub);
+
+  PortableInterceptor::ServerRequestInterceptor *retval =
+    PortableInterceptor::ServerRequestInterceptor::_nil ();
+
+  ACE_NEW_RETURN (
+      retval,
+      POA_PortableInterceptor::_tao_direct_collocated_ServerRequestInterceptor (this, 
+                                                                                stub),
+      PortableInterceptor::ServerRequestInterceptor::_nil ()
+    );
+
+  return retval;
 }
 
 POA_PortableInterceptor::_tao_direct_collocated_ServerRequestInterceptor::_tao_direct_collocated_ServerRequestInterceptor (
@@ -403,7 +434,18 @@ POA_PortableInterceptor::ClientRequestInterceptor::_this (CORBA_Environment &ACE
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  return new POA_PortableInterceptor::_tao_direct_collocated_ClientRequestInterceptor (this, stub);
+
+  PortableInterceptor::ClientRequestInterceptor *retval =
+    PortableInterceptor::ClientRequestInterceptor::_nil ();
+
+  ACE_NEW_RETURN (
+      retval,
+      POA_PortableInterceptor::_tao_direct_collocated_ClientRequestInterceptor (this, 
+                                                                                stub),
+      PortableInterceptor::ClientRequestInterceptor::_nil ()
+    );
+
+  return retval;
 }
 
 POA_PortableInterceptor::_tao_direct_collocated_ClientRequestInterceptor::_tao_direct_collocated_ClientRequestInterceptor (

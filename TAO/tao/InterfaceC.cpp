@@ -117,7 +117,14 @@ CORBA_IRObject_ptr CORBA_IRObject::_unchecked_narrow (
       if (retv != 0)
         return retv;
     }
-  return new CORBA_IRObject(stub);
+
+  CORBA_IRObject_ptr retval = CORBA_IRObject::_nil ();
+
+  ACE_NEW_RETURN (retval,
+                  CORBA_IRObject (stub),
+                  CORBA_IRObject::_nil ());
+
+  return retval;
 }
 
 CORBA_IRObject_ptr 
@@ -295,7 +302,14 @@ CORBA_Contained_ptr CORBA_Contained::_unchecked_narrow (
       if (retv != 0)
         return retv;
     }
-  return new CORBA_Contained(stub);
+
+  CORBA_Contained_ptr retval = CORBA_Contained::_nil ();
+
+  ACE_NEW_RETURN (retval,
+                  CORBA_Contained (stub),
+                  CORBA_Contained::_nil ());
+
+  return retval;
 }
 
 CORBA_Contained_ptr 
@@ -2035,7 +2049,14 @@ CORBA_Container_ptr CORBA_Container::_unchecked_narrow (
       if (retv != 0)
         return retv;
     }
-  return new CORBA_Container(stub);
+
+  CORBA_Container_ptr retval = CORBA_Container::_nil ();
+
+  ACE_NEW_RETURN (retval,
+                  CORBA_Container (stub),
+                  CORBA_Container::_nil ());
+
+  return retval;
 }
 
 CORBA_Container_ptr 
@@ -3223,7 +3244,14 @@ CORBA_IDLType_ptr CORBA_IDLType::_unchecked_narrow (
       if (retv != 0)
         return retv;
     }
-  return new CORBA_IDLType(stub);
+
+  CORBA_IDLType_ptr retval = CORBA_IDLType::_nil ();
+
+  ACE_NEW_RETURN (retval,
+                  CORBA_IDLType (stub),
+                  CORBA_IDLType::_nil ());
+
+  return retval;
 }
 
 CORBA_IDLType_ptr 
@@ -3375,7 +3403,14 @@ CORBA_Repository_ptr CORBA_Repository::_unchecked_narrow (
       if (retv != 0)
         return retv;
     }
-  return new CORBA_Repository(stub);
+
+  CORBA_Repository_ptr retval = CORBA_Repository::_nil ();
+
+  ACE_NEW_RETURN (retval,
+                  CORBA_Repository (stub),
+                  CORBA_Repository::_nil ());
+
+  return retval;
 }
 
 CORBA_Repository_ptr 
@@ -3862,7 +3897,14 @@ CORBA_ModuleDef_ptr CORBA_ModuleDef::_unchecked_narrow (
       if (retv != 0)
         return retv;
     }
-  return new CORBA_ModuleDef(stub);
+
+  CORBA_ModuleDef_ptr retval = CORBA_ModuleDef::_nil ();
+
+  ACE_NEW_RETURN (retval,
+                  CORBA_ModuleDef (stub),
+                  CORBA_ModuleDef::_nil ());
+
+  return retval;
 }
 
 CORBA_ModuleDef_ptr 
@@ -3979,7 +4021,14 @@ CORBA_ConstantDef_ptr CORBA_ConstantDef::_unchecked_narrow (
       if (retv != 0)
         return retv;
     }
-  return new CORBA_ConstantDef(stub);
+
+  CORBA_ConstantDef_ptr retval = CORBA_ConstantDef::_nil ();
+
+  ACE_NEW_RETURN (retval,
+                  CORBA_ConstantDef (stub),
+                  CORBA_ConstantDef::_nil ());
+
+  return retval;
 }
 
 CORBA_ConstantDef_ptr 
@@ -4366,7 +4415,14 @@ CORBA_TypedefDef_ptr CORBA_TypedefDef::_unchecked_narrow (
       if (retv != 0)
         return retv;
     }
-  return new CORBA_TypedefDef(stub);
+
+  CORBA_TypedefDef_ptr retval = CORBA_TypedefDef::_nil ();
+
+  ACE_NEW_RETURN (retval,
+                  CORBA_TypedefDef (stub),
+                  CORBA_TypedefDef::_nil ());
+
+  return retval;
 }
 
 CORBA_TypedefDef_ptr 
@@ -4486,7 +4542,14 @@ CORBA_StructDef_ptr CORBA_StructDef::_unchecked_narrow (
       if (retv != 0)
         return retv;
     }
-  return new CORBA_StructDef(stub);
+
+  CORBA_StructDef_ptr retval = CORBA_StructDef::_nil ();
+
+  ACE_NEW_RETURN (retval,
+                  CORBA_StructDef (stub),
+                  CORBA_StructDef::_nil ());
+
+  return retval;
 }
 
 CORBA_StructDef_ptr 
@@ -4664,7 +4727,14 @@ CORBA_UnionDef_ptr CORBA_UnionDef::_unchecked_narrow (
       if (retv != 0)
         return retv;
     }
-  return new CORBA_UnionDef(stub);
+
+  CORBA_UnionDef_ptr retval = CORBA_UnionDef::_nil ();
+
+  ACE_NEW_RETURN (retval,
+                  CORBA_UnionDef (stub),
+                  CORBA_UnionDef::_nil ());
+
+  return retval;
 }
 
 CORBA_UnionDef_ptr 
@@ -5000,7 +5070,14 @@ CORBA_EnumDef_ptr CORBA_EnumDef::_unchecked_narrow (
       if (retv != 0)
         return retv;
     }
-  return new CORBA_EnumDef(stub);
+
+  CORBA_EnumDef_ptr retval = CORBA_EnumDef::_nil ();
+
+  ACE_NEW_RETURN (retval,
+                  CORBA_EnumDef (stub),
+                  CORBA_EnumDef::_nil ());
+
+  return retval;
 }
 
 CORBA_EnumDef_ptr 
@@ -5177,7 +5254,14 @@ CORBA_AliasDef_ptr CORBA_AliasDef::_unchecked_narrow (
       if (retv != 0)
         return retv;
     }
-  return new CORBA_AliasDef(stub);
+
+  CORBA_AliasDef_ptr retval = CORBA_AliasDef::_nil ();
+
+  ACE_NEW_RETURN (retval,
+                  CORBA_AliasDef (stub),
+                  CORBA_AliasDef::_nil ());
+
+  return retval;
 }
 
 CORBA_AliasDef_ptr 
@@ -5353,7 +5437,14 @@ CORBA_PrimitiveDef_ptr CORBA_PrimitiveDef::_unchecked_narrow (
       if (retv != 0)
         return retv;
     }
-  return new CORBA_PrimitiveDef(stub);
+
+  CORBA_PrimitiveDef_ptr retval = CORBA_PrimitiveDef::_nil ();
+
+  ACE_NEW_RETURN (retval,
+                  CORBA_PrimitiveDef (stub),
+                  CORBA_PrimitiveDef::_nil ());
+
+  return retval;
 }
 
 CORBA_PrimitiveDef_ptr 
@@ -5473,7 +5564,14 @@ CORBA_StringDef_ptr CORBA_StringDef::_unchecked_narrow (
       if (retv != 0)
         return retv;
     }
-  return new CORBA_StringDef(stub);
+
+  CORBA_StringDef_ptr retval = CORBA_StringDef::_nil ();
+
+  ACE_NEW_RETURN (retval,
+                  CORBA_StringDef (stub),
+                  CORBA_StringDef::_nil ());
+
+  return retval;
 }
 
 CORBA_StringDef_ptr 
@@ -5647,7 +5745,14 @@ CORBA_WstringDef_ptr CORBA_WstringDef::_unchecked_narrow (
       if (retv != 0)
         return retv;
     }
-  return new CORBA_WstringDef(stub);
+
+  CORBA_WstringDef_ptr retval = CORBA_WstringDef::_nil ();
+
+  ACE_NEW_RETURN (retval,
+                  CORBA_WstringDef (stub),
+                  CORBA_WstringDef::_nil ());
+
+  return retval;
 }
 
 CORBA_WstringDef_ptr 
@@ -5821,7 +5926,14 @@ CORBA_FixedDef_ptr CORBA_FixedDef::_unchecked_narrow (
       if (retv != 0)
         return retv;
     }
-  return new CORBA_FixedDef(stub);
+
+  CORBA_FixedDef_ptr retval = CORBA_FixedDef::_nil ();
+
+  ACE_NEW_RETURN (retval,
+                  CORBA_FixedDef (stub),
+                  CORBA_FixedDef::_nil ());
+
+  return retval;
 }
 
 CORBA_FixedDef_ptr 
@@ -6101,7 +6213,14 @@ CORBA_SequenceDef_ptr CORBA_SequenceDef::_unchecked_narrow (
       if (retv != 0)
         return retv;
     }
-  return new CORBA_SequenceDef(stub);
+
+  CORBA_SequenceDef_ptr retval = CORBA_SequenceDef::_nil ();
+
+  ACE_NEW_RETURN (retval,
+                  CORBA_SequenceDef (stub),
+                  CORBA_SequenceDef::_nil ());
+
+  return retval;
 }
 
 CORBA_SequenceDef_ptr 
@@ -6433,7 +6552,14 @@ CORBA_ArrayDef_ptr CORBA_ArrayDef::_unchecked_narrow (
       if (retv != 0)
         return retv;
     }
-  return new CORBA_ArrayDef(stub);
+
+  CORBA_ArrayDef_ptr retval = CORBA_ArrayDef::_nil ();
+
+  ACE_NEW_RETURN (retval,
+                  CORBA_ArrayDef (stub),
+                  CORBA_ArrayDef::_nil ());
+
+  return retval;
 }
 
 CORBA_ArrayDef_ptr 
@@ -6765,7 +6891,14 @@ CORBA_ExceptionDef_ptr CORBA_ExceptionDef::_unchecked_narrow (
       if (retv != 0)
         return retv;
     }
-  return new CORBA_ExceptionDef(stub);
+
+  CORBA_ExceptionDef_ptr retval = CORBA_ExceptionDef::_nil ();
+
+  ACE_NEW_RETURN (retval,
+                  CORBA_ExceptionDef (stub),
+                  CORBA_ExceptionDef::_nil ());
+
+  return retval;
 }
 
 CORBA_ExceptionDef_ptr 
@@ -7058,7 +7191,14 @@ CORBA_AttributeDef_ptr CORBA_AttributeDef::_unchecked_narrow (
       if (retv != 0)
         return retv;
     }
-  return new CORBA_AttributeDef(stub);
+
+  CORBA_AttributeDef_ptr retval = CORBA_AttributeDef::_nil ();
+
+  ACE_NEW_RETURN (retval,
+                  CORBA_AttributeDef (stub),
+                  CORBA_AttributeDef::_nil ());
+
+  return retval;
 }
 
 CORBA_AttributeDef_ptr 
@@ -8058,7 +8198,14 @@ CORBA_OperationDef_ptr CORBA_OperationDef::_unchecked_narrow (
       if (retv != 0)
         return retv;
     }
-  return new CORBA_OperationDef(stub);
+
+  CORBA_OperationDef_ptr retval = CORBA_OperationDef::_nil ();
+
+  ACE_NEW_RETURN (retval,
+                  CORBA_OperationDef (stub),
+                  CORBA_OperationDef::_nil ());
+
+  return retval;
 }
 
 CORBA_OperationDef_ptr 
@@ -9431,7 +9578,14 @@ CORBA_InterfaceDef_ptr CORBA_InterfaceDef::_unchecked_narrow (
       if (retv != 0)
         return retv;
     }
-  return new CORBA_InterfaceDef(stub);
+
+  CORBA_InterfaceDef_ptr retval = CORBA_InterfaceDef::_nil ();
+
+  ACE_NEW_RETURN (retval,
+                  CORBA_InterfaceDef (stub),
+                  CORBA_InterfaceDef::_nil ());
+
+  return retval;
 }
 
 CORBA_InterfaceDef_ptr 
@@ -10528,7 +10682,14 @@ CORBA_ValueMemberDef_ptr CORBA_ValueMemberDef::_unchecked_narrow (
       if (retv != 0)
         return retv;
     }
-  return new CORBA_ValueMemberDef(stub);
+
+  CORBA_ValueMemberDef_ptr retval = CORBA_ValueMemberDef::_nil ();
+
+  ACE_NEW_RETURN (retval,
+                  CORBA_ValueMemberDef (stub),
+                  CORBA_ValueMemberDef::_nil ());
+
+  return retval;
 }
 
 CORBA_ValueMemberDef_ptr 
@@ -10860,7 +11021,14 @@ CORBA_ValueDef_ptr CORBA_ValueDef::_unchecked_narrow (
       if (retv != 0)
         return retv;
     }
-  return new CORBA_ValueDef(stub);
+
+  CORBA_ValueDef_ptr retval = CORBA_ValueDef::_nil ();
+
+  ACE_NEW_RETURN (retval,
+                  CORBA_ValueDef (stub),
+                  CORBA_ValueDef::_nil ());
+
+  return retval;
 }
 
 CORBA_ValueDef_ptr 
@@ -12594,7 +12762,14 @@ CORBA_ValueBoxDef_ptr CORBA_ValueBoxDef::_unchecked_narrow (
       if (retv != 0)
         return retv;
     }
-  return new CORBA_ValueBoxDef(stub);
+
+  CORBA_ValueBoxDef_ptr retval = CORBA_ValueBoxDef::_nil ();
+
+  ACE_NEW_RETURN (retval,
+                  CORBA_ValueBoxDef (stub),
+                  CORBA_ValueBoxDef::_nil ());
+
+  return retval;
 }
 
 CORBA_ValueBoxDef_ptr 

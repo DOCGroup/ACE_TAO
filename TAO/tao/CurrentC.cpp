@@ -47,10 +47,17 @@ CORBA_Current_ptr CORBA_Current::_narrow (
          || (servant = obj->_servant()->_downcast ("IDL:omg.org/CORBA/Current:1.0")) == 0
       )
     ACE_THROW_RETURN (CORBA::MARSHAL (), CORBA_Current::_nil ());
-  return new POA_CORBA::_tao_collocated_Current(
-      ACE_reinterpret_cast(POA_CORBA::Current_ptr, servant),
-      0
+  CORBA_Current_ptr retval = CORBA_Current::_nil ();
+  ACE_NEW_RETURN (
+      retval,
+      POA_CORBA::_tao_collocated_Current (
+          ACE_reinterpret_cast (POA_CORBA::Current_ptr, 
+                                servant),
+          0
+        ),
+      CORBA_Current::_nil ()
     );
+  return retval;
 }
 
 CORBA_Current_ptr CORBA_Current::_nil (void)

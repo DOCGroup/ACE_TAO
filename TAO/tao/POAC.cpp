@@ -120,12 +120,20 @@ PortableServer::ForwardRequest::_narrow (CORBA::Exception *exc)
 // = TAO extension
 CORBA::Exception *PortableServer::ForwardRequest::_alloc (void)
 {
-  return new PortableServer::ForwardRequest;
+  CORBA::Exception *retval = 0;
+
+  ACE_NEW_RETURN (retval,
+                  PortableServer::ForwardRequest,
+                  0);
+
+  return retval;
 }
 
 void operator<<= (CORBA::Any &_tao_any, const PortableServer::ForwardRequest &_tao_elem) // copying
 {
-  PortableServer::ForwardRequest *_tao_any_val = new PortableServer::ForwardRequest (_tao_elem);
+  PortableServer::ForwardRequest *_tao_any_val = 0;
+  ACE_NEW (_tao_any_val,
+           PortableServer::ForwardRequest (_tao_elem));
   if (!_tao_any_val) return;
   ACE_TRY_NEW_ENV
   {
@@ -293,12 +301,32 @@ PortableServer::ThreadPolicy_ptr PortableServer::ThreadPolicy::_narrow (
 #else
   stub->_incr_refcnt ();
   if (servant == 0)
-    return new PortableServer::ThreadPolicy(stub);
+    {
+      PortableServer::ThreadPolicy_ptr rval =
+        PortableServer::ThreadPolicy::_nil ();
+
+      ACE_NEW_RETURN (rval,
+                      PortableServer::ThreadPolicy (stub),
+                      PortableServer::ThreadPolicy::_nil ());
+
+      return rval;
+    }
 #endif /* TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
-  return new POA_PortableServer::_tao_collocated_ThreadPolicy(
-      ACE_reinterpret_cast(POA_PortableServer::ThreadPolicy_ptr, servant),
-      stub
+  
+  PortableServer::ThreadPolicy_ptr retval =
+    PortableServer::ThreadPolicy::_nil ();
+
+  ACE_NEW_RETURN (
+      retval,
+      POA_PortableServer::_tao_collocated_ThreadPolicy (
+          ACE_reinterpret_cast (POA_PortableServer::ThreadPolicy_ptr, 
+                                servant),
+          stub
+        ),
+      PortableServer::ThreadPolicy::_nil ()
     );
+
+  return retval;
 }
 
 #if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
@@ -430,12 +458,32 @@ PortableServer::LifespanPolicy_ptr PortableServer::LifespanPolicy::_narrow (
 #else
   stub->_incr_refcnt ();
   if (servant == 0)
-    return new PortableServer::LifespanPolicy(stub);
+    {
+      PortableServer::LifespanPolicy_ptr rval =
+        PortableServer::LifespanPolicy::_nil ();
+
+      ACE_NEW_RETURN (rval,
+                      PortableServer::LifespanPolicy (stub),
+                      PortableServer::LifespanPolicy::_nil ());
+
+      return rval;
+    }
 #endif /* TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
-  return new POA_PortableServer::_tao_collocated_LifespanPolicy(
-      ACE_reinterpret_cast(POA_PortableServer::LifespanPolicy_ptr, servant),
-      stub
+  
+  PortableServer::LifespanPolicy_ptr retval =
+    PortableServer::LifespanPolicy::_nil ();
+
+  ACE_NEW_RETURN (
+      retval,
+      POA_PortableServer::_tao_collocated_LifespanPolicy (
+          ACE_reinterpret_cast (POA_PortableServer::LifespanPolicy_ptr, 
+                                servant),
+          stub
+        ),
+      PortableServer::LifespanPolicy::_nil ()
     );
+
+  return retval;
 }
 
 #if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
@@ -567,12 +615,32 @@ PortableServer::IdUniquenessPolicy_ptr PortableServer::IdUniquenessPolicy::_narr
 #else
   stub->_incr_refcnt ();
   if (servant == 0)
-    return new PortableServer::IdUniquenessPolicy(stub);
+    {
+      PortableServer::IdUniquenessPolicy_ptr rval =
+        PortableServer::IdUniquenessPolicy::_nil ();
+
+      ACE_NEW_RETURN (rval,
+                      PortableServer::IdUniquenessPolicy (stub),
+                      PortableServer::IdUniquenessPolicy::_nil ());
+
+      return rval;
+    }
 #endif /* TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
-  return new POA_PortableServer::_tao_collocated_IdUniquenessPolicy(
-      ACE_reinterpret_cast(POA_PortableServer::IdUniquenessPolicy_ptr, servant),
-      stub
+  
+  PortableServer::IdUniquenessPolicy_ptr retval =
+    PortableServer::IdUniquenessPolicy::_nil ();
+
+  ACE_NEW_RETURN (
+      retval,
+      POA_PortableServer::_tao_collocated_IdUniquenessPolicy (
+          ACE_reinterpret_cast (POA_PortableServer::IdUniquenessPolicy_ptr, 
+                                servant),
+          stub
+        ),
+      PortableServer::IdUniquenessPolicy::_nil ()
     );
+
+  return retval;
 }
 
 #if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
@@ -703,12 +771,32 @@ PortableServer::IdAssignmentPolicy_ptr PortableServer::IdAssignmentPolicy::_narr
 #else
   stub->_incr_refcnt ();
   if (servant == 0)
-    return new PortableServer::IdAssignmentPolicy(stub);
+    {
+      PortableServer::IdAssignmentPolicy_ptr rval =
+        PortableServer::IdAssignmentPolicy::_nil ();
+
+      ACE_NEW_RETURN (rval,
+                      PortableServer::IdAssignmentPolicy (stub),
+                      PortableServer::IdAssignmentPolicy::_nil ());
+
+      return rval;
+    }
 #endif /* TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
-  return new POA_PortableServer::_tao_collocated_IdAssignmentPolicy(
-      ACE_reinterpret_cast(POA_PortableServer::IdAssignmentPolicy_ptr, servant),
-      stub
+  
+  PortableServer::IdAssignmentPolicy_ptr retval =
+    PortableServer::IdAssignmentPolicy::_nil ();
+
+  ACE_NEW_RETURN (
+      retval,
+      POA_PortableServer::_tao_collocated_IdAssignmentPolicy (
+          ACE_reinterpret_cast (POA_PortableServer::IdAssignmentPolicy_ptr, 
+                                servant),
+          stub
+        ),
+      PortableServer::IdAssignmentPolicy::_nil ()
     );
+
+  return retval;
 }
 
 #if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
@@ -842,12 +930,32 @@ PortableServer::ImplicitActivationPolicy_ptr PortableServer::ImplicitActivationP
 #else
   stub->_incr_refcnt ();
   if (servant == 0)
-    return new PortableServer::ImplicitActivationPolicy(stub);
+    {
+      PortableServer::ImplicitActivationPolicy_ptr rval =
+        PortableServer::ImplicitActivationPolicy::_nil ();
+
+      ACE_NEW_RETURN (rval,
+                      PortableServer::ImplicitActivationPolicy (stub),
+                      PortableServer::ImplicitActivationPolicy::_nil ());
+
+      return rval;
+    }
 #endif /* TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
-  return new POA_PortableServer::_tao_collocated_ImplicitActivationPolicy(
-      ACE_reinterpret_cast(POA_PortableServer::ImplicitActivationPolicy_ptr, servant),
-      stub
+  
+  PortableServer::ImplicitActivationPolicy_ptr retval =
+    PortableServer::ImplicitActivationPolicy::_nil ();
+
+  ACE_NEW_RETURN (
+      retval,
+      POA_PortableServer::_tao_collocated_ImplicitActivationPolicy (
+          ACE_reinterpret_cast (POA_PortableServer::ImplicitActivationPolicy_ptr, 
+                                servant),
+          stub
+        ),
+      PortableServer::ImplicitActivationPolicy::_nil ()
     );
+
+  return retval;
 }
 
 #if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
@@ -979,12 +1087,32 @@ PortableServer::ServantRetentionPolicy_ptr PortableServer::ServantRetentionPolic
 #else
   stub->_incr_refcnt ();
   if (servant == 0)
-    return new PortableServer::ServantRetentionPolicy(stub);
+    {
+      PortableServer::ServantRetentionPolicy_ptr rval =
+        PortableServer::ServantRetentionPolicy::_nil ();
+
+      ACE_NEW_RETURN (rval,
+                      PortableServer::ServantRetentionPolicy (stub),
+                      PortableServer::ServantRetentionPolicy::_nil ());
+
+      return rval;
+    }
 #endif /* TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
-  return new POA_PortableServer::_tao_collocated_ServantRetentionPolicy(
-      ACE_reinterpret_cast(POA_PortableServer::ServantRetentionPolicy_ptr, servant),
-      stub
+  
+  PortableServer::ServantRetentionPolicy_ptr retval =
+    PortableServer::ServantRetentionPolicy::_nil ();
+
+  ACE_NEW_RETURN (
+      retval,
+      POA_PortableServer::_tao_collocated_ServantRetentionPolicy (
+          ACE_reinterpret_cast (POA_PortableServer::ServantRetentionPolicy_ptr, 
+                                servant),
+          stub
+        ),
+      PortableServer::ServantRetentionPolicy::_nil ()
     );
+
+  return retval;
 }
 
 #if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
@@ -1116,12 +1244,32 @@ PortableServer::RequestProcessingPolicy_ptr PortableServer::RequestProcessingPol
 #else
   stub->_incr_refcnt ();
   if (servant == 0)
-    return new PortableServer::RequestProcessingPolicy(stub);
+    {
+      PortableServer::RequestProcessingPolicy_ptr rval =
+        PortableServer::RequestProcessingPolicy::_nil ();
+
+      ACE_NEW_RETURN (rval,
+                      PortableServer::RequestProcessingPolicy (stub),
+                      PortableServer::RequestProcessingPolicy::_nil ());
+
+      return rval;
+    }
 #endif /* TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
-  return new POA_PortableServer::_tao_collocated_RequestProcessingPolicy(
-      ACE_reinterpret_cast(POA_PortableServer::RequestProcessingPolicy_ptr, servant),
-      stub
+  
+  PortableServer::RequestProcessingPolicy_ptr retval =
+    PortableServer::RequestProcessingPolicy::_nil ();
+
+  ACE_NEW_RETURN (
+      retval,
+      POA_PortableServer::_tao_collocated_RequestProcessingPolicy (
+          ACE_reinterpret_cast (POA_PortableServer::RequestProcessingPolicy_ptr, 
+                                servant),
+          stub
+        ),
+      PortableServer::RequestProcessingPolicy::_nil ()
     );
+
+  return retval;
 }
 
 #if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
@@ -1231,10 +1379,21 @@ PortableServer::POAManager_ptr PortableServer::POAManager::_narrow (
       || (servant = obj->_servant ()->_downcast ("IDL:omg.org/PortableServer/POAManager:1.0")) == 0)
       // This can only be colocated
       ACE_THROW_RETURN (CORBA::MARSHAL (), PortableServer::POAManager::_nil ());
-  return new POA_PortableServer::_tao_collocated_POAManager(
-                                                            ACE_reinterpret_cast(POA_PortableServer::POAManager_ptr, servant),
-                                                            0
-                                                            );
+
+  PortableServer::POAManager_ptr retval = 
+    PortableServer::POAManager::_nil ();
+
+  ACE_NEW_RETURN (
+      retval,
+      POA_PortableServer::_tao_collocated_POAManager (
+          ACE_reinterpret_cast (POA_PortableServer::POAManager_ptr, 
+                                servant),
+          0
+        ),
+      PortableServer::POAManager::_nil ()
+    );
+
+  return retval;
 }
 
 // default constructor
@@ -1280,12 +1439,20 @@ PortableServer::POAManager::AdapterInactive::_narrow (CORBA::Exception *exc)
 // TAO extension - the _alloc method
 CORBA::Exception *PortableServer::POAManager::AdapterInactive::_alloc (void)
 {
-  return new PortableServer::POAManager::AdapterInactive;
+  CORBA::Exception *retval = 0;
+
+  ACE_NEW_RETURN (retval,
+                  PortableServer::POAManager::AdapterInactive,
+                  0);
+
+  return retval;
 }
 
 void operator<<= (CORBA::Any &_tao_any, const PortableServer::POAManager::AdapterInactive &_tao_elem) // copying
 {
-  PortableServer::POAManager::AdapterInactive *_tao_any_val = new PortableServer::POAManager::AdapterInactive (_tao_elem);
+  PortableServer::POAManager::AdapterInactive *_tao_any_val = 0;
+  ACE_NEW (_tao_any_val,
+           PortableServer::POAManager::AdapterInactive (_tao_elem));
   if (!_tao_any_val) return;
   ACE_TRY_NEW_ENV
   {
@@ -1419,10 +1586,21 @@ PortableServer::AdapterActivator_ptr PortableServer::AdapterActivator::_narrow (
       (servant = obj->_servant ()->_downcast ("IDL:omg.org/PortableServer/AdapterActivator:1.0")) == 0)
       // This can only be colocated
       ACE_THROW_RETURN (CORBA::MARSHAL (), PortableServer::AdapterActivator::_nil ());
-  return new POA_PortableServer::_tao_collocated_AdapterActivator(
-                                                                  ACE_reinterpret_cast(POA_PortableServer::AdapterActivator_ptr, servant),
-                                                                  0
-                                                                  );
+
+  PortableServer::AdapterActivator_ptr retval =
+    PortableServer::AdapterActivator::_nil ();
+
+  ACE_NEW_RETURN (
+      retval,
+      POA_PortableServer::_tao_collocated_AdapterActivator (
+          ACE_reinterpret_cast (POA_PortableServer::AdapterActivator_ptr, 
+                                servant),
+          0
+        ),
+      PortableServer::AdapterActivator::_nil ()
+    );
+
+  return retval;
 }
 
 CORBA::Boolean PortableServer::AdapterActivator::_is_a (const CORBA::Char *value, CORBA::Environment &_tao_environment)
@@ -1481,10 +1659,21 @@ PortableServer::ServantManager_ptr PortableServer::ServantManager::_narrow (
       (servant = obj->_servant ()->_downcast ("IDL:omg.org/PortableServer/ServantManager:1.0")) == 0)
     // This can only be colocated
     ACE_THROW_RETURN (CORBA::MARSHAL (), PortableServer::ServantManager::_nil ());
-  return new POA_PortableServer::_tao_collocated_ServantManager(
-                                                                ACE_reinterpret_cast(POA_PortableServer::ServantManager_ptr, servant),
-                                                                0
-                                                                );
+
+  PortableServer::ServantManager_ptr retval =
+    PortableServer::ServantManager::_nil ();
+
+  ACE_NEW_RETURN (
+      retval,
+      POA_PortableServer::_tao_collocated_ServantManager (
+          ACE_reinterpret_cast (POA_PortableServer::ServantManager_ptr, 
+                                servant),
+          0
+        ),
+      PortableServer::ServantManager::_nil ()
+    );
+
+  return retval;
 }
 
 CORBA::Boolean PortableServer::ServantManager::_is_a (const CORBA::Char *value, CORBA::Environment &_tao_environment)
@@ -1543,10 +1732,21 @@ PortableServer::ServantActivator_ptr PortableServer::ServantActivator::_narrow (
       (servant = obj->_servant ()->_downcast ("IDL:omg.org/PortableServer/ServantActivator:1.0")) == 0)
       // This can only be colocated
     ACE_THROW_RETURN (CORBA::MARSHAL (), PortableServer::ServantActivator::_nil ());
-  return new POA_PortableServer::_tao_collocated_ServantActivator(
-                                                                  ACE_reinterpret_cast(POA_PortableServer::ServantActivator_ptr, servant),
-                                                                  0
-                                                                  );
+
+  PortableServer::ServantActivator_ptr retval =
+    PortableServer::ServantActivator::_nil ();
+
+  ACE_NEW_RETURN (
+      retval,
+      POA_PortableServer::_tao_collocated_ServantActivator (
+          ACE_reinterpret_cast (POA_PortableServer::ServantActivator_ptr, 
+                                servant),
+          0
+        ),
+      PortableServer::ServantActivator::_nil ()
+    );
+
+  return retval;
 }
 
 CORBA::Boolean PortableServer::ServantActivator::_is_a (const CORBA::Char *value, CORBA::Environment &_tao_environment)
@@ -1606,10 +1806,21 @@ PortableServer::ServantLocator_ptr PortableServer::ServantLocator::_narrow (
       (servant = obj->_servant ()->_downcast ("IDL:omg.org/PortableServer/ServantLocator:1.0")) == 0)
     // This can only be colocated
     ACE_THROW_RETURN (CORBA::MARSHAL (), PortableServer::ServantLocator::_nil ());
-  return new POA_PortableServer::_tao_collocated_ServantLocator(
-                                                                ACE_reinterpret_cast(POA_PortableServer::ServantLocator_ptr, servant),
-                                                                0
-                                                                );
+
+  PortableServer::ServantLocator_ptr retval =
+    PortableServer::ServantLocator::_nil ();
+
+  ACE_NEW_RETURN (
+      retval,
+      POA_PortableServer::_tao_collocated_ServantLocator (
+          ACE_reinterpret_cast (POA_PortableServer::ServantLocator_ptr, 
+                                servant),
+          0
+        ),
+      PortableServer::ServantLocator::_nil ()
+    );
+
+  return retval;
 }
 
 CORBA::Boolean PortableServer::ServantLocator::_is_a (const CORBA::Char *value, CORBA::Environment &_tao_environment)
@@ -1671,10 +1882,21 @@ PortableServer::POA_ptr PortableServer::POA::_narrow (
       (servant = obj->_servant ()->_downcast ("IDL:omg.org/PortableServer/POA:1.0")) == 0)
     // This can only be colocated
     ACE_THROW_RETURN (CORBA::MARSHAL (), PortableServer::POA::_nil ());
-  return new POA_PortableServer::_tao_collocated_POA(
-                                                     ACE_reinterpret_cast(POA_PortableServer::POA_ptr, servant),
-                                                     0
-                                                     );
+
+  PortableServer::POA_ptr retval =
+    PortableServer::POA::_nil ();
+
+  ACE_NEW_RETURN (
+      retval,
+      POA_PortableServer::_tao_collocated_POA (
+          ACE_reinterpret_cast (POA_PortableServer::POA_ptr, 
+                                servant),
+          0
+        ),
+      PortableServer::POA::_nil ()
+    );
+
+  return retval;
 }
 
 // default constructor
@@ -1720,12 +1942,20 @@ PortableServer::POA::AdapterAlreadyExists::_narrow (CORBA::Exception *exc)
 // TAO extension - the _alloc method
 CORBA::Exception *PortableServer::POA::AdapterAlreadyExists::_alloc (void)
 {
-  return new PortableServer::POA::AdapterAlreadyExists;
+  CORBA::Exception *retval = 0;
+
+  ACE_NEW_RETURN (retval,
+                  PortableServer::POA::AdapterAlreadyExists,
+                  0);
+
+  return retval;
 }
 
 void operator<<= (CORBA::Any &_tao_any, const PortableServer::POA::AdapterAlreadyExists &_tao_elem) // copying
 {
-  PortableServer::POA::AdapterAlreadyExists *_tao_any_val = new PortableServer::POA::AdapterAlreadyExists (_tao_elem);
+  PortableServer::POA::AdapterAlreadyExists *_tao_any_val = 0;
+  ACE_NEW (_tao_any_val,
+           PortableServer::POA::AdapterAlreadyExists (_tao_elem));
   if (!_tao_any_val) return;
   ACE_TRY_NEW_ENV
   {
@@ -1846,12 +2076,20 @@ PortableServer::POA::AdapterInactive::_narrow (CORBA::Exception *exc)
 // TAO extension - the _alloc method
 CORBA::Exception *PortableServer::POA::AdapterInactive::_alloc (void)
 {
-  return new PortableServer::POA::AdapterInactive;
+  CORBA::Exception *retval = 0;
+
+  ACE_NEW_RETURN (retval,
+                  PortableServer::POA::AdapterInactive,
+                  0);
+
+  return retval;
 }
 
 void operator<<= (CORBA::Any &_tao_any, const PortableServer::POA::AdapterInactive &_tao_elem) // copying
 {
-  PortableServer::POA::AdapterInactive *_tao_any_val = new PortableServer::POA::AdapterInactive (_tao_elem);
+  PortableServer::POA::AdapterInactive *_tao_any_val = 0;
+  ACE_NEW (_tao_any_val,
+           PortableServer::POA::AdapterInactive (_tao_elem));
   if (!_tao_any_val) return;
   ACE_TRY_NEW_ENV
   {
@@ -1972,12 +2210,20 @@ PortableServer::POA::AdapterNonExistent::_narrow (CORBA::Exception *exc)
 // TAO extension - the _alloc method
 CORBA::Exception *PortableServer::POA::AdapterNonExistent::_alloc (void)
 {
-  return new PortableServer::POA::AdapterNonExistent;
+  CORBA::Exception *retval = 0;
+
+  ACE_NEW_RETURN (retval,
+                  PortableServer::POA::AdapterNonExistent,
+                  0);
+
+  return retval;
 }
 
 void operator<<= (CORBA::Any &_tao_any, const PortableServer::POA::AdapterNonExistent &_tao_elem) // copying
 {
-  PortableServer::POA::AdapterNonExistent *_tao_any_val = new PortableServer::POA::AdapterNonExistent (_tao_elem);
+  PortableServer::POA::AdapterNonExistent *_tao_any_val = 0;
+  ACE_NEW (_tao_any_val,
+           PortableServer::POA::AdapterNonExistent (_tao_elem));;
   if (!_tao_any_val) return;
   ACE_TRY_NEW_ENV
   {
@@ -2105,12 +2351,20 @@ PortableServer::POA::InvalidPolicy::_narrow (CORBA::Exception *exc)
 // TAO extension - the _alloc method
 CORBA::Exception *PortableServer::POA::InvalidPolicy::_alloc (void)
 {
-  return new PortableServer::POA::InvalidPolicy;
+  CORBA::Exception *retval = 0;
+
+  ACE_NEW_RETURN (retval,
+                  PortableServer::POA::InvalidPolicy,
+                  0);
+
+  return retval;
 }
 
 void operator<<= (CORBA::Any &_tao_any, const PortableServer::POA::InvalidPolicy &_tao_elem) // copying
 {
-  PortableServer::POA::InvalidPolicy *_tao_any_val = new PortableServer::POA::InvalidPolicy (_tao_elem);
+  PortableServer::POA::InvalidPolicy *_tao_any_val = 0;
+  ACE_NEW (_tao_any_val,
+           PortableServer::POA::InvalidPolicy (_tao_elem));
   if (!_tao_any_val) return;
   ACE_TRY_NEW_ENV
   {
@@ -2234,12 +2488,20 @@ PortableServer::POA::NoServant::_narrow (CORBA::Exception *exc)
 // TAO extension - the _alloc method
 CORBA::Exception *PortableServer::POA::NoServant::_alloc (void)
 {
-  return new PortableServer::POA::NoServant;
+  CORBA::Exception *retval = 0;
+
+  ACE_NEW_RETURN (retval,
+                  PortableServer::POA::NoServant,
+                  0);
+
+  return retval;
 }
 
 void operator<<= (CORBA::Any &_tao_any, const PortableServer::POA::NoServant &_tao_elem) // copying
 {
-  PortableServer::POA::NoServant *_tao_any_val = new PortableServer::POA::NoServant (_tao_elem);
+  PortableServer::POA::NoServant *_tao_any_val = 0;
+  ACE_NEW (_tao_any_val,
+           PortableServer::POA::NoServant (_tao_elem));
   if (!_tao_any_val) return;
   ACE_TRY_NEW_ENV
   {
@@ -2362,12 +2624,20 @@ PortableServer::POA::ObjectAlreadyActive::_narrow (CORBA::Exception *exc)
 // TAO extension - the _alloc method
 CORBA::Exception *PortableServer::POA::ObjectAlreadyActive::_alloc (void)
 {
-  return new PortableServer::POA::ObjectAlreadyActive;
+  CORBA::Exception *retval = 0;
+
+  ACE_NEW_RETURN (retval,
+                  PortableServer::POA::ObjectAlreadyActive,
+                  0);
+
+  return retval;
 }
 
 void operator<<= (CORBA::Any &_tao_any, const PortableServer::POA::ObjectAlreadyActive &_tao_elem) // copying
 {
-  PortableServer::POA::ObjectAlreadyActive *_tao_any_val = new PortableServer::POA::ObjectAlreadyActive (_tao_elem);
+  PortableServer::POA::ObjectAlreadyActive *_tao_any_val = 0;
+  ACE_NEW (_tao_any_val,
+           PortableServer::POA::ObjectAlreadyActive (_tao_elem));
   if (!_tao_any_val) return;
   ACE_TRY_NEW_ENV
   {
@@ -2486,12 +2756,20 @@ PortableServer::POA::ObjectNotActive::_narrow (CORBA::Exception *exc)
 // TAO extension - the _alloc method
 CORBA::Exception *PortableServer::POA::ObjectNotActive::_alloc (void)
 {
-  return new PortableServer::POA::ObjectNotActive;
+  CORBA::Exception *retval = 0;
+
+  ACE_NEW_RETURN (retval,
+                  PortableServer::POA::ObjectNotActive,
+                  0);
+
+  return retval;
 }
 
 void operator<<= (CORBA::Any &_tao_any, const PortableServer::POA::ObjectNotActive &_tao_elem) // copying
 {
-  PortableServer::POA::ObjectNotActive *_tao_any_val = new PortableServer::POA::ObjectNotActive (_tao_elem);
+  PortableServer::POA::ObjectNotActive *_tao_any_val = 0;
+  ACE_NEW (_tao_any_val,
+           PortableServer::POA::ObjectNotActive (_tao_elem));
   if (!_tao_any_val) return;
   ACE_TRY_NEW_ENV
   {
@@ -2610,12 +2888,20 @@ PortableServer::POA::ServantAlreadyActive::_narrow (CORBA::Exception *exc)
 // TAO extension - the _alloc method
 CORBA::Exception *PortableServer::POA::ServantAlreadyActive::_alloc (void)
 {
-  return new PortableServer::POA::ServantAlreadyActive;
+  CORBA::Exception *retval = 0;
+
+  ACE_NEW_RETURN (retval,
+                  PortableServer::POA::ServantAlreadyActive,
+                  0);
+
+  return retval;
 }
 
 void operator<<= (CORBA::Any &_tao_any, const PortableServer::POA::ServantAlreadyActive &_tao_elem) // copying
 {
-  PortableServer::POA::ServantAlreadyActive *_tao_any_val = new PortableServer::POA::ServantAlreadyActive (_tao_elem);
+  PortableServer::POA::ServantAlreadyActive *_tao_any_val = 0;
+  ACE_NEW (_tao_any_val,
+           PortableServer::POA::ServantAlreadyActive (_tao_elem));
   if (!_tao_any_val) return;
   ACE_TRY_NEW_ENV
   {
@@ -2734,12 +3020,20 @@ PortableServer::POA::ServantNotActive::_narrow (CORBA::Exception *exc)
 // TAO extension - the _alloc method
 CORBA::Exception *PortableServer::POA::ServantNotActive::_alloc (void)
 {
-  return new PortableServer::POA::ServantNotActive;
+  CORBA::Exception *retval = 0;
+
+  ACE_NEW_RETURN (retval,
+                  PortableServer::POA::ServantNotActive,
+                  0);
+
+  return retval;
 }
 
 void operator<<= (CORBA::Any &_tao_any, const PortableServer::POA::ServantNotActive &_tao_elem) // copying
 {
-  PortableServer::POA::ServantNotActive *_tao_any_val = new PortableServer::POA::ServantNotActive (_tao_elem);
+  PortableServer::POA::ServantNotActive *_tao_any_val = 0;
+  ACE_NEW (_tao_any_val,
+           PortableServer::POA::ServantNotActive (_tao_elem));
   if (!_tao_any_val) return;
   ACE_TRY_NEW_ENV
   {
@@ -2858,12 +3152,20 @@ PortableServer::POA::WrongAdapter::_narrow (CORBA::Exception *exc)
 // TAO extension - the _alloc method
 CORBA::Exception *PortableServer::POA::WrongAdapter::_alloc (void)
 {
-  return new PortableServer::POA::WrongAdapter;
+  CORBA::Exception *retval = 0;
+
+  ACE_NEW_RETURN (retval,
+                  PortableServer::POA::WrongAdapter,
+                  0);
+
+  return retval;
 }
 
 void operator<<= (CORBA::Any &_tao_any, const PortableServer::POA::WrongAdapter &_tao_elem) // copying
 {
-  PortableServer::POA::WrongAdapter *_tao_any_val = new PortableServer::POA::WrongAdapter (_tao_elem);
+  PortableServer::POA::WrongAdapter *_tao_any_val = 0;
+  ACE_NEW (_tao_any_val,
+           PortableServer::POA::WrongAdapter (_tao_elem));
   if (!_tao_any_val) return;
   ACE_TRY_NEW_ENV
   {
@@ -2982,12 +3284,20 @@ PortableServer::POA::WrongPolicy::_narrow (CORBA::Exception *exc)
 // TAO extension - the _alloc method
 CORBA::Exception *PortableServer::POA::WrongPolicy::_alloc (void)
 {
-  return new PortableServer::POA::WrongPolicy;
+  CORBA::Exception *retval = 0;
+
+  ACE_NEW_RETURN (retval,
+                  PortableServer::POA::WrongPolicy,
+                  0);
+
+  return retval;
 }
 
 void operator<<= (CORBA::Any &_tao_any, const PortableServer::POA::WrongPolicy &_tao_elem) // copying
 {
-  PortableServer::POA::WrongPolicy *_tao_any_val = new PortableServer::POA::WrongPolicy (_tao_elem);
+  PortableServer::POA::WrongPolicy *_tao_any_val = 0;
+  ACE_NEW (_tao_any_val,
+           PortableServer::POA::WrongPolicy (_tao_elem));
   if (!_tao_any_val) return;
   ACE_TRY_NEW_ENV
   {
@@ -3119,10 +3429,21 @@ PortableServer::Current_ptr PortableServer::Current::_narrow (
       (servant = obj->_servant ()->_downcast ("IDL:omg.org/PortableServer/Current:1.0")) == 0)
     // This can only be colocated
     ACE_THROW_RETURN (CORBA::MARSHAL (), PortableServer::Current::_nil ());
-  return new POA_PortableServer::_tao_collocated_Current(
-                                                         ACE_reinterpret_cast(POA_PortableServer::Current_ptr, servant),
-                                                         0
-                                                         );
+
+  PortableServer::Current_ptr retval =
+    PortableServer::Current::_nil ();
+
+  ACE_NEW_RETURN (
+      retval,
+      POA_PortableServer::_tao_collocated_Current (
+          ACE_reinterpret_cast (POA_PortableServer::Current_ptr, 
+                                servant),
+          0
+        ),
+      PortableServer::Current::_nil ()
+    );
+
+  return retval;
 }
 
 // default constructor
@@ -3168,12 +3489,20 @@ PortableServer::Current::NoContext::_narrow (CORBA::Exception *exc)
 // TAO extension - the _alloc method
 CORBA::Exception *PortableServer::Current::NoContext::_alloc (void)
 {
-  return new PortableServer::Current::NoContext;
+  CORBA::Exception *retval = 0;
+
+  ACE_NEW_RETURN (retval,
+                  PortableServer::Current::NoContext,
+                  0);
+
+  return retval;
 }
 
 void operator<<= (CORBA::Any &_tao_any, const PortableServer::Current::NoContext &_tao_elem) // copying
 {
-  PortableServer::Current::NoContext *_tao_any_val = new PortableServer::Current::NoContext (_tao_elem);
+  PortableServer::Current::NoContext *_tao_any_val = 0;
+  ACE_NEW (_tao_any_val,
+           PortableServer::Current::NoContext (_tao_elem));
   if (!_tao_any_val) return;
   ACE_TRY_NEW_ENV
   {

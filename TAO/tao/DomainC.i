@@ -386,7 +386,7 @@ ACE_INLINE
 CORBA_DomainManagerList_var::CORBA_DomainManagerList_var (const CORBA_DomainManagerList_var &p) // copy constructor
 {
   if (p.ptr_)
-    this->ptr_ = new CORBA_DomainManagerList(*p.ptr_);
+    ACE_NEW (this->ptr_, CORBA_DomainManagerList(*p.ptr_));
   else
     this->ptr_ = 0;
 }
@@ -411,7 +411,9 @@ CORBA_DomainManagerList_var::operator= (const CORBA_DomainManagerList_var &p) //
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new CORBA_DomainManagerList (*p.ptr_);
+    ACE_NEW_RETURN (this->ptr_, 
+                    CORBA_DomainManagerList (*p.ptr_), 
+		    *this);
   }
   return *this;
 }

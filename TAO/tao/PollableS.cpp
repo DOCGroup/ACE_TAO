@@ -322,7 +322,15 @@ POA_CORBA::Pollable::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  return new POA_CORBA::_tao_collocated_Pollable (this, stub);
+
+  CORBA::Pollable *retval = CORBA::Pollable::_nil ();
+
+  ACE_NEW_RETURN (retval,
+                  POA_CORBA::_tao_collocated_Pollable (this, 
+                                                       stub),'
+                  CORBA::Pollable::_nil ());
+
+  return retval;
 }
 
 class TAO_CORBA_DIIPollable_Perfect_Hash_OpTable : public TAO_Perfect_Hash_OpTable
@@ -548,7 +556,15 @@ POA_CORBA::DIIPollable::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  return new POA_CORBA::_tao_collocated_DIIPollable (this, stub);
+
+  CORBA::DIIPollable *retval = CORBA::DIIPollable::_nil ();
+
+  ACE_NEW_RETURN (retval,
+                  POA_CORBA::_tao_collocated_DIIPollable (this, 
+                                                          stub),'
+                  CORBA::DIIPollable::_nil ());
+
+  return retval;
 }
 
 class TAO_CORBA_PollableSet_Perfect_Hash_OpTable : public TAO_Perfect_Hash_OpTable
@@ -945,6 +961,14 @@ POA_CORBA::PollableSet::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  return new POA_CORBA::_tao_collocated_PollableSet (this, stub);
+
+  CORBA::PollableSet *retval = CORBA::PollableSet::_nil ();
+
+  ACE_NEW_RETURN (retval,
+                  POA_CORBA::_tao_collocated_PollableSet (this, 
+                                                          stub),'
+                  CORBA::PollableSet::_nil ());
+
+  return retval;
 }
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_AMI_POLLER */

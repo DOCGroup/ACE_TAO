@@ -333,7 +333,15 @@ POA_CORBA::Policy::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  return new POA_CORBA::_tao_collocated_Policy (this, stub);
+
+  CORBA::Policy *retval = CORBA::Policy::_nil ();
+
+  ACE_NEW_RETURN (retval,
+                  POA_CORBA::_tao_collocated_Policy (this, 
+                                                     stub),
+                  CORBA::Policy::_nil ());
+
+  return retval;
 }
 
 // ****************************************************************
@@ -384,7 +392,15 @@ POA_CORBA::PolicyManager::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  return new POA_CORBA::_tao_collocated_PolicyManager (this, stub);
+
+  CORBA::PolicyManager *retval = CORBA::PolicyManager::_nil ();
+
+  ACE_NEW_RETURN (retval,
+                  POA_CORBA::_tao_collocated_PolicyManager (this, 
+                                                            stub),
+                  CORBA::PolicyManager::_nil ());
+
+  return retval;
 }
 
 POA_CORBA::_tao_collocated_PolicyManager::_tao_collocated_PolicyManager (
@@ -494,7 +510,15 @@ POA_CORBA::PolicyCurrent::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  return new POA_CORBA::_tao_collocated_PolicyCurrent (this, stub);
+
+  CORBA::PolicyCurrent *retval = CORBA::PolicyCurrent::_nil ();
+
+  ACE_NEW_RETURN (retval,
+                  POA_CORBA::_tao_collocated_PolicyCurrent (this, 
+                                                            stub),
+                  CORBA::PolicyCurrent::_nil ());
+
+  return retval;
 }
 
 POA_CORBA::_tao_collocated_PolicyCurrent::_tao_collocated_PolicyCurrent (

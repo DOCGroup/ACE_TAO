@@ -86,5 +86,9 @@ POA_CORBA::Current::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  return new POA_CORBA::_tao_collocated_Current (this, stub);
+  CORBA::Current *retval = CORBA_Current::_nil ();
+  ACE_NEW_RETURN (retval,
+                  POA_CORBA::_tao_collocated_Current (this, stub),
+                  CORBA_Current::_nil ());
+  return retval;
 }

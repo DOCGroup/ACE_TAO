@@ -92,7 +92,12 @@ void CORBA_PolicyError::_raise ()
 // TAO extension - the _alloc method
 CORBA::Exception *CORBA_PolicyError::_alloc (void)
 {
-  return new CORBA_PolicyError;
+  CORBA::Exception *retval = 0;
+   
+  ACE_NEW_RETURN (retval,
+                  CORBA_PolicyError,
+                  0);
+  return retval;
 }
 
 CORBA_PolicyError::CORBA_PolicyError(
@@ -151,7 +156,13 @@ void CORBA_InvalidPolicies::_raise ()
 // TAO extension - the _alloc method
 CORBA::Exception *CORBA_InvalidPolicies::_alloc (void)
 {
-  return new CORBA_InvalidPolicies;
+  CORBA::Exception *retval = 0;
+
+  ACE_NEW_RETURN (retval,
+                  CORBA_InvalidPolicies,
+                  0);
+
+  return retval;
 }
 
 CORBA_InvalidPolicies::CORBA_InvalidPolicies(
@@ -185,12 +196,33 @@ CORBA_Policy_ptr CORBA_Policy::_narrow (
 #else
   stub->_incr_refcnt ();
   if (servant == 0)
-    return new CORBA_Policy(stub);
+    {
+      CORBA_Policy_ptr rval = 
+        CORBA_Policy::_nil ();
+
+      ACE_NEW_RETURN (rval,
+                      CORBA_Policy (stub),
+                      CORBA_Policy::_nil ());
+
+      return rval;
+    }
+
 #endif /* TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
-  return new POA_CORBA::_tao_collocated_Policy(
-      ACE_reinterpret_cast(POA_CORBA::Policy_ptr, servant),
-      stub
+
+  CORBA_Policy_ptr retval = 
+    CORBA_Policy::_nil ();
+
+  ACE_NEW_RETURN (
+      retval,
+      POA_CORBA::_tao_collocated_Policy (
+          ACE_reinterpret_cast (POA_CORBA::Policy_ptr, 
+                                servant),
+          stub
+        ),
+      CORBA_Policy::_nil ()
     );
+
+  return retval;
 }
 
 #if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
@@ -413,10 +445,21 @@ CORBA::PolicyManager_ptr CORBA_PolicyManager::_narrow (
   if (!obj->_is_collocated () || !obj->_servant() ||
       (servant = obj->_servant()->_downcast ("IDL:omg.org/CORBA/PolicyManager:1.0")) == 0)
     ACE_THROW_RETURN (CORBA::MARSHAL (), CORBA_PolicyManager::_nil ());
-  return new POA_CORBA::_tao_collocated_PolicyManager(
-      ACE_reinterpret_cast(POA_CORBA::PolicyManager_ptr, servant),
-      0
+
+  CORBA::PolicyManager_ptr retval = 
+    CORBA_PolicyManager::_nil ();
+
+  ACE_NEW_RETURN (
+      retval,
+      POA_CORBA::_tao_collocated_PolicyManager (
+          ACE_reinterpret_cast (POA_CORBA::PolicyManager_ptr, 
+                                servant),
+          0
+        ),
+      CORBA_PolicyManager::_nil ()
     );
+
+  return retval;
 }
 
 CORBA_PolicyList * CORBA_PolicyManager::get_policy_overrides (
@@ -475,10 +518,21 @@ CORBA_PolicyCurrent_ptr CORBA_PolicyCurrent::_narrow (
   if (!obj->_is_collocated () || !obj->_servant() ||
       (servant = obj->_servant()->_downcast ("IDL:omg.org/CORBA/PolicyCurrent:1.0")) == 0)
     ACE_THROW_RETURN (CORBA::MARSHAL (), CORBA_PolicyCurrent::_nil ());
-  return new POA_CORBA::_tao_collocated_PolicyCurrent(
-      ACE_reinterpret_cast(POA_CORBA::PolicyCurrent_ptr, servant),
-      0
+
+  CORBA_PolicyCurrent_ptr retval = 
+    CORBA_PolicyCurrent::_nil ();
+
+  ACE_NEW_RETURN (
+      retval,
+      POA_CORBA::_tao_collocated_PolicyCurrent (
+          ACE_reinterpret_cast  (POA_CORBA::PolicyCurrent_ptr, 
+                                 servant),
+          0
+        ),
+      CORBA_PolicyCurrent::_nil ()
     );
+
+  return retval;
 }
 
 CORBA::Boolean CORBA_PolicyCurrent::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
@@ -503,7 +557,9 @@ const char* CORBA_PolicyCurrent::_interface_repository_id (void) const
 
 void operator<<= (CORBA::Any &_tao_any, const CORBA_PolicyError &_tao_elem) // copying
 {
-  CORBA_PolicyError *_tao_any_val = new CORBA_PolicyError (_tao_elem);
+  CORBA_PolicyError *_tao_any_val = 0;
+  ACE_NEW (_tao_any_val,
+           CORBA_PolicyError (_tao_elem));
   if (!_tao_any_val) return;
   ACE_TRY_NEW_ENV
   {
@@ -568,7 +624,9 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_PolicyError *&_tao
 
 void operator<<= (CORBA::Any &_tao_any, const CORBA_InvalidPolicies &_tao_elem) // copying
 {
-  CORBA_InvalidPolicies *_tao_any_val = new CORBA_InvalidPolicies (_tao_elem);
+  CORBA_InvalidPolicies *_tao_any_val = 0;
+  ACE_NEW (_tao_any_val,
+           CORBA_InvalidPolicies (_tao_elem));
   if (!_tao_any_val) return;
   ACE_TRY_NEW_ENV
   {
