@@ -1,3 +1,10 @@
+Wed Jan 31 17:27:35 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/Acceptor.cpp (ACE_Oneshot_Acceptor::handle_input): Unregister
+          the acceptor from the reactor before doing the shared_accept call
+          to guard against the use-case where the acceptor is destroyed during
+          the service handler activation sequence.
+
 Wed Jan 31 15:55:23 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* ace/Synch.i:
