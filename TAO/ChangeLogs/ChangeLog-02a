@@ -1,3 +1,10 @@
+Mon Nov 12 14:06:40 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* orbsvcs/orbsvcs/IOR_Multicast.cpp (TAO_IOR_Multicast):
+	  Missed initializing the new private variable in the
+	  contructors. Thanks to Jeff for reporting a problem which arose
+	  because of this.
+
 Mon Nov 12 11:38:03 2001  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/tests/Security/Big_Request/client.cpp (main):
@@ -151,29 +158,29 @@ Sat Nov 10 18:50:40 2001  Ossama Othman  <ossama@uci.edu>
 
 Sat Nov 10 19:08:06 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* tao/Strategies/SHMIOP_Factory.cpp (init): 
-	* orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp (init): 
+	* tao/Strategies/SHMIOP_Factory.cpp (init):
+	* orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp (init):
 	* orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp (init):
 	  Added some more fixes for the "const" changes to
 	  ACE_Arg_Shifter.  Thanks to Craig Rodrigues for providing these.
 
 Sat Nov 10 16:31:10 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/ORB_Core.cpp (init): 
+	* tao/ORB_Core.cpp (init):
 	  Did some checking before actually changing the default value
 	  of the TAO_ORB_Parameters::default_init_ref_. Was doing wrong
 	  things when this checking wasnt done.
 
-	* tao/MCAST_Parser.cpp : 
+	* tao/MCAST_Parser.cpp :
 	  Modified to include the default port values for the services
 	  other than Naming Service. Previously, irrespective of the
 	  service, the default port for any multicast service was made the
 	  same as that for Naming Service. But, this is not maintaining
 	  backward compatibility for other services. So, the default
-	  multicast port now is dependent on the service being run. 
+	  multicast port now is dependent on the service being run.
 
 	  Thanks to Michael Sawczyn <msawczyn@columbus.rr.com> for
-	  reporting the bug. 
+	  reporting the bug.
 
 Sat Nov 10 15:31:15 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
@@ -190,13 +197,13 @@ Sat Nov 10 15:31:15 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 	  compatibility is also preserved. So, in case you dont need to
 	  choose the nic, you could use the previous format of
 	  mcast_address:port also. All this is specified in the comments.
-	
-	* orbsvcs/orbsvcs/IOR_Multicast.h : 
-	* orbsvcs/orbsvcs/IOR_Multicast.cpp : 
+
+	* orbsvcs/orbsvcs/IOR_Multicast.h :
+	* orbsvcs/orbsvcs/IOR_Multicast.cpp :
 	  Added support so that if a nic name has also been in the
-	  mcast_addr that is passed to TAO_IOR_Multicast::init method, 
+	  mcast_addr that is passed to TAO_IOR_Multicast::init method,
 	  the nic name is also passed to the subscribe call.
-	  	
+
 Sat Nov 10 08:58:06 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Sched_Factory.cpp:
@@ -214,7 +221,7 @@ Thu Nov  8 15:48:11 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
           Changed the format/indentation of the constructor call to
           the base class AST_Decl, so as not to confuse the configuration
-          of gcc used by HP-UX 11.11. Thanks to Steve Osselton 
+          of gcc used by HP-UX 11.11. Thanks to Steve Osselton
           <steve@prismtechnologies.com> for reporting the bug and
           suggesting the fix.
 
@@ -224,7 +231,7 @@ Thu Nov  8 13:57:58 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/Synch_Reply_Dispatcher.cpp:
 	* tao/DynamicInterface/DII_Reply_Dispatcher.cpp (dispatch_reply):
 	  Fixed a leak. The leak was occuring because of a unreleased
-	  datablock. 
+	  datablock.
 
 	  The Reply Dispatchers are created by the invocation object on
 	  the stack for every invocation. Once the invocation is done,
@@ -240,7 +247,7 @@ Thu Nov  8 13:57:58 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  small example to reproduce the problem. Chris Cleeland
 	  <cleeland@ociweb.com> made the task of fixing this quite easier
 	  by running leaky and providing a trace for it and thanks to him
-	  too. 
+	  too.
 
 	* orbsvcs/orbsvcs/FaultTolerance.bor: Added the new files.
 
