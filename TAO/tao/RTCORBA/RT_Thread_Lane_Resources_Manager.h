@@ -48,7 +48,12 @@ public:
   TAO_Thread_Lane_Resources &default_lane_resources (void);
   int shutdown_all_reactors (CORBA_Environment &ACE_TRY_ENV);
 
+  /// Get the Thread Pool Manager.
+  TAO_Thread_Pool_Manager &tp_manager (void);
+
 protected:
+
+  int shutdown_default_reactors (CORBA_Environment &ACE_TRY_ENV);
 
   /// Mutual exclusion for calling open.
   TAO_SYNCH_MUTEX open_lock_;
@@ -58,6 +63,7 @@ protected:
 
   TAO_Thread_Lane_Resources *default_lane_resources_;
 
+  /// Thread Pool Manager.
   TAO_Thread_Pool_Manager *tp_manager_;
 };
 
