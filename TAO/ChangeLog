@@ -1,3 +1,12 @@
+Mon Jan 19 18:07:19 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* examples/Borland/ChatClientWnd.cpp:
+	* examples/Borland/ChatClientWnd.h:
+	* examples/Borland/ORBThread.h:
+	* examples/Borland/pch.h:
+	* examples/Borland/ReceiverImpl.cpp:
+	  Removed not needed includes.
+
 Mon Jan 19 16:18:15 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/DLL_ORB/Test_Client_Module_Export.h:
