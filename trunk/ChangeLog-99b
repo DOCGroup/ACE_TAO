@@ -1,3 +1,14 @@
+Thu Nov  4 08:36:34 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Memory_Pool: Moved the sync() and protect() methods
+	  from ACE_Pagefile_Memory_Pool into the *.i file and made their
+ 	  parameter names anonymous since these methods are no-ops.
+  	  Thanks to Martin Krumpolec <krumpo@pobox.sk> for suggesting
+ 	  this.
+
+	* include/makeinclude/compiler.bor: Changed MISC_CFLAGS
+	  to -a8 -b- -Ve -Vx.  Thanks to Jody Hagins for this suggestion.
+
 Thu Nov 04 15:19:54 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE version 5.0.8 released.

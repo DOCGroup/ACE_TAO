@@ -209,4 +209,27 @@ ACE_Pagefile_Memory_Pool::round_to_page_size (size_t nbytes)
   return ACE::round_to_pagesize (nbytes);
 }
 
+ACE_INLINE int
+ACE_Pagefile_Memory_Pool::sync (ssize_t = -1, int = MS_SYNC) 
+{ 
+  return 0; 
+}
+
+ACE_INLINE int 
+ACE_Pagefile_Memory_Pool::sync (void *, size_t, int = MS_SYNC) 
+{ 
+  return 0; 
+}
+
+ACE_INLINE int 
+ACE_Pagefile_Memory_Pool::protect (ssize_t = -1, int = PROT_RDWR) 
+{ 
+  return 0; 
+}
+
+ACE_INLINE int 
+ACE_Pagefile_Memory_Pool::protect (void *, size_t, int = PROT_RDWR) 
+{ 
+  return 0; 
+}
 #endif /* ACE_WIN32 */

@@ -31,7 +31,7 @@ class TAO_Lifespan_Strategy;
 class TAO_Id_Assignment_Strategy;
 class TAO_Id_Hint_Strategy;
 
-class TAO_Active_Object_Map
+class TAO_Export TAO_Active_Object_Map
 {
   // = TITLE
   //     Map of object ids to servants.
