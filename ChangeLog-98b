@@ -1,3 +1,15 @@
+Sat Jun 20 00:28:57 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.cpp (thr_create): Specify <priority> as an unused
+	  argument when ACE_LACKS_SETSCHED.
+
+	* ace/OS.{h,i,cpp}: Rearrange macro indentations.
+
+	* bin/indent_macros.perl: This little perl script rearrange the
+	  indentation of macros so they are a bit easier to debug.
+
+	* ace/config-freebsd-pthread.h: Defined ACE_LACKS_PTHREAD_CANCEL.
+
 Sat Jun 20 00:14:07 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
 	* examples/Reactor/Proactor/test_proactor_with_aio.cpp: Test
