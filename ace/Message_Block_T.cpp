@@ -15,8 +15,8 @@ ACE_Locked_Data_Block<L>::~ACE_Locked_Data_Block (void)
 {
 }
 
-template<class L> ACE_Data_Block *
-ACE_Locked_Data_Block<L>::clone_nocopy (ACE_Message_Block::Message_Flags mask) const
+template<class ACE_LOCK> ACE_Data_Block *
+ACE_Locked_Data_Block<ACE_LOCK>::clone_nocopy (ACE_Message_Block::Message_Flags mask) const
 {
   ACE_TRACE ("ACE_Data_Block::clone");
 
@@ -25,12 +25,12 @@ ACE_Locked_Data_Block<L>::clone_nocopy (ACE_Message_Block::Message_Flags mask) c
   const ACE_Message_Block::Message_Flags always_clear =
     ACE_Message_Block::DONT_DELETE;
 
-  ACE_Locked_Data_Block<L> *nb;
+  ACE_Locked_Data_Block<ACE_LOCK> *nb;
 
   ACE_NEW_MALLOC_RETURN (nb,
-                         ACE_static_cast(ACE_Locked_Data_Block<L>*,
-                                         this->data_block_allocator ()->malloc (sizeof (ACE_Locked_Data_Block<L>))),
-                         ACE_Locked_Data_Block<L> (this->size (),
+                         ACE_static_cast(ACE_Locked_Data_Block<ACE_LOCK>*,
+                                         this->data_block_allocator ()->malloc (sizeof (ACE_Locked_Data_Block<ACE_LOCK>))),
+                         ACE_Locked_Data_Block<ACE_LOCK> (this->size (),
                                                    this->msg_type (),
                                                    0,
                                                    this->allocator_strategy (),
