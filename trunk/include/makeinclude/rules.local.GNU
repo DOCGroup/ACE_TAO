@@ -125,7 +125,7 @@ $(INSMAN)/man7/% \
 $(INSMAN)/man8/% \
 $(INSMAN)/manl/% \
 $(INSMAN)/mann/% :
-	@if test $(shell pwd) != $(@D) -o -n $(ACE_LDSO_Version_Number) ; then \
+	@if test $(shell pwd) != $(@D) -o -n "$(ACE_LDSO_Version_Number)" ; then \
 		if test -s $@ ; then \
 			echo "$(@F) already installed" ; \
 		else \
