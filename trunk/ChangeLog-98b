@@ -1,3 +1,10 @@
+Sun Nov 29 18:22:52 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.h: Added forward declarations of ACE_Time_Value's
+	  operator{+,-} so VC 6.0 won't get confused with the
+	  operator{+,-} in namespace std.  Thanks to Victor Yu
+	  <victor.yu@computechnics.com.au> for reporting this.
+
 1998-11-29  James CE Johnson  <jcej@chiroptera.tragus.org>
 
 	* docs/tutorials/007/page09.html: 
