@@ -1,3 +1,9 @@
+Wed Nov 24 09:44:43 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * include/makeinclude/platform_hpux_aCC.GNU:
+
+          After conversation with Johnny, I am reverting my previous change.
+
 Wed Nov 24 09:05:45 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * include/makeinclude/platform_hpux_aCC.GNU:
