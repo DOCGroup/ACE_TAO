@@ -201,6 +201,11 @@ main (int argc, char *argv[])
 #else
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
 #endif /* ACE_HAS_THREADS */
+
+  // Re-enable LM_DEBUG messages.
+  ACE_Log_Msg::instance ()->priority_mask (
+    ACE_Log_Msg::instance ()->priority_mask () | LM_DEBUG);
+
   ACE_END_TEST;
   return status;
 }
