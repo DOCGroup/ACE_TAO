@@ -154,13 +154,16 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::close_i (void)
               temp_ptr = temp_ptr->next_;
 
               // Explicitly call the destructor.
-              hold_ptr->ACE_Hash_Map_Entry<EXT_ID, INT_ID>::~ACE_Hash_Map_Entry ();
-              this->allocator_->free (hold_ptr);
+              ACE_DES_FREE_TEMPLATE (hold_ptr, this->allocator_->free,
+                                     ACE_Hash_Map_Entry, (<EXT_ID, INT_ID>));
             }
 
           // Destroy the dummy entry.
-          ACE_Hash_Map_Entry<EXT_ID, INT_ID> &entry = table_[i];
-          entry.ACE_Hash_Map_Entry<EXT_ID, INT_ID>::~ACE_Hash_Map_Entry ();
+          ACE_Hash_Map_Entry<EXT_ID, INT_ID> *entry = &table_[i];
+          // The "if" second argument results in a no-op instead of
+          // deallocation.
+          ACE_DES_FREE_TEMPLATE (entry, if,
+                                 ACE_Hash_Map_Entry, (<EXT_ID, INT_ID>));
         }
 
       // Free table memory.
@@ -356,8 +359,8 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::unbind_i (ACE_Hash_Map_Entry<EXT
   entry->prev_->next_ = entry->next_;
 
   // Explicitly call the destructor.
-  entry->ACE_Hash_Map_Entry<EXT_ID, INT_ID>::~ACE_Hash_Map_Entry ();
-  this->allocator_->free (entry);
+  ACE_DES_FREE_TEMPLATE (entry, this->allocator_->free,
+                         ACE_Hash_Map_Entry, (<EXT_ID, INT_ID>));
   this->cur_size_--;
   return 0;
 }

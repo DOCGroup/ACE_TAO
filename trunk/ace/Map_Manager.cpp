@@ -174,8 +174,11 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::free_search_structure (void)
       for (size_t i = 0; i < this->total_size_; i++)
         // Explicitly call the destructor.
         {
-          ACE_Map_Entry<EXT_ID, INT_ID> &ss = this->search_structure_[i];
-          ss.ACE_Map_Entry<EXT_ID, INT_ID>::~ACE_Map_Entry ();
+          ACE_Map_Entry<EXT_ID, INT_ID> *ss = &this->search_structure_[i];
+          // The "if" second argument results in a no-op instead of
+          // deallocation.
+          ACE_DES_FREE_TEMPLATE (ss, if,
+                                 ACE_Map_Entry, (<EXT_ID, INT_ID>));
         }
 
       // Actually free the memory.
@@ -672,7 +675,7 @@ ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::operator* (void)
 }
 
 // Returns the reference to the map_manager that is being
-// iterated over. 
+// iterated over.
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
 ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>&
 ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::map (void)
