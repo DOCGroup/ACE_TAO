@@ -340,5 +340,5 @@ ACE_Thread_Manager::register_as_terminated (ACE_Thread_Descriptor *td)
 ACE_INLINE int
 ACE_Thread_Manager::count_threads (void) const
 {
-  return this->thr_list_->size ();
+  return this->thr_list_.size ();
 }
