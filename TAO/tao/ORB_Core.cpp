@@ -277,7 +277,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
               arg_shifter.consume_arg ();
             }
         }
-      else if (ACE_OS::strcmp (current_arg, "-ORBimplrepoior") == 0)
+      else if (ACE_OS::strcasecmp (current_arg, "-ORBImplRepoIOR") == 0)
         {
           // Specify the IOR of the Implementation Repository
 
@@ -288,7 +288,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
               arg_shifter.consume_arg ();
             }
         }
-      else if (ACE_OS::strcmp (current_arg, "-ORBimplrepoport") == 0)
+      else if (ACE_OS::strcasecmp (current_arg, "-ORBImplRepoPort") == 0)
         {
           // Specify the multicast port number for the Implementation Repository.
 
