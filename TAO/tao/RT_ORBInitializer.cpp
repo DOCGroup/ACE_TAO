@@ -4,9 +4,7 @@
 
 #include "tao/RT_ORBInitializer.h"
 
-ACE_RCSID (TAO,
-           RT_ORBInitializer,
-           "$Id$")
+ACE_RCSID (TAO, RT_ORBInitializer, "$Id$")
 
 #if TAO_HAS_RT_CORBA == 1
 
@@ -22,38 +20,6 @@ ACE_RCSID (TAO,
 #include "ace/Service_Repository.h"
 #include "ace/Svc_Conf.h"
 
-static void
-add_static_service (const ACE_Static_Svc_Descriptor &desc)
-{
-  const ACE_Service_Type *service_type;
-  if (ACE_Service_Repository::instance ()->find (desc.name_,
-                                                 &service_type,
-                                                 0) >= 0)
-    {
-      // The service is already there, just return
-      return;
-    }
-                                    
-  ACE_Service_Object_Exterminator gobbler;
-  void *sym = (*desc.alloc_)(&gobbler);
-
-  ACE_Service_Type_Impl *service_type_impl =
-    ace_create_service_type (desc.name_,
-                             desc.type_,
-                             sym,
-                             desc.flags_,
-                             gobbler);
-
-  // @@ Raise exception
-  ACE_NEW (service_type,
-           ACE_Service_Type (desc.name_,
-                             service_type_impl,
-                             0,
-                             desc.active_));
-  // @@ Error checking
-  (void) ACE_Service_Repository::instance ()->insert (service_type);
-}
-
 void
 TAO_RT_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr info
@@ -62,8 +28,8 @@ TAO_RT_ORBInitializer::pre_init (
 {
   TAO_ENV_ARG_DEFN;
 
-  add_static_service (ace_svc_desc_TAO_RT_Protocols_Hooks);
-  add_static_service (ace_svc_desc_TAO_RT_ORB_Loader);
+  ACE_Service_Config::process_directive (ace_svc_desc_TAO_RT_Protocols_Hooks);
+  ACE_Service_Config::process_directive (ace_svc_desc_TAO_RT_ORB_Loader);
 
   // Sets the name of the Protocol_Hooks to be the RT_Protocols_Hooks.
   TAO_ORB_Core::set_protocols_hooks ("RT_Protocols_Hooks");
