@@ -335,10 +335,29 @@ TAO_SHMIOP_Transport::send (const ACE_Message_Block *message_block,
                             const ACE_Time_Value *max_wait_time)
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_SHMIOP_TRANSPORT_SEND_START);
+  ssize_t n = 0;
+  ssize_t len = 0;
+  ssize_t nbytes = 0;
 
-  return ACE::send_n (this->handle (),
-                      message_block,
-                      max_wait_time);
+  while (message_block != 0)
+    {
+      len = message_block->length ();
+      if (len > 0)
+        {
+          n = this->handler_->peer ().send (message_block->rd_ptr (),
+                                            len,
+                                            max_wait_time);
+          if (n <= 0)
+            return n;
+        }
+
+      if (message_block->cont ())
+        message_block = message_block->cont ();
+      else
+        message_block = message_block->next ();
+    }
+
+  return nbytes;
 }
 
 ssize_t
@@ -348,9 +367,9 @@ TAO_SHMIOP_Transport::send (const u_char *buf,
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_SHMIOP_TRANSPORT_SEND_START);
 
-  return this->handler_->peer ().send_n (buf,
-                                         len,
-                                         max_wait_time);
+  return this->handler_->peer ().send (buf,
+                                       len,
+                                       max_wait_time);
 }
 
 ssize_t
@@ -360,9 +379,9 @@ TAO_SHMIOP_Transport::recv (char *buf,
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_SHMIOP_TRANSPORT_RECEIVE_START);
 
-  return this->handler_->peer ().recv_n (buf,
-                                         len,
-                                         max_wait_time);
+  return this->handler_->peer ().recv (buf,
+                                       len,
+                                       max_wait_time);
 }
 
 // Default action to be taken for send request.
