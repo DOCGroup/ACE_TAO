@@ -1,9 +1,18 @@
+Mon Mar 26 23:29:47 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+	* Leader_Follower.{i,h,cpp}
+	* Wait_On_Leader_Follower.cpp
+
+	Implemented the Leader_Follower component of the ORD to use a
+	stack instead of a heap, using the same strategy as in ACE_Token.
+	This fixes Bug 721.
+
 Mon Mar 26 22:34:39 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/Sequence_T.h:
         * tao/Sequence_T.cpp:
 
-          Changed the assignment operator from T_var for 
+          Changed the assignment operator from T_var for
           class TAO_Object_Manager to take a const T_var &.
           The non-const parameter we had previously has
           incorrect semantics and may cause the wrong
@@ -439,9 +448,9 @@ Sun Mar 25 11:17:40 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
           change.
 
 Sun Mar 25 08:52:48 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
-  
-	* orbsvcs/orbsvcs/Makefile.RTSched: Added guards for old g++. 
-	
+
+	* orbsvcs/orbsvcs/Makefile.RTSched: Added guards for old g++.
+
 	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler.cpp:
 	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler.h:
 	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp:
