@@ -40,6 +40,7 @@ Tue Jan 16 20:43:46 2001  Jeff Parsons <parsons@cs.wustl.edu>
         * tao/TimeBaseC.i:
         * tao/DynamicAny/DynamicAnyC.i:
         * tao/IORManipulation/IORC.i:
+        * tao/PortableServer/ImplRepoC.i:
         * tao/PortableServer/PortableServerC.i:
 
           Corresponding mods to hand-drafted files.
