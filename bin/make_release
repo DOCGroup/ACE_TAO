@@ -267,8 +267,7 @@ if ($update_versions  &&  "$kit" ne 'ace+tao+ciao') {
   if ("$ace_tag") {
     &ex ("$cvs -q export -r$ace_tag -kv ACE_wrappers > /dev/null")  &&
       die "$0: failed cvs export of $ace_tag in $stage_dir\n";
-    }
-    &ex ("cd ACE_wrappers  &&  $make ACE-INSTALL")  &&
+      &ex ("cd ACE_wrappers  &&  $make ACE-INSTALL")  &&
       die "$0: failed make ACE-INSTALL in $stage_dir/ACE_wrappers\n";
   }
 
