@@ -18,7 +18,8 @@ Task_State::Task_State (int argc, char **argv)
     use_name_service_ (1),
     ior_file_ (0),
     granularity_ (1),
-    use_utilization_test_ (0)
+    use_utilization_test_ (0),
+    high_priority_loop_count_ (0)
 {
   ACE_Get_Opt opts (argc, argv, "usn:t:d:rk:xof:g:");
   int c;
@@ -137,6 +138,8 @@ Task_State::Task_State (int argc, char **argv)
                ACE_Barrier (thread_count_ + 1));
     }
 
+  ACE_NEW (semaphore_,
+	   ACE_Thread_Semaphore (0));
   ACE_NEW (latency_,
            double [thread_count_]);
   ACE_NEW (global_jitter_array_,
@@ -180,12 +183,15 @@ Client::get_high_priority_latency (void)
 double
 Client::get_low_priority_latency (void)
 {
+  if (ts_->thread_count_ == 1) 
+    return 0;
+  
   double l = 0;
 
   for (u_int i = 1; i < ts_->thread_count_; i++)
     l += (double) ts_->latency_[i];
 
-  return ts_->thread_count_ > 1? l / (double) (ts_->thread_count_ - 1) : 0;
+  return l / (double) (ts_->thread_count_ - 1);
 }
 
 u_int
@@ -199,7 +205,7 @@ Client::get_high_priority_jitter (void)
 {
   double jitter = 0.0;
   double average = get_high_priority_latency ();
-  double number_of_samples = ts_->loop_count_ / ts_->granularity_;
+  double number_of_samples = ts_->high_priority_loop_count_ / ts_->granularity_;
 
   // Compute the standard deviation (i.e. jitter) from the values
   // stored in the global_jitter_array_.
@@ -221,6 +227,9 @@ Client::get_high_priority_jitter (void)
 double
 Client::get_low_priority_jitter (void)
 {
+  if (ts_->thread_count_ == 1) 
+    return 0;
+  
   double jitter = 0.0;
   double average = get_low_priority_latency ();
   double number_of_samples = (ts_->thread_count_ - 1) * (ts_->loop_count_ / ts_->granularity_);
@@ -359,7 +368,8 @@ Client::svc (void)
         if (!CORBA::is_nil (this->naming_context_.in ()))
           {
             ACE_DEBUG ((LM_DEBUG,
-                        " (%t) ----- Using the NameService resolve() method to get cubit objects -----\n"));
+                        " (%t) ----- Using the NameService resolve() method"
+			" to get cubit objects -----\n"));
 
             // Construct the key for the name service lookup.
             CosNaming::Name mt_cubit_context_name (1);
@@ -528,7 +538,9 @@ Client::svc (void)
                                 ts_->loop_count_,
                                 this->id_,
                                 ts_->datatype_,
-                                frequency);
+				frequency);
+
+  ts_->semaphore_->release ();
 
   if (result == -1)
     return -1;
@@ -560,6 +572,7 @@ Client::run_tests (Cubit_ptr cb,
   u_int i = 0;
   u_int call_count = 0;
   u_int error_count = 0;
+  u_int low_priority_client_count = ts_->thread_count_ - 1;
   double *my_jitter_array;
 
   ACE_NEW_RETURN (my_jitter_array,
@@ -580,11 +593,13 @@ Client::run_tests (Cubit_ptr cb,
   quantify_stop_recording_data();
   quantify_clear_data ();
 #endif /* USE_QUANTIFY */
-
+    
   // Make the calls in a loop.
 
   ACE_High_Res_Timer * timer_ = 0;
-  for (i = 0; i < loop_count; i++)
+  // if i'm the high priority client, loop forever, until all low
+  // priority clients are done.  This is implemented with a semaphore.
+  for (i = 0; i < loop_count || id_ == 0; i++)
     {
       // Elapsed time will be in microseconds.
       ACE_Time_Value delta_t;
@@ -603,9 +618,9 @@ Client::run_tests (Cubit_ptr cb,
 #if defined (CHORUS)
           pstartTime = pccTime1Get();
 #else /* CHORUS */
-          ACE_NEW_RETURN (timer_,
-                          ACE_High_Res_Timer,
-                          -1);
+	  ACE_NEW_RETURN (timer_,
+			  ACE_High_Res_Timer,
+			  -1);
           timer_->start ();
 #endif /* !CHORUS */
         }
@@ -832,10 +847,26 @@ Client::run_tests (Cubit_ptr cb,
           delta = ((0.4 * fabs (real_time * (1000 * 1000))) + (0.6 * delta)); // pow(10,6)
           latency += (real_time * ts_->granularity_);
           my_jitter_array [i/ts_->granularity_] = real_time * 1000;
-          delete timer_;
+	  //          delete timer_;
 #endif /* !ACE_LACKS_FLOATING_POINT */
         }
+
+      // if We are the high priority client.
+      // if tryacquire() succeeded then a client must have done a
+      // release () on it, thus we decrement the client counter.
+      if (id_ == 0 && ts_->thread_count_ > 1)
+	if (ts_->semaphore_->tryacquire () != -1)
+	  {
+	    low_priority_client_count --;
+	    // if all clients are done then break out of loop.
+	    if (low_priority_client_count == 0)
+	      break;
+	  }
+
     }
+
+  if (id_ == 0)
+    ts_->high_priority_loop_count_ = call_count;
 
   if (call_count > 0)
     {
@@ -862,9 +893,10 @@ Client::run_tests (Cubit_ptr cb,
 #else
               ACE_DEBUG ((LM_DEBUG,
                           "(%P|%t) cube average call ACE_OS::time\t= %f msec, \t"
-                          "%f calls/second\n",
+			  "%f calls/second\n",
                           latency * 1000,
                           1 / latency));
+
               this->put_latency (my_jitter_array,
                                  latency * 1000,
                                  thread_id);

@@ -62,8 +62,12 @@ do_priority_inversion_test (ACE_Thread_Manager &thread_manager,
   Client **low_priority_client;
 
   ACE_NEW_RETURN (low_priority_client,
-                  Client *[ts.thread_count_ - 1],
+                  Client *[ts.thread_count_],
                   -1);
+
+  // hack to make sure we have something in this pointer, when
+  // thread_count == 1
+  low_priority_client[0] = &high_priority_client;
 
   // Create the daemon thread in its own <ACE_Thread_Manager>.
   ACE_Thread_Manager util_thr_mgr;
