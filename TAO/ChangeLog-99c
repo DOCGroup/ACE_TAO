@@ -1,3 +1,43 @@
+Fri Jun 18 21:00:18 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/fe/idl.ll:
+	* TAO_IDL/fe/idl.ll:
+	* TAO_IDL/fe/lex.yy.cpp:
+	* TAO_IDL/fe/lex.yy.cpp.diff:
+	  Added new token for unsigned integer and new line to
+	  grammar to create AST_Expression of that type.
+
+	* TAO_IDL/fe/idl.yy:
+	* TAO_IDL/fe/y.tab.h:
+	* TAO_IDL/fe/y.tab.cpp:
+	* TAO_IDL/fe/y.tab.cpp.diff:
+ 	  Added cases to lex for dec, hex and oct integers
+	  so that those integer literals with and without
+	  leading '-' are differentiated.
+
+	  We were having a problem with constants of type
+	  unsigned long assigned a value that was
+	  > LONG_MAX and < ULONG_MAX. Since all integer
+   	  literals were read as one case (signed longs)
+	  these assignments were viewed as negative
+	  numbers and so would cause a coercion error.
+	  Now integer literals without a leading - sign
+	  are read as unsigned longs, and the existing
+ 	  coercion code will catch legitimate out of
+	  bounds errors.
+
+	* TAO_IDL/be/be_sunsoft.cpp:
+	  Moved the check for char printout of value '\'
+	  to come before check for isprint(). Char value
+	  that's read in as '\\' is stored in an
+	  AST_Expression as '\'. isprint() sees this as a
+	  printable character, so the case below it testing
+	  for '\\' was never reached, and char consts 
+	  assigned the value of '\\' were getting output as
+	  '\', causing a C++ compile error. Thanks to 
+	  Hata Yoshiaki <hatay@alpha.co.jp> for pointing
+	  out this problem.
+
 Fri Jun 18 19:37:32 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.3.25 released.
