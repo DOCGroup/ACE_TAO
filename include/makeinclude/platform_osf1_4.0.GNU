@@ -13,6 +13,20 @@ CXX             = $(CC)
 ####       instead, change "-pthread" to "-threads".
 CFLAGS          += -pthread
 
+ifndef CXX_VERSION
+  CXX_VERSION     := $(shell $(CXX) -V)
+endif # CXX_VERSION
+
+ifeq (6.0-,$(findstring 6.0-,$(CXX_VERSION)))
+  PRE6_2 = 1
+else
+ifeq (6.1-,$(findstring 6.1-,$(CXX_VERSION)))
+  PRE6_2 = 1
+else  # 6.2 or later
+  PRE6_2 = 0
+endif # 6.2 or later
+endif # 6.0
+
 #### These flags can only be used with cxx Version 6.0 and later.
 #### They are enabled by default; they can be disabled by settting
 #### CXX_VER to CXX_5 either on the make command line, or by
@@ -28,9 +42,13 @@ CFLAGS          += -pthread
 #  839: no_corresponding_delete (until this is fixed in libTAO)
 # 1136: conversion to integral type of smaller size could lose data
 ifneq ($(CXX_VER),CXX_5)
-  WARNING_FLAGS += -w0 -msg_display_number \
-                   -msg_disable 9,174,193,236,401,610,835,839,1136
-endif
+  WARNING_FLAGS += -w0 -msg_display_number
+  ifeq (1,$(PRE6_2))
+    WARNING_FLAGS += -msg_disable 9,174,193,236,401,610,835,839
+  else  # 6.2 or later
+    WARNING_FLAGS += -msg_disable 9,174,193,236,401,610,835,839,1136
+  endif # 6.2 or later
+endif # 6.0 or later
 
 CCFLAGS         += $(CFLAGS) -ptr ptrepository $(WARNING_FLAGS)
 ifeq ($(rtti),)
@@ -59,10 +77,7 @@ ifndef exceptions
   #### Disable the default exception handling of cxx >= 6.0.
   #### This is untested.  exceptions=1 is the default, so it's not used
   #### by default.
-  CXX_HAS_EXCEPTIONS := \
-    $(shell if cxx -V | egrep -v 'C\+\+ [a-zA-Z][6-9]' > /dev/null; then \
-               echo 1; fi)
-  ifdef CXX_HAS_EXCEPTIONS
+  ifeq (6.,$(findstring 6.,$(CXX_VERSION)))
     CCFLAGS += -nocleanup
-  endif # CXX_HAS_EXCEPTIONS
+  endif # 6.x
 endif # ! exceptions
