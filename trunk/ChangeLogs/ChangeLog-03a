@@ -1,3 +1,9 @@
+Tue Jan 29 20:11:21 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* etc/*.doxygen (EXPAND_AS_DEFINED): Added ACE_CACHE_MAP_MANAGER
+	  to the list in EXPAND_AS_DEFINED. Thanks to Don Hinton
+	  <dhinton@ieee.org> for the suggestion.
+
 Tue Jan 29 19:36:24 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* bin/make_release: The whole release process has been moved to
