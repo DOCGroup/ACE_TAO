@@ -1,3 +1,8 @@
+Mon Feb  4 16:22:20 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* ace/OS.h: Include <new> instead of <new.h> if
+	  ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB is defined.
+
 Mon Feb  4 19:58:03 2002  Boris Kolpackov  <bosk@ipmce.ru>
 
 	* ace/Log_Msg.cpp:
