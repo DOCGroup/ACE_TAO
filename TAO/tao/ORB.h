@@ -546,9 +546,6 @@ private:
   TAO_ORB_Core* orb_core_;
   // The ORB_Core that created us....
 
-  ACE_Unbounded_Set<ACE_INET_Addr> collocation_record_;
-  // The collocation table...
-
   TAO_IOR_LookupTable lookup_table_;
   // Table of ObjectID->IOR mappings.
 
