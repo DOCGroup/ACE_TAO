@@ -1,3 +1,19 @@
+Sat Mar  4 16:09:42 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/MessagingC.h:
+	* tao/MessagingC.i:
+	* tao/MessagingC.cpp:
+	* tao/POAC.h:
+	* tao/POAC.i:
+	* tao/POAC.cpp:
+	* tao/PolicyC.h:
+	* tao/PolicyC.i:
+	* tao/PolicyC.cpp:
+	  Replaced all Any insertion/extraction operators with the new 
+	  versions that use compiled marshaling. Also added many missing 
+	  Any and CDR stream insertion/extraction operators. This 
+	  completes the job for all the generated files in TAO/tao.
+
 Fri Mar  3 14:41:42 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Sequence.cpp (allocbuf): 
