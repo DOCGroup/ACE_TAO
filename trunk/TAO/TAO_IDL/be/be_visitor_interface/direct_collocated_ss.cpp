@@ -66,18 +66,17 @@ int be_visitor_interface_direct_collocated_ss::visit_interface (be_interface *no
 
   if (node->is_nested ())
     {
-      be_decl* scope =
-	be_scope::narrow_from_scope (node->defined_in ())->decl ();
+      be_decl* scope = be_scope::narrow_from_scope (node->defined_in ())->decl ();
 
       *os << ": ACE_NESTED_CLASS ("
-	  << scope->name () << ","
-	  << node->local_name ()
-	  << ") ()," << be_nl;
+	        << scope->name () << ","
+	        << node->local_name ()
+	        << ") ()," << be_nl;
     }
   else
     {
       *os << ": " << node->name ()
-	  << " ()," << be_nl;
+	        << " ()," << be_nl;
     }
 
   // @@ We should call the constructor for all base classes, since we

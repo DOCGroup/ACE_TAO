@@ -61,26 +61,6 @@ be_visitor_operation_argument::post_process (be_decl *bd)
         if (!this->last_node (bd))
           *os << ",\n";
       break;
-#if 0 
-    case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_COLLOCATED_ARG_UPCALL_SS:          
-    case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARG_UPCALL_CS:          
-      if (!this->last_inout_or_out_node (bd))
-        {
-          // @@ Michael
-          // In the case of of AMI, we do not want to 
-          // print a comma for in arguments.
-          // This is due to the concept of post processing,
-          // which I was not able to prevent to be executed
-          // in the case of in arguments. Post processing
-          // does always write a comma, though.
-          be_argument *arg = this->ctx_->be_node_as_argument ();
-          ACE_ASSERT (arg != 0);
-          if (arg->direction () != AST_Argument::dir_IN)
-            *os << ",\n";
-        }
-      break;
-#endif /* 0 */
-
     default:
       break;
     }
@@ -122,20 +102,6 @@ be_visitor_operation_argument::visit_operation (be_operation *node)
           os->indent ();
           *os << "ACE_TRY_ENV";
           break;
-#if 0
-        case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_COLLOCATED_ARG_UPCALL_SS:
-        case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARG_UPCALL_CS:
-          // applicable only to these cases where the actual upcall is made 
-          if (this->ctx_->sub_state () == TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_HAS_ARGUMENTS)
-            {
-              // insert a comma only if there were previous parameters
-              *os << ",\n";
-            }
-          // last argument is the environment
-          os->indent ();
-          *os << "ACE_TRY_ENV";
-          break;
-#endif /* 0 */
         default:
           break;
         }
@@ -218,23 +184,6 @@ be_visitor_operation_argument::visit_argument (be_argument *node)
     case TAO_CodeGen::TAO_OPERATION_ARG_POST_MARSHAL_SS:
       ctx.state (TAO_CodeGen::TAO_ARGUMENT_POST_MARSHAL_SS);
       break;
-#if 0
-    case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARG_DECL_CS:
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_VARDECL_CS);
-      break;
-    case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARG_DEMARSHAL_CS:
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_DEMARSHAL_CS);
-      break;
-    case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARG_MARSHAL_CS:
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_MARSHAL_CS);
-      break;
-    case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_COLLOCATED_ARG_UPCALL_SS:
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_COLLOCATED_UPCALL_SS);
-      break;
-    case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARG_UPCALL_CS:
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_UPCALL_CS);
-      break;
-#endif /* 0 */
     default:
       {
         ACE_ERROR_RETURN ((LM_ERROR,
