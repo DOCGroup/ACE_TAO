@@ -42,6 +42,7 @@ DAMAGES.
 
 #include "asnmp/octet.h"
 #include "test_config.h"
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID(tests, Octet_Test, "$Id$")
 
