@@ -1790,6 +1790,13 @@ TAO_POA::reference_to_servant (CORBA::Object_ptr reference,
                         0);
     }
 
+  // Make sure that the reference is valid.
+  if (CORBA::is_nil (reference))
+    {
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (),
+                        0);
+    }
+
   // If the POA has the RETAIN policy and the specified object is
   // present in the Active Object Map, this operation returns the
   // servant associated with that object in the Active Object Map.
@@ -1941,6 +1948,13 @@ TAO_POA::reference_to_id (CORBA::Object_ptr reference,
                    PortableServer::POA::WrongAdapter,
                    PortableServer::POA::WrongPolicy))
 {
+  // Make sure that the reference is valid.
+  if (CORBA::is_nil (reference))
+    {
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (),
+                        0);
+    }
+
   // The WrongPolicy exception is declared to allow future extensions.
 
   // This operation returns the Object Id value encapsulated by the
