@@ -107,9 +107,9 @@ Server_i::write_iors_to_file (const char *first_ior,
 int
 Server_i::init (int argc, char **argv)
 {
-  //  CORBA::Environment TAO_TRY_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY_NEW_ENV
+  ACE_TRY
     {
       // Initialize the ORB.
       orb_ = CORBA::ORB_init (argc,
@@ -154,10 +154,10 @@ PortableServer::POA_ptr
 Server_i::create_poa (const char *name,
                       int servant_retention_policy)
 {
-  // CORBA::Environment TAO_TRY_ENV;
   PortableServer::POA_ptr my_poa = 0;
  
-  ACE_TRY_NEW_ENV
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {  
       policies_.length (4);
       
@@ -231,9 +231,8 @@ Server_i::create_poa (const char *name,
 int
 Server_i::create_activator (PortableServer::POA_var first_poa)
 {
-  // CORBA::Environment TAO_TRY_ENV;
-   
-  ACE_TRY_NEW_ENV
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     { 
       // An Servant Activator object is created which will activate
       // the servant on demand.
@@ -280,9 +279,8 @@ Server_i::create_activator (PortableServer::POA_var first_poa)
 int
 Server_i::create_locator (PortableServer::POA_var second_poa)
 {
-  // CORBA::Environment TAO_TRY_ENV;
-   
-  ACE_TRY_NEW_ENV
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     { 
       // An Servant Locator object is created which will activate 
       // the servant on demand.
@@ -330,9 +328,8 @@ Server_i::create_locator (PortableServer::POA_var second_poa)
 int 
 Server_i::run (void) 
 {
-  // CORBA::Environment TAO_TRY_ENV;
-   
-  ACE_TRY_NEW_ENV
+  ACE_DECLARE_NEW_CORBA_ENV; 
+  ACE_TRY
     { 
       // Invoke object_to_string on the references created in firstPOA
       // and secondPOA.
