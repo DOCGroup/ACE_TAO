@@ -8,10 +8,14 @@
 
 ACE_INLINE int
 ACE_Service_Config::open (int argc,
-                          ASYS_TCHAR *argv[], 
-                          LPCTSTR logger_key)
+                          ASYS_TCHAR *argv[],
+                          LPCTSTR logger_key,
+                          int ingore_static_svcs)
 {
   ACE_TRACE ("ACE_Service_Config::open");
+
+  ACE_Service_Config::no_static_svcs_ = (char) ignore_static_svcs;
+
   if (ACE_Service_Config::parse_args (argc, argv) == -1)
     return -1;
   else

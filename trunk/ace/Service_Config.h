@@ -102,7 +102,7 @@ public:
 
   // = Initialization and termination methods.
 
-  ACE_Service_Config (int ignore_static_svcs = 0,
+  ACE_Service_Config (int ignore_static_svcs = 1,
                       size_t size = ACE_Service_Config::MAX_SERVICES,
                       int signum = SIGHUP);
   // Initialize the Service Repository.
@@ -112,13 +112,15 @@ public:
   // Performs an open without parsing command-line arguments.
 
   static int open (const ASYS_TCHAR program_name[],
-                   LPCTSTR logger_key = ACE_DEFAULT_LOGGER_KEY);
+                   LPCTSTR logger_key = ACE_DEFAULT_LOGGER_KEY,
+                   int ignore_static_svcs = 1);
   // Performs an open without parsing command-line arguments.  Returns
   // number of errors that occurred on failure and 0 otherwise.
 
   static int open (int argc,
                    ASYS_TCHAR *argv[],
-                   LPCTSTR logger_key = ACE_DEFAULT_LOGGER_KEY);
+                   LPCTSTR logger_key = ACE_DEFAULT_LOGGER_KEY,
+                   int ignore_static_svcs = 1);
   // This is the primary entry point into the ACE_Service_Config (the
   // constructor just handles simple initializations).  It parses
   // arguments passed in from the command-line.  Returns number of
