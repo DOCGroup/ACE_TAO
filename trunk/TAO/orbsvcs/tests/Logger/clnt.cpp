@@ -136,6 +136,20 @@ Logger_Client::init (int argc, char **argv)
 	naming_context->resolve (factory_name, TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
+      /// The following resolve() must fail with an exception.
+
+      CosNaming::Name factory_name2(1);
+      factory_name2.length (1);
+      factory_name2[0].id = CORBA::string_dup ("logger_factory2");  
+
+      CORBA::Object_var factory_ref2 = 
+	naming_context->resolve (factory_name2, TAO_TRY_ENV);
+
+      if (TAO_TRY_ENV.exception ())
+	{
+	  TAO_TRY_ENV.print_exception ("Negative test case for name not found succeeded\n");
+	}
+
       if (CORBA::is_nil (factory_ref.in ()))
 	ACE_ERROR_RETURN ((LM_ERROR, "resolved to nil object"), -1);
 
