@@ -30,6 +30,7 @@ TAO/tests/Bug_1020_Basic_Regression/run_test.pl: !Win32 !MINIMUM !ST
 TAO/tests/Bug_1020_Regression/run_test.pl: !MINIMUM !ST !Win32
 TAO/tests/Bug_1361_Regression/run_test.pl: !MINIMUM !ST !Win32
 TAO/tests/Bug_1482_Regression/run_test.pl: !MINIMUM !ST 
+TAO/tests/Bug_1551_Regression/run_test.pl: !MINIMUM !ST
 TAO/tests/RTCORBA/Banded_Connections/run_test.pl: !MINIMUM !ST 
 TAO/tests/RTCORBA/Client_Propagated/run_test.pl: !MINIMUM !ST 
 TAO/tests/RTCORBA/Client_Protocol/run_test.pl: !MINIMUM 
