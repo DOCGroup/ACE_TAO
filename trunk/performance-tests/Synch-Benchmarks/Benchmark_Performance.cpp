@@ -28,12 +28,6 @@ Benchmark_Performance::done (sig_atomic_t d)
 }
 
 int
-Benchmark_Performance::svc (void)
-{
-  return -1;
-}
-
-int
 Benchmark_Performance::init (int, char **)
 {
   return 1;

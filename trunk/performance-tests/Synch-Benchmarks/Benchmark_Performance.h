@@ -19,7 +19,7 @@ class ACE_Svc_Export Benchmark_Performance : public Benchmark_Performance_Test_B
   //   Base class for all the timing tests.
 public:
   // = Hooks inherited from ACE_Service_Object.
-  virtual int svc (void);
+  virtual int svc (void) = 0;
   virtual int init (int, char *[]);
   virtual int info (char **, size_t) const;
   virtual int fini (void);
