@@ -11,7 +11,6 @@
 //
 // = AUTHOR
 //    Michael Kircher (mk1@cs.wustl.edu)
-//
 // ============================================================================
 
 #include "ace/Get_Opt.h"
@@ -29,16 +28,15 @@ Quoter_Generic_Factory_Impl::~Quoter_Generic_Factory_Impl (void)
 {
 }
 
-
 CORBA::Boolean 
 Quoter_Generic_Factory_Impl::supports (const CosLifeCycle::Key &factory_key,
                                        CORBA::Environment &_env_there)
 {
   ACE_UNUSED_ARG (factory_key);
   ACE_UNUSED_ARG (_env_there);
+
   return 0;
 }
-
 
 CORBA::Object_ptr
 Quoter_Generic_Factory_Impl::create_object (const CosLifeCycle::Key &factory_key, 
@@ -50,7 +48,8 @@ Quoter_Generic_Factory_Impl::create_object (const CosLifeCycle::Key &factory_key
   CORBA::Environment env_here;
 
   // Get a reference to the ORB.
-  CORBA::ORB_ptr orb_ptr = TAO_ORB_Core_instance ()->orb ();
+  CORBA::ORB_ptr orb_ptr =
+    TAO_ORB_Core_instance ()->orb ();
 
   // Get the Naming Service object reference.
   CORBA::Object_var namingObj_var = 
@@ -58,14 +57,15 @@ Quoter_Generic_Factory_Impl::create_object (const CosLifeCycle::Key &factory_key
 
   if (CORBA::is_nil (namingObj_var.in ())) 
     ACE_ERROR ((LM_ERROR,
-                " (%P|%t) Unable get the Naming Service.\n"));
+                "(%P|%t) Unable get the Naming Service.\n"));
 
   // Narrow the object reference to a Naming Context.
   CosNaming::NamingContext_var namingContext_var =
     CosNaming::NamingContext::_narrow (namingObj_var.in (),
                                        env_here);
 
-  // see if there is an exception, if yes then throw the NoFactory exception
+  // See if there is an exception, if yes then throw the NoFactory
+  // exception.
   if (env_here.exception () != 0) // throw a NoFactory exception  
     { 
       _env_there.exception (new CosLifeCycle::NoFactory (factory_key));      
@@ -80,7 +80,8 @@ Quoter_Generic_Factory_Impl::create_object (const CosLifeCycle::Key &factory_key
   CORBA::Object_var quoterNamingObj_var = 
     namingContext_var->resolve (quoterContextName, env_here);
 
-  // see if there is an exception, if yes then throw the NoFactory exception
+  // See if there is an exception, if yes then throw the NoFactory
+  // exception.
   if (env_here.exception () != 0) // throw a NoFactory exception  
     { 
       _env_there.exception (new CosLifeCycle::NoFactory (factory_key));      
@@ -90,8 +91,7 @@ Quoter_Generic_Factory_Impl::create_object (const CosLifeCycle::Key &factory_key
   CosNaming::NamingContext_var quoterNamingContext_var = 
     CosNaming::NamingContext::_narrow (quoterNamingObj_var.in (),
                                        env_here);
-
-  // see if there is an exception, if yes then throw the NoFactory
+  // See if there is an exception, if yes then throw the NoFactory
   // exception.
   if (env_here.exception () != 0) // throw a NoFactory exception  
     { 
@@ -99,7 +99,8 @@ Quoter_Generic_Factory_Impl::create_object (const CosLifeCycle::Key &factory_key
       return 0;
     }
 
-  // **  now a proper reference to the quoter naming context is available
+  // ** now a proper reference to the quoter naming context is
+  // available
 
   // Fill in the name of the Quoter Factory.
   //CosNaming::Name factory_Name (1);  // max = 1 
@@ -112,7 +113,7 @@ Quoter_Generic_Factory_Impl::create_object (const CosLifeCycle::Key &factory_key
   CORBA::Object_var quoterFactoryObject_var =  
     quoterNamingContext_var->resolve (factory_Name, env_here);
   
-  // see if there is an exception, if yes then throw the NoFactory
+  // See if there is an exception, if yes then throw the NoFactory
   // exception.
   if (env_here.exception () != 0) // throw a NoFactory exception  
     { 
@@ -120,7 +121,7 @@ Quoter_Generic_Factory_Impl::create_object (const CosLifeCycle::Key &factory_key
       return 0;
     }
 
-  // Were able to get a reference to Quoter Factory.
+  // We were able to get a reference to Quoter Factory.
 
   // Check if it is a valid Quoter Factory reference
   if (CORBA::is_nil (quoterFactoryObject_var.in())) 
@@ -141,7 +142,8 @@ Quoter_Generic_Factory_Impl::create_object (const CosLifeCycle::Key &factory_key
         Stock::Quoter_Factory::_narrow (quoterFactoryObject_var.in (), 
                                         env_here);
 
-      // see if there is an exception, if yes then throw the NoFactory exception
+      // See if there is an exception, if yes then throw the NoFactory
+      // exception.
       if (env_here.exception () != 0) // throw a NoFactory exception  
         { 
           _env_there.exception (new CosLifeCycle::NoFactory (factory_key));      
@@ -153,16 +155,18 @@ Quoter_Generic_Factory_Impl::create_object (const CosLifeCycle::Key &factory_key
                            "invalid factory.\n"),
                           0);
                        
-      ACE_DEBUG ((LM_DEBUG, "Factory reference OK.\n"));    
+      ACE_DEBUG ((LM_DEBUG,
+                  "Factory reference OK.\n"));    
       
       // Now retrieve the Quoter obj ref corresponding to the key.
-      Stock::Quoter_var quoter_var = factory_var->create_quoter ("test",
-                                                                 _env_there);
+      Stock::Quoter_var quoter_var =
+        factory_var->create_quoter ("test",
+                                    _env_there);
       
       ACE_DEBUG ((LM_DEBUG,
                   "Quoter Created\n"));
     
-      if (CORBA::is_nil (quoter_var.in()))
+      if (CORBA::is_nil (quoter_var.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            "null quoter objref returned by factory\n"),
                           0);
@@ -170,7 +174,8 @@ Quoter_Generic_Factory_Impl::create_object (const CosLifeCycle::Key &factory_key
       ACE_DEBUG ((LM_DEBUG,
                   "Return a object reference to a new object.\n"));
 
-      CORBA::Object_ptr object_ptr = CORBA::Object::_duplicate ((CORBA::Object_ptr) quoter_var.ptr());
+      CORBA::Object_ptr object_ptr =
+        CORBA::Object::_duplicate ((CORBA::Object_ptr) quoter_var.ptr ());
 
       return object_ptr;
     }
