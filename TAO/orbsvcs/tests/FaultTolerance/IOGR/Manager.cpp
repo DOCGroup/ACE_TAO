@@ -162,7 +162,7 @@ Manager::make_merged_iors (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK_RETURN (-1);
 
   // Get an object reference for the ORBs IORManipultion object!
-  CORBA_Object_ptr IORM =
+  CORBA::Object_ptr IORM =
     this->orb_->resolve_initial_references (TAO_OBJID_IORMANIPULATION,
                                             0
                                             ACE_ENV_ARG_PARAMETER);

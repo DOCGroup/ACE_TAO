@@ -81,7 +81,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       // Get an object reference for the ORBs IORManipultion object!
-      CORBA_Object_ptr IORM =
+      CORBA::Object_ptr IORM =
         orb->resolve_initial_references (TAO_OBJID_IORMANIPULATION,
                                          0
                                          ACE_ENV_ARG_PARAMETER);
@@ -96,7 +96,7 @@ main (int argc, char *argv[])
       iors [0] = object_primary;
       iors [1] = object_secondary;
 
-      CORBA_Object_var merged = iorm->merge_iors (iors ACE_ENV_ARG_PARAMETER);
+      CORBA::Object_var merged = iorm->merge_iors (iors ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var object =
