@@ -18,14 +18,16 @@
 #include "MyFooServant.h"
 
 // Constructor
-MyFirstFooServant::MyFirstFooServant (PortableServer::POA_ptr poa,
+MyFirstFooServant::MyFirstFooServant (CORBA::ORB_ptr orb_ptr,
+                                      PortableServer::POA_ptr poa_ptr,
                                       CORBA::Long value,
-                                      CORBA::Object_ptr forward_to)
-  : poa_ (PortableServer::POA::_duplicate (poa)),
+                                      CORBA::Object_ptr forward_to_ptr)
+  : orb_var_ (CORBA::ORB::_duplicate (orb_ptr)),
+    poa_var_ (PortableServer::POA::_duplicate (poa_ptr)),
     value_ (value),
-    forward_to_ (CORBA::Object::_duplicate (forward_to))
+    forward_to_var_ (CORBA::Object::_duplicate (forward_to_ptr))
 {
-  if (CORBA::is_nil (forward_to))
+  if (CORBA::is_nil (this->forward_to_var_))
     ACE_DEBUG ((LM_DEBUG,
                 "POA approach: Forward_to is nil!\n"));
 }
@@ -39,7 +41,7 @@ MyFirstFooServant::~MyFirstFooServant (void)
 PortableServer::POA_ptr
 MyFirstFooServant::_default_POA (CORBA::Environment &/*env*/)
 {
-  return PortableServer::POA::_duplicate (this->poa_.in ());
+  return PortableServer::POA::_duplicate (this->poa_var_.in ());
 }
 
 // Return this->value
@@ -49,20 +51,27 @@ MyFirstFooServant::doit (CORBA::Environment &/*env*/)
   return this->value_++;
 }
 
+void
+MyFirstFooServant::shutdown (CORBA::Environment &/*env*/)
+{
+  this->orb_var_->shutdown();
+}
+
+
 void 
 MyFirstFooServant::forward (CORBA::Environment &env)
 {
   ACE_DEBUG ((LM_DEBUG,
               "MyFirstFooServant::forward: being called\n"));
-  if (!CORBA::is_nil (this->forward_to_.in ()))
+  if (!CORBA::is_nil (this->forward_to_var_.in ()))
     {
       PortableServer::ObjectId_var oid =
-        this->poa_->servant_to_id (this, env);
+        this->poa_var_->servant_to_id (this, env);
       
       if (env.exception () != 0)
         return;
 
-      PortableServer::Servant servant = this->poa_->_servant ();
+      PortableServer::Servant servant = this->poa_var_->_servant ();
       if (servant == 0)
         {
           CORBA::Exception *exception = new Foo::Cannot_Forward;
@@ -75,7 +84,7 @@ MyFirstFooServant::forward (CORBA::Environment &env)
       TAO_POA *tao_poa = ACE_dynamic_cast (TAO_POA *, poa);
       
       tao_poa->forward_object (oid.in (),
-                               this->forward_to_.in (),
+                               this->forward_to_var_.in (),
                                env);
     }
   else
@@ -91,9 +100,11 @@ MyFirstFooServant::forward (CORBA::Environment &env)
 // Second Foo
 
 // Constructor
-MySecondFooServant::MySecondFooServant (MyFooServantLocator *locator_ptr,
+MySecondFooServant::MySecondFooServant (CORBA::ORB_ptr orb_ptr,
+                                        MyFooServantLocator *locator_ptr,
                                         CORBA::Long value)
-  : locator_ptr_ (locator_ptr),
+  : orb_var_ (CORBA::ORB::_duplicate (orb_ptr)),
+    locator_ptr_ (locator_ptr),
     value_ (value)
 {
 }
@@ -117,7 +128,13 @@ MySecondFooServant::forward (CORBA::Environment &env)
   // forward the forwarding request to the Servant Locator :-) This is
   // kind of a loop back, but it is correct only the IDL interface can
   // be assumed !!
-  locator_ptr_->forward (env);  
+  this->locator_ptr_->forward (env);  
 }
 
+
+void
+MySecondFooServant::shutdown (CORBA::Environment &/*env*/)
+{
+  this->orb_var_->shutdown();
+}
 

@@ -25,9 +25,10 @@ class MyFirstFooServant : public POA_Foo
   // @@ Michael, please comment me.
 public:
   // constructor - takes a POA and a value parameter
-  MyFirstFooServant (PortableServer::POA_ptr poa,
+  MyFirstFooServant (CORBA::ORB_ptr orb_ptr,
+                     PortableServer::POA_ptr poa_ptr,
                      CORBA::Long value,
-                     CORBA::Object_ptr forward_to);
+                     CORBA::Object_ptr forward_to_ptr);
   
   // Destructor
   virtual ~MyFirstFooServant (void);
@@ -40,12 +41,15 @@ public:
   
   // Setup forwarding
   virtual void forward (CORBA::Environment &env);
-  
+
+  virtual void shutdown (CORBA::Environment &env);
+
 protected:
   // Default poa associated with this servant
-  PortableServer::POA_var poa_;
+  CORBA::ORB_var orb_var_;
+  PortableServer::POA_var poa_var_;
   CORBA::Long value_;
-  CORBA::Object_var forward_to_;
+  CORBA::Object_var forward_to_var_;
 };
 
 class MySecondFooServant : public POA_Foo
@@ -54,7 +58,8 @@ class MySecondFooServant : public POA_Foo
   // @@ Michael, please comment me.
 public:
   // constructor - takes a POA and a value parameter
-  MySecondFooServant (MyFooServantLocator *locator,
+  MySecondFooServant (CORBA::ORB_ptr orb_ptr,
+                      MyFooServantLocator *locator,
                       CORBA::Long value);
   
   // Destructor
@@ -66,8 +71,11 @@ public:
   // Setup forwarding
   virtual void forward (CORBA::Environment &env);
 
+  virtual void shutdown (CORBA::Environment &env);
+
 protected:
   // Default poa associated with this servant
+  CORBA::ORB_var orb_var_;
   MyFooServantLocator *locator_ptr_;
   CORBA::Long value_;
 };
