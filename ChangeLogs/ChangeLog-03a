@@ -1,3 +1,8 @@
+Tue Jan 15 10:52:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * include/makeinclude/ace_flags.bor:
+          Added new flags for the new TAO PortableGroup library
+
 Mon Jan 14 14:40:25 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* bin/g++dep:
