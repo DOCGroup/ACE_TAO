@@ -24,6 +24,17 @@ use vars qw(@ISA);
 # ************************************************************
 
 
+sub crlf {
+  my($self) = shift;
+  if ($^O eq 'MSWin32') {
+    return "\n";
+  }
+  else {
+    return "\r\n";
+  }
+}
+
+
 sub workspace_file_name {
   my($self) = shift;
   return "Makefile";
@@ -33,8 +44,9 @@ sub workspace_file_name {
 sub pre_workspace {
   my($self) = shift;
   my($fh)   = shift;
+  my($crlf) = $self->crlf();
 
-  print $fh "# Microsoft Developer Studio Generated NMAKE File\r\n\r\n";
+  print $fh "# Microsoft Developer Studio Generated NMAKE File$crlf$crlf";
 }
 
 
@@ -44,8 +56,9 @@ sub write_comps {
   my($projects) = $self->get_projects();
   my($pjs)      = $self->get_project_info();
   my(@list)     = $self->sort_dependencies($projects, $pjs);
+  my($crlf)     = $self->crlf();
 
-  print $fh "ALL:\r\n";
+  print $fh "ALL:$crlf";
   foreach my $project (@list) {
     my($dir)    = dirname($project);
     my($chdir)  = 0;
@@ -65,8 +78,8 @@ sub write_comps {
 
     ## These commands will work.  In practicality, only the
     ## default configuration can be built at the top level.
-    print $fh ($chdir ? "\tcd $dir\r\n" : "") .
-              "\t\$(MAKE) /f " . basename($project) . " CFG=\"\$(CFG)\"\r\n" .
+    print $fh ($chdir ? "\tcd $dir$crlf" : "") .
+              "\t\$(MAKE) /f " . basename($project) . " CFG=\"\$(CFG)\"$crlf" .
               ($chdir ? "\tcd " . ("../" x $back) : "");
   }
 }
