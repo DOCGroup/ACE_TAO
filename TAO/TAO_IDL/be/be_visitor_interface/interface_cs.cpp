@@ -62,6 +62,28 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   be_visitor *visitor = 0;
   be_visitor_context ctx;
+
+  // Interceptor classes.  The interceptors helper classes must be
+  // defined before the interface operations because they are used in
+  // the implementation of said operations.
+
+  ctx = (*this->ctx_);
+  visitor = 0;
+
+  ctx.state (TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_CS);
+  visitor = tao_cg->make_visitor (&ctx);
+  if (!visitor || (node->accept (visitor) == -1))
+    {
+      delete visitor;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_interface_cs::"
+                         "visit_interface - "
+                         "codegen for interceptors classes failed\n"),
+                        -1);
+    }
+  delete visitor;
+  visitor = 0;
+
   if (!node->is_local ())
     {
       ctx = *this->ctx_;
@@ -401,24 +423,6 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
                          "codegen for scope failed\n"), -1);
     }
 
-  // Interceptor classes
-
-  ctx = (*this->ctx_);
-  visitor = 0;
-
-  ctx.state (TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_CS);
-  visitor = tao_cg->make_visitor (&ctx);
-  if (!visitor || (node->accept (visitor) == -1))
-    {
-      delete visitor;
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_interface_cs::"
-                         "visit_interface - "
-                         "codegen for interceptors classes failed\n"),
-                        -1);
-    }
-  delete visitor;
-  visitor = 0;
 
   // Smart Proxy classes
   if (! node->is_local ())

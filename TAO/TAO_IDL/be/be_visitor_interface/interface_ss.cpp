@@ -67,6 +67,25 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   be_visitor *visitor = 0;
   be_visitor_context ctx;
 
+  // Interceptor classes
+
+  ctx = *this->ctx_;
+  visitor = 0;
+
+  ctx.state (TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_SS);
+  visitor = tao_cg->make_visitor (&ctx);
+  if (!visitor || (node->accept (visitor) == -1))
+    {
+      delete visitor;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_interface_cs::"
+                         "visit_interface - "
+                         "codegen for interceptors classes failed\n"),
+                        -1);
+    }
+  delete visitor;
+  visitor = 0;
+
   if (be_global->gen_thru_poa_collocation () ||
       be_global->gen_direct_collocation ())
     {
@@ -173,13 +192,13 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   if (!node->is_nested ())
     {
       // we are outermost. So the POA_ prefix is prepended to our name
-      *os << node->full_skel_name () << "::POA_" << node->local_name () 
+      *os << node->full_skel_name () << "::POA_" << node->local_name ()
           << " (void)\n";
     }
   else
     {
       // the POA_ prefix is prepended to our outermost module name
-      *os << node->full_skel_name () << "::" << node->local_name () 
+      *os << node->full_skel_name () << "::" << node->local_name ()
           << " (void)\n";
     }
 
@@ -308,10 +327,10 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << "{" << be_idt_nl;
   *os << node->full_skel_name () << " *_tao_impl = ("
       << node->full_skel_name () << " *) _tao_object_reference;" << be_nl
-      << "CORBA_InterfaceDef_ptr _tao_retval = 0;" << be_nl 
+      << "CORBA_InterfaceDef_ptr _tao_retval = 0;" << be_nl
       << "CORBA::Boolean _tao_result = 0;" << be_nl << be_nl;
   *os << "TAO_IFR_Client_Adapter *_tao_adapter =" << be_idt_nl
-      << "ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (" 
+      << "ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance ("
       << be_idt << be_idt_nl
       << "TAO_ORB_Core::ifr_client_adapter_name ()" << be_uidt_nl
       << ");" << be_uidt_nl << be_uidt_nl;
@@ -324,7 +343,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "_tao_retval = _tao_impl->_get_interface (ACE_TRY_ENV);" << be_nl
       << "ACE_TRY_CHECK;" << be_nl << be_nl
       << "_tao_server_request.init_reply ();" << be_nl << be_nl
-      << "TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();" 
+      << "TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();"
       << be_nl << be_nl
       << "_tao_result =" << be_idt_nl
       << "_tao_adapter->interfacedef_cdr_insert (" << be_idt << be_idt_nl
@@ -507,25 +526,6 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     }
   */
   *os << "\n\n";
-
-  // Interceptor classes
-
-  ctx = *this->ctx_;
-  visitor = 0;
-
-  ctx.state (TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_SS);
-  visitor = tao_cg->make_visitor (&ctx);
-  if (!visitor || (node->accept (visitor) == -1))
-    {
-      delete visitor;
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_interface_cs::"
-                         "visit_interface - "
-                         "codegen for interceptors classes failed\n"),
-                        -1);
-    }
-  delete visitor;
-  visitor = 0;
 
   return 0;
 }

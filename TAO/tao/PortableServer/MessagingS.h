@@ -286,11 +286,11 @@ TAO_NAMESPACE_CLOSE
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
-
 #if defined (__BORLANDC__)
 #pragma option pop
 #endif /* __BORLANDC__ */
+
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 #include "ace/post.h"
 #endif /* ifndef */
