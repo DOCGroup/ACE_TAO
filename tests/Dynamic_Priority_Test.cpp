@@ -67,12 +67,18 @@ class ArgStruct
   // = TITLE
   //   Structure used to pass arguments to test functions.
 public:
-  // @@ Chris, can you please document these fields?
 
   ACE_Message_Queue<ACE_SYNCH> *queue_;
+  // message queue to test
+
   const char *order_string_;
+  // string of characters to indicate message order
+
   ACE_Message_Block **array_;
+  // array of message blocks to use
+
   u_int expected_count_;
+  // expected message count
 };
 
 // Order in which messages are sent.
@@ -133,13 +139,9 @@ order_consumer (void *args)
 {
   ACE_ASSERT (args != 0);
 
-  // @@ Chris, can you please use the appropriate
-  // ACE_reinterpret_cast() macro here (and elsewhere), rather than
-  // using the old-style C casts?
-
-  ACE_Message_Queue<ACE_SYNCH> *msg_queue = ((ArgStruct *) args)->queue_;
-  const char *receipt_order = ((ArgStruct *) args)->order_string_;
-  u_int expected_count = ((ArgStruct *) args)->expected_count_;
+  ACE_Message_Queue<ACE_SYNCH> *msg_queue = ACE_static_cast (ArgStruct *, args)->queue_;
+  const char *receipt_order = ACE_static_cast (ArgStruct *, args)->order_string_;
+  u_int expected_count = ACE_static_cast (ArgStruct *, args)->expected_count_;
 
   ACE_ASSERT (receipt_order != 0);
   ACE_ASSERT (msg_queue != 0);
@@ -180,10 +182,10 @@ order_producer (void *args)
 {
   ACE_ASSERT (args != 0);
 
-  ACE_Message_Queue<ACE_SYNCH> *msg_queue = ((ArgStruct *) args)->queue_;
-  const char *send_order = ((ArgStruct *) args)->order_string_;
-  ACE_Message_Block **block_array = ((ArgStruct *) args)->array_;
-  int expected_count = ((ArgStruct *) args)->expected_count_;
+  ACE_Message_Queue<ACE_SYNCH> *msg_queue = ACE_static_cast (ArgStruct *, args)->queue_;
+  const char *send_order = ACE_static_cast (ArgStruct *, args)->order_string_;
+  ACE_Message_Block **block_array = ACE_static_cast (ArgStruct *, args)->array_;
+  int expected_count = ACE_static_cast (ArgStruct *, args)->expected_count_;
 
   ACE_ASSERT (send_order != 0);
   ACE_ASSERT (block_array != 0);
@@ -331,8 +333,8 @@ performance_consumer (void * args)
 
   ACE_ASSERT (args != 0);
 
-  ACE_Message_Queue<ACE_SYNCH> *msg_queue = ((ArgStruct *) args)->queue_;
-  u_int expected_count = ((ArgStruct *) args)->expected_count_;
+  ACE_Message_Queue<ACE_SYNCH> *msg_queue = ACE_static_cast (ArgStruct *, args)->queue_;
+  u_int expected_count = ACE_static_cast (ArgStruct *, args)->expected_count_;
 
   ACE_ASSERT (msg_queue != 0);
 
@@ -349,8 +351,6 @@ performance_consumer (void * args)
     {
       if (msg_queue->dequeue_head (mb) == -1)
         break;
-
-      //  ACE_ASSERT ('a' == *mb->rd_ptr ());
     }
 
   // Stop timer, obtain and report its elapsed time.x
@@ -379,9 +379,9 @@ performance_producer (void *args)
 
   ACE_ASSERT (args != 0);
 
-  ACE_Message_Queue<ACE_SYNCH> *msg_queue = ((ArgStruct *) args)->queue_;
-  ACE_Message_Block **block_array = ((ArgStruct *) args)->array_;
-  int expected_count = ((ArgStruct *) args)->expected_count_;
+  ACE_Message_Queue<ACE_SYNCH> *msg_queue = ACE_static_cast (ArgStruct *, args)->queue_;
+  ACE_Message_Block **block_array = ACE_static_cast (ArgStruct *, args)->array_;
+  int expected_count = ACE_static_cast (ArgStruct *, args)->expected_count_;
 
   ACE_ASSERT (send_order != 0);
   ACE_ASSERT (block_array != 0);
@@ -754,3 +754,5 @@ main (int, ASYS_TCHAR *[])
   ACE_END_TEST;
   return 0;
 }
+
+

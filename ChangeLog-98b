@@ -1,3 +1,8 @@
+Mon Jul 27 14:25:15 1998  Chris Gill  <cdgill@cs.wustl.edu>
+
+	* tests/Dynamic_Priority_Test.cpp: Changed C-Style casts to 
+	  ACE_static_casts, documented argument structure members
+
 Mon Jul 27 12:23:55 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Select_Reactor.cpp (open): Changed a erroneous comparison
