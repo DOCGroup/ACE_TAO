@@ -1,3 +1,19 @@
+Fri Jun 15 20:18:07 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ace/Active_Map_Manager_T.i:
+        * ace/Map_Manager.cpp:
+        * ace/Map_Manager.h:
+        * ace/Map_Manager.i:
+
+          Fixed a bug in the Active_Map_Manager caused due to size_t being of
+          different size under 32-bit platforms versus 64-bit platforms.
+          The bug was triggered under Tru64. This has resulted in changing
+          the implementation to use ACE_UINT32 throughout while
+          maintaining a backward-compatible interface.
+
+          Many thanks to Irfan for his help in finding a solution.
+
+
 Fri Jun 15 17:40:51 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * examples/Shared_Malloc/Malloc.cpp:
