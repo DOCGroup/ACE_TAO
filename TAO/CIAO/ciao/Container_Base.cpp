@@ -206,7 +206,7 @@ CIAO::Session_Container::ciao_install_home (const char *exe_dll_name,
 
 void
 CIAO::Session_Container::ciao_uninstall_home (Components::CCMHome_ptr homeref
-                                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                              ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->uninstall (homeref
