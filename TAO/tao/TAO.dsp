@@ -200,6 +200,10 @@ SOURCE=.\Base_Transport_Property.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Basic_Arguments.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\BiDir_Adapter.cpp
 # End Source File
 # Begin Source File
@@ -868,6 +872,10 @@ SOURCE=.\skip.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Special_Basic_Arguments.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\StringSeqC.cpp
 # ADD CPP /GR
 # End Source File
@@ -983,6 +991,10 @@ SOURCE=.\TypeCodeFactory_Adapter.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\UB_String_Arguments.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Valuetype_Adapter.cpp
 # End Source File
 # Begin Source File
@@ -1060,6 +1072,10 @@ SOURCE=.\arg_shifter.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Arg_Traits_T.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Argument.h
 # End Source File
 # Begin Source File
@@ -1081,6 +1097,10 @@ SOURCE=.\Base_Transport_Property.h
 # Begin Source File
 
 SOURCE=.\Basic_Argument_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Basic_Arguments.h
 # End Source File
 # Begin Source File
 
@@ -1800,6 +1820,10 @@ SOURCE=.\Special_Basic_Argument_T.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Special_Basic_Arguments.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\StringSeqC.h
 # End Source File
 # Begin Source File
@@ -1917,6 +1941,14 @@ SOURCE=.\typecode.h
 # Begin Source File
 
 SOURCE=.\TypeCodeFactory_Adapter.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\UB_String_Argument_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\UB_String_Arguments.h
 # End Source File
 # Begin Source File
 
@@ -2643,6 +2675,11 @@ SOURCE=.\Sequence_T.cpp
 # Begin Source File
 
 SOURCE=.\Special_Basic_Argument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\UB_String_Argument_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File

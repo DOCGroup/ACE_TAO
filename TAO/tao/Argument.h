@@ -34,14 +34,9 @@ namespace TAO
   class TAO_Export Argument
   {
   public:
-    Argument (char const *argname) : argname_ (argname ) {}
-
     virtual CORBA::Boolean marshal (TAO_OutputCDR &) = 0;
     virtual CORBA::Boolean demarshal (TAO_InputCDR &) = 0;
     virtual void add_to_interceptor (Dynamic::Parameter &) = 0;
-
-  private:
-    char const * argname_;
   };
 
   /**

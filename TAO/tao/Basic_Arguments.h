@@ -21,7 +21,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "Basic_Argument_T.h"
-#include "Traits_T.h"
+#include "Arg_Traits_T.h"
 
 namespace TAO
 {
@@ -52,7 +52,7 @@ namespace TAO
   };
 
   template<>
-  class Traits<void>
+  class Arg_Traits<void>
   {
     typedef void                          ret_type;
 
@@ -69,47 +69,47 @@ namespace TAO
    */
 
   template<>
-  class Traits<CORBA::Short> : public Basic_Arg_Traits_T<CORBA::Short>
+  class Arg_Traits<CORBA::Short> : public Basic_Arg_Traits_T<CORBA::Short>
   {
   };
 
   template<>
-  class Traits<CORBA::Long> : public Basic_Arg_Traits_T<CORBA::Long>
+  class Arg_Traits<CORBA::Long> : public Basic_Arg_Traits_T<CORBA::Long>
   {
   };
 
   template<>
-  class Traits<CORBA::UShort> : public Basic_Arg_Traits_T<CORBA::UShort>
+  class Arg_Traits<CORBA::UShort> : public Basic_Arg_Traits_T<CORBA::UShort>
   {
   };
 
   template<>
-  class Traits<CORBA::ULong> : public Basic_Arg_Traits_T<CORBA::ULong>
+  class Arg_Traits<CORBA::ULong> : public Basic_Arg_Traits_T<CORBA::ULong>
   {
   };
 
   template<>
-  class Traits<CORBA::Float> : public Basic_Arg_Traits_T<CORBA::Float>
+  class Arg_Traits<CORBA::Float> : public Basic_Arg_Traits_T<CORBA::Float>
   {
   };
 
   template<>
-  class Traits<CORBA::Double> : public Basic_Arg_Traits_T<CORBA::Double>
+  class Arg_Traits<CORBA::Double> : public Basic_Arg_Traits_T<CORBA::Double>
   {
   };
 
   template<>
-  class Traits<CORBA::LongLong> : public Basic_Arg_Traits_T<CORBA::LongLong>
+  class Arg_Traits<CORBA::LongLong> : public Basic_Arg_Traits_T<CORBA::LongLong>
   {
   };
 
   template<>
-  class Traits<CORBA::ULongLong> : public Basic_Arg_Traits_T<CORBA::ULongLong>
+  class Arg_Traits<CORBA::ULongLong> : public Basic_Arg_Traits_T<CORBA::ULongLong>
   {
   };
 
   template<>
-  class Traits<CORBA::LongDouble> : public Basic_Arg_Traits_T<CORBA::LongDouble>
+  class Arg_Traits<CORBA::LongDouble> : public Basic_Arg_Traits_T<CORBA::LongDouble>
   {
   };
 };

@@ -28,7 +28,7 @@ namespace TAO
    *
    */
   template<typename S>
-  class Traits
+  class Arg_Traits
   {
   };
 };

@@ -34,7 +34,7 @@ namespace TAO
   class TAO_Export In_Special_Basic_Argument_T : public Argument
   {
   public:
-    In_Special_Basic_Argument_T (S const & x, char const * argname);
+    In_Special_Basic_Argument_T (S const & x);
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &);
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
@@ -54,7 +54,7 @@ namespace TAO
   class TAO_Export Inout_Special_Basic_Argument_T : public Argument
   {
   public:
-    Inout_Special_Basic_Argument_T (S & x, char const * argname);
+    Inout_Special_Basic_Argument_T (S & x);
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &);
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
@@ -74,7 +74,7 @@ namespace TAO
   class TAO_Export Out_Special_Basic_Argument_T : public Argument
   {
   public:
-    Out_Special_Basic_Argument_T (S & x, char const * argname);
+    Out_Special_Basic_Argument_T (S & x);
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &);
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
@@ -94,7 +94,7 @@ namespace TAO
   class TAO_Export Ret_Special_Basic_Argument_T : public Stub_Retval
   {
   public:
-    Ret_Special_Basic_Argument_T (S const & x);
+    Ret_Special_Basic_Argument_T (void);
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &);
     virtual void add_to_interceptor (CORBA::Any *);
@@ -102,7 +102,7 @@ namespace TAO
     operator S () const;
 
   private:
-    mutable S & x_;
+    S x_;
   };
 
   /**
@@ -115,7 +115,7 @@ namespace TAO
   class TAO_Export In_Special_Basic_SArgument_T : public Argument
   {
   public:
-    In_Special_Basic_SArgument_T (S const & x, char const * argname);
+    In_Special_Basic_SArgument_T (void);
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &);
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
@@ -124,7 +124,7 @@ namespace TAO
     operator S () const;
 
   private:
-    mutable S & x_;
+    S x_;
   };
 
   /**
@@ -137,7 +137,7 @@ namespace TAO
   class TAO_Export Inout_Special_Basic_SArgument_T : public Argument
   {
   public:
-    Inout_Special_Basic_SArgument_T (S const & x, char const * argname);
+    Inout_Special_Basic_SArgument_T (void);
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &);
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
@@ -146,7 +146,7 @@ namespace TAO
     operator S & ();
 
   private:
-    mutable S & x_;
+    S x_;
   };
 
   /**
@@ -159,7 +159,7 @@ namespace TAO
   class TAO_Export Out_Special_Basic_SArgument_T : public Argument
   {
   public:
-    Out_Special_Basic_SArgument_T (S const & x, char const * argname);
+    Out_Special_Basic_SArgument_T (void);
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &);
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
@@ -168,7 +168,7 @@ namespace TAO
     operator S & ();
 
   private:
-    mutable S & x_;
+    S x_;
   };
 
   /**
@@ -181,7 +181,7 @@ namespace TAO
   class TAO_Export Ret_Special_Basic_SArgument_T : public Skel_Retval
   {
   public:
-    Ret_Special_Basic_SArgument_T (S const & x);
+    Ret_Special_Basic_SArgument_T (void);
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &);
     virtual void add_to_interceptor (CORBA::Any *);
@@ -190,7 +190,7 @@ namespace TAO
     operator S & ();
 
   private:
-    mutable S & x_;
+    S x_;
   };
 
   /**
