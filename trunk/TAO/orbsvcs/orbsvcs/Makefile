@@ -58,6 +58,13 @@ IDL_FILES += \
 	CosTradingS \
 	SequencesC
 
+ifndef STL_ROOT
+STL_ROOT=/project/doc/irfan/ObjectSpace/SC4.0
+endif
+
+STD=$(STL_ROOT)/ospace/std
+STL=$(STL_ROOT)/stl
+
 include $(STL_ROOT)/config/local.cfg
 
 CC_INCLUDES += -I$(STD)

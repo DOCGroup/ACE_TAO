@@ -8,6 +8,13 @@
 #   STL (start)
 #---------------
 
+ifndef STL_ROOT
+STL_ROOT=/project/doc/irfan/ObjectSpace/SC4.0
+endif
+
+STD=$(STL_ROOT)/ospace/std
+STL=$(STL_ROOT)/stl
+
 include $(STL_ROOT)/config/local.cfg
 
 CC_INCLUDES += -I$(STD)
@@ -51,7 +58,7 @@ FILES   = $(IDL_FILES) \
 	  TT_Info \
 	  Service_Type_Exporter \
 	  Offer_Exporter \
-	  Offer_Importer 
+	  Offer_Importer
 
 DCFLAGS = -g
 LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao -L$(STL_ROOT)/lib
