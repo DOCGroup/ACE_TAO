@@ -837,10 +837,6 @@ char * tao_yyreds[] =
  * Copyright (c) 1993 by Sun Microsystems, Inc.
  */
 
-#if !defined (ACE_WIN32)
-#pragma ident	"@(#)yaccpar	6.12	93/06/07 SMI"
-#endif /* ACE_WIN32 */
-
 /*
 ** Skeleton parser driver for yacc output
 */
