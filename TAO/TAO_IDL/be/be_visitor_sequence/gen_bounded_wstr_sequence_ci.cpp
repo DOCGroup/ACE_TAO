@@ -107,8 +107,7 @@ be_visitor_sequence_ci::gen_bounded_wstr_sequence (be_sequence *node)
   *os << "ACE_INLINE" << be_nl
       << full_class_name << "::" << class_name << " (void)" << be_nl
       << "  : TAO_Bounded_Base_Sequence (" << node->max_size ()
-      << ", " << class_name << "::allocbuf(" 
-      << node->max_size () << "))" << be_nl
+      << ", 0)" << be_nl
       << "{" << be_nl
       << "}" << be_nl
       << be_nl;
