@@ -1,3 +1,35 @@
+Wed Nov  5 01:23:08 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * apps/Gateway/Gateway/Event_Channel.cpp:
+        * apps/Gateway/Gateway/Gateway.cpp:
+        * apps/Gateway/Peer/Peer.cpp:
+        * netsvcs/lib/Name_Handler.cpp:
+        * netsvcs/lib/Server_Logging_Handler_T.cpp:
+        * netsvcs/lib/TS_Server_Handler.cpp:
+        * tests/Multicast_Test.cpp:
+        * tests/Process_Manager_Test.cpp:
+        * examples/ASX/Event_Server/Event_Server/event_server.cpp:
+        * examples/ASX/Event_Server/Transceiver/transceiver.cpp:
+        * examples/ASX/UPIPE_Event_Server/event_server.cpp:
+        * examples/Connection/misc/Connection_Handler.cpp:
+        * examples/Connection/non_blocking/CPP-acceptor.cpp:
+        * examples/Connection/non_blocking/CPP-connector.cpp:
+        * examples/Logger/simple-server/server_loggerd.cpp:
+        * examples/Reactor/Misc/notification.cpp:
+        * examples/Reactor/Misc/test_demuxing.cpp:
+        * examples/Reactor/Misc/test_signals_1.cpp:
+        * examples/Service_Configurator/IPC-tests/server/server_test.cpp:
+        * examples/Threads/task_three.cpp:
+        * examples/Threads/thread_manager.cpp:
+        * examples/Threads/thread_specific.cpp:
+          Added #include of Signal.h.
+
+        * examples/Reactor/Misc/pingpong.cpp:
+          Null_Mutex.h.
+
+        * examples/C++NPv2/Logging_Event_Handler_Ex.cpp:
+          Added #include of ace/Timer_Queue.h.
+
 Wed Nov  5 00:56:43 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * Process_Manager.cpp:

@@ -3,7 +3,7 @@
 #include "ace/OS_main.h"
 #include "ace/Service_Config.h"
 #include "ace/Thread_Manager.h"
-#include "ace/Synch.h"
+#include "ace/Signal.h"
 
 ACE_RCSID(Threads, thread_specific, "$Id$")
 

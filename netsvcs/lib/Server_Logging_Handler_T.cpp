@@ -14,6 +14,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Log_Record.h"
 #include "Server_Logging_Handler_T.h"
+#include "ace/Signal.h"
 
 ACE_RCSID(lib, Server_Logging_Handler_T, "$Id$")
 
