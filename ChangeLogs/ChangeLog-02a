@@ -1,3 +1,11 @@
+Mon Feb 25 09:17:39 2002  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* ace/SSL/SSL_Context.cpp (dh_params): Wrapped the second argument
+ 	to ACE_OS::fopen with ACE_TEXT so that it behaves properly on wide 
+	character platforms.  Thanks to Craig Rodrigues for pointing this
+	out and Ossama Othman for explaining the difference btw. ACE_TEXT
+	and ACE_LIB_TEXT.
+
 Mon Feb 25 13:50:43 2002 UTC Don Hinton <dhinton@ieee.org>
 
 	* ace/Token.{h|i|cpp}: Added the ability to chose the queueing strategy, 
