@@ -4311,6 +4311,21 @@ typedef fd_set ACE_FD_SET_TYPE;
 #   define INET6_ADDRSTRLEN 46
 # endif /* INET6_ADDRSTRLEN */
 
+#if defined (ACE_HAS_IPV6)
+
+#  if defined (ACE_USES_IPV4_IPV6_MIGRATION)
+#    define ACE_ADDRESS_FAMILY_INET  AF_UNSPEC
+#    define ACE_PROTOCOL_FAMILY_INET PF_UNSPEC
+#  else
+#    define ACE_ADDRESS_FAMILY_INET AF_INET6
+#    define ACE_PROTOCOL_FAMILY_INET PF_INET6
+#  endif /* ACE_USES_IPV4_IPV6_MIGRATION */
+
+#else
+#  define ACE_ADDRESS_FAMILY_INET AF_INET
+#  define ACE_PROTOCOL_FAMILY_INET PF_INET
+#endif
+
 # if defined (ACE_LACKS_SIGSET)
 #    if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
 typedef pace_sigset_t sigset_t;
@@ -6424,7 +6439,10 @@ public:
                                         int length,
                                         int type);
   static struct hostent *gethostbyname (const char *name);
-  static struct hostent *gethostbyname2 (const char *name, int type);
+  static struct hostent *getipnodebyname (const char *name, int family,
+                                          int flags = 0);
+  static struct hostent *getipnodebyaddr (const void *src, size_t len,
+                                          int family);
   static struct hostent *gethostbyaddr_r (const char *addr,
                                           int length,
                                           int type,
@@ -6819,8 +6837,6 @@ public:
 # endif /* ACE_LACKS_NATIVE_STRPTIME */
 #endif /* ACE_HAS_STRPTIME */
 
-
-
 private:
 
 #if defined (ACE_LACKS_WRITEV)
@@ -6915,7 +6931,6 @@ private:
                              const ACE_Time_Value *timeout);
 
   static ACE_Time_Value gettimeofday_i (void);
-
 };
 
 /**

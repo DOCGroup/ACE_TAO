@@ -22,6 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Addr.h"
+#include "ace/INET_Addr.h"
 
 /**
  * @class ACE_SOCK_CODgram
@@ -38,7 +39,7 @@ public:
 
   ACE_SOCK_CODgram (const ACE_Addr &remote_sap,
                     const ACE_Addr &local_sap = ACE_Addr::sap_any,
-                    int protocol_family = PF_INET,
+                    int protocol_family = ACE_PROTOCOL_FAMILY_INET,
                     int protocol = 0,
                     int reuse_addr = 0);
 
@@ -50,7 +51,7 @@ public:
   /// Initiate a connected dgram.
   int open (const ACE_Addr &remote_sap,
             const ACE_Addr &local_sap = ACE_Addr::sap_any,
-            int protocol_family = PF_INET,
+            int protocol_family = ACE_PROTOCOL_FAMILY_INET,
             int protocol = 0,
             int reuse_addr = 0);
 

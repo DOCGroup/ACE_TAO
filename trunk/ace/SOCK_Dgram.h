@@ -16,6 +16,7 @@
 #include "ace/pre.h"
 
 #include "ace/SOCK.h"
+#include "ace/INET_Addr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -39,7 +40,7 @@ public:
   /// This is a BSD-style method (i.e., no QoS) for initiating a socket
   /// dgram that will accept datagrams at the <local> address.
   ACE_SOCK_Dgram (const ACE_Addr &local,
-                  int protocol_family = PF_INET,
+                  int protocol_family = ACE_PROTOCOL_FAMILY_INET,
                   int protocol = 0,
                   int reuse_addr = 0);
 
@@ -59,7 +60,7 @@ public:
   /// This is a BSD-style method (i.e., no QoS) for initiating a socket
   /// dgram that will accept datagrams at the <local> address.
   int open (const ACE_Addr &local,
-            int protocol_family = PF_INET,
+            int protocol_family = ACE_PROTOCOL_FAMILY_INET,
             int protocol = 0,
             int reuse_addr = 0);
 
