@@ -58,22 +58,22 @@ PERL5_CWD
 }
 
 ####
-#### process command line args
+#### Process command line args.
 ####
-while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^-/ ) {
-    if ( $ARGV[0] eq '-v' ) {
+while ($#ARGV >= 0  &&  $ARGV[0] =~ /^-/) {
+    if ($ARGV[0] eq '-v') {
         $verbose = 1;
-    } elsif ( $ARGV[0] eq '-d' ) {
-        if ( $ARGV[1] =~ /^\d+$/ ) {
+    } elsif ($ARGV[0] eq '-d') {
+        if ($ARGV[1] =~ /^\d+$/) {
             $directory_mode = $ARGV[1]; shift;
         } else {
             warn "$0:  must provide argument for -d option\n";
             die $usage;
         }
-    } elsif ($ARGV[0] eq '-a' ) {
+    } elsif ($ARGV[0] eq '-a') {
         $source = &cwd ();
         $absolute = 1;
-    } elsif ( $ARGV[0] eq '-?' ) {
+    } elsif ($ARGV[0] eq '-?') {
         print "$usage";
         exit;
     } else {
@@ -97,9 +97,9 @@ if (-e '/usr/bin/find') {
 }
 
 ####
-#### check that we're in an ACE "top level" directory
+#### Check that we're in an ACE "top level" directory.
 ####
-( -d 'ace' && -d 'examples' && -d 'netsvcs' )  ||
+(-d 'ace' && -d 'include')  ||
     die "$0:  must be in an ACE top level (ACE_ROOT) directory!\n";
 
 ####
@@ -111,31 +111,31 @@ if (-e '/usr/bin/find') {
 ####
 #### Get all ACE plain file and directory names.
 ####
-@files = ( `$find . -name CVS -prune \\\
+@files = (`$find . -name CVS -prune \\\
         -o -name build -prune -o \\\
     -name '.*obj' -prune -o -name Templates.DB -prune -o \\\
     \\( ! -type l ! -name core ! -name '*.state' ! -name '*.so' \\\
     ! -name '*.[oa]' ! -name '*~' ! -name '.' ! -name '.#*' \\\
     ! -name '*.log' \\) \\\
-    -print` );
+    -print`);
 
 ####
 #### Create directories and symlinks to files.
 ####
-foreach $file ( @files ) {
+foreach $file (@files) {
    chop $file;         #### remove trailing newline (from find command above)
    $file =~ s%^./%%g;  #### excise leading ./ directory component
 
-   if ( -d $file ) {
-        unless ( -d "$build/$file" ) {
+   if (-d $file) {
+        unless (-d "$build/$file") {
             print "mkdir $build/$file, $directory_mode\n" if $verbose;
             mkdir ("$build/$file", $directory_mode);
         }
     } else {
-        unless ( -e "$build/$file" ) {
+        unless (-e "$build/$file") {
             if (!$absolute) {
                 $up = '../..';
-                while ( $file =~ m%/%g ) {
+                while ($file =~ m%/%g) {
                   $up .= '/..';
                 }
 
@@ -153,7 +153,8 @@ foreach $file ( @files ) {
 }
 
 ####
-#### Find all the symlinks in the build directory
+#### Find all the symlinks in the build directory, and remove ones
+#### that are no longer actually linked to a file.
 ####
 open (LINKS, "$find $build -type l |") ||
     die "$0: cannot find symlinks in $build\n";
@@ -163,8 +164,7 @@ while (<LINKS>) {
     local @s = stat $_;
     if ($#s == -1) {
 	print "Removing $_ \n" if $verbose;
-	unlink $_ ||
-	    warn "$0: unlink of $_ failed\n";
+	unlink $_  ||  warn "$0: unlink of $_ failed\n";
     }
 
 }
@@ -176,8 +176,8 @@ close (LINKS) ||
 ####
 print "\nCompleted creation of $build/.\n";
 
-unless ( -e "$build/ace/config.h"  &&
-         -e "$build/include/makeinclude/platform_macros.GNU" ) {
+unless (-e "$build/ace/config.h"  &&
+        -e "$build/include/makeinclude/platform_macros.GNU") {
     print "Be sure to setup $build/ace/config.h and\n" .
           "$build/include/makeinclude/platform_macros.GNU symlinks.\n";
 }
