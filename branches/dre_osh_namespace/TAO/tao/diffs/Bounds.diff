@@ -1,0 +1,18 @@
+--- orig/BoundsC.h	Tue Feb  5 14:02:29 2002
++++ BoundsC.h	Tue Feb  5 14:04:26 2002
+@@ -23,13 +23,14 @@
+ #define _TAO_IDL_ORIG_BOUNDSC_H_
+ 
+ #include "ace/pre.h"
+-#include "tao/corba.h"
++#include "tao/corbafwd.h"
+ 
+ #if !defined (ACE_LACKS_PRAGMA_ONCE)
+ # pragma once
+ #endif /* ACE_LACKS_PRAGMA_ONCE */
+ 
+ #include "TAO_Export.h"
++#include "Exception.h"
+ 
+ #if defined (TAO_EXPORT_MACRO)
+ #undef TAO_EXPORT_MACRO
