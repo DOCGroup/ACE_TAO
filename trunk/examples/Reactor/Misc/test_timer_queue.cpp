@@ -15,7 +15,12 @@ public:
   {
     ACE_DEBUG ((LM_DEBUG, 
 		"yow, the time has come and gone %d times %d, Horatio!\n", 
-		this->count_++, int (arg)));
+		this->count_++,
+#if defined (ACE_HAS_64BIT_LONGS)
+                long (arg)));
+#else /* ! ACE_HAS_64BIT_LONGS */
+                int (arg)));
+#endif /* ! ACE_HAS_64BIT_LONGS */
     return 0;
   }
 
