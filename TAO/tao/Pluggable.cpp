@@ -245,9 +245,9 @@ TAO_Transport::start_request (TAO_ORB_Core *,
                               CORBA::Boolean,
                               TAO_OutputCDR &,
                               CORBA::Environment &ACE_TRY_ENV)
-    TAO_THROW_SPEC ((CORBA::SystemException))
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_THROW (CORBA::INTERNAL ());
+  ACE_THROW (CORBA::INTERNAL ());
 }
 
 void
@@ -256,9 +256,9 @@ TAO_Transport::start_locate (TAO_ORB_Core *,
                              CORBA::ULong,
                              TAO_OutputCDR &,
                              CORBA::Environment &ACE_TRY_ENV)
-    TAO_THROW_SPEC ((CORBA::SystemException))
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_THROW (CORBA::INTERNAL ());
+  ACE_THROW (CORBA::INTERNAL ());
 }
 
 // *********************************************************************
