@@ -121,8 +121,21 @@ int be_visitor_interface_direct_collocated_ss::visit_interface (be_interface *no
       << be_nl
       << "if (result != 0)" << be_nl
       << "  return result;" << be_nl;
-  *os << "return this->" << node->name ()
-      << "::_tao_QueryInterface (type);" << be_uidt_nl
+  *os << "return this->";
+  if (!node->is_nested ())
+    {
+      *os << node->name ();
+    }
+  else
+    {
+      be_decl* scope =
+        be_scope::narrow_from_scope (node->defined_in ())->decl ();
+      *os << "ACE_NESTED_CLASS ("
+          << scope->name () << ","
+          << node->local_name ()
+          << ")";
+    }
+  *os << "::_tao_QueryInterface (type);" << be_uidt_nl
       << "}\n" << be_nl;
 
   // Generate _get_servant implementation.

@@ -54,7 +54,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /machine:I386
-# ADD LINK32 ace.lib tao.lib /nologo /subsystem:windows /dll /machine:I386 /out:"..\..\..\..\..\bin\RTCORBA_Common.dll" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace"
+# ADD LINK32 ace.lib tao.lib TAO_PortableServer.lib /nologo /subsystem:windows /dll /machine:I386 /out:"..\..\..\..\..\bin\RTCORBA_Common.dll" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace"
 # SUBTRACT LINK32 /pdb:none
 
 !ELSEIF  "$(CFG)" == "RTCORBA Test Common DLL - Win32 Debug"
@@ -82,7 +82,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 TAOd.lib aced.lib /nologo /subsystem:windows /dll /debug /machine:I386 /out:"..\..\..\..\..\bin\RTCORBA_Commond.dll" /pdbtype:sept /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace"
+# ADD LINK32 TAOd.lib TAO_PortableServerd.lib aced.lib /nologo /subsystem:windows /dll /debug /machine:I386 /out:"..\..\..\..\..\bin\RTCORBA_Commond.dll" /pdbtype:sept /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace"
 # SUBTRACT LINK32 /profile /pdb:none
 
 !ENDIF 
@@ -102,8 +102,6 @@ SOURCE=.\test_i.cpp
 
 !ELSEIF  "$(CFG)" == "RTCORBA Test Common DLL - Win32 Debug"
 
-# ADD CPP /I "..\..\..\..\.."
-
 !ENDIF 
 
 # End Source File
@@ -115,8 +113,6 @@ SOURCE=.\testC.cpp
 
 !ELSEIF  "$(CFG)" == "RTCORBA Test Common DLL - Win32 Debug"
 
-# ADD CPP /I "..\..\..\..\.."
-
 !ENDIF 
 
 # End Source File
@@ -127,8 +123,6 @@ SOURCE=.\testS.cpp
 !IF  "$(CFG)" == "RTCORBA Test Common DLL - Win32 Release"
 
 !ELSEIF  "$(CFG)" == "RTCORBA Test Common DLL - Win32 Debug"
-
-# ADD CPP /I "..\..\..\..\.."
 
 !ENDIF 
 

@@ -1,3 +1,16 @@
+Thu Aug 31 16:00:38 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAO_IDL/be/be_visitor_interface/direct_collocated_ss.cpp:
+	  More problems with collocated classes, we needed to use
+	  ACE_NESTED_CLASS in the implementation of _tao_QueryInterface.
+
+	* examples/Quoter/Quoter_i.cpp:
+	  We use the TAO_POA implementation class directly here, need to
+	  include it explicitly.
+
+	* */*.dsp:
+	  Link against the new TAO_PortableServer library when needed.
+
 Thu Aug 31 13:51:06 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* */Makefile:

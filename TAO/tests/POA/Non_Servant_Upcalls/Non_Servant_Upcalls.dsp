@@ -7,19 +7,19 @@
 CFG=POA Non_Servant_Upcalls - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE
+!MESSAGE 
 !MESSAGE NMAKE /f "Non_Servant_Upcalls.mak".
-!MESSAGE
+!MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE
+!MESSAGE 
 !MESSAGE NMAKE /f "Non_Servant_Upcalls.mak" CFG="POA Non_Servant_Upcalls - Win32 Debug"
-!MESSAGE
+!MESSAGE 
 !MESSAGE Possible choices for configuration are:
-!MESSAGE
+!MESSAGE 
 !MESSAGE "POA Non_Servant_Upcalls - Win32 Release" (based on "Win32 (x86) Console Application")
 !MESSAGE "POA Non_Servant_Upcalls - Win32 Debug" (based on "Win32 (x86) Console Application")
-!MESSAGE
+!MESSAGE 
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
@@ -51,7 +51,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 ace.lib tao.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace"
+# ADD LINK32 ace.lib TAO.lib TAO_PortableServer.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\tao\PortableServer" /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace"
 
 !ELSEIF  "$(CFG)" == "POA Non_Servant_Upcalls - Win32 Debug"
 
@@ -76,9 +76,9 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 aced.lib taod.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace"
+# ADD LINK32 aced.lib TAOd.lib TAO_PortableServerd.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\tao\PortableServer" /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace"
 
-!ENDIF
+!ENDIF 
 
 # Begin Target
 
@@ -121,7 +121,7 @@ SOURCE=.\test.idl
 
 !IF  "$(CFG)" == "POA Non_Servant_Upcalls - Win32 Release"
 
-USERDEP__TEST_="..\..\..\..\bin\Release\tao_idl.exe"
+USERDEP__TEST_="..\..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO's IDL Compiler on $(InputPath)
 InputPath=.\test.idl
 InputName=test
@@ -159,7 +159,7 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "POA Non_Servant_Upcalls - Win32 Debug"
 
-USERDEP__TEST_="..\..\..\..\bin\tao_idl.exe"
+USERDEP__TEST_="..\..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO's IDL Compiler on $(InputPath)
 InputPath=.\test.idl
 InputName=test
@@ -195,7 +195,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ENDIF
+!ENDIF 
 
 # End Source File
 # End Group
