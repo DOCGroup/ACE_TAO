@@ -134,7 +134,7 @@ Raj <raj@itd.ssb.com>
 Darrin Edelman <darrin@aetherworks.com>
 Steve Weismuller <spweismu@rsoc.rockwell.com>
 Eric C. Newton <ecn@smart.net>
-Andres Kruse <kruse@cern.ch>
+Andres Kruse <akruse@cyberlife.co.uk>
 Ramesh Nagabushnam <rcn@nynexst.com>
 Antonio Tortorici <antonio@rh0011.roma.tlsoft.it>
 Nigel Lowe <nigel@nt.com>
@@ -709,7 +709,6 @@ David McCann <david.mccann@alcatel.at>
 Ruediger Franke <Ruediger.Franke@decrc.abb.de>
 Brian Jones <bjones@edgemail.com>
 Michael Garvin <mgarvin@nortelnetworks.com>
-Andres <akruse@cyberlife.co.uk>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson.  Paul devised the recursive Makefile scheme that
