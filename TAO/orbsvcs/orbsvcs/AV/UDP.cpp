@@ -10,6 +10,10 @@
 #include "UDP.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID (AV,
+           UDP,
+           "$Id$")
+
 //------------------------------------------------------------
 // TAO_AV_UDP_Flow_Handler
 //------------------------------------------------------------
@@ -428,7 +432,7 @@ TAO_AV_UDP_Acceptor::open_i (ACE_INET_Addr *inet_addr,
   ACE_INET_Addr *local_addr = 0;
 
   TAO_AV_Flow_Handler *flow_handler = 0;
-  
+
   // if using a default address and this is the control flow component, the
   //  handler and local address are already set in the flow spec entry
   if (is_default_addr &&
@@ -594,7 +598,7 @@ TAO_AV_UDP_Connector::connect (TAO_FlowSpec_Entry *entry,
                                TAO_AV_Core::Flow_Component flow_component)
 {
   ACE_INET_Addr *local_addr = 0;
-  ACE_INET_Addr *control_inet_addr;
+  ACE_INET_Addr *control_inet_addr = 0;
 
   this->entry_ = entry;
   this->flow_component_ = flow_component;
@@ -673,7 +677,7 @@ TAO_AV_UDP_Connector::connect (TAO_FlowSpec_Entry *entry,
                                                            entry->control_address ()) ;
                   else
                     {
-                      
+
                       if (local_addr != 0)
                         {
                           char buf [BUFSIZ];
@@ -685,21 +689,21 @@ TAO_AV_UDP_Connector::connect (TAO_FlowSpec_Entry *entry,
                                           -1);
                           local_control_addr->addr_to_string (buf, BUFSIZ);
                         }
-                      
-                      
+
+
                       if (entry->control_address () == 0)
                         ACE_NEW_RETURN (this->control_inet_address_,
-                                        ACE_INET_Addr ("0"),                                
+                                        ACE_INET_Addr ("0"),
                                         -1);
-                      else 
+                      else
                         control_inet_address_ = ACE_dynamic_cast (ACE_INET_Addr*,entry->control_address ());
                     }
-                  
-                  TAO_AV_UDP_Connection_Setup::setup(control_flow_handler,
-                                                     control_inet_addr,
-                                                     local_control_addr,
-                                                     entry->is_multicast (),
-                                                     TAO_AV_UDP_Connection_Setup::CONNECTOR);
+
+                  TAO_AV_UDP_Connection_Setup::setup (control_flow_handler,
+                                                      control_inet_addr,
+                                                      local_control_addr,
+                                                      entry->is_multicast (),
+                                                      TAO_AV_UDP_Connection_Setup::CONNECTOR);
 
                   if (local_control_addr->get_port_number () !=
                       local_addr->get_port_number () +1)
@@ -860,7 +864,7 @@ TAO_AV_UDP_Connection_Setup::setup (TAO_AV_Flow_Handler *&flow_handler,
 	result = handler->open (*local_addr);
       if (result < 0)
         ACE_ERROR_RETURN ((LM_ERROR,"handler::open failed\n"),-1);
-      
+
       // set the socket buffer sizes to 64k.
       int sndbufsize = ACE_DEFAULT_MAX_SOCKET_BUFSIZ;
       int rcvbufsize = ACE_DEFAULT_MAX_SOCKET_BUFSIZ;
@@ -892,7 +896,7 @@ TAO_AV_UDP_Connection_Setup::setup (TAO_AV_Flow_Handler *&flow_handler,
       if (result < 0)
         ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_Dgram_Connector::open: get_local_addr failed\n"),result);
     }
-  
+
   return 1;
 }
 
@@ -983,7 +987,7 @@ TAO_AV_UDP_Object::send_frame (const iovec *iov,
   int result = this->transport_->send (iov,iovcnt);
   if (result < 0)
     return result;
-  return 0;  
+  return 0;
 }
 
 int

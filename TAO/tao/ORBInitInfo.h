@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- *  @author Ossama Othman <ossama@uci.edu>
+ *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
 // ===================================================================
 
@@ -23,7 +23,6 @@
 
 #include "PortableInterceptorC.h"
 #include "LocalObject.h"
-#include "StringSeqC.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
@@ -39,9 +38,31 @@
 #endif /* __BORLANDC__ */
 
 class TAO_ORB_Core;
-class TAO_ORBInitInfo_var;
 class TAO_ORBInitInfo;
 typedef TAO_ORBInitInfo *TAO_ORBInitInfo_ptr;
+struct tao_TAO_ORBInitInfo_life;
+
+typedef TAO_Objref_Var_T<TAO_ORBInitInfo,
+                         tao_TAO_ORBInitInfo_life> TAO_ORBInitInfo_var;
+
+typedef TAO_Objref_Out_T<TAO_ORBInitInfo,
+                         tao_TAO_ORBInitInfo_life> TAO_ORBInitInfo_out;
+
+struct TAO_Export tao_TAO_ORBInitInfo_life
+{
+  static TAO_ORBInitInfo_ptr tao_duplicate (TAO_ORBInitInfo_ptr);
+  static void tao_release (TAO_ORBInitInfo_ptr);
+  static TAO_ORBInitInfo_ptr tao_nil (void);
+  static CORBA::Boolean tao_marshal (TAO_ORBInitInfo_ptr,
+                                     TAO_OutputCDR &);
+};
+
+struct TAO_Export tao_TAO_ORBInitInfo_cast
+{
+  static TAO_ORBInitInfo_ptr tao_narrow (CORBA::Object_ptr
+                                         ACE_ENV_ARG_DECL);
+  static CORBA::Object_ptr tao_upcast (void *);
+};
 
 /**
  * @class TAO_ORBInitInfo
@@ -69,7 +90,6 @@ public:
    * These methods are exported by the
    * PortableInterceptor::ORBInitInfo interface.
    */
-
   //@{
   /// Return the argument vector for the ORB currently being
   /// initialized as a string sequence.
@@ -159,7 +179,6 @@ public:
    * These methods are not part of the PortableInterceptor
    * specification, and are TAO-specific extensions.
    */
-
   //@{
   /// Allocate a slot in the ORB's TSS resources.
   /**
@@ -230,6 +249,8 @@ public:
   virtual void *_tao_QueryInterface (ptrdiff_t type);
 
   virtual const char* _interface_repository_id (void) const;
+
+  static int _tao_class_id; // Used when narrowing.
   //@}
 
 protected:
@@ -269,51 +290,6 @@ private:
 
   /// The number of allocated slots.
   PortableInterceptor::SlotId slot_count_;
-
-};
-
-/**
- * @class TAO_ORBInitInfo_var
- */
-class TAO_Export TAO_ORBInitInfo_var : public TAO_Base_var
-{
-public:
-
-  TAO_ORBInitInfo_var (void); // default constructor
-  TAO_ORBInitInfo_var (TAO_ORBInitInfo_ptr p) : ptr_ (p) {}
-  TAO_ORBInitInfo_var (const TAO_ORBInitInfo_var &); // copy constructor
-  ~TAO_ORBInitInfo_var (void); // destructor
-
-  TAO_ORBInitInfo_var &operator= (TAO_ORBInitInfo_ptr);
-  TAO_ORBInitInfo_var &operator= (const TAO_ORBInitInfo_var &);
-  TAO_ORBInitInfo_ptr operator-> (void) const;
-
-  operator const TAO_ORBInitInfo_ptr &() const;
-  operator TAO_ORBInitInfo_ptr &();
-  // in, inout, out, _retn
-  TAO_ORBInitInfo_ptr in (void) const;
-  TAO_ORBInitInfo_ptr &inout (void);
-  TAO_ORBInitInfo_ptr &out (void);
-  TAO_ORBInitInfo_ptr _retn (void);
-  TAO_ORBInitInfo_ptr ptr (void) const;
-
-  // Hooks used by template sequence and object manager classes
-  // for non-defined forward declared interfaces.
-  static TAO_ORBInitInfo_ptr duplicate (TAO_ORBInitInfo_ptr);
-  static void release (TAO_ORBInitInfo_ptr);
-  static TAO_ORBInitInfo_ptr nil (void);
-  static TAO_ORBInitInfo_ptr narrow (
-      CORBA::Object *
-      ACE_ENV_ARG_DECL_NOT_USED
-    );
-  static CORBA::Object * upcast (void *);
-
-private:
-
-  TAO_ORBInitInfo_ptr ptr_;
-  // Unimplemented - prevents widening assignment.
-  TAO_ORBInitInfo_var (const TAO_Base_var &rhs);
-  TAO_ORBInitInfo_var &operator= (const TAO_Base_var &rhs);
 
 };
 

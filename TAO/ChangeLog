@@ -34,14 +34,14 @@ Wed Aug 27 14:48:17 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 Wed Aug 27 14:11:35 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/RTSched.dsp: 
-	* orbsvcs/orbsvcs/RTSched.mpc: 
+	* orbsvcs/orbsvcs/RTSched.dsp:
+	* orbsvcs/orbsvcs/RTSched.mpc:
 	* orbsvcs/orbsvcs/Makefile.RTSched: Removed RtecBaseC.cpp and
-	  RtecBaseS.cpp from the list of source files. 
+	  RtecBaseS.cpp from the list of source files.
 
 Wed Aug 27 13:14:24 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Sched/Config_Scheduler.cpp: 
+	* orbsvcs/orbsvcs/Sched/Config_Scheduler.cpp:
 	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler.cpp: Added explicit
 	  template instantiations to fix link errors in
 	  RH71_Explicit_Templates build.
