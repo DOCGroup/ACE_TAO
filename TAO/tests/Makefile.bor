@@ -5,6 +5,7 @@
 DIRS = \
         AMI \
         Bidirectional \
+        Bidirectional_NestedUpcall \
 	CDR \
 	Collocation \
 	Connection_Purging \
