@@ -328,15 +328,17 @@ ifneq (,$(findstring Memory,$(ACE_COMPONENTS)))
   FILES += $(MEMORY_FILES)
 endif # Memory
 
-ifneq (,$(findstring Token,$(ACE_COMPONENTS)))
+ifeq (,$(findstring Token,$(ACE_COMPONENTS)))
+  CCFLAGS += -DACE_LACKS_ACE_TOKEN
+else  # ! Token
   FILES += $(TOKEN_FILES)
-endif # Token
+endif # ! Token
 
 ifeq (,$(findstring Other,$(ACE_COMPONENTS)))
   CCFLAGS += -DACE_LACKS_ACE_OTHER
-else
+else  # ! Other
   FILES += $(OTHER_FILES)
-endif # Other
+endif # ! Other
 
 ifeq ($(AIX_TEMPLATE_HACK),1)
   FILES = 0_ACE_All_Src

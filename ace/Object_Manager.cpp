@@ -3,7 +3,9 @@
 #define ACE_BUILD_DLL
 
 #include "ace/Object_Manager.h"
-#include "ace/Token_Manager.h"
+#if !defined (ACE_LACKS_ACE_TOKEN)
+# include "ace/Token_Manager.h"
+#endif /* ! ACE_LACKS_ACE_TOKEN */
 #if !defined (ACE_HAS_WINCE)  &&  !defined (ACE_LACKS_ACE_OTHER)
 # include "ace/Naming_Context.h"
 #endif /* ! ACE_HAS_WINCE  &&  ! ACE_LACKS_ACE_OTHER */
@@ -209,10 +211,12 @@ ACE_Object_Manager::init (void)
           ACE_PREALLOCATE_OBJECT (ACE_Recursive_Thread_Mutex,
                                   ACE_SINGLETON_RECURSIVE_THREAD_LOCK)
           ACE_PREALLOCATE_OBJECT (ACE_Thread_Mutex, ACE_THREAD_EXIT_LOCK)
+#if !defined (ACE_LACKS_ACE_TOKEN)
           ACE_PREALLOCATE_OBJECT (ACE_TOKEN_CONST::MUTEX,
                                   ACE_TOKEN_MANAGER_CREATION_LOCK)
           ACE_PREALLOCATE_OBJECT (ACE_TOKEN_CONST::MUTEX,
                                   ACE_TOKEN_INVARIANTS_CREATION_LOCK)
+#endif /* ! ACE_LACKS_ACE_TOKEN */
           ACE_PREALLOCATE_OBJECT (ACE_Thread_Mutex,
                                   ACE_PROACTOR_EVENT_LOOP_LOCK)
 #     endif /* ACE_MT_SAFE */
@@ -668,10 +672,12 @@ ACE_Object_Manager::fini (void)
       ACE_DELETE_PREALLOCATED_OBJECT (ACE_Recursive_Thread_Mutex,
                                       ACE_SINGLETON_RECURSIVE_THREAD_LOCK)
       ACE_DELETE_PREALLOCATED_OBJECT (ACE_Thread_Mutex, ACE_THREAD_EXIT_LOCK)
+#if !defined (ACE_LACKS_ACE_TOKEN)
       ACE_DELETE_PREALLOCATED_OBJECT (ACE_TOKEN_CONST::MUTEX,
                                       ACE_TOKEN_MANAGER_CREATION_LOCK)
       ACE_DELETE_PREALLOCATED_OBJECT (ACE_TOKEN_CONST::MUTEX,
                                       ACE_TOKEN_INVARIANTS_CREATION_LOCK)
+#endif /* ! ACE_LACKS_ACE_TOKEN */
       ACE_DELETE_PREALLOCATED_OBJECT (ACE_Thread_Mutex,
                                       ACE_PROACTOR_EVENT_LOOP_LOCK)
 # endif /* ACE_MT_SAFE */
