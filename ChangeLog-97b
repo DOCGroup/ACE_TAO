@@ -25,6 +25,9 @@ Sat Nov 22 14:38:22 1997  Steve Huston  <shuston@riverace.com>
 	  Added 'const' to "char *" - can't initialize a char * with
 	  a const string.  Fixes Riverace problem ID P38, P40.
 
+	* performance-tests/Synch-Benchmarks/Makefile: Changed SHLIB to use
+	  $(SOEXT) rather than .so.  Fixes Riverace problem ID P41.
+
 	* tests/Thread_Pool_Test.cpp: Moved 'this->getq(mb)' out of an
 	  ACE_ASSERT.  Thanks to Arturo Montes <mitosys@colomsat.net.co>
 	  for finding this.
