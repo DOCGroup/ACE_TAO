@@ -1,3 +1,14 @@
+Mon Oct  9 14:44:25 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * bin/generate_export_file.pl:
+
+          Made some minor changes to make a bit more robust.
+
+        * bin/regenerate_exports.pl: (added)
+
+          This script should be able to recurse from the current directory
+          reupdating the export files.  Use at your own risk.
+
 Mon Oct 09 03:23:22 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* bin/generate_export_file.pl: Changed the script so we can define
