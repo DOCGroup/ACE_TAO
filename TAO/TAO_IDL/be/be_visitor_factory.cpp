@@ -205,9 +205,11 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
 
     case TAO_CodeGen::TAO_INTERFACE_FWD_CH:
       return new be_visitor_interface_fwd_ch (new_ctx);
-
     case TAO_CodeGen::TAO_INTERFACE_FWD_CI:
       return new be_visitor_interface_fwd_ci (new_ctx);
+
+    case TAO_CodeGen::TAO_INTERFACE_FWD_CDR_OP_CH:
+      return new be_visitor_interface_fwd_cdr_op_ch (new_ctx);
     case TAO_CodeGen::TAO_INTERFACE_FWD_CDR_OP_CI:
       return new be_visitor_interface_fwd_cdr_op_ci (new_ctx);
     case TAO_CodeGen::TAO_INTERFACE_FWD_CDR_OP_CS:
