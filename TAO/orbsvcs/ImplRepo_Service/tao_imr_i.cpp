@@ -761,7 +761,10 @@ TAO_IMR_Op_Autostart::run (void)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      this->imr_locator_->list (0, server_list, server_iter ACE_ENV_ARG_PARAMETER);
+      this->imr_locator_->list (0,
+                                server_list,
+                                server_iter
+                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Check for more to be displayed
@@ -771,30 +774,35 @@ TAO_IMR_Op_Autostart::run (void)
 
           while (flag)
             {
-              // @@ To do: modify implementation of next_n to NOT
-              // return a boolean.
-              // flag =
               server_iter->next_n (IR_LIST_CHUNK,
                                    server_list
                                    ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
-              for (CORBA::ULong i = 0; i < server_list->length (); i++)
+              CORBA::ULong list_length = server_list->length ();
+              if (list_length > 0)
                 {
-                  ACE_TRY_EX (inside)
+                  for (CORBA::ULong i = 0; i < list_length; i++)
                     {
-                      this->imr_locator_->activate_server (
-                            server_list[i].server.in ()
-                            ACE_ENV_ARG_PARAMETER);
-                      ACE_TRY_CHECK_EX (inside);
+                      ACE_TRY_EX (inside)
+                        {
+                          this->imr_locator_->activate_server (
+                                server_list[i].server.in ()
+                                ACE_ENV_ARG_PARAMETER);
+                          ACE_TRY_CHECK_EX (inside);
+                        }
+                      ACE_CATCHANY
+                        {
+                          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                                               server_list[i].server.in ());
+                          // Ignore exception
+                        }
+                      ACE_ENDTRY;
                     }
-                  ACE_CATCHANY
-                    {
-                      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                                           server_list[i].server.in ());
-                      // Ignore exception
-                    }
-                  ACE_ENDTRY;
+                }
+              else
+                {
+                  flag = 0;
                 }
             }
 
@@ -907,8 +915,10 @@ TAO_IMR_Op_List::run (void)
       // at all of them.
       if (this->server_name_.length () == 0)
         {
-          this->imr_locator_->list
-               (IR_LIST_CHUNK, server_list, server_iter ACE_ENV_ARG_PARAMETER);
+          this->imr_locator_->list (IR_LIST_CHUNK,
+                                    server_list,
+                                    server_iter
+                                    ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           for (CORBA::ULong i = 0; i < server_list->length (); i++)
@@ -921,16 +931,21 @@ TAO_IMR_Op_List::run (void)
 
               while (flag)
                 {
-                  // @@ To do: modify implementation of next_n to NOT
-                  // return a boolean.
-                  // flag =
                   server_iter->next_n (IR_LIST_CHUNK,
                                        server_list
                                        ACE_ENV_ARG_PARAMETER);
                   ACE_TRY_CHECK;
 
-                  for (CORBA::ULong i = 0; i < server_list->length (); i++)
-                    this->display_server_information (server_list[i]);
+                  CORBA::ULong list_length = server_list->length ();
+                  if (list_length > 0)
+                    {
+                      for (CORBA::ULong i = 0; i < list_length; i++)
+                        this->display_server_information (server_list[i]);
+                    }
+                  else
+                   {
+                     flag = 0;
+                   }
                 }
 
               // We are done with the iterator, so it can go away now.
