@@ -242,9 +242,12 @@ ACE_Runtime_Scheduler::dispatch_configuration (RtecScheduler::Preemption_Priorit
     }
 }
 
-// @@ Chris, these comments are in the wrong part of the function.  They should go at the beginning, NOT the end...  Please fix all these.
+// @@ Chris, these comments are in the wrong part of the function.
+// They should go at the beginning, NOT the end...  Please fix all
+// these.
 
-  // provide the thread priority and queue type for the given priority level
+// provide the thread priority and queue type for the given priority
+// level
 
 RtecScheduler::Preemption_Priority_t 
 ACE_Runtime_Scheduler::last_scheduled_priority (CORBA::Environment &_env)
@@ -259,10 +262,10 @@ ACE_Runtime_Scheduler::last_scheduled_priority (CORBA::Environment &_env)
     return (RtecScheduler::Preemption_Priority_t) (config_count_ - 1);
 }
 
-  // Returns the last priority number assigned to an operation in the schedule.
-  // The number returned is one less than the total number of scheduled priorities.
-  // All scheduled priorities range from 0 to the number returned,
-inclusive.
+// Returns the last priority number assigned to an operation in the
+// schedule.  The number returned is one less than the total number of
+// scheduled priorities.  All scheduled priorities range from 0 to the
+// number returned, inclusive.
 
 
 
