@@ -23,6 +23,8 @@
 
 // Sun has the wrong prototype for sendmsg.
 #define ACE_HAS_BROKEN_SENDMSG
+#define ACE_HAS_UALARM
+#define ACE_LACKS_UALARM_PROTOTYPE
 
 // The SunOS 5.x version of rand_r is inconsistent with the header files...
 #define ACE_HAS_BROKEN_RANDR

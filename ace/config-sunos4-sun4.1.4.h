@@ -15,7 +15,7 @@
 
 // Special addition to handle sunOS 4.1 which is unable to
 // handle POSIX Prototypes !
-#define ACE_LACKS_POSIX_PROTO
+#define ACE_LACKS_POSIX_PROTOTYPES
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
 #define ACE_HAS_SYSV_IPC			

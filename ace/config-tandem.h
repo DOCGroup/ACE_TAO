@@ -24,7 +24,7 @@
 
 // Tandem doesn't include this although they are defined 
 // in sys/time.h and sys/resource.h
-#define ACE_LACKS_RLIMIT_PROTO // jjpp
+#define ACE_LACKS_RLIMIT_PROTOTYPE // jjpp
 // Tandem has a function to set t_errno (set_t_errno)
 #define ACE_HAS_SET_T_ERRNO         // jjpp
 
@@ -410,7 +410,7 @@
 // files.  
 //ACE_LACKS_PARAM_H			Platform lacks <sys/param.h> (e.g., 
 //MVS)
-//ACE_LACKS_POSIX_PROTO			Platform lacks POSIX prototypes for 
+//ACE_LACKS_POSIX_PROTOTYPES			Platform lacks POSIX prototypes for 
 //certain System V functions like shared memory and message queues.
 //ACE_LACKS_RECVMSG			Platform lacks recvmsg() (e.g., Linux)
 //ACE_LACKS_RWLOCK_T			Platform lacks readers/writer locks.

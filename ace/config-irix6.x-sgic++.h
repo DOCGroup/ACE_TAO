@@ -14,6 +14,7 @@
 
 #define ACE_HAS_IRIX62_THREADS
 #define ACE_HAS_PTHREAD_SIGMASK
+#define ACE_HAS_UALARM
 
 // Needed for the threading stuff?
 #include /**/ <sched.h>
