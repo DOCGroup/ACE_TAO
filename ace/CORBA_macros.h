@@ -360,24 +360,24 @@
 #endif /* ACE_NEW_THROWS_EXCEPTIONS */
 
 # define ACE_GUARD_THROW_EX(MUTEX,OBJ,LOCK,EXCEPTION) \
-  ACE_Guard<MUTEX> OBJ (LOCK); \
+  ACE_Guard< MUTEX > OBJ (LOCK); \
     if (OBJ.locked () == 0) ACE_THROW_INT (EXCEPTION);
 
 # define ACE_READ_GUARD_THROW_EX(MUTEX,OBJ,LOCK,EXCEPTION) \
-  ACE_Read_Guard<MUTEX> OBJ (LOCK); \
+  ACE_Read_Guard< MUTEX > OBJ (LOCK); \
     if (OBJ.locked () == 0) ACE_THROW_INT (EXCEPTION);
 
 # define ACE_WRITE_GUARD_THROW_EX(MUTEX,OBJ,LOCK,EXCEPTION) \
-  ACE_Write_Guard<MUTEX> OBJ (LOCK); \
+  ACE_Write_Guard< MUTEX > OBJ (LOCK); \
     if (OBJ.locked () == 0) ACE_THROW_INT (EXCEPTION);
 
 // The following ACE_GUARD_THROW* macros are to be depricated soon.
 // -------------------- Start Depricated --------------------
 # define ACE_GUARD_THROW(MUTEX,OBJ,LOCK,EXCEPTION) \
-  ACE_Guard<MUTEX> OBJ (LOCK); \
+  ACE_Guard< MUTEX > OBJ (LOCK); \
     if (OBJ.locked () == 0) TAO_THROW (EXCEPTION);
 # define ACE_GUARD_THROW_RETURN(MUTEX,OBJ,LOCK,EXCEPTION,RETURN) \
-  ACE_Guard<MUTEX> OBJ (LOCK); \
+  ACE_Guard< MUTEX > OBJ (LOCK); \
     if (OBJ.locked () == 0) TAO_THROW_RETURN (EXCEPTION, RETURN);
 // -------------------- End Deprication --------------------
 
