@@ -1,3 +1,8 @@
+Sun Nov 11 23:50:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* tests/Exposed_Policies/Policy_Tester.cpp:
+	  More const char * fixes.
+
 Sun Nov 11 14:15:23 2001  Balachandran Natarajan <bala@cs.wustl.edu>
 
 	* docs/configurations.html: Fixed some documentation
@@ -723,7 +728,7 @@ Mon Oct 15 22:41:17 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
           by setting an environment variable MINIMUM_CORBA to 1. Thanks to
           Adrian Mercieca <adrian@anvilmalta.com> for motivating this.
 
-Fri Oct 12 00:42:42 2001  Craig Rodriguse  <crodrigu@bbn.com>
+Fri Oct 12 00:42:42 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
         * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
         * orbsvcs/orbsvcs/AV/AVStreams_i.i:
