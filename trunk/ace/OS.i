@@ -1194,11 +1194,13 @@ ACE_OS::strtok_r (char *s, const char *tokens, char **lasts)
 }
 
 // Split a string up into 'token'-delimited piecs, ala Perl's "split".
-// The following routine should assign next_start to ret if
-// it can't find the token.  Then it should set
-// next_start to nil
+// The following routine should assign next_start to ret if it can't
+// find the token.  Then it should set next_start to nil.
+
 ACE_INLINE char *
-ACE::strsplit_r (char *str, const char *token, char *&next_start)
+ACE_OS::strsplit_r (char *str,
+                    const char *token,
+                    char *&next_start)
 {
   char *tok_loc;
   char *ret = 0;
@@ -1208,11 +1210,16 @@ ACE::strsplit_r (char *str, const char *token, char *&next_start)
 
   if (next_start != 0)
     {
-      if ( (tok_loc = strstr(next_start, token)) != 0)
+      tok_loc = strstr (next_start, token);
+
+      if (tok_loc != 0)
         {
-          ret = next_start;         // return the beginning of the string
-          *tok_loc = '\0';          // insure its terminated
-          next_start = tok_loc + strlen(token);
+          // Return the beginning of the string.
+          ret = next_start;         
+
+          // Insure its terminated.
+          *tok_loc = '\0';          
+          next_start = tok_loc + strlen (token);
         }
       else
         {
