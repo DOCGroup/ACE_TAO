@@ -62,7 +62,7 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
 #ifndef _AST_TYPE_AST_TYPE_HH
 #define _AST_TYPE_AST_TYPE_HH
@@ -70,34 +70,34 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // Class for all IDL types
 //
 // This is useful wherever any IDL type defining construct can appear
-// such as the base type for a typedef or array
+// such as the base type for a typedef or array.
 
-/*
-** DEPENDENCIES: ast_decl.hh, utl_scoped_name.hh, utl_strlist.hh
-**
-** USE: Included from ast.hh
-*/
-
-#include        "idl_fwd.h"
-#include        "idl_narrow.h"
-#include        "ast_decl.h"
+#include "idl_fwd.h"
+#include "idl_narrow.h"
+#include "ast_decl.h"
 
 
 class TAO_IDL_FE_Export AST_Type : public virtual AST_Decl
 {
 public:
-  // Operations
+  // Operations.
 
-  // Constructor(s)
-  AST_Type ();
+  // Constructor(s).
+  AST_Type (void);
 
   AST_Type (AST_Decl::NodeType nt,
             UTL_ScopedName *n,
             UTL_StrList *p);
 
+  // Destructor.
   virtual ~AST_Type (void);
 
-  // Narrowing
+  virtual idl_bool in_recursion (AST_Type *node = 0);
+  // Determine if we are involved in some kind of limited recursion.
+  // Most types cannot be involved except structs and unions.
+  // If the parameter is 0, we are trying to determine this for ourselves.
+
+  // Narrowing.
   DEF_NARROW_METHODS1(AST_Type, AST_Decl);
   DEF_NARROW_FROM_DECL(AST_Type);
 };

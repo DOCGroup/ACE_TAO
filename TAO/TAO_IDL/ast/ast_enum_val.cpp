@@ -62,33 +62,33 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
-/*
- * ast_enum_val.cc - Implementation of class AST_EnumVal
- *
- * AST_EnumVals denote IDL enumerator declarations
- * AST_EnumVals are a subclass of AST_Constant
- * AST_EnumVals have no additional fields
- */
+// AST_EnumVals denote IDL enumerator declarations
+// AST_EnumVals are a subclass of AST_Constant
+// AST_EnumVals have no additional fields.
 
-#include	"idl.h"
-#include	"idl_extern.h"
+#include "idl.h"
+#include "idl_extern.h"
 
 ACE_RCSID(ast, ast_enum_val, "$Id$")
 
-/*
- * Constructor(s) and destructor
- */
-AST_EnumVal::AST_EnumVal()
+// Constructor(s) and destructor.
+AST_EnumVal::AST_EnumVal (void)
 {
 }
 
-AST_EnumVal::AST_EnumVal(unsigned long v, UTL_ScopedName *n, UTL_StrList *p)
-	    : AST_Constant(AST_Expression::EV_ulong,
-			   AST_Decl::NT_enum_val,
-			   new AST_Expression(v), n, p),
-	      AST_Decl(AST_Decl::NT_enum_val, n, p)
+AST_EnumVal::AST_EnumVal (unsigned long v, 
+                          UTL_ScopedName *n, 
+                          UTL_StrList *p)
+  : AST_Constant  (AST_Expression::EV_ulong,
+		               AST_Decl::NT_enum_val,
+			             new AST_Expression (v), 
+                   n, 
+                   p),
+	  AST_Decl (AST_Decl::NT_enum_val, 
+              n, 
+              p)
 {
 }
 
@@ -96,30 +96,15 @@ AST_EnumVal::~AST_EnumVal (void)
 {
 }
 
-/*
- * Private operations
- */
+// Redefinition of inherited virtual operations.
 
-/*
- * Public operations
- */
-
-
-/*
- * Redefinition of inherited virtual operations
- */
-
-/*
- * Dump this AST_EnumVal to the ostream o
- */
+// Dump this AST_EnumVal to the ostream o.
 void
-AST_EnumVal::dump(ostream &o)
+AST_EnumVal::dump (ostream &o)
 {
-  AST_Constant::dump(o);
+  AST_Constant::dump (o);
 }
 
-/*
- * Narrowing methods
- */
+// Narrowing methods.
 IMPL_NARROW_METHODS1(AST_EnumVal, AST_Constant)
 IMPL_NARROW_FROM_DECL(AST_EnumVal)

@@ -62,38 +62,29 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
 #ifndef _AST_INTERFACE_AST_INTERFACE_HH
 #define _AST_INTERFACE_AST_INTERFACE_HH
 
-// Representation of interface:
-//
-// NOTE: add(AST_EnumValue *) is defined here because enums can
+// NOTE: add (AST_EnumValue *) is defined here because enums can
 // be defined manifest locally; the constants defined in these
 // enums are inserted in the enclosing scope.
 
-/*
-** DEPENDENCIES: ast_type.hh, utl_scope.hh, ast_decl.hh, utl_strlist.hh
-**
-** USE: Included from ast.hh
-*/
-
-#include        "idl_fwd.h"
-#include        "idl_narrow.h"
-#include        "ast_type.h"
-#include        "utl_scope.h"
-#include        "ast_decl.h"
+#include "idl_fwd.h"
+#include "idl_narrow.h"
+#include "ast_type.h"
+#include "utl_scope.h"
+#include "ast_decl.h"
 
 
 class TAO_IDL_FE_Export AST_Interface : public virtual AST_Type, 
                                         public virtual UTL_Scope
 {
 public:
-  // Operations
-
-  // Constructor(s)
+  // Constructor(s).
   AST_Interface (void);
+
   AST_Interface (UTL_ScopedName *n,
                  AST_Interface **ih,
                  long nih,
@@ -105,7 +96,7 @@ public:
 
   virtual ~AST_Interface (void);
 
-  // Data Accessors
+  // Data Accessors.
   static void fwd_redefinition_helper (AST_Interface *&i,
                                        UTL_Scope *s,
                                        UTL_StrList *p);
@@ -114,16 +105,23 @@ public:
                          UTL_StrList *p);
 
   AST_Interface **inherits (void);
+
   void set_inherits (AST_Interface **i);
+
   long n_inherits (void);
+
   void set_n_inherits (long i);
 
   AST_Interface **inherits_flat (void);
+
   void set_inherits_flat (AST_Interface **i);
+
   long n_inherits_flat (void);
+
   void set_n_inherits_flat (long i);
 
   void be_add_operation (AST_Operation *);
+
   void be_replace_operation (AST_Decl *old_op,
                              AST_Decl *new_op);
 
@@ -136,7 +134,9 @@ public:
   }
 
   virtual idl_bool is_valuetype (void);
+
   virtual idl_bool is_abstract_valuetype (void);
+
   virtual void set_abstract_valuetype (void);
 
   // Check if any member's name clashes with a parent's
@@ -147,45 +147,53 @@ public:
   // Cleanup function.
   virtual void destroy (void);
 
-  // Narrowing
+  // Narrowing.
   DEF_NARROW_METHODS2(AST_Interface, AST_Type, UTL_Scope);
   DEF_NARROW_FROM_DECL(AST_Interface);
   DEF_NARROW_FROM_SCOPE(AST_Interface);
 
-  // AST Dumping
-  virtual void                  dump (ostream &o);
+  // AST Dumping.
+  virtual void dump (ostream &o);
 
 private:
   // Helper function for fwd_redefinition_helper.
   static idl_bool compare_names (AST_Interface *that,
                                  AST_Interface *other);
 
-  // Data
-  // Immediate ancestors
-  AST_Interface                 **pd_inherits;  // Inherited interfaces
-                                                // This is an array of pointers
-                                                // to the inherited interfaces
-  long                          pd_n_inherits;  // How many of them?
+  // Data.
 
-  // All ancestors
-  AST_Interface                 **pd_inherits_flat;
-  long                          pd_n_inherits_flat;
+  // Immediate ancestors.
+  AST_Interface **pd_inherits;
+  long pd_n_inherits;
 
-  // Scope Management Protocol
-  friend int tao_yyparse();
+  // All ancestors.
+  AST_Interface **pd_inherits_flat;
+  long pd_n_inherits_flat;
 
-  virtual AST_Constant          *fe_add_constant(AST_Constant   *c);
-  virtual AST_Exception         *fe_add_exception(AST_Exception *e);
-  virtual AST_Attribute         *fe_add_attribute(AST_Attribute *a);
-  virtual AST_Field             *fe_add_field(AST_Field *o);
-  virtual AST_Operation         *fe_add_operation(AST_Operation *o);
-  virtual AST_Union             *fe_add_union(AST_Union         *u);
-  virtual AST_Structure         *fe_add_structure(AST_Structure *s);
-  virtual AST_Enum              *fe_add_enum(AST_Enum           *e);
-  virtual AST_EnumVal           *fe_add_enum_val(AST_EnumVal    *v);
-  virtual AST_Typedef           *fe_add_typedef(AST_Typedef     *t);
-  virtual AST_Native            *fe_add_native (AST_Native      *n);
+  // Scope Management Protocol.
+  friend int tao_yyparse (void);
 
+  virtual AST_Constant *fe_add_constant (AST_Constant *c);
+
+  virtual AST_Exception *fe_add_exception (AST_Exception *e);
+
+  virtual AST_Attribute *fe_add_attribute(AST_Attribute *a);
+
+  virtual AST_Field *fe_add_field (AST_Field *o);
+
+  virtual AST_Operation *fe_add_operation(AST_Operation *o);
+
+  virtual AST_Union *fe_add_union (AST_Union *u);
+
+  virtual AST_Structure *fe_add_structure (AST_Structure *s);
+
+  virtual AST_Enum *fe_add_enum (AST_Enum *e);
+
+  virtual AST_EnumVal *fe_add_enum_val (AST_EnumVal *v);
+
+  virtual AST_Typedef *fe_add_typedef (AST_Typedef *t);
+
+  virtual AST_Native *fe_add_native (AST_Native *n);
 };
 
 #endif           // _AST_INTERFACE_AST_INTERFACE_HH

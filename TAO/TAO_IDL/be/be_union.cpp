@@ -796,69 +796,6 @@ be_union::compute_size_type (void)
   return 0;
 }
 
-// Are we or the parameter node involved in any recursion?
-idl_bool
-be_union::in_recursion (be_type *node)
-{
-  if (node == 0)
-    {
-      // We are determining the recursive status for ourselves.
-      node = this;
-    }
-
-  // Proceed if the number of members in our scope is greater than 0.
-  if (this->nmembers () > 0)
-    {
-      // Initialize an iterator to iterate thru our scope.
-      UTL_ScopeActiveIterator *si = 0;
-      ACE_NEW_RETURN (si,
-                      UTL_ScopeActiveIterator (this,
-                                               UTL_Scope::IK_decls),
-                      0);
-      // Continue until each element is visited.
-      while (!si->is_done ())
-        {
-          be_union_branch *field = 
-            be_union_branch::narrow_from_decl (si->item ());
-
-          if (field == 0)
-            {
-              delete si;
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 ACE_TEXT ("(%N:%l) be_union::")
-                                 ACE_TEXT ("in_recursion - ")
-                                 ACE_TEXT ("bad field node\n")),
-                                0);
-            }
-
-          be_type *type = be_type::narrow_from_decl (field->field_type ());
-
-          if (type == 0)
-            {
-              delete si;
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 ACE_TEXT ("(%N:%l) be_union::")
-                                 ACE_TEXT ("in_recursion - ")
-                                 ACE_TEXT ("bad field type\n")),
-                                0);
-            }
-
-          if (type->in_recursion (node))
-            {
-              delete si;
-              return 1;
-            }
-
-          si->next ();
-        }
-
-      delete si;
-    }
-
-  // Not in recursion.
-  return 0;
-}
-
 // Return the default value.
 int
 be_union::default_value (be_union::DefaultValue &dv)

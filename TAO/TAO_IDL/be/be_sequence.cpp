@@ -50,28 +50,11 @@ be_sequence::be_sequence (AST_Expression *v,
                  abstract),
     mt_ (be_sequence::MNG_UNKNOWN)
 {
-  // Check if we are bounded or unbounded. An expression value of 0 means
-  // unbounded.
-  if (v->ev ()->u.ulval == 0)
-    {
-      this->unbounded_ = I_TRUE;
-    }
-  else
-    {
-      this->unbounded_ = I_FALSE;
-    }
-
   // A sequence data type is always VARIABLE.
   this->size_type (be_decl::VARIABLE);
 
   // Always the case.
   this->has_constructor (I_TRUE);
-}
-
-idl_bool
-be_sequence::unbounded (void) const
-{
-  return this->unbounded_;
 }
 
 // Helper to create_name.
@@ -136,7 +119,7 @@ be_sequence::gen_name (void)
     }
 
   // Append the size (if any).
-  if (this->unbounded_ == 0)
+  if (this->unbounded () == I_FALSE)
     {
       ACE_OS::sprintf (namebuf,
                        "%s_%lu",
@@ -421,43 +404,6 @@ be_sequence::instance_name ()
     }
 
   return namebuf;
-}
-
-idl_bool
-be_sequence::in_recursion (be_type *node)
-{
-  if (node == 0)
-    {
-      // There has to be a parameter
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("(%N:%l) be_sequence::")
-                         ACE_TEXT ("in_recursion - ")
-                         ACE_TEXT ("bad parameter node\n")),
-                        0);
-    }
-
-  be_type *type = be_type::narrow_from_decl (this->base_type ());
-
-  if (!type)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("(%N:%l) be_sequence::")
-                         ACE_TEXT ("in_recursion - ")
-                         ACE_TEXT ("bad base type\n")),
-                        0);
-    }
-
-  if (!ACE_OS::strcmp (node->full_name (), 
-                       type->full_name ()))
-    {
-      // They match.
-      return 1;
-    }
-  else
-    {
-      // Not in recursion.
-      return 0;
-    }
 }
 
 void

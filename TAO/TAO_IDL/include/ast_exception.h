@@ -62,36 +62,25 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
 #ifndef _AST_EXCEPTION_AST_EXCEPTION_HH
 #define _AST_EXCEPTION_AST_EXCEPTION_HH
 
-// Representation of exception
-//
-// NOTE: An exception is not a type according to the CORBAS 1.1
-//
-// NOTE: add(AST_ConcreteType *) is defined here because an exception
+// NOTE: add (AST_ConcreteType *) is defined here because an exception
 // can contain locally defined types in addition to fields.
 //
-// NOTE: add(AST_EnumValue *) is defined here because enums can
+// NOTE: add (AST_EnumValue *) is defined here because enums can
 // be defined manifest locally; the constants defined in these
 // enums are inserted in the enclosing scope. It is unlikely that
 // a BE writer will need to overload this function in AST_Exception.
 
-/*
-** DEPENDENCIES: ast_decl.hh, ast_structure.hh, utl_scope.hh, utl_strlist.hh
-**
-** USE: Included from ast.hh
-*/
-
 class TAO_IDL_FE_Export AST_Exception : public virtual AST_Structure
 {
 public:
-  // Operations
+  // Constructor(s).
+  AST_Exception (void);
 
-  // Constructor(s)
-  AST_Exception ();
   AST_Exception (UTL_ScopedName *n,
                  UTL_StrList *p,
                  idl_bool local,
@@ -99,24 +88,26 @@ public:
 
   virtual ~AST_Exception (void);
 
+  virtual idl_bool in_recursion (AST_Type *node = 0);
+  // Check if we or the parameter node is in recursion.
+
   // Narrowing
   DEF_NARROW_METHODS1(AST_Exception, AST_Structure);
   DEF_NARROW_FROM_DECL(AST_Exception);
   DEF_NARROW_FROM_SCOPE(AST_Exception);
 
-  // AST Dumping
-  virtual void                  dump(ostream &o);
+  // AST Dumping.
+  virtual void dump (ostream &o);
 
 private:
-  friend int tao_yyparse();
+  friend int tao_yyparse (void);
+
   // Scope Management Protocol
-
-  virtual AST_Field             *fe_add_field(AST_Field         *f);
-  virtual AST_Union             *fe_add_union(AST_Union         *u);
-  virtual AST_Structure         *fe_add_structure(AST_Structure *s);
-  virtual AST_Enum              *fe_add_enum(AST_Enum           *e);
-  virtual AST_EnumVal           *fe_add_enum_val(AST_EnumVal    *v);
-
+  virtual AST_Field *fe_add_field (AST_Field *f);
+  virtual AST_Union *fe_add_union (AST_Union *u);
+  virtual AST_Structure *fe_add_structure (AST_Structure *s);
+  virtual AST_Enum *fe_add_enum (AST_Enum *e);
+  virtual AST_EnumVal *fe_add_enum_val (AST_EnumVal *v);
 };
 
 #endif           // _AST_EXCEPTION_AST_EXCEPTION_HH

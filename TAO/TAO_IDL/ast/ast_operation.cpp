@@ -62,35 +62,32 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
-/*
- * ast_operation.cc - Implementation of class AST_Operation
- *
- * AST_Operation nodes denote IDL operation declarations
- * AST_Operations are a subclass of AST_Decl (they are not a type!)
- * and of UTL_Scope (the arguments are managed in a scope).
- * AST_Operations have a return type (a subclass of AST_Type),
- * a bitfield for denoting various properties of the operation (the
- * values are ORed together from constants defined in the enum
- * AST_Operation::FLags), a name (a UTL_ScopedName), a context
- * (implemented as a list of Strings, a UTL_StrList), and a raises
- * clause (implemented as an array of AST_Exceptions).
- */
+// AST_Operation nodes denote IDL operation declarations
+// AST_Operations are a subclass of AST_Decl (they are not a type!)
+// and of UTL_Scope (the arguments are managed in a scope).
+// AST_Operations have a return type (a subclass of AST_Type),
+// a bitfield for denoting various properties of the operation (the
+// values are ORed together from constants defined in the enum
+// AST_Operation::FLags), a name (a UTL_ScopedName), a context
+// (implemented as a list of Strings, a UTL_StrList), and a raises
+// clause (implemented as an array of AST_Exceptions).
 
-#include        "idl.h"
-#include        "idl_extern.h"
+#include "idl.h"
+#include "idl_extern.h"
 
 ACE_RCSID(ast, ast_operation, "$Id$")
 
-/*
- * Constructor(s) and destructor
- */
-AST_Operation::AST_Operation ()
-  : pd_return_type(NULL),
-    pd_flags(OP_noflags),
-    pd_context(NULL),
-    pd_exceptions(NULL)
+// Constructor(s) and destructor.
+
+AST_Operation::AST_Operation (void)
+  : pd_return_type (0),
+    pd_flags (OP_noflags),
+    pd_context (0),
+    pd_exceptions( 0),
+    argument_count_ (-1),
+    has_native_ (0)
 {
 }
 
@@ -100,223 +97,64 @@ AST_Operation::AST_Operation (AST_Type *rt,
                               UTL_StrList *p,
                               idl_bool local,
                               idl_bool abstract)
-  : AST_Decl(AST_Decl::NT_op, n, p),
+  : AST_Decl(AST_Decl::NT_op, 
+             n, 
+             p),
     UTL_Scope(AST_Decl::NT_op),
-    COMMON_Base (local, abstract),
-    pd_return_type(rt),
-    pd_flags(fl),
-    pd_context(NULL),
-    pd_exceptions(NULL)
+    COMMON_Base (local, 
+                 abstract),
+    pd_return_type (rt),
+    pd_flags (fl),
+    pd_context (0),
+    pd_exceptions (0),
+    argument_count_ (-1),
+    has_native_ (0)
 {
-  AST_PredefinedType *pdt;
+  AST_PredefinedType *pdt = 0;
 
-  /*
-   * Check that if the operation is oneway, the return type must be void
-   */
-  if (rt != NULL && pd_flags == OP_oneway) {
-    if (rt->node_type() != AST_Decl::NT_pre_defined)
-      idl_global->err()->error1(UTL_Error::EIDL_NONVOID_ONEWAY, this);
-    else {
-      pdt = AST_PredefinedType::narrow_from_decl(rt);
-      if (pdt == NULL || pdt->pt() != AST_PredefinedType::PT_void)
-        idl_global->err()->error1(UTL_Error::EIDL_NONVOID_ONEWAY, this);
+  // Check that if the operation is oneway, the return type must be void.
+  if (rt != 0 && pd_flags == OP_oneway) 
+    {
+      if (rt->node_type () != AST_Decl::NT_pre_defined)
+        {
+          idl_global->err ()->error1 (UTL_Error::EIDL_NONVOID_ONEWAY, 
+                                      this);
+        }
+      else 
+        {
+          pdt = AST_PredefinedType::narrow_from_decl (rt);
+
+          if (pdt == 0 || pdt->pt () != AST_PredefinedType::PT_void)
+            {
+              idl_global->err ()->error1 (UTL_Error::EIDL_NONVOID_ONEWAY, 
+                                          this);
+            }
+        }
     }
-  }
 }
 
 AST_Operation::~AST_Operation (void)
 {
 }
 
-/*
- * Private operations
- */
+// Public operations.
 
-/*
- * Public operations
- */
-
-/*
- * Redefinition of inherited virtual operations
- */
-
-/*
- * Add this context (a UTL_StrList) to this scope
- */
-UTL_StrList *
-AST_Operation::fe_add_context(UTL_StrList *t)
+// Return the member count.
+int
+AST_Operation::argument_count (void)
 {
-  pd_context = t;
+  this->compute_argument_attr ();
 
-  return t;
+  return this->argument_count_;
 }
 
-UTL_ExceptList *
-AST_Operation::be_add_exceptions (UTL_ExceptList *t)
+// Return if any argument or the return type is a <native> type.
+int
+AST_Operation::has_native (void)
 {
-  if (pd_exceptions)
-      idl_global->err ()->error1 (UTL_Error::EIDL_ILLEGAL_RAISES, this);
-  else
-    pd_exceptions = t;
+  this->compute_argument_attr ();
 
-  return pd_exceptions;
-}
-
-/*
- * Add these exceptions (identified by name) to this scope.
- * This looks up each name to resolve it to the name of a known
- * exception, and then adds the referenced exception to the list
- * of exceptions that this operation can raise.
- *
- * NOTE: No attempt is made to ensure that exceptions are mentioned
- *       only once..
- */
-UTL_NameList *
-AST_Operation::fe_add_exceptions(UTL_NameList *t)
-{
-  UTL_NamelistActiveIterator *nl_i;
-  UTL_ScopedName         *nl_n;
-  UTL_Scope                  *fs = idl_global->scopes()->top();
-  AST_Exception          *fe;
-  AST_Decl                   *d;
-
-  // Macro to avoid "warning: unused parameter" type warning.
-  ACE_UNUSED_ARG (fs);
-
-  pd_exceptions = NULL;
-  nl_i = new UTL_NamelistActiveIterator(t);
-  while (!(nl_i->is_done())) {
-    nl_n = nl_i->item();
-    d = lookup_by_name(nl_n, I_TRUE);
-    if (d == NULL || d->node_type() != AST_Decl::NT_except) {
-      idl_global->err()->lookup_error(nl_n);
-      delete nl_i;
-      return NULL;
-    }
-    fe = AST_Exception::narrow_from_decl(d);
-    if ((this->flags () == AST_Operation::OP_oneway) && fe)
-      idl_global->err ()->error1 (UTL_Error::EIDL_ILLEGAL_RAISES, this);
-
-    if (fe == NULL) {
-      idl_global->err()->error1(UTL_Error::EIDL_ILLEGAL_RAISES, this);
-      return NULL;
-    }
-    if (pd_exceptions == NULL)
-      pd_exceptions = new UTL_ExceptList(fe, NULL);
-    else
-      pd_exceptions->nconc(new UTL_ExceptList(fe, NULL));
-    nl_i->next();
-  }
-  delete nl_i;
-
-  return t;
-}
-
-/*
- * Add this AST_Argument node (an operation argument declaration)
- * to this scope
- */
-AST_Argument *AST_Operation::fe_add_argument(AST_Argument *t)
-{
-  AST_Decl *d;
-
-  /*
-   * Already defined and cannot be redefined? Or already used?
-   */
-  if ((d = lookup_by_name_local(t->local_name(), 0)) != NULL) {
-    if (!can_be_redefined(d)) {
-      idl_global->err()->error3(UTL_Error::EIDL_REDEF, t, this, d);
-      return NULL;
-    }
-    if (referenced(d, t->local_name ())) {
-      idl_global->err()->error3(UTL_Error::EIDL_DEF_USE, t, this, d);
-      return NULL;
-    }
-    if (t->has_ancestor(d)) {
-      idl_global->err()->redefinition_in_scope(t, d);
-      return NULL;
-    }
-  }
-  /*
-   * Cannot add OUT or INOUT argument to oneway operation
-   */
-  if ((t->direction() == AST_Argument::dir_OUT ||
-       t->direction() == AST_Argument::dir_INOUT) &&
-      pd_flags == OP_oneway) {
-    idl_global->err()->error2(UTL_Error::EIDL_ONEWAY_CONFLICT, t, this);
-    return NULL;
-  }
-  /*
-   * Add it to scope
-   */
-  add_to_scope(t);
-  /*
-   * Add it to set of locally referenced symbols
-   */
-  add_to_referenced(t, I_FALSE, t->local_name ());
-
-  return t;
-}
-
-/*
- * Dump this AST_Operation node (an operation) to the ostream o
- */
-void
-AST_Operation::dump(ostream &o)
-{
-  UTL_ScopeActiveIterator   *i;
-  UTL_StrlistActiveIterator *si;
-  UTL_ExceptlistActiveIterator *ei;
-  AST_Decl                  *d;
-  AST_Exception             *e;
-  UTL_String                *s;
-
-  if (pd_flags == OP_oneway)
-    o << "oneway ";
-  else if (pd_flags == OP_idempotent)
-    o << "idempotent ";
-
-  i = new UTL_ScopeActiveIterator(this, IK_decls);
-  pd_return_type->name()->dump(o);
-  o << " ";
-  local_name()->dump(o);
-  o << "(";
-  while (!(i->is_done())) {
-    d = i->item();
-    d->dump(o);
-    i->next();
-    if (!(i->is_done()))
-      o << ", ";
-  }
-  delete i;
-  o << ")";
-
-  if (pd_exceptions != NULL) {
-    o << " raises(";
-    ei = new UTL_ExceptlistActiveIterator(pd_exceptions);
-    while (!(ei->is_done())) {
-      e = ei->item();
-      ei->next();
-      e->local_name()->dump(o);
-      if (!(ei->is_done()))
-        o << ", ";
-    }
-    delete ei;
-    o << ")";
-  }
-  if (pd_context != NULL) {
-    o << " context(";
-    si = new UTL_StrlistActiveIterator(pd_context);
-    while (!(si->is_done())) {
-      s = si->item();
-      si->next();
-      o << s->get_string();
-      if (!(si->is_done()))
-        o << ", ";
-    }
-    delete si;
-    o << ")";
-  }
+  return this->has_native_;
 }
 
 void
@@ -324,35 +162,344 @@ AST_Operation::destroy (void)
 {
 }
 
-/*
- * Data accessors
- */
+// Private operations.
 
-AST_Type *
-AST_Operation::return_type()
+// Compute total number of members.
+int
+AST_Operation::compute_argument_attr (void)
 {
-  return pd_return_type;
+  if (this->argument_count_ != -1)
+    {
+      return 0;
+    }
+
+  AST_Decl *d = 0;
+  AST_Type *type = 0;
+  AST_Argument *arg = 0;
+
+  this->argument_count_ = 0;
+
+  // If there are elements in this scope.
+  if (this->nmembers () > 0)
+    {
+      // Instantiate a scope iterator.
+      UTL_ScopeActiveIterator *si = 0;
+      ACE_NEW_RETURN (si,
+                      UTL_ScopeActiveIterator (this, 
+                                               UTL_Scope::IK_decls),
+                      -1);
+
+      while (!si->is_done ())
+        {
+          // Get the next AST decl node.
+          d = si->item ();
+
+          if (d->node_type () == AST_Decl::NT_argument)
+            {
+              this->argument_count_++;
+
+              arg = AST_Argument::narrow_from_decl (d);
+
+              type = AST_Type::narrow_from_decl (arg->field_type ());
+
+              if (type->node_type () == AST_Decl::NT_native)
+                {
+                  this->has_native_ = 1;
+                }
+            }
+
+          si->next ();
+        }
+
+      delete si;
+    }
+
+  type = AST_Type::narrow_from_decl (this->return_type ());
+
+  if (type->node_type () == AST_Decl::NT_native)
+    {
+      this->has_native_ = 1;
+    }
+
+  return 0;
 }
 
-AST_Operation::Flags
-AST_Operation::flags()
-{
-  return pd_flags;
-}
-
+// Add this context (a UTL_StrList) to this scope.
 UTL_StrList *
-AST_Operation::context()
+AST_Operation::fe_add_context (UTL_StrList *t)
 {
-  return pd_context;
+  this->pd_context = t;
+
+  return t;
 }
 
 UTL_ExceptList *
-AST_Operation::exceptions()
+AST_Operation::be_add_exceptions (UTL_ExceptList *t)
 {
-  return pd_exceptions;
+  if (this->pd_exceptions != 0)
+    {
+      idl_global->err ()->error1 (UTL_Error::EIDL_ILLEGAL_RAISES, 
+                                  this);
+    }
+  else
+    {
+      this->pd_exceptions = t;
+    }
+
+  return this->pd_exceptions;
 }
 
-// Narrowing
+// Add these exceptions (identified by name) to this scope.
+// This looks up each name to resolve it to the name of a known
+// exception, and then adds the referenced exception to the list
+//  exceptions that this operation can raise.
+
+// NOTE: No attempt is made to ensure that exceptions are mentioned
+//       only once..
+UTL_NameList *
+AST_Operation::fe_add_exceptions (UTL_NameList *t)
+{
+  UTL_NamelistActiveIterator *nl_i = 0;
+  UTL_ScopedName *nl_n = 0;
+  AST_Exception *fe = 0;
+  AST_Decl *d = 0;
+
+  this->pd_exceptions = 0;
+
+  ACE_NEW_RETURN (nl_i,
+                  UTL_NamelistActiveIterator(t),
+                  0);
+
+  while (!nl_i->is_done()) 
+    {
+      nl_n = nl_i->item ();
+
+      d = lookup_by_name (nl_n, 
+                          I_TRUE);
+
+      if (d == 0 || d->node_type() != AST_Decl::NT_except) 
+        {
+          idl_global->err ()->lookup_error (nl_n);
+          delete nl_i;
+          return 0;
+        }
+
+      fe = AST_Exception::narrow_from_decl (d);
+
+      if ((this->flags () == AST_Operation::OP_oneway) && fe)
+        {
+          idl_global->err ()->error1 (UTL_Error::EIDL_ILLEGAL_RAISES, 
+                                      this);
+        }
+
+      if (fe == 0) 
+        {
+          idl_global->err ()->error1 (UTL_Error::EIDL_ILLEGAL_RAISES, 
+                                       this);
+          return 0;
+        }
+
+      if (this->pd_exceptions == 0)
+        {
+          ACE_NEW_RETURN (this->pd_exceptions,
+                          UTL_ExceptList (fe, 
+                                          0),
+                          0);
+        }
+      else
+        {
+          UTL_ExceptList *el = 0;
+          ACE_NEW_RETURN (el,
+                          UTL_ExceptList (fe,
+                                          0),
+                          0);
+
+          this->pd_exceptions->nconc (el);
+        }
+
+      nl_i->next ();
+    }
+
+  delete nl_i;
+  return t;
+}
+
+// Add this AST_Argument node (an operation argument declaration)
+// to this scope.
+AST_Argument *
+AST_Operation::fe_add_argument (AST_Argument *t)
+{
+  AST_Decl *d = 0;
+
+  // Already defined and cannot be redefined? Or already used?
+  if ((d = lookup_by_name_local (t->local_name(), 0)) != 0) 
+    {
+      if (!can_be_redefined (d)) 
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF, 
+                                      t, 
+                                      this, 
+                                      d);
+          return 0;
+        }
+
+      if (this->referenced (d, t->local_name ())) 
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE, 
+                                      t, 
+                                      this, 
+                                      d);
+          return 0;
+        }
+
+      if (t->has_ancestor (d)) 
+        {
+          idl_global->err ()->redefinition_in_scope (t, 
+                                                     d);
+          return 0;
+        }
+    }
+
+  // Cannot add OUT or INOUT argument to oneway operation.
+  if ((t->direction () == AST_Argument::dir_OUT 
+       || t->direction() == AST_Argument::dir_INOUT) 
+      && pd_flags == OP_oneway) 
+    {
+      idl_global->err ()->error2 (UTL_Error::EIDL_ONEWAY_CONFLICT, 
+                                  t, 
+                                  this);
+      return 0;
+    }
+
+  // Add it to scope.
+  this->add_to_scope (t);
+
+  // Add it to set of locally referenced symbols.
+  this->add_to_referenced (t, 
+                           I_FALSE, 
+                           t->local_name ());
+
+  return t;
+}
+
+// Dump this AST_Operation node (an operation) to the ostream o.
+void
+AST_Operation::dump (ostream &o)
+{
+  UTL_ScopeActiveIterator *i = 0;
+  UTL_StrlistActiveIterator *si = 0;
+  UTL_ExceptlistActiveIterator *ei = 0;
+  AST_Decl *d = 0;
+  AST_Exception *e = 0;
+  UTL_String *s = 0;
+
+  if (this->pd_flags == OP_oneway)
+    {
+      o << "oneway ";
+    }
+  else if (this->pd_flags == OP_idempotent)
+    {
+      o << "idempotent ";
+    }
+
+  ACE_NEW (i,
+           UTL_ScopeActiveIterator (this, 
+                                    IK_decls));
+
+  this->pd_return_type->name ()->dump (o);
+  o << " ";
+  this->local_name ()->dump (o);
+  o << "(";
+
+  while (!i->is_done()) 
+    {
+      d = i->item ();
+      d->dump (o);
+      i->next ();
+
+      if (!i->is_done())
+        {
+          o << ", ";
+        }
+    }
+
+  delete i;
+  o << ")";
+
+  if (this->pd_exceptions != 0) 
+    {
+      o << " raises(";
+
+      ACE_NEW (ei,
+               UTL_ExceptlistActiveIterator (pd_exceptions));
+
+      while (!ei->is_done()) 
+        {
+          e = ei->item ();
+          ei->next ();
+          e->local_name ()->dump (o);
+
+          if (!ei->is_done())
+            {
+             o << ", ";
+            }
+        }
+
+      delete ei;
+      o << ")";
+    }
+
+  if (this->pd_context != 0) 
+    {
+      o << " context(";
+
+      ACE_NEW (si,
+               UTL_StrlistActiveIterator (pd_context));
+
+      while (!si->is_done()) 
+        {
+          s = si->item ();
+          si->next ();
+          o << s->get_string ();
+
+          if (!si->is_done())
+            {
+              o << ", ";
+            }
+        }
+
+      delete si;
+      o << ")";
+    }
+}
+
+// Data accessors
+
+AST_Type *
+AST_Operation::return_type (void)
+{
+  return this->pd_return_type;
+}
+
+AST_Operation::Flags
+AST_Operation::flags (void)
+{
+  return this->pd_flags;
+}
+
+UTL_StrList *
+AST_Operation::context (void)
+{
+  return this->pd_context;
+}
+
+UTL_ExceptList *
+AST_Operation::exceptions (void)
+{
+  return this->pd_exceptions;
+}
+
+// Narrowing.
 IMPL_NARROW_METHODS2(AST_Operation, AST_Decl, UTL_Scope)
 IMPL_NARROW_FROM_DECL(AST_Operation)
 IMPL_NARROW_FROM_SCOPE(AST_Operation)

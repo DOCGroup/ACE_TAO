@@ -48,19 +48,11 @@ public:
                 idl_bool abstract);
   // Constructor
 
-  ~be_operation ();
+  ~be_operation (void);
   // Destructor.
 
-  int void_return_type ();
+  int void_return_type (void);
   // Returns 1 if the operation has a void return type.
-
-  virtual int argument_count (void);
-  // Return the count of members.
-
-  virtual int has_native (void);
-  // Any of the arguments or the return value is a <native> type.
-  // This is important because in that case no code should be
-  // generated for the stubs.
 
   be_argument *add_argument_to_scope (be_argument *arg);
   // Add an argument to the scope.
@@ -80,12 +72,12 @@ public:
   int has_extra_code_generation (TAO_CodeGen::CG_STATE current_state);
   // Returns true if we have to genrate extra code.
 
-  be_operation *marshaling ();
+  be_operation *marshaling (void);
   // returns the operation containing special marshaling information,
   // this makes sense if not all arguments get marshaled, e.g. AMI
   // sendc_ operations.
 
-  be_operation *arguments ();
+  be_operation *arguments (void);
   // Returns a customized arguments list, e.g. AMI sendc_ operations
   // only use the in and inout arguments but not the out arguments,
   // also the first argument is the reply handler.
@@ -98,15 +90,6 @@ public:
 protected:
   int compute_size_type (void);
   // Compute the size type if it is unknown.
-
-  int compute_argument_attr (void);
-  // Count the number of arguments.
-
-  int argument_count_;
-  // Number of arguments.
-
-  int has_native_;
-  // Is any argument of type native.
 
   be_operation_strategy *strategy_;
   // Member for holding the strategy for covering

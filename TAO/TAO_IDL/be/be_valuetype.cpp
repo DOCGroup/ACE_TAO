@@ -72,6 +72,8 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
               n, 
               p),
     UTL_Scope (AST_Decl::NT_interface),
+    COMMON_Base (0, 
+                 set_abstract),
     full_obv_skel_name_ (0),
     abstract_ (set_abstract)
 {

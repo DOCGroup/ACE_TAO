@@ -88,11 +88,6 @@ public:
   // recursive simply using "base_type->node_type()" will not work, so
   // the most "unaliased" type is needed.
 
-  virtual idl_bool in_recursion (be_type *node = 0);
-  // Determine if we are involved in some kind of limited recursion. Most types
-  // cannot be involved except structs and unions.
-  // If the parameter is 0, we are trying to determine this for ourselves.
-
   virtual void destroy (void);
   // Clean up allocated members.
 

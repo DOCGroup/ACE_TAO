@@ -37,8 +37,11 @@ public:
   be_valuetype (void);
   // Default constructor.
 
-  be_valuetype (UTL_ScopedName *n, AST_Interface **ih, long nih,
-                UTL_StrList *p, idl_bool set_abstract = 0);
+  be_valuetype (UTL_ScopedName *n, 
+                AST_Interface **ih, 
+                long nih,
+                UTL_StrList *p, 
+                idl_bool set_abstract = 0);
   // Constructor that sets its scoped name <n>, a list of inherited valuetypes
   // and supported interfaces <ih>, the number of inherited interfaces <nih>,
   // and any pragmas <p>.
@@ -46,21 +49,14 @@ public:
   ~be_valuetype (void);
   // Destructor.
 
-  virtual void redefine (AST_Interface *from, UTL_StrList *p);
+  virtual void redefine (AST_Interface *from, 
+                         UTL_StrList *p);
 
-  idl_bool opt_accessor ();
+  idl_bool opt_accessor (void);
   // Should generate optimized form?
 
   virtual int gen_var_defn (char *local_name = 0);
   // Generate the _var class definition.
-
-  // Virtual void gen_def_ctors (TAO_OutStream* os);
-  // Call the default constructors of all the base classes.
-
-
-
-  // Virtual void gen_copy_ctors (TAO_OutStream* os);
-  // Call the copy constructors of all the base classes.
 
   virtual int gen_var_impl (char *local_name = 0,
                             char *full_name = 0);
@@ -91,14 +87,8 @@ public:
   // Return length of encapsulation.
 #endif
 
-  // virtual int traverse_inheritance_graph (tao_code_emitter gen,
-  //                                         TAO_OutStream *os);
-  // template method using breadth first traversal of inheritance graph
-
-  // const char *relative_skel_name (const char *other_class_name);
-  // Relative skeleton name.
-
   const char *field_pd_prefix (void);
+
   const char *field_pd_postfix (void);
 
   // For building the name for private data fields.
@@ -108,9 +98,13 @@ public:
   // Visiting.
   virtual int accept (be_visitor *visitor);
 
-  virtual idl_bool is_valuetype ();
-  virtual idl_bool is_abstract_valuetype ();
-  virtual void set_abstract_valuetype ();
+  virtual idl_bool is_valuetype (void);
+
+  // Data accessors.
+
+  virtual idl_bool is_abstract_valuetype (void);
+
+  virtual void set_abstract_valuetype (void);
 
  // Narrowing.
   DEF_NARROW_METHODS1 (be_valuetype, be_interface);
@@ -122,7 +116,8 @@ public:
 
 
 private:
-  char * full_obv_skel_name_;
+  char *full_obv_skel_name_;
+
   idl_bool abstract_;
 };
 

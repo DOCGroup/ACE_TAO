@@ -106,7 +106,7 @@ COMMON_Base::destroy (void)
 {
 }
 
-// Constructor(s) and destructor
+// Constructor(s) and destructor.
 
 AST_Decl::AST_Decl (void)
   : pd_imported (I_FALSE),
@@ -119,7 +119,10 @@ AST_Decl::AST_Decl (void)
     pd_local_name (0),
     pd_original_local_name (0),
     pd_pragmas (0),
-    pd_added (I_FALSE)
+    pd_added (I_FALSE),
+    full_name_ (0),
+    repoID_ (0),
+    prefix_ (0)
 {
 }
 
@@ -137,7 +140,10 @@ AST_Decl::AST_Decl (NodeType nt,
     pd_name (0),
     pd_local_name (n == 0 ? 0 : n->last_component ()->copy ()),
     pd_pragmas (p),
-    pd_added (I_FALSE)
+    pd_added (I_FALSE),
+    full_name_ (0),
+    repoID_ (0),
+    prefix_ (0)
 {
   compute_full_name (n);
 
@@ -152,9 +158,9 @@ AST_Decl::~AST_Decl (void)
 {
 }
 
-// Private operations
+// Private operations.
 
-// Compute the full scoped name of an AST node
+// Compute our private UTL_ScopedName member.
 void
 AST_Decl::compute_full_name (UTL_ScopedName *n)
 {
@@ -176,10 +182,14 @@ AST_Decl::compute_full_name (UTL_ScopedName *n)
   d = ScopeAsDecl (this->defined_in ());
 
   if (d != 0)
-    cn = d->name ();
+    {
+      cn = d->name ();
+    }
 
   if (cn != 0)
-    this->pd_name = (UTL_ScopedName *) cn->copy ();
+    {
+      this->pd_name = (UTL_ScopedName *) cn->copy ();
+    }
 
   if (this->pd_local_name != 0)
     {
@@ -219,7 +229,300 @@ AST_Decl::compute_full_name (UTL_ScopedName *n)
     }
 }
 
-// Public operations
+// Compoute stringified prefix.
+void
+AST_Decl::compute_prefix (void)
+{
+  const char* pragma = 0;
+
+  if (this->pragmas () != 0)
+    {
+      for (UTL_StrlistActiveIterator i (this->pragmas ());
+           !i.is_done ();
+           i.next ())
+        {
+          const char* s = i.item ()->get_string ();
+
+          if (ACE_OS::strncmp (s, "#pragma prefix", 14) == 0)
+            {
+              pragma = s;
+            }
+        }
+    }
+
+  if (pragma != 0)
+    {
+      // Skip the space and the " also...
+      const char* tmp = pragma + 16;
+      const char* end = ACE_OS::strchr (tmp, '"');
+
+      if (end == 0)
+        {
+          idl_global->err ()->syntax_error (
+              IDL_GlobalData::PS_PragmaPrefixSyntax
+            );
+          this->prefix_ = ACE::strnew ("");
+          return;
+        }
+
+      int len = end - tmp;
+
+      ACE_NEW (this->prefix_,
+               char[len + 1]);
+
+      ACE_OS::strncpy (this->prefix_, 
+                       tmp, 
+                       len);
+
+      this->prefix_[len] = 0;
+      return;
+    }
+
+  // Could not find it in the local scope, try to recurse to the top
+  // scope...
+  if (this->defined_in () == 0)
+    {
+      this->prefix_ = ACE::strnew ("");
+    }
+  else
+    {
+      UTL_Scope *scope = this->defined_in ();
+
+      if (scope == 0)
+        {
+          this->prefix_ = ACE::strnew ("");
+        }
+      else
+        {
+          AST_Decl *d = ScopeAsDecl (scope);
+
+          if (d != 0)
+            {
+              this->prefix_ = ACE::strnew (d->prefix ());
+            }
+          else
+            {
+              this->prefix_ = ACE::strnew ("");
+            }
+        }
+    }
+}
+
+// Protected operations.
+
+// Compute stringified fully scoped name.
+void
+AST_Decl::compute_full_name (void)
+{
+  if (this->full_name_ != 0)
+    {
+      return;
+    }
+  else
+    {
+      long namelen = 0;
+      UTL_IdListActiveIterator *i = 0;
+      long first = I_TRUE;
+      long second = I_FALSE;
+
+      // In the first loop, compute the total length.
+      ACE_NEW (i,
+               UTL_IdListActiveIterator (this->name ()));
+
+      while (!i->is_done ())
+        {
+          if (!first)
+            {
+              namelen += 2; // for "::"
+            }
+          else if (second)
+            {
+              first = second = I_FALSE;
+            }
+
+          // Print the identifier.
+          namelen += ACE_OS::strlen (i->item ()->get_string ());
+
+          if (first)
+            {
+              if (ACE_OS::strcmp (i->item ()->get_string (), "") != 0)
+                {
+                  // Does not start with a "".
+                  first = I_FALSE;
+                }
+              else
+                {
+                  second = I_TRUE;
+                }
+            }
+
+          i->next ();
+        }
+
+      delete i;
+
+      ACE_NEW (this->full_name_,
+               char[namelen + 1]);
+
+      this->full_name_[0] = '\0';
+      first = I_TRUE;
+      second = I_FALSE;
+
+      ACE_NEW (i,
+               UTL_IdListActiveIterator (this->name ()));
+
+      while (!(i->is_done ()))
+        {
+          if (!first)
+            {
+              ACE_OS::strcat (this->full_name_, "::");
+            }
+          else if (second)
+            {
+              first = second = I_FALSE;
+            }
+
+          // Print the identifier.
+          ACE_OS::strcat (this->full_name_, i->item ()->get_string ());
+
+          if (first)
+            {
+              if (ACE_OS::strcmp (i->item ()->get_string (), "") != 0)
+                {
+                  // Does not start with a "".
+                  first = I_FALSE;
+                }
+              else
+                {
+                  second = I_TRUE;
+                }
+            }
+
+          i->next ();
+        }
+
+      delete i;
+    }
+
+  return;
+}
+
+// Compute stringified repository ID.
+void
+AST_Decl::compute_repoID (void)
+{
+  if (this->repoID_ != 0)
+    {
+      return;
+    }
+  else
+    {
+      long namelen = 8; // for the prefix "IDL:" and suffix ":1.0"
+      UTL_IdListActiveIterator *i = 0;
+      long first = I_TRUE;
+      long second = I_FALSE;
+
+      // in the first loop compute the total length
+      namelen += ACE_OS::strlen (this->prefix ()) + 1;
+
+      ACE_NEW (i,
+               UTL_IdListActiveIterator (this->name ()));
+
+      while (!(i->is_done ()))
+        {
+          if (!first)
+            {
+              namelen += 1; // for "/"
+            }
+          else if (second)
+            {
+              first = second = I_FALSE;
+            }
+
+          // Print the identifier.
+          namelen += ACE_OS::strlen (i->item ()->get_string ());
+
+          if (first)
+            {
+              if (ACE_OS::strcmp (i->item ()->get_string (), "") != 0)
+                {
+                  // Does not start with a "".
+                  first = I_FALSE;
+                }
+              else
+                {
+                  second = I_TRUE;
+                }
+            }
+
+          i->next ();
+        }
+
+      delete i;
+
+      ACE_NEW (this->repoID_,
+               char[namelen + 1]);
+
+      this->repoID_[0] = '\0';
+
+      ACE_OS::sprintf (this->repoID_, 
+                       "%s", 
+                       "IDL:");
+
+      ACE_OS::strcat (this->repoID_, 
+                      this->prefix ());
+
+      // Add the "/" only if there is a prefix.
+      if (ACE_OS::strcmp (this->prefix (), "") != 0)
+        {
+          ACE_OS::strcat (this->repoID_, "/");
+        }
+
+      ACE_NEW (i,
+               UTL_IdListActiveIterator (this->name ()));
+
+      first = I_TRUE;
+      second = I_FALSE;
+
+      while (!(i->is_done ()))
+        {
+          if (!first)
+            {
+              ACE_OS::strcat (this->repoID_, "/");
+            }
+          else if (second)
+            {
+              first = second = I_FALSE;
+            }
+
+          // Print the identifier.
+          ACE_OS::strcat (this->repoID_, i->item ()->get_string ());
+
+          if (first)
+            {
+              if (ACE_OS::strcmp (i->item ()->get_string (), "") != 0)
+                {
+                  // Does not start with a "".
+                  first = I_FALSE;
+                }
+              else
+                {
+                  second = I_TRUE;
+                }
+            }
+
+          i->next ();
+        }
+
+      delete i;
+      ACE_OS::strcat (this->repoID_, 
+                      ":1.0");
+    }
+
+  return;
+}
+
+// Public operations.
 
 // Return TRUE if one of my ancestor scopes is "s"
 // and FALSE otherwise.
@@ -261,8 +564,59 @@ AST_Decl::destroy (void)
   delete this->pd_original_local_name;
   this->pd_original_local_name = 0;
 
+  if (this->full_name_ != 0)
+    {
+      delete this->full_name_;
+      this->full_name_ = 0;
+    }
+
+  if (this->repoID_ != 0)
+    {
+      ACE_OS::free (this->repoID_);
+      this->repoID_ = 0;
+    }
+
+  if (this->prefix_ != 0)
+    {
+      delete this->prefix_;
+      this->prefix_ = 0;
+    }
+
   // Pragmas will be done in IDL_GlobalData
   // because they're not copied.
+}
+
+const char *
+AST_Decl::full_name (void)
+{
+  if (this->full_name_ == 0)
+    {
+      compute_full_name ();
+    }
+
+  return this->full_name_;
+}
+
+const char *
+AST_Decl::repoID (void)
+{
+  if (this->repoID_ == 0)
+    {
+      this->compute_repoID ();
+    }
+
+  return this->repoID_;
+}
+
+const char *
+AST_Decl::prefix (void)
+{
+  if (this->prefix_ == 0)
+    {
+      this->compute_prefix ();
+    }
+
+  return this->prefix_;
 }
 
 // Data accessors.
@@ -351,7 +705,6 @@ AST_Decl::name (void)
   return this->pd_name;
 }
 
-
 // @@ Wherever compute_* are called, we should remember to delete them
 //    after use.
 
@@ -412,6 +765,7 @@ AST_Decl::compute_name (const char *prefix,
           if (cn != 0)
             {
               result_name = (UTL_ScopedName *) cn->copy ();
+
               if (result_name == 0)
                 {
                   result_name = result_local_name;

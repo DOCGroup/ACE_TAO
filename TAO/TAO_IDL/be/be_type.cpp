@@ -598,13 +598,6 @@ be_type::base_node_type (void) const
   return ACE_const_cast (be_type*, this)->node_type ();
 }
 
-idl_bool
-be_type::in_recursion (be_type *)
-{
-  // By default we are not involved in recursion.
-  return 0;
-}
-
 // Cleanup method
 void
 be_type::destroy (void)

@@ -25,9 +25,6 @@ public:
                 idl_bool abstract);
   // Constructor.
 
-  virtual idl_bool in_recursion (be_type *node = 0);
-  // Check if we or the parameter node is in recursion.
-
   virtual void destroy (void);
   // Cleanup function.
 

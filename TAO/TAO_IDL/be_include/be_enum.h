@@ -44,9 +44,6 @@ public:
            idl_bool abstract);
   // Constructor.
 
-  virtual int member_count (void);
-  // Return the count of members
-
   // Convert a numeric value to the enum's string name for it.
   virtual UTL_ScopedName *value_to_name (const unsigned long v);
 
@@ -62,11 +59,6 @@ public:
   DEF_NARROW_FROM_SCOPE (be_enum);
 
 private:
-  int compute_member_count (void);
-  // Count the number of members.
-
-  int member_count_;
-  // Number of members.
 };
 
 #endif

@@ -26,8 +26,6 @@
 ACE_RCSID(be, be_operation, "$Id$")
 
 be_operation::be_operation (void)
-  : argument_count_ (-1),
-    has_native_ (0)
 {
   ACE_NEW (this->strategy_,
            be_operation_default_strategy (this));
@@ -50,9 +48,7 @@ be_operation::be_operation (AST_Type *rt,
               p),
     UTL_Scope (AST_Decl::NT_op),
     COMMON_Base (local, 
-                 abstract),
-    argument_count_ (-1),
-    has_native_ (0)
+                 abstract)
 {
   ACE_NEW (this->strategy_,
            be_operation_default_strategy (this));
@@ -61,69 +57,7 @@ be_operation::be_operation (AST_Type *rt,
 
 be_operation::~be_operation (void)
 {
-  // We know that it cannot be 0, but..
-  if (!this->strategy_)
-    {
-      delete this->strategy_;
-    }
 }
-
-
-// Compute total number of members.
-int
-be_operation::compute_argument_attr (void)
-{
-  if (this->argument_count_ != -1)
-    {
-      return 0;
-    }
-
-  this->argument_count_ = 0;
-
-  // If there are elements in this scope.
-  if (this->nmembers () > 0)
-    {
-      // instantiate a scope iterator.
-      UTL_ScopeActiveIterator *si = 0;
-      ACE_NEW_RETURN (si,
-                      UTL_ScopeActiveIterator (this, 
-                                               UTL_Scope::IK_decls),
-                      -1);
-
-      while (!si->is_done ())
-        {
-          // Get the next AST decl node.
-          AST_Decl *d = si->item ();
-
-          if (d->node_type () == AST_Decl::NT_argument)
-            {
-              this->argument_count_++;
-              be_argument *arg = be_argument::narrow_from_decl (d);
-              be_type* type =
-                be_type::narrow_from_decl (arg->field_type ());
-
-              if (type->base_node_type () == AST_Decl::NT_native)
-                {
-                  this->has_native_ = 1;
-                }
-            }
-
-          si->next ();
-        }
-
-      delete si;
-    }
-
-  be_type* type = be_type::narrow_from_decl (this->return_type ());
-
-  if (type->base_node_type () == AST_Decl::NT_native)
-    {
-      this->has_native_ = 1;
-    }
-
-  return 0;
-}
-
 
 int
 be_operation::void_return_type (void)
@@ -140,23 +74,6 @@ be_operation::void_return_type (void)
     {
       return 0;
     }
-}
-// Return the member count.
-int
-be_operation::argument_count (void)
-{
-  this->compute_argument_attr ();
-
-  return this->argument_count_;
-}
-
-// Return if any argument or the return type is a <native> type.
-int
-be_operation::has_native (void)
-{
-  this->compute_argument_attr ();
-
-  return this->has_native_;
 }
 
 be_argument *
