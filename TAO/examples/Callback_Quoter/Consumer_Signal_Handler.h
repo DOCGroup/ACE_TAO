@@ -29,7 +29,6 @@ class Consumer_Handler;
 
 class Consumer_Signal_Handler : public ACE_Event_Handler
 {
-  // @@ Please make sure that all the other classes are documented.
   // = TITLE
   //   Creating a class to handle signal events.
   //

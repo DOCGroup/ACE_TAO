@@ -47,19 +47,19 @@ Consumer_Input_Handler::handle_input (ACE_HANDLE)
 
       switch (tolower (buf[0]))
 	{
-	case 'r':
+	case Consumer_Input_Handler::REGISTER:
 	  {
 	    register_consumer ();
             TAO_CHECK_ENV;
 	    break;
 	  }
-	case 'u':
+	case Consumer_Input_Handler::UNREGISTER:
 	  {
 	    unregister_consumer ();
             TAO_CHECK_ENV;
 	    break;
 	  }
-        case 'q':
+        case Consumer_Input_Handler::EXIT:
 	  {
 	    quit_consumer_process ();
             TAO_CHECK_ENV;
@@ -219,4 +219,9 @@ Consumer_Input_Handler::quit_consumer_process ()
   TAO_ENDTRY;
 
 return 0;
+}
+
+Consumer_Input_Handler::~Consumer_Input_Handler (void)
+{
+  // No-op
 }

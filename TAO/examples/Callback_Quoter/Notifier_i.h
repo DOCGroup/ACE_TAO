@@ -34,8 +34,12 @@
 class Notifier_i : public POA_Notifier
 {
   // = TITLE
-  //    The implementation of the Notifier class, which is the servant
-  //    object for the callback quoter server.
+  //   Notifier servant class.
+  //
+  // = DESCRIPTION
+  //   The implementation of the Notifier class, which is the servant
+  //   object for the callback quoter server.
+  //   
 public:
   // = Initialization and termination methods.
   Notifier_i (void);
