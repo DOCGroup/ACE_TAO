@@ -1,3 +1,11 @@
+Wed May 19 18:14:41 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/orbsvcs_static.dsp:
+	* performance-tests/Cubit/TAO/IDL_Cubit/client.dsp
+	* performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.dsp
+	* performance-tests/Cubit/TAO/IDL_Cubit/server.dsp: Fixed Release
+	  configuations.
+
 Wed May 19 16:21:11 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/default_resource.cpp:
@@ -37,7 +45,7 @@ Wed May 19 15:25:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  also did a quick cleanup for the WString_Manager classes.
 	  Thanks to Lothar Werzinger <lwerzinger@krones.de> for providing
 	  this fixes.
-	  Also removed all uses of string_copy which is a non-standard TAO 
+	  Also removed all uses of string_copy which is a non-standard TAO
 	  extension.
 
 	* docs/releasenotes/TODO.html:
