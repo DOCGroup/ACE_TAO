@@ -28,7 +28,8 @@ PROG_SRCS = \
 	ImR_Locator_i.cpp \
 	tao_imr.cpp \
 	tao_imr_i.cpp \
-	XML_ContentHandler.cpp
+	XML_ContentHandler.cpp \
+	NT_Service.cpp
 
 SRC = $(PROG_SRCS)
 
@@ -41,7 +42,8 @@ IMR_ACTIVATOR_OBJS = \
 	Server_Info.o \
 	Server_Repository.o \
 	Repository_Configuration.o \
-	XML_ContentHandler.o
+	XML_ContentHandler.o \
+	NT_Service.o
 
 IMPLREPO_SVR_OBJS  = \
         Adapter_Activator.o \

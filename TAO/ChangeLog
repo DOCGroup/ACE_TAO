@@ -1,3 +1,9 @@
+Mon Jul 07 07:52:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/ImplRepo_Service/Makefile:
+          Added NT_Service, this fixes the build and link problems we have
+          with MinGW.
+
 Mon Jul 07 07:00:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Simple/echo/Echo_Client.bor:
