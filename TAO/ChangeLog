@@ -1,3 +1,9 @@
+Thu Jan  8 19:03:16 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/orbsvcs/FaultTolerance/FT_ORB_Utils_export.h:
+          Added check for TAO_AS_STATIC_LIBS for setting the export flags for
+          proper building of static libraries.
+
 Thu Jan  8 19:00:49 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/Dynamic_Bitset.{h,cpp,inl}:
