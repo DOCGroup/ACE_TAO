@@ -242,12 +242,14 @@ void
 JAWS_Asynch_Handler::handle_read_stream (const ACE_Asynch_Read_Stream::Result
                                          &result)
 {
-  // This callback is for this->receive_file()
 
   this->dispatch_handler ();
 
   if (result.act () != 0)
     {
+      // This callback is for io->receive_file()
+      JAWS_TRACE ("JAWS_Asynch_Handler::handle_read_stream (recv_file)");
+
       int code = 0;
       if (result.success () && result.bytes_transferred () != 0)
         {
@@ -281,6 +283,8 @@ JAWS_Asynch_Handler::handle_read_stream (const ACE_Asynch_Read_Stream::Result
   else
     {
       // This callback is for this->read()
+      JAWS_TRACE ("JAWS_Asynch_Handler::handle_read_stream (read)");
+
       if (result.success ()
           && result.bytes_transferred () != 0)
         this->handler ()->read_complete (&result.message_block ());

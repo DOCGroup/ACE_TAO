@@ -270,9 +270,11 @@ JAWS_Asynch_IO::accept (JAWS_IO_Handler *ioh,
   ACE_Asynch_Accept aa;
 
   size_t address_size = sizeof (sockaddr_in) + sizeof (sockaddr);
+  size_t bytes_to_read =
+    JAWS_Data_Block::JAWS_DATA_BLOCK_SIZE - (2 * address_size);
 
   if (aa.open (*(aioh->handler ()), listen_handle) == -1
-      || aa.accept (*ndb, JAWS_Data_Block::JAWS_DATA_BLOCK_SIZE - (2 * address_size)) == -1)
+      || aa.accept (*ndb, bytes_to_read) == -1)
     aioh->accept_error ();
 }
 
