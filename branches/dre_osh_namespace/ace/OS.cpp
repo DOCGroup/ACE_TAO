@@ -340,6 +340,7 @@ extern "C" int __d10_sigwait (const sigset_t *set, int *sig)
 #include "ace/OS_NS_netdb.cpp"
 #include "ace/OS_NS_poll.cpp"
 #include "ace/OS_NS_pwd.cpp"
+#include "ace/OS_NS_regex.cpp"
 #include "ace/OS_NS_signal.cpp"
 #include "ace/OS_NS_stdio.cpp"
 #include "ace/OS_NS_stdlib.cpp"

@@ -11,6 +11,7 @@
 #include "ace/SOCK_Stream.h"
 #include "Logging_Server.h"
 #include "ace/OS_NS_string.h"
+#include "ace/os_include/os_netdb.h"
 
 int Logging_Server::run (int argc, char *argv[])
 {

@@ -8,6 +8,7 @@
 
 #include "Logging_Event_Handler.h"
 #include "ace/OS_NS_string.h"
+#include "ace/os_include/os_netdb.h"
 
 int Logging_Event_Handler::open () {
 

@@ -9,6 +9,7 @@
 #include "ace/OS_NS_sys_select.h"
 #include "ace/OS_NS_netdb.h"
 #include "ace/OS_NS_arpa_inet.h"
+#include "ace/os_include/os_string.h"
 
 // Creates and binds a UDP socket...
 

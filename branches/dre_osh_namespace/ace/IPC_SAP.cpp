@@ -9,6 +9,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/os_include/os_signal.h"
+#include "ace/OS_NS_errno.h"
 
 ACE_RCSID(ace, IPC_SAP, "$Id$")
 

@@ -14,6 +14,7 @@
 #include "Log_Wrapper.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/os_include/os_netdb.h"
 
 ACE_RCSID(Multicast, server, "$Id$")
 

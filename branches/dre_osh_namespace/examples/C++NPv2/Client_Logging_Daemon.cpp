@@ -19,7 +19,7 @@
 #include "ace/Thread_Manager.h"
 #include "Logging_Acceptor.h"
 #include "CLD_export.h"
-
+#include "ace/os_include/os_netdb.h"
 
 #if !defined (FLUSH_TIMEOUT)
 #define FLUSH_TIMEOUT 120 /* 120 seconds == 2 minutes. */

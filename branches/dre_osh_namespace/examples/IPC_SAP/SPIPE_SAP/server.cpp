@@ -5,6 +5,7 @@
 #include "ace/SPIPE_Acceptor.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_poll.h"
 
 ACE_RCSID(SPIPE_SAP, server, "$Id$")
 

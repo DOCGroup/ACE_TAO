@@ -19,6 +19,7 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_stdlib.h"
 
 ACE_RCSID(ace, High_Res_Timer, "$Id$")
 
