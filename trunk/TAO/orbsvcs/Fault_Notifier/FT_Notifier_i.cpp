@@ -1,7 +1,7 @@
 // -*- C++ -*-
 //=============================================================================
 /**
- *  @file    FT_FaultNotifier_i.cpp
+ *  @file    FT_Notifier_i.cpp
  *
  *  $Id$
  *
@@ -13,7 +13,10 @@
 
 #include "FT_Notifier_i.h"
 
-#include "ace/Get_Opt.h"
+#include <ace/Get_Opt.h>
+#include <ace/OS_NS_stdio.h>
+#include <tao/debug.h>
+
 // Use this macro at the beginning of CORBA methods
 // to aid in debugging.
 #define METHOD_ENTRY(name)    \

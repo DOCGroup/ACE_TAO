@@ -1,7 +1,7 @@
 /* -*- C++ -*- */
 //=============================================================================
 /**
- *  @file    FTApp_FaultConsumer_Main.cpp
+ *  @file    FTAPP_FaultConsumer_Main.cpp
  *
  *  $Id$
  *

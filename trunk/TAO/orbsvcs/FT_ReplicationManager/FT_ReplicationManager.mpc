@@ -1,3 +1,4 @@
+// $Id$
 project(*Lib): orbsvcslib, core, notification, fault_tolerance, ftorb, portablegroup {
   sharedname   = TAO_ReplicationManagerLib
   dynamicflags = TAO_REPLICATIONMANAGERLIB_BUILD_DLL

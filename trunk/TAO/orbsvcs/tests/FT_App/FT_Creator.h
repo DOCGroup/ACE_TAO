@@ -1,7 +1,7 @@
 /* -*- C++ -*- */
 //=============================================================================
 /**
- *  @file    TAO_FT_Creator.h
+ *  @file    FT_Creator.h
  *
  *  $Id$
  *
@@ -15,6 +15,7 @@
 #ifndef FT_CREATOR_H
 #define FT_CREATOR_H
 #include <ace/ACE.h>
+#include /**/ "ace/pre.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -107,5 +108,7 @@ namespace FTAPP
   };
 
 } // namespace TAO
+
+#include /**/ "ace/post.h"
 
 #endif // FT_CREATOR_H
