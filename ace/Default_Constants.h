@@ -452,8 +452,12 @@ const unsigned int ACE_CONNECTOR_HANDLER_MAP_SIZE = 16;
 #    define ACE_DLL_PREFIX ACE_LIB_TEXT ("")
 #  endif /* __MINGW32__ */
 #else /* !ACE_WIN32 */
-#  define ACE_LD_SEARCH_PATH ACE_LIB_TEXT ("LD_LIBRARY_PATH")
-#  define ACE_LD_SEARCH_PATH_SEPARATOR_STR ACE_LIB_TEXT (":")
+#  if !defined (ACE_LD_SEARCH_PATH)
+#    define ACE_LD_SEARCH_PATH ACE_LIB_TEXT ("LD_LIBRARY_PATH")
+#  endif /* ACE_LD_SEARCH_PATH */
+#  if !defined (ACE_LD_SEARCH_PATH_SEPARATOR_STR)
+#    define ACE_LD_SEARCH_PATH_SEPARATOR_STR ACE_LIB_TEXT (":")
+#  endif /* ACE_LD_SEARCH_PATH_SEPARATOR_STR */
 #endif /* ACE_WIN32 */
 
 #if !defined (ACE_DLL_SUFFIX)

@@ -1,3 +1,10 @@
+Thu Jun 19 12:04:28 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/Default_Constants.h:
+          Added guards around ACE_LD_LIBRARY_PATH and
+          ACE_LD_SEARCH_PATH_SEPARATOR_STR.  Thanks to John Michael
+          Zorko <j.zorko@att.net> for reporting the problem.
+
 Thu Jun 19 07:01:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/config-lynxos.h: Since LynxOS lacks sys/select.h and
