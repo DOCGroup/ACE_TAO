@@ -215,7 +215,6 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
            factory != end;
            ++factory)
         {
-
           if ((*factory)->factory ()->match_prefix (prefix))
             {
               // increment slot past the "://" (i.e. add 3)

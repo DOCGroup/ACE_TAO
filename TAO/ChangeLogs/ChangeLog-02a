@@ -1,3 +1,163 @@
+Thu Nov  9 10:38:19 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/Makefile: 
+	  Updated the Makefile to include the new directory 'Strategies'
+	  for the library TAO_Strategies. The new library contains all the
+	  advanced TAO strategies: 
+	  The UIOP and SHMIOP protocol factories,
+	  all the reactor types except TP_Reactor which is now the default
+	  reactor, 
+	  the Direct and Linear Priority Mappings in the case of
+	  the priority mapping type and
+	  TAO_ALLOCATOR_NULL_LOCK cdr_allocator_type.
+	
+	* tao/Resource_Factory.h: 
+	* tao/Resource_Factory.cpp: 
+	  Added a new virtual method load_default_protocols which is
+	  implemented in default_resource to laod the default IIOP
+	  protocol. We need this new function so that the
+	  advanced_resource can call this to just load IIOP protocol and do
+	  nothing else.
+		
+	* tao/Strategies/strategies_export.h: 
+	  Generated for the new TAO_Strategies_Export macro.
+
+	* tao/TAO_Internal.h: 
+	* tao/TAO_Internal.cpp: 
+
+	* tao/Strategies/TAO_Strategies_Internal.h: 
+	* tao/Strategies/TAO_Strategies_Internal.cpp: 
+
+	  This is similar to the TAO_Internal. Has code related to
+	  UIOP and SHMIOP protocol factories which were in
+	  TAO_Internal previously.
+
+	* tao/default_resource.h: 
+	* tao/default_resource.i: 
+	* tao/default_resource.cpp: 
+
+	* tao/Strategies/advanced_resource.h: 
+	* tao/Strategies/advanced_resource.i: 
+	* tao/Strategies/advanced_resource.cpp: 
+
+	  Only the default strategies and reactor types are in
+	  default_resource now. Every other strategy is moved to
+	  advanced_resource. 
+		
+	* tao/Strategies/uiop_endpoints.h: 
+	* tao/Strategies/uiop_endpoints.i: 
+	* tao/Strategies/uiop_endpoints.cpp: 
+
+	* tao/Strategies/UIOP_Transport.h: 
+	* tao/Strategies/UIOP_Transport.i: 
+	* tao/Strategies/UIOP_Transport.cpp: 
+
+	* tao/Strategies/UIOP_Profile.h: 
+	* tao/Strategies/UIOP_Profile.i: 
+	* tao/Strategies/UIOP_Profile.cpp: 
+
+	* tao/Strategies/UIOP_Lite_Factory.h: 
+	* tao/Strategies/UIOP_Lite_Factory.i: 
+	* tao/Strategies/UIOP_Lite_Factory.cpp: 
+
+	* tao/Strategies/UIOP_Factory.h: 
+	* tao/Strategies/UIOP_Factory.i: 
+	* tao/Strategies/UIOP_Factory.cpp: 
+
+	* tao/Strategies/UIOP_Endpoint.h: 
+	* tao/Strategies/UIOP_Endpoint.i: 
+	* tao/Strategies/UIOP_Endpoint.cpp: 
+
+	* tao/Strategies/UIOP_Connector.h : 
+	* tao/Strategies/UIOP_Connector.i : 
+	* tao/Strategies/UIOP_Connector.cpp : 
+
+	* tao/Strategies/UIOP_Connect.h: 
+	* tao/Strategies/UIOP_Connect.i: 
+	* tao/Strategies/UIOP_Connect.cpp: 
+
+	* tao/Strategies/UIOP_Acceptor.h: 
+	* tao/Strategies/UIOP_Acceptor.i: 
+	* tao/Strategies/UIOP_Acceptor.cpp: 
+
+	* tao/Strategies/SHMIOP_Transport.h: 
+	* tao/Strategies/SHMIOP_Transport.i: 
+	* tao/Strategies/SHMIOP_Transport.cpp: 
+
+	* tao/Strategies/SHMIOP_Profile.i: 
+	* tao/Strategies/SHMIOP_Profile.h: 
+	* tao/Strategies/SHMIOP_Profile.cpp: 
+
+	* tao/Strategies/SHMIOP_Factory.h: 
+	* tao/Strategies/SHMIOP_Factory.i: 
+	* tao/Strategies/SHMIOP_Factory.cpp: 
+
+	* tao/Strategies/SHMIOP_Endpoint.h: 
+	* tao/Strategies/SHMIOP_Endpoint.i: 
+	* tao/Strategies/SHMIOP_Endpoint.cpp: 
+
+	* tao/Strategies/SHMIOP_Connector.h: 
+	* tao/Strategies/SHMIOP_Connector.i: 
+	* tao/Strategies/SHMIOP_Connector.cpp: 
+
+	* tao/Strategies/SHMIOP_Connect.h: 
+	* tao/Strategies/SHMIOP_Connect.i:
+	* tao/Strategies/SHMIOP_Connect.cpp: 
+
+	* tao/Strategies/SHMIOP_Acceptor.h: 
+	* tao/Strategies/SHMIOP_Acceptor.i: 
+	* tao/Strategies/SHMIOP_Acceptor.cpp: 
+
+	* tao/Strategies/Reactor_Per_Priority.h: 
+	* tao/Strategies/Reactor_Per_Priority.i: 
+	* tao/Strategies/Reactor_Per_Priority.cpp: 
+
+	* tao/Strategies/Linear_Priority_Mapping.h: 
+	* tao/Strategies/Linear_Priority_Mapping.i: 
+	* tao/Strategies/Linear_Priority_Mapping.cpp: 	
+
+	* tao/Strategies/Direct_Priority_Mapping.h: 
+	* tao/Strategies/Direct_Priority_Mapping.i: 
+	* tao/Strategies/Direct_Priority_Mapping.cpp: 
+
+	  Moved all these files from tao to Strategies/
+	  and made the appropriate cosmetic changes.
+
+	* tao/Strategies/tests/simple_test.idl: 
+
+	* tao/Strategies/tests/simple_test_i.h: 
+	* tao/Strategies/tests/simple_test_i.i: 
+	* tao/Strategies/tests/simple_test_i.cpp: 
+	* tao/Strategies/tests/server.cpp: 
+	* tao/Strategies/tests/client.cpp: 
+
+	* tao/Strategies/tests/svc.conf: 
+	* tao/Strategies/tests/advanced_svc.conf: 
+	* tao/Strategies/tests/README: 
+	* tao/Strategies/tests/Makefile: 
+	  Added a simple test to show the ways of loading the default and
+	  advanced strategies.
+	
+	* tests/RTCORBA/Server_Protocol/server_uiop.conf: 
+	* tests/RTCORBA/Server_Protocol/server_shmiop.conf: 
+	* tests/RTCORBA/Server_Protocol/server_reverse_nt.conf: 
+	* tests/RTCORBA/Server_Protocol/server_reverse.conf: 
+	* tests/RTCORBA/Server_Protocol/server.conf: 
+	* tests/RTCORBA/Server_Protocol/Makefile: 
+
+	* tests/Param_Test/Makefile: 
+
+	* tests/NestedUpcall/Simple/svc.conf: 
+	* tests/NestedUpcall/Simple/Makefile: 
+
+	* tests/Leader_Followers/run_test.pl: 
+	* tests/Leader_Followers/Makefile: 
+
+	* tests/InterOp-Naming/Makefile: 
+	  Modified the Makefiles to link the new TAO_Strategies library.
+	  Modified the service config files to correctly load the needed
+	  protocols and startegies owing to the new changes.
+
 Thu Nov  9 09:49:02 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/PortableInterceptorC.cpp:
