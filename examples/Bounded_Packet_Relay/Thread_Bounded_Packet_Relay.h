@@ -70,14 +70,25 @@ class Text_Input_Device_Wrapper : public Input_Device_Wrapper_Base
   //    streams.  Comments to this effect appear in the definition of
   //    the event loop method.
 public:
+
+  // = Enumerated logging level flags
+  enum Logging_Flags {NO_LOGGING = 0, 
+                      LOG_MSGS_CREATED = 1};
+
   // = Initialization and termination methods.
   Text_Input_Device_Wrapper (ACE_Thread_Manager *input_task_mgr,
                              size_t read_length, 
-                             const char* text);
+                             const char* text, 
+                             int logging = 0);
   // Constructor.
 
   ~Text_Input_Device_Wrapper (void);
   // Destructor.
+
+  virtual int modify_device_settings (void *logging);
+  // Modifies device settings based on passed pointer to a u_long.
+  // Turns logging on if u_long is non-zero, off if u_long is zero,
+  // and does nothing if the pointer is null.
 
 protected:
   virtual ACE_Message_Block *create_input_message (void);
@@ -93,6 +104,13 @@ private:
 
   size_t index_;
   // Index into the string.
+
+  int logging_;
+  // This value is 0 if logging is turned off, non-zero otherwise
+
+  u_long packet_count_;
+  // This value holds a count of packets created.
+
 };
 
 class Text_Output_Device_Wrapper : public Output_Device_Wrapper_Base
@@ -104,6 +122,11 @@ class Text_Output_Device_Wrapper : public Output_Device_Wrapper_Base
   //    Data from the passed output message is printed to the standard
   //    output stream, if logging is turned on.
 public:
+
+  // = Enumerated logging level flags
+  enum Logging_Flags {NO_LOGGING = 0, 
+                      LOG_MSGS_RCVD = 2,
+                      PRINT_MSGS_RCVD = 4};
 
   Text_Output_Device_Wrapper (int logging = 0);
   // Default constructor.
@@ -119,8 +142,13 @@ public:
   // and does nothing if the pointer is null.
 
 private:
+
   int logging_;
-  // This value is 0 if logging is turned off, non-zero otherwise
+  // This value holds the logging level.
+
+  u_long packet_count_;
+  // This value holds a count of packets received.
+
 };
 
 class User_Input_Task : public ACE_Task_Base
@@ -241,7 +269,8 @@ public:
   Send_Handler (u_long send_count, 
                 const ACE_Time_Value &duration,
                 Bounded_Packet_Relay &relay,
-                Thread_Timer_Queue &queue);
+                Thread_Timer_Queue &queue,
+                Thread_Bounded_Packet_Relay_Driver &driver);
   // Constructor.
 
   ~Send_Handler (void);
@@ -262,6 +291,9 @@ private:
   ACE_Time_Value duration_;
   // Stores the expected duration until expiration, and is used to 
   // re-register the handler if there are still sends to perform.
+
+  Thread_Bounded_Packet_Relay_Driver &driver_;
+  // Reference to the driver that will redisplay the user input menu.
 };
 
 class Termination_Handler : public BPR_Handler_Base
@@ -274,7 +306,8 @@ class Termination_Handler : public BPR_Handler_Base
   //     transmission method, and then deletes "this".
 public:
   Termination_Handler (Bounded_Packet_Relay &relay,
-                       Thread_Timer_Queue &queue);
+                       Thread_Timer_Queue &queue,
+                       Thread_Bounded_Packet_Relay_Driver &driver);
   // Constructor.
 
   ~Termination_Handler (void);
@@ -286,6 +319,10 @@ public:
 
   virtual int cancelled (void);
   // Cancellation hook.
+
+private:
+  Thread_Bounded_Packet_Relay_Driver &driver_;
+  // Reference to the driver that will redisplay the user input menu.
 };
 
 class Thread_Bounded_Packet_Relay_Driver : public Bounded_Packet_Relay_Driver <Thread_Timer_Queue>

@@ -95,7 +95,7 @@ public:
 
   int start_transmission (u_long packet_count,
                           u_long arrival_period,
-                          u_long logging_level);
+                          int logging_level);
   // Requests a transmission be started.
 
   int end_transmission (Transmission_Status status);
@@ -111,6 +111,9 @@ public:
 
 private:
   // = Concurrency Management.
+
+  int is_active_;
+  // flag for whether or not a transmission is active
 
   ACE_Thread_Manager * input_task_mgr_;
   // Thread manager for the input device task.
@@ -199,6 +202,10 @@ public:
 
   virtual int svc (void);
   // This method runs the input device loop in the new thread.
+
+  virtual int modify_device_settings (void *) = 0;
+  // Provides an abstract interface to allow modifying device
+  // settings.
 
 protected:
   virtual ACE_Message_Block *create_input_message (void) = 0;
