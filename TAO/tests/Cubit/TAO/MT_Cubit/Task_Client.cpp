@@ -177,6 +177,8 @@ Client::get_high_priority_jitter (void)
   double jitter = 0;
   double average = get_high_priority_latency ();
 
+  // @@ Please comment this code.
+
   for (u_int i = 0; i < ts_->loop_count_; i ++)
     {
       double difference = ts_->global_jitter_array_ [0][i] - average;
@@ -191,6 +193,8 @@ Client::get_low_priority_jitter (void)
 {
   double jitter = 0;
   double average = get_low_priority_latency ();
+
+  // @@ Please comment this code.
 
   for (u_int j = 1; j < ts_->start_count_; j ++)
     for (u_int i = 0; i < ts_->loop_count_; i ++)
