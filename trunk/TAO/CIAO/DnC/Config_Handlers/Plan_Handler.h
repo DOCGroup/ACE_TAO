@@ -1,6 +1,6 @@
 //==================================================================
 /**
- *  @file  Plan_handler.h
+ *  @file  Plan_Handler.h
  *
  *  $Id$
  *
@@ -58,14 +58,14 @@ typedef ACE_Hash_Map_Manager<ACE_TString, int, ACE_SYNCH_RW_MUTEX> REF_MAP;
 typedef ACE_Hash_Map_Iterator<ACE_TString, int, ACE_SYNCH_RW_MUTEX> REF_ITER;
 typedef ACE_Hash_Map_Manager<int, ACE_TString, ACE_SYNCH_RW_MUTEX> IDREF_MAP;
 
-namespace CIAO 
+namespace CIAO
 {
   namespace Config_Handler
   {
     /**
      * @class Plan_Handler
      *
-     * @brief Handler class for <DeploymentPlan> type 
+     * @brief Handler class for <DeploymentPlan> type
      *
      */
 

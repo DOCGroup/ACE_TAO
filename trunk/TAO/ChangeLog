@@ -1,3 +1,9 @@
+Mon May 17 11:23:23 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/ESF/ESF_Proxy_RB_Tree.i:
+          Changed formatting of the code so that we don't get incorrect fuzz
+          errors.
+
 Mon May 17 11:18:23 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/ImplRepo/NameService/run_test.pl:
