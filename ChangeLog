@@ -1,3 +1,9 @@
+Wed Dec 15 17:05:22 2004  Steve Huston  <shuston@riverace.com>
+
+	* tests/Test_Output.cpp: When resetting msg_ostream to cerr, specify
+	  0 for delete_ostream. ACE_Log_Msg is not allowed to delete cerr.
+	  Fixes the crash in Logging_Strategy_Test.
+
 Wed Dec 15 16:01:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/APG/Active_Objects/active_objects.mwc:
