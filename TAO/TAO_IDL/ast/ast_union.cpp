@@ -646,7 +646,7 @@ AST_Union::compute_default_value (void)
       ACE_NOTREACHED (break;)
     } // End of switch
 
-  // If we have determined that we don't need a default case and even then a
+  // If we have determined that we don't have a default case and even then a
   // default case was provided, flag this off as error.
   if ((this->default_value_.computed_ == 0)
       && (this->default_index () != -1))
