@@ -1,6 +1,8 @@
 # $Id$
 # LynxOS with g++
 
+LYNXOS = 1
+
 # NOTE:  with LynxOS 2.5.0-FCS version: 012797-G, you'll need to
 #        apply this patch:
 # ftp://ftp.lynx.com/pub/patches/v2.5-patches/v2.5-on-x86/000134-00.tar.Z
