@@ -97,33 +97,40 @@ performance of collocated objects.  Run the test without any argument
 to see results with collocation optimization.  Run it with
 <-ORBcollocation no> to perform the same test without the optimization.
 
-Sample Run- Using files to communicate IOR:
+run_test.pl:
+------------
+
+	This is a perl script which simplifies the execution of the
+test.  
+
+run_test [-h] [-n num] [-mcast] [-sleeptime t] [-debug] [-release]
+
+-h                  -- prints this information
+-n num              -- client uses <num> iterations
+-mcast              -- uses the multicast version of the nameservice
+-sleeptime t        -- run_test should sleep for <t> seconds between running
+                       the server and client
+-debug              -- sets the debug flag for both client and server
+-release            -- runs the Release version of the test (for NT use)
+                       (default is 3 seconds)
+
+Sample Run-Using files to communicate IOR:
 ------------------------------------------
 
 1. Start the server.
 
 % server -s -ORBport 20000 -ORBobjrefstyle url -o theior 
 
-starting up daemon <unknown>
-opening dynamic service Resource_Factory
-did dynamic on Resource_Factory, error = 0
-opening dynamic service Client_Strategy_Factory
-did dynamic on Client_Strategy_Factory, error = 0
-opening dynamic service Server_Strategy_Factory
-did dynamic on Server_Strategy_Factory, error = 0
+        IDL_Cubit:SERVER
+
 The IOR is: <iiop:1.0//tango:20000/Persistent/887665222/647179/RootPOA/RootPOA_is_BAD/factory\00\00>
 
-2.Start the client.
+2. Start the client.
 
 %client -s -ORBport 19998 -f theior
 
-starting up daemon <unknown>
-opening dynamic service Resource_Factory
-did dynamic on Resource_Factory, error = 0
-opening dynamic service Client_Strategy_Factory
-did dynamic on Client_Strategy_Factory, error = 0
-opening dynamic service Server_Strategy_Factory
-did dynamic on Server_Strategy_Factory, error = 0
+         IDL_Cubit: client
+
 Factory received OK
 .
 .
@@ -148,7 +155,7 @@ the  following 2 methods.
         
         b)set the ENVIRONMENT variable "NameService"
         
-       This might be helpful if more than one person is running the
+        This might be helpful if more than one person is running the
         Naming service in which case Multicast might cause confusion with some
         other Naming Service trying to answer your call.
 
@@ -160,10 +167,8 @@ on a single target:
 The gethrtime.o component should only be included in LDLIBS if
 building with GreenHills for Pentium target.
 
-
-
-*****************************************
 Using JAVA to access the IDL Cubit test:
+----------------------------------------
 
 install JDK1.2
 install Java to IDL compiler
