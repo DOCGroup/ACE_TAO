@@ -29,17 +29,18 @@ int PCB::handleEvent (const void *arg)
 
       // New interval is 10 ms.
       ACE_Time_Value interval (0L, 1000L); 
-      ACE_ASSERT (PTimer::instance ()->reset_interval
-                    (timerID_, interval) != -1);
-
-      ACE_UNUSED_ARG (interval);
+      if (PTimer::instance ()->reset_interval (timerID_, interval) != -1)
+	ACE_ERROR_RETURN ((LM_ERROR,
+			   ACE_TEXT ("%p\n"),
+			   ACE_TEXT ("reset_interval")),
+			  -1);
     }
 
   if (count_++ == 10)
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Canceling %d\n"),
                   timerID_));
-      ACE_ASSERT ((PTimer::instance ()->cancel (this)) != 0);
+      PTimer::instance ()->cancel (this);
     }
 
   return 0;
