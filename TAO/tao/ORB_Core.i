@@ -4,7 +4,7 @@
 
 #define TAO_TRF (this->resource_factory ())
 #define TAO_OC_RETRIEVE(member) \
-  ((this->##member##_ == 0) ? (this->##member##_ = this->resource_factory ()->get_##member ()) : (this->##member##_) )
+  ((this->member##_ == 0) ? (this->member##_ = this->resource_factory ()->get_##member ()) : (this->member##_) )
 
 ACE_INLINE ACE_Reactor *
 TAO_ORB_Core::reactor (ACE_Reactor *r)
