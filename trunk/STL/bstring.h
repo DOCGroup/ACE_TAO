@@ -2498,7 +2498,7 @@ operator>> (istream& i, basic_string<charT>& s) _THROW_ALLOC_LENGTH
 template basic_string<char>;
 #endif /* ghs */
 /* static */
-template<TYPE> 
+template<class TYPE> 
 const size_t basic_string<TYPE>::npos = NPOS;
 typedef  basic_string<char>     cstring;
 typedef  basic_string<char>     string;

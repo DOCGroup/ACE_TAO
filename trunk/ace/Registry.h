@@ -24,7 +24,7 @@
 // This only works on Win32 platforms
 
 #if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && \
-			(ACE_HAS_STANDARD_CPP_LIBRARY != 0)
+	    (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
 #include <vector>
 #include <string>
 #else
