@@ -443,6 +443,9 @@ be_visitor_field_ch::visit_sequence (be_sequence *node)
           // Generate the anonymous sequence member typedef.
           be_decl *bs = this->ctx_->scope ();
 
+          *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+              << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
           *os << "typedef " << bt->nested_type_name (bs)
               << " _" << this->ctx_->node ()->local_name ()
               << "_seq;" << be_nl;
