@@ -1,3 +1,28 @@
+Tue Mar 01 11:14:21 2005  Gan Deng <dengg@dre.vanderbilt.edu>
+
+	* DomainApplicationManager/Deployment_Configuration.h
+	* ExecutionManager/Execution_Manager.cpp
+	* NodeApplicationManager/ImplementationInfo.cpp
+	* NodeApplicationManager/ImplementationInfo.h
+	* NodeApplicationManager/NodeApplicationManager_Impl.cpp
+	* NodeApplicationManager/NodeApplicationManager_Impl.h
+	* NodeManager/NodeDaemon_Impl.cpp
+	* ciao/Container_Base.cpp
+	* ciao/Container_Impl.h
+	* ciao/Deployment_Core.idl
+	* ciao/NodeApplication_Impl.cpp
+	* ciao/NodeApplication_Impl.h
+	* ciao/Servant_Activator.cpp
+	* ciao/Servant_Activator.h
+	* examples/BasicSP/BMClosedED/BMClosedED_exec.cpp
+
+          Fixed compilation errors due to the recent refactoring
+          work in TAO.
+
+          Modified to make all the DAnCE tools to work together.
+          Right now, there is still an exception when tearing down
+          the assembly, which I will look into soon.
+
 Tue Feb 22 20:33:21 2005  Will Otte <wotte@dre.vanderbilt.edu>
 
 	* Config_Handlers/Singleton_IDREF_Map.cpp

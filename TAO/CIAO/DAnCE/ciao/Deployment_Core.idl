@@ -72,7 +72,6 @@ module Deployment
     string servant_entrypt;
     Properties component_config;
     //  Properties home_config;      //ignored for now.
-    //  Properties container_config  //igore for now
   };
 
   typedef sequence <ComponentImplementationInfo> ComponentImplementationInfos;

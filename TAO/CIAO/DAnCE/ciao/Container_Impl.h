@@ -27,6 +27,7 @@
 
 #include "Deployment_CoreS.h"
 #include "Container_Base.h"
+#include "ace/SString.h"
 #include "Server_init.h"  // write_IOR function
 #include "CIAO_common.h" // CIAO::debug_level
 

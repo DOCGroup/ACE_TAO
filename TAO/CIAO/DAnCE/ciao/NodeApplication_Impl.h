@@ -23,6 +23,7 @@
 #include "tao/ORB.h"
 #include "ace/Synch.h"
 #include "ace/Synch_Traits.h"
+#include "ace/SString.h"
 #include "Container_Base.h"
 #include "Deployment_CoreS.h"
 #include "Server_init.h"
@@ -157,7 +158,7 @@ namespace CIAO
 
   protected:
     /// Create and initialize all the containers
-    virtual CORBA::Long init_containers (
+    virtual CORBA::Long create_all_containers (
         const ::Deployment::NodeImplementationInfo & node_impl_info
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));

@@ -1,6 +1,7 @@
 //$Id$
 
 #include "NodeApplication_Impl.h"
+#include "ace/SString.h"
 #include "Container_Impl.h"
 
 #if !defined (__ACE_INLINE__)
@@ -20,7 +21,7 @@ CIAO::NodeApplication_Impl::init (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 CORBA::Long
-CIAO::NodeApplication_Impl::init_containers (
+CIAO::NodeApplication_Impl::create_all_containers (
   const ::Deployment::NodeImplementationInfo & node_impl_info
   ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException))
@@ -61,7 +62,7 @@ CIAO::NodeApplication_Impl::finishLaunch (
 
           if (this->component_map_.find (name, comp) != 0)
             {
-              ACE_THROW (Deployment::InvalidConnection ());
+              ACE_TRY_THROW (Deployment::InvalidConnection ());
             }
 
           Components::EventConsumerBase_var consumer;
@@ -183,8 +184,8 @@ CIAO::NodeApplication_Impl::install (
 
       retv->length (0);
 
-      // Call init_containers to create all the necessary containers..
-      this->init_containers (node_impl_info);
+      // Call create_all_containers to create all the necessary containers..
+      this->create_all_containers (node_impl_info);
 
       // For each container, invoke <install> operation, this will return
       // the ComponentInfo for components installed in each container.
@@ -205,6 +206,23 @@ CIAO::NodeApplication_Impl::install (
           for (CORBA::ULong j = curr_len; j < retv->length (); j++)
             retv[j] = comp_infos[j-curr_len];
         }
+
+      // @@ Maybe we can optimize this. We can come up with a decision later.
+      // Cache a copy of the component object references for all the components
+      // installed on this NodeApplication. I know we can delegates these to the
+      // undelying containers, but in that case, we should loop all the containers
+      // to find the component object reference. - Gan
+      const CORBA::ULong comp_len = retv->length ();
+      for (CORBA::ULong len = 0;
+          len < comp_len;
+          ++len)
+      {
+        //Since we know the type ahead of time...narrow is omitted here.
+        if (this->component_map_.
+            bind (retv[len].component_instance_name.in(),
+                  Components::CCMObject::_duplicate (retv[len].component_ref.in())))
+          ACE_THROW_RETURN (Deployment::InstallationFailure (), 0);
+      }
     }
   ACE_CATCHANY
     {
@@ -238,10 +256,7 @@ CIAO::NodeApplication_Impl::remove (ACE_ENV_SINGLE_ARG_DECL)
   if (CIAO::debug_level () > 1)
     ACE_DEBUG ((LM_DEBUG, "Removed all containers from this NodeApplication!\n"));
 
-  //@TODO: Find it out whether we need to shutdown ORB or not.
-  // My thought is we shouldn't, in case we need to reinstall some other containers
-  // or components later, such as Jai's swappable components functionality.
-  //this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
 }
 
 

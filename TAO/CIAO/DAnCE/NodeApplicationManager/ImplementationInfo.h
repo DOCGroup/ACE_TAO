@@ -8,6 +8,7 @@
  *         the plan.
  *
  * @author Tao Lu <lu@dre.vanderbilt.edu>
+ * @author Gan Deng <dengg@dre.vanderbilt.edu>
  ***************************************************************/
 
 #ifndef IMPLEMENTATIONIFO_H
@@ -23,15 +24,16 @@
 //#include "Deployment_CoreS.h"
 //#include "ace/os_types.h"
 #include "ciao/DeploymentC.h"
+#include "ace/SString.h"
 
 //@@ I wish we could have precompiled header support soon!!!
 
-// This mthod is a helper function to parse the plan into the
-// ImplementationInfo struct.
+// This method is a helper function to parse the local deployment plan into the
+// NodeImplementationInfo struct.
 
 namespace CIAO
 {
-  bool operator<<(Deployment::ImplementationInfos & info,
+  bool operator<< (Deployment::NodeImplementationInfo & info,
 		  const Deployment::DeploymentPlan & plan);
 }
 
