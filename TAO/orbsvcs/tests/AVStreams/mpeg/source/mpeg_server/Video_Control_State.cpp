@@ -3,7 +3,6 @@
 #include "Video_Control_State.h"
 #include "Video_Server.h"
 
-
 Video_Control_State::Video_Control_State ()
   : vch_ (VIDEO_CONTROL_HANDLER_INSTANCE::instance ()->get_video_control_handler ())
 {
@@ -301,7 +300,11 @@ Video_Control_Waiting_State::stat_stream (CORBA::Char_out ch,
 CORBA::Boolean 
 Video_Control_Waiting_State::close (void)
 {
-  return 0;
+  ACE_DEBUG ((LM_DEBUG,
+              "Video_Control_Waiting_State::close \n"));
+  VIDEO_SINGLETON::instance ()->normalExit = 1;
+  TAO_ORB_Core_instance ()->reactor ()->end_event_loop ();
+  return CORBA::B_TRUE;
 }
 
 
@@ -335,10 +338,10 @@ CORBA::Boolean
 Video_Control_Waiting_State::fast_backward (const Video_Control::FFpara &para)
                                 
 {
-  // Many guys in legacy code depend on this variable.
-  VIDEO_SINGLETON::instance ()-> cmd = CmdFB;
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Video_Control_Waiting_State::fast_backward () called\n"));
+  // Many guys in legacy code depend on this variable.
+  VIDEO_SINGLETON::instance ()-> cmd = CmdFB;
   VIDEO_SINGLETON::instance ()->init_fast_play (para);
   this->vch_->change_state (VIDEO_CONTROL_FAST_BACKWARD_STATE::instance ());
   return CORBA::B_TRUE;
@@ -349,7 +352,48 @@ CORBA::Boolean
 Video_Control_Waiting_State::step (const Video_Control::STEPpara &para)
                        
 {
-  return 0;
+  Video_Control::STEPpara step_para = para;
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) Video_Control_Waiting_State::step () called\n"));
+
+  int group;
+  int tag = 0;
+  int result;
+
+  VIDEO_SINGLETON::instance ()->cmdsn = step_para.sn;
+
+  if (!VIDEO_SINGLETON::instance ()-> live_source) {
+    if (step_para.nextFrame >= VIDEO_SINGLETON::instance ()->numF) /* send SEQ_END */
+      {
+        tag = 1;
+        step_para.nextFrame --;
+      }
+    /*
+      fprintf (stderr, "STEP . . .frame-%d\n", step_para.this->nextFrame);
+    */
+    CheckFrameRange (step_para.nextFrame);
+    group = VIDEO_SINGLETON::instance ()->FrameToGroup (&step_para.nextFrame);
+    if (VIDEO_SINGLETON::instance ()-> precmd != CmdSTEP && !tag ) {
+      result = VIDEO_SINGLETON::instance ()->SendReferences (group, step_para.nextFrame);
+      if (result < 0 )
+        return CORBA::B_FALSE;
+    }
+  }
+  if (VIDEO_SINGLETON::instance ()->live_source) 
+    StartPlayLiveVideo ();
+ 
+  if (VIDEO_SINGLETON::instance ()->live_source) {
+    VIDEO_SINGLETON::instance ()->SendPicture (&step_para.nextFrame);
+  }
+  else if (VIDEO_SINGLETON::instance ()->video_format == VIDEO_MPEG1) {
+    VIDEO_SINGLETON::instance ()->SendPacket (VIDEO_SINGLETON::instance ()->numS>1, group, tag ? VIDEO_SINGLETON::instance ()->numF : step_para.nextFrame, 0);
+  }
+  else {
+    fprintf (stderr, "VS: wierd1\n");
+  }
+ 
+  if (VIDEO_SINGLETON::instance ()->live_source) StopPlayLiveVideo ();
+  return CORBA::B_TRUE;
 }
 
 
@@ -403,7 +447,13 @@ CORBA::Boolean
 Video_Control_Waiting_State::stop (CORBA::Long cmdsn)
                        
 {
-  return 0;
+  ACE_DEBUG ((LM_DEBUG,
+              "Video_Control_Waiting_State::stop ()\n"));
+  VIDEO_SINGLETON::instance ()->cmd = CmdSTOP;
+  VIDEO_SINGLETON::instance ()->cmdsn = cmdsn;
+  Video_Timer_Global::StopTimer();
+  this->vch_->change_state (VIDEO_CONTROL_WAITING_STATE::instance ());
+  return CORBA::B_TRUE;
 }
 
 
@@ -487,11 +537,11 @@ Video_Control_Play_State::stop (CORBA::Long cmdsn)
 {
   ACE_DEBUG ((LM_DEBUG,
               "Video_Control_Play_State::stop ()\n"));
-    VIDEO_SINGLETON::instance ()->cmd = CmdSTOP;
-    VIDEO_SINGLETON::instance ()->cmdsn = cmdsn;
-    Video_Timer_Global::StopTimer();
-    this->vch_->change_state (VIDEO_CONTROL_WAITING_STATE::instance ());
-    return 0;
+  VIDEO_SINGLETON::instance ()->cmd = CmdSTOP;
+  VIDEO_SINGLETON::instance ()->cmdsn = cmdsn;
+  Video_Timer_Global::StopTimer();
+  this->vch_->change_state (VIDEO_CONTROL_WAITING_STATE::instance ());
+  return 0;
 }
 
 
