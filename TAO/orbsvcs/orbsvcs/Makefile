@@ -129,8 +129,6 @@ FILES += \
 	AV/AVStreams_i \
 	AV/Endpoint_Strategy \
 	AV/sfp \
-	Property/CosPropertyService_i \
-	Property/CosProperty_Hash \
 	Property/CosPropertyService_i
 endif
 
