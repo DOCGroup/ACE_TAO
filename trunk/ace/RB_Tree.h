@@ -443,7 +443,7 @@ protected:
    * or EXACT if an exactly matching node already exists.
    */
   ACE_RB_Tree_Node<EXT_ID, INT_ID> *find_node (const EXT_ID &k,
-                                               RB_SearchResult &result);
+                                               ACE_RB_Tree_Base::RB_SearchResult &result);
 
   /// Rebalance the tree after insertion of a node.
   void RB_rebalance (ACE_RB_Tree_Node<EXT_ID, INT_ID> * x);
