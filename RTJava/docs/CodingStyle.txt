@@ -1,8 +1,0 @@
-The coding guideline to be used are those specified by the
-document "Java[tm] Coding Style Guide" that can be found at:
-
-	 http://www.sun.com/forte/whitepapers/
-
-
-     
-
