@@ -41,6 +41,56 @@ DEFINE_GUID (IID_CORBA_ORB,
 DEFINE_GUID (IID_STUB_Object,
 0xa201e4c7, 0xf258, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
 
+TAO_Client_Strategy_Factory&
+CORBA_ORB::client_factory(void)
+{
+  if (client_factory_ == 0)
+    {
+      // Look in the service repository for an instance
+      client_factory_ =
+        ACE_Dynamic_Service<TAO_Client_Strategy_Factory>::instance("Client_Strategy_Factory");
+      client_factory_from_service_config_ = CORBA_B_TRUE;
+    }
+
+  if (client_factory_ == 0)
+    {
+      // Still don't have one
+      ACE_NEW(client_factory_, TAO_Default_Client_Strategy_Factory);
+      // this will throw an exception if it fails on exception-throwing platforms
+      client_factory_from_service_config_ = CORBA_B_FALSE;
+      // @@ At this point we need to register this with the
+      // Service_Repository in order to get it cleaned up properly.
+      // But, for now we let it leak.
+    }
+  
+  return *client_factory_;
+}
+
+TAO_Server_Strategy_Factory&
+CORBA_ORB::server_factory(void)
+{
+  if (server_factory_ == 0)
+    {
+      // Look in the service repository for an instance
+      server_factory_ =
+        ACE_Dynamic_Service<TAO_Server_Strategy_Factory>::instance("Server_Strategy_Factory");
+      server_factory_from_service_config_ = CORBA_B_TRUE;
+    }
+
+  if (server_factory_ == 0)
+    {
+      // Still don't have one
+      ACE_NEW(server_factory_, TAO_Default_Server_Strategy_Factory);
+      // this will throw an exception if it fails on exception-throwing platforms
+      server_factory_from_service_config_ = CORBA_B_FALSE;
+      // @@ At this point we need to register this with the
+      // Service_Repository in order to get it cleaned up properly.
+      // But, for now we let it leak.
+    }
+  
+  return *server_factory_;
+}
+
 ULONG __stdcall
 CORBA_ORB::Release (void)
 {
@@ -64,9 +114,17 @@ CORBA_ORB::Release (void)
 // registry.  Registry will be used to assign orb names and to
 // establish which is the default.
 
+// Little convenience function use in parsing arguments
+inline static void
+argvec_shift(int& argc, char *argv[], int numslots)
+{
+  ACE_OS::memmove(&argv[0], &argv[numslots], (argc - numslots)*sizeof(argv[0]));
+  argc -= numslots;
+}
+  
 CORBA_ORB_ptr
-CORBA_ORB_init (int &/* argc */,
-		char *const * /* argv */,
+CORBA_ORB_init (int &argc,
+		char *const *argv,
 		char *orb_name,
 		CORBA_Environment &env)
 {
@@ -97,14 +155,56 @@ CORBA_ORB_init (int &/* argc */,
       return 0;
     }
 
-  // ignoring argc, argv for now -- no arguments we care about
+  // Parse arguments to the ORB.  Typically the ORB is passed
+  // arguments straight from the command line, so we will simply pass
+  // through them and respond to the ones we understand and ignore
+  // those we don't.
   //
-  // XXX should remove any of the "-ORB*" arguments that we know about
-  // ... and report errors for the rest.
+  // In some instances, we may actually build another vector of
+  // arguments and stash it for use initializing other components such
+  // as the ACE_Service_Config or the RootPOA.
   //
-  // Parsing of these arguments should set values in a
-  // TAO_ORB_Parameters instance, likely the one contained in the
-  // newly-created ORB.
+  // @@ Should we consume arguments we understand or leave all
+  // arguments in the vector?
+  
+  // Prepare a copy of the argument vector
+  char *svc_config_argv[]; // @@ Should this be a data member?
+                           // Probably, but there's no object in which to scope it.
+  int svc_config_argc = 0;
+  ACE_NEW (svc_config_argv, char *[argc + 1]);
+
+  // Be certain to copy the program name.
+  // @@ I'm not sure that this convention makes sense.  Perhaps we
+  // @@ should use the ORB's name in place of argv[0]?
+  svc_config_argv[svc_config_argc++] = argv[0];
+
+  for (int i = 1; i < argc; )
+    {
+      if (ACE_OS::strcmp (argv[i], "-ORBsvcconf") == 0)
+        {
+          // Specify the name of the svc.conf file to be used
+          svc_config_argv[svc_config_argc++] = "-f";
+          
+	  if (i + 1 < argc)
+            // @@ Should we dup the string before assigning?
+	    svc_config_argv[svc_config_argc++] = argv[i + 1];
+
+          argvec_shift(argc, argv[i], 2);
+        }
+      else if (ACE_OS::strcmp (argv[i], "-OAdaemon") == 0)
+        {
+          // Be a daemon
+          svc_config_argv[svc_config_argc++] = "-b";
+
+          argvec_shift(argc, argv[i], 1);
+        }
+      else if (ACE_OS::strcmp (argv[i], "-d") == 0)
+        {
+          // Turn on debugging
+          svc_config_argv[svc_config_argc++] = "-d";
+          argvec_shift(argc, argv[i], 1);
+        }
+    }
 
 #ifdef	DEBUG
   // Make it a little easier to debug programs using this code.
@@ -148,7 +248,7 @@ CORBA_ORB_init (int &/* argc */,
   // implementation artifact of potential writes to dead connections,
   // as it'd be way expensive.  Do it here; who cares about SIGPIPE in
   // these kinds of applications, anyway?
- (void) ACE_OS::signal (SIGPIPE, SIG_IGN);
+  (void) ACE_OS::signal (SIGPIPE, SIG_IGN);
 #endif	// SIGPIPE
 
   ACE_OS::socket_init (ACE_WSOCK_VERSION);
@@ -160,6 +260,9 @@ CORBA_ORB_init (int &/* argc */,
   
   if (env.exception () != 0)
     return 0;
+
+  // Initialize the Service Configurator
+  ACE_Service_Config::open(svc_config_argc, svc_config_argv);
 
   // Inititalize the "ORB" pseudo-object now.
   IIOP_ORB_ptr the_orb = TAO_ORB::instance ();
@@ -228,10 +331,7 @@ CORBA_BOA_ptr CORBA_ORB::BOA_init (int &argc,
 	  if (i + 1 < argc)
 	    id = CORBA_string_dup (argv[i + 1]);
 
-	  for (int j = i ; j + 2 < argc ; j++)
-	    argv[j] = argv[j + 2];
-
-	  argc -= 2;
+          argvec_shift(argc, argv[i], 2);
         }
       else if (ACE_OS::strcmp (argv[i], "-OAhost") == 0)
 	{
@@ -240,10 +340,7 @@ CORBA_BOA_ptr CORBA_ORB::BOA_init (int &argc,
 	  if (i + 1 < argc)
 	    host = CORBA_string_dup (argv[i + 1]);
 
-	  for (int j = i ; j + 2 < argc ; j++)
-	    argv[j] = argv[j + 2];
-
-	  argc -= 2;
+          argvec_shift(argc, argv[i], 2);
 	}
       else if (ACE_OS::strcmp (argv[i], "-OAport") == 0)
 	{
@@ -252,10 +349,7 @@ CORBA_BOA_ptr CORBA_ORB::BOA_init (int &argc,
             // @@ We shouldn't limit this to being specified as an int! --cjc
 	    port = ACE_OS::atoi (argv[i + 1]);
 
-	  for (int j = i ; j + 2 < argc ; j++)
-	    argv[j] = argv[j + 2];
-
-	  argc -= 2;
+          argvec_shift(argc, argv[i], 2);
 	}
       else if (ACE_OS::strcmp (argv[i], "-OAobjdemux") == 0)
 	{
@@ -264,10 +358,7 @@ CORBA_BOA_ptr CORBA_ORB::BOA_init (int &argc,
 	  if (i + 1 < argc)
 	    demux = CORBA_string_dup (argv[i+1]);
 
-	  for (int j = i ; j + 2 < argc ; j++)
-	    argv[j] = argv[j + 2];
-
-	  argc -= 2;
+          argvec_shift(argc, argv[i], 2);
 	}
       else if (ACE_OS::strcmp (argv[i], "-OAtablesize") == 0)
 	{
@@ -275,10 +366,7 @@ CORBA_BOA_ptr CORBA_ORB::BOA_init (int &argc,
 	  if (i + 1 < argc)
 	    tablesize = ACE_OS::atoi (argv[i+1]);
 
-	  for (int j = i ; j + 2 < argc ; j++)
-	    argv[j] = argv[j + 2];
-
-	  argc -= 2;
+          argvec_shift(argc, argv[i], 2);
 	}
       else if (ACE_OS::strcmp (argv[i], "-OArcvsock") == 0)
 	{
@@ -292,10 +380,7 @@ CORBA_BOA_ptr CORBA_ORB::BOA_init (int &argc,
 	{
           // Specify whether or not threads should be used.
 	  use_threads = CORBA_B_TRUE;
-	  for (int j = i ; j + 1 < argc ; j++)
-	    argv[j] = argv[j + 1];
-
-	  argc -= 1;
+          argvec_shift(argc, argv[i], 1);
 	}
       else
 	i++;

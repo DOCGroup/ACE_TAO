@@ -15,8 +15,10 @@ CORBA_SRCS = any corbacom except nvlist object orbobj principa \
 	request svrrqst boa typecode optable
 
 # These are components that are only headers and must be installed
-OTHERS_HDRS = align cdr giop iiopobj iioporb xdr roa connect params factories marshal debug
-OTHERS_INLN = any boa cdr connect factories iiopobj iioporb object orbobj params roa svrrqst typecode marshal
+OTHERS_HDRS = align cdr giop iiopobj iioporb xdr roa connect params marshal debug \
+              default_client default_server server_factory client_factory
+OTHERS_INLN = any boa cdr connect iiopobj iioporb object orbobj params roa svrrqst typecode marshal \
+              default_client default_server server_factory client_factory
 # These are components that are either header & source or source-only
 OTHERS_SRCS = \
 	giop \
@@ -25,7 +27,10 @@ OTHERS_SRCS = \
 	invoke \
 	roa \
 	params \
-	factories \
+	default_client \
+	default_server \
+	server_factory \
+	client_factory \
 	objtable \
 	connect \
 	xdr \
