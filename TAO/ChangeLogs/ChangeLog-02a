@@ -1,3 +1,8 @@
+Sun May 28 16:46:19 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/tests/Notify/Basic/Updates.cpp:
+	  fixed minor compile error on Irix.
+
 Sat May 27 23:27:50 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
  	* orbsvcs/tests/Notify/Basic/Updates.cpp:
