@@ -5,12 +5,14 @@
 // component and have a loose table-driven coupling to ORB/protocol
 // library components.
 
+#include "tao/ORB.h"
+
 #include "ace/Dynamic_Service.h"
 #include "ace/Service_Repository.h"
 #include "ace/Object_Manager.h"
 #include "ace/SOCK_Dgram_Mcast.h"
 #include "ace/Thread_Manager.h"
-#include "tao/ORB.h"
+
 #include "tao/Object.h"
 #include "tao/Typecode.h"
 #include "tao/InconsistentTypeCodeC.h"
