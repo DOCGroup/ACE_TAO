@@ -122,7 +122,32 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
   if (major >=0 && minor >= 0)
     this->version_.set_version (ACE_static_cast (CORBA::Octet,major),
                                 ACE_static_cast (CORBA::Octet,minor));
-  ACE_INET_Addr addr (address.c_str ());
+
+  ACE_INET_Addr addr;
+
+  if (ACE_OS::strchr (address.c_str(), ':') == 0)
+    {
+      // Assume the address is a port number or port name and obtain
+      // the fully qualified domain name.
+
+      char buffer[MAXHOSTNAMELEN + 1];
+      if (addr.get_host_name (buffer, sizeof (buffer)) != 0)
+        return -1;
+
+      // First convert the port into a usable form.
+      if (addr.set (address.c_str ()) != 0)
+        return -1;
+
+      // Now reset the port and set the host.
+      if (addr.set (addr.get_port_number (),
+                    buffer,
+                    1) != 0)
+        return -1;
+    }
+  else if (addr.set (address.c_str ()) != 0)
+    {
+      return -1;
+    }
 
   return this->open_i (orb_core, addr);
 }
@@ -136,10 +161,11 @@ TAO_IIOP_Acceptor::open_default (TAO_ORB_Core *orb_core)
 
   ACE_INET_Addr addr;
   char buffer[MAXHOSTNAMELEN + 1];
-  if (addr.get_host_name (buffer, sizeof(buffer)) != 0)
+  if (addr.get_host_name (buffer, sizeof (buffer)) != 0)
     return -1;
 
-  addr.set (u_short(0), buffer, 1);
+  if (addr.set (u_short(0), buffer, 1) != 0)
+    return -1;
 
   this->host_ = buffer;
 
