@@ -1,3 +1,10 @@
+Fri May 28 18:35:41 2004  Steve Huston  <shuston@riverace.com>
+
+	* tests/FIFO_Test.cpp (server): The select() trick to wait for the
+	  writer to open the FIFO doesn't seem to work on AIX. It seems to
+	  select() the fifo handle as a normal file handle, always readable.
+	  So on AIX, sleep 1 second before proceeding.
+
 Fri May 28 15:54:26 2004  Steve Huston  <shuston@riverace.com>
 
 	* tests/MT_Reference_Counted_Event_Handler_Test.cpp: In
