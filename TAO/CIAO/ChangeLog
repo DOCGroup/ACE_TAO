@@ -1,6 +1,11 @@
+Mon Nov  1 15:09:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * VERSION:
+          Fixed description and mailing lists to use
+
 Fri Oct 29 17:18:51 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* CIDLC/ServantSourceGenerator.cpp (namespace): 
+	* CIDLC/ServantSourceGenerator.cpp (namespace):
 
 	  Fixed some weird VC6 issues reported by Theckla
 	  Louchios<theckla.louchiois@lmco.com>.
@@ -8,7 +13,7 @@ Fri Oct 29 17:18:51 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 Fri Oct 29 10:44:52 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * DAnCE/RepositoryManager/Repository_Manager.cpp;
-        
+
           Cosmetic changes.
 
 Mon Oct 25 07:31:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
