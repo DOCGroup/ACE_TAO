@@ -114,13 +114,13 @@ TAO_Service_Type_Exporter::add_all_types_to_all (CORBA::Environment& ACE_TRY_ENV
           ACE_DEBUG ((LM_DEBUG, "Getting link information for %s\n",
                       ACE_static_cast (const char*, link_name_seq[i])));
           CosTrading::Link::LinkInfo_var link_info =
-            link_if->describe_link (link_name_seq[iu], ACE_TRY_ENV);
+            link_if->describe_link (link_name_seq[i], ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
           ACE_DEBUG ((LM_DEBUG, "Adding service types to %s\n",
                       ACE_static_cast (const char*, link_name_seq[i])));
 
-          CosTrading::TypeRepository_var remote_repos = 
+          CosTrading::TypeRepository_var remote_repos =
             link_info->target->type_repos (ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
@@ -130,7 +130,7 @@ TAO_Service_Type_Exporter::add_all_types_to_all (CORBA::Environment& ACE_TRY_ENV
           ACE_TRY_CHECK;
 
         }
-      ACE_CATCHANY 
+      ACE_CATCHANY
         {
           // @@ Seth, Ignore all these exceptions?
         }
@@ -217,12 +217,12 @@ TAO_Service_Type_Exporter::list_all_types (CORBA::Environment& ACE_TRY_ENV)
         this->repos_->list_types (sst, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      for (int i = type_names->length () - 1; i >= 0; i--)
+      for (CORBA::ULong i = type_names->length (); i > 0;)
         {
           if (this->verbose_)
             {
               ACE_DEBUG ((LM_DEBUG, "type name: %s\n",
-                          ACE_static_cast (const char *, type_names[iu])));
+                          ACE_static_cast (const char *, type_names[--i])));
             }
         }
     }
@@ -428,7 +428,7 @@ TAO_Service_Type_Exporter::create_types (void)
   TT_Info::Printer pr;
   this->type_structs_[TT_Info::PRINTER].props.length (7);
   this->type_structs_[TT_Info::PRINTER].super_types.length (1);
-  this->type_structs_[TT_Info::PRINTER].super_types[0] = 
+  this->type_structs_[TT_Info::PRINTER].super_types[0] =
     TT_Info::INTERFACE_NAMES[TT_Info::REMOTE_IO];
   this->type_structs_[TT_Info::PRINTER].props[0].name       =
     TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_COLOR];
