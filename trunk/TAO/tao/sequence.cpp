@@ -34,7 +34,7 @@ TAO_String_Manager::TAO_String_Manager(const TAO_String_Manager &rhs)
 TAO_String_Manager&
 TAO_String_Manager::operator=(const TAO_String_Manager &rhs)
 {
-  if (this == &_tao_mng_type)
+  if (this == &rhs)
     return *this;
 
   if (this->release_) // need to free old one
