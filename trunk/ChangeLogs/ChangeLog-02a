@@ -1,3 +1,13 @@
+Sat Feb 10 07:19:37 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
+
+        * include/makeinclude/outputdir.bor:
+          Removed the now out-of-date comment about pascal/non-pascal
+          build directories.
+
+        * ace/config-win32-borland.h:
+          Added support for new ACE_HAS_VCL define to enable inclusion
+          of VCL header files.
+
 Fri Feb  9 16:47:44 2001  Pradeep Gore  <pradeep@cs.wustl.edu>
 
 	* ace/Makefile.am:

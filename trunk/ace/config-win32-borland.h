@@ -25,6 +25,13 @@
 #  define WIN32 1
 # endif
 
+// When building a VCL application, the main VCL header file should be
+// included before anything else. You can define ACE_HAS_VCL=1 in your
+// project settings to have this file included for you automatically.
+# if defined (ACE_HAS_VCL) && (ACE_HAS_VCL != 0)
+#  include <vcl.h>
+# endif 
+
 # include "ace/config-win32-common.h"
 
 # define ACE_CC_NAME ACE_LIB_TEXT ("Borland C++ Builder")
