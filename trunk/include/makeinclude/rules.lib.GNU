@@ -19,12 +19,13 @@ ifndef SOEXT
 endif
 
 VSHLIB  = $(SHLIB:%.$(SOEXT)=%$(VAR).$(SOEXT))
+ifdef SHLIBA
+VSHLIBA = $(SHLIBA:%.a=%$(VAR).a)
+endif
+
 VLOBJS   = $(subst .cpp,.$(OBJEXT),$(foreach file,$(LSRC),$(VDIR)$(notdir $(file))))
 
-ifdef TEMPINCDIR
-  VSHOBJS1 =
-else  # ! TEMPINCDIR
-  LSRC    += $(LSRC2)
+LSRC    += $(LSRC2)
 ifdef PRELIB
 ifdef PRELIB_USES_OBJ_ONLY
   VSHOBJS = $(subst .cpp,.o,$(foreach file,$(LSRC),$(VSHDIR)$(notdir $(file))))
@@ -37,7 +38,6 @@ else  # ! PRELIB
   VSHOBJS1 = \
     $(subst .cpp,.o,$(foreach file,$(LSRC),$(VSHDIR)$(notdir $(file))))
 endif # ! PRELIB
-endif # ! TEMPINCDIR
 
 # Comment out for now...
 # $(DEFS:%=$(INSINC)/%) \
@@ -45,12 +45,18 @@ endif # ! TEMPINCDIR
 ifdef shared_libs_only
   INSTALL += \
     $(VSHLIB:%.$(SOEXT)=$(INSLIB)/%.$(SOEXT)$(ACE_LDSO_Version_Number))
+ifdef SHLIBA
+  INSTALL += $(VSHLIBA:%=$(INSLIB)/%)
+endif
 else
 ifdef static_libs_only
   INSTALL += $(VLIB:%.a=$(INSLIB)/%.a)
 else
   INSTALL += $(VLIB:%.a=$(INSLIB)/%.a) \
     $(VSHLIB:%.$(SOEXT)=$(INSLIB)/%.$(SOEXT)$(ACE_LDSO_Version_Number))
+ifdef SHLIBA
+  INSTALL += $(VSHLIBA:%=$(INSLIB)/%)
+endif
 endif # static_libs_only
 endif # shared_libs_only
 
@@ -68,7 +74,7 @@ ifdef PRELIB
 endif
 
 # Comment these lines out if you want to build both *.a and *.so libraries...
-#$(VSHLIB): $(VSHOBJS) $(STATLIB)
+#$(VSHLIB): $(VSHOBJS)
 #ifdef PRELIB
 #	$(PRELIB)
 #endif
@@ -87,7 +93,7 @@ ifdef TEMPINCDIR
 # templates.
 	if test -s ./$(TEMPINCDIR)/*.C; \
 	then \
-		$(LINK.cc) -o dummy $(LDFLAGS) $(ACE_ROOT)/etc/xlc_dummy.cpp $@ $(LIBS); \
+		$(LINK.cc) -o dummy $(LDFLAGS) $(ACE_ROOT)/etc/xlc_dummy.cpp $^ $(LIBS); \
 		$(RM) dummy; \
 		$(AR) $(ARFLAGS) $@ tempinc/*.o; \
 	fi
@@ -99,17 +105,26 @@ endif # RANLIB
 
 # Note that if you don't want to build shared libraries, just remove the $(VSHOBJS)
 ifdef SHLIBBUILD
-$(VSHLIB): $(VSHOBJS) $(STATLIB)
+$(VSHLIB): $(VSHOBJS)
 else
-$(VSHLIB): $(VSHOBJS1) $(STATLIB)
+$(VSHLIB): $(VSHOBJS1)
 endif
 ifdef PRELIB
 	$(PRELIB)
 endif
+ifdef TEMPINCDIR
+# This is required to get AIX xlC to instantiate and compile the needed
+# templates before building the library.
+	if test -s ./$(TEMPINCDIR)/*.C; \
+	then \
+		$(LINK.cc) -o dummy $(LDFLAGS) $(ACE_ROOT)/etc/xlc_dummy.cpp $^ $(LIBS); \
+		$(RM) dummy; \
+	fi
+endif
 ifdef SHLIBBUILD
 	$(SHLIBBUILD)
 else
-	$(SOLINK.cc) -o $@ $(VSHOBJS1) $(LDFLAGS) $(LIBS) $(STATLIB)
+	$(SOLINK.cc) -o $@ $(VSHOBJS1) $(TMPL_OBJS) $(LDFLAGS) $(LIBS)
 	-chmod a+rx $@
 endif
 
