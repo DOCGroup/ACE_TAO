@@ -64,8 +64,9 @@ public:
   // <ACE_Service_Handler::open>.  The <backlog> parameter specifies
   // the listen backlog and the outstanding AcceptEx calls.
 
-  int accept (size_t bytes_to_read = 0);
-  // This initiates a new asynchronous accept through the AcceptEx call.
+  virtual int accept (size_t bytes_to_read = 0);
+  // This initiates a new asynchronous accept through the <AcceptEx>
+  // call.
 
   static size_t address_size (void);
   // This is required by the AcceptEx call.
