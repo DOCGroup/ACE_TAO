@@ -73,7 +73,8 @@ ACE_Thread::spawn_n (ACE_thread_t thread_ids[],
 
       if (result == 0)
 	{
-	  thread_ids[i] = t_id;
+          if (thread_ids != 0)
+            thread_ids[i] = t_id;
 	  if (thread_handles != 0)
 	    thread_handles[i] = t_handle;
 	}
