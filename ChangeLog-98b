@@ -1,15 +1,21 @@
+Sun Nov 15 16:34:11 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-osf1-4.0.h,config-linux-common.h:  added
+          ACE_HAS_BROKEN_EXPLICIT_DESTRUCTOR.  Thanks to James
+          Johnson for reporting that it is necessary.
+
 Sun Nov 15 12:40:35 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
 
-	*  docs/tutorials/018/*
-	*  docs/tutorials/online-tutorials.html
-	A new tutorial on ACE_Token.
+        *  docs/tutorials/018/*
+        *  docs/tutorials/online-tutorials.html
+        A new tutorial on ACE_Token.
 
 Sun Nov 15 12:10:39 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
 
-	* docs/tutorials/013/*
+        * docs/tutorials/013/*
 
-	A few more tweeks now that the sun is up.  Mostly simple
-	documentation changes but a couple of cleanups on the code as well.
+        A few more tweeks now that the sun is up.  Mostly simple
+        documentation changes but a couple of cleanups on the code as well.
 
 Sat Nov 14 23:15:58 EST 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
 
